@@ -223,7 +223,7 @@ void upstep_work::handle_extension_fusion_type(int verbose_level)
 				(*gen->print_function)(cout, size + 1,
 						gen->S1, gen->print_function_data);
 				}
-			gen->generator_apply_fusion_element_no_transporter(
+			gen->generator_apply_isomorphism_no_transporter(
 				size, size + 1, prev, prev_ex, 
 				gen->S1, gen->S2, 
 				verbose_level - 3);
@@ -767,7 +767,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		int nb_times_invert_called0 = gen->A->nb_times_invert_called;
 		int nb_times_retrieve_called0 = gen->A->nb_times_retrieve_called;
 		
-		r = find_automorphism_by_tracing(final_node, 
+		r = recognize(final_node, 
 				final_ex, 
 				TRUE /*f_tolerant*/, 
 				verbose_level - 4);
@@ -776,7 +776,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		if (f_v) {
 			cout << "upstep_work::upstep_for_sets coset "
 					<< coset << " / " << nb_cosets
-					<< " find_automorphism_by_tracing returns "
+					<< " recognize returns "
 					<< trace_result_as_text(r) << endl;
 			}
 		

@@ -249,7 +249,7 @@ void poset_classification::test_identify(int level, int nb_times,
 
 
 #if 1
-void poset_classification::poset_classification_apply_fusion_element_no_transporter(
+void poset_classification::poset_classification_apply_isomorphism_no_transporter(
 	int cur_level, int size, int cur_node, int cur_ex, 
 	int *set_in, int *set_out, 
 	int verbose_level)
@@ -261,7 +261,7 @@ void poset_classification::poset_classification_apply_fusion_element_no_transpor
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_fusion_element_"
+		cout << "poset_classification::poset_classification_apply_isomorphism_"
 				"no_transporter" << endl;
 		}
 
@@ -270,69 +270,25 @@ void poset_classification::poset_classification_apply_fusion_element_no_transpor
 	set_tmp = NEW_int(size);
 	A->element_one(Elt1, 0);
 
-	poset_classification_apply_fusion_element(cur_level, size, cur_node, cur_ex, 
+	poset_classification_apply_isomorphism(cur_level, size, cur_node, cur_ex, 
 		set_in, set_out, set_tmp, 
 		Elt1, Elt2, 
 		TRUE /* f_tolerant */, 
 		0 /*verbose_level*/);
 
-	#if 0
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_fusion_element_"
-				"no_transporter" << endl;
-		}
-	A->element_retrieve(
-			root[current_node].E[current_extension].data, Elt1, 0);
-	
-	A2->map_a_set(S1, S2, len, Elt1, 0);
-
-	int_vec_heapsort(S2, len);
-
-	//A->element_mult(gen->transporter->ith(lvl + 1),
-	//Elt1, gen->transporter->ith(0), 0);
-#endif
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(set_tmp);
 
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_fusion_element_"
+		cout << "poset_classification::poset_classification_apply_isomorphism_"
 				"no_transporter done" << endl;
 		}
 }
 #endif
 
-#if 0
-void poset_classification::poset_classification_apply_fusion_element(
-		int cur_level, int cur_node, int size, int level,
-	int current_extension, 
-	int *canonical_set, int *tmp_set, 
-	int *Elt_transporter, int *tmp_Elt, 
-	int verbose_level)
-{
-	oracle *O = &root[cur_node];
-	int i;
 
-	A->element_retrieve(O->E[current_extension].data, Elt1, 0);
-	
-	A2->map_a_set(canonical_set, tmp_set, size, Elt1, 0);
-
-	
-	int_vec_heapsort(tmp_set, level); //int_vec_sort(level, tmp_set);
-
-	A->element_mult(Elt_transporter, Elt1, tmp_Elt, 0);
-
-	for (i = 0; i < size; i++) {
-		canonical_set[i] = tmp_set[i];
-		}
-	A->element_move(tmp_Elt, Elt_transporter, 0);
-
-}
-#endif
-
-int poset_classification::poset_classification_apply_fusion_element(int level, int size, 
+int poset_classification::poset_classification_apply_isomorphism(int level, int size, 
 	int current_node, int current_extension, 
 	int *set_in, int *set_out, int *set_tmp, 
 	int *transporter_in, int *transporter_out, 
@@ -347,7 +303,7 @@ int poset_classification::poset_classification_apply_fusion_element(int level, i
 	O = &root[current_node];
 
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_fusion_element "
+		cout << "poset_classification::poset_classification_apply_isomorphism "
 				"current_node=" << current_node
 				<< " current_extension=" << current_extension << endl;
 		cout << "level=" << level << endl;		
@@ -359,7 +315,7 @@ int poset_classification::poset_classification_apply_fusion_element(int level, i
 	A2->element_retrieve(O->E[current_extension].data, Elt1, 0);
 	
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_fusion_element "
+		cout << "poset_classification::poset_classification_apply_isomorphism "
 				"applying fusion element" << endl;
 		A2->element_print_quick(Elt1, cout);
 		cout << "in action " << A2->label << ":" << endl;
@@ -370,7 +326,7 @@ int poset_classification::poset_classification_apply_fusion_element(int level, i
 		}
 	A2->map_a_set(set_in, set_tmp, size, Elt1, 0);
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_fusion_element "
+		cout << "poset_classification::poset_classification_apply_isomorphism "
 				"the set becomes: ";
 		int_vec_print(cout, set_tmp, size);
 		cout << endl;
@@ -392,11 +348,11 @@ int poset_classification::poset_classification_apply_fusion_element(int level, i
 		int_vec_heapsort(set_tmp, level + 1);
 		int_vec_copy(set_tmp, set_out, size);
 		if (f_v) {
-			cout << "poset_classification::poset_classification_apply_fusion_element "
+			cout << "poset_classification::poset_classification_apply_isomorphism "
 					"after sorting: ";
 			}
 		if (f_v) {
-			cout << "poset_classification::poset_classification_apply_fusion_element "
+			cout << "poset_classification::poset_classification_apply_isomorphism "
 					"calling find_oracle_node_for_set: ";
 			int_vec_print(cout, set_out, size);
 			cout << endl;
@@ -408,7 +364,7 @@ int poset_classification::poset_classification_apply_fusion_element(int level, i
 
 		}
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_fusion_element from ";
+		cout << "poset_classification::poset_classification_apply_isomorphism from ";
 		int_vec_print(cout, set_in, size);
 		cout << " to ";
 		int_vec_print(cout, set_out, size);
@@ -528,9 +484,9 @@ int poset_classification::trace_set_recursion(
 			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
-			cout << "before poset_classification_apply_fusion_element" << endl;
+			cout << "before poset_classification_apply_isomorphism" << endl;
 			}
-		next_node = poset_classification_apply_fusion_element(cur_level, size, 
+		next_node = poset_classification_apply_isomorphism(cur_level, size, 
 			cur_node, current_extension, 
 			canonical_set, tmp_set1, tmp_set2, 
 			Elt_transporter, tmp_Elt1, 
@@ -540,7 +496,7 @@ int poset_classification::trace_set_recursion(
 			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
-			cout << "after poset_classification_apply_fusion_element" << endl;
+			cout << "after poset_classification_apply_isomorphism" << endl;
 			}
 		if (f_v) {
 			cout << "poset_classification::trace_set_recursion "

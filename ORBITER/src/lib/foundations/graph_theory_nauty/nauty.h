@@ -211,7 +211,7 @@ it is necessary to check they are correct.
 *                   - Now labelorg has a concrete declaration in nautil.c    *
 *                        and EXTDEFS is not needed                           *
 *        5-May-01 : - NILFUNCTION, NILSET, NILGRAPH now obsolete.  Use NULL. *
-*       11-Sep-01 : - setword is unsigned int in the event that uint_MAX     *
+*       11-Sep-01 : - setword is unsigned int in the event that uINT_MAX     *
 *                     is defined and indicates it is big enough              *
 *       17-Oct-01 : - major rewrite for 2.1.  SYS_* variables gone!          *
 *                     Some modernity assumed, eg size_t                      *

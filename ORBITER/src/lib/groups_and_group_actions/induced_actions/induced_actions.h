@@ -208,7 +208,7 @@ public:
 // action_on_bricks.C:
 // #############################################################################
 
-//! related to a problem of Neal Sloan
+//! related to a problem of Neil Sloane
 
 
 class action_on_bricks {

@@ -87,7 +87,7 @@ public:
 	int *Elt5;
 	
 	int *tmp_set_apply_fusion;
-		// used in poset_orbit_upstep.C poset_orbit_node::apply_fusion_element
+		// used in poset_orbit_upstep.C poset_orbit_node::apply_isomorphism
 
 	int *tmp_find_node_for_subspace_by_rank1;
 		// [vector_space_dimension] used in poset_classification_trace.C: 
@@ -116,7 +116,7 @@ public:
 	int nb_times_trace;
 	int nb_times_trace_was_saved;
 	
-	// data for find_automorphism_by_tracing:
+	// data for recognize:
 	vector_ge *transporter; // [sz + 1]
 	int **set; // [sz + 1][sz]
 
@@ -535,11 +535,11 @@ public:
 	void identify(int *data, int sz, int *transporter, 
 		int &orbit_at_level, int verbose_level);
 	void test_identify(int level, int nb_times, int verbose_level);
-	void poset_classification_apply_fusion_element_no_transporter(
+	void poset_classification_apply_isomorphism_no_transporter(
 		int cur_level, int size, int cur_node, int cur_ex, 
 		int *set_in, int *set_out, 
 		int verbose_level);
-	int poset_classification_apply_fusion_element(int level, int size, 
+	int poset_classification_apply_isomorphism(int level, int size, 
 		int current_node, int current_extension, 
 		int *set_in, int *set_out, int *set_tmp, 
 		int *transporter_in, int *transporter_out, 
@@ -675,14 +675,14 @@ public:
 		int size, int f_implicit_fusion,
 		int lvl, int current_node,
 		int &final_node, int verbose_level);
-	// Called from poset_orbit_node::find_automorphism_by_tracing_recursion
+	// Called from poset_orbit_node::recognize_recursion
 	// when trace_next_point returns FALSE
 	// This can happen only if f_implicit_fusion is TRUE
 	void recognize_recursion(
 		int size, int f_implicit_fusion,
 		int lvl, int current_node, int &final_node,
 		int verbose_level);
-	// this routine is called by upstep_work::find_automorphism_by_tracing
+	// this routine is called by upstep_work::recognize
 	// we are dealing with a set of size len + 1.
 	// but we can only trace the first len points.
 	// the tracing starts at lvl = 0 with current_node = 0
@@ -766,14 +766,16 @@ public:
 	int get_node_in_level(poset_classification *gen);
 	int get_nb_of_live_points();
 	int get_nb_of_orbits_under_stabilizer();
-	void get_stabilizer_order(poset_classification *gen, longinteger_object &go);
+	void get_stabilizer_order(poset_classification *gen,
+		longinteger_object &go);
 	void get_stabilizer(poset_classification *gen, 
 		group &G, longinteger_object &go_G, 
 		int verbose_level);
 	void get_stabilizer_generators(poset_classification *gen,
 		strong_generators *&Strong_gens, 
 		int verbose_level);
-	void poset_orbit_node_depth_breadth_perm_and_inverse(poset_classification *gen, 
+	void poset_orbit_node_depth_breadth_perm_and_inverse(
+		poset_classification *gen,
 		int max_depth, 
 		int &idx, int hdl, int cur_depth, int *perm, int *perm_inv);
 	int find_extension_from_point(poset_classification *gen, int pt, 
@@ -799,7 +801,8 @@ public:
 	// stores a set of size i + 1 to gen->S[]
 	void store_set_to(poset_classification *gen, int i, int *to);
 	void store_set_to(poset_classification *gen, int *to);
-	int check_node_and_set_consistency(poset_classification *gen, int i, int *set);
+	int check_node_and_set_consistency(poset_classification *gen,
+		int i, int *set);
 	void print_set_verbose(poset_classification *gen);
 	void print_set(poset_classification *gen);
 	void print_node(poset_classification *gen);
@@ -822,7 +825,7 @@ public:
 
 
 	// poset_orbit_node_upstep.C:
-	int apply_fusion_element(poset_classification *gen, 
+	int apply_isomorphism(poset_classification *gen, 
 		int lvl, int current_node, 
 		int current_extension, int len, int f_tolerant, 
 		int verbose_level);
@@ -838,7 +841,7 @@ public:
 		int current_node, 
 		int len, int f_implicit_fusion, int &f_failure_to_find_point, 
 		int verbose_level);
-		// Called from upstep_work::find_automorphism_by_tracing_recursion
+		// Called from upstep_work::recognize_recursion
 		// applies the permutation which maps the point with index lvl 
 		// (i.e. the lvl+1-st point) to its orbit representative.
 		// also maps all the other points under that permutation.
@@ -890,7 +893,8 @@ public:
 		int f_use_invariant_subset_if_available, 
 		int f_implicit_fusion, 
 		int verbose_level);
-		// Called from poset_classification::downstep if we are acting on sets 
+		// Called from poset_classification::downstep
+		// if we are acting on sets
 		// (i.e., not on subspaces).
 		// Calls downstep_orbits, 
 		// downstep_orbit
@@ -1090,9 +1094,9 @@ struct coset_table_entry {
 		// as in the loop in upstep_work::upstep_subspace_action
 		// goes from 0 to degree - 1.
 
-	int node; // = final_node as computed by find_automorphism_by_tracing
-	int ex; // = final_ex as computed by find_automorphism_by_tracing
-	int type; // = return value of find_automorphism_by_tracing
+	int node; // = final_node as computed by recognize
+	int ex; // = final_ex as computed by recognize
+	int type; // = return value of recognize
 
 	int nb_times_image_of_called;
 	int nb_times_mult_called;
@@ -1215,10 +1219,10 @@ public:
 
 	// upstep_work_trace.C:
 
-	trace_result find_automorphism_by_tracing(
+	trace_result recognize(
 		int &final_node, int &final_ex, int f_tolerant, 
 		int verbose_level);
-	trace_result find_automorphism_by_tracing_recursion(
+	trace_result recognize_recursion(
 		int lvl, int current_node, int &final_node, int &final_ex, 
 		int f_tolerant, int verbose_level);
 	trace_result handle_last_level(

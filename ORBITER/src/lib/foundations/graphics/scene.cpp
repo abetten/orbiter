@@ -1103,8 +1103,14 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	pts = Face_points[idx];
 	Pts_in = new double [nb_pts * 3];
 	Pts_out = new double [nb_pts * 2];
+	cout << "scene::draw_face" << endl;
 	for (i = 0; i < nb_pts; i++) {
 		double_vec_copy(Point_coords + pts[i] * 3, Pts_in + i * 3, 3);
+		cout << "vertex i= " << i << " pts[i] = " << pts[i]
+				<< " x=" << Pts_in[i * 3 + 0]
+				<< " y=" << Pts_in[i * 3 + 1]
+				<< " z=" << Pts_in[i * 3 + 2]
+				<< endl;
 		}
 
 #if 0
@@ -2789,6 +2795,23 @@ void scene::create_Hilbert_model()
 		0, 0, -1, 0, -3, 0, 0, -1, 0, (double)-11/(double)25};
 	cubic(coeff_surf_lifted); // cubic 8, arc_lifting
 	}
+
+
+	int set[3];
+	int nCk = int_n_choose_k(8, 3);
+	int rk;
+	int first_three_face;
+
+	first_three_face = nb_faces;
+	cout << "first_three_face = " << first_three_face << endl;
+	for (rk = 0; rk < nCk; rk++) {
+		unrank_k_subset(rk, set, 8 /*n*/, 3 /*k*/);
+		face3(set[0], set[1], set[2]);
+		cout << "rk=" << rk << " set=";
+		int_vec_print(cout, set, 3);
+		cout << endl;
+	}
+
 }
 
 

@@ -116,10 +116,10 @@ void decomposition::setup_default_partition(int verbose_level)
 }
 
 void decomposition::compute_TDO(int max_depth, int verbose_level)
-// put max_depth = int_MAX if you want full depth
+// put max_depth = INT_MAX if you want full depth
 {
 	int f_v = (verbose_level >= 1);
-	//int depth = int_MAX;
+	//int depth = INT_MAX;
 
 	if (f_v) {
 		cout << "decomposition::compute_TDO" << endl;

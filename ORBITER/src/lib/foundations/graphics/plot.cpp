@@ -501,7 +501,7 @@ void draw_density2_multiple_curves(mp_graphics &G, int no,
 #if 0
 	int min_x, max_x, min_y, max_y;
 	
-	min_x = int_MAX;
+	min_x = INT_MAX;
 	max_x = int_MIN;
 	for (curve = 0; curve < nb_curves; curve++) {
 		min_x = MINIMUM(min_x, outline_number[curve][0]);

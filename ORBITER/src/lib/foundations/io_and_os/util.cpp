@@ -5020,7 +5020,7 @@ int os_seconds_past_1970()
 	return a;
 }
 
-void povray_beginning(ostream &ost, double angle)
+void povray_beginning(ostream &ost, double angle, int f_with_background)
 // angle = 22 
 {
 	ost << "//Files with predefined colors and textures" << endl;
@@ -5109,9 +5109,16 @@ void povray_beginning(ostream &ost, double angle)
 	ost << "light_source { <4,4,4> color White }  " << endl;  
 	ost << "light_source { <-5,0,5> color White }" << endl;
 	ost << endl;
-	ost << "//Set a background color" << endl;
-	ost << "background { color SkyBlue }" << endl;
-	ost << endl;
+
+	if (f_with_background) {
+		ost << "//Set a background color" << endl;
+		ost << "background { color SkyBlue }" << endl;
+		ost << endl;
+	} else {
+		ost << "//Set a background color" << endl;
+		ost << "background { color White }" << endl;
+		ost << endl;
+	}
 	ost << "// main part:" << endl;
 #endif
 	ost << endl;

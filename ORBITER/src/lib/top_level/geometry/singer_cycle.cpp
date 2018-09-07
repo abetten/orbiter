@@ -369,7 +369,7 @@ void singer_cycle::init_lines(int verbose_level)
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 
-	int TDO_depth = int_MAX;
+	int TDO_depth = INT_MAX;
 	
 	cout << "before compute_TDO_safe" << endl;
 	Inc->compute_TDO_safe(*Stack, TDO_depth, verbose_level - 3);

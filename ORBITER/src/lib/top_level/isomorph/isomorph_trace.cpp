@@ -1113,7 +1113,7 @@ int isomorph::handle_extension_database(int cur_level,
 		}
 	else if (t == 2) {
 		// fusion node		
-		apply_fusion_element_database(
+		apply_isomorphism_database(
 			cur_level, cur_node_global,
 			i, canonical_set, Elt_transporter, ref,  
 			verbose_level - 1);
@@ -1259,7 +1259,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 			cout << "fusion node" << endl;
 			}
 		// fusion node		
-		apply_fusion_element_oracle(cur_level, cur_node_global, 
+		apply_isomorphism_oracle(cur_level, cur_node_global, 
 			current_extension, canonical_set, Elt_transporter, 
 			verbose_level - 2);
 
@@ -1346,7 +1346,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 	exit(1);
 }
 
-void isomorph::apply_fusion_element_database(
+void isomorph::apply_isomorphism_database(
 	int cur_level, int cur_node_global,
 	int current_extension, int *canonical_set,
 	int *Elt_transporter, int ref,
@@ -1355,7 +1355,7 @@ void isomorph::apply_fusion_element_database(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "isomorph:: apply_fusion_element_database "
+		cout << "isomorph:: apply_isomorphism_database "
 				"iso_node " << iso_nodes << " node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
@@ -1381,7 +1381,7 @@ void isomorph::apply_fusion_element_database(
 
 }
 
-void isomorph::apply_fusion_element_oracle(
+void isomorph::apply_isomorphism_oracle(
 	int cur_level, int cur_node_global,
 	int current_extension, int *canonical_set, int *Elt_transporter, 
 	int verbose_level)
@@ -1391,7 +1391,7 @@ void isomorph::apply_fusion_element_oracle(
 
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " apply_fusion_element_oracle node ";
+				<< " apply_isomorphism_oracle node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : " << endl;
 		}

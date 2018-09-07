@@ -956,7 +956,7 @@ void set_of_sets::compute_tdo_decomposition(
 	int m, n;
 	//incidence_structure *I;
 	//partitionstack *Stack;
-	//int depth = int_MAX;
+	//int depth = INT_MAX;
 		
 	if (f_v) {
 		cout << "set_of_sets::compute_tdo_decomposition" << endl;

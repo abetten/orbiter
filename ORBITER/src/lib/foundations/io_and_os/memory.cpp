@@ -10,19 +10,19 @@
 #include "foundations.h"
 
 #define REGISTRY_SIZE 1000
-#define POINTER_TYPE_INVALID 0
-#define POINTER_TYPE_SMALLint 1
-#define POINTER_TYPE_SMALLpint 2
-#define POINTER_TYPE_int 3
-#define POINTER_TYPE_pint 4
-#define POINTER_TYPE_ppint 5
-#define POINTER_TYPE_char 6
-#define POINTER_TYPE_uchar 7
-#define POINTER_TYPE_pchar 8
-#define POINTER_TYPE_puchar 9
-#define POINTER_TYPE_PVOID 10
-#define POINTER_TYPE_OBJECT 11
-#define POINTER_TYPE_OBJECTS 12
+#define POintER_TYPE_INVALID 0
+#define POintER_TYPE_SMALLint 1
+#define POintER_TYPE_SMALLpint 2
+#define POintER_TYPE_int 3
+#define POintER_TYPE_pint 4
+#define POintER_TYPE_ppint 5
+#define POintER_TYPE_char 6
+#define POintER_TYPE_uchar 7
+#define POintER_TYPE_pchar 8
+#define POintER_TYPE_puchar 9
+#define POintER_TYPE_PVOID 10
+#define POintER_TYPE_OBJECT 11
+#define POintER_TYPE_OBJECTS 12
 
 
 
@@ -48,7 +48,7 @@ void mem_object_registry_entry::null()
 {
 	time_stamp = 0;
 	pointer = NULL;
-	object_type = POINTER_TYPE_INVALID;
+	object_type = POintER_TYPE_INVALID;
 	object_n = 0;
 	object_size_of = 0;
 	extra_type_info = NULL;
@@ -59,73 +59,73 @@ void mem_object_registry_entry::null()
 void mem_object_registry_entry::set_type_from_string(char *str)
 {
 	if (strcmp(str, "int") == 0) {
-		object_type = POINTER_TYPE_SMALLint;
+		object_type = POintER_TYPE_SMALLint;
 	} else if (strcmp(str, "pint") == 0) {
-		object_type = POINTER_TYPE_SMALLpint;
+		object_type = POintER_TYPE_SMALLpint;
 	} else if (strcmp(str, "int") == 0) {
-		object_type = POINTER_TYPE_int;
+		object_type = POintER_TYPE_int;
 	} else if (strcmp(str, "pint") == 0) {
-		object_type = POINTER_TYPE_pint;
+		object_type = POintER_TYPE_pint;
 	} else if (strcmp(str, "ppint") == 0) {
-		object_type = POINTER_TYPE_ppint;
+		object_type = POintER_TYPE_ppint;
 	} else if (strcmp(str, "char") == 0) {
-		object_type = POINTER_TYPE_char;
+		object_type = POintER_TYPE_char;
 	} else if (strcmp(str, "uchar") == 0) {
-		object_type = POINTER_TYPE_uchar;
+		object_type = POintER_TYPE_uchar;
 	} else if (strcmp(str, "pchar") == 0) {
-		object_type = POINTER_TYPE_pchar;
+		object_type = POintER_TYPE_pchar;
 	} else if (strcmp(str, "puchar") == 0) {
-		object_type = POINTER_TYPE_puchar;
+		object_type = POintER_TYPE_puchar;
 	} else if (strcmp(str, "pvoid") == 0) {
-		object_type = POINTER_TYPE_PVOID;
+		object_type = POintER_TYPE_PVOID;
 	} else if (strcmp(str, "OBJECT") == 0) {
-		object_type = POINTER_TYPE_OBJECT;
+		object_type = POintER_TYPE_OBJECT;
 	} else if (strcmp(str, "OBJECTS") == 0) {
-		object_type = POINTER_TYPE_OBJECTS;
+		object_type = POintER_TYPE_OBJECTS;
 	} else {
-		object_type = POINTER_TYPE_INVALID;
+		object_type = POintER_TYPE_INVALID;
 	}
 }
 
 void mem_object_registry_entry::print_type(ostream &ost)
 {
-	if (object_type == POINTER_TYPE_INVALID) {
+	if (object_type == POintER_TYPE_INVALID) {
 		ost << "invalid entry";
 		}
-	if (object_type == POINTER_TYPE_SMALLint) {
+	if (object_type == POintER_TYPE_SMALLint) {
 		ost << "int";
 		}
-	else if (object_type == POINTER_TYPE_SMALLpint) {
+	else if (object_type == POintER_TYPE_SMALLpint) {
 		ost << "pint";
 		}
-	else if (object_type == POINTER_TYPE_int) {
+	else if (object_type == POintER_TYPE_int) {
 		ost << "int";
 		}
-	else if (object_type == POINTER_TYPE_pint) {
+	else if (object_type == POintER_TYPE_pint) {
 		ost << "pint";
 		}
-	else if (object_type == POINTER_TYPE_ppint) {
+	else if (object_type == POintER_TYPE_ppint) {
 		ost << "ppint";
 		}
-	else if (object_type == POINTER_TYPE_char) {
+	else if (object_type == POintER_TYPE_char) {
 		ost << "char";
 		}
-	else if (object_type == POINTER_TYPE_uchar) {
+	else if (object_type == POintER_TYPE_uchar) {
 		ost << "uchar";
 		}
-	else if (object_type == POINTER_TYPE_pchar) {
+	else if (object_type == POintER_TYPE_pchar) {
 		ost << "pchar";
 		}
-	else if (object_type == POINTER_TYPE_puchar) {
+	else if (object_type == POintER_TYPE_puchar) {
 		ost << "puchar";
 		}
-	else if (object_type == POINTER_TYPE_PVOID) {
+	else if (object_type == POintER_TYPE_PVOID) {
 		ost << "pvoid";
 		}
-	else if (object_type == POINTER_TYPE_OBJECT) {
+	else if (object_type == POintER_TYPE_OBJECT) {
 		ost << "OBJECT";
 		}
-	else if (object_type == POINTER_TYPE_OBJECTS) {
+	else if (object_type == POintER_TYPE_OBJECTS) {
 		ost << "OBJECTS";
 		}
 	else {
@@ -136,44 +136,44 @@ void mem_object_registry_entry::print_type(ostream &ost)
 
 int mem_object_registry_entry::size_of()
 {
-	if (object_type == POINTER_TYPE_INVALID) {
+	if (object_type == POintER_TYPE_INVALID) {
 		cout << "mem_object_registry_entry::size_of invalid entry" << endl;
 		exit(1);
 		}
-	if (object_type == POINTER_TYPE_SMALLint) {
+	if (object_type == POintER_TYPE_SMALLint) {
 		return sizeof(int) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_SMALLpint) {
+	else if (object_type == POintER_TYPE_SMALLpint) {
 		return sizeof(int *) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_int) {
+	else if (object_type == POintER_TYPE_int) {
 		return sizeof(int) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_pint) {
+	else if (object_type == POintER_TYPE_pint) {
 		return sizeof(int *) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_ppint) {
+	else if (object_type == POintER_TYPE_ppint) {
 		return sizeof(int **) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_char) {
+	else if (object_type == POintER_TYPE_char) {
 		return sizeof(char) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_uchar) {
+	else if (object_type == POintER_TYPE_uchar) {
 		return sizeof(uchar) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_pchar) {
+	else if (object_type == POintER_TYPE_pchar) {
 		return sizeof(char *) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_puchar) {
+	else if (object_type == POintER_TYPE_puchar) {
 		return sizeof(uchar *) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_PVOID) {
+	else if (object_type == POintER_TYPE_PVOID) {
 		return sizeof(pvoid) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_OBJECT) {
+	else if (object_type == POintER_TYPE_OBJECT) {
 		return object_size_of;
 		}
-	else if (object_type == POINTER_TYPE_OBJECTS) {
+	else if (object_type == POintER_TYPE_OBJECTS) {
 		return object_n * object_size_of;
 		}
 	else {
@@ -448,7 +448,7 @@ int *mem_object_registry::allocate_int(int n, const char *file, int line)
 	p = new int[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_SMALLint, (int) n, sizeof(int),
+				POintER_TYPE_SMALLint, (int) n, sizeof(int),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -488,7 +488,7 @@ int **mem_object_registry::allocate_pint(int n, const char *file, int line)
 	p = new pint[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_SMALLpint, (int) n, sizeof(int *),
+				POintER_TYPE_SMALLpint, (int) n, sizeof(int *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -528,7 +528,7 @@ int ***mem_object_registry::allocate_ppint(int n, const char *file, int line)
 	p = new ppint[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_ppint, (int) n, sizeof(int **),
+				POintER_TYPE_ppint, (int) n, sizeof(int **),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -568,7 +568,7 @@ char *mem_object_registry::allocate_char(int n, const char *file, int line)
 	p = new char[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_char, (int) n, sizeof(char),
+				POintER_TYPE_char, (int) n, sizeof(char),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -608,7 +608,7 @@ uchar *mem_object_registry::allocate_uchar(int n, const char *file, int line)
 	p = new uchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_uchar, (int) n, sizeof(uchar),
+				POintER_TYPE_uchar, (int) n, sizeof(uchar),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -648,7 +648,7 @@ char **mem_object_registry::allocate_pchar(int n, const char *file, int line)
 	p = new pchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_pchar, (int) n, sizeof(char *),
+				POintER_TYPE_pchar, (int) n, sizeof(char *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -688,7 +688,7 @@ uchar **mem_object_registry::allocate_puchar(int n, const char *file, int line)
 	p = new puchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_puchar, (int) n, sizeof(char *),
+				POintER_TYPE_puchar, (int) n, sizeof(char *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -728,7 +728,7 @@ void **mem_object_registry::allocate_pvoid(int n, const char *file, int line)
 	p = new pvoid[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_PVOID, (int) n, sizeof(void *),
+				POintER_TYPE_PVOID, (int) n, sizeof(void *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -767,7 +767,7 @@ void *mem_object_registry::allocate_OBJECTS(void *p, int n, int size_of,
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_OBJECTS, (int) n, size_of,
+				POintER_TYPE_OBJECTS, (int) n, size_of,
 				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -806,7 +806,7 @@ void *mem_object_registry::allocate_OBJECT(void *p, int size_of,
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_OBJECT, (int) 1, size_of,
+				POintER_TYPE_OBJECT, (int) 1, size_of,
 				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -1078,8 +1078,8 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 				<< entries[f].source_line
 				<< " object type ";
 		entries[f].print_type(cout);
-		if (entries[f].object_type == POINTER_TYPE_OBJECT ||
-				entries[f].object_type == POINTER_TYPE_OBJECTS) {
+		if (entries[f].object_type == POintER_TYPE_OBJECT ||
+				entries[f].object_type == POintER_TYPE_OBJECTS) {
 			cout << " = " << entries[f].extra_type_info;
 		}
 		cout << " for a total of " << sz << " char" << endl;
@@ -1183,7 +1183,7 @@ static int registry_key_pair_compare_by_type(void *K1v, void *K2v)
 		return c;
 	}
 	//new the two entries have the same type
-	if (t1 == POINTER_TYPE_OBJECTS || t1 == POINTER_TYPE_OBJECT) {
+	if (t1 == POintER_TYPE_OBJECTS || t1 == POintER_TYPE_OBJECT) {
 		c = strcmp(K1->extra_type_info, K2->extra_type_info);
 		if (c) {
 			return c;
