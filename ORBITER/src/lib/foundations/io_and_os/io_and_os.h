@@ -492,7 +492,7 @@ int is_csv_file(const char *fname);
 int is_xml_file(const char *fname);
 void os_date_string(char *str, int sz);
 int os_seconds_past_1970();
-void povray_beginning(ostream &ost, double angle);
+void povray_beginning(ostream &ost, double angle, int f_with_background);
 void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost);
 void povray_animation_rotate_around_origin_and_given_vector(double *v, 
 	ostream &ost);

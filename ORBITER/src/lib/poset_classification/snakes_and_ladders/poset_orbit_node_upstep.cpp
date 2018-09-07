@@ -8,7 +8,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-int poset_orbit_node::apply_fusion_element(poset_classification *gen,
+int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	int lvl, int current_node, 
 	int current_extension, int len, int f_tolerant,
 	int verbose_level)
@@ -19,7 +19,7 @@ int poset_orbit_node::apply_fusion_element(poset_classification *gen,
 	int *set;
 
 	if (f_v) {
-		cout << "poset_orbit_node::apply_fusion_element" << endl;
+		cout << "poset_orbit_node::apply_isomorphism" << endl;
 		}
 
 	//set = NEW_int(len + 1); // this call should be eliminated
@@ -31,7 +31,7 @@ int poset_orbit_node::apply_fusion_element(poset_classification *gen,
 		// A Betten March 18 2012, this was gen->A2 previously
 	
 	if (f_v) {
-		cout << "poset_orbit_node::apply_fusion_element "
+		cout << "poset_orbit_node::apply_isomorphism "
 				"applying fusion element" << endl;
 		if (gen->f_allowed_to_show_group_elements) {
 			gen->A2->element_print_quick(gen->Elt1, cout);
@@ -50,7 +50,7 @@ int poset_orbit_node::apply_fusion_element(poset_classification *gen,
 			len + 1,
 			gen->Elt1, 0);
 	if (f_v) {
-		cout << "poset_orbit_node::apply_fusion_element the set becomes: ";
+		cout << "poset_orbit_node::apply_isomorphism the set becomes: ";
 		int_vec_print(cout, set, len + 1);
 		cout << endl;
 		}
@@ -78,10 +78,10 @@ int poset_orbit_node::apply_fusion_element(poset_classification *gen,
 		int_vec_heapsort(set, lvl + 1);
 		int_vec_copy(set, gen->set[lvl + 1], len + 1);
 		if (f_v) {
-			cout << "poset_orbit_node::apply_fusion_element after sorting: ";
+			cout << "poset_orbit_node::apply_isomorphism after sorting: ";
 			}
 		if (f_v) {
-			cout << "poset_orbit_node::apply_fusion_element "
+			cout << "poset_orbit_node::apply_isomorphism "
 					"calling find_oracle_node_for_set: ";
 			int_vec_print(cout, gen->set[lvl + 1], lvl + 1);
 			cout << endl;
@@ -94,7 +94,7 @@ int poset_orbit_node::apply_fusion_element(poset_classification *gen,
 
 	//FREE_int(set);
 	if (f_v) {
-		cout << "oracle::apply_fusion_element the set ";
+		cout << "oracle::apply_isomorphism the set ";
 		int_vec_print(cout, gen->set[lvl + 1], lvl + 1);
 		cout << " is node " << next_node << endl;
 		}
@@ -296,7 +296,7 @@ int poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
 	int len, int f_implicit_fusion,
 	int &f_failure_to_find_point,
 	int verbose_level)
-// Called from upstep_work::find_automorphism_by_tracing_recursion
+// Called from upstep_work::recognize_recursion
 // applies the permutation which maps the point with index lvl 
 // (i.e. the lvl+1-st point) to its orbit representative.
 // also maps all the other points under that permutation.

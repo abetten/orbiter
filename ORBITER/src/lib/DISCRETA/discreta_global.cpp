@@ -114,14 +114,14 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 				
 				gen->A->element_one(gen->transporter->ith(level + 1), 0);
 				
-				J = O->apply_fusion_element(gen, 
+				J = O->apply_isomorphism(gen, 
 					level, I /* current_node */, 
 					//0 /* my_node */, 0 /* my_extension */, 0 /* my_coset */, 
 					k /* current_extension */, level + 1, 
 					FALSE /* f_tolerant */, 
 					0/*verbose_level - 2*/);
 				if (FALSE) {
-					cout << "after apply_fusion_element J=" << J << endl;
+					cout << "after apply_isomorphism J=" << J << endl;
 					}
 #else
 				

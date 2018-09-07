@@ -535,12 +535,12 @@ public:
 		int &f_failure_to_find_point, 
 		int verbose_level);
 	// Returns next_node_global at level cur_level + 1.
-	void apply_fusion_element_database(int cur_level, 
+	void apply_isomorphism_database(int cur_level, 
 		int cur_node_global, 
 		int current_extension, int *canonical_set, 
 		int *Elt_transporter, int ref, 
 		int verbose_level);
-	void apply_fusion_element_oracle(int cur_level, 
+	void apply_isomorphism_oracle(int cur_level, 
 		int cur_node_global, 
 		int current_extension, int *canonical_set, 
 		int *Elt_transporter, 

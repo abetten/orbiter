@@ -2736,7 +2736,7 @@ void diophant::read_xml(ifstream &f, char *label)
 			}
 		f >> RHS[i];
 
-		//f.ignore(int_MAX, '\"');
+		//f.ignore(INT_MAX, '\"');
 		while (TRUE) {
 			f >> c;
 			if (c == '\"') {

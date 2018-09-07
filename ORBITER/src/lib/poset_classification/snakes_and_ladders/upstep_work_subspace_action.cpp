@@ -361,7 +361,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			int_set_print(cout, gen->set[0], size);
 			cout << endl;
 			cout << "upstep_work::upstep_subspace_action "
-					"calling find_automorphism_by_tracing" << endl;
+					"calling recognize" << endl;
 			}
 		
 #if 0		
@@ -380,10 +380,10 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			print_level_extension_info();
 			cout << " upstep_work::upstep_subspace_action coset "
 					<< coset << " / " << degree
-					<< " before find_automorphism_by_tracing " << endl;
+					<< " before recognize " << endl;
 		}
 
-		r = find_automorphism_by_tracing(
+		r = recognize(
 				final_node, final_ex,
 				TRUE /* f_tolerant */,
 				verbose_level - 1);
@@ -396,7 +396,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			print_level_extension_info();
 			cout << " upstep_work::upstep_subspace_action coset "
 					<< coset << " / " << degree
-					<< " after find_automorphism_by_tracing " << endl;
+					<< " after recognize " << endl;
 		}
 
 		
@@ -473,7 +473,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 				return FALSE;
 				}
 			cout << "upstep_work::upstep_subspace_action: "
-					"find_automorphism_by_tracing returns not_canonical, "
+					"recognize returns not_canonical, "
 					"this should not happen" << endl;
 			exit(1);
 			}

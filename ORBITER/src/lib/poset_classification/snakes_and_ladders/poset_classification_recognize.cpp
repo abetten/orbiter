@@ -12,7 +12,7 @@ void poset_classification::recognize_start_over(
 	int size, int f_implicit_fusion, 
 	int lvl, int current_node, 
 	int &final_node, int verbose_level)
-// Called from oracle::find_automorphism_by_tracing_recursion
+// Called from oracle::recognize_recursion
 // when trace_next_point returns FALSE
 // This can happen only if f_implicit_fusion is TRUE
 {
@@ -65,7 +65,7 @@ void poset_classification::recognize_recursion(
 	int size, int f_implicit_fusion, 
 	int lvl, int current_node, int &final_node, 
 	int verbose_level)
-// this routine is called by upstep_work::find_automorphism_by_tracing
+// this routine is called by upstep_work::recognize
 // we are dealing with a set of size size.
 // the tracing starts at lvl = 0 with current_node = 0
 {
@@ -126,7 +126,7 @@ void poset_classification::recognize_recursion(
 		if (!O->check_node_and_set_consistency(this, lvl - 1,
 				gen->set[lvl])) {
 			print_level_extension_coset_info();
-			cout << "upstep_work::find_automorphism_by_tracing_recursion: "
+			cout << "upstep_work::recognize_recursion: "
 					"node and set inconsistent, the node "
 					"corresponds to" << endl;
 			O->store_set_to(this, lvl - 1, set3);
@@ -150,7 +150,8 @@ void poset_classification::recognize_recursion(
 			0 /*verbose_level */);
 		if (f_v) {
 			cout << "poset_classification::recognize_recursion at ";
-			cout << "(" << lvl << "/" << node << ") after trace_starter, "
+			cout << "(" << lvl << "/" << node << ") "
+					"after trace_starter, "
 					"calling recognize_recursion" << endl;
 			}
 		recognize_recursion(
@@ -196,7 +197,8 @@ void poset_classification::recognize_recursion(
 		if (f_v) {
 			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << ") "
-					"O->trace_next_point_wrapper returns FALSE, after over" << endl;
+					"O->trace_next_point_wrapper "
+					"returns FALSE, after over" << endl;
 			}
 		}
 
@@ -207,7 +209,8 @@ void poset_classification::recognize_recursion(
 		}
 	
 	if (f_failure_to_find_point) {
-		cout << "poset_classification::recognize_recursion failure to find point" << endl;
+		cout << "poset_classification::recognize_recursion "
+				"failure to find point" << endl;
 		exit(1);
 		}
 
@@ -292,34 +295,36 @@ void poset_classification::recognize_recursion(
 					<< current_extension << ")";
 			cout << " fusion node " << O->node << endl;
 			}
-		next_node = O->apply_fusion_element(this,
+		next_node = O->apply_isomorphism(this,
 			lvl, current_node, 
 			current_extension, size - 1 /* len */,
 			FALSE /* f_tolerant */, verbose_level - 6);
 		
 		if (f_v) {
-			cout << "poset_classification::recognize_recursion lvl " << lvl << " at ";
+			cout << "poset_classification::recognize_recursion "
+					"lvl " << lvl << " at ";
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
 			cout << " fusion from " << O->node << " to "
 					<< next_node << endl;
 			}
 		if (next_node == -1) {
-			cout << "poset_classification::recognize_recursion next_node == -1" << endl;
+			cout << "poset_classification::recognize_recursion "
+					"next_node == -1" << endl;
 			exit(1);
 			}
 		if (f_v5) {
 			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
-			cout << " after apply_fusion_element, "
+			cout << " after apply_isomorphism, "
 					"next_node=" << next_node << endl;
 			}
 #if 0
 		if (next_node < path[lvl + 1]) {
 			if (f_v) {
-				cout << "poset_classification::recognize_recursion lvl "
-						<< lvl << " not canonical" << endl;
+				cout << "poset_classification::recognize_recursion "
+						"lvl " << lvl << " not canonical" << endl;
 				cout << "next_node=" << next_node << endl;
 				//cout << "path[lvl + 1]=" << path[lvl + 1] << endl;
 				}
@@ -361,16 +366,19 @@ void poset_classification::recognize_recursion(
 		return;
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_UNPROCESSED) {
-		cout << "poset_classification::recognize_recursion unprocessed node, "
+		cout << "poset_classification::recognize_recursion "
+				"unprocessed node, "
 				"this should not happen" << endl;
 		exit(1);
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_PROCESSING) {
-		cout << "poset_classification::recognize_recursion processing node, "
+		cout << "poset_classification::recognize_recursion "
+				"processing node, "
 				"this should not happen" << endl;
 		exit(1);
 		}
-	cout << "poset_classification::recognize_recursion unknown type of extension" << endl;
+	cout << "poset_classification::recognize_recursion "
+			"unknown type of extension" << endl;
 	exit(1);
 }
 
@@ -380,7 +388,7 @@ void poset_classification::recognize(
 	int &final_node, int verbose_level)
 // This routine is called from upstep
 // (upstep_work::upstep_subspace_action).
-// It in turn calls oracle::find_automorphism_by_tracing_recursion
+// It in turn calls oracle::recognize_recursion
 // It tries to compute an isomorphism
 // of the set in set[0][0,...,len]
 // (i.e. of size len+1) to the 
@@ -439,12 +447,15 @@ void poset_classification::recognize(
 		verbose_level);
 
 	if (f_v) {
-		cout << "poset_classification::recognize after recognize_recursion, "
+		cout << "poset_classification::recognize "
+				"after recognize_recursion, "
 				"copying transporter" << endl;
 		}
 
 
-	A->element_move(poset_classification::transporter->ith(size), transporter, 0);
+	A->element_move(
+			poset_classification::transporter->ith(size),
+			transporter, 0);
 
 
 	if (f_v) {
