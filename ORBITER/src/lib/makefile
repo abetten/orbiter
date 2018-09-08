@@ -1,4 +1,4 @@
-DISCRETA_CPP = /usr/bin/g++
+DISCRETA_CPP = g++
 CPPFLAGS = -Wall
 LIB = 
 LFLAGS = -lm

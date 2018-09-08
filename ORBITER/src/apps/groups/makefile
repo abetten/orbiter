@@ -1,6 +1,6 @@
 SRC=../../../../ORBITER/src
-DISCRETA_CPP = /usr/bin/g++
-DISCRETA_CC = /usr/bin/gcc
+DISCRETA_CPP = g++
+DISCRETA_CC = gcc
 CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
