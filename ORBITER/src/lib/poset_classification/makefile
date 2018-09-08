@@ -1,4 +1,4 @@
-DISCRETA_CPP = /usr/bin/g++
+DISCRETA_CPP = g++
 CPPFLAGS = -Wall -I.. -I../GALOIS -O3 -march=native -funroll-loops 
 # -frename-registers
 LIB = 
