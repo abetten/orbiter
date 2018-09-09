@@ -63,13 +63,13 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 	q = 3;
 	w = Witt_index(epsilon, n - 1);
 	
-	A = new action;
-	An = new action;
+	A = NEW_OBJECT(action);
+	An = NEW_OBJECT(action);
 	
 	if (f_v) {
 		cout << "Hill_cap before init_orthogonal" << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 	init_orthogonal(A, epsilon, n, F, verbose_level - 2);
 	action_on_orthogonal *AO;
@@ -168,7 +168,7 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 	if (f_v) {
 		cout << "Hill_cap computing orbits on points" << endl;
 		}
-	Orb = new schreier;
+	Orb = NEW_OBJECT(schreier);
 	Orb->init(P.A);
 	Orb->init_single_generator(Elt);
 	Orb->compute_all_point_orbits(verbose_level - 2);
@@ -364,7 +364,7 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 
 
 	
-	delete A;
+	FREE_OBJECT(A);
 	
 }
 
@@ -536,26 +536,6 @@ void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int
 		}
 	
 
-#if 0
-	sims *Stab;
-	vector_ge *gens;
-	int *tl;
-	int order;
-
-	gens = new vector_ge;
-	tl = NEW_int(A->base_len);
-	Stab = create_sims_for_stabilizer(A, ranks, sz, verbose_level);
-	Stab->extract_strong_generators_in_order(*gens, tl, verbose_level);
-	cout << "tl:";
-	int_vec_print(cout, tl, A->base_len);
-	cout << endl;
-	for (i = 0; i < gens->len; i++) {
-		cout << "generator " << i << ":" << endl;
-		A->element_print_quick(gens->ith(i), cout);
-		order = A->element_order(gens->ith(i));
-		cout << "order=" << order << endl;
-		}
-#endif
 
 	Weights = NEW_int(n + 1);
 	M = NEW_int(n * sz);

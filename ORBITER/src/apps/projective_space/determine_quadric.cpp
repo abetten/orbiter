@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init(q, 0);
 	F->init_override_polynomial(q, override_poly, verbose_level);
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 
 
 		
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	if (f_vv) {
 		cout << "before P->init" << endl;
@@ -170,8 +170,8 @@ int main(int argc, char **argv)
 		}
 
 
-	delete P;
-	delete F;
+	FREE_OBJECT(P);
+	FREE_OBJECT(F);
 
 }
 

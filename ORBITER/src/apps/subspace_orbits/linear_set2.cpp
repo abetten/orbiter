@@ -364,7 +364,7 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 		cout << "opening grassmann:" << endl;
 		}
 	grassmann *Grass;
-	Grass = new grassmann;
+	Grass = NEW_OBJECT(grassmann);
 	Grass->init(n2, s, Fq, 0 /*verbose_level*/);
 
 	int *spread_elements_numeric;
@@ -421,7 +421,7 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 #if 0
 	andre_construction *Andre;
 
-	Andre = new andre_construction;
+	Andre = NEW_OBJECT(andre_construction);
 	
 	cout << "Creating the projective plane using the Andre construction:" << endl;
 	Andre->init(Fq, s, spread_elements_numeric, 0 /*verbose_level*/);

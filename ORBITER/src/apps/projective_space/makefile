@@ -36,9 +36,6 @@ all: test_PG.out \
 
 
 
-#	factor_space.out \
-#	analyze.out  \
-
 
 
 test_PG.out:  test_PG.o;

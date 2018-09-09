@@ -302,7 +302,7 @@ int main(int argc, const char **argv)
 
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 	
 	if (f_hyperoval) {
@@ -346,10 +346,10 @@ int main(int argc, const char **argv)
 		finite_field *FQ;
 		subfield_structure *S;
 
-		FQ = new finite_field;
+		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 
-		S = new subfield_structure;
+		S = NEW_OBJECT(subfield_structure);
 		S->init(FQ, F, verbose_level);
 		
 		create_adelaide_hyperoval(S, 
@@ -362,8 +362,8 @@ int main(int argc, const char **argv)
 		export_gap(F, 3, Pts, nb_pts, fname);
 
 		
-		delete S;
-		delete FQ;
+		FREE_OBJECT(S);
+		FREE_OBJECT(FQ);
 		}
 	else if (f_BLT_database) {
 		create_BLT_from_database(f_BLT_in_PG /* f_embedded */, F, BLT_k, 
@@ -434,13 +434,13 @@ int main(int argc, const char **argv)
 
 		finite_field *FQ;
 
-		FQ = new finite_field;
+		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 
 		create_Baer_substructure(n, FQ, F, 
 			fname, nb_pts, Pts, 
 			verbose_level);
-		delete FQ;
+		FREE_OBJECT(FQ);
 		}
 	else if (f_orthogonal) {
 		if (!f_n) {
@@ -479,13 +479,13 @@ int main(int argc, const char **argv)
 
 		finite_field *FQ;
 
-		FQ = new finite_field;
+		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 		create_ttp_code(FQ, F, 
 			f_ttp_construction_A, f_ttp_hyperoval, f_ttp_construction_B, 
 			fname, nb_pts, Pts, 
 			verbose_level);
-		delete FQ;
+		FREE_OBJECT(FQ);
 		}
 	else if (f_unital_XXq_YZq_ZYq) {
 		create_unital_XXq_YZq_ZYq(F, 
@@ -501,21 +501,21 @@ int main(int argc, const char **argv)
 
 		finite_field *FQ;
 
-		FQ = new finite_field;
+		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 
 		create_desarguesian_line_spread_in_PG_3_q(FQ, F, 
 			f_embedded_in_PG_4_q,
 			fname, nb_pts, Pts, 
 			verbose_level);
-		delete FQ;
+		FREE_OBJECT(FQ);
 
 		}
 	else if (f_Buekenhout_Metz) {
 
 		finite_field *FQ;
 
-		FQ = new finite_field;
+		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 
 		create_Buekenhout_Metz(F, FQ, 

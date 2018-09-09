@@ -83,7 +83,9 @@ int main(int argc, char **argv)
 			read_cases_fname = argv[++i];
 			read_cases_column_of_case = atoi(argv[++i]);
 			read_cases_column_of_fname = atoi(argv[++i]);
-			cout << "-read_cases_text " << read_cases_fname << " " << read_cases_column_of_case << " " << read_cases_column_of_fname << endl;
+			cout << "-read_cases_text " << read_cases_fname << " "
+					<< read_cases_column_of_case << " "
+					<< read_cases_column_of_fname << endl;
 			}
 		else if (strcmp(argv[i], "-line") == 0) {
 			lines[nb_lines] = argv[++i];
@@ -137,7 +139,8 @@ int main(int argc, char **argv)
 		int nb_cases;
 		int n, c;
 		
-		int_matrix_read_csv(read_cases_fname, Cases, nb_cases, n, 0 /* verbose_level */);
+		int_matrix_read_csv(read_cases_fname,
+				Cases, nb_cases, n, 0 /* verbose_level */);
 		
 		if (n != 1) {
 			cout << "read cases, n != 1" << endl;
@@ -166,7 +169,8 @@ int main(int argc, char **argv)
 						fp << str << endl;
 						}
 					}
-				cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+				cout << "Written file " << fname << " of size "
+						<< file_size(fname) << endl;
 
 				char log_entry[1000];
 				
@@ -174,7 +178,8 @@ int main(int argc, char **argv)
 				fp_log << log_entry << endl;
 				}
 			}
-			cout << "Written file " << log_fname << " of size " << file_size(log_fname) << endl;
+			cout << "Written file " << log_fname << " of size "
+					<< file_size(log_fname) << endl;
 		}
 	else if (f_read_cases_text) {
 		cout << "read_cases_text" << endl;
@@ -201,12 +206,14 @@ int main(int argc, char **argv)
 		//S->print_table(cout, FALSE /* f_enclose_in_parentheses */);
 		for (row = 0; row < MINIMUM(10, S->nb_rows); row++) {
 			cout << "row " << row << " : ";
-			S->print_table_row(row, FALSE /* f_enclose_in_parentheses */, cout);
+			S->print_table_row(row,
+					FALSE /* f_enclose_in_parentheses */, cout);
 			}
 		cout << "..." << endl;
 		for (row = MAXIMUM(S->nb_rows - 10, 0); row < S->nb_rows; row++) {
 			cout << "row " << row << " : ";
-			S->print_table_row(row, FALSE /* f_enclose_in_parentheses */, cout);
+			S->print_table_row(row,
+					FALSE /* f_enclose_in_parentheses */, cout);
 			}
 
 
@@ -282,12 +289,14 @@ void create_files(int N,
 				}
 			}
 		}
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 	
 		}
 
 	}
-	cout << "Written file " << makefile_fname << " of size " << file_size(makefile_fname) << endl;
+	cout << "Written file " << makefile_fname << " of size "
+			<< file_size(makefile_fname) << endl;
 
 
 	if (f_v) {
@@ -385,12 +394,14 @@ void create_files_list_of_cases(spreadsheet *S,
 			}
 
 		}
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 	
 		}
 
 	}
-	cout << "Written file " << makefile_fname << " of size " << file_size(makefile_fname) << endl;
+	cout << "Written file " << makefile_fname << " of size "
+			<< file_size(makefile_fname) << endl;
 
 
 	if (f_v) {
