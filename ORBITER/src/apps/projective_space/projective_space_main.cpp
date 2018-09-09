@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 	
 	int f_semilinear;
@@ -234,7 +234,7 @@ int main(int argc, char **argv)
 
 	projective_space_with_action *PA;
 
-	PA = new projective_space_with_action;
+	PA = NEW_OBJECT(projective_space_with_action);
 	
 	PA->init(F, n, 
 		f_semilinear, 
@@ -261,7 +261,7 @@ int main(int argc, char **argv)
 
 		classify_bitvectors *CB;
 
-		CB = new classify_bitvectors;
+		CB = NEW_OBJECT(classify_bitvectors);
 	
 
 		cout << "before classify_objects_using_nauty" << endl;
@@ -407,7 +407,6 @@ int main(int argc, char **argv)
 
 			FREE_int(Input_objects);
 			}
-			//OiP = new object_in_projective_space;
 
 			OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[j];
 			OiP = OiPA->OiP;
@@ -613,9 +612,9 @@ int main(int argc, char **argv)
 
 
 			FREE_int(Elt);
-			delete Stack;
-			delete Inc;
-			delete SG;
+			FREE_OBJECT(Stack);
+			FREE_OBJECT(Inc);
+			FREE_OBJECT(SG);
 
 			}
 
@@ -676,7 +675,7 @@ void canonical_form(int nb_inputs, int *input_type,
 
 
 			sims *Aut;
-			Aut = new sims;
+			Aut = NEW_OBJECT(sims);
 			int f_get_automorphism_group = TRUE;
 			int total_backtrack_nodes = 0;
 			int *canonical_set;
@@ -701,16 +700,16 @@ void canonical_form(int nb_inputs, int *input_type,
 				SG, 
 				verbose_level)) {
 	
-				delete SG;
-				delete OiP;
+				FREE_OBJECT(SG);
+				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
-				OiPA = new object_in_projective_space_with_action;
+				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 				
 				OiPA->init(OiP, SG, verbose_level);
 				idx = CB->type_of[CB->n - 1];
@@ -735,16 +734,16 @@ void canonical_form(int nb_inputs, int *input_type,
 				SG, 
 				verbose_level)) {
 	
-				delete SG;
-				delete OiP;
+				FREE_OBJECT(SG);
+				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
-				OiPA = new object_in_projective_space_with_action;
+				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 				
 				OiPA->init(OiP, SG, verbose_level);
 				idx = CB->type_of[CB->n - 1];
@@ -769,16 +768,16 @@ void canonical_form(int nb_inputs, int *input_type,
 				SG, 
 				verbose_level)) {
 	
-				delete SG;
-				delete OiP;
+				FREE_OBJECT(SG);
+				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
-				OiPA = new object_in_projective_space_with_action;
+				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 				
 				OiPA->init(OiP, SG, verbose_level);
 				idx = CB->type_of[CB->n - 1];
@@ -796,7 +795,7 @@ void canonical_form(int nb_inputs, int *input_type,
 
 			set_of_sets *SoS;
 
-			SoS = new set_of_sets;
+			SoS = NEW_OBJECT(set_of_sets);
 
 			cout << "Reading the file " << input_string[input_idx] << endl;
 			SoS->init_from_file(PA->P->N_points /* underlying_set_size */, input_string[input_idx], verbose_level);
@@ -835,7 +834,7 @@ void canonical_form(int nb_inputs, int *input_type,
 				int_vec_print(cout, the_set_in, set_size_in);
 				cout << endl;
 
-				OiP = new object_in_projective_space;
+				OiP = NEW_OBJECT(object_in_projective_space);
 
 				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
 					OiP->init_point_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
@@ -863,17 +862,17 @@ void canonical_form(int nb_inputs, int *input_type,
 					SG, 
 					verbose_level)) {
 	
-					delete OiP;
-					delete SG;
+					FREE_OBJECT(OiP);
+					FREE_OBJECT(SG);
 					}
 				else {
-					cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+					cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 
 					int idx;
 
 					object_in_projective_space_with_action *OiPA;
 
-					OiPA = new object_in_projective_space_with_action;
+					OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 					
 					OiPA->init(OiP, SG, verbose_level);
 					idx = CB->type_of[CB->n - 1];
@@ -889,7 +888,7 @@ void canonical_form(int nb_inputs, int *input_type,
 			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				FREE_int(Spread_table);
 				}
-			delete SoS;
+			FREE_OBJECT(SoS);
 			}
 		else {
 			cout << "unknown input type" << endl;
@@ -936,16 +935,16 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				SG, 
 				verbose_level)) {
 	
-				delete SG;
-				delete OiP;
+				FREE_OBJECT(SG);
+				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
-				OiPA = new object_in_projective_space_with_action;
+				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 				
 				OiPA->init(OiP, SG, verbose_level);
 				idx = CB->type_of[CB->n - 1];
@@ -968,16 +967,16 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				SG, 
 				verbose_level)) {
 	
-				delete SG;
-				delete OiP;
+				FREE_OBJECT(SG);
+				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
-				OiPA = new object_in_projective_space_with_action;
+				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 				
 				OiPA->init(OiP, SG, verbose_level);
 				idx = CB->type_of[CB->n - 1];
@@ -1000,16 +999,16 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				SG, 
 				verbose_level)) {
 	
-				delete SG;
-				delete OiP;
+				FREE_OBJECT(SG);
+				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
-				OiPA = new object_in_projective_space_with_action;
+				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 				
 				OiPA->init(OiP, SG, verbose_level);
 				idx = CB->type_of[CB->n - 1];
@@ -1026,7 +1025,7 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 
 			set_of_sets *SoS;
 
-			SoS = new set_of_sets;
+			SoS = NEW_OBJECT(set_of_sets);
 
 			cout << "Reading the file " << input_string[input_idx] << endl;
 			SoS->init_from_file(PA->P->N_points /* underlying_set_size */, input_string[input_idx], verbose_level);
@@ -1070,7 +1069,7 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 					cout << endl;
 					}
 
-				OiP = new object_in_projective_space;
+				OiP = NEW_OBJECT(object_in_projective_space);
 
 				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
 					OiP->init_point_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
@@ -1096,17 +1095,17 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 					SG, 
 					verbose_level - 3)) {
 	
-					delete OiP;
-					delete SG;
+					FREE_OBJECT(OiP);
+					FREE_OBJECT(SG);
 					}
 				else {
-					cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
+					cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
 
 					int idx;
 
 					object_in_projective_space_with_action *OiPA;
 
-					OiPA = new object_in_projective_space_with_action;
+					OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 					
 					OiPA->init(OiP, SG, verbose_level);
 					idx = CB->type_of[CB->n - 1];
@@ -1124,7 +1123,7 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				FREE_int(Spread_table);
 				}
-			delete SoS;
+			FREE_OBJECT(SoS);
 			}
 		else {
 			cout << "unknown input type" << endl;
@@ -1271,7 +1270,7 @@ object_in_projective_space *create_object_from_string(projective_space_with_acti
 		}
 
 
-	OiP = new object_in_projective_space;
+	OiP = NEW_OBJECT(object_in_projective_space);
 
 	if (type == t_PTS) {
 		OiP->init_point_set(PA->P, the_set_in, set_size_in, verbose_level - 1);
@@ -1489,7 +1488,7 @@ void compute_ago_distribution(projective_space_with_action *PA,
 		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[i];
 		Ago[i] = OiPA->Aut_gens->group_order_as_int();
 		}
-	C_ago = new classify;
+	C_ago = NEW_OBJECT(classify);
 	C_ago->init(Ago, CB->nb_types, FALSE, 0);
 	FREE_int(Ago);
 	if (f_v) {
@@ -1515,7 +1514,7 @@ void compute_ago_distribution_permuted(projective_space_with_action *PA,
 		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[CB->perm[i]];
 		Ago[i] = OiPA->Aut_gens->group_order_as_int();
 		}
-	C_ago = new classify;
+	C_ago = NEW_OBJECT(classify);
 	C_ago->init(Ago, CB->nb_types, FALSE, 0);
 	FREE_int(Ago);
 	if (f_v) {
@@ -1538,7 +1537,7 @@ void compute_and_print_ago_distribution(ostream &ost, projective_space_with_acti
 	C_ago->print_naked_tex(ost, TRUE /* f_backwards */);
 	ost << endl;
 	ost << "$$" << endl;
-	delete C_ago;
+	FREE_OBJECT(C_ago);
 }
 
 void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_space_with_action *PA, 
@@ -1575,8 +1574,8 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_sp
 		}
 	
 	FREE_int(types);
-	delete SoS;
-	delete C_ago;
+	FREE_OBJECT(SoS);
+	FREE_OBJECT(C_ago);
 }
 
 

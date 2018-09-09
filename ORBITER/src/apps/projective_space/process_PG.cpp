@@ -123,11 +123,11 @@ int main(int argc, char **argv)
 		}
 
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init_override_polynomial(q, poly, 0);
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "process_PG before P->init" << endl;
@@ -312,7 +312,7 @@ int main(int argc, char **argv)
 
 				decomposition *D;
 
-				D = new decomposition;
+				D = NEW_OBJECT(decomposition);
 
 				cout << "before D->init_inc_and_stack" << endl;
 				D->init_inc_and_stack(Inc, Stack, verbose_level);
@@ -345,7 +345,7 @@ int main(int argc, char **argv)
 
 				//delete Stack;
 				//delete Inc;
-				delete D;
+				FREE_OBJECT(D);
 				}
 
 			else if (f_stabilizer) {
@@ -364,8 +364,8 @@ int main(int argc, char **argv)
 	} // fp
 
 	FREE_int(set);
-	delete P;
-	delete F;
+	FREE_OBJECT(P);
+	FREE_OBJECT(F);
 
 
 	the_end(t0);

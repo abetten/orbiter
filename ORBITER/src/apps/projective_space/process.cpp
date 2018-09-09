@@ -288,7 +288,7 @@ int main(int argc, char **argv)
 
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 	
 	if (f_embed) {
@@ -331,7 +331,7 @@ int main(int argc, char **argv)
 
 		finite_field *FQ;
 
-		FQ = new finite_field;
+		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 		
 		do_andre(FQ, F, 
@@ -340,7 +340,7 @@ int main(int argc, char **argv)
 			verbose_level - 1);
 		sprintf(fname_out, "%s_andre.txt", fname_base);
 
-		delete FQ;
+		FREE_OBJECT(FQ);
 		
 		}
 	else if (f_print) {

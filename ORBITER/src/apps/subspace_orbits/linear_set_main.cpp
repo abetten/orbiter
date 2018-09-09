@@ -171,31 +171,6 @@ int main(int argc, const char **argv)
 
 	int f_v = (verbose_level >= 1);
 	
-#if 0
-	finite_field *FQ;
-	action *AQ;
-	int m = 2;
-	int Q = 16;
-
-	FQ = new finite_field;
-	FQ->init(Q, 0);
-
-	
-	AQ = new action;
-
-	if (f_v) {
-		cout << "creating AQ" << endl;
-		}
-	AQ->init_general_linear_group(m, FQ, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
-	if (f_v) {
-		cout << "creating AQ done" << endl;
-		}
-
-	cout << "deleting AQ" << endl;
-	delete AQ;
-	cout << "deleting FQ" << endl;
-	delete FQ;
-#endif
 
 
 #if 1
@@ -206,7 +181,7 @@ int main(int argc, const char **argv)
 
 	linear_set *LS;
 
-	LS = new linear_set;
+	LS = NEW_OBJECT(linear_set);
 
 	LS->init(argc, argv, s, n, q, poly_q, poly_Q, depth, f_identify, verbose_level);
 
@@ -280,7 +255,7 @@ int main(int argc, const char **argv)
 		}
 
 	if (strong_gens) {
-		delete strong_gens;
+		FREE_OBJECT(strong_gens);
 		}
 	
 	if (f_draw_poset) {
@@ -291,7 +266,7 @@ int main(int argc, const char **argv)
 		}
 
 	
-	delete LS;
+	FREE_OBJECT(LS);
 
 	//registry_dump_sorted();
 #endif

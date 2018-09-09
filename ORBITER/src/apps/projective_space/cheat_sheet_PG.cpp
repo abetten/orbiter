@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	finite_field *F;
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, my_override_poly, 0);
 	cheat_sheet_PG(n, F, f_surface, verbose_level);
 	
@@ -93,7 +93,7 @@ void cheat_sheet_PG(int n, finite_field *F, int f_surface, int verbose_level)
 	author[0] = 0;
 	projective_space *P;
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	cout << "before P->init" << endl;
 	P->init(n, F, 
 		TRUE /* f_init_incidence_structure */, 
@@ -190,7 +190,7 @@ void cheat_sheet_PG(int n, finite_field *F, int f_surface, int verbose_level)
 	if (f_surface) {
 		surface *S;
 	
-		S = new surface;
+		S = NEW_OBJECT(surface);
 		S->init(F, verbose_level + 2);
 		
 		f << "\\clearpage" << endl << endl;
@@ -213,7 +213,7 @@ void cheat_sheet_PG(int n, finite_field *F, int f_surface, int verbose_level)
 
 		FREE_int(Lines);
 #endif
-		delete S;		
+		FREE_OBJECT(S);
 		}
 
 	latex_foot(f);

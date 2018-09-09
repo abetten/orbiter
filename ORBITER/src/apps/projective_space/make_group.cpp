@@ -49,8 +49,8 @@ void create_group(int verbose_level)
 	projective_space *P;
 	int i;
 	
-	F = new finite_field;
-	P = new projective_space;
+	F = NEW_OBJECT(finite_field);
+	P = NEW_OBJECT(projective_space);
 
 	F->init(q, 0);
 	P->init(n, F, 
@@ -58,7 +58,7 @@ void create_group(int verbose_level)
 		verbose_level - 3);
 
 	cout << "Creating linear group" << endl;
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_general_linear_group(n + 1, F, TRUE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
 	
 	cout << "Creating action on lines" << endl;
@@ -91,7 +91,7 @@ void create_group(int verbose_level)
 	sims *S;
 	int nb_times = 100;
 
-	S = new sims;
+	S = NEW_OBJECT(sims);
 	S->init(A);
 	S->init_trivial_group(0);
 	S->init_generators(gens, verbose_level);

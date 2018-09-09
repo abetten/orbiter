@@ -54,11 +54,11 @@ int main(int argc, char **argv)
 	
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 	create_ovoid(F, verbose_level);
 
-	delete F;
+	FREE_OBJECT(F);
 	the_end(t0);
 }
 
@@ -73,7 +73,7 @@ void create_ovoid(finite_field *F, int verbose_level)
 	int q = F->q;
 
 	d = n + 1;
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	
 	P->init(n, F, 
@@ -118,7 +118,7 @@ void create_ovoid(finite_field *F, int verbose_level)
 	sprintf(fname, "ovoid_%d.txt", q);
 	write_set_to_file(fname, L, N, verbose_level);
 
-	delete P;
+	FREE_OBJECT(P);
 	FREE_int(v);
 	FREE_int(w);
 	FREE_int(L);

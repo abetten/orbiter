@@ -5125,6 +5125,7 @@ void povray_beginning(ostream &ost, double angle, int f_with_background)
 	ost << endl;
 }
 
+
 void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost)
 {
 	ost << "	// the next three steps will perform a rotation" << endl;

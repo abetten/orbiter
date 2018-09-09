@@ -95,19 +95,19 @@ int main(int argc, const char **argv)
 	subfield_structure *SubS;
 	desarguesian_spread *D;
 
-	Fq = new finite_field;
+	Fq = NEW_OBJECT(finite_field);
 	if (f_v) {
 		cout << "before Fq->init" << endl;
 		}
 	Fq->init_override_polynomial(q, poly_q, 0);
 
-	FQ = new finite_field;
+	FQ = NEW_OBJECT(finite_field);
 	if (f_v) {
 		cout << "before FQ->init" << endl;
 		}
 	FQ->init_override_polynomial(Q, poly_Q, 0);
 
-	SubS = new subfield_structure;
+	SubS = NEW_OBJECT(subfield_structure);
 	if (f_v) {
 		cout << "before SubS->init" << endl;
 		}
@@ -119,7 +119,7 @@ int main(int argc, const char **argv)
 		cout << endl;
 		}
 	
-	D = new desarguesian_spread;
+	D = NEW_OBJECT(desarguesian_spread);
 	if (f_v) {
 		cout << "before D->init" << endl;
 		}

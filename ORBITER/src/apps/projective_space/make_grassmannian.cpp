@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 	
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 	create_grassmannian(n, k, F, verbose_level);
 
@@ -102,8 +102,8 @@ void create_grassmannian(int n, int k, finite_field *F, int verbose_level)
 
 	d = n + 1;
 	nk = int_n_choose_k(d, k + 1);
-	P = new projective_space;
-	P2 = new projective_space;
+	P = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(projective_space);
 	B = NEW_int((k + 1) * d);
 	v = NEW_int(nk);
 	A = NEW_int((k + 1) * (k + 1));
@@ -117,7 +117,7 @@ void create_grassmannian(int n, int k, finite_field *F, int verbose_level)
 		TRUE /* f_init_incidence_structure */, 
 		verbose_level);
 
-	Grass = new grassmann;
+	Grass = NEW_OBJECT(grassmann);
 
 	if (f_v) {
 		cout << "before Grass->init" << endl;
@@ -244,9 +244,9 @@ void create_grassmannian(int n, int k, finite_field *F, int verbose_level)
 	write_set_to_file(fname, L, N, verbose_level);
 
 
-	delete P;
-	delete P2;
-	delete Grass;
+	FREE_OBJECT(P);
+	FREE_OBJECT(P2);
+	FREE_OBJECT(Grass);
 	FREE_int(B);
 	FREE_int(L);
 	FREE_int(v);

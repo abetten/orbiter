@@ -58,10 +58,10 @@ void Baer_subplane(int q, int verbose_level)
 	int i, j, a, b, index, f_is_in_subfield;
 
 	Q = q * q;
-	P2 = new projective_space;
+	P2 = NEW_OBJECT(projective_space);
 
-	FQ = new finite_field;
-	Fq = new finite_field;
+	FQ = NEW_OBJECT(finite_field);
+	Fq = NEW_OBJECT(finite_field);
 
 	FQ->init_override_polynomial(Q, override_poly_Q, 0);
 	Fq->init_override_polynomial(q, override_poly_q, 0);
@@ -110,7 +110,7 @@ void Baer_subplane(int q, int verbose_level)
 
 	FREE_int(v);
 	FREE_int(S);
-	delete P2;
+	FREE_OBJECT(P2);
 }
 
 

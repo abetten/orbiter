@@ -124,14 +124,14 @@ void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level
 	cout << "number of points = " << N << endl;
 
 
-	v = new int[d];
-	v2 = new int[d];
-	G = new int[d * d];
+	v = NEW_int(d);
+	v2 = NEW_int(d);
+	G = NEW_int(d * d);
 
 	
 	finite_field *F;
 	
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level - 1);
 	F->print(TRUE);
 	
@@ -163,7 +163,7 @@ void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level
 		orthogonal_lines(F, epsilon, n, c123, verbose_level);
 		}
 	
-	delete F;
+	FREE_OBJECT(F);
 	FREE_int(v);
 	FREE_int(v2);
 	FREE_int(G);
