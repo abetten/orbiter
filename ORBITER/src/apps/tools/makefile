@@ -39,7 +39,9 @@ all: all_cliques.out \
 	graph.out \
 	collect.out \
 	memory_usage.out \
-	create_graph.out 
+	create_graph.out \
+	split_spreadsheet.out \
+	dio.out 
 
 
 
@@ -153,6 +155,12 @@ create_graph.out:  create_graph.o
 
 memory_usage.out:  memory_usage.o 
 	$(DISCRETA_CPP)  memory_usage.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+split_spreadsheet.out:  split_spreadsheet.o 
+	$(DISCRETA_CPP)  split_spreadsheet.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+dio.out:  dio.o 
+	$(DISCRETA_CPP)  dio.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

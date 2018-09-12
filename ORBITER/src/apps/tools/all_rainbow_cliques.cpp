@@ -93,9 +93,13 @@ int main(int argc, char **argv)
 				input_list_of_files_case[input_list_of_files_nb] = atoi(argv[++i]);
 				input_list_of_files_fname[input_list_of_files_nb] = argv[++i];
 				if (input_list_of_files_case[input_list_of_files_nb] == -1) {
+					i--;
 					break;
 					}
-				cout << input_list_of_files_case[input_list_of_files_nb] << " " << input_list_of_files_fname[input_list_of_files_nb] << endl;
+				cout << input_list_of_files_case[input_list_of_files_nb]
+					<< " "
+					<< input_list_of_files_fname[input_list_of_files_nb]
+					<< endl;
 				input_list_of_files_nb++;
 				}
 			cout << "-1" << endl;
