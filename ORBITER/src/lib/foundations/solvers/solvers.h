@@ -14,14 +14,19 @@
 
 //! for diophantine systems of equations (i.e., linear systems over the integers)
 
+//! there are three types of conditions:
+//! t_EQ: equality, the sum in row i on the left must equal RHS[i]
+//! t_LE: inequality, the sum in row i on the left must
+//!         be less than or equal to RHS[i]
+//! t_ZOR: Zero or otherwise: the sum in row i on the left must
+//!         be zero or equal to RHS[i]
+//! Here, the sum on the left in row i means
+//! the value \sum_{j=0}^{n-1} A(i,j) * x[j].
+
 
 
 class diophant {
 public:
-	static int cntr_new;
-	static int cntr_objects;
-	static int f_debug_memory;
-
 	char label[1000];
 	int m; // number of equations or inequalities
 	int n; // number of indeterminates
@@ -181,11 +186,16 @@ public:
 void diophant_callback_solution_found(int *sol, 
 	int len, int nb_sol, void *data);
 int diophant_solve_first_mckay(diophant *Dio, int f_once, int verbose_level);
-int diophant_solve_all_mckay(diophant *Dio, int &nb_backtrack_nodes, int verbose_level);
+int diophant_solve_all_mckay(diophant *Dio,
+	int &nb_backtrack_nodes, int verbose_level);
 int diophant_solve_once_mckay(diophant *Dio, int verbose_level);
 int diophant_solve_next_mckay(diophant *Dio, int verbose_level);
-void diophant_solve_mckay(diophant *Dio, const char *label, int maxresults, int &nb_backtrack_nodes, int &nb_sol, int verbose_level);
-void diophant_solve_mckay_override_minrhs_in_inequalities(diophant *Dio, const char *label, 
+void diophant_solve_mckay(diophant *Dio,
+		const char *label, int maxresults,
+		int &nb_backtrack_nodes, int &nb_sol,
+		int verbose_level);
+void diophant_solve_mckay_override_minrhs_in_inequalities(
+	diophant *Dio, const char *label,
 	int maxresults, int &nb_backtrack_nodes, 
 	int minrhs, int &nb_sol, int verbose_level);
 void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed, 

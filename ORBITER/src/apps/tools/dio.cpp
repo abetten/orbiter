@@ -9,6 +9,17 @@ ofstream *fp_sol;
 int t0;
 int nb_sol;
 
+
+// there are three types of conditions:
+// t_EQ: equality, the sum in row i on the left must equal RHS[i]
+// t_LE: inequality, the sum in row i on the left must
+//         be less than or equal to RHS[i]
+// t_ZOR: Zero or otherwise: the sum in row i on the left must
+//         be zero or equal to RHS[i]
+// Here, the sum on the left in row i means
+// the value \sum_{j=0}^{n-1} A(i,j) * x[j].
+
+
 int main(int argc, char **argv)
 {
 	int i, j; //, sum;

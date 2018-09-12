@@ -10,7 +10,8 @@
 mckay::tMCKAY::tMCKAY() {
 };
 
-void mckay::tMCKAY::Init(diophant *lgs, const char *label, int aEqnAnz, int aVarAnz) {
+void mckay::tMCKAY::Init(diophant *lgs,
+		const char *label, int aEqnAnz, int aVarAnz) {
   _varanz=aVarAnz;
   _eqnanz=aEqnAnz;
 	nb_calls_to_solve = 0;
@@ -141,7 +142,8 @@ bool mckay::tMCKAY::subtract(
 
 /*  end of subtraction. */
 	if (f_v) {
-		cout << "subtract: subtracted equation " << eqn1 << " from equation " << eqn2 << endl;
+		cout << "subtract: subtracted equation " << eqn1
+				<< " from equation " << eqn2 << endl;
 		}
 	return true;
 }
@@ -169,7 +171,10 @@ void mckay::tMCKAY::pruneqn(vector<int> &lorhs, vector<int> &hirhs,
 		for (i = 0; i < numeqn; ++i) {
 			if (!done[i] && neqn[i] > 0) {
 				for (j = 0; j < numeqn; ++j) {
-					if (i != j && subtract(i, eqn[i],neqn[i],lorhs[i],hirhs[i],j, eqn[j],&neqn[j],&lorhs[j],&hirhs[j], verbose_level)) {
+					if (i != j && subtract(i, eqn[i],neqn[i],
+							lorhs[i],hirhs[i],j, eqn[j],
+							&neqn[j],&lorhs[j],&hirhs[j],
+							verbose_level)) {
 						ok = false;
 						done[j] = false;
 						} // if
@@ -204,7 +209,10 @@ void mckay::tMCKAY::varprune(vector<int> &lo, vector<int> &hi,
 			if (lo[eqn[j][i].var] == hi[eqn[j][i].var]) {
 				sum += eqn[j][i].coeff*lo[eqn[j][i].var];
 				if (f_v && sum) {
-					cout << "varprune: equation " << j << " variable " << eqn[j][i].var << " is not free any more, sum += " << eqn[j][i].coeff*lo[eqn[j][i].var] << endl;
+					cout << "varprune: equation " << j << " variable "
+						<< eqn[j][i].var << " is not free any more, "
+						"sum += " << eqn[j][i].coeff * lo[eqn[j][i].var]
+						<< endl;
 					}
 				eqn[j][i] = eqn[j][--len];
 				}
@@ -215,14 +223,18 @@ void mckay::tMCKAY::varprune(vector<int> &lo, vector<int> &hi,
 		lorhs[j] -= sum;
 		hirhs[j] -= sum;
 		if (f_v && sum) {
-			cout << "varprune: equation " << j << " reducing RHS by " << sum << " to lorhs[j]=" << lorhs[j] << " hirhs[j]=" << hirhs[j] << endl;
+			cout << "varprune: equation " << j << " reducing RHS by "
+				<< sum << " to lorhs[j]=" << lorhs[j] << " hirhs[j]="
+				<< hirhs[j] << endl;
 			}
 		neqn[j] = len;
 		}
 }
 
 
-void mckay::tMCKAY::puteqns(vector<int> &lo, vector<int> &hi, int numvar, vector<int> &lorhs, vector<int> &hirhs, vector<equation> &eqn, vector<int> &neqn, int numeqn)
+void mckay::tMCKAY::puteqns(vector<int> &lo, vector<int> &hi,
+	int numvar, vector<int> &lorhs, vector<int> &hirhs,
+	vector<equation> &eqn, vector<int> &neqn, int numeqn)
 {
         int i,j;
 
@@ -238,7 +250,8 @@ void mckay::tMCKAY::puteqns(vector<int> &lo, vector<int> &hi, int numvar, vector
             cout<<",\n";
             for (j = 0; j < neqn[i]; ++j) {
                 if (j % 16 == 15) cout<<"\n  ";
-                cout<<(j==0?"":"+")<<eqn[i][j].coeff<<"*x"<<eqn[i][j].var;
+                cout<<(j==0?"":"+")<<eqn[i][j].coeff
+                		<<"*x"<<eqn[i][j].var;
             }
             cout<<(lorhs[i] < hirhs[i] ? " >= " : " = ")<<lorhs[i];
 
@@ -248,7 +261,8 @@ void mckay::tMCKAY::puteqns(vector<int> &lo, vector<int> &hi, int numvar, vector
             cout<<",\n";
             for (j = 0; j < neqn[i]; ++j) {
                 if (j % 16 == 15) cout<<"\n  ";
-                cout<<(j == 0 ? "" : "+")<<eqn[i][j].coeff<<"*x"<<eqn[i][j].var;
+                cout<<(j == 0 ? "" : "+")<<eqn[i][j].coeff
+                		<<"*x"<<eqn[i][j].var;
             }
             cout<<" <= "<<hirhs[i];
         }
@@ -260,7 +274,9 @@ void mckay::tMCKAY::puteqns(vector<int> &lo, vector<int> &hi, int numvar, vector
  take out common factors, return bad eqn number.
  It is only used in the main program.
 */
-int mckay::tMCKAY::divideeqns(vector<int> &lorhs, vector<int> &hirhs, vector<equation> &eqn, vector<int> &neqn, int numeqn)
+int mckay::tMCKAY::divideeqns(vector<int> &lorhs,
+		vector<int> &hirhs, vector<equation> &eqn,
+		vector<int> &neqn, int numeqn)
 {
     int i,j,g,len;
 
@@ -282,7 +298,8 @@ int mckay::tMCKAY::divideeqns(vector<int> &lorhs, vector<int> &hirhs, vector<equ
 	    hirhs[j] = hirhs[j] < 0 ? -1 : hirhs[j] / g;
 
 /*  Write some information.*/
-	    cerr<<"eqn "<<j<<": g="<<g<<" lorhs="<<lorhs[j]<<" hirhs="<<hirhs[j]<<"\n";
+	    cerr<<"eqn "<<j<<": g="<<g<<" lorhs="<<lorhs[j]
+			<<" hirhs="<<hirhs[j]<<"\n";
 
 	    if (lorhs[j] > hirhs[j]) return j;
 	}
@@ -364,7 +381,8 @@ void mckay::tMCKAY::solve(int level,
 		cout << "level=" << level << endl;
 		cout << "i : split[i] : range[i] : branch[i]" << endl;
 		for (i = 0; i < level; ++i) {
-			cout << i << " : " << split[i] << " : " << range[i] << " : " << branch[i] << " : " << endl;
+			cout << i << " : " << split[i] << " : " << range[i]
+				<< " : " << branch[i] << " : " << endl;
 			}
 		cout << "low and high:" << endl;
 		for (j = 0; j < numvar; j++) {
@@ -402,7 +420,8 @@ void mckay::tMCKAY::solve(int level,
 		    	cout << j << " : " << alo[j] << " : " << ahi[j] << endl;
 		    	}
 #ifdef MCKAY_DEBUG
-	        if (((os_ticks() - ticks0) / os_ticks_per_second()) > intERVAL_IN_SECONDS) {
+	        if (((os_ticks() - ticks0) / os_ticks_per_second())
+	        		> intERVAL_IN_SECONDS) {
 			ticks0 = os_ticks();
 			f_debug = TRUE;
 		       	puteqns(alo,ahi,numvar,lorhs,hirhs,eqn,neqn,numeqn);
@@ -434,7 +453,8 @@ void mckay::tMCKAY::solve(int level,
 
 		if (f_vv) {
 			log_12l(current_node, level);
-			cout << " restrict_variables returns FALSE, backtracking" << endl;
+			cout << " restrict_variables returns FALSE, "
+					"backtracking" << endl;
 			}
 		return;
 		}
@@ -536,7 +556,8 @@ void mckay::tMCKAY::solve(int level,
 					f_first_moved_has_changed = TRUE;
 					}
 				}
-			if (f_first_moved_has_changed || (f_v && (current_node % 10000) == 0) || f_vv) {
+			if (f_first_moved_has_changed ||
+					(f_v && (current_node % 10000) == 0) || f_vv) {
 				if (f_v) {
 					log_12l(current_node, level);
 					cout << " x_" << isplit << " = " << lo[isplit] << endl;
@@ -551,7 +572,9 @@ void mckay::tMCKAY::solve(int level,
 
 			// here comes the recursion:
 			
-			solve(level+1,lo,hi,active,numvar,lorhs,hirhs,eqn,neqn,numeqn, verbose_level);
+			solve(level+1,lo,hi,active,numvar,
+					lorhs,hirhs,eqn,neqn,numeqn,
+					verbose_level);
 			
 			++lo[isplit];
 			} // next i
@@ -620,7 +643,8 @@ int mckay::tMCKAY::restrict_variables(int level,
 				// in \|losum| and \|hisum|.
 
 				if (FALSE /*f_debug*/) {
-					cout << "checking equation " << j << " with unitcoeffs" << endl;
+					cout << "checking equation " << j
+							<< " with unitcoeffs" << endl;
 					}
 				losum = 0;
 				hisum = 0;
@@ -632,23 +656,31 @@ int mckay::tMCKAY::restrict_variables(int level,
 					}
 				if (losum > hirhs[j]) {
 					if (f_v) {
-						cout << "solve " << problem_label << " node " << current_node << " level " << level 
-							<< "return b/c for equation " << j << " with unitcoeffs "
-							"we have losum = " << losum << " > " << hirhs[j] << " = hirhs[j]" << endl;
+						cout << "solve " << problem_label << " node "
+							<< current_node << " level " << level
+							<< "return b/c for equation " << j
+							<< " with unitcoeffs "
+							"we have losum = " << losum << " > "
+							<< hirhs[j] << " = hirhs[j]" << endl;
 						}
 					return FALSE;
 					}
 				if (hisum < lorhs[j]) {
 					if (f_v) {
-						cout << "solve " << problem_label << " node " << current_node << " level " << level 
-							<< "return b/c for equation " << j << " with unitcoeffs "
-							" we have hisum = " << hisum << " < " << lorhs[j] << " = lorhs[j]" << endl;
+						cout << "solve " << problem_label << " node "
+							<< current_node << " level " << level
+							<< "return b/c for equation " << j
+							<< " with unitcoeffs "
+							" we have hisum = " << hisum << " < "
+							<< lorhs[j] << " = lorhs[j]" << endl;
 						}
 					return FALSE;
 					}
 
-				// If possible the lower or upper bounds on the variables are restricted further.
-				// count the number of remaining free variables in nfree.
+				// If possible the lower or upper bounds on the
+				// variables are restricted further.
+				// count the number of remaining free
+				// variables in nfree.
 
 				nfree = 0;
 				for (i = neqn[j]; --i >= 0;) {
@@ -659,13 +691,15 @@ int mckay::tMCKAY::restrict_variables(int level,
 						
 						xlo = lorhs[j] + hx - hisum;
 							// = lorhs[j] - (hisum - hx), i.e., 
-							// lorhs[j] minus hisum of all the other variables.
+							// lorhs[j] minus hisum of all the
+							// other variables.
 							// This is a lower bound on the amount 
 							// that the current variable contributes.
 							
 						xhi = hirhs[j] + lx - losum;
 							// = hirhs[j] - (losum - lx), i.e. 
-							// hirhs[j] minus losum of all the other variables.
+							// hirhs[j] minus losum of all the
+							// other variables.
 							// This is an upper bound on the amount 
 							// that the current variable contributes.
 							
@@ -676,7 +710,9 @@ int mckay::tMCKAY::restrict_variables(int level,
 								f_restriction_made = TRUE;
 								f_restriction_made_in_this_eqn = TRUE;
 								if (f_v) {
-									cout << "increasing lo[" << eiv << "] from " << save << " to " << lo[eiv] << endl;
+									cout << "increasing lo[" << eiv
+										<< "] from " << save << " to "
+										<< lo[eiv] << endl;
 									}
 								}
 							ok = 0;
@@ -691,7 +727,9 @@ int mckay::tMCKAY::restrict_variables(int level,
 								f_restriction_made = TRUE;
 								f_restriction_made_in_this_eqn = TRUE;
 								if (f_v) {
-									cout << "reducing hi[" << eiv << "] from " << save << " to " << hi[eiv] << endl;
+									cout << "reducing hi[" << eiv
+										<< "] from " << save << " to "
+										<< hi[eiv] << endl;
 									}
 								}
 							ok = 0;
@@ -709,9 +747,11 @@ int mckay::tMCKAY::restrict_variables(int level,
 			// than its upper bound, the procedure is stopped at once.
 			else {
 				// Again the lower and upper bounds on the variables 
-				// (belonging to nonzero coefficients) are summed up in \|losum| and \|hisum|.
+				// (belonging to nonzero coefficients) are summed
+				// up in \|losum| and \|hisum|.
 				if (FALSE /*f_debug*/) {
-					cout << "checking equation " << j << " without unitcoeffs" << endl;
+					cout << "checking equation " << j
+						<< " without unitcoeffs" << endl;
 					}
 				losum = 0;
 				hisum = 0;
@@ -721,30 +761,39 @@ int mckay::tMCKAY::restrict_variables(int level,
 					}
 				if (losum > hirhs[j]) {
 					if (f_v) {
-						cout << "solve " << problem_label << " node " << current_node << " level " << level 
-						<< "return b/c for equation " << j << " without unitcoeffs "
-						"we have losum = " << losum << " > " << hirhs[j] << " = hirhs[j]" << endl;
+						cout << "solve " << problem_label << " node "
+								<< current_node << " level " << level
+								<< "return b/c for equation " << j
+								<< " without unitcoeffs "
+								"we have losum = " << losum << " > "
+								<< hirhs[j] << " = hirhs[j]" << endl;
 						}
 					return FALSE;
 					}
 				if (hisum < lorhs[j]) {
 					if (f_v) {
-						cout << "solve " << problem_label << " node " << current_node << " level " << level 
-						<< "return b/c for equation " << j << " without unitcoeffs "
-						"we have hisum = " << hisum << " < " << lorhs[j] << " = lorhs[j]" << endl;
+						cout << "solve " << problem_label << " node "
+							<< current_node << " level " << level
+							<< "return b/c for equation " << j
+							<< " without unitcoeffs "
+							"we have hisum = " << hisum << " < "
+							<< lorhs[j] << " = lorhs[j]" << endl;
 						}
 					return FALSE;
 					}
 
 				if (f_vv && f_restriction_made_in_this_eqn) {
-					cout << "equation " << j << ", after restriction: low and high:" << endl;
+					cout << "equation " << j << ", after restriction: "
+							"low and high:" << endl;
 					for (i = 0; i < numvar; i++) {
-						cout << i << " : " << lo[i] << " : " << hi[i] << endl;
+						cout << i << " : " << lo[i] << " : "
+								<< hi[i] << endl;
 						}
 					cout << "hisum=" << hisum << endl;
 					cout << "losum=" << losum << endl;
 					}
-				// And if possible the lower or upper bounds on the variables 
+				// And if possible the lower or upper bounds
+				// on the variables
 				// are restricted further.
 
 				f_restriction_made_in_this_eqn = FALSE;
@@ -752,7 +801,8 @@ int mckay::tMCKAY::restrict_variables(int level,
 				nfree = 0;
 				for (i = neqn[j]; --i >= 0;) {
 					if (FALSE /*f_debug*/) {
-						cout << "restricting lower and upper bounds equation " << j << endl;
+						cout << "restricting lower and upper "
+								"bounds equation " << j << endl;
 						}
 					if (hi[eqn[j][i].var] != lo[eqn[j][i].var]) {
 						eic = eqn[j][i].coeff;
@@ -778,9 +828,11 @@ int mckay::tMCKAY::restrict_variables(int level,
 								f_restriction_made = TRUE;
 								f_restriction_made_in_this_eqn = TRUE;
 								if (f_v) {
-									cout << "increasing lo[" << eiv << "] from " 
+									cout << "increasing lo[" << eiv
+										<< "] from "
 										<< save << " to " << lo[eiv] << " : "
-										<< "eqn j=" << j << " variable " << eiv << " coeff=" << eic 
+										<< "eqn j=" << j << " variable "
+										<< eiv << " coeff=" << eic
 										<< " lorhs[j]=" << lorhs[j]
 										<< " hisum=" << hisum
 										<< " hx=" << hx
@@ -790,7 +842,9 @@ int mckay::tMCKAY::restrict_variables(int level,
 								}
 							if (lo[eiv] > hi[eiv]) {
 								if (f_v) {
-									cout << "return bc for eqn " << j << " term " << i << " xlo > lx and lo[eiv] > hi[eiv]" << endl;
+									cout << "return bc for eqn " << j
+										<< " term " << i << " xlo > lx "
+										"and lo[eiv] > hi[eiv]" << endl;
 									}
 								return FALSE;
 								}
@@ -805,7 +859,8 @@ int mckay::tMCKAY::restrict_variables(int level,
 								if (f_v) {
 									cout << "reducing hi[" << eiv << "] from " 
 										<< save << " to " << hi[eiv] << " : "
-										<< "eqn j=" << j << " variable " << eiv << " coeff=" << eic 
+										<< "eqn j=" << j << " variable "
+										<< eiv << " coeff=" << eic
 										<< " hirhs[j]=" << hirhs[j]
 										<< " losum=" << losum
 										<< " lx=" << lx
@@ -815,7 +870,9 @@ int mckay::tMCKAY::restrict_variables(int level,
 								}
 							if (lo[eiv] > hi[eiv]) {
 								if (f_v) {
-									cout << "return bc for eqn " << j << " term " << i << " xhi < hx and lo[eiv] > hi[eiv]" << endl;
+									cout << "return bc for eqn " << j
+											<< " term " << i << " xhi < hx "
+											"and lo[eiv] > hi[eiv]" << endl;
 									cout << "xlo=" << xlo << endl;
 									cout << "xhi=" << xhi << endl;
 									cout << "lx=" << lx << endl;
@@ -836,9 +893,11 @@ int mckay::tMCKAY::restrict_variables(int level,
 					} // next i 
 
 				if (f_vv && f_restriction_made_in_this_eqn) {
-					cout << "equation " << j << ", after restriction: low and high:" << endl;
+					cout << "equation " << j << ", after restriction: "
+							"low and high:" << endl;
 					for (i = 0; i < numvar; i++) {
-						cout << i << " : " << lo[i] << " : " << hi[i] << endl;
+						cout << i << " : " << lo[i] << " : "
+								<< hi[i] << endl;
 						}
 					cout << "hisum=" << hisum << endl;
 					cout << "losum=" << losum << endl;
@@ -848,9 +907,11 @@ int mckay::tMCKAY::restrict_variables(int level,
 				} // else 
 				
 				
-			// Now hopefully the variables are in each case further restricted.
+			// Now hopefully the variables are in each
+			// case further restricted.
 			// The equation becomes inactive if
-			// \item{(1)} there are no free variables in this equation \"and
+			// \item{(1)} there are no free variables in
+			// this equation \"and
 			// \item{(2)} if it was not possible to further 
 			//            restrict the variables in the last try.
 			
