@@ -382,7 +382,7 @@ void create_files_list_of_cases(spreadsheet *S,
 			}
 		else {
 			sprintf(str, command, i);
-			fp << str; // << " \\" << endl;
+			fp << str << " \\" << endl;
 			//fp << command << " \\" << endl;
 			for (j = 0; j < nb_cases; j++) {
 				if ((j % N) != i) {
@@ -393,12 +393,14 @@ void create_files_list_of_cases(spreadsheet *S,
 
 				case_number = S->get_int(j + 1, read_cases_column_of_case);
 				entry = S->get_string(j + 1, read_cases_column_of_fname);
-				fp /*<<  "\t\t" << case_number << " "*/ << entry; // << " \\" << endl;
+				fp <<  "\t\t" /*<< case_number << " "*/ << entry << " \\" << endl;
+#if 0
 				if (j < nb_cases - N) {
 					fp << ", "; // << endl;
 				} else {
 					fp << ")\"\\" << endl;
 				}
+#endif
 				}
 			fp << " & " << endl;
 			//fp << "\t\t" << -1 << " &" << endl;
