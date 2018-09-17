@@ -104,12 +104,13 @@ void poset_orbit_node::downstep(poset_classification *gen,
 				point_labels = AR.G.ABR->points;
 				}
 
+			cout << "Node " << node << " " << i << " drawing schreier tree" << endl;
 			Schreier.draw_tree(label, i, xmax, ymax, 
 				f_circletext, rad, 
 				f_embedded, f_sideways, 
 				scale, line_width, 
 				f_has_point_labels, point_labels, 
-				0 /*verbose_level */);
+				verbose_level + 3);
 			}
 		
 		char label_data[1000];

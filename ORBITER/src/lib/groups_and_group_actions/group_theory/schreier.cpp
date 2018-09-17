@@ -877,6 +877,25 @@ void schreier::print_generators()
 		}
 }
 
+void schreier::print_generators_latex(ostream &ost)
+{
+	int j;
+
+	ost << gens.len << " generators in action $"
+			<< A->label_tex << "$ of degree " << A->degree << ":\\\\" << endl;
+	for (j = 0; j < gens.len; j++) {
+		ost << "generator " << j << ":" << endl;
+		//A->element_print(gens.ith(j), cout);
+		ost << "$$" << endl;
+		A->element_print_latex(gens.ith(j), ost);
+		//A->element_print_as_permutation(gens.ith(j), cout);
+		if (j < gens.len - 1) {
+			ost << ", " << endl;
+			}
+		ost << "$$" << endl;
+		}
+}
+
 void schreier::print_generators_with_permutations()
 {
 	int j;
@@ -3413,6 +3432,8 @@ void schreier::latex(const char *fname)
 	ofstream fp(fname);
 
 	latex_head_easy(fp);
+
+	print_generators_latex(fp);
 
 	print_and_list_orbits_tex(fp);
 
