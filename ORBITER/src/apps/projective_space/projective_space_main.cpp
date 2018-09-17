@@ -42,24 +42,31 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 int count_number_of_objects_to_test(int nb_inputs, int *input_type, 
 	const char **input_string, const char **input_string2, 
 	int verbose_level);
-object_in_projective_space *create_object_from_string(projective_space_with_action *PA, 
+object_in_projective_space *create_object_from_string(
+	projective_space_with_action *PA,
 	int f_points, const char *set_as_string, int verbose_level);
-int process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
+int process_object(projective_space_with_action *PA,
+	classify_bitvectors *CB,
 	object_in_projective_space *OiP, 
 	int f_save_incma_in_and_out, const char *prefix, 
 	int nb_objects_to_test, 
 	strong_generators *&SG, 
 	int verbose_level);
-void OiPA_encode(void *extra_data, int *&encoding, int &encoding_sz, void *global_data);
-void OiPA_group_order(void *extra_data, longinteger_object &go, void *global_data);
-void print_summary_table_entry(int *Table, int m, int n, int i, int j, int val, char *output, void *data);
+void OiPA_encode(void *extra_data,
+	int *&encoding, int &encoding_sz, void *global_data);
+void OiPA_group_order(void *extra_data,
+	longinteger_object &go, void *global_data);
+void print_summary_table_entry(int *Table,
+	int m, int n, int i, int j, int val, char *output, void *data);
 void compute_ago_distribution(projective_space_with_action *PA, 
 	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
 void compute_ago_distribution_permuted(projective_space_with_action *PA, 
 	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
-void compute_and_print_ago_distribution(ostream &ost, projective_space_with_action *PA, 
+void compute_and_print_ago_distribution(ostream &ost,
+	projective_space_with_action *PA,
 	classify_bitvectors *CB, int verbose_level);
-void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_space_with_action *PA, 
+void compute_and_print_ago_distribution_with_classes(
+	ostream &ost, projective_space_with_action *PA,
 	classify_bitvectors *CB, int verbose_level);
 
 int main(int argc, char **argv)
@@ -163,11 +170,15 @@ int main(int argc, char **argv)
 			cout << "-file_of_packings " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-file_of_packings_through_spread_table") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE;
+		else if (strcmp(argv[i],
+				"-file_of_packings_through_spread_table") == 0) {
+			input_type[nb_inputs] =
+					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE;
 			input_string[nb_inputs] = argv[++i];
 			input_string2[nb_inputs] = argv[++i];
-			cout << "-file_of_packings_through_spread_table " << input_string[nb_inputs] << " " << input_string2[nb_inputs] << endl;
+			cout << "-file_of_packings_through_spread_table "
+				<< input_string[nb_inputs] << " "
+				<< input_string2[nb_inputs] << endl;
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-all_k_subsets") == 0) {
@@ -191,7 +202,8 @@ int main(int argc, char **argv)
 			}
 		else if (strcmp(argv[i], "-fixed_structure_of_element_of_order") == 0) {
 			order_list[order_list_sz] = atoi(argv[++i]);
-			cout << "-fixed_structure_of_element_of_order " << order_list[order_list_sz] << endl;
+			cout << "-fixed_structure_of_element_of_order "
+					<< order_list[order_list_sz] << endl;
 			order_list_sz++;
 			}
 		else if (strcmp(argv[i], "-classify_nauty") == 0) {
@@ -245,7 +257,8 @@ int main(int argc, char **argv)
 	int nb_objects_to_test;
 	
 	cout << "before count_number_of_objects_to_test" << endl;
-	nb_objects_to_test = count_number_of_objects_to_test(nb_inputs, input_type, 
+	nb_objects_to_test = count_number_of_objects_to_test(
+		nb_inputs, input_type,
 		input_string, input_string2, 
 		verbose_level - 1);
 
@@ -277,7 +290,8 @@ int main(int argc, char **argv)
 		cout << "We found " << CB->nb_types << " types" << endl;
 
 
-		compute_and_print_ago_distribution_with_classes(cout, PA, CB, verbose_level);
+		compute_and_print_ago_distribution_with_classes(cout,
+				PA, CB, verbose_level);
 
 
 		cout << "In the ordering of canonical forms, they are" << endl;
@@ -288,8 +302,10 @@ int main(int argc, char **argv)
 			object_in_projective_space_with_action *OiPA;
 			object_in_projective_space *OiP;
 		
-			cout << i << " / " << CB->nb_types << " is " << CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
-			OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[i];
+			cout << i << " / " << CB->nb_types << " is "
+				<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
+			OiPA = (object_in_projective_space_with_action *)
+					CB->Type_extra_data[i];
 			OiP = OiPA->OiP;
 			if (OiP->type != t_PAC) {
 				OiP->print(cout);
@@ -309,7 +325,8 @@ int main(int argc, char **argv)
 
 
 		if (f_save) {
-			cout << "Saving the classification with output prefix " << output_prefix << endl;
+			cout << "Saving the classification with output prefix "
+					<< output_prefix << endl;
 			CB->save(output_prefix, 
 				OiPA_encode, OiPA_group_order, 
 				NULL /* void *global_data */, 
@@ -323,7 +340,8 @@ int main(int argc, char **argv)
 		char fname[1000];
 
 		if (prefix == NULL) {
-			cout << "please use option -prefix <prefix> toset the prefix for the tex file" << endl;
+			cout << "please use option -prefix <prefix> toset the "
+					"prefix for the tex file" << endl;
 			exit(1);
 			}
 		sprintf(fname, "%s_classification.tex", prefix);
@@ -376,7 +394,8 @@ int main(int argc, char **argv)
 
 		fp << "\\section{Summary of Orbits}" << endl;
 		fp << "$$" << endl;
-		int_matrix_print_with_labels_and_partition(fp, Table, CB->nb_types, 4, 
+		int_matrix_print_with_labels_and_partition(fp,
+				Table, CB->nb_types, 4,
 			row_labels, col_labels, 
 			row_part_first, row_part_len, nb_row_parts,  
 			col_part_first, col_part_len, nb_col_parts,  
@@ -385,7 +404,8 @@ int main(int argc, char **argv)
 			TRUE /* f_tex */);
 		fp << "$$" << endl;
 
-		compute_and_print_ago_distribution_with_classes(fp, PA, CB, verbose_level);
+		compute_and_print_ago_distribution_with_classes(fp,
+				PA, CB, verbose_level);
 
 		for (i = 0; i < CB->nb_types; i++) {
 
@@ -393,28 +413,40 @@ int main(int argc, char **argv)
 			object_in_projective_space_with_action *OiPA;
 			object_in_projective_space *OiP;
 		
-			cout << "################################################################################" << endl;
-			cout << "Orbit " << i << " / " << CB->nb_types << " is canonical form no " << j << ", original object no " << CB->Type_rep[j] << ", frequency " << CB->Type_mult[j] << " : " << endl;
+			cout << "###################################################"
+					"#############################" << endl;
+			cout << "Orbit " << i << " / " << CB->nb_types
+					<< " is canonical form no " << j
+					<< ", original object no " << CB->Type_rep[j]
+					<< ", frequency " << CB->Type_mult[j]
+					<< " : " << endl;
 
 
 			{
 			int *Input_objects;
 			int nb_input_objects;
-			CB->C_type_of->get_class_by_value(Input_objects, nb_input_objects, j, 0 /*verbose_level */);
+			CB->C_type_of->get_class_by_value(Input_objects,
+				nb_input_objects, j, 0 /*verbose_level */);
 
-			cout << "This isomorphism type appears " << nb_input_objects << " times, namely for the following input objects:" << endl;
-			int_vec_print_as_matrix(cout, Input_objects, nb_input_objects, 10 /* width */, FALSE /* f_tex */);
+			cout << "This isomorphism type appears " << nb_input_objects
+					<< " times, namely for the following "
+							"input objects:" << endl;
+			int_vec_print_as_matrix(cout, Input_objects,
+					nb_input_objects, 10 /* width */,
+					FALSE /* f_tex */);
 
 			FREE_int(Input_objects);
 			}
 
-			OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[j];
+			OiPA = (object_in_projective_space_with_action *)
+					CB->Type_extra_data[j];
 			OiP = OiPA->OiP;
 			if (OiP->type != t_PAC) {
 				OiP->print(cout);
 				}
 
-			//OiP->init_point_set(PA->P, (int *)CB->Type_extra_data[j], sz, 0 /* verbose_level*/);
+			//OiP->init_point_set(PA->P, (int *)CB->Type_extra_data[j],
+			//sz, 0 /* verbose_level*/);
 
 
 
@@ -423,7 +455,8 @@ int main(int argc, char **argv)
 			char save_incma_in_and_out_prefix[1000];
 	
 			if (f_save_incma_in_and_out) {
-				sprintf(save_incma_in_and_out_prefix, "%s_iso_%d_%d", prefix, i, j);
+				sprintf(save_incma_in_and_out_prefix,
+						"%s_iso_%d_%d", prefix, i, j);
 				}
 	
 	
@@ -434,13 +467,18 @@ int main(int argc, char **argv)
 			SG = PA->set_stabilizer_of_object(
 				OiP, 
 				f_save_incma_in_and_out, save_incma_in_and_out_prefix, 
-				TRUE /* f_compute_canonical_form */, canonical_form, canonical_form_len, 
+				TRUE /* f_compute_canonical_form */,
+				canonical_form, canonical_form_len,
 				0 /* verbose_level */);
 
 			SG->group_order(go);
 	
-			fp << "\\section*{Orbit " << i << " / " << CB->nb_types << "}" << endl;
-			fp << "Orbit " << i << " / " << CB->nb_types <<  " stored at " << j << " is represented by input object " << CB->Type_rep[j] << " and appears " << CB->Type_mult[j] << " times: \\\\" << endl;
+			fp << "\\section*{Orbit " << i << " / "
+				<< CB->nb_types << "}" << endl;
+			fp << "Orbit " << i << " / " << CB->nb_types <<  " stored at "
+				<< j << " is represented by input object "
+				<< CB->Type_rep[j] << " and appears "
+				<< CB->Type_mult[j] << " times: \\\\" << endl;
 			if (OiP->type != t_PAC) {
 				OiP->print(fp);
 				fp << "\\\\" << endl;
@@ -454,10 +492,13 @@ int main(int argc, char **argv)
 			{
 			int *Input_objects;
 			int nb_input_objects;
-			CB->C_type_of->get_class_by_value(Input_objects, nb_input_objects, j, 0 /*verbose_level */);
+			CB->C_type_of->get_class_by_value(Input_objects,
+					nb_input_objects, j, 0 /*verbose_level */);
 			int_vec_heapsort(Input_objects, nb_input_objects);
 
-			fp << "This isomorphism type appears " << nb_input_objects << " times, namely for the following " << nb_input_objects << " input objects: " << endl;
+			fp << "This isomorphism type appears " << nb_input_objects
+					<< " times, namely for the following "
+					<< nb_input_objects << " input objects: " << endl;
 			if (nb_input_objects < 10) {
 				fp << "$" << endl;
 				int_set_print_tex(fp, Input_objects, nb_input_objects);
@@ -465,7 +506,8 @@ int main(int argc, char **argv)
 				}
 			else {
 				fp << "$$" << endl;
-				int_vec_print_as_matrix(fp, Input_objects, nb_input_objects, 10 /* width */, TRUE /* f_tex */);
+				int_vec_print_as_matrix(fp, Input_objects,
+					nb_input_objects, 10 /* width */, TRUE /* f_tex */);
 				fp << "$$" << endl;
 				}
 
@@ -534,11 +576,13 @@ int main(int argc, char **argv)
 	
 		
 			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
+				fp, TRUE /* f_enter_math */,
+				TRUE /* f_print_subscripts */, *Stack);
 
 	#if 0
 			Inc->get_and_print_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */, *Stack);
+				fp, TRUE /* f_enter_math */,
+				*Stack);
 	#endif
 
 
@@ -549,27 +593,34 @@ int main(int argc, char **argv)
 			f_refine_prev = TRUE;
 			for (h = 0; ; h++) {
 				if (EVEN(h)) {
-					f_refine = Inc->refine_column_partition_safe(*Stack, verbose_level - 3);
+					f_refine = Inc->refine_column_partition_safe(
+							*Stack, verbose_level - 3);
 					}
 				else {
-					f_refine = Inc->refine_row_partition_safe(*Stack, verbose_level - 3);
+					f_refine = Inc->refine_row_partition_safe(
+							*Stack, verbose_level - 3);
 					}
 
 				if (f_v) {
-					cout << "incidence_structure::compute_TDO_safe h=" << h << " after refine" << endl;
+					cout << "incidence_structure::compute_TDO_safe "
+							"h=" << h << " after refine" << endl;
 					}
 				if (EVEN(h)) {
 					//int f_list_incidences = FALSE;
 					Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-						fp, TRUE /* f_enter_math */, f_print_subscripts, *Stack);
-					//get_and_print_col_decomposition_scheme(PStack, f_list_incidences, FALSE);
+						fp, TRUE /* f_enter_math */,
+						f_print_subscripts, *Stack);
+					//get_and_print_col_decomposition_scheme(
+					//PStack, f_list_incidences, FALSE);
 					//PStack.print_classes_points_and_lines(cout);
 					}
 				else {
 					//int f_list_incidences = FALSE;
 					Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-						fp, TRUE /* f_enter_math */, f_print_subscripts, *Stack);
-					//get_and_print_row_decomposition_scheme(PStack, f_list_incidences, FALSE);
+						fp, TRUE /* f_enter_math */,
+						f_print_subscripts, *Stack);
+					//get_and_print_row_decomposition_scheme(
+					//PStack, f_list_incidences, FALSE);
 					//PStack.print_classes_points_and_lines(cout);
 					}
 		
@@ -596,8 +647,11 @@ int main(int argc, char **argv)
 			Elt = NEW_int(PA->A->elt_size_in_int);
 		
 			for (h = 0; h < order_list_sz; h++) {
-				if (Stab->find_element_of_given_order_int(Elt, order_list[h], nb_trials, max_trials, verbose_level)) {
-					fp << "We found an element of order " << order_list[h] << ", which is:" << endl;
+				if (Stab->find_element_of_given_order_int(Elt,
+						order_list[h], nb_trials, max_trials,
+						verbose_level)) {
+					fp << "We found an element of order "
+							<< order_list[h] << ", which is:" << endl;
 					fp << "$$" << endl;
 					PA->A->element_print_latex(Elt, fp);
 					fp << "$$" << endl;
@@ -606,7 +660,8 @@ int main(int argc, char **argv)
 						verbose_level);
 					}
 				else {
-					fp << "We could not find an element of order " << order_list[h] << "\\\\" << endl;
+					fp << "We could not find an element of order "
+						<< order_list[h] << "\\\\" << endl;
 					}
 				}
 
@@ -622,7 +677,8 @@ int main(int argc, char **argv)
 		latex_foot(fp);
 		}
 
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		
 		//FREE_int(perm);
 		//FREE_int(v);
@@ -662,10 +718,12 @@ void canonical_form(int nb_inputs, int *input_type,
 		}
 
 	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
-		cout << "input " << input_idx << " / " << nb_inputs << " is:" << endl;
+		cout << "input " << input_idx << " / " << nb_inputs
+				<< " is:" << endl;
 
 		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
-			cout << "input set of points " << input_string[input_idx] << ":" << endl;
+			cout << "input set of points " << input_string[input_idx]
+				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			//strong_generators *SG;
@@ -704,7 +762,8 @@ void canonical_form(int nb_inputs, int *input_type,
 				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of "
+					"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
@@ -720,7 +779,8 @@ void canonical_form(int nb_inputs, int *input_type,
 #endif
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
-			cout << "input set of lines " << input_string[input_idx] << ":" << endl;
+			cout << "input set of lines " << input_string[input_idx]
+				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			//strong_generators *SG;
@@ -738,7 +798,8 @@ void canonical_form(int nb_inputs, int *input_type,
 				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of "
+						"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
@@ -754,7 +815,8 @@ void canonical_form(int nb_inputs, int *input_type,
 #endif
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
-			cout << "input set of packing " << input_string[input_idx] << ":" << endl;
+			cout << "input set of packing " << input_string[input_idx]
+				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			//strong_generators *SG;
@@ -772,7 +834,8 @@ void canonical_form(int nb_inputs, int *input_type,
 				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of "
+					"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
@@ -790,15 +853,19 @@ void canonical_form(int nb_inputs, int *input_type,
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS || 
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
-				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-			cout << "input from file " << input_string[input_idx] << ":" << endl;
+				input_type[input_idx] ==
+					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+			cout << "input from file " << input_string[input_idx]
+				<< ":" << endl;
 
 			set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(set_of_sets);
 
 			cout << "Reading the file " << input_string[input_idx] << endl;
-			SoS->init_from_file(PA->P->N_points /* underlying_set_size */, input_string[input_idx], verbose_level);
+			SoS->init_from_file(
+				PA->P->N_points /* underlying_set_size */,
+				input_string[input_idx], verbose_level);
 			cout << "Read the file " << input_string[input_idx] << endl;
 
 			int h;
@@ -809,11 +876,17 @@ void canonical_form(int nb_inputs, int *input_type,
 			int nb_spreads;
 			int spread_size;
 
-			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				cout << "Reading spread table from file " << input_string2[input_idx] << endl;
-				int_matrix_read_csv(input_string2[input_idx], Spread_table, nb_spreads, spread_size, 0 /* verbose_level */);
-				cout << "Reading spread table from file " << input_string2[input_idx] << " done" << endl;
-				cout << "The spread table contains " << nb_spreads << " spreads" << endl;
+			if (input_type[input_idx] ==
+				INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+				cout << "Reading spread table from file "
+						<< input_string2[input_idx] << endl;
+				int_matrix_read_csv(input_string2[input_idx],
+						Spread_table, nb_spreads, spread_size,
+						0 /* verbose_level */);
+				cout << "Reading spread table from file "
+						<< input_string2[input_idx] << " done" << endl;
+				cout << "The spread table contains " << nb_spreads
+						<< " spreads" << endl;
 				}
 
 			cout << "processing " << SoS->nb_sets << " objects" << endl;
@@ -829,25 +902,34 @@ void canonical_form(int nb_inputs, int *input_type,
 				set_size_in = SoS->Set_size[h];
 				the_set_in = SoS->Sets[h];
 		
-				cout << "The input set " << h << " / " << SoS->nb_sets << " has size " << set_size_in << ":" << endl;
+				cout << "The input set " << h << " / " << SoS->nb_sets
+					<< " has size " << set_size_in << ":" << endl;
 				cout << "The input set is:" << endl;
 				int_vec_print(cout, the_set_in, set_size_in);
 				cout << endl;
 
 				OiP = NEW_OBJECT(object_in_projective_space);
 
-				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
-					OiP->init_point_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
+				if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_POintS) {
+					OiP->init_point_set(PA->P,
+							the_set_in, set_size_in, 0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
-					OiP->init_line_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
+				else if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_LINES) {
+					OiP->init_line_set(PA->P,
+							the_set_in, set_size_in, 0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS) {
-					OiP->init_packing_from_set(PA->P, the_set_in, set_size_in, verbose_level);
+				else if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_PACKINGS) {
+					OiP->init_packing_from_set(PA->P,
+							the_set_in, set_size_in, verbose_level);
 					}
-				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+				else if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 					OiP->init_packing_from_spread_table(PA->P, the_set_in, 
-						Spread_table, nb_spreads, spread_size, verbose_level);
+						Spread_table, nb_spreads,
+						spread_size, verbose_level);
 					}
 				else {
 					cout << "unknown type" << endl;
@@ -866,7 +948,8 @@ void canonical_form(int nb_inputs, int *input_type,
 					FREE_OBJECT(SG);
 					}
 				else {
-					cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+					cout << "New isomorphism type! The n e w number of "
+							"isomorphism types is " << CB->nb_types << endl;
 
 					int idx;
 
@@ -879,13 +962,17 @@ void canonical_form(int nb_inputs, int *input_type,
 					CB->Type_extra_data[idx] = OiPA;
 
 
-					compute_and_print_ago_distribution(cout, PA, CB, verbose_level);
+					compute_and_print_ago_distribution(cout,
+							PA, CB, verbose_level);
 					}
-				cout << "after input set " << h << " / " << SoS->nb_sets << ", we have " << CB->nb_types << " isomorphism types of objects" << endl;
+				cout << "after input set " << h << " / " << SoS->nb_sets
+					<< ", we have " << CB->nb_types << " isomorphism "
+							"types of objects" << endl;
 #endif
 
 				}
-			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+			if (input_type[input_idx] ==
+					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				FREE_int(Spread_table);
 				}
 			FREE_OBJECT(SoS);
@@ -919,10 +1006,12 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 		}
 
 	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
-		cout << "input " << input_idx << " / " << nb_inputs << " is:" << endl;
+		cout << "input " << input_idx << " / " << nb_inputs
+			<< " is:" << endl;
 
 		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
-			cout << "input set of points " << input_string[input_idx] << ":" << endl;
+			cout << "input set of points "
+				<< input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
 			strong_generators *SG;
@@ -939,7 +1028,8 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of "
+					"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
@@ -950,11 +1040,13 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				idx = CB->type_of[CB->n - 1];
 				CB->Type_extra_data[idx] = OiPA;
 
-				compute_and_print_ago_distribution(cout, PA, CB, verbose_level);
+				compute_and_print_ago_distribution(cout,
+						PA, CB, verbose_level);
 				}
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
-			cout << "input set of lines " << input_string[input_idx] << ":" << endl;
+			cout << "input set of lines " << input_string[input_idx]
+				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			strong_generators *SG;
@@ -971,7 +1063,8 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of "
+						"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
@@ -982,11 +1075,13 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				idx = CB->type_of[CB->n - 1];
 				CB->Type_extra_data[idx] = OiPA;
 
-				compute_and_print_ago_distribution(cout, PA, CB, verbose_level);
+				compute_and_print_ago_distribution(cout,
+					PA, CB, verbose_level);
 				}
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
-			cout << "input set of packing " << input_string[input_idx] << ":" << endl;
+			cout << "input set of packing "
+				<< input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
 			strong_generators *SG;
@@ -1003,7 +1098,8 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				FREE_OBJECT(OiP);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+				cout << "New isomorphism type! The n e w number of "
+					"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
 				object_in_projective_space_with_action *OiPA;
@@ -1014,21 +1110,26 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				idx = CB->type_of[CB->n - 1];
 				CB->Type_extra_data[idx] = OiPA;
 
-				compute_and_print_ago_distribution(cout, PA, CB, verbose_level);
+				compute_and_print_ago_distribution(cout,
+						PA, CB, verbose_level);
 				}
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS || 
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
-				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-			cout << "input from file " << input_string[input_idx] << ":" << endl;
+				input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+			cout << "input from file " << input_string[input_idx]
+				<< ":" << endl;
 
 			set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(set_of_sets);
 
 			cout << "Reading the file " << input_string[input_idx] << endl;
-			SoS->init_from_file(PA->P->N_points /* underlying_set_size */, input_string[input_idx], verbose_level);
+			SoS->init_from_file(
+					PA->P->N_points /* underlying_set_size */,
+					input_string[input_idx], verbose_level);
 			cout << "Read the file " << input_string[input_idx] << endl;
 
 			int h;
@@ -1039,11 +1140,17 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 			int nb_spreads;
 			int spread_size;
 
-			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				cout << "Reading spread table from file " << input_string2[input_idx] << endl;
-				int_matrix_read_csv(input_string2[input_idx], Spread_table, nb_spreads, spread_size, 0 /* verbose_level */);
-				cout << "Reading spread table from file " << input_string2[input_idx] << " done" << endl;
-				cout << "The spread table contains " << nb_spreads << " spreads" << endl;
+			if (input_type[input_idx] ==
+					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+				cout << "Reading spread table from file "
+					<< input_string2[input_idx] << endl;
+				int_matrix_read_csv(input_string2[input_idx],
+						Spread_table, nb_spreads, spread_size,
+						0 /* verbose_level */);
+				cout << "Reading spread table from file "
+						<< input_string2[input_idx] << " done" << endl;
+				cout << "The spread table contains " << nb_spreads
+						<< " spreads" << endl;
 				}
 
 			cout << "processing " << SoS->nb_sets << " objects" << endl;
@@ -1060,7 +1167,8 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				the_set_in = SoS->Sets[h];
 		
 				if (f_vv || ((h % 1024) == 0)) {
-					cout << "The input set " << h << " / " << SoS->nb_sets << " has size " << set_size_in << ":" << endl;
+					cout << "The input set " << h << " / " << SoS->nb_sets
+						<< " has size " << set_size_in << ":" << endl;
 					}
 
 				if (f_vvv) {
@@ -1071,18 +1179,26 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 
 				OiP = NEW_OBJECT(object_in_projective_space);
 
-				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
-					OiP->init_point_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
+				if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_POintS) {
+					OiP->init_point_set(PA->P, the_set_in, set_size_in,
+							0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
-					OiP->init_line_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
+				else if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_LINES) {
+					OiP->init_line_set(PA->P, the_set_in, set_size_in,
+							0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS) {
-					OiP->init_packing_from_set(PA->P, the_set_in, set_size_in, verbose_level);
+				else if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_PACKINGS) {
+					OiP->init_packing_from_set(PA->P,
+							the_set_in, set_size_in, verbose_level);
 					}
-				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+				else if (input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 					OiP->init_packing_from_spread_table(PA->P, the_set_in, 
-						Spread_table, nb_spreads, spread_size, verbose_level);
+						Spread_table, nb_spreads, spread_size,
+						verbose_level);
 					}
 				else {
 					cout << "unknown type" << endl;
@@ -1099,7 +1215,8 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 					FREE_OBJECT(SG);
 					}
 				else {
-					cout << "New isomorphism type! The n e w number of isomorphism types is " << CB->nb_types << endl;
+					cout << "New isomorphism type! The n e w number of "
+							"isomorphism types is " << CB->nb_types << endl;
 
 					int idx;
 
@@ -1112,15 +1229,20 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 					CB->Type_extra_data[idx] = OiPA;
 
 
-					compute_and_print_ago_distribution(cout, PA, CB, verbose_level);
+					compute_and_print_ago_distribution(cout,
+							PA, CB, verbose_level);
 					}
 
 				if (f_vv) {
-					cout << "after input set " << h << " / " << SoS->nb_sets << ", we have " << CB->nb_types << " isomorphism types of objects" << endl;
+					cout << "after input set " << h << " / "
+							<< SoS->nb_sets
+							<< ", we have " << CB->nb_types
+							<< " isomorphism types of objects" << endl;
 					}
 
 				}
-			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+			if (input_type[input_idx] ==
+					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				FREE_int(Spread_table);
 				}
 			FREE_OBJECT(SoS);
@@ -1151,11 +1273,13 @@ int count_number_of_objects_to_test(int nb_inputs, int *input_type,
 		}
 	nb_objects_to_test = 0;
 	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
-		cout << "input " << input_idx << " / " << nb_inputs << " is:" << endl;
+		cout << "input " << input_idx << " / " << nb_inputs
+			<< " is:" << endl;
 
 		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
 			if (f_v) {
-				cout << "input set of points " << input_string[input_idx] << ":" << endl;
+				cout << "input set of points "
+						<< input_string[input_idx] << ":" << endl;
 				}
 
 			nb_objects_to_test++;
@@ -1163,7 +1287,8 @@ int count_number_of_objects_to_test(int nb_inputs, int *input_type,
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
 			if (f_v) {
-				cout << "input set of lines " << input_string[input_idx] << ":" << endl;
+				cout << "input set of lines "
+						<< input_string[input_idx] << ":" << endl;
 				}
 
 			nb_objects_to_test++;
@@ -1171,7 +1296,8 @@ int count_number_of_objects_to_test(int nb_inputs, int *input_type,
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
 			if (f_v) {
-				cout << "input set of packing " << input_string[input_idx] << ":" << endl;
+				cout << "input set of packing "
+						<< input_string[input_idx] << ":" << endl;
 				}
 
 			nb_objects_to_test++;
@@ -1179,45 +1305,59 @@ int count_number_of_objects_to_test(int nb_inputs, int *input_type,
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
 			if (f_v) {
-				cout << "input sets of points from file " << input_string[input_idx] << ":" << endl;
+				cout << "input sets of points from file "
+						<< input_string[input_idx] << ":" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(input_string[input_idx], 0 /* verbose_level*/);
+			nb_obj = count_number_of_orbits_in_file(
+					input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
-				cout << "The file " << input_string[input_idx] << " has " << nb_obj << " objects" << endl;
+				cout << "The file " << input_string[input_idx]
+					<< " has " << nb_obj << " objects" << endl;
 				}
 
 			nb_objects_to_test += nb_obj;
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
 			if (f_v) {
-				cout << "input sets of lines from file " << input_string[input_idx] << ":" << endl;
+				cout << "input sets of lines from file "
+					<< input_string[input_idx] << ":" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(input_string[input_idx], 0 /* verbose_level*/);
+			nb_obj = count_number_of_orbits_in_file(
+				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
-				cout << "The file " << input_string[input_idx] << " has " << nb_obj << " objects" << endl;
+				cout << "The file " << input_string[input_idx]
+					<< " has " << nb_obj << " objects" << endl;
 				}
 
 			nb_objects_to_test += nb_obj;
 			}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS) {
 			if (f_v) {
-				cout << "input sets of packings from file " << input_string[input_idx] << ":" << endl;
+				cout << "input sets of packings from file "
+					<< input_string[input_idx] << ":" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(input_string[input_idx], 0 /* verbose_level*/);
+			nb_obj = count_number_of_orbits_in_file(
+				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
-				cout << "The file " << input_string[input_idx] << " has " << nb_obj << " objects" << endl;
+				cout << "The file " << input_string[input_idx]
+					<< " has " << nb_obj << " objects" << endl;
 				}
 
 			nb_objects_to_test += nb_obj;
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+		else if (input_type[input_idx] ==
+				INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 			if (f_v) {
-				cout << "input sets of packings from file " << input_string[input_idx] << endl;
-				cout << "through spread table " << input_string2[input_idx] << " :" << endl;
+				cout << "input sets of packings from file "
+					<< input_string[input_idx] << endl;
+				cout << "through spread table "
+					<< input_string2[input_idx] << " :" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(input_string[input_idx], 0 /* verbose_level*/);
+			nb_obj = count_number_of_orbits_in_file(
+				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
-				cout << "The file " << input_string[input_idx] << " has " << nb_obj << " objects" << endl;
+				cout << "The file " << input_string[input_idx]
+					<< " has " << nb_obj << " objects" << endl;
 				}
 
 			nb_objects_to_test += nb_obj;
@@ -1234,7 +1374,8 @@ int count_number_of_objects_to_test(int nb_inputs, int *input_type,
 	return nb_objects_to_test;
 }
 
-object_in_projective_space *create_object_from_string(projective_space_with_action *PA, 
+object_in_projective_space *create_object_from_string(
+	projective_space_with_action *PA,
 	int type, const char *set_as_string, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1273,13 +1414,16 @@ object_in_projective_space *create_object_from_string(projective_space_with_acti
 	OiP = NEW_OBJECT(object_in_projective_space);
 
 	if (type == t_PTS) {
-		OiP->init_point_set(PA->P, the_set_in, set_size_in, verbose_level - 1);
+		OiP->init_point_set(PA->P,
+				the_set_in, set_size_in, verbose_level - 1);
 		}
 	else if (type == t_LNS) {
-		OiP->init_line_set(PA->P, the_set_in, set_size_in, verbose_level - 1);
+		OiP->init_line_set(PA->P,
+				the_set_in, set_size_in, verbose_level - 1);
 		}
 	else if (type == t_PAC) {
-		OiP->init_packing_from_set(PA->P, the_set_in, set_size_in, verbose_level - 1);
+		OiP->init_packing_from_set(PA->P,
+				the_set_in, set_size_in, verbose_level - 1);
 		}
 	else {
 		cout << "create_object_from_string unknown type" << endl;
@@ -1294,7 +1438,8 @@ object_in_projective_space *create_object_from_string(projective_space_with_acti
 	return OiP;
 }
 
-int process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
+int process_object(projective_space_with_action *PA,
+	classify_bitvectors *CB,
 	object_in_projective_space *OiP, 
 	int f_save_incma_in_and_out, const char *prefix, 
 	int nb_objects_to_test, 
@@ -1324,7 +1469,8 @@ int process_object(projective_space_with_action *PA, classify_bitvectors *CB,
 	SG = PA->set_stabilizer_of_object(
 		OiP, 
 		f_save_incma_in_and_out, save_incma_in_and_out_prefix, 
-		TRUE /* f_compute_canonical_form */, canonical_form, canonical_form_len, 
+		TRUE /* f_compute_canonical_form */,
+		canonical_form, canonical_form_len,
 		0 /* verbose_level */);
 
 	SG->group_order(go);
@@ -1375,7 +1521,8 @@ int process_object(projective_space_with_action *PA, classify_bitvectors *CB,
 	return ret;
 }
 
-void OiPA_encode(void *extra_data, int *&encoding, int &encoding_sz, void *global_data)
+void OiPA_encode(void *extra_data,
+		int *&encoding, int &encoding_sz, void *global_data)
 {
 	//cout << "OiPA_encode" << endl;
 	object_in_projective_space_with_action *OiPA;
@@ -1389,7 +1536,8 @@ void OiPA_encode(void *extra_data, int *&encoding, int &encoding_sz, void *globa
 	
 }
 
-void OiPA_group_order(void *extra_data, longinteger_object &go, void *global_data)
+void OiPA_group_order(void *extra_data,
+		longinteger_object &go, void *global_data)
 {
 	//cout << "OiPA_group_order" << endl;
 	object_in_projective_space_with_action *OiPA;
@@ -1402,7 +1550,8 @@ void OiPA_group_order(void *extra_data, longinteger_object &go, void *global_dat
 	
 }
 
-void print_summary_table_entry(int *Table, int m, int n, int i, int j, int val, char *output, void *data)
+void print_summary_table_entry(int *Table,
+		int m, int n, int i, int j, int val, char *output, void *data)
 {
 	classify_bitvectors *CB;
 	object_in_projective_space_with_action *OiPA;
@@ -1446,7 +1595,8 @@ void print_summary_table_entry(int *Table, int m, int n, int i, int j, int val, 
 
 			int *Input_objects;
 			int nb_input_objects;
-			CB->C_type_of->get_class_by_value(Input_objects, nb_input_objects, CB->perm[i], 0 /*verbose_level */);
+			CB->C_type_of->get_class_by_value(Input_objects,
+				nb_input_objects, CB->perm[i], 0 /*verbose_level */);
 			int_vec_heapsort(Input_objects, nb_input_objects);
 
 			output[0] = 0;
@@ -1485,7 +1635,8 @@ void compute_ago_distribution(projective_space_with_action *PA,
 	for (i = 0; i < CB->nb_types; i++) {
 		object_in_projective_space_with_action *OiPA;
 
-		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[i];
+		OiPA = (object_in_projective_space_with_action *)
+				CB->Type_extra_data[i];
 		Ago[i] = OiPA->Aut_gens->group_order_as_int();
 		}
 	C_ago = NEW_OBJECT(classify);
@@ -1511,7 +1662,8 @@ void compute_ago_distribution_permuted(projective_space_with_action *PA,
 	for (i = 0; i < CB->nb_types; i++) {
 		object_in_projective_space_with_action *OiPA;
 
-		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[CB->perm[i]];
+		OiPA = (object_in_projective_space_with_action *)
+				CB->Type_extra_data[CB->perm[i]];
 		Ago[i] = OiPA->Aut_gens->group_order_as_int();
 		}
 	C_ago = NEW_OBJECT(classify);
@@ -1522,7 +1674,8 @@ void compute_ago_distribution_permuted(projective_space_with_action *PA,
 		}
 }
 
-void compute_and_print_ago_distribution(ostream &ost, projective_space_with_action *PA, 
+void compute_and_print_ago_distribution(ostream &ost,
+	projective_space_with_action *PA,
 	classify_bitvectors *CB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1540,7 +1693,8 @@ void compute_and_print_ago_distribution(ostream &ost, projective_space_with_acti
 	FREE_OBJECT(C_ago);
 }
 
-void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_space_with_action *PA, 
+void compute_and_print_ago_distribution_with_classes(ostream &ost,
+	projective_space_with_action *PA,
 	classify_bitvectors *CB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1560,15 +1714,19 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_sp
 	int *types;
 	int nb_types;
 
-	SoS = C_ago->get_set_partition_and_types(types, nb_types, verbose_level);
+	SoS = C_ago->get_set_partition_and_types(types,
+			nb_types, verbose_level);
 
 	
 	// go backwards to show large group orders first:
 	for (i = SoS->nb_sets - 1; i >= 0; i--) {
-		ost << "Group order $" << types[i] << "$ appears for the following $" << SoS->Set_size[i] << "$ classes: $" << endl;
+		ost << "Group order $" << types[i]
+			<< "$ appears for the following $" << SoS->Set_size[i]
+			<< "$ classes: $" << endl;
 		int_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
 		ost << "$\\\\" << endl;
-		//int_vec_print_as_matrix(ost, SoS->Sets[i], SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);
+		//int_vec_print_as_matrix(ost, SoS->Sets[i],
+		//SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);
 		//ost << "$$" << endl;
 		
 		}

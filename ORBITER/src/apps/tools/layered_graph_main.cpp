@@ -260,7 +260,7 @@ int main(int argc, const char **argv)
 	LG->draw_with_options(fname_out, &O, 0 /* verbose_level */);
 	
 
-
+	cout << "Written file " << fname_out << endl;
 
 	FREE_OBJECT(LG);
 

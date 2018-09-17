@@ -508,6 +508,7 @@ public:
 	void print_tables(ostream &ost, int f_with_cosetrep);
 	void print_tables_latex(ostream &ost, int f_with_cosetrep);
 	void print_generators();
+	void print_generators_latex(ostream &ost);
 	void print_generators_with_permutations();
 	void print_orbit(int orbit_no);
 	void print_orbit_using_labels(int orbit_no, int *labels);

@@ -31,7 +31,10 @@ all: test_PG.out \
 	plane_search.out \
 	example_fano_plane.out \
 	simeon.out \
-	export_data.out
+	export_data.out \
+	finite_field.out \
+	projective_space.out \
+	projective_space2.out
 
 
 
@@ -112,6 +115,15 @@ simeon.out:  simeon.o ;
 
 export_data.out:  export_data.o ;
 	$(DISCRETA_CPP)  export_data.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+finite_field.out:  finite_field.o ;
+	$(DISCRETA_CPP)  finite_field.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+projective_space.out:  projective_space.o ;
+	$(DISCRETA_CPP)  projective_space.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+projective_space2.out:  projective_space2.o ;
+	$(DISCRETA_CPP)  projective_space2.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 clean:
 	- rm *.o *.a *.out *~

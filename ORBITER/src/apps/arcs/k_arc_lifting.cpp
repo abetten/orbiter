@@ -376,8 +376,8 @@ int main(int argc, char **argv)
 		
 		}
 
-	delete P;
-	delete F;
+	FREE_OBJECT(P);
+	FREE_OBJECT(F);
 
 	the_end(t0);
 }

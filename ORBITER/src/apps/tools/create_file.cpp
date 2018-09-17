@@ -329,98 +329,132 @@ void create_files_list_of_cases(spreadsheet *S,
 
 
 	const char *makefile_fname = "makefile_submit";
+	const char *fname_submit_script = "submit_jobs.sh";
 	{
-	ofstream fp_makefile(makefile_fname);
+		ofstream fp_makefile(makefile_fname);
+		ofstream fp_submit_script(fname_submit_script);
 	
-	for (i = 0; i < N; i++) {
-
-		sprintf(fname, file_mask, i);
+		fp_submit_script << "#!/bin/bash" << endl;
+		for (i = 0; i < N; i++) {
 	
-		fp_makefile << "\tsbatch " << fname << endl;
-		{
-		ofstream fp(fname);
-	
-		for (j = 0; j < nb_lines; j++) {
-			sprintf(str, lines[j], i, i, i, i, i, i, i, i);
-			fp << str << endl;
-			}
+			sprintf(fname, file_mask, i);
 
-		if (f_tasks) {
-			char str[1000];
-			int t;
-			int NT;
+			fp_makefile << "\tsbatch " << fname << endl;
+			fp_submit_script << "sbatch " << fname << endl;
+			{
+				ofstream fp(fname);
 
-			sprintf(str, tasks_line, nb_tasks);
-			fp << str << endl;
-			NT = N * nb_tasks;
-			for (t = 0; t < nb_tasks; t++) {
-				sprintf(str, command, i, t, i, t);
-				fp << str; // << " \\" << endl;
-				for (j = 0; j < nb_cases; j++) {
-					if ((j % N) != i) {
-						continue;
+				for (j = 0; j < nb_lines; j++) {
+					sprintf(str, lines[j], i, i, i, i, i, i, i, i);
+					fp << str << endl;
+					}
+
+				if (f_tasks) {
+					char str[1000];
+					int t;
+					int NT;
+
+					sprintf(str, tasks_line, nb_tasks);
+					fp << str << endl;
+					NT = N * nb_tasks;
+					for (t = 0; t < nb_tasks; t++) {
+						sprintf(str, command, i, t, i, t);
+						fp << str; // << " \\" << endl;
+						for (j = 0; j < nb_cases; j++) {
+							if ((j % N) != i) {
+								continue;
+								}
+							if (((j - i) / N) % nb_tasks != t) {
+								continue;
+								}
+							char *entry;
+							int case_number;
+
+							case_number = S->get_int(j + 1, read_cases_column_of_case);
+							entry = S->get_string(j + 1, read_cases_column_of_fname);
+							fp << /* case_number << " " <<*/ entry;
+
+							if (j < nb_cases - N) {
+								fp << ", "; // << endl;
+							} else {
+								fp << ")\"\\" << endl;
+							}
+							}
+						fp << " & " << endl;
+						//fp << "\t\t" << -1 << " &" << endl;
 						}
-					if (((j - i) / N) % nb_tasks != t) {
-						continue;
-						}
-					char *entry;
-					int case_number;
+					} // if
+				else {
+					sprintf(str, command, i);
+					fp << str << " \\" << endl;
+					//fp << command << " \\" << endl;
+					for (j = 0; j < nb_cases; j++) {
+						if ((j % N) != i) {
+							continue;
+							}
+						char *entry;
+						int case_number;
 
-					case_number = S->get_int(j + 1, read_cases_column_of_case);
-					entry = S->get_string(j + 1, read_cases_column_of_fname);
-					fp << /* case_number << " " <<*/ entry;
-
-					if (j < nb_cases - N) {
-						fp << ", "; // << endl;
-					} else {
-						fp << ")\"\\" << endl;
-					}
-					}
-				fp << " & " << endl;
-				//fp << "\t\t" << -1 << " &" << endl;
-				}
-			}
-		else {
-			sprintf(str, command, i);
-			fp << str << " \\" << endl;
-			//fp << command << " \\" << endl;
-			for (j = 0; j < nb_cases; j++) {
-				if ((j % N) != i) {
-					continue;
-					}
-				char *entry;
-				int case_number;
-
-				case_number = S->get_int(j + 1, read_cases_column_of_case);
-				entry = S->get_string(j + 1, read_cases_column_of_fname);
-				fp <<  "\t\t" /*<< case_number << " "*/ << entry << " \\" << endl;
+						case_number = S->get_int(j + 1, read_cases_column_of_case);
+						entry = S->get_string(j + 1, read_cases_column_of_fname);
+						fp <<  "\t\t" /*<< case_number << " "*/ << entry << " \\" << endl;
 #if 0
-				if (j < nb_cases - N) {
-					fp << ", "; // << endl;
-				} else {
-					fp << ")\"\\" << endl;
-				}
+						if (j < nb_cases - N) {
+							fp << ", "; // << endl;
+						} else {
+							fp << ")\"\\" << endl;
+						}
 #endif
-				}
-			fp << " & " << endl;
-			//fp << "\t\t" << -1 << " &" << endl;
-			}
-		for (j = 0; j < nb_final_lines; j++) {
-			sprintf(str, final_lines[j], i, i, i, i, i, i, i, i);
-			fp << str << endl;
-			}
+						}
+					fp << " & " << endl;
+					//fp << "\t\t" << -1 << " &" << endl;
+					} // else
 
-		}
-		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				for (j = 0; j < nb_final_lines; j++) {
+					sprintf(str, final_lines[j], i, i, i, i, i, i, i, i);
+					fp << str << endl;
+					} // next j
 	
-		}
+			} // close fp(fname)
+
+			cout << "Written file " << fname << " of size "
+					<< file_size(fname) << endl;
+
+		} // next i
 
 	}
 	cout << "Written file " << makefile_fname << " of size "
 			<< file_size(makefile_fname) << endl;
 
+	const char *mask_submit_script_piecewise = "submit_jobs_%d.sh";
+	char fname_submit_piecewise[1000];
+	char cmd[1000];
+	int h;
+	int N1 = 128;
 
+	for (h = 0; h < N / N1; h++) {
+		sprintf(fname_submit_piecewise, mask_submit_script_piecewise, h * N1);
+		{
+			ofstream fp_submit_script(fname_submit_piecewise);
+
+			fp_submit_script << "#!/bin/bash" << endl;
+			for (i = 0; i < N1; i++) {
+
+				sprintf(fname, file_mask, h * N1 + i);
+
+				fp_submit_script << "sbatch " << fname;
+				if (i < N1 - 1) {
+					fp_submit_script << "; ";
+				} else {
+					fp_submit_script << endl;
+				}
+			}
+		}
+		cout << "Written file " << fname_submit_piecewise << " of size "
+			<< file_size(fname_submit_piecewise) << endl;
+		sprintf(cmd, "chmod +x %s", fname_submit_piecewise);
+		system(cmd);
+	}
 	if (f_v) {
 		cout << "create_files_list_of_cases done" << endl;
 		}
