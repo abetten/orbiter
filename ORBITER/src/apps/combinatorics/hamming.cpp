@@ -121,7 +121,7 @@ void create_object(int verbose_level)
 			}
 		Points[i * POint_width + n] = b_1;
 		}
-	cout << "POintS:" << endl;
+	cout << "POINTS:" << endl;
 	print_integer_matrix_width(cout, Points, nb_POintS, POint_width, POint_width, 1);
 
 	for (i = 0; i < nb_BLOCKS; i++) {
