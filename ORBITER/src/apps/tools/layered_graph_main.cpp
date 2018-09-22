@@ -14,15 +14,30 @@
 
 int t0; // the system time when the program started
 
-void draw_vertex_callback(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
-void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
-void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
-void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
-void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
+void draw_vertex_callback(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy);
+void draw_vertex_callback_standard(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy);
+void draw_vertex_callback_placeholders(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy);
+void draw_vertex_callback_graph(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy);
+void draw_vertex_callback_tournament(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy);
 int get_depth(layered_graph *LG, int layer, int node);
-int get_data(layered_graph *LG, int layer, int node, int *Data, int cur_depth);
-void draw_begining_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy);
-void draw_ending_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy);
+int get_data(layered_graph *LG,
+		int layer, int node, int *Data, int cur_depth);
+void draw_begining_callback(layered_graph *LG,
+		mp_graphics *G, int x_max, int y_max,
+		int f_rotated, int dx, int dy);
+void draw_ending_callback(layered_graph *LG,
+		mp_graphics *G, int x_max, int y_max,
+		int f_rotated, int dx, int dy);
 
 #define MAX_FILES 1000
 
@@ -267,41 +282,52 @@ int main(int argc, const char **argv)
 
 }
 
-void draw_vertex_callback(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
+void draw_vertex_callback(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy)
 {
 	cout << "draw_vertex_callback node " << node << endl;
 	if (f_my_type) {
 		if (strcmp(the_type, "as_graph") == 0) {
-			cout << "drawing as graph, calling draw_vertex_callback_graph" << endl;
-			draw_vertex_callback_graph(LG, G, layer, node, x, y, dx, dy);
+			cout << "drawing as graph, calling "
+					"draw_vertex_callback_graph" << endl;
+			draw_vertex_callback_graph(LG, G,
+					layer, node, x, y, dx, dy);
 			}
 		if (strcmp(the_type, "as_tournament") == 0) {
-			draw_vertex_callback_tournament(LG, G, layer, node, x, y, dx, dy);
+			draw_vertex_callback_tournament(LG, G,
+					layer, node, x, y, dx, dy);
 			}
 		}
 	else if (f_placeholder_labels) {
-		draw_vertex_callback_placeholders(LG, G, layer, node, x, y, dx, dy);
+		draw_vertex_callback_placeholders(LG, G,
+				layer, node, x, y, dx, dy);
 		}
 	else {
-		draw_vertex_callback_standard(LG, G, layer, node, x, y, dx, dy);
+		draw_vertex_callback_standard(LG, G,
+				layer, node, x, y, dx, dy);
 		}
 
 	if (f_numbering_on) {
 		char str[1000];
 		
-		sprintf(str, "%d", LG->L[layer].Nodes[node].depth_first_node_rank);
+		sprintf(str, "%d",
+				LG->L[layer].Nodes[node].depth_first_node_rank);
 		G->aligned_text(x + (int)(dx * numbering_on_scale), 
 			y - (int)(dy * numbering_on_scale), "", 
 			str);
 		}
 }
 
-void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
+void draw_vertex_callback_standard(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy)
 {
 	//int d1;
 	//char str[1000];
 
-	cout << "draw_vertex_callback_standard x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
+	cout << "draw_vertex_callback_standard x=" << x << " y=" << y
+			<< " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	//sprintf(str, "%d", d1);
@@ -313,7 +339,8 @@ void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, int layer,
 
 	if (f_data1) {
 		if (LG->L[layer].Nodes[node].f_has_data1) {
-			cout << "draw_vertex_callback_standard node " << node << " drawing data1" << endl;
+			cout << "draw_vertex_callback_standard node " << node
+					<< " drawing data1" << endl;
 
 			sprintf(str, "%d", LG->L[layer].Nodes[node].data1);
 			}
@@ -347,12 +374,15 @@ void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, int layer,
 	G->aligned_text(x, y, "", str2);
 }
 
-void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
+void draw_vertex_callback_placeholders(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy)
 {
 	//int d1;
 	//char str[1000];
 
-	cout << "draw_vertex_callback_placeholders x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
+	cout << "draw_vertex_callback_placeholders x=" << x << " y=" << y
+			<< " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	//sprintf(str, "%d", d1);
@@ -429,11 +459,13 @@ void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, int la
 	G->aligned_text(x, y, "", str);
 }
 
-void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
+void draw_vertex_callback_graph(layered_graph *LG,
+		mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
 {
 	int d1, nb_V, depth;
 
-	cout << "draw_vertex_callback x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
+	cout << "draw_vertex_callback x=" << x << " y=" << y
+			<< " dx = " << dx << " dy=" << dy << endl;
 	d1 = LG->L[layer].Nodes[node].data1;
 	nb_V = LG->data1;
 
@@ -449,7 +481,8 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, in
 		D = LG->L[layer].Nodes[node].vec_data;
 		len = LG->L[layer].Nodes[node].vec_data_len;
 		
-		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, len);
+		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ",
+				layer, node, x, y, dx, dy, nb_V, len);
 		for (i = 0; i < len; i++) {
 			sprintf(str + strlen(str), " %d", D[i]);
 			}
@@ -460,11 +493,13 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, in
 			int distinguished_edge;
 
 
-			distinguished_edge = LG->L[layer].Nodes[node].distinguished_element_index;
+			distinguished_edge =
+					LG->L[layer].Nodes[node].distinguished_element_index;
 
 			cout << "dinstingished edge = " << distinguished_edge << endl;
 
-			draw_graph_with_distinguished_edge(G, x, y, dx, dy, nb_V, D, len, distinguished_edge, 0 /*verbose_level*/);
+			draw_graph_with_distinguished_edge(G, x, y, dx, dy,
+					nb_V, D, len, distinguished_edge, 0 /*verbose_level*/);
 				// in GALOIS/draw.C
 			}
 		else {
@@ -482,14 +517,16 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, in
 
 		D = NEW_int(depth + 1);
 		get_data(LG, layer, node, D, depth);
-		cout << "draw_vertex_callback layer=" << layer << " node=" << node << " data = ";
+		cout << "draw_vertex_callback layer=" << layer
+				<< " node=" << node << " data = ";
 		int_vec_print(cout, D, depth);
 		cout << endl;
 
 		char str[1000000];
 		int i;
 
-		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, depth);
+		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ",
+				layer, node, x, y, dx, dy, nb_V, depth);
 		for (i = 0; i < depth; i++) {
 			sprintf(str + strlen(str), " %d", D[i]);
 			}
@@ -502,12 +539,15 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, in
 		}
 }
 
-void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
+void draw_vertex_callback_tournament(layered_graph *LG,
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy)
 {
 	int verbose_level = 0;
 	int d1, nb_V, depth;
 
-	cout << "draw_vertex_callback x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
+	cout << "draw_vertex_callback x=" << x << " y=" << y
+			<< " dx = " << dx << " dy=" << dy << endl;
 	d1 = LG->L[layer].Nodes[node].data1;
 	nb_V = LG->data1;
 
@@ -522,7 +562,8 @@ void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, int laye
 		D = LG->L[layer].Nodes[node].vec_data;
 		len = LG->L[layer].Nodes[node].vec_data_len;
 		
-		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, len);
+		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ",
+				layer, node, x, y, dx, dy, nb_V, len);
 		for (i = 0; i < len; i++) {
 			sprintf(str + strlen(str), " %d", D[i]);
 			}
@@ -540,14 +581,16 @@ void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, int laye
 
 		D = NEW_int(depth + 1);
 		get_data(LG, layer, node, D, depth);
-		cout << "draw_vertex_callback layer=" << layer << " node=" << node << " data = ";
+		cout << "draw_vertex_callback layer=" << layer
+				<< " node=" << node << " data = ";
 		int_vec_print(cout, D, depth);
 		cout << endl;
 
 		char str[1000000];
 		int i;
 
-		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, depth);
+		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ",
+				layer, node, x, y, dx, dy, nb_V, depth);
 		for (i = 0; i < depth; i++) {
 			sprintf(str + strlen(str), " %d", D[i]);
 			}
@@ -575,7 +618,8 @@ int get_depth(layered_graph *LG, int layer, int node)
 		}
 }
 
-int get_data(layered_graph *LG, int layer, int node, int *Data, int cur_depth)
+int get_data(layered_graph *LG, int layer,
+		int node, int *Data, int cur_depth)
 {
 	int d1, d2, d3;
 	
@@ -593,7 +637,8 @@ int get_data(layered_graph *LG, int layer, int node, int *Data, int cur_depth)
 		}
 }
 
-void draw_begining_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy)
+void draw_begining_callback(layered_graph *LG, mp_graphics *G,
+		int x_max, int y_max, int f_rotated, int dx, int dy)
 {
 	int l, x, y, l1, l2, ll, j, x0, x1, y0, y1;
 	int Px[100];
@@ -606,7 +651,9 @@ void draw_begining_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_
 
 	G->sl_thickness(100); // 100 is normal
 
-	for (l = 0; l < LG->nb_layers + boxed_group_size - 1; l += boxed_group_size) {
+	for (l = 0;
+			l < LG->nb_layers + boxed_group_size - 1;
+			l += boxed_group_size) {
 		l1 = l;
 		l2 = MINIMUM(l + boxed_group_size, LG->nb_layers - 1);
 		if (l2 == l1) {
@@ -626,7 +673,8 @@ void draw_begining_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_
 		x1 = INT_MIN;
 		for (ll = l1; ll <= l2; ll++) {
 			for (j = 0; j < LG->L[ll].nb_nodes; j++) {
-				LG->coordinates(LG->L[ll].Nodes[j].id, x_max, y_max, FALSE, x, y);
+				LG->coordinates(LG->L[ll].Nodes[j].id,
+						x_max, y_max, FALSE, x, y);
 				x0 = MINIMUM(x0, x);
 				x1 = MAXIMUM(x1, x);
 				}
@@ -670,7 +718,9 @@ void draw_begining_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_
 	
 }
 
-void draw_ending_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy)
+void draw_ending_callback(layered_graph *LG,
+		mp_graphics *G, int x_max, int y_max,
+		int f_rotated, int dx, int dy)
 {
 	cout << "draw_ending_callback" << endl;
 
@@ -686,7 +736,8 @@ void draw_ending_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_ma
 			if (f_select_layer) {
 				int idx;
 			
-				if (!int_vec_search_linear(select_layer, nb_select_layer, i, idx)) {
+				if (!int_vec_search_linear(select_layer,
+						nb_select_layer, i, idx)) {
 					continue;
 					}
 			
@@ -697,8 +748,10 @@ void draw_ending_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_ma
 			for (j = 0; j < LG->L[i].nb_nodes; j++) {
 				if (LG->L[i].Nodes[j].label) {
 					sprintf(str, "%s", LG->L[i].Nodes[j].label);
-					LG->coordinates(LG->L[i].Nodes[j].id, x_max, y_max, f_rotated, x, y);
-					cout << "Node " << i << " / " << j << " label: " << str << " x=" << x << " y=" << y << endl;
+					LG->coordinates(LG->L[i].Nodes[j].id,
+							x_max, y_max, f_rotated, x, y);
+					cout << "Node " << i << " / " << j << " label: "
+							<< str << " x=" << x << " y=" << y << endl;
 					y -= dy * 1.6;
 					G->aligned_text(x, y, "", str);
 					}

@@ -5467,7 +5467,9 @@ void concatenate_files(const char *fname_in_mask, int N,
 			cnt = 0;
 			while (TRUE) {
 				if (fp.eof()) {
-					cout << "Encountered End-of-file without having seem EOF marker, perhaps the file is corrupt. I was trying to read the file " << fname << endl;
+					cout << "Encountered End-of-file without having seem EOF "
+							"marker, perhaps the file is corrupt. "
+							"I was trying to read the file " << fname << endl;
 					//exit(1);
 					break;
 					}
