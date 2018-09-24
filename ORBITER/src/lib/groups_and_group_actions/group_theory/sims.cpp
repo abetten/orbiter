@@ -27,6 +27,8 @@ void sims::null()
 	orbit_inv = NULL;
 	prev = NULL;
 	label = NULL;
+	Path = NULL;
+	Label = NULL;
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
@@ -102,6 +104,13 @@ void sims::freeself()
 		FREE_pint(prev);
 		FREE_pint(label);
 		}
+
+	if (Path) {
+		FREE_int(Path);
+	}
+	if (Label) {
+		FREE_int(Label);
+	}
 
 	if (f_v) {
 		cout << "sims::freeself freeing orbit_len" << endl;
@@ -229,6 +238,8 @@ void sims::init(action *A)
 		prev[i] = NEW_int(A->degree);
 		label[i] = NEW_int(A->degree);
 		}
+	Path = NEW_int(A->degree + 1);
+	Label = NEW_int(A->degree + 1);
 	
 	FREE_int(nb_gen);
 	
@@ -258,6 +269,9 @@ void sims::init_without_base(action *A)
 	gens.init(A);
 	gens_inv.init(A);
 	
+	Path = NEW_int(A->degree + 1);
+	Label = NEW_int(A->degree + 1);
+
 	nb_gen = NEW_int(1);
 
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -285,6 +299,8 @@ void sims::reallocate_base(int old_base_len, int verbose_level)
 	int **old_orbit_inv = orbit_inv;
 	int **old_prev = prev;
 	int **old_label = label;
+	int *old_Path = Path;
+	int *old_Label = Label;
 	
 	if (f_v) {
 		cout << "sims::reallocate_base from " 
@@ -300,7 +316,9 @@ void sims::reallocate_base(int old_base_len, int verbose_level)
 	orbit_inv = NEW_pint(my_base_len);
 	prev = NEW_pint(my_base_len);
 	label = NEW_pint(my_base_len);
-	for (i = 0; i < old_base_len /* A->base_len - 1 */; i++) {
+	Path = NEW_int(A->degree + 1);
+	Label = NEW_int(A->degree + 1);
+	for (i = 0; i < old_base_len; i++) {
 		nb_gen[i] = old_nb_gen[i];
 		path[i] = old_path[i];
 		orbit_len[i] = old_orbit_len[i];
@@ -345,6 +363,10 @@ void sims::reallocate_base(int old_base_len, int verbose_level)
 		FREE_pint(old_prev);
 	if (old_label)
 		FREE_pint(old_label);
+	if (old_Path)
+		FREE_int(old_Path);
+	if (old_Label)
+		FREE_int(old_Label);
 }
 
 void sims::initialize_table(int i)
@@ -1494,8 +1516,8 @@ void sims::coset_rep(int i, int j, int verbose_level)
 		}
 
 	int depth;
-	int *Path;
-	int *Label;
+	//int *Path;
+	//int *Label;
 	int *gen;
 	int h, a;
 
@@ -1503,8 +1525,7 @@ void sims::coset_rep(int i, int j, int verbose_level)
 		cout << "sims::coset_rep "
 				"before compute_coset_rep_path" << endl;
 		}
-	compute_coset_rep_path(i, j,
-			Path, Label, depth, verbose_level - 2);
+	compute_coset_rep_path(i, j, depth, verbose_level - 2);
 	if (f_v) {
 		cout << "sims::coset_rep "
 				"after compute_coset_rep_path" << endl;
@@ -1542,8 +1563,8 @@ void sims::coset_rep(int i, int j, int verbose_level)
 		}
 	
 	
-	FREE_int(Path);
-	FREE_int(Label);
+	//FREE_int(Path);
+	//FREE_int(Label);
 
 	if (f_v) {
 		cout << "sims::coset_rep i=" << i << " j=" << j << endl;
@@ -1598,8 +1619,7 @@ int sims::compute_coset_rep_depth(int i, int j, int verbose_level)
 	return depth;
 }
 
-void sims::compute_coset_rep_path(int i, int j,
-		int *&Path, int *&Label, int &depth,
+void sims::compute_coset_rep_path(int i, int j, int &depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1612,7 +1632,15 @@ void sims::compute_coset_rep_path(int i, int j,
 		}
 
 
+	if (f_v) {
+		cout << "sims::compute_coset_rep_path "
+				"before compute_coset_rep_depth" << endl;
+		}
 	depth = compute_coset_rep_depth(i, j, verbose_level - 2);
+	if (f_v) {
+		cout << "sims::compute_coset_rep_path "
+				"after compute_coset_rep_depth" << endl;
+		}
 
 	if (f_vv) {
 		cout << "sims::compute_coset_rep_path "
@@ -1620,18 +1648,18 @@ void sims::compute_coset_rep_path(int i, int j,
 		}
 	
 
-	Path = NEW_int(depth + 1);
-	Label = NEW_int(depth);
+	//Path = NEW_int(depth + 1);
+	//Label = NEW_int(depth);
 
 	jj = j;
 	d = 0;
 	while (TRUE) {
 
-		Path[depth - d] = jj;
 		if (f_vv) {
 			cout << "Path[" << depth - d
 					<< "]=" << jj << endl;
 			}
+		Path[depth - d] = jj;
 
 		p = prev[i][jj];
 		if (f_vv) {

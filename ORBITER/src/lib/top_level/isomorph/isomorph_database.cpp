@@ -401,18 +401,40 @@ int isomorph::find_extension_easy_new(int *set,
 	int h;
 
 	h = int_vec_hash_after_sorting(set, size);
+	if (f_v) {
+		cout << "isomorph::find_extension_easy_new h=" << h << endl;
+		}
 
 
+	if (f_v) {
+		cout << "isomorph::find_extension_easy_new before "
+				"int_vec_search_first_occurence(h)" << endl;
+		}
 	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
-			N, h, first);
+			N, h, first, verbose_level);
+	if (f_v) {
+		cout << "isomorph::find_extension_easy_new after "
+				"int_vec_search_first_occurence(h) f_found=" << f_found << endl;
+		}
 
 	if (!f_found) {
 		ret = FALSE;
 		goto finish;
 		}
+	if (f_v) {
+		cout << "isomorph::find_extension_easy_new before "
+				"int_vec_search_first_occurence(h + 1) h+1=" << h + 1 << endl;
+		}
 	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
-			N, h + 1, idx2);
+			N, h + 1, idx2, verbose_level);
+	if (f_v) {
+		cout << "isomorph::find_extension_easy_new after "
+				"int_vec_search_first_occurence(h+1) f_found=" << f_found << endl;
+		}
 	len = idx2 - first;
+	if (f_v) {
+		cout << "isomorph::find_extension_easy_new len=" << len << endl;
+		}
 #if 0
 
 	if (f_vv) {
@@ -449,8 +471,16 @@ int isomorph::find_extension_easy_new(int *set,
 		ret = FALSE;
 		}
 	else {
+		if (f_v) {
+			cout << "isomorph::find_extension_easy_new before "
+					"find_extension_search_interval" << endl;
+			}
 		ret = find_extension_search_interval(set, 
 			first, len, idx, FALSE, 3, TRUE, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "isomorph::find_extension_easy_new after "
+					"find_extension_search_interval ret=" << ret << endl;
+			}
 		}
 
 finish:

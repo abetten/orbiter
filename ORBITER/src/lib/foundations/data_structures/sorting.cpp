@@ -952,13 +952,18 @@ int int_vec_search(int *v, int len, int a, int &idx)
 	return f_found;
 }
 
-int int_vec_search_first_occurence(int *v, int len, int a, int &idx)
+int int_vec_search_first_occurence(int *v, int len, int a, int &idx,
+		int verbose_level)
 // This function finds the first occurence of the element a.
 {
 	int l, r, m, res;
 	int f_found = FALSE;
-	int f_v = FALSE;
+	int f_v = (verbose_level >= 1);
 	
+	if (f_v) {
+		cout << "int_vec_search_first_occurence searching for " << a
+				<< " len=" << len << endl;
+		}
 	if (len == 0) {
 		idx = 0;
 		return FALSE;
@@ -966,7 +971,8 @@ int int_vec_search_first_occurence(int *v, int len, int a, int &idx)
 	l = 0;
 	r = len;
 	if (f_v) {
-		cout << "int_vec_search_first_occurence searching for " << a << " l=" << l << " r=" << r << endl;
+		cout << "int_vec_search_first_occurence searching for "
+				<< a << " l=" << l << " r=" << r << endl;
 		}
 	// invariant:
 	// v[i] < a for i < l;
@@ -978,7 +984,9 @@ int int_vec_search_first_occurence(int *v, int len, int a, int &idx)
 		// we examine the element above the middle
 		res = v[m] - a;
 		if (f_v) {
-			cout << "l=" << l << " r=" << r<< " m=" << m  << " v[m]=" << v[m] << " res=" << res << endl;
+			cout << "int_vec_search_first_occurence l=" << l
+					<< " r=" << r<< " m=" << m  << " v[m]=" << v[m]
+					<< " res=" << res << endl;
 			}
 		//cout << "search l=" << l << " m=" << m << " r=" 
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
@@ -989,15 +997,21 @@ int int_vec_search_first_occurence(int *v, int len, int a, int &idx)
 		if (res < 0) {
 			l = m + 1;
 			if (f_v) {
-				cout << "moving to the right" << endl;
+				cout << "int_vec_search_first_occurence "
+						"moving to the right" << endl;
 				}
 			}
 		else {
 			r = m;
 			if (f_v) {
-				cout << "moving to the left" << endl;
+				cout << "int_vec_search_first_occurence "
+						"moving to the left" << endl;
 				}
 			if (res == 0) {
+				if (f_v) {
+					cout << "int_vec_search_first_occurence "
+							"we found the element" << endl;
+					}
 				f_found = TRUE;
 				}
 			}
@@ -1010,6 +1024,10 @@ int int_vec_search_first_occurence(int *v, int len, int a, int &idx)
 		}
 #endif
 	idx = l;
+	if (f_v) {
+		cout << "int_vec_search_first_occurence done "
+				"f_found=" << f_found << " idx=" << idx << endl;
+		}
 	return f_found;
 }
 

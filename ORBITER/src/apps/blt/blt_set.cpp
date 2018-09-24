@@ -259,7 +259,7 @@ void blt_set::init_group(int verbose_level)
 		cout << "blt_set::init_group "
 				"computing lex least base" << endl;
 		}
-	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
+	A->lex_least_base_in_place(verbose_level - 2);
 	if (f_vv) {
 		cout << "blt_set::init_group "
 				"computing lex least base done" << endl;

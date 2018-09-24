@@ -1,4 +1,5 @@
 all: 
+	cd algebra; $(MAKE) all
 	cd arcs; $(MAKE) all
 	cd blt; $(MAKE) all
 	cd codes; $(MAKE) all
@@ -16,6 +17,7 @@ all:
 	cd tools; $(MAKE) all
 
 clean: 
+	cd algebra; $(MAKE) clean
 	cd arcs; $(MAKE) clean
 	cd blt; $(MAKE) clean
 	cd codes; $(MAKE) clean

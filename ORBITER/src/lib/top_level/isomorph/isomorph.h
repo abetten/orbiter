@@ -619,6 +619,7 @@ public:
 		// containing id_to_hash[] and id_to_datref[]
 		// Also initializes hash_vs_id_hash and hash_vs_id_id
 		// Called from init_solution
+	void print_hash_vs_id();
 	void write_orbit_data(int verbose_level);
 		// Writes the file 'fname_staborbits'
 	void read_orbit_data(int verbose_level);

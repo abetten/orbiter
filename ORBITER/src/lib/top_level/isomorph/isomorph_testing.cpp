@@ -553,6 +553,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	
 	
 	if (f_v) {
+		cout << "###############################################################" << endl;
 		cout << "isomorph::do_iso_test orbit_no=" << orbit_no << endl;
 		}
 
@@ -838,6 +839,11 @@ void isomorph::process_rearranged_set(
 			}
 		exit(1);
 #endif
+		if (TRUE) {
+			cout << "isomorph::process_rearranged_set flag orbit "
+					<< orbit_no << " subset " << subset_rank
+					<< " : not found" << endl;
+		}
 		return;
 		}
 	if (f_v) {
@@ -850,7 +856,7 @@ void isomorph::process_rearranged_set(
 	id0 = orbit_perm[orbit_fst[orbit_no0]];
 	
 	load_solution(id0, data0);
-		
+
 	if (!A->check_if_transporter_for_set(transporter, size, 
 		data, data0, verbose_level)) {
 		cout << "the element does not map set1 to set2" << endl;
