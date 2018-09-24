@@ -30,7 +30,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 	Elt = tmp_Elt1;
 	
 	if (f_v) {
-		cout << "iso_node " << iso_nodes << " identify_solution_relaxed: ";
+		cout << "iso_node " << iso_nodes << " isomorph::identify_solution_relaxed: ";
 		cout << endl;
 		//int_vec_print(cout, set, size);
 		//cout << endl;
@@ -50,14 +50,14 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " identify_solution calling trace : " << endl;
+					<< " isomorph::identify_solution_relaxed calling trace : " << endl;
 			}
 		case_nb = trace_set(canonical_set, transporter, 
 			f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
 
 		if (f_failure_to_find_point) {
 			if (f_v) {
-				cout << "iso_node " << iso_nodes << " identify_solution "
+				cout << "iso_node " << iso_nodes << " isomorph::identify_solution_relaxed "
 						"after trace: trace_set returns "
 						"f_failure_to_find_point" << endl;
 				}
@@ -65,7 +65,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 			}
 		if (f_v) {
 			cout << "iso_node " << iso_nodes
-					<< " identify_solution after trace: ";
+					<< " isomorph::identify_solution_relaxed after trace: ";
 			print_node_local(level, case_nb);
 			cout << endl;
 			//cout << "case_nb = " << case_nb << " : ";
@@ -85,7 +85,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 				verbose_level - 2)) {
 			if (f_vv) {
 				cout << "iso_node " << iso_nodes
-						<< " identify_solution after trace: ";
+						<< " isomorph::identify_solution_relaxed after trace: ";
 				print_node_local(level, case_nb);
 				cout << " : ";
 				cout << "solution is identified as id=" << id << endl;
@@ -104,7 +104,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 			}
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " identify_solution after trace: ";
+					<< " isomorph::identify_solution_relaxed after trace: ";
 			print_node_local(level, case_nb);
 			cout << " : ";
 			cout << "did not find extension" << endl;
@@ -118,11 +118,11 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 	load_solution(id0, data);
 	if (f_vv) {
 		//cout << "iso_node " << iso_nodes
-		//<< " identify_solution, checking" << endl;
+		//<< " isomorph::identify_solution_relaxed, checking" << endl;
 		}
 	if (!A->check_if_transporter_for_set(transporter,
 			size, set, data, verbose_level - 2)) {
-		cout << "identify_solution, check fails, stop" << endl;
+		cout << "isomorph::identify_solution_relaxed, check fails, stop" << endl;
 		int_vec_print(cout, set, size);
 		cout << endl;
 		int_vec_print(cout, data, size);
@@ -131,7 +131,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		}
 	if (f_vv) {
 		cout << "iso_node " << iso_nodes
-				<< " identify_solution after trace: ";
+				<< " isomorph::identify_solution_relaxed after trace: ";
 		print_node_local(level, case_nb);
 		cout << " : ";
 		cout << "id0 = " << id0 << " orbit=" << orbit << endl;
@@ -147,7 +147,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		}
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " identify_solution after trace: ";
+				<< " isomorph::identify_solution_relaxed after trace: ";
 		print_node_local(level, case_nb);
 		cout << " : ";
 		cout << "solution is identified as id=" << id << endl;
@@ -178,7 +178,7 @@ int isomorph::identify_solution(int *set,
 	Elt = tmp_Elt1;
 	
 	if (f_v) {
-		cout << "iso_node " << iso_nodes << " identify_solution: ";
+		cout << "iso_node " << iso_nodes << " isomorph::identify_solution: ";
 		cout << endl;
 		//int_vec_print(cout, set, size);
 		//cout << endl;
@@ -195,20 +195,20 @@ int isomorph::identify_solution(int *set,
 
 	while (TRUE) {
 		if (f_vv) {
-			cout << "iso_node " << iso_nodes << " identify_solution "
+			cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
 					"calling trace, cnt = " << cnt << " : " << endl;
 			}
 		case_nb = trace_set(canonical_set, transporter, 
 			f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
 		if (f_failure_to_find_point) {
 			if (f_vv) {
-				cout << "iso_node " << iso_nodes << " identify_solution "
+				cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
 						"trace returns f_failure_to_find_point" << endl;
 				}
 			return -1;
 			}
 		if (f_vv) {
-			cout << "iso_node " << iso_nodes << " identify_solution "
+			cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
 					"after trace: ";
 			print_node_local(level, case_nb);
 			cout << endl;
@@ -223,7 +223,7 @@ int isomorph::identify_solution(int *set,
 		if (find_extension_easy(canonical_set, case_nb, id,
 				verbose_level - 2)) {
 			if (f_vv) {
-				cout << "iso_node " << iso_nodes << " identify_solution "
+				cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
 						"after trace: ";
 				print_node_local(level, case_nb);
 				cout << " : ";
@@ -232,7 +232,7 @@ int isomorph::identify_solution(int *set,
 				}
 			orbit_representative(id, id0, orbit, Elt, verbose_level);
 			if (f_vv) {
-				cout << "iso_node " << iso_nodes << " identify_solution "
+				cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
 						"after trace: ";
 				print_node_local(level, case_nb);
 				cout << " : orbit_representative = " << id0 << endl;
@@ -248,7 +248,7 @@ int isomorph::identify_solution(int *set,
 			break;
 			}
 		if (f_vv) {
-			cout << "iso_node " << iso_nodes << " identify_solution "
+			cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
 					"after trace: ";
 			print_node_local(level, case_nb);
 			cout << " : ";
@@ -263,12 +263,12 @@ int isomorph::identify_solution(int *set,
 
 	load_solution(id0, data);
 	if (f_vv) {
-		//cout << "iso_node " << iso_nodes << " identify_solution,
+		//cout << "iso_node " << iso_nodes << " isomorph::identify_solution,
 		// checking" << endl;
 		}
 	if (!A->check_if_transporter_for_set(transporter, size, set,
 			data, verbose_level - 2)) {
-		cout << "identify_solution, check fails, stop" << endl;
+		cout << "isomorph::identify_solution, check fails, stop" << endl;
 		int_vec_print(cout, set, size);
 		cout << endl;
 		int_vec_print(cout, data, size);
@@ -277,7 +277,7 @@ int isomorph::identify_solution(int *set,
 		}
 	if (f_vv) {
 		cout << "iso_node " << iso_nodes
-				<< " identify_solution after trace: ";
+				<< " isomorph::identify_solution after trace: ";
 		print_node_local(level, case_nb);
 		cout << " : ";
 		cout << "id0 = " << id0 << " orbit=" << orbit << endl;
@@ -293,7 +293,7 @@ int isomorph::identify_solution(int *set,
 		}
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " identify_solution after trace: ";
+				<< " isomorph::identify_solution after trace: ";
 		print_node_local(level, case_nb);
 		cout << " : ";
 		cout << "solution is identified as id=" << id
@@ -345,7 +345,7 @@ int isomorph::trace_set(int *canonical_set, int *transporter,
 		cout << endl;
 		}
 	if (f_vv) {
-		cout << "transporter:" << endl;
+		cout << "iso_node " << iso_nodes << " isomorph::trace_set transporter:" << endl;
 #if 0
 		gen->A->print(cout, transporter);
 		//gen->A->print_as_permutation(cout, transporter);
@@ -385,7 +385,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 	
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " make_set_smaller: " << endl;
+				<< " isomorph::make_set_smaller: " << endl;
 		int_vec_print(cout, set, size);
 		cout << endl;
 		}
@@ -409,7 +409,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 	m = int_vec_minimum(set + level, size - level);
 	if (m < a) {
 		if (f_vv) {
-			cout << "isomorph::make_set_smaller a = " << a
+			cout << "iso_node " << iso_nodes
+					<< "isomorph::make_set_smaller a = " << a
 					<< " m = " << m << endl;
 			}
 		if (gen->f_starter) {
@@ -420,7 +421,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 			int_vec_heapsort(set, size);
 			}
 		if (f_vv) {
-			cout << "the reordered set is ";
+			cout << "iso_node " << iso_nodes
+				<< "isomorph::make_set_smaller the reordered set is ";
 			int_vec_print(cout, set, size);
 			cout << endl;
 			}
@@ -441,7 +443,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 			A->element_mult(transporter, Elt1, Elt2, FALSE);
 			A->element_move(Elt2, transporter, FALSE);
 			if (f_vv) {
-				cout << "the set is made smaller: " << endl;
+				cout << "iso_node " << iso_nodes
+					<< "isomorph::make_set_smaller the set is made smaller: " << endl;
 				int_vec_print(cout, set, size);
 				cout << endl;
 				}
@@ -449,8 +452,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 			}
 		}
 	
-	cout << "make_set_smaller: error, something is wrong" << endl;
-	cout << "make_set_smaller no stabilizer element maps "
+	cout << "isomorph::make_set_smaller: error, something is wrong" << endl;
+	cout << "isomorph::make_set_smaller no stabilizer element maps "
 			"any element to something smaller" << endl;
 	int_vec_print(cout, set, size);
 	cout << endl;
@@ -472,8 +475,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 	cout << "level = " << level << endl;
 	cout << "m = " << m << endl;
 	for (i = 0; i < gens.len; i++) {
-		
-		cout << "generator " << i << ":" << endl;
+		cout << "isomorph::make_set_smaller generator " << i << ":" << endl;
 		A->element_print(gens.ith(i), cout);
 		cout << endl;
 		A->element_print_as_permutation(gens.ith(i), cout);
@@ -513,8 +515,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 	
 	f_failure_to_find_point = FALSE;
 	if (f_v) {
-		cout << "isomorph::trace_set_recursion iso_node "
-				<< iso_nodes << " trace_set_recursion ";
+		cout << "iso_node "
+				<< iso_nodes << " isomorph::trace_set_recursion ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		//int_vec_print(cout, canonical_set, size);
@@ -544,8 +546,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 #endif
 
 		if (f_vv) {
-			cout << "isomorph::trace_set_recursion iso_node "
-					<< iso_nodes << " trace_set_recursion ";
+			cout << "iso_node "
+					<< iso_nodes << " isomorph::trace_set_recursion ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "after trace_starter" << endl;
@@ -557,8 +559,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 		FREE_int(next_set);
 		FREE_int(next_transporter);
 		if (f_v) {
-			cout << "isomorph::trace_set_recursion iso_node "
-					<< iso_nodes << " trace_set_recursion ";
+			cout << "iso_node "
+					<< iso_nodes << " isomorph::trace_set_recursion ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "after trace_starter, calling trace_set_recursion "
@@ -570,8 +572,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 		}
 	pt = canonical_set[cur_level];
 	if (f_vv) {
-		cout << "isomorph::trace_set_recursion iso_node "
-				<< iso_nodes << " trace_set_recursion ";
+		cout << "iso_node "
+				<< iso_nodes << " isomorph::trace_set_recursion ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "tracing point " << pt << endl;
@@ -581,8 +583,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 		canonical_set, transporter, f_implicit_fusion,
 		f_failure_to_find_point, verbose_level - 2);
 	if (f_vv) {
-		cout << "isomorph::trace_set_recursion iso_node "
-				<< iso_nodes << " trace_set_recursion ";
+		cout << "iso_node "
+				<< iso_nodes << " isomorph::trace_set_recursion ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "after tracing point " << pt << endl;
@@ -599,8 +601,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 		// we need to sort and restart the trace:
 
 		if (f_vv) {
-			cout << "isomorph::trace_set_recursion iso_node "
-					<< iso_nodes << " trace_set_recursion ";
+			cout << "iso_node "
+					<< iso_nodes << " isomorph::trace_set_recursion ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "trace_next_point returns FALSE" << endl;
@@ -614,8 +616,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 			}
 
 		if (f_vv) {
-			cout << "isomorph::trace_set_recursion iso_node "
-					<< iso_nodes << " trace_set_recursion ";
+			cout << "iso_node "
+					<< iso_nodes << " isomorph::trace_set_recursion ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "restarting the trace" << endl;
@@ -637,8 +639,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 		}
 	pt0 = canonical_set[cur_level];
 	if (f_vv) {
-		cout << "isomorph::trace_set_recursion iso_node "
-				<< iso_nodes << " trace_set_recursion ";
+		cout << "iso_node "
+				<< iso_nodes << " isomorph::trace_set_recursion ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "point " << pt << " has been mapped to "
@@ -655,8 +657,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 
 
 	if (f_vv) {
-		cout << "isomorph::trace_set_recursion iso_node "
-				<< iso_nodes << " trace_set_recursion ";
+		cout << "iso_node "
+				<< iso_nodes << " isomorph::trace_set_recursion ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "after handle_extension" << endl;
@@ -1016,8 +1018,9 @@ int isomorph::handle_extension_database(int cur_level,
 	
 
 	if (f_v) {
-		cout << "isomorph::handle_extension_database "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_database "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << endl;
 		}
@@ -1025,8 +1028,9 @@ int isomorph::handle_extension_database(int cur_level,
 	pos = 2 + cur_level;
 	nb_strong_generators = v->s_ii(pos++);
 	if (f_vv) {
-		cout << "isomorph::handle_extension_database "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_database "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "nb_strong_generators = " << nb_strong_generators << endl;
@@ -1036,8 +1040,9 @@ int isomorph::handle_extension_database(int cur_level,
 		}
 	nb_extensions = v->s_ii(pos++);
 	if (f_vv) {
-		cout << "isomorph::handle_extension_database "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_database "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "nb_extensions = " << nb_extensions << endl;
@@ -1050,8 +1055,9 @@ int isomorph::handle_extension_database(int cur_level,
 		d = v->s_ii(pos++);
 		if (pt == pt0) {
 			if (f_vv) {
-				cout << "isomorph::handle_extension_database "
-						"iso_node " << iso_nodes << " node ";
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::handle_extension_database "
+						" node ";
 				print_node_global(cur_level, cur_node_global);
 				cout << " : ";
 				cout << "we are in extension " << i << endl;
@@ -1063,8 +1069,9 @@ int isomorph::handle_extension_database(int cur_level,
 			}
 		}
 	if (i == nb_extensions) {
-		cout << "isomorph::handle_extension_database "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_database "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "did not find point " << pt0
@@ -1074,8 +1081,9 @@ int isomorph::handle_extension_database(int cur_level,
 	pos = v->s_l() - 1;
 	ref = v->s_ii(pos++);
 	if (f_vvv) {
-		cout << "isomorph::handle_extension_database "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_database "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "handle_extension_database ref = " << ref << endl;
@@ -1084,8 +1092,9 @@ int isomorph::handle_extension_database(int cur_level,
 	ref += nb_fusion;
 	if (t == 1) {
 		if (f_vv) {
-			cout << "isomorph::handle_extension_database "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_database "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			//int_vec_print(cout, canonical_set, size);
@@ -1097,8 +1106,9 @@ int isomorph::handle_extension_database(int cur_level,
 			}
 		else {
 			if (f_vv) {
-				cout << "isomorph::handle_extension_database "
-						"iso_node " << iso_nodes << " node ";
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::handle_extension_database "
+						" node ";
 				print_node_global(cur_level, cur_node_global);
 				cout << " : ";
 				cout << "calling trace_set_recursion for level "
@@ -1119,8 +1129,9 @@ int isomorph::handle_extension_database(int cur_level,
 			verbose_level - 1);
 
 		if (f_vv) {
-			cout << "isomorph::handle_extension_database "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_database "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "current_extension = " << i 
@@ -1144,8 +1155,9 @@ int isomorph::handle_extension_database(int cur_level,
 		next_node_global = gen->find_poset_orbit_node_for_set(cur_level + 1,
 				canonical_set, FALSE /*f_tolerant*/, 0);
 		if (f_vv) {
-			cout << "isomorph::handle_extension_database iso_node "
-					<< iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_database "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "next_node=" ;
@@ -1180,16 +1192,18 @@ int isomorph::handle_extension_oracle(int cur_level,
 	
 	f_failure_to_find_point = FALSE;
 	if (f_v) {
-		cout << "isomorph::handle_extension_oracle "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_oracle "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << endl;
 		}
 	pt0 = canonical_set[cur_level];
 	current_extension = O->find_extension_from_point(gen, pt0, FALSE);
 	if (current_extension < 0) {
-		cout << "isomorph::handle_extension_oracle "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_oracle "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "did not find point pt0=" << pt0 << endl;
@@ -1197,24 +1211,27 @@ int isomorph::handle_extension_oracle(int cur_level,
 		return -1;
 		}
 	if (f_v) {
-		cout << "isomorph::handle_extension_oracle "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_oracle "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "current_extension = " << current_extension << endl;
 		}
 	t = O->E[current_extension].type;
 	if (f_v) {
-		cout << "isomorph::handle_extension_oracle "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension_oracle "
+				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "type = " << t << endl;
 		}
 	if (t == 1) {
 		if (f_v) {
-			cout << "isomorph::handle_extension_oracle "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_oracle "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "extension node" << endl;
@@ -1222,8 +1239,9 @@ int isomorph::handle_extension_oracle(int cur_level,
 		// extension node
 		d = O->E[current_extension].data;
 		if (f_vv) {
-			cout << "isomorph::handle_extension_oracle "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_oracle "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			//int_vec_print(cout, canonical_set, size);
@@ -1235,8 +1253,9 @@ int isomorph::handle_extension_oracle(int cur_level,
 			}
 		else {
 			if (f_vv) {
-				cout << "isomorph::handle_extension_oracle "
-						"iso_node " << iso_nodes << " node ";
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::handle_extension_oracle "
+						" node ";
 				print_node_global(cur_level, cur_node_global);
 				cout << " : ";
 				cout << "calling trace_set_recursion for level "
@@ -1252,8 +1271,9 @@ int isomorph::handle_extension_oracle(int cur_level,
 		}
 	else if (t == 2) {
 		if (f_v) {
-			cout << "isomorph::handle_extension_oracle "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_oracle "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "fusion node" << endl;
@@ -1264,8 +1284,9 @@ int isomorph::handle_extension_oracle(int cur_level,
 			verbose_level - 2);
 
 		if (f_vv) {
-			cout << "isomorph::handle_extension_oracle "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_oracle "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "fusion element has been applied";
@@ -1276,24 +1297,26 @@ int isomorph::handle_extension_oracle(int cur_level,
 		int_vec_heapsort(canonical_set, cur_level + 1);
 		
 		if (f_vv) {
-			cout << "isomorph::handle_extension_oracle "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_oracle "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << " current_extension = " << current_extension 
 				<< " : after sorting the initial part ";
 			int_vec_print(cout, canonical_set, size);
 			cout << endl;
-			cout << "isomorph::handle_extension_oracle "
-					"iso_node " << iso_nodes
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_oracle "
 					<< " before gen->find_oracle_node_for_set" << endl;
 			}
 		next_node_global = gen->find_poset_orbit_node_for_set(
 				cur_level + 1, canonical_set, FALSE /*f_tolerant*/,
 				verbose_level);
 		if (f_vv) {
-			cout << "isomorph::handle_extension_oracle "
-					"iso_node " << iso_nodes << " node ";
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::handle_extension_oracle "
+					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "next_node=" ;
@@ -1309,8 +1332,9 @@ int isomorph::handle_extension_oracle(int cur_level,
 			}
 		else {
 			if (f_vv) {
-				cout << "isomorph::handle_extension_oracle "
-						"iso_node " << iso_nodes << " node ";
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::handle_extension_oracle "
+						" node ";
 				print_node_global(cur_level, cur_node_global);
 				cout << " : ";
 				cout << "calling trace_set_recursion for level "
@@ -1337,8 +1361,9 @@ int isomorph::handle_extension_oracle(int cur_level,
 
 
 		}
-	cout << "isomorph::handle_extension_oracle iso_node "
-			<< iso_nodes << " node ";
+	cout << "iso_node " << iso_nodes
+			<< " isomorph::handle_extension_oracle "
+			" node ";
 	print_node_global(cur_level, cur_node_global);
 	cout << " : ";
 	cout << "current_extension = " << current_extension << " : ";
@@ -1355,8 +1380,9 @@ void isomorph::apply_isomorphism_database(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "isomorph:: apply_isomorphism_database "
-				"iso_node " << iso_nodes << " node ";
+		cout << "iso_node " << iso_nodes
+				<< "isomorph::apply_isomorphism_database "
+				<< " node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "ref = " << ref << endl;

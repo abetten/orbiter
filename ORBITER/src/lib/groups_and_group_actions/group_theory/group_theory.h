@@ -839,6 +839,8 @@ public:
 	int **prev; // [base_len][A->deg]
 	int **label; // [base_len][A->deg]
 	
+	int *Path; // [A->deg + 1]
+	int *Label; // [A->deg]
 	
 	// storage for temporary data and 
 	// group elements computed by various routines.
@@ -965,8 +967,8 @@ public:
 		// j is a coset, not a point
 		// result is in cosetrep
 	int compute_coset_rep_depth(int i, int j, int verbose_level);
-	void compute_coset_rep_path(int i, int j, int *&Path, 
-		int *&Label, int &depth, int verbose_level);
+	void compute_coset_rep_path(int i, int j, int &depth,
+		int verbose_level);
 	void coset_rep_inv(int i, int j, int verbose_level_le);
 		// computes the inverse element of what coset_rep computes,
 		// i.e. an element which maps the 

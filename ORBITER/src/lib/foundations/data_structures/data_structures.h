@@ -476,7 +476,8 @@ int int_vec_search(int *v, int len, int a, int &idx);
 	// If a is not found, it returns in idx the position 
 	// where it should be inserted if 
 	// the vector is assumed to be in increasing order.
-int int_vec_search_first_occurence(int *v, int len, int a, int &idx);
+int int_vec_search_first_occurence(int *v, int len, int a, int &idx,
+		int verbose_level);
 	// This function finds the first occurence of the element a.
 int longinteger_vec_search(longinteger_object *v, int len, 
 	longinteger_object &a, int &idx);

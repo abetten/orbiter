@@ -1463,9 +1463,24 @@ void isomorph::read_hash_and_datref_file(int verbose_level)
 		exit(1);
 		}
 	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+
+	print_hash_vs_id();
+
 	if (f_v) {
 		cout << "isomorph::read_hash_and_datref_file done" << endl;
 		}
+}
+
+void isomorph::print_hash_vs_id()
+{
+	int i;
+
+	cout << "isomorph::print_hash_vs_id" << endl;
+	cout << "i : hash_vs_id_hash[i] : hash_vs_id_id[i]" << endl;
+	for (i = 0; i < N; i++) {
+		cout << i << " : " << hash_vs_id_hash[i]
+			<< " : " << hash_vs_id_id[i] << endl;
+	}
 }
 
 void isomorph::write_orbit_data(int verbose_level)
