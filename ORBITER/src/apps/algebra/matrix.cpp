@@ -51,7 +51,7 @@ int main(int argc, const char **argv)
 	
 	int *Elt1;
 	
-	A = new action;
+	A = NEW_OBJECT(action);
 	N = nb_PG_elements(n - 1, q);
 
 	if (f_v && N < 100) {
@@ -68,7 +68,7 @@ int main(int argc, const char **argv)
 		A->print_group_order(cout);
 		cout << endl;
 		}
-	Elt1 = new int[A->elt_size_in_int];
+	Elt1 = NEW_int(A->elt_size_in_int);
 	
 	nb = 1;
 	while (TRUE) {
@@ -99,6 +99,6 @@ int main(int argc, const char **argv)
 	cout << "written file tmp indicating success" << endl;
 
 	
-	delete A;
+	FREE_OBJECT(A);
 }
 

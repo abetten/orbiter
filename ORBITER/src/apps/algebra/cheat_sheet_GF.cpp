@@ -64,7 +64,8 @@ int main(int argc, char **argv)
 
 
 void cheat_sheet_GF(int q,
-		int f_override_polynomial, char *my_override_polynomial,
+		int f_override_polynomial,
+		char *my_override_polynomial,
 		int verbose_level)
 {
 	const char *override_poly;

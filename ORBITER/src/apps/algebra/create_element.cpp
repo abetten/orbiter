@@ -18,7 +18,8 @@ int t0; // the system time when the program started
 const char *version = "create_element.C version 12/25/2009";
 
 void create_element(int q, int k1, int k2, int verbose_level);
-void create_element_O4_isomorphism(int q, int f_switch, int *data8, int verbose_level);
+void create_element_O4_isomorphism(int q,
+		int f_switch, int *data8, int verbose_level);
 
 
 int main(int argc, char **argv)
@@ -67,7 +68,8 @@ int main(int argc, char **argv)
 		create_element(q, k1, k2, verbose_level);
 		}
 	if (f_O4) {
-		create_element_O4_isomorphism(q, f_switch, data8, verbose_level);
+		create_element_O4_isomorphism(q,
+				f_switch, data8, verbose_level);
 		}
 	
 	the_end_quietly(t0);
@@ -89,7 +91,9 @@ void create_element(int q, int k1, int k2, int verbose_level)
 	F->init(q, 0);	
 	A = new action;
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */,
+		TRUE /* f_basis */,
+		verbose_level);
 
 
 	int f_semilinear = TRUE;
@@ -97,13 +101,17 @@ void create_element(int q, int k1, int k2, int verbose_level)
 
 	A_O4 = new action;
 	A_O4->init_orthogonal_group(1 /*epsilon*/, 4/*n*/, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 	
 
 	A4 = new action;
 	A4->init_projective_group(4 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */,
+		TRUE /* f_basis */,
+		verbose_level);
 
 	A->print_base();
 	A->group_order(Go);
@@ -211,7 +219,8 @@ void create_element(int q, int k1, int k2, int verbose_level)
 }
 
 
-void create_element_O4_isomorphism(int q, int f_switch, int *data8, int verbose_level)
+void create_element_O4_isomorphism(int q,
+		int f_switch, int *data8, int verbose_level)
 {
 	finite_field *F;
 	action *A;
@@ -228,7 +237,9 @@ void create_element_O4_isomorphism(int q, int f_switch, int *data8, int verbose_
 	F->init(q, 0);
 	A = new action;
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */,
+		TRUE /* f_basis */,
+		verbose_level);
 
 
 	int f_semilinear = TRUE;
@@ -236,13 +247,17 @@ void create_element_O4_isomorphism(int q, int f_switch, int *data8, int verbose_
 
 	A_O4 = new action;
 	A_O4->init_orthogonal_group(1 /*epsilon*/, 4/*n*/, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 	
 
 	A4 = new action;
 	A4->init_projective_group(4 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */,
+		TRUE /* f_basis */,
+		verbose_level);
 
 	A->print_base();
 	A->group_order(Go);

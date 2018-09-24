@@ -6,15 +6,19 @@
 #include "orbiter.h"
 
 void print_usage();
-void factor_cyclotomic(int n, int q, int d, int *coeffs, int f_poly, char *poly, int verbose_level);
+void factor_cyclotomic(int n, int q, int d,
+	int *coeffs, int f_poly, char *poly, int verbose_level);
 
 
 void print_usage()
 {
-	cout << "usage: factor_cyclotomic [options] n q d a_d a_d-1 ... a_0" << endl;
+	cout << "usage: factor_cyclotomic [options] "
+			"n q d a_d a_d-1 ... a_0" << endl;
 	cout << "where options can be:" << endl;
-	cout << "-v  <n>                : verbose level <n>" << endl;
-	cout << "-poly  <m>             : use polynomial <m> to create the field GF(q)" << endl;
+	cout << "-v  <n>                "
+			": verbose level <n>" << endl;
+	cout << "-poly  <m>             "
+			": use polynomial <m> to create the field GF(q)" << endl;
 }
 
 int main(int argc, char **argv)
@@ -49,17 +53,18 @@ int main(int argc, char **argv)
 	d = atoi(argv[++i]);
 	int *coeffs;
 	
-	coeffs = new int[d + 1];
+	coeffs = NEW_int(d + 1);
 	for (j = d; j >= 0; j--) {
 		coeffs[j] = atoi(argv[++i]);
 		}
 	
 	factor_cyclotomic(n, q, d, coeffs, f_poly, poly, verbose_level);
 	
-	delete [] coeffs;
+	FREE_int(coeffs);
 }
 
-void factor_cyclotomic(int n, int q, int d, int *coeffs, int f_poly, char *poly, int verbose_level)
+void factor_cyclotomic(int n, int q, int d,
+	int *coeffs, int f_poly, char *poly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -71,7 +76,8 @@ void factor_cyclotomic(int n, int q, int d, int *coeffs, int f_poly, char *poly,
 	
 	factor_prime_power(q, p, e);
 	if (f_v) {
-		cout << "factor_cyclotomic q=" << q << " p=" << q << " e=" << e << " n=" << n << endl;
+		cout << "factor_cyclotomic q=" << q << " p=" << q
+			<< " e=" << e << " n=" << n << endl;
 		}
 	m = order_mod_p(q, n);
 	if (f_v) {
@@ -136,11 +142,12 @@ void factor_cyclotomic(int n, int q, int d, int *coeffs, int f_poly, char *poly,
 
 	if (f_v) {
 		Beta = FQ.alpha_power(beta);
-		cout << "the primitive n-th root of unity we choose is beta = alpha^" << beta << " = " << Beta << endl;	
+		cout << "the primitive n-th root of unity we choose "
+				"is beta = alpha^" << beta << " = " << Beta << endl;
 		}
 	
-	roots = new int[n];
-	roots2 = new int[n];
+	roots = NEW_int(n);
+	roots2 = NEW_int(n);
 	for (a = 0; a < n; a++) {
 		FQX.create_object_of_degree(Xma, 1);
 		t = FQ.power(Beta, a);
@@ -149,7 +156,8 @@ void factor_cyclotomic(int n, int q, int d, int *coeffs, int f_poly, char *poly,
 		FQX.integral_division(h, Xma, quo, rem, 0);
 		b = FQX.s_i(rem, 0);
 		if (b == 0) {
-			cout << "zero Beta^" << a << " log " << FQ.log_alpha(t) << endl;
+			cout << "zero Beta^" << a << " log "
+				<< FQ.log_alpha(t) << endl;
 			roots[nb_roots++] = a;
 			}
 		}

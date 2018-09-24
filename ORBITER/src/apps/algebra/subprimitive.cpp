@@ -10,7 +10,8 @@
 #include "orbiter.h"
 
 int Phi_of(int n, int verbose_level);
-void formula_subprimitive(int d, int q, longinteger_object &Rdq, int &g, int verbose_level);
+void formula_subprimitive(int d, int q,
+	longinteger_object &Rdq, int &g, int verbose_level);
 void formula(int d, int q, longinteger_object &Rdq, int verbose_level);
 int subprimitive(int q, int h);
 int period_of_sequence(int *v, int l);
@@ -73,7 +74,8 @@ int main(int argc, char **argv)
 	for (i = 0; i < nb_primes; i++) {
 		cout << setw(10) << Q[i];
 		for (h = 2; h <= H_max; h++) {
-			cout << " & " << setw(10) << Rdq[i * H_max + h - 2] << "_{" << setw(3) << G[i * H_max + h - 2] << "}";
+			cout << " & " << setw(10) << Rdq[i * H_max + h - 2]
+				<< "_{" << setw(3) << G[i * H_max + h - 2] << "}";
 			}
 		cout << "\\\\" << endl;
 		}
@@ -107,7 +109,8 @@ int Phi_of(int n, int verbose_level)
 	return R.as_int();
 }
 
-void formula_subprimitive(int d, int q, longinteger_object &Rdq, int &g, int verbose_level)
+void formula_subprimitive(int d, int q,
+		longinteger_object &Rdq, int &g, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int theta_mod_qm1, p, e, i, rem;

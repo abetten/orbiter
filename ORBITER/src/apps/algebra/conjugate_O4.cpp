@@ -88,7 +88,9 @@ void conjugate(int q, int *from_elt, int *to_elt, int verbose_level)
 	F->init(q, 0);
 	A_O4 = new action;
 	A_O4->init_orthogonal_group(1 /*epsilon*/, 4/*n*/, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 
 	

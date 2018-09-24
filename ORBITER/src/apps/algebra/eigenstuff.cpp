@@ -60,12 +60,14 @@ int main(int argc, char **argv)
 		}
 
 	if (!f_q) {
-		cout << "please use option -q <q> to specify the field size" << endl;
+		cout << "please use option -q <q> to specify "
+				"the field size" << endl;
 		exit(1);
 		}
 	cout << "q=" << q << endl;
 	if (!f_M) {
-		cout << "please use option -M <size> <list of entries> to specify the matrix" << endl;
+		cout << "please use option -M <size> <list of entries> "
+			"to specify the matrix" << endl;
 		exit(1);
 		}
 	int_vec_scan(data, Data, Data_len);
@@ -199,7 +201,8 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 				}
 			}
 		cout << "A:" << endl;
-		print_integer_matrix_width(cout, A, size, size, size, Fq.log10_of_q);
+		print_integer_matrix_width(cout, A,
+				size, size, size, Fq.log10_of_q);
 		for (i = 0; i < size; i++) {
 			for (j = 0; j < size; j++) {
 				a = A[i * size + j];
@@ -210,11 +213,13 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 				}
 			}
 		cout << "B = A - eigenvalue * I:" << endl;
-		print_integer_matrix_width(cout, B, size, size, size, Fq.log10_of_q);
+		print_integer_matrix_width(cout, B,
+				size, size, size, Fq.log10_of_q);
 		
 		cout << "B transposed:" << endl;
 		Fq.transpose_matrix(B, Bt, size, size);
-		print_integer_matrix_width(cout, Bt, size, size, size, Fq.log10_of_q);
+		print_integer_matrix_width(cout, Bt,
+				size, size, size, Fq.log10_of_q);
 
 		int f_special = FALSE;
 		int f_complete = TRUE;
@@ -226,14 +231,17 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 		base_cols = new int[size];
 		kernel = new int[size * size];
 		
-		nb_base_cols = Fq.Gauss_int(Bt, f_special, f_complete, base_cols, 
-			f_P, NULL, size, size, size, verbose_level - 1);
+		nb_base_cols = Fq.Gauss_int(Bt,
+			f_special, f_complete, base_cols,
+			f_P, NULL, size, size, size,
+			verbose_level - 1);
 		cout << "rank = " << nb_base_cols << endl;
 		
 		Fq.matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols, 
 			kernel_m, kernel_n, kernel);
 		cout << "kernel = left eigenvectors:" << endl;
-		print_integer_matrix_width(cout, kernel, size, kernel_n, kernel_n, Fq.log10_of_q);
+		print_integer_matrix_width(cout, kernel,
+				size, kernel_n, kernel_n, Fq.log10_of_q);
 		
 		int *vec1, *vec2;
 		vec1 = new int[size];

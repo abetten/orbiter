@@ -62,7 +62,7 @@ void do_it(int q, int k, int verbose_level)
 		}
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	cout << "initializing finite field of order " << q << ":" << endl;
 	F->init(q, 0);

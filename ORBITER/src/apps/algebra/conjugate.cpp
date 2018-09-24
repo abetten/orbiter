@@ -145,10 +145,12 @@ void conjugate(int q, int *from_elt, int *to_elt, int verbose_level)
 	
 	S->element_rank(rk_from, Elt1);
 	rk_from_int = rk_from.as_int();
-	cout << "from element has rank " << rk_from << " = " << rk_from_int << endl;
+	cout << "from element has rank " << rk_from << " = "
+			<< rk_from_int << endl;
 	S->element_rank(rk_to, Elt2);
 	rk_to_int = rk_to.as_int();
-	cout << "to element has rank " << rk_to << " = " << rk_to_int << endl;
+	cout << "to element has rank " << rk_to << " = "
+			<< rk_to_int << endl;
 	
 
 
@@ -194,7 +196,8 @@ void conjugate(int q, int *from_elt, int *to_elt, int verbose_level)
 		cout << "of order " << ord << endl;
 				
 		charpoly.charpoly(q, 2, Elt3, verbose_level - 2);
-		cout << "characteristic polynomial: " << charpoly << endl << endl;
+		cout << "characteristic polynomial: "
+				<< charpoly << endl << endl;
 		}
 
 	cout << "#####################" << endl;

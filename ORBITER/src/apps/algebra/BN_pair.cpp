@@ -23,9 +23,12 @@
 int t0; // the system time when the program started
 
 int main(int argc, char **argv);
-void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level);
-void compute_B(action *A, int epsilon, int n, finite_field *F, int verbose_level);
-void compute_N(action *A, int epsilon, int n, finite_field *F, int verbose_level);
+void init_orthogonal(action *A, int epsilon, int n,
+		finite_field *F, int verbose_level);
+void compute_B(action *A, int epsilon, int n,
+		finite_field *F, int verbose_level);
+void compute_N(action *A, int epsilon, int n,
+		finite_field *F, int verbose_level);
 
 
 
@@ -79,8 +82,8 @@ int main(int argc, char **argv)
 	action *A;
 	finite_field *F;
 
-	A = new action;
-	F = new finite_field;
+	A = NEW_OBJECT(action);
+	F = NEW_OBJECT(finite_field);
 	
 	cout << "epsilon=" << epsilon << endl;
 	cout << "n=" << n << endl;
@@ -112,7 +115,8 @@ int main(int argc, char **argv)
 
 
 
-void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level)
+void init_orthogonal(action *A, int epsilon, int n,
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -120,7 +124,8 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 	int f_basis = TRUE;
 
 	if (f_v) {
-		cout << "init_orthogonal epsilon=" << epsilon << " n=" << n << " q=" << F->q << endl;
+		cout << "init_orthogonal epsilon=" << epsilon
+				<< " n=" << n << " q=" << F->q << endl;
 		}
 
 	is_prime_power(F->q, p, hh);
@@ -137,7 +142,9 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 
 	A->init_orthogonal_group(epsilon, 
 		n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, 
 		0/*verbose_level*/);
 
@@ -154,7 +161,8 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 }
 
 
-void compute_B(action *A, int epsilon, int n, finite_field *F, int verbose_level)
+void compute_B(action *A, int epsilon, int n,
+		finite_field *F, int verbose_level)
 {
 	polar P;
 	int depth;
@@ -167,7 +175,8 @@ void compute_B(action *A, int epsilon, int n, finite_field *F, int verbose_level
 
 	depth = Witt_index(epsilon, n - 1);
 	
-	P.init(0, NULL, A, O, epsilon, n, depth, F, depth, verbose_level);
+	P.init(0, NULL, A, O, epsilon, n,
+			depth, F, depth, verbose_level);
 
 	P.Gen->f_do_group_extension_in_upstep = FALSE;
 		// since we want to stabilize the flag
@@ -176,7 +185,8 @@ void compute_B(action *A, int epsilon, int n, finite_field *F, int verbose_level
 	
 	P.compute_orbits(t0, verbose_level);
 	
-	cout << "we found " << P.nb_orbits << " orbits at depth " << depth << endl;
+	cout << "we found " << P.nb_orbits
+			<< " orbits at depth " << depth << endl;
 	
 	strong_generators *Strong_gens;
 	longinteger_object go;
@@ -190,10 +200,11 @@ void compute_B(action *A, int epsilon, int n, finite_field *F, int verbose_level
 	Strong_gens->group_order(go);
 	
 	cout << "The order of the stabilizer is: " << go << endl;
-	delete Strong_gens;
+	FREE_OBJECT(Strong_gens);
 }
 
-void compute_N(action *A, int epsilon, int n, finite_field *F, int verbose_level)
+void compute_N(action *A, int epsilon, int n,
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -218,7 +229,7 @@ void compute_N(action *A, int epsilon, int n, finite_field *F, int verbose_level
 	AO = A->G.AO;
 	O = AO->O;
 	
-	S = new set_stabilizer_compute;
+	S = NEW_OBJECT(set_stabilizer_compute);
 	the_set = NEW_int(n);
 	v = NEW_int(n); // n = algebraic dimension
 	the_set_size = 0;
@@ -249,10 +260,11 @@ void compute_N(action *A, int epsilon, int n, finite_field *F, int verbose_level
 	if (f_vv) {
 		cout << "computing set stabilizer:" << endl;
 		}
-	S->compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level - 3);
+	S->compute_set_stabilizer(t0, nb_backtrack_nodes,
+			Aut_gens, verbose_level - 3);
 	
 	Stab = Aut_gens->create_sims(verbose_level - 1);
-	delete Aut_gens;
+	FREE_OBJECT(Aut_gens);
 	
 	if (f_vv) {
 		cout << "stabilizer has been computed" << endl;
@@ -277,7 +289,7 @@ void compute_N(action *A, int epsilon, int n, finite_field *F, int verbose_level
 	longinteger_object go_induced;
 	int f_induce_action = TRUE;
 
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	
 	A2->induced_action_by_restriction(*A, f_induce_action, Stab, 
 		the_set_size, the_set, verbose_level);
@@ -289,7 +301,7 @@ void compute_N(action *A, int epsilon, int n, finite_field *F, int verbose_level
 	A2->group_order(go_induced);
 
 
-	delete Stab;
+	FREE_OBJECT(Stab);
 	if (f_v) {
 		cout << "the induced action has order " << go_induced << endl;
 		}

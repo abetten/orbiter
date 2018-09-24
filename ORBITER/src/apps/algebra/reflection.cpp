@@ -60,14 +60,6 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 	int *&reduced_word_length, int **&reduced_word, 
 	int verbose_level);
 	
-#if 0
-// analyze_group.C
-void analyze(action *A, sims *S, vector_ge *SG, vector_ge *gens2, int verbose_level);
-void compute_regular_representation(action *A, sims *S, vector_ge *SG, int *&perm, int verbose_level);
-
-void presentation(action *A, sims *S, vector_ge *gens, int *primes, int verbose_level);
-
-#endif
 
 
 void usage(int argc, char **argv)
@@ -133,7 +125,8 @@ void choose_random_generator(sims *G, int *Elt, int verbose_level)
 	G->A->element_print_quick(Elt, cout);
 }
 
-void do_it(int q, int type, int f_analyze, int f_words, int verbose_level)
+void do_it(int q, int type,
+		int f_analyze, int f_words, int verbose_level)
 {
 	finite_field *F;
 	action *A;
@@ -228,7 +221,8 @@ void do_it(int q, int type, int f_analyze, int f_words, int verbose_level)
 	
 	for (i = 0; i < nb_simple_roots; i++) {
 
-		create_reflection(A, M->GFq, Elt, simple_roots[i], nb_roots, roots + simple_roots[i] * dimension);
+		create_reflection(A, M->GFq, Elt, simple_roots[i],
+			nb_roots, roots + simple_roots[i] * dimension);
 		simple_roots_rank[i] = S.element_rank_int(Elt);		
 		}
 
@@ -358,7 +352,8 @@ void words(action *A, finite_field *F, sims *S,
 	int max_length, l, a, N;
 	
 	Elt1 = new int[A->elt_size_in_int];
-	max_length = create_reduced_expressions(A, F, S, nb_simple_roots, simple_roots_new_labels, 
+	max_length = create_reduced_expressions(A, F, S,
+		nb_simple_roots, simple_roots_new_labels,
 		Nb_elements_by_length, Elements_by_length, 
 		reduced_word_length, reduced_word, 
 		0/*verbose_level*/);
@@ -374,13 +369,15 @@ void words(action *A, finite_field *F, sims *S,
 #endif
 	N = 0;
 	for (l = 0; l <= max_length; l++) {
-		cout << "There are " << Nb_elements_by_length[l] << " words of length " << l << endl;
+		cout << "There are " << Nb_elements_by_length[l]
+			<< " words of length " << l << endl;
 		N += Nb_elements_by_length[l];
 		}
 	cout << "the sum of the number of reduced words is " << N << endl;
 	
 	for (l = 0; l <= max_length; l++) {
-		cout << "There are " << Nb_elements_by_length[l] << " words of length " << l << ":" << endl;
+		cout << "There are " << Nb_elements_by_length[l]
+			<< " words of length " << l << ":" << endl;
 		cout << "length : i : element : reduced expression" << endl;		
 		for (i = 0; i < Nb_elements_by_length[l]; i++) {
 			a = Elements_by_length[l][i];
@@ -400,7 +397,8 @@ void words(action *A, finite_field *F, sims *S,
 	ofstream f(fname);
 	
 	for (l = 0; l <= max_length; l++) {
-		cout << "There are " << Nb_elements_by_length[l] << " words of length " << l << ":" << endl;
+		cout << "There are " << Nb_elements_by_length[l]
+			<< " words of length " << l << ":" << endl;
 		for (i = 0; i < Nb_elements_by_length[l]; i++) {
 			a = Elements_by_length[l][i];
 			f << setw(3) << l << " ";
@@ -412,7 +410,8 @@ void words(action *A, finite_field *F, sims *S,
 		}
 	f << -1 << endl;
 	}
-	cout << "written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 
 
@@ -526,7 +525,8 @@ void create_roots_H4(finite_field *F)
 	int i, j, k, j1, j2, j3, j4, n;
 	int v[4];
 	int L[4], P[4], sgn;
-	int one, m_one, half, quarter, c, c2, tau, tau_inv, a, b, m_a, m_b, m_half;
+	int one, m_one, half, quarter, c, c2;
+	int tau, tau_inv, a, b, m_a, m_b, m_half;
 	
 	one = 1;
 	m_one = F->negate(one);
@@ -539,7 +539,8 @@ void create_roots_H4(finite_field *F)
 			break;
 		}
 	if (c == F->q) {
-		cout << "create_roots_H4: the field of order " << F->q << " does not contain a square root of 5" << endl;
+		cout << "create_roots_H4: the field of order " << F->q
+				<< " does not contain a square root of 5" << endl;
 		exit(1);
 		}
 	tau = F->mult(F->add(1, c), half);
@@ -992,7 +993,8 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 	
 	for (length = 0; length < max_length; length++) {
 		nb_words = i_power_j(nb_gens, length);
-		cout << endl << "computing words whose reduced length is " << length << endl;
+		cout << endl << "computing words whose reduced "
+			"length is " << length << endl;
 		//cout << "nb_words=" << nb_words << endl;
 
 
@@ -1021,7 +1023,8 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 						}
 					//reduced_word_idx[a] = i;
 					
-					Elements_by_length[length][Nb_elements_by_length[length]] = a;
+					Elements_by_length[length]
+						[Nb_elements_by_length[length]] = a;
 					Nb_elements_by_length[length]++;
 					}
 				}
@@ -1068,14 +1071,16 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 						//reduced_word_idx[a] = b;
 						//cout << "new group element" << endl;
 					
-						Elements_by_length[length][Nb_elements_by_length[length]] = a;
+						Elements_by_length[length]
+							[Nb_elements_by_length[length]] = a;
 						Nb_elements_by_length[length]++;
 						}
 					}
 				}
 			}
 		
-		cout << "found " << Nb_elements_by_length[length] << " elements of length " << length << endl;
+		cout << "found " << Nb_elements_by_length[length]
+			<< " elements of length " << length << endl;
 		for (i = 0; i < Nb_elements_by_length[length]; i++) {
 			a = Elements_by_length[length][i];
 			if (reduced_word_length[a] != length) {
@@ -1096,7 +1101,8 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 }
 
 
-void presentation(action *A, sims *S, vector_ge *gens, int *primes, int verbose_level)
+void presentation(action *A, sims *S,
+		vector_ge *gens, int *primes, int verbose_level)
 {
 	int *Elt1, *Elt2, *Elt3, *Elt4;
 	int i, j, k, l, a, b;
@@ -1136,7 +1142,8 @@ void presentation(action *A, sims *S, vector_ge *gens, int *primes, int verbose_
 	for (i = 0; i < l; i++) {
 		A->move(gens->ith(i), Elt1);
 		A->element_power_int_in_place(Elt1, primes[i], 0);
-		cout << "generator " << i << " to the power " << primes[i] << ":" << endl;
+		cout << "generator " << i << " to the power "
+			<< primes[i] << ":" << endl;
 		A->print(cout, Elt1);
 		cout << endl;
 		}
@@ -1173,7 +1180,8 @@ void presentation(action *A, sims *S, vector_ge *gens, int *primes, int verbose_
 		}
 	cout << "i : word_list[i] : inverse_word_list[i]" << endl;
 	for (i = 0; i < 1152; i++) {
-		cout << setw(5) << i << " : " << setw(5) << word_list[i] << " : " << setw(5) << inverse_word_list[i] << endl;
+		cout << setw(5) << i << " : " << setw(5) << word_list[i]
+			<< " : " << setw(5) << inverse_word_list[i] << endl;
 		}
 	for (i = 0; i < l; i++) {
 		A->move(gens->ith(i), Elt1);
@@ -1184,7 +1192,8 @@ void presentation(action *A, sims *S, vector_ge *gens, int *primes, int verbose_
 			cout << "g_" << j << "^{g_" << i << "} =" << endl;
 			A->print(cout, Elt4);
 			a = S->element_rank_int(Elt4);
-			cout << "which is element " << a << " which is word " << inverse_word_list[a] << endl;
+			cout << "which is element " << a << " which is word "
+					<< inverse_word_list[a] << endl;
 			cout << endl;
 			}
 		cout << endl;

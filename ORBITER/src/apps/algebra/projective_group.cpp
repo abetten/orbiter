@@ -139,7 +139,7 @@ int main(int argc, char **argv)
 		cout << "the minimum distance of the code is " << d << endl;
 
 		Perms = NEW_int(SG->gens->len * code_sz);
-		A_cols = new action;
+		A_cols = NEW_OBJECT(action);
 
 		cout << "creating action on the columns:" << endl;
 		A_cols->induced_action_by_restriction(*A, 
@@ -161,7 +161,7 @@ int main(int argc, char **argv)
 			}
 
 		
-		A_perm = new action;
+		A_perm = NEW_OBJECT(action);
 		A_perm->init_symmetric_group(code_sz, 0 /* verbose_level */);
 
 		S_big = A_perm->Sims;
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
 		PElt1 = NEW_int(A_perm->elt_size_in_int);
 		PElt2 = NEW_int(A_perm->elt_size_in_int);
 		vector_ge *gens;
-		gens = new vector_ge;
+		gens = NEW_OBJECT(vector_ge);
 		gens->init(A_perm);
 		gens->allocate(SG->gens->len);
 		for (i = 0; i < SG->gens->len; i++) {
@@ -306,10 +306,10 @@ int main(int argc, char **argv)
 		FREE_int(G);
 		}
 
-	delete S;
-	delete SG;
-	delete A;
-	delete F;
+	FREE_OBJECT(S);
+	FREE_OBJECT(SG);
+	FREE_OBJECT(A);
+	FREE_OBJECT(F);
 }
 
 void make_generator_matrix(finite_field *F,
@@ -336,9 +336,9 @@ void projective_group(int n, int q, int f_semilinear, int verbose_level)
 		cout << "projective_group n=" << n << " q=" << q
 				<< " f_semilinear=" << f_semilinear << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_projective_group(n, F, 
 		f_semilinear, TRUE /* f_basis */, verbose_level);
 	A->print_base();
@@ -350,7 +350,7 @@ void projective_group(int n, int q, int f_semilinear, int verbose_level)
 
 void grassmannian(int n, int k, finite_field *F, int verbose_level)
 {
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 
 	Gr->init(n, k, F, 0 /* verbose_level */);
 }
@@ -364,7 +364,7 @@ void read_group(const char *fname, int verbose_level)
 		cout << "read_group file = " << fname << endl;
 		}
 
-	SG = new strong_generators;
+	SG = NEW_OBJECT(strong_generators);
 	cout << "reading generators from file " << fname << endl;
 
 	//SG->init(A, 0);

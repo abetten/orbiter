@@ -71,7 +71,8 @@ void partition_dual(int *part, int *dual_part, int n, int verbose_level)
 			s += aj;
 			dual_part[s - 1] = j - i;
 			if (f_vv) {
-				cout << "partition_dual i=" << i << " j=" << j << " aj=" << aj << " s=" << s << endl;
+				cout << "partition_dual i=" << i << " j=" << j
+						<< " aj=" << aj << " s=" << s << endl;
 				}
 			}
 		j = i;
@@ -81,7 +82,8 @@ void partition_dual(int *part, int *dual_part, int n, int verbose_level)
 		s += aj;
 		dual_part[s - 1] = j;
 		if (f_vv) {
-			cout << "partition_dual j=" << j << " aj=" << aj << " s=" << s << endl;
+			cout << "partition_dual j=" << j << " aj=" << aj
+					<< " s=" << s << endl;
 			}
 		}
 	if (f_v) {
@@ -92,7 +94,8 @@ void partition_dual(int *part, int *dual_part, int n, int verbose_level)
 		}
 }
 
-void make_all_partitions_of_n(int n, int *&Table, int &nb, int verbose_level)
+void make_all_partitions_of_n(int n,
+		int *&Table, int &nb, int verbose_level)
 {
 	int *v;
 	int cnt;
@@ -285,7 +288,9 @@ int set_find(int *elts, int size, int a)
 	return idx;
 }
 
-void set_complement(int *subset, int subset_size, int *complement, int &size_complement, int universal_set_size)
+void set_complement(int *subset, int subset_size,
+		int *complement, int &size_complement,
+		int universal_set_size)
 // subset must be in increasing order
 {
 	int i, j;
@@ -301,7 +306,9 @@ void set_complement(int *subset, int subset_size, int *complement, int &size_com
 		}
 }
 
-void set_complement_safe(int *subset, int subset_size, int *complement, int &size_complement, int universal_set_size)
+void set_complement_safe(int *subset, int subset_size,
+		int *complement, int &size_complement,
+		int universal_set_size)
 // subset does not need to be in increasing order
 {
 	int i, j;
@@ -323,7 +330,8 @@ void set_complement_safe(int *subset, int subset_size, int *complement, int &siz
 	FREE_int(subset2);
 }
 
-void set_add_elements(int *elts, int &size, int *elts_to_add, int nb_elts_to_add)
+void set_add_elements(int *elts, int &size,
+		int *elts_to_add, int nb_elts_to_add)
 {
 	int i;
 
@@ -346,7 +354,8 @@ void set_add_element(int *elts, int &size, int a)
 	size++;
 }
 
-void set_delete_elements(int *elts, int &size, int *elts_to_delete, int nb_elts_to_delete)
+void set_delete_elements(int *elts, int &size,
+		int *elts_to_delete, int nb_elts_to_delete)
 {
 	int i;
 
@@ -401,7 +410,8 @@ int int_n_choose_k(int n, int k)
 	return r;
 }
 
-void make_t_k_incidence_matrix(int v, int t, int k, int &m, int &n, int *&M, 
+void make_t_k_incidence_matrix(int v, int t, int k,
+	int &m, int &n, int *&M,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -443,7 +453,8 @@ void print_k_subsets_by_rank(ostream &ost, int v, int k)
 	FREE_int(set);
 }
 
-int f_is_subset_of(int v, int t, int k, int rk_t_subset, int rk_k_subset)
+int f_is_subset_of(int v, int t, int k,
+		int rk_t_subset, int rk_k_subset)
 {
 	int *set1, *set2;
 	int i, j = 0, f_subset = TRUE;
@@ -626,7 +637,8 @@ int next_k_subset_at_level(int *set, int n, int k, int backtrack_level)
 	return FALSE;
 }
 
-void subset_permute_up_front(int n, int k, int *set, int *k_subset_idx, int *permuted_set)
+void subset_permute_up_front(int n, int k,
+		int *set, int *k_subset_idx, int *permuted_set)
 {
 	int i, ii, j;
 	
@@ -699,7 +711,8 @@ int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n)
 	
 
 	if (f_v) {
-		cout << "unordered_triple_pair_rank " << i << j << "," << k << l << "," << m << n << endl;
+		cout << "unordered_triple_pair_rank " << i << j
+			<< "," << k << l << "," << m << n << endl;
 		}
 	
 	if (i > j) {
@@ -759,7 +772,8 @@ int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n)
 	int_vec_search(six, sz, j, a);
 
 	if (f_v) {
-		cout << "unordered_triple_pair_rank : b = " << b << " a = " << a << endl;
+		cout << "unordered_triple_pair_rank : b = " << b
+			<< " a = " << a << endl;
 		}
 
 
@@ -767,7 +781,8 @@ int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n)
 	return rk;
 }
 
-void unordered_triple_pair_unrank(int rk, int &i, int &j, int &k, int &l, int &m, int &n)
+void unordered_triple_pair_unrank(int rk,
+	int &i, int &j, int &k, int &l, int &m, int &n)
 {
 	int a, b, u;
 	int six[5];
@@ -776,7 +791,8 @@ void unordered_triple_pair_unrank(int rk, int &i, int &j, int &k, int &l, int &m
 	a = rk / 3;
 	b = rk % 3;
 
-	//cout << "unordered_triple_pair_unrank rk=" << rk << " a=" << a << " b=" << b << endl;
+	//cout << "unordered_triple_pair_unrank rk=" << rk
+	//<< " a=" << a << " b=" << b << endl;
 	i = 0;
 	for (u = 0; u < 5; u++) {
 		six[u] = 1 + u;
@@ -821,7 +837,9 @@ void unordered_triple_pair_unrank(int rk, int &i, int &j, int &k, int &l, int &m
 	n = six[1];
 	//int_vec_print(cout, six, sz);
 	//cout << " m=" << m << " n=" << n << endl;
-	//cout << "unordered_triple_pair_unrank rk=" << rk << " i=" << i << " j=" << j << " k=" << k << " l=" << l << " m=" << m << " n=" << n << endl;
+	//cout << "unordered_triple_pair_unrank rk=" << rk << " i=" << i
+	//<< " j=" << j << " k=" << k << " l=" << l
+	//<< " m=" << m << " n=" << n << endl;
 }
 
 
@@ -852,7 +870,8 @@ void k2ij(int k, int & i, int & j, int n)
 			}
 		k -= (n - ii - 1);
 		}
-	cout << "k2ij: k too large: k = " << k_save << " n = " << n << endl;
+	cout << "k2ij: k too large: k = " << k_save
+			<< " n = " << n << endl;
 	exit(1);
 }
 
@@ -966,12 +985,14 @@ void perm_mult(int *a, int *b, int *c, int n)
 	for (i = 0; i < n; i++) {
 		j = a[i];
 		if (j < 0 || j >= n) {
-			cout << "perm_mult a[" << i << "] = " << j << " out of range" << endl;
+			cout << "perm_mult a[" << i << "] = " << j
+					<< " out of range" << endl;
 			exit(1);
 			}
 		k = b[j];
 		if (k < 0 || k >= n) {
-			cout << "perm_mult b[a[" << i << "] = " << j << "] = " << k << " out of range" << endl;
+			cout << "perm_mult b[a[" << i << "] = " << j
+					<< "] = " << k << " out of range" << endl;
 			exit(1);
 			}
 		c[i] = k;
@@ -1017,7 +1038,8 @@ void perm_raise(int *a, int *b, int e, int n)
 		}
 }
 
-void perm_direct_product(int n1, int n2, int *perm1, int *perm2, int *perm3)
+void perm_direct_product(int n1, int n2,
+		int *perm1, int *perm2, int *perm3)
 {
 	int i, j, a, b, c;
 	
@@ -1059,13 +1081,16 @@ void perm_print_list_offset(ostream &ost, int *a, int n, int offset)
 	cout << endl;
 }
 
-void perm_print_product_action(ostream &ost, int *a, int m_plus_n, int m, int offset, int f_cycle_length)
+void perm_print_product_action(ostream &ost, int *a,
+		int m_plus_n, int m, int offset, int f_cycle_length)
 {
 	//cout << "perm_print_product_action" << endl;
 	ost << "(";
-	perm_print_offset(ost, a, m, offset, f_cycle_length, FALSE, 0, FALSE);
+	perm_print_offset(ost, a, m, offset,
+			f_cycle_length, FALSE, 0, FALSE);
 	ost << "; ";
-	perm_print_offset(ost, a + m, m_plus_n - m, offset + m, f_cycle_length, FALSE, 0, FALSE);
+	perm_print_offset(ost, a + m, m_plus_n - m,
+			offset + m, f_cycle_length, FALSE, 0, FALSE);
 	ost << ")";
 	//cout << "perm_print_product_action done" << endl;
 }
@@ -1085,8 +1110,12 @@ void perm_print_counting_from_one(ostream &ost, int *a, int n)
 	perm_print_offset(ost, a, n, 1, FALSE, FALSE, 0, FALSE);
 }
 
-void perm_print_offset(ostream &ost, int *a, int n, int offset, int f_cycle_length, 
-	int f_max_cycle_length, int max_cycle_length, int f_orbit_structure)
+void perm_print_offset(ostream &ost,
+	int *a, int n,
+	int offset, int f_cycle_length,
+	int f_max_cycle_length,
+	int max_cycle_length,
+	int f_orbit_structure)
 {
 	int *have_seen;
 	int i, l, l1, first, next, len;
@@ -1110,19 +1139,22 @@ void perm_print_offset(ostream &ost, int *a, int n, int offset, int f_cycle_leng
 			}
 		// work on a next cycle, starting at position l:
 		first = l;
-		//cout << "perm_print_offset cyle starting with " << first << endl;
+		//cout << "perm_print_offset cyle starting
+		//"with " << first << endl;
 		l1 = l;
 		len = 1;
 		while (TRUE) {
 			if (l1 >= n) {
-				cout << "perm_print_offset cyle starting with " << first << endl;
+				cout << "perm_print_offset cyle starting with "
+						<< first << endl;
 				cout << "l1 = " << l1 << " >= n" << endl;
 				exit(1);
 				}
 			have_seen[l1] = TRUE;
 			next = a[l1];
 			if (next >= n) {
-				cout << "perm_print_offset next = " << next << " >= n = " << n << endl;
+				cout << "perm_print_offset next = " << next
+						<< " >= n = " << n << endl;
 				// print_list(ost);
 				exit(1);
 				}
@@ -1143,7 +1175,8 @@ void perm_print_offset(ostream &ost, int *a, int n, int offset, int f_cycle_leng
 			l1 = next;
 			len++;
 			}
-		//cout << "perm_print_offset cyle starting with " << first << " has length " << len << endl;
+		//cout << "perm_print_offset cyle starting with "
+		//<< first << " has length " << len << endl;
 		//cout << "nb_orbits=" << nb_orbits << endl;
 		if (f_orbit_structure) {
 			orbit_length[nb_orbits++] = len;
@@ -1217,7 +1250,8 @@ int perm_order(int *a, int n)
 			have_seen[l1] = TRUE;
 			next = a[l1];
 			if (next > n) {
-				cout << "perm_order: next = " << next << " > n = " << n << endl;
+				cout << "perm_order: next = " << next
+						<< " > n = " << n << endl;
 				// print_list(ost);
 				exit(1);
 				}
@@ -1405,7 +1439,8 @@ int philip_hall_test(int *A, int n, int k, int *memo, int verbose_level)
 	return TRUE;
 }
 
-int philip_hall_test_dual(int *A, int n, int k, int *memo, int verbose_level)
+int philip_hall_test_dual(int *A, int n, int k,
+		int *memo, int verbose_level)
 // memo points to free memory of n int's
 {
 	int f_v = (verbose_level >= 1);
@@ -1490,7 +1525,8 @@ int create_roots_H4(finite_field *F, int *roots)
 	int i, j, k, j1, j2, j3, j4, n;
 	int v[4];
 	int L[4], P[4], sgn;
-	int one, m_one, half, quarter, c, c2, /*tau, tau_inv,*/ a, b, m_a, m_b, m_half;
+	int one, m_one, half, quarter, c, c2; /*tau, tau_inv,*/
+	int a, b, m_a, m_b, m_half;
 	
 	one = 1;
 	m_one = F->negate(one);
@@ -1503,7 +1539,8 @@ int create_roots_H4(finite_field *F, int *roots)
 			break;
 		}
 	if (c == F->q) {
-		cout << "create_roots_H4: the field of order " << F->q << " does not contain a square root of 5" << endl;
+		cout << "create_roots_H4: the field of order " << F->q
+			<< " does not contain a square root of 5" << endl;
 		exit(1);
 		}
 	//tau = F->mult(F->add(1, c), half);
@@ -1658,7 +1695,8 @@ int generalized_binomial(int n, int k, int q)
 	return e;
 }
 
-void print_tableau(int *Tableau, int l1, int l2, int *row_parts, int *col_parts)
+void print_tableau(int *Tableau, int l1, int l2,
+		int *row_parts, int *col_parts)
 {
 	int i, j, a, b;
 
