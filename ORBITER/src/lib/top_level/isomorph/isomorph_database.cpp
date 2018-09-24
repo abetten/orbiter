@@ -411,7 +411,7 @@ int isomorph::find_extension_easy_new(int *set,
 				"int_vec_search_first_occurence(h)" << endl;
 		}
 	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
-			N, h, first, verbose_level);
+			N, h, first, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new after "
 				"int_vec_search_first_occurence(h) f_found=" << f_found << endl;
@@ -426,7 +426,7 @@ int isomorph::find_extension_easy_new(int *set,
 				"int_vec_search_first_occurence(h + 1) h+1=" << h + 1 << endl;
 		}
 	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
-			N, h + 1, idx2, verbose_level);
+			N, h + 1, idx2, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new after "
 				"int_vec_search_first_occurence(h+1) f_found=" << f_found << endl;
