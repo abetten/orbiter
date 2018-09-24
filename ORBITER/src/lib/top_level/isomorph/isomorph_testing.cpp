@@ -839,7 +839,7 @@ void isomorph::process_rearranged_set(
 			}
 		exit(1);
 #endif
-		if (TRUE) {
+		if (FALSE) {
 			cout << "isomorph::process_rearranged_set flag orbit "
 					<< orbit_no << " subset " << subset_rank
 					<< " : not found" << endl;
