@@ -291,7 +291,9 @@ void test2(int verbose_level)
 	
 	F->init(q, 0);
 	A->init_orthogonal_group(epsilon, n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 	
 	AO = A->G.AO;
@@ -319,7 +321,8 @@ void test2(int verbose_level)
 	gens->even_subgroup(verbose_level);
 
 	gens->group_order(go);
-	cout << "Created generators for the even subgroup of order " << go << endl;
+	cout << "Created generators for the even "
+			"subgroup of order " << go << endl;
 	
 #if 0
 	go = Go.as_int();
@@ -660,7 +663,8 @@ void test6(int verbose_level)
 	for (i = 0; i < 17; i++) {
 		tangent_planes[i] = new int[3 * 4];
 		cout << "i=" << i << endl;
-		O4_find_tangent_plane(*F, R_cur[0], R_cur[1], R_cur[2], R_cur[3], tangent_planes[i], verbose_level);
+		O4_find_tangent_plane(*F, R_cur[0], R_cur[1], R_cur[2], R_cur[3],
+			tangent_planes[i], verbose_level);
 		F->mult_vector_from_the_left(R_cur, mtxA, R_next, 4, 4);
 		R_cur[0] = R_next[0];
 		R_cur[1] = R_next[1];
@@ -672,7 +676,8 @@ void test6(int verbose_level)
 
 	for (i = 0; i < 17; i++) {
 		cout << "i=" << i << " basis:" << endl;
-		print_integer_matrix_width(cout, tangent_planes[i], 3, 4, 4, F->log10_of_q);
+		print_integer_matrix_width(cout, tangent_planes[i],
+			3, 4, 4, F->log10_of_q);
 		}
 	
 	int *intersection;
@@ -685,9 +690,11 @@ void test6(int verbose_level)
 			 
 			int a;
 			
-			rk = F->intersect_subspaces(4, 3, tangent_planes[i], 3, tangent_planes[j], 
+			rk = F->intersect_subspaces(4, 3,
+				tangent_planes[i], 3, tangent_planes[j],
 				a, intersection, 0);
-			print_integer_matrix_width(cout, intersection, rk, 4, 4, F->log10_of_q);
+			print_integer_matrix_width(cout, intersection,
+				rk, 4, 4, F->log10_of_q);
 			}
 		}
 	
@@ -712,7 +719,8 @@ void O4_grid_action(action *A_PGL4, int *Elt, int verbose_level)
 		x = z / size;
 		y = z % size;
 		cout << "(" << x << "," << y << ") -> ";
-		O4_grid_coordinates_unrank(*F, x1, x2, x3, x4, x, y, verbose_level);
+		O4_grid_coordinates_unrank(*F, x1, x2, x3, x4,
+			x, y, verbose_level);
 		v[0] = x1;
 		v[1] = x2;
 		v[2] = x3;
@@ -724,7 +732,8 @@ void O4_grid_action(action *A_PGL4, int *Elt, int verbose_level)
 		cout << "w=";
 		int_vec_print(cout, w, 4);
 		cout << endl;
-		O4_grid_coordinates_rank(*F, w[0], w[1], w[2], w[3], xx, yy, verbose_level);
+		O4_grid_coordinates_rank(*F, w[0], w[1], w[2], w[3],
+				xx, yy, verbose_level);
 		cout << "(" << xx << "," << yy << ")" << endl;
 		zz = xx * size + yy;
 		if (zz == z0)
@@ -737,7 +746,8 @@ void O4_grid_action(action *A_PGL4, int *Elt, int verbose_level)
 		for (y = 0; y < size; y++) {
 			z = x * size + y;
 			cout << "(" << x << "," << y << ") -> ";
-			O4_grid_coordinates_unrank(*F, x1, x2, x3, x4, x, y, verbose_level);
+			O4_grid_coordinates_unrank(*F, x1, x2, x3, x4,
+				x, y, verbose_level);
 			v[0] = x1;
 			v[1] = x2;
 			v[2] = x3;
@@ -749,7 +759,8 @@ void O4_grid_action(action *A_PGL4, int *Elt, int verbose_level)
 			//cout << "w=";
 			//int_vec_print(cout, w, 4);
 			//cout << endl;
-			O4_grid_coordinates_rank(*F, w[0], w[1], w[2], w[3], xx, yy, verbose_level);
+			O4_grid_coordinates_rank(*F, w[0], w[1], w[2], w[3],
+				xx, yy, verbose_level);
 			cout << "(" << xx << "," << yy << ")" << endl;
 			zz = xx * size + yy;
 			perm[z] = zz;
@@ -1214,7 +1225,8 @@ void test14(int verbose_level)
 	F->init(q, 0);
 	A = new action;
 	A->init_BLT(F, f_basis, f_init_hash_table, verbose_level);
-	//A->init_matrix_group(TRUE /* f_projective */, FALSE /* f_no_translations */, 3 /* n */, 4, 
+	//A->init_matrix_group(TRUE /* f_projective */,
+	//FALSE /* f_no_translations */, 3 /* n */, 4,
 	//	NULL, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
 
 
@@ -1321,7 +1333,9 @@ void test15(int verbose_level)
 	A = new action;
 	
 	A->init_orthogonal_group(epsilon, n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 	
 	A->lex_least_base_in_place(verbose_level);
@@ -1487,7 +1501,9 @@ void test16(int verbose_level)
 	Fq = new finite_field;
 	Fq->init(q, 0);
 	A->init_orthogonal_group(epsilon, n, Fq, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level - 1);
 	
 	A->lex_least_base_in_place(verbose_level - 1);
@@ -1813,7 +1829,9 @@ void test17(int verbose_level)
 	A4 = new action;
 	
 	A4->init_orthogonal_group(1 /*epsilon*/, 4, Fq, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, FALSE /*f_basis*/, verbose_level - 1);
 	
 	A4->lex_least_base_in_place(verbose_level - 1);
@@ -1955,7 +1973,9 @@ void test18(int verbose_level)
 	A = new action;
 	
 	A->init_orthogonal_group(epsilon, n, Fq, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level - 1);
 	
 	A->lex_least_base_in_place(verbose_level - 1);
@@ -2006,7 +2026,8 @@ void test18(int verbose_level)
 	sims *G;
 	longinteger_object go;
 
-	G = create_sims_from_generators_with_target_group_order_int(A, gens, 68, verbose_level);
+	G = create_sims_from_generators_with_target_group_order_int(
+			A, gens, 68, verbose_level);
 
 	cout << "sims created" << endl;
 	G->group_order(go);
@@ -2038,7 +2059,9 @@ void test19(int verbose_level)
 	A = new action;
 	
 	A->init_orthogonal_group(epsilon, n, Fq, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level - 1);
 	
 	A->lex_least_base_in_place(verbose_level - 1);
@@ -2098,7 +2121,8 @@ void test19(int verbose_level)
 	sims *G;
 	longinteger_object go;
 
-	G = create_sims_from_generators_without_target_group_order(A, gens, verbose_level);
+	G = create_sims_from_generators_without_target_group_order(
+		A, gens, verbose_level);
 
 	cout << "sims created" << endl;
 	G->group_order(go);
@@ -2421,7 +2445,8 @@ void test_bricks(int verbose_level)
 	B.init(F, verbose_level);
 	AB = new action;
 
-	AB->induced_action_on_bricks(*A, &B, f_linear_action, verbose_level);
+	AB->induced_action_on_bricks(*A, &B,
+			f_linear_action, verbose_level);
 
 	cout << "created AB" << endl;
 	AB->print_info();
@@ -2493,7 +2518,8 @@ void test_homogeneous_polynomials(int verbose_level)
 
 	HPD = new homogeneous_polynomial_domain;
 
-	HPD->init(F, n, d, FALSE /* f_init_incidence_structure */, verbose_level);
+	HPD->init(F, n, d,
+		FALSE /* f_init_incidence_structure */, verbose_level);
 
 	delete HPD;
 	delete F;

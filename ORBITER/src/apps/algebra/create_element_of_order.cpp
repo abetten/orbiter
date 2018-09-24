@@ -77,13 +77,17 @@ void create_element(int q, int k, int verbose_level)
 
 	A_O4 = new action;
 	A_O4->init_orthogonal_group(1 /*epsilon*/, 4/*n*/, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 	
 
 	A4 = new action;
 	A4->init_projective_group(4 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */,
+		TRUE /* f_basis */,
+		verbose_level);
 
 	A->print_base();
 	A->group_order(Go);
@@ -145,7 +149,8 @@ void create_element(int q, int k, int verbose_level)
 	A->element_print_quick(Elt7, cout);
 	cout << "D has projective order " << ord << endl;
 	if (ord != k) {
-		cout << "does not match " << k <<  " but this may be alright" << endl;
+		cout << "does not match " << k
+			<<  " but this may be alright" << endl;
 		//exit(1);
 		}
 
@@ -165,7 +170,8 @@ void create_element(int q, int k, int verbose_level)
 	O4_isomorphism_2to4(F, dataD, dataD, f_switch, mtxD);
 
 	cout << "mtxD:" << endl;
-	print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
+	print_integer_matrix_width(cout, mtxD,
+			4, 4, 4, F->log10_of_q);
 
 	A4->make_element(ELT1, mtxD, verbose_level);
 	cout << "diagonally embedded:" << endl;
@@ -175,7 +181,8 @@ void create_element(int q, int k, int verbose_level)
 
 
 	if (ord != k) {
-		cout << "does not match " << k << " but this may be alright" << endl;
+		cout << "does not match " << k
+			<< " but this may be alright" << endl;
 		//exit(1);
 		}
 

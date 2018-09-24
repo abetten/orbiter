@@ -48,9 +48,9 @@ int main(int argc, char **argv)
 	int *Elt1;
 
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);		
-	A = new action;
+	A = NEW_OBJECT(action);
 	
 	A->init_orthogonal_group(0 /*epsilon*/, 5/*n*/, F, 
 		TRUE /* f_on_points */,
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 	
 	O = A->G.AO->O;
 	
-	Elt1 = new int[A->elt_size_in_int];
+	Elt1 = NEW_int(A->elt_size_in_int);
 
 
 	{
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 	sims *S = A->Sims;
 	schreier Sch;
 	vector_ge gens;
-	int *tl = new int[A->base_len];
+	int *tl = NEW_int(A->base_len);
 	int j, rep;
 
 	cout << "extracting strong generators" << endl;

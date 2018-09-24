@@ -68,7 +68,9 @@ void find_element(int q, int *mtx, int verbose_level)
 	F->init(67, 0);
 	A = new action;
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */,
+		TRUE /* f_basis */,
+		verbose_level);
 
 
 

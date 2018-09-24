@@ -70,22 +70,26 @@ void test_borel(int n, int q, int verbose_level)
 	longinteger_object Go, goP;
 	int goi, goPi, rk, rk1, rkP;
 	
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	cout << "before create_linear_group" << endl;
 	create_linear_group(S, A, 
 		F, n, 
-		FALSE /* f_projective */, TRUE /* f_general */, FALSE /* f_affine */, 
-		FALSE /* f_semilinear */, TRUE /* f_special */, 
+		FALSE /* f_projective */,
+		TRUE /* f_general */,
+		FALSE /* f_affine */,
+		FALSE /* f_semilinear */,
+		TRUE /* f_special */,
 		verbose_level);
 	cout << "after create_linear_group" << endl;
 
-	AP = new action;
+	AP = NEW_OBJECT(action);
 	AP->init_symmetric_group(n, 0 /* verbose_level */);
 	AP->group_order(goP);
-	cout << "created symmetric group Sym_" << n << " of order " << goP << endl;
+	cout << "created symmetric group Sym_" << n
+			<< " of order " << goP << endl;
 	goPi = goP.as_int();
 	SP = AP->Sims;
 	
@@ -100,7 +104,7 @@ void test_borel(int n, int q, int verbose_level)
 	
 	strong_generators *SG;
 
-	SG = new strong_generators;
+	SG = NEW_OBJECT(strong_generators);
 
 	SG->init_from_sims(S, 0 /* verbose_level */);
 
@@ -186,8 +190,10 @@ void test_borel(int n, int q, int verbose_level)
 		fp << "\\right]" << endl;
 		fp << " & \\ " << endl;
 		AP->element_print_as_permutation_with_offset(Perm1, fp, 
-			1 /* offset */, TRUE /* f_do_it_anyway_even_for_big_degree */, 
-			FALSE /* f_print_cycles_of_length_one */, 0 /* verbose_level */);
+			1 /* offset */,
+			TRUE /* f_do_it_anyway_even_for_big_degree */,
+			FALSE /* f_print_cycles_of_length_one */,
+			0 /* verbose_level */);
 		fp << " \\\\" << endl;
 		fp << "\\hline" << endl;
 		
@@ -235,7 +241,7 @@ void test_borel(int n, int q, int verbose_level)
 	FREE_int(B1);
 	FREE_int(B2);
 	FREE_int(pivots);
-	delete SG;
+	FREE_OBJECT(SG);
 }
 
 void top(ostream &fp)

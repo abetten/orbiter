@@ -10,8 +10,10 @@
 
 #include "orbiter.h"
 
-void test_indexing(int n, int *type, int type_len, finite_field *F, int verbose_level);
-void test_action(int n, int *type, int type_len, finite_field *F, int verbose_level);
+void test_indexing(int n, int *type, int type_len,
+		finite_field *F, int verbose_level);
+void test_action(int n, int *type, int type_len,
+		finite_field *F, int verbose_level);
 void print_flag(ostream &ost, int pt, void *data);
 
 
@@ -50,7 +52,8 @@ int main(int argc, const char **argv)
 					break;
 					}
 				if (type[type_len] < 0) {
-					cout << "type must be a sequence of positive numbers" << endl;
+					cout << "type must be a sequence of "
+							"positive numbers" << endl;
 					exit(1);
 					}
 				type_len++;
@@ -70,7 +73,7 @@ int main(int argc, const char **argv)
 		}
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	test_indexing(n, type, type_len, F, verbose_level);
@@ -82,7 +85,8 @@ int main(int argc, const char **argv)
 }
 
 
-void test_indexing(int n, int *type, int type_len, finite_field *F, int verbose_level)
+void test_indexing(int n, int *type, int type_len,
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, h2, N;
@@ -95,7 +99,7 @@ void test_indexing(int n, int *type, int type_len, finite_field *F, int verbose_
 	subspace = NEW_int(n * n);
 	flag *Flag;
 
-	Flag = new flag;
+	Flag = NEW_OBJECT(flag);
 	Flag->init(n, type, type_len, F, verbose_level);
 	
 	//Flag->unrank(4, subspace, 1 /*verbose_level*/);
@@ -129,7 +133,8 @@ void test_indexing(int n, int *type, int type_len, finite_field *F, int verbose_
 	int flag_n;
 	int *subspace;
 
-void test_action(int n, int *type, int type_len, finite_field *F, int verbose_level)
+void test_action(int n, int *type, int type_len,
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_projective = TRUE;
@@ -152,7 +157,7 @@ void test_action(int n, int *type, int type_len, finite_field *F, int verbose_le
 		verbose_level);
 	Mtx = A->G.matrix_grp;
 	
-	AF = new action;
+	AF = NEW_OBJECT(action);
 
 	AF->induced_action_on_flags(A, type, type_len, verbose_level);
 
@@ -162,7 +167,7 @@ void test_action(int n, int *type, int type_len, finite_field *F, int verbose_le
 	strong_generators *SG;
 	longinteger_object Borel_go;
 	
-	SG = new strong_generators;
+	SG = NEW_OBJECT(strong_generators);
 	SG->generators_for_the_borel_subgroup_lower(A, 
 		Mtx, verbose_level);
 	SG->group_order(Borel_go);
@@ -180,7 +185,7 @@ void test_action(int n, int *type, int type_len, finite_field *F, int verbose_le
 		print_flag, NULL);
 
 
-	delete subspace;
+	FREE_int(subspace);
 }
 
 void print_flag(ostream &ost, int pt, void *data)

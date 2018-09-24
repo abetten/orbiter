@@ -32,7 +32,10 @@ int main()
 
 	//n2 = int_n_choose_k(n, 2);
 
-	cout << "n,m," << q1 << ",nb_liftings_" << q1 << ",nb_grass_" << q1 << ",nb_flags_" << q1 << "," << q2 << ",nb_liftings_" << q2 << ",nb_grass_" << q2 << ",nb_flags_" << q2  << endl;
+	cout << "n,m," << q1 << ",nb_liftings_" << q1 << ",nb_grass_"
+			<< q1 << ",nb_flags_" << q1 << "," << q2
+			<< ",nb_liftings_" << q2 << ",nb_grass_"
+			<< q2 << ",nb_flags_" << q2  << endl;
 	for (n = 1; n <= n_max; n++) {
 
 		//cout << "n=" << n << endl;
@@ -40,7 +43,8 @@ int main()
 		//cout << "nb_liftings=" << nb_liftings << endl;
 		//cout << "nb_grass   =" << nb_grass << endl;
 		//cout << "nb_flags   =" << nb_flags << endl;
-		//cout << m << "," << n << "," << q << "," << nb_liftings << "," << nb_grass << "," << nb_flags << endl;
+		//cout << m << "," << n << "," << q << "," << nb_liftings
+		//<< "," << nb_grass << "," << nb_flags << endl;
 		cout << n << "," << m;
 
 		count_nb_liftings(nb_liftings, m, n, q1);
