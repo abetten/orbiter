@@ -80,7 +80,7 @@ int main(int argc, const char **argv)
 	test_action(n, type, type_len, F, verbose_level);
 
 
-	delete F;
+	FREE_OBJECT(F);
 
 }
 

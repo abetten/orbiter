@@ -717,7 +717,8 @@ void strong_generators::generators_for_the_singer_cycle(
 		}
 }
 
-void strong_generators::generators_for_the_null_polarity_group(action *A, 
+void strong_generators::generators_for_the_null_polarity_group(
+	action *A,
 	matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -761,7 +762,8 @@ void strong_generators::generators_for_the_null_polarity_group(action *A,
 		}
 }
 
-void strong_generators::generators_for_symplectic_group(action *A, 
+void strong_generators::generators_for_symplectic_group(
+	action *A,
 	matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -912,7 +914,8 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 		}
 }
 
-void strong_generators::field_reduction(action *Aq,
+void strong_generators::field_reduction(
+		action *Aq,
 		int n, int s, finite_field *Fq,
 		int verbose_level)
 {
@@ -2204,7 +2207,8 @@ void strong_generators::generators_for_the_orthogonal_group(
 	A2 = NEW_OBJECT(action);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
-				"orthogonal_group before A2->init_orthogonal_group" << endl;
+				"orthogonal_group before "
+				"A2->init_orthogonal_group" << endl;
 		}
 
 	A2->init_orthogonal_group(epsilon, 
@@ -2216,7 +2220,8 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
-				"orthogonal_group after A2->init_orthogonal_group" << endl;
+				"orthogonal_group after "
+				"A2->init_orthogonal_group" << endl;
 		}
 
 	longinteger_object target_go;
@@ -2226,7 +2231,8 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
-				"orthogonal_group before generators_to_strong_generators" << endl;
+				"orthogonal_group before generators_to_"
+				"strong_generators" << endl;
 		}
 	generators_to_strong_generators(A, 
 		TRUE /* f_target_go */, target_go, 
@@ -2235,7 +2241,8 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
-				"orthogonal_group after generators_to_strong_generators" << endl;
+				"orthogonal_group after "
+				"generators_to_strong_generators" << endl;
 		}
 	
 	init_copy(Strong_gens2, 0 /* verbose_level */);
