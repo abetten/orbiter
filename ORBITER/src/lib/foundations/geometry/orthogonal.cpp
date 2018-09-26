@@ -7461,7 +7461,7 @@ void orthogonal::create_random_Siegel_transformation(
 			form_c1, form_c2, form_c3,
 			Mtx, v, u, verbose_level - 1);
 
-	if (TRUE) {
+	if (f_vv) {
 		cout << "form_c1=" << form_c1 << endl;
 		cout << "form_c2=" << form_c2 << endl;
 		cout << "form_c3=" << form_c3 << endl;

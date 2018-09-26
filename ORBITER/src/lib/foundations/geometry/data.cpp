@@ -1015,162 +1015,130 @@ int *cubic_surface_Lines(int q, int i)
 	if (q == 4) {
 		p = surface_4_Lines;
 		nb = surface_4_nb_reps;
-		//sz = surface_4_size;
 		}
 	else if (q == 7) {
 		p = surface_7_Lines;
 		nb = surface_7_nb_reps;
-		//sz = surface_7_size;
 		}
 	else if (q == 8) {
 		p = surface_8_Lines;
 		nb = surface_8_nb_reps;
-		//sz = surface_8_size;
 		}
 	else if (q == 9) {
 		p = surface_9_Lines;
 		nb = surface_9_nb_reps;
-		//sz = surface_9_size;
 		}
 	else if (q == 11) {
 		p = surface_11_Lines;
 		nb = surface_11_nb_reps;
-		//sz = surface_11_size;
 		}
 	else if (q == 13) {
 		p = surface_13_Lines;
 		nb = surface_13_nb_reps;
-		//sz = surface_13_size;
 		}
 	else if (q == 16) {
 		p = surface_16_Lines;
 		nb = surface_16_nb_reps;
-		//sz = surface_16_size;
 		}
 	else if (q == 17) {
 		p = surface_17_Lines;
 		nb = surface_17_nb_reps;
-		//sz = surface_17_size;
 		}
 	else if (q == 19) {
 		p = surface_19_Lines;
 		nb = surface_19_nb_reps;
-		//sz = surface_19_size;
 		}
 	else if (q == 23) {
 		p = surface_23_Lines;
 		nb = surface_23_nb_reps;
-		//sz = surface_23_size;
 		}
 	else if (q == 25) {
 		p = surface_25_Lines;
 		nb = surface_25_nb_reps;
-		//sz = surface_25_size;
 		}
 	else if (q == 27) {
 		p = surface_27_Lines;
 		nb = surface_27_nb_reps;
-		//sz = surface_27_size;
 		}
 	else if (q == 29) {
 		p = surface_29_Lines;
 		nb = surface_29_nb_reps;
-		//sz = surface_29_size;
 		}
 	else if (q == 31) {
 		p = surface_31_Lines;
 		nb = surface_31_nb_reps;
-		//sz = surface_31_size;
 		}
 	else if (q == 32) {
 		p = surface_32_Lines;
 		nb = surface_32_nb_reps;
-		//sz = surface_32_size;
 		}
 	else if (q == 37) {
 		p = surface_37_Lines;
 		nb = surface_37_nb_reps;
-		//sz = surface_37_size;
 		}
 	else if (q == 41) {
 		p = surface_41_Lines;
 		nb = surface_41_nb_reps;
-		//sz = surface_41_size;
 		}
 	else if (q == 43) {
 		p = surface_43_Lines;
 		nb = surface_43_nb_reps;
-		//sz = surface_43_size;
 		}
 	else if (q == 47) {
 		p = surface_47_Lines;
 		nb = surface_47_nb_reps;
-		//sz = surface_47_size;
 		}
 	else if (q == 49) {
 		p = surface_49_Lines;
 		nb = surface_49_nb_reps;
-		//sz = surface_49_size;
 		}
 	else if (q == 53) {
 		p = surface_53_Lines;
 		nb = surface_53_nb_reps;
-		//sz = surface_53_size;
 		}
 	else if (q == 59) {
 		p = surface_59_Lines;
 		nb = surface_59_nb_reps;
-		//sz = surface_59_size;
 		}
 	else if (q == 61) {
 		p = surface_61_Lines;
 		nb = surface_61_nb_reps;
-		//sz = surface_61_size;
 		}
 	else if (q == 64) {
 		p = surface_64_Lines;
 		nb = surface_64_nb_reps;
-		//sz = surface_64_size;
 		}
 	else if (q == 67) {
 		p = surface_67_Lines;
 		nb = surface_67_nb_reps;
-		//sz = surface_67_size;
 		}
 	else if (q == 71) {
 		p = surface_71_Lines;
 		nb = surface_71_nb_reps;
-		//sz = surface_71_size;
 		}
 	else if (q == 73) {
 		p = surface_73_Lines;
 		nb = surface_73_nb_reps;
-		//sz = surface_73_size;
 		}
 	else if (q == 79) {
 		p = surface_79_Lines;
 		nb = surface_79_nb_reps;
-		//sz = surface_79_size;
 		}
 	else if (q == 81) {
 		p = surface_81_Lines;
 		nb = surface_81_nb_reps;
-		//sz = surface_81_size;
 		}
 	else if (q == 83) {
 		p = surface_83_Lines;
 		nb = surface_83_nb_reps;
-		//sz = surface_83_size;
 		}
 	else if (q == 89) {
 		p = surface_89_Lines;
 		nb = surface_89_nb_reps;
-		//sz = surface_89_size;
 		}
 	else if (q == 97) {
 		p = surface_97_Lines;
 		nb = surface_97_nb_reps;
-		//sz = surface_97_size;
 		}
 	else {
 		cout << "cubic_surface_Lines q=" << q
@@ -1663,6 +1631,9 @@ int BLT_nb_reps(int q)
 	else if (q == 71) {
 		nb = BLT_71_nb_reps;
 		}
+	else if (q == 73) {
+		nb = BLT_73_nb_reps;
+		}
 	else {
 		cout << "BLT_nb_reps q=" << q
 				<< " I don't have information for this order" << endl;
@@ -1790,6 +1761,11 @@ int *BLT_representative(int q, int no)
 		p = BLT_71_reps;
 		nb = BLT_71_nb_reps;
 		sz = BLT_71_size;
+		}
+	else if (q == 73) {
+		p = BLT_73_reps;
+		nb = BLT_73_nb_reps;
+		sz = BLT_73_size;
 		}
 	else {
 		cout << "BLT_representative q=" << q
@@ -2000,6 +1976,14 @@ void BLT_stab_gens(int q, int no,
 		f = BLT_71_stab_gens_fst[no];
 		l = BLT_71_stab_gens_len[no];
 		stab_order = BLT_71_stab_order[no];
+		}
+	else if (q == 73) {
+		Reps = BLT_73_stab_gens;
+		nb = BLT_73_nb_reps;
+		make_element_size = BLT_73_make_element_size;
+		f = BLT_73_stab_gens_fst[no];
+		l = BLT_73_stab_gens_len[no];
+		stab_order = BLT_73_stab_order[no];
 		}
 	else {
 		cout << "BLT_representative q=" << q << " I don't have "

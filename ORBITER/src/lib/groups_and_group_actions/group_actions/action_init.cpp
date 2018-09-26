@@ -98,7 +98,8 @@ void action::init_direct_product_group(
 	strcpy(label, P->label);
 	strcpy(label_tex, P->label_tex);
 	if (f_v) {
-		cout << "action::init_direct_product_group label=" << label << endl;
+		cout << "action::init_direct_product_group "
+				"label=" << label << endl;
 		}
 
 	degree = P->degree_overall;
@@ -116,17 +117,20 @@ void action::init_direct_product_group(
 
 	degree = P->degree_overall;
 	if (f_v) {
-		cout << "action::init_direct_product_group degree=" << degree << endl;
+		cout << "action::init_direct_product_group "
+				"degree=" << degree << endl;
 		}
 	base_len = P->base_length;
 	if (f_v) {
-		cout << "action::init_direct_product_group base_len=" << base_len << endl;
+		cout << "action::init_direct_product_group "
+				"base_len=" << base_len << endl;
 		}
 
 	allocate_base_data(base_len);
 
 	int_vec_copy(P->the_base, base, base_len);
-	int_vec_copy(P->the_transversal_length, transversal_length, base_len);
+	int_vec_copy(P->the_transversal_length,
+			transversal_length, base_len);
 
 	int *gens_data;
 	int gens_size;
@@ -206,7 +210,8 @@ void action::init_direct_product_group(
 		}
 }
 
-void action::init_wreath_product_group_and_restrict(int nb_factors, int n,
+void action::init_wreath_product_group_and_restrict(
+		int nb_factors, int n,
 		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -307,13 +312,15 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 	low_level_point_size = W->low_level_point_size;
 	if (f_v) {
-		cout << "action::init_wreath_product_group low_level_point_size="
+		cout << "action::init_wreath_product_group "
+			"low_level_point_size="
 			<< low_level_point_size<< endl;
 		}
 	strcpy(label, W->label);
 	strcpy(label_tex, W->label_tex);
 	if (f_v) {
-		cout << "action::init_wreath_product_group label=" << label << endl;
+		cout << "action::init_wreath_product_group "
+				"label=" << label << endl;
 		}
 
 	degree = W->degree_overall;
@@ -331,17 +338,20 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 	degree = W->degree_overall;
 	if (f_v) {
-		cout << "action::init_wreath_product_group degree=" << degree << endl;
+		cout << "action::init_wreath_product_group "
+				"degree=" << degree << endl;
 		}
 	base_len = W->base_length;
 	if (f_v) {
-		cout << "action::init_wreath_product_group base_len=" << base_len << endl;
+		cout << "action::init_wreath_product_group "
+				"base_len=" << base_len << endl;
 		}
 
 	allocate_base_data(base_len);
 
 	int_vec_copy(W->the_base, base, base_len);
-	int_vec_copy(W->the_transversal_length, transversal_length, base_len);
+	int_vec_copy(W->the_transversal_length,
+			transversal_length, base_len);
 
 	int *gens_data;
 	int gens_size;

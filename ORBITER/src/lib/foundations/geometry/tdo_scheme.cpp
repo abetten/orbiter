@@ -170,7 +170,8 @@ void tdo_scheme::init_part_and_entries_int(
 }
 
 void tdo_scheme::init_TDO(int *Part, int *Entries,
-	int Row_level, int Col_level, int Extra_row_level, int Extra_col_level,
+	int Row_level, int Col_level,
+	int Extra_row_level, int Extra_col_level,
 	int Lambda_level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -548,7 +549,8 @@ void tdo_scheme::complete_partition_info(int h, int verbose_level)
 		for (k = 0; k < S; k++) {
 			row_class_no[h][f + k] = i;
 			if (f_vv) {
-				cout << "row_class_no[h][" << f + k << "]=" << row_class_no[h][f + k] << endl;
+				cout << "row_class_no[h][" << f + k << "]="
+					<< row_class_no[h][f + k] << endl;
 				}
 			}
 		f += S;
@@ -571,7 +573,8 @@ void tdo_scheme::complete_partition_info(int h, int verbose_level)
 		for (k = 0; k < S; k++) {
 			col_class_no[h][f + k] = j;
 			if (f_vv) {
-				cout << "col_class_no[h][" << f + k << "]=" << col_class_no[h][f + k] << endl;
+				cout << "col_class_no[h][" << f + k << "]="
+					<< col_class_no[h][f + k] << endl;
 				}
 			}
 		f += S;
@@ -592,26 +595,37 @@ void tdo_scheme::get_row_or_col_scheme(int h, int l, int verbose_level)
 		c2 = entries[i * 4 + 2];
 		v = entries[i * 4 + 3];
 		if (d == l) {
-			//cout << "entry " << i << " : " << d << " " << c1 << " " << c2 << " " << v << endl;
-			if (h == ROW && row_class_index[h][c1] >= 0) { // row scheme
+			//cout << "entry " << i << " : " << d << " "
+			//<< c1 << " " << c2 << " " << v << endl;
+			if (h == ROW && row_class_index[h][c1] >= 0) {
+				// row scheme
 				s1 = row_class_index[h][c1];
 				s2 = col_class_index[h][c2];
-				//cout << "the_row_scheme[" << s1 << " * " << nb_col_classes[h] << " + " << s2 << "] = " << v << endl;
+				//cout << "the_row_scheme[" << s1 << " * "
+				//<< nb_col_classes[h] << " + " << s2 << "] = "
+				//<< v << endl;
 				the_row_scheme[s1 * nb_col_classes[h] + s2] = v;
 				}
-			else if (h == COL && col_class_index[h][c1] >= 0) { // col scheme
+			else if (h == COL && col_class_index[h][c1] >= 0) {
+				// col scheme
 				s1 = row_class_index[h][c2];
 				s2 = col_class_index[h][c1];
-				//cout << "the_col_scheme[" << s1 << " * " << nb_col_classes[h] << " + " << s2 << "] = " << v << endl;
+				//cout << "the_col_scheme[" << s1 << " * "
+				//<< nb_col_classes[h] << " + " << s2 << "] = "
+				//<< v << endl;
 				the_col_scheme[s1 * nb_col_classes[h] + s2] = v;
 				}
-			else if (h == EXTRA_ROW && row_class_index[h][c1] >= 0) { // col scheme
+			else if (h == EXTRA_ROW && row_class_index[h][c1] >= 0) {
+				// col scheme
 				s1 = row_class_index[h][c1];
 				s2 = col_class_index[h][c2];
-				//cout << "the_extra_row_scheme[" << s1 << " * " << nb_col_classes[h] << " + " << s2 << "] = " << v << endl;
+				//cout << "the_extra_row_scheme[" << s1 << " * "
+				//<< nb_col_classes[h] << " + " << s2 << "] = "
+				//<< v << endl;
 				the_extra_row_scheme[s1 * nb_col_classes[h] + s2] = v;
 				}
-			else if (h == EXTRA_COL && col_class_index[h][c1] >= 0) { // col scheme
+			else if (h == EXTRA_COL && col_class_index[h][c1] >= 0) {
+				// col scheme
 				s1 = row_class_index[h][c2];
 				s2 = col_class_index[h][c1];
 				//cout << "EXTRA_COL:" << endl;
@@ -620,7 +634,8 @@ void tdo_scheme::get_row_or_col_scheme(int h, int l, int verbose_level)
 				//cout << "s1=" << s1 << endl;
 				//cout << "s2=" << s2 << endl;
 				//cout << "the_extra_col_scheme[" << s1 << " * "
-				//<< nb_col_classes[h] << " + " << s2 << "] = " << v << endl;
+				//<< nb_col_classes[h] << " + "
+				//<< s2 << "] = " << v << endl;
 				the_extra_col_scheme[s1 * nb_col_classes[h] + s2] = v;
 				}
 			//print_row_test_data();
@@ -680,7 +695,8 @@ void tdo_scheme::get_row_or_col_scheme(int h, int l, int verbose_level)
 		}
 }
 
-void tdo_scheme::get_column_split_partition(int verbose_level, partitionstack &P)
+void tdo_scheme::get_column_split_partition(int verbose_level,
+		partitionstack &P)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -976,7 +992,8 @@ void tdo_scheme::compute_whether_first_inc_must_be_moved(
 	int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "tdo_scheme::compute_whether_first_inc_must_be_moved" << endl;
+		cout << "tdo_scheme::compute_whether_first_"
+				"inc_must_be_moved" << endl;
 		}
 	for (i = 0; i < nb_row_classes[ROW]; i++) {
 		f_first_inc_must_be_moved[i] = TRUE;
@@ -1012,8 +1029,10 @@ void tdo_scheme::compute_whether_first_inc_must_be_moved(
 				row_cell = row_class_no[COL][fii];
 				if (row_cell != row_cell0) {
 					if (f_vvv) {
-						cout << "i=" << i << " ii=" << ii << " different "
-							"COL fuse, hence it must not be moved" << endl;
+						cout << "i=" << i << " ii=" << ii
+							<< " different "
+							"COL fuse, hence it must not "
+							"be moved" << endl;
 						cout << "fi=" << fi << endl;
 						cout << "fii=" << fii << endl;
 						cout << "row_cell0=" << row_cell0 << endl;
@@ -1048,8 +1067,10 @@ void tdo_scheme::compute_whether_first_inc_must_be_moved(
 				row_cell = row_class_no[EXTRA_COL][fii];
 				if (row_cell != row_cell0) {
 					if (f_vvv) {
-						cout << "i=" << i << " ii=" << ii << " different "
-							"EXTRACOL fuse, hence it must not be moved" << endl;
+						cout << "i=" << i << " ii=" << ii
+							<< " different "
+							"EXTRACOL fuse, hence it must "
+							"not be moved" << endl;
 						cout << "fi=" << fi << endl;
 						cout << "fii=" << fii << endl;
 						cout << "row_cell0=" << row_cell0 << endl;
@@ -1180,7 +1201,8 @@ int tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 			if (f_v5) {
 				cout << "that is" << endl;
 				for (i = 0; i < nb_non_zero_blocks; i++) {
-					d = distributions[cnt * nb_point_types + non_zero_blocks[i]];
+					d = distributions[cnt *
+						nb_point_types + non_zero_blocks[i]];
 					cout << setw(3) << i << " : " << setw(3) << d << " x ";
 					int_vec_print(cout,
 						point_types + non_zero_blocks[i] * point_type_len,
@@ -1208,7 +1230,8 @@ int tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 					for (i = 0; i < nb_non_zero_blocks; i++) {
 						d = distributions[cnt * nb_point_types +
 										  non_zero_blocks[i]];
-						cout << setw(3) << i << " : " << setw(3) << d << " x ";
+						cout << setw(3) << i << " : "
+							<< setw(3) << d << " x ";
 						int_vec_print(cout,
 							point_types + non_zero_blocks[i] * point_type_len,
 							point_type_len);
@@ -1236,14 +1259,17 @@ int tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 			}
 		} // next cnt
 	if (f_v) {
-		cout << "geometric_test_for_row_scheme: number of distributions reduced from " << nb_distributions << " to " 
+		cout << "geometric_test_for_row_scheme: number of distributions "
+			"reduced from " << nb_distributions << " to "
 			<< new_nb_distributions << ", i.e. Eliminated " 
 			<< nb_distributions - new_nb_distributions << " cases" << endl;
 		cout << "# of ruled out by test of order ";
 		int_vec_print(cout, ruled_out_by, nb_point_types + 1);
 		cout << endl;
-		//cout << "nb ruled out by first order test  = " << nb_ruled_out_by_order1 << endl;
-		//cout << "nb ruled out by second order test = " << nb_ruled_out_by_order2 << endl;
+		//cout << "nb ruled out by first order test  = "
+		//<< nb_ruled_out_by_order1 << endl;
+		//cout << "nb ruled out by second order test = "
+		//<< nb_ruled_out_by_order2 << endl;
 		for (i = nb_point_types; i >= 1; i--) {
 			if (ruled_out_by[i])
 				break;
@@ -1422,7 +1448,8 @@ int tdo_scheme::geometric_test_for_row_scheme_level_s(
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
 	int set[1000];
-	int J, L1, L2, len, max, cur, u, D, d, c, nb_inc, e, f, nb_ordererd_pairs;
+	int J, L1, L2, len, max, cur, u, D, d, c;
+	int nb_inc, e, f, nb_ordererd_pairs;
 	
 	if (f_vvv) {
 		cout << "geometric_test_for_row_scheme_level_s s=" << s << endl;
@@ -1571,7 +1598,8 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 	int nb_rows;
 	int i, j, J, S, l2, nb_eqns, nb_vars;
 	int nb_eqns_joining, nb_eqns_upper_bound;
-	int nb_sol, len, k, a2, a, b, ab, f_used, j1, j2, len1, len2, cnt;
+	int nb_sol, len, k, a2, a, b, ab;
+	int f_used, j1, j2, len1, len2, cnt;
 	int Nb_eqns, Nb_vars;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1996,9 +2024,12 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 
 	// now we compute the distributions:
 
-	if (!tdo_rows_setup_second_system(verbose_level, 
+	if (!tdo_rows_setup_second_system(
+		verbose_level,
 		T, P, 
-		f_omit1, omit1, f_use_packing_numbers, f_dual_is_linear_space, 
+		f_omit1, omit1,
+		f_use_packing_numbers,
+		f_dual_is_linear_space,
 		point_types, nb_point_types)) {
 		FREE_int(point_types);
 		return FALSE;
@@ -2018,7 +2049,8 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 			r = T.only_one_type[h];
 			u = T.types_first[r];
 			//cout << "only one type, r=" << r << " u=" << u
-			//<< " row_classes_len[ROW][r]=" << row_classes_len[ROW][r] << endl;
+			//<< " row_classes_len[ROW][r]="
+			//<< row_classes_len[ROW][r] << endl;
 			distributions[nb_distributions * nb_point_types + u] = 
 				row_classes_len[ROW][r];
 			}
@@ -2066,21 +2098,26 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 	if (f_omit) {
 		T.solve_second_system_omit(verbose_level - 1, 
 			row_classes_len[ROW], 
-			point_types, nb_point_types, distributions, nb_distributions, omit);
+			point_types, nb_point_types,
+			distributions, nb_distributions, omit);
 		}
 	else {
 		int f_scale = FALSE;
 		int scaling = 0;
-		T.solve_second_system(verbose_level - 1, f_use_mckay, f_once, 
+		T.solve_second_system(verbose_level - 1,
+			f_use_mckay, f_once,
 			row_classes_len[ROW], f_scale, scaling, 
-			point_types, nb_point_types, distributions, nb_distributions);
+			point_types, nb_point_types,
+			distributions, nb_distributions);
 		}
 
 
 
 	if (f_v) {
-		cout << "refine_rows_hard: second system " << cnt_second_system
-			<< " found " << nb_distributions << " distributions." << endl;
+		cout << "refine_rows_hard: second system "
+			<< cnt_second_system
+			<< " found " << nb_distributions
+			<< " distributions." << endl;
 		}
 	cnt_second_system++;
 	return TRUE;
@@ -2152,13 +2189,17 @@ int tdo_scheme::tdo_rows_setup_first_system(int verbose_level,
 				l = P.cellSize[i];
 				for (j = 0; j < l; j++) {
 					J = f + i + j; // +i for the slack variables
-					T.D1->Aij(r2, J) = minus_one_if_positive(the_col_scheme[r2 * l2 + f + j]);
+					T.D1->Aij(r2, J) =
+						minus_one_if_positive(
+								the_col_scheme[r2 * l2 + f + j]);
 					}
-				T.D1->Aij(r2, f + i + l) = 0; // the slack variable is not needed
+				T.D1->Aij(r2, f + i + l) = 0;
+					// the slack variable is not needed
 				}
 #if 0
 			for (J = 0; J < nb_vars; J++) {
-				T.D1->Aij(r2, J) = minus_one_if_positive(the_col_scheme[r2 * l2 + J]);
+				T.D1->Aij(r2, J) =
+					minus_one_if_positive(the_col_scheme[r2 * l2 + J]);
 				}
 #endif
 			T.D1->RHS[r] = row_classes_len[ROW][r] - 1;
@@ -2174,7 +2215,8 @@ int tdo_scheme::tdo_rows_setup_first_system(int verbose_level,
 					J = f + i + j; // +i for the slack variables
 					T.D1->Aij(r2, J) = the_col_scheme[r2 * l2 + f + j];
 					}
-				T.D1->Aij(r2, f + i + l) = 0; // the slack variable is not needed
+				T.D1->Aij(r2, f + i + l) = 0;
+					// the slack variable is not needed
 				}
 #if 0
 			for (J = 0; J < nb_vars; J++) {
@@ -2298,7 +2340,8 @@ int tdo_scheme::tdo_rows_setup_second_system(int verbose_level,
 
 	if (f_v) {
 		cout << "tdo_rows_setup_second_system: opening second system with " 
-			<< Nb_eqns << " equations and " << Nb_vars << " variables" << endl;
+			<< Nb_eqns << " equations and " << Nb_vars
+			<< " variables" << endl;
 		cout << "nb_eqns_joining=" << nb_eqns_joining << endl;
 		cout << "nb_eqns_counting=" << nb_eqns_counting << endl;
 		cout << "nb_eqns_packing=" << nb_eqns_packing << endl;
@@ -2469,7 +2512,8 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 					cout << "h=" << h << endl;
 					cout << "rr=T.only_one_type[h]=" << rr << endl;
 					cout << "p=row_classes_len[ROW][rr]=" << p << endl;
-					cout << "u=T.types_first[rr]=" << T.types_first[rr] << endl;
+					cout << "u=T.types_first[rr]="
+							<< T.types_first[rr] << endl;
 					cout << "I=" << I << endl;
 					cout << "a=point_types[u * L2 + I]=" << a << endl;
 					cout << "a2=binomial2(a)=" << a2 << endl;
@@ -2494,7 +2538,8 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 						cout << "h=" << h << endl;
 						cout << "rr=T.only_one_type[h]=" << rr << endl;
 						cout << "p=row_classes_len[ROW][rr]=" << p << endl;
-						cout << "u=T.types_first[rr]=" << T.types_first[rr] << endl;
+						cout << "u=T.types_first[rr]="
+								<< T.types_first[rr] << endl;
 						cout << "I1=" << I1 << endl;
 						cout << "I2=" << I2 << endl;
 						cout << "k=" << k << endl;
@@ -2776,7 +2821,8 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 			}
 		}
 
-	column_refinement_L1_L2(P, f_omit1, omit1, L1, L2, verbose_level);
+	column_refinement_L1_L2(P, f_omit1, omit1,
+			L1, L2, verbose_level);
 
 	T.allocate(R);
 	
@@ -2908,7 +2954,8 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 		
 		if (nb_sol == 1) {
 			if (f_v) {
-				cout << "only one solution in block r=" << r << endl;
+				cout << "only one solution in block "
+					"r=" << r << endl;
 				}
 			T.only_one_type[T.nb_only_one_type++] = r;
 			}
@@ -2987,15 +3034,20 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 		}
 
 	if (f_v) {
-		cout << "refine_cols_hard: solving second system " << cnt_second_system << " which is " << T.D2->m << " x " << T.D2->n << endl;
+		cout << "refine_cols_hard: solving second system "
+				<< cnt_second_system << " which is " << T.D2->m
+				<< " x " << T.D2->n << endl;
 		cout << "variable blocks:" << endl;
-		cout << "i : r : col_classes_len[COL][r] : types_first2[i] : types_len[r]" << endl;
+		cout << "i : r : col_classes_len[COL][r] : types_first2[i] : "
+			"types_len[r]" << endl;
 		int f, l;
 		for (i = 0; i < T.nb_multiple_types; i++) {
 			r = T.multiple_types[i];
 			f = T.types_first2[i];
 			l = T.types_len[r];
-			cout << i << " : " << r << " : " << setw(3) << col_classes_len[COL][r] << " : " << setw(3) << f << " : " << setw(3) << l << endl;
+			cout << i << " : " << r << " : " << setw(3)
+				<< col_classes_len[COL][r] << " : " << setw(3)
+				<< f << " : " << setw(3) << l << endl;
 			}
 		}
 
@@ -3222,10 +3274,12 @@ int tdo_scheme::tdo_columns_setup_second_system(
 
 	if (f_v) {
 		cout << "tdo_columns_setup_second_system" << endl;
-		cout << "f_use_packing_numbers=" << f_use_packing_numbers << endl;
+		cout << "f_use_packing_numbers="
+				<< f_use_packing_numbers << endl;
 		}
 		
-	int nb_eqns_joining, nb_eqns_counting, nb_eqns_upper_bound, nb_eqns_used;
+	int nb_eqns_joining, nb_eqns_counting;
+	int nb_eqns_upper_bound, nb_eqns_used;
 	int l2;
 	
 	l2 = nb_row_classes[ROW]; // the finer scheme
@@ -3609,7 +3663,8 @@ int tdo_scheme::td3_refine_rows(int verbose_level, int f_once,
 	nb_points = m;
 	lambda2 = lambda3 * (nb_points - 2) / (block_size - 2);
 	if (f_v) {
-		cout << "nb_points = " << nb_points << " lambda2 = " << lambda2 << endl;
+		cout << "nb_points = " << nb_points
+				<< " lambda2 = " << lambda2 << endl;
 		}
 	if ((block_size - 2) * lambda2 != lambda3 * (nb_points - 2)) {
 		cout << "parameters are wrong" << endl;
@@ -3653,7 +3708,8 @@ int tdo_scheme::td3_refine_rows(int verbose_level, int f_once,
 			point_types, nb_point_types, point_types_allocated);
 
 		if (f_vv) {
-			cout << "r = " << r << ", found " << nb_sol << " refined point types" << endl;
+			cout << "r = " << r << ", found " << nb_sol
+				<< " refined point types" << endl;
 			}
 		if (nb_sol == 0) {
 			FREE_int(point_types);
@@ -3701,7 +3757,9 @@ int tdo_scheme::td3_refine_rows(int verbose_level, int f_once,
 		for (h = 0; h < T.nb_only_one_type; h++) {
 			r = T.only_one_type[h];
 			u = T.types_first[r];
-			//cout << "only one type, r=" << r << " u=" << u << " row_classes_len[ROW][r]=" << row_classes_len[ROW][r] << endl;
+			//cout << "only one type, r=" << r << " u=" << u
+			//<< " row_classes_len[ROW][r]="
+			//<< row_classes_len[ROW][r] << endl;
 			distributions[nb_distributions * nb_point_types + u] = 
 				row_classes_len[ROW][r];
 			}
@@ -3718,7 +3776,8 @@ int tdo_scheme::td3_refine_rows(int verbose_level, int f_once,
 
 
 	if (f_v) {
-		cout << "td3_refine_rows: found " << nb_distributions << " distributions." << endl;
+		cout << "td3_refine_rows: found " << nb_distributions
+				<< " distributions." << endl;
 		}
 	return TRUE;
 }
@@ -3740,7 +3799,8 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 		}
 		
 
-	// create all partitions which are refined point types of points in block r
+	// create all partitions which are refined
+	// point types of points in block r
 
 	R = nb_row_classes[ROW];
 	l1 = nb_col_classes[ROW];
@@ -3764,7 +3824,8 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 		if (r2 == r) {
 			// connections within the same row-partition
 			for (J = 0; J < nb_vars; J++) {
-				T.D1->A[r2 * nb_vars + J] = minus_one_if_positive(the_col_scheme[r2 * l2 + J]);
+				T.D1->A[r2 * nb_vars + J] =
+					minus_one_if_positive(the_col_scheme[r2 * l2 + J]);
 				}
 			T.D1->RHS[r2] = (row_classes_len[ROW][r2] - 1) * lambda2;
 			}
@@ -3787,16 +3848,24 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 		if (r2 == r) {
 			// connections to pairs within the same row-partition
 			for (J = 0; J < nb_vars; J++) {
-				T.D1->A[(eqn_offset + r2) * nb_vars + J] = binomial2(minus_one_if_positive(the_col_scheme[r2 * l2 + J]));
+				T.D1->A[(eqn_offset + r2) * nb_vars + J] =
+					binomial2(minus_one_if_positive(
+							the_col_scheme[r2 * l2 + J]));
 				}
-			T.D1->RHS[eqn_offset + r2] = binomial2((row_classes_len[ROW][r2] - 1)) * lambda3;
+			T.D1->RHS[eqn_offset + r2] =
+				binomial2((row_classes_len[ROW][r2] - 1)) * lambda3;
 			}
 		else {
-			// connections to pairs with one in the same and one in the other part
+			// connections to pairs with one
+			// in the same and one in the other part
 			for (J = 0; J < nb_vars; J++) {
-				T.D1->A[(eqn_offset + r2) * nb_vars + J] = minus_one_if_positive(the_col_scheme[r * l2 + J]) * the_col_scheme[r2 * l2 + J];
+				T.D1->A[(eqn_offset + r2) * nb_vars + J] =
+					minus_one_if_positive(the_col_scheme[r * l2 + J])
+						* the_col_scheme[r2 * l2 + J];
 				}
-			T.D1->RHS[eqn_offset + r2] = (row_classes_len[ROW][r] - 1) * row_classes_len[ROW][r2] * lambda3;
+			T.D1->RHS[eqn_offset + r2] =
+				(row_classes_len[ROW][r] - 1) *
+					row_classes_len[ROW][r2] * lambda3;
 			}
 		}
 	if (f_vv) {
@@ -3811,13 +3880,16 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 			continue;
 		// connections to pairs from one different row-partition
 		for (J = 0; J < nb_vars; J++) {
-			T.D1->A[(eqn_offset + eqn_cnt) * nb_vars + J] = binomial2(the_col_scheme[r2 * l2 + J]);
+			T.D1->A[(eqn_offset + eqn_cnt) * nb_vars + J] =
+				binomial2(the_col_scheme[r2 * l2 + J]);
 			}
-		T.D1->RHS[eqn_offset + eqn_cnt] = binomial2(row_classes_len[ROW][r2]) * lambda3;
+		T.D1->RHS[eqn_offset + eqn_cnt] = binomial2(
+				row_classes_len[ROW][r2]) * lambda3;
 		eqn_cnt++;
 		}
 	if (f_vv) {
-		cout << "r=" << r << " after connections to pairs from one different row-partition, the system is" << endl;
+		cout << "r=" << r << " after connections to pairs "
+				"from one different row-partition, the system is" << endl;
 		T.D1->print();
 		}
 
@@ -3831,15 +3903,18 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 				continue;
 			// connections to pairs from two different row-partitions
 			for (J = 0; J < nb_vars; J++) {
-				T.D1->A[(eqn_offset + eqn_cnt) * nb_vars + J] = the_col_scheme[r2 * l2 + J] * the_col_scheme[r3 * l2 + J];
+				T.D1->A[(eqn_offset + eqn_cnt) * nb_vars + J] =
+					the_col_scheme[r2 * l2 + J] * the_col_scheme[r3 * l2 + J];
 				}
-			T.D1->RHS[eqn_offset + eqn_cnt] = row_classes_len[ROW][r2] * row_classes_len[ROW][r3] * lambda3;
+			T.D1->RHS[eqn_offset + eqn_cnt] =
+				row_classes_len[ROW][r2] * row_classes_len[ROW][r3] * lambda3;
 			eqn_cnt++;
 			}
 		}
 	eqn_offset += eqn_cnt;
 	if (f_vv) {
-		cout << "r=" << r << " after connections to pairs from two different row-partitions, the system is" << endl;
+		cout << "r=" << r << " after connections to pairs from two "
+				"different row-partitions, the system is" << endl;
 		T.D1->print();
 		}
 	
@@ -3863,7 +3938,8 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 			}
 		}
 	if (f_vv) {
-		cout << "r=" << r << " after adding extra equations, the system is" << endl;
+		cout << "r=" << r << " after adding extra equations, "
+				"the system is" << endl;
 		T.D1->print();
 		}
 	
@@ -3904,8 +3980,10 @@ int tdo_scheme::td3_rows_setup_second_system(int verbose_level,
 
 	T.D2->open(Nb_eqns, Nb_vars);
 	if (f_v) {
-		cout << "td3_rows_setup_second_system: opening second system with " 
-			<< Nb_eqns << " equations and " << Nb_vars << " variables" << endl;
+		cout << "td3_rows_setup_second_system: "
+			"opening second system with "
+			<< Nb_eqns << " equations and "
+			<< Nb_vars << " variables" << endl;
 		}
 
 	for (I = 0; I < Nb_eqns; I++) 
@@ -3978,7 +4056,10 @@ int tdo_scheme::td3_rows_counting_flags(int verbose_level,
 				T.D2->RHS[eqn_offset + i * (l2 + 1) + I] -= a * p;
 				if (T.D2->RHS[eqn_offset + i * (l2 + 1) + I] < 0) {
 					if (f_v) {
-						cout << "td3_rows_counting_flags: RHS[nb_eqns_joining + i * (l2 + 1) + I] is negative, no solution for the distribution" << endl;
+						cout << "td3_rows_counting_flags: RHS["
+							"nb_eqns_joining + i * (l2 + 1) + I] "
+							"is negative, no solution for the "
+							"distribution" << endl;
 						}
 					return FALSE;
 					}
@@ -4013,9 +4094,9 @@ int tdo_scheme::td3_rows_counting_flags(int verbose_level,
 	return TRUE;
 }
 
-// #################################################################################
+// #############################################################################
 // TDO parameter refinement for 3-designs - column refinement
-// #################################################################################
+// #############################################################################
 
 
 
@@ -4041,7 +4122,8 @@ int tdo_scheme::td3_refine_columns(int verbose_level, int f_once,
 	nb_points = m;
 	lambda2 = lambda3 * (nb_points - 2) / (block_size - 2);
 	if (f_v) {
-		cout << "nb_points = " << nb_points << " lambda2 = " << lambda2 << endl;
+		cout << "nb_points = " << nb_points
+			<< " lambda2 = " << lambda2 << endl;
 		}
 	if ((block_size - 2) * lambda2 != lambda3 * (nb_points - 2)) {
 		cout << "parameter are wrong" << endl;
@@ -4084,7 +4166,8 @@ int tdo_scheme::td3_refine_columns(int verbose_level, int f_once,
 			line_types, nb_line_types, line_types_allocated);
 
 		if (f_vv) {
-			cout << "r = " << r << ", found " << nb_sol << " refine line types" << endl;
+			cout << "r = " << r << ", found " << nb_sol
+				<< " refine line types" << endl;
 			}
 		if (nb_sol == 0) {
 			FREE_int(line_types);
@@ -4124,13 +4207,16 @@ int tdo_scheme::td3_refine_columns(int verbose_level, int f_once,
 		return FALSE;
 		}
 
-	T.solve_second_system(verbose_level - 1, FALSE /* f_use_mckay */, f_once, 
+	T.solve_second_system(verbose_level - 1,
+		FALSE /* f_use_mckay */, f_once,
 		col_classes_len[COL], f_scale, scaling, 
-		line_types, nb_line_types, distributions, nb_distributions);
+		line_types, nb_line_types,
+		distributions, nb_distributions);
 
 
 	if (f_v) {
-		cout << "td3_refine_columns: found " << nb_distributions << " distributions." << endl;
+		cout << "td3_refine_columns: found "
+			<< nb_distributions << " distributions." << endl;
 		}
 	return TRUE;
 }
@@ -4144,7 +4230,8 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int j, R, l1, l2, S, I, J, f, l, a, a2, s, d, d2, d3, o, h, rr, p, u, a3, e;
+	int j, R, l1, l2, S, I, J, f, l, a, a2;
+	int s, d, d2, d3, o, h, rr, p, u, a3, e;
 	
 	if (f_v) {
 		cout << "td3_columns_setup_first_system r=" << r << endl;
@@ -4206,7 +4293,8 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 			o -= a2 * p;
 			if (o < 0) {
 				if (f_vvv) {
-					cout << "only one type, but no solution because of joining in row-class " << j << endl;
+					cout << "only one type, but no solution because "
+						"of joining in row-class " << j << endl;
 					//cout << "u=" << u << " j=" << j << endl;
 					}
 				return FALSE;
@@ -4233,7 +4321,8 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 			o -= a3 * p;
 			if (o < 0) {
 				if (f_vvv) {
-					cout << "only one type, but no solution because of joining in row-class " << j << endl;
+					cout << "only one type, but no solution because "
+						"of joining in row-class " << j << endl;
 					//cout << "u=" << u << " j=" << j << endl;
 					}
 				return FALSE;
@@ -4254,8 +4343,10 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 }		
 
 
-int tdo_scheme::td3_columns_setup_second_system(int verbose_level,
-	int lambda3, int block_size, int lambda2, int f_scale, int scaling,
+int tdo_scheme::td3_columns_setup_second_system(
+	int verbose_level,
+	int lambda3, int block_size, int lambda2,
+	int f_scale, int scaling,
 	tdo_data &T, 
 	int nb_vars, int &Nb_vars, int &Nb_eqns, 
 	int *&line_types, int &nb_line_types)
@@ -4265,7 +4356,8 @@ int tdo_scheme::td3_columns_setup_second_system(int verbose_level,
 	//int f_vvv = (verbose_level >= 3);
 	int l2, i, r, I, J, a;
 	int S;
-	int nb_eqns_joining, nb_eqns_joining_pairs, nb_eqns_joining_triples, nb_eqns_counting;
+	int nb_eqns_joining, nb_eqns_joining_pairs;
+	int nb_eqns_joining_triples, nb_eqns_counting;
 
 	l2 = nb_row_classes[ROW];
 	
@@ -4289,8 +4381,10 @@ int tdo_scheme::td3_columns_setup_second_system(int verbose_level,
 
 	T.D2->open(Nb_eqns, Nb_vars);
 	if (f_v) {
-		cout << "td3_columns_setup_second_system: opening second system with " 
-			<< Nb_eqns << " equations and " << Nb_vars << " variables" << endl;
+		cout << "td3_columns_setup_second_system: "
+			"opening second system with "
+			<< Nb_eqns << " equations and "
+			<< Nb_vars << " variables" << endl;
 		}
 
 	for (I = 0; I < Nb_eqns; I++) 
@@ -4324,7 +4418,8 @@ int tdo_scheme::td3_columns_setup_second_system(int verbose_level,
 		return FALSE;
 		}
 	
-	if (!td3_columns_lambda2_joining_pairs_from_different_classes(verbose_level, 
+	if (!td3_columns_lambda2_joining_pairs_from_different_classes(
+		verbose_level,
 		lambda3, block_size, lambda2,  
 		T, 
 		nb_vars, Nb_vars, 
@@ -4350,7 +4445,8 @@ int tdo_scheme::td3_columns_setup_second_system(int verbose_level,
 	
 	if (f_scale) {
 		if (S % scaling) {
-			cout << "cannot scale by " << scaling << " b/c S=" << S << endl;
+			cout << "cannot scale by " << scaling
+				<< " b/c S=" << S << endl;
 			exit(1);
 			}
 		S /= scaling;
@@ -4358,7 +4454,8 @@ int tdo_scheme::td3_columns_setup_second_system(int verbose_level,
 			a = T.D2->RHS[I];
 			if (a % scaling) {
 				if (a % scaling) {
-					cout << "cannot scale by " << scaling << " b/c RHS[" << I << "]=" << a << endl;
+					cout << "cannot scale by " << scaling
+						<< " b/c RHS[" << I << "]=" << a << endl;
 					}
 				exit(1);
 				}
@@ -4402,7 +4499,8 @@ int tdo_scheme::td3_columns_triples_same_class(int verbose_level,
 	l2 = nb_row_classes[ROW];
 	
 	if (f_v) {
-		cout << "td3_columns_triples_same_class: eqn_offset=" << eqn_offset << endl;
+		cout << "td3_columns_triples_same_class: "
+				"eqn_offset=" << eqn_offset << endl;
 		}
 	// triples from the same class:
 	for (I = 0; I < l2; I++) {
@@ -4431,7 +4529,8 @@ int tdo_scheme::td3_columns_triples_same_class(int verbose_level,
 			T.D2->RHS[eqn_offset + I] -= a3 * p;
 			if (T.D2->RHS[eqn_offset + I] < 0) {
 				if (f_v) {
-					cout << "td3_refine_columns: RHS[I] is negative, no solution for the distribution" << endl;
+					cout << "td3_refine_columns: RHS[I] is negative, "
+						"no solution for the distribution" << endl;
 					}
 				return FALSE;
 				}
@@ -4458,7 +4557,8 @@ int tdo_scheme::td3_columns_pairs_same_class(int verbose_level,
 	l2 = nb_row_classes[ROW];
 	
 	if (f_v) {
-		cout << "td3_columns_pairs_same_class: eqn_offset=" << eqn_offset << endl;
+		cout << "td3_columns_pairs_same_class: "
+			"eqn_offset=" << eqn_offset << endl;
 		}
 	// pairs from the same class:
 	for (I = 0; I < l2; I++) {
@@ -4487,7 +4587,9 @@ int tdo_scheme::td3_columns_pairs_same_class(int verbose_level,
 			T.D2->RHS[eqn_offset + I] -= a2 * p;
 			if (T.D2->RHS[eqn_offset + I] < 0) {
 				if (f_v) {
-					cout << "td3_refine_columns: RHS[eqn_offset + I] is negative, no solution for the distribution" << endl;
+					cout << "td3_refine_columns: RHS[eqn_offset + I] "
+						"is negative, no solution for the "
+						"distribution" << endl;
 					}
 				return FALSE;
 				}
@@ -4515,7 +4617,8 @@ int tdo_scheme::td3_columns_counting_flags(int verbose_level,
 	l2 = nb_row_classes[ROW];
 	
 	if (f_v) {
-		cout << "td3_columns_counting_flags: eqn_offset=" << eqn_offset << endl;
+		cout << "td3_columns_counting_flags: "
+				"eqn_offset=" << eqn_offset << endl;
 		}
 	// counting flags, a block diagonal system with 
 	// nb_multiple_types * (l2 + 1) equations
@@ -4541,7 +4644,10 @@ int tdo_scheme::td3_columns_counting_flags(int verbose_level,
 				T.D2->RHS[eqn_offset + i * (l2 + 1) + I] -= a * p;
 				if (T.D2->RHS[eqn_offset + i * (l2 + 1) + I] < 0) {
 					if (f_v) {
-						cout << "td3_columns_counting_flags: RHS[nb_eqns_joining + i * (l2 + 1) + I] is negative, no solution for the distribution" << endl;
+						cout << "td3_columns_counting_flags: "
+							"RHS[nb_eqns_joining + i * (l2 + 1) + I] "
+							"is negative, no solution for the "
+							"distribution" << endl;
 						}
 					return FALSE;
 					}
@@ -4576,7 +4682,8 @@ int tdo_scheme::td3_columns_counting_flags(int verbose_level,
 	return TRUE;
 }
 
-int tdo_scheme::td3_columns_lambda2_joining_pairs_from_different_classes(int verbose_level,
+int tdo_scheme::td3_columns_lambda2_joining_pairs_from_different_classes(
+	int verbose_level,
 	int lambda3, int block_size, int lambda2,
 	tdo_data &T, 
 	int nb_vars, int Nb_vars, 
@@ -4590,7 +4697,8 @@ int tdo_scheme::td3_columns_lambda2_joining_pairs_from_different_classes(int ver
 	l2 = nb_row_classes[ROW];
 	
 	if (f_v) {
-		cout << "td3_columns_lambda2_joining_pairs_from_different_classes: eqn_offset=" << eqn_offset << endl;
+		cout << "td3_columns_lambda2_joining_pairs_from_different_"
+			"classes: eqn_offset=" << eqn_offset << endl;
 		}
 	// lambda2: joining pairs from different classes
 	for (I1 = 0; I1 < l2; I1++) {
@@ -4622,7 +4730,10 @@ int tdo_scheme::td3_columns_lambda2_joining_pairs_from_different_classes(int ver
 				T.D2->RHS[eqn_offset + k] -= a * b * p;
 				if (T.D2->RHS[eqn_offset + k] < 0) {
 					if (f_v) {
-						cout << "td3_columns_lambda2_joining_pairs_from_different_classes: RHS[eqn_offset + k] is negative, no solution for the distribution" << endl;
+						cout << "td3_columns_lambda2_joining_pairs_"
+							"from_different_classes: RHS[eqn_offset + k] "
+							"is negative, no solution for the "
+							"distribution" << endl;
 						}
 					return FALSE;
 					}
@@ -4630,14 +4741,16 @@ int tdo_scheme::td3_columns_lambda2_joining_pairs_from_different_classes(int ver
 			}
 		}
 	if (f_vvv) {
-		cout << "td3_columns_lambda2_joining_pairs_from_different_classes, the system is" << endl;
+		cout << "td3_columns_lambda2_joining_pairs_from_different_"
+				"classes, the system is" << endl;
 		T.D2->print();
 		}
 	
 	return TRUE;
 }
 
-int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(int verbose_level,
+int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(
+	int verbose_level,
 	int lambda3, int block_size, int lambda2,
 	tdo_data &T, 
 	int nb_vars, int Nb_vars, 
@@ -4652,9 +4765,11 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(int verbose_level,
 	l2 = nb_row_classes[ROW];
 	
 	if (f_v) {
-		cout << "td3_columns_lambda3_joining_triples_2_1: eqn_offset=" << eqn_offset << endl;
+		cout << "td3_columns_lambda3_joining_triples_2_1: "
+			"eqn_offset=" << eqn_offset << endl;
 		}
-	// lambda3: joining triples with two in the first class and one in the second class
+	// lambda3: joining triples with two in the first
+	// class and one in the second class
 	for (I1 = 0; I1 < l2; I1++) {
 		length_first = row_classes_len[ROW][I1];
 		length_first2 = binomial2(length_first);
@@ -4687,7 +4802,9 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(int verbose_level,
 				T.D2->RHS[l2 + k] -= a2 * b * p;
 				if (T.D2->RHS[l2 + k] < 0) {
 					if (f_v) {
-						cout << "td3_columns_lambda3_joining_triples_2_1: RHS[l2 + k] is negative, no solution for the distribution" << endl;
+						cout << "td3_columns_lambda3_joining_triples_2_1: "
+							"RHS[l2 + k] is negative, no solution for "
+							"the distribution" << endl;
 						}
 					return FALSE;
 					}
@@ -4695,14 +4812,16 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(int verbose_level,
 			}
 		}
 	if (f_vvv) {
-		cout << "td3_columns_lambda3_joining_triples_2_1, the system is" << endl;
+		cout << "td3_columns_lambda3_joining_triples_2_1, "
+				"the system is" << endl;
 		T.D2->print();
 		}
 	
 	return TRUE;
 }
 
-int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(int verbose_level,
+int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(
+	int verbose_level,
 	int lambda3, int block_size, int lambda2,
 	tdo_data &T, 
 	int nb_vars, int Nb_vars, 
@@ -4717,7 +4836,8 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(int verbose_level,
 	l2 = nb_row_classes[ROW];
 	
 	if (f_v) {
-		cout << "td3_columns_lambda3_joining_triples_1_1_1: eqn_offset=" << eqn_offset << endl;
+		cout << "td3_columns_lambda3_joining_triples_1_1_1: "
+			"eqn_offset=" << eqn_offset << endl;
 		}
 	// lambda3: joining triples with all in different classes
 	for (I1 = 0; I1 < l2; I1++) {
@@ -4737,10 +4857,12 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(int verbose_level,
 						a = line_types[c * nb_vars + I1];
 						b = line_types[c * nb_vars + I2];
 						g = line_types[c * nb_vars + I3];
-						T.D2->A[(l2 + l2 * (l2 - 1) + k) * Nb_vars + J] = a * b * g;
+						T.D2->A[(l2 + l2 * (l2 - 1) + k) *
+								Nb_vars + J] = a * b * g;
 						}
 					}
-				T.D2->RHS[l2 + l2 * (l2 - 1) + k] = length_first * length_second * length_third * lambda3;
+				T.D2->RHS[l2 + l2 * (l2 - 1) + k] = length_first *
+						length_second * length_third * lambda3;
 				for (h = 0; h < T.nb_only_one_type; h++) {
 					rr = T.only_one_type[h];
 					p = col_classes_len[COL][rr];
@@ -4751,7 +4873,10 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(int verbose_level,
 					T.D2->RHS[l2 + l2 * (l2 - 1) + k] -= a * b * g * p;
 					if (T.D2->RHS[l2 + l2 * (l2 - 1) + k] < 0) {
 						if (f_v) {
-							cout << "td3_columns_lambda3_joining_triples_1_1_1: RHS[l2 + l2 * (l2 - 1) + k] is negative, no solution for the distribution" << endl;
+							cout << "td3_columns_lambda3_joining_triples_"
+								"1_1_1: RHS[l2 + l2 * (l2 - 1) + k] is "
+								"negative, no solution for the "
+								"distribution" << endl;
 							}
 						return FALSE;
 						}
@@ -4760,7 +4885,8 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(int verbose_level,
 			}
 		}
 	if (f_vvv) {
-		cout << "td3_columns_lambda3_joining_triples_1_1_1, the system is" << endl;
+		cout << "td3_columns_lambda3_joining_triples_1_1_1, "
+				"the system is" << endl;
 		T.D2->print();
 		}
 	
