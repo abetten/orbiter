@@ -16,8 +16,10 @@ int t0 = 0;
 
 
 int main(int argc, const char **argv);
-void lift_single_arc(int *arc, int arc_size, surface_with_action *Surf_A, int verbose_level);
-void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_action *Surf_A, int verbose_level);
+void lift_single_arc(int *arc, int arc_size,
+		surface_with_action *Surf_A, int verbose_level);
+void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
+		surface_with_action *Surf_A, int verbose_level);
 
 
 int main(int argc, const char **argv)
@@ -108,11 +110,13 @@ int main(int argc, const char **argv)
 
 
 	if (f_v) {
-		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
+		cout << "before Surf_A->Classify_trihedral_"
+				"pairs->classify" << endl;
 		}
 	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
 	if (f_v) {
-		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
+		cout << "after Surf_A->Classify_trihedral_"
+				"pairs->classify" << endl;
 		}
 
 
@@ -137,7 +141,8 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "before classify_arcs_and_do_arc_lifting" << endl;
 			}
-		classify_arcs_and_do_arc_lifting(argc, argv, Surf_A, verbose_level);
+		classify_arcs_and_do_arc_lifting(argc, argv,
+				Surf_A, verbose_level);
 		}
 
 	the_end(t0);
@@ -146,7 +151,8 @@ int main(int argc, const char **argv)
 }
 
 
-void lift_single_arc(int *arc, int arc_size, surface_with_action *Surf_A, int verbose_level)
+void lift_single_arc(int *arc, int arc_size,
+		surface_with_action *Surf_A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q;
@@ -183,16 +189,22 @@ void lift_single_arc(int *arc, int arc_size, surface_with_action *Surf_A, int ve
 	sprintf(fname_arc_lifting, "single_arc_lifting_q%d_arc", q);
 
 	for (i = 0; i < 6; i++) {
-		sprintf(fname_arc_lifting + strlen(fname_arc_lifting), "_%d", arc[i]);
+		sprintf(fname_arc_lifting + strlen(fname_arc_lifting), "_%d",
+				arc[i]);
 		}
 	sprintf(fname_arc_lifting + strlen(fname_arc_lifting), ".tex");
 	ofstream fp(fname_arc_lifting);
 
 
-	latex_head(fp, FALSE /* f_book */, TRUE /* f_title */, 
+	latex_head(fp,
+		FALSE /* f_book */,
+		TRUE /* f_title */,
 		title, author, 
-		FALSE /*f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
-		TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/, 
+		FALSE /*f_toc */,
+		FALSE /* f_landscape */,
+		FALSE /* f_12pt */,
+		TRUE /*f_enlarged_page */,
+		TRUE /* f_pagenumbers*/,
 		NULL /* extra_praeamble */);
 
 
@@ -206,17 +218,23 @@ void lift_single_arc(int *arc, int arc_size, surface_with_action *Surf_A, int ve
 
 
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type1" << endl;
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_"
+			"orbits_on_trihedra_type1" << endl;
 	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type2" << endl;
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_"
+			"orbits_on_trihedra_type2" << endl;
 	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs no stabs" << endl;
-	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp, FALSE /* f_with_stabilizers */);
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_"
+			"trihedral_pairs no stabs" << endl;
+	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
+			FALSE /* f_with_stabilizers */);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs with stabs" << endl;
-	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp, TRUE /* f_with_stabilizers */);
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_"
+			"trihedral_pairs with stabs" << endl;
+	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
+			TRUE /* f_with_stabilizers */);
 
 
 
@@ -241,14 +259,16 @@ void lift_single_arc(int *arc, int arc_size, surface_with_action *Surf_A, int ve
 	latex_foot(fp);
 	} // fp
 
-	cout << "Written file " << fname_arc_lifting << " of size " << file_size(fname_arc_lifting) << endl;
+	cout << "Written file " << fname_arc_lifting << " of size "
+			<< file_size(fname_arc_lifting) << endl;
 
 	if (f_v) {
 		cout << "lift_single_arc done" << endl;
 		}
 }
 
-void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_action *Surf_A, int verbose_level)
+void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
+		surface_with_action *Surf_A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q;
@@ -292,10 +312,15 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 	ofstream fp(fname_arc_lifting);
 
 
-	latex_head(fp, FALSE /* f_book */, TRUE /* f_title */, 
+	latex_head(fp,
+		FALSE /* f_book */,
+		TRUE /* f_title */,
 		title, author, 
-		FALSE /*f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
-		TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/, 
+		FALSE /*f_toc */,
+		FALSE /* f_landscape */,
+		FALSE /* f_12pt */,
+		TRUE /*f_enlarged_page */,
+		TRUE /* f_pagenumbers*/,
 		NULL /* extra_praeamble */);
 
 
@@ -379,7 +404,9 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 	int_vec_zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
 	int_vec_zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
 
-	for (arc_idx = 0; arc_idx < Six_arcs->nb_arcs_not_on_conic; arc_idx++) {
+	for (arc_idx = 0;
+			arc_idx < Six_arcs->nb_arcs_not_on_conic;
+			arc_idx++) {
 
 
 		if (f_deleted[arc_idx]) {
@@ -398,7 +425,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 
 		Six_arcs->Gen->gen->get_set_by_level(
 				6 /* level */,
-				Six_arcs->Not_on_conic_idx[arc_idx], Arc6);
+				Six_arcs->Not_on_conic_idx[arc_idx],
+				Arc6);
 		
 		{
 		set_and_stabilizer *The_arc;
@@ -409,7 +437,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 				0 /* verbose_level */);
 		
 		
-		fp << "Arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << " is: ";
+		fp << "Arc " << arc_idx << " / "
+				<< Six_arcs->nb_arcs_not_on_conic << " is: ";
 		fp << "$$" << endl;
 		//int_vec_print(fp, Arc6, 6);
 		The_arc->print_set_tex(fp);
@@ -422,21 +451,27 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		fp << "The stabilizer is the following group:\\\\" << endl;
 		The_arc->Strong_gens->print_generators_tex(fp);
 
-		delete The_arc;
+		FREE_OBJECT(The_arc);
 		}
 
 		char arc_label[1000];
 		char arc_label_short[1000];
 		
-		sprintf(arc_label, "%d / %d", arc_idx, Six_arcs->nb_arcs_not_on_conic);
+		sprintf(arc_label, "%d / %d",
+				arc_idx, Six_arcs->nb_arcs_not_on_conic);
 		sprintf(arc_label_short, "Arc%d", arc_idx);
 		
 		if (f_v) {
-			cout << "classify_arcs_and_do_arc_lifting before do_arc_lifting" << endl;
+			cout << "classify_arcs_and_do_arc_lifting "
+					"before do_arc_lifting" << endl;
 			}
 
-		Surf_A->arc_lifting_and_classify(TRUE /* f_log_fp */, fp, 
-			Arc6, arc_label, arc_label_short, 
+		Surf_A->arc_lifting_and_classify(
+			TRUE /* f_log_fp */,
+			fp,
+			Arc6,
+			arc_label,
+			arc_label_short,
 			nb_surfaces, 
 			Six_arcs, 
 			Arc_identify_nb, 
@@ -445,7 +480,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 			verbose_level);
 
 		if (f_v) {
-			cout << "classify_arcs_and_do_arc_lifting after do_arc_lifting" << endl;
+			cout << "classify_arcs_and_do_arc_lifting "
+					"after do_arc_lifting" << endl;
 			}
 		
 
@@ -480,13 +516,17 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 	
 	cout << "decomposition matrix:" << endl;
 	cout << "$$" << endl;
-	print_integer_matrix_with_standard_labels(cout, Decomp, Six_arcs->nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
+	print_integer_matrix_with_standard_labels(cout, Decomp,
+			Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
+			TRUE /* f_tex */);
 	cout << "$$" << endl;
 	
 	fp << "Decomposition matrix:" << endl;
 	//fp << "$$" << endl;
-	//print_integer_matrix_with_standard_labels(fp, Decomp, nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
-	print_integer_matrix_tex_block_by_block(fp, Decomp, Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
+	//print_integer_matrix_with_standard_labels(fp, Decomp,
+	//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
+	print_integer_matrix_tex_block_by_block(fp, Decomp,
+			Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
 	//fp << "$$" << endl;
 
 
@@ -499,7 +539,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 	latex_foot(fp);
 	} // fp
 
-	cout << "Written file " << fname_arc_lifting << " of size " << file_size(fname_arc_lifting) << endl;
+	cout << "Written file " << fname_arc_lifting << " of size "
+			<< file_size(fname_arc_lifting) << endl;
 	//delete Gen;
 	//delete F;
 

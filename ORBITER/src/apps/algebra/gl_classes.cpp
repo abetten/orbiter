@@ -506,9 +506,14 @@ int main(int argc, char **argv)
 		Cent = new strong_generators;
 		Cent_GL = new strong_generators;
 		
+		cout << "before Cent->init_centralizer_of_matrix" << endl;
 		Cent->init_centralizer_of_matrix(A_PGL, Elt, verbose_level);
+		cout << "before Cent->init_centralizer_of_matrix" << endl;
+
+		cout << "before Cent_GL->init_centralizer_of_matrix_general_linear" << endl;
 		Cent_GL->init_centralizer_of_matrix_general_linear(
 				A_PGL, A_GL, Elt, verbose_level);
+		cout << "after Cent_GL->init_centralizer_of_matrix_general_linear" << endl;
 	
 
 		

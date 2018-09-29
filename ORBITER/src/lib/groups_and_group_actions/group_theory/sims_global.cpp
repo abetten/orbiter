@@ -306,7 +306,8 @@ sims *create_sims_for_centralizer_of_matrix(
 		}
 	R1->centralizer_order_Kung(C, centralizer_order, verbose_level);
 	if (f_v) {
-		cout << "after centralizer_order_Kung" << endl;
+		cout << "after centralizer_order_Kung, "
+				"centralizer_order=" << centralizer_order << endl;
 		}
 
 	Cent = create_sims_from_generators_with_target_group_order(
