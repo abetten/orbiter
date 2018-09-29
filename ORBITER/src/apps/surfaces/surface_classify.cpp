@@ -16,7 +16,6 @@
 int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
-int callback_check_surface(int len, int *S, void *data, int verbose_level);
 
 int main(int argc, const char **argv)
 {
@@ -61,7 +60,8 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-linear") == 0) {
 			f_linear = TRUE;
 			Descr = NEW_OBJECT(linear_group_description);
-			i += Descr->read_arguments(argc - (i - 1), argv + i, verbose_level);
+			i += Descr->read_arguments(argc - (i - 1),
+				argv + i, verbose_level);
 
 			cout << "-linear" << endl;
 			}
@@ -95,26 +95,31 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-memory_debug_verbose_level") == 0) {
 			memory_debug_verbose_level = atoi(argv[++i]);
-			cout << "-memory_debug_verbose_level " << memory_debug_verbose_level << endl;
+			cout << "-memory_debug_verbose_level "
+					<< memory_debug_verbose_level << endl;
 			}
 		else if (strcmp(argv[i], "-automatic_memory_dump") == 0) {
 			f_automatic_memory_dump = TRUE;
 			automatic_dump_interval = atoi(argv[++i]);
 			automatic_dump_mask = argv[++i];
-			cout << "-automatic_memory_dump " << automatic_dump_interval << " " << automatic_dump_mask << endl;
+			cout << "-automatic_memory_dump " << automatic_dump_interval
+				<< " " << automatic_dump_mask << endl;
 			}
 		else if (strcmp(argv[i], "-memory_dump_at_peak") == 0) {
 			f_memory_dump_at_peak = TRUE;
 			memory_dump_at_peak_fname = argv[++i];
-			cout << "-memory_dump_at_peak " << memory_dump_at_peak_fname << endl;
+			cout << "-memory_dump_at_peak "
+					<< memory_dump_at_peak_fname << endl;
 			}
 		else if (strcmp(argv[i], "-memory_dump_at_end") == 0) {
 			f_memory_dump_at_end = TRUE;
 			memory_dump_at_end_fname = argv[++i];
-			cout << "-memory_dump_at_end " << memory_dump_at_end_fname << endl;
+			cout << "-memory_dump_at_end "
+					<< memory_dump_at_end_fname << endl;
 			}
 		else if (strcmp(argv[i], "-memory_dump_cumulative") == 0) {
-			global_mem_object_registry.accumulate_and_ignore_duplicates(verbose_level);
+			global_mem_object_registry.accumulate_and_ignore_duplicates(
+					verbose_level);
 			cout << "-memory_dump_cumulative" << endl;
 		}
 	}
@@ -148,7 +153,8 @@ int main(int argc, const char **argv)
 
 	LG = NEW_OBJECT(linear_group);
 	if (f_v) {
-		cout << "surface_classify before LG->init, creating the group" << endl;
+		cout << "surface_classify before LG->init, "
+				"creating the group" << endl;
 		}
 
 	LG->init(Descr, verbose_level - 1);
@@ -178,17 +184,20 @@ int main(int argc, const char **argv)
 		char fname[1000];
 	
 		sprintf(fname, "Double_sixes_q%d.data", q);
-		cout << "Reading file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Reading file " << fname << " of size "
+				<< file_size(fname) << endl;
 		{
 
 		ifstream fp(fname);
 
 		if (f_v) {
-			cout << "surface_classify before SCW->Classify_double_sixes->read_file" << endl;
+			cout << "surface_classify before SCW->Classify_"
+					"double_sixes->read_file" << endl;
 			}
 		SCW->Classify_double_sixes->read_file(fp, verbose_level - 1);
 		if (f_v) {
-			cout << "surface_classify after SCW->Classify_double_sixes->read_file" << endl;
+			cout << "surface_classify after SCW->Classify_"
+					"double_sixes->read_file" << endl;
 			}
 		}
 		}
@@ -200,21 +209,25 @@ int main(int argc, const char **argv)
 	else {
 	
 		if (f_v) {
-			cout << "surface_classify before SCW->Classify_double_sixes->classify_partial_ovoids" << endl;
+			cout << "surface_classify before SCW->Classify_"
+					"double_sixes->classify_partial_ovoids" << endl;
 			}
 		SCW->Classify_double_sixes->classify_partial_ovoids(f_draw_poset, 
 			f_draw_poset_full, 
 			verbose_level - 1);
 		if (f_v) {
-			cout << "surface_classify after SCW->Classify_double_sixes->classify_partial_ovoids" << endl;
+			cout << "surface_classify after SCW->Classify_"
+					"double_sixes->classify_partial_ovoids" << endl;
 			}
 
 		if (f_v) {
-			cout << "surface_classify before SCW->Classify_double_sixes->classify" << endl;
+			cout << "surface_classify before SCW->Classify_"
+					"double_sixes->classify" << endl;
 			}
 		SCW->Classify_double_sixes->classify(verbose_level - 1);
 		if (f_v) {
-			cout << "surface_classify after SCW->Classify_double_sixes->classify" << endl;
+			cout << "surface_classify after SCW->Classify_"
+					"double_sixes->classify" << endl;
 			}
 
 
@@ -228,21 +241,25 @@ int main(int argc, const char **argv)
 		ofstream fp(fname);
 
 		if (f_v) {
-			cout << "surface_classify before SCW->Classify_double_sixes->write_file" << endl;
+			cout << "surface_classify before SCW->Classify_"
+					"double_sixes->write_file" << endl;
 			}
 		SCW->Classify_double_sixes->write_file(fp, verbose_level - 1);
 		if (f_v) {
-			cout << "surface_classify after SCW->Classify_double_sixes->write_file" << endl;
+			cout << "surface_classify after SCW->Classify_"
+					"double_sixes->write_file" << endl;
 			}
 		}
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		}
 		
 		}
 
 
 	if (f_v) {
-		cout << "surface_classify writing cheat sheet on double sixes" << endl;
+		cout << "surface_classify writing cheat sheet "
+				"on double sixes" << endl;
 		}
 	{
 	char fname[1000];
@@ -257,10 +274,15 @@ int main(int argc, const char **argv)
 		ofstream fp(fname);
 		
 		//latex_head_easy(fp);
-		latex_head(fp, FALSE /* f_book */, TRUE /* f_title */, 
+		latex_head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
 			title, author, 
-			FALSE /*f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
-			TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/, 
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
 			NULL /* extra_praeamble */);
 
 
@@ -271,10 +293,12 @@ int main(int argc, const char **argv)
 
 		latex_foot(fp);
 		}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 	}
 	if (f_v) {
-		cout << "surface_classify writing cheat sheet on double sixes done" << endl;
+		cout << "surface_classify writing cheat sheet on "
+				"double sixes done" << endl;
 		}
 
 
@@ -291,7 +315,8 @@ int main(int argc, const char **argv)
 		char fname[1000];
 	
 		sprintf(fname, "Surfaces_q%d.data", q);
-		cout << "Reading file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Reading file " << fname << " of size "
+				<< file_size(fname) << endl;
 		{
 
 		ifstream fp(fname);
@@ -313,11 +338,13 @@ int main(int argc, const char **argv)
 		cout << "surface_classify classifying surfaces" << endl;
 
 		if (f_v) {
-			cout << "surface_classify before SCW->classify_surfaces_from_double_sixes" << endl;
+			cout << "surface_classify before SCW->classify_surfaces_"
+					"from_double_sixes" << endl;
 			}
 		SCW->classify_surfaces_from_double_sixes(verbose_level - 1);
 		if (f_v) {
-			cout << "surface_classify after SCW->classify_surfaces_from_double_sixes" << endl;
+			cout << "surface_classify after SCW->classify_surfaces_"
+					"from_double_sixes" << endl;
 			}
 
 		{
@@ -336,7 +363,8 @@ int main(int argc, const char **argv)
 			cout << "surface_classify after SCW->write_file" << endl;
 			}
 		}
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		}
 
 
@@ -359,10 +387,15 @@ int main(int argc, const char **argv)
 			ofstream fp(fname);
 		
 			//latex_head_easy(fp);
-			latex_head(fp, FALSE /* f_book */, TRUE /* f_title */, 
+			latex_head(fp,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
 				title, author, 
-				FALSE /*f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
-				TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/, 
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
 				NULL /* extra_praeamble */);
 
 
@@ -370,18 +403,21 @@ int main(int argc, const char **argv)
 
 			latex_foot(fp);
 			}
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		}
 		}
 
 #if 1
 	if (SCW->nb_identify) {
 		if (f_v) {
-			cout << "surface_classify before SCW->identify_surfaces" << endl;
+			cout << "surface_classify before SCW->"
+					"identify_surfaces" << endl;
 			}
 		SCW->identify_surfaces(verbose_level - 1);
 		if (f_v) {
-			cout << "surface_classify after SCW->identify_surfaces" << endl;
+			cout << "surface_classify after SCW->"
+					"identify_surfaces" << endl;
 			}
 		}
 #endif
@@ -392,9 +428,11 @@ int main(int argc, const char **argv)
 
 
 #if 0
-	cout << "classify_surfaces, we are done but all data is still in memory, before doing a dump" << endl;
+	cout << "classify_surfaces, we are done but all data is "
+			"still in memory, before doing a dump" << endl;
 	registry_dump();
-	cout << "classify_surfaces, we are done but all data is still in memory, after doing a dump" << endl;
+	cout << "classify_surfaces, we are done but all data is "
+			"still in memory, after doing a dump" << endl;
 #endif
 	//SCW->identify_Sa_and_print_table(verbose_level);
 
@@ -426,7 +464,8 @@ int main(int argc, const char **argv)
 	//global_mem_object_registry.dump();
 
 	if (f_memory_dump_at_peak) {
-		global_mem_object_registry.manual_dump_with_file_name(memory_dump_at_peak_fname);
+		global_mem_object_registry.manual_dump_with_file_name(
+				memory_dump_at_peak_fname);
 	}
 
 
@@ -438,7 +477,8 @@ int main(int argc, const char **argv)
 	//the_end_quietly(t0);
 	cout << "classify_surfaces, after the_end" << endl;
 	if (f_memory_dump_at_end) {
-		global_mem_object_registry.manual_dump_with_file_name(memory_dump_at_end_fname);
+		global_mem_object_registry.manual_dump_with_file_name(
+				memory_dump_at_end_fname);
 	}
 }
 

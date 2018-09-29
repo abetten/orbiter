@@ -39,7 +39,8 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-description") == 0) {
 			f_description = TRUE;
 			Descr = NEW_OBJECT(surface_create_description);
-			i += Descr->read_arguments(argc - (i - 1), argv + i, verbose_level) - 1;
+			i += Descr->read_arguments(argc - (i - 1), argv + i,
+					verbose_level) - 1;
 
 			cout << "-description" << endl;
 			}
@@ -52,7 +53,8 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-transform_inverse") == 0) {
 			transform_coeffs[nb_transform] = argv[++i];
 			f_inverse_transform[nb_transform] = TRUE;
-			cout << "-transform_inverse " << transform_coeffs[nb_transform] << endl;
+			cout << "-transform_inverse "
+					<< transform_coeffs[nb_transform] << endl;
 			nb_transform++;
 			}
 		else if (strcmp(argv[i], "-quartic") == 0) {
@@ -61,7 +63,8 @@ int main(int argc, const char **argv)
 			}
 		}
 	if (!f_description) {
-		cout << "please use option -description ... to enter a description of the surface" << endl;
+		cout << "please use option -description ... to enter a "
+				"description of the surface" << endl;
 		exit(1);
 		}
 
@@ -77,7 +80,8 @@ int main(int argc, const char **argv)
 
 	if (nb_transform) {
 		cout << "before SC->apply_transformations" << endl;
-		SC->apply_transformations(transform_coeffs, f_inverse_transform, nb_transform, verbose_level);
+		SC->apply_transformations(transform_coeffs,
+				f_inverse_transform, nb_transform, verbose_level);
 		cout << "after SC->apply_transformations" << endl;
 		}
 
@@ -102,23 +106,33 @@ int main(int argc, const char **argv)
 
 	if (SC->f_has_group) {
 		for (i = 0; i < SC->Sg->gens->len; i++) {
-			cout << "Testing generator " << i << " / " << SC->Sg->gens->len << endl;
-			A->element_invert(SC->Sg->gens->ith(i), Elt2, 0 /*verbose_level*/);
+			cout << "Testing generator " << i << " / "
+					<< SC->Sg->gens->len << endl;
+			A->element_invert(SC->Sg->gens->ith(i),
+					Elt2, 0 /*verbose_level*/);
 	
-			SC->Surf->substitute_semilinear(SC->coeffs, coeffs_out, FALSE /* f_semilinear */, 0, Elt2, 0 /*verbose_level*/);
+			SC->Surf->substitute_semilinear(SC->coeffs,
+					coeffs_out,
+					FALSE /* f_semilinear */,
+					0,
+					Elt2,
+					0 /*verbose_level*/);
 
 			PG_element_normalize(*SC->F, coeffs_out, 1, 20);
 
 
 			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {
-				cout << "error, the transformation does not preserve the equation of the surface" << endl;
+				cout << "error, the transformation does not preserve "
+						"the equation of the surface" << endl;
 				exit(1);
 				}
-			cout << "Generator " << i << " / " << SC->Sg->gens->len << " is good" << endl;
+			cout << "Generator " << i << " / " << SC->Sg->gens->len
+					<< " is good" << endl;
 			}
 		}
 	else {
-		cout << "We do not have information about the automorphism group" << endl;
+		cout << "We do not have information about "
+				"the automorphism group" << endl;
 		}
 
 
@@ -148,14 +162,22 @@ int main(int argc, const char **argv)
 		SoA = NEW_OBJECT(surface_object_with_action);
 
 		if (SC->f_has_lines) {
-			cout << "creating surface using the known lines (which are arranged with respect to a double six):" << endl;
-			SoA->init(SC->Surf_A, SC->Lines, SC->coeffs, 
-				SC->Sg, FALSE /*f_find_double_six_and_rearrange_lines*/, verbose_level);
+			cout << "creating surface using the known lines (which are "
+					"arranged with respect to a double six):" << endl;
+			SoA->init(SC->Surf_A,
+				SC->Lines,
+				SC->coeffs,
+				SC->Sg,
+				FALSE /*f_find_double_six_and_rearrange_lines*/,
+				verbose_level);
 			}
 		else {
-			cout << "creating surface from equation only (no lines):" << endl;
-			SoA->init_equation(SC->Surf_A, SC->coeffs, 
-				SC->Sg, verbose_level);
+			cout << "creating surface from equation only "
+					"(no lines):" << endl;
+			SoA->init_equation(SC->Surf_A,
+				SC->coeffs,
+				SC->Sg,
+				verbose_level);
 			}
 		cout << "The surface has been created." << endl;
 
@@ -172,7 +194,8 @@ int main(int argc, const char **argv)
 
 		cout << "Classifying six-arcs not on a conic:" << endl;
 		
-		Six_arcs->init(SC->F, SC->Surf->P2, 
+		Six_arcs->init(SC->F,
+			SC->Surf->P2,
 			argc, argv, 
 			verbose_level);
 		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
@@ -194,8 +217,10 @@ int main(int argc, const char **argv)
 
 			latex_head_easy(fp);
 			SoA->cheat_sheet(fp, 
-				label, label_tex, 
-				TRUE /* f_print_orbits */, fname_mask /* const char *fname_mask*/, 
+				label,
+				label_tex,
+				TRUE /* f_print_orbits */,
+				fname_mask /* const char *fname_mask*/,
 				verbose_level);
 
 
@@ -224,13 +249,18 @@ int main(int argc, const char **argv)
 
 			for (ds = 0; ds < 36; ds++) {
 				for (ds_row = 0; ds_row < 2; ds_row++) {
-					SC->Surf->prepare_clebsch_map(ds, ds_row, line_a, line_b, transversal_line, 0 /*verbose_level */);
+					SC->Surf->prepare_clebsch_map(
+							ds, ds_row,
+							line_a, line_b,
+							transversal_line,
+							0 /*verbose_level */);
 
 
 					fp << endl;
 					fp << "\\bigskip" << endl;
 					fp << endl;
-					fp << "\\subsection{Clebsch map for double six " << ds << ", row " << ds_row << "}" << endl;
+					fp << "\\subsection{Clebsch map for double six "
+							<< ds << ", row " << ds_row << "}" << endl;
 					fp << endl;
 
 
@@ -239,18 +269,25 @@ int main(int argc, const char **argv)
 					SO->compute_clebsch_map(line_a, line_b, 
 						transversal_line, 
 						tritangent_plane_rk, 
-						Clebsch_map, Clebsch_coeff, 
+						Clebsch_map,
+						Clebsch_coeff,
 						verbose_level);
 
 
-					plane_rk_global = SO->Tritangent_planes[SO->Eckardt_to_Tritangent_plane[tritangent_plane_rk]];
+					plane_rk_global = SO->Tritangent_planes[
+						SO->Eckardt_to_Tritangent_plane[
+							tritangent_plane_rk]];
 
 					int Arc[6];
 					int Arc2[6];
 					int Blown_up_lines[6];
 					int perm[6];
 					
-					SO->clebsch_map_find_arc_and_lines(Clebsch_map, Arc, Blown_up_lines, 0 /* verbose_level */);
+					SO->clebsch_map_find_arc_and_lines(
+							Clebsch_map,
+							Arc,
+							Blown_up_lines,
+							0 /* verbose_level */);
 
 					for (j = 0; j < 6; j++) {
 						perm[j] = j;
@@ -276,11 +313,13 @@ int main(int argc, const char **argv)
 					fp << "Transversal line $";
 					fp << SC->Surf->Line_label_tex[transversal_line];
 					fp << "$\\\\" << endl;
-					fp << "Image plane $\\pi_{" << tritangent_plane_rk << "}=" << plane_rk_global << "=$\\\\" << endl;
+					fp << "Image plane $\\pi_{" << tritangent_plane_rk
+							<< "}=" << plane_rk_global << "=$\\\\" << endl;
 					fp << "$$" << endl;
 					
 					fp << "\\left[" << endl;
-					SC->Surf->Gr3->print_single_generator_matrix_tex(fp, plane_rk_global);
+					SC->Surf->Gr3->print_single_generator_matrix_tex(
+							fp, plane_rk_global);
 					fp << "\\right]," << endl;
 
 					fp << "$$" << endl;
@@ -296,20 +335,27 @@ int main(int argc, const char **argv)
 						}
 					fp << "\\}$\\\\" << endl;
 
-					fp << "The arc consists of the following points:\\\\" << endl;
-					display_table_of_projective_points(fp, SC->F, Arc2, 6, 3);
+					fp << "The arc consists of the following "
+							"points:\\\\" << endl;
+					display_table_of_projective_points(fp,
+							SC->F, Arc2, 6, 3);
 
 					int orbit_at_level, idx;
-					Six_arcs->Gen->gen->identify(Arc2, 6, transporter, orbit_at_level, 0 /*verbose_level */);
+					Six_arcs->Gen->gen->identify(Arc2, 6,
+							transporter, orbit_at_level,
+							0 /*verbose_level */);
 
 			
 					if (!int_vec_search(Six_arcs->Not_on_conic_idx, 
-						Six_arcs->nb_arcs_not_on_conic, orbit_at_level, idx)) {
+						Six_arcs->nb_arcs_not_on_conic,
+						orbit_at_level,
+						idx)) {
 						cout << "could not find orbit" << endl;
 						exit(1);
 						}
 
-					fp << "The arc is isomorphic to arc " << idx << " in the list.\\\\" << endl;
+					fp << "The arc is isomorphic to arc " << idx
+							<< " in the list.\\\\" << endl;
 					Arc_iso[2 * ds + ds_row] = idx;
 					
 
@@ -324,9 +370,11 @@ int main(int argc, const char **argv)
 			FREE_int(Clebsch_coeff);
 
 			
-			fp << "The isomorphism type of arc associated with each half-double six is:" << endl;
+			fp << "The isomorphism type of arc associated with "
+					"each half-double six is:" << endl;
 			fp << "$$" << endl;
-			print_integer_matrix_with_standard_labels(fp, Arc_iso, 36, 2, TRUE);
+			print_integer_matrix_with_standard_labels(fp,
+					Arc_iso, 36, 2, TRUE);
 			fp << "$$" << endl;
 
 			//fp << "The six-arcs not on a conic are:\\\\" << endl;
@@ -343,7 +391,8 @@ int main(int argc, const char **argv)
 	
 			latex_foot(fp);
 		}
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 
 
 
