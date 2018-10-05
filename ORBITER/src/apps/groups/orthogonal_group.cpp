@@ -138,38 +138,46 @@ void do_it(int epsilon, int n, int q, int verbose_level)
 			<< go << " and permutation degree "
 			<< A->degree << endl;
 	cout << "The points on which the group acts are:" << endl;
-	for (i = 0; i < A->degree; i++) {
-		O->unrank_point(v, 1 /* stride */, i, 0 /* verbose_level */);
-		cout << i << " / " << A->degree << " : ";
-		int_vec_print(cout, v, n);
-		cout << endl;
+	if (A->degree < 1000) {
+		for (i = 0; i < A->degree; i++) {
+			O->unrank_point(v, 1 /* stride */, i, 0 /* verbose_level */);
+			cout << i << " / " << A->degree << " : ";
+			int_vec_print(cout, v, n);
+			cout << endl;
 		}
+	} else {
+		cout << "Too many to print" << endl;
+	}
 	cout << "Generators are:" << endl;
 	for (i = 0; i < SG->gens->len; i++) {
 		cout << "generator " << i << " / "
 				<< SG->gens->len << " is: " << endl;
 		A->element_print_quick(SG->gens->ith(i), cout);
-		cout << "as permutation: " << endl;
-		A->element_print_as_permutation(
-				SG->gens->ith(i), cout);
-		cout << endl;
+		if (A->degree < 1000) {
+			cout << "as permutation: " << endl;
+			A->element_print_as_permutation(
+					SG->gens->ith(i), cout);
+			cout << endl;
 		}
-	cout << "Generators are:" << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		A->element_print_as_permutation(SG->gens->ith(i), cout);
-		cout << endl;
-		}
-	cout << "Generators in compact permutation form are:" << endl;
-	cout << SG->gens->len << " " << A->degree << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		for (j = 0; j < A->degree; j++) {
-			a = A->element_image_of(j,
-					SG->gens->ith(i), 0 /* verbose_level */);
-			cout << a << " ";
+	}
+	if (A->degree < 1000) {
+		cout << "Generators are:" << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			A->element_print_as_permutation(SG->gens->ith(i), cout);
+			cout << endl;
 			}
-		cout << endl;
-		}
-	cout << "-1" << endl;
+		cout << "Generators in compact permutation form are:" << endl;
+		cout << SG->gens->len << " " << A->degree << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			for (j = 0; j < A->degree; j++) {
+				a = A->element_image_of(j,
+						SG->gens->ith(i), 0 /* verbose_level */);
+				cout << a << " ";
+				}
+			cout << endl;
+			}
+		cout << "-1" << endl;
+	}
 
 	schreier *Sch;
 	char fname_tree[1000];

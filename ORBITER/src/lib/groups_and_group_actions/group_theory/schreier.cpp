@@ -461,7 +461,7 @@ void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
 
 	strong_generators *gens;
 
-	gens = generators_for_stabilizer_of_orbit_rep(default_action, 
+	gens = stabilizer_orbit_rep(default_action, 
 		full_group_order, i, 0 /*verbose_level */);
 	
 	gens->print_generators_tex(ost);
@@ -483,7 +483,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 
 	strong_generators *gens_stab;
 
-	gens_stab = generators_for_stabilizer_of_orbit_rep(
+	gens_stab = stabilizer_orbit_rep(
 		default_action,
 		full_group_order, i, 0 /*verbose_level */);
 	
@@ -641,7 +641,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	FREE_int(Perm_inv);
 }
 
-void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(
+void schreier::print_fancy(
 	ostream &ost, int f_tex, 
 	action *default_action, 
 	strong_generators *gens_full_group)
@@ -882,7 +882,8 @@ void schreier::print_generators_latex(ostream &ost)
 	int j;
 
 	ost << gens.len << " generators in action $"
-			<< A->label_tex << "$ of degree " << A->degree << ":\\\\" << endl;
+			<< A->label_tex << "$ of degree "
+			<< A->degree << ":\\\\" << endl;
 	for (j = 0; j < gens.len; j++) {
 		ost << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
@@ -901,7 +902,8 @@ void schreier::print_generators_with_permutations()
 	int j;
 	
 	cout << gens.len << " generators in action "
-			<< A->label << " of degree " << A->degree << ":" << endl;
+			<< A->label << " of degree "
+			<< A->degree << ":" << endl;
 	for (j = 0; j < gens.len; j++) {
 		cout << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
@@ -2658,7 +2660,7 @@ void schreier::get_orbit_partition(partitionstack &S,
 		}
 }
 
-strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal(
+strong_generators *schreier::stabilizer_any_point_plus_cosets(
 	action *default_action, 
 	longinteger_object &full_group_order, int pt, vector_ge *&cosets, 
 	int verbose_level)
@@ -2673,8 +2675,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 	int i, fst, len;
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_"
-				"arbitrary_point_and_transversal" << endl;
+		cout << "schreier::stabilizer_any_point_plus_cosets" << endl;
 		}
 	
 	cosets = NEW_OBJECT(vector_ge);
@@ -2684,7 +2685,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 	
 	orbit_index = orbit_number(pt);
 
-	gens0 = generators_for_stabilizer_of_orbit_rep(default_action, 
+	gens0 = stabilizer_orbit_rep(default_action, 
 		full_group_order, orbit_index, 0 /* verbose_level */);
 
 	fst = orbit_first[orbit_index];
@@ -2695,8 +2696,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 			orbit_index1, transporter, 0 /* verbose_level */);
 
 	if (orbit_index1 != orbit_index) {
-		cout << "schreier::generators_for_stabilizer_of_"
-				"arbitrary_point_and_transversal "
+		cout << "schreier::stabilizer_any_point_plus_cosets "
 				"orbit_index1 != orbit_index" << endl;
 		exit(1);
 		}
@@ -2705,21 +2705,18 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_"
-				"arbitrary_point_and_transversal before "
+		cout << "schreier::stabilizer_any_point_plus_cosets before "
 				"gens->init_generators_for_the_conjugate_group_aGav" << endl;
 		}
 	gens->init_generators_for_the_conjugate_group_aGav(gens0, 
 		transporter, verbose_level);
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_"
-				"arbitrary_point_and_transversal after "
+		cout << "schreier::stabilizer_any_point_plus_cosets after "
 				"gens->init_generators_for_the_conjugate_group_aGav" << endl;
 		}
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_arbitrary_point_and_transversal computing "
+		cout << "schreier::stabilizer_any_point_plus_cosets computing "
 				"coset representatives" << endl;
 		}
 	for (i = 0; i < len; i++) {
@@ -2728,8 +2725,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 		A->element_mult(transporter, transporter1, cosets->ith(i), 0);
 		}
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_arbitrary_point_and_transversal computing "
+		cout << "schreier::stabilizer_any_point_plus_cosets computing "
 				"coset representatives done" << endl;
 		}
 
@@ -2737,14 +2733,13 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 	FREE_int(transporter1);
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_arbitrary_point_and_transversal done" << endl;
+		cout << "schreier::stabilizer_any_point_plus_cosets done" << endl;
 		}
 	FREE_OBJECT(gens0);
 	return gens;
 }
 
-strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
+strong_generators *schreier::stabilizer_any_point(
 	action *default_action, 
 	longinteger_object &full_group_order, int pt, 
 	int verbose_level)
@@ -2757,23 +2752,22 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
 	int *transporter;
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_arbitrary_point" << endl;
+		cout << "schreier::stabilizer_any_point" << endl;
 		}
 	
 	transporter = NEW_int(A->elt_size_in_int);
 	
 	orbit_index = orbit_number(pt);
 
-	gens0 = generators_for_stabilizer_of_orbit_rep(default_action, 
+	gens0 = stabilizer_orbit_rep(default_action, 
 		full_group_order, orbit_index, 0 /* verbose_level */);
 
 	transporter_from_point_to_orbit_rep(pt,
 			orbit_index1, transporter, 0 /* verbose_level */);
 
 	if (orbit_index1 != orbit_index) {
-		cout << "schreier::generators_for_stabilizer_of_"
-				"arbitrary_point orbit_index1 != orbit_index" << endl;
+		cout << "schreier::stabilizer_any_point "
+				"orbit_index1 != orbit_index" << endl;
 		exit(1);
 		}
 	
@@ -2781,30 +2775,29 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
 
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_arbitrary_point before gens->init_generators_"
+		cout << "schreier::stabilizer_any_point "
+				"before gens->init_generators_"
 				"for_the_conjugate_group_aGav" << endl;
 		}
 	gens->init_generators_for_the_conjugate_group_aGav(gens0, 
 		transporter, verbose_level);
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_arbitrary_point after gens->init_generators_"
+		cout << "schreier::stabilizer_any_point "
+				"after gens->init_generators_"
 				"for_the_conjugate_group_aGav" << endl;
 		}
 
 	FREE_int(transporter);
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_arbitrary_point done" << endl;
+		cout << "schreier::stabilizer_any_point done" << endl;
 		}
 	FREE_OBJECT(gens0);
 	return gens;
 }
 
 
-strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
+strong_generators *schreier::stabilizer_orbit_rep(
 	action *default_action, 
 	longinteger_object &full_group_order, int orbit_idx, 
 	int verbose_level)
@@ -2814,8 +2807,7 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
 	sims *Stab;
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_orbit_rep" << endl;
+		cout << "schreier::stabilizer_orbit_rep" << endl;
 		}
 
 
@@ -2826,8 +2818,8 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
 
 	Stab->group_order(stab_order);
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_orbit_rep found a stabilizer group "
+		cout << "schreier::stabilizer_orbit_rep "
+				"found a stabilizer group "
 				"of order " << stab_order << endl;
 		}
 	
@@ -2837,8 +2829,7 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
 
 	FREE_OBJECT(Stab);
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_"
-				"of_orbit_rep done" << endl;
+		cout << "schreier::stabilizer_orbit_rep done" << endl;
 		}
 	return gens;
 }

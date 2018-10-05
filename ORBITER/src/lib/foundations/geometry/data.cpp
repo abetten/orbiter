@@ -826,6 +826,7 @@ int cubic_surface_nb_Eckardt_points(int q, int i)
 }
 
 
+#if 0
 int *cubic_surface_single_six(int q, int i)
 // i starts from 0
 {
@@ -1007,6 +1008,7 @@ int *cubic_surface_single_six(int q, int i)
 		}
 	return p + i * 6;
 }
+#endif
 
 int *cubic_surface_Lines(int q, int i)
 // i starts from 0

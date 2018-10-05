@@ -549,12 +549,13 @@ void set_and_stabilizer::init_surface(surface *Surf,
 	int data_size;
 	const char *stab_order;
 	//int nb_E;
-	int *starter_configuration;
-	int nb_lines;
+	//int *starter_configuration;
+	int nb_lines = 27;
 	int *Lines;
-	int *Lines_wedge;
-	int double_six[12];
+	//int *Lines_wedge;
+	//int double_six[12];
 	
+#if 0
 	starter_configuration = cubic_surface_single_six(q, no);
 	if (f_v) {
 		cout << "set_and_stabilizer::init_surface "
@@ -584,7 +585,8 @@ void set_and_stabilizer::init_surface(surface *Surf,
 
 	//Surf->line_to_wedge_vec(Lines, Lines_wedge, nb_lines);
 
-#if 0
+#else
+
 	Lines = cubic_surface_Lines(q, no);
 
 	if (FALSE) {
@@ -608,8 +610,8 @@ void set_and_stabilizer::init_surface(surface *Surf,
 		stab_order, 
 		verbose_level);
 
-	FREE_int(Lines);
-	FREE_int(Lines_wedge);
+	//FREE_int(Lines);
+	//FREE_int(Lines_wedge);
 	
 	if (f_v) {
 		cout << "set_and_stabilizer::init_surface done" << endl;

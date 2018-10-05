@@ -905,6 +905,40 @@ void matrix_group::general_linear_action_from_the_right(
 		}	
 }
 
+void matrix_group::substitute_surface_eqation(int *Elt,
+		int *coeff_in, int *coeff_out, surface *Surf,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "matrix_group::substitute_surface_eqation" << endl;
+	}
+	if (f_semilinear) {
+		Surf->substitute_semilinear(coeff_in,
+							coeff_out,
+							TRUE /* f_semilinear */,
+							(GFq->e - Elt[n * n]) % GFq->e,
+							Elt,
+							0 /*verbose_level*/);
+
+		PG_element_normalize(*GFq, coeff_out, 1, 20);
+	} else {
+		Surf->substitute_semilinear(coeff_in,
+							coeff_out,
+							FALSE /* f_semilinear */,
+							0,
+							Elt,
+							0 /*verbose_level*/);
+
+		PG_element_normalize(*GFq, coeff_out, 1, 20);
+
+	}
+	if (f_v) {
+		cout << "matrix_group::substitute_surface_eqation done" << endl;
+	}
+}
+
 void matrix_group::GL_one(int *Elt)
 {
 	GL_one_internal(Elt);
