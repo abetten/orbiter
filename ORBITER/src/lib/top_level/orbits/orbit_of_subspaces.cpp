@@ -635,7 +635,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 }
 
 strong_generators
-*orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep(
+*orbit_of_subspaces::stabilizer_orbit_rep(
 	longinteger_object &full_group_order,
 	int verbose_level)
 {

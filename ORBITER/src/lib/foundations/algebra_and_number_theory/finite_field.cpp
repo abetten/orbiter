@@ -1669,6 +1669,9 @@ void finite_field::print_element_with_symbol(ostream &ost,
 			if (b > 1) {
 				ost << "^{" << b << "}";
 				}
+			else {
+				ost << " ";
+			}
 			}
 		}
 	else {

@@ -53,7 +53,7 @@ public:
 		longinteger_object &go, 
 		sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
-	strong_generators *generators_for_stabilizer_of_orbit_rep(
+	strong_generators *stabilizer_orbit_rep(
 		longinteger_object &full_group_order, int verbose_level);
 	int search_data(int *data, int &idx);
 	void save_csv(const char *fname, int verbose_level);
@@ -170,7 +170,7 @@ public:
 		// transporter is an element which maps the orbit 
 		// representative to the given subspace.
 	void get_random_schreier_generator(int *Elt, int verbose_level);
-	strong_generators *generators_for_stabilizer_of_orbit_rep(
+	strong_generators *stabilizer_orbit_rep(
 		longinteger_object &full_group_order, int verbose_level);
 	void compute_stabilizer(action *default_action, longinteger_object &go, 
 		sims *&Stab, int verbose_level);

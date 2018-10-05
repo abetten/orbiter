@@ -554,7 +554,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		}
 }
 
-strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
+strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 	longinteger_object &full_group_order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

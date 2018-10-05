@@ -304,6 +304,9 @@ public:
 		int *v, int *A, int *vA, int verbose_level);
 	void general_linear_action_from_the_right(
 		int *v, int *A, int *vA, int verbose_level);
+	void substitute_surface_eqation(int *Elt,
+			int *coeff_in, int *coeff_out, surface *Surf,
+			int verbose_level);
 	void GL_one(int *Elt);
 	void GL_one_internal(int *Elt);
 	void GL_zero(int *Elt);
@@ -527,8 +530,7 @@ public:
 		ostream &ost, int f_tex, 
 		action *default_action, 
 		longinteger_object &full_group_order);
-	void 
-print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(
+	void print_fancy(
 		ostream &ost, int f_tex, 
 		action *default_action, strong_generators *gens_full_group);
 	void print_and_list_orbits_sorted_by_length(ostream &ost);
@@ -647,16 +649,15 @@ print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elemen
 		partitionstack &S, int verbose_level);
 	void get_orbit_partition(partitionstack &S, 
 		int verbose_level);
-	strong_generators
-	*generators_for_stabilizer_of_arbitrary_point_and_transversal(
+	strong_generators *stabilizer_any_point_plus_cosets(
 		action *default_action, 
 		longinteger_object &full_group_order, 
 		int pt, vector_ge *&cosets, int verbose_level);
-	strong_generators *generators_for_stabilizer_of_arbitrary_point(
+	strong_generators *stabilizer_any_point(
 		action *default_action, 
 		longinteger_object &full_group_order, int pt, 
 		int verbose_level);
-	strong_generators *generators_for_stabilizer_of_orbit_rep(
+	strong_generators *stabilizer_orbit_rep(
 		action *default_action, 
 		longinteger_object &full_group_order, 
 		int orbit_idx, int verbose_level);

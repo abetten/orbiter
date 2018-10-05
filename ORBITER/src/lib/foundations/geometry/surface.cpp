@@ -6861,17 +6861,31 @@ void surface::clebsch_cubics(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "surface::clebsch_cubics computing C[3] = the determinant" << endl;
+		cout << "surface::clebsch_cubics computing "
+				"C[3] = the determinant" << endl;
 		}
-	// compute C[3] as the negative of the determinant of the matrix of the first three columns:
+	// compute C[3] as the negative of the determinant
+	// of the matrix of the first three columns:
 	//int_vec_zero(C[3], nb_monomials6);
 	m1 = F->negate(1);
-	multiply_222_27_and_add(Clebsch_P[0 * 4 + 0], Clebsch_P[1 * 4 + 1], Clebsch_P[2 * 4 + 2], m1, C[3], 0 /* verbose_level*/);
-	multiply_222_27_and_add(Clebsch_P[0 * 4 + 1], Clebsch_P[1 * 4 + 2], Clebsch_P[2 * 4 + 0], m1, C[3], 0 /* verbose_level*/);
-	multiply_222_27_and_add(Clebsch_P[0 * 4 + 2], Clebsch_P[1 * 4 + 0], Clebsch_P[2 * 4 + 1], m1, C[3], 0 /* verbose_level*/);
-	multiply_222_27_and_add(Clebsch_P[2 * 4 + 0], Clebsch_P[1 * 4 + 1], Clebsch_P[0 * 4 + 2], 1, C[3], 0 /* verbose_level*/);
-	multiply_222_27_and_add(Clebsch_P[2 * 4 + 1], Clebsch_P[1 * 4 + 2], Clebsch_P[0 * 4 + 0], 1, C[3], 0 /* verbose_level*/);
-	multiply_222_27_and_add(Clebsch_P[2 * 4 + 2], Clebsch_P[1 * 4 + 0], Clebsch_P[0 * 4 + 1], 1, C[3], 0 /* verbose_level*/);
+	multiply_222_27_and_add(Clebsch_P[0 * 4 + 0],
+			Clebsch_P[1 * 4 + 1], Clebsch_P[2 * 4 + 2], m1, C[3],
+			0 /* verbose_level*/);
+	multiply_222_27_and_add(Clebsch_P[0 * 4 + 1],
+			Clebsch_P[1 * 4 + 2], Clebsch_P[2 * 4 + 0], m1, C[3],
+			0 /* verbose_level*/);
+	multiply_222_27_and_add(Clebsch_P[0 * 4 + 2],
+			Clebsch_P[1 * 4 + 0], Clebsch_P[2 * 4 + 1], m1, C[3],
+			0 /* verbose_level*/);
+	multiply_222_27_and_add(Clebsch_P[2 * 4 + 0],
+			Clebsch_P[1 * 4 + 1], Clebsch_P[0 * 4 + 2], 1, C[3],
+			0 /* verbose_level*/);
+	multiply_222_27_and_add(Clebsch_P[2 * 4 + 1],
+			Clebsch_P[1 * 4 + 2], Clebsch_P[0 * 4 + 0], 1, C[3],
+			0 /* verbose_level*/);
+	multiply_222_27_and_add(Clebsch_P[2 * 4 + 2],
+			Clebsch_P[1 * 4 + 0], Clebsch_P[0 * 4 + 1], 1, C[3],
+			0 /* verbose_level*/);
 
 	int I[3];
 	int J[3];

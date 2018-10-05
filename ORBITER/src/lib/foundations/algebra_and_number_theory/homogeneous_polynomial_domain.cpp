@@ -450,7 +450,8 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 			ost << " + ";
 			}
 		if (c > 1) {
-			ost << c;
+			F->print_element(ost, c);
+			//ost << c;
 			}
 		print_monomial(ost, i);
 		}
@@ -482,7 +483,8 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
 			ost << " + ";
 			}
 		if (c > 1) {
-			ost << c;
+			F->print_element(ost, c);
+			//ost << c;
 			}
 		print_monomial(ost, i);
 		cnt++;
