@@ -179,6 +179,11 @@ void do_it(int epsilon, int n, int q, int verbose_level)
 		cout << "-1" << endl;
 	}
 
+	if (A->degree > 5000) {
+		cout << "the degree is too large, we quit" << endl;
+		exit(1);
+	}
+
 	schreier *Sch;
 	char fname_tree[1000];
 	char fname_report[1000];

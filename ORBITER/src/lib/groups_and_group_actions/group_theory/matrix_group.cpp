@@ -1561,6 +1561,7 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 		for (j = 0; j < n; j++) {
 			a = D[i * n + j];	
 
+#if 0
 			if (is_prime(GFq->q)) {
 				ost << setw(w) << a << " ";
 				}
@@ -1568,6 +1569,9 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 				ost << a;
 				// GFq->print_element(ost, a);
 				}
+#else
+			GFq->print_element(ost, a);
+#endif
 		
 			if (j < n - 1)
 				ost << " & ";
@@ -1604,6 +1608,7 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 			for (j = 0; j < n; j++) {
 				a = Elt[i * n + j];	
 
+#if 0
 				if (is_prime(GFq->q)) {
 					ost << a;
 					}
@@ -1611,6 +1616,9 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 					ost << a;
 					//GFq->print_element(ost, a);
 					}
+#else
+				GFq->print_element(ost, a);
+#endif
 			
 				//if (j < n - 1)
 				//	ost << " & ";
@@ -1627,6 +1635,7 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 			for (j = 0; j < n; j++) {
 				a = Elt[i * n + j];	
 
+#if 0
 				if (is_prime(GFq->q)) {
 					ost << setw(w) << a << " ";
 					}
@@ -1634,6 +1643,9 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 					ost << a;
 					// GFq->print_element(ost, a);
 					}
+#else
+				GFq->print_element(ost, a);
+#endif
 			
 				if (j < n - 1)
 					ost << " & ";
@@ -1873,6 +1885,9 @@ void matrix_group::orthogonal_group_random_generator(
 				"random generator:" << endl;
 		A->element_print_quick(Elt, cout);
 		}
+	if (f_v) {
+		cout << "matrix_group::orthogonal_group_random_generator done" << endl;
+	}
 }
 
 

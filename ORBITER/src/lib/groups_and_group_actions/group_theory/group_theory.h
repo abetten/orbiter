@@ -1299,6 +1299,8 @@ public:
 	void decode_ascii_coding(char *ascii_coding, int verbose_level);
 	void export_permutation_group_to_magma(const char *fname, 
 		int verbose_level);
+	void export_permutation_group_to_GAP(const char *fname,
+		int verbose_level);
 	void compute_and_print_orbits_on_a_given_set(action *A_given,
 		int *set, int len, int verbose_level);
 	void compute_and_print_orbits(action *A_given, 

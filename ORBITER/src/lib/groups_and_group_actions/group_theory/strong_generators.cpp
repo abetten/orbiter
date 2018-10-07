@@ -1165,7 +1165,10 @@ void strong_generators::print_generators_tex(ostream &ost)
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
 		A->element_print_latex(gens->ith(i), ost);
-		if (((i + 1) % 4) == 0 && i < gens->len - 1) {
+		if (i < gens->len - 1) {
+			ost << ", " << endl;
+		}
+		if (((i + 1) % 3) == 0 && i < gens->len - 1) {
 			ost << "$$" << endl;
 			ost << "$$" << endl;
 			}
@@ -2188,6 +2191,43 @@ void strong_generators::export_permutation_group_to_magma(
 	if (f_v) {
 		cout << "strong_generators::export_permutation_"
 				"group_to_magma done" << endl;
+		}
+}
+
+void strong_generators::export_permutation_group_to_GAP(
+		const char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::export_permutation_"
+				"group_to_GAP" << endl;
+		}
+	{
+		ofstream fp(fname);
+
+		fp << "G := Group([" << endl;
+		for (i = 0; i < gens->len; i++) {
+			A->element_print_as_permutation_with_offset(
+				gens->ith(i), fp,
+				1 /* offset */,
+				TRUE /* f_do_it_anyway_even_for_big_degree */,
+				FALSE /* f_print_cycles_of_length_one */,
+				0 /* verbose_level */);
+			if (i < gens->len - 1) {
+				fp << ", " << endl;
+				}
+			}
+		fp << "]);" << endl;
+
+	}
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "strong_generators::export_permutation_"
+				"group_to_GAP done" << endl;
 		}
 }
 
