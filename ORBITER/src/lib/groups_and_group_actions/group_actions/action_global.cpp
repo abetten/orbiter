@@ -901,6 +901,12 @@ void callback_choose_random_generator_orthogonal(int iteration,
 	O = AO->O;
 	
 	M = subaction->G.matrix_grp;
+	if (f_v) {
+		cout << "callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration
+				<< " before M->orthogonal_group_random_generator"
+				<< endl;
+		}
 	M->orthogonal_group_random_generator(ss->GA, O, 
 		f_generator_orthogonal_siegel, 
 		f_generator_orthogonal_reflection, 
@@ -908,7 +914,17 @@ void callback_choose_random_generator_orthogonal(int iteration,
 		f_generator_orthogonal_semisimilarity, 
 		Elt, verbose_level - 2);
 	//M->GL_invert_internal(Elt, Elt + M->elt_size_int_half, 0);
+	if (f_v) {
+		cout << "callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration
+				<< " after M->orthogonal_group_random_generator"
+				<< endl;
+		}
 
+	if (f_v) {
+		cout << "callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration << " done" << endl;
+		}
 }
 
 

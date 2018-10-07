@@ -529,7 +529,7 @@ void action::init_orthogonal_group(int epsilon,
 		create_orthogonal_group(A /*subaction*/, 
 			TRUE /* f_has_target_go */, target_go, 
 			callback_choose_random_generator_orthogonal, 
-			0 /*verbose_level - 2*/);
+			verbose_level - 2);
 		if (f_vv) {
 			cout << "action::init_orthogonal_group "
 					"after create_orthogonal_group" << endl;
@@ -1651,14 +1651,25 @@ void action::create_orthogonal_group(action *subaction,
 	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
+		cout << "action::create_orthogonal_group" << endl;
+		}
+	if (f_v) {
 		cout << "action::create_orthogonal_group "
-				"we will use a schreier_sims object" << endl;
+				"before allocating a schreier_sims object" << endl;
 		}
 	
 	{
 	schreier_sims ss;
 
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"before ss.init" << endl;
+		}
 	ss.init(this, verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"after ss.init" << endl;
+		}
 
 	ss.interested_in_kernel(subaction, verbose_level - 1);
 	
@@ -1666,12 +1677,28 @@ void action::create_orthogonal_group(action *subaction,
 		ss.init_target_group_order(target_go, verbose_level - 1);
 		}
 	
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"before ss.init_random_process" << endl;
+		}
 	ss.init_random_process(
 		callback_choose_random_generator,   // see action_global.C
 		&ss, 
 		verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"after ss.init_random_process" << endl;
+		}
 	
-	ss.create_group(verbose_level);
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"before ss.create_group" << endl;
+		}
+	ss.create_group(verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"after ss.create_group" << endl;
+		}
 	
 	init_sims(ss.G, verbose_level);
 	f_has_kernel = TRUE;
@@ -1687,9 +1714,14 @@ void action::create_orthogonal_group(action *subaction,
 		}
 	compute_strong_generators_from_sims(verbose_level - 2);
 	if (f_v) {
-		cout << "action::create_orthogonal_group done" << endl;
+		cout << "action::create_orthogonal_group done, "
+				"freeing schreier_sims object" << endl;
 		}
 	}
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"done" << endl;
+		}
 }
 
 

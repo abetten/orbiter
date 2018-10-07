@@ -454,7 +454,8 @@ void induced_action_element_image_of_low_level(action &A,
 			}
 
 		cout << "induced_action_element_image_of_low_level "
-				"action_by_right_multiplication_t not yet implemented" << endl;
+				"action_by_right_multiplication_t "
+				"not yet implemented" << endl;
 		exit(1);
 #if 0
 		action_by_right_multiplication *ABRM = A.G.ABRM;
@@ -462,7 +463,8 @@ void induced_action_element_image_of_low_level(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		ABRM->compute_image(sub, Elt, a, b, verbose_level - 1);

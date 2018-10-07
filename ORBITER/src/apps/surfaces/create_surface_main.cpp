@@ -96,6 +96,10 @@ int main(int argc, const char **argv)
 	
 	SC->F->init_symbol_for_print("\\omega");
 
+	if (SC->F->e == 1) {
+		SC->F->f_print_as_exponentials = FALSE;
+	}
+
 	PG_element_normalize(*SC->F, SC->coeffs, 1, 20);
 
 	cout << "We have created the following surface:" << endl;

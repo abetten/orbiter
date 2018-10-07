@@ -1366,6 +1366,43 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	
 	}
 	ost << "\\end{verbatim}" << endl;
+
+
+	char gap_fname[1000];
+
+	sprintf(gap_fname, "%s_group.gap", label_txt);
+	Aut_gens->export_permutation_group_to_GAP(
+			gap_fname, verbose_level - 2);
+	if (f_v) {
+		cout << "written file " << gap_fname << " of size "
+				<< file_size(gap_fname) << endl;
+		}
+
+	ost << "\\clearpage\\subsection*{GAP Export}" << endl;
+	ost << "To export the group to GAP, use the following file\\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+
+	{
+	ifstream fp1(gap_fname);
+	char line[100000];
+
+	while (TRUE) {
+		if (fp1.eof()) {
+			break;
+			}
+
+		//cout << "count_number_of_orbits_in_file reading
+		//line, nb_sol = " << nb_sol << endl;
+		fp1.getline(line, 100000, '\n');
+		ost << line << endl;
+		}
+
+	}
+	ost << "\\end{verbatim}" << endl;
+
+
+
+
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet done" << endl;
 		}

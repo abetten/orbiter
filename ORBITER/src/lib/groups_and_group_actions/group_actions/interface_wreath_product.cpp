@@ -151,10 +151,8 @@ int wreath_product_group_element_is_one(action &A,
 		f_is_one = G.GL_is_one(Elt);
 		}
 	else {
-		/* if (A.ptr_element_image_of == element_image_of_line_through_vertex ||
-		A.ptr_element_image_of == element_image_of_plane_not_through_vertex_in_contragredient_action ||
-		A.ptr_element_image_of == element_image_under_wedge_action_from_the_right)*/
-		cout << "matrix_group_element_is_one: warning: using slow identity element test" << endl;
+		cout << "matrix_group_element_is_one: warning: "
+				"using slow identity element test" << endl;
 		f_is_one = TRUE;
 		for (i = 0; i < A.degree; i++) {
 			j = A.element_image_of(i, elt, FALSE);
@@ -164,10 +162,6 @@ int wreath_product_group_element_is_one(action &A,
 				}
 			}
 		}
-	/*else {
-		cout << "element_is_one() unrecognized ptr_element_image_of" << endl;
-		exit(1);
-		}*/
 #endif
 }
 
@@ -235,7 +229,8 @@ int wreath_product_group_element_store(action &A,
 	W.element_pack(Elt, W.elt1);
 	hdl = W.Elts->store(W.elt1);
 	if (f_v) {
-		cout << "wreath_product_group_element_store hdl = " << hdl << endl;
+		cout << "wreath_product_group_element_store "
+				"hdl = " << hdl << endl;
 		}
 	return hdl;
 }
