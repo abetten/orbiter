@@ -1998,6 +1998,7 @@ void sims::compute_base_orbit_known_length(int lvl,
 	//int f_vvv = (verbose_level >= 3);
 	//int f_v10 = FALSE; // (verbose_level >= 10);
 	int pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
+	double progress;
 	
 	pt = A->base[lvl];
 	pt_loc = orbit_inv[lvl][pt];
@@ -2027,11 +2028,17 @@ void sims::compute_base_orbit_known_length(int lvl,
 	while (cur < orbit_len[lvl] && orbit_len[lvl] < target_length) {
 		cur_pt = orbit[lvl][cur];
 		if (f_vv) {
+			if (target_length) {
+				progress = (double) cur / (double) target_length;
+			} else {
+				progress = 0.;
+			}
 			if (cur % ((1 << 21) - 1) == 0) {
 				cout << "sims::compute_base_orbit_known_length "
 						"lvl=" << lvl << " cur=" << cur
 						<< " orbit_len[lvl]=" << orbit_len[lvl]
-						<< " target_length=" << target_length << endl;
+						<< " target_length=" << target_length
+						<< " progress=" << progress * 100 << "%" << endl;
 				}
 			}
 		if (FALSE) {

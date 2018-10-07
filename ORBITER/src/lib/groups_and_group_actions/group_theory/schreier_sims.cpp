@@ -396,7 +396,8 @@ void schreier_sims::create_group(int verbose_level)
 	while (TRUE) {
 	
 		if (f_vv) {
-			cout << "iteration " << iteration << endl;
+			cout << "schreier_sims::create_group "
+					"iteration " << iteration << endl;
 			}
 		if (f_has_target_group_order && iteration > 10000) {
 			cout << "schreier_sims::create_group iteration > 1000, "
@@ -416,6 +417,12 @@ void schreier_sims::create_group(int verbose_level)
 			}
 
 		get_generator(Elt1, verbose_level - 3);
+		if (f_vv) {
+			cout << "schreier_sims::create_group "
+					"iteration " << iteration
+					<< " generator:" << endl;
+			GA->element_print_quick(Elt1, cout);
+			}
 
 		if (f_vvvv) {
 			cout << "schreier_sims::create_group "
