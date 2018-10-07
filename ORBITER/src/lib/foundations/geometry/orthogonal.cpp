@@ -10,14 +10,17 @@
 
 #include "foundations.h"
 
-void orthogonal::unrank_point(int *v, int stride, int rk, int verbose_level)
+void orthogonal::unrank_point(
+		int *v, int stride, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orthogonal::unrank_point rk=" << rk << " epsilon=" << epsilon << " n=" << n << endl;
+		cout << "orthogonal::unrank_point rk=" << rk
+				<< " epsilon=" << epsilon << " n=" << n << endl;
 		}
-	Q_epsilon_unrank(*F, v, stride, epsilon, n - 1, form_c1, form_c2, form_c3, rk);
+	Q_epsilon_unrank(*F, v, stride, epsilon, n - 1,
+			form_c1, form_c2, form_c3, rk);
 }
 
 int orthogonal::rank_point(int *v, int stride, int verbose_level)
@@ -34,11 +37,13 @@ int orthogonal::rank_point(int *v, int stride, int verbose_level)
 	for (i = 0; i < n; i++)
 		rk_pt_v[i] = v[i * stride];
 	
-	return Q_epsilon_rank(*F, rk_pt_v, 1, epsilon, n - 1,form_c1, form_c2, form_c3);
+	return Q_epsilon_rank(*F, rk_pt_v, 1, epsilon, n - 1,
+			form_c1, form_c2, form_c3);
 }
 
 
-void orthogonal::unrank_line(int &p1, int &p2, int rk, int verbose_level)
+void orthogonal::unrank_line(int &p1, int &p2,
+		int rk, int verbose_level)
 {
 	if (epsilon == 1) {
 		hyperbolic_unrank_line(p1, p2, rk, verbose_level);
@@ -68,13 +73,53 @@ int orthogonal::rank_line(int p1, int p2, int verbose_level)
 		}
 }
 
-int orthogonal::line_type_given_point_types(int pt1, int pt2, int pt1_type, int pt2_type)
+int orthogonal::line_type_given_point_types(
+		int pt1, int pt2, int pt1_type, int pt2_type)
 {
 	if (epsilon == 1) {
-		return hyperbolic_line_type_given_point_types(pt1, pt2, pt1_type, pt2_type);
+		return hyperbolic_line_type_given_point_types(
+				pt1, pt2, pt1_type, pt2_type);
 		}
 	else if (epsilon == 0) {
-		return parabolic_line_type_given_point_types(pt1, pt2, pt1_type, pt2_type, FALSE);
+		return parabolic_line_type_given_point_types(
+				pt1, pt2, pt1_type, pt2_type, FALSE);
+		}
+	else {
+		cout << "type_and_index_to_point_rk "
+				"epsilon = " << epsilon << endl;
+		exit(1);
+		}
+}
+
+int orthogonal::type_and_index_to_point_rk(
+		int type, int index, int verbose_level)
+{
+	if (epsilon == 1) {
+		return hyperbolic_type_and_index_to_point_rk(
+				type, index);
+		}
+	else if (epsilon == 0) {
+		return parabolic_type_and_index_to_point_rk(
+				type, index, verbose_level);
+		}
+	else {
+		cout << "type_and_index_to_point_rk "
+				"epsilon = " << epsilon << endl;
+		exit(1);
+		}
+}
+
+void orthogonal::point_rk_to_type_and_index(
+		int rk, int &type, int &index,
+		int verbose_level)
+{
+	if (epsilon == 1) {
+		hyperbolic_point_rk_to_type_and_index(
+				rk, type, index);
+		}
+	else if (epsilon == 0) {
+		parabolic_point_rk_to_type_and_index(
+				rk, type, index, verbose_level);
 		}
 	else {
 		cout << "type_and_index_to_point_rk epsilon = " << epsilon << endl;
@@ -82,42 +127,17 @@ int orthogonal::line_type_given_point_types(int pt1, int pt2, int pt1_type, int 
 		}
 }
 
-int orthogonal::type_and_index_to_point_rk(int type, int index, int verbose_level)
-{
-	if (epsilon == 1) {
-		return hyperbolic_type_and_index_to_point_rk(type, index);
-		}
-	else if (epsilon == 0) {
-		return parabolic_type_and_index_to_point_rk(type, index, verbose_level);
-		}
-	else {
-		cout << "type_and_index_to_point_rk epsilon = " << epsilon << endl;
-		exit(1);
-		}
-}
-
-void orthogonal::point_rk_to_type_and_index(int rk, int &type, int &index, int verbose_level)
-{
-	if (epsilon == 1) {
-		hyperbolic_point_rk_to_type_and_index(rk, type, index);
-		}
-	else if (epsilon == 0) {
-		parabolic_point_rk_to_type_and_index(rk, type, index, verbose_level);
-		}
-	else {
-		cout << "type_and_index_to_point_rk epsilon = " << epsilon << endl;
-		exit(1);
-		}
-}
-
-void orthogonal::canonical_points_of_line(int line_type, int pt1, int pt2, 
+void orthogonal::canonical_points_of_line(
+	int line_type, int pt1, int pt2,
 	int &cpt1, int &cpt2, int verbose_level)
 {
 	if (epsilon == 1) {
-		hyperbolic_canonical_points_of_line(line_type, pt1, pt2, cpt1, cpt2, verbose_level);
+		hyperbolic_canonical_points_of_line(line_type,
+				pt1, pt2, cpt1, cpt2, verbose_level);
 		}
 	else if (epsilon == 0) {
-		parabolic_canonical_points_of_line(line_type, pt1, pt2, cpt1, cpt2, verbose_level);
+		parabolic_canonical_points_of_line(line_type,
+				pt1, pt2, cpt1, cpt2, verbose_level);
 		}
 	else {
 		cout << "canonical_points_of_line epsilon = " << epsilon << endl;
@@ -201,7 +221,8 @@ int orthogonal::find_root(int rk2, int verbose_level)
 		}
 }
 
-void orthogonal::points_on_line_by_line_rank(int line_rk, int *line, int verbose_level)
+void orthogonal::points_on_line_by_line_rank(
+		int line_rk, int *line, int verbose_level)
 {
 	int p1, p2;
 	
@@ -209,7 +230,8 @@ void orthogonal::points_on_line_by_line_rank(int line_rk, int *line, int verbose
 	points_on_line(p1, p2, line, verbose_level);
 }
 
-void orthogonal::points_on_line(int pi, int pj, int *line, int verbose_level)
+void orthogonal::points_on_line(int pi, int pj,
+		int *line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *v1, *v2, *v3;
@@ -256,7 +278,8 @@ void orthogonal::points_on_line(int pi, int pj, int *line, int verbose_level)
 		}
 }
 
-void orthogonal::points_on_line_by_coordinates(int pi, int pj, int *pt_coords, int verbose_level)
+void orthogonal::points_on_line_by_coordinates(
+		int pi, int pj, int *pt_coords, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *v1, *v2, *v3;
@@ -295,7 +318,8 @@ void orthogonal::points_on_line_by_coordinates(int pi, int pj, int *pt_coords, i
 		}
 }
 
-void orthogonal::lines_on_point(int pt, int *line_pencil_point_ranks, int verbose_level)
+void orthogonal::lines_on_point(int pt,
+		int *line_pencil_point_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk, rk1, root1, root2;
@@ -307,7 +331,8 @@ void orthogonal::lines_on_point(int pt, int *line_pencil_point_ranks, int verbos
 	t = subspace_point_type;
 	for (i = 0; i < alpha; i++) {
 		rk = type_and_index_to_point_rk(t, i, 0);
-		unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 1);
+		unrank_point(lines_on_point_coords1 + i * n,
+				1, rk, verbose_level - 1);
 		}
 	if (pt != pt_P) {
 		root1 = find_root(pt_P, verbose_level);
@@ -321,17 +346,20 @@ void orthogonal::lines_on_point(int pt, int *line_pencil_point_ranks, int verbos
 		else {
 			F->copy_matrix(T1, T3, n, n);
 			}
-		F->mult_matrix_matrix(lines_on_point_coords1, T3, lines_on_point_coords2, alpha, n, n);
+		F->mult_matrix_matrix(lines_on_point_coords1, T3,
+				lines_on_point_coords2, alpha, n, n);
 		}
 	else {
 		for (i = 0; i < alpha; i++) {
 			for (j = 0; j < n; j++) {
-				lines_on_point_coords2[i * n + j] = lines_on_point_coords1[i * n + j];
+				lines_on_point_coords2[i * n + j] =
+						lines_on_point_coords1[i * n + j];
 				}
 			}
 		}
 	for (i = 0; i < alpha; i++) {
-		line_pencil_point_ranks[i] = rank_point(lines_on_point_coords2 + i * n, 1, verbose_level - 1);
+		line_pencil_point_ranks[i] = rank_point(
+				lines_on_point_coords2 + i * n, 1, verbose_level - 1);
 		}
 	if (f_v) {
 		cout << "line pencil (point ranks) on point " << pt << " : ";
@@ -340,7 +368,8 @@ void orthogonal::lines_on_point(int pt, int *line_pencil_point_ranks, int verbos
 		}
 }
 
-void orthogonal::lines_on_point_by_line_rank(int pt, int *line_pencil_line_ranks, int verbose_level)
+void orthogonal::lines_on_point_by_line_rank(int pt,
+		int *line_pencil_line_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk, rk1, root1, root2, pt2;
@@ -352,7 +381,8 @@ void orthogonal::lines_on_point_by_line_rank(int pt, int *line_pencil_line_ranks
 	t = subspace_point_type;
 	for (i = 0; i < alpha; i++) {
 		rk = type_and_index_to_point_rk(t, i, 0);
-		unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 1);
+		unrank_point(lines_on_point_coords1 + i * n,
+				1, rk, verbose_level - 1);
 		}
 	if (pt != pt_P) {
 		rk1 = type_and_index_to_point_rk(t, 0, verbose_level);
@@ -367,18 +397,22 @@ void orthogonal::lines_on_point_by_line_rank(int pt, int *line_pencil_line_ranks
 			Siegel_Transformation(T2, rk1, pt, root2, verbose_level);
 			F->mult_matrix_matrix(T1, T2, T3, n, n, n);
 			}
-		F->mult_matrix_matrix(lines_on_point_coords1, T3, lines_on_point_coords2, alpha, n, n);
+		F->mult_matrix_matrix(lines_on_point_coords1,
+				T3, lines_on_point_coords2, alpha, n, n);
 		}
 	else {
 		for (i = 0; i < alpha; i++) {
 			for (j = 0; j < n; j++) {
-				lines_on_point_coords2[i * n + j] = lines_on_point_coords1[i * n + j];
+				lines_on_point_coords2[i * n + j] =
+						lines_on_point_coords1[i * n + j];
 				}
 			}
 		}
 	for (i = 0; i < alpha; i++) {
-		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, verbose_level - 1);
-		line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level);
+		pt2 = rank_point(lines_on_point_coords2 + i * n, 1,
+				verbose_level - 1);
+		line_pencil_line_ranks[i] =
+				rank_line(pt, pt2, verbose_level);
 		}
 	int_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_v) {
@@ -436,7 +470,8 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 {
 	int i, j, rk1, rk2, u, cnt;
 	
-	cout << "lines between points of type P" << t1 << " and points of type P" << t2 << endl;
+	cout << "lines between points of type P" << t1
+			<< " and points of type P" << t2 << endl;
 	for (i = 0; i < P[t1 - 1]; i++) {
 		rk1 = type_and_index_to_point_rk(t1, i, verbose_level);
 		cout << i << " : " << rk1 << " : ";
@@ -492,8 +527,10 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 	cout << "rk1_subspace=" << rk1_subspace << endl;
 	cout << "rk2_subspace=" << rk2_subspace << endl;
 	
-	root = subspace->find_root_parabolic(rk2_subspace, verbose_level);
-	subspace->Siegel_Transformation(T1, rk1_subspace, rk2_subspace, root, verbose_level);
+	root = subspace->find_root_parabolic(
+			rk2_subspace, verbose_level);
+	subspace->Siegel_Transformation(T1,
+			rk1_subspace, rk2_subspace, root, verbose_level);
 
 	cout << "Siegel map takes 1st point to" << endl;
 	F->mult_matrix_matrix(v1, T1, v3, 1, n - 2, n - 2);
@@ -551,7 +588,8 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 	cout << endl;
 }
 
-void orthogonal::make_initial_partition(partitionstack &S, int verbose_level)
+void orthogonal::make_initial_partition(
+		partitionstack &S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, l, a, f;
@@ -570,7 +608,8 @@ void orthogonal::make_initial_partition(partitionstack &S, int verbose_level)
 		if (l == 0)
 			continue;
 		if (f_v) {
-			cout << "splitting off point class " << i << " of size " << l << endl;
+			cout << "splitting off point class " << i
+					<< " of size " << l << endl;
 			}
 		for (j = 0; j < l; j++) {
 			a = type_and_index_to_point_rk(i, j, verbose_level - 2);
@@ -588,7 +627,8 @@ void orthogonal::make_initial_partition(partitionstack &S, int verbose_level)
 		if (l == 0)
 			continue;
 		if (f_v) {
-			cout << "splitting off line class " << i << " of size " << l << endl;
+			cout << "splitting off line class " << i
+					<< " of size " << l << endl;
 			}
 		for (j = 0; j < l; j++) {
 			S.subset[j] = f + j;
@@ -603,7 +643,8 @@ void orthogonal::make_initial_partition(partitionstack &S, int verbose_level)
 		}
 }
 
-void orthogonal::point_to_line_map(int size, int *point_ranks, int *&line_vector, int verbose_level)
+void orthogonal::point_to_line_map(int size,
+		int *point_ranks, int *&line_vector, int verbose_level)
 {
 	int i, j, h;
 	int *neighbors;
@@ -615,7 +656,8 @@ void orthogonal::point_to_line_map(int size, int *point_ranks, int *&line_vector
 		line_vector[j] = 0;
 	
 	for (i = 0; i < size; i++) {
-		lines_on_point_by_line_rank(point_ranks[i], neighbors, verbose_level - 2);
+		lines_on_point_by_line_rank(
+				point_ranks[i], neighbors, verbose_level - 2);
 		for (h = 0; h < alpha; h++) {
 			j = neighbors[h];
 			line_vector[j]++;
@@ -624,7 +666,8 @@ void orthogonal::point_to_line_map(int size, int *point_ranks, int *&line_vector
 	FREE_int(neighbors);
 }
 
-void orthogonal::move_points_by_ranks_in_place(int pt_from, int pt_to, 
+void orthogonal::move_points_by_ranks_in_place(
+	int pt_from, int pt_to,
 	int nb, int *ranks, int verbose_level)
 {
 	int *input_coords, *output_coords, i;
@@ -632,14 +675,17 @@ void orthogonal::move_points_by_ranks_in_place(int pt_from, int pt_to,
 	input_coords = NEW_int(nb * n);
 	output_coords = NEW_int(nb * n);
 	for (i = 0; i < nb; i++) {
-		unrank_point(input_coords + i * n, 1, ranks[i], verbose_level - 1);
+		unrank_point(
+				input_coords + i * n, 1, ranks[i],
+				verbose_level - 1);
 		}
 	
 	move_points(pt_from, pt_to, 
 		nb, input_coords, output_coords, verbose_level);
 	
 	for (i = 0; i < nb; i++) {
-		ranks[i] = rank_point(output_coords + i * n, 1, verbose_level - 1);
+		ranks[i] = rank_point(
+				output_coords + i * n, 1, verbose_level - 1);
 		}
 	
 	FREE_int(input_coords);
@@ -647,21 +693,24 @@ void orthogonal::move_points_by_ranks_in_place(int pt_from, int pt_to,
 }
 
 void orthogonal::move_points_by_ranks(int pt_from, int pt_to, 
-	int nb, int *input_ranks, int *output_ranks, int verbose_level)
+	int nb, int *input_ranks, int *output_ranks,
+	int verbose_level)
 {
 	int *input_coords, *output_coords, i;
 	
 	input_coords = NEW_int(nb * n);
 	output_coords = NEW_int(nb * n);
 	for (i = 0; i < nb; i++) {
-		unrank_point(input_coords + i * n, 1, input_ranks[i], verbose_level - 1);
+		unrank_point(input_coords + i * n, 1,
+				input_ranks[i], verbose_level - 1);
 		}
 	
 	move_points(pt_from, pt_to, 
 		nb, input_coords, output_coords, verbose_level);
 	
 	for (i = 0; i < nb; i++) {
-		output_ranks[i] = rank_point(output_coords + i * n, 1, verbose_level - 1);
+		output_ranks[i] = rank_point(
+				output_coords + i * n, 1, verbose_level - 1);
 		}
 	
 	FREE_int(input_coords);
@@ -669,7 +718,8 @@ void orthogonal::move_points_by_ranks(int pt_from, int pt_to,
 }
 
 void orthogonal::move_points(int pt_from, int pt_to, 
-	int nb, int *input_coords, int *output_coords, int verbose_level)
+	int nb, int *input_coords, int *output_coords,
+	int verbose_level)
 {
 	int root, i;
 	int *tmp_coords = NULL;
@@ -688,8 +738,13 @@ void orthogonal::move_points(int pt_from, int pt_to,
 		
 		tmp_coords = NEW_int(n * nb);
 		root = find_root(pt_from, verbose_level - 2);
-		Siegel_Transformation(T, pt_from /* from */, 0 /* to */, root /* root */, verbose_level - 2);
-		F->mult_matrix_matrix(input_coords, T, tmp_coords, nb, n, n);
+		Siegel_Transformation(T,
+				pt_from /* from */,
+				0 /* to */,
+				root /* root */,
+				verbose_level - 2);
+		F->mult_matrix_matrix(input_coords,
+				T, tmp_coords, nb, n, n);
 		input_coords2 = tmp_coords;
 		}
 	else {
@@ -697,7 +752,11 @@ void orthogonal::move_points(int pt_from, int pt_to,
 		}
 		
 	root = find_root(pt_to, verbose_level - 2);
-	Siegel_Transformation(T, 0 /* from */, pt_to /* to */, root /* root */, verbose_level - 2);
+	Siegel_Transformation(T,
+			0 /* from */,
+			pt_to /* to */,
+			root /* root */,
+			verbose_level - 2);
 	F->mult_matrix_matrix(input_coords2, T, output_coords, nb, 5, 5);
 
 	if (tmp_coords) FREE_int(tmp_coords);
@@ -808,7 +867,8 @@ int orthogonal::BLT_test(int size, int *set, int verbose_level)
 			l2 = F->log_alpha(fxy);
 			l3 = F->log_alpha(fyz);
 			cout << "i=" << i << " fxy=" << fxy << " (log=" << l2 
-				<< ") fyz=" << fyz << " (log=" << l3 << ") a=" << a << endl;
+				<< ") fyz=" << fyz << " (log=" << l3
+				<< ") a=" << a << endl;
 			}
 		
 		
@@ -819,7 +879,8 @@ int orthogonal::BLT_test(int size, int *set, int verbose_level)
 				l2 = F->log_alpha(fxy);
 				l3 = F->log_alpha(fyz);
 				cout << "not OK; i=" << i << endl;
-				cout << "{x,y,z}={" << x << "," << y << "," << z << "}" << endl;
+				cout << "{x,y,z}={" << x << "," << y
+						<< "," << z << "}" << endl;
 				int_vec_print(cout, v1, n);
 				cout << endl;
 				int_vec_print(cout, v2, n);
@@ -844,7 +905,8 @@ int orthogonal::BLT_test(int size, int *set, int verbose_level)
 				else
 					cout << "-";
 				cout << " (log=" << l3 << ")" << endl;
-				cout << "a=" << a << "(log=" << F->log_alpha(a) << ") is the negative of a square" << endl;
+				cout << "a=" << a << "(log=" << F->log_alpha(a)
+						<< ") is the negative of a square" << endl;
 				print_minus_square_tables();
 				}
 			break;
@@ -880,13 +942,15 @@ int orthogonal::collinearity_test(int size, int *set, int verbose_level)
 			}
 		}
 	y = set[size - 1];
-	//Q_epsilon_unrank(*M->GFq, v, 1, epsilon, k, form_c1, form_c2, form_c3, y);
+	//Q_epsilon_unrank(*M->GFq, v, 1, epsilon, k,
+	//form_c1, form_c2, form_c3, y);
 	unrank_point(v1, 1, y, verbose_level - 1);
 	
 	for (i = 0; i < size - 1; i++) {
 		x = set[i];
 		unrank_point(v2, 1, x, verbose_level - 1);
-		//Q_epsilon_unrank(*M->GFq, u, 1, epsilon, k, form_c1, form_c2, form_c3, x);
+		//Q_epsilon_unrank(*M->GFq, u, 1, epsilon, k,
+		//form_c1, form_c2, form_c3, x);
 		
 		//fxy = evaluate_bilinear_form(*M->GFq, u, v, d, Gram);
 		fxy = evaluate_bilinear_form(v1, v2, 1);
@@ -895,7 +959,8 @@ int orthogonal::collinearity_test(int size, int *set, int verbose_level)
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; ";
-				cout << "{x,y}={" << x << "," << y << "} are collinear" << endl;
+				cout << "{x,y}={" << x << "," << y
+						<< "} are collinear" << endl;
 				int_vec_print(cout, v1, 5);
 				cout << endl;
 				int_vec_print(cout, v2, 5);
@@ -914,9 +979,9 @@ int orthogonal::collinearity_test(int size, int *set, int verbose_level)
 	return f_OK;
 }
 
-// ####################################################################################
+// #############################################################################
 // orthogonal_init.C:
-// ####################################################################################
+// #############################################################################
 
 orthogonal::orthogonal()
 {
@@ -1093,7 +1158,8 @@ orthogonal::~orthogonal()
 	//cout << "orthogonal::~orthogonal finished" << endl;
 }
 
-void orthogonal::init(int epsilon, int n, finite_field *F, int verbose_level)
+void orthogonal::init(int epsilon, int n,
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1165,28 +1231,34 @@ void orthogonal::init(int epsilon, int n, finite_field *F, int verbose_level)
 	form_c2 = 0;
 	form_c3 = 0;
 	if (epsilon == -1) {
-		choose_anisotropic_form(*F, form_c1, form_c2, form_c3, verbose_level);
+		choose_anisotropic_form(*F,
+				form_c1, form_c2, form_c3, verbose_level);
 		}
 	if (f_v) {
 		cout << "orthogonal::init computing Gram matrix" << endl;
 		}
-	::Gram_matrix(*F, epsilon, n - 1, form_c1, form_c2, form_c3, Gram_matrix);
+	::Gram_matrix(*F, epsilon, n - 1,
+			form_c1, form_c2, form_c3, Gram_matrix);
 	if (f_v) {
-		cout << "orthogonal::init computing Gram matrix done" << endl;
+		cout << "orthogonal::init "
+				"computing Gram matrix done" << endl;
 		}
 	
 	T1_m = count_T1(epsilon, m, q);
 	if (f_vvv) {
-		cout << "T1_m(" << epsilon << "," << m << "," << q << ") = " << T1_m << endl;
+		cout << "T1_m(" << epsilon << ","
+				<< m << "," << q << ") = " << T1_m << endl;
 		}
 	T1_mm1 = count_T1(epsilon, m - 1, q);
 	if (f_vvv) {
-		cout << "T1_mm1(" << epsilon << "," << m - 1 << "," << q << ") = " << T1_mm1 << endl;
+		cout << "T1_mm1(" << epsilon << ","
+				<< m - 1 << "," << q << ") = " << T1_mm1 << endl;
 		}
 	if (m > 1) {
 		T1_mm2 = count_T1(epsilon, m - 2, q);
 		if (f_vvv) {
-			cout << "T1_mm2(" << epsilon << "," << m - 2 << "," << q << ") = " << T1_mm2 << endl;
+			cout << "T1_mm2(" << epsilon << ","
+					<< m - 2 << "," << q << ") = " << T1_mm2 << endl;
 			}
 		}
 	else {
@@ -1238,9 +1310,11 @@ void orthogonal::init(int epsilon, int n, finite_field *F, int verbose_level)
 			cout << "T2(" << m - 2 << "," << q << ") = " << T2_mm2 << endl;
 		cout << "nb_pts_N1(" << m << "," << q << ") = " << N1_m << endl;
 		if (m >= 1)
-			cout << "nb_pts_N1(" << m - 1 << "," << q << ") = " << N1_mm1 << endl;
+			cout << "nb_pts_N1(" << m - 1 << "," << q << ") = "
+			<< N1_mm1 << endl;
 		if (m >= 2)
-			cout << "nb_pts_N1(" << m - 2 << "," << q << ") = " << N1_mm2 << endl;
+			cout << "nb_pts_N1(" << m - 2 << "," << q << ") = "
+			<< N1_mm2 << endl;
 		cout << "S_m=" << S_m << endl;
 		cout << "S_mm1=" << S_mm1 << endl;
 		cout << "S_mm2=" << S_mm2 << endl;
@@ -1323,7 +1397,8 @@ void orthogonal::init(int epsilon, int n, finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "O^" << epsilon << "(" << n << "," << q << ")" << endl;
-		cout << "epsilon=" << epsilon << " n=" << n << " m=" << m << " q=" << q << endl;
+		cout << "epsilon=" << epsilon
+				<< " n=" << n << " m=" << m << " q=" << q << endl;
 		cout << "pt_P = " << pt_P << endl;
 		cout << "pt_Q=" << pt_Q << endl;
 		cout << "nb_points = " << nb_points << endl;
@@ -1339,7 +1414,8 @@ void orthogonal::init(int epsilon, int n, finite_field *F, int verbose_level)
 		}
 	line_pencil = NEW_int(alpha);
 	if (f_v) {
-		cout << "before allocating Perp1 of size " << alpha * (q + 1) << endl;
+		cout << "before allocating Perp1 of size "
+				<< alpha * (q + 1) << endl;
 		}
 	Perp1 = NEW_int(alpha * (q + 1));
 	if (f_v) {
@@ -1351,24 +1427,29 @@ void orthogonal::init(int epsilon, int n, finite_field *F, int verbose_level)
 	if (f_v) {
 		print_schemes();
 		cout << "Gram matrix:" << endl;
-		print_integer_matrix_width(cout, Gram_matrix, n, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				Gram_matrix, n, n, n, F->log10_of_q + 1);
 		}
 	if (FALSE) {
 		for (i = 0; i < T1_m; i++) {
-			Q_epsilon_unrank(*F, v1, 1, epsilon, n - 1, form_c1, form_c2, form_c3, i);
+			Q_epsilon_unrank(*F, v1, 1, epsilon, n - 1,
+					form_c1, form_c2, form_c3, i);
 			cout << i << " : ";
 			int_vec_print(cout, v1, n);
-			j = Q_epsilon_rank(*F, v1, 1, epsilon, n - 1, form_c1, form_c2, form_c3);
+			j = Q_epsilon_rank(*F, v1, 1, epsilon, n - 1,
+					form_c1, form_c2, form_c3);
 			cout << " : " << j << endl;
 			}
 		}
 	if (FALSE) {
 		if (nb_points < 300) {
-			cout << "points of O^" << epsilon << "(" << n << "," << q << ") by type:" << endl;
+			cout << "points of O^" << epsilon
+					<< "(" << n << "," << q << ") by type:" << endl;
 			list_points_by_type(verbose_level);
 			}
 		if (nb_points < 300 && nb_lines < 300) {
-			cout << "points and lines of O^" << epsilon << "(" << n << "," << q << ") by type:" << endl;
+			cout << "points and lines of O^" << epsilon
+					<< "(" << n << "," << q << ") by type:" << endl;
 			list_all_points_vs_points(verbose_level);
 			}
 		}
@@ -1760,7 +1841,8 @@ void orthogonal::init_parabolic_odd(int verbose_level)
 		j = F->alpha_power(i);
 		if (is_minus_square(i)) {
 			if (f_v) {
-				cout << "i=" << i << " j=" << j << " is minus a square" << endl;
+				cout << "i=" << i << " j=" << j
+						<< " is minus a square" << endl;
 				}
 			f_is_minus_square[j]= TRUE;
 			minus_squares[a] = j;
@@ -1999,22 +2081,24 @@ void orthogonal::fill(int *M, int i, int j, int a)
 	M[(i - 1) * nb_line_classes + j - 1] = a;
 }
 
-// ####################################################################################
+// #############################################################################
 // orthogonal_hyperbolic.C:
-// ####################################################################################
+// #############################################################################
 
-//##################################################################################
+//##############################################################################
 // ranking / unranking points according to the partition:
-//##################################################################################
+//##############################################################################
 
-int orthogonal::hyperbolic_type_and_index_to_point_rk(int type, int index)
+int orthogonal::hyperbolic_type_and_index_to_point_rk(
+		int type, int index)
 {
 	int rk;
 	
 	rk = 0;
 	if (type == 4) {
 		if (index >= p4) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, index >= p4" << endl;
+			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+					"index >= p4" << endl;
 			exit(1);
 			}
 		rk += index;
@@ -2023,7 +2107,8 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(int type, int index)
 	rk += p4;
 	if (type == 6) {
 		if (index >= p6) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, index >= p6" << endl;
+			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+					"index >= p6" << endl;
 			exit(1);
 			}
 		rk += index;
@@ -2032,7 +2117,8 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(int type, int index)
 	rk += p6;
 	if (type == 3) {
 		if (index >= p3) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, index >= p3" << endl;
+			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+					"index >= p3" << endl;
 			exit(1);
 			}
 		rk += index;
@@ -2041,7 +2127,8 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(int type, int index)
 	rk += p3;
 	if (type == 5) {
 		if (index >= p5) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, index >= p5" << endl;
+			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+					"index >= p5" << endl;
 			exit(1);
 			}
 		rk += index;
@@ -2050,7 +2137,8 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(int type, int index)
 	rk += p5;
 	if (type == 2) {
 		if (index >= p2) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, index >= p2" << endl;
+			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+					"index >= p2" << endl;
 			exit(1);
 			}
 		rk += index;
@@ -2059,17 +2147,20 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(int type, int index)
 	rk += p2;
 	if (type == 1) {
 		if (index >= p1) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, index >= p1" << endl;
+			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+					"index >= p1" << endl;
 			exit(1);
 			}
 		rk += index;
 		return rk;
 		}
-	cout << "error in hyperbolic_type_and_index_to_point_rk, unknown type" << endl;
+	cout << "error in hyperbolic_type_and_index_to_point_rk, "
+			"unknown type" << endl;
 	exit(1);
 }
 
-void orthogonal::hyperbolic_point_rk_to_type_and_index(int rk, int &type, int &index)
+void orthogonal::hyperbolic_point_rk_to_type_and_index(
+		int rk, int &type, int &index)
 {
 	if (rk < p4) {
 		type = 4;
@@ -2111,19 +2202,21 @@ void orthogonal::hyperbolic_point_rk_to_type_and_index(int rk, int &type, int &i
 	
 }
 
-//##################################################################################
+//##############################################################################
 // ranking / unranking neighbors of the favorite point:
-//##################################################################################
+//##############################################################################
 
 
-//##################################################################################
+//##############################################################################
 // ranking / unranking lines:
-//##################################################################################
+//##############################################################################
 
-void orthogonal::hyperbolic_unrank_line(int &p1, int &p2, int rk, int verbose_level)
+void orthogonal::hyperbolic_unrank_line(
+		int &p1, int &p2, int rk, int verbose_level)
 {
 	if (m == 0) {
-		cout << "orthogonal::hyperbolic_unrank_line Witt index zero, there is no line to unrank" << endl;
+		cout << "orthogonal::hyperbolic_unrank_line "
+				"Witt index zero, there is no line to unrank" << endl;
 		exit(1);
 		}
 	if (rk < l1) {
@@ -2161,11 +2254,13 @@ void orthogonal::hyperbolic_unrank_line(int &p1, int &p2, int rk, int verbose_le
 		return;
 		}
 	rk -= l7;
-	cout << "error in orthogonal::hyperbolic_unrank_line, rk too big" << endl;
+	cout << "error in orthogonal::hyperbolic_unrank_line, "
+			"rk too big" << endl;
 	exit(1);
 }
 
-int orthogonal::hyperbolic_rank_line(int p1, int p2, int verbose_level)
+int orthogonal::hyperbolic_rank_line(
+		int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int pt1_type, pt2_type;
@@ -2174,7 +2269,8 @@ int orthogonal::hyperbolic_rank_line(int p1, int p2, int verbose_level)
 	int cp1, cp2;
 	
 	if (m == 0) {
-		cout << "orthogonal::rank_line Witt index zero, there is no line to rank" << endl;
+		cout << "orthogonal::rank_line Witt index zero, "
+				"there is no line to rank" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -2183,15 +2279,19 @@ int orthogonal::hyperbolic_rank_line(int p1, int p2, int verbose_level)
 	point_rk_to_type_and_index(p1, pt1_type, pt1_index, verbose_level);
 	point_rk_to_type_and_index(p2, pt2_type, pt2_index, verbose_level);
 	if (f_v) {
-		cout << "rank_line pt1_type=" << pt1_type << " pt2_type=" << pt2_type << endl;
+		cout << "rank_line pt1_type=" << pt1_type
+				<< " pt2_type=" << pt2_type << endl;
 		}
-	line_type = line_type_given_point_types(p1, p2, pt1_type, pt2_type);
+	line_type = line_type_given_point_types(p1, p2,
+			pt1_type, pt2_type);
 	if (f_v) {
 		cout << "rank_line line_type=" << line_type << endl;
 		}
-	canonical_points_of_line(line_type, p1, p2, cp1, cp2, verbose_level);
+	canonical_points_of_line(line_type, p1, p2,
+			cp1, cp2, verbose_level);
 	if (f_v) {
-		cout << "canonical points cp1=" << cp1 << " cp2=" << cp2 << endl;
+		cout << "canonical points "
+				"cp1=" << cp1 << " cp2=" << cp2 << endl;
 		}
 	if (line_type == 1) {
 		return rk + rank_line_L1(cp1, cp2, verbose_level);
@@ -2225,15 +2325,18 @@ int orthogonal::hyperbolic_rank_line(int p1, int p2, int verbose_level)
 	exit(1);
 }
 
-void orthogonal::unrank_line_L1(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::unrank_line_L1(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index, P4_field_element, root, i;
+	int P4_index, P4_sub_index, P4_line_index;
+	int P4_field_element, root, i;
 	
 	if (index >= l1) {
-		cout << "error in unrank_line_L1 index too large" << endl;
+		cout << "error in unrank_line_L1 "
+				"index too large" << endl;
 		}
 	P4_index = index / a41;
 	P4_sub_index = index % a41;
@@ -2248,8 +2351,10 @@ void orthogonal::unrank_line_L1(int &p1, int &p2, int index, int verbose_level)
 		exit(1);
 		}
 	if (f_vv) {
-		cout << "unrank_line_L1 P4_index=" << P4_index << " P4_sub_index=" << P4_sub_index << endl;
-		cout << "P4_line_index=" << P4_line_index << " P4_field_element=" << P4_field_element << endl;
+		cout << "unrank_line_L1 P4_index=" << P4_index
+				<< " P4_sub_index=" << P4_sub_index << endl;
+		cout << "P4_line_index=" << P4_line_index
+				<< " P4_field_element=" << P4_field_element << endl;
 		}
 	p1 = type_and_index_to_point_rk(4, P4_index, verbose_level);
 	if (f_vv) {
@@ -2274,9 +2379,12 @@ void orthogonal::unrank_line_L1(int &p1, int &p2, int index, int verbose_level)
 	
 	if (P4_index) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P4_index, m - 1, verbose_level - 1);
+			root = find_root_hyperbolic(P4_index, m - 1,
+					verbose_level - 1);
+
 			Siegel_map_between_singular_points_hyperbolic(T1, 
-				0, P4_index, root, m - 1, verbose_level - 1);
+				0, P4_index, root, m - 1,
+				verbose_level - 1);
 			}
 		else {
 			T1[0] = T1[3] = 0;
@@ -2301,7 +2409,8 @@ void orthogonal::unrank_line_L1(int &p1, int &p2, int index, int verbose_level)
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "unrank_line_L1 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "unrank_line_L1 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -2310,7 +2419,8 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index, P4_field_element, root, i;
+	int P4_index, P4_sub_index, P4_line_index;
+	int P4_field_element, root, i;
 	int P4_field_element_inverse;
 	int index, a, b;
 	
@@ -2330,7 +2440,9 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 		}
 	if (P4_index) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P4_index, m - 1, verbose_level - 1);
+			root = find_root_hyperbolic(
+					P4_index, m - 1, verbose_level - 1);
+
 			Siegel_map_between_singular_points_hyperbolic(T1, 
 				0, P4_index, root, m - 1, verbose_level - 1);
 			}
@@ -2365,7 +2477,8 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 		}
 	P4_field_element = F->negate(v2[n - 2]);
 	if (P4_field_element == 0) {
-		cout << "orthogonal::rank_line_L1: P4_field_element == 0" << endl;
+		cout << "orthogonal::rank_line_L1: "
+				"P4_field_element == 0" << endl;
 		exit(1);
 		}
 	P4_field_element_inverse = F->inverse(P4_field_element);
@@ -2378,7 +2491,8 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 		cout << endl;
 		}
 	if (v1[0] != 0 || v1[1] != 0) {
-		cout << "orthogonal::rank_line_L1: v1[0] != 0 || v1[1] != 0" << endl;
+		cout << "orthogonal::rank_line_L1: "
+				"v1[0] != 0 || v1[1] != 0" << endl;
 		exit(1);
 		}
 	P4_line_index = rank_N1(v1 + 2, 1, m - 2);
@@ -2389,7 +2503,8 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 	P4_sub_index = P4_line_index * (q - 1) + P4_field_element;
 	index = P4_index * a41 + P4_sub_index;
 	if (f_v) {
-		cout << "rank_line_L1 p1=" << p1 << " p2=" << p2 << " index=" << index << endl;
+		cout << "rank_line_L1 p1=" << p1
+				<< " p2=" << p2 << " index=" << index << endl;
 		}
 	if (index >= l1) {
 		cout << "error in rank_line_L1 index too large" << endl;
@@ -2398,7 +2513,8 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::unrank_line_L2(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::unrank_line_L2(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2417,8 +2533,10 @@ void orthogonal::unrank_line_L2(int &p1, int &p2, int index, int verbose_level)
 	P3_point = P3_index / (q - 1);
 	P3_field_element = P3_index % (q - 1);
 	if (f_vv) {
-		cout << "unrank_line_L2 P3_index=" << P3_index << " P3_sub_index=" << P3_sub_index << endl;
-		cout << "unrank_line_L2 P3_point=" << P3_point << " P3_field_element=" << P3_field_element << endl;
+		cout << "unrank_line_L2 P3_index=" << P3_index
+				<< " P3_sub_index=" << P3_sub_index << endl;
+		cout << "unrank_line_L2 P3_point=" << P3_point
+				<< " P3_field_element=" << P3_field_element << endl;
 		}
 	unrank_Sbar(v3, 1, m - 1, P3_point);
 	v3[n - 2] = 1 + P3_field_element;
@@ -2480,9 +2598,12 @@ void orthogonal::unrank_line_L2(int &p1, int &p2, int index, int verbose_level)
 		}
 	if (P3_point) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P3_point, m - 1, verbose_level - 1);
+			root = find_root_hyperbolic(P3_point, m - 1,
+					verbose_level - 1);
+
 			Siegel_map_between_singular_points_hyperbolic(T1, 
-				0, P3_point, root, m - 1, verbose_level - 1);
+				0, P3_point, root, m - 1,
+				verbose_level - 1);
 			}
 		else {
 			T1[0] = T1[3] = 0;
@@ -2525,7 +2646,8 @@ void orthogonal::unrank_line_L2(int &p1, int &p2, int index, int verbose_level)
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "unrank_line_L2 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "unrank_line_L2 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -2577,7 +2699,8 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 	P3_point = rank_Sbar(v3, 1, m - 1);
 	P3_index = P3_point * (q - 1) + P3_field_element;
 	if (f_vvv) {
-		cout << "P3_point=" << P3_point << " P3_field_element=" << P3_field_element << endl;
+		cout << "P3_point=" << P3_point
+				<< " P3_field_element=" << P3_field_element << endl;
 		cout << "P3_index=" << P3_index << endl;
 		}
 	if (f_vvv) {
@@ -2590,9 +2713,12 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 
 	if (P3_point) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P3_point, m - 1, verbose_level - 1);
+			root = find_root_hyperbolic(P3_point, m - 1,
+					verbose_level - 1);
+
 			Siegel_map_between_singular_points_hyperbolic(T1, 
-				0, P3_point, root, m - 1, verbose_level - 1);
+				0, P3_point, root, m - 1,
+				verbose_level - 1);
 			}
 		else {
 			T1[0] = T1[3] = 0;
@@ -2648,12 +2774,14 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 				cout << "case 2" << endl;
 				}
 			if (v1[0]) {
-				cout << "orthogonal::rank_line_L2, case 1 v1[0]" << endl;
+				cout << "orthogonal::rank_line_L2, case 1 "
+						"v1[0]" << endl;
 				exit(1);
 				}
 			c = v1[1];
 			if (c == 0) {
-				cout << "orthogonal::rank_line_L2, case 1 v1[1] == 0" << endl;
+				cout << "orthogonal::rank_line_L2, case 1 "
+						"v1[1] == 0" << endl;
 				exit(1);
 				}
 			if (c != F->negate(1)) {
@@ -2673,7 +2801,8 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 					break;
 				}
 			if (i == 1) {
-				cout << "orthogonal::rank_line_L2 case 2, i == 1" << endl;
+				cout << "orthogonal::rank_line_L2 case 2, "
+						"i == 1" << endl;
 				exit(1);
 				}
 			b = v1[i];
@@ -2700,7 +2829,8 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 			P3_sub_index = 1 + (q - 1) * T1_mm2;
 			c = v1[1];
 			if (c == 0) {
-				cout << "orthogonal::rank_line_L2, case 3 v1[1] == 0" << endl;
+				cout << "orthogonal::rank_line_L2, case 3 "
+						"v1[1] == 0" << endl;
 				exit(1);
 				}
 			if (c != F->negate(1)) {
@@ -2715,7 +2845,8 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 				cout << endl;
 				}
 			if (v1[0] == 0) {
-				cout << "orthogonal::rank_line_L2, case 3 v1[0] == 0" << endl;
+				cout << "orthogonal::rank_line_L2, case 3 "
+						"v1[0] == 0" << endl;
 				exit(1);
 				}
 			b = v1[0] - 1;
@@ -2731,13 +2862,15 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "rank_line_L2 p1=" << p1 << " p2=" << p2 << " P3_sub_index=" << P3_sub_index << endl;
+		cout << "rank_line_L2 p1=" << p1 << " p2=" << p2
+				<< " P3_sub_index=" << P3_sub_index << endl;
 		}
 	
 	index = P3_index * a32 + P3_sub_index;
 	
 	if (f_v) {
-		cout << "rank_line_L2 p1=" << p1 << " p2=" << p2 << " index=" << index << endl;
+		cout << "rank_line_L2 p1=" << p1 << " p2=" << p2
+				<< " index=" << index << endl;
 		}
 	if (index >= l2) {
 		cout << "error in rank_line_L2 index too large" << endl;
@@ -2745,12 +2878,14 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::unrank_line_L3(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::unrank_line_L3(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index, P4_field_element, root, i, e;
+	int P4_index, P4_sub_index, P4_line_index;
+	int P4_field_element, root, i, e;
 	
 	P4_index = index / a43;
 	P4_sub_index = index % a43;
@@ -2764,8 +2899,10 @@ void orthogonal::unrank_line_L3(int &p1, int &p2, int index, int verbose_level)
 		cout << "error in unrank_line_L3 index too large" << endl;
 		}
 	if (f_vv) {
-		cout << "unrank_line_L3 P4_index=" << P4_index << " P4_sub_index=" << P4_sub_index << endl;
-		cout << "P4_line_index=" << P4_line_index << " P4_field_element=" << P4_field_element << endl;
+		cout << "unrank_line_L3 P4_index=" << P4_index
+				<< " P4_sub_index=" << P4_sub_index << endl;
+		cout << "P4_line_index=" << P4_line_index
+				<< " P4_field_element=" << P4_field_element << endl;
 		}
 	p1 = P4_index;
 	unrank_Sbar(v3, 1, m, P4_index);
@@ -2785,9 +2922,12 @@ void orthogonal::unrank_line_L3(int &p1, int &p2, int index, int verbose_level)
 	
 	if (P4_index) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P4_index, m - 1, verbose_level - 1);
+			root = find_root_hyperbolic(
+					P4_index, m - 1, verbose_level - 1);
+
 			Siegel_map_between_singular_points_hyperbolic(T1, 
-				0, P4_index, root, m - 1, verbose_level - 1);
+				0, P4_index, root, m - 1,
+				verbose_level - 1);
 			}
 		else {
 			T1[0] = T1[3] = 0;
@@ -2816,7 +2956,8 @@ void orthogonal::unrank_line_L3(int &p1, int &p2, int index, int verbose_level)
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "unrank_line_L3 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "unrank_line_L3 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -2825,7 +2966,8 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index, P4_field_element, root, i, index;
+	int P4_index, P4_sub_index, P4_line_index;
+	int P4_field_element, root, i, index;
 	int a, b;
 	
 	if (f_v) {
@@ -2849,9 +2991,12 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 		}
 	if (P4_index) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P4_index, m - 1, verbose_level - 1);
+			root = find_root_hyperbolic(
+					P4_index, m - 1, verbose_level - 1);
+
 			Siegel_map_between_singular_points_hyperbolic(T1, 
-				0, P4_index, root, m - 1, verbose_level - 1);
+				0, P4_index, root, m - 1,
+				verbose_level - 1);
 			}
 		else {
 			T1[0] = T1[3] = 0;
@@ -2925,7 +3070,8 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 	index = P4_index * a43 + P4_sub_index;
 	
 	if (f_v) {
-		cout << "rank_line_L3 p1=" << p1 << " p2=" << p2 << " index=" << index << endl;
+		cout << "rank_line_L3 p1=" << p1 << " p2=" << p2
+				<< " index=" << index << endl;
 		}
 	if (index >= l3) {
 		cout << "error in rank_line_L3 index too large" << endl;
@@ -2933,12 +3079,14 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::unrank_line_L4(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::unrank_line_L4(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index, P4_field_element, root, i, e;
+	int P4_index, P4_sub_index, P4_line_index;
+	int P4_field_element, root, i, e;
 	
 	P4_index = index / a44;
 	P4_sub_index = index % a44;
@@ -2952,8 +3100,10 @@ void orthogonal::unrank_line_L4(int &p1, int &p2, int index, int verbose_level)
 		cout << "error in unrank_line_L4 index too large" << endl;
 		}
 	if (f_vv) {
-		cout << "unrank_line_L4 P4_index=" << P4_index << " P4_sub_index=" << P4_sub_index << endl;
-		cout << "P4_line_index=" << P4_line_index << " P4_field_element=" << P4_field_element << endl;
+		cout << "unrank_line_L4 P4_index=" << P4_index
+				<< " P4_sub_index=" << P4_sub_index << endl;
+		cout << "P4_line_index=" << P4_line_index
+				<< " P4_field_element=" << P4_field_element << endl;
 		}
 	p1 = P4_index;
 	unrank_Sbar(v3, 1, m, P4_index);
@@ -2971,9 +3121,12 @@ void orthogonal::unrank_line_L4(int &p1, int &p2, int index, int verbose_level)
 	
 	if (P4_index) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P4_index, m - 1, verbose_level - 1);
+			root = find_root_hyperbolic(
+					P4_index, m - 1, verbose_level - 1);
+
 			Siegel_map_between_singular_points_hyperbolic(T1, 
-				0, P4_index, root, m - 1, verbose_level - 1);
+				0, P4_index, root, m - 1,
+				verbose_level - 1);
 			}
 		else {
 			T1[0] = T1[3] = 0;
@@ -3002,7 +3155,8 @@ void orthogonal::unrank_line_L4(int &p1, int &p2, int index, int verbose_level)
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "unrank_line_L4 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "unrank_line_L4 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -3011,7 +3165,8 @@ int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P3_index, P3_sub_index, P3_line_index, P3_field_element, root, i, index;
+	int P3_index, P3_sub_index, P3_line_index;
+	int P3_field_element, root, i, index;
 	int a, b;
 	
 	if (f_v) {
@@ -3111,7 +3266,8 @@ int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 	index = P3_index * a44 + P3_sub_index;
 	
 	if (f_v) {
-		cout << "rank_line_L4 p1=" << p1 << " p2=" << p2 << " index=" << index << endl;
+		cout << "rank_line_L4 p1=" << p1 << " p2=" << p2
+				<< " index=" << index << endl;
 		}
 	if (index >= l4) {
 		cout << "error in rank_line_L4 index too large" << endl;
@@ -3119,7 +3275,8 @@ int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::unrank_line_L5(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::unrank_line_L5(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3129,11 +3286,13 @@ void orthogonal::unrank_line_L5(int &p1, int &p2, int index, int verbose_level)
 		cout << "unrank_line_L5 index=" << index << endl;
 		}
 	if (index >= l5) {
-		cout << "error in unrank_line_L5 index too large, l5=" << l5 << endl;
+		cout << "error in unrank_line_L5 index "
+				"too large, l5=" << l5 << endl;
 		}
 	subspace->unrank_line(p1, p2, index, verbose_level);
 	if (f_v) {
-		cout << "unrank_line_L5 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "unrank_line_L5 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -3147,7 +3306,8 @@ int orthogonal::rank_line_L5(int p1, int p2, int verbose_level)
 		}
 	index = subspace->rank_line(p1, p2, verbose_level);
 	if (f_v) {
-		cout << "rank_line_L5 p1=" << p1 << " p2=" << p2 << " index=" << index << endl;
+		cout << "rank_line_L5 p1=" << p1 << " p2=" << p2
+				<< " index=" << index << endl;
 		}
 	if (index >= l5) {
 		cout << "error in rank_line_L5 index too large" << endl;
@@ -3155,7 +3315,8 @@ int orthogonal::rank_line_L5(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::unrank_line_L6(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::unrank_line_L6(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3170,7 +3331,8 @@ void orthogonal::unrank_line_L6(int &p1, int &p2, int index, int verbose_level)
 	p1 = index;
 	p2 = type_and_index_to_point_rk(5, 0, verbose_level);
 	if (f_v) {
-		cout << "unrank_line_L6 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "unrank_line_L6 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -3184,7 +3346,8 @@ int orthogonal::rank_line_L6(int p1, int p2, int verbose_level)
 		}
 	index = p1;
 	if (f_v) {
-		cout << "rank_line_L6 p1=" << p1 << " p2=" << p2 << " index=" << index << endl;
+		cout << "rank_line_L6 p1=" << p1 << " p2=" << p2
+				<< " index=" << index << endl;
 		}
 	if (index >= l6) {
 		cout << "error in rank_line_L6 index too large" << endl;
@@ -3192,7 +3355,8 @@ int orthogonal::rank_line_L6(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::unrank_line_L7(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::unrank_line_L7(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3207,7 +3371,8 @@ void orthogonal::unrank_line_L7(int &p1, int &p2, int index, int verbose_level)
 	p1 = index;
 	p2 = type_and_index_to_point_rk(6, 0, verbose_level);
 	if (f_v) {
-		cout << "unrank_line_L7 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "unrank_line_L7 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -3221,7 +3386,8 @@ int orthogonal::rank_line_L7(int p1, int p2, int verbose_level)
 		}
 	index = p1;
 	if (f_v) {
-		cout << "rank_line_L7 p1=" << p1 << " p2=" << p2 << " index=" << index << endl;
+		cout << "rank_line_L7 p1=" << p1 << " p2=" << p2
+				<< " index=" << index << endl;
 		}
 	if (index >= l7) {
 		cout << "error in rank_line_L7 index too large" << endl;
@@ -3229,7 +3395,8 @@ int orthogonal::rank_line_L7(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::hyperbolic_canonical_points_of_line(int line_type, int pt1, int pt2, 
+void orthogonal::hyperbolic_canonical_points_of_line(
+	int line_type, int pt1, int pt2,
 	int &cpt1, int &cpt2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3256,13 +3423,15 @@ void orthogonal::hyperbolic_canonical_points_of_line(int line_type, int pt1, int
 		canonical_points_L7(pt1, pt2, cpt1, cpt2);
 		}
 	if (f_v) {
-		cout << "hyperbolic_canonical_points_of_line of type " << line_type << endl;
+		cout << "hyperbolic_canonical_points_of_line "
+				"of type " << line_type << endl;
 		cout << "pt1=" << pt1 << " pt2=" << pt2 << endl;
 		cout << "cpt1=" << cpt1 << " cpt2=" << cpt2 << endl;
 		}
 }
 
-void orthogonal::canonical_points_L1(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::canonical_points_L1(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int a, b, c, d, lambda1, lambda2, i;
 	
@@ -3285,21 +3454,24 @@ void orthogonal::canonical_points_L1(int pt1, int pt2, int &cpt1, int &cpt2)
 	lambda1 = F->mult(c, F->negate(F->inverse(a)));
 	lambda2 = F->mult(d, F->negate(F->inverse(b)));
 	if (lambda1 != lambda2) {
-		cout << "orthogonal::canonical_points_L1: lambda1 != lambda2" << endl;
+		cout << "orthogonal::canonical_points_L1: "
+				"lambda1 != lambda2" << endl;
 		exit(1);
 		}
 	for (i = 0; i < n; i++) {
 		v3[i] = F->add(F->mult(lambda1, v1[i]), v2[i]);
 		}
 	if (v3[n - 2] || v3[n - 1]) {
-		cout << "orthogonal::canonical_points_L1: v3[n - 2] || v3[n - 1]" << endl;
+		cout << "orthogonal::canonical_points_L1: "
+				"v3[n - 2] || v3[n - 1]" << endl;
 		exit(1);
 		}
 	cpt1 = rank_Sbar(v3, 1, m);
 	cpt2 = pt1;
 }
 
-void orthogonal::canonical_points_L2(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::canonical_points_L2(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int a, b, c, d, lambda, i, p1, p2;
 	
@@ -3323,7 +3495,8 @@ void orthogonal::canonical_points_L2(int pt1, int pt2, int &cpt1, int &cpt2)
 			v3[i] = F->add(F->mult(lambda, v1[i]), v2[i]);
 			}
 		if (v3[n - 1]) {
-			cout << "orthogonal::canonical_points_L2: v3[n - 1]" << endl;
+			cout << "orthogonal::canonical_points_L2: "
+					"v3[n - 1]" << endl;
 			exit(1);
 			}
 		p1 = rank_Sbar(v3, 1, m);
@@ -3344,14 +3517,16 @@ void orthogonal::canonical_points_L2(int pt1, int pt2, int &cpt1, int &cpt2)
 		v3[i] = F->add(F->mult(lambda, v1[i]), v2[i]);
 		}
 	if (v3[n - 2]) {
-		cout << "orthogonal::canonical_points_L2: v3[n - 2]" << endl;
+		cout << "orthogonal::canonical_points_L2: "
+				"v3[n - 2]" << endl;
 		exit(1);
 		}
 	cpt1 = p1;
 	cpt2 = rank_Sbar(v3, 1, m);
 }
 
-void orthogonal::canonical_points_L3(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::canonical_points_L3(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int a, b, c, d, lambda, i;
 	
@@ -3386,14 +3561,16 @@ void orthogonal::canonical_points_L3(int pt1, int pt2, int &cpt1, int &cpt2)
 		v3[i] = F->add(F->mult(lambda, v1[i]), v2[i]);
 		}
 	if (v3[n - 2] || v3[n - 1]) {
-		cout << "orthogonal::canonical_points_L3: v3[n - 2] || v3[n - 1]" << endl;
+		cout << "orthogonal::canonical_points_L3: "
+				"v3[n - 2] || v3[n - 1]" << endl;
 		exit(1);
 		}
 	cpt1 = rank_Sbar(v3, 1, m);
 	cpt2 = pt1;
 }
 
-void orthogonal::canonical_points_L4(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::canonical_points_L4(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int a, b, c, d, lambda, i;
 	
@@ -3428,30 +3605,35 @@ void orthogonal::canonical_points_L4(int pt1, int pt2, int &cpt1, int &cpt2)
 		v3[i] = F->add(F->mult(lambda, v1[i]), v2[i]);
 		}
 	if (v3[n - 2] || v3[n - 1]) {
-		cout << "orthogonal::canonical_points_L4: v3[n - 2] || v3[n - 1]" << endl;
+		cout << "orthogonal::canonical_points_L4: "
+				"v3[n - 2] || v3[n - 1]" << endl;
 		exit(1);
 		}
 	cpt1 = rank_Sbar(v3, 1, m);
 	cpt2 = pt1;
 }
 
-void orthogonal::canonical_points_L5(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::canonical_points_L5(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	cpt1 = pt1;
 	cpt2 = pt2;
 }
 
-void orthogonal::canonical_points_L6(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::canonical_points_L6(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	canonical_points_L3(pt1, pt2, cpt1, cpt2);
 }
 
-void orthogonal::canonical_points_L7(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::canonical_points_L7(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	canonical_points_L4(pt1, pt2, cpt1, cpt2);
 }
 
-int orthogonal::hyperbolic_line_type_given_point_types(int pt1, int pt2, int pt1_type, int pt2_type)
+int orthogonal::hyperbolic_line_type_given_point_types(
+		int pt1, int pt2, int pt1_type, int pt2_type)
 {
 	if (pt1_type == 1) {
 		if (pt2_type == 1) {
@@ -3535,7 +3717,8 @@ int orthogonal::hyperbolic_line_type_given_point_types(int pt1, int pt2, int pt1
 			return 7;
 			}
 		}
-	cout << "orthogonal::hyperbolic_line_type_given_point_types illegal combination" << endl;
+	cout << "orthogonal::hyperbolic_line_type_given_point_types "
+			"illegal combination" << endl;
 	cout << "pt1_type = " << pt1_type << endl;
 	cout << "pt2_type = " << pt2_type << endl;
 	exit(1);
@@ -3573,36 +3756,44 @@ int orthogonal::hyperbolic_decide_P3(int pt1, int pt2)
 		}
 }
 
-int orthogonal::find_root_hyperbolic(int rk2, int m, int verbose_level)
+int orthogonal::find_root_hyperbolic(
+		int rk2, int m, int verbose_level)
 // m = Witt index
 {
 	int f_v = (verbose_level >= 1);
 	int root, u, v;
 
 	if (f_v) {
-		cout << "find_root_hyperbolic rk2=" << rk2 << " m=" << m << endl;
+		cout << "find_root_hyperbolic "
+				"rk2=" << rk2 << " m=" << m << endl;
 		}
 	if (rk2 == 0) {
-		cout << "find_root_hyperbolic: rk2 must not be 0" << endl;
+		cout << "find_root_hyperbolic: "
+				"rk2 must not be 0" << endl;
 		exit(1);
 		}
 	if (m == 1) {
-		cout << "find_root_hyperbolic: m must not be 1" << endl;
+		cout << "find_root_hyperbolic: "
+				"m must not be 1" << endl;
 		exit(1);
 		}
-	find_root_hyperbolic_xyz(rk2, m, find_root_x, find_root_y, find_root_z, verbose_level);
+	find_root_hyperbolic_xyz(rk2, m,
+			find_root_x, find_root_y, find_root_z,
+			verbose_level);
 	if (f_v) {
 		cout << "find_root_hyperbolic root=" << endl;
 		int_vec_print(cout, find_root_z, 2 * m);
 		cout << endl;
 		}
 	
-	u = evaluate_hyperbolic_bilinear_form(find_root_z, find_root_x, 1, m);
+	u = evaluate_hyperbolic_bilinear_form(
+			find_root_z, find_root_x, 1, m);
 	if (u == 0) {
 		cout << "find_root_hyperbolic u=" << u << endl;
 		exit(1);
 		}
-	v = evaluate_hyperbolic_bilinear_form(find_root_z, find_root_y, 1, m);
+	v = evaluate_hyperbolic_bilinear_form(
+			find_root_z, find_root_y, 1, m);
 	if (v == 0) {
 		cout << "find_root_hyperbolic v=" << v << endl;
 		exit(1);
@@ -3614,7 +3805,9 @@ int orthogonal::find_root_hyperbolic(int rk2, int m, int verbose_level)
 	return root;
 }
 
-void orthogonal::find_root_hyperbolic_xyz(int rk2, int m, int *x, int *y, int *z, int verbose_level)
+void orthogonal::find_root_hyperbolic_xyz(
+		int rk2, int m, int *x, int *y, int *z,
+		int verbose_level)
 // m = Witt index
 {
 	int f_v = (verbose_level >= 1);
@@ -3624,7 +3817,8 @@ void orthogonal::find_root_hyperbolic_xyz(int rk2, int m, int *x, int *y, int *z
 	int y2_minus_y3, minus_y1, y3_minus_y2, a, a2;
 
 	if (f_v) {
-		cout << "orthogonal::find_root_hyperbolic_xyz rk2=" << rk2 << " m=" << m << endl;
+		cout << "orthogonal::find_root_hyperbolic_xyz "
+				"rk2=" << rk2 << " m=" << m << endl;
 		}
 	for (i = 0; i < d; i++) {
 		x[i] = 0;
@@ -3786,7 +3980,8 @@ void orthogonal::find_root_hyperbolic_xyz(int rk2, int m, int *x, int *y, int *z
 				}
 			return;
 			}
-		cout << "find_root_hyperbolic_xyz error neither y2 nor y3 is zero" << endl;
+		cout << "find_root_hyperbolic_xyz error "
+				"neither y2 nor y3 is zero" << endl;
 		exit(1);
 		}
 	if (f_vv) {
@@ -3814,7 +4009,8 @@ void orthogonal::find_root_hyperbolic_xyz(int rk2, int m, int *x, int *y, int *z
 		}
 }
 
-int orthogonal::evaluate_hyperbolic_quadratic_form(int *v, int stride, int m)
+int orthogonal::evaluate_hyperbolic_quadratic_form(
+		int *v, int stride, int m)
 {
 	int alpha = 0, beta, i;
 	
@@ -3825,7 +4021,8 @@ int orthogonal::evaluate_hyperbolic_quadratic_form(int *v, int stride, int m)
 	return alpha;
 }
 
-int orthogonal::evaluate_hyperbolic_bilinear_form(int *u, int *v, int stride, int m)
+int orthogonal::evaluate_hyperbolic_bilinear_form(
+		int *u, int *v, int stride, int m)
 {
 	int alpha = 0, beta1, beta2, i;
 	
@@ -3840,22 +4037,25 @@ int orthogonal::evaluate_hyperbolic_bilinear_form(int *u, int *v, int stride, in
 
 
 
-// ####################################################################################
+// #############################################################################
 // orthogonal_parabolic.C:
-// ####################################################################################
+// #############################################################################
 
-//##################################################################################
+//##############################################################################
 // ranking / unranking points according to the partition:
-//##################################################################################
+//##############################################################################
 
-int orthogonal::parabolic_type_and_index_to_point_rk(int type, int index, int verbose_level)
+int orthogonal::parabolic_type_and_index_to_point_rk(
+		int type, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int rk;
 	
 	if (f_v) {
-		cout << "parabolic_type_and_index_to_point_rk type=" << type << " index=" << index << " epsilon=" << epsilon << " n=" << n << endl;
+		cout << "parabolic_type_and_index_to_point_rk "
+			"type=" << type << " index=" << index
+			<< " epsilon=" << epsilon << " n=" << n << endl;
 		}
 	if (type == 3) {
 		int field, sub_index, len;
@@ -3865,14 +4065,17 @@ int orthogonal::parabolic_type_and_index_to_point_rk(int type, int index, int ve
 		sub_index = index % len;
 		field++;
 		if (f_vv) {
-			cout << "field=" << field << " sub_index=" << sub_index << endl;
+			cout << "field=" << field
+					<< " sub_index=" << sub_index << endl;
 			}
 		subspace->unrank_point(v_tmp2, 1, sub_index, verbose_level - 1);
 		v_tmp2[n - 2] = 0;
 		v_tmp2[n - 1] = field;
 		rk = rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+			cout << "parabolic_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index
+				<< " rk=" << rk << endl;
 			}
 		return rk;
 		}
@@ -3891,28 +4094,36 @@ int orthogonal::parabolic_type_and_index_to_point_rk(int type, int index, int ve
 		v_tmp2[n - 1] = 0;
 		rk = rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+			cout << "parabolic_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index
+				<< " rk=" << rk << endl;
 			}
 		return rk;
 		}
 	else if (type == 5) {
 		if (f_v) {
-			cout << "parabolic_type_and_index_to_point_rk type=" << type << " index=" << index << endl;
-			cout << "parabolic_type_and_index_to_point_rk before subspace->unrank_point" << endl;
+			cout << "parabolic_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index << endl;
+			cout << "parabolic_type_and_index_to_point_rk "
+				"before subspace->unrank_point" << endl;
 			}
 		if (subspace == NULL) {
-			cout << "parabolic_type_and_index_to_point_rk subspace == NULL" << endl;
+			cout << "parabolic_type_and_index_to_point_rk "
+				"subspace == NULL" << endl;
 			exit(1);
 			}
 		subspace->unrank_point(v_tmp2, 1, index, verbose_level /*- 1*/);
 		if (f_v) {
-			cout << "parabolic_type_and_index_to_point_rk after subspace->unrank_point" << endl;
+			cout << "parabolic_type_and_index_to_point_rk "
+					"after subspace->unrank_point" << endl;
 			}
 		v_tmp2[n - 2] = 0;
 		v_tmp2[n - 1] = 0;
 		rk = rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+			cout << "parabolic_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index
+				<< " rk=" << rk << endl;
 			}
 		return rk;
 		}
@@ -3920,12 +4131,15 @@ int orthogonal::parabolic_type_and_index_to_point_rk(int type, int index, int ve
 		if (index < 1) {
 			rk = pt_Q;
 			if (f_v) {
-				cout << "parabolic_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+				cout << "parabolic_type_and_index_to_point_rk "
+					"type=" << type << " index=" << index
+					<< " rk=" << rk << endl;
 				}
 			return rk;
 			}
 		else {
-			cout << "error in parabolic_P3to7_type_and_index_to_point_rk, illegal index" << endl;
+			cout << "error in parabolic_P3to7_type_and_index_to_point_rk, "
+					"illegal index" << endl;
 			exit(1);
 			}
 		}
@@ -3933,39 +4147,48 @@ int orthogonal::parabolic_type_and_index_to_point_rk(int type, int index, int ve
 		if (index < 1) {
 			rk = pt_P;
 			if (f_v) {
-				cout << "parabolic_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+				cout << "parabolic_type_and_index_to_point_rk "
+					"type=" << type << " index=" << index
+					<< " rk=" << rk << endl;
 				}
 			return rk;
 			}
 		else {
-			cout << "error in parabolic_P3to7_type_and_index_to_point_rk, illegal index" << endl;
+			cout << "error in parabolic_P3to7_type_and_index_to_point_rk, "
+				"illegal index" << endl;
 			exit(1);
 			}
 		}
 	else {
 		if (f_even) {
-			return parabolic_even_type_and_index_to_point_rk(type, index, verbose_level);
+			return parabolic_even_type_and_index_to_point_rk(
+					type, index, verbose_level);
 			}
 		else {
-			return parabolic_odd_type_and_index_to_point_rk(type, index, verbose_level);
+			return parabolic_odd_type_and_index_to_point_rk(
+					type, index, verbose_level);
 			}
 		}
 }
 
-int orthogonal::parabolic_even_type_and_index_to_point_rk(int type, int index, int verbose_level)
+int orthogonal::parabolic_even_type_and_index_to_point_rk(
+		int type, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int rk;
 	
 	if (f_v) {
-		cout << "parabolic_even_type_and_index_to_point_rk type=" << type << " index=" << index << endl;
+		cout << "parabolic_even_type_and_index_to_point_rk "
+			"type=" << type << " index=" << index << endl;
 		}	
 	if (type == 1) {
 		parabolic_even_type1_index_to_point(index, v_tmp2);
 		rk = rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_even_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+			cout << "parabolic_even_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index
+				<< " rk=" << rk << endl;
 			}
 		return rk;
 		}
@@ -3973,11 +4196,14 @@ int orthogonal::parabolic_even_type_and_index_to_point_rk(int type, int index, i
 		parabolic_even_type2_index_to_point(index, v_tmp2);
 		rk = rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_even_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+			cout << "parabolic_even_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index
+				<< " rk=" << rk << endl;
 			}
 		return rk;
 		}
-	cout << "error in parabolic_even_type_and_index_to_point_rk illegal type " << type << endl;
+	cout << "error in parabolic_even_type_and_index_to_point_rk "
+			"illegal type " << type << endl;
 	exit(1);
 }
 
@@ -3986,7 +4212,8 @@ void orthogonal::parabolic_even_type1_index_to_point(int index, int *v)
 	int a, b;
 	
 	if (index >= p1) {
-		cout << "error in parabolic_even_type1_index_to_point, index >= p1" << endl;
+		cout << "error in parabolic_even_type1_index_to_point, "
+				"index >= p1" << endl;
 		exit(1);
 		}
 	zero_vector(v + 1, 1, 2 * (m - 1));
@@ -3997,9 +4224,11 @@ void orthogonal::parabolic_even_type1_index_to_point(int index, int *v)
 	v[1 + 2 * (m - 1) + 1] = b;
 }
 
-void orthogonal::parabolic_even_type2_index_to_point(int index, int *v)
+void orthogonal::parabolic_even_type2_index_to_point(
+		int index, int *v)
 {
-	int a, b, c, d, l, ll, lll, field1, field2, sub_index, sub_sub_index;
+	int a, b, c, d, l, ll, lll, field1, field2;
+	int sub_index, sub_sub_index;
 	
 	l = (q - 1) * N1_mm1;
 	if (index < l) {
@@ -4042,7 +4271,8 @@ void orthogonal::parabolic_even_type2_index_to_point(int index, int *v)
 		sub_index = index % ll;
 		field2 = sub_index / N1_mm1;
 		sub_sub_index = sub_index % N1_mm1;
-		//cout << "field1=" << field1 << " field2=" << field2 << " sub_sub_index=" << sub_sub_index << endl;
+		//cout << "field1=" << field1 << " field2=" << field2
+		//<< " sub_sub_index=" << sub_sub_index << endl;
 		v[0] = 1;
 		unrank_N1(v + 1, 1, m - 1, sub_sub_index);
 		a = 2 + field1;
@@ -4055,19 +4285,22 @@ void orthogonal::parabolic_even_type2_index_to_point(int index, int *v)
 		return;
 		}
 	else {
-		cout << "error in parabolic_even_type2_index_to_point illegal index" << endl;
+		cout << "error in parabolic_even_type2_index_to_point "
+				"illegal index" << endl;
 		exit(1);
 		}		
 }
 
-int orthogonal::parabolic_odd_type_and_index_to_point_rk(int type, int index, int verbose_level)
+int orthogonal::parabolic_odd_type_and_index_to_point_rk(
+		int type, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int rk;
 	
 	if (f_v) {
-		cout << "parabolic_odd_type_and_index_to_point_rk type=" << type << " index=" << index << endl;
+		cout << "parabolic_odd_type_and_index_to_point_rk "
+			"type=" << type << " index=" << index << endl;
 		}	
 	if (type == 1) {
 		parabolic_odd_type1_index_to_point(index, v_tmp2, verbose_level);
@@ -4078,7 +4311,9 @@ int orthogonal::parabolic_odd_type_and_index_to_point_rk(int type, int index, in
 			}
 		rk = rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_odd_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+			cout << "parabolic_odd_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index
+				<< " rk=" << rk << endl;
 			}
 		return rk;
 		}
@@ -4086,24 +4321,30 @@ int orthogonal::parabolic_odd_type_and_index_to_point_rk(int type, int index, in
 		parabolic_odd_type2_index_to_point(index, v_tmp2, verbose_level);
 		rk = rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_odd_type_and_index_to_point_rk type=" << type << " index=" << index << " rk=" << rk << endl;
+			cout << "parabolic_odd_type_and_index_to_point_rk "
+				"type=" << type << " index=" << index
+				<< " rk=" << rk << endl;
 			}
 		return rk;
 		}
-	cout << "error in parabolic_odd_type_and_index_to_point_rk illegal type " << type << endl;
+	cout << "error in parabolic_odd_type_and_index_to_point_rk "
+			"illegal type " << type << endl;
 	exit(1);
 }
 
-void orthogonal::parabolic_odd_type1_index_to_point(int index, int *v, int verbose_level)
+void orthogonal::parabolic_odd_type1_index_to_point(
+		int index, int *v, int verbose_level)
 {
 	int a, b, c, l, ll, ms_idx, field1, field2, sub_index, sub_sub_index;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "parabolic_odd_type1_index_to_point m = " << m << " index = " << index << endl;
+		cout << "parabolic_odd_type1_index_to_point "
+				"m = " << m << " index = " << index << endl;
 		}
 	if (index >= p1) {
-		cout << "error in parabolic_odd_type1_index_to_point, index >= p1" << endl;
+		cout << "error in parabolic_odd_type1_index_to_point, "
+				"index >= p1" << endl;
 		exit(1);
 		}
 	l = (q - 1) / 2 * N1_mm1;
@@ -4112,7 +4353,9 @@ void orthogonal::parabolic_odd_type1_index_to_point(int index, int *v, int verbo
 		sub_index = index % N1_mm1;
 		field1 = minus_squares[ms_idx];
 		if (f_v) {
-			cout << "case a) ms_idx = " << ms_idx << " sub_index=" << sub_index << " field1 = " << field1 << endl;
+			cout << "case a) ms_idx = " << ms_idx
+				<< " sub_index=" << sub_index
+				<< " field1 = " << field1 << endl;
 			}
 		v[0] = 0;
 		v[1 + 2 * (m - 1) + 0] = field1;
@@ -4128,7 +4371,8 @@ void orthogonal::parabolic_odd_type1_index_to_point(int index, int *v, int verbo
 		field1 = index / S_mm1;
 		sub_index = index % S_mm1;
 		if (f_v) {
-			cout << "case b) sub_index=" << sub_index << " field1 = " << field1 << endl;
+			cout << "case b) sub_index=" << sub_index
+					<< " field1 = " << field1 << endl;
 			}
 		if (sub_index == 0) {
 			a = 1 + field1;
@@ -4143,7 +4387,8 @@ void orthogonal::parabolic_odd_type1_index_to_point(int index, int *v, int verbo
 			sub_index--;
 			field2 = sub_index / Sbar_mm1;
 			sub_sub_index = sub_index % Sbar_mm1;
-			//cout << "field1=" << field1 << " field2=" << field2 << " sub_sub_index=" << sub_sub_index << endl;
+			//cout << "field1=" << field1 << " field2=" << field2
+			//<< " sub_sub_index=" << sub_sub_index << endl;
 			a = 1 + field1;
 			b = F->mult(F->inverse(a), F->negate(1));
 			v[0] = 1;
@@ -4183,21 +4428,25 @@ void orthogonal::parabolic_odd_type1_index_to_point(int index, int *v, int verbo
 		return;
 		}
 	else {
-		cout << "error in parabolic_odd_type1_index_to_point illegal index" << endl;
+		cout << "error in parabolic_odd_type1_index_to_point "
+				"illegal index" << endl;
 		exit(1);
 		}
 }
 
-void orthogonal::parabolic_odd_type2_index_to_point(int index, int *v, int verbose_level)
+void orthogonal::parabolic_odd_type2_index_to_point(
+		int index, int *v, int verbose_level)
 {
 	int a, b, c, l, ll, ms_idx, field1, field2, sub_index, sub_sub_index;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "parabolic_odd_type2_index_to_point index = " << index << endl;
+		cout << "parabolic_odd_type2_index_to_point "
+				"index = " << index << endl;
 		}
 	if (index >= p1) {
-		cout << "error in parabolic_odd_type2_index_to_point, index >= p1" << endl;
+		cout << "error in parabolic_odd_type2_index_to_point, "
+				"index >= p1" << endl;
 		exit(1);
 		}
 	l = (q - 1) / 2 * N1_mm1;
@@ -4206,7 +4455,9 @@ void orthogonal::parabolic_odd_type2_index_to_point(int index, int *v, int verbo
 		sub_index = index % N1_mm1;
 		field1 = minus_nonsquares[ms_idx];
 		if (f_v) {
-			cout << "case 1 ms_idx=" << ms_idx << " field1=" << field1 << " sub_index=" << sub_index << endl;
+			cout << "case 1 ms_idx=" << ms_idx
+					<< " field1=" << field1
+					<< " sub_index=" << sub_index << endl;
 			}
 		v[0] = 0;
 		v[1 + 2 * (m - 1) + 0] = field1;
@@ -4226,9 +4477,12 @@ void orthogonal::parabolic_odd_type2_index_to_point(int index, int *v, int verbo
 		sub_sub_index = sub_index % N1_mm1;
 		field1 = minus_nonsquares[ms_idx];
 		if (f_v) {
-			cout << "case 2 ms_idx=" << ms_idx << " field1=" << field1 << " field2=" << field2 << " sub_sub_index=" << sub_sub_index << endl;
+			cout << "case 2 ms_idx=" << ms_idx
+				<< " field1=" << field1 << " field2=" << field2
+				<< " sub_sub_index=" << sub_sub_index << endl;
 			}
-		//cout << "ms_idx=" << ms_idx << " field2=" << field2 << " sub_sub_index=" << sub_sub_index << endl;
+		//cout << "ms_idx=" << ms_idx << " field2=" << field2
+		//<< " sub_sub_index=" << sub_sub_index << endl;
 		a = 1 + field2;
 		b = F->mult(F->inverse(a), field1);
 		v[0] = 1;
@@ -4239,23 +4493,28 @@ void orthogonal::parabolic_odd_type2_index_to_point(int index, int *v, int verbo
 		change_form_value(v + 1, 1, m - 1, c);
 		return;
 		}
-	cout << "error in parabolic_odd_type2_index_to_point illegal index" << endl;
+	cout << "error in parabolic_odd_type2_index_to_point "
+			"illegal index" << endl;
 	exit(1);
 }
 
-void orthogonal::parabolic_point_rk_to_type_and_index(int rk, int &type, int &index, int verbose_level)
+void orthogonal::parabolic_point_rk_to_type_and_index(
+		int rk, int &type, int &index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "parabolic_point_rk_to_type_and_index rk = " << rk << endl;
+		cout << "parabolic_point_rk_to_type_and_index "
+				"rk = " << rk << endl;
 		}
 	if (rk == pt_Q) {
 		type = 6;
 		index = 0;
 		if (f_v) {
-			cout << "parabolic_point_rk_to_type_and_index rk = " << rk << " type = " << type << " index = " << index << endl;
+			cout << "parabolic_point_rk_to_type_and_index "
+					"rk = " << rk << " type = " << type
+					<< " index = " << index << endl;
 			}
 		return;
 		}
@@ -4263,7 +4522,9 @@ void orthogonal::parabolic_point_rk_to_type_and_index(int rk, int &type, int &in
 		type = 7;
 		index = 0;
 		if (f_v) {
-			cout << "parabolic_point_rk_to_type_and_index rk = " << rk << " type = " << type << " index = " << index << endl;
+			cout << "parabolic_point_rk_to_type_and_index "
+					"rk = " << rk << " type = " << type
+					<< " index = " << index << endl;
 			}
 		return;
 		}
@@ -4285,7 +4546,9 @@ void orthogonal::parabolic_point_rk_to_type_and_index(int rk, int &type, int &in
 			}
 		index = (field - 1) * len + sub_index;
 		if (f_v) {
-			cout << "parabolic_point_rk_to_type_and_index rk = " << rk << " type = " << type << " index = " << index << endl;
+			cout << "parabolic_point_rk_to_type_and_index rk = " << rk
+					<< " type = " << type
+					<< " index = " << index << endl;
 			}
 		return;
 		}
@@ -4301,7 +4564,9 @@ void orthogonal::parabolic_point_rk_to_type_and_index(int rk, int &type, int &in
 			}
 		index = (field - 1) * len + sub_index;
 		if (f_v) {
-			cout << "parabolic_point_rk_to_type_and_index rk = " << rk << " type = " << type << " index = " << index << endl;
+			cout << "parabolic_point_rk_to_type_and_index "
+					"rk = " << rk << " type = " << type
+					<< " index = " << index << endl;
 			}
 		return;
 		}
@@ -4309,25 +4574,32 @@ void orthogonal::parabolic_point_rk_to_type_and_index(int rk, int &type, int &in
 		type = 5;
 		index = subspace->rank_point(v_tmp2, 1, verbose_level - 1);
 		if (f_v) {
-			cout << "parabolic_point_rk_to_type_and_index rk = " << rk << " type = " << type << " index = " << index << endl;
+			cout << "parabolic_point_rk_to_type_and_index "
+					"rk = " << rk << " type = " << type
+					<< " index = " << index << endl;
 			}
 		return;
 		}
 	if (f_even) {
-		parabolic_even_point_rk_to_type_and_index(rk, type, index, verbose_level);
+		parabolic_even_point_rk_to_type_and_index(rk,
+				type, index, verbose_level);
 		}
 	else {
-		parabolic_odd_point_rk_to_type_and_index(rk, type, index, verbose_level);
+		parabolic_odd_point_rk_to_type_and_index(rk,
+				type, index, verbose_level);
 		}
 }
 
-void orthogonal::parabolic_even_point_rk_to_type_and_index(int rk, int &type, int &index, int verbose_level)
+void orthogonal::parabolic_even_point_rk_to_type_and_index(
+		int rk, int &type, int &index, int verbose_level)
 {
 	unrank_point(v_tmp2, 1, rk, verbose_level - 1);
-	parabolic_even_point_to_type_and_index(v_tmp2, type, index, verbose_level);
+	parabolic_even_point_to_type_and_index(v_tmp2,
+			type, index, verbose_level);
 }
 
-void orthogonal::parabolic_even_point_to_type_and_index(int *v, int &type, int &index, int verbose_level)
+void orthogonal::parabolic_even_point_to_type_and_index(
+		int *v, int &type, int &index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_start_with_one, value_middle, value_end, f_middle_is_zero;
@@ -4339,7 +4611,8 @@ void orthogonal::parabolic_even_point_to_type_and_index(int *v, int &type, int &
 		cout << endl;
 		}
 	if (v[0] != 0 && v[0] != 1) {
-		cout << "parabolic_even_point_to_type_and_index: error in unrank_point" << endl;
+		cout << "parabolic_even_point_to_type_and_index: "
+				"error in unrank_point" << endl;
 		exit(1);
 		}
 	parabolic_point_properties(v, 1, n, 
@@ -4350,15 +4623,23 @@ void orthogonal::parabolic_even_point_to_type_and_index(int *v, int &type, int &
 	else
 		f_middle_is_zero = FALSE;
 	if (f_v) {
-		cout << "parabolic_even_point_to_type_and_index: f_start_with_one=" << f_start_with_one << " value_middle=" << value_middle << " f_middle_is_zero=" << f_middle_is_zero << " value_end=" << value_end << endl;
+		cout << "parabolic_even_point_to_type_and_index: "
+				"f_start_with_one=" << f_start_with_one
+				<< " value_middle=" << value_middle
+				<< " f_middle_is_zero=" << f_middle_is_zero
+				<< " value_end=" << value_end << endl;
 		}
-	if (f_start_with_one && value_middle == 0 && f_middle_is_zero && value_end == 1) {
+	if (f_start_with_one &&
+			value_middle == 0 &&
+			f_middle_is_zero &&
+			value_end == 1) {
 		type = 1;
 		a = v[1 + 2 * (m - 1) + 0];
 		b = v[1 + 2 * (m - 1) + 1];
 		index = a - 1;
 		if (f_v) {
-			cout << "parabolic_even_point_to_type_and_index type = " << type << " index = " << index << endl;
+			cout << "parabolic_even_point_to_type_and_index "
+				"type = " << type << " index = " << index << endl;
 			}
 		return;
 		}
@@ -4373,7 +4654,8 @@ void orthogonal::parabolic_even_point_to_type_and_index(int *v, int &type, int &
 			field1 = a - 1;
 			index += field1 * N1_mm1 + sub_index;
 			if (f_v) {
-				cout << "parabolic_even_point_to_type_and_index type = " << type << " index = " << index << endl;
+				cout << "parabolic_even_point_to_type_and_index "
+					"type = " << type << " index = " << index << endl;
 				}
 			return;
 			}
@@ -4392,7 +4674,8 @@ void orthogonal::parabolic_even_point_to_type_and_index(int *v, int &type, int &
 			field1 = a - 1;
 			index += field1 * ll + sub_index;
 			if (f_v) {
-				cout << "parabolic_even_point_to_type_and_index type = " << type << " index = " << index << endl;
+				cout << "parabolic_even_point_to_type_and_index "
+					"type = " << type << " index = " << index << endl;
 				}
 			return;
 			}
@@ -4404,40 +4687,49 @@ void orthogonal::parabolic_even_point_to_type_and_index(int *v, int &type, int &
 		b = v[1 + 2 * (m - 1) + 0];
 		//c = v[1 + 2 * (m - 1) + 1];
 		if (a == 0 || a == 1) {
-			cout << "error in parabolic_even_point_to_type_and_index a == 0 || a == 1" << endl;
+			cout << "error in parabolic_even_point_to_type_and_index "
+					"a == 0 || a == 1" << endl;
 			exit(1);
 			}
 		if (b == 0) {
-			cout << "error in parabolic_even_point_to_type_and_index b == 0" << endl;
+			cout << "error in parabolic_even_point_to_type_and_index "
+					"b == 0" << endl;
 			exit(1);
 			}
 		field2 = b - 1;
 		field1 = a - 2;
-		//cout << "field1=" << field1 << " field2=" << field2 << " sub_sub_index=" << sub_sub_index << endl;
+		//cout << "field1=" << field1 << " field2=" << field2
+		//<< " sub_sub_index=" << sub_sub_index << endl;
 		sub_index = field2 * N1_mm1 + sub_sub_index;
 		ll = (q - 1) * N1_mm1;
 		index += field1 * ll + sub_index;
 		if (f_v) {
-			cout << "parabolic_even_point_to_type_and_index type = " << type << " index = " << index << endl;
+			cout << "parabolic_even_point_to_type_and_index "
+					"type = " << type << " index = " << index << endl;
 			}
 		return;
 		}
 	else {
-		cout << "error in parabolic_even_point_to_type_and_index, unknown type, type = " << type << endl;
+		cout << "error in parabolic_even_point_to_type_and_index, "
+				"unknown type, type = " << type << endl;
 		exit(1);
 		}
 }
 
-void orthogonal::parabolic_odd_point_rk_to_type_and_index(int rk, int &type, int &index, int verbose_level)
+void orthogonal::parabolic_odd_point_rk_to_type_and_index(
+		int rk, int &type, int &index, int verbose_level)
 {
 	unrank_point(v_tmp2, 1, rk, verbose_level - 1);
-	parabolic_odd_point_to_type_and_index(v_tmp2, type, index, verbose_level);
+	parabolic_odd_point_to_type_and_index(v_tmp2,
+			type, index, verbose_level);
 }
 
-void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &index, int verbose_level)
+void orthogonal::parabolic_odd_point_to_type_and_index(
+		int *v, int &type, int &index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_start_with_one, value_middle, value_end, f_middle_is_zero, f_end_value_is_minus_square;
+	int f_start_with_one, value_middle, value_end;
+	int f_middle_is_zero, f_end_value_is_minus_square;
 	int a, c, l, ll, ms_idx, field1, field2, sub_index, sub_sub_index;
 	
 	if (f_v) {
@@ -4446,13 +4738,16 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		cout << endl;
 		}
 	if (v[0] != 0 && v[0] != 1) {
-		cout << "parabolic_odd_point_to_type_and_index: error in unrank_point" << endl;
+		cout << "parabolic_odd_point_to_type_and_index: "
+				"error in unrank_point" << endl;
 		exit(1);
 		}
 	parabolic_point_properties(v, 1, n, 
 		f_start_with_one, value_middle, value_end, verbose_level);
 	if (f_v) {
-		cout << "f_start_with_one=" << f_start_with_one << " value_middle=" << value_middle << " value_end=" << value_end << endl;
+		cout << "f_start_with_one=" << f_start_with_one
+				<< " value_middle=" << value_middle
+				<< " value_end=" << value_end << endl;
 		}
 	if (value_middle == 0) {
 		f_middle_is_zero = is_zero_vector(v + 1, 1, n - 3);
@@ -4465,7 +4760,8 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		}
 	f_end_value_is_minus_square = f_is_minus_square[value_end];
 	if (f_v) {
-		cout << "f_end_value_is_minus_square=" << f_end_value_is_minus_square << endl;
+		cout << "f_end_value_is_minus_square="
+				<< f_end_value_is_minus_square << endl;
 		}
 
 	if (f_end_value_is_minus_square) {
@@ -4475,14 +4771,16 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		if (!f_start_with_one) {
 			ms_idx = index_minus_square[value_end];
 			if (ms_idx == -1) {
-				cout << "parabolic_odd_point_to_type_and_index: ms_idx == -1" << endl;
+				cout << "parabolic_odd_point_to_type_and_index: "
+						"ms_idx == -1" << endl;
 				}
 			c = F->negate(value_end);
 			change_form_value(v + 1, 1, m - 1, F->inverse(c));
 			sub_index = rank_N1(v + 1, 1, m - 1);
 			index += ms_idx * N1_mm1 + sub_index;
 			if (f_v) {
-				cout << "parabolic_odd_point_to_type_and_index type = " << type << " index = " << index << endl;
+				cout << "parabolic_odd_point_to_type_and_index "
+					"type = " << type << " index = " << index << endl;
 				}
 			return;
 			}
@@ -4495,7 +4793,8 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 				sub_index = 0;
 				index += field1 * S_mm1 + sub_index;
 				if (f_v) {
-					cout << "parabolic_odd_point_to_type_and_index type = " << type << " index = " << index << endl;
+					cout << "parabolic_odd_point_to_type_and_index "
+						"type = " << type << " index = " << index << endl;
 					}
 				return;
 				}
@@ -4507,11 +4806,13 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 				scalar_multiply_vector(v + 1, 1, n - 3, F->inverse(field2));
 				sub_sub_index = rank_Sbar(v + 1, 1, m - 1);
 				field2--;
-				//cout << "field1=" << field1 << " field2=" << field2 << " sub_sub_index=" << sub_sub_index << endl;
+				//cout << "field1=" << field1 << " field2=" << field2
+				//<< " sub_sub_index=" << sub_sub_index << endl;
 				sub_index = field2 * Sbar_mm1 + sub_sub_index + 1;
 				index += field1 * S_mm1 + sub_index;
 				if (f_v) {
-					cout << "parabolic_odd_point_to_type_and_index type = " << type << " index = " << index << endl;
+					cout << "parabolic_odd_point_to_type_and_index "
+							"type = " << type << " index = " << index << endl;
 					}
 				return;
 				}
@@ -4521,7 +4822,8 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		ll = (q - 1) * N1_mm1;
 		ms_idx = index_minus_square_without[value_end];
 		if (ms_idx == -1) {
-			cout << "parabolic_odd_point_to_type_and_index: ms_idx == -1" << endl;
+			cout << "parabolic_odd_point_to_type_and_index: "
+					"ms_idx == -1" << endl;
 			}
 		field1 = minus_squares_without[ms_idx];
 		c = F->negate(F->add(1, field1));
@@ -4532,7 +4834,8 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		sub_index = field2 * N1_mm1 + sub_sub_index;
 		index += ms_idx * ll + sub_index;
 		if (f_v) {
-			cout << "parabolic_odd_point_to_type_and_index type = " << type << " index = " << index << endl;
+			cout << "parabolic_odd_point_to_type_and_index "
+					"type = " << type << " index = " << index << endl;
 			}
 		return;
 		}
@@ -4543,14 +4846,16 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		if (!f_start_with_one) {
 			ms_idx = index_minus_nonsquare[value_end];
 			if (ms_idx == -1) {
-				cout << "parabolic_odd_point_to_type_and_index: ms_idx == -1" << endl;
+				cout << "parabolic_odd_point_to_type_and_index: "
+						"ms_idx == -1" << endl;
 				}
 			c = F->negate(value_end);
 			change_form_value(v + 1, 1, m - 1, F->inverse(c));
 			sub_index = rank_N1(v + 1, 1, m - 1);
 			index += ms_idx * N1_mm1 + sub_index;
 			if (f_v) {
-				cout << "parabolic_odd_point_to_type_and_index type = " << type << " index = " << index << endl;
+				cout << "parabolic_odd_point_to_type_and_index "
+						"type = " << type << " index = " << index << endl;
 				}
 			return;
 			}
@@ -4559,7 +4864,8 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		ll = (q - 1) * N1_mm1;
 		ms_idx = index_minus_nonsquare[value_end];
 		if (ms_idx == -1) {
-			cout << "parabolic_odd_point_to_type_and_index: ms_idx == -1" << endl;
+			cout << "parabolic_odd_point_to_type_and_index: "
+					"ms_idx == -1" << endl;
 			}
 		//field1 = minus_nonsquares[ms_idx];
 		//c = F->negate(F->add(1, field1));
@@ -4567,31 +4873,37 @@ void orthogonal::parabolic_odd_point_to_type_and_index(int *v, int &type, int &i
 		sub_sub_index = rank_N1(v + 1, 1, m - 1);
 		a = v[1 + 2 * (m - 1) + 0];
 		field2 = a - 1;
-		//cout << "ms_idx=" << ms_idx << " field2=" << field2 << " sub_sub_index=" << sub_sub_index << endl;
+		//cout << "ms_idx=" << ms_idx << " field2=" << field2
+		//<< " sub_sub_index=" << sub_sub_index << endl;
 		sub_index = field2 * N1_mm1 + sub_sub_index;
 		index += ms_idx * ll + sub_index;
 		if (f_v) {
-			cout << "parabolic_odd_point_to_type_and_index type = " << type << " index = " << index << endl;
+			cout << "parabolic_odd_point_to_type_and_index "
+					"type = " << type << " index = " << index << endl;
 			}
 		return;
 		}
-	cout << "error in parabolic_odd_point_to_type_and_index, unknown type, type = " << type << endl;
+	cout << "error in parabolic_odd_point_to_type_and_index, "
+			"unknown type, type = " << type << endl;
 	exit(1);
 }
 
-//##################################################################################
+//##############################################################################
 // ranking / unranking neighbors of the favorite point:
-//##################################################################################
+//##############################################################################
 
-void orthogonal::parabolic_neighbor51_odd_unrank(int index, int *v, int verbose_level)
+void orthogonal::parabolic_neighbor51_odd_unrank(
+		int index, int *v, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "parabolic_neighbor51_odd_unrank index=" << index << endl;
+		cout << "parabolic_neighbor51_odd_unrank "
+				"index=" << index << endl;
 		}
-	subspace->parabolic_odd_type1_index_to_point(index, subspace->v_tmp2, verbose_level);
+	subspace->parabolic_odd_type1_index_to_point(
+			index, subspace->v_tmp2, verbose_level);
 	v[0] = subspace->v_tmp2[0];
 	v[1] = 0;
 	v[2] = 0;
@@ -4605,7 +4917,8 @@ void orthogonal::parabolic_neighbor51_odd_unrank(int index, int *v, int verbose_
 		}
 }
 
-int orthogonal::parabolic_neighbor51_odd_rank(int *v, int verbose_level)
+int orthogonal::parabolic_neighbor51_odd_rank(
+		int *v, int verbose_level)
 {
 	int i, type, index;
 	int f_v = (verbose_level >= 1);
@@ -4629,7 +4942,8 @@ int orthogonal::parabolic_neighbor51_odd_rank(int *v, int verbose_level)
 		int_vec_print(cout, subspace->v_tmp2, subspace->n);
 		cout << endl;
 		}
-	subspace->parabolic_odd_point_to_type_and_index(subspace->v_tmp2, type, index, verbose_level);
+	subspace->parabolic_odd_point_to_type_and_index(
+			subspace->v_tmp2, type, index, verbose_level);
 	if (type != 1) {
 		cout << "parabolic_neighbor51_odd_rank type != 1" << endl;
 		exit(1);
@@ -4638,7 +4952,8 @@ int orthogonal::parabolic_neighbor51_odd_rank(int *v, int verbose_level)
 }
 
 
-void orthogonal::parabolic_neighbor52_odd_unrank(int index, int *v, int verbose_level)
+void orthogonal::parabolic_neighbor52_odd_unrank(
+		int index, int *v, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -4646,7 +4961,8 @@ void orthogonal::parabolic_neighbor52_odd_unrank(int index, int *v, int verbose_
 	if (f_v) {
 		cout << "parabolic_neighbor52_odd_unrank index=" << index << endl;
 		}
-	subspace->parabolic_odd_type2_index_to_point(index, subspace->v_tmp2, verbose_level);
+	subspace->parabolic_odd_type2_index_to_point(
+			index, subspace->v_tmp2, verbose_level);
 	v[0] = subspace->v_tmp2[0];
 	v[1] = 0;
 	v[2] = 0;
@@ -4679,7 +4995,8 @@ int orthogonal::parabolic_neighbor52_odd_rank(int *v, int verbose_level)
 		subspace->v_tmp2[i] = v[2 + i];
 		}
 	subspace->normalize_point(subspace->v_tmp2, 1);
-	subspace->parabolic_odd_point_to_type_and_index(subspace->v_tmp2, type, index, verbose_level);
+	subspace->parabolic_odd_point_to_type_and_index(
+			subspace->v_tmp2, type, index, verbose_level);
 	if (type != 2) {
 		cout << "parabolic_neighbor52_odd_rank type != 2" << endl;
 		exit(1);
@@ -4687,7 +5004,8 @@ int orthogonal::parabolic_neighbor52_odd_rank(int *v, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_neighbor52_even_unrank(int index, int *v, int verbose_level)
+void orthogonal::parabolic_neighbor52_even_unrank(
+		int index, int *v, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -4728,7 +5046,8 @@ int orthogonal::parabolic_neighbor52_even_rank(int *v, int verbose_level)
 		subspace->v_tmp2[i] = v[2 + i];
 		}
 	subspace->normalize_point(subspace->v_tmp2, 1);
-	subspace->parabolic_even_point_to_type_and_index(subspace->v_tmp2, type, index, verbose_level);
+	subspace->parabolic_even_point_to_type_and_index(
+			subspace->v_tmp2, type, index, verbose_level);
 	if (type != 2) {
 		cout << "parabolic_neighbor52_even_rank type != 1" << endl;
 		exit(1);
@@ -4736,13 +5055,16 @@ int orthogonal::parabolic_neighbor52_even_rank(int *v, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_neighbor34_unrank(int index, int *v, int verbose_level)
+void orthogonal::parabolic_neighbor34_unrank(
+		int index, int *v, int verbose_level)
 {
-	int len, sub_len, a, av, b, sub_index, sub_sub_index, multiplyer;
+	int len, sub_len, a, av, b, sub_index;
+	int sub_sub_index, multiplyer;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "parabolic_neighbor34_unrank index=" << index << endl;
+		cout << "parabolic_neighbor34_unrank "
+				"index=" << index << endl;
 		}
 	len = S_mm2;
 	if (index < len) {
@@ -4766,7 +5088,8 @@ void orthogonal::parabolic_neighbor34_unrank(int index, int *v, int verbose_leve
 		sub_index = index % N1_mm2;
 		a++;
 		if (f_v) {
-			cout << "case 2 a=" << a << " sub_index=" << sub_index << endl;
+			cout << "case 2 a=" << a
+					<< " sub_index=" << sub_index << endl;
 			}
 		v[0] = 0;
 		v[n - 2] = 1;
@@ -4785,7 +5108,8 @@ void orthogonal::parabolic_neighbor34_unrank(int index, int *v, int verbose_leve
 		sub_index = index % N1_mm2;
 		a++;
 		if (f_v) {
-			cout << "case 3 a=" << a << " sub_index=" << sub_index << endl;
+			cout << "case 3 a=" << a
+					<< " sub_index=" << sub_index << endl;
 			}
 		v[0] = 1;
 		v[1] = 0;
@@ -4804,7 +5128,8 @@ void orthogonal::parabolic_neighbor34_unrank(int index, int *v, int verbose_leve
 		sub_index = index % S_mm2;
 		a++;
 		if (f_v) {
-			cout << "case 4 a=" << a << " sub_index=" << sub_index << endl;
+			cout << "case 4 a=" << a
+					<< " sub_index=" << sub_index << endl;
 			}
 		v[0] = 1;
 		v[1] = F->inverse(a);
@@ -4830,7 +5155,8 @@ void orthogonal::parabolic_neighbor34_unrank(int index, int *v, int verbose_leve
 			b++;
 			}
 		if (f_v) {
-			cout << "case 5 a=" << a << " b=" << b << " sub_sub_index=" << sub_sub_index << endl;
+			cout << "case 5 a=" << a << " b=" << b
+					<< " sub_sub_index=" << sub_sub_index << endl;
 			}
 		v[0] = 1;
 		v[1] = b;
@@ -4885,7 +5211,8 @@ int orthogonal::parabolic_neighbor34_rank(int *v, int verbose_level)
 
 	if (v[0] == 0) {
 		if (v[2] != F->negate(1)) {
-			cout << "parabolic_neighbor34_rank v[2] != F->negate(1)" << endl;
+			cout << "parabolic_neighbor34_rank "
+					"v[2] != F->negate(1)" << endl;
 			exit(1);
 			}
 		a = v[1];
@@ -4902,7 +5229,8 @@ int orthogonal::parabolic_neighbor34_rank(int *v, int verbose_level)
 			change_form_value(v + 3, 1, m - 2, F->inverse(a));
 			sub_index = rank_N1(v + 3, 1, m - 2);
 			if (f_v) {
-				cout << "case 2 a=" << a << " sub_index=" << sub_index << endl;
+				cout << "case 2 a=" << a
+						<< " sub_index=" << sub_index << endl;
 				}
 			index = (a - 1) * N1_mm2 + sub_index;
 			index += len1;
@@ -4916,7 +5244,8 @@ int orthogonal::parabolic_neighbor34_rank(int *v, int verbose_level)
 			}
 		a = v[n - 2];
 		if (v[2] != F->negate(a)) {
-			cout << "parabolic_neighbor34_rank v[2] != F->negate(a)" << endl;
+			cout << "parabolic_neighbor34_rank "
+					"v[2] != F->negate(a)" << endl;
 			exit(1);
 			}
 		if (v[1] == 0) {
@@ -4924,7 +5253,8 @@ int orthogonal::parabolic_neighbor34_rank(int *v, int verbose_level)
 			change_form_value(v + 3, 1, m - 2, F->negate(1));
 			sub_index = rank_N1(v + 3, 1, m - 2);
 			if (f_v) {
-				cout << "case 3 a=" << a << " sub_index=" << sub_index << endl;
+				cout << "case 3 a=" << a
+						<< " sub_index=" << sub_index << endl;
 				}
 			index = (a - 1) * N1_mm2 + sub_index;
 			index += len1;
@@ -4937,7 +5267,8 @@ int orthogonal::parabolic_neighbor34_rank(int *v, int verbose_level)
 				// case 4:
 				sub_index = rank_S(v + 3, 1, m - 2);
 				if (f_v) {
-					cout << "case 4 a=" << a << " sub_index=" << sub_index << endl;
+					cout << "case 4 a=" << a
+							<< " sub_index=" << sub_index << endl;
 					}
 				index = (a - 1) * S_mm2 + sub_index;
 				index += len1;
@@ -4960,7 +5291,8 @@ int orthogonal::parabolic_neighbor34_rank(int *v, int verbose_level)
 				change_form_value(v + 3, 1, m - 2, F->inverse(multiplyer));
 				sub_sub_index = rank_N1(v + 3, 1, m - 2);
 				if (f_v) {
-					cout << "case 5 a=" << a << " b=" << b << " sub_sub_index=" << sub_sub_index << endl;
+					cout << "case 5 a=" << a << " b=" << b
+							<< " sub_sub_index=" << sub_sub_index << endl;
 					}
 				if (b >= av)
 					b--;
@@ -4986,7 +5318,8 @@ finish:
 }
 
 
-void orthogonal::parabolic_neighbor53_unrank(int index, int *v, int verbose_level)
+void orthogonal::parabolic_neighbor53_unrank(
+		int index, int *v, int verbose_level)
 {
 	int a, sub_index;
 	int f_v = (verbose_level >= 1);
@@ -5003,7 +5336,8 @@ void orthogonal::parabolic_neighbor53_unrank(int index, int *v, int verbose_leve
 		sub_index = index % Sbar_mm2;
 		a++;
 		if (f_v) {
-			cout << "case 1 index=" << index << " a=" << a << " sub_index=" << sub_index << endl;
+			cout << "case 1 index=" << index << " a=" << a
+					<< " sub_index=" << sub_index << endl;
 			}
 		
 		v[0] = 0;
@@ -5021,7 +5355,8 @@ void orthogonal::parabolic_neighbor53_unrank(int index, int *v, int verbose_leve
 		sub_index = index % N1_mm2;
 		a++;
 		if (f_v) {
-			cout << "case 2 index=" << index << " a=" << a << " sub_index=" << sub_index << endl;
+			cout << "case 2 index=" << index << " a=" << a
+					<< " sub_index=" << sub_index << endl;
 			}
 		v[0] = 1;
 		v[1] = 0;
@@ -5092,7 +5427,8 @@ finish:
 	return index;
 }
 
-void orthogonal::parabolic_neighbor54_unrank(int index, int *v, int verbose_level)
+void orthogonal::parabolic_neighbor54_unrank(
+		int index, int *v, int verbose_level)
 {
 	int a, sub_index;
 	int f_v = (verbose_level >= 1);
@@ -5109,7 +5445,9 @@ void orthogonal::parabolic_neighbor54_unrank(int index, int *v, int verbose_leve
 		sub_index = index % Sbar_mm2;
 		a++;
 		if (f_v) {
-			cout << "case 1 index=" << index << " a=" << a << " sub_index=" << sub_index << endl;
+			cout << "case 1 index=" << index
+					<< " a=" << a
+					<< " sub_index=" << sub_index << endl;
 			}
 		
 		v[0] = 0;
@@ -5127,7 +5465,9 @@ void orthogonal::parabolic_neighbor54_unrank(int index, int *v, int verbose_leve
 		sub_index = index % N1_mm2;
 		a++;
 		if (f_v) {
-			cout << "case 2 index=" << index << " a=" << a << " sub_index=" << sub_index << endl;
+			cout << "case 2 index=" << index
+					<< " a=" << a
+					<< " sub_index=" << sub_index << endl;
 			}
 		v[0] = 1;
 		v[1] = 0;
@@ -5204,11 +5544,12 @@ finish:
 }
 
 
-//##################################################################################
+//##############################################################################
 // ranking / unranking lines:
-//##################################################################################
+//##############################################################################
 
-void orthogonal::parabolic_unrank_line(int &p1, int &p2, int rk, int verbose_level)
+void orthogonal::parabolic_unrank_line(
+		int &p1, int &p2, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -5216,7 +5557,8 @@ void orthogonal::parabolic_unrank_line(int &p1, int &p2, int rk, int verbose_lev
 		cout << "parabolic_unrank_line rk=" << rk << endl;
 		}
 	if (m == 0) {
-		cout << "orthogonal::parabolic_unrank_line Witt index zero, there is no line to unrank" << endl;
+		cout << "orthogonal::parabolic_unrank_line "
+				"Witt index zero, there is no line to unrank" << endl;
 		exit(1);
 		}
 	if (rk < l1) {
@@ -5271,7 +5613,8 @@ void orthogonal::parabolic_unrank_line(int &p1, int &p2, int rk, int verbose_lev
 		return;
 		}
 	rk -= l8;
-	cout << "error in orthogonal::parabolic_unrank_line, rk too big" << endl;
+	cout << "error in orthogonal::parabolic_unrank_line, "
+			"rk too big" << endl;
 	exit(1);
 }
 
@@ -5281,23 +5624,34 @@ int orthogonal::parabolic_rank_line(int p1, int p2, int verbose_level)
 	int p1_type, p2_type, p1_index, p2_index, type, cp1, cp2;
 	
 	if (f_v) {
-		cout << "parabolic_rank_line p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_rank_line "
+				"p1=" << p1 << " p2=" << p2 << endl;
 		}
-	point_rk_to_type_and_index(p1, p1_type, p1_index, verbose_level);
+	point_rk_to_type_and_index(p1,
+			p1_type, p1_index, verbose_level);
 	if (f_v) {
-		cout << "parabolic_rank_line p1_type=" << p1_type << " p1_index=" << p1_index << endl;
+		cout << "parabolic_rank_line "
+				"p1_type=" << p1_type
+				<< " p1_index=" << p1_index << endl;
 		}
-	point_rk_to_type_and_index(p2, p2_type, p2_index, verbose_level);
+	point_rk_to_type_and_index(p2,
+			p2_type, p2_index, verbose_level);
 	if (f_v) {
-		cout << "parabolic_rank_line p2_type=" << p2_type << " p2_index=" << p2_index << endl;
+		cout << "parabolic_rank_line "
+				"p2_type=" << p2_type
+				<< " p2_index=" << p2_index << endl;
 		}
-	type = parabolic_line_type_given_point_types(p1, p2, p1_type, p2_type, verbose_level);
+	type = parabolic_line_type_given_point_types(
+			p1, p2, p1_type, p2_type, verbose_level);
 	if (f_v) {
-		cout << "parabolic_rank_line line type = " << type << endl;
+		cout << "parabolic_rank_line "
+				"line type = " << type << endl;
 		}
-	parabolic_canonical_points_of_line(type, p1, p2, cp1, cp2, verbose_level);
+	parabolic_canonical_points_of_line(type,
+			p1, p2, cp1, cp2, verbose_level);
 	if (f_v) {
-		cout << "parabolic_rank_line cp1=" << cp1 << " cp2=" << cp2 << endl;
+		cout << "parabolic_rank_line "
+				"cp1=" << cp1 << " cp2=" << cp2 << endl;
 		}
 
 	if (type == 1) {
@@ -5308,27 +5662,35 @@ int orthogonal::parabolic_rank_line(int p1, int p2, int verbose_level)
 		}
 	else if (type == 2) {
 		if (f_even)
-			return l1 + parabolic_rank_line_L2_even(cp1, cp2, verbose_level);
+			return l1 +
+					parabolic_rank_line_L2_even(cp1, cp2, verbose_level);
 		else
-			return l1 + parabolic_rank_line_L2_odd(cp1, cp2, verbose_level);
+			return l1 +
+					parabolic_rank_line_L2_odd(cp1, cp2, verbose_level);
 		}
 	else if (type == 3) {
-		return l1 + l2 + parabolic_rank_line_L3(cp1, cp2, verbose_level);
+		return l1 + l2 +
+				parabolic_rank_line_L3(cp1, cp2, verbose_level);
 		}
 	else if (type == 4) {
-		return l1 + l2 + l3 + parabolic_rank_line_L4(cp1, cp2, verbose_level);
+		return l1 + l2 + l3 +
+				parabolic_rank_line_L4(cp1, cp2, verbose_level);
 		}
 	else if (type == 5) {
-		return l1 + l2 + l3 + l4 + parabolic_rank_line_L5(cp1, cp2, verbose_level);
+		return l1 + l2 + l3 + l4 +
+				parabolic_rank_line_L5(cp1, cp2, verbose_level);
 		}
 	else if (type == 6) {
-		return l1 + l2 + l3 + l4 + l5 + parabolic_rank_line_L6(cp1, cp2, verbose_level);
+		return l1 + l2 + l3 + l4 + l5 +
+				parabolic_rank_line_L6(cp1, cp2, verbose_level);
 		}
 	else if (type == 7) {
-		return l1 + l2 + l3 + l4 + l5 + l6 + parabolic_rank_line_L7(cp1, cp2, verbose_level);
+		return l1 + l2 + l3 + l4 + l5 + l6 +
+				parabolic_rank_line_L7(cp1, cp2, verbose_level);
 		}
 	else if (type == 8) {
-		return l1 + l2 + l3 + l4 + l5 + l6 + l7 + parabolic_rank_line_L8(cp1, cp2, verbose_level);
+		return l1 + l2 + l3 + l4 + l5 + l6 + l7 +
+				parabolic_rank_line_L8(cp1, cp2, verbose_level);
 		}
 	else {
 		cout << "parabolic_rank_line type nyi" << endl;
@@ -5336,7 +5698,8 @@ int orthogonal::parabolic_rank_line(int p1, int p2, int verbose_level)
 		}
 }
 
-void orthogonal::parabolic_unrank_line_L1_even(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L1_even(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -5344,12 +5707,15 @@ void orthogonal::parabolic_unrank_line_L1_even(int &p1, int &p2, int index, int 
 	int idx, sub_idx;
 	
 	if (index >= l1) {
-		cout << "error in parabolic_unrank_line_L1_even index too large" << endl;
+		cout << "error in parabolic_unrank_line_L1_even "
+				"index too large" << endl;
 		}
 	idx = index / (q - 1);
 	sub_idx = index % (q - 1);
 	if (f_v) {
-		cout << "parabolic_unrank_line_L1_even index=" << index << " idx=" << idx << " sub_idx=" << sub_idx << endl;
+		cout << "parabolic_unrank_line_L1_even "
+				"index=" << index << " idx=" << idx
+				<< " sub_idx=" << sub_idx << endl;
 		}
 	p1 = type_and_index_to_point_rk(5, idx, verbose_level);
 	if (f_vv) {
@@ -5360,11 +5726,14 @@ void orthogonal::parabolic_unrank_line_L1_even(int &p1, int &p2, int index, int 
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "parabolic_unrank_line_L1_even index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L1_even "
+				"index=" << index << " p1=" << p1
+				<< " p2=" << p2 << endl;
 		}
 }
 
-int orthogonal::parabolic_rank_line_L1_even(int p1, int p2, int verbose_level)
+int orthogonal::parabolic_rank_line_L1_even(
+		int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -5372,7 +5741,8 @@ int orthogonal::parabolic_rank_line_L1_even(int p1, int p2, int verbose_level)
 	int index, type, idx, sub_idx;
 
 	if (f_v) {
-		cout << "parabolic_unrank_line_L1_even " << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L1_even "
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 	point_rk_to_type_and_index(p1, type, idx, verbose_level);
 	if (type != 5) {
@@ -5388,7 +5758,8 @@ int orthogonal::parabolic_rank_line_L1_even(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L1_odd(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L1_odd(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -5396,10 +5767,13 @@ void orthogonal::parabolic_unrank_line_L1_odd(int &p1, int &p2, int index, int v
 	int idx, index2, rk1;
 	
 	if (f_v) {
-		cout << "parabolic_unrank_line_L1_odd index=" << index << " l1=" << l1 << " a51=" << a51 << endl;
+		cout << "parabolic_unrank_line_L1_odd "
+				"index=" << index << " l1=" << l1
+				<< " a51=" << a51 << endl;
 		}
 	if (index >= l1) {
-		cout << "error in parabolic_unrank_line_L1_odd index too large" << endl;
+		cout << "error in parabolic_unrank_line_L1_odd "
+				"index too large" << endl;
 		exit(1);
 		}
 	idx = index / a51;
@@ -5420,11 +5794,14 @@ void orthogonal::parabolic_unrank_line_L1_odd(int &p1, int &p2, int index, int v
 	p2 = rank_point(v4, 1, verbose_level - 1);
 
 	if (f_v) {
-		cout << "parabolic_unrank_line_L1_odd index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L1_odd "
+				"index=" << index << " p1=" << p1
+				<< " p2=" << p2 << endl;
 		}
 }
 
-int orthogonal::parabolic_rank_line_L1_odd(int p1, int p2, int verbose_level)
+int orthogonal::parabolic_rank_line_L1_odd(
+		int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -5432,17 +5809,20 @@ int orthogonal::parabolic_rank_line_L1_odd(int p1, int p2, int verbose_level)
 	int index, type, idx, index2, rk1;
 	
 	if (f_v) {
-		cout << "parabolic_rank_line_L1_odd p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_rank_line_L1_odd "
+				"p1=" << p1 << " p2=" << p2 << endl;
 		}
 
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
 	
 	point_rk_to_type_and_index(p1, type, idx, verbose_level);
 	if (f_v) {
-		cout << "parabolic_rank_line_L1_odd type=" << type << " idx=" << idx << endl;
+		cout << "parabolic_rank_line_L1_odd "
+				"type=" << type << " idx=" << idx << endl;
 		}
 	if (type != 5) {
-		cout << "parabolic_rank_line_L1_odd point 1 must be of type 5" << endl;
+		cout << "parabolic_rank_line_L1_odd "
+				"point 1 must be of type 5" << endl;
 		exit(1);
 		}
 	unrank_point(v4, 1, p2, verbose_level - 1);
@@ -5451,7 +5831,8 @@ int orthogonal::parabolic_rank_line_L1_odd(int p1, int p2, int verbose_level)
 	index2 = parabolic_neighbor51_odd_rank(v3, verbose_level);	
 		
 	if (f_v) {
-		cout << "parabolic_rank_line_L1_odd idx=" << idx << " index2=" << index2 << endl;
+		cout << "parabolic_rank_line_L1_odd "
+				"idx=" << idx << " index2=" << index2 << endl;
 		}
 	
 	index = idx * a51 + index2;
@@ -5462,7 +5843,8 @@ int orthogonal::parabolic_rank_line_L1_odd(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L2_even(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L2_even(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -5473,7 +5855,8 @@ void orthogonal::parabolic_unrank_line_L2_even(int &p1, int &p2, int index, int 
 		cout << "parabolic_unrank_line_L2_even index=" << index << endl;
 		}
 	if (index >= l2) {
-		cout << "error in parabolic_unrank_line_L2_even index too large" << endl;
+		cout << "error in parabolic_unrank_line_L2_even "
+				"index too large" << endl;
 		exit(1);
 		}
 	idx = index / a52a;
@@ -5491,11 +5874,14 @@ void orthogonal::parabolic_unrank_line_L2_even(int &p1, int &p2, int index, int 
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "parabolic_unrank_line_L2_even index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L2_even "
+				"index=" << index << " p1=" << p1
+				<< " p2=" << p2 << endl;
 		}
 }
 
-void orthogonal::parabolic_unrank_line_L2_odd(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L2_odd(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -5503,16 +5889,19 @@ void orthogonal::parabolic_unrank_line_L2_odd(int &p1, int &p2, int index, int v
 	int idx, index2, rk1;
 	
 	if (f_v) {
-		cout << "parabolic_unrank_line_L2_odd index=" << index << endl;
+		cout << "parabolic_unrank_line_L2_odd "
+				"index=" << index << endl;
 		}
 	if (index >= l2) {
-		cout << "error in parabolic_unrank_line_L2_odd index too large" << endl;
+		cout << "error in parabolic_unrank_line_L2_odd "
+				"index too large" << endl;
 		exit(1);
 		}
 	idx = index / a52a;
 	index2 = index % a52a;
 	if (f_v) {
-		cout << "parabolic_unrank_line_L2_odd idx=" << idx << " index2=" << index2 << endl;
+		cout << "parabolic_unrank_line_L2_odd "
+				"idx=" << idx << " index2=" << index2 << endl;
 		}
 
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
@@ -5532,11 +5921,14 @@ void orthogonal::parabolic_unrank_line_L2_odd(int &p1, int &p2, int index, int v
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "parabolic_unrank_line_L2_odd index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L2_odd "
+				"index=" << index << " p1=" << p1
+				<< " p2=" << p2 << endl;
 		}
 }
 
-int orthogonal::parabolic_rank_line_L2_even(int p1, int p2, int verbose_level)
+int orthogonal::parabolic_rank_line_L2_even(
+		int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -5544,16 +5936,19 @@ int orthogonal::parabolic_rank_line_L2_even(int p1, int p2, int verbose_level)
 	int index, type, idx, index2, rk1;
 	
 	if (f_v) {
-		cout << "parabolic_rank_line_L2_even p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_rank_line_L2_even "
+				"p1=" << p1 << " p2=" << p2 << endl;
 		}
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
 	
 	point_rk_to_type_and_index(p1, type, idx, verbose_level);
 	if (f_v) {
-		cout << "parabolic_rank_line_L2_even type=" << type << " idx=" << idx << endl;
+		cout << "parabolic_rank_line_L2_even "
+				"type=" << type << " idx=" << idx << endl;
 		}
 	if (type != 5) {
-		cout << "parabolic_rank_line_L2_even point 1 must be of type 5" << endl;
+		cout << "parabolic_rank_line_L2_even "
+				"point 1 must be of type 5" << endl;
 		exit(1);
 		}
 	unrank_point(v4, 1, p2, verbose_level - 1);
@@ -5567,7 +5962,8 @@ int orthogonal::parabolic_rank_line_L2_even(int p1, int p2, int verbose_level)
 	index2 = parabolic_neighbor52_even_rank(v3, verbose_level);	
 		
 	if (f_v) {
-		cout << "parabolic_rank_line_L2_even idx=" << idx << " index2=" << index2 << endl;
+		cout << "parabolic_rank_line_L2_even idx=" << idx
+				<< " index2=" << index2 << endl;
 		}
 	
 	index = idx * a52a + index2;
@@ -5578,7 +5974,8 @@ int orthogonal::parabolic_rank_line_L2_even(int p1, int p2, int verbose_level)
 	return index;
 }
 
-int orthogonal::parabolic_rank_line_L2_odd(int p1, int p2, int verbose_level)
+int orthogonal::parabolic_rank_line_L2_odd(
+		int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -5586,16 +5983,19 @@ int orthogonal::parabolic_rank_line_L2_odd(int p1, int p2, int verbose_level)
 	int index, type, idx, index2, rk1;
 	
 	if (f_v) {
-		cout << "parabolic_rank_line_L2_odd p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_rank_line_L2_odd "
+				"p1=" << p1 << " p2=" << p2 << endl;
 		}
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
 	
 	point_rk_to_type_and_index(p1, type, idx, verbose_level);
 	if (f_v) {
-		cout << "parabolic_rank_line_L2_odd type=" << type << " idx=" << idx << endl;
+		cout << "parabolic_rank_line_L2_odd type=" << type
+				<< " idx=" << idx << endl;
 		}
 	if (type != 5) {
-		cout << "parabolic_rank_line_L2_odd point 1 must be of type 5" << endl;
+		cout << "parabolic_rank_line_L2_odd "
+				"point 1 must be of type 5" << endl;
 		exit(1);
 		}
 	unrank_point(v4, 1, p2, verbose_level - 1);
@@ -5609,7 +6009,8 @@ int orthogonal::parabolic_rank_line_L2_odd(int p1, int p2, int verbose_level)
 	index2 = parabolic_neighbor52_odd_rank(v3, verbose_level);	
 		
 	if (f_v) {
-		cout << "parabolic_rank_line_L2_odd idx=" << idx << " index2=" << index2 << endl;
+		cout << "parabolic_rank_line_L2_odd idx=" << idx
+				<< " index2=" << index2 << endl;
 		}
 	
 	index = idx * a52a + index2;
@@ -5620,7 +6021,8 @@ int orthogonal::parabolic_rank_line_L2_odd(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L3(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L3(
+		int &p1, int &p2, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -5631,7 +6033,8 @@ void orthogonal::parabolic_unrank_line_L3(int &p1, int &p2, int index, int verbo
 		cout << "parabolic_unrank_line_L3 index=" << index << endl;
 		}
 	if (index >= l3) {
-		cout << "error in parabolic_unrank_line_L3 index too large" << endl;
+		cout << "error in parabolic_unrank_line_L3 "
+				"index too large" << endl;
 		exit(1);
 		}
 	idx = index / a32b;
@@ -5640,13 +6043,17 @@ void orthogonal::parabolic_unrank_line_L3(int &p1, int &p2, int index, int verbo
 	field = idx % (q - 1);
 	field++;
 	if (f_v) {
-		cout << "parabolic_unrank_line_L3 idx=" << idx << " index2=" << index2 << " idx2=" << idx2 << " field=" << field << endl;
+		cout << "parabolic_unrank_line_L3 idx=" << idx
+				<< " index2=" << index2 << " idx2=" << idx2
+				<< " field=" << field << endl;
 		}
 
 	rk1 = type_and_index_to_point_rk(3, 0, verbose_level);
 	rk2 = type_and_index_to_point_rk(5, idx2, verbose_level);
 	if (f_v) {
-		cout << "parabolic_unrank_line_L3 rk1=" << rk1 << " rk2=" << rk2 << " idx2=" << idx2 << " field=" << field << endl;
+		cout << "parabolic_unrank_line_L3 rk1=" << rk1
+				<< " rk2=" << rk2 << " idx2=" << idx2
+				<< " field=" << field << endl;
 		}
 	unrank_point(v1, 1, rk1, verbose_level - 1);
 	unrank_point(v2, 1, rk2, verbose_level - 1);
@@ -5714,7 +6121,8 @@ void orthogonal::parabolic_unrank_line_L3(int &p1, int &p2, int index, int verbo
 	
 
 	if (f_v) {
-		cout << "parabolic_unrank_line_L3 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L3 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -5723,10 +6131,12 @@ int orthogonal::parabolic_rank_line_L3(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	int index, idx, index2, idx2, field, rk1, rk2, type, a, b, c, i, multiplyer;
+	int index, idx, index2, idx2, field;
+	int rk1, rk2, type, a, b, c, i, multiplyer;
 	
 	if (f_v) {
-		cout << "parabolic_rank_line_L3 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_rank_line_L3 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 		}
 
 
@@ -5751,9 +6161,12 @@ int orthogonal::parabolic_rank_line_L3(int p1, int p2, int verbose_level)
 		}
 	v2[n - 1] = 0;
 	rk2 = rank_point(v2, 1, verbose_level - 1);
-	parabolic_point_rk_to_type_and_index(rk2, type, idx2, verbose_level);
+	parabolic_point_rk_to_type_and_index(rk2,
+			type, idx2, verbose_level);
 	if (f_v) {
-		cout << "parabolic_unrank_line_L3 rk1=" << rk1 << " rk2=" << rk2 << " idx2=" << idx2 << " field=" << field << endl;
+		cout << "parabolic_unrank_line_L3 "
+				"rk1=" << rk1 << " rk2=" << rk2
+				<< " idx2=" << idx2 << " field=" << field << endl;
 		}
 	if (type != 5) {
 		cout << "parabolic_rank_line_L3  type != 5" << endl;
@@ -5816,7 +6229,9 @@ int orthogonal::parabolic_rank_line_L3(int p1, int p2, int verbose_level)
 	index2 = parabolic_neighbor34_rank(v3, verbose_level);	
 		
 	if (f_v) {
-		cout << "parabolic_rank_line_L3 idx=" << idx << " index2=" << index2 << " idx2=" << idx2 << " field=" << field << endl;
+		cout << "parabolic_rank_line_L3 idx=" << idx
+				<< " index2=" << index2 << " idx2=" << idx2
+				<< " field=" << field << endl;
 		}
 	
 	index = idx * a32b + index2;
@@ -5828,7 +6243,8 @@ int orthogonal::parabolic_rank_line_L3(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L4(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L4(
+		int &p1, int &p2, int index, int verbose_level)
 // from P5 to P3
 {
 	int f_v = (verbose_level >= 1);
@@ -5846,7 +6262,8 @@ void orthogonal::parabolic_unrank_line_L4(int &p1, int &p2, int index, int verbo
 	idx = index / a53;
 	neighbor_idx = index % a53;
 	if (f_v) {
-		cout << "parabolic_unrank_line_L4 idx=" << idx << " neighbor_idx=" << neighbor_idx << endl;
+		cout << "parabolic_unrank_line_L4 idx=" << idx
+				<< " neighbor_idx=" << neighbor_idx << endl;
 		}
 
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
@@ -5866,7 +6283,8 @@ void orthogonal::parabolic_unrank_line_L4(int &p1, int &p2, int index, int verbo
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "parabolic_unrank_line_L4 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L4 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -5878,7 +6296,8 @@ int orthogonal::parabolic_rank_line_L4(int p1, int p2, int verbose_level)
 	int index, idx, neighbor_idx, rk1, type;
 	
 	if (f_v) {
-		cout << "parabolic_rank_line_L4 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_rank_line_L4 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 		}
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
 	
@@ -5899,7 +6318,8 @@ int orthogonal::parabolic_rank_line_L4(int p1, int p2, int verbose_level)
 	neighbor_idx = parabolic_neighbor53_rank(v3, verbose_level);
 		
 	if (f_v) {
-		cout << "parabolic_rank_line_L4 idx=" << idx << " neighbor_idx=" << neighbor_idx << endl;
+		cout << "parabolic_rank_line_L4 idx=" << idx
+				<< " neighbor_idx=" << neighbor_idx << endl;
 		}
 
 	index = idx * a53 + neighbor_idx;
@@ -5910,7 +6330,8 @@ int orthogonal::parabolic_rank_line_L4(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L5(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L5(
+	int &p1, int &p2, int index, int verbose_level)
 // from P5 to P4
 {
 	int f_v = (verbose_level >= 1);
@@ -5928,7 +6349,8 @@ void orthogonal::parabolic_unrank_line_L5(int &p1, int &p2, int index, int verbo
 	idx = index / a54;
 	neighbor_idx = index % a54;
 	if (f_v) {
-		cout << "parabolic_unrank_line_L5 idx=" << idx << " neighbor_idx=" << neighbor_idx << endl;
+		cout << "parabolic_unrank_line_L5 idx=" << idx
+				<< " neighbor_idx=" << neighbor_idx << endl;
 		}
 
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
@@ -5948,7 +6370,8 @@ void orthogonal::parabolic_unrank_line_L5(int &p1, int &p2, int index, int verbo
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "parabolic_unrank_line_L5 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L5 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -5981,7 +6404,8 @@ int orthogonal::parabolic_rank_line_L5(int p1, int p2, int verbose_level)
 	neighbor_idx = parabolic_neighbor54_rank(v3, verbose_level);
 		
 	if (f_v) {
-		cout << "parabolic_rank_line_L5 idx=" << idx << " neighbor_idx=" << neighbor_idx << endl;
+		cout << "parabolic_rank_line_L5 idx=" << idx
+				<< " neighbor_idx=" << neighbor_idx << endl;
 		}
 
 	index = idx * a54 + neighbor_idx;
@@ -5992,7 +6416,8 @@ int orthogonal::parabolic_rank_line_L5(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L6(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L6(
+		int &p1, int &p2, int index, int verbose_level)
 // within P5
 {
 	int f_v = (verbose_level >= 1);
@@ -6004,7 +6429,8 @@ void orthogonal::parabolic_unrank_line_L6(int &p1, int &p2, int index, int verbo
 		cout << "parabolic_unrank_line_L6 index=" << index << endl;
 		}
 	if (index >= l6) {
-		cout << "error in parabolic_unrank_line_L6 index too large" << endl;
+		cout << "error in parabolic_unrank_line_L6 "
+				"index too large" << endl;
 		exit(1);
 		}
 	subspace->parabolic_unrank_line(pt1, pt2, index, verbose_level);
@@ -6018,11 +6444,14 @@ void orthogonal::parabolic_unrank_line_L6(int &p1, int &p2, int index, int verbo
 	p2 = rank_point(v2, 1, verbose_level - 1);
 
 	if (f_v) {
-		cout << "parabolic_unrank_line_L6 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L6 "
+				"index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
-int orthogonal::parabolic_rank_line_L6(int p1, int p2, int verbose_level)
+int orthogonal::parabolic_rank_line_L6(
+		int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -6049,7 +6478,8 @@ int orthogonal::parabolic_rank_line_L6(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L7(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L7(
+		int &p1, int &p2, int index, int verbose_level)
 // from P6 = {Q}  to P5 via P3
 {
 	int f_v = (verbose_level >= 1);
@@ -6060,14 +6490,16 @@ void orthogonal::parabolic_unrank_line_L7(int &p1, int &p2, int index, int verbo
 		cout << "parabolic_unrank_line_L7 index=" << index << endl;
 		}
 	if (index >= l7) {
-		cout << "error in parabolic_unrank_line_L7 index too large" << endl;
+		cout << "error in parabolic_unrank_line_L7 "
+				"index too large" << endl;
 		exit(1);
 		}
 	p1 = pt_Q;
 	p2 = type_and_index_to_point_rk(5, index, verbose_level);
 
 	if (f_v) {
-		cout << "parabolic_unrank_line_L7 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L7 "
+				"index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -6097,7 +6529,8 @@ int orthogonal::parabolic_rank_line_L7(int p1, int p2, int verbose_level)
 	return index;
 }
 
-void orthogonal::parabolic_unrank_line_L8(int &p1, int &p2, int index, int verbose_level)
+void orthogonal::parabolic_unrank_line_L8(
+		int &p1, int &p2, int index, int verbose_level)
 // from P7 = {P}  to P5 via P4
 {
 	int f_v = (verbose_level >= 1);
@@ -6108,14 +6541,16 @@ void orthogonal::parabolic_unrank_line_L8(int &p1, int &p2, int index, int verbo
 		cout << "parabolic_unrank_line_L8 index=" << index << endl;
 		}
 	if (index >= l8) {
-		cout << "error in parabolic_unrank_line_L8 index too large" << endl;
+		cout << "error in parabolic_unrank_line_L8 "
+				"index too large" << endl;
 		exit(1);
 		}
 	p1 = pt_P;
 	p2 = type_and_index_to_point_rk(5, index, verbose_level);
 
 	if (f_v) {
-		cout << "parabolic_unrank_line_L8 index=" << index << " p1=" << p1 << " p2=" << p2 << endl;
+		cout << "parabolic_unrank_line_L8 index=" << index
+				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
 
@@ -6152,10 +6587,12 @@ int orthogonal::parabolic_line_type_given_point_types(int pt1, int pt2,
 	
 	
 	if (f_v) {
-		cout << "parabolic_line_type_given_point_types pt1=" << pt1 << " pt2=" << pt2 << endl; 
+		cout << "parabolic_line_type_given_point_types "
+				"pt1=" << pt1 << " pt2=" << pt2 << endl;
 		}
 	if (pt1_type > pt2_type) {
-		return parabolic_line_type_given_point_types(pt2, pt1, pt2_type, pt1_type, verbose_level);
+		return parabolic_line_type_given_point_types(
+				pt2, pt1, pt2_type, pt1_type, verbose_level);
 		}
 	
 	// from now on, we assume pt1_type <= pt2_type
@@ -6277,7 +6714,8 @@ int orthogonal::parabolic_line_type_given_point_types(int pt1, int pt2,
 			return 8;
 			}
 		}
-	cout << "orthogonal::parabolic_line_type_given_point_types illegal combination" << endl;
+	cout << "orthogonal::parabolic_line_type_given_point_types "
+			"illegal combination" << endl;
 	cout << "pt1_type = " << pt1_type << endl;
 	cout << "pt2_type = " << pt2_type << endl;
 	exit(1);
@@ -6365,7 +6803,8 @@ int orthogonal::parabolic_decide_P33(int pt1, int pt2)
 
 int orthogonal::parabolic_decide_P35(int pt1, int pt2)
 {
-	//cout << "parabolic_decide_P35 pt1 = " << pt1 << " pt2=" << pt2 << endl;
+	//cout << "parabolic_decide_P35 pt1 = " << pt1
+	//<< " pt2=" << pt2 << endl;
 	//unrank_point(v1, 1, pt1, verbose_level - 1);
 	//unrank_point(v2, 1, pt2, verbose_level - 1);
 	if (triple_is_collinear(pt1, pt2, pt_Q)) {
@@ -6408,7 +6847,8 @@ int orthogonal::parabolic_decide_P44(int pt1, int pt2)
 		}
 }
 
-void orthogonal::find_root_parabolic_xyz(int rk2, int *x, int *y, int *z, int verbose_level)
+void orthogonal::find_root_parabolic_xyz(
+	int rk2, int *x, int *y, int *z, int verbose_level)
 // m = Witt index
 {
 	int f_v = (verbose_level >= 1);
@@ -6439,10 +6879,12 @@ void orthogonal::find_root_parabolic_xyz(int rk2, int *x, int *y, int *z, int ve
 		return;
 		}
 	if (n == 3) {
-		cout << "find_root_parabolic_xyz n == 3, we should not be in this case" << endl;
+		cout << "find_root_parabolic_xyz n == 3, "
+				"we should not be in this case" << endl;
 		exit(1);
 		}
-	// now y[2] = 0 or y = (*0*..) and m > 1 and y_i \neq 0 for some i \ge 3
+	// now y[2] = 0 or y = (*0*..) and
+	// m > 1 and y_i \neq 0 for some i \ge 3
 	for (i = 3; i < n; i++) {
 		if (y[i]) {
 			if (EVEN(i)) {
@@ -6480,7 +6922,8 @@ int orthogonal::find_root_parabolic(int rk2, int verbose_level)
 		exit(1);
 		}
 #endif
-	find_root_parabolic_xyz(rk2, find_root_x, find_root_y, find_root_z, verbose_level);
+	find_root_parabolic_xyz(rk2,
+			find_root_x, find_root_y, find_root_z, verbose_level);
 	if (f_v) {
 		cout << "found root: ";
 		int_vec_print(cout, find_root_x, n);
@@ -6505,14 +6948,16 @@ int orthogonal::find_root_parabolic(int rk2, int verbose_level)
 	return root;
 }
 
-void orthogonal::Siegel_move_forward_by_index(int rk1, int rk2, int *v, int *w, int verbose_level)
+void orthogonal::Siegel_move_forward_by_index(
+		int rk1, int rk2, int *v, int *w, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i;
 	
 	if (f_v) {
-		cout << "Siegel_move_forward_by_index rk1=" << rk1 << " rk2=" << rk2 << endl;
+		cout << "Siegel_move_forward_by_index "
+				"rk1=" << rk1 << " rk2=" << rk2 << endl;
 		}
 	if (rk1 == rk2) {
 		for (i = 0; i < n; i++)
@@ -6541,14 +6986,16 @@ void orthogonal::Siegel_move_forward_by_index(int rk1, int rk2, int *v, int *w, 
 		}
 }
 
-void orthogonal::Siegel_move_backward_by_index(int rk1, int rk2, int *w, int *v, int verbose_level)
+void orthogonal::Siegel_move_backward_by_index(
+		int rk1, int rk2, int *w, int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i;
 	
 	if (f_v) {
-		cout << "Siegel_move_backward_by_index rk1=" << rk1 << " rk2=" << rk2 << endl;
+		cout << "Siegel_move_backward_by_index "
+				"rk1=" << rk1 << " rk2=" << rk2 << endl;
 		}
 	if (rk1 == rk2) {
 		for (i = 0; i < n; i++)
@@ -6577,7 +7024,8 @@ void orthogonal::Siegel_move_backward_by_index(int rk1, int rk2, int *w, int *v,
 		}
 }
 
-void orthogonal::Siegel_move_forward(int *v1, int *v2, int *v3, int *v4, int verbose_level)
+void orthogonal::Siegel_move_forward(
+		int *v1, int *v2, int *v3, int *v4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -6606,7 +7054,8 @@ void orthogonal::Siegel_move_forward(int *v1, int *v2, int *v3, int *v4, int ver
 	if (f_vv) {
 		cout << "root=" << root << endl;
 		}
-	subspace->Siegel_Transformation(T1, rk1_subspace, rk2_subspace, root, verbose_level - 2);
+	subspace->Siegel_Transformation(T1,
+			rk1_subspace, rk2_subspace, root, verbose_level - 2);
 	F->mult_matrix_matrix(v3, T1, v4, 1, n - 2, n - 2);
 	v4[n - 2] = v3[n - 2];
 	v4[n - 1] = v3[n - 1];
@@ -6620,7 +7069,8 @@ void orthogonal::Siegel_move_forward(int *v1, int *v2, int *v3, int *v4, int ver
 		}
 }
 
-void orthogonal::Siegel_move_backward(int *v1, int *v2, int *v3, int *v4, int verbose_level)
+void orthogonal::Siegel_move_backward(
+		int *v1, int *v2, int *v3, int *v4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -6645,14 +7095,16 @@ void orthogonal::Siegel_move_backward(int *v1, int *v2, int *v3, int *v4, int ve
 		return;
 		}
 	
-	root = subspace->find_root_parabolic(rk2_subspace, verbose_level - 2);
+	root = subspace->find_root_parabolic(
+			rk2_subspace, verbose_level - 2);
 	if (f_vv) {
 		cout << "root=" << root << endl;
 		cout << "image, to be moved back: " << endl;
 		int_vec_print(cout, v4, n);
 		cout << endl;
 		}
-	subspace->Siegel_Transformation(T1, rk1_subspace, rk2_subspace, root, verbose_level - 2);
+	subspace->Siegel_Transformation(T1,
+			rk1_subspace, rk2_subspace, root, verbose_level - 2);
 	F->invert_matrix(T1, T2, n - 2);
 	F->mult_matrix_matrix(v3, T2, v4, 1, n - 2, n - 2);
 	v4[n - 2] = v3[n - 2];
@@ -6667,13 +7119,16 @@ void orthogonal::Siegel_move_backward(int *v1, int *v2, int *v3, int *v4, int ve
 		}
 }
 
-void orthogonal::parabolic_canonical_points_of_line(int line_type, int pt1, int pt2, 
+void orthogonal::parabolic_canonical_points_of_line(
+	int line_type, int pt1, int pt2,
 	int &cpt1, int &cpt2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "parabolic_canonical_points_of_line line_type=" << line_type << " pt1=" << pt1 << " pt2=" << pt2 << endl;
+		cout << "parabolic_canonical_points_of_line "
+				"line_type=" << line_type
+				<< " pt1=" << pt1 << " pt2=" << pt2 << endl;
 		}
 	if (line_type == 1) {
 		if (f_even) {
@@ -6706,13 +7161,15 @@ void orthogonal::parabolic_canonical_points_of_line(int line_type, int pt1, int 
 		parabolic_canonical_points_L8(pt1, pt2, cpt1, cpt2);
 		}
 	if (f_v) {
-		cout << "parabolic_canonical_points_of_line of type " << line_type << endl;
+		cout << "parabolic_canonical_points_of_line "
+				"of type " << line_type << endl;
 		cout << "pt1=" << pt1 << " pt2=" << pt2 << endl;
 		cout << "cpt1=" << cpt1 << " cpt2=" << cpt2 << endl;
 		}
 }
 
-void orthogonal::parabolic_canonical_points_L1_even(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::parabolic_canonical_points_L1_even(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -6732,7 +7189,8 @@ void orthogonal::parabolic_canonical_points_L1_even(int pt1, int pt2, int &cpt1,
 	//int_vec_print(cout, v2, n); cout << endl;
 
 	if (!is_zero_vector(v1 + n - 2, 1, 2)) {
-		cout << "parabolic_canonical_points_L1_even ending of v1 is not zero" << endl;
+		cout << "parabolic_canonical_points_L1_even ending "
+				"of v1 is not zero" << endl;
 		exit(1);
 		}
 	for (i = 1; i < n - 2; i++) {
@@ -6743,7 +7201,8 @@ void orthogonal::parabolic_canonical_points_L1_even(int pt1, int pt2, int &cpt1,
 			//int_vec_print(cout, v2, n); cout << endl;
 
 			if (!is_zero_vector(v2 + 1, 1, n - 3)) {
-				cout << "parabolic_canonical_points_L1_even not zero" << endl;
+				cout << "parabolic_canonical_points_L1_even "
+						"not zero" << endl;
 				exit(1);
 				}
 			break;
@@ -6754,7 +7213,8 @@ void orthogonal::parabolic_canonical_points_L1_even(int pt1, int pt2, int &cpt1,
 	return;
 }
 
-void orthogonal::parabolic_canonical_points_separate_P5(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::parabolic_canonical_points_separate_P5(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -6783,7 +7243,8 @@ void orthogonal::parabolic_canonical_points_separate_P5(int pt1, int pt2, int &c
 	cout << endl;
 #endif
 	if (!is_zero_vector(v1 + n - 2, 1, 2)) {
-		cout << "parabolic_canonical_points_separate_P5 ending of v1 is not zero" << endl;
+		cout << "parabolic_canonical_points_separate_P5 "
+				"ending of v1 is not zero" << endl;
 		cout << "v1=";
 		int_vec_print(cout, v1, n);
 		cout << endl;
@@ -6794,7 +7255,8 @@ void orthogonal::parabolic_canonical_points_separate_P5(int pt1, int pt2, int &c
 	return;
 }
 
-void orthogonal::parabolic_canonical_points_L3(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::parabolic_canonical_points_L3(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int verbose_level = 0;
 
@@ -6815,7 +7277,8 @@ void orthogonal::parabolic_canonical_points_L3(int pt1, int pt2, int &cpt1, int 
 	return;
 }
 
-void orthogonal::parabolic_canonical_points_L7(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::parabolic_canonical_points_L7(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -6824,7 +7287,8 @@ void orthogonal::parabolic_canonical_points_L7(int pt1, int pt2, int &cpt1, int 
 	unrank_point(v2, 1, pt2, verbose_level - 1);
 	Gauss_step(v1, v2, n, n - 1);
 	if (!is_zero_vector(v2 + n - 2, 1, 2)) {
-		cout << "parabolic_canonical_points_L7 ending of v2 is not zero" << endl;
+		cout << "parabolic_canonical_points_L7 "
+				"ending of v2 is not zero" << endl;
 		exit(1);
 		}
 	// now v2 is a point in P5
@@ -6833,7 +7297,8 @@ void orthogonal::parabolic_canonical_points_L7(int pt1, int pt2, int &cpt1, int 
 		if (v1[i]) {
 			Gauss_step(v2, v1, n, i);
 			if (!is_zero_vector(v1, 1, n - 2)) {
-				cout << "parabolic_canonical_points_L7 not zero" << endl;
+				cout << "parabolic_canonical_points_L7 "
+						"not zero" << endl;
 				exit(1);
 				}
 			break;
@@ -6842,13 +7307,15 @@ void orthogonal::parabolic_canonical_points_L7(int pt1, int pt2, int &cpt1, int 
 	cpt1 = rank_point(v1, 1, verbose_level - 1);
 	cpt2 = rank_point(v2, 1, verbose_level - 1);
 	if (cpt1 != pt_Q) {
-		cout << "parabolic_canonical_points_L7 cpt1 != pt_Q" << endl;
+		cout << "parabolic_canonical_points_L7 "
+				"cpt1 != pt_Q" << endl;
 		exit(1);
 		}
 	return;
 }
 
-void orthogonal::parabolic_canonical_points_L8(int pt1, int pt2, int &cpt1, int &cpt2)
+void orthogonal::parabolic_canonical_points_L8(
+		int pt1, int pt2, int &cpt1, int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -6857,7 +7324,8 @@ void orthogonal::parabolic_canonical_points_L8(int pt1, int pt2, int &cpt1, int 
 	unrank_point(v2, 1, pt2, verbose_level - 1);
 	Gauss_step(v1, v2, n, n - 2);
 	if (!is_zero_vector(v2 + n - 2, 1, 2)) {
-		cout << "parabolic_canonical_points_L8 ending of v2 is not zero" << endl;
+		cout << "parabolic_canonical_points_L8 "
+				"ending of v2 is not zero" << endl;
 		exit(1);
 		}
 	// now v2 is a point in P5
@@ -6866,7 +7334,8 @@ void orthogonal::parabolic_canonical_points_L8(int pt1, int pt2, int &cpt1, int 
 		if (v1[i]) {
 			Gauss_step(v2, v1, n, i);
 			if (!is_zero_vector(v1, 1, n - 2)) {
-				cout << "parabolic_canonical_points_L8 not zero" << endl;
+				cout << "parabolic_canonical_points_L8 "
+						"not zero" << endl;
 				exit(1);
 				}
 			break;
@@ -6875,17 +7344,20 @@ void orthogonal::parabolic_canonical_points_L8(int pt1, int pt2, int &cpt1, int 
 	cpt1 = rank_point(v1, 1, verbose_level - 1);
 	cpt2 = rank_point(v2, 1, verbose_level - 1);
 	if (cpt1 != pt_P) {
-		cout << "parabolic_canonical_points_L8 cpt1 != pt_P" << endl;
+		cout << "parabolic_canonical_points_L8 "
+				"cpt1 != pt_P" << endl;
 		exit(1);
 		}
 	return;
 }
 
-int orthogonal::evaluate_parabolic_bilinear_form(int *u, int *v, int stride, int m)
+int orthogonal::evaluate_parabolic_bilinear_form(
+		int *u, int *v, int stride, int m)
 {
 	int a, b, c;
 	
-	a = evaluate_hyperbolic_bilinear_form(u + stride, v + stride, stride, m);
+	a = evaluate_hyperbolic_bilinear_form(
+			u + stride, v + stride, stride, m);
 	if (f_even) {
 		return a;
 		}
@@ -6896,7 +7368,8 @@ int orthogonal::evaluate_parabolic_bilinear_form(int *u, int *v, int stride, int
 }
 
 
-void orthogonal::parabolic_point_normalize(int *v, int stride, int n)
+void orthogonal::parabolic_point_normalize(
+		int *v, int stride, int n)
 {
 	if (v[0]) {
 		if (v[0] != 1) {
@@ -6908,7 +7381,8 @@ void orthogonal::parabolic_point_normalize(int *v, int stride, int n)
 		}
 }
 
-void orthogonal::parabolic_normalize_point_wrt_subspace(int *v, int stride)
+void orthogonal::parabolic_normalize_point_wrt_subspace(
+		int *v, int stride)
 {
 	int i, a, av;
 	
@@ -6925,7 +7399,8 @@ void orthogonal::parabolic_normalize_point_wrt_subspace(int *v, int stride)
 		exit(1);
 		}
 	a = v[i * stride];
-	//cout << "parabolic_normalize_point_wrt_subspace a=" << a << " in position " << i << endl;
+	//cout << "parabolic_normalize_point_wrt_subspace "
+	// "a=" << a << " in position " << i << endl;
 	av = F->inverse(a);
 	for (i = 0; i < n; i++) {
 		v[i * stride] = F->mult(av, v[i * stride]);
@@ -6947,7 +7422,8 @@ void orthogonal::parabolic_point_properties(int *v, int stride, int n,
 	m = (n - 1) / 2;
 	if (v[0]) {
 		if (v[0] != 1) {
-			cout << "error in parabolic_point_properties: v[0] != 1" << endl;
+			cout << "error in parabolic_point_properties: "
+					"v[0] != 1" << endl;
 			exit(1);
 			}
 		f_start_with_one = TRUE;
@@ -6956,13 +7432,16 @@ void orthogonal::parabolic_point_properties(int *v, int stride, int n,
 		f_start_with_one = FALSE;
 		PG_element_normalize(*F, v + 1, stride, n - 1);
 		if (f_v) {
-			cout << "orthogonal::parabolic_point_properties after normalization: ";
+			cout << "orthogonal::parabolic_point_properties "
+					"after normalization: ";
 			int_vec_print(cout, v, n);
 			cout << endl;
 			}
 		}
-	middle_value = evaluate_hyperbolic_quadratic_form(v + 1 * stride, stride, m - 1);
-	end_value = evaluate_hyperbolic_quadratic_form(v + (1 + 2 * (m - 1)) * stride, stride, 1);
+	middle_value = evaluate_hyperbolic_quadratic_form(
+			v + 1 * stride, stride, m - 1);
+	end_value = evaluate_hyperbolic_quadratic_form(
+			v + (1 + 2 * (m - 1)) * stride, stride, 1);
 }
 
 int orthogonal::parabolic_is_middle_dependent(int *vec1, int *vec2)
@@ -6994,9 +7473,9 @@ int orthogonal::parabolic_is_middle_dependent(int *vec1, int *vec2)
 
 
 
-// ####################################################################################
+// #############################################################################
 // orthogonal_util.C:
-// ####################################################################################
+// #############################################################################
 
 
 int orthogonal::test_if_minimal_on_line(int *v1, int *v2, int *v3)
@@ -7012,7 +7491,8 @@ int orthogonal::test_if_minimal_on_line(int *v1, int *v2, int *v3)
 	rk0 = rank_point(v1, 1, verbose_level - 1);
 	for (t = 1; t < q; t++) {
 		for (i = 0; i < n; i++) {
-			//cout << "i=" << i << ":" << v1[i] << " + " << t << " * " << v2[i] << "="; 
+			//cout << "i=" << i << ":" << v1[i] << " + "
+			//<< t << " * " << v2[i] << "=";
 			v3[i] = F->add(v1[i], F->mult(t, v2[i]));
 			//cout << v3[i] << endl;
 			}
@@ -7042,7 +7522,8 @@ void orthogonal::find_minimal_point_on_line(int *v1, int *v2, int *v3)
 	t0 = 0;
 	for (t = 1; t < q; t++) {
 		for (i = 0; i < n; i++) {
-			//cout << "i=" << i << ":" << v1[i] << " + " << t << " * " << v2[i] << "="; 
+			//cout << "i=" << i << ":" << v1[i]
+			//<< " + " << t << " * " << v2[i] << "=";
 			v3[i] = F->add(v1[i], F->mult(t, v2[i]));
 			//cout << v3[i] << endl;
 			}
@@ -7056,7 +7537,8 @@ void orthogonal::find_minimal_point_on_line(int *v1, int *v2, int *v3)
 			}
 		}
 	for (i = 0; i < n; i++) {
-		//cout << "i=" << i << ":" << v1[i] << " + " << t << " * " << v2[i] << "="; 
+		//cout << "i=" << i << ":" << v1[i] << " + "
+		//<< t << " * " << v2[i] << "=";
 		v3[i] = F->add(v1[i], F->mult(t0, v2[i]));
 		//cout << v3[i] << endl;
 		}
@@ -7083,7 +7565,8 @@ int orthogonal::is_zero_vector(int *u, int stride, int len)
 	return TRUE;
 }
 
-void orthogonal::change_form_value(int *u, int stride, int m, int multiplyer)
+void orthogonal::change_form_value(int *u,
+		int stride, int m, int multiplyer)
 {
 	int i;
 	
@@ -7092,7 +7575,8 @@ void orthogonal::change_form_value(int *u, int stride, int m, int multiplyer)
 		}
 }
 
-void orthogonal::scalar_multiply_vector(int *u, int stride, int len, int multiplyer)
+void orthogonal::scalar_multiply_vector(int *u,
+		int stride, int len, int multiplyer)
 {
 	int i;
 	
@@ -7110,7 +7594,8 @@ int orthogonal::last_non_zero_entry(int *u, int stride, int len)
 			return u[stride * i];
 			}
 		}
-	cout << "error in last_non_zero_entry: the vector is the zero vector" << endl;
+	cout << "error in last_non_zero_entry: the vector "
+			"is the zero vector" << endl;
 	exit(1);
 }
 
@@ -7145,7 +7630,8 @@ void orthogonal::Siegel_Transformation(int *T,
 {
 	int f_v = (verbose_level >= 1);
 	if (f_v) {
-		cout << "Siegel_Transformation rk_from=" << rk_from << " rk_to=" << rk_to << " root=" << root << endl;
+		cout << "Siegel_Transformation rk_from=" << rk_from
+				<< " rk_to=" << rk_to << " root=" << root << endl;
 		}
 	Siegel_Transformation2(T, 
 		rk_from, rk_to, root, 
@@ -7219,9 +7705,12 @@ void orthogonal::Siegel_Transformation3(int *T,
 		print_int_matrix(cout, Gram, n, n);
 		}
 	
-	//Q_epsilon_unrank(*F, B, 1, epsilon, k, form_c1, form_c2, form_c3, root);
-	//Q_epsilon_unrank(*F, B + d, 1, epsilon, k, form_c1, form_c2, form_c3, rk_from);
-	//Q_epsilon_unrank(*F, w, 1, epsilon, k, form_c1, form_c2, form_c3, rk_to);
+	//Q_epsilon_unrank(*F, B, 1, epsilon, k,
+	//form_c1, form_c2, form_c3, root);
+	//Q_epsilon_unrank(*F, B + d, 1, epsilon, k,
+	//form_c1, form_c2, form_c3, rk_from);
+	//Q_epsilon_unrank(*F, w, 1, epsilon, k,
+	//form_c1, form_c2, form_c3, rk_to);
 	
 	for (i = 0; i < n; i++) {
 		B[i] = root[i];
@@ -7391,8 +7880,8 @@ void orthogonal::create_random_Siegel_transformation(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int rk_u, rk_v, alpha;
-	int nb_pts, nb_pts_affine;
+	int rk_u, alpha, i;
+	int nb_pts; //, nb_pts_affine;
 	int k = m; // the Witt index, previously orthogonal_k;
 	int d = n;
 	int *u, *v;
@@ -7405,7 +7894,8 @@ void orthogonal::create_random_Siegel_transformation(
 	v = NEW_int(d);
 
 	nb_pts = nb_points; //nb_pts_Qepsilon(epsilon, d - 1, q);
-	nb_pts_affine = i_power_j(q, d);
+	//nb_pts_affine = i_power_j(q, d);
+
 	if (f_v) {
 		cout << "orthogonal::create_random_Siegel_transformation "
 				"q=" << q << endl;
@@ -7415,8 +7905,8 @@ void orthogonal::create_random_Siegel_transformation(
 				"Witt index k=" << k << endl;
 		cout << "orthogonal::create_random_Siegel_transformation "
 				"nb_pts=" << nb_pts << endl;
-		cout << "orthogonal::create_random_Siegel_transformation "
-				"nb_pts_affine=" << nb_pts_affine << endl;
+		//cout << "orthogonal::create_random_Siegel_transformation "
+		//		"nb_pts_affine=" << nb_pts_affine << endl;
 		}
 
 	rk_u = random_integer(nb_pts);
@@ -7429,12 +7919,21 @@ void orthogonal::create_random_Siegel_transformation(
 	// form_c1, form_c2, form_c3, rk_u);
 			
 	while (TRUE) {
+
+#if 0
 		rk_v = random_integer(nb_pts_affine);
 		if (f_v) {
 			cout << "orthogonal::create_random_Siegel_transformation "
 					"trying rk_v=" << rk_v << endl;
 			}
 		AG_element_unrank(q, v, 1 /* stride */, d, rk_v);
+#else
+		for (i = 0; i < d; i++) {
+			v[i] = random_integer(q);
+		}
+
+#endif
+
 		alpha = ::evaluate_bilinear_form(*F, u, v, d, Gram_matrix);
 		if (alpha == 0) {
 			if (f_v) {
@@ -7450,10 +7949,11 @@ void orthogonal::create_random_Siegel_transformation(
 		}
 	if (f_vv) {
 		cout << "rk_u = " << rk_u << " : ";
-		int_set_print(u, d);
+		int_vec_print(cout, u, d);
 		cout << endl;
-		cout << "rk_v = " << rk_v << " : ";
-		int_set_print(v, d);
+		//cout << "rk_v = " << rk_v << " : ";
+		cout << "v=";
+		int_vec_print(cout, v, d);
 		cout << endl;
 		}
 		
@@ -7624,35 +8124,88 @@ void orthogonal::create_random_orthogonal_reflection(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int rk_z, alpha;
-	int nb_pts_affine;
+	int alpha;
+	int i;
+	//int rk_z;
+	//int nb_pts_affine;
 	int d = n;
+	int cnt;
 	int *z;
 	
 	if (f_v) {
 		cout << "orthogonal::create_random_orthogonal_reflection" << endl;
+		cout << "verbose_level=" << verbose_level << endl;
 		}
 	
 	z = NEW_int(d);
 
+#if 0
 	nb_pts_affine = i_power_j(q, d);
+	if (f_v) {
+		cout << "orthogonal::create_random_orthogonal_reflection" << endl;
+		cout << "nb_pts_affine=" << nb_pts_affine << endl;
+		}
+#endif
 
-			
+	cnt = 0;
 	while (TRUE) {
+		if (f_v) {
+			cout << "orthogonal::create_random_orthogonal_reflection "
+					"iteration = " << cnt << endl;
+			}
+
+#if 0
 		rk_z = random_integer(nb_pts_affine);
-		AG_element_unrank(q, z, 1 /* stride */, d, rk_z);	
+		if (f_v) {
+			cout << "orthogonal::create_random_orthogonal_reflection "
+					"iteration = " << cnt
+					<< " trying rk_z=" << rk_z << endl;
+			}
+
+		AG_element_unrank(q, z, 1 /* stride */, d, rk_z);
+#else
+		for (i = 0; i < d; i++) {
+			z[i] = random_integer(q);
+		}
+#endif
+
+		if (f_v) {
+			cout << "orthogonal::create_random_orthogonal_reflection "
+					"trying ";
+			int_vec_print(cout, z, d);
+			cout << endl;
+		}
+
 		alpha = evaluate_quadratic_form(z, 1 /* stride */);
+		if (f_v) {
+			cout << "orthogonal::create_random_orthogonal_reflection "
+					"value of the quadratic form is " << alpha << endl;
+		}
 		if (alpha) {
 			break;
 			}
+		cnt++;
 		}
 	if (f_vv) {
-		cout << "rk_z = " << rk_z << " alpha = " << alpha << " : ";
-		int_set_print(z, d);
+		cout << "orthogonal::create_random_orthogonal_reflection "
+				"cnt=" << cnt
+				//"rk_z = " << rk_z
+				<< " alpha = " << alpha << " : ";
+		int_vec_print(cout, z, d);
 		cout << endl;
 		}
 	
+	if (f_v) {
+		cout << "orthogonal::create_random_orthogonal_reflection "
+				"before make_orthogonal_reflection" << endl;
+		}
+
 	make_orthogonal_reflection(Mtx, z, verbose_level - 1);
+
+	if (f_v) {
+		cout << "orthogonal::create_random_orthogonal_reflection "
+				"after make_orthogonal_reflection" << endl;
+		}
 
 
 
@@ -7660,7 +8213,18 @@ void orthogonal::create_random_orthogonal_reflection(
 	int *new_Gram;
 	new_Gram = NEW_int(d * d);
 	
+	if (f_v) {
+		cout << "orthogonal::create_random_orthogonal_reflection "
+				"before transform_form_matrix" << endl;
+		}
+
 	F->transform_form_matrix(Mtx, Gram_matrix, new_Gram, d);
+
+	if (f_v) {
+		cout << "orthogonal::create_random_orthogonal_reflection "
+				"after transform_form_matrix" << endl;
+		}
+
 	if (int_vec_compare(Gram_matrix, new_Gram, d * d) != 0) {
 		cout << "create_random_orthogonal_reflection "
 				"The Gram matrix is not preserved" << endl;

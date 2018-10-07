@@ -1154,6 +1154,8 @@ void induced_action_element_print(action &A,
 			}
 		sub->element_print_quick(elt, ost);
 
+
+#if 0
 		int n;
 		int *fp;
 		
@@ -1164,6 +1166,8 @@ void induced_action_element_print(action &A,
 		FREE_int(fp);
 		sub->element_print_base_images((int *)elt, ost);
 		ost << endl;
+#endif
+
 		}
 	else {
 		cout << "induced_action_element_print "

@@ -350,12 +350,14 @@ void matrix_group_element_print(action &A,
 	FREE_int(fp);
 #endif
 
+#if 0
 	if (A.degree < 0 /*1000*/) {
 		//cout << "matrix_group_element_print:
 		//printing element as permutation" << endl;
 		matrix_group_element_print_as_permutation(A, elt, ost);
 		ost << endl;
 		}
+#endif
 }
 
 void matrix_group_element_code_for_make_element(action &A,
