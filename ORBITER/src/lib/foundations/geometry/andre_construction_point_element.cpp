@@ -36,7 +36,8 @@ void andre_construction_point_element::freeself()
 	null();
 }
 
-void andre_construction_point_element::init(andre_construction *Andre, int verbose_level)
+void andre_construction_point_element::init(
+		andre_construction *Andre, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -55,12 +56,14 @@ void andre_construction_point_element::init(andre_construction *Andre, int verbo
 		}
 }
 
-void andre_construction_point_element::unrank(int point_rank, int verbose_level)
+void andre_construction_point_element::unrank(
+		int point_rank, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "andre_construction_point_element::unrank point_rank=" << point_rank << endl;
+		cout << "andre_construction_point_element::unrank "
+				"point_rank=" << point_rank << endl;
 		}
 	andre_construction_point_element::point_rank = point_rank;
 	if (point_rank < spread_size) {

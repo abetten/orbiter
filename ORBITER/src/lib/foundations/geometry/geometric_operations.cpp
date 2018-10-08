@@ -95,16 +95,20 @@ void do_m_subspace_type(int n, finite_field *F, int m,
 		cout << "after allocating intersection_numbers" << endl;
 		}
 	if (m == 1) {
-		P->line_intersection_type_basic(set, set_size, intersection_numbers, verbose_level - 1);
+		P->line_intersection_type_basic(set, set_size,
+				intersection_numbers, verbose_level - 1);
 		}
 	else if (m == 2) {
-		P->plane_intersection_type_basic(set, set_size, intersection_numbers, verbose_level - 1);
+		P->plane_intersection_type_basic(set, set_size,
+				intersection_numbers, verbose_level - 1);
 		}
 	else if (m == n - 1) {
-		P->hyperplane_intersection_type_basic(set, set_size, intersection_numbers, verbose_level - 1);
+		P->hyperplane_intersection_type_basic(set, set_size,
+				intersection_numbers, verbose_level - 1);
 		}
 	else {
-		cout << "do_m_subspace_type m=" << m << " not implemented" << endl;
+		cout << "do_m_subspace_type m=" << m
+				<< " not implemented" << endl;
 		exit(1);
 		}
 	
@@ -113,7 +117,8 @@ void do_m_subspace_type(int n, finite_field *F, int m,
 
 	C.init(intersection_numbers, N, f_second, 0);
 	if (f_v) {
-		cout << "do_m_subspace_type: " << m << "-subspace intersection type: ";
+		cout << "do_m_subspace_type: " << m
+				<< "-subspace intersection type: ";
 		C.print(FALSE /*f_backwards*/);
 		}
 	
@@ -155,14 +160,19 @@ void do_m_subspace_type(int n, finite_field *F, int m,
 				b = S[j];
 				G->unrank_int(b, 0);
 				
-				cout << "subspace " << j << " / " << l << " which is " << b << " has a basis:" << endl;
-				print_integer_matrix_width(cout, G->M, m + 1, d, d, P->F->log10_of_q);
+				cout << "subspace " << j << " / " << l << " which is "
+						<< b << " has a basis:" << endl;
+				print_integer_matrix_width(cout,
+						G->M, m + 1, d, d, P->F->log10_of_q);
 
 
 				P->intersection_of_subspace_with_point_set(
 					G, b, set, set_size, 
-					intersection_set, intersection_set_size, verbose_level);
-				cout << "intersection set of size " << intersection_set_size << ":" << endl;
+					intersection_set,
+					intersection_set_size,
+					verbose_level);
+				cout << "intersection set of size "
+						<< intersection_set_size << ":" << endl;
 				P->print_set(intersection_set, intersection_set_size);
 
 				FREE_int(intersection_set);
@@ -174,7 +184,8 @@ void do_m_subspace_type(int n, finite_field *F, int m,
 #if 0
 		cout << "i : intersection number of plane i" << endl;
 		for (i = 0; i < N_planes; i++) {
-			cout << setw(4) << i << " : " << setw(3) << intersection_numbers[i] << endl;
+			cout << setw(4) << i << " : " << setw(3)
+					<< intersection_numbers[i] << endl;
 			}
 #endif
 		}
@@ -238,12 +249,14 @@ void do_m_subspace_type_fast(int n, finite_field *F, int m,
 			verbose_level - 1);
 		}
 	else {
-		cout << "do_m_subspace_type m=" << m << " not implemented" << endl;
+		cout << "do_m_subspace_type m=" << m
+				<< " not implemented" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "do_m_subspace_type_fast: We found " << len << " planes." << endl;
+		cout << "do_m_subspace_type_fast: We found "
+				<< len << " planes." << endl;
 #if 1
 		for (i = 0; i < len; i++) {
 			cout << setw(3) << i << " : " << R[i] 
@@ -259,12 +272,14 @@ void do_m_subspace_type_fast(int n, finite_field *F, int m,
 
 	C.init(nb_pts_on_plane, len, f_second, 0);
 	if (f_v) {
-		cout << "do_m_subspace_type_fast: " << m << "-subspace intersection type: ";
+		cout << "do_m_subspace_type_fast: " << m
+				<< "-subspace intersection type: ";
 		C.print(FALSE /*f_backwards*/);
 		}
 	
 
-	// we will now look at the subspaces that intersect in the largest number of points:
+	// we will now look at the subspaces that intersect in
+	// the largest number of points:
 
 
 	int *Blocks;
@@ -304,8 +319,10 @@ void do_m_subspace_type_fast(int n, finite_field *F, int m,
 		b = S[i];
 		G->unrank_longinteger(R[b], 0);
 				
-		cout << "subspace " << i << " / " << nb_planes << " which is " << R[b] << " has a basis:" << endl;
-		print_integer_matrix_width(cout, G->M, m + 1, d, d, P->F->log10_of_q);
+		cout << "subspace " << i << " / " << nb_planes << " which is "
+			<< R[b] << " has a basis:" << endl;
+		print_integer_matrix_width(cout,
+				G->M, m + 1, d, d, P->F->log10_of_q);
 
 
 		P->intersection_of_subspace_with_point_set_rank_is_longinteger(
@@ -318,7 +335,8 @@ void do_m_subspace_type_fast(int n, finite_field *F, int m,
 			cout << "intersection_size=" << intersection_size << endl;
 			exit(1);
 			}
-		cout << "intersection set of size " << intersection_size << ":" << endl;
+		cout << "intersection set of size " << intersection_size
+				<< ":" << endl;
 		P->print_set(intersection_set, intersection_size);
 
 		for (j = 0; j < intersection_size; j++) {
@@ -342,7 +360,8 @@ void do_m_subspace_type_fast(int n, finite_field *F, int m,
 	int g;
 			
 	if (f_v) {
-		cout << "Computing plane invariant for " << nb_planes << " planes:" << endl;
+		cout << "Computing plane invariant for " << nb_planes
+				<< " planes:" << endl;
 		}
 	Incma = NEW_int(set_size * nb_planes);
 	ItI = NEW_int(nb_planes * nb_planes);
@@ -364,7 +383,8 @@ void do_m_subspace_type_fast(int n, finite_field *F, int m,
 		for (j = 0; j < nb_planes; j++) {
 			a = 0;
 			for (u = 0; u < set_size; u++) {
-				a += Incma[u * nb_planes + i] * Incma[u * nb_planes + j];
+				a += Incma[u * nb_planes + i] *
+						Incma[u * nb_planes + j];
 				}
 			ItI[i * nb_planes + j] = a;
 			}
@@ -377,7 +397,8 @@ void do_m_subspace_type_fast(int n, finite_field *F, int m,
 		for (j = 0; j < set_size; j++) {
 			a = 0;
 			for (u = 0; u < nb_planes; u++) {
-				a += Incma[i * nb_planes + u] * Incma[j * nb_planes + u];
+				a += Incma[i * nb_planes + u] *
+						Incma[j * nb_planes + u];
 				}
 			IIt[i * set_size + j] = a;
 			}
@@ -438,7 +459,8 @@ void do_line_type(int n, finite_field *F,
 	if (f_v) {
 		cout << "after allocating intersection_numbers" << endl;
 		}
-	P->line_intersection_type(set, set_size, intersection_numbers, 0 /* verbose_level */);
+	P->line_intersection_type(set, set_size,
+			intersection_numbers, 0 /* verbose_level */);
 	
 #if 0
 	for (i = 0; i < P->N_lines; i++) {
@@ -449,7 +471,8 @@ void do_line_type(int n, finite_field *F,
 		for (h = 0; h < P->r; h++) {
 			j = P->Lines_on_point[a * P->r + h];
 			//if (j == 17) {
-			//	cout << "set point " << i << " which is " << a << " lies on line 17" << endl;
+			//	cout << "set point " << i << " which is "
+			//<< a << " lies on line 17" << endl;
 			//	}
 			intersection_numbers[j]++;
 			}
@@ -493,7 +516,9 @@ void do_line_type(int n, finite_field *F,
 				P->unrank_line(basis, b);
 				if (f_show) {
 					cout << "line " << b << " has a basis:" << endl;
-					print_integer_matrix_width(cout, basis, 2, P->n + 1, P->n + 1, P->F->log10_of_q);
+					print_integer_matrix_width(cout,
+							basis, 2, P->n + 1, P->n + 1,
+							P->F->log10_of_q);
 					}
 				int *L;
 				int *I;
@@ -521,7 +546,8 @@ void do_line_type(int n, finite_field *F,
 #if 0
 		cout << "i : intersection number of line i" << endl;
 		for (i = 0; i < P->N_lines; i++) {
-			cout << setw(4) << i << " : " << setw(3) << intersection_numbers[i] << endl;
+			cout << setw(4) << i << " : " << setw(3)
+					<< intersection_numbers[i] << endl;
 			}
 #endif
 		}
@@ -624,7 +650,8 @@ void do_plane_type_failsafe(int n, finite_field *F,
 		}
 }
 
-void do_conic_type(int n, finite_field *F, int f_randomized, int nb_times, 
+void do_conic_type(int n,
+	finite_field *F, int f_randomized, int nb_times,
 	int *set, int set_size, 
 	int *&intersection_type, int &highest_intersection_number, 
 	int verbose_level)
@@ -663,7 +690,8 @@ void do_conic_type(int n, finite_field *F, int f_randomized, int nb_times,
 	FREE_OBJECT(P);
 }
 
-void do_test_diagonal_line(int n, finite_field *F, 
+void do_test_diagonal_line(int n,
+	finite_field *F,
 	int *set_in, int set_size, 
 	char *fname_orbits_on_quadrangles, 
 	int verbose_level)
@@ -674,7 +702,8 @@ void do_test_diagonal_line(int n, finite_field *F,
 
 	if (f_v) {
 		cout << "do_test_diagonal_line" << endl;
-		cout << "fname_orbits_on_quadrangles=" << fname_orbits_on_quadrangles << endl;
+		cout << "fname_orbits_on_quadrangles="
+				<< fname_orbits_on_quadrangles << endl;
 		}
 	if (n != 2) {
 		cout << "do_test_diagonal_line we need n = 2" << endl;
@@ -685,7 +714,8 @@ void do_test_diagonal_line(int n, finite_field *F,
 		exit(1);
 		}
 	if (set_size != F->q + 2) {
-		cout << "do_test_diagonal_line we need set_size == q + 2" << endl;
+		cout << "do_test_diagonal_line "
+				"we need set_size == q + 2" << endl;
 		exit(1);
 		}
 	P = NEW_OBJECT(projective_space);
@@ -752,7 +782,8 @@ void do_test_diagonal_line(int n, finite_field *F,
 			a = sets[h][i];
 			pt[i] = a;
 			if (!int_vec_search_linear(set_in, set_size, a, j)) {
-				cout << "the point " << a << " is not contained in the hyperoval" << endl;
+				cout << "the point " << a << " is not contained "
+						"in the hyperoval" << endl;
 				exit(1);
 				}
 			p_idx[i] = j;
@@ -783,13 +814,15 @@ void do_test_diagonal_line(int n, finite_field *F,
 		cout << endl;
 		
 
-		diag_line = P->line_through_two_points(diag_pts[0], diag_pts[1]);	
+		diag_line = P->line_through_two_points(
+				diag_pts[0], diag_pts[1]);
 		cout << "The diagonal line is " << diag_line << endl;
 
 		P->unrank_line(basis, diag_line);
 		int_matrix_print(basis, 2, 3);
 		
-		if (diag_line != P->line_through_two_points(diag_pts[0], diag_pts[2])) {
+		if (diag_line != P->line_through_two_points(
+				diag_pts[0], diag_pts[2])) {
 			cout << "diaginal points not collinear!" << endl;
 			exit(1);
 			}
@@ -846,7 +879,8 @@ void do_test_diagonal_line(int n, finite_field *F,
 		a = V2[i];
 		cout << i << " : " << a << " : " << Ago_ascii[a] << endl;
 		}
-	cout << "So, there are " << l0 << " external diagonal orbits  and " << l2 << " secant diagonal orbits" << endl;
+	cout << "So, there are " << l0 << " external diagonal orbits "
+			"and " << l2 << " secant diagonal orbits" << endl;
 
 	FREE_OBJECT(P);
 }
@@ -932,7 +966,8 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 	
 	for (i = 0; i < set_size_in; i++) {
 		if (f_vv) {
-			cout << "input point " << i << " is " << the_set_in[i] << " : ";
+			cout << "input point " << i << " is "
+					<< the_set_in[i] << " : ";
 			}
 		P2->unrank_point(v, the_set_in[i]);
 		PG_element_normalize(*FQ, v, 1, 3);
@@ -945,13 +980,16 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 
 			// we are dealing with a point on the line at infinity.
 			// Such a point corresponds to a line of the spread. 
-			// We create the line and then create all q + 1 points on that line.
+			// We create the line and then create all
+			// q + 1 points on that line.
 			
 			if (f_vv) {
 				cout << endl;
 				}
-			// w1[4] is the GF(q)-vector corresponding to the GF(q^2)-vector v[2]
-			// w2[4] is the GF(q)-vector corresponding to the GF(q^2)-vector v[2] * alpha
+			// w1[4] is the GF(q)-vector corresponding
+			// to the GF(q^2)-vector v[2]
+			// w2[4] is the GF(q)-vector corresponding
+			// to the GF(q^2)-vector v[2] * alpha
 			// where v[2] runs through the points of PG(1,q^2). 
 			// That way, w1[4] and w2[4] are a GF(q)-basis for the 
 			// 2-dimensional subspace v[2] (when viewed over GF(q)), 
@@ -977,9 +1015,11 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 				cout << endl;
 				}
 			
-			// now we create all points on the line spanned by w1[4] and w2[4]:
+			// now we create all points on the line spanned
+			// by w1[4] and w2[4]:
 			// There are q + 1 of these points.
-			// We make sure that the coordinate vectors have a zero in the last spot.
+			// We make sure that the coordinate vectors have
+			// a zero in the last spot.
 			
 			for (h = 0; h < Fq->q + 1; h++) {
 				PG_element_unrank_modified(*Fq, v2, 1, 2, h);
@@ -989,7 +1029,8 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 					cout << " : ";
 					}
 				for (k = 0; k < 4; k++) {
-					w3[k] = Fq->add(Fq->mult(v2[0], w1[k]), Fq->mult(v2[1], w2[k]));
+					w3[k] = Fq->add(Fq->mult(v2[0], w1[k]),
+							Fq->mult(v2[1], w2[k]));
 					}
 				w3[4] = 0;
 				if (f_vv) {
@@ -1006,7 +1047,8 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 		else {
 
 			// we are dealing with an affine point:
-			// We make sure that the coordinate vector has a one in the last spot.
+			// We make sure that the coordinate vector
+			// has a one in the last spot.
 
 
 			for (h = 0; h < 2; h++) {
@@ -1100,14 +1142,16 @@ void do_print_points_in_PG(int n, finite_field *F,
 		cout << setw(5) << h << " : " << setw(5) << a << " : ";
 		int_vec_print(cout, v, d);
 		cout << " : ";
-		F->int_vec_print_elements_exponential(cout, v, d, symbol_for_print);
+		F->int_vec_print_elements_exponential(cout,
+				v, d, symbol_for_print);
 		cout << endl;
 		}
 	FREE_int(v);
 	FREE_OBJECT(P);
 }
 
-void do_print_points_in_orthogonal_space(int epsilon, int n, finite_field *F, 
+void do_print_points_in_orthogonal_space(
+	int epsilon, int n, finite_field *F,
 	int *set_in, int set_size, int verbose_level)
 {
 	int d = n + 1;
@@ -1129,7 +1173,8 @@ void do_print_points_in_orthogonal_space(int epsilon, int n, finite_field *F,
 		//cout << setw(5) << h << " : ";
 		cout << setw(5) << a << " & ";
 		if (F->e > 1) {
-			F->int_vec_print_elements_exponential(cout, v, d, symbol_for_print);
+			F->int_vec_print_elements_exponential(cout,
+					v, d, symbol_for_print);
 			}
 		else {
 			int_vec_print(cout, v, d);
@@ -1140,7 +1185,8 @@ void do_print_points_in_orthogonal_space(int epsilon, int n, finite_field *F,
 	FREE_OBJECT(O);
 }
 
-void do_print_points_on_grassmannian(int n, int k, finite_field *F, 
+void do_print_points_on_grassmannian(
+	int n, int k, finite_field *F,
 	int *set_in, int set_size)
 {
 	grassmann *Grass;
@@ -1174,8 +1220,10 @@ void do_print_points_on_grassmannian(int n, int k, finite_field *F,
 	FREE_OBJECT(Grass);
 }
 
-void do_embed_orthogonal(int epsilon, int n, finite_field *F, 
-	int *set_in, int *&set_out, int set_size, int verbose_level)
+void do_embed_orthogonal(
+	int epsilon, int n, finite_field *F,
+	int *set_in, int *&set_out, int set_size,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -1213,7 +1261,8 @@ void do_embed_orthogonal(int epsilon, int n, finite_field *F,
 }
 
 void do_embed_points(int n, finite_field *F, 
-	int *set_in, int *&set_out, int set_size, int verbose_level)
+	int *set_in, int *&set_out, int set_size,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P1;
@@ -1254,7 +1303,8 @@ void do_embed_points(int n, finite_field *F,
 
 void do_draw_points_in_plane(finite_field *F, 
 	int *set, int set_size, 
-	const char *fname_base, int f_point_labels, int f_embedded, int f_sideways, 
+	const char *fname_base, int f_point_labels,
+	int f_embedded, int f_sideways,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1281,7 +1331,10 @@ void do_draw_points_in_plane(finite_field *F,
 		cout << "do_draw_points_in_plane after P->init" << endl;
 		}
 
-	P->draw_point_set_in_plane(fname_base, set, set_size, TRUE /*f_with_points*/, f_point_labels, f_embedded, f_sideways, rad, 0 /* verbose_level */);
+	P->draw_point_set_in_plane(fname_base, set, set_size,
+			TRUE /*f_with_points*/, f_point_labels,
+			f_embedded, f_sideways, rad,
+			0 /* verbose_level */);
 	FREE_OBJECT(P);
 
 	if (f_v) {
@@ -1309,20 +1362,24 @@ void do_ideal(int n, finite_field *F,
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
-	HPD->init(F, n + 1, degree, FALSE /* f_init_incidence_structure */, verbose_level);
+	HPD->init(F, n + 1, degree,
+		FALSE /* f_init_incidence_structure */,
+		verbose_level);
 
 	Kernel = NEW_int(HPD->nb_monomials * HPD->nb_monomials);
 	w1 = NEW_int(HPD->nb_monomials);
 	w2 = NEW_int(HPD->nb_monomials);
 	
-	HPD->vanishing_ideal(set_in, set_size, r, Kernel, 0 /*verbose_level */);
+	HPD->vanishing_ideal(set_in, set_size,
+			r, Kernel, 0 /*verbose_level */);
 
 	ns = HPD->nb_monomials - r; // dimension of null space
 	cout << "The system has rank " << r << endl;
 	cout << "The ideal has dimension " << ns << endl;
 	cout << "and is generated by:" << endl;
 	int_matrix_print(Kernel, ns, HPD->nb_monomials);
-	cout << "corresponding to the following basis of polynomials:" << endl;
+	cout << "corresponding to the following basis "
+			"of polynomials:" << endl;
 	for (h = 0; h < ns; h++) {
 		HPD->print_equation(cout, Kernel + h * HPD->nb_monomials);
 		cout << endl;
@@ -1332,7 +1389,8 @@ void do_ideal(int n, finite_field *F,
 	cout << "looping over all generators of the ideal:" << endl;
 	for (h = 0; h < ns; h++) {
 		cout << "generator " << h << " / " << ns << ":" << endl;
-		HPD->enumerate_points(Kernel + h * HPD->nb_monomials, Pts, nb_pts, verbose_level);
+		HPD->enumerate_points(Kernel + h * HPD->nb_monomials,
+				Pts, nb_pts, verbose_level);
 		cout << "We found " << nb_pts << " points on the curve" << endl;
 		cout << "They are : ";
 		int_vec_print(cout, Pts, nb_pts);
@@ -1410,11 +1468,13 @@ void do_move_line_in_PG(int n, finite_field *F,
 	Sch->compute_point_orbit(from_line, 0 /*verbose_level*/);
 	len = Sch->orbit_len[0];
 	if (f_v) {
-		cout << "from_line " << from_line << " lies in an orbit of length " << len << endl;
+		cout << "from_line " << from_line << " lies in an orbit "
+				"of length " << len << endl;
 		}
 	pos = Sch->orbit_inv[to_line];
 	if (pos >= len) {
-		cout << "to_line " << to_line << " does not lie in the same orbit as from_line " << from_line << endl;
+		cout << "to_line " << to_line << " does not lie in the "
+				"same orbit as from_line " << from_line << endl;
 		exit(1);
 		}
 	Sch->coset_rep(pos);
@@ -1443,7 +1503,8 @@ void do_move_line_in_PG(int n, finite_field *F,
 }
 
 void do_group_in_PG(int n, finite_field *F, 
-	int *the_set_in, int set_size_in, int f_list_group_elements, int verbose_level)
+	int *the_set_in, int set_size_in,
+	int f_list_group_elements, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1482,7 +1543,8 @@ void do_group_in_PG(int n, finite_field *F,
 		a = set_in[h];
 		P->unrank_point(v, a);
 		cout << setw(5) << h << " : " << setw(5) << a << " : ";
-		F->int_vec_print_elements_exponential(cout, v, d, symbol_for_print);
+		F->int_vec_print_elements_exponential(cout,
+				v, d, symbol_for_print);
 		cout << endl;
 		}
 	FREE_int(v);
@@ -1491,13 +1553,15 @@ void do_group_in_PG(int n, finite_field *F,
 	longinteger_object ago;
 		
 	if (f_v) {
-		cout << "do_group_in_PG before projective_space_set_stabilizer" << endl;
+		cout << "do_group_in_PG before projective_"
+				"space_set_stabilizer" << endl;
 		}
 	S = P->set_stabilizer(the_set_in, set_size_in, verbose_level - 1);
 
 
 	if (f_v) {
-		cout << "do_group_in_PG after projective_space_set_stabilizer" << endl;
+		cout << "do_group_in_PG after projective_"
+				"space_set_stabilizer" << endl;
 		}
 
 	S->group_order(ago);
@@ -1587,7 +1651,8 @@ void do_find_Eckardt_points_from_arc(int n, finite_field *F,
 	int nb_E;
 	int s, i;
 	
-	P->find_Eckardt_points_from_arc_not_on_conic(set_in, E, nb_E, verbose_level);
+	P->find_Eckardt_points_from_arc_not_on_conic(
+			set_in, E, nb_E, verbose_level);
 	for (s = 0; s < nb_E; s++) {
 		cout << s << " / " << nb_E << " : ";
 		E[s].print();
@@ -1610,7 +1675,8 @@ void do_find_Eckardt_points_from_arc(int n, finite_field *F,
 	int *T_idx;
 	int nb_T;
 	
-	S->find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(E_idx, nb_E, 
+	S->find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
+		E_idx, nb_E,
 		T_idx, nb_T, verbose_level);
 	
 	int t_idx;
@@ -1637,10 +1703,13 @@ void do_find_Eckardt_points_from_arc(int n, finite_field *F,
 	
 	for (i = 0; i < nb_T; i++) {
 		t_idx = T_idx[i];
-		cout << i << " / " << nb_T << " T_{" << S->Trihedral_pair_labels[t_idx] << "}" << endl;
+		cout << i << " / " << nb_T << " T_{"
+			<< S->Trihedral_pair_labels[t_idx] << "}" << endl;
 		
-		S->create_surface_and_planes_from_trihedral_pair_and_arc(set_in /* arc6 */, t_idx, 
-			Planes + i * 6 * 4, The_equation + i * 20, Lambda[i], 0 /*verbose_level*/);
+		S->create_surface_and_planes_from_trihedral_pair_and_arc(
+			set_in /* arc6 */, t_idx,
+			Planes + i * 6 * 4, The_equation + i * 20,
+			Lambda[i], 0 /*verbose_level*/);
 
 		cout << "planes:" << endl;
 		int_matrix_print(Planes + i * 6 * 4, 6, 4);
@@ -1654,11 +1723,15 @@ void do_find_Eckardt_points_from_arc(int n, finite_field *F,
 
 	for (i = 0; i < nb_T; i++) {
 
-		cout << "testing trihedral pair " << i << " / " << nb_T << ":" << endl;
+		cout << "testing trihedral pair " << i << " / "
+				<< nb_T << ":" << endl;
 
-		F->map_points_to_points_projectively(4 /* d */, 1 /* k */, Planes, Planes + i * 6 * 4, Transformation, nb_maps, verbose_level);
+		F->map_points_to_points_projectively(4 /* d */, 1 /* k */,
+			Planes, Planes + i * 6 * 4, Transformation, nb_maps,
+			verbose_level);
 		Nb_maps[i] = nb_maps;
-		cout << "testing trihedral pair " << i << " / " << nb_T << " done, we found " << nb_maps << " mappings" << endl;
+		cout << "testing trihedral pair " << i << " / " << nb_T
+			<< " done, we found " << nb_maps << " mappings" << endl;
 		}
 
 

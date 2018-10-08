@@ -48,19 +48,22 @@ void hjelmslev::freeself()
 	null();
 }
 
-void hjelmslev::init(finite_ring *R, int n, int k, int verbose_level)
+void hjelmslev::init(finite_ring *R,
+		int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "hjelmslev::init n=" << n << " k=" << k << " q=" << R->q << endl;
+		cout << "hjelmslev::init n=" << n << " k=" << k
+				<< " q=" << R->q << endl;
 		}
 	hjelmslev::R = R;
 	hjelmslev::n = n;
 	hjelmslev::k = k;
 	n_choose_k_p = generalized_binomial(n, k, R->p);
 	if (f_v) {
-		cout << "hjelmslev::init n_choose_k_p = " << n_choose_k_p << endl;
+		cout << "hjelmslev::init n_choose_k_p = "
+				<< n_choose_k_p << endl;
 		}
 	G = NEW_OBJECT(grassmann);
 	G->init(n, k, R->Fp, verbose_level);
@@ -130,9 +133,12 @@ int hjelmslev::rank_int(int *M, int verbose_level)
 	for (i = 0; i < k * n; i++) {
 		Mtx[i] = M[i];
 		}
-	rk_mtx = R->Gauss_int(Mtx, f_special, f_complete, base_cols, FALSE, NULL, k, n, n, 0);
+	rk_mtx = R->Gauss_int(Mtx,
+			f_special, f_complete,
+			base_cols, FALSE, NULL, k, n, n, 0);
 	if (f_v) {
-		cout << "hjelmslev::rank_int after Gauss, rk_mtx=" << rk_mtx << endl;
+		cout << "hjelmslev::rank_int after Gauss, "
+				"rk_mtx=" << rk_mtx << endl;
 		print_integer_matrix_width(cout, Mtx, k, n, n, 5);
 		cout << "base_cols=";
 		int_vec_print(cout, base_cols, rk_mtx);
@@ -168,7 +174,8 @@ int hjelmslev::rank_int(int *M, int verbose_level)
 	a = G->rank_int(0);
 	rk = b * n_choose_k_p + a;
 	if (f_v) {
-		cout << "hjelmslev::rank_int rk=" << rk << " a=" << a << " b=" << b << endl;
+		cout << "hjelmslev::rank_int rk=" << rk
+				<< " a=" << a << " b=" << b << endl;
 		}
 	return rk;
 }

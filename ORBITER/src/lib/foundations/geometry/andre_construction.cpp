@@ -64,7 +64,8 @@ void andre_construction::freeself()
 	null();
 }
 
-void andre_construction::init(finite_field *F, int k, int *spread_elements_numeric, 
+void andre_construction::init(finite_field *F,
+	int k, int *spread_elements_numeric,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -92,15 +93,19 @@ void andre_construction::init(finite_field *F, int k, int *spread_elements_numer
 		cout << "andre_construction::init after Grass->init" << endl;
 		}
 
-	andre_construction::spread_elements_numeric = NEW_int(spread_size);
+	andre_construction::spread_elements_numeric =
+			NEW_int(spread_size);
 	spread_elements_numeric_sorted = NEW_int(spread_size);
 	for (i = 0; i < spread_size; i++) {
-		andre_construction::spread_elements_numeric[i] = spread_elements_numeric[i];
-		spread_elements_numeric_sorted[i] = spread_elements_numeric[i];
+		andre_construction::spread_elements_numeric[i] =
+				spread_elements_numeric[i];
+		spread_elements_numeric_sorted[i] =
+				spread_elements_numeric[i];
 		}
 
 	if (f_v) {
-		cout << "andre_construction::init allocating spread_elements_perm" << endl;
+		cout << "andre_construction::init allocating "
+				"spread_elements_perm" << endl;
 		}
 
 	spread_elements_perm = NEW_int(spread_size);
@@ -108,9 +113,13 @@ void andre_construction::init(finite_field *F, int k, int *spread_elements_numer
 	for (i = 0; i < spread_size; i++) {
 		spread_elements_perm_inv[i] = i;
 		}
-	int_vec_heapsort_with_log(spread_elements_numeric_sorted, spread_elements_perm_inv, spread_size);
+	int_vec_heapsort_with_log(
+			spread_elements_numeric_sorted,
+			spread_elements_perm_inv,
+			spread_size);
 	if (f_v) {
-		cout << "andre_construction::init int_vec_heapsort_with_log" << endl;
+		cout << "andre_construction::init "
+				"int_vec_heapsort_with_log" << endl;
 		}
 	for (i = 0; i < spread_size; i++) {
 		j = spread_elements_perm_inv[i];
@@ -123,17 +132,22 @@ void andre_construction::init(finite_field *F, int k, int *spread_elements_numer
 
 	spread_elements_genma = NEW_int(spread_size * k * n);
 	for (i = 0; i < spread_size; i++) {
-		Grass->unrank_int_here(spread_elements_genma + i * k * n, spread_elements_numeric[i], 0);
+		Grass->unrank_int_here(
+			spread_elements_genma + i * k * n,
+			spread_elements_numeric[i], 0);
 		}
 	pivot = NEW_int(spread_size * k);
 	non_pivot = NEW_int(spread_size * (n - k));
 	for (i = 0; i < spread_size; i++) {
-		F->Gauss_simple(spread_elements_genma + i * k * n, k, n, pivot + i * k, 0 /*verbose_level*/);
+		F->Gauss_simple(spread_elements_genma + i * k * n,
+				k, n, pivot + i * k, 0 /*verbose_level*/);
 		set_complement(pivot + i * k, k, non_pivot + i * (n - k), a, n);
 		if (a != n - k) {
-			cout << "andre_construction::init problem in set_complement" << endl;
+			cout << "andre_construction::init "
+					"problem in set_complement" << endl;
 			}
-		cout << "andre_construction::init spread element " << i << " is " << spread_elements_numeric[i] << ":" << endl;
+		cout << "andre_construction::init spread element " << i
+				<< " is " << spread_elements_numeric[i] << ":" << endl;
 		int_matrix_print(spread_elements_genma + i * k * n, k, n);
 		cout << "pivot: ";
 		int_vec_print(cout, pivot + i * k, k);
@@ -147,7 +161,8 @@ void andre_construction::init(finite_field *F, int k, int *spread_elements_numer
 		}
 }
 
-void andre_construction::points_on_line(andre_construction_line_element *Line, 
+void andre_construction::points_on_line(
+	andre_construction_line_element *Line,
 	int *pts_on_line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -164,7 +179,8 @@ void andre_construction::points_on_line(andre_construction_line_element *Line,
 	else {
 		pts_on_line[0] = Line->parallel_class_idx;
 		for (i = 0; i < order; i++) {
-			pts_on_line[1 + i] = Line->make_affine_point(i, 0 /* verbose_level*/);
+			pts_on_line[1 + i] = Line->make_affine_point(
+					i, 0 /* verbose_level*/);
 			}
 		}
 	if (f_v) {
