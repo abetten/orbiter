@@ -64,7 +64,8 @@ void klein_correspondence::freeself()
 		}
 }
 
-void klein_correspondence::init(finite_field *F, orthogonal *O, int verbose_level)
+void klein_correspondence::init(finite_field *F,
+		orthogonal *O, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -188,7 +189,8 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, int verbose_leve
 		}
 	for (i = 0; i < P3->N_lines; i++) {
 		if (Point_on_quadric_to_line[i] == -1) {
-			cout << "Something is wrong with Point_on_quadric_to_line" << endl;
+			cout << "Something is wrong with "
+					"Point_on_quadric_to_line" << endl;
 			exit(1);
 			}
 		}
@@ -212,8 +214,10 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, int verbose_leve
 	Pt_rk = NEW_int(P3->N_lines);
 
 	for (i = 0; i < P3->N_lines; i++) {
-		O->unrank_point(coordinates_of_quadric_points + i * d, 1, i, 0);
-		int_vec_copy(coordinates_of_quadric_points + i * d, v6, 6);
+		O->unrank_point(
+			coordinates_of_quadric_points + i * d, 1, i, 0);
+		int_vec_copy(
+			coordinates_of_quadric_points + i * d, v6, 6);
 		PG_element_rank_modified(*F, v6, 1, d, a);
 		Pt_rk[i] = a;
 		}

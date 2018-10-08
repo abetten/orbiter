@@ -355,7 +355,8 @@ void buekenhout_metz::init_ovoid(int verbose_level)
 		}
 }
 
-void buekenhout_metz::init_ovoid_Uab_even(int a, int b, int verbose_level)
+void buekenhout_metz::init_ovoid_Uab_even(
+		int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -370,7 +371,8 @@ void buekenhout_metz::init_ovoid_Uab_even(int a, int b, int verbose_level)
 		}
 	
 	int X0, X1, Y1, Z, i, aa;
-	int a1, a2, /*b1,*/ b2, delta, delta2, lambda, lambda_big, c1, c2, c3;
+	int a1, a2, /*b1,*/ b2, delta, delta2;
+	int lambda, lambda_big, c1, c2, c3;
 	
 	a1 = components[a * 2 + 0];
 	a2 = components[a * 2 + 1];
@@ -1123,7 +1125,8 @@ void buekenhout_metz::investigate_line_orbit(int h, int verbose_level)
 		
 
 	// make sure the line is a secant line:
-	if (!int_vec_search_linear(secant_lines, nb_secant_lines, the_line, idx)) {
+	if (!int_vec_search_linear(secant_lines,
+			nb_secant_lines, the_line, idx)) {
 		if (f_v) {
 			cout << "line-orbit " << h << " represented by line "
 				<< the_line << " does not consist of "

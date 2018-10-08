@@ -36,7 +36,8 @@ void desarguesian_spread::init(int n, int m, int s,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "desarguesian_spread::init m=" << m << " n=" << n << " s=" << s << endl;
+		cout << "desarguesian_spread::init m=" << m
+				<< " n=" << n << " s=" << s << endl;
 		}
 	desarguesian_spread::n = n;
 	desarguesian_spread::m = m;
@@ -51,16 +52,19 @@ void desarguesian_spread::init(int n, int m, int s,
 		cout << "desarguesian_spread::init Q=" << Q << endl;
 		}
 	if (i_power_j(q, s) != Q) {
-		cout << "desarguesian_spread::init i_power_j(q, s) != Q" << endl;
+		cout << "desarguesian_spread::init "
+				"i_power_j(q, s) != Q" << endl;
 		exit(1);
 		}
 	if (s != SubS->s) {
-		cout << "desarguesian_spread::init s != SubS->s" << endl;
+		cout << "desarguesian_spread::init "
+				"s != SubS->s" << endl;
 		exit(1);
 		}
 	nb_points = nb_PG_elements(n - 1, q);
 	if (f_v) {
-		cout << "desarguesian_spread::init nb_points = " << nb_points << endl;
+		cout << "desarguesian_spread::init "
+				"nb_points = " << nb_points << endl;
 		}
 
 	N = nb_PG_elements(m - 1, Q);
@@ -70,15 +74,19 @@ void desarguesian_spread::init(int n, int m, int s,
 
 	nb_points_per_spread_element = nb_PG_elements(s - 1, q);
 	if (f_v) {
-		cout << "desarguesian_spread::init nb_points_per_spread_element = " << nb_points_per_spread_element << endl;
+		cout << "desarguesian_spread::init "
+				"nb_points_per_spread_element = "
+				<< nb_points_per_spread_element << endl;
 		}
 
 	if (f_v) {
-		cout << "desarguesian_spread::init before calculate_spread_elements" << endl;
+		cout << "desarguesian_spread::init "
+				"before calculate_spread_elements" << endl;
 		}
 	calculate_spread_elements(verbose_level - 2);
 	if (f_v) {
-		cout << "desarguesian_spread::init after calculate_spread_elements" << endl;
+		cout << "desarguesian_spread::init "
+				"after calculate_spread_elements" << endl;
 		}
 
 	if (f_v) {
@@ -86,7 +94,8 @@ void desarguesian_spread::init(int n, int m, int s,
 		}
 }
 
-void desarguesian_spread::calculate_spread_elements(int verbose_level)
+void desarguesian_spread::calculate_spread_elements(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -118,12 +127,14 @@ void desarguesian_spread::calculate_spread_elements(int verbose_level)
 			if (FALSE) {
 				cout << "i=" << i << " / " << s << endl;
 				}
-			// multiply by the i-th basis element, put into the vector w[m]
+			// multiply by the i-th basis element,
+			// put into the vector w[m]
 			a = SubS->Basis[i];
 			for (j = 0; j < m; j++) {
 				b = v[j];
 				if (FALSE) {
-					cout << "j=" << j << " / " << m << " a=" << a << " b=" << b << endl;
+					cout << "j=" << j << " / " << m
+							<< " a=" << a << " b=" << b << endl;
 					}
 				c = FQ->mult(b, a);
 				w[j] = c;
@@ -144,7 +155,9 @@ void desarguesian_spread::calculate_spread_elements(int verbose_level)
 			cout << endl;
 			int_matrix_print(z, s, n);
 			}
-		int_vec_copy(z, Spread_elements + h * spread_element_size, spread_element_size);
+		int_vec_copy(z,
+			Spread_elements + h * spread_element_size,
+			spread_element_size);
 		}
 	FREE_int(v);
 	FREE_int(w);
@@ -155,7 +168,8 @@ void desarguesian_spread::calculate_spread_elements(int verbose_level)
 	int rk;
 
 	if (f_v) {
-		cout << "desarguesian_spread::calculate_spread_elements computing List_of_points" << endl;
+		cout << "desarguesian_spread::calculate_spread_elements "
+				"computing List_of_points" << endl;
 		}
 	v = NEW_int(s);
 	w = NEW_int(n);
@@ -175,7 +189,9 @@ void desarguesian_spread::calculate_spread_elements(int verbose_level)
 			cout << "basis element " << h << " / " << N << ":" << endl;
 			int_matrix_print(Spread_elt_basis, s, n);
 			cout << "Consists of the following points:" << endl;
-			int_vec_print(cout, List_of_points + h * nb_points_per_spread_element, nb_points_per_spread_element);
+			int_vec_print(cout,
+				List_of_points + h * nb_points_per_spread_element,
+				nb_points_per_spread_element);
 			cout << endl;
 			}
 		}
@@ -188,7 +204,8 @@ void desarguesian_spread::calculate_spread_elements(int verbose_level)
 }
 
 
-void desarguesian_spread::compute_intersection_type(int k, int *subspace, 
+void desarguesian_spread::compute_intersection_type(
+	int k, int *subspace,
 	int *intersection_dimensions, int verbose_level)
 // intersection_dimensions[N]
 {
@@ -204,9 +221,11 @@ void desarguesian_spread::compute_intersection_type(int k, int *subspace,
 	intersection = NEW_int(n * n);
 	for (h = 0; h < N; h++) {
 		if (f_vv) {
-			cout << "desarguesian_spread::compute_intersection_type " << h << " / " << N << endl;
+			cout << "desarguesian_spread::compute_intersection_type "
+					<< h << " / " << N << endl;
 			}
-		Fq->intersect_subspaces(n, s, Spread_elements + h * spread_element_size, 
+		Fq->intersect_subspaces(n, s,
+			Spread_elements + h * spread_element_size,
 			k, subspace, 
 			k3, intersection, 
 			0 /*verbose_level - 2*/);
@@ -215,11 +234,13 @@ void desarguesian_spread::compute_intersection_type(int k, int *subspace,
 		}
 	FREE_int(intersection);
 	if (f_v) {
-		cout << "desarguesian_spread::compute_intersection_type done" << endl;
+		cout << "desarguesian_spread::compute_intersection_type "
+				"done" << endl;
 		}
 }
 
-void desarguesian_spread::compute_shadow(int *Basis, int basis_sz, 
+void desarguesian_spread::compute_shadow(
+	int *Basis, int basis_sz,
 	int *is_in_shadow, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -250,7 +271,8 @@ void desarguesian_spread::compute_shadow(int *Basis, int basis_sz,
 			for (j = 0; j < nb_points_per_spread_element; j++) {
 				rk = List_of_points[i * nb_points_per_spread_element + j];
 				if (is_in_shadow[rk]) {
-					cout << "is_in_shadow[rk] is TRUE, something is wrong with the spread" << endl;
+					cout << "is_in_shadow[rk] is TRUE, something is "
+							"wrong with the spread" << endl;
 					exit(1);
 					}
 				is_in_shadow[rk] = TRUE;
@@ -294,7 +316,8 @@ void desarguesian_spread::compute_linear_set(int *Basis, int basis_sz,
 			}
 		}
 	if (f_v) {
-		cout << "desarguesian_spread::compute_linear_set The linear set is: ";
+		cout << "desarguesian_spread::compute_linear_set "
+				"The linear set is: ";
 		int_vec_print(cout, the_linear_set, the_linear_set_sz);
 		cout << endl;
 		}

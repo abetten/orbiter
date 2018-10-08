@@ -53,7 +53,10 @@ void decomposition::freeself()
 	null();
 }
 
-void decomposition::init_inc_and_stack(incidence_structure *Inc, partitionstack *Stack, int verbose_level)
+void decomposition::init_inc_and_stack(
+		incidence_structure *Inc,
+		partitionstack *Stack,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -69,7 +72,8 @@ void decomposition::init_inc_and_stack(incidence_structure *Inc, partitionstack 
 		}
 }
 
-void decomposition::init_incidence_matrix(int m, int n, int *M, int verbose_level)
+void decomposition::init_incidence_matrix(
+		int m, int n, int *M, int verbose_level)
 // copies the incidence matrix
 {
 	int f_v = (verbose_level >= 1);

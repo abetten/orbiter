@@ -184,7 +184,8 @@ int braun_test_upper_bound(int v, int k)
 				}
 			}
 		}
-	//cout << "braun_test_upper_bound v=" << v << " k=" << k << " bound=" << bound << endl;
+	//cout << "braun_test_upper_bound v=" << v << " k=" << k
+	//<< " bound=" << bound << endl;
 	return bound;
 }
 
@@ -208,7 +209,8 @@ void TDO_refine_init_upper_bounds(int v_max)
 		bound = TDO_upper_bounds_initial_data[u * 3 + 2];
 		bound_braun = braun_test_upper_bound(i, j);
 		if (bound < bound_braun) {
-			//cout << "i=" << i << " j=" << j << " bound=" << bound << " bound_braun=" << bound_braun << endl;
+			//cout << "i=" << i << " j=" << j << " bound=" << bound
+			//<< " bound_braun=" << bound_braun << endl;
 			}
 		TDO_upper_bound_internal(i, j) = bound;
 		TDO_upper_bound_source(i, j) = 1;
@@ -222,15 +224,18 @@ void TDO_refine_init_upper_bounds(int v_max)
 			TDO_upper_bound_source(i, j) = 2;
 			bound_maxfit = packing_number_via_maxfit(i, j);
 			if (bound_maxfit < bound_braun) {
-				//cout << "i=" << i << " j=" << j << " bound_braun=" << bound_braun 
+				//cout << "i=" << i << " j=" << j
+				//<< " bound_braun=" << bound_braun
 				//	<< " bound_maxfit=" << bound_maxfit << endl;
 				TDO_upper_bound_internal(i, j) = bound_maxfit;
 				TDO_upper_bound_source(i, j) = 3;
 				}
 			}
 		}
-	//print_integer_matrix_width(cout, TDO_upper_bounds_table, v_max, v_max, v_max, 3);
-	//print_integer_matrix_width(cout, TDO_upper_bounds_table_source, v_max, v_max, v_max, 3);
+	//print_integer_matrix_width(cout,
+	//TDO_upper_bounds_table, v_max, v_max, v_max, 3);
+	//print_integer_matrix_width(cout,
+	//TDO_upper_bounds_table_source, v_max, v_max, v_max, 3);
 }
 
 void TDO_refine_extend_upper_bounds(int new_v_max)
@@ -240,7 +245,8 @@ void TDO_refine_extend_upper_bounds(int new_v_max)
 	int i, j, bound, bound_braun, bound_maxfit, src;
 	int v_max;
 
-	//cout << "TDO_refine_extend_upper_bounds new_v_max=" << new_v_max << endl;
+	//cout << "TDO_refine_extend_upper_bounds
+	//new_v_max=" << new_v_max << endl;
 	v_max = TDO_upper_bounds_v_max;
 	new_upper_bounds = NEW_int(new_v_max * new_v_max);
 	new_upper_bounds_source = NEW_int(new_v_max * new_v_max);
@@ -268,15 +274,18 @@ void TDO_refine_extend_upper_bounds(int new_v_max)
 			TDO_upper_bound_source(i, j) = 2;
 			bound_maxfit = packing_number_via_maxfit(i, j);
 			if (bound_maxfit < bound_braun) {
-				//cout << "i=" << i << " j=" << j << " bound_braun=" << bound_braun 
+				//cout << "i=" << i << " j=" << j
+				//<< " bound_braun=" << bound_braun
 				//	<< " bound_maxfit=" << bound_maxfit << endl;
 				TDO_upper_bound_internal(i, j) = bound_maxfit;
 				TDO_upper_bound_source(i, j) = 3;
 				}
 			}
 		}
-	//print_integer_matrix_width(cout, TDO_upper_bounds_table, new_v_max, new_v_max, new_v_max, 3);
-	//print_integer_matrix_width(cout, TDO_upper_bounds_table_source, new_v_max, new_v_max, new_v_max, 3);
+	//print_integer_matrix_width(cout,
+	//TDO_upper_bounds_table, new_v_max, new_v_max, new_v_max, 3);
+	//print_integer_matrix_width(cout,
+	//TDO_upper_bounds_table_source, new_v_max, new_v_max, new_v_max, 3);
 	
 }
 

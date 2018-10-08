@@ -526,7 +526,8 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 				}
 			}
 		else {
-			cout << "while reading fuse, I cannot figure out which fuse info you meant" << endl;
+			cout << "while reading fuse, I cannot figure out "
+					"which fuse info you meant" << endl;
 			exit(1);
 			}
 		}
@@ -555,7 +556,8 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 		}
 	//cout << "before ignore" << endl;
 	aStream.ignore(INT_MAX, '>');
-	//cout << "geo_parameter::input_mode_single v=" << v << " b=" << b << endl;
+	//cout << "geo_parameter::input_mode_single
+	//v=" << v << " b=" << b << endl;
 #endif
 #ifdef SYSTEMWINDOWS
 	cout << "geo_parameter::input_mode_single "
@@ -800,7 +802,8 @@ void geo_parameter::print_C_source()
 	cout << "int PRint_intERVAL_SECONDS = 10;" << endl;
 }
 
-void geo_parameter::convert_single_to_stack_fuse_simple_pt(int verbose_level)
+void geo_parameter::convert_single_to_stack_fuse_simple_pt(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1061,7 +1064,8 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		else {
 			nb_classes++;
 			class_first[nb_classes] =
-					class_first[nb_classes - 1] + class_len[nb_classes - 1];
+					class_first[nb_classes - 1] +
+					class_len[nb_classes - 1];
 			class_len[nb_classes] = 1;
 			}
 		}
@@ -1341,7 +1345,8 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		int_vec_classify(the_fuse[d], nb_V,
 				class_first[d], class_len[d], nb_classes[d]);
 		for (I = 0; I < nb_classes[d]; I++) {
-			block_length[d][I] = tdo_scheme_get_row_class_length_fused(G, h, 
+			block_length[d][I] =
+				tdo_scheme_get_row_class_length_fused(G, h,
 				class_first[d][I], class_len[d][I]);
 			}
 		class_idx[d] = NEW_int(nb_classes[d]);
@@ -1392,7 +1397,8 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 					}
 				e = s / M;
 				if (e * M != s) {
-					cout << "problems figuring out the previous scheme" << endl;
+					cout << "problems figuring out the "
+							"previous scheme" << endl;
 					cout << "d=" << d << endl;
 					cout << "s=" << s << endl;
 					//cout << "L=" << L << endl;
@@ -1405,7 +1411,8 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 				}
 			} // next j
 		if (f_v) {
-			cout << "depth " << d << ", the previous col scheme is" << endl;
+			cout << "depth " << d << ", the previous "
+					"col scheme is" << endl;
 			print_integer_matrix_width(cout,
 					prev_scheme[d], nb_classes[d],
 					fuse_block_len[d], fuse_block_len[d], 4);
@@ -1891,18 +1898,21 @@ void geo_parameter::print_schemes()
 	cout << "extra_row_level=" << extra_row_level << endl;
 	cout << "extra_col_level=" << extra_col_level << endl;
 	cout << "lambda_level=" << lambda_level << endl;
-	cout << "geo_parameter::print_schemes before TDO.init_TDO" << endl;
+	cout << "geo_parameter::print_schemes "
+			"before TDO.init_TDO" << endl;
 #endif
 	TDO.init_TDO(Part, Entries, row_level, col_level, 
 		extra_row_level, extra_col_level, 
 		lambda_level, 0/*verbose_level - 1*/);
-	//cout << "geo_parameter::print_schemes after TDO.init_TDO" << endl;
+	//cout << "geo_parameter::print_schemes
+	//after TDO.init_TDO" << endl;
 			
 	FREE_int(Part);
 	FREE_int(Entries);
 
 	TDO.print_all_schemes();
-	cout << "geo_parameter::print_schemes after TDO.print_all_schemes" << endl;
+	cout << "geo_parameter::print_schemes after "
+			"TDO.print_all_schemes" << endl;
 #endif
 }
 

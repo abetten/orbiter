@@ -67,10 +67,12 @@ void hermitian::init(finite_field *F, int nb_vars, int verbose_level)
 	hermitian::q = i_power_j(F->p, F->e >> 1);
 	hermitian::k = nb_vars;
 	if (f_v) {
-		cout << "hermitian::init Q=" << F->q << " q=" << q << " nb_vars=" << nb_vars << endl;
+		cout << "hermitian::init Q=" << F->q << " q=" << q
+				<< " nb_vars=" << nb_vars << endl;
 		}
 	if (F->e % 2) {
-		cout << "hermitian::init field must have a quadratic subfield" << endl;
+		cout << "hermitian::init field must have a "
+				"quadratic subfield" << endl;
 		exit(1);
 		}
 	cnt_N = NEW_int(k + 1);
@@ -118,9 +120,11 @@ void hermitian::init(finite_field *F, int nb_vars, int verbose_level)
 		int_vec_print(cout, norm_one_elements, q + 1);
 		cout << endl;
 		}
-	cout << "i : norm_one_elements[i] : F->N2(norm_one_elements[i])" << endl;
+	cout << "i : norm_one_elements[i] : "
+			"F->N2(norm_one_elements[i])" << endl;
 	for (i = 0; i < q + 1; i++) {
-		cout << i << " : " << norm_one_elements[i] << " : " << F->N2(norm_one_elements[i]) << endl;
+		cout << i << " : " << norm_one_elements[i] << " : "
+				<< F->N2(norm_one_elements[i]) << endl;
 		}
 	alpha = F->p;
 	beta = F->alpha_power(q + 1);
@@ -149,7 +153,8 @@ int hermitian::rank_point(int *v)
 	return rk;
 }
 
-void hermitian::list_of_points_embedded_in_PG(int *&Pts, int &nb_pts, int verbose_level)
+void hermitian::list_of_points_embedded_in_PG(
+	int *&Pts, int &nb_pts, int verbose_level)
 {
 	int i, rk;
 	int *v;
@@ -351,7 +356,8 @@ void hermitian::N_unrank(int *v, int len, int rk, int verbose_level)
 			coset0 = coset / (q + 1);
 			rk0 = coset % (q + 1);
 			if (f_v) {
-				cout << "N_unrank case 1 coset0=" << coset0 << " rk0=" << rk0 << endl;
+				cout << "N_unrank case 1 coset0=" << coset0
+						<< " rk0=" << rk0 << endl;
 				}
 			m_val = F->negate(val);
 			if (f_v) {
@@ -371,7 +377,8 @@ void hermitian::N_unrank(int *v, int len, int rk, int verbose_level)
 			if (f_v) {
 				cout << "N_unrank case 1 coset0=" << coset0 << endl;
 				}
-			v[len - 1] = F->mult(F->alpha_power(coset0), norm_one_elements[rk0]);
+			v[len - 1] = F->mult(F->alpha_power(coset0),
+					norm_one_elements[rk0]);
 			}
 		}
 	else {
@@ -530,10 +537,12 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 		coset2 = rk1 / cnt_N1[len - 1];
 		rk2 = rk1 % cnt_N1[len - 1];
 		if (f_v) {
-			cout << "N1_unrank case 1 coset1=" << coset1 << " rk1=" << rk1 << endl;
+			cout << "N1_unrank case 1 coset1=" << coset1
+					<< " rk1=" << rk1 << endl;
 			}
 		if (f_v) {
-			cout << "N1_unrank case 1 coset2=" << coset2 << " rk2=" << rk2 << endl;
+			cout << "N1_unrank case 1 coset2=" << coset2
+					<< " rk2=" << rk2 << endl;
 			}
 		
 		N1_unrank(v, len - 1, rk2, verbose_level - 1);
@@ -542,7 +551,8 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 			cout << "N1_unrank case 1 val=" << val << endl;
 			}
 		if (val != 1) {
-			cout << "N1_unrank case 1 error val=" << val << " should be 1" << endl;
+			cout << "N1_unrank case 1 error val=" << val
+					<< " should be 1" << endl;
 			exit(1);
 			}
 		coset2++;
@@ -573,7 +583,8 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 			exit(1);
 			}
 
-		v[len - 1] = F->mult(F->alpha_power(log), norm_one_elements[coset1]);
+		v[len - 1] = F->mult(F->alpha_power(log),
+				norm_one_elements[coset1]);
 		}
 	else {
 		if (f_v) {
@@ -584,7 +595,8 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 		coset = rk / cnt_S[len - 1];
 		rk1 = rk % cnt_S[len - 1];
 		if (f_v) {
-			cout << "N1_unrank case 2 coset=" << coset << " rk1=" << rk1 << endl;
+			cout << "N1_unrank case 2 coset=" << coset
+					<< " rk1=" << rk1 << endl;
 			}
 		S_unrank(v, len - 1, rk1, verbose_level - 1);
 		v[len - 1] = norm_one_elements[coset];
@@ -599,7 +611,8 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 int hermitian::N1_rank(int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int rk, coset, rk2, coset2, rk1, coset1, val, new_val, log, A, a, av, i, log1;
+	int rk, coset, rk2, coset2, rk1, coset1, val;
+	int new_val, log, A, a, av, i, log1;
 	
 	if (f_v) {
 		cout << "N1_rank len=" << len << " : ";
@@ -609,7 +622,8 @@ int hermitian::N1_rank(int *v, int len, int verbose_level)
 	if (len == 1) {
 		rk = index_of_norm_one_element[v[0]];
 		if (f_v) {
-			cout << "N1_rank len=" << len << " done, rk=" << rk << endl;
+			cout << "N1_rank len=" << len << " done, "
+					"rk=" << rk << endl;
 			}
 		return rk;
 		}
@@ -619,7 +633,8 @@ int hermitian::N1_rank(int *v, int len, int verbose_level)
 			}
 		rk = N1_rank(v, len - 1, verbose_level - 1);
 		if (f_v) {
-			cout << "N1_rank len=" << len << " done, rk=" << rk << endl;
+			cout << "N1_rank len=" << len << " done, "
+					"rk=" << rk << endl;
 			}
 		return rk;
 		}
@@ -689,7 +704,8 @@ int hermitian::N1_rank(int *v, int len, int verbose_level)
 		rk1 = S_rank(v, len - 1, verbose_level - 1);
 		coset = index_of_norm_one_element[v[len - 1]];
 		if (f_v) {
-			cout << "N1_rank case 2 coset=" << coset << " rk1=" << rk1 << endl;
+			cout << "N1_rank case 2 coset=" << coset
+					<< " rk1=" << rk1 << endl;
 			}
 
 		rk += coset * cnt_S[len - 1] + rk1;
@@ -702,13 +718,15 @@ int hermitian::N1_rank(int *v, int len, int verbose_level)
 	return rk;
 }
 
-void hermitian::S_unrank(int *v, int len, int rk, int verbose_level)
+void hermitian::S_unrank(int *v,
+		int len, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk1, coset, log, val, m_val;
 	
 	if (rk >= cnt_S[len]) {
-		cout << "hermitian::S_unrank fatal: rk >= cnt_S[len]" << endl;
+		cout << "hermitian::S_unrank fatal: "
+				"rk >= cnt_S[len]" << endl;
 		exit(1);
 		}
 	if (len == 1) {
@@ -722,7 +740,8 @@ void hermitian::S_unrank(int *v, int len, int rk, int verbose_level)
 		coset = rk / cnt_N[len - 1];
 		rk1 = rk % cnt_N[len - 1];
 		if (f_v) {
-			cout << "S_unrank case 1 coset=" << coset << " rk1=" << rk1 << endl;
+			cout << "S_unrank case 1 coset=" << coset
+					<< " rk1=" << rk1 << endl;
 			}
 		N_unrank(v, len - 1, rk1, verbose_level);
 		val = evaluate_hermitian_form(v, len - 1);
@@ -741,7 +760,8 @@ void hermitian::S_unrank(int *v, int len, int rk, int verbose_level)
 			cout << "hermitian::S_unrank fatal: log == -1" << endl;
 			exit(1);
 			}
-		v[len - 1] = F->mult(F->alpha_power(log), norm_one_elements[coset]);
+		v[len - 1] = F->mult(F->alpha_power(log),
+				norm_one_elements[coset]);
 		}
 	else {
 		if (f_v) {
@@ -821,17 +841,20 @@ int hermitian::S_rank(int *v, int len, int verbose_level)
 }
 
 
-void hermitian::Sbar_unrank(int *v, int len, int rk, int verbose_level)
+void hermitian::Sbar_unrank(int *v,
+		int len, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int log, a, b, i;
 	
 	if (rk >= cnt_Sbar[len]) {
-		cout << "hermitian::Sbar_unrank fatal: rk >= cnt_Sbar[len]" << endl;
+		cout << "hermitian::Sbar_unrank fatal: "
+				"rk >= cnt_Sbar[len]" << endl;
 		exit(1);
 		}
 	if (len == 1) {
-		cout << "hermitian::Sbar_unrank fatal: len == 1" << endl;
+		cout << "hermitian::Sbar_unrank fatal: "
+				"len == 1" << endl;
 		exit(1);
 		}
 	if (rk < cnt_Sbar[len - 1]) {
@@ -855,14 +878,16 @@ void hermitian::Sbar_unrank(int *v, int len, int rk, int verbose_level)
 			cout << "Sbar_unrank case 2 log=" << log << endl;
 			}
 		if (log == -1) {
-			cout << "hermitian::Sbar_unrank fatal: log == -1" << endl;
+			cout << "hermitian::Sbar_unrank fatal: "
+					"log == -1" << endl;
 			exit(1);
 			}
 		for (i = 0; i < len - 1; i++) {
 			v[i] = F->mult(b, v[i]);
 			}
 		v[len - 1] = 1;
-		//v[len - 1] = F->mult(F->alpha_power(log), norm_one_elements[0]);
+		//v[len - 1] = F->mult(F->alpha_power(log),
+		// norm_one_elements[0]);
 		}
 	if (f_v) {
 		cout << "Sbar_unrank len=" << len << " done: ";

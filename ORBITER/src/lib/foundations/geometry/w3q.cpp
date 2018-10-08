@@ -109,7 +109,8 @@ void W3q::init(finite_field *F, int verbose_level)
 		P3->unrank_line(Basis, Lines[h]);
 		if (f_vv) {
 			cout << "Line " << h << " is " << Lines[h] << ":" << endl;
-			print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
+			print_integer_matrix_width(cout,
+					Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
 			}
 
@@ -134,7 +135,8 @@ void W3q::init(finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "The isomorphism is:" << endl;
-		cout << "h : Lines[h] : Q4_rk[h] : Line_idx[h] : x : y : point in Q(4,q)" << endl;
+		cout << "h : Lines[h] : Q4_rk[h] : Line_idx[h] : "
+				"x : y : point in Q(4,q)" << endl;
 		cout << "Where x and y are a basis for the line" << endl;
 		for (h = 0; h < nb_lines; h++) {
 			cout << setw(4) << h << " : ";

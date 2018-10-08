@@ -234,7 +234,8 @@ int eckardt_point::rank()
 		}
 }
 
-void eckardt_point::unrank(int rk, int &i, int &j, int &k, int &l, int &m, int &n)
+void eckardt_point::unrank(int rk,
+		int &i, int &j, int &k, int &l, int &m, int &n)
 {
 	if (rk < 30) {
 		len = 2;

@@ -548,7 +548,8 @@ int incidence_structure::get_points_on_line(int *data, int j)
 			}
 		return nb_points_on_line[j];
 		}
-	else if (realization_type == INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL) {
+	else if (realization_type ==
+			INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL) {
 		O->points_on_line_by_line_rank(j, data, 0/* verbose_level - 2*/);
 		return O->q + 1;
 		}
@@ -913,15 +914,17 @@ int incidence_structure::refine_column_partition_safe(
 	int *neighbors;
 
 	if (f_v) {
-		cout << "incidence_structure::refine_column_partition_safe" << endl;
+		cout << "incidence_structure::refine_"
+				"column_partition_safe" << endl;
 		}
 	row_classes = NEW_int(PStack.ht);
 	col_classes = NEW_int(PStack.ht);
 	row_class_idx = NEW_int(PStack.ht);
 	col_class_idx = NEW_int(PStack.ht);
 
-	get_partition(PStack, row_classes, row_class_idx,
-			nb_row_classes, col_classes, col_class_idx, nb_col_classes);
+	get_partition(PStack,
+			row_classes, row_class_idx, nb_row_classes,
+			col_classes, col_class_idx, nb_col_classes);
 	
 	N = nb_points() + nb_lines();
 	data = NEW_int(N * nb_row_classes);
@@ -938,15 +941,18 @@ int incidence_structure::refine_column_partition_safe(
 			c = PStack.cellNumber[PStack.invPointList[i]];
 			I = row_class_idx[c];
 			if (I == -1) {
-				cout << "incidence_structure::refine_column_partition_safe I == -1" << endl;
+				cout << "incidence_structure::refine_column_"
+						"partition_safe I == -1" << endl;
 				exit(1);
 				}
 			data[(nb_points() + j) * nb_row_classes + I]++;
 			}
 		}
 	if (f_vv) {
-		cout << "incidence_structure::refine_column_partition_safe data:" << endl;
-		print_integer_matrix_width(cout, data + nb_points() * nb_row_classes, 
+		cout << "incidence_structure::refine_column_"
+				"partition_safe data:" << endl;
+		print_integer_matrix_width(cout,
+			data + nb_points() * nb_row_classes,
 			nb_lines(), nb_row_classes, nb_row_classes, 3);
 		}
 
@@ -974,7 +980,8 @@ int incidence_structure::refine_column_partition_safe(
 	FREE_int(row_class_idx);
 	FREE_int(col_class_idx);
 	if (f_v) {
-		cout << "incidence_structure::refine_column_partition_safe done" << endl;
+		cout << "incidence_structure::refine_column_"
+				"partition_safe done" << endl;
 		}
 	if (PStack.ht == ht) {
 		return FALSE;
@@ -1002,15 +1009,17 @@ int incidence_structure::refine_row_partition_safe(
 	int *neighbors;
 
 	if (f_v) {
-		cout << "incidence_structure::refine_row_partition_safe" << endl;
+		cout << "incidence_structure::refine_row_"
+				"partition_safe" << endl;
 		}
 	row_classes = NEW_int(PStack.ht);
 	col_classes = NEW_int(PStack.ht);
 	row_class_idx = NEW_int(PStack.ht);
 	col_class_idx = NEW_int(PStack.ht);
 
-	get_partition(PStack, row_classes, row_class_idx,
-			nb_row_classes, col_classes, col_class_idx, nb_col_classes);
+	get_partition(PStack,
+			row_classes, row_class_idx, nb_row_classes,
+			col_classes, col_class_idx, nb_col_classes);
 	
 	data = NEW_int(nb_points() * nb_col_classes);
 	for (i = 0; i < nb_points() * nb_col_classes; i++) {
@@ -1476,7 +1485,8 @@ incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex(
 			if (f_local_coordinates) {
 				ost << " (in local coordinates)";
 				}
-			ost << ", $k_{" << i << ", " << j << "}=" << kij << "$}" << endl;
+			ost << ", $k_{" << i << ", " << j << "}="
+					<< kij << "$}" << endl;
 			//ost << "f1=" << f1 << " l1=" << l1 << endl;
 			//ost << "f2=" << f2 << " l2=" << l2 << endl;
 			for (u = 0; u < l2; u++) {
@@ -3139,7 +3149,8 @@ void incidence_structure::init_partitionstack(partitionstack *S,
 	for (j = 0; j < nb_distinguished_point_sets; j++) {
 		if (f_v) {
 			cout << "splitting off " << j << "-th distinguished point "
-					"set of size " << distinguished_point_set_size[j] << endl;
+					"set of size "
+					<< distinguished_point_set_size[j] << endl;
 			}
 		if (f_v3) {
 			cout << "which is the following set of size "
@@ -3151,7 +3162,8 @@ void incidence_structure::init_partitionstack(partitionstack *S,
 		S->split_multiple_cells(distinguished_point_sets[j],
 				distinguished_point_set_size[j], TRUE, verbose_level);
 		if (f_vv) {
-			cout << "incidence_structure::init_partitionstack partition:" << endl;
+			cout << "incidence_structure::init_partitionstack "
+					"partition:" << endl;
 			S->print_classes_points_and_lines(cout);
 			}
 		}
@@ -3161,7 +3173,8 @@ void incidence_structure::init_partitionstack(partitionstack *S,
 	for (j = 0; j < nb_distinguished_line_sets; j++) {
 		if (f_v) {
 			cout << "splitting off " << j << "-th distinguished "
-					"line set of size " << distinguished_line_set_size[j] << endl;
+					"line set of size "
+					<< distinguished_line_set_size[j] << endl;
 			}
 		if (f_v3) {
 			cout << "which is the following set of size "
@@ -3240,7 +3253,8 @@ void incidence_structure::shrink_aut_generators(
 			}
 		for (j = 0; j < n; j++) {
 			Aut[h * (m + n) + m + j] =
-					Aut[h * total + nb_rows + j] - nb_distinguished_line_sets;
+					Aut[h * total + nb_rows + j] -
+						nb_distinguished_line_sets;
 			}
 		for (i = Base_length - 1; i >= 0; i--) {
 			if (Base[i] > m) {
@@ -3254,7 +3268,8 @@ void incidence_structure::shrink_aut_generators(
 		}
 
 	if (f_v) {
-		cout << "incidence_structure::shrink_aut_generators done" << endl;
+		cout << "incidence_structure::shrink_aut_generators "
+				"done" << endl;
 		}
 }
 
@@ -3692,7 +3707,8 @@ void incma_latex_picture(ostream &fp,
 				continue;
 				}
 			}
-		fp << "\\put(" << k * width << ",0){\\line(0,1){" << h << "}}" << endl;
+		fp << "\\put(" << k * width << ",0){\\line(0,1){"
+				<< h << "}}" << endl;
 		}
 	if (k != b) {
 		cout << "incma_latex_picture: k != b" << endl;
@@ -3709,7 +3725,8 @@ void incma_latex_picture(ostream &fp,
 				continue;
 				}
 			}
-		fp << "\\put(0," << h - k * width << "){\\line(1,0){" << w << "}}" << endl;
+		fp << "\\put(0," << h - k * width << "){\\line(1,0){"
+				<< w << "}}" << endl;
 		}
 	if (k != v) {
 		cout << "incma_latex_picture: k != v" << endl;

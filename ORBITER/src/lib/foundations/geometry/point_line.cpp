@@ -6,12 +6,14 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 {
 	int line = 0;
 	int *pts_on_line;
-	int u, v, o, e = 0, loe, p0, a, i, y1, y2, slope, b, x, f_slope, f_b, f_x;
+	int u, v, o, e = 0, loe, p0, a, i, y1, y2;
+	int slope, b, x, f_slope, f_b, f_x;
 	int f_found_quadrangle = FALSE;
 	int aa;
 	
 	if (f_vv) {
-		cout << "is_desarguesian_plane plane_order =" << plane_order << endl;
+		cout << "is_desarguesian_plane plane_order ="
+				<< plane_order << endl;
 		}
 	pts_on_line = NEW_int(plane_order + 1);
 	plane_get_points_on_line(line, pts_on_line);
@@ -22,7 +24,8 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 	u = pts_on_line[0];
 	v = pts_on_line[1];
 	if (f_vv) {
-		cout << "choosing points u=" << u << " and v=" << v << " on line " << line << endl;
+		cout << "choosing points u=" << u << " and v=" << v
+				<< " on line " << line << endl;
 		}
 	for (o = 0; o < nb_pts; o++) {
 		if (o == u)
@@ -60,7 +63,8 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 		exit(1);
 		}
 	if (f_vv) {
-		cout << "found quadrangle (" << o << "," << e << "," << u << "," << v << ")";
+		cout << "found quadrangle (" << o << "," << e
+				<< "," << u << "," << v << ")";
 		}
 	coordinatize_plane(o, e, u, v, MOLS, f_vv);
 	if (f_vv) {
@@ -80,7 +84,8 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 	if (plane_exponent > 1) {
 		if (f_v) {
 			cout << "plane order is not prime:" << endl;
-			cout << plane_order << " = " << plane_prime << "^" << plane_exponent << endl;
+			cout << plane_order << " = " << plane_prime << "^"
+					<< plane_exponent << endl;
 			}
 		return identify_field_not_of_prime_order(f_v, f_vv);
 		}
@@ -110,7 +115,8 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 					
 					// compute slope * x + b from the field, 
 					// i.e. MOLS 0 (addition) and plane_order (multiplication)
-					y1 = (slope * x + b) % plane_order; //MOLSaddition(MOLSmultiplication(slope, x), b);
+					y1 = (slope * x + b) % plane_order;
+						//MOLSaddition(MOLSmultiplication(slope, x), b);
 					a = MOLSsxb(f_slope, f_x, f_b);
 					y2 = field_element_inv[a];
 					if (y1 != y2) {
@@ -140,7 +146,8 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 
 int point_line::identify_field_not_of_prime_order(int f_v, int f_vv)
 {
-	cout << "point_line::identify_field_not_of_prime_order not yet implemented" << endl;
+	cout << "point_line::identify_field_not_of_prime_order "
+			"not yet implemented" << endl;
 	exit(1);
 #if 0
 	int m, n;  // the size of the incidence matrix
@@ -1291,7 +1298,8 @@ int point_line::count_pairs_CCR_representative(partitionstack &P,
 				nb1++;
 				}
 			}
-		// cout << "e1=" << e1 << " e2=" << e2 << " e3=" << e3 << " nb=" << nb1 << endl;
+		// cout << "e1=" << e1 << " e2=" << e2 << " e3=" << e3
+		//<< " nb=" << nb1 << endl;
 		if (nb == -1) {
 			nb = nb1;
 			}
@@ -1304,9 +1312,9 @@ int point_line::count_pairs_CCR_representative(partitionstack &P,
 }
 
 
-// ####################################################################################
+// #############################################################################
 // globals
-// ####################################################################################
+// #############################################################################
 
 void get_MOLm(int *MOLS, int order, int m, int *&M)
 {

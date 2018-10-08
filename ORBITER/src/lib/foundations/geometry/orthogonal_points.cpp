@@ -37,13 +37,15 @@ int count_T1(int epsilon, int n, int q)
 		return 0;
 		}
 	if (epsilon == 1) {
-		return ((i_power_j(q, n) - 1) * (i_power_j(q, n - 1) + 1)) / (q - 1);
+		return ((i_power_j(q, n) - 1) *
+				(i_power_j(q, n - 1) + 1)) / (q - 1);
 		}
 	else if (epsilon == 0) {
 		return count_T1(1, n, q) + count_N1(n, q);
 		}
 	else {
-		cout << "count_T1 epsilon = " << epsilon << " not yet implemented, returning 0" << endl;
+		cout << "count_T1 epsilon = " << epsilon
+				<< " not yet implemented, returning 0" << endl;
 		return 0;
 		}
 	//exit(1);
@@ -54,7 +56,9 @@ int count_T2(int n, int q)
 	if (n <= 0) {
 		return 0;
 		}
-	return (i_power_j(q, 2 * n - 2) - 1) * (i_power_j(q, n) - 1) * (i_power_j(q, n - 2) + 1) / ((q - 1) * (i_power_j(q, 2) - 1));
+	return (i_power_j(q, 2 * n - 2) - 1) *
+			(i_power_j(q, n) - 1) *
+			(i_power_j(q, n - 2) + 1) / ((q - 1) * (i_power_j(q, 2) - 1));
 }
 
 int nb_pts_Qepsilon(int epsilon, int k, int q)
@@ -87,7 +91,8 @@ int dimension_given_Witt_index(int epsilon, int n)
 		return 2 * n + 2;
 		}
 	else {
-		cout << "dimension_given_Witt_index() epsilon must be 0,1,-1" << endl;
+		cout << "dimension_given_Witt_index "
+				"epsilon must be 0,1,-1" << endl;
 		exit(1);
 		}
 }
@@ -185,7 +190,8 @@ int evaluate_quadratic_form(finite_field &GFq, int *v, int stride,
 	return c;
 }
 
-void Q_epsilon_unrank(finite_field &GFq, int *v, int stride, int epsilon, int k, 
+void Q_epsilon_unrank(finite_field &GFq,
+	int *v, int stride, int epsilon, int k,
 	int c1, int c2, int c3, int a)
 {
 	if (epsilon == 0) {
@@ -203,7 +209,8 @@ void Q_epsilon_unrank(finite_field &GFq, int *v, int stride, int epsilon, int k,
 		}
 }
 
-int Q_epsilon_rank(finite_field &GFq, int *v, int stride, int epsilon, int k, 
+int Q_epsilon_rank(finite_field &GFq,
+	int *v, int stride, int epsilon, int k,
 	int c1, int c2, int c3)
 {
 	int a;
@@ -279,7 +286,8 @@ vector_hashing *Hash_table_parabolic = NULL;
 int Hash_table_parabolic_q = 0;
 int Hash_table_parabolic_k = 0;
 
-void init_hash_table_parabolic(finite_field &GFq, int k, int verbose_level)
+void init_hash_table_parabolic(finite_field &GFq,
+		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q, n, ln2q, N, i, j;
@@ -310,7 +318,8 @@ void init_hash_table_parabolic(finite_field &GFq, int k, int verbose_level)
 				break;
 			}
 		if (v[j] != 1) {
-			cout << "init_hash_table_parabolic vector is not normalized" << endl;
+			cout << "init_hash_table_parabolic vector "
+					"is not normalized" << endl;
 			cout << "i=" << i << endl;
 			int_vec_print(cout, v, k + 1);
 			cout << endl;
@@ -321,12 +330,15 @@ void init_hash_table_parabolic(finite_field &GFq, int k, int verbose_level)
 	
 }
 
-void Q_unrank(finite_field &GFq, int *v, int stride, int k, int a)
+void Q_unrank(finite_field &GFq,
+		int *v, int stride, int k, int a)
 {
 	if (Hash_table_parabolic) {
-		if (Hash_table_parabolic_q == GFq.q && Hash_table_parabolic_k == k) {
+		if (Hash_table_parabolic_q == GFq.q &&
+				Hash_table_parabolic_k == k) {
 			if (stride != 1) {
-				cout << "Q_unrank with Hash table needs stride == 1" << endl;
+				cout << "Q_unrank with Hash table "
+						"needs stride == 1" << endl;
 				exit(1);
 				}
 			Hash_table_parabolic->unrank(a, v);
@@ -336,13 +348,16 @@ void Q_unrank(finite_field &GFq, int *v, int stride, int k, int a)
 	Q_unrank_directly(GFq, v, stride, k, a);
 }
 
-int Q_rank(finite_field &GFq, int *v, int stride, int k)
+int Q_rank(finite_field &GFq,
+		int *v, int stride, int k)
 {
 	if (Hash_table_parabolic) {
 		PG_element_normalize_from_front(GFq, v, stride, k + 1);
-		if (Hash_table_parabolic_q == GFq.q && Hash_table_parabolic_k == k) {
+		if (Hash_table_parabolic_q == GFq.q &&
+				Hash_table_parabolic_k == k) {
 			if (stride != 1) {
-				cout << "Q_unrank with Hash table needs stride == 1" << endl;
+				cout << "Q_unrank with Hash table "
+						"needs stride == 1" << endl;
 				exit(1);
 				}
 			return Hash_table_parabolic->rank(v);
@@ -351,7 +366,8 @@ int Q_rank(finite_field &GFq, int *v, int stride, int k)
 	return Q_rank_directly(GFq, v, stride, k);
 }
 
-void Q_unrank_directly(finite_field &GFq, int *v, int stride, int k, int a)
+void Q_unrank_directly(finite_field &GFq,
+		int *v, int stride, int k, int a)
 // parabolic quadric
 // k = projective dimension, must be even
 {
@@ -371,12 +387,14 @@ void Q_unrank_directly(finite_field &GFq, int *v, int stride, int k, int a)
 	minusone = GFq.negate(1);
 	if (minusone != 1) {
 		for (i = 0; i < n; i++) {
-			v[(1 + 2 * i) * stride] = GFq.mult(v[(1 + 2 * i) * stride], minusone);
+			v[(1 + 2 * i) * stride] =
+				GFq.mult(v[(1 + 2 * i) * stride], minusone);
 			}
 		}
 }
 
-int Q_rank_directly(finite_field &GFq, int *v, int stride, int k)
+int Q_rank_directly(finite_field &GFq,
+		int *v, int stride, int k)
 // parabolic quadric
 // k = projective dimension, must be even
 {
@@ -395,13 +413,15 @@ int Q_rank_directly(finite_field &GFq, int *v, int stride, int k)
 	minusone = GFq.negate(1);
 	if (minusone != 1) {
 		for (i = 0; i < n; i++) {
-			v[(1 + 2 * i) * stride] = GFq.mult(v[(1 + 2 * i) * stride], minusone);
+			v[(1 + 2 * i) * stride] =
+				GFq.mult(v[(1 + 2 * i) * stride], minusone);
 			}
 		}
 	N1_rank(GFq, v + stride, stride, n, b);
 	return a + b;
 }
-void Qplus_unrank(finite_field &GFq, int *v, int stride, int k, int a)
+void Qplus_unrank(finite_field &GFq,
+		int *v, int stride, int k, int a)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
@@ -411,7 +431,8 @@ void Qplus_unrank(finite_field &GFq, int *v, int stride, int k, int a)
 	Sbar_unrank(GFq, v, stride, n, a);
 }
 
-int Qplus_rank(finite_field &GFq, int *v, int stride, int k)
+int Qplus_rank(finite_field &GFq,
+		int *v, int stride, int k)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
@@ -422,11 +443,14 @@ int Qplus_rank(finite_field &GFq, int *v, int stride, int k)
 	return a;
 }
 
-void Qminus_unrank(finite_field &GFq, int *v, int stride, int k, int a, int c1, int c2, int c3)
+void Qminus_unrank(finite_field &GFq,
+		int *v, int stride, int k, int a,
+		int c1, int c2, int c3)
 // elliptic quadric
 // k = projective dimension, must be odd
 // the form is 
-// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 + c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
+// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
+// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
 {
 	int n, x, b, c, minusz, x1, x2, u, vv, w, z, i;
 	
@@ -452,7 +476,8 @@ void Qminus_unrank(finite_field &GFq, int *v, int stride, int k, int a, int c1, 
 		x1 = b;
 		x2 = 1;
 		if (b >= GFq.q) {
-			cout << "Qminus_unrank() b >= q, the rank was too big" << endl;
+			cout << "Qminus_unrank() b >= q, the rank "
+					"was too big" << endl;
 			exit(1);
 			}
 		}
@@ -484,21 +509,26 @@ void Qminus_unrank(finite_field &GFq, int *v, int stride, int k, int a, int c1, 
 		}
 }
 
-int Qminus_rank(finite_field &GFq, int *v, int stride, int k, int c1, int c2, int c3)
+int Qminus_rank(finite_field &GFq,
+		int *v, int stride, int k, int c1, int c2, int c3)
 // elliptic quadric
 // k = projective dimension, must be odd
 // the form is 
-// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 + c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
+// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
+// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
 {
-	int a, n, x, b, c, minusz, minuszv, x1, x2, u, vv, w, z, i;
+	int a, n, x, b, c, minusz, minuszv;
+	int x1, x2, u, vv, w, z, i;
 	
 	n = Witt_index(-1, k);
 
 	{
 	int aa;
-	aa = evaluate_quadratic_form(GFq, v, stride, -1, k, c1, c2, c3);
+	aa = evaluate_quadratic_form(GFq, v, stride, -1, k,
+			c1, c2, c3);
 	if (aa) {
-		cout << "Qminus_rank fatal: the vector is not zero under the quadratic form" << endl;
+		cout << "Qminus_rank fatal: the vector "
+				"is not zero under the quadratic form" << endl;
 		cout << "value=" << aa << endl;
 		cout << "stride=" << stride << endl;
 		cout << "k=" << k << endl;
@@ -558,9 +588,9 @@ int Qminus_rank(finite_field &GFq, int *v, int stride, int k, int c1, int c2, in
 
 
 
-// ##################################################################################################
+// #############################################################################
 // the following functions are for the hyperbolic quadric with Witt index n:
-// ##################################################################################################
+// #############################################################################
 
 int nb_pts_S(int n, int q)
 // Number of singular vectors (including the zero vector)
@@ -584,7 +614,8 @@ int nb_pts_S(int n, int q)
 }
 
 int nb_pts_N(int n, int q)
-// Number of non-singular vectors. Of course, |N(n,q)| + |S(n,q)| = q^{2n}
+// Number of non-singular vectors.
+// Of course, |N(n,q)| + |S(n,q)| = q^{2n}
 // |N(n,q)| = (q - 1) * |N1(n,q)|
 {
 	int a;
@@ -603,8 +634,10 @@ int nb_pts_N(int n, int q)
 }
 
 int nb_pts_N1(int n, int q)
-// Number of non-singular vectors for one fixed value of the quadratic form
-// i.e. number of solutions of \sum_{i=0}^{n-1} x_{2i}x_{2i+1} = s
+// Number of non-singular vectors
+// for one fixed value of the quadratic form
+// i.e. number of solutions of
+// \sum_{i=0}^{n-1} x_{2i}x_{2i+1} = s
 // for some fixed s \neq 0.
 {
 	int a;
@@ -669,13 +702,14 @@ int nb_pts_Nbar(int n, int q)
 }
 
 
-// ##################################################################################################
+// #############################################################################
 // unrank functions for the hyperbolic quadric:
-// ##################################################################################################
+// #############################################################################
 
 
 
-void S_unrank(finite_field &GFq, int *v, int stride, int n, int a)
+void S_unrank(finite_field &GFq,
+		int *v, int stride, int n, int a)
 {
 	int l, i, j, x, y, u, q = GFq.q;
 	int alpha, beta;
@@ -709,7 +743,8 @@ void S_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			return;
 			}
 		a -= l;
-		//cout << "S_unrank subtracting " << l << " to bring a down to " << a << endl;
+		//cout << "S_unrank subtracting " << l
+		//<< " to bring a down to " << a << endl;
 		x = nb_pts_N(1, q);
 		y = nb_pts_N1(n - 1, q);
 		l = x * y;
@@ -719,7 +754,8 @@ void S_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			N_unrank(GFq, v + (n - 1) * 2 * stride, stride, 1, i);
 			N1_unrank(GFq, v, stride, n - 1, j);
 
-			alpha = GFq.mult(v[2 * (n - 1) * stride], v[(2 * (n - 1) + 1) * stride]);
+			alpha = GFq.mult(v[2 * (n - 1) * stride],
+					v[(2 * (n - 1) + 1) * stride]);
 			beta = GFq.negate(alpha);
 			for (u = 0; u < n - 1; u++) {
 				v[2 * u * stride] = GFq.mult(v[2 * u * stride], beta);
@@ -733,7 +769,8 @@ void S_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 		}
 }
 
-void N_unrank(finite_field &GFq, int *v, int stride, int n, int a)
+void N_unrank(finite_field &GFq,
+		int *v, int stride, int n, int a)
 {
 	int l, i, j, k, j1, x, y, z, yz, u, q = GFq.q;
 	int alpha, beta, gamma, delta, epsilon;
@@ -792,7 +829,8 @@ void N_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			alpha = primitive_element(GFq);
 			
 			beta = GFq.power(alpha, j + 1);
-			gamma = GFq.mult(v[(n - 1) * 2 * stride], v[((n - 1) * 2 + 1) * stride]);
+			gamma = GFq.mult(v[(n - 1) * 2 * stride],
+					v[((n - 1) * 2 + 1) * stride]);
 			delta = GFq.negate(gamma);
 			epsilon = GFq.mult(delta, beta);
 			for (u = 0; u < n - 1; u++) {
@@ -817,7 +855,8 @@ void N1_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 		if (a < l) {
 			alpha = a + 1;
 			beta = GFq.inverse(alpha);
-			//cout << "N1_unrank() n == 1, a = " << a << " alpha = " << alpha << " beta = " << beta << endl;
+			//cout << "N1_unrank() n == 1, a = " << a
+			// << " alpha = " << alpha << " beta = " << beta << endl;
 			v[0 * stride] = alpha;
 			v[1 * stride] = beta;
 			return;
@@ -839,7 +878,8 @@ void N1_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			return;
 			}
 		a -= l;
-		//cout << "N1_unrank subtracting " << l << " to bring a down to " << a << endl;
+		//cout << "N1_unrank subtracting " << l
+		// << " to bring a down to " << a << endl;
 		x = nb_pts_N1(1, q);
 		y = nb_pts_S(n - 1, q);
 		l = x * y;
@@ -851,7 +891,8 @@ void N1_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			return;
 			}
 		a -= l;
-		//cout << "N1_unrank subtracting " << l << " to bring a down to " << a << endl;
+		//cout << "N1_unrank subtracting " << l
+		// << " to bring a down to " << a << endl;
 		x = nb_pts_N1(1, q);
 		y = (q - 2); // zero for q = 2
 		z = nb_pts_N1(n - 1, q);
@@ -874,10 +915,12 @@ void N1_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			
 			N1_unrank(GFq, v + (n - 1) * 2 * stride, stride, 1, i);
 			
-			//cout << "(" << v[2 * (n - 1) * stride] << "," << v[(2 * (n - 1) + 1) * stride] << ")" << endl;
+			//cout << "(" << v[2 * (n - 1) * stride] << ","
+			// << v[(2 * (n - 1) + 1) * stride] << ")" << endl;
 			
 			alpha = 2 + j;
-			v[2 * (n - 1) * stride] = GFq.mult(v[2 * (n - 1) * stride], alpha);
+			v[2 * (n - 1) * stride] = GFq.mult(
+					v[2 * (n - 1) * stride], alpha);
 
 			N1_unrank(GFq, v, stride, n - 1, k);
 			
@@ -906,7 +949,8 @@ void N1_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 		}
 }
 
-void Sbar_unrank(finite_field &GFq, int *v, int stride, int n, int a)
+void Sbar_unrank(finite_field &GFq,
+		int *v, int stride, int n, int a)
 {
 	int l, i, j, x, y, u, q = GFq.q;
 	int alpha, beta;
@@ -961,10 +1005,12 @@ void Sbar_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			j = a % y;
 			//cout << "i=" << i << " j=" << j << endl;
 			Nbar_unrank(GFq, v + (n - 1) * 2 * stride, stride, 1, i);
-			//cout << "(" << v[2 * (n - 1) * stride] << "," << v[(2 * (n - 1) + 1) * stride] << ")" << endl;
+			//cout << "(" << v[2 * (n - 1) * stride] << ","
+			//<< v[(2 * (n - 1) + 1) * stride] << ")" << endl;
 			N1_unrank(GFq, v, stride, n - 1, j);
 
-			alpha = GFq.mult(v[2 * (n - 1) * stride], v[(2 * (n - 1) + 1) * stride]);
+			alpha = GFq.mult(v[2 * (n - 1) * stride],
+					v[(2 * (n - 1) + 1) * stride]);
 			beta = GFq.negate(alpha);
 			for (u = 0; u < n - 1; u++) {
 				v[2 * u * stride] = GFq.mult(v[2 * u * stride], beta);
@@ -974,13 +1020,15 @@ void Sbar_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 			return;
 			}
 		else {
-			cout << "error in Sbar_unrank n = " << n << ", a = " << a << endl;
+			cout << "error in Sbar_unrank n = " << n
+					<< ", a = " << a << endl;
 			exit(1);
 			}
 		}
 }
 
-void Nbar_unrank(finite_field &GFq, int *v, int stride, int n, int a)
+void Nbar_unrank(finite_field &GFq,
+		int *v, int stride, int n, int a)
 {
 	int y, l, q = GFq.q;
 	
@@ -1004,13 +1052,14 @@ void Nbar_unrank(finite_field &GFq, int *v, int stride, int n, int a)
 }
 
 
-// ##################################################################################################
+// #############################################################################
 // rank functions for the hyperbolic quadric:
-// ##################################################################################################
+// #############################################################################
 
 
 
-void S_rank(finite_field &GFq, int *v, int stride, int n, int &a)
+void S_rank(finite_field &GFq,
+		int *v, int stride, int n, int &a)
 {
 	int l, i, j, x, y, u, q = GFq.q;
 	int alpha, beta, gamma, delta, epsilon;
@@ -1031,7 +1080,8 @@ void S_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		x = nb_pts_S(1, q);
 		y = nb_pts_S(n - 1, q);
 		l = x * y;
-		alpha = GFq.mult(v[2 * (n - 1) * stride], v[(2 * (n - 1) + 1) * stride]);
+		alpha = GFq.mult(v[2 * (n - 1) * stride],
+				v[(2 * (n - 1) + 1) * stride]);
 		if (alpha == 0) {
 			S_rank(GFq, v + (n - 1) * 2 * stride, stride, 1, i);
 			S_rank(GFq, v, stride, n - 1, j);
@@ -1046,7 +1096,8 @@ void S_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		
 		
 		beta = GFq.negate(alpha);
-		gamma = evaluate_hyperbolic_quadratic_form(GFq, v, stride, n - 1);
+		gamma = evaluate_hyperbolic_quadratic_form(
+				GFq, v, stride, n - 1);
 		if (gamma != beta) {
 			cout << "error in S_rank gamma != beta" << endl;
 			exit(1);
@@ -1055,7 +1106,8 @@ void S_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		for (u = 0; u < n - 1; u++) {
 			v[2 * u * stride] = GFq.mult(v[2 * u * stride], delta);
 			}
-		epsilon = evaluate_hyperbolic_quadratic_form(GFq, v, stride, n - 1);
+		epsilon = evaluate_hyperbolic_quadratic_form(
+				GFq, v, stride, n - 1);
 		if (epsilon != 1) {
 			cout << "error in S_rank epsilon != 1" << endl;
 			exit(1);
@@ -1065,16 +1117,19 @@ void S_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		}
 }
 
-void N_rank(finite_field &GFq, int *v, int stride, int n, int &a)
+void N_rank(finite_field &GFq,
+		int *v, int stride, int n, int &a)
 {
 	int l, i, j, k, x, y, z, yz, u, q = GFq.q;
-	int alpha, beta, gamma, delta, epsilon, gamma2, epsilon_inv;
+	int alpha, beta, gamma, delta;
+	int epsilon, gamma2, epsilon_inv;
 	
 	if (n == 1) {
 		x = q - 1;
 		y = q - 1;
 		if (v[0 * stride] == 0 || v[1 * stride] == 0) {
-			cout << "N_rank() v[0 * stride] == 0 || v[1 * stride] == 0" << endl;
+			cout << "N_rank() v[0 * stride] == 0 || "
+					"v[1 * stride] == 0" << endl;
 			exit(1);
 			}
 		j = v[0 * stride] - 1;
@@ -1082,7 +1137,8 @@ void N_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		a = i * y + j;
 		}
 	else {
-		gamma = GFq.mult(v[(n - 1) * 2 * stride], v[((n - 1) * 2 + 1) * stride]);
+		gamma = GFq.mult(v[(n - 1) * 2 * stride],
+				v[((n - 1) * 2 + 1) * stride]);
 		x = nb_pts_S(1, q);
 		y = nb_pts_N(n - 1, q);
 		l = x * y;
@@ -1096,7 +1152,8 @@ void N_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		x = nb_pts_N(1, q);
 		y = nb_pts_S(n - 1, q);
 		l = x * y;
-		gamma2 = evaluate_hyperbolic_quadratic_form(GFq, v, stride, n - 1);
+		gamma2 = evaluate_hyperbolic_quadratic_form(
+				GFq, v, stride, n - 1);
 		if (gamma2 == 0) {
 			N_rank(GFq, v + (n - 1) * 2, stride, 1, i);
 			S_rank(GFq, v, stride, n - 1, j);
@@ -1119,7 +1176,8 @@ void N_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 			if (epsilon == gamma2) {
 				epsilon_inv = GFq.inverse(epsilon);
 				for (u = 0; u < n - 1; u++) {
-					v[2 * u * stride] = GFq.mult(v[2 * u * stride], epsilon_inv);
+					v[2 * u * stride] = GFq.mult(
+							v[2 * u * stride], epsilon_inv);
 					}
 				N1_rank(GFq, v, stride, n - 1, k);
 				a += i * yz + j * z + k;
@@ -1145,14 +1203,16 @@ void N1_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 			}
 		gamma = GFq.inverse(alpha);
 		if (gamma != beta) {
-			cout << "error in N1_rank gamma = " << gamma << " != beta = " << beta << endl;
+			cout << "error in N1_rank gamma = " << gamma
+					<< " != beta = " << beta << endl;
 			exit(1);
 			}
 		a = alpha - 1;
 		}
 	else {
 		a = 0;
-		alpha = GFq.mult(v[2 * (n - 1) * stride], v[(2 * (n - 1) + 1) * stride]);
+		alpha = GFq.mult(v[2 * (n - 1) * stride],
+				v[(2 * (n - 1) + 1) * stride]);
 		x = nb_pts_S(1, q);
 		y = nb_pts_N1(n - 1, q);
 		l = x * y;
@@ -1163,7 +1223,8 @@ void N1_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 			return;
 			}
 		a += l;
-		gamma2 = evaluate_hyperbolic_quadratic_form(GFq, v, stride, n - 1);
+		gamma2 = evaluate_hyperbolic_quadratic_form(GFq,
+				v, stride, n - 1);
 		x = nb_pts_N1(1, q);
 		y = nb_pts_S(n - 1, q);
 		l = x * y;
@@ -1187,7 +1248,8 @@ void N1_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		yz = y * z;
 		l = x * yz; // zero for q = 2
 
-		alpha = GFq.mult(v[2 * (n - 1) * stride], v[(2 * (n - 1) + 1) * stride]);
+		alpha = GFq.mult(v[2 * (n - 1) * stride],
+				v[(2 * (n - 1) + 1) * stride]);
 		if (alpha == 0) {
 			cout << "N1_rank alpha == 0" << endl;
 			exit(1);
@@ -1198,11 +1260,13 @@ void N1_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 			}
 		j = alpha - 2;
 		alpha_inv = GFq.inverse(alpha);
-		v[2 * (n - 1) * stride] = GFq.mult(v[2 * (n - 1) * stride], alpha_inv);
+		v[2 * (n - 1) * stride] = GFq.mult(
+				v[2 * (n - 1) * stride], alpha_inv);
 		
 		N1_rank(GFq, v + (n - 1) * 2 * stride, stride, 1, i);
 		
-		gamma2 = evaluate_hyperbolic_quadratic_form(GFq, v, stride, n - 1);
+		gamma2 = evaluate_hyperbolic_quadratic_form(GFq,
+				v, stride, n - 1);
 		if (gamma2 == 0) {
 			cout << "N1_rank gamma2 == 0" << endl;
 			exit(1);
@@ -1222,7 +1286,8 @@ void N1_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		}
 }
 
-void Sbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
+void Sbar_rank(finite_field &GFq,
+		int *v, int stride, int n, int &a)
 {
 	int l, i, j, x, y, u, q = GFq.q;
 	int alpha, beta, beta2, beta_inv;
@@ -1249,7 +1314,8 @@ void Sbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 	else {
 		a = 0;
 		// test for leading (0,0):
-		if (v[2 * (n - 1) * stride] == 0 && v[(2 * (n - 1) + 1) * stride] == 0) {
+		if (v[2 * (n - 1) * stride] == 0 &&
+				v[(2 * (n - 1) + 1) * stride] == 0) {
 			// rank Sbar for the rest:
 			Sbar_rank(GFq, v, stride, n - 1, a);
 			return;
@@ -1258,12 +1324,14 @@ void Sbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		a += l;
 
 		// alpha = form value for the top two coefficients:
-		alpha = GFq.mult(v[2 * (n - 1) * stride], v[(2 * (n - 1) + 1) * stride]);
+		alpha = GFq.mult(v[2 * (n - 1) * stride],
+				v[(2 * (n - 1) + 1) * stride]);
 		x = nb_pts_Sbar(1, q); // = 2
 		y = nb_pts_S(n - 1, q);
 
 		// test for 0 + 0 
-		// (i.e. 0 = alpha = value of the form on the top two coefficients 
+		// (i.e. 0 = alpha = value of the form on
+		// the top two coefficients
 		// and 0 for value of the form on the rest):
 		if (alpha == 0) {
 			Sbar_rank(GFq, v + (n - 1) * 2 * stride, stride, 1, i);
@@ -1276,7 +1344,8 @@ void Sbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		l = x * y;
 		a += l;
 		// now it must be n + (-n) for some n \neq 0
-		// (i.e. n = alpha = value of the form on the top two coefficients and 
+		// (i.e. n = alpha = value of the form on
+		// the top two coefficients and
 		// -n for the value of the form on the rest): 
 		x = nb_pts_Nbar(1, q);
 		y = nb_pts_N1(n - 1, q);
@@ -1284,17 +1353,21 @@ void Sbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 
 		beta = GFq.negate(alpha);
 		// beta = - alpha
-		beta2 = evaluate_hyperbolic_quadratic_form(GFq, v, stride, n - 1);
+		beta2 = evaluate_hyperbolic_quadratic_form(GFq,
+				v, stride, n - 1);
 		// beta2 = value of the quadratic form on the rest
-		// must be - alpha (otherwise the vector does not represent a point in Sbar)
+		// must be - alpha (otherwise the vector does
+		// not represent a point in Sbar)
 		if (beta2 != beta) {
 			cout << "error in Sbar_rank beta2 != beta" << endl;
 			exit(1);
 			}
 		beta_inv = GFq.inverse(beta);
-		// divide by beta so that the quadratic form on the rest is equal to 1.
+		// divide by beta so that the quadratic form
+		// on the rest is equal to 1.
 		for (u = 0; u < n - 1; u++) {
-			v[2 * u * stride] = GFq.mult(v[2 * u * stride], beta_inv);
+			v[2 * u * stride] = GFq.mult(
+					v[2 * u * stride], beta_inv);
 			}
 		// rank the N1 part:
 		N1_rank(GFq, v, stride, n - 1, j);
@@ -1302,7 +1375,8 @@ void Sbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 		}
 }
 
-void Nbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
+void Nbar_rank(finite_field &GFq,
+		int *v, int stride, int n, int &a)
 {
 	if (n == 1) {
 		if (v[1 * stride] != 1) {
@@ -1323,12 +1397,13 @@ void Nbar_rank(finite_field &GFq, int *v, int stride, int n, int &a)
 }
 
 
-// ##################################################################################################
+// #############################################################################
 // other stuff:
-// ##################################################################################################
+// #############################################################################
 
 
-int evaluate_hyperbolic_quadratic_form(finite_field &GFq, int *v, int stride, int n)
+int evaluate_hyperbolic_quadratic_form(finite_field &GFq,
+		int *v, int stride, int n)
 {
 	int alpha = 0, beta, u;
 	
@@ -1339,7 +1414,8 @@ int evaluate_hyperbolic_quadratic_form(finite_field &GFq, int *v, int stride, in
 	return alpha;
 }
 
-int evaluate_hyperbolic_bilinear_form(finite_field &GFq, int *u, int *v, int n)
+int evaluate_hyperbolic_bilinear_form(finite_field &GFq,
+		int *u, int *v, int n)
 {
 	int alpha = 0, beta1, beta2, i;
 	
@@ -1360,7 +1436,8 @@ int primitive_element(finite_field &GFq)
 	return GFq.p;
 }
 
-void order_POmega_epsilon(int epsilon, int k, int q, longinteger_object &go, int verbose_level)
+void order_POmega_epsilon(int epsilon, int k, int q,
+		longinteger_object &go, int verbose_level)
 // k is projective dimension
 {
 	int w, m;
@@ -1373,7 +1450,8 @@ void order_POmega_epsilon(int epsilon, int k, int q, longinteger_object &go, int
 		m = w;
 		}
 	order_Pomega(epsilon, m, q, go, verbose_level);
-	cout << "order_POmega_epsilon  epsilon=" << epsilon << " k=" << k << " q=" << q << " order=" << go << endl;
+	cout << "order_POmega_epsilon  epsilon=" << epsilon
+			<< " k=" << k << " q=" << q << " order=" << go << endl;
 
 #if 0
 	int f_v = (verbose_level >= 1);
@@ -1396,7 +1474,8 @@ void order_POmega_epsilon(int epsilon, int k, int q, longinteger_object &go, int
 }
 
 #if 0
-void order_Pomega_plusminus(int epsilon, int m, int q, longinteger_object &o, int verbose_level)
+void order_Pomega_plusminus(int epsilon, int m, int q,
+		longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m
 {
 	int f_v = (verbose_level >= 1);
@@ -1459,12 +1538,14 @@ void order_Pomega_plusminus(int epsilon, int m, int q, longinteger_object &o, in
 	D.mult(S, Q, T);
 	D.integral_division_by_int(T, v, o, r);
 	if (f_v) {
-		cout << "the order of P\\Omega^" << epsilon << "(" << 2 * m << "," << q << ") is " << o << endl;
+		cout << "the order of P\\Omega^" << epsilon << "(" << 2 * m
+				<< "," << q << ") is " << o << endl;
 		}
 }
 #endif
 
-void order_PO_epsilon(int f_semilinear, int epsilon, int k, int q, 
+void order_PO_epsilon(int f_semilinear,
+	int epsilon, int k, int q,
 	longinteger_object &go, int verbose_level)
 // k is projective dimension
 {
@@ -1487,16 +1568,20 @@ void order_PO_epsilon(int f_semilinear, int epsilon, int k, int q,
 		D.mult_integer_in_place(go, e);
 		}
 	if (f_v) {
-		cout << "order_PO_epsilon  f_semilinear=" << f_semilinear << " epsilon=" << epsilon << " k=" << k << " q=" << q << " order=" << go << endl;
+		cout << "order_PO_epsilon  f_semilinear=" << f_semilinear
+				<< " epsilon=" << epsilon << " k=" << k
+				<< " q=" << q << " order=" << go << endl;
 		}
 }
 
-void order_PO(int epsilon, int m, int q, longinteger_object &o, int verbose_level)
+void order_PO(int epsilon, int m, int q,
+		longinteger_object &o, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "order_PO epsilon = " << epsilon << " m=" << m << " q=" << q << endl;
+		cout << "order_PO epsilon = " << epsilon
+				<< " m=" << m << " q=" << q << endl;
 		}
 
 	if (epsilon == 0) {
@@ -1514,7 +1599,8 @@ void order_PO(int epsilon, int m, int q, longinteger_object &o, int verbose_leve
 		}
 }
 
-void order_Pomega(int epsilon, int m, int q, longinteger_object &o, int verbose_level)
+void order_Pomega(int epsilon, int m, int q,
+		longinteger_object &o, int verbose_level)
 {
 	if (epsilon == 0) {
 		order_Pomega_parabolic(m, q, o, verbose_level);
@@ -1531,7 +1617,8 @@ void order_Pomega(int epsilon, int m, int q, longinteger_object &o, int verbose_
 		}
 }
 
-void order_PO_plus(int m, int q, longinteger_object &o, int verbose_level)
+void order_PO_plus(int m, int q,
+		longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m
 {
 	int f_v = (verbose_level >= 1);
@@ -1545,7 +1632,8 @@ void order_PO_plus(int m, int q, longinteger_object &o, int verbose_level)
 	Q.create(q);
 	D.power_int(Q, m * (m - 1));
 	if (f_v) {
-		cout << "order_PO_plus " << q << "^(" << m << "*" << m - 1 << ") = " << Q << endl;
+		cout << "order_PO_plus " << q << "^(" << m << "*"
+				<< m - 1 << ") = " << Q << endl;
 		}
 	// now Q = q^{m(m-1)}
 
@@ -1555,7 +1643,8 @@ void order_PO_plus(int m, int q, longinteger_object &o, int verbose_level)
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
-			cout << "order_PO_plus " << q << "^" << 2 * i << " - 1 = " << S << endl;
+			cout << "order_PO_plus " << q << "^"
+					<< 2 * i << " - 1 = " << S << endl;
 			}
 		D.mult(O, S, T);
 		T.assign_to(O);
@@ -1583,11 +1672,14 @@ void order_PO_plus(int m, int q, longinteger_object &o, int verbose_level)
 
 
 	if (f_v) {
-		cout << "order_PO_plus the order of PO" << "(" << dimension_given_Witt_index(1, m) << "," << q << ") is " << o << endl;
+		cout << "order_PO_plus the order of PO" << "("
+				<< dimension_given_Witt_index(1, m) << ","
+				<< q << ") is " << o << endl;
 		}
 }
 
-void order_PO_minus(int m, int q, longinteger_object &o, int verbose_level)
+void order_PO_minus(int m, int q,
+		longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m+2
 {
 	int f_v = (verbose_level >= 1);
@@ -1602,7 +1694,8 @@ void order_PO_minus(int m, int q, longinteger_object &o, int verbose_level)
 	Q.create(q);
 	D.power_int(Q, m * (m + 1));
 	if (f_v) {
-		cout << "order_PO_minus " << q << "^(" << m << "*" << m + 1 << ") = " << Q << endl;
+		cout << "order_PO_minus " << q << "^(" << m << "*"
+				<< m + 1 << ") = " << Q << endl;
 		}
 	// now Q = q^{m(m+1)}
 
@@ -1612,7 +1705,8 @@ void order_PO_minus(int m, int q, longinteger_object &o, int verbose_level)
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
-			cout << "order_PO_minus " << q << "^" << 2 * i << " - 1 = " << S << endl;
+			cout << "order_PO_minus " << q << "^" << 2 * i
+					<< " - 1 = " << S << endl;
 			}
 		D.mult(O, S, T);
 		T.assign_to(O);
@@ -1623,7 +1717,8 @@ void order_PO_minus(int m, int q, longinteger_object &o, int verbose_level)
 	D.power_int(R, m + 1);
 	D.add(R, plusone, S);
 	if (f_v) {
-		cout << "order_PO_minus " << q << "^" << m + 1 << " + 1 = " << S << endl;
+		cout << "order_PO_minus " << q << "^" << m + 1
+				<< " + 1 = " << S << endl;
 		}
 	// now S = q^{m+1}-1
 
@@ -1640,11 +1735,14 @@ void order_PO_minus(int m, int q, longinteger_object &o, int verbose_level)
 
 
 	if (f_v) {
-		cout << "order_PO_minus the order of PO^-" << "(" << dimension_given_Witt_index(-1, m) << "," << q << ") is " << o << endl;
+		cout << "order_PO_minus the order of PO^-" << "("
+			<< dimension_given_Witt_index(-1, m) << ","
+			<< q << ") is " << o << endl;
 		}
 }
 
-void order_PO_parabolic(int m, int q, longinteger_object &o, int verbose_level)
+void order_PO_parabolic(int m, int q,
+		longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m+1
 {
 	int f_v = (verbose_level >= 1);
@@ -1657,7 +1755,8 @@ void order_PO_parabolic(int m, int q, longinteger_object &o, int verbose_level)
 	Q.create(q);
 	D.power_int(Q, m * m);
 	if (f_v) {
-		cout << "order_PO_parabolic " << q << "^(" << m << "^2" << ") = " << Q << endl;
+		cout << "order_PO_parabolic " << q << "^(" << m
+				<< "^2" << ") = " << Q << endl;
 		}
 	// now Q = q^{m^2}
 
@@ -1667,7 +1766,8 @@ void order_PO_parabolic(int m, int q, longinteger_object &o, int verbose_level)
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
-			cout << "order_PO_parabolic " << q << "^" << 2 * i << " - 1 = " << S << endl;
+			cout << "order_PO_parabolic " << q << "^"
+					<< 2 * i << " - 1 = " << S << endl;
 			}
 		D.mult(O, S, T);
 		T.assign_to(O);
@@ -1679,12 +1779,15 @@ void order_PO_parabolic(int m, int q, longinteger_object &o, int verbose_level)
 
 
 	if (f_v) {
-		cout << "order_PO_parabolic the order of PO" << "(" << dimension_given_Witt_index(0, m) << "," << q << ") is " << o << endl;
+		cout << "order_PO_parabolic the order of PO" << "("
+			<< dimension_given_Witt_index(0, m) << ","
+			<< q << ") is " << o << endl;
 		}
 }
 
 
-void order_Pomega_plus(int m, int q, longinteger_object &o, int verbose_level)
+void order_Pomega_plus(int m, int q,
+		longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m
 {
 	int f_v = (verbose_level >= 1);
@@ -1734,12 +1837,16 @@ void order_Pomega_plus(int m, int q, longinteger_object &o, int verbose_level)
 
 
 	if (f_v) {
-		cout << "the order of P\\Omega^1" << "(" << dimension_given_Witt_index(1, m) << "," << q << ") is " << o << endl;
+		cout << "the order of P\\Omega^1" << "("
+			<< dimension_given_Witt_index(1, m) << ","
+			<< q << ") is " << o << endl;
 		}
 }
 
-void order_Pomega_minus(int m, int q, longinteger_object &o, int verbose_level)
-// m = half the dimension, the dimension is n = 2m, the Witt index is m - 1
+void order_Pomega_minus(int m, int q,
+		longinteger_object &o, int verbose_level)
+// m = half the dimension,
+// the dimension is n = 2m, the Witt index is m - 1
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_domain D;
@@ -1797,11 +1904,14 @@ void order_Pomega_minus(int m, int q, longinteger_object &o, int verbose_level)
 
 
 	if (f_v) {
-		cout << "the order of P\\Omega^-1" << "(" << dimension_given_Witt_index(-1, m - 1) << "," << q << ") is " << o << endl;
+		cout << "the order of P\\Omega^-1" << "("
+			<< dimension_given_Witt_index(-1, m - 1) << ","
+			<< q << ") is " << o << endl;
 		}
 }
 
-void order_Pomega_parabolic(int m, int q, longinteger_object &o, int verbose_level)
+void order_Pomega_parabolic(int m, int q,
+		longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m + 1
 {
 	int f_v = (verbose_level >= 1);
@@ -1835,7 +1945,9 @@ void order_Pomega_parabolic(int m, int q, longinteger_object &o, int verbose_lev
 		D.integral_division_by_int(T, 2, o, r);
 		}
 	if (f_v) {
-		cout << "the order of P\\Omega" << "(" << dimension_given_Witt_index(0, m) << "," << q << ") is " << o << endl;
+		cout << "the order of P\\Omega" << "("
+			<< dimension_given_Witt_index(0, m) << ","
+			<< q << ") is " << o << endl;
 		}
 }
 
@@ -1887,12 +1999,14 @@ int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level)
 		}
 #if 0
 	if (epsilon == -1) {
-		cout << "index_POmega_in_PO epsilon = -1 not yet implemented, returning 1" << endl;
+		cout << "index_POmega_in_PO epsilon = -1 not "
+				"yet implemented, returning 1" << endl;
 		return 1;
 		exit(1);
 		}
 #endif
-	cout << "index_POmega_in_PO epsilon not recognized, epsilon=" << epsilon << endl;
+	cout << "index_POmega_in_PO epsilon not recognized, "
+			"epsilon=" << epsilon << endl;
 	exit(1);
 }
 
@@ -1927,7 +2041,8 @@ void Gram_matrix(finite_field &GFq, int epsilon, int k,
 		}
 }
 
-int evaluate_bilinear_form(finite_field &GFq, int *u, int *v, int d, int *Gram)
+int evaluate_bilinear_form(finite_field &GFq,
+		int *u, int *v, int d, int *Gram)
 {
 	int i, j, a, b, c, e, A;
 	
@@ -1945,7 +2060,8 @@ int evaluate_bilinear_form(finite_field &GFq, int *u, int *v, int d, int *Gram)
 	return A;
 }
 
-void Siegel_Transformation(finite_field &GFq, int epsilon, int k, 
+void Siegel_Transformation(finite_field &GFq,
+	int epsilon, int k,
 	int form_c1, int form_c2, int form_c3,
 	int *M, int *v, int *u, int verbose_level)
 // if u is singular and v \in \la u \ra^\perp, then
@@ -2076,7 +2192,8 @@ void choose_anisotropic_form(finite_field &GFq,
 				get_primitive_polynomial(GFq.q, 2, 0),
 				verbose_level);
 	
-		//FX.create_object_by_rank_string(m, get_primitive_polynomial(GFq.p, 2 * GFq.e, 0), verbose_level);
+		//FX.create_object_by_rank_string(m,
+		//get_primitive_polynomial(GFq.p, 2 * GFq.e, 0), verbose_level);
 	
 		if (f_v) {
 			cout << "choosing the following primitive polynomial:" << endl;
@@ -2094,7 +2211,8 @@ void choose_anisotropic_form(finite_field &GFq,
 	finite_field GFQ;
 
 	GFQ.init(GFq.q * GFq.q, 0);
-	cout << "choose_anisotropic_form created field GF(" << GFQ.q << ")" << endl;
+	cout << "choose_anisotropic_form created field GF("
+			<< GFQ.q << ")" << endl;
 
 	c1 = 1;
 	c2 = GFQ.negate(GFQ.T2(GFQ.p));
@@ -2112,7 +2230,9 @@ void choose_anisotropic_form(finite_field &GFq,
 #endif
 
 	if (f_v) {
-		cout << "choose_anisotropic_form over GF(" << GFq.q << "): choosing c1=" << c1 << ", c2=" << c2 << ", c3=" << c3 << endl;
+		cout << "choose_anisotropic_form over GF(" << GFq.q
+				<< "): choosing c1=" << c1 << ", c2=" << c2
+				<< ", c3=" << c3 << endl;
 		}
 }
 
@@ -2132,7 +2252,8 @@ void test_Orthogonal(int epsilon, int k, int q)
 	//n = Witt_index(epsilon, k);
 	len = k + 1;
 	nb = nb_pts_Qepsilon(epsilon, k, q);
-	cout << "Q^" << epsilon << "(" << k << "," << q << ") has " << nb << " singular points" << endl;
+	cout << "Q^" << epsilon << "(" << k << "," << q << ") has "
+			<< nb << " singular points" << endl;
 	if (epsilon == 0) {
 		c1 = 1;
 		}
@@ -2154,7 +2275,8 @@ void test_Orthogonal(int epsilon, int k, int q)
 		cout << i << " : ";
 		int_vec_print(cout, v, len);
 		cout << " : ";
-		a = evaluate_quadratic_form(GFq, v, stride, epsilon, k, c1, c2, c3);
+		a = evaluate_quadratic_form(GFq, v, stride, epsilon, k,
+				c1, c2, c3);
 		cout << a;
 		j = Q_epsilon_rank(GFq, v, stride, epsilon, k, c1, c2, c3);
 		cout << " : " << j;
@@ -2188,7 +2310,8 @@ void test_orthogonal(int n, int q)
 	GFq.init(q, verbose_level);
 	v = NEW_int(2 * n);
 	nb = nb_pts_Sbar(n, q);
-	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb << " singular points" << endl;
+	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb
+			<< " singular points" << endl;
 	for (i = 0; i < nb; i++) {
 		Sbar_unrank(GFq, v, stride, n, i);
 		cout << i << " : ";
@@ -2203,7 +2326,8 @@ void test_orthogonal(int n, int q)
 			exit(1);
 			}
 		}
-	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb << " singular points" << endl;
+	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb
+			<< " singular points" << endl;
 	FREE_int(v);
 	cout << "test_orthogonal done" << endl;
 }
@@ -2222,7 +2346,10 @@ void orthogonal_Siegel_map_between_singular_points(int *T,
 	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "Siegel_map_between_singular_points rk_from=" << rk_from << " rk_to=" << rk_to << " root=" << root << endl;
+		cout << "Siegel_map_between_singular_points "
+				"rk_from=" << rk_from
+				<< " rk_to=" << rk_to
+				<< " root=" << root << endl;
 		}
 	d = algebraic_dimension;
 	k = d - 1;
@@ -2232,9 +2359,12 @@ void orthogonal_Siegel_map_between_singular_points(int *T,
 	w = NEW_int(d);
 	z = NEW_int(d);
 	x = NEW_int(d);
-	Q_epsilon_unrank(GFq, B, 1, epsilon, k, form_c1, form_c2, form_c3, root);
-	Q_epsilon_unrank(GFq, B + d, 1, epsilon, k, form_c1, form_c2, form_c3, rk_from);
-	Q_epsilon_unrank(GFq, w, 1, epsilon, k, form_c1, form_c2, form_c3, rk_to);
+	Q_epsilon_unrank(GFq, B, 1, epsilon, k,
+			form_c1, form_c2, form_c3, root);
+	Q_epsilon_unrank(GFq, B + d, 1, epsilon, k,
+			form_c1, form_c2, form_c3, rk_from);
+	Q_epsilon_unrank(GFq, w, 1, epsilon, k,
+			form_c1, form_c2, form_c3, rk_to);
 	if (f_vv) {
 		cout << "    root=";
 		int_vec_print(cout, B, d);
@@ -2361,7 +2491,8 @@ int orthogonal_find_root(int rk2,
 		}
 	x[0] = 1;
 	
-	Q_epsilon_unrank(GFq, y, 1, epsilon, k, form_c1, form_c2, form_c3, rk2);
+	Q_epsilon_unrank(GFq, y, 1, epsilon, k,
+			form_c1, form_c2, form_c3, rk2);
 	if (y[0]) {
 		z[1] = 1;
 		goto finish;
@@ -2434,7 +2565,8 @@ finish:
 		cout << "v=" << v << endl;
 		exit(1);
 		}
-	root = Q_epsilon_rank(GFq, z, 1, epsilon, k, form_c1, form_c2, form_c3);
+	root = Q_epsilon_rank(GFq, z, 1, epsilon, k,
+			form_c1, form_c2, form_c3);
 	if (f_v) {
 		cout << "orthogonal_find_root root=" << root << endl;
 		}

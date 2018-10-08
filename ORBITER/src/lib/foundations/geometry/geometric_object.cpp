@@ -235,7 +235,8 @@ void do_blocking_set_family_3(int n, finite_field *F,
 			}
 		}
 
-	cout << "we created a blocking set of lines of size " << S->k << ":" << endl;
+	cout << "we created a blocking set of lines of "
+			"size " << S->k << ":" << endl;
 	int_vec_print(cout, S->set, S->k);
 	cout << endl;
 	
@@ -320,7 +321,8 @@ void create_hyperoval(finite_field *F,
 	Pts = NEW_int(P->N_points);
 
 	if (f_translation) {
-		P->create_translation_hyperoval(Pts, nb_pts, translation_exponent, verbose_level - 0);
+		P->create_translation_hyperoval(Pts, nb_pts,
+				translation_exponent, verbose_level - 0);
 		sprintf(fname, "hyperoval_translation_q%d.txt", q);
 		}
 	else if (f_Segre) {
@@ -336,7 +338,8 @@ void create_hyperoval(finite_field *F,
 		sprintf(fname, "hyperoval_Cherowitzo_q%d.txt", q);
 		}
 	else if (f_OKeefe_Penttila) {
-		P->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts, verbose_level - 2);
+		P->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts,
+				verbose_level - 2);
 		sprintf(fname, "hyperoval_OKeefe_Penttila_q%d.txt", q);
 		}
 	else {
@@ -357,7 +360,8 @@ void create_hyperoval(finite_field *F,
 		}
 
 	if (!test_if_set_with_return_value(Pts, nb_pts)) {
-		cout << "create_hyperoval the set is not a set, something is wrong" << endl;
+		cout << "create_hyperoval the set is not a set, "
+				"something is wrong" << endl;
 		exit(1);
 		}
 
@@ -414,7 +418,8 @@ void create_subiaco_oval(finite_field *F,
 		}
 
 	if (!test_if_set_with_return_value(Pts, nb_pts)) {
-		cout << "create_subiaco_oval the set is not a set, something is wrong" << endl;
+		cout << "create_subiaco_oval the set is not a set, "
+				"something is wrong" << endl;
 		exit(1);
 		}
 
@@ -462,7 +467,8 @@ void create_subiaco_hyperoval(finite_field *F,
 		}
 
 	if (!test_if_set_with_return_value(Pts, nb_pts)) {
-		cout << "create_subiaco_hyperoval the set is not a set, something is wrong" << endl;
+		cout << "create_subiaco_hyperoval the set is not a set, "
+				"something is wrong" << endl;
 		exit(1);
 		}
 
@@ -511,7 +517,8 @@ void create_adelaide_hyperoval(subfield_structure *S,
 		}
 
 	if (!test_if_set_with_return_value(Pts, nb_pts)) {
-		cout << "create_adelaide_hyperoval the set is not a set, something is wrong" << endl;
+		cout << "create_adelaide_hyperoval the set is not a set, "
+				"something is wrong" << endl;
 		exit(1);
 		}
 
@@ -579,7 +586,8 @@ void create_ovoid(finite_field *F,
 	//FREE_int(L);
 }
 
-void create_Baer_substructure(int n, finite_field *FQ, finite_field *Fq, 
+void create_Baer_substructure(int n,
+	finite_field *FQ, finite_field *Fq,
 	char *fname, int &nb_pts, int *&Pts, 
 	int verbose_level)
 {
@@ -629,7 +637,9 @@ void create_Baer_substructure(int n, finite_field *FQ, finite_field *Fq,
 			Pts[nb_pts++] = i;
 			}
 		}
-	cout << "the Baer substructure PG(" << n << "," << q << ") inside PG(" << n << "," << Q << ") has size " << sz << ":" << endl;
+	cout << "the Baer substructure PG(" << n << "," << q
+			<< ") inside PG(" << n << "," << Q << ") has size "
+			<< sz << ":" << endl;
 	for (i = 0; i < sz; i++) {
 		cout << Pts[i] << " ";
 		}
@@ -649,7 +659,8 @@ void create_Baer_substructure(int n, finite_field *FQ, finite_field *Fq,
 }
 
 
-void create_BLT_from_database(int f_embedded, finite_field *F, int BLT_k, 
+void create_BLT_from_database(int f_embedded,
+	finite_field *F, int BLT_k,
 	char *fname, int &nb_pts, int *&Pts, 
 	int verbose_level)
 {
@@ -715,7 +726,8 @@ void create_BLT_from_database(int f_embedded, finite_field *F, int BLT_k,
 	//delete F;
 }
 
-void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq, 
+void create_BLT(int f_embedded,
+	finite_field *FQ, finite_field *Fq,
 	int f_Linear,
 	int f_Fisher,
 	int f_Mondello,
@@ -1023,7 +1035,8 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 		cout << "m=" << m << endl;
 		cout << "n=" << n << endl;
 		print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		//f.latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
+		//f.latex_matrix(cout, f_elements_exponential,
+		//symbol_for_print_subfield, H_subfield, m, n);
 		}
 	
 	d = m;
@@ -1038,7 +1051,8 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 	if (f_v) {
 		cout << "H_subfield:" << endl;
 		//print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		Fq->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
+		Fq->latex_matrix(cout, f_elements_exponential,
+			symbol_for_print_subfield, H_subfield, m, n);
 		}
 
 	v = NEW_int(d);
@@ -1134,7 +1148,8 @@ void create_unital_XXq_YZq_ZYq(finite_field *F,
 }
 
 
-void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *Fq, 
+void create_desarguesian_line_spread_in_PG_3_q(
+	finite_field *FQ, finite_field *Fq,
 	int f_embedded_in_PG_4_q, 
 	char *fname, int &nb_lines, int *&Lines, 
 	int verbose_level)
@@ -1155,7 +1170,8 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 	P3 = NEW_OBJECT(projective_space);
 
 	if (Q != FQ->q) {
-		cout << "create_desarguesian_line_spread_in_PG_3_q Q != FQ->q" << endl;
+		cout << "create_desarguesian_line_spread_in_PG_3_q "
+				"Q != FQ->q" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -1237,8 +1253,10 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 			cout << "rk=" << rk << endl;
 			}
 		P1->unrank_point(v2, rk);
-			// w1[4] is the GF(q)-vector corresponding to the GF(q^2)-vector v[2]
-			// w2[4] is the GF(q)-vector corresponding to the GF(q^2)-vector v[2] * alpha
+			// w1[4] is the GF(q)-vector corresponding
+			// to the GF(q^2)-vector v[2]
+			// w2[4] is the GF(q)-vector corresponding
+			// to the GF(q^2)-vector v[2] * alpha
 			// where v[2] runs through the points of PG(1,q^2). 
 			// That way, w1[4] and w2[4] are a GF(q)-basis for the 
 			// 2-dimensional subspace v[2] (when viewed over GF(q)), 
@@ -1293,10 +1311,12 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 		}
 
 	if (f_embedded_in_PG_4_q) {
-		sprintf(fname, "desarguesian_line_spread_in_PG_3_%d_embedded.txt", q);
+		sprintf(fname, "desarguesian_line_spread_"
+				"in_PG_3_%d_embedded.txt", q);
 		}
 	else {
-		sprintf(fname, "desarguesian_line_spread_in_PG_3_%d.txt", q);
+		sprintf(fname, "desarguesian_line_spread_"
+				"in_PG_3_%d.txt", q);
 		}
 
 	FREE_OBJECT(P1);

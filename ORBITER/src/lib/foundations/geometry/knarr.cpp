@@ -445,7 +445,8 @@ void knarr::points_and_lines(int verbose_level)
 			if (f_v4) {
 				cout << "Subspace i=" << i << " is totally "
 						"isotropic and does not contain P." << endl;
-				print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
+				print_integer_matrix_width(cout,
+						Basis, 3, 6, 6, F->log10_of_q);
 				cout << endl;
 
 

@@ -48,7 +48,8 @@ void andre_construction_line_element::freeself()
 	null();
 }
 
-void andre_construction_line_element::init(andre_construction *Andre, int verbose_level)
+void andre_construction_line_element::init(
+		andre_construction *Andre, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -70,13 +71,15 @@ void andre_construction_line_element::init(andre_construction *Andre, int verbos
 		}
 }
 
-void andre_construction_line_element::unrank(int line_rank, int verbose_level)
+void andre_construction_line_element::unrank(
+		int line_rank, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
 
 	if (f_v) {
-		cout << "andre_construction_line_element::unrank line_rank=" << line_rank << endl;
+		cout << "andre_construction_line_element::unrank "
+				"line_rank=" << line_rank << endl;
 		}
 	andre_construction_line_element::line_rank = line_rank;
 	if (line_rank < 1) {
@@ -88,9 +91,12 @@ void andre_construction_line_element::unrank(int line_rank, int verbose_level)
 		coset_idx = line_rank % Andre->order;
 		parallel_class_idx = line_rank / Andre->order;
 		AG_element_unrank(q, coset, 1, n - k, coset_idx);
-		int_vec_copy(Andre->spread_elements_genma + parallel_class_idx * k * n, coordinates, k * n);
+		int_vec_copy(
+			Andre->spread_elements_genma + parallel_class_idx * k * n,
+			coordinates, k * n);
 		for (i = 0; i < n - k; i++) {
-			non_pivots[i] = Andre->non_pivot[parallel_class_idx * (n - k) + i];
+			non_pivots[i] = Andre->non_pivot[
+					parallel_class_idx * (n - k) + i];
 			}
 		for (i = 0; i < k; i++) {
 			pivots[i] = Andre->pivot[parallel_class_idx * k + i];
@@ -124,12 +130,17 @@ int andre_construction_line_element::rank(int verbose_level)
 	else {
 		line_rank = 1;
 
-		F->Gauss_simple(coordinates, k, n, pivots, 0 /* verbose_level */);
+		F->Gauss_simple(coordinates,
+				k, n, pivots,
+				0 /* verbose_level */);
 		set_complement(pivots, k, non_pivots, a, n);
 
 		for (i = 0; i < k; i++) {
-			F->Gauss_step(coordinates + i * n, coordinates + k * n, n, pivots[i], 0 /* verbose_level */);
-				// afterwards: v2[idx] = 0 and v1,v2 span the same space as before
+			F->Gauss_step(coordinates + i * n,
+					coordinates + k * n, n, pivots[i],
+					0 /* verbose_level */);
+				// afterwards: v2[idx] = 0 and v1,v2
+				// span the same space as before
 				// v1 is not changed if v1[idx] is nonzero
 			}
 		for (i = 0; i < n - k; i++) {
@@ -139,9 +150,12 @@ int andre_construction_line_element::rank(int verbose_level)
 			}
 		AG_element_rank(q, coset, 1, n - k, coset_idx);
 
-		rk = Andre->Grass->rank_int_here(coordinates, 0 /* verbose_level*/);
-		if (!int_vec_search(Andre->spread_elements_numeric_sorted, spread_size, rk, idx)) {
-			cout << "andre_construction_line_element::rank annot find the spread element in the sorted list" << endl;
+		rk = Andre->Grass->rank_int_here(
+				coordinates, 0 /* verbose_level*/);
+		if (!int_vec_search(Andre->spread_elements_numeric_sorted,
+				spread_size, rk, idx)) {
+			cout << "andre_construction_line_element::rank cannot "
+					"find the spread element in the sorted list" << endl;
 			exit(1);
 			}
 		parallel_class_idx = Andre->spread_elements_perm_inv[idx];
@@ -153,7 +167,8 @@ int andre_construction_line_element::rank(int verbose_level)
 	return line_rank;
 }
 
-int andre_construction_line_element::make_affine_point(int idx, int verbose_level)
+int andre_construction_line_element::make_affine_point(
+		int idx, int verbose_level)
 // 0 \le idx \le order
 {
 	int f_v = (verbose_level >= 1);
@@ -162,7 +177,8 @@ int andre_construction_line_element::make_affine_point(int idx, int verbose_leve
 	int point_rank, a;
 
 	if (f_v) {
-		cout << "andre_construction_line_element::make_affine_point" << endl;
+		cout << "andre_construction_line_element::make_"
+				"affine_point" << endl;
 		}
 	vec1 = NEW_int(k + 1);
 	vec2 = NEW_int(n);
@@ -178,7 +194,8 @@ int andre_construction_line_element::make_affine_point(int idx, int verbose_leve
 	FREE_int(vec1);
 	FREE_int(vec2);
 	if (f_v) {
-		cout << "andre_construction_line_element::make_affine_point done" << endl;
+		cout << "andre_construction_line_element::make_"
+				"affine_point done" << endl;
 		}
 	return point_rank;
 }

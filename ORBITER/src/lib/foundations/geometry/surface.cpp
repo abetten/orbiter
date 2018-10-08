@@ -360,7 +360,8 @@ void surface::init(finite_field *F, int verbose_level)
 	Gr->init(n, 2, F, 0 /* verbose_level */);
 	nb_lines_PG_3 = Gr->nCkq.as_int();
 	if (f_v) {
-		cout << "surface::init nb_lines_PG_3 = " << nb_lines_PG_3 << endl;
+		cout << "surface::init nb_lines_PG_3 = "
+				<< nb_lines_PG_3 << endl;
 		}
 
 	Gr3 = NEW_OBJECT(grassmann);
@@ -379,11 +380,13 @@ void surface::init(finite_field *F, int verbose_level)
 	Klein = NEW_OBJECT(klein_correspondence);
 
 	if (f_v) {
-		cout << "surface::init initializing Klein correspondence" << endl;
+		cout << "surface::init initializing "
+				"Klein correspondence" << endl;
 		}
 	Klein->init(F, O, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "surface::init initializing Klein correspondence done" << endl;
+		cout << "surface::init initializing "
+				"Klein correspondence done" << endl;
 		}
 
 
@@ -5465,7 +5468,8 @@ void surface::create_surface(int f_iso, int iso,
 			int_vec_print(cout, nine_lines, 9);
 			cout << endl;
 			}
-		int double_sixes[6 * 12]; // there are 6 double sixes for each trihedral pair
+		int double_sixes[6 * 12];
+			// there are 6 double sixes for each trihedral pair
 
 		surface_object *SO;
 		int eqn[20];
@@ -5495,18 +5499,21 @@ void surface::create_surface(int f_iso, int iso,
 		SO->compute_tritangent_planes(verbose_level - 2);
 		if (f_v) {
 			cout << "surface::create_surface f_has_trihedral_pair "
-					"before SO->compute_planes_and_dual_point_ranks" << endl;
+					"before SO->compute_planes_and_"
+					"dual_point_ranks" << endl;
 			}
 		SO->compute_planes_and_dual_point_ranks(verbose_level - 2);
 		if (f_v) {
 			cout << "surface::create_surface f_has_trihedral_pair "
-					"before SO->identify_double_six_from_trihedral_pair" << endl;
+					"before SO->identify_double_six_"
+					"from_trihedral_pair" << endl;
 			}
 		SO->identify_double_six_from_trihedral_pair(Lines, t_idx,
 				nine_lines, double_sixes, verbose_level - 2);
 		if (f_v) {
 			cout << "surface::create_surface f_has_trihedral_pair "
-					"after SO->identify_double_six_from_trihedral_pair" << endl;
+					"after SO->identify_double_six_"
+					"from_trihedral_pair" << endl;
 			}
 		
 
@@ -5522,13 +5529,15 @@ void surface::create_surface(int f_iso, int iso,
 
 		if (f_v) {
 			cout << "surface::create_surface f_has_trihedral_pair "
-					"before rearrange_lines_according_to_a_given_double_six" << endl;
+					"before rearrange_lines_according_"
+					"to_a_given_double_six" << endl;
 			}
 		rearrange_lines_according_to_a_given_double_six(Lines, 
 			New_lines, double_sixes, verbose_level - 2);
 		if (f_v) {
 			cout << "surface::create_surface f_has_trihedral_pair "
-					"after rearrange_lines_according_to_a_given_double_six" << endl;
+					"after rearrange_lines_according_"
+					"to_a_given_double_six" << endl;
 			}
 
 		int_vec_copy(New_lines, Lines, 27);
@@ -5705,7 +5714,8 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 	
 	if (f_v) {
 		cout << "surface::compute_external_lines_on_"
-				"three_tritangent_planes computing tritangent planes:" << endl;
+				"three_tritangent_planes computing "
+				"tritangent planes:" << endl;
 		}
 	compute_tritangent_planes(Lines, 
 		Tritangent_planes, nb_tritangent_planes, 
@@ -5716,13 +5726,15 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 
 	if (f_v) {
 		cout << "surface::compute_external_lines_on_"
-				"three_tritangent_planes Lines_in_tritangent_plane: " << endl;
+				"three_tritangent_planes Lines_in_"
+				"tritangent_plane: " << endl;
 		print_integer_matrix_with_standard_labels(cout, 
 			Lines_in_tritangent_plane, nb_tritangent_planes, 
 			3, FALSE);
 		}
 
-	int *Intersection_matrix; // [nb_tritangent_planes * nb_tritangent_planes]
+	int *Intersection_matrix;
+		// [nb_tritangent_planes * nb_tritangent_planes]
 	int *Plane_intersections;
 	int *Plane_intersections_general;
 	int rk, idx;
@@ -5749,7 +5761,8 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 			Plane_intersections_general[i * nb_tritangent_planes + j] = -1;
 			if (j != i) {
 				rk = Intersection_matrix[i * nb_tritangent_planes + j];
-				if (int_vec_search_linear(Lines, 27, rk, idx)) {
+				if (int_vec_search_linear(
+					Lines, 27, rk, idx)) {
 					Plane_intersections[i * nb_tritangent_planes + j] = idx;
 					}
 				else {
@@ -6671,7 +6684,8 @@ int surface::clebsch_map(int *Lines, int *Pts, int nb_pts,
 			}
 
 
-		// The third plane is the image plane, given by dual coordinates:
+		// The third plane is the image
+		// plane, given by dual coordinates:
 		int_vec_copy(Plane + 3 * 4, Dual_planes + 8, 4);
 		if (f_v) {
 			cout << "Dual coordinates for all three planes: " << endl;
@@ -6679,7 +6693,8 @@ int surface::clebsch_map(int *Lines, int *Pts, int nb_pts,
 			cout << endl;
 			}
 
-		r = F->RREF_and_kernel(4, 3, Dual_planes, 0 /* verbose_level */);
+		r = F->RREF_and_kernel(4, 3,
+				Dual_planes, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "Dual coordinates and perp: " << endl;
 			int_matrix_print(Dual_planes, 4, 4);
@@ -6869,22 +6884,28 @@ void surface::clebsch_cubics(int verbose_level)
 	//int_vec_zero(C[3], nb_monomials6);
 	m1 = F->negate(1);
 	multiply_222_27_and_add(Clebsch_P[0 * 4 + 0],
-			Clebsch_P[1 * 4 + 1], Clebsch_P[2 * 4 + 2], m1, C[3],
+			Clebsch_P[1 * 4 + 1],
+			Clebsch_P[2 * 4 + 2], m1, C[3],
 			0 /* verbose_level*/);
 	multiply_222_27_and_add(Clebsch_P[0 * 4 + 1],
-			Clebsch_P[1 * 4 + 2], Clebsch_P[2 * 4 + 0], m1, C[3],
+			Clebsch_P[1 * 4 + 2],
+			Clebsch_P[2 * 4 + 0], m1, C[3],
 			0 /* verbose_level*/);
 	multiply_222_27_and_add(Clebsch_P[0 * 4 + 2],
-			Clebsch_P[1 * 4 + 0], Clebsch_P[2 * 4 + 1], m1, C[3],
+			Clebsch_P[1 * 4 + 0],
+			Clebsch_P[2 * 4 + 1], m1, C[3],
 			0 /* verbose_level*/);
 	multiply_222_27_and_add(Clebsch_P[2 * 4 + 0],
-			Clebsch_P[1 * 4 + 1], Clebsch_P[0 * 4 + 2], 1, C[3],
+			Clebsch_P[1 * 4 + 1],
+			Clebsch_P[0 * 4 + 2], 1, C[3],
 			0 /* verbose_level*/);
 	multiply_222_27_and_add(Clebsch_P[2 * 4 + 1],
-			Clebsch_P[1 * 4 + 2], Clebsch_P[0 * 4 + 0], 1, C[3],
+			Clebsch_P[1 * 4 + 2],
+			Clebsch_P[0 * 4 + 0], 1, C[3],
 			0 /* verbose_level*/);
 	multiply_222_27_and_add(Clebsch_P[2 * 4 + 2],
-			Clebsch_P[1 * 4 + 0], Clebsch_P[0 * 4 + 1], 1, C[3],
+			Clebsch_P[1 * 4 + 0],
+			Clebsch_P[0 * 4 + 1], 1, C[3],
 			0 /* verbose_level*/);
 
 	int I[3];
@@ -6937,12 +6958,14 @@ void surface::clebsch_cubics(int verbose_level)
 	int h;
 	
 	Clebsch_coeffs = NEW_int(4 * Poly3->nb_monomials * nb_monomials3);
-	int_vec_zero(Clebsch_coeffs, 4 * Poly3->nb_monomials * nb_monomials3);
+	int_vec_zero(Clebsch_coeffs,
+			4 * Poly3->nb_monomials * nb_monomials3);
 	CC = NEW_pint(4 * Poly3->nb_monomials);
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < Poly3->nb_monomials; j++) {
 			CC[i * Poly3->nb_monomials + j] = 
-				Clebsch_coeffs + (i * Poly3->nb_monomials + j) * nb_monomials3;
+				Clebsch_coeffs +
+					(i * Poly3->nb_monomials + j) * nb_monomials3;
 			}
 		}
 	for (i = 0; i < Poly3->nb_monomials; i++) {
@@ -6953,7 +6976,8 @@ void surface::clebsch_cubics(int verbose_level)
 				idx = Poly3_24->index_of_monomial(M24);
 				for (h = 0; h < 4; h++) {
 					CC[h * Poly3->nb_monomials + i][idx] = 
-						F->add(CC[h * Poly3->nb_monomials + i][idx], C[h][j]);
+						F->add(CC[h * Poly3->nb_monomials + i][idx],
+								C[h][j]);
 					}
 				}
 			}

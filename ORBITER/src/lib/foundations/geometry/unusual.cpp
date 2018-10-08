@@ -99,17 +99,21 @@ unusual_model::~unusual_model()
 		}
 }
 
-void unusual_model::setup_sum_of_squares(int q, const char *poly_q, const char *poly_Q, int verbose_level)
+void unusual_model::setup_sum_of_squares(int q,
+	const char *poly_q, const char *poly_Q, int verbose_level)
 {
 	setup2(q, poly_q, poly_Q, TRUE, verbose_level);
 }
 
-void unusual_model::setup(int q, const char *poly_q, const char *poly_Q, int verbose_level)
+void unusual_model::setup(int q,
+	const char *poly_q, const char *poly_Q, int verbose_level)
 {
 	setup2(q, poly_q, poly_Q, FALSE, verbose_level);
 }
 
-void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_sum_of_squares, int verbose_level)
+void unusual_model::setup2(int q,
+	const char *poly_q, const char *poly_Q,
+	int f_sum_of_squares, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -117,7 +121,8 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 	int Q, i, j, b, p, h;
 	
 	if (f_v) {
-		cout << "unusual_model::setup q=" << q << " f_sum_of_squares=" << f_sum_of_squares << endl;
+		cout << "unusual_model::setup q=" << q
+			<< " f_sum_of_squares=" << f_sum_of_squares << endl;
 		}
 	unusual_model::q = q;
 	Q = qq = q * q;
@@ -148,7 +153,8 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 		if (f.e > 1) {
 			F.init(qq, 1);
 			f.init(q, 3);
-			cout << "need to choose the generator polynomial for the field" << endl;
+			cout << "need to choose the generator polynomial "
+				"for the field" << endl;
 			F.compute_subfields(verbose_level);
 			exit(1);
 			}
@@ -173,9 +179,12 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 
 #if 0
 	if (q == 9) {
-		char *override_poly_Q = "110"; // X^{4} + X^{3} + 2
-		char *override_poly_q = "17"; // X^2 - X - 1 = X^2 +2X + 2 = 2 + 2*3 + 9 = 17
-		//finite_field::init_override_polynomial() GF(81) = GF(3^4), polynomial = X^{4} + X^{3} + 2 = 110
+		char *override_poly_Q = "110";
+			// X^{4} + X^{3} + 2
+		char *override_poly_q = "17";
+			// X^2 - X - 1 = X^2 +2X + 2 = 2 + 2*3 + 9 = 17
+		//finite_field::init_override_polynomial()
+		//GF(81) = GF(3^4), polynomial = X^{4} + X^{3} + 2 = 110
 		//subfields of F_{81}:
 		//subfield 3^2 : subgroup_index = 10
 		//0 : 0 : 1 : 1
@@ -186,8 +195,10 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 25) {
-		char *override_poly_Q = "767"; // X^{4} + X^{3} + 3X + 2
-		char *override_poly_q = "47"; // X^2 - X - 3 = X^2 +4X + 2=25+20+2=47
+		char *override_poly_Q = "767";
+			// X^{4} + X^{3} + 3X + 2
+		char *override_poly_q = "47";
+			// X^2 - X - 3 = X^2 +4X + 2=25+20+2=47
 		//subfields of F_{625}:
 		//subfield 5^2 : subgroup_index = 26
 		//0 : 0 : 1 : 1
@@ -198,8 +209,10 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 27) {
-		char *override_poly_Q = "974"; // X^{6} + X^{5} + 2
-		char *override_poly_q = "34"; // X^3 - X + 1 = X^3 +2X + 1 = 27+6+1=34
+		char *override_poly_Q = "974";
+			// X^{6} + X^{5} + 2
+		char *override_poly_q = "34";
+			// X^3 - X + 1 = X^3 +2X + 1 = 27+6+1=34
 		//subfields of F_{729}:
 		//subfield 3^2 : subgroup_index = 91
 		//0 : 0 : 1 : 1
@@ -241,8 +254,10 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 121) {
-		char *override_poly_Q = "15985"; // X^{4} + X^{3} + X + 2
-		char *override_poly_q = "200"; // X^2-4X+2=X^2+7X+2=11^2+7*11+2=200
+		char *override_poly_Q = "15985";
+			// X^{4} + X^{3} + X + 2
+		char *override_poly_q = "200";
+			// X^2-4X+2=X^2+7X+2=11^2+7*11+2=200
 		//subfields of F_{14641}:
 		//subfield 11^2 : subgroup_index = 122
 		//0 : 0 : 1 : 1
@@ -265,13 +280,16 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 		}
 
 	if (f_vv) {
-		cout << "unusual_model::setup calling subfield_embedding_2dimensional" << endl;
+		cout << "unusual_model::setup calling "
+			"subfield_embedding_2dimensional" << endl;
 		}
 	F.subfield_embedding_2dimensional(f, 
 		components, embedding, pair_embedding, verbose_level - 4);
 	if (f_vvv) {
-		cout << "unusual_model::setup subfield_embedding_2dimensional finished" << endl;
-		F.print_embedding(f, components, embedding, pair_embedding);
+		cout << "unusual_model::setup "
+			"subfield_embedding_2dimensional finished" << endl;
+		F.print_embedding(f, components,
+				embedding, pair_embedding);
 		}
 
 	T_alpha = F.retract(f, 2, F.T2(alpha), verbose_level - 2);	
@@ -326,7 +344,8 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 	
 	if (f_vvv) {
 		for (i = 0; i < 4; i++) {
-			b = f.evaluate_quadratic_form(4, nb_terms, form_i, form_j, form_coeff, 
+			b = f.evaluate_quadratic_form(4,
+				nb_terms, form_i, form_j, form_coeff,
 				basis + i * 4);
 			cout << "i=" << i << " form value " << b << endl;
 			}
@@ -339,7 +358,8 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 	
 	if (f_vv) {
 		cout << "restricted quadratic form:" << endl;
-		print_quadratic_form_list_coded(r_nb_terms, r_form_i, r_form_j, r_form_coeff);
+		print_quadratic_form_list_coded(r_nb_terms,
+				r_form_i, r_form_j, r_form_coeff);
 		}
 	r_Gram = NEW_int(2 * 2);
 	
@@ -363,7 +383,9 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 		cout << "hyperbolic basis:" << endl;
 		print_integer_matrix_width(cout, hyperbolic_basis, 4, 4, 4, 2);
 		for (i = 0; i < 4; i++) {
-			b = f.evaluate_quadratic_form(4, nb_terms, form_i, form_j, form_coeff, hyperbolic_basis + i * 4);
+			b = f.evaluate_quadratic_form(4,
+				nb_terms, form_i, form_j, form_coeff,
+				hyperbolic_basis + i * 4);
 			cout << "i=" << i << " quadratic form value " << b << endl;
 			}
 		}
@@ -371,7 +393,9 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 	M = NEW_int(4 * 4);
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			M[i * 4 + j] = f.evaluate_bilinear_form(4, hyperbolic_basis + i * 4, hyperbolic_basis + j * 4, Gram);
+			M[i * 4 + j] = f.evaluate_bilinear_form(4,
+					hyperbolic_basis + i * 4,
+					hyperbolic_basis + j * 4, Gram);
 			}
 		}
 	
@@ -380,24 +404,29 @@ void unusual_model::setup2(int q, const char *poly_q, const char *poly_Q, int f_
 		print_integer_matrix_width(cout, M, 4, 4, 4, 2);
 		}
 
-	f.restrict_quadratic_form_list_coding(4, 4, hyperbolic_basis, 
+	f.restrict_quadratic_form_list_coding(4, 4,
+		hyperbolic_basis,
 		nb_terms, form_i, form_j, form_coeff, 
 		rr_nb_terms, rr_form_i, rr_form_j, rr_form_coeff, 
 		verbose_level - 2);
 	if (f_vv) {
 		cout << "restricted quadratic form:" << endl;
-		print_quadratic_form_list_coded(rr_nb_terms, rr_form_i, rr_form_j, rr_form_coeff);
+		print_quadratic_form_list_coded(rr_nb_terms,
+				rr_form_i, rr_form_j, rr_form_coeff);
 		}
 	
-	f.matrix_inverse(hyperbolic_basis, hyperbolic_basis_inverse, 4, verbose_level - 2);
+	f.matrix_inverse(hyperbolic_basis,
+			hyperbolic_basis_inverse, 4, verbose_level - 2);
 	if (f_vv) {
 		cout << "inverse hyperbolic basis:" << endl;
-		print_integer_matrix_width(cout, hyperbolic_basis_inverse, 4, 4, 4, 2);
+		print_integer_matrix_width(cout,
+				hyperbolic_basis_inverse, 4, 4, 4, 2);
 		}
 	
 }
 
-void unusual_model::convert_to_ranks(int n, int *unusual_coordinates, int *ranks, int verbose_level)
+void unusual_model::convert_to_ranks(int n,
+		int *unusual_coordinates, int *ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -409,7 +438,8 @@ void unusual_model::convert_to_ranks(int n, int *unusual_coordinates, int *ranks
 		}
 	if (f_v) {
 		cout << "unusual_coordinates:" << endl;
-		print_integer_matrix_width(cout, unusual_coordinates, n, 3, 3, 2);
+		print_integer_matrix_width(cout,
+				unusual_coordinates, n, 3, 3, 2);
 		}
 
 	
@@ -433,7 +463,8 @@ void unusual_model::convert_to_ranks(int n, int *unusual_coordinates, int *ranks
 	FREE_int(usual);
 }
 
-void unusual_model::convert_from_ranks(int n, int *ranks, int *unusual_coordinates, int verbose_level)
+void unusual_model::convert_from_ranks(int n,
+	int *ranks, int *unusual_coordinates, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *usual;
@@ -454,18 +485,21 @@ void unusual_model::convert_from_ranks(int n, int *ranks, int *unusual_coordinat
 		}
 	
 
-	convert_from_usual(n, usual, unusual_coordinates, verbose_level - 1);
+	convert_from_usual(n, usual,
+			unusual_coordinates, verbose_level - 1);
 
 	if (f_v) {
 		cout << "unusual_coordinates:" << endl;
-		print_integer_matrix_width(cout, unusual_coordinates, n, 3, 3, 2);
+		print_integer_matrix_width(cout,
+				unusual_coordinates, n, 3, 3, 2);
 		}
 
 
 	FREE_int(usual);
 }
 
-int unusual_model::convert_to_rank(int *unusual_coordinates, int verbose_level)
+int unusual_model::convert_to_rank(
+	int *unusual_coordinates, int verbose_level)
 {
 	int usual[5];
 	int rank;
@@ -475,15 +509,19 @@ int unusual_model::convert_to_rank(int *unusual_coordinates, int verbose_level)
 	return rank;
 }
 
-void unusual_model::convert_from_rank(int rank, int *unusual_coordinates, int verbose_level)
+void unusual_model::convert_from_rank(int rank,
+	int *unusual_coordinates, int verbose_level)
 {
 	int usual[5];
 	
 	Q_unrank(f, usual, 1, 4, rank);
-	convert_from_usual(1, usual, unusual_coordinates, verbose_level - 1);
+	convert_from_usual(1, usual,
+			unusual_coordinates, verbose_level - 1);
 }
 
-void unusual_model::convert_to_usual(int n, int *unusual_coordinates, int *usual_coordinates, int verbose_level)
+void unusual_model::convert_to_usual(int n,
+	int *unusual_coordinates, int *usual_coordinates,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, c;
@@ -492,7 +530,8 @@ void unusual_model::convert_to_usual(int n, int *unusual_coordinates, int *usual
 	tmp = NEW_int(n * 4);
 	if (f_v) {
 		cout << "convert_to_usual:" << endl;
-		print_integer_matrix_width(cout, unusual_coordinates, n, 3, 3, 2);
+		print_integer_matrix_width(cout,
+			unusual_coordinates, n, 3, 3, 2);
 		}
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < 2; j++) {
@@ -510,7 +549,9 @@ void unusual_model::convert_to_usual(int n, int *unusual_coordinates, int *usual
 		print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
 		}
 	for (i = 0; i < n; i++) {
-		f.mult_matrix(tmp + i * 4, hyperbolic_basis_inverse, usual_coordinates + i * 5 + 1, 1, 4, 4);
+		f.mult_matrix(tmp + i * 4,
+			hyperbolic_basis_inverse,
+			usual_coordinates + i * 5 + 1, 1, 4, 4);
 		usual_coordinates[i * 5 + 0] = unusual_coordinates[i * 3 + 2];
 		}
 	if (f_v) {
@@ -520,7 +561,10 @@ void unusual_model::convert_to_usual(int n, int *unusual_coordinates, int *usual
 	FREE_int(tmp);
 }
 
-void unusual_model::convert_from_usual(int n, int *usual_coordinates, int *unusual_coordinates, int verbose_level)
+void unusual_model::convert_from_usual(int n,
+	int *usual_coordinates,
+	int *unusual_coordinates,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, c, aa, bb;
@@ -529,14 +573,16 @@ void unusual_model::convert_from_usual(int n, int *usual_coordinates, int *unusu
 	tmp = NEW_int(n * 4);
 	if (f_v) {
 		cout << "convert_from_usual:" << endl;
-		print_integer_matrix_width(cout, usual_coordinates, n, 5, 5, 2);
+		print_integer_matrix_width(cout,
+				usual_coordinates, n, 5, 5, 2);
 		}
 	if (q == 0) {
 		cout << "q=" << q << " is zero" << endl;
 		exit(1);
 		}
 	for (i = 0; i < n; i++) {
-		f.mult_matrix(usual_coordinates + i * 5 + 1, hyperbolic_basis, tmp + i * 4, 1, 4, 4);
+		f.mult_matrix(usual_coordinates + i * 5 + 1,
+			hyperbolic_basis, tmp + i * 4, 1, 4, 4);
 		}
 	if (f_v) {
 		cout << "tmp:" << endl;
@@ -579,7 +625,8 @@ void unusual_model::convert_from_usual(int n, int *usual_coordinates, int *unusu
 	FREE_int(tmp);
 }
 
-void unusual_model::create_Fisher_BLT_set(int *Fisher_BLT, int verbose_level)
+void unusual_model::create_Fisher_BLT_set(
+	int *Fisher_BLT, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -629,13 +676,15 @@ void unusual_model::create_Fisher_BLT_set(int *Fisher_BLT, int verbose_level)
 	Table = NEW_int((q + 1) * 3);
 
 	for (i = 0; i < nb_norm_one; i++) {
-		Table[i * 3 + 0] = F.mult(beta, F.mult(norm_one_table[i], norm_one_table[i]));
+		Table[i * 3 + 0] = F.mult(beta,
+			F.mult(norm_one_table[i], norm_one_table[i]));
 		Table[i * 3 + 1] = 0;
 		Table[i * 3 + 2] = 1;
 		}
 	for (i = 0; i < nb_norm_one; i++) {
 		Table[(nb_norm_one + i) * 3 + 0] = 0;
-		Table[(nb_norm_one + i) * 3 + 1] = F.mult(beta, F.mult(norm_one_table[i], norm_one_table[i]));
+		Table[(nb_norm_one + i) * 3 + 1] =
+			F.mult(beta, F.mult(norm_one_table[i], norm_one_table[i]));
 		Table[(nb_norm_one + i) * 3 + 2] = 1;
 		}
 	if (f_v) {
@@ -654,7 +703,8 @@ void unusual_model::create_Fisher_BLT_set(int *Fisher_BLT, int verbose_level)
 	FREE_int(Table);
 }
 
-void unusual_model::create_Linear_BLT_set(int *BLT, int verbose_level)
+void unusual_model::create_Linear_BLT_set(
+		int *BLT, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -705,14 +755,16 @@ void unusual_model::create_Linear_BLT_set(int *BLT, int verbose_level)
 	FREE_int(Table);
 }
 
-void unusual_model::create_Mondello_BLT_set(int *BLT, int verbose_level)
+void unusual_model::create_Mondello_BLT_set(
+	int *BLT, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i, beta, gamma;
 	int *norm_one_table, nb_norm_one = 0;
 	int *Table;
-	int /*minus_one,*/ four, five, minus_four_fifth, minus_one_fifth;
+	int /*minus_one,*/ four, five;
+	int minus_four_fifth, minus_one_fifth;
 	
 	if (f_v) {
 		cout << "unusual_model::create_Mondello_BLT_set" << endl;
@@ -723,7 +775,8 @@ void unusual_model::create_Mondello_BLT_set(int *BLT, int verbose_level)
 	minus_four_fifth = F.negate(F.mult(four, F.inverse(five)));
 	minus_one_fifth = F.negate(F.inverse(five));
 	
-	// now we find an element beta in F_q^2 with N2(beta) = minus_four_fifth
+	// now we find an element beta in F_q^2
+	// with N2(beta) = minus_four_fifth
 	for (beta = 1; beta < qq; beta++) {
 		if (F.N2(beta) == minus_four_fifth) {
 			break;
@@ -736,7 +789,8 @@ void unusual_model::create_Mondello_BLT_set(int *BLT, int verbose_level)
 		cout << "beta=" << beta << endl;
 		}
 
-	// now we find an element gamma in F_q^2 with N2(beta) = minus_one_fifth
+	// now we find an element gamma in
+	// F_q^2 with N2(beta) = minus_one_fifth
 	for (gamma = 1; gamma < qq; gamma++) {
 		if (F.N2(gamma) == minus_one_fifth) {
 			break;
@@ -798,19 +852,22 @@ int unusual_model::T2(int a)
 	
 }
 
-int unusual_model::quadratic_form(int a, int b, int c, int verbose_level)
+int unusual_model::quadratic_form(
+		int a, int b, int c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int w, x, y, z;
 	
 	if (f_v) {
-		cout << "quadratic_form a=" << a << " b=" << b << " c=" << c << endl;
+		cout << "quadratic_form a=" << a << " b=" << b
+				<< " c=" << c << endl;
 		}
 	x = N2(a);
 	y = N2(b);
 	z = f.power(c, 2);
 	if (f_v) {
-		cout << "quadratic_form N(a)=" << x << " N(b)=" << y << " c^2=" << z << endl;
+		cout << "quadratic_form N(a)=" << x
+				<< " N(b)=" << y << " c^2=" << z << endl;
 		}
 	w = f.add3(x, y, z);
 	if (f_v) {
@@ -819,13 +876,18 @@ int unusual_model::quadratic_form(int a, int b, int c, int verbose_level)
 	return w;
 }
 
-int unusual_model::bilinear_form(int a1, int b1, int c1, int a2, int b2, int c2, int verbose_level)
+int unusual_model::bilinear_form(
+		int a1, int b1, int c1,
+		int a2, int b2, int c2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a3, b3, c3, q1, q2, q3, w;
 	
 	if (f_v) {
-		cout << "bilinear_form (" << a1 << "," << b1 << "," << c1 << " and " << a2 << "," << b2 << "," << c2 << ")";
+		cout << "bilinear_form (" << a1 << "," << b1
+			<< "," << c1 << " and " << a2 << ","
+			<< b2 << "," << c2 << ")";
 		}
 	a3 = F.add(a1, a2);
 	b3 = F.add(b1, b2);
@@ -846,7 +908,8 @@ int unusual_model::bilinear_form(int a1, int b1, int c1, int a2, int b2, int c2,
 	return w;
 }
 
-void unusual_model::print_coordinates_detailed_set(int *set, int len)
+void unusual_model::print_coordinates_detailed_set(
+		int *set, int len)
 {
 	int i, j;
 	
@@ -887,8 +950,12 @@ void unusual_model::print_coordinates_detailed(int pt, int cnt)
 
 	cout << setw(3) << cnt << " : " << setw(6) << pt << " : ";
 	cout << setw(4) << l1 << ", " << setw(4) << l2 << " : ";
-	cout << setw(4) << ll1 << ", " << setw(4) << ll2 << " : Q(a,b,c)=" << w << " ";
-	cout << "(" << setw(3) << a << ", " << setw(3) << b << ", " << c << " : " << setw(3) << a1 << ", " << setw(4) << a2 << ", " << setw(3) << b1 << ", " << setw(4) << b2 << ", 1) : ";
+	cout << setw(4) << ll1 << ", " << setw(4) << ll2
+			<< " : Q(a,b,c)=" << w << " ";
+	cout << "(" << setw(3) << a << ", " << setw(3)
+			<< b << ", " << c << " : " << setw(3) << a1
+			<< ", " << setw(4) << a2 << ", " << setw(3)
+			<< b1 << ", " << setw(4) << b2 << ", 1) : ";
 	int_vec_print(cout, unusual, 3);
 	cout << " : " << unusual_point_rank << " : ";
 	int_vec_print(cout, usual, 5);
@@ -907,19 +974,23 @@ int unusual_model::build_candidate_set(orthogonal &O, int q,
 	len = (q + 1) / 2;
 	offset = (2 * m + 2) % len;
 	
-	return build_candidate_set_with_or_without_test(O, q, gamma, delta, offset, 
+	return build_candidate_set_with_or_without_test(
+		O, q, gamma, delta, offset,
 		m, Set, f_second_half, TRUE, verbose_level);
 }
 
-int unusual_model::build_candidate_set_with_offset(orthogonal &O, int q, 
+int unusual_model::build_candidate_set_with_offset(
+	orthogonal &O, int q,
 	int gamma, int delta, int offset, int m, int *Set, 
 	int f_second_half, int verbose_level)
 {
-	return build_candidate_set_with_or_without_test(O, q, gamma, delta, offset, 
+	return build_candidate_set_with_or_without_test(
+		O, q, gamma, delta, offset,
 		m, Set, f_second_half, TRUE, verbose_level);
 }
 
-int unusual_model::build_candidate_set_with_or_without_test(orthogonal &O, int q, 
+int unusual_model::build_candidate_set_with_or_without_test(
+	orthogonal &O, int q,
 	int gamma, int delta, int offset, int m, int *Set, 
 	int f_second_half, int f_test, int verbose_level)
 {
@@ -955,7 +1026,8 @@ int unusual_model::build_candidate_set_with_or_without_test(orthogonal &O, int q
 	if (f_test) {
 		for (i = 1; i < Len; i++) {
 			if (!O.BLT_test_full(i, Set, 0/*verbose_level*/)) {
-				cout << "BLT test fails in point " << i << " in 1st half" << endl;
+				cout << "BLT test fails in point " << i
+					<< " in 1st half" << endl;
 				FREE_int(Table);
 				return FALSE;
 				}
@@ -980,8 +1052,10 @@ int unusual_model::build_candidate_set_with_or_without_test(orthogonal &O, int q
 		convert_to_ranks(Len, Table, Set, verbose_level - 2);
 		if (f_test) {
 			for (i = 1; i < len; i++) {
-				if (!O.BLT_test_full(i, Set + len, 0/*verbose_level*/)) {
-					cout << "BLT test fails in point " << i << " in 2nd half" << endl;
+				if (!O.BLT_test_full(i, Set + len,
+						0/*verbose_level*/)) {
+					cout << "BLT test fails in point " << i
+						<< " in 2nd half" << endl;
 					FREE_int(Table);
 					return FALSE;
 					}
@@ -1019,7 +1093,8 @@ int unusual_model::build_candidate_set_with_or_without_test(orthogonal &O, int q
 		for (i = 1; i < Len; i++) {
 			if (!O.BLT_test(i, Set, 0/*verbose_level*/)) {
 				if (f_v) {
-					cout << "BLT test fails in point " << i << " in the joining" << endl;
+					cout << "BLT test fails in point " << i
+						<< " in the joining" << endl;
 					}
 				FREE_int(Table);
 				return FALSE;
@@ -1070,7 +1145,8 @@ int unusual_model::create_orbit_of_psi(orthogonal &O, int q,
 	if (f_test) {
 		for (i = 1; i < len; i++) {
 			if (!O.BLT_test_full(i, Set, 0/*verbose_level*/)) {
-				cout << "BLT test fails in point " << i << " in create_orbit_of_psi" << endl;
+				cout << "BLT test fails in point " << i
+					<< " in create_orbit_of_psi" << endl;
 				FREE_int(Table);
 				return FALSE;
 				}
@@ -1084,7 +1160,8 @@ int unusual_model::create_orbit_of_psi(orthogonal &O, int q,
 	return TRUE;
 }
 
-void unusual_model::transform_matrix_unusual_to_usual(orthogonal *O, 
+void unusual_model::transform_matrix_unusual_to_usual(
+	orthogonal *O,
 	int *M4, int *M5, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1102,7 +1179,8 @@ void unusual_model::transform_matrix_unusual_to_usual(orthogonal *O,
 	M5_tmp2 = NEW_int(5 * 5);
 	
 	if (f_v) {
-		cout << "unusual_model::transform_matrix_unusual_to_usual" << endl;
+		cout << "unusual_model::transform_matrix_"
+				"unusual_to_usual" << endl;
 		}
 	if (f_vv) {
 		cout << "transformation matrix in unusual model" << endl;
@@ -1112,7 +1190,8 @@ void unusual_model::transform_matrix_unusual_to_usual(orthogonal *O,
 	f.mult_matrix(hyperbolic_basis, M4, M4_tmp1, 4, 4, 4);
 	f.mult_matrix(M4_tmp1, hyperbolic_basis_inverse, M4_tmp2, 4, 4, 4);
 	if (f_vvv) {
-		cout << "transformation matrix in standard coordinates:" << endl;
+		cout << "transformation matrix in "
+				"standard coordinates:" << endl;
 		print_integer_matrix_width(cout, M4_tmp2, 4, 4, 4, 3);
 		}
 	for (i = 0; i < 25; i++) {
@@ -1134,9 +1213,11 @@ void unusual_model::transform_matrix_unusual_to_usual(orthogonal *O,
 	
 	if (f_vvv) {
 		cout << "transposed (M5t):" << endl;
-		print_integer_matrix_width(cout, M5t, 5, 5, 5, 3);
+		print_integer_matrix_width(cout,
+				M5t, 5, 5, 5, 3);
 		cout << "Gram matrix:" << endl;
-		print_integer_matrix_width(cout, O->Gram_matrix, 5, 5, 5, 3);
+		print_integer_matrix_width(cout,
+				O->Gram_matrix, 5, 5, 5, 3);
 		}
 		
 
@@ -1170,7 +1251,8 @@ void unusual_model::transform_matrix_unusual_to_usual(orthogonal *O,
 	FREE_int(M5_tmp2);
 }
 
-void unusual_model::transform_matrix_usual_to_unusual(orthogonal *O, 
+void unusual_model::transform_matrix_usual_to_unusual(
+	orthogonal *O,
 	int *M5, int *M4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1185,7 +1267,8 @@ void unusual_model::transform_matrix_usual_to_unusual(orthogonal *O,
 	//M5 = NEW_int(5 * 5);
 	
 	if (f_v) {
-		cout << "unusual_model::transform_matrix_usual_to_unusual" << endl;
+		cout << "unusual_model::transform_matrix_"
+				"usual_to_unusual" << endl;
 		}
 #if 0
 	if (f_vv) {
@@ -1208,7 +1291,8 @@ void unusual_model::transform_matrix_usual_to_unusual(orthogonal *O,
 			}
 		}
 
-	f.mult_matrix(hyperbolic_basis_inverse, M4_tmp2, M4_tmp1, 4, 4, 4);
+	f.mult_matrix(hyperbolic_basis_inverse,
+		M4_tmp2, M4_tmp1, 4, 4, 4);
 	f.mult_matrix(M4_tmp1, hyperbolic_basis, M4, 4, 4, 4);
 
 	if (f_vv) {
@@ -1246,7 +1330,8 @@ void unusual_model::parse_4by4_matrix(int *M4,
 					}
 				else {
 					if (v != F.power(q, q)) {
-						cout << "unusual_model::parse_4by4_matrix v != F.power(q, q)" << endl;
+						cout << "unusual_model::parse_"
+							"4by4_matrix v != F.power(q, q)" << endl;
 						exit(1);
 						}
 					f_semi = TRUE;
@@ -1330,15 +1415,18 @@ void unusual_model::print_2x2(int *v, int *f_semi)
 			if (a) {
 				l = F.log_alpha(a);
 				if (l == q * q - 1) {
-					cout << "      " << setw(F.log10_of_q) << 1 << " ";
+					cout << "      " << setw(F.log10_of_q)
+						<< 1 << " ";
 					}
 				else {
 					if ((l % (q - 1)) == 0) {
-						cout << " zeta^" << setw(F.log10_of_q) << l / (q - 1) << " ";
+						cout << " zeta^" << setw(F.log10_of_q)
+							<< l / (q - 1) << " ";
 					
 						}
 					else {
-						cout << "omega^" << setw(F.log10_of_q) << l << " ";
+						cout << "omega^" << setw(F.log10_of_q)
+							<< l << " ";
 						}
 					}
 				}
