@@ -171,7 +171,7 @@ int main(int argc, const char **argv)
 		cout << "surface_classify before SCW->init" << endl;
 		}
 	
-	SCW->init(F, LG, argc, argv, 0 /*verbose_level - 1*/);
+	SCW->init(F, LG, argc, argv, verbose_level - 1);
 
 	if (f_v) {
 		cout << "surface_classify after SCW->init" << endl;

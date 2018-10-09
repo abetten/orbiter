@@ -117,25 +117,13 @@ int main(int argc, const char **argv)
 					Elt2, 0 /*verbose_level*/);
 	
 
-#if 1
+
 			matrix_group *M;
 
 			M = A->G.matrix_grp;
 			M->substitute_surface_eqation(Elt2,
 					SC->coeffs, coeffs_out, SC->Surf,
 					verbose_level - 1);
-
-#else
-
-			SC->Surf->substitute_semilinear(SC->coeffs,
-					coeffs_out,
-					FALSE /* f_semilinear */,
-					0,
-					Elt2,
-					0 /*verbose_level*/);
-			PG_element_normalize(*SC->F, coeffs_out, 1, 20);
-#endif
-
 
 
 			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {

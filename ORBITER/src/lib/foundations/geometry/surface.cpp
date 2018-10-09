@@ -340,7 +340,7 @@ void surface::init(finite_field *F, int verbose_level)
 		}
 	P->init(3, F, 
 		TRUE /*f_init_incidence_structure */, 
-		0 /*verbose_level*/);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init after P->init" << endl;
 		}
@@ -351,7 +351,7 @@ void surface::init(finite_field *F, int verbose_level)
 		}
 	P2->init(2, F, 
 		TRUE /*f_init_incidence_structure */, 
-		0 /*verbose_level*/);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init after P2->init" << endl;
 		}
@@ -372,7 +372,7 @@ void surface::init(finite_field *F, int verbose_level)
 		cout << "surface::init initializing orthogonal" << endl;
 		}
 	O = NEW_OBJECT(orthogonal);
-	O->init(1 /* epsilon */, 6 /* n */, F, 0 /*verbose_level*/);
+	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init initializing orthogonal done" << endl;
 		}
@@ -383,7 +383,7 @@ void surface::init(finite_field *F, int verbose_level)
 		cout << "surface::init initializing "
 				"Klein correspondence" << endl;
 		}
-	Klein->init(F, O, 0 /*verbose_level*/);
+	Klein->init(F, O, verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init initializing "
 				"Klein correspondence done" << endl;

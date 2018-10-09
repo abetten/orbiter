@@ -7,7 +7,7 @@
 
 #define MAX_NUMBER_OF_LINES_FOR_INCIDENCE_MATRIX 100000
 #define MAX_NUMBER_OF_LINES_FOR_LINE_TABLE 1000000
-#define MAX_NUMBER_OF_POintS_FOR_POint_TABLE 1000000
+#define MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE 1000000
 
 
 
@@ -118,6 +118,8 @@ void projective_space::init(int n, finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	longinteger_domain D;
+	longinteger_object a;
 
 	projective_space::n = n;
 	projective_space::F = F;
@@ -151,9 +153,18 @@ void projective_space::init(int n, finite_field *F,
 				cout << "projective_space::init computing number of "
 						"subspaces of dimension " << i + 1 << endl;
 				}
-			Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
+			D.q_binomial_no_table(
+				a,
+				n + 1, i + 1, q, verbose_level - 2);
+			Nb_subspaces[i] = a.as_int();
+			//Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
 			}
-		r = generalized_binomial(n, 1, q);
+
+		D.q_binomial_no_table(
+			a,
+			n, 1, q, verbose_level - 2);
+		r = a.as_int();
+		//r = generalized_binomial(n, 1, q);
 		}
 	else {
 		for (i = 0; i <= n; i++) {
@@ -399,7 +410,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 
-	if (N_points < MAX_NUMBER_OF_POintS_FOR_POint_TABLE)  {
+	if (N_points < MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE)  {
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
 					"allocating Lines_on_point" << endl;
