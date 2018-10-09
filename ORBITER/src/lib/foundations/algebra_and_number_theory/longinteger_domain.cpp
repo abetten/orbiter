@@ -12,7 +12,8 @@
 #define TABLE_Q_BINOMIALS_MAX 200
 
 
-int longinteger_domain::compare(longinteger_object &a, longinteger_object &b)
+int longinteger_domain::compare(
+		longinteger_object &a, longinteger_object &b)
 {
 	int r;
 	
@@ -29,8 +30,10 @@ int longinteger_domain::compare(longinteger_object &a, longinteger_object &b)
 		return r;
 }
 
-int longinteger_domain::compare_unsigned(longinteger_object &a, longinteger_object &b)
-// returns -1 if a < b, 0 if a = b, and 1 if a > b, treating a and b as unsigned.
+int longinteger_domain::compare_unsigned(
+		longinteger_object &a, longinteger_object &b)
+// returns -1 if a < b, 0 if a = b,
+// and 1 if a > b, treating a and b as unsigned.
 {
 	int i, l;
 	char ai, bi;
@@ -53,7 +56,9 @@ int longinteger_domain::compare_unsigned(longinteger_object &a, longinteger_obje
 	return 0;
 }
 
-void longinteger_domain::subtract_signless(longinteger_object &a, longinteger_object &b, longinteger_object &c)
+void longinteger_domain::subtract_signless(
+		longinteger_object &a, longinteger_object &b,
+		longinteger_object &c)
 // c = a - b, assuming a > b
 {
 	int i;
@@ -85,7 +90,8 @@ void longinteger_domain::subtract_signless(longinteger_object &a, longinteger_ob
 	c.normalize();
 }
 
-void longinteger_domain::subtract_signless_in_place(longinteger_object &a, longinteger_object &b)
+void longinteger_domain::subtract_signless_in_place(
+		longinteger_object &a, longinteger_object &b)
 // a := a - b, assuming a > b
 {
 	int i;
@@ -110,7 +116,9 @@ void longinteger_domain::subtract_signless_in_place(longinteger_object &a, longi
 	//c.normalize();
 }
 
-void longinteger_domain::add(longinteger_object &a, longinteger_object &b, longinteger_object &c)
+void longinteger_domain::add(
+		longinteger_object &a, longinteger_object &b,
+		longinteger_object &c)
 {
 	int cmp, carry, i, ai, bi, ci;
 	
@@ -169,7 +177,8 @@ void longinteger_domain::add(longinteger_object &a, longinteger_object &b, longi
 	c.normalize();
 }
 
-void longinteger_domain::add_in_place(longinteger_object &a, longinteger_object &b)
+void longinteger_domain::add_in_place(
+		longinteger_object &a, longinteger_object &b)
 // a := a + b
 {
 	longinteger_object C;
@@ -179,7 +188,9 @@ void longinteger_domain::add_in_place(longinteger_object &a, longinteger_object 
 }
 
 
-void longinteger_domain::mult(longinteger_object &a, longinteger_object &b, longinteger_object &c)
+void longinteger_domain::mult(
+		longinteger_object &a, longinteger_object &b,
+		longinteger_object &c)
 {
 	int i, j;
 	char ai, bj, d, carry;
@@ -217,19 +228,21 @@ void longinteger_domain::mult(longinteger_object &a, longinteger_object &b, long
 			ai = a.rep()[i];
 			d = ai * bj + carry + c.rep()[i + j];
 			if (d >= 100) {
-				cout << "longinteger:mult() error: d >= 100" << endl;
+				cout << "longinteger:mult error: d >= 100" << endl;
 				exit(1);
 				}
 			carry = d / 10;
 			c.rep()[i + j] = d % 10;
 			if (f_v) {
-				cout << "c[" << i + j << "]=" << d % 10 << "=" << (char)('0' + c.rep()[i + j]) << endl;
+				cout << "c[" << i + j << "]=" << d % 10 << "="
+						<< (char)('0' + c.rep()[i + j]) << endl;
 				}
 			}
 		if (carry) {
 			c.rep()[j + a.len()] = carry;
 			if (f_v) {
-				cout << "c[" << j + a.len() << "]=" << carry << "=" << (char)('0' + carry) << endl;
+				cout << "c[" << j + a.len() << "]=" << carry << "="
+						<< (char)('0' + carry) << endl;
 				}
 			}
 		}
@@ -246,7 +259,8 @@ void longinteger_domain::mult(longinteger_object &a, longinteger_object &b, long
 		}
 }
 
-void longinteger_domain::mult_in_place(longinteger_object &a, longinteger_object &b)
+void longinteger_domain::mult_in_place(
+		longinteger_object &a, longinteger_object &b)
 {
 	longinteger_object C;
 	
@@ -255,7 +269,8 @@ void longinteger_domain::mult_in_place(longinteger_object &a, longinteger_object
 }
 
 
-void longinteger_domain::mult_integer_in_place(longinteger_object &a, int b)
+void longinteger_domain::mult_integer_in_place(
+		longinteger_object &a, int b)
 {
 	longinteger_object B, C;
 	
@@ -264,7 +279,8 @@ void longinteger_domain::mult_integer_in_place(longinteger_object &a, int b)
 	C.assign_to(a);
 }
 
-static int do_division(longinteger_domain &D, longinteger_object &r, longinteger_object table[10])
+static int do_division(longinteger_domain &D,
+		longinteger_object &r, longinteger_object table[10])
 {
 	int i, cmp;
 	
@@ -273,7 +289,7 @@ static int do_division(longinteger_domain &D, longinteger_object &r, longinteger
 		if (cmp >= 0)
 			return i;
 		}
-	cout << "do_division() we should never reach this point" << endl;
+	cout << "do_division we should never reach this point" << endl;
 	exit(1);
 }
 
@@ -289,7 +305,8 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 	longinteger_object q, r, c0;
 	
 	if (f_v ) {
-		cout << "longinteger_domain::mult_mod a=" << a << " b=" << b << " m=" << m << endl;
+		cout << "longinteger_domain::mult_mod "
+				"a=" << a << " b=" << b << " m=" << m << endl;
 		}
 	if (a.is_zero() || b.is_zero()) {
 		c.create(0);
@@ -297,12 +314,12 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 		}
 	if (compare_unsigned(a, m) >= 0) {
 		cout << a << " * " << b << endl;
-		cout << "longinteger_domain::mult_mod() a >= m" << endl;
+		cout << "longinteger_domain::mult_mod a >= m" << endl;
 		exit(1);
 		}
 	if (compare_unsigned(b, m) >= 0) {
 		cout << a << " * " << b << endl;
-		cout << "longinteger_domain::mult_mod() b >= m" << endl;
+		cout << "longinteger_domain::mult_mod b >= m" << endl;
 		exit(1);
 		}
 	if ((a.sign() && !b.sign()) || (!a.sign() && b.sign()))
@@ -318,11 +335,13 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 #endif
 	
 	if (f_v) {
-		cout << "calling c.freeself()" << endl;
+		cout << "longinteger_domain::mult_mod "
+				"calling c.freeself" << endl;
 		}
 	c.freeself();
 	if (f_v) {
-		cout << "after c.freeself()" << endl;
+		cout << "longinteger_domain::mult_mod"
+				"after c.freeself" << endl;
 		}
 	l = m.len();
 	c.len() = (int) (l + 2);
@@ -343,9 +362,11 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 			else 
 				ai = 0;
 			d = ai * bj + carry + c.rep()[i];
-			//cout << (int) ai << " * " << (int) bj << " + " << (int)carry << " + " << (int) c.rep()[i] << " = " << (int)d << endl;
+			//cout << (int) ai << " * " << (int) bj << " + "
+			// << (int)carry << " + " << (int) c.rep()[i]
+			// << " = " << (int)d << endl;
 			if (d >= 100) {
-				cout << "longinteger:mult_mod() error: d >= 100\n";
+				cout << "longinteger:mult_mod error: d >= 100" << endl;
 				exit(1);
 				}
 			carry = d / 10;
@@ -362,22 +383,26 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 			carry = d / 10;
 			c.rep()[i] = d % 10;
 			if (carry) {
-				cout << "error: carry" << endl;
+				cout << "longinteger_domain::mult_mod "
+						"error: carry" << endl;
 				exit(1);
 				}
 			}
 		if (f_vv) {
-			cout << "c=" << c << " len " << c.len() << endl;
+			cout << "longinteger_domain::mult_mod "
+					"c=" << c << " len " << c.len() << endl;
 			}
 		integral_division(c, m, q, r, 0/*verbose_level - 1*/);
 		//h = do_division(*this, c, table);
 		//subtract_signless_in_place(c, table[h]);
 		if (f_vv) {
-			cout << "r=" << r << " len " << r.len() << endl;
+			cout << "longinteger_domain::mult_mod "
+					"r=" << r << " len " << r.len() << endl;
 			}
 		c0.assign_to(c);
 		if (f_vv) {
-			cout << "c=c0=" << c << " len " << c.len() << endl;
+			cout << "longinteger_domain::mult_mod"
+					"c=c0=" << c << " len " << c.len() << endl;
 			}
 		if (j) {
 			c.rep()[0] = 0;
@@ -405,11 +430,13 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 		}
 	c.normalize();
 	if (f_v) {
-		cout << a << " * " << b << " = " << c << " mod " << m << endl;
+		cout << "longinteger_domain::mult_mod " << a << " * " << b
+				<< " = " << c << " mod " << m << endl;
 		}
 }
 
-void longinteger_domain::multiply_up(longinteger_object &a, int *x, int len)
+void longinteger_domain::multiply_up(
+		longinteger_object &a, int *x, int len)
 {
 	longinteger_object b, c;
 	int i;
@@ -420,28 +447,36 @@ void longinteger_domain::multiply_up(longinteger_object &a, int *x, int len)
 		}
 	a.one();
 	if (f_v) {
-		cout << "longinteger_domain::multiply_up a=" << a << endl;
+		cout << "longinteger_domain::multiply_up "
+				"a=" << a << endl;
 		}
 	for (i = 0; i < len; i++) {
 		if (x[i] == 1)
 			continue;
 		b.create(x[i]);
 		if (f_v) {
-			cout << "longinteger_domain::multiply_up i=" << i << " x[i]=" << x[i] << " b=" << b << endl;
+			cout << "longinteger_domain::multiply_up "
+					"i=" << i << " x[i]=" << x[i]
+					<< " b=" << b << endl;
 			}
 		mult(a, b, c);
 		if (f_v) {
-			cout << "longinteger_domain::multiply_up i=" << i << " x[i]=" << x[i] << " c=" << c << endl;
+			cout << "longinteger_domain::multiply_up "
+					"i=" << i << " x[i]=" << x[i]
+					<< " c=" << c << endl;
 			}
 		c.assign_to(a);
 		if (f_v) {
-			cout << "longinteger_domain::multiply_up i=" << i << " x[i]=" << x[i] << " a=" << a << endl;
+			cout << "longinteger_domain::multiply_up "
+					"i=" << i << " x[i]=" << x[i]
+					<< " a=" << a << endl;
 			}
 		//cout << "*" << x[i] << "=" << a << endl;
 		}
 }
 
-int longinteger_domain::quotient_as_int(longinteger_object &a, longinteger_object &b)
+int longinteger_domain::quotient_as_int(
+		longinteger_object &a, longinteger_object &b)
 {
 	longinteger_object q, r;
 
@@ -449,34 +484,41 @@ int longinteger_domain::quotient_as_int(longinteger_object &a, longinteger_objec
 	return q.as_int();
 }
 
-void longinteger_domain::integral_division_exact(longinteger_object &a, longinteger_object &b, longinteger_object &a_over_b)
+void longinteger_domain::integral_division_exact(
+		longinteger_object &a, longinteger_object &b,
+		longinteger_object &a_over_b)
 {
 	longinteger_object r;
 
 	integral_division(a, b, a_over_b, r, 0);
 	if (!r.is_zero()) {
-		cout << "longinteger_domain::integral_division_exact b does not divide a" << endl;
+		cout << "longinteger_domain::integral_division_exact "
+				"b does not divide a" << endl;
 		exit(1);
 		}
 }
 
 void longinteger_domain::integral_division(
 	longinteger_object &a, longinteger_object &b, 
-	longinteger_object &q, longinteger_object &r, int verbose_level)
+	longinteger_object &q, longinteger_object &r,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object table[10], c;
 	int i, l, ql;
 	
 	if (f_v) {
-		cout << "longinteger_domain::integral_division dividing a=" << a << " by b=" << b << endl;
+		cout << "longinteger_domain::integral_division "
+				"dividing a=" << a << " by b=" << b << endl;
 		}
 	if (a.sign()) {
-		cout << "longinteger_domain::integral_division() a is negative" << endl;
+		cout << "longinteger_domain::integral_division "
+				"a is negative" << endl;
 		exit(1);
 		}
 	if (b.sign()) {
-		cout << "longinteger_domain::integral_division() b is negative" << endl;
+		cout << "longinteger_domain::integral_division "
+				"b is negative" << endl;
 		exit(1);
 		}
 	if (compare(a, b) == -1) {
@@ -516,7 +558,8 @@ void longinteger_domain::integral_division(
 		q.rep()[l] = ql;
 		subtract_signless(r, table[ql], c);
 		if (f_v) {
-			cout << "l=" << l << " r=" << r << " ql=" << ql << " c=" << c << endl;
+			cout << "l=" << l << " r=" << r
+					<< " ql=" << ql << " c=" << c << endl;
 			}
 		
 		if (l == 0)
@@ -535,7 +578,8 @@ void longinteger_domain::integral_division(
 	q.normalize();
 }
 
-void longinteger_domain::integral_division_by_int(longinteger_object &a, 
+void longinteger_domain::integral_division_by_int(
+	longinteger_object &a,
 	int b, longinteger_object &q, int &r)
 {
 	longinteger_object B, R;
@@ -546,7 +590,8 @@ void longinteger_domain::integral_division_by_int(longinteger_object &a,
 	r = R.as_int();
 }
 
-void longinteger_domain::extended_gcd(longinteger_object &a, 
+void longinteger_domain::extended_gcd(
+	longinteger_object &a,
 	longinteger_object &b, longinteger_object &g, 
 	longinteger_object &u, longinteger_object &v, int verbose_level)
 // the gcd computed here is always nonnegative
@@ -557,7 +602,8 @@ void longinteger_domain::extended_gcd(longinteger_object &a,
 	int c;
 	
 	if (f_v) {
-		cout << "longinteger_domain::extended_gcd a=" << a << " b=" << b << endl;
+		cout << "longinteger_domain::extended_gcd "
+				"a=" << a << " b=" << b << endl;
 		}
 	if (a.is_zero()) {
 		b.assign_to(g);
@@ -661,7 +707,8 @@ void longinteger_domain::extended_gcd(longinteger_object &a,
 		}
 }
 
-int longinteger_domain::logarithm_base_b(longinteger_object &a, int b)
+int longinteger_domain::logarithm_base_b(
+		longinteger_object &a, int b)
 {
 	int r, l = 0;
 	longinteger_object a1, a2;
@@ -676,7 +723,8 @@ int longinteger_domain::logarithm_base_b(longinteger_object &a, int b)
 	return l;
 }
 
-void longinteger_domain::base_b_representation(longinteger_object &a, int b, int *&rep, int &len)
+void longinteger_domain::base_b_representation(
+		longinteger_object &a, int b, int *&rep, int &len)
 {
 	int i, r;
 	longinteger_object a1, a2;
@@ -703,7 +751,8 @@ void longinteger_domain::base_b_representation(longinteger_object &a, int b, int
 	cout << endl;
 }
 
-void longinteger_domain::power_int(longinteger_object &a, int n)
+void longinteger_domain::power_int(
+		longinteger_object &a, int n)
 {
 	longinteger_object b, c, d;
 	
@@ -721,7 +770,8 @@ void longinteger_domain::power_int(longinteger_object &a, int n)
 	c.assign_to(a);
 }
 
-void longinteger_domain::power_int_mod(longinteger_object &a, int n, longinteger_object &m)
+void longinteger_domain::power_int_mod(
+		longinteger_object &a, int n, longinteger_object &m)
 {
 	longinteger_object b, c, d;
 	
@@ -739,8 +789,10 @@ void longinteger_domain::power_int_mod(longinteger_object &a, int n, longinteger
 	c.assign_to(a);
 }
 
-void longinteger_domain::power_longint_mod(longinteger_object &a, 
-	longinteger_object &n, longinteger_object &m, int verbose_level)
+void longinteger_domain::power_longint_mod(
+	longinteger_object &a,
+	longinteger_object &n, longinteger_object &m,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -751,15 +803,18 @@ void longinteger_domain::power_longint_mod(longinteger_object &a,
 	c.one();
 	if (f_v) {
 		cout << "longinteger_domain::power_longint_mod" << endl;
-		cout << "computing " << b << " to the power " << n << " mod " << m << ":" << endl;
+		cout << "computing " << b << " to the power "
+				<< n << " mod " << m << ":" << endl;
 		}
 	while (!n.is_zero()) {
 		if (f_vv) {
-			cout << "n=" << n << " : " << b << "^" << n << " * " << c << endl;
+			cout << "n=" << n << " : " << b << "^"
+					<< n << " * " << c << endl;
 			}
 		integral_division_by_int(n, 2, n1, r);
 		if (f_vv) {
-			cout << "after division by 2, n1=" << n1 << " r=" << r << endl;
+			cout << "after division by 2, n1=" << n1
+					<< " r=" << r << endl;
 			}
 		if (r) {
 			mult_mod(b, c, d, m, verbose_level);
@@ -778,7 +833,8 @@ void longinteger_domain::power_longint_mod(longinteger_object &a,
 	c.assign_to(a);
 }
 
-void longinteger_domain::create_qnm1(longinteger_object &a, int q, int n)
+void longinteger_domain::create_qnm1(
+		longinteger_object &a, int q, int n)
 // create (q^n - 1)
 {
 	longinteger_object b, c;
@@ -795,7 +851,8 @@ static longinteger_object *tab_binomials = NULL;
 static int tab_binomials_size = 0;
 
 
-static void binomial_with_table(longinteger_object &a, int n, int k)
+static void binomial_with_table(
+		longinteger_object &a, int n, int k)
 {
 	int i, j;
 	longinteger_domain D;
@@ -815,11 +872,14 @@ static void binomial_with_table(longinteger_object &a, int n, int k)
 
 	// reallocate table if necessary:
 	if (n >= tab_binomials_size) {
-		//cout << "binomial_with_table() reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_binomials2 = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+		//cout << "binomial_with_table
+		// reallocating table to size " << n + 1 << endl;
+		longinteger_object *tab_binomials2 =
+			NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
 		for (i = 0; i < tab_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_binomials[i * tab_binomials_size + j].swap_with(tab_binomials2[i * (n + 1) + j]);
+				tab_binomials[i * tab_binomials_size +
+					j].swap_with(tab_binomials2[i * (n + 1) + j]);
 				}
 			}
 		for ( ; i <= n; i++) {
@@ -856,7 +916,7 @@ static void binomial_with_table(longinteger_object &a, int n, int k)
 		D.mult(b, c, d);
 		D.integral_division_by_int(d, k, a, r);
 		if (r != 0) {
-			cout << "longinteger.C: binomial_with_table() k != 0" << endl;
+			cout << "longinteger.C: binomial_with_table k != 0" << endl;
 			exit(1);
 			}
 		a.assign_to(tab_binomials[n * tab_binomials_size + k]);
@@ -871,14 +931,17 @@ static void binomial_with_table(longinteger_object &a, int n, int k)
 		}
 }
 
-void longinteger_domain::binomial(longinteger_object &a, int n, int k, int verbose_level)
+void longinteger_domain::binomial(
+	longinteger_object &a, int n, int k,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object b, c, d;
 	int r;
 	
 	if (f_v) {
-		cout << "longinteger_domain::binomial n=" << n << " k=" << k << endl;
+		cout << "longinteger_domain::binomial "
+				"n=" << n << " k=" << k << endl;
 		}
 	if (k < 0 || k > n) {
 		a.create(0);
@@ -894,7 +957,8 @@ void longinteger_domain::binomial(longinteger_object &a, int n, int k, int verbo
 		}
 	if (n < TABLE_BINOMIALS_MAX) {
 		if (f_v) {
-			cout << "longinteger_domain::binomial using table" << endl;
+			cout << "longinteger_domain::binomial "
+					"using table" << endl;
 			}
 		binomial_with_table(a, n, k);
 		return;
@@ -906,16 +970,19 @@ void longinteger_domain::binomial(longinteger_object &a, int n, int k, int verbo
 	mult(b, c, d);
 	integral_division_by_int(d, k, a, r);
 	if (r != 0) {
-		cout << "longinteger_domain::binomial() k != 0" << endl;
+		cout << "longinteger_domain::binomial "
+				"k != 0" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "longinteger_domain::binomial n=" << n << " k=" << k << " done" << endl;
+		cout << "longinteger_domain::binomial "
+				"n=" << n << " k=" << k << " done" << endl;
 		}
 	
 }
 
-void longinteger_domain::size_of_conjugacy_class_in_sym_n(longinteger_object &a, int n, int *part)
+void longinteger_domain::size_of_conjugacy_class_in_sym_n(
+	longinteger_object &a, int n, int *part)
 {
 	longinteger_object b, c, d;
 	int i, ai, j;
@@ -950,7 +1017,8 @@ static void q_binomial_with_table(longinteger_object &a,
 	int i, j;
 	longinteger_domain D;
 	
-	//cout << "q_binomial_with_table n=" << n << " k=" << k << " q=" << q << endl;
+	//cout << "q_binomial_with_table n=" << n
+	// << " k=" << k << " q=" << q << endl;
 	if (k < 0 || k > n) {
 		a.create(0);
 		return;
@@ -981,11 +1049,14 @@ static void q_binomial_with_table(longinteger_object &a,
 		else {
 			tab_q_binomials_q = q;
 			}
-		//cout << "binomial_with_table() reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_q_binomials2 = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+		//cout << "binomial_with_table
+		// reallocating table to size " << n + 1 << endl;
+		longinteger_object *tab_q_binomials2 =
+			NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
 		for (i = 0; i < tab_q_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_q_binomials[i * tab_q_binomials_size + j].swap_with(tab_q_binomials2[i * (n + 1) + j]);
+				tab_q_binomials[i * tab_q_binomials_size +
+					j].swap_with(tab_q_binomials2[i * (n + 1) + j]);
 				}
 			}
 		for ( ; i <= n; i++) {
@@ -1025,14 +1096,16 @@ static void q_binomial_with_table(longinteger_object &a,
 }
 
 
-void longinteger_domain::q_binomial(longinteger_object &a, 
+void longinteger_domain::q_binomial(
+	longinteger_object &a,
 	int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object b, c, top, bottom, r;
 	
 	if (f_v) {
-		cout << "longinteger_domain::q_binomial n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "longinteger_domain::q_binomial "
+				"n=" << n << " k=" << k << " q=" << q << endl;
 		}
 	if (k < 0 || k > n) {
 		a.create(0);
@@ -1046,7 +1119,8 @@ void longinteger_domain::q_binomial(longinteger_object &a,
 		a.create(1);
 		return;
 		}
-	//cout << "longinteger_domain::q_binomial n=" << n << " k=" << k << " q=" << q << endl;
+	//cout << "longinteger_domain::q_binomial
+	//n=" << n << " k=" << k << " q=" << q << endl;
 	if (n < TABLE_Q_BINOMIALS_MAX) {
 		q_binomial_with_table(a, n, k, q, verbose_level);
 		}
@@ -1054,18 +1128,22 @@ void longinteger_domain::q_binomial(longinteger_object &a,
 		q_binomial_no_table(b, n, k, q, verbose_level);
 		}
 	if (f_v) {
-		cout << "longinteger_domain::q_binomial n=" << n << " k=" << k << " q=" << q << " yields " << a << endl;
+		cout << "longinteger_domain::q_binomial "
+			"n=" << n << " k=" << k << " q=" << q
+			<< " yields " << a << endl;
 		}
 }
 
-void longinteger_domain::q_binomial_no_table(longinteger_object &a, 
+void longinteger_domain::q_binomial_no_table(
+	longinteger_object &a,
 	int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object b, c, top, bottom, r;
 	
 	if (f_v) {
-		cout << "longinteger_domain::q_binomial_no_table n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "longinteger_domain::q_binomial_no_table "
+			"n=" << n << " k=" << k << " q=" << q << endl;
 		}
 	if (k < 0 || k > n) {
 		a.create(0);
@@ -1085,7 +1163,8 @@ void longinteger_domain::q_binomial_no_table(longinteger_object &a,
 	create_qnm1(bottom, q, k);
 	integral_division(top, bottom, a, r, verbose_level - 1);
 	if (!r.is_zero()) {
-		cout << "longinteger_domain::q_binomial_no_table() remainder is not zero" << endl;
+		cout << "longinteger_domain::q_binomial_no_table "
+				"remainder is not zero" << endl;
 		cout << "q=" << q << endl;
 		cout << "n-1=" << n-1 << endl;
 		cout << "k-1=" << k-1 << endl;
@@ -1094,7 +1173,9 @@ void longinteger_domain::q_binomial_no_table(longinteger_object &a,
 		exit(1);
 		}
 	if (f_v) {
-		cout << "longinteger_domain::q_binomial_no_table n=" << n << " k=" << k << " q=" << q << " yields " << a << endl;
+		cout << "longinteger_domain::q_binomial_no_table "
+			"n=" << n << " k=" << k << " q=" << q
+			<< " yields " << a << endl;
 		}
 	
 }
@@ -1124,9 +1205,12 @@ static void krawtchouk_with_table(longinteger_object &a,
 	// reallocate table if necessary:
 	if (kx >= tab_krawtchouk_size) {
 		kx++;
-		//cout << "krawtchouk_with_table() reallocating table to size " << kx << endl;
-		longinteger_object *tab_krawtchouk2 = NEW_OBJECTS(longinteger_object, kx * kx);
-		int *tab_krawtchouk_entry_computed2 = NEW_int(kx * kx);
+		//cout << "krawtchouk_with_table
+		//reallocating table to size " << kx << endl;
+		longinteger_object *tab_krawtchouk2 =
+				NEW_OBJECTS(longinteger_object, kx * kx);
+		int *tab_krawtchouk_entry_computed2 =
+				NEW_int(kx * kx);
 		for (i = 0; i < kx; i++) {
 			for (j = 0; j < kx; j++) {
 				tab_krawtchouk_entry_computed2[i * kx + j] = FALSE;
@@ -1135,8 +1219,11 @@ static void krawtchouk_with_table(longinteger_object &a,
 			}
 		for (i = 0; i < tab_krawtchouk_size; i++) {
 			for (j = 0; j < tab_krawtchouk_size; j++) {
-				tab_krawtchouk[i * tab_krawtchouk_size + j].swap_with(tab_krawtchouk2[i * kx + j]);
-				tab_krawtchouk_entry_computed2[i * kx + j] = tab_krawtchouk_entry_computed[i * tab_krawtchouk_size + j];
+				tab_krawtchouk[i * tab_krawtchouk_size + j
+					].swap_with(tab_krawtchouk2[i * kx + j]);
+				tab_krawtchouk_entry_computed2[i * kx + j] =
+					tab_krawtchouk_entry_computed[
+						i * tab_krawtchouk_size + j];
 				}
 			}
 		if (tab_krawtchouk) {
@@ -1213,8 +1300,10 @@ static void krawtchouk_with_table(longinteger_object &a,
 			}
 		
 		a.assign_to(tab_krawtchouk[k * tab_krawtchouk_size + x]);
-		tab_krawtchouk_entry_computed[k * tab_krawtchouk_size + x] = TRUE;
-		//cout << "new table entry k=" << k << " x=" << x << " : " << a << endl;		
+		tab_krawtchouk_entry_computed[
+				k * tab_krawtchouk_size + x] = TRUE;
+		//cout << "new table entry k=" << k
+		// << " x=" << x << " : " << a << endl;
 		}
 	else {
 		tab_krawtchouk[k * tab_krawtchouk_size + x].assign_to(a);
@@ -1224,7 +1313,8 @@ static void krawtchouk_with_table(longinteger_object &a,
 void longinteger_domain::krawtchouk(longinteger_object &a, 
 	int n, int q, int k, int x)
 {	
-	//cout << "krawtchouk() n=" << n << " q=" << q << " k=" << k << " x=" << x << endl;
+	//cout << "krawtchouk() n=" << n << " q=" << q
+	//<< " k=" << k << " x=" << x << endl;
 	krawtchouk_with_table(a, n, q, k, x);
 }
 
@@ -1260,7 +1350,7 @@ int longinteger_domain::multiplicity_of_p(longinteger_object &a,
 	longinteger_object q;
 	
 	if (a.is_zero()) {
-		cout << "longinteger_domain::multiplicity_of_p() a = 0" << endl;
+		cout << "longinteger_domain::multiplicity_of_p a = 0" << endl;
 		exit(1);
 		}
 	a.assign_to(residue);
@@ -1274,7 +1364,8 @@ int longinteger_domain::multiplicity_of_p(longinteger_object &a,
 	return n;
 }
 
-int longinteger_domain::smallest_primedivisor(longinteger_object &a, 
+int longinteger_domain::smallest_primedivisor(
+	longinteger_object &a,
 	int p_min, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1283,7 +1374,8 @@ int longinteger_domain::smallest_primedivisor(longinteger_object &a,
 	int p, r, cnt = 0;
 	
 	if (f_v) {
-		cout << "smallest_primedivisor " << a << " p_min=" << p_min << endl;
+		cout << "smallest_primedivisor " << a
+				<< " p_min=" << p_min << endl;
 		}
 	a.assign_to(n);
 	
@@ -1307,12 +1399,15 @@ int longinteger_domain::smallest_primedivisor(longinteger_object &a,
 	while (TRUE) {
 		cnt++;
 		if (f_vv) {
-			cout << "smallest_primedivisor:n=" << n << " trying p=" << p << endl;
+			cout << "smallest_primedivisor:n=" << n
+					<< " trying p=" << p << endl;
 			}
 		n.assign_to(n1);
 		integral_division_by_int(n1, p, q, r);
 		if (f_vv && (cnt % 1) == 0) {
-			cout << "smallest_primedivisor:n=" << n1 << " trying p=" << p << " q=" << q << " r=" << r << endl;
+			cout << "smallest_primedivisor:n=" << n1
+				<< " trying p=" << p << " q=" << q
+				<< " r=" << r << endl;
 			cnt = 0;
 			}
 		if (r == 0)
@@ -1324,12 +1419,14 @@ int longinteger_domain::smallest_primedivisor(longinteger_object &a,
 		p += 2;
 		}
 	if (f_v) {
-		cout << "smallest_primedivisor the number is prime" << endl;
+		cout << "smallest_primedivisor "
+				"the number is prime" << endl;
 		}
 	return 0;
 }
 
-void longinteger_domain::factor_into_longintegers(longinteger_object &a, 
+void longinteger_domain::factor_into_longintegers(
+	longinteger_object &a,
 	int &nb_primes, longinteger_object *&primes, 
 	int *&exponents, int verbose_level)
 {
@@ -1343,7 +1440,8 @@ void longinteger_domain::factor_into_longintegers(longinteger_object &a,
 		cout << "factoring " << a << endl;
 		}
 	if (a.is_zero()) {
-		cout << "longinteger_domain::factor_into_longintegers() a is zero" << endl;
+		cout << "longinteger_domain::factor_into_longintegers "
+				"a is zero" << endl;
 		exit(1);
 		}
 	if (a.is_one()) {
@@ -1366,7 +1464,8 @@ void longinteger_domain::factor_into_longintegers(longinteger_object &a,
 	last_prime = p;
 	D.integral_division(n, pp, q, r, verbose_level - 1);
 	if (!r.is_zero()) {
-		cout << "longinteger_domain::factor_into_longintegers() factor does not divide" << endl;
+		cout << "longinteger_domain::factor_into_longintegers "
+				"factor does not divide" << endl;
 		}
 	q.assign_to(n);
 	while (!n.is_one()) {
@@ -1384,7 +1483,8 @@ void longinteger_domain::factor_into_longintegers(longinteger_object &a,
 			pp.create(p);
 			}
 		else {
-			longinteger_object *pr = NEW_OBJECTS(longinteger_object, nb_primes + 1);
+			longinteger_object *pr = NEW_OBJECTS(
+				longinteger_object, nb_primes + 1);
 			int *ex = NEW_int(nb_primes + 1);
 			for (i = 0; i < nb_primes; i++) {
 				primes[i].assign_to(pr[i]);
@@ -1408,7 +1508,8 @@ void longinteger_domain::factor_into_longintegers(longinteger_object &a,
 		
 		D.integral_division(n, pp, q, r, verbose_level - 1);
 		if (!r.is_zero()) {
-			cout << "longinteger_domain::factor_into_longintegers() factor does not divide" << endl;
+			cout << "longinteger_domain::factor_into_longintegers "
+					"factor does not divide" << endl;
 			}
 		q.assign_to(n);
 		if (f_v) {
@@ -1438,7 +1539,7 @@ void longinteger_domain::factor(longinteger_object &a,
 		cout << "factoring " << a << endl;
 		}
 	if (a.is_zero()) {
-		cout << "longinteger_domain::factor() a is zero" << endl;
+		cout << "longinteger_domain::factor a is zero" << endl;
 		exit(1);
 		}
 	if (a.is_one()) {
@@ -1516,11 +1617,13 @@ int longinteger_domain::jacobi(longinteger_object &a,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object a1, m1, a2, m2, a3, m3, u, v, g, q, r, res, minus_one;
+	longinteger_object a1, m1, a2, m2, a3, m3;
+	longinteger_object u, v, g, q, r, res, minus_one;
 	int n, rr, r1, t1, t2;
 	
 	if (f_v) {
-		cout << "longinteger_domain::jacobi (" << a << " over " << m << ")" << endl;
+		cout << "longinteger_domain::jacobi ("
+			<< a << " over " << m << ")" << endl;
 		}
 	a.assign_to(a1);
 	m.assign_to(m1);
@@ -1537,12 +1640,14 @@ int longinteger_domain::jacobi(longinteger_object &a,
 		// jacobi(a, m) = r1 * jacobi(a1, m1);
 		integral_division(a1, m1, q, r, verbose_level - 2);
 		if (f_vv) {
-			cout << r1 << " * Jacobi(" << r << ", " << m1 << ")" << endl;
+			cout << r1 << " * Jacobi(" << r << ", "
+					<< m1 << ")" << endl;
 			}
 		n = multiplicity_of_p(r, res, 2);
 		res.assign_to(a1);
 		if (f_vv) {
-			cout << r1 << " * Jacobi( 2^" << n << " * " << a1 << ", " << m1 << ")" << endl;
+			cout << r1 << " * Jacobi( 2^" << n << " * "
+					<< a1 << ", " << m1 << ")" << endl;
 			}
 		if (ODD(n)) {
 			// t = (m1 * m1 - 1) >> 3; /* t = (m1 * m1 - 1) / 8 */
@@ -1553,7 +1658,8 @@ int longinteger_domain::jacobi(longinteger_object &a,
 				}
 			}
 		if (f_vv) {
-			cout << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << r1 << " * Jacobi(" << a1 << ", "
+					<< m1 << ")" << endl;
 			}
 		if (a1.is_one_or_minus_one())
 			break;
@@ -1571,11 +1677,13 @@ int longinteger_domain::jacobi(longinteger_object &a,
 			r1 = -r1;
 			}
 		if (f_vv) {
-			cout << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << r1 << " * Jacobi(" << a1
+					<< ", " << m1 << ")" << endl;
 			}
 		}
 	if (f_v) {
-		cout << "jacobi(" << a << ", " << m << ") = " << r1 << endl;
+		cout << "jacobi(" << a << ", " << m
+				<< ") = " << r1 << endl;
 		}
 	return r1;
 }
@@ -1626,7 +1734,8 @@ void longinteger_domain::find_probable_prime_above(
 				}
 			goto loop;
 			}
-		if (solovay_strassen_is_prime(a, nb_solovay_strassen_tests, verbose_level - 2)) {
+		if (solovay_strassen_is_prime(a,
+				nb_solovay_strassen_tests, verbose_level - 2)) {
 			if (f_vv) {
 				cout << "may be prime" << endl;
 				}
@@ -1634,7 +1743,8 @@ void longinteger_domain::find_probable_prime_above(
 			}
 		else {
 			if (f_vv) {
-				cout << "is not prime because of Solovay Strassen" << endl;
+				cout << "is not prime because of "
+					"Solovay Strassen" << endl;
 				}
 			}
 loop:
@@ -1643,7 +1753,8 @@ loop:
 		i++;
 		}
 	if (f_v) {
-		cout << "find_probable_prime_above: probable prime: " << a << " (found after " << i << " tests)" << endl;
+		cout << "find_probable_prime_above: probable prime: "
+			<< a << " (found after " << i << " tests)" << endl;
 		}
 }
 
@@ -1658,9 +1769,11 @@ int longinteger_domain::solovay_strassen_is_prime(
 			<< n << " with " << nb_tests << " tests:" << endl;
 			}
 	for (i = 0; i < nb_tests; i++) {
-		if (!solovay_strassen_is_prime_single_test(n, verbose_level - 2)) {
+		if (!solovay_strassen_is_prime_single_test(
+				n, verbose_level - 2)) {
 			if (f_v) {
-				cout << "is not prime after " << i + 1 << " tests" << endl;
+				cout << "is not prime after "
+						<< i + 1 << " tests" << endl;
 				}
 			return FALSE;
 			}
@@ -1677,7 +1790,8 @@ int longinteger_domain::solovay_strassen_is_prime_single_test(
 	int r;
 
 	if (f_v) {
-		cout << "longinteger_domain::solovay_strassen_is_prime_single_test" << endl;
+		cout << "longinteger_domain::solovay_strassen_"
+				"is_prime_single_test" << endl;
 		}
 	one.create(1);
 	m_one.create(-1);
@@ -1686,7 +1800,9 @@ int longinteger_domain::solovay_strassen_is_prime_single_test(
 	add(a, one, b);
 	b.assign_to(a);
 	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_is_prime() choosing integer " << a << " less than " << n << endl;
+		cout << "longinteger_domain::solovay_strassen_is_prime "
+				"choosing integer " << a
+				<< " less than " << n << endl;
 		}
 
 	r = solovay_strassen_test(n, a, verbose_level);
@@ -1695,7 +1811,8 @@ int longinteger_domain::solovay_strassen_is_prime_single_test(
 }
 
 int longinteger_domain::solovay_strassen_test(
-	longinteger_object &n, longinteger_object &a, int verbose_level)
+	longinteger_object &n, longinteger_object &a,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1709,7 +1826,8 @@ int longinteger_domain::solovay_strassen_test(
 	m_one.create(-1);
 	add(n, m_one, n_minus_one);
 	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test a = " << a << endl;
+		cout << "longinteger_domain::solovay_strassen_test "
+			"a = " << a << endl;
 		}
 	x = jacobi(a, n, verbose_level - 2);
 	if (x == 0) {
@@ -1721,22 +1839,26 @@ int longinteger_domain::solovay_strassen_test(
 	add(n, m_one, b);
 	integral_division_by_int(b, 2, n2, r);
 	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test raising to the power " << n2 << endl;
+		cout << "longinteger_domain::solovay_strassen_test "
+			"raising to the power " << n2 << endl;
 		}
 	power_longint_mod(a, n2, n, 0 /*verbose_level - 2*/);
 	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test a^((n-1)/2) = " << a << endl;
+		cout << "longinteger_domain::solovay_strassen_test "
+				"a^((n-1)/2) = " << a << endl;
 		}
 	if (x == 1) {
 		if (a.is_one()) {
 			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test inconclusive" << endl;
+				cout << "longinteger_domain::solovay_strassen_test "
+					"inconclusive" << endl;
 				}
 			return TRUE;
 			}
 		else {
 			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test not prime (sure)" << endl;
+				cout << "longinteger_domain::solovay_strassen_test "
+					"not prime (sure)" << endl;
 				}
 			return FALSE;
 			}
@@ -1744,19 +1866,22 @@ int longinteger_domain::solovay_strassen_test(
 	if (x == -1) {
 		if (compare_unsigned(a, n_minus_one) == 0) {
 			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test inconclusive" << endl;
+				cout << "longinteger_domain::solovay_strassen_test "
+					"inconclusive" << endl;
 				}
 			return TRUE;
 			}
 		else {
 			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test not prime (sure)" << endl;
+				cout << "longinteger_domain::solovay_strassen_test "
+					"not prime (sure)" << endl;
 				}
 			return FALSE;
 			}
 		}
 	// we should never be here:
-	cout << "longinteger_domain::solovay_strassen_test error" << endl;
+	cout << "longinteger_domain::solovay_strassen_test "
+			"error" << endl;
 	exit(1);
 }
 
@@ -1769,7 +1894,8 @@ int longinteger_domain::miller_rabin_test(
 	int k, i;
 	
 	if (f_v) {
-		cout << "longinteger_domain::miller_rabin_test for " << n << endl;
+		cout << "longinteger_domain::miller_rabin_test "
+				"for " << n << endl;
 		}
 	one.create(1);
 	m_one.create(-1);
@@ -1784,7 +1910,8 @@ int longinteger_domain::miller_rabin_test(
 	a.create(2);
 #endif
 	if (f_vv) {
-		cout << "longinteger_domain::miller_rabin_test() choosing integer " << a << " less than " << n << endl;
+		cout << "longinteger_domain::miller_rabin_test "
+			"choosing integer " << a << " less than " << n << endl;
 		}
 	
 	k = multiplicity_of_p(n_minus_one, m, 2);
@@ -1814,7 +1941,8 @@ int longinteger_domain::miller_rabin_test(
 	for (i = 0; i < k; i++) {
 		mult_mod(b, b, c, n, 0); 
 		if (f_vv) {
-			cout << "b_" << i << "=" << b << " b_" << i + 1 << "=" << c << endl;
+			cout << "b_" << i << "=" << b
+					<< " b_" << i + 1 << "=" << c << endl;
 			}
 		c.assign_to(b);
 		if (compare_unsigned(b, n_minus_one) == 0) {
@@ -1848,7 +1976,9 @@ void longinteger_domain::get_k_bit_random_pseudoprime(
 	longinteger_object a, b;
 	
 	if (f_v) {
-		cout << "longinteger_domain::get_k_bit_random_pseudoprime trying to get a " << k << " bit, " << kk << " decimals random pseudoprime" << endl;
+		cout << "longinteger_domain::get_k_bit_random_pseudoprime "
+			"trying to get a " << k << " bit, " << kk
+			<< " decimals random pseudoprime" << endl;
 		}
 	a.create(10);
 	D.power_int(a, kk);
@@ -1861,11 +1991,14 @@ void longinteger_domain::get_k_bit_random_pseudoprime(
 		cout << "the sum is " << n << endl;
 		}
 	
-	D.find_probable_prime_above(n, nb_tests_solovay_strassen, f_miller_rabin_test, verbose_level - 1);
+	D.find_probable_prime_above(n,
+			nb_tests_solovay_strassen, f_miller_rabin_test,
+			verbose_level - 1);
 	
 }
 
-void longinteger_domain::RSA_setup(longinteger_object &n, 
+void longinteger_domain::RSA_setup(
+	longinteger_object &n,
 	longinteger_object &p, longinteger_object &q, 
 	longinteger_object &a, longinteger_object &b, 
 	int nb_bits, 
@@ -1885,12 +2018,14 @@ void longinteger_domain::RSA_setup(longinteger_object &n,
 		}
 	m1.create(-1);
 	D.get_k_bit_random_pseudoprime(p, half_bits, 
-		nb_tests_solovay_strassen, f_miller_rabin_test, verbose_level - 2);
+		nb_tests_solovay_strassen,
+		f_miller_rabin_test, verbose_level - 2);
 	if (f_vv) {
 		cout << "choosing p = " << p << endl;
 		}
 	D.get_k_bit_random_pseudoprime(q, half_bits, 
-		nb_tests_solovay_strassen, f_miller_rabin_test, verbose_level - 2);
+		nb_tests_solovay_strassen,
+		f_miller_rabin_test, verbose_level - 2);
 	if (f_v) {
 		cout << "choosing p = " << p << endl;
 		cout << "choosing q = " << q << endl;
@@ -1903,19 +2038,22 @@ void longinteger_domain::RSA_setup(longinteger_object &n,
 	D.add(q, m1, qm1);
 	D.mult(pm1, qm1, phi_n);
 	if (f_v) {
-		cout << "phi(n) = (p - 1)(q - 1) = " << phi_n << endl;
+		cout << "phi(n) = (p - 1)(q - 1) = "
+				<< phi_n << endl;
 		}
 	
 	while (TRUE) {
 		random_number_less_than_n(n, a);
 		if (f_v) {
-			cout << "choosing integer " << a << " less than " << n << endl;
+			cout << "choosing integer " << a
+					<< " less than " << n << endl;
 			}
 		D.extended_gcd(a, phi_n, g, b, v, verbose_level - 2);
 		if (g.is_one())
 			break;
 		if (f_v) {
-			cout << "non trivial gcd: " << g << " , repeating" << endl;
+			cout << "non trivial gcd: " << g
+					<< " , repeating" << endl;
 			}
 		}		
 	if (b.sign()) {
@@ -1933,7 +2071,9 @@ void longinteger_domain::RSA_setup(longinteger_object &n,
 }
 
 
-void longinteger_domain::matrix_product(longinteger_object *A, longinteger_object *B, longinteger_object *&C, int Am, int An, int Bn)
+void longinteger_domain::matrix_product(
+		longinteger_object *A, longinteger_object *B,
+		longinteger_object *&C, int Am, int An, int Bn)
 {
 	int i, j, k;
 	longinteger_object a, b, c;
@@ -1952,7 +2092,8 @@ void longinteger_domain::matrix_product(longinteger_object *A, longinteger_objec
 }
 
 void longinteger_domain::matrix_entries_integral_division_exact(
-	longinteger_object *A, longinteger_object &b, int Am, int An)
+	longinteger_object *A, longinteger_object &b,
+	int Am, int An)
 {
 	int i, j;
 	longinteger_object q, r;
@@ -1962,7 +2103,8 @@ void longinteger_domain::matrix_entries_integral_division_exact(
 		for (j = 0; j < An; j++) {
 			integral_division(A[i * An + j], b, q, r, verbose_level);
 			if (!r.is_zero()) {
-				cout << "integral division: " << b << " does not divide " << A[i * An + j] << endl;
+				cout << "integral division: " << b
+					<< " does not divide " << A[i * An + j] << endl;
 				cout << "i=" << i << " j=" << j << endl;
 				exit(1);
 				}
@@ -1971,7 +2113,9 @@ void longinteger_domain::matrix_entries_integral_division_exact(
 		}
 }
 
-void longinteger_domain::matrix_print_GAP(ostream &ost, longinteger_object *A, int Am, int An)
+void longinteger_domain::matrix_print_GAP(
+		ostream &ost, longinteger_object *A,
+		int Am, int An)
 {
 	int i, j;
 	
@@ -1992,7 +2136,9 @@ void longinteger_domain::matrix_print_GAP(ostream &ost, longinteger_object *A, i
 	ost << "];" << endl;
 }
 
-void longinteger_domain::matrix_print_tex(ostream &ost, longinteger_object *A, int Am, int An)
+void longinteger_domain::matrix_print_tex(
+		ostream &ost, longinteger_object *A,
+		int Am, int An)
 {
 	int i, j;
 	
@@ -2008,7 +2154,8 @@ void longinteger_domain::matrix_print_tex(ostream &ost, longinteger_object *A, i
 	ost << "\\end{array}" << endl;
 }
 
-void longinteger_domain::power_mod(char *aa, char *bb, char *nn, 
+void longinteger_domain::power_mod(
+	char *aa, char *bb, char *nn,
 	longinteger_object &result, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2022,12 +2169,15 @@ void longinteger_domain::power_mod(char *aa, char *bb, char *nn,
 	power_longint_mod(c, d, n, verbose_level - 1);
 	c.assign_to(result);
 	if (f_v) {
-		cout << "longinteger_domain::power_mod:" << aa << " ^ " << bb << " == " << result << " mod " << nn << endl;
+		cout << "longinteger_domain::power_mod:" << aa
+				<< " ^ " << bb << " == " << result
+				<< " mod " << nn << endl;
 		}
 }
 
 
-void longinteger_domain::factorial(longinteger_object &result, int n)
+void longinteger_domain::factorial(
+		longinteger_object &result, int n)
 {
 	int *x;
 	int i;
@@ -2040,7 +2190,9 @@ void longinteger_domain::factorial(longinteger_object &result, int n)
 	FREE_int(x);
 }
 
-void longinteger_domain::group_order_PGL(longinteger_object &result, int n, int q, int f_semilinear)
+void longinteger_domain::group_order_PGL(
+		longinteger_object &result,
+		int n, int q, int f_semilinear)
 {
 	int *x;
 	int i, l;
@@ -2064,7 +2216,8 @@ void longinteger_domain::group_order_PGL(longinteger_object &result, int n, int 
 		}
 
 #if 0
-	cout << "longinteger_domain::group_order_PGL factors of |PGL(n,q)| = ";
+	cout << "longinteger_domain::group_order_PGL "
+			"factors of |PGL(n,q)| = ";
 	int_vec_print(cout, x, l);
 	cout << endl;
 #endif
@@ -2073,7 +2226,8 @@ void longinteger_domain::group_order_PGL(longinteger_object &result, int n, int 
 	FREE_int(x);
 }
 
-int longinteger_domain::singleton_bound_for_d(int n, int k, int q, int verbose_level)
+int longinteger_domain::singleton_bound_for_d(
+		int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int d;
@@ -2086,7 +2240,8 @@ int longinteger_domain::singleton_bound_for_d(int n, int k, int q, int verbose_l
 }
 
 
-int longinteger_domain::hamming_bound_for_d(int n, int k, int q, int verbose_level)
+int longinteger_domain::hamming_bound_for_d(
+		int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2102,7 +2257,9 @@ int longinteger_domain::hamming_bound_for_d(int n, int k, int q, int verbose_lev
 	qm1_power.create(1);
 	B.create(0);
 	if (f_vv) {
-		cout << "longinteger_domain::hamming_bound_for_d: q=" << q << " n=" << n << " k=" << k << " " << q << "^" << n - k << " = " << qnmk << endl;
+		cout << "longinteger_domain::hamming_bound_for_d: "
+			"q=" << q << " n=" << n << " k=" << k << " "
+			<< q << "^" << n - k << " = " << qnmk << endl;
 		}
 	for (e = 0; ; e++) {
 		binomial(b, n, e, FALSE);
@@ -2129,7 +2286,8 @@ int longinteger_domain::hamming_bound_for_d(int n, int k, int q, int verbose_lev
 		}
 }
 
-int longinteger_domain::plotkin_bound_for_d(int n, int k, int q, int verbose_level)
+int longinteger_domain::plotkin_bound_for_d(
+		int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2162,7 +2320,8 @@ int longinteger_domain::plotkin_bound_for_d(int n, int k, int q, int verbose_lev
 		// now b = 2^k - 1
 
 	if (f_vv) {
-		cout << "longinteger_domain::plotkin_bound_for_d q=" << q << " n=" << n << " k=" << k << endl;
+		cout << "longinteger_domain::plotkin_bound_for_d "
+				"q=" << q << " n=" << n << " k=" << k << endl;
 		}
 	integral_division(c, b, Q, R, FALSE /* verbose_level */);
 	d = Q.as_int();
@@ -2175,7 +2334,8 @@ int longinteger_domain::plotkin_bound_for_d(int n, int k, int q, int verbose_lev
 	return d;
 }
 
-int longinteger_domain::griesmer_bound_for_d(int n, int k, int q, int verbose_level)
+int longinteger_domain::griesmer_bound_for_d(
+		int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int d, n1;
@@ -2196,7 +2356,8 @@ int longinteger_domain::griesmer_bound_for_d(int n, int k, int q, int verbose_le
 	return d;
 }
 
-int longinteger_domain::griesmer_bound_for_n(int k, int d, int q, int verbose_level)
+int longinteger_domain::griesmer_bound_for_n(
+		int k, int d, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2212,7 +2373,8 @@ int longinteger_domain::griesmer_bound_for_n(int k, int d, int q, int verbose_le
 	qi.create(1);
 	S.create(0);
 	if (f_vv) {
-		cout << "griesmer_bound_for_n: q=" << q << " d=" << d << " k=" << k << endl;
+		cout << "griesmer_bound_for_n: q=" << q
+				<< " d=" << d << " k=" << k << endl;
 		}
 	for (i = 0; i < k; i++) {
 		integral_division(d1, qi, Q, R, FALSE /* verbose_level */);
@@ -2242,8 +2404,9 @@ int longinteger_domain::griesmer_bound_for_n(int k, int d, int q, int verbose_le
 
 
 
-//##################
+//##############################################################################
 // global functions:
+//##############################################################################
 
 void test_longinteger()
 {
@@ -2448,14 +2611,16 @@ void determine_weight_enumerator()
 	FREE_OBJECTS(A2);
 }
 
-void longinteger_collect_setup(int &nb_agos, longinteger_object *&agos, int *&multiplicities)
+void longinteger_collect_setup(int &nb_agos,
+		longinteger_object *&agos, int *&multiplicities)
 {
 	nb_agos = 0;
 	agos = NULL;
 	multiplicities = NULL;
 }
 
-void longinteger_collect_free(int &nb_agos, longinteger_object *&agos, int *&multiplicities)
+void longinteger_collect_free(int &nb_agos,
+		longinteger_object *&agos, int *&multiplicities)
 {
 	if (nb_agos) {
 		FREE_OBJECTS(agos);
@@ -2463,7 +2628,9 @@ void longinteger_collect_free(int &nb_agos, longinteger_object *&agos, int *&mul
 		}
 }
 
-void longinteger_collect_add(int &nb_agos, longinteger_object *&agos, int *&multiplicities, longinteger_object &ago)
+void longinteger_collect_add(int &nb_agos,
+		longinteger_object *&agos, int *&multiplicities,
+		longinteger_object &ago)
 {
 	int j, c, h, f_added;
 	longinteger_object *tmp_agos;
@@ -2473,7 +2640,8 @@ void longinteger_collect_add(int &nb_agos, longinteger_object *&agos, int *&mult
 	f_added = FALSE;
 	for (j = 0; j < nb_agos; j++) {
 		c = D.compare_unsigned(ago, agos[j]);
-		//cout << "comparing " << ago << " with " << agos[j] << " yields " << c << endl;
+		//cout << "comparing " << ago << " with "
+		//<< agos[j] << " yields " << c << endl;
 		if (c >= 0) {
 			if (c == 0) {
 				multiplicities[j]++;
@@ -2523,7 +2691,8 @@ void longinteger_collect_add(int &nb_agos, longinteger_object *&agos, int *&mult
 		}
 }
 
-void longinteger_collect_print(ostream &ost, int &nb_agos, longinteger_object *&agos, int *&multiplicities)
+void longinteger_collect_print(ostream &ost,
+		int &nb_agos, longinteger_object *&agos, int *&multiplicities)
 {
 	int j;
 	

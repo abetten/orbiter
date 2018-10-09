@@ -74,7 +74,8 @@ void test_unipoly2()
 	
 }
 
-char *search_for_primitive_polynomial_of_given_degree(int p, int degree, int verbose_level)
+char *search_for_primitive_polynomial_of_given_degree(
+		int p, int degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	finite_field Fp;
@@ -88,7 +89,8 @@ char *search_for_primitive_polynomial_of_given_degree(int p, int degree, int ver
 	FX.create_object_by_rank(m, 0);
 	
 	if (f_v) {
-		cout << "search_for_primitive_polynomial_of_given_degree p=" << p << " degree=" << degree << endl;
+		cout << "search_for_primitive_polynomial_of_given_degree "
+				"p=" << p << " degree=" << degree << endl;
 		}
 	FX.get_a_primitive_polynomial(m, degree, verbose_level - 1);
 	FX.rank_longinteger(m, rk);

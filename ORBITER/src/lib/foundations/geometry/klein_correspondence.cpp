@@ -90,7 +90,7 @@ void klein_correspondence::init(finite_field *F,
 		}
 	P3->init(3, F, 
 		FALSE /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
+		verbose_level - 2);
 
 	P5 = NEW_OBJECT(projective_space);
 	
@@ -99,7 +99,7 @@ void klein_correspondence::init(finite_field *F,
 		}
 	P5->init(5, F, 
 		FALSE /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "klein_correspondence::after before P5->init" << endl;
 		}
