@@ -82,7 +82,8 @@ int main(int argc, char **argv)
 		sprintf(fname, file_mask, i, i, i, i, i);
 		
 		cout << "Reading file " << fname << endl;
-		read_set_from_file(fname, Sets[i], Set_sz[i], 0 /* verbose_level */);
+		read_set_from_file(fname,
+				Sets[i], Set_sz[i], 0 /* verbose_level */);
 
 		M += Set_sz[i];
 		}

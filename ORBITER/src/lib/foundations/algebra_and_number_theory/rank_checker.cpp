@@ -56,7 +56,8 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 		}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
-		PG_element_unrank_modified(*GFq, M1 + j, len /* stride */, m /* len */, S[j]);
+		PG_element_unrank_modified(*GFq,
+				M1 + j, len /* stride */, m /* len */, S[j]);
 		}
 	if (f_vv) {
 		cout << "\n";
@@ -98,8 +99,12 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 			print_integer_matrix(cout, M2, m, d1 + 1);
 			}
 		
-		rk = GFq->Gauss_int(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
-			FALSE /* f_P */, NULL, m /* m */, d1 + 1 /* n */, 0 /* Pn */, 
+		rk = GFq->Gauss_int(M2,
+			FALSE /* f_special */,
+			FALSE /* f_complete */,
+			base_cols,
+			FALSE /* f_P */, NULL,
+			m /* m */, d1 + 1 /* n */, 0 /* Pn */,
 			0 /* verbose_level */);
 		if (rk <= d1) {
 			f_OK = FALSE;
@@ -118,7 +123,8 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 	return TRUE;
 }
 
-int rank_checker::check_rank_matrix_input(int len, int *S, int dim_S, int verbose_level)
+int rank_checker::check_rank_matrix_input(
+		int len, int *S, int dim_S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -157,15 +163,21 @@ int rank_checker::check_rank_matrix_input(int len, int *S, int dim_S, int verbos
 			M2[i * (d1 + 1) + d1] = S[i * dim_S + len - 1];
 			}
 		
-		rk = GFq->Gauss_int(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
-			FALSE /* f_P */, NULL, m /* m */, d1 + 1 /* n */, 0 /* Pn */, 
+		rk = GFq->Gauss_int(M2,
+			FALSE /* f_special */,
+			FALSE /* f_complete */,
+			base_cols,
+			FALSE /* f_P */, NULL,
+			m /* m */, d1 + 1 /* n */, 0 /* Pn */,
 			0 /* verbose_level */);
 		if (rk <= d1) {
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
 				print_set(cout, d1, set);
-				cout << " leads to a rk " << rk << " submatrix, but we want rank " << d1 + 1 << endl;
+				cout << " leads to a rk " << rk
+						<< " submatrix, but we want rank "
+						<< d1 + 1 << endl;
 				}
 			break;
 			}
@@ -177,20 +189,23 @@ int rank_checker::check_rank_matrix_input(int len, int *S, int dim_S, int verbos
 	return TRUE;
 }
 
-int rank_checker::check_rank_last_two_are_fixed(int len, int *S, int verbose_level)
+int rank_checker::check_rank_last_two_are_fixed(
+		int len, int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, aj, rk, f_OK = TRUE;
 	
 	if (f_v) {
-		cout << "rank_checker::check_rank_last_two_are_fixed: checking the set ";
+		cout << "rank_checker::check_rank_last_two_are_fixed: "
+				"checking the set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
-		PG_element_unrank_modified(*GFq, M1 + j, len /* stride */, m /* len */, S[j]);
+		PG_element_unrank_modified(*GFq,
+				M1 + j, len /* stride */, m /* len */, S[j]);
 		}
 	if (f_vv) {
 		cout << "\n";
@@ -233,8 +248,12 @@ int rank_checker::check_rank_last_two_are_fixed(int len, int *S, int verbose_lev
 			print_integer_matrix(cout, M2, m, d1 + 2);
 			}
 		
-		rk = GFq->Gauss_int(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
-			FALSE /* f_P */, NULL, m /* m */, d1 + 2 /* n */, 0 /* Pn */, 
+		rk = GFq->Gauss_int(M2,
+			FALSE /* f_special */,
+			FALSE /* f_complete */,
+			base_cols,
+			FALSE /* f_P */, NULL,
+			m /* m */, d1 + 2 /* n */, 0 /* Pn */,
 			0 /* verbose_level */);
 		if (rk <= d1 + 1) {
 			f_OK = FALSE;
@@ -255,7 +274,8 @@ int rank_checker::check_rank_last_two_are_fixed(int len, int *S, int verbose_lev
 	return TRUE;
 }
 
-int rank_checker::compute_rank_row_vectors(int len, int *S, int f_projective, int verbose_level)
+int rank_checker::compute_rank_row_vectors(
+		int len, int *S, int f_projective, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -269,7 +289,8 @@ int rank_checker::compute_rank_row_vectors(int len, int *S, int f_projective, in
 	// M1 will be used as a len x n matrix
 	for (j = 0; j < len; j++) {
 		if (f_projective) {
-			PG_element_unrank_modified(*GFq, M1 + j * n, 1 /* stride */, n /* len */, S[j]);
+			PG_element_unrank_modified(*GFq,
+					M1 + j * n, 1 /* stride */, n /* len */, S[j]);
 			}
 		else {
 			AG_element_unrank(GFq->q, M1 + j * n, 1, n, S[j]);
@@ -282,8 +303,12 @@ int rank_checker::compute_rank_row_vectors(int len, int *S, int f_projective, in
 		}
 
 		
-	rk = GFq->Gauss_int(M1, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
-		FALSE /* f_P */, NULL, len /* m */, n /* n */, 0 /* Pn */, 
+	rk = GFq->Gauss_int(M1,
+		FALSE /* f_special */,
+		FALSE /* f_complete */,
+		base_cols,
+		FALSE /* f_P */, NULL,
+		len /* m */, n /* n */, 0 /* Pn */,
 		0 /* verbose_level */);
 
 	return rk;

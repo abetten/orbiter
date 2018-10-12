@@ -1227,6 +1227,69 @@ void perm_print_offset(ostream &ost,
 	FREE_int(have_seen);
 }
 
+void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles)
+{
+	int *have_seen;
+	int i, l, l1, first, next, len;
+
+	//cout << "perm_cycle_type degree=" << degree << endl;
+	nb_cycles = 0;
+	have_seen = NEW_int(degree);
+	for (l = 0; l < degree; l++) {
+		have_seen[l] = FALSE;
+		}
+	l = 0;
+	while (l < degree) {
+		if (have_seen[l]) {
+			l++;
+			continue;
+			}
+		// work on a next cycle, starting at position l:
+		first = l;
+		//cout << "perm_cycle_type cycle starting
+		//"with " << first << endl;
+		l1 = l;
+		len = 1;
+		while (TRUE) {
+			if (l1 >= degree) {
+				cout << "perm_cycle_type cyle starting with "
+						<< first << endl;
+				cout << "l1 = " << l1 << " >= degree" << endl;
+				exit(1);
+				}
+			have_seen[l1] = TRUE;
+			next = perm[l1];
+			if (next >= degree) {
+				cout << "perm_cycle_type next = " << next
+						<< " >= degree = " << degree << endl;
+				// print_list(ost);
+				exit(1);
+				}
+			if (next == first) {
+				break;
+				}
+			if (have_seen[next]) {
+				cout << "perm_cycle_type have_seen[next]" << endl;
+				cout << "first=" << first << endl;
+				cout << "len=" << len << endl;
+				cout << "l1=" << l1 << endl;
+				cout << "next=" << next << endl;
+				for (i = 0; i < degree; i++) {
+					cout << i << " : " << perm[i] << endl;
+					}
+				exit(1);
+				}
+			l1 = next;
+			len++;
+			}
+		//cout << "perm_print_offset cyle starting with "
+		//<< first << " has length " << len << endl;
+		//cout << "nb_orbits=" << nb_orbits << endl;
+		cycles[nb_cycles++] = len;
+		}
+	FREE_int(have_seen);
+}
+
 int perm_order(int *a, int n)
 {
 	int *have_seen;

@@ -72,7 +72,8 @@ void subfield_structure::init(finite_field *FQ,
 	Q = FQ->q;
 	q = Fq->q;
 	if (FQ->p != Fq->p) {
-		cout << "subfield_structure::init different characteristics" << endl;
+		cout << "subfield_structure::init "
+				"different characteristics" << endl;
 		exit(1);
 		}
 	s = FQ->e / Fq->e;

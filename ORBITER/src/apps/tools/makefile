@@ -33,6 +33,7 @@ all: all_cliques.out \
 	create_file.out \
 	missing_files.out \
 	read_solutions.out \
+	rainbow_cliques.out \
 	read_orbiter_file.out \
 	join_sets.out \
 	concatenate_files.out \
@@ -134,6 +135,9 @@ missing_files.out:  missing_files.o
 
 read_solutions.out:  read_solutions.o 
 	$(DISCRETA_CPP)  read_solutions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+rainbow_cliques.out:  rainbow_cliques.o 
+	$(DISCRETA_CPP)  rainbow_cliques.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 read_orbiter_file.out:  read_orbiter_file.o 
 	$(DISCRETA_CPP)  read_orbiter_file.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

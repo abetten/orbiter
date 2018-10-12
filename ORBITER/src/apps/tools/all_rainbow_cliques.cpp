@@ -15,17 +15,6 @@
 int t0; // the system time when the program started
 
 
-#if 0
-fname, f_output_solution_raw, 
-					f_output_file, output_file, 
-					f_maxdepth, maxdepth, 
-					f_restrictions, restrictions, 
-					f_tree, f_decision_nodes_only, fname_tree,  
-					print_interval, 
-					search_steps, decision_steps, nb_sol, dt, 
-					verbose_level
-#endif
-
 int main(int argc, char **argv)
 {
 	int i, j;
@@ -120,7 +109,8 @@ int main(int argc, char **argv)
 			f_list_of_cases = TRUE;
 			fname_list_of_cases = argv[++i];
 			fname_template = argv[++i];
-			cout << "-list_of_cases " << fname_list_of_cases << " " << fname_template << endl;
+			cout << "-list_of_cases " << fname_list_of_cases
+					<< " " << fname_template << endl;
 			}
 		else if (strcmp(argv[i], "-prefix") == 0) {
 			f_prefix = TRUE;
@@ -195,7 +185,8 @@ int main(int argc, char **argv)
 
 			cout << "loading graph from file " << fname << endl;
 			CG.load(fname, verbose_level - 1);
-			cout << "found a graph with " << CG.nb_points << " points"  << endl;
+			cout << "found a graph with " << CG.nb_points
+					<< " points"  << endl;
 
 
 			CG.export_to_magma(fname_magma, verbose_level);
@@ -238,8 +229,11 @@ int main(int argc, char **argv)
 
 			if (f_restrictions) {
 				for (i = 0; i < nb_restrictions; i++) {
-					sprintf(fname_solution + strlen(fname_solution), "_case%d_%d_%d", 
-						restrictions[3 * i + 0], restrictions[3 * i + 1], restrictions[3 * i + 2]);
+					sprintf(fname_solution + strlen(fname_solution),
+						"_case%d_%d_%d",
+						restrictions[3 * i + 0],
+						restrictions[3 * i + 1],
+						restrictions[3 * i + 2]);
 					}
 				}
 			
@@ -252,19 +246,26 @@ int main(int argc, char **argv)
 
 			if (f_solution_file) {
 
-				cout << "before CG.all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file" << endl;
+				cout << "before CG.all_cliques_of_size_"
+						"k_ignore_colors_"
+						"and_write_solutions_to_file" << endl;
 				CG.all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 					clique_size /* target_depth */, 
 					fname_solution, 
 					f_restrictions, restrictions, 
 					nb_sol, decision_step_counter, verbose_level);
-				cout << "after CG.all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file" << endl;
+				cout << "after CG.all_cliques_of_size_"
+						"k_ignore_colors_"
+						"and_write_solutions_to_file" << endl;
 				}
 			else {
-				cout << "before CG.all_cliques_of_size_k_ignore_colors" << endl;
-				CG.all_cliques_of_size_k_ignore_colors(clique_size /* target_depth */, 
+				cout << "before CG.all_cliques_of_size_"
+						"k_ignore_colors" << endl;
+				CG.all_cliques_of_size_k_ignore_colors(
+					clique_size /* target_depth */,
 					nb_sol, decision_step_counter, verbose_level);
-				cout << "after CG.all_cliques_of_size_k_ignore_colors" << endl;
+				cout << "after CG.all_cliques_of_size_"
+						"k_ignore_colors" << endl;
 				}
 
 
@@ -273,7 +274,8 @@ int main(int argc, char **argv)
 			fp << "success" << endl;
 			}
 			cout << "nb_sol = " << nb_sol << endl;
-			cout << "decision_step_counter = " << decision_step_counter << endl;
+			cout << "decision_step_counter = "
+				<< decision_step_counter << endl;
 			}
 		else {
 
@@ -294,17 +296,24 @@ int main(int argc, char **argv)
 			if (f_nonrecursive) {
 				int nb_sol, nb_backtrack_nodes;
 
-				cout << "finding rainbow cliques, calling colored_graph_all_rainbow_cliques_nonrecursive" << endl;
+				cout << "finding rainbow cliques, calling "
+						"colored_graph_all_rainbow_cliques_nonrecursive"
+						<< endl;
 
-				nb_sol = colored_graph_all_rainbow_cliques_nonrecursive(fname, nb_backtrack_nodes, verbose_level);
+				nb_sol = colored_graph_all_rainbow_cliques_nonrecursive(
+					fname, nb_backtrack_nodes, verbose_level);
 
 				cout << "nb_sol = " << nb_sol << endl;
-				cout << "nb_backtrack_nodes = " << nb_backtrack_nodes << endl;
+				cout << "nb_backtrack_nodes = " << nb_backtrack_nodes
+						<< endl;
 			
-				cout << "finding rainbow cliques, after colored_graph_all_rainbow_cliques_nonrecursive" << endl;
+				cout << "finding rainbow cliques, after "
+					"colored_graph_all_rainbow_cliques_nonrecursive"
+						<< endl;
 				}
 			else {
-				cout << "finding rainbow cliques, calling colored_graph_all_cliques" << endl;
+				cout << "finding rainbow cliques, "
+					"calling colored_graph_all_cliques" << endl;
 
 				int search_steps, decision_steps, nb_sol, dt;
 
@@ -356,10 +365,12 @@ int main(int argc, char **argv)
 		replace_extension_with(fname_stats, "_stats.csv");
 
 
-		read_set_from_file(fname_list_of_cases, list_of_cases, nb_cases, verbose_level);
+		read_set_from_file(fname_list_of_cases,
+				list_of_cases, nb_cases, verbose_level);
 		cout << "nb_cases=" << nb_cases << endl;
 
-		colored_graph_all_cliques_list_of_cases(list_of_cases, nb_cases, f_output_solution_raw, 
+		colored_graph_all_cliques_list_of_cases(
+			list_of_cases, nb_cases, f_output_solution_raw,
 			fname_template, 
 			fname_sol, fname_stats, 
 			f_split, split_r, split_m, 
@@ -369,12 +380,15 @@ int main(int argc, char **argv)
 			verbose_level);
 		
 		FREE_int(list_of_cases);
-		cout << "all_rainbow_cliques.out written file " << fname_sol << " of size " << file_size(fname_sol) << endl;
-		cout << "all_rainbow_cliques.out written file " << fname_stats << " of size " << file_size(fname_stats) << endl;
+		cout << "all_rainbow_cliques.out written file " << fname_sol
+				<< " of size " << file_size(fname_sol) << endl;
+		cout << "all_rainbow_cliques.out written file " << fname_stats
+				<< " of size " << file_size(fname_stats) << endl;
 		}
 	else if (f_input_list_of_files) {
 		
-		cout << "input_list_of_files with " << input_list_of_files_nb << " input files" << endl;
+		cout << "input_list_of_files with " << input_list_of_files_nb
+				<< " input files" << endl;
 
 		char fname_sol[1000];
 		char fname_stats[1000];
@@ -392,8 +406,10 @@ int main(int argc, char **argv)
 		replace_extension_with(fname_stats, "_stats.csv");
 
 
-		colored_graph_all_cliques_list_of_files(input_list_of_files_nb /* nb_cases */, 
-			input_list_of_files_case /* Case_number */, input_list_of_files_fname /* Case_fname */, 
+		colored_graph_all_cliques_list_of_files(
+			input_list_of_files_nb /* nb_cases */,
+			input_list_of_files_case /* Case_number */,
+			input_list_of_files_fname /* Case_fname */,
 			f_output_solution_raw, 
 			fname_sol, fname_stats, 
 			f_maxdepth, maxdepth, 
@@ -401,14 +417,17 @@ int main(int argc, char **argv)
 			print_interval, 
 			verbose_level);
 
-		cout << "all_rainbow_cliques.out written file " << fname_sol << " of size " << file_size(fname_sol) << endl;
-		cout << "all_rainbow_cliques.out written file " << fname_stats << " of size " << file_size(fname_stats) << endl;
+		cout << "all_rainbow_cliques.out written file " << fname_sol
+			<< " of size " << file_size(fname_sol) << endl;
+		cout << "all_rainbow_cliques.out written file " << fname_stats
+			<< " of size " << file_size(fname_stats) << endl;
 
 
 
 		}
 	else {
-		cout << "Please use options -file or -list_of_cases or -input_list_of_files" << endl;
+		cout << "Please use options -file or -list_of_cases or "
+				"-input_list_of_files" << endl;
 		exit(1);
 		}
 
@@ -418,7 +437,8 @@ int main(int argc, char **argv)
 		ofstream fp(success_fname);
 		fp << "Success" << endl;
 		}
-		cout << "Written file " << success_fname << " of size " << file_size(success_fname) << endl;
+		cout << "Written file " << success_fname << " of size "
+				<< file_size(success_fname) << endl;
 		}
 
 	cout << "all_rainbow_cliques.out is done" << endl;

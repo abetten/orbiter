@@ -492,7 +492,8 @@ int Jacobi(int a, int m, int verbose_level)
 			}
 		a1 = a1 % m1;
 		if (f_v) {
-			cout << "Jacobi = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << "Jacobi = " << r1
+					<< " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
 			}
 #if 0
 		a1 = NormRemainder(a1, m1);
@@ -530,7 +531,8 @@ int Jacobi(int a, int m, int verbose_level)
 		m1 = a1;
 		a1 = t;
 		if (f_v) {
-			cout << "Jacobi = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << "Jacobi = " << r1
+					<< " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
 			}
 		}
 	if (a1 == 1) {
@@ -544,7 +546,8 @@ int Jacobi(int a, int m, int verbose_level)
 	exit(1);
 }
 
-int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
+int Jacobi_with_key_in_latex(ostream &ost,
+		int a, int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
 	int f_v = (verbose_level >= 1);
@@ -569,7 +572,7 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 		 * ABS(r1) == 1.
 		 * Jacobi(a, m) = r1 * Jacobi(a1, m1) und ggT(a1, m1) == 1. */
 		if (a1 == 0) {
-			cout << "Jacobi() a1 == 0" << endl;
+			cout << "Jacobi a1 == 0" << endl;
 			exit(1);
 			}
 		if (a1 % m1 < a1) {
@@ -578,14 +581,16 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 				}
-			ost << " \\Big( \\frac{" << a1 % m1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+			ost << " \\Big( \\frac{" << a1 % m1 << " }{ "
+					<< m1 << "}\\Big)\\\\" << endl;
 
 			}
 
 		a1 = a1 % m1;
 
 		if (f_v) {
-			cout << "Jacobi() = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << "Jacobi = " << r1 << " * Jacobi("
+					<< a1 << ", " << m1 << ")" << endl;
 			}
 		ord2 = ny2(a1, a1);
 		
@@ -596,12 +601,18 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 				}
-			ost << "\\Big( \\frac{-1 }{ " << m1 << "}\\Big) \\cdot \\Big( \\frac{" << a1 * i_power_j(2, ord2) << " }{ " << m1 << "}\\Big)\\\\" << endl;
+			ost << "\\Big( \\frac{-1 }{ " << m1
+					<< "}\\Big) \\cdot \\Big( \\frac{"
+					<< a1 * i_power_j(2, ord2) << " }{ "
+					<< m1 << "}\\Big)\\\\" << endl;
 			ost << "=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 				}
-			ost << "(-1)^{\\frac{" << m1 << "-1}{2}} \\cdot \\Big( \\frac{" << a1 * i_power_j(2, ord2) << " }{ " << m1 << "}\\Big)\\\\" << endl;
+			ost << "(-1)^{\\frac{" << m1
+					<< "-1}{2}} \\cdot \\Big( \\frac{"
+					<< a1 * i_power_j(2, ord2) << " }{ "
+					<< m1 << "}\\Big)\\\\" << endl;
 
 
 
@@ -616,7 +627,9 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 				}
-			ost << " \\Big( \\frac{" << a1 * i_power_j(2, ord2) << " }{ " << m1 << "}\\Big)\\\\" << endl;
+			ost << " \\Big( \\frac{"
+					<< a1 * i_power_j(2, ord2)
+			<< " }{ " << m1 << "}\\Big)\\\\" << endl;
 
 
 			}
@@ -630,24 +643,34 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 					}
-				ost << "\\Big( \\frac{2}{ " << m1 << "}\\Big)^{" << ord2 << "} \\cdot \\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+				ost << "\\Big( \\frac{2}{ " << m1
+						<< "}\\Big)^{" << ord2
+						<< "} \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
 				ost << "=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 					}
-				ost << "\\Big( (-1)^{\\frac{" << m1 << "^2-1}{8}} \\Big)^{" << ord2<< "} \\cdot \\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+				ost << "\\Big( (-1)^{\\frac{" << m1
+						<< "^2-1}{8}} \\Big)^{" << ord2
+						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
+						<< m1 << "}\\Big)\\\\" << endl;
 				}
 			else {
 				ost << "=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 					}
-				ost << "\\Big( \\frac{2}{ " << m1 << "}\\Big) \\cdot \\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+				ost << "\\Big( \\frac{2}{ " << m1
+						<< "}\\Big) \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
 				ost << "=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 					}
-				ost << "(-1)^{\\frac{" << m1 << "^2-1}{8}} \\cdot \\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+				ost << "(-1)^{\\frac{" << m1
+						<< "^2-1}{8}} \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
 				}
 
 			if (m1 % 8 == 3 || m1 % 8 == 5)
@@ -657,7 +680,8 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 				}
-			ost << "\\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+			ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+					<< "}\\Big)\\\\" << endl;
 
 
 			}
@@ -667,18 +691,24 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 					}
-				ost << "\\Big( \\frac{2}{ " << m1 << "}\\Big)^{" << ord2 << "} \\cdot \\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+				ost << "\\Big( \\frac{2}{ " << m1 << "}\\Big)^{"
+						<< ord2 << "} \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
 
 				ost << "=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 					}
-				ost << "\\Big( (-1)^{\\frac{" << m1 << "^2-1}{8}} \\Big)^{" << ord2 << "} \\cdot \\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+				ost << "\\Big( (-1)^{\\frac{" << m1
+						<< "^2-1}{8}} \\Big)^{" << ord2
+						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
+						<< m1 << "}\\Big)\\\\" << endl;
 				ost << "=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 					}
-				ost << "\\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+				ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+						<< "}\\Big)\\\\" << endl;
 				}
 			}
 		if (ABS(a1) <= 1)
@@ -694,7 +724,10 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 		if (r1 == -1) {
 			ost << "(-1) \\cdot ";
 			}
-		ost << "\\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big) \\cdot (-1)^{\\frac{" << m1 << "-1}{2} \\cdot \\frac{" << a1 << " - 1}{2}}\\\\" << endl;
+		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+				<< "}\\Big) \\cdot (-1)^{\\frac{" << m1
+				<< "-1}{2} \\cdot \\frac{" << a1
+				<< " - 1}{2}}\\\\" << endl;
 
 
 		/* Reziprozitaet: */
@@ -708,10 +741,12 @@ int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 		if (r1 == -1) {
 			ost << "(-1) \\cdot ";
 			}
-		ost << "\\Big( \\frac{" << a1 << " }{ " << m1 << "}\\Big)\\\\" << endl;
+		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+				<< "}\\Big)\\\\" << endl;
 
 		if (f_v) {
-			cout << "Jacobi() = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << "Jacobi() = " << r1 << " * Jacobi(" << a1
+					<< ", " << m1 << ")" << endl;
 			}
 		}
 	if (a1 == 1) {

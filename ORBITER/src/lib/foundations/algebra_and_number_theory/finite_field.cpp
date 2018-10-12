@@ -557,7 +557,7 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 	a = 1;
 	for (i = 0; i < p; i++) {
 		if (a < 0 || a >= q) {
-			cout << "error in finite_field::create_alpha_table_prime_field() "
+			cout << "error in finite_field::create_alpha_table_prime_field "
 					"a = " << a << endl;
 			}
 		alpha_power_table[i] = a;
@@ -1132,7 +1132,7 @@ int finite_field::add8(int i1, int i2, int i3, int i4, int i5,
 int finite_field::negate(int i)
 {
 	if (i < 0 || i >= q) {
-		cout << "finite_field::negate() i = " << i << endl;
+		cout << "finite_field::negate i = " << i << endl;
 		exit(1);
 		}
 	if (f_has_table) {
@@ -1153,7 +1153,7 @@ int finite_field::negate(int i)
 int finite_field::inverse(int i)
 {
 	if (i <= 0 || i >= q) {
-		cout << "finite_field::inverse() i = " << i << endl;
+		cout << "finite_field::inverse i = " << i << endl;
 		exit(1);
 		}
 	if (f_has_table) {
@@ -1218,7 +1218,7 @@ int finite_field::absolute_trace(int i)
 		t = add(t, ii);
 		}
 	if (ii != i) {
-		cout << "finite_field::absolute_trace() ii != i" << endl;
+		cout << "finite_field::absolute_trace ii != i" << endl;
 		exit(1);
 		}
 	return t;
@@ -1230,13 +1230,13 @@ int finite_field::absolute_norm(int i)
 	
 	for (j = 0; j < e; j++) {
 		//ii = power(ii, p);
-		//cout << "absolute_trace() ii = " << ii << " -> ";
+		//cout << "absolute_trace ii = " << ii << " -> ";
 		ii = frobenius_table[ii];
 		//cout << ii << endl;
 		t = mult(t, ii);
 		}
 	if (ii != i) {
-		cout << "finite_field::absolute_norm() ii != i" << endl;
+		cout << "finite_field::absolute_norm ii != i" << endl;
 		exit(1);
 		}
 	return t;
@@ -1632,14 +1632,19 @@ void finite_field::print_element(ostream &ost, int a)
 {
 	int width;
 
-	if (f_print_as_exponentials) {
-		width = 10;
-		}
-	else {
-		width = log10_of_q;
-		}
-	print_element_with_symbol(ost, a, f_print_as_exponentials,
-			width, symbol_for_print);
+
+	if (e == 1) {
+		ost << a;
+	} else {
+		if (f_print_as_exponentials) {
+			width = 10;
+			}
+		else {
+			width = log10_of_q;
+			}
+		print_element_with_symbol(ost, a, f_print_as_exponentials,
+				width, symbol_for_print);
+	}
 }
 
 void finite_field::print_element_with_symbol(ostream &ost,

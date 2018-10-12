@@ -60,6 +60,7 @@ public:
 	double average_of_non_zero_values();
 	void get_data_by_multiplicity(int *&Pts, int &nb_pts, 
 		int multiplicity, int verbose_level);
+	int determine_class_by_value(int value);
 	void get_class_by_value(int *&Pts, int &nb_pts, int value, 
 		int verbose_level);
 	set_of_sets *get_set_partition_and_types(int *&types, 

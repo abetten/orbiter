@@ -299,6 +299,19 @@ void classify::get_data_by_multiplicity(
 		}
 }
 
+int classify::determine_class_by_value(int value)
+{
+	int i, f;
+
+	for (i = 0; i < nb_types; i++) {
+		f = type_first[i];
+		if (data_sorted[f] == value) {
+			return i;
+		}
+	}
+	return -1;
+}
+
 void classify::get_class_by_value(
 		int *&Pts, int &nb_pts, int value, int verbose_level)
 {
@@ -324,7 +337,7 @@ void classify::get_class_by_value(
 	Pts = NEW_int(1);
 	nb_pts = 0;
 	//cout << "classify::get_class_by_value
-	//ßdid not find the value" << endl;
+	//did not find the value" << endl;
 	//exit(1);
 }
 

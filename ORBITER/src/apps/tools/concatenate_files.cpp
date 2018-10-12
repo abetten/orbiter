@@ -90,7 +90,8 @@ int main(int argc, char **argv)
 
 			sprintf(fname_in_mask_processed, fname_in_mask, h);
 			sprintf(fname_out_processed, fname_out, h);
-			cout << "h=" << h << " fname_in_mask_processed=" << fname_in_mask_processed << endl;
+			cout << "h=" << h << " fname_in_mask_processed="
+					<< fname_in_mask_processed << endl;
 			concatenate_files(fname_in_mask_processed, N, 
 				fname_out_processed, EOF_marker, f_title_line, 
 				verbose_level);

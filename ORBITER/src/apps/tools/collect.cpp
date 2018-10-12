@@ -85,7 +85,8 @@ int main(int argc, char **argv)
 	Nb_cols = NEW_int(N);
 	for (i = 0; i < N; i++) {
 		sprintf(fname, fname_in_mask, i);
-		cout << "trying to read file " << i << " / " << N << " named " << fname << ":" << endl;
+		cout << "trying to read file " << i << " / " << N
+			<< " named " << fname << ":" << endl;
 		if (f_graph_number_of_vertices) {
 
 			colored_graph G;
@@ -97,7 +98,8 @@ int main(int argc, char **argv)
 		else if (strcmp(ext, ".csv") == 0) {
 			int_matrix_read_csv(fname, Data[i], 
 				Nb_rows[i], Nb_cols[i], verbose_level);
-			cout << "read file " << fname << " with " << Nb_rows[i] << " rows" << endl;
+			cout << "read file " << fname << " with "
+				<< Nb_rows[i] << " rows" << endl;
 			}
 		else if (strcmp(ext, ".txt") == 0) {
 
@@ -119,8 +121,10 @@ int main(int argc, char **argv)
 #endif
 
 			cout << "before try_to_read_file" << endl;
-			if (try_to_read_file(fname, Nb_rows[i], data, 0 /* verbose_level */)) {
-				cout << "read file " << fname << " nb_cases = " << Nb_rows[i] << endl;
+			if (try_to_read_file(fname, Nb_rows[i],
+					data, 0 /* verbose_level */)) {
+				cout << "read file " << fname
+						<< " nb_cases = " << Nb_rows[i] << endl;
 				}
 			else {
 				cout << "couldn't read file " << fname << endl;
@@ -141,7 +145,8 @@ int main(int argc, char **argv)
 			
 			//int_matrix_read_csv(fname, Data[i], 
 			//	Nb_rows[i], Nb_cols[i], verbose_level);
-			//cout << "read file " << fname << " with " << Nb_rows[i] << " rows" << endl;
+			//cout << "read file " << fname << " with "
+			//<< Nb_rows[i] << " rows" << endl;
 			}
 		}
 	classify C;
@@ -159,7 +164,8 @@ int main(int argc, char **argv)
 
 	if (f_save) {
 		int_vec_write_csv(Nb_rows, N, save_fname_csv, save_col_label);
-		cout << "Written file " << save_fname_csv << " of size " << file_size(save_fname_csv) << endl;
+		cout << "Written file " << save_fname_csv << " of size "
+			<< file_size(save_fname_csv) << endl;
 		}
 
 	if (f_has_ago) {
@@ -192,7 +198,8 @@ int main(int argc, char **argv)
 				T, total, 3, column_label);
 			
 			//int_vec_write_csv(Nb_rows, N, fname, "Nb");
-			cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+			cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 			}
 		FREE_int(T);
 		}
