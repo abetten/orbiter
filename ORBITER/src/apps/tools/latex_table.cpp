@@ -127,10 +127,12 @@ int main(int argc, char **argv)
 
 	{
 	ofstream fp(save_fname);
-	S->print_table_latex(fp, f_col_select, FALSE /* f_enclose_in_parentheses */);
+	S->print_table_latex(fp, f_col_select,
+		FALSE /* f_enclose_in_parentheses */);
 	}
 
-	cout << "Written file " << save_fname << " of size " << file_size(save_fname) << endl;
+	cout << "Written file " << save_fname << " of size "
+		<< file_size(save_fname) << endl;
 	
 	
 }

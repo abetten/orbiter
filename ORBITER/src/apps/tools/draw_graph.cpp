@@ -5,7 +5,8 @@
 
 #include "orbiter.h"
 
-void draw_graph(mp_graphics &G, int nb_v, int nb_e, int *E, int f_directed, 
+void draw_graph(mp_graphics &G,
+	int nb_v, int nb_e, int *E, int f_directed,
 	int f_no_point_labels, 
 	int f_point_labels, int *point_labels, 
 	int point_label_offset, 
@@ -215,7 +216,8 @@ int main(int argc, char **argv)
 		}
 
 	if (f_fname == FALSE) {
-		cout << "Please use option -fname <fname> to specify the base file name for the output file" << endl;
+		cout << "Please use option -fname <fname> to "
+				"specify the base file name for the output file" << endl;
 		exit(1);
 		}
 
@@ -236,9 +238,11 @@ int main(int argc, char **argv)
 		colored_graph *CG;
 
 		CG = NEW_OBJECT(colored_graph);
-		cout << "loading colored_graph from file " << colored_graph_fname << endl;
+		cout << "loading colored_graph from file "
+				<< colored_graph_fname << endl;
 		CG->load(colored_graph_fname, verbose_level);
-		cout << "After loading the graph, CG->nb_points=" << CG->nb_points << endl;
+		cout << "After loading the graph, "
+				"CG->nb_points=" << CG->nb_points << endl;
 		CG->print_points_and_colors();
 		CG->print_adjacency_list();
 
@@ -412,14 +416,16 @@ int main(int argc, char **argv)
 
 			
 		}
-		cout << "Written file " << fname_export << " of size " << file_size(fname_export) << endl;
+		cout << "Written file " << fname_export << " of size "
+				<< file_size(fname_export) << endl;
 		FREE_int(Adj);
 		}
 	G.finish(cout, TRUE);
 	}
 }
 
-void draw_graph(mp_graphics &G, int nb_v, int nb_e, int *E, int f_directed, 
+void draw_graph(mp_graphics &G,
+	int nb_v, int nb_e, int *E, int f_directed,
 	int f_no_point_labels, 
 	int f_point_labels, int *point_labels, 
 	int point_label_offset, 
@@ -459,7 +465,8 @@ void draw_graph(mp_graphics &G, int nb_v, int nb_e, int *E, int f_directed,
 		cout << "draw_graph" << endl;
 		}
 	if (f_vertex_selection) {
-		int_vec_scan(vertex_selection_text, vertex_selection, vertex_selection_length);
+		int_vec_scan(vertex_selection_text,
+				vertex_selection, vertex_selection_length);
 		cout << "vertex_selection: ";
 		int_vec_print(cout, vertex_selection, vertex_selection_length);
 		cout << endl;

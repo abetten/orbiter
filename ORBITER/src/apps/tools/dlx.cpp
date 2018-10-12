@@ -79,7 +79,8 @@ int main(int argc, const char **argv)
 		f_solution_file, solution_fname, 
 		f_tree_file, tree_fname, 
 		0);
-	cout << "after solve, we found " << nb_sol << " solutions in " << nb_backtrack << " steps" << endl;
+	cout << "after solve, we found " << nb_sol << " solutions in "
+		<< nb_backtrack << " steps" << endl;
 
 
 	the_end_quietly(t0);

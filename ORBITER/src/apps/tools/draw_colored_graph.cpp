@@ -89,7 +89,8 @@ int main(int argc, char **argv)
 			ymax_in = atoi(argv[++i]);
 			xmax_out = atoi(argv[++i]);
 			ymax_out = atoi(argv[++i]);
-			cout << "-coordinates " << xmax_in << " " << ymax_in << " " << xmax_out << " " << ymax_out << endl;
+			cout << "-coordinates " << xmax_in << " " << ymax_in
+				<< " " << xmax_out << " " << ymax_out << endl;
 			}
 		else if (strcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;

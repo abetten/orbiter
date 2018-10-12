@@ -78,7 +78,8 @@ void norm_tables::init(unusual_model &U, int verbose_level)
 			a = sorting_perm_inv[jj];
 			b = a + 1;
 			c = U.N2(b);
-			//cout << "j=" << j << " a=" << a << " b=" << b << " N2(b)=" << c << endl;
+			//cout << "j=" << j << " a=" << a << " b=" << b
+			// << " N2(b)=" << c << endl;
 			if (j == 0) {
 				the_type[i] = c;
 				}
@@ -87,7 +88,8 @@ void norm_tables::init(unusual_model &U, int verbose_level)
 
 }
 
-int norm_tables::choose_an_element_of_given_norm(int norm, int verbose_level)
+int norm_tables::choose_an_element_of_given_norm(
+		int norm, int verbose_level)
 {
 	int idx, f, gamma;
 	

@@ -134,16 +134,20 @@ int main(int argc, char **argv)
 
 	if (f_save) {
 		if (is_csv_file(fname_out)) {
-			int_matrix_write_csv(fname_out, Missing, nb_missing, missing_n);
+			int_matrix_write_csv(fname_out,
+					Missing, nb_missing, missing_n);
 			}
 		else {
 			if (missing_n != 1) {
-				cout << "missing_n != 1, cannot use write_set_to_file" << endl;
+				cout << "missing_n != 1, "
+						"cannot use write_set_to_file" << endl;
 				exit(1);
 				}
-			write_set_to_file(fname_out, Missing, nb_missing, verbose_level);
+			write_set_to_file(fname_out, Missing, nb_missing,
+					verbose_level);
 			}
-		cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+		cout << "Written file " << fname_out
+				<< " of size " << file_size(fname_out) << endl;
 		}
 
 	the_end(t0);

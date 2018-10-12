@@ -103,6 +103,7 @@ MODULES= \
 		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
 		foundations/graph_theory/clique_finder.o \
+		foundations/graph_theory/clique_finder_control.o \
 		foundations/graph_theory/colored_graph.o \
 		foundations/graph_theory/graph_layer.o \
 		foundations/graph_theory/graph_node.o \

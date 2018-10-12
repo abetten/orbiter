@@ -6,10 +6,18 @@
 #include "orbiter.h"
 
 
-void draw_vertex_callback(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
-void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
-void draw_vertex_callback_standard(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
-void draw_vertex_callback_graph(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
+void draw_vertex_callback(tree *T, mp_graphics *G,
+		int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy);
+void draw_vertex_callback_placeholders(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy);
+void draw_vertex_callback_standard(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy);
+void draw_vertex_callback_graph(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy);
 
 
 	int f_my_type = FALSE;
@@ -174,10 +182,12 @@ int main(int argc, const char **argv)
 		
 	tree T;
 
-	cout << "Trying to read file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Trying to read file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	if (file_size(fname) <= 0) {
-		cout << "treedraw.out the input file " << fname << " does not exist" << endl;
+		cout << "treedraw.out the input file " << fname
+				<< " does not exist" << endl;
 		exit(1);
 		}
 	T.init(fname, xmax, ymax, verbose_level);
@@ -195,18 +205,24 @@ int main(int argc, const char **argv)
 
 	if (f_graph) {
 		cout << "treedraw.out drawing as graph" << endl;
-		T.draw(fname_out, xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext, 
-			f_i, f_e, TRUE, draw_vertex_callback, f_embedded, f_sideways, f_on_circle, 
+		T.draw(fname_out,
+			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
+			f_i, f_e, TRUE, draw_vertex_callback,
+			f_embedded, f_sideways, f_on_circle,
 			scale, line_width);
 		}
 	else if (f_placeholder_labels) {
-		T.draw(fname_out, xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext, 
-			f_i, f_e, TRUE, draw_vertex_callback_placeholders, f_embedded, f_sideways, f_on_circle, 
+		T.draw(fname_out,
+			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
+			f_i, f_e, TRUE, draw_vertex_callback_placeholders,
+			f_embedded, f_sideways, f_on_circle,
 			scale, line_width);
 		}
 	else {
-		T.draw(fname_out, xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext, 
-			f_i, f_e, FALSE, NULL, f_embedded, f_sideways, f_on_circle, 
+		T.draw(fname_out,
+			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
+			f_i, f_e, FALSE, NULL,
+			f_embedded, f_sideways, f_on_circle,
 			scale, line_width);
 		}
 	
@@ -215,7 +231,9 @@ int main(int argc, const char **argv)
 }
 
 
-void draw_vertex_callback(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
+void draw_vertex_callback(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy)
 {
 
 	cout << "draw_vertex_callback" << endl;
@@ -230,7 +248,9 @@ void draw_vertex_callback(tree *T, mp_graphics *G, int *v, int layer, tree_node 
 	cout << "draw_vertex_callback done" << endl;
 }
 
-void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
+void draw_vertex_callback_placeholders(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy)
 {
 	int rk, r, l, d, i, *digits;
 	char str[1000];
@@ -265,12 +285,15 @@ void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, int *v, int laye
 	cout << "draw_vertex_callback_placeholders done" << endl;
 }
 
-void draw_vertex_callback_standard(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
+void draw_vertex_callback_standard(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy)
 {
 	//int d1;
 	char str[1000];
 
-	cout << "draw_vertex_callback_standard x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
+	cout << "draw_vertex_callback_standard x=" << x
+			<< " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	
@@ -280,12 +303,15 @@ void draw_vertex_callback_standard(tree *T, mp_graphics *G, int *v, int layer, t
 	G->aligned_text(x, y, "", str);
 }
 
-void draw_vertex_callback_graph(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
+void draw_vertex_callback_graph(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy)
 {
 	//int d1;
 	//char str[1000];
 
-	cout << "draw_vertex_callback_graph x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
+	cout << "draw_vertex_callback_graph x=" << x
+			<< " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	
@@ -307,7 +333,8 @@ void draw_vertex_callback_graph(tree *T, mp_graphics *G, int *v, int layer, tree
 
 
 	if (f_multiple_circles) {
-		draw_graph_on_multiple_circles(G, x, y, dx, dy, graph_nb_V, v, layer, nb_circles);
+		draw_graph_on_multiple_circles(G,
+				x, y, dx, dy, graph_nb_V, v, layer, nb_circles);
 			// in GALOIS/draw.C
 		}
 	else {

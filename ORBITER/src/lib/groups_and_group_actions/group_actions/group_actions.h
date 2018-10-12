@@ -419,11 +419,11 @@ public:
 	void stabilizer_of_dual_hyperoval_representative(int k, 
 		int n, int no, vector_ge *&gens, 
 		const char *&stab_order, int verbose_level);
-	void stabilizer_of_translation_plane_representative(int q, 
+	void stabilizer_of_spread_representative(int q,
 		int k, int no, vector_ge *&gens, const char *&stab_order, 
 		int verbose_level);
-	void normalizer_using_MAGMA(const char *prefix, 
-		sims *G, sims *H, int verbose_level);
+	void normalizer_using_MAGMA(const char *fname_magma_prefix,
+		sims *G, sims *H, strong_generators *&gens_N, int verbose_level);
 	void conjugacy_classes_using_MAGMA(const char *prefix, 
 		sims *G, int verbose_level);
 	void centralizer_using_MAGMA(const char *prefix, 
@@ -442,6 +442,7 @@ public:
 		int line_rk, int *Elt, int verbose_level);
 	void list_elements_as_permutations_vertically(vector_ge *gens,
 			ostream &ost);
+	matrix_group *get_matrix_group();
 
 
 

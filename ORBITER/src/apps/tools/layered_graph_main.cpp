@@ -253,7 +253,8 @@ int main(int argc, const char **argv)
 	
 	layered_graph_draw_options O;
 
-	O.init(xmax, ymax, x_max, y_max, rad, f_circle, f_corners, f_nodes_empty, 
+	O.init(xmax, ymax, x_max, y_max, rad,
+		f_circle, f_corners, f_nodes_empty,
 		f_select_layer, nb_select_layer, select_layer, 
 		TRUE, draw_begining_callback, 
 		TRUE, draw_ending_callback, 
@@ -460,7 +461,8 @@ void draw_vertex_callback_placeholders(layered_graph *LG,
 }
 
 void draw_vertex_callback_graph(layered_graph *LG,
-		mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
+		mp_graphics *G, int layer, int node,
+		int x, int y, int dx, int dy)
 {
 	int d1, nb_V, depth;
 

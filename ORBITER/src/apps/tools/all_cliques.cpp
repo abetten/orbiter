@@ -15,11 +15,14 @@
 int t0; // the system time when the program started
 
 void use_group(const char *fname, colored_graph *CG, 
-	int f_all_cliques, int f_all_cocliques, int f_draw_poset, int f_embedded, 
+	int f_all_cliques, int f_all_cocliques,
+	int f_draw_poset, int f_embedded,
 	int f_sideways, int nb_print_level, int *print_level, 
 	int verbose_level);
-void print_orbits_at_level(poset_classification *gen, int level, int verbose_level);
-void save_orbits_at_level(const char *fname, poset_classification *gen, int level, int verbose_level);
+void print_orbits_at_level(poset_classification *gen,
+	int level, int verbose_level);
+void save_orbits_at_level(const char *fname,
+	poset_classification *gen, int level, int verbose_level);
 void early_test_function_cliques(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -68,7 +71,8 @@ int main(int argc, char **argv)
 			f_all_cliques_of_size = TRUE;
 			clique_size = atoi(argv[++i]);
 			solution_fname = argv[++i];
-			cout << "-all_cliques_of_size " << clique_size << " " << solution_fname << endl;
+			cout << "-all_cliques_of_size " << clique_size
+					<< " " << solution_fname << endl;
 			}
 		else if (strcmp(argv[i], "-use_group") == 0) {
 			f_use_group = TRUE;
@@ -112,7 +116,8 @@ int main(int argc, char **argv)
 	if (f_use_group) {
 
 		use_group(fname, CG, 
-			f_all_cliques, f_all_cocliques, f_draw_poset, f_embedded, 
+			f_all_cliques, f_all_cocliques,
+			f_draw_poset, f_embedded,
 			f_sideways, nb_print_level, print_level, 
 			verbose_level);
 
@@ -130,9 +135,11 @@ int main(int argc, char **argv)
 				nb_sol, decision_step_counter, 
 				verbose_level - 2);
 
-			cout << "Written file " << solution_fname << " of size " << file_size(solution_fname) << endl;
+			cout << "Written file " << solution_fname << " of size "
+					<< file_size(solution_fname) << endl;
 			cout << "nb_sol = " << nb_sol << endl;
-			cout << "decision_step_counter = " << decision_step_counter << endl;
+			cout << "decision_step_counter = "
+					<< decision_step_counter << endl;
 			}
 		else {
 			cout << "don't know what to do" << endl;
@@ -149,7 +156,8 @@ int main(int argc, char **argv)
 
 
 void use_group(const char *fname, colored_graph *CG, 
-	int f_all_cliques, int f_all_cocliques, int f_draw_poset, int f_embedded, 
+	int f_all_cliques, int f_all_cocliques,
+	int f_draw_poset, int f_embedded,
 	int f_sideways, int nb_print_level, int *print_level, 
 	int verbose_level)
 {
@@ -159,7 +167,8 @@ void use_group(const char *fname, colored_graph *CG,
 	longinteger_object ago;
 
 	cout << "computing automorphism group of the graph:" << endl;
-	//Aut = create_automorphism_group_of_colored_graph_object(CG, verbose_level);
+	//Aut = create_automorphism_group_of_colored_graph_object(
+	//CG, verbose_level);
 
 
 	Adj = NEW_int(CG->nb_points * CG->nb_points);
@@ -173,7 +182,8 @@ void use_group(const char *fname, colored_graph *CG,
 		}
 
 	cout << "before create_automorphism_group_of_graph" << endl;
-	Aut = create_automorphism_group_of_graph(Adj, CG->nb_points, verbose_level);
+	Aut = create_automorphism_group_of_graph(
+			Adj, CG->nb_points, verbose_level);
 		// in ACTION/action_global.C
 
 	cout << "after create_automorphism_group_of_graph" << endl;
@@ -279,7 +289,9 @@ void use_group(const char *fname, colored_graph *CG,
 		}
 
 	if (f_draw_poset) {
-		gen->draw_poset(gen->fname_base, depth, 0 /* data1 */, f_embedded, f_sideways, verbose_level);
+		gen->draw_poset(gen->fname_base,
+				depth, 0 /* data1 */, f_embedded, f_sideways,
+				verbose_level);
 		}
 
 	print_orbits_at_level(gen, depth, verbose_level);
@@ -293,7 +305,8 @@ void use_group(const char *fname, colored_graph *CG,
 			char fname[1000];
 
 			sprintf(fname, "reps_at_level_%d.txt", print_level[i]);
-			save_orbits_at_level(fname, gen, print_level[i], verbose_level);
+			save_orbits_at_level(fname,
+					gen, print_level[i], verbose_level);
 			}
 		
 			}
@@ -305,7 +318,8 @@ void use_group(const char *fname, colored_graph *CG,
 	FREE_OBJECT(Aut);
 }
 
-void print_orbits_at_level(poset_classification *gen, int level, int verbose_level)
+void print_orbits_at_level(poset_classification *gen,
+	int level, int verbose_level)
 {
 	int *set;
 	longinteger_object go, ol, ago;
@@ -318,8 +332,10 @@ void print_orbits_at_level(poset_classification *gen, int level, int verbose_lev
 
 	gen->A->group_order(ago);
 	cout << "group order " << ago << endl;
-	cout << "The " << nb_orbits << " orbits at level " << level << " are:" << endl;
-	cout << "orbit : representative : stabilizer order : orbit length" << endl;
+	cout << "The " << nb_orbits << " orbits at level "
+			<< level << " are:" << endl;
+	cout << "orbit : representative : stabilizer order : "
+			"orbit length" << endl;
 	for (i = 0; i < nb_orbits; i++) {
 		
 		gen->get_set_by_level(level, i, set);
@@ -343,7 +359,8 @@ void print_orbits_at_level(poset_classification *gen, int level, int verbose_lev
 }
 
 void save_orbits_at_level(const char *fname,
-		poset_classification *gen, int level, int verbose_level)
+		poset_classification *gen, int level,
+		int verbose_level)
 {
 	int *set;
 	//longinteger_object go, ol, ago;
@@ -357,8 +374,10 @@ void save_orbits_at_level(const char *fname,
 #if 0
 	gen->A->group_order(ago);
 	cout << "group order " << ago << endl;
-	cout << "The " << nb_orbits << " orbits at level " << level << " are:" << endl;
-	cout << "orbit : representative : stabilizer order : orbit length" << endl;
+	cout << "The " << nb_orbits << " orbits at level "
+			<< level << " are:" << endl;
+	cout << "orbit : representative : stabilizer order : "
+			"orbit length" << endl;
 #endif
 
 
@@ -394,7 +413,8 @@ void save_orbits_at_level(const char *fname,
 	fp << -1 << endl;
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	FREE_int(set);
 }

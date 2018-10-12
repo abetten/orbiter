@@ -980,7 +980,8 @@ void colored_graph::draw_on_circle(char *fname,
 	
 }
 
-void colored_graph::draw_on_circle_2(mp_graphics &G, int f_labels, 
+void colored_graph::draw_on_circle_2(
+	mp_graphics &G, int f_labels,
 	int f_radius, double radius)
 {
 	int n = nb_points;
@@ -1406,7 +1407,8 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 
 	for (i = 0; i < nb_points_subgraph; i++) {
 		c = color_in_graph[i];
-		if (!int_vec_search(color_subset->set, color_subset->k, c, idx)) {
+		if (!int_vec_search(
+			color_subset->set, color_subset->k, c, idx)) {
 			cout << "error, did not find color" << endl;
 			exit(1);
 			}
@@ -2488,7 +2490,8 @@ void colored_graph_draw(const char *fname,
 		}
 }
 
-void colored_graph_all_cliques(const char *fname, int f_output_solution_raw, 
+void colored_graph_all_cliques(
+	const char *fname, int f_output_solution_raw,
 	int f_output_fname, const char *output_fname, 
 	int f_maxdepth, int maxdepth, 
 	int f_restrictions, int *restrictions, 

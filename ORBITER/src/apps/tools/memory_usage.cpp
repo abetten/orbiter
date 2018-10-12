@@ -94,7 +94,8 @@ int main(int argc, char **argv)
 	M = (mem_object_registry **) NEW_pvoid(nb_files);
 	for (idx = 0; idx < nb_files; idx++) {
 
-		cout << "file " << idx << " / " << nb_files << " is " << fnames[idx] << ":" << endl;
+		cout << "file " << idx << " / " << nb_files << " is "
+				<< fnames[idx] << ":" << endl;
 		spreadsheet *S;
 		char *p;
 		int N;
@@ -104,7 +105,8 @@ int main(int argc, char **argv)
 
 		cout << "Reading table " << fnames[idx] << endl;
 		if (file_size(fnames[idx]) <= 0) {
-			cout << "error: the file " << fnames[idx] << " does not exist" << endl;
+			cout << "error: the file " << fnames[idx]
+				<< " does not exist" << endl;
 			exit(1);
 		}
 		S->read_spreadsheet(fnames[idx], 0 /*verbose_level*/);
@@ -163,7 +165,8 @@ int main(int argc, char **argv)
 		M[idx]->dump_to_csv_file(fname);
 
 
-		cout << "file " << idx << " / " << nb_files << " is " << fnames[idx] << ":" << endl;
+		cout << "file " << idx << " / " << nb_files << " is "
+			<< fnames[idx] << ":" << endl;
 		cout << "usage by location:" << endl;
 		M[idx]->sort_by_location_and_get_frequency(verbose_level);
 	}

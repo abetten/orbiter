@@ -547,7 +547,7 @@ void action::free_base_data()
 		}
 }
 
-// ##########################################################################
+// #############################################################################
 
 
 int action::find_non_fixed_point(void *elt, int verbose_level)
@@ -2797,7 +2797,7 @@ void action::stabilizer_of_dual_hyperoval_representative(int k, int n, int no,
 		}
 }
 
-void action::stabilizer_of_translation_plane_representative(
+void action::stabilizer_of_spread_representative(
 		int q, int k, int no,
 		vector_ge *&gens, const char *&stab_order,
 		int verbose_level)
@@ -2808,7 +2808,7 @@ void action::stabilizer_of_translation_plane_representative(
 	int i;
 
 	if (f_v) {
-		cout << "action::stabilizer_of_translation_plane_representative"
+		cout << "action::stabilizer_of_spread_representative"
 				<< endl;
 		}
 	Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
@@ -2817,7 +2817,7 @@ void action::stabilizer_of_translation_plane_representative(
 	gens->init(this);
 	gens->allocate(nb_gens);
 	if (f_vv) {
-		cout << "action::stabilizer_of_translation_plane_representative "
+		cout << "action::stabilizer_of_spread_representative "
 				"creating stabilizer generators:" << endl;
 		}
 	for (i = 0; i < nb_gens; i++) {
@@ -2825,13 +2825,13 @@ void action::stabilizer_of_translation_plane_representative(
 		}
 	
 	if (f_v) {
-		cout << "action::stabilizer_of_translation_plane_representative done"
+		cout << "action::stabilizer_of_spread_representative done"
 				<< endl;
 		}
 }
 
-void action::normalizer_using_MAGMA(const char *prefix,
-		sims *G, sims *H, int verbose_level)
+void action::normalizer_using_MAGMA(const char *fname_magma_prefix,
+		sims *G, sims *H, strong_generators *&gens_N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname_magma[1000];
@@ -2841,8 +2841,8 @@ void action::normalizer_using_MAGMA(const char *prefix,
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA" << endl;
 		}
-	sprintf(fname_magma, "%snormalizer.magma", prefix);
-	sprintf(fname_output, "%snormalizer.txt", prefix);
+	sprintf(fname_magma, "%s.magma", fname_magma_prefix);
+	sprintf(fname_output, "%s.txt", fname_magma_prefix);
 
 	int n;
 
@@ -2876,17 +2876,85 @@ void action::normalizer_using_MAGMA(const char *prefix,
 	fp << "printf \"%o\", #N; printf \"\\n\";" << endl;
 	fp << "printf \"%o\", #Generators(N); printf \"\\n\";" << endl;
 	fp << "for h := 1 to #Generators(N) do for i := 1 to "
-			<< n << " do printf \"%o\", i^N.h; printf \", \"; "
+			<< n << " do printf \"%o\", i^N.h; printf \" \"; "
 			"if i mod 25 eq 0 then printf \"\n\"; end if; "
 			"end for; printf \"\\n\"; end for;" << endl;
 	fp << "UnsetOutputFile();" << endl;
 	}
-	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
-	cout << "executing normalizer command in MAGMA" << endl;
-	system(cmd);
 
-	cout << "normalizer command in MAGMA has finished" << endl;
-		
+	if (file_size(fname_output) > 0) {
+		if (f_v) {
+			cout << "file " << fname_output << " exists, reading it" << endl;
+		}
+
+		int i, j;
+		int go, nb_gens;
+		int *perms;
+
+		if (f_v) {
+			cout << "action::normalizer_using_MAGMA" << endl;
+			}
+		{
+			ifstream fp(fname_output);
+
+			fp >> go;
+			fp >> nb_gens;
+			if (f_v) {
+				cout << "action::normalizer_using_MAGMA We found " << nb_gens
+						<< " generators for a group of order " << go << endl;
+			}
+
+			perms = NEW_int(nb_gens * degree);
+
+			for (i = 0; i < nb_gens; i++) {
+				for (j = 0; j < degree; j++) {
+					fp >> perms[i * degree + j];
+					}
+				}
+			if (f_v) {
+				cout << "action::normalizer_using_MAGMA we read all "
+						"generators from file " << fname_output << endl;
+			}
+		}
+		for (i = 0; i < nb_gens * degree; i++) {
+			perms[i]--;
+			}
+
+		//longinteger_object go1;
+
+
+		gens_N = new strong_generators;
+		if (f_v) {
+			cout << "action::normalizer_using_MAGMA "
+				"before gens->init_from_permutation_"
+				"representation" << endl;
+		}
+
+		gens_N->init_from_permutation_representation(this,
+			perms,
+			nb_gens, go,
+			verbose_level);
+		if (f_v) {
+			cout << "action::normalizer_using_MAGMA "
+				"after gens->init_from_permutation_"
+				"representation" << endl;
+		}
+
+
+	} // if (file_size(fname_output))
+	else {
+
+		cout << "please exectute the magma file " << fname_magma
+				<< " and come back" << endl;
+
+		exit(0);
+		sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
+		cout << "executing normalizer command in MAGMA" << endl;
+		system(cmd);
+
+		cout << "normalizer command in MAGMA has finished" << endl;
+	}
+
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA done" << endl;
 		}
@@ -2942,6 +3010,10 @@ void action::conjugacy_classes_using_MAGMA(const char *prefix,
 	cout << "command ConjugacyClasses in MAGMA has finished" << endl;
 	
 	FREE_OBJECT(G_gen);
+
+
+
+
 	
 	if (f_v) {
 		cout << "action::conjugacy_classes_using_MAGMA done" << endl;
@@ -3208,4 +3280,76 @@ void action::list_elements_as_permutations_vertically(vector_ge *gens,
 }
 
 
-
+matrix_group *action::get_matrix_group()
+{
+	if (type_G == unknown_symmetry_group_t) {
+		cout << "action::get_matrix_group type_G == "
+				"unknown_symmetry_group_t" << endl;
+		exit(1);
+	} else if (type_G == matrix_group_t) {
+		return G.matrix_grp;
+	} else if (type_G == perm_group_t) {
+		cout << "action::get_matrix_group type_G == perm_group_t" << endl;
+		exit(1);
+	} else if (type_G == wreath_product_t) {
+		cout << "action::get_matrix_group type_G == wreath_product_t" << endl;
+		exit(1);
+	} else if (type_G == direct_product_t) {
+		cout << "action::get_matrix_group type_G == direct_product_t" << endl;
+		exit(1);
+	} else if (type_G == action_on_sets_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_subgroups_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_k_subsets_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_pairs_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_ordered_pairs_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == base_change_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == product_action_t) {
+		cout << "action::get_matrix_group type_G == product_action_t" << endl;
+		exit(1);
+	} else if (type_G == action_by_right_multiplication_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_by_restriction_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_by_conjugation_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_determinant_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_sign_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_grassmannian_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_spread_set_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_orthogonal_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_cosets_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_factor_space_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_wedge_product_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_by_representation_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_by_subfield_structure_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_bricks_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_andre_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_orbits_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_flags_t) {
+		return subaction->get_matrix_group();
+	} else if (type_G == action_on_homogeneous_polynomials_t) {
+		return subaction->get_matrix_group();
+	} else {
+		cout << "action::get_matrix_group unknown type" << endl;
+		exit(1);
+	}
+}

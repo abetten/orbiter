@@ -193,6 +193,7 @@ void perm_print_counting_from_one(ostream &ost, int *a, int n);
 void perm_print_offset(ostream &ost, int *a, int n, int offset, 
 	int f_cycle_length, 
 	int f_max_cycle_length, int max_cycle_length, int f_orbit_structure);
+void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles);
 int perm_order(int *a, int n);
 int perm_signum(int *perm, int n);
 void first_lehmercode(int n, int *v);

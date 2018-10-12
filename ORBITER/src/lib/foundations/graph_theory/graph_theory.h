@@ -162,6 +162,51 @@ void all_cliques_of_given_size(int *Adj, int nb_pts, int clique_sz,
 
 
 // #############################################################################
+// clique_finder_control.C
+// #############################################################################
+
+
+#define CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS 100
+
+//! a class that controlls the clique finding process
+
+
+class clique_finder_control {
+
+public:
+	int f_rainbow;
+	int f_file;
+	const char *fname_graph;
+	int f_nonrecursive;
+	int f_output_solution_raw;
+	int f_output_file;
+	const char *output_file;
+	int f_maxdepth;
+	int maxdepth;
+	int f_restrictions;
+	int nb_restrictions;
+	int restrictions[CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS * 3];
+	int f_tree;
+	int f_decision_nodes_only;
+	const char *fname_tree;
+	int print_interval;
+	int nb_search_steps;
+	int nb_decision_steps;
+	int nb_sol;
+	int dt;
+
+
+	clique_finder_control();
+	~clique_finder_control();
+	int parse_arguments(
+			int argc, const char **argv);
+	void all_cliques(
+		int verbose_level);
+};
+
+
+
+// #############################################################################
 // colored_graph.C
 // #############################################################################
 

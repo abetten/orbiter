@@ -13,7 +13,9 @@
 
 int t0; // the system time when the program started
 
-void split(const char *fname_base, int split_v, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
+void split(const char *fname_base,
+	int split_v, int f_dots, uchar *D,
+	int m, int n, int xmax, int ymax,
 	double scale, double line_width);
 void read_orbit_data(const char *fname, 
 	int &nb_orbits, int &N, 
@@ -25,9 +27,11 @@ void read_orbit_data(const char *fname,
 	int *&schreier_vector, 
 	int *&schreier_prev, 
 	int verbose_level);
-void draw_it(const char *fname_base, int idx, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
+void draw_it(const char *fname_base,
+	int idx, int f_dots, uchar *D, int m, int n, int xmax, int ymax,
 	double scale, double line_width);
-void draw_it2(mp_graphics &G, int f_dots, uchar *D, int m, int n, int xmax, int ymax);
+void draw_it2(mp_graphics &G,
+		int f_dots, uchar *D, int m, int n, int xmax, int ymax);
 
 int main(int argc, char **argv)
 {
@@ -213,16 +217,24 @@ int main(int argc, char **argv)
 	cout << "decomposition matrix computed" << endl;
 
 	if (f_split_v) {
-		split(output_fname, split_v, f_dots, D, m, n, xmax, ymax, scale, line_width);
+		split(output_fname,
+				split_v, f_dots, D,
+				m, n, xmax, ymax,
+				scale, line_width);
 		}
 	else {
-		draw_it(output_fname, 0/*idx*/, f_dots, D, m, n, xmax, ymax, scale, line_width);
+		draw_it(output_fname,
+				0/*idx*/, f_dots, D,
+				m, n, xmax, ymax,
+				scale, line_width);
 		}
 	
 	the_end_quietly(t0);
 }
 
-void split(const char *fname_base, int split_v, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
+void split(const char *fname_base,
+	int split_v, int f_dots, uchar *D,
+	int m, int n, int xmax, int ymax,
 	double scale, double line_width)
 {
 	int nb_pic;
@@ -249,7 +261,8 @@ void split(const char *fname_base, int split_v, int f_dots, uchar *D, int m, int
 					}
 				}
 			}
-		draw_it(fname_base, h/*idx*/, f_dots, D1, m1, n, xmax, ymax, scale, line_width);
+		draw_it(fname_base, h/*idx*/,
+				f_dots, D1, m1, n, xmax, ymax, scale, line_width);
 		FREE_uchar(D1);
 		}
 }
@@ -320,7 +333,9 @@ void read_orbit_data(const char *fname,
 		}
 }
 
-void draw_it(const char *fname_base, int idx, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
+void draw_it(const char *fname_base,
+	int idx, int f_dots, uchar *D,
+	int m, int n, int xmax, int ymax,
 	double scale, double line_width)
 {
 	mp_graphics G;
@@ -332,7 +347,9 @@ void draw_it(const char *fname_base, int idx, int f_dots, uchar *D, int m, int n
 	sprintf(fname_base2, "%s_%d", fname_base, idx);
 	sprintf(fname, "%s.mp", fname_base2);
 	{
-	G.setup(fname_base2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, f_sideways, 
+	G.setup(fname_base2,
+		0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax,
+		f_embedded, f_sideways,
 		scale, line_width);
 
 	//G.frame(0.05);
@@ -341,10 +358,13 @@ void draw_it(const char *fname_base, int idx, int f_dots, uchar *D, int m, int n
 
 	G.finish(cout, TRUE);
 	}
-	cout << "draw_it written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "draw_it written file " << fname << " of size "
+			<< file_size(fname) << endl;
 }
 
-void draw_it2(mp_graphics &G, int f_dots, uchar *D, int m, int n, int xmax, int ymax)
+void draw_it2(mp_graphics &G,
+		int f_dots, uchar *D,
+		int m, int n, int xmax, int ymax)
 {
 	grid_frame F;
 	int i, j, a, cnt, mn;

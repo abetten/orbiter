@@ -103,13 +103,15 @@ int main(int argc, char **argv)
 			series_from = atoi(argv[++i]);
 			series_len = atoi(argv[++i]);
 			series_column_mask = argv[++i];
-			cout << "-series " << series_from << " " << series_len << " " << series_column_mask << endl;
+			cout << "-series " << series_from << " " << series_len
+					<< " " << series_column_mask << endl;
 			}
 		else if (strcmp(argv[i], "-series_by_values") == 0) {
 			f_series_by_values = TRUE;
 			series_by_values_str = argv[++i];
 			series_by_values_column_mask = argv[++i];
-			cout << "-series_by_values " << series_by_values_str << " " << series_by_values_column_mask << endl;
+			cout << "-series_by_values " << series_by_values_str
+					<< " " << series_by_values_column_mask << endl;
 			}
 		else if (strcmp(argv[i], "-logscale") == 0) {
 			f_logscale = TRUE;
@@ -144,7 +146,8 @@ int main(int argc, char **argv)
 
 	//sprintf(fname_out, "plot_%s", fname);
 
-	cout << "Reading data from file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Reading data from file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	spreadsheet *Sp;
 	int *Idx1, idx2;
@@ -243,7 +246,10 @@ int main(int argc, char **argv)
 				f_NA[i * (m + 1) + 0] = FALSE;
 				S[i * (m + 1) + 0] = i;
 
-				Sp->get_value_double_or_NA(h + 1, Idx1[i], S[i * (m + 1) + 1 + h], f_NA[i * (m + 1) + 1 + h]);
+				Sp->get_value_double_or_NA(h + 1,
+						Idx1[i],
+						S[i * (m + 1) + 1 + h],
+						f_NA[i * (m + 1) + 1 + h]);
 				//S[i * (m + 1) + 1 + h] = Sp->get_double(h + 1, Idx1[i]);
 				if (f_y_multiplyer && !f_NA[i * (m + 1) + 1 + h]) {
 					S[i * (m + 1) + 1 + h] *= y_multiplyer;
@@ -260,7 +266,10 @@ int main(int argc, char **argv)
 				S[i * (m + 1) + 0] = values[i];
 				f_NA[i * (m + 1) + 0] = FALSE;
 				//S[i * (m + 1) + 0] = values[i];
-				Sp->get_value_double_or_NA(h + 1, Idx1[i], S[i * (m + 1) + 1 + h], f_NA[i * (m + 1) + 1 + h]);
+				Sp->get_value_double_or_NA(h + 1,
+						Idx1[i],
+						S[i * (m + 1) + 1 + h],
+						f_NA[i * (m + 1) + 1 + h]);
 				//S[i * (m + 1) + 1 + h] = Sp->get_double(h + 1, Idx1[i]);
 				if (f_y_multiplyer && !f_NA[i * (m + 1) + 1 + h]) {
 					S[i * (m + 1) + 1 + h] *= y_multiplyer;
@@ -273,19 +282,26 @@ int main(int argc, char **argv)
 		f_NA = new int [m * 2];
 		//int_vec_zero(S, m * 2);
 		for (i = 0; i < m; i++) {
-			Sp->get_value_double_or_NA(i + 1, Idx1[0], S[i * 2 + 0], f_NA[i * 2 + 0]);
+			Sp->get_value_double_or_NA(i + 1,
+					Idx1[0],
+					S[i * 2 + 0],
+					f_NA[i * 2 + 0]);
 			//S[i * 2 + 0] = Sp->get_double(i + 1, Idx1[0]);
 			if (f_x_multiplyer && !f_NA[i * 2 + 0]) {
 				S[i * 2 + 0] *= x_multiplyer;
 				}
-			Sp->get_value_double_or_NA(i + 1, idx2, S[i * 2 + 1], f_NA[i * 2 + 1]);
+			Sp->get_value_double_or_NA(i + 1,
+					idx2,
+					S[i * 2 + 1],
+					f_NA[i * 2 + 1]);
 			//S[i * 2 + 1] = Sp->get_double(i + 1, idx2);
 			if (f_y_multiplyer && !f_NA[i * 2 + 1]) {
 				S[i * 2 + 1] *= y_multiplyer;
 				}
 			}
 		while (m > 0) {
-			if (ABS(S[(m - 1) * 2 + 0]) < 0.00001 && ABS(S[(m - 1) * 2 + 1]) < 0.00001) {
+			if (ABS(S[(m - 1) * 2 + 0]) < 0.00001 &&
+					ABS(S[(m - 1) * 2 + 1]) < 0.00001) {
 				m--;
 				cout << "reducing m to " << m << endl;
 				}
@@ -340,7 +356,8 @@ int main(int argc, char **argv)
 				double x, y;
 
 				for (i = 0; i < series_len; i++) {
-					if (!f_NA[i * (m + 1) + 0] && !f_NA[i * (m + 1) + 1 + h]) {
+					if (!f_NA[i * (m + 1) + 0] &&
+							!f_NA[i * (m + 1) + 1 + h]) {
 						x = (double) S[i * (m + 1) + 0];
 						y = (double) S[i * (m + 1) + 1 + h];
 						fp << setw(12) << x << setw(12) << y << endl;
@@ -367,7 +384,8 @@ int main(int argc, char **argv)
 			fp << endl;
 			}
 	}
-	cout << "Written file " << fname_dat << " of size " << file_size(fname_dat) << endl;
+	cout << "Written file " << fname_dat << " of size "
+			<< file_size(fname_dat) << endl;
 
 
 	cout << "writing gnuplot control file " << fname_txt << endl;
@@ -407,13 +425,18 @@ int main(int argc, char **argv)
 				char my_title[1000];
 				sprintf(my_title, title, h + 1);
 				if (h == 0) {
-					fp << "plot '" << fname_dat << "' index " << h << " with linespoints  ls " << (h % 3) + 1 << " title '" << my_title << "'";
+					fp << "plot '" << fname_dat << "' index " << h
+							<< " with linespoints  ls " << (h % 3) + 1
+							<< " title '" << my_title << "'";
 					if (h < m - 1) {
 						fp << ", \\" << endl;
 						}
 					}
 				else {
-					fp << "     '' index " << h << " with linespoints  ls " << (h % 3) + 1 << " title '" << my_title << "'";
+					fp << "     '' index " << h
+							<< " with linespoints  ls "
+							<< (h % 3) + 1 << " title '"
+							<< my_title << "'";
 					if (h < m - 1) {
 						fp << ", \\" << endl;
 						}
@@ -421,10 +444,13 @@ int main(int argc, char **argv)
 				}
 			}
 		else {
-			fp << "plot '" << fname_dat << "' using 1:2 with points ls 1 title '" << title << "'" << endl;
+			fp << "plot '" << fname_dat
+					<< "' using 1:2 with points ls 1 title '"
+					<< title << "'" << endl;
 			}
 	}
-	cout << "Written file " << fname_txt << " of size " << file_size(fname_txt) << endl;
+	cout << "Written file " << fname_txt << " of size "
+			<< file_size(fname_txt) << endl;
 
 	sprintf(cmd, "gnuplot %s >%s", fname_txt, fname_out);
 	cout << "Executing command: " << cmd << endl;

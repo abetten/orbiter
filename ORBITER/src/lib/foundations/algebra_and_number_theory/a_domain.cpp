@@ -153,7 +153,8 @@ int a_domain::is_zero_vector(int *elt, int len, int verbose_level)
 	for (i = 0; i < len; i++) {
 		if (!is_zero(offset(elt, i), 0)) {
 
-			//cout << "a_domain::is_zero_vector element " << i << " is nonzero" << endl;
+			//cout << "a_domain::is_zero_vector element "
+			// << i << " is nonzero" << endl;
 
 			return FALSE;
 			}
@@ -280,7 +281,8 @@ void a_domain::copy(int *elt_from, int *elt_to, int verbose_level)
 		}
 }
 
-void a_domain::copy_vector(int *elt_from, int *elt_to, int len, int verbose_level)
+void a_domain::copy_vector(int *elt_from, int *elt_to,
+		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -294,7 +296,8 @@ void a_domain::copy_vector(int *elt_from, int *elt_to, int len, int verbose_leve
 }
 
 
-void a_domain::swap_vector(int *elt1, int *elt2, int n, int verbose_level)
+void a_domain::swap_vector(int *elt1, int *elt2,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -303,7 +306,8 @@ void a_domain::swap_vector(int *elt1, int *elt2, int n, int verbose_level)
 		cout << "a_domain::swap_vector" << endl;
 		}
 	for (i = 0; i < n; i++) {
-		swap(elt1 + i * size_of_instance_in_int, elt2 + i * size_of_instance_in_int, 0);
+		swap(elt1 + i * size_of_instance_in_int,
+				elt2 + i * size_of_instance_in_int, 0);
 		}
 }
 
@@ -507,7 +511,8 @@ void a_domain::mult_apply(int *elt_a, int *elt_b, int verbose_level)
 
 		int_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 		
-		//cout << "a_domain::mult_apply " << at << "/" << ab << " * " << bt << "/" << bb << " = " << ct << "/" << bb << endl;
+		//cout << "a_domain::mult_apply " << at << "/" << ab
+		//<< " * " << bt << "/" << bb << " = " << ct << "/" << bb << endl;
 		
 		elt_a[0] = ct;
 		elt_a[1] = cb;
@@ -802,7 +807,8 @@ void a_domain::make_element_from_integer(int *elt, int n, int verbose_level)
 		elt[1] = 1;
 		}
 	else {
-		cout << "a_domain::make_element_from_integer unknown domain kind" << endl;
+		cout << "a_domain::make_element_from_integer "
+				"unknown domain kind" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -815,7 +821,8 @@ int *a_domain::offset(int *A, int i)
 	return A + i * size_of_instance_in_int;
 }
 
-int a_domain::Gauss_echelon_form(int *A, int f_special, int f_complete, int *base_cols, 
+int a_domain::Gauss_echelon_form(int *A,
+	int f_special, int f_complete, int *base_cols,
 	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
@@ -852,13 +859,16 @@ int a_domain::Gauss_echelon_form(int *A, int f_special, int f_complete, int *bas
 		for (k = i; k < m; k++) {
 			if (!is_zero(offset(A, k * n + j), 0)) {
 				if (f_vv) {
-					cout << "i=" << i << " pivot found in " << k << "," << j << endl;
+					cout << "i=" << i << " pivot found in "
+							<< k << "," << j << endl;
 					}
 				// pivot element found: 
 				if (k != i) {
-					swap_vector(offset(A, i * n), offset(A, k * n), n, 0);
+					swap_vector(offset(A, i * n),
+							offset(A, k * n), n, 0);
 					if (f_P) {
-						swap_vector(offset(P, i * Pn), offset(P, k * Pn), Pn, 0);
+						swap_vector(offset(P, i * Pn),
+								offset(P, k * Pn), Pn, 0);
 						}
 					}
 				break;
@@ -873,7 +883,8 @@ int a_domain::Gauss_echelon_form(int *A, int f_special, int f_complete, int *bas
 			}
 		
 		if (f_vv) {
-			cout << "row " << i << " pivot in row " << k << " colum " << j << endl;
+			cout << "row " << i << " pivot in row " << k
+					<< " colum " << j << endl;
 			}
 		
 		base_cols[i] = j;
@@ -924,7 +935,9 @@ int a_domain::Gauss_echelon_form(int *A, int f_special, int f_complete, int *bas
 		// do the gaussian elimination: 
 
 		if (f_vv) {
-			cout << "doing elimination in column " << j << " from row " << i + 1 << " to row " << m - 1 << ":" << endl;
+			cout << "doing elimination in column " << j
+					<< " from row " << i + 1 << " to row "
+					<< m - 1 << ":" << endl;
 			}
 		for (k = i + 1; k < m; k++) {
 			if (f_vv) {
@@ -951,7 +964,8 @@ int a_domain::Gauss_echelon_form(int *A, int f_special, int f_complete, int *bas
 				}
 			for (jj = j + 1; jj < n; jj++) {
 				if (f_vv) {
-					cout << "eliminating row " << k <<  " column " << jj << endl;
+					cout << "eliminating row " << k
+							<< " column " << jj << endl;
 					}
 				copy(offset(A, i * n + jj), a, 0);
 				//a = A[i * n + jj];
@@ -1094,7 +1108,8 @@ int a_domain::Gauss_echelon_form(int *A, int f_special, int f_complete, int *bas
 }
 
 
-void a_domain::Gauss_step(int *v1, int *v2, int len, int idx, int verbose_level)
+void a_domain::Gauss_step(int *v1, int *v2,
+		int len, int idx, int verbose_level)
 // afterwards: v2[idx] = 0 and v1,v2 span the same space as before
 // v1 is not changed if v1[idx] is nonzero
 {
@@ -1141,10 +1156,13 @@ after:
 	FREE_int(tmp2);
 }
 
-void a_domain::matrix_get_kernel(int *M, int m, int n, int *base_cols, int nb_base_cols, 
+void a_domain::matrix_get_kernel(int *M,
+	int m, int n, int *base_cols, int nb_base_cols,
 	int &kernel_m, int &kernel_n, int *kernel, int verbose_level)
-// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) int's)
-// kernel is stored as column vectors, i.e. kernel_m = n and kernel_n = n - nb_base_cols.
+// kernel must point to the appropriate amount of memory!
+// (at least n * (n - nb_base_cols) int's)
+// kernel is stored as column vectors,
+// i.e. kernel_m = n and kernel_n = n - nb_base_cols.
 {
 	int f_v = (verbose_level >= 1);
 	int r, k, i, j, ii, jj;
@@ -1178,7 +1196,8 @@ void a_domain::matrix_get_kernel(int *M, int m, int n, int *base_cols, int nb_ba
 		for (j = 0; j < k; j++) {
 			jj = kernel_cols[j];
 
-			copy(offset(M, i * n + jj), offset(kernel, ii * kernel_n + j), 0);
+			copy(offset(M, i * n + jj),
+					offset(kernel, ii * kernel_n + j), 0);
 			}
 		}
 	for (i = 0; i < k; i++) {
@@ -1202,10 +1221,13 @@ void a_domain::matrix_get_kernel(int *M, int m, int n, int *base_cols, int nb_ba
 		}
 }
 
-void a_domain::matrix_get_kernel_as_row_vectors(int *M, int m, int n, int *base_cols, int nb_base_cols, 
+void a_domain::matrix_get_kernel_as_row_vectors(
+	int *M, int m, int n, int *base_cols, int nb_base_cols,
 	int &kernel_m, int &kernel_n, int *kernel, int verbose_level)
-// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) int's)
-// kernel is stored as row vectors, i.e. kernel_m = n - nb_base_cols and kernel_n = n.
+// kernel must point to the appropriate amount of memory!
+// (at least n * (n - nb_base_cols) int's)
+// kernel is stored as row vectors,
+// i.e. kernel_m = n - nb_base_cols and kernel_n = n.
 {
 	int f_v = (verbose_level >= 1);
 	int r, k, i, j, ii, jj;
@@ -1239,7 +1261,8 @@ void a_domain::matrix_get_kernel_as_row_vectors(int *M, int m, int n, int *base_
 		for (j = 0; j < k; j++) {
 			jj = kernel_cols[j];
 
-			copy(offset(M, i * n + jj), offset(kernel, j * kernel_n + ii), 0);
+			copy(offset(M, i * n + jj),
+					offset(kernel, j * kernel_n + ii), 0);
 			}
 		}
 	for (i = 0; i < k; i++) {
@@ -1263,7 +1286,8 @@ void a_domain::matrix_get_kernel_as_row_vectors(int *M, int m, int n, int *base_
 		}
 }
 
-void a_domain::get_image_and_kernel(int *M, int n, int &rk, int verbose_level)
+void a_domain::get_image_and_kernel(int *M,
+		int n, int &rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_special = FALSE;
@@ -1350,7 +1374,8 @@ void a_domain::complete_basis(int *M, int m, int n, int verbose_level)
 		}
 }
 
-void a_domain::mult_matrix(int *A, int *B, int *C, int ma, int na, int nb, int verbose_level)
+void a_domain::mult_matrix(int *A, int *B, int *C,
+		int ma, int na, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1372,7 +1397,8 @@ void a_domain::mult_matrix(int *A, int *B, int *C, int ma, int na, int nb, int v
 		for (k = 0; k < nb; k++) {
 			make_zero(D, 0);
 			for (j = 0; j < na; j++) {
-				mult(offset(A, i * na + j), offset(B, j * nb + k), E, 0);
+				mult(offset(A, i * na + j),
+						offset(B, j * nb + k), E, 0);
 				add_apply(D, E, 0);
 				}
 			copy(D, offset(C, i * nb + k), 0);
@@ -1389,7 +1415,8 @@ void a_domain::mult_matrix(int *A, int *B, int *C, int ma, int na, int nb, int v
 		}
 }
 
-void a_domain::mult_matrix3(int *A, int *B, int *C, int *D, int n, int verbose_level)
+void a_domain::mult_matrix3(int *A, int *B, int *C, int *D,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *T;
@@ -1406,7 +1433,8 @@ void a_domain::mult_matrix3(int *A, int *B, int *C, int *D, int n, int verbose_l
 		}
 }
 
-void a_domain::add_apply_matrix(int *A, int *B, int m, int n, int verbose_level)
+void a_domain::add_apply_matrix(int *A, int *B,
+		int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1424,7 +1452,8 @@ void a_domain::add_apply_matrix(int *A, int *B, int m, int n, int verbose_level)
 		}
 }
 
-void a_domain::matrix_mult_apply_scalar(int *A, int *s, int m, int n, int verbose_level)
+void a_domain::matrix_mult_apply_scalar(int *A,
+		int *s, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1442,8 +1471,14 @@ void a_domain::matrix_mult_apply_scalar(int *A, int *s, int m, int n, int verbos
 		}
 }
 
-void a_domain::make_block_matrix_2x2(int *Mtx, int n, int k, int *A, int *B, int *C, int *D, int verbose_level)
-// A is k x k, B is k x (n - k), C is (n - k) x k, D is (n - k) x (n - k), Mtx is n x n
+void a_domain::make_block_matrix_2x2(int *Mtx,
+		int n, int k, int *A, int *B, int *C, int *D,
+		int verbose_level)
+// A is k x k,
+// B is k x (n - k),
+// C is (n - k) x k,
+// D is (n - k) x (n - k),
+// Mtx is n x n
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, r;
@@ -1478,7 +1513,8 @@ void a_domain::make_block_matrix_2x2(int *Mtx, int n, int k, int *A, int *B, int
 		}
 }
 
-void a_domain::make_identity_matrix(int *A, int n, int verbose_level)
+void a_domain::make_identity_matrix(int *A,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1495,7 +1531,8 @@ void a_domain::make_identity_matrix(int *A, int n, int verbose_level)
 		}
 }
 
-void a_domain::matrix_inverse(int *A, int *Ainv, int n, int verbose_level)
+void a_domain::matrix_inverse(int *A, int *Ainv,
+		int n, int verbose_level)
 {
 	int *T, *basecols;
 	
@@ -1508,7 +1545,9 @@ void a_domain::matrix_inverse(int *A, int *Ainv, int n, int verbose_level)
 	FREE_int(basecols);
 }
 
-void a_domain::matrix_invert(int *A, int *T, int *basecols, int *Ainv, int n, int verbose_level)
+void a_domain::matrix_invert(int *A,
+	int *T, int *basecols, int *Ainv, int n,
+	int verbose_level)
 // T[n * n]
 // basecols[n]
 {
@@ -1521,8 +1560,12 @@ void a_domain::matrix_invert(int *A, int *T, int *basecols, int *Ainv, int n, in
 		}
 	copy_vector(A, T, n * n, 0);
 	make_identity_matrix(Ainv, n, 0);
-	rk = Gauss_echelon_form(T, FALSE /* f_special */, TRUE /* f_complete */, basecols, 
-		TRUE /* f_P */, Ainv, n, n, n, verbose_level - 2);
+	rk = Gauss_echelon_form(T,
+		FALSE /* f_special */,
+		TRUE /* f_complete */,
+		basecols,
+		TRUE /* f_P */, Ainv, n, n, n,
+		verbose_level - 2);
 	if (rk < n) {
 		cout << "a_domain::matrix_invert not invertible" << endl;
 		exit(1);
