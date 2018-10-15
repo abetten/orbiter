@@ -260,6 +260,172 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 	return CG;
 }
 
+colored_graph *colored_graph::subgraph_by_color_classes(
+		int c, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::subgraph_by_color_classes c=" << c << endl;
+		}
+
+	classify C;
+
+	C.init(point_color, nb_points, FALSE, 0);
+	if (f_v) {
+		cout << "point color distribution: ";
+		C.print_naked(TRUE);
+		cout << endl;
+		}
+
+	int *A;
+	int *Pts;
+	int *Color;
+	int i, j, I, f, l, ii, jj, idx1, idx2;
+
+	I = C.determine_class_by_value(c);
+	f = C.type_first[I];
+	l = C.type_len[I];
+
+	A = NEW_int(l * l);
+	Pts = NEW_int(l);
+	Color = NEW_int(l);
+
+	int_vec_zero(A, l * l);
+
+	for (i = 0; i < l; i++) {
+		ii = f + i;
+		idx1 = C.sorting_perm_inv[ii];
+		Color[i] = point_color[idx1];
+		Pts[i] = points[idx1];
+		}
+
+	for (i = 0; i < l; i++) {
+		ii = f + i;
+		idx1 = C.sorting_perm_inv[ii];
+		for (j = i + 1; j < l; j++) {
+			jj = f + j;
+			idx2 = C.sorting_perm_inv[jj];
+			if (is_adjacent(idx1, idx2)) {
+				A[i * l + j] = 1;
+				A[j * l + i] = 1;
+			}
+		}
+	}
+
+	colored_graph *CG;
+
+	CG = NEW_OBJECT(colored_graph);
+	CG->init_adjacency(l /* nb_points */, 1 /*nb_colors */,
+		Color, A, 0 /* verbose_level */);
+	CG->init_user_data(user_data, user_data_size,
+			0 /* verbose_level */);
+	int_vec_copy(Pts, CG->points, l);
+	FREE_int(A);
+	FREE_int(Color);
+	FREE_int(Pts);
+
+	if (f_v) {
+		cout << "colored_graph::subgraph_by_color_classes done" << endl;
+		}
+	return CG;
+}
+
+colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
+		int *seed_pts, int nb_seed_pts,
+		int c, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::subgraph_by_color_classes_with_condition "
+				"c=" << c << " nb_seed_pts=" << nb_seed_pts << endl;
+		}
+
+	classify C;
+
+	C.init(point_color, nb_points, FALSE, 0);
+	if (f_v) {
+		cout << "point color distribution: ";
+		C.print_naked(TRUE);
+		cout << endl;
+		}
+
+	int *A;
+	int *Pts;
+	int nb_pts;
+	int *Color;
+	int i, j, I, f, l, ii, jj, idx1, idx2;
+
+	I = C.determine_class_by_value(c);
+	f = C.type_first[I];
+	l = C.type_len[I];
+
+	Pts = NEW_int(l);
+	Color = NEW_int(l);
+
+
+	nb_pts = 0;
+	for (i = 0; i < l; i++) {
+		ii = f + i;
+		idx1 = C.sorting_perm_inv[ii];
+		if (point_color[idx1] != c) {
+			cout << "colored_graph::subgraph_by_color_classes_with_condition "
+					"point_color[idx1] != c" << endl;
+			exit(1);
+		}
+		for (j = 0; j < nb_seed_pts; j++) {
+			if (!is_adjacent(idx1, seed_pts[j])) {
+				break;
+			}
+		}
+		if (j < nb_seed_pts) {
+			continue;
+		}
+		Color[nb_pts] = c;
+		Pts[nb_pts] = points[idx1];
+		nb_pts++;
+		}
+
+	A = NEW_int(nb_pts * nb_pts);
+	int_vec_zero(A, nb_pts * nb_pts);
+
+	for (i = 0; i < nb_pts; i++) {
+		ii = f + i;
+		idx1 = C.sorting_perm_inv[ii];
+		for (j = i + 1; j < nb_pts; j++) {
+			jj = f + j;
+			idx2 = C.sorting_perm_inv[jj];
+			if (is_adjacent(idx1, idx2)) {
+				A[i * nb_pts + j] = 1;
+				A[j * nb_pts + i] = 1;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "colored_graph::subgraph_by_color_classes_with_condition "
+				"subgraph has " << nb_pts << " vertices" << endl;
+		}
+
+	colored_graph *CG;
+
+	CG = NEW_OBJECT(colored_graph);
+	CG->init_adjacency(nb_pts /* nb_points */, 1 /*nb_colors */,
+		Color, A, 0 /* verbose_level */);
+	CG->init_user_data(user_data, user_data_size,
+			0 /* verbose_level */);
+	int_vec_copy(Pts, CG->points, nb_pts);
+	FREE_int(A);
+	FREE_int(Color);
+	FREE_int(Pts);
+
+	if (f_v) {
+		cout << "colored_graph::subgraph_by_color_classes_with_condition "
+				"done" << endl;
+		}
+	return CG;
+}
+
 void colored_graph::print()
 {
 	int i;
@@ -646,88 +812,6 @@ void colored_graph::load(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 
-#if 0
-	FILE *fp;
-	char ext[1000];
-	int i;
-	
-	if (file_size(fname) <= 0) {
-		cout << "colored_graph::load file is empty or "
-				"does not exist" << endl;
-		exit(1);
-		}
-	
-	if (f_v) {
-		cout << "colored_graph::load Reading file " << fname
-				<< " of size " << file_size(fname) << endl;
-		}
-
-
-	get_extension_if_present(fname, ext);
-	strcpy(fname_base, fname);
-	chop_off_extension_if_present(fname_base, ext);
-	if (f_v) {
-		cout << "fname_base=" << fname_base << endl;
-		}
-
-	fp = fopen(fname, "rb");
-
-	nb_points = fread_int4(fp);
-	nb_colors = fread_int4(fp);
-
-	if (f_v) {
-		cout << "colored_graph::load the graph has " << nb_points
-				<< " points and " << nb_colors << " colors" << endl;
-		}
-
-	L = (nb_points * (nb_points - 1)) >> 1;
-
-	bitvector_length = (L + 7) >> 3;
-
-	user_data_size = fread_int4(fp);
-	user_data = NEW_int(user_data_size);
-	
-	for (i = 0; i < user_data_size; i++) {
-		user_data[i] = fread_int4(fp);
-		}
-
-	points = NEW_int(nb_points);
-	point_color = NEW_int(nb_points);
-
-
-	
-	for (i = 0; i < nb_points; i++) {
-		points[i] = fread_int4(fp);
-		point_color[i] = fread_int4(fp);
-		if (point_color[i] >= nb_colors) {
-			cout << "colored_graph::load" << endl;
-			cout << "point_color[i] >= nb_colors" << endl;
-			cout << "point_color[i]=" << point_color[i] << endl;
-			cout << "i=" << i << endl;
-			cout << "nb_colors=" << nb_colors << endl;
-			exit(1);
-			}
-		}
-
-#if 0
-	cout << "colored_graph::load points=";
-	int_vec_print(cout, points, nb_points);
-	cout << endl;
-#endif
-
-	f_ownership_of_bitvec = TRUE;
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-	fread_uchars(fp, bitvector_adjacency, bitvector_length);
-
-#if 0
-	for (i = 0; i < bitvector_length; i++) {
-		cout << i << " : " << (int) bitvector_adjacency[i] << endl;
-		}
-#endif
-
-	fclose(fp);
-#else
-
 	load_colored_graph(fname, 
 		nb_points /*nb_vertices*/, nb_colors /* nb_colors */, 
 		points /*vertex_labels*/, point_color /*vertex_colors*/, 
@@ -741,8 +825,6 @@ void colored_graph::load(const char *fname, int verbose_level)
 	replace_extension_with(fname_base, "");
 
 
-#endif
-
 	if (f_v) {
 		cout << "colored_graph::load Read file " << fname
 				<< " of size " << file_size(fname) << endl;
@@ -751,7 +833,8 @@ void colored_graph::load(const char *fname, int verbose_level)
 
 void colored_graph::all_cliques_of_size_k_ignore_colors(
 	int target_depth,
-	int &nb_sol, int &decision_step_counter,
+	int *&Sol, int &nb_solutions,
+	int &decision_step_counter,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -775,8 +858,13 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 
 	CF->backtrack_search(0 /* depth */, 0 /* verbose_level */);
 
-	nb_sol = CF->nb_sol;
+	nb_solutions = CF->nb_sol;
 	decision_step_counter = CF->decision_step_counter;
+
+	CF->get_solutions(Sol,
+			nb_solutions, target_depth, verbose_level);
+
+
 
 	FREE_OBJECT(CF);
 	if (f_v) {
