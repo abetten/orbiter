@@ -30,6 +30,7 @@ public:
 	char label[1000];
 	int m; // number of equations or inequalities
 	int n; // number of indeterminates
+	int f_has_sum;
 	int sum; // constraint: sum(i=0..(n-1); x[i]) = sum 
 	int sum1;
 	int f_x_max;
@@ -70,6 +71,9 @@ public:
 	
 	void open(int m, int n);
 	void join_problems(diophant *D1, diophant *D2, int verbose_level);
+	void init_partition_problem(
+		int *weights, int nb_weights, int target_value,
+		int verbose_level);
 	void init_problem_of_Steiner_type_with_RHS(int nb_rows, 
 		int nb_cols, int *Inc, int nb_to_select, 
 		int *Rhs, int verbose_level);

@@ -177,6 +177,8 @@ public:
 	int f_rainbow;
 	int f_file;
 	const char *fname_graph;
+	int f_weighted;
+	const char *weights_string;
 	int f_nonrecursive;
 	int f_output_solution_raw;
 	int f_output_file;
@@ -201,6 +203,9 @@ public:
 	int parse_arguments(
 			int argc, const char **argv);
 	void all_cliques(
+		int verbose_level);
+	void all_cliques_weighted(colored_graph *CG,
+		const char *fname_sol,
 		int verbose_level);
 };
 
@@ -251,6 +256,11 @@ public:
 		int &partition_length, 
 		int verbose_level);
 	colored_graph *sort_by_color_classes(int verbose_level);
+	colored_graph *subgraph_by_color_classes(
+			int c, int verbose_level);
+	colored_graph *subgraph_by_color_classes_with_condition(
+			int *seed_pts, int nb_seed_pts,
+			int c, int verbose_level);
 	void print();
 	void print_points_and_colors();
 	void print_adjacency_list();
@@ -273,8 +283,11 @@ public:
 	void init_user_data(int *data, int data_size, int verbose_level);
 	void save(const char *fname, int verbose_level);
 	void load(const char *fname, int verbose_level);
-	void all_cliques_of_size_k_ignore_colors(int target_depth, 
-		int &nb_sol, int &decision_step_counter, int verbose_level);
+	void all_cliques_of_size_k_ignore_colors(
+		int target_depth,
+		int *&Sol, int &nb_solutions,
+		int &decision_step_counter,
+		int verbose_level);
 	void all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 		int target_depth, 
 		const char *fname, 

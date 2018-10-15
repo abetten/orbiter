@@ -1035,13 +1035,16 @@ public:
 
 
 	// poset_orbit_node_downstep_subspace_action.C
-	void setup_factor_space_action_light(poset_classification *gen, 
+	void setup_factor_space_action_light(
+		poset_classification *gen,
 		action_on_factor_space &AF, 
 		int lvl, int verbose_level);
-	void setup_factor_space_action_with_early_test(poset_classification *gen, 
+	void setup_factor_space_action_with_early_test(
+		poset_classification *gen,
 		action_on_factor_space &AF, action &A_factor_space, 
 		int lvl, int verbose_level);
-	void setup_factor_space_action(poset_classification *gen, 
+	void setup_factor_space_action(
+		poset_classification *gen,
 		action_on_factor_space &AF, action &A_factor_space, 
 		int lvl, int f_compute_tables, 
 		int verbose_level);
@@ -1050,7 +1053,8 @@ public:
 		int lvl, 
 		int f_print_orbits, 
 		int verbose_level);
-	void downstep_subspace_action(poset_classification *gen, 
+	void downstep_subspace_action(
+		poset_classification *gen,
 		int lvl, 
 		int f_create_schreier_vector, int f_compact, 
 		int f_use_invariant_subset_if_available, 
@@ -1062,7 +1066,8 @@ public:
 		int f_use_invariant_subset_if_available, 
 		int &f_using_invariant_subset, 
 		int verbose_level);
-	void find_extensions_subspace_action(poset_classification *gen, schreier &O, 
+	void find_extensions_subspace_action(
+		poset_classification *gen, schreier &O,
 		action *A_factor_space, action_on_factor_space *AF, 
 		int lvl, int f_implicit_fusion, int verbose_level);
 	void create_schreier_vector_wrapper_subspace_action(

@@ -12,6 +12,8 @@
 clique_finder_control::clique_finder_control()
 {
 	f_rainbow = FALSE;
+	f_weighted = FALSE;
+	weights_string = NULL;
 	f_file = FALSE;
 	fname_graph = NULL;
 	f_nonrecursive = FALSE;
@@ -51,6 +53,11 @@ int clique_finder_control::parse_arguments(
 		else if (strcmp(argv[i], "-rainbow") == 0) {
 			f_rainbow = TRUE;
 			cout << "-rainbow " << endl;
+		}
+		else if (strcmp(argv[i], "-weighted") == 0) {
+			f_weighted = TRUE;
+			weights_string = argv[++i];
+			cout << "-weighted " << weights_string << endl;
 		}
 		else if (strcmp(argv[i], "-nonrecursive") == 0) {
 			f_nonrecursive = TRUE;
@@ -136,22 +143,36 @@ void clique_finder_control::all_cliques(
 
 
 	if (f_rainbow) {
-		if (f_v) {
-			cout << "clique_finder_control::all_cliques "
-					"before CG.all_rainbow_cliques" << endl;
+		if (f_weighted) {
+
+			if (f_v) {
+				cout << "clique_finder_control::all_cliques "
+						"weighted cliques" << endl;
 			}
-		CG.all_rainbow_cliques(&fp,
-			f_output_solution_raw,
-			f_maxdepth, maxdepth,
-			f_restrictions, restrictions,
-			f_tree, f_decision_nodes_only, fname_tree,
-			print_interval,
-			nb_search_steps, nb_decision_steps, nb_sol, dt,
-			verbose_level - 1);
-		if (f_v) {
-			cout << "clique_finder_control::all_cliques "
-					"after CG.all_rainbow_cliques" << endl;
+
+			all_cliques_weighted(&CG, fname_sol, verbose_level);
+
+
+
+
+		} else {
+			if (f_v) {
+				cout << "clique_finder_control::all_cliques "
+						"before CG.all_rainbow_cliques" << endl;
+				}
+			CG.all_rainbow_cliques(&fp,
+				f_output_solution_raw,
+				f_maxdepth, maxdepth,
+				f_restrictions, restrictions,
+				f_tree, f_decision_nodes_only, fname_tree,
+				print_interval,
+				nb_search_steps, nb_decision_steps, nb_sol, dt,
+				verbose_level - 1);
+			if (f_v) {
+				cout << "clique_finder_control::all_cliques "
+						"after CG.all_rainbow_cliques" << endl;
 			}
+		}
 	} else {
 		cout << "clique_finder_control::all_cliques !f_rainbow" << endl;
 		exit(1);
@@ -164,4 +185,124 @@ void clique_finder_control::all_cliques(
 		}
 }
 
+void clique_finder_control::all_cliques_weighted(colored_graph *CG,
+	const char *fname_sol,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "clique_finder_control::all_cliques_weighted" << endl;
+		}
+
+	int *weights;
+	int nb_weights;
+	int target_value;
+	int i;
+
+
+	int_vec_scan(weights_string, weights, nb_weights);
+
+	if (CG->nb_colors + 1 != nb_weights) {
+		cout << "CG.nb_colors + 1 != nb_weights" << endl;
+		exit(1);
+	}
+	target_value = weights[0];
+
+	for (i = 1; i < nb_weights; i++) {
+		weights[i - 1] = weights[i];
+	}
+	nb_weights--;
+
+	cout << "target_value = " << target_value << endl;
+	cout << "the weights are ";
+	int_vec_print(cout, weights, nb_weights);
+	cout << endl;
+
+	if (nb_weights != 2) {
+		cout << "clique_finder_control::all_cliques_weighted "
+				"nb_weights != 2" << endl;
+		exit(1);
+	}
+
+	diophant D;
+	int nb_backtrack_nodes;
+	int nb_sol;
+	int *Sol_weights;
+	int j;
+	vector<int> res;
+
+	D.init_partition_problem(
+			weights, nb_weights, target_value,
+			verbose_level);
+	D.solve_mckay("weights", INT_MAX /* maxresults */,
+			nb_backtrack_nodes, nb_sol, verbose_level);
+	cout << "we found " << nb_sol << " solutions for the "
+			"weight distribution" << endl;
+	Sol_weights = NEW_int(nb_sol * nb_weights);
+	for (i = 0; i < D._resultanz; i++) {
+		res = D._results.front();
+		for (j = 0; j < nb_weights; j++) {
+			Sol_weights[i * nb_weights + j] = res[j];
+			}
+		D._results.pop_front();
+		}
+	cout << "The solutions are:" << endl;
+	for (i = 0; i < nb_sol; i++) {
+		cout << i << " : ";
+		int_vec_print(cout, Sol_weights + i * nb_weights, nb_weights);
+		cout << endl;
+	}
+
+	int c1 = 0;
+	int c2 = 1;
+
+	cout << "creating subgraph of color " << c1 << ":" << endl;
+	colored_graph *subgraph;
+	subgraph = CG->subgraph_by_color_classes(
+			c1, verbose_level);
+
+	cout << "The subgraph has size " << subgraph->nb_points << endl;
+
+	int target_depth1;
+	int target_depth2;
+	int nb_cliques_in_subgraph;
+	int decision_step_counter;
+	int nb_solutions_total;
+	int *Sol;
+
+	nb_solutions_total = 0;
+	for (i = 0; i < nb_sol; i++) {
+		target_depth1 = Sol_weights[i * nb_weights + c1];
+		target_depth2 = Sol_weights[i * nb_weights + c2];
+		subgraph->all_cliques_of_size_k_ignore_colors(target_depth1,
+				Sol, nb_cliques_in_subgraph, decision_step_counter, verbose_level);
+		cout << "solution " << i << " with target_depth = " << target_depth1
+				<< " nb_cliques_in_subgraph=" << nb_cliques_in_subgraph << endl;
+
+		for (j = 0; j < nb_cliques_in_subgraph; j++) {
+			colored_graph *subgraph2;
+			int nb_cliques_in_subgraph2;
+			int *Sol2;
+			cout << "clique1 " << j << " / " << nb_cliques_in_subgraph << ":" << endl;
+			subgraph2 = CG->subgraph_by_color_classes_with_condition(
+						Sol + j * target_depth1, target_depth1,
+						c2, verbose_level);
+			cout << "subgraph2 has " << subgraph2->nb_points << " vertices" << endl;
+			subgraph2->all_cliques_of_size_k_ignore_colors(target_depth2,
+					Sol2, nb_cliques_in_subgraph2, decision_step_counter, verbose_level);
+			nb_solutions_total += nb_cliques_in_subgraph2;
+			cout << "nb_cliques_in_subgraph2=" << nb_cliques_in_subgraph2
+					<< " nb_solutions_total=" << nb_solutions_total << endl;
+			FREE_int(Sol2);
+			delete subgraph2;
+		}
+		FREE_int(Sol);
+	}
+	cout << "nb_solutions_total=" << nb_solutions_total << endl;
+	FREE_int(Sol_weights);
+
+	if (f_v) {
+		cout << "clique_finder_control::all_cliques_weighted done" << endl;
+		}
+}

@@ -38,6 +38,8 @@ void diophant::null()
 	f_max_time = FALSE;
 	X = FALSE;
 	Y = FALSE;
+	f_has_sum = FALSE;
+	f_x_max = FALSE;
 }
 
 void diophant::freeself()
@@ -107,6 +109,7 @@ void diophant::open(int m, int n)
 		type[i] = t_EQ;
 		eqn_label[i] = NULL;
 		}
+	f_has_sum = FALSE;
 	f_x_max = FALSE;
 	f_max_time = FALSE;
 }
@@ -130,6 +133,14 @@ void diophant::join_problems(
 		cout << "D1->sum != D2->sum" << endl;
 		exit(1);
 		}
+	if (!D1->f_has_sum) {
+		cout << "!D1->f_has_sum" << endl;
+		exit(1);
+		}
+	if (!D2->f_has_sum) {
+		cout << "!D2->f_has_sum" << endl;
+		exit(1);
+		}
 	if (D1->f_x_max != D2->f_x_max) {
 		cout << "D1->f_x_max != D2->f_x_max" << endl;
 		exit(1);
@@ -139,6 +150,7 @@ void diophant::join_problems(
 	nb_r2 = D2->m;
 	nb_rows = nb_r1 + nb_r2;
 	open(nb_rows, nb_cols);
+	f_has_sum = TRUE;
 	sum = D1->sum;
 	f_x_max = D1->f_x_max;
 	if (f_x_max) {
@@ -170,6 +182,32 @@ void diophant::join_problems(
 	
 }
 
+void diophant::init_partition_problem(
+	int *weights, int nb_weights, int target_value,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int j;
+
+	if (f_v) {
+		cout << "diophant::init_partition_problem" << endl;
+		}
+	open(1, nb_weights);
+	for (j = 0; j < nb_weights; j++) {
+		x_max[j] = target_value / weights[j];
+		}
+	f_x_max = TRUE;
+	f_has_sum = FALSE;
+	//sum = nb_to_select;
+	for (j = 0; j < nb_weights; j++) {
+		Aij(0, j) = weights[j];
+	}
+	RHSi(0) = target_value;
+	if (f_v) {
+		cout << "diophant::init_partition_problem" << endl;
+		}
+}
+
 
 void diophant::init_problem_of_Steiner_type_with_RHS(
 	int nb_rows, int nb_cols, int *Inc, int nb_to_select,
@@ -187,6 +225,7 @@ void diophant::init_problem_of_Steiner_type_with_RHS(
 		x_max[i] = 1;
 		}
 	f_x_max = TRUE;
+	f_has_sum = TRUE;
 	sum = nb_to_select;
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -215,6 +254,7 @@ void diophant::init_problem_of_Steiner_type(
 		x_max[i] = 1;
 		}
 	f_x_max = TRUE;
+	f_has_sum = TRUE;
 	sum = nb_to_select;
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -276,6 +316,7 @@ void diophant::init_clique_finding_problem(int *Adj, int nb_pts,
 		x_max[i] = 1;
 		}
 	f_x_max = TRUE;
+	f_has_sum = TRUE;
 	sum = nb_to_select;
 	i = 0;
 	for (i1 = 0; i1 < nb_pts; i1++) {
@@ -408,7 +449,11 @@ void diophant::print2(int f_with_gcd)
 			cout << "x_{" << j << "} \\le " << x_max[j] << endl;
 			}
 		}
-	cout << "sum = " << sum << endl;
+	if (f_has_sum) {
+		cout << "sum = " << sum << endl;
+	} else {
+		cout << "there is no condition on the sum of x_i" << endl;
+	}
 	//latex_it();
 }
 
@@ -426,7 +471,11 @@ void diophant::print_dense()
 			}
 		cout << endl;
 		}
-	cout << "sum = " << sum << endl;
+	if (f_has_sum) {
+		cout << "sum = " << sum << endl;
+	} else {
+		cout << "there is no condition on the sum of x_i" << endl;
+	}
 	//latex_it();
 }
 
@@ -443,7 +492,11 @@ void diophant::print_compressed()
 			cout << "x_{" << j << "} \\le " << x_max[j] << endl;
 			}
 		}
-	cout << "sum = " << sum << endl;
+	if (f_has_sum) {
+		cout << "sum = " << sum << endl;
+	} else {
+		cout << "there is no condition on the sum of x_i" << endl;
+	}
 }
 
 
@@ -779,6 +832,10 @@ void diophant::get_solutions(int *&Sol, int &nb_sol, int verbose_level)
 		cout << "nb_sol = " << _resultanz << endl;
 		cout << "sum = " << sum << endl;
 		}
+	if (!f_has_sum) {
+		cout << "diophant::get_solutions !f_has_sum" << endl;
+		exit(1);
+	}
 	nb_sol = _resultanz;
 	Sol = NEW_int(nb_sol * sum);
 	for (i = 0; i < _resultanz; i++) {
@@ -814,6 +871,10 @@ void diophant::get_solutions_full_length(int *&Sol,
 		cout << "nb_sol = " << _resultanz << endl;
 		cout << "sum = " << sum << endl;
 		}
+	if (!f_has_sum) {
+		cout << "diophant::get_solutions_full_length !f_has_sum" << endl;
+		exit(1);
+	}
 	nb_sol = _resultanz;
 	Sol = NEW_int(nb_sol * n);
 	for (i = 0; i < _resultanz; i++) {
@@ -841,6 +902,10 @@ void diophant::test_solution_full_length(int *sol, int verbose_level)
 		s += sol[j];
 		}
 	cout << "diophant::test_solution_full_length s=" << s << endl;
+	if (!f_has_sum) {
+		cout << "diophant::get_solutions_full_length !f_has_sum" << endl;
+		exit(1);
+	}
 	if (s != sum) {
 		cout << "diophant::test_solution_full_length s != sum" << endl;
 		exit(1);
@@ -1204,6 +1269,10 @@ int diophant::solve_first_betten(int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int k, total_max;
 
+	if (!f_has_sum) {
+		cout << "diophant::solve_first_betten !f_has_sum" << endl;
+		exit(1);
+	}
 	nb_steps_betten = 0;
 	if (m <= 0) {
 		if (f_v) {
@@ -1399,6 +1468,10 @@ int diophant::solve_next_betten(int verbose_level)
 {
 	int j;
 	
+	if (!f_has_sum) {
+		cout << "diophant::solve_next_betten !f_has_sum" << endl;
+		exit(1);
+	}
 	if (m == 0) {
 		return FALSE;
 		}
@@ -1815,16 +1888,18 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 			}
 		}
 	
-	// one more equation for \sum x_j = sum
-	i = (int) m;
-	fanz[i] = (int) n;
-	eqn[i].resize(n);
-	for (j = 0; j < n; j++) {
-		eqn[i][j].var = j;
-		eqn[i][j].coeff = 1;
-		}
-	minres[i] = (int) sum;
-	maxres[i] = (int) sum;
+	if (f_has_sum) {
+		// one more equation for \sum x_j = sum
+		i = (int) m;
+		fanz[i] = (int) n;
+		eqn[i].resize(n);
+		for (j = 0; j < n; j++) {
+			eqn[i][j].var = j;
+			eqn[i][j].coeff = 1;
+			}
+		minres[i] = (int) sum;
+		maxres[i] = (int) sum;
+	}
 	
 	// now the bounds on the x_j
 	minvarvalue.resize(n);
@@ -1943,7 +2018,9 @@ void diophant::latex_it(ostream &ost)
 		for (j = 0; j < n; j++) {
 			ost << "x_{" << j + 1 << "} \\le " << x_max[j] << "\\," << endl;
 			}
-		ost << "\\sum_{i=1}^{" << n << "} x_i=" << sum << endl;
+		if (f_has_sum) {
+			ost << "\\sum_{i=1}^{" << n << "} x_i=" << sum << endl;
+		}
 		ost << "}\\\\" << endl;
 		ost << "\\hline" << endl;
 		}
@@ -2124,7 +2201,7 @@ void diophant::save_in_compact_format(const char *fname, int verbose_level)
 	ofstream fp(fname);
 	
 	fp << "% " << fname << endl;
-	fp << m << " " << n << " " << sum << endl;
+	fp << m << " " << n << " " << f_has_sum << " " << sum << endl;
 	for (i = 0; i < m; i++) {
 		fp << i << " ";
 		if (type[i] == t_EQ) {
@@ -2163,6 +2240,7 @@ void diophant::read_compact_format(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int m, n, s;
 	int cnt, i, d, h, a;
+	int f_has_sum1;
 	
 	if (f_v) {
 		cout << "diophant::read_compact_format" << endl;
@@ -2190,11 +2268,19 @@ void diophant::read_compact_format(const char *fname, int verbose_level)
 		//cout << "substring ='" << str << "'" << endl;
 		n = atoi(str.c_str());
 		string remainder2 = remainder.substr(i + 1);
+
+		i = remainder2.find(" ");
+		str = remainder2.substr(0, i);
+		//cout << "substring ='" << str << "'" << endl;
+		f_has_sum1 = atoi(str.c_str());
+
+		str = remainder2.substr(i + 1);
 		s = atoi(remainder2.c_str());
 		//cout << "m=" << m << " n=" << n << " sum=" << s << endl;
 
 
 		open(m, n);
+		f_has_sum = f_has_sum1;
 		sum = s;
 
 
@@ -2269,7 +2355,8 @@ void diophant::read_compact_format(const char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "diophant::read_compact_format read system with " << m
-			<< " rows and " << n << " columns and sum " << sum << endl;
+			<< " rows and " << n << " columns and f_has_sum = " << f_has_sum
+			<< " and sum " << sum << endl;
 		}
 	}
 }
@@ -2300,7 +2387,7 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 	ofstream fp(fname);
 	
 	fp << "% diophantine system in general format " << fname << endl;
-	fp << m << " " << n << " " << sum << endl;
+	fp << m << " " << n << " " << f_has_sum << " " << sum << endl;
 	for (i = 0; i < m; i++) {
 		fp << i << " ";
 		if (type[i] == t_EQ) {
@@ -2369,6 +2456,7 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int m, n, s;
 	int cnt, i, d, h, a, nb_types, t, val;
+	int f_has_sum1;
 	
 	if (f_v) {
 		cout << "diophant::read_general_format" << endl;
@@ -2396,11 +2484,18 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 		//cout << "substring ='" << str << "'" << endl;
 		n = atoi(str.c_str());
 		string remainder2 = remainder.substr(i + 1);
-		s = atoi(remainder2.c_str());
-		cout << "m=" << m << " n=" << n << " sum=" << s << endl;
 
+		i = remainder2.find(" ");
+		str = remainder2.substr(0, i);
+		//cout << "substring ='" << str << "'" << endl;
+		f_has_sum1 = atoi(str.c_str());
+
+		str = remainder2.substr(i + 1);
+		s = atoi(remainder2.c_str());
+		//cout << "m=" << m << " n=" << n << " sum=" << s << endl;
 
 		open(m, n);
+		f_has_sum = f_has_sum1;
 		sum = s;
 
 
@@ -2499,7 +2594,8 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "diophant::read_general_format read system with " << m
-			<< " rows and " << n << " columns and sum " << sum << endl;
+			<< " rows and " << n << " columns and f_has_sum=" << f_has_sum
+			<< " sum " << sum << endl;
 		}
 	}
 }
@@ -2707,6 +2803,8 @@ void diophant::project(diophant *D, int first, int len,
 			D->x_max[j] = x_max[first + j];
 			}
 		}
+	D->f_has_sum = f_has_sum;
+	D->sum = sum;
 	D->eliminate_zero_rows(eqn_number, 0);
 }
 
@@ -2729,7 +2827,8 @@ void diophant::write_xml(ostream &ost, const char *label)
 	char *lbl;
 	
 	ost << "<DIOPHANT label=\"" << label << "\" num_eqns=" << m
-			<< " num_vars=" << n << " sum=" << sum << " f_x_max="
+			<< " num_vars=" << n << " f_has_sum=" << f_has_sum
+			<< " sum=" << sum << " f_x_max="
 			<< f_x_max << ">" << endl;
 	for (i = 0; i < m; i++) {
 		for (j = 0;j < n; j++) {
@@ -2769,7 +2868,7 @@ void diophant::read_xml(ifstream &f, char *label)
 #ifdef SYSTEMUNIX
 	string str, mapkey, mapval;
 	bool brk;
-	int eqpos, l, M = 0, N = 0, Sum = 0, F_x_max = 0, i, j, a;
+	int eqpos, l, M = 0, N = 0, F_has_sum = 0, Sum = 0, F_x_max = 0, i, j, a;
 	char tmp[1000], c;
 
 	label[0] = 0;
@@ -2803,6 +2902,9 @@ void diophant::read_xml(ifstream &f, char *label)
 			else if (mapkey == "num_vars") {
 				N = str2int(mapval);
 				}
+			else if (mapkey == "f_has_sum") {
+				F_has_sum = str2int(mapval);
+				}
 			else if (mapkey == "sum") {
 				Sum = str2int(mapval);
 				}
@@ -2814,6 +2916,7 @@ void diophant::read_xml(ifstream &f, char *label)
 		}
 	cout << "M=" << M << " N=" << N << endl;
 	open(M, N);
+	f_has_sum = F_has_sum;
 	sum = Sum;
 	f_x_max = F_x_max;
 	for (i = 0; i < m; i++) {

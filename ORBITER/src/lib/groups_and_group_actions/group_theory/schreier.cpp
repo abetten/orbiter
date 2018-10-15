@@ -2279,7 +2279,7 @@ void schreier::draw_tree2(const char *fname,
 		H = 0.;
 		}
 	sprintf(str, "N=%d, avg=%lf,  gens=%d, H=%lf", N, avg, nb_gens, H);
-	//G.aligned_text(x, y, "", str);
+	G.aligned_text(x, y, "", str);
 	
 
 #if 0
