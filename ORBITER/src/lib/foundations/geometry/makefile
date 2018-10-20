@@ -13,6 +13,7 @@ MODULES = \
 	data.o \
 	decomposition.o \
 	desarguesian_spread.o \
+	eckardt_point_info.o \
 	eckardt_point.o \
 	flag.o \
 	geo_parameter.o \

@@ -416,6 +416,40 @@ public:
 
 };
 
+// #############################################################################
+// eckardt_point_info.C:
+// #############################################################################
+
+//! information about the Eckardt points of a surface based on the Clebsch image arc
+
+
+class eckardt_point_info {
+
+public:
+
+	projective_space *P;
+	int arc6[6];
+
+	int *bisecants; // [15]
+	int *Intersections; // [15 * 15]
+	int *B_pts; // [nb_B_pts]
+	int *B_pts_label; // [nb_B_pts * 3]
+	int nb_B_pts; // at most 15
+	int *E2; // [6 * 5 * 2] Eckardt points of the second type
+	int nb_E2; // at most 30
+	int *conic_coefficients; // [6 * 6]
+	eckardt_point *E;
+	int nb_E;
+
+	eckardt_point_info();
+	~eckardt_point_info();
+	void null();
+	void freeself();
+	void init(projective_space *P,
+			int *arc6, int verbose_level);
+
+};
+
 
 // #############################################################################
 // eckardt_point.C
@@ -2148,6 +2182,7 @@ void display_all_PHG_elements(int n, int q);
 void display_table_of_projective_points(ostream &ost, finite_field *F, 
 	int *v, int nb_pts, int len);
 
+
 // #############################################################################
 // projective_space.C:
 // #############################################################################
@@ -2246,17 +2281,8 @@ public:
 		// conics[6 * 6]
 	void find_Eckardt_points_from_arc_not_on_conic(int *arc6, 
 		eckardt_point *&E, int &nb_E, int verbose_level);
-	void find_Eckardt_points_from_arc_not_on_conic_prepare_data(
+	eckardt_point_info *compute_eckardt_point_info(
 		int *arc6, 
-		int *&bisecants, // [15]
-		int *&Intersections, // [15 * 15]
-		int *&B_pts, // [nb_B_pts]
-		int *&B_pts_label, // [nb_B_pts * 3]
-		int &nb_B_pts, // at most 15
-		int *&E2, // [6 * 5 * 2] Eckardt points of the second type 
-		int &nb_E2, // at most 30
-		int *&conic_coefficients, // [6 * 6]
-		eckardt_point *&E, int &nb_E, 
 		int verbose_level);
 	void PG_2_8_create_conic_plus_nucleus_arc_1(int *the_arc, int &size, 
 		int verbose_level);

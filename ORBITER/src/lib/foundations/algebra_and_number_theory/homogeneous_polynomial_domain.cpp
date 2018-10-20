@@ -164,6 +164,7 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 	D->open(1, n);
 	D->fill_coefficient_matrix_with(1);
 	D->RHSi(0) = degree;
+	D->f_has_sum = TRUE;
 	D->sum = degree;
 
 	D->solve_all_betten(0 /* verbose_level */);

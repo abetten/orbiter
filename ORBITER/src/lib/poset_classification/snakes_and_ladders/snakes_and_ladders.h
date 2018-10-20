@@ -227,6 +227,7 @@ public:
 	double progress_last_time;
 	double progress_epsilon;
 
+	int f_export_schreier_trees;
 	int f_draw_schreier_trees;
 		char schreier_tree_prefix[1000];
 		int schreier_tree_xmax; // = 1000000;

@@ -283,7 +283,7 @@ typedef class geo_parameter geo_parameter;
 typedef class scene scene;
 typedef class mem_object_registry mem_object_registry;
 typedef class mem_object_registry_entry mem_object_registry_entry;
-
+typedef class eckardt_point_info eckardt_point_info;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

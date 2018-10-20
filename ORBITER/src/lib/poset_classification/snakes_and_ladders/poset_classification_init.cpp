@@ -117,6 +117,7 @@ void poset_classification::null()
 
 	depth = 0;
 
+	f_export_schreier_trees = FALSE;
 	f_draw_schreier_trees = FALSE;
 	schreier_tree_prefix[0] = 0;
 	schreier_tree_xmax = 1000000;
@@ -373,6 +374,10 @@ void poset_classification::read_arguments(int argc,
 				cout << "-findgroup " << find_group_order << endl;
 				}
 			}
+		else if (strcmp(argv[i], "-export_schreier_trees") == 0) {
+			f_export_schreier_trees = TRUE;
+			cout << "-export_schreier_trees" << endl;
+		}
 		else if (strcmp(argv[i], "-draw_schreier_trees") == 0) {
 			f_draw_schreier_trees = TRUE;
 			strcpy(schreier_tree_prefix, argv[++i]);
@@ -540,7 +545,8 @@ void poset_classification::initialize(action *A_base, action *A_use,
 	//f_allowed_to_show_group_elements = TRUE;
 
 	if (f_vv) {
-		cout << "poset_classification::initialize calling gen->init" << endl;
+		cout << "poset_classification::initialize "
+				"calling gen->init" << endl;
 		}
 	init(A_base, A_use, 
 		gens, 
@@ -549,11 +555,13 @@ void poset_classification::initialize(action *A_base, action *A_use,
 	int nb_oracle_nodes = 1000;
 	
 	if (f_vv) {
-		cout << "poset_classification::initialize calling gen->init_poset_orbit_node" << endl;
+		cout << "poset_classification::initialize "
+				"calling gen->init_poset_orbit_node" << endl;
 		}
 	init_poset_orbit_node(nb_oracle_nodes, verbose_level - 1);
 	if (f_vv) {
-		cout << "poset_classification::initialize calling gen->init_root_node" << endl;
+		cout << "poset_classification::initialize "
+				"calling gen->init_root_node" << endl;
 		}
 	init_root_node(verbose_level - 1);
 
@@ -647,13 +655,15 @@ void poset_classification::init_root_node_invariant_subset(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "poset_classification::init_root_node_invariant_subset" << endl;
+		cout << "poset_classification::init_root_node_"
+				"invariant_subset" << endl;
 		}
 	f_has_invariant_subset_for_root_node = TRUE;
 	invariant_subset_for_root_node = invariant_subset;
 	invariant_subset_for_root_node_size = invariant_subset_size;
 	if (f_v) {
-		cout << "poset_classification::init_root_node_invariant_subset "
+		cout << "poset_classification::init_root_node_"
+				"invariant_subset "
 				"installed invariant subset of size "
 				<< invariant_subset_size << endl;
 		}
@@ -685,7 +695,8 @@ void poset_classification::init_root_node(int verbose_level)
 			nb_unprocessed_nodes_at_level[i] = 0;
 			
 			if (f_vv) {
-				cout << "poset_classification::init_root_node initializing "
+				cout << "poset_classification::init_root_node "
+						"initializing "
 						"node at level " << i << endl;
 				}
 			first_poset_orbit_node_at_level[i + 1] =
@@ -725,7 +736,8 @@ void poset_classification::init_root_node(int verbose_level)
 		}
 }
 
-void poset_classification::init_poset_orbit_node(int nb_poset_orbit_nodes, int verbose_level)
+void poset_classification::init_poset_orbit_node(
+		int nb_poset_orbit_nodes, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -829,7 +841,8 @@ void poset_classification::reallocate_to(int new_number_of_nodes,
 		cout << "poset_classification::reallocate_to" << endl;
 		}
 	if (new_number_of_nodes < nb_poset_orbit_nodes_allocated) {
-		cout << "poset_classification::reallocate_to new_number_of_nodes < "
+		cout << "poset_classification::reallocate_to "
+				"new_number_of_nodes < "
 				"nb_oracle_nodes_allocated" << endl;
 		exit(1);
 		}
@@ -906,7 +919,8 @@ void poset_classification::init_starter(int starter_size,
 	starter_canonize_Elt = NEW_int(A->elt_size_in_int);
 }
 
-void poset_classification::init_vector_space_action(int vector_space_dimension, 
+void poset_classification::init_vector_space_action(
+	int vector_space_dimension,
 	finite_field *F, 
 	int (*rank_point_func)(int *v, void *data), 
 	void (*unrank_point_func)(int *v, int rk, void *data),

@@ -765,14 +765,14 @@ void surface_with_action::arc_lifting_and_classify(
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"arc " << arc_label << " yields a surface with "
-			<< AL->nb_E << " Eckardt points and a stabilizer "
+			<< AL->E->nb_E << " Eckardt points and a stabilizer "
 				"of order " << go << " with "
 			<< SOA->Orbits_on_single_sixes->nb_orbits
 			<< " orbits on single sixes" << endl;
 		}
 	if (f_log_fp) {
 		fp << "arc " << arc_label << " yields a surface with " 
-			<< AL->nb_E << " Eckardt points and a stabilizer of order " << go << " with " 
+			<< AL->E->nb_E << " Eckardt points and a stabilizer of order " << go << " with "
 			<< SOA->Orbits_on_single_sixes->nb_orbits
 			<< " orbits on single sixes\\\\" << endl;
 		}
@@ -1095,7 +1095,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 		if (f_v) {
 			cout << "arc " << arc_label << " yields a surface with "
-				<< AL->nb_E
+				<< AL->E->nb_E
 				<< " Eckardt points and a stabilizer of order "
 				<< go << " with "
 				<< SOA->Orbits_on_single_sixes->nb_orbits
@@ -1107,7 +1107,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 		if (f_log_fp) {
 			fp << "arc " << arc_label << " yields a surface with "
-				<< AL->nb_E
+				<< AL->E->nb_E
 				<< " Eckardt points and a stabilizer of order "
 				<< go << " with "
 				<< SOA->Orbits_on_single_sixes->nb_orbits
