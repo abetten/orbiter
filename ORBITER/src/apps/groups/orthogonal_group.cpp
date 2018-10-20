@@ -194,6 +194,14 @@ void do_it(int epsilon, int n, int q, int f_tree, int verbose_level)
 
 	cout << "computing orbits on points done." << endl;
 
+	char fname_tree_mask[1000];
+
+	sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d.layered_graph", epsilon, n, q);
+
+	Sch->export_tree_as_layered_graph(0 /* orbit_no */,
+			fname_tree_mask,
+			verbose_level);
+
 	if (f_tree) {
 
 		cout << "drawing the Schreier tree" << endl;
@@ -219,6 +227,7 @@ void do_it(int epsilon, int n, int q, int f_tree, int verbose_level)
 				scale, line_width,
 				FALSE /* f_has_point_labels */, NULL /*  *point_labels */,
 				verbose_level);
+
 
 		{
 		ofstream fp(fname_report);

@@ -603,6 +603,9 @@ public:
 		// computes random Schreier generator into schreier_gen
 	void trace_back(int *path, int i, int &j);
 	void print_tree(int orbit_no);
+	void export_tree_as_layered_graph(int orbit_no,
+			const char *fname_mask,
+			int verbose_level);
 	void draw_forest(const char *fname_mask, 
 		int xmax, int ymax, 
 		int f_circletext, int rad, 

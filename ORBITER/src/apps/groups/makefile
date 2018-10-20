@@ -8,12 +8,18 @@ LFLAGS = -lm
 
 all:  \
 	direct_product.out \
+	linear_group.out \
 	orthogonal_group.out \
 	wreath_product.out
 
 
 direct_product.out:  direct_product.o;
 	$(DISCRETA_CPP)  direct_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+linear_group.out:  linear_group.o;
+	$(DISCRETA_CPP)  linear_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 
 orthogonal_group.out:  orthogonal_group.o;
 	$(DISCRETA_CPP)  orthogonal_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

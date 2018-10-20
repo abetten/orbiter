@@ -73,6 +73,7 @@ MODULES= \
 		foundations/geometry/data.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \
+		foundations/geometry/eckardt_point_info.o \
 		foundations/geometry/eckardt_point.o \
 		foundations/geometry/flag.o \
 		foundations/geometry/geo_parameter.o \

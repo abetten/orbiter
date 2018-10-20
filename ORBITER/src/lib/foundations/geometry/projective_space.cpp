@@ -1854,8 +1854,9 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic(
 		}
 }
 
-void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(
+eckardt_point_info *projective_space::compute_eckardt_point_info(
 	int *arc6, 
+#if 0
 	int *&bisecants, // [15]
 	int *&Intersections, // [15 * 15]
 	int *&B_pts, // [nb_B_pts]
@@ -1865,34 +1866,28 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(
 	int &nb_E2, // at most 30
 	int *&conic_coefficients, // [6 * 6]
 	eckardt_point *&E, int &nb_E, 
+#endif
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+#if 0
 	int i, j, h, pi, pj, bi, bj, p;
 	int multiplicity = 6;
 	int t, f, l, s, u; //, len;
 
 	int arc5[5];
-#if 0
-	int *bisecants; // [15]
-	int *Intersections; // [15 * 15]
-	int *B_pts; // [nb_B_pts]
-	int *B_pts_label; // [nb_B_pts * 3]
-	int nb_B_pts; // at most 15
-	int *E2; // [6 * 5 * 2] Eckardt points of the second type 
-	int nb_E2 = 0; // at most 30
-	int *conic_coefficients; // [6 * 6]
-#endif
 	int *H1; // [6]
 	int *H; // [12]
+#endif
+
+	eckardt_point_info *E;
 	
 	if (f_v) {
-		cout << "projective_space::find_Eckardt_points_from_arc_"
-				"not_on_conic_prepare_data" << endl;
+		cout << "projective_space::compute_eckardt_point_info" << endl;
 		}
 	if (n != 2) {
-		cout << "projective_space::find_Eckardt_points_from_arc_"
-				"not_on_conic_prepare_data n != 2" << endl;
+		cout << "projective_space::compute_eckardt_point_info "
+				"n != 2" << endl;
 		exit(1);
 		}
 
@@ -1902,7 +1897,10 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(
 		cout << endl;
 		}
 
+	E = NEW_OBJECT(eckardt_point_info);
+	E->init(this, arc6, verbose_level);
 
+#if 0
 	if (f_v) {
 		cout << "computing E_{ij,kl,mn}:" << endl;
 		}
@@ -2087,7 +2085,8 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(
 					i1 = i;
 					}
 				if (f_v) {
-					cout << "Found Eckardt point E_{" << i1 + 1 << j + 1 << "}" << endl;
+					cout << "Found Eckardt point E_{"
+							<< i1 + 1 << j + 1 << "}" << endl;
 					}
 				E2[nb_E2 * 2 + 0] = i1;
 				E2[nb_E2 * 2 + 1] = j;
@@ -2126,10 +2125,11 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(
 
 	FREE_int(H1);
 	FREE_int(H);
+#endif
 	if (f_v) {
-		cout << "projective_space::find_Eckardt_points_from_arc_"
-				"not_on_conic_prepare_data done" << endl;
+		cout << "projective_space::compute_eckardt_point_info done" << endl;
 		}
+	return E;
 }
 
 void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
@@ -3202,7 +3202,9 @@ void projective_space::line_intersection_type_through_hyperplane(
 
 void projective_space::find_secant_lines(int *set, int set_size, 
 	int *lines, int &nb_lines, int max_lines, int verbose_level)
-// finds the secant lines as an ordered set.
+// finds the secant lines as an ordered set (secant variety).
+// this is done by looping over all pairs of points and creating the
+// line that is spanned by the two points.
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, rk, d, h, idx;
@@ -3246,6 +3248,11 @@ void projective_space::find_lines_which_are_contained(
 	int *set, int set_size, 
 	int *lines, int &nb_lines, int max_lines, 
 	int verbose_level)
+// finds all lines which are completely contained in the set of points
+// given in set[set_size].
+// First, finds all lines in the set which lie
+// in the hyperplane x_d = 0.
+// Then finds all remaining lines.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3286,6 +3293,8 @@ void projective_space::find_lines_which_are_contained(
 			}
 		}
 
+	// set1 is the set of points whose last coordinate is zero.
+	// set2 is the set of points whose last coordinate is nonzero.
 	int_vec_heapsort(set1, sz1);
 	int_vec_heapsort(set2, sz2);
 	
@@ -3295,19 +3304,27 @@ void projective_space::find_lines_which_are_contained(
 		}
 	
 
-	// do the line type in the hyperplane:
+	// find all secants in the hyperplane:
 	int *secants;
 	int n2, nb_secants;
 
 	n2 = (sz1 * (sz1 - 1)) >> 1;
+	// n2 is an upper bound on the number of secant lines
+
 	secants = NEW_int(n2);
 	find_secant_lines(set1, sz1,
-			secants, nb_secants, n2, verbose_level);
+			secants, nb_secants,
+			n2,
+			verbose_level);
 	if (f_vv) {
 		cout << "projective_space::find_lines_which_are_contained "
 				"we found " << nb_lines
 				<< " secants in the hyperplane" << endl;
 		}
+
+	// first we test the secants and
+	// find those which are lines on the surface:
+
 	nb_lines = 0;
 	for (i = 0; i < nb_secants; i++) {
 		rk = secants[i];
@@ -3320,21 +3337,33 @@ void projective_space::find_lines_which_are_contained(
 
 		int coeffs[2];
 
-
+		// loop over all points on the line:
 		for (a = 0; a < q + 1; a++) {
 
+			// unrank a point on the projective line:
 			PG_element_unrank_modified(*F, coeffs, 1, 2, a);
 			int_vec_copy(M, M2, 2 * d);
+
+			// map the point to the line at hand.
+			// form the linear combination:
+			// coeffs[0] * row0 of M2 + coeffs[1] * row1 of M2:
 			for (h = 0; h < d; h++) {
-				M2[2 * d + h] = F->add(F->mult(coeffs[0], M2[0 * d + h]),
+				M2[2 * d + h] = F->add(
+						F->mult(coeffs[0], M2[0 * d + h]),
 						F->mult(coeffs[1], M2[1 * d + h]));
 				}
+
+			// rank the test point and see
+			// if it belongs to the surface:
 			PG_element_rank_modified(*F, M2 + 2 * d, 1, d, b);
 			if (!int_vec_search(set1, sz1, b, idx)) {
 				break;
 				}
 			}
 		if (a == q + 1) {
+			// all q + 1 points of the secant line
+			// belong to the surface, so we
+			// found a line on the surface in the hyperplane.
 			lines[nb_lines++] = rk;
 			}
 		}
@@ -3366,6 +3395,9 @@ void projective_space::find_lines_which_are_contained(
 					"checking lines through hyperplane point " << i
 					<< " / " << sz1 << ":" << endl;
 			}
+
+		// consider a point P1 on the surface and in the hyperplane
+
 		int_vec_zero(f_taken, sz2);
 		for (j = 0; j < sz2; j++) {
 			if (f_taken[j]) {
@@ -3376,23 +3408,38 @@ void projective_space::find_lines_which_are_contained(
 						"i=" << i << " j=" << j << " / "
 						<< sz2 << ":" << endl;
 				}
+
+			// consider a point P2 on the surface
+			// but not in the hyperplane:
+
 			int_vec_copy(Pts1 + i * d, M, d);
 			int_vec_copy(Pts2 + j * d, M + d, d);
+
 			f_taken[j] = TRUE;
+
 			if (f_vv) {
 				int_matrix_print(M, 2, d);
 				}
+
 			rk = Grass_lines->rank_int_here(M, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "projective_space::find_lines_which_are_contained "
 						"line rk=" << rk << ":" << endl;
 				}
+
+			// test the q-1 points on the line through the P1 and P2
+			// (but excluding P1 and P2 themselves):
 			for (a = 1; a < q; a++) {
 				int_vec_copy(M, M2, 2 * d);
+
+				// form the linear combination P3 = P1 + a * P2:
 				for (h = 0; h < d; h++) {
-					M2[2 * d + h] = F->add(M2[0 * d + h],
-						F->mult(a, M2[1 * d + h]));
+					M2[2 * d + h] =
+						F->add(
+								M2[0 * d + h],
+								F->mult(a, M2[1 * d + h]));
 					}
+				// row 2 of M2 contains the coordinates of the point P3:
 				PG_element_rank_modified(*F, M2 + 2 * d, 1, d, b);
 				if (!int_vec_search(set2, sz2, b, idx)) {
 					break;
@@ -3401,10 +3448,13 @@ void projective_space::find_lines_which_are_contained(
 					if (f_vv) {
 						cout << "eliminating point " << idx << endl;
 						}
+					// we don't need to consider this point for P2:
 					f_taken[idx] = TRUE;
 					}
 				}
 			if (a == q) {
+				// The line P1P2 is contained in the surface.
+				// Add it to lines[]
 				if (nb_lines == max_lines) {
 					cout << "projective_space::find_lines_which_are_"
 							"contained nb_lines == max_lines" << endl;
@@ -3466,22 +3516,22 @@ void projective_space::plane_intersection_type_basic(
 			}
 		type[rk] = 0;
 		G->unrank_int_here(M1, rk, 0 /* verbose_level */);
+
+		// check which points are contained in the plane:
 		for (h = 0; h < set_size; h++) {
+
 			int_vec_copy(M1, M2, 3 * d);
-#if 0
-			for (i = 0; i < 3; i++) {
-				for (j = 0; j < d; j++) {
-					M[i * d + j] = G->M[i * d + j];
-					}
-				}
-#endif
 			unrank_point(M2 + 3 * d, set[h]);
+
 			if (F->rank_of_rectangular_matrix(M2,
 					4, d, 0 /*verbose_level*/) == 3) {
+				// the point lies in the plane,
+				// increment the intersection count:
 				type[rk]++;
-				}
-			} // next h
-		} // next rk
+			}
+		} // next h
+
+	} // next rk
 	FREE_int(M1);
 	FREE_int(M2);
 	FREE_OBJECT(G);
@@ -3512,15 +3562,22 @@ void projective_space::hyperplane_intersection_type_basic(
 	for (rk = 0; rk < N_hyperplanes; rk++) {
 		type[rk] = 0;
 		G->unrank_int(rk, 0 /* verbose_level */);
+
+		// check which points are contained in the hyperplane:
 		for (h = 0; h < set_size; h++) {
+
 			int_vec_copy(G->M, M, (d - 1) * d);
 			unrank_point(M + (d - 1) * d, set[h]);
+
 			if (F->rank_of_rectangular_matrix(M,
 					d, d, 0 /*verbose_level*/) == d - 1) {
+				// the point lies in the hyperplane,
+				// increment the intersection count:
 				type[rk]++;
-				}
-			} // next h
-		} // next rk
+			}
+		} // next h
+
+	} // next rk
 	FREE_int(M);
 	FREE_OBJECT(G);
 }
@@ -3531,35 +3588,6 @@ void projective_space::line_intersection_type_collected(
 	int *set, int set_size, int *type_collected, 
 	int verbose_level)
 // type[set_size + 1]
-#if 0
-{
-	int f_v = (verbose_level >= 1);
-	int i, a;
-	int *type;
-
-	if (f_v) {
-		cout << "projective_space::line_intersection_"
-				"type_collected" << endl;
-		}
-
-	type = NEW_int(N_lines);
-
-	line_intersection_type(set, set_size, type, verbose_level);
-
-	for (i = 0; i <= set_size; i++) {
-		type_collected[i] = 0;
-		}
-	for (i = 0; i < N_lines; i++) {
-		a = type[i];
-		type_collected[a]++;
-		}
-	FREE_int(type);
-	if (f_v) {
-		cout << "projective_space::line_intersection_"
-				"type_collected done" << endl;
-		}
-}
-#endif
 {
 	int f_v = (verbose_level >= 1);
 	int rk, h, d, cnt;
@@ -3572,18 +3600,34 @@ void projective_space::line_intersection_type_collected(
 	d = n + 1;
 	M = NEW_int(3 * d);
 	int_vec_zero(type_collected, set_size + 1);
+
+	// loop over all lines:
 	for (rk = 0; rk < N_lines; rk++) {
 		Grass_lines->unrank_int(rk, 0 /* verbose_level */);
 		cnt = 0;
+
+		// find which points in the set lie on the line:
 		for (h = 0; h < set_size; h++) {
+
 			int_vec_copy(Grass_lines->M, M, 2 * d);
+
+			// bad algorithm, we unrank the points over and over:
+
 			unrank_point(M + 2 * d, set[h]);
+
+			// test if the point lies on the line:
 			if (F->rank_of_rectangular_matrix(M,
 					3, d, 0 /*verbose_level*/) == 2) {
+
+				// yes, increment the counter
 				cnt++;
 				}
 			} // next h
+
+		// cnt is the number of points on the line:
+		// increment the line type vector at cnt:
 		type_collected[cnt]++;
+
 		} // next rk
 	FREE_int(M);
 }

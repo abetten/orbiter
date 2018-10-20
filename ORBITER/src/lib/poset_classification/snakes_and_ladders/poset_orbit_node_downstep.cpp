@@ -80,6 +80,21 @@ void poset_orbit_node::downstep(poset_classification *gen,
 	nb_orbits = Schreier.nb_orbits;
 
 #if 1
+	if (gen->f_export_schreier_trees) {
+		int orbit_no;
+
+		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+			char fname_mask[1000];
+
+			sprintf(fname_mask, "%sschreier_tree_node_%d_%%d.layered_graph",
+				gen->schreier_tree_prefix, node);
+
+
+			Schreier.export_tree_as_layered_graph(orbit_no,
+					fname_mask,
+					verbose_level);
+		}
+	}
 	if (gen->f_draw_schreier_trees) {
 		int i;
 	

@@ -259,13 +259,16 @@ int main(int argc, char **argv)
 						"and_write_solutions_to_file" << endl;
 				}
 			else {
+				int *Sol;
+
 				cout << "before CG.all_cliques_of_size_"
 						"k_ignore_colors" << endl;
 				CG.all_cliques_of_size_k_ignore_colors(
 					clique_size /* target_depth */,
-					nb_sol, decision_step_counter, verbose_level);
+					Sol, nb_sol, decision_step_counter, verbose_level);
 				cout << "after CG.all_cliques_of_size_"
 						"k_ignore_colors" << endl;
+				FREE_int(Sol);
 				}
 
 

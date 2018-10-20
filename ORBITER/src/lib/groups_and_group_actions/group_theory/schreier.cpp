@@ -2140,6 +2140,134 @@ void schreier::draw_forest(const char *fname_mask,
 		}
 }
 
+void schreier::export_tree_as_layered_graph(int orbit_no,
+		const char *fname_mask,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int fst, len;
+	int *depth;
+	int *horizontal_position;
+	int i, j, l, max_depth;
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph" << endl;
+		}
+
+	fst = orbit_first[orbit_no];
+	len = orbit_len[orbit_no];
+	depth = NEW_int(len);
+	horizontal_position = NEW_int(len);
+	max_depth = 0;
+	for (j = 0; j < len; j++) {
+		trace_back(NULL, orbit[fst + j], l);
+		l--;
+		depth[j] = l;
+		max_depth = MAX(max_depth, l);
+		}
+	int nb_layers;
+	nb_layers = max_depth + 1;
+	int *Nb;
+	int *Nb1;
+	int **Node;
+
+
+	//classify C;
+	//C.init(depth, len, FALSE, 0);
+	Nb = NEW_int(nb_layers);
+	Nb1 = NEW_int(nb_layers);
+	int_vec_zero(Nb, nb_layers);
+	int_vec_zero(Nb1, nb_layers);
+	for (j = 0; j < len; j++) {
+		trace_back(NULL, orbit[fst + j], l);
+		l--;
+		horizontal_position[j] = Nb[l];
+		Nb[l]++;
+	}
+	cout << "number of nodes at depth:" << endl;
+	for (i = 0; i <= max_depth; i++) {
+		cout << i << " : " << Nb[i] << endl;
+	}
+	Node = NEW_pint(nb_layers);
+	for (i = 0; i <= max_depth; i++) {
+		Node[i] = NEW_int(Nb[i]);
+	}
+	for (j = 0; j < len; j++) {
+		trace_back(NULL, orbit[fst + j], l);
+		l--;
+		Node[l][Nb1[l]] = j;
+		Nb1[l]++;
+	}
+
+	layered_graph *LG;
+	int n1, n2, j2;
+
+	LG = NEW_OBJECT(layered_graph);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph before LG->init" << endl;
+		}
+	//LG->add_data1(data1, 0/*verbose_level*/);
+	LG->init(nb_layers, Nb, "", verbose_level);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph after LG->init" << endl;
+		}
+	LG->place(verbose_level);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph after LG->place" << endl;
+		}
+	for (i = 0; i <= max_depth; i++) {
+		if (f_v) {
+			cout << "schreier::export_tree_as_layered_graph adding edges "
+					"i=" << i << " / " << max_depth
+					<< " Nb[i]=" << Nb[i] << endl;
+		}
+		for (j = 0; j < Nb[i]; j++) {
+			n1 = Node[i][j];
+			if (f_v) {
+				cout << "schreier::export_tree_as_layered_graph adding edges "
+						"i=" << i << " / " << max_depth
+						<< " j=" << j << " n1=" << n1 << endl;
+			}
+			if (prev[fst + n1] != -1) {
+				n2 = orbit_inv[prev[fst + n1]] - fst;
+				j2 = horizontal_position[n2];
+				if (f_v) {
+					cout << "schreier::export_tree_as_layered_graph adding edges "
+							"i=" << i << " / " << max_depth
+							<< " j=" << j << " n1=" << n1
+							<< " n2=" << n2 << " j2=" << j2 << endl;
+				}
+				cout << "adding edge ("<< i - 1 << "," << j2 << ") "
+						"-> (" << i << "," << j << ")" << endl;
+				LG->add_edge(i - 1, j2, i, j,
+						verbose_level);
+			}
+		}
+	}
+	for (j = 0; j < len; j++) {
+		char text[1000];
+
+		sprintf(text, "%d", orbit[fst + j]);
+		trace_back(NULL, orbit[fst + j], l);
+		l--;
+		LG->add_text(l, horizontal_position[j], text, 0/*verbose_level*/);
+	}
+	char fname[1000];
+
+	sprintf(fname, fname_mask, orbit_no);
+	LG->write_file(fname, 0 /*verbose_level*/);
+	delete LG;
+
+	FREE_int(Nb);
+	FREE_int(Nb1);
+	FREE_int(depth);
+	FREE_int(horizontal_position);
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph done" << endl;
+		}
+}
+
 void schreier::draw_tree(const char *fname, 
 	int orbit_no, int xmax, int ymax, 
 	int f_circletext, int rad, 

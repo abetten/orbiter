@@ -238,6 +238,7 @@ public:
 	int arc_size;
 	
 
+#if 0
 	// data from projective_space::
 	// find_Eckardt_points_from_arc_not_on_conic_prepare_data:
 		int *bisecants; // [15]
@@ -251,8 +252,11 @@ public:
 
 
 	eckardt_point *E;
-	int *E_idx;
 	int nb_E; // = nb_B_pts + nb_E2
+#else
+	eckardt_point_info *E;
+#endif
+	int *E_idx;
 
 	int *T_idx;
 	int nb_T;
