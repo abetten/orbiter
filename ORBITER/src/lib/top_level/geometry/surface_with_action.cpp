@@ -1090,7 +1090,8 @@ void surface_with_action::arc_lifting_and_classify(
 			}
 		f_deleted[idx] = TRUE;
 
-		Arc_identify[nb_surfaces * Six_arcs->nb_arcs_not_on_conic + j] = idx;
+		Arc_identify[nb_surfaces *
+			Six_arcs->nb_arcs_not_on_conic + j] = idx;
 
 
 		if (f_v) {

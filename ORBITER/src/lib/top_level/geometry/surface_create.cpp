@@ -104,7 +104,8 @@ void surface_create::init_with_data(
 
 
 void surface_create::init(surface_create_description *Descr,
-		int verbose_level)
+	surface_with_action *Surf_A,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -113,6 +114,7 @@ void surface_create::init(surface_create_description *Descr,
 		cout << "surface_create::init" << endl;
 		}
 	surface_create::Descr = Descr;
+
 	if (!Descr->f_q) {
 		cout << "surface_create::init !Descr->f_q" << endl;
 		exit(1);
@@ -121,6 +123,23 @@ void surface_create::init(surface_create_description *Descr,
 	if (f_v) {
 		cout << "surface_create::init q = " << q << endl;
 		}
+
+	surface_create::Surf_A = Surf_A;
+	surface_create::Surf = Surf_A->Surf;
+	surface_create::F = Surf->F;
+	if (F->q != q) {
+		cout << "surface_create::init F->q != q" << endl;
+		exit(1);
+	}
+	if (is_prime(q)) {
+		f_semilinear = FALSE;
+		}
+	else {
+		f_semilinear = TRUE;
+		}
+
+
+#if 0
 	if (f_v) {
 		cout << "surface_create::init creating "
 				"finite field of order " << q << endl;
@@ -128,8 +147,8 @@ void surface_create::init(surface_create_description *Descr,
 
 	f_ownership = FALSE;
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	//F = NEW_OBJECT(finite_field);
+	//F->init(q, 0);
 	
 
 	if (f_v) {
@@ -144,12 +163,6 @@ void surface_create::init(surface_create_description *Descr,
 		}
 
 
-	if (is_prime(q)) {
-		f_semilinear = FALSE;
-		}
-	else {
-		f_semilinear = TRUE;
-		}
 
 #if 0
 	cout << "surface_create::init before "
@@ -168,6 +181,7 @@ void surface_create::init(surface_create_description *Descr,
 	if (f_v) {
 		cout << "after Surf_A->init" << endl;
 		}
+#endif
 
 
 

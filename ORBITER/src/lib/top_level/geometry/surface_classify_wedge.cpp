@@ -26,6 +26,8 @@ void surface_classify_wedge::null()
 	F = NULL;
 	LG = NULL;
 	A = NULL;
+	q = 0;
+	f_semilinear = FALSE;
 
 	Surf = NULL;
 	Surf_A = NULL;
@@ -51,13 +53,14 @@ void surface_classify_wedge::null()
 
 void surface_classify_wedge::freeself()
 {
+#if 0
 	if (Surf) {
 		FREE_OBJECT(Surf);
 		}
 	if (Surf_A) {
 		FREE_OBJECT(Surf_A);
 		}
-
+#endif
 	if (Elt0) {
 		FREE_int(Elt0);
 		}
@@ -84,7 +87,8 @@ void surface_classify_wedge::freeself()
 	null();
 }
 
-void surface_classify_wedge::read_arguments(int argc, const char **argv, 
+void surface_classify_wedge::read_arguments(
+	int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -136,6 +140,7 @@ void surface_classify_wedge::read_arguments(int argc, const char **argv,
 
 void surface_classify_wedge::init(
 	finite_field *F, linear_group *LG,
+	int f_semilinear, surface_with_action *Surf_A,
 	int argc, const char **argv, 
 	int verbose_level)
 {
@@ -147,7 +152,12 @@ void surface_classify_wedge::init(
 		}
 	surface_classify_wedge::F = F;
 	surface_classify_wedge::LG = LG;
+	surface_classify_wedge::f_semilinear = f_semilinear;
+	surface_classify_wedge::Surf_A = Surf_A;
+	surface_classify_wedge::Surf = Surf_A->Surf;
 	q = F->q;
+
+	sprintf(fname_base, "surface_%d", q);
 	
 	read_arguments(argc, argv, verbose_level);
 	
@@ -155,6 +165,8 @@ void surface_classify_wedge::init(
 	A2 = LG->A2;
 
 
+
+#if 0
 	if (f_v) {
 		cout << "surface_classify_wedge::init "
 				"before Surf->init" << endl;
@@ -167,16 +179,9 @@ void surface_classify_wedge::init(
 		}
 
 
+
 	Surf_A = NEW_OBJECT(surface_with_action);
 
-	if (is_prime(q)) {
-		f_semilinear = FALSE;
-		}
-	else {
-		f_semilinear = TRUE;
-		}
-
-	sprintf(fname_base, "surface_%d", q);
 
 	
 	if (f_v) {
@@ -188,6 +193,7 @@ void surface_classify_wedge::init(
 		cout << "surface_classify_wedge::init "
 				"after Surf_A->init" << endl;
 		}
+#endif
 	
 	Elt0 = NEW_int(A->elt_size_in_int);
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -289,7 +295,8 @@ void surface_classify_wedge::downstep(int verbose_level)
 		longinteger_object go;
 		int Lines[27];
 
-		R = Classify_double_sixes->Double_sixes->get_set_and_stabilizer(
+		R = Classify_double_sixes->Double_sixes->
+				get_set_and_stabilizer(
 				i /* orbit_index */, 0 /* verbose_level */);
 
 		//gen->orbit_length(i /* node */, 3 /* level */, ol);
@@ -1081,12 +1088,15 @@ void surface_classify_wedge::identify_Sa(
 
 		int Lines27[27];
 		
-		if (Surf->create_surface_ab(a, b, Lines27, 
+		if (Surf->create_surface_ab(a, b, coeff, Lines27,
 			alpha, beta, nb_E, 
 			verbose_level)) {
 
-			Surf->create_equation_Sab(a, b, coeff, 0 /* verbose_level*/);
-		
+#if 0
+			Surf->create_equation_Sab(a, b, coeff,
+					0 /* verbose_level*/);
+#endif
+
 			identify_surface(coeff, 
 				iso_type, Elt, 
 				verbose_level);
@@ -1108,6 +1118,107 @@ void surface_classify_wedge::identify_Sa(
 		cout << "surface_classify_wedge::identify_Sa done" << endl;
 		}
 	
+}
+
+int surface_classify_wedge::isomorphism_test_pairwise(
+	surface_create *SC1, surface_create *SC2,
+	int &isomorphic_to1, int &isomorphic_to2,
+	int *Elt_isomorphism_1to2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt1, *Elt2, *Elt3;
+	int ret;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise" << endl;
+	}
+	int *coeff1;
+	int *coeff2;
+
+	coeff1 = SC1->coeffs;
+	coeff2 = SC2->coeffs;
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	identify_surface(
+		coeff1,
+		isomorphic_to1, Elt1,
+		verbose_level - 1);
+	identify_surface(
+		coeff2,
+		isomorphic_to2, Elt2,
+		verbose_level - 1);
+	if (isomorphic_to1 != isomorphic_to2) {
+		ret = FALSE;
+		if (f_v) {
+			cout << "surface_classify_wedge::isomorphism_test_"
+					"pairwise not isomorphic" << endl;
+		}
+	} else {
+		ret = TRUE;
+		if (f_v) {
+			cout << "surface_classify_wedge::isomorphism_test_"
+					"pairwise they are isomorphic" << endl;
+		}
+		A->element_invert(Elt2, Elt3, 0);
+		A->element_mult(Elt1, Elt3, Elt_isomorphism_1to2, 0);
+		if (f_v) {
+			cout << "an isomorphism from surface1 to surface2 is" << endl;
+			A->element_print(Elt_isomorphism_1to2, cout);
+		}
+		matrix_group *mtx;
+
+		mtx = A->G.matrix_grp;
+
+		if (f_v) {
+			cout << "testing the isomorphism" << endl;
+			A->element_print(Elt_isomorphism_1to2, cout);
+			cout << "from: ";
+			int_vec_print(cout, coeff1, 20);
+			cout << endl;
+			cout << "to  : ";
+			int_vec_print(cout, coeff2, 20);
+			cout << endl;
+		}
+		A->element_invert(Elt_isomorphism_1to2, Elt1, 0);
+		int coeff3[20];
+		int coeff4[20];
+		mtx->substitute_surface_eqation(Elt1,
+				coeff1, coeff3, Surf,
+				verbose_level - 1);
+
+		int_vec_copy(coeff2, coeff4, 20);
+		PG_element_normalize_from_front(*F,
+				coeff3, 1,
+				Surf->nb_monomials);
+		PG_element_normalize_from_front(*F,
+				coeff4, 1,
+				Surf->nb_monomials);
+
+		if (f_v) {
+			cout << "after substitution, normalized" << endl;
+			cout << "    : ";
+			int_vec_print(cout, coeff3, 20);
+			cout << endl;
+			cout << "coeff2, normalized" << endl;
+			cout << "    : ";
+			int_vec_print(cout, coeff4, 20);
+			cout << endl;
+		}
+		if (int_vec_compare(coeff3, coeff4, 20)) {
+			cout << "The surface equations are not equal. That is bad." << endl;
+			exit(1);
+		}
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise done" << endl;
+	}
+	return ret;
 }
 
 void surface_classify_wedge::identify_surface(
@@ -1143,22 +1254,30 @@ void surface_classify_wedge::identify_surface(
 	Points = NEW_int(Surf->P->N_points);
 	Lines = NEW_int(27);
 
+	// find all the points on the surface based on the equation:
+
 	Surf->enumerate_points(coeff_of_given_surface,
-			Points, nb_points, 0 /* verbose_level */);
+			Points, nb_points,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "The surface to be identified has "
 				<< nb_points << " points" << endl;
 		}
+
+	// find all lines which are completely contained in the
+	// set of points:
 
 	Surf->P->find_lines_which_are_contained(
 			Points, nb_points,
 			Lines, nb_lines, 27 /* max_lines */,
 			0 /* verbose_level */);
 
+	// the lines are not arranged according to a double six
+
 	if (f_v) {
 		cout << "The surface has " << nb_lines << " lines" << endl;
 		}
-	if (nb_lines != 27 && nb_lines != 21) {
+	if (nb_lines != 27 /*&& nb_lines != 21*/) {
 		cout << "the input surface has " << nb_lines << " lines" << endl;
 		cout << "something is wrong with the input surface, skipping" << endl;
 		FREE_int(Points);
@@ -1188,9 +1307,6 @@ void surface_classify_wedge::identify_surface(
 
 	int S3[6];
 	int K1[6];
-	//int W1[6];
-	//int W2[6];
-	//int W3[6];
 	int W4[6];
 	int h, l;
 	int f;
@@ -1243,7 +1359,7 @@ void surface_classify_wedge::identify_surface(
 		W4 /* int *five_lines_out_as_neighbors */,
 		idx2 /* &orbit_index */,
 		Elt2 /* transporter */,
-		verbose_level);
+		verbose_level - 2);
 	
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_surface "
@@ -1292,7 +1408,8 @@ void surface_classify_wedge::identify_surface(
 
 
 	double_six_orbit =
-		Classify_double_sixes->Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit;
+		Classify_double_sixes->Flag_orbits->
+			Flag_orbit_node[f].upstep_primary_orbit;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_surface "
@@ -1305,7 +1422,8 @@ void surface_classify_wedge::identify_surface(
 				"double_six_orbit < 0, something is wrong" << endl;
 		exit(1);
 		}
-	if (Classify_double_sixes->Flag_orbits->Flag_orbit_node[f].f_fusion_node) {
+	if (Classify_double_sixes->Flag_orbits->
+			Flag_orbit_node[f].f_fusion_node) {
 
 		if (f_v) {
 			cout << "surface_classify_wedge::identify_surface "
@@ -1313,7 +1431,8 @@ void surface_classify_wedge::identify_surface(
 			}
 
 		A->element_mult(Elt2,
-			Classify_double_sixes->Flag_orbits->Flag_orbit_node[f].fusion_elt,
+			Classify_double_sixes->Flag_orbits->
+				Flag_orbit_node[f].fusion_elt,
 			Elt3, 0);
 		}
 	else {
@@ -1368,7 +1487,8 @@ void surface_classify_wedge::identify_surface(
 
 	image = NEW_int(nb_points);
 	A->map_a_set_and_reorder(Points, image,
-			nb_points, Elt_isomorphism, 0 /* verbose_level */);
+			nb_points, Elt_isomorphism,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "The inverse isomorphism is given by:" << endl;

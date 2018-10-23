@@ -238,24 +238,8 @@ public:
 	int arc_size;
 	
 
-#if 0
-	// data from projective_space::
-	// find_Eckardt_points_from_arc_not_on_conic_prepare_data:
-		int *bisecants; // [15]
-		int *Intersections; // [15 * 15]
-		int *B_pts; // [nb_B_pts]
-		int *B_pts_label; // [nb_B_pts * 3]
-		int nb_B_pts; // at most 15
-		int *E2; // [6 * 5 * 2] Eckardt points of the second type 
-		int nb_E2; // at most 30
-		int *conic_coefficients; // [6 * 6]
-
-
-	eckardt_point *E;
-	int nb_E; // = nb_B_pts + nb_E2
-#else
 	eckardt_point_info *E;
-#endif
+
 	int *E_idx;
 
 	int *T_idx;
@@ -1489,6 +1473,7 @@ public:
 	void read_arguments(int argc, const char **argv, 
 		int verbose_level);
 	void init(finite_field *F, linear_group *LG, 
+		int f_semilinear, surface_with_action *Surf_A,
 		int argc, const char **argv, 
 		int verbose_level);
 	void classify_surfaces_from_double_sixes(int verbose_level);
@@ -1510,6 +1495,11 @@ public:
 		int verbose_level);
 	void identify_Sa_and_print_table(int verbose_level);
 	void identify_Sa(int *Iso_type, int *Nb_E, int verbose_level);
+	int isomorphism_test_pairwise(
+		surface_create *SC1, surface_create *SC2,
+		int &isomorphic_to1, int &isomorphic_to2,
+		int *Elt_isomorphism_1to2,
+		int verbose_level);
 	void identify_surface(int *coeff_of_given_surface, 
 		int &isomorphic_to, int *Elt_isomorphism, 
 		int verbose_level);
@@ -1565,7 +1555,9 @@ public:
 	void init_with_data(surface_create_description *Descr, 
 		surface_with_action *Surf_A, 
 		int verbose_level);
-	void init(surface_create_description *Descr, int verbose_level);
+	void init(surface_create_description *Descr,
+		surface_with_action *Surf_A,
+		int verbose_level);
 	void init2(int verbose_level);
 	void apply_transformations(const char **transform_coeffs, 
 		int *f_inverse_transform, int nb_transform, int verbose_level);
@@ -1603,6 +1595,7 @@ public:
 	void freeself();
 	int read_arguments(int argc, const char **argv, 
 		int verbose_level);
+	int get_q();
 };
 
 // #############################################################################

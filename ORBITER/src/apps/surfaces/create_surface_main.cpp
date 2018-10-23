@@ -1,4 +1,4 @@
-// create_surface_main.C
+// create_surface_main.cpp
 // 
 // Anton Betten
 //
@@ -68,15 +68,59 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	surface_create *SC;
 	int j;
+	int f_v = (verbose_level >= 1);
 
+
+	int q;
+	int f_semilinear;
+	finite_field *F;
+	surface *Surf;
+	surface_with_action *Surf_A;
+
+	q = Descr->get_q();
+	cout << "q=" << q << endl;
+
+	if (is_prime(q)) {
+		f_semilinear = FALSE;
+		}
+	else {
+		f_semilinear = TRUE;
+		}
+
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, 0);
+
+
+	if (f_v) {
+		cout << "create_surface_main creating "
+				"surface object" << endl;
+		}
+	Surf = NEW_OBJECT(surface);
+	Surf->init(F, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "create_surface_main creating "
+				"surface object done" << endl;
+		}
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	if (f_v) {
+		cout << "create_surface_main before Surf_A->init" << endl;
+		}
+	Surf_A->init(Surf, f_semilinear, verbose_level);
+	if (f_v) {
+		cout << "create_surface_mainafter Surf_A->init" << endl;
+		}
+
+
+	surface_create *SC;
 	SC = NEW_OBJECT(surface_create);
 
 	cout << "before SC->init" << endl;
-	SC->init(Descr, verbose_level);
+	SC->init(Descr, Surf_A, verbose_level);
 	cout << "after SC->init" << endl;
-	
 
 	if (nb_transform) {
 		cout << "before SC->apply_transformations" << endl;
