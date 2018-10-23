@@ -954,20 +954,6 @@ void arc_lifting::find_Eckardt_points(int verbose_level)
 	int s;
 	
 	E = Surf->P2->compute_eckardt_point_info(arc, verbose_level);
-#if 0
-	E = Surf->P2->find_Eckardt_points_from_arc_not_on_conic_prepare_data(
-		arc,
-		bisecants, // [15]
-		Intersections, // [15 * 15]
-		B_pts, // [nb_B_pts]
-		B_pts_label, // [nb_B_pts * 3]
-		nb_B_pts, // at most 15
-		E2, // [6 * 5 * 2] Eckardt points of the second type 
-		nb_E2, // at most 30
-		conic_coefficients, // [6 * 6]
-		E, nb_E, 
-		verbose_level);
-#endif
 	if (f_v) {
 		cout << "arc_lifting::init We found " << E->nb_E
 				<< " Eckardt points" << endl;
@@ -1156,7 +1142,8 @@ strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(
 		}
 
 	gens_dual =
-		Surf_A->Classify_trihedral_pairs->identify_trihedral_pair_and_get_stabilizer(
+		Surf_A->Classify_trihedral_pairs->
+			identify_trihedral_pair_and_get_stabilizer(
 		planes6, transporter, trihedral_pair_orbit_index, 
 		verbose_level);
 
@@ -1224,7 +1211,8 @@ void arc_lifting::create_action_on_equations_and_compute_orbits(
 				"orbits_on_equations" << endl;
 		}
 
-	create_action_and_compute_orbits_on_equations(Surf_A->A, 
+	create_action_and_compute_orbits_on_equations(
+		Surf_A->A,
 		Surf->Poly3_4, 
 		The_surface_equations, 
 		q + 1 /* nb_equations */, 
@@ -2025,7 +2013,8 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 			iso = Iso[i];
 			int_vec_copy(
 				Surf_A->Classify_trihedral_pairs->Trihedral_pairs->Rep +
-				iso * Surf_A->Classify_trihedral_pairs->Trihedral_pairs->representation_sz, 
+				iso * Surf_A->Classify_trihedral_pairs->
+					Trihedral_pairs->representation_sz,
 				planes6, 6);
 			
 			ost << " & ";

@@ -2613,8 +2613,11 @@ void surface::create_equation_Sab(int a, int b,
 		}
 }
 
-int surface::create_surface_ab(int a, int b, int *Lines, 
-	int &alpha, int &beta, int &nb_E, int verbose_level)
+int surface::create_surface_ab(int a, int b,
+	int *coeff20,
+	int *Lines27,
+	int &alpha, int &beta, int &nb_E,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int alpha0, beta0;
@@ -2622,7 +2625,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 	//int Basis[8];
 	//int Lines[27];
 	int nb, i, e, ee, nb_lines, rk, nb_pts;
-	int *coeff;
+	//int *coeff;
 	int *Pts;
 	int v[4];
 
@@ -2646,7 +2649,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 
 	Pts = NEW_int(nb_PG_elements(3, F->q));
 	
-	coeff = NEW_int(20);
+	//coeff = NEW_int(20);
 	alpha0 = F->negate(F->mult(b, b));
 	beta0 = F->mult(F->mult(F->power(b, 3), 
 		F->add(1, F->mult(a, a))), F->inverse(a));
@@ -2693,7 +2696,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 		}
 
 
-	int_vec_copy(Oab, Lines, 12);
+	int_vec_copy(Oab, Lines27, 12);
 	FREE_int(Oab);
 
 
@@ -2702,18 +2705,18 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 	if (f_v) {
 		cout << "surface::create_surface_ab We have a set of "
 				"lines of size " << nb << ":";
-		int_vec_print(cout, Lines, nb);
+		int_vec_print(cout, Lines27, nb);
 		cout << endl;
 		}
 
-	create_remaining_fifteen_lines(Lines, 
-		Lines + 12, 0 /* verbose_level */);
+	create_remaining_fifteen_lines(Lines27,
+		Lines27 + 12, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "surface::create_surface_ab The remaining 15 lines are:";
-		int_vec_print(cout, Lines + 12, 15);
+		int_vec_print(cout, Lines27 + 12, 15);
 		cout << endl;
-		Gr->print_set(Lines + 12, 15);
+		Gr->print_set(Lines27 + 12, 15);
 		}
 
 
@@ -2726,7 +2729,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 
 	create_special_fifteen_lines(special_lines, a, b, verbose_level);
 	for (i = 0; i < 15; i++) {
-		if (special_lines[i] != Lines[12 + i]) {
+		if (special_lines[i] != Lines27[12 + i]) {
 			cout << "surface::create_surface_ab something is wrong "
 					"with the special line " << i << " / 15 " << endl;
 			exit(1);
@@ -2737,7 +2740,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 				"fifteen_lines" << endl;
 		}
 
-	rk = compute_system_in_RREF(27, Lines, 0 /* verbose_level */);
+	rk = compute_system_in_RREF(27, Lines27, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface::create_surface_ab a=" << a 
 			<< " b=" << b << " rk=" << rk << endl;
@@ -2746,23 +2749,23 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 	if (rk != 19) {
 		cout << "surface::create_surface_ab rk != 19" << endl;
 		FREE_int(Pts);
-		FREE_int(coeff);
+		//FREE_int(coeff);
 		exit(1);
 		}
-	build_cubic_surface_from_lines(27, Lines, coeff,
+	build_cubic_surface_from_lines(27, Lines27, coeff20,
 			0 /* verbose_level */);
-	PG_element_normalize_from_front(*F, coeff, 1, 20);
+	PG_element_normalize_from_front(*F, coeff20, 1, 20);
 
 
 
-	enumerate_points(coeff, Pts, nb_pts, 0 /* verbose_level */);
+	enumerate_points(coeff20, Pts, nb_pts, 0 /* verbose_level */);
 	int_vec_heapsort(Pts, nb_pts);
 
 
 	if (f_v) {
 		cout << "surface::create_surface_ab "
 				"a=" << a << " b=" << b << " equation: ";
-		print_equation(cout, coeff);
+		print_equation(cout, coeff20);
 		cout << endl;
 		}
 
@@ -2787,7 +2790,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 	int *Intersection_pt_idx;
 
 	compute_adjacency_matrix_of_line_intersection_graph(
-		Adj, Lines, 27, verbose_level);
+		Adj, Lines27, 27, verbose_level);
 	if (f_v) {
 		cout << "surface::create_surface_ab "
 				"The adjacency matrix is:" << endl;
@@ -2797,7 +2800,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 
 
 	compute_intersection_points_and_indices(
-		Adj, Pts, nb_pts, Lines, 27, 
+		Adj, Pts, nb_pts, Lines27, 27,
 		Intersection_pt, Intersection_pt_idx, 
 		verbose_level);
 
@@ -2821,7 +2824,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 
 
 
-	if (!test_special_form_alpha_beta(coeff, alpha, beta, 
+	if (!test_special_form_alpha_beta(coeff20, alpha, beta,
 		0 /* verbose_level */)) {
 		cout << "surface::create_surface_ab not of special form" << endl;
 		exit(1);
@@ -2862,7 +2865,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 	set_of_sets *lines_on_pt;
 	
 	compute_points_on_lines(Pts, nb_pts, 
-		Lines, nb_lines, 
+		Lines27, nb_lines,
 		pts_on_lines, 
 		verbose_level);
 
@@ -2913,7 +2916,7 @@ int surface::create_surface_ab(int a, int b, int *Lines,
 
 	
 	FREE_int(E);
-	FREE_int(coeff);
+	//FREE_int(coeff);
 	FREE_int(Pts);
 	FREE_int(Intersection_pt);
 	FREE_int(Intersection_pt_idx);
@@ -5208,7 +5211,8 @@ int surface::intersection_of_five_lines(int *Adj,
 	return a;
 }
 
-void surface::create_surface_family_S(int a, int *Lines27, 
+void surface::create_surface_family_S(int a,
+	int *Lines27,
 	int *equation20, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5226,7 +5230,9 @@ void surface::create_surface_family_S(int a, int *Lines27,
 				"creating surface for a=" << a << ":" << endl;
 		}
 
-	create_surface_ab(a, b, Lines27,
+	create_surface_ab(a, b,
+		equation20,
+		Lines27,
 		alpha, beta, nb_E, 
 		0 /* verbose_level */);
 
@@ -5239,6 +5245,7 @@ void surface::create_surface_family_S(int a, int *Lines27,
 		cout << endl;
 		}
 
+#if 0
 	if (f_v) {
 		cout << "surface::create_surface_family_S "
 				"before create_equation_Sab" << endl;
@@ -5248,6 +5255,7 @@ void surface::create_surface_family_S(int a, int *Lines27,
 		cout << "surface::create_surface_family_S "
 				"after create_equation_Sab" << endl;
 		}
+#endif
 	
 	if (f_v) {
 		cout << "surface::create_surface_family_S "

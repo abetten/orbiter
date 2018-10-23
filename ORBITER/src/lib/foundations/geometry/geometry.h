@@ -2279,8 +2279,6 @@ public:
 		int *&conics, int verbose_level);
 		// bisecants[15 * 3]
 		// conics[6 * 6]
-	void find_Eckardt_points_from_arc_not_on_conic(int *arc6, 
-		eckardt_point *&E, int &nb_E, int verbose_level);
 	eckardt_point_info *compute_eckardt_point_info(
 		int *arc6, 
 		int verbose_level);
@@ -2674,8 +2672,11 @@ public:
 	int compute_rank_of_any_four(int *&Rk, int &nb_subsets, int *lines, 
 		int sz, int verbose_level);
 	void create_equation_Sab(int a, int b, int *coeff, int verbose_level);
-	int create_surface_ab(int a, int b, int *Lines, 
-		int &alpha, int &beta, int &nb_E, int verbose_level);
+	int create_surface_ab(int a, int b,
+		int *coeff20,
+		int *Lines27,
+		int &alpha, int &beta, int &nb_E,
+		int verbose_level);
 	void list_starter_configurations(int *Lines, int nb_lines, 
 		set_of_sets *line_intersections, int *&Table, int &N, 
 		int verbose_level);
@@ -2780,7 +2781,7 @@ public:
 		int *four_lines_idx, int b6, int verbose_level);
 	int intersection_of_five_lines(int *Adj, int *five_lines_idx, 
 		int verbose_level);
-	void create_surface_family_S(int a, int *Lines27, 
+	void create_surface_family_S(int a, int *Lines27,
 		int *equation20, int verbose_level);
 	void rearrange_lines_according_to_a_given_double_six(int *Lines, 
 		int *New_lines, int *double_six, int verbose_level);

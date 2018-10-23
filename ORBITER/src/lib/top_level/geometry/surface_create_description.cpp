@@ -86,3 +86,14 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 }
 
 
+int surface_create_description::get_q()
+{
+	if (!f_q) {
+		cout << "surface_create_description::get_q "
+				"q has not been set yet" << endl;
+		exit(1);
+	}
+	return q;
+}
+
+

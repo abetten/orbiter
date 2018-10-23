@@ -1,4 +1,4 @@
-// surface_classify.C
+// surface_classify.cpp
 // 
 // Anton Betten
 // September 1, 2016
@@ -30,6 +30,8 @@ int main(int argc, const char **argv)
 
 	{
 	finite_field *F;
+	surface *Surf;
+	surface_with_action *Surf_A;
 	linear_group_description *Descr;
 	linear_group *LG;
 
@@ -41,6 +43,7 @@ int main(int argc, const char **argv)
 	int f_double_sixes_only = FALSE;
 	int f_read_surfaces = FALSE;
 	int q;
+	int f_semilinear = FALSE;
 	int f_draw_poset = FALSE;
 	int f_draw_poset_full = FALSE;
 	int f_automatic_memory_dump = FALSE;
@@ -48,6 +51,10 @@ int main(int argc, const char **argv)
 	const char *automatic_dump_mask = NULL;
 	int f_memory_dump_at_peak = FALSE;
 	const char *memory_dump_at_peak_fname = NULL;
+	int f_identify_Sa = FALSE;
+	int f_isomorph = FALSE;
+	surface_create_description *surface_descr_isomorph1 = NULL;
+	surface_create_description *surface_descr_isomorph2 = NULL;
 
 
 	int i;
@@ -64,6 +71,22 @@ int main(int argc, const char **argv)
 				argv + i, verbose_level);
 
 			cout << "-linear" << endl;
+			}
+		else if (strcmp(argv[i], "-isomorph") == 0) {
+			f_isomorph = TRUE;
+			cout << "-isomorph reading description of first surface" << endl;
+			surface_descr_isomorph1 = NEW_OBJECT(surface_create_description);
+			i += surface_descr_isomorph1->
+					read_arguments(argc - (i - 1), argv + i,
+					verbose_level) - 1;
+			i += 2;
+			cout << "the current argument is " << argv[i] << endl;
+			cout << "-isomorph reading description of second surface" << endl;
+			surface_descr_isomorph2 = NEW_OBJECT(surface_create_description);
+			i += surface_descr_isomorph2->
+					read_arguments(argc - (i - 1), argv + i,
+					verbose_level) - 1;
+			cout << "-isomorph" << endl;
 			}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
@@ -122,6 +145,10 @@ int main(int argc, const char **argv)
 					verbose_level);
 			cout << "-memory_dump_cumulative" << endl;
 		}
+		else if (strcmp(argv[i], "-identify_Sa") == 0) {
+			f_identify_Sa = TRUE;
+			cout << "-identify_Sa" << endl;
+			}
 	}
 
 
@@ -149,6 +176,12 @@ int main(int argc, const char **argv)
 	Descr->F = F;
 	q = Descr->input_q;
 	
+	if (is_prime(q)) {
+		f_semilinear = FALSE;
+		}
+	else {
+		f_semilinear = TRUE;
+		}
 
 
 	LG = NEW_OBJECT(linear_group);
@@ -163,6 +196,32 @@ int main(int argc, const char **argv)
 		cout << "surface_classify after LG->init" << endl;
 		}
 
+
+	if (f_v) {
+		cout << "surface_classify before Surf->init" << endl;
+		}
+	Surf = NEW_OBJECT(surface);
+	Surf->init(F, verbose_level - 1);
+	if (f_v) {
+		cout << "surface_classify after Surf->init" << endl;
+		}
+
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+
+
+	if (f_v) {
+		cout << "surface_classify before Surf_A->init" << endl;
+		}
+	Surf_A->init(Surf, f_semilinear, verbose_level);
+	if (f_v) {
+		cout << "surface_classify after Surf_A->init" << endl;
+		}
+
+
+
+
 	surface_classify_wedge *SCW;
 
 	SCW = NEW_OBJECT(surface_classify_wedge);
@@ -171,7 +230,10 @@ int main(int argc, const char **argv)
 		cout << "surface_classify before SCW->init" << endl;
 		}
 	
-	SCW->init(F, LG, argc, argv, verbose_level - 1);
+	SCW->init(F, LG,
+			f_semilinear, Surf_A,
+			argc, argv,
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "surface_classify after SCW->init" << endl;
@@ -434,9 +496,49 @@ int main(int argc, const char **argv)
 	cout << "classify_surfaces, we are done but all data is "
 			"still in memory, after doing a dump" << endl;
 #endif
-	//SCW->identify_Sa_and_print_table(verbose_level);
 
+	if (f_identify_Sa) {
+		SCW->identify_Sa_and_print_table(verbose_level);
+	}
+	if (f_isomorph) {
+		cout << "isomorph" << endl;
 
+		surface_create *SC1;
+		surface_create *SC2;
+		SC1 = NEW_OBJECT(surface_create);
+		SC2 = NEW_OBJECT(surface_create);
+
+		cout << "before SC1->init" << endl;
+		SC1->init(surface_descr_isomorph1, Surf_A, verbose_level);
+		cout << "after SC1->init" << endl;
+
+		cout << "before SC2->init" << endl;
+		SC2->init(surface_descr_isomorph2, Surf_A, verbose_level);
+		cout << "after SC2->init" << endl;
+
+		int isomorphic_to1;
+		int isomorphic_to2;
+		int *Elt_isomorphism_1to2;
+
+		Elt_isomorphism_1to2 = NEW_int(SCW->A->elt_size_in_int);
+		if (SCW->isomorphism_test_pairwise(
+				SC1, SC2,
+				isomorphic_to1, isomorphic_to2,
+				Elt_isomorphism_1to2,
+				verbose_level)) {
+			cout << "The surfaces are isomorphic, "
+					"an isomorphism is given by" << endl;
+			SCW->A->element_print(Elt_isomorphism_1to2, cout);
+			cout << "The surfaces belongs to iso type "
+					<< isomorphic_to1 << endl;
+		} else {
+			cout << "The surfaces are NOT isomorphic." << endl;
+			cout << "surface 1 belongs to iso type "
+					<< isomorphic_to1 << endl;
+			cout << "surface 2 belongs to iso type "
+					<< isomorphic_to2 << endl;
+		}
+	}
 
 
 #if 0
