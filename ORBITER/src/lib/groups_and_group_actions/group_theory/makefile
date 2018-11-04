@@ -12,6 +12,7 @@ MODULES = \
 	matrix_group.o \
 	perm_group.o \
 	schreier.o \
+	schreier_io.o \
 	schreier_sims.o \
 	sims.o \
 	sims2.o \

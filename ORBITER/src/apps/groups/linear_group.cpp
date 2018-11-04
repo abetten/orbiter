@@ -102,7 +102,24 @@ int main(int argc, const char **argv)
 
 	Sch->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
+			verbose_level - 1);
+
+	int orbit_idx = 0;
+	schreier *shallow_tree;
+
+	cout << "computing shallow Schreier tree:" << endl;
+
+	Sch->shallow_tree_generators(orbit_idx,
+			shallow_tree,
 			verbose_level);
+
+	cout << "computing shallow Schreier tree done." << endl;
+
+	sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", LG->prefix);
+
+	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
+			fname_tree_mask,
+			verbose_level - 1);
 
 
 	}

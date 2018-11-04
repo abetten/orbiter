@@ -111,7 +111,7 @@ int main(int argc, const char **argv)
 		}
 	Surf_A->init(Surf, f_semilinear, verbose_level);
 	if (f_v) {
-		cout << "create_surface_mainafter Surf_A->init" << endl;
+		cout << "create_surface_main after Surf_A->init" << endl;
 		}
 
 
@@ -123,10 +123,12 @@ int main(int argc, const char **argv)
 	cout << "after SC->init" << endl;
 
 	if (nb_transform) {
-		cout << "before SC->apply_transformations" << endl;
+		cout << "create_surface_main "
+				"before SC->apply_transformations" << endl;
 		SC->apply_transformations(transform_coeffs,
 				f_inverse_transform, nb_transform, verbose_level);
-		cout << "after SC->apply_transformations" << endl;
+		cout << "create_surface_main "
+				"after SC->apply_transformations" << endl;
 		}
 
 	int coeffs_out[20];
@@ -146,7 +148,8 @@ int main(int argc, const char **argv)
 
 	PG_element_normalize(*SC->F, SC->coeffs, 1, 20);
 
-	cout << "We have created the following surface:" << endl;
+	cout << "create_surface_main "
+			"We have created the following surface:" << endl;
 	cout << "$$" << endl;
 	SC->Surf->print_equation_tex(cout, SC->coeffs);
 	cout << endl;
@@ -284,6 +287,15 @@ int main(int argc, const char **argv)
 			int plane_rk_global;
 			int ds, ds_row;
 			SO = SoA->SO;
+
+			fp << endl;
+			fp << "\\bigskip" << endl;
+			fp << endl;
+			fp << "\\section{Points on the surface}" << endl;
+			fp << endl;
+
+			SO->print_affine_points_in_source_code(fp);
+
 
 			fp << endl;
 			fp << "\\bigskip" << endl;

@@ -5020,8 +5020,17 @@ int os_seconds_past_1970()
 	return a;
 }
 
-void povray_beginning(ostream &ost, double angle, int f_with_background)
+void povray_beginning(ostream &ost,
+		double angle,
+		const char *sky,
+		const char *location,
+		const char *look_at,
+		int f_with_background)
 // angle = 22 
+// sky <1,1,1>
+// location  <-3,1,3>
+// look_at = <0,0,0>
+// or <1,1,1>*-1/sqrt(3)
 {
 	ost << "//Files with predefined colors and textures" << endl;
 	ost << "#version 3.7;" << endl;
@@ -5092,11 +5101,11 @@ void povray_beginning(ostream &ost, double angle, int f_with_background)
 #else
 	ost << "//Place the camera" << endl;
 	ost << "camera {" << endl;
-	ost << "   sky <1,1,1> " << endl;
+	ost << "   sky " << sky << endl;
 	ost << "   //direction <1,0,0>" << endl;
 	ost << "   //right <1,1,0> " << endl;
-	ost << "   location  <-3,1,3>" << endl;
-	ost << "   look_at   <1,1,1>*-1/sqrt(3)" << endl;
+	ost << "   location  " << location << endl;
+	ost << "   look_at  " << look_at << endl;
 	ost << "   angle " << angle << "      //Angle of the view" << endl;
 	ost << "	// smaller numbers are closer. Must be less than 180" << endl;
 	ost << "}" << endl;

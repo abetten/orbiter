@@ -79,6 +79,15 @@ void read_magma_permutation_group(const char *fname, int degree,
 
 
 void double_vec_print(double *a, int len);
+void double_vec_linear_combination1(double c1, double *v1,
+		double *w, int len);
+void double_vec_linear_combination(double c1, double *v1,
+		double c2, double *v2, double *v3, int len);
+void double_vec_linear_combination3(
+		double c1, double *v1,
+		double c2, double *v2,
+		double c3, double *v3,
+		double *w, int len);
 void double_vec_add(double *a, double *b, double *c, int len);
 void double_vec_subtract(double *a, double *b, double *c, int len);
 void double_vec_scalar_multiple(double *a, double lambda, int len);

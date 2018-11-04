@@ -2952,6 +2952,7 @@ public:
 	void print_lines_with_points_on_them(ostream &ost);
 	void print_equation(ostream &ost);
 	void print_general(ostream &ost);
+	void print_affine_points_in_source_code(ostream &ost);
 	void print_points(ostream &ost);
 	void print_double_sixes(ostream &ost);
 	void print_trihedral_pairs(ostream &ost);

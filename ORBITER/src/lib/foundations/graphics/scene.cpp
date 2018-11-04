@@ -26,6 +26,7 @@ scene::~scene()
 
 void scene::null()
 {
+	line_radius = 0.05;
 	nb_lines = 0;
 	Line_coords = NULL;
 	nb_edges = 0;
@@ -43,6 +44,10 @@ void scene::null()
 	Face_points = NULL;
 
 	extra_data = NULL;
+
+	f_has_affine_space = FALSE;
+	affine_space_q = 0;
+	affine_space_starting_point = 0;
 }
 
 void scene::freeself()
@@ -198,21 +203,25 @@ void scene::transform_lines(scene *S,
 		mult_matrix_4x4(x, A4, xx);
 		mult_matrix_4x4(y, A4, yy);
 		if (ABS(xx[3]) < 0.0001) {
-			cout << "scene::transform_lines warning, point x is moved to infinity" << endl;
+			cout << "scene::transform_lines warning, "
+					"point x is moved to infinity" << endl;
 			exit(1);
 			}
 		if (ABS(yy[3]) < 0.0001) {
-			cout << "scene::transform_lines warning, point y is moved to infinity" << endl;
+			cout << "scene::transform_lines warning, "
+					"point y is moved to infinity" << endl;
 			exit(1);
 			}
 		double_vec_normalize_from_back(xx, 4);
 		if (ABS(xx[3] - 1.) > 0.0001) {
-			cout << "scene::transform_lines warning, point xx is not an affine point" << endl;
+			cout << "scene::transform_lines warning, "
+					"point xx is not an affine point" << endl;
 			exit(1);
 			}
 		double_vec_normalize_from_back(yy, 4);
 		if (ABS(yy[3] - 1.) > 0.0001) {
-			cout << "scene::transform_lines warning, point yy is not an affine point" << endl;
+			cout << "scene::transform_lines warning, "
+					"point yy is not an affine point" << endl;
 			exit(1);
 			}
 		if (line_centered(xx, yy, xxx, yyy, 10.)) {
@@ -266,12 +275,14 @@ void scene::transform_points(scene *S, double *A4, double *A4_inv,
 		x[3] = 1.;
 		mult_matrix_4x4(x, A4, xx);
 		if (ABS(xx[3]) < 0.0001) {
-			cout << "scene::transform_lines warning, point x is moved to infinity" << endl;
+			cout << "scene::transform_lines warning, "
+					"point x is moved to infinity" << endl;
 			exit(1);
 			}
 		double_vec_normalize_from_back(xx, 4);
 		if (ABS(xx[3] - 1.) > 0.0001) {
-			cout << "scene::transform_lines warning, point xx is not an affine point" << endl;
+			cout << "scene::transform_lines warning, "
+					"point xx is not an affine point" << endl;
 			exit(1);
 			}
 		S->point(xx[0], xx[1], xx[2]);
@@ -580,7 +591,8 @@ int scene::point_as_intersection_of_two_lines(int line1, int line2)
 		System[i * 3 + 1] = -1. * v[i];
 		System[i * 3 + 2] = y[i] - x[i];
 		}
-	// rk = Gauss_elimination(System, 3, 3, base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
+	// rk = Gauss_elimination(System, 3, 3,
+	//base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
 	ker = Null_space(System, 3, 3, Ker, 0 /* verbose_level */);
 	if (ker != 1) {
 		cout << "scene::point_as_intersection_of_two_lines ker != 1" << endl;
@@ -833,14 +845,14 @@ int scene::face5(int pt1, int pt2, int pt3, int pt4, int pt5)
 
 
 void scene::draw_lines_with_selection(int *selection, int nb_select, 
-	double r, const char *options, ostream &ost)
+	const char *options, ostream &ost)
 {
 	int i, j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
 	ost << endl;
-	ost << "	        #declare r=" << r << "; " << endl;
+	ost << "	        #declare r=" << line_radius << "; " << endl;
 	//ost << "                #declare b=4;" << endl;
 	ost << endl;
 	for (i = 0; i < nb_select; i++) {
@@ -869,14 +881,14 @@ void scene::draw_lines_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_line_with_selection(int line_idx, 
-	double r, const char *options, ostream &ost)
+	const char *options, ostream &ost)
 {
 	int j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
 	ost << endl;
-	ost << "	        #declare r=" << r << "; " << endl;
+	ost << "	        #declare r=" << line_radius << "; " << endl;
 	//ost << "                #declare b=4;" << endl;
 	ost << endl;
 	s = line_idx;
@@ -1031,14 +1043,14 @@ void scene::draw_lines_bj(ostream &ost)
 
 
 void scene::draw_edges_with_selection(int *selection, int nb_select, 
-	double rad, const char *options, ostream &ost)
+	const char *options, ostream &ost)
 {
 	int s, i, j, h, pt1, pt2;
 		
 	ost << endl;
 	ost << "	union{ // edges" << endl;
 	ost << endl;
-	ost << "	        #declare r=" << rad << " ; " << endl;
+	ost << "	        #declare r=" << line_radius << " ; " << endl;
 	ost << endl;
 	for (i = 0; i < nb_select; i++) {
 		s = selection[i];
@@ -1091,6 +1103,7 @@ void scene::draw_faces_with_selection(int *selection, int nb_select,
 void scene::draw_face(int idx, double thickness_half, const char *options, 
 	ostream &ost)
 {
+	int f_v = FALSE;
 	int *pts;
 	int nb_pts, i;
 	double *Pts_in;
@@ -1103,15 +1116,19 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	pts = Face_points[idx];
 	Pts_in = new double [nb_pts * 3];
 	Pts_out = new double [nb_pts * 2];
-	cout << "scene::draw_face" << endl;
+	if (f_v) {
+		cout << "scene::draw_face" << endl;
+	}
 	for (i = 0; i < nb_pts; i++) {
 		double_vec_copy(Point_coords + pts[i] * 3, Pts_in + i * 3, 3);
-		cout << "vertex i= " << i << " pts[i] = " << pts[i]
-				<< " x=" << Pts_in[i * 3 + 0]
-				<< " y=" << Pts_in[i * 3 + 1]
-				<< " z=" << Pts_in[i * 3 + 2]
-				<< endl;
+		if (f_v) {
+			cout << "vertex i= " << i << " pts[i] = " << pts[i]
+					<< " x=" << Pts_in[i * 3 + 0]
+					<< " y=" << Pts_in[i * 3 + 1]
+					<< " z=" << Pts_in[i * 3 + 2]
+					<< endl;
 		}
+	}
 
 #if 0
 	triangular_prism(P1, P2, P3, 
@@ -1152,7 +1169,8 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	ost << "\t\t\t " << options << " " << endl;
 	//ost << "\t\t\ttexture{ " << endl;
 	//ost << "\t\t\t\tpigment{color " << color << " }" << endl;
-	//ost << "\t\t\t\tfinish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8}" << endl;
+	//ost << "\t\t\t\tfinish {ambient 0.4 diffuse 0.5 "
+	//"roughness 0.001 reflection 0.1 specular .8}" << endl;
 	//ost << "\t\t\t}" << endl;
 	//ost << "rotate<" << -90 << ",0,0>" << endl;
 	ost << "\t\trotate<";
@@ -1177,7 +1195,8 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	delete [] Pts_out;
 }
 
-void scene::draw_text(const char *text, double thickness_half, double extra_spacing, 
+void scene::draw_text(const char *text,
+		double thickness_half, double extra_spacing,
 		double scale, 
 		double off_x, double off_y, double off_z, 
 		const char *color_options, 
@@ -1202,10 +1221,12 @@ void scene::draw_text(const char *text, double thickness_half, double extra_spac
 		cout << "x,y,z=" << x << ", " << y << " , " << z << endl;
 		}
 	if (f_v) {
-		cout << "view_x,view_y,view_z=" << view_x << ", " << view_y << " , " << view_z << endl;
+		cout << "view_x,view_y,view_z=" << view_x << ", "
+				<< view_y << " , " << view_z << endl;
 		}
 	if (f_v) {
-		cout << "up_x,up_y,up_z=" << up_x << ", " << up_y << " , " << up_z << endl;
+		cout << "up_x,up_y,up_z=" << up_x << ", " << up_y
+				<< " , " << up_z << endl;
 		}
 	u[0] = view_y * up_z - view_z * up_y;
 	u[1] = -1 *(view_x * up_z - up_x * view_z);
@@ -1261,7 +1282,8 @@ void scene::draw_text(const char *text, double thickness_half, double extra_spac
 		}
 
 	ost << "\t\ttext {" << endl;
-		ost << "\t\tttf \"timrom.ttf\" \"" << text << "\" " << thickness_half << ", " << extra_spacing << " " << endl;
+		ost << "\t\tttf \"timrom.ttf\" \"" << text << "\" "
+				<< thickness_half << ", " << extra_spacing << " " << endl;
 		ost << "\t\t" << color_options << endl;
 		ost << "\t\tscale " << scale << endl;
 		ost << "\t\trotate<0,180,0>" << endl;
@@ -1293,7 +1315,8 @@ void scene::draw_text(const char *text, double thickness_half, double extra_spac
 
 
 
-void scene::draw_planes_with_selection(int *selection, int nb_select, 
+void scene::draw_planes_with_selection(
+	int *selection, int nb_select,
 	const char *options, ostream &ost)
 // for instance color = "Orange transmit 0.5 "
 {
@@ -1323,7 +1346,8 @@ void scene::draw_planes_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_points_with_selection(int *selection, int nb_select, 
+void scene::draw_points_with_selection(
+	int *selection, int nb_select,
 	double rad, const char *options, ostream &ost)
 // rad = 0.06 works
 {
@@ -1350,7 +1374,8 @@ void scene::draw_points_with_selection(int *selection, int nb_select,
 	ost << "		" << options << " " << endl;
 	//ost << "		pigment{" << color << "}" << endl;
 	//ost << "		pigment{Cyan*1.3}" << endl;
-	//ost << "		finish {ambient 0.4 diffuse 0.6 roughness 0.001 reflection 0 specular .8} " << endl;
+	//ost << "		finish {ambient 0.4 diffuse 0.6 roughness 0.001 "
+	//"reflection 0 specular .8} " << endl;
 	ost << "	}" << endl;
 }
 
@@ -1379,7 +1404,8 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 	ost << "		" << options << " " << endl;
 	//ost << "		pigment{" << color << "}" << endl;
 	//ost << "		pigment{Cyan*1.3}" << endl;
-	//ost << "		finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} " << endl;
+	//ost << "		finish {ambient 0.4 diffuse 0.5 roughness 0.001 "
+	//"reflection 0.1 specular .8} " << endl;
 	ost << "		}" << endl;
 	ost << "	}" << endl;
 }
@@ -1409,7 +1435,8 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 	ost << "		" << options << " " << endl;
 	//ost << "		texture{ pigment{" << color << "}}" << endl;
 	//ost << "		pigment{Cyan*1.3}" << endl;
-	//ost << "		finish { phong albedo 0.9 phong_size 60 ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} " << endl;
+	//ost << "		finish { phong albedo 0.9 phong_size 60 ambient 0.4 "
+	//"diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} " << endl;
 	ost << "		}" << endl;
 	ost << "	}" << endl;
 }
@@ -1450,7 +1477,8 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	// direction vector of the line:
 	// we will need v[] later, hence we store this vector
 	for (i = 0; i < 3; i++) {
-		v[i] = Line_coords[line_idx * 6 + 3 + i] - Line_coords[line_idx * 6 + i];
+		v[i] = Line_coords[line_idx * 6 + 3 + i] -
+				Line_coords[line_idx * 6 + i];
 		M[i * 4 + 0] = v[i];
 		}
 	
@@ -1471,7 +1499,8 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 		B[2 * 3 + 2] = -1.;
 		}
 	else {
-		cout << "scene::intersect_line_and_plane ABS(B[0 * 3 + 0]) is too small" << endl;
+		cout << "scene::intersect_line_and_plane "
+				"ABS(B[0 * 3 + 0]) is too small" << endl;
 		exit(1);
 		}
 	// copy u:
@@ -1511,20 +1540,25 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	double lambda;
 
 	if (f_vv) {
-		cout << "scene::intersect_line_and_plane before Gauss elimination:" << endl;
+		cout << "scene::intersect_line_and_plane "
+				"before Gauss elimination:" << endl;
 		print_system(M, 3, 4);
 		}
 	
-	rk = Gauss_elimination(M, 3, 4, base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
+	rk = Gauss_elimination(M, 3, 4,
+			base_cols, TRUE /* f_complete */,
+			0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "scene::intersect_line_and_plane after Gauss elimination:" << endl;
+		cout << "scene::intersect_line_and_plane "
+				"after Gauss elimination:" << endl;
 		print_system(M, 3, 4);
 		}
 	
 
 	if (rk < 3) {
-		cout << "scene::intersect_line_and_plane the matrix M does not have full rank" << endl;
+		cout << "scene::intersect_line_and_plane "
+				"the matrix M does not have full rank" << endl;
 		return FALSE;
 		}
 	lambda = 1. * M[0 * 4 + 3];
@@ -1533,7 +1567,9 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 		}
 
 	if (f_vv) {
-		cout << "scene::intersect_line_and_plane The intersection point is " << B[0] << ", " << B[1] << ", " << B[2] << endl;
+		cout << "scene::intersect_line_and_plane "
+				"The intersection point is "
+				<< B[0] << ", " << B[1] << ", " << B[2] << endl;
 		}
 	point(B[0], B[1], B[2]);
 
@@ -1585,13 +1621,15 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 	// direction vector of line 1:
 	// we will need v[] later, hence we store this vector
 	for (i = 0; i < 3; i++) {
-		v[i] = Line_coords[line1_idx * 6 + 3 + i] - Line_coords[line1_idx * 6 + i];
+		v[i] = Line_coords[line1_idx * 6 + 3 + i] -
+				Line_coords[line1_idx * 6 + i];
 		M[i * 3 + 0] = v[i];
 		}
 	
 	// negative direction vector of line 2:
 	for (i = 0; i < 3; i++) {
-		M[i * 3 + 1] = -1. * (Line_coords[line2_idx * 6 + 3 + i] - Line_coords[line2_idx * 6 + i]);
+		M[i * 3 + 1] = -1. * (Line_coords[line2_idx * 6 + 3 + i] -
+				Line_coords[line2_idx * 6 + i]);
 		}
 
 
@@ -1600,20 +1638,25 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 	int base_cols[3];
 
 	if (f_vv) {
-		cout << "scene::intersect_line_and_line before Gauss elimination:" << endl;
+		cout << "scene::intersect_line_and_line "
+				"before Gauss elimination:" << endl;
 		print_system(M, 3, 3);
 		}
 	
-	rk = Gauss_elimination(M, 3, 3, base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
+	rk = Gauss_elimination(M, 3, 3,
+			base_cols, TRUE /* f_complete */,
+			0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "scene::intersect_line_and_line after Gauss elimination:" << endl;
+		cout << "scene::intersect_line_and_line "
+				"after Gauss elimination:" << endl;
 		print_system(M, 3, 3);
 		}
 	
 
 	if (rk < 2) {
-		cout << "scene::intersect_line_and_line the matrix M does not have full rank" << endl;
+		cout << "scene::intersect_line_and_line "
+				"the matrix M does not have full rank" << endl;
 		return FALSE;
 		}
 	lambda = M[0 * 3 + 2];
@@ -1622,7 +1665,9 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 		}
 
 	if (f_vv) {
-		cout << "scene::intersect_line_and_line The intersection point is " << B[0] << ", " << B[1] << ", " << B[2] << endl;
+		cout << "scene::intersect_line_and_line "
+				"The intersection point is "
+				<< B[0] << ", " << B[1] << ", " << B[2] << endl;
 		}
 	point(B[0], B[1], B[2]);
 
@@ -1634,7 +1679,8 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 }
 
 
-int scene::line_extended(double x1, double x2, double x3, 
+int scene::line_extended(
+	double x1, double x2, double x3,
 	double y1, double y2, double y3, double r)
 {
 	double d1, d2;
@@ -1650,7 +1696,9 @@ int scene::line_extended(double x1, double x2, double x3,
 	// solve 
 	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = 10^2
 	// which gives
-	// (v[0]^2+v[1]^2+v[2]^2) * \lambda^2 + (2*x1*v[0] + 2*x2*v[1] + 2*x3*v[2]) * \lambda + x1^2 + x2^2 + x3^2 - 10^2 = 0
+	// (v[0]^2+v[1]^2+v[2]^2) * \lambda^2 +
+	// (2*x1*v[0] + 2*x2*v[1] + 2*x3*v[2]) * \lambda +
+	// x1^2 + x2^2 + x3^2 - 10^2 = 0
 	a = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
 	b = 2 * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
 	c = x1 * x1 + x2 * x2 + x3 * x3 - r * r;
@@ -1701,7 +1749,8 @@ void scene::map_a_line(int line1, int line2,
 	nb_new_points = 0;
 	double_vec_copy(Line_coords + line_idx * 6, line_pt1_in, 3);
 	double_vec_copy(Line_coords + line_idx * 6 + 3, line_pt2_in, 3);
-	line_centered(line_pt1_in, line_pt2_in, line_pt1, line_pt2, spread /* r */);
+	line_centered(line_pt1_in, line_pt2_in,
+			line_pt1, line_pt2, spread /* r */);
 	
 	for (i = 0; i < 3; i++) {
 		direction[i] = line_pt2[i] - line_pt1[i];
@@ -1711,7 +1760,8 @@ void scene::map_a_line(int line1, int line2,
 		}
 	for (h = 0; h < nb_pts; h++) {
 		if (f_v) {
-			cout << "map_a_line point " << h << " / " << nb_pts << ":" << endl;
+			cout << "map_a_line point " << h << " / "
+					<< nb_pts << ":" << endl;
 			}
 		for (i = 0; i < 3; i++) {
 			line_pt[i] = line_pt1[i] + (double) h * direction_step[i];
@@ -1821,7 +1871,8 @@ int scene::map_a_point(int line1, int line2,
 	double_vec_normalize_from_back(K4, 4);
 	double_vec_normalize_from_back(K4 + 4, 4);
 	if (ABS(K4[3] - 1.) > 0.01 && ABS(K4[4 + 3] - 1.) > 0.01) {
-		cout << "K4 (1) and (2) are not affine points, this is not good" << endl;
+		cout << "K4 (1) and (2) are not affine points, "
+				"this is not good" << endl;
 		exit(1);
 		}
 	if (ABS(K4[3] - 1.) > 0.01) {
@@ -1830,7 +1881,8 @@ int scene::map_a_point(int line1, int line2,
 			}
 		double_vec_normalize_from_back(K4, 4);
 		if (ABS(K4[3] - 1.) > 0.01) {
-			cout << "after fixing, K4 (1) is not an affine point, this is not good" << endl;
+			cout << "after fixing, K4 (1) is not an affine point, "
+					"this is not good" << endl;
 			return FALSE;
 			}
 		}
@@ -1840,13 +1892,16 @@ int scene::map_a_point(int line1, int line2,
 			}
 		double_vec_normalize_from_back(K4 + 4, 4);
 		if (ABS(K4[4 + 3] - 1.) > 0.01) {
-			cout << "after fixing, K4 (2) is not an affine point, this is not good" << endl;
+			cout << "after fixing, K4 (2) is not an affine point, "
+					"this is not good" << endl;
 			return FALSE;
 			}
 		}
-	new_line_idx = line_extended(K4[0], K4[1], K4[2], K4[4 + 0], K4[4 + 1], K4[4 + 2], 10.);
+	new_line_idx = line_extended(K4[0], K4[1], K4[2],
+			K4[4 + 0], K4[4 + 1], K4[4 + 2], 10.);
 	
-	intersect_line_and_plane(new_line_idx, plane_idx, new_pt_idx, 0 /* verbose_level */);
+	intersect_line_and_plane(new_line_idx, plane_idx,
+			new_pt_idx, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "map_a_point done" << endl;
@@ -2070,7 +2125,8 @@ void scene::rescale(int first_pt_idx, double rad_desired)
 			}
 		}
 	a = rad_desired / rad;
-	double_vec_scalar_multiple(Point_coords + first_pt_idx * 3, a, 3 * (nb_points - first_pt_idx));
+	double_vec_scalar_multiple(Point_coords + first_pt_idx * 3,
+			a, 3 * (nb_points - first_pt_idx));
 }
 
 double scene::euclidean_distance(int pt1, int pt2)
@@ -2083,7 +2139,8 @@ double scene::euclidean_distance(int pt1, int pt2)
 double scene::distance_from_origin(int pt)
 {
 	double d;
-	d = ::distance_from_origin(Point_coords[pt * 3 + 0], Point_coords[pt * 3 + 1], Point_coords[pt * 3 + 2]);
+	d = ::distance_from_origin(Point_coords[pt * 3 + 0],
+			Point_coords[pt * 3 + 1], Point_coords[pt * 3 + 2]);
 	return d;
 }
 
@@ -2272,8 +2329,10 @@ void scene::Dodecahedron_edges(int first_pt_idx)
 	
 	for (i = 0; i < 20; i++) {
 		for (j = i + 1; j < 20; j++) {
-			d = distance_between_two_points(first_pt_idx + i, first_pt_idx + j);
-			//cout << "i=" << i << " j=" << j << " d=" << d << " two_over_phi=" << two_over_phi;
+			d = distance_between_two_points(
+					first_pt_idx + i, first_pt_idx + j);
+			//cout << "i=" << i << " j=" << j << " d="
+			//<< d << " two_over_phi=" << two_over_phi;
 			if (ABS(d - two_over_phi) < 0.2) {
 				cout << "EDGE " << i << ", " << j << endl;
 				edge(first_pt_idx + i, first_pt_idx + j);
@@ -2375,8 +2434,14 @@ void scene::create_five_plus_one()
 }
 
 
-void scene::create_Hilbert_model()
+void scene::create_Hilbert_model(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_Hilbert_model" << endl;
+	}
 	double p = 1.;
 	double m = -1.;
 	double px = p + 1;
@@ -2636,14 +2701,17 @@ void scene::create_Hilbert_model()
 		};
 	double A4_inv[16];
 
-	matrix_double_inverse(A4, A4_inv, 4, 1 /* verbose_level*/);
+	matrix_double_inverse(A4, A4_inv, 4, 0 /* verbose_level*/);
 
 	substitute_cubic_linear(coeff_in, coeff_out, 
 			A4_inv, 0 /*verbose_level*/);
-	cout << "i : coeff_in[i] : coeff_out[i]" << endl;
-	for (i = 0; i < 20; i++) {
-		cout << i << " : " << coeff_in[i] << " : " << coeff_out[i] << endl;
+
+	if (f_v) {
+		cout << "i : coeff_in[i] : coeff_out[i]" << endl;
+		for (i = 0; i < 20; i++) {
+			cout << i << " : " << coeff_in[i] << " : " << coeff_out[i] << endl;
 		}
+	}
 
 #if 0
 0 : 0 : 0
@@ -2703,7 +2771,7 @@ void scene::create_Hilbert_model()
 		0.,-1.,0,-1.,0,1, // 61 (previously 49)
 		0.,0.,-1.,-1.,1,0 // 62 (previously 50)
 		};
-	double r = sqrt(5);
+	double r = 3.6; //sqrt(5);
 	// lines 60-62 (previously 48,49,50)
 	for (i = 0; i < 3; i++) {
 		line_pt_and_dir(Lines + i * 6, r);
@@ -2712,18 +2780,21 @@ void scene::create_Hilbert_model()
 	// Cayleys ruled surface:
 	//X0X1X2 − X1^3 − X0^2X3
 	// XYZ - Y^3 - X^2 coeff (1 based) 6,11,4
-	double coeff_cayley_ruled[20] = {0,0,0,-1,0,1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0};
+	double coeff_cayley_ruled[20] =
+		{0,0,0,-1,0,1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0};
 	cubic(coeff_cayley_ruled); // cubic 4, Cayley / Chasles ruled
 
 	// -x + y - z^3
-	double coeff_cayley_ruled2[20] = {0,0,0,0,0,0,0,0,0,-1,0,0,0,0,1,0,-1,0,0,0};
+	double coeff_cayley_ruled2[20] =
+		{0,0,0,0,0,0,0,0,0,-1,0,0,0,0,1,0,-1,0,0,0};
 	cubic(coeff_cayley_ruled2); // cubic 5, Cayley / Chasles ruled
 	// xy-x^3-z (-1,1, 1,7, -1,19)
-	double coeff_cayley_ruled3[20] = {-1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,-1,0};
+	double coeff_cayley_ruled3[20] =
+		{-1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,-1,0};
 	cubic(coeff_cayley_ruled3); // cubic 6, Cayley / Chasles ruled
 
 
-	// create lines on Cayley's ruled urface:
+	// create lines on Cayley's ruled surface:
 	double Line[6];
 	double s0, s1;
 	r = 10;
@@ -2744,9 +2815,11 @@ void scene::create_Hilbert_model()
 			Line[3] = 0.;
 			Line[4] = s0;
 			Line[5] = s1;
-			cout << "creating line " << i << " phi=" << phi << " ";
-			double_vec_print(Line, 6);
-			cout << endl;
+			if (f_v) {
+				cout << "creating line " << i << " phi=" << phi << " ";
+				double_vec_print(Line, 6);
+				cout << endl;
+			}
 			if (line_pt_and_dir(Line, r)) {
 				nb_lines_actual++;
 				}
@@ -2755,9 +2828,11 @@ void scene::create_Hilbert_model()
 				}
 			}
 		}
-	cout << "nb_lines0 = " << nb_lines0 << endl;
-	cout << "nb_lines_actual = " << nb_lines_actual << endl;
-	cout << "nb_lines = " << nb_lines << endl;
+	if (f_v) {
+		cout << "nb_lines0 = " << nb_lines0 << endl;
+		cout << "nb_lines_actual = " << nb_lines_actual << endl;
+		cout << "nb_lines = " << nb_lines << endl;
+	}
 	point(0,0,0); // 38
 
 	double osculating_tangent_line[6] = {0,0,0,1,0,0};
@@ -2796,23 +2871,364 @@ void scene::create_Hilbert_model()
 	cubic(coeff_surf_lifted); // cubic 8, arc_lifting
 	}
 
-
 	int set[3];
 	int nCk = int_n_choose_k(8, 3);
 	int rk;
 	int first_three_face;
 
 	first_three_face = nb_faces;
-	cout << "first_three_face = " << first_three_face << endl;
+	if (f_v) {
+		cout << "first_three_face = " << first_three_face << endl;
+	}
 	for (rk = 0; rk < nCk; rk++) {
 		unrank_k_subset(rk, set, 8 /*n*/, 3 /*k*/);
 		face3(set[0], set[1], set[2]);
-		cout << "rk=" << rk << " set=";
-		int_vec_print(cout, set, 3);
-		cout << endl;
+		if (f_v) {
+			cout << "rk=" << rk << " set=";
+			int_vec_print(cout, set, 3);
+			cout << endl;
+		}
 	}
 
+
+	// the lines in long:
+	cout << "the long lines start at " << nb_lines << endl;
+	r = 3.6;
+	for (i = 0; i < 27; i++) {
+		line_pt_and_dir(Lines + i * 6, r);
+		}
+
+
+
+	if (f_v) {
+		cout << "scene::create_Hilbert_model done" << endl;
+	}
 }
 
 
+void scene::create_affine_space(int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_affine_space" << endl;
+	}
+
+	int x, y, z;
+	double half = 3.6 / sqrt(3);
+	double dx = 2 * half / (double) q;
+	double dx_half = dx * 0.5;
+	double center[3];
+	double basis[9];
+	double v[3];
+
+	basis[0] = sqrt(6) / 3.;
+	basis[1] = -1 * sqrt(6) / 6.;
+	basis[2] = -1 * sqrt(6) / 6.;
+	basis[3] = 0.;
+	basis[4] = sqrt(2) * 0.5;
+	basis[5] = -1 * sqrt(2) * 0.5;
+	basis[6] = -7./15.;
+	basis[7] = -7./15.;
+	basis[8] = -7./15.;
+
+
+	cout << "dx = " << dx << endl;
+	cout << "dx_half = " << dx_half << endl;
+	center[0] = -half;
+	center[1] = -half;
+	center[2] = -half;
+
+	f_has_affine_space = TRUE;
+	affine_space_q = 0;
+	affine_space_starting_point = nb_points;
+
+	cout << "start_point for affine space over F_" << q
+			<< "=" << affine_space_starting_point << endl;
+
+	for (x = 0; x < q; x++) {
+		for (y = 0; y < q; y++) {
+			for (z = 0; z < q; z++) {
+				double_vec_linear_combination3(
+						-half + x * dx + dx_half, basis + 0,
+						-half + y * dx + dx_half, basis + 3,
+						-half + z * dx + dx_half, basis + 6,
+						v, 3);
+
+				point(v[0], v[1], v[2]);
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "scene::create_affine_space done" << endl;
+	}
+}
+
+#if 0
+void scene::create_surface_13_1(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_surface_13_1" << endl;
+	}
+	int q = 13;
+	int Pts[] = {
+		0, 0, 0, 1,
+		1, 1, 1, 1,
+		8, 0, 0, 1,
+		0, 1, 0, 1,
+		12, 1, 0, 1,
+		0, 2, 0, 1,
+		3, 2, 0, 1,
+		0, 3, 0, 1,
+		7, 3, 0, 1,
+		0, 4, 0, 1,
+		11, 4, 0, 1,
+		0, 5, 0, 1,
+		2, 5, 0, 1,
+		0, 6, 0, 1,
+		6, 6, 0, 1,
+		0, 7, 0, 1,
+		10, 7, 0, 1,
+		0, 8, 0, 1,
+		1, 8, 0, 1,
+		0, 9, 0, 1,
+		5, 9, 0, 1,
+		0, 10, 0, 1,
+		9, 10, 0, 1,
+		0, 11, 0, 1,
+		0, 12, 0, 1,
+		4, 12, 0, 1,
+		0, 0, 1, 1,
+		5, 0, 1, 1,
+		12, 1, 1, 1,
+		2, 2, 1, 1,
+		6, 2, 1, 1,
+		0, 3, 1, 1,
+		3, 3, 1, 1,
+		4, 4, 1, 1,
+		7, 4, 1, 1,
+		1, 5, 1, 1,
+		5, 5, 1, 1,
+		6, 6, 1, 1,
+		8, 6, 1, 1,
+		2, 7, 1, 1,
+		7, 7, 1, 1,
+		8, 8, 1, 1,
+		9, 8, 1, 1,
+		3, 9, 1, 1,
+		9, 9, 1, 1,
+		10, 10, 1, 1,
+		4, 11, 1, 1,
+		11, 11, 1, 1,
+		11, 12, 1, 1,
+		12, 12, 1, 1,
+		0, 0, 2, 1,
+		2, 0, 2, 1,
+		3, 1, 2, 1,
+		11, 1, 2, 1,
+		6, 2, 2, 1,
+		7, 2, 2, 1,
+		3, 3, 2, 1,
+		9, 3, 2, 1,
+		12, 4, 2, 1,
+		2, 5, 2, 1,
+		8, 5, 2, 1,
+		4, 6, 2, 1,
+		5, 6, 2, 1,
+		0, 7, 2, 1,
+		8, 7, 2, 1,
+		9, 8, 2, 1,
+		11, 8, 2, 1,
+		1, 9, 2, 1,
+		5, 9, 2, 1,
+		1, 10, 2, 1,
+		4, 10, 2, 1,
+		7, 11, 2, 1,
+		10, 11, 2, 1,
+		6, 12, 2, 1,
+		10, 12, 2, 1,
+		0, 0, 3, 1,
+		12, 0, 3, 1,
+		5, 1, 3, 1,
+		10, 1, 3, 1,
+		7, 2, 3, 1,
+		11, 2, 3, 1,
+		4, 3, 3, 1,
+		1, 4, 3, 1,
+		10, 4, 3, 1,
+		3, 5, 3, 1,
+		11, 5, 3, 1,
+		8, 6, 3, 1,
+		9, 6, 3, 1,
+		2, 7, 3, 1,
+		5, 7, 3, 1,
+		2, 8, 3, 1,
+		8, 8, 3, 1,
+		1, 9, 3, 1,
+		12, 9, 3, 1,
+		7, 10, 3, 1,
+		9, 10, 3, 1,
+		0, 11, 3, 1,
+		6, 11, 3, 1,
+		3, 12, 3, 1,
+		6, 12, 3, 1,
+		0, 0, 4, 1,
+		9, 0, 4, 1,
+		7, 1, 4, 1,
+		9, 1, 4, 1,
+		0, 2, 4, 1,
+		10, 2, 4, 1,
+		1, 5, 4, 1,
+		4, 5, 4, 1,
+		5, 6, 4, 1,
+		7, 6, 4, 1,
+		1, 7, 4, 1,
+		5, 7, 4, 1,
+		10, 9, 4, 1,
+		4, 11, 4, 1,
+		0, 0, 5, 1,
+		6, 0, 5, 1,
+		8, 1, 5, 1,
+		9, 1, 5, 1,
+		4, 3, 5, 1,
+		9, 3, 5, 1,
+		4, 5, 5, 1,
+		5, 5, 5, 1,
+		0, 6, 5, 1,
+		7, 6, 5, 1,
+		6, 9, 5, 1,
+		8, 9, 5, 1,
+		5, 10, 5, 1,
+		7, 10, 5, 1,
+		0, 0, 6, 1,
+		3, 0, 6, 1,
+		7, 1, 6, 1,
+		11, 1, 6, 1,
+		6, 5, 6, 1,
+		7, 5, 6, 1,
+		2, 9, 6, 1,
+		6, 9, 6, 1,
+		0, 10, 6, 1,
+		10, 10, 6, 1,
+		2, 11, 6, 1,
+		10, 11, 6, 1,
+		3, 12, 6, 1,
+		11, 12, 6, 1,
+		0, 0, 7, 1,
+		0, 1, 7, 1,
+		6, 1, 7, 1,
+		2, 2, 7, 1,
+		10, 2, 7, 1,
+		7, 5, 7, 1,
+		10, 5, 7, 1,
+		2, 8, 7, 1,
+		7, 8, 7, 1,
+		4, 9, 7, 1,
+		11, 9, 7, 1,
+		4, 10, 7, 1,
+		0, 0, 8, 1,
+		10, 0, 8, 1,
+		2, 1, 8, 1,
+		5, 1, 8, 1,
+		1, 4, 8, 1,
+		10, 4, 8, 1,
+		0, 5, 8, 1,
+		8, 5, 8, 1,
+		7, 7, 8, 1,
+		8, 7, 8, 1,
+		2, 9, 8, 1,
+		7, 9, 8, 1,
+		1, 10, 8, 1,
+		5, 10, 8, 1,
+		0, 0, 9, 1,
+		7, 0, 9, 1,
+		4, 1, 9, 1,
+		12, 4, 9, 1,
+		3, 5, 9, 1,
+		9, 5, 9, 1,
+		4, 6, 9, 1,
+		9, 6, 9, 1,
+		0, 9, 9, 1,
+		3, 9, 9, 1,
+		7, 12, 9, 1,
+		12, 12, 9, 1,
+		0, 0, 10, 1,
+		4, 0, 10, 1,
+		3, 1, 10, 1,
+		6, 1, 10, 1,
+		3, 2, 10, 1,
+		11, 2, 10, 1,
+		7, 3, 10, 1,
+		12, 3, 10, 1,
+		4, 4, 10, 1,
+		7, 4, 10, 1,
+		6, 5, 10, 1,
+		10, 5, 10, 1,
+		11, 9, 10, 1,
+		12, 9, 10, 1,
+		0, 0, 11, 1,
+		1, 0, 11, 1,
+		2, 1, 11, 1,
+		8, 1, 11, 1,
+		0, 4, 11, 1,
+		11, 4, 11, 1,
+		9, 5, 11, 1,
+		11, 5, 11, 1,
+		1, 8, 11, 1,
+		7, 8, 11, 1,
+		8, 9, 11, 1,
+		9, 9, 11, 1,
+		2, 11, 11, 1,
+		7, 11, 11, 1,
+		0, 0, 12, 1,
+		11, 0, 12, 1,
+		1, 1, 12, 1,
+		10, 1, 12, 1,
+		12, 3, 12, 1,
+		12, 5, 12, 1,
+		1, 7, 12, 1,
+		10, 7, 12, 1,
+		0, 8, 12, 1,
+		11, 8, 12, 1,
+		4, 9, 12, 1,
+		7, 9, 12, 1,
+		4, 12, 12, 1,
+		7, 12, 12, 1,
+	};
+	int nb_affine_pts = 222;
+	int i, x, y, z;
+	double half = 3.6 / sqrt(3);
+	double dx = 2 * half / (double) q;
+	double dx_half = dx * 0.5;
+	double center[3];
+
+	cout << "dx = " << dx << endl;
+	cout << "dx_half = " << dx_half << endl;
+	center[0] = -half;
+	center[1] = -half;
+	center[2] = -half;
+
+	int start_point = nb_points;
+
+	cout << "start_point=" << start_point << endl;
+
+	for (i = 0; i < nb_affine_pts; i++) {
+		x = Pts[i * 4 + 0];
+		y = Pts[i * 4 + 1];
+		z = Pts[i * 4 + 2];
+		point(center[0] + x * dx + dx_half,
+				center[1] + y * dx + dx_half,
+				center[2] + z * dx + dx_half);
+	}
+
+	if (f_v) {
+		cout << "scene::create_surface_13_1 done" << endl;
+	}
+}
+#endif
 
