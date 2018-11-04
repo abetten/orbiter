@@ -265,7 +265,7 @@ void spread_create::apply_transformations(
 	int desired_sz;
 	
 	if (f_v) {
-		cout << "BLT_set_create::apply_transformations" << endl;
+		cout << "spread_create::apply_transformations" << endl;
 		}
 	
 	A = Surf_A->A;
@@ -288,7 +288,7 @@ void spread_create::apply_transformations(
 		int coeffs_out[20];
 	
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations "
+			cout << "spread_create::apply_transformations "
 					"applying transformation " << h << " / "
 					<< nb_transform << ":" << endl;
 			}
@@ -296,7 +296,7 @@ void spread_create::apply_transformations(
 		int_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
 
 		if (sz != desired_sz) {
-			cout << "BLT_set_create::apply_transformations "
+			cout << "spread_create::apply_transformations "
 					"need exactly " << desired_sz
 					<< " coefficients for the transformation" << endl;
 			cout << "transform_coeffs[h]=" << transform_coeffs[h] << endl;
@@ -316,7 +316,7 @@ void spread_create::apply_transformations(
 		A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
 
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations "
+			cout << "spread_create::apply_transformations "
 					"applying the transformation given by:" << endl;
 			cout << "$$" << endl;
 			A->print_quick(cout, Elt2);
@@ -343,7 +343,7 @@ void spread_create::apply_transformations(
 			}
 	
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations "
+			cout << "spread_create::apply_transformations "
 					"The equation of the transformed surface is:" << endl;
 			cout << "$$" << endl;
 			Surf->print_equation_tex(cout, coeffs_out);
@@ -357,7 +357,7 @@ void spread_create::apply_transformations(
 		
 		SG2 = NEW_OBJECT(strong_generators);
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations "
+			cout << "spread_create::apply_transformations "
 					"before SG2->init_generators_for_the_"
 					"conjugate_group_avGa" << endl;
 			}

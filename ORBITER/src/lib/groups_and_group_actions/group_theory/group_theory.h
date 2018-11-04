@@ -288,7 +288,8 @@ public:
 	void compute_elt_size(int verbose_level);
 	void init_base(action *A, int verbose_level);
 	void init_base_projective(action *A, int verbose_level);
-	// initializes base, base_len, degree, transversal_length, orbit, orbit_inv
+		// initializes base, base_len, degree,
+		// transversal_length, orbit, orbit_inv
 	void init_base_affine(action *A, int verbose_level);
 	void init_base_general_linear(action *A, int verbose_level);
 	void init_gl_classes(int verbose_level);
@@ -334,13 +335,15 @@ public:
 	void put_digit_frobenius(uchar *elt, int d);
 	void make_element(int *Elt, int *data, int verbose_level);
 	void make_GL_element(int *Elt, int *A, int f);
-	void orthogonal_group_random_generator(action *A, orthogonal *O, 
+	void orthogonal_group_random_generator(
+		action *A, orthogonal *O,
 		int f_siegel, 
 		int f_reflection, 
 		int f_similarity,
 		int f_semisimilarity, 
 		int *Elt, int verbose_level);
-	void matrices_without_eigenvector_one(sims *S, int *&Sol, int &cnt, 
+	void matrices_without_eigenvector_one(
+		sims *S, int *&Sol, int &cnt,
 		int f_path_select, int select_value, 
 		int verbose_level);
 	void matrix_minor(int *Elt, int *Elt1, 
@@ -417,17 +420,20 @@ public:
 
 
 
-void perm_group_find_strong_generators_at_level(int level, int degree, 
+#if 0
+void perm_group_find_strong_generators_at_level(
+	int level, int degree,
 	int given_base_length, int *given_base,
 	int nb_gens, int *gens, 
 	int &nb_generators_found, int *idx_generators_found);
-void perm_group_generators_direct_product(int nb_diagonal_elements,
+void perm_group_generators_direct_product(
+	int nb_diagonal_elements,
 	int degree1, int degree2, int &degree3, 
 	int nb_gens1, int nb_gens2, int &nb_gens3, 
 	int *gens1, int *gens2, int *&gens3, 
 	int base_len1, int base_len2, int &base_len3, 
 	int *base1, int *base2, int *&base3);
-
+#endif
 
 
 
@@ -448,6 +454,9 @@ public:
 		// [nb_gens][2 * A->degree], 
 		// allocated by init_images, 
 		// called from init_generators
+		// for each generator,
+		// stores the generator as permutation in 0..A->degree-1 ,
+		// then the inverse generator in A->degree..2*A->degree-1
 	
 	int *orbit; // [A->degree]
 	int *orbit_inv; // [A->degree]
@@ -494,57 +503,6 @@ public:
 	void init_generators_by_hdl(int nb_gen, int *gen_hdl, 
 		int verbose_level);
 	int get_image(int i, int gen_idx, int verbose_level);
-	void print_orbit_lengths(ostream &ost);
-	void print_orbit_length_distribution(ostream &ost);
-	void print_orbit_reps(ostream &ost);
-	void print(ostream &ost);
-	void print_and_list_orbits(ostream &ost);
-	void print_and_list_orbits_tex(ostream &ost);
-	void print_and_list_orbits_of_given_length(ostream &ost, 
-		int len);
-	void print_and_list_orbits_and_stabilizer(ostream &ost, 
-		action *default_action, longinteger_object &go, 
-		void (*print_point)(ostream &ost, int pt, void *data), 
-			void *data);
-	void print_and_list_orbits_using_labels(ostream &ost, 
-		int *labels);
-	void print_tables(ostream &ost, int f_with_cosetrep);
-	void print_tables_latex(ostream &ost, int f_with_cosetrep);
-	void print_generators();
-	void print_generators_latex(ostream &ost);
-	void print_generators_with_permutations();
-	void print_orbit(int orbit_no);
-	void print_orbit_using_labels(int orbit_no, int *labels);
-	void print_orbit(ostream &ost, int orbit_no);
-	void print_orbit_tex(ostream &ost, int orbit_no);
-	void print_and_list_orbit_and_stabilizer_tex(int i, 
-		action *default_action, 
-		longinteger_object &full_group_order, 
-		ostream &ost);
-	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
-		int i, action *default_action, 
-		strong_generators *gens, ostream &ost);
-	void print_and_list_orbit_tex(int i, ostream &ost);
-	void print_and_list_orbits_sorted_by_length_tex(ostream &ost);
-	void print_and_list_orbits_and_stabilizer_sorted_by_length(
-		ostream &ost, int f_tex, 
-		action *default_action, 
-		longinteger_object &full_group_order);
-	void print_fancy(
-		ostream &ost, int f_tex, 
-		action *default_action, strong_generators *gens_full_group);
-	void print_and_list_orbits_sorted_by_length(ostream &ost);
-	void print_and_list_orbits_sorted_by_length(ostream &ost, int f_tex);
-	void print_orbit_using_labels(ostream &ost, int orbit_no, int *labels);
-	void print_orbit_using_callback(ostream &ost, int orbit_no, 
-		void (*print_point)(ostream &ost, int pt, void *data), 
-		void *data);
-	void print_orbit_type(int f_backwards);
-	void list_all_orbits_tex(ostream &ost);
-	void print_orbit_through_labels(ostream &ost, 
-		int orbit_no, int *point_labels);
-	void print_orbit_sorted(ostream &ost, int orbit_no);
-	void print_orbit(int cur, int last);
 	void swap_points(int i, int j);
 	void move_point_here(int here, int pt);
 	int orbit_representative(int pt);
@@ -562,25 +520,10 @@ public:
 		// to the j-th point in the orbit.
 	void coset_rep_with_verbosity(int j, int verbose_level);
 	void coset_rep_inv(int j);
-	void get_schreier_vector(int *&sv, 
-		int f_trivial_group, int f_compact);
-	void get_schreier_vector_compact(int *&sv, 
-		int f_trivial_group);
-		// allocates and creates array sv[size] using NEW_int
-		// where size is n + 1 if  f_trivial_group is TRUE
-		// and size is 3 * n + 1 otherwise
-		// Here, n is the combined size of all orbits 
-		// counted by nb_orbits
-		// sv[0] is equal to n
-		// sv + 1 is the array point_list of size [n], 
-		// listing the point in increasing order
-		// if f_trivial_group, sv + 1 + n is the array prev[n] and 
-		// sv + 1 + 2 * n is the array label[n] 
-	void get_schreier_vector_ordinary(int *&sv);
-		// allocates and creates array sv[2 * A->degree] 
-		// using NEW_int
-		// sv[i * 2 + 0] is prev[i]
-		// sv[i * 2 + 1] is label[i]
+	void shallow_tree_generators(int orbit_idx,
+			schreier *&shallow_tree,
+			int verbose_level);
+	void compute_point_orbit(int pt, int verbose_level);
 	void extend_orbit(int *elt, int verbose_level);
 	void compute_all_point_orbits(int verbose_level);
 	void compute_all_point_orbits_with_prefered_reps(
@@ -591,7 +534,6 @@ public:
 	void compute_all_orbits_on_invariant_subset(int len, 
 		int *subset, int verbose_level);
 	int sum_up_orbit_lengths();
-	void compute_point_orbit(int pt, int verbose_level);
 	void non_trivial_random_schreier_generator(action *A_original, 
 		int verbose_level);
 		// computes non trivial random Schreier 
@@ -602,46 +544,6 @@ public:
 	void random_schreier_generator(int verbose_level);
 		// computes random Schreier generator into schreier_gen
 	void trace_back(int *path, int i, int &j);
-	void print_tree(int orbit_no);
-	void export_tree_as_layered_graph(int orbit_no,
-			const char *fname_mask,
-			int verbose_level);
-	void draw_forest(const char *fname_mask, 
-		int xmax, int ymax, 
-		int f_circletext, int rad, 
-		int f_embedded, int f_sideways, 
-		double scale, double line_width, 
-		int f_has_point_labels, int *point_labels, 
-		int verbose_level);
-	void draw_tree(const char *fname, int orbit_no, 
-		int xmax, int ymax, int f_circletext, int rad, 
-		int f_embedded, int f_sideways, 
-		double scale, double line_width, 
-		int f_has_point_labels, int *point_labels, 
-		int verbose_level);
-	void draw_tree2(const char *fname, int xmax, int ymax, 
-		int f_circletext, 
-		int *weight, int *placement_x, int max_depth, 
-		int i, int last, int rad, 
-		int f_embedded, int f_sideways, 
-		double scale, double line_width, 
-		int f_has_point_labels, int *point_labels, 
-		int verbose_level);
-	void subtree_draw_lines(mp_graphics &G, int f_circletext, 
-		int parent_x, int parent_y, int *weight, 
-		int *placement_x, int max_depth, int i, int last, 
-		int verbose_level);
-	void subtree_draw_vertices(mp_graphics &G, 
-		int f_circletext, int parent_x, int parent_y, int *weight, 
-		int *placement_x, int max_depth, int i, int last, int rad, 
-		int f_has_point_labels, int *point_labels, 
-		int verbose_level);
-	void subtree_place(int *weight, int *placement_x, 
-		int left, int right, int i, int last);
-	int subtree_calc_weight(int *weight, int &max_depth, 
-		int i, int last);
-	int subtree_depth_first(ostream &ost, int *path, int i, int last);
-	void print_path(ostream &ost, int *path, int l);
 	void intersection_vector(int *set, int len, 
 		int *intersection_cnt);
 	void orbits_on_invariant_subset_fast(int len, 
@@ -672,16 +574,6 @@ public:
 		int verbose_level);
 	void compute_orbit_statistic(int *set, int set_size, 
 		int *orbit_count, int verbose_level);
-	void test_sv(action *A, int *hdl_strong_generators, int *sv, 
-		int f_trivial_group, int f_compact, int verbose_level);
-	void write_to_memory_object(memory_object *m, int verbose_level);
-	void read_from_memory_object(memory_object *m, int verbose_level);
-	void write_file(char *fname, int verbose_level);
-	void read_file(const char *fname, int verbose_level);
-	void write_to_file_binary(ofstream &fp, int verbose_level);
-	void read_from_file_binary(ifstream &fp, int verbose_level);
-	void write_file_binary(char *fname, int verbose_level);
-	void read_file_binary(const char *fname, int verbose_level);
 	void orbits_as_set_of_sets(set_of_sets *&S, int verbose_level);
 	void get_orbit_reps(int *&Reps, int &nb_reps, int verbose_level);
 	int find_shortest_orbit_if_unique(int &idx);
@@ -690,11 +582,132 @@ public:
 	void get_orbit_lengths_once_each(int *&orbit_lengths, 
 		int &nb_orbit_lengths);
 	int orbit_number(int pt);
-	void latex(const char *fname);
 	void get_orbit_decomposition_scheme_of_graph(
 		int *Adj, int n, int *&Decomp_scheme, int verbose_level);
 	void list_elements_as_permutations_vertically(ostream &ost);
+	void get_schreier_vector(int *&sv,
+		int f_trivial_group, int f_compact);
+	void get_schreier_vector_compact(int *&sv,
+		int f_trivial_group);
+		// allocates and creates array sv[size] using NEW_int
+		// where size is n + 1 if  f_trivial_group is TRUE
+		// and size is 3 * n + 1 otherwise
+		// Here, n is the combined size of all orbits
+		// counted by nb_orbits
+		// sv[0] is equal to n
+		// sv + 1 is the array point_list of size [n],
+		// listing the point in increasing order
+		// if f_trivial_group, sv + 1 + n is the array prev[n] and
+		// sv + 1 + 2 * n is the array label[n]
+	void get_schreier_vector_ordinary(int *&sv);
+		// allocates and creates array sv[2 * A->degree]
+		// using NEW_int
+		// sv[i * 2 + 0] is prev[i]
+		// sv[i * 2 + 1] is label[i]
+	void test_sv(action *A, int *hdl_strong_generators, int *sv,
+		int f_trivial_group, int f_compact, int verbose_level);
 
+	// schreier_io.cpp:
+	void latex(const char *fname);
+	void print_orbit_lengths(ostream &ost);
+	void print_orbit_length_distribution(ostream &ost);
+	void print_orbit_reps(ostream &ost);
+	void print(ostream &ost);
+	void print_and_list_orbits(ostream &ost);
+	void print_and_list_orbits_tex(ostream &ost);
+	void print_and_list_orbits_of_given_length(ostream &ost,
+		int len);
+	void print_and_list_orbits_and_stabilizer(ostream &ost,
+		action *default_action, longinteger_object &go,
+		void (*print_point)(ostream &ost, int pt, void *data),
+			void *data);
+	void print_and_list_orbits_using_labels(ostream &ost,
+		int *labels);
+	void print_tables(ostream &ost, int f_with_cosetrep);
+	void print_tables_latex(ostream &ost, int f_with_cosetrep);
+	void print_generators();
+	void print_generators_latex(ostream &ost);
+	void print_generators_with_permutations();
+	void print_orbit(int orbit_no);
+	void print_orbit_using_labels(int orbit_no, int *labels);
+	void print_orbit(ostream &ost, int orbit_no);
+	void print_orbit_tex(ostream &ost, int orbit_no);
+	void print_and_list_orbit_and_stabilizer_tex(int i,
+		action *default_action,
+		longinteger_object &full_group_order,
+		ostream &ost);
+	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
+		int i, action *default_action,
+		strong_generators *gens, ostream &ost);
+	void print_and_list_orbit_tex(int i, ostream &ost);
+	void print_and_list_orbits_sorted_by_length_tex(ostream &ost);
+	void print_and_list_orbits_and_stabilizer_sorted_by_length(
+		ostream &ost, int f_tex,
+		action *default_action,
+		longinteger_object &full_group_order);
+	void print_fancy(
+		ostream &ost, int f_tex,
+		action *default_action, strong_generators *gens_full_group);
+	void print_and_list_orbits_sorted_by_length(ostream &ost);
+	void print_and_list_orbits_sorted_by_length(ostream &ost, int f_tex);
+	void print_orbit_using_labels(ostream &ost, int orbit_no, int *labels);
+	void print_orbit_using_callback(ostream &ost, int orbit_no,
+		void (*print_point)(ostream &ost, int pt, void *data),
+		void *data);
+	void print_orbit_type(int f_backwards);
+	void list_all_orbits_tex(ostream &ost);
+	void print_orbit_through_labels(ostream &ost,
+		int orbit_no, int *point_labels);
+	void print_orbit_sorted(ostream &ost, int orbit_no);
+	void print_orbit(int cur, int last);
+	void print_tree(int orbit_no);
+	void export_tree_as_layered_graph(int orbit_no,
+			const char *fname_mask,
+			int verbose_level);
+	void draw_forest(const char *fname_mask,
+		int xmax, int ymax,
+		int f_circletext, int rad,
+		int f_embedded, int f_sideways,
+		double scale, double line_width,
+		int f_has_point_labels, int *point_labels,
+		int verbose_level);
+	void draw_tree(const char *fname, int orbit_no,
+		int xmax, int ymax, int f_circletext, int rad,
+		int f_embedded, int f_sideways,
+		double scale, double line_width,
+		int f_has_point_labels, int *point_labels,
+		int verbose_level);
+	void draw_tree2(const char *fname, int xmax, int ymax,
+		int f_circletext,
+		int *weight, int *placement_x, int max_depth,
+		int i, int last, int rad,
+		int f_embedded, int f_sideways,
+		double scale, double line_width,
+		int f_has_point_labels, int *point_labels,
+		int verbose_level);
+	void subtree_draw_lines(mp_graphics &G, int f_circletext,
+		int parent_x, int parent_y, int *weight,
+		int *placement_x, int max_depth, int i, int last,
+		int verbose_level);
+	void subtree_draw_vertices(mp_graphics &G,
+		int f_circletext, int parent_x, int parent_y, int *weight,
+		int *placement_x, int max_depth, int i, int last, int rad,
+		int f_has_point_labels, int *point_labels,
+		int verbose_level);
+	void subtree_place(int *weight, int *placement_x,
+		int left, int right, int i, int last);
+	int subtree_calc_weight(int *weight, int &max_depth,
+		int i, int last);
+	int subtree_depth_first(ostream &ost, int *path, int i, int last);
+	void print_path(ostream &ost, int *path, int l);
+	void write_to_memory_object(memory_object *m, int verbose_level);
+	void read_from_memory_object(memory_object *m, int verbose_level);
+	void write_file(char *fname, int verbose_level);
+	void read_file(const char *fname, int verbose_level);
+	void write_to_file_binary(ofstream &fp, int verbose_level);
+	void read_from_file_binary(ifstream &fp, int verbose_level);
+	void write_file_binary(char *fname, int verbose_level);
+	void read_file_binary(const char *fname, int verbose_level);
 };
 
 // #############################################################################
@@ -1495,7 +1508,8 @@ public:
 	void element_move(int *A, int *B, int verbose_level);
 	void element_invert(int *A, int *Av, int verbose_level);
 	void compute_induced_permutation(int *Elt, int *perm);
-	void apply_permutation(int *Elt, int *v_in, int *v_out, int verbose_level);
+	void apply_permutation(int *Elt,
+			int *v_in, int *v_out, int verbose_level);
 	int offset_i(int i);
 	void create_matrix(int *Elt, int *A, int verbose_level);
 		// uses A1, A2
@@ -1503,7 +1517,8 @@ public:
 	void element_unpack(uchar *elt, int *Elt);
 	void put_digit(uchar *elt, int f, int i, int j, int d);
 	int get_digit(uchar *elt, int f, int i, int j);
-	void make_element_from_one_component(int *Elt, int f, int *Elt_component);
+	void make_element_from_one_component(int *Elt,
+			int f, int *Elt_component);
 	void make_element_from_permutation(int *Elt, int *perm);
 	void make_element(int *Elt, int *data, int verbose_level);
 	void element_print_easy(int *Elt, ostream &ost);

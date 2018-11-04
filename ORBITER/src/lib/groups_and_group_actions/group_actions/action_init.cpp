@@ -1330,6 +1330,7 @@ void action::init_affine_group(int n, int q,
 	FREE_int(given_base);
 }
 
+#if 0
 void action::init_affine_grid_group(int q1, int q2, 
 	int f_translations1, int f_translations2, 
 	int f_semilinear1, int frobenius_power1, 
@@ -1415,6 +1416,7 @@ void action::init_affine_grid_group(int q1, int q2,
 	FREE_int(given_base2);
 	FREE_int(given_base3);
 }
+#endif
 
 void action::init_symmetric_group(int degree, int verbose_level)
 {

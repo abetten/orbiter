@@ -1107,7 +1107,12 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 
 
 	f_semilinear = Mtx_n1->f_semilinear;
-	nb_gens = spread_stab_gens->len + /* 1 + */ n * F->e;
+	nb_gens = spread_stab_gens->len + 1 + n * F->e;
+	//nb_gens = spread_stab_gens->len + /* 1 + */ n * F->e;
+
+	int alpha;
+
+	alpha = F->primitive_root();
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_translation_"
@@ -1150,18 +1155,14 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 			a = spread_stab_gens->ith(h)[n * n];
 			M1[n1 * n1] = a;
 			}
-		//An1->make_element(gens->ith(h), M, 0 /*verbose_level*/);
 		}
 
-#if 0
+#if 1
 	if (f_v) {
 		cout << "strong_generators::generators_for_translation_"
 				"plane_in_andre_model making generators of "
 				"the second kind:" << endl;
 		}
-	int alpha;
-
-	alpha = F->primitive_root();
 	M1 = M + cnt * sz;
 	int_vec_zero(M1, n1 * n1);
 	for (i = 0; i < n1; i++) {
@@ -1170,8 +1171,6 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	if (f_semilinear) {
 		M1[n1 * n1] = 0;
 		}
-	//An1->make_element(gens->ith(spread_stab_gens->len),
-	//M, 0 /* verbose_level */);
 	cnt++;
 #endif
 
@@ -1182,10 +1181,6 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 				"the third kind:" << endl;
 		}
 
-	int alpha;
-
-	alpha = F->primitive_root();
-	
 	for (h = 0; h < n; h++) {
 		for (u = 0; u < F->e; u++, cnt++) {
 			M1 = M + cnt * sz;
@@ -1198,9 +1193,6 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 			if (f_semilinear) {
 				M1[n1 * n1] = 0;
 				}
-			//An1->make_element(gens->ith(
-			// spread_stab_gens->len + 1 + h * F->e + u), M,
-			// 0 /* verbose_level */);
 			}
 		}
 
@@ -1210,13 +1202,24 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		exit(1);
 		}
 
+	if (f_v) {
+		cout << "strong_generators::generators_for_translation_"
+				"plane_in_andre_model making generators:" << endl;
+		}
 	for (h = 0; h < nb_gens; h++) {
 		M1 = M + h * sz;
+		if (f_v) {
+			cout << "strong_generators::generators_for_translation_"
+					"plane_in_andre_model generator " << h << " / "
+					<< nb_gens << endl;
+			int_vec_print(cout, M1, sz);
+			cout << endl;
+			}
 		A_PGL_n1_q->make_element(my_gens->ith(h), M1, 0 /* verbose_level */);
 		}
 
 	longinteger_domain D;
-	longinteger_object target_go, aa, b, go;
+	longinteger_object target_go, aa, b, bb, c, go;
 	
 
 	spread_stab_go.assign_to(aa);
@@ -1228,7 +1231,14 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 				"has order " << aa << endl;
 		}
 	b.create_i_power_j(q, n);
-	D.mult(aa, b, target_go);
+	D.mult(aa, b, bb);
+	c.create(q - 1);
+	D.mult(bb, c, target_go);
+	if (f_v) {
+		cout << "strong_generators::generators_for_translation_"
+				"plane_in_andre_model plane stabilizer "
+				"target_go=" << target_go << endl;
+		}
 
 	sims *S;
 

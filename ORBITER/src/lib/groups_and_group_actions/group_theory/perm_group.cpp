@@ -132,7 +132,7 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 	int hdl;
 
 	if (f_v) {
-		cout << "perm_group::init_data()" << endl;
+		cout << "perm_group::init_data" << endl;
 		cout << "degree=" << degree << endl;
 		cout << "elt_size_int=" << elt_size_int << endl;
 		cout << "page_length_log=" << page_length_log << endl;
@@ -148,7 +148,7 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 
 	
 	if (f_vv) {
-		cout << "perm_group::init_data() "
+		cout << "perm_group::init_data "
 				"calling Elts->init()" << endl;
 		}
 	Elts->init(char_per_elt /* entry_size */,
@@ -157,14 +157,14 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 
 
 	if (f_vv) {
-		cout << "perm_group::init_data() "
+		cout << "perm_group::init_data "
 				"calling one()" << endl;
 		}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
-		cout << "perm_group::init_data() "
+		cout << "perm_group::init_data "
 				"calling Elts->store()" << endl;
 		}
 	hdl = Elts->store(elt1);
@@ -175,7 +175,7 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 	
 
 	if (f_vv) {
-		cout << "perm_group::init_data() "
+		cout << "perm_group::init_data "
 				"finished" << endl;
 		}
 	
@@ -210,13 +210,13 @@ void perm_group::init_with_base(int degree,
 
 	
 	if (f_v) {
-		cout << "perm_group::init()" << endl;
+		cout << "perm_group::init" << endl;
 		cout << "degree=" << A.degree << endl;
 		cout << "base_len=" << A.base_len << endl;
 		}
 	if (f_vv) {
-		cout << "perm_group::init() "
-				"calling Elts->init()" << endl;
+		cout << "perm_group::init "
+				"calling Elts->init" << endl;
 		}
 	Elts->init(char_per_elt /* entry_size */,
 			page_length_log, verbose_level - 2);
@@ -225,15 +225,15 @@ void perm_group::init_with_base(int degree,
 
 
 	if (f_vv) {
-		cout << "perm_group::init() "
+		cout << "perm_group::init "
 				"calling one()" << endl;
 		}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
-		cout << "perm_group::init() "
-				"calling Elts->store()" << endl;
+		cout << "perm_group::init "
+				"calling Elts->store" << endl;
 		}
 	hdl = Elts->store(elt1);
 	if (f_vv) {
@@ -242,7 +242,7 @@ void perm_group::init_with_base(int degree,
 		}
 	
 	if (f_vv) {
-		cout << "perm_group::init() "
+		cout << "perm_group::init "
 				"initializing base, and transversal_length" << endl;
 		}
 	A.type_G = perm_group_t;
@@ -274,7 +274,7 @@ void perm_group::init_with_base(int degree,
 	sprintf(A.group_prefix, "Sym%d", degree);
 
 	if (f_vv) {
-		cout << "perm_group::init() finished" << endl;
+		cout << "perm_group::init finished" << endl;
 		}
 	
 	FREE_int(tmp1);
@@ -469,7 +469,7 @@ void perm_group::make_element(int *Elt, int *data, int verbose_level)
 		}
 }
 
-
+#if 0
 
 //#############################################################################
 // global functions:
@@ -622,4 +622,5 @@ void perm_group_generators_direct_product(
 			}
 		}
 }
+#endif
 

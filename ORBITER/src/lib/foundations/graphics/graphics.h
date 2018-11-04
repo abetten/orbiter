@@ -497,6 +497,8 @@ void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
 class scene {
 public:
 	
+	double line_radius;
+
 	int nb_lines;
 	double *Line_coords;
 		// [nb_lines * 6] a line is given by two points
@@ -528,6 +530,10 @@ public:
 
 	
 	void *extra_data;
+
+	int f_has_affine_space;
+	int affine_space_q;
+	int affine_space_starting_point;
 
 
 	scene();
@@ -618,9 +624,9 @@ public:
 	int face4(int pt1, int pt2, int pt3, int pt4);
 	int face5(int pt1, int pt2, int pt3, int pt4, int pt5);
 	void draw_lines_with_selection(int *selection, int nb_select, 
-		double r, const char *options, ostream &ost);
+		const char *options, ostream &ost);
 	void draw_line_with_selection(int line_idx, 
-		double r, const char *options, ostream &ost);
+		const char *options, ostream &ost);
 	void draw_lines_cij_with_selection(int *selection, int nb_select, 
 		ostream &ost);
 	void draw_lines_cij(ostream &ost);
@@ -631,7 +637,7 @@ public:
 		ostream &ost);
 	void draw_lines_bj(ostream &ost);
 	void draw_edges_with_selection(int *selection, int nb_select, 
-		double rad, const char *options, ostream &ost);
+		const char *options, ostream &ost);
 	void draw_faces_with_selection(int *selection, int nb_select, 
 		double thickness_half, const char *options, ostream &ost);
 	void draw_face(int idx, double thickness_half, const char *options, 
@@ -692,7 +698,9 @@ public:
 	void clebsch_cubic();
 	double distance_between_two_points(int pt1, int pt2);
 	void create_five_plus_one();
-	void create_Hilbert_model();
+	void create_Hilbert_model(int verbose_level);
+	void create_affine_space(int q, int verbose_level);
+	//void create_surface_13_1(int verbose_level);
 
 };
 

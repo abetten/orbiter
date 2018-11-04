@@ -159,6 +159,7 @@ MODULES= \
 		groups_and_group_actions/group_theory/matrix_group.o \
 		groups_and_group_actions/group_theory/perm_group.o \
 		groups_and_group_actions/group_theory/schreier.o \
+		groups_and_group_actions/group_theory/schreier_io.o \
 		groups_and_group_actions/group_theory/schreier_sims.o \
 		groups_and_group_actions/group_theory/sims.o \
 		groups_and_group_actions/group_theory/sims2.o \

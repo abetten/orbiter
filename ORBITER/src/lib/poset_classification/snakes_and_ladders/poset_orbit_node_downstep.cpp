@@ -602,7 +602,8 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
-		cout << "poset_orbit_node::downstep_orbit_test_and_schreier_vector" << endl;
+		cout << "poset_orbit_node::downstep_orbit_"
+				"test_and_schreier_vector" << endl;
 		}
 	if (f_use_invariant_subset_if_available) {
 		check_orbits_wrapper(gen, Schreier,

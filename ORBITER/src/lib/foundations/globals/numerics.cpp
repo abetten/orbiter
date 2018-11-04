@@ -26,6 +26,39 @@ void double_vec_print(double *a, int len)
 	cout << ")";
 }
 
+void double_vec_linear_combination1(double c1, double *v1,
+		double *w, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		w[i] = c1 * v1[i];
+		}
+}
+
+void double_vec_linear_combination(double c1, double *v1,
+		double c2, double *v2, double *v3, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		v3[i] = c1 * v1[i] + c2 * v2[i];
+		}
+}
+
+void double_vec_linear_combination3(
+		double c1, double *v1,
+		double c2, double *v2,
+		double c3, double *v3,
+		double *w, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		w[i] = c1 * v1[i] + c2 * v2[i] + c3 * v3[i];
+		}
+}
+
 void double_vec_add(double *a, double *b, double *c, int len)
 {
 	int i;

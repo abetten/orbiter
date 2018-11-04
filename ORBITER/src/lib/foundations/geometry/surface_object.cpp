@@ -1446,6 +1446,33 @@ void surface_object::print_general(ostream &ost)
 	ost << endl;
 }
 
+void surface_object::print_affine_points_in_source_code(ostream &ost)
+{
+	int i, j, cnt;
+	int v[4];
+
+	//ost << "\\clearpage" << endl;
+	ost << "\\subsection*{Affine points on surface}" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	ost << "int Pts[] = {" << endl;
+	cnt = 0;
+	for (i = 0; i < nb_pts; i++) {
+		Surf->unrank_point(v, Pts[i]);
+		PG_element_normalize(*Surf->F, v, 1, 4);
+		if (v[3]) {
+			ost << "\t";
+			for (j = 0; j < 4; j++) {
+				ost << v[j] << ", ";
+			}
+			ost << endl;
+			cnt++;
+		}
+	}
+	ost << "};" << endl;
+	ost << "nb_affine_pts = " << cnt << ";" << endl;
+	ost << "\\end{verbatim}" << endl;
+}
+
 void surface_object::print_points(ostream &ost)
 {
 	int i, p, a, b, c;

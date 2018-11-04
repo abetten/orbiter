@@ -533,6 +533,7 @@ public:
 		int f_multiplication, 
 		int multiplication_order, int verbose_level);
 
+#if 0
 	/** Create the product of two affine groups AGL(n,q)
 	 * as abstract permutation groups in product action,
 	 * not as matrix group */
@@ -544,6 +545,7 @@ public:
 		int f_multiplication2, int multiplication_order2, 
 		int f_diagonal, 
 		int verbose_level);
+#endif
 
 	/** Create the symmetric group of degree degree
 	 * as abstract permutation group */
