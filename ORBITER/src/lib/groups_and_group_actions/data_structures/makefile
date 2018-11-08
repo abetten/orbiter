@@ -10,6 +10,7 @@ MODULES = \
 	orbit_transversal.o \
 	page_storage.o \
 	projective_space_with_action.o \
+	schreier_vector_handler.o \
 	schreier_vector.o \
 	set_and_stabilizer.o \
 	union_find.o \

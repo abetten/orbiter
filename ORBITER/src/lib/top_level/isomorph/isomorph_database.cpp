@@ -123,12 +123,12 @@ void isomorph::prepare_database_access(int cur_level, int verbose_level)
 				"cur_level=" << cur_level << endl;
 		}
 	if (cur_level == level - 1) {
-		//first_node = gen->first_oracle_node_at_level[level - 1];
+		//first_node = gen->first_poset_orbit_node_at_level[level - 1];
 		DB_level = D1;
 		fp_ge = fp_ge1;
 		}
 	else if (cur_level == level) {
-		//first_node = gen->first_oracle_node_at_level[level];
+		//first_node = gen->first_poset_orbit_node_at_level[level];
 		DB_level = D2;
 		fp_ge = fp_ge2;
 		}

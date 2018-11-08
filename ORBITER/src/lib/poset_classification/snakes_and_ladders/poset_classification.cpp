@@ -120,16 +120,16 @@ void poset_classification::print_progress_by_extension(int size,
 	
 	progress = level_progress(size);
 		
-	print_level_info(size + 1, prev);
+	print_level_info(size, prev);
 	cout << " **** Upstep extension " << cur_ex << " / "
 		<< root[prev].nb_extensions << " with "
 		<< nb_ext_cur << " n e w orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have " 
-		<< cur - first_poset_orbit_node_at_level[size + 1]
-		<< " nodes at level " << size + 1;
+		<< cur - first_poset_orbit_node_at_level[size]
+		<< " nodes at level " << size;
 		cout << ", ";
-	print_progress(size + 1, progress);
-	print_progress_by_level(size + 1);
+	print_progress(progress);
+	print_progress_by_level(size);
 }
 
 void poset_classification::print_progress(int size,
@@ -140,18 +140,18 @@ void poset_classification::print_progress(int size,
 	
 	progress = level_progress(size);
 		
-	print_level_info(size + 1, prev);
+	print_level_info(size, prev);
 	cout << " **** Upstep finished with " 
 		<< nb_ext_cur << " n e w orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have " 
-		<< cur - first_poset_orbit_node_at_level[size + 1]
-		<< " nodes at level " << size + 1;
+		<< cur - first_poset_orbit_node_at_level[size]
+		<< " nodes at level " << size;
 		cout << ", ";
-	print_progress(size + 1, progress);
-	print_progress_by_level(size + 1);
+	print_progress(progress);
+	print_progress_by_level(size);
 }
 
-void poset_classification::print_progress(int lvl, double progress)
+void poset_classification::print_progress(double progress)
 {
 	double progress0;
 	int progress1, progress2;
@@ -244,9 +244,7 @@ void poset_classification::get_set_by_level(int level, int node, int *set)
 	poset_orbit_node *O;
 	
 	O = get_node_ij(level, node);
-	//n = first_oracle_node_at_level[level] + node;
 	size = O->depth_of_node(this);
-	//size = root[n].depth_of_node(this);
 	if (size != level) {
 		cout << "poset_classification::get_set_by_level size != level" << endl;
 		exit(1);
@@ -787,7 +785,7 @@ void poset_classification::print_problem_label()
 		}
 }
 
-void poset_classification::print_level_info(int i, int prev)
+void poset_classification::print_level_info(int prev_level, int prev)
 {
 	int t1, dt;
 	
@@ -800,14 +798,14 @@ void poset_classification::print_level_info(int i, int prev)
 	cout << "Time ";
 	time_check_delta(cout, dt);
 	print_problem_label();
-	cout << " : Level " << i - 1 << " Node " << prev << " = " 
-		<< prev - first_poset_orbit_node_at_level[i - 1]
+	cout << " : Level " << prev_level << " Node " << prev << " = "
+		<< prev - first_poset_orbit_node_at_level[prev_level]
 		<< " / " 
-		<< nb_orbits_at_level(i - 1)
+		<< nb_orbits_at_level(prev_level)
 		<< " : ";
 }
 
-void poset_classification::print_level_extension_info(int i, 
+void poset_classification::print_level_extension_info(int prev_level,
 	int prev, int cur_extension)
 {
 #if 0
@@ -820,17 +818,17 @@ void poset_classification::print_level_extension_info(int i,
 	time_check_delta(cout, dt);
 	print_problem_label();
 #endif
-	cout << "Level " << i - 1 << " Node " << prev << " = " 
-		<< prev - first_poset_orbit_node_at_level[i - 1]
+	cout << "Level " << prev_level << " Node " << prev << " = "
+		<< prev - first_poset_orbit_node_at_level[prev_level]
 		<< " / " 
-		<< nb_orbits_at_level(i - 1)
+		<< nb_orbits_at_level(prev_level)
 		<< " Extension " << cur_extension 
 		<< " / " 
 		<< root[prev].nb_extensions 
 		<< " : ";
 }
 
-void poset_classification::print_level_extension_coset_info(int i, 
+void poset_classification::print_level_extension_coset_info(int prev_level,
 	int prev, int cur_extension, int coset, int nb_cosets)
 {
 #if 0
@@ -843,10 +841,10 @@ void poset_classification::print_level_extension_coset_info(int i,
 	time_check_delta(cout, dt);
 	print_problem_label();
 #endif
-	cout << "Level " << i - 1 << " Node " << prev << " = " 
-		<< prev - first_poset_orbit_node_at_level[i - 1]
+	cout << "Level " << prev_level << " Node " << prev << " = "
+		<< prev - first_poset_orbit_node_at_level[prev_level]
 		<< " / " 
-		<< nb_orbits_at_level(i - 1)
+		<< nb_orbits_at_level(prev_level)
 		<< " Extension " << cur_extension 
 		<< " / " 
 		<< root[prev].nb_extensions 
@@ -962,7 +960,8 @@ void poset_classification::print_tree()
 {
 	int i;
 	
-	cout << "poset_classification::print_tree nb_oracle_nodes_used="
+	cout << "poset_classification::print_tree "
+			"nb_poset_orbit_nodes_used="
 			<< nb_poset_orbit_nodes_used << endl;
 	for (i = 0; i < nb_poset_orbit_nodes_used; i++) {
 		print_node(i);
@@ -977,7 +976,7 @@ void poset_classification::get_table_of_nodes(int *&Table,
 	
 	if (f_v) {
 		cout << "poset_classification::get_table_of_nodes "
-				"nb_oracle_nodes_used=" << nb_poset_orbit_nodes_used << endl;
+				"nb_poset_orbit_nodes_used=" << nb_poset_orbit_nodes_used << endl;
 		}
 	nb_rows = nb_poset_orbit_nodes_used;
 	nb_cols = 6;
@@ -1010,11 +1009,11 @@ int poset_classification::count_live_points(int level,
 		int node_local, int f_compact, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_v2 = FALSE;
+	//int f_v2 = FALSE;
 	int node;
-	int *osv;
+	//int *osv;
 	int nb_points;
-	int *pt_list;
+	//int *pt_list;
 	//int *pt_list2;
 	//int a, i, j;
 	
@@ -1022,10 +1021,11 @@ int poset_classification::count_live_points(int level,
 		cout << "poset_classification::count_live_points" << endl;
 		}
 	node = first_poset_orbit_node_at_level[level] + node_local;
-	if (root[node].sv == NULL) {
+	if (root[node].Schreier_vector == NULL) {
 		root[node].compute_schreier_vector(this, 
 			level, f_compact, verbose_level - 2);
 		}
+#if 0
 	osv = root[node].sv;
 	nb_points = osv[0];
 	pt_list = osv + 1;
@@ -1034,6 +1034,10 @@ int poset_classification::count_live_points(int level,
 		int_vec_print(cout, pt_list, nb_points);
 		cout << endl;
 		}
+#else
+	nb_points = root[node].get_nb_of_live_points();
+#endif
+
 
 #if 0
 	pt_list2 = NEW_int(nb_points);
@@ -1519,6 +1523,7 @@ void poset_classification::test_property(int depth,
 		}
 }
 
+#if 0
 void poset_classification::print_schreier_vectors_at_depth(
 		int depth, int verbose_level)
 {
@@ -1569,6 +1574,7 @@ void poset_classification::print_schreier_vector(int depth,
 
 	schreier_vector_print_tree(sv, 0 /*verbose_level */);
 }
+#endif
 
 void poset_classification::list_whole_orbit(int depth, int orbit_idx, 
 	int f_has_print_function, 
@@ -1733,7 +1739,6 @@ void poset_classification::map_to_canonical_k_subset(int *the_set,
 
 
 	// trace the subset:
-	//f = first_oracle_node_at_level[subset_size];
 	
 	if (f_vv) {
 		cout << "poset_classification::map_to_canonical_k_subset "
@@ -1785,13 +1790,15 @@ void poset_classification::get_representative_of_subset_orbit(
 	poset_orbit_node *O;
 
 	if (f_v) {
-		cout << "poset_classification::get_representative_of_subset_orbit "
+		cout << "poset_classification::get_representative_"
+				"of_subset_orbit "
 				"verbose_level=" << verbose_level << endl;
 		}
 	fst = first_poset_orbit_node_at_level[size];
 	node = fst + local_orbit_no;
 	if (f_vv) {
-		cout << "poset_classification::get_representative_of_subset_orbit "
+		cout << "poset_classification::get_representative_"
+				"of_subset_orbit "
 				"before get_set" << endl;
 		}
 	get_set(node, set, sz);
@@ -1801,12 +1808,14 @@ void poset_classification::get_representative_of_subset_orbit(
 		}
 	O = root + node;
 	if (f_vv) {
-		cout << "poset_classification::get_representative_of_subset_orbit "
+		cout << "poset_classification::get_representative_"
+				"of_subset_orbit "
 				"before get_stabilizer_poset_classifications" << endl;
 		}
 	O->get_stabilizer_generators(this, Strong_gens, 0);
 	if (f_v) {
-		cout << "poset_classification::get_representative_of_subset_orbit done" << endl;
+		cout << "poset_classification::get_representative_"
+				"of_subset_orbit done" << endl;
 		}
 }
 
@@ -2032,7 +2041,8 @@ void poset_classification::get_orbit_representatives(int level,
 	int i;
 
 	if (f_v) {
-		cout << "poset_classification::get_orbit_representatives" << endl;
+		cout << "poset_classification::get_orbit_"
+				"representatives" << endl;
 		}
 	nb_orbits = nb_orbits_at_level(level);
 	if (f_v) {
@@ -2045,7 +2055,8 @@ void poset_classification::get_orbit_representatives(int level,
 		}
 	
 	if (f_v) {
-		cout << "poset_classification::get_orbit_representatives done" << endl;
+		cout << "poset_classification::get_orbit_"
+				"representatives done" << endl;
 		}
 }
 
@@ -2083,7 +2094,8 @@ void poset_classification::rank_basis(int *Basis, int *S, int len)
 }
 
 
-void poset_classification::generate_source_code(int level, int verbose_level)
+void poset_classification::generate_source_code(
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2103,7 +2115,6 @@ void poset_classification::generate_source_code(int level, int verbose_level)
 	sprintf(fname, "%s.C", my_prefix);
 
 	set = NEW_int(level);
-	//f = first_oracle_node_at_level[level];
 	nb_iso = nb_orbits_at_level(level);
 
 
@@ -2173,7 +2184,8 @@ void poset_classification::generate_source_code(int level, int verbose_level)
 		for (j = 0; j < stab_gens_len[iso_type]; j++) {
 			if (f_vv) {
 				cout << "poset_classification::generate_source_code "
-						"before extract_strong_generators_in_order poset_classification "
+						"before extract_strong_generators_in_order "
+						"poset_classification "
 						<< j << " / " << stab_gens_len[iso_type] << endl;
 				}
 			fp << "\t";

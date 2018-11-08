@@ -72,6 +72,9 @@ public:
 	strong_generators *Strong_gens;
 	longinteger_object go;
 
+	schreier_vector_handler *Schreier_vector_handler;
+
+
 	// used as storage for the current set:
 	int *S; // [sz]
 	
@@ -251,7 +254,7 @@ public:
 		int prev, int cur_ex, int nb_ext_cur, int nb_fuse_cur);
 	void print_progress(int size, int cur, int prev, 
 		int nb_ext_cur, int nb_fuse_cur);
-	void print_progress(int lvl, double progress);
+	void print_progress(double progress);
 	void print_progress_by_level(int lvl);
 	void print_orbit_numbers(int depth);
 	void print_statistic_on_callbacks_naked();
@@ -271,7 +274,8 @@ public:
 	int find_poset_orbit_node_for_set_basic(int from, 
 		int node, int len, int *set, int f_tolerant, 
 		int verbose_level);
-	void poset_orbit_node_depth_breadth_perm_and_inverse(int max_depth, 
+	void poset_orbit_node_depth_breadth_perm_and_inverse(
+		int max_depth,
 		int *&perm, int *&perm_inv, int verbose_level);
 	int count_extension_nodes_at_level(int lvl);
 	double level_progress(int lvl);
@@ -282,19 +286,21 @@ public:
 		ostream &ost);
 	void stabilizer_order(int node, longinteger_object &go);
 	int check_the_set(int len, int *S, int verbose_level);
-	int check_the_set_incrementally(int len, int *S, int verbose_level);
+	int check_the_set_incrementally(int len, int *S,
+		int verbose_level);
 
-	void orbit_length(int orbit_at_level, int level, longinteger_object &len);
+	void orbit_length(int orbit_at_level, int level,
+		longinteger_object &len);
 	void get_orbit_length_and_stabilizer_order(int node, int level, 
 		longinteger_object &stab_order, longinteger_object &len);
 	int orbit_length_as_int(int orbit_at_level, int level);
 	void print_representatives_at_level(int lvl);
 	void print_lex_rank(int *set, int sz);
 	void print_problem_label();
-	void print_level_info(int i, int prev);
-	void print_level_extension_info(int i, 
+	void print_level_info(int prev_level, int prev);
+	void print_level_extension_info(int prev_level,
 		int prev, int cur_extension);
-	void print_level_extension_coset_info(int i, 
+	void print_level_extension_coset_info(int prev_level,
 		int prev, int cur_extension, int coset, int nb_cosets);
 	void recreate_schreier_vectors_up_to_level(int lvl, 
 		int f_compact, int verbose_level);
@@ -349,9 +355,10 @@ public:
 		int (*test_property_function)(int len, int *S, void *data), 
 		void *test_property_data, 
 		int &nb, int *&Orbit_idx);
-	void print_schreier_vectors_at_depth(int depth, int verbose_level);
-	void print_schreier_vector(int depth, int orbit_idx, 
-		int verbose_level);
+	//void print_schreier_vectors_at_depth(int depth,
+	//	int verbose_level);
+	//void print_schreier_vector(int depth, int orbit_idx,
+	//	int verbose_level);
 	void list_whole_orbit(int depth, int orbit_idx, 
 		int f_has_print_function, 
 		void (*print_function)(int len, int *S, void *data), 
@@ -422,7 +429,8 @@ public:
 		int *invariant_subset, int invariant_subset_size, 
 		int verbose_level);
 	void init_root_node(int verbose_level);
-	void init_poset_orbit_node(int nb_poset_orbit_nodes, int verbose_level);
+	void init_poset_orbit_node(int nb_poset_orbit_nodes,
+		int verbose_level);
 	void exit_poset_orbit_node();
 	void reallocate();
 	void reallocate_to(int new_number_of_nodes, int verbose_level);
@@ -483,13 +491,13 @@ public:
 		// inside the schreier vector data structure (sv).
 	void extend_level(int size, 
 		int f_create_schreier_vector, 
-		int f_compact, 
 		int f_use_invariant_subset_if_available, 
 		int f_debug, 
 		int f_write_candidate_file, 
 		int verbose_level);
 		// calls downstep, upstep
-	void downstep(int size, int f_create_schreier_vector, int f_compact, 
+	void downstep(int size,
+		int f_create_schreier_vector,
 		int f_use_invariant_subset_if_available, 
 		int verbose_level);
 		// calls root[prev].downstep_subspace_action 
@@ -497,7 +505,8 @@ public:
 	void upstep(int size, int f_debug, 
 		int verbose_level);
 		// calls extend_node
-	void extend_node(int size, int prev, int &cur, 
+	void extend_node(int size,
+		int prev, int &cur,
 		int f_debug, 
 		int f_indicate_not_canonicals, FILE *fp,
 		int verbose_level);
@@ -725,7 +734,8 @@ public:
 	int nb_extensions;
 	extension *E;
 	
-	int *sv;
+	//int *sv;
+	schreier_vector *Schreier_vector;
 	
 	// poset_orbit_node.C:
 	poset_orbit_node();
@@ -765,6 +775,7 @@ public:
 		int verbose_level);
 	int get_level(poset_classification *gen);
 	int get_node_in_level(poset_classification *gen);
+	int *live_points();
 	int get_nb_of_live_points();
 	int get_nb_of_orbits_under_stabilizer();
 	void get_stabilizer_order(poset_classification *gen,
@@ -808,7 +819,7 @@ public:
 	void print_set(poset_classification *gen);
 	void print_node(poset_classification *gen);
 	void print_extensions(poset_classification *gen);
-	void reconstruct_extensions_from_sv(poset_classification *gen, 
+	void reconstruct_extensions_from_sv(poset_classification *gen,
 		int verbose_level);
 
 	// in poset_orbit_node_io.C:
@@ -816,8 +827,10 @@ public:
 		int &nb_group_elements, int verbose_level);
 	void write_memory_object(action *A, memory_object *m, 
 		int &nb_group_elements, int verbose_level);
-	void sv_read_file(FILE *fp, int verbose_level);
-	void sv_write_file(FILE *fp, int verbose_level);
+	void sv_read_file(poset_classification *PC,
+			FILE *fp, int verbose_level);
+	void sv_write_file(poset_classification *PC,
+			FILE *fp, int verbose_level);
 	void read_file(action *A, FILE *fp, int &nb_group_elements, 
 		int verbose_level);
 	void write_file(action *A, FILE *fp, int &nb_group_elements, 
@@ -888,9 +901,9 @@ public:
 
 	// poset_orbit_node_downstep.C
 	// top level functions:
-	void downstep(poset_classification *gen, 
+	void downstep(poset_classification *gen,
 		int lvl, 
-		int f_create_schreier_vector, int f_compact, 
+		int f_create_schreier_vector,
 		int f_use_invariant_subset_if_available, 
 		int f_implicit_fusion, 
 		int verbose_level);
@@ -933,7 +946,6 @@ public:
 		int f_use_invariant_subset_if_available, 
 		int f_using_invariant_subset,
 		int f_create_schreier_vector,
-		int f_compact, 
 		int &nb_good_orbits, int &nb_points, 
 		int verbose_level);
 		// called from downstep once downstep_orbits is completed
@@ -989,8 +1001,8 @@ public:
 		// are used in pairs.
 		// Except, the order in which the function is used matters.
 		// Calls check_orbits
-	void create_schreier_vector_wrapper(int f_create_schreier_vector, 
-		int f_compact, 
+	void create_schreier_vector_wrapper(
+		int f_create_schreier_vector,
 		schreier &Schreier, int verbose_level);
 		// called from downstep_orbit_test_and_schreier_vector
 		// calls Schreier.get_schreier_vector
@@ -1057,7 +1069,7 @@ public:
 	void downstep_subspace_action(
 		poset_classification *gen,
 		int lvl, 
-		int f_create_schreier_vector, int f_compact, 
+		int f_create_schreier_vector,
 		int f_use_invariant_subset_if_available, 
 		int f_implicit_fusion, 
 		int verbose_level);
@@ -1072,16 +1084,12 @@ public:
 		action *A_factor_space, action_on_factor_space *AF, 
 		int lvl, int f_implicit_fusion, int verbose_level);
 	void create_schreier_vector_wrapper_subspace_action(
-		int f_create_schreier_vector, int f_compact, 
+		int f_create_schreier_vector,
 		schreier &Schreier, 
 		action *A_factor_space, action_on_factor_space *AF, 
 		int verbose_level);
 };
 
-
-// poset_orbit_node_downstep_subspace_action.C:
-void schreier_vector_relabel_points(int *sv, action_on_factor_space *AF, 
-	int f_compact, int f_trivial_group, int verbose_level);
 
 
 
@@ -1117,7 +1125,7 @@ struct coset_table_entry {
 class upstep_work {
 public:
 	poset_classification *gen;
-	int size;
+	int size; // size = size of the object at prev
 	int prev;
 	int prev_ex;
 	int cur;

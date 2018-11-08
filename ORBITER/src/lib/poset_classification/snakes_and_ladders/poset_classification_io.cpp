@@ -349,14 +349,14 @@ void poset_classification::read_sv_level_file_binary2(int level, FILE *fp,
 			if ((i % split_mod) != split_case)
 				continue;
 			}
-		root[f + i].sv_read_file(fp, verbose_level - 2);
+		root[f + i].sv_read_file(this, fp, verbose_level - 2);
 		if (f_recreate_extensions) {
 			root[f + i].reconstruct_extensions_from_sv(
 					this, verbose_level - 1);
 			}
 		if (f_dont_keep_sv) {
-			FREE_int(root[f + i].sv);
-			root[f + i].sv = NULL;
+			FREE_OBJECT(root[f + i].Schreier_vector);
+			root[f + i].Schreier_vector = NULL;
 			}
 		}
 	I = fread_int4(fp);
@@ -394,7 +394,7 @@ void poset_classification::write_sv_level_file_binary2(int level, FILE *fp,
 			if ((i % split_mod) != split_case)
 				continue;
 			}
-		root[f + i].sv_write_file(fp, verbose_level - 2);
+		root[f + i].sv_write_file(this, fp, verbose_level - 2);
 		}
 	fwrite_int4(fp, MAGIC_SYNC);
 	// a check to see if the file is not corrupt
@@ -638,12 +638,20 @@ void poset_classification::write_candidates_binary_using_sv(char *fname_base,
 	cand_first = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		node = fst + i;
-		int *osv = root[node].sv;
+		if (root[node].Schreier_vector == NULL) {
+			cout << "poset_classification::write_candidates_binary_using_sv "
+					"node " << i << " / " << len
+					<< " no schreier vector" << endl;
+		}
+		nb = root[node].get_nb_of_live_points();
+		//int *osv = root[node].sv;
 
 		if (f_vv) {
 			cout << "poset_classification::write_candidates_binary_using_sv "
 					"node " << i << " / " << len << endl;
 			}
+
+#if 0
 		if (osv == NULL) {
 			cout << "poset_classification::write_candidates_binary_using_sv "
 					"osv == NULL, we don't have a Schreier vector; "
@@ -658,6 +666,7 @@ void poset_classification::write_candidates_binary_using_sv(char *fname_base,
 					"nb=" << nb << endl;
 			}
 		subset = osv + 1;
+#endif
 		nb_cand[i] = nb;
 		total_nb_cand += nb;
 		}
@@ -669,9 +678,13 @@ void poset_classification::write_candidates_binary_using_sv(char *fname_base,
 	pos = 0;
 	for (i = 0; i < len; i++) {
 		node = fst + i;
+		int nb = root[node].get_nb_of_live_points();
+		subset = root[node].live_points();
+#if 0
 		int *osv = root[node].sv;
 		nb = osv[0];
 		subset = osv + 1;
+#endif
 		cand_first[i] = pos;
 		for (j = 0; j < nb; j++) {
 			Cand[pos + j] = subset[j];
@@ -840,7 +853,7 @@ void poset_classification::read_level_file(int level,
 		O->tl = NULL;
 		O->nb_extensions = 0;
 		O->E = NULL;
-		O->sv = NULL;
+		O->Schreier_vector = NULL;
 
 		{
 		group Aut;
@@ -1026,7 +1039,6 @@ void poset_classification::read_memory_object(int &depth_completed,
 	int f_vv = (verbose_level >= 2);
 	int i, nb_nodes, version, magic_sync;
 	
-	//nb_nodes = first_oracle_node_at_level[depth_completed + 1];
 	if (f_v) {
 		cout << "poset_classification::read_memory_object, "
 				"data size (in chars) = " << m->used_length << endl;
@@ -1056,7 +1068,6 @@ void poset_classification::read_memory_object(int &depth_completed,
 				"nb_nodes = " << nb_nodes << endl;
 		}
 
-	//G->init_oracle(nb_nodes);
 
 #if 1
 	if (nb_nodes > nb_poset_orbit_nodes_allocated) {
@@ -1518,7 +1529,6 @@ void poset_classification::make_spreadsheet_of_level_info(
 	
 	for (level = 0; level <= max_depth; level++) {
 
-		//first = first_oracle_node_at_level[level];
 		nb_orbits = nb_orbits_at_level(level);
 
 

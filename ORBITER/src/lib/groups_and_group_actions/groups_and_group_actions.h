@@ -53,6 +53,8 @@ typedef class action_on_subgroups action_on_subgroups;
 typedef class orbit_transversal orbit_transversal;
 typedef class wreath_product wreath_product;
 typedef class direct_product direct_product;
+typedef class schreier_vector_handler schreier_vector_handler;
+typedef class schreier_vector schreier_vector;
 
 
 enum symmetry_group_type { 

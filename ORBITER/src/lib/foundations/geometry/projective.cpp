@@ -488,7 +488,7 @@ void PG_element_unrank_modified(finite_field &GFq,
 	
 	n = len;
 	if (n <= 0) {
-		cout << "PG_element_unrank_modified() len <= 0" << endl;
+		cout << "PG_element_unrank_modified len <= 0" << endl;
 		exit(1);
 		}
 	if (a < n) {
@@ -548,7 +548,7 @@ void PG_element_unrank_modified(finite_field &GFq,
 			}
 		return;
 		}
-	cout << "PG_element_unrank_modified() a too large" << endl;
+	cout << "PG_element_unrank_modified a too large" << endl;
 	cout << "len = " << len << endl;
 	cout << "a = " << a1 << endl;
 	exit(1);
@@ -600,7 +600,7 @@ void AG_element_rank(int q, int *v, int stride, int len, int &a)
 	int i;
 	
 	if (len <= 0) {
-		cout << "AG_element_rank() len <= 0" << endl;
+		cout << "AG_element_rank len <= 0" << endl;
 		exit(1);
 		}
 	a = 0;
@@ -618,7 +618,7 @@ void AG_element_unrank(int q, int *v, int stride, int len, int a)
 	
 #if 1
 	if (len <= 0) {
-		cout << "AG_element_unrank() len <= 0" << endl;
+		cout << "AG_element_unrank len <= 0" << endl;
 		exit(1);
 		}
 #endif
@@ -637,7 +637,7 @@ void AG_element_rank_longinteger(int q,
 	int i;
 	
 	if (len <= 0) {
-		cout << "AG_element_rank_longinteger() len <= 0" << endl;
+		cout << "AG_element_rank_longinteger len <= 0" << endl;
 		exit(1);
 		}
 	a.create(0);

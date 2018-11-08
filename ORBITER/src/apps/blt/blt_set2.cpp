@@ -872,7 +872,7 @@ void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 	
 	if (f_v) {
 		for (i = 0; i <= Iso.level + 1; i++) {
-			cout << "gen->first_oracle_node_at_level[" << i
+			cout << "gen->first_poset_orbit_node_at_level[" << i
 					<< "]=" << Iso.gen->first_poset_orbit_node_at_level[i]
 					<< endl;
 			}

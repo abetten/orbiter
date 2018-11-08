@@ -150,7 +150,7 @@ void upstep_work::handle_extension(int &nb_fuse_cur,
 	type = O_prev->E[prev_ex].type;
 
 	if (f_v) {
-		gen->print_level_extension_info(size + 1, prev, prev_ex);
+		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "type ";
 		print_extension_type(cout, type);
 		cout << endl;
@@ -171,7 +171,7 @@ void upstep_work::handle_extension(int &nb_fuse_cur,
 		nb_ext_cur++;
 		}
 	else {
-		gen->print_level_extension_info(size + 1, prev, prev_ex);
+		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << endl;
 		cout << "upstep_work::handle_extension extension "
 				"not of unprocessed type, error" << endl;
@@ -212,7 +212,7 @@ void upstep_work::handle_extension_fusion_type(int verbose_level)
 		set[size] = pt; //gen->S1[size] = pt;
 			// so, we really have a set of size size + 1
 
-		gen->print_level_extension_info(size + 1, prev, prev_ex);
+		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << " point " << pt << " ";
 		int_set_print(cout, set /*gen->S1*/, size + 1);
 		cout << " is a fusion node, skipping" << endl;
@@ -259,7 +259,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 	type = O_prev->E[prev_ex].type;
 		
 	if (f_vv) {
-		gen->print_level_extension_info(size + 1, prev, prev_ex);
+		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "with point " << pt << " : " << endl;
 		}
 	if (type != EXTENSION_TYPE_UNPROCESSED) {
@@ -277,7 +277,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 	size++;
 		
 	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "with point " << pt
 				<< " : before init_extension_node" << endl;
 		}
@@ -285,7 +285,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 	ret = init_extension_node(verbose_level - 3);
 
 	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "with point " << pt << " : done " << endl;
 		cout << "nb_cosets_processed=" << nb_cosets_processed << endl;
 		}
@@ -324,13 +324,14 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		}
 
 	if (f_v) {
-		gen->print_level_extension_info(size + 1, prev, prev_ex);
+		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "with point " << pt << " done" << endl;
 		cout << "upstep_work::handle_extension_unprocessed_type done" << endl;
 		}
 }
 
 int upstep_work::init_extension_node(int verbose_level)
+// size has been incremented
 // Called from upstep_work::handle_extension_unprocessed_type
 // Calls upstep_subspace_action or upstep_for_sets, 
 // depending on the type of action
@@ -369,13 +370,14 @@ int upstep_work::init_extension_node(int verbose_level)
 
 
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep_work::init_extension_node cur=" << cur 
+			<< " size=" << size
 			<< " verbose_level=" << verbose_level << endl;
 		}
 
 	if (cur == -1) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep_work::init_extension_node cur=" << cur << endl;
 		exit(1);
 		}
@@ -393,7 +395,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		// stores a set of size 'size' to gen->S
 	
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep_work::init_extension_node "
 				"initializing Node " << cur << " ";
 		int_vec_print(cout, gen->S, size);
@@ -425,7 +427,7 @@ int upstep_work::init_extension_node(int verbose_level)
 	
 
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_set_print(cout, gen->S, size);
 		cout << "upstep_work::init_extension_node "
 				"before O_cur->init_extension_node_prepare_G" << endl;
@@ -435,7 +437,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		verbose_level - 4);
 		// poset_orbit_node.C
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_set_print(cout, gen->S, size);
 		cout << "upstep_work::init_extension_node "
 				"after O_cur->init_extension_node_prepare_G" << endl;
@@ -444,7 +446,7 @@ int upstep_work::init_extension_node(int verbose_level)
 	
 
 	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_set_print(cout, gen->S, size);
 		cout << endl;
 		}
@@ -466,7 +468,7 @@ int upstep_work::init_extension_node(int verbose_level)
 
 
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_set_print(cout, gen->S, size);
 		cout << "upstep_work::init_extension_node "
 				"before O_cur->init_extension_node_prepare_H" << endl;
@@ -490,7 +492,7 @@ int upstep_work::init_extension_node(int verbose_level)
 #endif
 	
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_set_print(cout, gen->S, size);
 		cout << "upstep_work::init_extension_node "
 				"after O_cur->init_extension_node_prepare_H" << endl;
@@ -498,14 +500,14 @@ int upstep_work::init_extension_node(int verbose_level)
 
 	
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_vec_print(cout, gen->S, size);
 		cout << "upstep_work::init_extension_node calling upstep" << endl;
 		}
 
 	if (gen->f_on_subspaces) {
 		if (f_v) {
-			gen->print_level_extension_info(size, prev, prev_ex);
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			int_vec_print(cout, gen->S, size);
 			cout << "upstep_work::init_extension_node "
 					"calling upstep_subspace_action" << endl;
@@ -524,7 +526,7 @@ int upstep_work::init_extension_node(int verbose_level)
 			exit(1);
 			}
 		if (f_v) {
-			gen->print_level_extension_info(size, prev, prev_ex);
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			int_vec_print(cout, gen->S, size);
 			cout << "upstep_work::init_extension_node "
 					"after upstep_subspace_action" << endl;
@@ -532,7 +534,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		}
 	else {
 		if (f_v) {
-			gen->print_level_extension_info(size, prev, prev_ex);
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			int_vec_print(cout, gen->S, size);
 			cout << "upstep_work::init_extension_node calling "
 					"upstep_for_sets, verbose_level = "
@@ -550,14 +552,14 @@ int upstep_work::init_extension_node(int verbose_level)
 			exit(1);
 			}
 		if (f_v) {
-			gen->print_level_extension_info(size, prev, prev_ex);
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			int_vec_print(cout, gen->S, size);
 			cout << "upstep_work::init_extension_node after "
 					"upstep_for_sets" << endl;
 			}
 		}
 	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_vec_print(cout, gen->S, size);
 		cout << "extension with point " << pt << " : " << endl;
 		cout << "after upstep_for_sets/upstep_subspace_action" << endl;
@@ -569,7 +571,7 @@ int upstep_work::init_extension_node(int verbose_level)
 
 
 	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_vec_print(cout, gen->S, size);
 		cout << "_{";
 		H->print_group_order(cout);
@@ -605,7 +607,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		longinteger_object go;
 		
 		gen->stabilizer_order(cur, go);
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_vec_print(cout, gen->S, size);
 		cout << "_{";
 		cout << go;
@@ -637,7 +639,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	
 	O_cur->store_set(gen, size - 1); // stores a set of size 'size'
 	if (f_v) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep for set ";
 		int_set_print(cout, gen->S, size);
 		cout << " verbose_level=" << verbose_level;
@@ -728,6 +730,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		if (idx < coset) {
 			gen->nb_times_trace_was_saved++;
 			if (f_vv) {
+				print_level_extension_coset_info();
 				cout << "coset " << coset << " / " << nb_cosets
 						<< " is at " << idx << " which has already "
 								"been done, so we save one trace" << endl;
@@ -759,7 +762,8 @@ int upstep_work::upstep_for_sets(int verbose_level)
 			cout << "exchanged set: ";
 			int_set_print(cout, gen->set[0], size);
 			cout << endl;
-			cout << "calling find_automorphism()" << endl;
+			cout << "calling recognize(), verbose_level="
+					<< verbose_level << endl;
 			}
 		
 		int nb_times_image_of_called0 = gen->A->nb_times_image_of_called;
@@ -903,12 +907,12 @@ int upstep_work::upstep_for_sets(int verbose_level)
 
 void upstep_work::print_level_extension_info()
 {
-	gen->print_level_extension_info(size, prev, prev_ex);
+	gen->print_level_extension_info(size - 1, prev, prev_ex);
 }
 
 void upstep_work::print_level_extension_coset_info()
 {
-	gen->print_level_extension_coset_info(size,
+	gen->print_level_extension_coset_info(size - 1,
 			prev, prev_ex, coset, nb_cosets);
 }
 

@@ -30,6 +30,7 @@ void poset_classification::null()
 	Elt_memory = NULL;
 	A = NULL;
 	Strong_gens = NULL;
+	Schreier_vector_handler = NULL;
 	//SG0 = NULL;
 	//transversal_length = NULL;
 	S = NULL;
@@ -153,6 +154,9 @@ void poset_classification::freeself()
 	if (S) {
 		FREE_int(S);
 		}
+	if (Schreier_vector_handler) {
+		FREE_OBJECT(Schreier_vector_handler);
+	}
 	if (tmp_set_apply_fusion) {
 		FREE_int(tmp_set_apply_fusion);
 		}
@@ -167,7 +171,8 @@ void poset_classification::freeself()
 		}
 
 	if (f_v) {
-		cout << "poset_classification::freeself deleting transporter and set[]" << endl;
+		cout << "poset_classification::freeself "
+				"deleting transporter and set[]" << endl;
 		}
 	if (transporter) {
 		FREE_OBJECT(transporter);
@@ -177,11 +182,13 @@ void poset_classification::freeself()
 		FREE_pint(set);
 		}
 	if (f_v) {
-		cout << "poset_classification::freeself  before exit_oracle" << endl;
+		cout << "poset_classification::freeself "
+				"before exit_poset_orbit_node" << endl;
 		}
 	exit_poset_orbit_node();
 	if (f_v) {
-		cout << "poset_classification::freeself  after exit_oracle" << endl;
+		cout << "poset_classification::freeself "
+				"after exit_poset_orbit_node" << endl;
 		}
 	if (tmp_v1) {
 		FREE_int(tmp_v1);
@@ -460,6 +467,10 @@ void poset_classification::init(action *A, action *A2,
 		cout << go << endl;
 		}
 	
+	Schreier_vector_handler = NEW_OBJECT(schreier_vector_handler);
+	Schreier_vector_handler->init(A,
+			TRUE /* f_allow_failure */,
+			verbose_level);
 	
 	if (f_v) {
 		cout << "poset_classification::init sz = " << sz << endl;
@@ -552,13 +563,13 @@ void poset_classification::initialize(action *A_base, action *A_use,
 		gens, 
 		depth, verbose_level - 2);
 	
-	int nb_oracle_nodes = 1000;
+	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_vv) {
 		cout << "poset_classification::initialize "
 				"calling gen->init_poset_orbit_node" << endl;
 		}
-	init_poset_orbit_node(nb_oracle_nodes, verbose_level - 1);
+	init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_vv) {
 		cout << "poset_classification::initialize "
 				"calling gen->init_root_node" << endl;
@@ -630,13 +641,13 @@ void poset_classification::initialize_with_starter(
 		starter_canonize, 
 		verbose_level - 2);
 
-	int nb_oracle_nodes = 1000;
+	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_vv) {
 		cout << "poset_classification::initialize_with_starter "
 				"calling gen->init_poset_orbit_node" << endl;
 		}
-	init_poset_orbit_node(nb_oracle_nodes, verbose_level - 1);
+	init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_vv) {
 		cout << "poset_classification::initialize_with_starter "
 				"calling gen->init_root_node" << endl;
@@ -686,7 +697,7 @@ void poset_classification::init_root_node(int verbose_level)
 		root[0].node = 0;
 		root[0].prev = -1;
 		root[0].nb_strong_generators = 0;
-		root[0].sv = NULL;
+		root[0].Schreier_vector = NULL;
 		for (i = 0; i < starter_size; i++) {
 			
 			nb_extension_nodes_at_level_total[i] = 0;
@@ -710,7 +721,7 @@ void poset_classification::init_root_node(int verbose_level)
 			root[i + 1].prev = i;
 			root[i + 1].pt = starter[i];
 			root[i + 1].nb_strong_generators = 0;
-			root[i + 1].sv = NULL;
+			root[i + 1].Schreier_vector = NULL;
 			}
 		if (f_vv) {
 			cout << "poset_classification::init_root_node "
@@ -721,7 +732,7 @@ void poset_classification::init_root_node(int verbose_level)
 		first_poset_orbit_node_at_level[starter_size + 1] =
 				starter_size + 1;
 		if (f_vv) {
-			cout << "i : first_oracle_node_at_level[i]" << endl;
+			cout << "i : first_poset_orbit_node_at_level[i]" << endl;
 			for (i = 0; i <= starter_size + 1; i++) {
 				cout << i << " : "
 						<< first_poset_orbit_node_at_level[i] << endl;
@@ -770,7 +781,7 @@ void poset_classification::init_poset_orbit_node(
 		nb_unprocessed_nodes_at_level[i] = 0;
 		}
 	if (f_v) {
-		cout << "poset_classification::init_oracle done" << endl;
+		cout << "poset_classification::init_poset_orbit_node done" << endl;
 		}
 }
 
@@ -843,7 +854,7 @@ void poset_classification::reallocate_to(int new_number_of_nodes,
 	if (new_number_of_nodes < nb_poset_orbit_nodes_allocated) {
 		cout << "poset_classification::reallocate_to "
 				"new_number_of_nodes < "
-				"nb_oracle_nodes_allocated" << endl;
+				"nb_poset_orbit_nodes_allocated" << endl;
 		exit(1);
 		}
 	if (f_v) {

@@ -585,8 +585,12 @@ public:
 	void get_orbit_decomposition_scheme_of_graph(
 		int *Adj, int n, int *&Decomp_scheme, int verbose_level);
 	void list_elements_as_permutations_vertically(ostream &ost);
-	void get_schreier_vector(int *&sv,
-		int f_trivial_group, int f_compact);
+	//void get_schreier_vector(int *&sv,
+	//	int f_trivial_group, int f_compact);
+	schreier_vector *get_schreier_vector(
+			int gen_hdl_first, int nb_gen, int verbose_level);
+	void create_point_list_sorted(
+			int *&point_list, int &point_list_length);
 	void get_schreier_vector_compact(int *&sv,
 		int f_trivial_group);
 		// allocates and creates array sv[size] using NEW_int
@@ -599,11 +603,13 @@ public:
 		// listing the point in increasing order
 		// if f_trivial_group, sv + 1 + n is the array prev[n] and
 		// sv + 1 + 2 * n is the array label[n]
+#if 0
 	void get_schreier_vector_ordinary(int *&sv);
 		// allocates and creates array sv[2 * A->degree]
 		// using NEW_int
 		// sv[i * 2 + 0] is prev[i]
 		// sv[i * 2 + 1] is label[i]
+#endif
 	void test_sv(action *A, int *hdl_strong_generators, int *sv,
 		int f_trivial_group, int f_compact, int verbose_level);
 

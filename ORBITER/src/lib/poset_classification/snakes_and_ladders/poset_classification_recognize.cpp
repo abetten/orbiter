@@ -12,7 +12,7 @@ void poset_classification::recognize_start_over(
 	int size, int f_implicit_fusion, 
 	int lvl, int current_node, 
 	int &final_node, int verbose_level)
-// Called from oracle::recognize_recursion
+// Called from poset_orbit_node::recognize_recursion
 // when trace_next_point returns FALSE
 // This can happen only if f_implicit_fusion is TRUE
 {
@@ -388,7 +388,7 @@ void poset_classification::recognize(
 	int &final_node, int verbose_level)
 // This routine is called from upstep
 // (upstep_work::upstep_subspace_action).
-// It in turn calls oracle::recognize_recursion
+// It in turn calls poset_orbit_node::recognize_recursion
 // It tries to compute an isomorphism
 // of the set in set[0][0,...,len]
 // (i.e. of size len+1) to the 

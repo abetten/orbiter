@@ -196,7 +196,6 @@ void set_stabilizer_compute::compute_set_stabilizer(int t0,
 	int f_vv = (verbose_level >= 2);
 	int i, lvl, depth_completed = 0;
 	int f_create_schreier_vector = TRUE;
-	int f_compact = TRUE;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_write_candidate_file = FALSE;
 // f_use_invariant_subset_if_available is an option that affects the downstep.
@@ -257,7 +256,7 @@ void set_stabilizer_compute::compute_set_stabilizer(int t0,
 			}
 
 		gen->extend_level(lvl, /* lvl,*/ 
-			f_create_schreier_vector, f_compact, 
+			f_create_schreier_vector,
 			f_use_invariant_subset_if_available, 
 			f_debug, 
 			f_write_candidate_file, 
@@ -656,12 +655,13 @@ void set_stabilizer_compute::compute_frequencies(int level,
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 
-	//f = gen->first_oracle_node_at_level[level];
 	nb_orbits = gen->nb_orbits_at_level(level);
 	n_choose_k = int_n_choose_k(set_size, level);
 	
 	if (f_v) {
-		cout << "set_stabilizer_compute::compute_frequencies level=" << level << " nb_orbits=" << nb_orbits << " n_choose_k=" << n_choose_k << endl;
+		cout << "set_stabilizer_compute::compute_frequencies "
+				"level=" << level << " nb_orbits=" << nb_orbits
+				<< " n_choose_k=" << n_choose_k << endl;
 		}	
 	
 	frequency = NEW_int(nb_orbits);

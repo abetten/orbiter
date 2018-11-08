@@ -634,17 +634,11 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 
 void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 {
-	//int node2;
-	//oracle *O2;
-	//vector_ge *gens;
-	//int *tl;
 	int *Elt;
 	int goi, i, order;
 	strong_generators *Strong_gens;
 
 	Elt = NEW_int(A->elt_size_in_int);	
-	//node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
-	//O2 = &Gen->root[node2];
 
 	Gen->get_stabilizer_generators(Strong_gens,  
 		depth, orbit_idx, 0 /* verbose_level*/);
@@ -677,7 +671,7 @@ void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 void polar::get_maximals(int depth, int orbit_idx, int verbose_level)
 {
 	int node2;
-	oracle *O2;
+	poset_orbit_node *O2;
 	vector_ge *gens;
 	int *tl;
 	int *Elt;
@@ -686,7 +680,7 @@ void polar::get_maximals(int depth, int orbit_idx, int verbose_level)
 	gens = NEW_OBJECT(vector_ge);
 	tl = NEW_int(A->base_len);
 	Elt = NEW_int(A->elt_size_in_int);	
-	node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
+	node2 = Gen->first_poset_orbit_node_at_level[depth] + orbit_idx;
 	O2 = &Gen->root[node2];
 	Gen->get_stabilizer(gens, tl, depth, orbit_idx, verbose_level);
 
