@@ -775,7 +775,8 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	S->group_order(S_go);
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer_case "
-				"The starter has a stabilizer of order " << S_go << endl;
+				"The starter has a stabilizer of order "
+				<< S_go << endl;
 		}
 			
 	for (j = 0; j < l; j++) {
@@ -813,7 +814,8 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	AA->Kernel->group_order(K_go);
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer_case orbit "
-				<< nb_orbits << " induced action has order " << AA_go << ", kernel has order " << K_go << endl;
+				<< nb_orbits << " induced action has order "
+				<< AA_go << ", kernel has order " << K_go << endl;
 		}
 #endif
 	
@@ -904,7 +906,6 @@ void isomorph::orbit_representative(int i, int &i0,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int c, p, i_loc, l; //, hdl;
-	//oracle *O;
 	int *Elt1, *Elt2;
 	vector_ge gens;
 	longinteger_object go;
@@ -922,7 +923,6 @@ void isomorph::orbit_representative(int i, int &i0,
 	Elt1 = orbit_representative_Elt1;
 	Elt2 = orbit_representative_Elt2;
 	c = starter_number[i];
-	//O = &gen->root[gen->first_oracle_node_at_level[level] + c];
 	if (f_v) {
 		cout << "isomorph::orbit_representative "
 				"before load_strong_generators" << endl;
@@ -1078,9 +1078,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	schreier *Schreier;
 	int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
-	//oracle *O;
 	longinteger_object go, so, so1;
-	//longinteger_domain DO;
 
 	if (f_v) {
 		cout << "isomorph::compute_stabilizer "
@@ -1117,14 +1115,6 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	
 	load_strong_generators(level, c, 
 		*gens, go, verbose_level - 1);
-#if 0
-	O = &gen->root[gen->first_oracle_node_at_level[level] + c];
-
-	if (O->nb_strong_generators)
-		DO.multiply_up(go, O->tl, A->base_len);
-	else
-		go.create(1);
-#endif
 	if (f_v) {
 		cout << "isomorph::compute_stabilizer "
 				"orbit_no=" << orbit_no
@@ -1461,8 +1451,6 @@ void isomorph::read_data_files_for_starter(int level,
 			MINIMUM(1, verbose_level - 1));
 
 	compute_nb_starter(level, verbose_level);
-	//nb_starter = gen->first_oracle_node_at_level[level + 1] -
-	// gen->first_oracle_node_at_level[level];
 
 	if (f_v) {
 		cout << "isomorph::read_data_files_for_starter finished, "
@@ -1475,8 +1463,6 @@ void isomorph::compute_nb_starter(int level, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	nb_starter = gen->nb_orbits_at_level(level);
-		//gen->first_oracle_node_at_level[level + 1] -
-		// gen->first_oracle_node_at_level[level];
 	if (f_v) {
 		cout << "isomorph::compute_nb_starter finished, "
 				"number of starters = " << nb_starter << endl;

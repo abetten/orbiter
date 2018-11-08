@@ -288,7 +288,8 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 #endif
 
 
-int poset_classification::poset_classification_apply_isomorphism(int level, int size, 
+int poset_classification::poset_classification_apply_isomorphism(
+	int level, int size,
 	int current_node, int current_extension, 
 	int *set_in, int *set_out, int *set_tmp, 
 	int *transporter_in, int *transporter_out, 
@@ -303,7 +304,8 @@ int poset_classification::poset_classification_apply_isomorphism(int level, int 
 	O = &root[current_node];
 
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_isomorphism "
+		cout << "poset_classification::poset_"
+				"classification_apply_isomorphism "
 				"current_node=" << current_node
 				<< " current_extension=" << current_extension << endl;
 		cout << "level=" << level << endl;		
@@ -315,7 +317,8 @@ int poset_classification::poset_classification_apply_isomorphism(int level, int 
 	A2->element_retrieve(O->E[current_extension].data, Elt1, 0);
 	
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_isomorphism "
+		cout << "poset_classification::poset_"
+				"classification_apply_isomorphism "
 				"applying fusion element" << endl;
 		A2->element_print_quick(Elt1, cout);
 		cout << "in action " << A2->label << ":" << endl;
@@ -326,7 +329,8 @@ int poset_classification::poset_classification_apply_isomorphism(int level, int 
 		}
 	A2->map_a_set(set_in, set_tmp, size, Elt1, 0);
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_isomorphism "
+		cout << "poset_classification::poset_"
+				"classification_apply_isomorphism "
 				"the set becomes: ";
 		int_vec_print(cout, set_tmp, size);
 		cout << endl;
@@ -348,12 +352,14 @@ int poset_classification::poset_classification_apply_isomorphism(int level, int 
 		int_vec_heapsort(set_tmp, level + 1);
 		int_vec_copy(set_tmp, set_out, size);
 		if (f_v) {
-			cout << "poset_classification::poset_classification_apply_isomorphism "
+			cout << "poset_classification::poset_"
+					"classification_apply_isomorphism "
 					"after sorting: ";
 			}
 		if (f_v) {
-			cout << "poset_classification::poset_classification_apply_isomorphism "
-					"calling find_oracle_node_for_set: ";
+			cout << "poset_classification::poset_"
+					"classification_apply_isomorphism "
+					"calling find_poset_orbit_node_for_set: ";
 			int_vec_print(cout, set_out, size);
 			cout << endl;
 			}
@@ -364,7 +370,8 @@ int poset_classification::poset_classification_apply_isomorphism(int level, int 
 
 		}
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_isomorphism from ";
+		cout << "poset_classification::poset_"
+				"classification_apply_isomorphism from ";
 		int_vec_print(cout, set_in, size);
 		cout << " to ";
 		int_vec_print(cout, set_out, size);

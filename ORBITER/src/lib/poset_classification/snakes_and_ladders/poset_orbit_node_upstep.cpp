@@ -82,7 +82,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 			}
 		if (f_v) {
 			cout << "poset_orbit_node::apply_isomorphism "
-					"calling find_oracle_node_for_set: ";
+					"calling find_poset_orbit_node_for_set: ";
 			int_vec_print(cout, gen->set[lvl + 1], lvl + 1);
 			cout << endl;
 			}
@@ -94,7 +94,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 
 	//FREE_int(set);
 	if (f_v) {
-		cout << "oracle::apply_isomorphism the set ";
+		cout << "poset_orbit_node::apply_isomorphism the set ";
 		int_vec_print(cout, gen->set[lvl + 1], lvl + 1);
 		cout << " is node " << next_node << endl;
 		}
@@ -108,7 +108,7 @@ void poset_orbit_node::install_fusion_node(
 	int pt0, int current_extension, 
 	int f_debug, int f_implicit_fusion, 
 	int verbose_level)
-// Called from oracle::handle_last_level
+// Called from poset_orbit_node::handle_last_level
 // current_node is the same as oracle::node !!!
 // pt0 is the same as E[current_extension].pt !!!
 {
@@ -291,7 +291,8 @@ void poset_orbit_node::install_fusion_node(
 		}
 }
 
-int poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
+int poset_orbit_node::trace_next_point_wrapper(
+	poset_classification *gen,
 	int lvl, int current_node,
 	int len, int f_implicit_fusion,
 	int &f_failure_to_find_point,
@@ -311,6 +312,10 @@ int poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper" << endl;
 		}
+	if (f_v) {
+		cout << "poset_orbit_node::trace_next_point_wrapper "
+				"before trace_next_point" << endl;
+		}
 	ret = trace_next_point(gen,
 		lvl,
 		current_node,
@@ -328,7 +333,8 @@ int poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
 	return ret;
 }
 
-int poset_orbit_node::trace_next_point_in_place(poset_classification *gen,
+int poset_orbit_node::trace_next_point_in_place(
+	poset_classification *gen,
 	int lvl,
 	int current_node,
 	int size,
@@ -373,7 +379,8 @@ int poset_orbit_node::trace_next_point_in_place(poset_classification *gen,
 	return ret;
 }
 
-void poset_orbit_node::trace_starter(poset_classification *gen, int size,
+void poset_orbit_node::trace_starter(
+	poset_classification *gen, int size,
 	int *cur_set, int *next_set,
 	int *cur_transporter, int *next_transporter, 
 	int verbose_level)
@@ -425,14 +432,15 @@ void poset_orbit_node::trace_starter(poset_classification *gen, int size,
 }
 
 
-int poset_orbit_node::trace_next_point(poset_classification *gen,
+int poset_orbit_node::trace_next_point(
+	poset_classification *gen,
 	int lvl, int current_node, int size, 
 	int *cur_set, int *next_set,
 	int *cur_transporter, int *next_transporter, 
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // Called by poset_orbit_node::trace_next_point_wrapper
-// and by oracle::trace_next_point_in_place
+// and by poset_orbit_node::trace_next_point_in_place
 // returns FALSE only if f_implicit_fusion is TRUE and
 // the set becomes lexcographically less 
 {
@@ -452,7 +460,7 @@ int poset_orbit_node::trace_next_point(poset_classification *gen,
 				<< " the_point=" << the_point << endl;
 		cout << "poset_orbit_node::trace_next_point node=" << node
 				<< " prev=" << prev << " pt=" << pt << endl;
-		cout << "oracle::trace_next_point verbose_level = "
+		cout << "poset_orbit_node::trace_next_point verbose_level = "
 				<< verbose_level << endl;
 		}
 	
@@ -462,31 +470,38 @@ int poset_orbit_node::trace_next_point(poset_classification *gen,
 			the_point, pt0, cosetrep,
 			verbose_level - 1);
 
-			// oracle_upstep_subspace_action.C
+			// poset_orbit_node_upstep_subspace_action.C
 
 		}
 	else {
+		if (f_v) {
+			cout << "poset_orbit_node::trace_next_point "
+					"before orbit_representative_and_coset_rep_inv" << endl;
+		}
 		if (!orbit_representative_and_coset_rep_inv(
 			gen, lvl,
 			the_point, pt0, cosetrep,
-			0 /*verbose_level - 1*/)) {
+			verbose_level - 1)) {
 			if (f_v) {
-				cout << "poset_orbit_node::trace_next_point orbit_representative_"
+				cout << "poset_orbit_node::trace_next_point "
+						"orbit_representative_"
 						"and_coset_rep_inv returns FALSE, "
 						"f_failure_to_find_point = TRUE" << endl;
 				}
 			f_failure_to_find_point = TRUE;
 			return TRUE;
 			}
+		if (f_v) {
+			cout << "poset_orbit_node::trace_next_point "
+					"after orbit_representative_and_coset_rep_inv" << endl;
+		}
 		}
 	if (f_vv) {
 		cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 				<< " mapping "
 				<< the_point << "->" << pt0
 				<< " under the element " << endl;
-		if (gen->f_allowed_to_show_group_elements) {
-			gen->A2->element_print_quick(cosetrep, cout);
-			}
+		gen->A2->element_print_quick(cosetrep, cout);
 		cout << "in action " << gen->A2->label << endl;
 		if (gen->f_allowed_to_show_group_elements)
 			gen->A2->element_print_as_permutation_verbose(
@@ -495,7 +510,8 @@ int poset_orbit_node::trace_next_point(poset_classification *gen,
 		}
 	if (pt0 == the_point) {
 		if (f_vv) {
-			cout << "Since the image point is equal to the original point, "
+			cout << "Since the image point is equal "
+					"to the original point, "
 					"we apply no element and copy the set "
 					"and the transporter over:" << endl;
 			}
@@ -506,9 +522,7 @@ int poset_orbit_node::trace_next_point(poset_classification *gen,
 		if (f_vv) {
 			cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 					<< " applying:" << endl;
-			if (gen->f_allowed_to_show_group_elements) {
-				gen->A2->element_print_quick(cosetrep, cout);
-				}
+			gen->A2->element_print_quick(cosetrep, cout);
 			cout << "in action " << gen->A2->label << endl;
 			if (gen->f_allowed_to_show_group_elements) {
 				gen->A2->element_print_as_permutation_verbose(
@@ -523,10 +537,21 @@ int poset_orbit_node::trace_next_point(poset_classification *gen,
 		int_vec_copy(cur_set, next_set, lvl);
 		next_set[lvl] = pt0;
 		for (i = lvl + 1; i < size; i++) {
+			if (f_vv) {
+				cout << "poset_orbit_node::trace_next_point lvl = " << lvl
+						<< " mapping point " << i << " / " << size
+						<< "cur_set[i]=" << cur_set[i] << endl;
+			}
 			next_set[i] = gen->A2->element_image_of(
-					cur_set[i], cosetrep, 0);
+					cur_set[i], cosetrep, verbose_level);
+			if (f_vv) {
+				cout << "poset_orbit_node::trace_next_point lvl = " << lvl
+						<< " mapping point " << i << " / " << size
+						<< "next_set[i]=" << next_set[i] << endl;
+			}
 			if (f_vvv) {
-				cout << "poset_orbit_node::trace_next_point lvl = " << lvl << ": ";
+				cout << "poset_orbit_node::trace_next_point "
+						"lvl = " << lvl << ": ";
 				cout << "mapping " << i << "-th point: "
 						<< cur_set[i] << "->" << next_set[i] << endl;
 				}
@@ -615,36 +640,54 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 	int lvl, int pt_to_trace,
 	int &pt0, int *&cosetrep,
 	int verbose_level)
-// called by oracle::oracle::trace_next_point
+// called by poset_orbit_node::trace_next_point
 {
 	int f_v = (verbose_level >= 1);
-	int f_check_image = FALSE;
-	int f_allow_failure = TRUE;
+	//int f_check_image = FALSE;
+	//int f_allow_failure = TRUE;
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 				"lvl=" << lvl
 				<< " pt_to_trace=" << pt_to_trace << endl;
 		}
-	cosetrep = gen->Elt1;
 	if (nb_strong_generators == 0) {
+		cosetrep = gen->Elt1;
 		gen->A->element_one(gen->Elt1, FALSE);
 		pt0 = pt_to_trace;
 		return TRUE;
 		}
-	if (sv) {
+	if (Schreier_vector) {
+
+#if 0
 		int f_trivial_group;
 		
 		if (nb_strong_generators) 
 			f_trivial_group = FALSE;
 		else 
 			f_trivial_group = TRUE;
-		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
+#endif
+
+		//cout << "Node " << node
+		//<< " poset_orbit_node::orbit_representative_and_"
 		//"coset_rep_inv calling schreier_vector_coset_rep_inv" << endl;
 
 
 		// in ACTION/schreier.C:
-		if (!schreier_vector_coset_rep_inv_general(gen->A2, 
+		if (f_v) {
+			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
+					"before gen->Schreier_vector_handler->coset_rep_inv "
+					"verbose_level=" << verbose_level
+					<< endl;
+		}
+		if (!gen->Schreier_vector_handler->coset_rep_inv(
+				Schreier_vector,
+				pt_to_trace,
+				pt0,
+				verbose_level - 1)) {
+
+#if 0
+			gen->A2,
 			sv, 
 			hdl_strong_generators, 
 			pt_to_trace, 
@@ -653,7 +696,8 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 			f_trivial_group, 
 			f_check_image, 
 			f_allow_failure, 
-			verbose_level - 1)) {
+			verbose_level - 1))
+#endif
 			if (f_v) {
 				cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 						"schreier_vector_coset_rep_inv_general returns FALSE, "
@@ -661,23 +705,33 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 				}
 			return FALSE;
 			}
+		cosetrep = gen->Schreier_vector_handler->cosetrep;
+		if (f_v) {
+			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
+					"after gen->Schreier_vector_handler->coset_rep_inv"
+					<< endl;
+		}
 
 		// gen->Elt1 contains the element that maps pt_to_trace to pt0
-		//cout << "Node " << node << " oracle::orbit_representative_and_"
+		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
 		//"coset_rep_inv schreier_vector_coset_rep_inv done" << endl;
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 					"schreier vector: pt_to_trace=" << pt_to_trace
 					<< " pt0=" << pt0 << endl;
+			cout << "cosetrep:" << endl;
+			gen->A2->element_print_quick(cosetrep, cout);
 			}
 		return TRUE;
 		}
 	else {
 		if (f_v) {
-			cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
-					"coset_rep_inv sv not available" << endl;
+			cout << "Node " << node
+					<< " poset_orbit_node::orbit_representative_and_"
+					"coset_rep_inv Schreier_vector not available" << endl;
 			}
 		}
+	cosetrep = gen->Elt1;
 	pt0 = gen->A2->least_image_of_point_generators_by_handle(
 		nb_strong_generators, 
 		hdl_strong_generators, 

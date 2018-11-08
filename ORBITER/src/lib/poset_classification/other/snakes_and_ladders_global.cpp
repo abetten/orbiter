@@ -608,7 +608,7 @@ poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
-		cout << "orbits_on_k_sets calling Gen->init_oracle" << endl;
+		cout << "orbits_on_k_sets calling Gen->init_poset_orbit_node" << endl;
 		}
 	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_v) {

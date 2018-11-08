@@ -145,7 +145,7 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 				//int_vec_print(cout, gen->S0, level + 1);
 				//cout << endl;
 
-				J = gen->find_oracle_node_for_set(level + 1, gen->S0, 0);
+				J = gen->find_poset_orbit_node_for_set(level + 1, gen->S0, 0);
 #endif
 				j = J - f2;
 				M.s_iji(i, j) += len;

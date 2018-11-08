@@ -30,7 +30,8 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 	Elt = tmp_Elt1;
 	
 	if (f_v) {
-		cout << "iso_node " << iso_nodes << " isomorph::identify_solution_relaxed: ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::identify_solution_relaxed: ";
 		cout << endl;
 		//int_vec_print(cout, set, size);
 		//cout << endl;
@@ -50,14 +51,17 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::identify_solution_relaxed calling trace : " << endl;
+					<< " isomorph::identify_solution_relaxed "
+							"calling trace : " << endl;
 			}
 		case_nb = trace_set(canonical_set, transporter, 
-			f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
+			f_implicit_fusion, f_failure_to_find_point,
+			verbose_level - 2);
 
 		if (f_failure_to_find_point) {
 			if (f_v) {
-				cout << "iso_node " << iso_nodes << " isomorph::identify_solution_relaxed "
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::identify_solution_relaxed "
 						"after trace: trace_set returns "
 						"f_failure_to_find_point" << endl;
 				}
@@ -65,7 +69,8 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 			}
 		if (f_v) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::identify_solution_relaxed after trace: ";
+					<< " isomorph::identify_solution_relaxed "
+					"after trace: ";
 			print_node_local(level, case_nb);
 			cout << endl;
 			//cout << "case_nb = " << case_nb << " : ";
@@ -85,12 +90,14 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 				verbose_level - 2)) {
 			if (f_vv) {
 				cout << "iso_node " << iso_nodes
-						<< " isomorph::identify_solution_relaxed after trace: ";
+						<< " isomorph::identify_solution_relaxed "
+						"after trace: ";
 				print_node_local(level, case_nb);
 				cout << " : ";
 				cout << "solution is identified as id=" << id << endl;
 				}
-			orbit_representative(id, id0, orbit, Elt, verbose_level - 2);
+			orbit_representative(id, id0,
+					orbit, Elt, verbose_level - 2);
 			orbit_no = orbit;
 	
 			A->mult_apply_from_the_right(transporter, Elt);
@@ -104,7 +111,8 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 			}
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::identify_solution_relaxed after trace: ";
+					<< " isomorph::identify_solution_relaxed "
+					"after trace: ";
 			print_node_local(level, case_nb);
 			cout << " : ";
 			cout << "did not find extension" << endl;
@@ -122,7 +130,8 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		}
 	if (!A->check_if_transporter_for_set(transporter,
 			size, set, data, verbose_level - 2)) {
-		cout << "isomorph::identify_solution_relaxed, check fails, stop" << endl;
+		cout << "isomorph::identify_solution_relaxed, "
+				"check fails, stop" << endl;
 		int_vec_print(cout, set, size);
 		cout << endl;
 		int_vec_print(cout, data, size);
@@ -131,7 +140,8 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		}
 	if (f_vv) {
 		cout << "iso_node " << iso_nodes
-				<< " isomorph::identify_solution_relaxed after trace: ";
+				<< " isomorph::identify_solution_relaxed "
+				"after trace: ";
 		print_node_local(level, case_nb);
 		cout << " : ";
 		cout << "id0 = " << id0 << " orbit=" << orbit << endl;
@@ -147,7 +157,8 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		}
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " isomorph::identify_solution_relaxed after trace: ";
+				<< " isomorph::identify_solution_relaxed "
+				"after trace: ";
 		print_node_local(level, case_nb);
 		cout << " : ";
 		cout << "solution is identified as id=" << id << endl;
@@ -178,7 +189,8 @@ int isomorph::identify_solution(int *set,
 	Elt = tmp_Elt1;
 	
 	if (f_v) {
-		cout << "iso_node " << iso_nodes << " isomorph::identify_solution: ";
+		cout << "iso_node " << iso_nodes
+			<< " isomorph::identify_solution: ";
 		cout << endl;
 		//int_vec_print(cout, set, size);
 		//cout << endl;
@@ -195,20 +207,23 @@ int isomorph::identify_solution(int *set,
 
 	while (TRUE) {
 		if (f_vv) {
-			cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::identify_solution "
 					"calling trace, cnt = " << cnt << " : " << endl;
 			}
 		case_nb = trace_set(canonical_set, transporter, 
 			f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
 		if (f_failure_to_find_point) {
 			if (f_vv) {
-				cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::identify_solution "
 						"trace returns f_failure_to_find_point" << endl;
 				}
 			return -1;
 			}
 		if (f_vv) {
-			cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::identify_solution "
 					"after trace: ";
 			print_node_local(level, case_nb);
 			cout << endl;
@@ -223,7 +238,8 @@ int isomorph::identify_solution(int *set,
 		if (find_extension_easy(canonical_set, case_nb, id,
 				verbose_level - 2)) {
 			if (f_vv) {
-				cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::identify_solution "
 						"after trace: ";
 				print_node_local(level, case_nb);
 				cout << " : ";
@@ -232,7 +248,8 @@ int isomorph::identify_solution(int *set,
 				}
 			orbit_representative(id, id0, orbit, Elt, verbose_level);
 			if (f_vv) {
-				cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
+				cout << "iso_node " << iso_nodes
+						<< " isomorph::identify_solution "
 						"after trace: ";
 				print_node_local(level, case_nb);
 				cout << " : orbit_representative = " << id0 << endl;
@@ -248,7 +265,8 @@ int isomorph::identify_solution(int *set,
 			break;
 			}
 		if (f_vv) {
-			cout << "iso_node " << iso_nodes << " isomorph::identify_solution "
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::identify_solution "
 					"after trace: ";
 			print_node_local(level, case_nb);
 			cout << " : ";
@@ -263,12 +281,14 @@ int isomorph::identify_solution(int *set,
 
 	load_solution(id0, data);
 	if (f_vv) {
-		//cout << "iso_node " << iso_nodes << " isomorph::identify_solution,
+		//cout << "iso_node " << iso_nodes
+		//<< " isomorph::identify_solution,
 		// checking" << endl;
 		}
 	if (!A->check_if_transporter_for_set(transporter, size, set,
 			data, verbose_level - 2)) {
-		cout << "isomorph::identify_solution, check fails, stop" << endl;
+		cout << "isomorph::identify_solution, "
+				"check fails, stop" << endl;
 		int_vec_print(cout, set, size);
 		cout << endl;
 		int_vec_print(cout, data, size);
@@ -305,7 +325,8 @@ int isomorph::identify_solution(int *set,
 	return orbit;
 }
 
-int isomorph::trace_set(int *canonical_set, int *transporter, 
+int isomorph::trace_set(
+	int *canonical_set, int *transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // returns the case number of the canonical set
@@ -332,7 +353,8 @@ int isomorph::trace_set(int *canonical_set, int *transporter,
 	if (f_failure_to_find_point) {
 		if (f_v) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::trace_set failure to find point" << endl;
+					<< " isomorph::trace_set "
+					"failure to find point" << endl;
 			}
 		return -1;
 		}
@@ -345,7 +367,8 @@ int isomorph::trace_set(int *canonical_set, int *transporter,
 		cout << endl;
 		}
 	if (f_vv) {
-		cout << "iso_node " << iso_nodes << " isomorph::trace_set transporter:" << endl;
+		cout << "iso_node " << iso_nodes
+			<< " isomorph::trace_set transporter:" << endl;
 #if 0
 		gen->A->print(cout, transporter);
 		//gen->A->print_as_permutation(cout, transporter);
@@ -444,7 +467,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 			A->element_move(Elt2, transporter, FALSE);
 			if (f_vv) {
 				cout << "iso_node " << iso_nodes
-					<< "isomorph::make_set_smaller the set is made smaller: " << endl;
+					<< "isomorph::make_set_smaller "
+					"the set is made smaller: " << endl;
 				int_vec_print(cout, set, size);
 				cout << endl;
 				}
@@ -452,7 +476,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 			}
 		}
 	
-	cout << "isomorph::make_set_smaller: error, something is wrong" << endl;
+	cout << "isomorph::make_set_smaller: "
+			"error, something is wrong" << endl;
 	cout << "isomorph::make_set_smaller no stabilizer element maps "
 			"any element to something smaller" << endl;
 	int_vec_print(cout, set, size);
@@ -475,7 +500,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 	cout << "level = " << level << endl;
 	cout << "m = " << m << endl;
 	for (i = 0; i < gens.len; i++) {
-		cout << "isomorph::make_set_smaller generator " << i << ":" << endl;
+		cout << "isomorph::make_set_smaller "
+				"generator " << i << ":" << endl;
 		A->element_print(gens.ith(i), cout);
 		cout << endl;
 		A->element_print_as_permutation(gens.ith(i), cout);
@@ -500,7 +526,8 @@ void isomorph::make_set_smaller(int case_nb_local,
 	exit(1);
 }
 
-int isomorph::trace_set_recursion(int cur_level, int cur_node_global, 
+int isomorph::trace_set_recursion(
+	int cur_level, int cur_node_global,
 	int *canonical_set, int *transporter, 
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
@@ -516,7 +543,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 	f_failure_to_find_point = FALSE;
 	if (f_v) {
 		cout << "iso_node "
-				<< iso_nodes << " isomorph::trace_set_recursion ";
+				<< iso_nodes
+				<< " isomorph::trace_set_recursion ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		//int_vec_print(cout, canonical_set, size);
@@ -547,7 +575,8 @@ int isomorph::trace_set_recursion(int cur_level, int cur_node_global,
 
 		if (f_vv) {
 			cout << "iso_node "
-					<< iso_nodes << " isomorph::trace_set_recursion ";
+					<< iso_nodes
+					<< " isomorph::trace_set_recursion ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "after trace_starter" << endl;
@@ -676,7 +705,7 @@ int isomorph::trace_next_point(int cur_level,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // Called from trace_set_recursion
-// Calls oracle::trace_next_point_in_place 
+// Calls ::trace_next_point_in_place
 // and (possibly) trace_next_point_database
 // Returns FALSE is the set becomes lexicographically smaller
 {
@@ -854,7 +883,8 @@ int isomorph::trace_next_point_database(
 
 	fseek(fp_ge, ref * gen->A->coded_elt_size_in_char, SEEK_SET);
 	for (i = 0; i < nb_strong_generators; i++) {
-		gen->A->element_read_file_fp(gens.ith(i), fp_ge, 0/* verbose_level*/);
+		gen->A->element_read_file_fp(gens.ith(i),
+				fp_ge, 0/* verbose_level*/);
 		}
 	
 	
@@ -902,9 +932,11 @@ int isomorph::trace_next_point_database(
 				canonical_set[i], tmp_ELT, FALSE);
 		}
 
-	//gen->A->map_a_set(gen->set[lvl], gen->set[lvl + 1], len + 1, cosetrep, 0);
+	//gen->A->map_a_set(gen->set[lvl],
+	//gen->set[lvl + 1], len + 1, cosetrep, 0);
 
-	//int_vec_sort(len, gen->set[lvl + 1]); // we keep the last point extra
+	//int_vec_sort(len, gen->set[lvl + 1]);
+		// we keep the last point extra
 
 	gen->A->mult_apply_from_the_right(
 			Elt_transporter, tmp_ELT);

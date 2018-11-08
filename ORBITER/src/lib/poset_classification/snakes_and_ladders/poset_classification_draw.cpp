@@ -96,7 +96,7 @@ int poset_classification::write_treefile(char *fname_base,
 		cout << "poset_classification::write_treefile too many nodes, "
 				"you may increase MAX_NODES_FOR_TREEFILE if you wish" << endl;
 		cout << "MAX_NODES_FOR_TREEFILE=" << MAX_NODES_FOR_TREEFILE << endl;
-		cout << "first_oracle_node_at_level[lvl + 1]="
+		cout << "first_poset_orbit_node_at_level[lvl + 1]="
 				<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 		cout << "lvl=" << lvl << endl;
 		return FALSE;
@@ -140,16 +140,18 @@ void poset_classification::draw_tree(char *fname_base, int lvl,
 			cout << "poset_classification::draw_tree read treefile "
 					<< fname1 << " with " << nb_nodes
 					<< " nodes" << endl;
-			cout << "poset_classification::draw_tree first_oracle_node_at_"
+			cout << "poset_classification::draw_tree "
+					"first_poset_orbit_node_at_level"
 					"level[lvl + 1] "
 					<< first_poset_orbit_node_at_level[lvl + 1]
 					<< " nodes" << endl;
 			}
 		if (nb_nodes != first_poset_orbit_node_at_level[lvl + 1]) {
-			cout << "poset_classification::draw_tree nb_nodes != first_oracle_"
-					"node_at_level[lvl + 1]" << endl;
+			cout << "poset_classification::draw_tree nb_nodes != "
+					"first_poset_orbit_node_at_level"
+					"[lvl + 1]" << endl;
 			cout << "nb_nodes=" << nb_nodes << endl;
-			cout << "first_oracle_node_at_level[lvl + 1]="
+			cout << "first_poset_orbit_node_at_level[lvl + 1]="
 					<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 			exit(1);
 			}
@@ -182,7 +184,8 @@ void poset_classification::draw_tree(char *fname_base, int lvl,
 			}
 		
 		if (f_vv) {	
-			cout << "poset_classification::draw_tree calling oracle_depth_"
+			cout << "poset_classification::draw_tree calling "
+					"poset_orbit_node_depth_"
 					"breadth_perm_and_inverse" << endl;
 			}
 		poset_orbit_node_depth_breadth_perm_and_inverse(lvl /* max_depth */,
@@ -485,7 +488,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 		Qy[2] = Py[perm[i]];
 		Qx[3] = Px[perm[i]];
 		Qy[3] = Py[perm[i]];
-		if (i >= first_oracle_node_at_level[sz]) {
+		if (i >= first_poset_orbit_node_node_at_level[sz]) {
 			Qx[0] -= 15 * delta_x;
 			Qx[1] += 15 * delta_x;
 			Qx[2] += 15 * delta_x;
@@ -1307,7 +1310,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 					n1 = E0->data;
 					if (f_v4) {
 						cout << "n1=" << n1
-								<< " first_oracle_node_at_level[lvl + 1] = "
+								<< " first_poset_orbit_node_node_at_level[lvl + 1] = "
 								<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 						}
 					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2,
@@ -1487,8 +1490,8 @@ void poset_classification::make_graph(int depth,
 						}
 					n1 = E0->data;
 					//cout << "n1=" << n1
-					//<< " first_oracle_node_at_level[lvl + 1] = "
-					//<< first_oracle_node_at_level[lvl + 1] << endl;
+					//<< " first_poset_orbit_node_at_level[lvl + 1] = "
+					//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 					LG->add_edge(lvl, po, lvl + 1,
 							n1 - first_poset_orbit_node_at_level[lvl + 1],
 							0 /*verbose_level*/);
@@ -1669,8 +1672,8 @@ void poset_classification::make_level_graph(int depth,
 					}
 				n1 = E0->data;
 				//cout << "n1=" << n1
-				//<< " first_oracle_node_at_level[lvl + 1] = "
-				//<< first_oracle_node_at_level[lvl + 1] << endl;
+				//<< " first_poset_orbit_node_at_level[lvl + 1] = "
+				//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 				LG->add_edge(2, f + so, 3,
 						n1 - first_poset_orbit_node_at_level[level + 1],
 						0 /*verbose_level*/);
@@ -1730,7 +1733,7 @@ void poset_classification::make_level_graph(int depth,
 				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
 						0/*verbose_level*/);
 				LG->add_node_data3(2 * lvl + 0, po,
-						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						root[n].prev - first_poset_orbit_node_at_level[lvl - 1],
 						0/*verbose_level*/);
 				}
 			else {
@@ -1923,8 +1926,8 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 						}
 					n1 = E0->data;
 					//cout << "n1=" << n1
-					//<< " first_oracle_node_at_level[lvl + 1] = "
-					//<< first_oracle_node_at_level[lvl + 1] << endl;
+					//<< " first_poset_orbit_node_at_level[lvl + 1] = "
+					//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
 							n1 - first_poset_orbit_node_at_level[L + 1],
 							0 /*verbose_level*/);
@@ -1986,7 +1989,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
 						0/*verbose_level*/);
 				LG->add_node_data3(2 * lvl + 0, po,
-						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						root[n].prev - first_poset_orbit_node_at_level[lvl - 1],
 						0/*verbose_level*/);
 				}
 			else {
@@ -2223,8 +2226,8 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 							}
 						n1 = E0->data;
 						//cout << "n1=" << n1
-						//<< " first_oracle_node_at_level[lvl + 1] = "
-						//<< first_oracle_node_at_level[lvl + 1] << endl;
+						//<< " first_poset_orbit_node_at_level[lvl + 1] = "
+						//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 
 
 

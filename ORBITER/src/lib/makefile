@@ -136,6 +136,7 @@ MODULES= \
 		groups_and_group_actions/data_structures/orbit_transversal.o \
 		groups_and_group_actions/data_structures/page_storage.o \
 		groups_and_group_actions/data_structures/projective_space_with_action.o \
+		groups_and_group_actions/data_structures/schreier_vector_handler.o \
 		groups_and_group_actions/data_structures/schreier_vector.o \
 		groups_and_group_actions/data_structures/set_and_stabilizer.o \
 		groups_and_group_actions/data_structures/union_find.o \

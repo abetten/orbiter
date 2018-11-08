@@ -11,13 +11,13 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	poset_classification *gen,
 	int lvl, int pt_to_trace,
 	int &pt0, int *&cosetrep, int verbose_level)
-// called by oracle::trace_next_point
+// called by poset_orbit_node::trace_next_point
 {
 	int f_v = (verbose_level >= 1);
 	action_on_factor_space AF;
 	action A_factor_space;
 	int projected_pt, projected_pt0;
-	int f_check_image = FALSE;
+	//int f_check_image = FALSE;
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_"
@@ -81,16 +81,26 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 			}
 		return;
 		}
-	if (sv) {
+	if (Schreier_vector) {
+
+#if 0
 		int f_trivial_group;
 		
 		if (nb_strong_generators) 
 			f_trivial_group = FALSE;
 		else 
 			f_trivial_group = TRUE;
+#endif
 		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
 		//"coset_rep_inv_subspace_action calling schreier_vector_"
 		//"coset_rep_inv" << endl;
+#if 1
+		gen->Schreier_vector_handler->coset_rep_inv(
+				Schreier_vector,
+				projected_pt,
+				projected_pt0,
+				verbose_level - 4);
+#else
 		schreier_vector_coset_rep_inv(
 			gen->A2 /*&A_factor_space*/,
 			sv, 
@@ -102,6 +112,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 			TRUE /* f_compact */,
 			f_check_image, 
 			verbose_level - 4);
+#endif
 		// gen->Elt1 contains the element that maps pt_to_trace to pt0
 		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
 		//"coset_rep_inv_subspace_action schreier_vector_coset_"
@@ -127,7 +138,8 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		return;
 		}
 	else {
-		cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
+		cout << "Node " << node
+				<< " poset_orbit_node::orbit_representative_and_"
 				"coset_rep_inv_subspace_action sv not "
 				"available (fatal)" << endl;
 		cout << "node=" << node << " prev=" << prev

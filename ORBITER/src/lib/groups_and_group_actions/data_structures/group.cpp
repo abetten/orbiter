@@ -169,7 +169,7 @@ void group::init_strong_generators_by_hdl(int nb_gen,
 				"before A->element_retrieve" << endl;
 		}
 	for (i = 0; i < nb_gen; i++) {
-		A->element_retrieve(gen_hdl[i], SG->ith(i), verbose_level);
+		A->element_retrieve(gen_hdl[i], SG->ith(i), 0/*verbose_level*/);
 		}
 	if (f_v) {
 		cout << "group::init_strong_generators_by_hdl "
@@ -239,7 +239,7 @@ void group::require_strong_generators()
 void group::require_sims()
 {
 	if (!f_has_sims) {
-		cout << "group::require_sims() !f_has_sims" << endl;
+		cout << "group::require_sims !f_has_sims" << endl;
 		exit(1);
 		}
 }
@@ -255,7 +255,7 @@ void group::group_order(longinteger_object &go)
 		D.multiply_up(go, tl, A->base_len);
 		}
 	else {
-		cout << "group::group_order() need sims or strong_generators" << endl;
+		cout << "group::group_order need sims or strong_generators" << endl;
 		exit(1);
 		}
 }
@@ -312,12 +312,12 @@ void group::code_ascii(int verbose_level)
 		}
 	*p++ = 0;
 	if (p - ascii_coding != sz) {
-		cout << "group::code_ascii(): p - ascii_coding != sz" << endl;
+		cout << "group::code_ascii p - ascii_coding != sz" << endl;
 		exit(1);
 		}
 	f_has_ascii_coding = TRUE;
 	if (f_v) {
-		cout << "group::code_ascii() " << ascii_coding << endl;
+		cout << "group::code_ascii " << ascii_coding << endl;
 		}
 }
 
@@ -338,7 +338,7 @@ void group::decode_ascii(int verbose_level)
 	len = decode_int4(p);
 	nbsg = decode_int4(p);
 	if (len != A->base_len) {
-		cout << "group::decode_ascii() len != A->base_len" << endl;
+		cout << "group::decode_ascii len != A->base_len" << endl;
 		cout << "len=" << len << " (from file)" << endl;
 		cout << "A->base_len=" << A->base_len << endl;
 		cout << "action A is " << A->label << endl;
@@ -460,7 +460,7 @@ void group::point_stabilizer(group &stab, int pt, int verbose_level)
 	int *tl;
 	
 	if (f_v) {
-		cout << "group::point_stabilizer() "
+		cout << "group::point_stabilizer "
 				"computing stabilizer of point " << pt << endl;
 		}
 	
@@ -503,7 +503,7 @@ void group::point_stabilizer_with_action(action *A2,
 	int *tl;
 	
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action() ";
+		cout << "group::point_stabilizer_with_action ";
 		cout << "computing stabilizer of point " << pt 
 			<< " in action " << A2->label 
 			<< " internal action is " << stab.A->label << endl;
@@ -513,13 +513,13 @@ void group::point_stabilizer_with_action(action *A2,
 	
 	tl = NEW_int(A->base_len);
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action() "
+		cout << "group::point_stabilizer_with_action "
 				"calling S->point_stabilizer_with_action" << endl;
 		}
 	S->point_stabilizer_with_action(A2, stab_gens,
 			tl, pt, verbose_level - 1);
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action() "
+		cout << "group::point_stabilizer_with_action "
 				"after S->point_stabilizer_with_action" << endl;
 		}
 	
@@ -634,7 +634,7 @@ void group::induced_action(action &induced_action,
 
 #if 0
 	if (f_v) {
-		cout << "group::induced_action() "
+		cout << "group::induced_action "
 				"finished after " << n << " steps" << endl;
 		cout << "H_order " << H_order << " K_order = " << K_order << endl;
 		cout << "# generators for H = " << HH.gens.len
@@ -653,7 +653,7 @@ void group::induced_action(action &induced_action,
 	KK.extract_strong_generators_in_order(K_SG, K_tl, verbose_level - 2);
 	
 
-	//cout << "group::induced_action() deleting HH,KK" << endl;
+	//cout << "group::induced_action deleting HH,KK" << endl;
 	}
 	
 	H.init(&induced_action);
@@ -661,7 +661,7 @@ void group::induced_action(action &induced_action,
 	H.init_strong_generators(H_SG, H_tl);
 	K.init_strong_generators(K_SG, K_tl);
 	if (f_v) {
-		cout << "group::induced_action() finished after "
+		cout << "group::induced_action finished after "
 				<< n << " iterations" << endl;
 		cout << "order of the induced group  = ";
 		H.print_group_order(cout);
@@ -688,10 +688,10 @@ void group::induced_action(action &induced_action,
 #endif
 	FREE_int(H_tl);
 	FREE_int(K_tl);
-	//cout << "group::induced_action() deleting SG" << endl;
+	//cout << "group::induced_action deleting SG" << endl;
 	}
 	if (f_v) {
-		cout << "group::induced_action() finished" << endl;
+		cout << "group::induced_action finished" << endl;
 		}	
 }
 
@@ -720,7 +720,7 @@ void group::extension(group &N, group &H, int verbose_level)
 	D.mult(go_N, go_H, go_G);
 	
 	if (f_v) {
-		cout << "group::extension() |N| = " << go_N << " |H| = " 
+		cout << "group::extension |N| = " << go_N << " |H| = "
 			<< go_H << " |G| = |N|*|H| = " << go_G << endl;
 		}
 	H.require_sims();
@@ -788,7 +788,7 @@ void group::extension(group &N, group &H, int verbose_level)
 	init_strong_generators(SG, tl);
 	
 	if (f_v) {
-		cout << "group::extension() finished after "
+		cout << "group::extension finished after "
 				<< n << " iterations" << endl;
 		cout << "order of the extension = ";
 		print_group_order(cout);

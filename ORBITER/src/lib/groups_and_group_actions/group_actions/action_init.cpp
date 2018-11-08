@@ -1081,21 +1081,21 @@ void action::init_matrix_group_strong_generators_builtin(
 		strong_generators_for_projective_linear_group(n, F, 
 			M->f_semilinear, 
 			data, size, nb_gens, 
-			verbose_level - 1);
+			0 /*verbose_level - 1*/);
 			// in GALOIS/projective.C
 		}
 	else if (M->f_affine) {
 		strong_generators_for_affine_linear_group(n, F, 
 			M->f_semilinear, 
 			data, size, nb_gens, 
-			verbose_level - 1);
+			0 /*verbose_level - 1*/);
 			// in GALOIS/projective.C
 		}
 	else if (M->f_general_linear) {
 		strong_generators_for_general_linear_group(n, F, 
 			M->f_semilinear, 
 			data, size, nb_gens, 
-			verbose_level - 1);
+			0 /*verbose_level - 1*/);
 			// in GALOIS/projective.C
 		}
 	else {
@@ -1108,7 +1108,7 @@ void action::init_matrix_group_strong_generators_builtin(
 
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_data(this, data, nb_gens, size,
-			transversal_length, verbose_level - 1);
+			transversal_length, 0 /*verbose_level - 1*/);
 
 	FREE_int(data);
 	

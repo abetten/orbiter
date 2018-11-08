@@ -1999,15 +1999,68 @@ void schreier::list_elements_as_permutations_vertically(ostream &ost)
 }
 
 
-void schreier::get_schreier_vector(int *&sv,
-	int f_trivial_group, int f_compact)
+schreier_vector *schreier::get_schreier_vector(
+	int gen_hdl_first, int nb_gen, int verbose_level)
 {
+#if 0
 	if (f_compact) {
 		get_schreier_vector_compact(sv, f_trivial_group);
 		}
 	else {
 		get_schreier_vector_ordinary(sv);
 		}
+#else
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::get_schreier_vector" << endl;
+	}
+	int *sv;
+	schreier_vector * Schreier_vector;
+	int f_trivial_group = FALSE;
+
+	if (nb_gen == 0) {
+		f_trivial_group = TRUE;
+	}
+
+	Schreier_vector = NEW_OBJECT(schreier_vector);
+	get_schreier_vector_compact(sv, f_trivial_group);
+	Schreier_vector->init(gen_hdl_first, nb_gen, sv, verbose_level - 1);
+	if (f_v) {
+		cout << "schreier::get_schreier_vector done" << endl;
+	}
+	return Schreier_vector;
+#endif
+}
+
+void schreier::create_point_list_sorted(
+		int *&point_list, int &point_list_length)
+{
+	int i, j, k, f, l, ff, p;
+
+	point_list_length = 0;
+	for (k = 0; k < nb_orbits; k++) {
+		point_list_length += orbit_len[k];
+		}
+	point_list = NEW_int(point_list_length);
+
+	ff = 0;
+	for (k = 0; k < nb_orbits; k++) {
+		f = orbit_first[k];
+		l = orbit_len[k];
+		for (j = 0; j < l; j++) {
+			i = f + j;
+			p = orbit[i];
+			point_list[ff + j] = p;
+			}
+		ff += l;
+		}
+	if (ff != point_list_length) {
+		cout << "schreier::get_schreier_vector_compact "
+				"ff != point_list_length" << endl;
+		exit(1);
+		}
+	int_vec_heapsort(point_list, point_list_length);
 }
 
 void schreier::get_schreier_vector_compact(int *&sv,
@@ -2022,9 +2075,12 @@ void schreier::get_schreier_vector_compact(int *&sv,
 // Unless f_trivial_group, sv + 1 + n is the array prev[n] and
 // sv + 1 + 2 * n is the array label[n]
 {
-	int i, j, k, f, ff, l, p, pr, la, n = 0;
+	int i, j, p, pr, la, n = 0;
 	int *point_list;
 
+	create_point_list_sorted(point_list, n);
+
+#if 0
 	for (k = 0; k < nb_orbits; k++) {
 		n += orbit_len[k];
 		}
@@ -2047,6 +2103,7 @@ void schreier::get_schreier_vector_compact(int *&sv,
 		exit(1);
 		}
 	int_vec_heapsort(point_list, n);
+#endif
 
 
 	if (f_trivial_group) {
@@ -2072,6 +2129,7 @@ void schreier::get_schreier_vector_compact(int *&sv,
 	FREE_int(point_list);
 }
 
+#if 0
 void schreier::get_schreier_vector_ordinary(int *&sv)
 // allocates and creates array sv[2 * A->degree] using NEW_int
 // sv[i * 2 + 0] is prev[i]
@@ -2093,6 +2151,7 @@ void schreier::get_schreier_vector_ordinary(int *&sv)
 			}
 		}
 }
+#endif
 
 void schreier::test_sv(action *A,
 	int *hdl_strong_generators, int *sv,

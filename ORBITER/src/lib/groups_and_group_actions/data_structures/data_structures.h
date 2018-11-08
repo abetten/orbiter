@@ -216,8 +216,79 @@ public:
 };
 
 // #############################################################################
-// schreier_vector.C:
+// schreier_vector_handler.cpp:
 // #############################################################################
+
+
+
+class schreier_vector_handler {
+public:
+	action *A;
+	int *cosetrep;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int f_check_image;
+	int f_allow_failure;
+
+	schreier_vector_handler();
+	~schreier_vector_handler();
+	void null();
+	void freeself();
+	void init(action *A, int f_allow_failure,
+			int verbose_level);
+	int coset_rep_inv(
+			schreier_vector *S,
+			int pt, int &pt0,
+			int verbose_level);
+	int coset_rep_inv_recursion(
+		schreier_vector *S,
+		int pt, int &pt0,
+		int verbose_level);
+	schreier_vector *sv_read_file(
+			int gen_hdl_first, int nb_gen,
+			FILE *fp, int verbose_level);
+	void sv_write_file(schreier_vector *Sv,
+			FILE *fp, int verbose_level);
+
+};
+
+// #############################################################################
+// schreier_vector.cpp:
+// #############################################################################
+
+
+
+class schreier_vector {
+public:
+	int gen_hdl_first;
+	int nb_gen;
+	int number_of_orbits;
+	int *sv;
+		// sv[0] = n = number of points in the set on which we act
+		// the next n entries are the points of the set
+		// the next n entries are the previous pointers
+		// the next n entries are the labels
+
+	schreier_vector();
+	~schreier_vector();
+	void null();
+	void freeself();
+	void init(int gen_hdl_first, int nb_gen, int *sv,
+			int verbose_level);
+	int *points();
+	int *prev();
+	int *label();
+	int get_number_of_points();
+	int get_number_of_orbits();
+	int count_number_of_orbits();
+	int determine_depth_recursion(
+		int n, int *pts, int *prev,
+		int *depth, int *ancestor, int pos);
+	void relabel_points(
+		action_on_factor_space *AF,
+		int verbose_level);
+};
 
 
 int schreier_vector_coset_rep_inv_general(action *A, 
@@ -258,6 +329,10 @@ void analyze_schreier_vector(int *sv, int verbose_level);
 	// we assume that the group is not trivial
 int schreier_vector_determine_depth_recursion(int n, int *pts, int *prev, 
 	int *depth, int *ancestor, int pos);
+// called from poset_orbit_node_downstep_subspace_action.C:
+void schreier_vector_relabel_points(int *sv, action_on_factor_space *AF,
+	int f_trivial_group, int verbose_level);
+
 
 // #############################################################################
 // set_and_stabilizer.C:
