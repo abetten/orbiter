@@ -90,7 +90,9 @@ public:
 	~action_by_restriction();
 	void null();
 	void free();
-	void init_from_sv(int *sv, int pt, int verbose_level);
+	void init_from_schreier_vector(
+			schreier_vector *Schreier_vector,
+			int pt, int verbose_level);
 	void init(int nb_points, int *points, int verbose_level);
 		// the array points must be orderd
 	int compute_image(action *A, int *Elt, int i, int verbose_level);

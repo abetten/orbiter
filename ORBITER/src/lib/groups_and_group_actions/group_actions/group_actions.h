@@ -633,7 +633,8 @@ public:
 	void induced_action_by_restriction_on_orbit_with_schreier_vector(
 		action &old_action, 
 		int f_induce_action, sims *old_G, 
-		int *sv, int pt, int verbose_level);
+		schreier_vector *Schreier_vector,
+		int pt, int verbose_level);
 	action *restricted_action(int *points, int nb_points, 
 		int verbose_level);
 	void induced_action_by_restriction(action &old_action, 
