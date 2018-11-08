@@ -525,7 +525,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 				*gen->A2,
 				FALSE /* f_induce_action */,
 				NULL /* old_G */,
-				Op->Schreier_vector->sv /* Op->sv*/,
+				Op->Schreier_vector /* Op->sv*/,
 				pt,
 				verbose_level - 1);
 			if (f_vvv) {

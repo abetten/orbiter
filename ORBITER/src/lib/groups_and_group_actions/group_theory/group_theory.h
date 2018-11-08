@@ -609,9 +609,9 @@ public:
 		// using NEW_int
 		// sv[i * 2 + 0] is prev[i]
 		// sv[i * 2 + 1] is label[i]
-#endif
 	void test_sv(action *A, int *hdl_strong_generators, int *sv,
 		int f_trivial_group, int f_compact, int verbose_level);
+#endif
 
 	// schreier_io.cpp:
 	void latex(const char *fname);

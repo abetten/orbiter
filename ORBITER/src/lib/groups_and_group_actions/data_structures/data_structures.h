@@ -219,6 +219,7 @@ public:
 // schreier_vector_handler.cpp:
 // #############################################################################
 
+//! manages access to schreier vectors
 
 
 class schreier_vector_handler {
@@ -257,6 +258,7 @@ public:
 // schreier_vector.cpp:
 // #############################################################################
 
+//! compact storage of schreier vectors
 
 
 class schreier_vector {
@@ -265,8 +267,12 @@ public:
 	int nb_gen;
 	int number_of_orbits;
 	int *sv;
+		// the length of sv is n+1 if the group is trivial
+		// and 3*n + 1 otherwise.
+		//
 		// sv[0] = n = number of points in the set on which we act
 		// the next n entries are the points of the set
+		// the next 2*n entries only exist if the group is non-trivial:
 		// the next n entries are the previous pointers
 		// the next n entries are the labels
 
@@ -288,9 +294,13 @@ public:
 	void relabel_points(
 		action_on_factor_space *AF,
 		int verbose_level);
+	void orbit_of_point(
+			int pt, int *&orbit_elts, int &orbit_len,
+			int verbose_level);
 };
 
 
+#if 0
 int schreier_vector_coset_rep_inv_general(action *A, 
 	int *sv, int *hdl_gen, int pt, 
 	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
@@ -332,6 +342,7 @@ int schreier_vector_determine_depth_recursion(int n, int *pts, int *prev,
 // called from poset_orbit_node_downstep_subspace_action.C:
 void schreier_vector_relabel_points(int *sv, action_on_factor_space *AF,
 	int f_trivial_group, int verbose_level);
+#endif
 
 
 // #############################################################################

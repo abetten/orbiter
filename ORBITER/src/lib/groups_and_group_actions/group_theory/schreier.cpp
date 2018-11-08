@@ -2153,6 +2153,7 @@ void schreier::get_schreier_vector_ordinary(int *&sv)
 }
 #endif
 
+#if 0
 void schreier::test_sv(action *A,
 	int *hdl_strong_generators, int *sv,
 	int f_trivial_group, int f_compact,
@@ -2197,4 +2198,5 @@ void schreier::test_sv(action *A,
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 }
+#endif
 

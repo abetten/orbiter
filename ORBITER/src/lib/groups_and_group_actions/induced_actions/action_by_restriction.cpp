@@ -37,117 +37,31 @@ void action_by_restriction::free()
 	null();
 }
 
-void action_by_restriction::init_from_sv(int *sv,
+void action_by_restriction::init_from_schreier_vector(
+		schreier_vector *Schreier_vector,
 		int pt, int verbose_level)
 {
-	int i, idx;
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "action_by_restriction::init_from_sv "
+		cout << "action_by_restriction::init_from_schreier_vector "
 				"pt=" << pt << endl;
 		}
-	int n;
-	int *pts;
-	int *prev;
-	int *label;
-	int *depth;
-	int *ancestor;
-
-	int *orbit_elt_idx;
 	int *orbit_elts;
 	int orbit_len;
 
-	n = sv[0];
-	pts = sv + 1;
-	prev = pts + n;
-	label = prev + n;
-	if (f_v) {
-		cout << "action_by_restriction::init_from_sv "
-				"schreier vector of length " << n << endl;
-		}
+	Schreier_vector->orbit_of_point(
+			pt, orbit_elts, orbit_len,
+			verbose_level);
 
-	if (!int_vec_search(pts, n, pt, idx)) {
-		cout << "action_by_restriction::init_from_sv "
-				"fatal: point " << pt << " not found" << endl;
-		exit(1);
-		}
-
-	depth = NEW_int(n);	
-	ancestor = NEW_int(n);	
-	orbit_elt_idx = NEW_int(n);	
-	
-	for (i = 0; i < n; i++) {
-		depth[i] = -1;
-		ancestor[i] = -1;
-		}
-	if (f_vv) {
-		cout << "action_by_restriction::init_from_sv "
-				"determining depth using schreier_vector_determine_"
-				"depth_recursion" << endl;
-		}
-	for (i = 0; i < n; i++) {
-		schreier_vector_determine_depth_recursion(n,
-				pts, prev, depth, ancestor, i);
-		}
-	if (f_vv) {
-		cout << "action_by_restriction::init_from_sv "
-				"determining depth using schreier_vector_"
-				"determine_depth_recursion done" << endl;
-		}
-	if (f_vvv && n < 100) {
-		cout << "i : pts[i] : prev[i] : label[i] : "
-				"depth[i] : ancestor[i]" << endl;
-		for (i = 0; i < n; i++) {
-			cout 
-				<< setw(5) << i << " : " 
-				<< setw(5) << pts[i] << " : " 
-				<< setw(5) << prev[i] << " : " 
-				<< setw(5) << label[i] << " : " 
-				<< setw(5) << depth[i] << " : " 
-				<< setw(5) << ancestor[i] 
-				<< endl;
-			}
-		}
-	orbit_len = 0;
-	for (i = 0; i < n; i++) {
-		if (ancestor[i] == pt) {
-			orbit_elt_idx[orbit_len++] = i;
-			}
-		}
-	if (f_v) {
-		cout << "action_by_restriction::init_from_sv "
-				"found orbit of length " << orbit_len << endl;
-		}
-	orbit_elts = NEW_int(orbit_len);
-	for (i = 0; i < orbit_len; i++) {
-		orbit_elts[i] = pts[orbit_elt_idx[i]];
-		}
-	if (f_vv) {
-		cout << "the points in the orbit are: ";
-		int_vec_print(cout, orbit_elts, orbit_len);
-		cout << endl;
-		}	
-	if (orbit_elts[0] != pt) {
-		cout << "action_by_restriction::init_from_sv "
-				"fatal: orbit_elts[0] != pt" << endl;
-		exit(1);
-		}
-	for (i = 1; i < orbit_len; i++) {
-		if (orbit_elts[i] < orbit_elts[i - 1]) {
-			cout << "action_by_restriction::init_from_sv "
-					"fatal: orbit_elts[] not increasing" << endl;
-			exit(1);
-			}
-		}
 	init(orbit_len, orbit_elts, verbose_level);
-	
-	FREE_int(depth);
-	FREE_int(ancestor);
-	FREE_int(orbit_elt_idx);
+
 	FREE_int(orbit_elts);
+
+	if (f_v) {
+		cout << "action_by_restriction::init_from_schreier_vector "
+				"done" << endl;
+		}
 }
 
 void action_by_restriction::init(int nb_points, int *points,
