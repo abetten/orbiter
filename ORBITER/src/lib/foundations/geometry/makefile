@@ -32,7 +32,6 @@ MODULES = \
 	orthogonal_points.o \
 	packing.o \
 	point_line.o \
-	projective.o \
 	projective_space.o \
 	surface.o \
 	surface_object.o \

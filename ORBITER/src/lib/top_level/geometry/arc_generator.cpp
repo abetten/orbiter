@@ -723,14 +723,14 @@ void arc_generator::print_set_in_affine_plane(int len, int *S)
 
 void arc_generator::point_unrank(int *v, int rk)
 {
-	PG_element_unrank_modified(*F, v, 1 /* stride */, n + 1 /* len */, rk);
+	F->PG_element_unrank_modified(v, 1 /* stride */, n + 1 /* len */, rk);
 }
 
 int arc_generator::point_rank(int *v)
 {
 	int rk;
 	
-	PG_element_rank_modified(*F, v, 1 /* stride */, n + 1, rk);
+	F->PG_element_rank_modified(v, 1 /* stride */, n + 1, rk);
 	return rk;
 }
 
@@ -744,7 +744,8 @@ void arc_generator::compute_line_type(int *set, int len, int verbose_level)
 		}
 
 	if (P->Lines_on_point == 0) {
-		cout << "arc_generator::compute_line_type P->Lines_on_point == 0" << endl;
+		cout << "arc_generator::compute_line_type "
+				"P->Lines_on_point == 0" << endl;
 		exit(1);
 		}
 	int_vec_zero(line_type, P->N_lines);
@@ -758,7 +759,8 @@ void arc_generator::compute_line_type(int *set, int len, int verbose_level)
 	
 }
 
-void arc_generator::lifting_prepare_function_new(exact_cover *E, int starter_case, 
+void arc_generator::lifting_prepare_function_new(
+	exact_cover *E, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
@@ -772,15 +774,18 @@ void arc_generator::lifting_prepare_function_new(exact_cover *E, int starter_cas
 	int nb_needed;
 
 	if (f_v) {
-		cout << "arc_generator::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 
 	if (n != 2) {
-		cout << "arc_generator::lifting_prepare_function_new needs n == 2" << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"needs n == 2" << endl;
 		exit(1);
 		}
 	if (d != 2) {
-		cout << "arc_generator::lifting_prepare_function_new needs d == 2" << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"needs d == 2" << endl;
 		exit(1);
 		}
 	nb_needed = target_size - starter_size;
@@ -796,7 +801,8 @@ void arc_generator::lifting_prepare_function_new(exact_cover *E, int starter_cas
 
 	C.init(line_type, P->N_lines, FALSE, 0);
 	if (f_v) {
-		cout << "arc_generator::lifting_prepare_function_new line_type:" << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"line_type:" << endl;
 		C.print_naked(TRUE);
 		cout << endl;
 		}
@@ -1793,7 +1799,7 @@ void print_point(int pt, void *data)
 	arc_generator *Gen = (arc_generator *) data;
 	int v[3];
 	
-	PG_element_unrank_modified(*Gen->F, v, 1 /* stride */, 3 /* len */, pt);
+	Gen->F->PG_element_unrank_modified(v, 1 /* stride */, 3 /* len */, pt);
 	cout << "(" << v[0] << "," << v[1] << "," << v[2] << ")" << endl;
 }
 

@@ -78,7 +78,10 @@ void poset_classification::null()
 	f_Log = FALSE;
 	f_print_only = FALSE;
 	f_find_group_order = FALSE;
-	
+
+	f_has_tools_path = FALSE;
+	tools_path = NULL;
+
 	f_has_invariant_subset_for_root_node = FALSE;
 	invariant_subset_for_root_node = NULL;
 	
@@ -405,6 +408,13 @@ void poset_classification::read_arguments(int argc,
 				<< " " << schreier_tree_scale 
 				<< " " << schreier_tree_line_width 
 				<< endl;
+			}
+		else if (strcmp(argv[i], "-tools_path") == 0) {
+			f_has_tools_path = TRUE;
+			tools_path = argv[++i];
+			if (f_v) {
+				cout << "-tools_path " << tools_path << endl;
+				}
 			}
 
 

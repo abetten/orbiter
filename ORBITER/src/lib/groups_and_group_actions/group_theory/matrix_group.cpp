@@ -799,11 +799,11 @@ int matrix_group::GL_image_of_PG_element(
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element" << endl;
 		}
-	PG_element_unrank_modified(*GFq, v1, 1, n, a);
+	GFq->PG_element_unrank_modified(v1, 1, n, a);
 
 	action_from_the_right_all_types(v1, Elt, v2, verbose_level - 1);
 	
-	PG_element_rank_modified(*GFq, v2, 1, n, b);
+	GFq->PG_element_rank_modified(v2, 1, n, b);
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element done" << endl;
@@ -922,7 +922,7 @@ void matrix_group::substitute_surface_eqation(int *Elt,
 							Elt,
 							0 /*verbose_level*/);
 
-		PG_element_normalize(*GFq, coeff_out, 1, 20);
+		GFq->PG_element_normalize(coeff_out, 1, 20);
 	} else {
 		Surf->substitute_semilinear(coeff_in,
 							coeff_out,
@@ -931,7 +931,7 @@ void matrix_group::substitute_surface_eqation(int *Elt,
 							Elt,
 							0 /*verbose_level*/);
 
-		PG_element_normalize(*GFq, coeff_out, 1, 20);
+		GFq->PG_element_normalize(coeff_out, 1, 20);
 
 	}
 	if (f_v) {
@@ -1495,7 +1495,7 @@ void matrix_group::GL_print_easy_normalized(int *Elt, ostream &ost)
 		int *D;
 		D = NEW_int(n * n);
 		int_vec_copy(Elt, D, n * n);
-		PG_element_normalize_from_front(*GFq, D, 1, n * n);
+		GFq->PG_element_normalize_from_front(D, 1, n * n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				a = D[i * n + j];
@@ -1552,7 +1552,7 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 	int_vec_copy(Elt, D, n * n);
 	
 	if (f_projective) {
-		PG_element_normalize_from_front(*GFq, D, 1, n * n);
+		GFq->PG_element_normalize_from_front(D, 1, n * n);
 		}
 
 	ost << "\\left[" << endl;

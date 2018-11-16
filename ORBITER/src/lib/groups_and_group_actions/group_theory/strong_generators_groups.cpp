@@ -9,7 +9,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
-void strong_generators::init_linear_group_from_scratch(action *&A, 
+void strong_generators::init_linear_group_from_scratch(
+	action *&A,
 	finite_field *F, int n, 
 	int f_projective, int f_general, int f_affine, 
 	int f_semilinear, int f_special, 

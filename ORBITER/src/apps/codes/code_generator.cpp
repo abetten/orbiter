@@ -34,6 +34,10 @@ void code_generator::read_arguments(int argc, const char **argv)
 			f_debug = TRUE;
 			cout << "-debug " << endl;
 			}
+		else if (strcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			cout << "-report " << endl;
+			}
 		else if (strcmp(argv[i], "-schreier_depth") == 0) {
 			schreier_depth = atoi(argv[++i]);
 			cout << "-schreier_depth " << schreier_depth << endl;
@@ -181,6 +185,7 @@ code_generator::~code_generator()
 void code_generator::null()
 {
 	verbose_level = 0;
+	f_report = FALSE;
 	f_nmk = FALSE;
 	f_linear = FALSE;
 	f_nonlinear = FALSE;
@@ -423,7 +428,7 @@ void code_generator::print(int len, int *S)
 	if (f_linear) {
 		cout << "generator matrix:" << endl;
 		for (j = 0; j < len; j++) {
-			PG_element_unrank_modified(*F, 
+			F->PG_element_unrank_modified(
 				rc.M1 + j, len /* stride */, nmk /* len */, 
 				S[j]);
 			}
@@ -552,6 +557,32 @@ void code_generator::main(int verbose_level)
 #endif
 		}
 
+
+	cout << "preparing level spreadsheet" << endl;
+	{
+	spreadsheet *Sp;
+	gen->make_spreadsheet_of_level_info(
+			Sp, depth, verbose_level);
+	char fname_csv[1000];
+	sprintf(fname_csv, "levels_%d.csv", depth);
+	Sp->save(fname_csv, verbose_level);
+	delete Sp;
+	}
+	cout << "preparing orbit spreadsheet" << endl;
+	{
+	spreadsheet *Sp;
+	gen->make_spreadsheet_of_orbit_reps(
+			Sp, depth);
+	char fname_csv[1000];
+	sprintf(fname_csv, "orbits_%d.csv",
+			depth);
+	Sp->save(fname_csv, verbose_level);
+	delete Sp;
+	}
+	cout << "preparing orbit spreadsheet done" << endl;
+
+
+
 	if (f_draw_poset) {
 		gen->draw_poset(gen->fname_base, depth, 
 			0 /* data1 */, f_embedded, f_sideways, 
@@ -560,6 +591,55 @@ void code_generator::main(int verbose_level)
 	if (f_print_data_structure) {
 		gen->print_data_structure_tex(depth, verbose_level);
 		}
+	if (f_report) {
+		char fname_base[1000];
+		char fname_report[1000];
+		char title[10000];
+		char author[10000];
+
+		sprintf(author, "");
+
+
+		if (f_linear) {
+			if (f_nmk) {
+				sprintf(title, "Classification of Optimal Linear Codes by Redundancy");
+				sprintf(fname_base, "codes_linear_nmk%d_q%d_d%d", nmk, q, d);
+				}
+			else {
+				sprintf(title, "Classification of Optimal Linear Codes");
+				sprintf(fname_base, "codes_linear_n%d_k%d_q%d_d%d", n, k, q, d);
+				}
+			}
+		else if (f_nonlinear) {
+			sprintf(title, "Classification of Optimal Nonlinear Codes");
+			sprintf(fname_base, "codes_nonlinear_n%d_k%d_d%d", n, k, d);
+			}
+
+		sprintf(fname_report, "%s.tex", fname_base);
+		{
+		ofstream fp(fname_report);
+
+
+		latex_head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+		A->report(fp);
+
+		gen->report(fp);
+
+		latex_foot(fp);
+
+		} // close fp
+
+	}
 	if (f_v) {
 		cout << "code_generator::main done" << endl;
 		}
@@ -684,10 +764,10 @@ int code_generator::Hamming_distance(int a, int b)
 			}
 		}
 	if (f_linear) {
-		PG_element_unrank_modified(*F, 
+		F->PG_element_unrank_modified(
 			v1, 1 /* stride */, nmk /* len */, 
 			a);
-		PG_element_unrank_modified(*F, 
+		F->PG_element_unrank_modified(
 			v2, 1 /* stride */, nmk /* len */, 
 			b);
 		for (i = 0; i < nmk; i++) {

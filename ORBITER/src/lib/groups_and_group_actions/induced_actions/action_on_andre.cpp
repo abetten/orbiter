@@ -40,7 +40,8 @@ void action_on_andre::free()
 	null();
 }
 
-void action_on_andre::init(action *An, action *An1, andre_construction *Andre, int verbose_level)
+void action_on_andre::init(action *An, action *An1,
+		andre_construction *Andre, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -149,7 +150,7 @@ int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_le
 
 		An1->element_image_of_low_level(coords1, coords2, Elt, verbose_level - 1);
 
-		PG_element_normalize(*Andre->F, coords2, 1, n1);
+		Andre->F->PG_element_normalize(coords2, 1, n1);
 		int_vec_copy(coords2, Pt.coordinates, n);
 		image = Pt.rank(0 /* verbose_level*/);
 		}
@@ -160,7 +161,8 @@ int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_le
 	return image;
 }
 
-int action_on_andre::compute_image_of_line(int *Elt, int line_idx, int verbose_level)
+int action_on_andre::compute_image_of_line(int *Elt,
+		int line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	andre_construction_line_element Line;
@@ -188,17 +190,19 @@ int action_on_andre::compute_image_of_line(int *Elt, int line_idx, int verbose_l
 			}
 
 		for (i = 0; i < k1; i++) {
-			An1->element_image_of_low_level(coords1 + i * n1, coords2 + i * n1, Elt, verbose_level - 1);
+			An1->element_image_of_low_level(coords1 + i * n1,
+					coords2 + i * n1, Elt, verbose_level - 1);
 			}
 
 		for (i = 0; i < k; i++) {
 			if (coords2[i * n1 + n]) {
-				cout << "action_on_andre::compute_image_of_line coords2[i * n1 + n]" << endl;
+				cout << "action_on_andre::compute_image_of_line "
+						"coords2[i * n1 + n]" << endl;
 				exit(1);
 				}
 			}
 
-		PG_element_normalize(*Andre->F, coords2 + k * n1, 1, n1);
+		Andre->F->PG_element_normalize(coords2 + k * n1, 1, n1);
 
 		for (i = 0; i < k1; i++) {
 			for (j = 0; j < n; j++) {

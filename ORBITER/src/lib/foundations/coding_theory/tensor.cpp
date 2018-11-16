@@ -576,7 +576,7 @@ void make_tensor_code_9dimensional_as_point_set(finite_field *F,
 		for (i = 0; i < 9; i++) {
 			pt[i] = code[i * length + t];
 			}
-		PG_element_rank_modified(*F, pt, 1, 9, rk);
+		F->PG_element_rank_modified(pt, 1, 9, rk);
 		the_set[t] = rk;
 		}
 	FREE_int(code);

@@ -63,6 +63,36 @@ void layered_graph::init(int nb_layers, int *Nb_nodes_layer,
 		}
 }
 
+int layered_graph::nb_nodes()
+{
+	int N = 0;
+	int i;
+
+	for (i = 0; i < nb_layers; i++) {
+		N += L[i].nb_nodes;
+	}
+	return N;
+}
+
+double layered_graph::average_word_length()
+{
+	double s = 0.;
+	double avg;
+	int N = 0;
+	int i;
+
+	for (i = 0; i < nb_layers; i++) {
+		N += L[i].nb_nodes;
+		s += L[i].nb_nodes * (i + 1);
+	}
+	if (N == 0) {
+		cout << "layered_graph::average_word_length N == 0" << endl;
+		exit(1);
+	}
+	avg = s / (double) N;
+	return avg;
+}
+
 void layered_graph::place(int verbose_level)
 {
 	double dy, dy2;
@@ -968,7 +998,7 @@ void layered_graph::create_spanning_tree(
 		double left = 0;
 		double right = 1;
 		L[0].Nodes[0].place_x_based_on_tree(this,
-				left, right, verbose_level);
+				left, right, 0 /*verbose_level*/);
 		}
 
 
@@ -988,7 +1018,7 @@ void layered_graph::compute_depth_first_ranks(int verbose_level)
 		}
 
 	L[0].Nodes[0].depth_first_rank_recursion(this,
-			r, verbose_level);
+			r, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "layered_graph::compute_depth_first_ranks done" << endl;

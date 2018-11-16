@@ -218,7 +218,7 @@ void klein_correspondence::init(finite_field *F,
 			coordinates_of_quadric_points + i * d, 1, i, 0);
 		int_vec_copy(
 			coordinates_of_quadric_points + i * d, v6, 6);
-		PG_element_rank_modified(*F, v6, 1, d, a);
+		F->PG_element_rank_modified(v6, 1, d, a);
 		Pt_rk[i] = a;
 		}
 

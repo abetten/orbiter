@@ -39,6 +39,7 @@ int main(int argc, const char **argv)
 	int verbose_level = 0;
 	int f_linear = FALSE;
 	int f_report = FALSE;
+	int f_report_5p1 = FALSE;
 	int f_read_double_sixes = FALSE;
 	int f_double_sixes_only = FALSE;
 	int f_read_surfaces = FALSE;
@@ -103,6 +104,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
+			}
+		else if (strcmp(argv[i], "-report_5p1") == 0) {
+			f_report_5p1 = TRUE;
+			cout << "-report_5p1" << endl;
 			}
 		else if (strcmp(argv[i], "-read_double_sixes") == 0) {
 			f_read_double_sixes = TRUE;
@@ -286,8 +291,10 @@ int main(int argc, const char **argv)
 			cout << "surface_classify before SCW->Classify_"
 					"double_sixes->classify_partial_ovoids" << endl;
 			}
-		SCW->Classify_double_sixes->classify_partial_ovoids(f_draw_poset, 
+		SCW->Classify_double_sixes->classify_partial_ovoids(
+			f_draw_poset,
 			f_draw_poset_full, 
+			f_report_5p1,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify after SCW->Classify_"

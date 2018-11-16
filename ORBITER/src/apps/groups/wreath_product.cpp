@@ -588,7 +588,7 @@ int wreath_rank_point_func(int *v, void *data)
 
 	T = (tensor_product *) data;
 	//AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
-	PG_element_rank_modified(*T->F, v, 1, T->vector_space_dimension, rk);
+	T->F->PG_element_rank_modified(v, 1, T->vector_space_dimension, rk);
 	return rk;
 }
 
@@ -598,7 +598,7 @@ void wreath_unrank_point_func(int *v, int rk, void *data)
 
 	T = (tensor_product *) data;
 	//AG_element_unrank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
-	PG_element_unrank_modified(*T->F, v, 1, T->vector_space_dimension, rk);
+	T->F->PG_element_unrank_modified(v, 1, T->vector_space_dimension, rk);
 }
 
 

@@ -2330,7 +2330,7 @@ void finite_field::projective_action_on_columns_from_the_left(
 		}
 						
 	for (j = 0; j < n; j++) {
-		PG_element_normalize_from_front(*this, AM + j,
+		PG_element_normalize_from_front(AM + j,
 				n /* stride */, m /* length */);
 		}
 	if (f_vv) {
@@ -2419,10 +2419,10 @@ void finite_field::builtin_transversal_rep_GLnq(int *A,
 		}
 	else {
 		if (i == 0) {
-			PG_element_unrank_modified(*this, A + i, n, n, j);
+			PG_element_unrank_modified(A + i, n, n, j);
 			}
 		else {
-			PG_element_unrank_modified_not_in_subspace(*this,
+			PG_element_unrank_modified_not_in_subspace(
 					A + i, n, n, i - 1, j);
 			}
 		i0 = -1;
@@ -3058,10 +3058,10 @@ int finite_field::compare_subspaces_ranked(
 	base_cols1 = NEW_int(vector_space_dimension);
 	base_cols2 = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
-		PG_element_unrank_modified(*this,
+		PG_element_unrank_modified(
 			M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set1[i]);
-		PG_element_unrank_modified(*this,
+		PG_element_unrank_modified(
 			M2 + i * vector_space_dimension,
 			1, vector_space_dimension, set2[i]);
 		}
@@ -3279,7 +3279,7 @@ int finite_field::Gauss_canonical_form_ranked(
 	M = NEW_int(size * vector_space_dimension);
 	base_cols = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
-		PG_element_unrank_modified(*this,
+		PG_element_unrank_modified(
 			M + i * vector_space_dimension,
 			1, vector_space_dimension,
 			set1[i]);
@@ -3306,7 +3306,7 @@ int finite_field::Gauss_canonical_form_ranked(
 		}
 
 	for (i = 0; i < rk; i++) {
-		PG_element_rank_modified(*this,
+		PG_element_rank_modified(
 			M + i * vector_space_dimension,
 			1, vector_space_dimension,
 			set2[i]);
@@ -3352,7 +3352,7 @@ int finite_field::lexleast_canonical_form_ranked(
 	M1 = NEW_int(size * vector_space_dimension);
 	base_cols = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
-		PG_element_unrank_modified(*this, M1 + i * vector_space_dimension, 
+		PG_element_unrank_modified(M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set1[i]);
 		}
 	if (f_v) {
@@ -3394,7 +3394,7 @@ int finite_field::lexleast_canonical_form_ranked(
 		if (a == 0) {
 			continue;
 			}
-		PG_element_rank_modified(*this,
+		PG_element_rank_modified(
 				M2 + a * vector_space_dimension, 1,
 				vector_space_dimension, list_of_ranks_PG[a]);
 		if (!int_vec_search(list_of_ranks_PG_sorted,
@@ -3447,7 +3447,7 @@ int finite_field::lexleast_canonical_form_ranked(
 					<< list_of_ranks_PG_sorted[a] << endl;
 			}
 		basis_vectors[i] = list_of_ranks_PG_sorted[a];
-		PG_element_unrank_modified(*this, M1 + i * vector_space_dimension, 
+		PG_element_unrank_modified(M1 + i * vector_space_dimension,
 			1, vector_space_dimension, basis_vectors[i]);
 		Sz = q * sz;
 		if (f_v) {
@@ -3490,7 +3490,7 @@ int finite_field::lexleast_canonical_form_ranked(
 				int_vec_print(cout, tmp, vector_space_dimension);
 				cout << endl;
 				}
-			PG_element_rank_modified(*this, tmp, 1,
+			PG_element_rank_modified(tmp, 1,
 					vector_space_dimension, a);
 			if (f_v) {
 				cout << "has rank " << a << endl;
@@ -3521,7 +3521,7 @@ int finite_field::lexleast_canonical_form_ranked(
 		}
 
 	for (i = 0; i < rk; i++) {
-		PG_element_rank_modified(*this, M1 + i * vector_space_dimension, 
+		PG_element_rank_modified(M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set2[i]);
 		}
 	if (f_v) {
@@ -3937,7 +3937,7 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 					}
 				}
 			}
-		PG_element_unrank_modified(*this, msg, 1, k, h);
+		PG_element_unrank_modified(msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
@@ -4009,7 +4009,7 @@ void finite_field::code_projective_weights(
 			time_check_delta(cout, dt);
 			cout << endl;
 			}
-		PG_element_unrank_modified(*this, msg, 1, k, h);
+		PG_element_unrank_modified(msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
@@ -5078,14 +5078,14 @@ void finite_field::unrank_point_in_PG(int *v, int len, int rk)
 // len is the length of the vector, not the projective dimension
 {
 
-	PG_element_unrank_modified(*this, v, 1 /* stride */, len, rk);
+	PG_element_unrank_modified(v, 1 /* stride */, len, rk);
 }
 
 int finite_field::rank_point_in_PG(int *v, int len)
 {
 	int rk;
 
-	PG_element_rank_modified(*this, v, 1 /* stride */, len, rk);
+	PG_element_rank_modified(v, 1 /* stride */, len, rk);
 	return rk;
 }
 
@@ -5398,7 +5398,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	int_vec_copy(B, B1, (d + k + 1) * d);
 	for (i = 0; i < d + k + 1; i++) {
 		//PG_element_normalize(*this, B1 + i * d, 1, d);
-		PG_element_rank_modified(*this, B1 + i * d, 1, d, a);
+		PG_element_rank_modified(B1 + i * d, 1, d, a);
 		B_set[i] = a;
 		}
 	int_vec_heapsort(B_set, d + k + 1);
@@ -5452,7 +5452,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 
 			for (i = 0; i < d + k + 1; i ++) {
 				mult_vector_from_the_left(A1 + i * d, Transform, v, d, d);
-				PG_element_rank_modified(*this, v, 1, d, a);
+				PG_element_rank_modified(v, 1, d, a);
 				image_set[i] = a;
 				}
 			if (f_v) {

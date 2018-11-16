@@ -333,13 +333,13 @@ void projective_space::init_incidence_structure(int verbose_level)
 		}
 	if (f_vv) {
 		for (i = 0; i < N_points; i++) {
-			PG_element_unrank_modified(*F, v, 1, n + 1, i);
+			F->PG_element_unrank_modified(v, 1, n + 1, i);
 			cout << "point " << i << " : ";
 			int_vec_print(cout, v, n + 1);
 			cout << " = ";
 			F->int_vec_print(cout, v, n + 1);
 
-			PG_element_normalize_from_front(*F, v, 1, n + 1);
+			F->PG_element_normalize_from_front(v, 1, n + 1);
 			cout << " = ";
 			int_vec_print(cout, v, n + 1);
 
@@ -401,9 +401,9 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 			for (a = 0; a < k; a++) {
-				PG_element_unrank_modified(*F, v, 1, 2, a);
+				F->PG_element_unrank_modified(v, 1, 2, a);
 				F->mult_matrix(v, Grass_lines->M, w, 1, 2, n + 1);
-				PG_element_rank_modified(*F, w, 1, n + 1, b);
+				F->PG_element_rank_modified(w, 1, n + 1, b);
 				if (incidence_bitvec) {
 					incidence_m_ii(b, i, 1);
 					}
@@ -471,7 +471,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 					A, n + 1, n + 1, n + 1, 
 					F->log10_of_q + 1);
 				}
-			PG_element_rank_modified(*F, 
+			F->PG_element_rank_modified(
 				A + 2 * (n + 1), 1, n + 1, a);
 			if (f_vv) {
 				cout << "line " << i << " is ";
@@ -620,9 +620,9 @@ void projective_space::create_points_on_line(
 	
 	Grass_lines->unrank_int(line_rk, 0/*verbose_level - 4*/);
 	for (a = 0; a < k; a++) {
-		PG_element_unrank_modified(*F, v, 1, 2, a);
+		F->PG_element_unrank_modified(v, 1, 2, a);
 		F->mult_matrix(v, Grass_lines->M, w, 1, 2, n + 1);
-		PG_element_rank_modified(*F, w, 1, n + 1, b);
+		F->PG_element_rank_modified(w, 1, n + 1, b);
 		line[a] = b;
 		}
 }
@@ -775,13 +775,13 @@ int projective_space::rank_point(int *v)
 {
 	int b;
 	
-	PG_element_rank_modified(*F, v, 1, n + 1, b);
+	F->PG_element_rank_modified(v, 1, n + 1, b);
 	return b;
 }
 
 void projective_space::unrank_point(int *v, int rk)
 {	
-	PG_element_unrank_modified(*F, v, 1, n + 1, rk);
+	F->PG_element_unrank_modified(v, 1, n + 1, rk);
 }
 
 int projective_space::rank_line(int *basis)
@@ -1547,7 +1547,7 @@ void projective_space::compute_bisecants_and_conics(
 			determine_line_in_plane(Line, 
 				bisecants + h * 3, 
 				0 /* verbose_level */);
-			PG_element_normalize_from_front(*F, 
+			F->PG_element_normalize_from_front(
 				bisecants + h * 3, 1, 3);
 			}
 		}
@@ -1572,7 +1572,7 @@ void projective_space::compute_bisecants_and_conics(
 
 		determine_conic_in_plane(arc5, 5,
 				six_coeffs, 0 /* verbose_level */);
-		PG_element_normalize_from_front(*F, six_coeffs, 1, 6);
+		F->PG_element_normalize_from_front(six_coeffs, 1, 6);
 		int_vec_copy(six_coeffs, conics + j * 6, 6);
 		}
 
@@ -1833,7 +1833,7 @@ void projective_space::create_Maruta_Hamada_arc(
 			b = Lines[L[h] * r + i];
 			cout << "point " << b << " = ";
 			unrank_point(v, b);
-			PG_element_normalize_from_front(*F, v, 1, 3);
+			F->PG_element_normalize_from_front(v, 1, 3);
 			int_vec_print(cout, v, 3);
 			cout << endl;
 			}
@@ -2617,9 +2617,9 @@ void projective_space::line_intersection_type_through_hyperplane(
 	
 	int_vec_zero(cnt1, nb_pts_in_hyperplane);
 	for (i = 0; i < nb_pts_in_hyperplane; i++) {
-		PG_element_unrank_modified(*F, Pts1 + i * d, 1, n, i);
+		F->PG_element_unrank_modified(Pts1 + i * d, 1, n, i);
 		Pts1[i * d + d - 1] = 0;
-		PG_element_rank_modified(*F, Pts1 + i * d, 1, n + 1, i1);
+		F->PG_element_rank_modified(Pts1 + i * d, 1, n + 1, i1);
 
 		// i1 is the rank of the hyperplane point
 		// inside the larger space:
@@ -2830,7 +2830,7 @@ void projective_space::find_lines_which_are_contained(
 		for (a = 0; a < q + 1; a++) {
 
 			// unrank a point on the projective line:
-			PG_element_unrank_modified(*F, coeffs, 1, 2, a);
+			F->PG_element_unrank_modified(coeffs, 1, 2, a);
 			int_vec_copy(M, M2, 2 * d);
 
 			// map the point to the line at hand.
@@ -2844,7 +2844,7 @@ void projective_space::find_lines_which_are_contained(
 
 			// rank the test point and see
 			// if it belongs to the surface:
-			PG_element_rank_modified(*F, M2 + 2 * d, 1, d, b);
+			F->PG_element_rank_modified(M2 + 2 * d, 1, d, b);
 			if (!int_vec_search(set1, sz1, b, idx)) {
 				break;
 				}
@@ -2929,7 +2929,7 @@ void projective_space::find_lines_which_are_contained(
 								F->mult(a, M2[1 * d + h]));
 					}
 				// row 2 of M2 contains the coordinates of the point P3:
-				PG_element_rank_modified(*F, M2 + 2 * d, 1, d, b);
+				F->PG_element_rank_modified(M2 + 2 * d, 1, d, b);
 				if (!int_vec_search(set2, sz2, b, idx)) {
 					break;
 					}
@@ -3529,7 +3529,7 @@ void projective_space::print_set_numerical(int *set, int set_size)
 		cout << setw(3) << i << " : " << setw(5) << a << " : ";
 		int_vec_print(cout, v, n + 1);
 		cout << "=";
-		PG_element_normalize_from_front(*F, v, 1, n + 1);
+		F->PG_element_normalize_from_front(v, 1, n + 1);
 		int_vec_print(cout, v, n + 1);
 		cout << endl;
 		}
@@ -3549,7 +3549,7 @@ void projective_space::print_set(
 		cout << setw(3) << i << " : " << setw(5) << a << " : ";
 		F->int_vec_print(cout, v, n + 1);
 		cout << "=";
-		PG_element_normalize_from_front(*F, v, 1, n + 1);
+		F->PG_element_normalize_from_front(v, 1, n + 1);
 		F->int_vec_print(cout, v, n + 1);
 		cout << endl;
 		}
@@ -4751,7 +4751,7 @@ void projective_space::cheat_sheet_points(
 	if (F->e == 1) {
 		f << "\\begin{multicols}{4}" << endl;
 		for (i = 0; i < N_points; i++) {
-			PG_element_unrank_modified(*F, v, 1, d, i);
+			F->PG_element_unrank_modified(v, 1, d, i);
 			f << "$P_{" << i << "}=";
 			int_vec_print(f, v, d);
 			f << "$\\\\" << endl;
@@ -4761,7 +4761,7 @@ void projective_space::cheat_sheet_points(
 	else {
 		f << "\\begin{multicols}{2}" << endl;
 		for (i = 0; i < N_points; i++) {
-			PG_element_unrank_modified(*F, v, 1, d, i);
+			F->PG_element_unrank_modified(v, 1, d, i);
 			f << "$P_{" << i << "}=";
 			int_vec_print(f, v, d);
 			f << "=";
@@ -4776,8 +4776,8 @@ void projective_space::cheat_sheet_points(
 	f << "Normalized from the left:\\\\" << endl;
 	f << "\\begin{multicols}{4}" << endl;
 	for (i = 0; i < N_points; i++) {
-		PG_element_unrank_modified(*F, v, 1, d, i);
-		PG_element_normalize_from_front(*F, v, 1, d);
+		F->PG_element_unrank_modified(v, 1, d, i);
+		F->PG_element_normalize_from_front(v, 1, d);
 		f << "$P_{" << i << "}=";
 		int_vec_print(f, v, d);
 		f << "$\\\\" << endl;
@@ -4820,7 +4820,7 @@ void projective_space::cheat_sheet_point_table(
 				a = (I * nb_rows_per_page + i) * nb_cols + j;
 				f << " & ";
 				if (a < N_points) {
-					PG_element_unrank_modified(*F, v, 1, d, a);
+					F->PG_element_unrank_modified(v, 1, d, a);
 					int_vec_print(f, v, d);
 					}
 				}
@@ -5161,7 +5161,7 @@ void projective_space::conic_type_randomized(int nb_times,
 			}
 
 
-		PG_element_normalize(*F, six_coeffs, 1, 6);
+		F->PG_element_normalize(six_coeffs, 1, 6);
 		AG_element_rank_longinteger(F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
@@ -5498,7 +5498,7 @@ void projective_space::conic_type(
 			}
 
 
-		PG_element_normalize(*F, six_coeffs, 1, 6);
+		F->PG_element_normalize(six_coeffs, 1, 6);
 		AG_element_rank_longinteger(F->q,
 				six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
@@ -5880,8 +5880,8 @@ int projective_space::elliptic_curve_addition(
 	
 	unrank_point(p1, p1_rk);
 	unrank_point(p2, p2_rk);
-	PG_element_normalize(*F, p1, 1, 3);
-	PG_element_normalize(*F, p2, 1, 3);
+	F->PG_element_normalize(p1, 1, 3);
+	F->PG_element_normalize(p2, 1, 3);
 	
 	x1 = p1[0];
 	y1 = p1[1];

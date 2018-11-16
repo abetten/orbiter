@@ -349,7 +349,7 @@ void action_on_factor_space::init_by_rank(
 	action_on_factor_space::subspace_basis =
 			NEW_int(subspace_basis_size * len);
 	for (i = 0; i < subspace_basis_size; i++) {
-		PG_element_unrank_modified(*F,
+		F->PG_element_unrank_modified(
 			action_on_factor_space::subspace_basis + i * len,
 			1, len, subspace_basis_ranks[i]);
 		}
@@ -766,7 +766,7 @@ int action_on_factor_space::project(
 			}
 		}
 	if (f_nonzero) {
-		PG_element_rank_modified(*F,
+		F->PG_element_rank_modified(
 				tmp, 1, factor_space_len, a);
 		return a;
 		}
@@ -783,7 +783,7 @@ int action_on_factor_space::preimage(
 		}
 	int i, a, b;
 	
-	PG_element_unrank_modified(*F,
+	F->PG_element_unrank_modified(
 			tmp, 1, factor_space_len, rk);
 	for (i = 0; i < factor_space_len; i++) {
 		Tmp1[embedding[i]] = tmp[i];
@@ -805,7 +805,7 @@ void action_on_factor_space::unrank(
 		}
 	else {
 		int i;
-		PG_element_unrank_modified(*F,
+		F->PG_element_unrank_modified(
 				tmp, 1, factor_space_len, rk);
 		for (i = 0; i < factor_space_len; i++) {
 			v[embedding[i]] = tmp[i];
@@ -855,7 +855,7 @@ int action_on_factor_space::rank(int *v, int verbose_level)
 		for (i = 0; i < factor_space_len; i++) {
 			tmp[i] = v[embedding[i]];
 			}
-		PG_element_rank_modified(*F,
+		F->PG_element_rank_modified(
 				tmp, 1, factor_space_len, rk);
 		return rk;
 		}
@@ -868,7 +868,7 @@ void action_on_factor_space::unrank_in_large_space(
 		(*unrank_point_func)(v, rk, rank_point_data);
 		}
 	else {
-		PG_element_unrank_modified(*F, v, 1, len, rk);
+		F->PG_element_unrank_modified(v, 1, len, rk);
 		}
 }
 
@@ -880,7 +880,7 @@ int action_on_factor_space::rank_in_large_space(int *v)
 		rk = (*rank_point_func)(v, rank_point_data);
 		}
 	else {
-		PG_element_rank_modified(*F, v, 1, len, rk);
+		F->PG_element_rank_modified(v, 1, len, rk);
 		}
 	return rk;
 }

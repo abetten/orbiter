@@ -146,7 +146,7 @@ int main(int argc, const char **argv)
 		SC->F->f_print_as_exponentials = FALSE;
 	}
 
-	PG_element_normalize(*SC->F, SC->coeffs, 1, 20);
+	SC->F->PG_element_normalize(SC->coeffs, 1, 20);
 
 	cout << "create_surface_main "
 			"We have created the following surface:" << endl;

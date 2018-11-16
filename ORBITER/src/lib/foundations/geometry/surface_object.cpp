@@ -1150,13 +1150,13 @@ void surface_object::print_tritangent_planes(ostream &ost)
 
 		Surf->Gr3->unrank_int_here_and_compute_perp(Mtx, plane_rk, 
 			0 /*verbose_level */);
-		PG_element_normalize(*F, Mtx + 12, 1, 4);
+		F->PG_element_normalize(Mtx + 12, 1, 4);
 		ost << "=V\\big(" << endl;
 		Surf->Poly1_4->print_equation(ost, Mtx + 12);
 		ost << "\\big)" << endl;
 		ost << "$$" << endl;
 		ost << "dual pt rank = $" << b << "$ ";
-		PG_element_unrank_modified(*F, v4, 1, 4, b);
+		F->PG_element_unrank_modified(v4, 1, 4, b);
 		ost << "$=";
 		int_vec_print(ost, v4, 4);
 		ost << "$.\\\\" << endl;
@@ -1458,7 +1458,7 @@ void surface_object::print_affine_points_in_source_code(ostream &ost)
 	cnt = 0;
 	for (i = 0; i < nb_pts; i++) {
 		Surf->unrank_point(v, Pts[i]);
-		PG_element_normalize(*Surf->F, v, 1, 4);
+		Surf->F->PG_element_normalize(v, 1, 4);
 		if (v[3]) {
 			ost << "\t";
 			for (j = 0; j < 4; j++) {
@@ -1874,11 +1874,11 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 		}
 	for (i = 0; i < 3; i++) {
 		c = Tritangent_plane_dual[plane_idx[i]];
-		PG_element_unrank_modified(*F, F_planes + i * 4, 1, 4, c);
+		F->PG_element_unrank_modified(F_planes + i * 4, 1, 4, c);
 		}
 	for (i = 0; i < 3; i++) {
 		c = Tritangent_plane_dual[plane_idx[3 + i]];
-		PG_element_unrank_modified(*F, G_planes + i * 4, 1, 4, c);
+		F->PG_element_unrank_modified(G_planes + i * 4, 1, 4, c);
 		}
 	int evals[6];
 	int pt_on_surface[4];
@@ -1889,7 +1889,7 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 
 	for (h = 0; h < nb_pts; h++) {
 		pt = Pts[h];
-		PG_element_unrank_modified(*F, pt_on_surface, 1, 4, pt);
+		F->PG_element_unrank_modified(pt_on_surface, 1, 4, pt);
 		for (i = 0; i < 3; i++) {
 			evals[i] = Surf->Poly1_4->evaluate_at_a_point(
 					F_planes + i * 4, pt_on_surface);
@@ -1923,7 +1923,7 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 	int_vec_copy(eqn_G, eqn_G2, 20);
 	F->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);
 	F->add_vector(eqn_F, eqn_G2, equation, 20);
-	PG_element_normalize(*F, equation, 1, 20);
+	F->PG_element_normalize(equation, 1, 20);
 
 	
 
@@ -3609,7 +3609,7 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 		plane_rk = Tritangent_planes[t];
 		Surf->Gr3->unrank_int_here_and_compute_perp(Mtx, plane_rk, 
 			0 /*verbose_level */);
-		PG_element_normalize(*F, Mtx + 12, 1, 4);
+		F->PG_element_normalize(Mtx + 12, 1, 4);
 		ost << "V\\big(";
 		Surf->Poly1_4->print_equation(ost, Mtx + 12);
 		ost << "\\big)=" << plane_rk;
@@ -3632,7 +3632,7 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 		ost << "V\\big(" << endl;
 		Surf->Gr3->unrank_int_here_and_compute_perp(Mtx, plane_rk, 
 			0 /*verbose_level */);
-		PG_element_normalize(*F, Mtx + 12, 1, 4);
+		F->PG_element_normalize(Mtx + 12, 1, 4);
 		Surf->Poly1_4->print_equation(ost, Mtx + 12);
 		ost << "\\big)=" << plane_rk << "}\\\\" << endl;
 		}

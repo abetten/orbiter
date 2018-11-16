@@ -911,7 +911,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	if (len >= 2) {
 		for (i = 0; i < nb0; i++) {
-			PG_element_unrank_modified(*F, v, 1, len - 1, i);
+			F->PG_element_unrank_modified(v, 1, len - 1, i);
 			F->mult_vector_from_the_left(v, M, N0 + i * n, len - 1, n);
 			}
 		if (f_v) {
@@ -920,7 +920,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			}
 		}
 	for (i = 0; i < nb; i++) {
-		PG_element_unrank_modified(*F, v, 1, len, i);
+		F->PG_element_unrank_modified(v, 1, len, i);
 		F->mult_vector_from_the_left(v, M, N + i * n, len, n);
 		}
 	if (f_v) {

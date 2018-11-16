@@ -2080,6 +2080,29 @@ void action::print_symmetry_group_type(ostream &ost)
 	
 }
 
+void action::report(ostream &ost)
+{
+	ost << "Group action $" << label_tex
+			<< "$ of degree " << degree << "\\\\" << endl;
+	if (f_has_sims) {
+		longinteger_object go;
+
+		Sims->group_order(go);
+		ost << "Group order " << go << "\\\\" << endl;
+		ost << "tl=$";
+		int_vec_print(ost, Sims->orbit_len, base_len);
+		ost << "$\\\\" << endl;
+		}
+	if (base_len) {
+		ost << "Base: $";
+		int_vec_print(ost, base, base_len);
+		ost << "$\\\\" << endl;
+		}
+	ost << "{\\tiny\\arraycolsep=2pt" << endl;
+	Strong_gens->print_generators_tex(ost);
+	ost << "}" << endl;
+}
+
 void action::print_info()
 {
 	cout << "ACTION " << label << " degree=" << degree << " of type ";

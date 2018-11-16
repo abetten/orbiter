@@ -282,6 +282,7 @@ public:
 	void freeself();
 	void init(int gen_hdl_first, int nb_gen, int *sv,
 			int verbose_level);
+	void set_sv(int *sv, int verbose_level);
 	int *points();
 	int *prev();
 	int *label();
@@ -297,6 +298,8 @@ public:
 	void orbit_of_point(
 			int pt, int *&orbit_elts, int &orbit_len,
 			int verbose_level);
+	void init_from_schreier(schreier *S,
+		int f_trivial_group, int verbose_level);
 };
 
 

@@ -352,7 +352,7 @@ int Q_rank(finite_field &GFq,
 		int *v, int stride, int k)
 {
 	if (Hash_table_parabolic) {
-		PG_element_normalize_from_front(GFq, v, stride, k + 1);
+		GFq.PG_element_normalize_from_front(v, stride, k + 1);
 		if (Hash_table_parabolic_q == GFq.q &&
 				Hash_table_parabolic_k == k) {
 			if (stride != 1) {
@@ -378,7 +378,7 @@ void Q_unrank_directly(finite_field &GFq,
 	if (a < x) {
 		v[0] = 0;
 		Sbar_unrank(GFq, v + stride, stride, n, a);
-		PG_element_normalize_from_front(GFq, v + stride, stride, k);
+		GFq.PG_element_normalize_from_front(v + stride, stride, k);
 		return;
 		}
 	a -= x;
@@ -408,7 +408,7 @@ int Q_rank_directly(finite_field &GFq,
 		}
 	a = x;
 	if (v[0] != 1) {
-		PG_element_normalize_from_front(GFq, v, stride, k + 1);
+		GFq.PG_element_normalize_from_front(v, stride, k + 1);
 		}
 	minusone = GFq.negate(1);
 	if (minusone != 1) {
@@ -540,7 +540,7 @@ int Qminus_rank(finite_field &GFq,
 		exit(1);
 		}
 	}
-	PG_element_normalize(GFq, v, stride, k + 1);
+	GFq.PG_element_normalize(v, stride, k + 1);
 	x1 = v[2 * n * stride];
 	x2 = v[(2 * n + 1) * stride];
 	if (x1 == 0 && x2 == 0) {
@@ -1292,7 +1292,7 @@ void Sbar_rank(finite_field &GFq,
 	int l, i, j, x, y, u, q = GFq.q;
 	int alpha, beta, beta2, beta_inv;
 	
-	PG_element_normalize(GFq, v, stride, 2 * n);
+	GFq.PG_element_normalize(v, stride, 2 * n);
 	if (n == 1) {
 		// test for (1,0) or (0,1):
 		if (v[0 * stride] == 1 && v[1 * stride] == 0) {

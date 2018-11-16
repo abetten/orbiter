@@ -554,8 +554,10 @@ public:
 	void compute_neighbors(int verbose_level);
 	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, 
 		int verbose_level);
-	void classify_partial_ovoids(int f_draw_poset, 
+	void classify_partial_ovoids(
+		int f_draw_poset,
 		int f_draw_poset_full, 
+		int f_report,
 		int verbose_level);
 	int partial_ovoid_test(int *S, int len, int verbose_level);
 	void test_orbits(int verbose_level);

@@ -962,13 +962,15 @@ void action::init_general_linear_group(int n, finite_field *F,
 
 	low_level_point_size = M->low_level_point_size;
 	if (f_v) {
-		cout << "action::init_general_linear_group low_level_point_size=" 
+		cout << "action::init_general_linear_group "
+			"low_level_point_size="
 			<< low_level_point_size<< endl;
 		}
 	strcpy(label, M->label);
 	strcpy(label_tex, M->label_tex);
 	if (f_v) {
-		cout << "action::init_general_linear_group label=" << label << endl;
+		cout << "action::init_general_linear_group "
+				"label=" << label << endl;
 		}
 
 	degree = M->degree;

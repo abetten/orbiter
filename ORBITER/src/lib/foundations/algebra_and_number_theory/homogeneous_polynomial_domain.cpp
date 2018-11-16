@@ -725,14 +725,14 @@ int homogeneous_polynomial_domain::rank_point(int *v)
 
 void homogeneous_polynomial_domain::unrank_coeff_vector(int *v, int rk)
 {
-	PG_element_unrank_modified(*F, v, 1, nb_monomials, rk);
+	F->PG_element_unrank_modified(v, 1, nb_monomials, rk);
 }
 
 int homogeneous_polynomial_domain::rank_coeff_vector(int *v)
 {
 	int rk;
 
-	PG_element_rank_modified(*F, v, 1, nb_monomials, rk);
+	F->PG_element_rank_modified(v, 1, nb_monomials, rk);
 	return rk;
 }
 
@@ -760,7 +760,7 @@ int homogeneous_polynomial_domain::test_weierstrass_form(int rk,
 	if (coeff2[1] || coeff2[3] || coeff2[6]) {
 		return FALSE;
 		}
-	PG_element_normalize_from_front(*F, coeff2, 1, nb_monomials);
+	F->PG_element_normalize_from_front(coeff2, 1, nb_monomials);
 	if (coeff2[0] != 1) {
 		return FALSE;
 		}

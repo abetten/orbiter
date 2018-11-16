@@ -978,7 +978,8 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 		for (j = 0; j < Nb[i]; j++) {
 			n1 = Node[i][j];
 			if (f_vvv) {
-				cout << "schreier::export_tree_as_layered_graph adding edges "
+				cout << "schreier::export_tree_as_layered_graph "
+						"adding edges "
 						"i=" << i << " / " << max_depth
 						<< " j=" << j << " n1=" << n1 << endl;
 			}
@@ -986,7 +987,8 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 				n2 = orbit_inv[prev[fst + n1]] - fst;
 				j2 = horizontal_position[n2];
 				if (f_vvv) {
-					cout << "schreier::export_tree_as_layered_graph adding edges "
+					cout << "schreier::export_tree_as_layered_graph "
+							"adding edges "
 							"i=" << i << " / " << max_depth
 							<< " j=" << j << " n1=" << n1
 							<< " n2=" << n2 << " j2=" << j2 << endl;
@@ -1006,7 +1008,8 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 		sprintf(text, "%d", orbit[fst + j]);
 		trace_back(NULL, orbit[fst + j], l);
 		l--;
-		LG->add_text(l, horizontal_position[j], text, 0/*verbose_level*/);
+		LG->add_text(l, horizontal_position[j],
+				text, 0/*verbose_level*/);
 	}
 	char fname[1000];
 

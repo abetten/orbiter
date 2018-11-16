@@ -1969,7 +1969,7 @@ void surface::create_the_fifteen_other_lines(int *double_six,
 		Lines[h] = Gr->rank_int_here(Basis0,
 				0/* verbose_level*/);
 		for (i = 0; i < 2; i++) {
-			PG_element_normalize_from_front(*F, 
+			F->PG_element_normalize_from_front(
 				Basis0 + i * 4, 1, 4);
 			}
 		if (f_v) {
@@ -2754,7 +2754,7 @@ int surface::create_surface_ab(int a, int b,
 		}
 	build_cubic_surface_from_lines(27, Lines27, coeff20,
 			0 /* verbose_level */);
-	PG_element_normalize_from_front(*F, coeff20, 1, 20);
+	F->PG_element_normalize_from_front(coeff20, 1, 20);
 
 
 
@@ -3055,7 +3055,7 @@ int surface::line_to_wedge(int line_rk)
 	a = Klein->Line_to_point_on_quadric[line_rk];
 	O->unrank_point(w2, 1, a, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
-	PG_element_rank_modified(*F, v2, 1, 6 /*wedge_dimension*/, b);
+	F->PG_element_rank_modified(v2, 1, 6 /*wedge_dimension*/, b);
 	//b = AW->rank_point(v);
 	return b;
 }
@@ -3083,7 +3083,7 @@ int surface::klein_to_wedge(int klein_rk)
 	
 	O->unrank_point(w2, 1, klein_rk, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
-	PG_element_rank_modified(*F, v2, 1, 6 /*wedge_dimension*/, b);
+	F->PG_element_rank_modified(v2, 1, 6 /*wedge_dimension*/, b);
 	//b = AW->rank_point(v);
 	return b;
 }
@@ -3226,7 +3226,7 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 
 	for (i = 0; i < nb_lines; i++) {
 		a = Wedge_rk[i];
-		PG_element_unrank_modified(*F, w, 1, 6 /*wedge_dimension*/, a);
+		F->PG_element_unrank_modified(w, 1, 6 /*wedge_dimension*/, a);
 		int_vec_print_to_str(str, w, 6);
 		Text_wedge[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_wedge[i], str);
@@ -4506,7 +4506,7 @@ surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_plane
 			int_vec_copy(curves_t + 4 * 5, 
 				The_plane_equations + h * 4, 4);
 
-			PG_element_normalize(*F, 
+			F->PG_element_normalize(
 				The_plane_equations + h * 4, 1, 4);
 			
 			}
@@ -4595,7 +4595,7 @@ void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 	
 
 	for (l = 0; l < q + 1; l++) {
-		PG_element_unrank_modified(*F, v, 1, 2, l);
+		F->PG_element_unrank_modified(v, 1, 2, l);
 		
 		multiply_linear_times_linear_times_linear_in_space(
 			The_six_plane_equations + 0 * 4, 
@@ -4614,7 +4614,7 @@ void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 		F->scalar_multiply_vector_in_place(v[1], eqn_G2, 20);
 		F->add_vector(eqn_F2, eqn_G2, 
 			The_surface_equations + l * 20, 20);
-		PG_element_normalize(*F, 
+		F->PG_element_normalize(
 			The_surface_equations + l * 20, 1, 20);
 		}
 
@@ -4747,7 +4747,7 @@ void surface::create_lambda_from_trihedral_pair_and_arc(
 		}
 	w[0] = 1;
 	w[1] = lambda;
-	PG_element_rank_modified(*F, w, 1, 2, lambda_rk);
+	F->PG_element_rank_modified(w, 1, 2, lambda_rk);
 	
 	if (f_v) {
 		cout << "surface::create_lambda_from_trihedral_"
@@ -6718,7 +6718,7 @@ int surface::clebsch_map(int *Lines, int *Pts, int nb_pts,
 			Image_rk[h] = -1;
 			continue;
 			}
-		PG_element_normalize(*F, Dual_planes + 12, 1, 4);
+		F->PG_element_normalize(Dual_planes + 12, 1, 4);
 		if (f_v) {
 			cout << "intersection point normalized: ";
 			int_vec_print(cout, Dual_planes + 12, 4);

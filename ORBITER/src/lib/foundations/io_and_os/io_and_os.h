@@ -479,6 +479,7 @@ void read_solution_file(char *fname,
 	int verbose_level);
 // sol_length must be constant
 void int_vec_print_to_str(char *str, int *data, int len);
+void int_vec_print_to_str_naked(char *str, int *data, int len);
 void int_matrix_print_with_labels_and_partition(ostream &ost, int *p, 
 	int m, int n, 
 	int *row_labels, int *col_labels, 

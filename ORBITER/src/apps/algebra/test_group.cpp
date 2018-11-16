@@ -1691,7 +1691,7 @@ void test16(int verbose_level)
 			for (h = 0; h < 25; h++) {
 				Data[h] = gens->ith(j)[h];
 				}
-			PG_element_normalize_from_front(*Fq, Data, 1, 25);
+			Fq->PG_element_normalize_from_front(Data, 1, 25);
 			print_integer_matrix_width(cout, Data, 5, 5, 5, 3);
 
 			for (u = 0; u < 4; u++) {
@@ -1708,7 +1708,7 @@ void test16(int verbose_level)
 			cout << "f_switch=" << f_switch << endl;
 			for (r = 0; r < 2; r++) {
 				cout << "component " << r << ":" << endl;
-				PG_element_normalize_from_front(*Fq, small + r * 4, 1, 4);
+				Fq->PG_element_normalize_from_front(small + r * 4, 1, 4);
 				print_integer_matrix_width(cout, small + r * 4, 2, 2, 2, 3);
 				A2->make_element(elt1, small + r * 4, verbose_level);
 				order = A2->element_order(elt1);
@@ -1949,7 +1949,7 @@ void print_fancy(action *A, finite_field *Fq, int *Elt, int n)
 	
 	//A->element_print_quick(Elt, cout);
 	order = A->element_order(Elt);
-	PG_element_normalize_from_front(*Fq, Elt, 1, n * n);
+	Fq->PG_element_normalize_from_front(Elt, 1, n * n);
 	print_integer_matrix_width(cout, Elt, n, n, n, 3);
 	cout << "order = " << order << endl;
 }

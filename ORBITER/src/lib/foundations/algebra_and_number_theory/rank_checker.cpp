@@ -56,7 +56,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 		}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
-		PG_element_unrank_modified(*GFq,
+		GFq->PG_element_unrank_modified(
 				M1 + j, len /* stride */, m /* len */, S[j]);
 		}
 	if (f_vv) {
@@ -204,7 +204,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 		}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
-		PG_element_unrank_modified(*GFq,
+		GFq->PG_element_unrank_modified(
 				M1 + j, len /* stride */, m /* len */, S[j]);
 		}
 	if (f_vv) {
@@ -289,7 +289,7 @@ int rank_checker::compute_rank_row_vectors(
 	// M1 will be used as a len x n matrix
 	for (j = 0; j < len; j++) {
 		if (f_projective) {
-			PG_element_unrank_modified(*GFq,
+			GFq->PG_element_unrank_modified(
 					M1 + j * n, 1 /* stride */, n /* len */, S[j]);
 			}
 		else {

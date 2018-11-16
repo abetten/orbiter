@@ -247,7 +247,7 @@ void subspace_orbits::unrank_set_to_M(int len, int *S)
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		PG_element_unrank_modified(*F, tmp_M + i * n, 1, n, S[i]);
+		F->PG_element_unrank_modified(tmp_M + i * n, 1, n, S[i]);
 		}
 }
 
@@ -256,7 +256,7 @@ void subspace_orbits::unrank_set_to_matrix(int len, int *S, int *M)
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		PG_element_unrank_modified(*F, M + i * n, 1, n, S[i]);
+		F->PG_element_unrank_modified(M + i * n, 1, n, S[i]);
 		}
 }
 
@@ -265,7 +265,7 @@ void subspace_orbits::rank_set_from_matrix(int len, int *S, int *M)
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		PG_element_rank_modified(*F, M + i * n, 1, n, S[i]);
+		F->PG_element_rank_modified(M + i * n, 1, n, S[i]);
 		}
 }
 
@@ -899,7 +899,7 @@ int subspace_orbits::test_minimum_distance(
 	msg = v;
 	word = w;
 	for (h = 0; h < N; h++) {
-		PG_element_unrank_modified(*F, msg, 1, k, h);
+		F->PG_element_unrank_modified(msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
 		F->mult_vector_from_the_left(msg, M, word, k, n);
 		wt = 0;
@@ -1012,7 +1012,7 @@ int subspace_orbits_rank_point_func(int *v, void *data)
 	
 	G = (subspace_orbits *) data;
 	gen = G->Gen;
-	PG_element_rank_modified(*gen->F, v, 1,
+	gen->F->PG_element_rank_modified(v, 1,
 			gen->vector_space_dimension, rk);
 	return rk;
 }
@@ -1024,7 +1024,7 @@ void subspace_orbits_unrank_point_func(int *v, int rk, void *data)
 	
 	G = (subspace_orbits *) data;
 	gen = G->Gen;
-	PG_element_unrank_modified(*gen->F, v, 1,
+	gen->F->PG_element_unrank_modified(v, 1,
 			gen->vector_space_dimension, rk);
 }
 

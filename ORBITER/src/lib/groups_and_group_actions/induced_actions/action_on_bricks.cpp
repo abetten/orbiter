@@ -33,7 +33,8 @@ void action_on_bricks::init(action *A, brick_domain *B,
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "action_on_bricks::init q=" << B->q << " f_linear_action=" << f_linear_action << endl;
+		cout << "action_on_bricks::init q=" << B->q
+				<< " f_linear_action=" << f_linear_action << endl;
 		}
 	action_on_bricks::A = A;
 	action_on_bricks::B = B;
@@ -47,7 +48,8 @@ void action_on_bricks::init(action *A, brick_domain *B,
 		}
 }
 
-void action_on_bricks::compute_image(int *Elt, int i, int &j, int verbose_level)
+void action_on_bricks::compute_image(int *Elt,
+		int i, int &j, int verbose_level)
 {
 	if (f_linear_action) {
 		compute_image_linear_action(Elt, i, j, verbose_level);
@@ -57,7 +59,8 @@ void action_on_bricks::compute_image(int *Elt, int i, int &j, int verbose_level)
 		}
 }
 
-void action_on_bricks::compute_image_linear_action(int *Elt, int i, int &j, int verbose_level)
+void action_on_bricks::compute_image_linear_action(int *Elt,
+		int i, int &j, int verbose_level)
 {
 	//verbose_level = 3; // !!!
 	int f_v = (verbose_level >= 1);
@@ -66,10 +69,12 @@ void action_on_bricks::compute_image_linear_action(int *Elt, int i, int &j, int 
 	int vv[3], ww[3], rk_vv, rk_ww;
 
 	if (f_v) {
-		cout << "action_on_bricks::compute_image i = " << i << endl;
+		cout << "action_on_bricks::compute_image "
+				"i = " << i << endl;
 		}
 	if (i < 0 || i >= degree) {
-		cout << "action_on_bricks::compute_image i = " << i << " out of range" << endl;
+		cout << "action_on_bricks::compute_image "
+				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
 	B->unrank_coordinates(i, v[0], v[1], w[0], w[1], 0);
@@ -84,8 +89,8 @@ void action_on_bricks::compute_image_linear_action(int *Elt, int i, int &j, int 
 		cout << endl;
 		}
 	
-	PG_element_rank_modified(*B->F, v, 1, 3, rk_v);
-	PG_element_rank_modified(*B->F, w, 1, 3, rk_w);
+	B->F->PG_element_rank_modified(v, 1, 3, rk_v);
+	B->F->PG_element_rank_modified(w, 1, 3, rk_w);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image rk_v=" << rk_v << endl;
 		cout << "action_on_bricks::compute_image rk_w=" << rk_w << endl;
@@ -98,8 +103,8 @@ void action_on_bricks::compute_image_linear_action(int *Elt, int i, int &j, int 
 		cout << "action_on_bricks::compute_image rk_vv=" << rk_vv << endl;
 		cout << "action_on_bricks::compute_image rk_ww=" << rk_ww << endl;
 		}
-	PG_element_unrank_modified(*B->F, vv, 1, 3, rk_vv);
-	PG_element_unrank_modified(*B->F, ww, 1, 3, rk_ww);
+	B->F->PG_element_unrank_modified(vv, 1, 3, rk_vv);
+	B->F->PG_element_unrank_modified(ww, 1, 3, rk_ww);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image vv=";
 		int_vec_print(cout, vv, 3);
@@ -116,8 +121,8 @@ void action_on_bricks::compute_image_linear_action(int *Elt, int i, int &j, int 
 		cout << "action_on_bricks::compute_image ww[2] == 0" << endl;
 		exit(1);
 		}
-	PG_element_normalize(*B->F, vv, 1, 3);
-	PG_element_normalize(*B->F, ww, 1, 3);
+	B->F->PG_element_normalize(vv, 1, 3);
+	B->F->PG_element_normalize(ww, 1, 3);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image after normalize vv=";
 		int_vec_print(cout, vv, 3);
@@ -128,12 +133,14 @@ void action_on_bricks::compute_image_linear_action(int *Elt, int i, int &j, int 
 		}
 	j = B->rank_coordinates(vv[0], vv[1], ww[0], ww[1], 0);
 	if (j < 0 || j >= degree) {
-		cout << "action_on_bricks::compute_image j = " << j << " out of range" << endl;
+		cout << "action_on_bricks::compute_image "
+				"j = " << j << " out of range" << endl;
 		exit(1);
 		}
 }
 
-void action_on_bricks::compute_image_permutation_action(int *Elt, int i, int &j, int verbose_level)
+void action_on_bricks::compute_image_permutation_action(
+		int *Elt, int i, int &j, int verbose_level)
 {
 	//verbose_level = 3; // !!!
 	int f_v = (verbose_level >= 1);
@@ -142,10 +149,12 @@ void action_on_bricks::compute_image_permutation_action(int *Elt, int i, int &j,
 	int a, b, c, d;
 
 	if (f_v) {
-		cout << "action_on_bricks::compute_image_permutation_action i = " << i << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"i = " << i << endl;
 		}
 	if (i < 0 || i >= degree) {
-		cout << "action_on_bricks::compute_image_permutation_action i = " << i << " out of range" << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
 	B->unrank_coordinates(i, x0, y0, x1, y1, 0);
@@ -153,16 +162,21 @@ void action_on_bricks::compute_image_permutation_action(int *Elt, int i, int &j,
 	b = x1 * B->q + y1;
 
 	if (f_v) {
-		cout << "action_on_bricks::compute_image_permutation_action a=" << a << endl;
-		cout << "action_on_bricks::compute_image_permutation_action b=" << b << endl;
-		cout << "action_on_bricks::compute_image_permutation_action A=" << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"a=" << a << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"b=" << b << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"A=" << endl;
 		A->element_print_quick(Elt, cout);
 		}
 	c = A->image_of(Elt, a);
 	d = A->image_of(Elt, b);
 	if (f_v) {
-		cout << "action_on_bricks::compute_image_permutation_action c=" << c << endl;
-		cout << "action_on_bricks::compute_image_permutation_action d=" << d << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"c=" << c << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"d=" << d << endl;
 		}
 	y2 = c % B->q;
 	x2 = c / B->q;
@@ -171,7 +185,8 @@ void action_on_bricks::compute_image_permutation_action(int *Elt, int i, int &j,
 
 	j = B->rank_coordinates(x2, y2, x3, y3, 0);
 	if (j < 0 || j >= degree) {
-		cout << "action_on_bricks::compute_image_permutation_action j = " << j << " out of range" << endl;
+		cout << "action_on_bricks::compute_image_permutation_action "
+				"j = " << j << " out of range" << endl;
 		exit(1);
 		}
 }

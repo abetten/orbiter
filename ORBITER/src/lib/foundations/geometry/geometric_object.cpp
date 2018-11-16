@@ -621,7 +621,7 @@ void create_Baer_substructure(int n,
 	Pts = NEW_int(P2->N_points);
 	sz = 0;
 	for (i = 0; i < P2->N_points; i++) {
-		PG_element_unrank_modified(*FQ, v, 1, d, i);
+		FQ->PG_element_unrank_modified(v, 1, d, i);
 		for (j = 0; j < d; j++) {
 			a = v[j];
 			b = FQ->log_alpha(a);
@@ -687,7 +687,7 @@ void create_BLT_from_database(int f_embedded,
 	for (i = 0; i < nb_pts; i++) {
 		Q_epsilon_unrank(*F, v, 1, epsilon, n, c1, c2, c3, BLT[i]);
 		if (f_embedded) {
-			PG_element_rank_modified(*F, v, 1, d, j);
+			F->PG_element_rank_modified(v, 1, d, j);
 			}
 		else {
 			j = BLT[i];
@@ -861,7 +861,7 @@ void create_orthogonal(int epsilon, int n, finite_field *F,
 		}
 	for (i = 0; i < nb_pts; i++) {
 		Q_epsilon_unrank(*F, v, 1, epsilon, n, c1, c2, c3, i);
-		PG_element_rank_modified(*F, v, 1, d, j);
+		F->PG_element_rank_modified(v, 1, d, j);
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
@@ -911,7 +911,7 @@ void create_hermitian(int n, finite_field *F,
 		}
 	for (i = 0; i < nb_pts; i++) {
 		H->Sbar_unrank(v, d, i, 0 /*verbose_level*/);
-		PG_element_rank_modified(*F, v, 1, d, j);
+		F->PG_element_rank_modified(v, 1, d, j);
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
@@ -968,7 +968,7 @@ void create_twisted_cubic(finite_field *F,
 		cout << "i : point : projective rank" << endl;
 		}
 	for (i = 0; i < nb_pts; i++) {
-		PG_element_unrank_modified(*F, v2, 1, 2, i);
+		F->PG_element_unrank_modified(v2, 1, 2, i);
 		s = v2[0];
 		t = v2[1];
 		v[0] = F->mult(F->power(s, 3), F->power(t, 0));

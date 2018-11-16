@@ -50,7 +50,7 @@ int main()
 		}
 
 	for (i = 0; i < A->degree; i++) {
-		PG_element_unrank_modified(*F, v, 1, d, i);
+		F->PG_element_unrank_modified(v, 1, d, i);
 		cout << "point " << i << " / " << A->degree << " is ";
 		int_vec_print(cout, v, d);
 		cout << endl;

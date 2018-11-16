@@ -275,7 +275,7 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 										}
 									for (ii = 0; ii < sz[8]; ii++) {
 										int rk;
-										PG_element_rank_modified(*O->F, pt_coords + set[ii] * n, 1, n, rk);
+										O->F->PG_element_rank_modified(pt_coords + set[ii] * n, 1, n, rk);
 										Sets[nb_sol * 56 + ii] = rk;
 										}
 
@@ -527,7 +527,7 @@ void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int
 
 	for (i = 0; i < sz; i++) {
 		ranks[i] = O->rank_point(coords + set[i] * n, 1, 0);
-		PG_element_rank_modified(*O->F, coords + set[i] * n, 1, n, PG_ranks[i]);
+		O->F->PG_element_rank_modified(coords + set[i] * n, 1, n, PG_ranks[i]);
 		}
 	cout << "point ranks: " << endl;
 	cout << "i : orthogonal rank : projective rank" << endl;

@@ -370,7 +370,7 @@ void spread_lifting::find_coloring(diophant *Dio,
 	for (i = 0; i < nb_free_points; i++) {
 		a = free_point_list[i];
 		S->unrank_point(v, a);
-		PG_element_normalize_from_front(*S->F, 
+		S->F->PG_element_normalize_from_front(
 			v, 1, S->n);
 		if (v[0] != 1) {
 			continue;

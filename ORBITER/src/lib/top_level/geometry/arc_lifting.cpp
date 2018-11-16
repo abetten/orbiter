@@ -842,7 +842,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 					0 /* verbose_level */);
 				}
 
-			PG_element_normalize(*F, coeff_out, 1, 20);
+			F->PG_element_normalize(coeff_out, 1, 20);
 
 			if (f_v) {
 				cout << "The transformed equation is:" << endl;
@@ -1319,7 +1319,7 @@ void arc_lifting::print(ostream &ost)
 
 	coeffs = The_surface_equations + lambda_rk * 20;
 	int_vec_copy(coeffs, coeffs2, 20);
-	PG_element_normalize_from_front(*F, coeffs2, 1, 20);
+	F->PG_element_normalize_from_front(coeffs2, 1, 20);
 	
 	ost << "\\bigskip" << endl;
 	ost << "The normalized equation of the surface is:" << endl;
@@ -1440,7 +1440,7 @@ void arc_lifting::print_bisecants(ostream &ost)
 
 		Surf->P2->Grass_lines->unrank_int_here_and_compute_perp(Mtx, a, 
 			0 /*verbose_level */);
-		PG_element_normalize(*F, Mtx + 6, 1, 3);
+		F->PG_element_normalize(Mtx + 6, 1, 3);
 		
 		ost << " & ";
 		Surf->Poly1->print_equation(ost, Mtx + 6);
@@ -1800,8 +1800,8 @@ void arc_lifting::print_surface_equations_on_line(
 	for (i = 0; i < q + 1; i++) {
 		ost << "Row " << i << " : ";
 
-		PG_element_unrank_modified(*F, v, 1, 2, i);
-		PG_element_normalize_from_front(*F, v, 1, 2);
+		F->PG_element_unrank_modified(v, 1, 2, i);
+		F->PG_element_normalize_from_front(v, 1, 2);
 		
 		ost << "$";
 		ost << v[0] << " \\cdot ";
@@ -2167,7 +2167,7 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 					0 /* verbose_level */);
 				}
 
-			PG_element_normalize(*F, coeff_out, 1, 20);
+			F->PG_element_normalize(coeff_out, 1, 20);
 
 			ost << "The transformed equation is: $" << endl;
 			int_vec_print(ost, coeff_out, 20);

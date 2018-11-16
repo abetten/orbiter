@@ -151,9 +151,9 @@ void grassmann::points_covered(int *the_points, int verbose_level)
 
 	nb = nb_points_covered(0 /* verbose_level*/);
 	for (i = 0; i < nb; i++) {
-		PG_element_unrank_modified(*F, v, 1, k, i);
+		F->PG_element_unrank_modified(v, 1, k, i);
 		F->mult_vector_from_the_left(v, M, w, k, n);
-		PG_element_rank_modified(*F, w, 1, n, a);
+		F->PG_element_rank_modified(w, 1, n, a);
 		the_points[i] = a;
 		}
 }

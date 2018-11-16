@@ -276,16 +276,16 @@ void points(int d, int q, int verbose_level)
 	N_points = generalized_binomial(n, 1, q);
 	cout << "number of points = " << N_points << endl;
 	for (i = 0; i < N_points; i++) {
-		PG_element_unrank_modified(F, v, 1, n, i);
+		F.PG_element_unrank_modified(v, 1, n, i);
 #if 0
 		cout << "point " << i << " : ";
 		int_vec_print(cout, v, n);
 		cout << " = ";
-		PG_element_normalize_from_front(F, v, 1, n);
+		F.PG_element_normalize_from_front(v, 1, n);
 		int_vec_print(cout, v, n);
 		cout << endl;
 #endif
-		PG_element_rank_modified(F, v, 1, n, j);
+		F.PG_element_rank_modified(v, 1, n, j);
 		if (j != i) {
 			cout << "error: i != j" << endl;
 			exit(1);

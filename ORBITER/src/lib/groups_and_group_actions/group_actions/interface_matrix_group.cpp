@@ -506,7 +506,7 @@ void matrix_group_print_point(action &A, int a, ostream &ost)
 	matrix_group *G = A.G.matrix_grp;
 	
 	if (G->f_projective) {
-		PG_element_unrank_modified(*G->GFq, G->v1, 1, G->n, a);
+		G->GFq->PG_element_unrank_modified(G->v1, 1, G->n, a);
 		}
 	else if (G->f_affine) {
 		AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);

@@ -251,10 +251,10 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 			}
 		int_vec_print(cout, vec1, size);
 		cout << endl;
-		PG_element_normalize_from_front(Fq, vec1, 1, size);
+		Fq.PG_element_normalize_from_front(vec1, 1, size);
 		int_vec_print(cout, vec1, size);
 		cout << endl;
-		PG_element_rank_modified(Fq, vec1, 1, size, a);
+		Fq.PG_element_rank_modified(vec1, 1, size, a);
 		cout << "has rank " << a << endl;
 
 		
@@ -263,10 +263,10 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 		Fq.mult_vector_from_the_left(vec1, A, vec2, size, size);
 		int_vec_print(cout, vec2, size);
 		cout << endl;
-		PG_element_normalize_from_front(Fq, vec2, 1, size);
+		Fq.PG_element_normalize_from_front(vec2, 1, size);
 		int_vec_print(cout, vec2, size);
 		cout << endl;
-		PG_element_rank_modified(Fq, vec2, 1, size, a);
+		Fq.PG_element_rank_modified(vec2, 1, size, a);
 		cout << "has rank " << a << endl;
 
 		delete [] vec1;

@@ -159,6 +159,9 @@ public:
 	int f_find_group_order;
 	int find_group_order;
 	
+	int f_has_tools_path;
+	const char *tools_path;
+
 	int verbose_level;
 	int verbose_level_group_theory;
 	
@@ -595,6 +598,14 @@ public:
 	void draw_poset_full(const char *fname_base, int depth, 
 		int data, int f_embedded, int f_sideways, 
 		double x_stretch, int verbose_level);
+	void draw_poset_fname_base_aux_poset(
+			char *fname, int depth);
+	void draw_poset_fname_base_poset_lvl(
+			char *fname, int depth);
+	void draw_poset_fname_base_tree_lvl(
+			char *fname, int depth);
+	void draw_poset_fname_base_poset_detailed_lvl(
+			char *fname, int depth);
 	void draw_poset(const char *fname_base, int depth, 
 		int data1, int f_embedded, int f_sideways, 
 		int verbose_level);
@@ -617,6 +628,7 @@ public:
 
 
 	// in poset_classification_io.C:
+	void report(ostream &ost);
 	void housekeeping(int i, int f_write_files, int t0, 
 		int verbose_level);
 	void housekeeping_no_data_file(int i, int t0, int verbose_level);
@@ -674,11 +686,13 @@ public:
 	void make_spreadsheet_of_orbit_reps(spreadsheet *&Sp, 
 		int max_depth);
 	void make_spreadsheet_of_level_info(spreadsheet *&Sp, 
-		int max_depth);
+		int max_depth, int verbose_level);
 	void write_file(ofstream &fp, int depth_completed, 
 		int verbose_level);
 	void read_file(ifstream &fp, int &depth_completed, 
 		int verbose_level);
+	void create_schreier_tree_fname_mask_base(
+			char *fname_mask, int node);
 
 	// poset_classification_recognize.C:
 	void recognize_start_over(
@@ -745,47 +759,11 @@ public:
 	void init_root_node(poset_classification *gen, int verbose_level);
 		// copies gen->SG0 and gen->tl into the poset_orbit_node 
 		// structure using store_strong_generators
-	void init_extension_node_prepare_G(poset_classification *gen,
-		int prev, int prev_ex, int size, group &G,
-		longinteger_object &go_G,
-		int verbose_level);
-		// sets up the group G using the strong
-		// poset_classifications that are stored
-	void init_extension_node_prepare_H(poset_classification *gen, 
-		int prev, int prev_ex, int size, 
-		group &G, longinteger_object &go_G, 
-		group &H, longinteger_object &go_H, 
-		int pt, int pt_orbit_len, 
-		int verbose_level);
-		// sets up the group H which is the stabilizer 
-		// of the point pt in G
-	void compute_point_stabilizer_in_subspace_setting(
-		poset_classification *gen,
-		int prev, int prev_ex, int size, 
-		group &G, longinteger_object &go_G, 
-		group &H, longinteger_object &go_H, 
-		int pt, int pt_orbit_len, 
-		int verbose_level);
-	void compute_point_stabilizer_in_standard_setting(
-		poset_classification *gen,
-		int prev, int prev_ex, int size, 
-		group &G, longinteger_object &go_G, 
-		group &H, /* longinteger_object &go_H, */
-		int pt, int pt_orbit_len, 
-		int verbose_level);
 	int get_level(poset_classification *gen);
 	int get_node_in_level(poset_classification *gen);
 	int *live_points();
 	int get_nb_of_live_points();
 	int get_nb_of_orbits_under_stabilizer();
-	void get_stabilizer_order(poset_classification *gen,
-		longinteger_object &go);
-	void get_stabilizer(poset_classification *gen, 
-		group &G, longinteger_object &go_G, 
-		int verbose_level);
-	void get_stabilizer_generators(poset_classification *gen,
-		strong_generators *&Strong_gens, 
-		int verbose_level);
 	void poset_orbit_node_depth_breadth_perm_and_inverse(
 		poset_classification *gen,
 		int max_depth, 
@@ -793,8 +771,6 @@ public:
 	int find_extension_from_point(poset_classification *gen, int pt, 
 		int verbose_level);
 	void print_extensions(ostream &ost);
-	void store_strong_generators(poset_classification *gen, 
-		strong_generators *Strong_gens);
 	void log_current_node_without_group(poset_classification *gen, 
 		int s, ostream &f, int verbose_level);
 	void log_current_node(poset_classification *gen, int s, 
@@ -821,6 +797,59 @@ public:
 	void print_extensions(poset_classification *gen);
 	void reconstruct_extensions_from_sv(poset_classification *gen,
 		int verbose_level);
+
+	// in poset_orbit_node_group_theory.C:
+	void store_strong_generators(poset_classification *gen,
+		strong_generators *Strong_gens);
+	void get_stabilizer_order(poset_classification *gen,
+		longinteger_object &go);
+	void get_stabilizer(poset_classification *gen,
+		group &G, longinteger_object &go_G,
+		int verbose_level);
+	void get_stabilizer_generators(poset_classification *gen,
+		strong_generators *&Strong_gens,
+		int verbose_level);
+	void init_extension_node_prepare_G(
+		poset_classification *gen,
+		int prev, int prev_ex, int size, group &G,
+		longinteger_object &go_G,
+		int verbose_level);
+		// sets up the group G using the strong
+		// poset_classifications that are stored
+	void init_extension_node_prepare_H(
+		poset_classification *gen,
+		int prev, int prev_ex, int size,
+		group &G, longinteger_object &go_G,
+		group &H, longinteger_object &go_H,
+		int pt, int pt_orbit_len,
+		int verbose_level);
+		// sets up the group H which is the stabilizer
+		// of the point pt in G
+	void compute_point_stabilizer_in_subspace_setting(
+		poset_classification *gen,
+		int prev, int prev_ex, int size,
+		group &G, longinteger_object &go_G,
+		group &H, longinteger_object &go_H,
+		int pt, int pt_orbit_len,
+		int verbose_level);
+	void compute_point_stabilizer_in_standard_setting(
+		poset_classification *gen,
+		int prev, int prev_ex, int size,
+		group &G, longinteger_object &go_G,
+		group &H, /* longinteger_object &go_H, */
+		int pt, int pt_orbit_len,
+		int verbose_level);
+	void create_schreier_vector_wrapper(
+		int f_create_schreier_vector,
+		schreier &Schreier, int verbose_level);
+		// called from downstep_orbit_test_and_schreier_vector
+		// calls Schreier.get_schreier_vector
+	void create_schreier_vector_wrapper_subspace_action(
+		int f_create_schreier_vector,
+		schreier &Schreier,
+		action *A_factor_space, action_on_factor_space *AF,
+		int verbose_level);
+
 
 	// in poset_orbit_node_io.C:
 	void read_memory_object(action *A, memory_object *m, 
@@ -1001,11 +1030,6 @@ public:
 		// are used in pairs.
 		// Except, the order in which the function is used matters.
 		// Calls check_orbits
-	void create_schreier_vector_wrapper(
-		int f_create_schreier_vector,
-		schreier &Schreier, int verbose_level);
-		// called from downstep_orbit_test_and_schreier_vector
-		// calls Schreier.get_schreier_vector
 
 	void test_orbits_for_implicit_fusion(poset_classification *gen, 
 		schreier &Schreier, action &AR, 
@@ -1083,11 +1107,6 @@ public:
 		poset_classification *gen, schreier &O,
 		action *A_factor_space, action_on_factor_space *AF, 
 		int lvl, int f_implicit_fusion, int verbose_level);
-	void create_schreier_vector_wrapper_subspace_action(
-		int f_create_schreier_vector,
-		schreier &Schreier, 
-		action *A_factor_space, action_on_factor_space *AF, 
-		int verbose_level);
 };
 
 

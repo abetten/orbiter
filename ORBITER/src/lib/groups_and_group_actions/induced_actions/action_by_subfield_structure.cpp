@@ -132,7 +132,8 @@ void action_by_subfield_structure::init(action &A, finite_field *Fq, int verbose
 	S = NEW_OBJECT(subfield_structure);
 
 	S->init(FQ, Fq, verbose_level);
-	cout << "action_by_subfield_structure::init creating subfield structure done" << endl;
+	cout << "action_by_subfield_structure::init "
+			"creating subfield structure done" << endl;
 		
 	Eltq = NEW_int(Aq->elt_size_in_int);
 	Mtx = NEW_int(m * m);
@@ -149,9 +150,10 @@ int action_by_subfield_structure::compute_image_int(
 	if (f_v) {
 		cout << "action_by_subfield_structure::compute_image_int" << endl;
 		}
-	PG_element_unrank_modified(*Fq, v1, 1, m, a);
+	Fq->PG_element_unrank_modified(v1, 1, m, a);
 	if (f_vv) {
-		cout << "action_by_subfield_structure::compute_image_int a = " << a << " v1 = ";
+		cout << "action_by_subfield_structure::compute_image_int "
+				"a = " << a << " v1 = ";
 		int_vec_print(cout, v1, m);
 		cout << endl;
 		}
@@ -163,9 +165,10 @@ int action_by_subfield_structure::compute_image_int(
 		cout << endl;
 		}
 
-	PG_element_rank_modified(*Fq, v2, 1, m, b);
+	Fq->PG_element_rank_modified(v2, 1, m, b);
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_int done " << a << "->" << b << endl;
+		cout << "action_by_subfield_structure::compute_image_int "
+				"done " << a << "->" << b << endl;
 		}
 	return b;
 }
@@ -213,7 +216,8 @@ void action_by_subfield_structure::compute_image_int_low_level(
 		cout << endl;
 		}
 	if (MQ->f_semilinear) {
-		cout << "action_by_subfield_structure::compute_image_int_low_level cannot handle semilinear elements" << endl;
+		cout << "action_by_subfield_structure::compute_image_int_low_level "
+				"cannot handle semilinear elements" << endl;
 		exit(1);
 #if 0
 		for (i = 0; i < m; i++) {
@@ -227,7 +231,8 @@ void action_by_subfield_structure::compute_image_int_low_level(
 #endif
 		}
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_int_low_level done" << endl;
+		cout << "action_by_subfield_structure::compute_image_int_low_level "
+				"done" << endl;
 		}
 }
 

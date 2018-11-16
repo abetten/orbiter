@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 		vec[4] = 0;
 		}
 	Fq.init(q, verbose_level - 1);
-	PG_element_rank_modified(Fq, vec, 1, 5, rk);
+	Fq.PG_element_rank_modified(vec, 1, 5, rk);
 	cout << "vector ";
 	int_vec_print(cout, vec, 5);
 	cout << " has rank " << rk << endl;
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 		j = Sch.orbit[Sch.orbit_first[i]];
 		cout << "orbit " << i << " representative is " << j << " : ";
 		int w[5];
-		PG_element_unrank_modified(Fq, w, 1, 5, j);
+		Fq.PG_element_unrank_modified(w, 1, 5, j);
 		int_vec_print(cout, w, 5);
 		cout << endl;
 		}

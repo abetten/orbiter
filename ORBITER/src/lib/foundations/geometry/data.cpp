@@ -2777,7 +2777,7 @@ void Segre_hyperoval(finite_field *F,
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		PG_element_rank_modified(*F, Mtx + i * 3, 1, 3, a);
+		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 		}
 
@@ -2846,7 +2846,7 @@ void GlynnI_hyperoval(finite_field *F,
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		PG_element_rank_modified(*F, Mtx + i * 3, 1, 3, a);
+		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 		}
 
@@ -2913,7 +2913,7 @@ void GlynnII_hyperoval(finite_field *F,
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		PG_element_rank_modified(*F, Mtx + i * 3, 1, 3, a);
+		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 		}
 
@@ -3056,7 +3056,7 @@ void Adelaide_hyperoval(subfield_structure *S, int *&Pts, int &nb_pts, int verbo
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		PG_element_rank_modified(*Fq, Mtx + i * 3, 1, 3, r);
+		Fq->PG_element_rank_modified(Mtx + i * 3, 1, 3, r);
 		Pts[i] = r;
 		}
 
@@ -3145,7 +3145,7 @@ void Subiaco_oval(finite_field *F,
 	Mtx[t * 3 + 1] = 1;
 	Mtx[t * 3 + 2] = 0;
 	for (i = 0; i < N; i++) {
-		PG_element_rank_modified(*F, Mtx + i * 3, 1, 3, a);
+		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 		}
 
@@ -3245,7 +3245,7 @@ void Subiaco_hyperoval(finite_field *F,
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		PG_element_rank_modified(*F, Mtx + i * 3, 1, 3, a);
+		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 		}
 
@@ -3416,7 +3416,7 @@ void LunelliSce(finite_field *Fq, int *pts18, int verbose_level)
 	N = nb_PG_elements(2, 16);
 	sz = 0;
 	for (i = 0; i < N; i++) {
-		PG_element_unrank_modified(*Fq, v, 1, 3, i);
+		Fq->PG_element_unrank_modified(v, 1, 3, i);
 		//cout << "i=" << i << " v=";
 		//int_vec_print(cout, v, 3);
 		//cout << endl;

@@ -84,11 +84,12 @@ void poset_orbit_node::downstep(poset_classification *gen,
 		int orbit_no;
 
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+			char fname_mask_base[1000];
 			char fname_mask[1000];
 
-			sprintf(fname_mask, "%sschreier_tree_node_%d_%%d.layered_graph",
-				gen->schreier_tree_prefix, node);
+			gen->create_schreier_tree_fname_mask_base(fname_mask_base, node);
 
+			sprintf(fname_mask, "%s.layered_graph", fname_mask_base);
 
 			Schreier.export_tree_as_layered_graph(orbit_no,
 					fname_mask,
@@ -1155,8 +1156,12 @@ void poset_orbit_node::check_orbits_wrapper(
 				<< f_use_incremental_test_func_if_available << endl;
 		}
 
-	check_orbits(gen, Schreier, AR, f_using_invariant_subset,
-			lvl, f_use_incremental_test_func_if_available,
+	check_orbits(gen,
+			Schreier,
+			AR,
+			f_using_invariant_subset,
+			lvl,
+			f_use_incremental_test_func_if_available,
 			verbose_level - 3);
 
 
@@ -1169,53 +1174,6 @@ void poset_orbit_node::check_orbits_wrapper(
 			<< nb_points1 << " points" << endl;
 		}
 
-}
-
-void poset_orbit_node::create_schreier_vector_wrapper(
-	int f_create_schreier_vector,
-	schreier &Schreier,
-	int verbose_level)
-// calls Schreier.get_schreier_vector
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int gen_hdl_first;
-	
-	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_vector_wrapper" << endl;
-	}
-	if (f_create_schreier_vector) {
-		
-		if (f_vv) {
-			cout << "poset_orbit_node::create_schreier_vector_wrapper "
-					"calling get_schreier_vector" << endl;
-			}
-		int i;
-		cout << "poset_orbit_node::create_schreier_vector_wrapper " << endl;
-		for (i = 0; i < nb_strong_generators; i++) {
-			cout << "hdl_strong_generators[" << i << "]=" << hdl_strong_generators[i] << endl;
-		}
-		if (nb_strong_generators == 0) {
-			gen_hdl_first = -1;
-			}
-		else {
-			gen_hdl_first = hdl_strong_generators[0];
-			}
-		Schreier_vector = Schreier.get_schreier_vector(
-				gen_hdl_first,
-				nb_strong_generators,
-				verbose_level - 1);
-		//Schreier.get_schreier_vector(sv, f_trivial_group, f_compact);
-		//Schreier.test_sv(gen->A, hdl_strong_generators,
-		// sv, f_trivial_group, f_compact, verbose_level);
-		}
-	else {
-		Schreier_vector = NULL;
-		}
-	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_vector_wrapper "
-				"done" << endl;
-	}
 }
 
 void poset_orbit_node::test_orbits_for_implicit_fusion(
@@ -1257,7 +1215,8 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 		if (lvl) {
 			if (rep <= pt) {
 				if (f_vv) {
-					cout << "orbit " << k << " is not accepted because "
+					cout << "orbit " << k
+						<< " is not accepted because "
 						<< "we use implicit fusion nodes and " 
 						<< rep << " is less than " 
 						<< pt << endl;
@@ -1275,7 +1234,8 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 		}
 	Schreier.nb_orbits = u;
 	if (f_v) {
-		cout << "test_orbits_for_implicit_fusion: orbit testing '"
+		cout << "test_orbits_for_implicit_fusion: "
+				"orbit testing '"
 				"finished: " << u << " orbits out of "
 				<< L << " accepted" << endl;
 		}
@@ -1309,8 +1269,10 @@ int poset_orbit_node::nb_extension_points()
 	
 }
 
-void poset_orbit_node::check_orbits(poset_classification *gen,
-	schreier &Schreier, action &AR, int f_using_invariant_subset, 
+void poset_orbit_node::check_orbits(
+	poset_classification *gen,
+	schreier &Schreier, action &AR,
+	int f_using_invariant_subset,
 	int lvl, 
 	int f_use_incremental_test_func_if_available, 
 	int verbose_level)
@@ -1367,8 +1329,9 @@ void poset_orbit_node::check_orbits(poset_classification *gen,
 		f_accept = TRUE;
 		if (j == lvl) {
 			if (f_vv) {
-				cout << "poset_orbit_node::check_orbits calling test_point_"
-						"using_check_functions" << endl;
+				cout << "poset_orbit_node::check_orbits "
+						"calling test_point_using_check_functions"
+						<< endl;
 				}
 			f_accept = test_point_using_check_functions(gen, 
 				lvl, rep, gen->S, 
@@ -1384,7 +1347,8 @@ void poset_orbit_node::check_orbits(poset_classification *gen,
 		else {
 			if (f_vv) {
 				cout << "orbit " << k << " of point " << rep 
-					<< " of length " << len << " is not accepted" << endl;
+					<< " of length " << len
+					<< " is not accepted" << endl;
 				}
 			continue;
 			}
@@ -1494,7 +1458,8 @@ void poset_orbit_node::relabel_schreier_vector(
 	//n = sv[0];
 	//pts = sv + 1;
 	if (f_v5) {
-		cout << "poset_orbit_node::relabel_schreier_vector sv before:" << endl;
+		cout << "poset_orbit_node::relabel_schreier_vector "
+				"sv before:" << endl;
 		//schreier_vector_print(sv);
 		}
 	for (i = 0; i < n; i++) {
@@ -1510,11 +1475,13 @@ void poset_orbit_node::relabel_schreier_vector(
 			}
 		}
 	if (f_v5) {
-		cout << "poset_orbit_node::relabel_schreier_vector sv after:" << endl;
+		cout << "poset_orbit_node::relabel_schreier_vector "
+				"sv after:" << endl;
 		//schreier_vector_print(sv);
 		}
 	if (f_v) {
-		cout << "poset_orbit_node::relabel_schreier_vector done" << endl;
+		cout << "poset_orbit_node::relabel_schreier_vector "
+				"done" << endl;
 		}
 }
 

@@ -37,7 +37,7 @@ void diagonal_orbit_perm(int n, finite_field &GFq,
 				cout << v[j] << " ";
 				}
 			}
-		PG_element_rank_modified(GFq, v, 1, n, a);
+		GFq.PG_element_rank_modified(v, 1, n, a);
 		if (f_v) {
 			cout << " : " << a << endl;
 			}
@@ -80,7 +80,7 @@ void frobenius_orbit_perm(int n, finite_field &GFq,
 		cout << "before PG_element_unrank_modified("
 				<< n + GFq.p << ")" << endl;
 		}
-	PG_element_unrank_modified(GFq, v, 1, n, n + GFq.p);
+	GFq.PG_element_unrank_modified(v, 1, n, n + GFq.p);
 	if (f_v) {
 		cout << "after PG_element_unrank_modified("
 				<< n + GFq.p << ")" << endl;
@@ -92,7 +92,7 @@ void frobenius_orbit_perm(int n, finite_field &GFq,
 				cout << v[j] << " ";
 				}
 			}
-		PG_element_rank_modified(GFq, v, 1, n, a);
+		GFq.PG_element_rank_modified(v, 1, n, a);
 		if (f_v) {
 			cout << " : " << a << endl;
 			}
@@ -174,11 +174,11 @@ void frobenius_in_PG(finite_field &GFq,
 	p = GFq.p;
 	l = nb_PG_elements(n, q);
 	for (i = 0; i < l; i++) {
-		PG_element_unrank_modified(GFq, v, 1 /* stride */, n + 1, i);
+		GFq.PG_element_unrank_modified(v, 1 /* stride */, n + 1, i);
 		for (j = 0; j <= n; j++) {
 			v[j] = GFq.power(v[j], p);
 			}
-		PG_element_unrank_modified(GFq, v, 1 /* stride */, n + 1, j);
+		GFq.PG_element_unrank_modified(v, 1 /* stride */, n + 1, j);
 		perm[i] = j;
 		}
 	if (f_v) {
@@ -1146,16 +1146,16 @@ void O4_grid_coordinates_rank(finite_field &F,
 		v[0] = b;
 		v[1] = d;
 		}
-	PG_element_normalize_from_front(F, v, 1, 2);
-	PG_element_normalize_from_front(F, w, 1, 2);
+	F.PG_element_normalize_from_front(v, 1, 2);
+	F.PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
 		int_vec_print(cout, v, 2);
 		int_vec_print(cout, w, 2);
 		cout << endl;
 		}
 	
-	PG_element_rank_modified(F, v, 1, 2, grid_x);
-	PG_element_rank_modified(F, w, 1, 2, grid_y);
+	F.PG_element_rank_modified(v, 1, 2, grid_x);
+	F.PG_element_rank_modified(w, 1, 2, grid_y);
 }
 
 void O4_grid_coordinates_unrank(finite_field &F,
@@ -1167,10 +1167,10 @@ void O4_grid_coordinates_unrank(finite_field &F,
 	int a, b, c, d;
 	int v[2], w[2];
 
-	PG_element_unrank_modified(F, v, 1, 2, grid_x);
-	PG_element_unrank_modified(F, w, 1, 2, grid_y);
-	PG_element_normalize_from_front(F, v, 1, 2);
-	PG_element_normalize_from_front(F, w, 1, 2);
+	F.PG_element_unrank_modified(v, 1, 2, grid_x);
+	F.PG_element_unrank_modified(w, 1, 2, grid_y);
+	F.PG_element_normalize_from_front(v, 1, 2);
+	F.PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
 		int_vec_print(cout, v, 2);
 		int_vec_print(cout, w, 2);
@@ -1242,7 +1242,7 @@ void O4_find_tangent_plane(finite_field &F,
 
 
 			for (k = 0; k < size; k++) {
-				PG_element_unrank_modified(F, vec2, 1, 2, k);
+				F.PG_element_unrank_modified(vec2, 1, 2, k);
 				y1 = F.add(F.mult(pt_x1, vec2[0]), F.mult(x1, vec2[1]));
 				y2 = F.add(F.mult(pt_x2, vec2[0]), F.mult(x2, vec2[1]));
 				y3 = F.add(F.mult(pt_x3, vec2[0]), F.mult(x3, vec2[1]));
