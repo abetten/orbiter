@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 	if (f_LunelliSce) {
 		LunelliSce(&Fq, pts, verbose_level);
 		for (i = 0; i < n; i++) {
-			PG_element_unrank_modified(Fq, coords + i * 3, 1, 3, pts[i]);
+			Fq.PG_element_unrank_modified(coords + i * 3, 1, 3, pts[i]);
 			}
 		}
 	else {
@@ -127,7 +127,7 @@ int main(int argc, char **argv)
 			coords[6 + t * 3 + 2] = 1;
 			}
 		for (i = 0; i < n; i++) {
-			PG_element_rank_modified(Fq, coords + i * 3, 1, 3, a);
+			Fq.PG_element_rank_modified(coords + i * 3, 1, 3, a);
 			pts[i] = a;
 			}
 		}

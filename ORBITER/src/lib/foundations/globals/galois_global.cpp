@@ -805,7 +805,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 			cout << "input point " << i << " : ";
 			}
 		P2->unrank_point(v, set2[i]);
-		PG_element_normalize(*FQ, v, 1, 3);
+		FQ->PG_element_normalize(v, 1, 3);
 		if (f_vv) {
 			int_vec_print(cout, v, 3);
 			cout << " becomes ";
@@ -858,7 +858,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 			// have a zero in the last spot.
 			
 			for (h = 0; h < q + 1; h++) {
-				PG_element_unrank_modified(*Fq, v2, 1, 2, h);
+				Fq->PG_element_unrank_modified(v2, 1, 2, h);
 				if (FALSE) {
 					cout << "v2=";
 					int_vec_print(cout, v2, 2);

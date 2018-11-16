@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 			cout << "point " << i << " has coordinates ";
 			int_vec_print(cout, pt_coords + i * 4, 4);
 			cout << endl;
-			PG_element_rank_modified(*F, pt_coords + i * 4, 1, 4, a);
+			F->PG_element_rank_modified(pt_coords + i * 4, 1, 4, a);
 			Pts[i] = a;
 			cout << "and rank " << a << endl;
 			}

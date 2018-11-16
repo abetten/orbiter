@@ -40,7 +40,8 @@ void action_by_representation::free()
 	null();
 }
 
-void action_by_representation::init_action_on_conic(action &A, int verbose_level)
+void action_by_representation::init_action_on_conic(
+		action &A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -49,7 +50,8 @@ void action_by_representation::init_action_on_conic(action &A, int verbose_level
 		cout << "starting with action " << A.label << endl;
 		}
 	if (A.type_G != matrix_group_t) {
-		cout << "action_by_representation::init fatal: A.type_G != matrix_group_t" << endl;
+		cout << "action_by_representation::init "
+				"fatal: A.type_G != matrix_group_t" << endl;
 		exit(1);
 		}
 	M = A.G.matrix_grp;
@@ -79,9 +81,10 @@ int action_by_representation::compute_image_int(
 	if (f_v) {
 		cout << "action_by_representation::compute_image_int" << endl;
 		}
-	PG_element_unrank_modified(*F, v1, 1, dimension, a);
+	F->PG_element_unrank_modified(v1, 1, dimension, a);
 	if (f_vv) {
-		cout << "action_by_representation::compute_image_int a = " << a << " v1 = ";
+		cout << "action_by_representation::compute_image_int "
+				"a = " << a << " v1 = ";
 		int_vec_print(cout, v1, dimension);
 		cout << endl;
 		}
@@ -93,9 +96,10 @@ int action_by_representation::compute_image_int(
 		cout << endl;
 		}
 
-	PG_element_rank_modified(*F, v2, 1, dimension, b);
+	F->PG_element_rank_modified(v2, 1, dimension, b);
 	if (f_v) {
-		cout << "action_by_representation::compute_image_int done " << a << "->" << b << endl;
+		cout << "action_by_representation::compute_image_int "
+				"done " << a << "->" << b << endl;
 		}
 	return b;
 }

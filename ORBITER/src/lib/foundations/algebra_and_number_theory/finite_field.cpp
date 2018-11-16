@@ -2258,7 +2258,7 @@ int finite_field::evaluate_monomial(int *monomial,
 
 void finite_field::projective_point_unrank(int n, int *v, int rk)
 {
-	PG_element_unrank_modified(*this, v, 1 /* stride */,
+	PG_element_unrank_modified(v, 1 /* stride */,
 			n + 1 /* len */, rk);
 }
 
@@ -2266,7 +2266,7 @@ int finite_field::projective_point_rank(int n, int *v)
 {
 	int rk;
 	
-	PG_element_rank_modified(*this, v, 1 /* stride */, n + 1, rk);
+	PG_element_rank_modified(v, 1 /* stride */, n + 1, rk);
 	return rk;
 }
 

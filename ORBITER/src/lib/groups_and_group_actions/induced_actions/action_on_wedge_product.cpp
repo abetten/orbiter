@@ -49,7 +49,8 @@ void action_on_wedge_product::init(action &A, int verbose_level)
 		cout << "starting with action " << A.label << endl;
 		}
 	if (A.type_G != matrix_group_t) {
-		cout << "action_on_wedge_product::init fatal: A.type_G != matrix_group_t" << endl;
+		cout << "action_on_wedge_product::init "
+				"fatal: A.type_G != matrix_group_t" << endl;
 		exit(1);
 		}
 	M = A.G.matrix_grp;
@@ -67,14 +68,14 @@ void action_on_wedge_product::init(action &A, int verbose_level)
 
 void action_on_wedge_product::unrank_point(int *v, int rk)
 {
-	PG_element_unrank_modified(*F, v, 1, wedge_dimension, rk);
+	F->PG_element_unrank_modified(v, 1, wedge_dimension, rk);
 }
 
 int action_on_wedge_product::rank_point(int *v)
 {
 	int rk;
 
-	PG_element_rank_modified(*F, v, 1, wedge_dimension, rk);
+	F->PG_element_rank_modified(v, 1, wedge_dimension, rk);
 	return rk;
 }
 
@@ -89,9 +90,10 @@ int action_on_wedge_product::compute_image_int(
 		cout << "action_on_wedge_product::compute_image_int" << endl;
 		}
 	//AG_element_unrank(q, wedge_v1, 1, wedge_dimension, a);
-	PG_element_unrank_modified(*F, wedge_v1, 1, wedge_dimension, a);
+	F->PG_element_unrank_modified(wedge_v1, 1, wedge_dimension, a);
 	if (f_vv) {
-		cout << "action_on_wedge_product::compute_image_int a = " << a << " wedge_v1 = ";
+		cout << "action_on_wedge_product::compute_image_int "
+				"a = " << a << " wedge_v1 = ";
 		int_vec_print(cout, wedge_v1, wedge_dimension);
 		cout << endl;
 		}
@@ -104,14 +106,16 @@ int action_on_wedge_product::compute_image_int(
 		}
 
 	//AG_element_rank(q, wedge_v2, 1, wedge_dimension, b);
-	PG_element_rank_modified(*F, wedge_v2, 1, wedge_dimension, b);
+	F->PG_element_rank_modified(wedge_v2, 1, wedge_dimension, b);
 	if (f_v) {
-		cout << "action_on_wedge_product::compute_image_int done " << a << "->" << b << endl;
+		cout << "action_on_wedge_product::compute_image_int "
+				"done " << a << "->" << b << endl;
 		}
 	return b;
 }
 
-int action_on_wedge_product::element_entry_frobenius(action &A, int *Elt, int verbose_level)
+int action_on_wedge_product::element_entry_frobenius(
+		action &A, int *Elt, int verbose_level)
 {
 	int f;
 
@@ -119,7 +123,8 @@ int action_on_wedge_product::element_entry_frobenius(action &A, int *Elt, int ve
 	return f;
 }
 
-int action_on_wedge_product::element_entry_ij(action &A, int *Elt, int I, int J, int verbose_level)
+int action_on_wedge_product::element_entry_ij(
+		action &A, int *Elt, int I, int J, int verbose_level)
 {
 	int i, j, k, l, w;
 
@@ -129,7 +134,8 @@ int action_on_wedge_product::element_entry_ij(action &A, int *Elt, int I, int J,
 	return w;
 }
 
-int action_on_wedge_product::element_entry_ijkl(action &A, int *Elt, int i, int j, int k, int l, int verbose_level)
+int action_on_wedge_product::element_entry_ijkl(action &A,
+		int *Elt, int i, int j, int k, int l, int verbose_level)
 {
 	int aki, alj, akj, ali, u, v, w;
 

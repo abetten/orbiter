@@ -249,7 +249,7 @@ void eckardt_point_info::init(projective_space *P,
 
 		P->determine_conic_in_plane(arc5, 5,
 			six_coeffs, 0 /* verbose_level */);
-		PG_element_normalize_from_front(*P->F, six_coeffs, 1, 6);
+		P->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
 
 #if 0
 		cout << "coefficients of the conic: ";

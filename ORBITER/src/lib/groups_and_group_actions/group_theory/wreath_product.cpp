@@ -325,7 +325,7 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 						"we are in the tensor product component "
 						"reduced input a = " << a << endl;
 			}
-			PG_element_unrank_modified(*F, u, 1,
+			F->PG_element_unrank_modified(u, 1,
 					dimension_of_tensor_action, a);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
@@ -357,7 +357,7 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 				int_vec_print(cout, w, dimension_of_tensor_action);
 				cout << endl;
 			}
-			PG_element_rank_modified(*F, w, 1,
+			F->PG_element_rank_modified(w, 1,
 					dimension_of_tensor_action, c);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "

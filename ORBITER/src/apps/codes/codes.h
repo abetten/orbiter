@@ -32,6 +32,8 @@ public:
 	int q;
 	int d;
 
+	int f_report;
+
 	char directory_path[1000];
 	char prefix[1000];
 

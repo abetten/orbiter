@@ -616,7 +616,8 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 			}
 		cout << "the orbit elements are:" << endl;
 		for (h = 0; h < Schreier.nb_orbits; h++) {
-			cout << "orbit " << setw(4) << h << " / " << Schreier.nb_orbits << " : " << endl;
+			cout << "orbit " << setw(4) << h << " / "
+				<< Schreier.nb_orbits << " : " << endl;
 
 			int first, len, rep, j;
 
@@ -631,7 +632,8 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 					rep,
 					gen->rank_point_data);
 
-				cout << setw(3) << j << " / " << setw(3) << len << " : " << rep << " = ";
+				cout << setw(3) << j << " / " << setw(3) << len
+						<< " : " << rep << " = ";
 				int_vec_print(cout,
 						gen->tmp_v1, gen->vector_space_dimension);
 				cout << " : ";
@@ -817,82 +819,6 @@ void poset_orbit_node::find_extensions_subspace_action(
 			cout << h << " : " << E[h].pt << " : "
 				<< E[h].orbit_len << endl;
 			}
-		}
-}
-
-void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
-	int f_create_schreier_vector,
-	schreier &Schreier, 
-	action *A_factor_space, action_on_factor_space *AF, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 10);
-	
-	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_vector_"
-				"wrapper_subspace_action"
-				<< endl;
-		}
-	if (/*nb_strong_generators &&*/ f_create_schreier_vector) {
-		int f_trivial_group;
-		
-		if (f_vv) {
-			cout << "calling get_schreier_vector" << endl;
-			}
-		if (nb_strong_generators == 0) {
-			f_trivial_group = TRUE;
-			}
-		else {
-			f_trivial_group = FALSE;
-			}
-		int gen_hdl_first;
-		if (nb_strong_generators == 0) {
-			gen_hdl_first = -1;
-			}
-		else {
-			gen_hdl_first = hdl_strong_generators[0];
-			}
-		Schreier_vector = Schreier.get_schreier_vector(
-				gen_hdl_first,
-				nb_strong_generators,
-				verbose_level - 1);
-		//Schreier.get_schreier_vector(sv, f_trivial_group, f_compact);
-		//Schreier.test_sv(gen->A, hdl_strong_generators,
-		// sv, f_trivial_group, f_compact, verbose_level);
-
-		if (f_vv) {
-			cout << "schreier vector before relabeling :" << endl;
-			int_vec_print(cout, Schreier_vector->points(),
-					Schreier_vector->get_number_of_points());
-			cout << endl;
-			}
-		if (f_v) {
-			cout << "poset_orbit_node::create_schreier_vector_"
-					"wrapper_subspace_action "
-					"changing point labels:" << endl;
-			}
-		Schreier_vector->relabel_points(AF,
-				verbose_level - 4);
-		if (f_v) {
-			cout << "poset_orbit_node::create_schreier_vector_"
-					"wrapper_subspace_action "
-					"changing point labels done" << endl;
-			}
-		if (f_vv) {
-			cout << "schreier vector after relabeling :" << endl;
-			int_vec_print(cout, Schreier_vector->points(),
-					Schreier_vector->get_number_of_points());
-			cout << endl;
-			}
-		}
-	else {
-		Schreier_vector = NULL;
-		}
-	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_vector_"
-				"wrapper_subspace_action "
-				"done" << endl;
 		}
 }
 

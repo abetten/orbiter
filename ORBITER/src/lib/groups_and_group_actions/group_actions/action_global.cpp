@@ -2320,7 +2320,7 @@ void O5_to_O4(action *A4, action *A5, finite_field *Fq,
 	for (h = 0; h < 25; h++) {
 		Data[h] = mtx5x5[h];
 		}
-	PG_element_normalize_from_front(*Fq, Data, 1, 25);
+	Fq->PG_element_normalize_from_front(Data, 1, 25);
 	if (f_v) {
 		cout << "as 5 x 5:" << endl;
 		print_integer_matrix_width(cout, Data, 5, 5, 5, 3);
@@ -2466,7 +2466,7 @@ void print_4x4_as_2x2(action *A2, finite_field *Fq, int *mtx4x4)
 	cout << "f_switch=" << f_switch << endl;
 	for (r = 0; r < 2; r++) {
 		cout << "component " << r << ":" << endl;
-		PG_element_normalize_from_front(*Fq, small + r * 4, 1, 4);
+		Fq->PG_element_normalize_from_front(small + r * 4, 1, 4);
 		print_integer_matrix_width(cout, small + r * 4, 2, 2, 2, 3);
 		A2->make_element(elt1, small + r * 4, 0);
 		order = A2->element_order(elt1);

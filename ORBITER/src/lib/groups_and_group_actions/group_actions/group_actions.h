@@ -374,6 +374,7 @@ public:
 		vector_ge *gens, strong_generators *&Strong_gens_out, 
 		int verbose_level);
 	void print_symmetry_group_type(ostream &ost);
+	void report(ostream &ost);
 	void print_info();
 	void print_base();
 	void group_order(longinteger_object &go);

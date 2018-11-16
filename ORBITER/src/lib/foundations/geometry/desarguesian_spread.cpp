@@ -117,7 +117,7 @@ void desarguesian_spread::calculate_spread_elements(
 		if (f_vv) {
 			cout << "h=" << h << " / " << N << endl;
 			}
-		PG_element_unrank_modified(*FQ, v, 1, m, h);
+		FQ->PG_element_unrank_modified(v, 1, m, h);
 		if (f_vv) {
 			int_vec_print(cout, v, m);
 			cout << endl;
@@ -180,9 +180,9 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		Spread_elt_basis = Spread_elements + h * spread_element_size;
 		for (i = 0; i < nb_points_per_spread_element; i++) {
-			PG_element_unrank_modified(*Fq, v, 1, s, i);
+			Fq->PG_element_unrank_modified(v, 1, s, i);
 			Fq->mult_vector_from_the_left(v, Spread_elt_basis, w, s, n);
-			PG_element_rank_modified(*Fq, w, 1, n, rk);
+			Fq->PG_element_rank_modified(w, 1, n, rk);
 			List_of_points[h * nb_points_per_spread_element + i] = rk;
 			}
 		if (f_vv) {
@@ -336,7 +336,7 @@ void desarguesian_spread::print_spread_element_table_tex()
 
 	v = NEW_int(m);
 	for (a = 0; a < N; a++) {
-		PG_element_unrank_modified(*FQ, v, 1, m, a);
+		FQ->PG_element_unrank_modified(v, 1, m, a);
 		cout << "$";
 		int_vec_print(cout, v, m);
 		cout << "$";
@@ -380,7 +380,7 @@ void desarguesian_spread::print_linear_set_element_tex(int a, int sz)
 	int *v;
 
 	v = NEW_int(m);
-	PG_element_unrank_modified(*FQ, v, 1, m, a);
+	FQ->PG_element_unrank_modified(v, 1, m, a);
 	cout << "D_{";
 	int_vec_print(cout, v, m);
 	cout << "}";

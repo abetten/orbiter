@@ -48,10 +48,28 @@ void schreier_vector::init(
 	schreier_vector::gen_hdl_first = gen_hdl_first;
 	schreier_vector::nb_gen = nb_gen;
 	schreier_vector::sv = sv;
-	number_of_orbits = count_number_of_orbits();
+	if (sv) {
+		number_of_orbits = count_number_of_orbits();
+	}
+	else {
+		number_of_orbits = -1;
+	}
 	if (f_v) {
 		cout << "schreier_vector::init done" << endl;
 	}
+}
+
+void schreier_vector::set_sv(
+		int *sv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier_vector::set_sv" << endl;
+	}
+	schreier_vector::sv = sv;
+	number_of_orbits = count_number_of_orbits();
 }
 
 int *schreier_vector::points()
@@ -542,6 +560,59 @@ void schreier_vector::orbit_of_point(
 	FREE_int(ancestor);
 	FREE_int(orbit_elt_idx);
 }
+
+void schreier_vector::init_from_schreier(schreier *S,
+	int f_trivial_group, int verbose_level)
+// allocated and creates array sv[size] using NEW_int
+// where size is n + 1 if  f_trivial_group is TRUE
+// and size is 3 * n + 1 otherwise
+// Here, n is the combined size of all orbits counted by nb_orbits
+// sv[0] is equal to n
+// sv + 1 is the array point_list of size [n],
+// listing the point in increasing order
+// Unless f_trivial_group, sv + 1 + n is the array prev[n] and
+// sv + 1 + 2 * n is the array label[n]
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, p, pr, la, n = 0;
+	int *point_list;
+	int *svec;
+
+	if (f_v) {
+		cout << "schreier_vector::init_from_schreier" << endl;
+	}
+	S->create_point_list_sorted(point_list, n);
+
+
+	if (f_trivial_group) {
+		svec = NEW_int(n + 1);
+		}
+	else {
+		svec = NEW_int(3 * n + 1);
+		}
+	svec[0] = n;
+	for (i = 0; i < n; i++) {
+		svec[1 + i] = point_list[i];
+		}
+	if (!f_trivial_group) {
+		for (i = 0; i < n; i++) {
+			p = point_list[i];
+			j = S->orbit_inv[p];
+			pr = S->prev[j];
+			la = S->label[j];
+			svec[1 + n + i] = pr;
+			svec[1 + 2 * n + i] = la;
+			}
+		}
+	FREE_int(point_list);
+
+	set_sv(svec, verbose_level - 1);
+
+	if (f_v) {
+		cout << "schreier_vector::init_from_schreier done" << endl;
+	}
+}
+
 
 
 // #############################################################################

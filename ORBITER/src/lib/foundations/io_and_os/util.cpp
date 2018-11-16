@@ -1601,6 +1601,7 @@ void latex_head(ostream& ost, int f_book, int f_title,
 	ost << "\\usepackage{rotating}\n"; 
 	ost << "\\usepackage{array}\n"; 
 	ost << "\\usepackage{tikz}\n"; 
+	ost << "\\usepackage{longtable}\n";
 	ost << "\\usepackage{anyfontsize}\n"; 
 	ost << "\\usepackage{t1enc}\n"; 
 	ost << "%\\usepackage{amsmath,amsfonts} \n"; 
@@ -4866,6 +4867,20 @@ void int_vec_print_to_str(char *str, int *data, int len)
 			}
 		}
 	strcat(str, "\"");
+}
+
+void int_vec_print_to_str_naked(char *str, int *data, int len)
+{
+	int i, a;
+
+	str[0] = 0;
+	for (i = 0; i < len; i++) {
+		a = data[i];
+		sprintf(str + strlen(str), "%d", a);
+		if (i < len - 1) {
+			strcat(str, ", ");
+			}
+		}
 }
 
 void int_matrix_print_with_labels_and_partition(ostream &ost, 

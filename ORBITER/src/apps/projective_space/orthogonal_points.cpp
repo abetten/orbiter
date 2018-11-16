@@ -113,7 +113,7 @@ int main(int argc, char **argv)
 		}
 	for (i = 0; i < N; i++) {
 		Q_epsilon_unrank(GFq, v, 1, epsilon, n, c1, c2, c3, i);
-		PG_element_rank_modified(GFq, v, 1, d, j);
+		GFq.PG_element_rank_modified(v, 1, d, j);
 		L[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";

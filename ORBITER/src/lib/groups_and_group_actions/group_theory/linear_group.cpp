@@ -35,7 +35,8 @@ void linear_group::freeself()
 }
 
 void linear_group::init(
-		linear_group_description *description, int verbose_level)
+		linear_group_description *description,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

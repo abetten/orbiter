@@ -87,13 +87,13 @@ void do_it(int q, int k, int verbose_level)
 		for (i = 0; i < k; i++) {
 			v[i] = P[i * q + j];
 			}
-		PG_element_rank_modified(*F, v, 1, k, a);
+		F->PG_element_rank_modified(v, 1, k, a);
 
 		set[j] = a;
 		}
 	int_vec_zero(v, k);
 	v[k - 1] = 1;
-	PG_element_rank_modified(*F, v, 1, k, a);
+	F->PG_element_rank_modified(v, 1, k, a);
 	set[q] = a;
 
 	char fname[1000];

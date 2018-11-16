@@ -105,7 +105,7 @@ void orbit_of_equations::map_an_equation(int *object_in, int *object_out,
 		}
 	AonHPD->compute_image_int_low_level(
 		Elt, object_in + 1, object_out + 1, verbose_level - 2);
-	PG_element_normalize_from_front(*F, 
+	F->PG_element_normalize_from_front(
 		object_out + 1, 1, nb_monomials);
 	if (f_v) {
 		cout << "orbit_of_equations::map_an_equation done" << endl;
@@ -158,7 +158,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 		}
 	int_vec_copy(coeff, Equations[0] + 1, nb_monomials);
 	Equations[0][0] = 0;
-	PG_element_normalize_from_front(*F, 
+	F->PG_element_normalize_from_front(
 		Equations[0] + 1, 1, nb_monomials);
 
 	position_of_original_object = 0;

@@ -35,6 +35,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/finite_field.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
+		foundations/algebra_and_number_theory/finite_field_projective.o \
 		foundations/algebra_and_number_theory/finite_field_representations.o \
 		foundations/algebra_and_number_theory/finite_field_tables.o \
 		foundations/algebra_and_number_theory/finite_ring.o \
@@ -92,7 +93,6 @@ MODULES= \
 		foundations/geometry/orthogonal_points.o \
 		foundations/geometry/packing.o \
 		foundations/geometry/point_line.o \
-		foundations/geometry/projective.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/surface.o \
 		foundations/geometry/surface_object.o \
@@ -209,6 +209,7 @@ MODULES= \
 		poset_classification/snakes_and_ladders/poset_orbit_node.o \
 		poset_classification/snakes_and_ladders/poset_orbit_node_downstep.o \
 		poset_classification/snakes_and_ladders/poset_orbit_node_downstep_subspace_action.o \
+		poset_classification/snakes_and_ladders/poset_orbit_node_group_theory.o \
 		poset_classification/snakes_and_ladders/poset_orbit_node_io.o \
 		poset_classification/snakes_and_ladders/poset_orbit_node_upstep.o \
 		poset_classification/snakes_and_ladders/poset_orbit_node_upstep_subspace_action.o \

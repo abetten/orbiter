@@ -275,7 +275,7 @@ void Hill_cap56(int argc, const char **argv,
 										}
 									for (ii = 0; ii < sz[8]; ii++) {
 										int rk;
-										PG_element_rank_modified(*O->F, pt_coords + set[ii] * n, 1, n, rk);
+										O->F->PG_element_rank_modified(pt_coords + set[ii] * n, 1, n, rk);
 										Sets[nb_sol * 56 + ii] = rk;
 										}
 

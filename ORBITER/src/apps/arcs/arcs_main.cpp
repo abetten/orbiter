@@ -64,7 +64,7 @@ int main(int argc, const char **argv)
 				{
 				spreadsheet *Sp;
 				Gen->gen->make_spreadsheet_of_level_info(
-						Sp, Gen->ECA->starter_size);
+						Sp, Gen->ECA->starter_size, Gen->verbose_level);
 				char fname_csv[1000];
 				sprintf(fname_csv, "arcs_%d_%d_level.csv",
 						Gen->q, Gen->ECA->starter_size);

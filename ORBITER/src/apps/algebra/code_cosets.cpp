@@ -338,7 +338,7 @@ void make_generator_matrix(finite_field *F,
 		}
 	for (i = 0; i < n; i++) {
 		a = code[i];
-		PG_element_unrank_modified(*F, G + i, n, k, a);
+		F->PG_element_unrank_modified(G + i, n, k, a);
 		}
 }
 

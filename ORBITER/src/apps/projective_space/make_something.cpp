@@ -595,9 +595,9 @@ void export_magma(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
 	fp << "S:={};" << endl;
 	fp << "a := F.1;" << endl;
 	for (h = 0; h < nb_pts; h++) {
-		PG_element_unrank_modified(*F, v, 1, d, Pts[h]);
+		F->PG_element_unrank_modified(v, 1, d, Pts[h]);
 
-		PG_element_normalize_from_front(*F, v, 1, d);
+		F->PG_element_normalize_from_front(v, 1, d);
 		
 		fp << "Include(~S,Index(I,[";
 		for (i = 0; i < d; i++) {
@@ -644,9 +644,9 @@ void export_gap(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
 	fp << "pg := ProjectiveSpace(" << d - 1 << "," << F->q << ");" << endl;
 	fp << "S:=[" << endl;
 	for (h = 0; h < nb_pts; h++) {
-		PG_element_unrank_modified(*F, v, 1, d, Pts[h]);
+		F->PG_element_unrank_modified(v, 1, d, Pts[h]);
 
-		PG_element_normalize_from_front(*F, v, 1, d);
+		F->PG_element_normalize_from_front(v, 1, d);
 		
 		fp << "[";
 		for (i = 0; i < d; i++) {

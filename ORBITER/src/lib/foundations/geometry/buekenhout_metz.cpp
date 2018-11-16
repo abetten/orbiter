@@ -293,7 +293,7 @@ void buekenhout_metz::init_ovoid(int verbose_level)
 	ovoid = NEW_int(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {
-		PG_element_unrank_modified(*Fq, w1, 1, 4, i);
+		Fq->PG_element_unrank_modified(w1, 1, 4, i);
 		if (f_vv) {
 			cout << "testing point " << i << endl;
 			}
@@ -406,7 +406,7 @@ void buekenhout_metz::init_ovoid_Uab_even(
 	ovoid = NEW_int(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {
-		PG_element_unrank_modified(*Fq, w1, 1, 4, i);
+		Fq->PG_element_unrank_modified(w1, 1, 4, i);
 		if (f_v) {
 			cout << "testing point " << i << endl;
 			}

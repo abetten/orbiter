@@ -524,6 +524,8 @@ public:
 			schreier *&shallow_tree,
 			int verbose_level);
 	void compute_point_orbit(int pt, int verbose_level);
+	void compute_point_orbit_with_limited_depth(
+			int pt, int max_depth, int verbose_level);
 	void extend_orbit(int *elt, int verbose_level);
 	void compute_all_point_orbits(int verbose_level);
 	void compute_all_point_orbits_with_prefered_reps(
@@ -591,6 +593,7 @@ public:
 			int gen_hdl_first, int nb_gen, int verbose_level);
 	void create_point_list_sorted(
 			int *&point_list, int &point_list_length);
+#if 0
 	void get_schreier_vector_compact(int *&sv,
 		int f_trivial_group);
 		// allocates and creates array sv[size] using NEW_int
@@ -603,7 +606,6 @@ public:
 		// listing the point in increasing order
 		// if f_trivial_group, sv + 1 + n is the array prev[n] and
 		// sv + 1 + 2 * n is the array label[n]
-#if 0
 	void get_schreier_vector_ordinary(int *&sv);
 		// allocates and creates array sv[2 * A->degree]
 		// using NEW_int

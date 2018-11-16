@@ -31,6 +31,9 @@ int main(int argc, const char **argv)
 	int verbose_level = 0;
 	int f_linear = FALSE;
 	int q;
+	int f_orbits_on_subsets = FALSE;
+	int orbits_on_subsets_size = 0;
+	int f_draw_poset = FALSE;
 
 
 	int i;
@@ -47,6 +50,15 @@ int main(int argc, const char **argv)
 				argv + i, verbose_level);
 
 			cout << "-linear" << endl;
+			}
+		else if (strcmp(argv[i], "-orbits_on_subsets") == 0) {
+			f_orbits_on_subsets = TRUE;
+			orbits_on_subsets_size = atoi(argv[++i]);
+			cout << "-orbits_on_subsets" << orbits_on_subsets_size << endl;
+			}
+		else if (strcmp(argv[i], "-draw_poset") == 0) {
+			f_draw_poset = TRUE;
+			cout << "-draw_poset" << endl;
 			}
 	}
 
@@ -90,6 +102,14 @@ int main(int argc, const char **argv)
 	schreier *Sch;
 	Sch = NEW_OBJECT(schreier);
 
+	A->Strong_gens->print_generators_tex(cout);
+	A->Strong_gens->print_generators_as_permutations();
+
+	for (i = 0; i < A->degree; i++) {
+		cout << i << " & ";
+		A->print_point(i, cout);
+		cout << "\\\\" << endl;
+	}
 	cout << "computing orbits on points:" << endl;
 	A->all_point_orbits(*Sch, verbose_level);
 
@@ -121,7 +141,25 @@ int main(int argc, const char **argv)
 			fname_tree_mask,
 			verbose_level - 1);
 
+	if (f_orbits_on_subsets) {
+		cout << "computing orbits on subsets:" << endl;
+		poset_classification *PC;
 
+		PC = orbits_on_k_sets_compute(A, A,
+				A->Strong_gens,
+				orbits_on_subsets_size, verbose_level);
+		if (f_draw_poset) {
+			{
+			char fname_poset[1000];
+			sprintf(fname_poset, "%s_%d", LG->prefix, orbits_on_subsets_size);
+			PC->draw_poset(fname_poset,
+					orbits_on_subsets_size /*depth*/, 0 /* data1 */,
+					TRUE /* f_embedded */,
+					FALSE /* f_sideways */,
+					0 /* verbose_level */);
+			}
+		}
+	}
 	}
 }
 

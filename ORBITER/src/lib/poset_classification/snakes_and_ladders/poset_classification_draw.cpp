@@ -674,7 +674,33 @@ void poset_classification::draw_poset_full(const char *fname_base,
 		}
 }
 
-void poset_classification::draw_poset(const char *fname_base,
+void poset_classification::draw_poset_fname_base_aux_poset(
+		char *fname, int depth)
+{
+	sprintf(fname, "%s_aux_poset_lvl_%d", fname_base, depth);
+}
+
+void poset_classification::draw_poset_fname_base_poset_lvl(
+		char *fname, int depth)
+{
+	sprintf(fname, "%s_poset_lvl_%d", fname_base, depth);
+}
+
+void poset_classification::draw_poset_fname_base_tree_lvl(
+		char *fname, int depth)
+{
+	sprintf(fname, "%s_tree_lvl_%d", fname_base, depth);
+}
+
+void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
+		char *fname, int depth)
+{
+	sprintf(fname, "%s_poset_detailed_lvl_%d", fname_base, depth);
+}
+
+
+void poset_classification::draw_poset(
+		const char *fname_base,
 		int depth, int data, int f_embedded, int f_sideways,
 		int verbose_level)
 {
@@ -685,7 +711,8 @@ void poset_classification::draw_poset(const char *fname_base,
 	layered_graph *LG4;
 
 	if (f_v) {
-		cout << "poset_classification::draw_poset data=" << data << endl;
+		cout << "poset_classification::draw_poset "
+				"data=" << data << endl;
 		}
 
 
@@ -740,17 +767,19 @@ void poset_classification::draw_poset(const char *fname_base,
 	double scale = .45;
 	double line_width = 1.5;
 
-	sprintf(fname_base1, "%s_aux_poset_lvl_%d", fname_base, depth);
+	draw_poset_fname_base_aux_poset(fname_base1, depth);
+	draw_poset_fname_base_poset_lvl(fname_base2, depth);
+	draw_poset_fname_base_tree_lvl(fname_base3, depth);
+	draw_poset_fname_base_poset_detailed_lvl(fname_base4, depth);
+
 	sprintf(fname1, "%s.layered_graph", fname_base1);
-	sprintf(fname_base2, "%s_poset_lvl_%d", fname_base, depth);
 	sprintf(fname2, "%s.layered_graph", fname_base2);
-	sprintf(fname_base3, "%s_tree_lvl_%d", fname_base, depth);
 	sprintf(fname3, "%s.layered_graph", fname_base3);
-	sprintf(fname_base4, "%s_poset_detailed_lvl_%d", fname_base, depth);
 	sprintf(fname4, "%s.layered_graph", fname_base4);
 
 	if (f_v) {
-		cout << "poset_classification::draw_poset writing file " << fname1 << endl;
+		cout << "poset_classification::draw_poset "
+				"writing file " << fname1 << endl;
 		}
 
 
@@ -808,7 +837,8 @@ void poset_classification::draw_poset(const char *fname_base,
 		}
 }
 
-void poset_classification::draw_level_graph(const char *fname_base,
+void poset_classification::draw_level_graph(
+		const char *fname_base,
 		int depth, int data, int level,
 		int f_embedded, int f_sideways,
 		int verbose_level)
@@ -817,7 +847,8 @@ void poset_classification::draw_level_graph(const char *fname_base,
 	layered_graph *LG;
 
 	if (f_v) {
-		cout << "poset_classification::draw_level_graph data=" << data << endl;
+		cout << "poset_classification::draw_level_graph "
+				"data=" << data << endl;
 		}
 
 

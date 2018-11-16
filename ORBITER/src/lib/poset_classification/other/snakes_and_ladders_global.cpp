@@ -811,7 +811,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 	f << "B := [ BV | " << endl;
 	for (i = 0; i < Gen->A->base_len; i++) {
 		a = Gen->A->base[i];
-		PG_element_unrank_modified(*Gen->F, v, 1, n, a);
+		Gen->F->PG_element_unrank_modified(v, 1, n, a);
 		//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
 		f << "[ ";
 		for (h = 0; h < n; h++) {

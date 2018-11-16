@@ -78,7 +78,7 @@ void Baer_subplane(int q, int verbose_level)
 	S = NEW_int(P2->N_points);
 	sz = 0;
 	for (i = 0; i < P2->N_points; i++) {
-		PG_element_unrank_modified(*FQ, v, 1, 3, i);
+		FQ->PG_element_unrank_modified(v, 1, 3, i);
 		for (j = 0; j < 3; j++) {
 			a = v[j];
 			b = FQ->log_alpha(a);

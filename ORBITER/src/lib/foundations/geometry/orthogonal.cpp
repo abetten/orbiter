@@ -252,7 +252,7 @@ void orthogonal::points_on_line(int pi, int pj,
 		cout << endl;
 		}
 	for (t = 0; t <= q; t++) {
-		PG_element_unrank_modified(*F, coeff, 1, 2, t);
+		F->PG_element_unrank_modified(coeff, 1, 2, t);
 		for (i = 0; i < n; i++) {
 			a = F->mult(coeff[0], v1[i]);
 			b = F->mult(coeff[1], v2[i]);
@@ -300,7 +300,7 @@ void orthogonal::points_on_line_by_coordinates(
 		cout << endl;
 		}
 	for (t = 0; t <= q; t++) {
-		PG_element_unrank_modified(*F, coeff, 1, 2, t);
+		F->PG_element_unrank_modified(coeff, 1, 2, t);
 		for (i = 0; i < n; i++) {
 			a = F->mult(coeff[0], v1[i]);
 			b = F->mult(coeff[1], v2[i]);
@@ -7373,11 +7373,11 @@ void orthogonal::parabolic_point_normalize(
 {
 	if (v[0]) {
 		if (v[0] != 1) {
-			PG_element_normalize_from_front(*F, v, stride, n);
+			F->PG_element_normalize_from_front(v, stride, n);
 			}
 		}
 	else {
-		PG_element_normalize(*F, v, stride, n);
+		F->PG_element_normalize(v, stride, n);
 		}
 }
 
@@ -7387,7 +7387,7 @@ void orthogonal::parabolic_normalize_point_wrt_subspace(
 	int i, a, av;
 	
 	if (v[0]) {
-		PG_element_normalize_from_front(*F, v, stride, n);
+		F->PG_element_normalize_from_front(v, stride, n);
 		return;
 		}
 	for (i = n - 3; i >= 0; i--) {
@@ -7430,7 +7430,7 @@ void orthogonal::parabolic_point_properties(int *v, int stride, int n,
 		}
 	else {
 		f_start_with_one = FALSE;
-		PG_element_normalize(*F, v + 1, stride, n - 1);
+		F->PG_element_normalize(v + 1, stride, n - 1);
 		if (f_v) {
 			cout << "orthogonal::parabolic_point_properties "
 					"after normalization: ";
@@ -8431,7 +8431,7 @@ int orthogonal::rank_Nbar(int *v, int stride, int m)
 void orthogonal::normalize_point(int *v, int stride)
 {
 	if (epsilon == 1) {
-		PG_element_normalize(*F, v, stride, n);
+		F->PG_element_normalize(v, stride, n);
 		}
 	else if (epsilon == 0) {
 		parabolic_point_normalize(v, stride, n);

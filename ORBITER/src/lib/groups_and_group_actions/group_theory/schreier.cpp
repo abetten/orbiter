@@ -460,6 +460,8 @@ void schreier::shallow_tree_generators(int orbit_idx,
 	int fst, len, root, cnt, l;
 	int i, j, a, f, o;
 	int *Elt1, *Elt2;
+	int *candidates;
+	int nb_candidates;
 
 	if (f_v) {
 		cout << "schreier::shallow_tree_generators " << endl;
@@ -471,6 +473,8 @@ void schreier::shallow_tree_generators(int orbit_idx,
 	root = orbit[fst];
 
 	vector_ge *gens;
+
+	candidates = NEW_int(len);
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -494,7 +498,9 @@ void schreier::shallow_tree_generators(int orbit_idx,
 					"iteration " << cnt
 					<< " before compute_point_orbit:" << endl;
 		}
-		S->compute_point_orbit(root, 0 /*verbose_level*/);
+		S->compute_point_orbit_with_limited_depth(root,
+				gens->len, 0 /*verbose_level*/);
+		//S->compute_point_orbit(root, 0 /*verbose_level*/);
 		l = S->orbit_len[0];
 		if (f_v) {
 			cout << "schreier::shallow_tree_generators "
@@ -511,19 +517,34 @@ void schreier::shallow_tree_generators(int orbit_idx,
 		// (i.e., the bad Schreier tree) but not
 		// to the new orbit (the good Schreier tree).
 		// When l < len, such an element must exist.
+		nb_candidates = 0;
 		f = S->orbit_first[0];
 		for (i = 0; i < len; i++) {
 			a = orbit[fst + i];
 			j = S->orbit_inv[a];
 			if (j >= f + l) {
-				break;
+				candidates[nb_candidates++] = a;
 			}
 		}
-		if (i == len) {
+
+		if (nb_candidates == 0) {
 			cout << "schreier::shallow_tree_generators "
 					"did not find element in orbit" << endl;
 			exit(1);
 		}
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"found " << nb_candidates
+					<< " candidates of points outside the orbit" << endl;
+		}
+		j = random_integer(nb_candidates);
+		//j = 0;
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"picking random candidate " << j << " / "
+					<< nb_candidates << endl;
+		}
+		a = candidates[j];
 		if (f_v) {
 			cout << "schreier::shallow_tree_generators "
 					"found point " << a << " outside of orbit" << endl;
@@ -537,6 +558,10 @@ void schreier::shallow_tree_generators(int orbit_idx,
 			cout << "schreier::shallow_tree_generators "
 					"new generator is:" << endl;
 			A->element_print_quick(Elt1, cout);
+			int o;
+
+			o = A->element_order(Elt1);
+			cout << "The order of the element is: " << o << endl;
 		}
 		A->element_invert(Elt1, Elt2, 0);
 		// append the generator and its inverse to the generating set:
@@ -546,7 +571,13 @@ void schreier::shallow_tree_generators(int orbit_idx,
 		cnt++;
 
 	}
+	if (f_v) {
+		cout << "schreier::shallow_tree_generators cnt=" << cnt
+				<< " number of generators=" << gens->len << endl;
+		cout << "done" << endl;
+		}
 
+	FREE_int(candidates);
 	delete gens;
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -671,6 +702,115 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 
 			}
 		}
+	nb_orbits++;
+}
+
+void schreier::compute_point_orbit_with_limited_depth(
+		int pt, int max_depth, int verbose_level)
+{
+	int pt_loc, cur, cur_pt, total, i, next_pt;
+	int next_pt_loc, total1, cur1;
+	int *depth;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 5);
+	//int f_vvv = FALSE; //(verbose_level >= 3);
+
+	if (f_v) {
+		cout << "schreier::compute_point_orbit_with_limited_depth" << endl;
+		cout << "computing orbit of point " << pt
+				<< " in action " << A->label << endl;
+		}
+	depth = NEW_int(A->degree);
+	int_vec_zero(depth, A->degree);
+	pt_loc = orbit_inv[pt];
+	cur = orbit_first[nb_orbits];
+	if (pt_loc < cur) {
+		cout << "schreier::compute_point_orbit_with_limited_depth "
+				"i < orbit_first[nb_orbits]" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "schreier::compute_point_orbit_with_limited_depth "
+				"computing orbit of pt " << pt << endl;
+		}
+	if (pt_loc > orbit_first[nb_orbits]) {
+		swap_points(orbit_first[nb_orbits], pt_loc);
+		}
+	depth[cur] = 0;
+	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
+	total = cur + 1;
+	while (cur < total) {
+		cur_pt = orbit[cur];
+		if (depth[cur] > max_depth) {
+			break;
+		}
+		if (f_vv) {
+			cout << "schreier::compute_point_orbit_with_limited_depth cur="
+					<< cur << " total=" << total
+					<< " applying generators to " << cur_pt << endl;
+			}
+		for (i = 0; i < gens.len; i++) {
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"applying generator "
+						<< i << " to point " << cur_pt << endl;
+				}
+			next_pt = get_image(cur_pt, i,
+				0 /*verbose_level - 5*/); // !!
+				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
+			next_pt_loc = orbit_inv[next_pt];
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"generator "
+						<< i << " maps " << cur_pt
+						<< " to " << next_pt << endl;
+				}
+			if (next_pt_loc < total)
+				continue;
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"n e w pt "
+						<< next_pt << " reached from "
+						<< cur_pt << " under generator " << i << endl;
+				}
+			swap_points(total, next_pt_loc);
+			depth[total] = depth[cur] + 1;
+			prev[total] = cur_pt;
+			label[total] = i;
+			//orbit_no[total] = nb_orbits;
+			total++;
+			total1 = total - orbit_first[nb_orbits];
+			cur1 = cur - orbit_first[nb_orbits];
+			if ((total1 % 10000) == 0 ||
+					(cur1 > 0 && (cur1 % 10000) == 0)) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"degree = "
+						<< A->degree << " length = " << total1
+					<< " processed = " << cur1 << " nb_orbits="
+					<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
+					<< next_pt << " orbit_first[nb_orbits]="
+					<< orbit_first[nb_orbits] << endl;
+				}
+			if (FALSE) {
+				cout << "cur = " << cur << endl;
+				cout << "total = " << total << endl;
+				print_orbit(cur, total - 1);
+				}
+			}
+		cur++;
+		}
+	orbit_first[nb_orbits + 1] = total;
+	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
+	//orbit_first[nb_orbits + 2] = A->degree;
+	//orbit_len[nb_orbits + 1] = A->degree - total;
+	if (f_v) {
+		cout << "schreier::compute_point_orbit_with_limited_depth "
+				"found an incomplete orbit of length "
+				<< orbit_len[nb_orbits]
+				<< " total length " << total
+				<< " degree=" << A->degree << endl;
+		}
+	FREE_int(depth);
 	nb_orbits++;
 }
 
@@ -2002,20 +2142,12 @@ void schreier::list_elements_as_permutations_vertically(ostream &ost)
 schreier_vector *schreier::get_schreier_vector(
 	int gen_hdl_first, int nb_gen, int verbose_level)
 {
-#if 0
-	if (f_compact) {
-		get_schreier_vector_compact(sv, f_trivial_group);
-		}
-	else {
-		get_schreier_vector_ordinary(sv);
-		}
-#else
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "schreier::get_schreier_vector" << endl;
 	}
-	int *sv;
+	//int *sv;
 	schreier_vector * Schreier_vector;
 	int f_trivial_group = FALSE;
 
@@ -2024,13 +2156,14 @@ schreier_vector *schreier::get_schreier_vector(
 	}
 
 	Schreier_vector = NEW_OBJECT(schreier_vector);
-	get_schreier_vector_compact(sv, f_trivial_group);
-	Schreier_vector->init(gen_hdl_first, nb_gen, sv, verbose_level - 1);
+	//get_schreier_vector_compact(sv, f_trivial_group);
+	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
+	Schreier_vector->init_from_schreier(this,
+			f_trivial_group, verbose_level);
 	if (f_v) {
 		cout << "schreier::get_schreier_vector done" << endl;
 	}
 	return Schreier_vector;
-#endif
 }
 
 void schreier::create_point_list_sorted(
@@ -2063,6 +2196,7 @@ void schreier::create_point_list_sorted(
 	int_vec_heapsort(point_list, point_list_length);
 }
 
+#if 0
 void schreier::get_schreier_vector_compact(int *&sv,
 	int f_trivial_group)
 // allocated and creates array sv[size] using NEW_int
@@ -2079,31 +2213,6 @@ void schreier::get_schreier_vector_compact(int *&sv,
 	int *point_list;
 
 	create_point_list_sorted(point_list, n);
-
-#if 0
-	for (k = 0; k < nb_orbits; k++) {
-		n += orbit_len[k];
-		}
-	point_list = NEW_int(n);
-
-	ff = 0;
-	for (k = 0; k < nb_orbits; k++) {
-		f = orbit_first[k];
-		l = orbit_len[k];
-		for (j = 0; j < l; j++) {
-			i = f + j;
-			p = orbit[i];
-			point_list[ff + j] = p;
-			}
-		ff += l;
-		}
-	if (ff != n) {
-		cout << "schreier::get_schreier_vector_compact "
-				"ff != n" << endl;
-		exit(1);
-		}
-	int_vec_heapsort(point_list, n);
-#endif
 
 
 	if (f_trivial_group) {
@@ -2127,29 +2236,6 @@ void schreier::get_schreier_vector_compact(int *&sv,
 			}
 		}
 	FREE_int(point_list);
-}
-
-#if 0
-void schreier::get_schreier_vector_ordinary(int *&sv)
-// allocates and creates array sv[2 * A->degree] using NEW_int
-// sv[i * 2 + 0] is prev[i]
-// sv[i * 2 + 1] is label[i]
-{
-	int i, j;
-
-	sv = NEW_int(2 * A->degree);
-	for (i = 0; i < A->degree; i++) {
-		j = orbit_inv[i];
-		if (prev[j] != -1) {
-			sv[i * 2 + 0] = prev[j];
-			sv[i * 2 + 1] = label[j];
-			//cout << "label[" << i << "] = " << label[j] << endl;
-			}
-		else {
-			sv[i * 2 + 0] = -1;
-			sv[i * 2 + 1] = -1;
-			}
-		}
 }
 #endif
 

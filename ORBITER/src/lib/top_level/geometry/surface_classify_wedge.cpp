@@ -1189,10 +1189,10 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 				verbose_level - 1);
 
 		int_vec_copy(coeff2, coeff4, 20);
-		PG_element_normalize_from_front(*F,
+		F->PG_element_normalize_from_front(
 				coeff3, 1,
 				Surf->nb_monomials);
-		PG_element_normalize_from_front(*F,
+		F->PG_element_normalize_from_front(
 				coeff4, 1,
 				Surf->nb_monomials);
 
@@ -1533,8 +1533,8 @@ void surface_classify_wedge::identify_surface(
 	Surf->build_cubic_surface_from_lines(
 			27, Lines0, eqn0,
 			0 /* verbose_level*/);
-	PG_element_normalize_from_front(
-			*F, eqn0, 1, Surf->nb_monomials);
+	F->PG_element_normalize_from_front(
+			eqn0, 1, Surf->nb_monomials);
 
 	int_vec_print(cout, eqn0, Surf->nb_monomials);
 	//int_vec_print(cout,
@@ -1579,7 +1579,7 @@ void surface_classify_wedge::identify_surface(
 	cout << endl;
 #endif
 
-	PG_element_normalize_from_front(*F,
+	F->PG_element_normalize_from_front(
 			coeffs_transformed, 1,
 			Surf->nb_monomials);
 
@@ -1683,7 +1683,7 @@ void surface_classify_wedge::report_surface(
 	
 	Surf->build_cubic_surface_from_lines(27,
 			Lines, equation, 0 /* verbose_level */);
-	PG_element_normalize_from_front(*F, equation, 1, 20);
+	F->PG_element_normalize_from_front(equation, 1, 20);
 
 
 	//Surf->print_equation_wrapped(ost, equation);
@@ -1856,7 +1856,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 	
 		Surf->build_cubic_surface_from_lines(27,
 				Lines, equation, 0 /* verbose_level */);
-		PG_element_normalize_from_front(*F, equation, 1, 20);
+		F->PG_element_normalize_from_front(equation, 1, 20);
 
 		f << "\t";
 		for (i = 0; i < Surf->nb_monomials; i++) {
@@ -1922,7 +1922,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		int_vec_copy(SaS->data, Lines, 27);
 		Surf->build_cubic_surface_from_lines(27,
 				Lines, equation, 0 /* verbose_level */);
-		PG_element_normalize_from_front(*F, equation, 1, 20);
+		F->PG_element_normalize_from_front(equation, 1, 20);
 
 		Pts = NEW_int(Surf->nb_pts_on_surface);
 		Surf->enumerate_points(equation, Pts, nb_pts,

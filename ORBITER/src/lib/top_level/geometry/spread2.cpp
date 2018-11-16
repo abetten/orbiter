@@ -2226,17 +2226,22 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, int h, int &
 	Stab->group_order(go);
 
 	if (f_v) {
-		cout << "spread::cooperstein_thas_quotients Isomorphism type " << h << " with automorphism group of order " << go << ":" << endl;
+		cout << "spread::cooperstein_thas_quotients "
+				"Isomorphism type " << h << " with automorphism group "
+						"of order " << go << ":" << endl;
 		}
 
 	if (f_vv) {
-		cout << "spread::cooperstein_thas_quotients before compute_all_point_orbits" << endl;
+		cout << "spread::cooperstein_thas_quotients "
+				"before compute_all_point_orbits" << endl;
 		}
 
-	Iso.A_base->compute_all_point_orbits(Orb, Stab->gens, 0 /*verbose_level - 2*/);
+	Iso.A_base->compute_all_point_orbits(Orb,
+			Stab->gens, 0 /*verbose_level - 2*/);
 
 	if (f_vv) {
-		cout << "spread::cooperstein_thas_quotients There are " << Orb.nb_orbits << " orbits on points" << endl;
+		cout << "spread::cooperstein_thas_quotients There are "
+				<< Orb.nb_orbits << " orbits on points" << endl;
 		}
 
 
@@ -2251,7 +2256,8 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, int h, int &
 	Gr->init(n - 1, k, F, 0 /* verbose_level */);
 	for (i = 0; i < order + 1; i++) {
 		Grass->unrank_int_here(Mtx, data[i], 0/*verbose_level - 4*/);
-		all_PG_elements_in_subspace(F, Mtx, k, n, Pts[i], nb_points, 0 /* verbose_level */);
+		all_PG_elements_in_subspace(F, Mtx, k, n,
+				Pts[i], nb_points, 0 /* verbose_level */);
 		int_vec_heapsort(Pts[i], nb_points);
 		}
 
@@ -2263,12 +2269,16 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, int h, int &
 		Dom.integral_division_by_int(go, orbit_length, stab_order, rem);
 
 		if (f_vv) {
-			cout << "spread::cooperstein_thas_quotients Orbit " << u << " is represented by point " << the_point << " orbit lnegth = " << orbit_length << " stabilizer order before " << go << " after " << stab_order << endl;
+			cout << "spread::cooperstein_thas_quotients Orbit " << u
+					<< " is represented by point " << the_point
+					<< " orbit lnegth = " << orbit_length
+					<< " stabilizer order before " << go
+					<< " after " << stab_order << endl;
 			}
 
 
-		PG_element_unrank_modified(*F, vec1, 1, n, the_point);
-		PG_element_normalize_from_front(*F, vec1, 1, n);
+		F->PG_element_unrank_modified(vec1, 1, n, the_point);
+		F->PG_element_normalize_from_front(vec1, 1, n);
 		pivot = int_vec_find_first_nonzero_entry(vec1, n);
 			// GALOIS/util.C
 
@@ -2278,7 +2288,8 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, int h, int &
 				}
 			}
 		if (i == order + 1) {
-			cout << "spread::cooperstein_thas_quotients Did not find the point" << endl;
+			cout << "spread::cooperstein_thas_quotients "
+					"Did not find the point" << endl;
 			exit(1);
 			}
 		i0 = i;
@@ -2311,7 +2322,8 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, int h, int &
 #endif
 
 			if (f_vv) {
-				cout << "spread::cooperstein_thas_quotients the reduction of the " << i << "-th matrix is:" << endl;
+				cout << "spread::cooperstein_thas_quotients the reduction "
+						"of the " << i << "-th matrix is:" << endl;
 				int_matrix_print(Mtx, k, n - 1);
 				}
 
@@ -2320,7 +2332,9 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, int h, int &
 			}
 
 		if (f_vv) {
-			cout << "spread::cooperstein_thas_quotients The quotient system with respect to orbit " << u << " / " << Orb.nb_orbits << " is:" << endl;
+			cout << "spread::cooperstein_thas_quotients The quotient "
+					"system with respect to orbit " << u << " / "
+					<< Orb.nb_orbits << " is:" << endl;
 			int_vec_print(cout, data2, order);
 			cout << endl;
 			}
@@ -2339,7 +2353,8 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, int h, int &
 
 
 		char fname[1000];
-		sprintf(fname, "quotient_q%d_iso%d_nb%d_orbit_length%d.txt", i_power_j(q, k), h, u, orbit_length);
+		sprintf(fname, "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
+				i_power_j(q, k), h, u, orbit_length);
 		write_set_to_file(fname, data2, order, 0 /* verbose_level*/);
 		cnt++;
 
@@ -2382,11 +2397,13 @@ void spread::orbit_info_short(ofstream &f, isomorph &Iso, int h)
 	longinteger_object go1;
 			
 	Iso.AA->group_order(go1);
-	cout << "action " << Iso.AA->label << " computed, group order is " << go1 << endl;
+	cout << "action " << Iso.AA->label << " computed, "
+			"group order is " << go1 << endl;
 
 
 #if 0
-	f << "Order of the group that is induced on the collection of subspaces is ";
+	f << "Order of the group that is induced on the "
+			"collection of subspaces is ";
 	f << "$";
 	go1.print_not_scientific(f);
 	f << "$\\\\" << endl;
@@ -2415,7 +2432,8 @@ void spread::orbit_info_short(ofstream &f, isomorph &Iso, int h)
 
 
 
-void spread::report_stabilizer(isomorph &Iso, ofstream &f, int orbit, int verbose_level)
+void spread::report_stabilizer(isomorph &Iso,
+		ofstream &f, int orbit, int verbose_level)
 {
 	sims *Stab;
 	longinteger_object go;
@@ -2438,15 +2456,16 @@ void spread::report_stabilizer(isomorph &Iso, ofstream &f, int orbit, int verbos
 
 		f << "$$ g_{" << i + 1 << "}=" << endl;
 		A->element_print_latex(Stab->gens.ith(i), f);
-		f << "$$" << endl << "of order $" << ord << "$ and with " << n << " fixed points" << endl;
+		f << "$$" << endl << "of order $" << ord << "$ and with "
+				<< n << " fixed points" << endl;
 		}
 }
 
 
 
-// ####################################################################################
+// #############################################################################
 // global functions:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -2472,7 +2491,8 @@ void spread_early_test_func_callback(int *S, int len,
 		}
 }
 
-int spread_check_function_callback(int len, int *S, void *data, int verbose_level)
+int spread_check_function_callback(int len,
+		int *S, void *data, int verbose_level)
 {
 	spread *T = (spread *) data;
 	int f_OK;
@@ -2491,7 +2511,8 @@ int spread_check_function_incremental_callback(
 	return f_OK; 
 }
 
-int spread_check_conditions(int len, int *S, void *data, int verbose_level)
+int spread_check_conditions(int len,
+		int *S, void *data, int verbose_level)
 {
 	spread *T = (spread *) data;
 	return T->check_function(len, S, verbose_level);
@@ -2504,7 +2525,8 @@ void spread_callback_report(isomorph *Iso, void *data, int verbose_level)
 	T->report2(*Iso, verbose_level);
 }
 
-void spread_callback_make_quotients(isomorph *Iso, void *data, int verbose_level)
+void spread_callback_make_quotients(isomorph *Iso,
+		void *data, int verbose_level)
 {
 	spread *T = (spread *) data;
 	

@@ -541,6 +541,8 @@ public:
 	void freeself();
 	void init(int nb_layers, int *Nb_nodes_layer, 
 		const char *fname_base, int verbose_level);
+	int nb_nodes();
+	double average_word_length();
 	void place(int verbose_level);
 	void place_with_y_stretch(double y_stretch, int verbose_level);
 	void place_with_grouping(int **Group_sizes, int *Nb_groups, 
@@ -611,6 +613,7 @@ public:
 	int f_label_edges;
 	int f_rotated;
 	
+
 	double global_scale;
 	double global_line_width;
 

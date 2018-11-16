@@ -146,7 +146,8 @@ int main(int argc, const char **argv)
 			f_test_identify = TRUE;
 			identify_level = atoi(argv[++i]);
 			identify_nb_times = atoi(argv[++i]);
-			cout << "-test_identify " << identify_level << " " << identify_nb_times << endl;
+			cout << "-test_identify " << identify_level << " "
+					<< identify_nb_times << endl;
 			}
 
 
@@ -172,7 +173,8 @@ int main(int argc, const char **argv)
 			f_print_representatives = TRUE;
 			representatives_size = atoi(argv[++i]);
 			representatives_fname = argv[++i];
-			cout << "-print_representatives" << representatives_size << " " << representatives_fname << endl;
+			cout << "-print_representatives" << representatives_size
+					<< " " << representatives_fname << endl;
 			}
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
@@ -205,15 +207,18 @@ int main(int argc, const char **argv)
 
 
 	if (!f_order) {
-		cout << "spread_classify.C please use option -order <order>" << endl;
+		cout << "spread_classify.C please use option "
+				"-order <order>" << endl;
 		exit(1);
 		}
 	if (!ECA->f_starter_size) {
-		cout << "spread_classify.C please use option -starter_size <starter_size>" << endl;
+		cout << "spread_classify.C please use option "
+				"-starter_size <starter_size>" << endl;
 		exit(1);
 		}
 	if (!ECA->f_has_input_prefix) {
-		cout << "spread_classify.C please use option -input_prefix <input_prefix>" << endl;
+		cout << "spread_classify.C please use option "
+				"-input_prefix <input_prefix>" << endl;
 		exit(1);
 		}
 
@@ -224,20 +229,23 @@ int main(int argc, const char **argv)
 
 	if (f_dim_over_kernel) {
 		if (e % dim_over_kernel) {
-			cout << "spread_classify.C dim_over_kernel does not divide e" << endl;
+			cout << "spread_classify.C dim_over_kernel "
+					"does not divide e" << endl;
 			exit(1);
 			}
 		e1 = e / dim_over_kernel;
 		n = 2 * dim_over_kernel;
 		k = dim_over_kernel;
 		q = i_power_j(p, e1);
-		cout << "spread_classify.C order=" << order << " n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "spread_classify.C order=" << order
+				<< " n=" << n << " k=" << k << " q=" << q << endl;
 		}
 	else {
 		n = 2 * e;
 		k = e;
 		q = p;
-		cout << "spread_classify.C order=" << order << " n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "spread_classify.C order=" << order
+				<< " n=" << n << " k=" << k << " q=" << q << endl;
 		}
 
 	finite_field *F;
@@ -265,7 +273,8 @@ int main(int argc, const char **argv)
 
 	char prefix_with_directory[1000];
 
-	sprintf(prefix_with_directory, "%s%s", T.starter_directory_name, T.prefix);
+	sprintf(prefix_with_directory, "%s%s",
+			T.starter_directory_name, T.prefix);
 
 	IA->init(T.A, T.A2, T.gen, 
 		T.spread_size, prefix_with_directory, ECA,
@@ -286,18 +295,24 @@ int main(int argc, const char **argv)
 		
 		T.compute(verbose_level);
 
-		cout << "spread_classify.C starter_size = " << ECA->starter_size << endl;
-		cout << "spread_classify.C spread_size = " << T.spread_size << endl;
+		cout << "spread_classify.C "
+				"starter_size = " << ECA->starter_size << endl;
+		cout << "spread_classify.C "
+				"spread_size = " << T.spread_size << endl;
 	
 
 		if (f_list) {
-			int f_show_orbit_decomposition = TRUE, f_show_stab = TRUE, f_save_stab = TRUE, f_show_whole_orbit = FALSE;
+			int f_show_orbit_decomposition = TRUE;
+			int f_show_stab = TRUE;
+			int f_save_stab = TRUE;
+			int f_show_whole_orbit = FALSE;
 		
 			T.gen->list_all_orbits_at_level(ECA->starter_size, 
 				TRUE, 
 				print_spread, 
 				&T, 
-				f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+				f_show_orbit_decomposition,
+				f_show_stab, f_save_stab, f_show_whole_orbit);
 
 #if 0
 			int d;
@@ -309,17 +324,22 @@ int main(int argc, const char **argv)
 		
 		if (f_draw_poset) {
 			if (f_v) {
-				cout << "spread_classify.C before gen->draw_poset" << endl;
+				cout << "spread_classify.C "
+						"before gen->draw_poset" << endl;
 				}
-			T.gen->draw_poset(T.gen->fname_base, ECA->starter_size, 0 /* data1 */, f_embedded, f_sideways, verbose_level);
+			T.gen->draw_poset(T.gen->fname_base,
+					ECA->starter_size, 0 /* data1 */,
+					f_embedded, f_sideways, verbose_level);
 			}
 
 
 		if (f_print_data_structure) {
 			if (f_v) {
-				cout << "spread_classify.C before gen->print_data_structure_tex" << endl;
+				cout << "spread_classify.C "
+						"before gen->print_data_structure_tex" << endl;
 				}
-			T.gen->print_data_structure_tex(ECA->starter_size, 0 /*gen->verbose_level*/);
+			T.gen->print_data_structure_tex(
+					ECA->starter_size, 0 /*gen->verbose_level*/);
 			}
 
 
@@ -329,9 +349,11 @@ int main(int argc, const char **argv)
 		cout << "spread_classify.C f_identify" << endl;
 
 		
-		cout << "spread_classify.C classifying translation planes" << endl;
+		cout << "spread_classify.C "
+				"classifying spreads" << endl;
 		T.compute(0 /* verbose_level */);
-		cout << "spread_classify.C classifying translation planes done" << endl;
+		cout << "spread_classify.C "
+				"classifying spreads done" << endl;
 
 		//T.gen->print_node(5);
 		int *transporter;
@@ -345,12 +367,16 @@ int main(int argc, const char **argv)
 			int sz;
 
 			int_vec_scan(identify_data[i], data, sz);
-			cout << "spread_classify.C identifying set " << i << " / " << nb_identify << " : ";
+			cout << "spread_classify.C identifying set "
+					<< i << " / " << nb_identify << " : ";
 			int_vec_print(cout, data, sz);
 			cout << endl;
-			T.gen->identify(data, sz, transporter, orbit_at_level, verbose_level);
+			T.gen->identify(data, sz,
+					transporter, orbit_at_level, verbose_level);
 
-			cout << "The set " << i << " / " << nb_identify << " is identified to belong to orbit " << orbit_at_level << endl;
+			cout << "The set " << i << " / " << nb_identify
+					<< " is identified to belong to orbit "
+					<< orbit_at_level << endl;
 			cout << "A transporter is " << endl;
 			T.gen->A->element_print_quick(transporter, cout);
 
@@ -362,11 +388,14 @@ int main(int argc, const char **argv)
 	else if (f_test_identify) {
 		cout << "spread_classify.C f_test_identify" << endl;
 		
-		cout << "spread_classify.C classifying translation planes" << endl;
+		cout << "spread_classify.C "
+				"classifying spreads" << endl;
 		T.compute(0 /* verbose_level */);
-		cout << "spread_classify.C classifying translation planes done" << endl;
+		cout << "spread_classify.C "
+				"classifying spreads done" << endl;
 
-		T.gen->test_identify(identify_level, identify_nb_times, verbose_level);
+		T.gen->test_identify(identify_level,
+				identify_nb_times, verbose_level);
 	}
 
 
@@ -420,18 +449,24 @@ int main(int argc, const char **argv)
 		int no, nb;
 		char fname[1000];
 		
-		cout << "spread_classify.C printing orbit representatives at level " << representatives_size << endl;
+		cout << "spread_classify.C printing orbit "
+				"representatives at level "
+				<< representatives_size << endl;
 		R = NEW_OBJECT(orbit_rep);
 		M = NEW_int(T.k * T.n);
 
-		sprintf(fname, "%s_lvl_%d", representatives_fname, representatives_size);
+		sprintf(fname, "%s_lvl_%d",
+				representatives_fname, representatives_size);
 
 		nb = count_number_of_orbits_in_file(fname, verbose_level);
 
-		cout << "there are " << nb << " orbit representatives in the file " << fname << endl;
+		cout << "there are " << nb << " orbit representatives "
+				"in the file " << fname << endl;
 		for (no = 0; no < nb; no++) {
-			R->init_from_file(T.A /*A_base*/, (char *) representatives_fname, 
-				representatives_size, no, representatives_size - 1/*level_of_candidates_file*/, 
+			R->init_from_file(T.A /*A_base*/,
+				(char *) representatives_fname,
+				representatives_size, no,
+				representatives_size - 1/*level_of_candidates_file*/,
 				spread_lifting_early_test_function, 
 				&T, 
 				verbose_level - 1
@@ -444,7 +479,8 @@ int main(int argc, const char **argv)
 			cout << endl;
 			for (i = 0; i < representatives_size; i++) {
 				cout << R->rep[i] << " = " << endl;
-				T.Grass->unrank_int_here(M, R->rep[i], 0/*verbose_level - 4*/);
+				T.Grass->unrank_int_here(M,
+						R->rep[i], 0/*verbose_level - 4*/);
 				int_matrix_print(M, T.k, T.n);
 			}
 		}

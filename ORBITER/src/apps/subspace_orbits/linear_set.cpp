@@ -332,9 +332,9 @@ void linear_set::init(int argc, const char **argv,
 	spread_embedding = NEW_int(D->N);
 	vec = NEW_int(m1);
 	for (i = 0; i < D->N; i++) {
-		PG_element_unrank_modified(*FQ, vec, 1, m, i);
+		FQ->PG_element_unrank_modified(vec, 1, m, i);
 		vec[m] = 0;
-		PG_element_rank_modified(*FQ, vec, 1, m1, j);
+		FQ->PG_element_rank_modified(vec, 1, m1, j);
 		spread_embedding[i] = j;
 		}
 
@@ -507,7 +507,7 @@ int linear_set::test_set(int len, int *S, int verbose_level)
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {
-		PG_element_unrank_modified(*Fq, 
+		Fq->PG_element_unrank_modified(
 			Basis + i * vector_space_dimension, 1, 
 			vector_space_dimension, S[i]);
 		}
@@ -563,7 +563,7 @@ void linear_set::compute_intersection_types_at_level(int level,
 	for (node = 0; node < nb_nodes; node++) {
 		Gen->get_set_by_level(level, node, set);
 		for (i = 0; i < level; i++) {
-			PG_element_unrank_modified(*Fq, 
+			Fq->PG_element_unrank_modified(
 				Basis + i * n, 1, n, set[i]);
 			}
 		D->compute_intersection_type(level, Basis, 
@@ -738,7 +738,7 @@ void linear_set::print_orbits_at_level(int level)
 	for (orbit_at_level = 0; orbit_at_level < len; orbit_at_level++) {
 		Gen->get_set_by_level(level, orbit_at_level, set);
 		for (i = 0; i < level; i++) {
-			PG_element_unrank_modified(*Fq, Basis + i * n, 1, n, set[i]);
+			Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
 			}
 		Gen->get_stabilizer_order(level, orbit_at_level, go);
 		cout << "orbit " << orbit_at_level << " / " << len
@@ -776,7 +776,7 @@ void linear_set::classify_secondary(int argc, const char **argv,
 
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
-		PG_element_unrank_modified(*Fq, Basis + i * n, 1, n, set[i]);
+		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
 		}
 	cout << "set: ";
 	int_vec_print(cout, set, level);
@@ -1055,7 +1055,7 @@ void linear_set::do_classify_secondary(int verbose_level)
 
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
-		PG_element_unrank_modified(*Fq, Basis1 + i * n, 1, n, set1[i]);
+		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
 		}
 	cout << "set1: ";
 	int_vec_print(cout, set1, secondary_level);
@@ -1072,7 +1072,7 @@ void linear_set::do_classify_secondary(int verbose_level)
 		cout << "Orbit " << h << " / " << nb_orbits << ":" << endl;
 		Gen2->get_set_by_level(secondary_depth, h, set2);
 		for (i = 0; i < secondary_depth; i++) {
-			PG_element_unrank_modified(*Fq, Basis2 + i * n, 1, n, set2[i]);
+			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
 			}
 		cout << "set2: ";
 		int_vec_print(cout, set2, secondary_depth);
@@ -1128,7 +1128,7 @@ int linear_set::test_set_secondary(int len, int *S, int verbose_level)
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {
-		PG_element_unrank_modified(*Fq,
+		Fq->PG_element_unrank_modified(
 				Basis + i * vector_space_dimension, 1,
 				vector_space_dimension, S[i]);
 		}
@@ -1161,9 +1161,9 @@ int linear_set::test_set_secondary(int len, int *S, int verbose_level)
 
 	
 		for (i = 0; i < nb; i++) {
-			PG_element_unrank_modified(*Fq, v, 1, len, i);
+			Fq->PG_element_unrank_modified(v, 1, len, i);
 			Fq->mult_vector_from_the_left(v, Basis, w, len, n);
-			PG_element_rank_modified(*Fq, w, 1, n, rk);
+			Fq->PG_element_rank_modified(w, 1, n, rk);
 			if (is_allowed[rk] == FALSE) {
 				ret = FALSE;
 				break;
@@ -1213,7 +1213,7 @@ void linear_set::compute_stabilizer_of_linear_set(
 
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
-		PG_element_unrank_modified(*Fq, Basis + i * n, 1, n, set[i]);
+		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
 		}
 	cout << "set: ";
 	int_vec_print(cout, set, level);
@@ -1466,7 +1466,7 @@ void linear_set::do_compute_stabilizer(
 
 	Gen->get_set_by_level(level, orbit_at_level, set1);
 	for (i = 0; i < level; i++) {
-		PG_element_unrank_modified(*Fq, Basis1 + i * n, 1, n, set1[i]);
+		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
 		}
 	cout << "set1: ";
 	int_vec_print(cout, set1, level);
@@ -1544,7 +1544,7 @@ void linear_set::do_compute_stabilizer(
 				<< orbit_len << ":" << endl;
 		Gen_stab->get_set_by_level(level, h, set2);
 		for (i = 0; i < level; i++) {
-			PG_element_unrank_modified(*Fq, Basis2 + i * n, 1, n, set2[i]);
+			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
 			}
 		cout << "set2: ";
 		int_vec_print(cout, set2, level);

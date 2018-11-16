@@ -42,10 +42,10 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
-		PG_element_unrank_modified(*Fq, Basis1 + i * n, 1, n, set1[i]);
+		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
 		}
 	for (i = 0; i < secondary_level; i++) {
-		PG_element_unrank_modified(*Fq, BasisU + i * n1, 1, n, set1[i]);
+		Fq->PG_element_unrank_modified(BasisU + i * n1, 1, n, set1[i]);
 		}
 	BasisU[secondary_level * n1 + n] = 1; // the vector v
 	if (f_vv) {
@@ -61,10 +61,10 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 
 	Gen2->get_set_by_level(secondary_depth, orbit_for_W, set2);
 	for (i = 0; i < secondary_depth; i++) {
-		PG_element_unrank_modified(*Fq, Basis2 + i * n, 1, n, set2[i]);
+		Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
 		}
 	for (i = 0; i < secondary_depth; i++) {
-		PG_element_unrank_modified(*Fq, BasisW + i * n1, 1, n, set2[i]);
+		Fq->PG_element_unrank_modified(BasisW + i * n1, 1, n, set2[i]);
 		}
 
 	if (f_vv) {

@@ -223,7 +223,7 @@ int main(int argc, char **argv)
 			int v[3];
 			
 			for (a = 1; a <= P->N_points; a++) {
-				PG_element_unrank_fining(*P->F, v, 3, a);
+				P->F->PG_element_unrank_fining(v, 3, a);
 				cout << a << " : ";
 				int_vec_print(cout, v, 3);
 				cout << endl;
@@ -236,7 +236,7 @@ int main(int argc, char **argv)
 			
 			qm1o2 = (q - 1) >> 1;
 			for (a = 0; a < P->N_points; a++) {
-				PG_element_unrank_gary_cook(*P->F, v, 3, a);
+				P->F->PG_element_unrank_gary_cook(v, 3, a);
 				cout << a << " : (";
 				for (i = 0; i < 3; i++) {
 					j = v[i];
@@ -272,9 +272,9 @@ int main(int argc, char **argv)
 			cout << "changing from fining to orbiter:" << endl;
 			for (i = 0; i < the_arc_sz; i++) {
 				a = the_arc[i];
-				PG_element_unrank_fining(*P->F, v, 3, a);
+				P->F->PG_element_unrank_fining(v, 3, a);
 				int_vec_copy(v, w, 3);
-				PG_element_rank_modified(*P->F, w, 1, 3, b);
+				P->F->PG_element_rank_modified(w, 1, 3, b);
 				cout << a << " : ";
 				int_vec_print(cout, v, 3);
 				cout << " : " << b << endl;
@@ -292,9 +292,9 @@ int main(int argc, char **argv)
 			cout << "changing from Gary Cook to orbiter:" << endl;
 			for (i = 0; i < the_arc_sz; i++) {
 				a = the_arc[i];
-				PG_element_unrank_gary_cook(*P->F, v, 3, a);
+				P->F->PG_element_unrank_gary_cook(v, 3, a);
 				int_vec_copy(v, w, 3);
-				PG_element_rank_modified(*P->F, w, 1, 3, b);
+				P->F->PG_element_rank_modified(w, 1, 3, b);
 				cout << a << " : ";
 				int_vec_print(cout, v, 3);
 				cout << " : " << b << endl;

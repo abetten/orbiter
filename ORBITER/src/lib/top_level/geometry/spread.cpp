@@ -148,7 +148,8 @@ void spread::init(int order, int n, int k, int max_depth,
 	
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
-	//sprintf(prefix_with_directory, "%s%s", starter_directory_name, base_fname);
+	//sprintf(prefix_with_directory, "%s%s",
+	//starter_directory_name, base_fname);
 	spread::starter_size = starter_size;
 
 
@@ -168,7 +169,8 @@ void spread::init(int order, int n, int k, int max_depth,
 
 	if (is_prime(q)) {
 		if (f_v) {
-			cout << "spread::init q=" << q << " is a prime, putting f_semilinear = FALSE" << endl;
+			cout << "spread::init q=" << q << " is a prime, "
+					"putting f_semilinear = FALSE" << endl;
 			}
 		f_semilinear = FALSE;
 		}
@@ -187,14 +189,17 @@ void spread::init(int order, int n, int k, int max_depth,
 	if (f_v) {
 		cout << "spread::init before init_projective_group" << endl;
 		}
-	A->init_projective_group(n, F, f_semilinear, f_basis, 0 /*verbose_level*/);
+	A->init_projective_group(n, F, f_semilinear,
+			f_basis, 0 /*verbose_level*/);
 	
 	if (f_v) {
-		cout << "spread::init after init_projective_group, checking group order" << endl;
+		cout << "spread::init after init_projective_group, "
+				"checking group order" << endl;
 		}
 	A->Sims->group_order(go);
 	if (f_v) {
-		cout << "spread::init after init_projective_group group of order " << go << " has been created" <<  endl;
+		cout << "spread::init after init_projective_group "
+				"group of order " << go << " has been created" <<  endl;
 		}
 
 
@@ -386,14 +391,14 @@ void spread::init(int order, int n, int k, int max_depth,
 
 void spread::unrank_point(int *v, int a)
 {
-	PG_element_unrank_modified(*F, v, 1, n, a);
+	F->PG_element_unrank_modified(v, 1, n, a);
 }
 
 int spread::rank_point(int *v)
 {
 	int a;
 	
-	PG_element_rank_modified(*F, v, 1, n, a);
+	F->PG_element_rank_modified(v, 1, n, a);
 	return a;
 }
 
@@ -483,7 +488,7 @@ void spread::print_elements_and_points()
 			}
 		unrank_subspace(M, i);
 		for (a = 0; a < r; a++) {
-			PG_element_unrank_modified(*F, v, 1, k, a);
+			F->PG_element_unrank_modified(v, 1, k, a);
 			F->mult_matrix(v, M, w, 1, k, n);
 			b = rank_point(w);
 			Line[a] = b;

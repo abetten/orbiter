@@ -38,25 +38,29 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-description") == 0) {
 			f_description = TRUE;
 			Descr = NEW_OBJECT(spread_create_description);
-			i += Descr->read_arguments(argc - (i - 1), argv + i, verbose_level) - 1;
+			i += Descr->read_arguments(argc - (i - 1),
+					argv + i, verbose_level) - 1;
 
 			cout << "-description" << endl;
 			}
 		else if (strcmp(argv[i], "-transform") == 0) {
 			transform_coeffs[nb_transform] = argv[++i];
 			f_inverse_transform[nb_transform] = FALSE;
-			cout << "-transform " << transform_coeffs[nb_transform] << endl;
+			cout << "-transform "
+					<< transform_coeffs[nb_transform] << endl;
 			nb_transform++;
 			}
 		else if (strcmp(argv[i], "-transform_inverse") == 0) {
 			transform_coeffs[nb_transform] = argv[++i];
 			f_inverse_transform[nb_transform] = TRUE;
-			cout << "-transform_inverse " << transform_coeffs[nb_transform] << endl;
+			cout << "-transform_inverse "
+					<< transform_coeffs[nb_transform] << endl;
 			nb_transform++;
 			}
 		}
 	if (!f_description) {
-		cout << "please use option -description ... to enter a description of the surface" << endl;
+		cout << "please use option -description ... to enter "
+				"a description of the surface" << endl;
 		exit(1);
 		}
 
@@ -71,7 +75,8 @@ int main(int argc, const char **argv)
 
 	if (nb_transform) {
 		cout << "before SC->apply_transformations" << endl;
-		SC->apply_transformations(transform_coeffs, f_inverse_transform, nb_transform, verbose_level);
+		SC->apply_transformations(transform_coeffs,
+				f_inverse_transform, nb_transform, verbose_level);
 		cout << "after SC->apply_transformations" << endl;
 		}
 
@@ -88,23 +93,30 @@ int main(int argc, const char **argv)
 #if 0
 	if (SC->f_has_group) {
 		for (i = 0; i < SC->Sg->gens->len; i++) {
-			cout << "Testing generator " << i << " / " << SC->Sg->gens->len << endl;
-			A->element_invert(BC->Sg->gens->ith(i), Elt2, 0 /*verbose_level*/);
+			cout << "Testing generator " << i << " / "
+					<< SC->Sg->gens->len << endl;
+			A->element_invert(BC->Sg->gens->ith(i), Elt2,
+					0 /*verbose_level*/);
 	
-			BC->Surf->substitute_semilinear(SC->coeffs, coeffs_out, FALSE /* f_semilinear */, 0, Elt2, 0 /*verbose_level*/);
+			BC->Surf->substitute_semilinear(SC->coeffs, coeffs_out,
+					FALSE /* f_semilinear */, 0, Elt2,
+					0 /*verbose_level*/);
 
 			PG_element_normalize(*SC->F, coeffs_out, 1, 20);
 
 
 			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {
-				cout << "error, the transformation does not preserve the equation of the surface" << endl;
+				cout << "error, the transformation does not preserve "
+						"the equation of the surface" << endl;
 				exit(1);
 				}
-			cout << "Generator " << i << " / " << SC->Sg->gens->len << " is good" << endl;
+			cout << "Generator " << i << " / " << SC->Sg->gens->len
+					<< " is good" << endl;
 			}
 		}
 	else {
-		cout << "We do not have information about the automorphism group" << endl;
+		cout << "We do not have information about "
+				"the automorphism group" << endl;
 		}
 #endif
 

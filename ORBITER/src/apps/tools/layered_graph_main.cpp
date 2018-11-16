@@ -274,7 +274,12 @@ int main(int argc, const char **argv)
 	//replace_extension_with(fname_out, const char *new_ext);
 
 	LG->draw_with_options(fname_out, &O, 0 /* verbose_level */);
-	
+	int n;
+	double avg;
+	n = LG->nb_nodes();
+	avg = LG->average_word_length();
+	cout << "number of nodes = " << n << endl;
+	cout << "average word length = " << avg << endl;
 
 	cout << "Written file " << fname_out << endl;
 

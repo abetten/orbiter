@@ -18,6 +18,7 @@ MODULES = \
 	poset_orbit_node.o \
 	poset_orbit_node_downstep.o \
 	poset_orbit_node_downstep_subspace_action.o \
+	poset_orbit_node_group_theory.o \
 	poset_orbit_node_io.o \
 	poset_orbit_node_upstep.o \
 	poset_orbit_node_upstep_subspace_action.o \

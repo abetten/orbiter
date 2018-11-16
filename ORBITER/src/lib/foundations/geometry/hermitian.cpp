@@ -164,7 +164,7 @@ void hermitian::list_of_points_embedded_in_PG(
 	Pts = NEW_int(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
-		PG_element_rank_modified(*F, v, 1, k, rk);
+		F->PG_element_rank_modified(v, 1, k, rk);
 		Pts[i] = rk;
 		}
 }
@@ -922,7 +922,7 @@ int hermitian::Sbar_rank(int *v, int len, int verbose_level)
 			cout << "Sbar_rank case 2" << endl;
 			}
 
-		PG_element_normalize(*F, v, 1, len);
+		F->PG_element_normalize(v, 1, len);
 		rk = cnt_Sbar[len - 1];
 
 		val = evaluate_hermitian_form(v, len - 1); 

@@ -970,7 +970,7 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 					<< the_set_in[i] << " : ";
 			}
 		P2->unrank_point(v, the_set_in[i]);
-		PG_element_normalize(*FQ, v, 1, 3);
+		FQ->PG_element_normalize(v, 1, 3);
 		if (f_vv) {
 			int_vec_print(cout, v, 3);
 			cout << " becomes ";
@@ -1022,7 +1022,7 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 			// a zero in the last spot.
 			
 			for (h = 0; h < Fq->q + 1; h++) {
-				PG_element_unrank_modified(*Fq, v2, 1, 2, h);
+				Fq->PG_element_unrank_modified(v2, 1, 2, h);
 				if (FALSE) {
 					cout << "v2=";
 					int_vec_print(cout, v2, 2);
@@ -1400,7 +1400,7 @@ void do_ideal(int n, finite_field *F,
 	cout << "looping over all elements of the ideal:" << endl;
 	N = nb_PG_elements(ns - 1, F->q);
 	for (h = 0; h < N; h++) {
-		PG_element_unrank_modified(*F, w1, 1, ns, h);
+		F->PG_element_unrank_modified(w1, 1, ns, h);
 		cout << "element " << h << " / " << N << " w1=";
 		int_vec_print(cout, w1, ns);
 		F->mult_vector_from_the_left(w1, Kernel, w2, ns, HPD->nb_monomials);

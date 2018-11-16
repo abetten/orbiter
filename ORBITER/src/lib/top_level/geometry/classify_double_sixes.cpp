@@ -374,6 +374,7 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(
 void classify_double_sixes::classify_partial_ovoids(
 	int f_draw_poset,
 	int f_draw_poset_full, 
+	int f_report,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -433,6 +434,42 @@ void classify_double_sixes::classify_partial_ovoids(
 				0 /* verbose_level */);
 		}
 		}
+	if (f_report) {
+		char fname_base[1000];
+		char fname_report[1000];
+		char title[10000];
+		char author[10000];
+
+		sprintf(author, "");
+
+
+		sprintf(title, "Classification of Five-Plus-Ones over GF(%d)", q);
+		sprintf(fname_base, "five_plus_one_q%d", q);
+
+		sprintf(fname_report, "%s.tex", fname_base);
+		{
+		ofstream fp(fname_report);
+
+
+		latex_head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+		A->report(fp);
+
+		Five_plus_one->report(fp);
+
+		latex_foot(fp);
+
+		} // close fp
+	}
 	if (q < 20) {
 		{
 		spreadsheet *Sp;
