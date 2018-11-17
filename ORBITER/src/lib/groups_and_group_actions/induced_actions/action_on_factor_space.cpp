@@ -641,7 +641,8 @@ int action_on_factor_space::lexleast_element_in_coset(int rk,
 	for (i = 0; i < N; i++) {
 		AG_element_unrank(F->q, w, 1, subspace_basis_size, i);
 		F->mult_matrix_matrix(w, subspace_basis,
-				v1, 1, subspace_basis_size, len);
+				v1, 1, subspace_basis_size, len,
+				0 /* verbose_level */);
 		F->add_vector(v1, Tmp1, v2, len);
 		b = rank_in_large_space(v2);
 		if (b < rk1) {

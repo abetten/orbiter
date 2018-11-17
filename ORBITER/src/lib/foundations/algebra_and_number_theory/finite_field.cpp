@@ -11,6 +11,8 @@
 
 #define CREATE_TABLE_UPPER_BOUND 1024
 
+int nb_calls_to_finite_field_init = 0;
+
 finite_field::finite_field()
 {
 	null();
@@ -34,6 +36,9 @@ void finite_field::null()
 	override_poly = NULL;
 	symbol_for_print = NULL;
 	f_print_as_exponentials = TRUE;
+	nb_calls_to_mult_matrix_matrix = 0;
+	nb_calls_to_PG_element_rank_modified = 0;
+	nb_calls_to_PG_element_unrank_modified = 0;
 }
 
 finite_field::~finite_field()
@@ -74,6 +79,14 @@ finite_field::~finite_field()
 	null();
 }
 
+void finite_field::print_call_stats(ostream &ost)
+{
+	cout << "finite_field::print_call_stats" << endl;
+	cout << "nb_calls_to_mult_matrix_matrix=" << nb_calls_to_mult_matrix_matrix << endl;
+	cout << "nb_calls_to_PG_element_rank_modified=" << nb_calls_to_PG_element_rank_modified << endl;
+	cout << "nb_calls_to_PG_element_unrank_modified=" << nb_calls_to_PG_element_unrank_modified << endl;
+}
+
 void finite_field::init(int q)
 {
 	init(q, 0);
@@ -88,6 +101,7 @@ void finite_field::init(int q, int verbose_level)
 	if (f_v) {
 		cout << "finite_field::init q=" << q << endl;
 		}
+	nb_calls_to_finite_field_init++;
 	finite_field::q = q;
 	factor_prime_power(q, p, e);
 	init_symbol_for_print("g");

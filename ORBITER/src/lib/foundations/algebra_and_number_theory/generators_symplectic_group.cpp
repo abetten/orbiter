@@ -84,7 +84,8 @@ void generators_symplectic_group::init(finite_field *F,
 	generators_symplectic_group::F = F;
 	generators_symplectic_group::n = n;
 	if (ODD(n)) {
-		cout << "generators_symplectic_group::init n must be even" << endl;
+		cout << "generators_symplectic_group::init "
+				"n must be even" << endl;
 		exit(1);
 		}
 	n_half = n >> 1;

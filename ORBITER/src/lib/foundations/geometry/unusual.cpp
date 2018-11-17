@@ -377,7 +377,9 @@ void unusual_model::setup2(int q,
 		cout << "basis_subspace:" << endl;
 		print_integer_matrix_width(cout, basis_subspace, 2, 2, 2, 2);
 		}
-	f.mult_matrix(basis_subspace, basis + 8, hyperbolic_basis + 8, 2, 2, 4);
+	f.mult_matrix_matrix(basis_subspace,
+			basis + 8, hyperbolic_basis + 8, 2, 2, 4,
+			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "hyperbolic basis:" << endl;
@@ -549,9 +551,10 @@ void unusual_model::convert_to_usual(int n,
 		print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
 		}
 	for (i = 0; i < n; i++) {
-		f.mult_matrix(tmp + i * 4,
+		f.mult_matrix_matrix(tmp + i * 4,
 			hyperbolic_basis_inverse,
-			usual_coordinates + i * 5 + 1, 1, 4, 4);
+			usual_coordinates + i * 5 + 1, 1, 4, 4,
+			0 /* verbose_level */);
 		usual_coordinates[i * 5 + 0] = unusual_coordinates[i * 3 + 2];
 		}
 	if (f_v) {
@@ -581,8 +584,9 @@ void unusual_model::convert_from_usual(int n,
 		exit(1);
 		}
 	for (i = 0; i < n; i++) {
-		f.mult_matrix(usual_coordinates + i * 5 + 1,
-			hyperbolic_basis, tmp + i * 4, 1, 4, 4);
+		f.mult_matrix_matrix(usual_coordinates + i * 5 + 1,
+			hyperbolic_basis, tmp + i * 4, 1, 4, 4,
+			0 /* verbose_level */);
 		}
 	if (f_v) {
 		cout << "tmp:" << endl;
@@ -1187,8 +1191,12 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
 		}
 
-	f.mult_matrix(hyperbolic_basis, M4, M4_tmp1, 4, 4, 4);
-	f.mult_matrix(M4_tmp1, hyperbolic_basis_inverse, M4_tmp2, 4, 4, 4);
+	f.mult_matrix_matrix(hyperbolic_basis,
+			M4, M4_tmp1, 4, 4, 4,
+			0 /* verbose_level */);
+	f.mult_matrix_matrix(M4_tmp1,
+			hyperbolic_basis_inverse, M4_tmp2, 4, 4, 4,
+			0 /* verbose_level */);
 	if (f_vvv) {
 		cout << "transformation matrix in "
 				"standard coordinates:" << endl;
@@ -1221,8 +1229,10 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		}
 		
 
-	f.mult_matrix(M5, O->Gram_matrix, M5_tmp1, 5, 5, 5);
-	f.mult_matrix(M5_tmp1, M5t, M5_tmp2, 5, 5, 5);
+	f.mult_matrix_matrix(M5, O->Gram_matrix, M5_tmp1, 5, 5, 5,
+			0 /* verbose_level */);
+	f.mult_matrix_matrix(M5_tmp1, M5t, M5_tmp2, 5, 5, 5,
+			0 /* verbose_level */);
 	
 	if (f_vvv) {
 		cout << "Gram matrix transformed:" << endl;
@@ -1291,9 +1301,12 @@ void unusual_model::transform_matrix_usual_to_unusual(
 			}
 		}
 
-	f.mult_matrix(hyperbolic_basis_inverse,
-		M4_tmp2, M4_tmp1, 4, 4, 4);
-	f.mult_matrix(M4_tmp1, hyperbolic_basis, M4, 4, 4, 4);
+	f.mult_matrix_matrix(hyperbolic_basis_inverse,
+		M4_tmp2, M4_tmp1, 4, 4, 4,
+		0 /* verbose_level */);
+	f.mult_matrix_matrix(M4_tmp1,
+			hyperbolic_basis, M4, 4, 4, 4,
+			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "transformation matrix in unusual model" << endl;

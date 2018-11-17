@@ -369,7 +369,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		for (a = 0; a < q; a++) {
 			v[0] = a;
 			v[1] = 1;
-			F->mult_matrix_matrix(v, L, w, 1, 2, 4);
+			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
+					0 /* verbose_level */);
 			//rk = Surf->rank_point(w);
 
 			// Evaluate the equation of the hyperboloid
@@ -485,7 +486,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		Surf->Gr->unrank_int_here(L, image[h], 0 /* verbose_level */);
 		for (a = 0; a < q + 1; a++) {
 			F->PG_element_unrank_modified(v, 1, 2, a);
-			F->mult_matrix_matrix(v, L, w, 1, 2, 4);
+			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
+					0 /* verbose_level */);
 
 			// Evaluate the equation of the hyperboloid
 			// which is x_0x_3-x_1x_2 = 0,

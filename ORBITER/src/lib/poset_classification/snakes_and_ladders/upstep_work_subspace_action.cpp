@@ -329,7 +329,8 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 				base_change_matrix,
 				AG->GE->M,
 				changed_space,
-				n, n, big_n);
+				n, n, big_n,
+				0 /* verbose_level */);
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action "
 					"changed_space for coset " << coset << ":" << endl;

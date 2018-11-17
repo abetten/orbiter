@@ -11,6 +11,10 @@
 
 rank_checker::rank_checker()
 {
+	GFq = NULL;
+	m = 0;
+	n = 0;
+	d = 0;
 	M1 = NULL;
 	M2 = NULL;
 	base_cols = NULL;

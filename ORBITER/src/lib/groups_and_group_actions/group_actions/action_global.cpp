@@ -2388,8 +2388,10 @@ void O4_to_O5(action *A4, action *A5, finite_field *Fq,
 		cout << "mtx_tr:" << endl;
 		print_integer_matrix_width(cout, mtx_tr, 4, 4, 4, 3);
 		}
-	Fq->mult_matrix(mtx4x4, gram, mtx_tmp1, 4, 4, 4);
-	Fq->mult_matrix(mtx_tmp1, mtx_tr, mtx_tmp2, 4, 4, 4);
+	Fq->mult_matrix_matrix(mtx4x4, gram, mtx_tmp1, 4, 4, 4,
+			0 /* verbose_level */);
+	Fq->mult_matrix_matrix(mtx_tmp1, mtx_tr, mtx_tmp2, 4, 4, 4,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "transformed Gram matrix:" << endl;
 		print_integer_matrix_width(cout, mtx_tmp2, 4, 4, 4, 3);

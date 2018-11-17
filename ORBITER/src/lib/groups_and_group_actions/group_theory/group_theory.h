@@ -420,22 +420,6 @@ public:
 
 
 
-#if 0
-void perm_group_find_strong_generators_at_level(
-	int level, int degree,
-	int given_base_length, int *given_base,
-	int nb_gens, int *gens, 
-	int &nb_generators_found, int *idx_generators_found);
-void perm_group_generators_direct_product(
-	int nb_diagonal_elements,
-	int degree1, int degree2, int &degree3, 
-	int nb_gens1, int nb_gens2, int &nb_gens3, 
-	int *gens1, int *gens2, int *&gens3, 
-	int base_len1, int base_len2, int &base_len3, 
-	int *base1, int *base2, int *&base3);
-#endif
-
-
 
 // #############################################################################
 // schreier.C:
@@ -520,9 +504,6 @@ public:
 		// to the j-th point in the orbit.
 	void coset_rep_with_verbosity(int j, int verbose_level);
 	void coset_rep_inv(int j);
-	void shallow_tree_generators(int orbit_idx,
-			schreier *&shallow_tree,
-			int verbose_level);
 	void compute_point_orbit(int pt, int verbose_level);
 	void compute_point_orbit_with_limited_depth(
 			int pt, int max_depth, int verbose_level);
@@ -587,33 +568,13 @@ public:
 	void get_orbit_decomposition_scheme_of_graph(
 		int *Adj, int n, int *&Decomp_scheme, int verbose_level);
 	void list_elements_as_permutations_vertically(ostream &ost);
-	//void get_schreier_vector(int *&sv,
-	//	int f_trivial_group, int f_compact);
-	schreier_vector *get_schreier_vector(
-			int gen_hdl_first, int nb_gen, int verbose_level);
 	void create_point_list_sorted(
 			int *&point_list, int &point_list_length);
-#if 0
-	void get_schreier_vector_compact(int *&sv,
-		int f_trivial_group);
-		// allocates and creates array sv[size] using NEW_int
-		// where size is n + 1 if  f_trivial_group is TRUE
-		// and size is 3 * n + 1 otherwise
-		// Here, n is the combined size of all orbits
-		// counted by nb_orbits
-		// sv[0] is equal to n
-		// sv + 1 is the array point_list of size [n],
-		// listing the point in increasing order
-		// if f_trivial_group, sv + 1 + n is the array prev[n] and
-		// sv + 1 + 2 * n is the array label[n]
-	void get_schreier_vector_ordinary(int *&sv);
-		// allocates and creates array sv[2 * A->degree]
-		// using NEW_int
-		// sv[i * 2 + 0] is prev[i]
-		// sv[i * 2 + 1] is label[i]
-	void test_sv(action *A, int *hdl_strong_generators, int *sv,
-		int f_trivial_group, int f_compact, int verbose_level);
-#endif
+	void shallow_tree_generators(int orbit_idx,
+			schreier *&shallow_tree,
+			int verbose_level);
+	schreier_vector *get_schreier_vector(
+			int gen_hdl_first, int nb_gen, int verbose_level);
 
 	// schreier_io.cpp:
 	void latex(const char *fname);

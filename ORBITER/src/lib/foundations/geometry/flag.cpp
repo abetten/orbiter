@@ -222,7 +222,8 @@ void flag::unrank_recursion(int rk, int *subspace, int verbose_level)
 		int_matrix_print(Gr->M, s2, n);
 		}
 
-	F->mult_matrix_matrix(Gr->M, subspace, M, s2, s2, n);
+	F->mult_matrix_matrix(Gr->M, subspace, M, s2, s2, n,
+			0 /* verbose_level */);
 	int_vec_copy(subspace + s2 * n, M + s2 * n, (K - s2) * n);
 
 	if (f_v) {
@@ -331,7 +332,8 @@ int flag::rank_recursion(int *input_subspace,
 		int_matrix_print(M1, s1, s2);
 		}
 
-	F->mult_matrix_matrix(M1, transform, M2, s1, s2, s2);
+	F->mult_matrix_matrix(M1, transform, M2, s1, s2, s2,
+			0 /* verbose_level */);
 
 	// now M2 is s1 x s2
 	// M2 is the coefficient matrix that defines
@@ -379,7 +381,8 @@ int flag::rank_recursion(int *input_subspace,
 		cout << "after unrank_embedded, coefficient matrix is" << endl;
 		int_matrix_print(Gr->M, s2, s2);
 		}
-	F->mult_matrix_matrix(Gr->M, big_space, M, s2, s2, n);
+	F->mult_matrix_matrix(Gr->M, big_space, M, s2, s2, n,
+			0 /* verbose_level */);
 	int_vec_copy(big_space + s2 * n, M + s2 * n, (K - s2) * n);
 	//now M is K x n
 	if (f_v) {

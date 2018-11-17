@@ -296,6 +296,13 @@ void poset_classification::housekeeping(int i,
 		//cout << "nb_times_trace_was_saved="
 		// << nb_times_trace_was_saved << endl;
 		//cout << "f_write_files=" << f_write_files << endl;
+		cout << "nb_calls_to_coset_rep_inv="
+				<< Schreier_vector_handler->nb_calls_to_coset_rep_inv << endl;
+		cout << "nb_calls_to_coset_rep_inv_recursion="
+				<< Schreier_vector_handler->nb_calls_to_coset_rep_inv_recursion << endl;
+		cout << "average word length=" <<
+				(double) Schreier_vector_handler->nb_calls_to_coset_rep_inv_recursion /
+				(double) Schreier_vector_handler->nb_calls_to_coset_rep_inv << endl;
 		}
 	if (f_find_group_order) {
 		find_automorphism_group_of_order(i, find_group_order);

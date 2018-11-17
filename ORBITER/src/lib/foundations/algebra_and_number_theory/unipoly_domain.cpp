@@ -202,7 +202,8 @@ void unipoly_domain::create_Dickson_polynomial(
 		unipoly_object &p, int *map)
 {
 	if (f_factorring) {
-		cout << "unipoly_domain::create_Dickson_polynomial a factorring" << endl;
+		cout << "unipoly_domain::create_Dickson_polynomial "
+				"a factorring" << endl;
 		exit(1);
 		}
 	int d = gfq->q - 1;
@@ -1705,7 +1706,8 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 				}
 			}
 		if (h) {
-			gfq->mult_matrix(M2, Mtx_in, M1, k, k, k);
+			gfq->mult_matrix_matrix(M2, Mtx_in, M1, k, k, k,
+					0 /* verbose_level */);
 			}
 		else {
 			int_vec_copy(M2, M1, k * k);

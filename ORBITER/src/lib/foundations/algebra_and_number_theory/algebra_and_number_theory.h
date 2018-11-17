@@ -148,6 +148,7 @@ public:
 	finite_field();
 	void null();
 	~finite_field();
+	void print_call_stats(ostream &ost);
 	void init(int q);
 	void init(int q, int verbose_level);
 	void init_symbol_for_print(const char *symbol);
@@ -301,22 +302,31 @@ public:
 		int *B, int n, int f, int l);
 		// initializes B as the l x l minor of A 
 		// (which is n x n) starting from row f. 
+#if 0
 	void mult_matrix(int *A, int *B, int *C, 
 		int ma, int na, int nb);
+#endif
 	void mult_vector_from_the_left(int *v, int *A, 
 		int *vA, int m, int n);
 		// v[m], A[m][n], vA[n]
 	void mult_vector_from_the_right(int *A, int *v, 
 		int *Av, int m, int n);
 		// A[m][n], v[n], Av[m]
-	void mult_matrix_matrix_verbose(int *A, int *B, 
+
+	int nb_calls_to_mult_matrix_matrix;
+	void mult_matrix_matrix(int *A, int *B,
 		int *C, int m, int n, int o, int verbose_level);
+		// matrix multiplication C := A * B,
+		// where A is m x n and B is n x o, so that C is m by o
+
+#if 0
 	void mult_matrix_matrix(int *A, int *B, int *C, 
 		int m, int n, int o);
 		// multiplies C := A * B, 
 		// where A is m x n and B is n x o, 
 		// so that C is m by o
 		// C must already be allocated
+#endif
 	void semilinear_matrix_mult(int *A, int *B, int *AB, int n);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 	void semilinear_matrix_mult_memory_given(int *A, int *B, 
@@ -682,6 +692,10 @@ public:
 	void PG_element_normalize_from_front(
 			int *v, int stride, int len);
 	// first non zero element made one
+
+	int nb_calls_to_PG_element_rank_modified;
+	int nb_calls_to_PG_element_unrank_modified;
+
 	void PG_element_rank_modified(
 			int *v, int stride, int len, int &a);
 	void PG_element_unrank_fining(
@@ -695,6 +709,8 @@ public:
 	void PG_element_unrank_modified_not_in_subspace(
 			int *v, int stride, int len, int m, int a);
 };
+
+extern int nb_calls_to_finite_field_init;
 
 // #############################################################################
 // finite_field_projective.cpp
@@ -717,22 +733,6 @@ void display_all_AG_elements(int n,
 	finite_field &GFq);
 void PG_element_apply_frobenius(int n,
 	finite_field &GFq, int *v, int f);
-//void PG_element_normalize(finite_field &GFq,
-//	int *v, int stride, int len);
-//void PG_element_normalize_from_front(finite_field &GFq,
-//	int *v, int stride, int len);
-//void PG_element_rank_modified(finite_field &GFq,
-//	int *v, int stride, int len, int &a);
-//void PG_element_unrank_fining(finite_field &GFq,
-//	int *v, int len, int a);
-//void PG_element_unrank_gary_cook(finite_field &GFq,
-//	int *v, int len, int a);
-//void PG_element_unrank_modified(finite_field &GFq,
-//	int *v, int stride, int len, int a);
-//void PG_element_rank_modified_not_in_subspace(finite_field &GFq,
-//	int *v, int stride, int len, int m, int &a);
-//void PG_element_unrank_modified_not_in_subspace(finite_field &GFq,
-//	int *v, int stride, int len, int m, int a);
 void AG_element_rank(int q, int *v, int stride, int len, int &a);
 void AG_element_unrank(int q, int *v, int stride, int len, int a);
 void AG_element_rank_longinteger(int q, int *v, int stride, int len,
@@ -762,17 +762,78 @@ int line_intersection_with_oval(finite_field &GFq,
 	int verbose_level);
 int get_base_line(finite_field &GFq, int plane1, int plane2,
 	int verbose_level);
-int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
-// last unit element made one
-int PHG_element_normalize_from_front(finite_ring &R, int *v,
-	int stride, int len);
-// first non unit element made one
-int PHG_element_rank(finite_ring &R, int *v, int stride, int len);
-void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
-int nb_PHG_elements(int n, finite_ring &R);
-void display_all_PHG_elements(int n, int q);
 void display_table_of_projective_points(ostream &ost, finite_field *F,
 	int *v, int nb_pts, int len);
+void create_Fisher_BLT_set(int *Fisher_BLT, int q,
+	const char *poly_q, const char *poly_Q, int verbose_level);
+void create_Linear_BLT_set(int *BLT, int q,
+	const char *poly_q, const char *poly_Q, int verbose_level);
+void create_Mondello_BLT_set(int *BLT, int q,
+	const char *poly_q, const char *poly_Q, int verbose_level);
+void print_quadratic_form_list_coded(int form_nb_terms,
+	int *form_i, int *form_j, int *form_coeff);
+void make_Gram_matrix_from_list_coded_quadratic_form(
+	int n, finite_field &F,
+	int nb_terms, int *form_i, int *form_j,
+	int *form_coeff, int *Gram);
+void add_term(int n, finite_field &F, int &nb_terms,
+	int *form_i, int *form_j, int *form_coeff, int *Gram,
+	int i, int j, int coeff);
+void create_BLT_point(finite_field *F, int *v5, int a, int b, int c,
+	int verbose_level);
+// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
+// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
+// b^2/4 + (-c)*a + -(b^2/4-ac)
+// = b^2/4 -ac -b^2/4 + ac = 0
+void create_FTWKB_BLT_set(orthogonal *O, int *set, int verbose_level);
+void create_K1_BLT_set(orthogonal *O, int *set, int verbose_level);
+void create_K2_BLT_set(orthogonal *O, int *set, int verbose_level);
+void create_LP_37_72_BLT_set(orthogonal *O, int *set, int verbose_level);
+void create_LP_37_4a_BLT_set(orthogonal *O, int *set, int verbose_level);
+void create_LP_37_4b_BLT_set(orthogonal *O, int *set, int verbose_level);
+void GlynnI_hyperoval(finite_field *F, int *&Pts, int &nb_pts,
+	int verbose_level);
+void GlynnII_hyperoval(finite_field *F, int *&Pts, int &nb_pts,
+	int verbose_level);
+void Segre_hyperoval(finite_field *F, int *&Pts, int &nb_pts,
+	int verbose_level);
+void Adelaide_hyperoval(subfield_structure *S, int *&Pts, int &nb_pts,
+	int verbose_level);
+void Subiaco_oval(finite_field *F, int *&Pts, int &nb_pts, int f_short,
+	int verbose_level);
+void Subiaco_hyperoval(finite_field *F, int *&Pts, int &nb_pts,
+	int verbose_level);
+int OKeefe_Penttila_32(finite_field *F, int t);
+int Subiaco64_1(finite_field *F, int t);
+// needs the field generated by beta with beta^6=beta+1
+int Subiaco64_2(finite_field *F, int t);
+// needs the field generated by beta with beta^6=beta+1
+int Adelaide64(finite_field *F, int t);
+// needs the field generated by beta with beta^6=beta+1
+void LunelliSce(finite_field *Fq, int *pts18, int verbose_level);
+int LunelliSce_evaluate_cubic1(finite_field *F, int *v);
+int LunelliSce_evaluate_cubic2(finite_field *F, int *v);
+void plane_invariant(int q, orthogonal *O, unusual_model *U,
+	int size, int *set,
+	int &nb_planes, int *&intersection_matrix,
+	int &Block_size, int *&Blocks,
+	int verbose_level);
+// using hash values
+void create_Law_71_BLT_set(orthogonal *O, int *set, int verbose_level);
+void O4_isomorphism_4to2(finite_field *F,
+	int *At, int *As, int &f_switch, int *B,
+	int verbose_level);
+void O4_isomorphism_2to4(finite_field *F,
+	int *At, int *As, int f_switch, int *B);
+void O4_grid_coordinates_rank(finite_field &F,
+	int x1, int x2, int x3, int x4,
+	int &grid_x, int &grid_y, int verbose_level);
+void O4_grid_coordinates_unrank(finite_field &F,
+	int &x1, int &x2, int &x3, int &x4, int grid_x,
+	int grid_y, int verbose_level);
+void O4_find_tangent_plane(finite_field &F,
+	int pt_x1, int pt_x2, int pt_x3, int pt_x4,
+	int *tangent_plane, int verbose_level);
 
 
 
@@ -835,6 +896,17 @@ public:
 		// A is a m x n matrix,
 		// P is a m x Pn matrix (if f_P is TRUE)
 };
+
+int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
+// last unit element made one
+int PHG_element_normalize_from_front(finite_ring &R, int *v,
+	int stride, int len);
+// first non unit element made one
+int PHG_element_rank(finite_ring &R, int *v, int stride, int len);
+void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
+int nb_PHG_elements(int n, finite_ring &R);
+void display_all_PHG_elements(int n, int q);
+
 
 // #############################################################################
 // generators_symplectic_group.C:
@@ -1024,6 +1096,7 @@ void diagonal_orbit_perm(int n, finite_field &GFq,
 	int *orbit, int *orbit_inv, int verbose_level);
 void frobenius_orbit_perm(int n, finite_field &GFq, 
 	int *orbit, int *orbit_inv, int verbose_level);
+#if 0
 void translation_in_AG(finite_field &GFq, int n, int i, 
 	int a, int *perm, int *v, int verbose_level);
 	// v[n] needs to be allocated 
@@ -1068,6 +1141,7 @@ void generators_AGL1_x_AGL1_extended_twice(finite_field &F1,
 	finite_field &F2, int u1, int v1, 
 	int u2, int v2, int &deg, 
 	int &nb_perms, int *&perms, int verbose_level);
+#endif
 void generators_symmetric_group(int deg, 
 	int &nb_perms, int *&perms, int verbose_level);
 void generators_cyclic_group(int deg, 
@@ -1090,20 +1164,6 @@ void generators_concatenate(int deg1, int nb_perms1, int *perms1,
 	int deg2, int nb_perms2, int *perms2, 
 	int &deg3, int &nb_perms3, int *&perms3, 
 	int verbose_level);
-void O4_isomorphism_4to2(finite_field *F, 
-	int *At, int *As, int &f_switch, int *B, 
-	int verbose_level);
-void O4_isomorphism_2to4(finite_field *F, 
-	int *At, int *As, int f_switch, int *B);
-void O4_grid_coordinates_rank(finite_field &F, 
-	int x1, int x2, int x3, int x4, 
-	int &grid_x, int &grid_y, int verbose_level);
-void O4_grid_coordinates_unrank(finite_field &F, 
-	int &x1, int &x2, int &x3, int &x4, int grid_x, 
-	int grid_y, int verbose_level);
-void O4_find_tangent_plane(finite_field &F, 
-	int pt_x1, int pt_x2, int pt_x3, int pt_x4, 
-	int *tangent_plane, int verbose_level);
 int matrix_group_base_len_projective_group(int n, int q, 
 	int f_semilinear, int verbose_level);
 int matrix_group_base_len_affine_group(int n, int q, 

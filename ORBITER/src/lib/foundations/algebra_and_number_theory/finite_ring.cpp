@@ -387,5 +387,197 @@ int finite_ring::Gauss_int(int *A, int f_special,
 	return rank;
 }
 
+// #############################################################################
+// globals:
+// #############################################################################
+
+
+int PHG_element_normalize(finite_ring &R,
+		int *v, int stride, int len)
+// last unit element made one
+{
+	int i, j, a;
+
+	for (i = len - 1; i >= 0; i--) {
+		a = v[i * stride];
+		if (R.is_unit(a)) {
+			if (a == 1)
+				return i;
+			a = R.inverse(a);
+			for (j = len - 1; j >= 0; j--) {
+				v[j * stride] = R.mult(v[j * stride], a);
+				}
+			return i;
+			}
+		}
+	cout << "PHG_element_normalize "
+			"vector is not free" << endl;
+	exit(1);
+}
+
+
+int PHG_element_normalize_from_front(finite_ring &R,
+		int *v, int stride, int len)
+// first non unit element made one
+{
+	int i, j, a;
+
+	for (i = 0; i < len; i++) {
+		a = v[i * stride];
+		if (R.is_unit(a)) {
+			if (a == 1)
+				return i;
+			a = R.inverse(a);
+			for (j = 0; j < len; j++) {
+				v[j * stride] = R.mult(v[j * stride], a);
+				}
+			return i;
+			}
+		}
+	cout << "PHG_element_normalize_from_front "
+			"vector is not free" << endl;
+	exit(1);
+}
+
+int PHG_element_rank(finite_ring &R,
+		int *v, int stride, int len)
+{
+	int i, j, idx, a, b, r1, r2, rk, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+
+	if (len <= 0) {
+		cout << "PHG_element_rank len <= 0" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "the vector before normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	idx = PHG_element_normalize(R, v, stride, len);
+	if (f_v) {
+		cout << "the vector after normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+			}
+		embedding[i] = j;
+		}
+	for (i = 0; i < len - 1; i++) {
+		w[i] = v[embedding[i] * stride];
+		}
+	for (i = 0; i < len - 1; i++) {
+		a = w[i];
+		b = a % R.p;
+		v[embedding[i] * stride] = b;
+		w[i] = (a - b) / R.p;
+		}
+	if (f_v) {
+		cout << "w=";
+		int_vec_print(cout, w, len - 1);
+		cout << endl;
+		}
+	AG_element_rank(R.e, w, 1, len - 1, r1);
+	R.Fp->PG_element_rank_modified(v, stride, len, r2);
+
+	N = nb_PG_elements(len - 1, R.p);
+	rk = r1 * N + r2;
+
+	FREE_int(w);
+	FREE_int(embedding);
+
+	return rk;
+}
+
+void PHG_element_unrank(finite_ring &R,
+		int *v, int stride, int len, int rk)
+{
+	int i, j, idx, r1, r2, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+
+	if (len <= 0) {
+		cout << "PHG_element_unrank len <= 0" << endl;
+		exit(1);
+		}
+
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
+
+	N = nb_PG_elements(len - 1, R.p);
+	r2 = rk % N;
+	r1 = (rk - r2) / N;
+
+	AG_element_unrank(R.e, w, 1, len - 1, r1);
+	R.Fp->PG_element_unrank_modified(v, stride, len, r2);
+
+	if (f_v) {
+		cout << "w=";
+		int_vec_print(cout, w, len - 1);
+		cout << endl;
+		}
+
+	idx = PHG_element_normalize(R, v, stride, len);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+			}
+		embedding[i] = j;
+		}
+
+	for (i = 0; i < len - 1; i++) {
+		v[embedding[i] * stride] += w[i] * R.p;
+		}
+
+
+
+	FREE_int(w);
+	FREE_int(embedding);
+
+}
+
+int nb_PHG_elements(int n, finite_ring &R)
+{
+	int N1, N2;
+
+	N1 = nb_PG_elements(n, R.p);
+	N2 = nb_AG_elements(n, R.e);
+	return N1 * N2;
+}
+
+void display_all_PHG_elements(int n, int q)
+{
+	int *v = NEW_int(n + 1);
+	int l;
+	int i, j, a;
+	finite_ring R;
+
+	R.init(q, 0);
+	l = nb_PHG_elements(n, R);
+	for (i = 0; i < l; i++) {
+		PHG_element_unrank(R, v, 1, n + 1, i);
+		cout << i << " : ";
+		for (j = 0; j < n + 1; j++) {
+			cout << v[j] << " ";
+			}
+		a = PHG_element_rank(R, v, 1, n + 1);
+		cout << " : " << a << endl;
+		}
+	FREE_int(v);
+}
+
+
 
 

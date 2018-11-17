@@ -53,6 +53,8 @@ void schreier_vector_handler::init(action *A, int f_allow_failure,
 	}
 	schreier_vector_handler::A = A;
 	schreier_vector_handler::f_allow_failure = f_allow_failure;
+	nb_calls_to_coset_rep_inv = 0;
+	nb_calls_to_coset_rep_inv_recursion = 0;
 	cosetrep = NEW_int(A->elt_size_in_int);
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -74,6 +76,7 @@ int schreier_vector_handler::coset_rep_inv(
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"tracing point pt" << endl;
 		}
+	nb_calls_to_coset_rep_inv++;
 	A->element_one(cosetrep, 0);
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv "
@@ -118,6 +121,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 		cout << "schreier_vector_handler::coset_rep_inv_recursion "
 				"tracing point " << pt << endl;
 		}
+	nb_calls_to_coset_rep_inv_recursion++;
 
 	//cout << "schreier_vector_coset_rep_inv_compact_general "
 	//"pt = " << pt << endl;

@@ -142,6 +142,7 @@ void finite_field::matrix_minor(int f_semilinear,
 		}
 }
 
+#if 0
 void finite_field::mult_matrix(int *A, int *B, int *C,
 		int ma, int na, int nb)
 {
@@ -159,11 +160,13 @@ void finite_field::mult_matrix(int *A, int *B, int *C,
 			}
 		}
 }
+#endif
 
 void finite_field::mult_vector_from_the_left(int *v,
 		int *A, int *vA, int m, int n)
 // v[m], A[m][n], vA[n]
 {
+#if 0
 	int j, k, a, b, ab, c;
 	
 	for (j = 0; j < n; j++) {
@@ -176,12 +179,18 @@ void finite_field::mult_vector_from_the_left(int *v,
 			}
 		vA[j] = c;
 		}
+#else
+	mult_matrix_matrix(
+			v, A, vA,
+			1, m, n, 0 /*verbose_level */);
+#endif
 }
 
 void finite_field::mult_vector_from_the_right(int *A,
 		int *v, int *Av, int m, int n)
 // A[m][n], v[n], Av[m]
 {
+#if 0
 	int i, k, a, b, ab, c;
 	
 	for (i = 0; i < m; i++) {
@@ -194,23 +203,31 @@ void finite_field::mult_vector_from_the_right(int *A,
 			}
 		Av[i] = c;
 		}
+#else
+	mult_matrix_matrix(
+			A, v, Av,
+			m, n, 1, 0 /*verbose_level */);
+
+#endif
 }
 
-void finite_field::mult_matrix_matrix_verbose(int *A, int *B, int *C,
+void finite_field::mult_matrix_matrix(
+		int *A, int *B, int *C,
 		int m, int n, int o, int verbose_level)
-// multiplies C := A * B, where A is m x n and B is n x o, so that C is m by o
-// C must already be allocated
+// matrix multiplication C := A * B,
+// where A is m x n and B is n x o, so that C is m by o
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, k, a, b;
 	
 	if (f_v) {
-		cout << "finite_field::mult_matrix_matrix_verbose" << endl;
+		cout << "finite_field::mult_matrix_matrix" << endl;
 		cout << "A=" << endl;
 		int_matrix_print(A, m, n);
 		cout << "B=" << endl;
 		int_matrix_print(B, n, o);
 		}
+	nb_calls_to_mult_matrix_matrix++;
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < o; j++) {
 			a = 0;
@@ -223,6 +240,7 @@ void finite_field::mult_matrix_matrix_verbose(int *A, int *B, int *C,
 		}
 }
 
+#if 0
 void finite_field::mult_matrix_matrix(int *A, int *B, int *C,
 		int m, int n, int o)
 // multiplies C := A * B,
@@ -242,6 +260,7 @@ void finite_field::mult_matrix_matrix(int *A, int *B, int *C,
 			}
 		}
 }
+#endif
 
 void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 // (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
@@ -336,12 +355,12 @@ void finite_field::matrix_mult_affine(int *A, int *B, int *AB,
 		int_matrix_print(b2, 1, n);
 		}
 	
-	mult_matrix(A1, A2, A3, n, n, n);
+	mult_matrix_matrix(A1, A2, A3, n, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "A3=" << endl;
 		int_matrix_print(A3, n, n);
 		}
-	mult_matrix(b1, A2, b3, 1, n, n);
+	mult_matrix_matrix(b1, A2, b3, 1, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "b3=" << endl;
 		int_matrix_print(b3, 1, n);
@@ -380,10 +399,10 @@ void finite_field::semilinear_matrix_mult_affine(
 	
 	int_vec_copy(A2, T, n * n);
 	vector_frobenius_power_in_place(T, n * n, f1inv);
-	mult_matrix(A1, T, A3, n, n, n);
+	mult_matrix_matrix(A1, T, A3, n, n, n, 0 /* verbose_level */);
 	//vector_frobenius_power_in_place(A2, n * n, f1);
 	
-	mult_matrix(b1, A2, b3, 1, n, n);
+	mult_matrix_matrix(b1, A2, b3, 1, n, n, 0 /* verbose_level */);
 	vector_frobenius_power_in_place(b3, n, f2);
 	add_vector(b3, b2, b3, n);
 
@@ -640,7 +659,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 	finv = irem(-f, e);
 	vector_frobenius_power_in_place(Ainv, n * n, f);
 
-	mult_matrix(b1, Ainv, b2, 1, n, n);
+	mult_matrix_matrix(b1, Ainv, b2, 1, n, n, 0 /* verbose_level */);
 	
 	vector_frobenius_power_in_place(b2, n, finv);
 
@@ -678,7 +697,7 @@ void finite_field::matrix_invert_affine(int *A,
 	b2 = Ainv + n * n;
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 
-	mult_matrix(b1, Ainv, b2, 1, n, n);
+	mult_matrix_matrix(b1, Ainv, b2, 1, n, n, 0 /* verbose_level */);
 	
 	negate_vector_in_place(b2, n);
 
@@ -934,7 +953,7 @@ void finite_field::invert_matrix(int *A, int *A_inv, int n)
 			TRUE /*f_complete */, base_cols,
 		TRUE /* f_P */, A_inv, n, n, n, 0 /* verbose_level */);
 	if (rk < n) {
-		cout << "finite_field::invert_matrix() "
+		cout << "finite_field::invert_matrix "
 				"matrix is not invertible, the rank is " << rk << endl;
 		exit(1);
 		}
@@ -952,8 +971,8 @@ void finite_field::transform_form_matrix(int *A,
 	Tmp2 = NEW_int(d * d);
 
 	transpose_matrix(A, Tmp1, d, d);
-	mult_matrix(A, Gram, Tmp2, d, d, d);
-	mult_matrix(Tmp2, Tmp1, new_Gram, d, d, d);
+	mult_matrix_matrix(A, Gram, Tmp2, d, d, d, 0 /* verbose_level */);
+	mult_matrix_matrix(Tmp2, Tmp1, new_Gram, d, d, d, 0 /* verbose_level */);
 
 	FREE_int(Tmp1);
 	FREE_int(Tmp2);
@@ -1979,7 +1998,7 @@ int finite_field::perp(int n, int k, int *A, int *Gram)
 	B = NEW_int(n * n);
 	K = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	mult_matrix_matrix(A, Gram, B, k, n, n);
+	mult_matrix_matrix(A, Gram, B, k, n, n, 0 /* verbose_level */);
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, k, n, n,
@@ -2321,7 +2340,7 @@ void finite_field::projective_action_on_columns_from_the_left(
 		cout << "A:" << endl;
 		print_integer_matrix_width(cout, A, m, m, m, 2);
 		}
-	mult_matrix_matrix(A, M, AM, m, m, n);
+	mult_matrix_matrix(A, M, AM, m, m, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "M:" << endl;
 		print_integer_matrix_width(cout, M, m, n, n, 2);
@@ -2605,7 +2624,7 @@ int finite_field::evaluate_bilinear_form(int n,
 	int *v3, a;
 	
 	v3 = NEW_int(n);
-	mult_matrix(v1, Gram, v3, 1, n, n);
+	mult_matrix_matrix(v1, Gram, v3, 1, n, n, 0 /* verbose_level */);
 	a = dot_product(n, v3, v2);
 	FREE_int(v3);
 	return a;
@@ -2727,7 +2746,8 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		print_integer_matrix_width(cout, v1 + n, n - 1, n, n, 2);
 		}
 	AG_element_unrank(q, v2_coords, 1, n - 1, 1);
-	mult_matrix(v2_coords, v1 + n, v2, 1, n - 1, n);
+	mult_matrix_matrix(v2_coords, v1 + n, v2, 1, n - 1, n,
+			0 /* verbose_level */);
 	b = evaluate_quadratic_form(n, form_nb_terms,
 			form_i, form_j, form_coeff, v2);
 	if (f_v) {
@@ -2756,7 +2776,8 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		exit(1);
 		}
 	AG_element_unrank(q, v3_coords, 1, n - 2, 1);
-	mult_matrix(v3_coords, intersection, v3, 1, n - 2, n);
+	mult_matrix_matrix(v3_coords, intersection, v3, 1, n - 2, n,
+			0 /* verbose_level */);
 	c = evaluate_quadratic_form(n, form_nb_terms,
 			form_i, form_j, form_coeff, v3);
 	if (f_v) {
@@ -2808,7 +2829,8 @@ finish:
 	FREE_int(intersection);
 }
 
-void finite_field::complete_hyperbolic_pair(int n, int form_nb_terms, 
+void finite_field::complete_hyperbolic_pair(
+	int n, int form_nb_terms,
 	int *form_i, int *form_j, int *form_coeff, int *Gram, 
 	int *vec1, int *vec2, int verbose_level)
 {
@@ -2827,7 +2849,8 @@ void finite_field::complete_hyperbolic_pair(int n, int form_nb_terms,
 		cout << "Gram=" << endl;
 		print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
 		}
-	mult_matrix(vec1, Gram, v0, 1, n, n);
+	mult_matrix_matrix(vec1, Gram, v0, 1, n, n,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "v0=";
 		int_vec_print(cout, v0, n);
@@ -3388,7 +3411,8 @@ int finite_field::lexleast_canonical_form_ranked(
 	for (a = 0; a < N; a++) {
 		AG_element_unrank(q, v, 1, rk, a);
 		mult_matrix_matrix(v, M1, M2 + a * vector_space_dimension, 
-			1, rk, vector_space_dimension);
+			1, rk, vector_space_dimension,
+			0 /* verbose_level */);
 		AG_element_rank(q, M2 + a * vector_space_dimension, 1,
 				vector_space_dimension, list_of_ranks[a]);
 		if (a == 0) {
@@ -3484,7 +3508,8 @@ int finite_field::lexleast_canonical_form_ranked(
 				}
 #endif
 			mult_matrix_matrix(v/*w*/, M1, tmp, 1, i + 1,
-					vector_space_dimension);
+					vector_space_dimension,
+					0 /* verbose_level */);
 			if (f_v) {
 				cout << " tmp=";
 				int_vec_print(cout, tmp, vector_space_dimension);
@@ -4655,7 +4680,8 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 		cout << endl;
 		}
 
-	mult_matrix(Frobenius, Frobenius, F2, d, d, d);
+	mult_matrix_matrix(Frobenius, Frobenius, F2, d, d, d,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"Frobenius^2 = " << endl;
@@ -5057,8 +5083,8 @@ int finite_field::test_if_commute(int *A, int *B, int k, int verbose_level)
 	M1 = NEW_int(k * k);
 	M2 = NEW_int(k * k);
 
-	mult_matrix_matrix(A, B, M1, k, k, k);
-	mult_matrix_matrix(B, A, M2, k, k, k);
+	mult_matrix_matrix(A, B, M1, k, k, k, 0 /* verbose_level */);
+	mult_matrix_matrix(B, A, M2, k, k, k, 0 /* verbose_level */);
 	if (int_vec_compare(M1, M2, k * k) == 0) {
 		ret = TRUE;
 		}
@@ -5346,7 +5372,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 		cout << "T3=" << endl;
 		int_matrix_print(T3, d, d);
 		}
-	mult_matrix(T1, T3, Transform, d, d, d);
+	mult_matrix_matrix(T1, T3, Transform, d, d, d, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Transform=" << endl;
 		int_matrix_print(Transform, d, d);
