@@ -14,6 +14,7 @@ void free_global_data()
 void the_end(int t0)
 {
 	cout << "***************** The End **********************" << endl;
+	cout << "nb_calls_to_finite_field_init=" << nb_calls_to_finite_field_init << endl;
 	if (f_memory_debug) {
 		cout << "freeing global data" << endl;
 		free_global_data();

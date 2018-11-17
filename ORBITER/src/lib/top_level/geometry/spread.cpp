@@ -489,7 +489,8 @@ void spread::print_elements_and_points()
 		unrank_subspace(M, i);
 		for (a = 0; a < r; a++) {
 			F->PG_element_unrank_modified(v, 1, k, a);
-			F->mult_matrix(v, M, w, 1, k, n);
+			F->mult_matrix_matrix(v, M, w, 1, k, n,
+					0 /* verbose_level */);
 			b = rank_point(w);
 			Line[a] = b;
 			}

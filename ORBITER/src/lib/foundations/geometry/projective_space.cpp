@@ -402,7 +402,8 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 			for (a = 0; a < k; a++) {
 				F->PG_element_unrank_modified(v, 1, 2, a);
-				F->mult_matrix(v, Grass_lines->M, w, 1, 2, n + 1);
+				F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
+						0 /* verbose_level */);
 				F->PG_element_rank_modified(w, 1, n + 1, b);
 				if (incidence_bitvec) {
 					incidence_m_ii(b, i, 1);
@@ -621,7 +622,8 @@ void projective_space::create_points_on_line(
 	Grass_lines->unrank_int(line_rk, 0/*verbose_level - 4*/);
 	for (a = 0; a < k; a++) {
 		F->PG_element_unrank_modified(v, 1, 2, a);
-		F->mult_matrix(v, Grass_lines->M, w, 1, 2, n + 1);
+		F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
+				0 /* verbose_level */);
 		F->PG_element_rank_modified(w, 1, n + 1, b);
 		line[a] = b;
 		}

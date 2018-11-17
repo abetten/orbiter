@@ -1456,7 +1456,8 @@ void create_segre_variety(finite_field *F, int a, int b,
 		P1->unrank_point(v1, i);
 		for (j = 0; j < N2; j++) {
 			P2->unrank_point(v2, j);
-			F->mult_matrix_matrix(v1, v2, v3, a + 1, 1, b + 1);
+			F->mult_matrix_matrix(v1, v2, v3, a + 1, 1, b + 1,
+					0 /* verbose_level */);
 			rk = P3->rank_point(v3);
 			Pts[nb_pts++] = rk;
 			if (f_v) {

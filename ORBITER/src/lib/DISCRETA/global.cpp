@@ -3405,7 +3405,8 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_v) {
 		cout << "fine_tune: tuning matrix:" << endl;
-		print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
+		print_integer_matrix_width(cout,
+				mtxD, 4, 4, 4, F->log10_of_q);
 		}
 
 	int mtxGram[16];
@@ -3423,12 +3424,15 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 	mtxGram[3 * 4 + 2] = 1;
 	
 	F->transpose_matrix(mtxD, mtxDt, 4, 4);
-	F->mult_matrix_matrix(mtxDt, mtxGram, mtxE, 4, 4, 4);
-	F->mult_matrix_matrix(mtxE, mtxD, mtxF, 4, 4, 4);
+	F->mult_matrix_matrix(mtxDt, mtxGram, mtxE, 4, 4, 4,
+			0 /* verbose_level */);
+	F->mult_matrix_matrix(mtxE, mtxD, mtxF, 4, 4, 4,
+			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "D^transpose * Gram * D = " << endl;
-		print_integer_matrix_width(cout, mtxF, 4, 4, 4, F->log10_of_q);
+		print_integer_matrix_width(cout,
+				mtxF, 4, 4, 4, F->log10_of_q);
 		}
 
 	int c, d, cv;
@@ -3477,14 +3481,17 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_vv) {
 		cout << "mtxG = s * mtxD:" << endl;
-		print_integer_matrix_width(cout, mtxG, 4, 4, 4, F->log10_of_q);
+		print_integer_matrix_width(cout,
+				mtxG, 4, 4, 4, F->log10_of_q);
 		}
 
 
 	int mtxGt[16];
 	F->transpose_matrix(mtxG, mtxGt, 4, 4);
-	F->mult_matrix_matrix(mtxGt, mtxGram, mtxE, 4, 4, 4);
-	F->mult_matrix_matrix(mtxE, mtxG, mtxF, 4, 4, 4);
+	F->mult_matrix_matrix(mtxGt, mtxGram, mtxE, 4, 4, 4,
+			0 /* verbose_level */);
+	F->mult_matrix_matrix(mtxE, mtxG, mtxF, 4, 4, 4,
+			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "G^transpose * Gram * G = " << endl;

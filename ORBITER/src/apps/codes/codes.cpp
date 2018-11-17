@@ -23,6 +23,7 @@ int main(int argc, const char **argv)
 
 	cg.main(cg.verbose_level);
 	
+	cout << "nb_calls_to_finite_field_init=" << nb_calls_to_finite_field_init << endl;
 	
 	}
 	the_end(t0);

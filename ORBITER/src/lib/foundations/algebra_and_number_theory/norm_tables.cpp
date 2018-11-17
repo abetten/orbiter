@@ -16,6 +16,7 @@ norm_tables::norm_tables()
 	norm_table_sorted = NULL;
 	sorting_perm = NULL;
 	sorting_perm_inv = NULL;
+	nb_types = 0;
 	type_first = NULL;
 	type_len = NULL;
 	the_type = NULL;

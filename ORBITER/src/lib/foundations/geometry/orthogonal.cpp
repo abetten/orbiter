@@ -341,13 +341,15 @@ void orthogonal::lines_on_point(int pt,
 		if (pt != 0) {
 			root2 = find_root(pt, verbose_level);
 			Siegel_Transformation(T2, rk1, pt, root2, verbose_level);
-			F->mult_matrix_matrix(T1, T2, T3, n, n, n);
+			F->mult_matrix_matrix(T1, T2, T3, n, n, n,
+					0 /* verbose_level */);
 			}
 		else {
 			F->copy_matrix(T1, T3, n, n);
 			}
 		F->mult_matrix_matrix(lines_on_point_coords1, T3,
-				lines_on_point_coords2, alpha, n, n);
+				lines_on_point_coords2, alpha, n, n,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < alpha; i++) {
@@ -395,10 +397,12 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			root2 = find_root(pt, verbose_level);
 			Siegel_Transformation(T1, pt_P, rk1, root1, verbose_level);
 			Siegel_Transformation(T2, rk1, pt, root2, verbose_level);
-			F->mult_matrix_matrix(T1, T2, T3, n, n, n);
+			F->mult_matrix_matrix(T1, T2, T3, n, n, n,
+					0 /* verbose_level */);
 			}
 		F->mult_matrix_matrix(lines_on_point_coords1,
-				T3, lines_on_point_coords2, alpha, n, n);
+				T3, lines_on_point_coords2, alpha, n, n,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < alpha; i++) {
@@ -533,7 +537,8 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 			rk1_subspace, rk2_subspace, root, verbose_level);
 
 	cout << "Siegel map takes 1st point to" << endl;
-	F->mult_matrix_matrix(v1, T1, v3, 1, n - 2, n - 2);
+	F->mult_matrix_matrix(v1, T1, v3, 1, n - 2, n - 2,
+			0 /* verbose_level */);
 	int_vec_print(cout, v3, n - 2);
 	cout << endl;
 
@@ -562,7 +567,8 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 		cout << cnt << " : " << j << " : " << rk3 << " : ";
 		int_vec_print(cout, v3, n);
 		cout << " to ";
-		F->mult_matrix_matrix(v3, T1, v_tmp, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v3, T1, v_tmp, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 				
 			
 		v_tmp[n - 2] = v3[n - 2];
@@ -744,7 +750,8 @@ void orthogonal::move_points(int pt_from, int pt_to,
 				root /* root */,
 				verbose_level - 2);
 		F->mult_matrix_matrix(input_coords,
-				T, tmp_coords, nb, n, n);
+				T, tmp_coords, nb, n, n,
+				0 /* verbose_level */);
 		input_coords2 = tmp_coords;
 		}
 	else {
@@ -757,7 +764,8 @@ void orthogonal::move_points(int pt_from, int pt_to,
 			pt_to /* to */,
 			root /* root */,
 			verbose_level - 2);
-	F->mult_matrix_matrix(input_coords2, T, output_coords, nb, 5, 5);
+	F->mult_matrix_matrix(input_coords2, T, output_coords, nb, 5, 5,
+			0 /* verbose_level */);
 
 	if (tmp_coords) FREE_int(tmp_coords);
 	
@@ -2390,7 +2398,8 @@ void orthogonal::unrank_line_L1(
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < n - 2; i++) {
@@ -2451,7 +2460,8 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 			T1[1] = T1[2] = 1;
 			}
 		F->invert_matrix(T1, T2, n - 2);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < n - 2; i++) 
@@ -2613,7 +2623,8 @@ void orthogonal::unrank_line_L2(
 			cout << "the Siegel map is" << endl;
 			print_integer_matrix(cout, T1, n - 2, n - 2);
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < n - 2; i++) {
@@ -2725,7 +2736,8 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 			T1[1] = T1[2] = 1;
 			}
 		F->invert_matrix(T1, T2, n - 2);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < n - 2; i++) 
@@ -2933,7 +2945,8 @@ void orthogonal::unrank_line_L3(
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < n - 2; i++) 
@@ -3003,7 +3016,8 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 			T1[1] = T1[2] = 1;
 			}
 		F->invert_matrix(T1, T2, n - 2);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		v1[n - 2] = v2[n - 2];
 		v1[n - 1] = v2[n - 1];
 		}
@@ -3132,7 +3146,8 @@ void orthogonal::unrank_line_L4(
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		}
 	else {
 		for (i = 0; i < n - 2; i++) 
@@ -3199,7 +3214,8 @@ int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 			T1[1] = T1[2] = 1;
 			}
 		F->invert_matrix(T1, T2, n - 2);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2);
+		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+				0 /* verbose_level */);
 		v1[n - 2] = v2[n - 2];
 		v1[n - 1] = v2[n - 1];
 		}
@@ -7056,7 +7072,8 @@ void orthogonal::Siegel_move_forward(
 		}
 	subspace->Siegel_Transformation(T1,
 			rk1_subspace, rk2_subspace, root, verbose_level - 2);
-	F->mult_matrix_matrix(v3, T1, v4, 1, n - 2, n - 2);
+	F->mult_matrix_matrix(v3, T1, v4, 1, n - 2, n - 2,
+			0 /* verbose_level */);
 	v4[n - 2] = v3[n - 2];
 	v4[n - 1] = v3[n - 1];
 	if (f_v) {
@@ -7106,7 +7123,8 @@ void orthogonal::Siegel_move_backward(
 	subspace->Siegel_Transformation(T1,
 			rk1_subspace, rk2_subspace, root, verbose_level - 2);
 	F->invert_matrix(T1, T2, n - 2);
-	F->mult_matrix_matrix(v3, T2, v4, 1, n - 2, n - 2);
+	F->mult_matrix_matrix(v3, T2, v4, 1, n - 2, n - 2,
+			0 /* verbose_level */);
 	v4[n - 2] = v3[n - 2];
 	v4[n - 1] = v3[n - 1];
 	if (f_v) {
@@ -7757,7 +7775,8 @@ void orthogonal::Siegel_Transformation3(int *T,
 		cout << "the matrix Bv is:" << endl;
 		print_integer_matrix(cout, B, n, n);
 		}
-	F->mult_matrix_matrix(w, Bv, z, 1, n, n);
+	F->mult_matrix_matrix(w, Bv, z, 1, n, n,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
 		print_integer_matrix(cout, z, 1, n);
@@ -7768,7 +7787,8 @@ void orthogonal::Siegel_Transformation3(int *T,
 		cout << "the coefficient vector z is:" << endl;
 		print_integer_matrix(cout, z, 1, n);
 		}
-	F->mult_matrix_matrix(z, B, x, 1, n, n);
+	F->mult_matrix_matrix(z, B, x, 1, n, n,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x is:" << endl;
 		print_integer_matrix(cout, x, 1, n);

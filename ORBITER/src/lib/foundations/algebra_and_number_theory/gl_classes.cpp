@@ -949,8 +949,8 @@ void gl_classes::identify_matrix(int *Mtx,
 	
 	F->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
 
-	F->mult_matrix(Basis_inv, Mtx, M2, k, k, k);
-	F->mult_matrix(M2, Basis, M3, k, k, k);
+	F->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k, 0 /* verbose_level */);
+	F->mult_matrix_matrix(M2, Basis, M3, k, k, k, 0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "gl_classes::identify_matrix B^-1 * A * B = " << endl;
@@ -1197,7 +1197,7 @@ void gl_classes::compute_generalized_kernels(matrix_block_data *Data,
 			break;
 			}
 
-		F->mult_matrix(M3, M2, M4, k, k, k);
+		F->mult_matrix_matrix(M3, M2, M4, k, k, k, 0 /* verbose_level */);
 		int_vec_copy(M4, M3, k * k);
 
 		}
@@ -1532,8 +1532,10 @@ void gl_classes::generators_for_centralizer(
 		}
 
 	for (i = 0; i < nb_gens; i++) {
-		F->matrix_inverse(Gens[i], Basis_inv, k, 0 /* verbose_level */);
-		F->mult_matrix(Basis, Basis_inv, M2, k, k, k);
+		F->matrix_inverse(Gens[i], Basis_inv, k,
+				0 /* verbose_level */);
+		F->mult_matrix_matrix(Basis, Basis_inv, M2, k, k, k,
+				0 /* verbose_level */);
 		int_vec_copy(M2, Gens[i], k * k);
 		}
 
@@ -1554,8 +1556,10 @@ void gl_classes::generators_for_centralizer(
 	
 	F->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
 
-	F->mult_matrix(Basis_inv, Mtx, M2, k, k, k);
-	F->mult_matrix(M2, Basis, M3, k, k, k);
+	F->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k,
+			0 /* verbose_level */);
+	F->mult_matrix_matrix(M2, Basis, M3, k, k, k,
+			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "gl_classes::generators_for_centralizer "

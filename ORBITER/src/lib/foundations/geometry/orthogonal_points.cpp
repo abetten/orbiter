@@ -2414,7 +2414,8 @@ void orthogonal_Siegel_map_between_singular_points(int *T,
 		cout << "the matrix Bv = B^{-1} is:" << endl;
 		print_integer_matrix(cout, B, d, d);
 		}
-	GFq.mult_matrix_matrix(w, Bv, z, 1, d, d);
+	GFq.mult_matrix_matrix(w, Bv, z, 1, d, d,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z = w * Bv is:" << endl;
 		int_vec_print(cout, z, d);
@@ -2427,7 +2428,8 @@ void orthogonal_Siegel_map_between_singular_points(int *T,
 		int_vec_print(cout, z, d);
 		cout << endl;
 		}
-	GFq.mult_matrix_matrix(z, B, x, 1, d, d);
+	GFq.mult_matrix_matrix(z, B, x, 1, d, d,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x = z * B is:" << endl;
 		int_vec_print(cout, x, d);

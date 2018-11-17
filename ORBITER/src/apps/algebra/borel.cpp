@@ -197,8 +197,10 @@ void test_borel(int n, int q, int verbose_level)
 		fp << " \\\\" << endl;
 		fp << "\\hline" << endl;
 		
-		F->mult_matrix(B1, M, M1, n, n, n);
-		F->mult_matrix(M1, B2, M2, n, n, n);
+		F->mult_matrix_matrix(B1, M, M1, n, n, n,
+				0 /* verbose_level */);
+		F->mult_matrix_matrix(M1, B2, M2, n, n, n,
+				0 /* verbose_level */);
 		cout << "N:" << endl;
 		int_matrix_print(M, n, n);
 		cout << "B1:" << endl;

@@ -397,8 +397,8 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	B2[2 * 3 + 1] = beta_trinomial(q, beta, 1, 0, 1);
 	B2[2 * 3 + 2] = beta_trinomial(q, beta, 2, 0, 2);
 	
-	mult_matrix(M1, B1, eta, 2, 3, 3);
-	mult_matrix(M2, B2, zeta, 2, 3, 3);
+	mult_matrix_matrix(M1, B1, eta, 2, 3, 3, 0 /* verbose_level */);
+	mult_matrix_matrix(M2, B2, zeta, 2, 3, 3, 0 /* verbose_level */);
 	int eta11, eta12, eta13;
 	int eta21, eta22, eta23;
 	int zeta11, zeta12, zeta13;

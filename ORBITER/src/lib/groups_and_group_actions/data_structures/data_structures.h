@@ -231,6 +231,8 @@ public:
 	int *Elt3;
 	int f_check_image;
 	int f_allow_failure;
+	int nb_calls_to_coset_rep_inv;
+	int nb_calls_to_coset_rep_inv_recursion;
 
 	schreier_vector_handler();
 	~schreier_vector_handler();
@@ -303,49 +305,6 @@ public:
 };
 
 
-#if 0
-int schreier_vector_coset_rep_inv_general(action *A, 
-	int *sv, int *hdl_gen, int pt, 
-	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
-	int f_trivial_group, int f_check_image, 
-	int f_allow_failure, int verbose_level);
-// determines pt0 to be the first point of the orbit containing pt.
-// cosetrep will be a group element that maps pt to pt0.
-int schreier_vector_coset_rep_inv_compact_general(action *A, 
-	int *sv, int *hdl_gen, int pt, 
-	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
-	int f_trivial_group, int f_check_image, 
-	int f_allow_failure, int verbose_level);
-void schreier_vector_coset_rep_inv(action *A, int *sv, int *hdl_gen, int pt, 
-	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
-	int f_trivial_group, int f_compact, int f_check_image, 
-	int verbose_level);
-	// determines pt0 to be the first point of the 
-	// orbit containing pt.
-	// cosetrep will be a group element that maps pt to pt0.
-void schreier_vector_coset_rep_inv_compact(action *A, 
-	int *sv, int *hdl_gen, int pt, 
-	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
-	int f_trivial_group, int f_check_image, 
-	int verbose_level);
-void schreier_vector_coset_rep_inv1(action *A, 
-	int *sv, int *hdl_gen, int pt, 
-	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3);
-
-
-void schreier_vector_print(int *sv);
-void schreier_vector_print_tree(int *sv, int verbose_level);
-int schreier_vector_compute_depth_recursively(int n, 
-	int *Depth, int *pts, int *prev, int pt);
-int sv_number_of_orbits(int *sv);
-void analyze_schreier_vector(int *sv, int verbose_level);
-	// we assume that the group is not trivial
-int schreier_vector_determine_depth_recursion(int n, int *pts, int *prev, 
-	int *depth, int *ancestor, int pos);
-// called from poset_orbit_node_downstep_subspace_action.C:
-void schreier_vector_relabel_points(int *sv, action_on_factor_space *AF,
-	int f_trivial_group, int verbose_level);
-#endif
 
 
 // #############################################################################

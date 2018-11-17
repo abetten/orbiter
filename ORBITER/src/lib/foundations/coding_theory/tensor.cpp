@@ -294,7 +294,8 @@ void create_matrix_M(
 		cout << "M:" << endl;
 		print_integer_matrix_width(cout, M, m, n, n, 2);
 
-		F->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
+		F->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print, M, m, n);
 		}
 
 
@@ -305,7 +306,8 @@ void create_matrix_M(
 		col_sum = NEW_int(m);
 		for (i = 0; i < n; i++)
 			all_one[i] = 1;
-		F->mult_matrix_matrix(M, all_one, col_sum, m, n, 1);
+		F->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
+				0 /* verbose_level */);
 		cout << "overall col_sum:" << endl;
 		print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
 		FREE_int(all_one);
@@ -318,8 +320,10 @@ void create_matrix_M(
 
 
 void create_matrix_H_subfield(finite_field *F, finite_field*f, 
-	int *H_subfield, int *C, int *C_inv, int *M, int m, int n, int beta, int beta_q, 
-	int f_elements_exponential, const char *symbol_for_print, const char *symbol_for_print_subfield, 
+	int *H_subfield, int *C, int *C_inv, int *M,
+	int m, int n, int beta, int beta_q,
+	int f_elements_exponential, const char *symbol_for_print,
+	const char *symbol_for_print_subfield,
 	int f_construction_A, int f_hyperoval, int f_construction_B, 
 	int verbose_level)
 {
@@ -408,7 +412,8 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 	if (f_v) {
 		cout << "matrix C:" << endl;
 		print_integer_matrix_width(cout, C, m, m, m, 2);
-		F->latex_matrix(cout, f_elements_exponential, symbol_for_print, C, m, m);
+		F->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print, C, m, m);
 		}
 
 
@@ -419,7 +424,8 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 		print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 		}
 
-	F->mult_matrix_matrix(C, C_inv, AA, m, m, m);
+	F->mult_matrix_matrix(C, C_inv, AA, m, m, m,
+			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "C * C_inv:" << endl;
@@ -427,12 +433,14 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 		}
 	
 
-	F->mult_matrix_matrix(C, M, H, m, m, n);
+	F->mult_matrix_matrix(C, M, H, m, m, n,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "H = C * M:" << endl;
 		print_integer_matrix_width(cout, H, m, n, n, 2);
-		F->latex_matrix(cout, f_elements_exponential, symbol_for_print, H, m, n);
+		F->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print, H, m, n);
 		}
 	
 	
@@ -448,7 +456,8 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 	if (f_v) {
 		cout << "H_subfield:" << endl;
 		print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		f->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
+		f->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print_subfield, H_subfield, m, n);
 		}
 	
 	FREE_int(H);
@@ -457,7 +466,8 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 
 
 
-void tt_field_reduction(finite_field &F, finite_field &f, int m, int n, int *M, int *MM, int verbose_level)
+void tt_field_reduction(finite_field &F, finite_field &f,
+		int m, int n, int *M, int *MM, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -468,7 +478,8 @@ void tt_field_reduction(finite_field &F, finite_field &f, int m, int n, int *M, 
 	q = f.q;
 	index = (Q - 1) / (q - 1);
 	if (f_v) {
-		cout << "field reduction, Q=" << Q << " q=" << q << " index=" << index << endl;
+		cout << "field reduction, Q=" << Q
+				<< " q=" << q << " index=" << index << endl;
 		}
 	if (f_vv) {
 		cout << "before:" << endl;
@@ -487,7 +498,8 @@ void tt_field_reduction(finite_field &F, finite_field &f, int m, int n, int *M, 
 			else {
 				if (f.e == 1) {
 					if (a >= q) {
-						cout << "field reduction: element does not lie in the subfield: " << a << endl;
+						cout << "field reduction: element does not "
+								"lie in the subfield: " << a << endl;
 						exit(1);
 						}
 					c = a;
@@ -741,7 +753,8 @@ void make_tensor_code_9_dimensional(int q,
 		col_sum = NEW_int(m);
 		for (i = 0; i < n; i++)
 			all_one[i] = 1;
-		F.mult_matrix_matrix(M, all_one, col_sum, m, n, 1);
+		F.mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
+				0 /* verbose_level */);
 		cout << "col_sum:" << endl;
 		print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
 		FREE_int(all_one);
@@ -768,13 +781,15 @@ void make_tensor_code_9_dimensional(int q,
 	{
 	int *AA;
 	AA = NEW_int(m * m);
-	F.mult_matrix_matrix(C, C_inv, AA, m, m, m);
+	F.mult_matrix_matrix(C, C_inv, AA, m, m, m,
+			0 /* verbose_level */);
 	cout << "C * C_inv:" << endl;
 	print_integer_matrix_width(cout, AA, m, m, m, 2);
 	FREE_int(AA);
 	}
 
-	F.mult_matrix_matrix(C, M, H, m, m, n);
+	F.mult_matrix_matrix(C, M, H, m, m, n,
+			0 /* verbose_level */);
 	cout << "H = C * M:" << endl;
 	print_integer_matrix_width(cout, H, m, n, n, 2);
 	

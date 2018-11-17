@@ -114,10 +114,12 @@ void action_by_representation::compute_image_int_low_level(
 	int i, f;
 	
 	if (f_v) {
-		cout << "action_by_representation::compute_image_int_low_level" << endl;
+		cout << "action_by_representation::compute_image_int_low_level"
+				<< endl;
 		}
 	if (f_vv) {
-		cout << "action_by_representation::compute_image_int_low_level: x=";
+		cout << "action_by_representation::compute_image_int_low_level: "
+				"x=";
 		int_vec_print(cout, x, dimension);
 		cout << endl;
 		}
@@ -144,11 +146,14 @@ void action_by_representation::compute_image_int_low_level(
 
 	if (f_v) {
 		cout << "A=" << endl;
-		print_integer_matrix_width(cout, AA, 3, 3, 3, F->log10_of_q);
+		print_integer_matrix_width(cout,
+				AA, 3, 3, 3, F->log10_of_q);
 		}
-	F->mult_matrix(x, AA, xA, 1, 3, 3);
+	F->mult_matrix_matrix(x, AA, xA, 1, 3, 3,
+			0 /* verbose_level */);
 	if (f_vv) {
-		cout << "action_by_representation::compute_image_int_low_level: xA=";
+		cout << "action_by_representation::compute_image_int_low_level: "
+				"xA=";
 		int_vec_print(cout, xA, dimension);
 		cout << endl;
 		}
@@ -164,7 +169,8 @@ void action_by_representation::compute_image_int_low_level(
 			}
 		}
 	if (f_v) {
-		cout << "action_by_representation::compute_image_int_low_level done" << endl;
+		cout << "action_by_representation::compute_image_int_low_level "
+				"done" << endl;
 		}
 }
 

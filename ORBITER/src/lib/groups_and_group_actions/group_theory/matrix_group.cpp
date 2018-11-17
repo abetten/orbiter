@@ -1109,7 +1109,8 @@ void matrix_group::GL_mult_internal(
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->mult_matrix_matrix" << endl;
 				}
-			GFq->mult_matrix_matrix(A, B, AB, n, n, n);
+			GFq->mult_matrix_matrix(A, B, AB, n, n, n,
+					0 /* verbose_level */);
 			}
 		}
 	else if (f_affine) {
@@ -1142,7 +1143,8 @@ void matrix_group::GL_mult_internal(
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->mult_matrix_matrix" << endl;
 				}
-			GFq->mult_matrix_matrix(A, B, AB, n, n, n);
+			GFq->mult_matrix_matrix(A, B, AB, n, n, n,
+					0 /* verbose_level */);
 			}
 		}
 	else {

@@ -102,7 +102,7 @@ void schreier::init_images(int nb_images, int verbose_level)
 		cout << "schreier::init_images" << endl;
 		}
 	if (A == NULL) {
-		cout << "schreier::init_images() action is NULL" << endl;
+		cout << "schreier::init_images action is NULL" << endl;
 		exit(1);
 		}
 	delete_images();
@@ -284,7 +284,8 @@ int schreier::get_image(int i, int gen_idx, int verbose_level)
 		}
 	if (f_v) {
 		cout << "schreier::get_image image of point "
-				<< i << " under generator " << gen_idx << " is " << a << endl;
+				<< i << " under generator " << gen_idx
+				<< " is " << a << endl;
 		}
 	return a;
 }
@@ -449,142 +450,6 @@ void schreier::coset_rep_inv(int j)
 		}
 	else {
 		A->element_one(cosetrep, 0);
-		}
-}
-
-void schreier::shallow_tree_generators(int orbit_idx,
-		schreier *&shallow_tree,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int fst, len, root, cnt, l;
-	int i, j, a, f, o;
-	int *Elt1, *Elt2;
-	int *candidates;
-	int nb_candidates;
-
-	if (f_v) {
-		cout << "schreier::shallow_tree_generators " << endl;
-		cout << "computing shallow tree for orbit " << orbit_idx
-				<< " in action " << A->label << endl;
-		}
-	fst = orbit_first[orbit_idx];
-	len = orbit_len[orbit_idx];
-	root = orbit[fst];
-
-	vector_ge *gens;
-
-	candidates = NEW_int(len);
-
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-
-	gens = new vector_ge;
-
-	gens->init(A);
-	cnt = 0;
-	while (TRUE) {
-		if (f_v) {
-			cout << "schreier::shallow_tree_generators "
-					"iteration " << cnt << ":" << endl;
-		}
-		schreier *S;
-
-		S = new schreier;
-		S->init(A);
-		S->init_generators(*gens);
-		if (f_v) {
-			cout << "schreier::shallow_tree_generators "
-					"iteration " << cnt
-					<< " before compute_point_orbit:" << endl;
-		}
-		S->compute_point_orbit_with_limited_depth(root,
-				gens->len, 0 /*verbose_level*/);
-		//S->compute_point_orbit(root, 0 /*verbose_level*/);
-		l = S->orbit_len[0];
-		if (f_v) {
-			cout << "schreier::shallow_tree_generators "
-					"iteration " << cnt
-					<< " after compute_point_orbit, "
-					"found an orbit of length " << l << endl;
-		}
-		if (l == len) {
-			shallow_tree = S;
-			break;
-		}
-
-		// find an element that belongs to the original orbit
-		// (i.e., the bad Schreier tree) but not
-		// to the new orbit (the good Schreier tree).
-		// When l < len, such an element must exist.
-		nb_candidates = 0;
-		f = S->orbit_first[0];
-		for (i = 0; i < len; i++) {
-			a = orbit[fst + i];
-			j = S->orbit_inv[a];
-			if (j >= f + l) {
-				candidates[nb_candidates++] = a;
-			}
-		}
-
-		if (nb_candidates == 0) {
-			cout << "schreier::shallow_tree_generators "
-					"did not find element in orbit" << endl;
-			exit(1);
-		}
-		if (f_v) {
-			cout << "schreier::shallow_tree_generators "
-					"found " << nb_candidates
-					<< " candidates of points outside the orbit" << endl;
-		}
-		j = random_integer(nb_candidates);
-		//j = 0;
-		if (f_v) {
-			cout << "schreier::shallow_tree_generators "
-					"picking random candidate " << j << " / "
-					<< nb_candidates << endl;
-		}
-		a = candidates[j];
-		if (f_v) {
-			cout << "schreier::shallow_tree_generators "
-					"found point " << a << " outside of orbit" << endl;
-		}
-		// our next generator will be the transporter from
-		// the root node to the node we just found in the
-		// old (bad) Schreier tree:
-		transporter_from_orbit_rep_to_point(a,
-				o, Elt1, 0 /*verbose_level*/);
-		if (f_v) {
-			cout << "schreier::shallow_tree_generators "
-					"new generator is:" << endl;
-			A->element_print_quick(Elt1, cout);
-			int o;
-
-			o = A->element_order(Elt1);
-			cout << "The order of the element is: " << o << endl;
-		}
-		A->element_invert(Elt1, Elt2, 0);
-		// append the generator and its inverse to the generating set:
-		gens->append(Elt1);
-		gens->append(Elt2);
-		delete S;
-		cnt++;
-
-	}
-	if (f_v) {
-		cout << "schreier::shallow_tree_generators cnt=" << cnt
-				<< " number of generators=" << gens->len << endl;
-		cout << "done" << endl;
-		}
-
-	FREE_int(candidates);
-	delete gens;
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-
-	if (f_v) {
-		cout << "schreier::shallow_tree_generators " << endl;
-		cout << "done" << endl;
 		}
 }
 
@@ -2139,33 +2004,6 @@ void schreier::list_elements_as_permutations_vertically(ostream &ost)
 }
 
 
-schreier_vector *schreier::get_schreier_vector(
-	int gen_hdl_first, int nb_gen, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "schreier::get_schreier_vector" << endl;
-	}
-	//int *sv;
-	schreier_vector * Schreier_vector;
-	int f_trivial_group = FALSE;
-
-	if (nb_gen == 0) {
-		f_trivial_group = TRUE;
-	}
-
-	Schreier_vector = NEW_OBJECT(schreier_vector);
-	//get_schreier_vector_compact(sv, f_trivial_group);
-	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
-	Schreier_vector->init_from_schreier(this,
-			f_trivial_group, verbose_level);
-	if (f_v) {
-		cout << "schreier::get_schreier_vector done" << endl;
-	}
-	return Schreier_vector;
-}
-
 void schreier::create_point_list_sorted(
 		int *&point_list, int &point_list_length)
 {
@@ -2196,93 +2034,167 @@ void schreier::create_point_list_sorted(
 	int_vec_heapsort(point_list, point_list_length);
 }
 
-#if 0
-void schreier::get_schreier_vector_compact(int *&sv,
-	int f_trivial_group)
-// allocated and creates array sv[size] using NEW_int
-// where size is n + 1 if  f_trivial_group is TRUE
-// and size is 3 * n + 1 otherwise
-// Here, n is the combined size of all orbits counted by nb_orbits
-// sv[0] is equal to n
-// sv + 1 is the array point_list of size [n],
-// listing the point in increasing order
-// Unless f_trivial_group, sv + 1 + n is the array prev[n] and
-// sv + 1 + 2 * n is the array label[n]
-{
-	int i, j, p, pr, la, n = 0;
-	int *point_list;
-
-	create_point_list_sorted(point_list, n);
-
-
-	if (f_trivial_group) {
-		sv = NEW_int(n + 1);
-		}
-	else {
-		sv = NEW_int(3 * n + 1);
-		}
-	sv[0] = n;
-	for (i = 0; i < n; i++) {
-		sv[1 + i] = point_list[i];
-		}
-	if (!f_trivial_group) {
-		for (i = 0; i < n; i++) {
-			p = point_list[i];
-			j = orbit_inv[p];
-			pr = prev[j];
-			la = label[j];
-			sv[1 + n + i] = pr;
-			sv[1 + 2 * n + i] = la;
-			}
-		}
-	FREE_int(point_list);
-}
-#endif
-
-#if 0
-void schreier::test_sv(action *A,
-	int *hdl_strong_generators, int *sv,
-	int f_trivial_group, int f_compact,
-	int verbose_level)
+void schreier::shallow_tree_generators(int orbit_idx,
+		schreier *&shallow_tree,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *crep, *Elt1, *Elt2, *Elt3;
+	int fst, len, root, cnt, l;
+	int i, j, a, f, o;
+	int *Elt1, *Elt2;
+	int *candidates;
+	int nb_candidates;
 
-	crep = NEW_int(A->elt_size_in_int);
+	if (f_v) {
+		cout << "schreier::shallow_tree_generators " << endl;
+		cout << "computing shallow tree for orbit " << orbit_idx
+				<< " in action " << A->label << endl;
+		}
+	fst = orbit_first[orbit_idx];
+	len = orbit_len[orbit_idx];
+	root = orbit[fst];
+
+	vector_ge *gens;
+
+	candidates = NEW_int(len);
+
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-	int k, i, j, pt, pt0;
-	int f_check_image = FALSE;
 
-	if (f_v) {
-		cout << "testing the schreier vector" << endl;
+	gens = new vector_ge;
+
+	gens->init(A);
+	cnt = 0;
+	while (TRUE) {
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"iteration " << cnt << ":" << endl;
 		}
-	for (k = 0; k < nb_orbits; k++) {
-		for (j = 0; j < orbit_len[k]; j++) {
-			i = orbit_first[k] + j;
-			pt = orbit[i];
-			coset_rep_inv(i);
-			schreier_vector_coset_rep_inv(
-				A, sv, hdl_strong_generators, pt, pt0,
-				crep, Elt1, Elt2, Elt3,
-				f_trivial_group, f_compact,
-				f_check_image, verbose_level - 4);
-			A->element_invert(crep, Elt1, 0);
-			A->element_mult(cosetrep, Elt1, Elt2, 0);
-			if (!A->element_is_one(Elt2, 0)) {
-				cout << "schreier::test_sv() test fails" << endl;
-				exit(1);
-				}
+		schreier *S;
+
+		S = new schreier;
+		S->init(A);
+		S->init_generators(*gens);
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"iteration " << cnt
+					<< " before compute_point_orbit:" << endl;
+		}
+		S->compute_point_orbit_with_limited_depth(root,
+				gens->len, 0 /*verbose_level*/);
+		//S->compute_point_orbit(root, 0 /*verbose_level*/);
+		l = S->orbit_len[0];
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"iteration " << cnt
+					<< " after compute_point_orbit, "
+					"found an orbit of length " << l << endl;
+		}
+		if (l == len) {
+			shallow_tree = S;
+			break;
+		}
+
+		// find an element that belongs to the original orbit
+		// (i.e., the bad Schreier tree) but not
+		// to the new orbit (the good Schreier tree).
+		// When l < len, such an element must exist.
+		nb_candidates = 0;
+		f = S->orbit_first[0];
+		for (i = 0; i < len; i++) {
+			a = orbit[fst + i];
+			j = S->orbit_inv[a];
+			if (j >= f + l) {
+				candidates[nb_candidates++] = a;
 			}
 		}
-	if (f_v) {
-		cout << "sv test passed" << endl;
+
+		if (nb_candidates == 0) {
+			cout << "schreier::shallow_tree_generators "
+					"did not find element in orbit" << endl;
+			exit(1);
 		}
-	FREE_int(crep);
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"found " << nb_candidates
+					<< " candidates of points outside the orbit" << endl;
+		}
+		j = random_integer(nb_candidates);
+		//j = 0;
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"picking random candidate " << j << " / "
+					<< nb_candidates << endl;
+		}
+		a = candidates[j];
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"found point " << a << " outside of orbit" << endl;
+		}
+		// our next generator will be the transporter from
+		// the root node to the node we just found in the
+		// old (bad) Schreier tree:
+		transporter_from_orbit_rep_to_point(a,
+				o, Elt1, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators "
+					"new generator is:" << endl;
+			A->element_print_quick(Elt1, cout);
+			int o;
+
+			o = A->element_order(Elt1);
+			cout << "The order of the element is: " << o << endl;
+		}
+		A->element_invert(Elt1, Elt2, 0);
+		// append the generator and its inverse to the generating set:
+		gens->append(Elt1);
+		gens->append(Elt2);
+		delete S;
+		cnt++;
+
+	}
+	if (f_v) {
+		cout << "schreier::shallow_tree_generators cnt=" << cnt
+				<< " number of generators=" << gens->len << endl;
+		cout << "done" << endl;
+		}
+
+	FREE_int(candidates);
+	delete gens;
 	FREE_int(Elt1);
 	FREE_int(Elt2);
-	FREE_int(Elt3);
+
+	if (f_v) {
+		cout << "schreier::shallow_tree_generators " << endl;
+		cout << "done" << endl;
+		}
 }
-#endif
+
+
+schreier_vector *schreier::get_schreier_vector(
+	int gen_hdl_first, int nb_gen, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::get_schreier_vector" << endl;
+	}
+	//int *sv;
+	schreier_vector * Schreier_vector;
+	int f_trivial_group = FALSE;
+
+	if (nb_gen == 0) {
+		f_trivial_group = TRUE;
+	}
+
+	Schreier_vector = NEW_OBJECT(schreier_vector);
+	//get_schreier_vector_compact(sv, f_trivial_group);
+	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
+	Schreier_vector->init_from_schreier(this,
+			f_trivial_group, verbose_level);
+	if (f_v) {
+		cout << "schreier::get_schreier_vector done" << endl;
+	}
+	return Schreier_vector;
+}
 

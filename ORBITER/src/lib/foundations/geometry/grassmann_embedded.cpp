@@ -192,7 +192,8 @@ void grassmann_embedded::unrank_embedded_int(
 				M, n, big_n, big_n, F->log10_of_q);
 		}
 	F->mult_matrix_matrix(G->M, M,
-			subspace_basis_with_embedding, n /* not k */, n, big_n);
+			subspace_basis_with_embedding, n /* not k */, n, big_n,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_embedded_int "
 				"subspace_basis:" << endl;
@@ -247,7 +248,8 @@ void grassmann_embedded::unrank_int(
 			M, n, big_n, big_n, F->log10_of_q);
 		}
 	F->mult_matrix_matrix(G->M, M,
-			subspace_basis, k, n, big_n);
+			subspace_basis, k, n, big_n,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_int "
 			"subspace_basis:" << endl;
@@ -283,7 +285,8 @@ int grassmann_embedded::rank_int(
 		print_integer_matrix_width(cout,
 				tmp_M1, k, n, n, F->log10_of_q);
 		}
-	F->mult_matrix_matrix(tmp_M1, transform, tmp_M2, k, n, n);
+	F->mult_matrix_matrix(tmp_M1, transform, tmp_M2, k, n, n,
+			0 /* verbose_level */);
 
 	// now tmp_M2 is k x n
 	// tmp_M2 is the coefficient matrix that defines

@@ -132,7 +132,8 @@ void recoordinatize::do_recoordinatize(
 		print_integer_matrix_width(cout,
 				AAv, n, n, n, F->log10_of_q + 1);
 		}
-	F->mult_matrix_matrix(M, AAv, N, 3 * k, n, n);
+	F->mult_matrix_matrix(M, AAv, N, 3 * k, n, n,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "N:" << endl;
 		print_integer_matrix_width(cout,
@@ -190,14 +191,16 @@ void recoordinatize::do_recoordinatize(
 		}
 
 	
-	F->mult_matrix_matrix(AAv, B, C, n, n, n);
+	F->mult_matrix_matrix(AAv, B, C, n, n, n,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "C:" << endl;
 		print_integer_matrix_width(cout,
 				C, n, n, n, F->log10_of_q + 1);
 		}
 	
-	F->mult_matrix_matrix(M, C, M1, 3 * k, n, n);
+	F->mult_matrix_matrix(M, C, M1, 3 * k, n, n,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "M1:" << endl;
 		print_integer_matrix_width(cout,
