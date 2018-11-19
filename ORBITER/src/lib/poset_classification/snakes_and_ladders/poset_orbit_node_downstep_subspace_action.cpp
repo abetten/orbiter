@@ -249,7 +249,7 @@ void poset_orbit_node::setup_factor_space_action(
 	FREE_int(coordinates);
 }
 
-void poset_orbit_node::downstep_subspace_action(
+void poset_orbit_node::compute_flag_orbits_subspace_action(
 	poset_classification *gen,
 	int lvl, 
 	int f_create_schreier_vector,
@@ -259,7 +259,7 @@ void poset_orbit_node::downstep_subspace_action(
 // called from generator::downstep
 {
 	//if (node == 0) {verbose_level += 20;
-	// cout << "poset_orbit_node::downstep_subspace_action "
+	// cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 	//"node 0 reached" << endl;}
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -274,7 +274,7 @@ void poset_orbit_node::downstep_subspace_action(
 
 
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action" << endl;
 		}
 	store_set(gen, lvl - 1); // stores a set of size lvl to gen->S
 	
@@ -327,7 +327,7 @@ void poset_orbit_node::downstep_subspace_action(
 	if (gen->f_early_test_func) {
 
 		if (f_v) {
-			cout << "poset_orbit_node::downstep_subspace_action "
+			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"before setup_factor_space_action_with_early_test"
 					<< endl;
 			}
@@ -336,7 +336,7 @@ void poset_orbit_node::downstep_subspace_action(
 			lvl, verbose_level - 2);
 
 		if (f_v) {
-			cout << "poset_orbit_node::downstep_subspace_action "
+			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"after setup_factor_space_action_with_early_test"
 					<< endl;
 			}
@@ -344,7 +344,7 @@ void poset_orbit_node::downstep_subspace_action(
 		}
 	else {
 		if (f_v) {
-			cout << "poset_orbit_node::downstep_subspace_action "
+			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"before setup_factor_space_action" << endl;
 			}
 		setup_factor_space_action(gen,
@@ -352,14 +352,14 @@ void poset_orbit_node::downstep_subspace_action(
 				TRUE /*f_compute_tables*/,
 				verbose_level - 7);
 		if (f_v) {
-			cout << "poset_orbit_node::downstep_subspace_action "
+			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"after setup_factor_space_action" << endl;
 			}
 		}
 	
 	
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before Schreier.init" << endl;
 		}
 
@@ -370,7 +370,7 @@ void poset_orbit_node::downstep_subspace_action(
 
 
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before Schreier.init_generators_by_hdl" << endl;
 		}
 	Schreier->init_generators_by_hdl(
@@ -379,7 +379,7 @@ void poset_orbit_node::downstep_subspace_action(
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before downstep_orbits_subspace_action" << endl;
 		}
 	downstep_orbits_subspace_action(
@@ -394,23 +394,24 @@ void poset_orbit_node::downstep_subspace_action(
 
 	nb_orbits = Schreier->nb_orbits;
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"after downstep_orbits_subspace_action "
 				"nb_orbits=" << nb_orbits << endl;
 		}
 	
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before create_schreier_vector_wrapper_subspace_action "
 				<< endl;
 		}
 	create_schreier_vector_wrapper_subspace_action(
+		gen,
 		f_create_schreier_vector, 
 		*Schreier, 
 		A_factor_space, AF, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"after create_schreier_vector_wrapper_subspace_action "
 				<< endl;
 		}
@@ -440,7 +441,7 @@ void poset_orbit_node::downstep_subspace_action(
 		cout << " : calling find_extensions_subspace_action" << endl;
 		}
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before find_extensions_subspace_action" << endl;
 		}
 	find_extensions_subspace_action(
@@ -449,7 +450,7 @@ void poset_orbit_node::downstep_subspace_action(
 		lvl, f_implicit_fusion,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"after find_extensions_subspace_action" << endl;
 		}
 	if (f_v4) {
@@ -473,7 +474,7 @@ void poset_orbit_node::downstep_subspace_action(
 			verbose_level);
 		}
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action "
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before deleting things" << endl;
 		}
 	FREE_OBJECT(Strong_gens);
@@ -481,7 +482,8 @@ void poset_orbit_node::downstep_subspace_action(
 	FREE_OBJECT(A_factor_space);
 	FREE_OBJECT(AF);
 	if (f_v) {
-		cout << "poset_orbit_node::downstep_subspace_action done" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
+				"done" << endl;
 		}
 
 }

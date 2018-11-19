@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 	F = NEW_OBJECT(finite_field);
 	
 	F->init(q, verbose_level - 1);
-	F->print(TRUE);
+	F->print();
 	
 	if (epsilon == 0) {
 		c1 = 1;

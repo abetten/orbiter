@@ -299,7 +299,7 @@ void blt_set::init_group(int verbose_level)
 
 
 	if (FALSE /*f_vv*/) {
-		O->F->print(FALSE);
+		O->F->print();
 		}
 
 

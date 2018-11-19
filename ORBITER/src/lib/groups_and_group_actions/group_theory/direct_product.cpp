@@ -155,14 +155,17 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	base_len_in_component1 = M1->base_len(verbose_level);
 	if (f_v) {
 		cout << "direct_product::init "
-				"base_len_in_component1 = " << base_len_in_component1 << endl;
+				"base_len_in_component1 = "
+				<< base_len_in_component1 << endl;
 	}
 	base_len_in_component2 = M2->base_len(verbose_level);
 	if (f_v) {
 		cout << "direct_product::init "
-				"base_len_in_component1 = " << base_len_in_component1 << endl;
+				"base_len_in_component1 = "
+				<< base_len_in_component1 << endl;
 		cout << "direct_product::init "
-				"base_len_in_component2 = " << base_len_in_component2 << endl;
+				"base_len_in_component2 = "
+				<< base_len_in_component2 << endl;
 	}
 	base_for_component1 = NEW_int(base_len_in_component1);
 	tl_for_component1 = NEW_int(base_len_in_component1);
@@ -174,11 +177,13 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component1 = ";
-		int_vec_print(cout, base_for_component1, base_len_in_component1);
+		int_vec_print(cout, base_for_component1,
+				base_len_in_component1);
 		cout << endl;
 		cout << "direct_product::init "
 				"tl_for_component1 = ";
-		int_vec_print(cout, tl_for_component1, base_len_in_component1);
+		int_vec_print(cout, tl_for_component1,
+				base_len_in_component1);
 		cout << endl;
 	}
 
@@ -193,11 +198,13 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component2 = ";
-		int_vec_print(cout, base_for_component2, base_len_in_component2);
+		int_vec_print(cout, base_for_component2,
+				base_len_in_component2);
 		cout << endl;
 		cout << "direct_product::init "
 				"tl_for_component2 = ";
-		int_vec_print(cout, tl_for_component2, base_len_in_component2);
+		int_vec_print(cout, tl_for_component2,
+				base_len_in_component2);
 		cout << endl;
 	}
 
@@ -487,12 +494,15 @@ void direct_product::make_element(int *Elt, int *data, int verbose_level)
 		int_vec_print(cout, data, make_element_size);
 		cout << endl;
 	}
-	M1->make_element(Elt + offset_i(0), data,
+	M1->make_element(Elt + offset_i(0),
+			data,
 			0 /* verbose_level */);
-	M2->make_element(Elt + offset_i(1), data + M1->make_element_size,
+	M2->make_element(Elt + offset_i(1),
+			data + M1->make_element_size,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "direct_product::make_element created this element:" << endl;
+		cout << "direct_product::make_element "
+				"created this element:" << endl;
 		element_print_easy(Elt, cout);
 	}
 	if (f_v) {
@@ -587,9 +597,11 @@ void direct_product::make_strong_generators_data(int *&data,
 				"before strong_generators_for_general_linear_group" << endl;
 	}
 	M1->strong_generators_low_level(
-			GL1_data, GL1_size, GL1_nb_gens, verbose_level - 1);
+			GL1_data, GL1_size, GL1_nb_gens,
+			verbose_level - 1);
 	M2->strong_generators_low_level(
-			GL2_data, GL2_size, GL2_nb_gens, verbose_level - 1);
+			GL2_data, GL2_size, GL2_nb_gens,
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "direct_product::make_strong_generators_data "
@@ -673,19 +685,24 @@ void direct_product::lift_generators(
 	A1->element_one(Elt1, 0 /* verbose_level */);
 	A2->element_one(Elt2, 0 /* verbose_level */);
 	for (i = 0; i < len1; i++) {
-		A1->element_move(SG1->gens->ith(i), Elt3, 0 /* verbose_level */);
+		A1->element_move(SG1->gens->ith(i),
+				Elt3, 0 /* verbose_level */);
 		A2->element_move(Elt2,
-				Elt3 + A1->elt_size_in_int, 0 /* verbose_level */);
+				Elt3 + A1->elt_size_in_int,
+				0 /* verbose_level */);
 		A->element_move(Elt3, gens->ith(i), 0);
 	}
 	for (i = 0; i < len2; i++) {
-		A1->element_move(Elt1, Elt3, 0 /* verbose_level */);
+		A1->element_move(Elt1, Elt3,
+				0 /* verbose_level */);
 		A2->element_move(SG2->gens->ith(i),
-				Elt3 + A1->elt_size_in_int, 0 /* verbose_level */);
+				Elt3 + A1->elt_size_in_int,
+				0 /* verbose_level */);
 		A->element_move(Elt3, gens->ith(len1 + i), 0);
 	}
 	if (f_v) {
-		cout << "direct_product::lift_generators the generators are:" << endl;
+		cout << "direct_product::lift_generators "
+				"the generators are:" << endl;
 		gens->print_quick(cout);
 	}
 	SG1->group_order(go1);

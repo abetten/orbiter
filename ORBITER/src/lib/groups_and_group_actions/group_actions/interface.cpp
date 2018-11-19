@@ -41,7 +41,8 @@ int induced_action_element_image_of(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		ABRM->compute_image(sub, Elt, a, b, verbose_level - 1);
@@ -77,7 +78,8 @@ int induced_action_element_image_of(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		b = ABC->compute_image(sub, Elt, a, verbose_level - 1);
@@ -108,7 +110,8 @@ int induced_action_element_image_of(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		AD->compute_image(sub, Elt, a, b, verbose_level - 1);
@@ -133,7 +136,8 @@ int induced_action_element_image_of(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
@@ -159,7 +163,8 @@ int induced_action_element_image_of(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 #endif
@@ -176,7 +181,8 @@ int induced_action_element_image_of(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
@@ -202,7 +208,8 @@ int induced_action_element_image_of(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		b = SubfieldStructure->compute_image_int(
@@ -482,7 +489,8 @@ void induced_action_element_image_of_low_level(action &A,
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_image_of "
-					"type action_by_restriction_t, no subaction" << endl;
+					"type action_by_restriction_t, "
+					"no subaction" << endl;
 			exit(1);
 			}
 		sub->image_of_low_level(elt, input, output, verbose_level - 1);
@@ -500,7 +508,8 @@ void induced_action_element_image_of_low_level(action &A,
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of no subaction" << endl;
+			cout << "induced_action_element_image_of "
+					"no subaction" << endl;
 			exit(1);
 			}
 		ABC->compute_image(sub, Elt, a, b, verbose_level - 1);

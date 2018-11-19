@@ -498,8 +498,8 @@ public:
 		int f_debug, 
 		int f_write_candidate_file, 
 		int verbose_level);
-		// calls downstep, upstep
-	void downstep(int size,
+		// calls compute_flag_orbits, upstep
+	void compute_flag_orbits(int size,
 		int f_create_schreier_vector,
 		int f_use_invariant_subset_if_available, 
 		int verbose_level);
@@ -693,6 +693,8 @@ public:
 		int verbose_level);
 	void create_schreier_tree_fname_mask_base(
 			char *fname_mask, int node);
+	void create_shallow_schreier_tree_fname_mask_base(
+			char *fname_mask, int node);
 
 	// poset_classification_recognize.C:
 	void recognize_start_over(
@@ -797,6 +799,8 @@ public:
 	void print_extensions(poset_classification *gen);
 	void reconstruct_extensions_from_sv(poset_classification *gen,
 		int verbose_level);
+	int nb_extension_points();
+		// sums up the lengths of orbits in all extensions
 
 	// in poset_orbit_node_group_theory.C:
 	void store_strong_generators(poset_classification *gen,
@@ -840,11 +844,13 @@ public:
 		int pt, int pt_orbit_len,
 		int verbose_level);
 	void create_schreier_vector_wrapper(
+		poset_classification *gen,
 		int f_create_schreier_vector,
 		schreier &Schreier, int verbose_level);
 		// called from downstep_orbit_test_and_schreier_vector
 		// calls Schreier.get_schreier_vector
 	void create_schreier_vector_wrapper_subspace_action(
+		poset_classification *gen,
 		int f_create_schreier_vector,
 		schreier &Schreier,
 		action *A_factor_space, action_on_factor_space *AF,
@@ -865,6 +871,18 @@ public:
 	void write_file(action *A, FILE *fp, int &nb_group_elements, 
 		int verbose_level);
 	int calc_size_on_file(action *A, int verbose_level);
+	void save_schreier_forest(
+		poset_classification *PC,
+		schreier *Schreier,
+		int verbose_level);
+	void save_shallow_schreier_forest(
+		poset_classification *PC,
+		int verbose_level);
+	void draw_schreier_forest(
+		poset_classification *PC,
+		schreier *Schreier,
+		int f_using_invariant_subset, action *AR,
+		int verbose_level);
 
 
 	// poset_orbit_node_upstep.C:
@@ -930,13 +948,14 @@ public:
 
 	// poset_orbit_node_downstep.C
 	// top level functions:
-	void downstep(poset_classification *gen,
+	void compute_flag_orbits(
+		poset_classification *gen,
 		int lvl, 
 		int f_create_schreier_vector,
 		int f_use_invariant_subset_if_available, 
 		int f_implicit_fusion, 
 		int verbose_level);
-		// Called from poset_classification::downstep
+		// Called from poset_classification::compute_flag_orbits
 		// if we are acting on sets
 		// (i.e., not on subspaces).
 		// Calls downstep_orbits, 
@@ -950,12 +969,11 @@ public:
 		// and Schreier.get_schreier_vector
 
 		// 1st level under downstep:
-	void downstep_orbits(
+	void schreier_forest(
 		poset_classification *gen, schreier &Schreier, action &AR, 
 		int lvl, 
 		int f_use_invariant_subset_if_available, 
 		int &f_using_invariant_subset, 
-		int &f_node_is_dead_because_of_clique_testing, 
 		int verbose_level);
 		// calls downstep_get_invariant_subset, 
 		// downstep_apply_early_test, 
@@ -1038,8 +1056,6 @@ public:
 		// called from downstep_implicit_fusion
 		// eliminates implicit fusion orbits from the 
 		// Schreier data structure, 
-	int nb_extension_points();
-		// sums up the lengths of orbits in all extensions
 	void check_orbits(poset_classification *gen, 
 		schreier &Schreier, action &AR, 
 		int f_using_invariant_subset, 
@@ -1090,7 +1106,7 @@ public:
 		int lvl, 
 		int f_print_orbits, 
 		int verbose_level);
-	void downstep_subspace_action(
+	void compute_flag_orbits_subspace_action(
 		poset_classification *gen,
 		int lvl, 
 		int f_create_schreier_vector,

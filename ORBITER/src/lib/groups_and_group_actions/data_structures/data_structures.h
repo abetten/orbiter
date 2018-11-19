@@ -131,6 +131,11 @@ public:
 	int next_free_entry;
 	int nb_free_entries;
 	
+	int f_elt_print_function;
+	void (* elt_print)(void *p, void *data, ostream &ost);
+	void *elt_print_data;
+
+
 	void init(int entry_size, int page_length_log, 
 		int verbose_level);
 	void add_elt_print_function(
@@ -149,9 +154,6 @@ public:
 	~page_storage();
 	void print_storage_used();
 	
-	int f_elt_print_function;
-	void (* elt_print)(void *p, void *data, ostream &ost);
-	void *elt_print_data;
 };
 
 void test_page_storage(int f_v);
@@ -225,6 +227,7 @@ public:
 class schreier_vector_handler {
 public:
 	action *A;
+	action *A2;
 	int *cosetrep;
 	int *Elt1;
 	int *Elt2;
@@ -238,7 +241,8 @@ public:
 	~schreier_vector_handler();
 	void null();
 	void freeself();
-	void init(action *A, int f_allow_failure,
+	void init(action *A, action *A2,
+			int f_allow_failure,
 			int verbose_level);
 	int coset_rep_inv(
 			schreier_vector *S,
@@ -277,6 +281,8 @@ public:
 		// the next 2*n entries only exist if the group is non-trivial:
 		// the next n entries are the previous pointers
 		// the next n entries are the labels
+	int f_has_local_generators;
+	vector_ge *local_gens;
 
 	schreier_vector();
 	~schreier_vector();
@@ -291,6 +297,8 @@ public:
 	int get_number_of_points();
 	int get_number_of_orbits();
 	int count_number_of_orbits();
+	void count_number_of_orbits_and_get_orbit_reps(
+			int *&orbit_reps, int &nb_orbits);
 	int determine_depth_recursion(
 		int n, int *pts, int *prev,
 		int *depth, int *ancestor, int pos);
@@ -302,6 +310,13 @@ public:
 			int verbose_level);
 	void init_from_schreier(schreier *S,
 		int f_trivial_group, int verbose_level);
+	void init_shallow_schreier_forest(schreier *S,
+		int f_trivial_group, int verbose_level);
+	void export_tree_as_layered_graph(
+			int orbit_no, int orbit_rep,
+			const char *fname_mask,
+			int verbose_level);
+	void trace_back(int pt, int &depth);
 };
 
 

@@ -139,10 +139,12 @@ int matrix_group_element_is_one(action &A, void *elt, int verbose_level)
 		}
 	if (f_v) {
 		if (f_is_one) {
-			cout << "matrix_group_element_is_one returns YES" << endl;
+			cout << "matrix_group_element_is_one "
+					"returns YES" << endl;
 			}
 		else {
-			cout << "matrix_group_element_is_one returns NO" << endl;
+			cout << "matrix_group_element_is_one "
+					"returns NO" << endl;
 			}
 		}
 	return f_is_one;
@@ -185,7 +187,8 @@ void matrix_group_element_retrieve(action &A,
 	uchar *p_elt;
 	
 	if (f_v) {
-		cout << "matrix_group_element_retrieve hdl = " << hdl << endl;
+		cout << "matrix_group_element_retrieve "
+				"hdl = " << hdl << endl;
 		}
 	p_elt = G.Elts->s_i(hdl);
 	//if (f_v) {
@@ -211,7 +214,8 @@ int matrix_group_element_store(action &A,
 	G.GL_pack(Elt, G.elt1);
 	hdl = G.Elts->store(G.elt1);
 	if (f_v) {
-		cout << "matrix_group_element_store hdl = " << hdl << endl;
+		cout << "matrix_group_element_store "
+				"hdl = " << hdl << endl;
 		}
 	return hdl;
 }

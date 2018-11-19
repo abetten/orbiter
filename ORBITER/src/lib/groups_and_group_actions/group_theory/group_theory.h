@@ -189,6 +189,8 @@ public:
 	~linear_group_description();
 	void null();
 	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
 	int read_arguments(int argc, const char **argv, 
 		int verbose_level);
 };

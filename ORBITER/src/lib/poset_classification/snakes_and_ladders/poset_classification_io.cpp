@@ -146,7 +146,7 @@ void poset_classification::report(ostream &ost)
 		"-y_stretch 0.75 "
 		"-rad 6000 "
 		"-nodes_empty "
-		"-corners "
+		/*"-corners "*/
 		/*"-embedded "*/
 		"-line_width 0.30 "
 		"-spanning_tree",
@@ -176,12 +176,15 @@ void poset_classification::report(ostream &ost)
 	for (level = 0; level <= depth; level++) {
 		first = first_poset_orbit_node_at_level[level];
 		nb_orbits = nb_orbits_at_level(level);
-		for (orbit_at_level = 0; orbit_at_level < nb_orbits; orbit_at_level++) {
+		for (orbit_at_level = 0;
+				orbit_at_level < nb_orbits;
+				orbit_at_level++) {
 
 			char fname_mask_base[1000];
 			O = get_node_ij(level, orbit_at_level);
 
-			create_schreier_tree_fname_mask_base(fname_mask_base, O->node);
+			create_shallow_schreier_tree_fname_mask_base(fname_mask_base, O->node);
+			//create_schreier_tree_fname_mask_base(fname_mask_base, O->node);
 
 			strong_generators *gens;
 
@@ -193,7 +196,8 @@ void poset_classification::report(ostream &ost)
 			Schreier_vector = O->Schreier_vector;
 
 
-			ost << "\\subsection*{Node " << O->node << " at Level " << level << " Orbit " << orbit_at_level << "}" << endl;
+			ost << "\\subsection*{Node " << O->node << " at Level "
+					<< level << " Orbit " << orbit_at_level << "}" << endl;
 
 
 			ost << "{\\tiny\\arraycolsep=2pt" << endl;
@@ -227,7 +231,8 @@ void poset_classification::report(ostream &ost)
 					sprintf(fname_1, "%s_draw_tree.1", fname_base);
 
 					if (!f_has_tools_path) {
-						cout << "please set tools path using -tools_path <tools_path>" << endl;
+						cout << "please set tools path using "
+								"-tools_path <tools_path>" << endl;
 						exit(1);
 					}
 					sprintf(cmd, "%s/layered_graph_main.out -v 2 "
@@ -237,7 +242,7 @@ void poset_classification::report(ostream &ost)
 						"-y_stretch 0.3 "
 						"-rad 2000 "
 						"-nodes_empty "
-						"-corners "
+						/*"-corners "*/
 						/*"-embedded "*/
 						"-line_width 0.30 "
 						"-spanning_tree",
@@ -249,11 +254,14 @@ void poset_classification::report(ostream &ost)
 					cout << "executing: " << cmd << endl;
 					system(cmd);
 
-					ost << "\\subsection*{Node " << O->node << "=" << level << "/" << orbit_at_level << " Orbit " << j << "}" << endl;
+					ost << "\\subsection*{Node " << O->node << "="
+							<< level << "/" << orbit_at_level
+							<< " Orbit " << j << "}" << endl;
 
 
 					//ost << "\\input " << fname_tex << endl;
-					ost << "\\includegraphics[width=160mm]{" << fname_1 << "}\\" << endl;
+					ost << "\\includegraphics[width=160mm]{"
+							<< fname_1 << "}\\" << endl;
 				}
 			}
 			FREE_OBJECT(gens);
@@ -296,13 +304,16 @@ void poset_classification::housekeeping(int i,
 		//cout << "nb_times_trace_was_saved="
 		// << nb_times_trace_was_saved << endl;
 		//cout << "f_write_files=" << f_write_files << endl;
+		int nb1, nb2;
+
+		nb1 = Schreier_vector_handler->nb_calls_to_coset_rep_inv;
+		nb2 = Schreier_vector_handler->nb_calls_to_coset_rep_inv_recursion;
 		cout << "nb_calls_to_coset_rep_inv="
-				<< Schreier_vector_handler->nb_calls_to_coset_rep_inv << endl;
+				<< nb1 << endl;
 		cout << "nb_calls_to_coset_rep_inv_recursion="
-				<< Schreier_vector_handler->nb_calls_to_coset_rep_inv_recursion << endl;
+				<< nb2 << endl;
 		cout << "average word length=" <<
-				(double) Schreier_vector_handler->nb_calls_to_coset_rep_inv_recursion /
-				(double) Schreier_vector_handler->nb_calls_to_coset_rep_inv << endl;
+				(double) nb2 / (double) nb1 << endl;
 		}
 	if (f_find_group_order) {
 		find_automorphism_group_of_order(i, find_group_order);
@@ -320,7 +331,8 @@ void poset_classification::housekeeping(int i,
 		char my_fname_base[1000];
 		
 		if (f_v) {
-			cout << "poset_classification_housekeeping writing files" << endl;
+			cout << "poset_classification_housekeeping "
+					"writing files" << endl;
 			}
 #if 1
 		sprintf(my_fname_base, "%sa", fname_base);
@@ -2065,6 +2077,12 @@ void poset_classification::create_schreier_tree_fname_mask_base(
 			schreier_tree_prefix, node);
 }
 
+void poset_classification::create_shallow_schreier_tree_fname_mask_base(
+		char *fname_mask, int node)
+{
 
+	sprintf(fname_mask, "%sshallow_schreier_tree_node_%d_%%d",
+			schreier_tree_prefix, node);
+}
 
 

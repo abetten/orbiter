@@ -92,10 +92,12 @@ int direct_product_group_element_is_one(action &A,
 	ret = P.element_is_one(Elt);
 	if (f_v) {
 		if (ret) {
-			cout << "direct_product_group_element_is_one returns YES" << endl;
+			cout << "direct_product_group_element_is_one "
+					"returns YES" << endl;
 			}
 		else {
-			cout << "direct_product_group_element_is_one returns NO" << endl;
+			cout << "direct_product_group_element_is_one "
+					"returns NO" << endl;
 			}
 		}
 	return ret;
@@ -165,7 +167,8 @@ int direct_product_group_element_store(action &A,
 	P.element_pack(Elt, P.elt1);
 	hdl = P.Elts->store(P.elt1);
 	if (f_v) {
-		cout << "direct_product_group_element_store hdl = " << hdl << endl;
+		cout << "direct_product_group_element_store "
+				"hdl = " << hdl << endl;
 		}
 	return hdl;
 }

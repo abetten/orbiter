@@ -601,10 +601,13 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 }
 
 void poset_orbit_node::create_schreier_vector_wrapper(
+	poset_classification *gen,
 	int f_create_schreier_vector,
 	schreier &Schreier,
 	int verbose_level)
 // calls Schreier.get_schreier_vector
+// called from poset_orbit_node_downstep.cpp and from
+// poset_orbit_node_downstep_subspace_action.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -640,6 +643,9 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 				gen_hdl_first,
 				nb_strong_generators,
 				verbose_level - 1);
+		if (Schreier_vector->f_has_local_generators) {
+			Schreier_vector->local_gens->A = gen->Schreier_vector_handler->A2;
+		}
 		//Schreier.get_schreier_vector(sv, f_trivial_group, f_compact);
 		//Schreier.test_sv(gen->A, hdl_strong_generators,
 		// sv, f_trivial_group, f_compact, verbose_level);
@@ -656,6 +662,7 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 
 
 void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
+	poset_classification *gen,
 	int f_create_schreier_vector,
 	schreier &Schreier,
 	action *A_factor_space, action_on_factor_space *AF,

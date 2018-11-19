@@ -91,142 +91,142 @@ void action::freeself()
 			}
 		if (type_G == matrix_group_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.matrix_grp" << endl;
+				cout << "action::~action freeing G.matrix_grp" << endl;
 				cout << "G.matrix_grp=" << G.matrix_grp << endl;
 				}
 			FREE_OBJECT(G.matrix_grp);
 			if (f_vv) {
-				cout << "action::~action() freeing G.matrix_grp finished"
+				cout << "action::~action freeing G.matrix_grp finished"
 						<< endl;
 				}
 			G.matrix_grp = NULL;
 			}
 		else if (type_G == wreath_product_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing "
+				cout << "action::~action freeing "
 						"G.wreath_product_group" << endl;
 				cout << "G.wreath_product_group="
 						<< G.wreath_product_group << endl;
 				}
 			FREE_OBJECT(G.wreath_product_group);
 			if (f_vv) {
-				cout << "action::~action() freeing "
+				cout << "action::~action freeing "
 						"G.wreath_product_group finished" << endl;
 				}
 			G.wreath_product_group = NULL;
 			}
 		else if (type_G == perm_group_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.perm_group_t" << endl;
+				cout << "action::~action freeing G.perm_group_t" << endl;
 				}
 			FREE_OBJECT(G.perm_grp);
 			if (f_vv) {
-				cout << "action::~action() freeing G.perm_group_t finished"
+				cout << "action::~action freeing G.perm_group_t finished"
 						<< endl;
 				}
 			G.perm_grp = NULL;
 			}
 		else if (type_G == action_on_sets_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.on_sets" << endl;
+				cout << "action::~action freeing G.on_sets" << endl;
 				cout << "G.on_sets=" << G.on_sets << endl;
 				}
 			FREE_OBJECT(G.on_sets);
 			if (f_vv) {
-				cout << "action::~action() freeing G.on_sets finished" << endl;
+				cout << "action::~action freeing G.on_sets finished" << endl;
 				}
 			G.on_sets = NULL;
 			}
 		else if (type_G == action_on_k_subsets_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.on_sets" << endl;
+				cout << "action::~action freeing G.on_sets" << endl;
 				cout << "G.on_k_subsets=" << G.on_k_subsets << endl;
 				}
 			FREE_OBJECT(G.on_k_subsets);
 			if (f_vv) {
-				cout << "action::~action() freeing G.on_k_subsets finished"
+				cout << "action::~action freeing G.on_k_subsets finished"
 						<< endl;
 				}
 			G.on_k_subsets = NULL;
 			}
 		else if (type_G == action_on_orbits_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnOrbits" << endl;
+				cout << "action::~action freeing G.OnOrbits" << endl;
 				cout << "G.OnOrbits=" << G.OnOrbits << endl;
 				}
 			FREE_OBJECT(G.OnOrbits);
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnOrbits finished" << endl;
+				cout << "action::~action freeing G.OnOrbits finished" << endl;
 				}
 			G.OnOrbits = NULL;
 			}
 		else if (type_G == action_on_bricks_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnBricks" << endl;
+				cout << "action::~action freeing G.OnBricks" << endl;
 				cout << "G.OnBricks=" << G.OnBricks << endl;
 				}
 			FREE_OBJECT(G.OnBricks);
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnBricks finished" << endl;
+				cout << "action::~action freeing G.OnBricks finished" << endl;
 				}
 			G.OnBricks = NULL;
 			}
 		else if (type_G == action_on_andre_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnAndre" << endl;
+				cout << "action::~action freeing G.OnAndre" << endl;
 				cout << "G.OnAndre=" << G.OnAndre << endl;
 				}
 			FREE_OBJECT(G.OnAndre);
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnAndre finished" << endl;
+				cout << "action::~action freeing G.OnAndre finished" << endl;
 				}
 			G.OnAndre = NULL;
 			}
 		else if (type_G == action_by_right_multiplication_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.ABRM" << endl;
+				cout << "action::~action freeing G.ABRM" << endl;
 				}
 			FREE_OBJECT(G.ABRM);
 			G.ABRM = NULL;
 			}
 		else if (type_G == action_by_restriction_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.ABR" << endl;
+				cout << "action::~action freeing G.ABR" << endl;
 				}
 			FREE_OBJECT(G.ABR);
 			G.ABR = NULL;
 			}
 		else if (type_G == action_by_conjugation_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.ABC" << endl;
+				cout << "action::~action freeing G.ABC" << endl;
 				}
 			FREE_OBJECT(G.ABC);
 			G.ABC = NULL;
 			}
 		else if (type_G == action_by_representation_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.Rep" << endl;
+				cout << "action::~action freeing G.Rep" << endl;
 				}
 			FREE_OBJECT(G.Rep);
 			G.Rep = NULL;
 			}
 		else if (type_G == action_on_determinant_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.AD" << endl;
+				cout << "action::~action freeing G.AD" << endl;
 				}
 			FREE_OBJECT(G.AD);
 			G.AD = NULL;
 			}
 		else if (type_G == action_on_sign_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnSign" << endl;
+				cout << "action::~action freeing G.OnSign" << endl;
 				}
 			FREE_OBJECT(G.OnSign);
 			G.OnSign = NULL;
 			}
 		else if (type_G == action_on_grassmannian_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.AG" << endl;
+				cout << "action::~action freeing G.AG" << endl;
 				}
 			FREE_OBJECT(G.AG);
 			G.AG = NULL;
@@ -241,7 +241,7 @@ void action::freeself()
 			}
 		else if (type_G == action_on_homogeneous_polynomials_t) {
 			if (f_vv) {
-				cout << "action::~action() freeing G.OnHP" << endl;
+				cout << "action::~action freeing G.OnHP" << endl;
 				}
 			FREE_OBJECT(G.OnHP);
 			G.OnHP = NULL;
@@ -324,13 +324,13 @@ void action::freeself()
 	
 	if (f_has_sims) {
 		if (f_v) {
-			cout << "action::~action() freeing Sims" << endl;
+			cout << "action::~action freeing Sims" << endl;
 			}
 		FREE_OBJECT(Sims);
 		Sims = NULL;
 		f_has_sims = FALSE;
 		if (f_v) {
-			cout << "action::~action() freeing Sims finished" << endl;
+			cout << "action::~action freeing Sims finished" << endl;
 			}
 		}
 
@@ -340,13 +340,13 @@ void action::freeself()
 
 	if (f_has_kernel) {
 		if (f_v) {
-			cout << "action::~action() freeing Kernel" << endl;
+			cout << "action::~action freeing Kernel" << endl;
 			}
 		FREE_OBJECT(Kernel);
 		Kernel = NULL;
 		f_has_kernel = FALSE;
 		if (f_v) {
-			cout << "action::~action() freeing Kernel finished" << endl;
+			cout << "action::~action freeing Kernel finished" << endl;
 			}
 		}
 	if (f_v) {
@@ -1692,7 +1692,8 @@ void action::make_element_from_base_image(int *Elt,
 			}
 		if (c != yi) {
 			cout << "action::make_element_from_base_image "
-					"fatal: element_image_of(b_pt, Elt3, 0) != yi" << endl;
+					"fatal: element_image_of(b_pt, Elt3, 0) "
+					"!= yi" << endl;
 			exit(1);
 			}
 		}
@@ -1701,7 +1702,8 @@ void action::make_element_from_base_image(int *Elt,
 		yi = data[i];
 		b = element_image_of(base[i], Elt, 0);
 		if (yi != b) {
-			cout << "action::make_element_from_base_image fatal: yi != b"
+			cout << "action::make_element_from_base_image "
+					"fatal: yi != b"
 					<< endl;
 			cout << "i=" << i << endl;
 			cout << "base[i]=" << base[i] << endl;
@@ -1711,7 +1713,8 @@ void action::make_element_from_base_image(int *Elt,
 			}
 		}
 	if (f_v) {
-		cout << "action::make_element_from_base_image created element:" << endl;
+		cout << "action::make_element_from_base_image "
+				"created element:" << endl;
 		element_print_quick(Elt, cout);
 		}
 	FREE_int(base_image);
@@ -1946,7 +1949,8 @@ void action::init_group_from_generators(
 	nb_gens = group_generator_size / make_element_size;
 	if (nb_gens * make_element_size != group_generator_size) {
 		cout << "action::init_group_from_generators fatal: "
-				"group_generator_size is not divisible by make_element_size"
+				"group_generator_size is not "
+				"divisible by make_element_size"
 				<< endl;
 		cout << "make_element_size=" << make_element_size << endl;
 		cout << "group_generator_size=" << group_generator_size << endl;
@@ -2789,7 +2793,8 @@ void action::compute_orbits_on_points(schreier *&Sch,
 		}
 }
 
-void action::stabilizer_of_dual_hyperoval_representative(int k, int n, int no,
+void action::stabilizer_of_dual_hyperoval_representative(
+		int k, int n, int no,
 		vector_ge *&gens, const char *&stab_order,
 		int verbose_level)
 {
@@ -2844,7 +2849,8 @@ void action::stabilizer_of_spread_representative(
 				"creating stabilizer generators:" << endl;
 		}
 	for (i = 0; i < nb_gens; i++) {
-		make_element(gens->ith(i), data + i * data_size, 0 /*verbose_level*/);
+		make_element(gens->ith(i),
+				data + i * data_size, 0 /*verbose_level*/);
 		}
 	
 	if (f_v) {
@@ -2853,8 +2859,10 @@ void action::stabilizer_of_spread_representative(
 		}
 }
 
-void action::normalizer_using_MAGMA(const char *fname_magma_prefix,
-		sims *G, sims *H, strong_generators *&gens_N, int verbose_level)
+void action::normalizer_using_MAGMA(
+		const char *fname_magma_prefix,
+		sims *G, sims *H, strong_generators *&gens_N,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname_magma[1000];
@@ -2907,7 +2915,8 @@ void action::normalizer_using_MAGMA(const char *fname_magma_prefix,
 
 	if (file_size(fname_output) > 0) {
 		if (f_v) {
-			cout << "file " << fname_output << " exists, reading it" << endl;
+			cout << "file " << fname_output
+					<< " exists, reading it" << endl;
 		}
 
 		int i, j;
@@ -3124,8 +3133,10 @@ void action::point_stabilizer_any_point(int &pt,
 		cout << "action::point_stabilizer_any_point "
 				"computing all point orbits:" << endl;
 		}
-	Sch = Strong_gens->orbits_on_points_schreier(this, 0 /* verbose_level */);
-	//compute_all_point_orbits(Sch, *Strong_gens->gens, 0 /* verbose_level */);
+	Sch = Strong_gens->orbits_on_points_schreier(
+			this, 0 /* verbose_level */);
+	//compute_all_point_orbits(Sch,
+	//*Strong_gens->gens, 0 /* verbose_level */);
 	cout << "computing all point orbits done, found "
 			<< Sch->nb_orbits << " orbits" << endl;
 
@@ -3135,7 +3146,8 @@ void action::point_stabilizer_any_point(int &pt,
 	pt = Sch->orbit[f];
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point orbit rep = "
+		cout << "action::point_stabilizer_any_point "
+				"orbit rep = "
 				<< pt << endl;
 		}
 
@@ -3278,11 +3290,13 @@ void action::make_element_which_moves_a_line_in_PG3q(
 	make_element(Elt, N, 0);
 
 	if (f_v) {
-		cout << "action::make_element_which_moves_a_line_in_PG3q done" << endl;
+		cout << "action::make_element_which_moves_a_line_in_PG3q "
+				"done" << endl;
 		}
 }
 
-void action::list_elements_as_permutations_vertically(vector_ge *gens,
+void action::list_elements_as_permutations_vertically(
+		vector_ge *gens,
 		ostream &ost)
 {
 	int i, j, a, len;
@@ -3295,7 +3309,8 @@ void action::list_elements_as_permutations_vertically(vector_ge *gens,
 	for (i = 0; i < degree; i++) {
 		ost << setw(3) << i;
 		for (j = 0; j < len; j++) {
-			a = element_image_of(i, gens->ith(j), 0 /* verbose_level */);
+			a = element_image_of(i,
+					gens->ith(j), 0 /* verbose_level */);
 			ost << " & " << setw(3) << a;
 		}
 		ost << "\\\\" << endl;

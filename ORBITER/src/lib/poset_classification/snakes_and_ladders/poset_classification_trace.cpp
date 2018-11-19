@@ -410,6 +410,10 @@ int poset_classification::trace_set_recursion(
 	if (f_v) {
 		cout << "tracing point " << pt << endl;
 		}
+	if (f_v) {
+		cout << "poset_classification::trace_set_recursion "
+				"before O->trace_next_point_in_place" << endl;
+	}
 	if (!O->trace_next_point_in_place(this, 
 		cur_level, cur_node, size, 
 		canonical_set, tmp_set1,
@@ -431,12 +435,23 @@ int poset_classification::trace_set_recursion(
 		int_vec_heapsort(canonical_set, cur_level + 1);
 		
 		
-		return trace_set_recursion(0, 0, 
+		if (f_v) {
+			cout << "poset_classification::trace_set_recursion "
+					"before trace_set_recursion" << endl;
+		}
+		int r;
+
+		r = trace_set_recursion(0, 0,
 			size, level, 
 			canonical_set, tmp_set1, tmp_set2, 
 			Elt_transporter, tmp_Elt1, 
 			f_tolerant, 
 			verbose_level);
+		if (f_v) {
+			cout << "poset_classification::trace_set_recursion "
+					"after trace_set_recursion, r = " << r << endl;
+		}
+		return r;
 		}
 
 	if (f_failure_to_find_point) {
@@ -453,8 +468,17 @@ int poset_classification::trace_set_recursion(
 		cout << " point " << pt
 				<< " has been mapped to " << pt0 << endl;
 		}
+	if (f_v) {
+		cout << "poset_classification::trace_set_recursion "
+				"before O->find_extension_from_point" << endl;
+	}
 	current_extension = O->find_extension_from_point(
-			this, pt0, FALSE);
+			this, pt0, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "poset_classification::trace_set_recursion "
+				"after O->find_extension_from_point "
+				"current_extension=" << current_extension<< endl;
+	}
 
 	if (current_extension < 0) {
 		cout << "poset_classification::trace_set_recursion: "
@@ -464,6 +488,10 @@ int poset_classification::trace_set_recursion(
 	t = O->E[current_extension].type;
 	if (t == EXTENSION_TYPE_EXTENSION) {
 		// extension node
+		if (f_v) {
+			cout << "poset_classification::trace_set_recursion "
+					"EXTENSION_TYPE_EXTENSION" << endl;
+		}
 		next_node = O->E[current_extension].data;
 		if (f_v) {
 			cout << "poset_classification::trace_set_recursion "
@@ -477,15 +505,30 @@ int poset_classification::trace_set_recursion(
 			return next_node;
 			}
 		else {
-			return trace_set_recursion(cur_level + 1, next_node, 
+			int r;
+
+			if (f_v) {
+				cout << "poset_classification::trace_set_recursion "
+						"before trace_set_recursion" << endl;
+			}
+			r = trace_set_recursion(cur_level + 1, next_node,
 				size, level, canonical_set, tmp_set1, tmp_set2,  
 				Elt_transporter, tmp_Elt1, 
 				f_tolerant, 
 				verbose_level);
+			if (f_v) {
+				cout << "poset_classification::trace_set_recursion "
+						"after trace_set_recursion" << endl;
+			}
+			return r;
 			}
 		}
 	else if (t == EXTENSION_TYPE_FUSION) {
 		// fusion node
+		if (f_v) {
+			cout << "poset_classification::trace_set_recursion "
+					"EXTENSION_TYPE_FUSION" << endl;
+		}
 
 		if (f_v) {
 			cout << "poset_classification::trace_set_recursion "
@@ -541,11 +584,22 @@ int poset_classification::trace_set_recursion(
 			return next_node;
 			}
 		else {
-			return trace_set_recursion(cur_level + 1, next_node, 
+			int r;
+
+			if (f_v) {
+				cout << "poset_classification::trace_set_recursion "
+						"before trace_set_recursion" << endl;
+			}
+			r = trace_set_recursion(cur_level + 1, next_node,
 				size, level, canonical_set, tmp_set1, tmp_set2,  
 				Elt_transporter, tmp_Elt1, 
 				f_tolerant, 
 				verbose_level);
+			if (f_v) {
+				cout << "poset_classification::trace_set_recursion "
+						"after trace_set_recursion" << endl;
+			}
+			return r;
 			}
 #if 0
 		// we need to restart the trace:
@@ -567,7 +621,7 @@ int poset_classification::trace_set(int *set, int size, int level,
 // called by map_set_to_set_BLT in orbits.C
 // returns the case number of the canonical set
 {
-	int i, n, case_nb;
+	int n, case_nb;
 	int f_v = (verbose_level >= 1);
 	int *tmp_set1, *tmp_set2;
 	int *tmp_Elt;
@@ -585,11 +639,18 @@ int poset_classification::trace_set(int *set, int size, int level,
 		cout << "f_lex=" << f_lex << endl;
 		}
 	
+	int_vec_copy(set, canonical_set, size);
+#if 0
 	for (i = 0; i < size; i++) {
 		canonical_set[i] = set[i];
 		}
+#endif
 	A->element_one(Elt_transporter, 0);
 
+	if (f_v) {
+		cout << "poset_classification::trace_set "
+				"before trace_set_recursion" << endl;
+	}
 	n = trace_set_recursion(
 		0 /* cur_level */,
 		0 /* cur_node */,  size, level,
@@ -597,6 +658,11 @@ int poset_classification::trace_set(int *set, int size, int level,
 		Elt_transporter, tmp_Elt, 
 		FALSE /*f_tolerant*/, 
 		verbose_level);
+	if (f_v) {
+		cout << "poset_classification::trace_set "
+				"after trace_set_recursion" << endl;
+		cout << "n = " << n << endl;
+	}
 
 	case_nb = n - first_poset_orbit_node_at_level[level];
 

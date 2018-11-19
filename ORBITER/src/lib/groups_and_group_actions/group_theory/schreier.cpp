@@ -2119,8 +2119,8 @@ void schreier::shallow_tree_generators(int orbit_idx,
 					"found " << nb_candidates
 					<< " candidates of points outside the orbit" << endl;
 		}
-		j = random_integer(nb_candidates);
-		//j = 0;
+		//j = random_integer(nb_candidates);
+		j = 0;
 		if (f_v) {
 			cout << "schreier::shallow_tree_generators "
 					"picking random candidate " << j << " / "
@@ -2190,8 +2190,15 @@ schreier_vector *schreier::get_schreier_vector(
 	Schreier_vector = NEW_OBJECT(schreier_vector);
 	//get_schreier_vector_compact(sv, f_trivial_group);
 	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
+
+#if 0
 	Schreier_vector->init_from_schreier(this,
 			f_trivial_group, verbose_level);
+#else
+	Schreier_vector->init_shallow_schreier_forest(this,
+			f_trivial_group, verbose_level);
+#endif
+
 	if (f_v) {
 		cout << "schreier::get_schreier_vector done" << endl;
 	}
