@@ -478,7 +478,7 @@ void poset_classification::init(action *A, action *A2,
 		}
 	
 	Schreier_vector_handler = NEW_OBJECT(schreier_vector_handler);
-	Schreier_vector_handler->init(A,
+	Schreier_vector_handler->init(A, A2,
 			TRUE /* f_allow_failure */,
 			verbose_level);
 	

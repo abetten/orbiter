@@ -22,8 +22,8 @@ int main(int argc, const char **argv)
 	cg.init(argc, argv);
 
 	cg.main(cg.verbose_level);
+	cg.F->print_call_stats(cout);
 	
-	cout << "nb_calls_to_finite_field_init=" << nb_calls_to_finite_field_init << endl;
 	
 	}
 	the_end(t0);

@@ -56,7 +56,8 @@ void projective_space_with_action::freeself()
 
 void projective_space_with_action::init(
 	finite_field *F, int n, int f_semilinear,
-	int f_init_incidence_structure, int verbose_level)
+	int f_init_incidence_structure,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -164,7 +165,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		cout << "set_size = " << set_size << endl;
 		}
 	if (P->incidence_bitvec == NULL) {
-		cout << "projective_space_with_action::set_stabilizer P->incidence_bitvec == NULL" << endl;
+		cout << "projective_space_with_action::set_stabilizer "
+				"P->incidence_bitvec == NULL" << endl;
 		exit(1);
 		}
 
@@ -176,7 +178,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	C.init(set, set_size, TRUE, 0);
 	if (C.second_nb_types > 1) {
-		cout << "projective_space_with_action::set_stabilizer: The set is a multiset:" << endl;
+		cout << "projective_space_with_action::set_stabilizer: "
+				"The set is a multiset:" << endl;
 		C.print(FALSE /*f_backwards*/);
 		}
 
@@ -195,7 +198,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	labeling = NEW_int(nb_rows + nb_cols);
 
 	if (f_vv) {
-		cout << "projective_space_with_action::set_stabilizer Initializing Incma" << endl;
+		cout << "projective_space_with_action::set_stabilizer "
+				"Initializing Incma" << endl;
 		}
 
 	for (i = 0; i < P->N_points; i++) {
@@ -233,7 +237,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 			i = C.data_sorted[f + 0];
 			if (f_vvv) {
 				cout << "h=" << h << " idx=" << idx
-						<< " f=" << f << " l=" << l << " i=" << i << endl;
+					<< " f=" << f << " l=" << l << " i=" << i << endl;
 				}
 			Incma[i * nb_cols + P->N_lines + j] = 1;
 			}	
@@ -325,7 +329,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		Transversal_length, Ago, verbose_level - 3);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer "
-				"done with nauty_interface_matrix_int, Ago=" << Ago << endl;
+				"done with nauty_interface_matrix_int, "
+				"Ago=" << Ago << endl;
 		}
 
 	int *Incma_out;
@@ -417,13 +422,15 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
-		int_vec_write_csv(labeling, N, fname_labeling, "canonical labeling");
+		int_vec_write_csv(labeling, N,
+				fname_labeling, "canonical labeling");
 		int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
 		
 		colored_graph *CG;
 		create_Levi_graph_from_incidence_matrix(CG,
-				Incma_out, nb_rows, nb_cols, TRUE, labeling, verbose_level);
+				Incma_out, nb_rows, nb_cols,
+				TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		FREE_OBJECT(CG);
 		}
@@ -671,7 +678,8 @@ strong_generators
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object before OiP->encode_incma" << endl;
 		}
-	OiP->encode_incma(Incma, nb_rows, nb_cols, partition, verbose_level - 1);
+	OiP->encode_incma(Incma, nb_rows, nb_cols,
+			partition, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object after OiP->encode_incma" << endl;
@@ -705,7 +713,8 @@ strong_generators
 
 		colored_graph *CG;
 		create_Levi_graph_from_incidence_matrix(CG,
-				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
+				Incma, nb_rows, nb_cols,
+				TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_int(Incma);
 		delete CG;
@@ -716,7 +725,8 @@ strong_generators
 
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object initializing Aut, Base, Transversal_length" << endl;
+				"of_object initializing Aut, Base, "
+				"Transversal_length" << endl;
 		}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
@@ -811,7 +821,8 @@ strong_generators
 		
 		colored_graph *CG;
 		create_Levi_graph_from_incidence_matrix(CG,
-				Incma_out, nb_rows, nb_cols, TRUE, labeling, verbose_level);
+				Incma_out, nb_rows, nb_cols,
+				TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		FREE_OBJECT(CG);
 		}
@@ -896,7 +907,7 @@ strong_generators
 			if (f_vv) {
 				cout << "projective_space_with_action::set_stabilizer_"
 						"of_object generator " << g << " does not "
-								"correspond to a semilinear mapping" << endl;
+						"correspond to a semilinear mapping" << endl;
 				}
 			}
 		}
@@ -927,7 +938,8 @@ strong_generators
 			j2 = A_perm->element_image_of(i, gens->ith(g), 0);
 			if (j1 != j2) {
 				cout << "projective_space_with_action::set_stabilizer_"
-						"of_object problem with generator: j1 != j2" << endl;
+						"of_object problem with generator: "
+						"j1 != j2" << endl;
 				cout << "i=" << i << endl;
 				cout << "j1=" << j1 << endl;
 				cout << "j2=" << j2 << endl;

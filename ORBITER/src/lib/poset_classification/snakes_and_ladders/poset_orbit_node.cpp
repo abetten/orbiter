@@ -907,5 +907,18 @@ void poset_orbit_node::reconstruct_extensions_from_sv(
 	FREE_int(orbit_reps);
 }
 
+int poset_orbit_node::nb_extension_points()
+// sums up the lengths of orbits in all extensions
+{
+	int i, n;
+
+	n = 0;
+	for (i = 0; i < nb_extensions; i++) {
+		n += E[i].orbit_len;
+		}
+	return n;
+
+}
+
 
 

@@ -8,9 +8,26 @@
 
 page_storage::page_storage()
 {
+	overall_length = 0;
+	entry_size = 0;
+	page_length_log = 0;
+	page_length = 0;
+	page_size = 0;
+	allocation_table_length = 0;
+
 	page_ptr_used = 0;
+	page_ptr_allocated = 0;
+	page_ptr_oversize = 0;
+
 	pages = NULL;
 	allocation_tables = NULL;
+
+	next_free_entry = 0;
+	nb_free_entries = 0;
+
+	f_elt_print_function = FALSE;
+	elt_print = NULL;
+	elt_print_data = NULL;
 }
 
 page_storage::~page_storage()

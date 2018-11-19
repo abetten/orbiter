@@ -53,6 +53,86 @@ void linear_group_description::freeself()
 	null();
 }
 
+void linear_group_description::read_arguments_from_string(
+		const char *str, int verbose_level)
+{
+	int f_vv = (verbose_level >= 2);
+	int l, i, len;
+	char *s;
+	char *p_buf;
+	char *buf;
+	int argc;
+	char **argv;
+
+	l = strlen(str);
+	s = NEW_char(l + 1);
+	buf = NEW_char(l + 1);
+
+	strcpy(s, str);
+	p_buf = s;
+	i = 0;
+	while (TRUE) {
+		if (*p_buf == 0) {
+			break;
+			}
+		//s_scan_token(&p_buf, str);
+		//s_scan_token(&p_buf, str);
+		/* r =*/ s_scan_token_arbitrary(&p_buf, buf);
+
+		if (f_vv) {
+			cout << "Token " << setw(6) << i << " is '"
+					<< buf << "'" << endl;
+			}
+#if 0
+		if (strcmp(str, ",") == 0) {
+			continue;
+			}
+#endif
+		i++;
+		}
+	argc = i;
+	argv = NEW_pchar(argc);
+	i = 0;
+	p_buf = s;
+	while (TRUE) {
+		if (*p_buf == 0) {
+			break;
+			}
+		//s_scan_token(&p_buf, str);
+		//s_scan_token(&p_buf, str);
+		/* r =*/ s_scan_token_arbitrary(&p_buf, buf);
+
+		if (f_vv) {
+			cout << "Token " << setw(6) << i << " is '"
+					<< buf << "'" << endl;
+			}
+		len = strlen(buf);
+		argv[i] = NEW_char(len + 1);
+		strcpy(argv[i], buf);
+#if 0
+		if (strcmp(str, ",") == 0) {
+			continue;
+			}
+#endif
+		i++;
+		}
+	cout << "argv:" << endl;
+	for (i = 0; i < argc; i++) {
+		cout << i << " : " << argv[i] << endl;
+	}
+
+	read_arguments(
+		argc, (const char **) argv,
+		verbose_level);
+
+	FREE_char(s);
+	FREE_char(buf);
+	for (i = 0; i < argc; i++) {
+		FREE_char(argv[i]);
+	}
+	FREE_pchar(argv);
+}
+
 int linear_group_description::read_arguments(
 	int argc, const char **argv,
 	int verbose_level)

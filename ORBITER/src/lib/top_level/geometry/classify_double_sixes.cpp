@@ -956,7 +956,7 @@ void classify_double_sixes::identify_five_plus_one(
 			N1, 5, 5,
 			five_lines_out_as_neighbors,
 			Elt1,
-			0 /* verbose_level */);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "classify_double_sixes::identify_five_plus_one "
 				"orbit_index = " << orbit_index << endl;
@@ -1067,7 +1067,8 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		i = Idx[f];
 		if (f_v) {
-			cout << "orbit " << f << " / " << nb
+			cout << "classify_double_sixes::downstep "
+					"orbit " << f << " / " << nb
 					<< " with rank = 19 is orbit "
 					<< i << " / " << nb_orbits << endl;
 			}
@@ -1144,7 +1145,8 @@ void classify_double_sixes::downstep(int verbose_level)
 			}
 		else {
 			if (f_vv) {
-				cout << "orbit " << f << " / " << nb
+				cout << "classify_double_sixes::downstep "
+						"orbit " << f << " / " << nb
 						<< " with rank = 19 does not yield a "
 						"double six, skipping" << endl;
 				}
@@ -1306,7 +1308,7 @@ void classify_double_sixes::upstep(int verbose_level)
 					}
 				identify_five_plus_one(five_lines, transversal_line, 
 					five_lines_out_as_neighbors, orbit_index, 
-					Elt3 /* transporter */, verbose_level - 2);
+					Elt3 /* transporter */, verbose_level + 10);
 
 				if (f_v) {
 					cout << "We found a transporter:" << endl;

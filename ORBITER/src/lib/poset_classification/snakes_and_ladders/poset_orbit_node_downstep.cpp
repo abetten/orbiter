@@ -9,13 +9,14 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void poset_orbit_node::downstep(poset_classification *gen,
+void poset_orbit_node::compute_flag_orbits(
+	poset_classification *gen,
 	int lvl, 
 	int f_create_schreier_vector,
 	int f_use_invariant_subset_if_available, 
 	int f_implicit_fusion, 
 	int verbose_level)
-// Called from generator::downstep if we are acting on sets 
+// Called from generator::compute_flag_orbits if we are acting on sets
 // (i.e., not on subspaces).
 // Calls downstep_orbits, 
 // downstep_orbit_test_and_schreier_vector and 
@@ -34,10 +35,9 @@ void poset_orbit_node::downstep(poset_classification *gen,
 	int f_using_invariant_subset = FALSE;
 	schreier Schreier;
 	action AR;
-	int f_node_is_dead_because_of_clique_testing = FALSE;
 
 	if (f_v) {
-		cout << "poset_orbit_node::downstep" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits" << endl;
 		store_set(gen, lvl - 1); // stores a set of size lvl
 		gen->print_level_info(lvl, node);
 		cout << " : Downstep for ";
@@ -59,87 +59,43 @@ void poset_orbit_node::downstep(poset_classification *gen,
 
 	//cout << "calling downstep_orbits" << endl;
 	if (f_v) {
-		cout << "poset_orbit_node::downstep before downstep_orbits" << endl;
-		}
-	downstep_orbits(gen, Schreier, AR, 
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"before schreier_forest" << endl;
+	}
+	schreier_forest(gen, Schreier, AR,
 		lvl, 
 		f_use_invariant_subset_if_available, 
 		f_using_invariant_subset, 
-		f_node_is_dead_because_of_clique_testing, 
-		verbose_level - 1);
+			verbose_level - 1);
 	if (f_v) {
-		cout << "poset_orbit_node::downstep after downstep_orbits" << endl;
-		}
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"after schreier_forest" << endl;
+	}
 
 #if 0
 	if (node == 50) {
-		cout << "poset_orbit_node::downstep after downstep_orbits" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"after downstep_orbits" << endl;
 		gen->root[49].print_extensions(cout);
 		}
 #endif
 	nb_orbits = Schreier.nb_orbits;
 
-#if 1
-	if (gen->f_export_schreier_trees) {
-		int orbit_no;
 
-		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-			char fname_mask_base[1000];
-			char fname_mask[1000];
-
-			gen->create_schreier_tree_fname_mask_base(fname_mask_base, node);
-
-			sprintf(fname_mask, "%s.layered_graph", fname_mask_base);
-
-			Schreier.export_tree_as_layered_graph(orbit_no,
-					fname_mask,
-					verbose_level);
-		}
-	}
-	if (gen->f_draw_schreier_trees) {
-		int i;
-	
-		for (i = 0; i < nb_orbits; i++) {
-			char label[1000];
-			int xmax = gen->schreier_tree_xmax;
-			int ymax =  gen->schreier_tree_ymax;
-			int f_circletext = gen->schreier_tree_f_circletext;
-			int rad = gen->schreier_tree_rad;
-			int f_embedded = gen->schreier_tree_f_embedded;
-			int f_sideways = gen->schreier_tree_f_sideways;
-			double scale = gen->schreier_tree_scale;
-			double line_width = gen->schreier_tree_line_width;
-			int f_has_point_labels = FALSE;
-			int *point_labels = NULL;
-			
-			sprintf(label, "%sschreier_tree_node_%d_%d",
-					gen->schreier_tree_prefix, node, i);
-
-			if (f_using_invariant_subset) {
-				f_has_point_labels = TRUE;
-				point_labels = AR.G.ABR->points;
-				}
-
-			cout << "Node " << node << " " << i << " drawing schreier tree" << endl;
-			Schreier.draw_tree(label, i, xmax, ymax, 
-				f_circletext, rad, 
-				f_embedded, f_sideways, 
-				scale, line_width, 
-				f_has_point_labels, point_labels, 
-				verbose_level + 3);
-			}
-		
-		char label_data[1000];
-		sprintf(label_data, "%sschreier_data_node_%d.tex",
-				gen->schreier_tree_prefix, node);
-		Schreier.latex(label_data);
-		}
-#endif
+	save_schreier_forest(
+		gen,
+		&Schreier,
+		verbose_level);
+	draw_schreier_forest(
+			gen,
+			&Schreier,
+			f_using_invariant_subset, &AR,
+			verbose_level);
 
 	
 	if (f_v) {
-		cout << "poset_orbit_node::downstep before downstep_orbit_test_and_"
-				"schreier_vector" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"before downstep_orbit_test_and_schreier_vector" << endl;
 		}
 	downstep_orbit_test_and_schreier_vector(
 		gen, Schreier, AR, 
@@ -150,20 +106,21 @@ void poset_orbit_node::downstep(poset_classification *gen,
 		good_orbits1, nb_points1, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "poset_orbit_node::downstep after downstep_orbit_test_and_"
-				"schreier_vector" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"after downstep_orbit_test_and_schreier_vector" << endl;
 		}
 
 #if 0
 	if (node == 50) {
-		cout << "poset_orbit_node::downstep after downstep_orbit_test_and_"
-				"schreier_vector" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"after downstep_orbit_test_and_schreier_vector" << endl;
 		gen->root[49].print_extensions(cout);
 		}
 #endif
 
 	if (f_v) {
-		cout << "poset_orbit_node::downstep before downstep_implicit_fusion" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"before downstep_implicit_fusion" << endl;
 		}
 	downstep_implicit_fusion(
 		gen, Schreier, AR, f_using_invariant_subset,
@@ -172,16 +129,19 @@ void poset_orbit_node::downstep(poset_classification *gen,
 		good_orbits1, nb_points1, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "poset_orbit_node::downstep after downstep_implicit_fusion" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"after downstep_implicit_fusion" << endl;
 		}
 
 #if 0
 	if (node == 50) {
-		cout << "poset_orbit_node::downstep after downstep_implicit_fusion" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"after downstep_implicit_fusion" << endl;
 		gen->root[49].print_extensions(cout);
 		}
 #endif
 
+	save_shallow_schreier_forest(gen, verbose_level);
 
 	
 	if (f_vvv) {
@@ -189,19 +149,21 @@ void poset_orbit_node::downstep(poset_classification *gen,
 		cout << " : calling find_extensions" << endl;
 		}
 	if (f_v) {
-		cout << "poset_orbit_node::downstep before find_extensions" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"before find_extensions" << endl;
 		}
 	find_extensions(
 		gen, Schreier, AR, f_using_invariant_subset,
 		lvl, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "poset_orbit_node::downstep after find_extensions" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits "
+				"after find_extensions" << endl;
 		}
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << " : after test_orbits and find_extensions, we have "
-				<< nb_extensions << " extensions" << endl;
+		cout << " : after test_orbits and find_extensions, "
+				"we have " << nb_extensions << " extensions" << endl;
 		}
 
 	if (f_vvv) {
@@ -217,7 +179,7 @@ void poset_orbit_node::downstep(poset_classification *gen,
 				<< nb_extension_points() << " points " << endl;
 		}
 	if (f_v) {
-		cout << "poset_orbit_node::downstep done" << endl;
+		cout << "poset_orbit_node::compute_flag_orbits done" << endl;
 		}
 
 }
@@ -280,7 +242,8 @@ void poset_orbit_node::compute_schreier_vector(
 			verbose_level);
 
 		AR.induced_action_by_restriction(*gen->A2, 
-			FALSE /*f_induce_action*/, NULL /*sims *old_G*/, 
+			FALSE /*f_induce_action*/,
+			NULL /*sims *old_G*/,
 			nb_candidates, candidates,
 			verbose_level - 2);
 
@@ -317,7 +280,8 @@ void poset_orbit_node::compute_schreier_vector(
 			candidates, nb_candidates, 
 			verbose_level);
 		AR.induced_action_by_restriction(*gen->A2, 
-			FALSE /*f_induce_action*/, NULL /*sims *old_G*/, 
+			FALSE /*f_induce_action*/,
+			NULL /*sims *old_G*/,
 			nb_candidates, candidates,
 			verbose_level - 2);
 		//if (f_vv) {
@@ -340,8 +304,10 @@ void poset_orbit_node::compute_schreier_vector(
 			// here was a mistake, it was gen->A
 			// A. Betten, Dec 17, 2011 !!!
 		}
-	Schreier.init_generators_by_hdl(nb_strong_generators,
-			hdl_strong_generators, verbose_level - 1);
+	Schreier.init_generators_by_hdl(
+			nb_strong_generators,
+			hdl_strong_generators,
+			verbose_level - 1);
 	if (f_vv) {
 		cout << "poset_orbit_node::compute_schreier_vector "
 				"calling compute_all_point_orbits" << endl;
@@ -379,6 +345,7 @@ void poset_orbit_node::compute_schreier_vector(
 		}	
 
 	create_schreier_vector_wrapper(
+			gen,
 			TRUE /* f_create_schreier_vector */,
 			Schreier, verbose_level - 1);
 
@@ -410,12 +377,11 @@ void poset_orbit_node::compute_schreier_vector(
 
 
 
-void poset_orbit_node::downstep_orbits(
+void poset_orbit_node::schreier_forest(
 	poset_classification *gen, schreier &Schreier, action &AR,
 	int lvl, 
 	int f_use_invariant_subset_if_available, 
 	int &f_using_invariant_subset, 
-	int &f_node_is_dead_because_of_clique_testing, 
 	int verbose_level)
 // calls downstep_get_invariant_subset, downstep_apply_early_test, 
 // and AR.induced_action_by_restriction
@@ -437,12 +403,11 @@ void poset_orbit_node::downstep_orbits(
 	int nb_candidates = 0;
 	int f_subset_is_allocated = FALSE;
 
-	f_node_is_dead_because_of_clique_testing = FALSE;
 	f_using_invariant_subset = FALSE;
 
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << "poset_orbit_node::downstep_orbits" << endl;
+		cout << "poset_orbit_node::schreier_forest" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	
@@ -451,7 +416,7 @@ void poset_orbit_node::downstep_orbits(
 	if (f_use_invariant_subset_if_available) {
 		if (lvl == 0) {
 			if (f_v) {
-				cout << "poset_orbit_node::downstep_orbits we are trying "
+				cout << "poset_orbit_node::schreier_forest we are trying "
 						"to find an invariant subset" << endl;
 				}
 			}
@@ -467,7 +432,7 @@ void poset_orbit_node::downstep_orbits(
 		}
 	else {
 		if (lvl == 0) {
-			cout << "poset_orbit_node::downstep_orbits we are NOT using "
+			cout << "poset_orbit_node::schreier_forest we are NOT using "
 					"an invariant subset" << endl;
 			}
 		}
@@ -577,7 +542,7 @@ void poset_orbit_node::downstep_orbits(
 		}
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << "poset_orbit_node::downstep_orbits: we found "
+		cout << "poset_orbit_node::schreier_forest: we found "
 				<< Schreier.nb_orbits << " orbits" << endl;
 		}
 	if (f_using_invariant_subset && f_subset_is_allocated) {
@@ -642,6 +607,7 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 			}
 
 		create_schreier_vector_wrapper(
+			gen,
 			f_create_schreier_vector, 
 			Schreier, 
 			verbose_level - 1);
@@ -662,6 +628,7 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 		// in this case, we need all orbits in the schreier vector.
 		// that's why we do the orbit checking afterwards
 		create_schreier_vector_wrapper(
+			gen,
 			f_create_schreier_vector, 
 			Schreier, 
 			verbose_level - 1);
@@ -890,11 +857,11 @@ void poset_orbit_node::find_extensions(poset_classification *gen,
 
 
 int poset_orbit_node::downstep_get_invariant_subset(
-		poset_classification *gen,
+	poset_classification *gen,
 	int lvl, 
 	int &n, int *&subset, int &f_subset_is_allocated, 
 	int verbose_level)
-// called from downstep_orbits
+// called from schreier_forest
 // Gets the live points at the present node.
 {
 	int f_v = (verbose_level >= 1);
@@ -1253,19 +1220,6 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 					<< rep << " : " << setw(5) << len << endl;
 			}
 		}
-	
-}
-
-int poset_orbit_node::nb_extension_points()
-// sums up the lengths of orbits in all extensions
-{
-	int i, n;
-	
-	n = 0;
-	for (i = 0; i < nb_extensions; i++) {
-		n += E[i].orbit_len;
-		}
-	return n;
 	
 }
 

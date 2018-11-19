@@ -43,7 +43,8 @@ void schreier_vector_handler::freeself()
 	null();
 }
 
-void schreier_vector_handler::init(action *A, int f_allow_failure,
+void schreier_vector_handler::init(action *A, action *A2,
+		int f_allow_failure,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -52,6 +53,7 @@ void schreier_vector_handler::init(action *A, int f_allow_failure,
 		cout << "schreier_vector_handler::init" << endl;
 	}
 	schreier_vector_handler::A = A;
+	schreier_vector_handler::A2 = A2;
 	schreier_vector_handler::f_allow_failure = f_allow_failure;
 	nb_calls_to_coset_rep_inv = 0;
 	nb_calls_to_coset_rep_inv_recursion = 0;
@@ -70,6 +72,7 @@ int schreier_vector_handler::coset_rep_inv(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int ret;
 
 	if (f_v) {
@@ -78,10 +81,31 @@ int schreier_vector_handler::coset_rep_inv(
 		}
 	nb_calls_to_coset_rep_inv++;
 	A->element_one(cosetrep, 0);
-	if (f_v) {
+	if (f_vv) {
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"cosetrep:" << endl;
 		A->element_print_quick(cosetrep, cout);
+	}
+	if (f_v) {
+		cout << "action A:" << endl;
+		A->print_info();
+		cout << "action A2:" << endl;
+		A2->print_info();
+		cout << "action S->local_gens->A:" << endl;
+		S->local_gens->A->print_info();
+		cout << "schreier_vector_handler::coset_rep_inv "
+				"we have " << S->local_gens->len
+		<< " local generators" << endl;
+	}
+	if (f_vv) {
+		int i;
+		cout << "the local generators are:" << endl;
+		for (i = 0; i < S->local_gens->len; i++) {
+			cout << "generator " << i << " / "
+					<< S->local_gens->len << ":" << endl;
+			S->local_gens->A->element_print_quick(
+					S->local_gens->ith(i), cout);
+		}
 	}
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv "
@@ -89,8 +113,8 @@ int schreier_vector_handler::coset_rep_inv(
 		}
 	ret = coset_rep_inv_recursion(
 		S, pt, pt0,
-		verbose_level - 1);
-	if (f_v) {
+		verbose_level - 2);
+	if (f_vv) {
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"after coset_rep_inv_recursion cosetrep:" << endl;
 		A->element_print_quick(cosetrep, cout);
@@ -114,7 +138,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int hdl, pt_loc, pr, la, n;
 
 	if (f_v) {
@@ -161,16 +185,36 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 					"prev = " << pr << " label = " << la << endl;
 			}
 		//hdl = hdl_gen[la];
-		hdl = S->gen_hdl_first + la;
-		A->element_retrieve(hdl, Elt1, 0);
-		//cout << "retrieving generator " << gen_idx << endl;
+		if (S->f_has_local_generators) {
+			if (f_v) {
+				cout << "schreier_vector_handler::coset_rep_inv_recursion "
+						"using local_generator" << endl;
+				cout << "generator " << la << ":" << endl;
+			}
+			if (f_vv) {
+				A->element_print_quick(S->local_gens->ith(la), cout);
+			}
+			A->element_move(S->local_gens->ith(la), Elt1, 0);
+		} else {
+			if (f_v) {
+				cout << "schreier_vector_handler::coset_rep_inv_recursion "
+						"using global generator" << endl;
+			}
+			hdl = S->gen_hdl_first + la;
+			A->element_retrieve(hdl, Elt1, 0);
+			//cout << "retrieving generator " << gen_idx << endl;
+		}
 		//A->element_print_verbose(Elt1, cout);
 		A->element_invert(Elt1, Elt2, 0);
 
 		if (f_check_image) {
 			int prev;
 
-			prev = A->element_image_of(pt, Elt2, 0);
+			if (f_v) {
+				cout << "schreier_vector_handler::coset_rep_inv_recursion "
+						"check_image is TRUE" << endl;
+			}
+			prev = A2->element_image_of(pt, Elt2, 0);
 
 			//cout << "prev = " << prev << endl;
 			if (pr != prev) {
@@ -178,6 +222,10 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 						"pr != prev" << endl;
 				cout << "pr = " << pr << endl;
 				cout << "prev = " << prev << endl;
+				cout << "Elt1:" << endl;
+				A->element_print_quick(Elt1, cout);
+				cout << "Elt2:" << endl;
+				A->element_print_quick(Elt2, cout);
 				exit(1);
 				}
 			}

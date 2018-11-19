@@ -6,6 +6,7 @@ all:
 	cd combinatorics; $(MAKE) all
 	cd graph; $(MAKE) all
 	cd groups; $(MAKE) all
+	cd main; $(MAKE) all
 	cd ovoid; $(MAKE) all
 	cd projective_space; $(MAKE) all
 	cd regular_ls; $(MAKE) all
@@ -24,6 +25,7 @@ clean:
 	cd combinatorics; $(MAKE) clean
 	cd graph; $(MAKE) clean
 	cd groups; $(MAKE) clean
+	cd main; $(MAKE) clean
 	cd ovoid; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
 	cd regular_ls; $(MAKE) clean

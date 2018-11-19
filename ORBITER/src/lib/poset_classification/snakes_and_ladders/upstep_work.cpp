@@ -10,14 +10,30 @@
 upstep_work::upstep_work()
 {
 	gen = NULL;
+	size = 0;
+	prev = 0;
+	prev_ex = 0;
+	cur = 0;
 	nb_fusion_nodes = 0;
 	nb_fuse_cur = 0;
 	nb_ext_cur = 0;
+	f_debug = FALSE;
+	f_implicit_fusion = FALSE;
+	f_indicate_not_canonicals = FALSE;
 	mod_for_printing = 1;
+	pt = 0;
+	pt_orbit_len = 0;
+	path = NULL;
+	O_prev = NULL;
+	O_cur = NULL;
 	G = NULL;
 	H = NULL;
+	coset = 0;
+	nb_cosets = 0;
+	nb_cosets_processed = 0;
 	coset_table = NULL;
-	path = NULL;
+	f = NULL;
+
 
 }
 
@@ -886,7 +902,8 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				"extension_tolerant up_orbit.orbit_len[0]="
 				<< up_orbit.orbit_len[0] << endl;
 		}
-	H->S->transitive_extension_tolerant(up_orbit,
+	H->S->transitive_extension_tolerant(
+			up_orbit,
 			SG_extension, tl_extension, f_tolerant,
 			0 /*verbose_level - 3*/);
 	H->delete_strong_generators();

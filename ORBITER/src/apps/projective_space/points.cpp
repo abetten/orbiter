@@ -16,8 +16,10 @@
 
 int t0; // the system time when the program started
 
-void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level);
-void orthogonal_lines(finite_field *F, int epsilon, int n, int *c123, int verbose_level);
+void orthogonal_points(int epsilon, int n, int q,
+		int f_lines, int verbose_level);
+void orthogonal_lines(finite_field *F,
+		int epsilon, int n, int *c123, int verbose_level);
 void points(int n, int q, int verbose_level);
 
 int main(int argc, char **argv)
@@ -72,7 +74,8 @@ int main(int argc, char **argv)
 			}
 		}
 	if (!f_d && !f_n) {
-		cout << "please use either the -d <d> or the -n <n> option" << endl;
+		cout << "please use either the -d <d> "
+				"or the -n <n> option" << endl;
 		exit(1);
 		}
 	if (!f_q) {
@@ -89,7 +92,8 @@ int main(int argc, char **argv)
 		cout << "orthogonal" << endl;
 		if (ODD(n)) {
 			if (!f_epsilon) {
-				cout << "please use -epsilon <epsilon> option if n is odd." << endl;
+				cout << "please use -epsilon <epsilon> "
+						"option if n is odd." << endl;
 				exit(1);
 				}
 			}
@@ -103,12 +107,14 @@ int main(int argc, char **argv)
 	int dt;
 	dt = delta_time(t0);
 
-	cout << "time in ticks " << dt << " tps=" << os_ticks_per_second() << endl;
+	cout << "time in ticks " << dt << " tps="
+			<< os_ticks_per_second() << endl;
 
 	the_end(t0);
 }
 
-void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level)
+void orthogonal_points(int epsilon, int n, int q,
+		int f_lines, int verbose_level)
 {
 	int i, j;
 	int d;
@@ -133,7 +139,7 @@ void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level
 	
 	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level - 1);
-	F->print(TRUE);
+	F->print();
 	
 	if (epsilon == 0)
 		c123[0] = 1;
@@ -169,7 +175,8 @@ void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level
 	FREE_int(G);
 }
 
-void orthogonal_lines(finite_field *F, int epsilon, int n, int *c123, int verbose_level)
+void orthogonal_lines(finite_field *F,
+		int epsilon, int n, int *c123, int verbose_level)
 {
 	orthogonal O;
 	int p1, p2, i, j, a, len;
@@ -182,7 +189,8 @@ void orthogonal_lines(finite_field *F, int epsilon, int n, int *c123, int verbos
 	L = NEW_int(2 * d);
 	
 	cout << "O^" << epsilon << "(" << d << "," << q << ") with " 
-		<< O.nb_points << " points and " << O.nb_lines << " lines" << endl << endl;
+		<< O.nb_points << " points and "
+		<< O.nb_lines << " lines" << endl << endl;
 	
 
 #if 0

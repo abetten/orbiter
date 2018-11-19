@@ -179,7 +179,7 @@ void ovoid_generator::init(int argc, const char **argv,
 	
 	if (f_vv) {
 		cout << "The finite field is:" << endl;
-		O->F->print(TRUE);
+		O->F->print();
 		}
 
 	if (f_v) {

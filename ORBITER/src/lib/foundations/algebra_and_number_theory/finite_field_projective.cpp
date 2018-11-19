@@ -418,6 +418,197 @@ void finite_field::PG_element_unrank_modified_not_in_subspace(
 	PG_element_unrank_modified(v, stride, len, a);
 }
 
+int finite_field::evaluate_conic_form(int *six_coeffs, int *v3)
+{
+	//int a = 2, b = 0, c = 0, d = 4, e = 4, f = 4, val, val1;
+	//int a = 3, b = 1, c = 2, d = 4, e = 1, f = 4, val, val1;
+	int val, val1;
+
+	val = 0;
+	val1 = product3(six_coeffs[0], v3[0], v3[0]);
+	val = add(val, val1);
+	val1 = product3(six_coeffs[1], v3[1], v3[1]);
+	val = add(val, val1);
+	val1 = product3(six_coeffs[2], v3[2], v3[2]);
+	val = add(val, val1);
+	val1 = product3(six_coeffs[3], v3[0], v3[1]);
+	val = add(val, val1);
+	val1 = product3(six_coeffs[4], v3[0], v3[2]);
+	val = add(val, val1);
+	val1 = product3(six_coeffs[5], v3[1], v3[2]);
+	val = add(val, val1);
+	return val;
+}
+
+int finite_field::evaluate_quadric_form_in_PG_three(
+		int *ten_coeffs, int *v4)
+{
+	int val, val1;
+
+	val = 0;
+	val1 = product3(ten_coeffs[0], v4[0], v4[0]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[1], v4[1], v4[1]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[2], v4[2], v4[2]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[3], v4[3], v4[3]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[4], v4[0], v4[1]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[5], v4[0], v4[2]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[6], v4[0], v4[3]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[7], v4[1], v4[2]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[8], v4[1], v4[3]);
+	val = add(val, val1);
+	val1 = product3(ten_coeffs[9], v4[2], v4[3]);
+	val = add(val, val1);
+	return val;
+}
+
+int finite_field::Pluecker_12(int *x4, int *y4)
+{
+	return Pluecker_ij(0, 1, x4, y4);
+}
+
+int finite_field::Pluecker_21(int *x4, int *y4)
+{
+	return Pluecker_ij(1, 0, x4, y4);
+}
+
+int finite_field::Pluecker_13(int *x4, int *y4)
+{
+	return Pluecker_ij(0, 2, x4, y4);
+}
+
+int finite_field::Pluecker_31(int *x4, int *y4)
+{
+	return Pluecker_ij(2, 0, x4, y4);
+}
+
+int finite_field::Pluecker_14(int *x4, int *y4)
+{
+	return Pluecker_ij(0, 3, x4, y4);
+}
+
+int finite_field::Pluecker_41(int *x4, int *y4)
+{
+	return Pluecker_ij(3, 0, x4, y4);
+}
+
+int finite_field::Pluecker_23(int *x4, int *y4)
+{
+	return Pluecker_ij(1, 2, x4, y4);
+}
+
+int finite_field::Pluecker_32(int *x4, int *y4)
+{
+	return Pluecker_ij(2, 1, x4, y4);
+}
+
+int finite_field::Pluecker_24(int *x4, int *y4)
+{
+	return Pluecker_ij(1, 3, x4, y4);
+}
+
+int finite_field::Pluecker_42(int *x4, int *y4)
+{
+	return Pluecker_ij(3, 1, x4, y4);
+}
+
+int finite_field::Pluecker_34(int *x4, int *y4)
+{
+	return Pluecker_ij(2, 3, x4, y4);
+}
+
+int finite_field::Pluecker_43(int *x4, int *y4)
+{
+	return Pluecker_ij(3, 2, x4, y4);
+}
+
+int finite_field::Pluecker_ij(int i, int j, int *x4, int *y4)
+{
+	return add(mult(x4[i], y4[j]), negate(mult(x4[j], y4[i])));
+}
+
+
+int finite_field::evaluate_symplectic_form(int len, int *x, int *y)
+{
+	int i, n, c;
+
+	if (ODD(len)) {
+		cout << "finite_field::evaluate_symplectic_form len must be even"
+				<< endl;
+		cout << "len=" << len << endl;
+		exit(1);
+		}
+	c = 0;
+	n = len >> 1;
+	for (i = 0; i < n; i++) {
+		c = add(c, add(
+				mult(x[2 * i + 0], y[2 * i + 1]),
+				negate(mult(x[2 * i + 1], y[2 * i + 0]))
+				));
+		}
+	return c;
+}
+
+int finite_field::evaluate_quadratic_form_x0x3mx1x2(int *x)
+{
+	int a;
+
+	a = add(mult(x[0], x[3]), negate(mult(x[1], x[2])));
+	return a;
+}
+
+int finite_field::is_totally_isotropic_wrt_symplectic_form(
+		int k, int n, int *Basis)
+{
+	int i, j;
+
+	for (i = 0; i < k; i++) {
+		for (j = i + 1; j < k; j++) {
+			if (evaluate_symplectic_form(n, Basis + i * n, Basis + j * n)) {
+				return FALSE;
+				}
+			}
+		}
+	return TRUE;
+}
+
+int finite_field::evaluate_monomial(int *monomial,
+		int *variables, int nb_vars)
+{
+	int i, j, a, b, x;
+
+	a = 1;
+	for (i = 0; i < nb_vars; i++) {
+		b = monomial[i];
+		x = variables[i];
+		for (j = 0; j < b; j++) {
+			a = mult(a, x);
+			}
+		}
+	return a;
+}
+
+void finite_field::projective_point_unrank(int n, int *v, int rk)
+{
+	PG_element_unrank_modified(v, 1 /* stride */,
+			n + 1 /* len */, rk);
+}
+
+int finite_field::projective_point_rank(int n, int *v)
+{
+	int rk;
+
+	PG_element_rank_modified(v, 1 /* stride */, n + 1, rk);
+	return rk;
+}
+
 
 // #############################################################################
 // globals:

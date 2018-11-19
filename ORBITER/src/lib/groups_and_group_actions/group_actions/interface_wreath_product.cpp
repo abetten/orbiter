@@ -133,10 +133,12 @@ int wreath_product_group_element_is_one(action &A,
 	ret = W.element_is_one(Elt);
 	if (f_v) {
 		if (ret) {
-			cout << "wreath_product_group_element_is_one returns YES" << endl;
+			cout << "wreath_product_group_element_is_one "
+					"returns YES" << endl;
 			}
 		else {
-			cout << "wreath_product_group_element_is_one returns NO" << endl;
+			cout << "wreath_product_group_element_is_one "
+					"returns NO" << endl;
 			}
 		}
 	return ret;
@@ -342,7 +344,8 @@ void wreath_product_group_element_dispose(action &A,
 	wreath_product &W = *A.G.wreath_product_group;
 
 	if (f_v) {
-		cout << "wreath_product_group_element_dispose() hdl = " << hdl << endl;
+		cout << "wreath_product_group_element_dispose "
+				"hdl = " << hdl << endl;
 		}
 	W.Elts->dispose(hdl);
 }

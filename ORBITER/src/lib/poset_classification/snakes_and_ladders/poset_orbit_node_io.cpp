@@ -497,6 +497,146 @@ int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 	return s;
 }
 
+void poset_orbit_node::save_schreier_forest(
+	poset_classification *PC,
+	schreier *Schreier,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_orbit_node::save_schreier_forest"
+				<< endl;
+	}
+	if (PC->f_export_schreier_trees) {
+		int orbit_no, nb_orbits;
+
+		nb_orbits = Schreier->nb_orbits;
+		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+			char fname_mask_base[1000];
+			char fname_mask[1000];
+
+			PC->create_schreier_tree_fname_mask_base(
+					fname_mask_base, node);
+
+			sprintf(fname_mask, "%s.layered_graph", fname_mask_base);
+
+			Schreier->export_tree_as_layered_graph(orbit_no,
+					fname_mask,
+					verbose_level);
+		}
+	}
+	if (f_v) {
+		cout << "poset_orbit_node::save_schreier_forest "
+				"done" << endl;
+	}
+}
+
+void poset_orbit_node::save_shallow_schreier_forest(
+	poset_classification *PC,
+	int verbose_level)
+{
+	int f_v = TRUE;//(verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_orbit_node::save_shallow_schreier_forest"
+				<< endl;
+	}
+	if (PC->f_export_schreier_trees) {
+		int orbit_no, nb_orbits;
+		int *orbit_reps;
+
+		if (Schreier_vector == NULL) {
+			cout << "poset_orbit_node::save_shallow_schreier_forest "
+					"Schreier_vector == NULL" << endl;
+			exit(1);
+		}
+		Schreier_vector->count_number_of_orbits_and_get_orbit_reps(
+					orbit_reps, nb_orbits);
+		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+			char fname_mask_base[1000];
+			char fname_mask[1000];
+
+			PC->create_shallow_schreier_tree_fname_mask_base(
+					fname_mask_base, node);
+
+			sprintf(fname_mask, "%s.layered_graph", fname_mask_base);
+
+			Schreier_vector->export_tree_as_layered_graph(
+					orbit_no, orbit_reps[orbit_no],
+					fname_mask,
+					verbose_level);
+		}
+	}
+	if (f_v) {
+		cout << "poset_orbit_node::save_shallow_schreier_forest "
+				"done" << endl;
+	}
+}
+
+void poset_orbit_node::draw_schreier_forest(
+	poset_classification *PC,
+	schreier *Schreier,
+	int f_using_invariant_subset, action *AR,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_orbit_node::draw_schreier_forest"
+				<< endl;
+	}
+	if (PC->f_draw_schreier_trees) {
+		int orbit_no, nb_orbits;
+
+		nb_orbits = Schreier->nb_orbits;
+		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+			char label[1000];
+			int xmax = PC->schreier_tree_xmax;
+			int ymax =  PC->schreier_tree_ymax;
+			int f_circletext = PC->schreier_tree_f_circletext;
+			int rad = PC->schreier_tree_rad;
+			int f_embedded = PC->schreier_tree_f_embedded;
+			int f_sideways = PC->schreier_tree_f_sideways;
+			double scale = PC->schreier_tree_scale;
+			double line_width = PC->schreier_tree_line_width;
+			int f_has_point_labels = FALSE;
+			int *point_labels = NULL;
+
+			sprintf(label, "%sschreier_tree_node_%d_%d",
+					PC->schreier_tree_prefix, node, orbit_no);
+
+			if (f_using_invariant_subset) {
+				f_has_point_labels = TRUE;
+				point_labels = AR->G.ABR->points;
+				}
+
+			if (f_v) {
+				cout << "poset_orbit_node::draw_schreier_forest"
+						<< endl;
+				cout << "Node " << node << " " << orbit_no
+						<< " drawing schreier tree" << endl;
+			}
+			Schreier->draw_tree(label, orbit_no, xmax, ymax,
+				f_circletext, rad,
+				f_embedded, f_sideways,
+				scale, line_width,
+				f_has_point_labels, point_labels,
+				verbose_level - 1);
+			}
+
+		char label_data[1000];
+		sprintf(label_data, "%sschreier_data_node_%d.tex",
+				PC->schreier_tree_prefix, node);
+		Schreier->latex(label_data);
+		}
+
+	if (f_v) {
+		cout << "poset_orbit_node::draw_schreier_forest"
+				" done" << endl;
+	}
+}
+
 
 
 

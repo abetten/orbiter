@@ -129,7 +129,8 @@ int poset_classification::main(int t0,
 		
 		if (f_v) {
 			cout << "depth_completed = " << depth_completed << endl;
-			cout << "poset_classification::main: recreating schreier vectors "
+			cout << "poset_classification::main: "
+					"recreating schreier vectors "
 					"to depth " << depth_completed - 1 << endl;
 			}
 	
@@ -276,15 +277,15 @@ void poset_classification::extend_level(int size,
 
 	if (f_v) {
 		cout << "poset_classification::extend_level size = " << size
-				<< " calling downstep" << endl;
+				<< " calling compute_flag_orbits" << endl;
 		}
-	downstep(size,
+	compute_flag_orbits(size,
 		f_create_schreier_vector,
 		f_use_invariant_subset_if_available, 
 		verbose_level - 1);
 	if (f_v) {
 		cout << "poset_classification::extend_level size = " << size <<
-				"after downstep" << endl;
+				"after compute_flag_orbits" << endl;
 		}
 
 	if (f_write_candidate_file) {
@@ -312,7 +313,7 @@ void poset_classification::extend_level(int size,
 
 }
 
-void poset_classification::downstep(int size, 
+void poset_classification::compute_flag_orbits(int size,
 	int f_create_schreier_vector,
 	int f_use_invariant_subset_if_available, 
 	int verbose_level)
@@ -334,7 +335,7 @@ void poset_classification::downstep(int size,
 				"##################################################" << endl;
 		print_problem_label();
 		cout << endl;
-		cout << "downstep depth " << size
+		cout << "compute_flag_orbits depth " << size
 				<< " creating orbits at level " << size + 1
 				<< " verbose_level=" << verbose_level << endl;
 		}
@@ -349,18 +350,19 @@ void poset_classification::downstep(int size,
 		
 		if (f_print) {
 			print_level_info(size, prev);
-			cout << " Downstep node starting" << endl;
+			cout << " compute_flag_orbits node " << u << " / " << l
+					<< " starting" << endl;
 			}
 			
 		if (f_on_subspaces) {
-			root[prev].downstep_subspace_action(this, size, 
+			root[prev].compute_flag_orbits_subspace_action(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				f_lex, 
 				verbose_level - 2);
 			}
 		else {
-			root[prev].downstep(this, size, 
+			root[prev].compute_flag_orbits(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				f_lex, 
@@ -369,7 +371,8 @@ void poset_classification::downstep(int size,
 		if (f_print) {
 			//cout << endl;
 			print_level_info(size, prev);
-			cout << " Downstep node finished : ";
+			cout << " compute_flag_orbits node " << u << " / " << l
+					<< " finished : ";
 			if (root[prev].Schreier_vector) {
 				//int nb = root[prev].sv[0];
 				int nb = root[prev].get_nb_of_live_points();

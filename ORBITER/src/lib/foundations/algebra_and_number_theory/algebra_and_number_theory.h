@@ -163,7 +163,8 @@ public:
 	void create_alpha_table_prime_field(int verbose_level);
 	void create_tables_prime_field(int verbose_level);
 	void create_tables_extension_field(int verbose_level);
-	void print(int f_add_mult_table);
+	void print();
+	void print_detailed(int f_add_mult_table);
 	void print_add_mult_tables();
 	void print_tables();
 	void print_tables_extension_field(const char *poly);
@@ -260,31 +261,9 @@ public:
 	void latex_matrix(ostream &f, int f_elements_exponential, 
 		const char *symbol_for_print, int *M, int m, int n);
 	void power_table(int t, int *power_table, int len);
-	int evaluate_conic_form(int *six_coeffs, int *v3);
-	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);
-	int Pluecker_12(int *x4, int *y4);
-	int Pluecker_21(int *x4, int *y4);
-	int Pluecker_13(int *x4, int *y4);
-	int Pluecker_31(int *x4, int *y4);
-	int Pluecker_14(int *x4, int *y4);
-	int Pluecker_41(int *x4, int *y4);
-	int Pluecker_23(int *x4, int *y4);
-	int Pluecker_32(int *x4, int *y4);
-	int Pluecker_24(int *x4, int *y4);
-	int Pluecker_42(int *x4, int *y4);
-	int Pluecker_34(int *x4, int *y4);
-	int Pluecker_43(int *x4, int *y4);
-	int Pluecker_ij(int i, int j, int *x4, int *y4);
-	int evaluate_symplectic_form(int len, int *x, int *y);
-	int evaluate_quadratic_form_x0x3mx1x2(int *x);
-	int is_totally_isotropic_wrt_symplectic_form(int k, 
-		int n, int *Basis);
 	void cheat_sheet(ostream &f, int verbose_level);
 	void cheat_sheet_top(ostream &f, int nb_cols);
 	void cheat_sheet_bottom(ostream &f);
-	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
-	void projective_point_unrank(int n, int *v, int rk);
-	int projective_point_rank(int n, int *v);
 
 	// #########################################################################
 	// finite_field_linear_algebra.C:
@@ -302,10 +281,6 @@ public:
 		int *B, int n, int f, int l);
 		// initializes B as the l x l minor of A 
 		// (which is n x n) starting from row f. 
-#if 0
-	void mult_matrix(int *A, int *B, int *C, 
-		int ma, int na, int nb);
-#endif
 	void mult_vector_from_the_left(int *v, int *A, 
 		int *vA, int m, int n);
 		// v[m], A[m][n], vA[n]
@@ -318,15 +293,6 @@ public:
 		int *C, int m, int n, int o, int verbose_level);
 		// matrix multiplication C := A * B,
 		// where A is m x n and B is n x o, so that C is m by o
-
-#if 0
-	void mult_matrix_matrix(int *A, int *B, int *C, 
-		int m, int n, int o);
-		// multiplies C := A * B, 
-		// where A is m x n and B is n x o, 
-		// so that C is m by o
-		// C must already be allocated
-#endif
 	void semilinear_matrix_mult(int *A, int *B, int *AB, int n);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 	void semilinear_matrix_mult_memory_given(int *A, int *B, 
@@ -708,6 +674,29 @@ public:
 			int *v, int stride, int len, int m, int &a);
 	void PG_element_unrank_modified_not_in_subspace(
 			int *v, int stride, int len, int m, int a);
+
+	int evaluate_conic_form(int *six_coeffs, int *v3);
+	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);
+	int Pluecker_12(int *x4, int *y4);
+	int Pluecker_21(int *x4, int *y4);
+	int Pluecker_13(int *x4, int *y4);
+	int Pluecker_31(int *x4, int *y4);
+	int Pluecker_14(int *x4, int *y4);
+	int Pluecker_41(int *x4, int *y4);
+	int Pluecker_23(int *x4, int *y4);
+	int Pluecker_32(int *x4, int *y4);
+	int Pluecker_24(int *x4, int *y4);
+	int Pluecker_42(int *x4, int *y4);
+	int Pluecker_34(int *x4, int *y4);
+	int Pluecker_43(int *x4, int *y4);
+	int Pluecker_ij(int i, int j, int *x4, int *y4);
+	int evaluate_symplectic_form(int len, int *x, int *y);
+	int evaluate_quadratic_form_x0x3mx1x2(int *x);
+	int is_totally_isotropic_wrt_symplectic_form(int k,
+		int n, int *Basis);
+	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
+	void projective_point_unrank(int n, int *v, int rk);
+	int projective_point_rank(int n, int *v);
 };
 
 extern int nb_calls_to_finite_field_init;
@@ -1096,52 +1085,6 @@ void diagonal_orbit_perm(int n, finite_field &GFq,
 	int *orbit, int *orbit_inv, int verbose_level);
 void frobenius_orbit_perm(int n, finite_field &GFq, 
 	int *orbit, int *orbit_inv, int verbose_level);
-#if 0
-void translation_in_AG(finite_field &GFq, int n, int i, 
-	int a, int *perm, int *v, int verbose_level);
-	// v[n] needs to be allocated 
-	// p[q^n] needs to be allocated
-void frobenius_in_AG(finite_field &GFq, int n, 
-	int *perm, int *v, int verbose_level);
-	// v[n] needs to be allocated 
-	// p[q^n] needs to be allocated
-void frobenius_in_PG(finite_field &GFq, int n, 
-	int *perm, int *v, int verbose_level);
-	// v[n + 1] needs to be allocated 
-	// p[q^n+...+q+1] needs to be allocated
-void AG_representation_of_matrix(finite_field &GFq, 
-	int n, int f_from_the_right, 
-	int *M, int *v, int *w, int *perm, int verbose_level);
-	// perm[q^n] needs to be already allocated
-void AG_representation_one_dimensional(finite_field &GFq, 
-	int a, int *perm, int verbose_level);
-	// perm[q] needs to be already allocated
-int nb_generators_affine_translations(finite_field &GFq, int n);
-void generators_affine_translations(finite_field &GFq, 
-	int n, int *perms, int verbose_level);
-	// primes[n * d] needs to be allocated, where d = q^n
-void generators_AGL1xAGL1_subdirect1(finite_field &GFq1, 
-	finite_field &GFq2, int u, int v, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_AGL1q(finite_field &GFq, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_AGL1q_subgroup(finite_field &GFq, 
-	int index_in_multiplicative_group, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_AGL1_x_AGL1(finite_field &GFq1, 
-	finite_field &GFq2, int &deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_AGL1_x_AGL1_extension(finite_field &GFq1, 
-	finite_field &GFq2, int u, int v, 
-	int &deg, int &nb_perms, int *&perms, int verbose_level);
-void generators_AGL1_x_AGL1_extended_once(finite_field &F1, 
-	finite_field &F2, int u, int v, 
-	int &deg, int &nb_perms, int *&perms, int verbose_level);
-void generators_AGL1_x_AGL1_extended_twice(finite_field &F1, 
-	finite_field &F2, int u1, int v1, 
-	int u2, int v2, int &deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-#endif
 void generators_symmetric_group(int deg, 
 	int &nb_perms, int *&perms, int verbose_level);
 void generators_cyclic_group(int deg, 
