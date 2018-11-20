@@ -198,6 +198,26 @@ void poset_classification::print_orbit_numbers(int depth)
 	compute_and_print_automorphism_group_orders(depth, cout);
 }
 
+void poset_classification::print()
+{
+	int nb_nodes, j;
+
+	cout << "Poset classification:" << endl;
+	print_problem_label();
+	cout << "Action:" << endl;
+	Poset->A->print_info();
+	cout << "Action2:" << endl;
+	Poset->A2->print_info();
+	cout << "Group order:" << Poset->go << endl;
+	cout << "Degree:" << Poset->A2->degree << endl;
+	cout << "depth:" << depth << endl;
+	nb_nodes = nb_orbits_at_level(depth);
+	cout << "Found " << nb_nodes << " orbits at depth " << depth << endl;
+	for (j = 0; j <= depth; j++) {
+		cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
+		}
+	cout << "total: " << first_poset_orbit_node_at_level[depth + 1] << endl;
+}
 
 void poset_classification::print_statistic_on_callbacks_naked()
 {

@@ -90,6 +90,9 @@ void poset::init(
 		cout << "poset::init" << endl;
 		}
 	poset::description = description;
+	f_subset_lattice = description->f_subset_lattice;
+	n = description->n;
+	f_subspace_lattice = description->f_subspace_lattice;
 	poset::A = A;
 	poset::A2 = A2;
 	poset::Strong_gens = Strong_gens;
@@ -111,3 +114,15 @@ void poset::init(
 		}
 }
 
+void poset::print()
+{
+	if (f_subset_lattice) {
+		cout << "poset of subsets" << endl;
+	}
+	if (f_subspace_lattice) {
+		cout << "poset of subspaces" << endl;
+	}
+	A->print_info();
+	A2->print_info();
+	cout << "group order " << go << endl;
+}

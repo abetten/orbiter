@@ -101,6 +101,8 @@ enum symbol_table_object_type {
 	t_nothing_object,
 	t_finite_field,
 	t_action,
+	t_poset,
+	t_poset_classification,
 };
 
 class orbiter_symbol_table_entry {
@@ -180,6 +182,18 @@ void orbiter_symbol_table_entry::print()
 
 			A = (action *) ptr;
 			A->print_info();
+		}
+		else if (object_type == t_poset) {
+			poset *P;
+
+			P = (poset *) ptr;
+			P->print();
+		}
+		else if (object_type == t_poset_classification) {
+			poset_classification *PC;
+
+			PC = (poset_classification *) ptr;
+			PC->print();
 		}
 	}
 }
@@ -292,6 +306,12 @@ static void sighandler (int);
 void do_something(char *input_line, int verbose_level);
 void execute(orbiter_token *T, int nb_T, int verbose_level);
 void execute_assignment(orbiter_token *T, int nb_T, int verbose_level);
+int assignment_group(orbiter_symbol_table_entry *Symb,
+		orbiter_token *T, int nb_T, int verbose_level);
+int assignment_poset(orbiter_symbol_table_entry *Symb,
+		orbiter_token *T, int nb_T, int verbose_level);
+int assignment_poset_classification(orbiter_symbol_table_entry *Symb,
+		orbiter_token *T, int nb_T, int verbose_level);
 void refresh_prompt();
 void init_prompt();
 void tokenize(char *line, orbiter_token *&T, int &nb_tokens);
@@ -476,7 +496,11 @@ void execute(orbiter_token *T, int nb_T, int verbose_level)
 void execute_assignment(orbiter_token *T, int nb_T, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	cout << "assignment to " << T[0].str << endl;
+
+
+	if (f_v) {
+		cout << "assignment to " << T[0].str << endl;
+	}
 
 	orbiter_symbol_table_entry *Symb;
 
@@ -485,7 +509,9 @@ void execute_assignment(orbiter_token *T, int nb_T, int verbose_level)
 	int idx;
 	idx = Session->find_symbol(T[0].str);
 	if (idx >= 0) {
-		cout << "Overriding symbol " << idx << endl;
+		if (f_v) {
+			cout << "Overriding symbol " << idx << endl;
+		}
 	}
 	if (T[2].type() == t_int) {
 		int *v;
@@ -529,111 +555,473 @@ void execute_assignment(orbiter_token *T, int nb_T, int verbose_level)
 			}
 		}
 		else if (strcmp(T[2].str, "group") == 0) {
-			if (nb_T <= 2) {
-				cout << "need another argument to specify the parameters of the group" << endl;
+			if (assignment_group(Symb, T, nb_T, verbose_level)) {
+				Session->add_symbol_table_entry(T[0].str, Symb);
 			}
 			else {
-				char arguments[1000];
-				int i;
-				finite_field *F = NULL;
-
-				if (T[3].type() != t_label) {
-					cout << "the first argument after group must be label of the finite field" << endl;
-				}
-				else {
-					int idx;
-					idx = Session->find_symbol(T[3].str);
-
-					if (Session->Table[idx].type != t_object) {
-						cout << "object with label " << T[3].str << " not of type t_object" << endl;
-					}
-					if (Session->Table[idx].object_type == t_finite_field) {
-						F = (finite_field *) Session->Table[idx].ptr;
-						F->print();
-					}
-					arguments[0] = 0;
-					int f_next_symbol_is_keyword;
-					int f_this_symbol_is_keyword;
-
-					f_next_symbol_is_keyword = FALSE;
-					for (i = 4; i < nb_T; i++) {
-						f_this_symbol_is_keyword = f_next_symbol_is_keyword;
-						f_next_symbol_is_keyword = FALSE;
-						if (T[i].type() == t_label) {
-							if (f_this_symbol_is_keyword) {
-								sprintf(arguments + strlen(arguments), "-%s ", T[i].str);
-							}
-							else {
-								int idx;
-								idx = Session->find_symbol(T[i].str);
-								if (idx >= 0) {
-									cout << T[i].str << " = ";
-									Session->Table[idx].print();
-								}
-								if (Session->Table[idx].type != t_intvec) {
-									cout << "label " << T[i].str << " not of type int" << endl;
-								}
-								else {
-									sprintf(arguments + strlen(arguments), "%d ", Session->Table[idx].vec[0]);
-								}
-							}
-						}
-						else if (T[i].type() == t_int) {
-							sprintf(arguments + strlen(arguments), "%s ", T[i].str);
-						}
-						else if (T[i].type() == t_symbol) {
-							if (T[i].symbol_type() == t_minus) {
-								f_next_symbol_is_keyword = TRUE;
-							}
-						}
-					}
-					sprintf(arguments + strlen(arguments), " -end");
-					cout << "creating group from arguments: " << arguments << endl;
-					linear_group_description *Descr;
-					linear_group *LG;
-					Descr = NEW_OBJECT(linear_group_description);
-					cout << "before Descr->read_arguments_from_string" << endl;
-					Descr->read_arguments_from_string(
-							arguments, 2 /*verbose_level*/);
-					cout << "after Descr->read_arguments_from_string" << endl;
-					if (F == NULL) {
-						cout << "finite field is missing" << endl;
-					}
-					else {
-						Descr->F = F;
-
-						LG = NEW_OBJECT(linear_group);
-						if (f_v) {
-							cout << "linear_group before LG->init, "
-									"creating the group" << endl;
-							}
-
-						cout << "before LG->init" << endl;
-						LG->init(Descr, verbose_level - 1);
-						cout << "after LG->init" << endl;
-
-						if (f_v) {
-							cout << "linear_group after LG->init" << endl;
-							}
-
-						action *A;
-
-						A = LG->A2;
-
-						cout << "created group " << LG->prefix << endl;
-
-						Symb->type = t_object;
-						Symb->object_type = t_action;
-						Symb->ptr = A;
-						Session->add_symbol_table_entry(T[0].str, Symb);
-					}
-				}
+				cout << "something went wrong" << endl;
+			}
+		}
+		else if (strcmp(T[2].str, "poset") == 0) {
+			if (assignment_poset(Symb, T, nb_T, verbose_level)) {
+				Session->add_symbol_table_entry(T[0].str, Symb);
+			}
+			else {
+				cout << "something went wrong" << endl;
+			}
+		}
+		else if (strcmp(T[2].str, "poset_classification") == 0) {
+			if (assignment_poset_classification(Symb, T, nb_T, verbose_level)) {
+				Session->add_symbol_table_entry(T[0].str, Symb);
+			}
+			else {
+				cout << "something went wrong" << endl;
 			}
 		}
 		else {
 			cout << "unknown label " << T[2].str << endl;
 		}
 	}
+}
+
+
+int assignment_group(orbiter_symbol_table_entry *Symb,
+		orbiter_token *T, int nb_T, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "assignment_group" << endl;
+	}
+	if (nb_T <= 2) {
+		cout << "need another argument to specify the parameters "
+				"of the group" << endl;
+		return FALSE;
+	}
+	char arguments[1000];
+	int i;
+	finite_field *F = NULL;
+
+	if (T[3].type() != t_label) {
+		cout << "the first argument after group must be label "
+				"of the finite field" << endl;
+		return FALSE;
+	}
+	int idx;
+	idx = Session->find_symbol(T[3].str);
+
+	if (Session->Table[idx].type != t_object) {
+		cout << "object with label " << T[3].str
+				<< " not of type t_object" << endl;
+		return FALSE;
+	}
+	if (Session->Table[idx].object_type == t_finite_field) {
+		F = (finite_field *) Session->Table[idx].ptr;
+		F->print();
+	}
+	arguments[0] = 0;
+	int f_next_symbol_is_keyword;
+	int f_this_symbol_is_keyword;
+
+	f_next_symbol_is_keyword = FALSE;
+	for (i = 4; i < nb_T; i++) {
+		f_this_symbol_is_keyword = f_next_symbol_is_keyword;
+		f_next_symbol_is_keyword = FALSE;
+		if (T[i].type() == t_label) {
+			if (f_this_symbol_is_keyword) {
+				sprintf(arguments + strlen(arguments), "-%s ", T[i].str);
+			}
+			else {
+				int idx;
+				idx = Session->find_symbol(T[i].str);
+				if (idx >= 0) {
+					cout << T[i].str << " = ";
+					Session->Table[idx].print();
+				}
+				if (Session->Table[idx].type != t_intvec) {
+					cout << "label " << T[i].str << " not of type int" << endl;
+				}
+				else {
+					sprintf(arguments + strlen(arguments), "%d ",
+							Session->Table[idx].vec[0]);
+				}
+			}
+		}
+		else if (T[i].type() == t_int) {
+			sprintf(arguments + strlen(arguments), "%s ", T[i].str);
+		}
+		else if (T[i].type() == t_symbol) {
+			if (T[i].symbol_type() == t_minus) {
+				f_next_symbol_is_keyword = TRUE;
+			}
+		}
+	}
+	sprintf(arguments + strlen(arguments), " -end");
+	cout << "creating group from arguments: " << arguments << endl;
+	linear_group_description *Descr;
+	linear_group *LG;
+	Descr = NEW_OBJECT(linear_group_description);
+	cout << "before Descr->read_arguments_from_string" << endl;
+	Descr->read_arguments_from_string(
+			arguments, 2 /*verbose_level*/);
+	cout << "after Descr->read_arguments_from_string" << endl;
+	if (F == NULL) {
+		cout << "finite field is missing" << endl;
+		return FALSE;
+	}
+	Descr->F = F;
+
+	LG = NEW_OBJECT(linear_group);
+	if (f_v) {
+		cout << "linear_group before LG->init, "
+				"creating the group" << endl;
+		}
+
+	cout << "before LG->init" << endl;
+	LG->init(Descr, verbose_level - 1);
+	cout << "after LG->init" << endl;
+
+	if (f_v) {
+		cout << "linear_group after LG->init" << endl;
+		}
+
+	action *A;
+
+	A = LG->A2;
+
+	cout << "created group " << LG->prefix << endl;
+
+	Symb->type = t_object;
+	Symb->object_type = t_action;
+	Symb->ptr = A;
+	if (f_v) {
+		cout << "assignment_group done" << endl;
+	}
+	return TRUE;
+}
+
+int assignment_poset(orbiter_symbol_table_entry *Symb,
+		orbiter_token *T, int nb_T, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "assignment_poset" << endl;
+	}
+	if (nb_T <= 3) {
+		cout << "need two more arguments to specify the action " << endl;
+		return FALSE;
+	}
+	char arguments[1000];
+	int i;
+	action *A1 = NULL;
+	action *A2 = NULL;
+
+	if (T[3].type() != t_label) {
+		cout << "the first argument after poset must be the label "
+				"of an action" << endl;
+		return FALSE;
+	}
+	int idx;
+	idx = Session->find_symbol(T[3].str);
+
+	if (Session->Table[idx].type != t_object) {
+		cout << "object with label " << T[3].str
+				<< " not of type t_object" << endl;
+		return FALSE;
+	}
+	if (Session->Table[idx].object_type != t_action) {
+		cout << "object with label " << T[3].str
+				<< " not of type t_action" << endl;
+		return FALSE;
+	}
+	A1 = (action *) Session->Table[idx].ptr;
+	A1->print_info();
+
+	if (T[4].type() != t_label) {
+		cout << "the second argument after poset must be the label "
+				"of an action" << endl;
+		return FALSE;
+	}
+	idx = Session->find_symbol(T[4].str);
+
+	if (Session->Table[idx].type != t_object) {
+		cout << "object with label " << T[4].str
+				<< " not of type t_object" << endl;
+		return FALSE;
+	}
+	if (Session->Table[idx].object_type != t_action) {
+		cout << "object with label " << T[4].str
+				<< " not of type t_action" << endl;
+		return FALSE;
+	}
+	A2 = (action *) Session->Table[idx].ptr;
+	A2->print_info();
+
+
+
+	arguments[0] = 0;
+	int f_next_symbol_is_keyword;
+	int f_this_symbol_is_keyword;
+
+	f_next_symbol_is_keyword = FALSE;
+	for (i = 5; i < nb_T; i++) {
+		f_this_symbol_is_keyword = f_next_symbol_is_keyword;
+		f_next_symbol_is_keyword = FALSE;
+		if (T[i].type() == t_label) {
+			if (f_this_symbol_is_keyword) {
+				sprintf(arguments + strlen(arguments), "-%s ", T[i].str);
+			}
+			else {
+				int idx;
+				idx = Session->find_symbol(T[i].str);
+				if (idx >= 0) {
+					cout << T[i].str << " = ";
+					Session->Table[idx].print();
+				}
+				if (Session->Table[idx].type != t_intvec) {
+					cout << "label " << T[i].str << " not of type int" << endl;
+				}
+				else {
+					sprintf(arguments + strlen(arguments), "%d ",
+							Session->Table[idx].vec[0]);
+				}
+			}
+		}
+		else if (T[i].type() == t_int) {
+			sprintf(arguments + strlen(arguments), "%s ", T[i].str);
+		}
+		else if (T[i].type() == t_symbol) {
+			if (T[i].symbol_type() == t_minus) {
+				f_next_symbol_is_keyword = TRUE;
+			}
+		}
+	}
+	sprintf(arguments + strlen(arguments), " -end");
+	cout << "creating poset from arguments: " << arguments << endl;
+	poset_description *Descr;
+	poset *Poset;
+	Descr = NEW_OBJECT(poset_description);
+	cout << "before Descr->read_arguments_from_string" << endl;
+	Descr->read_arguments_from_string(
+			arguments, 2 /*verbose_level*/);
+	cout << "after Descr->read_arguments_from_string" << endl;
+	if (A1 == NULL) {
+		cout << "action1 is missing" << endl;
+		return FALSE;
+	}
+	if (A2 == NULL) {
+		cout << "action2 is missing" << endl;
+		return FALSE;
+	}
+
+	Poset = NEW_OBJECT(poset);
+	if (f_v) {
+		cout << "before Poset->init" << endl;
+		}
+
+	Poset->init(
+			Descr,
+			A1, // the action in which the group is given
+			A2, // the action in which we do the search
+			A1->Strong_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "after Poset->init" << endl;
+		}
+
+
+	//cout << "created poset " << LG->prefix << endl;
+
+	Symb->type = t_object;
+	Symb->object_type = t_poset;
+	Symb->ptr = Poset;
+	if (f_v) {
+		cout << "assignment_poset done" << endl;
+	}
+	return TRUE;
+}
+
+int assignment_poset_classification(orbiter_symbol_table_entry *Symb,
+		orbiter_token *T, int nb_T, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "assignment_poset_classification" << endl;
+	}
+	if (nb_T <= 3) {
+		cout << "need two more arguments to specify the action " << endl;
+		return FALSE;
+	}
+	//char arguments[1000];
+	//int i;
+	poset *Poset = NULL;
+	int depth = 0;
+
+	if (T[3].type() != t_label) {
+		cout << "the first argument after poset_classification must be the label "
+				"of a poset" << endl;
+		return FALSE;
+	}
+	int idx;
+	idx = Session->find_symbol(T[3].str);
+
+	if (Session->Table[idx].type != t_object) {
+		cout << "object with label " << T[3].str
+				<< " not of type t_object" << endl;
+		return FALSE;
+	}
+	if (Session->Table[idx].object_type != t_poset) {
+		cout << "object with label " << T[3].str
+				<< " not of type t_action" << endl;
+		return FALSE;
+	}
+	Poset = (poset *) Session->Table[idx].ptr;
+	Poset->print();
+
+	if (T[4].type() != t_label) {
+		cout << "the second argument after poset must be the label "
+				"of an poset" << endl;
+		return FALSE;
+	}
+	idx = Session->find_symbol(T[4].str);
+
+	if (Session->Table[idx].type != t_intvec) {
+		cout << "object with label " << T[4].str
+				<< " not of type t_intvec" << endl;
+		return FALSE;
+	}
+	depth = Session->Table[idx].vec[0];
+	cout << "depth = " << depth << endl;
+
+
+#if 0
+	arguments[0] = 0;
+	int f_next_symbol_is_keyword;
+	int f_this_symbol_is_keyword;
+
+	f_next_symbol_is_keyword = FALSE;
+	for (i = 5; i < nb_T; i++) {
+		f_this_symbol_is_keyword = f_next_symbol_is_keyword;
+		f_next_symbol_is_keyword = FALSE;
+		if (T[i].type() == t_label) {
+			if (f_this_symbol_is_keyword) {
+				sprintf(arguments + strlen(arguments), "-%s ", T[i].str);
+			}
+			else {
+				int idx;
+				idx = Session->find_symbol(T[i].str);
+				if (idx >= 0) {
+					cout << T[i].str << " = ";
+					Session->Table[idx].print();
+				}
+				if (Session->Table[idx].type != t_intvec) {
+					cout << "label " << T[i].str << " not of type int" << endl;
+				}
+				else {
+					sprintf(arguments + strlen(arguments), "%d ",
+							Session->Table[idx].vec[0]);
+				}
+			}
+		}
+		else if (T[i].type() == t_int) {
+			sprintf(arguments + strlen(arguments), "%s ", T[i].str);
+		}
+		else if (T[i].type() == t_symbol) {
+			if (T[i].symbol_type() == t_minus) {
+				f_next_symbol_is_keyword = TRUE;
+			}
+		}
+	}
+	sprintf(arguments + strlen(arguments), " -end");
+	cout << "creating poset from arguments: " << arguments << endl;
+	poset_description *Descr;
+	poset *Poset;
+	Descr = NEW_OBJECT(poset_description);
+	cout << "before Descr->read_arguments_from_string" << endl;
+	Descr->read_arguments_from_string(
+			arguments, 2 /*verbose_level*/);
+	cout << "after Descr->read_arguments_from_string" << endl;
+#endif
+	if (Poset == NULL) {
+		cout << "poset is missing" << endl;
+		return FALSE;
+	}
+
+	poset_classification *PC;
+
+	PC = NEW_OBJECT(poset_classification);
+	if (f_v) {
+		cout << "before Poset->init" << endl;
+		}
+
+	PC->init(Poset, depth /* sz */, verbose_level);
+
+	PC->depth = depth;
+
+	if (f_v) {
+		cout << "after PC->init" << endl;
+		}
+
+#if 0
+	if (f_v) {
+		cout << "code_generator::init group set up, "
+				"calling gen->init_early_test_func" << endl;
+		}
+	gen->init_early_test_func(
+		check_mindist_early_test_func,
+		this,
+		verbose_level);
+#endif
+
+	int nb_nodes = 1000;
+
+	if (f_v) {
+		cout << "before PC->init_poset_orbit_node" << endl;
+		}
+	PC->init_poset_orbit_node(nb_nodes, verbose_level - 1);
+	if (f_v) {
+		cout << "after PC->init_poset_orbit_node" << endl;
+		}
+
+	if (f_v) {
+		cout << "before PC->root[0].init_root_node" << endl;
+		}
+	PC->root[0].init_root_node(PC, PC->verbose_level - 2);
+	if (f_v) {
+		cout << "after PC->root[0].init_root_node" << endl;
+		}
+
+	int depth1;
+	int t0;
+
+	t0 = os_ticks();
+
+	if (f_v) {
+		cout << "before PC->main" << endl;
+		}
+	depth1 = PC->main(t0,
+		depth /* schreier_depth */,
+		TRUE /* f_use_invariant_subset_if_available*/,
+		FALSE /*f_debug*/,
+		verbose_level);
+	if (f_v) {
+		cout << "after PC->main" << endl;
+		}
+
+
+
+	//cout << "created poset " << LG->prefix << endl;
+
+	Symb->type = t_object;
+	Symb->object_type = t_poset_classification;
+	Symb->ptr = PC;
+	if (f_v) {
+		cout << "assignment_poset_classification done" << endl;
+	}
+	return TRUE;
 }
 
 void refresh_prompt()
