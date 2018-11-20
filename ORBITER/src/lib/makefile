@@ -135,6 +135,8 @@ MODULES= \
 		groups_and_group_actions/data_structures/group.o \
 		groups_and_group_actions/data_structures/orbit_transversal.o \
 		groups_and_group_actions/data_structures/page_storage.o \
+		groups_and_group_actions/data_structures/poset.o \
+		groups_and_group_actions/data_structures/poset_description.o \
 		groups_and_group_actions/data_structures/projective_space_with_action.o \
 		groups_and_group_actions/data_structures/schreier_vector_handler.o \
 		groups_and_group_actions/data_structures/schreier_vector.o \

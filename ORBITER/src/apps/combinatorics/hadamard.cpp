@@ -363,12 +363,18 @@ void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_cliq
 	if (f_v) {
 		cout << "Starting the clique finder, target_depth = " << n << " prefix=" << prefix << endl;
 		}
+
+	poset *Poset;
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
+
 	compute_orbits_on_subsets(gen, 
 		n /* target_depth */,
 		prefix, 
 		TRUE /* f_W */, FALSE /* f_w */,
-		A, A, 
-		A->Strong_gens, 
+		Poset,
 		early_test_function,
 		this, 
 		NULL, 

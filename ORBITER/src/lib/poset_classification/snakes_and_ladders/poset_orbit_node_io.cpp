@@ -536,7 +536,7 @@ void poset_orbit_node::save_shallow_schreier_forest(
 	poset_classification *PC,
 	int verbose_level)
 {
-	int f_v = TRUE;//(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "poset_orbit_node::save_shallow_schreier_forest"

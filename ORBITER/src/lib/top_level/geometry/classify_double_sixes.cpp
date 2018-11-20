@@ -54,6 +54,7 @@ void classify_double_sixes::null()
 	Pts_wedge_to_line = NULL;
 	line_to_pts_wedge = NULL;
 	A_on_neighbors = NULL;
+	Poset = NULL;
 	Five_plus_one = NULL;
 	u = NULL;
 	v = NULL;
@@ -214,13 +215,16 @@ void classify_double_sixes::init(
 	Five_plus_one->read_arguments(argc, argv, 0);
 
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A_on_neighbors,
+			SG_line_stab,
+			verbose_level);
 
 	cout << "classify_double_sixes::init "
 			"before Five_plus_one->init" << endl;
-	Five_plus_one->init(A, A_on_neighbors, 
-		SG_line_stab,
+	Five_plus_one->init(Poset,
 		5 /* sz */, 
-		verbose_level - 1 + 5);
+		verbose_level - 1);
 	cout << "classify_double_sixes::init "
 			"after Five_plus_one->init" << endl;
 
@@ -405,7 +409,7 @@ void classify_double_sixes::classify_partial_ovoids(
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
-		verbose_level + 3);
+		verbose_level - 1);
 	if (f_v) {
 		cout << "classify_double_sixes::classify_"
 				"partial_ovoids "
@@ -694,6 +698,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 	
 	if (f_v) {
 		cout << "classify_double_sixes::test_orbits" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 	len = Five_plus_one->nb_orbits_at_level(5);
 
@@ -909,6 +914,7 @@ void classify_double_sixes::identify_five_plus_one(
 				"five_lines=";
 		int_vec_print(cout, five_lines, 5);
 		cout << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 
 	
@@ -1031,6 +1037,7 @@ void classify_double_sixes::downstep(int verbose_level)
 
 	if (f_v) {
 		cout << "classify_double_sixes::downstep" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 
 	if (f_v) {
@@ -1185,6 +1192,7 @@ void classify_double_sixes::upstep(int verbose_level)
 
 	if (f_v) {
 		cout << "classify_double_sixes::upstep" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 
 
@@ -1308,7 +1316,7 @@ void classify_double_sixes::upstep(int verbose_level)
 					}
 				identify_five_plus_one(five_lines, transversal_line, 
 					five_lines_out_as_neighbors, orbit_index, 
-					Elt3 /* transporter */, verbose_level + 10);
+					Elt3 /* transporter */, verbose_level - 2);
 
 				if (f_v) {
 					cout << "We found a transporter:" << endl;

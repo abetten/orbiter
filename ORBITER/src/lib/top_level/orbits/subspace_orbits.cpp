@@ -21,6 +21,7 @@ subspace_orbits::subspace_orbits()
 	v = NULL;
 	w = NULL;
 	weights = NULL;
+	Poset = NULL;
 	Gen = NULL;
 	
 	f_print_generators = FALSE;
@@ -49,6 +50,9 @@ subspace_orbits::~subspace_orbits()
 		}
 	if (weights) {
 		FREE_int(weights);
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
 		}
 	if (Gen) {
 		FREE_OBJECT(Gen);
@@ -156,9 +160,12 @@ void subspace_orbits::init_group(int verbose_level)
 		cout << "subspace_orbits->init_group before Gen->init" << endl;
 		}
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subspace_lattice(LG->A_linear,
+			LG->A2, LG->Strong_gens,
+			verbose_level);
 	
-	Gen->init(LG->A_linear,
-			LG->A2, LG->Strong_gens, Gen->depth, verbose_level);
+	Gen->init(Poset, Gen->depth, verbose_level);
 
 #if 0
 	Gen->init_check_func(
@@ -219,9 +226,9 @@ void subspace_orbits::compute_orbits(int verbose_level)
 		cout << "subspace_orbits::compute_orbits "
 				"calling generator_main" << endl;
 		cout << "A=";
-		Gen->A->print_info();
+		Gen->Poset->A->print_info();
 		cout << "A2=";
-		Gen->A2->print_info();
+		Gen->Poset->A2->print_info();
 		}
 	Gen->main(t0, 
 		schreier_depth, 
@@ -768,7 +775,7 @@ void subspace_orbits::print_set(int len, int *S)
 
 	S1 = NEW_int(n - k);
 	canonical_subset = NEW_int(n - k);
-	transporter = NEW_int(Gen->A->elt_size_in_int);
+	transporter = NEW_int(Gen->Poset->A->elt_size_in_int);
 	M2 = NEW_int((n - k) * n);
 	rank_set_from_matrix(n - k, S1, tmp_M + k * n);
 
@@ -801,9 +808,9 @@ void subspace_orbits::print_set(int len, int *S)
 		cout << "\\right]" << endl;
 
 		cout << "transporter:" << endl;
-		Gen->A->element_print_quick(transporter, cout);
+		Gen->Poset->A->element_print_quick(transporter, cout);
 		cout << "transporter in latex:" << endl;
-		Gen->A->element_print_latex(transporter, cout);
+		Gen->Poset->A->element_print_latex(transporter, cout);
 		}
 
 	FREE_int(S1);

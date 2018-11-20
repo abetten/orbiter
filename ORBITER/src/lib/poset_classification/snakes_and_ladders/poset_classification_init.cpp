@@ -28,8 +28,11 @@ void poset_classification::null()
 	f_candidate_incremental_check_func = FALSE;
 	f_print_function = FALSE;
 	Elt_memory = NULL;
-	A = NULL;
-	Strong_gens = NULL;
+
+	//A = NULL;
+	//Strong_gens = NULL;
+	Poset = NULL;
+
 	Schreier_vector_handler = NULL;
 	//SG0 = NULL;
 	//transversal_length = NULL;
@@ -421,8 +424,9 @@ void poset_classification::read_arguments(int argc,
 		}
 }
 
-void poset_classification::init(action *A, action *A2, 
-	strong_generators *gens, 
+void poset_classification::init(poset *Poset,
+	//action *A, action *A2,
+	//strong_generators *gens,
 	int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -434,23 +438,27 @@ void poset_classification::init(action *A, action *A2,
 		cout << "poset_classification::init" << endl;
 		}
 	
-	poset_classification::A = A;
-	poset_classification::A2 = A2;
+	poset_classification::Poset = Poset;
+	//poset_classification::A = A;
+	//poset_classification::A2 = A2;
 	poset_classification::sz = sz;
 
-	if (A == NULL) {
-		cout << "poset_classification::init A == NULL" << endl;
+	if (Poset == NULL) {
+		cout << "poset_classification::init Poset == NULL" << endl;
 		exit(1);
 		}
-	if (A2 == NULL) {
-		cout << "poset_classification::init A2 == NULL" << endl;
+	if (Poset->A == NULL) {
+		cout << "poset_classification::init Poset->A == NULL" << endl;
+		exit(1);
+		}
+	if (Poset->A2 == NULL) {
+		cout << "poset_classification::init Poset->A2 == NULL" << endl;
 		exit(1);
 		}
 	if (f_v) {
 		cout << "poset_classification::init sz = " << sz << endl;
-		cout << "poset_classification::init A->degree=" << A->degree << endl;
-		cout << "poset_classification::init A2->degree=" << A2->degree << endl;
-		cout << "poset_classification::init sz = " << sz << endl;
+		cout << "poset_classification::init A->degree=" << Poset->A->degree << endl;
+		cout << "poset_classification::init A2->degree=" << Poset->A2->degree << endl;
 		}
 	t0 = os_ticks();
 
@@ -459,26 +467,27 @@ void poset_classification::init(action *A, action *A2,
 	
 	if (f_vv) {
 		cout << "poset_classification::init action A:" << endl;
-		A->print_info();
+		Poset->A->print_info();
 		cout << "poset_classification::init action A2:" << endl;
-		A2->print_info();
+		Poset->A2->print_info();
 		}
 
 
+#if 0
 	if (f_v) {
 		cout << "poset_classification::init computing group order" << endl;
 		}
 
-	gens->group_order(go);
-
+	//gens->group_order(go);
+#endif
 
 	if (f_v) {
 		cout << "poset_classification::init group order is ";
-		cout << go << endl;
+		cout << Poset->go << endl;
 		}
 	
 	Schreier_vector_handler = NEW_OBJECT(schreier_vector_handler);
-	Schreier_vector_handler->init(A, A2,
+	Schreier_vector_handler->init(Poset->A, Poset->A2,
 			TRUE /* f_allow_failure */,
 			verbose_level);
 	
@@ -486,7 +495,7 @@ void poset_classification::init(action *A, action *A2,
 		cout << "poset_classification::init sz = " << sz << endl;
 		}
 	
-	Strong_gens = gens;
+	//Strong_gens = gens;
 
 
 
@@ -507,17 +516,17 @@ void poset_classification::init(action *A, action *A2,
 		}
 
 
-	Elt_memory = NEW_int(5 * A->elt_size_in_int);
-	Elt1 = Elt_memory + 0 * A->elt_size_in_int;
-	Elt2 = Elt_memory + 1 * A->elt_size_in_int;
-	Elt3 = Elt_memory + 2 * A->elt_size_in_int;
-	Elt4 = Elt_memory + 3 * A->elt_size_in_int;
-	Elt5 = Elt_memory + 4 * A->elt_size_in_int;
+	Elt_memory = NEW_int(5 * Poset->A->elt_size_in_int);
+	Elt1 = Elt_memory + 0 * Poset->A->elt_size_in_int;
+	Elt2 = Elt_memory + 1 * Poset->A->elt_size_in_int;
+	Elt3 = Elt_memory + 2 * Poset->A->elt_size_in_int;
+	Elt4 = Elt_memory + 3 * Poset->A->elt_size_in_int;
+	Elt5 = Elt_memory + 4 * Poset->A->elt_size_in_int;
 	
 	transporter = NEW_OBJECT(vector_ge);
-	transporter->init(A);
+	transporter->init(Poset->A);
 	transporter->allocate(sz + 1);
-	A->element_one(transporter->ith(0), FALSE);
+	Poset->A->element_one(transporter->ith(0), FALSE);
 	
 	set = NEW_pint(sz + 1);
 	for (i = 0; i <= sz; i++) {
@@ -528,11 +537,11 @@ void poset_classification::init(action *A, action *A2,
 	nb_poset_orbit_nodes_used = 0;
 	nb_poset_orbit_nodes_allocated = 0;
 
-	nb_times_image_of_called0 = A->nb_times_image_of_called;
-	nb_times_mult_called0 = A->nb_times_mult_called;
-	nb_times_invert_called0 = A->nb_times_invert_called;
-	nb_times_retrieve_called0 = A->nb_times_retrieve_called;
-	nb_times_store_called0 = A->nb_times_store_called;
+	nb_times_image_of_called0 = Poset->A->nb_times_image_of_called;
+	nb_times_mult_called0 = Poset->A->nb_times_mult_called;
+	nb_times_invert_called0 = Poset->A->nb_times_invert_called;
+	nb_times_retrieve_called0 = Poset->A->nb_times_retrieve_called;
+	nb_times_store_called0 = Poset->A->nb_times_store_called;
 
 	if (f_v) {
 		cout << "poset_classification::init done" << endl;
@@ -540,8 +549,10 @@ void poset_classification::init(action *A, action *A2,
 }
 
 
-void poset_classification::initialize(action *A_base, action *A_use, 
-	strong_generators *gens, 
+void poset_classification::initialize(
+	poset *Poset,
+	//action *A_base, action *A_use,
+	//strong_generators *gens,
 	int depth, 
 	const char *path, const char *prefix, int verbose_level)
 {
@@ -569,8 +580,9 @@ void poset_classification::initialize(action *A_base, action *A_use,
 		cout << "poset_classification::initialize "
 				"calling gen->init" << endl;
 		}
-	init(A_base, A_use, 
-		gens, 
+	init(Poset,
+		//A_base, A_use,
+		//gens,
 		depth, verbose_level - 2);
 	
 	int nb_poset_orbit_nodes = 1000;
@@ -593,8 +605,9 @@ void poset_classification::initialize(action *A_base, action *A_use,
 
 
 void poset_classification::initialize_with_starter(
-	action *A_base, action *A_use,
-	strong_generators *gens, 
+	poset *Poset,
+	//action *A_base, action *A_use,
+	//strong_generators *gens,
 	int depth, 
 	char *path, 
 	char *prefix, 
@@ -632,9 +645,9 @@ void poset_classification::initialize_with_starter(
 		cout << "poset_classification::initialize_with_starter "
 				"calling gen->init" << endl;
 		}
-	init(A_base, A_use, 
-		gens, 
-		//*gens, tl, 
+	init(Poset,
+		//A_base, A_use,
+		//gens,
 		depth, verbose_level - 2);
 	
 
@@ -937,7 +950,7 @@ void poset_classification::init_starter(int starter_size,
 	poset_classification::starter_nb_live_points = starter_nb_live_points;
 	poset_classification::starter_canonize_data = starter_canonize_data;
 	poset_classification::starter_canonize = starter_canonize;
-	starter_canonize_Elt = NEW_int(A->elt_size_in_int);
+	starter_canonize_Elt = NEW_int(Poset->A->elt_size_in_int);
 }
 
 void poset_classification::init_vector_space_action(

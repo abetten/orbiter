@@ -307,13 +307,21 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 		int nb_backtrack_nodes;
 	
 		cout << "computing stabilizer of conic:" << endl;
-		STAB.init(A, variety, variety_size /* points, nb_points*/ , verbose_level);
+
+		poset *Poset;
+		Poset = NEW_OBJECT(poset);
+		Poset->init_subset_lattice(A, A,
+				A->Strong_gens,
+				verbose_level);
+
+		STAB.init(Poset, variety, variety_size /* points, nb_points*/ , verbose_level);
 		STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level + 10);
 		longinteger_object go, go2;
 		Stab = Aut_gens->create_sims(verbose_level - 1);
 		Stab->group_order(go);
 		cout << "computing stabilizer of conic done, found a group of order " << go << endl;
 
+		FREE_OBJECT(Poset);
 		FREE_OBJECT(Stab);
 		}
 	else {
@@ -488,7 +496,12 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 	int nb_backtrack_nodes;
 
 	cout << "computing stabilizer of conic:" << endl;
-	STAB.init(A, points, nb_points, verbose_level);
+	poset *Poset;
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
+	STAB.init(Poset, points, nb_points, verbose_level);
 	STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level + - 2);
 	Stab = Aut_gens->create_sims(verbose_level - 1);
 	longinteger_object go, go2;
@@ -514,6 +527,7 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 		}
 	FREE_OBJECT(Aut_gens);
 	FREE_OBJECT(Stab);
+	FREE_OBJECT(Poset);
 	FREE_OBJECT(A2);
 	}
 }

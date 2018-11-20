@@ -1708,7 +1708,7 @@ void isomorph::induced_action_on_set_and_kernel(
 
 	int f_induce_action = TRUE;
 	
-	AAA.induced_action_by_restriction(*gen->A2, 
+	AAA.induced_action_by_restriction(*gen->Poset->A2,
 		f_induce_action, Stab, 
 		size, set, verbose_level - 1);
 

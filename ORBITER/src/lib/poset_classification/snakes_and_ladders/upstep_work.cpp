@@ -663,7 +663,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				<< f_indicate_not_canonicals << endl;
 		//cout << endl;
 		}
-	A_by_restriction.induced_action_by_restriction(*gen->A2, 
+	A_by_restriction.induced_action_by_restriction(*gen->Poset->A2,
 		FALSE /* f_induce_action */, NULL /*sims *old_G */, 
 		size, gen->S, 0 /*verbose_level - 2*/);
 	
@@ -770,7 +770,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 			}
 		gen->set[0][coset] = pt;
 		gen->set[0][size - 1] = possible_image;
-		gen->A->element_one(gen->transporter->ith(0), 0);
+		gen->Poset->A->element_one(gen->transporter->ith(0), 0);
 
 
 		if (f_v4) {
@@ -778,14 +778,15 @@ int upstep_work::upstep_for_sets(int verbose_level)
 			cout << "exchanged set: ";
 			int_set_print(cout, gen->set[0], size);
 			cout << endl;
-			cout << "calling recognize(), verbose_level="
+			cout << "upstep_work::upstep_for_sets "
+					"calling recognize, verbose_level="
 					<< verbose_level << endl;
 			}
 		
-		int nb_times_image_of_called0 = gen->A->nb_times_image_of_called;
-		int nb_times_mult_called0 = gen->A->nb_times_mult_called;
-		int nb_times_invert_called0 = gen->A->nb_times_invert_called;
-		int nb_times_retrieve_called0 = gen->A->nb_times_retrieve_called;
+		int nb_times_image_of_called0 = gen->Poset->A->nb_times_image_of_called;
+		int nb_times_mult_called0 = gen->Poset->A->nb_times_mult_called;
+		int nb_times_invert_called0 = gen->Poset->A->nb_times_invert_called;
+		int nb_times_retrieve_called0 = gen->Poset->A->nb_times_retrieve_called;
 		
 		r = recognize(final_node, 
 				final_ex, 
@@ -807,13 +808,13 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		coset_table[nb_cosets_processed].node = final_node;
 		coset_table[nb_cosets_processed].ex = final_ex;
 		coset_table[nb_cosets_processed].nb_times_image_of_called = 
-			gen->A->nb_times_image_of_called - nb_times_image_of_called0;
+			gen->Poset->A->nb_times_image_of_called - nb_times_image_of_called0;
 		coset_table[nb_cosets_processed].nb_times_mult_called = 
-			gen->A->nb_times_mult_called - nb_times_mult_called0;
+			gen->Poset->A->nb_times_mult_called - nb_times_mult_called0;
 		coset_table[nb_cosets_processed].nb_times_invert_called = 
-			gen->A->nb_times_invert_called - nb_times_invert_called0;
+			gen->Poset->A->nb_times_invert_called - nb_times_invert_called0;
 		coset_table[nb_cosets_processed].nb_times_retrieve_called = 
-			gen->A->nb_times_retrieve_called - nb_times_retrieve_called0;
+			gen->Poset->A->nb_times_retrieve_called - nb_times_retrieve_called0;
 		nb_cosets_processed++;
 
 		if (f_vvv) {
@@ -831,11 +832,11 @@ int upstep_work::upstep_for_sets(int verbose_level)
 						"mapping " << possible_image << " to " << pt << endl;
 				//gen->A->element_print_as_permutation(aut, cout);
 				if (gen->f_allowed_to_show_group_elements && f_v5) {
-					gen->A->element_print_quick(aut, cout);
+					gen->Poset->A->element_print_quick(aut, cout);
 					cout << endl;
 					}
 				}
-			if (gen->A2->element_image_of(possible_image, aut, 0) != pt) {
+			if (gen->Poset->A2->element_image_of(possible_image, aut, 0) != pt) {
 				cout << "upstep_work::upstep_for_sets image of possible_"
 						"image is not pt" << endl;
 				exit(1);
@@ -894,7 +895,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		print_coset_table(coset_table, nb_cosets_processed);
 		}
 	vector_ge SG_extension;
-	int *tl_extension = NEW_int(gen->A->base_len);
+	int *tl_extension = NEW_int(gen->Poset->A->base_len);
 	int f_tolerant = TRUE;
 	
 	if (f_vvv) {

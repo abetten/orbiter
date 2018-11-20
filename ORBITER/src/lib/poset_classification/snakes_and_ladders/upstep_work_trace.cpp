@@ -172,8 +172,12 @@ trace_result upstep_work::recognize_recursion(
 	}
 	
 	if (lvl == 0 && gen->f_starter) {
-		int *cur_set =
-				gen->set[0];
+		if (f_v4) {
+			print_level_extension_coset_info();
+			cout << "upstep_work::recognize_recursion "
+					"special handling because of starter" << endl;
+			}
+		int *cur_set = gen->set[0];
 		int *next_set =
 				gen->set[0 + gen->starter_size];
 		int *cur_transporter =
@@ -343,7 +347,7 @@ trace_result upstep_work::recognize_recursion(
 		int *transporter = gen->transporter->ith(lvl + 1);
 		cout << "upstep_work::recognize_recursion "
 				"transporter element:" << endl;
-		gen->A2->element_print_quick(transporter, cout);
+		gen->Poset->A2->element_print_quick(transporter, cout);
 		//gen->A2->element_print_as_permutation(transporter, cout);
 		cout << endl;
 		}
@@ -355,10 +359,15 @@ trace_result upstep_work::recognize_recursion(
 			cout << "upstep_work::recognize_recursion "
 					"calling handle_last_level" << endl;
 			cout << "The element \\alpha is equal to " << endl;
-			gen->A2->element_print_quick(
+			gen->Poset->A2->element_print_quick(
 					gen->transporter->ith(lvl + 1), cout);
 			}
 		trace_result r;
+		if (f_v) {
+			print_level_extension_coset_info();
+			cout << "upstep_work::recognize_recursion "
+					"before handle_last_level" << endl;
+			}
 		r = handle_last_level(
 			lvl,
 			current_node,
@@ -617,7 +626,7 @@ trace_result upstep_work::handle_last_level(
 			cout << " extension node is current node, "
 					"i.e. found an automorphism" << endl;
 			if (gen->f_allowed_to_show_group_elements && f_vv) {
-				gen->A->element_print_quick(
+				gen->Poset->A->element_print_quick(
 						gen->transporter->ith(lvl + 1), cout);
 				cout << endl;
 				}
@@ -698,7 +707,7 @@ trace_result upstep_work::start_over(
 		int_set_print(cout, gen->set[0], size);
 		cout << endl;
 		}
-	gen->A->element_move(
+	gen->Poset->A->element_move(
 		gen->transporter->ith(lvl + 1),
 		gen->transporter->ith(0),
 		FALSE);

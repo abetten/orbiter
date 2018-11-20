@@ -28,6 +28,7 @@ void choose_points_or_lines::null()
 	transporter = NULL;
 	transporter_inv = NULL;
 	gen = NULL;
+	Poset = NULL;
 	f_has_favorite = FALSE;
 	f_iso_test_only = FALSE;
 	f_has_orbit_select = FALSE;
@@ -54,6 +55,9 @@ void choose_points_or_lines::freeself()
 		}
 	if (gen) {
 		FREE_OBJECT(gen);
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
 		}
 	free_representative();
 	null();
@@ -144,7 +148,8 @@ void choose_points_or_lines::compute_orbits_from_sims(sims *G, int verbose_level
 	FREE_OBJECT(Strong_gens);
 }
 
-void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vector_ge *gens, int *tl */, int verbose_level)
+void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -156,6 +161,9 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 	if (gen) {
 		FREE_OBJECT(gen);
 		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
+		}
 	
 	gen = NEW_OBJECT(poset_classification);
 
@@ -165,13 +173,18 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 	gen->depth = nb_points_or_lines;
 	
 	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " calling gen->init" << endl;
+		cout << "choose_points_or_lines::compute_orbits "
+				<< label << " calling gen->init" << endl;
 		}
-	gen->init(A, A2, 
-		Strong_gens, 
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A2, Strong_gens, verbose_level);
+
+	gen->init(Poset,
 		gen->depth /* sz */, verbose_level - 2);
 	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " calling gen->init_check_func" << endl;
+		cout << "choose_points_or_lines::compute_orbits "
+				<< label << " calling gen->init_check_func" << endl;
 		}
 	gen->init_check_func(
 		check_function, 
@@ -190,11 +203,13 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " calling gen->init_poset_orbit_node" << endl;
+		cout << "choose_points_or_lines::compute_orbits "
+				<< label << " calling gen->init_poset_orbit_node" << endl;
 		}
 	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " calling gen->init_root_node" << endl;
+		cout << "choose_points_or_lines::compute_orbits "
+				<< label << " calling gen->init_root_node" << endl;
 		}
 	gen->root[0].init_root_node(gen, verbose_level - 1);
 	
@@ -205,7 +220,8 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 	int f_debug = FALSE;
 	
 	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " calling generator_main" << endl;
+		cout << "choose_points_or_lines::compute_orbits "
+				<< label << " calling generator_main" << endl;
 		}
 	gen->main(t0, 
 		schreier_depth, 
@@ -217,12 +233,15 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 	int f;
 	
 	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " done with generator_main" << endl;
+		cout << "choose_points_or_lines::compute_orbits "
+				<< label << " done with generator_main" << endl;
 		}
 	f = gen->first_poset_orbit_node_at_level[nb_points_or_lines];
 	nb_orbits = gen->first_poset_orbit_node_at_level[nb_points_or_lines + 1] - f;
 	if (f_v) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " we found " << nb_orbits << " orbits on " << nb_points_or_lines;
+		cout << "choose_points_or_lines::compute_orbits "
+				<< label << " we found " << nb_orbits
+				<< " orbits on " << nb_points_or_lines;
 		if (f_choose_lines) {
 			cout << "-sets of lines" << endl;
 			}
@@ -232,7 +251,8 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 		}
 }
 
-void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int verbose_level)
+void choose_points_or_lines::choose_orbit(int orbit_no,
+		int &f_hit_favorite, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -246,7 +266,8 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 	
 	f_hit_favorite = FALSE;
 	if (f_v) {
-		cout << "choose_points_or_lines::choose_orbit " << label << " orbit_no " << orbit_no << " / " << nb_orbits << endl;
+		cout << "choose_points_or_lines::choose_orbit " << label
+				<< " orbit_no " << orbit_no << " / " << nb_orbits << endl;
 		}
 	
 	
@@ -267,7 +288,8 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 	
 	if (f_vv) {
 		cout << "##############################################################################" << endl;
-		cout << "choose_points_or_lines::choose_orbit " << label << " choosing orbit " << orbit_no << " / " << nb_orbits << endl;
+		cout << "choose_points_or_lines::choose_orbit " << label
+				<< " choosing orbit " << orbit_no << " / " << nb_orbits << endl;
 		}
 	if (f_vvv) {
 		cout << "choose_points_or_lines::choose_orbit " << label << " the ";
@@ -277,7 +299,8 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 		else {
 			cout << "points";
 			}
-		cout << " representing orbit " << orbit_no << " / " << nb_orbits << " are ";
+		cout << " representing orbit " << orbit_no << " / "
+				<< nb_orbits << " are ";
 		int_set_print(representative, nb_points_or_lines);
 		cout << endl;
 		}
@@ -285,14 +308,17 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 
 	f_changed = FALSE;
 	if (f_has_favorite) {
-		f_hit_favorite = favorite_orbit_representative(transporter, transporter_inv,
+		f_hit_favorite = favorite_orbit_representative(
+				transporter, transporter_inv,
 			the_favorite_representative, verbose_level - 3);
 		if (f_hit_favorite) {
 			if (f_iso_test_only) {
 				f_changed = FALSE;
 				if (f_v) {
-					cout << "choose_points_or_lines::choose_orbit " << label << " isomorphism test only" << endl;
-					cout << "element mapping the favorite set to the canonical set:" << endl;
+					cout << "choose_points_or_lines::choose_orbit "
+							<< label << " isomorphism test only" << endl;
+					cout << "element mapping the favorite set to "
+							"the canonical set:" << endl;
 					A->print_for_make_element(cout, transporter_inv);
 					cout << endl;					
 					A->print_quick(cout, transporter_inv);
@@ -308,14 +334,17 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 			representative[i] = the_favorite_representative[i];
 			}
 		if (f_vvv) {
-			cout << "choose_points_or_lines::choose_orbit " << label << " / " << nb_orbits << " after changing, the representative set for orbit " << orbit_no << " are ";
+			cout << "choose_points_or_lines::choose_orbit " << label
+				<< " / " << nb_orbits << " after changing, the "
+				"representative set for orbit " << orbit_no << " are ";
 			int_set_print(representative, nb_points_or_lines);
 			cout << endl;
 			}
 		}
 	
 	G->init(A);
-	G->init_strong_generators_by_hdl(O->nb_strong_generators, O->hdl_strong_generators, O->tl, FALSE);
+	G->init_strong_generators_by_hdl(O->nb_strong_generators,
+			O->hdl_strong_generators, O->tl, FALSE);
 	G->schreier_sims(0);
 	G->group_order(go);
 
@@ -339,25 +368,26 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 		NewStab->init_trivial_group(0/*verbose_level - 1*/);
 		//NewStab->group_order(stab_order);
 
-		NewStab->conjugate(A, G->S, transporter_inv, FALSE, 0 /*verbose_level - 1*/);
+		NewStab->conjugate(A, G->S, transporter_inv,
+				FALSE, 0 /*verbose_level - 1*/);
 		NewStab->group_order(go1);
 		if (f_vv) {
 			cout << "The conjugated stabilizer has order " << go1 << endl;
 			}
 		Stab_Strong_gens->init_from_sims(NewStab, 0);
-		//NewStab->extract_strong_generators_in_order(*stab_gens, stab_tl, 0/*verbose_level*/);
 		NewStab->group_order(*stab_order);
 
 		FREE_OBJECT(NewStab);
 		}
 	else {
 		Stab_Strong_gens->init_from_sims(G->S, 0);
-		//G->S->extract_strong_generators_in_order(*stab_gens, stab_tl, 0/*verbose_level*/);
 		G->S->group_order(*stab_order);
 		}
 
 	if (f_v) {
-		cout << "choose_points_or_lines::choose_orbit " << label << " orbit_no " << orbit_no << " / " << nb_orbits << " done, chosen the set ";
+		cout << "choose_points_or_lines::choose_orbit " << label
+			<< " orbit_no " << orbit_no << " / " << nb_orbits
+			<< " done, chosen the set ";
 		int_set_print(representative, nb_points_or_lines);
 		cout << "_" << *stab_order;
 		cout << endl;
@@ -370,7 +400,9 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 		}
 #endif
 	if (f_vv) {
-		cout << "choose_points_or_lines::choose_orbit " << label << " we have " << Stab_Strong_gens->gens->len << " strong generators" << endl;
+		cout << "choose_points_or_lines::choose_orbit " << label
+			<< " we have " << Stab_Strong_gens->gens->len
+			<< " strong generators" << endl;
 		}
 	if (f_vv || print_generators_verbose_level) {
 		for (i = 0; i < Stab_Strong_gens->gens->len; i++) {
@@ -381,10 +413,12 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 
 			if (print_generators_verbose_level > 1) {
 				cout << "in action on points:" << endl;
-				A->element_print_as_permutation(Stab_Strong_gens->gens->ith(i), cout);
+				A->element_print_as_permutation(
+						Stab_Strong_gens->gens->ith(i), cout);
 				cout << endl;
 				cout << "in action on lines:" << endl;
-				A_lines->element_print_as_permutation(Stab_Strong_gens->gens->ith(i), cout);
+				A_lines->element_print_as_permutation(
+						Stab_Strong_gens->gens->ith(i), cout);
 				cout << endl;
 				}
 			}
@@ -397,7 +431,8 @@ void choose_points_or_lines::choose_orbit(int orbit_no, int &f_hit_favorite, int
 	
 }
 
-int choose_points_or_lines::favorite_orbit_representative(int *transporter, int *transporter_inv, 
+int choose_points_or_lines::favorite_orbit_representative(
+	int *transporter, int *transporter_inv,
 	int *the_favorite_representative, 
 	int verbose_level)
 {
@@ -412,10 +447,12 @@ int choose_points_or_lines::favorite_orbit_representative(int *transporter, int 
 	int i;
 	
 	if (f_v) {
-		cout << "choose_points_or_lines::favorite_orbit_representative " << label << endl;
+		cout << "choose_points_or_lines::favorite_orbit_representative "
+				<< label << endl;
 		}
 	if (nb_points_or_lines != favorite_size) {
-		cout << "choose_points_or_lines::favorite_orbit_representative " << label << " not the right size" << endl;
+		cout << "choose_points_or_lines::favorite_orbit_representative "
+				<< label << " not the right size" << endl;
 		cout << "nb_points_or_lines=" << nb_points_or_lines << endl;		
 		cout << "favorite_size=" << favorite_size << endl;		
 		return FALSE;
@@ -426,7 +463,9 @@ int choose_points_or_lines::favorite_orbit_representative(int *transporter, int 
 	Elt1 = NEW_int(A2->elt_size_in_int);
 	Elt2 = NEW_int(A2->elt_size_in_int);
 	Elt3 = NEW_int(A2->elt_size_in_int);
-	gen->trace_set(favorite, nb_points_or_lines, nb_points_or_lines /* level */, 
+	gen->trace_set(
+		favorite, nb_points_or_lines,
+		nb_points_or_lines /* level */,
 		canonical_set1, 
 		transporter_inv, 
 		//f_implicit_fusion, 
@@ -442,7 +481,8 @@ int choose_points_or_lines::favorite_orbit_representative(int *transporter, int 
 	A2->element_invert(transporter_inv, transporter, FALSE);
 	if (f_OK) {
 		if (f_v) {
-			cout << "arc::favorite_zero_lines: transporter to favorite set:" << endl;
+			cout << "arc::favorite_zero_lines: transporter "
+					"to favorite set:" << endl;
 			A2->element_print(transporter, cout);
 			A2->element_print_as_permutation(transporter, cout);
 			}

@@ -241,7 +241,7 @@ void poset_orbit_node::compute_schreier_vector(
 			candidates, nb_candidates, 
 			verbose_level);
 
-		AR.induced_action_by_restriction(*gen->A2, 
+		AR.induced_action_by_restriction(*gen->Poset->A2,
 			FALSE /*f_induce_action*/,
 			NULL /*sims *old_G*/,
 			nb_candidates, candidates,
@@ -264,7 +264,7 @@ void poset_orbit_node::compute_schreier_vector(
 	else if (lvl == 0) {
 		int *subset;
 		int i;
-		int n = gen->A2->degree;
+		int n = gen->Poset->A2->degree;
 		
 		subset = NEW_int(n);
 		for (i = 0; i < n; i++) {
@@ -279,7 +279,7 @@ void poset_orbit_node::compute_schreier_vector(
 			n, subset, 
 			candidates, nb_candidates, 
 			verbose_level);
-		AR.induced_action_by_restriction(*gen->A2, 
+		AR.induced_action_by_restriction(*gen->Poset->A2,
 			FALSE /*f_induce_action*/,
 			NULL /*sims *old_G*/,
 			nb_candidates, candidates,
@@ -300,7 +300,7 @@ void poset_orbit_node::compute_schreier_vector(
 		}
 	else {
 		f_using_invariant_subset = FALSE;
-		Schreier.init(gen->A2);
+		Schreier.init(gen->Poset->A2);
 			// here was a mistake, it was gen->A
 			// A. Betten, Dec 17, 2011 !!!
 		}
@@ -475,7 +475,7 @@ void poset_orbit_node::schreier_forest(
 
 
 
-		AR.induced_action_by_restriction(*gen->A2, 
+		AR.induced_action_by_restriction(*gen->Poset->A2,
 			FALSE /*f_induce_action*/, NULL /*sims *old_G*/, 
 			nb_candidates, candidates, verbose_level - 2);
 		
@@ -488,7 +488,7 @@ void poset_orbit_node::schreier_forest(
 	else {
 		gen->print_level_info(lvl, node);
 		cout << " : we are NOT using an invariant subset" << endl;
-		Schreier.init(gen->A2);
+		Schreier.init(gen->Poset->A2);
 		}
 
 
@@ -897,7 +897,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 		goto the_end;
 		}
 	else if (lvl == 0) {
-		n = gen->A2->degree;
+		n = gen->Poset->A2->degree;
 		subset = NEW_int(n);
 		int i;
 		for (i = 0; i < n; i++) {
@@ -958,7 +958,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 				pt = O->E[i].pt;
 				schreier S;
 
-				S.init(gen->A2);
+				S.init(gen->Poset->A2);
 				S.init_generators_by_hdl(O->nb_strong_generators, 
 					O->hdl_strong_generators, verbose_level - 1);
 				S.compute_point_orbit(pt, 0/*verbose_level*/);
@@ -1488,7 +1488,7 @@ void poset_orbit_node::downstep_orbits_print(
 		if (FALSE) {
 			Schreier.print(cout);
 			Schreier.print_generators();
-			if (gen->A->degree < 1000 && FALSE) {
+			if (gen->Poset->A->degree < 1000 && FALSE) {
 				Schreier.print_tree(0);
 				Schreier.print_tables(cout, FALSE /* f_with_cosetrep */);
 				}

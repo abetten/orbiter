@@ -30,6 +30,8 @@ void classify_trihedral_pairs::null()
 	Surf = NULL;
 	gens_type1 = NULL;
 	gens_type2 = NULL;
+	Poset1 = NULL;
+	Poset2 = NULL;
 	orbits_on_trihedra_type1 = NULL;
 	orbits_on_trihedra_type2 = NULL;
 	Flag_orbits = NULL;
@@ -45,6 +47,12 @@ void classify_trihedral_pairs::freeself()
 	if (gens_type2) {
 		FREE_OBJECT(gens_type2);
 		}
+	if (Poset1) {
+		FREE_OBJECT(Poset1);
+	}
+	if (Poset2) {
+		FREE_OBJECT(Poset2);
+	}
 	if (orbits_on_trihedra_type1) {
 		FREE_OBJECT(orbits_on_trihedra_type1);
 		}
@@ -122,12 +130,15 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		cout << "computing orbits on 3-subsets of points (type 1):" << endl;
 		}
 
+	Poset1 = NEW_OBJECT(poset);
+	Poset1->init_subset_lattice(A, A, gens_type1,
+			verbose_level);
+
 	compute_orbits_on_subsets(orbits_on_trihedra_type1, 
 		3, /* target_depth */
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,
-		A, A, 
-		gens_type1, 
+		Poset1,
 		classify_trihedral_pairs_early_test_function_type1
 			/* void (*early_test_func_callback)(int *S, int len,
 			int *candidates, int nb_candidates, 
@@ -147,12 +158,14 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		}
 
 	
+	Poset2 = NEW_OBJECT(poset);
+	Poset2->init_subset_lattice(A, A, gens_type2,
+			verbose_level);
 	compute_orbits_on_subsets(orbits_on_trihedra_type2, 
 		3, /* target_depth */
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,
-		A, A, 
-		gens_type2, 
+		Poset2,
 		classify_trihedral_pairs_early_test_function_type2
 			/* void (*early_test_func_callback)(int *S, int len,
 			int *candidates, int nb_candidates, 

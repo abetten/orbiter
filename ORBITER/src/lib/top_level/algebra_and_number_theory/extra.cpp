@@ -34,7 +34,11 @@ sims *create_sims_for_stabilizer(action *A,
 		}
 	strong_generators *Aut_gens;
 
-	STAB.init(A, set, set_size, verbose_level);
+	poset *Poset;
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A, A->Strong_gens, verbose_level);
+	STAB.init(Poset, set, set_size, verbose_level);
 	STAB.compute_set_stabilizer(t0,
 			nb_backtrack_nodes, Aut_gens,
 			verbose_level - 1);
@@ -49,6 +53,7 @@ sims *create_sims_for_stabilizer(action *A,
 		cout << "create_sims_for_stabilizer, "
 				"found a group of order " << go << endl;
 		}
+	FREE_OBJECT(Poset);
 	return Stab;
 }
 
@@ -67,7 +72,11 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 		cout << "create_sims_for_stabilizer_with_input_group" << endl;
 		}
 
-	STAB.init_with_strong_generators(A, A0, Strong_gens,
+	poset *Poset;
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A0, A, A0->Strong_gens, verbose_level);
+	STAB.init_with_strong_generators(Poset,
 			set, set_size, verbose_level);
 	if (f_v) {
 		cout << "create_sims_for_stabilizer_with_input_group "
@@ -81,6 +90,7 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 	Stab = Aut_gens->create_sims(verbose_level - 1);
 	
 
+	FREE_OBJECT(Poset);
 	delete Aut_gens;
 
 	if (f_v) {

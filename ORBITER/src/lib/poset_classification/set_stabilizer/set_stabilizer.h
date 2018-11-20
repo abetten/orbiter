@@ -35,9 +35,13 @@ public:
 
 	set_stabilizer_compute();
 	~set_stabilizer_compute();
-	void init(action *A, int *set, int size, int verbose_level);
-	void init_with_strong_generators(action *A, action *A0, 
-		strong_generators *Strong_gens, 
+	void init(poset *Poset,
+		//action *A,
+		int *set, int size, int verbose_level);
+	void init_with_strong_generators(
+		poset *Poset,
+		//action *A, action *A0,
+		//strong_generators *Strong_gens,
 		int *set, int size, int verbose_level);
 	void compute_set_stabilizer(int t0, int &nb_backtrack_nodes, 
 		strong_generators *&Aut_gens, int verbose_level);

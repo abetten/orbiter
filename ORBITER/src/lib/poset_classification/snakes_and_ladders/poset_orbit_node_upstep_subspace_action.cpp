@@ -64,7 +64,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		}
 	cosetrep = gen->Elt1;
 	if (nb_strong_generators == 0) {
-		gen->A->element_one(gen->Elt1, 0);
+		gen->Poset->A->element_one(gen->Elt1, 0);
 		projected_pt0 = projected_pt;
 		
 
@@ -130,7 +130,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 				<< " preimage=" << pt0 << endl;
 			}
 		int a;
-		a = gen->A2->element_image_of(pt_to_trace, gen->Elt1, 0);
+		a = gen->Poset->A2->element_image_of(pt_to_trace, gen->Elt1, 0);
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
 					"subspace_action " << pt_to_trace << "->" << a << endl;

@@ -201,11 +201,11 @@ void poset_classification::print_orbit_numbers(int depth)
 
 void poset_classification::print_statistic_on_callbacks_naked()
 {
-	cout << A->nb_times_image_of_called - nb_times_image_of_called0 << "/";
-	cout << A->nb_times_mult_called - nb_times_mult_called0 << "/";
-	cout << A->nb_times_invert_called - nb_times_invert_called0 << "/";
-	cout << A->nb_times_retrieve_called - nb_times_retrieve_called0 << "/";
-	cout << A->nb_times_store_called - nb_times_store_called0;
+	cout << Poset->A->nb_times_image_of_called - nb_times_image_of_called0 << "/";
+	cout << Poset->A->nb_times_mult_called - nb_times_mult_called0 << "/";
+	cout << Poset->A->nb_times_invert_called - nb_times_invert_called0 << "/";
+	cout << Poset->A->nb_times_retrieve_called - nb_times_retrieve_called0 << "/";
+	cout << Poset->A->nb_times_store_called - nb_times_store_called0;
 }
 
 void poset_classification::print_statistic_on_callbacks()
@@ -225,7 +225,7 @@ set_and_stabilizer *poset_classification::get_set_and_stabilizer(
 		cout << "poset_classification::get_set_and_stabilizer" << endl;
 		}
 	SaS = NEW_OBJECT(set_and_stabilizer);
-	SaS->init(A, A2, 0 /*verbose_level */);
+	SaS->init(Poset->A, Poset->A2, 0 /*verbose_level */);
 	SaS->allocate_data(level, 0 /* verbose_level */);
 	get_set_by_level(level, orbit_at_level, SaS->data);
 	get_stabilizer_generators(SaS->Strong_gens,
@@ -640,7 +640,7 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 void poset_classification::stabilizer_order(int node, longinteger_object &go)
 {
 	if (root[node].nb_strong_generators) {
-		go.create_product(A->base_len, root[node].tl);
+		go.create_product(Poset->A->base_len, root[node].tl);
 		}
 	else {
 		go.create(1);
@@ -714,7 +714,7 @@ void poset_classification::orbit_length(int orbit_at_level,
 	longinteger_object stab_order, quo, rem;
 
 	get_stabilizer_order(level, orbit_at_level, stab_order);
-	D.integral_division(go, stab_order, len, rem, 0);
+	D.integral_division(Poset->go, stab_order, len, rem, 0);
 	if (!rem.is_zero()) {
 		cout << "poset_classification::orbit_length stabilizer order does "
 				"not divide group order" << endl;
@@ -731,7 +731,7 @@ void poset_classification::get_orbit_length_and_stabilizer_order(int node,
 	longinteger_object quo, rem;
 
 	get_stabilizer_order(level, node, stab_order);
-	D.integral_division(go, stab_order, len, rem, 0);
+	D.integral_division(Poset->go, stab_order, len, rem, 0);
 	if (!rem.is_zero()) {
 		cout << "poset_classification::orbit_length stabilizer order "
 				"does not divide group order" << endl;
@@ -769,7 +769,7 @@ void poset_classification::print_lex_rank(int *set, int sz)
 	int r1, r2;
 	int n;
 	
-	n = A2->degree;
+	n = Poset->A2->degree;
 	r1 = rank_subset(set, sz, n);
 	r2 = rank_k_subset(set, n, sz);
 
@@ -1068,7 +1068,7 @@ void poset_classification::find_automorphism_group_of_order(int level, int order
 			ago.create(1);
 			}
 		else {
-			ago.create_product(A->base_len, root[node].tl);
+			ago.create_product(Poset->A->base_len, root[node].tl);
 			}
 		if (ago.as_int() == order) {
 			cout << "found a node whose automorphism group is order "
@@ -1086,15 +1086,15 @@ void poset_classification::find_automorphism_group_of_order(int level, int order
 				level, i, 0  /* verbose_level */);
 				
 			for (j = 0; j < Strong_gens->gens->len; j++) {
-				elt_order = A->element_order(Strong_gens->gens->ith(j));
+				elt_order = Poset->A->element_order(Strong_gens->gens->ith(j));
 				cout << "poset_classification " << j << " of order "
 						<< elt_order << ":" << endl;
 				if (order == elt_order) {
 					cout << "CYCLIC" << endl;
 					}
-				A->element_print(
+				Poset->A->element_print(
 						Strong_gens->gens->ith(j), cout);
-				A->element_print_as_permutation(
+				Poset->A->element_print_as_permutation(
 						Strong_gens->gens->ith(j), cout);
 				}
 			FREE_OBJECT(Strong_gens);
@@ -1117,7 +1117,7 @@ void poset_classification::get_stabilizer_order(int level,
 	else {
 		longinteger_domain D;
 
-		D.multiply_up(go, O->tl, A->base_len);
+		D.multiply_up(go, O->tl, Poset->A->base_len);
 		}
 }
 
@@ -1137,7 +1137,7 @@ void poset_classification::get_stabilizer_group(group *&G,
 	node = first_poset_orbit_node_at_level[level] + orbit_at_level;
 	O = root + node;
 
-	G->init(A);
+	G->init(Poset->A);
 	if (f_vv) {
 		cout << "poset_classification::get_stabilizer_group before "
 				"G->init_strong_generators_by_hdl" << endl;
@@ -1228,17 +1228,17 @@ void poset_classification::orbit_element_unrank(int depth,
 				<< " rank=" << rank << endl;
 		}
 
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(Poset->A->elt_size_in_int);
+	Elt2 = NEW_int(Poset->A->elt_size_in_int);
 	the_set = NEW_int(depth);
 	
 	O = &root[first_poset_orbit_node_at_level[depth] + orbit_idx];
 	coset_unrank(depth, orbit_idx, rank, Elt1,
 			0/*verbose_level*/);
 
-	A->element_invert(Elt1, Elt2, 0);
+	Poset->A->element_invert(Elt1, Elt2, 0);
 	O->store_set_to(this, depth - 1, the_set);
-	A2->map_a_set(the_set, set, depth, Elt2,
+	Poset->A2->map_a_set(the_set, set, depth, Elt2,
 			0/*verbose_level*/);
 
 	FREE_int(the_set);
@@ -1270,7 +1270,7 @@ void poset_classification::orbit_element_rank(int depth,
 		cout << endl;
 		}
 
-	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(Poset->A->elt_size_in_int);
 	the_set = NEW_int(depth);
 	canonical_set = NEW_int(depth);
 	for (i = 0; i < depth; i++) {
@@ -1289,9 +1289,9 @@ void poset_classification::orbit_element_rank(int depth,
 		cout << "poset_classification::orbit_element_rank after trace_set, "
 				"orbit_idx = " << orbit_idx << endl;
 		cout << "transporter:" << endl;
-		A->element_print_quick(Elt1, cout);
+		Poset->A->element_print_quick(Elt1, cout);
 		cout << "as permutation:" << endl;
-		A2->element_print_as_permutation(Elt1, cout);
+		Poset->A2->element_print_as_permutation(Elt1, cout);
 		}
 	if (f_v) {
 		cout << "calling coset_rank" << endl;
@@ -1324,9 +1324,9 @@ void poset_classification::coset_unrank(int depth, int orbit_idx,
 		cout << "poset_classification::coset_unrank depth=" << depth
 				<< " orbit_idx=" << orbit_idx << endl;
 		cout << "action A:" << endl;
-		A->print_info();
+		Poset->A->print_info();
 		cout << "action A2:" << endl;
-		A2->print_info();
+		Poset->A2->print_info();
 		}
 
 	O1 = &root[0];
@@ -1337,7 +1337,7 @@ void poset_classification::coset_unrank(int depth, int orbit_idx,
 	G1 = NEW_OBJECT(group);
 	G2 = NEW_OBJECT(group);
 	the_set = NEW_int(depth);
-	Elt_gk = NEW_int(A->elt_size_in_int);
+	Elt_gk = NEW_int(Poset->A->elt_size_in_int);
 	
 	O2->store_set_to(this, depth - 1, the_set);
 	
@@ -1354,7 +1354,7 @@ void poset_classification::coset_unrank(int depth, int orbit_idx,
 			*G2, U_order, verbose_level - 2);
 
 
-	A->coset_unrank(G1->S, G2->S, rank, Elt, verbose_level);
+	Poset->A->coset_unrank(G1->S, G2->S, rank, Elt, verbose_level);
 
 	FREE_OBJECT(G1);
 	FREE_OBJECT(G2);
@@ -1378,9 +1378,9 @@ int poset_classification::coset_rank(int depth, int orbit_idx,
 		cout << "poset_classification::coset_rank depth=" << depth
 				<< " orbit_idx=" << orbit_idx << endl;
 		cout << "action A:" << endl;
-		A->print_info();
+		Poset->A->print_info();
 		cout << "action A2:" << endl;
-		A2->print_info();
+		Poset->A2->print_info();
 		}
 
 	O1 = &root[0];
@@ -1391,7 +1391,7 @@ int poset_classification::coset_rank(int depth, int orbit_idx,
 	G1 = NEW_OBJECT(group);
 	G2 = NEW_OBJECT(group);
 	the_set = NEW_int(depth);
-	Elt_gk = NEW_int(A->elt_size_in_int);
+	Elt_gk = NEW_int(Poset->A->elt_size_in_int);
 	
 	O2->store_set_to(this, depth - 1, the_set);
 	
@@ -1406,7 +1406,7 @@ int poset_classification::coset_rank(int depth, int orbit_idx,
 	O2->get_stabilizer(this, *G2, U_order, verbose_level - 2);
 
 
-	rank = A->coset_rank(G1->S, G2->S, Elt, verbose_level);
+	rank = Poset->A->coset_rank(G1->S, G2->S, Elt, verbose_level);
 
 	FREE_OBJECT(G1);
 	FREE_OBJECT(G2);
@@ -1623,12 +1623,12 @@ void poset_classification::list_whole_orbit(int depth, int orbit_idx,
 			cout << "poset_classification::list_whole_orbit "
 					"orbits on the set:" << endl;
 			Strong_gens->compute_and_print_orbits_on_a_given_set(
-					A2, set, depth, 0 /* verbose_level*/);
+					Poset->A2, set, depth, 0 /* verbose_level*/);
 			}
 	
 		cout << "poset_classification::list_whole_orbit orbits in the original "
 				"action on the whole space:" << endl;
-		Strong_gens->compute_and_print_orbits(A, 0 /* verbose_level*/);
+		Strong_gens->compute_and_print_orbits(Poset->A, 0 /* verbose_level*/);
 		}
 	
 	if (f_show_stab) {
@@ -1715,7 +1715,7 @@ void poset_classification::map_to_canonical_k_subset(int *the_set,
 	our_set = NEW_int(set_size);
 	subset = NEW_int(set_size);
 	canonical_subset = NEW_int(set_size);
-	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(Poset->A->elt_size_in_int);
 	reduced_set_size = set_size - subset_size;
 
 	// unrank the k-subset and its complement to our_set[set_size]:
@@ -1735,7 +1735,7 @@ void poset_classification::map_to_canonical_k_subset(int *the_set,
 		set[0][i] = subset[i];
 		}
 	
-	A->element_one(poset_classification::transporter->ith(0), FALSE);
+	Poset->A->element_one(poset_classification::transporter->ith(0), FALSE);
 
 
 	// trace the subset:
@@ -1757,10 +1757,10 @@ void poset_classification::map_to_canonical_k_subset(int *the_set,
 		}
 	if (FALSE) {
 		cout << "the transporter is" << endl;
-		A->element_print(Elt1, cout);
+		Poset->A->element_print(Elt1, cout);
 		cout << endl;
 		}
-	A->element_move(Elt1, transporter, FALSE);
+	Poset->A->element_move(Elt1, transporter, FALSE);
 	for (i = 0; i < reduced_set_size; i++) {
 		reduced_set[i] = canonical_subset[subset_size + i];
 		}
@@ -1947,7 +1947,7 @@ void poset_classification::trace_all_k_subsets(int *the_set,
 				<< " nCk = " << nCk << endl;
 		}
 
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = NEW_int(Poset->A->elt_size_in_int);
 
 	index_set = NEW_int(k);
 	subset = NEW_int(k);
@@ -1979,7 +1979,7 @@ void poset_classification::trace_all_k_subsets(int *the_set,
 			int_vec_print(cout, subset, k);
 			cout << endl;
 			}
-		A->element_one(transporter->ith(0), 0);
+		Poset->A->element_one(transporter->ith(0), 0);
 		
 		if (k == 0) {
 			isotype[0] = 0;
@@ -2008,7 +2008,7 @@ void poset_classification::trace_all_k_subsets(int *the_set,
 			if (FALSE) {
 				cout << "poset_classification::trace_all_k_subsets "
 						"the transporter is" << endl;
-				A->element_print(Elt, cout);
+				Poset->A->element_print(Elt, cout);
 				cout << endl;
 				}
 
@@ -2156,7 +2156,7 @@ void poset_classification::generate_source_code(
 
 
 	fp << "int " << prefix << "_make_element_size = "
-			<< A->make_element_size << ";" << endl;
+			<< Poset->A->make_element_size << ";" << endl;
 	
 	{
 	int *stab_gens_first;
@@ -2189,7 +2189,7 @@ void poset_classification::generate_source_code(
 						<< j << " / " << stab_gens_len[iso_type] << endl;
 				}
 			fp << "\t";
-			A->element_print_for_make_element(
+			Poset->A->element_print_for_make_element(
 					SaS->Strong_gens->gens->ith(j), fp);
 			fp << endl;
 			}

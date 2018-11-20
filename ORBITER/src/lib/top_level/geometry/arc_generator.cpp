@@ -34,6 +34,7 @@ void arc_generator::null()
 
 	A = NULL;
 	A_on_lines = NULL;
+	Poset = NULL;
 	P = NULL;
 	line_type = NULL;
 	f_d = FALSE;
@@ -77,6 +78,9 @@ void arc_generator::freeself()
 	if (A_on_lines) {
 		FREE_OBJECT(A_on_lines);
 		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
+	}
 	if (P) {
 		FREE_OBJECT(P);
 		}
@@ -315,6 +319,8 @@ void arc_generator::init(finite_field *F,
 		A_on_lines->print_info();
 		}
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A, A->Strong_gens, verbose_level);
 	
 
 	if (f_v) {
@@ -380,8 +386,7 @@ void arc_generator::prepare_generator(int verbose_level)
 
 	
 	gen->depth = starter_size;
-	gen->initialize(A, A,  
-		A->Strong_gens, 
+	gen->initialize(Poset,
 		starter_size, 
 		starter_directory_name, prefix, verbose_level - 1);
 
@@ -478,8 +483,8 @@ void arc_generator::compute_starter(int verbose_level)
 			cout << endl;
 		
 			canonical_set = NEW_int(recognize_set_sz);
-			Elt_transporter = NEW_int(gen->A->elt_size_in_int);
-			Elt_transporter_inv = NEW_int(gen->A->elt_size_in_int);
+			Elt_transporter = NEW_int(gen->Poset->A->elt_size_in_int);
+			Elt_transporter_inv = NEW_int(gen->Poset->A->elt_size_in_int);
 			
 			orb = gen->trace_set(recognize_set, recognize_set_sz, recognize_set_sz /* level */, 
 				canonical_set, Elt_transporter, 

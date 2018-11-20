@@ -17,6 +17,7 @@ polar::polar()
 	Mtx = NULL;
 	tmp_M = NULL;
 	base_cols = NULL;
+	Poset = NULL;
 	Gen = NULL;
 	f_has_strong_generators = FALSE;
 	f_has_strong_generators_allocated = FALSE;
@@ -36,6 +37,9 @@ polar::~polar()
 		}
 	if (base_cols) {
 		FREE_int(base_cols);
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
 		}
 	if (Gen) {
 		FREE_OBJECT(Gen);
@@ -173,7 +177,11 @@ void polar::init2(int verbose_level)
 			f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one);
 		}
-	Gen->init(A, A, gens,
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			gens,
+			verbose_level);
+	Gen->init(Poset,
 			Gen->depth /* sz */, verbose_level);
 
 	Gen->init_check_func(
@@ -225,9 +233,9 @@ void polar::compute_orbits(int t0, int verbose_level)
 	if (f_v) {
 		cout << "polar::compute_orbits calling generator_main" << endl;
 		cout << "A=";
-		Gen->A->print_info();
+		Gen->Poset->A->print_info();
 		cout << "A2=";
-		Gen->A2->print_info();
+		Gen->Poset->A2->print_info();
 		}
 	Gen->main(t0, 
 		schreier_depth, 
@@ -271,8 +279,8 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	if (f_v) {
 		cout << "polar::compute_cosets" << endl;
 		}
-	Elt1 = NEW_int(Gen->A->elt_size_in_int);
-	Elt2 = NEW_int(Gen->A->elt_size_in_int);
+	Elt1 = NEW_int(Gen->Poset->A->elt_size_in_int);
+	Elt2 = NEW_int(Gen->Poset->A->elt_size_in_int);
 	the_set1 = NEW_int(depth);
 	the_set2 = NEW_int(depth);
 	M1 = NEW_int(k * n);
@@ -327,16 +335,16 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 
 		if (f_vvv) {
 			cout << "Left coset " << c << " is represented by" << endl;
-			Gen->A->element_print_quick(Elt1, cout);
+			Gen->Poset->A->element_print_quick(Elt1, cout);
 			cout << endl;
 			}
 
-		Gen->A->element_invert(Elt1, Elt2, 0);
+		Gen->Poset->A->element_invert(Elt1, Elt2, 0);
 
 
 		if (f_vvv) {
 			cout << "Right coset " << c << " is represented by" << endl;
-			Gen->A->element_print_quick(Elt2, cout);
+			Gen->Poset->A->element_print_quick(Elt2, cout);
 			cout << endl;
 			}
 
@@ -397,8 +405,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	if (f_v) {
 		cout << "polar::dual_polar_graph" << endl;
 		}
-	Elt1 = NEW_int(Gen->A->elt_size_in_int);
-	Elt2 = NEW_int(Gen->A->elt_size_in_int);
+	Elt1 = NEW_int(Gen->Poset->A->elt_size_in_int);
+	Elt2 = NEW_int(Gen->Poset->A->elt_size_in_int);
 	the_set1 = NEW_int(depth);
 	the_set2 = NEW_int(depth);
 	M1 = NEW_int(k * n);
@@ -470,17 +478,17 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 
 		if (FALSE) {
 			cout << "Left coset " << c << " is represented by" << endl;
-			Gen->A->element_print_quick(Elt1, cout);
+			Gen->Poset->A->element_print_quick(Elt1, cout);
 			cout << endl;
 			}
 
-		Gen->A->element_invert(Elt1, Elt2, 0);
+		Gen->Poset->A->element_invert(Elt1, Elt2, 0);
 
 
 		if (FALSE) {
 			cout << "Right coset " << c
 					<< " is represented by" << endl;
-			Gen->A->element_print_quick(Elt2, cout);
+			Gen->Poset->A->element_print_quick(Elt2, cout);
 			cout << endl;
 			}
 

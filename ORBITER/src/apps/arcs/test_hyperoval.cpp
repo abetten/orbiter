@@ -173,12 +173,19 @@ int main(int argc, char **argv)
 	
 		cout << "computing stabilizer" << endl;
 	
+		poset *Poset;
 		set_stabilizer_compute STAB;
 		sims *Stab;
 		int nb_backtrack_nodes;
 	
 		cout << "computing stabilizer of the hyperoval:" << endl;
-		STAB.init(A, pts, n, verbose_level);
+
+		Poset = NEW_OBJECT(poset);
+		Poset->init_subset_lattice(A, A,
+				A->Strong_gens,
+				verbose_level);
+
+		STAB.init(Poset, pts, n, verbose_level);
 		STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level);
 
 
@@ -196,6 +203,7 @@ int main(int argc, char **argv)
 	
 		FREE_OBJECT(Aut_gens);
 		FREE_OBJECT(Stab);
+		FREE_OBJECT(Poset);
 		}
 
 

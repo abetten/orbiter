@@ -90,7 +90,7 @@ void poset_orbit_node::init_root_node(
 		cout << "poset_orbit_node::init_root_node "
 				"storing strong generators" << endl;
 		}
-	store_strong_generators(gen, gen->Strong_gens);
+	store_strong_generators(gen, gen->Poset->Strong_gens);
 		// stores the strong generators into
 		// the poset_orbit_node structure,
 		// copies transversal_length into tl
@@ -306,7 +306,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 
 	group G;
 
-	G.init(gen->A);
+	G.init(gen->Poset->A);
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators, hdl_strong_generators, tl, FALSE);
 
@@ -408,15 +408,15 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 	int *Elt2;
 	
 	S = NEW_int(s);
-	Elt = NEW_int(gen->A->elt_size_in_int);
-	Elt_inv = NEW_int(gen->A->elt_size_in_int);
-	Elt1 = NEW_int(gen->A->elt_size_in_int);
-	Elt2 = NEW_int(gen->A->elt_size_in_int);
+	Elt = NEW_int(gen->Poset->A->elt_size_in_int);
+	Elt_inv = NEW_int(gen->Poset->A->elt_size_in_int);
+	Elt1 = NEW_int(gen->Poset->A->elt_size_in_int);
+	Elt2 = NEW_int(gen->Poset->A->elt_size_in_int);
 	
 	store_set_to(gen, s - 1, gen->set0);
-	gen->A->element_retrieve(hdl, Elt, 0);
+	gen->Poset->A->element_retrieve(hdl, Elt, 0);
 	//gen->A->element_print(Elt, cout);
-	gen->A->element_invert(Elt, Elt_inv, 0);
+	gen->Poset->A->element_invert(Elt, Elt_inv, 0);
 	for (i = 0; i < s; i++) {
 		S[i] = Elt[gen->set0[i]];
 		}
@@ -432,7 +432,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 		}
 	group G;
 
-	G.init(gen->A);
+	G.init(gen->Poset->A);
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators,
 			hdl_strong_generators, tl,
@@ -657,11 +657,11 @@ void poset_orbit_node::print_set(poset_classification *gen)
 		cout << "_1";
 		}
 	else {
-		D.multiply_up(go, tl, gen->A->base_len);
+		D.multiply_up(go, tl, gen->Poset->A->base_len);
 		cout << "_{";
-		for (i = 0; i < gen->A->base_len; i++) {
+		for (i = 0; i < gen->Poset->A->base_len; i++) {
 			cout << tl[i];
-			if (i < gen->A->base_len - 1)
+			if (i < gen->Poset->A->base_len - 1)
 				cout << " * ";
 			}
 		cout << " = " << go << "}";
@@ -757,9 +757,9 @@ void poset_orbit_node::print_extensions(poset_classification *gen)
 	depth = depth_of_node(gen);
 	cout << "poset_orbit_node::print_extensions node=" << node
 			<< " at depth " << depth
-			<< " degree=" << gen->A2->degree << endl;
+			<< " degree=" << gen->Poset->A2->degree << endl;
 	print_extensions(cout);
-	orbit = NEW_int(gen->A2->degree);
+	orbit = NEW_int(gen->Poset->A2->degree);
 
 	if (nb_extensions >= 10) {
 		cout << "too many to print "

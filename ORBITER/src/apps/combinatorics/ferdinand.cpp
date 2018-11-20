@@ -64,6 +64,7 @@ public:
 	longinteger_object Aut_order;
 	action *Aut;
 	action *A2;
+	poset *Poset;
 	poset_classification *gen;
 
 
@@ -1019,12 +1020,16 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 	cout << "classifying subsets:" << endl;
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(Aut, Aut,
+			Aut_gens,
+			verbose_level);
+
 	compute_orbits_on_subsets(gen, 
 		target_depth,
 		prefix, 
 		f_W, f_w,
-		Aut, Aut, 
-		Aut_gens, 
+		Poset,
 		NULL /* ferdinand3_early_test_func */,
 		NULL /* void *early_test_func_data */, 
 		ferdinand_incremental_check_func /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level)*/, 
@@ -1037,7 +1042,6 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 	sprintf(fname, "Ferdinand%d_%d", level, group);
 	gen->draw_poset(fname, target_depth, 0 /* data */, TRUE /* f_embedded */, FALSE /* f_sideways */, 0 /* verbose_level */);
 #endif
-
 
 	if (f_v) {
 		cout << "cayley_graph_search::classify_subsets done" << endl;

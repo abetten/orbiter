@@ -514,6 +514,7 @@ void test_typedefs();
 void concatenate_files(const char *fname_in_mask, int N, 
 	const char *fname_out, const char *EOF_marker, int f_title_line, 
 	int verbose_level);
+void chop_string(const char *str, int &argc, char **&argv);
 
 
 

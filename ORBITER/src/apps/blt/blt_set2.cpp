@@ -710,9 +710,18 @@ void blt_set::report(isomorph &Iso, int verbose_level)
 		Strong_gens->init_from_sims(Iso.AA->Sims, 0);
 		//Iso.AA->Sims->extract_strong_generators_in_order(
 		//SG, tl, verbose_level);
-		orbits_on_k_sets(Iso.AA, Iso.AA, Strong_gens /* SG, tl */, 
+
+
+		poset *Poset;
+
+		Poset = NEW_OBJECT(poset);
+		Poset->init_subset_lattice(Iso.AA, Iso.AA, Strong_gens,
+				verbose_level);
+
+		orbits_on_k_sets(Poset,
 			Iso.level, orbit_reps, nb_orbits, verbose_level);
 
+		FREE_OBJECT(Poset);
 		f << "Number of orbits on $" << Iso.level << "$-sets is "
 				<< nb_orbits << ".\\\\" << endl;
 		FREE_int(orbit_reps);
@@ -964,8 +973,18 @@ void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 		//tl = NEW_int(Iso.AA->base_len);
 		//Iso.AA->Sims->extract_strong_generators_in_order(
 		// SG, tl, verbose_level);
-		orbits_on_k_sets(Iso.AA, Iso.AA, Strong_gens /* SG, tl */, 
+
+
+		poset *Poset;
+
+		Poset = NEW_OBJECT(poset);
+		Poset->init_subset_lattice(Iso.AA, Iso.AA, Strong_gens,
+				verbose_level);
+
+		orbits_on_k_sets(Poset,
 			Iso.level, orbit_reps, nb_orbits, verbose_level);
+
+		FREE_OBJECT(Poset);
 
 		cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
 		int_matrix_print(orbit_reps, nb_orbits, Iso.level);

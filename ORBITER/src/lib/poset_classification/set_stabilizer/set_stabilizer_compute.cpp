@@ -61,7 +61,9 @@ set_stabilizer_compute::~set_stabilizer_compute()
 		}
 }
 
-void set_stabilizer_compute::init(action *A,
+void set_stabilizer_compute::init(
+		poset *Poset,
+		//action *A,
 		int *set, int size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -69,9 +71,9 @@ void set_stabilizer_compute::init(action *A,
 	longinteger_object go;
 
 	if (f_v) {
-		A->group_order(go);
+		Poset->A->group_order(go);
 		cout << "set_stabilizer_compute::init "
-				"group of degree " << A->degree
+				"group of degree " << Poset->A->degree
 			<< " and order " << go
 			<< ", set of size " << size << endl;
 		}
@@ -81,20 +83,24 @@ void set_stabilizer_compute::init(action *A,
 				"the set is not a set" << endl;
 		exit(1);
 		}
-	if (!A->f_has_strong_generators) {
+	if (!Poset->A->f_has_strong_generators) {
 		cout << "set_stabilizer_compute::init "
 				"action has no strong generators" << endl;
 		cout << "the action is " << endl;
-		A->print_info();
+		Poset->A->print_info();
 		exit(1);
 		}
-	init_with_strong_generators(A, A,
-			A->Strong_gens, set, size, verbose_level);
+	init_with_strong_generators(
+			Poset,
+			//A, A,
+			//A->Strong_gens,
+			set, size, verbose_level);
 }
 
 void set_stabilizer_compute::init_with_strong_generators(
-	action *A, action *A0,
-	strong_generators *Strong_gens, 
+	poset *Poset,
+	//action *A, action *A0,
+	//strong_generators *Strong_gens,
 	int *set, int size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -102,14 +108,14 @@ void set_stabilizer_compute::init_with_strong_generators(
 	int t;
 	longinteger_object go;
 	
-	set_stabilizer_compute::A = A0;
-	set_stabilizer_compute::A2 = A;
+	set_stabilizer_compute::A = Poset->A;
+	set_stabilizer_compute::A2 = Poset->A2;
 	gen = NEW_OBJECT(poset_classification);
 	
 	set_stabilizer_compute::set_size = size;
 	
 	if (f_v) {
-		Strong_gens->group_order(go);
+		Poset->Strong_gens->group_order(go);
 		cout << "set_stabilizer_compute::init_with_strong_generators "
 				"group of degree " << A->degree
 			<< " and order " << go << ", set of size " << size << endl;
@@ -154,7 +160,9 @@ void set_stabilizer_compute::init_with_strong_generators(
 		cout << "set_stabilizer_compute::init_with_strong_generators "
 				"calling gen->init:" << endl;
 		}
-	gen->init(A0, A2, Strong_gens, gen->depth /* sz */, verbose_level - 2);
+	gen->init(Poset,
+			//A0, A2, Strong_gens,
+			gen->depth /* sz */, verbose_level - 2);
 
 	//gen->init_check_func(set_stabilizer_compute_callback_check_conditions, 
 	//	this /* check_conditions_data */);
@@ -339,7 +347,7 @@ void set_stabilizer_compute::compute_set_stabilizer(int t0,
 		}
 	
 	
-	G.init(gen->A);
+	G.init(gen->Poset->A);
 	G.init_strong_generators_by_hdl(O->nb_strong_generators,
 			O->hdl_strong_generators, O->tl, FALSE);
 	G.schreier_sims(0);
@@ -425,7 +433,7 @@ void set_stabilizer_compute::print_frequencies(
 
 			O = &gen->root[f + i];
 
-			G.init(gen->A);
+			G.init(gen->Poset->A);
 			G.init_strong_generators_by_hdl(
 					O->nb_strong_generators,
 					O->hdl_strong_generators,
@@ -699,7 +707,7 @@ void set_stabilizer_compute::compute_frequencies(int level,
 			int_vec_print(cout, subset, level);
 			cout << endl;
 			}
-		gen->A->element_one(gen->transporter->ith(0), 0);
+		gen->Poset->A->element_one(gen->transporter->ith(0), 0);
 		
 		if (level == 0) {
 			frequency[0] = 1;
@@ -726,7 +734,7 @@ void set_stabilizer_compute::compute_frequencies(int level,
 			isomorphism_type_of_subset[subset_rk] = local_idx;
 			if (FALSE) {
 				cout << "the transporter is" << endl;
-				gen->A->element_print(Elt1, cout);
+				gen->Poset->A->element_print(Elt1, cout);
 				cout << endl;
 				}
 

@@ -42,6 +42,7 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	wreath_product *W;
+	poset *Poset;
 	poset_classification *Gen;
 	int vector_space_dimension;
 
@@ -169,6 +170,7 @@ tensor_product::tensor_product()
 	A = NULL;
 	A0 = NULL;
 	W = NULL;
+	Poset = NULL;
 	Gen = NULL;
 }
 
@@ -501,10 +503,15 @@ void tensor_product::init(int argc, const char **argv,
 
 	Gen->depth = depth;
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A0, A,
+			SG,
+			verbose_level);
+
 	if (f_v) {
 		cout << "tensor_product::init before Gen->init" << endl;
 		}
-	Gen->init(A0, A, SG, Gen->depth /* sz */, verbose_level);
+	Gen->init(Poset, Gen->depth /* sz */, verbose_level);
 	if (f_v) {
 		cout << "tensor_product::init after Gen->init" << endl;
 		}

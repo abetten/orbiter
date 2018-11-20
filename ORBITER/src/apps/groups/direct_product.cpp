@@ -67,6 +67,8 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	direct_product *P;
+	poset *Poset_pairs;
+	poset *Poset_search;
 	poset_classification *Pairs;
 	poset_classification *Gen;
 
@@ -335,6 +337,8 @@ direct_product_action::direct_product_action()
 	A = NULL;
 	A0 = NULL;
 	P = NULL;
+	Poset_pairs = NULL;
+	Poset_search = NULL;
 	Pairs = NULL;
 	Gen = NULL;
 
@@ -883,11 +887,16 @@ void direct_product_action::init(int argc, const char **argv,
 
 		Pairs->depth = 2;
 
+		Poset_pairs = NEW_OBJECT(poset);
+		Poset_pairs->init_subset_lattice(A0, A, Strong_gens,
+				verbose_level);
+
+
 		if (f_v) {
 			cout << "direct_product_action::init "
 					"before Pairs->init" << endl;
 			}
-		Pairs->init(A0, A, Strong_gens,
+		Pairs->init(Poset_pairs,
 				Pairs->depth /* sz */, verbose_level);
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -1183,12 +1192,16 @@ void direct_product_action::init(int argc, const char **argv,
 
 
 		Gen->depth = depth;
+		Poset_search = NEW_OBJECT(poset);
+		Poset_search->init_subset_lattice(A0, A, SG,
+				verbose_level);
+
 
 		if (f_v) {
 			cout << "direct_product_action::init "
 					"before Gen->init" << endl;
 			}
-		Gen->init(A0, A, SG,
+		Gen->init(Poset_search,
 				Gen->depth /* sz */, verbose_level);
 		if (f_v) {
 			cout << "direct_product_action::init "

@@ -41,7 +41,7 @@ void poset_classification::recognize_start_over(
 		int_set_print(cout, set[0], size);
 		cout << endl;
 		}
-	A->element_move(
+	Poset->A->element_move(
 		transporter->ith(lvl + 1),
 		transporter->ith(0), FALSE);
 	if (f_v) {
@@ -277,7 +277,7 @@ void poset_classification::recognize_recursion(
 	if (f_allowed_to_show_group_elements && f_v4) {
 		int *transporter1 = transporter->ith(lvl + 1);
 		cout << "recognize_recursion transporter element:" << endl;
-		A2->element_print_quick(transporter1, cout);
+		Poset->A2->element_print_quick(transporter1, cout);
 		//A2->element_print_as_permutation(transporter1, cout);
 		cout << endl;
 		}
@@ -418,7 +418,7 @@ void poset_classification::recognize(
 	
 	int_vec_copy(the_set, set[0], size);
 
-	A->element_one(poset_classification::transporter->ith(0), 0);
+	Poset->A->element_one(poset_classification::transporter->ith(0), 0);
 
 	if (f_vv) {
 		int_vec_print(cout, set[0], size);
@@ -453,7 +453,7 @@ void poset_classification::recognize(
 		}
 
 
-	A->element_move(
+	Poset->A->element_move(
 			poset_classification::transporter->ith(size),
 			transporter, 0);
 
