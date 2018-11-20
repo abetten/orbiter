@@ -198,6 +198,7 @@ public:
 		action *A2, // the action in which we do the search
 		strong_generators *Strong_gens,
 		int verbose_level);
+	void print();
 };
 
 //! description of a poset from the command line
