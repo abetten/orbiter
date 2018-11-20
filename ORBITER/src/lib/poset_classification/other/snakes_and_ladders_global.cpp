@@ -440,8 +440,9 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 	int target_depth,
 	const char *prefix, 
 	int f_W, int f_w,
-	action *A, action *A2, 
-	strong_generators *Strong_gens, 
+	poset *Poset,
+	//action *A, action *A2,
+	//strong_generators *Strong_gens,
 	void (*early_test_func_callback)(int *S, int len, 
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
@@ -480,8 +481,9 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 	if (f_v) {
 		cout << "compute_orbits_on_subsets calling gen->init" << endl;
 		}
-	gen->init(A, A2, 
-		Strong_gens, 
+	gen->init(Poset,
+		//A, A2,
+		//Strong_gens,
 		target_depth, verbose_level - 1);
 
 	strcpy(gen->fname_base, prefix);
@@ -526,8 +528,10 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 		}
 }
 
-void orbits_on_k_sets(action *A1, action *A2, 
-	strong_generators *Strong_gens, 
+void orbits_on_k_sets(
+	poset *Poset,
+	//action *A1, action *A2,
+	//strong_generators *Strong_gens,
 	int k, int *&orbit_reps, int &nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -537,8 +541,10 @@ void orbits_on_k_sets(action *A1, action *A2,
 		cout << "orbits_on_k_sets" << endl;
 		}
 	
-	Gen = orbits_on_k_sets_compute(A1, A2, 
-		Strong_gens, 
+	Gen = orbits_on_k_sets_compute(
+		Poset,
+		//A1, A2,
+		//Strong_gens,
 		k, verbose_level);
 	if (f_v) {
 		cout << "orbits_on_k_sets: done with orbits_on_k_sets_compute" << endl;
@@ -566,8 +572,10 @@ void orbits_on_k_sets(action *A1, action *A2,
 		}
 }
 
-poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
-	strong_generators *Strong_gens, 
+poset_classification *orbits_on_k_sets_compute(
+	poset *Poset,
+	//action *A1, action *A2,
+	//strong_generators *Strong_gens,
 	int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -588,8 +596,10 @@ poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	if (f_v) {
 		cout << "orbits_on_k_sets_compute calling Gen->init" << endl;
 		}
-	Gen->init(A1, A2, 
-		Strong_gens, 
+	Gen->init(
+		Poset,
+		//A1, A2,
+		//Strong_gens,
 		Gen->depth /* sz */, verbose_level - 1);
 	//Gen->init_check_func(
 	//	check_zero_lines, 
@@ -721,7 +731,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 
 	the_set = NEW_int(level);
 	v = NEW_int(vector_space_dimension);
-	Elt = NEW_int(Gen->A->elt_size_in_int);
+	Elt = NEW_int(Gen->Poset->A->elt_size_in_int);
 	
 	fst = Gen->first_poset_orbit_node_at_level[level];
 	len = Gen->first_poset_orbit_node_at_level[level + 1] - fst;
@@ -809,8 +819,8 @@ void wedge_product_export_magma(poset_classification *Gen,
 	f << "// base:" << endl;
 	f << "BV := VectorSpace (GF (q), n);" << endl;
 	f << "B := [ BV | " << endl;
-	for (i = 0; i < Gen->A->base_len; i++) {
-		a = Gen->A->base[i];
+	for (i = 0; i < Gen->Poset->A->base_len; i++) {
+		a = Gen->Poset->A->base[i];
 		Gen->F->PG_element_unrank_modified(v, 1, n, a);
 		//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
 		f << "[ ";
@@ -819,7 +829,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 			if (h < n - 1)
 				f << ", ";
 			}
-        	if (i < Gen->A->base_len - 1)
+        	if (i < Gen->Poset->A->base_len - 1)
 				f << "], " << endl;
 		else f << " ]" << endl;
 		}
@@ -838,14 +848,14 @@ void wedge_product_export_magma(poset_classification *Gen,
 				<< O->nb_strong_generators << " strong generators";
 		if (O->nb_strong_generators) {
 			f << ", transversal lengths: ";
-			int_vec_print(f, O->tl, Gen->A->base_len);
+			int_vec_print(f, O->tl, Gen->Poset->A->base_len);
 			}
 		f << endl;
 		f << "[" << endl;
 
 	 	for (j = 0; j < O->nb_strong_generators; j++) {
 
-			Gen->A->element_retrieve(O->hdl_strong_generators[j], Elt, 0);
+			Gen->Poset->A->element_retrieve(O->hdl_strong_generators[j], Elt, 0);
 			
 				f << "[";
 			//Gen->A->element_print_quick(Elt, f);

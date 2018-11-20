@@ -1338,8 +1338,14 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 					"orbit=" << orbit << " / " << Iso->Reps->count
 					<< " computing orbits on subsets" << endl;
 			}
-		orbits_on_k_sets(Iso->A_base, Iso->AA, Strong_gens, 
+		poset *Poset;
+		Poset = NEW_OBJECT(poset);
+		Poset->init_subset_lattice(
+				Iso->A_base, Iso->AA, Strong_gens,
+				verbose_level);
+		orbits_on_k_sets(Poset,
 			Iso->level, orbit_reps, nb_orbits, verbose_level - 5);
+		FREE_OBJECT(Poset);
 		if (f_vv) {
 			cout << "isomorph_compute_down_orbits_for_isomorphism_type "
 					"orbit=" << orbit << " / " << Iso->Reps->count

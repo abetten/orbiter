@@ -257,6 +257,7 @@ public:
 	int *w; // [n]
 	int *weights; // [n + 1]
 
+	poset *Poset;
 	poset_classification *Gen;
 
 	int schreier_depth;

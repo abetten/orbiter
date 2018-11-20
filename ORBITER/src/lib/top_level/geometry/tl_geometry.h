@@ -134,6 +134,8 @@ public:
 	action_on_grassmannian *AG;
 	action *A_on_lines;
 	
+	poset *Poset;
+
 	projective_space *P; // projective n-space
 	
 	int f_d;
@@ -387,6 +389,7 @@ public:
 
 	int (*check_function)(int len, int *S, void *data, int verbose_level);
 	poset_classification *gen;
+	poset *Poset;
 
 	int nb_orbits;
 	int current_orbit;
@@ -473,7 +476,6 @@ public:
 		// stabilizer of the special line in PGL(4,q) 
 		// this group acts on the set Neighbors[] in the wedge action
 
-
 	int l_min;
 	int short_orbit_idx;
 
@@ -520,6 +522,7 @@ public:
 	action *A_on_neighbors; 
 		// restricted action A2 on the set Neighbors[]
 
+	poset *Poset;
 	poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
 
@@ -600,6 +603,8 @@ public:
 	strong_generators *gens_type1;
 	strong_generators *gens_type2;
 
+	poset *Poset1;
+	poset *Poset2;
 	poset_classification *orbits_on_trihedra_type1;
 	poset_classification *orbits_on_trihedra_type2;
 
@@ -799,6 +804,7 @@ public:
 	int *tmp_M; // [n * n]
 	int *base_cols; // [n]
 
+	poset *Poset;
 	poset_classification *Gen;
 
 	int schreier_depth;
@@ -960,6 +966,7 @@ class search_blocking_set {
 public:
 	incidence_structure *Inc; // do not free
 	action *A; // do not free
+	poset *Poset;
 	poset_classification *gen;
 
 	fancy_set *Line_intersections; // [Inc->nb_cols]
@@ -1149,7 +1156,7 @@ public:
 	int *tmp_M3;
 	int *tmp_M4;
 
-
+	poset *Poset;
 	poset_classification *gen; // allocated in init()
 
 
@@ -1777,6 +1784,7 @@ public:
 	incidence_structure *Inc;
 	partitionstack *Stack;
 
+	poset *Poset;
 	poset_classification *arcs;
 
 	translation_plane_via_andre_model();

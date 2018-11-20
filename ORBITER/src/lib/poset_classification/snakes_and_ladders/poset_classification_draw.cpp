@@ -427,9 +427,9 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 						cout << endl;
 						}
 				
-					A2->element_retrieve(hdl, Elt1, FALSE);
+					Poset->A2->element_retrieve(hdl, Elt1, FALSE);
 	
-					A2->map_a_set(set0, set1, depth + 1, Elt1, 0);
+					Poset->A2->map_a_set(set0, set1, depth + 1, Elt1, 0);
 
 					int_vec_heapsort(set1, depth + 1);
 				
@@ -1798,8 +1798,8 @@ void poset_classification::make_level_graph(int depth,
 								0 /* verbose_level */);
 						}
 					else if (E->type == EXTENSION_TYPE_FUSION) {
-						A->element_retrieve(E->data, Elt1, 0);
-						A2->map_a_set(the_set, the_set2, lvl + 1, Elt1, 0);
+						Poset->A->element_retrieve(E->data, Elt1, 0);
+						Poset->A2->map_a_set(the_set, the_set2, lvl + 1, Elt1, 0);
 						LG->add_node_vec_data(l + 2, f + so, the_set2, lvl + 1,
 								0 /* verbose_level */);
 						LG->set_distinguished_element_index(l + 2, f + so, lvl,
@@ -2061,8 +2061,8 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 								f + so, L, 0 /* verbose_level */);
 						}
 					else if (E->type == EXTENSION_TYPE_FUSION) {
-						A->element_retrieve(E->data, Elt1, 0);
-						A2->map_a_set(the_set, the_set2, L + 1, Elt1, 0);
+						Poset->A->element_retrieve(E->data, Elt1, 0);
+						Poset->A2->map_a_set(the_set, the_set2, L + 1, Elt1, 0);
 						LG->add_node_vec_data(3 * L + 2, f + so,
 								the_set2, L + 1, 0 /* verbose_level */);
 						LG->set_distinguished_element_index(3 * L + 2,
@@ -2152,7 +2152,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 
 		int f_permutation_degree_is_small;
 
-		if (A2->degree < 15) {
+		if (Poset->A2->degree < 15) {
 			f_permutation_degree_is_small = TRUE;
 			}
 		else {
@@ -2273,17 +2273,17 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 						fp << " & ";
 
 						hdl = E->data;
-						A->element_retrieve(hdl, Elt1, FALSE);
+						Poset->A->element_retrieve(hdl, Elt1, FALSE);
 
 						fp << "$";
-						A->element_print_latex(Elt1, fp);
+						Poset->A->element_print_latex(Elt1, fp);
 						fp << "$";
 
 						fp << " & ";
 
 						if (f_permutation_degree_is_small) {
 							fp << "$";
-							A2->element_print_as_permutation(Elt1, fp);
+							Poset->A2->element_print_as_permutation(Elt1, fp);
 							fp << "$";
 
 							fp << " & ";

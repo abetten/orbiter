@@ -225,6 +225,7 @@ void surface_classify_wedge::classify_surfaces_from_double_sixes(
 	if (f_v) {
 		cout << "surface_classify_wedge::classify_surfaces_"
 				"from_double_sixes" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 
 
@@ -271,6 +272,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_classify_wedge::downstep" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 	nb_orbits = Classify_double_sixes->Double_sixes->nb_orbits;
 	Flag_orbits = NEW_OBJECT(flag_orbits);
@@ -367,6 +369,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_classify_wedge::upstep" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 
 

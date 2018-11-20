@@ -60,6 +60,7 @@ public:
 	strong_generators *Strong_gens;
 	action *A; // PGL(n - k, q) if f_linear
 
+	poset *Poset;
 	poset_classification *gen;
 			
 

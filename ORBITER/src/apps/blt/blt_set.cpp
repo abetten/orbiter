@@ -67,6 +67,7 @@ void blt_set::null()
 {
 	//override_poly = NULL;
 	f_semilinear = FALSE;
+	Poset = NULL;
 	gen = NULL;
 	F = NULL;
 	A = NULL;
@@ -98,6 +99,10 @@ void blt_set::freeself()
 		}
 	if (f_v) {
 		cout << "blt_set::freeself before gen" << endl;
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
+		Poset = NULL;
 		}
 	if (gen) {
 		delete gen;
@@ -365,8 +370,12 @@ void blt_set::init2(int verbose_level)
 		cout << "blt_set::init2 depth = " << gen->depth << endl;
 		}
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
 	
-	gen->init(A, A, A->Strong_gens, 
+	gen->init(Poset,
 		gen->depth /* sz */, verbose_level);
 	
 #if 0

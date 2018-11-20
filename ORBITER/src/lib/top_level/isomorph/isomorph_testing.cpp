@@ -24,7 +24,7 @@ void isomorph::iso_test_init(int verbose_level)
 
 	Reps = NEW_OBJECT(representatives);
 
-	Reps->init(gen->A, nb_orbits, prefix, verbose_level);
+	Reps->init(gen->Poset->A, nb_orbits, prefix, verbose_level);
 
 	if (f_v) {
 		cout << "isomorph::iso_test_init done" << endl;
@@ -1259,16 +1259,16 @@ int isomorph::identify_database_is_open(int *set,
 		FILE *f2;
 		int *Elt1, *Elt2;
 		
-		Elt1 = NEW_int(gen->A->elt_size_in_int);
-		Elt2 = NEW_int(gen->A->elt_size_in_int);
+		Elt1 = NEW_int(gen->Poset->A->elt_size_in_int);
+		Elt2 = NEW_int(gen->Poset->A->elt_size_in_int);
 		
 		f2 = fopen(Reps->fname_fusion_ge, "rb");
-		fseek(f2, orbit_no0 * gen->A->coded_elt_size_in_char, SEEK_SET);
-		gen->A->element_read_file_fp(Elt1, f2, 0/* verbose_level*/);
+		fseek(f2, orbit_no0 * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
+		gen->Poset->A->element_read_file_fp(Elt1, f2, 0/* verbose_level*/);
 		
 		fclose(f2);
-		gen->A->mult(transporter, Elt1, Elt2);
-		gen->A->move(Elt2, transporter);
+		gen->Poset->A->mult(transporter, Elt1, Elt2);
+		gen->Poset->A->move(Elt2, transporter);
 		FREE_int(Elt1);
 		FREE_int(Elt2);
 		}
@@ -1331,7 +1331,7 @@ void isomorph::induced_action_on_set_basic(sims *S,
 		cout << "isomorph::induced_action_on_set_basic "
 				"before induced_action_by_restriction" << endl;
 		}
-	AA->induced_action_by_restriction(*gen->A2, 
+	AA->induced_action_by_restriction(*gen->Poset->A2,
 		TRUE, S, size, set, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "isomorph::induced_action_on_set_basic "
@@ -1399,7 +1399,7 @@ void isomorph::induced_action_on_set(
 		cout << "isomorph::induced_action_on_set "
 				"before induced_action_by_restriction" << endl;
 		}
-	AA->induced_action_by_restriction(*gen->A2,
+	AA->induced_action_by_restriction(*gen->Poset->A2,
 			TRUE, S, size, set, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set "

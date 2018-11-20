@@ -39,6 +39,7 @@ public:
 	char prefix_with_directory[1000];
 	int starter_size;
 	
+	poset *Poset;
 	poset_classification *gen;
 	action *A;
 	int degree;

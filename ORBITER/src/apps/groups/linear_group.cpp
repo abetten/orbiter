@@ -144,9 +144,13 @@ int main(int argc, const char **argv)
 	if (f_orbits_on_subsets) {
 		cout << "computing orbits on subsets:" << endl;
 		poset_classification *PC;
+		poset *Poset;
 
-		PC = orbits_on_k_sets_compute(A, A,
+		Poset = NEW_OBJECT(poset);
+		Poset->init_subset_lattice(A, A,
 				A->Strong_gens,
+				verbose_level);
+		PC = orbits_on_k_sets_compute(Poset,
 				orbits_on_subsets_size, verbose_level);
 		if (f_draw_poset) {
 			{

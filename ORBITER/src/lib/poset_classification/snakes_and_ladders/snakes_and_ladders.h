@@ -66,11 +66,15 @@ public:
 
 	char problem_label[1000];
 	
+#if 0
 	action *A; // the action in which the group is given
 	action *A2; // the action in which we do the search
 	
 	strong_generators *Strong_gens;
 	longinteger_object go;
+#else
+	poset *Poset;
+#endif
 
 	schreier_vector_handler *Schreier_vector_handler;
 
@@ -406,16 +410,19 @@ public:
 	void usage();
 	void read_arguments(int argc, const char **argv, 
 		int verbose_level);
-	void init(action *A, action *A2, 
-		strong_generators *gens, 
+	void init(poset *Poset,
+		//action *A, action *A2,
+		//strong_generators *gens,
 		int sz, int verbose_level);
 		// gens will not be copied !
-	void initialize(action *A_base, action *A_use, 
-		strong_generators *gens, 
+	void initialize(poset *Poset,
+		//action *A_base, action *A_use,
+		//strong_generators *gens,
 		int depth, 
 		const char *path, const char *prefix, int verbose_level);
-	void initialize_with_starter(action *A_base, action *A_use, 
-		strong_generators *gens, 
+	void initialize_with_starter(poset *Poset,
+		//action *A_base, action *A_use,
+		//strong_generators *gens,
 		int depth, 
 		char *path, 
 		char *prefix, 

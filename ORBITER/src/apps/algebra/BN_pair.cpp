@@ -207,14 +207,11 @@ void compute_N(action *A, int epsilon, int n,
 		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
 	int *the_set;
 	int *v;
 	int the_set_size;
 	set_stabilizer_compute *S;
-	sims *Stab;
 	longinteger_object go;
-	int nb_backtrack_nodes;
 	int i, h;
 	action_on_orthogonal *AO;
 	orthogonal *O;
@@ -250,12 +247,24 @@ void compute_N(action *A, int epsilon, int n,
 		}
 
 
+	int f_vv = (verbose_level >= 2);
+	sims *Stab;
+	int nb_backtrack_nodes;
+
+
+	poset *Poset;
 	strong_generators *Aut_gens;
 	
+	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
+
 	if (f_vv) {
 		cout << "initializing set_stabilizer_compute:" << endl;
 		}
-	S->init(A, the_set, the_set_size, verbose_level - 3);
+	S->init(Poset, the_set, the_set_size, verbose_level - 3);
 	
 	if (f_vv) {
 		cout << "computing set stabilizer:" << endl;
@@ -305,6 +314,7 @@ void compute_N(action *A, int epsilon, int n,
 	if (f_v) {
 		cout << "the induced action has order " << go_induced << endl;
 		}
+
 }
 
 

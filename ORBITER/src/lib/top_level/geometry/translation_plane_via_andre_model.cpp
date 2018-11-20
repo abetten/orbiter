@@ -35,6 +35,7 @@ void translation_plane_via_andre_model::null()
 	strong_gens = NULL;
 	Inc = NULL;
 	Stack = NULL;
+	Poset = NULL;
 	arcs = NULL;
 }
 
@@ -75,6 +76,9 @@ void translation_plane_via_andre_model::freeself()
 		}
 	if (Stack) {
 		FREE_OBJECT(Stack);
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
 		}
 	if (arcs) {
 		FREE_OBJECT(arcs);
@@ -271,7 +275,8 @@ void translation_plane_via_andre_model::init(int *spread_elements_numeric,
 
 	Inc->init_by_matrix(nb_rows, nb_cols, Incma, verbose_level - 2);
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init after Inc->init_by_matrix" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"after Inc->init_by_matrix" << endl;
 		}
 	
 
@@ -285,20 +290,25 @@ void translation_plane_via_andre_model::init(int *spread_elements_numeric,
 		}
 	
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init initializing action An" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"initializing action An" << endl;
 		}
 	An = NEW_OBJECT(action);
-	An->init_projective_group(n, F, f_semilinear, f_basis, 0 /* verbose_level */);
+	An->init_projective_group(n, F, f_semilinear,
+			f_basis, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init initializing action An1" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"initializing action An1" << endl;
 		}
 	An1 = NEW_OBJECT(action);
-	An1->init_projective_group(n1, F, f_semilinear, f_basis, 0 /*verbose_level */);
+	An1->init_projective_group(n1, F, f_semilinear,
+			f_basis, 0 /*verbose_level */);
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init initializing OnAndre" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"initializing OnAndre" << endl;
 		}
 
 
@@ -310,7 +320,8 @@ void translation_plane_via_andre_model::init(int *spread_elements_numeric,
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init initializing spread stabilizer" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"initializing spread stabilizer" << endl;
 		}
 
 	strong_gens->generators_for_translation_plane_in_andre_model(
@@ -320,7 +331,8 @@ void translation_plane_via_andre_model::init(int *spread_elements_numeric,
 		verbose_level);
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init initializing spread stabilizer" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"initializing spread stabilizer" << endl;
 		}
 
 
@@ -329,8 +341,11 @@ void translation_plane_via_andre_model::init(int *spread_elements_numeric,
 	strong_gens->group_order(stab_go);
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init Stabilizer has order " << stab_go << endl;
-		cout << "translation_plane_via_andre_model::init we will now compute the tactical decomposition induced by the spread stabilizer" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"Stabilizer has order " << stab_go << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"we will now compute the tactical decomposition "
+				"induced by the spread stabilizer" << endl;
 		}
 
 	int set_size = nb_rows;
@@ -375,7 +390,8 @@ void translation_plane_via_andre_model::init(int *spread_elements_numeric,
 		}
 }
 
-void translation_plane_via_andre_model::classify_arcs(const char *prefix, int depth, int verbose_level)
+void translation_plane_via_andre_model::classify_arcs(
+		const char *prefix, int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t0 = os_ticks();
@@ -394,11 +410,15 @@ void translation_plane_via_andre_model::classify_arcs(const char *prefix, int de
 	//sprintf(fname_base, "%sarcs", prefix);
 	
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::classify_arcs before gen->initialize" << endl;
+		cout << "translation_plane_via_andre_model::classify_arcs "
+				"before gen->initialize" << endl;
 		}
 
-	arcs->initialize(An1, OnAndre, 
-		strong_gens,  
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(An1, OnAndre,
+			strong_gens,
+			verbose_level);
+	arcs->initialize(Poset,
 		depth, 
 		prefix, "arcs", verbose_level - 1);
 
@@ -431,7 +451,8 @@ void translation_plane_via_andre_model::classify_arcs(const char *prefix, int de
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::classify_arcs before generator_main" << endl;
+		cout << "translation_plane_via_andre_model::classify_arcs "
+				"before generator_main" << endl;
 		}
 
 	arcs->main(t0, 
@@ -453,7 +474,8 @@ void translation_plane_via_andre_model::classify_arcs(const char *prefix, int de
 	system(cmd);
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::classify_arcs before isomorph_build_db" << endl;
+		cout << "translation_plane_via_andre_model::classify_arcs "
+				"before isomorph_build_db" << endl;
 		}
 
 	isomorph_build_db(An1, OnAndre, arcs, 
@@ -469,7 +491,8 @@ void translation_plane_via_andre_model::classify_arcs(const char *prefix, int de
 
 }
 
-void translation_plane_via_andre_model::classify_subplanes(const char *prefix, int verbose_level)
+void translation_plane_via_andre_model::classify_subplanes(
+		const char *prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t0 = os_ticks();
@@ -491,11 +514,15 @@ void translation_plane_via_andre_model::classify_subplanes(const char *prefix, i
 	//sprintf(fname_base, "%sarcs", prefix);
 	
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::classify_subplanes before gen->initialize" << endl;
+		cout << "translation_plane_via_andre_model::classify_subplanes "
+				"before gen->initialize" << endl;
 		}
 
-	arcs->initialize(An1, OnAndre,  
-		strong_gens, 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(An1, OnAndre,
+			strong_gens,
+			verbose_level);
+	arcs->initialize(Poset,
 		depth, 
 		prefix, "subplanes", verbose_level - 1);
 
@@ -528,7 +555,8 @@ void translation_plane_via_andre_model::classify_subplanes(const char *prefix, i
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::classify_subplanes before generator_main" << endl;
+		cout << "translation_plane_via_andre_model::classify_subplanes "
+				"before generator_main" << endl;
 		}
 
 	arcs->main(t0, 

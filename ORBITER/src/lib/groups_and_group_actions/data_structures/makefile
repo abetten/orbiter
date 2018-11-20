@@ -9,6 +9,8 @@ MODULES = \
 	group.o \
 	orbit_transversal.o \
 	page_storage.o \
+	poset.o \
+	poset_description.o \
 	projective_space_with_action.o \
 	schreier_vector_handler.o \
 	schreier_vector.o \

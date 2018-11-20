@@ -137,7 +137,7 @@ void compute_stabilizer::init(int *the_set,
 	compute_stabilizer::interesting_subsets = interesting_subsets;
 
 	Stab = NEW_OBJECT(sims);
-	Stab->init(gen->A);
+	Stab->init(gen->Poset->A);
 	Stab->init_trivial_group(verbose_level - 1);
 
 	init_U(verbose_level);

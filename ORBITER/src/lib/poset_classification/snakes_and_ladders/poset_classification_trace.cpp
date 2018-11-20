@@ -29,9 +29,9 @@ int poset_classification::find_isomorphism(
 	
 	set1_canonical = NEW_int(sz);
 	set2_canonical = NEW_int(sz);
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(Poset->A->elt_size_in_int);
+	Elt2 = NEW_int(Poset->A->elt_size_in_int);
+	Elt3 = NEW_int(Poset->A->elt_size_in_int);
 
 	orb1 = trace_set(set1, sz, sz, 
 		set1_canonical, Elt1, 
@@ -43,8 +43,8 @@ int poset_classification::find_isomorphism(
 
 	if (orb1 == orb2) {
 		ret = TRUE;
-		A->element_invert(Elt2, Elt3, 0);
-		A->element_mult(Elt1, Elt3, transporter, 0);
+		Poset->A->element_invert(Elt2, Elt3, 0);
+		Poset->A->element_mult(Elt1, Elt3, transporter, 0);
 		orbit_idx = orb1;
 		}
 	else {
@@ -83,13 +83,13 @@ set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 		int_vec_print(cout, set, sz);
 		cout << endl;
 		}
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = NEW_int(Poset->A->elt_size_in_int);
 	identify(set, sz, transporter,
 			orbit_at_level, verbose_level - 2);
 
 	SaS = get_set_and_stabilizer(sz,
 			orbit_at_level, 0 /* verbose_level */);
-	A->element_invert(transporter, Elt, 0);
+	Poset->A->element_invert(transporter, Elt, 0);
 	SaS->apply_to_self(Elt, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -160,7 +160,7 @@ void poset_classification::identify(int *data, int sz,
 		}
 	if (f_v) {
 		cout << "poset_classification::identify transporter:" << endl;
-		A->element_print_quick(transporter, cout);
+		Poset->A->element_print_quick(transporter, cout);
 		}
 
 	if (f_v) {
@@ -190,13 +190,13 @@ void poset_classification::test_identify(int level, int nb_times,
 				<< " nb_times = " << nb_times << endl;
 		}
 
-	Elt = NEW_int(A->elt_size_in_int);
-	transporter = NEW_int(A->elt_size_in_int);
+	Elt = NEW_int(Poset->A->elt_size_in_int);
+	transporter = NEW_int(Poset->A->elt_size_in_int);
 	nb_orbits = nb_orbits_at_level(level);
 	set1 = NEW_int(level);
 	set2 = NEW_int(level);
 
-	S = Strong_gens->create_sims(0 /*verbose_level*/);
+	S = Poset->Strong_gens->create_sims(0 /*verbose_level*/);
 
 	S->group_order(go);
 	cout << "Group of order " << go << " created" << endl;
@@ -216,8 +216,8 @@ void poset_classification::test_identify(int level, int nb_times,
 			int_vec_print(cout, set1, level);
 			cout << endl;
 			}
-		A->random_element(S, Elt, 0 /* verbose_level */);
-		A2->map_a_set_and_reorder(set1, set2, level, Elt,
+		Poset->A->random_element(S, Elt, 0 /* verbose_level */);
+		Poset->A2->map_a_set_and_reorder(set1, set2, level, Elt,
 				0 /* verbose_level */);
 		cout << "mapped set is ";
 		int_vec_print(cout, set2, level);
@@ -265,10 +265,10 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 				"no_transporter" << endl;
 		}
 
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(Poset->A->elt_size_in_int);
+	Elt2 = NEW_int(Poset->A->elt_size_in_int);
 	set_tmp = NEW_int(size);
-	A->element_one(Elt1, 0);
+	Poset->A->element_one(Elt1, 0);
 
 	poset_classification_apply_isomorphism(cur_level, size, cur_node, cur_ex, 
 		set_in, set_out, set_tmp, 
@@ -314,20 +314,20 @@ int poset_classification::poset_classification_apply_isomorphism(
 		cout << endl;
 		}
 
-	A2->element_retrieve(O->E[current_extension].data, Elt1, 0);
+	Poset->A2->element_retrieve(O->E[current_extension].data, Elt1, 0);
 	
 	if (f_v) {
 		cout << "poset_classification::poset_"
 				"classification_apply_isomorphism "
 				"applying fusion element" << endl;
-		A2->element_print_quick(Elt1, cout);
-		cout << "in action " << A2->label << ":" << endl;
-		A2->element_print_as_permutation(Elt1, cout);
+		Poset->A2->element_print_quick(Elt1, cout);
+		cout << "in action " << Poset->A2->label << ":" << endl;
+		Poset->A2->element_print_as_permutation(Elt1, cout);
 		cout << "to the set ";
 		int_vec_print(cout, set_in, size);
 		cout << endl;
 		}
-	A2->map_a_set(set_in, set_tmp, size, Elt1, 0);
+	Poset->A2->map_a_set(set_in, set_tmp, size, Elt1, 0);
 	if (f_v) {
 		cout << "poset_classification::poset_"
 				"classification_apply_isomorphism "
@@ -336,12 +336,12 @@ int poset_classification::poset_classification_apply_isomorphism(
 		cout << endl;
 		}
 
-	A2->element_mult(transporter_in, Elt1, Elt2, 0);
+	Poset->A2->element_mult(transporter_in, Elt1, Elt2, 0);
 	if (f_v) {
 		int_vec_print(cout, set_in, size);
 		cout << endl;
 		}
-	A2->move(Elt2, transporter_out);
+	Poset->A2->move(Elt2, transporter_out);
 
 	if (f_on_subspaces) {
 		next_node = find_node_for_subspace_by_rank(set_tmp,
@@ -575,7 +575,7 @@ int poset_classification::trace_set_recursion(
 				}
 			return -1;
 			}
-		A->element_move(tmp_Elt1, Elt_transporter, 0);
+		Poset->A->element_move(tmp_Elt1, Elt_transporter, 0);
 		for (i = 0; i < size; i++) {
 			canonical_set[i] = tmp_set1[i];
 			}
@@ -628,7 +628,7 @@ int poset_classification::trace_set(int *set, int size, int level,
 
 	tmp_set1 = NEW_int(size);
 	tmp_set2 = NEW_int(size);
-	tmp_Elt = NEW_int(A->elt_size_in_int);
+	tmp_Elt = NEW_int(Poset->A->elt_size_in_int);
 
 	if (f_v) {
 		cout << "poset_classification::trace_set" << endl;
@@ -645,7 +645,7 @@ int poset_classification::trace_set(int *set, int size, int level,
 		canonical_set[i] = set[i];
 		}
 #endif
-	A->element_one(Elt_transporter, 0);
+	Poset->A->element_one(Elt_transporter, 0);
 
 	if (f_v) {
 		cout << "poset_classification::trace_set "

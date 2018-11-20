@@ -13,6 +13,7 @@
 
 graph_generator::graph_generator()
 {
+	Poset = NULL;
 	gen = NULL;
 	A_base = NULL;
 	A_on_edges = NULL;
@@ -356,8 +357,13 @@ void graph_generator::init(int argc, const char **argv)
 				<< target_depth << endl;
 		}
 
-	gen->initialize(A_base, A_on_edges,  
-		A_base->Strong_gens, 
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A_base, A_on_edges,
+			A_base->Strong_gens,
+			verbose_level);
+
+	gen->initialize(Poset,
 		target_depth, 
 		"", prefix, verbose_level - 1);
 	

@@ -189,6 +189,7 @@ void code_generator::null()
 	f_nmk = FALSE;
 	f_linear = FALSE;
 	f_nonlinear = FALSE;
+	Poset = NULL;
 	gen = NULL;
 	F = NULL;
 	v1 = NULL;
@@ -210,6 +211,9 @@ void code_generator::freeself()
 {
 	if (A) {
 		FREE_OBJECT(A);
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
 		}
 	if (F) {
 		FREE_OBJECT(F);
@@ -236,6 +240,7 @@ void code_generator::init(int argc, const char **argv)
 {
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
+	Poset = NEW_OBJECT(poset);
 	gen = NEW_OBJECT(poset_classification);
 	int f_basis = TRUE;
 	
@@ -354,7 +359,11 @@ void code_generator::init(int argc, const char **argv)
 				<< A->f_has_strong_generators << endl;
 		}
 	
-	gen->init(A, A, Strong_gens, gen->depth /* sz */, verbose_level);
+	Poset->init_subset_lattice(A, A,
+			Strong_gens,
+			verbose_level);
+
+	gen->init(Poset, gen->depth /* sz */, verbose_level);
 
 
 #if 0
@@ -683,7 +692,7 @@ void code_generator::early_test_func_by_using_group(
 
 	schreier Schreier;
 
-	Schreier.init(gen->A2);
+	Schreier.init(gen->Poset->A2);
 
 	Schreier.init_generators_by_hdl(
 		O->nb_strong_generators, O->hdl_strong_generators, 0);

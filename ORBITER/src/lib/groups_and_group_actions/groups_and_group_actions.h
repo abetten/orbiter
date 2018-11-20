@@ -55,6 +55,8 @@ typedef class wreath_product wreath_product;
 typedef class direct_product direct_product;
 typedef class schreier_vector_handler schreier_vector_handler;
 typedef class schreier_vector schreier_vector;
+typedef class poset_description poset_description;
+typedef class poset poset;
 
 
 enum symmetry_group_type { 

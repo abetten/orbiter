@@ -154,7 +154,7 @@ int main(int argc, const char **argv)
 		int *transporter;
 		int orbit_at_level;
 		
-		transporter = NEW_int(Gen.gen->A->elt_size_in_int);
+		transporter = NEW_int(Gen.gen->Poset->A->elt_size_in_int);
 		
 		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz,
 				transporter, orbit_at_level, Gen.gen->verbose_level);

@@ -27,6 +27,7 @@ void search_blocking_set::null()
 {
 	Inc = NULL;
 	A = NULL;
+	Poset = NULL;
 	gen = NULL;
 	Line_intersections = NULL;
 	blocking_set = NULL;
@@ -50,6 +51,9 @@ void search_blocking_set::freeself()
 	
 	if (Line_intersections) {
 		FREE_OBJECTS(Line_intersections);
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
 		}
 	if (gen) {
 		FREE_OBJECT(gen);
@@ -145,8 +149,11 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		cout << "find_partial_blocking_sets !A->f_has_strong_generators" << endl;
 		exit(1);
 		}
-	gen->init(A, A, 
-		A->Strong_gens, 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
+	gen->init(Poset,
 		//*A->strong_generators, A->tl, 
 		gen->depth, verbose_level);
 	gen->init_check_func(

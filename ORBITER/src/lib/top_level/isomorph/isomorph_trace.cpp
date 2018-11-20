@@ -559,7 +559,7 @@ int isomorph::trace_set_recursion(
 		int *next_transporter;
 
 		next_set = NEW_int(size);
-		next_transporter = NEW_int(gen->A->elt_size_in_int);
+		next_transporter = NEW_int(gen->Poset->A->elt_size_in_int);
 
 		gen->root[0].trace_starter(gen, size, 
 			canonical_set, next_set,
@@ -584,7 +584,7 @@ int isomorph::trace_set_recursion(
 			cout << endl;
 			}
 
-		gen->A->element_move(next_transporter, transporter, 0);
+		gen->Poset->A->element_move(next_transporter, transporter, 0);
 		FREE_int(next_set);
 		FREE_int(next_transporter);
 		if (f_v) {
@@ -823,7 +823,7 @@ int isomorph::trace_next_point_database(
 
 	prepare_database_access(cur_level, verbose_level);
 	//elt = NEW_char(gen->A->coded_elt_size_in_char);
-	tmp_ELT = NEW_int(gen->A->elt_size_in_int);
+	tmp_ELT = NEW_int(gen->Poset->A->elt_size_in_int);
 	
 	cur_node_local =
 			cur_node_global -
@@ -878,12 +878,12 @@ int isomorph::trace_next_point_database(
 	{
 	vector_ge gens;
 
-	gens.init(gen->A);
+	gens.init(gen->Poset->A);
 	gens.allocate(nb_strong_generators);
 
-	fseek(fp_ge, ref * gen->A->coded_elt_size_in_char, SEEK_SET);
+	fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
 	for (i = 0; i < nb_strong_generators; i++) {
-		gen->A->element_read_file_fp(gens.ith(i),
+		gen->Poset->A->element_read_file_fp(gens.ith(i),
 				fp_ge, 0/* verbose_level*/);
 		}
 	
@@ -898,7 +898,7 @@ int isomorph::trace_next_point_database(
 		cout << "computing least_image_of_point "
 				"for point " << pt << endl;
 		}
-	image = gen->A2->least_image_of_point(gens,
+	image = gen->Poset->A2->least_image_of_point(gens,
 			pt, tmp_ELT, verbose_level - 3);
 	if (f_vv) {
 		cout << "iso_node " << iso_nodes
@@ -923,12 +923,12 @@ int isomorph::trace_next_point_database(
 
 	if (FALSE /*f_vvv*/) {
 		cout << "applying:" << endl;
-		gen->A->element_print(tmp_ELT, cout);
+		gen->Poset->A->element_print(tmp_ELT, cout);
 		cout << endl;
 		}
 		
 	for (i = cur_level; i < size; i++) {
-		canonical_set[i] = gen->A2->element_image_of(
+		canonical_set[i] = gen->Poset->A2->element_image_of(
 				canonical_set[i], tmp_ELT, FALSE);
 		}
 
@@ -938,7 +938,7 @@ int isomorph::trace_next_point_database(
 	//int_vec_sort(len, gen->set[lvl + 1]);
 		// we keep the last point extra
 
-	gen->A->mult_apply_from_the_right(
+	gen->Poset->A->mult_apply_from_the_right(
 			Elt_transporter, tmp_ELT);
 
 	if (f_v) {
@@ -1068,7 +1068,7 @@ int isomorph::handle_extension_database(int cur_level,
 		cout << "nb_strong_generators = " << nb_strong_generators << endl;
 		}
 	if (nb_strong_generators) {
-		pos += gen->A->base_len;
+		pos += gen->Poset->A->base_len;
 		}
 	nb_extensions = v->s_ii(pos++);
 	if (f_vv) {
@@ -1420,21 +1420,22 @@ void isomorph::apply_isomorphism_database(
 		cout << "ref = " << ref << endl;
 		}
 	
-	fseek(fp_ge, ref * gen->A->coded_elt_size_in_char,
+	fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char,
 			SEEK_SET);
-	gen->A->element_read_file_fp(gen->Elt1, fp_ge, 0/* verbose_level*/);
+	gen->Poset->A->element_read_file_fp(
+			gen->Elt1, fp_ge, 0/* verbose_level*/);
 	
-	gen->A2->map_a_set(canonical_set,
+	gen->Poset->A2->map_a_set(canonical_set,
 			apply_fusion_tmp_set1, size, gen->Elt1, 0);
 
 	//int_vec_heapsort(apply_fusion_tmp_set1, level);
 	int_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
 
-	gen->A->element_mult(Elt_transporter,
+	gen->Poset->A->element_mult(Elt_transporter,
 			gen->Elt1, apply_fusion_Elt1, FALSE);
 
 	int_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
-	gen->A->element_move(apply_fusion_Elt1,
+	gen->Poset->A->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
 
 }
@@ -1454,20 +1455,21 @@ void isomorph::apply_isomorphism_oracle(
 		cout << " : " << endl;
 		}
 	
-	gen->A->element_retrieve(O->E[current_extension].data,
+	gen->Poset->A->element_retrieve(
+			O->E[current_extension].data,
 			gen->Elt1, FALSE);
 	
-	gen->A2->map_a_set(canonical_set,
+	gen->Poset->A2->map_a_set(canonical_set,
 			apply_fusion_tmp_set1, size, gen->Elt1, 0);
 
 	//int_vec_heapsort(apply_fusion_tmp_set1, level);
 	int_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
 
-	gen->A->element_mult(Elt_transporter,
+	gen->Poset->A->element_mult(Elt_transporter,
 			gen->Elt1, apply_fusion_Elt1, FALSE);
 
 	int_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
-	gen->A->element_move(apply_fusion_Elt1,
+	gen->Poset->A->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
 
 }

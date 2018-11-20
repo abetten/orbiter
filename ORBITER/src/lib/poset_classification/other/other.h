@@ -56,8 +56,9 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 	int target_depth,
 	const char *prefix, 
 	int f_W, int f_w,
-	action *A, action *A2, 
-	strong_generators *Strong_gens, 
+	poset *Poset,
+	//action *A, action *A2,
+	//strong_generators *Strong_gens,
 	void (*early_test_func_callback)(int *S, int len, 
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
@@ -67,11 +68,15 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 		void *data, int verbose_level), 
 	void *candidate_incremental_check_data, 
 	int verbose_level);
-void orbits_on_k_sets(action *A1, action *A2, 
-	strong_generators *Strong_gens, 
+void orbits_on_k_sets(
+	poset *Poset,
+	//action *A1, action *A2,
+	//strong_generators *Strong_gens,
 	int k, int *&orbit_reps, int &nb_orbits, int verbose_level);
-poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
-	strong_generators *Strong_gens, 
+poset_classification *orbits_on_k_sets_compute(
+	poset *Poset,
+	//action *A1, action *A2,
+	//strong_generators *Strong_gens,
 	int k, int verbose_level);
 void print_extension_type(ostream &ost, int t);
 const char *trace_result_as_text(trace_result r);

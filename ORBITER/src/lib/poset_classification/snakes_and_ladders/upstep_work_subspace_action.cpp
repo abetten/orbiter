@@ -64,17 +64,17 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		//cout << endl;
 		}
 
-	if (!gen->A2->f_is_linear) {
+	if (!gen->Poset->A2->f_is_linear) {
 		cout << "upstep_work::upstep_subspace_action "
 				"action is not linear" << endl;
 		exit(1);
 		}
-	if (gen->A2->type_G == matrix_group_t) {
-		M = gen->A2->G.matrix_grp;
+	if (gen->Poset->A2->type_G == matrix_group_t) {
+		M = gen->Poset->A2->G.matrix_grp;
 		F = M->GFq;
 		}
 	else {
-		action *sub = gen->A2->subaction;
+		action *sub = gen->Poset->A2->subaction;
 		if (sub->type_G == wreath_product_t) {
 			W = sub->G.wreath_product_group;
 			F = W->F;
@@ -84,8 +84,8 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		}
 	}
 #if 1
-	if (gen->A2->type_G == action_by_subfield_structure_t) {
-		F = gen->A2->G.SubfieldStructure->Fq;
+	if (gen->Poset->A2->type_G == action_by_subfield_structure_t) {
+		F = gen->Poset->A2->G.SubfieldStructure->Fq;
 			// we need the small field because we work 
 			// in the large vector space over the small field.
 		}
@@ -123,7 +123,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "upstep_work::upstep_subspace_action "
 				"setting up action_on_grassmannian:" << endl;
 		}
-	AG->init(*gen->A2, &G, verbose_level - 2);
+	AG->init(*gen->Poset->A2, &G, verbose_level - 2);
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"after AG.init" << endl;
@@ -143,7 +143,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	
 
 	A_on_hyperplanes.induced_action_on_grassmannian(
-		gen->A2,
+		gen->Poset->A2,
 		AG, 
 		FALSE /* f_induce_action*/,
 		NULL /*sims *old_G*/,
@@ -353,7 +353,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		
 		
 		// initialize transporter[0] for the tracing
-		gen->A->element_one(gen->transporter->ith(0), 0);
+		gen->Poset->A->element_one(gen->transporter->ith(0), 0);
 
 
 		if (f_vv) {
@@ -371,10 +371,10 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			}
 #endif
 		
-		int nb_times_image_of_called0 = gen->A->nb_times_image_of_called;
-		int nb_times_mult_called0 = gen->A->nb_times_mult_called;
-		int nb_times_invert_called0 = gen->A->nb_times_invert_called;
-		int nb_times_retrieve_called0 = gen->A->nb_times_retrieve_called;
+		int nb_times_image_of_called0 = gen->Poset->A->nb_times_image_of_called;
+		int nb_times_mult_called0 = gen->Poset->A->nb_times_mult_called;
+		int nb_times_invert_called0 = gen->Poset->A->nb_times_invert_called;
+		int nb_times_retrieve_called0 = gen->Poset->A->nb_times_retrieve_called;
 
 		
 		if (f_vv) {
@@ -406,13 +406,13 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		coset_table[nb_cosets_processed].node = final_node;
 		coset_table[nb_cosets_processed].ex = final_ex;
 		coset_table[nb_cosets_processed].nb_times_image_of_called = 
-			gen->A->nb_times_image_of_called - nb_times_image_of_called0;
+			gen->Poset->A->nb_times_image_of_called - nb_times_image_of_called0;
 		coset_table[nb_cosets_processed].nb_times_mult_called = 
-			gen->A->nb_times_mult_called - nb_times_mult_called0;
+			gen->Poset->A->nb_times_mult_called - nb_times_mult_called0;
 		coset_table[nb_cosets_processed].nb_times_invert_called = 
-			gen->A->nb_times_invert_called - nb_times_invert_called0;
+			gen->Poset->A->nb_times_invert_called - nb_times_invert_called0;
 		coset_table[nb_cosets_processed].nb_times_retrieve_called = 
-			gen->A->nb_times_retrieve_called - nb_times_retrieve_called0;
+			gen->Poset->A->nb_times_retrieve_called - nb_times_retrieve_called0;
 		nb_cosets_processed++;
 
 		if (f_v) {
@@ -432,7 +432,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 				if (coset > 0 &&
 						TRUE /*gen->f_allowed_to_show_group_elements*/
 						&& f_v) {
-					gen->A->element_print_quick(aut, cout);
+					gen->Poset->A->element_print_quick(aut, cout);
 					cout << endl;
 #if 0
 					cout << "in the action " << gen->A2->label
@@ -520,7 +520,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 	if (gen->f_do_group_extension_in_upstep) {
 		vector_ge SG_extension;
-		int *tl_extension = NEW_int(gen->A->base_len);
+		int *tl_extension = NEW_int(gen->Poset->A->base_len);
 		int f_OK;
 		int f_tolerant = FALSE;
 	

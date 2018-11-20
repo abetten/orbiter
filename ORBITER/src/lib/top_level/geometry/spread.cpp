@@ -41,6 +41,7 @@ void spread::null()
 	tmp_M2 = NULL;
 	tmp_M3 = NULL;
 	tmp_M4 = NULL;
+	Poset = NULL;
 	gen = NULL;
 	Sing = NULL;
 	O = NULL;
@@ -534,14 +535,17 @@ void spread::init2(int verbose_level)
 		}
 	//depth = order + 1;
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A2,
+			A->Strong_gens,
+			verbose_level);
 	
 	
 	if (f_recoordinatize) {
 		if (f_v) {
 			cout << "spread::init2 before gen->initialize_with_starter" << endl;
 			}
-		gen->initialize_with_starter(A, A2, 
-			A->Strong_gens, 
+		gen->initialize_with_starter(Poset,
 			order + 1, 
 			starter_directory_name, 
 			prefix, 
@@ -561,8 +565,7 @@ void spread::init2(int verbose_level)
 		if (f_v) {
 			cout << "spread::init2 before gen->initialize" << endl;
 			}
-		gen->initialize(A, A2, 
-			A->Strong_gens, 
+		gen->initialize(Poset,
 			order + 1, 
 			starter_directory_name, prefix, 
 			verbose_level - 2);
