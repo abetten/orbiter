@@ -5,9 +5,10 @@
 // started:  September 20, 2007
 
 
+typedef class extension extension;
+typedef class orbit_based_testing orbit_based_testing;
 typedef class poset_classification poset_classification;
 typedef class poset_orbit_node poset_orbit_node;
-typedef class extension extension;
 typedef class set_stabilizer_compute set_stabilizer_compute;
 typedef class upstep_work upstep_work;
 typedef class compute_stabilizer compute_stabilizer;

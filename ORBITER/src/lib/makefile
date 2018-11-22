@@ -135,8 +135,6 @@ MODULES= \
 		groups_and_group_actions/data_structures/group.o \
 		groups_and_group_actions/data_structures/orbit_transversal.o \
 		groups_and_group_actions/data_structures/page_storage.o \
-		groups_and_group_actions/data_structures/poset.o \
-		groups_and_group_actions/data_structures/poset_description.o \
 		groups_and_group_actions/data_structures/projective_space_with_action.o \
 		groups_and_group_actions/data_structures/schreier_vector_handler.o \
 		groups_and_group_actions/data_structures/schreier_vector.o \
@@ -200,6 +198,9 @@ MODULES= \
 		poset_classification/classify/orbit_node.o \
 		poset_classification/other/snakes_and_ladders_global.o \
 		poset_classification/snakes_and_ladders/extension.o \
+		poset_classification/snakes_and_ladders/orbit_based_testing.o \
+		poset_classification/snakes_and_ladders/poset.o \
+		poset_classification/snakes_and_ladders/poset_description.o \
 		poset_classification/snakes_and_ladders/poset_classification.o \
 		poset_classification/snakes_and_ladders/poset_classification_classify.o \
 		poset_classification/snakes_and_ladders/poset_classification_combinatorics.o \

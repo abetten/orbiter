@@ -51,6 +51,158 @@ public:
 	~extension();
 };
 
+// #############################################################################
+// orbit_based_testing.cpp
+// #############################################################################
+
+//! testing a property for orbit representatives only
+
+#define MAX_CALLBACK 100
+
+
+class orbit_based_testing {
+
+public:
+
+	poset_classification *PC;
+	int max_depth;
+	int *local_S; // [max_depth]
+	int nb_callback;
+	int (*callback_testing[MAX_CALLBACK])(orbit_based_testing *Obt,
+			int *S, int len, void *data, int verbose_level);
+	void *callback_data[MAX_CALLBACK];
+
+	int nb_callback_no_group;
+	int (*callback_testing_no_group[MAX_CALLBACK])(
+			int *S, int len,
+			int *candidates, int nb_candidates,
+			int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level);
+	void *callback_data_no_group[MAX_CALLBACK];
+
+	orbit_based_testing();
+	~orbit_based_testing();
+	void null();
+	void freeself();
+	void init(
+			poset_classification *PC,
+			int max_depth,
+			int verbose_level);
+	void add_callback(
+			int (*func)(orbit_based_testing *Obt,
+					int *S, int len, void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void add_callback_no_group(
+			int (*func)(int *S, int len,
+					int *candidates, int nb_candidates,
+					int *good_candidates, int &nb_good_candidates,
+					void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void early_test_func(
+		int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void early_test_func_by_using_group(
+		int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+};
+
+
+//! used to create a poset from command line arguments
+
+// #############################################################################
+// poset.C:
+// #############################################################################
+
+
+class poset {
+public:
+	poset_description *description;
+
+	int f_subset_lattice;
+	int n;
+
+	int f_subspace_lattice;
+	int vector_space_dimension;
+
+	action *A; // the action in which the group is given
+	action *A2; // the action in which we do the search
+
+	strong_generators *Strong_gens;
+	longinteger_object go;
+
+	int f_has_orbit_based_testing;
+	orbit_based_testing *Orbit_based_testing;
+
+	poset();
+	~poset();
+	void null();
+	void freeself();
+	void init_subset_lattice(action *A, action *A2,
+			strong_generators *Strong_gens,
+			int verbose_level);
+	void init_subspace_lattice(action *A, action *A2,
+			strong_generators *Strong_gens,
+			int verbose_level);
+	void init(poset_description *description,
+		action *A, // the action in which the group is given
+		action *A2, // the action in which we do the search
+		strong_generators *Strong_gens,
+		int verbose_level);
+	void add_independence_condition(
+			int independence_value,
+			int verbose_level);
+	void print();
+	void early_test_func(
+		int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+};
+
+int callback_test_independence_condition(orbit_based_testing *Obt,
+					int *S, int len, void *data, int verbose_level);
+
+//! description of a poset from the command line
+
+
+// #############################################################################
+// poset_description.C:
+// #############################################################################
+
+
+
+class poset_description {
+public:
+	int f_subset_lattice;
+
+	int f_subspace_lattice;
+
+
+	char label[1000];
+
+	int f_independence_condition;
+	int independence_condition_value;
+
+
+	poset_description();
+	~poset_description();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+};
+
+
+
+
 
 // #############################################################################
 // poset_classification.C
@@ -66,15 +218,8 @@ public:
 
 	char problem_label[1000];
 	
-#if 0
-	action *A; // the action in which the group is given
-	action *A2; // the action in which we do the search
-	
-	strong_generators *Strong_gens;
-	longinteger_object go;
-#else
 	poset *Poset;
-#endif
+
 
 	schreier_vector_handler *Schreier_vector_handler;
 
@@ -220,6 +365,8 @@ public:
 	void *rank_point_data;
 	int *tmp_v1; // [vector_space_dimension]
 
+
+#if 0
 	int f_early_test_func;
 	void (*early_test_func)(int *S, int len, 
 		int *candidates, int nb_candidates, 
@@ -227,6 +374,8 @@ public:
 		void *data, int verbose_level);
 	void *early_test_func_data;
 	int f_its_OK_to_not_have_an_early_test_func;
+#endif
+
 
 	int nb_times_image_of_called0;
 	int nb_times_mult_called0;
@@ -470,6 +619,7 @@ public:
 		void (*unrank_point_func)(int *v, int rk, void *data), 
 		void *data, 
 		int verbose_level);
+#if 0
 	void init_early_test_func(
 		void (*early_test_func)(int *S, int len, 
 			int *candidates, int nb_candidates, 
@@ -477,6 +627,7 @@ public:
 			void *data, int verbose_level), 
 		void *data,  
 		int verbose_level);
+#endif
 
 	// poset_classification_classify.C
 	int compute_orbits(int from_level, int to_level, 

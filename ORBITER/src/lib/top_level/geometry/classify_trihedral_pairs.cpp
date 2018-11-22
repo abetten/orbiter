@@ -139,12 +139,15 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,
 		Poset1,
+#if 0
+		// ToDo
 		classify_trihedral_pairs_early_test_function_type1
 			/* void (*early_test_func_callback)(int *S, int len,
 			int *candidates, int nb_candidates, 
 			int *good_candidates, int &nb_good_candidates, 
 			void *data, int verbose_level) */,
 		this /* void *early_test_func_data */, 
+#endif
 		NULL /* int (*candidate_incremental_check_func)(int len,
 				int *S, void *data, int verbose_level) */,
 		NULL  /*void *candidate_incremental_check_data */, 
@@ -166,12 +169,15 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,
 		Poset2,
+#if 0
+		// ToDo
 		classify_trihedral_pairs_early_test_function_type2
 			/* void (*early_test_func_callback)(int *S, int len,
 			int *candidates, int nb_candidates, 
 			int *good_candidates, int &nb_good_candidates, 
 			void *data, int verbose_level) */,
 		this /* void *early_test_func_data */, 
+#endif
 		NULL /* int (*candidate_incremental_check_func)(int len,
 			int *S, void *data, int verbose_level) */,
 		NULL  /*void *candidate_incremental_check_data */, 

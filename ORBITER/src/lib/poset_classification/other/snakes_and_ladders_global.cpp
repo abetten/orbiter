@@ -441,13 +441,13 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 	const char *prefix, 
 	int f_W, int f_w,
 	poset *Poset,
-	//action *A, action *A2,
-	//strong_generators *Strong_gens,
+#if 0
 	void (*early_test_func_callback)(int *S, int len, 
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		void *data, int verbose_level),
 	void *early_test_func_data, 
+#endif
 	int (*candidate_incremental_check_func)(int len,
 			int *S, void *data, int verbose_level),
 	void *candidate_incremental_check_data, 
@@ -457,7 +457,6 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 	int nb_poset_orbit_nodes = 1000;
 	int schreier_depth = target_depth;
 	int f_use_invariant_subset_if_available = TRUE;
-	//int f_implicit_fusion = FALSE;
 	int f_debug = FALSE;
 	int t0 = os_ticks();
 	
@@ -489,13 +488,14 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 	strcpy(gen->fname_base, prefix);
 
 
+#if 0
 	if (early_test_func_callback) {
 		gen->init_early_test_func(
 			early_test_func_callback, 
 			early_test_func_data,  
 			verbose_level);
 		}
-
+#endif
 
 	if (candidate_incremental_check_func) {
 		gen->init_incremental_check_func(
@@ -530,8 +530,6 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 
 void orbits_on_k_sets(
 	poset *Poset,
-	//action *A1, action *A2,
-	//strong_generators *Strong_gens,
 	int k, int *&orbit_reps, int &nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -543,8 +541,6 @@ void orbits_on_k_sets(
 	
 	Gen = orbits_on_k_sets_compute(
 		Poset,
-		//A1, A2,
-		//Strong_gens,
 		k, verbose_level);
 	if (f_v) {
 		cout << "orbits_on_k_sets: done with orbits_on_k_sets_compute" << endl;
@@ -574,12 +570,9 @@ void orbits_on_k_sets(
 
 poset_classification *orbits_on_k_sets_compute(
 	poset *Poset,
-	//action *A1, action *A2,
-	//strong_generators *Strong_gens,
 	int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	poset_classification *Gen;
 	
 
@@ -598,8 +591,6 @@ poset_classification *orbits_on_k_sets_compute(
 		}
 	Gen->init(
 		Poset,
-		//A1, A2,
-		//Strong_gens,
 		Gen->depth /* sz */, verbose_level - 1);
 	//Gen->init_check_func(
 	//	check_zero_lines, 
@@ -628,7 +619,6 @@ poset_classification *orbits_on_k_sets_compute(
 	
 	int schreier_depth = Gen->depth;
 	int f_use_invariant_subset_if_available = TRUE;
-	//int f_implicit_fusion = FALSE;
 	int f_debug = FALSE;
 	int t0 = os_ticks();
 	
@@ -638,7 +628,6 @@ poset_classification *orbits_on_k_sets_compute(
 	Gen->main(t0, 
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
-		//f_implicit_fusion, 
 		f_debug, 
 		verbose_level - 1);
 	
@@ -855,7 +844,8 @@ void wedge_product_export_magma(poset_classification *Gen,
 
 	 	for (j = 0; j < O->nb_strong_generators; j++) {
 
-			Gen->Poset->A->element_retrieve(O->hdl_strong_generators[j], Elt, 0);
+			Gen->Poset->A->element_retrieve(
+					O->hdl_strong_generators[j], Elt, 0);
 			
 				f << "[";
 			//Gen->A->element_print_quick(Elt, f);

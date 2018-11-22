@@ -90,7 +90,8 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 		0 /*verbose_level*/);
 
 	if (f_vv) {
-		cout << "The large linear set of size " << large_linear_set_sz << " is ";
+		cout << "The large linear set of size "
+				<< large_linear_set_sz << " is ";
 		int_vec_print(cout, large_linear_set, large_linear_set_sz);
 		cout << endl;
 		D1->print_linear_set_tex(large_linear_set, large_linear_set_sz);
@@ -101,7 +102,8 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 		small_linear_set, small_linear_set_sz, 
 		0 /*verbose_level*/);
 	if (f_vv) {
-		cout << "The small linear set of size " << small_linear_set_sz << " is ";
+		cout << "The small linear set of size "
+				<< small_linear_set_sz << " is ";
 		int_vec_print(cout, small_linear_set, small_linear_set_sz);
 		cout << endl;
 		D->print_linear_set_tex(small_linear_set, small_linear_set_sz);
@@ -113,7 +115,8 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 		small_linear_set_W, small_linear_set_W_sz, 
 		0 /*verbose_level*/);
 	if (f_vv) {
-		cout << "The small linear set for W of size " << small_linear_set_W_sz << " is ";
+		cout << "The small linear set for W of size "
+				<< small_linear_set_W_sz << " is ";
 		int_vec_print(cout, small_linear_set_W, small_linear_set_W_sz);
 		cout << endl;
 		D->print_linear_set_tex(small_linear_set_W, small_linear_set_W_sz);
@@ -129,7 +132,8 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 		small_linear_set[i] = b;
 		}
 	if (f_vv) {
-		cout << "After embedding, the small linear set of size " << small_linear_set_sz << " is ";
+		cout << "After embedding, the small linear set of size "
+				<< small_linear_set_sz << " is ";
 		int_vec_print(cout, small_linear_set, small_linear_set_sz);
 		cout << endl;
 		D1->print_linear_set_tex(small_linear_set, small_linear_set_sz);
@@ -144,8 +148,10 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 
 	for (i = 0; i < small_linear_set_sz; i++) {
 		a = small_linear_set[i];
-		if (!int_vec_search(large_linear_set, large_linear_set_sz, a, idx)) {
-			cout << "Cannot find embedded spread element in large linear set, something is wrong" << endl;
+		if (!int_vec_search(large_linear_set,
+				large_linear_set_sz, a, idx)) {
+			cout << "Cannot find embedded spread element "
+					"in large linear set, something is wrong" << endl;
 			exit(1);
 			}
 		is_deleted[idx] = TRUE;
@@ -192,7 +198,8 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 	Basis_elt = NEW_int(dimW * n2);
 	base_cols = NEW_int(n1);
 	kernel_cols = NEW_int(n1);
-	if (Fq->Gauss_simple(BasisW, dimW, n1, base_cols, 0/* verbose_level*/) != dimW) {
+	if (Fq->Gauss_simple(BasisW, dimW, n1, base_cols,
+			0/* verbose_level*/) != dimW) {
 		cout << "BasisW does not have the correct rank" << endl;
 		exit(1);
 		}
@@ -238,10 +245,13 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 
 	for (h = 0; h < linear_set_sz; h++) {
 		if (f_v3) {
-			cout << "spread element " << h << " / " << linear_set_sz << ":" << endl;
+			cout << "spread element " << h << " / "
+					<< linear_set_sz << ":" << endl;
 			}
 		a = linear_set[h];
-		int_vec_copy(D1->Spread_elements + a * D1->spread_element_size, Spread_element_basis, D1->spread_element_size);
+		int_vec_copy(
+				D1->Spread_elements + a * D1->spread_element_size,
+				Spread_element_basis, D1->spread_element_size);
 		if (f_v3) {
 			cout << "Spread element " << a << " is:" << endl;
 			int_matrix_print(Spread_element_basis, s, n1);
@@ -295,7 +305,8 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 	if (f_v3) {
 		cout << "The components are:" << endl;
 		for (h = 0; h < linear_set_sz + 1; h++) {
-			cout << "Component " << h << " / " << linear_set_sz << ":" << endl;
+			cout << "Component " << h << " / "
+					<< linear_set_sz << ":" << endl;
 			int_matrix_print(Components[h], s, n2);
 			}
 		}
@@ -323,13 +334,17 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 	Intersection = NEW_int(n2 * n2);
 	for (h1 = 0; h1 < nb_components; h1++) {
 		for (h2 = h1 + 1; h2 < nb_components; h2++) {
-			Fq->intersect_subspaces(n2, s, Components[h1], s, Components[h2], 
+			Fq->intersect_subspaces(n2, s,
+				Components[h1], s, Components[h2],
 				k3, Intersection, 0 /* verbose_level */);
 			if (k3) {
-				cout << "Components " << h1 << " and " << h2 << " intersect non-trivially!" << endl;
-				cout << "Component " << h1 << " / " << nb_components << ":" << endl;
+				cout << "Components " << h1 << " and "
+						<< h2 << " intersect non-trivially!" << endl;
+				cout << "Component " << h1 << " / "
+						<< nb_components << ":" << endl;
 				int_matrix_print(Components[h1], s, n2);
-				cout << "Component " << h2 << " / " << nb_components << ":" << endl;
+				cout << "Component " << h2 << " / "
+						<< nb_components << ":" << endl;
 				int_matrix_print(Components[h2], s, n2);
 				}
 			}
@@ -371,18 +386,21 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 
 	spread_elements_numeric = NEW_int(nb_components);
 	for (h = 0; h < nb_components; h++) {
-		spread_elements_numeric[h] = Grass->rank_int_here(Components[h], 0);
+		spread_elements_numeric[h] =
+				Grass->rank_int_here(Components[h], 0);
 		}
 	
 	if (f_vv) {
 		cout << "spread elements numeric:" << endl;
 		for (i = 0; i < nb_components; i++) {
-			cout << setw(3) << i << " : " << spread_elements_numeric[i] << endl;
+			cout << setw(3) << i << " : "
+					<< spread_elements_numeric[i] << endl;
 			}
 		}
 
 	if (f_identify) {
-		cout << "linear_set::construct_semifield before T->identify" << endl;
+		cout << "linear_set::construct_semifield "
+				"before T->identify" << endl;
 
 		if (nb_components != order + 1) {
 			cout << "nb_components != order + 1" << endl;
@@ -393,7 +411,7 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 		int f_implicit_fusion = FALSE;
 		int final_node;
 
-		transporter = NEW_int(T->gen->A->elt_size_in_int);
+		transporter = NEW_int(T->gen->Poset->A->elt_size_in_int);
 
 		T->gen->recognize(
 			spread_elements_numeric, nb_components, 
@@ -411,9 +429,11 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 		T->gen->get_stabilizer_order(lvl, orbit_at_lvl, go);
 
 		cout << "linear_set::construct_semifield after recognize" << endl;
-		cout << "final_node=" << final_node << " which is isomorphism type " << orbit_at_lvl << " with stabilizer order " << go << endl;
+		cout << "final_node=" << final_node
+				<< " which is isomorphism type " << orbit_at_lvl
+				<< " with stabilizer order " << go << endl;
 		cout << "transporter=" << endl;
-		T->gen->A->element_print_quick(transporter, cout);
+		T->gen->Poset->A->element_print_quick(transporter, cout);
 
 		FREE_int(transporter);
 		}
@@ -423,9 +443,11 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 
 	Andre = NEW_OBJECT(andre_construction);
 	
-	cout << "Creating the projective plane using the Andre construction:" << endl;
+	cout << "Creating the projective plane using "
+			"the Andre construction:" << endl;
 	Andre->init(Fq, s, spread_elements_numeric, 0 /*verbose_level*/);
-	cout << "Done creating the projective plane using the Andre construction." << endl;
+	cout << "Done creating the projective plane using "
+			"the Andre construction." << endl;
 #endif
 
 	

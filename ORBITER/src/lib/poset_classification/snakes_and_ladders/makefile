@@ -7,6 +7,9 @@ LFLAGS = -lm
 
 MODULES = \
 	extension.o \
+	orbit_based_testing.o \
+	poset.o \
+	poset_description.o \
 	poset_classification.o \
 	poset_classification_classify.o \
 	poset_classification_combinatorics.o \

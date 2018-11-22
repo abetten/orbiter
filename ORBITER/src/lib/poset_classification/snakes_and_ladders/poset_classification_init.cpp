@@ -118,9 +118,11 @@ void poset_classification::null()
 	unrank_point_func = NULL;
 	tmp_v1 = NULL;
 
+#if 0
 	f_early_test_func = FALSE;
 	early_test_func = NULL;
 	f_its_OK_to_not_have_an_early_test_func = FALSE;
+#endif
 
 	depth = 0;
 
@@ -425,8 +427,6 @@ void poset_classification::read_arguments(int argc,
 }
 
 void poset_classification::init(poset *Poset,
-	//action *A, action *A2,
-	//strong_generators *gens,
 	int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -460,6 +460,11 @@ void poset_classification::init(poset *Poset,
 		cout << "poset_classification::init A->degree=" << Poset->A->degree << endl;
 		cout << "poset_classification::init A2->degree=" << Poset->A2->degree << endl;
 		}
+
+	if (Poset->Orbit_based_testing) {
+		Poset->Orbit_based_testing->PC = this;
+	}
+
 	t0 = os_ticks();
 
 	progress_epsilon = 0.005;
@@ -551,8 +556,6 @@ void poset_classification::init(poset *Poset,
 
 void poset_classification::initialize(
 	poset *Poset,
-	//action *A_base, action *A_use,
-	//strong_generators *gens,
 	int depth, 
 	const char *path, const char *prefix, int verbose_level)
 {
@@ -581,8 +584,6 @@ void poset_classification::initialize(
 				"calling gen->init" << endl;
 		}
 	init(Poset,
-		//A_base, A_use,
-		//gens,
 		depth, verbose_level - 2);
 	
 	int nb_poset_orbit_nodes = 1000;
@@ -606,8 +607,6 @@ void poset_classification::initialize(
 
 void poset_classification::initialize_with_starter(
 	poset *Poset,
-	//action *A_base, action *A_use,
-	//strong_generators *gens,
 	int depth, 
 	char *path, 
 	char *prefix, 
@@ -646,8 +645,6 @@ void poset_classification::initialize_with_starter(
 				"calling gen->init" << endl;
 		}
 	init(Poset,
-		//A_base, A_use,
-		//gens,
 		depth, verbose_level - 2);
 	
 
@@ -985,6 +982,7 @@ void poset_classification::init_vector_space_action(
 			NEW_int(vector_space_dimension);
 }
 
+#if 0
 void poset_classification::init_early_test_func(
 	void (*early_test_func)(int *S, int len, 
 		int *candidates, int nb_candidates, 
@@ -1002,5 +1000,7 @@ void poset_classification::init_early_test_func(
 	poset_classification::early_test_func = early_test_func;
 	early_test_func_data = data;
 }
+#endif
+
 
 

@@ -32,6 +32,7 @@ public:
 	int m2;
 	int *v1; // [k]
 	
+	poset *Poset;
 	poset_classification *gen;
 	action *A;
 	action *A2;

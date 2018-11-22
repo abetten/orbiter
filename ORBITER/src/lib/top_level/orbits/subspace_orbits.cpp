@@ -172,10 +172,14 @@ void subspace_orbits::init_group(int verbose_level)
 		subspace_orbits_test_func, 
 		this /* candidate_check_data */);
 #endif
+
+#if 0
+	// ToDo
 	Gen->init_early_test_func(
 		subspace_orbits_early_test_func, 
 		this /*void *data */,  
 		verbose_level);
+#endif
 
 	//Gen->init_incremental_check_func(
 		//check_mindist_incremental, 

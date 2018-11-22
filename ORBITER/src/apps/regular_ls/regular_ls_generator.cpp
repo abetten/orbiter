@@ -108,6 +108,7 @@ regular_ls_generator::~regular_ls_generator()
 
 void regular_ls_generator::null()
 {
+	Poset = NULL;
 	gen = NULL;
 	A = NULL;
 	A2 = NULL;
@@ -234,8 +235,14 @@ void regular_ls_generator::init_generator(
 
 
 	strcpy(gen->fname_base, prefix_with_directory);
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A2,
+			Strong_gens,
+			verbose_level);
+
 	
-	gen->init(A, A2, Strong_gens, gen->depth, 0/*verbose_level - 3*/);
+	gen->init(Poset, gen->depth, 0/*verbose_level - 3*/);
 	
 #if 0
 	// not needed since we have an early_test_func:
@@ -244,11 +251,13 @@ void regular_ls_generator::init_generator(
 #endif
 
 	// we have an early test function:
-
+#if 0
+	// ToDo
 	gen->init_early_test_func(
 		rls_generator_early_test_function, 
 		this,  
 		verbose_level);
+#endif
 
 	// We also have an incremental check function. 
 	// This is only used by the clique finder:

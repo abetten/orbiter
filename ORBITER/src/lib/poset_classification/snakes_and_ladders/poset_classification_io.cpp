@@ -1789,6 +1789,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int nb_rows, Nb_orbits, nb_orbits, i, level;
 	pchar *Text_label;
 	pchar *Text_nb_orbits;
@@ -1844,7 +1845,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 		for (i = 0; i < nb_orbits; i++) {
 			
-			if (f_v) {
+			if (f_vv) {
 				cout << "poset_classification::make_spreadsheet_of_level_info "
 						"level = " << level << " / " << max_depth
 						<< " orbit " << i << " / " << nb_orbits << endl;

@@ -199,10 +199,15 @@ void polar::init2(int verbose_level)
 		this, 
 		verbose_level);
 
+#if 0
+	//ToDo
 	Gen->init_early_test_func(
 		polar_callback_early_test_func, 
 		this,  
 		verbose_level);
+#endif
+
+
 #if 0
 	Gen->f_print_function = TRUE;
 	Gen->print_function = print_set;

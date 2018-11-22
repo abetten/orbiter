@@ -105,11 +105,20 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				<< gen->Poset->A2->degree
 				<< " n = " << n << endl;
 		}
+	gen->Poset->early_test_func(
+			the_set, lvl,
+			subset /* int *candidates*/,
+			n /*int nb_candidates*/,
+			candidates /*int *good_candidates*/,
+			nb_candidates /*int &nb_good_candidates*/,
+			verbose_level - 2);
+#if 0
 	(*gen->early_test_func)(the_set,
 		lvl, subset, n,
 		candidates, nb_candidates,
 		gen->early_test_func_data,
 		verbose_level - 2);
+#endif
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action_"
 				"with_early_test "
@@ -289,8 +298,8 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		print_set(gen);
 		cout <<  " in subspace_action";
 		cout << " verbose_level=" << verbose_level << endl;
-		cout << "gen->f_early_test_func="
-				<< gen->f_early_test_func << endl;
+		//cout << "gen->f_early_test_func="
+		//		<< gen->f_early_test_func << endl;
 		if (f_vvv) {
 			print_set_verbose(gen);
 			}
@@ -324,16 +333,20 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		}
 	
 
-	if (gen->f_early_test_func) {
+	if (FALSE /*gen->f_early_test_func*/) {
 
 		if (f_v) {
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"before setup_factor_space_action_with_early_test"
 					<< endl;
 			}
+		cout << "setup_factor_space_action_with_early_test unavailable" << endl;
+		exit(1);
+#if 0
 		setup_factor_space_action_with_early_test(gen, 
 			*AF, *A_factor_space, 
 			lvl, verbose_level - 2);
+#endif
 
 		if (f_v) {
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "

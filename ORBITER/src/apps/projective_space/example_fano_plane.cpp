@@ -65,10 +65,15 @@ int main()
 
 	Sch->print_and_list_orbits(cout);
 	
+	poset *Poset;
 	poset_classification *Gen;
 
-	Gen = orbits_on_k_sets_compute(A, A, 
-		A->Strong_gens, 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
+
+	Gen = orbits_on_k_sets_compute(Poset,
 		k, verbose_level);
 	Gen->print_orbit_numbers(k);
 
@@ -90,6 +95,8 @@ int main()
 		}
 
 	
+	FREE_OBJECT(Gen);
+	FREE_OBJECT(Poset);
 	FREE_OBJECT(F);
 }
 

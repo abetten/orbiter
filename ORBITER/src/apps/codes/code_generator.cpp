@@ -363,6 +363,13 @@ void code_generator::init(int argc, const char **argv)
 			Strong_gens,
 			verbose_level);
 
+
+	int independence_value = d - 1;
+
+	Poset->add_independence_condition(
+			independence_value,
+			verbose_level);
+
 	gen->init(Poset, gen->depth /* sz */, verbose_level);
 
 
@@ -382,6 +389,9 @@ void code_generator::init(int argc, const char **argv)
 	gen->init_incremental_check_func(check_mindist_incremental,
 			this /* candidate_check_data */);
 #endif
+
+#if 0
+	//ToDo
 	if (f_v) {
 		cout << "code_generator::init group set up, "
 				"calling gen->init_early_test_func" << endl;
@@ -391,7 +401,7 @@ void code_generator::init(int argc, const char **argv)
 		this,  
 		verbose_level);
 	//gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
-
+#endif
 	
 
 #if 0

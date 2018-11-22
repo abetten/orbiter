@@ -224,8 +224,14 @@ void use_group(const char *fname, colored_graph *CG,
 
 
 	char prefix[1000];
+	poset *Poset;
 	poset_classification *gen;
 	int nb_orbits, depth;
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(Aut_on_points, Aut_on_points,
+			Aut_on_points->Strong_gens,
+			verbose_level);
 
 	if (f_all_cliques) {
 
@@ -239,10 +245,10 @@ void use_group(const char *fname, colored_graph *CG,
 			CG->nb_points /* target_depth */,
 			prefix, 
 			FALSE /* f_W */, FALSE /* f_w */,
-			Aut_on_points, Aut_on_points, 
-			Aut_on_points->Strong_gens, 
-			early_test_function_cliques,
-			CG, 
+			Poset,
+			// ToDo
+			//early_test_function_cliques,
+			//CG,
 			NULL, 
 			NULL, 
 			verbose_level);
@@ -256,10 +262,10 @@ void use_group(const char *fname, colored_graph *CG,
 			CG->nb_points /* target_depth */,
 			prefix, 
 			FALSE /* f_W */, FALSE /* f_w */,
-			Aut_on_points, Aut_on_points, 
-			Aut_on_points->Strong_gens, 
-			early_test_function_cocliques,
-			CG, 
+			Poset,
+			// ToDo
+			//early_test_function_cocliques,
+			//CG,
 			NULL, 
 			NULL, 
 			verbose_level);
@@ -330,7 +336,7 @@ void print_orbits_at_level(poset_classification *gen,
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
-	gen->A->group_order(ago);
+	gen->Poset->A->group_order(ago);
 	cout << "group order " << ago << endl;
 	cout << "The " << nb_orbits << " orbits at level "
 			<< level << " are:" << endl;

@@ -1030,8 +1030,8 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 		prefix, 
 		f_W, f_w,
 		Poset,
-		NULL /* ferdinand3_early_test_func */,
-		NULL /* void *early_test_func_data */, 
+		//NULL /* ferdinand3_early_test_func */,
+		//NULL /* void *early_test_func_data */,
 		ferdinand_incremental_check_func /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level)*/, 
 		this /* void *candidate_incremental_check_data */, 
 		verbose_level);
