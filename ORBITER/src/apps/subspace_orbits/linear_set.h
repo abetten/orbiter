@@ -45,6 +45,7 @@ public:
 	action *Aq;
 	action *AQ;
 	action *A_PGLQ;
+	poset *Poset1;
 	poset_classification *Gen;
 	int vector_space_dimension; // = n
 	strong_generators *Strong_gens;
@@ -67,7 +68,9 @@ public:
 	int *secondary_candidates;
 	int secondary_nb_candidates;
 	int secondary_schreier_depth;
+	poset *Poset_stab;
 	poset_classification *Gen_stab;
+	poset *Poset2;
 	poset_classification *Gen2;
 	int *is_allowed;
 

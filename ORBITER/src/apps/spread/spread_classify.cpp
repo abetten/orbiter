@@ -359,7 +359,7 @@ int main(int argc, const char **argv)
 		int *transporter;
 		int orbit_at_level;
 		
-		transporter = NEW_int(T.gen->A->elt_size_in_int);
+		transporter = NEW_int(T.gen->Poset->A->elt_size_in_int);
 		
 		for (i = 0; i < nb_identify; i++) {
 
@@ -378,7 +378,7 @@ int main(int argc, const char **argv)
 					<< " is identified to belong to orbit "
 					<< orbit_at_level << endl;
 			cout << "A transporter is " << endl;
-			T.gen->A->element_print_quick(transporter, cout);
+			T.gen->Poset->A->element_print_quick(transporter, cout);
 
 			FREE_int(data);
 		}

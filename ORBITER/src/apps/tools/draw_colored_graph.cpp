@@ -172,7 +172,8 @@ int main(int argc, char **argv)
 			sscanf(argv[++i], "%d", &expand_power);
 			for (j = 0; ; j++) {
 				expand_power_graph_fname[j] = argv[++i];
-				cout << "j=" << j << " : " << expand_power_graph_fname[j] << endl;
+				cout << "j=" << j << " : "
+						<< expand_power_graph_fname[j] << endl;
 				if (strcmp(expand_power_graph_fname[j], "-1") == 0) {
 					cout << "break j=" << j << endl;
 					break;
@@ -239,7 +240,8 @@ int main(int argc, char **argv)
 		CG->export_to_file(export_fname, 0 /* verbose_level */);
 		}
 	if (f_export_laplacian) {
-		CG->export_laplacian_to_file(export_laplacian_fname, 0 /* verbose_level */);
+		CG->export_laplacian_to_file(export_laplacian_fname,
+				0 /* verbose_level */);
 		}
 
 
@@ -266,11 +268,13 @@ int main(int argc, char **argv)
 		replace_extension_with(fname2, "_bitmatrix");
 
 		if (f_partitioned) {
-			CG->draw_partitioned(fname2, xmax_in, ymax_in, xmax_out, ymax_out, 
+			CG->draw_partitioned(fname2,
+				xmax_in, ymax_in, xmax_out, ymax_out,
 				f_labels, scale, line_width, verbose_level);
 			}
 		else if (f_partition) {
-			CG->draw_with_a_given_partition(fname2, xmax_in, ymax_in, xmax_out, ymax_out, part, nb_parts, 
+			CG->draw_with_a_given_partition(fname2,
+				xmax_in, ymax_in, xmax_out, ymax_out, part, nb_parts,
 				scale, line_width, verbose_level);
 			}
 		else if (f_Levi) {
@@ -314,7 +318,8 @@ int main(int argc, char **argv)
 		longinteger_object ago;
 
 		cout << "computing automorphism group of the graph:" << endl;
-		//Aut = create_automorphism_group_of_colored_graph_object(CG, verbose_level);
+		//Aut = create_automorphism_group_of_colored_graph_object(
+		//CG, verbose_level);
 
 
 		Adj = NEW_int(CG->nb_points * CG->nb_points);
@@ -326,7 +331,8 @@ int main(int argc, char **argv)
 					}
 				}
 			}
-		Aut = create_automorphism_group_of_graph(Adj, CG->nb_points, verbose_level);
+		Aut = create_automorphism_group_of_graph(Adj,
+				CG->nb_points, verbose_level);
 
 		Aut->group_order(ago);	
 		cout << "ago=" << ago << endl;
@@ -439,7 +445,8 @@ int main(int argc, char **argv)
 
 			}
 
-		cout << "the " << expand_power << " power of the adjacency matrix is:" << endl;
+		cout << "the " << expand_power << " power of the adjacency "
+				"matrix is:" << endl;
 		int_matrix_print(B, n, n);
 		
 		diag = B[0 * n + 0];
@@ -454,7 +461,8 @@ int main(int argc, char **argv)
 			B[i * n + i] = 0;
 			}
 
-		cout << "after subtracting " << diag << " times the identity, the matrix is:" << endl;
+		cout << "after subtracting " << diag << " times the identity, "
+				"the matrix is:" << endl;
 		int_matrix_print(B, n, n);
 
 		for (p = 0; p < n * n; p++) {
@@ -468,7 +476,8 @@ int main(int argc, char **argv)
 			for (i = 0; i < n * n; i++) {
 				if (Adj[i]) {
 					if (B[i] != c) {
-						cout << "B is not constant on the original graph" << endl;
+						cout << "B is not constant on the "
+								"original graph" << endl;
 						exit(1);
 						}
 					}
@@ -481,7 +490,8 @@ int main(int argc, char **argv)
 			}
 		
 
-		cout << "after subtracting " << c << " times the original graph, the matrix is:" << endl;
+		cout << "after subtracting " << c << " times the original graph, "
+				"the matrix is:" << endl;
 		int_matrix_print(B, n, n);
 
 
@@ -499,7 +509,8 @@ int main(int argc, char **argv)
 			CG_basis[h].load(expand_power_graph_fname[h], verbose_level);
 			
 			if (CG_basis[h].nb_points != n) {
-				cout << "the graph " << expand_power_graph_fname[h] << " has the wrong number of vertices" << endl;
+				cout << "the graph " << expand_power_graph_fname[h]
+					<< " has the wrong number of vertices" << endl;
 				exit(1);
 				}
 			int *H;
@@ -526,7 +537,8 @@ int main(int argc, char **argv)
 				for (i = 0; i < n * n; i++) {
 					if (H[i]) {
 						if (B[i] != coeffs[h]) {
-							cout << "B is not constant on the graph " << expand_power_graph_fname[h] << endl;
+							cout << "B is not constant on the graph "
+								<< expand_power_graph_fname[h] << endl;
 							exit(1);
 							}
 						}
@@ -537,7 +549,9 @@ int main(int argc, char **argv)
 						}
 					}
 				}
-			cout << "after subtracting " << coeffs[h] << " times the graph " << expand_power_graph_fname[h] << ", the matrix is:" << endl;
+			cout << "after subtracting " << coeffs[h]
+				<< " times the graph " << expand_power_graph_fname[h]
+				<< ", the matrix is:" << endl;
 			int_matrix_print(B, n, n);
 			
 			FREE_int(H);
@@ -560,7 +574,8 @@ int main(int argc, char **argv)
 		longinteger_object ago;
 
 		cout << "computing automorphism group of the graph:" << endl;
-		//Aut = create_automorphism_group_of_colored_graph_object(CG, verbose_level);
+		//Aut = create_automorphism_group_of_colored_graph_object(
+		//CG, verbose_level);
 
 
 		Adj = NEW_int(CG->nb_points * CG->nb_points);
@@ -572,7 +587,8 @@ int main(int argc, char **argv)
 					}
 				}
 			}
-		Aut = create_automorphism_group_of_graph(Adj, CG->nb_points, verbose_level);
+		Aut = create_automorphism_group_of_graph(Adj,
+				CG->nb_points, verbose_level);
 
 		Aut->group_order(ago);	
 		cout << "ago=" << ago << endl;
@@ -602,15 +618,23 @@ int main(int argc, char **argv)
 		strcpy(prefix, fname);
 		replace_extension_with(prefix, "_cliques");
 
+		poset *Poset;
+
+		Poset = NEW_OBJECT(poset);
+		Poset->init_subset_lattice(Aut_on_points, Aut_on_points,
+				Aut_on_points->Strong_gens,
+				verbose_level);
+
+
 		if (f_all_cliques) {
 			compute_orbits_on_subsets(gen, 
 				CG->nb_points /* target_depth */,
 				prefix, 
 				TRUE /* f_W */, FALSE /* f_w */,
-				Aut_on_points, Aut_on_points, 
-				Aut_on_points->Strong_gens, 
-				early_test_function_cliques,
-				CG, 
+				Poset,
+				// ToDo
+				//early_test_function_cliques,
+				//CG,
 				NULL, 
 				NULL, 
 				verbose_level);
@@ -620,10 +644,10 @@ int main(int argc, char **argv)
 				CG->nb_points /* target_depth */,
 				prefix, 
 				TRUE /* f_W */, FALSE /* f_w */,
-				Aut_on_points, Aut_on_points, 
-				Aut_on_points->Strong_gens, 
-				early_test_function_cocliques,
-				CG, 
+				Poset,
+				// ToDo
+				//early_test_function_cocliques,
+				//CG,
 				NULL, 
 				NULL, 
 				verbose_level);
@@ -641,14 +665,16 @@ int main(int argc, char **argv)
 			cout << "the largest cliques have size " << depth << endl;
 			for (i = 0; i <= depth; i++) {
 				nb_orbits = gen->nb_orbits_at_level(i);
-				cout << setw(3) << i << " : " << setw(3) << nb_orbits << endl;
+				cout << setw(3) << i << " : " << setw(3)
+						<< nb_orbits << endl;
 				}
 			}
 		else if (f_all_cocliques) {
 			cout << "the largest cocliques have size " << depth << endl;
 			for (i = 0; i <= depth; i++) {
 				nb_orbits = gen->nb_orbits_at_level(i);
-				cout << setw(3) << i << " : " << setw(3) << nb_orbits << endl;
+				cout << setw(3) << i << " : " << setw(3)
+						<< nb_orbits << endl;
 				}
 			}
 
@@ -659,7 +685,8 @@ int main(int argc, char **argv)
 		set = NEW_int(depth);
 		nb_orbits = gen->nb_orbits_at_level(depth);
 
-		cout << "orbit : representative : stabilizer order : orbit length" << endl;
+		cout << "orbit : representative : stabilizer order : "
+				"orbit length" << endl;
 		for (i = 0; i < nb_orbits; i++) {
 			gen->get_set_by_level(depth, i, set);
 
@@ -762,7 +789,8 @@ void characteristic_polynomial(colored_graph *CG, int verbose_level)
 	finite_field Fq;
 
 
-	//q = (1L << 59) - 55; // is prime according to https://primes.utm.edu/lists/2small/0bit.html
+	//q = (1L << 59) - 55;
+	// is prime according to https://primes.utm.edu/lists/2small/0bit.html
 
 	q = (1L << 13) - 1;
 

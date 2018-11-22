@@ -36,6 +36,7 @@ class ovoid_generator {
 
 public:
 
+	poset *Poset;
 	poset_classification *gen;
 	
 	finite_field *F;

@@ -8,3 +8,10 @@ LFLAGS = -lm
 
 all:
 	g++ $(CPPFLAGS) $(LIB) readline.cpp -o orbiter
+
+	
+clean:
+	- rm orbiter
+	- rm *.o
+		
+	

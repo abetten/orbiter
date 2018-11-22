@@ -148,22 +148,26 @@ int main(int argc, char **argv)
 	
 	char prefix[1000];
 	poset_classification *gen;
-	
+	poset *Poset;
 
 
 
 	strcpy(prefix, fname);
 	replace_extension_with(prefix, "_p_and_c");
 
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(Aut_on_edges, Aut_on_edges,
+			Aut_on_edges->Strong_gens,
+			verbose_level);
 
 	compute_orbits_on_subsets(gen, 
 		depth /* target_depth */,
 		prefix, 
 		FALSE /* f_W */, FALSE /* f_w */,
-		Aut_on_edges, Aut_on_edges, 
-		Aut_on_edges->Strong_gens, 
-		early_test_function_paths_and_cycles,
-		CG, 
+		Poset,
+		// ToDo
+		//early_test_function_paths_and_cycles,
+		//CG,
 		NULL, 
 		NULL, 
 		verbose_level);
@@ -237,7 +241,7 @@ void print_orbits_at_level(poset_classification *gen,
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
-	gen->A->group_order(ago);
+	gen->Poset->A->group_order(ago);
 	cout << "group order " << ago << endl;
 	cout << "The " << nb_orbits << " orbits at level " << level << " are:" << endl;
 	cout << "orbit : representative : stabilizer order : orbit length" << endl;
@@ -275,7 +279,7 @@ void print_selected_orbits_at_level(poset_classification *gen, int level,
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
-	gen->A->group_order(ago);
+	gen->Poset->A->group_order(ago);
 	cout << "group order " << ago << endl;
 	cout << "The " << nb_selected_orbits << " / "
 			<< nb_orbits << " orbits at level " << level << " are:" << endl;

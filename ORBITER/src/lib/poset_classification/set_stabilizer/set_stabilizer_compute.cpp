@@ -177,7 +177,7 @@ void set_stabilizer_compute::init_with_strong_generators(
 	gen->print_function = print_code;
 	gen->print_function_data = this;
 #endif
-	gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
+	//gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
 
 	int nb_poset_orbit_nodes = ONE_MILLION;
 	

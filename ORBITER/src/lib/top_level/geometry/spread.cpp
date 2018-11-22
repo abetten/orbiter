@@ -587,10 +587,13 @@ void spread::init2(int verbose_level)
 
 	// we have an early test function:
 
+#if 0
+	//ToDo
 	gen->init_early_test_func(
 		spread_early_test_func_callback, 
 		this,  
 		verbose_level);
+#endif
 
 	// We also have an incremental check function. 
 	// This is only used by the clique finder:

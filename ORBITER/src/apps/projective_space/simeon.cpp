@@ -92,19 +92,19 @@ int main()
 
 	P->init_incidence_structure(0 /*verbose_level*/);
 
+	poset *Poset;
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
 
 
 	compute_orbits_on_subsets(Gen, 
 		k /* target_depth */,
 		"" /* const char *prefix */, 
 		FALSE /* f_W */, FALSE /* f_w */,
-		A /* action *A */, A /* action *A2 */, 
-		A->Strong_gens /* strong_generators *Strong_gens */, 
-		NULL /* void (*early_test_func_callback)(int *S, int len, 
-			int *candidates, int nb_candidates, 
-			int *good_candidates, int &nb_good_candidates, 
-			void *data, int verbose_level) */,
-		NULL /* void *early_test_func_data */, 
+		Poset,
 		test_function_for_arc /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level) */, 
 		NULL /* void *candidate_incremental_check_data */, 
 		verbose_level);
@@ -275,19 +275,19 @@ void do_simeon(set_and_stabilizer *SaS)
 
 
 	int target_depth = 5;
+	poset *Poset2;
 	poset_classification *Gen2;
+
+	Poset2 = NEW_OBJECT(poset);
+	Poset2->init_subset_lattice(A, A3,
+			SaS->Strong_gens,
+			verbose_level);
 
 	compute_orbits_on_subsets(Gen2, 
 		target_depth,
 		"" /* const char *prefix */, 
 		FALSE /* f_W */, FALSE /* f_w */,
-		A /* action *A */, A3 /* action *A2 */, 
-		SaS->Strong_gens /* strong_generators *Strong_gens */, 
-		NULL /* void (*early_test_func_callback)(int *S, int len, 
-			int *candidates, int nb_candidates, 
-			int *good_candidates, int &nb_good_candidates, 
-			void *data, int verbose_level) */,
-		NULL /* void *early_test_func_data */, 
+		Poset2,
 		NULL /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level) */, 
 		NULL /* void *candidate_incremental_check_data */, 
 		5 /* verbose_level */);

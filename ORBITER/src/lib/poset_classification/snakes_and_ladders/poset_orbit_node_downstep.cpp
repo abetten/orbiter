@@ -1044,8 +1044,10 @@ void poset_orbit_node::downstep_apply_early_test(
 		}
 
 	if (f_vv) {
-		cout << "calling early_test_func" << endl;
+		cout << "calling Poset->early_test_func_by_using_group" << endl;
 		}
+
+#if 0
 	if (!gen->f_early_test_func) {
 		if (gen->f_its_OK_to_not_have_an_early_test_func) {
 			
@@ -1084,6 +1086,16 @@ void poset_orbit_node::downstep_apply_early_test(
 			candidates, nb_candidates,
 			gen->early_test_func_data, verbose_level - 1);
 		}
+#else
+	gen->Poset->early_test_func(
+			the_set, lvl,
+			subset /* int *candidates*/,
+			n /*int nb_candidates*/,
+			candidates /*int *good_candidates*/,
+			nb_candidates /*int &nb_good_candidates*/,
+			verbose_level - 2);
+#endif
+
 	
 	if (f_v) {
 		cout << "poset_orbit_node::downstep_apply_early_test "

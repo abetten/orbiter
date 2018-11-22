@@ -14,6 +14,7 @@
 
 ovoid_generator::ovoid_generator()
 {
+	Poset = NULL;
 	gen = NULL;
 	F = NULL;
 	A = NULL;
@@ -60,6 +61,9 @@ ovoid_generator::~ovoid_generator()
 
 	if (f_v) {
 		cout << "ovoid_generator::~ovoid_generator" << endl;
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
 		}
 	if (A) {
 		FREE_OBJECT(A);
@@ -110,6 +114,7 @@ void ovoid_generator::init(int argc, const char **argv,
 	gen = NEW_OBJECT(poset_classification);
 
 	read_arguments(argc, argv, verbose_level);
+
 
 
 	gen->read_arguments(argc, argv, 0);
@@ -221,9 +226,12 @@ void ovoid_generator::init(int argc, const char **argv,
 		cout << "depth = " << depth << endl;
 		}
 	
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			A->Strong_gens,
+			verbose_level);
 
-	gen->init(A, A,
-		A->Strong_gens,
+	gen->init(Poset,
 		gen->depth /* sz */,
 		verbose_level - 1);
 
@@ -234,11 +242,13 @@ void ovoid_generator::init(int argc, const char **argv,
 
 	// we have an early test function:
 
+#if 0
+	// ToDo
 	gen->init_early_test_func(
 		ovoid_generator_early_test_func_callback,
 		this,
 		verbose_level);
-
+#endif
 
 
 	gen->f_print_function = TRUE;

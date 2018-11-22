@@ -336,7 +336,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 
 
@@ -356,7 +356,8 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	action A_factor_space;
 	int projected_pt;
 
-	if (gen->f_early_test_func) {
+	if (FALSE /*gen->f_early_test_func*/) {
+#if 0
 		int i;
 
 		if (f_v) {
@@ -393,6 +394,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 			exit(1);
 			}
 		projected_pt = i;
+#endif
 		}
 	else {
 		// no early_test_func:

@@ -37,9 +37,12 @@ void linear_set::null()
 	D = NULL;
 	D1 = NULL;
 	spread_embedding = NULL;
+	Poset1 = NULL;
 	Gen = NULL;
 	Basis = NULL;
 	base_cols = NULL;
+	Poset_stab = NULL;
+	Poset2 = NULL;
 	Gen2 = NULL;
 	is_allowed = NULL;
 	f_identify = FALSE;
@@ -50,6 +53,12 @@ void linear_set::freeself()
 {
 	int f_v = FALSE;
 
+	if (Poset1) {
+		if (f_v) {
+			cout << "linear_set::freeself before delete Poset1" << endl;
+			}
+		FREE_OBJECT(Poset1);
+		}
 	if (Gen) {
 		if (f_v) {
 			cout << "linear_set::freeself before delete Gen" << endl;
@@ -127,6 +136,9 @@ void linear_set::freeself()
 		}
 	if (base_cols) {
 		FREE_int(base_cols);
+		}
+	if (Poset2) {
+		FREE_OBJECT(Poset2);
 		}
 	if (Gen2) {
 		FREE_OBJECT(Gen2);
@@ -343,7 +355,7 @@ void linear_set::init(int argc, const char **argv,
 		cout << "linear_set::init computing spread_embedding done" << endl;
 		}	
 
-
+	Poset1 = NEW_OBJECT(poset);
 	Gen = NEW_OBJECT(poset_classification);
 
 	Gen->read_arguments(argc, argv, 0);
@@ -352,12 +364,15 @@ void linear_set::init(int argc, const char **argv,
 	sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
 	
 	
+	Poset1->init_subset_lattice(Aq, Aq, Strong_gens,
+			verbose_level);
+
 	Gen->depth = depth;
 
 	if (f_v) {
 		cout << "linear_set::init before Gen->init" << endl;
 		}
-	Gen->init(Aq, Aq, Strong_gens, Gen->depth /* sz */, verbose_level);
+	Gen->init(Poset1, Gen->depth /* sz */, verbose_level);
 	if (f_v) {
 		cout << "linear_set::init after Gen->init" << endl;
 		}
@@ -368,10 +383,15 @@ void linear_set::init(int argc, const char **argv,
 		subspace_orbits_test_func, 
 		this /* candidate_check_data */);
 #endif
+
+#if 0
+	// ToDo
 	Gen->init_early_test_func(
 		linear_set_early_test_func, 
 		this /*void *data */,  
 		verbose_level);
+#endif
+
 
 	//Gen->init_incremental_check_func(
 		//check_mindist_incremental, 
@@ -459,9 +479,9 @@ void linear_set::do_classify(int verbose_level)
 	if (f_v) {
 		cout << "linear_set::do_classify calling generator_main" << endl;
 		cout << "A=";
-		Gen->A->print_info();
+		Gen->Poset->A->print_info();
 		cout << "A2=";
-		Gen->A2->print_info();
+		Gen->Poset->A2->print_info();
 		}
 
 	Gen->compute_orbits(0, depth, //f_lex, 
@@ -894,6 +914,7 @@ void linear_set::init_secondary(int argc, const char **argv,
 	secondary_candidates = candidates;
 	secondary_nb_candidates = nb_candidates;
 
+	Poset2 = NEW_OBJECT(poset);
 	Gen2 = NEW_OBJECT(poset_classification);
 
 	Gen2->read_arguments(argc, argv, 0);
@@ -920,8 +941,10 @@ void linear_set::init_secondary(int argc, const char **argv,
 		}
 	
 	cout << "linear_set::init_secondary before Gen2->init" << endl;
-	Gen2->init(Aq, Aq,
+	Poset2->init_subset_lattice(Aq, Aq,
 			Strong_gens_previous,
+			verbose_level);
+	Gen2->init(Poset2,
 			Gen2->depth /* sz */,
 			verbose_level);
 	cout << "linear_set::init_secondary after Gen2->init" << endl;
@@ -934,10 +957,14 @@ void linear_set::init_secondary(int argc, const char **argv,
 		subspace_orbits_test_func, 
 		this /* candidate_check_data */);
 #endif
+
+#if 0
+	// ToDo
 	Gen2->init_early_test_func(
 		linear_set_secondary_early_test_func, 
 		this /*void *data */,  
 		verbose_level);
+#endif
 
 	//Gen2->init_incremental_check_func(
 		//check_mindist_incremental, 
@@ -1018,9 +1045,9 @@ void linear_set::do_classify_secondary(int verbose_level)
 		cout << "linear_set::do_classify_secondary "
 				"calling generator_main" << endl;
 		cout << "A=";
-		Gen2->A->print_info();
+		Gen2->Poset->A->print_info();
 		cout << "A2=";
-		Gen2->A2->print_info();
+		Gen2->Poset->A2->print_info();
 		}
 	Gen2->main(t0, 
 		secondary_schreier_depth, 
@@ -1292,6 +1319,7 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 		cout << "linear_set::init_compute_stabilizer" << endl;
 		}
 
+	Poset_stab = NEW_OBJECT(poset);
 	Gen_stab = NEW_OBJECT(poset_classification);
 
 	Gen_stab->read_arguments(argc, argv, 0);
@@ -1318,8 +1346,10 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 	
 	cout << "linear_set::init_compute_stabilizer "
 			"before Gen_stab->init" << endl;
-	Gen_stab->init(Aq, Aq,
+	Poset_stab->init_subset_lattice(Aq, Aq,
 			Strong_gens_previous,
+			verbose_level);
+	Gen_stab->init(Poset_stab,
 			Gen_stab->depth /* sz */,
 			verbose_level);
 	cout << "linear_set::init_compute_stabilizer "
@@ -1332,10 +1362,15 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 		subspace_orbits_test_func, 
 		this /* candidate_check_data */);
 #endif
+
+
+#if 0
+	// ToDo
 	Gen_stab->init_early_test_func(
 		linear_set_secondary_early_test_func, 
 		this /*void *data */,  
 		verbose_level);
+#endif
 
 		// we can use the same test function:
 		// test if the whole subspace consists of allowed vectors
@@ -1426,9 +1461,9 @@ void linear_set::do_compute_stabilizer(
 		cout << "linear_set::do_compute_stabilizer "
 				"calling generator_main" << endl;
 		cout << "A=";
-		Gen_stab->A->print_info();
+		Gen_stab->Poset->A->print_info();
 		cout << "A2=";
-		Gen_stab->A2->print_info();
+		Gen_stab->Poset->A2->print_info();
 		}
 	Gen_stab->main(t0, 
 		Gen_stab->depth, 

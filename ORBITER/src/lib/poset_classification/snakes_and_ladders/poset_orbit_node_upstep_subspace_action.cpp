@@ -28,7 +28,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		cout << "setting up factor space action" << endl;
 		}
 
-	if (gen->f_early_test_func) {
+	if (FALSE /*gen->f_early_test_func*/) {
 		gen->root[node].setup_factor_space_action_light(gen,
 				AF, lvl, verbose_level - 4);
 
