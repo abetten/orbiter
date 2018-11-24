@@ -627,31 +627,28 @@ int main(int argc, char **argv)
 
 
 		if (f_all_cliques) {
-			compute_orbits_on_subsets(gen, 
-				CG->nb_points /* target_depth */,
-				prefix, 
-				TRUE /* f_W */, FALSE /* f_w */,
-				Poset,
-				// ToDo
-				//early_test_function_cliques,
-				//CG,
-				NULL, 
-				NULL, 
-				verbose_level);
+
+			Poset->add_testing_without_group(
+					early_test_function_cliques,
+						CG /* void *data */,
+						verbose_level);
+
 			}
 		else {
-			compute_orbits_on_subsets(gen, 
-				CG->nb_points /* target_depth */,
-				prefix, 
-				TRUE /* f_W */, FALSE /* f_w */,
-				Poset,
-				// ToDo
-				//early_test_function_cocliques,
-				//CG,
-				NULL, 
-				NULL, 
-				verbose_level);
+
+			Poset->add_testing_without_group(
+					early_test_function_cocliques,
+						CG /* void *data */,
+						verbose_level);
+
 			}
+
+		compute_orbits_on_subsets(gen,
+			CG->nb_points /* target_depth */,
+			prefix,
+			TRUE /* f_W */, FALSE /* f_w */,
+			Poset,
+			verbose_level);
 
 		for (depth = 0; depth < CG->nb_points; depth++) {
 			nb_orbits = gen->nb_orbits_at_level(depth);

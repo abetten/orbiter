@@ -160,37 +160,42 @@ int main(int argc, char **argv)
 			Aut_on_edges->Strong_gens,
 			verbose_level);
 
+	Poset->add_testing_without_group(
+			early_test_function_paths_and_cycles,
+				CG /* void *data */,
+				verbose_level);
+
+
 	compute_orbits_on_subsets(gen, 
 		depth /* target_depth */,
 		prefix, 
 		FALSE /* f_W */, FALSE /* f_w */,
 		Poset,
-		// ToDo
-		//early_test_function_paths_and_cycles,
-		//CG,
-		NULL, 
-		NULL, 
 		verbose_level);
 
 
 	if (f_draw_poset) {
 		gen->draw_poset(gen->fname_base, depth,
-				0 /* data1 */, f_embedded, f_sideways, verbose_level);
+				0 /* data1 */, f_embedded, f_sideways,
+				verbose_level);
 		}
 
 	print_orbits_at_level(gen, depth, verbose_level);
 	if (nb_print_level) {
 		for (i = 0; i < nb_print_level; i++) {
-			print_orbits_at_level(gen, print_level[i], verbose_level);
+			print_orbits_at_level(gen, print_level[i],
+					verbose_level);
 			}
 		}
 
 	int nb_selected_orbits;
 	int *orbits;
 
-	select_cycles(CG, gen, depth, nb_selected_orbits, orbits);
+	select_cycles(CG, gen, depth,
+			nb_selected_orbits, orbits);
 	print_selected_orbits_at_level(gen,
-			depth, nb_selected_orbits, orbits, verbose_level);
+			depth, nb_selected_orbits, orbits,
+			verbose_level);
 
 	FREE_int(orbits);
 	FREE_int(M);
@@ -243,8 +248,10 @@ void print_orbits_at_level(poset_classification *gen,
 
 	gen->Poset->A->group_order(ago);
 	cout << "group order " << ago << endl;
-	cout << "The " << nb_orbits << " orbits at level " << level << " are:" << endl;
-	cout << "orbit : representative : stabilizer order : orbit length" << endl;
+	cout << "The " << nb_orbits << " orbits at level "
+			<< level << " are:" << endl;
+	cout << "orbit : representative : stabilizer order "
+			": orbit length" << endl;
 	for (i = 0; i < nb_orbits; i++) {
 		
 		gen->get_set_by_level(level, i, set);
@@ -267,8 +274,10 @@ void print_orbits_at_level(poset_classification *gen,
 	FREE_int(set);
 }
 
-void print_selected_orbits_at_level(poset_classification *gen, int level,
-	int nb_selected_orbits, int *orbits, int verbose_level)
+void print_selected_orbits_at_level(
+	poset_classification *gen, int level,
+	int nb_selected_orbits, int *orbits,
+	int verbose_level)
 {
 	int *set;
 	longinteger_object go, ol, ago;
@@ -282,8 +291,10 @@ void print_selected_orbits_at_level(poset_classification *gen, int level,
 	gen->Poset->A->group_order(ago);
 	cout << "group order " << ago << endl;
 	cout << "The " << nb_selected_orbits << " / "
-			<< nb_orbits << " orbits at level " << level << " are:" << endl;
-	cout << "orbit : representative : stabilizer order : orbit length" << endl;
+			<< nb_orbits << " orbits at level "
+			<< level << " are:" << endl;
+	cout << "orbit : representative : stabilizer order "
+			": orbit length" << endl;
 	for (i = 0; i < nb_selected_orbits; i++) {
 		
 		j = orbits[i];

@@ -102,7 +102,7 @@ void choose_points_or_lines::init(const char *label, void *data,
 	action *A, action *A_lines, 
 	int f_choose_lines, 
 	int nb_points_or_lines, 
-	int (*check_function)(int len, int *S, void *data, int verbose_level), 
+	//int (*check_function)(int len, int *S, void *data, int verbose_level),
 	int t0, 
 	int verbose_level)
 {
@@ -119,7 +119,7 @@ void choose_points_or_lines::init(const char *label, void *data,
 	choose_points_or_lines::A_lines = A_lines;
 	choose_points_or_lines::f_choose_lines = f_choose_lines;
 	choose_points_or_lines::nb_points_or_lines = nb_points_or_lines;
-	choose_points_or_lines::check_function = check_function;
+	//choose_points_or_lines::check_function = check_function;
 	choose_points_or_lines::t0 = t0;
 	if (f_choose_lines) {
 		A2 = A_lines;
@@ -186,12 +186,15 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " calling gen->init_check_func" << endl;
 		}
+
+#if 0
 	gen->init_check_func(
 		check_function, 
 		data /* candidate_check_data */);
 	//gen->init_incremental_check_func(
 		//check_mindist_incremental, 
 		//this /* candidate_check_data */);
+#endif
 
 
 #if 0

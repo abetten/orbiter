@@ -105,8 +105,10 @@ int main()
 		"" /* const char *prefix */, 
 		FALSE /* f_W */, FALSE /* f_w */,
 		Poset,
-		test_function_for_arc /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level) */, 
-		NULL /* void *candidate_incremental_check_data */, 
+		// ToDo
+		//test_function_for_arc /* int (*candidate_incremental_check_func)
+		//(int len, int *S, void *data, int verbose_level) */,
+		//NULL /* void *candidate_incremental_check_data */,
 		verbose_level);
 
 
@@ -121,13 +123,15 @@ int main()
 	int nb_orbits;
 
 	nb_orbits = Gen->nb_orbits_at_level(k);
-	cout << "We found " << nb_orbits << " orbits of subsets of size " << k << endl;
+	cout << "We found " << nb_orbits
+			<< " orbits of subsets of size " << k << endl;
 
 	for (i = 0; i < nb_orbits; i++) {
 	
 		set_and_stabilizer *SaS;
 
-		SaS = Gen->get_set_and_stabilizer(k /* level */, i /* orbit_at_level */, 0 /* verbose_level */);
+		SaS = Gen->get_set_and_stabilizer(k /* level */,
+				i /* orbit_at_level */, 0 /* verbose_level */);
 		cout << "orbit " << i << " / " << nb_orbits << " : ";
 		SaS->print_set_tex(cout);
 		cout << endl;
@@ -144,14 +148,16 @@ int main()
 }
 
 
-int test_function_for_arc(int len, int *S, void *data, int verbose_level)
+int test_function_for_arc(int len, int *S,
+		void *data, int verbose_level)
 {
 	int *type_collected;
 	int i;
 
 	//cout << "test_function_for_arc" << endl;
 	type_collected = NEW_int(len + 1);
-	P->line_intersection_type_collected(S /*int *set */, len /* int set_size */, 
+	P->line_intersection_type_collected(
+		S /*int *set */, len /* int set_size */,
 		type_collected, 2 /*verbose_level */);
 	for (i = d + 1; i < len + 1; i++) {
 		if (type_collected[i]) {
@@ -184,14 +190,16 @@ void do_simeon(set_and_stabilizer *SaS)
 	type = NEW_int(P->N_lines);
 	external_lines = NEW_int(P->N_lines);
 	nb_external_lines = 0;
-	P->line_intersection_type(original_arc, original_arc_sz, type, 0 /*verbose_level*/);
+	P->line_intersection_type(original_arc,
+			original_arc_sz, type, 0 /*verbose_level*/);
 
 	for (i = 0; i < P->N_lines; i++) {
 		if (type[i] == 0) {
 			external_lines[nb_external_lines++] = i;
 			}
 		}
-	cout << "We found " << nb_external_lines << " external lines, they are: ";
+	cout << "We found " << nb_external_lines
+			<< " external lines, they are: ";
 	int_vec_print(cout, external_lines, nb_external_lines);
 	cout << endl;
 
@@ -229,7 +237,8 @@ void do_simeon(set_and_stabilizer *SaS)
 				bj = bisecants[j];
 				a = P->line_intersection(bi, bj);
 			
-				if (int_vec_search_linear(original_arc, original_arc_sz, a, idx)) {
+				if (int_vec_search_linear(original_arc,
+						original_arc_sz, a, idx)) {
 					}
 				else {
 					if (!int_vec_search(c2_points, h, a, idx)) {
@@ -267,11 +276,13 @@ void do_simeon(set_and_stabilizer *SaS)
 			filtered_lines[nb_filtered_lines++] = a;
 			}
 		}
-	cout << "We found " << nb_filtered_lines << " lines which intersect the set of c2 points in at least 2 points" << endl;
+	cout << "We found " << nb_filtered_lines << " lines which intersect "
+			"the set of c2 points in at least 2 points" << endl;
 
 
 	A2 = A->induced_action_on_grassmannian(2, verbose_level);
-	A3 = A2->restricted_action(filtered_lines, nb_filtered_lines, verbose_level);
+	A3 = A2->restricted_action(filtered_lines,
+			nb_filtered_lines, verbose_level);
 
 
 	int target_depth = 5;
@@ -288,8 +299,9 @@ void do_simeon(set_and_stabilizer *SaS)
 		"" /* const char *prefix */, 
 		FALSE /* f_W */, FALSE /* f_w */,
 		Poset2,
-		NULL /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level) */, 
-		NULL /* void *candidate_incremental_check_data */, 
+		//NULL /* int (*candidate_incremental_check_func)(
+		//int len, int *S, void *data, int verbose_level) */,
+		//NULL /* void *candidate_incremental_check_data */,
 		5 /* verbose_level */);
 	
 	
@@ -301,7 +313,8 @@ void do_simeon(set_and_stabilizer *SaS)
 	int nb_sol = 0;
 
 	nb_orbits = Gen2->nb_orbits_at_level(target_depth);
-	cout << "We found " << nb_orbits << " orbits of subsets of filtered external lines of size " << k << endl;
+	cout << "We found " << nb_orbits << " orbits of subsets "
+			"of filtered external lines of size " << k << endl;
 
 	covering_number = NEW_int(h);
 
@@ -309,7 +322,8 @@ void do_simeon(set_and_stabilizer *SaS)
 	
 		set_and_stabilizer *SaS;
 
-		SaS = Gen2->get_set_and_stabilizer(target_depth, i /* orbit_at_level */, 0 /* verbose_level */);
+		SaS = Gen2->get_set_and_stabilizer(target_depth,
+				i /* orbit_at_level */, 0 /* verbose_level */);
 
 		if ((i % 10000) == 0) {
 			cout << "testing orbit " << i << endl;

@@ -73,7 +73,7 @@ public:
 	void *callback_data[MAX_CALLBACK];
 
 	int nb_callback_no_group;
-	int (*callback_testing_no_group[MAX_CALLBACK])(
+	void (*callback_testing_no_group[MAX_CALLBACK])(
 			int *S, int len,
 			int *candidates, int nb_candidates,
 			int *good_candidates, int &nb_good_candidates,
@@ -94,7 +94,7 @@ public:
 			void *data,
 			int verbose_level);
 	void add_callback_no_group(
-			int (*func)(int *S, int len,
+			void (*func)(int *S, int len,
 					int *candidates, int nb_candidates,
 					int *good_candidates, int &nb_good_candidates,
 					void *data, int verbose_level),
@@ -156,6 +156,13 @@ public:
 		int verbose_level);
 	void add_independence_condition(
 			int independence_value,
+			int verbose_level);
+	void add_testing_without_group(
+			void (*func)(int *S, int len,
+					int *candidates, int nb_candidates,
+					int *good_candidates, int &nb_good_candidates,
+					void *data, int verbose_level),
+			void *data,
 			int verbose_level);
 	void print();
 	void early_test_func(
@@ -251,6 +258,7 @@ public:
 		// [vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
 
+#if 0
 	int f_candidate_check_func;
 	int (*candidate_check_func)(int len, int *S, void *data, 
 		int verbose_level);
@@ -260,6 +268,7 @@ public:
 	int (*candidate_incremental_check_func)(int len, int *S, 
 		void *data, int verbose_level);
 	void *candidate_incremental_check_data;
+#endif
 
 	int f_print_function;
 	void (*print_function)(int len, int *S, void *data);
@@ -442,10 +451,11 @@ public:
 	void compute_and_print_automorphism_group_orders(int lvl, 
 		ostream &ost);
 	void stabilizer_order(int node, longinteger_object &go);
+#if 0
 	int check_the_set(int len, int *S, int verbose_level);
 	int check_the_set_incrementally(int len, int *S,
 		int verbose_level);
-
+#endif
 	void orbit_length(int orbit_at_level, int level,
 		longinteger_object &len);
 	void get_orbit_length_and_stabilizer_order(int node, int level, 
@@ -561,18 +571,11 @@ public:
 	void read_arguments(int argc, const char **argv, 
 		int verbose_level);
 	void init(poset *Poset,
-		//action *A, action *A2,
-		//strong_generators *gens,
 		int sz, int verbose_level);
-		// gens will not be copied !
 	void initialize(poset *Poset,
-		//action *A_base, action *A_use,
-		//strong_generators *gens,
 		int depth, 
 		const char *path, const char *prefix, int verbose_level);
 	void initialize_with_starter(poset *Poset,
-		//action *A_base, action *A_use,
-		//strong_generators *gens,
 		int depth, 
 		char *path, 
 		char *prefix, 
@@ -594,6 +597,7 @@ public:
 	void exit_poset_orbit_node();
 	void reallocate();
 	void reallocate_to(int new_number_of_nodes, int verbose_level);
+#if 0
 	void init_check_func(
 		int (*candidate_check_func)(int len, int *S, void *data, 
 		int verbose_level), 
@@ -602,6 +606,7 @@ public:
 		int (*candidate_incremental_check_func)(int len, int *S, 
 			void *data, int verbose_level), 
 		void *candidate_incremental_check_data);
+#endif
 	void init_starter(int starter_size, 
 		int *starter, 
 		strong_generators *starter_strong_gens, 
@@ -735,6 +740,7 @@ public:
 		int verbose_level);
 	
 	// poset_classification_draw.C:
+	void report_schreier_trees(ostream &ost, int verbose_level);
 	void write_treefile_and_draw_tree(char *fname_base, 
 		int lvl, int xmax, int ymax, int rad, 
 		int f_embedded, int verbose_level);
@@ -909,7 +915,6 @@ public:
 	int nb_extensions;
 	extension *E;
 	
-	//int *sv;
 	schreier_vector *Schreier_vector;
 	
 	// poset_orbit_node.C:

@@ -241,35 +241,31 @@ void use_group(const char *fname, colored_graph *CG,
 		replace_extension_with(prefix, "_cliques");
 
 
-		compute_orbits_on_subsets(gen, 
-			CG->nb_points /* target_depth */,
-			prefix, 
-			FALSE /* f_W */, FALSE /* f_w */,
-			Poset,
-			// ToDo
-			//early_test_function_cliques,
-			//CG,
-			NULL, 
-			NULL, 
-			verbose_level);
+		Poset->add_testing_without_group(
+				early_test_function_cliques,
+					CG /* void *data */,
+					verbose_level);
+
 		}
 	else {
 
 		strcpy(prefix, fname);
 		replace_extension_with(prefix, "_cocliques");
 
-		compute_orbits_on_subsets(gen, 
-			CG->nb_points /* target_depth */,
-			prefix, 
-			FALSE /* f_W */, FALSE /* f_w */,
-			Poset,
-			// ToDo
-			//early_test_function_cocliques,
-			//CG,
-			NULL, 
-			NULL, 
-			verbose_level);
+		Poset->add_testing_without_group(
+				early_test_function_cocliques,
+					CG /* void *data */,
+					verbose_level);
+
 		}
+
+	compute_orbits_on_subsets(gen,
+		CG->nb_points /* target_depth */,
+		prefix,
+		FALSE /* f_W */, FALSE /* f_w */,
+		Poset,
+		verbose_level);
+
 
 	for (depth = 0; depth < CG->nb_points; depth++) {
 		nb_orbits = gen->nb_orbits_at_level(depth);

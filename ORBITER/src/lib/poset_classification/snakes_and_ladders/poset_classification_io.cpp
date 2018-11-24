@@ -10,6 +10,184 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+void poset_classification::report_schreier_trees(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, h, degree, a;
+	int N, Nb_gen;
+	int *data1;
+	int *data2;
+	int *data3;
+	int level, first, nb_orbits, cnt, cnt3, nb_live_pts, elt_size, hdl;
+	//int *rep = NULL;
+	//char str[1000];
+	int *Elt1;
+	poset_orbit_node *O;
+	longinteger_object stab_order, orbit_length;
+
+	if (f_v) {
+		cout << "poset_classification::report_schreier_trees" << endl;
+	}
+	N = 0;
+	for (level = 0; level < depth; level++) {
+		N += nb_orbits_at_level(level);
+	}
+
+
+	degree = Poset->A2->degree;
+	elt_size= Poset->A->make_element_size;
+
+	Nb_gen = 0;
+	for (level = 0; level < depth; level++) {
+		first = first_poset_orbit_node_at_level[level];
+		nb_orbits = nb_orbits_at_level(level);
+		for (i = 0; i < nb_orbits; i++) {
+			O = get_node_ij(level, i);
+
+			Nb_gen += O->nb_strong_generators;
+
+		}
+	}
+
+
+	ost << "# N = number of nodes in the poset classification" << endl;
+	ost << N << endl;
+	ost << "# degree of permutation action = size of the set we act on" << endl;
+	ost << degree << endl;
+	ost << "# size of a group element in int" << endl;
+	ost << elt_size << endl;
+	ost << "# Nb_gen = total number of generators = number of rows of data_matrix3" << endl;
+	ost << Nb_gen << endl;
+
+
+	ost << "# number of generators at each node, row in data_matrix3 where these generators start:" << endl;
+
+	cnt3 = 0;
+	for (level = 0; level < depth; level++) {
+		first = first_poset_orbit_node_at_level[level];
+		nb_orbits = nb_orbits_at_level(level);
+		for (i = 0; i < nb_orbits; i++) {
+			O = get_node_ij(level, i);
+			ost << O->nb_strong_generators << " " << cnt3 << endl;
+			cnt3 += O->nb_strong_generators;
+		}
+	}
+	ost << endl;
+
+	data1 = NEW_int(N * degree);
+	data2 = NEW_int(N * degree);
+	data3 = NEW_int(Nb_gen * elt_size);
+	Elt1 = NEW_int(Poset->A->elt_size_in_int);
+
+
+	//rep = NEW_int(depth + 1);
+
+	cnt = 0;
+	cnt3 = 0;
+	for (level = 0; level < depth; level++) {
+		first = first_poset_orbit_node_at_level[level];
+		nb_orbits = nb_orbits_at_level(level);
+		for (i = 0; i < nb_orbits; i++) {
+
+			//get_set_by_level(level, i, rep);
+			//int_vec_print_to_str_naked(str, rep, level);
+
+			get_orbit_length_and_stabilizer_order(i, level,
+				stab_order, orbit_length);
+			//stab_order.print_to_string(str);
+
+			//orbit_length.print_to_string(str);
+
+			O = get_node_ij(level, i);
+			schreier_vector *Schreier_vector;
+
+			Schreier_vector = O->Schreier_vector;
+
+			nb_live_pts = O->get_nb_of_live_points();
+
+			int *sv = Schreier_vector->sv;
+			int nb_live_pts = sv[0];
+			int *points = sv + 1;
+			int *parent = points + nb_live_pts;
+			int *label = parent + nb_live_pts;
+			int f_group_is_trivial;
+			if (O->nb_strong_generators == 0) {
+				f_group_is_trivial = TRUE;
+			} else {
+				f_group_is_trivial = FALSE;
+			}
+
+			cout << "Node " << level << "/" << i << endl;
+			cout << "points : parent : label" << endl;
+			for (h = 0; h < nb_live_pts; h++) {
+				cout << "points[h]" << " : ";
+				if (!f_group_is_trivial) {
+					cout << parent[h] << " : " << label[h];
+				}
+				cout << endl;
+			}
+			for (j = 0; j < degree; j++) {
+				data1[cnt * degree + j] = -2;
+				data2[cnt * degree + j] = -2;
+			}
+			cout << "node " << level << "/" << i << " computing data1/data2" << endl;
+			for (h = 0; h < nb_live_pts; h++) {
+				a = points[h];
+				if (f_group_is_trivial) {
+					data1[cnt * degree + a] = -1;
+					data2[cnt * degree + a] = -1;
+				} else {
+					data1[cnt * degree + a] = parent[h];
+					data2[cnt * degree + a] = label[h];
+				}
+			}
+			cnt++;
+			cout << "node " << level << "/" << i << " computing data3 cnt3=" << cnt3 << endl;
+			if (!f_group_is_trivial) {
+				for (h = 0; h < O->nb_strong_generators; h++) {
+					cout << "h=" << h << " / " << O->nb_strong_generators << endl;
+					hdl = O->hdl_strong_generators[h];
+					cout << "before element_retrieve, hdl=" << hdl << endl;
+					Poset->A->element_retrieve(hdl, Elt1, 0);
+					cout << "after element_retrieve" << endl;
+					for (j = 0; j < elt_size; j++) {
+						data3[cnt3 * elt_size + j] = Elt1[j];
+					}
+					cnt3++;
+				}
+			}
+		}
+	}
+
+	ost << "# data_matrix1: parent information" << endl;
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < degree; j++) {
+			ost << data1[i * degree + j] << " ";
+		}
+		ost << endl;
+	}
+	ost << endl;
+
+	ost << "# data_matrix2: label" << endl;
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < degree; j++) {
+			ost << data2[i * degree + j] << " ";
+		}
+		ost << endl;
+	}
+	ost << endl;
+
+	ost << "# data_matrix3: schreier generators" << endl;
+	for (i = 0; i < Nb_gen; i++) {
+		for (j = 0; j < elt_size; j++) {
+			ost << data3[i * elt_size + j] << " ";
+		}
+		ost << endl;
+	}
+	ost << endl;
+
+}
+
 void poset_classification::report(ostream &ost)
 {
 	int i;

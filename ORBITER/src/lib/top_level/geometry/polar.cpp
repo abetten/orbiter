@@ -181,12 +181,19 @@ void polar::init2(int verbose_level)
 	Poset->init_subset_lattice(A, A,
 			gens,
 			verbose_level);
+	Poset->add_testing_without_group(
+			polar_callback_early_test_func,
+				this /* void *data */,
+				verbose_level);
 	Gen->init(Poset,
 			Gen->depth /* sz */, verbose_level);
 
+#if 0
+	// ToDo
 	Gen->init_check_func(
 		polar_callback_test_func, 
 		this /* candidate_check_data */);
+#endif
 
 	//Gen->init_incremental_check_func(
 		//check_mindist_incremental, 
@@ -200,7 +207,6 @@ void polar::init2(int verbose_level)
 		verbose_level);
 
 #if 0
-	//ToDo
 	Gen->init_early_test_func(
 		polar_callback_early_test_func, 
 		this,  
@@ -758,6 +764,7 @@ void polar::compute_Kramer_Mesner_matrix(int t, int k, int verbose_level)
 	
 }
 
+#if 0
 int polar::test(int *S, int len, int verbose_level)
 // test if totally isotropic, i.e. contained in its own perp
 {
@@ -804,6 +811,7 @@ int polar::test(int *S, int len, int verbose_level)
 		}
 	return f_OK;
 }
+#endif
 
 void polar::test_if_in_perp(int *S, int len, 
 	int *candidates, int nb_candidates, 
@@ -1221,6 +1229,7 @@ void polar_callback_unrank_point_func(int *v, int rk, void *data)
 	// gen->vector_space_dimension, rk);
 }
 
+#if 0
 int polar_callback_test_func(int len, int *S,
 		void *data, int verbose_level)
 {
@@ -1243,6 +1252,7 @@ int polar_callback_test_func(int len, int *S,
 		return FALSE;
 		}
 }
+#endif
 
 void polar_callback_early_test_func(int *S, int len, 
 	int *candidates, int nb_candidates, 

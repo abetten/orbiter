@@ -177,7 +177,8 @@ void spread::init(int order, int n, int k, int max_depth,
 		}
 	else {
 		if (f_v) {
-			cout << "spread::init q=" << q << " is not a prime" << endl;
+			cout << "spread::init q=" << q
+					<< " is not a prime" << endl;
 			}
 		}
 
@@ -188,19 +189,23 @@ void spread::init(int order, int n, int k, int max_depth,
 
 
 	if (f_v) {
-		cout << "spread::init before init_projective_group" << endl;
+		cout << "spread::init "
+				"before init_projective_group" << endl;
 		}
 	A->init_projective_group(n, F, f_semilinear,
 			f_basis, 0 /*verbose_level*/);
 	
 	if (f_v) {
-		cout << "spread::init after init_projective_group, "
+		cout << "spread::init "
+				"after init_projective_group, "
 				"checking group order" << endl;
 		}
 	A->Sims->group_order(go);
 	if (f_v) {
-		cout << "spread::init after init_projective_group "
-				"group of order " << go << " has been created" <<  endl;
+		cout << "spread::init "
+				"after init_projective_group "
+				"group of order " << go
+				<< " has been created" <<  endl;
 		}
 
 
@@ -219,9 +224,12 @@ void spread::init(int order, int n, int k, int max_depth,
 	nb_points_total = nb_pts = generalized_binomial(n, 1, q);
 	
 	if (f_v) {
-		cout << "spread::init nCkq = {n \\choose k}_q = " << nCkq << endl;
-		cout << "spread::init r = {k \\choose 1}_q = " << r << endl;
-		cout << "spread::init nb_pts = {n \\choose 1}_q = " << nb_pts << endl;
+		cout << "spread::init "
+				"nCkq = {n \\choose k}_q = " << nCkq << endl;
+		cout << "spread::init "
+				"r = {k \\choose 1}_q = " << r << endl;
+		cout << "spread::init "
+				"nb_pts = {n \\choose 1}_q = " << nb_pts << endl;
 		}
 
 
@@ -241,7 +249,8 @@ void spread::init(int order, int n, int k, int max_depth,
 		MINIMUM(verbose_level - 2, 2));
 	
 	if (f_v) {
-		cout << "spread::init after A2->induced_action_on_grassmannian" <<  endl;
+		cout << "spread::init after "
+				"A2->induced_action_on_grassmannian" <<  endl;
 		}
 
 	if (f_vv) {
@@ -305,22 +314,25 @@ void spread::init(int order, int n, int k, int max_depth,
 		longinteger_object go;
 		
 		A->Strong_gens->group_order(go);
-		cout << "spread::init The order of PGGL(n,q) is " << go << endl;
+		cout << "spread::init The order "
+				"of PGGL(n,q) is " << go << endl;
 		}
 
 	
 	if (f_recoordinatize) {
 		if (f_v) {
-			cout << "spread::init before recoordinatize::init" << endl;
+			cout << "spread::init before "
+					"recoordinatize::init" << endl;
 			}
 		R = NEW_OBJECT(recoordinatize);
 		R->init(n, k, F, Grass, A, A2, 
 			f_projective, f_semilinear, 
-			spread_check_function_incremental, (void *) this, 
+			callback_incremental_check_function, (void *) this,
 			verbose_level);
 
 		if (f_v) {
-			cout << "spread::init before recoordinatize::compute_starter" << endl;
+			cout << "spread::init before "
+					"recoordinatize::compute_starter" << endl;
 			}
 		R->compute_starter(Starter, Starter_size, 
 			Starter_Strong_gens, MINIMUM(verbose_level - 1, 1));
@@ -328,7 +340,8 @@ void spread::init(int order, int n, int k, int max_depth,
 		longinteger_object go;
 		Starter_Strong_gens->group_order(go);
 		if (TRUE /*f_v*/) {
-			cout << "spread::init The stabilizer of the first three components has order " << go << endl;
+			cout << "spread::init The stabilizer of the "
+					"first three components has order " << go << endl;
 			}
 
 
@@ -336,7 +349,9 @@ void spread::init(int order, int n, int k, int max_depth,
 		}
 	else {
 		if (f_v) {
-			cout << "spread::init we are not using recoordinatization, please use option -recoordinatize" << endl;
+			cout << "spread::init we are not using "
+					"recoordinatization, please use option "
+					"-recoordinatize" << endl;
 			//exit(1);
 			}
 		Nb = generalized_binomial(n, k, q); //R->nCkq; // this makes no sense
@@ -359,7 +374,8 @@ void spread::init(int order, int n, int k, int max_depth,
 	if (k == 2 && is_prime(q)) {
 		Sing = NEW_OBJECT(singer_cycle);
 		if (f_v) {
-			cout << "spread::init before singer_cycle::init" << endl;
+			cout << "spread::init "
+					"before singer_cycle::init" << endl;
 			}
 		Sing->init(4, F, A, A2, 0 /*verbose_level*/);
 		Sing->init_lines(0 /*verbose_level*/);
@@ -369,7 +385,8 @@ void spread::init(int order, int n, int k, int max_depth,
 	if (k == 2) {
 		
 		if (f_v) {
-			cout << "spread::init k = 2, initializing klein correspondence" << endl;
+			cout << "spread::init k = 2, "
+					"initializing klein correspondence" << endl;
 			}
 		Klein = NEW_OBJECT(klein_correspondence);
 		O = NEW_OBJECT(orthogonal);
@@ -379,7 +396,8 @@ void spread::init(int order, int n, int k, int max_depth,
 		}
 	else {
 		if (f_v) {
-			cout << "spread::init we are not initializing klein correspondence" << endl;
+			cout << "spread::init we are not "
+					"initializing klein correspondence" << endl;
 			}
 		O = NULL;
 		Klein = NULL;
@@ -461,7 +479,8 @@ void spread::print_elements()
 			}
 		unrank_subspace(M, i);
 		if (FALSE) {
-			print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+			print_integer_matrix_width(cout, M,
+					k, n, n, F->log10_of_q + 1);
 			}
 		j = rank_subspace(M);
 		if (j != i) {
@@ -496,7 +515,8 @@ void spread::print_elements_and_points()
 			Line[a] = b;
 			}
 		cout << "line " << i << ":" << endl;
-		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout, M,
+				k, n, n, F->log10_of_q + 1);
 		cout << "points on subspace " << i << " : ";
 		int_vec_print(cout, Line, r);
 		cout << endl;
@@ -539,11 +559,16 @@ void spread::init2(int verbose_level)
 	Poset->init_subset_lattice(A, A2,
 			A->Strong_gens,
 			verbose_level);
-	
+	Poset->add_testing_without_group(
+			spread_early_test_func_callback,
+				this /* void *data */,
+				verbose_level);
+
 	
 	if (f_recoordinatize) {
 		if (f_v) {
-			cout << "spread::init2 before gen->initialize_with_starter" << endl;
+			cout << "spread::init2 "
+					"before gen->initialize_with_starter" << endl;
 			}
 		gen->initialize_with_starter(Poset,
 			order + 1, 
@@ -558,48 +583,26 @@ void spread::init2(int verbose_level)
 			starter_canonize_callback, 
 			verbose_level - 2);
 		if (f_v) {
-			cout << "spread::init2 after gen->initialize_with_starter" << endl;
+			cout << "spread::init2 "
+					"after gen->initialize_with_starter" << endl;
 			}
 		}
 	else {
 		if (f_v) {
-			cout << "spread::init2 before gen->initialize" << endl;
+			cout << "spread::init2 "
+					"before gen->initialize" << endl;
 			}
 		gen->initialize(Poset,
 			order + 1, 
 			starter_directory_name, prefix, 
 			verbose_level - 2);
 		if (f_v) {
-			cout << "spread::init2 after gen->initialize" << endl;
+			cout << "spread::init2 "
+					"after gen->initialize" << endl;
 			}
 		}
 
 	gen->f_allowed_to_show_group_elements = TRUE;
-
-#if 0
-	// not needed since we have an early_test_func:
-
-	gen->init_check_func(
-		check_function_callback, 
-		this /* candidate_check_data */);
-#endif
-
-
-	// we have an early test function:
-
-#if 0
-	//ToDo
-	gen->init_early_test_func(
-		spread_early_test_func_callback, 
-		this,  
-		verbose_level);
-#endif
-
-	// We also have an incremental check function. 
-	// This is only used by the clique finder:
-	gen->init_incremental_check_func(
-		spread_check_function_incremental_callback, 
-		this /* candidate_check_data */);
 
 
 #if 0
@@ -670,6 +673,7 @@ void spread::early_test_func(int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	int verbose_level)
+// for poset classification
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -686,11 +690,19 @@ void spread::early_test_func(int *S, int len,
 		int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
-			for (i = 0; i < nb_candidates; i++) {
-				Grass->unrank_int(candidates[i], 0/*verbose_level - 4*/);
-				cout << "candidate " << i << "=" << candidates[i] << ":" << endl;
-				print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
+			if (nb_candidates < 100) {
+				for (i = 0; i < nb_candidates; i++) {
+					Grass->unrank_int(candidates[i], 0/*verbose_level - 4*/);
+					cout << "candidate " << i << "="
+							<< candidates[i] << ":" << endl;
+					print_integer_matrix_width(cout,
+							Grass->M, k, n, n, F->log10_of_q + 1);
+					}
 				}
+			else {
+				cout << "too many to print" << endl;
+				f_vv = FALSE;
+			}
 			}
 		}
 
@@ -709,7 +721,8 @@ void spread::early_test_func(int *S, int len,
 	if (f_v) {
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
-			print_integer_matrix_width(cout, MM + i * k * n, k, n, n, F->log10_of_q + 1);
+			print_integer_matrix_width(cout,
+					MM + i * k * n, k, n, n, F->log10_of_q + 1);
 			}
 		}
 	
@@ -727,8 +740,10 @@ void spread::early_test_func(int *S, int len,
 			int_vec_copy(Grass->M, M + kn, k * n);
 
 			if (f_vv) {
-				cout << "testing (p_" << i << ",candidates[" << j << "])=(" << S[i] <<  "," << candidates[j] << ")" << endl;
-				print_integer_matrix_width(cout, M, n, n, n, F->log10_of_q + 1);
+				cout << "testing (p_" << i << ",candidates[" << j << "])="
+						"(" << S[i] <<  "," << candidates[j] << ")" << endl;
+				print_integer_matrix_width(cout, M,
+						n, n, n, F->log10_of_q + 1);
 				}
 			rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
 			if (rk < n) {
@@ -749,12 +764,17 @@ void spread::early_test_func(int *S, int len,
 		} // next j
 	
 	if (f_v) {
+		cout << "spread::early_test_func we found " << nb_good_candidates
+				<< " good candidates" << endl;
+		}
+	if (f_v) {
 		cout << "spread::early_test_func done" << endl;
 		}
 }
 
 int spread::check_function(int len, int *S, int verbose_level)
 // checks all {len \choose 2} pairs. This is very inefficient.
+// This function should not be used for poset classification!
 {
 	int f_OK = TRUE;
 	int f_v = (verbose_level >= 1);
@@ -777,7 +797,8 @@ int spread::check_function(int len, int *S, int verbose_level)
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
 			Grass->unrank_int(S[i], 0/*verbose_level - 4*/);
-			print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
+			print_integer_matrix_width(cout, Grass->M,
+					k, n, n, F->log10_of_q + 1);
 			}
 		}
 
@@ -788,8 +809,10 @@ int spread::check_function(int len, int *S, int verbose_level)
 			unrank_subspace(M + kn, S[j]);
 
 			if (f_vv) {
-				cout << "testing (p_" << i << ",p_" << j << ")=(" << S[i] << "," << S[j] << ")" << endl;
-				print_integer_matrix_width(cout, M, n, n, n, F->log10_of_q + 1);
+				cout << "testing (p_" << i << ",p_" << j << ")"
+						"=(" << S[i] << "," << S[j] << ")" << endl;
+				print_integer_matrix_width(cout, M,
+						n, n, n, F->log10_of_q + 1);
 				}
 			rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
 			if (rk < n) {
@@ -824,8 +847,9 @@ int spread::check_function(int len, int *S, int verbose_level)
 
 }
 
-int spread::check_function_incremental(int len, int *S, int verbose_level)
+int spread::incremental_check_function(int len, int *S, int verbose_level)
 // checks the pairs (0,len-1),(1,len-1),\ldots,(len-2,len-1) 
+// for recoordinatize
 {
 	int f_OK = TRUE;
 	int f_v = (verbose_level >= 1);
@@ -835,7 +859,7 @@ int spread::check_function_incremental(int len, int *S, int verbose_level)
 	int *B, *base_cols;
 		
 	if (f_v) {
-		cout << "spread::check_function_incremental checking set ";
+		cout << "spread::incremental_check_function checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -852,7 +876,8 @@ int spread::check_function_incremental(int len, int *S, int verbose_level)
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
 			Grass->unrank_int(S[i], 0/*verbose_level - 4*/);
-			print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
+			print_integer_matrix_width(cout,
+					Grass->M, k, n, n, F->log10_of_q + 1);
 			}
 		}
 	
@@ -864,8 +889,10 @@ int spread::check_function_incremental(int len, int *S, int verbose_level)
 		int_vec_copy(M1, M + kn, kn);
 		
 		if (f_vv) {
-			cout << "testing (p_" << i << ",p_" << j << ")=(" << S[i] <<  "," << S[j] << ")" << endl;
-			print_integer_matrix_width(cout, M, n, n, n, F->log10_of_q + 1);
+			cout << "testing (p_" << i << ",p_" << j << ")"
+					"=(" << S[i] <<  "," << S[j] << ")" << endl;
+			print_integer_matrix_width(cout, M,
+					n, n, n, F->log10_of_q + 1);
 			}
 		rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
 		if (rk < n) {
@@ -898,6 +925,7 @@ finish:
 
 }
 
+#if 0
 int spread::check_function_pair(int rk1, int rk2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -907,7 +935,8 @@ int spread::check_function_pair(int rk1, int rk2, int verbose_level)
 	int *B, *base_cols;
 		
 	if (f_v) {
-		cout << "spread::check_function_pair checking (" << rk1 << "," << rk2 << ")" << endl;
+		cout << "spread::check_function_pair "
+				"checking (" << rk1 << "," << rk2 << ")" << endl;
 		}
 	M = tmp_M1; // [n * n]
 	B = tmp_M3;
@@ -918,7 +947,8 @@ int spread::check_function_pair(int rk1, int rk2, int verbose_level)
 
 	if (f_vv) {
 		cout << "testing (" << rk1 <<  "," << rk2 << ")" << endl;
-		print_integer_matrix_width(cout, M, n, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout, M,
+				n, n, n, F->log10_of_q + 1);
 		}
 	rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
 
@@ -935,9 +965,12 @@ int spread::check_function_pair(int rk1, int rk2, int verbose_level)
 		return TRUE;
 		}
 }
+#endif
 
-void spread::lifting_prepare_function_new(exact_cover *E, int starter_case, 
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+void spread::lifting_prepare_function_new(
+	exact_cover *E, int starter_case,
+	int *candidates, int nb_candidates,
+	strong_generators *Strong_gens,
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
 	int verbose_level)
@@ -946,7 +979,8 @@ void spread::lifting_prepare_function_new(exact_cover *E, int starter_case,
 	int f_v3 = (verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 
 
@@ -955,7 +989,8 @@ void spread::lifting_prepare_function_new(exact_cover *E, int starter_case,
 	SL = NEW_OBJECT(spread_lifting);
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new before SL->init" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"before SL->init" << endl;
 		}
 	SL->init(this, E, 
 		E->starter, E->starter_size, 
@@ -964,30 +999,35 @@ void spread::lifting_prepare_function_new(exact_cover *E, int starter_case,
 		E->f_lex, 
 		verbose_level);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new after SL->init" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"after SL->init" << endl;
 		}
 
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new before SL->create_system" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"before SL->create_system" << endl;
 		}
 
 	Dio = SL->create_system(verbose_level - 2);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new after SL->create_system" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"after SL->create_system" << endl;
 		}
 
 	int *col_color;
 	int nb_colors;
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new before SL->find_coloring" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"before SL->find_coloring" << endl;
 		}
 	SL->find_coloring(Dio, 
 		col_color, nb_colors, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new after SL->find_coloring" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"after SL->find_coloring" << endl;
 		}
 
 	if (f_v3) {
@@ -999,11 +1039,13 @@ void spread::lifting_prepare_function_new(exact_cover *E, int starter_case,
 	uchar *Adj;
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new before Dio->make_clique_graph_adjacency_matrix" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"before Dio->make_clique_graph_adjacency_matrix" << endl;
 		}
 	Dio->make_clique_graph_adjacency_matrix(Adj, verbose_level - 2);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new after Dio->make_clique_graph_adjacency_matrix" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"after Dio->make_clique_graph_adjacency_matrix" << endl;
 		}
 
 	colored_graph *CG;
@@ -1011,22 +1053,26 @@ void spread::lifting_prepare_function_new(exact_cover *E, int starter_case,
 	CG = NEW_OBJECT(colored_graph);
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new before CG->init_with_point_labels" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"before CG->init_with_point_labels" << endl;
 		}
 	CG->init_with_point_labels(SL->nb_cols, nb_colors, 
 		col_color, Adj, TRUE /* f_ownership_of_bitvec */, 
 		SL->col_labels /* point_labels */, 
 		verbose_level);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new after CG->init_with_point_labels" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"after CG->init_with_point_labels" << endl;
 		}
 	
 	char fname_clique_graph[1000];
 
-	sprintf(fname_clique_graph, "%sgraph_%d.bin", E->output_prefix, starter_case);
+	sprintf(fname_clique_graph, "%sgraph_%d.bin",
+			E->output_prefix, starter_case);
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
-		cout << "Written file " << fname_clique_graph << " of size " << file_size(fname_clique_graph) << endl;
+		cout << "Written file " << fname_clique_graph
+				<< " of size " << file_size(fname_clique_graph) << endl;
 		}
 
 	FREE_OBJECT(CG);
@@ -1039,17 +1085,20 @@ void spread::lifting_prepare_function_new(exact_cover *E, int starter_case,
 	FREE_int(col_color);
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new after SL->create_system" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"after SL->create_system" << endl;
 		}
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new done" << endl;
+		cout << "spread::lifting_prepare_function_new "
+				"done" << endl;
 		}
 }
 
 
 
-void spread::compute_dual_spread(int *spread, int *dual_spread, int verbose_level)
+void spread::compute_dual_spread(int *spread,
+		int *dual_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1057,7 +1106,8 @@ void spread::compute_dual_spread(int *spread, int *dual_spread, int verbose_leve
 		cout << "spread::compute_dual_spread" << endl;
 		}
 
-	Grass->compute_dual_spread(spread, dual_spread, spread_size, verbose_level - 1);
+	Grass->compute_dual_spread(spread, dual_spread,
+			spread_size, verbose_level - 1);
 
 	if (f_v) {
 		cout << "spread::compute_dual_spread done" << endl;
@@ -1074,7 +1124,8 @@ void spread::print(int len, int *S)
 		return;
 		}
 	for (i = 0; i < len; i++) {
-		cout << "$S_{" << i + 1 << "}$ has rank " << S[i] << " and is generated by\\\\" << endl;
+		cout << "$S_{" << i + 1 << "}$ has rank " << S[i]
+			<< " and is generated by\\\\" << endl;
 		Grass->unrank_int(S[i], 0);
 		cout << "$$" << endl;
 		cout << "\\left[" << endl;
@@ -1097,7 +1148,7 @@ void spread_lifting_early_test_function(int *S, int len,
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level)
 {
-	spread *T = (spread *) data;
+	spread *Spread = (spread *) data;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -1105,7 +1156,7 @@ void spread_lifting_early_test_function(int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		}
-	T->early_test_func(S, len, 
+	Spread->early_test_func(S, len,
 		candidates, nb_candidates, 
 		good_candidates, nb_good_candidates, 
 		verbose_level - 2);
@@ -1114,70 +1165,83 @@ void spread_lifting_early_test_function(int *S, int len,
 		}
 }
 
-void spread_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+void spread_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
+	int *candidates, int nb_candidates,
+	strong_generators *Strong_gens,
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	spread *T = (spread *) EC->user_data;
+	spread *Spread = (spread *) EC->user_data;
 
 	if (f_v) {
-		cout << "spread_lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "spread_lifting_prepare_function_new "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 
-	T->lifting_prepare_function_new(EC, starter_case, 
+	Spread->lifting_prepare_function_new(EC, starter_case,
 		candidates, nb_candidates, Strong_gens, 
 		Dio, col_labels, f_ruled_out, 
 		verbose_level);
 
 
 	if (f_v) {
-		cout << "spread_lifting_prepare_function_new after lifting_prepare_function_new" << endl;
+		cout << "spread_lifting_prepare_function_new "
+				"after lifting_prepare_function_new" << endl;
 		}
 
 	if (f_v) {
-		cout << "spread_lifting_prepare_function_new nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
+		cout << "spread_lifting_prepare_function_new "
+				"nb_rows=" << Dio->m
+				<< " nb_cols=" << Dio->n << endl;
 		}
 
 	if (f_v) {
-		cout << "spread_lifting_prepare_function_new done" << endl;
+		cout << "spread_lifting_prepare_function_new "
+				"done" << endl;
 		}
 }
 
 
 
 
-int starter_canonize_callback(int *Set, int len, int *Elt, void *data, int verbose_level)
+int starter_canonize_callback(int *Set, int len,
+		int *Elt, void *data, int verbose_level)
+// for starter, interface to recoordinatize,
+// which uses callback_incremental_check_function
 {
-	spread *T = (spread *) data;
+	spread *Spread = (spread *) data;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "starter_canonize_callback" << endl;
 		}
-	T->R->do_recoordinatize(Set[0], Set[1], Set[2], verbose_level - 2);
-	T->A->element_move(T->R->Elt, Elt, FALSE);
+	Spread->R->do_recoordinatize(Set[0], Set[1], Set[2], verbose_level - 2);
+	Spread->A->element_move(Spread->R->Elt, Elt, FALSE);
 	if (f_v) {
 		cout << "starter_canonize_callback done" << endl;
 		}
 	if (f_vv) {
 		cout << "transporter:" << endl;
-		T->A->element_print(Elt, cout);
+		Spread->A->element_print(Elt, cout);
 		}
 	return TRUE;
 }
 
-int spread_check_function_incremental(int len, int *S, void *data, int verbose_level)
+int callback_incremental_check_function(
+		int len, int *S, void *data, int verbose_level)
+// for recoordinatize
 {
-	spread *T = (spread *) data;
+	spread *Spread = (spread *) data;
 	int ret;
 
-	ret = T->check_function_incremental(len, S, verbose_level);
+	ret = Spread->incremental_check_function(len, S, verbose_level);
 	return ret;
 }
+
 
 
 

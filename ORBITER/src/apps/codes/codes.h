@@ -32,6 +32,7 @@ public:
 	int q;
 	int d;
 
+	int f_report_schreier_trees;
 	int f_report;
 
 	char directory_path[1000];
@@ -87,21 +88,25 @@ public:
 	void init(int argc, const char **argv);
 	void print(int len, int *S);
 	void main(int verbose_level);
+#if 0
 	void early_test_func_by_using_group(int *S, int len, 
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
+#endif
 	int Hamming_distance(int a, int b);
 };
 
+#if 0
 void check_mindist_early_test_func(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, 
 	int verbose_level);
 int check_mindist(int len, int *S, void *data, int verbose_level);
-int check_mindist_incremental(int len, int *S, 
-	void *data, int verbose_level);
+//int check_mindist_incremental(int len, int *S,
+//	void *data, int verbose_level);
+#endif
 void print_code(int len, int *S, void *data);
 
 

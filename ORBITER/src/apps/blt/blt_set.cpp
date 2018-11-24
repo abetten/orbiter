@@ -375,30 +375,19 @@ void blt_set::init2(int verbose_level)
 			A->Strong_gens,
 			verbose_level);
 	
+	if (f_v) {
+		cout << "blt_set::init2 before "
+				"Poset->add_testing_without_group" << endl;
+		}
+	Poset->add_testing_without_group(
+				early_test_func_callback,
+				this /* void *data */,
+				verbose_level);
+
 	gen->init(Poset,
 		gen->depth /* sz */, verbose_level);
 	
-#if 0
-	// not needed since we have an early_test_func:
-	gen->init_check_func(::check_conditions, 
-		(void *)this /* candidate_check_data */);
-#endif
 
-	// we have an early test function:
-
-#if 0
-	// ToDo
-	gen->init_early_test_func(
-		early_test_func_callback, 
-		this,  
-		verbose_level);
-#endif
-
-	// We also have an incremental check function. 
-	// This is only used by the clique finder:
-	gen->init_incremental_check_func(
-		check_function_incremental_callback, 
-		this /* candidate_check_data */);
 
 
 	gen->f_print_function = TRUE;
@@ -805,7 +794,8 @@ int blt_set::create_graph(
 	
 		if (f_v3) {
 			cout << "blt_set::create_graph Case " << orbit_at_level
-					<< " / " << R->nb_cases << " Before lexorder_test" << endl;
+					<< " / " << R->nb_cases
+					<< " Before lexorder_test" << endl;
 			}
 		A->lexorder_test(R->candidates,
 			R->nb_candidates, nb_candidates2,
@@ -1446,95 +1436,6 @@ void blt_set::early_test_func(int *S, int len,
 				}
 			} // next j
 		} // else
-}
-
-int blt_set::check_function_incremental(
-		int len, int *S, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, a;
-	int f_OK;
-	int *v1, *v2, *v3;
-	int m1[5];
-	int m3[5];
-	int two;
-	int fxy, fxz, fyz;
-		
-	if (f_v) {
-		cout << "blt_set::check_function_incremental "
-				"checking set ";
-		print_set(cout, len, S);
-		cout << endl;
-		}
-
-	for (i = 0; i < len; i++) {
-		O->unrank_point(Pts + i * 5, 1, S[i], 0/*verbose_level - 4*/);
-		}
-
-	two = O->F->add(1, 1);
-
-	v1 = Pts;
-	v3 = Pts + (len - 1) * 5;
-
-	m1[0] = O->F->mult(two, v1[0]);
-	m1[1] = v1[2];
-	m1[2] = v1[1];
-	m1[3] = v1[4];
-	m1[4] = v1[3];
-
-	//fxz = evaluate_bilinear_form(v1, v3, 1);
-	// too slow !!!
-	fxz = O->F->add5(
-			O->F->mult(m1[0], v3[0]), 
-			O->F->mult(m1[1], v3[1]), 
-			O->F->mult(m1[2], v3[2]), 
-			O->F->mult(m1[3], v3[3]), 
-			O->F->mult(m1[4], v3[4]) 
-		);
-
-	m3[0] = O->F->mult(two, v3[0]);
-	m3[1] = v3[2];
-	m3[2] = v3[1];
-	m3[3] = v3[4];
-	m3[4] = v3[3];
-
-	f_OK = TRUE;
-	for (i = 1; i < len - 1; i++) {
-		//fxy = evaluate_bilinear_form(v1, v2, 1);
-
-		v2 = Pts + i * 5;
-		
-		fxy = O->F->add5(
-			O->F->mult(m1[0], v2[0]), 
-			O->F->mult(m1[1], v2[1]), 
-			O->F->mult(m1[2], v2[2]), 
-			O->F->mult(m1[3], v2[3]), 
-			O->F->mult(m1[4], v2[4]) 
-			);
-		
-		//fyz = evaluate_bilinear_form(v2, v3, 1);
-		fyz = O->F->add5(
-				O->F->mult(m3[0], v2[0]), 
-				O->F->mult(m3[1], v2[1]), 
-				O->F->mult(m3[2], v2[2]), 
-				O->F->mult(m3[3], v2[3]), 
-				O->F->mult(m3[4], v2[4]) 
-			);
-
-		a = O->F->product3(fxy, fxz, fyz);
-
-		if (a == 0) {
-			f_OK = FALSE;
-			break;
-			}
-		
-		if (O->f_is_minus_square[a]) {
-			f_OK = FALSE;
-			break;
-			}
-
-		}
-	return f_OK;
 }
 
 int blt_set::pair_test(int a, int x, int y, int verbose_level)

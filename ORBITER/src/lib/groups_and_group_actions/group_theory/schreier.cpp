@@ -2191,7 +2191,7 @@ schreier_vector *schreier::get_schreier_vector(
 	//get_schreier_vector_compact(sv, f_trivial_group);
 	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
 
-#if 0
+#if 1
 	Schreier_vector->init_from_schreier(this,
 			f_trivial_group, verbose_level);
 #else

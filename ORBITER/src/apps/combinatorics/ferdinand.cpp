@@ -93,9 +93,11 @@ public:
 
 
 void ferdinand(int level, int group, int subgroup, 
-	int f_create_graph, int create_graph_level, int create_graph_index, int connection_element, 
+	int f_create_graph, int create_graph_level,
+	int create_graph_index, int connection_element,
 	int verbose_level);
-int ferdinand_incremental_check_func(int len, int *S, void *data, int verbose_level);
+int ferdinand_incremental_check_func(int len, int *S,
+		void *data, int verbose_level);
 
 
 int main(int argc, char **argv)
@@ -139,7 +141,9 @@ int main(int argc, char **argv)
 			create_graph_level = atoi(argv[++i]);
 			create_graph_index = atoi(argv[++i]);
 			connection_element = atoi(argv[++i]);
-			cout << "-create_graph " << create_graph_level << " " << create_graph_index << " " << connection_element << endl;
+			cout << "-create_graph " << create_graph_level
+					<< " " << create_graph_index << " "
+					<< connection_element << endl;
 			}
 		}
 	if (!f_level) {
@@ -151,7 +155,8 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	ferdinand(level, group, subgroup, 
-		f_create_graph, create_graph_level, create_graph_index, connection_element, 
+		f_create_graph, create_graph_level,
+		create_graph_index, connection_element,
 		verbose_level);
 	cout << "end" << endl;
 }
@@ -160,7 +165,8 @@ int main(int argc, char **argv)
 
 
 void ferdinand(int level, int group, int subgroup, 
-	int f_create_graph, int create_graph_level, int create_graph_index, int connection_element, 
+	int f_create_graph, int create_graph_level,
+	int create_graph_index, int connection_element,
 	int verbose_level)
 {
 
@@ -170,7 +176,8 @@ void ferdinand(int level, int group, int subgroup,
 
 
 
-	cout << "ferdinand level = " << level << " group = " << group << " subgroup = " << subgroup << endl;
+	cout << "ferdinand level = " << level << " group = " << group
+			<< " subgroup = " << subgroup << endl;
 
 	cout << "before init" << endl;
 	Cayley->init(level, group, subgroup, verbose_level);
@@ -188,7 +195,8 @@ void ferdinand(int level, int group, int subgroup,
 	
 
 	if (f_create_graph) {
-		cout << "creating graph level=" << create_graph_level << " index = " << create_graph_index << endl;
+		cout << "creating graph level=" << create_graph_level
+				<< " index = " << create_graph_index << endl;
 
 		set_and_stabilizer *SaS;
 
@@ -280,7 +288,8 @@ void ferdinand(int level, int group, int subgroup,
 
 		char fname[1000];
 
-		sprintf(fname, "F_%d_%d_%d.bin", go, create_graph_level, connection_element);
+		sprintf(fname, "F_%d_%d_%d.bin",
+				go, create_graph_level, connection_element);
 		CG->save(fname, verbose_level);
 
 		FREE_OBJECT(CG);
@@ -296,7 +305,8 @@ void ferdinand(int level, int group, int subgroup,
 }
 
 
-int ferdinand_incremental_check_func(int len, int *S, void *data, int verbose_level)
+int ferdinand_incremental_check_func(int len, int *S,
+		void *data, int verbose_level)
 {
 	cayley_graph_search *Cayley = (cayley_graph_search *) data;
 
@@ -305,12 +315,13 @@ int ferdinand_incremental_check_func(int len, int *S, void *data, int verbose_le
 }
 
 
-// ####################################################################################
+// #############################################################################
 // cayley_graph_search.C:
-// ####################################################################################
+// #############################################################################
 
 
-void cayley_graph_search::init(int level, int group, int subgroup, int verbose_level)
+void cayley_graph_search::init(int level,
+		int group, int subgroup, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -327,20 +338,24 @@ void cayley_graph_search::init(int level, int group, int subgroup, int verbose_l
 	data_size = 0;
 
 	if (f_v) {
-		cout << "cayley_graph_search::init before init_group" << endl;
+		cout << "cayley_graph_search::init "
+				"before init_group" << endl;
 		}
 	init_group(verbose_level);
 	if (f_v) {
-		cout << "cayley_graph_search::init after init_group" << endl;
+		cout << "cayley_graph_search::init "
+				"after init_group" << endl;
 		}
 
 
 	if (f_v) {
-		cout << "cayley_graph_search::init before init_group2" << endl;
+		cout << "cayley_graph_search::init "
+				"before init_group2" << endl;
 		}
 	init_group2(verbose_level);
 	if (f_v) {
-		cout << "cayley_graph_search::init after init_group2" << endl;
+		cout << "cayley_graph_search::init "
+				"after init_group2" << endl;
 		}
 
 	int i, j;
@@ -355,7 +370,8 @@ void cayley_graph_search::init(int level, int group, int subgroup, int verbose_l
 	list_of_elements_inverse = NEW_int(go);
 	for (i = 0; i < go_subgroup; i++) {
 		S_subgroup->element_unrank_int(i, Elt1);
-		cout << "Element " << setw(5) << i << " / " << go_subgroup << ":" << endl;
+		cout << "Element " << setw(5) << i << " / "
+				<< go_subgroup << ":" << endl;
 		A->element_print(Elt1, cout);
 		j = S->element_rank_int(Elt1);
 		cout << "is element " << j << endl;
@@ -364,7 +380,8 @@ void cayley_graph_search::init(int level, int group, int subgroup, int verbose_l
 	
 	cout << "generators:" << endl;
 	for (i = 0; i < nb_generators; i++) {
-		cout << "generator " << i << " / " << nb_generators << " is " << generators[i] << endl;
+		cout << "generator " << i << " / " << nb_generators
+				<< " is " << generators[i] << endl;
 		A->element_print_quick(Strong_gens->gens->ith(i), cout);
 		cout << endl;
 		}
@@ -374,7 +391,8 @@ void cayley_graph_search::init(int level, int group, int subgroup, int verbose_l
 		A->element_mult(Elt1, Strong_gens->gens->ith(0), Elt2, 0);
 		j = S->element_rank_int(Elt2);
 		list_of_elements[go_subgroup + i] = j;
-		cout << "Element " << setw(5) << i << " / " << go_subgroup << " * b = " << endl;
+		cout << "Element " << setw(5) << i << " / "
+				<< go_subgroup << " * b = " << endl;
 		A->element_print(Elt2, cout);
 		j = S->element_rank_int(Elt1);
 		cout << "is element " << j << endl;
@@ -388,7 +406,8 @@ void cayley_graph_search::init(int level, int group, int subgroup, int verbose_l
 
 	cout << "List of elements and inverse:" << endl;
 	for (i = 0; i < go; i++) {
-		cout << i << " : " << list_of_elements[i] << " : " << list_of_elements_inverse[i] << endl;
+		cout << i << " : " << list_of_elements[i] << " : "
+				<< list_of_elements_inverse[i] << endl;
 		}
 
 
@@ -443,7 +462,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 		exit(1);
 		}
 
-	S_subgroup = Strong_gens_subgroup->create_sims(0 /* verbose_level */);
+	S_subgroup = Strong_gens_subgroup->create_sims(
+			0 /* verbose_level */);
 
 
 	f_has_order2 = NEW_int(go);
@@ -455,7 +475,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 		if (group == 2 || group == 3 || group == 5) {
 			for (i = 0; i < go_subgroup; i++) {
 				S_subgroup->element_unrank_int(i, Elt1);
-				cout << "Element " << setw(5) << i << " / " << go_subgroup << ":" << endl;
+				cout << "Element " << setw(5) << i << " / "
+						<< go_subgroup << ":" << endl;
 				A->element_print(Elt1, cout);
 				j = S->element_rank_int(Elt1);
 				f_subgroup[j] = TRUE;
@@ -464,7 +485,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 		else if (group == 4) {
 			for (i = 0; i < go; i++) {
 				S->element_unrank_int(i, Elt1);
-				cout << "Element " << setw(5) << i << " / " << go << ":" << endl;
+				cout << "Element " << setw(5) << i << " / "
+						<< go << ":" << endl;
 				A->element_print(Elt1, cout);
 				cout << endl;
 				if (F->is_identity_matrix(Elt1, 4)) {
@@ -479,7 +501,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 	else if (level == 5) {
 		for (i = 0; i < go_subgroup; i++) {
 			S_subgroup->element_unrank_int(i, Elt1);
-			cout << "Element " << setw(5) << i << " / " << go_subgroup << ":" << endl;
+			cout << "Element " << setw(5) << i << " / "
+					<< go_subgroup << ":" << endl;
 			A->element_print(Elt1, cout);
 			j = S->element_rank_int(Elt1);
 			f_subgroup[j] = TRUE;
@@ -490,7 +513,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 	nb_involutions = 0;	
 	for (i = 0; i < go; i++) {
 		S->element_unrank_int(i, Elt1);
-		cout << "Element " << setw(5) << i << " / " << go << ":" << endl;
+		cout << "Element " << setw(5) << i << " / "
+				<< go << ":" << endl;
 		A->element_print(Elt1, cout);
 		cout << endl;
 		ord = A->element_order(Elt1);
@@ -534,8 +558,10 @@ void cayley_graph_search::init_group2(int verbose_level)
 #if 1
 
 	A2 = NEW_OBJECT(action);
-	A2->induced_action_by_right_multiplication(FALSE /* f_basis */, S, 
-		S /* Base_group */, FALSE /* f_ownership */, verbose_level);
+	A2->induced_action_by_right_multiplication(
+		FALSE /* f_basis */, S,
+		S /* Base_group */, FALSE /* f_ownership */,
+		verbose_level);
 #endif
 
 
@@ -579,7 +605,9 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 		gens->allocate(3);
 
 		for (i = 0; i < 3; i++) {
-			A->make_element(Elt1, data + i * data_size, 0 /*verbose_level*/);
+			A->make_element(Elt1,
+					data + i * data_size,
+					0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
 		}
@@ -677,13 +705,17 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		gens->allocate(4);
 
 		for (i = 0; i < 4; i++) {
-			A->make_element(Elt1, data + i * data_size, 0 /*verbose_level*/);
+			A->make_element(Elt1,
+					data + i * data_size,
+					0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
 		gens_subgroup->allocate(4);
 
 		for (i = 0; i < 4; i++) {
-			A->make_element(Elt1, data_subgroup + i * data_size, 0 /*verbose_level*/);
+			A->make_element(Elt1,
+					data_subgroup + i * data_size,
+					0 /*verbose_level*/);
 			A->element_move(Elt1, gens_subgroup->ith(i), 0);
 			}
 		}
@@ -710,7 +742,9 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		gens->allocate(4);
 
 		for (i = 0; i < 4; i++) {
-			A->make_element(Elt1, data + i * data_size, 0 /*verbose_level*/);
+			A->make_element(Elt1,
+					data + i * data_size,
+					0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
 		gens_subgroup->allocate(4);
@@ -718,13 +752,17 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 		if (subgroup == 1) {
 			for (i = 0; i < 4; i++) {
-				A->make_element(Elt1, data_subgroup1 + i * data_size, 0 /*verbose_level*/);
+				A->make_element(Elt1,
+						data_subgroup1 + i * data_size,
+						0 /*verbose_level*/);
 				A->element_move(Elt1, gens_subgroup->ith(i), 0);
 				}
 			}
 		else if (subgroup == 2) {
 			for (i = 0; i < 4; i++) {
-				A->make_element(Elt1, data_subgroup2 + i * data_size, 0 /*verbose_level*/);
+				A->make_element(Elt1,
+						data_subgroup2 + i * data_size,
+						0 /*verbose_level*/);
 				A->element_move(Elt1, gens_subgroup->ith(i), 0);
 				}
 			}
@@ -778,7 +816,9 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			int *perm;
 			int degree;
 			
-			scan_permutation_from_string(data_str[i], perm, degree, 0 /* verbose_level */);
+			scan_permutation_from_string(
+					data_str[i], perm, degree,
+					0 /* verbose_level */);
 			cout << "degree=" << degree << endl;
 			for (j = 0; j < degree; j++) {
 				cout << perm[j] << " ";
@@ -809,7 +849,9 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			int *perm;
 			int degree;
 			
-			scan_permutation_from_string(data_subgroup_str[i], perm, degree, 0 /* verbose_level */);
+			scan_permutation_from_string(
+					data_subgroup_str[i], perm, degree,
+					0 /* verbose_level */);
 			for (j = 0; j < degree; j++) {
 				cout << perm[j] << " ";
 				}
@@ -967,7 +1009,8 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 }
 
-int cayley_graph_search::incremental_check_func(int len, int *S, int verbose_level)
+int cayley_graph_search::incremental_check_func(
+		int len, int *S, int verbose_level)
 {
 	int f_OK = TRUE;
 	//verbose_level = 1;
@@ -1030,21 +1073,26 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 		prefix, 
 		f_W, f_w,
 		Poset,
+		// ToDo
 		//NULL /* ferdinand3_early_test_func */,
 		//NULL /* void *early_test_func_data */,
-		ferdinand_incremental_check_func /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level)*/, 
-		this /* void *candidate_incremental_check_data */, 
+		//ferdinand_incremental_check_func /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level)*/,
+		//this /* void *candidate_incremental_check_data */,
 		verbose_level);
 
 
 
 #if 0
 	sprintf(fname, "Ferdinand%d_%d", level, group);
-	gen->draw_poset(fname, target_depth, 0 /* data */, TRUE /* f_embedded */, FALSE /* f_sideways */, 0 /* verbose_level */);
+	gen->draw_poset(fname, target_depth, 0 /* data */,
+			TRUE /* f_embedded */,
+			FALSE /* f_sideways */,
+			0 /* verbose_level */);
 #endif
 
 	if (f_v) {
-		cout << "cayley_graph_search::classify_subsets done" << endl;
+		cout << "cayley_graph_search::classify_subsets "
+				"done" << endl;
 		}
 
 }
@@ -1066,13 +1114,15 @@ void cayley_graph_search::write_file(int verbose_level)
 
 	for (sz = 1; sz <= target_depth; sz++) {
 
-		sprintf(fname_graphs, "ferdinand%d_%d_subgroup_%d_graphs_sz_%d.txt", level, group, subgroup, sz);
+		sprintf(fname_graphs, "ferdinand%d_%d_subgroup_%d_graphs_sz_%d.txt",
+				level, group, subgroup, sz);
 		{
 		ofstream fp(fname_graphs);
 
 		for (i = 0; i < go; i++) {
 			S->element_unrank_int(i, Elt1);
-			cout << "Element " << setw(5) << i << " / " << go << ":" << endl;
+			cout << "Element " << setw(5) << i << " / "
+					<< go << ":" << endl;
 			A->element_print(Elt1, cout);
 			cout << endl;
 
@@ -1083,7 +1133,8 @@ void cayley_graph_search::write_file(int verbose_level)
 		fp << endl;
 		for (i = 0; i < go; i++) {
 			S->element_unrank_int(i, Elt1);
-			cout << "Element " << setw(5) << i << " / " << go << ":" << endl;
+			cout << "Element " << setw(5) << i << " / "
+					<< go << ":" << endl;
 			A->element_print(Elt1, cout);
 			cout << endl;
 
@@ -1101,7 +1152,8 @@ void cayley_graph_search::write_file(int verbose_level)
 		Adj = NEW_int(go * sz);
 
 		nb_orbits = gen->nb_orbits_at_level(sz);
-		cout << "We found " << nb_orbits << " orbits on " << sz << "-subsets" << endl;
+		cout << "We found " << nb_orbits << " orbits on "
+				<< sz << "-subsets" << endl;
 		//fp << "[";
 #if 0
 		for (n = 0; n < nb_orbits; n++) {
@@ -1134,7 +1186,8 @@ void cayley_graph_search::write_file(int verbose_level)
 				SaS->data, sz, 
 				verbose_level);
 			//cout << "The adjacency sets are:" << endl;
-			//print_integer_matrix_with_standard_labels(cout, Adj, go, sz, FALSE /* f_tex */);
+			//print_integer_matrix_with_standard_labels(cout,
+			//Adj, go, sz, FALSE /* f_tex */);
 			fp << "{";
 			for (i = 0; i < go; i++) {
 				fp << i << ":[";
@@ -1153,7 +1206,8 @@ void cayley_graph_search::write_file(int verbose_level)
 				}
 			fp << "}";
 
-			//action *create_automorphism_group_of_graph(int *Adj, int n, int verbose_level);
+			//action *create_automorphism_group_of_graph(
+			//int *Adj, int n, int verbose_level);
 #if 0
 			if (n < nb_orbits - 1) {
 				fp << ", ";
@@ -1169,7 +1223,8 @@ void cayley_graph_search::write_file(int verbose_level)
 		delete Adj;
 		} // end of fp
 
-	cout << "written file " << fname_graphs << " of size " << file_size(fname_graphs) << endl;
+	cout << "written file " << fname_graphs << " of size "
+			<< file_size(fname_graphs) << endl;
 	} // next sz
 
 
@@ -1214,25 +1269,31 @@ void cayley_graph_search::create_Adjacency_list(int *Adj,
 		S->element_unrank_int(i, Elt1);
 
 #if 0
-		cout << "Element " << setw(5) << i << " / " << go << ":" << endl;
+		cout << "Element " << setw(5) << i << " / "
+				<< go << ":" << endl;
 
 		cout << "set: ";
 		int_vec_print(cout, connection_set, connection_set_sz);
 		cout << endl;
 #endif
 
-		A2->map_a_set_and_reorder(connection_set, Adj + i * connection_set_sz, connection_set_sz, Elt1, 0 /* verbose_level */);
+		A2->map_a_set_and_reorder(connection_set,
+				Adj + i * connection_set_sz,
+				connection_set_sz, Elt1,
+				0 /* verbose_level */);
 
 #if 0
 		cout << "image_set: ";
-		int_vec_print(cout, Adj + i * connection_set_sz, connection_set_sz);
+		int_vec_print(cout,
+				Adj + i * connection_set_sz, connection_set_sz);
 		cout << endl;
 #endif
 	
 		}
 #if 0
 	//cout << "The adjacency sets are:" << endl;
-	//print_integer_matrix_with_standard_labels(cout, Adj, go, sz, FALSE /* f_tex */);
+	//print_integer_matrix_with_standard_labels(cout,
+	//Adj, go, sz, FALSE /* f_tex */);
 	cout << "{";
 	for (i = 0; i < go; i++) {
 		cout << i << ":[";
@@ -1253,11 +1314,13 @@ void cayley_graph_search::create_Adjacency_list(int *Adj,
 #endif
 
 	if (f_v) {
-		cout << "cayley_graph_search::create_Adjacency_list done" << endl;
+		cout << "cayley_graph_search::create_Adjacency_list "
+				"done" << endl;
 		}
 }
 
-void cayley_graph_search::create_additional_edges(int *Additional_neighbor, 
+void cayley_graph_search::create_additional_edges(
+	int *Additional_neighbor,
 	int *Additional_neighbor_sz, 
 	int connection_element, 
 	int verbose_level)
@@ -1278,7 +1341,8 @@ void cayley_graph_search::create_additional_edges(int *Additional_neighbor,
 			continue;
 			}
 		S->element_unrank_int(i, Elt1);
-		Additional_neighbor[i] = A2->element_image_of(connection_element, Elt1, 0 /* verbose_level */);
+		Additional_neighbor[i] = A2->element_image_of(
+				connection_element, Elt1, 0 /* verbose_level */);
 		Additional_neighbor_sz[i]++;
 		}
 }

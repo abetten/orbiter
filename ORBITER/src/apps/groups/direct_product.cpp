@@ -1207,9 +1207,12 @@ void direct_product_action::init(int argc, const char **argv,
 			cout << "direct_product_action::init "
 					"after Gen->init" << endl;
 			}
+
+#if 0
+		// ToDo
 		Gen->init_check_func(::design_search_check_conditions,
 			(void *)this /* candidate_check_data */);
-
+#endif
 
 		int nb_nodes = 1000;
 
@@ -1561,7 +1564,8 @@ void direct_product_action::testing(
 	}
 }
 
-int direct_product_action::find_pair_orbit(int i, int j, int verbose_level)
+int direct_product_action::find_pair_orbit(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_no;
@@ -1570,7 +1574,8 @@ int direct_product_action::find_pair_orbit(int i, int j, int verbose_level)
 		cout << "direct_product_action::find_pair_orbit" << endl;
 	}
 	if (i == j) {
-		cout << "direct_product_action::find_pair_orbit i = j = " << j << endl;
+		cout << "direct_product_action::find_pair_orbit "
+				"i = j = " << j << endl;
 		exit(1);
 		}
 	orbit_no = pair_orbit[i * V + j];
@@ -1580,7 +1585,8 @@ int direct_product_action::find_pair_orbit(int i, int j, int verbose_level)
 	return orbit_no;
 }
 
-int direct_product_action::find_pair_orbit_by_tracing(int i, int j, int verbose_level)
+int direct_product_action::find_pair_orbit_by_tracing(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_no;
@@ -1591,7 +1597,8 @@ int direct_product_action::find_pair_orbit_by_tracing(int i, int j, int verbose_
 		cout << "direct_product_action::find_pair_orbit_by_tracing" << endl;
 	}
 	if (i == j) {
-		cout << "direct_product_action::find_pair_orbit_by_tracing i = j = " << j << endl;
+		cout << "direct_product_action::find_pair_orbit_by_tracing "
+				"i = j = " << j << endl;
 		exit(1);
 		}
 	set[0] = i;
@@ -1600,25 +1607,29 @@ int direct_product_action::find_pair_orbit_by_tracing(int i, int j, int verbose_
 		canonical_set, transporter,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "direct_product_action::find_pair_orbit_by_tracing done" << endl;
+		cout << "direct_product_action::find_pair_orbit_by_tracing "
+				"done" << endl;
 	}
 	return orbit_no;
 }
 
-void direct_product_action::compute_pair_orbit_table(int verbose_level)
+void direct_product_action::compute_pair_orbit_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, k;
 
 
 	if (f_v) {
-		cout << "direct_product_action::compute_pair_orbit_table" << endl;
+		cout << "direct_product_action::compute_pair_"
+				"orbit_table" << endl;
 	}
 	pair_orbit = NEW_int(V * V);
 	int_vec_zero(pair_orbit, V * V);
 	for (i = 0; i < V; i++) {
 		for (j = i + 1; j < V; j++) {
-			k = find_pair_orbit_by_tracing(i, j, 0 /*verbose_level - 2*/);
+			k = find_pair_orbit_by_tracing(i, j,
+					0 /*verbose_level - 2*/);
 			pair_orbit[i * V + j] = k;
 			pair_orbit[j * V + i] = k;
 		}
@@ -1627,11 +1638,13 @@ void direct_product_action::compute_pair_orbit_table(int verbose_level)
 		}
 	}
 	if (f_v) {
-		cout << "direct_product_action::compute_pair_orbit_table done" << endl;
+		cout << "direct_product_action::compute_pair_"
+				"orbit_table done" << endl;
 	}
 }
 
-void direct_product_action::write_pair_orbit_file(int verbose_level)
+void direct_product_action::write_pair_orbit_file(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
@@ -1640,7 +1653,8 @@ void direct_product_action::write_pair_orbit_file(int verbose_level)
 
 
 	if (f_v) {
-		cout << "direct_product_action::write_pair_orbit_file" << endl;
+		cout << "direct_product_action::write_pair_"
+				"orbit_file" << endl;
 	}
 	sprintf(fname, "%s.2orbits", group_label);
 	cout << "writing pair-orbit file " << fname << endl;
@@ -1651,7 +1665,8 @@ void direct_product_action::write_pair_orbit_file(int verbose_level)
 		n = Pairs->first_poset_orbit_node_at_level[2] + i;
 		Pairs->get_set(n, set, size);
 		if (size != 2) {
-			cout << "direct_product_action::write_pair_orbit_file "
+			cout << "direct_product_action::write_pair_"
+					"orbit_file "
 					"size != 2" << endl;
 			exit(1);
 			}
@@ -1672,12 +1687,14 @@ void direct_product_action::write_pair_orbit_file(int verbose_level)
 	cout << "written file " << fname << " of size "
 			<< file_size(fname) << endl;
 	if (f_v) {
-		cout << "direct_product_action::write_pair_orbit_file done" << endl;
+		cout << "direct_product_action::write_pair_"
+				"orbit_file done" << endl;
 	}
 
 }
 
-void direct_product_action::print_mask_test_i(ostream &ost, int i)
+void direct_product_action::print_mask_test_i(
+		ostream &ost, int i)
 {
 	int who, what;
 
@@ -1733,7 +1750,8 @@ int direct_product_action::check_conditions(
 	pt = S[len - 1];
 	if (int_vec_search_linear(S, len - 1, pt, idx)) {
 		if (f_v) {
-			cout << "direct_product_action::check_conditions not OK, "
+			cout << "direct_product_action::check_conditions "
+					"not OK, "
 					"repeat entry" << endl;
 		}
 		return FALSE;
@@ -1783,7 +1801,8 @@ int direct_product_action::check_conditions(
 		}
 }
 
-int direct_product_action::check_orbit_covering(int *line,
+int direct_product_action::check_orbit_covering(
+		int *line,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

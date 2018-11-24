@@ -7,77 +7,6 @@
 // based on global.h, which was taken from reader.h: 3/22/09
 
 // #############################################################################
-// BLT_set_create.C:
-// #############################################################################
-
-//! to create a BLT-set from a known construction
-
-
-
-class BLT_set_create {
-
-public:
-	BLT_set_create_description *Descr;
-
-	char prefix[1000];
-	char label_txt[1000];
-	char label_tex[1000];
-
-	int q;
-	finite_field *F;
-
-	int f_semilinear;
-	
-	action *A; // orthogonal group
-	int degree;
-	orthogonal *O;
-	
-	int *set;
-	int f_has_group;
-	strong_generators *Sg;
-	
-
-
-	
-	BLT_set_create();
-	~BLT_set_create();
-	void null();
-	void freeself();
-	void init(BLT_set_create_description *Descr, int verbose_level);
-	void apply_transformations(const char **transform_coeffs, 
-		int *f_inverse_transform, int nb_transform, int verbose_level);
-};
-
-// #############################################################################
-// BLT_set_create_description.C:
-// #############################################################################
-
-//! to describe a BLT set with a known construction from the command line
-
-
-
-class BLT_set_create_description {
-
-public:
-
-	int f_q;
-	int q;
-	int f_catalogue;
-	int iso;
-	int f_family;
-	const char *family_name;
-
-
-	
-	BLT_set_create_description();
-	~BLT_set_create_description();
-	void null();
-	void freeself();
-	int read_arguments(int argc, const char **argv, 
-		int verbose_level);
-};
-
-// #############################################################################
 // arc_generator.C
 // #############################################################################
 
@@ -185,7 +114,7 @@ public:
 		// compute the incidence matrix of tangent lines 
 		// versus candidate points
 		// extended by external lines versus candidate points
-	int arc_test(int *S, int len, int verbose_level);
+	//int arc_test(int *S, int len, int verbose_level);
 	void report(isomorph &Iso, int verbose_level);
 	void report_decompositions(isomorph &Iso, ofstream &f, int orbit, 
 		int *data, int verbose_level);
@@ -195,18 +124,23 @@ public:
 };
 
 
+
+#if 0
 int callback_arc_test(exact_cover *EC, int *S, int len, 
 	void *data, int verbose_level);
 int check_arc(int len, int *S, void *data, int verbose_level);
 int placebo_test_function(int len, int *S, void *data, int verbose_level);
+#endif
 void arc_generator_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
+#if 0
 void placebo_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
+#endif
 void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case, 
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
@@ -351,6 +285,78 @@ public:
 		vector_ge *cosets);
 };
 
+
+// #############################################################################
+// BLT_set_create.C:
+// #############################################################################
+
+//! to create a BLT-set from a known construction
+
+
+
+class BLT_set_create {
+
+public:
+	BLT_set_create_description *Descr;
+
+	char prefix[1000];
+	char label_txt[1000];
+	char label_tex[1000];
+
+	int q;
+	finite_field *F;
+
+	int f_semilinear;
+
+	action *A; // orthogonal group
+	int degree;
+	orthogonal *O;
+
+	int *set;
+	int f_has_group;
+	strong_generators *Sg;
+
+
+
+
+	BLT_set_create();
+	~BLT_set_create();
+	void null();
+	void freeself();
+	void init(BLT_set_create_description *Descr, int verbose_level);
+	void apply_transformations(const char **transform_coeffs,
+		int *f_inverse_transform, int nb_transform, int verbose_level);
+};
+
+// #############################################################################
+// BLT_set_create_description.C:
+// #############################################################################
+
+//! to describe a BLT set with a known construction from the command line
+
+
+
+class BLT_set_create_description {
+
+public:
+
+	int f_q;
+	int q;
+	int f_catalogue;
+	int iso;
+	int f_family;
+	const char *family_name;
+
+
+
+	BLT_set_create_description();
+	~BLT_set_create_description();
+	void null();
+	void freeself();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+};
+
 // #############################################################################
 // choose_points_or_lines.C:
 // #############################################################################
@@ -387,7 +393,10 @@ public:
 		// maps the favorite rep to the canonical rep 
 
 
+#if 0
 	int (*check_function)(int len, int *S, void *data, int verbose_level);
+#endif
+
 	poset_classification *gen;
 	poset *Poset;
 
@@ -422,8 +431,8 @@ public:
 		action *A, action *A_lines, 
 		int f_choose_lines, 
 		int nb_points_or_lines, 
-		int (*check_function)(int len, int *S, void *data, 
-			int verbose_level), 
+		//int (*check_function)(int len, int *S, void *data,
+		//	int verbose_level),
 		int t0, 
 		int verbose_level);
 	void compute_orbits_from_sims(sims *G, int verbose_level);
@@ -541,6 +550,8 @@ public:
 		// Po[Flag_orbits->nb_flag_orbits], 
 		//list of orbits for which a double six exists
 
+	int *Pts_for_partial_ovoid_test; // [5*6]
+
 	
 	flag_orbits *Flag_orbits;
 
@@ -562,7 +573,11 @@ public:
 		int f_draw_poset_full, 
 		int f_report,
 		int verbose_level);
-	int partial_ovoid_test(int *S, int len, int verbose_level);
+	void partial_ovoid_test_early(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	//int partial_ovoid_test(int *S, int len, int verbose_level);
 	void test_orbits(int verbose_level);
 	void make_spreadsheet_of_fiveplusone_configurations(
 		spreadsheet *&Sp, 
@@ -580,6 +595,11 @@ public:
 	void read_file(ifstream &fp, int verbose_level);
 
 };
+
+void callback_partial_ovoid_test_early(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 // #############################################################################
 // classify_trihedral_pairs.C:
@@ -837,7 +857,7 @@ public:
 		int verbose_level);
 	void show_stabilizer(int depth, int orbit_idx, int verbose_level);
 	void compute_Kramer_Mesner_matrix(int t, int k, int verbose_level);
-	int test(int *S, int len, int verbose_level);
+	//int test(int *S, int len, int verbose_level);
 		// test if totally isotropic, i.e. contained in its own perp
 	void test_if_in_perp(int *S, int len, 
 		int *candidates, int nb_candidates, 
@@ -862,7 +882,7 @@ public:
 
 int polar_callback_rank_point_func(int *v, void *data);
 void polar_callback_unrank_point_func(int *v, int rk, void *data);
-int polar_callback_test_func(int len, int *S, void *data, int verbose_level);
+//int polar_callback_test_func(int len, int *S, void *data, int verbose_level);
 void polar_callback_early_test_func(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -1008,8 +1028,10 @@ public:
 	void restore_line_intersection_size(int level);
 };
 
+#if 0
 int callback_check_partial_blocking_set(int len, int *S, 
 	void *data, int verbose_level);
+#endif
 
 // #############################################################################
 // singer_cycle.C
@@ -1203,8 +1225,8 @@ public:
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
 	int check_function(int len, int *S, int verbose_level);
-	int check_function_incremental(int len, int *S, int verbose_level);
-	int check_function_pair(int rk1, int rk2, int verbose_level);
+	int incremental_check_function(int len, int *S, int verbose_level);
+	//int check_function_pair(int rk1, int rk2, int verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case, 
 		int *candidates, int nb_candidates, 
 		strong_generators *Strong_gens, 
@@ -1266,7 +1288,8 @@ void spread_lifting_prepare_function_new(exact_cover *EC, int starter_case,
 	int verbose_level);
 int starter_canonize_callback(int *Set, int len, int *Elt, 
 	void *data, int verbose_level);
-int spread_check_function_incremental(int len, int *S, 
+int callback_incremental_check_function(
+	int len, int *S,
 	void *data, int verbose_level);
 
 
@@ -1277,9 +1300,6 @@ void spread_early_test_func_callback(int *S, int len,
 	void *data, int verbose_level);
 int spread_check_function_callback(int len, int *S, 
 	void *data, int verbose_level);
-int spread_check_function_incremental_callback(int len, int *S, 
-	void *data, int verbose_level);
-int spread_check_conditions(int len, int *S, void *data, int verbose_level);
 void spread_callback_report(isomorph *Iso, void *data, int verbose_level);
 void spread_callback_make_quotients(isomorph *Iso, void *data, 
 	int verbose_level);

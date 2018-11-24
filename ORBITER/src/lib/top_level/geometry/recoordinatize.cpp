@@ -302,7 +302,7 @@ void recoordinatize::stabilizer_of_first_three(
 
 	
 	if (f_v) {
-		cout << "recoordinatize::compute_starter "
+		cout << "recoordinatize::stabilizer_of_first_three "
 				"before  A0->init_matrix_group" << endl;
 		}
 	A0->init_projective_group(k, F, 
@@ -311,7 +311,7 @@ void recoordinatize::stabilizer_of_first_three(
 		
 	A0->group_order(target_go);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter "
+		cout << "recoordinatize::stabilizer_of_first_three "
 				"target_go=" << target_go
 			<< " = order of PGGL(" << k << "," << q << ")" << endl;
 		cout << "action A0 created: ";
@@ -324,7 +324,7 @@ void recoordinatize::stabilizer_of_first_three(
 		
 	A0_linear->group_order(go_linear);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter "
+		cout << "recoordinatize::stabilizer_of_first_three "
 				"order of PGL(" << k << "," << q << ") is "
 			<< go_linear << endl;
 		cout << "action A0_linear created: ";
@@ -337,7 +337,7 @@ void recoordinatize::stabilizer_of_first_three(
 	six.create(6);
 	D.mult(target_go, six, target_go2);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter "
+		cout << "recoordinatize::stabilizer_of_first_three "
 				"target_go2=" << target_go2
 			<< " = target_go times 6" << endl;
 		}
@@ -348,7 +348,7 @@ void recoordinatize::stabilizer_of_first_three(
 
 
 	if (f_v) {
-		cout << "recoordinatize::compute_starter "
+		cout << "recoordinatize::stabilizer_of_first_three "
 				"before make_generators_stabilizer_of_"
 				"three_components" << endl;
 		}
@@ -360,7 +360,7 @@ void recoordinatize::stabilizer_of_first_three(
 		// in ACTION/action_global.C
 
 	if (f_v) {
-		cout << "recoordinatize::compute_starter "
+		cout << "recoordinatize::stabilizer_of_first_three "
 				"before generators_to_strong_generators" << endl;
 		}
 
@@ -372,7 +372,8 @@ void recoordinatize::stabilizer_of_first_three(
 
 
 	if (f_v) {
-		cout << "recoordinatize::stabilizer_of_first_three done" << endl;
+		cout << "recoordinatize::stabilizer_of_first_three "
+				"done" << endl;
 		}
 }
 
@@ -626,7 +627,8 @@ void recoordinatize::compute_live_points_low_level(
 				cout << "has rank " << a << endl;
 				}
 			if ((*check_function_incremental)(4, SS,
-					check_function_incremental_data, 0/*verbose_level - 4*/)) {
+					check_function_incremental_data,
+					0/*verbose_level - 4*/)) {
 				if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 					cout << "recoordinatize::compute_live_points_"
 							"low_level element " << cnt << " = " << h << ", "

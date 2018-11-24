@@ -445,7 +445,11 @@ void poset_orbit_node::schreier_forest(
 					"live points at the predecessor node: number=" << n;
 			if (f_v4) {
 				cout << " : ";
-				int_vec_print(cout, subset, n);
+				if (n < 100) {
+					int_vec_print(cout, subset, n);
+				} else {
+					cout << "too large to print";
+				}
 				cout << endl; 
 				}
 			else {
@@ -465,7 +469,11 @@ void poset_orbit_node::schreier_forest(
 					"number=" << nb_candidates;
 			if (f_v4) {
 				cout << " : ";
-				int_vec_print(cout, candidates, nb_candidates);
+				if (nb_candidates < 100) {
+					int_vec_print(cout, candidates, nb_candidates);
+				} else {
+					cout << "too large to print";
+				}
 				cout << endl; 
 				}
 			else {
@@ -991,6 +999,8 @@ int poset_orbit_node::downstep_get_invariant_subset(
 		}
 the_end:
 	if (f_v) {
+		cout << "poset_orbit_node::downstep_get_invariant_subset "
+				"subset has size " << n << endl;
 		cout << "poset_orbit_node::downstep_get_invariant_subset done" << endl;
 		}
 	return ret;
@@ -1273,6 +1283,10 @@ void poset_orbit_node::check_orbits(
 	if (f_v) {
 		cout << "check_orbits: testing " << L << " orbits" << endl;
 		}
+	if (L > 100) {
+		f_vv = FALSE;
+		f_vvv = FALSE;
+	}
 	for (k = 0; k < L; k++) {
 		fst = Schreier.orbit_first[k];
 		len = Schreier.orbit_len[k];
@@ -1301,7 +1315,7 @@ void poset_orbit_node::check_orbits(
 				}
 			f_accept = test_point_using_check_functions(gen, 
 				lvl, rep, gen->S, 
-				verbose_level - 4);
+				verbose_level - 10);
 			}
 		if (f_accept) {
 			if (f_vv) {
@@ -1358,13 +1372,14 @@ int poset_orbit_node::test_point_using_check_functions(
 // Otherwise accepts any point.
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	int f_accept = TRUE;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::test_point_using_check_functions" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
+#if 0
 	if (gen->f_candidate_incremental_check_func) {
 		if (f_vv) {
 			cout << "checking point " << rep
@@ -1395,6 +1410,7 @@ int poset_orbit_node::test_point_using_check_functions(
 	else {
 		//cout << "neither incremental nor ordinary check function" << endl;
 		}
+#endif
 	return f_accept;
 }
 

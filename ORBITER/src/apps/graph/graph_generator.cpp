@@ -367,10 +367,11 @@ void graph_generator::init(int argc, const char **argv)
 		target_depth, 
 		"", prefix, verbose_level - 1);
 	
-
+#if 0
+	// ToDo
 	gen->init_check_func(::check_conditions, 
 		(void *)this /* candidate_check_data */);
-
+#endif
 	
 	gen->f_print_function = TRUE;
 	gen->print_function = print_set;

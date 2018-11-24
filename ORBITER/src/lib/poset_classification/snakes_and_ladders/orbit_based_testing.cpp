@@ -83,7 +83,7 @@ void orbit_based_testing::add_callback(
 }
 
 void orbit_based_testing::add_callback_no_group(
-		int (*func)(int *S, int len,
+		void (*func)(int *S, int len,
 				int *candidates, int nb_candidates,
 				int *good_candidates, int &nb_good_candidates,
 				void *data, int verbose_level),
@@ -111,7 +111,7 @@ void orbit_based_testing::early_test_func(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func" << endl;
