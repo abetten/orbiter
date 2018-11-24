@@ -240,6 +240,10 @@ void regular_ls_generator::init_generator(
 	Poset->init_subset_lattice(A, A2,
 			Strong_gens,
 			verbose_level);
+	Poset->add_testing_without_group(
+			rls_generator_early_test_function,
+				this /* void *data */,
+				verbose_level);
 
 	
 	gen->init(Poset, gen->depth, 0/*verbose_level - 3*/);
@@ -252,19 +256,20 @@ void regular_ls_generator::init_generator(
 
 	// we have an early test function:
 #if 0
-	// ToDo
 	gen->init_early_test_func(
 		rls_generator_early_test_function, 
 		this,  
 		verbose_level);
 #endif
 
+
+#if 0
 	// We also have an incremental check function. 
 	// This is only used by the clique finder:
 	gen->init_incremental_check_func(
 		check_function_incremental_callback, 
 		this /* candidate_check_data */);
-
+#endif
 
 	gen->f_print_function = TRUE;
 	gen->print_function = print_set;
@@ -274,17 +279,21 @@ void regular_ls_generator::init_generator(
 	int nb_nodes = ONE_MILLION;
 	
 	if (f_vv) {
-		cout << "regular_ls_generator::init_generator calling init_poset_orbit_node with " << nb_nodes << " nodes" << endl;
+		cout << "regular_ls_generator::init_generator calling "
+				"init_poset_orbit_node with " << nb_nodes
+				<< " nodes" << endl;
 		}
 	
 	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_vv) {
-		cout << "regular_ls_generator::init_generator after init_root_node" << endl;
+		cout << "regular_ls_generator::init_generator after "
+				"init_root_node" << endl;
 		}
 	
 	//cout << "verbose_level = " << verbose_level << endl;
-	//cout << "verbose_level_group_theory = " << verbose_level_group_theory << endl;
+	//cout << "verbose_level_group_theory = "
+	//<< verbose_level_group_theory << endl;
 	
 	gen->root[0].init_root_node(gen, 0/*verbose_level - 2*/);
 	if (f_v) {
@@ -307,7 +316,8 @@ void regular_ls_generator::compute_starter(
 	
 	
 	gen->f_W = TRUE;
-	gen->compute_orbits(0 /* from_level */, starter_size /* to_level */, 
+	gen->compute_orbits(0 /* from_level */,
+		starter_size /* to_level */,
 		//f_lex, 
 		f_write_candidate_file, 
 		verbose_level);
@@ -315,10 +325,13 @@ void regular_ls_generator::compute_starter(
 
 	if (f_draw_poset) {
 		if (f_v) {
-			cout << "regular_ls_generator::compute_starter before gen->draw_poset" << endl;
+			cout << "regular_ls_generator::compute_starter "
+					"before gen->draw_poset" << endl;
 			}
 
-		gen->draw_poset(prefix_with_directory, starter_size, 0 /* data1 */, f_embedded, f_sideways, 0 /* gen->verbose_level */);
+		gen->draw_poset(prefix_with_directory, starter_size,
+				0 /* data1 */, f_embedded, f_sideways,
+				0 /* gen->verbose_level */);
 		
 		}
 	if (f_v) {
@@ -379,13 +392,15 @@ void regular_ls_generator::early_test_func(int *S, int len,
 		f_OK = TRUE;
 
 		if (f_vv) {
-			cout << "Testing candidate " << j << " = " << candidates[j] << endl;
+			cout << "Testing candidate " << j << " = "
+					<< candidates[j] << endl;
 			}
 
 		// do some testing
 		unrank_k_subset(candidates[j], v1, m, k);
 		if (f_vv) {
-			cout << "Testing candidate " << j << " = " << candidates[j] << " = ";
+			cout << "Testing candidate " << j << " = "
+					<< candidates[j] << " = ";
 			int_vec_print(cout, v1, k);
 			cout << endl;
 			}
@@ -409,21 +424,24 @@ void regular_ls_generator::early_test_func(int *S, int len,
 
 		if (f_OK) {
 			if (f_vv) {
-				cout << "Testing candidate " << j << " = " << candidates[j] << " is good" << endl;
+				cout << "Testing candidate " << j << " = "
+						<< candidates[j] << " is good" << endl;
 				}
 			good_candidates[nb_good_candidates++] = candidates[j];
 			}
 		}
 }
-
-int regular_ls_generator::check_function_incremental(int len, int *S, int verbose_level)
+#if 0
+int regular_ls_generator::check_function_incremental(
+		int len, int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b, p;
 	int f_OK;
 		
 	if (f_v) {
-		cout << "regular_ls_generator::check_function_incremental checking set ";
+		cout << "regular_ls_generator::check_function_incremental "
+				"checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -465,6 +483,7 @@ int regular_ls_generator::check_function_incremental(int len, int *S, int verbos
 
 	return f_OK;
 }
+#endif
 
 void regular_ls_generator::print(int *S, int len)
 {
@@ -476,7 +495,8 @@ void regular_ls_generator::print(int *S, int len)
 	cout << endl;
 }
 
-void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, int starter_case, 
+void regular_ls_generator::lifting_prepare_function_new(
+	exact_cover *E, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
@@ -489,7 +509,8 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, int star
 	int nb_open_rows, nb_open_pairs;
 
 	if (f_v) {
-		cout << "regular_ls_generator::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "regular_ls_generator::lifting_prepare_function_new "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 
 	nb_needed = target_size - E->starter_size;
@@ -661,6 +682,7 @@ void rls_generator_early_test_function(int *S, int len,
 		}
 }
 
+#if 0
 int check_function_incremental_callback(int len, int *S, void *data, int verbose_level)
 {
 	regular_ls_generator *Gen = (regular_ls_generator *) data;
@@ -669,9 +691,10 @@ int check_function_incremental_callback(int len, int *S, void *data, int verbose
 	f_OK = Gen->check_function_incremental(len, S, verbose_level);
 	return f_OK; 
 }
+#endif
 
-
-void rls_generator_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
+void rls_generator_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
@@ -681,7 +704,8 @@ void rls_generator_lifting_prepare_function_new(exact_cover *EC, int starter_cas
 	regular_ls_generator *Gen = (regular_ls_generator *) EC->user_data;
 
 	if (f_v) {
-		cout << "rls_generator_lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "rls_generator_lifting_prepare_function_new "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 
 	Gen->lifting_prepare_function_new(EC, starter_case, 

@@ -447,10 +447,10 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 		int *good_candidates, int &nb_good_candidates, 
 		void *data, int verbose_level),
 	void *early_test_func_data, 
-#endif
 	int (*candidate_incremental_check_func)(int len,
 			int *S, void *data, int verbose_level),
 	void *candidate_incremental_check_data, 
+#endif
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -495,13 +495,13 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 			early_test_func_data,  
 			verbose_level);
 		}
-#endif
 
 	if (candidate_incremental_check_func) {
 		gen->init_incremental_check_func(
 			candidate_incremental_check_func, 
 			candidate_incremental_check_data);
 		}
+#endif
 
 	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	gen->init_root_node(verbose_level - 1);

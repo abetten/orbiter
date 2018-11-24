@@ -1095,15 +1095,10 @@ void print_set(int len, int *S, void *data)
 	Gen->print(S, len);
 }
 
-int check_conditions(int len, int *S, void *data, int verbose_level)
-{
-	blt_set *Gen = (blt_set *) data;
-	return Gen->check_conditions(len, S, verbose_level);
-}
-
 void blt_set_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	int *candidates, int nb_candidates,
+	strong_generators *Strong_gens,
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
 	int verbose_level)
@@ -1161,18 +1156,6 @@ void early_test_func_callback(int *S, int len,
 		cout << "early_test_func done" << endl;
 		}
 }
-
-int check_function_incremental_callback(int len,
-		int *S, void *data, int verbose_level)
-{
-	blt_set *BLT = (blt_set *) data;
-	int f_OK;
-	
-	f_OK = BLT->check_function_incremental(len, S, verbose_level);
-	return f_OK; 
-}
-
-
 
 void callback_report(isomorph *Iso, void *data, int verbose_level)
 {

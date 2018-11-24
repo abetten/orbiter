@@ -315,13 +315,27 @@ void arc_generator::init(finite_field *F,
 		MINIMUM(verbose_level - 2, 2));
 	
 	if (f_v) {
-		cout << "action A_on_lines created: ";
+		cout << "arc_generator::init "
+				"action A_on_lines created: ";
 		A_on_lines->print_info();
 		}
 
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A, A->Strong_gens, verbose_level);
 	
+
+	if (!f_no_arc_testing) {
+		if (f_v) {
+			cout << "arc_generator::init before "
+					"Poset->add_testing_without_group" << endl;
+			}
+		Poset->add_testing_without_group(
+				arc_generator_early_test_function,
+					this /* void *data */,
+					verbose_level);
+	}
+
+
 
 	if (f_v) {
 		cout << "arc_generator::init creating projective plane" << endl;
@@ -390,7 +404,7 @@ void arc_generator::prepare_generator(int verbose_level)
 		starter_size, 
 		starter_directory_name, prefix, verbose_level - 1);
 
-
+#if 0
 	if (f_no_arc_testing) {
 		cout << "arc_generator::prepare_generator installing placebo_test_function" << endl;
 		gen->init_check_func(placebo_test_function, 
@@ -401,6 +415,8 @@ void arc_generator::prepare_generator(int verbose_level)
 		gen->init_check_func(::check_arc, 
 			(void *)this /* candidate_check_data */);
 		}
+#endif
+
 	if (f_v) {
 		cout << "arc_generator::prepare_generator done" << endl;
 		}
@@ -430,8 +446,10 @@ void arc_generator::compute_starter(int verbose_level)
 
 
 	if (f_v) {
-		cout << "arc_generator::compute_starter before generator_main" << endl;
-		cout << "arc_generator::compute_starter gen->fname_base=" << gen->fname_base << endl;
+		cout << "arc_generator::compute_starter "
+				"before generator_main" << endl;
+		cout << "arc_generator::compute_starter "
+				"gen->fname_base=" << gen->fname_base << endl;
 		}
 
 	depth = gen->main(t0, 
@@ -440,17 +458,20 @@ void arc_generator::compute_starter(int verbose_level)
 		f_debug, 
 		verbose_level);
 	if (f_v) {
-		cout << "arc_generator::compute_starter gen->main returns depth=" << depth << endl;
+		cout << "arc_generator::compute_starter "
+				"gen->main returns depth=" << depth << endl;
 		}
 
 	if (f_v) {
-		cout << "arc_generator::compute_starter after gen->main" << endl;
+		cout << "arc_generator::compute_starter "
+				"after gen->main" << endl;
 		}
 
 
 #if 0
 	if (f_v) {
-		cout << "arc_generator::compute_starter before gen->print_data_structure_tex" << endl;
+		cout << "arc_generator::compute_starter "
+				"before gen->print_data_structure_tex" << endl;
 		}
 
 	//gen->print_data_structure_tex(depth, 0 /*gen->verbose_level */);
@@ -458,10 +479,12 @@ void arc_generator::compute_starter(int verbose_level)
 
 	if (f_draw_poset) {
 		if (f_v) {
-			cout << "arc_generator::compute_starter before gen->draw_poset" << endl;
+			cout << "arc_generator::compute_starter "
+					"before gen->draw_poset" << endl;
 			}
 
-		gen->draw_poset(gen->fname_base, depth, 0 /* data1 */, f_embedded, f_sideways, 0 /* gen->verbose_level */);
+		gen->draw_poset(gen->fname_base, depth, 0 /* data1 */,
+				f_embedded, f_sideways, 0 /* gen->verbose_level */);
 		}
 
 
@@ -486,7 +509,8 @@ void arc_generator::compute_starter(int verbose_level)
 			Elt_transporter = NEW_int(gen->Poset->A->elt_size_in_int);
 			Elt_transporter_inv = NEW_int(gen->Poset->A->elt_size_in_int);
 			
-			orb = gen->trace_set(recognize_set, recognize_set_sz, recognize_set_sz /* level */, 
+			orb = gen->trace_set(recognize_set,
+				recognize_set_sz, recognize_set_sz /* level */,
 				canonical_set, Elt_transporter, 
 				0 /*verbose_level */);
 
@@ -509,7 +533,8 @@ void arc_generator::compute_starter(int verbose_level)
 			}
 		}
 	if (f_list) {
-		int f_show_orbit_decomposition = FALSE, f_show_stab = FALSE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
+		int f_show_orbit_decomposition = FALSE, f_show_stab = FALSE;
+		int f_save_stab = FALSE, f_show_whole_orbit = FALSE;
 		
 		gen->generate_source_code(depth, verbose_level);
 		
@@ -517,7 +542,10 @@ void arc_generator::compute_starter(int verbose_level)
 			TRUE, 
 			::arc_print, 
 			this, 
-			f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+			f_show_orbit_decomposition,
+			f_show_stab,
+			f_save_stab,
+			f_show_whole_orbit);
 
 
 
@@ -837,7 +865,8 @@ void arc_generator::lifting_prepare_function_new(
 			}
 		}
 	if (i == C.nb_types) {
-		cout << "arc_generator::lifting_prepare_function_new there are no tangent lines" << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"there are no tangent lines" << endl;
 		exit(1);
 		}
 	tangent_lines_fst = fst;
@@ -864,7 +893,8 @@ void arc_generator::lifting_prepare_function_new(
 			}
 		}
 	if (i == C.nb_types) {
-		cout << "arc_generator::lifting_prepare_function_new there are no external lines" << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"there are no external lines" << endl;
 		exit(1);
 		}
 	external_lines_fst = fst;
@@ -893,12 +923,15 @@ void arc_generator::lifting_prepare_function_new(
 		}
 
 	if (f_vv) {
-		cout << "arc_generator::lifting_prepare_function_new after lexorder test" << endl;
-		cout << "arc_generator::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"after lexorder test" << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 
 	// compute the incidence matrix between
-	// tangent lines and candidate points as well as external lines and candidate points:
+	// tangent lines and candidate points as well as
+	// external lines and candidate points:
 
 
 	int nb_rows;
@@ -929,7 +962,8 @@ void arc_generator::lifting_prepare_function_new(
 		for (j = 0; j < P->r; j++) {
 			b = P->Lines_on_point[a * P->r + j];
 			if (line_type[b] == 2) {
-				cout << "arc_generator::lifting_prepare_function candidate lies on a secant" << endl;
+				cout << "arc_generator::lifting_prepare_function "
+						"candidate lies on a secant" << endl;
 				exit(1);
 				}
 			idx = tangent_line_idx[b];
@@ -950,10 +984,12 @@ void arc_generator::lifting_prepare_function_new(
 	FREE_int(external_line_idx);
 	
 	if (f_v) {
-		cout << "arc_generator::lifting_prepare_function_new done" << endl;
+		cout << "arc_generator::lifting_prepare_function_new "
+				"done" << endl;
 		}
 }
 
+#if 0
 int arc_generator::arc_test(int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -979,6 +1015,7 @@ int arc_generator::arc_test(int *S, int len, int verbose_level)
 		}
 	return ret;
 }
+#endif
 
 void arc_generator::report(isomorph &Iso, int verbose_level)
 {
@@ -1639,6 +1676,7 @@ int arc_generator::simeon_matrix_entry(int *Coord, int *C, int *E, int *S, int l
 // global functions
 // ##################################################################################################
 
+#if 0
 int callback_arc_test(exact_cover *EC, int *S, int len, void *data, int verbose_level)
 {
 	arc_generator *Gen = (arc_generator *) data;
@@ -1664,8 +1702,9 @@ int callback_arc_test(exact_cover *EC, int *S, int len, void *data, int verbose_
 		return FALSE;
 		}
 }
+#endif
 
-
+#if 0
 int check_arc(int len, int *S, void *data, int verbose_level)
 {
 	arc_generator *Gen = (arc_generator *) data;
@@ -1717,6 +1756,7 @@ int placebo_test_function(int len, int *S, void *data, int verbose_level)
 		return FALSE;
 		}
 }
+#endif
 
 void arc_generator_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
@@ -1740,6 +1780,7 @@ void arc_generator_early_test_function(int *S, int len,
 		}
 }
 
+#if 0
 void placebo_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -1761,6 +1802,7 @@ void placebo_early_test_function(int *S, int len,
 		cout << "placebo_early_test_function done" << endl;
 		}
 }
+#endif
 
 void arc_generator_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 

@@ -97,6 +97,10 @@ int *schreier_vector::prev()
 				"sv == NULL" << endl;
 		exit(1);
 	}
+	if (nb_gen == 0) {
+		cout << "schreier_vector::prev N/A since nb_gen == 0" << endl;
+		exit(1);
+	}
 	int n = sv[0];
 	return sv + 1 + n;
 }
@@ -106,6 +110,10 @@ int *schreier_vector::label()
 	if (sv == NULL) {
 		cout << "schreier_vector::label "
 				"sv == NULL" << endl;
+		exit(1);
+	}
+	if (nb_gen == 0) {
+		cout << "schreier_vector::label N/A since nb_gen == 0" << endl;
 		exit(1);
 	}
 	int n = sv[0];
@@ -134,10 +142,8 @@ int schreier_vector::get_number_of_orbits()
 
 int schreier_vector::count_number_of_orbits()
 {
-	int i, n, nb = 0;
+	int i, n;
 	int *pts;
-	int *prev;
-	//int *label;
 
 	if (sv == NULL) {
 		cout << "schreier_vector::count_number_of_orbits "
@@ -146,22 +152,27 @@ int schreier_vector::count_number_of_orbits()
 	}
 	n = sv[0];
 	pts = sv + 1;
-	prev = pts + n;
-	for (i = 0; i < n; i++) {
-		if (prev[i] == -1) {
-			nb++;
+	if (nb_gen == 0) {
+		return n;
+	} else {
+		int *prev;
+		//int *label;
+		int nb = 0;
+		prev = pts + n;
+		for (i = 0; i < n; i++) {
+			if (prev[i] == -1) {
+				nb++;
+				}
 			}
-		}
-	return nb;
+		return nb;
+	}
 }
 
 void schreier_vector::count_number_of_orbits_and_get_orbit_reps(
 		int *&orbit_reps, int &nb_orbits)
 {
-	int i, n, nb;
+	int i, n;
 	int *pts;
-	int *prev;
-	//int *label;
 
 	if (sv == NULL) {
 		cout << "schreier_vector::count_number_of_orbits "
@@ -171,19 +182,31 @@ void schreier_vector::count_number_of_orbits_and_get_orbit_reps(
 	nb_orbits = 0;
 	n = sv[0];
 	pts = sv + 1;
-	prev = pts + n;
-	for (i = 0; i < n; i++) {
-		if (prev[i] == -1) {
-			nb_orbits++;
+	if (nb_gen == 0) {
+		nb_orbits = n;
+		orbit_reps = NEW_int(nb_orbits);
+		for (i = 0; i < n; i++) {
+			orbit_reps[i] = pts[i];
 			}
-		}
-	orbit_reps = NEW_int(nb_orbits);
-	nb = 0;
-	for (i = 0; i < n; i++) {
-		if (prev[i] == -1) {
-			orbit_reps[nb++] = pts[i];
+	} else {
+		int nb;
+		int *prev;
+		//int *label;
+
+		prev = pts + n;
+		for (i = 0; i < n; i++) {
+			if (prev[i] == -1) {
+				nb_orbits++;
+				}
 			}
-		}
+		orbit_reps = NEW_int(nb_orbits);
+		nb = 0;
+		for (i = 0; i < n; i++) {
+			if (prev[i] == -1) {
+				orbit_reps[nb++] = pts[i];
+				}
+			}
+	}
 }
 
 int schreier_vector::determine_depth_recursion(
@@ -243,8 +266,6 @@ void schreier_vector::relabel_points(
 	int f_trivial_group;
 	int n;
 	int *pts;
-	int *prev;
-	int *label;
 	int i, pt, pre, q, pr, new_pr, pos;
 	int *new_sv;
 	int *new_pts;
@@ -274,8 +295,6 @@ void schreier_vector::relabel_points(
 #endif
 	n = sv[0];
 	pts = sv + 1;
-	prev = pts + n;
-	label = prev + n;
 
 	if (f_trivial_group) {
 		if (f_v) {
@@ -303,6 +322,12 @@ void schreier_vector::relabel_points(
 		FREE_int(new_sv);
 		return;
 		}
+
+
+	int *prev;
+	int *label;
+	prev = pts + n;
+	label = prev + n;
 
 
 	new_sv = NEW_int(3 * n + 1);
@@ -504,8 +529,6 @@ void schreier_vector::orbit_of_point(
 		}
 	int n;
 	int *pts;
-	int *prev;
-	int *label;
 	int *depth;
 	int *ancestor;
 
@@ -513,6 +536,17 @@ void schreier_vector::orbit_of_point(
 
 	n = sv[0];
 	pts = sv + 1;
+
+
+	if (nb_gen == 0) {
+		orbit_len = 1;
+		orbit_elts = NEW_int(orbit_len);
+		orbit_elts[0] = pt;
+		return;
+	}
+
+	int *prev;
+	int *label;
 	prev = pts + n;
 	label = prev + n;
 	if (f_v) {

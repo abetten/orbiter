@@ -24,8 +24,8 @@ void poset_classification::null()
 {
 	problem_label[0] = 0;
 	
-	f_candidate_check_func = FALSE;
-	f_candidate_incremental_check_func = FALSE;
+	//f_candidate_check_func = FALSE;
+	//f_candidate_incremental_check_func = FALSE;
 	f_print_function = FALSE;
 	Elt_memory = NULL;
 
@@ -895,7 +895,7 @@ void poset_classification::reallocate_to(int new_number_of_nodes,
 		}
 }
 
-
+#if 0
 void poset_classification::init_check_func(
 	int (*candidate_check_func)(int len, int *S,
 			void *data, int verbose_level),
@@ -917,6 +917,7 @@ void poset_classification::init_incremental_check_func(
 	poset_classification::candidate_incremental_check_data =
 			candidate_incremental_check_data;
 }
+#endif
 
 void poset_classification::init_starter(int starter_size, 
 	int *starter, 

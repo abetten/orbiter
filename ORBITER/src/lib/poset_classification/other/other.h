@@ -65,10 +65,10 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 		int *good_candidates, int &nb_good_candidates, 
 		void *data, int verbose_level),
 	void *early_test_func_data, 
-#endif
 	int (*candidate_incremental_check_func)(int len, int *S, 
 		void *data, int verbose_level), 
 	void *candidate_incremental_check_data, 
+#endif
 	int verbose_level);
 void orbits_on_k_sets(
 	poset *Poset,

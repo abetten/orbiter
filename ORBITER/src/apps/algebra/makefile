@@ -29,6 +29,7 @@ all: \
 	flag.out \
 	borel.out \
 	counting_flags.out \
+	three_squares.out \
 	code_cosets.out 
 
 BN_pair.out:  BN_pair.o;
@@ -96,6 +97,9 @@ counting_flags.out:  counting_flags.o ;
 
 code_cosets.out:  code_cosets.o ;
 	$(DISCRETA_CPP)  code_cosets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+three_squares.out:  three_squares.o ;
+	$(DISCRETA_CPP)  three_squares.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

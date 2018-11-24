@@ -66,6 +66,8 @@ void classify_double_sixes::null()
 	nb = 0;
 	Po = NULL;
 
+	Pts_for_partial_ovoid_test = NULL;
+
 	Flag_orbits = NULL;
 
 	Double_sixes = NULL;
@@ -95,6 +97,9 @@ void classify_double_sixes::freeself()
 	if (Po) {
 		FREE_int(Po);
 		}
+	if (Pts_for_partial_ovoid_test) {
+		FREE_int(Pts_for_partial_ovoid_test);
+	}
 	if (Flag_orbits) {
 		FREE_OBJECT(Flag_orbits);
 		}
@@ -220,6 +225,16 @@ void classify_double_sixes::init(
 			SG_line_stab,
 			verbose_level);
 
+	if (f_v) {
+		cout << "classify_double_sixes::init before "
+				"Poset->add_testing_without_group" << endl;
+		}
+	Pts_for_partial_ovoid_test = NEW_int(5 * 6);
+	Poset->add_testing_without_group(
+			callback_partial_ovoid_test_early,
+				this /* void *data */,
+				verbose_level);
+
 	cout << "classify_double_sixes::init "
 			"before Five_plus_one->init" << endl;
 	Five_plus_one->init(Poset,
@@ -229,8 +244,8 @@ void classify_double_sixes::init(
 			"after Five_plus_one->init" << endl;
 
 
-	Five_plus_one->init_check_func(callback_partial_ovoid_test, 
-		(void *)this /* candidate_check_data */);
+	//Five_plus_one->init_check_func(callback_partial_ovoid_test,
+	//	(void *)this /* candidate_check_data */);
 
 
 	//Five_plus_one->f_print_function = TRUE;
@@ -492,6 +507,81 @@ void classify_double_sixes::classify_partial_ovoids(
 
 
 
+void classify_double_sixes::partial_ovoid_test_early(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
+	int u[6];
+	int v[6];
+	int fxy;
+	int f_OK;
+
+	if (f_v) {
+		cout << "classify_double_sixes::partial_ovoid_test_early checking set ";
+		print_set(cout, len, S);
+		cout << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
+		int_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+		}
+
+	if (len > 5) {
+		cout << "classify_double_sixes::partial_ovoid_test_early len > 5" << endl;
+		exit(1);
+	}
+	for (i = 0; i < len; i++) {
+		AW->unrank_point(u, Neighbors[S[i]]);
+		Surf->wedge_to_klein(u, Pts_for_partial_ovoid_test + i * 6);
+		}
+
+	if (len == 0) {
+		int_vec_copy(candidates, good_candidates, nb_candidates);
+		nb_good_candidates = nb_candidates;
+		}
+	else {
+		nb_good_candidates = 0;
+
+		if (f_vv) {
+			cout << "classify_double_sixes::partial_ovoid_test_early "
+					"before testing" << endl;
+			}
+		for (j = 0; j < nb_candidates; j++) {
+
+
+			if (f_vv) {
+				cout << "classify_double_sixes::partial_ovoid_test_early "
+						"testing " << j << " / "
+						<< nb_candidates << endl;
+				}
+
+			AW->unrank_point(u, Neighbors[candidates[j]]);
+			Surf->wedge_to_klein(u, v);
+
+			f_OK = TRUE;
+			for (i = 0; i < len; i++) {
+				fxy = Surf->O->evaluate_bilinear_form(
+						Pts_for_partial_ovoid_test + i * 6, v, 1);
+
+				if (fxy == 0) {
+					f_OK = FALSE;
+					break;
+				}
+			}
+			if (f_OK) {
+				good_candidates[nb_good_candidates++] =
+						candidates[j];
+				}
+			} // next j
+		} // else
+}
+
+
+#if 0
 int classify_double_sixes::partial_ovoid_test(
 		int *S, int len, int verbose_level)
 // Make sure that the set of lines is pairwise disjoint.
@@ -686,6 +776,7 @@ int classify_double_sixes::partial_ovoid_test(
 		}
 	return f_OK;
 }
+#endif
 
 void classify_double_sixes::test_orbits(int verbose_level)
 {
@@ -720,6 +811,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 			cout << endl;
 			}
 
+#if 0
 		if (partial_ovoid_test(S, 5, 0 /*verbose_level - 2*/)) {
 			if (f_vv) {
 				cout << "classify_double_sixes::test_orbits "
@@ -733,6 +825,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 					"not happen" << endl;
 			exit(1);
 			}
+#endif
 
 
 		int_vec_apply(S, Neighbor_to_line, S2, 5);
@@ -1709,5 +1802,43 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 				"finished" << endl;
 		}
 }
+
+#if 0
+int callback_partial_ovoid_test(int len, int *S,
+		void *data, int verbose_level)
+{
+	classify_double_sixes *Classify_double_sixes =
+			(classify_double_sixes *) data;
+	//surface_classify_wedge *SCW = (surface_classify_wedge *) data;
+
+	return Classify_double_sixes->partial_ovoid_test(
+			S, len, verbose_level);
+}
+#endif
+
+
+void callback_partial_ovoid_test_early(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	classify_double_sixes *Classify_double_sixes = (classify_double_sixes *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "callback_partial_ovoid_test_early for set ";
+		print_set(cout, len, S);
+		cout << endl;
+		}
+	Classify_double_sixes->partial_ovoid_test_early(S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "callback_partial_ovoid_test_early done" << endl;
+		}
+}
+
+
 
 

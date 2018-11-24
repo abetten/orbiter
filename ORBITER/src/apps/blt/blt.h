@@ -119,7 +119,7 @@ public:
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
-	int check_function_incremental(int len, int *S, int verbose_level);
+	//int check_function_incremental(int len, int *S, int verbose_level);
 	int pair_test(int a, int x, int y, int verbose_level);
 		// We assume that a is an element of a set S
 		// of size at least two such that
@@ -149,8 +149,7 @@ public:
 
 // blt_set2.C:
 void print_set(int len, int *S, void *data);
-int check_conditions(int len, int *S, void *data, int verbose_level);
-void blt_set_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
+void blt_set_lifting_prepare_function_new(exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
@@ -159,8 +158,6 @@ void early_test_func_callback(int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
-int check_function_incremental_callback(int len, int *S,
-		void *data, int verbose_level);
 void callback_report(isomorph *Iso, void *data, int verbose_level);
 void callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
 

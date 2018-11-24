@@ -38,6 +38,10 @@ void code_generator::read_arguments(int argc, const char **argv)
 			f_report = TRUE;
 			cout << "-report " << endl;
 			}
+		else if (strcmp(argv[i], "-report_schreier_trees") == 0) {
+			f_report_schreier_trees = TRUE;
+			cout << "-report_schreier_trees " << endl;
+			}
 		else if (strcmp(argv[i], "-schreier_depth") == 0) {
 			schreier_depth = atoi(argv[++i]);
 			cout << "-schreier_depth " << schreier_depth << endl;
@@ -186,6 +190,7 @@ void code_generator::null()
 {
 	verbose_level = 0;
 	f_report = FALSE;
+	f_report_schreier_trees = FALSE;
 	f_nmk = FALSE;
 	f_linear = FALSE;
 	f_nonlinear = FALSE;
@@ -391,14 +396,13 @@ void code_generator::init(int argc, const char **argv)
 #endif
 
 #if 0
-	//ToDo
 	if (f_v) {
 		cout << "code_generator::init group set up, "
 				"calling gen->init_early_test_func" << endl;
 		}
 	gen->init_early_test_func(
-		check_mindist_early_test_func, 
-		this,  
+		check_mindist_early_test_func,
+		this,
 		verbose_level);
 	//gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
 #endif
@@ -610,6 +614,27 @@ void code_generator::main(int verbose_level)
 	if (f_print_data_structure) {
 		gen->print_data_structure_tex(depth, verbose_level);
 		}
+	if (f_report_schreier_trees) {
+		char fname_base[1000];
+		char fname_report[1000];
+		if (f_linear) {
+			if (f_nmk) {
+				sprintf(fname_base, "codes_linear_nmk%d_q%d_d%d", nmk, q, d);
+				}
+			else {
+				sprintf(fname_base, "codes_linear_n%d_k%d_q%d_d%d", n, k, q, d);
+				}
+			}
+		else if (f_nonlinear) {
+			sprintf(fname_base, "codes_nonlinear_n%d_k%d_d%d", n, k, d);
+			}
+		sprintf(fname_report, "%s.txt", fname_base);
+		{
+		ofstream fp(fname_report);
+
+		gen->report_schreier_trees(fp, verbose_level);
+		}
+	}
 	if (f_report) {
 		char fname_base[1000];
 		char fname_report[1000];
@@ -664,6 +689,7 @@ void code_generator::main(int verbose_level)
 		}
 }
 
+#if 0
 void code_generator::early_test_func_by_using_group(
 	int *S, int len, 
 	int *candidates, int nb_candidates, 
@@ -761,6 +787,7 @@ void code_generator::early_test_func_by_using_group(
 			<< nb_good_orbits << " good orbits" << endl;
 		}
 }
+#endif
 
 int code_generator::Hamming_distance(int a, int b)
 {
@@ -807,6 +834,7 @@ int code_generator::Hamming_distance(int a, int b)
 // callback functions
 // #############################################################################
 
+#if 0
 void check_mindist_early_test_func(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -854,7 +882,9 @@ void check_mindist_early_test_func(int *S, int len,
 			<< nb_good_candidates << endl;
 		}
 }
+#endif
 
+#if 0
 int check_mindist(int len, int *S, void *data, int verbose_level)
 {
 	code_generator *cg = (code_generator *) data;
@@ -887,7 +917,9 @@ int check_mindist(int len, int *S, void *data, int verbose_level)
 		return FALSE;
 		}
 }
+#endif
 
+#if 0
 int check_mindist_incremental(int len, int *S,
 		void *data, int verbose_level)
 {
@@ -922,6 +954,7 @@ int check_mindist_incremental(int len, int *S,
 		return FALSE;
 		}
 }
+#endif
 
 void print_code(int len, int *S, void *data)
 {

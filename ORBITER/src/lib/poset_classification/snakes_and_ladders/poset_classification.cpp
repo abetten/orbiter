@@ -667,6 +667,7 @@ void poset_classification::stabilizer_order(int node, longinteger_object &go)
 		}
 }
 
+#if 0
 int poset_classification::check_the_set(int len, int *S, int verbose_level)
 // used by lookahead_first_at_level
 {
@@ -723,7 +724,7 @@ int poset_classification::check_the_set_incrementally(int len,
 		}
 	return TRUE;
 }
-
+#endif
 
 
 void poset_classification::orbit_length(int orbit_at_level,

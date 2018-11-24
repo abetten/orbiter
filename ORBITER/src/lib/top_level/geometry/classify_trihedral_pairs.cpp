@@ -134,23 +134,28 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	Poset1->init_subset_lattice(A, A, gens_type1,
 			verbose_level);
 
+	Poset1->add_testing_without_group(
+			classify_trihedral_pairs_early_test_function_type1,
+				this /* void *data */,
+				verbose_level);
+
+
 	compute_orbits_on_subsets(orbits_on_trihedra_type1, 
 		3, /* target_depth */
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,
 		Poset1,
 #if 0
-		// ToDo
 		classify_trihedral_pairs_early_test_function_type1
 			/* void (*early_test_func_callback)(int *S, int len,
 			int *candidates, int nb_candidates, 
 			int *good_candidates, int &nb_good_candidates, 
 			void *data, int verbose_level) */,
 		this /* void *early_test_func_data */, 
-#endif
 		NULL /* int (*candidate_incremental_check_func)(int len,
 				int *S, void *data, int verbose_level) */,
 		NULL  /*void *candidate_incremental_check_data */, 
+#endif
 		0 /*verbose_level*/);
 
 	if (f_v) {
@@ -164,23 +169,28 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	Poset2 = NEW_OBJECT(poset);
 	Poset2->init_subset_lattice(A, A, gens_type2,
 			verbose_level);
+
+	Poset2->add_testing_without_group(
+			classify_trihedral_pairs_early_test_function_type2,
+				this /* void *data */,
+				verbose_level);
+
 	compute_orbits_on_subsets(orbits_on_trihedra_type2, 
 		3, /* target_depth */
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,
 		Poset2,
 #if 0
-		// ToDo
 		classify_trihedral_pairs_early_test_function_type2
 			/* void (*early_test_func_callback)(int *S, int len,
 			int *candidates, int nb_candidates, 
 			int *good_candidates, int &nb_good_candidates, 
 			void *data, int verbose_level) */,
 		this /* void *early_test_func_data */, 
-#endif
 		NULL /* int (*candidate_incremental_check_func)(int len,
 			int *S, void *data, int verbose_level) */,
 		NULL  /*void *candidate_incremental_check_data */, 
+#endif
 		0 /*verbose_level*/);
 
 	if (f_v) {

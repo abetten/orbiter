@@ -48,10 +48,12 @@ void spread_lifting::freeself()
 	null();
 }
 
-void spread_lifting::init(spread *S, exact_cover *E, 
+void spread_lifting::init(
+	spread *S, exact_cover *E,
 	int *starter, int starter_size, 
 	int starter_case_number, int starter_number_of_cases, 
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	int *candidates, int nb_candidates,
+	strong_generators *Strong_gens,
 	int f_lex, 
 	int verbose_level)
 {
@@ -270,6 +272,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 
 	Dio = NEW_OBJECT(diophant);
 	Dio->open(nb_rows, nb_cols);
+	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_rows; i++) {

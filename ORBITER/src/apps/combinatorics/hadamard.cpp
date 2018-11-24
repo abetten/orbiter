@@ -328,7 +328,8 @@ void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_cliq
 		sprintf(fname_base, "Hadamard_graph_%d", n);
 
 
-		//CG->draw_partitioned(fname_base, xmax_in, ymax_in, xmax_out, ymax_out, verbose_level);
+		//CG->draw_partitioned(fname_base,
+		//xmax_in, ymax_in, xmax_out, ymax_out, verbose_level);
 		CG->draw(fname_base, xmax_in, ymax_in, xmax_out, ymax_out, 
 			scale, line_width, verbose_level);
 
@@ -339,7 +340,8 @@ void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_cliq
 
 
 	if (f_v) {
-		cout << "computing automorphism group of uncolored graph:" << endl;
+		cout << "computing automorphism group of "
+				"uncolored graph:" << endl;
 		}
 	A = create_automorphism_group_of_graph_bitvec(
 		CG->nb_points, bitvector_adjacency, 
@@ -348,20 +350,23 @@ void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_cliq
 	longinteger_object go;
 	A->group_order(go);
 	if (f_v) {
-		cout << "computing automorphism group of uncolored graph done, group order = " << go << endl;
+		cout << "computing automorphism group of "
+				"uncolored graph done, group order = " << go << endl;
 		}
 
 	char fname_group[1000];
 	
 	
 	sprintf(fname_group, "Hadamard_group_%d.magma", n);
-	A->Strong_gens->export_permutation_group_to_magma(fname_group, 1 /* verbose_level */);
+	A->Strong_gens->export_permutation_group_to_magma(
+			fname_group, 1 /* verbose_level */);
 
 	char prefix[1000];
 	sprintf(prefix, "./had_%d", n);
 
 	if (f_v) {
-		cout << "Starting the clique finder, target_depth = " << n << " prefix=" << prefix << endl;
+		cout << "Starting the clique finder, "
+				"target_depth = " << n << " prefix=" << prefix << endl;
 		}
 
 	poset *Poset;
@@ -369,17 +374,21 @@ void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_cliq
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
+	Poset->add_testing_without_group(
+			early_test_function,
+			this /* void *data */,
+			verbose_level);
+
 
 	compute_orbits_on_subsets(gen, 
 		n /* target_depth */,
 		prefix, 
 		TRUE /* f_W */, FALSE /* f_w */,
 		Poset,
-		// ToDo
 		//early_test_function,
 		//this,
-		NULL, 
-		NULL, 
+		//NULL,
+		//NULL,
 		verbose_level_clique);
 
 	nb_orbits = gen->nb_orbits_at_level(n);
