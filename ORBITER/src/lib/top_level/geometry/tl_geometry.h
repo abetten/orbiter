@@ -86,7 +86,7 @@ public:
 	void read_arguments(int argc, const char **argv);
 	void main(int verbose_level);
 	void init(finite_field *F,
-		const char *input_prefix, 
+		const char *starter_directory_name,
 		const char *base_fname,
 		int starter_size,  
 		int argc, const char **argv, 
@@ -150,7 +150,7 @@ void arc_generator_lifting_prepare_function_new(
 void print_arc(int len, int *S, void *data);
 void print_point(int pt, void *data);
 void callback_arc_report(isomorph *Iso, void *data, int verbose_level);
-void arc_print(int len, int *S, void *data);
+void callback_arc_print(ostream &ost, int len, int *S, void *data);
 
 // #############################################################################
 // arc_lifting.C:
@@ -1265,7 +1265,7 @@ public:
 	void read_and_print_spread(const char *fname, int verbose_level);
 	void HMO(const char *fname, int verbose_level);
 	void get_spread_matrices(int *F, int *G, int *data, int verbose_level);
-	void print_spread(int *data, int sz);
+	void print_spread(ostream &ost, int *data, int sz);
 	void report2(isomorph &Iso, int verbose_level);
 	void all_cooperstein_thas_quotients(isomorph &Iso, int verbose_level);
 	void cooperstein_thas_quotients(isomorph &Iso, ofstream &f, 
@@ -1273,7 +1273,7 @@ public:
 	void orbit_info_short(ofstream &f, isomorph &Iso, int h);
 	void report_stabilizer(isomorph &Iso, ofstream &f, int orbit, 
 		int verbose_level);
-	void print(int len, int *S);
+	void print(ostream &ost, int len, int *S);
 };
 
 
@@ -1303,6 +1303,7 @@ int spread_check_function_callback(int len, int *S,
 void spread_callback_report(isomorph *Iso, void *data, int verbose_level);
 void spread_callback_make_quotients(isomorph *Iso, void *data, 
 	int verbose_level);
+void callback_spread_print(ostream &ost, int len, int *S, void *data);
 
 // #############################################################################
 // spread_create.C:

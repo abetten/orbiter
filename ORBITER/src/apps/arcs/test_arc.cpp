@@ -86,7 +86,8 @@ int main(int argc, char **argv)
 
 
 	if (f_v) {
-		cout << "creating projective space PG(" << k - 1 << ", " << q << ")" << endl;
+		cout << "creating projective space "
+				"PG(" << k - 1 << ", " << q << ")" << endl;
 		}
 
 
@@ -139,7 +140,8 @@ int main(int argc, char **argv)
 				}
 			}
 		cout << "Roth_Lempel:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Roth_Lempel, k, nb_c, TRUE /* f_tex*/);
+		print_integer_matrix_with_standard_labels(cout,
+				Roth_Lempel, k, nb_c, TRUE /* f_tex*/);
 		rk = F->Gauss_easy(Roth_Lempel, k, nb_c);
 		cout << "The matrix has rank " << rk << endl;
 		

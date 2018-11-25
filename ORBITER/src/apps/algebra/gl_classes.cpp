@@ -800,14 +800,15 @@ void do_identify_one(int q, int d,
 	A->group_order(Go);
 	
 
-	int go, class_rep;
+	int class_rep;
 
 	int *Elt, *Basis;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	Basis = NEW_int(d * d);
 
-	go = Go.as_int();
+	//int go;
+	//go = Go.as_int();
 
 	cout << "Looking at element " << elt_idx << ":" << endl;
 

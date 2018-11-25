@@ -82,10 +82,11 @@ void create_element(int q, int k1, int k2, int verbose_level)
 	action *A4;
 	action *A_O4;
 	longinteger_object Go;
-	int go, ord;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
-	int *ELT1, *ELT2;
-	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
+	int ord;
+	//int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
+	int *Elt6, *Elt7;
+	int *ELT1; //, *ELT2;
+	//int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
 	
 	F = new finite_field;
 	F->init(q, 0);	
@@ -115,26 +116,33 @@ void create_element(int q, int k1, int k2, int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//int go;
+	//go = Go.as_int();
 	
+#if 0
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
 	Elt3 = new int[A->elt_size_in_int];
 	Elt4 = new int[A->elt_size_in_int];
 	Elt5 = new int[A->elt_size_in_int];
+#endif
 	Elt6 = new int[A->elt_size_in_int];
 	Elt7 = new int[A->elt_size_in_int];
 
+#if 0
 	Elt_At = new int[A->elt_size_in_int];
 	Elt_As = new int[A->elt_size_in_int];
 	Elt_Bt = new int[A->elt_size_in_int];
 	Elt_Bs = new int[A->elt_size_in_int];
+#endif
 
 	ELT1 = new int[A4->elt_size_in_int];
-	ELT2 = new int[A4->elt_size_in_int];
+	//ELT2 = new int[A4->elt_size_in_int];
 
+#if 0
 	ELT_A = new int[A4->elt_size_in_int];
 	ELT_B = new int[A4->elt_size_in_int];
+#endif
 
 	int dataD[4];
 	int dataD1[4];
@@ -227,11 +235,8 @@ void create_element_O4_isomorphism(int q,
 	action *A4;
 	action *A_O4;
 	longinteger_object Go;
-	int go, ord;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
-	int *ELT1, *ELT2;
-	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
-	//int i;
+	int ord;
+	int *ELT1;
 	
 	F = new finite_field;
 	F->init(q, 0);
@@ -261,26 +266,11 @@ void create_element_O4_isomorphism(int q,
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//int go;
+	//go = Go.as_int();
 	
-	Elt1 = new int[A->elt_size_in_int];
-	Elt2 = new int[A->elt_size_in_int];
-	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
-	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
-
-	Elt_At = new int[A->elt_size_in_int];
-	Elt_As = new int[A->elt_size_in_int];
-	Elt_Bt = new int[A->elt_size_in_int];
-	Elt_Bs = new int[A->elt_size_in_int];
-
 	ELT1 = new int[A4->elt_size_in_int];
-	ELT2 = new int[A4->elt_size_in_int];
 
-	ELT_A = new int[A4->elt_size_in_int];
-	ELT_B = new int[A4->elt_size_in_int];
 
 	int mtxD[16];
 

@@ -6,7 +6,8 @@
 #include "orbiter.h"
 #include "regular_ls.h"
 
-void regular_ls_generator::init_basic(int argc, const char **argv, 
+void regular_ls_generator::init_basic(
+	int argc, const char **argv,
 	const char *input_prefix, const char *base_fname, 
 	int starter_size, 
 	int verbose_level)
@@ -23,14 +24,16 @@ void regular_ls_generator::init_basic(int argc, const char **argv,
 	gen = NEW_OBJECT(poset_classification);
 	
 	if (f_vv) {
-		cout << "regular_ls_generator::init_basic before read_arguments" << endl;
+		cout << "regular_ls_generator::init_basic "
+				"before read_arguments" << endl;
 		}
 
 	read_arguments(argc, argv);
 
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
-	sprintf(prefix_with_directory, "%s%s", starter_directory_name, base_fname);
+	sprintf(prefix_with_directory, "%s%s",
+			starter_directory_name, base_fname);
 
 	target_size = n;
 
@@ -79,19 +82,23 @@ void regular_ls_generator::read_arguments(int argc, const char **argv)
 			}
 		}
 	if (!f_m) {
-		cout << "regular_ls_generator::read_arguments Please use option -m <m>" << endl;
+		cout << "regular_ls_generator::read_arguments "
+				"Please use option -m <m>" << endl;
 		exit(1);
 		}
 	if (!f_n) {
-		cout << "regular_ls_generator::read_arguments Please use option -n <n>" << endl;
+		cout << "regular_ls_generator::read_arguments "
+				"Please use option -n <n>" << endl;
 		exit(1);
 		}
 	if (!f_k) {
-		cout << "regular_ls_generator::read_arguments Please use option -k <k>" << endl;
+		cout << "regular_ls_generator::read_arguments "
+				"Please use option -k <k>" << endl;
 		exit(1);
 		}
 	if (!f_r) {
-		cout << "regular_ls_generator::read_arguments Please use option -r <r>" << endl;
+		cout << "regular_ls_generator::read_arguments "
+				"Please use option -r <r>" << endl;
 		exit(1);
 		}
 }
@@ -157,7 +164,8 @@ void regular_ls_generator::init_group(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_group creating symmetric group of degree " << m << endl;
+		cout << "regular_ls_generator::init_group "
+				"creating symmetric group of degree " << m << endl;
 		}
 	A = NEW_OBJECT(action);
 	A->init_symmetric_group(m /* degree */, 0 /* verbose_level - 2*/);
@@ -168,7 +176,8 @@ void regular_ls_generator::init_group(int verbose_level)
 		}
 }
 
-void regular_ls_generator::init_action_on_k_subsets(int k, int verbose_level)
+void regular_ls_generator::init_action_on_k_subsets(
+		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -179,7 +188,8 @@ void regular_ls_generator::init_action_on_k_subsets(int k, int verbose_level)
 	//regular_ls_generator::onk = onk;
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_action_on_k_subsets creating action on k-subsets for k=" << k << endl;
+		cout << "regular_ls_generator::init_action_on_k_subsets "
+				"creating action on k-subsets for k=" << k << endl;
 		}
 	A2 = NEW_OBJECT(action);
 	A2->induced_action_on_k_subsets(*A, k, verbose_level - 2);
@@ -187,11 +197,13 @@ void regular_ls_generator::init_action_on_k_subsets(int k, int verbose_level)
 	Aonk = A2->G.on_k_subsets;
 	
 	if (f_v) {
-		cout << "regular_ls_generator::init_action_on_k_subsets before A2->induced_action_override_sims" << endl;
+		cout << "regular_ls_generator::init_action_on_k_subsets "
+				"before A2->induced_action_override_sims" << endl;
 		}
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_action_on_k_subsets done" << endl;
+		cout << "regular_ls_generator::init_action_on_k_subsets "
+				"done" << endl;
 		}
 }
 
@@ -220,7 +232,8 @@ void regular_ls_generator::init_generator(
 	regular_ls_generator::initial_pair_covering = NEW_int(m2);
 	if (f_has_initial_pair_covering) {
 		for (i = 0; i < m2; i++) {
-			regular_ls_generator::initial_pair_covering[i] = initial_pair_covering[i];
+			regular_ls_generator::initial_pair_covering[i] =
+					initial_pair_covering[i];
 			}
 		}
 	else {
@@ -230,7 +243,8 @@ void regular_ls_generator::init_generator(
 		}
 	
 	if (f_v) {
-		cout << "regular_ls_generator::init_generator depth = " << gen->depth << endl;
+		cout << "regular_ls_generator::init_generator "
+				"depth = " << gen->depth << endl;
 		}
 
 
@@ -485,14 +499,14 @@ int regular_ls_generator::check_function_incremental(
 }
 #endif
 
-void regular_ls_generator::print(int *S, int len)
+void regular_ls_generator::print(ostream &ost, int *S, int len)
 {
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		cout << S[i] << " ";
+		ost << S[i] << " ";
 		}
-	cout << endl;
+	ost << endl;
 }
 
 void regular_ls_generator::lifting_prepare_function_new(
@@ -652,12 +666,12 @@ void regular_ls_generator::lifting_prepare_function_new(
 
 
 
-void print_set(int len, int *S, void *data)
+void print_set(ostream &ost, int len, int *S, void *data)
 {
 	regular_ls_generator *Gen = (regular_ls_generator *) data;
 	
 	//print_vector(ost, S, len);
-	Gen->print(S, len);
+	Gen->print(ost, S, len);
 }
 
 void rls_generator_early_test_function(int *S, int len, 

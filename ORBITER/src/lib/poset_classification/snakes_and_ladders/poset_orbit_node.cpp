@@ -353,8 +353,8 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 		delete Strong_gens;
 		}
 
-#if 0
-	if (FALSE /* f_v */) {
+#if 1
+	if (gen->f_print_function) {
 		f << "# BEGINCOMMENT" << endl;
 		if (gen->f_print_function) {
 			(*gen->print_function)(f, s, gen->set0,
@@ -377,8 +377,8 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 				
 				G.A->element_print(G.SG->ith(i), f);
 				f << endl;
-				G.A->element_print_as_permutation(G.SG->ith(i), f);
-				f << endl;
+				//G.A->element_print_as_permutation(G.SG->ith(i), f);
+				//f << endl;
 
 #if 0
 				G.A->element_rank(rk, G.SG->ith(i), 0);
@@ -633,7 +633,7 @@ void poset_orbit_node::print_set_verbose(poset_classification *gen)
 	set = NEW_int(depth);
 	store_set_to(gen, depth - 1, set /* gen->S0 */);
 	if (gen->f_print_function) {
-		(*gen->print_function)(depth,
+		(*gen->print_function)(cout, depth,
 				set /* gen->S0 */, gen->print_function_data);
 		}
 	FREE_int(set);
@@ -693,7 +693,7 @@ void poset_orbit_node::print_node(poset_classification *gen)
 	store_set_to(gen, depth - 1, set /*gen->S0*/);
 
 	if (gen->f_print_function) {
-		(*gen->print_function)(depth,
+		(*gen->print_function)(cout, depth,
 				set /* gen->S0 */, gen->print_function_data);
 		}
 

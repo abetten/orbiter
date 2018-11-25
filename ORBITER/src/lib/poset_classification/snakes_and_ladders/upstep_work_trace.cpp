@@ -51,7 +51,7 @@ trace_result upstep_work::recognize(
 		int_vec_print(cout, gen->set[0], len + 1);
 		cout << endl;
 		if (gen->f_print_function) {
-			(*gen->print_function)(size,
+			(*gen->print_function)(cout, size,
 					gen->set[0], gen->print_function_data);
 			}
 		}
@@ -152,7 +152,7 @@ trace_result upstep_work::recognize_recursion(
 	}
 	if (f_v4) {
 		if (gen->f_print_function) {
-			(*gen->print_function)(size,
+			(*gen->print_function)(cout, size,
 					gen->set[lvl], gen->print_function_data);
 		}
 	}

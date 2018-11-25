@@ -228,20 +228,22 @@ void usage(int argc, const char **argv)
 }
 
 
-void callback_print_set(int len, int *S, void *data)
+void callback_print_set(ostream &ost, int len, int *S, void *data)
 {
 	ovoid_generator *Gen = (ovoid_generator *) data;
 	
 	//print_vector(ost, S, len);
-	Gen->print(S, len);
+	Gen->print(ost, S, len);
 }
 
+#if 0
 int callback_check_conditions(int len, int *S,
 		void *data, int verbose_level)
 {
 	ovoid_generator *Gen = (ovoid_generator *) data;
 	return Gen->check_conditions(len, S, verbose_level);
 }
+#endif
 
 
 

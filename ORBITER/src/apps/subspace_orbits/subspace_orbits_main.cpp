@@ -21,7 +21,7 @@ int extra_test_func(subspace_orbits *SubOrb,
 	int len, int *S, void *data, int verbose_level);
 int test_dim_C_cap_Cperp_property(int len, int *S, void *data);
 int compute_minimum_distance(int len, int *S, void *data);
-void print_subspace(int len, int *S, void *data);
+void print_subspace(ostream &ost, int len, int *S, void *data);
 
 
 
@@ -485,11 +485,11 @@ int compute_minimum_distance(int len, int *S, void *data)
 	return d;
 }
 
-void print_subspace(int len, int *S, void *data)
+void print_subspace(ostream &ost, int len, int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;
 	
-	so->print_set(len, S);
+	so->print_set(ost, len, S);
 }
 
 

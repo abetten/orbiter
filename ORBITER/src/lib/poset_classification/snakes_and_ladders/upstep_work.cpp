@@ -468,7 +468,8 @@ int upstep_work::init_extension_node(int verbose_level)
 		}
 	if (f_vvv) {
 		if (gen->f_print_function) {
-			(*gen->print_function)(size, gen->S, gen->print_function_data);
+			(*gen->print_function)(cout,
+					size, gen->S, gen->print_function_data);
 			}
 		}
 	if (f_vv) {

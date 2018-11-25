@@ -310,7 +310,9 @@ void int_matrix_make_block_matrix_2x2(int *Mtx, int k,
 void int_matrix_delete_column_in_place(int *Mtx, int k, int n, int pivot);
 // afterwards, the matrix is k x (n - 1)
 int int_matrix_max_log_of_entries(int *p, int m, int n);
+void int_matrix_print_ost(ostream &ost, int *p, int m, int n);
 void int_matrix_print(int *p, int m, int n);
+void int_matrix_print_ost(ostream &ost, int *p, int m, int n, int w);
 void int_matrix_print(int *p, int m, int n, int w);
 void int_matrix_print_tex(ostream &ost, int *p, int m, int n);
 void int_matrix_print_bitwise(int *p, int m, int n);

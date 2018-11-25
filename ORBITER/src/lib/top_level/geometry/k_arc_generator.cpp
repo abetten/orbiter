@@ -43,7 +43,8 @@ void k_arc_generator::freeself()
 	null();
 }
 
-void k_arc_generator::init(finite_field *F, projective_space *P2, 
+void k_arc_generator::init(
+	finite_field *F, projective_space *P2,
 	int d, int sz, 
 	int argc, const char **argv, 
 	int verbose_level)
@@ -51,7 +52,8 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "k_arc_generator::init d=" << d << " sz=" << sz << endl;
+		cout << "k_arc_generator::init "
+				"d=" << d << " sz=" << sz << endl;
 		}
 
 	k_arc_generator::d = d;
@@ -81,16 +83,18 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	Gen->ECA->base_fname = base_fname;
 	
 	if (f_v) {
-		cout << "k_arc_generator::init before Gen->init" << endl;
+		cout << "k_arc_generator::init "
+				"before Gen->init" << endl;
 		}
 	Gen->init(F, 
-		"" /* Gen->ECA->input_prefix */, 
-		"" /* Gen->ECA->base_fname */,
+		"ARCS/" /* Gen->ECA->input_prefix */,
+		base_fname /* Gen->ECA->base_fname */,
 		sz /* Gen->ECA->starter_size */, 
 		argc, argv, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "k_arc_generator::init after Gen->init" << endl;
+		cout << "k_arc_generator::init "
+				"after Gen->init" << endl;
 		}
 
 
@@ -99,7 +103,8 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	//Gen->main(Gen->verbose_level);
 
 	if (f_v) {
-		cout << "k_arc_generator::init Classifying 6-arcs "
+		cout << "k_arc_generator::init "
+				"Classifying 6-arcs "
 				"for q=" << F->q << endl;
 		}
 	
@@ -126,20 +131,30 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	k_arc_idx = NEW_int(nb_orbits);	
 	
 	if (f_v) {
-		cout << "k_arc_generator::init testing the arcs" << endl;
+		cout << "k_arc_generator::init "
+				"testing the arcs" << endl;
 		}
 
 	for (h = 0; h < nb_orbits; h++) {
 
 		if (f_v) {
 			cout << "k_arc_generator::init testing arc " << h
-					<< " / " << nb_orbits << endl;
+					<< " / " << nb_orbits << " : "; // << endl;
 			}
 
 		
 		Gen->gen->get_set_by_level(sz, h, Arc);
 		
 		compute_line_type(Arc, sz, 0 /* verbose_level */);
+
+		if (f_v) {
+			classify C;
+
+			C.init(line_type, P2->N_lines, FALSE, 0);
+			C.print_naked(TRUE);
+			//cout << endl;
+		}
+
 		for (j = 0; j < P2->N_lines; j++) {
 			if (line_type[j] == d) {
 				break;
@@ -148,7 +163,15 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 
 		if (j < P2->N_lines) {
 			k_arc_idx[nb_k_arcs++] = h;
+			if (f_v) {
+				cout << " is good" << endl;
 			}
+			}
+		else {
+			if (f_v) {
+				cout << " is bad" << endl;
+			}
+		}
 
 
 		}

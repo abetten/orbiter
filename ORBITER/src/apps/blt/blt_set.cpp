@@ -1565,14 +1565,14 @@ int blt_set::collinearity_test(int *S, int len, int verbose_level)
 	return f_OK;
 }
 
-void blt_set::print(int *S, int len)
+void blt_set::print(ostream &ost, int *S, int len)
 {
 	int i;
 	
 	for (i = 0; i < len; i++) {
 		O->unrank_point(O->v1, 1, S[i], 0);
-		int_vec_print(cout, O->v1, n);
-		cout << endl;
+		int_vec_print(ost, O->v1, n);
+		ost << endl;
 		}
 }
 

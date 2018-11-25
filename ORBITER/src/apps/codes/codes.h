@@ -86,7 +86,7 @@ public:
 	void null();
 	void freeself();
 	void init(int argc, const char **argv);
-	void print(int len, int *S);
+	void print(ostream &ost, int len, int *S);
 	void main(int verbose_level);
 #if 0
 	void early_test_func_by_using_group(int *S, int len, 
@@ -107,7 +107,7 @@ int check_mindist(int len, int *S, void *data, int verbose_level);
 //int check_mindist_incremental(int len, int *S,
 //	void *data, int verbose_level);
 #endif
-void print_code(int len, int *S, void *data);
+void print_code(ostream &ost, int len, int *S, void *data);
 
 
 

@@ -21,8 +21,8 @@ extern int t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
 int check_conditions(int len, int *S, void *data, int verbose_level);
-void callback_print_set(int len, int *S, void *data);
-int callback_check_conditions(int len, int *S, void *data, int verbose_level);
+void callback_print_set(ostream &ost, int len, int *S, void *data);
+//int callback_check_conditions(int len, int *S, void *data, int verbose_level);
 
 // #############################################################################
 // ovoid_generator.C:
@@ -93,13 +93,13 @@ public:
 	~ovoid_generator();
 	void init(int argc, const char **argv, int &verbose_level);
 	void read_arguments(int argc, const char **argv, int &verbose_level);
-	int check_conditions(int len, int *S, int verbose_level);
+	//int check_conditions(int len, int *S, int verbose_level);
 	void early_test_func(int *S, int len,
 		int *candidates, int nb_candidates,
 		int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int collinearity_test(int *S, int len, int verbose_level);
-	void print(int *S, int len);
+	//int collinearity_test(int *S, int len, int verbose_level);
+	void print(ostream &ost, int *S, int len);
 	void make_graphs(orbiter_data_file *ODF,
 		int f_split, int split_r, int split_m,
 		int f_lexorder_test,

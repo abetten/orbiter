@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 
 	finite_field *F;
 	action *A;
-	orthogonal *O;
+	//orthogonal *O;
 	int f_semilinear = TRUE;
 	int f_basis = TRUE;
 	int *Elt1;
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 	
-	O = A->G.AO->O;
+	//O = A->G.AO->O;
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 

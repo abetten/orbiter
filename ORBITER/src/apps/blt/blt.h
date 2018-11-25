@@ -130,7 +130,7 @@ public:
 		// the triple \{ x,y,a\}
 	int check_conditions(int len, int *S, int verbose_level);
 	int collinearity_test(int *S, int len, int verbose_level);
-	void print(int *S, int len);
+	void print(ostream &ost, int *S, int len);
 
 	// blt_set2.C:
 	void find_free_points(int *S, int S_sz, 
@@ -148,7 +148,7 @@ public:
 };
 
 // blt_set2.C:
-void print_set(int len, int *S, void *data);
+void print_set(ostream &ost, int len, int *S, void *data);
 void blt_set_lifting_prepare_function_new(exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 

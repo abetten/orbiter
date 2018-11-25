@@ -162,16 +162,19 @@ void translation_plane_via_andre_model::init(
 					"before Line->unrank j=" << j << endl;
 			}
 		Line->unrank(j, 0 /*verbose_level*/);
-		Andre->points_on_line(Line, pts_on_line, 0 /* verbose_level */);
+		Andre->points_on_line(Line,
+				pts_on_line, 0 /* verbose_level */);
 		if (f_v10) {
-			cout << "translation_plane_via_andre_model::init Line_" << j << "=";
+			cout << "translation_plane_via_andre_model::init "
+					"Line_" << j << "=";
 			int_vec_print(cout, pts_on_line, Andre->order + 1);
 			cout << endl;
 			}
 		for (h = 0; h < Andre->order + 1; h++) {
 			i = pts_on_line[h];
 			if (i >= N) {
-				cout << "translation_plane_via_andre_model::init i >= N" << endl;
+				cout << "translation_plane_via_andre_model::init "
+						"i >= N" << endl;
 				exit(1);
 				}
 			Incma[i * N + j] = 1;
@@ -190,7 +193,8 @@ void translation_plane_via_andre_model::init(
 		}
 	for (j = 0; j < N; j++) {
 		Line->unrank(j, 0 /*verbose_level*/);
-		Andre->points_on_line(Line, pts_on_line, 0 /* verbose_level */);
+		Andre->points_on_line(Line,
+				pts_on_line, 0 /* verbose_level */);
 		for (u = 0; u < Andre->order + 1; u++) {
 			i1 = pts_on_line[u];
 			for (v = u + 1; v < Andre->order + 1; v++) {
@@ -289,7 +293,8 @@ void translation_plane_via_andre_model::init(
 
 	Inc = NEW_OBJECT(incidence_structure);
 
-	Inc->init_by_matrix(nb_rows, nb_cols, Incma, verbose_level - 2);
+	Inc->init_by_matrix(nb_rows, nb_cols,
+			Incma, verbose_level - 2);
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"after Inc->init_by_matrix" << endl;
@@ -715,7 +720,7 @@ int translation_plane_via_andre_model::check_subplane(
 	else {
 		len2 = 1;
 		}
-	L = NEW_int(len2);
+	L = NEW_int(len2); // bad! No memory stuff in a test function
 
 
 	for (i = 0; i < len; i++) {
@@ -736,6 +741,9 @@ int translation_plane_via_andre_model::check_subplane(
 			}
 		}
 	if (len >= 3) {
+
+		// compute all secants:
+
 		h = 0;
 		for (i = 0; i < len; i++) {
 			a = S[i];

@@ -96,10 +96,10 @@ int main(int argc, char **argv)
 
 
 	action_on_orthogonal *AO;
-	orthogonal *O;
+	//orthogonal *O;
 
 	AO = A->G.AO;
-	O = AO->O;
+	//O = AO->O;
 
 
 	cout << "computing the group B:" << endl;

@@ -88,7 +88,7 @@ public:
 	int girth_check(int *S, int len, int verbose_level);
 	int girth_test_vertex(int *S, int len, int vertex, int girth, int verbose_level);
 	void get_adjacency(int *S, int len, int verbose_level);
-	void print(int *S, int len);
+	void print(ostream &ost, int *S, int len);
 	void print_score_sequences(int level, int verbose_level);
 	void score_sequence(int n, int *set, int sz, int *score, int verbose_level);
 	void draw_graphs(int level, double scale, int xmax_in, int ymax_in, int xmax, int ymax, int f_embedded, int f_sideways, int verbose_level);
@@ -97,6 +97,6 @@ public:
 
 
 int check_conditions(int len, int *S, void *data, int verbose_level);
-void print_set(int len, int *S, void *data);
+void print_set(ostream &ost, int len, int *S, void *data);
 
 
