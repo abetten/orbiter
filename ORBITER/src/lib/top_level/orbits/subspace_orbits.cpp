@@ -14,6 +14,12 @@
 subspace_orbits::subspace_orbits()
 {
 	LG = NULL;
+	n = 0;
+	F = NULL;
+	q = 0;
+	depth = 0;
+
+	f_print_generators = FALSE;
 	tmp_M = NULL;
 	tmp_M2 = NULL;
 	tmp_M3 = NULL;
@@ -21,11 +27,23 @@ subspace_orbits::subspace_orbits()
 	v = NULL;
 	w = NULL;
 	weights = NULL;
+
 	Poset = NULL;
 	Gen = NULL;
 	
-	f_print_generators = FALSE;
+	schreier_depth = 0;
+	f_use_invariant_subset_if_available = FALSE;
+	f_implicit_fusion = FALSE;
+	f_debug = FALSE;
+	f_has_strong_generators = FALSE;
+	Strong_gens = NULL;
+
 	f_has_extra_test_func = FALSE;
+	extra_test_func = NULL;
+	extra_test_func_data = NULL;
+
+	test_dim = 0;
+
 }
 
 subspace_orbits::~subspace_orbits()
@@ -164,6 +182,10 @@ void subspace_orbits::init_group(int verbose_level)
 	Poset->init_subspace_lattice(LG->A_linear,
 			LG->A2, LG->Strong_gens,
 			verbose_level);
+	Poset->add_testing_without_group(
+			subspace_orbits_early_test_func,
+				this /* void *data */,
+				verbose_level);
 	
 	Gen->init(Poset, Gen->depth, verbose_level);
 
@@ -690,7 +712,8 @@ int subspace_orbits::compute_minimum_distance(int len, int *S)
 
 #if 0
 	cout << "coordinate matrix:" << endl;
-	print_integer_matrix_width(cout, tmp_M, len, n, n, P->F->log10_of_q);
+	print_integer_matrix_width(cout,
+			tmp_M, len, n, n, P->F->log10_of_q);
 #endif
 
 
@@ -710,32 +733,32 @@ int subspace_orbits::compute_minimum_distance(int len, int *S)
 	return d;
 }
 
-void subspace_orbits::print_set(int len, int *S)
+void subspace_orbits::print_set(ostream &ost, int len, int *S)
 {
 	int i;
 	
-	cout << "subspace_orbits::print_set" << endl;
-	cout << "Set ";
-	int_vec_print(cout, S, len);
-	cout << endl;
+	ost << "subspace_orbits::print_set" << endl;
+	ost << "Set ";
+	int_vec_print(ost, S, len);
+	ost << endl;
 
 	unrank_set_to_M(len, S);
 
-	cout << "coordinate matrix after unrank:" << endl;
-	print_integer_matrix_width(cout,
+	ost << "coordinate matrix after unrank:" << endl;
+	print_integer_matrix_width(ost,
 			tmp_M, len, n, n, F->log10_of_q);
 
 
 	F->Gauss_easy(tmp_M, len, n);
 
-	cout << "coordinate matrix in RREF:" << endl;
-	print_integer_matrix_width(cout,
+	ost << "coordinate matrix in RREF:" << endl;
+	print_integer_matrix_width(ost,
 			tmp_M, len, n, n, F->log10_of_q);
 
 	
-	cout << "\\left[" << endl;
-	int_matrix_print_tex(cout, tmp_M, len, n);
-	cout << "\\right]" << endl;
+	ost << "\\left[" << endl;
+	int_matrix_print_tex(ost, tmp_M, len, n);
+	ost << "\\right]" << endl;
 
 
 	if (len) {
@@ -745,12 +768,12 @@ void subspace_orbits::print_set(int len, int *S)
 			0 /*verbose_level*/);
 
 
-		cout << "projective weights: " << endl;
+		ost << "projective weights: " << endl;
 		for (i = 0; i <= n; i++) {
 			if (weights[i] == 0) {
 				continue;
 				}
-			cout << i << " : " << weights[i] << endl;
+			ost << i << " : " << weights[i] << endl;
 			}
 		}
 
@@ -762,13 +785,13 @@ void subspace_orbits::print_set(int len, int *S)
 		tmp_M2, tmp_M3, base_cols, 
 		0 /*verbose_level*/);
 
-	cout << "C perp:" << endl;
-	print_integer_matrix_width(cout,
+	ost << "C perp:" << endl;
+	print_integer_matrix_width(ost,
 			tmp_M + k * n, n - k, n, n, F->log10_of_q);
 
-	cout << "\\left[" << endl;
-	int_matrix_print_tex(cout, tmp_M + k * n, n - k, n);
-	cout << "\\right]" << endl;
+	ost << "\\left[" << endl;
+	int_matrix_print_tex(ost, tmp_M + k * n, n - k, n);
+	ost << "\\right]" << endl;
 
 	int *S1;
 	int *canonical_subset;
@@ -783,38 +806,40 @@ void subspace_orbits::print_set(int len, int *S)
 	M2 = NEW_int((n - k) * n);
 	rank_set_from_matrix(n - k, S1, tmp_M + k * n);
 
-	cout << "ranks of rows of the dual:" << endl;
-	int_vec_print(cout, S1, n - k);
-	cout << endl;
+	ost << "ranks of rows of the dual:" << endl;
+	int_vec_print(ost, S1, n - k);
+	ost << endl;
 
 
 	if (n - k > 0 && n - k <= depth && FALSE) {
-		cout << "before Gen->trace_set" << endl;
+		ost << "before Gen->trace_set" << endl;
 		local_idx = Gen->trace_set(S1, n - k, n - k, 
 			canonical_subset, transporter, 
 			//f_implicit_fusion, 
 			0 /*verbose_level - 3*/);
 
-		global_idx = Gen->first_poset_orbit_node_at_level[n - k] + local_idx;
-		cout << "after Gen->trace_set" << endl;
-		cout << "local_idx = " << local_idx << endl;
-		cout << "global_idx = " << global_idx << endl;
-		cout << "canonical set:" << endl;
-		int_vec_print(cout, canonical_subset, n - k);
-		cout << endl;
+		global_idx =
+				Gen->first_poset_orbit_node_at_level[n - k] + local_idx;
+		ost << "after Gen->trace_set" << endl;
+		ost << "local_idx = " << local_idx << endl;
+		ost << "global_idx = " << global_idx << endl;
+		ost << "canonical set:" << endl;
+		int_vec_print(ost, canonical_subset, n - k);
+		ost << endl;
 
 		unrank_set_to_matrix(n - k, canonical_subset, M2);
-		cout << "C perp canonical:" << endl;
-		print_integer_matrix_width(cout, M2, n - k, n, n, F->log10_of_q);
+		ost << "C perp canonical:" << endl;
+		print_integer_matrix_width(ost,
+				M2, n - k, n, n, F->log10_of_q);
 
-		cout << "\\left[" << endl;
-		int_matrix_print_tex(cout, M2, n - k, n);
-		cout << "\\right]" << endl;
+		ost << "\\left[" << endl;
+		int_matrix_print_tex(ost, M2, n - k, n);
+		ost << "\\right]" << endl;
 
-		cout << "transporter:" << endl;
-		Gen->Poset->A->element_print_quick(transporter, cout);
-		cout << "transporter in latex:" << endl;
-		Gen->Poset->A->element_print_latex(transporter, cout);
+		ost << "transporter:" << endl;
+		Gen->Poset->A->element_print_quick(transporter, ost);
+		ost << "transporter in latex:" << endl;
+		Gen->Poset->A->element_print_latex(transporter, ost);
 		}
 
 	FREE_int(S1);
@@ -826,10 +851,11 @@ void subspace_orbits::print_set(int len, int *S)
 	F->intersect_subspaces(n, k, tmp_M, n - k, tmp_M + k * n, 
 		k3, tmp_M2, 0 /*verbose_level*/);
 
-	cout << "\\dim (C \\cap C^\\bot) = " << k3 << endl;
+	ost << "\\dim (C \\cap C^\\bot) = " << k3 << endl;
 
-	cout << "basis for C \\cap C^\\bot:" << endl;
-	print_integer_matrix_width(cout, tmp_M2, k3, n, n, F->log10_of_q);
+	ost << "basis for C \\cap C^\\bot:" << endl;
+	print_integer_matrix_width(ost,
+			tmp_M2, k3, n, n, F->log10_of_q);
 	
 	
 }
@@ -957,7 +983,8 @@ int subspace_orbits::test_if_self_orthogonal(
 	unrank_set_to_M(len, S);
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
-		print_integer_matrix_width(cout, M, len, n, n, F->log10_of_q);
+		print_integer_matrix_width(cout,
+				M, len, n, n, F->log10_of_q);
 		}
 
 	ret = TRUE;

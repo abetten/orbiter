@@ -15,8 +15,20 @@ tdo_scheme::tdo_scheme()
 {
 	int i;
 	
+	P = NULL;
+	part_length = 0;
 	part = NULL;
+	nb_entries = 0;
 	entries = NULL;
+
+	row_level = 0;
+	col_level = 0;
+	lambda_level = 0;
+	extra_row_level = 0;
+	extra_col_level = 0;
+	mn = 0;
+	m = 0;
+	n = 0;
 	for (i = 0; i < NUMBER_OF_SCHEMES; i++) {
 		row_classes[i] = NULL;
 		col_classes[i] = NULL;
@@ -37,7 +49,7 @@ tdo_scheme::tdo_scheme()
 	the_col_scheme_cur = NULL;
 	the_extra_row_scheme_cur = NULL;
 	the_extra_col_scheme_cur = NULL;
-	P = NULL;
+
 }
 
 tdo_scheme::~tdo_scheme()
@@ -2243,6 +2255,7 @@ int tdo_scheme::tdo_rows_setup_first_system(int verbose_level,
 			s_or_s_default = s_default;
 			}
 		else {
+			s_default = 0; // not needed but compiler likes it
 			s_or_s_default = s;
 			}
 		

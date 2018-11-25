@@ -15,7 +15,7 @@
 
 int t0; // the system time when the program started
 
-void print_spread(int len, int *S, void *data);
+void print_spread(ostream &ost, int len, int *S, void *data);
 
 
 #define MAX_FILES 1000
@@ -496,11 +496,11 @@ int main(int argc, const char **argv)
 }
 
 
-void print_spread(int len, int *S, void *data)
+void print_spread(ostream &ost, int len, int *S, void *data)
 {
-	spread *T = (spread *) data;
+	spread *Spread = (spread *) data;
 	
-	T->print(len, S);
+	Spread->print(ost, len, S);
 }
 
 

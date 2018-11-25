@@ -701,22 +701,22 @@ void graph_generator::get_adjacency(int *S, int len, int verbose_level)
 		}
 }
 
-void graph_generator::print(int *S, int len)
+void graph_generator::print(ostream &ost, int *S, int len)
 {
 	int i, j;
 	
-	cout << "graph_generator::print" << endl;
+	ost << "graph_generator::print" << endl;
 	
 	for (i = 0; i < len; i++) {
-		cout << S[i] << " ";
+		ost << S[i] << " ";
 		}
-	cout << endl;
+	ost << endl;
 	get_adjacency(S, len, 0);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
-			cout << setw(2) << adjacency[i * n + j];
+			ost << setw(2) << adjacency[i * n + j];
 			}
-		cout << endl;
+		ost << endl;
 		}
 	
 }
@@ -901,12 +901,12 @@ int check_conditions(int len, int *S, void *data, int verbose_level)
 		}
 }
 
-void print_set(int len, int *S, void *data)
+void print_set(ostream &ost, int len, int *S, void *data)
 {
 	graph_generator *Gen = (graph_generator *) data;
 	
 	//print_vector(ost, S, len);
-	Gen->print(S, len);
+	Gen->print(ost, S, len);
 }
 
 

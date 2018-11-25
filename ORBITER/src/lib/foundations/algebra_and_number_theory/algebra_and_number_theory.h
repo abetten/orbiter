@@ -516,8 +516,8 @@ public:
 	int is_contained_in_subspace(int k, 
 		int len, int *basis, int *base_cols, 
 		int *v, int verbose_level);
-	void compute_and_print_projective_weights(int *M, 
-		int n, int k);
+	void compute_and_print_projective_weights(
+		ostream &ost, int *M, int n, int k);
 	int code_minimum_distance(int n, int k, 
 		int *code, int verbose_level);
 		// code[k * n]

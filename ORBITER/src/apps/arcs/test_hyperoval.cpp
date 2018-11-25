@@ -186,7 +186,8 @@ int main(int argc, char **argv)
 				verbose_level);
 
 		STAB.init(Poset, pts, n, verbose_level);
-		STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level);
+		STAB.compute_set_stabilizer(t0,
+				nb_backtrack_nodes, Aut_gens, verbose_level);
 
 
 		Stab = Aut_gens->create_sims(verbose_level - 1);
@@ -196,7 +197,8 @@ int main(int argc, char **argv)
 
 		longinteger_object go, go2;
 		Stab->group_order(go);
-		cout << "computing stabilizer of hyperoval done, found a group of order " << go << endl;
+		cout << "computing stabilizer of hyperoval done, "
+				"found a group of order " << go << endl;
 
 		cout << "strong generators:" << endl;
 		Aut_gens->print_generators();

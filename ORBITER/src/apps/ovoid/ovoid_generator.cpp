@@ -231,27 +231,18 @@ void ovoid_generator::init(int argc, const char **argv,
 			A->Strong_gens,
 			verbose_level);
 
+	Poset->add_testing_without_group(
+			ovoid_generator_early_test_func_callback,
+				this /* void *data */,
+				verbose_level);
+
 	gen->init(Poset,
 		gen->depth /* sz */,
 		verbose_level - 1);
 
-#if 0
-	gen->init_check_func(callback_check_conditions,
-		(void *)this /* candidate_check_data */);
-#endif
-
-	// we have an early test function:
-
-#if 0
-	// ToDo
-	gen->init_early_test_func(
-		ovoid_generator_early_test_func_callback,
-		this,
-		verbose_level);
-#endif
 
 
-	gen->f_print_function = TRUE;
+	gen->f_print_function = FALSE;
 	gen->print_function = callback_print_set;
 	gen->print_function_data = (void *) this;
 
@@ -347,7 +338,7 @@ void ovoid_generator::init(int argc, const char **argv,
 
 	}
 	if (f_v) {
-		cout << "init() finished" << endl;
+		cout << "init finished" << endl;
 		}
 }
 
@@ -437,6 +428,7 @@ void ovoid_generator::read_arguments(
 	cout << "Witt index " << m << endl;
 }
 
+#if 0
 int ovoid_generator::check_conditions(int len, int *S,
 		int verbose_level)
 {
@@ -469,6 +461,7 @@ int ovoid_generator::check_conditions(int len, int *S,
 		return FALSE;
 		}
 }
+#endif
 
 void ovoid_generator::early_test_func(int *S, int len,
 	int *candidates, int nb_candidates,
@@ -542,6 +535,7 @@ void ovoid_generator::early_test_func(int *S, int len,
 		} // else
 }
 
+#if 0
 int ovoid_generator::collinearity_test(int *S, int len,
 		int verbose_level)
 {
@@ -593,16 +587,17 @@ int ovoid_generator::collinearity_test(int *S, int len,
 		}
 	return f_OK;
 }
+#endif
 
-void ovoid_generator::print(int *S, int len)
+void ovoid_generator::print(ostream &ost, int *S, int len)
 {
 	int i;
 	
 	for (i = 0; i < len; i++) {
 		for (i = 0; i < len; i++) {
 			O->unrank_point(u, 1, S[i], 0);
-			int_vec_print(cout, u, n);
-			cout << endl;
+			int_vec_print(ost, u, n);
+			ost << endl;
 			}
 		}
 }

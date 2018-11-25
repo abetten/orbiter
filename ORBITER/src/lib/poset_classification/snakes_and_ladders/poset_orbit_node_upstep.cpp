@@ -595,7 +595,7 @@ int poset_orbit_node::trace_next_point(
 		int_set_print(cout, next_set, size);
 		cout << endl;
 		if (gen->f_print_function && f_vvv) {
-			(*gen->print_function)(size,
+			(*gen->print_function)(cout, size,
 					next_set, gen->print_function_data);
 			}
 		if (gen->f_allowed_to_show_group_elements && f_v10) {

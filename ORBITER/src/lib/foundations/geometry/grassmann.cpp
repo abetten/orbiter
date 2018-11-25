@@ -838,7 +838,7 @@ void grassmann::unrank_int_here_and_compute_perp(
 	int f_v = (verbose_level >= 1);
 	int r;
 	int *base_cols; // [n]
-	int *embedding;
+	//int *embedding;
 
 	if (f_v) {
 		cout << "grassmann::unrank_int_here_and_compute_perp" << endl;
@@ -846,7 +846,7 @@ void grassmann::unrank_int_here_and_compute_perp(
 	unrank_int(rk, verbose_level);
 	int_vec_copy(M, Mtx, k * n);
 	base_cols = NEW_int(n);
-	embedding = base_cols + k;
+	//embedding = base_cols + k;
 	r = F->RREF_and_kernel(n, k, Mtx, 0 /* verbose_level */);
 	if (r != k) {
 		cout << "r != k" << endl;

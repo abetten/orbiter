@@ -1544,9 +1544,9 @@ void matrix_group::GL_print_easy_normalized(int *Elt, ostream &ost)
 void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 {
 	int i, j, a;
-	int w;
+	//int w;
 	
-	w = (int) GFq->log10_of_q;
+	//w = (int) GFq->log10_of_q;
 
 	int *D;
 	D = NEW_int(n * n);
@@ -1599,9 +1599,9 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 {
     int i, j, a;
-    int w;
+    //int w;
 	
-	w = (int) GFq->log10_of_q;
+	//w = (int) GFq->log10_of_q;
 
 	if (GFq->q <= 9) {
 		ost << "\\left[" << endl;

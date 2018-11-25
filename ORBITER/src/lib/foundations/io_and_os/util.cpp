@@ -778,12 +778,35 @@ int int_matrix_max_log_of_entries(int *p, int m, int n)
 	return w;
 }
 
+void int_matrix_print_ost(ostream &ost, int *p, int m, int n)
+{
+	int w;
+
+	w = int_matrix_max_log_of_entries(p, m, n);
+	int_matrix_print_ost(ost, p, m, n, w);
+}
+
 void int_matrix_print(int *p, int m, int n)
 {
 	int w;
 	
 	w = int_matrix_max_log_of_entries(p, m, n);
 	int_matrix_print(p, m, n, w);
+}
+
+void int_matrix_print_ost(ostream &ost, int *p, int m, int n, int w)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << setw((int) w) << p[i * n + j];
+			if (w) {
+				ost << " ";
+				}
+			}
+		ost << endl;
+		}
 }
 
 void int_matrix_print(int *p, int m, int n, int w)

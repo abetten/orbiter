@@ -116,7 +116,7 @@ void poset_classification::recognize_recursion(
 		}
 	if (f_v4) {
 		if (f_print_function) {
-			(*print_function)(size, set[lvl],
+			(*print_function)(cout, size, set[lvl],
 					print_function_data);
 			}
 		}
@@ -424,7 +424,7 @@ void poset_classification::recognize(
 		int_vec_print(cout, set[0], size);
 		cout << endl;
 		if (f_print_function) {
-			(*print_function)(size, set[0],
+			(*print_function)(cout, size, set[0],
 					print_function_data);
 			}
 		}

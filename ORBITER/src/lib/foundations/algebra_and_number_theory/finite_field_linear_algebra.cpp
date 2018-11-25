@@ -3691,7 +3691,7 @@ int finite_field::is_contained_in_subspace(int k,
 }
 
 void finite_field::compute_and_print_projective_weights(
-		int *M, int n, int k)
+		ostream &ost, int *M, int n, int k)
 {
 	int i;
 	int *weights;
@@ -3703,12 +3703,12 @@ void finite_field::compute_and_print_projective_weights(
 		0 /*verbose_level*/);
 
 
-	cout << "projective weights: " << endl;
+	ost << "projective weights: " << endl;
 	for (i = 0; i <= n; i++) {
 		if (weights[i] == 0) {
 			continue;
 			}
-		cout << i << " : " << weights[i] << endl;
+		ost << i << " : " << weights[i] << endl;
 		}
 	FREE_int(weights);
 }

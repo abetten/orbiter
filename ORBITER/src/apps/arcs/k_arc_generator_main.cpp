@@ -57,6 +57,10 @@ int main(int argc, const char **argv)
 		cout << "please use option -d <d>" << endl;
 		exit(1);
 		}
+	if (!f_q) {
+		cout << "please use option -q <q>" << endl;
+		exit(1);
+		}
 	if (!f_sz) {
 		cout << "please use option -sz <sz>" << endl;
 		exit(1);

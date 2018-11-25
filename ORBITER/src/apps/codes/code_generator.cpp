@@ -416,7 +416,7 @@ void code_generator::init(int argc, const char **argv)
 		}
 #endif
 
-	gen->f_print_function = TRUE;
+	gen->f_print_function = FALSE;
 	gen->print_function = print_code;
 	gen->print_function_data = this;
 	
@@ -439,7 +439,7 @@ void code_generator::init(int argc, const char **argv)
 }
 
 
-void code_generator::print(int len, int *S)
+void code_generator::print(ostream &ost, int len, int *S)
 {
 	int N, j;
 	int *codewords;
@@ -449,15 +449,15 @@ void code_generator::print(int len, int *S)
 		}
 
 	if (f_linear) {
-		cout << "generator matrix:" << endl;
+		ost << "generator matrix:" << endl;
 		for (j = 0; j < len; j++) {
 			F->PG_element_unrank_modified(
 				rc.M1 + j, len /* stride */, nmk /* len */, 
 				S[j]);
 			}
-		print_integer_matrix(cout, rc.M1, nmk, len);
+		print_integer_matrix(ost, rc.M1, nmk, len);
 
-		int_matrix_print_tex(cout, rc.M1, nmk, len);
+		int_matrix_print_tex(ost, rc.M1, nmk, len);
 
 		N = i_power_j(F->q, nmk);
 		codewords = NEW_int(N);
@@ -466,28 +466,28 @@ void code_generator::print(int len, int *S)
 			codewords,
 			verbose_level);
 
-		cout << "The " << N << " codewords are: ";
-		int_vec_print(cout, codewords, N);
-		cout << endl;
+		ost << "The " << N << " codewords are: ";
+		int_vec_print(ost, codewords, N);
+		ost << endl;
 
 		FREE_int(codewords);
 
 
-		F->compute_and_print_projective_weights(rc.M1, len, nmk);
+		F->compute_and_print_projective_weights(ost, rc.M1, len, nmk);
 
 		if (len > k) {
 			int *A, *B;
 			int k1;
 
-			cout << "computing the dual code:" << endl;
+			ost << "computing the dual code:" << endl;
 
 			A = NEW_int(n * n);
 			int_vec_copy(rc.M1, A, nmk * len);
 			F->perp_standard(len, nmk, A, 0 /* verbose_level*/);
 			B = A + nmk * len;
-			print_integer_matrix(cout, B, len - nmk, len);
+			print_integer_matrix(ost, B, len - nmk, len);
 
-			int_matrix_print_tex(cout, B, len - nmk, len);
+			int_matrix_print_tex(ost, B, len - nmk, len);
 
 
 			k1 = len - nmk;
@@ -499,20 +499,20 @@ void code_generator::print(int len, int *S)
 				codewords,
 				verbose_level);
 
-			cout << "The " << N << " codewords are: ";
-			int_vec_print(cout, codewords, N);
-			cout << endl;
+			ost << "The " << N << " codewords are: ";
+			int_vec_print(ost, codewords, N);
+			ost << endl;
 
 			FREE_int(codewords);
 		
-			cout << "before F->compute_and_print_"
+			ost << "before F->compute_and_print_"
 					"projective_weights" << endl;
 			F->compute_and_print_projective_weights(
-					B, len, len - nmk);
+					ost, B, len, len - nmk);
 			}
 		}
 	else if (f_nonlinear) {
-		cout << "print nonlinear not yet implemented" << endl;
+		ost << "print nonlinear not yet implemented" << endl;
 		}	
 }
 
@@ -956,11 +956,11 @@ int check_mindist_incremental(int len, int *S,
 }
 #endif
 
-void print_code(int len, int *S, void *data)
+void print_code(ostream &ost, int len, int *S, void *data)
 {
 	code_generator *cg = (code_generator *) data;
 	
-	cg->print(len, S);
+	cg->print(ost, len, S);
 }
 
 

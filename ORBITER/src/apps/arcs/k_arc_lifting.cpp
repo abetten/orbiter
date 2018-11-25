@@ -11,7 +11,8 @@
 int t0; // the system time when the program started
 
 int main(int argc, char **argv);
-void arc_lifting_from_classification_file(const char *classification_fname, 
+void arc_lifting_from_classification_file(
+	const char *classification_fname,
 	projective_space *P, int k, int sz, 
 	int f_Cook, int f_DLX, int f_McKay, 
 	int f_split, int split_r, int split_m, 
@@ -24,7 +25,8 @@ void do_arc_lifting(projective_space *P, int k,
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
 	int verbose_level);
-void user_callback_solution_found(int *sol, int len, int nb_sol, void *data);
+void user_callback_solution_found(
+	int *sol, int len, int nb_sol, void *data);
 void search(int level);
 
 
@@ -130,7 +132,9 @@ int main(int argc, char **argv)
 			f_split = TRUE;
 			split_r = atoi(argv[++i]);
 			split_m = atoi(argv[++i]);
-			split_r = split_r % split_m; // added so that 0 can be written as m. The Sussex HPD does not allow zero for a TASK_ID.
+			split_r = split_r % split_m;
+				// added so that 0 can be written as m.
+				// The Sussex HPD does not allow zero for a TASK_ID.
 			cout << "-split " << split_r << " " << split_m << endl;
 			}
 		else if (strcmp(argv[i], "-fining_labels") == 0) {
@@ -162,7 +166,8 @@ int main(int argc, char **argv)
 			f_loop = TRUE;
 			loop_start = atoi(argv[++i]);
 			loop_increment = atoi(argv[++i]);
-			cout << "-loop " << loop_start << " " << loop_increment << endl;
+			cout << "-loop " << loop_start << " "
+					<< loop_increment << endl;
 			}
 		}
 	
@@ -200,7 +205,8 @@ int main(int argc, char **argv)
 
 
 	if (f_v) {
-		cout << "creating projective space PG(" << 2 << ", " << q << ")" << endl;
+		cout << "creating projective space "
+				"PG(" << 2 << ", " << q << ")" << endl;
 		}
 
 
@@ -332,18 +338,26 @@ int main(int argc, char **argv)
 			for (cnt = loop_start; TRUE; cnt += loop_increment) {
 				sprintf(classification_fname2, classification_fname, cnt);
 				if (file_size(classification_fname2) <= 0) {
-					cout << "The file " << classification_fname2 << " does not exist, we break off" << endl;
+					cout << "The file " << classification_fname2
+							<< " does not exist, we break off" << endl;
 					break;
 					}
 				loop_end = cnt;
 				nb_loop_iterations++;
 				}
 			
-			cout << "Processing loop from " << loop_start << " to " << loop_end << " in increments of " << loop_increment << " which is " << nb_loop_iterations << " iterations" << endl;
+			cout << "Processing loop from " << loop_start << " to "
+					<< loop_end << " in increments of " << loop_increment
+					<< " which is " << nb_loop_iterations
+					<< " iterations" << endl;
 			
-			for (cur_loop_iterations = 0; cur_loop_iterations < nb_loop_iterations; cur_loop_iterations++) {
+			for (cur_loop_iterations = 0;
+					cur_loop_iterations < nb_loop_iterations;
+					cur_loop_iterations++) {
 				cnt = loop_start + cur_loop_iterations * loop_increment;
-				cout << "Loop " << cur_loop_iterations << "/ " << nb_loop_iterations << " is case " << cnt << ":" << endl;
+				cout << "Loop " << cur_loop_iterations << "/ "
+						<< nb_loop_iterations << " is case "
+						<< cnt << ":" << endl;
 				sprintf(classification_fname2, classification_fname, cnt);
 
 				int nb_sol_total = 0;
@@ -356,7 +370,10 @@ int main(int argc, char **argv)
 					nb_sol_total, 
 					verbose_level - 2);
 				nb_sol_overall += nb_sol_total;
-				cout << "Finished loop " << cur_loop_iterations << "/ " << nb_loop_iterations << " is case " << cnt << ": nb_sol_total = " << nb_sol_total << " nb_sol_overall=" << nb_sol_overall << endl;
+				cout << "Finished loop " << cur_loop_iterations << "/ "
+						<< nb_loop_iterations << " is case " << cnt
+						<< ": nb_sol_total = " << nb_sol_total
+						<< " nb_sol_overall=" << nb_sol_overall << endl;
 				}
 			cout << "nb_sol_overall = " << nb_sol_overall << endl;
 			}
@@ -384,7 +401,8 @@ int main(int argc, char **argv)
 
 
 
-void arc_lifting_from_classification_file(const char *classification_fname, 
+void arc_lifting_from_classification_file(
+	const char *classification_fname,
 	projective_space *P, int k, int sz, 
 	int f_Cook, int f_DLX, int f_McKay, 
 	int f_split, int split_r, int split_m, 
@@ -411,7 +429,8 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 	F = P->F;
 	q = F->q;
 	if (f_split) {
-		cout << "split: doing only the cases congruent to " << split_r << " modulo " << split_m << endl;
+		cout << "split: doing only the cases congruent to " << split_r
+				<< " modulo " << split_m << endl;
 		}
 
 	action *A;
@@ -429,7 +448,8 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 		}
 
 	A = NEW_OBJECT(action);
-	A->init_projective_group(3, F, f_semilinear, f_basis, 0 /*verbose_level*/);
+	A->init_projective_group(3, F,
+			f_semilinear, f_basis, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "arc_generator::init after init_projective_group" << endl;
@@ -437,7 +457,8 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 
 
 	if (f_v) {
-		cout << "reading all orbit representatives from file " << classification_fname << endl;
+		cout << "reading all orbit representatives from "
+				"file " << classification_fname << endl;
 		}
 	orbit_transversal *T;
 
@@ -445,7 +466,8 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 	T->read_from_file(A, A, classification_fname, verbose_level - 1);
 
 	if (f_v) {
-		cout << "We read all orbit representatives. There are " << T->nb_orbits << " orbits" << endl;
+		cout << "We read all orbit representatives. "
+				"There are " << T->nb_orbits << " orbits" << endl;
 		}
 
 	set_and_stabilizer *rep;
@@ -465,21 +487,25 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 	char success_fname[1000];
 
 	if (!f_solution_prefix) {
-		sprintf(solution_fname, "arc_%d_%d_from_%s", sz, k, classification_fname);
+		sprintf(solution_fname, "arc_%d_%d_from_%s",
+				sz, k, classification_fname);
 		}
 	else {
-		sprintf(solution_fname, "%sarc_%d_%d_from_%s", solution_prefix, sz, k, classification_fname);
+		sprintf(solution_fname, "%sarc_%d_%d_from_%s",
+				solution_prefix, sz, k, classification_fname);
 		}
 
 	if (f_split) {
-		sprintf(solution_fname + strlen(solution_fname), "_case_r%d_m%d", split_r, split_m);
+		sprintf(solution_fname + strlen(solution_fname),
+				"_case_r%d_m%d", split_r, split_m);
 		}
 	sprintf(success_fname, "%s.success", solution_fname);
 
 
 
 	if (f_v) {
-		cout << "We will write the solutions to the file " << solution_fname << endl;
+		cout << "We will write the solutions to the "
+				"file " << solution_fname << endl;
 		}
 
 	{
@@ -505,7 +531,9 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 #endif
 
 			if (f_vv) {
-				cout << "File " << classification_fname << " We will consider representative " << orbit_idx << " / " << T->nb_orbits << endl;
+				cout << "File " << classification_fname
+						<< " We will consider representative "
+						<< orbit_idx << " / " << T->nb_orbits << endl;
 				}
 			if (f_vvv) {
 				cout << " which is " << endl;
@@ -517,7 +545,10 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 			arc_sz = rep->sz;
 	
 			if (f_vv) {
-				cout << "File " << classification_fname << " Lifting arc " << orbit_idx << " / " << T->nb_orbits << " nb_sol_total=" << nb_sol_total << endl;
+				cout << "File " << classification_fname
+						<< " Lifting arc " << orbit_idx << " / "
+						<< T->nb_orbits
+						<< " nb_sol_total=" << nb_sol_total << endl;
 				}
 			nb_sol = 0;
 			cnt = 0;
@@ -533,7 +564,11 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 			Cnt[orbit_idx] = cnt;
 			nb_sol_total += nb_sol;
 			if (f_v || ((case_cnt % 1024) == 0)) {
-				cout << "File " << classification_fname << " Lifting arc " << orbit_idx << " / " << T->nb_orbits << " done, nb_sol = " << nb_sol << " nb_sol_total=" << nb_sol_total << endl;
+				cout << "File " << classification_fname
+						<< " Lifting arc " << orbit_idx << " / "
+						<< T->nb_orbits << " done, nb_sol = "
+						<< nb_sol << " nb_sol_total="
+						<< nb_sol_total << endl;
 				}
 	
 			}
@@ -544,12 +579,14 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 				if (Nb_sol[orbit_idx] == 0) {
 					continue;
 					}
-				cout << orbit_idx << " : " << Cnt[orbit_idx] << " : " << Nb_sol[orbit_idx] << endl;
+				cout << orbit_idx << " : " << Cnt[orbit_idx]
+					<< " : " << Nb_sol[orbit_idx] << endl;
 				}
 			}
 		Fp << -1 << endl;
 	}
-	cout << "Written file " << solution_fname << " of size " << file_size(solution_fname) << endl;
+	cout << "Written file " << solution_fname << " of size "
+			<< file_size(solution_fname) << endl;
 	{
 	ofstream fp(success_fname);
 	fp << "success" << endl;
@@ -559,7 +596,8 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 		}
 }
 
-void do_arc_lifting(projective_space *P, int k, 
+void do_arc_lifting(
+	projective_space *P, int k,
 	int *arc, int arc_sz, int target_sz, 
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
@@ -583,7 +621,8 @@ void do_arc_lifting(projective_space *P, int k,
 
 	free_points = NEW_int(P->N_points);
 
-	set_complement(arc, arc_sz, free_points, nb_free_points, P->N_points);
+	set_complement(arc, arc_sz,
+			free_points, nb_free_points, P->N_points);
 
 	if (f_v) {
 		cout << "nb_free_points = " << nb_free_points << endl;
@@ -631,7 +670,9 @@ void do_arc_lifting(projective_space *P, int k,
 		f_semilinear = TRUE;
 		}
 	A_linear = NEW_OBJECT(action);
-	A_linear->init_projective_group(P->n + 1, F, f_semilinear, TRUE /*f_basis */, 0 /*verbose_level*/);
+	A_linear->init_projective_group(P->n + 1, F,
+			f_semilinear, TRUE /*f_basis */,
+			0 /*verbose_level*/);
 	
 
 #if 0
@@ -671,7 +712,8 @@ void do_arc_lifting(projective_space *P, int k,
 
 
 	line_type = NEW_int(P->N_lines);
-	P->line_intersection_type(arc, arc_sz, line_type, 0 /* verbose_level */);
+	P->line_intersection_type(arc, arc_sz,
+			line_type, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "line_type: ";
 		int_vec_print_fully(cout, line_type, P->N_lines);
@@ -749,9 +791,11 @@ void do_arc_lifting(projective_space *P, int k,
 
 
 	if (f_save_system) {
-		cout << "do_arc_lifting saving the system to file " << fname_system << endl;
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << endl;
 		D->save_in_general_format(fname_system, 0 /* verbose_level */);
-		cout << "do_arc_lifting saving the system to file " << fname_system << " done" << endl;
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << " done" << endl;
 		D->print();
 		D->print_tight();
 		}
@@ -828,7 +872,8 @@ void do_arc_lifting(projective_space *P, int k,
 					for (l = 0; l < Sz[h]; l++) {
 						if (Cook_table[h * w + l] == pt) {
 							for (u = l + 1; u < Sz[h]; u++) {
-								Cook_table[h * w + u - 1] = Cook_table[h * w + u];
+								Cook_table[h * w + u - 1] =
+									Cook_table[h * w + u];
 								}
 							Sz[h]--;
 							l--;
@@ -864,7 +909,9 @@ void do_arc_lifting(projective_space *P, int k,
 
 
 		int_vec_copy(Sz, Sz2, nb_km1_lines);
-		int_vec_sorting_permutation(Sz2, nb_km1_lines, perm, perm_inv, FALSE /* f_increasingly */);
+		int_vec_sorting_permutation(Sz2,
+				nb_km1_lines, perm, perm_inv,
+				FALSE /* f_increasingly */);
 
 
 
@@ -903,7 +950,8 @@ void do_arc_lifting(projective_space *P, int k,
 
 
 		line_type = NEW_int(P->N_lines);
-		P->line_intersection_type(arc, arc_sz, line_type, 0 /* verbose_level */);
+		P->line_intersection_type(arc, arc_sz,
+				line_type, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "line_type: " << endl;
 			int_vec_print_fully(cout, line_type, P->N_lines);
@@ -916,7 +964,8 @@ void do_arc_lifting(projective_space *P, int k,
 			}
 
 
-		Line_type_after = NEW_int(nb_needed * P->N_lines); // [nb_needed * P->N_lines]
+		Line_type_after = NEW_int(nb_needed * P->N_lines);
+			// [nb_needed * P->N_lines]
 	
 
 #if 1
@@ -950,7 +999,8 @@ void do_arc_lifting(projective_space *P, int k,
 			cout << "before solve_all_DLX_with_RHS" << endl;
 			}
 		D->solve_all_DLX_with_RHS(
-			FALSE /* f_write_tree */, "" /* "search_tree.tree"*/ /* fname_tree */, 
+			FALSE /* f_write_tree */,
+			"" /* "search_tree.tree"*/ /* fname_tree */,
 			verbose_level - 1);
 		nb_sol = D->_resultanz;
 		if (f_v) {
@@ -963,13 +1013,15 @@ void do_arc_lifting(projective_space *P, int k,
 			}
 		int nb_backtrack_nodes;
 
-		D->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
+		D->solve_all_mckay(nb_backtrack_nodes,
+				verbose_level - 2);
 		
 		//D->solve_once_mckay(verbose_level - 1);
 		nb_sol = D->_resultanz;
 
 		if (f_v) {
-			cout << "after solve_all_mckay nb_sol = " << nb_sol << endl;
+			cout << "after solve_all_mckay "
+					"nb_sol = " << nb_sol << endl;
 			}
 		if (nb_sol) {
 			int *Sol;
@@ -1004,7 +1056,8 @@ void do_arc_lifting(projective_space *P, int k,
 			}
 		}
 	else {
-		cout << "please specify an option for how to solve the system" << endl;
+		cout << "please specify an option for how "
+				"to solve the system" << endl;
 		exit(1);
 		}
 
@@ -1025,23 +1078,27 @@ void do_arc_lifting(projective_space *P, int k,
 		cout << "read solutions from file:" << endl;
 		for (i = 0; i < MINIMUM(10, nb_sol); i++) {
 			cout << "solution " << i << " / " << nb_sol << ":" << endl;
-			int_vec_print_fully(cout, Sol + i * nb_free_points, nb_free_points);
+			int_vec_print_fully(cout,
+					Sol + i * nb_free_points, nb_free_points);
 			cout << endl;
 			}
 		for (i = 0; i < nb_sol; i++) {
-			D->test_solution_full_length(Sol + i * nb_free_points, verbose_level);
+			D->test_solution_full_length(Sol + i * nb_free_points,
+					verbose_level);
 			}
 		cout << "The solutions are OK" << endl;
 		}
 	else {
-		D->save_in_general_format("system.diophant", 0 /* verbose_level */);
+		D->save_in_general_format("system.diophant",
+				0 /* verbose_level */);
 		D->print();
 		D->print_tight();
 		}
 
 
 	cout << "before with_RHS_and_callback" << endl;
-	D->solve_all_DLX_with_RHS_and_callback(TRUE /* f_write_tree */, "search_tree.tree" /* fname_tree */, 
+	D->solve_all_DLX_with_RHS_and_callback(TRUE /* f_write_tree */,
+			"search_tree.tree" /* fname_tree */,
 		user_callback_solution_found, 
 		1 /* verbose_level */);
 
@@ -1059,7 +1116,8 @@ void do_arc_lifting(projective_space *P, int k,
 }
 
 
-void user_callback_solution_found(int *sol, int len, int nb_sol, void *data)
+void user_callback_solution_found(
+		int *sol, int len, int nb_sol, void *data)
 {
 	cout << "user_callback_solution_found" << endl;
 	nb_sol++;
@@ -1094,7 +1152,8 @@ void user_callback_solution_found(int *sol, int len, int nb_sol, void *data)
 
 
 	line_type = NEW_int(P->N_lines);
-	P->line_intersection_type(big_arc, big_arc_size, line_type, 0 /* verbose_level */);
+	P->line_intersection_type(big_arc,
+			big_arc_size, line_type, 0 /* verbose_level */);
 	cout << "line_type: " << endl;
 	int_vec_print_fully(cout, line_type, P->N_lines);
 	cout << endl;
@@ -1255,11 +1314,14 @@ void search(int level)
 		r0 = row[level - 1] - 1;
 		}
 	for (row[level] = r0; row[level] >= b; row[level]--) {
-		for (col[level] = 0; col[level] < Sz2[row[level]]; col[level]++) {
+		for (col[level] = 0;
+				col[level] < Sz2[row[level]];
+				col[level]++) {
 			
 			pt = Cook_table2[row[level] * w + col[level]];
 
-			//cout << "level " << level << " row = " << row[level] << " col = " << col[level] << " pt = " << pt << endl;
+			//cout << "level " << level << " row = " << row[level]
+			//<< " col = " << col[level] << " pt = " << pt << endl;
 			
 			Arc[level] = pt;
 

@@ -271,7 +271,7 @@ public:
 #endif
 
 	int f_print_function;
-	void (*print_function)(int len, int *S, void *data);
+	void (*print_function)(ostream &ost, int len, int *S, void *data);
 	void *print_function_data;
 	
 	int nb_times_trace;
@@ -501,7 +501,7 @@ public:
 		int verbose_level);
 	void list_all_orbits_at_level(int depth, 
 		int f_has_print_function, 
-		void (*print_function)(int len, int *S, void *data), 
+		void (*print_function)(ostream &ost, int len, int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
@@ -514,7 +514,7 @@ public:
 	void list_selected_set_of_orbits_at_level(int depth, 
 		int nb_orbits, int *Orbit_idx, 
 		int f_has_print_function, 
-		void (*print_function)(int len, int *S, void *data), 
+		void (*print_function)(ostream &ost, int len, int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
@@ -528,7 +528,7 @@ public:
 	//	int verbose_level);
 	void list_whole_orbit(int depth, int orbit_idx, 
 		int f_has_print_function, 
-		void (*print_function)(int len, int *S, void *data), 
+		void (*print_function)(ostream &ost, int len, int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
@@ -560,7 +560,6 @@ public:
 	int rank_point(int *v);
 	void unrank_basis(int *Basis, int *S, int len);
 	void rank_basis(int *Basis, int *S, int len);
-	void generate_source_code(int level, int verbose_level);
 
 	// poset_classification_init.C:
 	poset_classification();
@@ -821,7 +820,6 @@ public:
 	void write_level_file_binary2(int level, FILE *fp, 
 		int &nb_group_elements, int verbose_level);
 	int calc_size_on_file(int depth_completed, int verbose_level);
-	void make_fname_candidates_file_default(char *fname, int level);
 	void write_candidates_binary_using_sv(char *fname_base, 
 		int lvl, int t0, int verbose_level);
 	void read_level_file(int level, char *fname, int verbose_level);
@@ -856,10 +854,12 @@ public:
 		int verbose_level);
 	void read_file(ifstream &fp, int &depth_completed, 
 		int verbose_level);
+	void generate_source_code(int level, int verbose_level);
 	void create_schreier_tree_fname_mask_base(
 			char *fname_mask, int node);
 	void create_shallow_schreier_tree_fname_mask_base(
 			char *fname_mask, int node);
+	void make_fname_candidates_file_default(char *fname, int level);
 
 	// poset_classification_recognize.C:
 	void recognize_start_over(

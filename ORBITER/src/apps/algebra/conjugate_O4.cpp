@@ -76,8 +76,8 @@ void conjugate(int q, int *from_elt, int *to_elt, int verbose_level)
 	action *A4;
 	action *A_O4;
 	longinteger_object Go;
-	int go, ord;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	int ord;
+	int *Elt1, *Elt2; //, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
 		
 
 
@@ -99,15 +99,18 @@ void conjugate(int q, int *from_elt, int *to_elt, int verbose_level)
 
 	A_O4->print_base();
 	A_O4->group_order(Go);
-	go = Go.as_int();
+	//int go;
+	//go = Go.as_int();
 	
 	Elt1 = new int[A4->elt_size_in_int];
 	Elt2 = new int[A4->elt_size_in_int];
+#if 0
 	Elt3 = new int[A4->elt_size_in_int];
 	Elt4 = new int[A4->elt_size_in_int];
 	Elt5 = new int[A4->elt_size_in_int];
 	Elt6 = new int[A4->elt_size_in_int];
 	Elt7 = new int[A4->elt_size_in_int];
+#endif
 
 
 	A4->make_element(Elt1, from_elt, verbose_level);

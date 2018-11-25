@@ -1087,12 +1087,12 @@ void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 
 
 
-void print_set(int len, int *S, void *data)
+void print_set(ostream &ost, int len, int *S, void *data)
 {
 	blt_set *Gen = (blt_set *) data;
 	
 	//print_vector(ost, S, len);
-	Gen->print(S, len);
+	Gen->print(ost, S, len);
 }
 
 void blt_set_lifting_prepare_function_new(

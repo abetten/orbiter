@@ -69,7 +69,7 @@ public:
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
 	int check_function_incremental(int len, int *S, int verbose_level);
-	void print(int *S, int len);
+	void print(ostream &ost, int *S, int len);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case, 
 		int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 		diophant *&Dio, int *&col_labels, 
@@ -104,7 +104,7 @@ public:
 
 
 
-void print_set(int len, int *S, void *data);
+void print_set(ostream &ost, int len, int *S, void *data);
 void rls_generator_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 

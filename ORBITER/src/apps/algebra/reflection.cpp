@@ -135,7 +135,7 @@ void do_it(int q, int type,
 	int n;
 	int f_semilinear = FALSE;
 	int f_basis = TRUE;
-	int target_go;
+	//int target_go;
 	
 	F = new finite_field;
 	F->init(q, 0);
@@ -147,15 +147,15 @@ void do_it(int q, int type,
 		f_semilinear = FALSE;
 	
 	if (type == TYPE_F4) {
-		target_go = 1152;
+		//target_go = 1152;
 		dimension = 4;
 		}
 	else if (type == TYPE_H4) {
-		target_go = 14400;
+		//target_go = 14400;
 		dimension = 4;
 		}
 	else if (type == TYPE_E6) {
-		target_go = 51840;
+		//target_go = 51840;
 		dimension = 8;
 		}
 	n = dimension + 1;

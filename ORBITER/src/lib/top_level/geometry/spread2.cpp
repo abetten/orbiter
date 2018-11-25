@@ -1523,7 +1523,7 @@ void spread::read_and_print_spread(const char *fname, int verbose_level)
 	int sz;
 	
 	read_set_from_file(fname, data, sz, verbose_level);
-	print_spread(data, sz);
+	print_spread(cout, data, sz);
 	FREE_int(data);
 }
 
@@ -1546,7 +1546,7 @@ void spread::HMO(const char *fname, int verbose_level)
 	H = NEW_int(order);
 	Ge = NEW_int(order);
 	He = NEW_int(order);
-	print_spread(data, sz);
+	print_spread(cout, data, sz);
 	get_spread_matrices(G, H, data, verbose_level);
 
 
@@ -1714,16 +1714,16 @@ void spread::get_spread_matrices(int *G, int *H,
 		}
 }
 
-void spread::print_spread(int *data, int sz)
+void spread::print_spread(ostream &ost, int *data, int sz)
 {
 	//int sz = order + 1;
 	int h;
 
 	for (h = 0; h < sz; h++) {
 		Grass->unrank_int(data[h], 0);
-		cout << "Spread element " << h << ":" << endl;
-		int_matrix_print(Grass->M, k, n);
-		}	
+		ost << "Spread element " << h << ":" << endl;
+		int_matrix_print_ost(ost, Grass->M, k, n);
+		}
 }
 
 void spread::report2(isomorph &Iso, int verbose_level)
@@ -1998,8 +1998,10 @@ void spread::report2(isomorph &Iso, int verbose_level)
 		schreier Orb;
 		//longinteger_object go2;
 		
-		Iso.AA->compute_all_point_orbits(Orb, Stab->gens, verbose_level - 2);
-		f << "With " << Orb.nb_orbits << " orbits on the subspaces\\\\" << endl;
+		Iso.AA->compute_all_point_orbits(Orb,
+				Stab->gens, verbose_level - 2);
+		f << "With " << Orb.nb_orbits
+				<< " orbits on the subspaces\\\\" << endl;
 
 		classify C_ol;
 
@@ -2072,7 +2074,8 @@ void spread::report2(isomorph &Iso, int verbose_level)
 		f << "$$" << endl;
 		f << "\\begin{array}{|c|c|c|c|}" << endl;
 		f << "\\hline" << endl;
-		f << "\\mbox{Orbit} & \\mbox{Length} & \\mbox{Induced} & \\mbox{Kernel} \\\\" << endl;
+		f << "\\mbox{Orbit} & \\mbox{Length} & \\mbox{Induced} "
+				"& \\mbox{Kernel} \\\\" << endl;
 		f << "\\hline" << endl;
 		for (i = 0; i < Orb.nb_orbits; i++) {
 			int fst, len, j;
@@ -2356,8 +2359,10 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 			Grass->unrank_int_here(Mtx, a, 0/*verbose_level - 4*/);
 			int_vec_copy(vec1, vec2, n);
 			for (j = 0; j < k; j++) {
-				F->Gauss_step(vec2, Mtx + j * n, n, pivot, 0 /* verbose_level*/);
-					// afterwards: v2[idx] = 0 and v1,v2 span the same space as before
+				F->Gauss_step(vec2, Mtx + j * n, n, pivot,
+						0 /* verbose_level*/);
+					// afterwards: v2[idx] = 0 and
+					// v1,v2 span the same space as before
 					// v1 is not changed if v1[idx] is nonzero
 				}
 
@@ -2583,6 +2588,13 @@ void spread_callback_make_quotients(isomorph *Iso,
 	spread *Spread = (spread *) data;
 	
 	Spread->all_cooperstein_thas_quotients(*Iso, verbose_level);
+}
+
+void callback_spread_print(ostream &ost, int len, int *S, void *data)
+{
+	spread *Spread = (spread *) data;
+
+	Spread->print_spread(ost, S, len);
 }
 
 

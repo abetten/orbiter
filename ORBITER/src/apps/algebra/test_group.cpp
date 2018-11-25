@@ -118,7 +118,7 @@ void test_group(int argc, const char **argv, int f_full, int verbose_level)
 	action *A;
 	longinteger_object Go;
 	int go;
-	int h, i, j, q;
+	int h, i, j;
 	int *Elt;
 
 
@@ -134,7 +134,7 @@ void test_group(int argc, const char **argv, int f_full, int verbose_level)
 	F->init(Descr->input_q, 0);
 
 	Descr->F = F;
-	q = Descr->input_q;
+	//q = Descr->input_q;
 	
 
 
@@ -284,7 +284,7 @@ void test2(int verbose_level)
 	action_on_orthogonal *AO;
 	orthogonal *O;
 	
-	int N;
+	//int N;
 		
 	F = new finite_field;
 	A = new action;
@@ -299,7 +299,7 @@ void test2(int verbose_level)
 	AO = A->G.AO;
 	O = AO->O;
 
-	N = O->nb_points + O->nb_lines;
+	//N = O->nb_points + O->nb_lines;
 	
 	//A->degree = O->nb_points;
 		
@@ -421,7 +421,7 @@ void test6(int verbose_level)
 	longinteger_object Go;
 	int go, i, j, rk, ord;
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
-	int *ELT1, *ELT2;
+	int *ELT1;
 	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
 		
 	F = new finite_field;
@@ -454,7 +454,6 @@ void test6(int verbose_level)
 	Elt_Bs = new int[A->elt_size_in_int];
 
 	ELT1 = new int[A4->elt_size_in_int];
-	ELT2 = new int[A4->elt_size_in_int];
 
 	ELT_A = new int[A4->elt_size_in_int];
 	ELT_B = new int[A4->elt_size_in_int];
@@ -651,15 +650,18 @@ void test6(int verbose_level)
 
 
 	int R1[] = {65,65,45,52};
-	int R_start[4], R_cur[4], R_next[4];
+	//int R_start[4],
+	int R_cur[4], R_next[4];
 	int **tangent_planes;
 
 	cout << "computing tangent planes first orbit:" << endl;
 	tangent_planes = new pint[17];
+#if 0
 	R_start[0] = R_cur[0] = R1[0];
 	R_start[1] = R_cur[1] = R1[1];
 	R_start[2] = R_cur[2] = R1[2];
 	R_start[3] = R_cur[3] = R1[3];
+#endif
 	for (i = 0; i < 17; i++) {
 		tangent_planes[i] = new int[3 * 4];
 		cout << "i=" << i << endl;
@@ -711,9 +713,9 @@ void O4_grid_action(action *A_PGL4, int *Elt, int verbose_level)
 	F = A_PGL4->G.matrix_grp->GFq;
 	q = F->q;
 	int size = q + 1;
-	int *perm;
+	//int *perm;
 
-	perm = new int[size * size];
+	//perm = new int[size * size];
 	z = z0 = 0; // 69;
 	while (TRUE) {
 		x = z / size;
@@ -782,9 +784,9 @@ void test7(int verbose_level)
 	action *A;
 	action *A4;
 	longinteger_object Go;
-	int go, ord;
+	int ord;
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
-	int *ELT1, *ELT2;
+	int *ELT1;
 	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
 	
 	F = new finite_field;
@@ -800,7 +802,7 @@ void test7(int verbose_level)
 		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
@@ -816,7 +818,6 @@ void test7(int verbose_level)
 	Elt_Bs = new int[A->elt_size_in_int];
 
 	ELT1 = new int[A4->elt_size_in_int];
-	ELT2 = new int[A4->elt_size_in_int];
 
 	ELT_A = new int[A4->elt_size_in_int];
 	ELT_B = new int[A4->elt_size_in_int];
@@ -901,8 +902,8 @@ void test8(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go, i;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	int i;
+	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
 
 	F = new finite_field;
 	A = new action;
@@ -914,15 +915,11 @@ void test8(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
 	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
-	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 
 	int data[] = {0,1,4,6};
@@ -946,8 +943,8 @@ void test9(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	//int go;
+	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
 
 	F = new finite_field;
 	F->init(8, 0);
@@ -960,15 +957,11 @@ void test9(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
 	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
-	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 
 	int data1[] = {0,1,0,1,0,0,0,0,1,0};
@@ -995,8 +988,8 @@ void test10(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	//int go;
+	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
 
 	F = new finite_field;
 	F->init(8, 0);
@@ -1008,15 +1001,11 @@ void test10(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
 	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
-	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 
 	int data1[] = {1,0,0,0,6,0,0,0,1,0};
@@ -1046,8 +1035,8 @@ void test11(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	//int go;
+	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
 
 	F = new finite_field;
 	F->init_override_polynomial(16, "19", 0);
@@ -1059,15 +1048,11 @@ void test11(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
 	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
-	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 
 	int data1[] = {1,6,6,6,1,6,1,1,7,2};
@@ -1097,8 +1082,8 @@ void test12(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	//int go;
+	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
 
 	F = new finite_field;
 	F->init_override_polynomial(16, "19", 0);
@@ -1110,15 +1095,11 @@ void test12(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
 	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
-	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 
 	//int data2[] = {5,0,0,0,5,0,0,0,5,2};
@@ -1149,8 +1130,8 @@ void test13(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	//int go;
+	int *Elt1;
 
 	F = new finite_field;
 	A = new action;
@@ -1162,15 +1143,9 @@ void test13(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
-	Elt2 = new int[A->elt_size_in_int];
-	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
-	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 
 	int data1[] = {0,1,0,0,0,1,2,2,3};
@@ -1191,8 +1166,8 @@ void test14(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	//int go;
+	int *Elt1, *Elt2, *Elt4, *Elt5, *Elt6, *Elt7;
 	int q = 19;
 	int f_basis = TRUE;
 	int f_init_hash_table = FALSE;
@@ -1233,11 +1208,11 @@ void test14(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
-	Elt3 = new int[A->elt_size_in_int];
+	//Elt3 = new int[A->elt_size_in_int];
 	Elt4 = new int[A->elt_size_in_int];
 	Elt5 = new int[A->elt_size_in_int];
 	Elt6 = new int[A->elt_size_in_int];
@@ -1323,9 +1298,9 @@ void test15(int verbose_level)
 	int q = 67;
 
 	action_on_orthogonal *AO;
-	orthogonal *O;
+	//orthogonal *O;
 	
-	int N;
+	//int N;
 		
 	F = new finite_field;
 
@@ -1341,9 +1316,9 @@ void test15(int verbose_level)
 	A->lex_least_base_in_place(verbose_level);
 	
 	AO = A->G.AO;
-	O = AO->O;
+	//O = AO->O;
 
-	N = O->nb_points + O->nb_lines;
+	//N = O->nb_points + O->nb_lines;
 	
 	//A->degree = O->nb_points;
 		
@@ -1573,10 +1548,10 @@ void test16(int verbose_level)
 		}
 
 	
-	sims *Stab;
+	//sims *Stab;
 	action *A_restr;
 
-	Stab = new sims;
+	//Stab = new sims;
 	
 	longinteger_object target_go;
 	int f_has_target_group_order = TRUE;
@@ -1789,12 +1764,14 @@ void test17(int verbose_level)
 	int *T1, *S1;
 	int *T2, *S2;
 	int *T3, *S3;
+#if 0
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
 	int *Elt4;
 	int *Elt5;
 	int *Elt6;
+#endif
 	int *elt1;
 	int *elt2;
 	int *elt3;
@@ -1838,6 +1815,11 @@ void test17(int verbose_level)
 	
 	O4 = A4->G.AO->O;
 	
+	int f_switch1, f_switch2, f_switch3;
+
+
+#if 0
+
 	Elt1 = NEW_int(A4->elt_size_in_int);
 	Elt2 = NEW_int(A4->elt_size_in_int);
 	Elt3 = NEW_int(A4->elt_size_in_int);
@@ -1845,9 +1827,7 @@ void test17(int verbose_level)
 	Elt5 = NEW_int(A4->elt_size_in_int);
 	Elt6 = NEW_int(A4->elt_size_in_int);
 	
-	int f_switch1, f_switch2, f_switch3;
-	
-#if 0
+
 	int data16_1[16];
 	int data16_2[16];
 	int data16_3[16];
@@ -1958,7 +1938,7 @@ void test18(int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	action *A;
-	orthogonal *O;
+	//orthogonal *O;
 	finite_field *Fq;
 	int i;
 	
@@ -1980,7 +1960,7 @@ void test18(int verbose_level)
 	
 	A->lex_least_base_in_place(verbose_level - 1);
 	
-	O = A->G.AO->O;
+	//O = A->G.AO->O;
 
 	int nb_stab_gens = 2;
 	int stab_gens[] = {
@@ -2043,7 +2023,7 @@ void test19(int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	action *A;
-	orthogonal *O;
+	//orthogonal *O;
 	finite_field *Fq;
 	int i, j;
 	
@@ -2066,7 +2046,7 @@ void test19(int verbose_level)
 	
 	A->lex_least_base_in_place(verbose_level - 1);
 	
-	O = A->G.AO->O;
+	//O = A->G.AO->O;
 
 	int nb_gens = 2;
 	int gens_data[] = {
@@ -2143,7 +2123,7 @@ void test20(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
+	//int go;
 	int *Elt1, *Elt2, *Elt3;
 	int i;
 
@@ -2159,7 +2139,7 @@ void test20(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -2359,7 +2339,7 @@ void test_bricks(int verbose_level)
 	action *A;
 	longinteger_object Go;
 	int go;
-	int *Elt1, *Elt2, *Elt3;
+	int *Elt1; //, *Elt2, *Elt3;
 	int i;
 	int q = 5;
 
@@ -2377,8 +2357,6 @@ void test_bricks(int verbose_level)
 	go = Go.as_int();
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
 
 	int m_one;
 

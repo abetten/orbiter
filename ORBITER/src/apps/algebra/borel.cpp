@@ -47,6 +47,14 @@ int main(int argc, char **argv)
 			cout << "-q " << q << endl;
 			}
 		}
+	if (!f_n) {
+		cout << "please use option -n <n>" << endl;
+		exit(1);
+	}
+	if (!f_q) {
+		cout << "please use option -q <q>" << endl;
+		exit(1);
+	}
 	test_borel(n, q, verbose_level);
 }
 

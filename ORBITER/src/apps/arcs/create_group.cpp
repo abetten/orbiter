@@ -140,7 +140,8 @@ void create_group_arcs8(int q, int verbose_level)
 				}
 			}
 		}
-	cout << "We found " << cnt << " group elements of order 9. nb_zero_max = " << nb_zero_max << endl;
+	cout << "We found " << cnt << " group elements of order 9. "
+			"nb_zero_max = " << nb_zero_max << endl;
 
 	for (i = 0; i < go.as_int(); i++) {
 		Aut->element_unrank_int(i, Elt);
@@ -153,7 +154,8 @@ void create_group_arcs8(int q, int verbose_level)
 					}
 				}
 			if (nb_zero == nb_zero_max) {
-				cout << "Element " << setw(5) << i << " / " << go.as_int() << endl;
+				cout << "Element " << setw(5) << i << " / "
+						<< go.as_int() << endl;
 				A->element_print(Elt, cout);
 				A->element_print_as_permutation(Elt, cout);
 				cout << endl;

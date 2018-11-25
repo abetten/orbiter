@@ -56,7 +56,7 @@ void find_element(int q, int *mtx, int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go, ord;
+	int ord;
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
 
 	int dataE[4];
@@ -76,7 +76,8 @@ void find_element(int q, int *mtx, int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//int go;
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
