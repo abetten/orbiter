@@ -129,7 +129,7 @@ discreta_base *calloc_nobjects_plus_length(int n, kind k)
 		new( &p[i] ) discreta_base;
 		p[i].c_kind(k);
 		}
-	p[-1].c_kind(intEGER);
+	p[-1].c_kind(INTEGER);
 	p[-1].m_i_i(n);
 	return p;
 }
@@ -169,9 +169,9 @@ discreta_base *calloc_m_times_n_objects(int m, int n, kind k)
 		new( &p[i] ) discreta_base;
 		p[i].c_kind(k);
 		}
-	p[-2].c_kind(intEGER);
+	p[-2].c_kind(INTEGER);
 	p[-2].m_i_i(m);
-	p[-1].c_kind(intEGER);
+	p[-1].c_kind(INTEGER);
 	p[-1].m_i_i(n);
 	return p;
 }
@@ -207,14 +207,14 @@ const char *kind_ascii(kind k)
 {
 	switch(k) {
 		case BASE: return "BASE";
-		case intEGER: return "intEGER";
+		case INTEGER: return "intEGER";
 		case VECTOR: return "VECTOR";
 		case NUMBER_PARTITION: return "NUMBER_PARTITION";
 		case PERMUTATION: return "PERMUTATION";
 		
 		case MATRIX: return "MATRIX";
 
-		case LONGintEGER: return "LONGintEGER";
+		case LONGINTEGER: return "LONGintEGER";
 		//case SUBGROUP_LATTICE: return "SUBGROUP_LATTICE";
 		//case SUBGROUP_ORBIT: return "SUBGROUP_ORBIT";
 
@@ -920,7 +920,7 @@ int sqrt_mod_involved(int a, int p)
 		}
 	// now p % 8 == 1
 	// Tonelli / Shanks algorithm:
-	int n, r, q, e, m;
+	int n, r = 0, q, e, m;
 	longinteger Z, N, Y, B, T, d, mP, AB, Ypower, Bpower;
 
 #ifdef TONELLI_VERBOSE

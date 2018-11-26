@@ -1683,13 +1683,13 @@ int scene::line_extended(
 	double x1, double x2, double x3,
 	double y1, double y2, double y3, double r)
 {
-	double d1, d2;
+	//double d1, d2;
 	double v[3];
 	double a, b, c, av, d, e;
 	double lambda1, lambda2;
 
-	d1 = ::distance_from_origin(x1, x2, x3);
-	d2 = ::distance_from_origin(y1, y2, y3);
+	//d1 = ::distance_from_origin(x1, x2, x3);
+	//d2 = ::distance_from_origin(y1, y2, y3);
 	v[0] = y1 - x1;
 	v[1] = y2 - x2;
 	v[2] = y3 - x3;
@@ -1859,7 +1859,7 @@ int scene::map_a_point(int line1, int line2,
 	double_vec_copy(K1, K3, 4);
 	double_vec_copy(K2, K3 + 4, 4);
 	k3 = Null_space(K3, 2, 4, K4, 0 /* verbose_level */);
-	if (k2 != 1) {
+	if (k3 != 2) {
 		cout << "map_a_point k3 != 2" << endl;
 		return FALSE;
 		}
@@ -2111,11 +2111,11 @@ void scene::fourD_cube(double rad_desired)
 void scene::rescale(int first_pt_idx, double rad_desired)
 {
 	int i;
-	double rad, a;
+	double rad = 1., a;
 
 	for (i = first_pt_idx; i < nb_points; i++) {
 		a = ::distance_from_origin(Point_coords + i * 3, 3);
-		if (i == 0) {
+		if (i == first_pt_idx) {
 			rad = a;
 			}
 		else {
@@ -2919,7 +2919,7 @@ void scene::create_affine_space(int q, int verbose_level)
 	double half = 3.6 / sqrt(3);
 	double dx = 2 * half / (double) q;
 	double dx_half = dx * 0.5;
-	double center[3];
+	//double center[3];
 	double basis[9];
 	double v[3];
 
@@ -2936,9 +2936,9 @@ void scene::create_affine_space(int q, int verbose_level)
 
 	cout << "dx = " << dx << endl;
 	cout << "dx_half = " << dx_half << endl;
-	center[0] = -half;
-	center[1] = -half;
-	center[2] = -half;
+	//center[0] = -half;
+	//center[1] = -half;
+	//center[2] = -half;
 
 	f_has_affine_space = TRUE;
 	affine_space_q = 0;

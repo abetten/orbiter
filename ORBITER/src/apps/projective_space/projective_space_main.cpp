@@ -18,10 +18,10 @@
 int t0; // the system time when the program started
 
 
-#define INPUT_TYPE_SET_OF_POintS 1
+#define INPUT_TYPE_SET_OF_POINTS 1
 #define INPUT_TYPE_SET_OF_LINES 2
 #define INPUT_TYPE_SET_OF_PACKING 3
-#define INPUT_TYPE_FILE_OF_POintS 4
+#define INPUT_TYPE_FILE_OF_POINTS 4
 #define INPUT_TYPE_FILE_OF_LINES 5
 #define INPUT_TYPE_FILE_OF_PACKINGS 6
 #define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 			cout << "-poly " << poly << endl;
 			}
 		else if (strcmp(argv[i], "-set_of_points") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POintS;
+			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
 			input_string[nb_inputs] = argv[++i];
 			input_string2[nb_inputs] = NULL;
 			cout << "-set_of_points " << input_string[nb_inputs] << endl;
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-file_of_points") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POintS;
+			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINTS;
 			input_string[nb_inputs] = argv[++i];
 			input_string2[nb_inputs] = NULL;
 			cout << "-file_of_points " << input_string[nb_inputs] << endl;
@@ -721,7 +721,7 @@ void canonical_form(int nb_inputs, int *input_type,
 		cout << "input " << input_idx << " / " << nb_inputs
 				<< " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
+		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
 			cout << "input set of points " << input_string[input_idx]
 				<< ":" << endl;
 
@@ -850,7 +850,7 @@ void canonical_form(int nb_inputs, int *input_type,
 				}
 #endif
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS || 
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
 				input_type[input_idx] ==
@@ -911,7 +911,7 @@ void canonical_form(int nb_inputs, int *input_type,
 				OiP = NEW_OBJECT(object_in_projective_space);
 
 				if (input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_POintS) {
+						INPUT_TYPE_FILE_OF_POINTS) {
 					OiP->init_point_set(PA->P,
 							the_set_in, set_size_in, 0 /* verbose_level*/);
 					}
@@ -1009,7 +1009,7 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 		cout << "input " << input_idx << " / " << nb_inputs
 			<< " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
+		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
 			cout << "input set of points "
 				<< input_string[input_idx] << ":" << endl;
 
@@ -1114,7 +1114,7 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 						PA, CB, verbose_level);
 				}
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS || 
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
 				input_type[input_idx] ==
@@ -1180,7 +1180,7 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 				OiP = NEW_OBJECT(object_in_projective_space);
 
 				if (input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_POintS) {
+						INPUT_TYPE_FILE_OF_POINTS) {
 					OiP->init_point_set(PA->P, the_set_in, set_size_in,
 							0 /* verbose_level*/);
 					}
@@ -1276,7 +1276,7 @@ int count_number_of_objects_to_test(int nb_inputs, int *input_type,
 		cout << "input " << input_idx << " / " << nb_inputs
 			<< " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
+		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
 			if (f_v) {
 				cout << "input set of points "
 						<< input_string[input_idx] << ":" << endl;
@@ -1303,7 +1303,7 @@ int count_number_of_objects_to_test(int nb_inputs, int *input_type,
 			nb_objects_to_test++;
 
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
 			if (f_v) {
 				cout << "input sets of points from file "
 						<< input_string[input_idx] << ":" << endl;

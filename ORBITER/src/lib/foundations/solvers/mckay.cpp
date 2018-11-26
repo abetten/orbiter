@@ -341,8 +341,8 @@ void mckay::tMCKAY::solve(int level,
 	int numeqn, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
     int i,j;
 	vector<int> lo, hi;
 	lo.resize(_varanz);
@@ -350,19 +350,18 @@ void mckay::tMCKAY::solve(int level,
 	int isplit,mindiff;
 	vector<bool> active;
 	active.resize(_eqnanz);
-	int current_node;
+	//int current_node;
 	int f_restriction_made;
 
-	current_node = nb_calls_to_solve;
+	//current_node = nb_calls_to_solve;
 	nb_calls_to_solve++;
+#if 0
 	if (f_vv) {
 		log_12l(current_node, level);
-#if 0
 		cout << "solve " << problem_label << " node " << current_node 
 			<< " first_moved " << first_moved  
 			<< " second_moved " << second_moved  
 			<< " level " << level;
-#endif
 		}
 	if (f_vvv) {
 		cout << " : ";
@@ -376,6 +375,7 @@ void mckay::tMCKAY::solve(int level,
 	if (f_vv) {
 		cout << endl;
 		}
+#endif
 #ifdef MCKAY_DEBUG
 	if (f_vvv) {
 		cout << "level=" << level << endl;
@@ -390,11 +390,14 @@ void mckay::tMCKAY::solve(int level,
 			}
 		}
 #endif
+
+#if 0
 	if (f_vvv) {
 		log_12l(current_node, level);
 		cout << " current system:" << endl;
 		puteqns(alo,ahi,numvar,lorhs,hirhs,eqn,neqn,numeqn);
 		}
+#endif
 	//f_debug = FALSE;
 
 	//f_debug = (verbose_level >= 10);
@@ -403,8 +406,8 @@ void mckay::tMCKAY::solve(int level,
 		return;
 		}
 
-#if 0
-	if (f_v) {
+
+	if (FALSE) {
         	int nacc = 0;
 		cout << " SOLVE level "<<level<< endl;
 	            cout<<"Number of active equations: ";
@@ -421,7 +424,7 @@ void mckay::tMCKAY::solve(int level,
 		    	}
 #ifdef MCKAY_DEBUG
 	        if (((os_ticks() - ticks0) / os_ticks_per_second())
-	        		> intERVAL_IN_SECONDS) {
+	        		> INTERVAL_IN_SECONDS) {
 			ticks0 = os_ticks();
 			f_debug = TRUE;
 		       	puteqns(alo,ahi,numvar,lorhs,hirhs,eqn,neqn,numeqn);
@@ -431,7 +434,7 @@ void mckay::tMCKAY::solve(int level,
 			}
 #endif
 		}
-#endif
+
 
 
 
@@ -451,16 +454,19 @@ void mckay::tMCKAY::solve(int level,
 		eqn, neqn, 
 		numeqn, f_restriction_made, verbose_level - 1)) {
 
+#if 0
 		if (f_vv) {
 			log_12l(current_node, level);
 			cout << " restrict_variables returns FALSE, "
 					"backtracking" << endl;
 			}
+#endif
 		return;
 		}
 
 
 
+#if 0
 	if (f_vvv && f_restriction_made) {
 		log_12l(current_node, level);
 		cout << " after restriction: low and high:" << endl;
@@ -468,6 +474,7 @@ void mckay::tMCKAY::solve(int level,
 			cout << i << " : " << lo[i] << " : " << hi[i] << endl;
 			}
 		}
+#endif
 
 	// Here comes the searching part. 
 	// \|mindiff| gives the smallest
@@ -475,11 +482,14 @@ void mckay::tMCKAY::solve(int level,
 	// \|isplit|
 	// is the corresponding variable number.
 
+#if 0
 	if (f_vv) {
 		log_12l(current_node, level);
 		cout << "searching part" << endl;
 		}
- 	mindiff = INT_MAX;
+#endif
+
+	mindiff = INT_MAX;
 	isplit = -1;
 	for (i = 0; i < numvar; ++i) {
         if (hi[i] != lo[i] && hi[i] - lo[i] < mindiff) {
@@ -495,7 +505,7 @@ void mckay::tMCKAY::solve(int level,
 
 	if (isplit < 0) {
 		if (f_v) {
-			log_12l(current_node, level);
+			log_12l(nb_calls_to_solve, level);
 			cout << " solution " << D->_resultanz << endl;
 			}
 		D->_results.push_back(lo);
@@ -520,11 +530,13 @@ void mckay::tMCKAY::solve(int level,
 
 //#if VERBOSE > 2
 
+#if 0
 			if (f_vvv) {
 				log_12l(current_node, level);
 				cout << " after varprune and pruneqn:" << endl;
 				puteqns(lo,hi,numvar,lorhs,hirhs,eqn,neqn,numeqn);
 				}
+#endif
 //#endif
 			}
 
@@ -537,31 +549,41 @@ void mckay::tMCKAY::solve(int level,
    \|branch|, \|split| and \|range| are collected for debugging purposes.
 */
 
-	int f_first_moved_has_changed = FALSE;
 	
+#if 0
 		if ((f_v && (current_node % 10000) == 0) || f_vv) {
 			log_12l(current_node, level);
 			cout << " choosing variable " << isplit 
 				<< " lo=" << lo[isplit] << " hi=" << hi[isplit] << endl;
 			}
+#endif
 		for (i = 0; i <= mindiff; ++i) {
+			int first_moved_orig = first_moved;
+			int second_moved_orig = second_moved;
+			int f_first_moved_has_changed = FALSE;
+			int f_second_moved_has_changed = FALSE;
+
+
 			if (i) {
+
 				if (level < first_moved) {
 					first_moved = level;
 					second_moved = INT_MAX;
-					f_first_moved_has_changed = TRUE;
 					}
 				else if (level < second_moved) {
 					second_moved = level;
+					}
+				if (first_moved != first_moved_orig) {
 					f_first_moved_has_changed = TRUE;
-					}
 				}
-			if (f_first_moved_has_changed ||
-					(f_v && (current_node % 10000) == 0) || f_vv) {
-				if (f_v) {
-					log_12l(current_node, level);
+				if (second_moved != second_moved_orig) {
+					f_second_moved_has_changed = TRUE;
+				}
+				}
+			if (f_first_moved_has_changed || f_second_moved_has_changed ||
+					(nb_calls_to_solve % 10000000) == 0) {
+					log_12l(nb_calls_to_solve, level);
 					cout << " x_" << isplit << " = " << lo[isplit] << endl;
-					}
 				}
 			hi[isplit] = lo[isplit];
 #ifdef MCKAY_DEBUG
@@ -579,10 +601,13 @@ void mckay::tMCKAY::solve(int level,
 			++lo[isplit];
 			} // next i
         } // else
+
+#if 0
 	if (f_vv) {
 			log_12l(current_node, level);
 			cout << " done" << endl;
 		}
+#endif
 }
 
 int mckay::tMCKAY::restrict_variables(int level, 
@@ -946,6 +971,7 @@ void mckay::tMCKAY::log_12l(int current_node, int level)
 			}
 		
 		cout << " level " << level;
+		cout << " nb_sol=" << D->_resultanz;
 }
 
 

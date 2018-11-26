@@ -917,7 +917,7 @@ int Vector::hip()
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
-		if (s_i(i).s_kind() != intEGER)
+		if (s_i(i).s_kind() != INTEGER)
 			return FALSE;
 		}
 	return TRUE;
@@ -932,8 +932,8 @@ int Vector::hip1()
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
-		if (s_i(i).s_kind() != intEGER) {
-			cout << "Vector::hip1(): object not of type intEGER\n";
+		if (s_i(i).s_kind() != INTEGER) {
+			cout << "Vector::hip1(): object not of type INTEGER\n";
 			exit(1);
 			}
 		k = s_ii(i);
@@ -1091,7 +1091,7 @@ void Vector::conjugate_with_inverse(discreta_base & a)
 void merge(Vector &v1, Vector &v2, Vector &v3)
 {
 	int l1, l2, l3, i1 = 0, i2 = 0, r;
-	int f_add1, f_add2;
+	int f_add1; //, f_add2;
 	
 	l1 = v1.s_l();
 	l2 = v2.s_l();
@@ -1099,18 +1099,18 @@ void merge(Vector &v1, Vector &v2, Vector &v3)
 	v3.m_l(l3);
 	while (i1 < l1 || i2 < l2) {
 		f_add1 = FALSE;
-		f_add2 = FALSE;
+		//f_add2 = FALSE;
 		if (i1 < l1 && i2 < l2) {
 			r = v1[i1].compare_with(v2[i2]);
 			if (r < 0)
 				f_add1 = TRUE;
-			else
-				f_add2 = TRUE;
+			//else
+			//	f_add2 = TRUE;
 			}
 		else if (i1 < l1)
 			f_add1 = TRUE;
-		else
-			f_add2 = TRUE;
+		//else
+		//	f_add2 = TRUE;
 		if (f_add1) {
 			v3[i1 + i2] = v1[i1];
 			i1++;
@@ -1127,7 +1127,7 @@ void merge_with_fellows(Vector &v1, Vector &v1_fellow,
 	Vector &v3, Vector &v3_fellow)
 {
 	int l1, l2, l3, i1 = 0, i2 = 0, r;
-	int f_add1, f_add2;
+	int f_add1; //, f_add2;
 	
 	l1 = v1.s_l();
 	l2 = v2.s_l();
@@ -1136,18 +1136,18 @@ void merge_with_fellows(Vector &v1, Vector &v1_fellow,
 	v3_fellow.m_l(l3);
 	while (i1 < l1 || i2 < l2) {
 		f_add1 = FALSE;
-		f_add2 = FALSE;
+		//f_add2 = FALSE;
 		if (i1 < l1 && i2 < l2) {
 			r = v1[i1].compare_with(v2[i2]);
 			if (r < 0)
 				f_add1 = TRUE;
-			else
-				f_add2 = TRUE;
+			//else
+			//	f_add2 = TRUE;
 			}
 		else if (i1 < l1)
 			f_add1 = TRUE;
-		else
-			f_add2 = TRUE;
+		//else
+		//	f_add2 = TRUE;
 		if (f_add1) {
 			v3[i1 + i2] = v1[i1];
 			v3_fellow[i1 + i2] = v1_fellow[i1];
@@ -1748,7 +1748,7 @@ int Vector::hash(int hash0)
 	l = s_l();
 	h = hash_int(h, s_l());
 	for (i = 0; i < l; i++) {
-		if (s_i(i).s_kind() != intEGER) {
+		if (s_i(i).s_kind() != INTEGER) {
 			cout << "Vector::hash() must be vector of integers" << endl;
 			exit(1);
 			}

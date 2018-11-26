@@ -731,10 +731,10 @@ int matrix::rank()
 
 int matrix::get_kernel(Vector& base_cols, matrix& kernel)
 {
-	int r, m, n, k, i, j, ii, iii, a, b;
+	int r, n, k, i, j, ii, iii, a, b;
 	Vector kcol;
 	
-	m = s_m();
+	//m = s_m();
 	n = s_n();
 	r = base_cols.s_l();
 	k = n - r;
@@ -1836,7 +1836,7 @@ int matrix::hip()
 	n = s_n();
 	for (i = 0; i < m; i++)
 		for (j = 0; j < n; j++)
-			if (s_ij(i, j).s_kind() != intEGER)
+			if (s_ij(i, j).s_kind() != INTEGER)
 				return FALSE;
 	return TRUE;
 }
@@ -1852,7 +1852,7 @@ int matrix::hip1()
 	n = s_n();
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			if (s_ij(i, j).s_kind() != intEGER) {
+			if (s_ij(i, j).s_kind() != INTEGER) {
 				cout << "matrix::hip1(): not intEGER\n";
 				exit(1);
 				}
@@ -2139,11 +2139,11 @@ void matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, int f_tex,
 	Vector & decomp, permutation & p)
 {
 	matrix M;
-	int m, n;
+	int n;
 	Vector row_decomp, col_decomp;
 	int i, l1, l, ll;
 	
-	m = s_m();
+	//m = s_m();
 	n = s_n();
 	M = *this;
 	M.apply_col_row_perm(p);
@@ -2514,7 +2514,7 @@ void matrix::calc_hash_key(int key_len, hollerith & hash_key, int f_v)
 	char *alphabet = NULL;
 	char *inc = NULL;
 	char *key = NULL;
-	int i0, i, j, k, v, b, nb_inc, pr, x, y;
+	int i, j, k, v, b, nb_inc, pr, x, y;
 	char c;
 	int f_vv = FALSE;
 	Vector P;
@@ -2534,7 +2534,7 @@ void matrix::calc_hash_key(int key_len, hollerith & hash_key, int f_v)
 	alphabet = (char *) new char[al_len + 1];
 	inc = (char *) new char[nb_inc + 1];
 	key = (char *) new char[key_len + 1];
-	i0 = 0;
+	//i0 = 0;
 	k = 0;
 	while (k < al_len) {
 		for (i = 0; i < 10; i++) {

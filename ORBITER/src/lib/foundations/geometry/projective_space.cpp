@@ -2064,6 +2064,12 @@ void projective_space::create_Cheon_arc(
 		exit(1);
 		}
 #endif
+	for (i = 0; i < 9; i++) {
+		pencil[i] = 0;
+	}
+	for (i = 0; i < 21; i++) {
+		Pencil[i] = 0;
+	}
 	for (i = 0; i < 3; i++) {
 		points[i] = rank_point(data + i * 3);
 		}

@@ -32,7 +32,7 @@
 
 enum kind { 
 	BASE = 0,
-	intEGER = 1,
+	INTEGER = 1,
 	VECTOR = 2,
 	NUMBER_PARTITION = 3, 
 	// RATIONAL /* BRUCH */ = 4, 
@@ -44,7 +44,7 @@ enum kind {
 	MATRIX = 11,
 
 	// MONOM = 21, 
-	LONGintEGER = 22,
+	LONGINTEGER = 22,
 	
 	//SUBGROUP_LATTICE = 36, 
 	//SUBGROUP_ORBIT = 37, 
@@ -452,7 +452,7 @@ void free_finite_field_domain(domain *dom, int f_v);
 
 // internal representations:
 
-typedef struct longinteger_representation LONGintEGER_REPRESENTATION;
+typedef struct longinteger_representation LONGINTEGER_REPRESENTATION;
 //typedef struct bitmatrix_representation BITMATRIX_REPRESENTATION;
 
 //! DISCRETA internal class
@@ -464,7 +464,7 @@ typedef union {
 	int *int_pointer;
 	discreta_base *vector_pointer;
 	discreta_base *matrix_pointer;
-	LONGintEGER_REPRESENTATION *longinteger_rep;
+	LONGINTEGER_REPRESENTATION *longinteger_rep;
 	//BITMATRIX_REPRESENTATION *bitmatrix_rep;
 } OBJECTSELF;
 
@@ -547,8 +547,8 @@ class discreta_base
 	design_parameter_source& as_design_parameter_source() { return *(design_parameter_source *)this; }
 	design_parameter& as_design_parameter() { return *(design_parameter *)this; }
 	
-	integer& change_to_integer() { freeself(); c_kind(intEGER); return as_integer(); }
-	longinteger& change_to_longinteger() { freeself(); c_kind(LONGintEGER); return as_longinteger(); }
+	integer& change_to_integer() { freeself(); c_kind(INTEGER); return as_integer(); }
+	longinteger& change_to_longinteger() { freeself(); c_kind(LONGINTEGER); return as_longinteger(); }
 	Vector& change_to_vector() { freeself(); c_kind(VECTOR); return as_vector(); }
 	permutation& change_to_permutation() { freeself(); c_kind(PERMUTATION); return as_permutation(); }
 	number_partition& change_to_number_partition() { freeself(); c_kind(NUMBER_PARTITION); return as_number_partition(); }
@@ -882,7 +882,7 @@ class longinteger: public discreta_base
 
 	ostream& print(ostream&);
 	
-	LONGintEGER_REPRESENTATION *s_rep();
+	LONGINTEGER_REPRESENTATION *s_rep();
 	int& s_sign();
 	int& s_len();
 	char& s_p(int i);
@@ -2187,11 +2187,12 @@ class database: public Vector
 	void delete_files();
 	void put_file_size();
 	void get_file_size();
-	void user2total(int user, int *total, int *pad);
+	void user2total(int user, int &total, int &pad);
 	int size_of_header();
 	int size_of_header_log();
 	
-	void add_object_return_datref(Vector &the_object, uint4 &datref, int verbose_level);
+	void add_object_return_datref(Vector &the_object,
+			uint4 &datref, int verbose_level);
 	void add_object(Vector &the_object, int verbose_level);
 	void delete_object(Vector& the_object, uint4 datref, int verbose_level);
 	void get_object(uint4 datref, Vector &the_object, int verbose_level);

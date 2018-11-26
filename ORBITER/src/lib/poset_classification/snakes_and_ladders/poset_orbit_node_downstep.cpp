@@ -198,7 +198,7 @@ void poset_orbit_node::compute_schreier_vector(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	schreier Schreier;
-	int f_trivial_group;
+	//int f_trivial_group;
 	int f_using_invariant_subset = FALSE;
 	int f_use_incremental_test_func_if_available = TRUE;
 	int *candidates = NULL;
@@ -210,12 +210,14 @@ void poset_orbit_node::compute_schreier_vector(
 				"computing Schreier vector" << endl;
 		}	
 	
+#if 0
 	if (nb_strong_generators == 0) {
 		f_trivial_group = TRUE;
 		}
 	else {
 		f_trivial_group = FALSE;
 		}
+#endif
 	if (FALSE) {
 		cout << "generators:" << endl;
 		Schreier.print_generators();

@@ -459,7 +459,8 @@ void classify_double_sixes::classify_partial_ovoids(
 		char title[10000];
 		char author[10000];
 
-		sprintf(author, "");
+		author[0] = 0;
+		//sprintf(author, "");
 
 
 		sprintf(title, "Classification of Five-Plus-Ones over GF(%d)", q);

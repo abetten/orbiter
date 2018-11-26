@@ -150,6 +150,10 @@ int main(int argc, char **argv)
 		cout << "please use option -level <level>" << endl;
 		exit(1);
 		}
+	if (!f_subgroup) {
+		cout << "please use option -subgroup <subgroup>" << endl;
+		exit(1);
+		}
 	if (!f_group) {
 		cout << "please use option -group <group>" << endl;
 		exit(1);

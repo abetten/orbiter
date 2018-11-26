@@ -71,6 +71,10 @@ int main(int argc, const char **argv)
 		cout << "please use -q <q> to specify q" << endl;
 		exit(1);
 		}
+	if (!f_type) {
+		cout << "please use -type" << endl;
+		exit(1);
+		}
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);

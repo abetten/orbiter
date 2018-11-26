@@ -641,7 +641,8 @@ void code_generator::main(int verbose_level)
 		char title[10000];
 		char author[10000];
 
-		sprintf(author, "");
+		author[0] = 0;
+		//sprintf(author, "");
 
 
 		if (f_linear) {

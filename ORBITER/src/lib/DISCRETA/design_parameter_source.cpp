@@ -15,7 +15,8 @@ design_parameter_source::design_parameter_source() : Vector()
 design_parameter_source::design_parameter_source(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "design_parameter_source::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	cout << "design_parameter_source::copy constructor for object: "
+			<< const_cast<discreta_base &>(x) << "\n";
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
 

@@ -67,6 +67,10 @@ int main(int argc, char **argv)
 		cout << "Please use option -n <n>" << endl;
 		exit(1);
 		}
+	if (!f_scale) {
+		cout << "Please use option -scale <scale>" << endl;
+		exit(1);
+		}
 	int *Adj;
 	int *Adj2;
 	int *edges2;

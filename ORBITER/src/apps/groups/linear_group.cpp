@@ -30,7 +30,7 @@ int main(int argc, const char **argv)
 
 	int verbose_level = 0;
 	int f_linear = FALSE;
-	int q;
+	//int q;
 	int f_orbits_on_subsets = FALSE;
 	int orbits_on_subsets_size = 0;
 	int f_draw_poset = FALSE;
@@ -77,7 +77,7 @@ int main(int argc, const char **argv)
 	F->init(Descr->input_q, 0);
 
 	Descr->F = F;
-	q = Descr->input_q;
+	//q = Descr->input_q;
 
 
 

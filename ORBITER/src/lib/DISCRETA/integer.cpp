@@ -10,13 +10,11 @@
 //#include <sstream.h>
 #include <stdlib.h>
 
-#undef intEGER_M_I_VERBOSE
-
-/********************************* integer *********************************/
+#undef INTEGER_M_I_VERBOSE
 
 integer::integer()
 {
-	k = intEGER;
+	k = INTEGER;
 	clearself();
 }
 
@@ -24,14 +22,14 @@ integer::integer(char *p)
 {
 	int i = atoi(p);
 	
-	k = intEGER;
+	k = INTEGER;
 	clearself();
 	m_i((int) i);
 }
 
 integer::integer(int i)
 {
-	k = intEGER;
+	k = INTEGER;
 	clearself();
 	m_i((int) i);
 }
@@ -39,7 +37,8 @@ integer::integer(int i)
 integer::integer(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	// cout << "integer::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	// cout << "integer::copy constructor for object: "
+	//<< const_cast<discreta_base &>(x) << "\n";
 	clearself();
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
@@ -56,7 +55,7 @@ void integer::settype_integer()
 {
 	// cout << "integer::settype_integer()\n";
 	new(this) integer;
-	k = intEGER;
+	k = INTEGER;
 }
 
 integer::~integer()
@@ -73,7 +72,7 @@ void integer::freeself_integer()
 
 kind integer::s_virtual_kind()
 {
-	return intEGER;
+	return INTEGER;
 }
 
 void integer::copyobject_to(discreta_base &x)
@@ -87,7 +86,7 @@ void integer::copyobject_to(discreta_base &x)
 ostream& integer::print(ostream& ost)
 {
 	domain *dom;
-#ifdef PRint_WITH_TYPE
+#ifdef PRINT_WITH_TYPE
 	ost << "(intEGER, ";
 #endif
 #if 0
@@ -111,7 +110,7 @@ ostream& integer::print(ostream& ost)
 		ost << s_i();
 		}
 
-#ifdef PRint_WITH_TYPE
+#ifdef PRINT_WITH_TYPE
 	ost << ")";
 #endif
 	return ost;
@@ -119,8 +118,9 @@ ostream& integer::print(ostream& ost)
 
 integer& integer::m_i(int i)
 {
-	if (s_kind() != intEGER) {
-		cout << "error: integer::m_i() this not an integer, converting\n";
+	if (s_kind() != INTEGER) {
+		cout << "error: integer::m_i "
+				"this not an integer, converting\n";
 		exit(1);
 		// settype_integer();
 		}
@@ -133,15 +133,16 @@ int integer::compare_with(discreta_base &a)
 	int i, j;
 	//domain *dom;
 	
-	if (s_kind() != intEGER) {
+	if (s_kind() != INTEGER) {
 		return compare_with(a);
 		}
-	if (a.s_kind() != intEGER) {
-		if (a.s_kind() == LONGintEGER) {
+	if (a.s_kind() != INTEGER) {
+		if (a.s_kind() == LONGINTEGER) {
 			int r = a.as_longinteger().compare_with(*this);
 			return -r;
 			}
-		cout << "integer::compare_with() a is neither integer nor longinteger\n";
+		cout << "integer::compare_with "
+				"a is neither integer nor longinteger\n";
 		exit(1);
 		}
 #if 0
@@ -164,7 +165,7 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 {
 	domain *dom;
 	
-	if (x.s_kind() == intEGER) {
+	if (x.s_kind() == INTEGER) {
 
 		if (is_GFq_domain(dom)) {
 			unipoly a, b, c;
@@ -210,7 +211,7 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 				}
 			}
 		}
-	else if (x.s_kind() == LONGintEGER) {
+	else if (x.s_kind() == LONGINTEGER) {
 		longinteger a, b, c;
 			
 		a.homo_z(s_i());
@@ -232,7 +233,7 @@ int integer::invert_to(discreta_base &x)
 	int i;
 	domain *dom;
 	
-	if (s_kind() != intEGER) {
+	if (s_kind() != INTEGER) {
 		cout << "integer::invert_to() this not an integer" << endl;
 		exit(1);
 		}
@@ -284,7 +285,7 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 {
 	domain *dom;
 	
-	if (x.s_kind() == intEGER) {
+	if (x.s_kind() == INTEGER) {
 
 
 		if (is_GFq_domain(dom)) {
@@ -328,7 +329,7 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 				}
 			}
 		}
-	else if (x.s_kind() == LONGintEGER) {
+	else if (x.s_kind() == LONGINTEGER) {
 		longinteger a, b, c;
 			
 		a.homo_z(s_i());
@@ -350,7 +351,7 @@ void integer::negate_to(discreta_base &x)
 	int i;
 	domain *dom;
 	
-	if (s_kind() != intEGER) {
+	if (s_kind() != INTEGER) {
 		cout << "integer::negate_to() this not an integer\n";
 		exit(1);
 		}
@@ -523,10 +524,10 @@ int integer::compare_with_euklidean(discreta_base &a)
 {
 	int i, j;
 	
-	if (s_kind() != intEGER) {
+	if (s_kind() != INTEGER) {
 		return compare_with_euklidean(a);
 		}
-	if (a.s_kind() != intEGER) {
+	if (a.s_kind() != INTEGER) {
 		cout << "integer::compare_with_euklidean() a is not an integer\n";
 		exit(1);
 		}
@@ -539,19 +540,21 @@ int integer::compare_with_euklidean(discreta_base &a)
 	return 0;
 }
 
-void integer::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level)
+void integer::integral_division(discreta_base &x,
+		discreta_base &q, discreta_base &r, int verbose_level)
 {
 	int a, b, qq, rr;
 	
-	if (s_kind() != intEGER) {
+	if (s_kind() != INTEGER) {
 		cout << "integer::integral_division() this not an integer\n";
 		exit(1);
 		}
-	if (x.s_kind() != intEGER) {
-		if (x.s_kind() == LONGintEGER) {
+	if (x.s_kind() != INTEGER) {
+		if (x.s_kind() == LONGINTEGER) {
 			integer y;
 			if (!x.as_longinteger().retract_to_integer_if_possible(y)) {
-				cout << "integer::integral_division() longinteger x cannot be retracted to integer\n";
+				cout << "integer::integral_division() "
+						"longinteger x cannot be retracted to integer\n";
 				cout << "x=" << x << endl;
 				exit(1);
 				}
@@ -559,7 +562,8 @@ void integer::integral_division(discreta_base &x, discreta_base &q, discreta_bas
 			return;
 			}
 		else {
-			cout << "integer::integral_division() x is neither integer nor longinteger\n";
+			cout << "integer::integral_division() "
+					"x is neither integer nor longinteger\n";
 			exit(1);
 			}
 		}

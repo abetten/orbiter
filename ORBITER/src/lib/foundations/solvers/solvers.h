@@ -283,8 +283,8 @@ namespace mckay {
 	/* bigger gets more diagnostic output */
 	//#define VERBOSE 0
 
-	#define MCKAY_DEBUG
-	#define intERVAL_IN_SECONDS 1
+	#undef MCKAY_DEBUG
+	#define INTERVAL_IN_SECONDS 1
 
 	typedef struct {int var,coeff;} term;
 	typedef vector<term> equation;

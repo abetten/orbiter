@@ -10,7 +10,6 @@ MODULES = \
 	elliptic_curve.o \
 	extra.o \
 	factor_group.o \
-	top_level_global.o \
 	young.o 
 
 

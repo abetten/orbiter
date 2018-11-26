@@ -4,7 +4,8 @@
 // July 28, 2011
 //
 // 
-// -embed -orthogonal <epsilon> turns points from Q^<epsilon>(n,q) into points from PG(n,q)
+// -embed -orthogonal <epsilon> turns points
+// from Q^<epsilon>(n,q) into points from PG(n,q)
 //
 //
 

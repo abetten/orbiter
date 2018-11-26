@@ -262,30 +262,7 @@ void regular_ls_generator::init_generator(
 	
 	gen->init(Poset, gen->depth, 0/*verbose_level - 3*/);
 	
-#if 0
-	// not needed since we have an early_test_func:
-	gen->init_check_func(::check_conditions, 
-		(void *)this /* candidate_check_data */);
-#endif
-
-	// we have an early test function:
-#if 0
-	gen->init_early_test_func(
-		rls_generator_early_test_function, 
-		this,  
-		verbose_level);
-#endif
-
-
-#if 0
-	// We also have an incremental check function. 
-	// This is only used by the clique finder:
-	gen->init_incremental_check_func(
-		check_function_incremental_callback, 
-		this /* candidate_check_data */);
-#endif
-
-	gen->f_print_function = TRUE;
+	gen->f_print_function = FALSE;
 	gen->print_function = print_set;
 	gen->print_function_data = (void *) this;
 	
@@ -696,17 +673,6 @@ void rls_generator_early_test_function(int *S, int len,
 		}
 }
 
-#if 0
-int check_function_incremental_callback(int len, int *S, void *data, int verbose_level)
-{
-	regular_ls_generator *Gen = (regular_ls_generator *) data;
-	int f_OK;
-	
-	f_OK = Gen->check_function_incremental(len, S, verbose_level);
-	return f_OK; 
-}
-#endif
-
 void rls_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
@@ -729,11 +695,13 @@ void rls_generator_lifting_prepare_function_new(
 
 
 	if (f_v) {
-		cout << "rls_generator_lifting_prepare_function_new nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
+		cout << "rls_generator_lifting_prepare_function_new "
+				"nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
 		}
 
 	if (f_v) {
-		cout << "rls_generator_lifting_prepare_function_new done" << endl;
+		cout << "rls_generator_lifting_prepare_function_new "
+				"done" << endl;
 		}
 }
 

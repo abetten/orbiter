@@ -5612,3 +5612,16 @@ void chop_string(const char *str, int &argc, char **&argv)
 	FREE_pchar(argv);
 #endif
 }
+
+const char *strip_directory(const char *p)
+{
+	int i, l;
+
+	l = strlen(p);
+	for (i = l - 1; i >= 0; i--) {
+		if (p[i] == '/') {
+			return p + i + 1;
+		}
+	}
+	return p;
+}

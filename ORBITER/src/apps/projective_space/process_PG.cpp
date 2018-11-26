@@ -175,6 +175,9 @@ int main(int argc, char **argv)
 		if (FALSE /* f_vv */) {
 			cout << "Line read :'" << buf << "'" << endl;
 			}
+		if (buf[0] == '#') {
+			continue;
+		}
 		p_buf = buf;
 		while (TRUE) {
 			int tmp;
@@ -277,7 +280,8 @@ int main(int argc, char **argv)
 				get_fname_base(fname, fname_base);
 				sprintf(fname2, "%s_hyperoval_%d.txt", fname_base, cnt);
 				write_set_to_file(fname2, set2, sz2, verbose_level);
-				cout << "Written file " << fname2 << " of size " << file_size(fname2) << endl;
+				cout << "Written file " << fname2 << " of size "
+						<< file_size(fname2) << endl;
 				}
 
 			else if (f_TDO) {
@@ -304,7 +308,8 @@ int main(int argc, char **argv)
 				cout << "after P->make_incidence_structure_and_partition" << endl;
 
 
-				cout << "before Stack->split_cell splitting a set of size " << set_size << endl;
+				cout << "before Stack->split_cell splitting a set of size "
+						<< set_size << endl;
 				Stack->split_cell(set, set_size, verbose_level);
 				Stack->sort_cells();
 

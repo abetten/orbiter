@@ -94,7 +94,7 @@ ostream& unipoly::print(ostream& ost)
 	// ost << "(";
 	for (i = d; i >= 0; i--) {
 		coef = s_i(i);
-		if (coef.s_kind() == intEGER) {
+		if (coef.s_kind() == INTEGER) {
 			k = coef.s_i_i();
 			if (k == 0) {
 				if (i == 0 && f_nothing_printed_at_all) {
@@ -668,9 +668,9 @@ void unipoly::largest_divisor_prime_to(unipoly& q, unipoly& r)
 //In other words, $r$ is the maximal divisor of $p$ which is prime to $q$.
 {
 	unipoly rr, g, u, v;
-	int d;
+	//int d;
 	
-	d = degree();
+	//d = degree();
 	r = *this;
 	r.extended_gcd(q, u, v, g, 0);
 	while (g.degree()) {

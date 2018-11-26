@@ -95,10 +95,10 @@ int main(int argc, char **argv)
 	cout << "after init_orthogonal" << endl;
 
 
-	action_on_orthogonal *AO;
+	//action_on_orthogonal *AO;
 	//orthogonal *O;
 
-	AO = A->G.AO;
+	//AO = A->G.AO;
 	//O = AO->O;
 
 

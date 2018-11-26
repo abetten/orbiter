@@ -24,6 +24,7 @@ void do_arc_lifting(projective_space *P, int k,
 	int *arc, int arc_sz, int target_sz, 
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
+	int &nb_backtrack_nodes,
 	int verbose_level);
 void user_callback_solution_found(
 	int *sol, int len, int nb_sol, void *data);
@@ -32,7 +33,7 @@ void search(int level);
 
 	finite_field *F;
 	projective_space *P;
-	action *A_linear;
+	//action *A_linear;
 int *arc;
 int arc_sz;
 	int *free_points;
@@ -263,6 +264,7 @@ int main(int argc, char **argv)
 
 		int *the_arc;
 		int the_arc_sz;
+		int nb_backtrack_nodes;
 		
 		int_vec_scan(arc_text, the_arc, the_arc_sz);
 		cout << "input arc of size " << the_arc_sz << " = ";
@@ -324,6 +326,7 @@ int main(int argc, char **argv)
 		do_arc_lifting(P, k, the_arc, the_arc_sz, sz, 
 			f_save_system, fname_system, 
 			f_Cook, f_DLX, f_McKay, 
+			nb_backtrack_nodes,
 			verbose_level);
 
 		}
@@ -486,13 +489,17 @@ void arc_lifting_from_classification_file(
 	char solution_fname[1000];
 	char success_fname[1000];
 
+
+
 	if (!f_solution_prefix) {
 		sprintf(solution_fname, "arc_%d_%d_from_%s",
-				sz, k, classification_fname);
+				sz, k,
+				strip_directory(classification_fname));
 		}
 	else {
 		sprintf(solution_fname, "%sarc_%d_%d_from_%s",
-				solution_prefix, sz, k, classification_fname);
+				solution_prefix, sz, k,
+				strip_directory(classification_fname));
 		}
 
 	if (f_split) {
@@ -506,6 +513,7 @@ void arc_lifting_from_classification_file(
 	if (f_v) {
 		cout << "We will write the solutions to the "
 				"file " << solution_fname << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 
 	{
@@ -552,12 +560,41 @@ void arc_lifting_from_classification_file(
 				}
 			nb_sol = 0;
 			cnt = 0;
+			int nb_backtrack_nodes;
 
+			Fp << "# start arc " << orbit_idx << endl;
+
+			int t0 = os_ticks();
 
 			do_arc_lifting(P, k, arc, arc_sz, sz, 
 				f_save_system, fname_system, 
 				f_Cook, f_DLX, f_McKay, 
+				nb_backtrack_nodes,
 				verbose_level - 2);
+
+			int t1, dt;
+
+			t1 = os_ticks();
+			dt = t1 - t0;
+
+
+
+			Fp << "# finish arc " << orbit_idx << " with " << nb_sol
+					<< " solutions, nb_backtrack_nodes=" << nb_backtrack_nodes;
+			if (f_Cook) {
+				Fp << " -Cook";
+			}
+			else if (f_DLX) {
+				Fp << " -DLX";
+			}
+			else if (f_McKay) {
+				Fp << " -McKay";
+			}
+
+			Fp << " : time ";
+			time_check_delta(Fp, dt);
+
+			Fp << endl;
 
 
 			Nb_sol[orbit_idx] = nb_sol;
@@ -601,6 +638,7 @@ void do_arc_lifting(
 	int *arc, int arc_sz, int target_sz, 
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
+	int &nb_backtrack_nodes,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -618,6 +656,8 @@ void do_arc_lifting(
 		int_vec_print(cout, arc, arc_sz);
 		cout << endl;
 		}
+
+	nb_backtrack_nodes = 0;
 
 	free_points = NEW_int(P->N_points);
 
@@ -669,18 +709,21 @@ void do_arc_lifting(
 	else {
 		f_semilinear = TRUE;
 		}
+#if 1
+	action *A_linear;
+
 	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(P->n + 1, F,
 			f_semilinear, TRUE /*f_basis */,
 			0 /*verbose_level*/);
 	
 
-#if 0
 	{
 	if (f_vv) {
 		cout << "computing stabilizer of the arc:" << endl;
 		}
 	sims *Stab;
+	strong_generators *SG;
 	int canonical_pt;
 	int *canonical_set;
 
@@ -699,9 +742,15 @@ void do_arc_lifting(
 	if (f_v) {
 		cout << "The stabilizer of the arc is a group of order " << go << endl;
 		}
+	SG = NEW_OBJECT(strong_generators);
+	SG->init_from_sims(Stab, verbose_level);
+	cout << "generators:" << endl;
+	SG->print_generators_tex(cout);
+
 	FREE_int(canonical_set);
-	delete Stab;
-	//exit(1);
+	FREE_OBJECT(Stab);
+	FREE_OBJECT(A_linear);
+	exit(1);
 	}
 #endif
 
@@ -747,6 +796,7 @@ void do_arc_lifting(
 	for (j = 0; j < nb_free_points; j++) {
 		D->x_max[j] = 1;
 		}
+	D->f_has_sum = TRUE;
 	D->sum = target_sz - arc_sz;
 	h = 0;
 	for (i = 0; i < P->N_lines; i++) {
@@ -1011,14 +1061,15 @@ void do_arc_lifting(
 		if (f_v) {
 			cout << "before solve_all_mckay" << endl;
 			}
-		int nb_backtrack_nodes;
 
 		D->solve_all_mckay(nb_backtrack_nodes,
 				verbose_level - 2);
+		if (f_v) {
+			cout << "after solve_all_mckay" << endl;
+			}
 		
 		//D->solve_once_mckay(verbose_level - 1);
 		nb_sol = D->_resultanz;
-
 		if (f_v) {
 			cout << "after solve_all_mckay "
 					"nb_sol = " << nb_sol << endl;
@@ -1032,7 +1083,13 @@ void do_arc_lifting(
 			big_arc = NEW_int(target_sz);
 			
 			int_vec_copy(arc, big_arc, arc_sz);
+			if (f_v) {
+				cout << "before D->get_solutions" << endl;
+				}
 			D->get_solutions(Sol, nb_sol, 0 /* verbose_level */);
+			if (f_v) {
+				cout << "after D->get_solutions" << endl;
+				}
 			for (i = 0; i < nb_sol; i++) {
 				for (j = 0; j < D->sum; j++) {
 					a = Sol[i * D->sum + j];
@@ -1107,7 +1164,7 @@ void do_arc_lifting(
 	
 
 	FREE_OBJECT(D);
-	FREE_OBJECT(A_linear);
+	//FREE_OBJECT(A_linear);
 	FREE_int(type_collected);
 	FREE_int(Coord);
 
@@ -1165,6 +1222,7 @@ void user_callback_solution_found(
 
 
 
+#if 0
 	cout << "computing stabilizer of the arc:" << endl;
 	sims *Stab;
 	int canonical_pt;
@@ -1202,11 +1260,13 @@ void user_callback_solution_found(
 	//exit(1);
 
 	FREE_int(type_collected);
+#endif
 	FREE_int(line_type);
 	FREE_int(big_arc);
 	
 }
  
+
 
 void search(int level)
 {
@@ -1246,6 +1306,8 @@ void search(int level)
 		int_vec_print(cout, big_arc, big_arc_size);
 		//cout << endl;
 
+
+#if 0
 		sims *Stab;
 		int canonical_pt;
 		int *canonical_set;
@@ -1270,6 +1332,7 @@ void search(int level)
 
 		FREE_int(canonical_set);
 		delete Stab;
+#endif
 
 		int *type_collected;
 
@@ -1347,4 +1410,5 @@ void search(int level)
 			}
 		}
 }
+
 
