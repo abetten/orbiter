@@ -17,7 +17,8 @@ bt_key::bt_key() : Vector()
 bt_key::bt_key(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "bt_key::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	cout << "bt_key::copy constructor for object: "
+			<< const_cast<discreta_base &>(x) << "\n";
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
 
@@ -356,8 +357,9 @@ int bt_key_compare(char *key1, char *key2, Vector& V, int depth)
 
 void bt_key_fill_in_int4(char **p_key, discreta_base& key_op)
 {
-	if (key_op.s_kind() != intEGER) {
-		cout << "bt_key_fill_in_int4() object not an intEGER" << endl;
+	if (key_op.s_kind() != INTEGER) {
+		cout << "bt_key_fill_in_int4 "
+				"object not an intEGER" << endl;
 		exit(1);
 		}
 	integer& key_op_int = key_op.as_integer();
@@ -375,8 +377,9 @@ void bt_key_fill_in_int4(char **p_key, discreta_base& key_op)
 
 void bt_key_fill_in_int2(char **p_key, discreta_base& key_op)
 {
-	if (key_op.s_kind() != intEGER) {
-		cout << "bt_key_fill_in_int2() object not an intEGER" << endl;
+	if (key_op.s_kind() != INTEGER) {
+		cout << "bt_key_fill_in_int2 "
+				"object not an intEGER" << endl;
 		exit(1);
 		}
 	integer& key_op_int = key_op.as_integer();
@@ -395,7 +398,8 @@ void bt_key_fill_in_int2(char **p_key, discreta_base& key_op)
 void bt_key_fill_in_string(char **p_key, int output_size, discreta_base& key_op)
 {
 	if (key_op.s_kind() != HOLLERITH) {
-		cout << "bt_key_fill_in_string() object not an HOLLERITH" << endl;
+		cout << "bt_key_fill_in_string "
+				"object not an HOLLERITH" << endl;
 		exit(1);
 		}
 	hollerith& h = key_op.as_hollerith();

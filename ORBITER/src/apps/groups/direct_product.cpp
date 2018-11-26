@@ -1852,7 +1852,7 @@ int direct_product_action::check_row_sums(int *line,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, p, x, y, s, f_OK = TRUE;
+	int i, p, x, s, f_OK = TRUE;
 	int f_DD_problem = FALSE;
 
 	inner_pairs_in_rows = 0;
@@ -1865,7 +1865,7 @@ int direct_product_action::check_row_sums(int *line,
 	for (i = 0; i < len; i++) {
 		p = line[i];
 		x = p / Ysize;
-		y = p % Ysize;
+		//y = p % Ysize;
 		inner_pairs_in_rows += row_sum[x];
 		row_sum[x]++;
 		if (DELANDTSHEER_DOYEN_X != -1) {
@@ -1927,7 +1927,7 @@ int direct_product_action::check_col_sums(int *line,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, p, x, y, s, f_OK = TRUE;
+	int i, p, y, s, f_OK = TRUE;
 	int f_DD_problem = FALSE;
 
 	inner_pairs_in_cols = 0;
@@ -1939,7 +1939,7 @@ int direct_product_action::check_col_sums(int *line,
 		}
 	for (i = 0; i < len; i++) {
 		p = line[i];
-		x = p / Ysize;
+		//x = p / Ysize;
 		y = p % Ysize;
 		inner_pairs_in_cols += col_sum[y];
 		col_sum[y]++;

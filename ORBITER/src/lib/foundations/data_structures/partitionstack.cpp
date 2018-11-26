@@ -438,15 +438,14 @@ void partitionstack::print_class_point_or_line(ostream& ost, int idx)
 		}
 	int_vec_heapsort(S, len);
 	//int_set_print(ost, S, len);
-	ost << "{ ";
+	if (is_col_class(idx)) {
+		ost << "lines {";
+		}
+	else {
+		ost << "points {";
+		}
 	for (j = 0; j < len; j++) {
-		if (is_col_class(idx)) {
-			ost << "\\ell_{";
-			}
-		else {
-			ost << "P_{";
-			}
-		ost << S[j] << "}";
+		ost << S[j];
 		if (j < len - 1)
 			ost << ", ";
 		}

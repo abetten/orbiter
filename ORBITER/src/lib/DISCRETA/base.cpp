@@ -72,12 +72,12 @@ void discreta_base::freeself_kind(kind k)
 {
 	switch (k) {
 		case BASE: freeself_discreta_base(); break;
-		case intEGER: as_integer().freeself_integer(); break;
+		case INTEGER: as_integer().freeself_integer(); break;
 		case VECTOR: as_vector().freeself_vector(); break;
 		case NUMBER_PARTITION: as_number_partition().freeself_number_partition(); break;
 		case PERMUTATION: as_permutation().freeself_permutation(); break;
 		case MATRIX: as_matrix().freeself_matrix(); break;
-		case LONGintEGER: as_longinteger().freeself_longinteger(); break;
+		case LONGINTEGER: as_longinteger().freeself_longinteger(); break;
 		case MEMORY: as_memory().freeself_memory(); break;
 		//case PERM_GROUP: as_perm_group().freeself_perm_group(); break;
 		//case PERM_GROUP_STAB_CHAIN: as_perm_group_stab_chain().freeself_perm_group_stab_chain(); break;
@@ -105,7 +105,7 @@ void discreta_base::settype_base()
 {
 #ifdef BASE_SETTYPE_VERBOSE
 	if (s_kind() != BASE) {
-		cout << "warning: base::settype_base() converting from " 
+		cout << "warning: base::settype_base converting from "
 			<< kind_ascii(s_kind()) << " to BASE\n";
 		}
 #endif
@@ -118,8 +118,10 @@ kind discreta_base::s_kind()
 	
 	kv = s_virtual_kind();
 	if (k != kv) {
-		cout << "discreta_base::s_kind(): kind != virtual kind\n";
-		cout << "k=" << kind_ascii(k) << ", virtual kind = " << kind_ascii(kv) << endl;
+		cout << "discreta_base::s_kind "
+				"kind != virtual kind\n";
+		cout << "k=" << kind_ascii(k)
+				<< ", virtual kind = " << kind_ascii(kv) << endl;
 		exit(1);
 		}
 	return k;
@@ -135,12 +137,12 @@ void discreta_base::c_kind(kind k)
 	// cout << "discreta_base::c_kind(), k= " << kind_ascii(k) << "\n";
 	switch (k) {
 		case BASE: settype_base(); break;
-		case intEGER: as_integer().settype_integer(); break;
+		case INTEGER: as_integer().settype_integer(); break;
 		case VECTOR: as_vector().settype_vector(); break;
 		case NUMBER_PARTITION: as_number_partition().settype_number_partition(); break;
 		case PERMUTATION: as_permutation().settype_permutation(); break;
 		case MATRIX: as_matrix().settype_matrix(); break;
-		case LONGintEGER: as_longinteger().settype_longinteger(); break;
+		case LONGINTEGER: as_longinteger().settype_longinteger(); break;
 		case MEMORY: as_memory().settype_memory(); break;
 		//case PERM_GROUP: as_perm_group().settype_perm_group(); break;
 		//case PERM_GROUP_STAB_CHAIN: as_perm_group_stab_chain().settype_perm_group_stab_chain(); break;
@@ -197,10 +199,12 @@ void discreta_base::copyobject_to(discreta_base &x)
 	OBJECTSELF s = self;
 	
 	if (k != BASE) {
-		cout << "error: discreta_base::copyobject_to() for object of kind " << kind_ascii(k) << endl;
+		cout << "error: discreta_base::copyobject_to "
+				"for object of kind " << kind_ascii(k) << endl;
 		exit(1);
 		}
-	cout << "warning: discreta_base::copyobject_to() for object: " << *this << "\n";
+	cout << "warning: discreta_base::copyobject_to "
+			"for object: " << *this << "\n";
 	x.freeself();
 	x.c_kind(k);
 	x.self = s;
@@ -247,8 +251,8 @@ ostream& discreta_base::printobjectkindln(ostream& ost)
 
 int& discreta_base::s_i_i()
 {
-	if (s_kind() != intEGER) {
-		cout << "discreta_base::s_i_i() not an integer, objectkind=";
+	if (s_kind() != INTEGER) {
+		cout << "discreta_base::s_i_i not an integer, objectkind=";
 		printobjectkindln(cout);
 		exit(1);
 		}
@@ -359,7 +363,8 @@ void discreta_base::mult(discreta_base &x, discreta_base &y)
 	x.mult_to(y, *this);
 }
 
-void discreta_base::mult_mod(discreta_base &x, discreta_base &y, discreta_base &p)
+void discreta_base::mult_mod(discreta_base &x,
+		discreta_base &y, discreta_base &p)
 {
 	discreta_base z;
 	
@@ -397,9 +402,11 @@ int discreta_base::invert_mod(discreta_base &p)
 {
 	discreta_base u, v, g;
 	
-	// cout << "discreta_base::invert_mod() this=" << *this << endl;
+	// cout << "discreta_base::invert_mod this=" << *this << endl;
 	extended_gcd(p, u, v, g, 0);
-	// cout << "discreta_base::invert_mod(): gcd = " << g << " = " << u << " * " << *this << " + " << v << " * " << p << endl;
+	// cout << "discreta_base::invert_mod "
+	//"gcd = " << g << " = " << u << " * " << *this
+	// << " + " << v << " * " << p << endl;
 	if (!g.is_one()) {
 		return FALSE;
 		}
@@ -518,7 +525,7 @@ discreta_base& discreta_base::power_longinteger(longinteger& l)
 	a.one();
 	b = *this;
 	while (!l.is_zero()) {
-		if (a.s_kind() == LONGintEGER) {
+		if (a.s_kind() == LONGINTEGER) {
 			longinteger &B = b.as_longinteger();
 			int d;
 			
@@ -542,7 +549,8 @@ discreta_base& discreta_base::power_longinteger(longinteger& l)
 	return *this;
 }
 
-discreta_base& discreta_base::power_longinteger_mod(longinteger& l, discreta_base &p)
+discreta_base& discreta_base::power_longinteger_mod(
+		longinteger& l, discreta_base &p)
 {
 	discreta_base a, b, c;
 	
@@ -550,7 +558,7 @@ discreta_base& discreta_base::power_longinteger_mod(longinteger& l, discreta_bas
 	a.one();
 	b = *this;
 	while (!l.is_zero()) {
-		if (a.s_kind() == LONGintEGER) {
+		if (a.s_kind() == LONGINTEGER) {
 			longinteger &B = a.as_longinteger();
 			int d;
 			
@@ -663,7 +671,8 @@ void discreta_base::add(discreta_base &x, discreta_base &y)
 	x.add_to(y, *this);
 }
 
-void discreta_base::add_mod(discreta_base &x, discreta_base &y, discreta_base &p)
+void discreta_base::add_mod(
+		discreta_base &x, discreta_base &y, discreta_base &p)
 {
 	discreta_base z;
 	
@@ -874,7 +883,9 @@ int discreta_base::compare_with_euklidean(discreta_base &a)
 	exit(1);
 }
 
-void discreta_base::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level)
+void discreta_base::integral_division(
+		discreta_base &x, discreta_base &q, discreta_base &r,
+		int verbose_level)
 {
 	if (s_kind() != BASE) {
 		// cout << "integral_division() not implemented for class ";
@@ -887,7 +898,8 @@ void discreta_base::integral_division(discreta_base &x, discreta_base &q, discre
 	exit(1);
 }
 
-void discreta_base::integral_division_exact(discreta_base &x, discreta_base &q)
+void discreta_base::integral_division_exact(
+		discreta_base &x, discreta_base &q)
 {
 	discreta_base r;
 	
@@ -895,15 +907,18 @@ void discreta_base::integral_division_exact(discreta_base &x, discreta_base &q)
 		integral_division(x, q, r, 0);
 		if (r.is_zero())
 			return;
-		cout << "integral_division_exact() remainder not zero\n";
-		cout << "this=" << *this << " divided by " << x << " gives remainder " << r << endl;
+		cout << "integral_division_exact "
+				"remainder not zero" << endl;
+		cout << "this=" << *this << " divided by "
+				<< x << " gives remainder " << r << endl;
 		exit(1);
 		}
 	NOT_EXISTING_FUNCTION("discreta_base::integral_division");
 	exit(1);
 }
 
-void discreta_base::integral_division_by_integer(int x, discreta_base &q, discreta_base &r)
+void discreta_base::integral_division_by_integer(
+		int x, discreta_base &q, discreta_base &r)
 {
 	discreta_base a;
 	
@@ -911,7 +926,8 @@ void discreta_base::integral_division_by_integer(int x, discreta_base &q, discre
 	integral_division(a, q, r, 0);
 }
 
-void discreta_base::integral_division_by_integer_exact(int x, discreta_base &q)
+void discreta_base::integral_division_by_integer_exact(
+		int x, discreta_base &q)
 {
 	discreta_base a;
 	
@@ -947,7 +963,9 @@ void discreta_base::modulo(discreta_base &p)
 	swap(r);
 }
 
-void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_base &v, discreta_base &g, int verbose_level)
+void discreta_base::extended_gcd(discreta_base &n,
+		discreta_base &u, discreta_base &v, discreta_base &g,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -955,7 +973,8 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 	int c;
 	
 	if (f_v) {
-		cout << "discreta_base::extended_gcd() m=" << *this << " n=" << n << endl;
+		cout << "discreta_base::extended_gcd "
+				"m=" << *this << " n=" << n << endl;
 		}
 	c = compare_with_euklidean(n);
 	if (c < 0) {
@@ -963,7 +982,8 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 		return;
 		}
 	if (f_v) {
-		cout << "discreta_base::extended_gcd() m=" << *this << "(" << kind_ascii(s_kind()) << ")"
+		cout << "discreta_base::extended_gcd "
+				"m=" << *this << "(" << kind_ascii(s_kind()) << ")"
 			<< "n=" << n << "(" << kind_ascii(n.s_kind()) << ")" << endl;
 		}
 	u = *this;
@@ -975,7 +995,7 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 		return;
 		}
 
-	if (s_kind() == intEGER) {
+	if (s_kind() == INTEGER) {
 		int a;
 		a = s_i_i();
 		if (a < 0) {
@@ -1042,7 +1062,7 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 	u = u2;
 	v = v2;
 	g = N;
-	if (s_kind() == intEGER) {
+	if (s_kind() == INTEGER) {
 		// cout << "sign1=" << sign1 << endl;
 		// cout << "sign2=" << sign2 << endl;
 		int a;
@@ -1069,7 +1089,8 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 		// v *= sign2;
 		}
 	if (f_v) {
-		cout << "g=" << g << " =" << u << " * " << *this << " + " << v << " * " << n << endl;
+		cout << "g=" << g << " =" << u << " * "
+				<< *this << " + " << v << " * " << n << endl;
 		}
 }
 
@@ -1088,12 +1109,13 @@ void discreta_base::write_memory(memory &m, int debug_depth)
 		}
 	m.write_char(c);
 	if (debug_depth > 0) {
-		cout << "discreta_base::write_memory() object of kind = " << kind_ascii(k) << endl;
+		cout << "discreta_base::write_memory "
+				"object of kind = " << kind_ascii(k) << endl;
 		}
 	switch (k) {
 		case BASE:
 			break;
-		case intEGER:
+		case INTEGER:
 			m.write_int(s_i_i());
 			break;
 		case VECTOR:
@@ -1108,9 +1130,10 @@ void discreta_base::write_memory(memory &m, int debug_depth)
 		case MATRIX:
 			as_matrix().write_mem(m, debug_depth);
 			break;
-		case LONGintEGER:
+		case LONGINTEGER:
 			// as_longinteger().write_mem(m, debug_depth);
-			cout << "discreta_base::write_mem() no write_mem for LONGintEGER" << endl;
+			cout << "discreta_base::write_mem "
+					"no write_mem for LONGINTEGER" << endl;
 			break;
 		case MEMORY:
 			as_memory().write_mem(m, debug_depth);
@@ -1163,7 +1186,8 @@ void discreta_base::write_memory(memory &m, int debug_depth)
 			as_design_parameter_source().write_mem(m, debug_depth);
 			break;
 		default:
-			cout << "discreta_base::write_memory() no write_mem for " << kind_ascii(k) << endl;
+			cout << "discreta_base::write_memory "
+					"no write_mem for " << kind_ascii(k) << endl;
 			exit(1);
 		}
 }
@@ -1180,7 +1204,7 @@ void discreta_base::read_memory(memory &m, int debug_depth)
 	switch (k) {
 		case BASE:
 			break;
-		case intEGER:
+		case INTEGER:
 			m.read_int(&i);
 			m_i_i(i);
 			break;
@@ -1196,9 +1220,10 @@ void discreta_base::read_memory(memory &m, int debug_depth)
 		case MATRIX:
 			as_matrix().read_mem(m, debug_depth);
 			break;
-		case LONGintEGER:
+		case LONGINTEGER:
 			// as_longinteger().read_mem(m, debug_depth);
-			cout << "discreta_base::read_mem() no read_mem for LONGintEGER" << endl;
+			cout << "discreta_base::read_mem "
+					"no read_mem for LONGINTEGER" << endl;
 			break;
 		case MEMORY:
 			as_memory().read_mem(m, debug_depth);
@@ -1251,7 +1276,8 @@ void discreta_base::read_memory(memory &m, int debug_depth)
 			as_design_parameter_source().read_mem(m, debug_depth);
 			break;
 		default:
-			cout << "discreta_base::read_memory() no read_mem for " << kind_ascii(k) << endl;
+			cout << "discreta_base::read_memory "
+					"no read_mem for " << kind_ascii(k) << endl;
 			exit(1);
 		}
 }
@@ -1260,20 +1286,21 @@ int discreta_base::calc_size_on_file()
 {
 	enum kind k;
 	int i, size;
-	char c;
+	//char c;
 	
 	k = s_kind();
 	i = (int) k;
-	c = (char) k;
+	//c = (char) k;
 	if (!ONE_char_int(i)) {
-		cout << "write_memory(): kind not 1 char" << endl;
+		cout << "write_memory "
+				"kind not 1 char" << endl;
 		exit(1);
 		}
 	size = 1;
 	switch (k) {
 		case BASE:
 			break;
-		case intEGER:
+		case INTEGER:
 			size += 4;
 			break;
 		case VECTOR:
@@ -1288,9 +1315,10 @@ int discreta_base::calc_size_on_file()
 		case MATRIX:
 			size += as_matrix().csf();
 			break;
-		case LONGintEGER:
+		case LONGINTEGER:
 			// size += as_longinteger().csf();
-			cout << "discreta_base::write_mem() no csf for LONGintEGER" << endl;
+			cout << "discreta_base::write_mem "
+					"no csf for LONGINTEGER" << endl;
 			break;
 		case MEMORY:
 			size += as_memory().csf();
@@ -1343,34 +1371,40 @@ int discreta_base::calc_size_on_file()
 			size += as_design_parameter_source().csf();
 			break;
 		default:
-			cout << "discreta_base::calc_size_on_file() no csf() for " << kind_ascii(k) << endl;
+			cout << "discreta_base::calc_size_on_file "
+					"no csf for " << kind_ascii(k) << endl;
 			exit(1);
 		}
 	return size;
 }
 
 void discreta_base::pack(memory & M, int f_v, int debug_depth)
-// used to pack (i.e. to serialize) objects into (binary) strings in memory objects.
+// used to pack (i.e. to serialize) objects
+// into (binary) strings in memory objects.
 {
 	int size, size0;
 	
 	if (f_v) {
-		cout << "discreta_base::pack(): calculating memory size" << endl;
+		cout << "discreta_base::pack "
+				"calculating memory size" << endl;
 		}
 	size0 = calc_size_on_file();
 	// M.init(0, NULL);
 	if (f_v) {
-		cout << "discreta_base::pack(): allocating memory of size " << size0 << endl;
+		cout << "discreta_base::pack "
+				"allocating memory of size " << size0 << endl;
 		}
 	M.alloc(size0);
 	M.used_length() = 0;
 	if (f_v) {
-		cout << "discreta_base::pack(): calling write_memory()" << endl;
+		cout << "discreta_base::pack calling write_memory" << endl;
 		}
 	write_memory(M, debug_depth);
 	size = M.used_length();
 	if (size != size0) {
-		cout << "discreta_base::pack(): WARNING!!!: size = " << size << " != size0 = " << size0 << endl;
+		cout << "discreta_base::pack "
+				"WARNING!!!: size = " << size
+				<< " != size0 = " << size0 << endl;
 		}
 }
 
@@ -1391,24 +1425,28 @@ void discreta_base::save_ascii(ostream & f)
 	uchar *pc, c1, c2;
 
 	if (f_v) {
-		cout << "discreta_base::save_ascii(): calculating memory size" << endl;
+		cout << "discreta_base::save_ascii "
+				"calculating memory size" << endl;
 		}
 	if (f_vv)
 		debug_depth = 1;
 	else
 		debug_depth = 0;
 	if (f_v) {
-		cout << "discreta_base::save_ascii(): packing object" << endl;
+		cout << "discreta_base::save_ascii "
+				"packing object" << endl;
 		}
 	pack(M, f_v, debug_depth);
 #ifdef SAVE_ASCII_USE_COMPRESS
 	if (f_v) {
-		cout << "discreta_base::save_ascii(): compressing object" << endl;
+		cout << "discreta_base::save_ascii "
+				"compressing object" << endl;
 		}
 	M.compress(f_v);
 #endif
 	if (f_v) {
-		cout << "discreta_base::save_ascii(): saving data" << endl;
+		cout << "discreta_base::save_ascii "
+				"saving data" << endl;
 		}
 	size = M.used_length();
 	pc = (uchar *) M.self.char_pointer;
@@ -1448,19 +1486,22 @@ void discreta_base::load_ascii(istream & f)
 	p = buf;
 	s_scan_token(&p, str);
 	if (strcmp(str, "ASCII") != 0) {
-		cout << "discreta_base::load_ascii(): error reading header: ASCII keyword not found" << endl;
+		cout << "discreta_base::load_ascii "
+				"error reading header: ASCII keyword not found" << endl;
 		exit(1);
 		}
 	s_scan_int(&p, &size);
 	if (f_v) {
-		cout << "discreta_base::load_ascii(): reading ASCII file of size " << size << endl;
+		cout << "discreta_base::load_ascii "
+				"reading ASCII file of size " << size << endl;
 		}
 	M.alloc(size);
 	pc = (uchar *) M.self.char_pointer;
 	for (i = 0; i < size; i++) {
 		while (TRUE) {
 			if (f.eof()) {
-				cout << "discreta_base::load_ascii() primature EOF" << endl;
+				cout << "discreta_base::load_ascii "
+						"primature EOF" << endl;
 				exit(1);
 				}
 			f >> cc;
@@ -1470,7 +1511,8 @@ void discreta_base::load_ascii(istream & f)
 			}
 		a1 = (uint) cc;
 		if (f.eof()) {
-			cout << "discreta_base::load_ascii() primature EOF" << endl;
+			cout << "discreta_base::load_ascii "
+					"primature EOF" << endl;
 			exit(1);
 			}
 		f >> cc;
@@ -1495,7 +1537,8 @@ void discreta_base::load_ascii(istream & f)
 	p = buf;
 	s_scan_token(&p, str);
 	if (strcmp(str, "ASCIIEND") != 0) {
-		cout << "discreta_base::load_ascii(): error reading footer: ASCIIEND keyword not found" << endl;
+		cout << "discreta_base::load_ascii "
+				"error reading footer: ASCIIEND keyword not found" << endl;
 		exit(1);
 		}
 

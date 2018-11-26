@@ -1256,7 +1256,7 @@ void permutation::m_l(int l)
 	int i;
 	
 	freeself();
-	self.vector_pointer = calloc_nobjects_plus_length(l, intEGER);
+	self.vector_pointer = calloc_nobjects_plus_length(l, INTEGER);
 	for (i = 0; i < l; i++) {
 		s_i(i) = i;
 		}

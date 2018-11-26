@@ -1143,7 +1143,8 @@ int diophant::solve_all_mckay(int &nb_backtrack_nodes, int verbose_level)
 	int nb_sol;
 	
 	if (f_v) {
-		cout << "diophant::solve_all_mckay before solve_mckay" << endl;
+		cout << "diophant::solve_all_mckay before solve_mckay, "
+				"verbose_level=" << verbose_level << endl;
 		}
 	solve_mckay(label, maxresults,
 			nb_backtrack_nodes, nb_sol, verbose_level);
@@ -1823,9 +1824,17 @@ int diophant::j_nxt(int j, int verbose_level)
 void diophant::solve_mckay(const char *label, int maxresults, 
 	int &nb_backtrack_nodes, int &nb_sol, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "diophant::solve_mckay" << endl;
+	}
 	solve_mckay_override_minrhs_in_inequalities(label, 
 		maxresults, nb_backtrack_nodes, 0 /* minrhs */, nb_sol, 
 		verbose_level);
+	if (f_v) {
+		cout << "diophant::solve_mckay done" << endl;
+	}
 }
 
 void diophant::solve_mckay_override_minrhs_in_inequalities(
@@ -1843,7 +1852,8 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 	vector<int> maxvarvalue;
 
 	if (f_v) {
-		cout << "diophant_solve_mckay " << label << ", a system "
+		cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
+				<< label << ", a system "
 				"of size " << m << " x " << n << endl;
 		}
 	lgs.Init(this, label, (int) m + 1, (int) n);
@@ -1863,7 +1873,8 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 			maxres[i] = (int) RHS[i];
 			}
 		else {
-			cout << "diophant_solve_mckay we cannot do this type of "
+			cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
+					"we cannot do this type of "
 					"condition, equation " << i << endl;
 			exit(1);
 			}
@@ -1940,7 +1951,8 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 	nb_backtrack_nodes = lgs.nb_calls_to_solve;
 	nb_sol = _resultanz;
 	if (f_v) {
-		cout << "diophant::solve_mckay " << label << " finished, "
+		cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
+			<< label << " finished, "
 			"number of solutions = " << _resultanz
 			<< " nb_backtrack_nodes=" << nb_backtrack_nodes << endl;
 		}

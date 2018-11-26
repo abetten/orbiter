@@ -503,11 +503,12 @@ int poset_orbit_node::trace_next_point(
 				<< " under the element " << endl;
 		gen->Poset->A2->element_print_quick(cosetrep, cout);
 		cout << "in action " << gen->Poset->A2->label << endl;
-		if (gen->f_allowed_to_show_group_elements)
+		if (gen->f_allowed_to_show_group_elements) {
 			gen->Poset->A2->element_print_as_permutation_verbose(
 					cosetrep, cout, 0);
 			cout << endl;
 		}
+	}
 	if (pt0 == the_point) {
 		if (f_vv) {
 			cout << "Since the image point is equal "

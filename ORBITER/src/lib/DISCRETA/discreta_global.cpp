@@ -14,7 +14,8 @@ void free_global_data()
 void the_end(int t0)
 {
 	cout << "***************** The End **********************" << endl;
-	cout << "nb_calls_to_finite_field_init=" << nb_calls_to_finite_field_init << endl;
+	cout << "nb_calls_to_finite_field_init="
+			<< nb_calls_to_finite_field_init << endl;
 	if (f_memory_debug) {
 		cout << "freeing global data" << endl;
 		free_global_data();
@@ -41,44 +42,53 @@ void the_end_quietly(int t0)
 	cout << endl;
 }
 
-void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
+void calc_Kramer_Mesner_matrix_neighboring(
+	poset_classification *gen,
 	int level, matrix &M, int verbose_level)
 // we assume that we don't use implicit fusion nodes
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;//(verbose_level >= 2);
-	int f1, f2, f3, l1, l2, i, j, k, I, J, len;
+	int f1, f2, l1, l2, i, j, k, I, J, len;
 	poset_orbit_node *O;
 	
 	if (f_v) {
-		cout << "calc_Kramer_Mesner_matrix_neighboring level=" << level << endl;
+		cout << "calc_Kramer_Mesner_matrix_neighboring "
+				"level=" << level << endl;
 		}
 
 	f1 = gen->first_poset_orbit_node_at_level[level];
 	f2 = gen->first_poset_orbit_node_at_level[level + 1];
-	f3 = gen->first_poset_orbit_node_at_level[level + 2];
+	//f3 = gen->first_poset_orbit_node_at_level[level + 2];
 	l1 = gen->nb_orbits_at_level(level); //f2 - f1;
 	l2 = gen->nb_orbits_at_level(level + 1); //f3 - f2;
 
 	M.m_mn_n(l1, l2);
 
 	if (f_v) {
-		cout << "calc_Kramer_Mesner_matrix_neighboring the size of the matrix is " << l1 << " x " << l2 << endl;
+		cout << "calc_Kramer_Mesner_matrix_neighboring "
+				"the size of the matrix is " << l1 << " x " << l2 << endl;
 		}
 
 	for (i = 0; i < l1; i++) {
 		if (f_vv) {
-			cout << "calc_Kramer_Mesner_matrix_neighboring i=" << i << " / " << l1 << endl;
+			cout << "calc_Kramer_Mesner_matrix_neighboring "
+					"i=" << i << " / " << l1 << endl;
 			}
 		I = f1 + i;
 		O = &gen->root[I];
 		for (k = 0; k < O->nb_extensions; k++) {
 			if (f_vv) {
-				cout << "calc_Kramer_Mesner_matrix_neighboring i=" << i << " / " << l1 << " extension " << k << " / " << O->nb_extensions << endl;
+				cout << "calc_Kramer_Mesner_matrix_neighboring "
+						"i=" << i << " / " << l1 << " extension "
+						<< k << " / " << O->nb_extensions << endl;
 				}
 			if (O->E[k].type == EXTENSION_TYPE_EXTENSION) {
 				if (f_vv) {
-					cout << "calc_Kramer_Mesner_matrix_neighboring i=" << i << " / " << l1 << " extension " << k << " / " << O->nb_extensions << " type extension node" << endl;
+					cout << "calc_Kramer_Mesner_matrix_neighboring "
+							"i=" << i << " / " << l1 << " extension "
+							<< k << " / " << O->nb_extensions
+							<< " type extension node" << endl;
 					}
 				len = O->E[k].orbit_len;
 				J = O->E[k].data;
@@ -87,7 +97,10 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 				}
 			if (O->E[k].type == EXTENSION_TYPE_FUSION) {
 				if (f_vv) {
-					cout << "calc_Kramer_Mesner_matrix_neighboring i=" << i << " / " << l1 << " extension " << k << " / " << O->nb_extensions << " type fusion" << endl;
+					cout << "calc_Kramer_Mesner_matrix_neighboring "
+							"i=" << i << " / " << l1 << " extension "
+							<< k << " / " << O->nb_extensions
+							<< " type fusion" << endl;
 					}
 				// fusion node
 				len = O->E[k].orbit_len;
@@ -99,7 +112,9 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 				ext1 = O->E[k].data2;
 				O1 = &gen->root[I1];
 				if (O1->E[ext1].type != EXTENSION_TYPE_EXTENSION) {
-					cout << "calc_Kramer_Mesner_matrix_neighboring O1->E[ext1].type != EXTENSION_TYPE_EXTENSION something is wrong" << endl;
+					cout << "calc_Kramer_Mesner_matrix_neighboring "
+							"O1->E[ext1].type != EXTENSION_TYPE_EXTENSION "
+							"something is wrong" << endl;
 					exit(1);
 					}
 				J = O1->E[ext1].data;
@@ -154,7 +169,8 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 			}
 		}
 	if (f_v) {
-		cout << "calc_Kramer_Mesner_matrix_neighboring level=" << level << " done" << endl;
+		cout << "calc_Kramer_Mesner_matrix_neighboring "
+				"level=" << level << " done" << endl;
 		}
 }
 
@@ -168,7 +184,7 @@ void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k,
 	int i;
 	
 	if (f_v) {
-		cout << "Mtk_from_MM(): t = " << t << ", k = " << k << endl;
+		cout << "Mtk_from_MM t = " << t << ", k = " << k << endl;
 		}
 	if (k == t) {
 		matrix &M1 = MM[t - 1].as_matrix();
@@ -185,7 +201,8 @@ void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k,
 		}
 	M.swap(Mtk);
 	if (f_v) {
-		cout << "Mtk_from_MM(): t = " << t << ", k = " << k << " done" << endl;
+		cout << "Mtk_from_MM t = " << t
+				<< ", k = " << k << " done" << endl;
 		}
 }
 
@@ -199,7 +216,8 @@ void Mtk_via_Mtr_Mrk(int t, int r, int k, int f_subspaces, int q,
 	int i, j, m, n;
 	
 	if (f_v) {
-		cout << "Mtk_via_Mtr_Mrk(): t = " << t << ", r = " << r << ", k = " << k << endl;
+		cout << "Mtk_via_Mtr_Mrk(): t = " << t << ", r = "
+				<< r << ", k = " << k << endl;
 		}
 	Mtk.mult(Mtr, Mrk);
 		/* Mtk := (k - t) atop (k - r) * M_t,k */
@@ -241,7 +259,8 @@ void Mtk_sup_to_inf(poset_classification *gen,
 	Nt = Mtk_sup.s_m();
 	Nk = Mtk_sup.s_n();
 	if (f_v) {
-		cout << "M_{" << t << "," << k << "} sup is a matrix of size " << Nt << " x " << Nk << endl;
+		cout << "M_{" << t << "," << k << "} sup is a matrix of size "
+				<< Nt << " x " << Nk << endl;
 		cout << Mtk_sup << endl;
 		}
 	M_sup = NEW_int(Nt * Nk);
@@ -270,7 +289,8 @@ void Mtk_sup_to_inf(poset_classification *gen,
 		}
 	if (f_v) {
 		cout << "Mtk_sup_to_inf" << endl;
-		cout << "M_{" << t << "," << k << "} inf is a matrix of size " << Nt << " x " << Nk << endl;
+		cout << "M_{" << t << "," << k << "} inf is a matrix of size "
+				<< Nt << " x " << Nk << endl;
 		cout << Mtk_inf << endl;
 		}
 	
@@ -291,7 +311,8 @@ void compute_Kramer_Mesner_matrix(poset_classification *gen,
 	V.m_l(k);
 	for (i = 0; i < k; i++) {
 		V[i].change_to_matrix();
-		calc_Kramer_Mesner_matrix_neighboring(gen, i, V[i].as_matrix(), verbose_level - 2);
+		calc_Kramer_Mesner_matrix_neighboring(gen, i,
+			V[i].as_matrix(), verbose_level - 2);
 			// DISCRETA/discreta_global.C
 
 
@@ -311,8 +332,10 @@ void compute_Kramer_Mesner_matrix(poset_classification *gen,
 	if (f_v) {
 		int m = Mtk.s_m();
 		int n = Mtk.s_n();
-		cout << "compute_Kramer_Mesner_matrix t=" << t << " k=" << k << " done" << endl;
-		cout << "compute_Kramer_Mesner_matrix the matrix has size " << m << " x " << n << endl;
+		cout << "compute_Kramer_Mesner_matrix t=" << t
+				<< " k=" << k << " done" << endl;
+		cout << "compute_Kramer_Mesner_matrix the matrix has size "
+				<< m << " x " << n << endl;
 		}
 }
 

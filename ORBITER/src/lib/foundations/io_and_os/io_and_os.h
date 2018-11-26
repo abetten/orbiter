@@ -334,7 +334,8 @@ int os_memory_usage();
 int os_ticks();
 int os_ticks_system();
 int os_ticks_per_second();
-void os_ticks_to_dhms(int ticks, int tps, int &d, int &h, int &m, int &s);
+void os_ticks_to_dhms(int ticks, int tps,
+		int &d, int &h, int &m, int &s);
 void time_check_delta(ostream &ost, int dt);
 void print_elapsed_time(ostream &ost, int d, int h, int m, int s);
 void time_check(ostream &ost, int t0);
@@ -346,7 +347,8 @@ int4 fread_int4(FILE *fp);
 void fwrite_uchars(FILE *fp, uchar *p, int len);
 void fread_uchars(FILE *fp, uchar *p, int len);
 void latex_head_easy(ostream& ost);
-void latex_head_easy_with_extras_in_the_praeamble(ostream& ost, const char *extras);
+void latex_head_easy_with_extras_in_the_praeamble(
+	ostream& ost, const char *extras);
 void latex_head_easy_sideways(ostream& ost);
 void latex_head(ostream& ost, int f_book, int f_title, 
 	const char *title, const char *author, 
@@ -363,7 +365,8 @@ void code_int4(char *&p, int4 i);
 int4 decode_int4(char *&p);
 void code_uchar(char *&p, uchar a);
 void decode_uchar(char *&p, uchar &a);
-void print_incidence_structure(ostream &ost, int m, int n, int len, int *S);
+void print_incidence_structure(ostream &ost,
+		int m, int n, int len, int *S);
 void int_vec_scan(const char *s, int *&v, int &len);
 void int_vec_scan_from_stream(istream & is, int *&v, int &len);
 void double_vec_scan(const char *s, double *&v, int &len);
@@ -517,6 +520,7 @@ void concatenate_files(const char *fname_in_mask, int N,
 	const char *fname_out, const char *EOF_marker, int f_title_line, 
 	int verbose_level);
 void chop_string(const char *str, int &argc, char **&argv);
+const char *strip_directory(const char *p);
 
 
 

@@ -679,17 +679,19 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 				<< endl;
 		}
 	if (/*nb_strong_generators &&*/ f_create_schreier_vector) {
-		int f_trivial_group;
+		//int f_trivial_group;
 
 		if (f_vv) {
 			cout << "calling get_schreier_vector" << endl;
 			}
+#if 0
 		if (nb_strong_generators == 0) {
 			f_trivial_group = TRUE;
 			}
 		else {
 			f_trivial_group = FALSE;
 			}
+#endif
 		int gen_hdl_first;
 		if (nb_strong_generators == 0) {
 			gen_hdl_first = -1;

@@ -19,7 +19,8 @@ database::database() : Vector()
 database::database(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "database::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	cout << "database::copy constructor for object: "
+			<< const_cast<discreta_base &>(x) << "\n";
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
 
@@ -192,7 +193,7 @@ void database::get_file_size()
 	file_size() = l;
 }
 
-void database::user2total(int user, int *total, int *pad)
+void database::user2total(int user, int &total, int &pad)
 {
 	int r, r1, sz;
 	
@@ -205,13 +206,13 @@ void database::user2total(int user, int *total, int *pad)
 		else {
 			r1 = 0;
 			}
-		*pad = r1 + sz;
-		*total = sz + sz + user + *pad;
+		pad = r1 + sz;
+		total = sz + sz + user + pad;
 		}
 	else if (file_type() == DB_FILE_TYPE_COMPACT) {
 		r = user % sz;
-		*pad = sz - r;
-		*total = sizeof(int4) * 2 + user + *pad;
+		pad = sz - r;
+		total = sizeof(int4) * 2 + user + pad;
 		}
 }
 
@@ -395,7 +396,7 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 		exit(1);
 		}
 	size = data_type->data_size;
-	user2total(size, &total, &pad);
+	user2total(size, total, pad);
 	memory M;
 	
 	M.alloc(size);
@@ -859,7 +860,7 @@ void database::add_data_DB_standard(void *d,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int total, pad;
+	int total = 0, pad = 0;
 	char *data2 = NULL;
 	char *pc, *pc0;
 	int i;
@@ -878,7 +879,7 @@ void database::add_data_DB_standard(void *d,
 	if (f_v) {
 		cout << "database::add_data_DB_standard()" << endl;
 		}
-	user2total(size, &total, &pad);
+	user2total(size, total, pad);
 	data2 = (char *) new char[total];
 	header[0] = MAGIC_SYNC;
 	header[1] = TRUE;
@@ -899,7 +900,8 @@ void database::add_data_DB_standard(void *d,
 	pc = (char *)(pi + 8);
 	pc0 = (char *)d;
 	if (f_vv) {
-		cout << "size = " << size << " pad = " << pad << " total = " << total << endl;
+		cout << "size = " << size << " pad = " << pad
+				<< " total = " << total << endl;
 		}
 	for (i = 0; i < size; i++)
 		pc[i] = pc0[i];
@@ -946,7 +948,7 @@ void database::add_data_DB_compact(void *d,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int total, pad;
+	int total = 0, pad = 0;
 	char *data2 = NULL;
 	char *pc, *pc0;
 	int i;
@@ -960,7 +962,7 @@ void database::add_data_DB_compact(void *d,
 	if (f_v) {
 		cout << "database::add_data_DB_compact()" << endl;
 		}
-	user2total(size, &total, &pad);
+	user2total(size, total, pad);
 	data2 = (char *) new char[total];
 	header[0] = MAGIC_SYNC;
 	header[1] = (int4) size;

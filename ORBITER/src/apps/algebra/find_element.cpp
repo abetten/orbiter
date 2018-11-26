@@ -57,7 +57,7 @@ void find_element(int q, int *mtx, int verbose_level)
 	action *A;
 	longinteger_object Go;
 	int ord;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
+	int *Elt6;
 
 	int dataE[4];
 
@@ -79,13 +79,7 @@ void find_element(int q, int *mtx, int verbose_level)
 	//int go;
 	//go = Go.as_int();
 	
-	Elt1 = new int[A->elt_size_in_int];
-	Elt2 = new int[A->elt_size_in_int];
-	Elt3 = new int[A->elt_size_in_int];
-	Elt4 = new int[A->elt_size_in_int];
-	Elt5 = new int[A->elt_size_in_int];
 	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 	int dataD[4];
 

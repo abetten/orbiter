@@ -281,8 +281,8 @@ void test2(int verbose_level)
 	int n = 6;
 	int q = 13;
 
-	action_on_orthogonal *AO;
-	orthogonal *O;
+	//action_on_orthogonal *AO;
+	//orthogonal *O;
 	
 	//int N;
 		
@@ -296,8 +296,8 @@ void test2(int verbose_level)
 		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, verbose_level);
 	
-	AO = A->G.AO;
-	O = AO->O;
+	//AO = A->G.AO;
+	//O = AO->O;
 
 	//N = O->nb_points + O->nb_lines;
 	
@@ -419,7 +419,7 @@ void test6(int verbose_level)
 	action *A;
 	action *A4;
 	longinteger_object Go;
-	int go, i, j, rk, ord;
+	int i, j, rk, ord;
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
 	int *ELT1;
 	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
@@ -438,7 +438,7 @@ void test6(int verbose_level)
 		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = new int[A->elt_size_in_int];
 	Elt2 = new int[A->elt_size_in_int];
@@ -649,7 +649,7 @@ void test6(int verbose_level)
 
 
 
-	int R1[] = {65,65,45,52};
+	//int R1[] = {65,65,45,52};
 	//int R_start[4],
 	int R_cur[4], R_next[4];
 	int **tangent_planes;
@@ -785,8 +785,8 @@ void test7(int verbose_level)
 	action *A4;
 	longinteger_object Go;
 	int ord;
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
-	int *ELT1;
+	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6; //, *Elt7;
+	//int *ELT1;
 	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
 	
 	F = new finite_field;
@@ -810,14 +810,11 @@ void test7(int verbose_level)
 	Elt4 = new int[A->elt_size_in_int];
 	Elt5 = new int[A->elt_size_in_int];
 	Elt6 = new int[A->elt_size_in_int];
-	Elt7 = new int[A->elt_size_in_int];
 
 	Elt_At = new int[A->elt_size_in_int];
 	Elt_As = new int[A->elt_size_in_int];
 	Elt_Bt = new int[A->elt_size_in_int];
 	Elt_Bs = new int[A->elt_size_in_int];
-
-	ELT1 = new int[A4->elt_size_in_int];
 
 	ELT_A = new int[A4->elt_size_in_int];
 	ELT_B = new int[A4->elt_size_in_int];
@@ -1297,7 +1294,7 @@ void test15(int verbose_level)
 	int n = 5;
 	int q = 67;
 
-	action_on_orthogonal *AO;
+	//action_on_orthogonal *AO;
 	//orthogonal *O;
 	
 	//int N;
@@ -1315,7 +1312,7 @@ void test15(int verbose_level)
 	
 	A->lex_least_base_in_place(verbose_level);
 	
-	AO = A->G.AO;
+	//AO = A->G.AO;
 	//O = AO->O;
 
 	//N = O->nb_points + O->nb_lines;
@@ -1778,7 +1775,7 @@ void test17(int verbose_level)
 	int *elt4;
 	int *elt5;
 	int f_semilinear = FALSE;
-	orthogonal *O4;
+	//orthogonal *O4;
 	finite_field *Fq;
 
 	Fq = new finite_field;
@@ -1813,9 +1810,9 @@ void test17(int verbose_level)
 	
 	A4->lex_least_base_in_place(verbose_level - 1);
 	
-	O4 = A4->G.AO->O;
+	//O4 = A4->G.AO->O;
 	
-	int f_switch1, f_switch2, f_switch3;
+	int /*f_switch1,*/ f_switch2;//, f_switch3;
 
 
 #if 0
@@ -1870,7 +1867,7 @@ void test17(int verbose_level)
 #else
 	int data4_1[]={1,43,23,54};
 	int data4_2[]={1,23,19,16};
-	f_switch1 = TRUE;
+	//f_switch1 = TRUE;
 	A2->make_element(T1, data4_1, verbose_level - 1);
 	A2->make_element(S1, data4_2, verbose_level - 1);
 	f_switch2 = TRUE;
@@ -1884,7 +1881,7 @@ void test17(int verbose_level)
 		A2->element_mult(T1, T2, T3, 0);
 		A2->element_mult(S1, S2, S3, 0);
 		}
-	f_switch3 = (f_switch1 + f_switch2) % 2;
+	//f_switch3 = (f_switch1 + f_switch2) % 2;
 	cout << "T3:" << endl;
 	print_fancy(A2, Fq, T3, 2);
 	cout << "S3:" << endl;
@@ -2338,7 +2335,7 @@ void test_bricks(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
-	int go;
+	//int go;
 	int *Elt1; //, *Elt2, *Elt3;
 	int i;
 	int q = 5;
@@ -2354,7 +2351,7 @@ void test_bricks(int verbose_level)
 
 	A->print_base();
 	A->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 

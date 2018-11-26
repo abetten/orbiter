@@ -1110,7 +1110,7 @@ void solid::edge_midpoints(solid& A)
 	int adj[1000], nb_adj;
 	int nb_V, nb_E, nb_E_old, nb_F;
 	int v;
-	int ei, ej, e, ee, f, i, j, l, k;
+	int ei, ej, e, ee, f, i, j, k;
 	solid B;
 	Vector gen_new;
 	
@@ -1121,7 +1121,7 @@ void solid::edge_midpoints(solid& A)
 	nb_E = nb_E_old = solid::nb_E();
 	nb_F = solid::nb_F();
 	B = *this;
-	l = group_generators().s_l();
+	//l = group_generators().s_l();
 
 	B.x().realloc(nb_V + nb_E);
 	B.y().realloc(nb_V + nb_E);
@@ -1517,7 +1517,7 @@ void solid::induced_group_on_edges(Vector & gen, Vector & gen_e)
 
 void solid::tetrahedron(int r)
 {
-	double phi, h, c;
+	double phi, c;
 	int i;
 	permutation P;
 	
@@ -1533,7 +1533,7 @@ void solid::tetrahedron(int r)
 	group_generators_i(1) = P;
 	f_vertex_labels() = FALSE;
 	phi = 120.;
-	h = 4. * r * 0.33333;
+	//h = 4. * r * 0.33333;
 	c = square_root(8. / 9.) * r;
 	
 	placement().m_l(3);
@@ -1773,7 +1773,7 @@ void solid::dodecahedron(int r)
 	permutation P;
 	
 	init();
-	double phi, phi_2, sin_phi_2, R, RR, s, d, dr, h, hh, H, a, hH;
+	double phi, /* phi_2, */ sin_phi_2, R, RR, s, d, dr, h, hh, H, hH;
 	int i;
 	
 	group_generators().m_l(2);
@@ -1801,7 +1801,7 @@ void solid::dodecahedron(int r)
 	z().m_l_n(20);
 	cout << "make placement:" << endl;
 	phi = 72.;
-	phi_2 = 36.;
+	//phi_2 = 36.;
 	// cout << "angles: phi = " << phi << ", phi/2 = " << phi_2 << endl;
 	sin_phi_2 = sin_grad(phi * .5);
 	s = 2. * (double) r * sin_phi_2;
@@ -1820,7 +1820,7 @@ void solid::dodecahedron(int r)
 	// cout << "R^2 = " << RR << endl;
 	H = .5 * (RR - hh - r * r) / h;
 	// cout << "H = " << H << endl;
-	a = square_root(RR + H * H);
+	//a = square_root(RR + H * H);
 	// cout << "a = " << a << endl;
 	hH = h + H;
 	// cout << "h + H = " << hH << endl;

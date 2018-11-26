@@ -184,7 +184,7 @@ void tensor_product::init(int argc, const char **argv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *v;
+	//int *v;
 	int i, j, a;
 
 	if (f_v) {
@@ -198,7 +198,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	A = NEW_OBJECT(action);
 
-	v = NEW_int(n);
+	//v = NEW_int(n);
 
 
 	F = NEW_OBJECT(finite_field);
@@ -539,7 +539,7 @@ void tensor_product::init(int argc, const char **argv,
 		this,
 		verbose_level);
 #if 0
-	Gen->f_print_function = TRUE;
+	Gen->f_print_function = FALSE;
 	Gen->print_function = print_set;
 	Gen->print_function_data = this;
 #endif
@@ -547,19 +547,21 @@ void tensor_product::init(int argc, const char **argv,
 	int nb_nodes = 1000;
 
 	if (f_v) {
-		cout << "tensor_product::init before Gen->init_poset_orbit_node" << endl;
+		cout << "tensor_product::init "
+				"before Gen->init_poset_orbit_node" << endl;
 		}
 	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
-		cout << "tensor_product::init calling Gen->init_root_node" << endl;
+		cout << "tensor_product::init "
+				"calling Gen->init_root_node" << endl;
 		}
 	Gen->root[0].init_root_node(Gen, verbose_level - 1);
 
-	int schreier_depth;
+	//int schreier_depth;
 	int f_use_invariant_subset_if_available;
 	int f_debug;
 
-	schreier_depth = Gen->depth;
+	//schreier_depth = Gen->depth;
 	f_use_invariant_subset_if_available = TRUE;
 	f_debug = FALSE;
 

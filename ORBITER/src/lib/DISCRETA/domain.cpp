@@ -241,7 +241,8 @@ int finite_field_domain_primitive_root()
 				return i;
 				}
 			}
-		cout << "finite_field_domain_primitive_root() couldn't find primitive root!" << endl;
+		cout << "finite_field_domain_primitive_root "
+				"couldn't find primitive root!" << endl;
 		exit(1);
 		// int p, f;
 		// factor_prime_power(q, &p, &f);
@@ -253,13 +254,14 @@ int finite_field_domain_primitive_root()
 void finite_field_domain_base_over_subfield(Vector & b)
 {
 	domain *d, *sd;
-	int qq, q, f, a, i;
+	int q, f, a, i;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "finite_field_domain_base_over_subfield() no finite field domain" << endl;
+		cout << "finite_field_domain_base_over_subfield "
+				"no finite field domain" << endl;
 		exit(1);
 		}
-	qq = finite_field_domain_order_int(d);
+	//qq = finite_field_domain_order_int(d);
 	if (is_GFp_domain(d)) {
 		b.m_l(1);
 		b.m_ii(0, 1);
