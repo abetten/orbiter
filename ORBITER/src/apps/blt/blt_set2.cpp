@@ -874,7 +874,7 @@ void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 	Iso.depth_completed = Iso.level /*- 2*/;
 
 	Iso.gen->recreate_schreier_vectors_up_to_level(
-			Iso.level - 1, TRUE /* f_compact */,
+			Iso.level - 1,
 			verbose_level);
 
 	int i;

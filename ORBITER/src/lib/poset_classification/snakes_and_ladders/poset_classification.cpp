@@ -906,7 +906,7 @@ void poset_classification::print_level_extension_coset_info(
 
 void poset_classification::recreate_schreier_vectors_up_to_level(
 		int lvl,
-		int f_compact, int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -924,16 +924,16 @@ void poset_classification::recreate_schreier_vectors_up_to_level(
 					"creating Schreier vectors at "
 					"level " << i << endl;
 			}
-		recreate_schreier_vectors_at_level(i, f_compact, verbose_level);
+		recreate_schreier_vectors_at_level(i, 0 /*verbose_level*/);
 		}
 }
 
 void poset_classification::recreate_schreier_vectors_at_level(
 		int i,
-		int f_compact, int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE;//(verbose_level >= 2);
 	int f, cur, l, prev, u;
 	int f_recreate_extensions = FALSE;
 	int f_dont_keep_sv = FALSE;
@@ -999,7 +999,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 			}
 			
 		root[prev].compute_schreier_vector(this, i,
-				f_compact, verbose_level - 1);
+				0 /*verbose_level - 1*/);
 		}
 	write_sv_level_file_binary(i,
 			fname_base, FALSE, 0, 0, verbose_level);
@@ -1078,7 +1078,7 @@ void poset_classification::get_table_of_nodes(int *&Table,
 
 int poset_classification::count_live_points(
 		int level,
-		int node_local, int f_compact, int verbose_level)
+		int node_local, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_v2 = FALSE;
@@ -1095,7 +1095,7 @@ int poset_classification::count_live_points(
 	node = first_poset_orbit_node_at_level[level] + node_local;
 	if (root[node].Schreier_vector == NULL) {
 		root[node].compute_schreier_vector(this, 
-			level, f_compact, verbose_level - 2);
+			level, verbose_level - 2);
 		}
 #if 0
 	osv = root[node].sv;

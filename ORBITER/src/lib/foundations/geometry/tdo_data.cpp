@@ -10,7 +10,9 @@ tdo_data::tdo_data()
 	types_first = NULL;
 	types_len = NULL;
 	only_one_type = NULL;
+	nb_only_one_type = 0;
 	multiple_types = NULL;
+	nb_multiple_types = 0;
 	types_first2 = NULL;
 	D1 = NULL;
 	D2 = NULL;
@@ -154,6 +156,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		}
 	D2->project(&D, f, l, eqn_number, nb_eqns_replaced,
 			eqns_replaced, verbose_level - 1);
+	D.f_has_sum = TRUE;
 	D.sum = s;
 	if (f_vv) {
 		cout << "after projection:" << endl;
@@ -234,6 +237,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		D2->project(&DD, F, L, eqn_number2,
 				nb_eqns_replaced2, eqns_replaced2,
 				verbose_level - 1);
+		DD.f_has_sum = TRUE;
 		DD.sum = s;
 		for (i = 0; i < DD.m; i++) {
 			ii = eqn_number2[i];
@@ -330,6 +334,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			}
 		D2->project(&D, f, l, nb_eqns_replaced,
 				eqns_replaced, verbose_level);
+		D.f_has_sum = TRUE;
 		D.sum = classes_len[r];
 		D.print();
 		D.solve_first(verbose_level);

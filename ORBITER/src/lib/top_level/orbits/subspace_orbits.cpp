@@ -77,7 +77,8 @@ subspace_orbits::~subspace_orbits()
 		}
 }
 
-void subspace_orbits::init(int argc, const char **argv, 
+void subspace_orbits::init(
+	int argc, const char **argv,
 	linear_group *LG, int depth, 
 	int verbose_level)
 {
@@ -166,16 +167,19 @@ void subspace_orbits::init_group(int verbose_level)
 		int f_do_it_anyway_even_for_big_degree = TRUE;
 		int f_print_cycles_of_length_one = TRUE;
 		
-		cout << "subspace_orbits->init_group printing generators "
+		cout << "subspace_orbits->init_group "
+				"printing generators "
 				"for the group:" << endl;
-		LG->Strong_gens->gens->print(cout, f_print_as_permutation, 
+		LG->Strong_gens->gens->print(cout,
+			f_print_as_permutation,
 			f_offset, offset, 
 			f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one);
 		}
 
 	if (f_v) {
-		cout << "subspace_orbits->init_group before Gen->init" << endl;
+		cout << "subspace_orbits->init_group "
+				"before Gen->init" << endl;
 		}
 
 	Poset = NEW_OBJECT(poset);
@@ -189,23 +193,6 @@ void subspace_orbits::init_group(int verbose_level)
 	
 	Gen->init(Poset, Gen->depth, verbose_level);
 
-#if 0
-	Gen->init_check_func(
-		subspace_orbits_test_func, 
-		this /* candidate_check_data */);
-#endif
-
-#if 0
-	// ToDo
-	Gen->init_early_test_func(
-		subspace_orbits_early_test_func, 
-		this /*void *data */,  
-		verbose_level);
-#endif
-
-	//Gen->init_incremental_check_func(
-		//check_mindist_incremental, 
-		//this /* candidate_check_data */);
 
 	Gen->init_vector_space_action(n, 
 		F, 
@@ -225,7 +212,8 @@ void subspace_orbits::init_group(int verbose_level)
 		cout << "subspace_orbits->init_group "
 				"before Gen->init_poset_orbit_node" << endl;
 		}
-	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
+	Gen->init_poset_orbit_node(
+			nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "subspace_orbits->init_group "
 				"calling Gen->init_root_node" << endl;
@@ -275,7 +263,8 @@ void subspace_orbits::compute_orbits(int verbose_level)
 		}
 }
 
-void subspace_orbits::unrank_set_to_M(int len, int *S)
+void subspace_orbits::unrank_set_to_M(
+		int len, int *S)
 {
 	int i;
 	
@@ -284,7 +273,8 @@ void subspace_orbits::unrank_set_to_M(int len, int *S)
 		}
 }
 
-void subspace_orbits::unrank_set_to_matrix(int len, int *S, int *M)
+void subspace_orbits::unrank_set_to_matrix(
+		int len, int *S, int *M)
 {
 	int i;
 	
@@ -293,7 +283,8 @@ void subspace_orbits::unrank_set_to_matrix(int len, int *S, int *M)
 		}
 }
 
-void subspace_orbits::rank_set_from_matrix(int len, int *S, int *M)
+void subspace_orbits::rank_set_from_matrix(
+		int len, int *S, int *M)
 {
 	int i;
 	
@@ -302,7 +293,8 @@ void subspace_orbits::rank_set_from_matrix(int len, int *S, int *M)
 		}
 }
 
-void subspace_orbits::Kramer_Mesner_matrix(int t, int k,
+void subspace_orbits::Kramer_Mesner_matrix(
+	int t, int k,
 	int f_print_matrix,
 	int f_read_solutions, const char *solution_fname,
 	int verbose_level)
@@ -319,7 +311,8 @@ void subspace_orbits::Kramer_Mesner_matrix(int t, int k,
 	int m, n;
 
 	compute_Kramer_Mesner_matrix(Gen, 
-		t, k, Mtk, TRUE /* f_subspaces */, q, verbose_level - 2);
+		t, k, Mtk, TRUE /* f_subspaces */,
+		q, verbose_level - 2);
 		// in DISCRETA/discreta_global.C
 
 	m = Mtk.s_m();
@@ -379,6 +372,7 @@ void subspace_orbits::Kramer_Mesner_matrix(int t, int k,
 	D->type[row] = t_EQ;
 	D->RHSi(row) = 0;
 
+	D->f_has_sum = TRUE;
 	D->sum = 0;
 	D->f_x_max = TRUE;
 	for (i = 0; i < n; i++) {
@@ -994,8 +988,8 @@ int subspace_orbits::test_if_self_orthogonal(
 					"doubly_even needs q = 2" << endl;
 			exit(1);
 			}
-		/// check if each row of the generator matrix has weight
-		/// divisible by 4:
+		// check if each row of the generator matrix has weight
+		// divisible by 4:
 		for (i = 0; i < len; i++) {
 			wt = 0;
 			for (j = 0; j < n; j++) {

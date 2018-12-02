@@ -91,7 +91,8 @@ int main(int argc, const char **argv)
 			f_r = TRUE;
 			depth_completed = atoi(argv[++i]);
 			data_file_name = argv[++i];
-			cout << "-r " << depth_completed << " " << data_file_name << endl;
+			cout << "-r " << depth_completed << " "
+					<< data_file_name << endl;
 			}
 		else if (strcmp(argv[i], "-exportmagma") == 0) {
 			f_exportmagma = TRUE;
@@ -117,7 +118,8 @@ int main(int argc, const char **argv)
 				}
 			group_generators_data_size = j;
 			cout << "-G ";
-			int_vec_print(cout, group_generators_data, group_generators_data_size);
+			int_vec_print(cout, group_generators_data,
+					group_generators_data_size);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-GO") == 0) {
@@ -198,17 +200,20 @@ int main(int argc, const char **argv)
 
 	F = NEW_OBJECT(finite_field);
 
-	F->init_override_polynomial(Descr->input_q, override_poly, 0);
+	F->init_override_polynomial(
+			Descr->input_q, override_poly, 0);
 	Descr->F = F;
 
 
 	LG = NEW_OBJECT(linear_group);
 
-	cout << "before LG->init, creating the group" << endl;
+	cout << "before LG->init, "
+			"creating the group" << endl;
 
 	LG->init(Descr, verbose_level);
 	
-	cout << "after LG->init, strong generators for the group have been created" << endl;
+	cout << "after LG->init, strong generators "
+			"for the group have been created" << endl;
 
 
 
@@ -231,12 +236,16 @@ int main(int argc, const char **argv)
 #if 0
 	if (f_r) {
 		//SubOrb->init2(verbose_level);
-		SubOrb->read_data_file(depth_completed, data_file_name, f_exportmagma, verbose_level);
+		SubOrb->read_data_file(depth_completed,
+				data_file_name, f_exportmagma, verbose_level);
 		}
 	else {
 		if (f_group_generators) {
-			SubOrb->init_group(group_generators_data, group_generators_data_size, 
-				f_group_order_target, group_order_target, verbose_level);
+			SubOrb->init_group(
+				group_generators_data,
+				group_generators_data_size,
+				f_group_order_target, group_order_target,
+				verbose_level);
 			}
 		SubOrb->init2(verbose_level);
 		}
@@ -245,23 +254,36 @@ int main(int argc, const char **argv)
 
 	SubOrb->compute_orbits(verbose_level);
 	if (f_KM) {
-		SubOrb->Kramer_Mesner_matrix(KM_t, KM_k, f_print_matrix, f_read_solutions, solution_fname, verbose_level);
+		SubOrb->Kramer_Mesner_matrix(KM_t, KM_k,
+				f_print_matrix,
+				f_read_solutions,
+				solution_fname,
+				verbose_level);
 		}
 
 
 
 	if (f_list) {
-		int f_show_orbit_decomposition = FALSE, f_show_stab = TRUE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
+		int f_show_orbit_decomposition = FALSE;
+		int f_show_stab = TRUE;
+		int f_save_stab = FALSE;
+		int f_show_whole_orbit = FALSE;
 		
 		SubOrb->Gen->list_all_orbits_at_level(depth, 
 			TRUE, 
 			print_subspace, 
 			SubOrb, 
-			f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+			f_show_orbit_decomposition,
+			f_show_stab,
+			f_save_stab,
+			f_show_whole_orbit);
 		}
 
 	if (f_list_all_levels) {
-		int f_show_orbit_decomposition = FALSE, f_show_stab = TRUE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
+		int f_show_orbit_decomposition = FALSE;
+		int f_show_stab = TRUE;
+		int f_save_stab = FALSE;
+		int f_show_whole_orbit = FALSE;
 		int l;
 
 		for (l = 0; l <= depth; l++) {
@@ -270,7 +292,10 @@ int main(int argc, const char **argv)
 				TRUE, 
 				print_subspace, 
 				SubOrb, 
-				f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+				f_show_orbit_decomposition,
+				f_show_stab,
+				f_save_stab,
+				f_show_whole_orbit);
 			}
 		}
 
@@ -291,16 +316,23 @@ int main(int argc, const char **argv)
 		int_vec_print(cout, Orbits, nb_orbits);
 		cout << endl;
 
-		int f_show_orbit_decomposition = FALSE, f_show_stab = FALSE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
+		int f_show_orbit_decomposition = FALSE;
+		int f_show_stab = FALSE;
+		int f_save_stab = FALSE;
+		int f_show_whole_orbit = FALSE;
 		
 		SubOrb->Gen->list_selected_set_of_orbits_at_level(depth, 
 			nb_orbits, Orbits, 
 			TRUE, 
 			print_subspace, 
 			SubOrb, 
-			f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+			f_show_orbit_decomposition,
+			f_show_stab,
+			f_save_stab,
+			f_show_whole_orbit);
 
-		SubOrb->Gen->compute_integer_property_of_selected_list_of_orbits(depth, 
+		SubOrb->Gen->compute_integer_property_of_selected_list_of_orbits(
+			depth,
 			nb_orbits, Orbits, 
 			compute_minimum_distance, 
 			SubOrb, 
@@ -309,7 +341,8 @@ int main(int argc, const char **argv)
 		classify C;
 
 		C.init(Data, nb_orbits, FALSE, 0);
-		cout << "The distribution of the minimum distance of the " << nb_orbits << " LCD codes is: ";
+		cout << "The distribution of the minimum distance "
+				"of the " << nb_orbits << " LCD codes is: ";
 		C.print_naked(TRUE);
 		cout << endl;
 		FREE_int(Data);
@@ -319,8 +352,11 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "before gen->draw_poset" << endl;
 			}
-		SubOrb->Gen->draw_poset(SubOrb->Gen->fname_base, depth, 
-			0 /* data1 */, f_embedded, f_sideways, 0 /* gen->verbose_level */);
+		SubOrb->Gen->draw_poset(
+			SubOrb->Gen->fname_base,
+			depth,
+			0 /* data1 */, f_embedded, f_sideways,
+			0 /* gen->verbose_level */);
 		}
 
 
@@ -332,13 +368,17 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "before SubOrb.Gen->get_table_of_nodes" << endl;
 			}
-		SubOrb->Gen->get_table_of_nodes(Table, nb_rows, nb_cols, 0 /*verbose_level*/);
+		SubOrb->Gen->get_table_of_nodes(Table,
+				nb_rows, nb_cols, 0 /*verbose_level*/);
 	
 		if (f_v) {
-			cout << "before int_matrix_write_csv nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
+			cout << "before int_matrix_write_csv "
+					"nb_rows=" << nb_rows
+					<< " nb_cols=" << nb_cols << endl;
 			}
 
-		sprintf(fname, "%s_table_of_nodes.csv", SubOrb->Gen->fname_base);
+		sprintf(fname, "%s_table_of_nodes.csv",
+				SubOrb->Gen->fname_base);
 		if (f_v) {
 			cout << "writing to file " << fname << endl;
 			}
@@ -351,7 +391,9 @@ int main(int argc, const char **argv)
 
 
 
-	cout << "Memory usage = " << os_memory_usage() <<  " Time = " << delta_time(t0) << " tps = " << os_ticks_per_second() << endl;
+	cout << "Memory usage = " << os_memory_usage()
+			<<  " Time = " << delta_time(t0)
+			<< " tps = " << os_ticks_per_second() << endl;
 	char exec_log_fname[1000];
 	int M[3];
 	const char *column_labels[] = {
@@ -368,8 +410,10 @@ int main(int argc, const char **argv)
 	else {
 		sprintf(exec_log_fname, "subspace_orbits_run.csv");
 		}
-	int_matrix_write_csv_with_labels(exec_log_fname, M, 1, 3, column_labels);
-	cout << "Written file " << exec_log_fname << " of size " << file_size(exec_log_fname) << endl;
+	int_matrix_write_csv_with_labels(
+			exec_log_fname, M, 1, 3, column_labels);
+	cout << "Written file " << exec_log_fname << " of size "
+			<< file_size(exec_log_fname) << endl;
 
 	FREE_OBJECT(LG);
 	FREE_OBJECT(Descr);
@@ -380,9 +424,9 @@ int main(int argc, const char **argv)
 	the_end(t0);
 }
 
-// ##################################################################################################
+// #############################################################################
 // callback functions
-// ##################################################################################################
+// #############################################################################
 
 
 int extra_test_func(subspace_orbits *SubOrb, 
@@ -394,24 +438,30 @@ int extra_test_func(subspace_orbits *SubOrb,
 	int ret = TRUE;
 
 	if (f_mindist) {
-		ret = SubOrb->test_minimum_distance(len, S, the_mindist, 0 /* verbose_level */);
+		ret = SubOrb->test_minimum_distance(len, S,
+				the_mindist, 0 /* verbose_level */);
 		if (f_v) {
 			if (ret) {
-				cout << "extra_test_func the minimum distance is OK" << endl;
+				cout << "extra_test_func the minimum distance "
+						"is OK" << endl;
 				}
 			else {
-				cout << "extra_test_func the minimum distance is not OK" << endl;
+				cout << "extra_test_func the minimum distance "
+						"is not OK" << endl;
 				}
 			}
 		}
 	if (ret && f_self_orthogonal) {
-		ret = SubOrb->test_if_self_orthogonal(len, S, f_doubly_even, 0 /* verbose_level */);
+		ret = SubOrb->test_if_self_orthogonal(len, S,
+				f_doubly_even, 0 /* verbose_level */);
 		if (f_v) {
 			if (ret) {
-				cout << "extra_test_func the self-orthogonality test is OK" << endl;
+				cout << "extra_test_func the self-orthogonality "
+						"test is OK" << endl;
 				}
 			else {
-				cout << "extra_test_func the self-orthogonality test is not OK" << endl;
+				cout << "extra_test_func the self-orthogonality "
+						"test is not OK" << endl;
 				}
 			}
 		}
@@ -435,7 +485,8 @@ int mindist_test_func(subspace_orbits *SubOrb,
 	int mindist = *p_mindist;
 	int ret;
 
-	ret = SubOrb->test_minimum_distance(len, S, mindist, 0 /* verbose_level */);
+	ret = SubOrb->test_minimum_distance(len, S,
+			mindist, 0 /* verbose_level */);
 	if (f_v) {
 		if (ret) {
 			cout << "mindist_test_func the set is OK" << endl;

@@ -11,7 +11,8 @@ all:  maxfit.out \
 		tdo_can.out \
 		tdo_start.out \
 		tdo_refine.out \
-		tdo_print.out 
+		tdo_print.out \
+		widor.out
 
 maxfit.out:  maxfit.o ;
 	$(DISCRETA_CPP)  maxfit.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -33,6 +34,9 @@ tdo_refine_all.out:  tdo_refine_all.o;
 
 tdo_print.out:  tdo_print.o ;
 	$(DISCRETA_CPP)  tdo_print.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+widor.out:  widor.o ;
+	$(DISCRETA_CPP)  widor.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 clean:

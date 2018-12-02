@@ -7,15 +7,34 @@
 
 geo_parameter::geo_parameter()
 {
+	decomposition_type = 0;
+	fuse_type = 0;
+	v = 0;
+	b = 0;
+
+	mode = 0;
+	label[0] = 0;
+
+	nb_V = 0;
+	nb_B = 0;
 	V = NULL;
 	B = NULL;
 	scheme = NULL;
 	fuse = NULL;
+
+	nb_parts = 0;
+	nb_entries = 0;
+
 	part = NULL;
 	entries = NULL;
-	label[0] = 0;
 	part_nb_alloc = 0;
 	entries_nb_alloc = 0;
+
+	lambda_level = 0;
+	row_level = 0;
+	col_level = 0;
+	extra_row_level = 0;
+	extra_col_level = 0;
 }
 
 geo_parameter::~geo_parameter()
@@ -129,8 +148,8 @@ void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 		sum += B[j];
 		}
 	aStream << " -1 ";
-	if (decomposition_type == POintTACTICAL ||
-			decomposition_type == POintANDBLOCKTACTICAL) {
+	if (decomposition_type == POINTTACTICAL ||
+			decomposition_type == POINTANDBLOCKTACTICAL) {
 		pt_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -142,7 +161,7 @@ void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 			}
 		}
 	if (decomposition_type == BLOCKTACTICAL ||
-			decomposition_type == POintANDBLOCKTACTICAL) {
+			decomposition_type == POINTANDBLOCKTACTICAL) {
 		bt_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -237,19 +256,19 @@ void geo_parameter::convert_single_to_stack(int verbose_level)
 		}
 	if (f_v) {
 		cout << "decomposition_type=";
-		if (decomposition_type == POintTACTICAL) {
-			cout << "POintTACTICAL" << endl;
+		if (decomposition_type == POINTTACTICAL) {
+			cout << "POINTTACTICAL" << endl;
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
 			cout << "BLOCKTACTICAL" << endl;
 			}
-		else if (decomposition_type == POintANDBLOCKTACTICAL) {
-			cout << "POintANDBLOCKTACTICAL" << endl;
+		else if (decomposition_type == POINTANDBLOCKTACTICAL) {
+			cout << "POINTANDBLOCKTACTICAL" << endl;
 			}
 		
 		}
-	if (decomposition_type == POintTACTICAL ||
-			decomposition_type == POintANDBLOCKTACTICAL) {
+	if (decomposition_type == POINTTACTICAL ||
+			decomposition_type == POINTANDBLOCKTACTICAL) {
 		row_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -266,7 +285,7 @@ void geo_parameter::convert_single_to_stack(int verbose_level)
 			}
 		}
 	if (decomposition_type == BLOCKTACTICAL ||
-			decomposition_type == POintANDBLOCKTACTICAL) {
+			decomposition_type == POINTANDBLOCKTACTICAL) {
 		col_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -305,7 +324,7 @@ void geo_parameter::convert_single_to_stack(int verbose_level)
 		tdo_scheme G;
 		
 		
-		if (decomposition_type == POintTACTICAL) {
+		if (decomposition_type == POINTTACTICAL) {
 			convert_single_to_stack_fuse_simple_pt(verbose_level);
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
@@ -321,7 +340,7 @@ void geo_parameter::convert_single_to_stack(int verbose_level)
 		tdo_scheme G;
 		
 		
-		if (decomposition_type == POintTACTICAL) {
+		if (decomposition_type == POINTTACTICAL) {
 			convert_single_to_stack_fuse_double_pt(verbose_level);
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
@@ -401,11 +420,11 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 			mapval = str.substr(eqpos + 1, str.size() - eqpos - 1);
 			if (mapkey == "type") {
 				if (mapval == "pt")
-					decomposition_type = POintTACTICAL;
+					decomposition_type = POINTTACTICAL;
 				else if (mapval == "bt")
 					decomposition_type = BLOCKTACTICAL;
 				else if (mapval == "geo")
-					decomposition_type = POintANDBLOCKTACTICAL;
+					decomposition_type = POINTANDBLOCKTACTICAL;
 				else
 					decomposition_type = UNKNOWNTYPE;
 				}
@@ -509,7 +528,7 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 		}
 #endif
 	if (fuse_type == FUSE_TYPE_SIMPLE) {
-		if (decomposition_type == POintTACTICAL) {
+		if (decomposition_type == POINTTACTICAL) {
 			fuse = NEW_int(nb_V);
 			for (i = 0; i < nb_V; i++) {
 				aStream >> val;
@@ -532,7 +551,7 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 			}
 		}
 	else if (fuse_type == FUSE_TYPE_DOUBLE) {
-		if (decomposition_type == POintTACTICAL) {
+		if (decomposition_type == POINTTACTICAL) {
 			fuse = NEW_int(4 + 2 * nb_V);
 			for (i = 0; i < 4 + 2 * nb_V; i++) {
 				aStream >> val;

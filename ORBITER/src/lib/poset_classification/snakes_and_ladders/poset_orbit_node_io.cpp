@@ -11,6 +11,7 @@
 #include "poset_classification/poset_classification.h"
 
 void poset_orbit_node::read_memory_object(
+		poset_classification *PC,
 		action *A, memory_object *m, int &nb_group_elements,
 		int verbose_level)
 {
@@ -18,7 +19,7 @@ void poset_orbit_node::read_memory_object(
 	int i;
 	int *Elt;
 	
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = PC->Elt6;
 	m->read_int(&node);
 	if (f_v) {
 		cout << "poset_orbit_node::read_memory_object "
@@ -36,7 +37,7 @@ void poset_orbit_node::read_memory_object(
 		hdl_strong_generators = NEW_int(nb_strong_generators);
 		tl = NEW_int(A->base_len);
 		for (i = 0; i < nb_strong_generators; i++) {
-			A->element_read_from_memory_object(Elt, m, verbose_level);
+			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
 			hdl_strong_generators[i] = A->element_store(Elt, FALSE);
 			nb_group_elements++;
 			}
@@ -84,7 +85,7 @@ void poset_orbit_node::read_memory_object(
 			}
 		else if (E[i].type == EXTENSION_TYPE_FUSION) {
 			// fusion node
-			A->element_read_from_memory_object(Elt, m, verbose_level);
+			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
 			E[i].data = A->element_store(Elt, FALSE);
 			m->read_int(&E[i].data1);
 			m->read_int(&E[i].data2);
@@ -96,7 +97,6 @@ void poset_orbit_node::read_memory_object(
 			exit(1);
 			}
 		}
-	FREE_int(Elt);
 	if (f_v) {
 		cout << "poset_orbit_node::read_memory_object node "
 				<< node << " finished" << endl;
@@ -104,6 +104,7 @@ void poset_orbit_node::read_memory_object(
 }
 
 void poset_orbit_node::write_memory_object(
+		poset_classification *PC,
 		action *A, memory_object *m, int &nb_group_elements,
 		int verbose_level)
 {
@@ -111,7 +112,8 @@ void poset_orbit_node::write_memory_object(
 	int i;
 	int *Elt;
 	
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = PC->Elt6;
+
 	if (f_v) {
 		cout << "poset_orbit_node::write_memory_object "
 				"node " << node << endl;
@@ -181,54 +183,46 @@ void poset_orbit_node::write_memory_object(
 			exit(1);
 			}
 		}
-	FREE_int(Elt);
 	if (f_v) {
 		cout << "poset_orbit_node::write_memory_object node "
 				<< node << " finished" << endl;
 		}
 }
 
+int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
+{
+	int i, s = 0;
+	s += 4 * 4; // node, prev, pt, nb_strong_generators
+	s += nb_strong_generators * A->coded_elt_size_in_char;
+	if (nb_strong_generators) {
+		s += A->base_len * 4;
+		// tl[]
+		}
+	s += 4; // nb_extensions
+	for (i = 0; i < nb_extensions; i++) {
+		s += 3 * 4; // pt, orbit_len, type
+		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
+			// extension node
+			s += 4; // data
+			}
+		else if (E[i].type == EXTENSION_TYPE_FUSION) {
+			// fusion node
+			s += A->coded_elt_size_in_char; // group element
+			s += 2 * 4; // data1, data2
+			}
+		}
+	return s;
+}
+
 
 void poset_orbit_node::sv_read_file(poset_classification *PC,
 		FILE *fp, int verbose_level)
 {
-	//int i, n, len;
-	//int4 I;
 	int f_v = (verbose_level >= 1);
-	//int f_trivial_group;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::sv_read_file node " << node << endl;
 		}
-#if 0
-	I = fread_int4(fp);
-	if (I == 0) {
-		sv = NULL;
-		cout << "poset_orbit_node::sv_read_file node " << node
-				<< ", sv = NULL, no schreier vector" << endl;
-		return;
-		}
-	f_trivial_group = fread_int4(fp);
-	n = fread_int4(fp);
-	
-	
-	int *osv;
-	if (f_trivial_group) {
-		osv = NEW_int(n + 1);
-		len = n;
-		}
-	else {
-		osv = NEW_int(3 * n + 1);
-		len = 3 * n;
-		}
-	osv[0] = n;
-	for (i = 0; i < len; i++) {
-		osv[1 + i] = fread_int4(fp);
-		}
-	sv = osv;
-	cout << "poset_orbit_node::sv_read_file node " << node
-			<< " read sv with " << n << " live points" << endl;
-#else
 	int hdl;
 
 	if (nb_strong_generators) {
@@ -239,7 +233,6 @@ void poset_orbit_node::sv_read_file(poset_classification *PC,
 	Schreier_vector = PC->Schreier_vector_handler->sv_read_file(
 			hdl, nb_strong_generators,
 			fp, verbose_level);
-#endif
 	if (f_v) {
 		cout << "poset_orbit_node::sv_read_file node " << node
 				<< " finished" << endl;
@@ -249,44 +242,14 @@ void poset_orbit_node::sv_read_file(poset_classification *PC,
 void poset_orbit_node::sv_write_file(poset_classification *PC,
 		FILE *fp, int verbose_level)
 {
-	//int i, len;
 	int f_v = (verbose_level >= 1);
-	//int f_trivial_group;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::sv_write_file node " << node << endl;
 		}
 
-#if 0
-	if (sv == NULL) {
-		fwrite_int4(fp, 0);
-		}
-	else {
-		fwrite_int4(fp, 1);
-		if (nb_strong_generators == 0) {
-			f_trivial_group = TRUE;
-			}
-		else {
-			f_trivial_group = FALSE;
-			}
-		fwrite_int4(fp, f_trivial_group);
-		int *osv = sv;
-		int n = osv[0];
-		fwrite_int4(fp, n);
-		if (f_trivial_group) {
-			len = n;
-			}
-		else {
-			len = 3 * n;
-			}
-		for (i = 0; i < len; i++) {
-			fwrite_int4(fp, osv[1 + i]);
-			}
-		}
-#else
 	PC->Schreier_vector_handler->sv_write_file(Schreier_vector,
 			fp, verbose_level);
-#endif
 	
 	if (f_v) {
 		cout << "poset_orbit_node::sv_write_file node "
@@ -471,30 +434,6 @@ void poset_orbit_node::write_file(action *A,
 		cout << "poset_orbit_node::write_file node "
 				<< node << " finished" << endl;
 		}
-}
-
-int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
-{
-	int i, s = 0;
-	s += 4 * 4; // node, prev, pt, nb_strong_generators
-	s += nb_strong_generators * A->coded_elt_size_in_char;
-	if (nb_strong_generators) {
-		s += A->base_len * 4; 
-		// tl[]
-		}
-	s += 4; // nb_extensions
-	for (i = 0; i < nb_extensions; i++) {
-		s += 3 * 4; // pt, orbit_len, type
-		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
-			// extension node
-			s += 4; // data
-			}
-		else if (E[i].type == EXTENSION_TYPE_FUSION) {
-			// fusion node
-			s += A->coded_elt_size_in_char; // group element
-			}
-		}
-	return s;
 }
 
 void poset_orbit_node::save_schreier_forest(

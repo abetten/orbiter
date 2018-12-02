@@ -94,7 +94,7 @@ void scene::init(int verbose_level)
 	nb_lines = 0;
 	Edge_points = NEW_int(SCENE_MAX_EDGES * 2);
 	nb_edges = 0;
-	Point_coords = new double [SCENE_MAX_POintS * 3];
+	Point_coords = new double [SCENE_MAX_POINTS * 3];
 	nb_points = 0;
 	Plane_coords = new double [SCENE_MAX_PLANES * 4];
 	nb_planes = 0;
@@ -524,7 +524,7 @@ int scene::point(double x1, double x2, double x3)
 	Point_coords[nb_points * 3 + 1] = x2;
 	Point_coords[nb_points * 3 + 2] = x3;
 	nb_points++;
-	if (nb_points >= SCENE_MAX_POintS) {
+	if (nb_points >= SCENE_MAX_POINTS) {
 		cout << "too many points" << endl;
 		exit(1);
 		}

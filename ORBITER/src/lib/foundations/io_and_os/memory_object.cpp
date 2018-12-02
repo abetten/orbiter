@@ -24,6 +24,9 @@
 memory_object::memory_object()
 {
 	char_pointer = NULL;
+	alloc_length = 0;
+	used_length = 0;
+	cur_pointer = 0;
 }
 
 memory_object::~memory_object()
@@ -44,7 +47,8 @@ void memory_object::freeself()
 	null();
 }
 
-void memory_object::init(int length, char *d, int verbose_level)
+void memory_object::init(int length,
+		char *d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -69,13 +73,15 @@ void memory_object::alloc(int length, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "memory_object::alloc length=" << length << endl;
+		cout << "memory_object::alloc "
+				"length=" << length << endl;
 		}
 	freeself();
 
 	char_pointer = NEW_char(length);
 	if (char_pointer == NULL) {
-		cout << "memory_object::alloc() out of memory" << endl;
+		cout << "memory_object::alloc "
+				"out of memory" << endl;
 		exit(1);
 		}
 	alloc_length = length;
@@ -87,19 +93,30 @@ void memory_object::alloc(int length, int verbose_level)
 		}
 }
 
-void memory_object::append(int length, char *d, int verbose_level)
+void memory_object::append(int length,
+		char *d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, old_length, new_length;
+	int i, old_length, new_length, new_alloc_length;
 	
 	if (f_v) {
 		cout << "memory_object::append" << endl;
+		cout << "used_length=" << endl;
+		cout << "alloc_length=" << alloc_length << endl;
 		}
 	old_length = used_length;
 	new_length = old_length + length;
 	if (new_length > alloc_length) {
-		realloc(MAXIMUM(new_length, 2 * alloc_length), verbose_level);
+		if (f_v) {
+			cout << "memory_object::append before realloc" << endl;
+		}
+		new_alloc_length = MAXIMUM(new_length, 2 * alloc_length);
+		realloc(new_alloc_length, verbose_level);
+		if (f_v) {
+			cout << "memory_object::append after realloc" << endl;
+		}
 		used_length = new_length;
+		alloc_length = new_alloc_length;
 		}
 	else {
 		used_length = new_length;
@@ -114,20 +131,23 @@ void memory_object::append(int length, char *d, int verbose_level)
 
 void memory_object::realloc(int new_length, int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	int f_v = TRUE; //(verbose_level >= 1);
 	int old_length;
 	int old_cur_pointer;
 	int i;
 	char *old_pc;
 	
 	if (f_v) {
-		cout << "memory_object::realloc new_length=" << new_length << endl;
+		cout << "memory_object::realloc "
+				"old_length=" << used_length <<
+				"new_length=" << new_length << endl;
 		}
 	old_pc = char_pointer;
 	old_length = used_length;
 	old_cur_pointer = cur_pointer;
 	if (new_length < old_length) {
-		cout << "memory_object::realloc warning: new_length < old_length" << endl;
+		cout << "memory_object::realloc warning: "
+				"new_length < old_length" << endl;
 		}
 	char_pointer = NULL;
 	alloc(new_length, verbose_level - 1);
@@ -160,7 +180,8 @@ void memory_object::read_char(char *c)
 	l = used_length;
 	l1 = l - cur_p;
 	if (l1 < 1) {
-		cout << "memory_object::read_char error: l1 < 1" << endl;
+		cout << "memory_object::read_char "
+				"error: l1 < 1" << endl;
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
@@ -234,7 +255,8 @@ void memory_object::read_double(double *f)
 	l = used_length;
 	l1 = l - cur_p;
 	if (l1 < (int)sizeof(double)) {
-		cout << "memory_object::read_int error: l1 < sizeof(double)" << endl;
+		cout << "memory_object::read_int "
+				"error: l1 < sizeof(double)" << endl;
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
@@ -266,7 +288,8 @@ void memory_object::read_int64(int *i)
 	l = used_length;
 	l1 = l - cur_p;
 	if (l1 < 8) {
-		cout << "memory_object::read_int error: l1 < 8" << endl;
+		cout << "memory_object::read_int "
+				"error: l1 < 8" << endl;
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
@@ -303,7 +326,8 @@ void memory_object::read_int(int *i)
 	l = used_length;
 	l1 = l - cur_p;
 	if (l1 < 4) {
-		cout << "memory_object::read_int error: l1 < 4" << endl;
+		cout << "memory_object::read_int "
+				"error: l1 < 4" << endl;
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
@@ -313,10 +337,17 @@ void memory_object::read_int(int *i)
 		cp1++;
 		cp++;
 		}
+	if (f_v) {
+		cout << "memory_object::read_int before swap: i1 = " << i1 << endl;
+		}
 	block_swap_chars((char *) &i1, 4, 1);
+	if (f_v) {
+		cout << "memory_object::read_int after swap: i1 = " << i1 << endl;
+		}
 	cur_pointer += 4;
 	if (f_v) {
-		cout << "memory_object::read_int done read " << i1 << endl;
+		cout << "memory_object::read_int "
+				"done read " << i1 << endl;
 		}
 	*i = (int) i1;
 }
@@ -335,8 +366,10 @@ void memory_object::read_file(const char *fname, int verbose_level)
 	fsize = file_size(fname);
 	alloc(fsize, 0);
 	fp = fopen(fname, "r");
-	if ((int) fread(char_pointer, 1 /* size */, fsize /* nitems */, fp) != fsize) {
-		cout << "memory_object::read_file error in fread" << endl;
+	if ((int) fread(char_pointer,
+			1 /* size */, fsize /* nitems */, fp) != fsize) {
+		cout << "memory_object::read_file "
+				"error in fread" << endl;
 		}
 	fclose(fp);
 	used_length = fsize;
@@ -364,7 +397,8 @@ void memory_object::write_file(const char *fname, int verbose_level)
 	
 	fclose(fp);
 	if (file_size(fname) != size) {
-		cout << "memory_object::write_file error: file_size(fname) != size" << endl;
+		cout << "memory_object::write_file error "
+				"file_size(fname) != size" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -386,6 +420,7 @@ int memory_object::multiplicity_of_character(char c)
 	return l;
 }
 
+#if 0
 static void code(uchar *pc, int l, uchar *pc2, uchar code_char);
 static int decode(uchar *pc2, int l2, uchar *pc, uchar code_char);
 
@@ -474,7 +509,8 @@ void memory_object::compress(int verbose_level)
 	code((uchar *) char_pointer, l, (uchar *) mem2.char_pointer, (uchar) 0);
 #if 0
 	if (l3 != l2) {
-		cout << "memory_object::compress() warning: l2 = " << l2 << " != l3 = " << l3 << endl;
+		cout << "memory_object::compress "
+				"warning: l2 = " << l2 << " != l3 = " << l3 << endl;
 		}
 #endif
 	freeself();
@@ -484,7 +520,8 @@ void memory_object::compress(int verbose_level)
 	alloc_length = mem2.alloc_length;
 	mem2.null();
 	if (f_v) {
-		cout << "memory_object::compress compressed from " << l << " to " << l2 << " chars." << endl;
+		cout << "memory_object::compress "
+				"compressed from " << l << " to " << l2 << " chars." << endl;
 		}
 }
 
@@ -496,7 +533,8 @@ void memory_object::decompress(int verbose_level)
 	
 	l2 = used_length;
 	if (f_v) {
-		cout << "memory_object::decompress decompressing from " << l2 << " chars";
+		cout << "memory_object::decompress "
+				"decompressing from " << l2 << " chars";
 		}
 	l = decode((uchar *) char_pointer, l2, NULL, (uchar) 0);
 	mem2.alloc(l, 0);
@@ -509,10 +547,12 @@ void memory_object::decompress(int verbose_level)
 	mem2.null();
 
 	if (f_v) {
-		cout << "memory_object::decompress decompressing from " << l2 << " to ";
+		cout << "memory_object::decompress "
+				"decompressing from " << l2 << " to ";
 		cout << l << " chars." << endl;
 		}
 }
+#endif
 
 
 

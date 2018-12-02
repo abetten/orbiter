@@ -2286,7 +2286,7 @@ void isomorph::read_everything_including_classification(
 	depth_completed = level /*- 2*/;
 
 	gen->recreate_schreier_vectors_up_to_level(level - 1,
-			TRUE /* f_compact */, verbose_level);
+			verbose_level);
 
 	
 	if (f_v) {

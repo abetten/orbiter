@@ -458,7 +458,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	int pt_loc, cur, cur_pt, total, i, next_pt;
 	int next_pt_loc, total1, cur1;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 5);
+	int f_vv = FALSE;//(verbose_level >= 2);
 	//int f_vvv = FALSE; //(verbose_level >= 3);
 
 	if (f_v) {
@@ -485,31 +485,30 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	while (cur < total) {
 		cur_pt = orbit[cur];
 		if (f_vv) {
-			cout << "schreier::compute_point_orbit cur="
-					<< cur << " total=" << total
-					<< " applying generators to " << cur_pt << endl;
-			}
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit "
+						"expanding point " << cur_pt << endl;
+				}
+		}
 		for (i = 0; i < gens.len; i++) {
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit "
-						"applying generator "
-						<< i << " to point " << cur_pt << endl;
+						"expanding point " << cur_pt
+						<< " using generator " << i << endl;
 				}
 			next_pt = get_image(cur_pt, i,
 				0 /*verbose_level - 5*/); // !!
 				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
 			next_pt_loc = orbit_inv[next_pt];
 			if (f_vv) {
-				cout << "schreier::compute_point_orbit generator "
-						<< i << " maps " << cur_pt
-						<< " to " << next_pt << endl;
+				cout << "schreier::compute_point_orbit " << cur_pt
+						<< " -> " << next_pt << endl;
 				}
 			if (next_pt_loc < total)
 				continue;
 			if (f_vv) {
-				cout << "schreier::compute_point_orbit n e w pt "
-						<< next_pt << " reached from "
-						<< cur_pt << " under generator " << i << endl;
+				cout << "schreier::compute_point_orbit expanding: "
+						<< cur_pt << ", " << next_pt << ", " << i << endl;
 				}
 			swap_points(total, next_pt_loc);
 			prev[total] = cur_pt;
@@ -532,6 +531,11 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 				cout << "total = " << total << endl;
 				print_orbit(cur, total - 1);
 				}
+			}
+		if (f_vv) {
+			cout << "schreier::compute_point_orbit cur_pt " << cur_pt
+					<< " has been expanded" << endl;
+			cout << "cur=" << cur << " total = " << total << endl;
 			}
 		cur++;
 		}

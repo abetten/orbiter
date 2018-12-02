@@ -480,7 +480,7 @@ void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
 
 #define SCENE_MAX_LINES 100000
 #define SCENE_MAX_EDGES 100000
-#define SCENE_MAX_POintS 100000
+#define SCENE_MAX_POINTS 100000
 #define SCENE_MAX_PLANES 10000
 #define SCENE_MAX_QUADRICS 10000
 #define SCENE_MAX_CUBICS 10000
