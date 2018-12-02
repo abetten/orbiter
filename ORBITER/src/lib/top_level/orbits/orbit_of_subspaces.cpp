@@ -54,7 +54,8 @@ void orbit_of_subspaces::freeself()
 	null();
 }
 
-void orbit_of_subspaces::init(action *A, action *A2, finite_field *F, 
+void orbit_of_subspaces::init(
+	action *A, action *A2, finite_field *F,
 	int *subspace_by_rank, int k, int n, 
 	int f_has_desired_pivots, int *desired_pivots, 
 	int f_has_rank_functions, void *rank_unrank_data, 
@@ -169,9 +170,12 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 			int_vec_print(cout, desired_pivots, k);
 			cout << endl;
 			}
-		F->Gauss_int_with_given_pivots(subspace, 
-			FALSE /* f_special */, TRUE /* f_complete */,
-			desired_pivots, k /* nb_pivots */,
+		F->Gauss_int_with_given_pivots(
+			subspace,
+			FALSE /* f_special */,
+			TRUE /* f_complete */,
+			desired_pivots,
+			k /* nb_pivots */,
 			k, n, 
 			0 /*verbose_level - 2*/);
 		if (f_vv) {
@@ -305,7 +309,8 @@ void orbit_of_subspaces::compute(int verbose_level)
 		cout << "orbit_of_subspaces::compute" << endl;
 		}
 	if (f_v) {
-		cout << "orbit_of_subspaces::compute sz=" << sz << endl;
+		cout << "orbit_of_subspaces::compute "
+				"sz=" << sz << endl;
 		}
 	cur_basis = NEW_int(sz);
 	new_basis = NEW_int(sz);
@@ -317,13 +322,15 @@ void orbit_of_subspaces::compute(int verbose_level)
 	prev[0] = -1;
 	label[0] = -1;
 	if (f_v) {
-		cout << "orbit_of_subspaces::compute init Subspaces[0]" << endl;
+		cout << "orbit_of_subspaces::compute "
+				"init Subspaces[0]" << endl;
 		}
 	for (i = 0; i < k; i++) {
 
 		Subspaces[0][1 + i] = subspace_by_rank[i];
 		if (f_v) {
-			cout << "subspace_by_rank[i]=" << subspace_by_rank[i] << endl;
+			cout << "subspace_by_rank[i]="
+					<< subspace_by_rank[i] << endl;
 			}
 		unrank_vector(subspace_by_rank[i],
 				Subspaces[0] + 1 + k + i * n,
@@ -336,7 +343,8 @@ void orbit_of_subspaces::compute(int verbose_level)
 			}
 
 		}
-	rref_and_rank_and_hash(Subspaces[0], verbose_level - 1);
+	rref_and_rank_and_hash(Subspaces[0],
+			verbose_level - 1);
 
 	position_of_original_subspace = 0;
 
@@ -346,7 +354,8 @@ void orbit_of_subspaces::compute(int verbose_level)
 	Q_len = 1;
 	while (Q_len) {
 		if (f_vv) {
-			cout << "Q_len = " << Q_len << " : used_length="
+			cout << "Q_len = " << Q_len
+					<< " : used_length="
 					<< used_length << " : ";
 			int_vec_print(cout, Q, Q_len);
 			cout << endl;

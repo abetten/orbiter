@@ -191,8 +191,8 @@ public:
 	void read_file(const char *fname, int verbose_level);
 	void write_file(const char *fname, int verbose_level);
 	int multiplicity_of_character(char c);
-	void compress(int verbose_level);
-	void decompress(int verbose_level);
+	//void compress(int verbose_level);
+	//void decompress(int verbose_level);
 };
 
 // #############################################################################

@@ -725,7 +725,7 @@ void isomorph_testing(
 				"vectors_up_to_level" << endl;
 		}
 	Iso.gen->recreate_schreier_vectors_up_to_level(level - 1,
-			TRUE /* f_compact */, verbose_level - 1);
+			verbose_level - 1);
 
 	int i;
 	

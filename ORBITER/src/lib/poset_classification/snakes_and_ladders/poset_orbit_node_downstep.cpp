@@ -187,7 +187,7 @@ void poset_orbit_node::compute_flag_orbits(
 
 void poset_orbit_node::compute_schreier_vector(
 	poset_classification *gen,
-	int lvl, int f_compact, int verbose_level)
+	int lvl, int verbose_level)
 // called from generator::recreate_schreier_vectors_at_level
 // and from generator::count_live_points
 // calls downstep_apply_early_test

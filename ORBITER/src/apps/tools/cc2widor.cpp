@@ -90,9 +90,9 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 		f.getline(buf, 100000, '\n');
 		if (buf[0] == '#')
 			continue;
-		if (strncmp(buf, "STARTINGPOint", 13) == 0) {
+		if (strncmp(buf, "STARTINGPOINT", 13) == 0) {
 			sscanf(buf + 13, "%d", &no);
-			printf("found STARTINGPOint %d\n", no);
+			printf("found STARTINGPOINT %d\n", no);
 			printf("%s\n", buf);
 			break;				
 			}
@@ -148,7 +148,8 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 				s_flag[i] = 0;
 				}
 			s_type[v - 1] = 1;
-			s_flag[v - 1] = 0; //s_flag_opt_zahl; /* urspr�nglicher Wert FTFF (JS 120100) */
+			s_flag[v - 1] = 0; //s_flag_opt_zahl;
+			/* urspruenglicher Wert FTFF (JS 120100) */
 			
 			r_type = new int[v + 1];
 			r_from = new int[v + 1];

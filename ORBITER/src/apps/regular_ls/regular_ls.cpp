@@ -108,12 +108,8 @@ int main(int argc, const char **argv)
 
 
 	if (f_starter) {
-
-		int f_write_candidate_file = TRUE;
 		
 		Gen.compute_starter(
-			//ECA->f_lex, 
-			f_write_candidate_file, 
 			f_draw_poset, f_embedded, f_sideways, verbose_level);
 
 		}

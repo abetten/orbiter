@@ -11,10 +11,8 @@
 #include "poset_classification/poset_classification.h"
 
 int poset_classification::compute_orbits(int from_level, int to_level, 
-	int f_write_candidate_file, 
 	int verbose_level)
-// returns TRUE if there is at least one orbit at level to_level,
-// FALSE otherwise
+// returns the last level that was computed.
 {
 	int f_v = (verbose_level >= 1);
 	int level;
@@ -28,8 +26,6 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 		cout << "poset_classification::compute_orbits from "
 				<< from_level << " to " << to_level << endl;
 		cout << "f_lex=" << f_lex << endl;
-		cout << "f_write_candidate_file="
-				<< f_write_candidate_file << endl;
 		cout << "fname_base=" << fname_base << endl;
 		}
 
@@ -42,6 +38,17 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 			cout << " calling extend_level " << level << endl;
 			}
 
+		int f_write_candidate_file = FALSE;
+
+#if 1
+		if (f_W && level) {
+			f_write_candidate_file = TRUE;
+			}
+
+		if (f_w && level == to_level - 1) {
+			f_write_candidate_file = TRUE;
+			}
+#endif
 
 		extend_level(level, 
 			f_create_schreier_vector, 
@@ -135,7 +142,6 @@ int poset_classification::main(int t0,
 			}
 	
 		recreate_schreier_vectors_up_to_level(depth_completed - 1, 
-			TRUE /* f_compact */, 
 			verbose_level /*MINIMUM(verbose_level, 1)*/);
 		}
 	if (f_print_only) {
@@ -295,7 +301,12 @@ void poset_classification::extend_level(int size,
 					<< " before write_candidates_binary_using_sv" << endl;
 			}
 		write_candidates_binary_using_sv(fname_base,
-				size, t0, 1 /*verbose_level */);
+				size, t0, verbose_level - 1);
+		if (f_v) {
+			cout << "poset_classification::extend_level "
+					"size = " << size
+					<< " after write_candidates_binary_using_sv" << endl;
+			}
 		}
 
 	if (f_v) {

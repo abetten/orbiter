@@ -83,7 +83,6 @@ void poset_orbit_node::get_stabilizer_generators(
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_by_hdl(gen->Poset->A,
 			hdl_strong_generators, nb_strong_generators, 0);
-	//gens.init_by_hdl(gen->A, hdl_strong_generators, nb_strong_generators);
 	if (nb_strong_generators == 0) {
 		for (i = 0; i < gen->Poset->A->base_len; i++) {
 			Strong_gens->tl[i] = 1;
@@ -183,11 +182,6 @@ void poset_orbit_node::init_extension_node_prepare_H(
 	//int f_v5 = (verbose_level >= 5);
 	//int f_v10 = (verbose_level >= 10);
 
-#if 0
-	H.init(gen->A);
-
-	poset_orbit_node *Op = &gen->root[prev];
-#endif
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_extension_node_prepare_H, "
@@ -256,7 +250,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		compute_point_stabilizer_in_standard_setting(gen,
 			prev, prev_ex, size,
 			G, go_G,
-			H, /*go_H, */
+			H,
 			pt, pt_orbit_len,
 			0 /*verbose_level - 3*/);
 		if (f_vv) {
@@ -648,10 +642,7 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 		if (Schreier_vector->f_has_local_generators) {
 			Schreier_vector->local_gens->A = gen->Schreier_vector_handler->A2;
 		}
-		//Schreier.get_schreier_vector(sv, f_trivial_group, f_compact);
-		//Schreier.test_sv(gen->A, hdl_strong_generators,
-		// sv, f_trivial_group, f_compact, verbose_level);
-		}
+	}
 	else {
 		Schreier_vector = NULL;
 		}
@@ -678,20 +669,11 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 				"wrapper_subspace_action"
 				<< endl;
 		}
-	if (/*nb_strong_generators &&*/ f_create_schreier_vector) {
-		//int f_trivial_group;
+	if (f_create_schreier_vector) {
 
 		if (f_vv) {
 			cout << "calling get_schreier_vector" << endl;
 			}
-#if 0
-		if (nb_strong_generators == 0) {
-			f_trivial_group = TRUE;
-			}
-		else {
-			f_trivial_group = FALSE;
-			}
-#endif
 		int gen_hdl_first;
 		if (nb_strong_generators == 0) {
 			gen_hdl_first = -1;
@@ -703,9 +685,6 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 				gen_hdl_first,
 				nb_strong_generators,
 				verbose_level - 1);
-		//Schreier.get_schreier_vector(sv, f_trivial_group, f_compact);
-		//Schreier.test_sv(gen->A, hdl_strong_generators,
-		// sv, f_trivial_group, f_compact, verbose_level);
 
 		if (f_vv) {
 			cout << "schreier vector before relabeling :" << endl;

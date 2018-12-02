@@ -61,8 +61,6 @@ public:
 		strong_generators *Strong_gens, 
 		int verbose_level);
 	void compute_starter(
-		//int f_lex, 
-		int f_write_candidate_file, 
 		int f_draw_poset, int f_embedded, int f_sideways, int verbose_level);
 	void early_test_func(int *S, int len, 
 		int *candidates, int nb_candidates, 

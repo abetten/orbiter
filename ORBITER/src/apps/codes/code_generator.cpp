@@ -38,6 +38,11 @@ void code_generator::read_arguments(int argc, const char **argv)
 			f_report = TRUE;
 			cout << "-report " << endl;
 			}
+		else if (strcmp(argv[i], "-read_data_file") == 0) {
+			f_read_data_file = TRUE;
+			fname_data_file = argv[++i];
+			cout << "-read_data_file " << fname_data_file << endl;
+			}
 		else if (strcmp(argv[i], "-report_schreier_trees") == 0) {
 			f_report_schreier_trees = TRUE;
 			cout << "-report_schreier_trees " << endl;
@@ -190,6 +195,11 @@ void code_generator::null()
 {
 	verbose_level = 0;
 	f_report = FALSE;
+
+	f_read_data_file = FALSE;
+	fname_data_file = NULL;
+	depth_completed = 0;
+
 	f_report_schreier_trees = FALSE;
 	f_nmk = FALSE;
 	f_linear = FALSE;
@@ -378,35 +388,6 @@ void code_generator::init(int argc, const char **argv)
 	gen->init(Poset, gen->depth /* sz */, verbose_level);
 
 
-#if 0
-	if (f_v) {
-		cout << "code_generator::init group set up, "
-				"calling gen->init_check_func" << endl;
-		}
-
-	gen->init_check_func(check_mindist, this /* candidate_check_data */);
-
-	if (f_v) {
-		cout << "code_generator::init group set up, "
-				"calling gen->init_incremental_check_func" << endl;
-		}
-
-	gen->init_incremental_check_func(check_mindist_incremental,
-			this /* candidate_check_data */);
-#endif
-
-#if 0
-	if (f_v) {
-		cout << "code_generator::init group set up, "
-				"calling gen->init_early_test_func" << endl;
-		}
-	gen->init_early_test_func(
-		check_mindist_early_test_func,
-		this,
-		verbose_level);
-	//gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
-#endif
-	
 
 #if 0
 	if (FALSE && gen->A->degree < 1000) {
@@ -420,9 +401,8 @@ void code_generator::init(int argc, const char **argv)
 	gen->print_function = print_code;
 	gen->print_function_data = this;
 	
-
 	int nb_nodes = ONE_MILLION;
-	
+
 	if (f_v) {
 		cout << "code_generator::init group set up, "
 				"calling gen->init_poset_orbit_node" << endl;
@@ -436,85 +416,34 @@ void code_generator::init(int argc, const char **argv)
 		}
 
 	gen->root[0].init_root_node(gen, gen->verbose_level - 2);
-}
+	if (f_read_data_file) {
+		if (f_v) {
+			cout << "code_generator::init reading data file "
+					<< fname_data_file << endl;
+			}
 
+		gen->read_data_file(depth_completed,
+				fname_data_file, verbose_level - 1);
+		if (f_v) {
+			cout << "code_generator::init after reading data file "
+					<< fname_data_file << " depth_completed = "
+					<< depth_completed << endl;
+			}
+		if (f_v) {
+			cout << "code_generator::init before "
+					"gen->recreate_schreier_vectors_up_to_level" << endl;
+			}
+		gen->recreate_schreier_vectors_up_to_level(depth_completed - 1,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "code_generator::init after "
+					"gen->recreate_schreier_vectors_up_to_level" << endl;
+			}
 
-void code_generator::print(ostream &ost, int len, int *S)
-{
-	int N, j;
-	int *codewords;
+	}
 	
-	if (len == 0) {
-		return;
-		}
-
-	if (f_linear) {
-		ost << "generator matrix:" << endl;
-		for (j = 0; j < len; j++) {
-			F->PG_element_unrank_modified(
-				rc.M1 + j, len /* stride */, nmk /* len */, 
-				S[j]);
-			}
-		print_integer_matrix(ost, rc.M1, nmk, len);
-
-		int_matrix_print_tex(ost, rc.M1, nmk, len);
-
-		N = i_power_j(F->q, nmk);
-		codewords = NEW_int(N);
-		F->codewords_affine(len, nmk, 
-			rc.M1, 
-			codewords,
-			verbose_level);
-
-		ost << "The " << N << " codewords are: ";
-		int_vec_print(ost, codewords, N);
-		ost << endl;
-
-		FREE_int(codewords);
-
-
-		F->compute_and_print_projective_weights(ost, rc.M1, len, nmk);
-
-		if (len > k) {
-			int *A, *B;
-			int k1;
-
-			ost << "computing the dual code:" << endl;
-
-			A = NEW_int(n * n);
-			int_vec_copy(rc.M1, A, nmk * len);
-			F->perp_standard(len, nmk, A, 0 /* verbose_level*/);
-			B = A + nmk * len;
-			print_integer_matrix(ost, B, len - nmk, len);
-
-			int_matrix_print_tex(ost, B, len - nmk, len);
-
-
-			k1 = len - nmk;
-		
-			N = i_power_j(F->q, k1);
-			codewords = NEW_int(N);
-			F->codewords_affine(len, k1, 
-				B, 
-				codewords,
-				verbose_level);
-
-			ost << "The " << N << " codewords are: ";
-			int_vec_print(ost, codewords, N);
-			ost << endl;
-
-			FREE_int(codewords);
-		
-			ost << "before F->compute_and_print_"
-					"projective_weights" << endl;
-			F->compute_and_print_projective_weights(
-					ost, B, len, len - nmk);
-			}
-		}
-	else if (f_nonlinear) {
-		ost << "print nonlinear not yet implemented" << endl;
-		}	
 }
+
 
 void code_generator::main(int verbose_level)
 {
@@ -526,11 +455,23 @@ void code_generator::main(int verbose_level)
 	if (f_v) {
 		cout << "code_generator::main" << endl;
 		}
-	depth = gen->main(t0, 
-		schreier_depth, 
-		f_use_invariant_subset_if_available, 
-		f_debug, 
-		verbose_level);
+	if (f_read_data_file) {
+		int target_depth;
+		if (gen->f_max_depth) {
+			target_depth = gen->max_depth;
+			}
+		else {
+			target_depth = gen->depth;
+			}
+		depth = gen->compute_orbits(depth_completed, target_depth,
+				verbose_level);
+	} else {
+		depth = gen->main(t0,
+			schreier_depth,
+			f_use_invariant_subset_if_available,
+			f_debug,
+			verbose_level);
+	}
 
 	if (f_table_of_nodes) {
 		int *Table;
@@ -690,6 +631,83 @@ void code_generator::main(int verbose_level)
 		}
 }
 
+void code_generator::print(ostream &ost, int len, int *S)
+{
+	int N, j;
+	int *codewords;
+
+	if (len == 0) {
+		return;
+		}
+
+	if (f_linear) {
+		ost << "generator matrix:" << endl;
+		for (j = 0; j < len; j++) {
+			F->PG_element_unrank_modified(
+				rc.M1 + j, len /* stride */, nmk /* len */,
+				S[j]);
+			}
+		print_integer_matrix(ost, rc.M1, nmk, len);
+
+		int_matrix_print_tex(ost, rc.M1, nmk, len);
+
+		N = i_power_j(F->q, nmk);
+		codewords = NEW_int(N);
+		F->codewords_affine(len, nmk,
+			rc.M1,
+			codewords,
+			verbose_level);
+
+		ost << "The " << N << " codewords are: ";
+		int_vec_print(ost, codewords, N);
+		ost << endl;
+
+		FREE_int(codewords);
+
+
+		F->compute_and_print_projective_weights(ost, rc.M1, len, nmk);
+
+		if (len > k) {
+			int *A, *B;
+			int k1;
+
+			ost << "computing the dual code:" << endl;
+
+			A = NEW_int(n * n);
+			int_vec_copy(rc.M1, A, nmk * len);
+			F->perp_standard(len, nmk, A, 0 /* verbose_level*/);
+			B = A + nmk * len;
+			print_integer_matrix(ost, B, len - nmk, len);
+
+			int_matrix_print_tex(ost, B, len - nmk, len);
+
+
+			k1 = len - nmk;
+
+			N = i_power_j(F->q, k1);
+			codewords = NEW_int(N);
+			F->codewords_affine(len, k1,
+				B,
+				codewords,
+				verbose_level);
+
+			ost << "The " << N << " codewords are: ";
+			int_vec_print(ost, codewords, N);
+			ost << endl;
+
+			FREE_int(codewords);
+
+			ost << "before F->compute_and_print_"
+					"projective_weights" << endl;
+			F->compute_and_print_projective_weights(
+					ost, B, len, len - nmk);
+			}
+		}
+	else if (f_nonlinear) {
+		ost << "print nonlinear not yet implemented" << endl;
+		}
+}
+
 #if 0
 void code_generator::early_test_func_by_using_group(
 	int *S, int len, 
@@ -834,128 +852,6 @@ int code_generator::Hamming_distance(int a, int b)
 // #############################################################################
 // callback functions
 // #############################################################################
-
-#if 0
-void check_mindist_early_test_func(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
-	void *data, int verbose_level)
-{
-	code_generator *cg = (code_generator *) data;
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "check_mindist_early_test_func S=";
-		int_vec_print(cout, S, len);
-		cout << " testing " << nb_candidates << " candidates" << endl;
-		//int_vec_print(cout, candidates, nb_candidates);
-		//cout << endl;
-		}
-
-	cg->early_test_func_by_using_group(S, len, 
-		candidates, nb_candidates, 
-		good_candidates, nb_good_candidates, 
-		verbose_level);
-
-#if 0
-	nb_good_candidates = 0;
-	for (i = 0; i < nb_candidates; i++) {
-		S[len] = candidates[i];
-		if (cg->rc.check_rank_last_two_are_fixed(len + 1, 
-			S, verbose_level - 1)) {		
-			good_candidates[nb_good_candidates++] = candidates[i];
-			}
-		if ((i % 1000) == 0 && i) {
-			int t1, dt;
-	
-			t1 = os_ticks();
-			dt = t1 - cg->gen->t0;
-			cout << "Time ";
-			time_check_delta(cout, dt);
-			cout << " : " << i << endl;
-			}
-		}
-#endif
-	
-
-	if (f_v) {
-		cout << "check_mindist_early_test_func nb_good_candidates=" 
-			<< nb_good_candidates << endl;
-		}
-}
-#endif
-
-#if 0
-int check_mindist(int len, int *S, void *data, int verbose_level)
-{
-	code_generator *cg = (code_generator *) data;
-	int f_OK = TRUE;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "checking set ";
-		print_set(cout, len, S);
-		}
-
-	if (cg->f_linear) {
-		if (!cg->rc.check_rank(len, S, verbose_level - 1)) {
-			return FALSE;
-			}
-		}
-	else {
-		cout << "check_mindist not yet implemented "
-				"for nonlinear codes" << endl;
-		}
-
-	
-	if (f_OK) {
-		if (f_v) {
-			cout << "OK" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		return FALSE;
-		}
-}
-#endif
-
-#if 0
-int check_mindist_incremental(int len, int *S,
-		void *data, int verbose_level)
-{
-	code_generator *cg = (code_generator *) data;
-	int f_OK = TRUE;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "checking set ";
-		print_set(cout, len, S);
-		cout << " (incrementally)";
-		}
-	if (cg->f_linear) {
-		if (!cg->rc.check_rank_last_two_are_fixed(len, S, 
-			verbose_level - 1)) {
-			return FALSE;
-			}
-		}
-	else {
-		cout << "check_mindist_incremental "
-				"not yet implemented for nonlinear codes" << endl;
-		}
-
-	
-	if (f_OK) {
-		if (f_v) {
-			cout << "OK" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		return FALSE;
-		}
-}
-#endif
 
 void print_code(ostream &ost, int len, int *S, void *data)
 {

@@ -484,8 +484,8 @@ void linear_set::do_classify(int verbose_level)
 		Gen->Poset->A2->print_info();
 		}
 
-	Gen->compute_orbits(0, depth, //f_lex, 
-		FALSE /* f_write_candidate_file */, verbose_level);
+	Gen->compute_orbits(0, depth,
+		verbose_level);
 
 #if 0
 	Gen->main(t0, 

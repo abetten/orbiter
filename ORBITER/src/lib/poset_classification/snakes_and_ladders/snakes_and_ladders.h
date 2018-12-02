@@ -238,12 +238,13 @@ public:
 		// the target depth
 		
 	
-	int *Elt_memory; // [5 * elt_size_in_int]
+	int *Elt_memory; // [6 * elt_size_in_int]
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
 	int *Elt4;
 	int *Elt5;
+	int *Elt6; // for poset_orbit_node::read_memory_object / write_memory_object
 	
 	int *tmp_set_apply_fusion;
 		// used in poset_orbit_upstep.C poset_orbit_node::apply_isomorphism
@@ -470,14 +471,14 @@ public:
 	void print_level_extension_coset_info(int prev_level,
 		int prev, int cur_extension, int coset, int nb_cosets);
 	void recreate_schreier_vectors_up_to_level(int lvl, 
-		int f_compact, int verbose_level);
-	void recreate_schreier_vectors_at_level(int i, int f_compact, 
+		int verbose_level);
+	void recreate_schreier_vectors_at_level(int i,
 		int verbose_level);
 	void print_node(int node);
 	void print_tree();
 	void get_table_of_nodes(int *&Table, int &nb_rows, int &nb_cols, 
 		int verbose_level);
-	int count_live_points(int level, int node_local, int f_compact, 
+	int count_live_points(int level, int node_local,
 		int verbose_level);
 	void find_automorphism_group_of_order(int level, int order);
 	void get_stabilizer_order(int level, int orbit_at_level, 
@@ -635,7 +636,6 @@ public:
 
 	// poset_classification_classify.C
 	int compute_orbits(int from_level, int to_level, 
-		int f_write_candidate_file, 
 		int verbose_level);
 		// returns TRUE if there is at least one orbit 
 		// at level to_level, 
@@ -792,6 +792,14 @@ public:
 
 
 	// in poset_classification_io.C:
+	void read_data_file(int &depth_completed,
+		const char *fname, int verbose_level);
+	void write_data_file(int depth_completed,
+		const char *fname_base, int verbose_level);
+	void read_memory_object(int &depth_completed,
+		memory_object *m, int &nb_group_elements, int verbose_level);
+	void write_memory_object(int depth_completed,
+		memory_object *m, int &nb_group_elements, int verbose_level);
 	void report(ostream &ost);
 	void housekeeping(int i, int f_write_files, int t0, 
 		int verbose_level);
@@ -823,14 +831,6 @@ public:
 	void write_candidates_binary_using_sv(char *fname_base, 
 		int lvl, int t0, int verbose_level);
 	void read_level_file(int level, char *fname, int verbose_level);
-	void read_data_file(int &depth_completed, 
-		const char *fname, int verbose_level);
-	void write_data_file(int depth_completed, 
-		const char *fname_base, int verbose_level);
-	void read_memory_object(int &depth_completed, 
-		memory_object *m, int &nb_group_elements, int verbose_level);
-	void write_memory_object(int depth_completed, 
-		memory_object *m, int &nb_group_elements, int verbose_level);
 	void recover(const char *recover_fname, 
 		int &depth_completed, int verbose_level);
 	void write_lvl_file_with_candidates(char *fname_base, 
@@ -1022,19 +1022,28 @@ public:
 
 
 	// in poset_orbit_node_io.C:
-	void read_memory_object(action *A, memory_object *m, 
+	void read_memory_object(
+		poset_classification *PC,
+		action *A, memory_object *m,
 		int &nb_group_elements, int verbose_level);
-	void write_memory_object(action *A, memory_object *m, 
+	void write_memory_object(
+		poset_classification *PC,
+		action *A, memory_object *m,
 		int &nb_group_elements, int verbose_level);
-	void sv_read_file(poset_classification *PC,
-			FILE *fp, int verbose_level);
-	void sv_write_file(poset_classification *PC,
-			FILE *fp, int verbose_level);
-	void read_file(action *A, FILE *fp, int &nb_group_elements, 
+	int calc_size_on_file(
+		action *A, int verbose_level);
+	void sv_read_file(
+		poset_classification *PC,
+		FILE *fp, int verbose_level);
+	void sv_write_file(
+		poset_classification *PC,
+		FILE *fp, int verbose_level);
+	void read_file(
+		action *A, FILE *fp, int &nb_group_elements,
 		int verbose_level);
-	void write_file(action *A, FILE *fp, int &nb_group_elements, 
+	void write_file(
+		action *A, FILE *fp, int &nb_group_elements,
 		int verbose_level);
-	int calc_size_on_file(action *A, int verbose_level);
 	void save_schreier_forest(
 		poset_classification *PC,
 		schreier *Schreier,
@@ -1125,7 +1134,7 @@ public:
 		// Calls downstep_orbits, 
 		// downstep_orbit
 	void compute_schreier_vector(poset_classification *gen, 
-		int lvl, int f_compact, int verbose_level);
+		int lvl, int verbose_level);
 		// called from poset_classification::recreate_schreier_vectors_at_level
 		// and from poset_classification::count_live_points
 		// calls downstep_apply_early_test

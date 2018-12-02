@@ -294,7 +294,6 @@ void regular_ls_generator::init_generator(
 
 void regular_ls_generator::compute_starter(
 	//int f_lex, 
-	int f_write_candidate_file, 
 	int f_draw_poset, int f_embedded, int f_sideways, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -309,8 +308,6 @@ void regular_ls_generator::compute_starter(
 	gen->f_W = TRUE;
 	gen->compute_orbits(0 /* from_level */,
 		starter_size /* to_level */,
-		//f_lex, 
-		f_write_candidate_file, 
 		verbose_level);
 
 

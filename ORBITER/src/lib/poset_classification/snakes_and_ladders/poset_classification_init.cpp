@@ -521,12 +521,13 @@ void poset_classification::init(poset *Poset,
 		}
 
 
-	Elt_memory = NEW_int(5 * Poset->A->elt_size_in_int);
+	Elt_memory = NEW_int(6 * Poset->A->elt_size_in_int);
 	Elt1 = Elt_memory + 0 * Poset->A->elt_size_in_int;
 	Elt2 = Elt_memory + 1 * Poset->A->elt_size_in_int;
 	Elt3 = Elt_memory + 2 * Poset->A->elt_size_in_int;
 	Elt4 = Elt_memory + 3 * Poset->A->elt_size_in_int;
 	Elt5 = Elt_memory + 4 * Poset->A->elt_size_in_int;
+	Elt6 = Elt_memory + 5 * Poset->A->elt_size_in_int;
 	
 	transporter = NEW_OBJECT(vector_ge);
 	transporter->init(Poset->A);

@@ -252,7 +252,7 @@ int action::element_is_one(
 	if (f_has_kernel && Kernel->A->base_len) {
 		int *Elt1;
 		int drop_out_level, image;
-		Elt1 = NEW_int(elt_size_in_int);
+		Elt1 = NEW_int(elt_size_in_int); // this should be avoided
 		if (f_v) {
 			cout << "action::element_is_one "
 					"before Kernel->strip" << endl;
@@ -670,11 +670,13 @@ void action::element_write_to_file_binary(int *Elt,
 				"coded_elt_size_in_char == 0" << endl;
 		exit(1);
 	}
-	elt = NEW_char(coded_elt_size_in_char);
+	//elt = NEW_char(coded_elt_size_in_char);
+		// memory allocation should be avoided in a low-level function
+	elt = element_rw_memory_object;
 
 	element_pack(Elt, elt, FALSE);
 	fp.write(elt, coded_elt_size_in_char);
-	FREE_char(elt);
+	//FREE_char(elt);
 }
 
 void action::element_read_from_file_binary(int *Elt,
@@ -687,11 +689,13 @@ void action::element_read_from_file_binary(int *Elt,
 	if (f_v) {
 		cout << "action::element_read_from_memory_object" << endl;
 		}
-	elt = NEW_char(coded_elt_size_in_char);
+	//elt = NEW_char(coded_elt_size_in_char);
+		// memory allocation should be avoided in a low-level function
+	elt = element_rw_memory_object;
 
 	fp.read(elt, coded_elt_size_in_char);
 	element_unpack(elt, Elt, FALSE);
-	FREE_char(elt);
+	//FREE_char(elt);
 }
 
 void action::random_element(sims *S, int *Elt, int verbose_level)

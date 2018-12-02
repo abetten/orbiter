@@ -826,11 +826,6 @@ int action_on_factor_space::rank(int *v, int verbose_level)
 		w = tmp_w;
 		//w = NEW_int(len);
 		int_vec_copy(v, w, len);
-#if 0
-		for (i = 0; i < len; i++) {
-			w[i] = v[i];
-			}
-#endif
 		reduce_mod_subspace(v, verbose_level - 1);
 		p = rank_in_large_space(v);
 		if (!int_vec_search(coset_reps_Gauss, nb_cosets, p, idx)) {

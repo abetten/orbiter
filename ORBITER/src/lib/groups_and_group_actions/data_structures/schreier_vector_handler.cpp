@@ -305,9 +305,10 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 	//sv = osv;
 	Sv = NEW_OBJECT(schreier_vector);
 	Sv->init(gen_hdl_first, nb_gen, osv, verbose_level);
-	cout << "schreier_vector_handler::sv_read_file "
-			"read sv with " << n << " live points" << endl;
-
+	if (f_v) {
+		cout << "schreier_vector_handler::sv_read_file "
+				"read sv with " << n << " live points" << endl;
+	}
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_read_file finished" << endl;
 		}

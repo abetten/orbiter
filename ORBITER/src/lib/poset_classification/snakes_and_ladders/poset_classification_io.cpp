@@ -10,6 +10,359 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+void poset_classification::read_data_file(int &depth_completed,
+		const char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int size;
+	int nb_group_elements;
+	memory_object *m;
+
+
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"fname = " << fname << endl;
+		cout << "Poset->A->elt_size_in_int = "
+				<< Poset->A->elt_size_in_int << endl;
+		cout << "Poset->A->coded_elt_size_in_char = "
+				<< Poset->A->coded_elt_size_in_char << endl;
+		cout << "verbose_level=" << verbose_level << endl;
+		}
+	size = file_size(fname);
+	if (f_v) {
+		cout << "file size = " << size << endl;
+		}
+	if (size == -1) {
+		cout << "error: the file does not exist" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"before m->alloc" << endl;
+		}
+
+	m = NEW_OBJECT(memory_object);
+	m->alloc(size, 0);
+
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"after m->alloc" << endl;
+		}
+
+	m->used_length = 0;
+
+	FILE *fp;
+
+	fp = fopen(fname, "r");
+
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"before fread" << endl;
+		}
+	fread(m->char_pointer, 1 /* size */, size /* items */, fp);
+
+	fclose(fp);
+
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"after fread" << endl;
+		}
+
+	m->used_length = size;
+	m->cur_pointer = 0;
+
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"before read_memory_object" << endl;
+		}
+	read_memory_object(depth_completed, m,
+			nb_group_elements, verbose_level - 2);
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"after poset_classification_read_memory" << endl;
+		}
+
+	FREE_OBJECT(m);
+	if (f_v) {
+		cout << "poset_classification::read_data_file done" <<endl;
+		}
+
+}
+
+void poset_classification::write_data_file(int depth_completed,
+		const char *fname_base, int verbose_level)
+{
+	memory_object *m;
+	int f_v = (verbose_level >= 1);
+	char fname[1000];
+	int nb_group_elements;
+	int size0;
+	int verbose_level1;
+
+	sprintf(fname, "%s_%d.data", fname_base, depth_completed);
+
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+				"fname = " << fname << endl;
+		cout << "Poset->A->elt_size_in_int = "
+				<< Poset->A->elt_size_in_int << endl;
+		cout << "Poset->A->coded_elt_size_in_char = "
+				<< Poset->A->coded_elt_size_in_char << endl;
+		}
+	size0 = calc_size_on_file(
+			depth_completed, verbose_level);
+	if (f_v) {
+		cout << "size on file = " << size0 << endl;
+		}
+
+	verbose_level1 = verbose_level;
+	if (size0 > 1 * ONE_MILLION) {
+		cout << "poset_classification::write_data_file "
+				"file=" << fname << endl;
+		cout << "size on file = " << size0 << endl;
+		cout << "the size is very big" << endl;
+		verbose_level1 = 2;
+		}
+
+	m = NEW_OBJECT(memory_object);
+	m->alloc(size0, 0);
+	m->used_length = 0;
+
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+				"before write_memory_object" << endl;
+	}
+	write_memory_object(
+			depth_completed, m,
+			nb_group_elements, verbose_level1);
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+				"after write_memory_object, written " << nb_group_elements
+				<< " group elements" << endl;
+	}
+
+	FILE *fp;
+	int size;
+
+	size = m->used_length;
+
+	fp = fopen(fname, "wb");
+
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+				"before fwrite" << endl;
+	}
+	fwrite(m->char_pointer, 1 /* size */, size /* items */, fp);
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+				"after fwrite" << endl;
+	}
+
+	fclose(fp);
+
+	FREE_OBJECT(m);
+
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+			"finished written file "
+			<< fname << " of size " << file_size(fname)
+			<< " nb_group_elements=" << nb_group_elements << endl;
+		}
+}
+
+void poset_classification::read_memory_object(
+		int &depth_completed,
+		memory_object *m, int &nb_group_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, nb_nodes, version, magic_sync;
+
+	if (f_v) {
+		cout << "poset_classification::read_memory_object, "
+				"data size (in chars) = " << m->used_length << endl;
+		}
+	nb_group_elements = 0;
+	m->read_int(&version);
+	if (version != 1) {
+		cout << "poset_classification::read_memory_object "
+				"version = " << version << " unknown" << endl;
+		exit(1);
+		}
+	m->read_int(&depth_completed);
+	if (f_v) {
+		cout << "poset_classification::read_memory_object "
+				"depth_completed = " << depth_completed << endl;
+		}
+
+	if (depth_completed > sz) {
+		cout << "poset_classification::read_memory_object "
+				"depth_completed > sz" << endl;
+		exit(1);
+		}
+
+	if (f_v) {
+		cout << "poset_classification::read_memory_object "
+				"before m->read_int" << endl;
+	}
+	m->read_int(&nb_nodes);
+	if (f_v) {
+		cout << "poset_classification::read_memory_object "
+				"nb_nodes = " << nb_nodes << endl;
+		}
+
+
+#if 1
+	if (nb_nodes > nb_poset_orbit_nodes_allocated) {
+		reallocate_to(nb_nodes, verbose_level - 1);
+		}
+#endif
+	for (i = 0; i <= depth_completed + 1; i++) {
+		m->read_int(&first_poset_orbit_node_at_level[i]);
+		}
+
+
+
+	int one_percent;
+	int verbose_level_down = 0;
+
+
+	one_percent = (int)((double) nb_nodes * 0.01);
+	if (f_v) {
+		cout << "poset_classification::read_memory_object "
+				" one_percent = " << one_percent << " nodes" << endl;
+		}
+
+	for (i = 0; i < nb_nodes; i++) {
+		if (nb_nodes > 1000) {
+			if ((i % one_percent) == 0) {
+				int t1, dt;
+
+				t1 = os_ticks();
+				dt = t1 - t0;
+
+				cout << "Time ";
+				time_check_delta(cout, dt);
+				print_problem_label();
+				cout << " : " << i / one_percent << " percent done, "
+						" node=" << i << " / " << nb_nodes << " "
+						"nb_group_elements=" << nb_group_elements << endl;
+
+
+#if 0
+				// ToDo: debugging a special case !
+				if (i / one_percent == 73) {
+					verbose_level_down = 5;
+				} else {
+					verbose_level_down = 0;
+				}
+#endif
+			}
+		}
+
+		root[i].read_memory_object(this, Poset->A, m,
+				nb_group_elements,
+				verbose_level_down /*verbose_level - 1*/);
+		}
+	if (f_v) {
+		cout << "poset_classification::read_memory_object "
+				"reading nodes completed" << endl;
+		}
+	m->read_int(&magic_sync);
+	if (magic_sync != MAGIC_SYNC) {
+		cout << "poset_classification::read_memory_object "
+				"could not read MAGIC_SYNC, file is corrupt" << endl;
+		exit(1);
+		}
+	nb_poset_orbit_nodes_used = nb_nodes;
+	if (f_v) {
+		cout << "poset_classification::read_memory_object finished ";
+		cout << "depth_completed=" << depth_completed
+			<< ", with " << nb_nodes << " nodes"
+			<< " and " << nb_group_elements << " group elements"
+			<< endl;
+		}
+}
+
+void poset_classification::write_memory_object(
+		int depth_completed,
+		memory_object *m, int &nb_group_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, nb_nodes;
+
+	nb_nodes = first_poset_orbit_node_at_level[depth_completed + 1];
+	if (f_v) {
+		cout << "poset_classification::write_memory_object "
+				<< nb_nodes << " nodes" << endl;
+		}
+	nb_group_elements = 0;
+	m->write_int(1); // version number of this file format
+	m->write_int(depth_completed);
+	m->write_int(nb_nodes);
+	for (i = 0; i <= depth_completed + 1; i++) {
+		m->write_int(first_poset_orbit_node_at_level[i]);
+		}
+	if (f_v) {
+		cout << "poset_classification::write_memory_object "
+				" writing " << nb_nodes << " node" << endl;
+		}
+
+	int one_percent;
+	int verbose_level_down = 0;
+
+
+	one_percent = (int)((double) nb_nodes * 0.01);
+	if (f_v) {
+		cout << "poset_classification::write_memory_object "
+				" one_percent = " << one_percent << " nodes" << endl;
+		}
+
+	for (i = 0; i < nb_nodes; i++) {
+		if (nb_nodes > 1000) {
+			if ((i % one_percent) == 0) {
+				int t1, dt;
+
+				t1 = os_ticks();
+				dt = t1 - t0;
+
+				cout << "Time ";
+				time_check_delta(cout, dt);
+				print_problem_label();
+				cout << " : " << i / one_percent << " percent done, "
+						" node=" << i << " / " << nb_nodes << " "
+						"nb_group_elements=" << nb_group_elements << endl;
+
+
+#if 0
+				// ToDo: debugging a special case !
+				if (i / one_percent == 73) {
+					verbose_level_down = 5;
+				} else {
+					verbose_level_down = 0;
+				}
+#endif
+			}
+		}
+		root[i].write_memory_object(this, Poset->A, m,
+				nb_group_elements,
+				verbose_level_down /*verbose_level - 2*/);
+		}
+	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
+	if (f_v) {
+		cout << "poset_classification::write_memory_object "
+				" done, written " << nb_group_elements
+				<< " group elements" << endl;
+		}
+	if (f_v) {
+		cout << "poset_classification::write_memory_object "
+				"finished, data size (in chars) = "
+				<< m->used_length << endl;
+		}
+}
+
 void poset_classification::report_schreier_trees(
 		ostream &ost, int verbose_level)
 {
@@ -20,8 +373,6 @@ void poset_classification::report_schreier_trees(
 	int *data2;
 	int *data3;
 	int level, nb_orbits, cnt, cnt3, elt_size, hdl;
-	//int *rep = NULL;
-	//char str[1000];
 	int *Elt1;
 	poset_orbit_node *O;
 	longinteger_object stab_order, orbit_length;
@@ -40,7 +391,6 @@ void poset_classification::report_schreier_trees(
 
 	Nb_gen = 0;
 	for (level = 0; level < depth; level++) {
-		//first = first_poset_orbit_node_at_level[level];
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 			O = get_node_ij(level, i);
@@ -68,7 +418,6 @@ void poset_classification::report_schreier_trees(
 
 	cnt3 = 0;
 	for (level = 0; level < depth; level++) {
-		//first = first_poset_orbit_node_at_level[level];
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 			O = get_node_ij(level, i);
@@ -201,13 +550,6 @@ void poset_classification::report(ostream &ost)
 	int *N;
 
 
-#if 0
-	for (d = 0; d < depth; d++) {
-		if (nb_orbits_at_level(d) == 0) {
-			break;
-		}
-	}
-#endif
 
 	ost << "Poset classification up to depth " << depth << "\\\\" << endl;
 
@@ -272,7 +614,7 @@ void poset_classification::report(ostream &ost)
 
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
-		//first = first_poset_orbit_node_at_level[level];
+
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 
@@ -281,6 +623,7 @@ void poset_classification::report(ostream &ost)
 
 			get_orbit_length_and_stabilizer_order(i, level,
 				stab_order, orbit_length);
+
 			//stab_order.print_to_string(str);
 
 			//orbit_length.print_to_string(str);
@@ -365,7 +708,7 @@ void poset_classification::report(ostream &ost)
 
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
-//		/first = first_poset_orbit_node_at_level[level];
+
 		nb_orbits = nb_orbits_at_level(level);
 		for (orbit_at_level = 0;
 				orbit_at_level < nb_orbits;
@@ -383,6 +726,12 @@ void poset_classification::report(ostream &ost)
 
 			get_stabilizer_generators(gens,
 					level, orbit_at_level, verbose_level);
+			get_orbit_length_and_stabilizer_order(i, level,
+				stab_order, orbit_length);
+
+			stab_order.print_to_string(str);
+
+			//orbit_length.print_to_string(str);
 
 			schreier_vector *Schreier_vector;
 
@@ -392,6 +741,13 @@ void poset_classification::report(ostream &ost)
 			ost << "\\subsection*{Node " << O->node << " at Level "
 					<< level << " Orbit " << orbit_at_level << "}" << endl;
 
+
+			ost << "$$" << endl;
+			int_set_print_tex(ost, rep, level);
+			ost << "_{";
+			ost << str;
+			ost << "}";
+			ost << "$$" << endl;
 
 			ost << "{\\tiny\\arraycolsep=2pt" << endl;
 			gens->print_generators_tex(ost);
@@ -539,6 +895,10 @@ void poset_classification::housekeeping(int i,
 			}
 		write_level_file_binary(i, my_fname_base,
 				0/*verbose_level*/);
+		if (f_v) {
+			cout << "poset_classification_housekeeping "
+					"after write_level_file_binary" << endl;
+			}
 		if (i) {		
 			sprintf(my_fname_base, "%sb", fname_base);
 			if (f_v) {
@@ -568,14 +928,18 @@ void poset_classification::housekeeping(int i,
 				FALSE /* f_long_version */, 0);
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
+					"after write_lvl_file" << endl;
+			}
+		if (f_v) {
+			cout << "poset_classification_housekeeping "
 					"before poset_classification::write_data_file" << endl;
 			}
 		poset_classification::write_data_file(i /* depth_completed */,
-				fname_base, 0);
+				fname_base, verbose_level);
 
 		if (f_v) {
 			cout << "poset_classification::housekeeping "
-					"poset_classification::write_data_file done" << endl;
+					"after poset_classification::write_data_file" << endl;
 			}
 		}
 	else {
@@ -819,10 +1183,10 @@ void poset_classification::read_sv_level_file_binary2(
 			if ((i % split_mod) != split_case)
 				continue;
 			}
-		root[f + i].sv_read_file(this, fp, verbose_level - 2);
+		root[f + i].sv_read_file(this, fp, 0 /*verbose_level - 2*/);
 		if (f_recreate_extensions) {
 			root[f + i].reconstruct_extensions_from_sv(
-					this, verbose_level - 1);
+					this, 0 /*verbose_level - 1*/);
 			}
 		if (f_dont_keep_sv) {
 			FREE_OBJECT(root[f + i].Schreier_vector);
@@ -1112,33 +1476,16 @@ void poset_classification::write_candidates_binary_using_sv(
 					<< " no schreier vector" << endl;
 		}
 		nb = root[node].get_nb_of_live_points();
-		//int *osv = root[node].sv;
 
 		if (f_vv) {
 			cout << "poset_classification::write_candidates_binary_using_sv "
 					"node " << i << " / " << len << endl;
 			}
 
-#if 0
-		if (osv == NULL) {
-			cout << "poset_classification::write_candidates_binary_using_sv "
-					"osv == NULL, we don't have a Schreier vector; "
-					"maybe set -schreier_depth <depth>" << endl;
-			exit(1);
-			}
-		nb = osv[0];
-		if (FALSE) {
-			cout << "poset_classification::write_candidates_binary_using_sv "
-					"i=" << i << endl;
-			cout << "poset_classification::write_candidates_binary_using_sv "
-					"nb=" << nb << endl;
-			}
-		subset = osv + 1;
-#endif
 		nb_cand[i] = nb;
 		total_nb_cand += nb;
 		}
-	if (f_vv) {
+	if (f_v) {
 		cout << "poset_classification::write_candidates_binary_using_sv "
 				"total_nb_cand=" << total_nb_cand << endl;
 		}
@@ -1148,11 +1495,6 @@ void poset_classification::write_candidates_binary_using_sv(
 		node = fst + i;
 		int nb = root[node].get_nb_of_live_points();
 		subset = root[node].live_points();
-#if 0
-		int *osv = root[node].sv;
-		nb = osv[0];
-		subset = osv + 1;
-#endif
 		cand_first[i] = pos;
 		for (j = 0; j < nb; j++) {
 			Cand[pos + j] = subset[j];
@@ -1161,6 +1503,10 @@ void poset_classification::write_candidates_binary_using_sv(
 		}
 	FILE *fp;
 
+	if (f_v) {
+		cout << "poset_classification::write_candidates_binary_using_sv "
+				"writing file" << fname1 << endl;
+		}
 	fp = fopen(fname1, "wb");
 
 	fwrite_int4(fp, len);
@@ -1174,6 +1520,10 @@ void poset_classification::write_candidates_binary_using_sv(
 
 
 	fclose(fp);
+	if (f_v) {
+		cout << "written file " << fname1 << " of size "
+				<< file_size(fname1) << endl;
+		}
 
 
 	FREE_int(nb_cand);
@@ -1181,8 +1531,8 @@ void poset_classification::write_candidates_binary_using_sv(
 	FREE_int(Cand);
 	}
 	if (f_v) {
-		cout << "written file " << fname1 << " of size "
-				<< file_size(fname1) << endl;
+		cout << "poset_classification::write_candidates_binary_using_sv "
+				"done" << endl;
 		}
 }
 
@@ -1371,302 +1721,6 @@ void poset_classification::read_level_file(int level,
 	if (f_v) {
 		cout << "poset_classification::read_level_file "
 				"fname=" << fname << " done" << endl;
-		}
-}
-
-void poset_classification::read_data_file(int &depth_completed,
-		const char *fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int size;
-	int nb_group_elements;
-	memory_object *m;
-	
-	
-	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"fname = " << fname << endl;
-		cout << "Poset->A->elt_size_in_int = "
-				<< Poset->A->elt_size_in_int << endl;
-		cout << "Poset->A->coded_elt_size_in_char = "
-				<< Poset->A->coded_elt_size_in_char << endl;
-		}
-	size = file_size(fname);
-	if (f_v) {
-		cout << "file size = " << size << endl;
-		}
-	if (size == -1) {
-		cout << "error: the file does not exist" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"before m->alloc" << endl;
-		}
-
-	m = NEW_OBJECT(memory_object);
-	m->alloc(size, 0);
-
-	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"after m->alloc" << endl;
-		}
-	
-	m->used_length = 0;
-
-	FILE *fp;
-	
-	fp = fopen(fname, "r");
-
-	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"before fread" << endl;
-		}
-	fread(m->char_pointer, 1 /* size */, size /* items */, fp);
-	
-	fclose(fp);
-
-	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"after fread" << endl;
-		}
-
-	m->used_length = size;
-	m->cur_pointer = 0;
-
-	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"before poset_classification_read_memory" << endl;
-		}
-	read_memory_object(depth_completed, m,
-			nb_group_elements, verbose_level - 2);
-	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"after poset_classification_read_memory" << endl;
-		}
-
-	FREE_OBJECT(m);
-	if (f_v) {
-		cout << "poset_classification::read_data_file done" <<endl;
-		}
-	
-}
-
-void poset_classification::write_data_file(int depth_completed,
-		const char *fname_base, int verbose_level)
-{
-	memory_object *m;
-	int f_v = (verbose_level >= 1);
-	char fname[1000];
-	int nb_group_elements;
-	int size0;
-	int verbose_level1;
-	
-	sprintf(fname, "%s_%d.data", fname_base, depth_completed);
-	
-	if (f_v) {
-		cout << "poset_classification::write_data_file "
-				"fname = " << fname << endl;
-		cout << "Poset->A->elt_size_in_int = "
-				<< Poset->A->elt_size_in_int << endl;
-		cout << "Poset->A->coded_elt_size_in_char = "
-				<< Poset->A->coded_elt_size_in_char << endl;
-		}
-	size0 = calc_size_on_file(
-			depth_completed, verbose_level);
-	if (f_v) {
-		cout << "size on file = " << size0 << endl;
-		}
-	
-	verbose_level1 = verbose_level;
-	if (size0 > 1 * ONE_MILLION) {
-		cout << "poset_classification::write_data_file "
-				"file=" << fname << endl;
-		cout << "size on file = " << size0 << endl;
-		cout << "the size is very big" << endl;
-		verbose_level1 = 2;
-		}
-	
-	m = NEW_OBJECT(memory_object);
-	m->alloc(size0, 0);
-	m->used_length = 0;
-
-	if (f_v) {
-		cout << "poset_classification::write_data_file "
-				"before write_memory_object" << endl;
-	}
-	write_memory_object(
-			depth_completed, m,
-			nb_group_elements, verbose_level1);
-	if (f_v) {
-		cout << "poset_classification::write_data_file "
-				"after write_memory_object, written " << nb_group_elements
-				<< " group elements" << endl;
-	}
-
-	FILE *fp;
-	int size;
-
-	size = m->used_length;
-	
-	fp = fopen(fname, "wb");
-
-	if (f_v) {
-		cout << "poset_classification::write_data_file "
-				"before fwrite" << endl;
-	}
-	fwrite(m->char_pointer, 1 /* size */, size /* items */, fp);
-	if (f_v) {
-		cout << "poset_classification::write_data_file "
-				"after fwrite" << endl;
-	}
-	
-	fclose(fp);
-
-	FREE_OBJECT(m);
-	
-	if (f_v) {
-		cout << "poset_classification::write_data_file "
-			"finished written file "
-			<< fname << " of size " << file_size(fname) 
-			<< " nb_group_elements=" << nb_group_elements << endl;
-		}
-}
-
-void poset_classification::read_memory_object(
-		int &depth_completed,
-		memory_object *m, int &nb_group_elements,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, nb_nodes, version, magic_sync;
-	
-	if (f_v) {
-		cout << "poset_classification::read_memory_object, "
-				"data size (in chars) = " << m->used_length << endl;
-		}
-	nb_group_elements = 0;
-	m->read_int(&version);
-	if (version != 1) {
-		cout << "poset_classification::read_memory_object "
-				"version = " << version << " unknown" << endl;
-		exit(1);
-		}
-	m->read_int(&depth_completed);
-	if (f_v) {
-		cout << "poset_classification::read_memory_object "
-				"depth_completed = " << depth_completed << endl;
-		}
-
-	if (depth_completed > sz) {
-		cout << "poset_classification::read_memory_object "
-				"depth_completed > sz" << endl;
-		exit(1);
-		}
-
-	if (f_v) {
-		cout << "poset_classification::read_memory_object "
-				"before m->read_int" << endl;
-	}
-	m->read_int(&nb_nodes);
-	if (f_v) {
-		cout << "poset_classification::read_memory_object "
-				"nb_nodes = " << nb_nodes << endl;
-		}
-
-
-#if 1
-	if (nb_nodes > nb_poset_orbit_nodes_allocated) {
-		reallocate_to(nb_nodes, verbose_level - 1);
-		}
-#endif
-	for (i = 0; i <= depth_completed + 1; i++) {
-		m->read_int(&first_poset_orbit_node_at_level[i]);
-		}
-	for (i = 0; i < nb_nodes; i++) {
-		if ((f_v && ((i % 1000) == 0)) || f_vv) {
-			cout << "reading node " << i << endl;
-			}
-		root[i].read_memory_object(Poset->A, m,
-				nb_group_elements, verbose_level - 1);
-		}
-	if (f_v) {
-		cout << "poset_classification::read_memory_object "
-				"reading nodes completed" << endl;
-		}
-	m->read_int(&magic_sync);
-	if (magic_sync != MAGIC_SYNC) {
-		cout << "poset_classification::read_memory_object "
-				"could not read MAGIC_SYNC, file is corrupt" << endl;
-		exit(1);
-		}
-	nb_poset_orbit_nodes_used = nb_nodes;
-	if (f_v) {
-		cout << "poset_classification::read_memory_object finished ";
-		cout << "depth_completed=" << depth_completed 
-			<< ", with " << nb_nodes << " nodes" 
-			<< " and " << nb_group_elements << " group elements"
-			<< endl;
-		}
-}
-
-void poset_classification::write_memory_object(
-		int depth_completed,
-		memory_object *m, int &nb_group_elements,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, nb_nodes;
-	
-	nb_nodes = first_poset_orbit_node_at_level[depth_completed + 1];
-	if (f_v) {
-		cout << "poset_classification::write_memory_object "
-				<< nb_nodes << " nodes" << endl;
-		}
-	nb_group_elements = 0;
-	m->write_int(1); // version number of this file format
-	m->write_int(depth_completed);
-	m->write_int(nb_nodes);
-	for (i = 0; i <= depth_completed + 1; i++) {
-		m->write_int(first_poset_orbit_node_at_level[i]);
-		}
-	if (f_v) {
-		cout << "poset_classification::write_memory_object "
-				" writing " << nb_nodes << " node" << endl;
-		}
-
-	int one_percent;
-
-	one_percent = (int)((double) nb_nodes * 0.01);
-	for (i = 0; i < nb_nodes; i++) {
-		if (nb_nodes > 1000) {
-			if ((i % one_percent) == 0) {
-				int t1, dt;
-
-				t1 = os_ticks();
-				dt = t1 - t0;
-
-				cout << "Time ";
-				time_check_delta(cout, dt);
-				print_problem_label();
-				cout << " : " << i / one_percent << " percent done, "
-						"nb_group_elements=" << nb_group_elements << endl;
-			}
-		}
-		root[i].write_memory_object(Poset->A, m,
-				nb_group_elements, 0 /*verbose_level - 2*/);
-		}
-	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
-	if (f_v) {
-		cout << "poset_classification::write_memory_object "
-				" done, written " << nb_group_elements
-				<< " group elements" << endl;
-		}
-	if (f_v) {
-		cout << "poset_classification::write_memory_object "
-				"finished, data size (in chars) = "
-				<< m->used_length << endl;
 		}
 }
 

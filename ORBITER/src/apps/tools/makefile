@@ -27,7 +27,6 @@ all: all_cliques.out \
 	solve_diophant.out \
 	split.out \
 	treedraw.out \
-	widor.out \
 	prepare_frames.out \
 	sajeeb.out \
 	create_file.out \
@@ -117,9 +116,6 @@ split.out:  split.o
 
 treedraw.out:  treedraw.o 
 	$(DISCRETA_CPP)  treedraw.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-widor.out:  widor.o 
-	$(DISCRETA_CPP)  widor.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 prepare_frames.out:  prepare_frames.o 
 	$(DISCRETA_CPP)  prepare_frames.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
