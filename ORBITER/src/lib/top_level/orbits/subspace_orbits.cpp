@@ -28,6 +28,7 @@ subspace_orbits::subspace_orbits()
 	w = NULL;
 	weights = NULL;
 
+	VS = NULL;
 	Poset = NULL;
 	Gen = NULL;
 	
@@ -69,6 +70,9 @@ subspace_orbits::~subspace_orbits()
 	if (weights) {
 		FREE_int(weights);
 		}
+	if (VS) {
+		FREE_OBJECT(VS);
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 		}
@@ -182,9 +186,19 @@ void subspace_orbits::init_group(int verbose_level)
 				"before Gen->init" << endl;
 		}
 
+	VS = NEW_OBJECT(vector_space);
+	VS->init(F, n /* dimension */,
+			verbose_level - 1);
+	VS->init_rank_functions(
+			subspace_orbits_rank_point_func,
+			subspace_orbits_unrank_point_func,
+			this,
+			verbose_level - 1);
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subspace_lattice(LG->A_linear,
 			LG->A2, LG->Strong_gens,
+			VS,
 			verbose_level);
 	Poset->add_testing_without_group(
 			subspace_orbits_early_test_func,
@@ -194,12 +208,14 @@ void subspace_orbits::init_group(int verbose_level)
 	Gen->init(Poset, Gen->depth, verbose_level);
 
 
+#if 0
 	Gen->init_vector_space_action(n, 
 		F, 
 		subspace_orbits_rank_point_func, 
 		subspace_orbits_unrank_point_func, 
 		this, 
 		verbose_level);
+#endif
 #if 0
 	Gen->f_print_function = TRUE;
 	Gen->print_function = print_set;
@@ -585,7 +601,7 @@ void subspace_orbits::print_one_solution(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, orbit_idx, len, rank, h, rk, cnt;
+	int i, orbit_idx, len, rank, rk, cnt;
 	int *set;
 	int *M;
 	grassmann *Gr;
@@ -595,9 +611,9 @@ void subspace_orbits::print_one_solution(
 		}
 
 	set = NEW_int(k);
-	M = NEW_int(k * Gen->vector_space_dimension);
+	M = NEW_int(k * Gen->Poset->VS->dimension);
 	Gr = NEW_OBJECT(grassmann);
-	Gr->init(Gen->vector_space_dimension, k, Gen->F,
+	Gr->init(Gen->Poset->VS->dimension, k, Gen->Poset->VS->F,
 			0/*verbose_level - 10*/);
 
 	int_vec_print(cout, sol, D->sum);
@@ -624,12 +640,15 @@ void subspace_orbits::print_one_solution(
 			cout << rank << " / " << len << " : ";
 			int_vec_print(cout, set, k);
 			cout << endl;
+			Gen->unrank_basis(M, set, k);
+#if 0
 			for (h = 0; h < k; h++) {
 				Gen->unrank_point(M + h * Gen->vector_space_dimension,
 						set[h]);
 				}
+#endif
 			cout << "generator matrix:" << endl;
-			int_matrix_print(M, k, Gen->vector_space_dimension);
+			int_matrix_print(M, k, Gen->Poset->VS->dimension);
 			rk = Gr->rank_int_here(M, 0);
 			cout << "rank = " << rk << endl;
 			
@@ -1044,8 +1063,8 @@ int subspace_orbits_rank_point_func(int *v, void *data)
 	
 	G = (subspace_orbits *) data;
 	gen = G->Gen;
-	gen->F->PG_element_rank_modified(v, 1,
-			gen->vector_space_dimension, rk);
+	gen->Poset->VS->F->PG_element_rank_modified(v, 1,
+			gen->Poset->VS->dimension, rk);
 	return rk;
 }
 
@@ -1056,8 +1075,8 @@ void subspace_orbits_unrank_point_func(int *v, int rk, void *data)
 	
 	G = (subspace_orbits *) data;
 	gen = G->Gen;
-	gen->F->PG_element_unrank_modified(v, 1,
-			gen->vector_space_dimension, rk);
+	gen->Poset->VS->F->PG_element_unrank_modified(v, 1,
+			gen->Poset->VS->dimension, rk);
 }
 
 void subspace_orbits_early_test_func(int *S, int len, 

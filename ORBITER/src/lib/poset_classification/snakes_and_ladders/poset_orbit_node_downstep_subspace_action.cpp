@@ -25,14 +25,16 @@ void poset_orbit_node::setup_factor_space_action_light(
 	the_set = NEW_int(lvl);
 	store_set_to(gen, lvl - 1, the_set);
 	
-	AF.init_light(*gen->Poset->A,
+	AF.init_light(
+		gen->Poset->VS,
+		*gen->Poset->A,
 		*gen->Poset->A2,
-		gen->vector_space_dimension,
-		gen->F,
+		//gen->vector_space_dimension,
+		//gen->F,
 		the_set, lvl, 
-		gen->rank_point_func, 
-		gen->unrank_point_func, 
-		gen->rank_point_data, 
+		//gen->rank_point_func,
+		//gen->unrank_point_func,
+		//gen->rank_point_data,
 		verbose_level - 1);
 	FREE_int(the_set);
 }
@@ -136,14 +138,16 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"before AF.init_by_rank_table_mode" << endl;
 		}
 	AF.init_by_rank_table_mode(
+		gen->Poset->VS,
 		*gen->Poset->A,
-		*gen->Poset->A2, gen->vector_space_dimension,
-		gen->F,
+		*gen->Poset->A2,
+		//gen->vector_space_dimension,
+		//gen->F,
 		the_set, lvl, 
 		candidates, nb_candidates, 
-		gen->rank_point_func, 
-		gen->unrank_point_func, 
-		gen->rank_point_data, 
+		//gen->rank_point_func,
+		//gen->unrank_point_func,
+		//gen->rank_point_data,
 		verbose_level - 3);
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action_"
@@ -163,7 +167,8 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"before A_factor_space.induced_action_on_factor_space"
 				<< endl;
 		}
-	A_factor_space.induced_action_on_factor_space(gen->Poset->A2, &AF,
+	A_factor_space.induced_action_on_factor_space(
+		gen->Poset->A2, &AF,
 		FALSE /*f_induce_action*/,
 		NULL /* sims */,
 		0/*verbose_level - 3*/);
@@ -199,7 +204,7 @@ void poset_orbit_node::setup_factor_space_action(
 	int f_v20 = (verbose_level >= 20);
 	int *the_set;
 	int *coordinates;
-	int i;
+	//int i;
 
 	if (f_v) {
 		cout << "poset_orbit_node::setup_factor_space_action "
@@ -210,7 +215,7 @@ void poset_orbit_node::setup_factor_space_action(
 		cout << "f_compute_tables=" << f_compute_tables << endl;
 		}
 	the_set = NEW_int(lvl);
-	coordinates = NEW_int(lvl * gen->vector_space_dimension);
+	coordinates = NEW_int(lvl * gen->Poset->VS->dimension);
 	store_set_to(gen, lvl - 1, the_set);
 
 	if (f_v) {
@@ -219,20 +224,24 @@ void poset_orbit_node::setup_factor_space_action(
 		cout << endl;
 		cout << "poset_orbit_node::setup_factor_space_action "
 				"initializing action_on_factor_space "
-				"dimension=" << gen->vector_space_dimension << endl;
+				"dimension=" << gen->Poset->VS->dimension << endl;
 		}
+	gen->unrank_basis(coordinates, the_set, lvl);
+#if 0
 	for (i = 0; i < lvl; i++) {
 		(*gen->unrank_point_func)(
 			coordinates + i * gen->vector_space_dimension,
 			the_set[i],
 			gen->rank_point_data);
 		}
+#endif
 	//AF.init_by_rank(*gen->A2, gen->vector_space_dimension,
 	// gen->F, the_set, lvl, verbose_level);
 	AF.init_from_coordinate_vectors(
+		gen->Poset->VS,
 		*gen->Poset->A, *gen->Poset->A2,
-		gen->vector_space_dimension,
-		gen->F,
+		//gen->vector_space_dimension,
+		//gen->F,
 		coordinates, lvl, f_compute_tables,
 		verbose_level);
 	if (f_v20) {
@@ -533,14 +542,12 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 		cout << setw(4) << h << " : " 
 			<< setw(5) << rep;
 
-		(*gen->unrank_point_func)(
-			gen->tmp_v1,
-			rep,
-			gen->rank_point_data);
+		gen->unrank_point(gen->Poset->VS->v1, rep);
 
 		cout << " = ";
 		int_vec_print(cout,
-				gen->tmp_v1, gen->vector_space_dimension);
+				gen->Poset->VS->v1,
+				gen->Poset->VS->dimension);
 		cout << " : " << setw(5) << len;
 		if (f_print_orbits) {
 			if (len < 25) {
@@ -610,14 +617,17 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 			first = Schreier.orbit_first[h];
 			rep = AF->preimage_table[Schreier.orbit[first + 0]];
 
+			gen->unrank_point(gen->Poset->VS->v1, rep);
+#if 0
 			(*gen->unrank_point_func)(
 				gen->tmp_v1,
 				rep,
 				gen->rank_point_data);
+#endif
 
 			cout << rep << " = ";
 			int_vec_print(cout,
-					gen->tmp_v1, gen->vector_space_dimension);
+					gen->Poset->VS->v1, gen->Poset->VS->dimension);
 
 			cout << " : " << setw(5) << Schreier.orbit_len[h];
 			//if (f_vvv) {
@@ -642,15 +652,18 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 			for (j = 0; j < len; j++) {
 				rep = AF->preimage_table[Schreier.orbit[first + j]];
 
+				gen->unrank_point(gen->Poset->VS->v1, rep);
+#if 0
 				(*gen->unrank_point_func)(
 					gen->tmp_v1,
 					rep,
 					gen->rank_point_data);
+#endif
 
 				cout << setw(3) << j << " / " << setw(3) << len
 						<< " : " << rep << " = ";
 				int_vec_print(cout,
-						gen->tmp_v1, gen->vector_space_dimension);
+						gen->Poset->VS->v1, gen->Poset->VS->dimension);
 				cout << " : ";
 				cout << Schreier.prev[first + j];
 				cout << " : ";

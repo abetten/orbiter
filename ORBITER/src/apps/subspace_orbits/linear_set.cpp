@@ -37,6 +37,7 @@ void linear_set::null()
 	D = NULL;
 	D1 = NULL;
 	spread_embedding = NULL;
+	VS = NULL;
 	Poset1 = NULL;
 	Gen = NULL;
 	Basis = NULL;
@@ -53,6 +54,12 @@ void linear_set::freeself()
 {
 	int f_v = FALSE;
 
+	if (VS) {
+		if (f_v) {
+			cout << "linear_set::freeself before delete VS" << endl;
+			}
+		FREE_OBJECT(VS);
+		}
 	if (Poset1) {
 		if (f_v) {
 			cout << "linear_set::freeself before delete Poset1" << endl;
@@ -355,6 +362,16 @@ void linear_set::init(int argc, const char **argv,
 		cout << "linear_set::init computing spread_embedding done" << endl;
 		}	
 
+	VS = NEW_OBJECT(vector_space);
+	VS->init(P->F, vector_space_dimension /* dimension */,
+			verbose_level - 1);
+	VS->init_rank_functions(
+			linear_set_rank_point_func,
+			linear_set_unrank_point_func,
+			this,
+			verbose_level - 1);
+
+
 	Poset1 = NEW_OBJECT(poset);
 	Gen = NEW_OBJECT(poset_classification);
 
@@ -364,7 +381,7 @@ void linear_set::init(int argc, const char **argv,
 	sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
 	
 	
-	Poset1->init_subset_lattice(Aq, Aq, Strong_gens,
+	Poset1->init_subspace_lattice(Aq, Aq, Strong_gens, VS,
 			verbose_level);
 
 	Gen->depth = depth;
@@ -397,12 +414,14 @@ void linear_set::init(int argc, const char **argv,
 		//check_mindist_incremental, 
 		//this /* candidate_check_data */);
 
+#if 0
 	Gen->init_vector_space_action(vector_space_dimension, 
 		P->F, 
 		linear_set_rank_point_func, 
 		linear_set_unrank_point_func, 
 		this, 
 		verbose_level);
+#endif
 #if 0
 	Gen->f_print_function = TRUE;
 	Gen->print_function = print_set;
@@ -941,8 +960,8 @@ void linear_set::init_secondary(int argc, const char **argv,
 		}
 	
 	cout << "linear_set::init_secondary before Gen2->init" << endl;
-	Poset2->init_subset_lattice(Aq, Aq,
-			Strong_gens_previous,
+	Poset2->init_subspace_lattice(Aq, Aq,
+			Strong_gens_previous, VS,
 			verbose_level);
 	Gen2->init(Poset2,
 			Gen2->depth /* sz */,
@@ -970,12 +989,14 @@ void linear_set::init_secondary(int argc, const char **argv,
 		//check_mindist_incremental, 
 		//this /* candidate_check_data */);
 
+#if 0
 	Gen2->init_vector_space_action(vector_space_dimension, 
 		P->F, 
 		linear_set_rank_point_func, 
 		linear_set_unrank_point_func, 
 		this, 
 		verbose_level);
+#endif
 #if 0
 	Gen->f_print_function = TRUE;
 	Gen->print_function = print_set;
@@ -1346,8 +1367,8 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 	
 	cout << "linear_set::init_compute_stabilizer "
 			"before Gen_stab->init" << endl;
-	Poset_stab->init_subset_lattice(Aq, Aq,
-			Strong_gens_previous,
+	Poset_stab->init_subspace_lattice(Aq, Aq,
+			Strong_gens_previous, VS,
 			verbose_level);
 	Gen_stab->init(Poset_stab,
 			Gen_stab->depth /* sz */,
@@ -1379,12 +1400,14 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 		//check_mindist_incremental, 
 		//this /* candidate_check_data */);
 
+#if 0
 	Gen_stab->init_vector_space_action(vector_space_dimension, 
 		P->F, 
 		linear_set_rank_point_func, 
 		linear_set_unrank_point_func, 
 		this, 
 		verbose_level);
+#endif
 #if 0
 	Gen->f_print_function = TRUE;
 	Gen->print_function = print_set;

@@ -21,13 +21,17 @@ poset::~poset()
 
 void poset::null()
 {
+
+
 	description = NULL;
+	f_subset_lattice = FALSE;
+	n = 0;
+	f_subspace_lattice = FALSE;
+	VS = NULL;
 
 	A = NULL;
 	A2 = NULL;
 	Strong_gens = NULL;
-
-	longinteger_object go;
 
 	f_has_orbit_based_testing = FALSE;
 	Orbit_based_testing = NULL;
@@ -68,6 +72,7 @@ void poset::init_subset_lattice(action *A, action *A2,
 
 void poset::init_subspace_lattice(action *A, action *A2,
 		strong_generators *Strong_gens,
+		vector_space *VS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -78,6 +83,7 @@ void poset::init_subspace_lattice(action *A, action *A2,
 	f_subset_lattice = FALSE;
 	n = A2->degree;
 	f_subspace_lattice = TRUE;
+	poset::VS = VS;
 	poset::A = A;
 	poset::A2 = A2;
 	poset::Strong_gens = Strong_gens;
@@ -109,6 +115,16 @@ void poset::init(
 	f_subset_lattice = description->f_subset_lattice;
 	n = A2->degree;
 	f_subspace_lattice = description->f_subspace_lattice;
+	VS = NEW_OBJECT(vector_space);
+	matrix_group *mtx;
+	finite_field *F;
+	mtx = A->get_matrix_group();
+	F = mtx->GFq;
+	if (mtx->n != description->dimension) {
+		cout << "poset::init mtx->n != description->dimension" << endl;
+		exit(1);
+	}
+	VS->init(F, description->dimension, verbose_level);
 	Strong_gens->group_order(go);
 	f_has_orbit_based_testing = FALSE;
 
@@ -235,12 +251,15 @@ void poset::add_testing_without_group(
 void poset::print()
 {
 	if (f_subset_lattice) {
-		cout << "poset of subsets" << endl;
+		cout << "poset of subsets of an " << n << "-element set" << endl;
 	}
 	if (f_subspace_lattice) {
-		cout << "poset of subspaces" << endl;
+		cout << "poset of subspaces of F_{" << VS->F->q << "}^{"
+				<< VS->dimension << "}" << endl;
 	}
+	cout << "group action A:" << endl;
 	A->print_info();
+	cout << "group action A2:" << endl;
 	A2->print_info();
 	cout << "group order " << go << endl;
 }
@@ -281,6 +300,36 @@ void poset::early_test_func(
 		cout << "poset::early_test_func done" << endl;
 	}
 }
+
+void poset::unrank_point(int *v, int rk)
+{
+	if (!f_subspace_lattice) {
+		cout << "poset::unrank_point !f_subspace_lattice" << endl;
+		exit(1);
+	}
+	if (VS == NULL) {
+		cout << "poset::unrank_point VS == NULL" << endl;
+		exit(1);
+	}
+	VS->unrank_point(v, rk);
+}
+
+int poset::rank_point(int *v)
+{
+	int rk;
+
+	if (!f_subspace_lattice) {
+		cout << "poset::rank_point !f_subspace_lattice" << endl;
+		exit(1);
+	}
+	if (VS == NULL) {
+		cout << "poset::rank_point VS == NULL" << endl;
+		exit(1);
+	}
+	rk = VS->rank_point(v);
+	return rk;
+}
+
 
 
 int callback_test_independence_condition(orbit_based_testing *Obt,

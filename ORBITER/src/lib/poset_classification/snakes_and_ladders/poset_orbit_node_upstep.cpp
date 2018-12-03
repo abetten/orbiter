@@ -66,7 +66,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	gen->Poset->A2->move(gen->Elt2,
 			gen->transporter->ith(lvl + 1));
 
-	if (gen->f_on_subspaces) {
+	if (gen->Poset->f_subspace_lattice) {
 		next_node = gen->find_node_for_subspace_by_rank(
 				set,
 				lvl + 1,
@@ -140,7 +140,8 @@ void poset_orbit_node::install_fusion_node(
 		exit(1);
 		}
 	if (f_v) {
-		cout << "poset_orbit_node::install_fusion_node: unprocessed extension, ";
+		cout << "poset_orbit_node::install_fusion_node: "
+				"unprocessed extension, ";
 		cout << "we will now install a fusion node at node " << node 
 			<< " , extension " << current_extension << endl;
 		}
@@ -163,7 +164,8 @@ void poset_orbit_node::install_fusion_node(
 				gen->Elt1, cout, 0);
 	}
 	if (f_v) {
-		cout << "poset_orbit_node::install_fusion_node: fusion element:" << endl;
+		cout << "poset_orbit_node::install_fusion_node: "
+				"fusion element:" << endl;
 		if (gen->f_allowed_to_show_group_elements) {
 			gen->Poset->A->element_print_quick(gen->Elt1, cout);
 			gen->Poset->A2->element_print_as_permutation(gen->Elt1, cout);
@@ -239,18 +241,23 @@ void poset_orbit_node::install_fusion_node(
 			lvl + 1,
 			gen->Elt1, 0);
 	if (f_v) {
-		cout << "poset_orbit_node::install_fusion_node after map_a_set set3=";
+		cout << "poset_orbit_node::install_fusion_node "
+				"after map_a_set set3=";
 		int_vec_print(cout, gen->set3, lvl + 1);
 		cout << endl;
 	}
 
-	if (gen->f_on_subspaces) {
+	if (gen->Poset->f_subspace_lattice) {
+		cmp = gen->Poset->VS->compare_subspaces_ranked(
+				gen->set3, gen->set0, lvl + 1, verbose_level);
+#if 0
 		cmp = gen->F->compare_subspaces_ranked_with_unrank_function(
 			gen->set3, gen->set0, lvl + 1, 
 			gen->vector_space_dimension, 
 			gen->unrank_point_func,
 			gen->rank_point_data, 
 			verbose_level);
+#endif
 		}
 	else {
 		int_vec_heapsort(gen->set3, lvl);
@@ -259,29 +266,30 @@ void poset_orbit_node::install_fusion_node(
 
 
 	if (cmp != 0) {
-		cout << "poset_orbit_node::install_fusion_node something is wrong" << endl;
+		cout << "poset_orbit_node::install_fusion_node "
+				"something is wrong" << endl;
 		cout << "comparing ";
 		int_set_print(cout, gen->set3, lvl + 1);
 		cout << " with ";
 		int_set_print(cout, gen->set0, lvl + 1);
 		cout << endl;
-		if (gen->f_on_subspaces) {
+		if (gen->Poset->f_subspace_lattice) {
 			int *v;
 			int i;
 
-			v = NEW_int(gen->vector_space_dimension);
+			v = NEW_int(gen->Poset->VS->dimension);
 			int_set_print(cout, gen->set3, lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->set3[i]);
-				int_vec_print(cout, v, gen->vector_space_dimension);
+				int_vec_print(cout, v, gen->Poset->VS->dimension);
 				cout << endl;
 				}
 			int_set_print(cout, gen->set0, lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->set0[i]);
-				int_vec_print(cout, v, gen->vector_space_dimension);
+				int_vec_print(cout, v, gen->Poset->VS->dimension);
 				cout << endl;
 				}
 
@@ -464,7 +472,7 @@ int poset_orbit_node::trace_next_point(
 				<< verbose_level << endl;
 		}
 	
-	if (gen->f_on_subspaces) {
+	if (gen->Poset->f_subspace_lattice) {
 		orbit_representative_and_coset_rep_inv_subspace_action(
 			gen, lvl,
 			the_point, pt0, cosetrep,

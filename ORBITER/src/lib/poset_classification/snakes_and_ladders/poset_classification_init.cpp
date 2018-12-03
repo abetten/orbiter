@@ -113,10 +113,12 @@ void poset_classification::null()
 	downstep_orbits_print_max_orbits = 25;
 	downstep_orbits_print_max_points_per_orbit = 50;
 
+#if 0
 	f_on_subspaces = FALSE;
 	rank_point_func = NULL;
 	unrank_point_func = NULL;
 	tmp_v1 = NULL;
+#endif
 
 #if 0
 	f_early_test_func = FALSE;
@@ -198,9 +200,11 @@ void poset_classification::freeself()
 		cout << "poset_classification::freeself "
 				"after exit_poset_orbit_node" << endl;
 		}
+#if 0
 	if (tmp_v1) {
 		FREE_int(tmp_v1);
 	}
+#endif
 
 
 	if (f_v) {
@@ -444,21 +448,27 @@ void poset_classification::init(poset *Poset,
 	poset_classification::sz = sz;
 
 	if (Poset == NULL) {
-		cout << "poset_classification::init Poset == NULL" << endl;
+		cout << "poset_classification::init "
+				"Poset == NULL" << endl;
 		exit(1);
 		}
 	if (Poset->A == NULL) {
-		cout << "poset_classification::init Poset->A == NULL" << endl;
+		cout << "poset_classification::init "
+				"Poset->A == NULL" << endl;
 		exit(1);
 		}
 	if (Poset->A2 == NULL) {
-		cout << "poset_classification::init Poset->A2 == NULL" << endl;
+		cout << "poset_classification::init "
+				"Poset->A2 == NULL" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "poset_classification::init sz = " << sz << endl;
-		cout << "poset_classification::init A->degree=" << Poset->A->degree << endl;
-		cout << "poset_classification::init A2->degree=" << Poset->A2->degree << endl;
+		cout << "poset_classification::init "
+				"sz = " << sz << endl;
+		cout << "poset_classification::init "
+				"A->degree=" << Poset->A->degree << endl;
+		cout << "poset_classification::init "
+				"A2->degree=" << Poset->A2->degree << endl;
 		}
 
 	if (Poset->Orbit_based_testing) {
@@ -549,6 +559,16 @@ void poset_classification::init(poset *Poset,
 	nb_times_retrieve_called0 = Poset->A->nb_times_retrieve_called;
 	nb_times_store_called0 = Poset->A->nb_times_store_called;
 
+
+	if (Poset->f_subspace_lattice) {
+		tmp_find_node_for_subspace_by_rank1 =
+				NEW_int(Poset->VS->dimension);
+		tmp_find_node_for_subspace_by_rank2 =
+				NEW_int(sz * Poset->VS->dimension);
+		tmp_find_node_for_subspace_by_rank3 =
+				NEW_int(Poset->VS->dimension);
+	}
+
 	if (f_v) {
 		cout << "poset_classification::init done" << endl;
 		}
@@ -565,7 +585,8 @@ void poset_classification::initialize(
 
 	if (f_v) {
 		cout << "poset_classification::initialize" << endl;
-		cout << "poset_classification::initialize depth = " << depth << endl;
+		cout << "poset_classification::initialize "
+				"depth = " << depth << endl;
 		}
 
 	strcpy(poset_classification::path, path);
@@ -952,6 +973,7 @@ void poset_classification::init_starter(int starter_size,
 	starter_canonize_Elt = NEW_int(Poset->A->elt_size_in_int);
 }
 
+#if 0
 void poset_classification::init_vector_space_action(
 	int vector_space_dimension,
 	finite_field *F, 
@@ -983,6 +1005,8 @@ void poset_classification::init_vector_space_action(
 	tmp_v1 =
 			NEW_int(vector_space_dimension);
 }
+#endif
+
 
 #if 0
 void poset_classification::init_early_test_func(

@@ -45,6 +45,7 @@ public:
 	action *Aq;
 	action *AQ;
 	action *A_PGLQ;
+	vector_space *VS;
 	poset *Poset1;
 	poset_classification *Gen;
 	int vector_space_dimension; // = n

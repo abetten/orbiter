@@ -319,9 +319,14 @@ public:
 
 class action_on_factor_space {
 public:
-	int len; // length of vectors in large space
-	finite_field *F;
-	int *subspace_basis; // [subspace_basis_size * len]
+	vector_space *VS;
+
+
+	//int len; // length of vectors in large space
+	// len is now VS->dimension
+	//finite_field *F;
+
+	int *subspace_basis; // [subspace_basis_size * VS->dimension]
 	int subspace_basis_size;
 	int *base_cols; // [subspace_basis_size] 
 		// the pivot column for the subspace basis
@@ -338,7 +343,7 @@ public:
 		// as computed by compute_large_degree();
 	
 	int factor_space_len; 
-		// = len - subspace_basis_size
+		// = VS->dimension - subspace_basis_size
 
 	int *embedding; 
 		// [factor_space_len]
@@ -353,22 +358,25 @@ public:
 		// is in coset_reps_Gauss[j]
 	int *preimage_table; // [degree]
 	int *tmp; // [factor_space_len] 
-	int *Tmp1; // [len] 
-	int *Tmp2; // [len]
+	int *Tmp1; // [VS->dimension]
+	int *Tmp2; // [VS->dimension]
 	int f_tables_have_been_computed;
 
 	int f_table_mode;
+
+#if 0
 	int f_has_rank_function;
 	int (*rank_point_func)(int *v, void *data);
 	void (*unrank_point_func)(int *v, int rk, void *data);
 	void *rank_point_data;
+#endif
 	int nb_cosets;
 	int *coset_reps_Gauss; 
 		// [nb_cosets]
 		// ordered list of Gauss reduced coset representatives
 		// the entries are ranks of vectors in the large space
 
-	int *tmp_w; // [len] temporary vector for use in rank
+	int *tmp_w; // [VS->dimension] temporary vector for use in rank
 	int *tmp_w1;
 		// [subspace_basis_size] 
 		// temporary vector for lexleast_element_in_coset
@@ -383,27 +391,34 @@ public:
 	~action_on_factor_space();
 	void null();
 	void free();
-	void init_light(action &A_base, action &A, int len, 
-		finite_field *F, 
+	void init_light(
+		vector_space *VS,
+		action &A_base, action &A,
+		//int len,
+		//finite_field *F,
 		int *subspace_basis_ranks, int subspace_basis_size, 
-		int (*rank_point_func)(int *v, void *data), 
-		void (*unrank_point_func)(int *v, int rk, void *data), 
-		void *rank_point_data, 
+		//int (*rank_point_func)(int *v, void *data),
+		//void (*unrank_point_func)(int *v, int rk, void *data),
+		//void *rank_point_data,
 		int verbose_level);
-	void init_by_rank_table_mode(action &A_base, 
-		action &A, int len, finite_field *F, 
+	void init_by_rank_table_mode(
+		vector_space *VS,
+		action &A_base, action &A, //int len, finite_field *F,
 		int *subspace_basis_ranks, int subspace_basis_size, 
 		int *point_list, int nb_points, 
-		int (*rank_point_func)(int *v, void *data), 
-		void (*unrank_point_func)(int *v, int rk, void *data), 
-		void *rank_point_data, 
+		//int (*rank_point_func)(int *v, void *data),
+		//void (*unrank_point_func)(int *v, int rk, void *data),
+		//void *rank_point_data,
 		int verbose_level);
-	void init_by_rank(action &A_base, action &A, 
-		int len, finite_field *F, 
+	void init_by_rank(
+		vector_space *VS,
+		action &A_base, action &A,
+		//int len, finite_field *F,
 		int *subspace_basis_ranks, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
-	void init_from_coordinate_vectors(action &A_base, 
-		action &A, int len, finite_field *F, 
+	void init_from_coordinate_vectors(
+		vector_space *VS,
+		action &A_base, action &A, //int len, finite_field *F,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
 	void init2(action &A_base, action &A, 

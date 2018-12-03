@@ -213,7 +213,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 				<< " in group of order " << go_G << endl;
 		}
 
-	if (gen->f_on_subspaces) {
+	if (gen->Poset->f_subspace_lattice) {
 
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);

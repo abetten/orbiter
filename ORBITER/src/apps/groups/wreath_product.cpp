@@ -42,6 +42,7 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	wreath_product *W;
+	vector_space *VS;
 	poset *Poset;
 	poset_classification *Gen;
 	int vector_space_dimension;
@@ -170,6 +171,7 @@ tensor_product::tensor_product()
 	A = NULL;
 	A0 = NULL;
 	W = NULL;
+	VS = NULL;
 	Poset = NULL;
 	Gen = NULL;
 }
@@ -503,9 +505,20 @@ void tensor_product::init(int argc, const char **argv,
 
 	Gen->depth = depth;
 
+	VS = NEW_OBJECT(vector_space);
+	VS->init(F, vector_space_dimension /* dimension */,
+			verbose_level - 1);
+	VS->init_rank_functions(
+			wreath_rank_point_func,
+			wreath_unrank_point_func,
+			this,
+			verbose_level - 1);
+
+
 	Poset = NEW_OBJECT(poset);
-	Poset->init_subset_lattice(A0, A,
+	Poset->init_subspace_lattice(A0, A,
 			SG,
+			VS,
 			verbose_level);
 
 	if (f_v) {
@@ -531,6 +544,7 @@ void tensor_product::init(int argc, const char **argv,
 		//check_mindist_incremental,
 		//this /* candidate_check_data */);
 
+#if 0
 	Gen->init_vector_space_action(
 		vector_space_dimension,
 		F,
@@ -538,6 +552,7 @@ void tensor_product::init(int argc, const char **argv,
 		wreath_unrank_point_func,
 		this,
 		verbose_level);
+#endif
 #if 0
 	Gen->f_print_function = FALSE;
 	Gen->print_function = print_set;

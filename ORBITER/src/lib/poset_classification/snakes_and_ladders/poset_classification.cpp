@@ -63,39 +63,35 @@ int poset_classification::poset_structure_is_contained(
 		f_contained = FALSE;
 		}
 	else {
-		if (f_on_subspaces) {
+		if (Poset->f_subspace_lattice) {
 			int *B1, *B2;
+			int dim = Poset->VS->dimension;
 
-			B1 = NEW_int(sz1 * vector_space_dimension);
-			B2 = NEW_int((sz1 + sz2) * vector_space_dimension);
+			B1 = NEW_int(sz1 * dim);
+			B2 = NEW_int((sz1 + sz2) * dim);
 
 			for (i = 0; i < sz1; i++) {
-				unrank_point(B1 + i * vector_space_dimension, set1[i]);
-				//(*unrank_point_func)(B1 + i * vector_space_dimension,
-				//set1[i], rank_point_data);
+				unrank_point(B1 + i * dim, set1[i]);
 				}
 			for (i = 0; i < sz2; i++) {
-				unrank_point(B2 + i * vector_space_dimension, set2[i]);
-				//(*unrank_point_func)(B2 + i * vector_space_dimension,
-				//set2[i], rank_point_data);
+				unrank_point(B2 + i * dim, set2[i]);
 				}
 
-			rk1 = F->Gauss_easy(B1, sz1, vector_space_dimension);
+			rk1 = Poset->VS->F->Gauss_easy(B1, sz1, dim);
 			if (rk1 != sz1) {
 				cout << "poset_structure_is_contained rk1 != sz1" << endl;
 				exit(1);
 				}
 			
-			rk2 = F->Gauss_easy(B2, sz2, vector_space_dimension);
+			rk2 = Poset->VS->F->Gauss_easy(B2, sz2, dim);
 			if (rk2 != sz2) {
 				cout << "poset_structure_is_contained rk2 != sz2" << endl;
 				exit(1);
 				}
 			int_vec_copy(B1,
-					B2 + sz2 * vector_space_dimension,
-					sz1 * vector_space_dimension);
-			rk2 = F->Gauss_easy(B2, sz1 + sz2,
-					vector_space_dimension);
+					B2 + sz2 * dim,
+					sz1 * dim);
+			rk2 = Poset->VS->F->Gauss_easy(B2, sz1 + sz2, dim);
 			if (rk2 > sz2) {
 				f_contained = FALSE;
 				}
@@ -1722,12 +1718,15 @@ void poset_classification::list_whole_orbit(
 
 
 	if (f_show_orbit_decomposition) {
-		if (!f_on_subspaces) {
+		if (Poset->f_subset_lattice) {
 			cout << "poset_classification::list_whole_orbit "
 					"orbits on the set:" << endl;
 			Strong_gens->compute_and_print_orbits_on_a_given_set(
 					Poset->A2, set, depth, 0 /* verbose_level*/);
 			}
+		else {
+			cout << "subspace_lattice not yet implemented" << endl;
+		}
 	
 		cout << "poset_classification::list_whole_orbit "
 				"orbits in the original "
@@ -2184,14 +2183,14 @@ void poset_classification::get_orbit_representatives(
 
 void poset_classification::unrank_point(int *v, int rk)
 {
-	(*unrank_point_func)(v, rk, rank_point_data);
+	Poset->unrank_point(v, rk);
 }
 
 int poset_classification::rank_point(int *v)
 {
 	int rk;
 
-	rk = (*rank_point_func)(v, rank_point_data);
+	rk = Poset->rank_point(v);
 	return rk;
 }
 
@@ -2201,8 +2200,7 @@ void poset_classification::unrank_basis(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		(*unrank_point_func)(Basis + i * vector_space_dimension,
-				S[i], rank_point_data);
+		unrank_point(Basis + i * Poset->VS->dimension, S[i]);
 	}
 }
 
@@ -2212,8 +2210,7 @@ void poset_classification::rank_basis(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		S[i] = (*rank_point_func)(Basis + i * vector_space_dimension,
-				rank_point_data);
+		S[i] = rank_point(Basis + i * Poset->VS->dimension);
 	}
 }
 

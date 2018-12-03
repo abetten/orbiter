@@ -90,7 +90,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			// in the large vector space over the small field.
 		}
 #endif
-	big_n = gen->vector_space_dimension;
+	big_n = gen->Poset->VS->dimension;
 	n = size;
 	k = size - 1;
 	if (f_vv) {
