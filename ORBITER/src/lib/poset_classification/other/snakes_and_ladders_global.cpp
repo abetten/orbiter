@@ -755,7 +755,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 		O->store_set_to(Gen, level - 1, the_set);
 	 	for (j = 0; j < level; j++) {
 			a = the_set[j];
-			(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
+			Gen->unrank_point(v, a);
 			f << "[ ";
 			for (h = 0; h < vector_space_dimension; h++) {
 				f << v[h];
@@ -810,7 +810,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 	f << "B := [ BV | " << endl;
 	for (i = 0; i < Gen->Poset->A->base_len; i++) {
 		a = Gen->Poset->A->base[i];
-		Gen->F->PG_element_unrank_modified(v, 1, n, a);
+		Gen->Poset->VS->F->PG_element_unrank_modified(v, 1, n, a);
 		//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
 		f << "[ ";
 		for (h = 0; h < n; h++) {

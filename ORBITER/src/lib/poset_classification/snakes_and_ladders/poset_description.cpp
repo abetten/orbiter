@@ -92,7 +92,9 @@ int poset_description::read_arguments(
 			}
 		else if (strcmp(argv[i], "-subspace_lattice") == 0) {
 			f_subspace_lattice = TRUE;
-			cout << "-subset_lattice " << endl;
+			dimension = atoi(argv[++i]);
+			q = atoi(argv[++i]);
+			cout << "-subset_lattice " << dimension << " " << q << endl;
 			}
 		else if (strcmp(argv[i], "-independence_condition") == 0) {
 			f_independence_condition = TRUE;

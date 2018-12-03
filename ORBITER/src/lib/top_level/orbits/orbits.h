@@ -257,6 +257,7 @@ public:
 	int *w; // [n]
 	int *weights; // [n + 1]
 
+	vector_space *VS;
 	poset *Poset;
 	poset_classification *Gen;
 

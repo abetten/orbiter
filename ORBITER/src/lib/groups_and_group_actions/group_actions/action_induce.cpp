@@ -237,11 +237,14 @@ void action::induced_action_on_factor_space(action *A_old,
 		}
 	A = A_old;
 	sprintf(group_prefix, "%s_Factorspace_%d_%d_%d",
-			A->label, AF->len, AF->factor_space_len, AF->F->q);
+			A->label, AF->VS->dimension,
+			AF->factor_space_len, AF->VS->F->q);
 	sprintf(label, "%s_Factorspace_%d_%d_%d",
-			A->label, AF->len, AF->factor_space_len, AF->F->q);
+			A->label, AF->VS->dimension,
+			AF->factor_space_len, AF->VS->F->q);
 	sprintf(label_tex, "%s Factorspace_%d_%d_%d",
-			A->label_tex, AF->len, AF->factor_space_len, AF->F->q);
+			A->label_tex, AF->VS->dimension,
+			AF->factor_space_len, AF->VS->F->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len

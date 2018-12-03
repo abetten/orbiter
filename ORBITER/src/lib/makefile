@@ -52,6 +52,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/rank_checker.o \
 		foundations/algebra_and_number_theory/subfield_structure.o \
 		foundations/algebra_and_number_theory/unipoly_domain.o \
+		foundations/algebra_and_number_theory/vector_space.o \
 		foundations/coding_theory/mindist.o \
 		foundations/coding_theory/tensor.o \
 		foundations/combinatorics/brick_domain.o \

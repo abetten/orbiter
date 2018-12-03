@@ -17,6 +17,7 @@ polar::polar()
 	Mtx = NULL;
 	tmp_M = NULL;
 	base_cols = NULL;
+	VS = NULL;
 	Poset = NULL;
 	Gen = NULL;
 	f_has_strong_generators = FALSE;
@@ -38,6 +39,9 @@ polar::~polar()
 	if (base_cols) {
 		FREE_int(base_cols);
 		}
+	if (VS) {
+		FREE_OBJECT(VS);
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 		}
@@ -177,9 +181,20 @@ void polar::init2(int verbose_level)
 			f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one);
 		}
+	VS = NEW_OBJECT(vector_space);
+
+	VS->init(F, n /* dimension */,
+			verbose_level - 1);
+	VS->init_rank_functions(
+			polar_callback_rank_point_func,
+			polar_callback_unrank_point_func,
+			this,
+			verbose_level - 1);
+
 	Poset = NEW_OBJECT(poset);
-	Poset->init_subset_lattice(A, A,
+	Poset->init_subspace_lattice(A, A,
 			gens,
+			VS,
 			verbose_level);
 	Poset->add_testing_without_group(
 			polar_callback_early_test_func,
@@ -189,7 +204,6 @@ void polar::init2(int verbose_level)
 			Gen->depth /* sz */, verbose_level);
 
 #if 0
-	// ToDo
 	Gen->init_check_func(
 		polar_callback_test_func, 
 		this /* candidate_check_data */);
@@ -199,12 +213,14 @@ void polar::init2(int verbose_level)
 		//check_mindist_incremental, 
 		//this /* candidate_check_data */);
 
+#if 0
 	Gen->init_vector_space_action(n /* vector_space_dimension */, 
 		F, 
 		polar_callback_rank_point_func, 
 		polar_callback_unrank_point_func, 
 		this, 
 		verbose_level);
+#endif
 
 #if 0
 	Gen->init_early_test_func(

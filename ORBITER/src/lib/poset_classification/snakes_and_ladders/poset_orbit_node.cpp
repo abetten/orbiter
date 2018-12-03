@@ -605,7 +605,7 @@ int poset_orbit_node::check_node_and_set_consistency(
 	if (i < 0)
 		return TRUE;
 	if (set[i] != pt) {
-		cout << "check_node_and_set_consistency() inconsistent" << endl;
+		cout << "check_node_and_set_consistency inconsistent" << endl;
 		return FALSE;
 		}
 	if (i >= 0) {

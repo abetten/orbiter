@@ -1782,4 +1782,37 @@ public:
 };
 
 
+//! a vector space over a finite field
 
+
+class vector_space {
+public:
+
+	int dimension;
+	finite_field *F;
+
+	int (*rank_point_func)(int *v, void *data);
+	void (*unrank_point_func)(int *v, int rk, void *data);
+	void *rank_point_data;
+	int *v1; // [dimension]
+	int *base_cols; // [dimension]
+
+
+	vector_space();
+	~vector_space();
+	void null();
+	void freeself();
+	void init(finite_field *F, int dimension,
+			int verbose_level);
+	void init_rank_functions(
+		int (*rank_point_func)(int *v, void *data),
+		void (*unrank_point_func)(int *v, int rk, void *data),
+		void *data,
+		int verbose_level);
+	void unrank_point(int *v, int rk);
+	int rank_point(int *v);
+	int RREF_and_rank(int *basis, int k);
+	int is_contained_in_subspace(int *v, int *basis, int k);
+	int compare_subspaces_ranked(
+			int *set1, int *set2, int k, int verbose_level);
+};

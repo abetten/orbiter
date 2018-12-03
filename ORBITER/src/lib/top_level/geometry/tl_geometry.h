@@ -824,6 +824,7 @@ public:
 	int *tmp_M; // [n * n]
 	int *base_cols; // [n]
 
+	vector_space *VS;
 	poset *Poset;
 	poset_classification *Gen;
 

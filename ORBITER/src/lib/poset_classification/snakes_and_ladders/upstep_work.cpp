@@ -522,7 +522,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		cout << "upstep_work::init_extension_node calling upstep" << endl;
 		}
 
-	if (gen->f_on_subspaces) {
+	if (gen->Poset->f_subspace_lattice) {
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			int_vec_print(cout, gen->S, size);

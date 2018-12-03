@@ -365,7 +365,7 @@ void poset_classification::compute_flag_orbits(int size,
 					<< " starting" << endl;
 			}
 			
-		if (f_on_subspaces) {
+		if (Poset->f_subspace_lattice) {
 			root[prev].compute_flag_orbits_subspace_action(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
@@ -455,7 +455,8 @@ void poset_classification::upstep(int size,
 	for (u = 0; u < l; u++) {
 
 		if (f_v4) {
-			cout << "poset_classification::upstep case " << u << " / " << l << endl;
+			cout << "poset_classification::upstep "
+					"case " << u << " / " << l << endl;
 			}
 		prev = f + u;
 			
@@ -468,7 +469,8 @@ void poset_classification::upstep(int size,
 
 #if 1
 		if (f_v4) {
-			cout << "poset_classification::upstep before extend_node" << endl;
+			cout << "poset_classification::upstep "
+					"before extend_node" << endl;
 			print_extensions_at_level(cout, size);
 			}
 #endif
@@ -481,7 +483,8 @@ void poset_classification::upstep(int size,
 
 #if 1
 		if (f_v4) {
-			cout << "poset_classification::upstep after extend_node, size="
+			cout << "poset_classification::upstep "
+					"after extend_node, size="
 					<< size << endl;
 			}
 #endif
@@ -603,7 +606,8 @@ void poset_classification::extend_node(
 
 		if (f_vvv) {
 			print_level_info(size, prev);
-			cout << "poset_classification::extend_node working on extension "
+			cout << "poset_classification::extend_node "
+					"working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ":" << endl;
 			}
@@ -615,7 +619,8 @@ void poset_classification::extend_node(
 
 #if 0
 		if (FALSE /*prev == 32 && prev_ex == 3*/) { 
-			cout << "poset_classification::extend_node we are at node (32,3)" << endl;
+			cout << "poset_classification::extend_node "
+					"we are at node (32,3)" << endl;
 			verbose_level_down = verbose_level + 20; 
 			}
 		else {
@@ -626,7 +631,8 @@ void poset_classification::extend_node(
 
 		if (f_vvv) {
 			print_level_info(size, prev);
-			cout << "poset_classification::extend_node working on extension "
+			cout << "poset_classification::extend_node "
+					"working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": before Work.init" << endl;
 			}
@@ -639,7 +645,8 @@ void poset_classification::extend_node(
 
 		if (f_vvv) {
 			print_level_info(size, prev);
-			cout << "poset_classification::extend_node working on extension "
+			cout << "poset_classification::extend_node "
+					"working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": after Work.init" << endl;
 			}
@@ -654,7 +661,8 @@ void poset_classification::extend_node(
 			}
 		if (f_vvv) {
 			print_level_info(size, prev);
-			cout << "poset_classification::extend_node working on extension "
+			cout << "poset_classification::extend_node "
+					"working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": before Work.handle_extension nb_ext_cur="
 					<< nb_ext_cur << endl;
@@ -676,10 +684,12 @@ void poset_classification::extend_node(
 
 		if (f_vvv) {
 			print_level_info(size, prev);
-			cout << "poset_classification::extend_node working on extension "
+			cout << "poset_classification::extend_node "
+					"working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ":" << endl;
-			cout << "poset_classification::extend_node after freeing Work" << endl;
+			cout << "poset_classification::extend_node "
+					"after freeing Work" << endl;
 			}
 
 		}

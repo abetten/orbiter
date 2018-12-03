@@ -75,7 +75,8 @@ int poset_classification::write_treefile(char *fname_base,
 		for (i = first_poset_orbit_node_at_level[level];
 				i < first_poset_orbit_node_at_level[level + 1]; i++) {
 			if (f_vv) {
-				cout << "poset_classification::write_treefile node " << i << ":" << endl;
+				cout << "poset_classification::write_treefile "
+						"node " << i << ":" << endl;
 				}
 			log_nodes_for_treefile(level, i, f,
 					TRUE /* f_recurse */, verbose_level);
@@ -163,7 +164,8 @@ void poset_classification::draw_tree(char *fname_base, int lvl,
 		coord_xyw = NEW_int(3 * nb_nodes);
 			
 		if (f_vv) {
-			cout << "poset_classification::draw_tree calling get_coordinates" << endl;
+			cout << "poset_classification::draw_tree "
+					"calling get_coordinates" << endl;
 			}
 		T.root->get_coordinates_and_width(idx, coord_xyw);
 

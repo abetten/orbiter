@@ -25,7 +25,8 @@ MODULES = \
 	number_theory.o \
 	rank_checker.o \
 	subfield_structure.o \
-	unipoly_domain.o
+	unipoly_domain.o \
+	vector_space.o
 
 
 all : $(MODULES)

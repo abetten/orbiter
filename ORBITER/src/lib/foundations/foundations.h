@@ -66,6 +66,7 @@
 // added class homogeneous_polynomial_domain: Sept 9, 2016
 // added class eckardt_point: January 12, 2017
 // added class surface_object: March 18, 2017
+// added class vector_space: December 2, 2018
 
 #include <iostream>
 #include <fstream>
@@ -284,6 +285,7 @@ typedef class scene scene;
 typedef class mem_object_registry mem_object_registry;
 typedef class mem_object_registry_entry mem_object_registry_entry;
 typedef class eckardt_point_info eckardt_point_info;
+typedef class vector_space vector_space;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

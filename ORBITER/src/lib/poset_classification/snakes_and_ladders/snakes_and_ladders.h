@@ -55,7 +55,7 @@ public:
 // orbit_based_testing.cpp
 // #############################################################################
 
-//! testing a property for orbit representatives only
+//! various test functions which define a G-invariant poset
 
 #define MAX_CALLBACK 100
 
@@ -113,7 +113,7 @@ public:
 };
 
 
-//! used to create a poset from command line arguments
+//! a poset on which a group acts
 
 // #############################################################################
 // poset.C:
@@ -128,7 +128,8 @@ public:
 	int n;
 
 	int f_subspace_lattice;
-	int vector_space_dimension;
+	vector_space *VS;
+	//int vector_space_dimension;
 
 	action *A; // the action in which the group is given
 	action *A2; // the action in which we do the search
@@ -148,6 +149,7 @@ public:
 			int verbose_level);
 	void init_subspace_lattice(action *A, action *A2,
 			strong_generators *Strong_gens,
+			vector_space *VS,
 			int verbose_level);
 	void init(poset_description *description,
 		action *A, // the action in which the group is given
@@ -170,6 +172,8 @@ public:
 		int *candidates, int nb_candidates,
 		int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
+	void unrank_point(int *v, int rk);
+	int rank_point(int *v);
 };
 
 int callback_test_independence_condition(orbit_based_testing *Obt,
@@ -189,6 +193,8 @@ public:
 	int f_subset_lattice;
 
 	int f_subspace_lattice;
+	int dimension;
+	int q;
 
 
 	char label[1000];
@@ -249,6 +255,8 @@ public:
 	int *tmp_set_apply_fusion;
 		// used in poset_orbit_upstep.C poset_orbit_node::apply_isomorphism
 
+
+	// for vector space actions, allocated in init:
 	int *tmp_find_node_for_subspace_by_rank1;
 		// [vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
@@ -366,7 +374,8 @@ public:
 	int downstep_orbits_print_max_orbits;
 	int downstep_orbits_print_max_points_per_orbit;
 	
-	
+
+#if 0
 	int f_on_subspaces;
 	int vector_space_dimension;
 	finite_field *F;
@@ -374,6 +383,7 @@ public:
 	void (*unrank_point_func)(int *v, int rk, void *data);
 	void *rank_point_data;
 	int *tmp_v1; // [vector_space_dimension]
+#endif
 
 
 #if 0
@@ -618,12 +628,14 @@ public:
 		int verbose_level);
 		// Does not initialize the first starter nodes. 
 		// This is done in init_root_node 
+#if 0
 	void init_vector_space_action(int vector_space_dimension, 
 		finite_field *F, 
 		int (*rank_point_func)(int *v, void *data), 
 		void (*unrank_point_func)(int *v, int rk, void *data), 
 		void *data, 
 		int verbose_level);
+#endif
 #if 0
 	void init_early_test_func(
 		void (*early_test_func)(int *S, int len, 
