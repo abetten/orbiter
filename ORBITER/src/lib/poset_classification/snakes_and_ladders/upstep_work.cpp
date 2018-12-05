@@ -140,7 +140,8 @@ void upstep_work::init(poset_classification *gen,
 		}
 }
 
-void upstep_work::handle_extension(int &nb_fuse_cur,
+void upstep_work::handle_extension(
+		int &nb_fuse_cur,
 		int &nb_ext_cur, int verbose_level)
 // called from poset_classification::extend_node
 // Calls handle_extension_fusion_type 
@@ -157,7 +158,7 @@ void upstep_work::handle_extension(int &nb_fuse_cur,
 	int type;
 
 	if (f_v) {
-		print_level_extension_info();
+		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "upstep_work::handle_extension verbose_level = "
 				<< verbose_level << endl;
 		cout << "prev=" << prev << " prev_ex=" << prev_ex << endl;
@@ -268,7 +269,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 	int ret, type;
 	
 	if (f_v) {
-		print_level_extension_info();
+		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "upstep_work::handle_extension_unprocessed_type" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
@@ -291,6 +292,8 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 	pt_orbit_len = O_prev->E[prev_ex].orbit_len;
 
 	size++;
+		// here, size is incremented so we need to subtract
+		// one if we want to use gen->print_level_extension_info
 		
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
@@ -302,7 +305,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << "with point " << pt << " : done " << endl;
+		cout << "with point " << pt << " : after init_extension_node ";
 		cout << "nb_cosets_processed=" << nb_cosets_processed << endl;
 		}
 	if (f_vvv) {
@@ -335,6 +338,8 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 
 	cur++;
 	size--;
+		// the original value of size is restored
+
 	if (f_vvv) {
 		cout << "cur=" << cur << endl;
 		}
@@ -923,6 +928,12 @@ int upstep_work::upstep_for_sets(int verbose_level)
 
 
 
+#if 0
+void upstep_work::print_level_extension_info_original_size()
+{
+	gen->print_level_extension_info(size, prev, prev_ex);
+}
+#endif
 
 void upstep_work::print_level_extension_info()
 {

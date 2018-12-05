@@ -147,9 +147,11 @@ void group::init_strong_generators_by_hdl(int nb_gen,
 		cout << "gen_hdl=";
 		int_vec_print(cout, gen_hdl, nb_gen);
 		cout << endl;
-		cout << "tl=";
-		int_vec_print(cout, tl, A->base_len);
-		cout << endl;
+		if (nb_gen) {
+			cout << "tl=";
+			int_vec_print(cout, tl, A->base_len);
+			cout << endl;
+		}
 	}
 	if (f_v) {
 		cout << "group::init_strong_generators_by_hdl "

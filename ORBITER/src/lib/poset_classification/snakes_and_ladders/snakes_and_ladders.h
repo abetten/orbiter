@@ -1435,6 +1435,7 @@ public:
 		// The newly added point is in gen->S[size - 1]
 		// returns FALSE if the set is not canonical 
 		// (provided f_indicate_not_canonicals is TRUE)
+	//void print_level_extension_info_original_size();
 	void print_level_extension_info();
 	void print_level_extension_coset_info();
 

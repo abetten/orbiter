@@ -91,20 +91,25 @@ int schreier_vector_handler::coset_rep_inv(
 		A->print_info();
 		cout << "action A2:" << endl;
 		A2->print_info();
-		cout << "action S->local_gens->A:" << endl;
-		S->local_gens->A->print_info();
-		cout << "schreier_vector_handler::coset_rep_inv "
-				"we have " << S->local_gens->len
-		<< " local generators" << endl;
-	}
-	if (f_vv) {
-		int i;
-		cout << "the local generators are:" << endl;
-		for (i = 0; i < S->local_gens->len; i++) {
-			cout << "generator " << i << " / "
-					<< S->local_gens->len << ":" << endl;
-			S->local_gens->A->element_print_quick(
-					S->local_gens->ith(i), cout);
+		if (S->f_has_local_generators) {
+			cout << "action S->local_gens->A:" << endl;
+			S->local_gens->A->print_info();
+			cout << "schreier_vector_handler::coset_rep_inv "
+					"we have " << S->local_gens->len
+			<< " local generators" << endl;
+			if (f_vv) {
+				int i;
+				cout << "the local generators are:" << endl;
+				for (i = 0; i < S->local_gens->len; i++) {
+					cout << "generator " << i << " / "
+							<< S->local_gens->len << ":" << endl;
+					S->local_gens->A->element_print_quick(
+							S->local_gens->ith(i), cout);
+				}
+			}
+		}
+		else {
+			cout << "there are no local generators" << endl;
 		}
 	}
 	if (f_v) {

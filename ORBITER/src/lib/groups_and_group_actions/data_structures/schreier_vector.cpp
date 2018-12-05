@@ -748,7 +748,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 			nb_gens = Shallow_tree->gens.len;
 			if (f_v) {
 				cout << "schreier_vector::init_shallow_schreier_forest "
-					"orbit has length " << len << " and "
+					"orbit " << orbit_idx << " has length " << len << " and "
 					<< nb_gens << " generators" << endl;
 			}
 			for (i = 0; i < nb_gens; i++) {
