@@ -29,12 +29,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 		gen->Poset->VS,
 		*gen->Poset->A,
 		*gen->Poset->A2,
-		//gen->vector_space_dimension,
-		//gen->F,
 		the_set, lvl, 
-		//gen->rank_point_func,
-		//gen->unrank_point_func,
-		//gen->rank_point_data,
 		verbose_level - 1);
 	FREE_int(the_set);
 }
@@ -141,13 +136,8 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 		gen->Poset->VS,
 		*gen->Poset->A,
 		*gen->Poset->A2,
-		//gen->vector_space_dimension,
-		//gen->F,
 		the_set, lvl, 
 		candidates, nb_candidates, 
-		//gen->rank_point_func,
-		//gen->unrank_point_func,
-		//gen->rank_point_data,
 		verbose_level - 3);
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action_"
@@ -235,13 +225,9 @@ void poset_orbit_node::setup_factor_space_action(
 			gen->rank_point_data);
 		}
 #endif
-	//AF.init_by_rank(*gen->A2, gen->vector_space_dimension,
-	// gen->F, the_set, lvl, verbose_level);
 	AF.init_from_coordinate_vectors(
 		gen->Poset->VS,
 		*gen->Poset->A, *gen->Poset->A2,
-		//gen->vector_space_dimension,
-		//gen->F,
 		coordinates, lvl, f_compute_tables,
 		verbose_level);
 	if (f_v20) {

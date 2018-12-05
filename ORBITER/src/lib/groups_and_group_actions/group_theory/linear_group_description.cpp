@@ -264,7 +264,7 @@ int linear_group_description::read_arguments(
 		else if (strcmp(argv[i], "-singer") == 0) {
 			f_singer_group = TRUE;
 			singer_power = atoi(argv[++i]);
-			cout << "-singer" << singer_power << endl;
+			cout << "-singer " << singer_power << endl;
 			}
 		else if (strcmp(argv[i], "-subfield_structure_action") == 0) {
 			f_subfield_structure_action = TRUE;

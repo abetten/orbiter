@@ -899,6 +899,8 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph" << endl;
+		cout << "schreier::export_tree_as_layered_graph "
+				"nb_gen = " << gens.len << endl;
 		}
 
 	fst = orbit_first[orbit_no];

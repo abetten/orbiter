@@ -131,9 +131,9 @@ int *poset_orbit_node::live_points()
 int poset_orbit_node::get_nb_of_live_points()
 {
 	if (Schreier_vector == NULL) {
-		cout << "poset_orbit_node::get_nb_of_live_points "
-				"Schreier_vector == NULL" << endl;
-		exit(1);
+		//cout << "poset_orbit_node::get_nb_of_live_points "
+		//		"Schreier_vector == NULL" << endl;
+		return 0;
 	} else {
 		return Schreier_vector->get_number_of_points();
 	}
@@ -142,9 +142,9 @@ int poset_orbit_node::get_nb_of_live_points()
 int poset_orbit_node::get_nb_of_orbits_under_stabilizer()
 {
 	if (Schreier_vector == NULL) {
-		cout << "poset_orbit_node::get_nb_of_orbits_under_stabilizer "
-				"Schreier_vector == NULL" << endl;
-		exit(1);
+		//cout << "poset_orbit_node::get_nb_of_orbits_under_stabilizer "
+		//		"Schreier_vector == NULL" << endl;
+		return 0;
 	} else {
 		return Schreier_vector->get_number_of_orbits();
 	}

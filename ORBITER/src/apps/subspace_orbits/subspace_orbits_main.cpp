@@ -65,8 +65,9 @@ int main(int argc, const char **argv)
 	int f_print_matrix = FALSE;
 	int f_run_log_fname = FALSE;
 	const char *run_log_fname = NULL;
-	
+	int f_group = FALSE;
 	linear_group_description *Descr;
+	int h;
 	
  	t0 = os_ticks();
 
@@ -86,6 +87,13 @@ int main(int argc, const char **argv)
 			f_depth = TRUE;
 			depth = atoi(argv[++i]);
 			cout << "-depth " << depth << endl;
+			}
+		else if (strcmp(argv[i], "-group") == 0) {
+			f_group = TRUE;
+			Descr = NEW_OBJECT(linear_group_description);
+			h = Descr->read_arguments(argc, argv + i + 1, verbose_level);
+			i += h;
+			cout << "-group " << endl;
 			}
 		else if (strcmp(argv[i], "-r") == 0) {
 			f_r = TRUE;
@@ -184,9 +192,11 @@ int main(int argc, const char **argv)
 		
 		}
 
-	Descr = NEW_OBJECT(linear_group_description);
-	Descr->read_arguments(argc, argv, verbose_level);
 
+	if (!f_group) {
+		cout << "please use -group option" << endl;
+		exit(1);
+		}
 	if (!f_depth) {
 		cout << "please use -depth option" << endl;
 		exit(1);

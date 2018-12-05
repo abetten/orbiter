@@ -669,6 +669,7 @@ void poset_classification::extend_node(
 			}
 		Work.handle_extension(nb_fuse_cur, nb_ext_cur, 
 			verbose_level - 4);
+		// in upstep_work.cpp
 
 		if (f_vvv) {
 			print_level_info(size, prev);

@@ -297,6 +297,9 @@ void poset_orbit_node::install_fusion_node(
 			}
 		exit(1);
 		}
+	if (f_v) {
+		cout << "poset_orbit_node::install_fusion_node done" << endl;
+	}
 }
 
 int poset_orbit_node::trace_next_point_wrapper(
@@ -456,8 +459,8 @@ int poset_orbit_node::trace_next_point(
 	int *cosetrep;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	int f_v10 = (verbose_level >= 10);
+	//int f_vvv = (verbose_level >= 3);
+	//int f_v10 = (verbose_level >= 10);
 	int ret;
 	
 	f_failure_to_find_point = FALSE;
@@ -473,14 +476,23 @@ int poset_orbit_node::trace_next_point(
 		}
 	
 	if (gen->Poset->f_subspace_lattice) {
+		if (f_v) {
+			cout << "poset_orbit_node::trace_next_point before "
+					"orbit_representative_and_coset_rep_inv_"
+					"subspace_action" << endl;
+		}
 		orbit_representative_and_coset_rep_inv_subspace_action(
 			gen, lvl,
 			the_point, pt0, cosetrep,
 			verbose_level - 1);
 
 			// poset_orbit_node_upstep_subspace_action.C
-
+		if (f_v) {
+			cout << "poset_orbit_node::trace_next_point lvl = " << lvl
+					<< " the_point=" << the_point
+					<< " is traced to " << pt0 << endl;
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point "
@@ -504,7 +516,7 @@ int poset_orbit_node::trace_next_point(
 					"after orbit_representative_and_coset_rep_inv" << endl;
 		}
 		}
-	if (f_vv) {
+	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 				<< " mapping "
 				<< the_point << "->" << pt0
@@ -518,7 +530,7 @@ int poset_orbit_node::trace_next_point(
 		}
 	}
 	if (pt0 == the_point) {
-		if (f_vv) {
+		if (f_v) {
 			cout << "Since the image point is equal "
 					"to the original point, "
 					"we apply no element and copy the set "
@@ -528,7 +540,7 @@ int poset_orbit_node::trace_next_point(
 		gen->Poset->A2->element_move(cur_transporter, next_transporter, FALSE);
 		}
 	else {
-		if (f_vv) {
+		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 					<< " applying:" << endl;
 			gen->Poset->A2->element_print_quick(cosetrep, cout);
@@ -546,19 +558,19 @@ int poset_orbit_node::trace_next_point(
 		int_vec_copy(cur_set, next_set, lvl);
 		next_set[lvl] = pt0;
 		for (i = lvl + 1; i < size; i++) {
-			if (f_vv) {
+			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 						<< " mapping point " << i << " / " << size
 						<< "cur_set[i]=" << cur_set[i] << endl;
 			}
 			next_set[i] = gen->Poset->A2->element_image_of(
-					cur_set[i], cosetrep, verbose_level);
-			if (f_vv) {
+					cur_set[i], cosetrep, 0 /*verbose_level*/);
+			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 						<< " mapping point " << i << " / " << size
 						<< "next_set[i]=" << next_set[i] << endl;
 			}
-			if (f_vvv) {
+			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point "
 						"lvl = " << lvl << ": ";
 				cout << "mapping " << i << "-th point: "
@@ -597,17 +609,18 @@ int poset_orbit_node::trace_next_point(
 #endif
 		}
 	
-	if (f_vv) {
+	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 			<< " mapping " << the_point << "->" << pt0
 			<< " done, the set becomes ";
 		int_set_print(cout, next_set, size);
 		cout << endl;
-		if (gen->f_print_function && f_vvv) {
+
+		if (gen->f_print_function && f_vv) {
 			(*gen->print_function)(cout, size,
 					next_set, gen->print_function_data);
 			}
-		if (gen->f_allowed_to_show_group_elements && f_v10) {
+		if (gen->f_allowed_to_show_group_elements && f_vv) {
 			cout << "poset_orbit_node::trace_next_point the n e w "
 					"transporter is" << endl;
 			gen->Poset->A2->element_print_quick(next_transporter, cout);
