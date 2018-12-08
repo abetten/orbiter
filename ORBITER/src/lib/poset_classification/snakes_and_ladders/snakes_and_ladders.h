@@ -159,6 +159,11 @@ public:
 	void add_independence_condition(
 			int independence_value,
 			int verbose_level);
+	void add_testing(
+			int (*func)(orbit_based_testing *Obt,
+					int *S, int len, void *data, int verbose_level),
+			void *data,
+			int verbose_level);
 	void add_testing_without_group(
 			void (*func)(int *S, int len,
 					int *candidates, int nb_candidates,
@@ -263,7 +268,7 @@ public:
 	int *tmp_find_node_for_subspace_by_rank2;
 		// [sz * vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
-	int *tmp_find_node_for_subspace_by_rank3;
+	//int *tmp_find_node_for_subspace_by_rank3;
 		// [vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
 
@@ -929,6 +934,8 @@ public:
 	
 	schreier_vector *Schreier_vector;
 	
+	action *A_on_upset;
+
 	// poset_orbit_node.C:
 	poset_orbit_node();
 	~poset_orbit_node();
@@ -1273,6 +1280,17 @@ public:
 
 
 	// poset_orbit_node_downstep_subspace_action.C
+	void compute_flag_orbits_subspace_action(
+		poset_classification *gen,
+		int lvl,
+		int f_create_schreier_vector,
+		int f_use_invariant_subset_if_available,
+		int f_implicit_fusion,
+		int verbose_level);
+		// called from poset_classification::downstep
+		// creates action *A_factor_space
+		// and action_on_factor_space *AF
+		// and disposes them at the end.
 	void setup_factor_space_action_light(
 		poset_classification *gen,
 		action_on_factor_space &AF, 
@@ -1290,13 +1308,6 @@ public:
 		poset_classification *gen, schreier &Schreier, 
 		int lvl, 
 		int f_print_orbits, 
-		int verbose_level);
-	void compute_flag_orbits_subspace_action(
-		poset_classification *gen,
-		int lvl, 
-		int f_create_schreier_vector,
-		int f_use_invariant_subset_if_available, 
-		int f_implicit_fusion, 
 		int verbose_level);
 	void downstep_orbits_subspace_action(
 		poset_classification *gen, schreier &Schreier, 

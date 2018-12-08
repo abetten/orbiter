@@ -206,6 +206,45 @@ void poset::add_independence_condition(
 }
 
 
+void poset::add_testing(
+		int (*func)(orbit_based_testing *Obt,
+				int *S, int len, void *data, int verbose_level),
+		void *data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset::add_testing" << endl;
+		}
+
+	if (Orbit_based_testing == NULL) {
+		f_has_orbit_based_testing = TRUE;
+		Orbit_based_testing = NEW_OBJECT(orbit_based_testing);
+		if (f_v) {
+			cout << "poset::add_testing before "
+					"Orbit_based_testing->init" << endl;
+		}
+		Orbit_based_testing->init(
+			NULL /* poset_classification *PC */,
+			n,
+			verbose_level);
+	}
+	if (f_v) {
+		cout << "poset::add_testing "
+				"adding callback for testing the "
+				"independence condition" << endl;
+	}
+	Orbit_based_testing->add_callback(
+			func,
+			data,
+			verbose_level);
+
+	if (f_v) {
+		cout << "poset::add_testing done" << endl;
+		}
+}
+
 void poset::add_testing_without_group(
 		void (*func)(int *S, int len,
 				int *candidates, int nb_candidates,

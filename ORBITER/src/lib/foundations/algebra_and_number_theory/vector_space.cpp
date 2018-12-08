@@ -30,6 +30,9 @@ void vector_space::null()
 	rank_point_data = NULL;
 	v1 = NULL;
 	base_cols = NULL;
+	base_cols2 = NULL;
+	M1 = NULL;
+	M2 = NULL;
 }
 
 void vector_space::freeself()
@@ -39,6 +42,15 @@ void vector_space::freeself()
 	}
 	if (base_cols) {
 		FREE_int(base_cols);
+	}
+	if (base_cols2) {
+		FREE_int(base_cols2);
+	}
+	if (M1) {
+		FREE_int(M1);
+	}
+	if (M2) {
+		FREE_int(M2);
 	}
 }
 
@@ -55,6 +67,12 @@ void vector_space::init(finite_field *F, int dimension,
 	vector_space::dimension = dimension;
 	v1 = NEW_int(dimension);
 	base_cols = NEW_int(dimension);
+	base_cols2 = NEW_int(dimension);
+	rank_point_func = vector_space_rank_point_callback;
+	unrank_point_func = vector_space_unrank_point_callback;
+	rank_point_data = this;
+	M1 = NEW_int(dimension * dimension);
+	M2 = NEW_int(dimension * dimension);
 	if (f_v) {
 		cout << "vector_space::init done" << endl;
 		}
@@ -77,6 +95,24 @@ void vector_space::init_rank_functions(
 	if (f_v) {
 		cout << "vector_space::init_rank_functions done" << endl;
 		}
+}
+
+void vector_space::unrank_basis(int *Mtx, int *set, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		unrank_point(Mtx + i * dimension, set[i]);
+	}
+}
+
+void vector_space::rank_basis(int *Mtx, int *set, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		set[i] = rank_point(Mtx + i * dimension);
+	}
 }
 
 void vector_space::unrank_point(int *v, int rk)
@@ -127,20 +163,125 @@ int vector_space::compare_subspaces_ranked(
 		int *set1, int *set2, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret;
+	int r, i;
+	int rk1, rk2;
 
 	if (f_v) {
 		cout << "vector_space::compare_subspaces_ranked" << endl;
 	}
-	ret = F->compare_subspaces_ranked_with_unrank_function(
+#if 0
+	r = F->compare_subspaces_ranked_with_unrank_function(
 				set1, set2, k,
 				dimension,
 				unrank_point_func,
 				rank_point_data,
 				verbose_level);
-	if (f_v) {
-		cout << "vector_space::compare_subspaces_ranked done" << endl;
+#else
+	if (k > dimension) {
+		cout << "vector_space::compare_subspaces_ranked "
+				"k > dimension" << endl;
+		exit(1);
 	}
-	return ret;
+	unrank_basis(M1, set1, k);
+	unrank_basis(M2, set2, k);
+	if (f_v) {
+		cout << "matrix1:" << endl;
+		print_integer_matrix_width(cout, M1, k,
+				dimension, dimension,
+				F->log10_of_q);
+		cout << "matrix2:" << endl;
+		print_integer_matrix_width(cout, M2, k,
+				dimension, dimension,
+				F->log10_of_q);
+		}
+	rk1 = F->Gauss_simple(M1, k,
+			dimension, base_cols,
+			0/*int verbose_level*/);
+	rk2 = F->Gauss_simple(M2, k,
+			dimension, base_cols2,
+			0/*int verbose_level*/);
+	if (f_v) {
+		cout << "vector_space::compare_subspaces_ranked "
+				"after Gauss" << endl;
+		cout << "matrix1:" << endl;
+		print_integer_matrix_width(cout, M1, k,
+				dimension, dimension,
+				F->log10_of_q);
+		cout << "rank1=" << rk1 << endl;
+		cout << "base_cols1: ";
+		::int_vec_print(cout, base_cols, rk1);
+		cout << endl;
+		cout << "matrix2:" << endl;
+		print_integer_matrix_width(cout, M2, k,
+				dimension, dimension,
+				F->log10_of_q);
+		cout << "rank2=" << rk2 << endl;
+		cout << "base_cols2: ";
+		::int_vec_print(cout, base_cols2, rk2);
+		cout << endl;
+		}
+	if (rk1 != rk2) {
+		if (f_v) {
+			cout << "vector_space::compare_subspaces_ranked "
+					"the ranks differ, "
+					"so the subspaces are not equal, "
+					"we return 1" << endl;
+			}
+		r = 1;
+		goto ret;
+		}
+	for (i = 0; i < rk1; i++) {
+		if (base_cols[i] != base_cols2[i]) {
+			if (f_v) {
+				cout << "the base_cols differ in entry " << i
+						<< ", so the subspaces are not equal, "
+						"we return 1" << endl;
+				}
+			r = 1;
+			goto ret;
+			}
+		}
+	for (i = 0; i < k * dimension; i++) {
+		if (M1[i] != M2[i]) {
+			if (f_v) {
+				cout << "the matrices differ in entry " << i
+						<< ", so the subspaces are not equal, "
+						"we return 1" << endl;
+				}
+			r = 1;
+			goto ret;
+			}
+		}
+	if (f_v) {
+		cout << "the subspaces are equal, we return 0" << endl;
+		}
+	r = 0;
+#endif
+	if (f_v) {
+		cout << "vector_space::compare_subspaces_ranked "
+				"done" << endl;
+	}
+ret:
+	return r;
 }
+
+void vector_space_unrank_point_callback(int *v, int rk, void *data)
+{
+	vector_space *VS = (vector_space *) data;
+
+	VS->F->PG_element_unrank_modified(v, 1, VS->dimension, rk);
+
+}
+
+int vector_space_rank_point_callback(int *v, void *data)
+{
+	vector_space *VS = (vector_space *) data;
+	int rk;
+
+	VS->F->PG_element_rank_modified(v, 1, VS->dimension, rk);
+	return rk;
+
+}
+
+
 

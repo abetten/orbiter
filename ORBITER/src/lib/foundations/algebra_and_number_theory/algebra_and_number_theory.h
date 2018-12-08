@@ -9,7 +9,7 @@
 
 
 // #############################################################################
-// a_domain.C:
+// a_domain.cpp
 // #############################################################################
 
 enum domain_kind {
@@ -113,7 +113,7 @@ public:
 
 
 // #############################################################################
-// finite_field.C:
+// finite_field.cpp
 // #############################################################################
 
 //! a finite field Fq
@@ -266,7 +266,7 @@ public:
 	void cheat_sheet_bottom(ostream &f);
 
 	// #########################################################################
-	// finite_field_linear_algebra.C:
+	// finite_field_linear_algebra.cpp
 	// #########################################################################
 
 	void copy_matrix(int *A, int *B, int ma, int na);
@@ -617,7 +617,7 @@ public:
 		int &group_order, int verbose_level);
 
 	// #########################################################################
-	// finite_field_representations.C:
+	// finite_field_representations.cpp
 	// #########################################################################
 
 	void representing_matrix8_R(int *A, 
@@ -827,7 +827,7 @@ void O4_find_tangent_plane(finite_field &F,
 
 
 // #############################################################################
-// finite_field_tables.C:
+// finite_field_tables.cpp
 // #############################################################################
 
 extern int finitefield_primes[];
@@ -837,7 +837,7 @@ extern const char *finitefield_primitive_polynomial[][100];
 const char *get_primitive_polynomial(int p, int e, int verbose_level);
 
 // #############################################################################
-// finite_ring.C:
+// finite_ring.cpp
 // #############################################################################
 
 
@@ -898,7 +898,7 @@ void display_all_PHG_elements(int n, int q);
 
 
 // #############################################################################
-// generators_symplectic_group.C:
+// generators_symplectic_group.cpp
 // #############################################################################
 
 
@@ -944,7 +944,7 @@ public:
 };
 
 // #############################################################################
-// gl_classes.C:
+// gl_classes.cpp
 // #############################################################################
 
 //! conjugacy classes in GL(n,q)
@@ -1077,7 +1077,7 @@ public:
 };
 
 // #############################################################################
-// group_generators.C:
+// group_generators.cpp
 // #############################################################################
 
 
@@ -1162,7 +1162,7 @@ void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F,
 
 
 // #############################################################################
-// heisenberg.C
+// heisenberg.cpp
 // #############################################################################
 
 //! The Heisenberg group of n x n matrices
@@ -1201,7 +1201,7 @@ public:
 };
 
 // #############################################################################
-// homogeneous_polynomial_domain.C
+// homogeneous_polynomial_domain.cpp
 // #############################################################################
 
 //! Homogeneous polynomials in n variables over a finite field
@@ -1295,7 +1295,7 @@ void homogeneous_polynomial_domain_swap_monomial(void *data,
 
 
 // #############################################################################
-// longinteger_domain.C:
+// longinteger_domain.cpp:
 // #############################################################################
 
 //! Domain to compute with objects of type longinteger
@@ -1441,7 +1441,7 @@ void longinteger_print_digits(char *rep, int len);
 
 
 // #############################################################################
-// norm_tables.C:
+// norm_tables.cpp:
 // #############################################################################
 
 //! tables for the norm map in a finite field
@@ -1464,7 +1464,7 @@ public:
 
 
 // #############################################################################
-// null_polarity_generator.C:
+// null_polarity_generator.cpp:
 // #############################################################################
 
 //! internal class to compute generators for the group of null polarities
@@ -1505,7 +1505,7 @@ public:
 };
 
 // #############################################################################
-// number_theory.C:
+// number_theory.cpp:
 // #############################################################################
 
 
@@ -1553,7 +1553,7 @@ void int_mult_fractions(int at, int ab, int bt, int bb,
 
 
 // #############################################################################
-// rank_checker.C:
+// rank_checker.cpp:
 // #############################################################################
 
 
@@ -1584,7 +1584,7 @@ public:
 };
 
 // #############################################################################
-// subfield_structure.C:
+// subfield_structure.cpp:
 // #############################################################################
 
 //! a finite field as a vector space over a subfield
@@ -1639,7 +1639,7 @@ public:
 };
 
 // #############################################################################
-// unipoly_domain.C:
+// unipoly_domain.cpp:
 // #############################################################################
 
 //! domain to compute with polynomials in one variable over a finite field
@@ -1782,6 +1782,11 @@ public:
 };
 
 
+// #############################################################################
+// vector_space.cpp:
+// #############################################################################
+
+
 //! a vector space over a finite field
 
 
@@ -1796,6 +1801,9 @@ public:
 	void *rank_point_data;
 	int *v1; // [dimension]
 	int *base_cols; // [dimension]
+	int *base_cols2; // [dimension]
+	int *M1; // [dimension * dimension]
+	int *M2; // [dimension * dimension]
 
 
 	vector_space();
@@ -1809,10 +1817,19 @@ public:
 		void (*unrank_point_func)(int *v, int rk, void *data),
 		void *data,
 		int verbose_level);
+	void unrank_basis(int *Mtx, int *set, int len);
+	void rank_basis(int *Mtx, int *set, int len);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
 	int RREF_and_rank(int *basis, int k);
 	int is_contained_in_subspace(int *v, int *basis, int k);
 	int compare_subspaces_ranked(
 			int *set1, int *set2, int k, int verbose_level);
+		// equality test for subspaces given by ranks of basis elements
 };
+
+
+void vector_space_unrank_point_callback(int *v, int rk, void *data);
+int vector_space_rank_point_callback(int *v, void *data);
+
+

@@ -640,11 +640,7 @@ int poset_classification::trace_set(int *set, int size, int level,
 		}
 	
 	int_vec_copy(set, canonical_set, size);
-#if 0
-	for (i = 0; i < size; i++) {
-		canonical_set[i] = set[i];
-		}
-#endif
+
 	Poset->A->element_one(Elt_transporter, 0);
 
 	if (f_v) {
@@ -684,7 +680,7 @@ int poset_classification::find_node_for_subspace_by_rank(
 	int f_vv = (verbose_level >= 2);
 	int *v;
 	int *basis;
-	int *base_cols;
+	//int *base_cols;
 	int rk, node, i, j, pt;
 
 	if (f_v) {
@@ -694,25 +690,15 @@ int poset_classification::find_node_for_subspace_by_rank(
 		}
 	v = tmp_find_node_for_subspace_by_rank1;
 	basis = tmp_find_node_for_subspace_by_rank2;
-	base_cols = tmp_find_node_for_subspace_by_rank3;
+	//base_cols = tmp_find_node_for_subspace_by_rank3;
 	//v = NEW_int(vector_space_dimension);
 	//basis = NEW_int(len * vector_space_dimension);
 	//base_cols = NEW_int(vector_space_dimension);
 
 	unrank_basis(basis, set, len);
-#if 0
-	for (i = 0; i < len; i++) {
-		unrank_point(basis + i * vector_space_dimension, set[i]);
-		//(*unrank_point_func)(basis + i * vector_space_dimension,
-		//set[i], rank_point_data);
-		}
-#endif
+
 	rk = Poset->VS->RREF_and_rank(basis, len);
-#if 0
-	rk = F->Gauss_simple(
-			basis, len, vector_space_dimension,
-			base_cols, 0 /* verbose_level */);
-#endif
+
 	if (rk != len) {
 		cout << "poset_classification::find_node_for_subspace_by_rank "
 				"rk != len" << endl;
@@ -732,13 +718,6 @@ int poset_classification::find_node_for_subspace_by_rank(
 			if (!Poset->VS->is_contained_in_subspace(v, basis, len)) {
 				continue;
 			}
-#if 0
-			if (!F->is_contained_in_subspace(len,
-					vector_space_dimension, basis, base_cols,
-				v, verbose_level)) {
-				continue;
-				}
-#endif
 			if (f_vv) {
 				cout << "poset_classification::find_node_for_subspace_by_rank "
 						"at node " << node << " extension " << j

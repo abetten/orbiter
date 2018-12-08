@@ -41,7 +41,7 @@ void poset_classification::null()
 	tmp_set_apply_fusion = NULL;
 	tmp_find_node_for_subspace_by_rank1 = NULL;
 	tmp_find_node_for_subspace_by_rank2 = NULL;
-	tmp_find_node_for_subspace_by_rank3 = NULL;
+	//tmp_find_node_for_subspace_by_rank3 = NULL;
 
 
 	nb_times_trace = 0;
@@ -176,9 +176,9 @@ void poset_classification::freeself()
 	if (tmp_find_node_for_subspace_by_rank2) {
 		FREE_int(tmp_find_node_for_subspace_by_rank2);
 		}
-	if (tmp_find_node_for_subspace_by_rank3) {
-		FREE_int(tmp_find_node_for_subspace_by_rank3);
-		}
+	//if (tmp_find_node_for_subspace_by_rank3) {
+	//	FREE_int(tmp_find_node_for_subspace_by_rank3);
+	//	}
 
 	if (f_v) {
 		cout << "poset_classification::freeself "
@@ -565,8 +565,8 @@ void poset_classification::init(poset *Poset,
 				NEW_int(Poset->VS->dimension);
 		tmp_find_node_for_subspace_by_rank2 =
 				NEW_int(sz * Poset->VS->dimension);
-		tmp_find_node_for_subspace_by_rank3 =
-				NEW_int(Poset->VS->dimension);
+		//tmp_find_node_for_subspace_by_rank3 =
+		//		NEW_int(Poset->VS->dimension);
 	}
 
 	if (f_v) {
