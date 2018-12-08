@@ -12,12 +12,22 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	int lvl, int pt_to_trace,
 	int &pt0, int *&cosetrep, int verbose_level)
 // called by poset_orbit_node::trace_next_point
+// creates action_on_factor_space AF;
+// and action A_factor_space;
+// and disposes them at the end.
 {
 	int f_v = (verbose_level >= 1);
-	action_on_factor_space AF;
-	action A_factor_space;
 	int projected_pt, projected_pt0;
+
+	action_on_factor_space *AF;
+	action *A_factor_space;
+
 	//int f_check_image = FALSE;
+
+
+	A_factor_space = A_on_upset;
+	AF = A_factor_space->G.AF;
+
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_"
@@ -28,7 +38,9 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		cout << "setting up factor space action" << endl;
 		}
 
-	if (TRUE /*gen->f_early_test_func*/) {
+#if 0
+
+	//if (TRUE /*gen->f_early_test_func*/) {
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_"
 					"rep_inv_subspace_action "
@@ -51,7 +63,9 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 			AF, A_factor_space, lvl, 
 			verbose_level - 2);
 #endif
-	}
+	//}
+
+#if 0
 	else {
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_"
@@ -68,6 +82,9 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 					"after setup_factor_space_action" << endl;
 		}
 	}
+#endif
+#endif
+
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_"
@@ -75,12 +92,9 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 				"before project_onto_Gauss_reduced_vector" << endl;
 	}
 	//projected_pt = AF.project(pt_to_trace, verbose_level - 2);
-	projected_pt = AF.project_onto_Gauss_reduced_vector(
+	projected_pt = AF->project_onto_Gauss_reduced_vector(
 			pt_to_trace, verbose_level - 4);
 
-
-	//G.point_stabilizer_with_action(&A_factor_space,
-	// H, projected_pt, 0);
 
 	if (f_v) {
 		cout << "poset_orbit_node::representative_and_coset_rep_inv_subspace_action "
@@ -95,7 +109,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		
 
 		//pt0 = AF.preimage(projected_pt0, verbose_level - 2);
-		pt0 = AF.lexleast_element_in_coset(
+		pt0 = AF->lexleast_element_in_coset(
 				projected_pt0,
 				verbose_level - 4);
 
@@ -109,18 +123,6 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		}
 	if (Schreier_vector) {
 
-#if 0
-		int f_trivial_group;
-		
-		if (nb_strong_generators) 
-			f_trivial_group = FALSE;
-		else 
-			f_trivial_group = TRUE;
-#endif
-		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
-		//"coset_rep_inv_subspace_action calling schreier_vector_"
-		//"coset_rep_inv" << endl;
-#if 1
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
 					"subspace_action before "
@@ -137,31 +139,13 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 					"subspace_action after "
 					"Schreier_vector_handler->coset_rep_inv" << endl;
 		}
-#else
-		schreier_vector_coset_rep_inv(
-			&A_factor_space,
-			sv, 
-			hdl_strong_generators, 
-			projected_pt, 
-			projected_pt0, 
-			gen->Elt1, gen->Elt2, gen->Elt3, gen->Elt4, 
-			f_trivial_group, 
-			TRUE /* f_compact */,
-			f_check_image, 
-			verbose_level - 4);
-#endif
-		// gen->Elt1 contains the element that maps pt_to_trace to pt0
-		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
-		//"coset_rep_inv_subspace_action schreier_vector_coset_"
-		//"rep_inv done" << endl;
-		
-		//pt0 = AF.preimage(projected_pt0, verbose_level - 2);
+
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
 					"subspace_action before "
 					"AF.lexleast_element_in_coset" << endl;
 		}
-		pt0 = AF.lexleast_element_in_coset(
+		pt0 = AF->lexleast_element_in_coset(
 				projected_pt0, verbose_level - 4);
 
 		if (f_v) {
@@ -197,27 +181,6 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		cout << "verbose_level=" << verbose_level << endl;
 		exit(1);
 		}
-#if 0
-	projected_pt0 =
-			A_factor_space.least_image_of_point_generators_by_handle(
-		nb_strong_generators, 
-		hdl_strong_generators, 
-		projected_pt, 
-		gen->Elt1, 
-		verbose_level - 1);
-	pt0 = AF.preimage(projected_pt0, verbose_level - 2);
-	if (f_v) {
-		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
-				"pt_to_trace=" << pt_to_trace
-			<< " projected_pt0=" << projected_pt0
-			<< " preimage=" << pt0 << endl;
-		}
-	//return;
-	if (f_v) {
-		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
-				"subspace_action done" << endl;
-		}
-#endif
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_"
 				"rep_inv_subspace_action" << endl;

@@ -26,6 +26,7 @@ void poset_orbit_node::null()
 	E = NULL;
 	//sv = NULL;
 	Schreier_vector = NULL;
+	A_on_upset = NULL;
 }
 
 void poset_orbit_node::freeself()
@@ -60,6 +61,9 @@ void poset_orbit_node::freeself()
 #endif
 	if (Schreier_vector) {
 		FREE_OBJECT(Schreier_vector);
+	}
+	if (A_on_upset) {
+		FREE_OBJECT(A_on_upset);
 	}
 	null();
 	//cout << "poset_orbit_node::freeself finished" << endl;
