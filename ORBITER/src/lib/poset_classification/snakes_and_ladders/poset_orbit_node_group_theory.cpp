@@ -185,7 +185,10 @@ void poset_orbit_node::init_extension_node_prepare_H(
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_extension_node_prepare_H, "
-				"verbose_level = " << verbose_level << endl;
+				"verbose_level = " << verbose_level
+				<< " pt = " << pt
+				<< " pt_orbit_len = " << pt_orbit_len
+				<< endl;
 		}
 
 
@@ -227,7 +230,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			G, go_G,
 			H, go_H,
 			pt, pt_orbit_len,
-			0 /*verbose_level - 3*/);
+			verbose_level - 3);
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			int_vec_print(cout, gen->S, size);
@@ -300,7 +303,9 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		int_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_H: "
 				"fatal: q != pt_orbit_len" << endl;
-		cout << "q = " << q.as_int() << endl;
+		cout << "go_G = " << go_G << endl;
+		cout << "go_H = " << go_H << endl;
+		cout << "q = " << q << endl;
 		cout << "pt_orbit_len = " << pt_orbit_len << endl;
 		exit(1);
 		}
@@ -328,28 +333,60 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	group &H, longinteger_object &go_H,
 	int pt, int pt_orbit_len,
 	int verbose_level)
+// we are at the new node, and prev is the node from which we came.
+// prev_ex is the extension that we are currently crocessing.
+// size is the new size.
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
+	int projected_pt;
 
 
 	if (f_v) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting, "
 				"verbose_level = " << verbose_level << endl;
 		}
 
+	if (f_v) {
+		cout << "generators for G of order " << go_G << endl;
+		G.SG->print_with_given_action(
+				cout, gen->Poset->A2);
+	}
 	H.init(gen->Poset->A);
 
+
+
+#if 0
+	action_on_factor_space *AF;
+	action *A_factor_space;
+
+	if (gen->root[prev].A_on_upset == NULL) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
+		cout << "poset_orbit_node::compute_point_stabilizer_"
+				"in_subspace_setting gen->root[prev].A_on_upset == NULL" << endl;
+		exit(1);
+	}
+	A_factor_space = gen->root[prev].A_on_upset;
+	AF = A_factor_space->G.AF;
+	if (f_v) {
+		cout << "generators for G of order " << go_G
+				<< " in factor space action" << endl;
+		G.SG->print_with_given_action(
+				cout, A_factor_space);
+	}
+#endif
+
+
+	{
+#if 1
+	action_on_factor_space *AF;
+	action A_factor_space;
 	poset_orbit_node *Op = &gen->root[prev];
 
-
-
-	action_on_factor_space AF;
-	action A_factor_space;
-	int projected_pt;
-
+	AF = NEW_OBJECT(action_on_factor_space);
 	if (FALSE /*gen->f_early_test_func*/) {
 #if 0
 		int i;
@@ -394,24 +431,40 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 		// no early_test_func:
 
 		if (f_vvv) {
-			gen->print_level_extension_info(size, prev, prev_ex);
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			cout << " poset_orbit_node::compute_point_stabilizer_"
 					"in_subspace_setting, "
 					"without early test function,  setting up factor "
 					"space action:" << endl;
 			}
-		Op->setup_factor_space_action(gen,
-			AF,
+		Op->setup_factor_space_action(
+			gen,
+			*AF,
 			A_factor_space,
 			size - 1,
 			TRUE /*f_compute_tables*/,
 			verbose_level - 4);
-
-		projected_pt = AF.project(pt, verbose_level - 4);
+		// now AF is part of A_factor_space
+		// and should not be freed.
+		projected_pt = AF->project(pt, verbose_level - 4);
 		}
+#endif
+
+#if 0
+	if (f_vvv) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
+		cout << " poset_orbit_node::compute_point_stabilizer_"
+				"in_subspace_setting "
+				" before AF->project_onto_Gauss_reduced_vector"
+				<< endl;
+		}
+#endif
+	//projected_pt = AF->project(pt, verbose_level - 4);
+	//projected_pt = AF->project_onto_Gauss_reduced_vector(
+	//		pt, verbose_level - 4);
 
 	if (f_vvv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << " poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting "
 				" pt=" << pt << " projected_pt=" << projected_pt << endl;
@@ -423,7 +476,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 		exit(1);
 		}
 	if (f_vvv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << " poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting "
 				"calling G.point_stabilizer_with_action" << endl;
@@ -434,12 +487,18 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 			projected_pt,
 			verbose_level - 4);
 	if (f_vvv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << " poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting "
 				"G.point_stabilizer_with_action done" << endl;
 		}
 
+	if (f_v) {
+		cout << "poset_orbit_node::compute_point_stabilizer_"
+				"in_subspace_setting "
+				"before freeing A_factor_space" << endl;
+		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting "

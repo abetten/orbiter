@@ -80,18 +80,18 @@ void action::freeself()
 	int f_vv = FALSE;
 
 	if (f_v) {
-		cout << "deleting action " << label << endl;
+		cout << "action::freeself deleting action " << label << endl;
 		print_info();
 		}
 	if (f_allocated) {
 		if (f_vv) {
-			cout << "freeing G of type ";
+			cout << "action::freeself freeing G of type ";
 			action_print_symmetry_group_type(cout, type_G);
 			cout << endl;
 			}
 		if (type_G == matrix_group_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.matrix_grp" << endl;
+				cout << "action::freeself freeing G.matrix_grp" << endl;
 				cout << "G.matrix_grp=" << G.matrix_grp << endl;
 				}
 			FREE_OBJECT(G.matrix_grp);
@@ -103,151 +103,161 @@ void action::freeself()
 			}
 		else if (type_G == wreath_product_t) {
 			if (f_vv) {
-				cout << "action::~action freeing "
+				cout << "action::freeself freeing "
 						"G.wreath_product_group" << endl;
 				cout << "G.wreath_product_group="
 						<< G.wreath_product_group << endl;
 				}
 			FREE_OBJECT(G.wreath_product_group);
 			if (f_vv) {
-				cout << "action::~action freeing "
+				cout << "action::freeself freeing "
 						"G.wreath_product_group finished" << endl;
 				}
 			G.wreath_product_group = NULL;
 			}
 		else if (type_G == perm_group_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.perm_group_t" << endl;
+				cout << "action::freeself freeing G.perm_group_t" << endl;
 				}
 			FREE_OBJECT(G.perm_grp);
 			if (f_vv) {
-				cout << "action::~action freeing G.perm_group_t finished"
+				cout << "action::freeself freeing G.perm_group_t finished"
 						<< endl;
 				}
 			G.perm_grp = NULL;
 			}
 		else if (type_G == action_on_sets_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.on_sets" << endl;
+				cout << "action::freeself freeing G.on_sets" << endl;
 				cout << "G.on_sets=" << G.on_sets << endl;
 				}
 			FREE_OBJECT(G.on_sets);
 			if (f_vv) {
-				cout << "action::~action freeing G.on_sets finished" << endl;
+				cout << "action::freeself freeing G.on_sets finished" << endl;
 				}
 			G.on_sets = NULL;
 			}
 		else if (type_G == action_on_k_subsets_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.on_sets" << endl;
+				cout << "action::freeself freeing G.on_sets" << endl;
 				cout << "G.on_k_subsets=" << G.on_k_subsets << endl;
 				}
 			FREE_OBJECT(G.on_k_subsets);
 			if (f_vv) {
-				cout << "action::~action freeing G.on_k_subsets finished"
+				cout << "action::freeself freeing G.on_k_subsets finished"
 						<< endl;
 				}
 			G.on_k_subsets = NULL;
 			}
 		else if (type_G == action_on_orbits_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.OnOrbits" << endl;
+				cout << "action::freeself freeing G.OnOrbits" << endl;
 				cout << "G.OnOrbits=" << G.OnOrbits << endl;
 				}
 			FREE_OBJECT(G.OnOrbits);
 			if (f_vv) {
-				cout << "action::~action freeing G.OnOrbits finished" << endl;
+				cout << "action::freeself freeing G.OnOrbits finished" << endl;
 				}
 			G.OnOrbits = NULL;
 			}
 		else if (type_G == action_on_bricks_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.OnBricks" << endl;
+				cout << "action::freeself freeing G.OnBricks" << endl;
 				cout << "G.OnBricks=" << G.OnBricks << endl;
 				}
 			FREE_OBJECT(G.OnBricks);
 			if (f_vv) {
-				cout << "action::~action freeing G.OnBricks finished" << endl;
+				cout << "action::freeself freeing G.OnBricks finished" << endl;
 				}
 			G.OnBricks = NULL;
 			}
 		else if (type_G == action_on_andre_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.OnAndre" << endl;
+				cout << "action::freeself freeing G.OnAndre" << endl;
 				cout << "G.OnAndre=" << G.OnAndre << endl;
 				}
 			FREE_OBJECT(G.OnAndre);
 			if (f_vv) {
-				cout << "action::~action freeing G.OnAndre finished" << endl;
+				cout << "action::freeself freeing G.OnAndre finished" << endl;
 				}
 			G.OnAndre = NULL;
 			}
 		else if (type_G == action_by_right_multiplication_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.ABRM" << endl;
+				cout << "action::freeself freeing G.ABRM" << endl;
 				}
 			FREE_OBJECT(G.ABRM);
 			G.ABRM = NULL;
 			}
 		else if (type_G == action_by_restriction_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.ABR" << endl;
+				cout << "action::freeself freeing G.ABR" << endl;
 				}
 			FREE_OBJECT(G.ABR);
 			G.ABR = NULL;
 			}
 		else if (type_G == action_by_conjugation_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.ABC" << endl;
+				cout << "action::freeself freeing G.ABC" << endl;
 				}
 			FREE_OBJECT(G.ABC);
 			G.ABC = NULL;
 			}
 		else if (type_G == action_by_representation_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.Rep" << endl;
+				cout << "action::freeself freeing G.Rep" << endl;
 				}
 			FREE_OBJECT(G.Rep);
 			G.Rep = NULL;
 			}
 		else if (type_G == action_on_determinant_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.AD" << endl;
+				cout << "action::freeself freeing G.AD" << endl;
 				}
 			FREE_OBJECT(G.AD);
 			G.AD = NULL;
 			}
 		else if (type_G == action_on_sign_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.OnSign" << endl;
+				cout << "action::freeself freeing G.OnSign" << endl;
 				}
 			FREE_OBJECT(G.OnSign);
 			G.OnSign = NULL;
 			}
 		else if (type_G == action_on_grassmannian_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.AG" << endl;
+				cout << "action::freeself freeing G.AG" << endl;
 				}
 			FREE_OBJECT(G.AG);
 			G.AG = NULL;
 			}
 		else if (type_G == action_on_factor_space_t) {
-			//delete G.AF;
+			if (f_vv) {
+				cout << "action::freeself freeing G.AF" << endl;
+				}
+			FREE_OBJECT(G.AF);
 			G.AF = NULL;
 			}
 		else if (type_G == action_on_wedge_product_t) {
-			//delete G.AW;
+			//FREE_OBJECT(G.AW);
 			G.AW = NULL;
 			}
 		else if (type_G == action_on_homogeneous_polynomials_t) {
 			if (f_vv) {
-				cout << "action::~action freeing G.OnHP" << endl;
+				cout << "action::freeself freeing G.OnHP" << endl;
 				}
 			FREE_OBJECT(G.OnHP);
 			G.OnHP = NULL;
 			}
+		else if (type_G == action_by_subfield_structure_t) {
+			if (f_vv) {
+				cout << "action::freeself freeing G.SubfieldStructure" << endl;
+				}
+			FREE_OBJECT(G.SubfieldStructure);
+			G.SubfieldStructure = NULL;
+			}
 		else {
-			cout << "action::~action don't know "
+			cout << "action::freeself don't know "
 					"how to free the object; action type is ";
 			print_symmetry_group_type(cout);
 			cout << endl;
@@ -257,14 +267,14 @@ void action::freeself()
 		type_G = unknown_symmetry_group_t;
 		}
 	if (f_v) {
-		cout << "deleted G " << endl;
+		cout << "action::freeself after freeing G " << endl;
 		}
 
 	
 	free_base_data();
 
 	if (f_v) {
-		cout << "after free_base_data" << endl;
+		cout << "action::freeself after free_base_data" << endl;
 		}
 	
 #if 0
@@ -281,13 +291,13 @@ void action::freeself()
 #endif
 	
 	if (f_v) {
-		cout << "after freeing transversal reps" << endl;
+		cout << "action::freeself after freeing transversal reps" << endl;
 		}
 		
 	free_element_data();
 
 	if (f_v) {
-		cout << "after free_element_data" << endl;
+		cout << "action::freeself after free_element_data" << endl;
 		}
 	
 	if (f_has_strong_generators) {
@@ -304,7 +314,7 @@ void action::freeself()
 		}
 
 	if (f_v) {
-		cout << "after freeing strong generators" << endl;
+		cout << "action::freeself after freeing strong generators" << endl;
 		}
 
 	if (f_has_subaction && f_subaction_is_allocated) {
@@ -319,38 +329,39 @@ void action::freeself()
 		}
 
 	if (f_v) {
-		cout << "after freeing subaction" << endl;
+		cout << "action::freeself after freeing subaction" << endl;
 		}
 	
 	if (f_has_sims) {
 		if (f_v) {
-			cout << "action::~action freeing Sims" << endl;
+			cout << "action::freeself freeing Sims" << endl;
 			}
 		FREE_OBJECT(Sims);
 		Sims = NULL;
 		f_has_sims = FALSE;
 		if (f_v) {
-			cout << "action::~action freeing Sims finished" << endl;
+			cout << "action::freeself freeing Sims finished" << endl;
 			}
 		}
 
 	if (f_v) {
-		cout << "after freeing sims" << endl;
+		cout << "action::freeself after freeing sims" << endl;
 		}
 
 	if (f_has_kernel) {
 		if (f_v) {
-			cout << "action::~action freeing Kernel" << endl;
+			cout << "action::freeself freeing Kernel" << endl;
 			}
 		FREE_OBJECT(Kernel);
 		Kernel = NULL;
 		f_has_kernel = FALSE;
 		if (f_v) {
-			cout << "action::~action freeing Kernel finished" << endl;
+			cout << "action::freeself freeing Kernel finished" << endl;
 			}
 		}
 	if (f_v) {
-		cout << "deleting action " << label << " done" << endl;
+		cout << "action::freeself "
+				"deleting action " << label << " done" << endl;
 		}
 }
 
@@ -708,9 +719,12 @@ void action::init_sims(sims *G, int verbose_level)
 		}
 	init_base_from_sims(G, verbose_level);
 
+	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+#if 0
 	f_has_strong_generators = TRUE;
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(G, 0);
+#endif
 	
 	if (f_v) {
 		cout << "action::init_sims done" << endl;
@@ -2067,6 +2081,7 @@ void action::init_group_from_generators_by_base_images(
 
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
+	f_has_strong_generators = TRUE;
 
 	FREE_int(Elt);
 }
@@ -2638,6 +2653,7 @@ void action::read_set_and_stabilizer(const char *fname,
 	
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(stab, 0);
+	f_has_strong_generators = TRUE;
 
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer Group order=" << go << endl;

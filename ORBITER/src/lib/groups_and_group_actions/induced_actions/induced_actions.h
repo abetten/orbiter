@@ -364,12 +364,6 @@ public:
 
 	int f_table_mode;
 
-#if 0
-	int f_has_rank_function;
-	int (*rank_point_func)(int *v, void *data);
-	void (*unrank_point_func)(int *v, int rk, void *data);
-	void *rank_point_data;
-#endif
 	int nb_cosets;
 	int *coset_reps_Gauss; 
 		// [nb_cosets]
@@ -394,31 +388,28 @@ public:
 	void init_light(
 		vector_space *VS,
 		action &A_base, action &A,
-		//int len,
-		//finite_field *F,
 		int *subspace_basis_ranks, int subspace_basis_size, 
-		//int (*rank_point_func)(int *v, void *data),
-		//void (*unrank_point_func)(int *v, int rk, void *data),
-		//void *rank_point_data,
 		int verbose_level);
 	void init_by_rank_table_mode(
 		vector_space *VS,
-		action &A_base, action &A, //int len, finite_field *F,
+		action &A_base, action &A,
 		int *subspace_basis_ranks, int subspace_basis_size, 
 		int *point_list, int nb_points, 
-		//int (*rank_point_func)(int *v, void *data),
-		//void (*unrank_point_func)(int *v, int rk, void *data),
-		//void *rank_point_data,
 		int verbose_level);
+	void print_coset_table();
+	void print_projection_table(
+			int *point_list, int nb_points);
+	void init_coset_table(
+			int *point_list, int nb_points,
+			int verbose_level);
 	void init_by_rank(
 		vector_space *VS,
 		action &A_base, action &A,
-		//int len, finite_field *F,
 		int *subspace_basis_ranks, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
 	void init_from_coordinate_vectors(
 		vector_space *VS,
-		action &A_base, action &A, //int len, finite_field *F,
+		action &A_base, action &A,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
 	void init2(action &A_base, action &A, 
@@ -445,10 +436,13 @@ public:
 		// If the vector turns out to lie in the 
 		// subspace, -1 is returned.
 	int preimage(int rk, int verbose_level);
+	void embed(int *from, int *to);
 	void unrank(int *v, int rk, int verbose_level);
 	int rank(int *v, int verbose_level);
 	void unrank_in_large_space(int *v, int rk);
 	int rank_in_large_space(int *v);
+	void unrank_in_small_space(int *v, int rk);
+	int rank_in_small_space(int *v);
 	int compute_image(action *A, int *Elt, int i, int verbose_level);
 };
 

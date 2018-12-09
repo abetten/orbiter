@@ -42,11 +42,11 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	{
 	action A_on_hyperplanes;
 	int big_n, n, k, rk, degree, idx;
-	int *ambient_space;
-	int *base_change_matrix;
-	int *base_cols;
-	int *embedding;
-	int *changed_space;
+	int *ambient_space; // [n * big_n]
+	int *base_change_matrix; // [n * n]
+	int *base_cols; // [n]
+	int *embedding; // [n]
+	int *changed_space; // [n * big_n]
 	
 	AG = NEW_OBJECT(action_on_grassmannian);
 	
@@ -566,7 +566,9 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "upstep_work::upstep_subspace_action "
 				"before freeing A_on_hyperplanes" << endl;
 		}
-	}
+	} // end A_on_hyperplanes
+
+	FREE_OBJECT(AG);
 
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "

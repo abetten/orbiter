@@ -453,6 +453,7 @@ void vector_ge::print_with_given_action(ostream &ost, action *A2)
 		A->element_print_quick(ith(i), ost);
 		ost << endl;
 		A2->element_print_as_permutation(ith(i), ost);
+		ost << endl;
 		}
 }
 

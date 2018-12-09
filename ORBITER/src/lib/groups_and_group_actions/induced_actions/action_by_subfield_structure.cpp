@@ -58,7 +58,8 @@ void action_by_subfield_structure::free()
 	null();
 }
 
-void action_by_subfield_structure::init(action &A, finite_field *Fq, int verbose_level)
+void action_by_subfield_structure::init(action &A,
+		finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int p1, h1;
@@ -72,7 +73,8 @@ void action_by_subfield_structure::init(action &A, finite_field *Fq, int verbose
 	action_by_subfield_structure::Fq = Fq;
 	q = Fq->q;
 	if (A.type_G != matrix_group_t) {
-		cout << "action_by_subfield_structure::init fatal: A.type_G != matrix_group_t" << endl;
+		cout << "action_by_subfield_structure::init "
+				"fatal: A.type_G != matrix_group_t" << endl;
 		exit(1);
 		}
 	AQ = &A;
@@ -85,13 +87,15 @@ void action_by_subfield_structure::init(action &A, finite_field *Fq, int verbose
 	is_prime_power(q, p1, h1);
 	is_prime_power(Q, p, h);
 	if (p1 != p) {
-		cout << "action_by_subfield_structure::init different characteristics of the fields" << endl;
+		cout << "action_by_subfield_structure::init "
+				"different characteristics of the fields" << endl;
 		exit(1);
 		}
 
 	s = h / h1;
 	if (h1 * s != h) {
-		cout << "action_by_subfield_structure::init not a subfield" << endl;
+		cout << "action_by_subfield_structure::init "
+				"not a subfield" << endl;
 		exit(1);
 		}
 
@@ -117,17 +121,21 @@ void action_by_subfield_structure::init(action &A, finite_field *Fq, int verbose
 
 
 	if (f_v) {
-		cout << "action_by_subfield_structure::init before Aq->init_matrix_group" << endl;
+		cout << "action_by_subfield_structure::init "
+				"before Aq->init_matrix_group" << endl;
 		}
 
 
-	Aq->init_projective_group(m, Fq, f_semilinear, f_basis, verbose_level - 2);
+	Aq->init_projective_group(m, Fq,
+			f_semilinear, f_basis, verbose_level - 2);
 	Mq = Aq->G.matrix_grp;
 
 
-	cout << "action_by_subfield_structure::init after Aq->init_matrix_group" << endl;
+	cout << "action_by_subfield_structure::init "
+			"after Aq->init_matrix_group" << endl;
 	
-	cout << "action_by_subfield_structure::init creating subfield structure" << endl;
+	cout << "action_by_subfield_structure::init "
+			"creating subfield structure" << endl;
 
 	S = NEW_OBJECT(subfield_structure);
 
@@ -174,7 +182,8 @@ int action_by_subfield_structure::compute_image_int(
 }
 
 void action_by_subfield_structure::compute_image_int_low_level(
-	action &A, int *Elt, int *input, int *output, int verbose_level)
+	action &A, int *Elt, int *input, int *output,
+	int verbose_level)
 {
 	int *x = input;
 	int *xA = output;
@@ -183,7 +192,8 @@ void action_by_subfield_structure::compute_image_int_low_level(
 	int i, j, a, b, c, d, I, J, u, v;
 	
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_int_low_level" << endl;
+		cout << "action_by_subfield_structure::compute_"
+				"image_int_low_level" << endl;
 		}
 	if (f_vv) {
 		cout << "subfield structure action: x=";
@@ -216,7 +226,8 @@ void action_by_subfield_structure::compute_image_int_low_level(
 		cout << endl;
 		}
 	if (MQ->f_semilinear) {
-		cout << "action_by_subfield_structure::compute_image_int_low_level "
+		cout << "action_by_subfield_structure::compute_"
+				"image_int_low_level "
 				"cannot handle semilinear elements" << endl;
 		exit(1);
 #if 0
@@ -231,7 +242,8 @@ void action_by_subfield_structure::compute_image_int_low_level(
 #endif
 		}
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_int_low_level "
+		cout << "action_by_subfield_structure::compute_"
+				"image_int_low_level "
 				"done" << endl;
 		}
 }

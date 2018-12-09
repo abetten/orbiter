@@ -14,7 +14,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	int f_use_invariant_subset_if_available, 
 	int f_implicit_fusion, 
 	int verbose_level)
-// called from poset_classification::downstep
+// called from poset_classification::compute_flag_orbits
 // creates action *A_factor_space
 // and action_on_factor_space *AF
 // and disposes them at the end.
@@ -131,6 +131,12 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 				"before Schreier.init" << endl;
 		}
 
+	if (A_on_upset) {
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
+				"A_on_upset is already allocated" << endl;
+		FREE_OBJECT(A_on_upset);
+	}
+	A_on_upset = A_factor_space;
 
 	Schreier->init(A_factor_space);
 
@@ -248,7 +254,6 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	FREE_OBJECT(Strong_gens);
 	FREE_OBJECT(Schreier);
 
-	A_on_upset = A_factor_space;
 
 	//FREE_OBJECT(A_factor_space);
 	//FREE_OBJECT(AF);

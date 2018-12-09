@@ -1107,7 +1107,7 @@ void action::init_matrix_group_strong_generators_builtin(
 		}
 
 
-
+	f_has_strong_generators = TRUE;
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_data(this, data, nb_gens, size,
 			transversal_length, 0 /*verbose_level - 1*/);

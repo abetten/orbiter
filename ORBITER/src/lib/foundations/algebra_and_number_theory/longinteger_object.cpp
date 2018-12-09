@@ -32,7 +32,9 @@ void longinteger_object::freeself()
 			cout << "longinteger_object::freeself ";
 			longinteger_print_digits(rep(), len());
 			cout << endl;
+			//print(cout);
 			}
+
 		FREE_char(r);
 		r = NULL;
 		}

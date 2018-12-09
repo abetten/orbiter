@@ -2582,10 +2582,12 @@ finish:
 
 void orthogonal_points_free_global_data()
 {
+	cout << "orthogonal_points_free_global_data" << endl;
 	if (Hash_table_parabolic) {
 		delete Hash_table_parabolic;
 		Hash_table_parabolic = NULL;
 		}
+	cout << "orthogonal_points_free_global_data done" << endl;
 }
 
 

@@ -268,7 +268,7 @@ void action::induced_action_on_factor_space(action *A_old,
 #endif
 	type_G = action_on_factor_space_t;
 	G.AF = AF;
-	f_allocated = FALSE;
+	f_allocated = TRUE;
 	make_element_size = A->make_element_size;
 	low_level_point_size = A->low_level_point_size;
 	
