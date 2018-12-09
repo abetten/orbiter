@@ -30,7 +30,6 @@ void action_on_factor_space::null()
 	Tmp2 = NULL;
 	f_tables_have_been_computed = FALSE;
 	f_table_mode = FALSE;
-	//f_has_rank_function = FALSE;
 	coset_reps_Gauss = NULL;
 	tmp_w = NULL;
 	tmp_w1 = NULL;
@@ -129,55 +128,40 @@ void action_on_factor_space::free()
 
 void action_on_factor_space::init_light(
 	vector_space *VS,
-	action &A_base, action &A, /*int len, finite_field *F,*/
+	action &A_base, action &A,
 	int *subspace_basis_ranks, int subspace_basis_size, 
-	//int (*rank_point_func)(int *v, void *data),
-	//void (*unrank_point_func)(int *v, int rk, void *data),
-	//void *rank_point_data,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	int i;
-	
+
 	if (f_v) {
 		cout << "action_on_factor_space::init_light" << endl;
 		}
 
 	action_on_factor_space::VS = VS;
 
-	//action_on_factor_space::len = len;
-	//action_on_factor_space::F = F;
 	action_on_factor_space::subspace_basis_size =
 			subspace_basis_size;
 	action_on_factor_space::subspace_basis =
 			NEW_int(subspace_basis_size * VS->dimension);
-
-	//action_on_factor_space::rank_point_func = rank_point_func;
-	//action_on_factor_space::unrank_point_func = unrank_point_func;
-	//action_on_factor_space::rank_point_data = rank_point_data;
-	//f_has_rank_function = TRUE;
 	
-	for (i = 0; i < subspace_basis_size; i++) {
-		unrank_in_large_space(
-				action_on_factor_space::subspace_basis +
-					i * VS->dimension,
-				subspace_basis_ranks[i]);
-		}
+	VS->unrank_basis(subspace_basis,
+			subspace_basis_ranks, subspace_basis_size);
+
 	init2(A_base, A, FALSE /*f_compute_tables*/,
 			verbose_level - 1);
 
 
+	if (f_v) {
+		cout << "action_on_factor_space::init_light done" << endl;
+		}
 }
 
 void action_on_factor_space::init_by_rank_table_mode(
 	vector_space *VS,
-	action &A_base, action &A, //int len, finite_field *F,
+	action &A_base, action &A,
 	int *subspace_basis_ranks, int subspace_basis_size, 
 	int *point_list, int nb_points, 
-	//int (*rank_point_func)(int *v, void *data),
-	//void (*unrank_point_func)(int *v, int rk, void *data),
-	//void *rank_point_data,
 	int verbose_level)
 // establishes subspace_bases[subspace_basis_size * len]
 // by unranking the points in  subspace_basis_ranks[]
@@ -185,7 +169,7 @@ void action_on_factor_space::init_by_rank_table_mode(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int i, j;
+	int i;
 	
 	if (f_v) {
 		cout << "action_on_factor_space::init_"
@@ -194,48 +178,130 @@ void action_on_factor_space::init_by_rank_table_mode(
 		}
 
 	action_on_factor_space::VS = VS;
-	//action_on_factor_space::len = len;
-	//action_on_factor_space::F = F;
 	action_on_factor_space::subspace_basis_size = subspace_basis_size;
+
 	action_on_factor_space::subspace_basis =
 			NEW_int(subspace_basis_size * VS->dimension);
 
-	//action_on_factor_space::rank_point_func = rank_point_func;
-	//action_on_factor_space::unrank_point_func = unrank_point_func;
-	//action_on_factor_space::rank_point_data = rank_point_data;
 	f_table_mode = TRUE;
-	//f_has_rank_function = TRUE;
 
-#if 0
-	action_on_factor_space::point_list = NEW_int(nb_points);
-	action_on_factor_space::nb_points = nb_points;
+	VS->unrank_basis(subspace_basis,
+			subspace_basis_ranks, subspace_basis_size);
 
-	for (i = 0; i < nb_points; i++) {
-		action_on_factor_space::point_list[i] = point_list[i];
-		}
-#endif
-
-	for (i = 0; i < subspace_basis_size; i++) {
-		unrank_in_large_space(
-				action_on_factor_space::subspace_basis + i * VS->dimension,
-				subspace_basis_ranks[i]);
-		}
-	init2(A_base, A, FALSE /*f_compute_tables*/, verbose_level - 1);
+	init2(A_base, A,
+			FALSE /*f_compute_tables*/,
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "action_on_factor_space::init_"
-				"by_rank_table_mode done with init2, "
-				"now computing projection_table:" << endl;
+				"by_rank_table_mode "
+				"before init_coset_table" << endl;
 		}
 
+	init_coset_table(
+				point_list, nb_points,
+				verbose_level);
+	degree = nb_cosets;
 
-	int p, idx;
+	if (f_v) {
+		cout << "action_on_factor_space::init_"
+				"by_rank_table_mode "
+				"after init_coset_table" << endl;
+		}
+	
+
+	if (f_vv) {
+		cout << "action_on_factor_space::init_by_"
+				"rank_table_mode we found "
+				<< nb_cosets << " cosets" << endl;
+	}
+	if (f_vvv) {
+		print_coset_table();
+		print_projection_table(point_list, nb_points);
+		}
+	//large_degree = nb_points;
+	preimage_table = NEW_int(nb_cosets);
+	for (i = 0; i < nb_cosets; i++) {
+		preimage_table[i] = lexleast_element_in_coset(
+				coset_reps_Gauss[i], 0 /* verbose_level */);
+		}
+	f_tables_have_been_computed = TRUE;
+	
+	if (f_vvv) {
+		cout << "action_on_factor_space::init_"
+				"by_rank_table_mode the preimage table:" << endl;
+		for (i = 0; i < nb_cosets; i++) {
+			cout << setw(5) << i << " : "
+					<< setw(7) << coset_reps_Gauss[i] << " : ";
+			unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
+			int_vec_print(cout, Tmp1, VS->dimension);
+			cout << setw(7) << preimage_table[i] << " : ";
+			unrank_in_large_space(Tmp1, preimage_table[i]);
+			int_vec_print(cout, Tmp1, VS->dimension);
+			cout << endl;
+			}
+		}
+	if (f_v) {
+		cout << "action_on_factor_space::init_"
+				"by_rank_table_mode done" << endl;
+		}
+}
+
+void action_on_factor_space::print_coset_table()
+{
+	int i;
+
+	cout << "The Gauss-coset "
+			"representatives are:" << endl;
+	for (i = 0; i < nb_cosets; i++) {
+		cout << setw(5) << i << " : " << setw(7)
+				<< coset_reps_Gauss[i] << " : ";
+		unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
+		int_vec_print(cout, Tmp1, VS->dimension);
+		cout << endl;
+		}
+}
+
+void action_on_factor_space::print_projection_table(
+		int *point_list, int nb_points)
+{
+	int i;
+
+	cout << "The projection_table is:" << endl;
+	cout << "i : pt : pt_coords : projection : "
+			"proj_coords" << endl;
+	for (i = 0; i < nb_points; i++) {
+		cout << setw(5) << i << " : "
+				<< setw(7) << point_list[i] << " : ";
+		unrank_in_large_space(Tmp1, point_list[i]);
+		int_vec_print(cout, Tmp1, VS->dimension);
+		cout << " : " << setw(7) << projection_table[i] << " : ";
+		if (projection_table[i] >= 0) {
+			unrank_in_large_space(Tmp1,
+					coset_reps_Gauss[projection_table[i]]);
+			int_vec_print(cout, Tmp1, VS->dimension);
+			}
+		cout << endl;
+		}
+}
+
+void action_on_factor_space::init_coset_table(
+		int *point_list, int nb_points,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_on_factor_space::init_coset_table" << endl;
+		cout << "nb_points = " << nb_points << endl;
+		}
+	int i, j, p, idx;
 
 
 	coset_reps_Gauss = NEW_int(nb_points);
 	projection_table = NEW_int(nb_points);
 	nb_cosets = 0;
-	
+
 
 	if (subspace_basis_size) {
 		for (i = 0; i < nb_points; i++) {
@@ -275,94 +341,33 @@ void action_on_factor_space::init_by_rank_table_mode(
 			}
 		nb_cosets = nb_points;
 		}
-	if (f_vv) {
-		cout << "action_on_factor_space::init_by_"
-				"rank_table_mode we found "
-				<< nb_cosets << " cosets" << endl;
-		if (f_vvv) {
-			cout << "action_on_factor_space::init_"
-					"by_rank_table_mode the Gauss-coset "
-					"representatives are:" << endl;
-			for (i = 0; i < nb_cosets; i++) {
-				cout << setw(5) << i << " : " << setw(7)
-						<< coset_reps_Gauss[i] << " : ";
-				unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
-				int_vec_print(cout, Tmp1, VS->dimension);
-				cout << endl;
-				}
-			cout << "action_on_factor_space::init_'"
-					"by_rank_table_mode the projection table is:" << endl;
-			cout << "i : pt : pt_coords : projection : "
-					"proj_coords" << endl;
-			for (i = 0; i < nb_points; i++) {
-				cout << setw(5) << i << " : "
-						<< setw(7) << point_list[i] << " : ";
-				unrank_in_large_space(Tmp1, point_list[i]);
-				int_vec_print(cout, Tmp1, VS->dimension);
-				cout << " : " << setw(7) << projection_table[i] << " : ";
-				if (projection_table[i] >= 0) {
-					unrank_in_large_space(Tmp1,
-							coset_reps_Gauss[projection_table[i]]);
-					int_vec_print(cout, Tmp1, VS->dimension);
-					}
-				cout << endl;
-				}
-			}
-		}
-	degree = nb_cosets;
-	//large_degree = nb_points;
-	preimage_table = NEW_int(nb_cosets);
-	for (i = 0; i < nb_cosets; i++) {
-		preimage_table[i] = lexleast_element_in_coset(
-				coset_reps_Gauss[i], 0 /* verbose_level */);
-		}
-	f_tables_have_been_computed = TRUE;
-	
-	if (f_vvv) {
-		cout << "action_on_factor_space::init_"
-				"by_rank_table_mode the preimage table:" << endl;
-		for (i = 0; i < nb_cosets; i++) {
-			cout << setw(5) << i << " : "
-					<< setw(7) << coset_reps_Gauss[i] << " : ";
-			unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
-			int_vec_print(cout, Tmp1, VS->dimension);
-			cout << setw(7) << preimage_table[i] << " : ";
-			unrank_in_large_space(Tmp1, preimage_table[i]);
-			int_vec_print(cout, Tmp1, VS->dimension);
-			cout << endl;
-			}
-		}
 	if (f_v) {
-		cout << "action_on_factor_space::init_"
-				"by_rank_table_mode done" << endl;
+		cout << "action_on_factor_space::init_coset_table done" << endl;
 		}
 }
 
+
 void action_on_factor_space::init_by_rank(
 	vector_space *VS,
-	action &A_base, action &A, //int len, finite_field *F,
+	action &A_base, action &A,
 	int *subspace_basis_ranks, int subspace_basis_size,
 	int f_compute_tables,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 	
 	if (f_v) {
 		cout << "action_on_factor_space::init_by_rank" << endl;
 		}
 	action_on_factor_space::VS = VS;
-	//action_on_factor_space::len = len;
-	//action_on_factor_space::F = F;
 	action_on_factor_space::subspace_basis_size =
 			subspace_basis_size;
 	action_on_factor_space::subspace_basis =
 			NEW_int(subspace_basis_size * VS->dimension);
-	for (i = 0; i < subspace_basis_size; i++) {
-		VS->F->PG_element_unrank_modified(
-			action_on_factor_space::subspace_basis + i * VS->dimension,
-			1, VS->dimension, subspace_basis_ranks[i]);
-		}
+
+	VS->unrank_basis(subspace_basis,
+			subspace_basis_ranks, subspace_basis_size);
+
 	init2(A_base, A, f_compute_tables, verbose_level);
 	if (f_v) {
 		cout << "action_on_factor_space::init_by_rank done" << endl;
@@ -371,7 +376,7 @@ void action_on_factor_space::init_by_rank(
 
 void action_on_factor_space::init_from_coordinate_vectors(
 	vector_space *VS,
-	action &A_base, action &A, //int len, finite_field *F,
+	action &A_base, action &A,
 	int *subspace_basis, int subspace_basis_size,
 	int f_compute_tables, int verbose_level)
 {
@@ -382,8 +387,6 @@ void action_on_factor_space::init_from_coordinate_vectors(
 				"from_coordinate_vectors" << endl;
 		}
 	action_on_factor_space::VS = VS;
-	//action_on_factor_space::len = len;
-	//action_on_factor_space::F = F;
 	action_on_factor_space::subspace_basis_size = subspace_basis_size;
 	action_on_factor_space::subspace_basis =
 			NEW_int(subspace_basis_size * VS->dimension);
@@ -753,6 +756,10 @@ int action_on_factor_space::project_onto_Gauss_reduced_vector(
 
 int action_on_factor_space::project(
 		int rk, int verbose_level)
+// returns the rank in the factor space
+// of the vector rk in the large space
+// after reduction modulo the subspace
+//
 // unranks the vector rk,
 // and reduces it modulo the subspace basis.
 // The non-pivot components are considered
@@ -781,8 +788,9 @@ int action_on_factor_space::project(
 			}
 		}
 	if (f_nonzero) {
-		VS->F->PG_element_rank_modified(
-				tmp, 1, factor_space_len, a);
+		a = rank_in_small_space(tmp);
+		//VS->F->PG_element_rank_modified(
+		//		tmp, 1, factor_space_len, a);
 		return a;
 		}
 	else {
@@ -796,19 +804,36 @@ int action_on_factor_space::preimage(
 	if (f_tables_have_been_computed) {
 		return preimage_table[rk];
 		}
-	int i, a, b;
+	int a, b;
 	
-	VS->F->PG_element_unrank_modified(
-			tmp, 1, factor_space_len, rk);
+	unrank_in_small_space(tmp, rk);
+	//VS->F->PG_element_unrank_modified(
+	//		tmp, 1, factor_space_len, rk);
+
+	embed(tmp, Tmp1);
+#if 0
 	for (i = 0; i < factor_space_len; i++) {
 		Tmp1[embedding[i]] = tmp[i];
 		}
 	for (i = 0; i < subspace_basis_size; i++) {
 		Tmp1[base_cols[i]] = 0;
 		}
+#endif
 	a = rank_in_large_space(Tmp1);
 	b = lexleast_element_in_coset(a, verbose_level);
 	return b;
+}
+
+void action_on_factor_space::embed(int *from, int *to)
+{
+	int i;
+
+	for (i = 0; i < factor_space_len; i++) {
+		to[embedding[i]] = from[i];
+		}
+	for (i = 0; i < subspace_basis_size; i++) {
+		to[base_cols[i]] = 0;
+		}
 }
 
 void action_on_factor_space::unrank(
@@ -819,22 +844,27 @@ void action_on_factor_space::unrank(
 		unrank_in_large_space(v, coset_reps_Gauss[rk]);
 		}
 	else {
-		int i;
-		VS->F->PG_element_unrank_modified(
-				tmp, 1, factor_space_len, rk);
+		//int i;
+
+		unrank_in_small_space(tmp, rk);
+		//VS->F->PG_element_unrank_modified(
+		//		tmp, 1, factor_space_len, rk);
+		embed(tmp, v);
+#if 0
 		for (i = 0; i < factor_space_len; i++) {
 			v[embedding[i]] = tmp[i];
 			}
 		for (i = 0; i < subspace_basis_size; i++) {
 			v[base_cols[i]] = 0;
 			}
+#endif
 		}
 }
 
 int action_on_factor_space::rank(int *v, int verbose_level)
 {
 	if (f_table_mode) {
-		int p, idx; //, i;
+		int p, idx;
 		int *w;
 		
 		w = tmp_w;
@@ -865,8 +895,9 @@ int action_on_factor_space::rank(int *v, int verbose_level)
 		for (i = 0; i < factor_space_len; i++) {
 			tmp[i] = v[embedding[i]];
 			}
-		VS->F->PG_element_rank_modified(
-				tmp, 1, factor_space_len, rk);
+		rk = rank_in_small_space(tmp);
+		//VS->F->PG_element_rank_modified(
+		//		tmp, 1, factor_space_len, rk);
 		return rk;
 		}
 }
@@ -875,14 +906,6 @@ void action_on_factor_space::unrank_in_large_space(
 		int *v, int rk)
 {
 	VS->unrank_point(v, rk);
-#if 0
-	if (f_has_rank_function) {
-		(*unrank_point_func)(v, rk, rank_point_data);
-		}
-	else {
-		F->PG_element_unrank_modified(v, 1, len, rk);
-		}
-#endif
 }
 
 int action_on_factor_space::rank_in_large_space(int *v)
@@ -890,14 +913,22 @@ int action_on_factor_space::rank_in_large_space(int *v)
 	int rk;
 
 	rk = VS->rank_point(v);
-#if 0
-	if (f_has_rank_function) {
-		rk = (*rank_point_func)(v, rank_point_data);
-		}
-	else {
-		F->PG_element_rank_modified(v, 1, len, rk);
-		}
-#endif
+	return rk;
+}
+
+void action_on_factor_space::unrank_in_small_space(
+		int *v, int rk)
+{
+	VS->F->PG_element_unrank_modified(
+			v, 1, factor_space_len, rk);
+}
+
+int action_on_factor_space::rank_in_small_space(int *v)
+{
+	int rk;
+
+	VS->F->PG_element_rank_modified(
+			v, 1, factor_space_len, rk);
 	return rk;
 }
 

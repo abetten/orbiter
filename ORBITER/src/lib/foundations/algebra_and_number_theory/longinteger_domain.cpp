@@ -1010,6 +1010,13 @@ static longinteger_object *tab_q_binomials = NULL;
 static int tab_q_binomials_size = 0;
 static int tab_q_binomials_q = 0;
 
+void longinteger_domain_free_tab_q_binomials()
+{
+	if (tab_q_binomials) {
+		FREE_OBJECTS(tab_q_binomials);
+		tab_q_binomials = NULL;
+	}
+}
 
 static void q_binomial_with_table(longinteger_object &a, 
 	int n, int k, int q, int verbose_level)
@@ -2716,16 +2723,26 @@ void longinteger_collect_print(ostream &ost,
 
 void longinteger_free_global_data()
 {
+	cout << "longinteger_free_global_data" << endl;
 	if (tab_binomials) {
+		cout << "longinteger_free_global_data before "
+				"FREE_OBJECTS(tab_binomials)" << endl;
 		FREE_OBJECTS(tab_binomials);
+		cout << "longinteger_free_global_data after "
+				"FREE_OBJECTS(tab_binomials)" << endl;
 		tab_binomials = NULL;
 		tab_binomials_size = 0;
 		}
 	if (tab_q_binomials) {
+		cout << "longinteger_free_global_data before "
+				"FREE_OBJECTS(tab_q_binomials)" << endl;
 		FREE_OBJECTS(tab_q_binomials);
+		cout << "longinteger_free_global_data after "
+				"FREE_OBJECTS(tab_q_binomials)" << endl;
 		tab_q_binomials = NULL;
 		tab_q_binomials_size = 0;
 		}
+	cout << "longinteger_free_global_data done" << endl;
 }
 
 void longinteger_print_digits(char *rep, int len)

@@ -1437,6 +1437,7 @@ void longinteger_collect_print(ostream &ost, int &nb_agos,
 	longinteger_object *&agos, int *&multiplicities);
 void longinteger_free_global_data();
 void longinteger_print_digits(char *rep, int len);
+void longinteger_domain_free_tab_q_binomials();
 
 
 

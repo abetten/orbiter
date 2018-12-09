@@ -766,7 +766,7 @@ void poset_classification::report(ostream &ost)
 
 
 			nb_extensions = O->nb_extensions;
-			ost << "There are " << nbo << " orbits\\\\" << endl;
+			//ost << "There are " << nbo << " orbits\\\\" << endl;
 			ost << "There are " << nb_extensions
 					<< " extensions\\\\" << endl;
 			ost << "Number of generators " << O->nb_strong_generators

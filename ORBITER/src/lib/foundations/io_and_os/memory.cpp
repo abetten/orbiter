@@ -967,7 +967,8 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 	} else {
 		if (!search(pointer, idx)) {
 			cout << "mem_object_registry::delete_from_registry pointer is "
-					"not in registry, something is wrong; ignoring" << endl;
+					"not in registry, something is wrong; "
+					"ignoring, pointer = " << pointer << endl;
 			//exit(1);
 		}
 		for (i = idx + 1; i < nb_entries_used; i++) {

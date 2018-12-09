@@ -7,8 +7,10 @@
 
 void free_global_data()
 {
+	cout << "discreta_global free_global_data freeing global data" << endl;
 	orthogonal_points_free_global_data();
 	longinteger_free_global_data();
+	longinteger_domain_free_tab_q_binomials();
 }
 
 void the_end(int t0)
@@ -16,9 +18,8 @@ void the_end(int t0)
 	cout << "***************** The End **********************" << endl;
 	cout << "nb_calls_to_finite_field_init="
 			<< nb_calls_to_finite_field_init << endl;
+	free_global_data();
 	if (f_memory_debug) {
-		cout << "freeing global data" << endl;
-		free_global_data();
 		//registry_dump();
 		//registry_dump_sorted();
 		}
@@ -36,7 +37,7 @@ void the_end(int t0)
 
 void the_end_quietly(int t0)
 {
-	//cout << "the_end_quietly: freeing global data" << endl;
+	//cout << "discreta_global the_end_quietly: freeing global data" << endl;
 	free_global_data();
 	time_check(cout, t0);
 	cout << endl;

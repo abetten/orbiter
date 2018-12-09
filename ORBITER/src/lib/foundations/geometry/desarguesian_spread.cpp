@@ -19,14 +19,23 @@ desarguesian_spread::~desarguesian_spread()
 
 void desarguesian_spread::null()
 {
+	SubS = NULL;
 	Spread_elements = NULL;
+	List_of_points = NULL;
 }
 
 void desarguesian_spread::freeself()
 {
+	if (SubS) {
+		FREE_OBJECT(SubS);
+	}
 	if (Spread_elements) {
 		FREE_int(Spread_elements);
 		}
+	if (List_of_points) {
+		FREE_int(List_of_points);
+	}
+	null();
 }
 
 void desarguesian_spread::init(int n, int m, int s, 

@@ -238,8 +238,8 @@ void sims::init(action *A)
 		prev[i] = NEW_int(A->degree);
 		label[i] = NEW_int(A->degree);
 		}
-	Path = NEW_int(A->degree + 1);
-	Label = NEW_int(A->degree + 1);
+	//Path = NEW_int(A->degree + 1);
+	//Label = NEW_int(A->degree + 1);
 	
 	FREE_int(nb_gen);
 	
