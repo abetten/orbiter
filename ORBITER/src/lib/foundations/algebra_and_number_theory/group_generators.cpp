@@ -107,483 +107,6 @@ void frobenius_orbit_perm(int n, finite_field &GFq,
 	FREE_int(v);
 }
 
-#if 0
-void translation_in_AG(finite_field &GFq,
-		int n, int i, int a, int *perm, int *v,
-		int verbose_level)
-// v[n] needs to be allocated 
-// p[q^n] needs to be allocated
-{
-	int f_v = (verbose_level >= 1);
-	int ii, j, l, q;
-	
-	q = GFq.q;
-	l = nb_AG_elements(n, q);
-	for (ii = 0; ii < l; ii++) {
-		AG_element_unrank(q, v, 1 /* stride */, n, ii);
-		// cout << "ii=" << ii << " v=" << v;
-		v[i] = GFq.add(v[i], a);
-		
-		AG_element_rank(q, v, 1 /* stride */, n, j);
-		perm[ii] = j;
-		// cout << " j=" << j << endl;
-		}
-	if (f_v) {
-		cout << "translation_in_AG() i=" << i << " a=" << a << " : ";
-		perm_print(cout, perm, l);
-		cout << endl;
-		}
-}
-
-void frobenius_in_AG(finite_field &GFq,
-		int n, int *perm, int *v,
-		int verbose_level)
-// v[n] needs to be allocated 
-// p[q^n] needs to be allocated
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, l, q, p;
-	
-	q = GFq.q;
-	p = GFq.p;
-	l = nb_AG_elements(n, q);
-	for (i = 0; i < l; i++) {
-		AG_element_unrank(q, v, 1 /* stride */, n, i);
-		for (j = 0; j < n; j++) {
-			v[j] = GFq.power(v[j], p);
-			}
-		AG_element_rank(q, v, 1 /* stride */, n, j);
-		perm[i] = j;
-		}
-	if (f_v) {
-		cout << "frobenius_in_AG() : ";
-		perm_print(cout, perm, l);
-		cout << endl;
-		}
-}
-
-void frobenius_in_PG(finite_field &GFq,
-		int n, int *perm, int *v,
-		int verbose_level)
-// v[n + 1] needs to be allocated 
-// p[q^n+...+q+1] needs to be allocated
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, l, q, p;
-	
-	q = GFq.q;
-	p = GFq.p;
-	l = nb_PG_elements(n, q);
-	for (i = 0; i < l; i++) {
-		GFq.PG_element_unrank_modified(v, 1 /* stride */, n + 1, i);
-		for (j = 0; j <= n; j++) {
-			v[j] = GFq.power(v[j], p);
-			}
-		GFq.PG_element_unrank_modified(v, 1 /* stride */, n + 1, j);
-		perm[i] = j;
-		}
-	if (f_v) {
-		cout << "frobenius_in_PG() : ";
-		perm_print(cout, perm, l);
-		cout << endl;
-		}
-}
-
-void AG_representation_of_matrix(finite_field &GFq,
-	int n, int f_from_the_right,
-	int *M, int *v, int *w, int *perm,
-	int verbose_level)
-// perm[q^n] needs to be already allocated
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, l, q;
-	
-	q = GFq.q;
-	l = nb_AG_elements(n, q);
-	for (i = 0; i < l; i++) {
-		AG_element_unrank(q, v, 1 /* stride */, n, i);
-		if (f_from_the_right) {
-			GFq.mult_matrix_matrix(v, M, w, 1, n, n);
-			}
-		else {
-			GFq.mult_matrix_matrix(M, v, w, n, n, 1);
-			}
-		AG_element_rank(q, w, 1 /* stride */, n, j);
-		perm[i] = j;
-		}
-	if (f_v) {
-		cout << "AG_representation_of_matrix() : ";
-		perm_print(cout, perm, l);
-		cout << endl;
-		}
-	
-}
-
-void AG_representation_one_dimensional(finite_field &GFq, 
-	int a, int *perm, int verbose_level)
-// perm[q] needs to be already allocated
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, l, q, v, w;
-	
-	q = GFq.q;
-	l = q;
-	if (f_v) {
-		cout << "AG_representation_one_dimensional() : "
-				"q = " << q << " a=" << a << endl;
-		}
-	for (i = 0; i < q; i++) {
-		AG_element_unrank(q, &v, 1 /* stride */, 1, i);
-		w = GFq.mult(a, v);
-		AG_element_rank(q, &w, 1 /* stride */, 1, j);
-		perm[i] = j;
-		}
-	if (f_v) {
-		cout << "AG_representation_one_dimensional() : ";
-		perm_print(cout, perm, l);
-		cout << endl;
-		}
-	
-}
-
-int nb_generators_affine_translations(finite_field &GFq, int n)
-{
-	return n * GFq.e;
-}
-
-void generators_affine_translations(finite_field &GFq,
-		int n, int *perms, int verbose_level)
-// primes[n * d] needs to be allocated, where d = q^n
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int *v, i, j, l, k = 0, a = 1;
-	
-	l = nb_AG_elements(n, GFq.q);
-	
-	if (f_v) {
-		cout << "computing generators for affine translations, "
-				"q=" << GFq.q << " n = " << n << endl;
-		}
-	v = NEW_int(n);
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < GFq.e; j++) {
-			translation_in_AG(GFq, n, i, a, perms + k * l, v, f_vv);
-			k++;
-			a *= GFq.p;
-			}
-		}
-	FREE_int(v);
-}
-
-void generators_AGL1xAGL1_subdirect1(
-	finite_field &GFq1, finite_field &GFq2,
-	int u, int v, int &nb_perms, int *&perms, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int *perms1;
-	int *perms2;
-	int nb1, nb2, q1, q2, q12, i, k = 0;
-	
-	q1 = GFq1.q;
-	q2 = GFq2.q;
-	q12 = q1 * q2;
-	nb1 = nb_generators_affine_translations(GFq1, 1);
-	nb2 = nb_generators_affine_translations(GFq2, 1);
-	perms1 = NEW_int((nb1 + 3) * q1);
-	perms2 = NEW_int((nb2 + 3) * q2);
-	nb_perms = nb1 + nb2 + 1;
-	perms = NEW_int(nb_perms * q12);
-
-	perm_identity(perms1, q1);
-	perm_identity(perms2, q2);
-
-	generators_affine_translations(GFq1, 1, perms1 + q1, verbose_level - 2);
-	generators_affine_translations(GFq2, 1, perms2 + q2, verbose_level - 2);
-	if (f_v) {
-		cout << "affine translations created" << endl;
-		}
-	
-	AG_representation_one_dimensional(GFq1, GFq1.alpha,
-			perms1 + (nb1 + 1) * q1,
-		verbose_level - 2);
-	AG_representation_one_dimensional(GFq2, GFq2.alpha,
-			perms2 + (nb2 + 1) * q2,
-		verbose_level - 2);
-	if (f_v) {
-		cout << "AG_representation_one_dimensional created" << endl;
-		if (f_vv) {
-			perm_print(cout, perms1 + (nb1 + 1) * q1, q1); cout << endl;
-			perm_print(cout, perms2 + (nb2 + 1) * q2, q2); cout << endl;
-			}
-		}
-	
-	perm_raise(perms1 + (nb1 + 1) * q1, perms1 + (nb1 + 2) * q1, u, q1);
-	perm_raise(perms2 + (nb2 + 1) * q2, perms2 + (nb2 + 2) * q2, v, q2);
-	if (f_v) {
-		cout << "raised to the powers u and v" << endl;
-		if (f_vv) {
-			perm_print(cout, perms1 + (nb1 + 2) * q1, q1); cout << endl;
-			perm_print(cout, perms2 + (nb2 + 2) * q2, q2); cout << endl;
-			}
-		}
-	
-	for (i = 0; i < nb1; i++) {
-		perm_direct_product(q1, q2,
-				perms1 + (i + 1) * q1, perms2, perms + k * q12);
-		k++;
-		}
-	for (i = 0; i < nb2; i++) {
-		perm_direct_product(q1, q2,
-				perms1, perms2 + (i + 1) * q2, perms + k * q12);
-		k++;
-		}
-	perm_direct_product(q1, q2, 
-		perms1 + (nb1 + 2) * q1, 
-		perms2 + (nb2 + 2) * q2, 
-		perms + k * q12);
-	k++;
-	if (f_v) {
-		cout << "generators for subdirect product "
-				"AGL(1," << q1 << ") x AGL(1," << q2 << ") created" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * q12, q12);
-			cout << endl;
-			}
-		}
-	FREE_int(perms1);
-	FREE_int(perms2);
-}
-
-void generators_AGL1q(finite_field &GFq,
-		int &nb_perms, int *&perms, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int nb, q, i;
-	
-	q = GFq.q;
-	nb = nb_generators_affine_translations(GFq, 1);
-	nb_perms = nb + 1;
-	perms = NEW_int(nb_perms * q);
-
-	generators_affine_translations(GFq, 1, perms, verbose_level - 2);
-	if (f_v) {
-		cout << "affine translations created" << endl;
-		}
-	
-	AG_representation_one_dimensional(GFq, GFq.alpha,
-			perms + nb * q, verbose_level - 2);
-	if (f_v) {
-		cout << "AG_representation_one_dimensional created" << endl;
-		}
-	
-	if (f_v) {
-		cout << "generators for AGL(1," << q << ") created" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * q, q);
-			cout << endl;
-			}
-		}
-}
-
-void generators_AGL1q_subgroup(finite_field &GFq,
-	int index_in_multiplicative_group,
-	int &nb_perms, int *&perms, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int nb, q, i, a, b;
-	
-	q = GFq.q;
-	nb = nb_generators_affine_translations(GFq, 1);
-	nb_perms = nb + 1;
-	perms = NEW_int(nb_perms * q);
-
-	generators_affine_translations(GFq, 1, perms, verbose_level - 2);
-	if (f_v) {
-		cout << "affine translations created" << endl;
-		}
-	
-	a = GFq.alpha;
-	b = GFq.power(a, index_in_multiplicative_group);
-	AG_representation_one_dimensional(GFq, b,
-			perms + nb * q, verbose_level - 2);
-	if (f_v) {
-		cout << "AG_representation_one_dimensional created" << endl;
-		}
-	
-	if (f_v) {
-		cout << "generators for AGL(1," << q << ") created" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * q, q);
-			cout << endl;
-			}
-		}
-}
-
-void generators_AGL1_x_AGL1(
-	finite_field &GFq1, finite_field &GFq2, int &deg,
-	int &nb_perms, int *&perms, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int deg1, nb_perms1, *perms1;
-	int deg2, nb_perms2, *perms2;
-	int i;
-	
-	deg1 = GFq1.q;
-	deg2 = GFq2.q;
-	
-	generators_AGL1q(GFq1, nb_perms1, perms1, verbose_level - 1);
-	generators_AGL1q(GFq2, nb_perms2, perms2, verbose_level - 1);
-	
-	generators_direct_product(deg1, nb_perms1, perms1, deg2, 
-		nb_perms2, perms2, deg, nb_perms, perms, verbose_level - 1);
-	
-	FREE_int(perms1);
-	FREE_int(perms2);
-	if (f_v) {
-		cout << "generators for AGL(1," << deg1
-				<< ") x AGL(1," << deg2 << ") created" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
-			cout << endl;
-			}
-		}
-}
-
-void generators_AGL1_x_AGL1_extension(
-	finite_field &GFq1, finite_field &GFq2, int u, int v,
-	int &deg, int &nb_perms, int *&perms, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int *perms1, *perms2;
-	int q1, q2, i;
-	
-	q1 = GFq1.q;
-	q2 = GFq2.q;
-	
-	perms1 = NEW_int(2 * q1);
-	perms2 = NEW_int(2 * q2);
-	
-	deg = q1 * q2;
-	nb_perms = 1;
-	perms = NEW_int(nb_perms * deg);
-
-	AG_representation_one_dimensional(GFq1, GFq1.alpha, perms1, f_vv);
-	AG_representation_one_dimensional(GFq2, GFq2.alpha, perms2, f_vv);
-	if (f_v) {
-		cout << "AG_representation_one_dimensional created" << endl;
-		}
-	
-	perm_raise(perms1, perms1 + q1, u, q1);
-	perm_raise(perms2, perms2 + q2, v, q2);
-	if (f_v) {
-		cout << "raised to the powers u and v" << endl;
-		}
-	
-	perm_direct_product(q1, q2, perms1 + q1, perms2 + q2, perms);
-	FREE_int(perms1);
-	FREE_int(perms2);
-	
-	if (f_v) {
-		cout << "generators for a^" << u << "b^" << v << " created" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
-			cout << endl;
-			}
-		}
-}
-
-void generators_AGL1_x_AGL1_extended_once(
-	finite_field &F1, finite_field &F2, int u, int v,
-	int &deg, int &nb_perms, int *&perms,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int deg1, nb_perms1, *perms1;
-	int deg2, nb_perms2, *perms2;
-	int q1, q2, i;
-	
-	q1 = F1.q;
-	q2 = F2.q;
-	generators_AGL1_x_AGL1(F1, F2,
-			deg1, nb_perms1, perms1, verbose_level - 1);
-	generators_AGL1_x_AGL1_extension(F1, F2, u, v, deg2,
-			nb_perms2, perms2, verbose_level - 1);
-	
-	generators_concatenate(deg1, nb_perms1, perms1, 
-		deg2, nb_perms2, perms2, 
-		deg, nb_perms, perms, verbose_level - 1);
-	
-	FREE_int(perms1);
-	FREE_int(perms2);
-	
-	if (f_v) {
-		cout << "generators for AGL(1," << q1 << ") x AGL(1," << q2 << ") "
-				"extended by a^" << u << "b^" << v << " created" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
-			cout << endl;
-			}
-		}
-}
-
-void generators_AGL1_x_AGL1_extended_twice(
-		finite_field &F1, finite_field &F2,
-		int u1, int v1, int u2, int v2, int &deg, int &nb_perms, int *&perms,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int deg1, nb_perms1, *perms1;
-	int deg2, nb_perms2, *perms2;
-	int q1, q2, i;
-	
-	q1 = F1.q;
-	q2 = F2.q;
-	generators_AGL1_x_AGL1_extended_once(F1, F2, u1, v1,
-			deg1, nb_perms1, perms1, verbose_level - 1);
-	generators_AGL1_x_AGL1_extension(F1, F2, u2, v2,
-			deg2, nb_perms2, perms2, verbose_level - 1);
-	
-	generators_concatenate(deg1, nb_perms1, perms1, deg2,
-			nb_perms2, perms2, deg, nb_perms, perms,
-			verbose_level - 1);
-	
-	FREE_int(perms1);
-	FREE_int(perms2);
-	
-	if (f_v) {
-		cout << "generators for AGL(1," << q1 << ") x AGL(1," << q2 << ") "
-				"extended by a^" << u1 << "b^" << v1
-				<< " and by a^" << u2 << "b^" << v2 << " created" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
-			cout << endl;
-			}
-		}
-}
-#endif
-
 void generators_symmetric_group(int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
@@ -739,6 +262,77 @@ void generators_identity_group(int deg,
 			perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 			}
+		}
+}
+
+void generators_Hall_reflection_normalizer_group(int nb_pairs,
+		int &nb_perms, int *&perms, int &degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, h;
+
+	if (f_v) {
+		cout << "generators_Hall_reflection_normalizer_group" << endl;
+	}
+	degree = nb_pairs * 2;
+	nb_perms = nb_pairs + (nb_pairs - 1);
+	perms = NEW_int(nb_perms * degree);
+	h = 0;
+	for (i = 0; i < nb_pairs; i++, h++) {
+		perm_identity(perms + h * degree, degree);
+		perms[h * degree + 2 * i] = 2 * i + 1;
+		perms[h * degree + 2 * i + 1] = 2 * i;
+	}
+	for (i = 0; i < nb_pairs - 1; i++, h++) {
+		perm_identity(perms + h * degree, degree);
+		perms[h * degree + 2 * i] = 2 * (i + 1);
+		perms[h * degree + 2 * i + 1] = 2 * (i + 1) + 1;
+		perms[h * degree + 2 * (i + 1)] = 2 * i;
+		perms[h * degree + 2 * (i + 1) + 1] = 2 * i + 1;
+		}
+	if (h != nb_perms) {
+		cout << "generators_Hall_reflection_normalizer_group "
+				"h != nb_perms" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "generators_Hall_reflection_normalizer_group "
+				"generators for normalizer of the Hall reflection group "
+				"of degree "
+				<< degree << " created" << endl;
+		}
+	if (f_vv) {
+		for (i = 0; i < nb_perms; i++) {
+			perm_print(cout, perms + i * degree, degree);
+			cout << endl;
+			}
+		}
+	if (f_v) {
+		cout << "generators_Hall_reflection_normalizer_group done" << endl;
+	}
+}
+
+void order_Hall_reflection_normalizer_factorized(int nb_pairs,
+		int *&factors, int &nb_factors)
+{
+	int i, j, nb_perms;
+
+	nb_perms = nb_pairs + nb_pairs - 1;
+	nb_factors = nb_perms;
+	factors = NEW_int(nb_perms);
+	j = 0;
+	for (i = 0; i < nb_pairs; i++, j++) {
+		factors[j] = 2;
+		}
+	for (i = 0; i < nb_pairs - 1; i++, j++) {
+		factors[j] = nb_pairs - i;
+		}
+	if (j != nb_factors) {
+		cout << "order_Hall_reflection_normalizer_factorized "
+				"j != nb_perms" << endl;
+		exit(1);
 		}
 }
 

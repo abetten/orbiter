@@ -1095,6 +1095,11 @@ void generators_dihedral_involution(int deg,
 	int &nb_perms, int *&perms, int verbose_level);
 void generators_identity_group(int deg, 
 	int &nb_perms, int *&perms, int verbose_level);
+void generators_Hall_reflection_normalizer_group(int nb_pairs,
+		int &nb_perms, int *&perms, int &degree,
+		int verbose_level);
+void order_Hall_reflection_normalizer_factorized(int nb_pairs,
+		int *&factors, int &nb_factors);
 void order_Bn_group_factorized(int n, 
 	int *&factors, int &nb_factors);
 void generators_Bn_group(int n, int &deg, 

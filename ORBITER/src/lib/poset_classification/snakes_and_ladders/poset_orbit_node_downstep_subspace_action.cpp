@@ -190,26 +190,6 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 				<< endl;
 		}
 
-#if 0
-	downstep_orbit_test_and_schreier_vector(
-		gen, Schreier, 
-		lvl, 
-		f_use_invariant_subset_if_available, 
-		f_using_invariant_subset,
-		f_create_schreier_vector,
-		f_compact, 
-		good_orbits1, nb_points1, 
-		verbose_level - 1);
-
-
-	downstep_implicit_fusion(
-		gen, Schreier, 
-		lvl, 
-		f_implicit_fusion, 
-		good_orbits1, nb_points1, 
-		verbose_level - 1);
-
-#endif
 	if (f_v4) {
 		gen->print_level_info(lvl, node);
 		cout << " : calling find_extensions_subspace_action" << endl;

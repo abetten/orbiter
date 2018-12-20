@@ -1370,6 +1370,8 @@ public:
 	void stabilizer_of_spread_from_catalogue(action *A, 
 		int q, int k, int iso, 
 		int verbose_level);
+	void normalizer_of_a_Hall_reflection(
+		int nb_pairs, int &degree, int verbose_level);
 
 
 };
