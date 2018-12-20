@@ -293,8 +293,8 @@ void regular_ls_generator::init_generator(
 }
 
 void regular_ls_generator::compute_starter(
-	//int f_lex, 
-	int f_draw_poset, int f_embedded, int f_sideways, int verbose_level)
+	int f_draw_poset, int f_embedded, int f_sideways,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//char cmd[1000];
@@ -602,7 +602,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 
 			if (row_sum[v1[h1]] == r) {
 				cout << "regular_ls_generator::lifting_prepare_"
-						"function_new row_sum[v1[h1]] == onr" << endl;
+						"function_new row_sum[v1[h1]] == r" << endl;
 				exit(1);
 				}
 			idx = open_row_idx[v1[h1]];

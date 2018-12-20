@@ -2589,5 +2589,111 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 		}
 }
 
+void strong_generators::normalizer_of_a_Hall_reflection(
+	int nb_pairs, int &degree, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_perms;
+	int *perms;
+	vector_ge *gens;
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"of_a_Hall_reflection" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"of_a_Hall_reflection before generators_Hall_"
+				"reflection_normalizer_group" << endl;
+		}
+
+	generators_Hall_reflection_normalizer_group(nb_pairs,
+			nb_perms, perms, degree,
+			verbose_level);
+
+
+
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"of_a_Hall_reflection after generators_Hall_"
+				"reflection_normalizer_group" << endl;
+		}
+
+
+	gens = NEW_OBJECT(vector_ge);
+	gens->init(A);
+
+	int i;
+
+	gens->allocate(nb_perms);
+	for (i = 0; i < nb_perms; i++) {
+		A->make_element(gens->ith(i), perms + i * degree, 0);
+		}
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"of_a_Hall_reflection generators are:" << endl;
+		gens->print_quick(cout);
+		}
+
+
+
+	int *factors;
+	int nb_factors;
+	longinteger_object target_go;
+
+
+	order_Hall_reflection_normalizer_factorized(nb_pairs,
+			factors, nb_factors);
+
+	target_go.create_product(nb_factors, factors);
+	FREE_int(factors);
+
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"strong_generators target_go=" << target_go << endl;
+		}
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"strong_generators before A->init_permutation_group" << endl;
+		}
+	A = NEW_OBJECT(action);
+	A->init_permutation_group(degree, verbose_level);
+
+	strong_generators *SG;
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"strong_generators "
+				"before generators_to_strong_generators" << endl;
+		}
+
+	generators_to_strong_generators(A,
+		TRUE /* f_target_go */, target_go,
+		gens, SG, verbose_level - 3);
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"of_a_Hall_reflection after generators_to_"
+				"strong_generators" << endl;
+		}
+
+	init_copy(SG, 0);
+
+
+	FREE_OBJECT(SG);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::normalizer_"
+				"of_a_Hall_reflection done" << endl;
+		}
+}
+
 
 
