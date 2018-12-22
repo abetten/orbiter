@@ -467,11 +467,6 @@ public:
 	void compute_and_print_automorphism_group_orders(int lvl, 
 		ostream &ost);
 	void stabilizer_order(int node, longinteger_object &go);
-#if 0
-	int check_the_set(int len, int *S, int verbose_level);
-	int check_the_set_incrementally(int len, int *S,
-		int verbose_level);
-#endif
 	void orbit_length(int orbit_at_level, int level,
 		longinteger_object &len);
 	void get_orbit_length_and_stabilizer_order(int node, int level, 

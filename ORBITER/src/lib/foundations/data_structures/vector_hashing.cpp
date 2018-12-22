@@ -9,14 +9,19 @@
 
 vector_hashing::vector_hashing()
 {
+	data_size = 0;
+	N = 0;
+	bit_length = 0;
 	vector_data = NULL;
 	H = NULL;
 	H_sorted = NULL;
 	perm = NULL;
 	perm_inv = NULL;
+	nb_types = 0;
 	type_first = NULL;
 	type_len = NULL;
 	type_value = NULL;
+
 }
 
 vector_hashing::~vector_hashing()

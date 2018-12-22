@@ -258,6 +258,8 @@ public:
 			FILE *fp, int verbose_level);
 	void sv_write_file(schreier_vector *Sv,
 			FILE *fp, int verbose_level);
+	set_of_sets *get_orbits_as_set_of_sets(schreier_vector *Sv,
+			int verbose_level);
 
 };
 
@@ -320,6 +322,9 @@ public:
 	void trace_back(int pt, int &depth);
 };
 
+int schreier_vector_determine_depth_recursion(
+	int n, int *pts, int *prev,
+	int *depth, int *ancestor, int pos);
 
 
 

@@ -965,6 +965,7 @@ public:
 		// j is a coset, not a point
 		// result is in cosetrep
 	void compute_base_orbits(int verbose_level);
+	void print_generators_at_level_or_below(int lvl);
 	void compute_base_orbits_known_length(int *tl, 
 		int verbose_level);
 	void extend_base_orbit(int new_gen_idx, int lvl, 
@@ -1425,12 +1426,21 @@ public:
 	char label_tex[1000];
 
 	int degree_of_matrix_group;
+		// = M->degree;
 	int dimension_of_matrix_group;
+		// = M->n
 	int dimension_of_tensor_action;
+		// = i_power_j(dimension_of_matrix_group, nb_factors);
 	int degree_of_tensor_action;
+		// = (i_power_j_safe(q, dimension_of_tensor_action) - 1) / (q - 1);
 	int degree_overall;
+		// = nb_factors + nb_factors *
+		// degree_of_matrix_group + degree_of_tensor_action;
 	int low_level_point_size;
+		// = dimension_of_tensor_action
 	int make_element_size;
+		// = nb_factors + nb_factors *
+		// dimension_of_matrix_group * dimension_of_matrix_group;
 	perm_group *P;
 	int elt_size_int;
 

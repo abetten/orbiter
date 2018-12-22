@@ -1834,6 +1834,9 @@ void sims::compute_base_orbits_known_length(int *tl,
 		if (orbit_len[i] != tl[i]) {
 			cout << "sims::compute_base_orbits_known_length "
 					"orbit_len[i] != tl[i]" << endl;
+			cout << "orbit_len[i]=" << orbit_len[i] << endl;
+			cout << "tl[i]=" << tl[i] << endl;
+			print_generators_at_level_or_below(i);
 			exit(1);
 			}
 		}
@@ -1984,6 +1987,21 @@ void sims::compute_base_orbit(int lvl, int verbose_level)
 				cout << ", ";
 			}
 		cout << " }" << endl;
+		}
+}
+
+void sims::print_generators_at_level_or_below(int lvl)
+{
+	int i, gen_idx;
+
+	cout << "sims::print_generators_at_level_or_below lvl=" << lvl << ":" << endl;
+	for (i = 0; i < nb_gen[lvl]; i++) {
+		gen_idx = gen_perm[i];
+		cout << "sims::print_generators_at_level_or_below "
+				"generator " << i << ":" << endl;
+		A->element_print_quick(gens.ith(gen_idx), cout);
+		cout << "as permutation:" << endl;
+		A->element_print_as_permutation(gens.ith(gen_idx), cout);
 		}
 }
 
@@ -2585,7 +2603,9 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 
 		if (f_vv) {
 			cout << "sims::point_stabilizer_stabchain_with_action "
-					"loop iteration " << cnt << endl;
+					"loop iteration " << cnt
+					<< " cur_stab_order=" << cur_stab_order
+					<< " stab_order=" << stab_order << endl;
 			}
 
 		if (cnt % 2 || nb_gen[0] == 0) {

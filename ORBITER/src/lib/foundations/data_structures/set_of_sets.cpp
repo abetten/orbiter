@@ -47,17 +47,20 @@ set_of_sets *set_of_sets::copy()
 
 	SoS = NEW_OBJECT(set_of_sets);
 
-	SoS->init(underlying_set_size, nb_sets, Sets, Set_size, 0 /*verbose_level */);
+	SoS->init(underlying_set_size,
+			nb_sets, Sets, Set_size, 0 /*verbose_level */);
 	return SoS;
 }
 
-void set_of_sets::init_simple(int underlying_set_size, int nb_sets, int verbose_level)
+void set_of_sets::init_simple(int underlying_set_size,
+		int nb_sets, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "set_of_sets::init_simple nb_sets=" << nb_sets << " underlying_set_size=" << underlying_set_size << endl;
+		cout << "set_of_sets::init_simple nb_sets=" << nb_sets
+				<< " underlying_set_size=" << underlying_set_size << endl;
 		}
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
@@ -69,13 +72,15 @@ void set_of_sets::init_simple(int underlying_set_size, int nb_sets, int verbose_
 	int_vec_zero(Set_size, nb_sets);
 }
 
-void set_of_sets::init_from_adjacency_matrix(int n, int *Adj, int verbose_level)
+void set_of_sets::init_from_adjacency_matrix(
+		int n, int *Adj, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	
 	if (f_v) {
-		cout << "set_of_sets::init_from_adjacency_matrix n=" << n << endl;
+		cout << "set_of_sets::init_from_adjacency_matrix "
+				"n=" << n << endl;
 		}
 	init_simple(n, n, 0 /* verbose_level*/);
 	for (i = 0; i < n; i++) {
@@ -99,13 +104,15 @@ void set_of_sets::init_from_adjacency_matrix(int n, int *Adj, int verbose_level)
 	
 }
 
-void set_of_sets::init(int underlying_set_size, int nb_sets, int **Pts, int *Sz, int verbose_level)
+void set_of_sets::init(int underlying_set_size,
+		int nb_sets, int **Pts, int *Sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "set_of_sets::init nb_sets=" << nb_sets << " underlying_set_size=" << underlying_set_size << endl;
+		cout << "set_of_sets::init nb_sets=" << nb_sets
+				<< " underlying_set_size=" << underlying_set_size << endl;
 		}
 
 	init_basic(underlying_set_size, nb_sets, Sz, verbose_level);
@@ -115,13 +122,15 @@ void set_of_sets::init(int underlying_set_size, int nb_sets, int **Pts, int *Sz,
 		}
 }
 
-void set_of_sets::init_basic(int underlying_set_size, int nb_sets, int *Sz, int verbose_level)
+void set_of_sets::init_basic(int underlying_set_size,
+		int nb_sets, int *Sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "set_of_sets::init_basic nb_sets=" << nb_sets << " underlying_set_size=" << underlying_set_size << endl;
+		cout << "set_of_sets::init_basic nb_sets=" << nb_sets
+				<< " underlying_set_size=" << underlying_set_size << endl;
 		}
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
@@ -133,20 +142,24 @@ void set_of_sets::init_basic(int underlying_set_size, int nb_sets, int *Sz, int 
 	for (i = 0; i < nb_sets; i++) {
 		Set_size[i] = Sz[i];
 		if (FALSE /*f_v*/) {
-			cout << "set_of_sets::init_basic allocating set " << i << " of size " << Sz[i] << endl;
+			cout << "set_of_sets::init_basic allocating set " << i
+					<< " of size " << Sz[i] << endl;
 			}
 		Sets[i] = NEW_int(Sz[i]);
 		}
 }
 
-void set_of_sets::init_basic_constant_size(int underlying_set_size, 
+void set_of_sets::init_basic_constant_size(
+	int underlying_set_size,
 	int nb_sets, int constant_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "set_of_sets::init_basic_constant_size nb_sets=" << nb_sets << " underlying_set_size=" << underlying_set_size << endl;
+		cout << "set_of_sets::init_basic_constant_size "
+				"nb_sets=" << nb_sets
+				<< " underlying_set_size=" << underlying_set_size << endl;
 		}
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
@@ -158,7 +171,9 @@ void set_of_sets::init_basic_constant_size(int underlying_set_size,
 	for (i = 0; i < nb_sets; i++) {
 		Set_size[i] = constant_size;
 		if (FALSE /*f_v*/) {
-			cout << "set_of_sets::init_basic_constant_size allocating set " << i << " of size " << constant_size << endl;
+			cout << "set_of_sets::init_basic_constant_size "
+					"allocating set " << i << " of size "
+					<< constant_size << endl;
 			}
 		Sets[i] = NEW_int(constant_size);
 		}
@@ -166,7 +181,8 @@ void set_of_sets::init_basic_constant_size(int underlying_set_size,
 
 #define MY_BUFSIZE ONE_MILLION
 
-void set_of_sets::init_from_file(int underlying_set_size, const char *fname, int verbose_level)
+void set_of_sets::init_from_file(int underlying_set_size,
+		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -175,13 +191,15 @@ void set_of_sets::init_from_file(int underlying_set_size, const char *fname, int
 		}
 	if (is_csv_file(fname)) {
 		if (f_v) {
-			cout << "set_of_sets::init_from_file the file is a csv file" << endl;
+			cout << "set_of_sets::init_from_file "
+					"the file is a csv file" << endl;
 			}
 		init_from_csv_file(underlying_set_size, fname, verbose_level);
 		}
 	else {
 		if (f_v) {
-			cout << "set_of_sets::init_from_file assuming the file is an orbiter file" << endl;
+			cout << "set_of_sets::init_from_file "
+					"assuming the file is an orbiter file" << endl;
 			}
 		init_from_orbiter_file(underlying_set_size, fname, verbose_level);
 		}
@@ -190,7 +208,8 @@ void set_of_sets::init_from_file(int underlying_set_size, const char *fname, int
 		}
 }
 
-void set_of_sets::init_from_csv_file(int underlying_set_size, const char *fname, int verbose_level)
+void set_of_sets::init_from_csv_file(int underlying_set_size,
+		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -205,7 +224,8 @@ void set_of_sets::init_from_csv_file(int underlying_set_size, const char *fname,
 	int_matrix_read_csv(fname, Data, m, n, verbose_level);
 
 	if (f_v) {
-		cout << "set_of_sets::init_from_csv_file m=" << m << " n=" << n << endl;
+		cout << "set_of_sets::init_from_csv_file "
+				"m=" << m << " n=" << n << endl;
 		}
 
 	init_basic_constant_size(underlying_set_size, 
@@ -224,17 +244,20 @@ void set_of_sets::init_from_csv_file(int underlying_set_size, const char *fname,
 		}
 }
 
-void set_of_sets::init_from_orbiter_file(int underlying_set_size, const char *fname, int verbose_level)
+void set_of_sets::init_from_orbiter_file(int underlying_set_size,
+		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "set_of_sets::init_from_orbiter_file fname=" << fname << endl;
+		cout << "set_of_sets::init_from_orbiter_file "
+				"fname=" << fname << endl;
 		}
 	nb_sets = count_number_of_orbits_in_file(fname, verbose_level - 1);
 	if (f_v) {
-		cout << "set_of_sets::init_from_orbiter_file nb_sets=" << nb_sets << endl;
+		cout << "set_of_sets::init_from_orbiter_file "
+				"nb_sets=" << nb_sets << endl;
 		}
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_pint(nb_sets);
@@ -259,10 +282,12 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size, const char *fn
 			break;
 			}
 		
-		//cout << "set_of_sets::init_from_orbiter_file reading line, nb_sol = " << nb_sol << endl;
+		//cout << "set_of_sets::init_from_orbiter_file "
+		//"reading line, nb_sol = " << nb_sol << endl;
 		fp.getline(buf, MY_BUFSIZE, '\n');
 		if (strlen(buf) == 0) {
-			cout << "set_of_sets::init_from_orbiter_file reading an empty line" << endl;
+			cout << "set_of_sets::init_from_orbiter_file "
+					"reading an empty line" << endl;
 			break;
 			}
 		
@@ -274,13 +299,16 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size, const char *fn
 		s_scan_int(&p_buf, &len);
 		if (len == -1) {
 			if (f_v) {
-				cout << "set_of_sets::init_from_orbiter_file found a complete file with " << nb_sol << " solutions" << endl;
+				cout << "set_of_sets::init_from_orbiter_file "
+						"found a complete file with " << nb_sol
+						<< " solutions" << endl;
 				}
 			break;
 			}
 		else {
 			if (f_v) {
-				cout << "set_of_sets::init_from_orbiter_file reading a set of size " << len << endl;
+				cout << "set_of_sets::init_from_orbiter_file "
+						"reading a set of size " << len << endl;
 				}
 			}
 		Sets[nb_sol] = NEW_int(len);
@@ -292,18 +320,21 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size, const char *fn
 		nb_sol++;
 		}
 	if (nb_sol != nb_sets) {
-		cout << "set_of_sets::init_from_orbiter_file nb_sol != nb_sets" << endl;
+		cout << "set_of_sets::init_from_orbiter_file "
+				"nb_sol != nb_sets" << endl;
 		exit(1);
 		}
 	}
 	FREE_char(buf);
 	
 	if (f_v) {
-		cout << "set_of_sets::init_from_orbiter_file done" << endl;
+		cout << "set_of_sets::init_from_orbiter_file "
+				"done" << endl;
 		}
 }
 
-void set_of_sets::init_set(int idx_of_set, int *set, int sz, int verbose_level)
+void set_of_sets::init_set(int idx_of_set,
+		int *set, int sz, int verbose_level)
 // Stores a copy of the given set.
 {
 	int f_v = (verbose_level >= 1);
@@ -313,7 +344,8 @@ void set_of_sets::init_set(int idx_of_set, int *set, int sz, int verbose_level)
 		cout << "set_of_sets::init_set" << endl;
 		}
 	if (Sets[idx_of_set]) {
-		cout << "set_of_sets::init_set Sets[idx_of_set] is allocated" << endl;
+		cout << "set_of_sets::init_set Sets[idx_of_set] "
+				"is allocated" << endl;
 		exit(1);
 		}
 	Sets[idx_of_set] = NEW_int(sz);
@@ -327,7 +359,8 @@ void set_of_sets::init_set(int idx_of_set, int *set, int sz, int verbose_level)
 		}
 }
 
-void set_of_sets::init_cycle_structure(int *perm, int n, int verbose_level)
+void set_of_sets::init_cycle_structure(int *perm,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	

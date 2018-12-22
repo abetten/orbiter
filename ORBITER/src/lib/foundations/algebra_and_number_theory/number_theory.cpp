@@ -135,17 +135,40 @@ void extended_gcd_int(int m, int n, int &g, int &u, int &v)
 	v = V.as_int();
 }
 
+int i_power_j_safe(int i, int j)
+{
+	longinteger_domain D;
+
+	longinteger_object a, b, c;
+	int res;
+
+	a.create(i);
+	D.power_int(a, j);
+	res = a.as_int();
+	b.create(res);
+	b.negate();
+	D.add(a, b, c);
+	if (!c.is_zero()) {
+		cout << "i_power_j_safe int overflow when computing "
+				<< i << "^" << j << endl;
+		cout << "should be        " << a << endl;
+		cout << "but comes out as " << res << endl;
+		exit(1);
+	}
+	return res;
+}
+
 int i_power_j(int i, int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
 {
 	int k, r = 1;
 
-	//cout << "i_power_j() i=" << i << ", j=" << j << endl;
+	//cout << "i_power_j i=" << i << ", j=" << j << endl;
 	for (k = 0; k < j; k++) {
 		r *= i;
 		}
-	//cout << "i_power_j() yields" << r << endl;
+	//cout << "i_power_j yields" << r << endl;
 	return r;
 }
 
@@ -438,7 +461,7 @@ int primitive_root(int p, int verbose_level)
 	int i, o;
 
 	if (p < 2) {
-		cout << "primitive_root(): p < 2" << endl;
+		cout << "primitive_root: p < 2" << endl;
 		exit(1);
 		}
 	if (p == 2)

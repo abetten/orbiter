@@ -479,8 +479,16 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << " poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting "
-				"calling G.point_stabilizer_with_action" << endl;
+				"calling G.point_stabilizer_with_action "
+				"verbose_level=" << verbose_level << endl;
 		}
+
+#if 0
+	if (size == 2 && prev == 2 && prev_ex == 6) {
+		verbose_level += 10;
+		cout << "START" << endl;
+	}
+#endif
 	G.point_stabilizer_with_action(
 			&A_factor_space,
 			H,

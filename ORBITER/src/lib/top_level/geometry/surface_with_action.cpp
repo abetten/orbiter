@@ -774,7 +774,8 @@ void surface_with_action::arc_lifting_and_classify(
 		}
 	if (f_log_fp) {
 		fp << "arc " << arc_label << " yields a surface with " 
-			<< AL->E->nb_E << " Eckardt points and a stabilizer of order " << go << " with "
+			<< AL->E->nb_E << " Eckardt points and a "
+					"stabilizer of order " << go << " with "
 			<< SOA->Orbits_on_single_sixes->nb_orbits
 			<< " orbits on single sixes\\\\" << endl;
 		}
@@ -975,7 +976,8 @@ void surface_with_action::arc_lifting_and_classify(
 				}
 			intersection_points[u] =
 					Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
-							a, plane_rk_global, 0 /* verbose_level */);
+							a, plane_rk_global,
+							0 /* verbose_level */);
 			if (f_v) {
 				cout << "surface_with_action::arc_lifting_and_classify "
 						"intersection point " << intersection_points[u] << endl;
@@ -989,7 +991,8 @@ void surface_with_action::arc_lifting_and_classify(
 				}
 			F->reduce_mod_subspace_and_get_coefficient_vector(
 				3, 4, Plane, base_cols, 
-				v, coefficients, 0 /* verbose_level */);
+				v, coefficients,
+				0 /* verbose_level */);
 			if (f_v) {
 				cout << "surface_with_action::arc_lifting_and_classify "
 						"local coefficients ";
@@ -1004,10 +1007,15 @@ void surface_with_action::arc_lifting_and_classify(
 		Clebsch_map = NEW_int(SOA->SO->nb_pts);
 		Clebsch_coeff = NEW_int(SOA->SO->nb_pts * 4);
 
-		if (!Surf->clebsch_map(SOA->SO->Lines,
-				SOA->SO->Pts, SOA->SO->nb_pts,
-				line_idx, plane_rk_global,
-			Clebsch_map, Clebsch_coeff, verbose_level)) {
+		if (!Surf->clebsch_map(
+				SOA->SO->Lines,
+				SOA->SO->Pts,
+				SOA->SO->nb_pts,
+				line_idx,
+				plane_rk_global,
+				Clebsch_map,
+				Clebsch_coeff,
+				verbose_level)) {
 			cout << "The plane contains one of the lines, "
 					"this should not happen" << endl;
 			exit(1);
