@@ -19,12 +19,13 @@ void usage(int argc, const char **argv);
 int main(int argc, const char **argv);
 int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
+void wreath_product_print_set(ostream &ost, int len, int *S, void *data);
 
 
 
 typedef class tensor_product tensor_product;
 
-//! class for the app wreath_product
+//! classification of tensors under the wreath product group
 
 
 class tensor_product {
@@ -46,6 +47,7 @@ public:
 	poset *Poset;
 	poset_classification *Gen;
 	int vector_space_dimension;
+	int *v; // [vector_space_dimension]
 
 	tensor_product();
 	~tensor_product();
@@ -164,6 +166,7 @@ tensor_product::tensor_product()
 	argv = NULL;
 	nb_factors = 0;
 	vector_space_dimension = 0;
+	v = NULL;
 	n = 0;
 	q = 0;
 	SG = NULL;
@@ -230,65 +233,111 @@ void tensor_product::init(int argc, const char **argv,
 		exit(1);
 		}
 
+	v = NEW_int(vector_space_dimension);
+
 	SG = A0->Strong_gens;
 	SG->group_order(go);
 
-	cout << "The group " << A->label << " has order " << go
+	cout << "tensor_product::init The group " << A->label
+			<< " has order " << go
 			<< " and permutation degree " << A->degree << endl;
 
 
+#if 0
+	i = SG->gens->len - 1;
+	cout << "generator " << i << " is: " << endl;
 
-	cout << "Generators are:" << endl;
+
+	int h;
+
+	cout << "computing image of 2:" << endl;
+	h = A->element_image_of(2,
+			SG->gens->ith(i), 10 /*verbose_level - 2*/);
+
+
+	for (j = 0; j < A->degree; j++) {
+		h = A->element_image_of(j,
+				SG->gens->ith(i), verbose_level - 2);
+		cout << j << " -> " << h << endl;
+	}
+
+		A->element_print_as_permutation(SG->gens->ith(i), cout);
+	cout << endl;
+#endif
+
+	cout << "tensor_product::init Generators are:" << endl;
 	for (i = 0; i < SG->gens->len; i++) {
 		cout << "generator " << i << " / "
 				<< SG->gens->len << " is: " << endl;
 		A->element_print_quick(SG->gens->ith(i), cout);
 		cout << "as permutation: " << endl;
-		A->element_print_as_permutation_with_offset(
-				SG->gens->ith(i), cout,
-				0 /* offset*/,
-				TRUE /* f_do_it_anyway_even_for_big_degree*/,
-				TRUE /* f_print_cycles_of_length_one*/,
-				0 /* verbose_level*/);
-		//A->element_print_as_permutation(SG->gens->ith(i), cout);
-		cout << endl;
-		}
-	cout << "Generators are:" << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		A->element_print_as_permutation(SG->gens->ith(i), cout);
-		cout << endl;
-		}
-	cout << "Generators in GAP format are:" << endl;
-	cout << "G := Group([";
-	for (i = 0; i < SG->gens->len; i++) {
-		A->element_print_as_permutation_with_offset(
-				SG->gens->ith(i), cout,
-				1 /*offset*/,
-				TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one */,
-				0 /* verbose_level*/);
-		if (i < SG->gens->len - 1) {
-			cout << ", " << endl;
+		if (A->degree < 200) {
+			A->element_print_as_permutation_with_offset(
+					SG->gens->ith(i), cout,
+					0 /* offset*/,
+					TRUE /* f_do_it_anyway_even_for_big_degree*/,
+					TRUE /* f_print_cycles_of_length_one*/,
+					0 /* verbose_level*/);
+			//A->element_print_as_permutation(SG->gens->ith(i), cout);
+			cout << endl;
+		} else {
+			cout << "too big to print" << endl;
 		}
 	}
-	cout << "]);" << endl;
-	cout << "Generators in compact permutation form are:" << endl;
-	cout << SG->gens->len << " " << A->degree << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		for (j = 0; j < A->degree; j++) {
-			a = A->element_image_of(j,
-					SG->gens->ith(i), 0 /* verbose_level */);
-			cout << a << " ";
-			}
-		cout << endl;
-		}
-	cout << "-1" << endl;
+	cout << "tensor_product::init Generators as permutations are:" << endl;
 
+
+
+	if (A->degree < 200) {
+		for (i = 0; i < SG->gens->len; i++) {
+			A->element_print_as_permutation(SG->gens->ith(i), cout);
+			cout << endl;
+		}
+	}
+	else {
+		cout << "too big to print" << endl;
+	}
+	cout << "tensor_product::init Generators in GAP format are:" << endl;
+	if (A->degree < 200) {
+		cout << "G := Group([";
+		for (i = 0; i < SG->gens->len; i++) {
+			A->element_print_as_permutation_with_offset(
+					SG->gens->ith(i), cout,
+					1 /*offset*/,
+					TRUE /* f_do_it_anyway_even_for_big_degree */,
+					FALSE /* f_print_cycles_of_length_one */,
+					0 /* verbose_level*/);
+			if (i < SG->gens->len - 1) {
+				cout << ", " << endl;
+			}
+		}
+		cout << "]);" << endl;
+	}
+	else {
+		cout << "too big to print" << endl;
+	}
+	cout << "tensor_product::init "
+			"Generators in compact permutation form are:" << endl;
+	if (A->degree < 200) {
+		cout << SG->gens->len << " " << A->degree << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			for (j = 0; j < A->degree; j++) {
+				a = A->element_image_of(j,
+						SG->gens->ith(i), 0 /* verbose_level */);
+				cout << a << " ";
+				}
+			cout << endl;
+			}
+		cout << "-1" << endl;
+	}
+	else {
+		cout << "too big to print" << endl;
+	}
 
 
 #if 0
 
-	cout << "testing..." << endl;
+	cout << "tensor_product::init testing..." << endl;
 	int r1, r2;
 	int *Elt1;
 	int *Elt2;
@@ -353,7 +402,7 @@ void tensor_product::init(int argc, const char **argv,
 			}
 		}
 	}
-	cout << "test 1 passed" << endl;
+	cout << "tensor_product::init test 1 passed" << endl;
 
 
 	for (cnt = 0; cnt < 10; cnt++) {
@@ -389,7 +438,7 @@ void tensor_product::init(int argc, const char **argv,
 		}
 	}
 
-	cout << "test 2 passed" << endl;
+	cout << "tensor_product::init test 2 passed" << endl;
 
 
 
@@ -446,7 +495,7 @@ void tensor_product::init(int argc, const char **argv,
 			}
 		}
 	}
-	cout << "test 3 passed" << endl;
+	cout << "tensor_product::init test 3 passed" << endl;
 
 
 	cout << "performing test 4:" << endl;
@@ -481,7 +530,7 @@ void tensor_product::init(int argc, const char **argv,
 		}
 	}
 
-	cout << "test 4 passed" << endl;
+	cout << "tensor_product::init test 4 passed" << endl;
 
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -530,34 +579,9 @@ void tensor_product::init(int argc, const char **argv,
 		}
 
 
-#if 0
-	Gen->init_check_func(
-		subspace_orbits_test_func,
-		this /* candidate_check_data */);
-	Gen->init_early_test_func(
-		linear_set_early_test_func,
-		this /*void *data */,
-		verbose_level);
-#endif
-
-	//Gen->init_incremental_check_func(
-		//check_mindist_incremental,
-		//this /* candidate_check_data */);
-
-#if 0
-	Gen->init_vector_space_action(
-		vector_space_dimension,
-		F,
-		wreath_rank_point_func,
-		wreath_unrank_point_func,
-		this,
-		verbose_level);
-#endif
-#if 0
-	Gen->f_print_function = FALSE;
-	Gen->print_function = print_set;
+	Gen->f_print_function = TRUE;
+	Gen->print_function = wreath_product_print_set;
 	Gen->print_function_data = this;
-#endif
 
 	int nb_nodes = 1000;
 
@@ -599,6 +623,28 @@ void tensor_product::init(int argc, const char **argv,
 		f_debug,
 		verbose_level);
 
+	set_of_sets *SoS;
+
+	SoS = Gen->Schreier_vector_handler->get_orbits_as_set_of_sets(
+			Gen->root[0].Schreier_vector, verbose_level);
+
+	SoS->sort_all(verbose_level);
+	cout << "orbits at level 1:" << endl;
+	SoS->print_table();
+
+	for (i = 0; i < SoS->nb_sets; i++) {
+		cout << "Orbit " << i << " has size " << SoS->Set_size[i] << " : ";
+		int_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+		cout << endl;
+		for (j = 0; j < SoS->Set_size[i]; j++) {
+			a = SoS->Sets[i][j];
+			cout << j << " : " << a << " : ";
+			F->PG_element_unrank_modified(v, 1, vector_space_dimension, a);
+			int_vec_print(cout, v, vector_space_dimension);
+			cout << endl;
+		}
+	}
+
 	if (f_v) {
 		cout << "tensor_product::init after Gen->main" << endl;
 	}
@@ -625,4 +671,22 @@ void wreath_unrank_point_func(int *v, int rk, void *data)
 	T->F->PG_element_unrank_modified(v, 1, T->vector_space_dimension, rk);
 }
 
+
+void wreath_product_print_set(ostream &ost, int len, int *S, void *data)
+{
+	tensor_product *T;
+	int i;
+
+	T = (tensor_product *) data;
+	cout << "set: ";
+	int_vec_print(cout, S, len);
+	cout << endl;
+	for (i = 0; i < len; i++) {
+		T->F->PG_element_unrank_modified(T->v,
+				1, T->vector_space_dimension, S[i]);
+		cout << S[i] << " : ";
+		int_vec_print(cout, T->v, T->vector_space_dimension);
+		cout << endl;
+	}
+}
 

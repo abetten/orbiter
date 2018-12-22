@@ -367,3 +367,84 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 		}
 }
 
+set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
+		schreier_vector *Sv, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *orbit_reps;
+	int nb_orbits;
+	set_of_sets *SoS;
+	int i, t;
+
+	if (f_v) {
+		cout << "schreier_vector_handler::get_orbits_as_set_of_sets" << endl;
+	}
+	if (Sv->nb_gen == 0) {
+		cout << "schreier_vector_handler::get_orbits_as_set_of_sets "
+				"Sv->nb_gen == 0" << endl;
+		exit(1);
+	}
+	int n;
+	int *pts;
+	int *depth;
+	int *ancestor;
+
+	n = Sv->sv[0];
+	pts = Sv->sv + 1;
+
+	Sv->count_number_of_orbits_and_get_orbit_reps(
+		orbit_reps, nb_orbits);
+	SoS = NEW_OBJECT(set_of_sets);
+	int *prev;
+
+	prev = pts + n;
+#if 0
+	cout << "i : pts : prev" << endl;
+	for (i = 0; i < n; i++) {
+		cout << i << " : " << pts[i] << " : " << prev[i] << endl;
+	}
+#endif
+
+	depth = NEW_int(n);
+	ancestor = NEW_int(n);
+
+	for (i = 0; i < n; i++) {
+		depth[i] = -1;
+		ancestor[i] = -1;
+		}
+	for (i = 0; i < n; i++) {
+		schreier_vector_determine_depth_recursion(n,
+				pts, prev, depth, ancestor, i);
+		}
+#if 0
+	cout << "i : pts : depth : ancestor" << endl;
+	for (i = 0; i < n; i++) {
+		cout << i << " : " << pts[i] << " : " << depth[i] << " : " << ancestor[i] << endl;
+	}
+#endif
+
+	classify C;
+	int f, a;
+
+	C.init(ancestor, n, FALSE, 0);
+
+	SoS->init_basic(A2->degree /* underlying_set_size*/,
+			C.nb_types, C.type_len, verbose_level);
+
+	FREE_int(depth);
+	FREE_int(ancestor);
+
+	for (t = 0; t < C.nb_types; t++) {
+		f = C.type_first[t];
+		for (i = 0; i < C.type_len[t]; i++) {
+			a = C.sorting_perm_inv[f + i];
+			SoS->Sets[t][i] = pts[a];
+		}
+	}
+
+	if (f_v) {
+		cout << "schreier_vector_handler::get_orbits_as_set_of_sets "
+				"done" << endl;
+	}
+	return SoS;
+}

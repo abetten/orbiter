@@ -6,9 +6,6 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
-static int schreier_vector_determine_depth_recursion(
-	int n, int *pts, int *prev,
-	int *depth, int *ancestor, int pos);
 
 
 schreier_vector::schreier_vector()
@@ -1047,7 +1044,7 @@ void schreier_vector::trace_back(int pt, int &depth)
 // #############################################################################
 
 
-static int schreier_vector_determine_depth_recursion(
+int schreier_vector_determine_depth_recursion(
 	int n, int *pts, int *prev,
 	int *depth, int *ancestor, int pos)
 {

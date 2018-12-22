@@ -166,10 +166,20 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	make_element_size = nb_factors + nb_factors *
 			dimension_of_matrix_group * dimension_of_matrix_group;
 	degree_of_tensor_action =
-			(i_power_j(q, dimension_of_tensor_action) - 1) / (q - 1);
+			(i_power_j_safe(q, dimension_of_tensor_action) - 1) / (q - 1);
+		// warning: int overflow possible
 	degree_overall = nb_factors + nb_factors *
 			degree_of_matrix_group + degree_of_tensor_action;
 	if (f_v) {
+		cout << "wreath_product::init_tensor_wreath_product "
+				"degree_of_matrix_group = "
+				<< degree_of_matrix_group << endl;
+		cout << "wreath_product::init_tensor_wreath_product "
+				"dimension_of_matrix_group = "
+				<< dimension_of_matrix_group << endl;
+		cout << "wreath_product::init_tensor_wreath_product "
+				"low_level_point_size = "
+				<< low_level_point_size << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"dimension_of_tensor_action = "
 				<< dimension_of_tensor_action << endl;
@@ -180,8 +190,8 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 				"degree_overall = " << degree_overall << endl;
 	}
 	perm_offset_i = NEW_int(nb_factors + 1);
-		// one more so it can also be used to indicated
-		// the start of the tensor product action.
+		// one more so it can also be used to indicate
+		// the start of the tensor product action also.
 	perm_offset_i[0] = nb_factors;
 	for (i = 1; i <= nb_factors; i++) {
 		// note equality here!
@@ -350,7 +360,7 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 				int_vec_print(cout, v, dimension_of_tensor_action);
 				cout << endl;
 			}
-			apply_permutation(Elt, v, w, 0 /* verbose_level*/);
+			apply_permutation(Elt, v, w, verbose_level);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"w = ";
@@ -435,17 +445,23 @@ void wreath_product::element_one(int *Elt)
 
 int wreath_product::element_is_one(int *Elt)
 {
-		int f, scalar;
+		int f; //, scalar;
 
 		if (!P->is_one(Elt)) {
 			return FALSE;
 		}
 		for (f = 0; f < nb_factors; f++) {
+			if (!F->is_identity_matrix(
+					Elt + offset_i(f), dimension_of_matrix_group)) {
+				return FALSE;
+			}
+#if 0
 			if (!F->is_scalar_multiple_of_identity_matrix(
 					Elt + offset_i(f), dimension_of_matrix_group,
 					scalar)) {
 				return FALSE;
 			}
+#endif
 		}
 		return TRUE;
 }
@@ -515,13 +531,15 @@ void wreath_product::compute_induced_permutation(int *Elt, int *perm)
 	int i, j, h, k, a;
 
 	for (i = 0; i < dimension_of_tensor_action; i++) {
-		AG_element_unrank(q, index_set1, 1, nb_factors, i);
+		AG_element_unrank(dimension_of_matrix_group,
+				index_set1, 1, nb_factors, i);
 		for (h = 0; h < nb_factors; h++) {
 			a = index_set1[h];
 			k = Elt[h];
 			index_set2[k] = a;
 		}
-		AG_element_rank(q, index_set2, 1, nb_factors, j);
+		AG_element_rank(dimension_of_matrix_group,
+				index_set2, 1, nb_factors, j);
 		perm[i] = j;
 	}
 }
