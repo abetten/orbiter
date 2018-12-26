@@ -89,10 +89,14 @@ void poset_orbit_node::init_root_node(
 	//sv = NULL;
 	Schreier_vector = NULL;
 	
+	longinteger_object go;
+
+	gen->Poset->Strong_gens->group_order(go);
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_root_node "
-				"storing strong generators" << endl;
+				"storing strong generators "
+				"for a group of order " << go << endl;
 		}
 	store_strong_generators(gen, gen->Poset->Strong_gens);
 		// stores the strong generators into
@@ -669,6 +673,8 @@ void poset_orbit_node::print_set(poset_classification *gen)
 				cout << " * ";
 			}
 		cout << " = " << go << "}";
+		cout << " in action ";
+		cout << gen->Poset->A->label << endl;
 		}
 
 	//gen->print_lex_rank(set, size);

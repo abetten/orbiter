@@ -999,7 +999,7 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int input_idx;
+	int input_idx, ret;
 	
 	if (f_v) {
 		cout << "classify_objects_using_nauty" << endl;
@@ -1018,12 +1018,25 @@ void classify_objects_using_nauty(int nb_inputs, int *input_type,
 			
 			OiP = create_object_from_string(PA, t_PTS, 
 				input_string[input_idx], verbose_level);
-			if (!process_object(PA, CB, OiP, 
-				f_save_incma_in_and_out, prefix, 
-				nb_objects_to_test, 
-				SG, 
-				verbose_level)) {
-	
+
+			if (f_v) {
+				cout << "classify_objects_using_nauty "
+						"before process_object" << endl;
+				}
+
+			ret = process_object(PA, CB, OiP,
+					f_save_incma_in_and_out, prefix,
+					nb_objects_to_test,
+					SG,
+					verbose_level);
+
+			if (f_v) {
+				cout << "classify_objects_using_nauty "
+						"after process_object, ret=" << ret << endl;
+				}
+
+
+			if (!ret) {
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
 				}
@@ -1466,12 +1479,21 @@ int process_object(projective_space_with_action *PA,
 	int canonical_form_len;
 
 
+	if (f_v) {
+		cout << "process_object before PA->set_stabilizer_of_object" << endl;
+		}
+
 	SG = PA->set_stabilizer_of_object(
 		OiP, 
 		f_save_incma_in_and_out, save_incma_in_and_out_prefix, 
 		TRUE /* f_compute_canonical_form */,
 		canonical_form, canonical_form_len,
-		0 /* verbose_level */);
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "process_object after PA->set_stabilizer_of_object" << endl;
+		}
+
 
 	SG->group_order(go);
 	

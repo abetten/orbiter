@@ -275,6 +275,8 @@ int main(int argc, const char **argv)
 				fname_mask /* const char *fname_mask*/,
 				verbose_level);
 
+			fp << "\\setlength{\\parindent}{0pt}" << endl;
+
 
 
 			surface_object *SO;
@@ -300,7 +302,18 @@ int main(int argc, const char **argv)
 			fp << endl;
 			fp << "\\bigskip" << endl;
 			fp << endl;
+
 			fp << "\\section{Clebsch maps}" << endl;
+
+			SC->Surf->latex_table_of_clebsch_maps(fp);
+
+
+			fp << endl;
+			fp << "\\bigskip" << endl;
+			fp << endl;
+
+
+			fp << "\\section{Clebsch maps in detail}" << endl;
 			fp << endl;
 
 
