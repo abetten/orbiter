@@ -265,6 +265,42 @@ void generators_identity_group(int deg,
 		}
 }
 
+void generators_Hall_reflection(int nb_pairs,
+		int &nb_perms, int *&perms, int &degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+
+	if (f_v) {
+		cout << "generators_Hall_reflection" << endl;
+	}
+	degree = nb_pairs * 2;
+	nb_perms = 1;
+	perms = NEW_int(nb_perms * degree);
+	perm_identity(perms, degree);
+	for (i = 0; i < nb_pairs; i++) {
+		perms[2 * i] = 2 * i + 1;
+		perms[2 * i + 1] = 2 * i;
+	}
+	if (f_v) {
+		cout << "generators_Hall_reflection "
+				"generators for the Hall reflection group "
+				"of degree "
+				<< degree << " created" << endl;
+		}
+	if (f_vv) {
+		for (i = 0; i < 1; i++) {
+			perm_print(cout, perms + i * degree, degree);
+			cout << endl;
+			}
+		}
+	if (f_v) {
+		cout << "generators_Hall_reflection done" << endl;
+	}
+}
+
 void generators_Hall_reflection_normalizer_group(int nb_pairs,
 		int &nb_perms, int *&perms, int &degree,
 		int verbose_level)

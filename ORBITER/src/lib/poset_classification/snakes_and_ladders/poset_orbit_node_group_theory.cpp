@@ -536,6 +536,9 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 		cout << "poset_orbit_node::compute_point_stabilizer_"
 				"in_standard_setting "
 				"r != 0" << endl;
+		cout << "go_G=" << go_G << endl;
+		cout << "pt_orbit_len=" << pt_orbit_len << endl;
+		cout << "go_H=" << go_H << endl;
 		exit(1);
 		}
 

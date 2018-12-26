@@ -709,7 +709,7 @@ void do_arc_lifting(
 	else {
 		f_semilinear = TRUE;
 		}
-#if 1
+#if 0
 	action *A_linear;
 
 	A_linear = NEW_OBJECT(action);
@@ -856,7 +856,7 @@ void do_arc_lifting(
 
 		cout << "Cook approach:" << endl;
 		
-		int *km1_lines;
+		int *km1_lines; // km1 stands for k minus one
 	
 
 		nb_km1_lines = 0;
@@ -869,6 +869,8 @@ void do_arc_lifting(
 				}
 			}
 		km1_lines = NEW_int(nb_km1_lines);
+			// number of rows in the Cook table
+
 		h = 0;
 		for (i = 0; i < P->N_lines; i++) {
 			if (line_type[i] == k - 1) {
@@ -879,6 +881,7 @@ void do_arc_lifting(
 		int line, idx;
 
 		w = F->q + 1 - (k - 1);
+			// number of columns in the Cook table
 
 
 		Cook_table = NEW_int(nb_km1_lines * w);
@@ -887,8 +890,13 @@ void do_arc_lifting(
 			h = 0;
 			for (j = 0; j < F->q + 1; j++) {
 				pt = P->Lines[line * P->k + j];
+					// j-th point on i-th (k-1)-line
 			
+				// thes it pt is already in the arc,
+				// skip if so.
 				if (!int_vec_search(arc, arc_sz, pt, idx)) {
+
+					// otherwise, put it in the Cook table:
 					Cook_table[i * w + h++] = pt;
 					}
 				}
@@ -916,7 +924,7 @@ void do_arc_lifting(
 			Sz[i] = w;
 			}
 		for (i = 0; i < nb_km1_lines; i++) {
-			for (j = 0; j < w; j++) {
+			for (j = 0; j < Sz[i]; j++) {
 				pt = Cook_table[i * w + j];
 				for (h = i + 1; h < nb_km1_lines; h++) {
 					for (l = 0; l < Sz[h]; l++) {
@@ -1350,13 +1358,14 @@ void search(int level)
 			cout << i << " : " << type_collected[i] << endl;
 			}
 
+#if 0
 		*fp << big_arc_size;
 		for (i = 0; i < big_arc_size; i++) {
 			*fp << " " << big_arc[i];
 			}
 		//*fp << " " << go;
 		*fp << endl;
-		
+#endif
 
 	//exit(1);
 

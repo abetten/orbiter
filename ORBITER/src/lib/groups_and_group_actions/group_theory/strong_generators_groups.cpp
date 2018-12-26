@@ -2589,6 +2589,101 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 		}
 }
 
+void strong_generators::Hall_reflection(
+	int nb_pairs, int &degree, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_perms;
+	int *perms;
+	vector_ge *gens;
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection "
+				"before generators_Hall_reflection" << endl;
+		}
+
+	generators_Hall_reflection(nb_pairs,
+			nb_perms, perms, degree,
+			verbose_level);
+
+
+
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection "
+				"after generators_Hall_reflection" << endl;
+		}
+
+
+	gens = NEW_OBJECT(vector_ge);
+	gens->init(A);
+
+	int i;
+
+	gens->allocate(nb_perms);
+	for (i = 0; i < nb_perms; i++) {
+		A->make_element(gens->ith(i), perms + i * degree, 0);
+		}
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection "
+				"generators are:" << endl;
+		gens->print_quick(cout);
+		}
+
+
+
+	longinteger_object target_go;
+
+
+	target_go.create(2);
+
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection "
+				"target_go=" << target_go << endl;
+		}
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection "
+				"before A->init_permutation_group" << endl;
+		}
+	A = NEW_OBJECT(action);
+	A->init_permutation_group(degree, verbose_level);
+
+	strong_generators *SG;
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection "
+				"before generators_to_strong_generators" << endl;
+		}
+
+	generators_to_strong_generators(A,
+		TRUE /* f_target_go */, target_go,
+		gens, SG, verbose_level - 3);
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection "
+				"after generators_to_"
+				"strong_generators" << endl;
+		}
+
+	init_copy(SG, 0);
+
+
+	FREE_OBJECT(SG);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::Hall_reflection done" << endl;
+		}
+}
+
 void strong_generators::normalizer_of_a_Hall_reflection(
 	int nb_pairs, int &degree, int verbose_level)
 {
@@ -2663,7 +2758,8 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 				"strong_generators before A->init_permutation_group" << endl;
 		}
 	A = NEW_OBJECT(action);
-	A->init_permutation_group(degree, verbose_level);
+	A->init_symmetric_group(degree, verbose_level);
+	//A->init_permutation_group(degree, verbose_level);
 
 	strong_generators *SG;
 

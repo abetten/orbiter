@@ -1095,6 +1095,9 @@ void generators_dihedral_involution(int deg,
 	int &nb_perms, int *&perms, int verbose_level);
 void generators_identity_group(int deg, 
 	int &nb_perms, int *&perms, int verbose_level);
+void generators_Hall_reflection(int nb_pairs,
+		int &nb_perms, int *&perms, int &degree,
+		int verbose_level);
 void generators_Hall_reflection_normalizer_group(int nb_pairs,
 		int &nb_perms, int *&perms, int &degree,
 		int verbose_level);

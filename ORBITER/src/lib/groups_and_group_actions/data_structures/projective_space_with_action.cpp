@@ -993,14 +993,41 @@ strong_generators
 		exit(1);
 		}
 
+	if (f_v) {
+		cout << "before freeing Aut" << endl;
+	}
 	FREE_int(Aut);
+	if (f_v) {
+		cout << "before freeing Base" << endl;
+	}
 	FREE_int(Base);
+	if (f_v) {
+		cout << "before freeing Transversal_length" << endl;
+	}
 	FREE_int(Transversal_length);
+	if (f_v) {
+		cout << "before freeing Incma" << endl;
+	}
 	FREE_int(Incma);
+	if (f_v) {
+		cout << "before freeing partition" << endl;
+	}
 	FREE_int(partition);
+	if (f_v) {
+		cout << "before freeing labeling" << endl;
+	}
 	FREE_int(labeling);
+	if (f_v) {
+		cout << "before freeing A_perm" << endl;
+	}
 	FREE_OBJECT(A_perm);
-	FREE_OBJECT(gens);
+	if (f_v) {
+		cout << "not freeing gens" << endl;
+	}
+	//FREE_OBJECT(gens);
+	if (f_v) {
+		cout << "before freeing Mtx" << endl;
+	}
 	FREE_int(Mtx);
 
 
