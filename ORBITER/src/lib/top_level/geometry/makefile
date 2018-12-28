@@ -9,6 +9,7 @@ MODULES = \
 	BLT_set_create.o \
 	BLT_set_create_description.o \
 	arc_generator.o \
+	arc_lifting_with_two_lines.o \
 	arc_lifting.o \
 	choose_points_or_lines.o \
 	classify_double_sixes.o \

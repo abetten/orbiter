@@ -786,6 +786,15 @@ void projective_space::unrank_point(int *v, int rk)
 	F->PG_element_unrank_modified(v, 1, n + 1, rk);
 }
 
+void projective_space::unrank_points(int *v, int *Rk, int sz)
+{
+	int i;
+
+	for (i = 0; i < sz; i++) {
+		F->PG_element_unrank_modified(v + i * (n + 1), 1, n + 1, Rk[i]);
+	}
+}
+
 int projective_space::rank_line(int *basis)
 {
 	int b;
@@ -6383,6 +6392,45 @@ int projective_space::line_of_intersection_of_two_planes_in_three_space_using_du
 	rk = Grass_lines->rank_int_here(Basis + 8, 0 /* verbose_level */);
 	return rk;
 }
+
+int projective_space::transversal_to_two_skew_lines_through_a_point(
+	int line1, int line2, int pt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Basis1[4 * 4];
+	int Basis2[4 * 4];
+	int Basis3[4 * 4];
+	int a;
+
+	if (f_v) {
+		cout << "projective_space::transversal_to_two_skew_lines_"
+				"through_a_point" << endl;
+		}
+	if (n != 3) {
+		cout << "projective_space::transversal_to_two_skew_lines_"
+				"through_a_point "
+				"n != 3" << endl;
+		exit(1);
+		}
+	unrank_line(Basis1, line1);
+	unrank_point(Basis1 + 8, pt);
+	unrank_line(Basis2, line2);
+	unrank_point(Basis2 + 8, pt);
+	F->RREF_and_kernel(4, 3, Basis1, 0 /* verbose_level */);
+	F->RREF_and_kernel(4, 3, Basis2, 0 /* verbose_level */);
+	int_vec_copy(Basis1 + 12, Basis3, 4);
+	int_vec_copy(Basis2 + 12, Basis3 + 4, 4);
+	F->RREF_and_kernel(4, 2, Basis3, 0 /* verbose_level */);
+	a = rank_line(Basis3 + 8);
+	if (f_v) {
+		cout << "projective_space::transversal_to_two_skew_lines_"
+				"through_a_point "
+				"done" << endl;
+		}
+	return a;
+}
+
+
 
 void projective_space::plane_intersection_matrix_in_three_space(
 	int *Planes, int nb_planes, int *&Intersection_matrix, 
