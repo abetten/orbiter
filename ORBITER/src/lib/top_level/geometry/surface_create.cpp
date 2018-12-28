@@ -139,52 +139,6 @@ void surface_create::init(surface_create_description *Descr,
 		}
 
 
-#if 0
-	if (f_v) {
-		cout << "surface_create::init creating "
-				"finite field of order " << q << endl;
-		}
-
-	f_ownership = FALSE;
-
-	//F = NEW_OBJECT(finite_field);
-	//F->init(q, 0);
-	
-
-	if (f_v) {
-		cout << "surface_create::init creating "
-				"surface object" << endl;
-		}
-	Surf = NEW_OBJECT(surface);
-	Surf->init(F, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_create::init creating "
-				"surface object done" << endl;
-		}
-
-
-
-#if 0
-	cout << "surface_create::init before "
-			"Surf->init_large_polynomial_domains" << endl;
-	Surf->init_large_polynomial_domains(verbose_level);
-	cout << "surface_create::init after "
-			"Surf->init_large_polynomial_domains" << endl;
-#endif
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-	
-	if (f_v) {
-		cout << "before Surf_A->init" << endl;
-		}
-	Surf_A->init(Surf, f_semilinear, verbose_level);
-	if (f_v) {
-		cout << "after Surf_A->init" << endl;
-		}
-#endif
-
-
-
 	if (f_v) {
 		cout << "surface_create::init before init2" << endl;
 		}
@@ -402,6 +356,84 @@ void surface_create::init2(int verbose_level)
 
 		FREE_OBJECT(AL);
 		
+
+		FREE_int(arc);
+		}
+	else if (Descr->f_arc_lifting_with_two_lines) {
+
+		if (f_v) {
+			cout << "surface_create::init2 by "
+					"arc lifting with two lines" << endl;
+			}
+
+		int *arc;
+		int arc_size;
+		int line1, line2;
+
+		int_vec_scan(Descr->arc_lifting_text, arc, arc_size);
+
+		if (arc_size != 8) {
+			cout << "surface_create::init arc_size != 8" << endl;
+			exit(1);
+			}
+		line1 = arc[6];
+		line2 = arc[7];
+		arc_size -= 2;
+
+		if (f_v) {
+			cout << "surface_create::init2 arc: ";
+			int_vec_print(cout, arc, 6);
+			cout << endl;
+			}
+
+		if (f_v) {
+			cout << "surface_create::init2 before Surf_A->"
+					"Classify_trihedral_pairs->classify" << endl;
+			}
+		Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
+		if (f_v) {
+			cout << "surface_create::init2 after Surf_A->"
+					"Classify_trihedral_pairs->classify" << endl;
+			}
+
+
+		arc_lifting_with_two_lines *AL;
+
+		AL = NEW_OBJECT(arc_lifting_with_two_lines);
+
+
+		if (f_v) {
+			cout << "surface_create::init2 before "
+					"AL->create_surface" << endl;
+			}
+		AL->create_surface(Surf_A, arc, line1, line2, verbose_level);
+		if (f_v) {
+			cout << "surface_create::init2 after "
+					"AL->create_surface" << endl;
+			}
+
+		int_vec_copy(AL->coeff, coeffs, 20);
+
+		//Sg = AL->Aut_gens->create_copy();
+		f_has_group = FALSE;
+		f_has_lines = FALSE;
+		sprintf(prefix, "arc_q%d", F->q);
+		sprintf(label_txt, "arc_q%d", F->q);
+		sprintf(label_tex, "arc\\_q%d", F->q);
+
+		int i;
+
+		for (i = 0; i < 6; i++) {
+			sprintf(prefix + strlen(prefix), "_%d", arc[i]);
+			sprintf(label_txt + strlen(label_txt), "_%d", arc[i]);
+			sprintf(label_tex + strlen(label_tex), "\\_%d", arc[i]);
+			}
+
+		//AL->print(fp);
+
+
+		FREE_OBJECT(AL);
+
 
 		FREE_int(arc);
 		}

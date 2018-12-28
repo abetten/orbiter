@@ -2102,6 +2102,7 @@ public:
 	void print_all_points();
 	int rank_point(int *v);
 	void unrank_point(int *v, int rk);
+	void unrank_points(int *v, int *Rk, int sz);
 	int rank_line(int *basis);
 	void unrank_line(int *basis, int rk);
 	void unrank_lines(int *v, int *Rk, int nb);
@@ -2300,6 +2301,8 @@ public:
 		int plane, int verbose_level);
 	int line_of_intersection_of_two_planes_in_three_space(int plane1, 
 		int plane2, int verbose_level);
+	int transversal_to_two_skew_lines_through_a_point(
+		int line1, int line2, int pt, int verbose_level);
 	int 
 	line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(
 		int plane1, int plane2, int verbose_level);

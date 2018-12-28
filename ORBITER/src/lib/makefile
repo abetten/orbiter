@@ -256,6 +256,7 @@ MODULES= \
 		top_level/geometry/BLT_set_create.o \
 		top_level/geometry/BLT_set_create_description.o \
 		top_level/geometry/arc_generator.o \
+		top_level/geometry/arc_lifting_with_two_lines.o \
 		top_level/geometry/arc_lifting.o \
 		top_level/geometry/choose_points_or_lines.o \
 		top_level/geometry/classify_double_sixes.o \

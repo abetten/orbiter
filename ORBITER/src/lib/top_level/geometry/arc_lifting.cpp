@@ -166,75 +166,6 @@ void arc_lifting::freeself()
 	null();
 }
 
-#if 0
-void arc_lifting::create_surface_fancy(surface_with_action *Surf_A, 
-	int *Arc6_in_PG3q, int hyp, int tritangent_plane_idx, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int q;
-	surface *Surf;
-	int Arc6[6];
-	int Plane[12];
-	int base_cols[4];
-	int w[4];
-	int coefficients[3];
-	int trihedral_pair_idx;
-	int position;
-
-	if (f_v) {
-		cout << "arc_lifting::create_surface_fancy" << endl;
-		}
-
-
-	q = Surf_A->F->q;
-	Surf = Surf_A->Surf;
-
-	Surf->tritangent_plane_to_trihedral_pair_and_position(
-		tritangent_plane_idx, 
-		trihedral_pair_idx, position,
-		verbose_level);
-
-
-	if (f_v) {
-		cout << "arc_lifting::create_surface_fancy "
-				"before arc_lifting->init" << endl;
-		}
-	init(Surf_A, Arc6, 6, verbose_level - 2);
-
-	Surf->Gr3->unrank_int_here(Plane, hyp, 0 /*verbose_level */);
-	if (f_v) {
-		cout << "arc_lifting::create_surface_fancy "
-				"Basis for hyperplane hyp=" hyp << ":" << endl;
-		int_matrix_print(Plane, 3, 4);
-		}
-	for (i = 0; i < 6; i++) {
-		Surf->P->unrank_point(w, Arc6_in_PG3q[i]);
-		F->reduce_mod_subspace_and_get_coefficient_vector(
-				3, 4, Plane, base_cols, 
-				w, coefficients, 0 /* verbose_level */);
-		Arc6[i] = Surf->P2->rank_point(coefficients);
-		}
-	if (f_v) {
-		cout << "arc_lifting::create_surface_fancy "
-				"The arc in local coordinates:" << endl;
-		int_vec_print(cout, Arc6, 6);
-		cout << endl;
-		}
-
-	if (f_v) {
-		cout << "arc_lifting::create_surface_fancy "
-				"before arc_lifting->init" << endl;
-		}
-	init(Surf_A, Arc6, 6, verbose_level - 2);
-
-
-
-
-	if (f_v) {
-		cout << "arc_lifting::create_surface_fancy done" << endl;
-		}
-}
-#endif
 
 void arc_lifting::create_surface(surface_with_action *Surf_A, 
 	int *Arc6, int verbose_level)
@@ -279,7 +210,8 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 				"arc_lifting->create_surface_from_trihedral_pair_and_arc"
 				<< endl;
 		}
-	create_surface_from_trihedral_pair_and_arc(t_idx0, planes6, 
+	create_surface_from_trihedral_pair_and_arc(
+		t_idx0, planes6,
 		The_six_plane_equations, The_surface_equations, 
 		lambda, lambda_rk, verbose_level);
 

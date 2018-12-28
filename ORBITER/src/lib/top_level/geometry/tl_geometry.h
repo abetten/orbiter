@@ -98,7 +98,6 @@ public:
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
-		//int check_arc(int *S, int len, int verbose_level);
 	void print(int len, int *S);
 	void print_set_in_affine_plane(int len, int *S);
 	void point_unrank(int *v, int rk);
@@ -114,7 +113,6 @@ public:
 		// compute the incidence matrix of tangent lines 
 		// versus candidate points
 		// extended by external lines versus candidate points
-	//int arc_test(int *S, int len, int verbose_level);
 	void report(isomorph &Iso, int verbose_level);
 	void report_decompositions(isomorph &Iso, ofstream &f, int orbit, 
 		int *data, int verbose_level);
@@ -125,22 +123,10 @@ public:
 
 
 
-#if 0
-int callback_arc_test(exact_cover *EC, int *S, int len, 
-	void *data, int verbose_level);
-int check_arc(int len, int *S, void *data, int verbose_level);
-int placebo_test_function(int len, int *S, void *data, int verbose_level);
-#endif
 void arc_generator_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
-#if 0
-void placebo_early_test_function(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
-	void *data, int verbose_level);
-#endif
 void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case, 
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
@@ -284,6 +270,55 @@ public:
 	void print_isomorphism_types_of_trihedral_pairs(ostream &ost, 
 		vector_ge *cosets);
 };
+
+// #############################################################################
+// arc_lifting_with_two_lines.C:
+// #############################################################################
+
+//! creates a cubic surface from a 6-arc in a plane
+
+
+class arc_lifting_with_two_lines {
+
+public:
+
+	int q;
+	finite_field *F; // do not free
+
+	surface *Surf; // do not free
+
+	surface_with_action *Surf_A;
+
+	int *Arc6;
+	int arc_size; // = 6
+
+	int line1, line2;
+
+	int plane_rk;
+
+	int *Arc_coords; // [6 * 4]
+
+	int P[6];
+
+	int transversal_01;
+	int transversal_23;
+	int transversal_45;
+
+	int transversal[4];
+
+	int input_Lines[9];
+
+	int coeff[20];
+
+	arc_lifting_with_two_lines();
+	~arc_lifting_with_two_lines();
+	void null();
+	void freeself();
+	void create_surface(
+		surface_with_action *Surf_A,
+		int *Arc6, int line1, int line2, int verbose_level);
+};
+
 
 
 // #############################################################################
@@ -1617,7 +1652,7 @@ public:
 	int parameter_a;
 	int f_arc_lifting;
 	const char *arc_lifting_text;
-
+	int f_arc_lifting_with_two_lines;
 
 	
 	surface_create_description();

@@ -105,7 +105,8 @@ void surface_with_action::init(surface *Surf,
 		cout << "surface_with_action::init "
 				"before Recoordinatize->init" << endl;
 		}
-	Recoordinatize->init(4 /*n*/, 2 /*k*/, F, Surf->Gr, A, A2, 
+	Recoordinatize->init(4 /*n*/, 2 /*k*/,
+		F, Surf->Gr, A, A2,
 		TRUE /* f_projective */, f_semilinear, 
 		NULL /*int (*check_function_incremental)(int len,
 			int *S, void *data, int verbose_level)*/,
@@ -190,9 +191,11 @@ int surface_with_action::create_double_six_safely(
 		}
 
 	r1 = create_double_six_from_five_lines_with_a_common_transversal(
-		five_lines, transversal_line, double_six1, 0 /* verbose_level */);
+		five_lines, transversal_line, double_six1,
+		0 /* verbose_level */);
 	r2 = Surf->create_double_six_from_five_lines_with_a_common_transversal(
-			five_lines, double_six2, 0 /* verbose_level */);
+			five_lines, double_six2,
+			0 /* verbose_level */);
 
 	if (r1 && !r2) {
 		cout << "surface_with_action::create_double_six_safely "
@@ -330,7 +333,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 
-		Q = A->element_image_of(P4, Recoordinatize->Elt, 0 /* verbose_level */);
+		Q = A->element_image_of(P4,
+				Recoordinatize->Elt, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ai4image = " << ai4image << " Q=" << Q << endl;
 			}
@@ -477,13 +481,16 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 	// map b4 and b5:
 	image[0] = A2->element_image_of(b4,
-			Recoordinatize->Elt, 0 /* verbose_level */);
+			Recoordinatize->Elt,
+			0 /* verbose_level */);
 	image[1] = A2->element_image_of(b5,
-			Recoordinatize->Elt, 0 /* verbose_level */);
+			Recoordinatize->Elt,
+			0 /* verbose_level */);
 	
 	nb_pts = 0;
 	for (h = 0; h < 2; h++) {
-		Surf->Gr->unrank_int_here(L, image[h], 0 /* verbose_level */);
+		Surf->Gr->unrank_int_here(L,
+				image[h], 0 /* verbose_level */);
 		for (a = 0; a < q + 1; a++) {
 			F->PG_element_unrank_modified(v, 1, 2, a);
 			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
@@ -547,12 +554,14 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 	if (h == 2) {
 		cout << "surface_with_action::create_double_six_from_five_"
-				"lines_with_a_common_transversal could not determine a_6" << endl;
+				"lines_with_a_common_transversal "
+				"could not determine a_6" << endl;
 		exit(1);
 		}
 	if (line3 == -1) {
 		cout << "surface_with_action::create_double_six_from_five_"
-				"lines_with_a_common_transversal line3 == -1" << endl;
+				"lines_with_a_common_transversal "
+				"line3 == -1" << endl;
 		exit(1);
 		}
 	// Map line3 back to get line4 = a_6:
@@ -636,7 +645,8 @@ void surface_with_action::arc_lifting_and_classify(
 
 	SOA->init(this, 
 		AL->Lines27, AL->the_equation, 
-		AL->Aut_gens, FALSE /* f_find_double_six_and_rearrange_lines */, 
+		AL->Aut_gens,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
@@ -667,7 +677,9 @@ void surface_with_action::arc_lifting_and_classify(
 					"before Surf->print_equation_in_trihedral_form" << endl;
 			}
 		Surf->print_equation_in_trihedral_form(fp,
-				AL->The_six_plane_equations, AL->lambda, AL->the_equation);
+				AL->The_six_plane_equations,
+				AL->lambda,
+				AL->the_equation);
 		//Surf->print_equation_in_trihedral_form(fp,
 		//AL->the_equation, AL->t_idx0, lambda);
 		if (f_v) {
@@ -736,8 +748,10 @@ void surface_with_action::arc_lifting_and_classify(
 	int nine_lines_idx[9];
 
 
-	SOA->SO->identify_lines(AL->nine_lines, 9,
-			nine_lines_idx, FALSE /* verbose_level */);
+	SOA->SO->identify_lines(
+			AL->nine_lines, 9,
+			nine_lines_idx,
+			FALSE /* verbose_level */);
 
 
 
@@ -745,7 +759,8 @@ void surface_with_action::arc_lifting_and_classify(
 		fp << "The nine lines in the selected trihedral pair are:" << endl;
 
 		SOA->SO->print_nine_lines_latex(fp,
-				AL->nine_lines, nine_lines_idx);
+				AL->nine_lines,
+				nine_lines_idx);
 
 		//SOA->SO->latex_table_of_trihedral_pairs_and_clebsch_system(
 		//fp, AL->T_idx, AL->nb_T);
@@ -759,7 +774,8 @@ void surface_with_action::arc_lifting_and_classify(
 
 		sprintf(fname_mask, "orbit_half_double_sixes_q%d_iso%d_%%d",
 				q, nb_surfaces);
-		SOA->print_automorphism_group(fp, TRUE /* f_print_orbits */, 
+		SOA->print_automorphism_group(fp,
+			TRUE /* f_print_orbits */,
 			fname_mask);
 		}
 

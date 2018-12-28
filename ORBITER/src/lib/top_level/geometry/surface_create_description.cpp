@@ -34,6 +34,7 @@ void surface_create_description::null()
 	parameter_a = 0;
 	f_arc_lifting = FALSE;
 	arc_lifting_text = NULL;
+	f_arc_lifting_with_two_lines = FALSE;
 }
 
 void surface_create_description::freeself()
@@ -76,6 +77,11 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			f_arc_lifting = TRUE;
 			arc_lifting_text = argv[++i];
 			cout << "-arc_lifting " << arc_lifting_text << endl;
+			}
+		else if (strcmp(argv[i], "-arc_lifting_with_two_lines") == 0) {
+			f_arc_lifting_with_two_lines = TRUE;
+			arc_lifting_text = argv[++i];
+			cout << "-arc_lifting_with_two_lines " << arc_lifting_text << endl;
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			return i;
