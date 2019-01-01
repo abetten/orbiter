@@ -426,6 +426,61 @@ public:
 };
 
 // #############################################################################
+// elliptic_curve.C:
+// #############################################################################
+
+
+// needs sqrt_mod_involved from DISCRETA/global.C
+
+
+//! represents a fixed elliptic curve in Weierstrass form
+
+
+
+class elliptic_curve {
+
+public:
+	int q;
+	int p;
+	int e;
+	int b, c; // the equation of the curve is Y^2 = X^3 + bX + c mod p
+	int nb; // number of points
+	int *T; // [nb * 3] point coordinates
+		// the point at inifinity is last
+	int *A; // [nb * nb] addition table
+	finite_field *F;
+
+
+	elliptic_curve();
+	~elliptic_curve();
+	void null();
+	void freeself();
+	void init(finite_field *F, int b, int c, int verbose_level);
+	void compute_points(int verbose_level);
+	void add_point_to_table(int x, int y, int z);
+	int evaluate_RHS(int x);
+		// evaluates x^3 + bx + c
+	void print_points();
+	void print_points_affine();
+	void addition(
+		int x1, int x2, int x3,
+		int y1, int y2, int y3,
+		int &z1, int &z2, int &z3, int verbose_level);
+	void draw_grid(char *fname, int xmax, int ymax,
+		int f_with_points, int verbose_level);
+	void draw_grid2(mp_graphics &G,
+		int f_with_points, int verbose_level);
+	void make_affine_point(int x1, int x2, int x3,
+		int &a, int &b, int verbose_level);
+	void compute_addition_table(int verbose_level);
+	void print_addition_table();
+	int index_of_point(int x1, int x2, int x3);
+	int order_of_point(int i);
+	void print_all_powers(int i);
+};
+
+
+// #############################################################################
 // flag.C:
 // #############################################################################
 
@@ -611,8 +666,15 @@ void create_orthogonal(int epsilon, int n, finite_field *F,
 void create_hermitian(int n, finite_field *F, 
 	char *fname, int &nb_pts, int *&Pts, 
 	int verbose_level);
+void create_cubic(finite_field *F,
+	char *fname, int &nb_pts, int *&Pts,
+	int verbose_level);
 void create_twisted_cubic(finite_field *F, 
 	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level);
+void create_elliptic_curve(finite_field *F,
+	int elliptic_curve_b, int elliptic_curve_c,
+	char *fname, int &nb_pts, int *&Pts,
 	int verbose_level);
 void create_ttp_code(finite_field *FQ, finite_field *Fq, 
 	int f_construction_A, int f_hyperoval, int f_construction_B, 

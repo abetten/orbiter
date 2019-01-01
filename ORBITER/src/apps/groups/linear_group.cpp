@@ -102,8 +102,8 @@ int main(int argc, const char **argv)
 	schreier *Sch;
 	Sch = NEW_OBJECT(schreier);
 
-	A->Strong_gens->print_generators_tex(cout);
-	A->Strong_gens->print_generators_as_permutations();
+	LG->Strong_gens->print_generators_tex(cout);
+	LG->Strong_gens->print_generators_as_permutations();
 
 	for (i = 0; i < A->degree; i++) {
 		cout << i << " & ";
@@ -111,7 +111,10 @@ int main(int argc, const char **argv)
 		cout << "\\\\" << endl;
 	}
 	cout << "computing orbits on points:" << endl;
-	A->all_point_orbits(*Sch, verbose_level);
+	//A->all_point_orbits(*Sch, verbose_level);
+	A->all_point_orbits_from_generators(*Sch,
+			LG->Strong_gens,
+			verbose_level);
 
 
 	cout << "computing orbits on points done." << endl;

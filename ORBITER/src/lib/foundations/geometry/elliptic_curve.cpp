@@ -8,7 +8,7 @@
 //
 //
 
-#include "orbiter.h"
+#include "foundations.h"
 
 
 elliptic_curve::elliptic_curve()
@@ -113,7 +113,7 @@ void elliptic_curve::compute_points(int verbose_level)
 	if (f_v) {
 		cout << "elliptic_curve::compute_points" << endl;
 		}
-	bound = q + 1 + 2 * ((int)(sqrt(q)) + 1);// Hasse Weil bound
+	bound = q + 1 + 2 * ((int)(sqrt(q)) + 1); // Hasse Weil bound
 	
 
 
@@ -444,10 +444,13 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 	G.draw_axes_and_grid(
 		0., (double)(q - 1), 0., (double)(q - 1),
 		x_stretch, y_stretch,
-		TRUE /* f_x_axis_at_y_min */, TRUE /* f_y_axis_at_x_min */, 
+		TRUE /* f_x_axis_at_y_min */,
+		TRUE /* f_y_axis_at_x_min */,
 		1 /* x_mod */, 1 /* y_mod */, 1, 1, 
-		-2. /* x_labels_offset */, -2. /* y_labels_offset */, 
-		0.5 /* x_tick_half_width */, 0.5 /* y_tick_half_width */, 
+		-2. /* x_labels_offset */,
+		-2. /* y_labels_offset */,
+		0.5 /* x_tick_half_width */,
+		0.5 /* y_tick_half_width */,
 		TRUE /* f_v_lines */, 1 /* subdivide_v */,
 		TRUE /* f_h_lines */, 1 /* subdivide_h */);
 

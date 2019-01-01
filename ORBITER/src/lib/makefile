@@ -77,6 +77,7 @@ MODULES= \
 		foundations/geometry/desarguesian_spread.o \
 		foundations/geometry/eckardt_point_info.o \
 		foundations/geometry/eckardt_point.o \
+		foundations/geometry/elliptic_curve.o \
 		foundations/geometry/flag.o \
 		foundations/geometry/geo_parameter.o \
 		foundations/geometry/geometric_object.o \
@@ -249,7 +250,6 @@ MODULES= \
 		DISCRETA/unipoly.o \
 		DISCRETA/vector.o \
 		top_level/algebra_and_number_theory/analyze_group.o \
-		top_level/algebra_and_number_theory/elliptic_curve.o \
 		top_level/algebra_and_number_theory/extra.o \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/young.o \

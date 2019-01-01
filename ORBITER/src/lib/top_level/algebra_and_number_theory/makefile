@@ -7,7 +7,6 @@ LFLAGS = -lm
 
 MODULES = \
 	analyze_group.o \
-	elliptic_curve.o \
 	extra.o \
 	factor_group.o \
 	young.o 

@@ -98,18 +98,7 @@ int main(int argc, const char **argv)
 			A->element_invert(BC->Sg->gens->ith(i),
 					Elt2, 0 /*verbose_level*/);
 	
-			BC->Surf->substitute_semilinear(SC->coeffs,
-					coeffs_out, FALSE /* f_semilinear */, 0,
-					Elt2, 0 /*verbose_level*/);
 
-			PG_element_normalize(*SC->F, coeffs_out, 1, 20);
-
-
-			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {
-				cout << "error, the transformation does not "
-						"preserve the equation of the surface" << endl;
-				exit(1);
-				}
 			cout << "Generator " << i << " / " << SC->Sg->gens->len
 					<< " is good" << endl;
 			}
