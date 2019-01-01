@@ -68,7 +68,7 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	int j;
+	//int j;
 	int f_v = (verbose_level >= 1);
 
 
@@ -283,8 +283,8 @@ int main(int argc, const char **argv)
 			int *Arc_iso; // [72]
 			int *Clebsch_map; // [nb_pts]
 			int *Clebsch_coeff; // [nb_pts * 4]
-			int line_a, line_b;
-			int transversal_line;
+			//int line_a, line_b;
+			//int transversal_line;
 			int tritangent_plane_rk;
 			int plane_rk_global;
 			int ds, ds_row;
@@ -309,12 +309,30 @@ int main(int argc, const char **argv)
 
 
 			fp << endl;
-			fp << "\\bigskip" << endl;
+			fp << "\\clearpage" << endl;
 			fp << endl;
 
+
+
+			fp << "\\section{Six-arcs not on a conic}" << endl;
+			fp << endl;
+
+
+			//fp << "The six-arcs not on a conic are:\\\\" << endl;
+			Six_arcs->report_latex(fp);
+
+
+
+
+#if 0
+			fp << endl;
+			fp << "\\clearpage" << endl;
+			fp << endl;
 
 			fp << "\\section{Clebsch maps in detail}" << endl;
 			fp << endl;
+
+
 
 
 			Arc_iso = NEW_int(72);
@@ -428,6 +446,8 @@ int main(int argc, const char **argv)
 						exit(1);
 						}
 
+					fp << "The arc is isomorphic to arc " << orbit_at_level
+							<< " in the original classification.\\\\" << endl;
 					fp << "The arc is isomorphic to arc " << idx
 							<< " in the list.\\\\" << endl;
 					Arc_iso[2 * ds + ds_row] = idx;
@@ -440,8 +460,6 @@ int main(int argc, const char **argv)
 					}
 				}
 			
-			FREE_int(Clebsch_map);
-			FREE_int(Clebsch_coeff);
 
 			
 			fp << "The isomorphism type of arc associated with "
@@ -451,8 +469,208 @@ int main(int argc, const char **argv)
 					Arc_iso, 36, 2, TRUE);
 			fp << "$$" << endl;
 
-			//fp << "The six-arcs not on a conic are:\\\\" << endl;
-			Six_arcs->report_latex(fp);
+			FREE_int(Arc_iso);
+			FREE_int(Clebsch_map);
+			FREE_int(Clebsch_coeff);
+#endif
+
+
+#if 1
+			fp << endl;
+			fp << "\\clearpage" << endl;
+			fp << endl;
+
+
+			fp << "\\section{Clebsch maps in detail by orbits "
+					"on half-double sixes}" << endl;
+			fp << endl;
+
+
+
+			fp << "There are " << SoA->Orbits_on_single_sixes->nb_orbits
+					<< "orbits on half double sixes\\\\" << endl;
+
+			Arc_iso = NEW_int(SoA->Orbits_on_single_sixes->nb_orbits);
+			Clebsch_map = NEW_int(SO->nb_pts);
+			Clebsch_coeff = NEW_int(SO->nb_pts * 4);
+
+			int j, f, l, k;
+
+			for (j = 0; j < SoA->Orbits_on_single_sixes->nb_orbits; j++) {
+
+				int line1, line2, transversal_line;
+
+				if (f_v) {
+					cout << "surface_with_action::arc_lifting_and_classify "
+						"orbit on single sixes " << j << " / "
+						<< SoA->Orbits_on_single_sixes->nb_orbits << ":" << endl;
+				}
+
+				fp << "\\subsection*{Orbit on single sixes " << j << " / "
+					<< SoA->Orbits_on_single_sixes->nb_orbits << "}" << endl;
+
+				f = SoA->Orbits_on_single_sixes->orbit_first[j];
+				l = SoA->Orbits_on_single_sixes->orbit_len[j];
+				if (f_v) {
+					cout << "orbit f=" << f <<  " l=" << l << endl;
+					}
+				k = SoA->Orbits_on_single_sixes->orbit[f];
+
+				if (f_v) {
+					cout << "The half double six is no " << k << " : ";
+					int_vec_print(cout, SoA->Surf->Half_double_sixes + k * 6, 6);
+					cout << endl;
+					}
+
+				int h;
+
+				fp << "The half double six is no " << k << "$ = "
+						<< Surf->Half_double_six_label_tex[k] << "$ : $";
+				int_vec_print(fp, Surf->Half_double_sixes + k * 6, 6);
+				fp << " = \\{" << endl;
+				for (h = 0; h < 6; h++) {
+					fp << Surf->Line_label_tex[
+							Surf->Half_double_sixes[k * 6 + h]];
+					if (h < 6 - 1) {
+						fp << ", ";
+						}
+					}
+				fp << "\\}$\\\\" << endl;
+
+				ds = k / 2;
+				ds_row = k % 2;
+
+				SC->Surf->prepare_clebsch_map(
+						ds, ds_row,
+						line1, line2,
+						transversal_line,
+						0 /*verbose_level */);
+
+				fp << endl;
+				fp << "\\bigskip" << endl;
+				fp << endl;
+				fp << "\\subsection{Clebsch map for double six "
+						<< ds << ", row " << ds_row << "}" << endl;
+				fp << endl;
+
+
+
+				cout << "computing clebsch map:" << endl;
+				SO->compute_clebsch_map(line1, line2,
+					transversal_line,
+					tritangent_plane_rk,
+					Clebsch_map,
+					Clebsch_coeff,
+					verbose_level);
+
+
+				plane_rk_global = SO->Tritangent_planes[
+					SO->Eckardt_to_Tritangent_plane[
+						tritangent_plane_rk]];
+
+				int Arc[6];
+				int Arc2[6];
+				int Blown_up_lines[6];
+				int perm[6];
+
+				SO->clebsch_map_find_arc_and_lines(
+						Clebsch_map,
+						Arc,
+						Blown_up_lines,
+						0 /* verbose_level */);
+
+				for (h = 0; h < 6; h++) {
+					perm[h] = h;
+					}
+
+				int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
+				for (h = 0; h < 6; h++) {
+					Arc2[h] = Arc[perm[h]];
+					}
+
+
+				fp << endl;
+				fp << "\\bigskip" << endl;
+				fp << endl;
+				//fp << "\\section{Clebsch map}" << endl;
+				//fp << endl;
+				fp << "Line 1 = $";
+				fp << SC->Surf->Line_label_tex[line1];
+				fp << "$\\\\" << endl;
+				fp << "Line 2 = $";
+				fp << SC->Surf->Line_label_tex[line2];
+				fp << "$\\\\" << endl;
+				fp << "Transversal line $";
+				fp << SC->Surf->Line_label_tex[transversal_line];
+				fp << "$\\\\" << endl;
+				fp << "Image plane $\\pi_{" << tritangent_plane_rk
+						<< "}=" << plane_rk_global << "=$\\\\" << endl;
+				fp << "$$" << endl;
+
+				fp << "\\left[" << endl;
+				SC->Surf->Gr3->print_single_generator_matrix_tex(
+						fp, plane_rk_global);
+				fp << "\\right]," << endl;
+
+				fp << "$$" << endl;
+				fp << "Arc $";
+				int_set_print_tex(fp, Arc2, 6);
+				fp << "$\\\\" << endl;
+				fp << "Half double six: $";
+				int_set_print_tex(fp, Blown_up_lines, 6);
+				fp << "=\\{";
+				for (h = 0; h < 6; h++) {
+					fp << SC->Surf->Line_label_tex[Blown_up_lines[h]];
+					fp << ", ";
+					}
+				fp << "\\}$\\\\" << endl;
+
+				fp << "The arc consists of the following "
+						"points:\\\\" << endl;
+				display_table_of_projective_points(fp,
+						SC->F, Arc2, 6, 3);
+
+				int orbit_at_level, idx;
+				Six_arcs->Gen->gen->identify(Arc2, 6,
+						transporter, orbit_at_level,
+						0 /*verbose_level */);
+
+
+				if (!int_vec_search(Six_arcs->Not_on_conic_idx,
+					Six_arcs->nb_arcs_not_on_conic,
+					orbit_at_level,
+					idx)) {
+					cout << "could not find orbit" << endl;
+					exit(1);
+					}
+
+				fp << "The arc is isomorphic to arc " << orbit_at_level
+						<< " in the original classification.\\\\" << endl;
+				fp << "The arc is isomorphic to arc " << idx
+						<< " in the list.\\\\" << endl;
+				Arc_iso[j] = idx;
+
+
+
+				SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
+
+			} // next j
+
+			fp << "The isomorphism type of arc associated with "
+					"each half-double six is:" << endl;
+			fp << "$$" << endl;
+			int_vec_print(fp,
+					Arc_iso, SoA->Orbits_on_single_sixes->nb_orbits);
+			fp << "$$" << endl;
+
+
+
+			FREE_int(Arc_iso);
+			FREE_int(Clebsch_map);
+			FREE_int(Clebsch_coeff);
+
+#endif
+
 
 
 			if (f_quartic) {

@@ -41,8 +41,6 @@ typedef class translation_plane_via_andre_model
 typedef class isomorph_arguments isomorph_arguments;
 	// added January 27, 2016
 typedef struct isomorph_worker_data isomorph_worker_data;
-typedef class elliptic_curve elliptic_curve;
-	// added November 19, 2014
 typedef class surface_classify_wedge surface_classify_wedge;
 	// added September 2, 2016
 typedef class arc_generator arc_generator;

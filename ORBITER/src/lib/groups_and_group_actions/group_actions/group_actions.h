@@ -326,6 +326,9 @@ public:
 		int *gen_handle, int pt, int *transporter, 
 		int verbose_level);
 	void all_point_orbits(schreier &Schreier, int verbose_level);
+	void all_point_orbits_from_generators(schreier &Schreier,
+			strong_generators *SG,
+			int verbose_level);
 	void compute_stabilizer_orbits(partitionstack *&Staborbits, 
 		int verbose_level);
 	int check_if_in_set_stabilizer(int *Elt, 

@@ -940,6 +940,68 @@ void create_hermitian(int n, finite_field *F,
 }
 
 
+void create_cubic(finite_field *F,
+	char *fname, int &nb_pts, int *&Pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	projective_space *P;
+	int n = 2;
+	int i, j, a, d, s, t;
+	int *v;
+	int v2[2];
+	int q = F->q;
+
+	d = n + 1;
+	P = NEW_OBJECT(projective_space);
+
+
+	P->init(n, F,
+		FALSE /* f_init_incidence_structure */,
+		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
+	nb_pts = q + 1;
+
+	v = NEW_int(d);
+	Pts = NEW_int(P->N_points);
+
+	if (f_v) {
+		cout << "i : point : projective rank" << endl;
+		}
+	for (i = 0; i < nb_pts; i++) {
+		F->PG_element_unrank_modified(v2, 1, 2, i);
+		s = v2[0];
+		t = v2[1];
+		for (j = 0; j < d; j++) {
+			v[j] = F->mult(F->power(s, n - j), F->power(t, j));
+		}
+		a = P->rank_point(v);
+		Pts[i] = a;
+		if (f_v) {
+			cout << setw(4) << i << " : ";
+			int_vec_print(cout, v, d);
+			cout << " : " << setw(5) << a << endl;
+			}
+		}
+
+#if 0
+	cout << "list of points on the cubic:" << endl;
+	cout << N << endl;
+	for (i = 0; i < N; i++) {
+		cout << L[i] << " ";
+		}
+	cout << endl;
+#endif
+
+	//char fname[1000];
+	sprintf(fname, "cubic_%d.txt", q);
+	//write_set_to_file(fname, L, N, verbose_level);
+
+	FREE_OBJECT(P);
+	FREE_int(v);
+	//FREE_int(L);
+}
+
+
 void create_twisted_cubic(finite_field *F, 
 	char *fname, int &nb_pts, int *&Pts, 
 	int verbose_level)
@@ -997,6 +1059,71 @@ void create_twisted_cubic(finite_field *F,
 	sprintf(fname, "twisted_cubic_%d.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
+	FREE_OBJECT(P);
+	FREE_int(v);
+	//FREE_int(L);
+}
+
+void create_elliptic_curve(finite_field *F,
+	int elliptic_curve_b, int elliptic_curve_c,
+	char *fname, int &nb_pts, int *&Pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	projective_space *P;
+	int n = 2;
+	int i, a, d;
+	int *v;
+	int q = F->q;
+	elliptic_curve *E;
+
+	d = n + 1;
+	P = NEW_OBJECT(projective_space);
+
+
+	P->init(n, F,
+		FALSE /* f_init_incidence_structure */,
+		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
+	nb_pts = q + 1;
+
+	E = NEW_OBJECT(elliptic_curve);
+	v = NEW_int(n + 1);
+	Pts = NEW_int(P->N_points);
+
+	E->init(F, elliptic_curve_b, elliptic_curve_c,
+			verbose_level);
+
+	nb_pts = E->nb;
+
+	if (f_v) {
+		cout << "i : point : projective rank" << endl;
+		}
+	for (i = 0; i < nb_pts; i++) {
+		F->PG_element_rank_modified(E->T + i * d, 1, d, a);
+		Pts[i] = a;
+		if (f_v) {
+			cout << setw(4) << i << " : ";
+			int_vec_print(cout, E->T + i * d, d);
+			cout << " : " << setw(5) << a << endl;
+			}
+		}
+
+#if 0
+	cout << "list of points on the elliptic curve:" << endl;
+	cout << N << endl;
+	for (i = 0; i < N; i++) {
+		cout << L[i] << " ";
+		}
+	cout << endl;
+#endif
+
+	//char fname[1000];
+	sprintf(fname, "elliptic_curve_b%d_c%d_q%d.txt",
+			elliptic_curve_b, elliptic_curve_c, q);
+	//write_set_to_file(fname, L, N, verbose_level);
+
+
+	FREE_OBJECT(E);
 	FREE_OBJECT(P);
 	FREE_int(v);
 	//FREE_int(L);

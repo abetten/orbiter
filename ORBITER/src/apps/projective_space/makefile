@@ -16,6 +16,7 @@ all: test_PG.out \
 	analyze_q_designs.out  \
 	hill.out \
 	determine_conic.out \
+	determine_cubic.out \
 	determine_quadric.out \
 	ovoid.out \
 	cheat_sheet_PG.out \
@@ -67,6 +68,9 @@ hill.out:  hill.o;
 
 determine_conic.out:  determine_conic.o;
 	$(DISCRETA_CPP)  determine_conic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+determine_cubic.out:  determine_cubic.o;
+	$(DISCRETA_CPP)  determine_cubic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 determine_quadric.out:  determine_quadric.o;
 	$(DISCRETA_CPP)  determine_quadric.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

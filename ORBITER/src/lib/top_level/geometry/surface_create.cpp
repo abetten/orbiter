@@ -555,6 +555,14 @@ void surface_create::apply_transformations(
 			cout << "$$" << endl;
 			}
 		
+#if 1
+			matrix_group *M;
+
+			M = A->G.matrix_grp;
+			M->substitute_surface_eqation(Elt3,
+					coeffs, coeffs_out, Surf,
+					verbose_level - 1);
+#else
 	
 		if (f_semilinear) {
 			int n = 4;
@@ -566,6 +574,7 @@ void surface_create::apply_transformations(
 			Surf->substitute_semilinear(coeffs, coeffs_out,
 					FALSE, 0, Elt3, verbose_level);
 			}
+#endif
 	
 		if (f_v) {
 			cout << "surface_create::apply_transformations "

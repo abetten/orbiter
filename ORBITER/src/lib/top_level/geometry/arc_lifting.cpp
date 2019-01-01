@@ -212,8 +212,10 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		}
 	create_surface_from_trihedral_pair_and_arc(
 		t_idx0, planes6,
-		The_six_plane_equations, The_surface_equations, 
-		lambda, lambda_rk, verbose_level);
+		The_six_plane_equations,
+		The_surface_equations,
+		lambda, lambda_rk,
+		verbose_level);
 
 	if (f_v) {
 		print_equations();
@@ -748,17 +750,21 @@ void arc_lifting::loop_over_trihedral_pairs(
 				cout << "mtx->f_semilinear=" << mtx->f_semilinear << endl;
 				}
 
+
+#if 1
+			matrix_group *M;
+
+			M = Surf_A->A->G.matrix_grp;
+			M->substitute_surface_eqation(Elt4,
+					the_equation, coeff_out, Surf,
+					verbose_level - 1);
+#else
+
 			if (mtx->f_semilinear) {
 				int n, frob; //, e;
 				
 				n = mtx->n;
 				frob = Elt4[n * n];
-#if 0
-				e = mtx->GFq->e;
-				if (frob) {
-					frob = e - frob;
-					}
-#endif
 				Surf->substitute_semilinear(the_equation, 
 					coeff_out, 
 					mtx->f_semilinear, 
@@ -773,6 +779,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 					Elt4, 
 					0 /* verbose_level */);
 				}
+#endif
 
 			F->PG_element_normalize(coeff_out, 1, 20);
 
@@ -970,18 +977,10 @@ void arc_lifting::create_the_six_plane_equations(
 	int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6,
 			row_col_Eckardt_points, 6);
 
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[0] * 4,
-			The_six_plane_equations, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[1] * 4,
-			The_six_plane_equations + 4, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[2] * 4,
-			The_six_plane_equations + 8, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[3] * 4,
-			The_six_plane_equations + 12, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[4] * 4,
-			The_six_plane_equations + 16, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[5] * 4,
-			The_six_plane_equations + 20, 4);
+	for (i = 0; i < 6; i++) {
+		int_vec_copy(The_plane_equations + row_col_Eckardt_points[i] * 4,
+				The_six_plane_equations + i * 4, 4);
+	}
 
 	if (f_v) {
 		cout << "arc_lifting::create_the_six_plane_equations" << endl;
@@ -1333,16 +1332,6 @@ void arc_lifting::print(ostream &ost)
 
 void arc_lifting::print_Eckardt_point_data(ostream &ost)
 {
-#if 0
-		int *bisecants; // [15]
-		int *Intersections; // [15 * 15]
-		int *B_pts; // [nb_B_pts]
-		int *B_pts_label; // [nb_B_pts * 3]
-		int nb_B_pts; // at most 15
-		int *E2; // [6 * 5 * 2] Eckardt points of the second type 
-		int nb_E2; // at most 30
-		int *conic_coefficients; // [6 * 6]
-#endif
 	print_bisecants(ost);
 	print_intersections(ost);
 	print_conics(ost);
@@ -2073,17 +2062,19 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 			ost << "$$" << endl;
 
 
+#if 1
+			//matrix_group *M;
+
+			//M = A->G.matrix_grp;
+			mtx->substitute_surface_eqation(Elt4,
+					the_equation, coeff_out, Surf,
+					0 /*verbose_level - 1*/);
+#else
 			if (mtx->f_semilinear) {
 				int n, frob; //, e;
 				
 				n = mtx->n;
 				frob = Elt4[n * n];
-#if 0
-				e = mtx->GFq->e;
-				if (frob) {
-					frob = e - frob;
-					}
-#endif
 				Surf->substitute_semilinear(the_equation, 
 					coeff_out, 
 					mtx->f_semilinear, 
@@ -2098,6 +2089,8 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 					Elt4, 
 					0 /* verbose_level */);
 				}
+#endif
+
 
 			F->PG_element_normalize(coeff_out, 1, 20);
 

@@ -1202,6 +1202,20 @@ void action::all_point_orbits(schreier &Schreier, int verbose_level)
 	Schreier.compute_all_point_orbits(verbose_level);
 }
 
+void action::all_point_orbits_from_generators(schreier &Schreier,
+		strong_generators *SG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::all_point_orbits_from_generators" << endl;
+		}
+	Schreier.init(this);
+	Schreier.init_generators(*SG->gens /* *strong_generators */);
+	Schreier.compute_all_point_orbits(verbose_level);
+}
+
 void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
 		int verbose_level)
 {

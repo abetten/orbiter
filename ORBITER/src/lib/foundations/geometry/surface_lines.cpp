@@ -294,7 +294,8 @@ int surface::compute_system_in_RREF(
 		}
 
 	if (nb_pts > max_pts) {
-		cout << "surface::compute_system_in_RREF nb_pts > max_pts" << endl;
+		cout << "surface::compute_system_in_RREF "
+				"nb_pts > max_pts" << endl;
 		exit(1);
 		}
 	if (FALSE) {
@@ -337,6 +338,7 @@ int surface::compute_system_in_RREF(
 		}
 	return r;
 }
+
 void surface::compute_intersection_points(int *Adj,
 	int *Lines, int nb_lines,
 	int *&Intersection_pt,

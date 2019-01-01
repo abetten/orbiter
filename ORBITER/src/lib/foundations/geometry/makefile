@@ -15,6 +15,7 @@ MODULES = \
 	desarguesian_spread.o \
 	eckardt_point_info.o \
 	eckardt_point.o \
+	elliptic_curve.o \
 	flag.o \
 	geo_parameter.o \
 	geometric_object.o \

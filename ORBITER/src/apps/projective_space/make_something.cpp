@@ -70,7 +70,12 @@ int main(int argc, const char **argv)
 
 	int f_hermitian = FALSE;
 
-	int f_twisted_cubic = FALSE;
+	int f_cubic = FALSE; // twisted cubic in PG(2,q)
+	int f_twisted_cubic = FALSE; // twisted cubic in PG(3,q)
+
+	int f_elliptic_curve = FALSE;
+	int elliptic_curve_b = 0;
+	int elliptic_curve_c = 0;
 
 	int f_Hill_cap_56 = FALSE;
 
@@ -210,9 +215,20 @@ int main(int argc, const char **argv)
 			f_hermitian = TRUE;
 			cout << "-hermitian" << endl;
 			}
+		else if (strcmp(argv[i], "-cubic") == 0) {
+			f_cubic = TRUE;
+			cout << "-cubic " << endl;
+			}
 		else if (strcmp(argv[i], "-twisted_cubic") == 0) {
 			f_twisted_cubic = TRUE;
 			cout << "-twisted_cubic " << endl;
+			}
+		else if (strcmp(argv[i], "-elliptic_curve") == 0) {
+			f_elliptic_curve = TRUE;
+			elliptic_curve_b = atoi(argv[++i]);
+			elliptic_curve_c = atoi(argv[++i]);
+			cout << "-elliptic_curve " << elliptic_curve_b
+					<< " " << elliptic_curve_c << endl;
 			}
 		else if (strcmp(argv[i], "-Hill_cap_56") == 0) {
 			f_Hill_cap_56 = TRUE;
@@ -460,9 +476,20 @@ int main(int argc, const char **argv)
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
+	else if (f_cubic) {
+		create_cubic(F,
+			fname, nb_pts, Pts,
+			verbose_level);
+		}
 	else if (f_twisted_cubic) {
 		create_twisted_cubic(F, 
 			fname, nb_pts, Pts, 
+			verbose_level);
+		}
+	else if (f_elliptic_curve) {
+		create_elliptic_curve(F,
+			elliptic_curve_b, elliptic_curve_c,
+			fname, nb_pts, Pts,
 			verbose_level);
 		}
 	else if (f_Hill_cap_56) {

@@ -591,8 +591,10 @@ void surface_with_action::arc_lifting_and_classify(
 
 
 	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify arc = "
-				<< arc_label << " nb_surfaces = " << nb_surfaces << endl;
+		cout << "surface_with_action::arc_lifting_and_classify "
+				"arc = " << arc_label
+				<< " nb_surfaces = " << nb_surfaces
+				<< endl;
 		}
 
 
@@ -652,19 +654,6 @@ void surface_with_action::arc_lifting_and_classify(
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"after SOA->init" << endl;
 		}
-#if 0
-	if (!SOA->init_equation(this, AL->the_equation, 
-		AL->Aut_gens, verbose_level)) {
-		cout << "surface_with_action::arc_lifting_and_classify "
-				"the surface does not have 27 lines" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify "
-				"after SOA->init" << endl;
-		}
-#endif
-
 
 
 	if (f_log_fp) {
@@ -1043,7 +1032,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< Surf->Line_label_tex[line2] 
 				<< "$\\\\" << endl;
 
-			SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
+			//SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
 			}
 
 		

@@ -1551,28 +1551,9 @@ void surface_classify_wedge::identify_surface(
 
 	mtx = A->G.matrix_grp;
 	
-#if 1
 	mtx->substitute_surface_eqation(Elt_isomorphism_inv,
 			coeff_of_given_surface, coeffs_transformed, Surf,
 			verbose_level - 1);
-#else
-	if (mtx->f_semilinear) {
-		int n, frob;
-
-		n = mtx->n;
-		frob = Elt_isomorphism[n * n];
-		Surf->substitute_semilinear(coeff_of_given_surface,
-				coeffs_transformed, TRUE, frob,
-				Elt_isomorphism_inv,
-				0 /* verbose_level */);
-		}
-	else {
-		Surf->substitute_semilinear(coeff_of_given_surface,
-				coeffs_transformed, FALSE, 0,
-				Elt_isomorphism_inv,
-				0 /* verbose_level */);
-		}
-#endif
 
 #if 0
 	cout << "coeffs_transformed = " << endl;
