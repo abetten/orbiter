@@ -39,7 +39,10 @@ public:
 
 int t0; // the system time when the program started
 
-void do_collate(int N, const char *collate_output_file_mask, const char *collated_fname, int verbose_level);
+void do_collate(int N,
+		const char *collate_output_file_mask,
+		const char *collated_fname,
+		int verbose_level);
 void do_scheduling(int N, int *list_of_cases, 
 	int J, 
 	int f_input_file_mask, const char *input_file_mask, 

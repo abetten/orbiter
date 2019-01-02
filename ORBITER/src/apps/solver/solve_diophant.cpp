@@ -95,7 +95,8 @@ int main(int argc, char **argv)
 			f_list_of_cases = TRUE;
 			fname_list_of_cases = argv[++i];
 			fname_template = argv[++i];
-			cout << "-list_of_cases " << fname_list_of_cases << " " << fname_template << endl;
+			cout << "-list_of_cases " << fname_list_of_cases
+					<< " " << fname_template << endl;
 			}
 		else if (strcmp(argv[i], "-prefix") == 0) {
 			f_prefix = TRUE;
@@ -137,7 +138,8 @@ int main(int argc, char **argv)
 			ymax_in = atoi(argv[++i]);
 			xmax_out = atoi(argv[++i]);
 			ymax_out = atoi(argv[++i]);
-			cout << "-coordinates " << xmax_in << " " << ymax_in << " " << xmax_out << " " << ymax_out << endl;
+			cout << "-coordinates " << xmax_in << " " << ymax_in
+				<< " " << xmax_out << " " << ymax_out << endl;
 			}
 		else if (strcmp(argv[i], "-test") == 0) {
 			f_test = TRUE;
@@ -156,7 +158,8 @@ int main(int argc, char **argv)
 		else if (strcmp(argv[i], "-RHS_row") == 0) {
 			RHS_row[RHS_row_nb] = atoi(argv[++i]);
 			RHS_row_value[RHS_row_nb] = atoi(argv[++i]);
-			cout << "-RHS_row " << RHS_row[RHS_row_nb] << " " << RHS_row_value[RHS_row_nb] << endl;
+			cout << "-RHS_row " << RHS_row[RHS_row_nb]
+					<< " " << RHS_row_value[RHS_row_nb] << endl;
 			RHS_row_nb++;
 			}
 		else if (strcmp(argv[i], "-sum") == 0) {
@@ -176,7 +179,8 @@ int main(int argc, char **argv)
 			xmax_variable[nb_xmax] = atoi(argv[++i]);
 			xmax_value[nb_xmax] = atoi(argv[++i]);
 			nb_xmax++;
-			cout << "-xmax " << xmax_variable[nb_xmax - 1] << " " << xmax_value[nb_xmax - 1] << endl;
+			cout << "-xmax " << xmax_variable[nb_xmax - 1]
+				<< " " << xmax_value[nb_xmax - 1] << endl;
 			}
 		else if (strcmp(argv[i], "-scale") == 0) {
 			f_scale = TRUE;
@@ -232,7 +236,8 @@ int main(int argc, char **argv)
 		}
 
 	if (f_v) {
-		cout << "found a system with " << Dio->m << " rows and " << Dio->n << " columns, the sum is " << Dio->sum << endl;
+		cout << "found a system with " << Dio->m << " rows and "
+				<< Dio->n << " columns, the sum is " << Dio->sum << endl;
 		}
 
 
@@ -260,7 +265,8 @@ int main(int argc, char **argv)
 		sprintf(fname_base, "%s", fname);
 		replace_extension_with(fname_base, "_drawing");		
 		//Dio->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out);
-		Dio->draw_partitioned(fname_base, xmax_in, ymax_in, xmax_out, ymax_out, 
+		Dio->draw_partitioned(fname_base,
+			xmax_in, ymax_in, xmax_out, ymax_out,
 			FALSE, 0, 0,
 			verbose_level);
 		}
@@ -289,7 +295,8 @@ int main(int argc, char **argv)
 
 		replace_extension_with(fname_base, "_drawing");
 		
-		CG->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out, scale, line_width);
+		CG->draw_it(fname_base,
+				xmax_in, ymax_in, xmax_out, ymax_out, scale, line_width);
 
 		
 		FREE_OBJECT(CG);
@@ -339,7 +346,8 @@ int main(int argc, char **argv)
 			ofstream fp(fname_base);
 			Dio->latex_it(fp);
 		}
-		cout << "Written file " << fname_base << " of size " << file_size(fname_base) << endl;
+		cout << "Written file " << fname_base << " of size "
+				<< file_size(fname_base) << endl;
 		}
 	
 	if (f_analyze) {
@@ -368,7 +376,8 @@ int main(int argc, char **argv)
 			cout << "solving with DLX" << endl;
 			Dio->solve_all_DLX_with_RHS(f_tree, fname_tree, verbose_level - 2);
 			}
-		cout << "Found " << Dio->_resultanz << " solutions with " << Dio->nb_steps_betten << " backtrack steps" << endl;
+		cout << "Found " << Dio->_resultanz << " solutions with "
+				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
 		if (f_output_file) {
 			if (f_draw_solutions) {

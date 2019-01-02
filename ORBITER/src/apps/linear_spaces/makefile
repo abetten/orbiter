@@ -6,13 +6,17 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all:  maxfit.out \
+all:  cc2widor.out \
+		maxfit.out \
 		packing.out \
 		tdo_can.out \
 		tdo_start.out \
 		tdo_refine.out \
 		tdo_print.out \
 		widor.out
+
+cc2widor.out:  cc2widor.o 
+	$(DISCRETA_CPP)  cc2widor.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 maxfit.out:  maxfit.o ;
 	$(DISCRETA_CPP)  maxfit.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

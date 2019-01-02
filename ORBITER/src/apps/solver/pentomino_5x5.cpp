@@ -505,7 +505,9 @@ void decode_assembly(int *set)
 		x = tt % 5;
 		y = tt / 5;
 		rr = R[h][r];
-		cout << "h=" << h << " r=" << r << " t=" << t << " tt=" << tt << " x=" << x << " y=" << y << " rr=" << rr << endl;
+		cout << "h=" << h << " r=" << r << " t=" << t
+				<< " tt=" << tt
+				<< " x=" << x << " y=" << y << " rr=" << rr << endl;
 		}
 }
 
@@ -584,7 +586,9 @@ void draw_it(ostream &ost, int *sol)
 	ost << "\\end{tikzpicture}" << endl;
 }
 
-void compute_image_function(set_of_sets *S, void *compute_image_data, int elt_idx, int gen_idx, int &idx_of_image, int verbose_level)
+void compute_image_function(set_of_sets *S,
+		void *compute_image_data, int elt_idx, int gen_idx, int &idx_of_image,
+		int verbose_level)
 // implements a rotation by 90 degree:
 {
 	//int verbose_level = 0;
@@ -600,7 +604,8 @@ void compute_image_function(set_of_sets *S, void *compute_image_data, int elt_id
 
 
 	if (f_v) {
-		cout << "compute_image_function computing image of solution " << elt_idx << " = ";
+		cout << "compute_image_function "
+				"computing image of solution " << elt_idx << " = ";
 		int_vec_print(cout, set1, sz);
 		cout << " under generator " << gen_idx << endl;
 		}
@@ -623,7 +628,8 @@ void compute_image_function(set_of_sets *S, void *compute_image_data, int elt_id
 			}
 		b = code_piece(h, r, t);
 		if (f_vv) {
-			cout << "b=" << b << " h=" << h << " r=" << r << " t=" << t << endl;
+			cout << "b=" << b << " h=" << h
+					<< " r=" << r << " t=" << t << endl;
 			}
 		set2[i] = b;
 		}
@@ -693,7 +699,8 @@ void turn_piece(int &h, int &r, int &t, int verbose_level)
 	r %= R_length[h];
 	tt = tyy * 5 + txx;
 	if (!int_vec_search_linear(T[h], T_length[h], tt, t)) {
-		cout << "turn_piece cannot find tt=" << tt << " for h=" << h << endl;
+		cout << "turn_piece cannot find "
+				"tt=" << tt << " for h=" << h << endl;
 		exit(1);
 		}
 }
@@ -1174,6 +1181,7 @@ void make_coefficient_matrix(diophant *D)
 	for (i = 0; i < D->m; i++) {
 		D->RHS[i] = 1;
 		}
+	D->f_has_sum = TRUE;
 	D->sum = 5;
 }
 
