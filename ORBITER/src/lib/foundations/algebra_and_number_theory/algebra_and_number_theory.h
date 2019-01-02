@@ -651,7 +651,10 @@ public:
 	int beta_trinomial(int q, int beta, int a1, int a2, int a3);
 	int T3product2(int a1, int a2);
 
-	// finite_field_projective.cpp:
+	// #########################################################################
+	// finite_field_projective.cpp
+	// #########################################################################
+
 	void PG_element_normalize(
 			int *v, int stride, int len);
 	// last non-zero element made one
@@ -666,6 +669,8 @@ public:
 			int *v, int stride, int len, int &a);
 	void PG_element_unrank_fining(
 			int *v, int len, int a);
+	int PG_element_rank_fining(
+			int *v, int len);
 	void PG_element_unrank_gary_cook(
 			int *v, int len, int a);
 	void PG_element_unrank_modified(

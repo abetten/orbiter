@@ -243,6 +243,50 @@ void finite_field::PG_element_unrank_fining(
 		}
 }
 
+int finite_field::PG_element_rank_fining(
+		int *v, int len)
+{
+	int a;
+
+	if (len != 3) {
+		cout << "finite_field::PG_element_rank_fining "
+				"len != 3" << endl;
+		exit(1);
+		}
+	//PG_element_normalize(v, 1, len);
+
+	PG_element_normalize_from_front(v, 1, len);
+
+	if (v[2] == 0) {
+		if (v[0] == 1 && v[1] == 0) {
+			return 1;
+		}
+		else if (v[0] == 0 && v[1] == 1) {
+			return 2;
+		}
+		else {
+			return 2 + v[1];
+		}
+
+	} else {
+		if (v[0] == 0 && v[1] == 0) {
+			return q + 2;
+		}
+		else {
+			a = (q + 1) * v[2] + 2;
+			if (v[0] == 1 && v[1] == 0) {
+				return a;
+			}
+			else if (v[0] == 0 && v[1] == 1) {
+				return a + 1;
+			}
+			else {
+				return a + 1 + v[1];
+			}
+		}
+	}
+}
+
 void finite_field::PG_element_unrank_gary_cook(
 		int *v, int len, int a)
 {
