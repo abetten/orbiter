@@ -50,13 +50,13 @@ int main(int argc, char **argv)
 	int f_make_clique_graph = FALSE;
 	int f_RHS = FALSE;
 	int RHS_value = 0;
-	int f_sum = FALSE;
-	int sum_value = 0;
+	//int f_sum = FALSE;
+	//int sum_value = 0;
 	int RHS_row_nb = 0;
 	int RHS_row[1000];
 	int RHS_row_value[1000];
 	int f_betten = FALSE;
-	int f_mckay = FALSE;
+	int f_McKay = FALSE;
 	int nb_xmax = 0;
 	int xmax_value[1000];
 	int xmax_variable[1000];
@@ -162,18 +162,20 @@ int main(int argc, char **argv)
 					<< " " << RHS_row_value[RHS_row_nb] << endl;
 			RHS_row_nb++;
 			}
+#if 0
 		else if (strcmp(argv[i], "-sum") == 0) {
 			f_sum = TRUE;
 			sum_value = atoi(argv[++i]);
 			cout << "-sum " << sum_value << endl;
 			}
+#endif
 		else if (strcmp(argv[i], "-betten") == 0) {
 			f_betten = TRUE;
 			cout << "-betten " << endl;
 			}
-		else if (strcmp(argv[i], "-mckay") == 0) {
-			f_mckay = TRUE;
-			cout << "-mckay " << endl;
+		else if (strcmp(argv[i], "-McKay") == 0) {
+			f_McKay = TRUE;
+			cout << "-McKay " << endl;
 			}
 		else if (strcmp(argv[i], "-xmax") == 0) {
 			xmax_variable[nb_xmax] = atoi(argv[++i]);
@@ -231,9 +233,12 @@ int main(int argc, char **argv)
 
 	Dio->eliminate_zero_rows_quick(verbose_level);
 
+#if 0
 	if (f_sum) {
+		Dio->f_has_sum = TRUE;
 		Dio->sum = sum_value;
 		}
+#endif
 
 	if (f_v) {
 		cout << "found a system with " << Dio->m << " rows and "
@@ -365,7 +370,7 @@ int main(int argc, char **argv)
 			cout << "solving with betten" << endl;
 			Dio->solve_all_betten(verbose_level - 2);
 			}
-		else if (f_mckay) {
+		else if (f_McKay) {
 			int nb_backtrack_nodes;
 			
 			cout << "solving with mckay" << endl;

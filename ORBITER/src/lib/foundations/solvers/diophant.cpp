@@ -2480,7 +2480,11 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 	{
 	ifstream myfile (fname);
 	if (myfile.is_open()) {
+		cout << "diophant::read_general_format" << endl;
 		getline (myfile, line); // file name
+
+
+		cout << "diophant::read_general_format parsing '" << line << "'" << endl;
 		getline (myfile, line); // m n sum
 
 		i = line.find(" ");
@@ -2502,9 +2506,14 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 		//cout << "substring ='" << str << "'" << endl;
 		f_has_sum1 = atoi(str.c_str());
 
-		str = remainder2.substr(i + 1);
-		s = atoi(remainder2.c_str());
-		//cout << "m=" << m << " n=" << n << " sum=" << s << endl;
+		string remainder3 = remainder2.substr(i + 1);
+		cout << "diophant::read_general_format "
+				"m=" << m << " n=" << n << " remainder3=" << remainder3 << endl;
+
+		//str = remainder3.substr(i + 1);
+		s = atoi(remainder3.c_str());
+		cout << "diophant::read_general_format "
+				"m=" << m << " n=" << n << " sum=" << s << endl;
 
 		open(m, n);
 		f_has_sum = f_has_sum1;

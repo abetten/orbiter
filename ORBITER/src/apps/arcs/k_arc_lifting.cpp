@@ -1144,9 +1144,9 @@ void do_arc_lifting(
 
 				if (f_fining_output) {
 					ost << target_sz;
-					for (i = 0; i < target_sz; i++) {
+					for (j = 0; j < target_sz; j++) {
 						int v[3], b;
-						P->F->PG_element_unrank_modified(v, 1, 3, big_arc[i]);
+						P->F->PG_element_unrank_modified(v, 1, 3, big_arc[j]);
 						b = P->F->PG_element_rank_fining(v, 3);
 						ost << " " << b;
 						}
