@@ -1,4 +1,4 @@
-// grassmann.C
+// grassmann_graph.C
 // 
 
 #include "orbiter.h"

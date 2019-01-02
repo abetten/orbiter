@@ -178,6 +178,7 @@ int main(int argc, char **argv)
 		}
 	//D.f_le[3] = TRUE;
 	//D.f_le[4] = TRUE;
+	D.f_has_sum = TRUE;
 	D.sum = 51;
 #endif
 

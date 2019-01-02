@@ -10,10 +10,14 @@
 int t0;
 
 void design_from_PG(int PG_n, int PG_q, int verbose_level);
-void design_from_PG_with_field(int PG_n, finite_field *F, int verbose_level);
+void design_from_PG_with_field(int PG_n,
+		finite_field *F, int verbose_level);
 void do_it(const char *fname, int verbose_level);
-void design_properties(incidence_structure *Incidence, int verbose_level);
-int number_of_blocks_through_set_of_points(incidence_structure *Incidence, int *set_of_points, int set_size);
+void design_properties(incidence_structure *Incidence,
+		int verbose_level);
+int number_of_blocks_through_set_of_points(
+		incidence_structure *Incidence,
+		int *set_of_points, int set_size);
 
 
 int main(int argc, const char **argv)
@@ -78,7 +82,8 @@ void design_from_PG(int PG_n, int PG_q, int verbose_level)
 	FREE_OBJECT(F);
 }
 
-void design_from_PG_with_field(int PG_n, finite_field *F, int verbose_level)
+void design_from_PG_with_field(int PG_n,
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -97,7 +102,8 @@ void design_from_PG_with_field(int PG_n, finite_field *F, int verbose_level)
 	incidence_structure *Incidence;
 	partitionstack *Stack;
 
-	P->make_incidence_structure_and_partition(Incidence, Stack, verbose_level);
+	P->make_incidence_structure_and_partition(Incidence,
+			Stack, verbose_level);
 
 
 
@@ -153,7 +159,8 @@ void do_it(const char *fname, int verbose_level)
 
 
 	Incidence = NEW_OBJECT(incidence_structure);
-	Incidence->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
+	Incidence->init_by_matrix(set_size, nb_blocks, Inc,
+			0 /* verbose_level */);
 
 
 	design_properties(Incidence, verbose_level);
@@ -186,7 +193,9 @@ void design_properties(incidence_structure *Incidence, int verbose_level)
 	if (f_v) {
 		cout << "Row-scheme:" << endl;
 		Incidence->get_and_print_row_tactical_decomposition_scheme_tex(
-			cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
+			cout, FALSE /* f_enter_math */,
+			TRUE /* f_print_subscripts */,
+			*Stack);
 		}
 
 	int *set;
@@ -198,7 +207,8 @@ void design_properties(incidence_structure *Incidence, int verbose_level)
 		
 		cout << "Checking strength t=" << t << endl;
 		Nt = int_n_choose_k(set_size, t);
-		cout << "There are " << Nt << " " << t << "-subsets of an " << set_size << "-set" << endl;
+		cout << "There are " << Nt << " " << t
+				<< "-subsets of an " << set_size << "-set" << endl;
 
 		Freq = NEW_int(Nt);
 		for (h = 0; h < Nt; h++) {
@@ -221,7 +231,9 @@ void design_properties(incidence_structure *Incidence, int verbose_level)
 	delete Stack;
 }
 
-int number_of_blocks_through_set_of_points(incidence_structure *Incidence, int *set_of_points, int set_size)
+int number_of_blocks_through_set_of_points(
+		incidence_structure *Incidence,
+		int *set_of_points, int set_size)
 {
 	int i, j;
 	int nb, h;
