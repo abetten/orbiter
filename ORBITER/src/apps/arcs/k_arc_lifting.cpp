@@ -58,6 +58,7 @@ int arc_sz;
 	int nb_sol = 0;
 	int cnt = 0;
 	//ofstream *fp;
+	int f_fining_output = FALSE;
 
 int main(int argc, char **argv)
 {
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
 	const char *poly = NULL;
 	int f_arc = FALSE;
 	const char *arc_text = NULL;
-	int f_fining_labels = FALSE;
+	int f_fining_input = FALSE;
 	int f_cook_labels = FALSE;
 	int f_classification = FALSE;
 	const char *classification_fname = NULL;
@@ -141,9 +142,13 @@ int main(int argc, char **argv)
 				// The Sussex HPD does not allow zero for a TASK_ID.
 			cout << "-split " << split_r << " " << split_m << endl;
 			}
-		else if (strcmp(argv[i], "-fining_labels") == 0) {
-			f_fining_labels = TRUE;
-			cout << "-fining_labels " << endl;
+		else if (strcmp(argv[i], "-fining_input") == 0) {
+			f_fining_input = TRUE;
+			cout << "-fining_input " << endl;
+			}
+		else if (strcmp(argv[i], "-fining_output") == 0) {
+			f_fining_output = TRUE;
+			cout << "-fining_output " << endl;
 			}
 		else if (strcmp(argv[i], "-cook_labels") == 0) {
 			f_cook_labels = TRUE;
@@ -228,15 +233,29 @@ int main(int argc, char **argv)
 
 	if (f_arc) {
 		cout << "processing a given arc" << endl;
-		if (f_fining_labels) {
-			int a;
+		if (f_fining_input) {
+			int a, b;
 			int v[3];
+			int w[3];
 			
 			for (a = 1; a <= P->N_points; a++) {
 				P->F->PG_element_unrank_fining(v, 3, a);
+				int_vec_copy(v, w, 3);
+				b = P->F->PG_element_rank_fining(w, 3);
 				cout << a << " : ";
 				int_vec_print(cout, v, 3);
+				cout << " : ";
+				P->F->PG_element_normalize(v, 1, 3);
+				int_vec_print(cout, v, 3);
+				cout << " : " << b;
 				cout << endl;
+
+#if 1
+				if (b != a) {
+					cout << "error in PG_element_rank_fining" << endl;
+					exit(1);
+				}
+#endif
 				}
 			}
 		else if (f_cook_labels) {
@@ -275,7 +294,7 @@ int main(int argc, char **argv)
 		cout << endl;
 
 
-		if (f_fining_labels) {
+		if (f_fining_input) {
 			int a, b;
 			int v[3];
 			int w[3];
@@ -602,6 +621,9 @@ void arc_lifting_from_classification_file(
 			}
 			else if (f_McKay) {
 				Fp << " -McKay";
+			}
+			if (f_fining_output) {
+				Fp << " -fining_output";
 			}
 
 			Fp << " : time ";
@@ -1119,12 +1141,26 @@ void do_arc_lifting(
 					big_arc[arc_sz + j] = pt;
 					}
 				
-				ost << target_sz;
-				for (j = 0; j < target_sz; j++) {
-					ost << " " << big_arc[j];
-					}
-				//*fp << " " << go;
-				ost << endl;
+
+				if (f_fining_output) {
+					ost << target_sz;
+					for (i = 0; i < target_sz; i++) {
+						int v[3], b;
+						P->F->PG_element_unrank_modified(v, 1, 3, big_arc[i]);
+						b = P->F->PG_element_rank_fining(v, 3);
+						ost << " " << b;
+						}
+					//ost << " " << go;
+					ost << endl;
+				}
+				else {
+					ost << target_sz;
+					for (j = 0; j < target_sz; j++) {
+						ost << " " << big_arc[j];
+						}
+					//*fp << " " << go;
+					ost << endl;
+				}
 
 				}
 			FREE_int(big_arc);
@@ -1372,12 +1408,25 @@ void search(ostream &ost, int level)
 			cout << i << " : " << type_collected[i] << endl;
 			}
 
-		ost << big_arc_size;
-		for (i = 0; i < big_arc_size; i++) {
-			ost << " " << big_arc[i];
-			}
-		//ost << " " << go;
-		ost << endl;
+		if (f_fining_output) {
+			ost << big_arc_size;
+			for (i = 0; i < big_arc_size; i++) {
+				int v[3], b;
+				P->F->PG_element_unrank_modified(v, 1, 3, big_arc[i]);
+				b = P->F->PG_element_rank_fining(v, 3);
+				ost << " " << b;
+				}
+			//ost << " " << go;
+			ost << endl;
+		}
+		else {
+			ost << big_arc_size;
+			for (i = 0; i < big_arc_size; i++) {
+				ost << " " << big_arc[i];
+				}
+			//ost << " " << go;
+			ost << endl;
+		}
 
 	//exit(1);
 
