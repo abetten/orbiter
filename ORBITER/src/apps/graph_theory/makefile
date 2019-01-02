@@ -8,18 +8,26 @@ LFLAGS = -lm
 #.PRECIOUS: %.o
 
 all: all_cliques.out \
-	all_cycles.out \
-	all_rainbow_cliques.out \
-	colored_graph.out \
-	create_graph.out \
-	create_layered_graph_file.out \
-	draw_colored_graph.out \
-	draw_graph.out \
-	graph.out \
-	layered_graph_main.out \
-	nauty.out \
-	rainbow_cliques.out \
-	treedraw.out
+		all_cycles.out \
+		all_rainbow_cliques.out \
+		colored_graph.out \
+		create_graph.out \
+		create_layered_graph_file.out \
+		draw_colored_graph.out \
+		draw_graph.out \
+		graph.out \
+		grassmann_graph.out \
+		johnson_graph.out \
+		layered_graph_main.out \
+		nauty.out \
+		paley.out \
+		rainbow_cliques.out \
+		sarnak.out \
+		schlaefli.out \
+		shrikhande.out  \
+		srg.out \
+		treedraw.out \
+		winnie_li.out
 
 
 
@@ -62,17 +70,41 @@ draw_graph.out:  draw_graph.o
 graph.out:  graph.o 
 	$(DISCRETA_CPP)  graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+grassmann_graph.out:  grassmann_graph.o;
+	$(DISCRETA_CPP)  grassmann_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+johnson_graph.out:  johnson_graph.o;
+	$(DISCRETA_CPP)  johnson_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 layered_graph_main.out:  layered_graph_main.o 
 	$(DISCRETA_CPP)  layered_graph_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 nauty.out:  nauty.o 
 	$(DISCRETA_CPP)  nauty.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+paley.out:  paley.o;
+	$(DISCRETA_CPP)  paley.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 rainbow_cliques.out:  rainbow_cliques.o 
 	$(DISCRETA_CPP)  rainbow_cliques.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+sarnak.out:  sarnak.o;
+	$(DISCRETA_CPP)  sarnak.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+schlaefli.out:  schlaefli.o;
+	$(DISCRETA_CPP)  schlaefli.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+shrikhande.out:  shrikhande.o;
+	$(DISCRETA_CPP)  shrikhande.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+srg.out:  srg.o;
+	$(DISCRETA_CPP)  srg.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 treedraw.out:  treedraw.o 
 	$(DISCRETA_CPP)  treedraw.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+winnie_li.out:  winnie_li.o;
+	$(DISCRETA_CPP)  winnie_li.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

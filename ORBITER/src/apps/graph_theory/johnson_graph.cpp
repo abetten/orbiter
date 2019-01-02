@@ -1,4 +1,4 @@
-// johnson.C
+// johnson_graph.C
 // 
 // Anton Betten
 // January 20, 2015

@@ -9,8 +9,7 @@ LFLAGS = -lm
 
 
 
-all: 
-	analyze_projective_code.out  \
+all: analyze_projective_code.out  \
 	analyze_q_designs.out  \
 	baer_subplane.out \
 	cheat_sheet_PG.out \

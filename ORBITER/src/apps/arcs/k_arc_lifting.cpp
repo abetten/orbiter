@@ -1,6 +1,7 @@
 // k_arc_lifting.C
 //
-// Anton Betten, Awss Al-Ogaidi
+// Anton Betten, Awss Al-ogaidi
+//
 // Sept 15, 2017
 
 #include "orbiter.h"
@@ -20,7 +21,9 @@ void arc_lifting_from_classification_file(
 	int f_solution_prefix, const char *solution_prefix, 
 	int &nb_sol_total, 
 	int verbose_level);
-void do_arc_lifting(projective_space *P, int k, 
+void do_arc_lifting(
+	ostream &ost,
+	projective_space *P, int k,
 	int *arc, int arc_sz, int target_sz, 
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
@@ -28,7 +31,7 @@ void do_arc_lifting(projective_space *P, int k,
 	int verbose_level);
 void user_callback_solution_found(
 	int *sol, int len, int nb_sol, void *data);
-void search(int level);
+void search(ostream &ost, int level);
 
 
 	finite_field *F;
@@ -54,7 +57,7 @@ int arc_sz;
 	int k = 0;
 	int nb_sol = 0;
 	int cnt = 0;
-	ofstream *fp;
+	//ofstream *fp;
 
 int main(int argc, char **argv)
 {
@@ -323,12 +326,18 @@ int main(int argc, char **argv)
 		arc = the_arc;
 		arc_sz = the_arc_sz;
 		
-		do_arc_lifting(P, k, the_arc, the_arc_sz, sz, 
+		const char *fname = "solutions.txt";
+		{
+		ofstream fp(fname);
+		do_arc_lifting(
+			fp,
+			P, k, the_arc, the_arc_sz, sz,
 			f_save_system, fname_system, 
 			f_Cook, f_DLX, f_McKay, 
 			nb_backtrack_nodes,
 			verbose_level);
-
+		}
+		cout << "written file " << fname << " of size " << file_size(fname) << endl;
 		}
 	else if (f_classification) {
 		cout << "processing classification" << endl;
@@ -364,7 +373,8 @@ int main(int argc, char **argv)
 				sprintf(classification_fname2, classification_fname, cnt);
 
 				int nb_sol_total = 0;
-				arc_lifting_from_classification_file(classification_fname2, 
+				arc_lifting_from_classification_file(
+					classification_fname2,
 					P, k, sz, 
 					f_Cook, f_DLX, f_McKay, 
 					f_split, split_r, split_m, 
@@ -492,12 +502,14 @@ void arc_lifting_from_classification_file(
 
 
 	if (!f_solution_prefix) {
-		sprintf(solution_fname, "arc_%d_%d_from_%s",
+		sprintf(solution_fname,
+				"arc_%d_%d_from_%s",
 				sz, k,
 				strip_directory(classification_fname));
 		}
 	else {
-		sprintf(solution_fname, "%sarc_%d_%d_from_%s",
+		sprintf(solution_fname,
+				"%sarc_%d_%d_from_%s",
 				solution_prefix, sz, k,
 				strip_directory(classification_fname));
 		}
@@ -519,7 +531,7 @@ void arc_lifting_from_classification_file(
 	{
 		ofstream Fp(solution_fname);
 		int case_cnt = 0;
-		fp = &Fp;
+		//fp = &Fp;
 
 
 		for (orbit_idx = 0; orbit_idx < T->nb_orbits; orbit_idx++) {
@@ -566,7 +578,8 @@ void arc_lifting_from_classification_file(
 
 			int t0 = os_ticks();
 
-			do_arc_lifting(P, k, arc, arc_sz, sz, 
+			do_arc_lifting(Fp,
+				P, k, arc, arc_sz, sz,
 				f_save_system, fname_system, 
 				f_Cook, f_DLX, f_McKay, 
 				nb_backtrack_nodes,
@@ -634,6 +647,7 @@ void arc_lifting_from_classification_file(
 }
 
 void do_arc_lifting(
+	ostream &ost,
 	projective_space *P, int k,
 	int *arc, int arc_sz, int target_sz, 
 	int f_save_system, const char *fname_system, 
@@ -1030,7 +1044,7 @@ void do_arc_lifting(
 		if (f_v) {
 			cout << "starting the search" << endl;
 			}
-		search(0);
+		search(ost, 0);
 		if (f_v) {
 			cout << "the search is finished" << endl;
 			}
@@ -1105,12 +1119,12 @@ void do_arc_lifting(
 					big_arc[arc_sz + j] = pt;
 					}
 				
-				*fp << target_sz;
+				ost << target_sz;
 				for (j = 0; j < target_sz; j++) {
-					*fp << " " << big_arc[j];
+					ost << " " << big_arc[j];
 					}
 				//*fp << " " << go;
-				*fp << endl;
+				ost << endl;
 
 				}
 			FREE_int(big_arc);
@@ -1276,7 +1290,7 @@ void user_callback_solution_found(
  
 
 
-void search(int level)
+void search(ostream &ost, int level)
 {
 	int b, i, line, pt, r0;
 	int *line_type_before;
@@ -1358,14 +1372,12 @@ void search(int level)
 			cout << i << " : " << type_collected[i] << endl;
 			}
 
-#if 0
-		*fp << big_arc_size;
+		ost << big_arc_size;
 		for (i = 0; i < big_arc_size; i++) {
-			*fp << " " << big_arc[i];
+			ost << " " << big_arc[i];
 			}
-		//*fp << " " << go;
-		*fp << endl;
-#endif
+		//ost << " " << go;
+		ost << endl;
 
 	//exit(1);
 
@@ -1414,7 +1426,7 @@ void search(int level)
 					}
 				}
 			if (i == F->q + 1) {
-				search(level + 1);
+				search(ost, level + 1);
 				}
 			}
 		}

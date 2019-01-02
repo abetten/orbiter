@@ -20,36 +20,28 @@ all: all_k_subsets.out \
 		design.out \
 		ferdinand.out \
 		fibonacci.out \
-		grassmann_graph.out \
 		group_ring.out \
 		had.out \
 		hadamard.out \
 		hamming.out \
 		johnson_table.out \
-		johnson.out \
 		lehmer.out \
 		matrix_rank.out \
 		nondecreasing.out \
 		orthogonal.out \
-		paley.out \
 		partitions.out \
 		poset_of_subsets.out \
 		random_permutation.out \
 		random.out \
 		rank_anything.out \
 		rank_subsets_lex.out \
-		sarnak.out \
-		schlaefli.out \
 		sequences.out \
-		shrikhande.out  \
-		srg.out \
 		subsets.out \
 		tao.out \
 		test.out \
 		test2.out \
-		unrank.out \
-		winnie_li.out \
- 
+		unrank.out 
+
 #problem11.out 
 
 all_k_subsets.out:  all_k_subsets.o;
@@ -88,9 +80,6 @@ ferdinand.out:  ferdinand.o;
 fibonacci.out:  fibonacci.o;
 	$(DISCRETA_CPP)  fibonacci.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-grassmann_graph.out:  grassmann_graph.o;
-	$(DISCRETA_CPP)  grassmann_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 group_ring.out:  group_ring.o;
 	$(DISCRETA_CPP)  group_ring.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -106,9 +95,6 @@ hamming.out:  hamming.o;
 johnson_table.out:  johnson_table.o;
 	$(DISCRETA_CPP)  johnson_table.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-johnson.out:  johnson.o;
-	$(DISCRETA_CPP)  johnson.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 lehmer.out:  lehmer.o;
 	$(DISCRETA_CC)  lehmer.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -120,9 +106,6 @@ nondecreasing.out:  nondecreasing.o;
 
 orthogonal.out:  orthogonal.o;
 	$(DISCRETA_CPP)  orthogonal.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-paley.out:  paley.o;
-	$(DISCRETA_CPP)  paley.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 partitions.out: partitions.o
 	$(DISCRETA_CPP) partitions.o -o partitions.out
@@ -142,20 +125,8 @@ rank_anything.out:  rank_anything.o;
 rank_subsets_lex.out:  rank_subsets_lex.o;
 	$(DISCRETA_CPP)  rank_subsets_lex.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-sarnak.out:  sarnak.o;
-	$(DISCRETA_CPP)  sarnak.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-schlaefli.out:  schlaefli.o;
-	$(DISCRETA_CPP)  schlaefli.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 sequences.out:  sequences.o;
 	$(DISCRETA_CPP)  sequences.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-shrikhande.out:  shrikhande.o;
-	$(DISCRETA_CPP)  shrikhande.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-srg.out:  srg.o;
-	$(DISCRETA_CPP)  srg.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 subsets.out:  subsets.o;
 	$(DISCRETA_CPP)  subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -174,9 +145,6 @@ test_group.out:  test_group.o;
 
 unrank.out:  unrank.o;
 	$(DISCRETA_CPP)  unrank.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-winnie_li.out:  winnie_li.o;
-	$(DISCRETA_CPP)  winnie_li.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 
