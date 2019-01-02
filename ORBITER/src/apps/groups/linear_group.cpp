@@ -117,7 +117,10 @@ int main(int argc, const char **argv)
 			verbose_level);
 
 
+
 	cout << "computing orbits on points done." << endl;
+
+	Sch->print_and_list_orbits(cout);
 
 	char fname_tree_mask[1000];
 

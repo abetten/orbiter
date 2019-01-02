@@ -128,6 +128,8 @@ public:
 	void init_diagonal_group(char *prefix, int verbose_level);
 	void init_singer_group(char *prefix, int singer_power, 
 		int verbose_level);
+	void init_singer_group_and_frobenius(char *prefix,
+			int singer_power, int verbose_level);
 	void init_null_polarity_group(char *prefix, int verbose_level);
 	void init_borel_subgroup_upper(char *prefix, int verbose_level);
 	void init_identity_subgroup(char *prefix, int verbose_level);
@@ -169,6 +171,7 @@ public:
 	int f_null_polarity_group;
 	int f_symplectic_group;
 	int f_singer_group;
+	int f_singer_group_and_frobenius;
 	int singer_power;
 	int f_subfield_structure_action;
 	int s;
@@ -1316,6 +1319,10 @@ public:
 		matrix_group *Mtx, int verbose_level);
 	void generators_for_the_singer_cycle(action *A, 
 		matrix_group *Mtx, int power_of_singer, int verbose_level);
+	void generators_for_the_singer_cycle_and_the_Frobenius(
+		action *A,
+		matrix_group *Mtx, int power_of_singer,
+		int verbose_level);
 	void generators_for_the_null_polarity_group(action *A, 
 		matrix_group *Mtx, int verbose_level);
 	void generators_for_symplectic_group(action *A, 

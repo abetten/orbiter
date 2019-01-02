@@ -718,6 +718,191 @@ void strong_generators::generators_for_the_singer_cycle(
 		}
 }
 
+void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
+	action *A,
+	matrix_group *Mtx, int power_of_singer,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Elt1;
+	sims *S;
+	finite_field *F;
+	longinteger_domain D;
+	longinteger_object target_go;
+	int *go_factored;
+	int n, q;
+	vector_ge *my_gens;
+	int *data1;
+	int *data2;
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_singer_cycle_"
+				"and_the_Frobenius initializing singer group "
+				"power_of_singer=" << power_of_singer << endl;
+		}
+	F = Mtx->GFq;
+	q = F->q;
+	n = Mtx->n;
+	if (f_v) {
+		cout << "n=" << n << " q=" << q << endl;
+		}
+	Elt1 = NEW_int(A->elt_size_in_int);
+	go_factored = NEW_int(2);
+	data1 = NEW_int(n * n + 1);
+	data2 = NEW_int(n * n + 1);
+
+	// group order
+	// = (q^n - 1) / (q - 1) if projective
+	// = q^n - 1 if general_linear
+
+	go_factored[0] = nb_PG_elements(n - 1, q);
+	int g;
+	g = gcd_int(go_factored[0], power_of_singer);
+	go_factored[0] = go_factored[0] / g;
+	go_factored[1] = n;
+
+	D.multiply_up(target_go, go_factored, 2);
+	if (f_v) {
+		cout << "group order factored: ";
+		int_vec_print(cout, go_factored, 2);
+		cout << endl;
+		cout << "target_go=" << target_go << endl;
+		}
+	my_gens = NEW_OBJECT(vector_ge);
+	my_gens->init(A);
+	my_gens->allocate(2);
+
+
+
+	{
+	finite_field Fp;
+
+	if (!is_prime(q)) {
+		cout << "strong_generators::generators_for_the_singer_cycle_"
+				"and_the_Frobenius field order must be a prime" << endl;
+		exit(1);
+		}
+
+	Fp.init(q, 0 /*verbose_level*/);
+	unipoly_domain FX(&Fp);
+
+	unipoly_object m;
+	longinteger_object rk;
+
+	FX.create_object_by_rank(m, 0);
+
+	if (f_v) {
+		cout << "search_for_primitive_polynomial_"
+				"of_given_degree p=" << q << " degree=" << n << endl;
+		}
+	FX.get_a_primitive_polynomial(m, n, verbose_level - 1);
+
+	int_vec_zero(data1, n * n);
+
+	// create upper diagonal:
+	for (i = 0; i < n - 1; i++) {
+		data1[i * n + i + 1] = 1;
+		}
+
+	int a, b;
+
+	// create the lower row:
+	for (i = 0; i < n; i++) {
+		a = FX.s_i(m, i);
+		b = F->negate(a);
+		data1[(n - 1) * n + i] = b;
+		}
+
+	if (Mtx->f_semilinear) {
+		data1[n * n] = 0;
+		}
+
+	int_vec_zero(data2, n * n);
+
+	FX.Frobenius_matrix_by_rows(data2, m,
+			verbose_level);
+
+	if (Mtx->f_semilinear) {
+		data2[n * n] = 0;
+		}
+
+	}
+
+
+	A->make_element(Elt1, data1, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "singer cycle 0:" << endl;
+		A->element_print_quick(Elt1, cout);
+		}
+
+	A->element_power_int_in_place(Elt1,
+		power_of_singer, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "generator after raising to the "
+				"power of " << power_of_singer << ":" << endl;
+		A->element_print_quick(Elt1, cout);
+		}
+	my_gens->copy_in(0, Elt1);
+
+	A->make_element(Elt1, data2, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "Frob:" << endl;
+		A->element_print_quick(Elt1, cout);
+		}
+	my_gens->copy_in(1, Elt1);
+
+
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_singer_cycle_"
+				"and_the_Frobenius creating group" << endl;
+		}
+	if (f_v) {
+		cout << "group order factored: ";
+		int_vec_print(cout, go_factored, 1);
+		cout << endl;
+		cout << "target_go=" << target_go << endl;
+		}
+	S = create_sims_from_generators_randomized(A,
+		my_gens, TRUE /* f_target_go */,
+		target_go, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_singer_cycle_"
+				"and_the_Frobenius after creating group" << endl;
+		}
+	init_from_sims(S, 0);
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_singer_cycle_"
+				"and_the_Frobenius after extracting "
+				"strong generators" << endl;
+		}
+	if (f_vv) {
+		int f_print_as_permutation = FALSE;
+		int f_offset = FALSE;
+		int offset = 0;
+		int f_do_it_anyway_even_for_big_degree = FALSE;
+		int f_print_cycles_of_length_one = FALSE;
+
+		cout << "strong generators are:" << endl;
+		gens->print(cout, f_print_as_permutation,
+			f_offset, offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one);
+		}
+	FREE_OBJECT(S);
+	FREE_OBJECT(my_gens);
+	FREE_int(data1);
+	FREE_int(data2);
+	FREE_int(go_factored);
+	FREE_int(Elt1);
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_singer_cycle_"
+				"and_the_Frobenius done" << endl;
+		}
+}
+
 void strong_generators::generators_for_the_null_polarity_group(
 	action *A,
 	matrix_group *Mtx, int verbose_level)

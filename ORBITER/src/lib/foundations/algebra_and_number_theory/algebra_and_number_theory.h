@@ -1703,6 +1703,9 @@ public:
 		int factor_polynomial_degree, 
 		int *factor_polynomial_coefficents_negated, 
 		int verbose_level);
+	void Frobenius_matrix_by_rows(int *&Frob,
+		unipoly_object factor_polynomial, int verbose_level);
+		// the j-th row of Frob is x^{j*q} mod m
 	void Frobenius_matrix(int *&Frob, unipoly_object factor_polynomial, 
 		int verbose_level);
 	void Berlekamp_matrix(int *&B, unipoly_object factor_polynomial, 
