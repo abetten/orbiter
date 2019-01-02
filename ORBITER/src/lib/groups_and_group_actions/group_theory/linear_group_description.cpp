@@ -35,6 +35,7 @@ void linear_group_description::null()
 	f_null_polarity_group = FALSE;
 	f_symplectic_group = FALSE;
 	f_singer_group = FALSE;
+	f_singer_group_and_frobenius = FALSE;
 	singer_power = 1;
 	f_subfield_structure_action = FALSE;
 	f_subgroup_from_file = FALSE;
@@ -265,6 +266,11 @@ int linear_group_description::read_arguments(
 			f_singer_group = TRUE;
 			singer_power = atoi(argv[++i]);
 			cout << "-singer " << singer_power << endl;
+			}
+		else if (strcmp(argv[i], "-singer_and_frobenius") == 0) {
+			f_singer_group_and_frobenius = TRUE;
+			singer_power = atoi(argv[++i]);
+			cout << "-f_singer_group_and_frobenius " << singer_power << endl;
 			}
 		else if (strcmp(argv[i], "-subfield_structure_action") == 0) {
 			f_subfield_structure_action = TRUE;

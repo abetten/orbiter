@@ -114,6 +114,10 @@ void linear_group::init(
 		init_singer_group(prefix,
 				description->singer_power, verbose_level);
 		}
+	else if (description->f_singer_group_and_frobenius) {
+		init_singer_group_and_frobenius(prefix,
+				description->singer_power, verbose_level);
+		}
 	else if (description->f_identity_group) {
 		init_identity_subgroup(prefix, verbose_level);
 		}
@@ -387,6 +391,41 @@ void linear_group::init_singer_group(char *prefix,
 
 	if (f_v) {
 		cout << "linear_group::init_singer_group "
+				"done, prefix = " << prefix << endl;
+		}
+}
+
+void linear_group::init_singer_group_and_frobenius(char *prefix,
+		int singer_power, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "linear_group::init_singer_group_and_frobenius "
+				"initializing singer group" << endl;
+		}
+
+	vector_space_dimension = n;
+	q = input_q;
+
+	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens->generators_for_the_singer_cycle_and_the_Frobenius(
+			A_linear, Mtx, singer_power, verbose_level - 1);
+	f_has_strong_generators = TRUE;
+
+
+	A2 = A_linear;
+
+	sprintf(prefix, "Singer_%d_%d_power%d_and_Frob",
+			n, q, singer_power);
+	if (f_v) {
+		cout << "linear_group::init_singer_group_and_frobenius "
+				"created group " << prefix << endl;
+		}
+
+	if (f_v) {
+		cout << "linear_group::init_singer_group_and_frobenius "
 				"done, prefix = " << prefix << endl;
 		}
 }

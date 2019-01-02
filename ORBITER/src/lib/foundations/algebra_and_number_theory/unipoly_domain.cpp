@@ -747,6 +747,24 @@ void unipoly_domain::mult_mod(unipoly_object a,
 		}
 }
 
+void unipoly_domain::Frobenius_matrix_by_rows(int *&Frob,
+	unipoly_object factor_polynomial, int verbose_level)
+// the j-th row of Frob is x^{j*q} mod m
+{
+	int f_v = (verbose_level >= 1);
+	int d;
+
+	if (f_v) {
+		cout << "unipoly_domain::Frobenius_matrix_by_rows" << endl;
+		}
+	d = degree(factor_polynomial);
+	Frobenius_matrix(Frob, factor_polynomial, verbose_level);
+	gfq->transpose_matrix_in_place(Frob, d);
+	if (f_v) {
+		cout << "unipoly_domain::Frobenius_matrix_by_rows done" << endl;
+		}
+}
+
 void unipoly_domain::Frobenius_matrix(int *&Frob,
 	unipoly_object factor_polynomial, int verbose_level)
 // the j-th column of Frob is x^{j*q} mod m
