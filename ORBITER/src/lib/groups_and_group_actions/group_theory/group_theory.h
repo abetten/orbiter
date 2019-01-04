@@ -116,6 +116,9 @@ public:
 	int vector_space_dimension;
 	int q;
 
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
+
 	linear_group();
 	~linear_group();
 	void null();
@@ -1318,10 +1321,13 @@ public:
 	void generators_for_the_diagonal_group(action *A, 
 		matrix_group *Mtx, int verbose_level);
 	void generators_for_the_singer_cycle(action *A, 
-		matrix_group *Mtx, int power_of_singer, int verbose_level);
+		matrix_group *Mtx, int power_of_singer,
+		vector_ge *&nice_gens,
+		int verbose_level);
 	void generators_for_the_singer_cycle_and_the_Frobenius(
 		action *A,
 		matrix_group *Mtx, int power_of_singer,
+		vector_ge *&nice_gens,
 		int verbose_level);
 	void generators_for_the_null_polarity_group(action *A, 
 		matrix_group *Mtx, int verbose_level);

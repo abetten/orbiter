@@ -9,6 +9,10 @@
 
 #include "foundations.h"
 
+#define MAX_NUMBER_OF_PLANES_FOR_PLANE_TYPE 100000
+
+
+
 surface_object::surface_object()
 {
 	null();
@@ -765,26 +769,36 @@ void surface_object::compute_adjacency_matrix_of_line_intersection_graph(
 
 }
 
+
 void surface_object::compute_plane_type_by_points(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int N_planes;
 	
 	if (f_v) {
 		cout << "surface_object::compute_plane_type_by_points" << endl;
 		}
 
-	Surf->P->plane_intersection_type_basic(Pts, nb_pts, 
-		plane_type_by_points, 0 /* verbose_level */);
+	N_planes = Surf->P->nb_rk_k_subspaces_as_int(3);
 
+	if (N_planes < MAX_NUMBER_OF_PLANES_FOR_PLANE_TYPE) {
+		Surf->P->plane_intersection_type_basic(Pts, nb_pts,
+			plane_type_by_points, 0 /* verbose_level */);
+
+
+		C_plane_type_by_points = NEW_OBJECT(classify);
 	
-	C_plane_type_by_points = NEW_OBJECT(classify);
-
-	C_plane_type_by_points->init(plane_type_by_points, nb_planes, FALSE, 0);
-	if (f_v) {
-		cout << "plane types by points: ";
-		C_plane_type_by_points->print_naked(TRUE);
-		cout << endl;
-		}
+		C_plane_type_by_points->init(plane_type_by_points, nb_planes, FALSE, 0);
+		if (f_v) {
+			cout << "plane types by points: ";
+			C_plane_type_by_points->print_naked(TRUE);
+			cout << endl;
+			}
+	}
+	else {
+		cout << "surface_object::compute_plane_type_by_points "
+				"too many planes, skipping plane type " << endl;
+	}
 
 
 	if (f_v) {
@@ -1425,10 +1439,13 @@ void surface_object::print_equation(ostream &ost)
 void surface_object::print_general(ostream &ost)
 {
 	ost << "\\subsection*{General information}" << endl;
-	ost << "Plane types by points: ";
-	ost << "$$" << endl;
-	C_plane_type_by_points->print_naked_tex(ost, TRUE);
-	ost << "$$" << endl;
+
+	if (C_plane_type_by_points) {
+		ost << "Plane types by points: ";
+		ost << "$$" << endl;
+		C_plane_type_by_points->print_naked_tex(ost, TRUE);
+		ost << "$$" << endl;
+	}
 	ost << "Type of pts on lines:" << endl;
 	ost << "$$" << endl;
 	Type_pts_on_lines->print_naked_tex(ost, TRUE);
@@ -1482,20 +1499,26 @@ void surface_object::print_points(ostream &ost)
 	ost << "\\subsection*{Points on surface}" << endl;
 	ost << "\\subsubsection*{All Points}" << endl;
 	ost << "The surface has " << nb_pts << " points:\\\\" << endl;
-	ost << "$$" << endl;
-	int_vec_print_as_matrix(ost, Pts, nb_pts, 10, TRUE /* f_tex */);
-	ost << "$$" << endl;
-	//ost << "\\clearpage" << endl;
-	ost << "The points on the surface are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	ost << "\\noindent" << endl;
-	for (i = 0; i < nb_pts; i++) {
-		Surf->unrank_point(v, Pts[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-		}
-	ost << "\\end{multicols}" << endl;
+
+	if (nb_pts < 1000) {
+		ost << "$$" << endl;
+		int_vec_print_as_matrix(ost, Pts, nb_pts, 10, TRUE /* f_tex */);
+		ost << "$$" << endl;
+		//ost << "\\clearpage" << endl;
+		ost << "The points on the surface are:\\\\" << endl;
+		ost << "\\begin{multicols}{2}" << endl;
+		ost << "\\noindent" << endl;
+		for (i = 0; i < nb_pts; i++) {
+			Surf->unrank_point(v, Pts[i]);
+			ost << i << " : $P_{" << i << "} = P_{" << Pts[i] << "}=";
+			int_vec_print_fully(ost, v, 4);
+			ost << "$\\\\" << endl;
+			}
+		ost << "\\end{multicols}" << endl;
+	}
+	else {
+		ost << "Too many to print.\\\\" << endl;
+	}
 
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsubsection*{Eckardt Points}" << endl;
@@ -1545,28 +1568,33 @@ void surface_object::print_points(ostream &ost)
 	ost << "\\subsubsection*{Double Points}" << endl;
 	ost << "The surface has " << nb_Double_points
 			<< " Double points:\\\\" << endl;
-	ost << "$$" << endl;
-	int_vec_print_as_matrix(ost,
-			Double_points, nb_Double_points, 10,
-			TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	int_vec_print_as_matrix(ost,
-			Double_points_index, nb_Double_points, 10,
-			TRUE /* f_tex */);
-	ost << "$$" << endl;
-	//ost << "\\clearpage" << endl;
-	ost << "The Double points on the surface are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	ost << "\\noindent" << endl;
-	for (i = 0; i < nb_Double_points; i++) {
-		Surf->unrank_point(v, Double_points[i]);
-		ost << i << " : $P_{" << Double_points_index[i]
-				<< "} = P_{" << Double_points[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-		}
-	ost << "\\end{multicols}" << endl;
+	if (nb_Double_points < 1000) {
+		ost << "$$" << endl;
+		int_vec_print_as_matrix(ost,
+				Double_points, nb_Double_points, 10,
+				TRUE /* f_tex */);
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		int_vec_print_as_matrix(ost,
+				Double_points_index, nb_Double_points, 10,
+				TRUE /* f_tex */);
+		ost << "$$" << endl;
+		//ost << "\\clearpage" << endl;
+		ost << "The Double points on the surface are:\\\\" << endl;
+		ost << "\\begin{multicols}{2}" << endl;
+		ost << "\\noindent" << endl;
+		for (i = 0; i < nb_Double_points; i++) {
+			Surf->unrank_point(v, Double_points[i]);
+			ost << i << " : $P_{" << Double_points_index[i]
+					<< "} = P_{" << Double_points[i] << "}=";
+			int_vec_print_fully(ost, v, 4);
+			ost << "$\\\\" << endl;
+			}
+		ost << "\\end{multicols}" << endl;
+	}
+	else {
+		ost << "Too many to print.\\\\" << endl;
+	}
 
 	
 
@@ -1587,25 +1615,30 @@ void surface_object::print_points(ostream &ost)
 	ost << "\\subsubsection*{Points on surface but on no line}" << endl;
 	ost << "The surface has " << nb_pts_not_on_lines
 			<< " points not on any line:\\\\" << endl;
-	ost << "$$" << endl;
-	int_vec_print_as_matrix(ost,
-			Pts_not_on_lines, nb_pts_not_on_lines, 10,
-			TRUE /* f_tex */);
-	//print_integer_matrix_with_standard_labels(ost, Pts3,
-	//(nb_pts_not_on_lines + 9) / 10, 10, TRUE /* f_tex */);
-	ost << "$$" << endl;
-	//ost << "%%\\clearpage" << endl;
-	ost << "The points on the surface but not "
-			"on lines are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	ost << "\\noindent" << endl;
-	for (i = 0; i < nb_pts_not_on_lines; i++) {
-		Surf->unrank_point(v, Pts_not_on_lines[i]);
-		ost << i << " : $P_{" << Pts_not_on_lines[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-		}
-	ost << "\\end{multicols}" << endl;
+	if (nb_pts_not_on_lines < 1000) {
+		ost << "$$" << endl;
+		int_vec_print_as_matrix(ost,
+				Pts_not_on_lines, nb_pts_not_on_lines, 10,
+				TRUE /* f_tex */);
+		//print_integer_matrix_with_standard_labels(ost, Pts3,
+		//(nb_pts_not_on_lines + 9) / 10, 10, TRUE /* f_tex */);
+		ost << "$$" << endl;
+		//ost << "%%\\clearpage" << endl;
+		ost << "The points on the surface but not "
+				"on lines are:\\\\" << endl;
+		ost << "\\begin{multicols}{2}" << endl;
+		ost << "\\noindent" << endl;
+		for (i = 0; i < nb_pts_not_on_lines; i++) {
+			Surf->unrank_point(v, Pts_not_on_lines[i]);
+			ost << i << " : $P_{" << Pts_not_on_lines[i] << "}=";
+			int_vec_print_fully(ost, v, 4);
+			ost << "$\\\\" << endl;
+			}
+		ost << "\\end{multicols}" << endl;
+	}
+	else {
+		ost << "Too many to print.\\\\" << endl;
+	}
 
 #if 0
 	ost << "\\clearpage" << endl;

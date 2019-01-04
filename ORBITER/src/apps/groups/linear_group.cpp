@@ -102,8 +102,19 @@ int main(int argc, const char **argv)
 	schreier *Sch;
 	Sch = NEW_OBJECT(schreier);
 
+	cout << "Strong generators are:" << endl;
 	LG->Strong_gens->print_generators_tex(cout);
+	cout << "Strong generators as permutations are:" << endl;
 	LG->Strong_gens->print_generators_as_permutations();
+
+
+	if (LG->f_has_nice_gens) {
+		cout << "we have nice generators, they are:" << endl;
+		LG->nice_gens->print(cout);
+		LG->nice_gens->print_as_permutation(cout);
+	}
+
+
 
 	for (i = 0; i < A->degree; i++) {
 		cout << i << " & ";

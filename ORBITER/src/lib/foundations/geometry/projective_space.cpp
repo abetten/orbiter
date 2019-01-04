@@ -279,7 +279,8 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 
-	if (N_points < MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE)  {
+	if (N_points < MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE &&
+			N_lines < MAX_NUMBER_OF_LINES_FOR_LINE_TABLE)  {
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
 					"allocating Lines_on_point" << endl;
@@ -364,7 +365,17 @@ void projective_space::init_incidence_structure(int verbose_level)
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
 					"computing lines..." << endl;
+			if (Lines) {
+				cout << "Lines is allocated" << endl;
 			}
+			if (incidence_bitvec) {
+				cout << "incidence_bitvec is allocated" << endl;
+			}
+			if (Lines_on_point) {
+				cout << "Lines_on_point is allocated" << endl;
+			}
+		}
+
 
 
 		int *R;

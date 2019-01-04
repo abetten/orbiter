@@ -27,6 +27,8 @@ void linear_group::null()
 	Mtx = NULL;
 	f_has_strong_generators = FALSE;
 	Strong_gens = NULL;
+	f_has_nice_gens = FALSE;
+	nice_gens = NULL;
 }
 
 void linear_group::freeself()
@@ -376,8 +378,10 @@ void linear_group::init_singer_group(char *prefix,
 	
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_singer_cycle(
-			A_linear, Mtx, singer_power, verbose_level - 1);
+			A_linear, Mtx, singer_power, nice_gens,
+			verbose_level - 1);
 	f_has_strong_generators = TRUE;
+	f_has_nice_gens = TRUE;
 	
 
 	A2 = A_linear;
@@ -411,8 +415,10 @@ void linear_group::init_singer_group_and_frobenius(char *prefix,
 
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_singer_cycle_and_the_Frobenius(
-			A_linear, Mtx, singer_power, verbose_level - 1);
+			A_linear, Mtx, singer_power, nice_gens,
+			verbose_level - 1);
 	f_has_strong_generators = TRUE;
+	f_has_nice_gens = TRUE;
 
 
 	A2 = A_linear;

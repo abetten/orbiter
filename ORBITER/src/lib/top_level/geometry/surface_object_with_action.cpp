@@ -1335,72 +1335,78 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		}
 
 
-	char magma_fname[1000];
-
-	sprintf(magma_fname, "%s_group.magma", label_txt);
-	Aut_gens->export_permutation_group_to_magma(
-			magma_fname, verbose_level - 2);
-	if (f_v) {
-		cout << "written file " << magma_fname << " of size "
-				<< file_size(magma_fname) << endl;
-		}
-
-	ost << "\\clearpage\\subsection*{Magma Export}" << endl;
-	ost << "To export the group to Magma, use the following file\\\\" << endl;
-	ost << "\\begin{verbatim}" << endl;
-	
-	{
-	ifstream fp1(magma_fname);
-	char line[100000];
-
-	while (TRUE) {
-		if (fp1.eof()) {
-			break;
-			}
-	
-		//cout << "count_number_of_orbits_in_file reading
-		//line, nb_sol = " << nb_sol << endl;
-		fp1.getline(line, 100000, '\n');
-		ost << line << endl;
-		}
-	
-	}
-	ost << "\\end{verbatim}" << endl;
+	if (Aut_gens->A->degree < 10000) {
 
 
-	char gap_fname[1000];
+		char magma_fname[1000];
 
-	sprintf(gap_fname, "%s_group.gap", label_txt);
-	Aut_gens->export_permutation_group_to_GAP(
-			gap_fname, verbose_level - 2);
-	if (f_v) {
-		cout << "written file " << gap_fname << " of size "
-				<< file_size(gap_fname) << endl;
-		}
-
-	ost << "\\clearpage\\subsection*{GAP Export}" << endl;
-	ost << "To export the group to GAP, use the following file\\\\" << endl;
-	ost << "\\begin{verbatim}" << endl;
-
-	{
-	ifstream fp1(gap_fname);
-	char line[100000];
-
-	while (TRUE) {
-		if (fp1.eof()) {
-			break;
+		sprintf(magma_fname, "%s_group.magma", label_txt);
+		Aut_gens->export_permutation_group_to_magma(
+				magma_fname, verbose_level - 2);
+		if (f_v) {
+			cout << "written file " << magma_fname << " of size "
+					<< file_size(magma_fname) << endl;
 			}
 
-		//cout << "count_number_of_orbits_in_file reading
-		//line, nb_sol = " << nb_sol << endl;
-		fp1.getline(line, 100000, '\n');
-		ost << line << endl;
+		ost << "\\clearpage\\subsection*{Magma Export}" << endl;
+		ost << "To export the group to Magma, use the following file\\\\" << endl;
+		ost << "\\begin{verbatim}" << endl;
+
+		{
+		ifstream fp1(magma_fname);
+		char line[100000];
+
+		while (TRUE) {
+			if (fp1.eof()) {
+				break;
+				}
+
+			//cout << "count_number_of_orbits_in_file reading
+			//line, nb_sol = " << nb_sol << endl;
+			fp1.getline(line, 100000, '\n');
+			ost << line << endl;
+			}
+
 		}
+		ost << "\\end{verbatim}" << endl;
 
+
+		char gap_fname[1000];
+
+		sprintf(gap_fname, "%s_group.gap", label_txt);
+		Aut_gens->export_permutation_group_to_GAP(
+				gap_fname, verbose_level - 2);
+		if (f_v) {
+			cout << "written file " << gap_fname << " of size "
+					<< file_size(gap_fname) << endl;
+			}
+
+		ost << "\\clearpage\\subsection*{GAP Export}" << endl;
+		ost << "To export the group to GAP, use the following file\\\\" << endl;
+		ost << "\\begin{verbatim}" << endl;
+
+		{
+		ifstream fp1(gap_fname);
+		char line[100000];
+
+		while (TRUE) {
+			if (fp1.eof()) {
+				break;
+				}
+	
+			//cout << "count_number_of_orbits_in_file reading
+			//line, nb_sol = " << nb_sol << endl;
+			fp1.getline(line, 100000, '\n');
+			ost << line << endl;
+			}
+	
+		}
+		ost << "\\end{verbatim}" << endl;
+	
 	}
-	ost << "\\end{verbatim}" << endl;
-
-
+	else {
+		cout << "permutation degree is too large, skipping export to magma and GAP" << endl;
+	}
 
 
 	if (f_v) {
