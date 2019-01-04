@@ -558,6 +558,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 void strong_generators::generators_for_the_singer_cycle(
 	action *A,
 	matrix_group *Mtx, int power_of_singer,
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -569,7 +570,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	longinteger_object target_go;
 	int *go_factored;
 	int n, q;
-	vector_ge *my_gens;
+	//vector_ge *my_gens;
 	int *data;
 	int i;
 	
@@ -604,9 +605,9 @@ void strong_generators::generators_for_the_singer_cycle(
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
-	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A);
-	my_gens->allocate(1);
+	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens->init(A);
+	nice_gens->allocate(1);
 
 	
 
@@ -669,7 +670,7 @@ void strong_generators::generators_for_the_singer_cycle(
 				"power of " << power_of_singer << ":" << endl;
 		A->element_print_quick(Elt1, cout);
 		}
-	my_gens->copy_in(0, Elt1);
+	nice_gens->copy_in(0, Elt1);
 
 
 	if (f_v) {
@@ -683,7 +684,8 @@ void strong_generators::generators_for_the_singer_cycle(
 		cout << "target_go=" << target_go << endl;
 		}
 	S = create_sims_from_generators_randomized(A, 
-		my_gens, TRUE /* f_target_go */, 
+		nice_gens,
+		TRUE /* f_target_go */,
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
@@ -708,7 +710,7 @@ void strong_generators::generators_for_the_singer_cycle(
 			f_print_cycles_of_length_one);
 		}
 	FREE_OBJECT(S);
-	FREE_OBJECT(my_gens);
+	//FREE_OBJECT(nice_gens);
 	FREE_int(data);
 	FREE_int(go_factored);
 	FREE_int(Elt1);
@@ -721,6 +723,7 @@ void strong_generators::generators_for_the_singer_cycle(
 void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	action *A,
 	matrix_group *Mtx, int power_of_singer,
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -732,7 +735,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	longinteger_object target_go;
 	int *go_factored;
 	int n, q;
-	vector_ge *my_gens;
+	//vector_ge *my_gens;
 	int *data1;
 	int *data2;
 	int i;
@@ -770,9 +773,9 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
-	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A);
-	my_gens->allocate(2);
+	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens->init(A);
+	nice_gens->allocate(2);
 
 
 
@@ -845,14 +848,14 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 				"power of " << power_of_singer << ":" << endl;
 		A->element_print_quick(Elt1, cout);
 		}
-	my_gens->copy_in(0, Elt1);
+	nice_gens->copy_in(0, Elt1);
 
 	A->make_element(Elt1, data2, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "Frob:" << endl;
 		A->element_print_quick(Elt1, cout);
 		}
-	my_gens->copy_in(1, Elt1);
+	nice_gens->copy_in(1, Elt1);
 
 
 
@@ -867,7 +870,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		cout << "target_go=" << target_go << endl;
 		}
 	S = create_sims_from_generators_randomized(A,
-		my_gens, TRUE /* f_target_go */,
+		nice_gens,
+		TRUE /* f_target_go */,
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle_"
@@ -892,7 +896,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 			f_print_cycles_of_length_one);
 		}
 	FREE_OBJECT(S);
-	FREE_OBJECT(my_gens);
+	//FREE_OBJECT(nice_gens);
 	FREE_int(data1);
 	FREE_int(data2);
 	FREE_int(go_factored);

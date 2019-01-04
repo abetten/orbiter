@@ -119,6 +119,7 @@ using namespace std;
 #endif
 /*----------------------------------------------------------------------------*/
 
+#define SYSTEMUNIX
 
 
 #define HAS_NAUTY 1

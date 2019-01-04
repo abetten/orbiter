@@ -647,10 +647,12 @@ void create_adelaide_hyperoval(subfield_structure *S,
 void create_ovoid(finite_field *F, 
 	char *fname, int &nb_pts, int *&Pts, 
 	int verbose_level);
-void create_Baer_substructure(int n, finite_field *FQ, finite_field *Fq, 
+void create_Baer_substructure(
+	int n, finite_field *FQ, finite_field *Fq,
 	char *fname, int &nb_pts, int *&Pts, 
 	int verbose_level);
-void create_BLT_from_database(int f_embedded, finite_field *F, int BLT_k, 
+void create_BLT_from_database(
+	int f_embedded, finite_field *F, int BLT_k,
 	char *fname, int &nb_pts, int *&Pts, 
 	int verbose_level);
 void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq, 
@@ -726,7 +728,8 @@ void do_plane_type(int n, finite_field *F,
 void do_plane_type_failsafe(int n, finite_field *F, 
 	int *set, int set_size, 
 	int verbose_level);
-void do_conic_type(int n, finite_field *F, int f_randomized, int nb_times, 
+void do_conic_type(int n,
+	finite_field *F, int f_randomized, int nb_times,
 	int *set, int set_size, 
 	int *&intersection_type, int &highest_intersection_number, 
 	int verbose_level);

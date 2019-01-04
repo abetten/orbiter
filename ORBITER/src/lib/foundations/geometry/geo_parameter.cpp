@@ -377,6 +377,7 @@ int geo_parameter::partition_number_col(int col_idx)
 int geo_parameter::input(ifstream &aStream)
 {
 #ifdef SYSTEMUNIX
+	cout << "geo_parameter::input SYSTEMUNIX" << endl;
 	string str;
 	//Reset();
 	//tTDO::Stream(aStream);
@@ -385,16 +386,23 @@ int geo_parameter::input(ifstream &aStream)
 	v = 0;
 	b = 0;
 	if (str == "HTDO") {
-		cout << "geo_parameter::input read HTD, "
+		cout << "geo_parameter::input read HTDO, "
 				"before input_mode_single" << endl;
 		return input_mode_single(aStream);
 		}
+	else {
+		cout << "geo_parameter::input str = " << str << endl;
+		return FALSE;
+	}
 #endif
 #ifdef SYSTEMWINDOWS
+	cout << "geo_parameter::input SYSTEMWINDOWS" << endl;
 	cout << "geo_parameter::input has a problem "
 			"under windows"<< endl;
 	exit(1);
 #endif
+	cout << "geo_parameter::input neither SYSTEMUNIX "
+			"nor SYSTEMWINDOWS" << endl;
 	return FALSE;
 }
 
