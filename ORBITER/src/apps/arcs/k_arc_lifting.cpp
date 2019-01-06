@@ -74,6 +74,7 @@ int main(int argc, char **argv)
 	const char *arc_text = NULL;
 	int f_fining_input = FALSE;
 	int f_cook_labels = FALSE;
+	int f_dualize = FALSE;
 	int f_classification = FALSE;
 	const char *classification_fname = NULL;
 	int f_split = FALSE;
@@ -153,6 +154,10 @@ int main(int argc, char **argv)
 		else if (strcmp(argv[i], "-cook_labels") == 0) {
 			f_cook_labels = TRUE;
 			cout << "-cook_labels " << endl;
+			}
+		else if (strcmp(argv[i], "-dualize") == 0) {
+			f_dualize = TRUE;
+			cout << "-dualize " << endl;
 			}
 		else if (strcmp(argv[i], "-Cook") == 0) {
 			f_Cook = TRUE;
@@ -334,6 +339,21 @@ int main(int argc, char **argv)
 			int_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 			}
+
+		if (f_dualize) {
+			cout << "dualizing the input set" << endl;
+			int a, b;
+			for (i = 0; i < the_arc_sz; i++) {
+				a = the_arc[i];
+				b = P->Polarity_hyperplane_to_point[a];
+				the_arc[i] = b;
+			}
+			cout << "input arc after applying the polarity "
+					"from lines to points = ";
+			int_vec_print(cout, the_arc, the_arc_sz);
+			cout << endl;
+
+		}
 
 		int_vec_heapsort(the_arc, the_arc_sz);
 
@@ -680,7 +700,7 @@ void do_arc_lifting(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *Coord;
-	int i, j, a, d, pt;
+	int i, j, a, d, pt, h;
 
 	if (f_v) {
 		cout << "do_arc_lifting" << endl;
@@ -795,6 +815,7 @@ void do_arc_lifting(
 	//int *line_type;
 
 
+#if 0
 
 	line_type = NEW_int(P->N_lines);
 	P->line_intersection_type(arc, arc_sz,
@@ -870,6 +891,16 @@ void do_arc_lifting(
 	
 	D->m = h;
 
+#else
+	P->arc_lifting_diophant(
+			arc, arc_sz,
+			target_sz, k /* target_d */,
+			D,
+			verbose_level);
+#endif
+
+
+
 	if (f_vv) {
 		cout << "do_arc_lifting The system is:" << endl;
 		D->print_tight();
@@ -928,7 +959,7 @@ void do_arc_lifting(
 				pt = P->Lines[line * P->k + j];
 					// j-th point on i-th (k-1)-line
 			
-				// thes it pt is already in the arc,
+				// test it pt is already in the arc,
 				// skip if so.
 				if (!int_vec_search(arc, arc_sz, pt, idx)) {
 
@@ -1232,7 +1263,8 @@ void do_arc_lifting(
 
 
 void user_callback_solution_found(
-		int *sol, int len, int nb_sol, void *data)
+		int *sol, int len, int nb_sol,
+		void *data)
 {
 	cout << "user_callback_solution_found" << endl;
 	nb_sol++;

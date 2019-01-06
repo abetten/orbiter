@@ -92,7 +92,8 @@ int main(int argc, char **argv)
 
 	if (nb_pts) {
 		if (nb_pts < 9) {
-			cout << "please give at least 9 points using -pts <p1> ... <p9>" << endl;
+			cout << "please give at least 9 points "
+					"using -pts <p1> ... <p9>" << endl;
 			exit(1);
 			}
 		Pts = NEW_int(nb_pts);
@@ -102,7 +103,8 @@ int main(int argc, char **argv)
 		int a;
 		
 		if (nb_pt_coords < 36) {
-			cout << "please give at least 36 = 9 x 4 point coordinates using -pt_coords <p1> ... <p36>" << endl;
+			cout << "please give at least 36 = 9 x 4 point coordinates "
+					"using -pt_coords <p1> ... <p36>" << endl;
 			cout << "you gave " << nb_pt_coords << endl;
 			exit(1);
 			}
@@ -118,7 +120,8 @@ int main(int argc, char **argv)
 			}
 		}
 	else {
-		cout << "Please specify points using -pts or using -pt_coordinates" << endl;
+		cout << "Please specify points using -pts or "
+				"using -pt_coordinates" << endl;
 		exit(1);
 		}
 
@@ -141,7 +144,8 @@ int main(int argc, char **argv)
 	if (f_vv) {
 		cout << "after P->init" << endl;
 		}
-	P->determine_quadric_in_solid(Pts, nb_pts, ten_coeffs, verbose_level);
+	P->determine_quadric_in_solid(Pts, nb_pts,
+			ten_coeffs, verbose_level);
 
 	if (f_v) {
 		cout << "determine_quadric_in_solid the ten coefficients are ";
@@ -154,7 +158,8 @@ int main(int argc, char **argv)
 	int nb_points;
 	
 	cout << "quadric points brute force:" << endl;
-	P->quadric_points_brute_force(ten_coeffs, points, nb_points, verbose_level);
+	P->quadric_points_brute_force(ten_coeffs,
+			points, nb_points, verbose_level);
 	if (f_v) {
 		int v[4];
 		

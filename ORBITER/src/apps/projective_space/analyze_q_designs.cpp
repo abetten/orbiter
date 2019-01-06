@@ -122,17 +122,18 @@ void analyze(int n, int k, int t, int q,
 	if (f_v) {
 		cout << "analyze" << endl;
 		}
-	int_matrix_read_csv(fname, Designs, nb_designs, len, 0 /* verbose_level */);
+	int_matrix_read_csv(fname,
+			Designs, nb_designs, len, 0 /* verbose_level */);
 
 	cout << "read " << nb_designs << " from file " << fname << endl;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
-	Gr_t = new grassmann;
+	Gr_t = NEW_OBJECT(grassmann);
 	Gr_t->init(n, t, F, 0/*verbose_level - 10*/);
-	Gr_k = new grassmann;
+	Gr_k = NEW_OBJECT(grassmann);
 	Gr_k->init(n, k, F, 0/*verbose_level - 10*/);
-	Gr_tk = new grassmann;
+	Gr_tk = NEW_OBJECT(grassmann);
 	Gr_tk->init(k, t, F, 0/*verbose_level - 10*/);
 	
 
@@ -144,9 +145,10 @@ void analyze(int n, int k, int t, int q,
 				Designs + i * len, len, verbose_level);
 		}
 
-	delete Gr_t;
-	delete Gr_k;
-	delete F;
+	FREE_OBJECT(Gr_t);
+	FREE_OBJECT(Gr_k);
+	FREE_OBJECT(Gr_tk);
+	FREE_OBJECT(F);
 }
 
 void analyze_design(int n, int k, int t, int q,
@@ -245,14 +247,14 @@ void test_group(int n, int k, int t, int q,
 	cout << "read " << nb_designs << " from file " << fname << endl;
 
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init(Descr->input_q, 0);
 	//F->init_override_polynomial(Descr->input_q, override_poly, 0);
 	Descr->F = F;
 	q = Descr->input_q;
 
-	LG = new linear_group;
+	LG = NEW_OBJECT(linear_group);
 
 	cout << "test_group before LG->init, creating the group" << endl;
 
@@ -265,11 +267,11 @@ void test_group(int n, int k, int t, int q,
 	A2 = LG->A2;
 	S = LG->Strong_gens->create_sims(0 /*verbose_level */);
 		
-	Gr_t = new grassmann;
+	Gr_t = NEW_OBJECT(grassmann);
 	Gr_t->init(n, t, F, 0/*verbose_level - 10*/);
-	Gr_k = new grassmann;
+	Gr_k = NEW_OBJECT(grassmann);
 	Gr_k->init(n, k, F, 0/*verbose_level - 10*/);
-	Gr_tk = new grassmann;
+	Gr_tk = NEW_OBJECT(grassmann);
 	Gr_tk->init(k, t, F, 0/*verbose_level - 10*/);
 
 	if (f_v) {
@@ -285,7 +287,8 @@ void test_group(int n, int k, int t, int q,
 }
 
 
-void group_of_design(int n, int k, int t, int q, finite_field *F, 
+void group_of_design(int n, int k, int t, int q,
+	finite_field *F,
 	grassmann *Gr_t, grassmann *Gr_k, grassmann *Gr_tk, 
 	action *A, action *A2, 
 	int *design, int len, int verbose_level)

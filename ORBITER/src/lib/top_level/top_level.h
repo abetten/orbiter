@@ -75,6 +75,8 @@ typedef class spread_create spread_create;
 typedef class spread_lifting spread_lifting;
 	// added April 1, 2018
 typedef class k_arc_generator k_arc_generator;
+typedef class arc_lifting_simeon arc_lifting_simeon;
+	// added Jan 6, 2019
 
 
 // #############################################################################

@@ -47,6 +47,9 @@ public:
 	diophant_equation_type *type;
 	char **eqn_label; // [m] a label for each equation / inequality
 
+	int f_has_var_labels;
+	int *var_labels; // [n]
+
 
 	// the following vectors are used by diophant::test_solution
 	int *X; // [n]
@@ -70,6 +73,7 @@ public:
 	void freeself();
 	
 	void open(int m, int n);
+	void int_var_labels(int *labels, int verbose_level);
 	void join_problems(diophant *D1, diophant *D2, int verbose_level);
 	void init_partition_problem(
 		int *weights, int nb_weights, int target_value,

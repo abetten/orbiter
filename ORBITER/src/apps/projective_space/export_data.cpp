@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	int i;
 	int f_q = FALSE;
 	int q;
-	int f_TP = FALSE;
+	int f_spread = FALSE;
 	int f_BLT = FALSE;
 	int k;
 
@@ -31,10 +31,10 @@ int main(int argc, char **argv)
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
-		else if (strcmp(argv[i], "-TP") == 0) {
-			f_TP = TRUE;
+		else if (strcmp(argv[i], "-spread") == 0) {
+			f_spread = TRUE;
 			k = atoi(argv[++i]);
-			cout << "-TP " << k << endl;
+			cout << "-spread " << k << endl;
 			}
 		else if (strcmp(argv[i], "-BLT") == 0) {
 			f_BLT = TRUE;
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	char fname[1000];
 
 
-	if (f_TP) {
+	if (f_spread) {
 		int nb_reps;
 		int *p;
 		int *Table;
@@ -75,7 +75,8 @@ int main(int argc, char **argv)
 		write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
 		}
 	if (f_v) {
-		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		}
 	the_end(t0);
 }
