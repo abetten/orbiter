@@ -120,17 +120,18 @@ void diophant::open(int m, int n)
 	f_has_var_labels = FALSE;
 }
 
-void diophant::int_var_labels(int *labels, int verbose_level)
+void diophant::init_var_labels(int *labels, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "diophant::int_var_labels" << endl;
+		cout << "diophant::init_var_labels" << endl;
 	}
 	var_labels = NEW_int(n);
+	f_has_var_labels = TRUE;
 	int_vec_copy(labels, var_labels, n);
 	if (f_v) {
-		cout << "diophant::int_var_labels done" << endl;
+		cout << "diophant::init_var_labels done" << endl;
 	}
 
 }
