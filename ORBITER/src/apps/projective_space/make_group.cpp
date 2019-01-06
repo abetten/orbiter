@@ -59,7 +59,10 @@ void create_group(int verbose_level)
 
 	cout << "Creating linear group" << endl;
 	A = NEW_OBJECT(action);
-	A->init_general_linear_group(n + 1, F, TRUE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
+	A->init_general_linear_group(n + 1, F,
+			TRUE /* f_semilinear */,
+			TRUE /* f_basis */,
+			verbose_level - 2);
 	
 	cout << "Creating action on lines" << endl;
 	projective_space_init_line_action(P, A, A2, verbose_level);

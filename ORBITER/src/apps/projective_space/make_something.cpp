@@ -19,8 +19,10 @@
 int t0; // the system time when the program started
 
 
-void export_magma(finite_field *F, int d, int *Pts, int nb_pts, char *fname);
-void export_gap(finite_field *F, int d, int *Pts, int nb_pts, char *fname);
+void export_magma(finite_field *F,
+		int d, int *Pts, int nb_pts, char *fname);
+void export_gap(finite_field *F,
+		int d, int *Pts, int nb_pts, char *fname);
 
 
 
@@ -289,7 +291,8 @@ int main(int argc, const char **argv)
 			f_segre_variety = TRUE;
 			segre_variety_a = atoi(argv[++i]);
 			segre_variety_b = atoi(argv[++i]);
-			cout << "-segre_variety " << segre_variety_a << " " << segre_variety_b << endl;
+			cout << "-segre_variety " << segre_variety_a
+					<< " " << segre_variety_b << endl;
 			}
 		else if (strcmp(argv[i], "-Maruta_Hamada_arc") == 0) {
 			f_Maruta_Hamada_arc = TRUE;
@@ -308,7 +311,8 @@ int main(int argc, const char **argv)
 		}
 	
 	if (!f_q) {
-		cout << "please specify the field order using the option -q <q>" << endl;
+		cout << "please specify the field order "
+				"using the option -q <q>" << endl;
 		exit(1);
 		}
 
@@ -439,12 +443,14 @@ int main(int argc, const char **argv)
 		}
 	else if (f_Baer) {
 		if (!f_n) {
-			cout << "please specify the projective dimension using the option -n <n>" << endl;
+			cout << "please specify the projective dimension "
+					"using the option -n <n>" << endl;
 			exit(1);
 			}
 
 		if (!f_Q) {
-			cout << "please specify the field order using the option -Q <Q>" << endl;
+			cout << "please specify the field order "
+					"using the option -Q <Q>" << endl;
 			exit(1);
 			}
 
@@ -460,7 +466,8 @@ int main(int argc, const char **argv)
 		}
 	else if (f_orthogonal) {
 		if (!f_n) {
-			cout << "please specify the projective dimension using the option -n <n>" << endl;
+			cout << "please specify the projective dimension "
+					"using the option -n <n>" << endl;
 			exit(1);
 			}
 		create_orthogonal(orthogonal_epsilon, n, F, 
@@ -469,7 +476,8 @@ int main(int argc, const char **argv)
 		}
 	else if (f_hermitian) {
 		if (!f_n) {
-			cout << "please specify the projective dimension using the option -n <n>" << endl;
+			cout << "please specify the projective dimension "
+					"using the option -n <n>" << endl;
 			exit(1);
 			}
 		create_hermitian(n, F, 
@@ -500,7 +508,8 @@ int main(int argc, const char **argv)
 	else if (f_ttp_code) {
 
 		if (!f_Q) {
-			cout << "please specify the field order using the option -Q <Q>" << endl;
+			cout << "please specify the field order "
+					"using the option -Q <Q>" << endl;
 			exit(1);
 			}
 
@@ -522,7 +531,8 @@ int main(int argc, const char **argv)
 	else if (f_desarguesian_line_spread_in_PG_3_q) {
 
 		if (!f_Q) {
-			cout << "please specify the field order using the option -Q <Q>" << endl;
+			cout << "please specify the field order "
+					"using the option -Q <Q>" << endl;
 			exit(1);
 			}
 
@@ -553,7 +563,8 @@ int main(int argc, const char **argv)
 		}
 	else if (f_whole_space) {
 		if (!f_n) {
-			cout << "please specify the projective dimension using the option -n <n>" << endl;
+			cout << "please specify the projective dimension "
+					"using the option -n <n>" << endl;
 			exit(1);
 			}
 		create_whole_space(n, F, 
@@ -562,7 +573,8 @@ int main(int argc, const char **argv)
 		}
 	else if (f_hyperplane) {
 		if (!f_n) {
-			cout << "please specify the projective dimension using the option -n <n>" << endl;
+			cout << "please specify the projective dimension "
+					"using the option -n <n>" << endl;
 			exit(1);
 			}
 		create_hyperplane(n, F, 
@@ -586,7 +598,8 @@ int main(int argc, const char **argv)
 		}
 
 
-	cout << "we created a set of " << nb_pts << " points, and we will write it to the file " << fname << endl;
+	cout << "we created a set of " << nb_pts << " points, "
+			"and we will write it to the file " << fname << endl;
 	cout << "list of points:" << endl;
 	cout << nb_pts << endl;
 	for (i = 0; i < nb_pts; i++) {
@@ -595,7 +608,8 @@ int main(int argc, const char **argv)
 	cout << endl;
 
 	write_set_to_file(fname, Pts, nb_pts, verbose_level);
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 
 	if (Pts) {
@@ -605,7 +619,8 @@ int main(int argc, const char **argv)
 }
 
 
-void export_magma(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
+void export_magma(finite_field *F,
+		int d, int *Pts, int nb_pts, char *fname)
 {
 	char fname2[1000];
 	int *v;
@@ -618,7 +633,8 @@ void export_magma(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
 	{
 	ofstream fp(fname2);
 
-	fp << "G,I:=PGammaL(" << d << "," << F->q << ");F:=GF(" << F->q << ");" << endl;
+	fp << "G,I:=PGammaL(" << d << "," << F->q
+			<< ");F:=GF(" << F->q << ");" << endl;
 	fp << "S:={};" << endl;
 	fp << "a := F.1;" << endl;
 	for (h = 0; h < nb_pts; h++) {
@@ -649,12 +665,14 @@ void export_magma(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
 	fp << "Size(Stab);" << endl;
 	fp << endl;
 	}
-	cout << "Written file " << fname2 << " of size " << file_size(fname2) << endl;
+	cout << "Written file " << fname2 << " of size "
+			<< file_size(fname2) << endl;
 
 	FREE_int(v);
 }
 
-void export_gap(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
+void export_gap(finite_field *F,
+		int d, int *Pts, int nb_pts, char *fname)
 {
 	char fname2[1000];
 	int *v;
@@ -704,7 +722,8 @@ void export_gap(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
 	fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
 	fp << "Size(stab);" << endl;
 	}
-	cout << "Written file " << fname2 << " of size " << file_size(fname2) << endl;
+	cout << "Written file " << fname2 << " of size "
+			<< file_size(fname2) << endl;
 
 #if 0
 LoadPackage("fining");

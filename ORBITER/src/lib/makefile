@@ -33,11 +33,12 @@ clean:
 
 MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
-		foundations/algebra_and_number_theory/finite_field.o \
+		foundations/algebra_and_number_theory/finite_field_io.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
 		foundations/algebra_and_number_theory/finite_field_projective.o \
 		foundations/algebra_and_number_theory/finite_field_representations.o \
 		foundations/algebra_and_number_theory/finite_field_tables.o \
+		foundations/algebra_and_number_theory/finite_field.o \
 		foundations/algebra_and_number_theory/finite_ring.o \
 		foundations/algebra_and_number_theory/generators_symplectic_group.o \
 		foundations/algebra_and_number_theory/gl_classes.o \
@@ -256,6 +257,7 @@ MODULES= \
 		top_level/geometry/BLT_set_create.o \
 		top_level/geometry/BLT_set_create_description.o \
 		top_level/geometry/arc_generator.o \
+		top_level/geometry/arc_lifting_simeon.o \
 		top_level/geometry/arc_lifting_with_two_lines.o \
 		top_level/geometry/arc_lifting.o \
 		top_level/geometry/choose_points_or_lines.o \

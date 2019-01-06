@@ -2382,6 +2382,11 @@ public:
 		incidence_structure *&Inc, 
 		partitionstack *&Stack, 
 		int verbose_level);
+	void arc_lifting_diophant(
+		int *arc, int arc_sz,
+		int target_sz, int target_d,
+		diophant *&D,
+		int verbose_level);
 };
 
 

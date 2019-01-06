@@ -138,6 +138,56 @@ void print_point(int pt, void *data);
 void callback_arc_report(isomorph *Iso, void *data, int verbose_level);
 void callback_arc_print(ostream &ost, int len, int *S, void *data);
 
+
+
+//! arc lifting according to Simeon Ball and Ray Hill
+
+
+class arc_lifting_simeon {
+
+public:
+
+	int verbose_level;
+	int q;
+	int d; // largest number of points per line
+	int n; // projective dimension
+	int k; // size of the arc
+	finite_field *F;
+	int f_projective;
+	int f_general;
+	int f_affine;
+	int f_semilinear;
+	int f_special;
+	sims *S;
+	action *A;
+	longinteger_object go;
+	int *Elt;
+	int *v;
+	schreier *Sch;
+	poset *Poset;
+	poset_classification *Gen;
+	projective_space *P;
+
+	action *A2; // action on the lines
+	action *A3; // action on lines restricted to filtered_lines
+
+
+	arc_lifting_simeon();
+	~arc_lifting_simeon();
+	void init(int q, int d, int n, int k,
+			int verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void do_covering_problem(set_and_stabilizer *SaS);
+
+
+};
+
+
+
+
 // #############################################################################
 // arc_lifting.C:
 // #############################################################################

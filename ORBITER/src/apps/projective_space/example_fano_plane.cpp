@@ -80,13 +80,17 @@ int main()
 	int nb_orbits;
 
 	nb_orbits = Gen->nb_orbits_at_level(k);
-	cout << "We found " << nb_orbits << " orbits of subsets of size " << k << endl;
+	cout << "We found " << nb_orbits
+			<< " orbits of subsets of size " << k << endl;
 
 	for (i = 0; i < nb_orbits; i++) {
 	
 		set_and_stabilizer *SaS;
 
-		SaS = Gen->get_set_and_stabilizer(k /* level */, i /* orbit_at_level */, 0 /* verbose_level */);
+		SaS = Gen->get_set_and_stabilizer(
+				k /* level */,
+				i /* orbit_at_level */,
+				0 /* verbose_level */);
 		cout << "orbit " << i << " / " << nb_orbits << " : ";
 		SaS->print_set_tex(cout);
 		cout << endl;

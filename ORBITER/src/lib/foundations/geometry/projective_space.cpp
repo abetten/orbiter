@@ -6646,4 +6646,126 @@ void projective_space::decomposition(
 		}
 }
 
+void projective_space::arc_lifting_diophant(
+	int *arc, int arc_sz,
+	int target_sz, int target_d,
+	diophant *&D,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *line_type;
+	int i, j, h, pt;
+	int *free_points;
+	int nb_free_points;
 
+	if (f_v) {
+		cout << "projective_space::arc_lifting_diophant" << endl;
+		}
+
+	free_points = NEW_int(N_points);
+
+	set_complement(arc, arc_sz,
+			free_points, nb_free_points, N_points);
+
+
+
+	line_type = NEW_int(N_lines);
+	line_intersection_type(arc, arc_sz,
+			line_type, 0 /* verbose_level */);
+	if (f_vv) {
+		cout << "line_type: ";
+		int_vec_print_fully(cout, line_type, N_lines);
+		cout << endl;
+		}
+
+	if (f_vv) {
+		cout << "line type:" << endl;
+		for (i = 0; i < N_lines; i++) {
+			cout << i << " : " << line_type[i] << endl;
+			}
+		}
+
+	classify C;
+	C.init(line_type, N_lines, FALSE, 0);
+	if (f_v) {
+		cout << "projective_space::arc_lifting_diophant line_type:";
+		C.print_naked(TRUE);
+		cout << endl;
+		cout << "nb_free_points=" << nb_free_points << endl;
+		}
+
+
+	D = NEW_OBJECT(diophant);
+	D->open(N_lines + 1, nb_free_points);
+	D->f_x_max = TRUE;
+	for (j = 0; j < nb_free_points; j++) {
+		D->x_max[j] = 1;
+		}
+	D->f_has_sum = TRUE;
+	D->sum = target_sz - arc_sz;
+	h = 0;
+	for (i = 0; i < N_lines; i++) {
+		if (line_type[i] > k) {
+			cout << "projective_space::arc_lifting_diophant "
+					"line_type[i] > k" << endl;
+			exit(1);
+			}
+	#if 0
+		if (line_type[i] < k - 1) {
+			continue;
+			}
+	#endif
+		for (j = 0; j < nb_free_points; j++) {
+			pt = free_points[j];
+			if (is_incident(pt, i /* line */)) {
+				D->Aij(h, j) = 1;
+				}
+			else {
+				D->Aij(h, j) = 0;
+				}
+			}
+		D->type[h] = t_LE;
+		D->RHSi(h) = target_d - line_type[i];
+		h++;
+		}
+
+
+	// add one extra row:
+	for (j = 0; j < nb_free_points; j++) {
+		D->Aij(h, j) = 1;
+		}
+	D->type[h] = t_EQ;
+	D->RHSi(h) = target_sz - arc_sz;
+	h++;
+
+	D->m = h;
+
+	D->int_var_labels(free_points, verbose_level);
+
+	if (f_vv) {
+		cout << "projective_space::arc_lifting_diophant "
+				"The system is:" << endl;
+		D->print_tight();
+		}
+
+#if 0
+	if (f_save_system) {
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << endl;
+		D->save_in_general_format(fname_system, 0 /* verbose_level */);
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << " done" << endl;
+		D->print();
+		D->print_tight();
+		}
+#endif
+
+	FREE_int(line_type);
+	FREE_int(free_points);
+
+	if (f_v) {
+		cout << "projective_space::arc_lifting_diophant done" << endl;
+		}
+
+}

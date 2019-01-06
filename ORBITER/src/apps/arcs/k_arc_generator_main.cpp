@@ -4,7 +4,7 @@
 //
 // started May 14, 2018
 //
-// Searches for (k,d)-arcs in desarguesian projective planes
+// Classifies (k,d)-arcs in desarguesian projective planes
 //
 //
 

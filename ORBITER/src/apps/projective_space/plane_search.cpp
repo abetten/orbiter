@@ -89,7 +89,7 @@ void plane_search(int q, int verbose_level)
 
 	backtrack(F, 2, verbose_level);
 	cout << "nb_sol=" << nb_sol << endl;
-	delete F;
+	FREE_OBJECT(F);
 }
 
 void backtrack(finite_field *F, int row, int verbose_level)

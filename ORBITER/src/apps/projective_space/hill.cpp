@@ -17,11 +17,16 @@ int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
 void Hill_cap(int argc, const char **argv, int verbose_level);
-void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level);
+void init_orthogonal(action *A,
+		int epsilon, int n, finite_field *F, int verbose_level);
 int get_orbit(schreier *Orb, int idx, int *set);
-void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
-int test_if_arc(finite_field *Fq, int *pt_coords, int *set, int set_sz, int k, int verbose_level);
-void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int sz, 
+void append_orbit_and_adjust_size(schreier *Orb,
+		int idx, int *set, int &sz);
+int test_if_arc(finite_field *Fq,
+		int *pt_coords, int *set, int set_sz,
+		int k, int verbose_level);
+void solution(int w, int n,
+	action *A, orthogonal *O, int *coords, int *set, int sz,
 	longinteger_object *Rank_lines, int nb_lines, int verbose_level);
 
 
@@ -104,7 +109,8 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 	P.compute_orbits(t0, verbose_level - 2);
 	
 	if (f_v) {
-		cout << "we found " << P.nb_orbits << " orbits at depth " << w << endl;
+		cout << "we found " << P.nb_orbits
+				<< " orbits at depth " << w << endl;
 		}
 	
 	//P.compute_cosets(w, 0, verbose_level);
@@ -131,9 +137,11 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 		}
 	Grass.init(n, w, F, 0 /*verbose_level*/);
 
-	cout << "there are " << nb_lines << " lines, generator matrices are:" << endl;
+	cout << "there are " << nb_lines << " lines, "
+			"generator matrices are:" << endl;
 	for (i = 0; i < nb_lines; i++) {
-		Grass.unrank_longinteger(Rank_lines[i], 0/*verbose_level - 3*/);
+		Grass.unrank_longinteger(Rank_lines[i],
+				0/*verbose_level - 3*/);
 		cout << setw(5) << i << " : " << Rank_lines[i] << ":" << endl;
 		print_integer_matrix_width(cout, Grass.M, w, n, n, 2);
 		}
@@ -354,7 +362,8 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 			}
 		}
 	cout << "Adj:" << endl;
-	print_integer_matrix_width(cout, Adj, nb_good_orbits, nb_good_orbits, nb_good_orbits, 1);
+	print_integer_matrix_width(cout, Adj,
+			nb_good_orbits, nb_good_orbits, nb_good_orbits, 1);
 
 
 	FREE_int(Elt);
@@ -368,7 +377,8 @@ void Hill_cap(int argc, const char **argv, int verbose_level)
 	
 }
 
-void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level)
+void init_orthogonal(action *A,
+		int epsilon, int n, finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -378,7 +388,8 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 	int q = F->q;
 
 	if (f_v) {
-		cout << "init_orthogonal epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
+		cout << "init_orthogonal epsilon=" << epsilon
+				<< " n=" << n << " q=" << q << endl;
 		}
 
 	is_prime_power(q, p, hh);
@@ -399,7 +410,9 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 
 	A->init_orthogonal_group(epsilon, 
 		n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, f_basis, 
 		0/*verbose_level*/);
 
@@ -434,7 +447,8 @@ int get_orbit(schreier *Orb, int idx, int *set)
 	return len;
 }
 
-void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz)
+void append_orbit_and_adjust_size(schreier *Orb,
+		int idx, int *set, int &sz)
 {
 	int f, i, len;
 
@@ -445,7 +459,9 @@ void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz)
 		}
 }
 
-int test_if_arc(finite_field *Fq, int *pt_coords, int *set, int set_sz, int k, int verbose_level)
+int test_if_arc(finite_field *Fq,
+		int *pt_coords, int *set, int set_sz,
+		int k, int verbose_level)
 {
 	int f_v = FALSE; //(verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -506,8 +522,10 @@ done:
 	return ret;
 }
 
-void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int sz, 
-	longinteger_object *Rank_lines, int nb_lines, int verbose_level)
+void solution(int w, int n,
+	action *A, orthogonal *O, int *coords, int *set, int sz,
+	longinteger_object *Rank_lines, int nb_lines,
+	int verbose_level)
 {
 	int *M;
 	int *Weights;
@@ -527,12 +545,14 @@ void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int
 
 	for (i = 0; i < sz; i++) {
 		ranks[i] = O->rank_point(coords + set[i] * n, 1, 0);
-		O->F->PG_element_rank_modified(coords + set[i] * n, 1, n, PG_ranks[i]);
+		O->F->PG_element_rank_modified(
+				coords + set[i] * n, 1, n, PG_ranks[i]);
 		}
 	cout << "point ranks: " << endl;
 	cout << "i : orthogonal rank : projective rank" << endl;
 	for (i = 0; i < sz; i++) {
-		cout << setw(3) << i << " : " << setw(6) << ranks[i] << " : " << setw(6) << PG_ranks[i] << endl;
+		cout << setw(3) << i << " : " << setw(6) << ranks[i]
+			<< " : " << setw(6) << PG_ranks[i] << endl;
 		}
 	
 
@@ -548,7 +568,8 @@ void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int
 	print_integer_matrix_width(cout, M, n, sz, sz, F->log10_of_q);
 
 	cout << "computing the weight enumerator:" << endl;
-	F->code_weight_enumerator_fast(sz, n, M, Weights, verbose_level);
+	F->code_weight_enumerator_fast(sz, n, M,
+			Weights, verbose_level);
 
 
 
@@ -601,9 +622,6 @@ void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int
 	int nb_subsets = 2;
 	int Sz[2];
 	int *Subsets[2];
-	//int f_semilinear = TRUE;
-	//char *override_poly = NULL;
-	//int f_basis = FALSE;
 	
 	Sz[0] = nb_lines;
 	Subsets[0] = NEW_int(nb_lines);
@@ -616,8 +634,8 @@ void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int
 	Sz[1] = sz;
 	Subsets[1] = PG_ranks;
 	
-	decomposition_projective_space(n - 1, F, nb_subsets, Sz, Subsets, 
-		//f_semilinear, f_basis, 
+	decomposition_projective_space(
+		n - 1, F, nb_subsets, Sz, Subsets,
 		verbose_level - 2);
 
 		// in TOP_LEVEL/decomposition.C

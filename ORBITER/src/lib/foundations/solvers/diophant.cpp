@@ -40,6 +40,8 @@ void diophant::null()
 	Y = FALSE;
 	f_has_sum = FALSE;
 	f_x_max = FALSE;
+	f_has_var_labels = FALSE;
+	var_labels = NULL;
 }
 
 void diophant::freeself()
@@ -81,6 +83,9 @@ void diophant::freeself()
 	if (Y) {
 		FREE_int(Y);
 		}
+	if (f_has_var_labels) {
+		FREE_int(var_labels);
+	}
 	null();
 }
 
@@ -112,8 +117,23 @@ void diophant::open(int m, int n)
 	f_has_sum = FALSE;
 	f_x_max = FALSE;
 	f_max_time = FALSE;
+	f_has_var_labels = FALSE;
 }
 
+void diophant::int_var_labels(int *labels, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "diophant::int_var_labels" << endl;
+	}
+	var_labels = NEW_int(n);
+	int_vec_copy(labels, var_labels, n);
+	if (f_v) {
+		cout << "diophant::int_var_labels done" << endl;
+	}
+
+}
 void diophant::join_problems(
 		diophant *D1, diophant *D2, int verbose_level)
 {
@@ -2399,7 +2419,14 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 	ofstream fp(fname);
 	
 	fp << "% diophantine system in general format " << fname << endl;
-	fp << m << " " << n << " " << f_has_sum << " " << sum << endl;
+	fp << m << " " << n << " " << f_has_sum << " " << sum << " "
+			<< f_has_var_labels << endl;
+	if (f_has_var_labels) {
+		for (j = 0; j < n; j++) {
+			fp << var_labels[j] << " ";
+		}
+		fp << endl;
+	}
 	for (i = 0; i < m; i++) {
 		fp << i << " ";
 		if (type[i] == t_EQ) {
@@ -2467,7 +2494,7 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int m, n, s;
-	int cnt, i, d, h, a, nb_types, t, val;
+	int cnt, i, j, d, h, a, nb_types, t, val;
 	int f_has_sum1;
 	
 	if (f_v) {
@@ -2507,18 +2534,39 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 		f_has_sum1 = atoi(str.c_str());
 
 		string remainder3 = remainder2.substr(i + 1);
-		cout << "diophant::read_general_format "
-				"m=" << m << " n=" << n << " remainder3=" << remainder3 << endl;
+		i = remainder3.find(" ");
+		str = remainder3.substr(0, i);
+		s = atoi(str.c_str());
+		string remainder4 = remainder3.substr(i + 1);
+		f_has_var_labels = atoi(remainder4.c_str());
+
+
+		//cout << "diophant::read_general_format "
+		//		"m=" << m << " n=" << n << " remainder3=" << remainder3 << endl;
 
 		//str = remainder3.substr(i + 1);
-		s = atoi(remainder3.c_str());
 		cout << "diophant::read_general_format "
-				"m=" << m << " n=" << n << " sum=" << s << endl;
+				"m=" << m << " n=" << n << " sum=" << s
+				<< " f_has_var_labels=" << f_has_var_labels << endl;
 
 		open(m, n);
 		f_has_sum = f_has_sum1;
 		sum = s;
 
+		if (f_has_var_labels) {
+
+			var_labels = NEW_int(n);
+			getline (myfile, line);
+			for (j = 0; j < n; j++) {
+
+				// read the value:
+				i = line.find(" ");
+				str = line.substr(0, i);
+				var_labels[j] = atoi(str.c_str());
+				remainder = line.substr(i + 1);
+				line = remainder;
+			}
+		}
 
 		for (cnt = 0; cnt < m; cnt++) {
 			getline (myfile, line);

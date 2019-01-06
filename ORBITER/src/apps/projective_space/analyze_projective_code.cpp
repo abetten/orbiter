@@ -142,14 +142,18 @@ void do_analyze_projective_code(int n, finite_field *F,
 
 	if (f_v) {
 		cout << "generator matrix m=" << d << " n=" << set_size << endl;
-		F->latex_matrix(cout, f_elements_exponential, symbol_for_print, genma, d, set_size);
-		print_integer_matrix_width(cout, genma, d, set_size, set_size, 2);
+		F->latex_matrix(cout,
+				f_elements_exponential, symbol_for_print,
+				genma, d, set_size);
+		print_integer_matrix_width(cout, genma,
+				d, set_size, set_size, 2);
 		}
 
 	int N;
 	int min_d;
 	int *weights;
-	F->code_projective_weights(set_size, d, genma, weights, verbose_level);
+	F->code_projective_weights(set_size, d,
+			genma, weights, verbose_level);
 
 	N = nb_PG_elements(n, q);
 	min_d = weights[0];

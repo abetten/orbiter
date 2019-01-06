@@ -154,7 +154,6 @@ public:
 	void init_symbol_for_print(const char *symbol);
 	void init_override_polynomial(int q, const char *poly, 
 		int verbose_level);
-	void print_minimum_polynomial(int p, const char *polynomial);
 	int compute_subfield_polynomial(int order_subfield, 
 		int verbose_level);
 	void compute_subfields(int verbose_level);
@@ -163,18 +162,6 @@ public:
 	void create_alpha_table_prime_field(int verbose_level);
 	void create_tables_prime_field(int verbose_level);
 	void create_tables_extension_field(int verbose_level);
-	void print();
-	void print_detailed(int f_add_mult_table);
-	void print_add_mult_tables();
-	void print_tables();
-	void print_tables_extension_field(const char *poly);
-	void display_T2(ostream &ost);
-	void display_T3(ostream &ost);
-	void display_N2(ostream &ost);
-	void display_N3(ostream &ost);
-	void print_integer_matrix_zech(ostream &ost, 
-		int *p, int m, int n);
-
 	int *private_add_table();
 	int *private_mult_table();
 	int zero();
@@ -231,39 +218,6 @@ public:
 	void subfield_embedding_2dimensional(finite_field &subfield, 
 		int *&components, int *&embedding, 
 		int *&pair_embedding, int verbose_level);
-	void print_embedding(finite_field &subfield, 
-		int *components, int *embedding, int *pair_embedding);
-		// we think of F as two dimensional vector space 
-		// over f with basis (1,alpha)
-		// for i,j \in f, with x = i + j * alpha \in F, we have 
-		// pair_embedding[i * q + j] = x;
-		// also, 
-		// components[x * 2 + 0] = i;
-		// components[x * 2 + 1] = j;
-		// also, for i \in f, embedding[i] is the element 
-		// in F that corresponds to i 
-		// components[Q * 2]
-		// embedding[q]
-		// pair_embedding[q * q]
-	void print_embedding_tex(finite_field &subfield, 
-		int *components, int *embedding, int *pair_embedding);
-	void print_indicator_square_nonsquare(int a);
-	void print_element(ostream &ost, int a);
-	void print_element_with_symbol(ostream &ost, 
-		int a, int f_exponential, int width, const char *symbol);
-	void int_vec_print(ostream &ost, int *v, int len);
-	void int_vec_print_elements_exponential(ostream &ost, 
-		int *v, int len, const char *symbol_for_print);
-	void latex_addition_table(ostream &f, 
-		int f_elements_exponential, const char *symbol_for_print);
-	void latex_multiplication_table(ostream &f, 
-		int f_elements_exponential, const char *symbol_for_print);
-	void latex_matrix(ostream &f, int f_elements_exponential, 
-		const char *symbol_for_print, int *M, int m, int n);
-	void power_table(int t, int *power_table, int len);
-	void cheat_sheet(ostream &f, int verbose_level);
-	void cheat_sheet_top(ostream &f, int nb_cols);
-	void cheat_sheet_bottom(ostream &f);
 
 	// #########################################################################
 	// finite_field_linear_algebra.cpp
@@ -702,6 +656,59 @@ public:
 	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
 	void projective_point_unrank(int n, int *v, int rk);
 	int projective_point_rank(int n, int *v);
+
+
+	// #########################################################################
+	// finite_field_io.cpp
+	// #########################################################################
+
+	void cheat_sheet_PG(int n,
+			int f_surface, int verbose_level);
+	void print_minimum_polynomial(int p, const char *polynomial);
+	void print();
+	void print_detailed(int f_add_mult_table);
+	void print_add_mult_tables();
+	void print_tables();
+	void print_tables_extension_field(const char *poly);
+	void display_T2(ostream &ost);
+	void display_T3(ostream &ost);
+	void display_N2(ostream &ost);
+	void display_N3(ostream &ost);
+	void print_integer_matrix_zech(ostream &ost,
+		int *p, int m, int n);
+	void print_embedding(finite_field &subfield,
+		int *components, int *embedding, int *pair_embedding);
+		// we think of F as two dimensional vector space
+		// over f with basis (1,alpha)
+		// for i,j \in f, with x = i + j * alpha \in F, we have
+		// pair_embedding[i * q + j] = x;
+		// also,
+		// components[x * 2 + 0] = i;
+		// components[x * 2 + 1] = j;
+		// also, for i \in f, embedding[i] is the element
+		// in F that corresponds to i
+		// components[Q * 2]
+		// embedding[q]
+		// pair_embedding[q * q]
+	void print_embedding_tex(finite_field &subfield,
+		int *components, int *embedding, int *pair_embedding);
+	void print_indicator_square_nonsquare(int a);
+	void print_element(ostream &ost, int a);
+	void print_element_with_symbol(ostream &ost,
+		int a, int f_exponential, int width, const char *symbol);
+	void int_vec_print(ostream &ost, int *v, int len);
+	void int_vec_print_elements_exponential(ostream &ost,
+		int *v, int len, const char *symbol_for_print);
+	void latex_addition_table(ostream &f,
+		int f_elements_exponential, const char *symbol_for_print);
+	void latex_multiplication_table(ostream &f,
+		int f_elements_exponential, const char *symbol_for_print);
+	void latex_matrix(ostream &f, int f_elements_exponential,
+		const char *symbol_for_print, int *M, int m, int n);
+	void power_table(int t, int *power_table, int len);
+	void cheat_sheet(ostream &f, int verbose_level);
+	void cheat_sheet_top(ostream &f, int nb_cols);
+	void cheat_sheet_bottom(ostream &f);
 };
 
 extern int nb_calls_to_finite_field_init;
