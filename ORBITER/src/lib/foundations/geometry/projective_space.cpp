@@ -6741,7 +6741,7 @@ void projective_space::arc_lifting_diophant(
 
 	D->m = h;
 
-	D->int_var_labels(free_points, verbose_level);
+	D->init_var_labels(free_points, verbose_level);
 
 	if (f_vv) {
 		cout << "projective_space::arc_lifting_diophant "
