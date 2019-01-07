@@ -22,6 +22,7 @@ MODULES = \
 	action_on_k_subsets.o \
 	action_on_orbits.o \
 	action_on_orthogonal.o \
+	action_on_set_partitions.o \
 	action_on_sets.o \
 	action_on_sign.o \
 	action_on_spread_set.o \

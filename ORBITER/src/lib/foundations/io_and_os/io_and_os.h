@@ -28,9 +28,11 @@ public:
 	~file_output();
 	void null();
 	void freeself();
-	void open(const char *fname, void *user_data, int verbose_level);
+	void open(const char *fname, void *user_data,
+			int verbose_level);
 	void close();
-	void write_line(int nb, int *data, int verbose_level);
+	void write_line(int nb, int *data,
+			int verbose_level);
 	void write_EOF(int nb_sol, int verbose_level);
 };
 

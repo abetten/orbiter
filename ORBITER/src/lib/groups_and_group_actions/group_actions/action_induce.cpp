@@ -6,6 +6,76 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+action *action::induced_action_on_set_partitions(
+		int universal_set_size, int partition_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action_on_set_partitions *OSP;
+	action *A;
+
+	if (f_v) {
+		cout << "action::induced_action_on_set_partitions" << endl;
+		}
+	A = NEW_OBJECT(action);
+
+	sprintf(A->group_prefix, "%s_on_set_partitions_%d_%d",
+			label, universal_set_size, partition_size);
+	sprintf(A->label, "%s_on_set_partitions_%d_%d",
+			label, universal_set_size, partition_size);
+	sprintf(A->label_tex, "%s on set partitions %d %d",
+			label, universal_set_size, partition_size);
+	if (f_v) {
+		cout << "the old_action " << label
+			<< " has base_length = " << base_len
+			<< " and degree " << degree << endl;
+		}
+	A->f_has_subaction = TRUE;
+	A->subaction = this;
+	OSP = NEW_OBJECT(action_on_set_partitions);
+
+	OSP->init(universal_set_size, partition_size,
+			this, verbose_level);
+	A->type_G = action_on_set_partitions_t;
+	A->G.OnSetPartitions = OSP;
+	A->f_allocated = TRUE;
+	A->make_element_size = make_element_size;
+	A->low_level_point_size = 0;
+
+	A->f_has_strong_generators = FALSE;
+
+	A->degree = OSP->nb_set_partitions;
+	A->base_len = 0;
+	if (f_v) {
+		cout << "action::induced_action_on_set_partitions "
+				"before init_function_pointers_induced_action" << endl;
+		}
+	A->init_function_pointers_induced_action();
+
+
+
+	A->elt_size_in_int = elt_size_in_int;
+	A->coded_elt_size_in_char = coded_elt_size_in_char;
+
+	if (f_v) {
+		cout << "action::induced_action_on_set_partitions "
+				"before allocate_element_data" << endl;
+		}
+	allocate_element_data();
+
+
+	if (f_v) {
+		cout << "action::induced_action_on_set_partitions "
+				"finished, created action " << A->label << endl;
+		cout << "degree=" << A->degree << endl;
+		cout << "make_element_size=" << A->make_element_size << endl;
+		cout << "low_level_point_size=" << A->low_level_point_size << endl;
+		print_info();
+		}
+	return A;
+}
+
+
 void action::init_action_on_lines(action *A,
 		finite_field *F, int n, int verbose_level)
 {

@@ -48,11 +48,13 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 
 
 	if (f_v) {
-		cout << "orbiter_data_file::load loading file " << fname << endl;
+		cout << "orbiter_data_file::load "
+				"loading file " << fname << endl;
 		}
 
 
-	if (!try_to_read_file(fname, nb_cases, data, verbose_level)) {
+	if (!try_to_read_file(fname,
+			nb_cases, data, verbose_level)) {
 		cout << "orbiter_data_file::load couldn't read file " 
 			<< fname << endl;
 		exit(1);
@@ -63,15 +65,18 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "read_and_parse_data_file: parsing sets" << endl;
+		cout << "read_and_parse_data_file: "
+				"parsing sets" << endl;
 		}
 	
-	parse_sets(nb_cases, data, FALSE /*f_casenumbers */, 
+	parse_sets(nb_cases, data,
+		FALSE /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
 		0/*verbose_level - 2*/);
 	if (f_v) {
-		cout << "read_and_parse_data_file: parsing sets done" << endl;
+		cout << "read_and_parse_data_file: "
+				"parsing sets done" << endl;
 		}
 
 	for (i = 0; i < nb_cases; i++) {
@@ -80,7 +85,8 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 	FREE_pchar(data);
 	
 	if (f_v) {
-		cout << "orbiter_data_file::load done nb_cases = " << nb_cases << endl;
+		cout << "orbiter_data_file::load "
+				"done nb_cases = " << nb_cases << endl;
 		}
 }
 

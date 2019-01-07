@@ -62,7 +62,8 @@ int int_vec_is_constant_on_subset(int *v,
 	return TRUE;
 }
 
-void int_vec_take_away(int *v, int &len, int *take_away, int nb_take_away)
+void int_vec_take_away(int *v, int &len,
+		int *take_away, int nb_take_away)
 	// v must be sorted
 {
 	int i, j, idx;
@@ -164,7 +165,8 @@ void int_vec_delete_element_assume_sorted(int *v,
 	int idx, i;
 
 	if (!int_vec_search(v, len, a, idx)) {
-		cout << "int_vec_delete_element_assume_sorted cannot find the element" << endl;
+		cout << "int_vec_delete_element_assume_sorted "
+				"cannot find the element" << endl;
 		exit(1);
 		}
 	for (i = idx + 1; i < len; i++) {
@@ -660,7 +662,9 @@ void print_integer_matrix_tex_block_by_block(ostream &ost,
 				}
 			for (i = 0; i < v; i++) {
 				for (j = 0; j < w; j++) {
-					M[i * w + j] = p[(I * block_width + i) * n + J * block_width + j];
+					M[i * w + j] =
+							p[(I * block_width + i) * n +
+							  J * block_width + j];
 					}
 				}
 			cout << "print_integer_matrix_tex_block_by_block I=" 
@@ -1291,7 +1295,9 @@ int os_memory_usage()
 	return t_info.resident_size;
 #endif
 #ifdef SYSTEM_LINUX
-	int chars = 128; // number of characters to read from the /proc/self/status file in a given line
+	int chars = 128;
+		// number of characters to read from the
+		//  /proc/self/status file in a given line
 	FILE* file = fopen("/proc/self/status", "r");
 	char line[chars];
 	while (fgets(line, chars, file) != NULL) {     
@@ -1374,7 +1380,8 @@ int os_ticks_per_second()
 #endif
 }
 
-void os_ticks_to_dhms(int ticks, int tps, int &d, int &h, int &m, int &s)
+void os_ticks_to_dhms(int ticks,
+		int tps, int &d, int &h, int &m, int &s)
 {
 	int l1;
 	int f_v = FALSE;
@@ -1556,7 +1563,8 @@ void latex_head_easy(ostream& ost)
 
 }
 
-void latex_head_easy_with_extras_in_the_praeamble(ostream& ost, const char *extras)
+void latex_head_easy_with_extras_in_the_praeamble(
+		ostream& ost, const char *extras)
 {
 	latex_head(ost, 
 		FALSE /* f_book */, 
@@ -1585,7 +1593,8 @@ void latex_head_easy_sideways(ostream& ost)
 
 }
 
-void latex_head(ostream& ost, int f_book, int f_title, 
+void latex_head(ostream& ost,
+	int f_book, int f_title,
 	const char *title, const char *author, 
 	int f_toc, int f_landscape, int f_12pt, 
 	int f_enlarged_page, int f_pagenumbers, 
@@ -2232,7 +2241,8 @@ void int_vec_scan(const char *s, int *&v, int &len)
 			break;
 			}
 		ins >> c;
-		cout << "int_vec_scan_from_stream: \"" << c << "\", ascii=" << (int)c << endl;
+		cout << "int_vec_scan_from_stream: \"" << c
+				<< "\", ascii=" << (int)c << endl;
 		}
 	}
 #endif
@@ -2272,7 +2282,8 @@ void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 			}
 		while (TRUE) {
 			// read digits:
-			//cout << "int_vec_scan_from_stream: \"" << c << "\", ascii=" << (int)c << endl;
+			//cout << "int_vec_scan_from_stream: \"" << c
+			//<< "\", ascii=" << (int)c << endl;
 			while (c != 0) {
 				if (c == '-') {
 					//cout << "c='" << c << "'" << endl;
@@ -2301,12 +2312,14 @@ void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 				if (c == 0) {
 					break;
 					}
-				//cout << "int_vec_scan_from_stream inside loop: \"" << c << "\", ascii=" << (int)c << endl;
+				//cout << "int_vec_scan_from_stream inside loop: \""
+				//<< c << "\", ascii=" << (int)c << endl;
 				}
 			s[l] = 0;
 			a = atoi(s);
 			if (FALSE) {
-				cout << "digit as string: " << s << ", numeric: " << a << endl;
+				cout << "digit as string: " << s
+						<< ", numeric: " << a << endl;
 				}
 			if (h == len) {
 				len += 20;
@@ -2383,7 +2396,8 @@ void double_vec_scan_from_stream(istream & is, double *&v, int &len)
 			while (c != 0) {
 
 				if (f_v) {
-					cout << "character \"" << c << "\", ascii=" << (int)c << endl;
+					cout << "character \"" << c
+							<< "\", ascii=" << (int)c << endl;
 					}
 
 				if (c == '-') {
@@ -2413,7 +2427,8 @@ void double_vec_scan_from_stream(istream & is, double *&v, int &len)
 				if (c == 0) {
 					break;
 					}
-				//cout << "int_vec_scan_from_stream inside loop: \"" << c << "\", ascii=" << (int)c << endl;
+				//cout << "int_vec_scan_from_stream inside loop: \""
+				//<< c << "\", ascii=" << (int)c << endl;
 				}
 			s[l] = 0;
 			sscanf(s, "%lf", &a);
@@ -2756,20 +2771,23 @@ int s_scan_token(char **s, char *str)
 	len = 0;
 	c = **s;
 	if (isalpha(c)) {
-		//cout << "character '" << c << "', remainder '" << *s << "'" << endl;
+		//cout << "character '" << c << "', remainder '"
+		//<< *s << "'" << endl;
 		while (isalnum(c) || c == '_') {
 			str[len] = c;
 			len++;
 			(*s)++;
 			c = **s;
-			//cout << "character '" << c << "', remainder '" << *s << "'" << endl;
+			//cout << "character '" << c << "', remainder '"
+			//<< *s << "'" << endl;
 			}
 		str[len] = 0;
 		}
 	else if (isdigit(c) || c == '-') {
 		str[len++] = c;
 		(*s)++;
-		//cout << "character '" << c << "', remainder '" << *s << "'" << endl;
+		//cout << "character '" << c << "', remainder '"
+		//<< *s << "'" << endl;
 		//printf("\"%s\"\n", *s);
 		c = **s;
 		while (isdigit(c)) {
@@ -2810,7 +2828,8 @@ int s_scan_token_arbitrary(char **s, char *str)
 	c = **s;
 	while (c != 0 && c != ' ' && c != '\t' && 
 		c != '\r' && c != 10 && c != 13) {
-		//cout << "s_scan_token_arbitrary len=" << len << " reading " << c << endl;
+		//cout << "s_scan_token_arbitrary len=" << len
+		//<< " reading " << c << endl;
 		str[len] = c;
 		len++;
 		(*s)++;
@@ -2907,7 +2926,8 @@ int s_scan_token_comma_separated(char **s, char *str)
 				//cout << "read '" << c << "'" << endl; 
 				if (c == 0) {
 					str[len] = 0;
-					cout << "s_scan_token_comma_separated: end of line inside string" << endl;
+					cout << "s_scan_token_comma_separated: "
+							"end of line inside string" << endl;
 					cout << "while scanning '" << str << "'" << endl;
 					exit(1);
 					break;
@@ -3085,7 +3105,8 @@ void parse_line(char *line, int &len,
 }
 
 
-int count_number_of_orbits_in_file(const char *fname, int verbose_level)
+int count_number_of_orbits_in_file(
+		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *buf, *p_buf;
@@ -3094,12 +3115,14 @@ int count_number_of_orbits_in_file(const char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "count_number_of_orbits_in_file " << fname << endl;
-		cout << "count_number_of_orbits_in_file trying to read file " 
+		cout << "count_number_of_orbits_in_file "
+				"trying to read file "
 			<< fname << " of size " << file_size(fname) << endl;
 		}
 
 	if (file_size(fname) < 0) {
-		cout << "count_number_of_orbits_in_file file size is -1" << endl;
+		cout << "count_number_of_orbits_in_file "
+				"file size is -1" << endl;
 		return -1;
 		}
 	
@@ -3117,10 +3140,12 @@ int count_number_of_orbits_in_file(const char *fname, int verbose_level)
 			break;
 			}
 		
-		//cout << "count_number_of_orbits_in_file reading line, nb_sol = " << nb_sol << endl;
+		//cout << "count_number_of_orbits_in_file "
+		//"reading line, nb_sol = " << nb_sol << endl;
 		fp.getline(buf, MY_BUFSIZE, '\n');
 		if (strlen(buf) == 0) {
-			cout << "count_number_of_orbits_in_file reading an empty line" << endl;
+			cout << "count_number_of_orbits_in_file "
+					"reading an empty line" << endl;
 			break;
 			}
 		
@@ -3132,13 +3157,16 @@ int count_number_of_orbits_in_file(const char *fname, int verbose_level)
 		s_scan_int(&p_buf, &len);
 		if (len == -1) {
 			if (f_v) {
-				cout << "count_number_of_orbits_in_file found a complete file with " << nb_sol << " solutions" << endl;
+				cout << "count_number_of_orbits_in_file "
+						"found a complete file with " << nb_sol
+						<< " solutions" << endl;
 				}
 			break;
 			}
 		else {
 			if (FALSE) {
-				cout << "count_number_of_orbits_in_file found a set of size " << len << endl;
+				cout << "count_number_of_orbits_in_file "
+						"found a set of size " << len << endl;
 				}
 			}
 		nb_sol++;
@@ -3183,7 +3211,8 @@ int count_number_of_lines_in_file(const char *fname, int verbose_level)
 			break;
 			}
 		
-		//cout << "count_number_of_lines_in_file reading line, nb_sol = " << nb_sol << endl;
+		//cout << "count_number_of_lines_in_file "
+		// "reading line, nb_sol = " << nb_sol << endl;
 		fp.getline(buf, MY_BUFSIZE, '\n');
 		nb_lines++;
 		}
@@ -3319,8 +3348,10 @@ return_false:
 	return FALSE;
 }
 
-void read_and_parse_data_file(const char *fname, int &nb_cases, 
-	char **&data, int **&sets, int *&set_sizes, int verbose_level)
+void read_and_parse_data_file(
+	const char *fname, int &nb_cases,
+	char **&data, int **&sets, int *&set_sizes,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3396,7 +3427,8 @@ void parse_sets_and_check_sizes_easy(int len, int nb_cases,
 		0/*verbose_level - 2*/);
 	for (i = 0; i < nb_cases; i++) {
 		if (set_sizes[i] != len) {
-			cout << "parse_sets_and_check_sizes_easy set_sizes[i] != len" << endl;
+			cout << "parse_sets_and_check_sizes_easy "
+					"set_sizes[i] != len" << endl;
 			exit(1);
 			}
 		}
@@ -3454,7 +3486,8 @@ void free_data_fancy(int nb_cases,
 		}
 }
 
-void read_and_parse_data_file_fancy(const char *fname, 
+void read_and_parse_data_file_fancy(
+	const char *fname,
 	int f_casenumbers, 
 	int &nb_cases, 
 	int *&Set_sizes, int **&Sets, 
@@ -3469,20 +3502,24 @@ void read_and_parse_data_file_fancy(const char *fname,
 	int i;
 	
 	if (f_v) {
-		cout << "read_and_parse_data_file_fancy: reading file " 
+		cout << "read_and_parse_data_file_fancy "
+				"reading file "
 			<< fname << endl;
 		}
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy before try_to_read_file" << endl;
+		cout << "read_and_parse_data_file_fancy "
+				"before try_to_read_file" << endl;
 		}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level - 1)) {
 		if (f_vv) {
-			cout << "read_and_parse_data_file_fancy file read containing " 
+			cout << "read_and_parse_data_file_fancy "
+					"file read containing "
 				<< nb_cases << " cases" << endl;
 			}
 		}
 	else {
-		cout << "read_and_parse_data_file_fancy: couldn't read file fname=" 
+		cout << "read_and_parse_data_file_fancy "
+				"couldn't read file fname="
 			<< fname << endl;
 		exit(1);
 		}
@@ -3498,7 +3535,8 @@ void read_and_parse_data_file_fancy(const char *fname,
 	
 
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy: parsing sets" << endl;
+		cout << "read_and_parse_data_file_fancy "
+				"parsing sets" << endl;
 		}
 	parse_sets(nb_cases, data, f_casenumbers, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -3506,14 +3544,15 @@ void read_and_parse_data_file_fancy(const char *fname,
 		verbose_level - 2);
 	
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy: freeing temporary data" << endl;
+		cout << "read_and_parse_data_file_fancy "
+				"freeing temporary data" << endl;
 		}
 	for (i = 0; i < nb_cases; i++) {
 		FREE_char(data[i]);
 		}
 	FREE_pchar(data);
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy: done" << endl;
+		cout << "read_and_parse_data_file_fancy done" << endl;
 		}
 }
 
@@ -3545,7 +3584,8 @@ void read_set_from_file(const char *fname,
 	for (i = 0; i < set_size; i++) {
 		f >> a;
 		//if (f_v) {
-			//cout << "read_set_from_file: the " << i << "-th number is " << a << endl;
+			//cout << "read_set_from_file: the " << i
+			//<< "-th number is " << a << endl;
 			//}
 		if (a == -1)
 			break;
@@ -3616,7 +3656,8 @@ void read_set_from_file_int4(const char *fname,
 		f.read((char *) &a, sizeof(int4));
 		b = a;
 		//if (f_v) {
-			//cout << "read_set_from_file: the " << i << "-th number is " << a << endl;
+			//cout << "read_set_from_file: the " << i
+			//<< "-th number is " << a << endl;
 			//}
 		if (b == -1)
 			break;
@@ -3653,7 +3694,8 @@ void write_set_to_file_as_int4(const char *fname,
 	f.write((char *) &a, sizeof(int4));
 	b = a;
 	if (b != set_size) {
-		cout << "write_set_to_file_as_int4 data loss regarding set_size" << endl;
+		cout << "write_set_to_file_as_int4 "
+				"data loss regarding set_size" << endl;
 		cout << "set_size=" << set_size << endl;
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
@@ -3699,7 +3741,8 @@ void write_set_to_file_as_int8(const char *fname,
 	f.write((char *) &a, sizeof(int8));
 	b = a;
 	if (b != set_size) {
-		cout << "write_set_to_file_as_int8 data loss regarding set_size" << endl;
+		cout << "write_set_to_file_as_int8 "
+				"data loss regarding set_size" << endl;
 		cout << "set_size=" << set_size << endl;
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
@@ -3859,7 +3902,8 @@ void read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 			//cout << cnt << " : " << a << " ";
 			}
 		if (a == -1) {
-			cout << "\nread_incidence_matrix_from_inc_file: found a complete file with " 
+			cout << "\nread_incidence_matrix_from_inc_file: "
+					"found a complete file with "
 				<< cnt << " solutions" << endl;
 			break;
 			}
@@ -3886,7 +3930,8 @@ void read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 				M[X[h]] = 1;
 				}
 			if (f_vv) {
-				cout << "read_incidence_matrix_from_inc_file: found the following incidence matrix:" << endl;
+				cout << "read_incidence_matrix_from_inc_file: "
+						"found the following incidence matrix:" << endl;
 				print_integer_matrix_width(cout, 
 					M, m, n, n, 1);
 				}
@@ -3953,7 +3998,9 @@ int inc_file_get_number_of_geometries(
 			//cout << cnt << " : " << a << " ";
 			}
 		if (a == -1) {
-			cout << "\nread_incidence_matrix_from_inc_file: found a complete file with " << cnt << " solutions" << endl;
+			cout << "\nread_incidence_matrix_from_inc_file: "
+					"found a complete file with " << cnt
+					<< " solutions" << endl;
 			break;
 			}
 		X[0] = a;
@@ -3981,7 +4028,8 @@ int inc_file_get_number_of_geometries(
 
 void print_line_of_number_signs()
 {
-	cout << "##################################################################################################" << endl;
+	cout << "###########################################################"
+			"#######################################" << endl;
 }
 
 void print_repeated_character(ostream &ost, char c, int n)
@@ -4055,13 +4103,15 @@ void count_number_of_solutions_in_file(const char *fname,
 	
 	while (TRUE) {
 		if (fp.eof()) {
-			cout << "count_number_of_solutions_in_file eof, break" << endl;
+			cout << "count_number_of_solutions_in_file "
+					"eof, break" << endl;
 			break;
 			}
 		fp.getline(buf, MY_BUFSIZE, '\n');
 		//cout << "read line '" << buf << "'" << endl;
 		if (strlen(buf) == 0) {
-			cout << "count_number_of_solutions_in_file empty line" << endl;
+			cout << "count_number_of_solutions_in_file "
+					"empty line" << endl;
 			exit(1);
 			}
 		
@@ -4119,20 +4169,23 @@ void count_number_of_solutions_in_file_by_case(const char *fname,
 	the_case = -1;
 	while (TRUE) {
 		if (fp.eof()) {
-			cout << "count_number_of_solutions_in_file_by_case eof, break" << endl;
+			cout << "count_number_of_solutions_in_file_by_case "
+					"eof, break" << endl;
 			break;
 			}
 		fp.getline(buf, MY_BUFSIZE, '\n');
 		//cout << "read line '" << buf << "'" << endl;
 		if (strlen(buf) == 0) {
-			cout << "count_number_of_solutions_in_file_by_case empty line, break" << endl;
+			cout << "count_number_of_solutions_in_file_by_case "
+					"empty line, break" << endl;
 			break;
 			}
 		
 		if (strncmp(buf, "# start case", 12) == 0) {
 			the_case = atoi(buf + 13);
 			the_case_count = 0;
-			cout << "count_number_of_solutions_in_file_by_case read start case " << the_case << endl;
+			cout << "count_number_of_solutions_in_file_by_case "
+					"read start case " << the_case << endl;
 			}
 		else if (strncmp(buf, "# end case", 10) == 0) {
 			if (nb_cases == N) {
@@ -4154,7 +4207,8 @@ void count_number_of_solutions_in_file_by_case(const char *fname,
 			nb_solutions[nb_cases] = the_case_count;
 			case_nb[nb_cases] = the_case;
 			nb_cases++;
-			//cout << "count_number_of_solutions_in_file_by_case read end case " << the_case << endl;
+			//cout << "count_number_of_solutions_in_file_by_case "
+			//"read end case " << the_case << endl;
 			the_case = -1;
 			}
 		else { 
@@ -4222,7 +4276,8 @@ void read_solutions_from_file(const char *fname,
 				break;
 				}
 			if (a != solution_size) {
-				cout << "read_solutions_from_file a != solution_size" << endl;
+				cout << "read_solutions_from_file "
+						"a != solution_size" << endl;
 				exit(1);
 				}
 			for (i = 0; i < solution_size; i++) {
@@ -4233,7 +4288,8 @@ void read_solutions_from_file(const char *fname,
 			}
 	}
 	if (nb_sol != nb_solutions) {
-		cout << "read_solutions_from_file nb_sol != nb_solutions" << endl;
+		cout << "read_solutions_from_file "
+				"nb_sol != nb_solutions" << endl;
 		exit(1);
 		}
 	FREE_char(buf);
@@ -4285,7 +4341,8 @@ void read_solutions_from_file_by_case(const char *fname,
 		fp.getline(buf, MY_BUFSIZE, '\n');
 		//cout << "read line '" << buf << "'" << endl;
 		if (strlen(buf) == 0) {
-			cout << "read_solutions_from_file_by_case empty line, break" << endl;
+			cout << "read_solutions_from_file_by_case "
+					"empty line, break" << endl;
 			break;
 			}
 		
@@ -4293,18 +4350,23 @@ void read_solutions_from_file_by_case(const char *fname,
 			the_case = atoi(buf + 13);
 			the_case_count = 0;
 			if (the_case != case_nb[nb_case1]) {
-				cout << "read_solutions_from_file_by_case the_case != case_nb[nb_case1]" << endl;
+				cout << "read_solutions_from_file_by_case "
+						"the_case != case_nb[nb_case1]" << endl;
 				exit(1);
 				}
-			Solutions[nb_case1] = NEW_int(nb_solutions[nb_case1] * solution_size);
-			cout << "read_solutions_from_file_by_case read start case " << the_case << endl;
+			Solutions[nb_case1] =
+					NEW_int(nb_solutions[nb_case1] * solution_size);
+			cout << "read_solutions_from_file_by_case "
+					"read start case " << the_case << endl;
 			}
 		else if (strncmp(buf, "# end case", 10) == 0) {
 			if (the_case_count != nb_solutions[nb_case1]) {
-				cout << "read_solutions_from_file_by_case the_case_count != nb_solutions[nb_case1]" << endl;
+				cout << "read_solutions_from_file_by_case "
+						"the_case_count != nb_solutions[nb_case1]" << endl;
 				exit(1);
 				}
-			cout << "read_solutions_from_file_by_case read end case " << the_case << endl;
+			cout << "read_solutions_from_file_by_case "
+					"read end case " << the_case << endl;
 			nb_case1++;
 			the_case = -1;
 			}
@@ -4313,11 +4375,14 @@ void read_solutions_from_file_by_case(const char *fname,
 				char *p_buf;
 				int sz, a;
 				
-				//cout << "read_solutions_from_file_by_case reading solution " << the_case_count << " for case " << the_case << endl;
+				//cout << "read_solutions_from_file_by_case "
+				//"reading solution " << the_case_count
+				//<< " for case " << the_case << endl;
 				p_buf = buf;
 				s_scan_int(&p_buf, &sz);
 				if (sz != solution_size) {
-					cout << "read_solutions_from_file_by_case sz != solution_size" << endl;
+					cout << "read_solutions_from_file_by_case "
+							"sz != solution_size" << endl;
 					exit(1);
 					}
 				for (i = 0; i < sz; i++) {
@@ -4784,7 +4849,8 @@ void read_solution_file(char *fname,
 			<< " of size " << file_size(fname) << endl;
 		}
 	if (file_size(fname) <= 0) {
-		cout << "read_solution_file There is something wrong with the file " 
+		cout << "read_solution_file "
+				"There is something wrong with the file "
 			<< fname << endl;
 		exit(1);
 		}
@@ -4809,7 +4875,8 @@ void read_solution_file(char *fname,
 					}
 				else {
 					if (nb != nb_max) {
-						cout << "read_solution_file solutions have different length" << endl;
+						cout << "read_solution_file "
+								"solutions have different length" << endl;
 						exit(1);
 						}
 					}
@@ -5057,407 +5124,6 @@ int os_seconds_past_1970()
 	}
 	return a;
 }
-
-void povray_beginning(ostream &ost,
-		double angle,
-		const char *sky,
-		const char *location,
-		const char *look_at,
-		int f_with_background)
-// angle = 22 
-// sky <1,1,1>
-// location  <-3,1,3>
-// look_at = <0,0,0>
-// or <1,1,1>*-1/sqrt(3)
-{
-	ost << "//Files with predefined colors and textures" << endl;
-	ost << "#version 3.7;" << endl;
-	ost << "#include \"colors.inc\"" << endl;
-	ost << "#include \"glass.inc\"" << endl;
-	ost << "#include \"golds.inc\"" << endl;
-	ost << "#include \"metals.inc\"" << endl;
-	ost << "#include \"stones.inc\"" << endl;
-	ost << "#include \"woods.inc\"" << endl;
-	ost << "#include \"textures.inc\"" << endl;
-	ost << endl;
-
-
-#if 0
-	ost << "//Place the camera" << endl;
-	ost << "camera {" << endl;
-	ost << "   sky <0,0,1> " << endl;
-	ost << "   direction <-1,0,0>" << endl;
-	ost << "   right <-4/3,0,0> " << endl;
-	ost << "	//location <-2.5,0.6,-3>*3" << endl;
-	ost << "	//look_at<0,0.2,0>" << endl;
-	ost << "   location  <0,5,0>  //Camera location" << endl;
-	ost << "   look_at   <0,0,0>    //Where camera is pointing" << endl;
-	ost << "   angle " << angle << "      //Angle of the view" << endl;
-	ost << "	// 22 is default, 18 is closer,  28 is further away" << endl;
-	ost << "}" << endl;
-	ost << endl;
-	ost << "//Ambient light to brighten up darker pictures" << endl;
-	ost << "//global_settings { ambient_light White }" << endl;
-	ost << "global_settings { max_trace_level 10 }" << endl;
-	ost << endl;
-	ost << endl;
-	ost << "//Place a light" << endl;
-	ost << "//light_source { <15,30,1> color White*2 }   " << endl;          
-	ost << "//light_source { <10,10,0> color White*2 }  " << endl;           
-	ost << "light_source { <0,2,0> color White*2 }    " << endl;         
-	ost << "light_source { <0,0,2> color White }" << endl;
-	ost << "//light_source { <0,10,0> color White*2}" << endl;
-	ost << endl;
-	ost << endl;
-	ost << endl;
-	ost << "//plane{z,7 pigment {SkyBlue} }" << endl;
-	ost << "plane{y,7 pigment {SkyBlue} }" << endl;
-	ost << endl;
-	ost << "//texture {T_Silver_3A}" << endl;
-	ost << endl;
-	ost << "//Set a background color" << endl;
-	ost << "background { color SkyBlue }" << endl;
-	ost << endl;
-	ost << "union{ " << endl;
-	ost << "/* 	        #declare r=0.09 ; " << endl;
-	ost << endl;
-	ost << "object{ // x-axis" << endl;
-	ost << "cylinder{< 0,0,0 >,<1.5,0,0 > ,r }" << endl;
-	ost << " 	pigment{Red} " << endl;
-	ost << endl;
-	ost << "} " << endl;
-	ost << "object{ // y-axis" << endl;
-	ost << "cylinder{< 0,0,0 >,<0,1.5,0 > ,r }" << endl;
-	ost << " 	pigment{Green} " << endl;
-	ost << endl;
-	ost << "} " << endl;
-	ost << "object{ // z-axis" << endl;
-	ost << "cylinder{< 0,0,0 >,<0,0,1.5 > ,r }" << endl;
-	ost << " 	pigment{Blue} " << endl;
- 	ost << endl;
-	ost << "} */" << endl;
-#else
-	ost << "//Place the camera" << endl;
-	ost << "camera {" << endl;
-	ost << "   sky " << sky << endl;
-	ost << "   //direction <1,0,0>" << endl;
-	ost << "   //right <1,1,0> " << endl;
-	ost << "   location  " << location << endl;
-	ost << "   look_at  " << look_at << endl;
-	ost << "   angle " << angle << "      //Angle of the view" << endl;
-	ost << "	// smaller numbers are closer. Must be less than 180" << endl;
-	ost << "}" << endl;
-	ost << endl;
-	ost << "//Ambient light to brighten up darker pictures" << endl;
-	ost << "//global_settings { ambient_light White }" << endl;
-	ost << "global_settings { max_trace_level 10 }" << endl;
-	ost << endl;
-	ost << "//Place a light" << endl;
-	ost << "light_source { <4,4,4> color White }  " << endl;  
-	ost << "light_source { <-5,0,5> color White }" << endl;
-	ost << endl;
-
-	if (f_with_background) {
-		ost << "//Set a background color" << endl;
-		ost << "background { color SkyBlue }" << endl;
-		ost << endl;
-	} else {
-		ost << "//Set a background color" << endl;
-		ost << "background { color White }" << endl;
-		ost << endl;
-	}
-	ost << "// main part:" << endl;
-#endif
-	ost << endl;
-	ost << endl;
-}
-
-
-void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost)
-{
-	ost << "	// the next three steps will perform a rotation" << endl;
-	ost << "	// around the axis of symmetry 1,1,1:" << endl;
-	ost << endl;
-	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
-	ost << "	matrix<" << endl;
-	ost << "	1/sqrt(3),2/sqrt(6),0," << endl;
-	ost << "	1/sqrt(3),-1/sqrt(6),1/sqrt(2)," << endl;
-	ost << "	1/sqrt(3),-1/sqrt(6),-1/sqrt(2)," << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << endl;
-	ost << "        rotate <360*clock,0,0> " << endl;
-	ost << endl;
-	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
-	ost << endl;
-	ost << "	matrix<" << endl;
-	ost << "	1/sqrt(3),1/sqrt(3),1/sqrt(3)," << endl;
-	ost << "	2/sqrt(6),-1/sqrt(6),-1/sqrt(6)," << endl;
-	ost << "	0,1/sqrt(2),-1/sqrt(2)," << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << endl;
-}
-
-void povray_animation_rotate_around_origin_and_given_vector(
-	double *v, ostream &ost)
-{
-	double A[9], Av[9];
-
-	orthogonal_transformation_from_point_to_basis_vector(v, 
-		A, Av, 0 /* verbose_level */);
-	
-	ost << "	// the next three steps will perform a rotation" << endl;
-	ost << "	// around the axis of symmetry 1,1,1:" << endl;
-	ost << endl;
-	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
-	ost << "	matrix<" << endl;
-	ost << "	";
-	output_double(A[0], ost);
-	ost << ",";
-	output_double(A[1], ost);
-	ost << ",";
-	output_double(A[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(A[3], ost);
-	ost << ",";
-	output_double(A[4], ost);
-	ost << ",";
-	output_double(A[5], ost);
-	ost << ",";
-	ost << "	";
-	output_double(A[6], ost);
-	ost << ",";
-	output_double(A[7], ost);
-	ost << ",";
-	output_double(A[8], ost);
-	ost << ",";
-	ost << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << endl;
-	ost << "        rotate <360*clock,0,0> " << endl;
-	ost << endl;
-	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
-	ost << endl;
-	ost << "	matrix<" << endl;
-	ost << "	";
-	output_double(Av[0], ost);
-	ost << ",";
-	output_double(Av[1], ost);
-	ost << ",";
-	output_double(Av[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(Av[3], ost);
-	ost << ",";
-	output_double(Av[4], ost);
-	ost << ",";
-	output_double(Av[5], ost);
-	ost << ",";
-	ost << "	";
-	output_double(Av[6], ost);
-	ost << ",";
-	output_double(Av[7], ost);
-	ost << ",";
-	output_double(Av[8], ost);
-	ost << ",";
-	ost << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << endl;
-}
-
-void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
-	double *v, double angle_zero_one, ostream &ost)
-{
-	double A[9], Av[9];
-
-	orthogonal_transformation_from_point_to_basis_vector(v, 
-		A, Av, 0 /* verbose_level */);
-	
-	ost << "	// the next three steps will perform a rotation" << endl;
-	ost << "	// around the axis of symmetry 1,1,1:" << endl;
-	ost << endl;
-	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
-	ost << "	matrix<" << endl;
-	ost << "	";
-	output_double(A[0], ost);
-	ost << ",";
-	output_double(A[1], ost);
-	ost << ",";
-	output_double(A[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(A[3], ost);
-	ost << ",";
-	output_double(A[4], ost);
-	ost << ",";
-	output_double(A[5], ost);
-	ost << ",";
-	ost << "	";
-	output_double(A[6], ost);
-	ost << ",";
-	output_double(A[7], ost);
-	ost << ",";
-	output_double(A[8], ost);
-	ost << ",";
-	ost << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << endl;
-	ost << "        rotate <" << angle_zero_one * 360. << ",0,0> " << endl;
-	ost << endl;
-	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
-	ost << endl;
-	ost << "	matrix<" << endl;
-	ost << "	";
-	output_double(Av[0], ost);
-	ost << ",";
-	output_double(Av[1], ost);
-	ost << ",";
-	output_double(Av[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(Av[3], ost);
-	ost << ",";
-	output_double(Av[4], ost);
-	ost << ",";
-	output_double(Av[5], ost);
-	ost << ",";
-	ost << "	";
-	output_double(Av[6], ost);
-	ost << ",";
-	output_double(Av[7], ost);
-	ost << ",";
-	output_double(Av[8], ost);
-	ost << ",";
-	ost << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << endl;
-}
-
-void povray_union_start(ostream &ost)
-{
-	ost << "union{ " << endl;
-	ost << endl;
-	ost << endl;
-	ost << "// uncomment this if you need axes:" << endl;
-	ost << "/* 	        #declare r=0.09 ; " << endl;
-	ost << endl;
-	ost << "object{ // x-axis" << endl;
-	ost << "cylinder{< 0,0,0 >,<1.5,0,0 > ,r }" << endl;
-	ost << " 	pigment{Red} " << endl;
-	ost << endl;
-	ost << "} " << endl;
-	ost << "object{ // y-axis" << endl;
-	ost << "cylinder{< 0,0,0 >,<0,1.5,0 > ,r }" << endl;
-	ost << " 	pigment{Green} " << endl;
-	ost << endl;
-	ost << "} " << endl;
-	ost << "object{ // z-axis" << endl;
-	ost << "cylinder{< 0,0,0 >,<0,0,1.5 > ,r }" << endl;
-	ost << " 	pigment{Blue} " << endl;
- 	ost << endl;
-	ost << "} */" << endl;
-}
-
-void povray_union_end(ostream &ost, double clipping_radius)
-{
-	ost << endl;
-	ost << " 	scale  1.0" << endl;
-	ost << endl;
-	ost << "	clipped_by { sphere{ < 0.,0.,0. > , " 
-		<< clipping_radius << "  } }" << endl;
-	ost << "	bounded_by { clipped_by }" << endl;
-	ost << endl;
-	ost << "} // union" << endl;
-}
-
-void povray_bottom_plane(ostream &ost)
-{
-
-	ost << endl;
-	ost << "//bottom plane:" << endl;
-	ost << "plane {" << endl;
-	ost << "    <1,1,1>*1/sqrt(3), -2" << endl;
-	ost << "    texture {" << endl;
-	ost << "      pigment {SteelBlue}" << endl;
-	ost << "      finish {" << endl;
-	ost << "        diffuse 0.6" << endl;
-	ost << "        ambient 0.2" << endl;
-	ost << "        phong 1" << endl;
-	ost << "        phong_size 100" << endl;
-	ost << "        reflection 0.25" << endl;
-	ost << "      }" << endl;
-	ost << "    }" << endl;
-	ost << "  } // end plane" << endl;
-#if 0
-	ost << endl;
-	ost << endl;
-	ost << endl;
-	ost << "#declare d = .8; " << endl;
-	ost << endl;
-	ost << "plane {" << endl;
-	ost << "    //y, -d" << endl;
-	ost << "    z, -d" << endl;
-	ost << "    texture {" << endl;
-	ost << "      pigment {SkyBlue}   // Yellow" << endl;
-	ost << "      //pigment {" << endl;
-	ost << "      //  checker" << endl;
-	ost << "      //  color rgb<0.5, 0, 0>" << endl;
-	ost << "      //  color rgb<0, 0.5, 0.5>" << endl;
-	ost << "      //}" << endl;
-	ost << "      finish {" << endl;
-	ost << "        diffuse 0.6" << endl;
-	ost << "        ambient 0.2" << endl;
-	ost << "        phong 1" << endl;
-	ost << "        phong_size 100" << endl;
-	ost << "        reflection 0.25" << endl;
-	ost << "      }" << endl;
-	ost << "    }" << endl;
-	ost << "  }" << endl;
-#endif
-	ost << endl;
-	ost << endl;
-
-}
-
-void povray_rotate_111(int h, int nb_frames, ostream &fp)
-{
-	//int nb_frames_per_rotation;
-	//nb_frames_per_rotation = nb_frames;
-	double angle_zero_one = 1. - (h * 1. / (double) nb_frames);
-		// rotate in the opposite direction
-	
-	double v[3] = {1.,1.,1.};
-	
-	povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
-		v, angle_zero_one, fp);
-}
-
-
-void povray_ini(ostream &ost, const char *fname_pov, 
-	int first_frame, int last_frame)
-{
-	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;
-	ost << "Antialias=On" << endl;
-	ost << endl;
-	ost << "Antialias_Threshold=0.1" << endl;
-	ost << "Antialias_Depth=2" << endl;
-	ost << "Input_File_Name=" << fname_pov << endl;
-	ost << endl;
-	ost << "Initial_Frame=" << first_frame << endl;
-	ost << "Final_Frame=" << last_frame << endl;
-	ost << "Initial_Clock=0" << endl;
-	ost << "Final_Clock=1" << endl;
-	ost << endl;
-	ost << "Cyclic_Animation=on" << endl;
-	ost << "Pause_when_Done=off" << endl;
-}
-
 
 void test_typedefs()
 {

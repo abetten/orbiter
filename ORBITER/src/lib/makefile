@@ -192,6 +192,7 @@ MODULES= \
 		groups_and_group_actions/induced_actions/action_on_k_subsets.o \
 		groups_and_group_actions/induced_actions/action_on_orbits.o \
 		groups_and_group_actions/induced_actions/action_on_orthogonal.o \
+		groups_and_group_actions/induced_actions/action_on_set_partitions.o \
 		groups_and_group_actions/induced_actions/action_on_sets.o \
 		groups_and_group_actions/induced_actions/action_on_sign.o \
 		groups_and_group_actions/induced_actions/action_on_spread_set.o \

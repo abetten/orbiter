@@ -31,7 +31,8 @@ void file_output::freeself()
 }
 
 
-void file_output::open(const char *fname, void *user_data, int verbose_level)
+void file_output::open(const char *fname,
+		void *user_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -60,7 +61,8 @@ void file_output::close()
 	f_file_is_open = FALSE;
 }
 
-void file_output::write_line(int nb, int *data, int verbose_level)
+void file_output::write_line(int nb, int *data,
+		int verbose_level)
 {
 	int i;
 

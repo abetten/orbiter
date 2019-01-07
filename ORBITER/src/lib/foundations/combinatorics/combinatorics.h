@@ -163,6 +163,8 @@ void subset_permute_up_front(int n, int k, int *set, int *k_subset_idx,
 	int *permuted_set);
 int ordered_pair_rank(int i, int j, int n);
 void ordered_pair_unrank(int rk, int &i, int &j, int n);
+void set_partition_4_into_2_unrank(int rk, int *v);
+int set_partition_4_into_2_rank(int *v);
 int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n);
 void unordered_triple_pair_unrank(int rk, int &i, int &j, int &k, 
 	int &l, int &m, int &n);
