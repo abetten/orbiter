@@ -192,23 +192,41 @@ void poset_orbit_node::write_memory_object(
 int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 {
 	int i, s = 0;
-	s += 4 * 4; // node, prev, pt, nb_strong_generators
+	s += 4 * sizeof(int); // node, prev, pt, nb_strong_generators
+	//m->write_int(node);
+	//m->write_int(prev);
+	//m->write_int(pt);
+	//m->write_int(nb_strong_generators);
+
 	s += nb_strong_generators * A->coded_elt_size_in_char;
 	if (nb_strong_generators) {
-		s += A->base_len * 4;
+		s += A->base_len * sizeof(int);
 		// tl[]
 		}
-	s += 4; // nb_extensions
+
+	s += sizeof(int); // nb_extensions
+	//m->write_int(nb_extensions);
+
 	for (i = 0; i < nb_extensions; i++) {
-		s += 3 * 4; // pt, orbit_len, type
+		s += 3 * sizeof(int); // pt, orbit_len, type
+		//m->write_int(E[i].pt);
+		//m->write_int(E[i].orbit_len);
+		//m->write_int(E[i].type);
+
 		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			s += 4; // data
+			s += sizeof(int); // data
+			//m->write_int(E[i].data); // next poset_orbit_node
 			}
 		else if (E[i].type == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			s += A->coded_elt_size_in_char; // group element
-			s += 2 * 4; // data1, data2
+			//A->element_retrieve(E[i].data, Elt, FALSE);
+			//A->element_write_to_memory_object(Elt, m, verbose_level);
+
+			s += 2 * sizeof(int); // data1, data2
+			//m->write_int(E[i].data1);
+			//m->write_int(E[i].data2);
 			}
 		}
 	return s;

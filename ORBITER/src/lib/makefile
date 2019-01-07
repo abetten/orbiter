@@ -125,6 +125,7 @@ MODULES= \
 		foundations/graphics/draw.o \
 		foundations/graphics/mp_graphics.o \
 		foundations/graphics/plot.o \
+		foundations/graphics/povray_interface.o \
 		foundations/graphics/scene.o \
 		foundations/graphics/tree.o \
 		foundations/graphics/tree_node.o \

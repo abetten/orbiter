@@ -268,21 +268,7 @@ public:
 	int *tmp_find_node_for_subspace_by_rank2;
 		// [sz * vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
-	//int *tmp_find_node_for_subspace_by_rank3;
-		// [vector_space_dimension] used in poset_classification_trace.C: 
-		// find_node_for_subspace_by_rank
 
-#if 0
-	int f_candidate_check_func;
-	int (*candidate_check_func)(int len, int *S, void *data, 
-		int verbose_level);
-	void *candidate_check_data;
-	
-	int f_candidate_incremental_check_func;
-	int (*candidate_incremental_check_func)(int len, int *S, 
-		void *data, int verbose_level);
-	void *candidate_incremental_check_data;
-#endif
 
 	int f_print_function;
 	void (*print_function)(ostream &ost, int len, int *S, void *data);
@@ -379,27 +365,6 @@ public:
 	int downstep_orbits_print_max_orbits;
 	int downstep_orbits_print_max_points_per_orbit;
 	
-
-#if 0
-	int f_on_subspaces;
-	int vector_space_dimension;
-	finite_field *F;
-	int (*rank_point_func)(int *v, void *data);
-	void (*unrank_point_func)(int *v, int rk, void *data);
-	void *rank_point_data;
-	int *tmp_v1; // [vector_space_dimension]
-#endif
-
-
-#if 0
-	int f_early_test_func;
-	void (*early_test_func)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
-		void *data, int verbose_level);
-	void *early_test_func_data;
-	int f_its_OK_to_not_have_an_early_test_func;
-#endif
 
 
 	int nb_times_image_of_called0;
@@ -607,16 +572,6 @@ public:
 	void exit_poset_orbit_node();
 	void reallocate();
 	void reallocate_to(int new_number_of_nodes, int verbose_level);
-#if 0
-	void init_check_func(
-		int (*candidate_check_func)(int len, int *S, void *data, 
-		int verbose_level), 
-		void *candidate_check_data);
-	void init_incremental_check_func(
-		int (*candidate_incremental_check_func)(int len, int *S, 
-			void *data, int verbose_level), 
-		void *candidate_incremental_check_data);
-#endif
 	void init_starter(int starter_size, 
 		int *starter, 
 		strong_generators *starter_strong_gens, 
@@ -628,23 +583,6 @@ public:
 		int verbose_level);
 		// Does not initialize the first starter nodes. 
 		// This is done in init_root_node 
-#if 0
-	void init_vector_space_action(int vector_space_dimension, 
-		finite_field *F, 
-		int (*rank_point_func)(int *v, void *data), 
-		void (*unrank_point_func)(int *v, int rk, void *data), 
-		void *data, 
-		int verbose_level);
-#endif
-#if 0
-	void init_early_test_func(
-		void (*early_test_func)(int *S, int len, 
-			int *candidates, int nb_candidates, 
-			int *good_candidates, int &nb_good_candidates, 
-			void *data, int verbose_level), 
-		void *data,  
-		int verbose_level);
-#endif
 
 	// poset_classification_classify.C
 	int compute_orbits(int from_level, int to_level, 
@@ -808,10 +746,15 @@ public:
 		const char *fname, int verbose_level);
 	void write_data_file(int depth_completed,
 		const char *fname_base, int verbose_level);
+	void write_file(ofstream &fp, int depth_completed,
+		int verbose_level);
+	void read_file(ifstream &fp, int &depth_completed,
+		int verbose_level);
 	void read_memory_object(int &depth_completed,
 		memory_object *m, int &nb_group_elements, int verbose_level);
 	void write_memory_object(int depth_completed,
 		memory_object *m, int &nb_group_elements, int verbose_level);
+	int calc_size_on_file(int depth_completed, int verbose_level);
 	void report(ostream &ost);
 	void housekeeping(int i, int f_write_files, int t0, 
 		int verbose_level);
@@ -839,7 +782,6 @@ public:
 		int &nb_group_elements, int verbose_level);
 	void write_level_file_binary2(int level, FILE *fp, 
 		int &nb_group_elements, int verbose_level);
-	int calc_size_on_file(int depth_completed, int verbose_level);
 	void write_candidates_binary_using_sv(char *fname_base, 
 		int lvl, int t0, int verbose_level);
 	void read_level_file(int level, char *fname, int verbose_level);
@@ -862,10 +804,6 @@ public:
 		int max_depth);
 	void make_spreadsheet_of_level_info(spreadsheet *&Sp, 
 		int max_depth, int verbose_level);
-	void write_file(ofstream &fp, int depth_completed, 
-		int verbose_level);
-	void read_file(ifstream &fp, int &depth_completed, 
-		int verbose_level);
 	void generate_source_code(int level, int verbose_level);
 	void create_schreier_tree_fname_mask_base(
 			char *fname_mask, int node);

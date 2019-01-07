@@ -475,6 +475,29 @@ void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
 	double &a, double &b);
 
 // #############################################################################
+// povray_interface.cpp
+// #############################################################################
+
+void povray_beginning(ostream &ost,
+		double angle,
+		const char *sky,
+		const char *location,
+		const char *look_at,
+		int f_with_background);
+void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost);
+void povray_animation_rotate_around_origin_and_given_vector(double *v,
+	ostream &ost);
+void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+	double *v, double angle_zero_one, ostream &ost);
+void povray_union_start(ostream &ost);
+void povray_union_end(ostream &ost, double clipping_radius);
+void povray_bottom_plane(ostream &ost);
+void povray_rotate_111(int h, int nb_frames, ostream &fp);
+void povray_ini(ostream &ost, const char *fname_pov, int first_frame,
+	int last_frame);
+
+
+// #############################################################################
 // scene.C
 // #############################################################################
 

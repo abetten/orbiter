@@ -501,7 +501,8 @@ void arc_lifting_from_classification_file(
 
 	A = NEW_OBJECT(action);
 	A->init_projective_group(3, F,
-			f_semilinear, f_basis, 0 /*verbose_level*/);
+			f_semilinear, f_basis,
+			0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "arc_generator::init after init_projective_group" << endl;
@@ -515,7 +516,8 @@ void arc_lifting_from_classification_file(
 	orbit_transversal *T;
 
 	T = NEW_OBJECT(orbit_transversal);
-	T->read_from_file(A, A, classification_fname, verbose_level - 1);
+	T->read_from_file(A, A,
+			classification_fname, verbose_level - 1);
 
 	if (f_v) {
 		cout << "We read all orbit representatives. "
@@ -718,7 +720,8 @@ void do_arc_lifting(
 	free_points = NEW_int(P->N_points);
 
 	set_complement(arc, arc_sz,
-			free_points, nb_free_points, P->N_points);
+			free_points, nb_free_points,
+			P->N_points);
 
 	if (f_v) {
 		cout << "nb_free_points = " << nb_free_points << endl;
@@ -812,92 +815,12 @@ void do_arc_lifting(
 
 
 	diophant *D;
-	//int *line_type;
 
-
-#if 0
-
-	line_type = NEW_int(P->N_lines);
-	P->line_intersection_type(arc, arc_sz,
-			line_type, 0 /* verbose_level */);
-	if (f_vv) {
-		cout << "line_type: ";
-		int_vec_print_fully(cout, line_type, P->N_lines);
-		cout << endl;
-		}
-
-	if (f_vv) {
-		cout << "line type:" << endl;
-		for (i = 0; i < P->N_lines; i++) {
-			cout << i << " : " << line_type[i] << endl;
-			}
-		}
-
-	classify C;
-	C.init(line_type, P->N_lines, FALSE, 0);
-	if (f_v) {
-		cout << "line_type:";
-		C.print_naked(TRUE);
-		cout << endl;
-		cout << "nb_free_points=" << nb_free_points << endl;
-		}
-	
-
-	//exit(1);
-	
-	int h;
-	
-	D = NEW_OBJECT(diophant);
-	D->open(P->N_lines + 1, nb_free_points);
-	D->f_x_max = TRUE;
-	for (j = 0; j < nb_free_points; j++) {
-		D->x_max[j] = 1;
-		}
-	D->f_has_sum = TRUE;
-	D->sum = target_sz - arc_sz;
-	h = 0;
-	for (i = 0; i < P->N_lines; i++) {
-		if (line_type[i] > k) {
-			cout << "line_type[i] > k" << endl;
-			exit(1);
-			}
-#if 0
-		if (line_type[i] < k - 1) {
-			continue;
-			}
-#endif
-		for (j = 0; j < nb_free_points; j++) {
-			pt = free_points[j];
-			if (P->is_incident(pt, i /* line */)) {
-				D->Aij(h, j) = 1;
-				}
-			else {
-				D->Aij(h, j) = 0;
-				}
-			}
-		D->type[h] = t_LE;
-		D->RHSi(h) = k - line_type[i];
-		h++;
-		}
-
-
-	// add one extra row:
-	for (j = 0; j < nb_free_points; j++) {
-		D->Aij(h, j) = 1;
-		}
-	D->type[h] = t_EQ;
-	D->RHSi(h) = target_sz - arc_sz;
-	h++;
-	
-	D->m = h;
-
-#else
 	P->arc_lifting_diophant(
 			arc, arc_sz,
 			target_sz, k /* target_d */,
 			D,
 			verbose_level);
-#endif
 
 
 
