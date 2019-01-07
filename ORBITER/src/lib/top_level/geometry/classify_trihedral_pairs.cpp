@@ -790,11 +790,14 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 		longinteger_object go;
 
 		R = orbits_on_trihedra_type1->get_set_and_stabilizer(
-				3 /* level */, i /* orbit_at_level */,
+				3 /* level */,
+				i /* orbit_at_level */,
 				0 /* verbose_level */);
 
 		orbits_on_trihedra_type1->orbit_length(
-				i /* node */, 3 /* level */, ol);
+				i /* node */,
+				3 /* level */,
+				ol);
 
 		R->Strong_gens->group_order(go);
 
@@ -835,7 +838,8 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 		R->Strong_gens->group_order(go);
 
 		Flag_orbits->Flag_orbit_node[nb_orbits_type1 + i].init(
-			Flag_orbits, nb_orbits_type1 + i /* flag_orbit_index */,
+			Flag_orbits,
+			nb_orbits_type1 + i /* flag_orbit_index */,
 			1 /* downstep_primary_orbit */,
 			i /* downstep_secondary_orbit */,
 			ol.as_int() /* downstep_orbit_len */,

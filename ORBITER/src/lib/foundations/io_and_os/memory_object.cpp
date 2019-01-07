@@ -47,7 +47,7 @@ void memory_object::freeself()
 	null();
 }
 
-void memory_object::init(int length,
+void memory_object::init(long int length,
 		char *initial_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -67,7 +67,7 @@ void memory_object::init(int length,
 		}
 }
 
-void memory_object::alloc(int length, int verbose_level)
+void memory_object::alloc(long int length, int verbose_level)
 // sets alloc_length to length
 {
 	int f_v = (verbose_level >= 1);
@@ -93,11 +93,11 @@ void memory_object::alloc(int length, int verbose_level)
 		}
 }
 
-void memory_object::append(int length,
+void memory_object::append(long int length,
 		char *d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, old_length, new_length, new_alloc_length;
+	long int i, old_length, new_length, new_alloc_length;
 	
 	if (f_v) {
 		cout << "memory_object::append" << endl;
@@ -125,12 +125,12 @@ void memory_object::append(int length,
 	}
 }
 
-void memory_object::realloc(int &new_length, int verbose_level)
+void memory_object::realloc(long int &new_length, int verbose_level)
 {
 	int f_v = TRUE; //(verbose_level >= 1);
-	int old_length;
-	int old_cur_pointer;
-	int i;
+	long int old_length;
+	long int old_cur_pointer;
+	long int i;
 	char *old_data;
 	
 	if (f_v) {
@@ -188,7 +188,7 @@ void memory_object::write_char(char c)
 
 void memory_object::read_char(char *c)
 {
-	int l1, cur_p, l;
+	long int l1, cur_p, l;
 	char *cp;
 	
 	cur_p = cur_pointer;
@@ -263,7 +263,7 @@ void memory_object::write_double(double f)
 void memory_object::read_double(double *f)
 {
 	double f1;
-	int l1, j, cur_p, l;
+	long int l1, j, cur_p, l;
 	char *cp, *cp1;
 	
 	cur_p = cur_pointer;
@@ -296,7 +296,7 @@ void memory_object::write_int64(int i)
 void memory_object::read_int64(int *i)
 {
 	int8 i1;
-	int l1, j, cur_p, l;
+	long int l1, j, cur_p, l;
 	char *cp, *cp1;
 	
 	cur_p = cur_pointer;
@@ -331,7 +331,7 @@ void memory_object::read_int(int *i)
 {
 	int f_v = FALSE;
 	int4 i1;
-	int l1, j, cur_p, l;
+	long int l1, j, cur_p, l;
 	char *cp, *cp1;
 	
 	if (f_v) {

@@ -10,19 +10,19 @@
 #include "foundations.h"
 
 #define REGISTRY_SIZE 1000
-#define POintER_TYPE_INVALID 0
-#define POintER_TYPE_SMALLint 1
-#define POintER_TYPE_SMALLpint 2
-#define POintER_TYPE_int 3
-#define POintER_TYPE_pint 4
-#define POintER_TYPE_ppint 5
-#define POintER_TYPE_char 6
-#define POintER_TYPE_uchar 7
-#define POintER_TYPE_pchar 8
-#define POintER_TYPE_puchar 9
-#define POintER_TYPE_PVOID 10
-#define POintER_TYPE_OBJECT 11
-#define POintER_TYPE_OBJECTS 12
+#define POINTER_TYPE_INVALID 0
+#define POINTER_TYPE_SMALLint 1
+#define POINTER_TYPE_SMALLpint 2
+#define POINTER_TYPE_int 3
+#define POINTER_TYPE_pint 4
+#define POINTER_TYPE_ppint 5
+#define POINTER_TYPE_char 6
+#define POINTER_TYPE_uchar 7
+#define POINTER_TYPE_pchar 8
+#define POINTER_TYPE_puchar 9
+#define POINTER_TYPE_PVOID 10
+#define POINTER_TYPE_OBJECT 11
+#define POINTER_TYPE_OBJECTS 12
 
 
 
@@ -48,7 +48,7 @@ void mem_object_registry_entry::null()
 {
 	time_stamp = 0;
 	pointer = NULL;
-	object_type = POintER_TYPE_INVALID;
+	object_type = POINTER_TYPE_INVALID;
 	object_n = 0;
 	object_size_of = 0;
 	extra_type_info = NULL;
@@ -59,73 +59,73 @@ void mem_object_registry_entry::null()
 void mem_object_registry_entry::set_type_from_string(char *str)
 {
 	if (strcmp(str, "int") == 0) {
-		object_type = POintER_TYPE_SMALLint;
+		object_type = POINTER_TYPE_SMALLint;
 	} else if (strcmp(str, "pint") == 0) {
-		object_type = POintER_TYPE_SMALLpint;
+		object_type = POINTER_TYPE_SMALLpint;
 	} else if (strcmp(str, "int") == 0) {
-		object_type = POintER_TYPE_int;
+		object_type = POINTER_TYPE_int;
 	} else if (strcmp(str, "pint") == 0) {
-		object_type = POintER_TYPE_pint;
+		object_type = POINTER_TYPE_pint;
 	} else if (strcmp(str, "ppint") == 0) {
-		object_type = POintER_TYPE_ppint;
+		object_type = POINTER_TYPE_ppint;
 	} else if (strcmp(str, "char") == 0) {
-		object_type = POintER_TYPE_char;
+		object_type = POINTER_TYPE_char;
 	} else if (strcmp(str, "uchar") == 0) {
-		object_type = POintER_TYPE_uchar;
+		object_type = POINTER_TYPE_uchar;
 	} else if (strcmp(str, "pchar") == 0) {
-		object_type = POintER_TYPE_pchar;
+		object_type = POINTER_TYPE_pchar;
 	} else if (strcmp(str, "puchar") == 0) {
-		object_type = POintER_TYPE_puchar;
+		object_type = POINTER_TYPE_puchar;
 	} else if (strcmp(str, "pvoid") == 0) {
-		object_type = POintER_TYPE_PVOID;
+		object_type = POINTER_TYPE_PVOID;
 	} else if (strcmp(str, "OBJECT") == 0) {
-		object_type = POintER_TYPE_OBJECT;
+		object_type = POINTER_TYPE_OBJECT;
 	} else if (strcmp(str, "OBJECTS") == 0) {
-		object_type = POintER_TYPE_OBJECTS;
+		object_type = POINTER_TYPE_OBJECTS;
 	} else {
-		object_type = POintER_TYPE_INVALID;
+		object_type = POINTER_TYPE_INVALID;
 	}
 }
 
 void mem_object_registry_entry::print_type(ostream &ost)
 {
-	if (object_type == POintER_TYPE_INVALID) {
+	if (object_type == POINTER_TYPE_INVALID) {
 		ost << "invalid entry";
 		}
-	if (object_type == POintER_TYPE_SMALLint) {
+	if (object_type == POINTER_TYPE_SMALLint) {
 		ost << "int";
 		}
-	else if (object_type == POintER_TYPE_SMALLpint) {
+	else if (object_type == POINTER_TYPE_SMALLpint) {
 		ost << "pint";
 		}
-	else if (object_type == POintER_TYPE_int) {
+	else if (object_type == POINTER_TYPE_int) {
 		ost << "int";
 		}
-	else if (object_type == POintER_TYPE_pint) {
+	else if (object_type == POINTER_TYPE_pint) {
 		ost << "pint";
 		}
-	else if (object_type == POintER_TYPE_ppint) {
+	else if (object_type == POINTER_TYPE_ppint) {
 		ost << "ppint";
 		}
-	else if (object_type == POintER_TYPE_char) {
+	else if (object_type == POINTER_TYPE_char) {
 		ost << "char";
 		}
-	else if (object_type == POintER_TYPE_uchar) {
+	else if (object_type == POINTER_TYPE_uchar) {
 		ost << "uchar";
 		}
-	else if (object_type == POintER_TYPE_pchar) {
+	else if (object_type == POINTER_TYPE_pchar) {
 		ost << "pchar";
 		}
-	else if (object_type == POintER_TYPE_puchar) {
+	else if (object_type == POINTER_TYPE_puchar) {
 		ost << "puchar";
 		}
-	else if (object_type == POintER_TYPE_PVOID) {
+	else if (object_type == POINTER_TYPE_PVOID) {
 		ost << "pvoid";
 		}
-	else if (object_type == POintER_TYPE_OBJECT) {
+	else if (object_type == POINTER_TYPE_OBJECT) {
 		ost << "OBJECT";
 		}
-	else if (object_type == POintER_TYPE_OBJECTS) {
+	else if (object_type == POINTER_TYPE_OBJECTS) {
 		ost << "OBJECTS";
 		}
 	else {
@@ -136,44 +136,44 @@ void mem_object_registry_entry::print_type(ostream &ost)
 
 int mem_object_registry_entry::size_of()
 {
-	if (object_type == POintER_TYPE_INVALID) {
+	if (object_type == POINTER_TYPE_INVALID) {
 		cout << "mem_object_registry_entry::size_of invalid entry" << endl;
 		exit(1);
 		}
-	if (object_type == POintER_TYPE_SMALLint) {
+	if (object_type == POINTER_TYPE_SMALLint) {
 		return sizeof(int) * object_n;
 		}
-	else if (object_type == POintER_TYPE_SMALLpint) {
+	else if (object_type == POINTER_TYPE_SMALLpint) {
 		return sizeof(int *) * object_n;
 		}
-	else if (object_type == POintER_TYPE_int) {
+	else if (object_type == POINTER_TYPE_int) {
 		return sizeof(int) * object_n;
 		}
-	else if (object_type == POintER_TYPE_pint) {
+	else if (object_type == POINTER_TYPE_pint) {
 		return sizeof(int *) * object_n;
 		}
-	else if (object_type == POintER_TYPE_ppint) {
+	else if (object_type == POINTER_TYPE_ppint) {
 		return sizeof(int **) * object_n;
 		}
-	else if (object_type == POintER_TYPE_char) {
+	else if (object_type == POINTER_TYPE_char) {
 		return sizeof(char) * object_n;
 		}
-	else if (object_type == POintER_TYPE_uchar) {
+	else if (object_type == POINTER_TYPE_uchar) {
 		return sizeof(uchar) * object_n;
 		}
-	else if (object_type == POintER_TYPE_pchar) {
+	else if (object_type == POINTER_TYPE_pchar) {
 		return sizeof(char *) * object_n;
 		}
-	else if (object_type == POintER_TYPE_puchar) {
+	else if (object_type == POINTER_TYPE_puchar) {
 		return sizeof(uchar *) * object_n;
 		}
-	else if (object_type == POintER_TYPE_PVOID) {
+	else if (object_type == POINTER_TYPE_PVOID) {
 		return sizeof(pvoid) * object_n;
 		}
-	else if (object_type == POintER_TYPE_OBJECT) {
+	else if (object_type == POINTER_TYPE_OBJECT) {
 		return object_size_of;
 		}
-	else if (object_type == POintER_TYPE_OBJECTS) {
+	else if (object_type == POINTER_TYPE_OBJECTS) {
 		return object_n * object_size_of;
 		}
 	else {
@@ -287,7 +287,8 @@ void mem_object_registry::init(int verbose_level)
 	}
 }
 
-void mem_object_registry::accumulate_and_ignore_duplicates(int verbose_level)
+void mem_object_registry::accumulate_and_ignore_duplicates(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -310,7 +311,8 @@ void mem_object_registry::allocate(int N, int verbose_level)
 	nb_entries_used = 0;
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate trying to allocate "
+		cout << "mem_object_registry::allocate "
+				"trying to allocate "
 				<< nb_entries_allocated << " entries" << endl;
 	}
 
@@ -416,7 +418,8 @@ void mem_object_registry::dump_to_csv_file(const char *fname)
 
 		//cout << "memory registry:" << endl;
 
-		fp << "Line,Pointer,Timestamp,Type,N,Sizeof,ExtraTypeInfo,File,LineInFile" << endl;
+		fp << "Line,Pointer,Timestamp,Type,N,Sizeof,"
+				"ExtraTypeInfo,File,LineInFile" << endl;
 		sz = 0;
 		for (i = 0; i < nb_entries_used; i++) {
 			s = entries[i].size_of();
@@ -436,7 +439,8 @@ void mem_object_registry::dump_to_csv_file(const char *fname)
 }
 
 
-int *mem_object_registry::allocate_int(int n, const char *file, int line)
+int *mem_object_registry::allocate_int(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -448,7 +452,7 @@ int *mem_object_registry::allocate_int(int n, const char *file, int line)
 	p = new int[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_SMALLint, (int) n, sizeof(int),
+				POINTER_TYPE_SMALLint, n, sizeof(int),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -476,7 +480,8 @@ void mem_object_registry::free_int(int *p, const char *file, int line)
 	delete [] p;
 }
 
-int **mem_object_registry::allocate_pint(int n, const char *file, int line)
+int **mem_object_registry::allocate_pint(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -488,14 +493,15 @@ int **mem_object_registry::allocate_pint(int n, const char *file, int line)
 	p = new pint[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_SMALLpint, (int) n, sizeof(int *),
+				POINTER_TYPE_SMALLpint, n, sizeof(int *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_pint(int **p, const char *file, int line)
+void mem_object_registry::free_pint(int **p,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -516,7 +522,8 @@ void mem_object_registry::free_pint(int **p, const char *file, int line)
 	delete [] p;
 }
 
-int ***mem_object_registry::allocate_ppint(int n, const char *file, int line)
+int ***mem_object_registry::allocate_ppint(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -528,7 +535,7 @@ int ***mem_object_registry::allocate_ppint(int n, const char *file, int line)
 	p = new ppint[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_ppint, (int) n, sizeof(int **),
+				POINTER_TYPE_ppint, n, sizeof(int **),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -556,7 +563,8 @@ void mem_object_registry::free_ppint(int ***p, const char *file, int line)
 	delete [] p;
 }
 
-char *mem_object_registry::allocate_char(int n, const char *file, int line)
+char *mem_object_registry::allocate_char(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -568,7 +576,7 @@ char *mem_object_registry::allocate_char(int n, const char *file, int line)
 	p = new char[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_char, (int) n, sizeof(char),
+				POINTER_TYPE_char, n, sizeof(char),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -596,7 +604,8 @@ void mem_object_registry::free_char(char *p, const char *file, int line)
 	delete [] p;
 }
 
-uchar *mem_object_registry::allocate_uchar(int n, const char *file, int line)
+uchar *mem_object_registry::allocate_uchar(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -608,14 +617,15 @@ uchar *mem_object_registry::allocate_uchar(int n, const char *file, int line)
 	p = new uchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_uchar, (int) n, sizeof(uchar),
+				POINTER_TYPE_uchar, n, sizeof(uchar),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_uchar(uchar *p, const char *file, int line)
+void mem_object_registry::free_uchar(uchar *p,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -636,7 +646,8 @@ void mem_object_registry::free_uchar(uchar *p, const char *file, int line)
 	delete [] p;
 }
 
-char **mem_object_registry::allocate_pchar(int n, const char *file, int line)
+char **mem_object_registry::allocate_pchar(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -648,14 +659,15 @@ char **mem_object_registry::allocate_pchar(int n, const char *file, int line)
 	p = new pchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_pchar, (int) n, sizeof(char *),
+				POINTER_TYPE_pchar, n, sizeof(char *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_pchar(char **p, const char *file, int line)
+void mem_object_registry::free_pchar(char **p,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -676,7 +688,8 @@ void mem_object_registry::free_pchar(char **p, const char *file, int line)
 	delete [] p;
 }
 
-uchar **mem_object_registry::allocate_puchar(int n, const char *file, int line)
+uchar **mem_object_registry::allocate_puchar(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -688,14 +701,15 @@ uchar **mem_object_registry::allocate_puchar(int n, const char *file, int line)
 	p = new puchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_puchar, (int) n, sizeof(char *),
+				POINTER_TYPE_puchar, n, sizeof(char *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_puchar(uchar **p, const char *file, int line)
+void mem_object_registry::free_puchar(uchar **p,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -716,7 +730,8 @@ void mem_object_registry::free_puchar(uchar **p, const char *file, int line)
 	delete [] p;
 }
 
-void **mem_object_registry::allocate_pvoid(int n, const char *file, int line)
+void **mem_object_registry::allocate_pvoid(long int n,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -728,14 +743,15 @@ void **mem_object_registry::allocate_pvoid(int n, const char *file, int line)
 	p = new pvoid[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_PVOID, (int) n, sizeof(void *),
+				POINTER_TYPE_PVOID, n, sizeof(void *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_pvoid(void **p, const char *file, int line)
+void mem_object_registry::free_pvoid(void **p,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -756,7 +772,8 @@ void mem_object_registry::free_pvoid(void **p, const char *file, int line)
 	delete [] p;
 }
 
-void *mem_object_registry::allocate_OBJECTS(void *p, int n, int size_of,
+void *mem_object_registry::allocate_OBJECTS(void *p,
+		long int n, int size_of,
 		const char *extra_type_info, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
@@ -767,14 +784,15 @@ void *mem_object_registry::allocate_OBJECTS(void *p, int n, int size_of,
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_OBJECTS, (int) n, size_of,
+				POINTER_TYPE_OBJECTS, n, size_of,
 				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_OBJECTS(void *p, const char *file, int line)
+void mem_object_registry::free_OBJECTS(void *p,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -806,14 +824,15 @@ void *mem_object_registry::allocate_OBJECT(void *p, int size_of,
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POintER_TYPE_OBJECT, (int) 1, size_of,
+				POINTER_TYPE_OBJECT, 1, size_of,
 				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_OBJECT(void *p, const char *file, int line)
+void mem_object_registry::free_OBJECT(void *p,
+		const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -902,7 +921,7 @@ void mem_object_registry::insert_at(int idx)
 }
 
 void mem_object_registry::add_to_registry(void *pointer,
-		int object_type, int object_n, int object_size_of,
+		int object_type, long int object_n, int object_size_of,
 		const char *extra_type_info,
 		const char *source_file, int source_line,
 		int verbose_level)
@@ -1008,13 +1027,15 @@ void mem_object_registry::sort_by_size(int verbose_level)
 
 }
 
-void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
+void mem_object_registry::sort_by_location_and_get_frequency(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
+		cout << "mem_object_registry::sort_by_location_"
+				"and_get_frequency" << endl;
 	}
 
 	sort_by_location(verbose_level - 1);
@@ -1032,7 +1053,8 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 	type_first[0] = 0;
 	type_len[0] = 1;
 	for (i = 1; i < nb_entries_used; i++) {
-		c = registry_key_pair_compare_by_location(entries + i, entries + (i - 1));
+		c = registry_key_pair_compare_by_location(
+				entries + i, entries + (i - 1));
 		if (c == 0) {
 			type_len[nb_types]++;
 			}
@@ -1079,8 +1101,8 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 				<< entries[f].source_line
 				<< " object type ";
 		entries[f].print_type(cout);
-		if (entries[f].object_type == POintER_TYPE_OBJECT ||
-				entries[f].object_type == POintER_TYPE_OBJECTS) {
+		if (entries[f].object_type == POINTER_TYPE_OBJECT ||
+				entries[f].object_type == POINTER_TYPE_OBJECTS) {
 			cout << " = " << entries[f].extra_type_info;
 		}
 		cout << " for a total of " << sz << " char" << endl;
@@ -1093,7 +1115,8 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 	delete [] frequency;
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
+		cout << "mem_object_registry::sort_by_location_"
+				"and_get_frequency" << endl;
 	}
 }
 
@@ -1106,17 +1129,20 @@ void mem_object_registry::sort_by_type(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_type before Heapsort" << endl;
+		cout << "mem_object_registry::sort_by_type "
+				"before Heapsort" << endl;
 	}
 	Heapsort(entries, nb_entries_used,
 		sizeof(mem_object_registry_entry),
 		registry_key_pair_compare_by_type);
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_type after Heapsort" << endl;
+		cout << "mem_object_registry::sort_by_type "
+				"after Heapsort" << endl;
 	}
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_type done" << endl;
+		cout << "mem_object_registry::sort_by_type "
+				"done" << endl;
 	}
 
 }
@@ -1130,17 +1156,21 @@ void mem_object_registry::sort_by_location(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_location before Heapsort" << endl;
+		cout << "mem_object_registry::sort_by_location "
+				"before Heapsort" << endl;
 	}
 	Heapsort(entries, nb_entries_used,
 		sizeof(mem_object_registry_entry),
 		registry_key_pair_compare_by_location);
+
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_location after Heapsort" << endl;
+		cout << "mem_object_registry::sort_by_location "
+				"after Heapsort" << endl;
 	}
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_location done" << endl;
+		cout << "mem_object_registry::sort_by_location "
+				"done" << endl;
 	}
 
 }
@@ -1184,7 +1214,7 @@ static int registry_key_pair_compare_by_type(void *K1v, void *K2v)
 		return c;
 	}
 	//new the two entries have the same type
-	if (t1 == POintER_TYPE_OBJECTS || t1 == POintER_TYPE_OBJECT) {
+	if (t1 == POINTER_TYPE_OBJECTS || t1 == POINTER_TYPE_OBJECT) {
 		c = strcmp(K1->extra_type_info, K2->extra_type_info);
 		if (c) {
 			return c;
