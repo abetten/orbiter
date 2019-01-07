@@ -23,7 +23,7 @@
 
 memory_object::memory_object()
 {
-	char_pointer = NULL;
+	data = NULL;
 	alloc_length = 0;
 	used_length = 0;
 	cur_pointer = 0;
@@ -36,19 +36,19 @@ memory_object::~memory_object()
 
 void memory_object::null()
 {
-	char_pointer = NULL;
+	data = NULL;
 }
 
 void memory_object::freeself()
 {
-	if (char_pointer) {
-		FREE_char(char_pointer);
+	if (data) {
+		FREE_char(data);
 		}
 	null();
 }
 
 void memory_object::init(int length,
-		char *d, int verbose_level)
+		char *initial_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -58,8 +58,10 @@ void memory_object::init(int length,
 		}
 	alloc(length, verbose_level - 1);
 	for (i = 0; i < length; i++) {
-		s_i(i) = d[i];
+		data[i] = initial_data[i];
 		}
+	used_length = length;
+	cur_pointer = 0;
 	if (f_v) {
 		cout << "memory_object::init done" << endl;
 		}
@@ -67,8 +69,6 @@ void memory_object::init(int length,
 
 void memory_object::alloc(int length, int verbose_level)
 // sets alloc_length to length
-// sets used_length to length, 
-// sets cur_pointer to 0.
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -76,17 +76,17 @@ void memory_object::alloc(int length, int verbose_level)
 		cout << "memory_object::alloc "
 				"length=" << length << endl;
 		}
-	freeself();
+	//freeself();
 
-	char_pointer = NEW_char(length);
-	if (char_pointer == NULL) {
+	data = NEW_char(length);
+	if (data == NULL) {
 		cout << "memory_object::alloc "
 				"out of memory" << endl;
 		exit(1);
 		}
 	alloc_length = length;
-	used_length = length;
-	cur_pointer = 0;
+	//used_length = length;
+	//cur_pointer = 0;
 
 	if (f_v) {
 		cout << "memory_object::alloc done" << endl;
@@ -103,7 +103,7 @@ void memory_object::append(int length,
 		cout << "memory_object::append" << endl;
 		cout << "used_length=" << endl;
 		cout << "alloc_length=" << alloc_length << endl;
-		}
+	}
 	old_length = used_length;
 	new_length = old_length + length;
 	if (new_length > alloc_length) {
@@ -115,52 +115,67 @@ void memory_object::append(int length,
 		if (f_v) {
 			cout << "memory_object::append after realloc" << endl;
 		}
-		used_length = new_length;
-		alloc_length = new_alloc_length;
-		}
-	else {
-		used_length = new_length;
-		}
+	}
 	for (i = 0; i < length; i++) {
-		char_pointer[old_length + i] = d[i];
-		}
+		data[old_length + i] = d[i];
+	}
+	used_length = old_length + length;
 	if (f_v) {
 		cout << "memory_object::append done" << endl;
-		}
+	}
 }
 
-void memory_object::realloc(int new_length, int verbose_level)
+void memory_object::realloc(int &new_length, int verbose_level)
 {
 	int f_v = TRUE; //(verbose_level >= 1);
 	int old_length;
 	int old_cur_pointer;
 	int i;
-	char *old_pc;
+	char *old_data;
 	
 	if (f_v) {
 		cout << "memory_object::realloc "
 				"old_length=" << used_length <<
-				"new_length=" << new_length << endl;
+				" new_length=" << new_length << endl;
 		}
-	old_pc = char_pointer;
+	old_data = data;
 	old_length = used_length;
 	old_cur_pointer = cur_pointer;
 	if (new_length < old_length) {
-		cout << "memory_object::realloc warning: "
+		cout << "memory_object::realloc error: "
 				"new_length < old_length" << endl;
+		exit(1);
 		}
-	char_pointer = NULL;
+	if (new_length < 2 * old_length) {
+		new_length = 2 * old_length;
+			// this is so that we don't get bogged down
+			// in many small increments
+			// which lead to slow performance because
+			// we need to copy the data over each time we reallocate
+	}
+	if (f_v) {
+		cout << "memory_object::realloc "
+				"old_length=" << used_length <<
+				" adjusted new_length=" << new_length << endl;
+		}
+	data = NULL;
 	alloc(new_length, verbose_level - 1);
 	for (i = 0; 
 		i < MINIMUM(old_length, new_length); 
 		i++) {
-		char_pointer[i] = old_pc[i];
+		data[i] = old_data[i];
 		}
 	for (i = old_length; i < new_length; i++) {
-		char_pointer[i] = 0;
+		data[i] = 0;
 		}
-	FREE_char(old_pc);
+	FREE_char(old_data);
 	cur_pointer = old_cur_pointer;
+
+
+	if (f_v) {
+		cout << "memory_object::realloc done "
+				" used_length=" << used_length << endl;
+		}
 	if (f_v) {
 		cout << "memory_object::realloc done" << endl;
 		}
@@ -184,7 +199,7 @@ void memory_object::read_char(char *c)
 				"error: l1 < 1" << endl;
 		exit(1);
 		}
-	cp = char_pointer + cur_p;
+	cp = data + cur_p;
 	*c = *cp;
 	cur_pointer++;
 }
@@ -259,7 +274,7 @@ void memory_object::read_double(double *f)
 				"error: l1 < sizeof(double)" << endl;
 		exit(1);
 		}
-	cp = char_pointer + cur_p;
+	cp = data + cur_p;
 	cp1 = (char *) &f1;
 	for (j = 0; j < (int)sizeof(double); j++) {
 		*cp1 = *cp;
@@ -292,7 +307,7 @@ void memory_object::read_int64(int *i)
 				"error: l1 < 8" << endl;
 		exit(1);
 		}
-	cp = char_pointer + cur_p;
+	cp = data + cur_p;
 	cp1 = (char *) &i1;
 	for (j = 0; j < 8; j++) {
 		*cp1 = *cp;
@@ -330,7 +345,7 @@ void memory_object::read_int(int *i)
 				"error: l1 < 4" << endl;
 		exit(1);
 		}
-	cp = char_pointer + cur_p;
+	cp = data + cur_p;
 	cp1 = (char *) &i1;
 	for (j = 0; j < 4; j++) {
 		*cp1 = *cp;
@@ -366,7 +381,7 @@ void memory_object::read_file(const char *fname, int verbose_level)
 	fsize = file_size(fname);
 	alloc(fsize, 0);
 	fp = fopen(fname, "r");
-	if ((int) fread(char_pointer,
+	if ((int) fread(data,
 			1 /* size */, fsize /* nitems */, fp) != fsize) {
 		cout << "memory_object::read_file "
 				"error in fread" << endl;
@@ -393,7 +408,7 @@ void memory_object::write_file(const char *fname, int verbose_level)
 	
 	fp = fopen(fname, "wb");
 
-	fwrite(char_pointer, 1 /* size */, size /* items */, fp);
+	fwrite(data, 1 /* size */, size /* items */, fp);
 	
 	fclose(fp);
 	if (file_size(fname) != size) {
@@ -413,7 +428,7 @@ int memory_object::multiplicity_of_character(char c)
 	
 	l = 0;
 	for (i = 0; i < used_length; i++) {
-		if (char_pointer[i] == c) {
+		if (data[i] == c) {
 			l++;
 			}
 		}

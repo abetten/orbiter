@@ -155,7 +155,7 @@ void stop_memory_debug();
 // memory_object.C:
 // #############################################################################
 
-//! can be used for serialization
+//! for serialization of complex data types
 
 
 
@@ -167,17 +167,18 @@ public:
 	void null();
 	void freeself();
 
-	char *char_pointer;
+	char *data;
 	int alloc_length;
+		// maintained by alloc()
 	int used_length;
 	int cur_pointer;
 
 
-	char & s_i(int i) { return char_pointer[i]; };
-	void init(int length, char *d, int verbose_level);
+	char & s_i(int i) { return data[i]; };
+	void init(int length, char *initial_data, int verbose_level);
 	void alloc(int length, int verbose_level);
 	void append(int length, char *d, int verbose_level);
-	void realloc(int new_length, int verbose_level);
+	void realloc(int &new_length, int verbose_level);
 	void write_char(char c);
 	void read_char(char *c);
 	void write_string(const char *p);
@@ -191,8 +192,6 @@ public:
 	void read_file(const char *fname, int verbose_level);
 	void write_file(const char *fname, int verbose_level);
 	int multiplicity_of_character(char c);
-	//void compress(int verbose_level);
-	//void decompress(int verbose_level);
 };
 
 // #############################################################################
@@ -201,7 +200,7 @@ public:
 
 
 
-//! a class to read output files from orbiters poset classification
+//! read output files from the poset classification
 
 
 
@@ -498,23 +497,6 @@ int is_csv_file(const char *fname);
 int is_xml_file(const char *fname);
 void os_date_string(char *str, int sz);
 int os_seconds_past_1970();
-void povray_beginning(ostream &ost,
-		double angle,
-		const char *sky,
-		const char *location,
-		const char *look_at,
-		int f_with_background);
-void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost);
-void povray_animation_rotate_around_origin_and_given_vector(double *v, 
-	ostream &ost);
-void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
-	double *v, double angle_zero_one, ostream &ost);
-void povray_union_start(ostream &ost);
-void povray_union_end(ostream &ost, double clipping_radius);
-void povray_bottom_plane(ostream &ost);
-void povray_rotate_111(int h, int nb_frames, ostream &fp);
-void povray_ini(ostream &ost, const char *fname_pov, int first_frame, 
-	int last_frame);
 void test_typedefs();
 void concatenate_files(const char *fname_in_mask, int N, 
 	const char *fname_out, const char *EOF_marker, int f_title_line, 
