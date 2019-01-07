@@ -81,23 +81,23 @@ public:
 	void manual_dump_with_file_name(const char *fname);
 	void dump();
 	void dump_to_csv_file(const char *fname);
-	int *allocate_int(int n, const char *file, int line);
+	int *allocate_int(long int n, const char *file, int line);
 	void free_int(int *p, const char *file, int line);
-	int **allocate_pint(int n, const char *file, int line);
+	int **allocate_pint(long int n, const char *file, int line);
 	void free_pint(int **p, const char *file, int line);
-	int ***allocate_ppint(int n, const char *file, int line);
+	int ***allocate_ppint(long int n, const char *file, int line);
 	void free_ppint(int ***p, const char *file, int line);
-	char *allocate_char(int n, const char *file, int line);
+	char *allocate_char(long int n, const char *file, int line);
 	void free_char(char *p, const char *file, int line);
-	uchar *allocate_uchar(int n, const char *file, int line);
+	uchar *allocate_uchar(long int n, const char *file, int line);
 	void free_uchar(uchar *p, const char *file, int line);
-	char **allocate_pchar(int n, const char *file, int line);
+	char **allocate_pchar(long int n, const char *file, int line);
 	void free_pchar(char **p, const char *file, int line);
-	uchar **allocate_puchar(int n, const char *file, int line);
+	uchar **allocate_puchar(long int n, const char *file, int line);
 	void free_puchar(uchar **p, const char *file, int line);
-	void **allocate_pvoid(int n, const char *file, int line);
+	void **allocate_pvoid(long int n, const char *file, int line);
 	void free_pvoid(void **p, const char *file, int line);
-	void *allocate_OBJECTS(void *p, int n, int size_of,
+	void *allocate_OBJECTS(void *p, long int n, int size_of,
 			const char *extra_type_info, const char *file, int line);
 	void free_OBJECTS(void *p, const char *file, int line);
 	void *allocate_OBJECT(void *p, int size_of,
@@ -106,7 +106,7 @@ public:
 	int search(void *p, int &idx);
 	void insert_at(int idx);
 	void add_to_registry(void *pointer,
-			int object_type, int object_n, int object_size_of,
+			int object_type, long int object_n, int object_size_of,
 			const char *extra_type_info,
 			const char *source_file, int source_line,
 			int verbose_level);
@@ -125,7 +125,7 @@ public:
 	int time_stamp;
 	void *pointer;
 	int object_type;
-	int object_n;
+	long int object_n;
 	int object_size_of;
 		// needed for objects of type class
 	const char *extra_type_info;
@@ -168,17 +168,17 @@ public:
 	void freeself();
 
 	char *data;
-	int alloc_length;
+	long int alloc_length;
 		// maintained by alloc()
-	int used_length;
-	int cur_pointer;
+	long int used_length;
+	long int cur_pointer;
 
 
 	char & s_i(int i) { return data[i]; };
-	void init(int length, char *initial_data, int verbose_level);
-	void alloc(int length, int verbose_level);
-	void append(int length, char *d, int verbose_level);
-	void realloc(int &new_length, int verbose_level);
+	void init(long int length, char *initial_data, int verbose_level);
+	void alloc(long int length, int verbose_level);
+	void append(long int length, char *d, int verbose_level);
+	void realloc(long int &new_length, int verbose_level);
 	void write_char(char c);
 	void read_char(char *c);
 	void write_string(const char *p);
