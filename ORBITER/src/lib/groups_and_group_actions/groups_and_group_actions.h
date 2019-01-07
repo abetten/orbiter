@@ -57,6 +57,7 @@ typedef class schreier_vector_handler schreier_vector_handler;
 typedef class schreier_vector schreier_vector;
 typedef class poset_description poset_description;
 typedef class poset poset;
+typedef class action_on_set_partitions action_on_set_partitions;
 
 
 enum symmetry_group_type { 
@@ -89,7 +90,8 @@ enum symmetry_group_type {
 	action_on_andre_t,
 	action_on_orbits_t,
 	action_on_flags_t,
-	action_on_homogeneous_polynomials_t
+	action_on_homogeneous_polynomials_t,
+	action_on_set_partitions_t
 };
 
 enum representation_type {
@@ -98,7 +100,7 @@ enum representation_type {
 }; 
 
 
-//! internal class related to action
+//! interface for the various types of group actions
 
 
 union symmetry_group {
@@ -128,6 +130,7 @@ union symmetry_group {
 	action_on_orbits *OnOrbits;
 	action_on_flags *OnFlags;
 	action_on_homogeneous_polynomials *OnHP;
+	action_on_set_partitions *OnSetPartitions;
 };
 
 

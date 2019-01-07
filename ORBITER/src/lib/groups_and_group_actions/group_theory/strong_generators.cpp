@@ -1202,6 +1202,8 @@ void strong_generators::print_with_given_action(
 		cout << "Generator " << i << " / "
 				<< gens->len << " is:" << endl;
 		A2->element_print(gens->ith(i), cout);
+		cout << endl;
+		cout << "as permutation:" << endl;
 		A2->element_print_as_permutation(gens->ith(i), cout);
 		cout << endl;
 		}

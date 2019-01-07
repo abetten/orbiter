@@ -141,7 +141,7 @@ public:
 
 
 
-	/** the length of the orbit  of $G^{(i)}$ on $b_i$ */
+	/** the length of the orbit of $G^{(i)}$ on $b_i$ */
 	int *transversal_length;
 
 	/** the orbit of  b_i */
@@ -537,19 +537,6 @@ public:
 		int f_multiplication, 
 		int multiplication_order, int verbose_level);
 
-#if 0
-	/** Create the product of two affine groups AGL(n,q)
-	 * as abstract permutation groups in product action,
-	 * not as matrix group */
-	void init_affine_grid_group(int q1, int q2, 
-		int f_translations1, int f_translations2, 
-		int f_semilinear1, int frobenius_power1, 
-		int f_semilinear2, int frobenius_power2, 
-		int f_multiplication1, int multiplication_order1, 
-		int f_multiplication2, int multiplication_order2, 
-		int f_diagonal, 
-		int verbose_level);
-#endif
 
 	/** Create the symmetric group of degree degree
 	 * as abstract permutation group */
@@ -572,6 +559,9 @@ public:
 	
 	// action_induce.C:
 
+	action *induced_action_on_set_partitions(
+			int universal_set_size, int partition_size,
+			int verbose_level);
 	/** Create the induced action on lines in PG(n-1,q)
 	 * using an action_on_grassmannian object */
 	void init_action_on_lines(action *A, finite_field *F, 

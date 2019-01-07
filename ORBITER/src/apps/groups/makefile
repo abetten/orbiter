@@ -7,10 +7,15 @@ LFLAGS = -lm
 
 
 all:  \
+	action_on_set_partitions.out \
 	direct_product.out \
 	linear_group.out \
 	orthogonal_group.out \
 	wreath_product.out
+
+
+action_on_set_partitions.out:  action_on_set_partitions.o;
+	$(DISCRETA_CPP)  action_on_set_partitions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 direct_product.out:  direct_product.o;

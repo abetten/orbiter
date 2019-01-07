@@ -261,6 +261,14 @@ int induced_action_element_image_of(action &A,
 			}
 		AOS->compute_image(sub, Elt, a, b, verbose_level - 1);
 		}
+	else if (A.type_G == action_on_set_partitions_t) {
+		if (f_v) {
+			cout << "induced_action_element_image_of "
+					"action_on_set_partitions_t" << endl;
+			}
+		action_on_set_partitions *OSP = A.G.OnSetPartitions;
+		b = OSP->compute_image(Elt, a, verbose_level - 1);
+		}
 	else if (A.type_G == action_on_subgroups_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
@@ -665,6 +673,13 @@ void induced_action_element_image_of_low_level(action &A,
 			}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_sets_t not yet implemented" << endl;
+		exit(1);
+		}
+	else if (A.type_G == action_on_set_partitions_t) {
+		if (f_v) {
+			cout << "induced_action_element_image_of "
+					"action_on_set_partitions_t" << endl;
+			}
 		exit(1);
 		}
 	else if (A.type_G == action_on_subgroups_t) {

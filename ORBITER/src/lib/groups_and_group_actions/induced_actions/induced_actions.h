@@ -652,6 +652,37 @@ public:
 };
 
 // #############################################################################
+// action_on_set_partitions.cpp:
+// #############################################################################
+
+
+//! induced action on a set partitions.
+
+
+
+class action_on_set_partitions {
+public:
+	int nb_set_partitions;
+	int universal_set_size;
+	int partition_size;
+	int nb_parts;
+	action *A;
+	int *v1;
+	int *v2;
+
+	action_on_set_partitions();
+	~action_on_set_partitions();
+	void null();
+	void free();
+	void init(int universal_set_size, int partition_size,
+		action *A,
+		int verbose_level);
+	int compute_image(
+		int *Elt,
+		int a, int verbose_level);
+};
+
+// #############################################################################
 // action_on_sets.C:
 // #############################################################################
 

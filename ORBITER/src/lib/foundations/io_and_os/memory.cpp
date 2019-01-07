@@ -378,7 +378,8 @@ void mem_object_registry::manual_dump()
 	dump_to_csv_file(fname);
 }
 
-void mem_object_registry::manual_dump_with_file_name(const char *fname)
+void mem_object_registry::manual_dump_with_file_name(
+		const char *fname)
 {
 	dump_to_csv_file(fname);
 }

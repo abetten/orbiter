@@ -427,7 +427,7 @@ void make_t_k_incidence_matrix(int v, int t, int k,
 			}
 		}
 	if (f_v) {
-		cout << "make_t_k_incidence_matrix() computed " << m << " x " << n 
+		cout << "make_t_k_incidence_matrix computed " << m << " x " << n
 			<< " KM matrix" << endl;
 		}
 	if (f_vv) {
@@ -779,6 +779,67 @@ int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n)
 
 	rk = a * 3 + b;
 	return rk;
+}
+
+void set_partition_4_into_2_unrank(int rk, int *v)
+{
+	if (rk == 0) {
+		v[0] = 0;
+		v[1] = 1;
+		v[2] = 2;
+		v[3] = 3;
+	}
+	else if (rk == 1) {
+		v[0] = 0;
+		v[1] = 2;
+		v[2] = 1;
+		v[3] = 3;
+	}
+	else if (rk == 2) {
+		v[0] = 0;
+		v[1] = 3;
+		v[2] = 1;
+		v[3] = 2;
+	}
+}
+
+int set_partition_4_into_2_rank(int *v)
+{
+	if (v[0] > v[1]) {
+		int a = v[1];
+		v[1] = v[0];
+		v[0] = a;
+	}
+	if (v[2] > v[3]) {
+		int a = v[3];
+		v[3] = v[2];
+		v[2] = a;
+	}
+	if (v[2] < v[0]) {
+		int a, b;
+		a = v[0];
+		b = v[1];
+		v[0] = v[2];
+		v[1] = v[3];
+		v[2] = a;
+		v[3] = b;
+	}
+	if (v[0] != 0) {
+		cout << "set_partition_4_into_2_rank v[0] != 0";
+	}
+	if (v[1] == 1) {
+		return 0;
+	}
+	else if (v[1] == 2) {
+		return 1;
+	}
+	else if (v[1] == 3) {
+		return 2;
+	}
+	else {
+		cout << "set_partition_4_into_2_rank something is wrong" << endl;
+		exit(1);
+	}
 }
 
 void unordered_triple_pair_unrank(int rk,
