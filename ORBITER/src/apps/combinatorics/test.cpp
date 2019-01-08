@@ -465,7 +465,8 @@ void count_recursion(int n, int *digits, int depth)
 
 }
 
-void draw_action(char *fname_base, int xmax, int ymax, int *Adjacency, int m, int n, int f_cartesian)
+void draw_action(char *fname_base,
+		int xmax, int ymax, int *Adjacency, int m, int n, int f_cartesian)
 {
 	int x_min = -1500, x_max = 1500;
 	int y_min = -1500, y_max = 1500;
@@ -476,7 +477,8 @@ void draw_action(char *fname_base, int xmax, int ymax, int *Adjacency, int m, in
 	
 	sprintf(fname_full, "%s.mp", fname_base);
 	{
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname_full,
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -492,12 +494,14 @@ void draw_action(char *fname_base, int xmax, int ymax, int *Adjacency, int m, in
 	G.end_figure();
 	G.footer();
 	}
-	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+	cout << "written file " << fname_full << " of size "
+			<< file_size(fname_full) << endl;
 	
 }
 
 
-void draw_action_(mp_graphics &G, int *Adjacency, int m, int n, int f_cartesian)
+void draw_action_(mp_graphics &G,
+		int *Adjacency, int m, int n, int f_cartesian)
 {
 	int PX[100], PY[100];
 	double delta_phi1;
@@ -715,7 +719,8 @@ void test_hall(int n, int nb_inc, int verbose_level)
 		if (!test_hall_condition(H, S, n, k)) {
 			if (f_vv) {
 				cout << "H=\n" << H << endl;
-				cout << "Hall condition not satisfied for selection" << S << endl;
+				cout << "Hall condition not satisfied "
+						"for selection" << S << endl;
 				}
 			}
 		else {
@@ -732,7 +737,8 @@ void test_hall(int n, int nb_inc, int verbose_level)
 #endif
 }
 
-void matchmaker(matrix &H, Vector &matching, Vector &matching_inv, int verbose_level)
+void matchmaker(matrix &H,
+		Vector &matching, Vector &matching_inv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

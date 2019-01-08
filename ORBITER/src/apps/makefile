@@ -4,7 +4,7 @@ all:
 	cd blt; $(MAKE) all
 	cd codes; $(MAKE) all
 	cd combinatorics; $(MAKE) all
-	cd graph; $(MAKE) all
+	cd graph_classify; $(MAKE) all
 	cd graph_theory; $(MAKE) all
 	cd groups; $(MAKE) all
 	cd linear_spaces; $(MAKE) all
@@ -25,7 +25,7 @@ clean:
 	cd blt; $(MAKE) clean
 	cd codes; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
-	cd graph; $(MAKE) clean
+	cd graph_classify; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
 	cd groups; $(MAKE) clean
 	cd linear_spaces; $(MAKE) clean

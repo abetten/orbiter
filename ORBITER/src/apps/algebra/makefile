@@ -28,6 +28,7 @@ all: \
 	matrix.out \
 	move_point_orthogonal.out \
 	pascal_matrix.out \
+	polynomial_orbits.out \
 	projective_group.out  \
 	reflection.out \
 	subprimitive.out \
@@ -94,6 +95,9 @@ move_point_orthogonal.out:  move_point_orthogonal.o;
 
 pascal_matrix.out:  pascal_matrix.o ;
 	$(DISCRETA_CPP)  pascal_matrix.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+polynomial_orbits.out:  polynomial_orbits.o ;
+	$(DISCRETA_CPP)  polynomial_orbits.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 projective_group.out:  projective_group.o ;
 	$(DISCRETA_CPP)  projective_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

@@ -9,8 +9,6 @@ LFLAGS = -lm
 
 
 all: all_k_subsets.out \
-		alphabet.out \
-		alphabet2.out \
 		burnside.out \
 		cayley_sym_n.out \
 		cayley.out \
@@ -42,16 +40,9 @@ all: all_k_subsets.out \
 		test2.out \
 		unrank.out 
 
-#problem11.out 
 
 all_k_subsets.out:  all_k_subsets.o;
 	$(DISCRETA_CPP)  all_k_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-alphabet.out:  alphabet.o;
-	$(DISCRETA_CPP)  alphabet.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-alphabet2.out:  alphabet2.o;
-	$(DISCRETA_CPP)  alphabet2.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 burnside.out:  burnside.o;
 	$(DISCRETA_CPP)  burnside.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

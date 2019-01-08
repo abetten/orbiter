@@ -6,8 +6,9 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	BLT_set_create.o \
 	BLT_set_create_description.o \
+	BLT_set_create.o \
+	blt_set.o \
 	arc_generator.o \
 	arc_lifting_simeon.o \
 	arc_lifting_with_two_lines.o \

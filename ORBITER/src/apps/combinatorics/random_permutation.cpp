@@ -5,7 +5,8 @@
 
 #include "orbiter.h"
 
-void choose_random_permutation(int n, int f_save, const char *fname, int verbose_level);
+void choose_random_permutation(int n,
+		int f_save, const char *fname, int verbose_level);
 
 int main(int argc, char **argv)
 {
@@ -41,7 +42,8 @@ int main(int argc, char **argv)
 	choose_random_permutation(n, f_save, fname, verbose_level);
 }
 
-void choose_random_permutation(int n, int f_save, const char *fname, int verbose_level)
+void choose_random_permutation(int n,
+		int f_save, const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -63,7 +63,8 @@ int main(int argc, char **argv)
 					for (j = i + 1; j < N; j++) {
 						unrank_k_subset(j, set2, n, k);
 
-						int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
+						int_vec_intersect_sorted_vectors(
+								set1, k, set2, k, set3, sz);
 						if (sz == s) {
 							Adj[i * N + j] = 1;
 							Adj[j * N + 1] = 1;
@@ -77,7 +78,8 @@ int main(int argc, char **argv)
 				int b;
 				longinteger_domain D;
 
-				Aut = create_automorphism_group_of_graph(Adj, N, 0/*verbose_level*/);
+				Aut = create_automorphism_group_of_graph(
+						Adj, N, 0/*verbose_level*/);
 				Aut->group_order(ago);
 				
 
@@ -87,7 +89,8 @@ int main(int argc, char **argv)
 
 				b = D.quotient_as_int(ago, a);
 
-				cout << "n=" << n << " k=" << k << " s=" << s << " ago_quotient = " << b << endl;
+				cout << "n=" << n << " k=" << k << " s=" << s
+						<< " ago_quotient = " << b << endl;
 
 				delete Aut;
 				FREE_int(Adj);
