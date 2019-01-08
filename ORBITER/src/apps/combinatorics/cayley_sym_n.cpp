@@ -9,8 +9,10 @@
 
 int t0;
 
-void do_it(int n, int f_special, int f_bubble, int f_pancake, int f_burnt_pancake, int verbose_level);
-void get_submatrices(int n, int *Adj, int N, int N0, int **&P, int verbose_level);
+void do_it(int n, int f_special, int f_bubble,
+		int f_pancake, int f_burnt_pancake, int verbose_level);
+void get_submatrices(int n, int *Adj,
+		int N, int N0, int **&P, int verbose_level);
 void mult_matrix(int *P, int *Q, int *R, int N);
 
 
@@ -64,11 +66,13 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	do_it(n, f_star, f_bubble, f_pancake, f_burnt_pancake, verbose_level);
+	do_it(n, f_star, f_bubble,
+			f_pancake, f_burnt_pancake, verbose_level);
 	
 }
 
-void do_it(int n, int f_star, int f_bubble, int f_pancake, int f_burnt_pancake, int verbose_level)
+void do_it(int n, int f_star, int f_bubble,
+		int f_pancake, int f_burnt_pancake, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -159,7 +163,8 @@ void do_it(int n, int f_star, int f_bubble, int f_pancake, int f_burnt_pancake, 
 		G_gens->allocate(nb_perms);
 
 		for (i = 0; i < nb_perms; i++) {
-			A->make_element(G_gens->ith(i), perms + i * deg1, 0 /* verbose_level */);
+			A->make_element(G_gens->ith(i),
+					perms + i * deg1, 0 /* verbose_level */);
 			}
 
 		generators_to_strong_generators(A, 
@@ -249,11 +254,13 @@ void do_it(int n, int f_star, int f_bubble, int f_pancake, int f_burnt_pancake, 
 
 
 
-	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
+	cout << "The adjacency matrix of a graph with " << goi
+			<< " vertices has been computed" << endl;
 	//int_matrix_print(Adj, goi, goi);
 
 
-	save_as_colored_graph_easy(fname_base, goi, Adj, 0 /* verbose_level */);
+	save_as_colored_graph_easy(fname_base, goi,
+			Adj, 0 /* verbose_level */);
 
 
 	return;
@@ -285,7 +292,8 @@ void do_it(int n, int f_star, int f_bubble, int f_pancake, int f_burnt_pancake, 
 }
 
 
-void get_submatrices(int n, int *Adj, int N, int N0, int **&P, int verbose_level)
+void get_submatrices(int n, int *Adj,
+		int N, int N0, int **&P, int verbose_level)
 {
 	
 	//int *Q;

@@ -77,6 +77,8 @@ typedef class spread_lifting spread_lifting;
 typedef class k_arc_generator k_arc_generator;
 typedef class arc_lifting_simeon arc_lifting_simeon;
 	// added Jan 6, 2019
+typedef class blt_set blt_set;
+	// started 8/13/2006, added Jan 6, 2019
 
 
 // #############################################################################

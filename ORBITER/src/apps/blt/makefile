@@ -17,8 +17,8 @@ all: \
 
 
 
-blt_main.out:  blt_main.o blt_set.o blt_set2.o ;
-	$(DISCRETA_CPP)  blt_main.o blt_set.o blt_set2.o \
+blt_main.out:  blt_main.o ;
+	$(DISCRETA_CPP)  blt_main.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 plot_stats_on_graphs.out:  plot_stats_on_graphs.o ;

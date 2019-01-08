@@ -385,10 +385,6 @@ void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_cliq
 		prefix, 
 		TRUE /* f_W */, FALSE /* f_w */,
 		Poset,
-		//early_test_function,
-		//this,
-		//NULL,
-		//NULL,
 		verbose_level_clique);
 
 	nb_orbits = gen->nb_orbits_at_level(n);

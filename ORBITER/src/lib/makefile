@@ -256,8 +256,9 @@ MODULES= \
 		top_level/algebra_and_number_theory/extra.o \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/young.o \
-		top_level/geometry/BLT_set_create.o \
 		top_level/geometry/BLT_set_create_description.o \
+		top_level/geometry/BLT_set_create.o \
+		top_level/geometry/blt_set.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
 		top_level/geometry/arc_lifting_with_two_lines.o \

@@ -16,9 +16,11 @@ void create_matrix(matrix &M, int i, int *S, int nb_classes,
 void compute_character_table(a_domain *D, int nb_classes, int *Omega, 
 	int *character_degree, int *class_size, 
 	int *&character_table, int verbose_level);
-void compute_character_degrees(a_domain *D, int goi, int nb_classes, int *Omega, int *class_size, 
+void compute_character_degrees(a_domain *D,
+	int goi, int nb_classes, int *Omega, int *class_size,
 	int *&character_degree, int verbose_level);
-void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int *&Omega, int verbose_level);
+void compute_omega(a_domain *D, int *N0, int nb_classes,
+		int *Mu, int nb_mu, int *&Omega, int verbose_level);
 int compute_r0(int *N, int nb_classes, int verbose_level);
 void compute_multiplication_constants_center_of_group_ring(action *A, 
 	action_by_conjugation *ABC, 
@@ -26,8 +28,10 @@ void compute_multiplication_constants_center_of_group_ring(action *A,
 void compute_Distribution_table(action *A, action_by_conjugation *ABC, 
 	schreier *Sch, int nb_classes, 
 	int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level);
-void multiply_word(action *A, int **Gens, int *Choice, int t, int *Elt1, int *Elt2, int verbose_level);
-void create_generators(action *A, int n, int **&Elt, int &nb_gens, int f_special, int verbose_level);
+void multiply_word(action *A, int **Gens,
+		int *Choice, int t, int *Elt1, int *Elt2, int verbose_level);
+void create_generators(action *A, int n,
+		int **&Elt, int &nb_gens, int f_special, int verbose_level);
 void integral_eigenvalues(int *M, int n, 
 	int *&Lambda, 
 	int &nb_lambda, 
@@ -197,7 +201,8 @@ void do_it(int n, int verbose_level)
 
 
 	if (r0 == -1) {
-		cout << "Did not find a matrix with the right number of distinct eigenvalues" << endl;
+		cout << "Did not find a matrix with the right number "
+				"of distinct eigenvalues" << endl;
 		exit(1);
 		}
 
@@ -463,8 +468,11 @@ void compute_character_table(a_domain *D, int nb_classes, int *Omega,
 		for (j = 0; j < nb_classes; j++) {
 
 			if (f_vv) {
-				cout << "i=" << i << " j=" << j << " character_degree[i]=" << character_degree[i] 
-					<< " omega_ij=" << D->as_int(D->offset(Omega, j * nb_classes + i), 0) << " class_size[j]=" << class_size[j] << endl;
+				cout << "i=" << i << " j=" << j
+					<< " character_degree[i]=" << character_degree[i]
+					<< " omega_ij="
+					<< D->as_int(D->offset(Omega, j * nb_classes + i), 0)
+					<< " class_size[j]=" << class_size[j] << endl;
 				}
 			
 			w = character_degree[i] * D->as_int(D->offset(Omega, j * nb_classes + i), 0);
@@ -482,7 +490,8 @@ void compute_character_table(a_domain *D, int nb_classes, int *Omega,
 		}
 }
 
-void compute_character_degrees(a_domain *D, int goi, int nb_classes, int *Omega, int *class_size, 
+void compute_character_degrees(a_domain *D,
+	int goi, int nb_classes, int *Omega, int *class_size,
 	int *&character_degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -559,7 +568,8 @@ void compute_character_degrees(a_domain *D, int goi, int nb_classes, int *Omega,
 		}
 }
 
-void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int *&Omega, int verbose_level)
+void compute_omega(a_domain *D, int *N0, int nb_classes,
+		int *Mu, int nb_mu, int *&Omega, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -578,7 +588,8 @@ void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int
 
 		x = Mu[h];
 		if (f_v) {
-			cout << "eigenvalue " << h << " / " << nb_mu << " is " << x << ":" << endl;
+			cout << "eigenvalue " << h << " / " << nb_mu
+					<< " is " << x << ":" << endl;
 			}
 		for (i = 0; i < nb_classes; i++) {
 			for (j = 0; j < nb_classes; j++) {
@@ -597,7 +608,8 @@ void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int
 
 		D->get_image_and_kernel(M, nb_classes, rk, verbose_level);
 		
-		//rk = double_Gauss(M, nb_classes, nb_classes, base_cols, 0 /*verbose_level */);
+		//rk = double_Gauss(M, nb_classes, nb_classes,
+		//base_cols, 0 /*verbose_level */);
 
 		if (f_vv) {
 			cout << "after get_image_and_kernel:" << endl;
@@ -624,7 +636,8 @@ void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int
 		cout << endl;
 		
 		for (i = 0; i < nb_classes; i++) {
-			D->mult_apply(D->offset(M, (nb_classes - 1) * nb_classes + i), c, 0);
+			D->mult_apply(D->offset(M,
+					(nb_classes - 1) * nb_classes + i), c, 0);
 			}
 
 		if (f_vv) {
@@ -632,7 +645,8 @@ void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int
 			D->print_matrix(M, nb_classes, nb_classes);
 			}
 		for (i = 0; i < nb_classes; i++) {
-			D->copy(D->offset(M, (nb_classes - 1) * nb_classes + i), D->offset(Omega, i * nb_classes + h), 0);
+			D->copy(D->offset(M, (nb_classes - 1) * nb_classes + i),
+					D->offset(Omega, i * nb_classes + h), 0);
 			}
 		FREE_int(b);
 		FREE_int(c);
@@ -691,10 +705,12 @@ int compute_r0(int *N, int nb_classes, int verbose_level)
 			cout << "Has " << nb_mu << " distinct eigenvalues" << endl;
 
 
-			cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
+			cout << "We found " << nb_lambda
+					<< " integer roots, they are: " << endl;
 			int_vec_print(cout, Lambda, nb_lambda);
 			cout << endl;		
-			cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
+			cout << "We found " << nb_mu
+					<< " distinct integer roots, they are: " << endl;
 			for (i = 0; i < nb_mu; i++) {
 				cout << Mu[i] << " with multiplicity " << Mu_mult[i] << endl;
 				}

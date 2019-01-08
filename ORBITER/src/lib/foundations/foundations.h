@@ -359,7 +359,7 @@ typedef enum diophant_equation_type diophant_equation_type;
 // #############################################################################
 
 
-//! a class to represent matrices over int
+//! matrices over int
 
 
 class int_matrix {

@@ -8,8 +8,6 @@
 
 #include "orbiter.h"
 
-#include "blt.h"
-
 
 // global data:
 

@@ -78,7 +78,8 @@ void do_it(int universal_set_size, int partition_size,
 	A->group_order(go);
 
 	goi = go.as_int();
-	cout << "Created group Sym(" << universal_set_size << ") of size " << goi << endl;
+	cout << "Created group Sym(" << universal_set_size
+			<< ") of order " << goi << endl;
 
 	A2 = A->induced_action_on_set_partitions(
 			universal_set_size, partition_size,
