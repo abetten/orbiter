@@ -828,3 +828,23 @@ void surface::latex_table_of_clebsch_maps(ostream &ost)
 	cout << "surface::latex_table_of_clebsch_maps done" << endl;
 }
 
+void surface::print_half_double_sixes_in_GAP()
+{
+	int i, j;
+
+	cout << "[";
+	for (i = 0; i < 72; i++) {
+		cout << "[";
+		for (j = 0; j < 6; j++) {
+			cout << Half_double_sixes[i * 6 + j] + 1;
+			if (j < 6 - 1) {
+				cout << ", ";
+			}
+		}
+		cout << "]";
+		if (i < 72 - 1) {
+			cout << "," << endl;
+		}
+	}
+	cout << "];" << endl;
+}

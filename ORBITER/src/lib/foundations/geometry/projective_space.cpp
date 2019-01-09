@@ -38,6 +38,8 @@ void projective_space::null()
 	Polarity_hyperplane_to_point = NULL;
 	v = NULL;
 	w = NULL;
+	Mtx = NULL;
+	Mtx2 = NULL;
 }
 
 void projective_space::freeself()
@@ -64,6 +66,12 @@ void projective_space::freeself()
 		}
 	if (w) {
 		FREE_int(w);
+		}
+	if (Mtx) {
+		FREE_int(Mtx);
+		}
+	if (Mtx2) {
+		FREE_int(Mtx2);
 		}
 
 	if (Grass_lines) {
@@ -134,6 +142,8 @@ void projective_space::init(int n, finite_field *F,
 
 	v = NEW_int(n + 1);
 	w = NEW_int(n + 1);
+	Mtx = NEW_int(3 * (n + 1));
+	Mtx2 = NEW_int(3 * (n + 1));
 
 	Grass_lines = NEW_OBJECT(grassmann);
 	Grass_lines->init(n + 1, 2, F, verbose_level - 2);
@@ -640,6 +650,46 @@ void projective_space::create_points_on_line(
 		}
 }
 
+int projective_space::create_point_on_line(
+	int line_rk, int pt_rk, int verbose_level)
+// pt_rk is between 0 and q-1.
+{
+	int f_v = (verbose_level >= 1);
+	int b;
+	int v[2];
+
+	if (f_v) {
+		cout << "projective_space::create_point_on_line" << endl;
+		}
+	Grass_lines->unrank_int(line_rk, 0/*verbose_level - 4*/);
+	if (f_v) {
+		cout << "projective_space::create_point_on_line line:" << endl;
+		int_matrix_print(Grass_lines->M, 2, n + 1);
+		}
+
+	F->PG_element_unrank_modified(v, 1, 2, pt_rk);
+	if (f_v) {
+		cout << "projective_space::create_point_on_line v=" << endl;
+		int_vec_print(cout, v, 2);
+		cout << endl;
+		}
+
+	F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "projective_space::create_point_on_line w=" << endl;
+		int_vec_print(cout, w, n + 1);
+		cout << endl;
+		}
+
+	F->PG_element_rank_modified(w, 1, n + 1, b);
+
+	if (f_v) {
+		cout << "projective_space::create_point_on_line b = " << b << endl;
+		}
+	return b;
+}
+
 void projective_space::make_incidence_matrix(
 	int &m, int &n,
 	int *&Inc, int verbose_level)
@@ -668,13 +718,43 @@ void projective_space::make_incidence_matrix(
 
 int projective_space::is_incident(int pt, int line)
 {
-	int a;
+	int f_v = FALSE;
+	int a, rk;
 
-	if (incidence_bitvec == 0) {
+	if (TRUE /*incidence_bitvec == NULL*/) {
+#if 0
 		cout << "projective_space::is_incident "
 				"incidence_bitvec == 0" << endl;
 		exit(1);
+#endif
+		Grass_lines->unrank_int(line, 0/*verbose_level - 4*/);
+
+		if (f_v) {
+			cout << "projective_space::is_incident "
+					"line=" << endl;
+			int_matrix_print(Grass_lines->M, 2, n + 1);
 		}
+		int_vec_copy(Grass_lines->M, Mtx, 2 * (n + 1));
+		F->PG_element_unrank_modified(Mtx + 2 * (n + 1), 1, n + 1, pt);
+		if (f_v) {
+			cout << "point:" << endl;
+			int_vec_print(cout, Mtx + 2 * (n + 1), n + 1);
+			cout << endl;
+		}
+
+		rk = F->rank_of_rectangular_matrix_memory_given(Mtx,
+				3, n + 1, Mtx2, v /* base_cols */,
+				0 /*verbose_level*/);
+		if (f_v) {
+			cout << "rk = " << rk << endl;
+		}
+		if (rk == 3) {
+			return FALSE;
+		}
+		else {
+			return TRUE;
+		}
+	}
 	a = pt * N_lines + line;
 	return bitvector_s_i(incidence_bitvec, a);
 }
