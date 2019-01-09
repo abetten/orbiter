@@ -2144,6 +2144,8 @@ public:
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
+	int *Mtx; // [3 * (n + 1)]
+	int *Mtx2; // [3 * (n + 1)]
 
 	projective_space();
 	~projective_space();
@@ -2156,6 +2158,9 @@ public:
 	void create_points_on_line(int line_rk, int *line, 
 		int verbose_level);
 		// needs line[k]
+	int create_point_on_line(
+		int line_rk, int pt_rk, int verbose_level);
+	// pt_rk is between 0 and q-1.
 	void make_incidence_matrix(int &m, int &n, 
 		int *&Inc, int verbose_level);
 	int is_incident(int pt, int line);
@@ -2796,6 +2801,7 @@ public:
 	void print_line_labelling(ostream &ost);
 	void print_set_of_lines_tex(ostream &ost, int *v, int len);
 	void latex_table_of_clebsch_maps(ostream &ost);
+	void print_half_double_sixes_in_GAP();
 
 };
 

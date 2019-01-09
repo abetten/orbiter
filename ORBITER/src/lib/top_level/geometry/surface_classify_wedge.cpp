@@ -165,35 +165,6 @@ void surface_classify_wedge::init(
 	A2 = LG->A2;
 
 
-
-#if 0
-	if (f_v) {
-		cout << "surface_classify_wedge::init "
-				"before Surf->init" << endl;
-		}
-	Surf = NEW_OBJECT(surface);
-	Surf->init(F, verbose_level - 1);
-	if (f_v) {
-		cout << "surface_classify_wedge::init "
-				"after Surf->init" << endl;
-		}
-
-
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-
-	
-	if (f_v) {
-		cout << "surface_classify_wedge::init "
-				"before Surf_A->init" << endl;
-		}
-	Surf_A->init(Surf, f_semilinear, verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::init "
-				"after Surf_A->init" << endl;
-		}
-#endif
 	
 	Elt0 = NEW_int(A->elt_size_in_int);
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -276,9 +247,13 @@ void surface_classify_wedge::downstep(int verbose_level)
 		}
 	nb_orbits = Classify_double_sixes->Double_sixes->nb_orbits;
 	Flag_orbits = NEW_OBJECT(flag_orbits);
-	Flag_orbits->init(A, A2, nb_orbits /* nb_primary_orbits_lower */, 
-		27 /* pt_representation_sz */, nb_orbits /* nb_flag_orbits */, 
-		verbose_level);
+	Flag_orbits->init(
+			A,
+			A2,
+			nb_orbits /* nb_primary_orbits_lower */,
+			27 /* pt_representation_sz */,
+			nb_orbits /* nb_flag_orbits */,
+			verbose_level);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::downstep "
@@ -299,7 +274,8 @@ void surface_classify_wedge::downstep(int verbose_level)
 
 		R = Classify_double_sixes->Double_sixes->
 				get_set_and_stabilizer(
-				i /* orbit_index */, 0 /* verbose_level */);
+				i /* orbit_index */,
+				0 /* verbose_level */);
 
 		//gen->orbit_length(i /* node */, 3 /* level */, ol);
 
@@ -855,12 +831,9 @@ void surface_classify_wedge::identify(
 	int **Identify_coeff, 
 	int **Identify_monomial, 
 	int *Identify_length, 
-	//int **&Label, 
-	//int *&nb_Labels, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int iso_type;
 	int **Elt_isomorphism;
 	int *isomorphic_to;
 	int cnt;

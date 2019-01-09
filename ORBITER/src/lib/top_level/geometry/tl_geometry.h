@@ -359,6 +359,7 @@ public:
 	int input_Lines[9];
 
 	int coeff[20];
+	int lines27[27];
 
 	arc_lifting_with_two_lines();
 	~arc_lifting_with_two_lines();
@@ -366,7 +367,8 @@ public:
 	void freeself();
 	void create_surface(
 		surface_with_action *Surf_A,
-		int *Arc6, int line1, int line2, int verbose_level);
+		int *Arc6, int line1, int line2,
+		int verbose_level);
 };
 
 

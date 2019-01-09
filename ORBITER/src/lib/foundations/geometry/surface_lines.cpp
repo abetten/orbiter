@@ -606,7 +606,7 @@ int surface::create_double_six_from_five_lines_with_a_common_transversal(
 	if (f_v) {
 		cout << "surface::create_double_six_from_five_lines_with_"
 				"a_common_transversal" << endl;
-		cout << "The five lines as points are ";
+		cout << "The five lines as orthogonal points are ";
 		int_vec_print(cout, o_rank, 5);
 		cout << endl;
 		}
@@ -648,6 +648,11 @@ int surface::create_double_six_from_five_lines_with_a_common_transversal(
 			cout << endl;
 			}
 		if (Perp_sz[rk] != 2) {
+			cout << "surface::create_double_six_from_five_lines_with_"
+					"a_common_transversal Perp_opp_sz != 2, "
+					"something is wrong" << endl;
+			cout << "subset " << rk << " / " << nb_subsets << endl;
+			exit(1);
 			ret = FALSE;
 			nb_subsets = rk + 1;
 			goto finish;
@@ -686,6 +691,13 @@ int surface::create_double_six_from_five_lines_with_a_common_transversal(
 				}
 			}
 		}
+	if (f_v) {
+		cout << "surface::create_double_six_from_five_lines_with_"
+				"a_common_transversal" << endl;
+		cout << "opposites ";
+		int_vec_print(cout, opposites, 5);
+		cout << endl;
+		}
 
 	o_rank[11] = transversal;
 	for (i = 0; i < 5; i++) {
@@ -708,6 +720,10 @@ int surface::create_double_six_from_five_lines_with_a_common_transversal(
 		}
 	if (Perp_opp_sz != 2) {
 		ret = FALSE;
+		cout << "surface::create_double_six_from_five_lines_with_"
+				"a_common_transversal Perp_opp_sz != 2, "
+				"something is wrong" << endl;
+		exit(1);
 		FREE_int(Perp_opp);
 		goto finish;
 		}
@@ -728,10 +744,25 @@ int surface::create_double_six_from_five_lines_with_a_common_transversal(
 
 	o_rank[5] = transversal_opp;
 
+	if (f_v) {
+		cout << "surface::create_double_six_from_five_lines_with_"
+				"a_common_transversal" << endl;
+		cout << "o_rank ";
+		int_vec_print(cout, o_rank, 12);
+		cout << endl;
+		}
 
 	for (i = 0; i < 12; i++) {
 		double_six[i] = Klein->Point_on_quadric_to_line[o_rank[i]];
 		}
+	if (f_v) {
+		cout << "surface::create_double_six_from_five_lines_with_"
+				"a_common_transversal" << endl;
+		cout << "double_six ";
+		int_vec_print(cout, double_six, 12);
+		cout << endl;
+		}
+
 
 
 	if (f_v) {

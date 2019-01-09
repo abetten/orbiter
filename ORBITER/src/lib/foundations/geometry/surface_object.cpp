@@ -1591,6 +1591,49 @@ void surface_object::print_points(ostream &ost)
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
+		ost << "The double points on the surface are:\\\\" << endl;
+		//ost << "\\begin{multicols}{2}" << endl;
+
+		int *pt_idx;
+
+		pt_idx = NEW_int(27 * 27);
+		for (i = 0; i < 27 * 27; i++) {
+			pt_idx[i] = -1;
+		}
+		for (p = 0; p < nb_pts; p++) {
+			if (lines_on_point->Set_size[p] != 2) {
+				continue;
+				}
+			a = lines_on_point->Sets[p][0];
+			b = lines_on_point->Sets[p][1];
+			if (a > b) {
+				a = lines_on_point->Sets[p][1];
+				b = lines_on_point->Sets[p][0];
+			}
+			pt_idx[a * 27 + b] = p;
+		}
+		ost << "\\begin{align*}" << endl;
+		for (a = 0; a < 27; a++) {
+			for (b = a + 1; b < 27; b++) {
+				p = pt_idx[a * 27 + b];
+				if (p == -1) {
+					continue;
+				}
+				Surf->unrank_point(v, Pts[p]);
+				ost << "P_{" << p
+						<< "} = P_{" << Pts[p] << "}=";
+				int_vec_print_fully(ost, v, 4);
+				ost << " = ";
+				ost << "\\ell_{" << a << "} \\cap ";
+				ost << "\\ell_{" << b << "} ";
+				ost << " = ";
+				ost << Surf->Line_label_tex[a] << " \\cap ";
+				ost << Surf->Line_label_tex[b] << "\\\\";
+			}
+		}
+		ost << "\\end{align*}" << endl;
+
+		FREE_int(pt_idx);
 	}
 	else {
 		ost << "Too many to print.\\\\" << endl;
