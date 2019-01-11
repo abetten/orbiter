@@ -5013,3 +5013,72 @@ void surface::tritangent_plane_to_trihedral_pair_and_position(
 		}
 }
 
+void surface::do_arc_lifting_with_two_lines(
+	int *Arc6, int p1_idx, int p2_idx, int partition_rk,
+	int line1, int line2,
+	int *coeff20, int *lines27,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int arc[6];
+	int P1, P2;
+
+
+	if (f_v) {
+		cout << "surface::do_arc_lifting_with_two_lines" << endl;
+		cout << "Arc6: ";
+		int_vec_print(cout, Arc6, 6);
+		cout << endl;
+		cout << "p1_idx=" << p1_idx << " p2_idx=" << p2_idx
+				<< " partition_rk=" << partition_rk
+				<< " line1=" << line1 << " line2=" << line2 << endl;
+	}
+
+	P1 = Arc6[p1_idx];
+	P2 = Arc6[p2_idx];
+
+	if (f_v) {
+		cout << "surface::do_arc_lifting_with_two_lines before "
+				"P->rearrange_arc_for_lifting" << endl;
+		}
+	P->rearrange_arc_for_lifting(Arc6,
+				P1, P2, partition_rk, arc,
+				verbose_level);
+
+	if (f_v) {
+		cout << "surface::do_arc_lifting_with_two_lines after "
+				"P->rearrange_arc_for_lifting" << endl;
+		cout << "arc: ";
+		int_vec_print(cout, arc, 6);
+		cout << endl;
+		}
+
+	arc_lifting_with_two_lines *AL;
+
+	AL = NEW_OBJECT(arc_lifting_with_two_lines);
+
+
+	if (f_v) {
+		cout << "surface::do_arc_lifting_with_two_lines before "
+				"AL->create_surface" << endl;
+		}
+	AL->create_surface(this, arc, line1, line2, verbose_level);
+	if (f_v) {
+		cout << "surface::do_arc_lifting_with_two_lines after "
+				"AL->create_surface" << endl;
+		cout << "equation: ";
+		int_vec_print(cout, AL->coeff, 20);
+		cout << endl;
+		cout << "lines: ";
+		int_vec_print(cout, AL->lines27, 27);
+		cout << endl;
+		}
+
+	int_vec_copy(AL->coeff, coeff20, 20);
+	int_vec_copy(AL->lines27, lines27, 27);
+
+
+	if (f_v) {
+		cout << "surface::do_arc_lifting_with_two_lines done" << endl;
+	}
+}

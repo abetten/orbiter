@@ -406,7 +406,7 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 before "
 					"AL->create_surface" << endl;
 			}
-		AL->create_surface(Surf_A, arc, line1, line2, verbose_level);
+		AL->create_surface(Surf, arc, line1, line2, verbose_level);
 		if (f_v) {
 			cout << "surface_create::init2 after "
 					"AL->create_surface" << endl;

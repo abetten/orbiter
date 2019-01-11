@@ -8,7 +8,8 @@ LFLAGS = -lm
 
 all:  arc_lifting_main.out \
 	create_surface_main.out \
-	surface_classify.out
+	surface_classify.out \
+	surfaces_arc_lifting_main.out 
 
 
 arc_lifting_main.out:  arc_lifting_main.o  ;
@@ -19,6 +20,9 @@ create_surface_main.out:  create_surface_main.o   ;
 
 surface_classify.out:  surface_classify.o ;
 	$(DISCRETA_CPP)  surface_classify.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+surfaces_arc_lifting_main.out:  surfaces_arc_lifting_main.o ;
+	$(DISCRETA_CPP)  surfaces_arc_lifting_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 clean:

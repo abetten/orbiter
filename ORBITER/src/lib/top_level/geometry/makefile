@@ -11,8 +11,9 @@ MODULES = \
 	blt_set.o \
 	arc_generator.o \
 	arc_lifting_simeon.o \
-	arc_lifting_with_two_lines.o \
 	arc_lifting.o \
+	arc_orbits_on_pairs.o \
+	arc_partition.o \
 	choose_points_or_lines.o \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
@@ -36,6 +37,7 @@ MODULES = \
 	surface_create_description.o \
 	surface_object_with_action.o \
 	surface_with_action.o \
+	surfaces_arc_lifting.o \
 	translation_plane_via_andre_model.o
 
 

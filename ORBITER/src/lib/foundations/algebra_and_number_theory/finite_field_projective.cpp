@@ -10,7 +10,6 @@
 
 #include "foundations.h"
 
-
 void finite_field::PG_element_normalize(
 		int *v, int stride, int len)
 // last non-zero element made one
@@ -53,8 +52,33 @@ void finite_field::PG_element_normalize_from_front(
 			return;
 			}
 		}
-	cout << "finite_field::PG_element_normalize zero vector" << endl;
+	cout << "finite_field::PG_element_normalize_from_front "
+			"zero vector" << endl;
 	exit(1);
+}
+
+void finite_field::PG_elements_embed(
+		int *set_in, int *set_out, int sz,
+		int old_length, int new_length, int *v)
+{
+	int i;
+
+	for (i = 0; i < sz; i++) {
+		set_out[i] = PG_element_embed(
+				set_in[i], old_length, new_length, v);
+	}
+}
+
+int finite_field::PG_element_embed(
+		int rk, int old_length, int new_length, int *v)
+{
+	int a;
+	PG_element_unrank_modified(
+			v, 1, old_length, rk);
+	int_vec_zero(v + old_length, new_length - old_length);
+	PG_element_rank_modified(
+			v, 1, new_length, a);
+	return a;
 }
 
 void finite_field::PG_element_rank_modified(

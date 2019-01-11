@@ -1254,6 +1254,7 @@ public:
 	void print_generators_tex();
 	void print_generators_tex(ostream &ost);
 	void print_generators_as_permutations();
+	void print_generators_as_permutations_tex(ostream &ost, action *A2);
 	void print_with_given_action(ostream &ost, action *A2);
 	void print_elements_ost(ostream &ost);
 	void print_elements_latex_ost(ostream &ost);
@@ -1388,6 +1389,10 @@ public:
 		int nb_pairs, int &degree, int verbose_level);
 	void normalizer_of_a_Hall_reflection(
 		int nb_pairs, int &degree, int verbose_level);
+	void lifted_group_on_hyperplane_W0_fixing_two_lines(
+		strong_generators *SG_hyperplane,
+		projective_space *P, int line1, int line2,
+		int verbose_level);
 
 
 };

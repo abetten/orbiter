@@ -349,6 +349,9 @@ void action_print_symmetry_group_type(ostream &ost,
 	else if (a == action_on_sets_t) {
 		ost << "action_on_sets_t";
 		}
+	else if (a == action_on_set_partitions_t) {
+		ost << "action_on_set_partitions_t";
+		}
 	else if (a == action_on_subgroups_t) {
 		ost << "action_on_subgroups_t";
 		}

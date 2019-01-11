@@ -8,7 +8,7 @@
 //
 //
 
-#include "orbiter.h"
+#include "foundations.h"
 
 arc_lifting_with_two_lines::arc_lifting_with_two_lines()
 {
@@ -25,7 +25,6 @@ void arc_lifting_with_two_lines::null()
 	q = 0;
 	F = NULL;
 	Surf = NULL;
-	Surf_A = NULL;
 	Arc6 = NULL;
 	Arc_coords = NULL;
 
@@ -40,7 +39,7 @@ void arc_lifting_with_two_lines::freeself()
 }
 
 void arc_lifting_with_two_lines::create_surface(
-	surface_with_action *Surf_A,
+	surface *Surf,
 	int *Arc6, int line1, int line2,
 	int verbose_level)
 // line1 = b1
@@ -51,7 +50,6 @@ void arc_lifting_with_two_lines::create_surface(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int q;
-	surface *Surf;
 	int base_cols[4];
 	int Basis[16];
 	int Transversals[4 * 8];
@@ -67,11 +65,10 @@ void arc_lifting_with_two_lines::create_surface(
 
 	arc_size = 6;
 	arc_lifting_with_two_lines::Arc6 = Arc6;
-	arc_lifting_with_two_lines::Surf_A = Surf_A;
+	arc_lifting_with_two_lines::Surf = Surf;
 	arc_lifting_with_two_lines::line1 = line1;
 	arc_lifting_with_two_lines::line2 = line2;
 
-	Surf = Surf_A->Surf;
 	F = Surf->F;
 	q = F->q;
 
@@ -162,10 +159,6 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"transversal_01=" << transversal_01 << endl;
 	}
-
-	// ToDo:
-	// We should use a partition of 2345 into two classes of size two
-	// in order to determine the two lines:
 
 	transversal_23 = Surf->P->line_through_two_points(P[2], P[3]);
 	// the line c_23
@@ -268,7 +261,8 @@ void arc_lifting_with_two_lines::create_surface(
 		pt1 = Surf->P->create_point_on_line(
 				line1, i1 /*pt_rk*/, 0 /* verbose_level*/);
 		if (!Surf->P->is_incident(pt1, transversal_01)) {
-			cout << "found point pt1 which is not on transversal_01, i1=" << i1 << endl;
+			cout << "found point pt1 which is not on "
+					"transversal_01, i1=" << i1 << endl;
 			break;
 		}
 	}
@@ -311,7 +305,7 @@ void arc_lifting_with_two_lines::create_surface(
 			cout << "pt3 == P[1], skipping" << endl;
 			continue;
 		}
-#if 0
+#if 1
 		if (pt3 == pt1) {
 			cout << "pt3 == pt1, skipping" << endl;
 			continue;
@@ -322,9 +316,9 @@ void arc_lifting_with_two_lines::create_surface(
 		}
 	}
 	if (j1 == q + 1) {
-		cout << "arc_lifting_with_two_lines::create_surface could "
-				"not find third point on line3" << endl;
-		exit(1);
+		cout << "arc_lifting_with_two_lines::create_surface "
+				"j1 == q + 1, picking pt1" << endl;
+		pt3 = pt1;
 	}
 
 	for (j2 = 0; j2 <= q; j2++) {
@@ -333,7 +327,7 @@ void arc_lifting_with_two_lines::create_surface(
 		if (pt4 == P[1]) {
 			continue;
 		}
-#if 0
+#if 1
 		if (pt4 == pt2) {
 			continue;
 		}
@@ -345,9 +339,9 @@ void arc_lifting_with_two_lines::create_surface(
 		}
 	}
 	if (j2 == q + 1) {
-		cout << "arc_lifting_with_two_lines::create_surface could "
-				"not find third point on line4" << endl;
-		exit(1);
+		cout << "arc_lifting_with_two_lines::create_surface "
+				"j2 == q + 1, picking pt2" << endl;
+		pt4 = pt2;
 	}
 
 	if (f_vv) {
@@ -356,13 +350,17 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 
 	int a2;
+	int basis_a2[8];
 
 	a2 = Surf->P->line_through_two_points(pt3, pt4);
+	Surf->unrank_line(basis_a2, a2);
 
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"a2=" << a2 << endl;
+		cout << "basis_a2:" << endl;
+		int_matrix_print(basis_a2, 2, 4);
 	}
 
 
@@ -446,7 +444,7 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 	int_vec_copy(double_six, lines27, 12);
 	Surf->create_the_fifteen_other_lines(double_six,
-			double_six + 12, verbose_level);
+			lines27 + 12, verbose_level);
 
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "

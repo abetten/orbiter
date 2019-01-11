@@ -69,6 +69,8 @@ public:
 	void freeself();
 	void init(action *A, action *A2, int nb_primary_orbits_lower,
 			int pt_representation_sz, int nb_flag_orbits, int verbose_level);
+	int find_node_by_po_so(int po, int so, int &idx,
+		int verbose_level);
 	void write_file(ofstream &fp, int verbose_level);
 	void read_file(ifstream &fp, int verbose_level);
 

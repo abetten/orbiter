@@ -1193,6 +1193,23 @@ void strong_generators::print_generators_as_permutations()
 		}
 }
 
+void strong_generators::print_generators_as_permutations_tex(ostream &ost, action *A2)
+{
+	int i;
+	longinteger_object go;
+
+	group_order(go);
+	ost << "Strong generators for a group of order " << go << ":" << endl;
+	ost << "\\\\" << endl;
+	for (i = 0; i < gens->len; i++) {
+		ost << "Generator " << i << " / "
+				<< gens->len << " is: $" << endl;
+		//A->element_print(gens->ith(i), cout);
+		A2->element_print_as_permutation(gens->ith(i), ost);
+		ost << "$\\\\" << endl;
+		}
+}
+
 void strong_generators::print_with_given_action(
 		ostream &ost, action *A2)
 {

@@ -2980,5 +2980,113 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 		}
 }
 
+void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
+	strong_generators *SG_hyperplane,
+	projective_space *P, int line1, int line2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	vector_ge *gens;
+	int A4[16];
+
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines" << endl;
+		}
+
+
+
+	gens = NEW_OBJECT(vector_ge);
+	gens->init(A);
+
+	int i;
+
+	gens->allocate(SG_hyperplane->gens->len);
+	for (i = 0; i < SG_hyperplane->gens->len; i++) {
+		if (f_v) {
+			cout << "strong_generators::lifted_group_on_"
+					"hyperplane_W0_fixing_two_lines lifting generator "
+					<< i << " / " << SG_hyperplane->gens->len << endl;
+			}
+
+		if (f_v) {
+			cout << "strong_generators::lifted_group_on_"
+					"hyperplane_W0_fixing_two_lines lifting generator "
+					<< i << " / " << SG_hyperplane->gens->len
+					<< " before P->lifted_action_on_hyperplane_"
+							"W0_fixing_two_lines" << endl;
+			}
+		P->lifted_action_on_hyperplane_W0_fixing_two_lines(
+				SG_hyperplane->gens->ith(i), line1, line2,
+				A4,
+				verbose_level);
+		if (f_v) {
+			cout << "strong_generators::lifted_group_on_"
+					"hyperplane_W0_fixing_two_lines lifting generator "
+					<< i << " / " << SG_hyperplane->gens->len
+					<< " after P->lifted_action_on_hyperplane_"
+							"W0_fixing_two_lines" << endl;
+			}
+		A->make_element(gens->ith(i), A4, 0);
+		if (f_v) {
+			cout << "strong_generators::lifted_group_on_"
+					"hyperplane_W0_fixing_two_lines generator "
+					<< i << " / " << SG_hyperplane->gens->len
+					<< " lifts to " << endl;
+			A->element_print_quick(gens->ith(i), cout);
+			}
+		}
+
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines generators are:" << endl;
+		gens->print_quick(cout);
+		}
+
+
+
+	longinteger_object target_go;
+
+
+	SG_hyperplane->group_order(target_go);
+
+
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines "
+				"target_go=" << target_go << endl;
+		}
+
+
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines "
+				"before generators_to_strong_generators" << endl;
+		}
+
+	strong_generators *SG;
+
+	generators_to_strong_generators(A,
+		TRUE /* f_target_go */, target_go,
+		gens, SG, verbose_level - 3);
+
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines after generators_to_"
+				"strong_generators" << endl;
+		}
+
+	init_copy(SG, 0);
+
+
+	FREE_OBJECT(SG);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines done" << endl;
+		}
+}
+
 
 

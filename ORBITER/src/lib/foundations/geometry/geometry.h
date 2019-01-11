@@ -117,6 +117,58 @@ public:
 };
 
 // #############################################################################
+// arc_lifting_with_two_lines.C:
+// #############################################################################
+
+//! creates a cubic surface from a 6-arc in a plane
+
+
+class arc_lifting_with_two_lines {
+
+public:
+
+	int q;
+	finite_field *F; // do not free
+
+	surface *Surf; // do not free
+
+	//surface_with_action *Surf_A;
+
+	int *Arc6;
+	int arc_size; // = 6
+
+	int line1, line2;
+
+	int plane_rk;
+
+	int *Arc_coords; // [6 * 4]
+
+	int P[6];
+
+	int transversal_01;
+	int transversal_23;
+	int transversal_45;
+
+	int transversal[4];
+
+	int input_Lines[9];
+
+	int coeff[20];
+	int lines27[27];
+
+	arc_lifting_with_two_lines();
+	~arc_lifting_with_two_lines();
+	void null();
+	void freeself();
+	void create_surface(
+		surface *Surf,
+		int *Arc6, int line1, int line2,
+		int verbose_level);
+};
+
+
+
+// #############################################################################
 // buekenhout_metz.C:
 // #############################################################################
 
@@ -2392,6 +2444,16 @@ public:
 		int target_sz, int target_d,
 		diophant *&D,
 		int verbose_level);
+	void rearrange_arc_for_lifting(int *Arc6,
+			int P1, int P2, int partition_rk, int *arc,
+			int verbose_level);
+	void find_two_lines_for_arc_lifting(
+			int P1, int P2, int &line1, int &line2,
+			int verbose_level);
+	void lifted_action_on_hyperplane_W0_fixing_two_lines(
+			int *A3, int line1, int line2,
+			int *A4,
+			int verbose_level);
 };
 
 
@@ -2689,8 +2751,11 @@ public:
 	void tritangent_plane_to_trihedral_pair_and_position(
 		int tritangent_plane_idx, 
 		int &trihedral_pair_idx, int &position, int verbose_level);
-	int identify_two_lines(int *lines, int verbose_level);
-	int identify_three_lines(int *lines, int verbose_level);
+	void do_arc_lifting_with_two_lines(
+		int *Arc6, int p1_idx, int p2_idx, int partition_rk,
+		int line1, int line2,
+		int *coeff20, int *lines27,
+		int verbose_level);
 
 	// surface_lines.cpp:
 	void init_line_data(int verbose_level);
@@ -2762,6 +2827,8 @@ public:
 		int *New_lines, int *double_six, int verbose_level);
 	void create_lines_from_plane_equations(int *The_plane_equations,
 		int *Lines, int verbose_level);
+	int identify_two_lines(int *lines, int verbose_level);
+	int identify_three_lines(int *lines, int verbose_level);
 	void create_remaining_fifteen_lines(
 		int *double_six, int *fifteen_lines,
 		int verbose_level);
