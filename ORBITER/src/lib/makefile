@@ -72,6 +72,7 @@ MODULES= \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \
+		foundations/geometry/arc_lifting_with_two_lines.o \
 		foundations/geometry/buekenhout_metz.o \
 		foundations/geometry/data.o \
 		foundations/geometry/decomposition.o \
@@ -261,8 +262,9 @@ MODULES= \
 		top_level/geometry/blt_set.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
-		top_level/geometry/arc_lifting_with_two_lines.o \
 		top_level/geometry/arc_lifting.o \
+		top_level/geometry/arc_orbits_on_pairs.o \
+		top_level/geometry/arc_partition.o \
 		top_level/geometry/choose_points_or_lines.o \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
@@ -286,6 +288,7 @@ MODULES= \
 		top_level/geometry/surface_create_description.o \
 		top_level/geometry/surface_object_with_action.o \
 		top_level/geometry/surface_with_action.o \
+		top_level/geometry/surfaces_arc_lifting.o \
 		top_level/geometry/translation_plane_via_andre_model.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \

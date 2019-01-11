@@ -294,6 +294,10 @@ public:
 	void characteristic_vector(int *A, int m, int *set, int size);
 	int is_zero_vector(int *A, int m);
 	void add_vector(int *A, int *B, int *C, int m);
+	void linear_combination_of_vectors(
+			int a, int *A, int b, int *B, int *C, int len);
+	void linear_combination_of_three_vectors(
+			int a, int *A, int b, int *B, int c, int *C, int *D, int len);
 	void negate_vector(int *A, int *B, int m);
 	void negate_vector_in_place(int *A, int m);
 	void scalar_multiply_vector_in_place(int c, int *A, int m);
@@ -302,6 +306,8 @@ public:
 	void transpose_matrix(int *A, int *At, int ma, int na);
 	void transpose_matrix_in_place(int *A, int m);
 	void invert_matrix(int *A, int *A_inv, int n);
+	void invert_matrix_memory_given(int *A, int *A_inv, int n,
+			int *tmp_A, int *tmp_basecols);
 	void transform_form_matrix(int *A, int *Gram, 
 		int *new_Gram, int d);
 		// computes new_Gram = A * Gram * A^\top
@@ -322,9 +328,8 @@ public:
 		// v1 is not changed if v1[idx] is nonzero
 	void Gauss_step_make_pivot_one(int *v1, int *v2, 
 		int len, int idx, int verbose_level);
-		// afterwards: v2[idx] = 0 
-		// and v1,v2 span the same space as before
-		// v1[idx] is zero
+		// afterwards:  v1,v2 span the same space as before
+		// v2[idx] = 0, v1[idx] = 1,
 	int base_cols_and_embedding(int m, int n, int *A, 
 		int *base_cols, int *embedding, int verbose_level);
 		// returns the rank rk of the matrix.
@@ -619,6 +624,11 @@ public:
 	int nb_calls_to_PG_element_rank_modified;
 	int nb_calls_to_PG_element_unrank_modified;
 
+	void PG_elements_embed(
+			int *set_in, int *set_out, int sz,
+			int old_length, int new_length, int *v);
+	int PG_element_embed(
+			int rk, int old_length, int new_length, int *v);
 	void PG_element_rank_modified(
 			int *v, int stride, int len, int &a);
 	void PG_element_unrank_fining(

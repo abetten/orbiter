@@ -137,6 +137,17 @@ void action::freeself()
 				}
 			G.on_sets = NULL;
 			}
+		else if (type_G == action_on_set_partitions_t) {
+			if (f_vv) {
+				cout << "action::freeself freeing G.OnSetPartitions" << endl;
+				cout << "G.OnSetPartitions=" << G.OnSetPartitions << endl;
+				}
+			FREE_OBJECT(G.OnSetPartitions);
+			if (f_vv) {
+				cout << "action::freeself freeing G.OnSetPartitions finished" << endl;
+				}
+			G.OnSetPartitions = NULL;
+			}
 		else if (type_G == action_on_k_subsets_t) {
 			if (f_vv) {
 				cout << "action::freeself freeing G.on_sets" << endl;

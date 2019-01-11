@@ -854,6 +854,26 @@ void finite_field::add_vector(int *A, int *B, int *C, int m)
 		}
 }
 
+void finite_field::linear_combination_of_vectors(
+		int a, int *A, int b, int *B, int *C, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		C[i] = add(mult(a, A[i]), mult(b, B[i]));
+		}
+}
+
+void finite_field::linear_combination_of_three_vectors(
+		int a, int *A, int b, int *B, int c, int *C, int *D, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		D[i] = add3(mult(a, A[i]), mult(b, B[i]), mult(c, C[i]));
+		}
+}
+
 void finite_field::negate_vector(int *A, int *B, int m)
 {
 	int i;
@@ -959,6 +979,43 @@ void finite_field::invert_matrix(int *A, int *A_inv, int n)
 		}
 	FREE_int(A_tmp);
 	FREE_int(base_cols);
+}
+
+void finite_field::invert_matrix_memory_given(int *A, int *A_inv, int n,
+		int *tmp_A, int *tmp_basecols)
+{
+	int i, j, a, rk;
+	int *A_tmp;
+	int *base_cols;
+
+	A_tmp = tmp_A;
+	base_cols = tmp_basecols;
+
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			if (i == j) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			A_inv[i * n + j] = a;
+			}
+		}
+	int_vec_copy(A, A_tmp, n * n);
+
+	rk = Gauss_int(A_tmp,
+			FALSE /* f_special */,
+			TRUE /*f_complete */, base_cols,
+		TRUE /* f_P */, A_inv, n, n, n, 0 /* verbose_level */);
+	if (rk < n) {
+		cout << "finite_field::invert_matrix "
+				"matrix is not invertible, the rank is " << rk << endl;
+		exit(1);
+		}
+	//FREE_int(A_tmp);
+	//FREE_int(base_cols);
 }
 
 void finite_field::transform_form_matrix(int *A,
@@ -1160,8 +1217,8 @@ after:
 
 void finite_field::Gauss_step_make_pivot_one(int *v1, int *v2, 
 	int len, int idx, int verbose_level)
-// afterwards: v2[idx] = 0 and v1,v2 span the same space as before
-// v1[idx] is zero
+// afterwards:  v1,v2 span the same space as before
+// v2[idx] = 0, v1[idx] = 1,
 {
 	int i, a, av;
 	int f_v = (verbose_level >= 1);

@@ -67,6 +67,84 @@ void flag_orbits::init(action *A, action *A2,
 		}
 }
 
+int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "flag_orbits::find_node_by_po_so" << endl;
+		}
+	int l, r, m, res;
+	int f_found = FALSE;
+	int len;
+
+	len = nb_flag_orbits;
+	if (f_v) {
+		cout << "flag_orbits::find_node_by_po_so len=" << len << endl;
+		}
+	if (len == 0) {
+		idx = 0;
+		return FALSE;
+		}
+	l = 0;
+	r = len;
+	// invariant:
+	// v[i] <= a for i < l;
+	// v[i] >  a for i >= r;
+	// r - l is the length of the area to search in.
+	while (l < r) {
+		if (f_v) {
+			cout << "flag_orbits::find_node_by_po_so "
+					"l=" << l << " r=" << r << endl;
+			}
+		m = (l + r) >> 1;
+		// if the length of the search area is even
+		// we examine the element above the middle
+
+		if (Flag_orbit_node[m].downstep_primary_orbit < po) {
+			res = -1;
+		}
+		else if (Flag_orbit_node[m].downstep_primary_orbit > po) {
+			res = 1;
+		}
+		else {
+			if (Flag_orbit_node[m].downstep_secondary_orbit < so) {
+				res = -1;
+			}
+			else if (Flag_orbit_node[m].downstep_secondary_orbit > so) {
+				res = 1;
+			}
+			else {
+				res = 0;
+			}
+		}
+		//res = (*compare_func)(a, v[m], data_for_compare);
+		if (f_v) {
+			cout << "m=" << m << " res=" << res << endl;
+			}
+		//res = v[m] - a;
+		//cout << "search l=" << l << " m=" << m << " r="
+		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
+		if (res <= 0) {
+			l = m + 1;
+			if (res == 0) {
+				f_found = TRUE;
+				}
+			}
+		else {
+			r = m;
+			}
+		}
+	// now: l == r;
+	// and f_found is set accordingly */
+	if (f_found) {
+		l--;
+		}
+	idx = l;
+	return f_found;
+}
+
 void flag_orbits::write_file(ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

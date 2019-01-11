@@ -322,54 +322,86 @@ public:
 };
 
 // #############################################################################
-// arc_lifting_with_two_lines.C:
+// arc_orbits_on_pairs.cpp
 // #############################################################################
 
-//! creates a cubic surface from a 6-arc in a plane
+//! orbits on pairs of points of a nonconical six-arc
 
 
-class arc_lifting_with_two_lines {
-
+class arc_orbits_on_pairs {
 public:
 
-	int q;
-	finite_field *F; // do not free
+	surfaces_arc_lifting *SAL;
 
-	surface *Surf; // do not free
+	action *A;
 
-	surface_with_action *Surf_A;
+	set_and_stabilizer *The_arc;
+	action *A_on_arc;
 
-	int *Arc6;
-	int arc_size; // = 6
+	int arc_idx;
+	poset *Poset;
+	poset_classification *Orbits_on_pairs;
 
-	int line1, line2;
+	int nb_orbits_on_pairs;
 
-	int plane_rk;
+	arc_partition *Table_orbits_on_partition;
 
-	int *Arc_coords; // [6 * 4]
+	int total_nb_orbits_on_partitions;
 
-	int P[6];
 
-	int transversal_01;
-	int transversal_23;
-	int transversal_45;
-
-	int transversal[4];
-
-	int input_Lines[9];
-
-	int coeff[20];
-	int lines27[27];
-
-	arc_lifting_with_two_lines();
-	~arc_lifting_with_two_lines();
+	arc_orbits_on_pairs();
+	~arc_orbits_on_pairs();
 	void null();
 	void freeself();
-	void create_surface(
-		surface_with_action *Surf_A,
-		int *Arc6, int line1, int line2,
+	void init(
+		surfaces_arc_lifting *SAL, int arc_idx,
+		action *A,
+		int argc, const char **argv,
 		int verbose_level);
+
 };
+
+
+// #############################################################################
+// arc_partition.cpp
+// #############################################################################
+
+//! orbits on the partitions of the remaining four point of a nonconical arc
+
+
+class arc_partition {
+public:
+
+	arc_orbits_on_pairs *OP;
+
+	action *A;
+	action *A_on_arc;
+
+	int pair_orbit_idx;
+	set_and_stabilizer *The_pair;
+
+	int arc_remainder[4];
+
+	action *A_on_rest;
+	action *A_on_partition;
+
+	schreier *Orbits_on_partition;
+
+	int nb_orbits_on_partition;
+
+
+	arc_partition();
+	~arc_partition();
+	void null();
+	void freeself();
+	void init(
+		arc_orbits_on_pairs *OP, int pair_orbit_idx,
+		action *A, action *A_on_arc,
+		int argc, const char **argv,
+		int verbose_level);
+
+};
+
 
 
 
@@ -2001,6 +2033,54 @@ public:
 		int *f_deleted, 
 		int verbose_level);
 
+};
+
+// #############################################################################
+// surfaces_arc_lifting.cpp
+// #############################################################################
+
+//! to classify cubic surfaces using lifted arcs
+
+
+class surfaces_arc_lifting {
+public:
+	finite_field *F;
+	int q;
+	linear_group *LG4; // PGL(4,q)
+	linear_group *LG3; // PGL(3,q)
+
+	int f_semilinear;
+
+	char fname_base[1000];
+
+	action *A4; // the action of PGL(4,q) on points
+	action *A3; // the action of PGL(3,q) on points
+
+	surface *Surf;
+	surface_with_action *Surf_A;
+
+	six_arcs_not_on_a_conic *Six_arcs;
+
+	arc_orbits_on_pairs *Table_orbits_on_pairs;
+
+	int nb_flag_orbits;
+
+	// classification of surfaces:
+	flag_orbits *Flag_orbits;
+
+	classification *Surfaces;
+
+	surfaces_arc_lifting();
+	~surfaces_arc_lifting();
+	void null();
+	void freeself();
+	void init(
+		finite_field *F, linear_group *LG4, linear_group *LG3,
+		int f_semilinear, surface_with_action *Surf_A,
+		int argc, const char **argv,
+		int verbose_level);
+	void downstep(int verbose_level);
+	void report(int verbose_level);
 };
 
 // #############################################################################

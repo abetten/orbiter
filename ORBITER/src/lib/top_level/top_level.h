@@ -79,7 +79,12 @@ typedef class arc_lifting_simeon arc_lifting_simeon;
 	// added Jan 6, 2019
 typedef class blt_set blt_set;
 	// started 8/13/2006, added Jan 6, 2019
-
+typedef class surfaces_arc_lifting surfaces_arc_lifting;
+	// started 1/9/2019
+typedef class arc_orbits_on_pairs arc_orbits_on_pairs;
+	// started 1/9/2019
+typedef class arc_partition arc_partition;
+	// started 1/9/2019
 
 // #############################################################################
 // representatives.C

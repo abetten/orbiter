@@ -9,6 +9,7 @@ MODULES = \
 	andre_construction.o \
 	andre_construction_line_element.o \
 	andre_construction_point_element.o \
+	arc_lifting_with_two_lines.o \
 	buekenhout_metz.o \
 	data.o \
 	decomposition.o \
