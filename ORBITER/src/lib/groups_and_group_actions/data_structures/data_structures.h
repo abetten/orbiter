@@ -101,63 +101,6 @@ public:
 		const char *fname, int verbose_level);
 };
 
-// #############################################################################
-// page_storage.C:
-// #############################################################################
-
-//! a data structure to store group elements in compressed form
-
-
-
-class page_storage {
-
-public:
-	int overall_length;
-	
-	int entry_size; // in char
-	int page_length_log; // number of bits
-	int page_length; // entries per page
-	int page_size; // size in char of one page
-	int allocation_table_length;
-		// size in char of one allocation table
-	
-	int page_ptr_used;
-	int page_ptr_allocated;
-	int page_ptr_oversize;
-	
-	uchar **pages;
-	uchar **allocation_tables;
-	
-	int next_free_entry;
-	int nb_free_entries;
-	
-	int f_elt_print_function;
-	void (* elt_print)(void *p, void *data, ostream &ost);
-	void *elt_print_data;
-
-
-	void init(int entry_size, int page_length_log, 
-		int verbose_level);
-	void add_elt_print_function(
-		void (* elt_print)(void *p, void *data, ostream &ost), 
-		void *elt_print_data);
-	void print();
-	uchar *s_i_and_allocate(int i);
-	uchar *s_i_and_deallocate(int i);
-	uchar *s_i(int i);
-	uchar *s_i_and_allocation_bit(int i, int &f_allocated);
-	void check_allocation_table();
-	int store(uchar *elt);
-	void dispose(int hdl);
-	void check_free_list();
-	page_storage();
-	~page_storage();
-	void print_storage_used();
-	
-};
-
-void test_page_storage(int f_v);
-
 
 
 // #############################################################################

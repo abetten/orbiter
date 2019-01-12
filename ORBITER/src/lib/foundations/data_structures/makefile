@@ -10,6 +10,7 @@ MODULES = \
 	int_vector.o \
 	data_file.o \
 	fancy_set.o \
+	page_storage.o \
 	partitionstack.o \
 	set_of_sets.o \
 	sorting.o \

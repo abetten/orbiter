@@ -621,6 +621,7 @@ void poset_classification::initialize(
 		}
 	init_root_node(verbose_level - 1);
 
+
 	if (f_v) {
 		cout << "poset_classification::initialize done" << endl;
 		}

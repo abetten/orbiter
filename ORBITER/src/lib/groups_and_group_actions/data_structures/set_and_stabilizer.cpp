@@ -342,7 +342,8 @@ void set_and_stabilizer::apply_to_self_inverse(int *Elt, int verbose_level)
 		}
 }
 
-void set_and_stabilizer::apply_to_self_element_raw(int *Elt_data, int verbose_level)
+void set_and_stabilizer::apply_to_self_element_raw(
+		int *Elt_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -360,13 +361,15 @@ void set_and_stabilizer::apply_to_self_element_raw(int *Elt_data, int verbose_le
 		}
 }
 
-void set_and_stabilizer::apply_to_self_inverse_element_raw(int *Elt_data, int verbose_level)
+void set_and_stabilizer::apply_to_self_inverse_element_raw(
+		int *Elt_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
 
 	if (f_v) {
-		cout << "set_and_stabilizer::apply_to_self_inverse_element_raw" << endl;
+		cout << "set_and_stabilizer::apply_to_self_"
+				"inverse_element_raw" << endl;
 		}
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -374,12 +377,14 @@ void set_and_stabilizer::apply_to_self_inverse_element_raw(int *Elt_data, int ve
 	apply_to_self_inverse(Elt, verbose_level);
 	FREE_int(Elt);
 	if (f_v) {
-		cout << "set_and_stabilizer::apply_to_self_inverse_element_raw done" << endl;
+		cout << "set_and_stabilizer::apply_to_self_"
+				"inverse_element_raw done" << endl;
 		}
 }
 
 
-void set_and_stabilizer::rearrange_by_orbits(int *&orbit_first, int *&orbit_length, 
+void set_and_stabilizer::rearrange_by_orbits(
+	int *&orbit_first, int *&orbit_length,
 	int *&orbit, int &nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -392,11 +397,15 @@ void set_and_stabilizer::rearrange_by_orbits(int *&orbit_first, int *&orbit_leng
 
 			
 	if (f_v) {
-		cout << "set_and_stabilizer::rearrange_by_orbits creating restricted action on the set of lines" << endl;
+		cout << "set_and_stabilizer::rearrange_by_orbits "
+				"creating restricted action on the set "
+				"of lines" << endl;
 		}
 	A_on_set = A2->restricted_action(data, sz, verbose_level);
 	if (f_v) {
-		cout << "set_and_stabilizer::rearrange_by_orbits creating restricted action on the set of lines done" << endl;
+		cout << "set_and_stabilizer::rearrange_by_orbits "
+				"creating restricted action on the set of "
+				"lines done" << endl;
 		}
 
 	schreier *Orb;
@@ -404,9 +413,11 @@ void set_and_stabilizer::rearrange_by_orbits(int *&orbit_first, int *&orbit_leng
 	int f, l, h, cur, j, a, b;
 			
 	if (f_v) {
-		cout << "set_and_stabilizer::rearrange_by_orbits computing orbits on set:" << endl;
+		cout << "set_and_stabilizer::rearrange_by_orbits "
+				"computing orbits on set:" << endl;
 		}
-	Orb = Strong_gens->orbits_on_points_schreier(A_on_set, verbose_level);
+	Orb = Strong_gens->orbits_on_points_schreier(
+			A_on_set, verbose_level);
 
 	data2 = NEW_int(sz);
 

@@ -50,6 +50,9 @@ public:
 	const char *recognize[1000];
 	int nb_recognize;
 
+	int f_read_data_file;
+	const char *fname_data_file;
+	int depth_completed;
 
 
 	int f_no_arc_testing;

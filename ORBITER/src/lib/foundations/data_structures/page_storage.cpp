@@ -3,8 +3,7 @@
 // Anton Betten
 // October 23, 2002
 
-#include "foundations/foundations.h"
-#include "groups_and_group_actions.h"
+#include "foundations.h"
 
 page_storage::page_storage()
 {
@@ -32,7 +31,7 @@ page_storage::page_storage()
 
 page_storage::~page_storage()
 {
-	int i;
+	long int i;
 	
 	//cout << "page_storage::~page_storage" << endl;
 	if (pages) {
@@ -179,13 +178,13 @@ void page_storage::print()
 	print_storage_used();
 }
 
-uchar *page_storage::s_i_and_allocate(int i)
+uchar *page_storage::s_i_and_allocate(long int i)
 {
 	uchar *p, *q;
 	int j;
 	
-	int page_idx = i & (page_length - 1);
-	int page = i >> page_length_log;
+	long int page_idx = i & (page_length - 1);
+	long int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i_and_allocate "
 				"page >= page_ptr_used" << endl;
@@ -266,7 +265,7 @@ uchar *page_storage::s_i_and_allocate(int i)
 	return p;
 }
 
-uchar *page_storage::s_i_and_deallocate(int i)
+uchar *page_storage::s_i_and_deallocate(long int i)
 {
 	uchar *p;
 	
@@ -277,8 +276,8 @@ uchar *page_storage::s_i_and_deallocate(int i)
 		print();
 		exit(1);
 		}
-	int page_idx = i & (page_length - 1);
-	int page = i >> page_length_log;
+	long int page_idx = i & (page_length - 1);
+	long int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i_and_deallocate "
 				"page >= page_ptr_used" << endl;
@@ -304,7 +303,7 @@ uchar *page_storage::s_i_and_deallocate(int i)
 	return p;
 }
 
-uchar *page_storage::s_i(int i)
+uchar *page_storage::s_i(long int i)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -314,8 +313,8 @@ uchar *page_storage::s_i(int i)
 		exit(1);
 		}
 	
-	int page_idx = i & (page_length - 1);
-	int page = i >> page_length_log;
+	long int page_idx = i & (page_length - 1);
+	long int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i "
 				"page >= page_ptr_used" << endl;
@@ -338,7 +337,7 @@ uchar *page_storage::s_i(int i)
 	return pages[page] + page_idx * entry_size;
 }
 
-uchar *page_storage::s_i_and_allocation_bit(int i, int &f_allocated)
+uchar *page_storage::s_i_and_allocation_bit(long int i, int &f_allocated)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -348,8 +347,8 @@ uchar *page_storage::s_i_and_allocation_bit(int i, int &f_allocated)
 		exit(1);
 		}
 	
-	int page_idx = i & (page_length - 1);
-	int page = i >> page_length_log;
+	long int page_idx = i & (page_length - 1);
+	long int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i "
 				"page >= page_ptr_used" << endl;
@@ -372,8 +371,8 @@ uchar *page_storage::s_i_and_allocation_bit(int i, int &f_allocated)
 
 void page_storage::check_allocation_table()
 {
-	int page_idx = overall_length & (page_length - 1);
-	int page = overall_length >> page_length_log;
+	long int page_idx = overall_length & (page_length - 1);
+	long int page = overall_length >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "check_allocation_table::s_i "
 				"page >= page_ptr_used" << endl;
@@ -407,18 +406,18 @@ void page_storage::check_allocation_table()
 		}
 }
 
-int page_storage::store(uchar *elt)
+long int page_storage::store(uchar *elt)
 {
-	int i, hdl;
+	long int i, hdl;
 	uchar *p, *q;
 	
 	if (nb_free_entries) {
-		int nfe = next_free_entry;
+		long int nfe = next_free_entry;
 		
 		p = s_i_and_allocate(nfe);
-		int next_next_free_entry;
+		long int next_next_free_entry;
 		
-		uchar_move(p, (uchar *) &next_next_free_entry, sizeof(int));
+		uchar_move(p, (uchar *) &next_next_free_entry, sizeof(long int));
 		if (nb_free_entries > 1) {
 			if (next_next_free_entry < 0 ||
 					next_next_free_entry >= overall_length) {
@@ -448,9 +447,12 @@ int page_storage::store(uchar *elt)
 #endif
 		}
 	else {
-		if (overall_length > page_ptr_used * page_length) {
+		if (overall_length > (long int) page_ptr_used * page_length) {
 			cout << "page_storage::store "
 					"overall_length > page_ptr_used * page_length" << endl;
+			cout << "overall_length=" << overall_length << endl;
+			cout << "page_ptr_used=" << page_ptr_used << endl;
+			cout << "page_length=" << page_length << endl;
 			exit(1);
 			}
 		if (overall_length == page_ptr_used * page_length) {
@@ -507,13 +509,13 @@ int page_storage::store(uchar *elt)
 	return hdl;
 }
 
-void page_storage::dispose(int hdl)
+void page_storage::dispose(long int hdl)
 {
 #if 1
 	uchar *p = s_i_and_deallocate(hdl);
 
-	int next_next_free_entry = next_free_entry;
-	uchar_move((uchar *) &next_next_free_entry, p, sizeof(int));
+	long int next_next_free_entry = next_free_entry;
+	uchar_move((uchar *) &next_next_free_entry, p, sizeof(long int));
 	next_free_entry = hdl;
 	nb_free_entries++;
 	//check_free_list();
@@ -525,7 +527,8 @@ void page_storage::dispose(int hdl)
 
 void page_storage::check_free_list()
 {
-	int nb = 0, nfe, f_allocated; 
+	long int nb = 0, nfe;
+	int f_allocated;
 	uchar *p;
 	
 	if (nb_free_entries == 0)
@@ -543,7 +546,7 @@ void page_storage::check_free_list()
 			print();
 			exit(1);
 			}
-		uchar_move(p, (uchar *) &nfe, sizeof(int));
+		uchar_move(p, (uchar *) &nfe, sizeof(long int));
 		if (nfe == -1)
 			break;
 		}

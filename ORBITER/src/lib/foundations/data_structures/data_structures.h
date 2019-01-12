@@ -125,6 +125,63 @@ class fancy_set {
 
 };
 
+// #############################################################################
+// page_storage.C:
+// #############################################################################
+
+//! a data structure to store group elements in compressed form
+
+
+
+class page_storage {
+
+public:
+	long int overall_length;
+
+	long int entry_size; // in char
+	long int page_length_log; // number of bits
+	long int page_length; // entries per page
+	long int page_size; // size in char of one page
+	long int allocation_table_length;
+		// size in char of one allocation table
+
+	long int page_ptr_used;
+	long int page_ptr_allocated;
+	long int page_ptr_oversize;
+
+	uchar **pages;
+	uchar **allocation_tables;
+
+	long int next_free_entry;
+	long int nb_free_entries;
+
+	int f_elt_print_function;
+	void (* elt_print)(void *p, void *data, ostream &ost);
+	void *elt_print_data;
+
+
+	void init(int entry_size, int page_length_log,
+		int verbose_level);
+	void add_elt_print_function(
+		void (* elt_print)(void *p, void *data, ostream &ost),
+		void *elt_print_data);
+	void print();
+	uchar *s_i_and_allocate(long int i);
+	uchar *s_i_and_deallocate(long int i);
+	uchar *s_i(long int i);
+	uchar *s_i_and_allocation_bit(long int i, int &f_allocated);
+	void check_allocation_table();
+	long int store(uchar *elt);
+	void dispose(long int hdl);
+	void check_free_list();
+	page_storage();
+	~page_storage();
+	void print_storage_used();
+
+};
+
+void test_page_storage(int f_v);
+
 
 // #############################################################################
 // partitionstack.C

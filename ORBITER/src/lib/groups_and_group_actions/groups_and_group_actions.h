@@ -14,7 +14,6 @@ typedef class schreier schreier;
 typedef class sims sims;
 typedef class sims *p_sims;
 typedef class group group;
-typedef class page_storage page_storage;
 typedef class action_on_sets action_on_sets;
 typedef class action_on_k_subsets action_on_k_subsets;
 typedef class action_by_right_multiplication 

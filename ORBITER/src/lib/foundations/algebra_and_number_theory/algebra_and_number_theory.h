@@ -242,7 +242,7 @@ public:
 		int *Av, int m, int n);
 		// A[m][n], v[n], Av[m]
 
-	int nb_calls_to_mult_matrix_matrix;
+	long int nb_calls_to_mult_matrix_matrix;
 	void mult_matrix_matrix(int *A, int *B,
 		int *C, int m, int n, int o, int verbose_level);
 		// matrix multiplication C := A * B,
@@ -621,8 +621,8 @@ public:
 			int *v, int stride, int len);
 	// first non zero element made one
 
-	int nb_calls_to_PG_element_rank_modified;
-	int nb_calls_to_PG_element_unrank_modified;
+	long int nb_calls_to_PG_element_rank_modified;
+	long int nb_calls_to_PG_element_unrank_modified;
 
 	void PG_elements_embed(
 			int *set_in, int *set_out, int sz,
