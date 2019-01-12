@@ -108,7 +108,8 @@ void union_find::print()
 	cout << "i : ancestor(i) : prev[i]" << endl;
 	for (i = 0; i < A->degree; i++) {
 		j = ancestor(i);
-		cout << setw(4) << i << " : " << setw(4) << j << " : " << setw(4) << i << endl;
+		cout << setw(4) << i << " : " << setw(4)
+				<< j << " : " << setw(4) << i << endl;
 		}
 }
 	
@@ -127,7 +128,8 @@ void union_find::add_generators(vector_ge *gens, int verbose_level)
 		}
 	for (i = 0; i < gens->len; i++) {
 		if (f_vv) {
-			cout << "union_find::add_generators adding generator " << i << endl;
+			cout << "union_find::add_generators "
+					"adding generator " << i << endl;
 			}
 		add_generator(gens->ith(i), verbose_level - 2);
 		}
@@ -154,7 +156,8 @@ void union_find::add_generator(int *Elt, int verbose_level)
 		}
 	if (f_vv) {
 		A->print_quick(cout, Elt);
-		cout << "as permutation of degree " << A->degree << " (skipped)" << endl;
+		cout << "as permutation of degree "
+				<< A->degree << " (skipped)" << endl;
 		//A->print_as_permutation(cout, Elt);
 		}
 	if (f_vv) {
@@ -181,12 +184,14 @@ void union_find::add_generator(int *Elt, int verbose_level)
 		while (TRUE) {
 			cnt++;
 			if (cnt > A->degree) {
-				cout << "union_find::add_generator too many iterations" << endl;
+				cout << "union_find::add_generator "
+						"too many iterations" << endl;
 				exit(1);
 				}
 			k = A->element_image_of(j, Elt, 0);
 			if (f_vv) {
-				cout << "union_find::add_generator i0=" << i0 << " j=" << j << " k=" << k << endl;
+				cout << "union_find::add_generator "
+						"i0=" << i0 << " j=" << j << " k=" << k << endl;
 				}
 			if (k == i0)
 				break;

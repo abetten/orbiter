@@ -55,6 +55,11 @@ void arc_generator::null()
 	
 	f_no_arc_testing = FALSE;
 
+	f_read_data_file = FALSE;
+	fname_data_file = NULL;
+	depth_completed = 0;
+
+
 }
 
 void arc_generator::freeself()
@@ -156,6 +161,11 @@ void arc_generator::read_arguments(int argc, const char **argv)
 			recognize[nb_recognize] = argv[++i];
 			cout << "-recognize " << recognize[nb_recognize] << endl;
 			nb_recognize++;
+			}
+		else if (strcmp(argv[i], "-read_data_file") == 0) {
+			f_read_data_file = TRUE;
+			fname_data_file = argv[++i];
+			cout << "-read_data_file " << fname_data_file << endl;
 			}
 
 		}
@@ -443,6 +453,32 @@ void arc_generator::prepare_generator(int verbose_level)
 		}
 #endif
 
+	if (f_read_data_file) {
+		if (f_v) {
+			cout << "arc_generator::init reading data file "
+					<< fname_data_file << endl;
+			}
+
+		gen->read_data_file(depth_completed,
+				fname_data_file, verbose_level - 1);
+		if (f_v) {
+			cout << "arc_generator::init after reading data file "
+					<< fname_data_file << " depth_completed = "
+					<< depth_completed << endl;
+			}
+		if (f_v) {
+			cout << "arc_generator::init before "
+					"gen->recreate_schreier_vectors_up_to_level" << endl;
+			}
+		gen->recreate_schreier_vectors_up_to_level(depth_completed - 1,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "arc_generator::init after "
+					"gen->recreate_schreier_vectors_up_to_level" << endl;
+			}
+
+	}
+
 	if (f_v) {
 		cout << "arc_generator::prepare_generator done" << endl;
 		}
@@ -472,27 +508,49 @@ void arc_generator::compute_starter(int verbose_level)
 	int f_sideways = FALSE;
 
 
+	if (f_read_data_file) {
+		int target_depth;
+		if (gen->f_max_depth) {
+			target_depth = gen->max_depth;
+			}
+		else {
+			target_depth = gen->depth;
+			}
+		if (f_v) {
+			cout << "arc_generator::compute_starter "
+					"before generator_main" << endl;
+			cout << "arc_generator::compute_starter "
+					"gen->compute_orbits=" << gen->fname_base << endl;
+			}
+		depth = gen->compute_orbits(depth_completed, target_depth,
+				verbose_level);
+		if (f_v) {
+			cout << "arc_generator::compute_starter "
+					"after gen->compute_orbits" << endl;
+			}
+	} else {
+		if (f_v) {
+			cout << "arc_generator::compute_starter "
+					"before generator_main" << endl;
+			cout << "arc_generator::compute_starter "
+					"gen->fname_base=" << gen->fname_base << endl;
+			}
+		depth = gen->main(t0,
+			schreier_depth,
+			f_use_invariant_subset_if_available,
+			f_debug,
+			verbose_level);
+		if (f_v) {
+			cout << "arc_generator::compute_starter "
+					"after gen->main" << endl;
+			}
+	}
+
 	if (f_v) {
 		cout << "arc_generator::compute_starter "
-				"before generator_main" << endl;
-		cout << "arc_generator::compute_starter "
-				"gen->fname_base=" << gen->fname_base << endl;
+				"finished, depth=" << depth << endl;
 		}
 
-	depth = gen->main(t0, 
-		schreier_depth, 
-		f_use_invariant_subset_if_available, 
-		f_debug, 
-		verbose_level);
-	if (f_v) {
-		cout << "arc_generator::compute_starter "
-				"gen->main returns depth=" << depth << endl;
-		}
-
-	if (f_v) {
-		cout << "arc_generator::compute_starter "
-				"after gen->main" << endl;
-		}
 
 
 #if 0

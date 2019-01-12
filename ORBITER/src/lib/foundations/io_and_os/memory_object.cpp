@@ -194,9 +194,12 @@ void memory_object::read_char(char *c)
 	cur_p = cur_pointer;
 	l = used_length;
 	l1 = l - cur_p;
-	if (l1 < 1) {
+	if (l1 < 0) {
 		cout << "memory_object::read_char "
-				"error: l1 < 1" << endl;
+				"error: l1 < 0" << endl;
+		cout << "cur_pointer=" << cur_pointer << endl;
+		cout << "used_length=" << used_length << endl;
+		cout << "l1=" << l1 << endl;
 		exit(1);
 		}
 	cp = data + cur_p;

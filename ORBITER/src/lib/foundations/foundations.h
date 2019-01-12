@@ -290,6 +290,7 @@ typedef class vector_space vector_space;
 typedef class elliptic_curve elliptic_curve;
 	// added November 19, 2014
 typedef class arc_lifting_with_two_lines arc_lifting_with_two_lines;
+typedef class page_storage page_storage;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

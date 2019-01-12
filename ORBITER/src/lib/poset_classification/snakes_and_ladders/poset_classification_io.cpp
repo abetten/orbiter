@@ -2227,7 +2227,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 1);
 	int nb_rows, Nb_orbits, nb_orbits, i, level;
 	pchar *Text_label;
 	pchar *Text_nb_orbits;
@@ -2285,7 +2285,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 		for (i = 0; i < nb_orbits; i++) {
 			
-			if (f_vv) {
+			if (FALSE) {
 				cout << "poset_classification::"
 						"make_spreadsheet_of_level_info "
 						"level = " << level << " / " << max_depth
@@ -2304,8 +2304,8 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 
 			} else {
-				cout << "node " << level << " / " << i
-						<< " does not have a Schreier vector" << endl;
+				//cout << "node " << level << " / " << i
+				//		<< " does not have a Schreier vector" << endl;
 				schreier_vector_length_int = 1;
 			}
 			if (schreier_vector_length_int <= 0) {

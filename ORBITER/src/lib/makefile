@@ -63,6 +63,7 @@ MODULES= \
 		foundations/data_structures/int_vector.o \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/fancy_set.o \
+		foundations/data_structures/page_storage.o \
 		foundations/data_structures/partitionstack.o \
 		foundations/data_structures/set_of_sets.o \
 		foundations/data_structures/sorting.o \
@@ -141,7 +142,6 @@ MODULES= \
 		foundations/statistics/classify.o \
 		groups_and_group_actions/data_structures/group.o \
 		groups_and_group_actions/data_structures/orbit_transversal.o \
-		groups_and_group_actions/data_structures/page_storage.o \
 		groups_and_group_actions/data_structures/projective_space_with_action.o \
 		groups_and_group_actions/data_structures/schreier_vector_handler.o \
 		groups_and_group_actions/data_structures/schreier_vector.o \
