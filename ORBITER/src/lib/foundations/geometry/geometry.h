@@ -286,6 +286,9 @@ int *BLT_representative(int q, int no);
 void BLT_stab_gens(int q, int no, int *&data, int &nb_gens, 
 	int &data_size, const char *&stab_order);
 
+void get_projective_plane_list_of_lines(int *&list_of_lines,
+		int &order, int &nb_lines, int &line_size,
+		const char *label, int verbose_level);
 
 
 const char *override_polynomial_subfield(int q);

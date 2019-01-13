@@ -870,6 +870,27 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	cheat_sheet_bottom(f);
 
 
+	FREE_int(v);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet done" << endl;
+		}
+}
+
+void finite_field::cheat_sheet_tables(ostream &f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int i, j;
+	//int *v;
+	//int f_first;
+	//int a, h;
+	const char *symbol_for_print = "\\alpha";
+
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet_tables" << endl;
+		}
+	//v = NEW_int(e);
+
 	if (q <= 64) {
 		f << "$$" << endl;
 		latex_addition_table(f, FALSE /* f_elements_exponential */,
@@ -903,9 +924,10 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 		f << "Addition and multiplication tables omitted" << endl;
 		}
 
-	FREE_int(v);
+
+	//FREE_int(v);
 	if (f_v) {
-		cout << "finite_field::cheat_sheet done" << endl;
+		cout << "finite_field::cheat_sheet_tables done" << endl;
 		}
 }
 

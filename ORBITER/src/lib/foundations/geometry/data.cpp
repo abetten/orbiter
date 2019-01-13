@@ -62,6 +62,8 @@
 
 #include "./DATA/data_BLT.cpp"
 
+#include "./DATA/planes_16.cpp"
+
 
 // #############################################################################
 // Cubic surfaces:
@@ -2202,4 +2204,124 @@ const char *override_polynomial_extension_field(int q)
 
 
 
+// #############################################################################
+// planes
+// #############################################################################
 
+void get_projective_plane_list_of_lines(int *&list_of_lines,
+		int &order, int &nb_lines, int &line_size,
+		const char *label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "get_projective_plane_list_of_lines" << endl;
+	}
+	if (strcmp(label, "Mathon_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_mathon[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Semi4_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_semi4[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Semi2_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_semi2[i] - 1;
+		}
+	}
+	else if (strcmp(label, "PG_2_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_PG_2_16[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Lmrh_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_Lmrh[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Jowk_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_jowk[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Jo_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_johnson[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Hall_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_Hall[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Dsfp_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_dsfp[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Demp_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_demp[i] - 1;
+		}
+	}
+	else if (strcmp(label, "Bbh1_16") == 0) {
+		order = 16;
+		nb_lines = order * order + order + 1;
+		line_size = order + 1;
+		list_of_lines = NEW_int(nb_lines * line_size);
+		for (i = 0; i < nb_lines * line_size; i++) {
+			list_of_lines[i] = plane_bbh1[i] - 1;
+		}
+	}
+	else {
+		cout << "get_projective_plane_list_of_lines unrecognized type" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "get_projective_plane_list_of_lines done" << endl;
+	}
+}

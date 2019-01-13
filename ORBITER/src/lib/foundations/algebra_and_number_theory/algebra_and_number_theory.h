@@ -674,6 +674,7 @@ public:
 
 	void cheat_sheet_PG(int n,
 			int f_surface, int verbose_level);
+	void cheat_sheet_tables(ostream &f, int verbose_level);
 	void print_minimum_polynomial(int p, const char *polynomial);
 	void print();
 	void print_detailed(int f_add_mult_table);

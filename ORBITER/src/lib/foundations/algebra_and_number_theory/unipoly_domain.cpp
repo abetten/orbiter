@@ -14,7 +14,9 @@ unipoly_domain::unipoly_domain(finite_field *GFq)
 {
 	gfq = GFq;
 	f_factorring = FALSE;
-	
+	factor_degree = 0;
+	factor_coeffs = NULL;
+	factor_poly = NULL;
 }
 
 unipoly_domain::unipoly_domain(finite_field *GFq, unipoly_object m)

@@ -600,8 +600,23 @@ void surface_create::apply_transformations(
 		FREE_OBJECT(Sg);
 		Sg = SG2;
 
-		FREE_int(transformation_coeffs);
+
+		if (f_has_lines) {
+			cout << "surface_create::apply_transformations Lines = ";
+			int_vec_print(cout, Lines, 27);
+			cout << endl;
+			int i;
+			for (i = 0; i < 27; i++) {
+				cout << "line " << i << ":" << endl;
+				Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, Lines[i]);
+				Lines[i] = Surf_A->A2->element_image_of(Lines[i], Elt2, verbose_level);
+				cout << "maps to " << endl;
+				Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, Lines[i]);
+			}
 		}
+
+		FREE_int(transformation_coeffs);
+		} // next h
 
 
 	FREE_int(Elt1);
