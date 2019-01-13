@@ -100,6 +100,8 @@ void cheat_sheet_GF(int q,
 
 	F.cheat_sheet(f, verbose_level);
 	
+	F.cheat_sheet_tables(f, verbose_level);
+
 	latex_foot(f);
 	}
 	cout << "written file " << fname << " of size " << file_size(fname) << endl;

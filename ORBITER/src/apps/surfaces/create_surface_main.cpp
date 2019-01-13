@@ -271,6 +271,13 @@ int main(int argc, const char **argv)
 			ofstream fp(fname);
 
 			latex_head_easy(fp);
+
+
+			fp << "\\section{The Finite Field $\\mathbb F_{" << q << "}$}" << endl;
+			SC->F->cheat_sheet(fp, verbose_level);
+
+			fp << "\\bigskip" << endl;
+
 			SoA->cheat_sheet(fp, 
 				label,
 				label_tex,

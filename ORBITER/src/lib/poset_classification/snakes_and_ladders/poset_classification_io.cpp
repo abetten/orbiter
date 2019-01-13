@@ -1182,6 +1182,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 		}
 
 	if (f_W || (f_w && i == sz)) {
+#if 0
 		char fname_base2[1000];
 		
 		sprintf(fname_base2, "%sa", fname_base);
@@ -1192,6 +1193,8 @@ void poset_classification::housekeeping_no_data_file(int i,
 			write_sv_level_file_binary(i - 1, 
 				fname_base, FALSE, 0, 0, 1/*verbose_level*/);
 			}
+#endif
+
 		write_lvl_file(fname_base, i, t0,
 				FALSE /* f_with_strong_generators */,
 				FALSE /* f_long_version */, 0);
