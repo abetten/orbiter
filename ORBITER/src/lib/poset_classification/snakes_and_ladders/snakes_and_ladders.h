@@ -508,6 +508,9 @@ public:
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
+	void get_whole_orbit(
+		int depth, int orbit_idx,
+		int *&Orbit, int &orbit_length, int verbose_level);
 	void print_extensions_at_level(ostream &ost, int lvl);
 	void map_to_canonical_k_subset(int *the_set, int set_size, 
 		int subset_size, int subset_rk, 

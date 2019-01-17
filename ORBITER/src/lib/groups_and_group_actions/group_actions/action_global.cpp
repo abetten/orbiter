@@ -1740,11 +1740,6 @@ action *create_automorphism_group_of_block_system(
 		}
 	M = NEW_int(nb_points * nb_blocks);
 	int_vec_zero(M, nb_points * nb_blocks);
-#if 0
-	for (i = 0; i < nb_points * nb_blocks; i++) {
-		M[i] = 0;
-		}
-#endif
 	for (j = 0; j < nb_blocks; j++) {
 		for (h = 0; h < block_size; h++) {
 			i = Blocks[j * block_size + h];
@@ -1757,6 +1752,61 @@ action *create_automorphism_group_of_block_system(
 	FREE_int(M);
 	if (f_v) {
 		cout << "create_automorphism_group_of_block_system done" << endl;
+		}
+	return A;
+}
+
+action *create_automorphism_group_of_collection_of_two_block_systems(
+	int nb_points,
+	int nb_blocks1, int block_size1, int *Blocks1,
+	int nb_blocks2, int block_size2, int *Blocks2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *M;
+	action *A;
+	int i, j, h;
+	int nb_cols;
+	int nb_rows;
+
+	if (f_v) {
+		cout << "create_automorphism_group_of_collection_of_two_block_systems" << endl;
+		}
+	nb_cols = nb_blocks1 + nb_blocks2 + 1;
+	nb_rows = nb_points + 2;
+
+	M = NEW_int(nb_rows * nb_cols);
+	int_vec_zero(M, nb_rows * nb_cols);
+
+	// first system:
+	for (j = 0; j < nb_blocks1; j++) {
+		for (h = 0; h < block_size1; h++) {
+			i = Blocks1[j * block_size1 + h];
+			M[i * nb_cols + j] = 1;
+			}
+		i = nb_points + 0;
+		M[i * nb_cols + j] = 1;
+		}
+	// second system:
+	for (j = 0; j < nb_blocks2; j++) {
+		for (h = 0; h < block_size2; h++) {
+			i = Blocks2[j * block_size2 + h];
+			M[i * nb_cols + nb_blocks1 + j] = 1;
+			}
+		i = nb_points + 1;
+		M[i * nb_cols + nb_blocks1 + j] = 1;
+		}
+	// the extra column:
+	for (i = 0; i < 2; i++) {
+		M[(nb_points + i) * nb_cols + nb_blocks1 + nb_blocks2] = 1;
+	}
+
+	A = create_automorphism_group_of_incidence_matrix(
+		nb_rows, nb_cols, M, verbose_level);
+
+	FREE_int(M);
+	if (f_v) {
+		cout << "create_automorphism_group_of_collection_of_two_block_systems done" << endl;
 		}
 	return A;
 }
@@ -1849,12 +1899,44 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int *partition;
+	int i;
+	action *A;
+
+	if (f_v) {
+		cout << "create_automorphism_group_"
+				"of_incidence_structure_low_level" << endl;
+		}
+
+	partition = NEW_int(m + n);
+	for (i = 0; i < m + n; i++) {
+		partition[i] = 1;
+		}
+
+	partition[m - 1] = 0;
+
+	A = create_automorphism_group_of_incidence_structure_with_partition(
+			m, n, nb_inc, X, partition,
+			verbose_level);
+
+	FREE_int(partition);
+	if (f_v) {
+		cout << "create_automorphism_group_"
+				"of_incidence_structure_low_level done" << endl;
+		}
+	return A;
+}
+
+action *create_automorphism_group_of_incidence_structure_with_partition(
+	int m, int n, int nb_inc, int *X, int *partition,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 	int f_v10 = (verbose_level >= 10);
 	int *labeling; //, *labeling_inv;
 	int *Aut;
-	int *Base, *Transversal_length, *partitions;
+	int *Base, *Transversal_length;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
-	int i;
 	
 	
 	//m = # rows
@@ -1863,29 +1945,25 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 	Aut = NEW_int((m+n) * (m+n));
 	Base = NEW_int(m+n);
 	Transversal_length = NEW_int(m + n);
-	partitions = NEW_int(m + n);
 
 	if (f_v) {
-		cout << "create_automorphism_group_of_incidence_structure_low_level" << endl;
+		cout << "create_automorphism_group_of_"
+				"incidence_structure_with_partition" << endl;
 		}
-	for (i = 0; i < m + n; i++) {
-		partitions[i] = 1;
-		}
-
-	partitions[m - 1] = 0;
 
 	labeling = NEW_int(m + n);
 	//labeling_inv = NEW_int(m + n);
 
 	nauty_interface_int(m, n, X, nb_inc, 
-		labeling, partitions, 
+		labeling, partition,
 		Aut, Aut_counter, 
 		Base, Base_length, 
 		Transversal_length, Ago);
 
 	if (f_v) {
 		if (TRUE /*(input_no % 500) == 0*/) {
-			cout << "create_automorphism_group_of_incidence_structure_low_level: "
+			cout << "create_automorphism_group_of_"
+					"incidence_structure_with_partition: "
 					"The group order is = " << Ago << endl;
 			}
 		}
@@ -1898,7 +1976,8 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 #endif
 
 	if (f_v10) {
-		cout << "create_automorphism_group_of_incidence_structure_low_level: "
+		cout << "create_automorphism_group_of_"
+				"incidence_structure_with_partition: "
 				"labeling:" << endl;
 		int_vec_print(cout, labeling, m + n);
 		cout << endl;
@@ -1906,14 +1985,17 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 		//int_vec_print(cout, labeling_inv, m + n);
 		//cout << endl;
 
-		cout << "create_automorphism_group_of_incidence_structure_low_level: "
+		cout << "create_automorphism_group_of_"
+				"incidence_structure_with_partition: "
 				"Base:" << endl;
 		int_vec_print(cout, Base, Base_length);
 		cout << endl;
 
-		cout << "create_automorphism_group_of_incidence_structure_low_level: "
+		cout << "create_automorphism_group_of_"
+				"incidence_structure_with_partition: "
 				"generators:" << endl;
-		print_integer_matrix_width(cout, Aut, Aut_counter, m + n, m + n, 2);
+		print_integer_matrix_width(cout,
+				Aut, Aut_counter, m + n, m + n, 2);
 		}
 
 
@@ -1932,7 +2014,8 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 		verbose_level - 2);
 
 	if (f_v) {
-		cout << "create_automorphism_group_of_incidence_structure_low_level: "
+		cout << "create_automorphism_group_of_"
+				"incidence_structure_with_partition: "
 				"created action ";
 		A->print_info();
 		cout << endl;
@@ -1941,7 +2024,6 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 	FREE_int(Aut);
 	FREE_int(Base);
 	FREE_int(Transversal_length);
-	FREE_int(partitions);
 	FREE_int(labeling);
 
 	return A;
