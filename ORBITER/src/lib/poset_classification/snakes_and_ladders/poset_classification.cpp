@@ -1753,7 +1753,7 @@ void poset_classification::list_whole_orbit(
 
 	if (f_show_whole_orbit) {
 		int max_len;
-		if (len > 10) {
+		if (len > 1000) {
 			max_len = 10;
 			}
 		else {
@@ -1770,12 +1770,48 @@ void poset_classification::list_whole_orbit(
 				cout << setw(5) << rank << " : ";
 				int_set_print(cout, set, depth);
 				cout << endl;
-				}	
+				}
+			if (max_len < len) {
+				cout << "output truncated" << endl;
+			}
 			}
 		}
 
 	FREE_int(set);
 	FREE_OBJECT(Strong_gens);
+}
+
+void poset_classification::get_whole_orbit(
+	int depth, int orbit_idx,
+	int *&Orbit, int &orbit_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rank;
+	longinteger_object Len, L, go;
+	longinteger_domain D;
+
+	if (f_v) {
+		cout << "poset_classification::get_whole_orbit" << endl;
+	}
+	poset_classification::orbit_length(orbit_idx, depth, Len);
+	orbit_length = orbit_length_as_int(orbit_idx, depth);
+	L.create(orbit_length);
+	if (D.compare(L, Len) != 0) {
+		cout << "poset_classification::get_whole_orbit "
+				"orbit is too long" << endl;
+		exit(1);
+		}
+
+	Orbit = NEW_int(orbit_length * depth);
+	for (rank = 0; rank < orbit_length; rank++) {
+		orbit_element_unrank(depth, orbit_idx,
+				rank,
+				Orbit + rank * depth,
+				0 /* verbose_level */);
+		}
+	if (f_v) {
+		cout << "poset_classification::get_whole_orbit done" << endl;
+	}
 }
 
 void poset_classification::print_extensions_at_level(

@@ -16,6 +16,7 @@ typedef class flag_orbits flag_orbits;
 typedef class flag_orbit_node flag_orbit_node;
 typedef class classification classification;
 typedef class orbit_node orbit_node;
+typedef class poset poset;
 
 enum trace_result { 
 	found_automorphism, 

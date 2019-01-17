@@ -169,6 +169,101 @@ int main(int argc, const char **argv)
 				verbose_level);
 		PC = orbits_on_k_sets_compute(Poset,
 				orbits_on_subsets_size, verbose_level);
+
+		int depth;
+
+		for (depth = 0; depth <= orbits_on_subsets_size; depth++) {
+			cout << "Orbits on subsets of size " << depth << ":" << endl;
+			PC->list_all_orbits_at_level(depth,
+					FALSE /* f_has_print_function */,
+					NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
+					NULL /* void *print_function_data*/,
+					TRUE /* f_show_orbit_decomposition */,
+					TRUE /* f_show_stab */,
+					FALSE /* f_save_stab */,
+					TRUE /* f_show_whole_orbit*/);
+			int nb_orbits, orbit_idx;
+
+			nb_orbits = PC->nb_orbits_at_level(depth);
+			for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+
+				int orbit_length;
+				int *Orbit;
+
+				cout << "before PC->get_whole_orbit depth " << depth
+						<< " orbit " << orbit_idx
+						<< " / " << nb_orbits << ":" << endl;
+				PC->get_whole_orbit(
+						depth, orbit_idx,
+						Orbit, orbit_length, verbose_level);
+				cout << "depth " << depth << " orbit " << orbit_idx
+						<< " / " << nb_orbits << " has length "
+						<< orbit_length << ":" << endl;
+				int_matrix_print(Orbit, orbit_length, depth);
+
+				action *Aut;
+				longinteger_object ago;
+
+				Aut = create_automorphism_group_of_block_system(
+					A->degree /* nb_points */,
+					orbit_length /* nb_blocks */,
+					depth /* block_size */, Orbit,
+					verbose_level);
+				Aut->group_order(ago);
+				cout << "The automorphism group of the set system "
+						"has order " << ago << endl;
+
+				FREE_OBJECT(Aut);
+				FREE_int(Orbit);
+			}
+			if (nb_orbits == 2) {
+				cout << "the number of orbits at depth " << depth
+						<< " is two, we will try create_automorphism_"
+						"group_of_collection_of_two_block_systems" << endl;
+				int *Orbit1;
+				int orbit_length1;
+				int *Orbit2;
+				int orbit_length2;
+
+				cout << "before PC->get_whole_orbit depth " << depth
+						<< " orbit " << orbit_idx
+						<< " / " << nb_orbits << ":" << endl;
+				PC->get_whole_orbit(
+						depth, 0 /* orbit_idx*/,
+						Orbit1, orbit_length1, verbose_level);
+				cout << "depth " << depth << " orbit " << 0
+						<< " / " << nb_orbits << " has length "
+						<< orbit_length1 << ":" << endl;
+				int_matrix_print(Orbit1, orbit_length1, depth);
+
+				PC->get_whole_orbit(
+						depth, 1 /* orbit_idx*/,
+						Orbit2, orbit_length2, verbose_level);
+				cout << "depth " << depth << " orbit " << 1
+						<< " / " << nb_orbits << " has length "
+						<< orbit_length2 << ":" << endl;
+				int_matrix_print(Orbit2, orbit_length2, depth);
+
+				action *Aut;
+				longinteger_object ago;
+
+				Aut = create_automorphism_group_of_collection_of_two_block_systems(
+					A->degree /* nb_points */,
+					orbit_length1 /* nb_blocks */,
+					depth /* block_size */, Orbit1,
+					orbit_length2 /* nb_blocks */,
+					depth /* block_size */, Orbit2,
+					verbose_level);
+				Aut->group_order(ago);
+				cout << "The automorphism group of the collection of two set systems "
+						"has order " << ago << endl;
+
+				FREE_OBJECT(Aut);
+				FREE_int(Orbit1);
+				FREE_int(Orbit2);
+
+			}
+		}
 		if (f_draw_poset) {
 			{
 			char fname_poset[1000];
