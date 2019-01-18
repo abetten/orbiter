@@ -6,6 +6,47 @@
 // based on action.h which was started:  August 13, 2005
 
 
+
+
+// #############################################################################
+// data_input_stream.cpp:
+// #############################################################################
+
+
+#define INPUT_TYPE_SET_OF_POINTS 1
+#define INPUT_TYPE_SET_OF_LINES 2
+#define INPUT_TYPE_SET_OF_PACKING 3
+#define INPUT_TYPE_FILE_OF_POINTS 4
+#define INPUT_TYPE_FILE_OF_LINES 5
+#define INPUT_TYPE_FILE_OF_PACKINGS 6
+#define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
+
+
+
+//! description of input data for classification of geometric objects from the command line
+
+
+class data_input_stream {
+public:
+	int nb_inputs;
+	int input_type[1000];
+	const char *input_string[1000];
+	const char *input_string2[1000];
+
+	data_input_stream();
+	~data_input_stream();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+	int count_number_of_objects_to_test(
+		int verbose_level);
+};
+
+
+
 // #############################################################################
 // group.C:
 // #############################################################################
@@ -138,13 +179,6 @@ public:
 // #############################################################################
 
 
-#define INPUT_TYPE_SET_OF_POINTS 1
-#define INPUT_TYPE_SET_OF_LINES 2
-#define INPUT_TYPE_SET_OF_PACKING 3
-#define INPUT_TYPE_FILE_OF_POINTS 4
-#define INPUT_TYPE_FILE_OF_LINES 5
-#define INPUT_TYPE_FILE_OF_PACKINGS 6
-#define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
 
 
 //! projective space PG(n,q) with automorphism group PGGL(n+1,q)
@@ -211,8 +245,7 @@ public:
 		strong_generators *&SG,
 		int verbose_level);
 	void classify_objects_using_nauty(
-		int nb_inputs, int *input_type,
-		const char **input_string, const char **input_string2,
+		data_input_stream *Data,
 		int nb_objects_to_test,
 		classify_bitvectors *CB,
 		int f_save_incma_in_and_out, const char *prefix,
@@ -235,9 +268,6 @@ void compute_and_print_ago_distribution(ostream &ost,
 void compute_and_print_ago_distribution_with_classes(
 	ostream &ost,
 	classify_bitvectors *CB, int verbose_level);
-int count_number_of_objects_to_test(int nb_inputs, int *input_type,
-	const char **input_string, const char **input_string2,
-	int verbose_level);
 
 
 // #############################################################################

@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	data_input_stream.o \
 	group.o \
 	object_in_projective_space_with_action.o \
 	orbit_transversal.o \

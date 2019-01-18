@@ -1431,8 +1431,7 @@ int projective_space_with_action::process_object(
 }
 
 void projective_space_with_action::classify_objects_using_nauty(
-	int nb_inputs, int *input_type,
-	const char **input_string, const char **input_string2,
+	data_input_stream *Data,
 	int nb_objects_to_test,
 	classify_bitvectors *CB,
 	int f_save_incma_in_and_out, const char *prefix,
@@ -1447,19 +1446,19 @@ void projective_space_with_action::classify_objects_using_nauty(
 		cout << "classify_objects_using_nauty" << endl;
 		}
 
-	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
-		cout << "input " << input_idx << " / " << nb_inputs
+	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
+		cout << "input " << input_idx << " / " << Data->nb_inputs
 			<< " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+		if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
 			cout << "input set of points "
-				<< input_string[input_idx] << ":" << endl;
+				<< Data->input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
 			strong_generators *SG;
 
 			OiP = create_object_from_string(t_PTS,
-				input_string[input_idx], verbose_level);
+					Data->input_string[input_idx], verbose_level);
 
 			if (f_v) {
 				cout << "classify_objects_using_nauty "
@@ -1499,15 +1498,15 @@ void projective_space_with_action::classify_objects_using_nauty(
 						CB, verbose_level);
 				}
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
-			cout << "input set of lines " << input_string[input_idx]
+		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
+			cout << "input set of lines " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			strong_generators *SG;
 
 			OiP = create_object_from_string(t_LNS,
-				input_string[input_idx], verbose_level);
+					Data->input_string[input_idx], verbose_level);
 			if (!process_object(CB, OiP,
 				f_save_incma_in_and_out, prefix,
 				nb_objects_to_test,
@@ -1534,15 +1533,15 @@ void projective_space_with_action::classify_objects_using_nauty(
 					CB, verbose_level);
 				}
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
+		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
 			cout << "input set of packing "
-				<< input_string[input_idx] << ":" << endl;
+				<< Data->input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
 			strong_generators *SG;
 
 			OiP = create_object_from_string(t_PAC,
-				input_string[input_idx], verbose_level);
+					Data->input_string[input_idx], verbose_level);
 			if (!process_object(CB, OiP,
 				f_save_incma_in_and_out, prefix,
 				nb_objects_to_test,
@@ -1569,23 +1568,23 @@ void projective_space_with_action::classify_objects_using_nauty(
 						CB, verbose_level);
 				}
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
-				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
-				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
-				input_type[input_idx] ==
+		else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
+				Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
+				Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
+				Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-			cout << "input from file " << input_string[input_idx]
+			cout << "input from file " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(set_of_sets);
 
-			cout << "Reading the file " << input_string[input_idx] << endl;
+			cout << "Reading the file " << Data->input_string[input_idx] << endl;
 			SoS->init_from_file(
 					P->N_points /* underlying_set_size */,
-					input_string[input_idx], verbose_level);
-			cout << "Read the file " << input_string[input_idx] << endl;
+					Data->input_string[input_idx], verbose_level);
+			cout << "Read the file " << Data->input_string[input_idx] << endl;
 
 			int h;
 
@@ -1595,15 +1594,15 @@ void projective_space_with_action::classify_objects_using_nauty(
 			int nb_spreads;
 			int spread_size;
 
-			if (input_type[input_idx] ==
+			if (Data->input_type[input_idx] ==
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				cout << "Reading spread table from file "
-					<< input_string2[input_idx] << endl;
-				int_matrix_read_csv(input_string2[input_idx],
+					<< Data->input_string2[input_idx] << endl;
+				int_matrix_read_csv(Data->input_string2[input_idx],
 						Spread_table, nb_spreads, spread_size,
 						0 /* verbose_level */);
 				cout << "Reading spread table from file "
-						<< input_string2[input_idx] << " done" << endl;
+						<< Data->input_string2[input_idx] << " done" << endl;
 				cout << "The spread table contains " << nb_spreads
 						<< " spreads" << endl;
 				}
@@ -1634,22 +1633,22 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 				OiP = NEW_OBJECT(object_in_projective_space);
 
-				if (input_type[input_idx] ==
+				if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_POINTS) {
 					OiP->init_point_set(P, the_set_in, set_size_in,
 							0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] ==
+				else if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_LINES) {
 					OiP->init_line_set(P, the_set_in, set_size_in,
 							0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] ==
+				else if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_PACKINGS) {
 					OiP->init_packing_from_set(P,
 							the_set_in, set_size_in, verbose_level);
 					}
-				else if (input_type[input_idx] ==
+				else if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 					OiP->init_packing_from_spread_table(P, the_set_in,
 						Spread_table, nb_spreads, spread_size,
@@ -1696,7 +1695,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					}
 
 				}
-			if (input_type[input_idx] ==
+			if (Data->input_type[input_idx] ==
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				FREE_int(Spread_table);
 				}
@@ -1933,120 +1932,4 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 	FREE_OBJECT(SoS);
 	FREE_OBJECT(C_ago);
 }
-
-int count_number_of_objects_to_test(
-	int nb_inputs, int *input_type,
-	const char **input_string, const char **input_string2,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int input_idx, nb_obj;
-	int nb_objects_to_test;
-
-	if (f_v) {
-		cout << "count_number_of_objects_to_test" << endl;
-		}
-	nb_objects_to_test = 0;
-	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
-		cout << "input " << input_idx << " / " << nb_inputs
-			<< " is:" << endl;
-
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
-			if (f_v) {
-				cout << "input set of points "
-						<< input_string[input_idx] << ":" << endl;
-				}
-
-			nb_objects_to_test++;
-
-			}
-		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
-			if (f_v) {
-				cout << "input set of lines "
-						<< input_string[input_idx] << ":" << endl;
-				}
-
-			nb_objects_to_test++;
-
-			}
-		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
-			if (f_v) {
-				cout << "input set of packing "
-						<< input_string[input_idx] << ":" << endl;
-				}
-
-			nb_objects_to_test++;
-
-			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
-			if (f_v) {
-				cout << "input sets of points from file "
-						<< input_string[input_idx] << ":" << endl;
-				}
-			nb_obj = count_number_of_orbits_in_file(
-					input_string[input_idx], 0 /* verbose_level*/);
-			if (f_v) {
-				cout << "The file " << input_string[input_idx]
-					<< " has " << nb_obj << " objects" << endl;
-				}
-
-			nb_objects_to_test += nb_obj;
-			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
-			if (f_v) {
-				cout << "input sets of lines from file "
-					<< input_string[input_idx] << ":" << endl;
-				}
-			nb_obj = count_number_of_orbits_in_file(
-				input_string[input_idx], 0 /* verbose_level*/);
-			if (f_v) {
-				cout << "The file " << input_string[input_idx]
-					<< " has " << nb_obj << " objects" << endl;
-				}
-
-			nb_objects_to_test += nb_obj;
-			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS) {
-			if (f_v) {
-				cout << "input sets of packings from file "
-					<< input_string[input_idx] << ":" << endl;
-				}
-			nb_obj = count_number_of_orbits_in_file(
-				input_string[input_idx], 0 /* verbose_level*/);
-			if (f_v) {
-				cout << "The file " << input_string[input_idx]
-					<< " has " << nb_obj << " objects" << endl;
-				}
-
-			nb_objects_to_test += nb_obj;
-			}
-		else if (input_type[input_idx] ==
-				INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-			if (f_v) {
-				cout << "input sets of packings from file "
-					<< input_string[input_idx] << endl;
-				cout << "through spread table "
-					<< input_string2[input_idx] << " :" << endl;
-				}
-			nb_obj = count_number_of_orbits_in_file(
-				input_string[input_idx], 0 /* verbose_level*/);
-			if (f_v) {
-				cout << "The file " << input_string[input_idx]
-					<< " has " << nb_obj << " objects" << endl;
-				}
-
-			nb_objects_to_test += nb_obj;
-			}
-		else {
-			cout << "unknown input type" << endl;
-			exit(1);
-			}
-		}
-
-	if (f_v) {
-		cout << "count_number_of_objects_to_test done" << endl;
-		}
-	return nb_objects_to_test;
-}
-
 

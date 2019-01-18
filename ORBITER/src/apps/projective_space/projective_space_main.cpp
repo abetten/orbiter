@@ -19,14 +19,13 @@ int t0; // the system time when the program started
 
 
 
-void canonical_form(int nb_inputs, int *input_type, 
-	const char **input_string, const char **input_string2, 
+void canonical_form(data_input_stream *Data,
 	int nb_objects_to_test, 
 	projective_space_with_action *PA, 
 	int f_save_incma_in_and_out, const char *prefix, 
 	int verbose_level);
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	int verbose_level = 0;
 	int i;
@@ -35,15 +34,12 @@ int main(int argc, char **argv)
 	int f_n = FALSE;
 	int n;
 	int f_poly = FALSE;
-	char *poly = NULL;
+	const char *poly = NULL;
 
 	int f_init_incidence_structure = TRUE;
 
-	int nb_inputs = 0;
-	int input_type[1000];
-	const char *input_string[1000];
-	const char *input_string2[1000];
-
+	int f_input = FALSE;
+	data_input_stream *Data_input_stream = NULL;
 
 	int f_all_k_subsets = FALSE;
 	int k = 0;
@@ -85,59 +81,16 @@ int main(int argc, char **argv)
 			poly = argv[++i];
 			cout << "-poly " << poly << endl;
 			}
-		else if (strcmp(argv[i], "-set_of_points") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
-			cout << "-set_of_points " << input_string[nb_inputs] << endl;
-			nb_inputs++;
+		else if (strcmp(argv[i], "-input") == 0) {
+			f_input = TRUE;
+			Data_input_stream = NEW_OBJECT(data_input_stream);
+			i += Data_input_stream->read_arguments(argc - (i - 1),
+				argv + i, verbose_level);
+
+			cout << "-input" << endl;
 			}
-		else if (strcmp(argv[i], "-set_of_lines") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_SET_OF_LINES;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
-			cout << "-set_of_lines " << input_string[nb_inputs] << endl;
-			nb_inputs++;
-			}
-		else if (strcmp(argv[i], "-set_of_packing") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_SET_OF_PACKING;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
-			cout << "-set_of_packing " << input_string[nb_inputs] << endl;
-			nb_inputs++;
-			}
-		else if (strcmp(argv[i], "-file_of_points") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINTS;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
-			cout << "-file_of_points " << input_string[nb_inputs] << endl;
-			nb_inputs++;
-			}
-		else if (strcmp(argv[i], "-file_of_lines") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_LINES;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
-			cout << "-file_of_lines " << input_string[nb_inputs] << endl;
-			nb_inputs++;
-			}
-		else if (strcmp(argv[i], "-file_of_packings") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_PACKINGS;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
-			cout << "-file_of_packings " << input_string[nb_inputs] << endl;
-			nb_inputs++;
-			}
-		else if (strcmp(argv[i],
-				"-file_of_packings_through_spread_table") == 0) {
-			input_type[nb_inputs] =
-					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = argv[++i];
-			cout << "-file_of_packings_through_spread_table "
-				<< input_string[nb_inputs] << " "
-				<< input_string2[nb_inputs] << endl;
-			nb_inputs++;
-			}
+
+
 		else if (strcmp(argv[i], "-all_k_subsets") == 0) {
 			f_all_k_subsets = TRUE;
 			k = atoi(argv[++i]);
@@ -184,6 +137,10 @@ int main(int argc, char **argv)
 		cout << "please use option -n <n>" << endl;
 		exit(1);
 		}
+	if (!f_input) {
+		cout << "please use option -input ... -end" << endl;
+		exit(1);
+		}
 
 	finite_field *F;
 
@@ -214,9 +171,7 @@ int main(int argc, char **argv)
 	int nb_objects_to_test;
 	
 	cout << "before count_number_of_objects_to_test" << endl;
-	nb_objects_to_test = count_number_of_objects_to_test(
-		nb_inputs, input_type,
-		input_string, input_string2, 
+	nb_objects_to_test = Data_input_stream->count_number_of_objects_to_test(
 		verbose_level - 1);
 
 
@@ -235,8 +190,7 @@ int main(int argc, char **argv)
 	
 
 		cout << "before classify_objects_using_nauty" << endl;
-		PA->classify_objects_using_nauty(nb_inputs, input_type,
-			input_string, input_string2, 
+		PA->classify_objects_using_nauty(Data_input_stream,
 			nb_objects_to_test, 
 			CB,
 			f_save_incma_in_and_out, prefix, 
@@ -645,8 +599,7 @@ int main(int argc, char **argv)
 	else if (f_classify_backtrack) {
 
 		
-		canonical_form(nb_inputs, input_type, 
-			input_string, input_string2, 
+		canonical_form(Data_input_stream,
 			nb_objects_to_test, 
 			PA, 
 			f_save_incma_in_and_out, prefix, 
@@ -659,8 +612,7 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void canonical_form(int nb_inputs, int *input_type, 
-	const char **input_string, const char **input_string2, 
+void canonical_form(data_input_stream *Data,
 	int nb_objects_to_test, 
 	projective_space_with_action *PA, 
 	int f_save_incma_in_and_out, const char *prefix, 
@@ -675,19 +627,19 @@ void canonical_form(int nb_inputs, int *input_type,
 		cout << "canonical_form" << endl;
 		}
 
-	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
-		cout << "input " << input_idx << " / " << nb_inputs
+	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
+		cout << "input " << input_idx << " / " << Data->nb_inputs
 				<< " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
-			cout << "input set of points " << input_string[input_idx]
+		if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+			cout << "input set of points " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			//strong_generators *SG;
 			
 			OiP = PA->create_object_from_string(t_PTS,
-				input_string[input_idx], verbose_level);
+					Data->input_string[input_idx], verbose_level);
 
 
 			sims *Aut;
@@ -736,15 +688,15 @@ void canonical_form(int nb_inputs, int *input_type,
 				}
 #endif
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
-			cout << "input set of lines " << input_string[input_idx]
+		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
+			cout << "input set of lines " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			//strong_generators *SG;
 			
 			OiP = PA->create_object_from_string(t_LNS,
-				input_string[input_idx], verbose_level);
+					Data->input_string[input_idx], verbose_level);
 #if 0
 			if (!process_object(PA, CB, OiP, 
 				f_save_incma_in_and_out, prefix, 
@@ -772,15 +724,15 @@ void canonical_form(int nb_inputs, int *input_type,
 				}
 #endif
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
-			cout << "input set of packing " << input_string[input_idx]
+		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
+			cout << "input set of packing " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			object_in_projective_space *OiP;
 			//strong_generators *SG;
 			
 			OiP = PA->create_object_from_string(t_PAC,
-				input_string[input_idx], verbose_level);
+					Data->input_string[input_idx], verbose_level);
 #if 0
 			if (!process_object(PA, CB, OiP, 
 				f_save_incma_in_and_out, prefix, 
@@ -808,23 +760,23 @@ void canonical_form(int nb_inputs, int *input_type,
 				}
 #endif
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
-				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
-				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
-				input_type[input_idx] ==
+		else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
+				Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
+				Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
+				Data->input_type[input_idx] ==
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-			cout << "input from file " << input_string[input_idx]
+			cout << "input from file " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(set_of_sets);
 
-			cout << "Reading the file " << input_string[input_idx] << endl;
+			cout << "Reading the file " << Data->input_string[input_idx] << endl;
 			SoS->init_from_file(
 				PA->P->N_points /* underlying_set_size */,
-				input_string[input_idx], verbose_level);
-			cout << "Read the file " << input_string[input_idx] << endl;
+				Data->input_string[input_idx], verbose_level);
+			cout << "Read the file " << Data->input_string[input_idx] << endl;
 
 			int h;
 
@@ -834,15 +786,15 @@ void canonical_form(int nb_inputs, int *input_type,
 			int nb_spreads;
 			int spread_size;
 
-			if (input_type[input_idx] ==
+			if (Data->input_type[input_idx] ==
 				INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				cout << "Reading spread table from file "
-						<< input_string2[input_idx] << endl;
-				int_matrix_read_csv(input_string2[input_idx],
+						<< Data->input_string2[input_idx] << endl;
+				int_matrix_read_csv(Data->input_string2[input_idx],
 						Spread_table, nb_spreads, spread_size,
 						0 /* verbose_level */);
 				cout << "Reading spread table from file "
-						<< input_string2[input_idx] << " done" << endl;
+						<< Data->input_string2[input_idx] << " done" << endl;
 				cout << "The spread table contains " << nb_spreads
 						<< " spreads" << endl;
 				}
@@ -868,22 +820,22 @@ void canonical_form(int nb_inputs, int *input_type,
 
 				OiP = NEW_OBJECT(object_in_projective_space);
 
-				if (input_type[input_idx] ==
+				if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_POINTS) {
 					OiP->init_point_set(PA->P,
 							the_set_in, set_size_in, 0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] ==
+				else if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_LINES) {
 					OiP->init_line_set(PA->P,
 							the_set_in, set_size_in, 0 /* verbose_level*/);
 					}
-				else if (input_type[input_idx] ==
+				else if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_PACKINGS) {
 					OiP->init_packing_from_set(PA->P,
 							the_set_in, set_size_in, verbose_level);
 					}
-				else if (input_type[input_idx] ==
+				else if (Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 					OiP->init_packing_from_spread_table(PA->P, the_set_in, 
 						Spread_table, nb_spreads,
@@ -929,7 +881,7 @@ void canonical_form(int nb_inputs, int *input_type,
 #endif
 
 				}
-			if (input_type[input_idx] ==
+			if (Data->input_type[input_idx] ==
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				FREE_int(Spread_table);
 				}
