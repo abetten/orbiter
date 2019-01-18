@@ -140,6 +140,7 @@ MODULES= \
 		foundations/solvers/dlx.o \
 		foundations/solvers/mckay.o \
 		foundations/statistics/classify.o \
+		groups_and_group_actions/data_structures/data_input_stream.o \
 		groups_and_group_actions/data_structures/group.o \
 		groups_and_group_actions/data_structures/object_in_projective_space_with_action.o \
 		groups_and_group_actions/data_structures/orbit_transversal.o \

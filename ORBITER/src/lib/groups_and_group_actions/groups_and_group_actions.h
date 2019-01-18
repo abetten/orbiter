@@ -60,7 +60,7 @@ typedef class action_on_set_partitions action_on_set_partitions;
 typedef class object_in_projective_space_with_action
 	object_in_projective_space_with_action;
 	// added December 30, 2017
-
+typedef class data_input_stream data_input_stream;
 
 enum symmetry_group_type { 
 	unknown_symmetry_group_t, 
