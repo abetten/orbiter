@@ -194,7 +194,7 @@ void strong_generators::init_by_hdl(action *A,
 
 void strong_generators::init_from_permutation_representation(
 	action *A, int *data,
-	int nb_elements, int group_order, 
+	int nb_elements, int group_order, vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -205,23 +205,23 @@ void strong_generators::init_from_permutation_representation(
 		}
 	init(A, verbose_level - 2);
 
-	vector_ge *my_gens;
-	my_gens = NEW_OBJECT(vector_ge);
+	//vector_ge *nice_gens;
+	nice_gens = NEW_OBJECT(vector_ge);
 
-	my_gens->init_from_permutation_representation(A, data, 
+	nice_gens->init_from_permutation_representation(A, data,
 		nb_elements, verbose_level);
 	
 	sims *S;
 
 	S = create_sims_from_generators_with_target_group_order_int(A, 
-		my_gens, group_order, 0 /* verbose_level */);
+			nice_gens, group_order, 0 /* verbose_level */);
 	
 	init_from_sims(S, 0 /* verbose_level */);
 
 	//tl = NEW_int(A->base_len);
 	//int_vec_copy(transversal_length, tl, A->base_len);
 
-	FREE_OBJECT(my_gens);
+	//FREE_OBJECT(my_gens);
 	if (f_v) {
 		cout << "strong_generators::init_from_permutation_"
 				"representation done, found a group of order "

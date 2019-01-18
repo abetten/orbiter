@@ -2602,7 +2602,8 @@ int reverse_engineer_semilinear_map(action *A,
 
 
 	if (f_v) {
-		cout << "reverse_engineer_semilinear_map maping unit vectors" << endl;
+		cout << "reverse_engineer_semilinear_map "
+				"maping unit vectors" << endl;
 		}
 	for (e = 0; e < d; e++) {
 		// map the unit vector e_e
@@ -2636,7 +2637,8 @@ int reverse_engineer_semilinear_map(action *A,
 
 	// map the vector (1,1,...,1):
 	if (f_v) {
-		cout << "reverse_engineer_semilinear_map mapping the all-one vector"
+		cout << "reverse_engineer_semilinear_map "
+				"mapping the all-one vector"
 				<< endl;
 		}
 	for (h = 0; h < d; h++) {
@@ -2689,7 +2691,7 @@ int reverse_engineer_semilinear_map(action *A,
 
 	// figure out the frobenius:
 	if (f_v) {
-		cout << "projective_space::reverse_engineer_semilinear_map "
+		cout << "reverse_engineer_semilinear_map "
 				"figuring out the frobenius" << endl;
 		}
 
@@ -2730,14 +2732,16 @@ int reverse_engineer_semilinear_map(action *A,
 		for (i = 0; i < d; i++) {
 			system[i * 3 + 2] = v2[i];
 			}
-		rk = F->Gauss_simple(system, d, 3, base_cols, verbose_level - 4);
+		rk = F->Gauss_simple(system,
+				d, 3, base_cols, verbose_level - 4);
 		if (rk != 2) {
 			cout << "rk != 2, fatal" << endl;
 			exit(1);
 			}
 		if (f_vv) {
 			cout << "after Gauss_simple:" << endl;
-			print_integer_matrix_width(cout, system, 2, 3, 3, F->log10_of_q);
+			print_integer_matrix_width(cout,
+					system, 2, 3, 3, F->log10_of_q);
 			cout << endl;
 			}
 
@@ -2750,7 +2754,8 @@ int reverse_engineer_semilinear_map(action *A,
 			}
 		if (f_vv) {
 			cout << "after scaling the last column:" << endl;
-			print_integer_matrix_width(cout, system, 2, 3, 3, F->log10_of_q);
+			print_integer_matrix_width(cout,
+					system, 2, 3, 3, F->log10_of_q);
 			cout << endl;
 			}
 		lambda = system[1 * 3 + 2];
@@ -2770,7 +2775,8 @@ int reverse_engineer_semilinear_map(action *A,
 				}
 			}
 		if (i == F->e) {
-			cout << "problem figuring out the Frobenius" << endl;
+			cout << "reverse_engineer_semilinear_map "
+					"problem figuring out the Frobenius" << endl;
 			exit(1);
 			}
 
@@ -2790,10 +2796,11 @@ int reverse_engineer_semilinear_map(action *A,
 		Mtx[hh] = F->frobenius_power(Mtx[hh], frobenius_inv);
 		}
 	if (f_v) {
-		cout << "projective_space::reverse_engineer_semilinear_map "
+		cout << "reverse_engineer_semilinear_map "
 				"done, we found the following map" << endl;
 		cout << "Mtx:" << endl;
-		print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
+		print_integer_matrix_width(cout,
+				Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 		cout << "frobenius = " << frobenius << endl;
 		}

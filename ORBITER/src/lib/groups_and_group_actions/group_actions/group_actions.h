@@ -329,6 +329,9 @@ public:
 	void all_point_orbits_from_generators(schreier &Schreier,
 			strong_generators *SG,
 			int verbose_level);
+	void all_point_orbits_from_single_generator(schreier &Schreier,
+			int *Elt,
+			int verbose_level);
 	void compute_stabilizer_orbits(partitionstack *&Staborbits, 
 		int verbose_level);
 	int check_if_in_set_stabilizer(int *Elt, 
@@ -430,6 +433,26 @@ public:
 		sims *G, sims *H, strong_generators *&gens_N, int verbose_level);
 	void conjugacy_classes_using_MAGMA(const char *prefix, 
 		sims *G, int verbose_level);
+	void read_conjugacy_classes_from_MAGMA(
+			char *fname,
+			int &nb_classes,
+			int *&perms,
+			int *&class_size,
+			int *&class_order_of_element,
+			int verbose_level);
+	void conjugacy_classes_and_normalizers_using_MAGMA(
+			const char *prefix,
+			sims *G, int verbose_level);
+	void read_conjugacy_classes_and_normalizers_from_MAGMA(
+			char *fname,
+			int &nb_classes,
+			int *&perms,
+			int *&class_size,
+			int *&class_order_of_element,
+			int *&class_normalizer_order,
+			int *&class_normalizer_number_of_generators,
+			int **&normalizer_generators_perms,
+			int verbose_level);
 	void centralizer_using_MAGMA(const char *prefix, 
 		sims *G, int *Elt, int verbose_level);
 	void point_stabilizer_any_point(int &pt, 

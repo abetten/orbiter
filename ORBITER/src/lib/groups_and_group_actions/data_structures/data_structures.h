@@ -78,6 +78,36 @@ public:
 };
 
 // #############################################################################
+// object_in_projective_space_with_action.C:
+// #############################################################################
+
+
+
+//! to represent an object in projective space
+
+
+class object_in_projective_space_with_action {
+
+public:
+
+	object_in_projective_space *OiP;
+		// do not free
+	strong_generators *Aut_gens;
+		// generators for the automorphism group
+
+
+	object_in_projective_space_with_action();
+	~object_in_projective_space_with_action();
+	void null();
+	void freeself();
+	void init(object_in_projective_space *OiP,
+		strong_generators *Aut_gens, int verbose_level);
+};
+
+
+
+
+// #############################################################################
 // orbit_transversal.C:
 // #############################################################################
 
@@ -106,6 +136,15 @@ public:
 // #############################################################################
 // projective_space_with_action.C:
 // #############################################################################
+
+
+#define INPUT_TYPE_SET_OF_POINTS 1
+#define INPUT_TYPE_SET_OF_LINES 2
+#define INPUT_TYPE_SET_OF_PACKING 3
+#define INPUT_TYPE_FILE_OF_POINTS 4
+#define INPUT_TYPE_FILE_OF_LINES 5
+#define INPUT_TYPE_FILE_OF_PACKINGS 6
+#define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
 
 
 //! projective space PG(n,q) with automorphism group PGGL(n+1,q)
@@ -159,7 +198,47 @@ public:
 	void report_fixed_objects_in_PG_3_tex(
 		int *Elt, ostream &ost, 
 		int verbose_level);
+	void report_orbits_in_PG_3_tex(
+		int *Elt, ostream &ost,
+		int verbose_level);
+	object_in_projective_space *create_object_from_string(
+		int type, const char *set_as_string, int verbose_level);
+	int process_object(
+		classify_bitvectors *CB,
+		object_in_projective_space *OiP,
+		int f_save_incma_in_and_out, const char *prefix,
+		int nb_objects_to_test,
+		strong_generators *&SG,
+		int verbose_level);
+	void classify_objects_using_nauty(
+		int nb_inputs, int *input_type,
+		const char **input_string, const char **input_string2,
+		int nb_objects_to_test,
+		classify_bitvectors *CB,
+		int f_save_incma_in_and_out, const char *prefix,
+		int verbose_level);
 };
+
+//globals:
+void OiPA_encode(void *extra_data,
+	int *&encoding, int &encoding_sz, void *global_data);
+void OiPA_group_order(void *extra_data,
+	longinteger_object &go, void *global_data);
+void print_summary_table_entry(int *Table,
+	int m, int n, int i, int j, int val, char *output, void *data);
+void compute_ago_distribution(
+	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
+void compute_ago_distribution_permuted(
+	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
+void compute_and_print_ago_distribution(ostream &ost,
+	classify_bitvectors *CB, int verbose_level);
+void compute_and_print_ago_distribution_with_classes(
+	ostream &ost,
+	classify_bitvectors *CB, int verbose_level);
+int count_number_of_objects_to_test(int nb_inputs, int *input_type,
+	const char **input_string, const char **input_string2,
+	int verbose_level);
+
 
 // #############################################################################
 // schreier_vector_handler.cpp:
