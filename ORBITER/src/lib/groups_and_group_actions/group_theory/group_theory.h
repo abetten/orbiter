@@ -587,6 +587,7 @@ public:
 	// schreier_io.cpp:
 	void latex(const char *fname);
 	void print_orbit_lengths(ostream &ost);
+	void print_orbit_lengths_tex(ostream &ost);
 	void print_orbit_length_distribution(ostream &ost);
 	void print_orbit_reps(ostream &ost);
 	void print(ostream &ost);
@@ -1190,7 +1191,7 @@ public:
 		int nb_gen, int verbose_level);
 	void init_from_permutation_representation(action *A, 
 		int *data, 
-		int nb_elements, int group_order, 
+		int nb_elements, int group_order, vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data(action *A, int *data, 
 		int nb_elements, int elt_size, 

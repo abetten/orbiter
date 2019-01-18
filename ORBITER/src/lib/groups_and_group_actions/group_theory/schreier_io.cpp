@@ -62,6 +62,41 @@ void schreier::print_orbit_lengths(ostream &ost)
 
 }
 
+void schreier::print_orbit_lengths_tex(ostream &ost)
+{
+	int i, f, l, m;
+	int *orbit_len_sorted;
+	int *sorting_perm;
+	int *sorting_perm_inv;
+	int nb_types;
+	int *type_first;
+	int *type_len;
+
+	int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
+		sorting_perm, sorting_perm_inv,
+		nb_types, type_first, type_len);
+
+	ost << "There are " << nb_orbits << " orbits, the orbit lengths are $" << endl;
+	for (i = 0; i < nb_types; i++) {
+		f = type_first[i];
+		l = type_len[i];
+		m = orbit_len_sorted[f];
+		ost << m;
+		if (l > 1) {
+			ost << "^{" << l << "}";
+			}
+		if (i < nb_types - 1)
+			ost << ", ";
+		}
+	ost << "$ \\\\" << endl;
+	FREE_int(orbit_len_sorted);
+	FREE_int(sorting_perm);
+	FREE_int(sorting_perm_inv);
+	FREE_int(type_first);
+	FREE_int(type_len);
+
+}
+
 void schreier::print_orbit_length_distribution(ostream &ost)
 {
 	int *val, *mult, len;

@@ -141,6 +141,7 @@ MODULES= \
 		foundations/solvers/mckay.o \
 		foundations/statistics/classify.o \
 		groups_and_group_actions/data_structures/group.o \
+		groups_and_group_actions/data_structures/object_in_projective_space_with_action.o \
 		groups_and_group_actions/data_structures/orbit_transversal.o \
 		groups_and_group_actions/data_structures/projective_space_with_action.o \
 		groups_and_group_actions/data_structures/schreier_vector_handler.o \
@@ -271,7 +272,6 @@ MODULES= \
 		top_level/geometry/decomposition.o \
 		top_level/geometry/incidence_structure.o \
 		top_level/geometry/k_arc_generator.o \
-		top_level/geometry/object_in_projective_space_with_action.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/projective_space.o \
 		top_level/geometry/recoordinatize.o \

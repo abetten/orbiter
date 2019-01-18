@@ -53,9 +53,6 @@ typedef class classify_trihedral_pairs classify_trihedral_pairs;
 	// added October 9, 2017
 typedef class classify_double_sixes classify_double_sixes;
 	// added October 10, 2017
-typedef class object_in_projective_space_with_action 
-	object_in_projective_space_with_action;
-	// added December 30, 2017
 typedef class surface_create_description surface_create_description;
 	// added January 14, 2018
 typedef class surface_create surface_create;

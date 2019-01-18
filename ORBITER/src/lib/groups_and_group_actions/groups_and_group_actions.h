@@ -57,6 +57,9 @@ typedef class schreier_vector schreier_vector;
 typedef class poset_description poset_description;
 typedef class poset poset;
 typedef class action_on_set_partitions action_on_set_partitions;
+typedef class object_in_projective_space_with_action
+	object_in_projective_space_with_action;
+	// added December 30, 2017
 
 
 enum symmetry_group_type { 

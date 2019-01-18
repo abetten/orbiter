@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	group.o \
+	object_in_projective_space_with_action.o \
 	orbit_transversal.o \
 	projective_space_with_action.o \
 	schreier_vector_handler.o \

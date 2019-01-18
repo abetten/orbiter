@@ -1040,32 +1040,6 @@ public:
 };
 
 // #############################################################################
-// object_in_projective_space_with_action.C:
-// #############################################################################
-
-
-//! to represent an object in projective space
-
-
-class object_in_projective_space_with_action {
-
-public:
-
-	object_in_projective_space *OiP;
-		// do not free
-	strong_generators *Aut_gens;
-		// generators for the automorphism group
-
-
-	object_in_projective_space_with_action();
-	~object_in_projective_space_with_action();
-	void null();
-	void freeself();
-	void init(object_in_projective_space *OiP, 
-		strong_generators *Aut_gens, int verbose_level);
-};
-
-// #############################################################################
 // polar.C:
 // #############################################################################
 

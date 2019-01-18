@@ -20,7 +20,6 @@ MODULES = \
 	decomposition.o \
 	incidence_structure.o \
 	k_arc_generator.o \
-	object_in_projective_space_with_action.o \
 	polar.o \
 	projective_space.o \
 	recoordinatize.o \
