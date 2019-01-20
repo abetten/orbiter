@@ -775,6 +775,7 @@ void projective_space::incidence_m_ii(int pt, int line, int a)
 void projective_space::make_incidence_structure_and_partition(
 	incidence_structure *&Inc, 
 	partitionstack *&Stack, int verbose_level)
+// points vs lines
 {
 	int f_v = (verbose_level >= 1);
 	int *M;
@@ -837,6 +838,140 @@ void projective_space::make_incidence_structure_and_partition(
 		}
 }
 
+void projective_space::incma_for_type_ij(
+	int row_type, int col_type,
+	int *&Incma, int &nb_rows, int &nb_cols,
+	int verbose_level)
+// row_type, col_type are the vector space dimensions of the objects
+// indexing rows and columns.
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, rk;
+	int *Basis;
+	int *Basis2;
+	int *base_cols;
+	int d = n + 1;
+
+	if (f_v) {
+		cout << "projective_space::incma_for_type_ij" << endl;
+		cout << "row_type = " << row_type << endl;
+		cout << "col_type = " << col_type << endl;
+		}
+	if (col_type < row_type) {
+		cout << "projective_space::incma_for_type_ij "
+				"col_type < row_type" << endl;
+		exit(1);
+	}
+	if (col_type < 0) {
+		cout << "projective_space::incma_for_type_ij "
+				"col_type < 0" << endl;
+		exit(1);
+	}
+	if (col_type > n + 1) {
+		cout << "projective_space::incma_for_type_ij "
+				"col_type > P->n + 1" << endl;
+		exit(1);
+	}
+	nb_rows = nb_rk_k_subspaces_as_int(row_type);
+	nb_cols = nb_rk_k_subspaces_as_int(col_type);
+
+
+	Basis = NEW_int(3 * d * d);
+	Basis2 = NEW_int(3 * d * d);
+	base_cols = NEW_int(d);
+
+	Incma = NEW_int(nb_rows * nb_cols);
+	int_vec_zero(Incma, nb_rows * nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		if (row_type == 1) {
+			unrank_point(Basis, i);
+		}
+		else if (row_type == 2) {
+			unrank_line(Basis, i);
+		}
+		else if (row_type == 3) {
+			unrank_plane(Basis, i);
+		}
+		else {
+			cout << "projective_space::incma_for_type_ij "
+					"row_type " << row_type
+				<< " not yet implemented" << endl;
+			exit(1);
+		}
+		for (j = 0; j < nb_cols; j++) {
+			if (col_type == 1) {
+				unrank_point(Basis + row_type * d, j);
+			}
+			else if (col_type == 2){
+				unrank_line(Basis + row_type * d, j);
+			}
+			else if (col_type == 3) {
+				unrank_plane(Basis + row_type * d, j);
+			}
+			else {
+				cout << "projective_space::incma_for_type_ij "
+						"col_type " << col_type
+					<< " not yet implemented" << endl;
+				exit(1);
+			}
+			rk = F->rank_of_rectangular_matrix_memory_given(Basis,
+					row_type + col_type, d, Basis2, base_cols,
+					0 /*verbose_level*/);
+			if (rk == col_type) {
+				Incma[i * nb_cols + j] = 1;
+			}
+		}
+	}
+
+	FREE_int(Basis);
+	FREE_int(Basis2);
+	FREE_int(base_cols);
+	if (f_v) {
+		cout << "projective_space::incma_for_type_ij done" << endl;
+		}
+}
+
+void projective_space::incidence_and_stack_for_type_ij(
+	int row_type, int col_type,
+	incidence_structure *&Inc,
+	partitionstack *&Stack,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Incma;
+	int nb_rows, nb_cols;
+
+	if (f_v) {
+		cout << "projective_space::incidence_and_stack_for_type_ij" << endl;
+	}
+	incma_for_type_ij(
+		row_type, col_type,
+		Incma, nb_rows, nb_cols,
+		verbose_level);
+	if (f_v) {
+		cout << "projective_space::incidence_and_stack_for_type_ij "
+				"before Inc->init_by_matrix" << endl;
+		}
+	Inc = NEW_OBJECT(incidence_structure);
+	Inc->init_by_matrix(nb_rows, nb_cols, Incma, verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space::incidence_and_stack_for_type_ij "
+				"after Inc->init_by_matrix" << endl;
+		}
+	FREE_int(Incma);
+
+
+	Stack = NEW_OBJECT(partitionstack);
+	Stack->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
+	Stack->subset_continguous(nb_rows, nb_cols);
+	Stack->split_cell(0 /* verbose_level */);
+	Stack->sort_cells();
+
+	if (f_v) {
+		cout << "projective_space::incidence_and_stack_for_type_ij "
+				"done" << endl;
+	}
+}
 int projective_space::nb_rk_k_subspaces_as_int(int k)
 {
 	longinteger_domain D;

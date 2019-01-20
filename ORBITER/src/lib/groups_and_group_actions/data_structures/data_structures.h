@@ -235,6 +235,9 @@ public:
 	void report_orbits_in_PG_3_tex(
 		int *Elt, ostream &ost,
 		int verbose_level);
+	void report_decomposition_by_single_automorphism(
+		int *Elt, ostream &ost,
+		int verbose_level);
 	object_in_projective_space *create_object_from_string(
 		int type, const char *set_as_string, int verbose_level);
 	int process_object(
@@ -250,6 +253,15 @@ public:
 		classify_bitvectors *CB,
 		int f_save_incma_in_and_out, const char *prefix,
 		int verbose_level);
+#if 0
+	void incma_with_orbit_decomposition(
+		int row_type, int col_type,
+		schreier *Sch_on_rows, schreier *Sch_on_cols,
+		int *&Incma, int &nb_rows, int &nb_cols,
+		incidence_structure *&Inc,
+		partitionstack *&Stack,
+		int verbose_level);
+#endif
 };
 
 //globals:
