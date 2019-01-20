@@ -336,7 +336,7 @@ void printobjectkind(ostream& ost, kind k);
 const char *kind_ascii(kind k);
 const char *action_kind_ascii(kind k);
 //void int_swap(int& x, int& y);
-void uint4_swap(uint4& x, uint4& y);
+void uint4_swap(uint_4& x, uint_4& y);
 
 ostream& operator<<(ostream& ost, class discreta_base& p);
 // discreta_base operator * (discreta_base& x, discreta_base &y);
@@ -2113,8 +2113,8 @@ void bt_key_fill_in_int4(char **p_key, discreta_base& key_op);
 void bt_key_fill_in_int2(char **p_key, discreta_base& key_op);
 void bt_key_fill_in_string(char **p_key, int output_size, discreta_base& key_op);
 void bt_key_fill_in(char *key, Vector& V, Vector& the_object);
-void bt_key_get_int4(char **key, int4 &i);
-void bt_key_get_int2(char **key, int2 &i);
+void bt_key_get_int4(char **key, int_4 &i);
+void bt_key_get_int2(char **key, int_2 &i);
 
 #define BTREEMAXKEYLEN 24
 //#define BTREEMAXKEYLEN 48
@@ -2134,8 +2134,8 @@ typedef KEYCARRIER KEYTYPE;
 
 
 typedef struct datatype {
-	uint4 datref;
-	uint4 data_size;
+	uint_4 datref;
+	uint_4 data_size;
 } DATATYPE;
 
 //#define DB_SIZEOF_HEADER 16
@@ -2192,10 +2192,10 @@ class database: public Vector
 	int size_of_header_log();
 	
 	void add_object_return_datref(Vector &the_object,
-			uint4 &datref, int verbose_level);
+			uint_4 &datref, int verbose_level);
 	void add_object(Vector &the_object, int verbose_level);
-	void delete_object(Vector& the_object, uint4 datref, int verbose_level);
-	void get_object(uint4 datref, Vector &the_object, int verbose_level);
+	void delete_object(Vector& the_object, uint_4 datref, int verbose_level);
+	void get_object(uint_4 datref, Vector &the_object, int verbose_level);
 	void get_object(DATATYPE *data_type, Vector &the_object, int verbose_level);
 	void get_object_by_unique_int4(int btree_idx, 
 		int id, Vector& the_object, int verbose_level);
@@ -2223,14 +2223,14 @@ class database: public Vector
 		Vector& i_min, Vector &i_max, Vector& datrefs, 
 		int verbose_level);
 
-	int get_size_from_datref(uint4 datref, int verbose_level);
+	int get_size_from_datref(uint_4 datref, int verbose_level);
 	void add_data_DB(void *d, 
-		int size, uint4 *datref, int verbose_level);
+		int size, uint_4 *datref, int verbose_level);
 	void add_data_DB_standard(void *d, 
-		int size, uint4 *datref, int verbose_level);
+		int size, uint_4 *datref, int verbose_level);
 	void add_data_DB_compact(void *d, 
-		int size, uint4 *datref, int verbose_level);
-	void free_data_DB(uint4 datref, int size, int verbose_level);
+		int size, uint_4 *datref, int verbose_level);
+	void free_data_DB(uint_4 datref, int size, int verbose_level);
 
 	void file_open(int verbose_level);
 	void file_create(int verbose_level);
@@ -2260,8 +2260,8 @@ class database: public Vector
 typedef struct itemtyp {
 	KEYTYPE Key;
 	DATATYPE Data;
-	int4 Childs; // Anzahl der Nachfolger ueber Ref
-	int4 Ref;
+	int_4 Childs; // Anzahl der Nachfolger ueber Ref
+	int_4 Ref;
 } ItemTyp;
 
 
@@ -2269,11 +2269,11 @@ typedef struct itemtyp {
 
 
 typedef struct pagetyp {
-	int4 AllocRec;
-	int4 NextFreeRec;
-	int4 RootRec;
+	int_4 AllocRec;
+	int_4 NextFreeRec;
+	int_4 RootRec;
 
-	int4 NumItems;
+	int_4 NumItems;
 	ItemTyp Item[BTREEMAXPAGESIZE + 1];
 /* Item[0]           enthaelt keine Daten, 
  *                   nur Ref/Childs ist verwendet.
@@ -2286,8 +2286,8 @@ typedef struct pagetyp {
 
 
 typedef struct buffer {
-	int4 PageNum;
-	int4 unused;
+	int_4 PageNum;
+	int_4 unused;
 	PageTyp Page;
 	long align;
 } Buffer;

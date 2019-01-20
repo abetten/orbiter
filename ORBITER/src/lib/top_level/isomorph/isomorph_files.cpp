@@ -509,7 +509,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 	data = NEW_int(size + 1);
 	for (u = 0; u < nb_solutions; u++) {
 
-		uint4 datref;
+		uint_4 datref;
 		int hs, id;
 				
 		data[0] = the_case;
@@ -566,7 +566,7 @@ void isomorph::build_up_database(int nb_files,
 	int data[1000];
 	char buf[MY_BUFSIZE];
 	int print_mod = 1000;
-	uint4 datref;
+	uint_4 datref;
 	int nb_fail = 0;
 
 	

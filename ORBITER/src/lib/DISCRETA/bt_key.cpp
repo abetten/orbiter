@@ -126,10 +126,10 @@ int bt_lexicographic_cmp(char *p1, char *p2)
 
 int bt_key_int_cmp(char *p1, char *p2)
 {
-	int4 *p_l1, *p_l2;
+	int_4 *p_l1, *p_l2;
 	
-	p_l1 = (int4 *) p1;
-	p_l2 = (int4 *) p2;
+	p_l1 = (int_4 *) p1;
+	p_l2 = (int_4 *) p2;
 	if (*p_l1 < *p_l2) {
 		return -1;
 		}
@@ -141,10 +141,10 @@ int bt_key_int_cmp(char *p1, char *p2)
 
 int bt_key_int2_cmp(char *p1, char *p2)
 {
-	int4 *p_l1, *p_l2;
+	int_4 *p_l1, *p_l2;
 	
-	p_l1 = (int4 *) p1;
-	p_l2 = (int4 *) p2;
+	p_l1 = (int_4 *) p1;
+	p_l2 = (int_4 *) p2;
 	if (*p_l1 < *p_l2) {
 		return -1;
 		}
@@ -162,14 +162,14 @@ int bt_key_int2_cmp(char *p1, char *p2)
 
 void bt_key_print_int4(char **key, ostream& ost)
 {
-	int4 i;
+	int_4 i;
 	bt_key_get_int4(key, i);
 	ost << i;
 }
 
 void bt_key_print_int2(char **key, ostream& ost)
 {
-	int2 i;
+	int_2 i;
 	bt_key_get_int2(key, i);
 	ost << i;
 }
@@ -245,7 +245,7 @@ void bt_key_print(char *key, Vector& V, ostream& ost)
 
 int bt_key_compare_int4(char **p_key1, char **p_key2)
 {
-	int4 int1, int2;
+	int_4 int1, int2;
 	int i;
 	char c;
 	char *pc_1 = (char *) &int1;
@@ -270,7 +270,7 @@ int bt_key_compare_int4(char **p_key1, char **p_key2)
 
 int bt_key_compare_int2(char **p_key1, char **p_key2)
 {
-	int2 int1, int2;
+	int_2 int1, int2;
 	int i;
 	char c;
 	char *pc_1 = (char *) &int1;
@@ -363,7 +363,7 @@ void bt_key_fill_in_int4(char **p_key, discreta_base& key_op)
 		exit(1);
 		}
 	integer& key_op_int = key_op.as_integer();
-	int4 a = (int4) key_op_int.s_i();
+	int_4 a = (int_4) key_op_int.s_i();
 	int i;
 	char *pc = (char *) &a;
 	char c;
@@ -383,7 +383,7 @@ void bt_key_fill_in_int2(char **p_key, discreta_base& key_op)
 		exit(1);
 		}
 	integer& key_op_int = key_op.as_integer();
-	int2 a = key_op_int.s_i();
+	int_2 a = key_op_int.s_i();
 	int i;
 	char *pc = (char *) &a;
 	char c;
@@ -461,19 +461,19 @@ void bt_key_fill_in(char *key, Vector& V, Vector& the_object)
 					bt_key_fill_in_int2(&the_key, *key_object1);
 					}
 				else {
-					cout << "bt_key_fill_in() output_size not 2 or 4" << endl;
+					cout << "bt_key_fill_in output_size not 2 or 4" << endl;
 					exit(1);
 					}
 				}
 			}
 		else {
-			cout << "bt_key_fill_in() unknown bt_key_kind" << endl;
+			cout << "bt_key_fill_in unknown bt_key_kind" << endl;
 			exit(1);
 			}
 		}
 }
 
-void bt_key_get_int4(char **key, int4 &i)
+void bt_key_get_int4(char **key, int_4 &i)
 {
 	char *pc = (char *)&i;
 	
@@ -483,7 +483,7 @@ void bt_key_get_int4(char **key, int4 &i)
 	pc[3] = **key; (*key)++;
 }
 
-void bt_key_get_int2(char **key, int2 &i)
+void bt_key_get_int2(char **key, int_2 &i)
 {
 	char *pc = (char *)&i;
 	

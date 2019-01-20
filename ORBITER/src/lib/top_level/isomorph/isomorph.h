@@ -415,7 +415,7 @@ public:
 		// fields 3-8 are the starter
 	void add_solution_to_database(int *data, 
 		int nb, int id, int no, 
-		int nb_solutions, int h, uint4 &datref, 
+		int nb_solutions, int h, uint_4 &datref,
 		int print_mod, int verbose_level);
 	void load_solution(int id, int *data);
 	void load_solution_by_btree(int btree_idx, 

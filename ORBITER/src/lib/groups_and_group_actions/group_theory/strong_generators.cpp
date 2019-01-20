@@ -2074,18 +2074,18 @@ void strong_generators::compute_ascii_coding(
 	if (f_v) {
 		cout << "strong_generators::compute_ascii_coding" << endl;
 		}
-	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(int4) +
+	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(int_4) +
 			A->coded_elt_size_in_char * gens->len) + 1;
 	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
-	code_int4(p, (int4) A->base_len);
+	code_int4(p, (int_4) A->base_len);
 		// in GALOIS/util.C
-	code_int4(p, (int4) gens->len);
+	code_int4(p, (int_4) gens->len);
 	for (i = 0; i < A->base_len; i++) {
-		code_int4(p, (int4) A->base[i]);
+		code_int4(p, (int_4) A->base[i]);
 		}
 	for (i = 0; i < A->base_len; i++) {
-		code_int4(p, (int4) tl[i]);
+		code_int4(p, (int_4) tl[i]);
 		}
 	for (i = 0; i < gens->len; i++) {
 		A->element_pack(gens->ith(i), A->elt1, FALSE);

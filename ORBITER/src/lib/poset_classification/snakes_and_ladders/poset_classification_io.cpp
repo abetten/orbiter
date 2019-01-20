@@ -1298,7 +1298,7 @@ void poset_classification::read_sv_level_file_binary2(
 {
 	int f, i, nb_nodes;
 	int f_v = (verbose_level >= 1);
-	int4 I;
+	int_4 I;
 	
 	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
@@ -1465,7 +1465,7 @@ void poset_classification::read_level_file_binary2(
 	int f, i, nb_nodes, magic_sync;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int4 I;
+	int_4 I;
 	
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary2" << endl;
@@ -1696,9 +1696,9 @@ void poset_classification_read_candidates_of_orbit(
 		}
 	if (f_vv) {
 		cout << "seeking position "
-				<< (1 + orbit_at_level * 2) * sizeof(int4) << endl;
+				<< (1 + orbit_at_level * 2) * sizeof(int_4) << endl;
 		}
-	fseek(fp, (1 + orbit_at_level * 2) * sizeof(int4), SEEK_SET);
+	fseek(fp, (1 + orbit_at_level * 2) * sizeof(int_4), SEEK_SET);
 	nb_candidates = fread_int4(fp);
 	if (f_vv) {
 		cout << "nb_candidates=" << nb_candidates << endl;
@@ -1708,7 +1708,7 @@ void poset_classification_read_candidates_of_orbit(
 		cout << "cand_first=" << cand_first << endl;
 		}
 	candidates = NEW_int(nb_candidates);
-	fseek(fp, (1 + nb * 2 + cand_first) * sizeof(int4), SEEK_SET);
+	fseek(fp, (1 + nb * 2 + cand_first) * sizeof(int_4), SEEK_SET);
 	for (i = 0; i < nb_candidates; i++) {
 		candidates[i] = fread_int4(fp);
 		}

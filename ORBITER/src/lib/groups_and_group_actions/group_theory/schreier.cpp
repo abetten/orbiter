@@ -2065,7 +2065,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 
 	gens->init(A);
 	cnt = 0;
@@ -2076,7 +2076,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 		}
 		schreier *S;
 
-		S = new schreier;
+		S = NEW_OBJECT(schreier);
 		S->init(A);
 		S->init_generators(*gens);
 		if (f_v) {
@@ -2153,7 +2153,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 		// append the generator and its inverse to the generating set:
 		gens->append(Elt1);
 		gens->append(Elt2);
-		delete S;
+		FREE_OBJECT(S);
 		cnt++;
 
 	}
@@ -2164,7 +2164,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 		}
 
 	FREE_int(candidates);
-	delete gens;
+	FREE_OBJECT(gens);
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 

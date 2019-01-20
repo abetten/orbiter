@@ -291,21 +291,21 @@ void group::code_ascii(int verbose_level)
 				<< " base_len=" << A->base_len << endl;
 		}
 	require_strong_generators();
-	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(int4)
+	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(int_4)
 			+ A->coded_elt_size_in_char * SG->len) + 1;
 	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
 
 	//cout << "group::code_ascii action A->base_len=" << A->base_len << endl;
-	code_int4(p, (int4) A->base_len);
+	code_int4(p, (int_4) A->base_len);
 		// in GALOIS/util.C
 	//cout << "group::code_ascii action SG->len=" << SG->len << endl;
-	code_int4(p, (int4) SG->len);
+	code_int4(p, (int_4) SG->len);
 	for (i = 0; i < A->base_len; i++) {
-		code_int4(p, (int4) A->base[i]);
+		code_int4(p, (int_4) A->base[i]);
 		}
 	for (i = 0; i < A->base_len; i++) {
-		code_int4(p, (int4) tl[i]);
+		code_int4(p, (int_4) tl[i]);
 		}
 	for (i = 0; i < SG->len; i++) {
 		A->element_pack(SG->ith(i), A->elt1, FALSE);

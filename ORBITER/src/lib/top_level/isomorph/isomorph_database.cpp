@@ -202,7 +202,7 @@ void isomorph::init_DB_sol(int verbose_level)
 }
 
 void isomorph::add_solution_to_database(int *data, 
-	int nb, int id, int no, int nb_solutions, int h, uint4 &datref, 
+	int nb, int id, int no, int nb_solutions, int h, uint_4 &datref,
 	int print_mod, int verbose_level)
 {
 	int f_vvv = (verbose_level >= 3);
@@ -244,7 +244,7 @@ void isomorph::load_solution(int id, int *data)
 		}
 	//DB_sol->get_object_by_unique_int4(2, id, v, verbose_level);
 	datref = id_to_datref[id];
-	DB_sol->get_object((uint4) datref, v, 0/*verbose_level*/);
+	DB_sol->get_object((uint_4) datref, v, 0/*verbose_level*/);
 	
 	//cout << v << endl;
 	for (i = 0; i < size; i++) {
