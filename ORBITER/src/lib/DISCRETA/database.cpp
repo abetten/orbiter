@@ -167,21 +167,21 @@ void database::delete_files()
 
 void database::put_file_size()
 {
-	int4 l, l1;
+	int_4 l, l1;
 	int f_v = FALSE;
 
 	if (f_v) {
 		cout << "database::put_file_size" << endl;
 		}
 	file_seek(DB_POS_FILESIZE);
-	l = l1 = (int4) file_size();
-	block_swap_chars((char *)&l, sizeof(int4), 1);
+	l = l1 = (int_4) file_size();
+	block_swap_chars((char *)&l, sizeof(int_4), 1);
 	file_write(&l, 4, 1);
 }
 
 void database::get_file_size()
 {
-	int4 l;
+	int_4 l;
 	int f_v = FALSE;
 
 	if (f_v) {
@@ -189,7 +189,7 @@ void database::get_file_size()
 		}
 	file_seek(DB_POS_FILESIZE);
 	file_read(&l, 4, 1);
-	block_swap_chars((char *)&l, sizeof(int4), 1);
+	block_swap_chars((char *)&l, sizeof(int_4), 1);
 	file_size() = l;
 }
 
@@ -212,7 +212,7 @@ void database::user2total(int user, int &total, int &pad)
 	else if (file_type() == DB_FILE_TYPE_COMPACT) {
 		r = user % sz;
 		pad = sz - r;
-		total = sizeof(int4) * 2 + user + pad;
+		total = sizeof(int_4) * 2 + user + pad;
 		}
 }
 
@@ -247,7 +247,7 @@ int database::size_of_header_log()
 	
 }
 
-void database::add_object_return_datref(Vector &the_object, uint4 &datref, int verbose_level)
+void database::add_object_return_datref(Vector &the_object, uint_4 &datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -293,7 +293,7 @@ void database::add_object_return_datref(Vector &the_object, uint4 &datref, int v
 		cout << "finished with add_data_DB()" << endl;
 		}
 	data_type.datref = datref;
-	data_type.data_size = (uint4) size;
+	data_type.data_size = (uint_4) size;
 
 	for (i = 0; i < btree_access().s_l(); i++) {
 		btree & bt = btree_access_i(i);
@@ -319,7 +319,7 @@ void database::add_object_return_datref(Vector &the_object, uint4 &datref, int v
 void database::add_object(Vector &the_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	uint4 datref;
+	uint_4 datref;
 
 	if (f_v) {
 		cout << "database::add_object" << endl;
@@ -331,7 +331,7 @@ void database::add_object(Vector &the_object, int verbose_level)
 }
 
 void database::delete_object(Vector& the_object, 
-	uint4 datref, int verbose_level)
+	uint_4 datref, int verbose_level)
 {
 	int i, j, len;
 	int idx;
@@ -348,7 +348,7 @@ void database::delete_object(Vector& the_object,
 		}
 	int size = get_size_from_datref(datref, verbose_level - 1);
 	data_type.datref = datref;
-	data_type.data_size = (uint4) size;
+	data_type.data_size = (uint_4) size;
 	len = btree_access().s_l();
 	for (i = 0; i < len; i++) {
 		for (j = 0; j < BTREEMAXKEYLEN; j++) {
@@ -365,7 +365,7 @@ void database::delete_object(Vector& the_object,
 	free_data_DB(datref, size, verbose_level - 2);
 }
 
-void database::get_object(uint4 datref, 
+void database::get_object(uint_4 datref,
 	Vector &the_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -377,7 +377,7 @@ void database::get_object(uint4 datref,
 		}
 	size = get_size_from_datref(datref, verbose_level - 1);
 	data_type.datref = datref;
-	data_type.data_size = (uint4) size;
+	data_type.data_size = (uint_4) size;
 	get_object(&data_type, the_object, verbose_level - 1);
 }
 
@@ -410,12 +410,12 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 	file_read(d, 1, total);
 	
 	if (file_type() == DB_FILE_TYPE_STANDARD) {
-		int4 *header = (int4 *) d;
-		int4 *header2 = header + 4;
+		int_4 *header = (int_4 *) d;
+		int_4 *header2 = header + 4;
 		
 		pc1 = d + 8 * 4;
-		block_swap_chars((char *)header, sizeof(int4), 4);
-		block_swap_chars((char *)header2, sizeof(int4), 4);
+		block_swap_chars((char *)header, sizeof(int_4), 4);
+		block_swap_chars((char *)header2, sizeof(int_4), 4);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_object()|header: no MAGIC_SYNC" << endl;
 			cout << "data_type->datref=" << data_type->datref << endl;
@@ -451,10 +451,10 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 			}
 		}
 	else if (file_type() == DB_FILE_TYPE_COMPACT) {
-		int4 *header = (int4 *) d;
+		int_4 *header = (int_4 *) d;
 		
 		pc1 = d + 4 * 2;
-		block_swap_chars((char *)header, sizeof(int4), 2);
+		block_swap_chars((char *)header, sizeof(int_4), 2);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_object()|header: no MAGIC_SYNC" << endl;
 			cout << "data_type->datref=" << data_type->datref << endl;
@@ -503,7 +503,7 @@ void database::get_object_by_unique_int4(int btree_idx, int id,
 	if (f_v) {
 		cout << "datref=" << datref << " calling get_object" << endl;
 		}
-	get_object((uint4) datref, the_object, verbose_level - 1);
+	get_object((uint_4) datref, the_object, verbose_level - 1);
 }
 
 int database::get_object_by_unique_int4_if_there(int btree_idx, int id, 
@@ -526,7 +526,7 @@ int database::get_object_by_unique_int4_if_there(int btree_idx, int id,
 	if (f_v) {
 		cout << "calling get_object" << endl;
 		}
-	get_object((uint4) datref, the_object, verbose_level - 1);
+	get_object((uint_4) datref, the_object, verbose_level - 1);
 	return TRUE;
 }
 
@@ -612,7 +612,7 @@ void database::print_subset(Vector& datrefs, ostream& ost)
 	
 	len = datrefs.s_l();
 	for (i = 0; i < len; i++) {
-		get_object((uint4) datrefs.s_ii(i), the_object, verbose_level);
+		get_object((uint_4) datrefs.s_ii(i), the_object, verbose_level);
 		cout << i << " : " << the_object << endl;
 		}
 }
@@ -645,7 +645,7 @@ void database::extract_subset(Vector& datrefs, char *out_path, int verbose_level
 			if ((i % 10) == 0)
 				cout << endl;
 			}
-		get_object((uint4) datrefs.s_ii(i), the_object, verbose_level - 2);
+		get_object((uint_4) datrefs.s_ii(i), the_object, verbose_level - 2);
 		if (f_vv) {
 			cout << i << " : " << the_object << endl;
 			}
@@ -789,11 +789,11 @@ void database::search_int4_multi_dimensional(Vector& btree_idx,
 }
 
 
-int database::get_size_from_datref(uint4 datref, int verbose_level)
+int database::get_size_from_datref(uint_4 datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int size;
-	int4 *header = NULL;
+	int_4 *header = NULL;
 	
 	if (f_v) {
 		cout << "database::get_size_from_datref" << endl;
@@ -803,10 +803,10 @@ int database::get_size_from_datref(uint4 datref, int verbose_level)
 		exit(1);
 		}
 	if (file_type() == DB_FILE_TYPE_STANDARD) {
-		header = new int4[8];
+		header = new int_4[8];
 		file_seek(((uint)datref) << size_of_header_log());
 		file_read((char *)header, 1, 8 * 4);
-		block_swap_chars((char *)header, sizeof(int4), 8);
+		block_swap_chars((char *)header, sizeof(int_4), 8);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_size_from_datref()|header: no MAGIC_SYNC, probably the datref is wrong" << endl;
 			cout << "datref=" << datref << endl;
@@ -820,10 +820,10 @@ int database::get_size_from_datref(uint4 datref, int verbose_level)
 		delete [] header;
 		}
 	else if (file_type() == DB_FILE_TYPE_COMPACT) {
-		header = new int4[2];
+		header = new int_4[2];
 		file_seek(((uint)datref) << size_of_header_log());
 		file_read((char *)header, 1, 4 * 2);
-		block_swap_chars((char *)header, sizeof(int4), 2);
+		block_swap_chars((char *)header, sizeof(int_4), 2);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_size_from_datref()|header: no MAGIC_SYNC, probably the datref is wrong" << endl;
 			cout << "datref=" << datref << endl;
@@ -845,7 +845,7 @@ int database::get_size_from_datref(uint4 datref, int verbose_level)
 }
 
 void database::add_data_DB(void *d, 
-	int size, uint4 *datref, int verbose_level)
+	int size, uint_4 *datref, int verbose_level)
 {
 	if (file_type() == DB_FILE_TYPE_STANDARD) {
 		add_data_DB_standard(d, size, datref, verbose_level);
@@ -856,7 +856,7 @@ void database::add_data_DB(void *d,
 }
 
 void database::add_data_DB_standard(void *d, 
-	int size, uint4 *datref, int verbose_level)
+	int size, uint_4 *datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -864,9 +864,9 @@ void database::add_data_DB_standard(void *d,
 	char *data2 = NULL;
 	char *pc, *pc0;
 	int i;
-	int4 *pi;
-	int4 header[4];
-	int4 new_header[4];
+	int_4 *pi;
+	int_4 header[4];
+	int_4 new_header[4];
 		/* 0: SYNC
 		 * 1: f_used
 		 * 2: length user data
@@ -883,10 +883,10 @@ void database::add_data_DB_standard(void *d,
 	data2 = (char *) new char[total];
 	header[0] = MAGIC_SYNC;
 	header[1] = TRUE;
-	header[2] = (int4) size;
-	header[3] = (int4) total;
-	block_swap_chars((char *)header, sizeof(int4), 4);
-	pi = (int4 *)data2;
+	header[2] = (int_4) size;
+	header[3] = (int_4) total;
+	block_swap_chars((char *)header, sizeof(int_4), 4);
+	pi = (int_4 *)data2;
 	pi[0] = header[0];
 	pi[1] = header[1];
 	pi[2] = header[2];
@@ -895,7 +895,7 @@ void database::add_data_DB_standard(void *d,
 	pi[5] = header[1];
 	pi[6] = header[2];
 	pi[7] = header[3];
-	block_swap_chars((char *)header, sizeof(int4), 4);
+	block_swap_chars((char *)header, sizeof(int_4), 4);
 		// swap header back, there will be another test 
 	pc = (char *)(pi + 8);
 	pc0 = (char *)d;
@@ -914,7 +914,7 @@ void database::add_data_DB_standard(void *d,
 		}
 	file_seek(old_file_size);
 	file_write(data2, 1, total);
-	*datref = (uint4)(old_file_size >> size_of_header_log());
+	*datref = (uint_4)(old_file_size >> size_of_header_log());
 	if (((int)((uint)*datref << size_of_header_log())) != old_file_size) {
 		cout << "database::add_data_DB_standard ((uint)*datref << size_of_header_log()) != old_file_size" << endl;
 		cout << "old_file_size=" << old_file_size << endl;
@@ -927,7 +927,7 @@ void database::add_data_DB_standard(void *d,
 	
 	file_seek(old_file_size);
 	file_read(new_header, 4, 4);
-	block_swap_chars((char *)new_header, sizeof(int4), 4);
+	block_swap_chars((char *)new_header, sizeof(int_4), 4);
 	if (header[0] != new_header[0]) {
 		cout << "header[0] != new_header[0]\n";
 		}
@@ -944,7 +944,7 @@ void database::add_data_DB_standard(void *d,
 }
 
 void database::add_data_DB_compact(void *d, 
-	int size, uint4 *datref, int verbose_level)
+	int size, uint_4 *datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -952,9 +952,9 @@ void database::add_data_DB_compact(void *d,
 	char *data2 = NULL;
 	char *pc, *pc0;
 	int i;
-	int4 *pi;
-	int4 header[2];
-	int4 new_header[2];
+	int_4 *pi;
+	int_4 header[2];
+	int_4 new_header[2];
 		// 0: SYNC
 		// 1: size of user data are
 	int old_file_size;
@@ -965,12 +965,12 @@ void database::add_data_DB_compact(void *d,
 	user2total(size, total, pad);
 	data2 = (char *) new char[total];
 	header[0] = MAGIC_SYNC;
-	header[1] = (int4) size;
-	block_swap_chars((char *)header, sizeof(int4), 2);
-	pi = (int4 *)data2;
+	header[1] = (int_4) size;
+	block_swap_chars((char *)header, sizeof(int_4), 2);
+	pi = (int_4 *)data2;
 	pi[0] = header[0];
 	pi[1] = header[1];
-	block_swap_chars((char *)header, sizeof(int4), 2);
+	block_swap_chars((char *)header, sizeof(int_4), 2);
 		// swap header back, there will be another test 
 	pc = (char *)(pi + 2);
 	pc0 = (char *)d;
@@ -984,7 +984,7 @@ void database::add_data_DB_compact(void *d,
 	old_file_size = file_size();
 	file_seek(old_file_size);
 	file_write(data2, 1, total);
-	*datref = (uint4)(old_file_size >> size_of_header_log());
+	*datref = (uint_4)(old_file_size >> size_of_header_log());
 	if (((int)((uint)*datref << size_of_header_log())) != old_file_size) {
 		cout << "database::add_data_DB_compact ((uint)*datref << size_of_header_log()) != old_file_size" << endl;
 		cout << "old_file_size=" << old_file_size << endl;
@@ -997,7 +997,7 @@ void database::add_data_DB_compact(void *d,
 	
 	file_seek(old_file_size);
 	file_read(new_header, 4, 2);
-	block_swap_chars((char *)new_header, sizeof(int4), 2);
+	block_swap_chars((char *)new_header, sizeof(int_4), 2);
 	if (header[0] != new_header[0]) {
 		cout << "header[0] != new_header[0]\n";
 		}
@@ -1007,12 +1007,12 @@ void database::add_data_DB_compact(void *d,
 	delete [] data2;
 }
 
-void database::free_data_DB(uint4 datref, int size, int verbose_level)
+void database::free_data_DB(uint_4 datref, int size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int total;
-	int4 header[8];
+	int_4 header[8];
 	
 	if (f_v) {
 		cout << "database::free_data_DB()" << endl;

@@ -260,7 +260,7 @@ void memory::read_char(char *c)
 
 void memory::write_int(int i)
 {
-	int4 i1 = (int4) i;
+	int_4 i1 = (int_4) i;
 	
 #ifdef DEBUG_WRITE_int
 	cout << "memory::write_int(), at " << used_length() << ", writing int " << i1 << endl;
@@ -271,7 +271,7 @@ void memory::write_int(int i)
 
 void memory::read_int(int *i)
 {
-	int4 i1;
+	int_4 i1;
 	int l1, j, cur_p, l;
 	char *cp, *cp1;
 	

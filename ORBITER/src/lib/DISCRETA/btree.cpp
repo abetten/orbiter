@@ -62,7 +62,7 @@ void database_init(int verbose_level)
 		cout << "database_init() sizeof(ItemTyp)=" << sizeof(ItemTyp) << endl;
 		cout << "database_init() sizeof(PageTyp)=" << sizeof(PageTyp) << endl;
 		cout << "database_init() sizeof(Buffer)=" << sizeof(Buffer) << endl;
-		cout << "database_init() sizeof(int4)=" << sizeof(int4) << endl;
+		cout << "database_init() sizeof(int_4)=" << sizeof(int_4) << endl;
 		}
 	
 	RootBF = (Buffer *) new Buffer[MAX_ROOT_BUF];
@@ -341,7 +341,7 @@ void btree::open(int verbose_level)
 			}
 		file_seek(Root());
 		file_read(&Root_BF->Page, "btree::open");
-		Root_BF->PageNum = (int4) Root();
+		Root_BF->PageNum = (int_4) Root();
 		}
 	else {
 		Root_BF->PageNum = 0;
@@ -428,9 +428,9 @@ void btree::WriteInfo(int verbose_level)
 		}
 	size = sizeof(Buffer);
 	fill_char((char *)BF, size, 0);
-	BF->Page.AllocRec = (int4) AllocRec();
-	BF->Page.NextFreeRec = (int4) FreeRec();
-	BF->Page.RootRec = (int4) Root();
+	BF->Page.AllocRec = (int_4) AllocRec();
+	BF->Page.NextFreeRec = (int_4) FreeRec();
+	BF->Page.RootRec = (int_4) Root();
 	
 	if (f_vv) {
 		cout << "btree::WriteInfo writing page 0" << endl;
@@ -511,7 +511,7 @@ void btree::ReleaseRec(int x)
 		}
 	size = (int)sizeof(Buffer);
 	fill_char((char *)BF, size, 0);
-	BF->Page.NextFreeRec = (int4) FreeRec();
+	BF->Page.NextFreeRec = (int_4) FreeRec();
 	file_seek(x);
 	file_write(&BF->Page, "ReleaseRec");
 	FreeRec() = x;
@@ -549,7 +549,7 @@ void btree::LoadPage(Buffer *BF, int x, int verbose_level)
 		*BF = *Root_BF;
 		}
 	else {
-		BF->PageNum = (int4) x;
+		BF->PageNum = (int_4) x;
 #ifdef USE_TABLE
 		page_table *T;
 	
@@ -898,7 +898,7 @@ int btree::get_highest_int4()
 	// key_print(key.c, ost);
 	// cout << endl;
 	char *p_key = key.c;
-	int4 i;
+	int_4 i;
 	bt_key_get_int4(&p_key, i);
 	return i;
 }
@@ -1083,7 +1083,7 @@ int btree::SearchPage(Buffer *buffer,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	ItemTyp *item = NULL;
-	uint4 searchdatref = 0;
+	uint_4 searchdatref = 0;
 	int childs;
 	int r, l, i;
 	int res;
@@ -1361,14 +1361,14 @@ void btree::insert_key(KEYTYPE *pKey,
 			cout << endl;
 			}
 		new_page_num = AllocateRec(verbose_level);
-		NewRoot->PageNum = (int4) new_page_num;
+		NewRoot->PageNum = (int_4) new_page_num;
 		if (f_v) {
 			cout << "btree::insert_key: RootSplit, NewRoot->PageNum = " << NewRoot->PageNum << endl;
 			}
 
 		NewRoot->Page.NumItems = 1;
-		NewRoot->Page.Item[0].Ref = (int4) Root();
-		NewRoot->Page.Item[0].Childs = (int4) NewNeighbourChilds;
+		NewRoot->Page.Item[0].Ref = (int_4) Root();
+		NewRoot->Page.Item[0].Childs = (int_4) NewNeighbourChilds;
 		NewRoot->Page.Item[1] = RootItem;
 		
 		Root() = NewRoot->PageNum;
@@ -1479,7 +1479,7 @@ void btree::Update(int Node, int *Rise,
 			cout << endl;
 			}
 		/* RisenItem muss nach x eingefuegt werden: */
-		IKBF->Page.Item[x].Childs = (int4) *RisenNeighbourChilds;
+		IKBF->Page.Item[x].Childs = (int_4) *RisenNeighbourChilds;
 		/* Nach Seiten-Split hat der linke Nachbar weniger 
 		 * Nachfolger */
 		if (IKBF->Page.NumItems < BTREEMAXPAGESIZE) {
@@ -1556,7 +1556,7 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 	if (f_v) {
 		cout << "Split new page=" << new_page_num << endl;
 		}
-	SplitBF->PageNum = (int4) new_page_num;
+	SplitBF->PageNum = (int_4) new_page_num;
 	if (x < BTREEHALFPAGESIZE) {
 		SplitItem = BF->Page.Item[BTREEHALFPAGESIZE];
 		for (z = BTREEHALFPAGESIZE - 1; z >= x + 1; z--) {
@@ -1589,7 +1589,7 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 	BF->Page.NumItems = BTREEHALFPAGESIZE;
 	SplitBF->Page.NumItems = BTREEHALFPAGESIZE;
 	SplitItem.Ref = SplitBF->PageNum;
-	SplitItem.Childs = (int4) sum2;
+	SplitItem.Childs = (int_4) sum2;
 	*Item = SplitItem;
 	
 	if (f_v) {
@@ -1794,7 +1794,7 @@ void btree::FindGreatest(int Node1,
 			}
 		NumBF--;
 		Underflow = (NumBF < BTREEHALFPAGESIZE);
-		buf->Page.NumItems = (int4) NumBF;
+		buf->Page.NumItems = (int_4) NumBF;
 		SavePage(buf, verbose_level - 1);
 		}
 	delete buf;
@@ -1868,8 +1868,8 @@ void btree::Compensate(int Precedent,
 			for (z = 1; z <= NumBF2; z++) {
 				BF2->Page.Item[z] = BF2->Page.Item[x + z];
 				}
-			BF2->Page.NumItems = (int4) NumBF2;
-			BF1->Page.NumItems = (int4) (BTREEHALFPAGESIZE + x - 1);
+			BF2->Page.NumItems = (int_4) NumBF2;
+			BF1->Page.NumItems = (int_4) (BTREEHALFPAGESIZE + x - 1);
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF2, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
@@ -1888,7 +1888,7 @@ void btree::Compensate(int Precedent,
 				BF3->Page.Item[z] = BF3->Page.Item[z + 1];
 				}
 			BF1->Page.NumItems = BTREEMAXPAGESIZE;
-			BF3->Page.NumItems = (int4) NumBF3 - 1L;
+			BF3->Page.NumItems = (int_4) NumBF3 - 1L;
 			Underflow = (NumBF3 <= BTREEHALFPAGESIZE);
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
@@ -1929,8 +1929,8 @@ void btree::Compensate(int Precedent,
 			BF3->Page.Item[Path].Data = BF2->Page.Item[NumBF2 + 1].Data;
 			BF3->Page.Item[Path].Childs += sum;
 			BF3->Page.Item[Path - 1].Childs -= sum;
-			BF2->Page.NumItems = (int4) NumBF2;
-			BF1->Page.NumItems = (int4) (x + BTREEHALFPAGESIZE - 1L);
+			BF2->Page.NumItems = (int_4) NumBF2;
+			BF1->Page.NumItems = (int_4) (x + BTREEHALFPAGESIZE - 1L);
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF2, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
@@ -1949,7 +1949,7 @@ void btree::Compensate(int Precedent,
 				BF2->Page.Item[NumBF2 + 1 + z] = BF1->Page.Item[z];
 				}
 			BF2->Page.NumItems = BTREEMAXPAGESIZE;
-			BF3->Page.NumItems = (int4) NumBF3 - 1;
+			BF3->Page.NumItems = (int_4) NumBF3 - 1;
 			BF3->Page.Item[Path - 1].Childs += 
 				BF3->Page.Item[Path].Childs + 1;
 			Underflow = (NumBF3 <= BTREEHALFPAGESIZE);

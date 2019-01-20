@@ -266,9 +266,9 @@ void int_swap(int& x, int& y)
 }
 #endif
 
-void uint4_swap(uint4& x, uint4& y)
+void uint4_swap(uint_4& x, uint_4& y)
 {
-	uint4 z;
+	uint_4 z;
 	
 	z = x;
 	x = y;

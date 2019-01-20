@@ -162,28 +162,28 @@ using namespace std;
 #undef int_HAS_8_charS
 
 #ifdef int_HAS_2_charS
-typedef short int2;
-typedef long int4;
-typedef long int8;
-typedef unsigned short uint2;
-typedef unsigned long uint4;
-typedef unsigned long uint8;
+typedef short int_2;
+typedef long int_4;
+typedef long int_8;
+typedef unsigned short uint_2;
+typedef unsigned long uint_4;
+typedef unsigned long uint_8;
 #endif
 #ifdef int_HAS_4_charS
-typedef short int2;
-typedef int int4;
-typedef long int8;
-typedef unsigned short uint2;
-typedef unsigned int uint4;
-typedef unsigned long uint8;
+typedef short int_2;
+typedef int int_4;
+typedef long int_8;
+typedef unsigned short uint_2;
+typedef unsigned int uint_4;
+typedef unsigned long uint_8;
 #endif
 #ifdef int_HAS_8_charS
-typedef short int2;
-typedef short int int4;
-typedef int int8;
-typedef unsigned short uint2;
-typedef unsigned short int uint4;
-typedef unsigned int uint8;
+typedef short int_2;
+typedef short int int_4;
+typedef int int_8;
+typedef unsigned short uint_2;
+typedef unsigned short int uint_4;
+typedef unsigned int uint_8;
 #endif
 
 

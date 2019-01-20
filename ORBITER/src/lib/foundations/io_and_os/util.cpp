@@ -1522,15 +1522,15 @@ void delete_file(const char *fname)
 
 void fwrite_int4(FILE *fp, int a)
 {
-	int4 I;
+	int_4 I;
 
-	I = (int4) a;
+	I = (int_4) a;
 	fwrite(&I, 1 /* size */, 4 /* items */, fp);
 }
 
-int4 fread_int4(FILE *fp)
+int_4 fread_int4(FILE *fp)
 {
-	int4 I;
+	int_4 I;
 
 	fread(&I, 1 /* size */, 4 /* items */, fp);
 	return I;
@@ -2109,7 +2109,7 @@ static int f_has_swap = 0;
 static void test_swap()
 {
 	//unsigned long test_long = 0x11223344L;
-	int4 test = 0x11223344L;
+	int_4 test = 0x11223344L;
 	char *ptr;
 	
 	ptr = (char *) &test;
@@ -2158,9 +2158,9 @@ void block_swap_chars(char *ptr, int size, int no)
 		}
 }
 
-void code_int4(char *&p, int4 i)
+void code_int4(char *&p, int_4 i)
 {
-	int4 ii = i;
+	int_4 ii = i;
 
 	//cout << "code_int4 " << i << endl;
 	uchar *q = (uchar *) &ii;
@@ -2171,9 +2171,9 @@ void code_int4(char *&p, int4 i)
 	code_uchar(p, q[3]);
 }
 
-int4 decode_int4(char *&p)
+int_4 decode_int4(char *&p)
 {
-	int4 ii;
+	int_4 ii;
 	uchar *q = (uchar *) &ii;
 	decode_uchar(p, q[0]);
 	decode_uchar(p, q[1]);
@@ -3639,7 +3639,7 @@ void read_set_from_file_int4(const char *fname,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, b;
-	int4 a;
+	int_4 a;
 	
 	if (f_v) {
 		cout << "read_set_from_file_int4 opening file " << fname 
@@ -3648,12 +3648,12 @@ void read_set_from_file_int4(const char *fname,
 		}
 	ifstream f(fname, ios::binary);
 	
-	f.read((char *) &a, sizeof(int4));
+	f.read((char *) &a, sizeof(int_4));
 	set_size = a;
 	the_set = NEW_int(set_size);
 	
 	for (i = 0; i < set_size; i++) {
-		f.read((char *) &a, sizeof(int4));
+		f.read((char *) &a, sizeof(int_4));
 		b = a;
 		//if (f_v) {
 			//cout << "read_set_from_file: the " << i
@@ -3679,7 +3679,7 @@ void write_set_to_file_as_int4(const char *fname,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	int4 a;
+	int_4 a;
 	int b;
 	
 	if (f_v) {
@@ -3690,8 +3690,8 @@ void write_set_to_file_as_int4(const char *fname,
 	ofstream f(fname, ios::binary);
 	
 
-	a = (int4) set_size;
-	f.write((char *) &a, sizeof(int4));
+	a = (int_4) set_size;
+	f.write((char *) &a, sizeof(int_4));
 	b = a;
 	if (b != set_size) {
 		cout << "write_set_to_file_as_int4 "
@@ -3702,8 +3702,8 @@ void write_set_to_file_as_int4(const char *fname,
 		exit(1);
 		}
 	for (i = 0; i < set_size; i++) {
-		a = (int4) the_set[i];
-		f.write((char *) &a, sizeof(int4));
+		a = (int_4) the_set[i];
+		f.write((char *) &a, sizeof(int_4));
 		b = a;
 		if (b != the_set[i]) {
 			cout << "write_set_to_file_as_int4 data loss" << endl;
@@ -3726,7 +3726,7 @@ void write_set_to_file_as_int8(const char *fname,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	int8 a;
+	int_8 a;
 	int b;
 	
 	if (f_v) {
@@ -3737,8 +3737,8 @@ void write_set_to_file_as_int8(const char *fname,
 	ofstream f(fname, ios::binary);
 	
 
-	a = (int8) set_size;
-	f.write((char *) &a, sizeof(int8));
+	a = (int_8) set_size;
+	f.write((char *) &a, sizeof(int_8));
 	b = a;
 	if (b != set_size) {
 		cout << "write_set_to_file_as_int8 "
@@ -3749,8 +3749,8 @@ void write_set_to_file_as_int8(const char *fname,
 		exit(1);
 		}
 	for (i = 0; i < set_size; i++) {
-		a = (int8) the_set[i];
-		f.write((char *) &a, sizeof(int8));
+		a = (int_8) the_set[i];
+		f.write((char *) &a, sizeof(int_8));
 		b = a;
 		if (b != the_set[i]) {
 			cout << "write_set_to_file_as_int8 data loss" << endl;
@@ -5128,23 +5128,23 @@ int os_seconds_past_1970()
 void test_typedefs()
 {
 	cout << "test_typedefs()" << endl;
-	if (sizeof(int2) != 2) {
-		cout << "warning: sizeof(int2)=" << sizeof(int2) << endl;
+	if (sizeof(int_2) != 2) {
+		cout << "warning: sizeof(int_2)=" << sizeof(int_2) << endl;
 		}
-	if (sizeof(int4) != 4) {
-		cout << "warning: sizeof(int4)=" << sizeof(int4) << endl;
+	if (sizeof(int_4) != 4) {
+		cout << "warning: sizeof(int4)=" << sizeof(int_4) << endl;
 		}
-	if (sizeof(int8) != 8) {
-		cout << "warning: sizeof(int8)=" << sizeof(int8) << endl;
+	if (sizeof(int_8) != 8) {
+		cout << "warning: sizeof(int8)=" << sizeof(int_8) << endl;
 		}
-	if (sizeof(uint2) != 2) {
-		cout << "warning: sizeof(uint2)=" << sizeof(uint2) << endl;
+	if (sizeof(uint_2) != 2) {
+		cout << "warning: sizeof(uint_2)=" << sizeof(uint_2) << endl;
 		}
-	if (sizeof(uint4) != 4) {
-		cout << "warning: sizeof(uint2)=" << sizeof(uint4) << endl;
+	if (sizeof(uint_4) != 4) {
+		cout << "warning: sizeof(uint_2)=" << sizeof(uint_4) << endl;
 		}
-	if (sizeof(uint8) != 8) {
-		cout << "warning: sizeof(uint2)=" << sizeof(uint8) << endl;
+	if (sizeof(uint_8) != 8) {
+		cout << "warning: sizeof(uint_2)=" << sizeof(uint_8) << endl;
 		}
 	cout << "test_typedefs() done" << endl;
 }
