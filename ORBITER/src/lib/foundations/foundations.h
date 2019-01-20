@@ -95,6 +95,24 @@ using namespace std;
 
 
 
+
+
+
+/*-------------------------------------------------------*/
+// CUDA Stuff
+/*-------------------------------------------------------*/
+#ifdef __CUDA_ARCH__
+#include "CUDA/FiniteField.h"
+#include "CUDA/Matrix.h"
+#include "CUDA/Vector.h"
+#include "CUDA/Linalg.h"
+#include "CUDA/PG.h"
+#endif
+/*-------------------------------------------------------*/
+
+
+
+
 /*----------------------------------------------------------------------------*/
 /// The following code block identifies the current operating system the code is
 /// being executed on and turns on specific macros in order to use system calls

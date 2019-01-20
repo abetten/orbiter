@@ -155,7 +155,6 @@ int main(int argc, const char **argv)
 
 	T->init(argc, argv, nb_factors, d, q, depth, verbose_level);
 
-
 	the_end_quietly(t0);
 
 }
@@ -334,6 +333,12 @@ void tensor_product::init(int argc, const char **argv,
 		cout << "too big to print" << endl;
 	}
 
+	/*-----------------------------------------------------*/
+	// Testing CUDA Stuff
+	/*-----------------------------------------------------*/
+	Matrix<int> M(5,5), N(5.5);
+	
+	/*-----------------------------------------------------*/
 
 #if 0
 
