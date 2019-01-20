@@ -2182,7 +2182,11 @@ public:
 	int n; // projective dimension
 	int q;
 	int N_points, N_lines;
-	int *Nb_subspaces; 
+	int *Nb_subspaces;  // [n + 1]
+	 // Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
+		// N_points = Nb_subspaces[0]
+		// N_lines = Nb_subspaces[1];
+
 	int r; // number of lines on a point
 	int k; // number of points on a line
 
@@ -2223,6 +2227,17 @@ public:
 	void make_incidence_structure_and_partition(
 		incidence_structure *&Inc, 
 		partitionstack *&Stack, int verbose_level);
+	void incma_for_type_ij(
+		int row_type, int col_type,
+		int *&Incma, int &nb_rows, int &nb_cols,
+		int verbose_level);
+		// row_type, col_type are the vector space dimensions of the objects
+		// indexing rows and columns.
+	void incidence_and_stack_for_type_ij(
+		int row_type, int col_type,
+		incidence_structure *&Inc,
+		partitionstack *&Stack,
+		int verbose_level);
 	int nb_rk_k_subspaces_as_int(int k);
 	void print_all_points();
 	int rank_point(int *v);
