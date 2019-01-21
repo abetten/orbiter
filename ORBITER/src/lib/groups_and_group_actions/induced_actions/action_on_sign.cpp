@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_sign::action_on_sign()
 {
 	null();
@@ -78,5 +80,7 @@ void action_on_sign::compute_image(int *Elt, int i, int &j, int verbose_level)
 	if (f_v) {
 		cout << "action_on_sign::compute_image  image of " << i << " is " << j << endl;
 		}
+}
+
 }
 

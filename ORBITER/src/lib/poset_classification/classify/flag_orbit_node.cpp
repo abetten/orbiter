@@ -12,6 +12,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 flag_orbit_node::flag_orbit_node()
 {
 	null();
@@ -130,6 +132,8 @@ void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
 	if (f_v) {
 		cout << "flag_orbit_node::read_file finished" << endl;
 		}
+}
+
 }
 
 

@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
 
 orbit_of_subspaces::orbit_of_subspaces()
 {
@@ -869,6 +870,8 @@ int orbit_of_subspaces_compare_func(void *a, void *b, void *data)
 			}
 		}
 	return 0;
+}
+
 }
 
 

@@ -25,6 +25,10 @@
 #define POINTER_TYPE_OBJECTS 12
 
 
+namespace orbiter {
+
+
+
 
 int f_memory_debug = FALSE;
 int memory_debug_verbose_level = 0;
@@ -1249,3 +1253,4 @@ static int registry_key_pair_compare_by_location(void *K1v, void *K2v)
 }
 
 
+}

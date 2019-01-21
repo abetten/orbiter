@@ -10,6 +10,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_orbit_node::read_memory_object(
 		poset_classification *PC,
 		action *A, memory_object *m, int &nb_group_elements,
@@ -594,6 +596,7 @@ void poset_orbit_node::draw_schreier_forest(
 	}
 }
 
+}
 
 
 

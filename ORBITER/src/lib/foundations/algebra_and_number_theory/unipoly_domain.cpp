@@ -10,6 +10,9 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
 unipoly_domain::unipoly_domain(finite_field *GFq)
 {
 	gfq = GFq;
@@ -3342,3 +3345,4 @@ void unipoly_domain::deletion_matrix(unipoly_object *M,
 }
 
 
+}

@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 exact_cover::exact_cover()
 {
@@ -731,4 +733,5 @@ void exact_cover::lexorder_test(int *live_blocks2, int &nb_live_blocks2, vector_
 		}
 }
 
+}
 

@@ -11,6 +11,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 void isomorph_print_set(ostream &ost, int len, int *S, void *data)
 {
 	//isomorph *G = (isomorph *) data;
@@ -221,6 +223,8 @@ void compute_lifts_new(
 	if (f_v) {
 		cout << "compute_lifts_new done" << endl;
 		}
+}
+
 }
 
 

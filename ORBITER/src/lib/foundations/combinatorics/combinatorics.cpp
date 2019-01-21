@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int Hamming_distance_binary(int a, int b, int n)
 {
 	int i, d, u, v;
@@ -1834,7 +1837,7 @@ void print_tableau(int *Tableau, int l1, int l2,
 		}
 }
 
-
+}
 
 
 

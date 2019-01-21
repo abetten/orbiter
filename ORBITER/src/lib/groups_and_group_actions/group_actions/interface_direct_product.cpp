@@ -10,6 +10,9 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+
+namespace orbiter {
+
 // #############################################################################
 // interface functions: direct product group
 // #############################################################################
@@ -357,6 +360,8 @@ void direct_product_group_print_point(action &A, int a, ostream &ost)
 	cout << "direct_product_group_print_point "
 			"not yet implemented" << endl;
 	exit(1);
+}
+
 }
 
 

@@ -11,6 +11,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 surface_object_with_action::surface_object_with_action()
 {
@@ -1754,3 +1756,5 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 		}
 }
 
+
+}

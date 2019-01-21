@@ -6,6 +6,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 klein_correspondence::klein_correspondence()
 {
 	null();
@@ -324,5 +327,8 @@ void klein_correspondence::plane_intersections(
 	if (f_v) {
 		cout << "klein_correspondence::plane_intersections done" << endl;
 		}
+}
+
+
 }
 

@@ -11,6 +11,7 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
 
 classify_double_sixes::classify_double_sixes()
 {
@@ -1840,6 +1841,7 @@ void callback_partial_ovoid_test_early(int *S, int len,
 		}
 }
 
+}
 
 
 

@@ -7,6 +7,9 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+namespace orbiter {
+
+
 // #############################################################################
 // brick_domain.C:
 // #############################################################################
@@ -214,4 +217,4 @@ int generalized_binomial(int n, int k, int q);
 void print_tableau(int *Tableau, int l1, int l2, 
 	int *row_parts, int *col_parts);
 
-
+}

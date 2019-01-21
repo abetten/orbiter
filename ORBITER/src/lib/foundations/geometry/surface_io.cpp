@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void surface::print_equation(ostream &ost, int *coeffs)
 {
 	Poly3_4->print_equation(ost, coeffs);
@@ -847,4 +850,6 @@ void surface::print_half_double_sixes_in_GAP()
 		}
 	}
 	cout << "];" << endl;
+}
+
 }

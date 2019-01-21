@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 
 orbit_of_sets::orbit_of_sets()
@@ -246,4 +248,7 @@ int orbit_of_sets_compare_func(void *a, void *b, void *data)
 		}
 	return 0;
 }
+
+}
+
 

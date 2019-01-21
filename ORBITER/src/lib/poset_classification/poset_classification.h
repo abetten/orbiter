@@ -5,6 +5,9 @@
 // started:  September 20, 2007
 
 
+namespace orbiter {
+
+
 typedef class extension extension;
 typedef class orbit_based_testing orbit_based_testing;
 typedef class poset_classification poset_classification;
@@ -17,6 +20,7 @@ typedef class flag_orbit_node flag_orbit_node;
 typedef class classification classification;
 typedef class orbit_node orbit_node;
 typedef class poset poset;
+
 
 enum trace_result { 
 	found_automorphism, 
@@ -31,6 +35,8 @@ enum find_isomorphism_result {
 	fi_not_isomorphic, 
 	fi_no_result 
 };
+
+}
 
 #include "./classify/classify.h"
 #include "./other/other.h"

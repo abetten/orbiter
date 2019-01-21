@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 schreier_vector_handler::schreier_vector_handler()
 {
 	null();
@@ -448,3 +450,6 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 	}
 	return SoS;
 }
+
+}
+

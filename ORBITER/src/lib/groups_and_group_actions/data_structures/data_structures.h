@@ -6,6 +6,8 @@
 // based on action.h which was started:  August 13, 2005
 
 
+namespace orbiter {
+
 
 
 // #############################################################################
@@ -522,3 +524,4 @@ public:
 };
 
 
+}

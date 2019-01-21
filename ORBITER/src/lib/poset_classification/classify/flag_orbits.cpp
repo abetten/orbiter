@@ -12,6 +12,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 flag_orbits::flag_orbits()
 {
 	null();
@@ -204,3 +206,4 @@ void flag_orbits::read_file(ifstream &fp, int verbose_level)
 }
 
 
+}

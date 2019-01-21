@@ -5,6 +5,7 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
 
 
 isomorph_arguments::isomorph_arguments()
@@ -85,12 +86,12 @@ void isomorph_arguments::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-read_solutions_after_split") == 0) {
 			f_read_solutions_after_split = TRUE;
-			read_solutions_split_m = atoi(argv[++i]);
+			read_solutions_split_m = std::atoi(argv[++i]);
 			cout << "-read_solutions_after_split " << read_solutions_split_m << endl;
 			}
 		else if (strcmp(argv[i], "-read_statistics_after_split") == 0) {
 			f_read_statistics_after_split = TRUE;
-			read_statistics_split_m = atoi(argv[++i]);
+			read_statistics_split_m = std::atoi(argv[++i]);
 			cout << "-read_statistics_after_split " << read_statistics_split_m << endl;
 			}
 
@@ -113,7 +114,7 @@ void isomorph_arguments::read_arguments(int argc, const char **argv,
 			cout << "-e " << event_file_name << endl;
 			}
 		else if (strcmp(argv[i], "-print_interval") == 0) {
-			print_mod = atoi(argv[++i]);
+			print_mod = std::atoi(argv[++i]);
 			cout << "-print_interval " << print_mod << endl;
 			}
 		else if (strcmp(argv[i], "-report") == 0) {
@@ -400,4 +401,5 @@ void isomorph_arguments::execute(int verbose_level)
 		}
 }
 
+}
 

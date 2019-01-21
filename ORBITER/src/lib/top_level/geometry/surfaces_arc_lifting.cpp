@@ -10,6 +10,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 surfaces_arc_lifting::surfaces_arc_lifting()
 {
 	null();
@@ -768,4 +770,5 @@ void surfaces_arc_lifting::report(int verbose_level)
 		}
 }
 
+}
 

@@ -11,6 +11,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 void isomorph::iso_test_init(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1623,5 +1625,6 @@ int isomorph::handle_automorphism(int *set, sims *Stab,
 }
 
 
+}
 
 

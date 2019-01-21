@@ -9,6 +9,9 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+
+namespace orbiter {
+
 void strong_generators::init_linear_group_from_scratch(
 	action *&A,
 	finite_field *F, int n, 
@@ -2108,7 +2111,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 				"parabolic_subgroup" << endl;
 		}
 
-	::generators_for_parabolic_subgroup(n, F, 
+	orbiter::generators_for_parabolic_subgroup(n, F,
 		Mtx->f_semilinear, k, 
 		data, size, nb_gens, 
 		verbose_level);
@@ -2210,7 +2213,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 				"for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
 		}
 
-	::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
+	orbiter::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		F,
 		Mtx->f_semilinear, 
 		data, size, nb_gens, 
@@ -2317,7 +2320,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 				"stabilizer_of_triangle_in_PGL4" << endl;
 		}
 
-	::generators_for_stabilizer_of_triangle_in_PGL4(F, 
+	orbiter::generators_for_stabilizer_of_triangle_in_PGL4(F,
 		Mtx->f_semilinear, 
 		data, size, nb_gens, 
 		verbose_level);
@@ -3090,3 +3093,4 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 
 
 
+}

@@ -4,6 +4,9 @@
 // Jan 1, 2013
 
 #include "orbiter.h"
+
+using namespace orbiter;
+
 #include "regular_ls.h"
 
 void regular_ls_generator::init_basic(

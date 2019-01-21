@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_by_subfield_structure::action_by_subfield_structure()
 {
 	null();
@@ -246,6 +248,8 @@ void action_by_subfield_structure::compute_image_int_low_level(
 				"image_int_low_level "
 				"done" << endl;
 		}
+}
+
 }
 
 

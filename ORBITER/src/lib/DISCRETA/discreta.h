@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+namespace orbiter {
+
 #define BITS_OF_int 32
 #define SYSTEMUNIX
 #undef SYSTEMMAC
@@ -2719,6 +2722,8 @@ void compute_Kramer_Mesner_matrix(poset_classification *gen,
 	int t, int k, matrix &M, int f_subspaces, int q, int verbose_level);
 void matrix_to_diophant(matrix& M, diophant *&D, int verbose_level);
 
+
+}
 
 
 

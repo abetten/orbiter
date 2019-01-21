@@ -8,6 +8,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 homogeneous_polynomial_domain::homogeneous_polynomial_domain()
 {
 	null();
@@ -948,4 +951,5 @@ void homogeneous_polynomial_domain_swap_monomial(
 	
 }
 
+}
 

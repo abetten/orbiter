@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 sims::sims()
 {
 	null();
@@ -5748,6 +5750,9 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group done" << endl;
 		}
+}
+
+
 }
 
 

@@ -5,6 +5,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 void free_global_data()
 {
 	cout << "discreta_global free_global_data freeing global data" << endl;
@@ -370,4 +372,5 @@ void matrix_to_diophant(matrix& M, diophant *&D, int verbose_level)
 		}
 }
 
+}
 

@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 static void print_from_to(int d, int i, int j, int *v1, int *v2);
 
 action *create_automorphism_group_from_group_table(
@@ -3961,3 +3963,4 @@ void create_action_and_compute_orbits_on_equations(
 }
 
 
+}

@@ -6,6 +6,10 @@
 // top_level started:  September 23 2010
 // based on global.h, which was taken from reader.h: 3/22/09
 
+
+namespace orbiter {
+
+
 // #############################################################################
 // orbit_of_equations.C
 // #############################################################################
@@ -312,5 +316,5 @@ void subspace_orbits_early_test_func(int *S, int len,
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
 
-
+}
 

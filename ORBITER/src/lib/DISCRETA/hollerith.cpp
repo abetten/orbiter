@@ -7,6 +7,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 #undef HOLLERITH_COPY_VERBOSE
 
 
@@ -214,4 +216,6 @@ void hollerith::get_current_date()
 	f1.getline(str, sizeof(str));
 	}
 	init(str);
+}
+
 }

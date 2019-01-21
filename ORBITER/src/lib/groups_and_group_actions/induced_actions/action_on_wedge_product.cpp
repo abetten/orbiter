@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_wedge_product::action_on_wedge_product()
 {
 	null();
@@ -236,6 +238,8 @@ void action_on_wedge_product::compute_image_int_low_level(
 	if (f_v) {
 		cout << "action_on_wedge_product::compute_image_int_low_level done" << endl;
 		}
+}
+
 }
 
 

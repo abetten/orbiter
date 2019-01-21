@@ -7,6 +7,9 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
 set_of_sets::set_of_sets()
 {
 	null();
@@ -1502,5 +1505,7 @@ void set_of_sets_swap_func(void *data, int i, int j, void *extra_data)
 	p = S->Sets[i];
 	S->Sets[i] = S->Sets[j];
 	S->Sets[j] = p;
+}
+
 }
 

@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 strong_generators::strong_generators()
 {
 	null();
@@ -2607,6 +2609,8 @@ void strong_generators_array_read_from_file(const char *fname,
 	
 	FREE_int(Go);
 
+
+}
 
 }
 

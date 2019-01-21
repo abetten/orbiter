@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_andre::action_on_andre()
 {
 	null();
@@ -218,5 +220,6 @@ int action_on_andre::compute_image_of_line(int *Elt,
 	return image;
 }
 
+}
 
 

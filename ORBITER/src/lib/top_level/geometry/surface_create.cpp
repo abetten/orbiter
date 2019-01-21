@@ -12,6 +12,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 surface_create::surface_create()
 {
 	null();
@@ -626,6 +628,8 @@ void surface_create::apply_transformations(
 	if (f_v) {
 		cout << "surface_create::apply_transformations done" << endl;
 		}
+}
+
 }
 
 

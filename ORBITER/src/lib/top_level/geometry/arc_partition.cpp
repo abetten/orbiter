@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 arc_partition::arc_partition()
 {
@@ -135,3 +137,4 @@ void arc_partition::init(
 }
 
 
+}

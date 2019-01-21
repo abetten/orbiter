@@ -7,6 +7,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 orbit_based_testing::orbit_based_testing()
 {
 	null();
@@ -255,6 +257,8 @@ void orbit_based_testing::early_test_func_by_using_group(
 			<< nb_good_candidates << " good candidates in "
 			<< nb_good_orbits << " good orbits" << endl;
 		}
+}
+
 }
 
 

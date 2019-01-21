@@ -11,6 +11,10 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
+
 
 
 andre_construction_point_element::andre_construction_point_element()
@@ -104,4 +108,5 @@ int andre_construction_point_element::rank(int verbose_level)
 }
 
 
+}
 

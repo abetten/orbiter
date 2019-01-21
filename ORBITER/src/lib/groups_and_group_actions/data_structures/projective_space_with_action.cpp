@@ -12,6 +12,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 
 projective_space_with_action::projective_space_with_action()
 {
@@ -2110,3 +2112,4 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 	FREE_OBJECT(C_ago);
 }
 
+}

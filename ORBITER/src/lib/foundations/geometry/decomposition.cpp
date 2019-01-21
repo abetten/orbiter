@@ -7,6 +7,9 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
 decomposition::decomposition()
 {
 	null();
@@ -242,4 +245,6 @@ void decomposition::print_column_decomposition_tex(
 		col_scheme, f_print_subscripts);
 }
 
+
+}
 

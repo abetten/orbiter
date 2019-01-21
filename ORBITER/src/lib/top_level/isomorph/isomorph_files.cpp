@@ -12,6 +12,9 @@
 
 #include "orbiter.h"
 
+
+namespace orbiter {
+
 #define MY_BUFSIZE 1000000
 
 void isomorph::init_solutions(int **Solutions, int *Nb_sol,
@@ -2314,5 +2317,6 @@ void isomorph::read_everything_including_classification(
 		}
 }
 
+}
 
 

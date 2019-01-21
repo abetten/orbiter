@@ -10,6 +10,7 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
 
 
 singer_cycle::singer_cycle()
@@ -386,6 +387,8 @@ void singer_cycle::init_lines(int verbose_level)
 	if (f_v) {
 		cout << "singer_cycle::init_lines done" << endl;
 		}
+}
+
 }
 
 

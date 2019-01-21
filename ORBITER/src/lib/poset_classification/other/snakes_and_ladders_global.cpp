@@ -8,6 +8,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 #define MY_OWN_BUFSIZE 1000000
 
 void read_orbit_rep_and_candidates_from_files_and_process(
@@ -901,6 +903,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 }
 
 
+}
 
 
 

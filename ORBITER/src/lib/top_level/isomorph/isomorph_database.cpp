@@ -10,6 +10,9 @@
 
 #include "orbiter.h"
 
+
+namespace orbiter {
+
 void isomorph::setup_and_open_solution_database(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -980,5 +983,6 @@ finish:
 }
 
 
+}
 
 

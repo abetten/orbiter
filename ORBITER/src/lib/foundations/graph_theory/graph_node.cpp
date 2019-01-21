@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 graph_node::graph_node()
 {
 	null();
@@ -365,4 +368,7 @@ void graph_node::depth_first_rank_recursion(
 		cout << "graph_node::depth_first_rank_recursion done" << endl;
 		}
 }
+
+}
+
 

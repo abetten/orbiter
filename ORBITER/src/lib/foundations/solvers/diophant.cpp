@@ -8,6 +8,10 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
+
 void (*diophant_user_callback_solution_found)(int *sol, 
 	int len, int nb_sol, void *data) = NULL;
 
@@ -3981,6 +3985,8 @@ void solve_diophant(int *Inc,
 		cout << "solve_diophant done nb_sol=" << nb_sol
 				<< " nb_backtrack=" << nb_backtrack << " dt=" << dt << endl;
 		}
+}
+
 }
 
 

@@ -6,6 +6,7 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
 
 
 linear_group_description::linear_group_description()
@@ -333,6 +334,8 @@ int linear_group_description::read_arguments(
 	} // next i
 	cout << "linear_group_description::read_arguments done" << endl;
 	return i;
+}
+
 }
 
 

@@ -6,6 +6,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 fancy_set::fancy_set()
 {
 	null();
@@ -242,7 +245,8 @@ int fancy_set::compare_lexicographically(fancy_set *second_set)
 {
 	sort();
 	second_set->sort();
-	return ::compare_lexicographically(k, set, second_set->k, second_set->set);
+	return orbiter::compare_lexicographically(k, set,
+			second_set->k, second_set->set);
 	
 }
 
@@ -289,6 +293,7 @@ int fancy_set::is_equal(fancy_set *set2)
 	return FALSE;
 }
 
+}
 
 
 

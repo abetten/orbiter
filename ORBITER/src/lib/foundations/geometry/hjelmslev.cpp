@@ -12,6 +12,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 hjelmslev::hjelmslev()
 {
 	null();
@@ -180,3 +183,4 @@ int hjelmslev::rank_int(int *M, int verbose_level)
 	return rk;
 }
 
+}

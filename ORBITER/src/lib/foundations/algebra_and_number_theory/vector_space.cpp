@@ -10,6 +10,9 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
 vector_space::vector_space()
 {
 	null();
@@ -209,7 +212,7 @@ int vector_space::compare_subspaces_ranked(
 				F->log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		::int_vec_print(cout, base_cols, rk1);
+		orbiter::int_vec_print(cout, base_cols, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
 		print_integer_matrix_width(cout, M2, k,
@@ -217,7 +220,7 @@ int vector_space::compare_subspaces_ranked(
 				F->log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		::int_vec_print(cout, base_cols2, rk2);
+		orbiter::int_vec_print(cout, base_cols2, rk2);
 		cout << endl;
 		}
 	if (rk1 != rk2) {
@@ -283,5 +286,5 @@ int vector_space_rank_point_callback(int *v, void *data)
 
 }
 
-
+}
 

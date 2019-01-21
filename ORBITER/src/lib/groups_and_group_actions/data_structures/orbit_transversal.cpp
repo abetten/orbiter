@@ -7,6 +7,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 orbit_transversal::orbit_transversal()
 {
 	null();
@@ -116,5 +118,6 @@ void orbit_transversal::read_from_file(
 }
 
 
+}
 
 

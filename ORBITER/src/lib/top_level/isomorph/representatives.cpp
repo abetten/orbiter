@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 representatives::representatives()
 {
@@ -419,5 +421,6 @@ void representatives::print_fusion_statistics()
 	cout << "nb_open = " << nb_open << endl;
 }
 
+}
 
 

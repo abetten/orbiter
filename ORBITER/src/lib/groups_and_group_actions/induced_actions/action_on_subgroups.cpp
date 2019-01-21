@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_subgroups::action_on_subgroups()
 {
 	null();
@@ -262,4 +264,5 @@ int action_on_subgroups_compare_inverted(void *a, void *b, void *data)
 }
 
 
+}
 

@@ -6,6 +6,7 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
 
 
 schreier_vector::schreier_vector()
@@ -1092,4 +1093,5 @@ int schreier_vector_determine_depth_recursion(
 }
 
 
+}
 

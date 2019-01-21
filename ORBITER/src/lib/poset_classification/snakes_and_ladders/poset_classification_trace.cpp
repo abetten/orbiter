@@ -8,6 +8,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 int poset_classification::find_isomorphism(
 		int *set1, int *set2, int sz,
 		int *transporter, int &orbit_idx,
@@ -748,3 +750,4 @@ int poset_classification::find_node_for_subspace_by_rank(
 	return node;
 }
 
+}

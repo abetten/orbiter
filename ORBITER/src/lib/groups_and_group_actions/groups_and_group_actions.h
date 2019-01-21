@@ -4,6 +4,9 @@
 //
 // started:  August 13, 2005
 
+namespace orbiter {
+
+
 
 typedef class action action;
 typedef class matrix_group matrix_group;
@@ -61,6 +64,8 @@ typedef class object_in_projective_space_with_action
 	object_in_projective_space_with_action;
 	// added December 30, 2017
 typedef class data_input_stream data_input_stream;
+
+
 
 enum symmetry_group_type { 
 	unknown_symmetry_group_t, 
@@ -209,6 +214,8 @@ public:
 	int test_if_all_elements_stabilize_a_set(action *A2, 
 		int *set, int sz, int verbose_level);
 };
+
+}
 
 #include "./data_structures/data_structures.h"
 #include "./group_actions/group_actions.h"

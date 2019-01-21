@@ -9,6 +9,9 @@
 #define AUTS_ALLOCATE_BLOCK_SIZE 100
 
 
+namespace orbiter {
+
+
 typedef struct action_is_minimal_data action_is_minimal_data;
 
 //! internal class for is_minimal backtracking used by class action
@@ -728,6 +731,8 @@ finish:
 	FREE_int(D.is_minimal_base_point);
 
 	return ret;
+}
+
 }
 
 

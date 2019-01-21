@@ -11,6 +11,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 // ####################################################################################
 // now comes partitionstack
@@ -2398,5 +2401,7 @@ void partitionstack::split_by_orbit_partition(int nb_orbits,
 		}
 }
 
+
+}
 
 

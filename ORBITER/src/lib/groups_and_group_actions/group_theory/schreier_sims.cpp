@@ -7,6 +7,8 @@
 #include "groups_and_group_actions.h"
 
 
+namespace orbiter {
+
 schreier_sims::schreier_sims()
 {
 	null();
@@ -615,4 +617,5 @@ void schreier_sims::create_group(int verbose_level)
 		}
 }
 
+}
 

@@ -11,6 +11,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int count_Sbar(int n, int q)
 {
 	return count_T1(1, n, q);
@@ -2591,3 +2594,4 @@ void orthogonal_points_free_global_data()
 }
 
 
+}

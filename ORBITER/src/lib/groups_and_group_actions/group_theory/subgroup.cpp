@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 subgroup::subgroup()
 {
 	null();
@@ -64,4 +66,5 @@ int subgroup::contains_this_element(int elt)
 		}
 }
 
+}
 

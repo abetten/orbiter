@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 rainbow_cliques::rainbow_cliques()
 {
 	null();
@@ -489,4 +492,5 @@ int call_back_colored_graph_find_candidates(clique_finder *CF,
 }
 
 
+}
 

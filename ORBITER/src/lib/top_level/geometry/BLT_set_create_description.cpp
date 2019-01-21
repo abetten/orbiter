@@ -11,6 +11,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 BLT_set_create_description::BLT_set_create_description()
 {
@@ -50,12 +52,12 @@ int BLT_set_create_description::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = atoi(argv[++i]);
+			q = std::atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
 		else if (strcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = atoi(argv[++i]);
+			iso = std::atoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 			}
 		else if (strcmp(argv[i], "-family") == 0) {
@@ -71,4 +73,5 @@ int BLT_set_create_description::read_arguments(int argc, const char **argv,
 	return i;
 }
 
+}
 

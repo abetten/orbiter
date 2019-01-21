@@ -11,6 +11,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 int compute_system_in_RREF(
 		projective_space *P,
 		homogeneous_polynomial_domain *Poly_3_3,

@@ -8,6 +8,8 @@
 // galois started:  August 12, 2005
 
 
+namespace orbiter {
+
 // #############################################################################
 // a_domain.cpp
 // #############################################################################
@@ -1868,4 +1870,5 @@ public:
 void vector_space_unrank_point_callback(int *v, int rk, void *data);
 int vector_space_rank_point_callback(int *v, void *data);
 
+}
 

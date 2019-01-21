@@ -19,7 +19,6 @@ all: analyze_projective_code.out  \
 	determine_quadric.out \
 	example_fano_plane.out \
 	export_data.out \
-	hill.out \
 	make_BLT_set.out \
 	make_group.out \
 	make_grassmannian.out \

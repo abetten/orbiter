@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action *action::induced_action_on_set_partitions(
 		int universal_set_size, int partition_size,
 		int verbose_level)
@@ -2684,4 +2686,5 @@ void action::base_change(action *old_action,
 		}
 }
 
+}
 

@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void surface::init_line_data(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1993,4 +1996,5 @@ int surface::compute_transversals_of_any_four(
 	return ret;
 }
 
+}
 

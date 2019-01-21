@@ -6,6 +6,9 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
 
 desarguesian_spread::desarguesian_spread()
 {
@@ -397,3 +400,4 @@ void desarguesian_spread::print_linear_set_element_tex(int a, int sz)
 	FREE_int(v);
 }
 
+}

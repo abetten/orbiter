@@ -11,6 +11,7 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
 
 static void intersection_matrix_entry_print(int *p, 
 	int m, int n, int i, int j, int val, char *output, void *data);
@@ -2201,6 +2202,7 @@ static void Web_of_cubic_curves_entry_print(int *p,
 		}
 }
 
+}
 
 
 

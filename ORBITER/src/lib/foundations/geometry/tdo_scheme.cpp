@@ -11,6 +11,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 tdo_scheme::tdo_scheme()
 {
 	int i;
@@ -4981,3 +4984,4 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(
 	return TRUE;
 }
 
+}

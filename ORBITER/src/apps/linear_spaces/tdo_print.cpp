@@ -5,7 +5,9 @@
 
 #include "orbiter.h"
 #include <string>
-#include <DISCRETA/discreta.h>
+
+using namespace orbiter;
+
 
 int t0;
 

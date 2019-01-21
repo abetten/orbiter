@@ -11,6 +11,8 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
 
 
 andre_construction::andre_construction()
@@ -188,5 +190,6 @@ void andre_construction::points_on_line(
 		}
 }
 
+}
 
 

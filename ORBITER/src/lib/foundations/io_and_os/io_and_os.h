@@ -8,6 +8,8 @@
 // galois started:  August 12, 2005
 
 
+namespace orbiter {
+
 
 
 // #############################################################################
@@ -507,7 +509,7 @@ void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);
 
 
-
+}
 
 
 

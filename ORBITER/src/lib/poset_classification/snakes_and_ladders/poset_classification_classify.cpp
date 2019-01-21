@@ -10,6 +10,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 int poset_classification::compute_orbits(int from_level, int to_level, 
 	int verbose_level)
 // returns the last level that was computed.
@@ -710,6 +712,8 @@ void poset_classification::extend_node(
 		//cout << "cur=" << cur << endl;
 
 		}
+}
+
 }
 
 

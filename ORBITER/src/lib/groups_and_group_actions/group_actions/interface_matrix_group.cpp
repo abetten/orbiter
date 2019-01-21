@@ -12,6 +12,9 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+
+namespace orbiter {
+
 // #############################################################################
 // interface functions: matrix group
 // #############################################################################
@@ -526,3 +529,4 @@ void matrix_group_print_point(action &A, int a, ostream &ost)
 }
 
 
+}

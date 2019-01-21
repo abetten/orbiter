@@ -8,6 +8,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 {
 	null();
@@ -223,6 +225,8 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 	}
 	ost << "The overall number of 6-arcs not on a conic "
 			"in $\\PG(2," << F->q << ")$ is: " << Ol << "\\\\" << endl;
+}
+
 }
 
 

@@ -11,6 +11,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 classify_trihedral_pairs::classify_trihedral_pairs()
 {
@@ -1265,4 +1267,5 @@ void classify_trihedral_pairs_early_test_function_type2(int *S, int len,
 		}
 }
 
+}
 

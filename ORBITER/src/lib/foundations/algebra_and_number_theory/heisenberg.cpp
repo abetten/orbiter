@@ -6,6 +6,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 heisenberg::heisenberg()
 {
 	null();
@@ -208,6 +211,8 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 	if (f_v) {
 		cout << "heisenberg::generating_set finished" << endl;
 		}
+}
+
 }
 
 

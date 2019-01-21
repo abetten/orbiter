@@ -7,6 +7,9 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+namespace orbiter {
+
+
 // #############################################################################
 // clique_finder.C
 // #############################################################################
@@ -743,5 +746,6 @@ int call_back_colored_graph_find_candidates(clique_finder *CF,
 	int *candidates, int verbose_level);
 
 
+}
 
 

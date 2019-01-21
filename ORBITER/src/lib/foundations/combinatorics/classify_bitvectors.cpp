@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 classify_bitvectors::classify_bitvectors()
 {
 	null();
@@ -334,4 +337,5 @@ int compare_func_for_bitvectors(void *a, void *b, void *data)
 	return 0;
 }
 
+}
 

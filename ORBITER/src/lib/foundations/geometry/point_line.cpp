@@ -2,6 +2,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int point_line::is_desarguesian_plane(int f_v, int f_vv)
 {
 	int line = 0;
@@ -1329,4 +1332,5 @@ void get_MOLm(int *MOLS, int order, int m, int *&M)
 		}
 }
 
+}
 

@@ -8,6 +8,10 @@
  * pulled out of snakesandladders.h: Aug 9, 2018
  */
 
+namespace orbiter {
+
+
+
 // #############################################################################
 // extension.C:
 // #############################################################################
@@ -1420,5 +1424,6 @@ public:
 // in upstep_work.C:
 void print_coset_table(coset_table_entry *coset_table, int len);
 
+}
 
 

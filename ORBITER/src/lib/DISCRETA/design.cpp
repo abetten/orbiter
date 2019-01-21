@@ -6,6 +6,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 static void prepare_entry(Vector &entry, int i, int j,
 		int h, int t, int v, int k, int lambda);
@@ -2138,3 +2140,5 @@ void extract_subgroup(int q1, int q2, int u1, int v1, int f_cycle_index)
 #endif
 
 
+
+}

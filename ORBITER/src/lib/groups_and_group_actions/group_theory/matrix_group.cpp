@@ -12,6 +12,8 @@
 #include "groups_and_group_actions.h"
 
 
+namespace orbiter {
+
 matrix_group::matrix_group()
 {
 	null();
@@ -2164,3 +2166,6 @@ void matrix_group::strong_generators_low_level(int *&data,
 		cout << "matrix_group::strong_generators_low_level done" << endl;
 		}
 }
+
+}
+

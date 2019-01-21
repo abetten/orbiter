@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_bricks::action_on_bricks()
 {
 	null();
@@ -192,4 +194,4 @@ void action_on_bricks::compute_image_permutation_action(
 }
 
 
-
+}

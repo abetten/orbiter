@@ -6,6 +6,8 @@
 #include "foundations.h"
 #include <math.h>
 
+namespace orbiter {
+
 
 void draw_density(char *prefix, int *the_set, int set_size,
 	int f_title, const char *title, int out_of, 
@@ -993,6 +995,8 @@ void projective_plane_make_affine_point(int q, int x1, int x2, int x3, double &a
 		a = x1;
 		b = x2;
 		}
+}
+
 }
 
 

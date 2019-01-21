@@ -6,11 +6,13 @@
 // added print_inc() Dec 21, 2010
 
 #include "orbiter.h"
+#include <string.h>
+
+
+namespace orbiter {
 
 #undef GEOMETRY_CHANGE_KIND_VERBOSE
 #undef GEOMETRY_COPY_VERBOSE
-
-#include <string.h>
 
 
 geometry::geometry() : Vector()
@@ -976,5 +978,6 @@ int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f
 	cout << "search_geo_file() could not find GEOMETRY " 
 		<< geo_nr << " " << geo_label << " in file " << fname << endl;
 	exit(1);
+}
 }
 

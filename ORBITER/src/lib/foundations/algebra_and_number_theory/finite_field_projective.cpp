@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+
+namespace orbiter {
+
 void finite_field::PG_element_normalize(
 		int *v, int stride, int len)
 // last non-zero element made one
@@ -3680,5 +3683,7 @@ void O4_find_tangent_plane(finite_field &F,
 				<< " y3=" << y3 << " y4=" << y4 << endl;
 		}
 #endif
+}
+
 }
 

@@ -6,6 +6,9 @@
 // based on action.h which was started:  August 13, 2005
 
 
+namespace orbiter {
+
+
 // #############################################################################
 // direct_product.C:
 // #############################################################################
@@ -146,13 +149,13 @@ public:
 		int verbose_level);
 };
 
-//! description of a linear group from the command line
 
 
 // #############################################################################
 // linear_group_description.C:
 // #############################################################################
 
+//! description of a linear group from the command line
 
 
 class linear_group_description {
@@ -1531,3 +1534,4 @@ public:
 			int &size, int &nb_gens, int verbose_level);
 };
 
+}

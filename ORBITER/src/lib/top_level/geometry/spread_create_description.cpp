@@ -12,6 +12,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 spread_create_description::spread_create_description()
 {
 	null();
@@ -52,17 +54,17 @@ int spread_create_description::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = atoi(argv[++i]);
+			q = std::atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
 		else if (strcmp(argv[i], "-k") == 0) {
 			f_k = TRUE;
-			k = atoi(argv[++i]);
+			k = std::atoi(argv[++i]);
 			cout << "-k " << k << endl;
 			}
 		else if (strcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = atoi(argv[++i]);
+			iso = std::atoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 			}
 		else if (strcmp(argv[i], "-family") == 0) {
@@ -79,3 +81,4 @@ int spread_create_description::read_arguments(int argc, const char **argv,
 }
 
 
+}

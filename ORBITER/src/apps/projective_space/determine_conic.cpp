@@ -16,6 +16,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 
 int determine_conic(finite_field *F,
 		int *input_pts, int nb_pts, int *six_coeffs, int verbose_level);

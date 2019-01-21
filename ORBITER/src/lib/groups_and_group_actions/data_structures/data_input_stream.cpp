@@ -9,7 +9,7 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
-
+namespace orbiter {
 
 data_input_stream::data_input_stream()
 {
@@ -262,4 +262,5 @@ int data_input_stream::count_number_of_objects_to_test(
 }
 
 
+}
 

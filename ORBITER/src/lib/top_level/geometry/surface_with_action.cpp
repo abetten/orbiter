@@ -12,6 +12,9 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
+
 surface_with_action::surface_with_action()
 {
 	null();
@@ -1157,6 +1160,8 @@ void surface_with_action::arc_lifting_and_classify(
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify done" << endl;
 		}
+
+}
 
 }
 

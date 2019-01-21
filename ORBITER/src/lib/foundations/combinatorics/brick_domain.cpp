@@ -6,6 +6,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 brick_domain::brick_domain()
 {
@@ -177,4 +180,5 @@ void brick_test(int q, int verbose_level)
 	cout << "brick_test: OK" << endl;
 }
 
+}
 

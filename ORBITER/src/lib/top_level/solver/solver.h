@@ -6,6 +6,11 @@
 // top_level started:  September 23 2010
 // based on global.h, which was taken from reader.h: 3/22/09
 
+
+
+namespace orbiter {
+
+
 // #############################################################################
 // exact_cover.C
 // #############################################################################
@@ -201,4 +206,4 @@ public:
 	void compute_lifts(int verbose_level);
 };
 
-
+}

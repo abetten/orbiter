@@ -76,6 +76,8 @@
 #include "cleanup.e"
 #endif
 
+
+
 #define NAUTY_ABORTED (-11)
 #define NAUTY_KILLED (-12)
 
@@ -1269,4 +1271,6 @@ store_perm(permutation *perm, int n) // Abdullah !!!
 // 		aut_counter++;
 }
 /* Done Abdullah 2018 */
+
+
 

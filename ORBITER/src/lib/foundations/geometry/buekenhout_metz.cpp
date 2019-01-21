@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 buekenhout_metz::buekenhout_metz()
 {
@@ -1394,4 +1397,5 @@ int buekenhout_metz_check_good_points(int len,
 	return TRUE;
 }
 
+}
 

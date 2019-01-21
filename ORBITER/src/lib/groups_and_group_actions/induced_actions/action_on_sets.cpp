@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_sets::action_on_sets()
 {
 	null();
@@ -297,5 +299,8 @@ int action_on_sets_compare_inverted(void *a, void *b, void *data)
 	c = int_vec_compare(B, A, AOS->set_size);
 	return c;
 }
+
+}
+
 
 

@@ -11,6 +11,8 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
 
 
 andre_construction_line_element::andre_construction_line_element()
@@ -200,4 +202,5 @@ int andre_construction_line_element::make_affine_point(
 	return point_rank;
 }
 
+}
 

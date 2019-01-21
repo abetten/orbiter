@@ -9,6 +9,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 // global functions:
 
 sims *create_sims_from_generators_with_target_group_order_factorized(
@@ -346,4 +348,5 @@ sims *create_sims_for_centralizer_of_matrix(
 }
 
 
+}
 

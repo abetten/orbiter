@@ -12,6 +12,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 classification::classification()
 {
 	null();
@@ -230,4 +232,5 @@ void classification::read_file(ifstream &fp, int verbose_level)
 		}
 }
 
+}
 

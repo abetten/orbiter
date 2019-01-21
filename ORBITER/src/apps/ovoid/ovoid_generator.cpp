@@ -12,6 +12,10 @@
 
 #include "ovoid.h"
 
+using namespace orbiter;
+
+
+
 ovoid_generator::ovoid_generator()
 {
 	Poset = NULL;

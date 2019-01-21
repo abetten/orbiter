@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_orthogonal::action_on_orthogonal()
 {
 	null();
@@ -185,5 +187,6 @@ int action_on_orthogonal::compute_image_int(int *Elt, int i, int verbose_level)
 	return j;
 }
 
+}
 
 

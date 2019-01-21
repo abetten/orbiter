@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_determinant::action_on_determinant()
 {
 	null();
@@ -97,5 +99,7 @@ void action_on_determinant::compute_image(action *A, int *Elt, int i, int &j, in
 			}
 		cout << "image of " << i << " is " << j << endl;
 		}
+}
+
 }
 

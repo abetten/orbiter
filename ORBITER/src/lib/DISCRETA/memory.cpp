@@ -6,6 +6,9 @@
 
 #include "orbiter.h"
 
+
+namespace orbiter {
+
 #undef MEMORY_COPY_VERBOSE
 #undef DEBUG_MEM
 #undef DEBUG_WRITE_CHAR
@@ -520,5 +523,6 @@ void memory::read_mem(memory & M, int debug_depth)
 	delete [] mem;
 }
 
+}
 
 

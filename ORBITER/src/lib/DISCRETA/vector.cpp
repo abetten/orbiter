@@ -9,6 +9,8 @@
 #undef VECTOR_COPY_VERBOSE
 #undef VECTOR_CHANGE_KIND_VERBOSE
 
+namespace orbiter {
+
 
 Vector::Vector()
 {
@@ -1883,4 +1885,6 @@ void Vector::get_element_orders(Vector &vec_of_orders)
 		o = s_i(i).order();
 		vec_of_orders.m_ii(i, o);
 		}
+}
+
 }

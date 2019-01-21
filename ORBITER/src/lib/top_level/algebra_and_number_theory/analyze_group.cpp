@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 void analyze_group(action *A, sims *S,
 		vector_ge *SG, vector_ge *gens2, int verbose_level)
 {
@@ -472,3 +474,4 @@ void presentation(action *A, sims *S, int goi,
 }
 
 
+}

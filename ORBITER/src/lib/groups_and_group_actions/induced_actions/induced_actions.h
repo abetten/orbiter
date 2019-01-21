@@ -5,6 +5,10 @@
 // moved here from action.h: July 28, 2018
 // based on action.h which was started:  August 13, 2005
 
+
+namespace orbiter {
+
+
 // #############################################################################
 // action_by_conjugation.C:
 // #############################################################################
@@ -912,6 +916,7 @@ public:
 };
 
 
+}
 
 
 

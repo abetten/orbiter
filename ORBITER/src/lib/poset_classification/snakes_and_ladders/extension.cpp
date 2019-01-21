@@ -7,6 +7,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 extension::extension()
 {
 	pt = -1;
@@ -21,6 +23,7 @@ extension::~extension()
 {
 }
 
+}
 
 
 

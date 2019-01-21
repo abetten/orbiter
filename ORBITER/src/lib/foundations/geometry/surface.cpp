@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 surface::surface()
 {
 	null();
@@ -5081,4 +5084,6 @@ void surface::do_arc_lifting_with_two_lines(
 	if (f_v) {
 		cout << "surface::do_arc_lifting_with_two_lines done" << endl;
 	}
+}
+
 }

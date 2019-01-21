@@ -10,6 +10,7 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
 
 
 
@@ -708,4 +709,5 @@ int callback_check_partial_blocking_set(int len, int *S,
 }
 #endif
 
+}
 

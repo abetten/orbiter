@@ -6,6 +6,10 @@
 
 #include "orbiter.h"
 
+
+using namespace orbiter;
+
+
 int main()
 {
 	int verbose_level = 0;

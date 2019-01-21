@@ -10,6 +10,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 
 wreath_product::wreath_product()
 {
@@ -912,4 +914,6 @@ void wreath_product::make_strong_generators_data(int *&data,
 	if (f_v) {
 		cout << "wreath_product::make_strong_generators_data done" << endl;
 	}
+}
+
 }

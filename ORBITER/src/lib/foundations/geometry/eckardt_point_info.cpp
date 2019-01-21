@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 eckardt_point_info::eckardt_point_info()
 {
 	null();
@@ -316,3 +319,6 @@ void eckardt_point_info::init(projective_space *P,
 		cout << "eckardt_point_info::init done" << endl;
 		}
 }
+
+}
+

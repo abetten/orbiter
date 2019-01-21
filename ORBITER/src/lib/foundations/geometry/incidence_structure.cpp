@@ -8,6 +8,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 // #############################################################################
 // incidence_structure
@@ -3850,5 +3853,6 @@ void incma_latex_override_unit_length_drop()
 
 
 
+}
 
 

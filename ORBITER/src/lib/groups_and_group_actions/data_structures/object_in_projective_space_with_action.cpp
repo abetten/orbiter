@@ -13,6 +13,8 @@
 #include "groups_and_group_actions.h"
 
 
+namespace orbiter {
+
 object_in_projective_space_with_action::object_in_projective_space_with_action()
 {
 	null();
@@ -53,3 +55,4 @@ void object_in_projective_space_with_action::init(
 }
 
 
+}
