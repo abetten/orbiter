@@ -6,6 +6,10 @@
 // top_level started:  September 23 2010
 // based on global.h, which was taken from reader.h: 3/22/09
 
+
+namespace orbiter {
+
+
 // #############################################################################
 // arc_generator.C
 // #############################################################################
@@ -2127,3 +2131,4 @@ int translation_plane_via_andre_model_check_arc(int len, int *S,
 int translation_plane_via_andre_model_check_subplane(int len, int *S, 
 	void *data, int verbose_level);
 
+}

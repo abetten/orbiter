@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 set_and_stabilizer::set_and_stabilizer()
 {
 	null();
@@ -627,6 +629,8 @@ void set_and_stabilizer::init_surface(surface *Surf,
 	if (f_v) {
 		cout << "set_and_stabilizer::init_surface done" << endl;
 		}
+}
+
 }
 
 

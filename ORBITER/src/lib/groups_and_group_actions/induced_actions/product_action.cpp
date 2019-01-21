@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 product_action::product_action()
 {
 	null();
@@ -237,5 +239,6 @@ void product_action::make_element(int *Elt, int *data, int verbose_level)
 		data + A1->make_element_size, verbose_level);
 }
 
+}
 
 

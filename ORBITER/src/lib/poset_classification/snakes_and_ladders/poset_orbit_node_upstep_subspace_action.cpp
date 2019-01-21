@@ -7,6 +7,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	poset_classification *gen,
 	int lvl, int pt_to_trace,
@@ -187,6 +189,8 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		cout << "node=" << node << " prev=" << prev
 				<< " pt=" << pt << "done" << endl;
 		}
+}
+
 }
 
 

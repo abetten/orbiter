@@ -8,6 +8,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 k_arc_generator::k_arc_generator()
 {
 	null();
@@ -218,5 +220,6 @@ void k_arc_generator::compute_line_type(int *set, int len,
 	
 }
 
+}
 
 

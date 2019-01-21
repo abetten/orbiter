@@ -8,6 +8,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 trace_result upstep_work::recognize(
 	int &final_node, int &final_ex, int f_tolerant,
 	int verbose_level)
@@ -737,4 +739,5 @@ trace_result upstep_work::start_over(
 	return r;
 }
 
+}
 

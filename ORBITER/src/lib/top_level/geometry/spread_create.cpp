@@ -11,6 +11,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 spread_create::spread_create()
 {
@@ -262,4 +264,5 @@ void spread_create::apply_transformations(
 		}
 }
 
+}
 

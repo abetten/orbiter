@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int_matrix::int_matrix()
 {
 	null();
@@ -71,5 +74,5 @@ void int_matrix::print()
 	int_matrix_print(M, m, n);
 }
 
-
+}
 

@@ -67,6 +67,8 @@
 #include "io.e"
 #endif
 
+
+
     /* macros for hash-codes: */
     /* Don't use NAUTY_INFINITY here as that would make the canonical
      * labelling depend on whether BIGNAUTY is in operation */
@@ -745,3 +747,4 @@ nautil_freedyn(void)
     DYNFREE(workperm,workperm_sz);
 #endif
 }
+

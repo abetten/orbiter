@@ -11,6 +11,8 @@
 #define MAX_NODES_FOR_TREEFILE 25000
 //#define MAX_NODES_FOR_TREEFILE 6500
 
+namespace orbiter {
+
 static void print_table1_top(ofstream &fp);
 static void print_table1_bottom(ofstream &fp);
 static void print_table_top(ofstream &fp, int f_permutation_degree_is_small);
@@ -2381,4 +2383,5 @@ static void print_set_special(ofstream &fp, int *set, int sz)
 }
 
 
+}
 

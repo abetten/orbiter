@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 rank_checker::rank_checker()
 {
 	GFq = NULL;
@@ -317,4 +320,4 @@ int rank_checker::compute_rank_row_vectors(
 
 	return rk;
 }
-
+}

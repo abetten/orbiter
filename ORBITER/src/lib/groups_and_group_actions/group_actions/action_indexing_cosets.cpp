@@ -8,6 +8,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 void action::coset_unrank(sims *G, sims *U, int rank, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -592,4 +594,5 @@ done:
 	return rank;	
 }
 
+}
 

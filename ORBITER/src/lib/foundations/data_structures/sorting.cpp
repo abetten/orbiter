@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void int_vec_search_vec(int *v, int len, int *A, int A_sz, int *Idx)
 {
 	int i;
@@ -1727,5 +1730,7 @@ void find_points_by_multiplicity(int *data, int data_sz, int multiplicity, int *
 	classify C;
 	C.init(data, data_sz, FALSE, 0);
 	C.get_data_by_multiplicity(pts, nb_pts, multiplicity, 0 /* verbose_level */);
+}
+
 }
 

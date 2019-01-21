@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 tdo_data::tdo_data()
 {
 	types_first = NULL;
@@ -567,3 +570,4 @@ void tdo_data::solve_second_system(int verbose_level,
 }
 
 
+}

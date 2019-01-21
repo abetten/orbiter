@@ -228,6 +228,10 @@ typedef void *pvoid;
 #define M_PI 3.14159265358979323846264
 #endif
 
+
+
+namespace orbiter {
+
 typedef class finite_field finite_field;
 typedef class longinteger_object longinteger_object;
 typedef longinteger_object *plonginteger_object;
@@ -309,6 +313,8 @@ typedef class elliptic_curve elliptic_curve;
 	// added November 19, 2014
 typedef class arc_lifting_with_two_lines arc_lifting_with_two_lines;
 typedef class page_storage page_storage;
+
+
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
@@ -463,7 +469,7 @@ public:
 
 ostream& operator<<(ostream& ost, longinteger_object& p);
 
-
+}
 
 #include "./algebra_and_number_theory/algebra_and_number_theory.h"
 #include "./coding_theory/coding_theory.h"

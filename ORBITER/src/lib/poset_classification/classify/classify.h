@@ -8,6 +8,8 @@
  * pulled out of snakesandladders.h: Aug 9, 2018
  */
 
+namespace orbiter {
+
 
 
 // #############################################################################
@@ -137,5 +139,5 @@ public:
 	void read_file(ifstream &fp, int verbose_level);
 };
 
-
+}
 

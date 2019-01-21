@@ -12,6 +12,9 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
 object_in_projective_space::object_in_projective_space()
 {
 	null();
@@ -829,6 +832,8 @@ void object_in_projective_space::klein(int verbose_level)
 	if (f_v) {
 		cout << "object_in_projective_space::klein done" << endl;
 		}
+}
+
 }
 
 

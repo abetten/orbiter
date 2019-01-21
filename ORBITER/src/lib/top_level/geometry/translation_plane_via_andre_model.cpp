@@ -11,6 +11,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 translation_plane_via_andre_model::translation_plane_via_andre_model()
 {
 	null();
@@ -920,5 +922,6 @@ int translation_plane_via_andre_model_check_subplane(
 		}
 }
 
+}
 
 

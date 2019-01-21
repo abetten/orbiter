@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void do_Klein_correspondence(int n, finite_field *F, 
 	int *set_in, int set_size,
 	int *&the_set_out, int &set_size_out, 
@@ -1586,6 +1589,8 @@ void do_group_in_PG(int n, finite_field *F,
 
 #endif
 
+
+}
 
 
 

@@ -7,6 +7,10 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
+
 int ijk_rank(int i, int j, int k, int n)
 {
 	int set[3];
@@ -200,3 +204,4 @@ void int_k2ij(int k, int & i, int & j, int n)
 	exit(1);
 }
 
+}

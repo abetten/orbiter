@@ -5,6 +5,10 @@
 
 #include "orbiter.h"
 
+
+using namespace orbiter;
+
+
 int t0;
 
 const char *version = "tdo_start Jan 30 2008";

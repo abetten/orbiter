@@ -9,6 +9,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_orbit_node::store_strong_generators(
 		poset_classification *gen,
 		strong_generators *Strong_gens)
@@ -791,3 +793,4 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 		}
 }
 
+}

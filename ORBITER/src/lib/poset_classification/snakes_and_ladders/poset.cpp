@@ -7,6 +7,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
 
 
 poset::poset()
@@ -389,5 +390,7 @@ int callback_test_independence_condition(orbit_based_testing *Obt,
 	else {
 		return FALSE;
 		}
+
+}
 
 }

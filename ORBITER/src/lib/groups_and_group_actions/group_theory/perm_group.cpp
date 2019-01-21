@@ -10,6 +10,9 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+
+namespace orbiter {
+
 perm_group::perm_group()
 {
 	null();
@@ -623,4 +626,6 @@ void perm_group_generators_direct_product(
 		}
 }
 #endif
+
+}
 

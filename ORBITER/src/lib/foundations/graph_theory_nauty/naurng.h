@@ -14,6 +14,7 @@
 #ifndef NAURNG_H
 #include "nauty.h"
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -38,3 +39,5 @@ long ran_nextran(void);
 
 #define NAURNG_H
 #endif
+
+

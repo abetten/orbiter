@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 colored_graph::colored_graph()
 {
 	null();
@@ -2868,6 +2871,8 @@ int colored_graph_all_rainbow_cliques_nonrecursive(
 				"nonrecursive done" << endl;
 		}
 	return nb_sol;
+}
+
 }
 
 

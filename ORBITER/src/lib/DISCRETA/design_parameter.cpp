@@ -6,6 +6,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 design_parameter::design_parameter() : Vector()
 {
 	k = DESIGN_PARAMETER;
@@ -698,3 +700,4 @@ void design_parameter::init_database(database& D, char *path)
 	D.btree_access().append(B);
 }
 
+}

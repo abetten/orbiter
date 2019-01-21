@@ -10,6 +10,7 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
 
 arc_orbits_on_pairs::arc_orbits_on_pairs()
 {
@@ -198,5 +199,7 @@ void arc_orbits_on_pairs::init(
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init done" << endl;
 		}
+}
+
 }
 

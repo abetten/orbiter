@@ -6,6 +6,10 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+
+namespace orbiter {
+
+
 schreier::schreier()
 {
 	A = NULL;
@@ -2209,3 +2213,4 @@ schreier_vector *schreier::get_schreier_vector(
 	return Schreier_vector;
 }
 
+}

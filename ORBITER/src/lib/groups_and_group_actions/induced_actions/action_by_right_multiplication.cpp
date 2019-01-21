@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_by_right_multiplication::action_by_right_multiplication()
 {
 	null();
@@ -77,5 +79,7 @@ void action_by_right_multiplication::compute_image(action *A, int *Elt, int i, i
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image image is " << j << endl;
 		}
+}
+
 }
 

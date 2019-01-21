@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 void choose_random_generator_derived_group(sims *G,
 		int *Elt, int verbose_level)
 {
@@ -157,5 +159,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 				"finished: found a group of order " << go << endl;
 		print_transversal_lengths();
 		}
+}
+
 }
 

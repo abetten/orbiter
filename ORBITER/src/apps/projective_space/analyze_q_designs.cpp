@@ -7,6 +7,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 
 void analyze(int n, int k, int t, int q,
 	const char *fname, int verbose_level);

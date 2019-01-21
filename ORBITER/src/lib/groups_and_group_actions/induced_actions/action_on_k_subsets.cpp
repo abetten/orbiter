@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_k_subsets::action_on_k_subsets()
 {
 	null();
@@ -89,4 +91,5 @@ void action_on_k_subsets::compute_image(int *Elt, int i, int &j, int verbose_lev
 }
 
 
+}
 

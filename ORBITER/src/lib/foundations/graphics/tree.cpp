@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 tree::tree()
 {
 	root = NULL;
@@ -274,5 +277,9 @@ void tree::compute_DFS_ranks(int &nb_nodes, int verbose_level)
 		cout << "tree::compute_DFS_ranks done" << endl;
 		}
 }
+
+}
+
+
 
 

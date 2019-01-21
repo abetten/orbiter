@@ -5,6 +5,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 
 #define MY_BUFSIZE 1000000
 

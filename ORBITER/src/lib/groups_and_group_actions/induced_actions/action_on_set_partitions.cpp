@@ -8,6 +8,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_set_partitions::action_on_set_partitions()
 {
 	null();
@@ -139,4 +141,7 @@ int action_on_set_partitions::compute_image(
 		}
 	return b;
 }
+
+}
+
 

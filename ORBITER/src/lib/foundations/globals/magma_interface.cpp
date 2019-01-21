@@ -7,6 +7,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void magma_write_permutation_group(const char *fname_base,
 	int group_order, int *Table, int *gens, int nb_gens,
 	int verbose_level)
@@ -138,4 +141,5 @@ void read_magma_permutation_group(const char *fname,
 	}
 }
 
+}
 

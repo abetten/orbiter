@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 graph_layer::graph_layer()
 {
 	null();
@@ -165,6 +168,7 @@ void graph_layer::read_memory_object(
 		}
 }
 
+}
 
 
 

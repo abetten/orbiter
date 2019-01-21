@@ -10,7 +10,10 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
 double norm_of_vector(int x1, int x2, int y1, int y2);
+
 
 layered_graph::layered_graph()
 {
@@ -1054,5 +1057,8 @@ double norm_of_vector(int x1, int x2, int y1, int y2)
 {
 	return sqrt((double)(x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
+
+}
+
 
 

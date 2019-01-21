@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void orthogonal::unrank_point(
 		int *v, int stride, int rk, int verbose_level)
 {
@@ -192,7 +195,7 @@ int orthogonal::evaluate_bilinear_form(int *u, int *v, int stride)
 		return evaluate_parabolic_bilinear_form(u, v, stride, m);
 		}
 	else if (epsilon == -1) {
-		return ::evaluate_bilinear_form(*F, u, v, n, Gram_matrix);
+		return orbiter::evaluate_bilinear_form(*F, u, v, n, Gram_matrix);
 		}
 	else {
 		cout << "evaluate_bilinear_form epsilon = " << epsilon << endl;
@@ -1245,7 +1248,7 @@ void orthogonal::init(int epsilon, int n,
 	if (f_v) {
 		cout << "orthogonal::init computing Gram matrix" << endl;
 		}
-	::Gram_matrix(*F, epsilon, n - 1,
+	orbiter::Gram_matrix(*F, epsilon, n - 1,
 			form_c1, form_c2, form_c3, Gram_matrix);
 	if (f_v) {
 		cout << "orthogonal::init "
@@ -7632,7 +7635,7 @@ void orthogonal::Siegel_map_between_singular_points_hyperbolic(int *T,
 {
 	int *Gram;
 	
-	::Gram_matrix(*F, 1, 2 * m - 1, 0,0,0, Gram);
+	orbiter::Gram_matrix(*F, 1, 2 * m - 1, 0,0,0, Gram);
 	orthogonal_Siegel_map_between_singular_points(T, 
 		rk_from, rk_to, root, 
 		*F, epsilon, 2 * m, 
@@ -7747,8 +7750,8 @@ void orthogonal::Siegel_Transformation3(int *T,
 		cout << endl;
 		}
 	
-	a = ::evaluate_bilinear_form(*F, B, B + n, n, Gram);
-	b = ::evaluate_bilinear_form(*F, B, w, n, Gram);
+	a = orbiter::evaluate_bilinear_form(*F, B, B + n, n, Gram);
+	b = orbiter::evaluate_bilinear_form(*F, B, w, n, Gram);
 	av = F->inverse(a);
 	bv = F->inverse(b);
 	for (i = 0; i < n; i++) {
@@ -7954,7 +7957,7 @@ void orthogonal::create_random_Siegel_transformation(
 
 #endif
 
-		alpha = ::evaluate_bilinear_form(*F, u, v, d, Gram_matrix);
+		alpha = orbiter::evaluate_bilinear_form(*F, u, v, d, Gram_matrix);
 		if (alpha == 0) {
 			if (f_v) {
 				cout << "orthogonal::create_random_Siegel_transformation "
@@ -7977,7 +7980,7 @@ void orthogonal::create_random_Siegel_transformation(
 		cout << endl;
 		}
 		
-	::Siegel_Transformation(*F, epsilon, d - 1,
+	orbiter::Siegel_Transformation(*F, epsilon, d - 1,
 			form_c1, form_c2, form_c3,
 			Mtx, v, u, verbose_level - 1);
 
@@ -8312,7 +8315,7 @@ void orthogonal::make_Siegel_Transformation(int *M, int *v, int *u,
 	int f_v = (verbose_level >= 1);
 	int i, j, Qv, e;
 	
-	Qv = ::evaluate_quadratic_form(*F, v, 1 /*stride*/,
+	Qv = orbiter::evaluate_quadratic_form(*F, v, 1 /*stride*/,
 			epsilon, n - 1,
 			form_c1, form_c2, form_c3);
 	F->identity_matrix(M, n);
@@ -8737,4 +8740,5 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 		} 
 }
 
+}
 

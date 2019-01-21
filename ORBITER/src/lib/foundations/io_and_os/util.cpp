@@ -9,6 +9,12 @@
 
 #include "foundations.h"
 
+#include <sstream>
+
+
+namespace orbiter {
+
+
 
 #define MY_BUFSIZE 1000000
 
@@ -2226,7 +2232,6 @@ void print_incidence_structure(ostream &ost,
 	FREE_int(M);
 }
 
-#include <sstream>
 
 
 void int_vec_scan(const char *s, int *&v, int &len)
@@ -5291,3 +5296,7 @@ const char *strip_directory(const char *p)
 	}
 	return p;
 }
+
+
+}
+

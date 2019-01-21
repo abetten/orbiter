@@ -13,6 +13,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 void blt_set::read_arguments(int argc, const char **argv)
 {
 	int i;
@@ -21,17 +23,17 @@ void blt_set::read_arguments(int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-schreier") == 0) {
 			f_override_schreier_depth = TRUE;
-			override_schreier_depth = atoi(argv[++i]);
+			override_schreier_depth = std::atoi(argv[++i]);
 			cout << "-schreier " << override_schreier_depth << endl;
 			}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_override_n = TRUE;
-			override_n = atoi(argv[++i]);
+			override_n = std::atoi(argv[++i]);
 			cout << "-override_n " << override_n << endl;
 			}
 		else if (strcmp(argv[i], "-epsilon") == 0) {
 			f_override_epsilon = TRUE;
-			override_epsilon = atoi(argv[++i]);
+			override_epsilon = std::atoi(argv[++i]);
 			cout << "-override_epsilon " << override_epsilon << endl;
 			}
 		else if (strcmp(argv[i], "-BLT") == 0) {
@@ -2735,6 +2737,7 @@ void callback_subset_orbits(isomorph *Iso, void *data, int verbose_level)
 	Gen->subset_orbits(*Iso, verbose_level);
 }
 
+}
 
 
 

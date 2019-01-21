@@ -5,6 +5,10 @@
 // moved here from action.h: July 28, 2018
 // based on action.h which was started:  August 13, 2005
 
+
+namespace orbiter {
+
+
 // #############################################################################
 // action.C:
 // #############################################################################
@@ -1270,4 +1274,5 @@ void wreath_product_group_element_print_verbose(action &A,
 void wreath_product_group_print_point(action &A,
 	int a, ostream &ost);
 
+}
 

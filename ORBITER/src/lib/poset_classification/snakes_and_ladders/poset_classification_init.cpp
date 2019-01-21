@@ -10,6 +10,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 poset_classification::poset_classification()
 {
 	null();
@@ -1030,4 +1032,5 @@ void poset_classification::init_early_test_func(
 #endif
 
 
+}
 

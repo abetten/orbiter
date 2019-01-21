@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 
 // #############################################################################
 // class action:
@@ -3687,3 +3689,6 @@ matrix_group *action::get_matrix_group()
 		exit(1);
 	}
 }
+
+}
+

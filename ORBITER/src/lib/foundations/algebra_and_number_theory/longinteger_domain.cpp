@@ -11,6 +11,9 @@
 
 #define TABLE_Q_BINOMIALS_MAX 200
 
+namespace orbiter {
+
+
 
 int longinteger_domain::compare(
 		longinteger_object &a, longinteger_object &b)
@@ -2748,5 +2751,6 @@ void longinteger_free_global_data()
 void longinteger_print_digits(char *rep, int len)
 {
 	for (int h = 0; h < len; h++) cout << (char)('0' + rep[h]) << " ";
+}
 }
 

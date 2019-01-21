@@ -10,6 +10,8 @@
 //#include <sstream.h>
 #include <stdlib.h>
 
+namespace orbiter {
+
 #undef INTEGER_M_I_VERBOSE
 
 integer::integer()
@@ -602,5 +604,6 @@ int integer::log2()
 
 
 
+}
 
 

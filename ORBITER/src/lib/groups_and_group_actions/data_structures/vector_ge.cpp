@@ -9,6 +9,8 @@
 #undef PRint_WITH_TYPE
 #define RANGE_CHECKING
 
+namespace orbiter {
+
 vector_ge::vector_ge()
 {
 	null();
@@ -578,7 +580,8 @@ void vector_ge::extract_subset_of_elements_by_rank(int *rank_vector, int len, si
 		S->element_unrank_int(r, Elt);
 
 		if (f_v) {
-			cout << "vector_ge::extract_subset_of_elements_by_rank element " << i << " = " << r << " / " << len << endl;
+			cout << "vector_ge::extract_subset_of_elements_by_rank "
+					"element " << i << " = " << r << " / " << len << endl;
 			A->element_print_quick(Elt, cout);
 			}
 		A->element_move(Elt, ith(i), 0);
@@ -601,7 +604,8 @@ int vector_ge::test_if_all_elements_stabilize_a_point(action *A2, int pt)
 	return TRUE;
 }
 
-int vector_ge::test_if_all_elements_stabilize_a_set(action *A2, int *set, int sz, int verbose_level)
+int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
+		int *set, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -624,5 +628,6 @@ int vector_ge::test_if_all_elements_stabilize_a_set(action *A2, int *set, int sz
 	return TRUE;
 }
 
+}
 
 

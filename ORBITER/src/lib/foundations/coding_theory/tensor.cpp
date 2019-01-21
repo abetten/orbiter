@@ -10,6 +10,8 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
 
 
 void twisted_tensor_product_codes(
@@ -828,5 +830,6 @@ void make_tensor_code_9_dimensional(int q,
 	FREE_int(C_inv);
 	FREE_int(H);
 	
+}
 }
 

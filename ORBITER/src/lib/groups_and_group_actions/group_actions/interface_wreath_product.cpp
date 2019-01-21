@@ -10,6 +10,9 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+
+namespace orbiter {
+
 // #############################################################################
 // interface functions: wreath product group
 // #############################################################################
@@ -561,6 +564,8 @@ void wreath_product_group_print_point(action &A, int a, ostream &ost)
 	cout << "wreath_product_group_print_point "
 			"not yet implemented" << endl;
 	exit(1);
+}
+
 }
 
 

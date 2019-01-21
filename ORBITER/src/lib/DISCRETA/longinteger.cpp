@@ -9,6 +9,8 @@
 #undef DEBUG_LONGintEGER_DIVISION
 #undef DEBUG_LONGintEGER_COMPARE
 
+namespace orbiter {
+
 
 static void subtract_signless(longinteger &x, longinteger &y, longinteger &z);
 static int do_division(longinteger& r, longinteger *d);
@@ -914,4 +916,5 @@ int longinteger::Lucas_test_Mersenne(int m, int f_v)
 		return FALSE;
 }
 
+}
 

@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 grassmann_embedded::grassmann_embedded()
 {
 	G = NULL;
@@ -348,3 +351,4 @@ int grassmann_embedded::rank_int(
 	return rk;
 }
 
+}

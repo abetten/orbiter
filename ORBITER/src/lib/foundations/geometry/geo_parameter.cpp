@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 geo_parameter::geo_parameter()
 {
 	decomposition_type = 0;
@@ -1943,5 +1946,6 @@ void geo_parameter::print_schemes()
 #endif
 }
 
+}
 
 

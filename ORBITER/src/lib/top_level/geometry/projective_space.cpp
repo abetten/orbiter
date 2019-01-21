@@ -11,6 +11,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 void Hill_cap56(int argc, const char **argv, 
 	char *fname, int &nb_Pts, int *&Pts, 
@@ -476,6 +478,9 @@ void create_Buekenhout_Metz(
 	FREE_OBJECT(BM);
 
 }
+
+}
+
 
 
 

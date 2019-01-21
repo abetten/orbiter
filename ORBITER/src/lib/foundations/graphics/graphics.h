@@ -7,6 +7,9 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+namespace orbiter {
+
+
 // #############################################################################
 // draw.C
 // #############################################################################
@@ -838,7 +841,7 @@ public:
 
 int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 
-
+}
 
 
 

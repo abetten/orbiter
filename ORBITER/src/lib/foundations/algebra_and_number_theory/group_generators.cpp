@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 void diagonal_orbit_perm(int n, finite_field &GFq,
 		int *orbit, int *orbit_inv, int verbose_level)
@@ -1635,4 +1638,5 @@ void generators_for_stabilizer_of_triangle_in_PGL4(
 		}
 }
 
+}
 

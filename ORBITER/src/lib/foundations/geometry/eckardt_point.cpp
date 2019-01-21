@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 eckardt_point::eckardt_point()
 {
 	null();
@@ -251,3 +254,4 @@ void eckardt_point::unrank(int rk,
 }
 
 
+}

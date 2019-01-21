@@ -6,6 +6,10 @@
 //
 // based on global.h, which was taken from reader.h: 3/22/09
 
+
+namespace orbiter {
+
+
 typedef class representatives representatives;
 	// added 7/3/12
 typedef class isomorph isomorph;
@@ -83,6 +87,7 @@ typedef class arc_orbits_on_pairs arc_orbits_on_pairs;
 typedef class arc_partition arc_partition;
 	// started 1/9/2019
 
+
 // #############################################################################
 // representatives.C
 // #############################################################################
@@ -153,7 +158,7 @@ public:
 	void print_fusion_statistics();
 };
 
-
+}
 
 
 #include "./algebra_and_number_theory/tl_algebra_and_number_theory.h"

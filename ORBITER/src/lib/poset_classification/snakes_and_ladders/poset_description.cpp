@@ -7,6 +7,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
 
 
 poset_description::poset_description()
@@ -112,4 +113,6 @@ int poset_description::read_arguments(
 	} // next i
 	cout << "poset_description::read_arguments done" << endl;
 	return i;
+}
+
 }

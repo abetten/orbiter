@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 mp_graphics::mp_graphics()
 {
 	default_values();
@@ -2646,5 +2649,6 @@ void mp_graphics::output_y_tikz(int y)
 		}
 }
 
+}
 
 

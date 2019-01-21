@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 int isomorph::identify_solution_relaxed(int *set, int *transporter, 
 	int f_implicit_fusion, int &orbit_no,
 	int &f_failure_to_find_point, int verbose_level)
@@ -1471,6 +1473,8 @@ void isomorph::apply_isomorphism_oracle(
 	int_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->Poset->A->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
+
+}
 
 }
 

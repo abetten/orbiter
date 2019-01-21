@@ -7,6 +7,9 @@
 #include "groups_and_group_actions.h"
 
 
+namespace orbiter {
+
+
 
 linear_group::linear_group()
 {
@@ -709,4 +712,5 @@ void linear_group::init_subgroup_from_file(char *prefix,
 }
 
 
+}
 

@@ -11,6 +11,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 grassmann::grassmann()
 {
 	n = 0;
@@ -975,6 +978,8 @@ void grassmann::compute_dual_spread(
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread done" << endl;
 		}
+}
+
 }
 
 

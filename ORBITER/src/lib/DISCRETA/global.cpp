@@ -9,6 +9,8 @@
 //#include <stdio.h>
 //#include <stdlib.h> // for rand(), RAND_MAX
 
+namespace orbiter {
+
 #undef DEBUG_CALLOC_NOBJECTS_PLUS_LENGTH
 #undef TONELLI_VERBOSE
 #undef DEBUG_INVERT_MOD_intEGER
@@ -3514,4 +3516,5 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 	//O4_isomorphism_4to2(F, At2, As2, f_switch2, mtxG, verbose_level);
 }
 
+}
 

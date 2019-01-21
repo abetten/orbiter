@@ -13,6 +13,9 @@
 
 //#include "partition_backtrack.h"
 
+
+namespace orbiter {
+
 #undef MATRIX_COPY_VERBOSE
 #undef DEBUG_S_IJ
 
@@ -1776,7 +1779,7 @@ void matrix::binomial(int n_min, int n_max, int k_min, int k_max)
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::Binomial(n_min + i, k_min + j, s_ij(i, j));			
+			orbiter::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			}
 		}
 }
@@ -1791,7 +1794,7 @@ void matrix::stirling_second(int n_min, int n_max, int k_min, int k_max, int f_o
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::stirling_second(n_min + i, k_min + j, f_ordered, s_ij(i, j), f_v);			
+			orbiter::stirling_second(n_min + i, k_min + j, f_ordered, s_ij(i, j), f_v);
 			}
 		}
 }
@@ -1806,7 +1809,7 @@ void matrix::stirling_first(int n_min, int n_max, int k_min, int k_max, int f_si
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::stirling_first(n_min + i, k_min + j, f_signless, s_ij(i, j), f_v);			
+			orbiter::stirling_first(n_min + i, k_min + j, f_signless, s_ij(i, j), f_v);
 			}
 		}
 }
@@ -1820,7 +1823,7 @@ void matrix::binomial(int n_min, int n_max, int k_min, int k_max, int f_inverse)
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::Binomial(n_min + i, k_min + j, s_ij(i, j));
+			orbiter::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			if (f_inverse && ODD(n_min + i + k_min + j))
 				s_ij(i, j).negate();			
 			}
@@ -3129,7 +3132,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		cout << "!s_ij(l, 1).is_zero()" << endl;
 		exit(1);
 		}
-	ql = ::i_power_j(q, l);
+	ql = orbiter::i_power_j(q, l);
 	nb = nb_PG_elements(m - l - 2, q);
 	s = ql * ql * nb;
 	if (f_v) {
@@ -3158,7 +3161,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		cout << "a=" << a << endl;
 		}
 	for (l--; l >= 0; l--) {
-		ql = ::i_power_j(q, l);
+		ql = orbiter::i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;
@@ -3190,7 +3193,7 @@ void matrix::PG_line_unrank(int a)
 	// cout << "matrix::PG_line_unrank() a=" << a << endl;
 	l = 0;
 	while (l < m) {
-		ql = ::i_power_j(q, l);
+		ql = orbiter::i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		// cout << "matrix::PG_line_unrank() a=" << a << " l=" << l << " s=" << s << " ql=" << ql << " nb=" << nb << endl;
@@ -3423,7 +3426,7 @@ int nb_PG_lines(int n, int q)
 	
 	m = n + 1;
 	for (l = 0; l < m; l++) {
-		ql = ::i_power_j(q, l);
+		ql = orbiter::i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;
@@ -3640,3 +3643,4 @@ void matrix::save_as_inc(ofstream &f)
 }
 
 
+}

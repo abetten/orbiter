@@ -7,6 +7,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 void convert(ifstream &f, ofstream &g, int f_simple);
 
 int main(int argc, char **argv)

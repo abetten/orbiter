@@ -7,6 +7,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_orbit_node::compute_flag_orbits_subspace_action(
 	poset_classification *gen,
 	int lvl, 
@@ -807,3 +809,5 @@ void poset_orbit_node::find_extensions_subspace_action(
 		}
 }
 
+
+}

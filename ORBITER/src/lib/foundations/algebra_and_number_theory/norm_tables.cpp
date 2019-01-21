@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 norm_tables::norm_tables()
 {
 	norm_table = NULL;
@@ -101,4 +104,5 @@ int norm_tables::choose_an_element_of_given_norm(
 	return gamma;
 }
 
+}
 

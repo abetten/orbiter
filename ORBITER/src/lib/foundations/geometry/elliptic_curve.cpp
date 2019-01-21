@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 elliptic_curve::elliptic_curve()
 {
@@ -829,6 +832,8 @@ void elliptic_curve::print_all_powers(int i)
 		j = A[i * nb + j];
 		ord++;
 		}
+}
+
 }
 
 

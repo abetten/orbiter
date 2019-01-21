@@ -10,6 +10,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_classification::read_data_file(int &depth_completed,
 		const char *fname, int verbose_level)
 {
@@ -2585,4 +2587,5 @@ void poset_classification::make_fname_candidates_file_default(
 	sprintf(fname, "%s_lvl_%d_candidates.bin", fname_base, level);
 }
 
+}
 

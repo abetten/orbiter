@@ -8,6 +8,9 @@
 //
 //
 
+using namespace orbiter;
+
+
 typedef  int * pint;
 
 typedef class ovoid_generator ovoid_generator;

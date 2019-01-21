@@ -8,6 +8,7 @@
 
 #include <string.h> // strncmp
 
+namespace orbiter {
 
 bt_key::bt_key() : Vector()
 {
@@ -491,4 +492,5 @@ void bt_key_get_int2(char **key, int_2 &i)
 	pc[1] = **key; (*key)++;
 }
 
+}
 

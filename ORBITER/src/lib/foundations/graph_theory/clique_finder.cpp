@@ -12,6 +12,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 #undef SUSPICOUS
 
@@ -1958,3 +1961,4 @@ continuation_point:
 }
 
 
+}

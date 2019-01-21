@@ -8,6 +8,8 @@
 
 #include <stdlib.h> // for rand(), RAND_MAX
 
+namespace orbiter {
+
 #define MAX_DOMAIN_STACK 100
 
 int domain_stack_len = 0;
@@ -377,3 +379,4 @@ void free_finite_field_domain(domain *dom, int f_v)
 	exit(1);
 }
 
+}

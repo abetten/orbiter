@@ -9,6 +9,9 @@
 
 #include <stdlib.h> // for system
 
+
+namespace orbiter {
+
 //int bt_debug = FALSE;
 
 #undef USE_TABLE
@@ -2197,5 +2200,7 @@ static void bt_item_copy(ItemTyp *a, ItemTyp *b)
 	len = sizeof(ItemTyp);
 	for (i = 0; i < len; i++)
 		pcb[i] = pca[i];
+}
+
 }
 

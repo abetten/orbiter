@@ -8,6 +8,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	int lvl, int current_node, 
 	int current_extension, int len, int f_tolerant,
@@ -768,4 +770,5 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 	return TRUE;
 }
 
+}
 

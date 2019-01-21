@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 void isomorph_read_statistic_files(
 	action *A_base, action *A,
 	poset_classification *gen,
@@ -1643,6 +1645,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 
 
 
+}
 
 
 

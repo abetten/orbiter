@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_homogeneous_polynomials::action_on_homogeneous_polynomials()
 {
 	null();
@@ -247,4 +249,5 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 		}
 }
 
+}
 

@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_by_representation::action_by_representation()
 {
 	null();
@@ -174,4 +176,5 @@ void action_by_representation::compute_image_int_low_level(
 		}
 }
 
+}
 

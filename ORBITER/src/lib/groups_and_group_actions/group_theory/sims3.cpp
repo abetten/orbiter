@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 void sims::subgroup_make_characteristic_vector(
 		sims *Sub, int *C, int verbose_level)
 {
@@ -124,3 +126,4 @@ void sims::order_structure_relative_to_subgroup(int *C_sub,
 		}
 }
 
+}

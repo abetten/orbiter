@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
 
 orbit_rep::orbit_rep()
 {
@@ -99,6 +100,8 @@ void orbit_rep::init_from_file(
 				<< orbit_at_level << " done, "
 				"stabilizer order = " << *stab_go << endl;
 		}
+
+}
 
 }
 

@@ -6,6 +6,8 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
 
 null_polarity_generator::null_polarity_generator()
 {
@@ -301,3 +303,4 @@ int null_polarity_generator::dot_product(int *u1, int *u2)
 #endif
 }
 
+}

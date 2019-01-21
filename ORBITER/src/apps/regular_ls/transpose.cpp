@@ -8,6 +8,10 @@
 //
 
 #include "orbiter.h"
+
+using namespace orbiter;
+
+
 #include "regular_ls.h"
 
 

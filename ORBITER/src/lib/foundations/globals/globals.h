@@ -7,6 +7,9 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+namespace orbiter {
+
+
 // #############################################################################
 // galois_global.C:
 // #############################################################################
@@ -140,5 +143,7 @@ void make_transform_t_varphi_u_double(int n, double *varphi, double *u,
 void matrix_double_inverse(double *A, double *Av, int n, int verbose_level);
 int line_centered(double *pt1_in, double *pt2_in, 
 	double *pt1_out, double *pt2_out, double r);
+
+}
 
 

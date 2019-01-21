@@ -12,6 +12,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 recoordinatize::recoordinatize()
 {
 	null();
@@ -730,6 +732,8 @@ void recoordinatize::make_first_three(
 	if (f_v) {
 		cout << "recoordinatize::make_first_three done" << endl;
 		}
+}
+
 }
 
 

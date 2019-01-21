@@ -5,6 +5,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int power_mod(int a, int n, int p)
 {
 	longinteger_domain D;
@@ -988,6 +991,8 @@ void int_mult_fractions(int at, int ab,
 		ct /= g;
 		cb /= g;
 		}
+}
+
 }
 
 

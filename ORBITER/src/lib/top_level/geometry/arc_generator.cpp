@@ -14,6 +14,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 arc_generator::arc_generator()
 {
 	null();
@@ -106,17 +108,17 @@ void arc_generator::read_arguments(int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		
 		if (strcmp(argv[i], "-v") == 0) {
-			verbose_level = atoi(argv[++i]);
+			verbose_level = std::atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 			}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = atoi(argv[++i]);
+			q = std::atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
-			n = atoi(argv[++i]);
+			n = std::atoi(argv[++i]);
 			cout << "-n " << n << endl;
 			}
 		else if (strcmp(argv[i], "-poly") == 0) {
@@ -138,23 +140,23 @@ void arc_generator::read_arguments(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
-			target_size = atoi(argv[++i]);
+			target_size = std::atoi(argv[++i]);
 			cout << "-target_size " << target_size << endl;
 			}
 		else if (strcmp(argv[i], "-d") == 0) {
 			f_d = TRUE;
 			f_no_arc_testing = FALSE;
-			d = atoi(argv[++i]);
+			d = std::atoi(argv[++i]);
 			cout << "-d " << d << endl;
 			}
 		else if (strcmp(argv[i], "-list") == 0) {
 			f_list = TRUE;
-			list_depth = atoi(argv[++i]);
+			list_depth = std::atoi(argv[++i]);
 			cout << "-list " << list_depth << endl;
 			}
 		else if (strcmp(argv[i], "-simeon") == 0) {
 			f_simeon = TRUE;
-			simeon_s = atoi(argv[++i]);
+			simeon_s = std::atoi(argv[++i]);
 			cout << "-simeon " << simeon_s << endl;
 			}
 		else if (strcmp(argv[i], "-recognize") == 0) {
@@ -838,7 +840,7 @@ void arc_generator::print(int len, int *S)
 
 void arc_generator::print_set_in_affine_plane(int len, int *S)
 {
-	::print_set_in_affine_plane(*F, len, S);
+	orbiter::print_set_in_affine_plane(*F, len, S);
 }
 
 
@@ -1996,6 +1998,7 @@ void callback_arc_print(
 	Gen->print(len, S);
 }
 
+}
 
 
 

@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int_vector::int_vector()
 {
 	null();
@@ -200,4 +203,5 @@ int int_vector::maximum()
 }
 
 
+}
 

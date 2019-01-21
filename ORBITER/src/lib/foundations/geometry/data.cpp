@@ -19,6 +19,8 @@
 
 
 
+namespace orbiter {
+
 
 
 #include "./DATA/data_hyperovals.cpp"
@@ -2325,3 +2327,6 @@ void get_projective_plane_list_of_lines(int *&list_of_lines,
 		cout << "get_projective_plane_list_of_lines done" << endl;
 	}
 }
+
+}
+

@@ -7,6 +7,8 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+namespace orbiter {
+
 
 // #############################################################################
 // int_vector.C:
@@ -718,7 +720,7 @@ public:
 	void unrank(int rk, int *data);
 };
 
-
+}
 
 
 

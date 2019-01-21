@@ -23,6 +23,7 @@
 #define ONE_WORD_SETS
 #include "nauty.h"
 
+
     /* macros for hash-codes: */
 #define MASH(l,i) ((((l) ^ 065435) + (i)) & 077777)
     /* : expression whose long value depends only on long l and int/long i.
@@ -710,3 +711,5 @@ naugraph_freedyn(void)
     DYNFREE(dnwork,dnwork_sz);
 #endif
 }
+
+

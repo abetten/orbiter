@@ -10,6 +10,7 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
 
 
 orbit_of_equations::orbit_of_equations()
@@ -641,6 +642,7 @@ int orbit_of_equations_compare_func(void *a, void *b, void *data)
 	return 0;
 }
 
+}
 
 
 

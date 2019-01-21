@@ -7,6 +7,10 @@
 #include "foundations.h"
 //#include <stdlib.h>
 
+
+namespace orbiter {
+
+
 typedef struct mindist MINDIST;
 
 //! internal class for the algorithm to compute the minimum distance of a linear code
@@ -710,4 +714,5 @@ static void vmmult(MINDIST *MD, int *v, int **mx, int *cv)
 	}
 }
 
+}
 

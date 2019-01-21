@@ -12,6 +12,7 @@
 
 #include <fstream>
 
+namespace orbiter {
 
 
 void decomposition_projective_space(int k, finite_field *F, 
@@ -128,5 +129,7 @@ void decomposition_projective_space(int k, finite_field *F,
 
 	FREE_int(part);
 	FREE_int(Mtx);
+}
+
 }
 

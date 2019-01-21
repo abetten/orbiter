@@ -8,6 +8,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_classification::recognize_start_over(
 	int size, int f_implicit_fusion, 
 	int lvl, int current_node, 
@@ -464,4 +466,5 @@ void poset_classification::recognize(
 }
 
 
+}
 

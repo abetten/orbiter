@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void do_cone_over(int n, finite_field *F, 
 	int *set_in, int set_size_in, int *&set_out, int &set_size_out, 
 	int verbose_level)
@@ -1632,6 +1635,8 @@ void create_Maruta_Hamada_arc(finite_field *F,
 	
 	FREE_OBJECT(P);
 	//FREE_int(Pts);
+}
+
 }
 
 

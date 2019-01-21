@@ -8,6 +8,8 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
 void finite_field::cheat_sheet_PG(int n,
 		int f_surface, int verbose_level)
 {
@@ -966,5 +968,6 @@ void finite_field::cheat_sheet_bottom(ostream &f)
 	f << "$$" << endl;
 }
 
+}
 
 

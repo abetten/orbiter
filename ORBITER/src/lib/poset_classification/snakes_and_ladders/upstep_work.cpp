@@ -7,6 +7,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 upstep_work::upstep_work()
 {
 	gen = NULL;
@@ -967,4 +969,5 @@ void print_coset_table(coset_table_entry *coset_table, int len)
 }
 
 
+}
 

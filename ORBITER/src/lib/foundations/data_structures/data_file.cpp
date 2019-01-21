@@ -12,6 +12,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 data_file::data_file()
 {
 	null();
@@ -134,4 +137,5 @@ void data_file::read_candidates(const char *candidates_fname, int verbose_level)
 		}	
 }
 
+}
 

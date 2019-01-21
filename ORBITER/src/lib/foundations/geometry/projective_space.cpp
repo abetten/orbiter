@@ -10,6 +10,8 @@
 #define MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE 1000000
 
 
+namespace orbiter {
+
 
 
 projective_space::projective_space()
@@ -7415,4 +7417,7 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 				"hyperplane_W0_fixing_two_lines done" << endl;
 		}
 }
+
+}
+
 

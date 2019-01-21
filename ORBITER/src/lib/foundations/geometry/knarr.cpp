@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 	// The Knarr construction of a GQ(q^2,q) from a BLT set of lines in W(3,q):
 	//
 	// let P = (1,0,0,0,0,0) in W(5,q)
@@ -671,4 +674,5 @@ void knarr::incidence_matrix(int *&Inc,
 	FREE_int(Basis_V);
 }
 
+}
 

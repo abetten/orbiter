@@ -8,6 +8,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 compute_stabilizer::compute_stabilizer()
 {
 	null();
@@ -1034,4 +1036,7 @@ void compute_stabilizer::free1()
 		FREE_int(Elt4);
 		}
 }
+
+}
+
 

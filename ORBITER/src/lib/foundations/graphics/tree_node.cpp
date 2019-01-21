@@ -10,6 +10,9 @@
 
 #define DONT_DRAW_ROOT_NODE 0
 
+namespace orbiter {
+
+
 
 tree_node::tree_node()
 {
@@ -527,4 +530,5 @@ int tree_node_calc_y_coordinate(int ymax, int l, int max_depth)
 	return y;
 }
 
+}
 

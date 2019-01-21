@@ -10,6 +10,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_classification::Plesken_matrix_up(int depth,
 		int *&P, int &N, int verbose_level)
 {
@@ -451,5 +453,6 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 }
 
 
+}
 
 

@@ -10,6 +10,9 @@
 #include "foundations.h"
 #include <math.h>
 
+namespace orbiter {
+
+
 
 void orbits_point(int *Px, int *Py, int idx, int sx, int sy, int i, int j)
 {
@@ -973,6 +976,8 @@ void draw_bitmatrix2(mp_graphics &G, int f_dots,
 			}
 		}
 	cout << "draw_it2 # of non-zero coefficients = " << cnt << endl;
+}
+
 }
 
 

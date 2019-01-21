@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 #define N 100
 
 int t0;

@@ -7,6 +7,9 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+
+namespace orbiter {
+
 void schreier::latex(const char *fname)
 {
 	int f_with_cosetrep = TRUE;
@@ -76,7 +79,7 @@ void schreier::print_orbit_lengths_tex(ostream &ost)
 		sorting_perm, sorting_perm_inv,
 		nb_types, type_first, type_len);
 
-	ost << "There are " << nb_orbits << " orbits, the orbit lengths are $" << endl;
+	ost << "There are " << nb_orbits << " orbits, the orbit lengths are $";
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		l = type_len[i];
@@ -1668,4 +1671,6 @@ void schreier::read_file_binary(const char *fname, int verbose_level)
 	if (f_v) {
 		cout << "schreier::read_file_binary done" << endl;
 		}
+}
+
 }

@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_flags::action_on_flags()
 {
 	null();
@@ -121,4 +123,5 @@ int action_on_flags::compute_image(int *Elt, int i, int verbose_level)
 }
 
 
+}
 

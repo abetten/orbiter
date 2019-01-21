@@ -11,6 +11,9 @@
 #include "foundations.h"
 
 
+namespace orbiter {
+
+
 orbiter_data_file::orbiter_data_file()
 {
 	null();
@@ -90,4 +93,6 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 		}
 }
 
+
+}
 

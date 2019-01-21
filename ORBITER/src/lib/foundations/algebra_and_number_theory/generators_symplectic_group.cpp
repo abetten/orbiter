@@ -5,6 +5,8 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
 
 
 generators_symplectic_group::generators_symplectic_group()
@@ -320,5 +322,7 @@ int generators_symplectic_group::dot_product(int *u1, int *u2)
 		c = F->add(c, F->negate(F->mult(u1[2 * i + 1], u2[2 * i + 0])));
 		}
 	return c;
+}
+
 }
 

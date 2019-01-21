@@ -9,7 +9,11 @@
 
 #include "foundations.h"
 
+
 #define CREATE_TABLE_UPPER_BOUND 1024
+
+namespace orbiter {
+
 
 int nb_calls_to_finite_field_init = 0;
 
@@ -544,7 +548,7 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 		cout << "create_alpha_table_prime_field, "
 				"q=" << q << " p=" << p << " e=" << e << endl;
 		}
-	alpha = ::primitive_root(p, f_v);
+	alpha = orbiter::primitive_root(p, f_v);
 	if (f_v) {
 		cout << "primitive element is alpha=" << alpha << endl;
 		}
@@ -1325,5 +1329,7 @@ void finite_field::subfield_embedding_2dimensional(
 		cout << "finite_field::subfield_embedding_2dimensional "
 				"finished" << endl;
 		}
+}
+
 }
 

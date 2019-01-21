@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 young::young()
 {
 	null();
@@ -919,5 +921,6 @@ void young::Maschke(int *Rep,
 }
 
 
+}
 
 

@@ -7,6 +7,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 poset_orbit_node::poset_orbit_node()
 {
 	null();
@@ -931,4 +933,5 @@ int poset_orbit_node::nb_extension_points()
 }
 
 
+}
 

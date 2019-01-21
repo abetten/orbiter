@@ -11,6 +11,7 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
 
 
 
@@ -1551,6 +1552,7 @@ void induced_action_print_point(action &A,
 		}
 }
 
+}
 
 
 

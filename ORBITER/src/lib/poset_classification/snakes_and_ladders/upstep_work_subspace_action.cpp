@@ -9,6 +9,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 int upstep_work::upstep_subspace_action(int verbose_level)
 // This routine is called from upstep_work::init_extension_node
 // It computes coset_table.
@@ -581,4 +583,5 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	return TRUE;
 }
 
+}
 

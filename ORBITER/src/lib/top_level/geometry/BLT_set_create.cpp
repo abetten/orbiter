@@ -12,6 +12,8 @@
 #include "orbiter.h"
 
 
+namespace orbiter {
+
 BLT_set_create::BLT_set_create()
 {
 	null();
@@ -204,3 +206,4 @@ void BLT_set_create::apply_transformations(const char **transform_coeffs,
 }
 
 
+}

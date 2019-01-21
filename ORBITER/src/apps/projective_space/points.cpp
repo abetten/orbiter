@@ -11,6 +11,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 
 // global data:
 

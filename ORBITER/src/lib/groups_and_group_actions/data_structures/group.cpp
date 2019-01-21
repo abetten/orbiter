@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 group::group()
 {
 	null();
@@ -884,4 +886,5 @@ void group::print_strong_generators_with_different_action_verbose(
 		}
 }
 
+}
 

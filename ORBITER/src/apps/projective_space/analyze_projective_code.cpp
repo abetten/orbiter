@@ -11,6 +11,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 #define MY_MAX_SET_SIZE 2000
 
 // global data:

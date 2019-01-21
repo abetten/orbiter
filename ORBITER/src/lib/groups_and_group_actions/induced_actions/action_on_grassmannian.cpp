@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_on_grassmannian::action_on_grassmannian()
 {
 	null();
@@ -334,4 +336,5 @@ void action_on_grassmannian::print_point(int a, ostream &ost)
 			G->k, G->n, G->n, 2 /*M->GFq->log10_of_q*/);
 }
 
+}
 

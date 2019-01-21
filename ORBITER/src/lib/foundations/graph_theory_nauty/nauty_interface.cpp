@@ -24,10 +24,14 @@
 
 
 
+
 #define MAXN 20000
 #include "nauty.h"
 
 #define MAX_WORKSPACE 50000
+
+
+namespace orbiter {
 
 static graph g[MAXN * MAXM];
 static graph canong[MAXN * MAXM];
@@ -624,6 +628,9 @@ static void nauty_interface_free_data()
 #endif
 }
 #endif
+
+
+}
 
 
 

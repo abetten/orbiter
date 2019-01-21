@@ -11,6 +11,8 @@
 #undef PARTITION_COPY_VERBOSE
 
 
+namespace orbiter {
+
 number_partition::number_partition() : Vector()
 {
 	k = NUMBER_PARTITION;
@@ -447,3 +449,4 @@ int next_passport_i(Vector &pass, int n, int k, int i, int & S)
 		}
 }
 
+}

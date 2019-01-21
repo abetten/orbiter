@@ -9,6 +9,8 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
+namespace orbiter {
+
 void poset_orbit_node::compute_flag_orbits(
 	poset_classification *gen,
 	int lvl, 
@@ -1532,4 +1534,5 @@ void poset_orbit_node::downstep_orbits_print(
 
 
 
+}
 

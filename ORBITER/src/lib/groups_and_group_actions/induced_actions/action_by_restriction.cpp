@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 action_by_restriction::action_by_restriction()
 {
 	null();
@@ -159,5 +161,6 @@ int action_by_restriction::compute_image(
 	return c;
 }
 
+}
 
 

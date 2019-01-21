@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 
 layered_graph_draw_options::layered_graph_draw_options()
 {
@@ -93,3 +96,4 @@ void layered_graph_draw_options::init(
 	O->global_line_width = global_line_width;
 }
 
+}

@@ -8,6 +8,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int strcmp_with_or_without(char *p, char *q);
 
 spreadsheet::spreadsheet()
@@ -1358,4 +1361,5 @@ int strcmp_with_or_without(char *p, char *q)
 }
 
 
+}
 

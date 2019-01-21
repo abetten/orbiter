@@ -20,6 +20,10 @@
 #include "foundations.h"
 
 
+
+namespace orbiter {
+
+
 #define DLX_FANCY_LEVEL 30
 #define DLX_TRACKING_DEPTH 10
 
@@ -124,8 +128,8 @@ void install_callback_solution_found(
 	void *callback_solution_found_data)
 {
 	f_has_callback_solution_found = TRUE;
-	::callback_solution_found = callback_solution_found;
-	::callback_solution_found_data = callback_solution_found_data;
+	orbiter::callback_solution_found = callback_solution_found;
+	orbiter::callback_solution_found_data = callback_solution_found_data;
 }
 
 void de_install_callback_solution_found()
@@ -293,7 +297,7 @@ void DlxSolve(int *Data, int nb_rows, int nb_cols,
 	DlxSearch(0);
 
 
-	nb_sol = ::dlx_nb_sol;
+	nb_sol = orbiter::dlx_nb_sol;
 	nb_backtrack = dlx_nb_backtrack_nodes;
 
 
@@ -342,7 +346,7 @@ void DlxSolve_with_RHS(int *Data, int nb_rows, int nb_cols,
 	DlxSearchRHS(0, verbose_level);
 
 
-	nb_sol = ::dlx_nb_sol;
+	nb_sol = orbiter::dlx_nb_sol;
 	nb_backtrack = dlx_nb_backtrack_nodes;
 
 
@@ -452,15 +456,15 @@ void Create_RHS(int nb_cols, int *RHS, int f_has_type, diophant_equation_type *t
 	current_row_save = NEW_int(sum_rhs);
 
 	if (f_has_type) {
-		::type = NEW_OBJECTS(diophant_equation_type, nCol);
+		orbiter::type = NEW_OBJECTS(diophant_equation_type, nCol);
 		for (i = 0; i < nCol; i++) {
-			::type[i] = type[i];
+			orbiter::type[i] = type[i];
 			}
 		}
 	else {
-		::type = NEW_OBJECTS(diophant_equation_type, nCol);
+		orbiter::type = NEW_OBJECTS(diophant_equation_type, nCol);
 		for (i = 0; i < nCol; i++) {
-			::type[i] = t_EQ;
+			orbiter::type[i] = t_EQ;
 			}
 		}
 	changed_type_columns = NEW_int(nCol);
@@ -1218,6 +1222,8 @@ void UnCover(dlx_node *ColNode)
 
 
 	//cout << "UnCover done" << endl;
+}
+
 }
 
 

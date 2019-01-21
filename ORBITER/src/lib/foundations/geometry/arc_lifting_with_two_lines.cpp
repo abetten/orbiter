@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 arc_lifting_with_two_lines::arc_lifting_with_two_lines()
 {
 	null();
@@ -452,3 +455,4 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 }
 
+}

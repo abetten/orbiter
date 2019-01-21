@@ -8,6 +8,8 @@
 #include "poset_classification/poset_classification.h"
 
 
+namespace orbiter {
+
 int poset_classification::nb_orbits_at_level(int level)
 {
 	int f, l;
@@ -2250,6 +2252,7 @@ void poset_classification::rank_basis(
 	}
 }
 
+}
 
 
 

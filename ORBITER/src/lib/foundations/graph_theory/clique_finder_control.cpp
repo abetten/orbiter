@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 clique_finder_control::clique_finder_control()
 {
 	f_rainbow = FALSE;
@@ -305,4 +308,6 @@ void clique_finder_control::all_cliques_weighted(colored_graph *CG,
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques_weighted done" << endl;
 		}
+}
+
 }

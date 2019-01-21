@@ -9,6 +9,8 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
 
 
 classify::classify()
@@ -372,3 +374,4 @@ set_of_sets *classify::get_set_partition_and_types(
 	return SoS;
 }
 
+}

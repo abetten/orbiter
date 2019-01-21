@@ -10,6 +10,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 int finitefield_primes[] = {
 	2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 
 	17, 19, 23, 25, 27, 29, 31, 32, 37, 41, 
@@ -966,5 +969,7 @@ const char *get_primitive_polynomial(int p, int e, int verbose_level)
 		exit(1);
 		}
 	return m; 
+}
+
 }
 

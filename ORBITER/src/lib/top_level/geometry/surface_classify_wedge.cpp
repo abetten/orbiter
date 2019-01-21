@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+namespace orbiter {
+
 
 surface_classify_wedge::surface_classify_wedge()
 {
@@ -114,11 +116,11 @@ void surface_classify_wedge::read_arguments(
 			Identify_label[nb_identify] = NEW_char(strlen(label) + 1);
 			strcpy(Identify_label[nb_identify], label);
 			for (j = 0; ; j++) {
-				coeff[j] = atoi(argv[++i]);
+				coeff[j] = std::atoi(argv[++i]);
 				if (coeff[j] == -1) {
 					break;
 					}
-				monomial[j] = atoi(argv[++i]);
+				monomial[j] = std::atoi(argv[++i]);
 				}
 			nb_terms = j;
 			Identify_coeff[nb_identify] = NEW_int(nb_terms);
@@ -2064,5 +2066,6 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 }
 
 
+}
 
 

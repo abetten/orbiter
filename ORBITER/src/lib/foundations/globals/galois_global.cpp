@@ -13,6 +13,9 @@
 
 #include "foundations.h"
 
+namespace orbiter {
+
+
 void test_unipoly()
 {
 	finite_field GFp;
@@ -1108,6 +1111,8 @@ void create_Levi_graph_from_incidence_matrix(
 	if (f_v) {
 		cout << "create_Levi_graph_from_incidence_matrix done" << endl;
 		}
+}
+
 }
 
 

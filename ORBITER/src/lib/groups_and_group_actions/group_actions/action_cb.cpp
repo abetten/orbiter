@@ -6,6 +6,8 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
+namespace orbiter {
+
 int action::image_of(
 		void *elt, int a)
 {
@@ -713,3 +715,4 @@ void action::random_element(sims *S, int *Elt, int verbose_level)
 		}
 }
 
+}

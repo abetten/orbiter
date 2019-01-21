@@ -8,6 +8,8 @@
 #include <cstring>
 	// for memcpy
 
+namespace orbiter {
+
 void action::init_direct_product_group_and_restrict(
 		matrix_group *M1, matrix_group *M2, int verbose_level)
 {
@@ -1728,4 +1730,5 @@ void action::create_orthogonal_group(action *subaction,
 		}
 }
 
+}
 
