@@ -6,6 +6,9 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
+
 int evaluate_cubic_form(finite_field *F, int *v);
 
 int main(int argc, char **argv)

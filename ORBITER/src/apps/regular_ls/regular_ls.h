@@ -104,7 +104,7 @@ public:
 
 
 
-void print_set(ostream &ost, int len, int *S, void *data);
+void rls_generator_print_set(ostream &ost, int len, int *S, void *data);
 void rls_generator_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 

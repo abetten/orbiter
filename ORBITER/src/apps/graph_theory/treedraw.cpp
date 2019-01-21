@@ -6,6 +6,9 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
+
 void draw_vertex_callback(tree *T, mp_graphics *G,
 		int *v, int layer, tree_node *N,
 		int x, int y, int dx, int dy);

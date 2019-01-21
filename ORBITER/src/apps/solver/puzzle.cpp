@@ -6,6 +6,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 
 int main(void)
 {

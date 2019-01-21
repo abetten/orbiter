@@ -266,7 +266,7 @@ void regular_ls_generator::init_generator(
 	gen->init(Poset, gen->depth, 0/*verbose_level - 3*/);
 	
 	gen->f_print_function = FALSE;
-	gen->print_function = print_set;
+	gen->print_function = rls_generator_print_set;
 	gen->print_function_data = (void *) this;
 	
 	
@@ -643,7 +643,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 
 
 
-void print_set(ostream &ost, int len, int *S, void *data)
+void rls_generator_print_set(ostream &ost, int len, int *S, void *data)
 {
 	regular_ls_generator *Gen = (regular_ls_generator *) data;
 	

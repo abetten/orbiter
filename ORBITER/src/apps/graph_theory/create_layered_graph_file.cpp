@@ -14,6 +14,9 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
+
 void create_graph_from_file(layered_graph *&LG,
 		int f_grouping, double x_stretch, const char *fname);
 

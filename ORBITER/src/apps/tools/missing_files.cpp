@@ -8,6 +8,10 @@
 
 #include "orbiter.h"
 
+
+using namespace orbiter;
+
+
 int t0;
 
 int main(int argc, char **argv)

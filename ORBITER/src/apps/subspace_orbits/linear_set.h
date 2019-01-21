@@ -7,7 +7,6 @@
 //
 //
 
-#include <orbiter.h>
 
 
 typedef class linear_set linear_set;

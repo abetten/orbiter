@@ -8,6 +8,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 #define MY_BUFSIZE ONE_MILLION
 
 int main(int argc, char **argv)

@@ -6,6 +6,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 #define NB_PIECES 18
 
 	int *S[NB_PIECES];

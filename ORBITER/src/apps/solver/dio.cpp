@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 ofstream *fp_sol;
 int t0;
 int nb_sol;
