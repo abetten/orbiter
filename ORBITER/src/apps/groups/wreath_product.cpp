@@ -334,12 +334,19 @@ void tensor_product::init(int argc, const char **argv,
 		cout << "too big to print" << endl;
 	}
 
+#ifdef __CUDA_ARCH__
 	/*-----------------------------------------------------*/
 	// Testing CUDA Stuff
 	/*-----------------------------------------------------*/
-	Matrix<int> M(5,5), N(5.5);
-	
+	const size_t __matrix__size__ = 50000;
+	Matrix<int> M(__matrix__size__,__matrix__size__),
+				N(__matrix__size__,__matrix__size__);
+	for (size_t i=0; i<__matrix__size__; ++i)
+		for (size_t j=0;j<__matrix__size__; j++)
+			M(i,j) = N(i,j) = i+j;
+
 	/*-----------------------------------------------------*/
+#endif
 
 #if 0
 
