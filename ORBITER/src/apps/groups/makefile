@@ -47,14 +47,26 @@ endif
 
 all: $(ALL_TARGETS)
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
+	@echo "----------------------------------------"
+	@echo -n "compiling with CUDA: "
+	@echo $<
+	@echo "----------------------------------------"
 	nvcc $(CUDA_FLAGS) $(CPPFLAGS) wreath_product.o -o wreath_product.out $(LIB) $(CUDA_LIB)
 else
+	@echo "----------------------------------------"
+	@echo -n "compiling without CUDA: "
+	@echo $<
+	@echo "----------------------------------------"
 	$(CC) $(CSTD) $(CFLAGS) $(OPTFLAGS) $(ALL_TARGETS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -o main
 endif
 
 	
 wreath_product.o: wreath_product.cpp
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
+	@echo "----------------------------------------"
+	@echo -n "compiling with CUDA: "
+	@echo $<
+	@echo "----------------------------------------"
 	nvcc -x cu -c $(CUDA_FLAGS) $(CPPFLAGS) -rdc=true $< -o $@
 else
 	@echo "----------------------------------------"
