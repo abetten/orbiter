@@ -20,6 +20,7 @@ typedef class flag_orbit_node flag_orbit_node;
 typedef class classification classification;
 typedef class orbit_node orbit_node;
 typedef class poset poset;
+typedef class poset_description poset_description;
 
 
 enum trace_result { 
