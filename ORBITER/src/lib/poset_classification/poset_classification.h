@@ -8,18 +8,19 @@
 namespace orbiter {
 
 
-typedef class extension extension;
-typedef class orbit_based_testing orbit_based_testing;
-typedef class poset_classification poset_classification;
-typedef class poset_orbit_node poset_orbit_node;
-typedef class set_stabilizer_compute set_stabilizer_compute;
-typedef class upstep_work upstep_work;
-typedef class compute_stabilizer compute_stabilizer;
-typedef class flag_orbits flag_orbits;
-typedef class flag_orbit_node flag_orbit_node;
-typedef class classification classification;
-typedef class orbit_node orbit_node;
-typedef class poset poset;
+class extension;
+class orbit_based_testing;
+class poset_classification;
+class poset_orbit_node;
+class set_stabilizer_compute;
+class upstep_work;
+class compute_stabilizer;
+class flag_orbits;
+class flag_orbit_node;
+class classification;
+class orbit_node;
+class poset;
+class poset_description;
 
 
 enum trace_result { 

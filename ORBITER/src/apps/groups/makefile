@@ -1,13 +1,20 @@
 SRC=../../../../ORBITER/src
-DISCRETA_CPP = nvcc
+DISCRETA_CPP = g++
 DISCRETA_CC = gcc
 CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
+CC=g++
 
 
 
 
+all:  \
+	action_on_set_partitions.out \
+	direct_product.out \
+	linear_group.out \
+	orthogonal_group.out \
+	wreath_product.out
 
 
 ALL_TARGETS=wreath_product.out
@@ -43,9 +50,16 @@ endif
 #-------------------------------------------------------------
 
 
+wreath_product.out: wreath_product.o
+	$(CC) $(CSTD) $(CFLAGS) $(OPTFLAGS) $(ALL_TARGETS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -o wreath_product.out
+
+wreath_product.o: wreath_product.cpp
+	$(CC) $(CSTD) $(CFLAGS) $(CPPFLAGS) $(OPTFLAGS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -c $<
 
 
-all: $(ALL_TARGETS)
+
+
+not_all: $(ALL_TARGETS)
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
 	@echo "----------------------------------------"
 	@echo -n "compiling with CUDA: "
@@ -61,7 +75,7 @@ else
 endif
 
 	
-wreath_product.o: wreath_product.cpp
+not_wreath_product.o: wreath_product.cpp
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
 	@echo "----------------------------------------"
 	@echo -n "compiling with CUDA: "
@@ -88,13 +102,6 @@ endif
 
 
 
-not_cuda_all:  \
-	action_on_set_partitions.out \
-	direct_product.out \
-	linear_group.out \
-	orthogonal_group.out \
-	wreath_product.out
-
 
 action_on_set_partitions.out:  action_on_set_partitions.o;
 	$(DISCRETA_CPP)  action_on_set_partitions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -112,8 +119,8 @@ orthogonal_group.out:  orthogonal_group.o;
 	$(DISCRETA_CPP)  orthogonal_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
-wreath_product.out:  wreath_product.o;
-	$(DISCRETA_CPP)  wreath_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+#wreath_product.out:  wreath_product.o;
+#	$(DISCRETA_CPP)  wreath_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 clean:

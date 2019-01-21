@@ -1710,7 +1710,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 	Nb_eqns = l2 + nb_eqns_joining + nb_eqns_upper_bound;
 	Nb_vars = nb_sol;
 	
-	dophant D2;
+	diophant D2;
 	
 	D2.open(Nb_eqns, Nb_vars);
 	point_types = NEW_int(nb_point_types * point_type_len);
