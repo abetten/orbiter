@@ -80,6 +80,7 @@ void usage(int argc, const char **argv)
 #include "CUDA/gpuErrchk.h"
 
 
+
 // The reason this function exists is because the modulo
 // operator in c++ is implementation dependent. This block
 // of code works around the implementation dependent modulo
@@ -850,7 +851,7 @@ public:
 
 template <typename Mat>
 __global__
-void cuda_matrix_matrix_dot_(Mat& A, Mat& B, Mat& C, int p=0, int axis=0) {
+void cuda_matrix_matrix_dot_(Mat& A, Mat& B, Mat& C, int p=0, int axis=0, size_t h = 0) {
 
 	// axis = 0
 	//		Do val += A(row, e) * B(e, col);
@@ -883,7 +884,7 @@ void cuda_matrix_matrix_dot_(Mat& A, Mat& B, Mat& C, int p=0, int axis=0) {
 			if (p == 0) {
 				val += A(row, e) * B(e, col);
 			} else {
-				val += mod(A(row, e) * B(e, col), p);
+				val = mod(val + A(row, e) * B(h * A.ncols + e, col), p);
 			}
 		}
 	}
@@ -918,78 +919,310 @@ void cuda_matrix_matrix_dot_(Mat& A, Mat& B, Mat& C, int p=0, int axis=0) {
 		}
 	}
 
-	if (p == 0) C(row, col) = val;
-	else C(row, col) = mod(val, p);
+	C(row, col) = val;
 
 }
 
 
-template <typename Mat>
+template <typename T>
 __host__
-Mat* cuda_dot(Mat& A, Mat& B, int q=0, int axis=0, bool ea=true, bool eb=true, bool ec=true) {
+void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C, int* perms, int* result, int q=0, int axis=0, bool ea=true, bool eb=true, bool ec=true) {
 	size_t m = A.nrows;
 	size_t n = A.ncols;
 
 	size_t o = B.nrows;
 	size_t p = B.ncols;
 
-	if (n != o) {
-		printf("%s:%d:Cannot perform matrix multiplication, ", __FILE__, __LINE__);
-		cout << n << " " << o << endl;
-		printf("size of matrix column do not match size of vector.\n");
-		exit(-1);
-	}
+//	if (n != o) {
+//		printf("%s:%d:Cannot perform matrix multiplication, ", __FILE__, __LINE__);
+//		cout << n << " " << o << endl;
+//		printf("size of matrix column do not match size of vector.\n");
+//		exit(-1);
+//	}
 
-	// Host matrix C, used to store the result of
-	// multiplying matrix A and B.
-	Mat& C = *new Mat(m, p);
 
 	// Copy matrix A, B and C into device memory
-	Mat* d_A = A.InitializeOnGPU(true);
-	Mat* d_B = B.InitializeOnGPU(true);
-	Mat* d_C = C.InitializeOnGPU(true);
+	Matrix<T>* d_A = A.InitializeOnGPU(true);
+	Matrix<T>* d_B = B.InitializeOnGPU(true);
+	Matrix<T>* d_C = C.InitializeOnGPU(true);
 
 	// Find out how many threads are needed assuming each thread
 	// works on one entry of the resultant matrix.
 	int num_threads = m * p;
 
-	// Find out how many blocks are needed
-	int block_size = 16;
-	int num_blocks = (num_threads + block_size*block_size - 1)/ (block_size*block_size) ;
-	int gridDim_x = (C.ncols + block_size - 1) / block_size;
-	int gridDim_y = (C.nrows + block_size - 1) / block_size;
-	if (num_blocks > gridDim_x*gridDim_y || num_threads > gridDim_x*gridDim_y*pow(block_size,2)) {
-		cout << "Error:" << __FILE__ << ":" << __LINE__ <<
-		"number of required blocks is greater than number of blocks set."
-		<< endl;
+
+
+	_Vector<T> V (B.ncols);
+	_Vector<T> V2 (B.ncols);
+	int a = 0;
+
+	for (size_t h=0; h<B.nrows/A.ncols; ++h) {
+
+		// Find out how many blocks are needed
+		int block_size = 16;
+		int num_blocks = (num_threads + block_size*block_size - 1)/ (block_size*block_size) ;
+		int gridDim_x = (C.ncols + block_size - 1) / block_size;
+		int gridDim_y = (C.nrows + block_size - 1) / block_size;
+		if (num_blocks > gridDim_x*gridDim_y || num_threads > gridDim_x*gridDim_y*pow(block_size,2)) {
+			cout << "Error:" << __FILE__ << ":" << __LINE__ <<
+			"number of required blocks is greater than number of blocks set."
+			<< endl;
+		}
+		dim3 blockDim(block_size, block_size, 1);
+		dim3 gridDim(gridDim_x, gridDim_y, 1);
+
+		cuda_matrix_matrix_dot_<<<gridDim, blockDim>>>(*d_A, *d_B, *d_C, q, axis, h);
+		// Do some error checking after kernel launch
+		gpuErrchk( cudaGetLastError() );
+		gpuErrchk( cudaPeekAtLastError() );
+		gpuErrchk( cudaDeviceSynchronize() );
+
+		// After the matrix multiplication is done, copy the matrix into
+		// host memory.
+		C.copy_matrix_to_host(true);
+
+		for (size_t i=0; i<C.nrows; ++i) {
+			for (size_t j=0; j<C.ncols; ++j) {
+				//a = perms [h * C.nrows + j];
+				V(j) = C(i, j);
+			}
+			for (size_t k=0; k<B.ncols; ++k) {
+				a = perms [h * C.ncols + k];
+				V2(a) = V(k);
+			}
+			make_num_rep(V2, q);
+			result [h * A.nrows + i] = V2.num_rep_;
+
+		}
+
 	}
-	dim3 blockDim(block_size, block_size, 1);
-	dim3 gridDim(gridDim_x, gridDim_y, 1);
 
 
-	cuda_matrix_matrix_dot_<<<gridDim, blockDim>>>(*d_A, *d_B, *d_C, q, axis);
-	// Do some error checking after kernel launch
-	gpuErrchk( cudaGetLastError() );
-	gpuErrchk( cudaPeekAtLastError() );
-	gpuErrchk( cudaDeviceSynchronize() );
-
-	// After the matrix multiplication is done, copy the matrix into
-	// host memory.
-	C.copy_matrix_to_host(true);
 
 	// Free up all space allocated on the GPU for matrix multiplication.
 	if (ea) A.UninitializeOnGPU();
 	if (eb) B.UninitializeOnGPU();
 	if (ec) C.UninitializeOnGPU();
-
-	return &C;
 }
 
 
 
+template <typename T>
+__host__
+void make_num_rep(_Vector<T>& v, unsigned int q) {
+	// This function assumes that the vector is already normalized
+
+	int i, j, q_power_j, b, sqj;
+	int f_v = false;
+
+	int stride = 1, len = v.size();
+
+	if (len <= 0) {
+		cout << "PG_element_rank_modified len <= 0" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "the vector before normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+		}
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "the vector after normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+		}
+		cout << endl;
+	}
+
+	for (i = 0; i < len; i++) {
+		if (v[i * stride])
+			break;
+	}
+
+	if (i == len) {
+		cout << "PG_element_rank_modified zero vector" << endl;
+		exit(1);
+	}
+
+	for (j = i + 1; j < len; j++) {
+		if (v[j * stride])
+			break;
+	}
+
+	if (j == len) {
+		// we have the unit vector vector e_i
+		v.num_rep_ = i;
+		return;
+	}
+
+	// test for the all one vector:
+	if (i == 0 && v[i * stride] == 1) {
+		for (j = i + 1; j < len; j++) {
+			if (v[j * stride] != 1)
+				break;
+		}
+		if (j == len) {
+			v.num_rep_ = len;
+			return;
+		}
+	}
+
+	for (i = len - 1; i >= 0; i--) {
+		if (v[i * stride])
+			break;
+	}
+
+	if (i < 0) {
+		cout << "PG_element_rank_modified zero vector" << endl;
+		exit(1);
+	}
+
+	if (v[i * stride] != 1) {
+		cout << "PG_element_rank_modified vector not normalized" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "i=" << i << endl;
+	}
+
+	b = 0;
+	q_power_j = 1;
+	sqj = 0;
+
+	for (j = 0; j < i; j++) {
+		b += q_power_j - 1;
+		sqj += q_power_j;
+		q_power_j *= q;
+	}
+
+	if (f_v) {
+		cout << "b=" << b << endl;
+		cout << "sqj=" << sqj << endl;
+	}
+
+	v.num_rep_ = 0;
+
+	for (j = i - 1; j >= 0; j--) {
+		v.num_rep_ += v[j * stride];
+		if (j > 0)
+			v.num_rep_ *= q;
+		if (f_v) {
+			cout << "j=" << j << ", a=" << v.num_rep_ << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "a=" << v.num_rep_ << endl;
+	}
+
+	// take care of 1111 vector being left out
+	if (i == len - 1) {
+		//cout << "sqj=" << sqj << endl;
+		if (v.num_rep_ >= sqj)
+			v.num_rep_--;
+	}
+
+	v.num_rep_ += b;
+	v.num_rep_ += len;
+}
+
+template <typename T>
+__host__
+void make_vector_from_number (_Vector<T>& vec, unsigned int number, int q) {
+	// Create a new in the heap from the number n
+	// and return a pointer to it.
+
+	int len = vec.size_;
+
+	int a = number;
+	int stride = 1;
+	int n, l, ql, sql, k, j, r, a1 = a;
+
+	n = len;
+
+	if (a < n) {
+		// unit vector:
+		for (k = 0; k < n; k++) {
+			if (k == a) {
+				vec.vec_[k * stride] = 1;
+			}
+			else {
+				vec.vec_[k * stride] = 0;
+			}
+		}
+		return;
+	}
+	a -= n;
+	if (a == 0) {
+		// all one vector
+		for (k = 0; k < n; k++) {
+			vec.vec_[k * stride] = 1;
+		}
+		return;
+	}
+	a--;
+
+	l = 1;
+	ql = q;
+	sql = 1;
+	// sql = q^0 + q^1 + \cdots + q^{l-1}
+	while (l < n) {
+		if (a >= ql - 1) {
+			a -= (ql - 1);
+			sql += ql;
+			ql *= q;
+			l++;
+			continue;
+		}
+		vec.vec_[l * stride] = 1;
+		for (k = l + 1; k < n; k++) {
+			vec.vec_[k * stride] = 0;
+		}
+		a++; // take into account that we do not want 00001000
+		if (l == n - 1 && a >= sql) {
+			a++;
+			// take int account that the
+			// vector 11111 has already been listed
+		}
+		j = 0;
+		while (a != 0) {
+			r = a % q;
+			vec.vec_[j * stride] = r;
+			j++;
+			a -= r;
+			a /= q;
+		}
+		for (; j < l; j++) {
+			vec.vec_[j * stride] = 0;
+		}
+		return;
+	}
+	cout << __FILE__ << ":" << __LINE__ << endl;
+	cout << "PG_element_unrank_modified a too large" << endl;
+	cout << "len = " << len << endl;
+	cout << "a = " << a1 << endl;
+	exit(1);
+}
 
 
 
+template <typename T>
+__host__
+void PGL_Vector_unrank_Matrix (Matrix<T>& M, size_t vector_size, size_t q, const size_t N) {
+	_Vector<T> V (vector_size);
+
+	for (size_t i=0; i<N; ++i) {
+		make_vector_from_number (V, i, q);
+		for (size_t j=0; j<vector_size; ++j)
+			M(i,j) = V(j);
+	}
+}
 
 #endif
 /*-------------------------------------------------------*/
@@ -1257,31 +1490,51 @@ void tensor_product::init(int argc, const char **argv,
 	}
 
 
+	int *generator_stack;
+	int *perms;
+	int mtx_n;
+	int mtx_n2;
+
+	mtx_n = W->dimension_of_tensor_action;
+	mtx_n2 = mtx_n * mtx_n;
+
+	generator_stack = NEW_int(SG->gens->len * mtx_n2);
+	perms = NEW_int(SG->gens->len * mtx_n);
+	for (i = 0; i < SG->gens->len; i++) {
+		cout << "generator " << i << " / "
+				<< SG->gens->len << " is: " << endl;
+		A->element_print_quick(SG->gens->ith(i), cout);
+		W->create_matrix(SG->gens->ith(i), generator_stack + i * mtx_n2,
+		0 /* verbose_level */);
+		W->compute_induced_permutation(SG->gens->ith(i), perms + i * mtx_n);
+	}
+	cout << "generator_stack:" << endl;
+	int_matrix_print(generator_stack, SG->gens->len * mtx_n, mtx_n);
+	cout << "perms:" << endl;
+	int_matrix_print(perms, SG->gens->len, mtx_n);
+
+
+
 	cout << __FILE__ << ":" << __LINE__ << endl;
 #ifdef __CUDACC__
 
-	const size_t __matrix__size__ = 32768;
+	Matrix<int> M (W->degree_of_tensor_action, mtx_n);
+	PGL_Vector_unrank_Matrix (M, mtx_n, W->q, W->degree_of_tensor_action);
 
-	Matrix<int> M(__matrix__size__, __matrix__size__),
-				N(__matrix__size__, __matrix__size__);
+	Matrix<int> N (SG->gens->len * mtx_n, mtx_n);
+	for (size_t i=0; i<N.nrows; ++i) {
+		for (size_t j=0; j<N.ncols; ++j) {
+			N(i,j) = generator_stack [i * N.ncols + j];
+		}
+	}
 
+	int* result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
 
-	for (size_t i=0; i<__matrix__size__; ++i)
-		for (size_t j=0; j<__matrix__size__; ++j)
-			M(i,j) = N(i,j) = i+j;
+	Matrix<int> MN (M.nrows, N.ncols);
+	cuda_dot(M, N, MN, perms, result, q);
 
-	cout << "M Before:" << endl; M.nrows = M.ncols = 5; M.print();M.nrows = M.ncols = __matrix__size__; cout << endl;
-	cout << "N Before:" << endl; N.nrows = N.ncols = 5; N.print();N.nrows = N.ncols = __matrix__size__; cout << endl;
-
-	Matrix<int> P = *cuda_dot(M, N);
-
-	cout << "P:" << endl; P.nrows = P.ncols = 5; P.print();P.nrows = P.ncols = __matrix__size__; cout << endl;
-
-
-//	int __n__ = 10000;
-//	float* __a__ = new float [__n__];
-//	float* d_a = NULL;
-//	cudaMalloc(&d_a, sizeof(float)*__n__);
+	cout << "result:" << endl;
+	int_matrix_print(result, SG->gens->len, W->degree_of_tensor_action);
 
 #endif
 	cout << __FILE__ << ":" << __LINE__ << endl;
