@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 
 int t0 = 0;
 

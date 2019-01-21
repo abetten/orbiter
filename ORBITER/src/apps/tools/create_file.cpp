@@ -8,6 +8,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 #define MAX_LINES 1000
 
 

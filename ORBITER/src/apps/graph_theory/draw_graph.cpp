@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 void draw_graph(mp_graphics &G,
 	int nb_v, int nb_e, int *E, int f_directed,
 	int f_no_point_labels, 

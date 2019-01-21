@@ -9,6 +9,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 
 #define V  50
 

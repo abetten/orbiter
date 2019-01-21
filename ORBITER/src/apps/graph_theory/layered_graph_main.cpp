@@ -10,6 +10,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 // global data:
 
 int t0; // the system time when the program started

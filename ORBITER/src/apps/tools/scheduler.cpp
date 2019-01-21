@@ -8,6 +8,10 @@
 
 #include "orbiter.h"
 
+
+using namespace orbiter;
+
+
 #define MY_BUFSIZE ONE_MILLION
 
 typedef class job_table job_table;

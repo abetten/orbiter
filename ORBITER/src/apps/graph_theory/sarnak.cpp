@@ -27,6 +27,9 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
+
 int t0;
 
 void do_it(int p, int q, int verbose_level);

@@ -7,7 +7,15 @@
 //
 //
 
+#include <orbiter.h>
+
+using namespace orbiter;
+
 #include "linear_set.h"
+
+
+using namespace orbiter;
+
 
 // global data:
 

@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
+
 void canonical_form(int *Adj, int *Adj2, int n, int nb_edges, int *edges2, 
 	int *labeling, action *&A, action *&A2, schreier *&Sch,
 	int verbose_level);
