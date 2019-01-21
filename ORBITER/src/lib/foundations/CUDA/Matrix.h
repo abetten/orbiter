@@ -5,8 +5,8 @@
  *      Author: sajeeb
  */
 
-#ifndef MATRIX_H_
-#define MATRIX_H_
+//#ifndef MATRIX_H_
+//#define MATRIX_H_
 
 
 #include <stdlib.h>
@@ -23,13 +23,12 @@
 #include "gpuErrchk.h"
 #include "Vector.h"
 
-using std::cout;
-using std::endl;
+//using std::cout;
+//using std::endl;
 using std::ostream;
 
 
 template <typename T>
-
 class Matrix {
 public:
 
@@ -557,4 +556,4 @@ public:
 
 };
 
-#endif
+//#endif
