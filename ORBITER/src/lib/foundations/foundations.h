@@ -232,87 +232,88 @@ typedef void *pvoid;
 
 namespace orbiter {
 
-typedef class finite_field finite_field;
-typedef class longinteger_object longinteger_object;
+
+class finite_field;
+class longinteger_object;
 typedef longinteger_object *plonginteger_object;
-typedef class longinteger_domain longinteger_domain;
-typedef class rank_checker rank_checker;
-typedef class classify classify;
+class longinteger_domain;
+class rank_checker;
+class classify;
 typedef void *unipoly_object;
-typedef class unipoly_domain unipoly_domain;
-typedef class mp_graphics mp_graphics;
-typedef class partitionstack partitionstack;
-typedef class orthogonal orthogonal;
-typedef class vector_hashing vector_hashing;
-typedef class unusual_model unusual_model;
-typedef class grassmann grassmann;
-typedef class grassmann_embedded grassmann_embedded;
-typedef class hermitian hermitian;
-typedef class incidence_structure incidence_structure;
-typedef class finite_ring finite_ring;
-typedef class hjelmslev hjelmslev;
-typedef class norm_tables norm_tables;
-typedef struct coordinate_frame coordinate_frame;
-typedef class data_file data_file;
-typedef class subfield_structure subfield_structure;
-typedef class clique_finder clique_finder;
-typedef class colored_graph colored_graph;
-typedef class rainbow_cliques rainbow_cliques;
-typedef class set_of_sets set_of_sets;
-typedef class decomposition decomposition;
-typedef class brick_domain brick_domain;
-typedef class spreadsheet spreadsheet;
-typedef class andre_construction andre_construction;
-typedef class andre_construction_point_element andre_construction_point_element;
-typedef class andre_construction_line_element andre_construction_line_element;
-typedef class memory_object memory_object;
-typedef class tree_node tree_node;
+class unipoly_domain;
+class mp_graphics;
+class partitionstack;
+class orthogonal;
+class vector_hashing;
+class unusual_model;
+class grassmann;
+class grassmann_embedded;
+class hermitian;
+class incidence_structure;
+class finite_ring;
+class hjelmslev;
+class norm_tables;
+class coordinate_frame;
+class data_file;
+class subfield_structure;
+class clique_finder;
+class colored_graph;
+class rainbow_cliques;
+class set_of_sets;
+class decomposition;
+class brick_domain;
+class spreadsheet;
+class andre_construction;
+class andre_construction_point_element;
+class andre_construction_line_element;
+class memory_object;
+class tree_node;
 typedef tree_node *ptree_node;
-typedef class tree tree;
-typedef class int_matrix int_matrix;
-typedef class gl_classes gl_classes;
-typedef class gl_class_rep gl_class_rep;
-typedef class matrix_block_data matrix_block_data;
-typedef class layered_graph layered_graph;
-typedef class graph_layer graph_layer;
-typedef class graph_node graph_node;
-typedef class int_vector int_vector;
-typedef class projective_space projective_space;
-typedef class buekenhout_metz buekenhout_metz;
-typedef class a_domain a_domain;
-typedef class diophant dophant;
-typedef class null_polarity_generator null_polarity_generator;
-typedef class layered_graph_draw_options layered_graph_draw_options;
-typedef class klein_correspondence klein_correspondence;
-typedef class file_output file_output;
-typedef class generators_symplectic_group generators_symplectic_group;
-typedef class flag flag;
-typedef class W3q W3q; // added March 4, 2011
-typedef class knarr knarr; // added March 30, 2011
-typedef class surface surface; // added July 26, 2016
-typedef class homogeneous_polynomial_domain homogeneous_polynomial_domain;
-	// added Sept 9, 2016
-typedef class eckardt_point eckardt_point;
-typedef class surface_object surface_object;
-typedef class heisenberg heisenberg;
-typedef class desarguesian_spread desarguesian_spread;
-typedef class classify_bitvectors classify_bitvectors;
-typedef class object_in_projective_space object_in_projective_space;
-typedef class point_line point_line;
+class tree;
+class int_matrix;
+class gl_classes;
+class gl_class_rep;
+class matrix_block_data;
+class layered_graph;
+class graph_layer;
+class graph_node;
+class int_vector;
+class projective_space;
+class buekenhout_metz;
+class a_domain;
+class diophant; // TODO: need to fix this
+class null_polarity_generator;
+class layered_graph_draw_options;
+class klein_correspondence;
+class file_output;
+class generators_symplectic_group;
+class flag;
+class W3q; // added March 4, 2011
+class knarr; // added March 30, 2011
+class surface; // added July 26, 2016
+class homogeneous_polynomial_domain;
+// added Sept 9, 2016
+class eckardt_point;
+class surface_object;
+class heisenberg;
+class desarguesian_spread;
+class classify_bitvectors;
+class object_in_projective_space;
+class point_line;
 typedef struct plane_data PLANE_DATA;
-typedef class tdo_scheme tdo_scheme;
-typedef class tdo_data tdo_data;
-typedef struct solution_file_data solution_file_data;
-typedef class geo_parameter geo_parameter;
-typedef class scene scene;
-typedef class mem_object_registry mem_object_registry;
-typedef class mem_object_registry_entry mem_object_registry_entry;
-typedef class eckardt_point_info eckardt_point_info;
-typedef class vector_space vector_space;
-typedef class elliptic_curve elliptic_curve;
-	// added November 19, 2014
-typedef class arc_lifting_with_two_lines arc_lifting_with_two_lines;
-typedef class page_storage page_storage;
+class tdo_scheme;
+class tdo_data;
+struct solution_file_data;
+class geo_parameter;
+class scene;
+class mem_object_registry;
+class mem_object_registry_entry;
+class eckardt_point_info;
+class vector_space;
+class elliptic_curve;
+// added November 19, 2014
+class arc_lifting_with_two_lines;
+class page_storage;
 
 
 

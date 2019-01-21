@@ -254,7 +254,7 @@ void arc_lifting_with_two_lines::create_surface(
 
 	int B1[8];
 	int P2[4];
-	int pt1, pt2;
+	int pt1 = 0, pt2 = 0;
 	int i1, i2, j1, j2;
 
 	Surf->unrank_line(B1, line1);
@@ -293,7 +293,7 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 
 	int line3, line4;
-	int pt3, pt4;
+	int pt3 = 0, pt4 = 0;
 	int val;
 
 	line3 = Surf->P->line_through_two_points(P[1], pt1);

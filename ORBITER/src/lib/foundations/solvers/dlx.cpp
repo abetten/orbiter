@@ -81,8 +81,8 @@ int *DLX_Cur_col; // [nRow]
 int *Nb_col_nodes; // [nCol]
 int dlx_nb_sol = 0;
 int dlx_nb_backtrack_nodes;
-dlx_node *Matrix = NULL; // [nRow * nCol]
-dlx_node *Root = NULL; 
+dlx_node *DLX_Matrix = NULL; // [nRow * nCol]
+dlx_node *DLX_Root = NULL;
 //dlx_node **RowHeader = NULL; // [nRow]
 int dlx_f_write_to_file = FALSE;
 ofstream *dlx_fp_sol = NULL;
@@ -281,7 +281,8 @@ void DlxSolve(int *Data, int nb_rows, int nb_cols,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "DlxSolve nb_rows = " << nb_rows << " nb_cols = " << nb_cols << endl;
+		cout << "DlxSolve nb_rows = " << nb_rows << " nb_cols = "
+				<< nb_cols << endl;
 		}
 
 
@@ -302,7 +303,8 @@ void DlxSolve(int *Data, int nb_rows, int nb_cols,
 
 
 	if (f_v) {
-		cout << "DlxSolve finds " << dlx_nb_sol << " solutions with nb_backtrack_nodes=" << dlx_nb_backtrack_nodes << endl;
+		cout << "DlxSolve finds " << dlx_nb_sol << " solutions "
+				"with nb_backtrack_nodes=" << dlx_nb_backtrack_nodes << endl;
 		}
 
 	close_solution_file(f_write_file);
@@ -329,7 +331,8 @@ void DlxSolve_with_RHS(int *Data, int nb_rows, int nb_cols,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "DlxSolve_with_RHS nb_rows = " << nb_rows << " nb_cols = " << nb_cols << endl;
+		cout << "DlxSolve_with_RHS nb_rows = " << nb_rows
+				<< " nb_cols = " << nb_cols << endl;
 		}
 
 
@@ -351,7 +354,8 @@ void DlxSolve_with_RHS(int *Data, int nb_rows, int nb_cols,
 
 
 	if (f_v) {
-		cout << "DlxSolve_with_RHS finds " << dlx_nb_sol << " solutions with nb_backtrack_nodes=" << dlx_nb_backtrack_nodes << endl;
+		cout << "DlxSolve_with_RHS finds " << dlx_nb_sol << " solutions "
+				"with nb_backtrack_nodes=" << dlx_nb_backtrack_nodes << endl;
 		}
 
 	close_solution_file(f_write_file);
@@ -369,7 +373,8 @@ void DlxSolve_with_RHS(int *Data, int nb_rows, int nb_cols,
 		}
 }
 
-void open_solution_file(int f_write_file, const char *solution_fname, int verbose_level)
+void open_solution_file(int f_write_file,
+		const char *solution_fname, int verbose_level)
 {
 	if (f_write_file) {
 		dlx_fp_sol = new ofstream;
@@ -384,14 +389,16 @@ void open_solution_file(int f_write_file, const char *solution_fname, int verbos
 void close_solution_file(int f_write_file)
 {
 	if (f_write_file) {
-		*dlx_fp_sol << -1 << " " << dlx_nb_sol << " " << dlx_nb_backtrack_nodes << endl;
+		*dlx_fp_sol << -1 << " " << dlx_nb_sol << " "
+				<< dlx_nb_backtrack_nodes << endl;
 		dlx_fp_sol->close();
 		delete dlx_fp_sol;
 		dlx_f_write_to_file = FALSE;
 		}
 }
 
-void open_tree_file(int f_write_tree_file, const char *tree_fname, int verbose_level)
+void open_tree_file(int f_write_tree_file,
+		const char *tree_fname, int verbose_level)
 {
 	if (f_write_tree_file) {
 		DLX_f_write_tree = TRUE;
@@ -418,7 +425,8 @@ void print_position(dlx_node *p)
 	cout << p->row << "/" << p->col;
 }
 
-void Create_RHS(int nb_cols, int *RHS, int f_has_type, diophant_equation_type *type, int verbose_level)
+void Create_RHS(int nb_cols, int *RHS, int f_has_type,
+		diophant_equation_type *type, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, sum_rhs;
@@ -522,8 +530,8 @@ void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level)
 		cout << endl;
 		}
 
-	Matrix = new dlx_node[nRow * nCol];
-	Root = new dlx_node;
+	DLX_Matrix = new dlx_node[nRow * nCol];
+	DLX_Root = new dlx_node;
 	//RowHeader = new pdlx_node[nRow];
 
 	
@@ -541,28 +549,29 @@ void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level)
 	// Build toroidal linklist matrix according to data bitmap
 	for (a = 0; a < nRow; a++) {
 		for (b = 0; b < nCol; b++) {
-			Matrix[a * nCol + b].row = a;
-			Matrix[a * nCol + b].col = b;
+			DLX_Matrix[a * nCol + b].row = a;
+			DLX_Matrix[a * nCol + b].col = b;
 			}
 		}
 	
-	// Connect the coefficients which are nonzero to their up and down and left and right neighbors:
+	// Connect the coefficients which are nonzero to
+	// their up and down and left and right neighbors:
 
 	for (a = 0; a < nRow; a++) {
 		for (b = 0; b < nCol; b++) {
 			if (Data[a * nCol + b] != 0) {
 				// Left pointer
 				i = a; j = b; do { j = dataLeft(j); } while (Data[i * nCol + j] == 0);
-				Matrix[a * nCol + b].Left = &Matrix[i * nCol + j]; 
+				DLX_Matrix[a * nCol + b].Left = &DLX_Matrix[i * nCol + j];
 				// Right pointer
 				i = a; j = b; do { j = dataRight(j); } while (Data[i * nCol + j] == 0);
-				Matrix[a * nCol + b].Right = &Matrix[i * nCol + j];
+				DLX_Matrix[a * nCol + b].Right = &DLX_Matrix[i * nCol + j];
 				// Up pointer
 				i = a; j = b; do { i = dataUp(i); } while (Data[i * nCol + j] == 0);
-				Matrix[a * nCol + b].Up = &Matrix[i * nCol + j];
+				DLX_Matrix[a * nCol + b].Up = &DLX_Matrix[i * nCol + j];
 				// Down pointer
 				i = a; j = b; do { i = dataDown(i); } while (Data[i * nCol + j] == 0);
-				Matrix[a * nCol + b].Down = &Matrix[i * nCol + j]; 
+				DLX_Matrix[a * nCol + b].Down = &DLX_Matrix[i * nCol + j];
 
 #if 0
 				cout << "at " << a << "/" << b << ":";
@@ -573,7 +582,7 @@ void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level)
 				cout << endl;
 #endif
 				// Header pointer at the very bottom:
-				Matrix[a * nCol + b].Header = &Matrix[(nRow - 1) * nCol + b];
+				DLX_Matrix[a * nCol + b].Header = &DLX_Matrix[(nRow - 1) * nCol + b];
 				//Row Header
 				//RowHeader[a] = &Matrix[a * nCol + b];
 				}
@@ -587,7 +596,7 @@ void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level)
 		dlx_node *ColNode, *RowNode;
 
 		// this is the RHS
-		ColNode = &Matrix[(nRow - 1) * nCol + j];
+		ColNode = &DLX_Matrix[(nRow - 1) * nCol + j];
 		
 		for (RowNode = ColNode->Down; RowNode != ColNode; RowNode = RowNode->Down) {
 			Nb_col_nodes[j]++;
@@ -601,18 +610,18 @@ void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level)
 		}
 #endif
 	//Insert root at the end of all RHS nodes:
-	Root->Left = &Matrix[(nRow - 1) * nCol + (nCol - 1)];
-	Root->Right = &Matrix[(nRow - 1) * nCol + 0];
-	Matrix[(nRow - 1) * nCol + nCol - 1].Right = Root;
-	Matrix[(nRow - 1) * nCol + 0].Left = Root;
-	Root->row = -1;
-	Root->col = -1;
+	DLX_Root->Left = &DLX_Matrix[(nRow - 1) * nCol + (nCol - 1)];
+	DLX_Root->Right = &DLX_Matrix[(nRow - 1) * nCol + 0];
+	DLX_Matrix[(nRow - 1) * nCol + nCol - 1].Right = DLX_Root;
+	DLX_Matrix[(nRow - 1) * nCol + 0].Left = DLX_Root;
+	DLX_Root->row = -1;
+	DLX_Root->col = -1;
 }
 
 void DeleteMatrix()
 {
-	delete Matrix;
-	delete Root;
+	delete DLX_Matrix;
+	delete DLX_Root;
 	FREE_int(Result);
 	FREE_int(Nb_choices);
 	FREE_int(Cur_choice);
@@ -623,7 +632,7 @@ dlx_node *get_column_header(int c)
 {
 	dlx_node *Node;
 	
-	for (Node = Root->Right; Node != Root; Node = Node->Right) {
+	for (Node = DLX_Root->Right; Node != DLX_Root; Node = Node->Right) {
 		if (Node->col == c) {
 			return Node;
 			}
@@ -637,7 +646,7 @@ dlx_node *ChooseColumnFancy(void)
 	int j, nb_node, nb_node_min = 0;
 	dlx_node *Node, *Node_min = NULL;
 	
-	for (Node = Root->Right; Node != Root; Node = Node->Right) {
+	for (Node = DLX_Root->Right; Node != DLX_Root; Node = Node->Right) {
 		j = Node->col;
 		nb_node = Nb_col_nodes[j];
 		if (Node_min == NULL) {
@@ -656,11 +665,11 @@ dlx_node *ChooseColumnFancy(void)
 
 dlx_node *ChooseColumn(void)
 {
-	if (Root->Right == Root) {
+	if (DLX_Root->Right == DLX_Root) {
 		cout << "ChooseColumn Root->Right == Root" << endl;
 		exit(1);
 		}
-	return Root->Right;
+	return DLX_Root->Right;
 }
 
 dlx_node *ChooseColumnFancyRHS(void)
@@ -668,7 +677,7 @@ dlx_node *ChooseColumnFancyRHS(void)
 	int j, nb_node, nb_node_min = 0;
 	dlx_node *Node, *Node_min = NULL;
 	
-	for (Node = Root->Right; Node != Root; Node = Node->Right) {
+	for (Node = DLX_Root->Right; Node != DLX_Root; Node = Node->Right) {
 		j = Node->col;
 		if (type[j] == t_LE || type[j] == t_ZOR) {
 			continue;
@@ -693,12 +702,12 @@ dlx_node *ChooseColumnRHS(void)
 	dlx_node *Node;
 	int j;
 	
-	if (Root->Right == Root) {
+	if (DLX_Root->Right == DLX_Root) {
 		cout << "ChooseColumn Root->Right == Root" << endl;
 		exit(1);
 		}
 	
-	for (Node = Root->Right; Node != Root; Node = Node->Right) {
+	for (Node = DLX_Root->Right; Node != DLX_Root; Node = Node->Right) {
 		j = Node->col;
 		if (type[j] == t_LE || type[j] == t_ZOR) {
 			continue;
@@ -713,7 +722,7 @@ void print_root()
 {
 	dlx_node *Node, *N;
 
-	for (Node = Root->Right; Node != Root; Node = Node->Right) {
+	for (Node = DLX_Root->Right; Node != DLX_Root; Node = Node->Right) {
 		cout << "printing column ";
 		print_position(Node);
 		cout << endl;
@@ -813,9 +822,9 @@ int IsDone()
 		cout << c << " : " << current_RHS[c] << " : " << target_RHS[c] << endl;
 		}
 #endif
-	N = Root->Left;
+	N = DLX_Root->Left;
 	while (TRUE) {
-		if (N == Root) {
+		if (N == DLX_Root) {
 			//cout << "is done" << endl;
 			return TRUE;
 			}
@@ -854,7 +863,7 @@ void DlxSearch(int k)
 	dlx_nb_backtrack_nodes++;
 	print_if_necessary(k);
 	
-	if (Root->Left == Root && Root->Right == Root) {
+	if (DLX_Root->Left == DLX_Root && DLX_Root->Right == DLX_Root) {
 		// All header columns gone means we have a valid solution!
 
 		process_solution(k);
@@ -990,7 +999,9 @@ void DlxSearchRHS(int k, int verbose_level)
 	current_RHS[c]++;
 
 	if (f_v) {
-		cout << "DlxSearchRHS k=" << k << " choosing column " << c << " RHS = " << current_RHS[c] << " / " << target_RHS[c] << endl;
+		cout << "DlxSearchRHS k=" << k << " choosing column " << c
+				<< " RHS = " << current_RHS[c] << " / "
+				<< target_RHS[c] << endl;
 		}
 
 	if (current_RHS[c] > target_RHS[c]) {
@@ -1003,7 +1014,8 @@ void DlxSearchRHS(int k, int verbose_level)
 		// have we reached the RHS in this column?
 	if (f_done) {
 		if (f_v) {
-			cout << "DlxSearchRHS k=" << k << " column " << c << " is done, so we cover it" << endl;
+			cout << "DlxSearchRHS k=" << k << " column " << c
+					<< " is done, so we cover it" << endl;
 			}
 			// we have reached the RHS in this column, 
 			// so we cannot place any more in this column.
@@ -1018,7 +1030,8 @@ void DlxSearchRHS(int k, int verbose_level)
 	count_nb_choices(k, Column);
 
 	if (f_v) {
-		cout << "DlxSearchRHS k=" << k << " column " << c << " number of choices is " << Nb_choices[k] << endl;
+		cout << "DlxSearchRHS k=" << k << " column " << c
+				<< " number of choices is " << Nb_choices[k] << endl;
 		}
 
 
@@ -1027,7 +1040,8 @@ void DlxSearchRHS(int k, int verbose_level)
 	// we loop over all nodes in that column:
 
 
-	for (RowNode = Column->Down; RowNode != Column; RowNode = RowNode->Down, Cur_choice[k]++) {
+	for (RowNode = Column->Down; RowNode != Column;
+			RowNode = RowNode->Down, Cur_choice[k]++) {
 		
 		// Try this row node on!
 		r = RowNode->row;
@@ -1038,7 +1052,9 @@ void DlxSearchRHS(int k, int verbose_level)
 		Result[k] = r;
 
 		if (f_v) {
-			cout << "DlxSearchRHS k=" << k << " column " << c << " choice " << Cur_choice[k] << " / " << Nb_choices[k] << " which is ";
+			cout << "DlxSearchRHS k=" << k << " column " << c
+					<< " choice " << Cur_choice[k] << " / "
+					<< Nb_choices[k] << " which is ";
 			int_vec_print(cout, Result, k + 1);
 			cout << endl;
 			}
@@ -1072,7 +1088,9 @@ void DlxSearchRHS(int k, int verbose_level)
 		// For each of these columns we need to call Cover 
 		// to remove further rows which have a one in that column
  
-		for (RightNode = RowNode->Right; RightNode != RowNode; RightNode = RightNode->Right) {
+		for (RightNode = RowNode->Right;
+				RightNode != RowNode;
+				RightNode = RightNode->Right) {
 			c2 = RightNode->col;
 			if (c2 != c) {
 				current_RHS[c2]++;
@@ -1105,7 +1123,9 @@ void DlxSearchRHS(int k, int verbose_level)
 
 
 		if (f_v) {
-			cout << "DlxSearchRHS k=" << k << " column " << c << " choice " << Cur_choice[k] << " / " << Nb_choices[k] << " which is ";
+			cout << "DlxSearchRHS k=" << k << " column " << c
+					<< " choice " << Cur_choice[k] << " / "
+					<< Nb_choices[k] << " which is ";
 			int_vec_print(cout, Result, k + 1);
 			cout << " recursing" << endl;
 			}
@@ -1115,7 +1135,9 @@ void DlxSearchRHS(int k, int verbose_level)
 		DlxSearchRHS(k + 1, verbose_level);
 
 		if (f_v) {
-			cout << "DlxSearchRHS k=" << k << " column " << c << " choice " << Cur_choice[k] << " / " << Nb_choices[k] << " which is ";
+			cout << "DlxSearchRHS k=" << k << " column " << c
+					<< " choice " << Cur_choice[k] << " / "
+					<< Nb_choices[k] << " which is ";
 			int_vec_print(cout, Result, k + 1);
 			cout << " after recursion" << endl;
 			}
@@ -1141,7 +1163,9 @@ void DlxSearchRHS(int k, int verbose_level)
 		for (i = 0; i < nb_changed_type_columns[k]; i++) {
 			c2 = changed_type_columns[--nb_changed_type_columns_total];
 			if (current_RHS[c2] != 0) {
-				cout << "DlxSearchRHS current_RHS[c2] != 0 error, current_RHS[c2]=" << current_RHS[c2] << " c2=" << c2 << " c=" << c << " k=" << k << endl;
+				cout << "DlxSearchRHS current_RHS[c2] != 0 error, "
+						"current_RHS[c2]=" << current_RHS[c2]
+						<< " c2=" << c2 << " c=" << c << " k=" << k << endl;
 				exit(1);
 				}
 			type[c2] = t_ZOR;

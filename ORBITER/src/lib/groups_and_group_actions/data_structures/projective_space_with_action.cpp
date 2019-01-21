@@ -1193,7 +1193,7 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 				"report_orbits_in_PG_3_tex P->n != 3" << endl;
 		exit(1);
 		}
-	projective_space *P3;
+	//projective_space *P3;
 	int order;
 
 	longinteger_object full_group_order;
@@ -1201,7 +1201,7 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 
 	full_group_order.create(order);
 
-	P3 = P;
+	//P3 = P;
 
 	ost << "Fixed Objects:\\\\" << endl;
 
@@ -1288,7 +1288,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 				"decomposition_by_single_automorphism P->n != 3" << endl;
 		exit(1);
 		}
-	projective_space *P3;
+	//projective_space *P3;
 	int order;
 
 	longinteger_object full_group_order;
@@ -1296,7 +1296,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 
 	full_group_order.create(order);
 
-	P3 = P;
+	//P3 = P;
 
 	//ost << "Fixed Objects:\\\\" << endl;
 

@@ -667,9 +667,7 @@ public:
 		// maps the favorite rep to the canonical rep 
 
 
-#if 0
 	int (*check_function)(int len, int *S, void *data, int verbose_level);
-#endif
 
 	poset_classification *gen;
 	poset *Poset;
@@ -705,8 +703,8 @@ public:
 		action *A, action *A_lines, 
 		int f_choose_lines, 
 		int nb_points_or_lines, 
-		//int (*check_function)(int len, int *S, void *data,
-		//	int verbose_level),
+		int (*check_function)(int len, int *S, void *data,
+				int verbose_level),
 		int t0, 
 		int verbose_level);
 	void compute_orbits_from_sims(sims *G, int verbose_level);
