@@ -8,62 +8,56 @@ namespace orbiter {
 
 
 
-typedef class action action;
-typedef class matrix_group matrix_group;
-typedef class perm_group perm_group;
-typedef class vector_ge vector_ge;
+class action;
+class matrix_group;
+class perm_group;
+class vector_ge;
 typedef class vector_ge *p_vector_ge;
-typedef class schreier schreier;
-typedef class sims sims;
+class schreier;
+class sims;
 typedef class sims *p_sims;
-typedef class group group;
-typedef class action_on_sets action_on_sets;
-typedef class action_on_k_subsets action_on_k_subsets;
-typedef class action_by_right_multiplication 
-	action_by_right_multiplication;
-typedef class action_by_restriction action_by_restriction;
-typedef class action_by_conjugation action_by_conjugation;
-typedef class action_on_orbits action_on_orbits;
-typedef class action_on_flags action_on_flags;
-typedef class action_by_representation action_by_representation;
-typedef class action_by_subfield_structure action_by_subfield_structure;
-typedef class action_on_grassmannian action_on_grassmannian;
-typedef class action_on_spread_set action_on_spread_set;
-typedef class action_on_orthogonal action_on_orthogonal;
-typedef class action_on_wedge_product action_on_wedge_product;
-typedef class action_on_cosets action_on_cosets;
-typedef class action_on_factor_space action_on_factor_space;
-typedef class action_on_determinant action_on_determinant;
-typedef class action_on_sign action_on_sign;
-typedef class action_on_homogeneous_polynomials 
-	action_on_homogeneous_polynomials;
-typedef class product_action product_action;
-typedef class union_find union_find;
-typedef class union_find_on_k_subsets union_find_on_k_subsets;
-typedef class schreier_sims schreier_sims;
+class group;
+class action_on_sets;
+class action_on_k_subsets;
+class action_by_right_multiplication;
+class action_by_restriction;
+class action_by_conjugation;
+class action_on_orbits;
+class action_on_flags;
+class action_by_representation;
+class action_by_subfield_structure;
+class action_on_grassmannian;
+class action_on_spread_set;
+class action_on_orthogonal;
+class action_on_wedge_product;
+class action_on_cosets;
+class action_on_factor_space;
+class action_on_determinant;
+class action_on_sign;
+class action_on_homogeneous_polynomials;
+class product_action;
+class union_find;
+class union_find_on_k_subsets;
+class schreier_sims;
 typedef sims *psims;
-typedef class action_on_bricks action_on_bricks;
-typedef class action_on_andre action_on_andre;
-typedef class strong_generators strong_generators;
+class action_on_bricks;
+class action_on_andre;
+class strong_generators;
 typedef strong_generators *pstrong_generators;
-typedef class linear_group_description linear_group_description;
-typedef class linear_group linear_group;
-typedef class set_and_stabilizer set_and_stabilizer;
-typedef class subgroup subgroup;
+class linear_group_description;
+class linear_group;
+class set_and_stabilizer;
+class subgroup;
 typedef class subgroup *psubgroup;
-typedef class action_on_subgroups action_on_subgroups;
-typedef class orbit_transversal orbit_transversal;
-typedef class wreath_product wreath_product;
-typedef class direct_product direct_product;
-typedef class schreier_vector_handler schreier_vector_handler;
-typedef class schreier_vector schreier_vector;
-//typedef class poset_description poset_description;
-//typedef class poset poset;
-typedef class action_on_set_partitions action_on_set_partitions;
-typedef class object_in_projective_space_with_action
-	object_in_projective_space_with_action;
-	// added December 30, 2017
-typedef class data_input_stream data_input_stream;
+class action_on_subgroups;
+class orbit_transversal;
+class wreath_product;
+class direct_product;
+class schreier_vector_handler;
+class schreier_vector;
+class action_on_set_partitions;
+class object_in_projective_space_with_action;
+class data_input_stream;
 
 
 

@@ -185,7 +185,7 @@ void draw(char *fname)
 	int xmin = -n * dx, xmax = n * dx;
 	int ymin = -n * dy, ymax = 0;
 	int factor_1000 = 1000;
-	int Px[1000], Py[1000];
+	//int Px[1000], Py[1000];
 	char fname_full[1000];
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
@@ -200,7 +200,7 @@ void draw(char *fname)
 	G.header();
 	G.begin_figure(factor_1000);
 
-	G.circle(Px[1], Py[1], 500);
+	//G.circle(Px[1], Py[1], 500);
 
 #if 0
 	for (k = 0; k < short_base_len; k++) {
