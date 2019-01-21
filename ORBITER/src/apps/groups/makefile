@@ -1,20 +1,14 @@
-SRC=../../../../ORBITER/src
+SRC=../..
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -I$(SRC)/lib 
+CPPFLAGS = -Wall -I$(SRC)/lib -I../../lib/foundations
+INCLUDES=-I$(SRC)/lib -I../../lib/foundations
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
-CC=g++
 
 
 
 
-all:  \
-	action_on_set_partitions.out \
-	direct_product.out \
-	linear_group.out \
-	orthogonal_group.out \
-	wreath_product.out
 
 
 ALL_TARGETS=wreath_product.out
@@ -25,6 +19,7 @@ ALL_TARGETS=wreath_product.out
 #-------------------------------------------------------------
 # vars required by the CUDA compiler
 #-------------------------------------------------------------
+CSTD=-std=c++11
 CUDA_LIB=-lcudart -lcudadevrt
 CUDA_FLAGS= -gencode arch=compute_50,code=sm_50 \
 			-gencode arch=compute_60,code=sm_60 \
@@ -41,66 +36,31 @@ TRUE=1
 FALSE=0
 
 # Check for CUDA compiler
-COMPILE_ON_GPU=
+COMPILE_ON_GPU=$(TRUE)
 ifeq ( , $(shell which nvcc))
 	COMPILE_ON_GPU = $(FALSE)
-else
-	COMPILE_ON_GPU = $(TRUE)
 endif
 #-------------------------------------------------------------
 
 
-wreath_product.out: wreath_product.o
-	$(CC) $(CSTD) $(CFLAGS) $(OPTFLAGS) $(ALL_TARGETS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -o wreath_product.out
-
-wreath_product.o: wreath_product.cpp
-	$(CC) $(CSTD) $(CFLAGS) $(CPPFLAGS) $(OPTFLAGS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -c $<
 
 
-
-
-not_all: $(ALL_TARGETS)
+all: 
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
-	@echo "----------------------------------------"
-	@echo -n "compiling with CUDA: "
-	@echo $<
-	@echo "----------------------------------------"
-	nvcc $(CUDA_FLAGS) $(CPPFLAGS) wreath_product.o -o wreath_product.out $(LIB) $(CUDA_LIB)
+	$(MAKE) COMPILE_ON_GPU=$(TRUE) cuda_all
 else
-	@echo "----------------------------------------"
-	@echo -n "compiling without CUDA: "
-	@echo $<
-	@echo "----------------------------------------"
-	$(CC) $(CSTD) $(CFLAGS) $(OPTFLAGS) $(ALL_TARGETS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -o main
-endif
-
-	
-not_wreath_product.o: wreath_product.cpp
-ifeq ($(TRUE), $(COMPILE_ON_GPU))
-	@echo "----------------------------------------"
-	@echo -n "compiling with CUDA: "
-	@echo $<
-	@echo "----------------------------------------"
-	nvcc -x cu -c $(CUDA_FLAGS) $(CPPFLAGS) -rdc=true $< -o $@
-else
-	@echo "----------------------------------------"
-	@echo -n "compiling without CUDA: "
-	@echo $<
-	@echo "----------------------------------------"
-	$(CC) $(CSTD) $(CFLAGS) $(CPPFLAGS) $(OPTFLAGS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -c $<
+	$(MAKE) COMPILE_ON_GPU=$(FALSE) not_cuda_all
 endif
 
 
 
 
-
-
-
-
-
-
-
-
+not_cuda_all:  \
+	action_on_set_partitions.out \
+	direct_product.out \
+	linear_group.out \
+	orthogonal_group.out \
+	wreath_product.out
 
 
 action_on_set_partitions.out:  action_on_set_partitions.o;
@@ -119,9 +79,37 @@ orthogonal_group.out:  orthogonal_group.o;
 	$(DISCRETA_CPP)  orthogonal_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
-#wreath_product.out:  wreath_product.o;
-#	$(DISCRETA_CPP)  wreath_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+wreath_product.out:  wreath_product.o;
+ifeq ($(TRUE), $(COMPILE_ON_GPU))
+	@echo "wreath_product.out"
+	$(DISCRETA_CPP) wreath_product.o wreath_product_gpuCode.o $(CPPFLAGS) $(LFLAGS) $(LIB) $(CUDA_LIB) -o $@
+else
+	$(DISCRETA_CPP)  wreath_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+endif
 
+## CUDA
+
+cuda_all: $(ALL_TARGETS)
+	@echo "Done with cuda_all"
+
+
+	
+wreath_product.o: wreath_product.cpp
+ifeq ($(TRUE), $(COMPILE_ON_GPU))
+	@echo "----------------------------------------"
+	@echo -n "compiling with CUDA wreath_product.o: "
+	@echo $<
+	@echo "----------------------------------------"
+	nvcc -x cu -c $(CUDA_FLAGS) $(INCLUDES) -rdc=true $< -o $@ $(CUDA_LIB)
+	nvcc $(CUDA_FLAGS) -I. -dlink $(CUDA_LIB) wreath_product.o -o wreath_product_gpuCode.o
+	@echo "----------------------------------------"
+else
+	@echo "----------------------------------------"
+	@echo -n "compiling without CUDA: "
+	@echo $<
+	@echo "----------------------------------------"
+	$(MAKE) COMPILE_ON_GPU=$(FALSE) not_cuda_all
+endif
 
 clean:
 	- rm *.o *.out *~
