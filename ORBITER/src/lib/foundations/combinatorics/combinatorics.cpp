@@ -1429,6 +1429,28 @@ int perm_signum(int *perm, int n)
 		}
 }
 
+int is_permutation(int *perm, int n)
+{
+	int *perm2;
+	int i;
+
+	perm2 = NEW_int(n);
+	int_vec_copy(perm, perm2, n);
+	int_vec_heapsort(perm2, n);
+	for (i = 0; i < n; i++) {
+		if (perm2[i] != i) {
+			break;
+		}
+	}
+	FREE_int(perm2);
+	if (i == n) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 void first_lehmercode(int n, int *v)
 {
 	int i;
