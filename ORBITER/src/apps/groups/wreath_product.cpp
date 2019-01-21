@@ -12,6 +12,8 @@
 
 using namespace orbiter;
 
+
+
 // global data:
 
 int t0; // the system time when the program started
@@ -71,6 +73,13 @@ void usage(int argc, const char **argv)
 	cout << "-q <q>                   : set field size q" << endl;
 }
 
+/*-------------------------------------------------------*/
+// CUDA Stuff
+/*-------------------------------------------------------*/
+#ifdef __CUDA_ARCH__
+#include "CUDA/Linalg.h"
+#endif
+/*-------------------------------------------------------*/
 
 
 int main(int argc, const char **argv)
@@ -334,46 +343,33 @@ void tensor_product::init(int argc, const char **argv,
 		cout << "too big to print" << endl;
 	}
 
+
+
 #ifdef __CUDA_ARCH__
-	/*-----------------------------------------------------*/
-	// Testing CUDA Stuff
-	/*-----------------------------------------------------*/
+#include "CUDA/Matrix.h"
+
 	const size_t __matrix__size__ = 50000;
-	Matrix<int> M(__matrix__size__,__matrix__size__),
-				N(__matrix__size__,__matrix__size__),
-				P(__matrix__size__,__matrix__size__);
-	for (size_t i=0; i<__matrix__size__; ++i)
-		for (size_t j=0;j<__matrix__size__; j++) {
-			M(i,j) = N(i,j) = i+j;
-		}
-	cout << "M: " << endl;
-	for (size_t i=0; i<5; ++i) {
-		for (size_t j=0;j<5; j++)
-			cout << std::setw(3) << M(i.j);
-		cout << endl;
-	} cout << endl;
-	cout << "N: " << endl;
-	for (size_t i=0; i<5; ++i) {
-		for (size_t j=0;j<5; j++)
-			cout << std::setw(3) << N(i.j);
-		cout << endl;
-	} cout << endl;
+
+	Matrix<int> M(__matrix__size__, __matrix__size__),
+				N(__matrix__size__, __matrix__size__),
+				P(__matrix__size__, __matrix__size__);
+
+	for (size_t i=0; i<5; ++i)
+		for (size_t j=0; j<5; ++j)
+			M(i,j) = N(i,j) + i+j;
+
+	cout << "M Before:"; M.nrows = M.ncols = 5; M.print();M.nrows = M.ncols = __matrix__size__; cout << endl;
+	cout << "N Before:"; N.nrows = N.ncols = 5; N.print();N.nrows = N.ncols = __matrix__size__; cout << endl;
+	cout << "P Before:"; P.nrows = P.ncols = 5; P.print();P.nrows = P.ncols = __matrix__size__; cout << endl;
+
 	linalg::device_dot(M, N, P);
-	cout << "After" << endl;
-	cout << "M: " << endl;
-	for (size_t i=0; i<5; ++i) {
-		for (size_t j=0;j<5; j++)
-			cout << std::setw(3) << M(i.j);
-		cout << endl;
-	} cout << endl;
-	cout << "N: " << endl;
-	for (size_t i=0; i<5; ++i) {
-		for (size_t j=0;j<5; j++)
-			cout << std::setw(3) << N(i.j);
-		cout << endl;
-	} cout << endl;
-	/*-----------------------------------------------------*/
+
+	cout << "P Before:"; P.nrows = P.ncols = 5; P.print();P.nrows = P.ncols = __matrix__size__; cout << endl;
+
 #endif
+
+
+
 
 #if 0
 
