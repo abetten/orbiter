@@ -140,8 +140,6 @@ int modinv(int a, int b)
 
 
 
-
-
 template <typename T>
 class _Vector {
 public:
@@ -311,7 +309,30 @@ public:
 
 
 
+template <typename Vec>
+void right_normalize_(_Vector<Vec>& x, int p) {
+	// last non-zero element made one
+	int i, j, a;
+	int len = x.size();
 
+	for (i = len - 1; i >= 0; i--) {
+		a = x[i];
+		if (a) {
+			if (a == 1) {
+				return;
+			}
+			a = modinv(a, p);
+			x[i] = 1;
+			for (j = i - 1; j >= 0; j--) {
+				x[j] = mod(x[j] * a, p);
+			}
+			return;
+		}
+	}
+	cout << __FILE__ << ":" << __LINE__ << endl;
+	cout << "PG_element_normalize() zero vector()" << endl;
+	exit(1);
+}
 
 
 
@@ -871,8 +892,8 @@ void cuda_matrix_matrix_dot_(Mat& A, Mat& B, Mat& C, int p=0, int axis=0, size_t
 
 
 
-	int row = (blockDim.y * blockIdx.y) + threadIdx.y;
-	int col = (blockDim.x * blockIdx.x) + threadIdx.x;
+	int col = (blockDim.y * blockIdx.y) + threadIdx.y;
+	int row = (blockDim.x * blockIdx.x) + threadIdx.x;
 
 	if (row >= C.nrows || col >= C.ncols) return;
 
@@ -950,26 +971,27 @@ void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C, int* perms, int* result,
 	// works on one entry of the resultant matrix.
 	int num_threads = m * p;
 
+	// Find out how many blocks are needed
+	int block_size = 16;
+	int num_blocks = (num_threads + block_size*block_size - 1)/ (block_size*block_size) ;
+	int gridDim_y = (C.ncols + block_size - 1) / block_size;
+	int gridDim_x = (C.nrows + block_size - 1) / block_size;
+	if (num_blocks > gridDim_x*gridDim_y || num_threads > gridDim_x*gridDim_y*pow(block_size,2)) {
+		cout << "Error:" << __FILE__ << ":" << __LINE__ <<
+		"number of required blocks is greater than number of blocks set."
+		<< endl;
+	}
+	dim3 blockDim(block_size, block_size, 1);
+	dim3 gridDim(gridDim_x, gridDim_y, 1);
 
+	cout << "C.nrows: " << C.nrows << ", C.ncols: " << C.ncols << endl;
+	cout << "block_size: " << block_size << ", gridDim_x: " << gridDim_x << ", gridDim_y: " << gridDim_y << endl;
 
 	_Vector<T> V (B.ncols);
 	_Vector<T> V2 (B.ncols);
 	int a = 0;
 
 	for (size_t h=0; h<B.nrows/A.ncols; ++h) {
-
-		// Find out how many blocks are needed
-		int block_size = 16;
-		int num_blocks = (num_threads + block_size*block_size - 1)/ (block_size*block_size) ;
-		int gridDim_x = (C.ncols + block_size - 1) / block_size;
-		int gridDim_y = (C.nrows + block_size - 1) / block_size;
-		if (num_blocks > gridDim_x*gridDim_y || num_threads > gridDim_x*gridDim_y*pow(block_size,2)) {
-			cout << "Error:" << __FILE__ << ":" << __LINE__ <<
-			"number of required blocks is greater than number of blocks set."
-			<< endl;
-		}
-		dim3 blockDim(block_size, block_size, 1);
-		dim3 gridDim(gridDim_x, gridDim_y, 1);
 
 		cuda_matrix_matrix_dot_<<<gridDim, blockDim>>>(*d_A, *d_B, *d_C, q, axis, h);
 		// Do some error checking after kernel launch
@@ -1030,6 +1052,7 @@ void make_num_rep(_Vector<T>& v, unsigned int q) {
 		cout << endl;
 	}
 
+	right_normalize_(v, q);
 
 	if (f_v) {
 		cout << "the vector after normalization is ";
@@ -1533,8 +1556,23 @@ void tensor_product::init(int argc, const char **argv,
 	Matrix<int> MN (M.nrows, N.ncols);
 	cuda_dot(M, N, MN, perms, result, q);
 
-	cout << "result:" << endl;
-	int_matrix_print(result, SG->gens->len, W->degree_of_tensor_action);
+//	cout << "result:" << endl;
+//	int_matrix_print(result, SG->gens->len, W->degree_of_tensor_action);
+
+
+	for (i = 0; i < SG->gens->len; i++) {
+		cout << "testing result " << i << " / " << SG->gens->len << ": ";
+		if (is_permutation(result + i * W->degree_of_tensor_action, W->degree_of_tensor_action)) {
+			cout << "OK" << endl;
+		}
+		else {
+			cout << "not OK" << endl;
+		}
+	}
+
+
+	cout << __FILE__ << ":" << __LINE__ << endl;
+	exit(0);
 
 #endif
 	cout << __FILE__ << ":" << __LINE__ << endl;

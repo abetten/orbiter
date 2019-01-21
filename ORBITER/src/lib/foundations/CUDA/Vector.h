@@ -23,7 +23,6 @@ using std::ostream;
 
 
 template <typename T>
-
 class Vector {
 public:
 
