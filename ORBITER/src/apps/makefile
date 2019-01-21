@@ -6,7 +6,7 @@ all:
 	cd combinatorics; $(MAKE) all
 	cd graph_classify; $(MAKE) all
 	cd graph_theory; $(MAKE) all
-	#cd groups; $(MAKE) all
+	cd groups; $(MAKE) all
 	cd linear_spaces; $(MAKE) all
 	#cd main; $(MAKE) all
 	cd ovoid; $(MAKE) all

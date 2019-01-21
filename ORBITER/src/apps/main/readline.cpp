@@ -28,6 +28,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 
 //typedef enum orbiter_token_type orbiter_token_type;
 
