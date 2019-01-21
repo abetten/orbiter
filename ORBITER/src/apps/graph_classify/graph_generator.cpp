@@ -9,7 +9,15 @@
 //
 
 #include "orbiter.h"
+
+using namespace orbiter;
+
+
 #include "graph.h"
+
+
+int check_conditions(int len, int *S, void *data, int verbose_level);
+void print_set(ostream &ost, int len, int *S, void *data);
 
 graph_generator::graph_generator()
 {

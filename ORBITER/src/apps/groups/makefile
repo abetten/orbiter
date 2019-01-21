@@ -61,7 +61,7 @@ else
 	@echo -n "compiling without CUDA: "
 	@echo $<
 	@echo "----------------------------------------"
-	$(CC) $(CSTD) $(CFLAGS) $(OPTFLAGS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -c $<
+	$(CC) $(CSTD) $(CFLAGS) $(CPPFLAGS) $(OPTFLAGS) $(INCLUDES) $(LIBS_DIR) $(LIBS) -c $<
 endif
 
 

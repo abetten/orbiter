@@ -6,6 +6,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 typedef class code_generator code_generator;
 
 extern int t0; // the system time when the program started

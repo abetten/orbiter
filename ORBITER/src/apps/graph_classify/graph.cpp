@@ -9,6 +9,9 @@
 //
 
 #include "orbiter.h"
+
+using namespace orbiter;
+
 #include "graph.h"
 
 // global data:

@@ -5,6 +5,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void choose_random_permutation(int n,
 		int f_save, const char *fname, int verbose_level);
 

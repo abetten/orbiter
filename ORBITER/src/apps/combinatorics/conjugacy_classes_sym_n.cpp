@@ -6,6 +6,9 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
+
 void make_partitions(int n, int *Part, int cnt);
 int count_partitions(int n);
 int next_partition(int n, int *part);

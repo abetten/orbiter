@@ -4,20 +4,20 @@ all:
 	cd blt; $(MAKE) all
 	cd codes; $(MAKE) all
 	cd combinatorics; $(MAKE) all
-	cd graph_classify; $(MAKE) all
-	cd graph_theory; $(MAKE) all
+	#cd graph_classify; $(MAKE) all
+	#cd graph_theory; $(MAKE) all
 	cd groups; $(MAKE) all
-	cd linear_spaces; $(MAKE) all
+	#cd linear_spaces; $(MAKE) all
 	#cd main; $(MAKE) all
-	cd ovoid; $(MAKE) all
-	cd projective_space; $(MAKE) all
-	cd regular_ls; $(MAKE) all
-	cd solver; $(MAKE) all
-	cd spread; $(MAKE) all
-	cd subspace_orbits; $(MAKE) all
-	cd surfaces; $(MAKE) all
-	cd test; $(MAKE) all
-	cd tools; $(MAKE) all
+	#cd ovoid; $(MAKE) all
+	#cd projective_space; $(MAKE) all
+	#cd regular_ls; $(MAKE) all
+	#cd solver; $(MAKE) all
+	#cd spread; $(MAKE) all
+	#cd subspace_orbits; $(MAKE) all
+	#cd surfaces; $(MAKE) all
+	#cd test; $(MAKE) all
+	#cd tools; $(MAKE) all
 
 clean: 
 	cd algebra; $(MAKE) clean

@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 #define MAX_MASK_TESTS 1000
 
 // global data:

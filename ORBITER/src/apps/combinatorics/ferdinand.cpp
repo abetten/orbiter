@@ -11,6 +11,8 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
 typedef class cayley_graph_search cayley_graph_search;
 
 //! for a problem of Ferdinand Ihringer
