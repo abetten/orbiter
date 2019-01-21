@@ -100,11 +100,21 @@ void choose_points_or_lines::free_representative()
 	null_representative();
 }
 
+#if 0
+void poset::add_testing_without_group(
+		void (*func)(int *S, int len,
+				int *candidates, int nb_candidates,
+				int *good_candidates, int &nb_good_candidates,
+				void *data, int verbose_level),
+		void *data,
+		int verbose_level)
+#endif
+
 void choose_points_or_lines::init(const char *label, void *data, 
 	action *A, action *A_lines, 
 	int f_choose_lines, 
 	int nb_points_or_lines, 
-	//int (*check_function)(int len, int *S, void *data, int verbose_level),
+	int (*check_function)(int len, int *S, void *data, int verbose_level),
 	int t0, 
 	int verbose_level)
 {
@@ -121,7 +131,7 @@ void choose_points_or_lines::init(const char *label, void *data,
 	choose_points_or_lines::A_lines = A_lines;
 	choose_points_or_lines::f_choose_lines = f_choose_lines;
 	choose_points_or_lines::nb_points_or_lines = nb_points_or_lines;
-	//choose_points_or_lines::check_function = check_function;
+	choose_points_or_lines::check_function = check_function;
 	choose_points_or_lines::t0 = t0;
 	if (f_choose_lines) {
 		A2 = A_lines;
