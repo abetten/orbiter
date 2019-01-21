@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 int Phi_of(int n, int verbose_level);
 void formula_subprimitive(int d, int q,
 	longinteger_object &Rdq, int &g, int verbose_level);

@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void do_it(int q, int k, int verbose_level);
 int entry_ij(finite_field *F, int m, int n);
 

@@ -6,6 +6,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void count_nb_liftings(longinteger_object &N, int m, int n, int q);
 void count_nb_grass(longinteger_object &N, int m, int n, int q);
 void count_nb_flags(longinteger_object &N, int m, int n, int q);

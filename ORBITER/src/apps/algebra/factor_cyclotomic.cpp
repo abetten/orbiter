@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+
+using namespace orbiter;
+
 void print_usage();
 void factor_cyclotomic(int n, int q, int d,
 	int *coeffs, int f_poly, char *poly, int verbose_level);

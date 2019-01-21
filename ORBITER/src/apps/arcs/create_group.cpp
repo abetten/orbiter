@@ -10,6 +10,7 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
 
 int main(int argc, const char **argv);
 void create_group_arcs8(int q, int verbose_level);

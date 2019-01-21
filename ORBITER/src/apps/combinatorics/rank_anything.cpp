@@ -5,6 +5,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void rank_subsets(int n, int verbose_level);
 void rank_binary_trees(int n, int verbose_level);
 

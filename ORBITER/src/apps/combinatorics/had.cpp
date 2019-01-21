@@ -7,6 +7,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void do_it(int verbose_level);
 
 int t0;

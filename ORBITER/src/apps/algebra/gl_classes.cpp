@@ -5,6 +5,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level);
 void do_random(int q, int d, int f_no_eigenvalue_one, int verbose_level);
 void do_identify_all(int q, int d,

@@ -3,6 +3,7 @@
 using namespace std;
 
 
+
 int main(void)
 {
 	int i, j, k, l, c2, c3, c4, cnt;

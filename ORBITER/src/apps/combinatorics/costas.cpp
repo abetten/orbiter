@@ -8,6 +8,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 int t0 = 0;
 
 void read(const char *fname, int verbose_level);

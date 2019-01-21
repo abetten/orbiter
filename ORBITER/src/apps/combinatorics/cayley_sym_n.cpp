@@ -7,6 +7,8 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
 int t0;
 
 void do_it(int n, int f_special, int f_bubble,

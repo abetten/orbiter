@@ -1,6 +1,7 @@
 // graph.h
 // 
 
+
 typedef class graph_generator graph_generator;
 
 
@@ -96,7 +97,5 @@ public:
 };
 
 
-int check_conditions(int len, int *S, void *data, int verbose_level);
-void print_set(ostream &ost, int len, int *S, void *data);
 
 

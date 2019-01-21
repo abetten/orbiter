@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void test_indexing(int n, int *type, int type_len,
 		finite_field *F, int verbose_level);
 void test_action(int n, int *type, int type_len,

@@ -10,7 +10,10 @@
 
 #include "orbiter.h"
 
+
 #include <fstream>
+
+using namespace orbiter;
 
 // global data:
 

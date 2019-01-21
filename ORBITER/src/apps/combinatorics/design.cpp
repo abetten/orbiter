@@ -7,6 +7,8 @@
 #include "orbiter.h"
 
 
+using namespace orbiter;
+
 int t0;
 
 void design_from_PG(int PG_n, int PG_q, int verbose_level);

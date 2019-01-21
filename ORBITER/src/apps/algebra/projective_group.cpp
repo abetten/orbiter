@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter;
+
 void make_generator_matrix(finite_field *F,
 		int *G, int k, int n, int *code, int verbose_level);
 void projective_group(int n, int q, int f_semilinear, int verbose_level);
