@@ -106,9 +106,10 @@ ifeq ($(TRUE), $(COMPILE_ON_GPU))
 else
 	@echo "----------------------------------------"
 	@echo -n "compiling without CUDA: "
+	@echo $@
 	@echo $<
 	@echo "----------------------------------------"
-	$(MAKE) COMPILE_ON_GPU=$(FALSE) not_cuda_all
+	$(DISCRETA_CPP) -c $< $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 endif
 
 
