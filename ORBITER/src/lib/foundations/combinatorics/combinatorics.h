@@ -201,6 +201,7 @@ void perm_print_offset(ostream &ost, int *a, int n, int offset,
 void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles);
 int perm_order(int *a, int n);
 int perm_signum(int *perm, int n);
+int is_permutation(int *perm, int n);
 void first_lehmercode(int n, int *v);
 int next_lehmercode(int n, int *v);
 void lehmercode_to_permutation(int n, int *code, int *perm);
