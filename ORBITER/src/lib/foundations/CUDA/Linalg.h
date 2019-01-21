@@ -16,7 +16,6 @@ namespace linalg {
 
 	template <typename Mat>
 	__host__
-	__device__
 	void transpose(Mat& SRC, Mat& DST) {
 		// this function assumes that the destination matrix, DST
 		// has the proper dimensions, i.e. if src matrix has dimensions
@@ -32,7 +31,6 @@ namespace linalg {
 
 	template <typename Mat>
 	__host__
-	__device__
 	void transpose(Mat& M) {
 		// This function takes in a matrix reference M, and returns
 		// the transpose of M

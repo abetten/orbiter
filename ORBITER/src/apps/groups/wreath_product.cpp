@@ -340,11 +340,38 @@ void tensor_product::init(int argc, const char **argv,
 	/*-----------------------------------------------------*/
 	const size_t __matrix__size__ = 50000;
 	Matrix<int> M(__matrix__size__,__matrix__size__),
-				N(__matrix__size__,__matrix__size__);
+				N(__matrix__size__,__matrix__size__),
+				P(__matrix__size__,__matrix__size__);
 	for (size_t i=0; i<__matrix__size__; ++i)
-		for (size_t j=0;j<__matrix__size__; j++)
+		for (size_t j=0;j<__matrix__size__; j++) {
 			M(i,j) = N(i,j) = i+j;
-
+		}
+	cout << "M: " << endl;
+	for (size_t i=0; i<5; ++i) {
+		for (size_t j=0;j<5; j++)
+			cout << std::setw(3) << M(i.j);
+		cout << endl;
+	} cout << endl;
+	cout << "N: " << endl;
+	for (size_t i=0; i<5; ++i) {
+		for (size_t j=0;j<5; j++)
+			cout << std::setw(3) << N(i.j);
+		cout << endl;
+	} cout << endl;
+	linalg::device_dot(M, N, P);
+	cout << "After" << endl;
+	cout << "M: " << endl;
+	for (size_t i=0; i<5; ++i) {
+		for (size_t j=0;j<5; j++)
+			cout << std::setw(3) << M(i.j);
+		cout << endl;
+	} cout << endl;
+	cout << "N: " << endl;
+	for (size_t i=0; i<5; ++i) {
+		for (size_t j=0;j<5; j++)
+			cout << std::setw(3) << N(i.j);
+		cout << endl;
+	} cout << endl;
 	/*-----------------------------------------------------*/
 #endif
 
