@@ -23,7 +23,7 @@ int main(int argc, const char **argv);
 int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
 void wreath_product_print_set(ostream &ost, int len, int *S, void *data);
-
+void wreath_product_orbits_CUDA(wreath_product* W, strong_generators* SG, action* A, int*& result, int verbosity=0);
 
 
 typedef class tensor_product tensor_product;
@@ -1247,6 +1247,18 @@ void PGL_Vector_unrank_Matrix (Matrix<T>& M, size_t vector_size, size_t q, const
 	}
 }
 
+template <typename T, typename U>
+__host__
+void PGL_Vector_unrank_Matrix (Matrix<T>& M, size_t vector_size, size_t q, const vector<U> in) {
+	_Vector<T> V (vector_size);
+
+	for (size_t i=0; i<in.size(); ++i) {
+		make_vector_from_number (V, in[i], q);
+			for (size_t j=0; j<vector_size; ++j)
+				M(i,j) = V(j);
+	}
+}
+
 #endif
 /*-------------------------------------------------------*/
 
@@ -1513,68 +1525,10 @@ void tensor_product::init(int argc, const char **argv,
 	}
 
 
-	int *generator_stack;
-	int *perms;
-	int mtx_n;
-	int mtx_n2;
-
-	mtx_n = W->dimension_of_tensor_action;
-	mtx_n2 = mtx_n * mtx_n;
-
-	generator_stack = NEW_int(SG->gens->len * mtx_n2);
-	perms = NEW_int(SG->gens->len * mtx_n);
-	for (i = 0; i < SG->gens->len; i++) {
-		cout << "generator " << i << " / "
-				<< SG->gens->len << " is: " << endl;
-		A->element_print_quick(SG->gens->ith(i), cout);
-		W->create_matrix(SG->gens->ith(i), generator_stack + i * mtx_n2,
-		0 /* verbose_level */);
-		W->compute_induced_permutation(SG->gens->ith(i), perms + i * mtx_n);
-	}
-	cout << "generator_stack:" << endl;
-	int_matrix_print(generator_stack, SG->gens->len * mtx_n, mtx_n);
-	cout << "perms:" << endl;
-	int_matrix_print(perms, SG->gens->len, mtx_n);
-
-
+	int* result = NULL;
 
 	cout << __FILE__ << ":" << __LINE__ << endl;
-#ifdef __CUDACC__
-
-	Matrix<int> M (W->degree_of_tensor_action, mtx_n);
-	PGL_Vector_unrank_Matrix (M, mtx_n, W->q, W->degree_of_tensor_action);
-
-	Matrix<int> N (SG->gens->len * mtx_n, mtx_n);
-	for (size_t i=0; i<N.nrows; ++i) {
-		for (size_t j=0; j<N.ncols; ++j) {
-			N(i,j) = generator_stack [i * N.ncols + j];
-		}
-	}
-
-	int* result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
-
-	Matrix<int> MN (M.nrows, N.ncols);
-	cuda_dot(M, N, MN, perms, result, q);
-
-//	cout << "result:" << endl;
-//	int_matrix_print(result, SG->gens->len, W->degree_of_tensor_action);
-
-
-	for (i = 0; i < SG->gens->len; i++) {
-		cout << "testing result " << i << " / " << SG->gens->len << ": ";
-		if (is_permutation(result + i * W->degree_of_tensor_action, W->degree_of_tensor_action)) {
-			cout << "OK" << endl;
-		}
-		else {
-			cout << "not OK" << endl;
-		}
-	}
-
-
-	cout << __FILE__ << ":" << __LINE__ << endl;
-	exit(0);
-
-#endif
+	wreath_product_orbits_CUDA(W, SG, A, result);
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
 
@@ -1934,3 +1888,74 @@ void wreath_product_print_set(ostream &ost, int len, int *S, void *data)
 	}
 }
 
+void wreath_product_orbits_CUDA(wreath_product* W,
+								strong_generators* SG,
+								action* A,
+								int*& result,
+								int verbosity) {
+#ifdef __CUDACC__
+
+	int *generator_stack;
+	int *perms;
+	int mtx_n;
+	int mtx_n2;
+
+	mtx_n = W->dimension_of_tensor_action;
+	mtx_n2 = mtx_n * mtx_n;
+
+	generator_stack = NEW_int(SG->gens->len * mtx_n2);
+	perms = NEW_int(SG->gens->len * mtx_n);
+	for (size_t i = 0; i < SG->gens->len; i++) {
+		cout << "generator " << i << " / "
+				<< SG->gens->len << " is: " << endl;
+		A->element_print_quick(SG->gens->ith(i), cout);
+		W->create_matrix(SG->gens->ith(i), generator_stack + i * mtx_n2,
+		0 /* verbose_level */);
+		W->compute_induced_permutation(SG->gens->ith(i), perms + i * mtx_n);
+	}
+	cout << "generator_stack:" << endl;
+	int_matrix_print(generator_stack, SG->gens->len * mtx_n, mtx_n);
+	cout << "perms:" << endl;
+	int_matrix_print(perms, SG->gens->len, mtx_n);
+
+
+
+	Matrix<int> M (W->degree_of_tensor_action, mtx_n);
+	PGL_Vector_unrank_Matrix (M, mtx_n, W->q, W->degree_of_tensor_action);
+
+	Matrix<int> N (SG->gens->len * mtx_n, mtx_n);
+	for (size_t i=0; i<N.nrows; ++i) {
+		for (size_t j=0; j<N.ncols; ++j) {
+			N(i,j) = generator_stack [i * N.ncols + j];
+		}
+	}
+
+	result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
+
+	Matrix<int> MN (M.nrows, N.ncols);
+	cuda_dot(M, N, MN, perms, result, W->q);
+
+//	cout << "result:" << endl;
+//	int_matrix_print(result, SG->gens->len, W->degree_of_tensor_action);
+
+
+
+	for (size_t i = 0; i < SG->gens->len; i++) {
+		cout << "testing result " << i << " / " << SG->gens->len << ": ";
+		if (is_permutation(result + i * W->degree_of_tensor_action, W->degree_of_tensor_action)) {
+			cout << "OK" << endl;
+		}
+		else {
+			cout << "not OK" << endl;
+		}
+	}
+
+
+	cout << __FILE__ << ":" << __LINE__ << endl;
+	exit(0);
+
+	FREE_int (generator_stack);
+	FREE_int(perms);
+
+#endif
+}
