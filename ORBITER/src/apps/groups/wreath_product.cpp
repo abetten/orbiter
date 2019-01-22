@@ -24,6 +24,7 @@ int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
 void wreath_product_print_set(ostream &ost, int len, int *S, void *data);
 void wreath_product_orbits_CUDA(wreath_product* W, strong_generators* SG, action* A, int*& result, int verbosity=0);
+void wreath_product_testing(action *A, strong_generators *SG, int verbose_level);
 
 
 typedef class tensor_product tensor_product;
@@ -1534,211 +1535,7 @@ void tensor_product::init(int argc, const char **argv,
 
 
 #if 0
-
-	cout << "tensor_product::init testing..." << endl;
-	int r1, r2;
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-	int *Elt4;
-	int *perm1;
-	int *perm2;
-	int *perm3;
-	int *perm4;
-	int *perm5;
-	int cnt;
-
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-	Elt4 = NEW_int(A->elt_size_in_int);
-	perm1 = NEW_int(A->degree);
-	perm2 = NEW_int(A->degree);
-	perm3 = NEW_int(A->degree);
-	perm4 = NEW_int(A->degree);
-	perm5 = NEW_int(A->degree);
-
-	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
-		cout << "r1=" << r1 << endl;
-		cout << "r2=" << r2 << endl;
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		A->element_move(SG->gens->ith(r2), Elt2, 0);
-		cout << "Elt1 = " << endl;
-		A->element_print_quick(Elt1, cout);
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm1, A->degree);
-		cout << endl;
-
-		cout << "Elt2 = " << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm2, A->degree);
-		cout << endl;
-
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		cout << "Elt3 = " << endl;
-		A->element_print_quick(Elt3, cout);
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm3, A->degree);
-		cout << endl;
-
-		perm_mult(perm1, perm2, perm4, A->degree);
-		cout << "perm1 * perm2= " << endl;
-		perm_print(cout, perm4, A->degree);
-		cout << endl;
-
-		for (i = 0; i < A->degree; i++) {
-			if (perm3[i] != perm4[i]) {
-				cout << "test " << cnt
-						<< " failed; something is wrong" << endl;
-				exit(1);
-			}
-		}
-	}
-	cout << "tensor_product::init test 1 passed" << endl;
-
-
-	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		cout << "r1=" << r1 << endl;
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		cout << "Elt1 = " << endl;
-		A->element_print_quick(Elt1, cout);
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm1, A->degree);
-		cout << endl;
-
-		A->element_invert(Elt1, Elt2, 0);
-		cout << "Elt2 = " << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm2, A->degree);
-		cout << endl;
-
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		cout << "Elt3 = " << endl;
-		A->element_print_quick(Elt3, cout);
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm3, A->degree);
-		cout << endl;
-
-		if (!perm_is_identity(perm3, A->degree)) {
-			cout << "fails the inverse test" << endl;
-			exit(1);
-		}
-	}
-
-	cout << "tensor_product::init test 2 passed" << endl;
-
-
-
-	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
-		cout << "r1=" << r1 << endl;
-		cout << "r2=" << r2 << endl;
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		A->element_move(SG->gens->ith(r2), Elt2, 0);
-		cout << "Elt1 = " << endl;
-		A->element_print_quick(Elt1, cout);
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm1, A->degree);
-		cout << endl;
-
-		cout << "Elt2 = " << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		perm_print(cout, perm2, A->degree);
-		cout << endl;
-
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		cout << "Elt3 = " << endl;
-		A->element_print_quick(Elt3, cout);
-
-		A->element_invert(Elt3, Elt4, 0);
-		cout << "Elt4 = Elt3^-1 = " << endl;
-		A->element_print_quick(Elt4, cout);
-
-
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
-		cout << "as Elt3 as permutation: " << endl;
-		perm_print(cout, perm3, A->degree);
-		cout << endl;
-
-		A->element_as_permutation(Elt4, perm4, 0 /* verbose_level */);
-		cout << "as Elt4 as permutation: " << endl;
-		perm_print(cout, perm4, A->degree);
-		cout << endl;
-
-		perm_mult(perm3, perm4, perm5, A->degree);
-		cout << "perm3 * perm4= " << endl;
-		perm_print(cout, perm5, A->degree);
-		cout << endl;
-
-		for (i = 0; i < A->degree; i++) {
-			if (perm5[i] != i) {
-				cout << "test " << cnt
-						<< " failed; something is wrong" << endl;
-				exit(1);
-			}
-		}
-	}
-	cout << "tensor_product::init test 3 passed" << endl;
-
-
-	cout << "performing test 4:" << endl;
-
-	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
-	A->make_element(Elt1, data, verbose_level);
-	A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-	cout << "as Elt1 as permutation: " << endl;
-	perm_print(cout, perm1, A->degree);
-	cout << endl;
-
-	A->element_invert(Elt1, Elt2, 0);
-	A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-	cout << "as Elt2 as permutation: " << endl;
-	perm_print(cout, perm2, A->degree);
-	cout << endl;
-
-
-	A->element_mult(Elt1, Elt2, Elt3, 0);
-	cout << "Elt3 = " << endl;
-	A->element_print_quick(Elt3, cout);
-
-	perm_mult(perm1, perm2, perm3, A->degree);
-	cout << "perm1 * perm2= " << endl;
-	perm_print(cout, perm3, A->degree);
-	cout << endl;
-
-	for (i = 0; i < A->degree; i++) {
-		if (perm3[i] != i) {
-			cout << "test 4 failed; something is wrong" << endl;
-			exit(1);
-		}
-	}
-
-	cout << "tensor_product::init test 4 passed" << endl;
-
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
-	FREE_int(Elt4);
-	FREE_int(perm1);
-	FREE_int(perm2);
-	FREE_int(perm3);
-	FREE_int(perm4);
-	FREE_int(perm5);
+	wreath_product_testing(A, SG, verbose_level);
 #endif
 
 
@@ -1958,4 +1755,214 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	FREE_int(perms);
 
 #endif
+}
+
+
+void wreath_product_testing(action *A, strong_generators *SG, int verbose_level)
+{
+	cout << "wreath_product_testing testing..." << endl;
+	int r1, r2;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+	int *perm1;
+	int *perm2;
+	int *perm3;
+	int *perm4;
+	int *perm5;
+	int cnt;
+	int i;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	perm1 = NEW_int(A->degree);
+	perm2 = NEW_int(A->degree);
+	perm3 = NEW_int(A->degree);
+	perm4 = NEW_int(A->degree);
+	perm5 = NEW_int(A->degree);
+
+	for (cnt = 0; cnt < 10; cnt++) {
+		r1 = random_integer(SG->gens->len);
+		r2 = random_integer(SG->gens->len);
+		cout << "r1=" << r1 << endl;
+		cout << "r2=" << r2 << endl;
+		A->element_move(SG->gens->ith(r1), Elt1, 0);
+		A->element_move(SG->gens->ith(r2), Elt2, 0);
+		cout << "Elt1 = " << endl;
+		A->element_print_quick(Elt1, cout);
+		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm1, A->degree);
+		cout << endl;
+
+		cout << "Elt2 = " << endl;
+		A->element_print_quick(Elt2, cout);
+		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm2, A->degree);
+		cout << endl;
+
+		A->element_mult(Elt1, Elt2, Elt3, 0);
+		cout << "Elt3 = " << endl;
+		A->element_print_quick(Elt3, cout);
+		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm3, A->degree);
+		cout << endl;
+
+		perm_mult(perm1, perm2, perm4, A->degree);
+		cout << "perm1 * perm2= " << endl;
+		perm_print(cout, perm4, A->degree);
+		cout << endl;
+
+		for (i = 0; i < A->degree; i++) {
+			if (perm3[i] != perm4[i]) {
+				cout << "test " << cnt
+						<< " failed; something is wrong" << endl;
+				exit(1);
+			}
+		}
+	}
+	cout << "tensor_product::init test 1 passed" << endl;
+
+
+	for (cnt = 0; cnt < 10; cnt++) {
+		r1 = random_integer(SG->gens->len);
+		cout << "r1=" << r1 << endl;
+		A->element_move(SG->gens->ith(r1), Elt1, 0);
+		cout << "Elt1 = " << endl;
+		A->element_print_quick(Elt1, cout);
+		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm1, A->degree);
+		cout << endl;
+
+		A->element_invert(Elt1, Elt2, 0);
+		cout << "Elt2 = " << endl;
+		A->element_print_quick(Elt2, cout);
+		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm2, A->degree);
+		cout << endl;
+
+		A->element_mult(Elt1, Elt2, Elt3, 0);
+		cout << "Elt3 = " << endl;
+		A->element_print_quick(Elt3, cout);
+		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm3, A->degree);
+		cout << endl;
+
+		if (!perm_is_identity(perm3, A->degree)) {
+			cout << "fails the inverse test" << endl;
+			exit(1);
+		}
+	}
+
+	cout << "tensor_product::init test 2 passed" << endl;
+
+
+
+	for (cnt = 0; cnt < 10; cnt++) {
+		r1 = random_integer(SG->gens->len);
+		r2 = random_integer(SG->gens->len);
+		cout << "r1=" << r1 << endl;
+		cout << "r2=" << r2 << endl;
+		A->element_move(SG->gens->ith(r1), Elt1, 0);
+		A->element_move(SG->gens->ith(r2), Elt2, 0);
+		cout << "Elt1 = " << endl;
+		A->element_print_quick(Elt1, cout);
+		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm1, A->degree);
+		cout << endl;
+
+		cout << "Elt2 = " << endl;
+		A->element_print_quick(Elt2, cout);
+		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm2, A->degree);
+		cout << endl;
+
+		A->element_mult(Elt1, Elt2, Elt3, 0);
+		cout << "Elt3 = " << endl;
+		A->element_print_quick(Elt3, cout);
+
+		A->element_invert(Elt3, Elt4, 0);
+		cout << "Elt4 = Elt3^-1 = " << endl;
+		A->element_print_quick(Elt4, cout);
+
+
+		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		cout << "as Elt3 as permutation: " << endl;
+		perm_print(cout, perm3, A->degree);
+		cout << endl;
+
+		A->element_as_permutation(Elt4, perm4, 0 /* verbose_level */);
+		cout << "as Elt4 as permutation: " << endl;
+		perm_print(cout, perm4, A->degree);
+		cout << endl;
+
+		perm_mult(perm3, perm4, perm5, A->degree);
+		cout << "perm3 * perm4= " << endl;
+		perm_print(cout, perm5, A->degree);
+		cout << endl;
+
+		for (i = 0; i < A->degree; i++) {
+			if (perm5[i] != i) {
+				cout << "test " << cnt
+						<< " failed; something is wrong" << endl;
+				exit(1);
+			}
+		}
+	}
+	cout << "tensor_product::init test 3 passed" << endl;
+
+
+	cout << "performing test 4:" << endl;
+
+	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
+	A->make_element(Elt1, data, verbose_level);
+	A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+	cout << "as Elt1 as permutation: " << endl;
+	perm_print(cout, perm1, A->degree);
+	cout << endl;
+
+	A->element_invert(Elt1, Elt2, 0);
+	A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+	cout << "as Elt2 as permutation: " << endl;
+	perm_print(cout, perm2, A->degree);
+	cout << endl;
+
+
+	A->element_mult(Elt1, Elt2, Elt3, 0);
+	cout << "Elt3 = " << endl;
+	A->element_print_quick(Elt3, cout);
+
+	perm_mult(perm1, perm2, perm3, A->degree);
+	cout << "perm1 * perm2= " << endl;
+	perm_print(cout, perm3, A->degree);
+	cout << endl;
+
+	for (i = 0; i < A->degree; i++) {
+		if (perm3[i] != i) {
+			cout << "test 4 failed; something is wrong" << endl;
+			exit(1);
+		}
+	}
+
+	cout << "tensor_product::init test 4 passed" << endl;
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	FREE_int(perm1);
+	FREE_int(perm2);
+	FREE_int(perm3);
+	FREE_int(perm4);
+	FREE_int(perm5);
 }
