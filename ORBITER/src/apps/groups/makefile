@@ -35,22 +35,21 @@ CUDA_FLAGS= -gencode arch=compute_50,code=sm_50 \
 TRUE=1
 FALSE=0
 
-# Check for CUDA compiler
-COMPILE_ON_GPU=$(TRUE)
-ifeq ( , $(shell which nvcc))
-	COMPILE_ON_GPU = $(FALSE)
-endif
+
 #-------------------------------------------------------------
 
 
 
 
-all: 
-ifeq ($(TRUE), $(COMPILE_ON_GPU))
-	$(MAKE) COMPILE_ON_GPU=$(TRUE) cuda_all
-else
-	$(MAKE) COMPILE_ON_GPU=$(FALSE) not_cuda_all
-endif
+all:
+	junk=$$(which nvccc);\
+	if [ $$? -eq 0 ]; then \
+        $(MAKE) COMPILE_ON_GPU=$(TRUE) cuda_all; \
+	else \
+		$(MAKE) COMPILE_ON_GPU=$(FALSE) not_cuda_all; \
+	fi; \
+
+
 
 
 
