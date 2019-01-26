@@ -9,6 +9,79 @@
 
 namespace orbiter {
 
+// #############################################################################
+// kramer_mesner.cpp
+// #############################################################################
+
+
+class kramer_mesner {
+
+public:
+
+	int n;
+	int q, p, h;
+
+
+
+	char *override_poly;
+
+	finite_field *F;
+
+
+	int f_linear;
+	linear_group_description *Descr;
+	linear_group *LG;
+
+	action *A;
+	action *A2;
+	int f_A_is_allocated;
+
+	action *final_A;
+
+
+
+	int f_list;
+	int f_arc;
+	int f_surface;
+	surface *Surf;
+	int f_KM;
+
+	int f_orbits_t;
+	int orbits_t;
+	int f_orbits_k;
+	int orbits_k;
+
+
+	int f_draw_poset;
+	int f_embedded;
+	int f_sideways;
+
+
+	int nb_identify;
+	char **Identify_label;
+	int **Identify_data;
+	int *Identify_length;
+
+
+
+
+	poset *Poset;
+	poset_classification *gen;
+
+
+
+
+	kramer_mesner();
+	~kramer_mesner();
+	void read_arguments(int argc, const char **argv, int &verbose_level);
+	void init_group(sims *&S, int verbose_level);
+	void orbits(int argc, const char **argv, sims *S, int verbose_level);
+};
+
+
+int kramer_mesner_test_arc(int len, int *S, void *data, int verbose_level);
+int kramer_mesner_test_surface(int len, int *S, void *data, int verbose_level);
+
 
 // #############################################################################
 // orbit_of_equations.C
