@@ -23,6 +23,7 @@ all: all_k_subsets.out \
 		hadamard.out \
 		hamming.out \
 		johnson_table.out \
+		kramer_mesner.out \
 		lehmer.out \
 		matrix_rank.out \
 		nondecreasing.out \
@@ -85,6 +86,9 @@ hamming.out:  hamming.o;
 
 johnson_table.out:  johnson_table.o;
 	$(DISCRETA_CPP)  johnson_table.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+kramer_mesner.out:  kramer_mesner.o;
+	$(DISCRETA_CPP)  kramer_mesner.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 lehmer.out:  lehmer.o;
 	$(DISCRETA_CC)  lehmer.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

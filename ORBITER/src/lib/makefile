@@ -299,6 +299,7 @@ MODULES= \
 		top_level/isomorph/isomorph_testing.o \
 		top_level/isomorph/isomorph_trace.o \
 		top_level/isomorph/representatives.o \
+		top_level/orbits/kramer_mesner.o \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
