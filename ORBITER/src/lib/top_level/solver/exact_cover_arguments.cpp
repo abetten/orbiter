@@ -71,7 +71,7 @@ void exact_cover_arguments::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-starter_size") == 0) {
 			f_starter_size = TRUE;
-			starter_size = std::atoi(argv[++i]);
+			starter_size = atoi(argv[++i]);
 			cout << "-starter_size " << starter_size << endl;
 			}
 		else if (strcmp(argv[i], "-lift") == 0) {
@@ -97,8 +97,8 @@ void exact_cover_arguments::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
-			split_r = std::atoi(argv[++i]);
-			split_m = std::atoi(argv[++i]);
+			split_r = atoi(argv[++i]);
+			split_m = atoi(argv[++i]);
 			cout << "-split " << split_r << " " << split_m << endl;
 			}
 		else if (strcmp(argv[i], "-draw_system") == 0) {

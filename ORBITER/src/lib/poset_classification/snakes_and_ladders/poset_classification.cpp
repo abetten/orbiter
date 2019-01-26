@@ -4,7 +4,7 @@
 // December 29, 2003
 
 #include "foundations/foundations.h"
-#include "groups_and_group_actions/groups_and_group_actions.h"
+#include "group_actions/group_actions.h"
 #include "poset_classification/poset_classification.h"
 
 
@@ -81,13 +81,15 @@ int poset_classification::poset_structure_is_contained(
 
 			rk1 = Poset->VS->F->Gauss_easy(B1, sz1, dim);
 			if (rk1 != sz1) {
-				cout << "poset_structure_is_contained rk1 != sz1" << endl;
+				cout << "poset_structure_is_contained "
+						"rk1 != sz1" << endl;
 				exit(1);
 				}
 			
 			rk2 = Poset->VS->F->Gauss_easy(B2, sz2, dim);
 			if (rk2 != sz2) {
-				cout << "poset_structure_is_contained rk2 != sz2" << endl;
+				cout << "poset_structure_is_contained "
+						"rk2 != sz2" << endl;
 				exit(1);
 				}
 			int_vec_copy(B1,

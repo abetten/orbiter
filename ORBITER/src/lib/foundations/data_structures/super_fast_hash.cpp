@@ -16,6 +16,7 @@
 #endif
 
 namespace orbiter {
+namespace foundations {
 
 
 uint32_t SuperFastHash (const char * data, int len) 
@@ -64,3 +65,5 @@ int rem;
     return hash;
 }
 }
+}
+

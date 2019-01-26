@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 double norm_of_vector(int x1, int x2, int y1, int y2);
 
@@ -1059,6 +1060,8 @@ double norm_of_vector(int x1, int x2, int y1, int y2)
 }
 
 }
+}
+
 
 
 

@@ -7,6 +7,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 klein_correspondence::klein_correspondence()
@@ -330,5 +331,6 @@ void klein_correspondence::plane_intersections(
 }
 
 
+}
 }
 

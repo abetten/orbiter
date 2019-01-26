@@ -12,6 +12,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 int count_Sbar(int n, int q)
@@ -2594,4 +2595,5 @@ void orthogonal_points_free_global_data()
 }
 
 
+}
 }

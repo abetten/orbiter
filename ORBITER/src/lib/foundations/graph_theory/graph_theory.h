@@ -8,6 +8,7 @@
 // galois started:  August 12, 2005
 
 namespace orbiter {
+namespace foundations {
 
 
 // #############################################################################
@@ -747,5 +748,5 @@ int call_back_colored_graph_find_candidates(clique_finder *CF,
 
 
 }
-
+}
 

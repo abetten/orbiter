@@ -13,6 +13,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 data_file::data_file()
@@ -66,12 +67,14 @@ void data_file::freeself()
 	cout << "data_file::freeself done" << endl;
 }
 
-void data_file::read(const char *fname, int f_casenumbers, int verbose_level)
+void data_file::read(const char *fname,
+		int f_casenumbers, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "data_file::read trying to read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "data_file::read trying to read file "
+				<< fname << " of size " << file_size(fname) << endl;
 		cout << "f_casenumbers=" << f_casenumbers << endl;
 		}
 	strcpy(data_file::fname, fname);
@@ -87,13 +90,16 @@ void data_file::read(const char *fname, int f_casenumbers, int verbose_level)
 		}	
 }
 
-void data_file::read_candidates(const char *candidates_fname, int verbose_level)
+void data_file::read_candidates(const char *candidates_fname,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, cnt, a, b;
 
 	if (f_v) {
-		cout << "data_file::read_candidates trying to read candidates file " << candidates_fname << " of size " << file_size(candidates_fname) << endl;
+		cout << "data_file::read_candidates trying to read "
+				"candidates file " << candidates_fname << " of size "
+				<< file_size(candidates_fname) << endl;
 		}
 
 	nb_candidates = NEW_int(nb_cases);
@@ -137,5 +143,6 @@ void data_file::read_candidates(const char *candidates_fname, int verbose_level)
 		}	
 }
 
+}
 }
 

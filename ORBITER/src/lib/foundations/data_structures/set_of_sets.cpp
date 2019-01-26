@@ -8,6 +8,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 set_of_sets::set_of_sets()
@@ -1507,5 +1508,6 @@ void set_of_sets_swap_func(void *data, int i, int j, void *extra_data)
 	S->Sets[j] = p;
 }
 
+}
 }
 

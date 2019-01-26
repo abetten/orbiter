@@ -9,6 +9,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 int strcmp_with_or_without(char *p, char *q);
@@ -1362,4 +1363,6 @@ int strcmp_with_or_without(char *p, char *q)
 
 
 }
+}
+
 

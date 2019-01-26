@@ -14,11 +14,15 @@ namespace orbiter {
 set_stabilizer_compute::set_stabilizer_compute()
 {
 	A = NULL;
+	A2 = NULL;
+	set_size = 0;
 	the_set = NULL;
 	the_set_sorted = NULL;
 	the_set_sorting_perm = NULL;
 	the_set_sorting_perm_inv = NULL;
 	gen = NULL;
+
+	overall_backtrack_nodes = 0;
 }
 
 set_stabilizer_compute::~set_stabilizer_compute()

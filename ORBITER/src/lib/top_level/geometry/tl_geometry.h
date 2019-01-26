@@ -140,10 +140,10 @@ void arc_generator_lifting_prepare_function_new(
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 
 	int verbose_level);
-void print_arc(int len, int *S, void *data);
-void print_point(int pt, void *data);
-void callback_arc_report(isomorph *Iso, void *data, int verbose_level);
-void callback_arc_print(ostream &ost, int len, int *S, void *data);
+void arc_generator_print_arc(int len, int *S, void *data);
+void arc_generator_print_point(int pt, void *data);
+void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
+void arc_generator_print_arc(ostream &ost, int len, int *S, void *data);
 
 
 
@@ -615,18 +615,18 @@ public:
 };
 
 // blt_set2.C:
-void print_set(ostream &ost, int len, int *S, void *data);
+void blt_set_print(ostream &ost, int len, int *S, void *data);
 void blt_set_lifting_prepare_function_new(exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens,
 	diophant *&Dio, int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
-void early_test_func_callback(int *S, int len,
+void blt_set_early_test_func_callback(int *S, int len,
 	int *candidates, int nb_candidates,
 	int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-void callback_report(isomorph *Iso, void *data, int verbose_level);
-void callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
+void blt_set_callback_report(isomorph *Iso, void *data, int verbose_level);
+void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
 
 
 

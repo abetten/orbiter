@@ -12,6 +12,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 tdo_scheme::tdo_scheme()
@@ -4984,4 +4985,5 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(
 	return TRUE;
 }
 
+}
 }

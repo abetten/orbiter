@@ -536,7 +536,7 @@ void spread::read_arguments(int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-schreier") == 0) {
 			f_override_schreier_depth = TRUE;
-			override_schreier_depth = std::atoi(argv[++i]);
+			override_schreier_depth = atoi(argv[++i]);
 			cout << "-schreier " << override_schreier_depth << endl;
 			}
 		else if (strcmp(argv[i], "-print_generators") == 0) {

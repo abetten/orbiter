@@ -8,6 +8,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 decomposition::decomposition()
@@ -247,4 +248,6 @@ void decomposition::print_column_decomposition_tex(
 
 
 }
+}
+
 

@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 flag::flag()
@@ -407,5 +408,6 @@ int flag::rank_recursion(int *input_subspace,
 	return rk;
 }
 
+}
 }
 

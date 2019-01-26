@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -575,6 +576,7 @@ void memory_object::decompress(int verbose_level)
 #endif
 
 
+}
 }
 
 

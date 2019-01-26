@@ -5,7 +5,7 @@
 // moved out of upstep_work.C: Dec 20, 2011
 
 #include "foundations/foundations.h"
-#include "groups_and_group_actions/groups_and_group_actions.h"
+#include "group_actions/group_actions.h"
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {

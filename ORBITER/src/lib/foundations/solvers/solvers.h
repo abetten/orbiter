@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 // #############################################################################
@@ -294,8 +295,12 @@ namespace mckay {
 	#undef MCKAY_DEBUG
 	#define INTERVAL_IN_SECONDS 1
 
+	//! a term in a diophantine system of type tMCKAY
+
 	typedef struct {int var,coeff;} term;
 	typedef vector<term> equation;
+
+	//! solving diophantine system according to McKay
 
 	class tMCKAY {
 	public:
@@ -367,6 +372,7 @@ namespace mckay {
 }
 
 
+}
 }
 
 

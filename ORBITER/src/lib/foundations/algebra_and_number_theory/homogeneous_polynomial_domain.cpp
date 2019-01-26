@@ -9,6 +9,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 homogeneous_polynomial_domain::homogeneous_polynomial_domain()
@@ -952,4 +953,6 @@ void homogeneous_polynomial_domain_swap_monomial(
 }
 
 }
+}
+
 

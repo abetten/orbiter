@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -180,4 +181,5 @@ void W3q::isomorphism_Q4q(int *x4, int *y4, int *v)
 }
 
 
+}
 }

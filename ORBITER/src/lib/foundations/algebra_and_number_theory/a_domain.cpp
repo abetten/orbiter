@@ -13,6 +13,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 a_domain::a_domain()
@@ -1580,5 +1581,6 @@ void a_domain::matrix_invert(int *A,
 		}
 }
 
+}
 }
 

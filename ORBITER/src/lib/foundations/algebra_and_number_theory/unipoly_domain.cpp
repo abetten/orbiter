@@ -11,6 +11,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 unipoly_domain::unipoly_domain(finite_field *GFq)
@@ -3346,3 +3347,5 @@ void unipoly_domain::deletion_matrix(unipoly_object *M,
 
 
 }
+}
+

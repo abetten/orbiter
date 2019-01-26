@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 gl_classes::gl_classes()
@@ -2201,6 +2202,7 @@ void matrix_block_data::allocate(int k)
 }
 
 
+}
 }
 
 

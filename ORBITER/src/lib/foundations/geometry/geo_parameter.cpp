@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 geo_parameter::geo_parameter()
@@ -1946,6 +1947,7 @@ void geo_parameter::print_schemes()
 #endif
 }
 
+}
 }
 
 

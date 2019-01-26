@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 int longinteger_f_print_scientific = FALSE;
@@ -478,5 +479,6 @@ int longinteger_object::compare_with_int(int a)
 	return D.compare(*this, b);
 }
 
+}
 }
 

@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 void finite_field::copy_matrix(int *A, int *B, int ma, int na)
 {
@@ -69,7 +70,7 @@ int finite_field::is_identity_matrix(int *A, int n)
 int finite_field::is_diagonal_matrix(int *A, int n)
 {
 
-	return orbiter::is_diagonal_matrix(A, n);
+	return orbiter::foundations::is_diagonal_matrix(A, n);
 
 #if 0
 	int i, j;
@@ -1769,7 +1770,7 @@ void finite_field::Gauss_int_with_given_pivots(int *A,
 				"Gauss algorithm for matrix:" << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		cout << "pivots: ";
-		orbiter::int_vec_print(cout, pivots, nb_pivots);
+		orbiter::foundations::int_vec_print(cout, pivots, nb_pivots);
 		cout << endl;
 		//print_tables();
 		}
@@ -3240,10 +3241,10 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 		cout << "finite_field::compare_subspaces_ranked_"
 				"with_unrank_function" << endl;
 		cout << "set1: ";
-		orbiter::int_vec_print(cout, set1, size);
+		orbiter::foundations::int_vec_print(cout, set1, size);
 		cout << endl;
 		cout << "set2: ";
-		orbiter::int_vec_print(cout, set2, size);
+		orbiter::foundations::int_vec_print(cout, set2, size);
 		cout << endl;
 		}
 	M1 = NEW_int(size * vector_space_dimension);
@@ -3286,7 +3287,7 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 				log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		orbiter::int_vec_print(cout, base_cols1, rk1);
+		orbiter::foundations::int_vec_print(cout, base_cols1, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
 		print_integer_matrix_width(cout, M2, size,
@@ -3294,7 +3295,7 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 				log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		orbiter::int_vec_print(cout, base_cols2, rk2);
+		orbiter::foundations::int_vec_print(cout, base_cols2, rk2);
 		cout << endl;
 		}
 	if (rk1 != rk2) {
@@ -4220,7 +4221,7 @@ int finite_field::dependency(int d,
 		cout << "finite_field::dependency A=" << endl;
 		int_matrix_print(A, m, deg);
 		cout << "v = ";
-		orbiter::int_vec_print(cout, v, deg);
+		orbiter::foundations::int_vec_print(cout, v, deg);
 		cout << endl;
 		}
 	// fill the m-th row of matrix A with v^rho: 
@@ -4232,7 +4233,7 @@ int finite_field::dependency(int d,
 				"after putting in row " << m << " A=" << endl;
 		int_matrix_print(A, m + 1, deg);
 		cout << "rho = ";
-		orbiter::int_vec_print(cout, rho, deg);
+		orbiter::foundations::int_vec_print(cout, rho, deg);
 		cout << endl;
 		}
 	for (k = 0; k < m; k++) {
@@ -4274,7 +4275,7 @@ int finite_field::dependency(int d,
 				"m=" << m << " after reapply, A=" << endl;
 		int_matrix_print(A, m + 1, deg);
 		cout << "rho = ";
-		orbiter::int_vec_print(cout, rho, deg);
+		orbiter::foundations::int_vec_print(cout, rho, deg);
 		cout << endl;
 		}
 	
@@ -4315,7 +4316,7 @@ int finite_field::dependency(int d,
 				<< " after pivoting, A=" << endl;
 		int_matrix_print(A, m + 1, deg);
 		cout << "rho = ";
-		orbiter::int_vec_print(cout, rho, deg);
+		orbiter::foundations::int_vec_print(cout, rho, deg);
 		cout << endl;
 		}
 	
@@ -4411,7 +4412,7 @@ void finite_field::order_ideal_generator(int d,
 				"after preparing mue:" << endl;
 		cout << "mue_deg = " << mue_deg << endl;
 		cout << "mue = ";
-		orbiter::int_vec_print(cout, mue, mue_deg + 1);
+		orbiter::foundations::int_vec_print(cout, mue, mue_deg + 1);
 		cout << endl;
 		}
 
@@ -4477,7 +4478,7 @@ void finite_field::random_invertible_matrix(int *M,
 				}
 			AG_element_unrank(q, M + i * k, 1, k, r);
 			if (f_vv) {
-				orbiter::int_matrix_print(M, i + 1, k);
+				orbiter::foundations::int_matrix_print(M, i + 1, k);
 				}
 			
 			int_vec_copy(M, N, (i + 1) * k);
@@ -5387,7 +5388,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 
 	if (f_v) {
 		cout << "permutation: ";
-		orbiter::int_vec_print(cout, perm, d + 1);
+		orbiter::foundations::int_vec_print(cout, perm, d + 1);
 		cout << endl;
 		}
 	if (f_v) {
@@ -5489,7 +5490,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	int_vec_heapsort(B_set, d + k + 1);
 	if (f_v) {
 		cout << "B_set = ";
-		orbiter::int_vec_print(cout, B_set, d + k + 1);
+		orbiter::foundations::int_vec_print(cout, B_set, d + k + 1);
 		cout << endl;
 		}
 	
@@ -5502,9 +5503,9 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 
 		if (f_v) {
 			cout << "subset " << h << " / " << nCk << " is ";
-			orbiter::int_vec_print(cout, subset, d + 1);
+			orbiter::foundations::int_vec_print(cout, subset, d + 1);
 			cout << ", the complement is ";
-			orbiter::int_vec_print(cout, subset + d + 1, k);
+			orbiter::foundations::int_vec_print(cout, subset + d + 1, k);
 			cout << endl;
 			}
 
@@ -5523,13 +5524,13 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 		while (TRUE) {
 			if (f_v) {
 				cout << "lehmercode: ";
-				orbiter::int_vec_print(cout, lehmercode, d + 1);
+				orbiter::foundations::int_vec_print(cout, lehmercode, d + 1);
 				cout << endl;
 				}
 			lehmercode_to_permutation(d + 1, lehmercode, perm);
 			if (f_v) {
 				cout << "permutation: ";
-				orbiter::int_vec_print(cout, perm, d + 1);
+				orbiter::foundations::int_vec_print(cout, perm, d + 1);
 				cout << endl;
 				}
 			map_frame_to_frame_with_permutation(d, A1, perm,
@@ -5542,13 +5543,13 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 				}
 			if (f_v) {
 				cout << "image_set before sorting: ";
-				orbiter::int_vec_print(cout, image_set, d + k + 1);
+				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);
 				cout << endl;
 				}
 			int_vec_heapsort(image_set, d + k + 1);
 			if (f_v) {
 				cout << "image_set after sorting: ";
-				orbiter::int_vec_print(cout, image_set, d + k + 1);
+				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);
 				cout << endl;
 				}
 
@@ -5676,4 +5677,6 @@ void finite_field::cubic_surface_family_24_generators(
 }
 
 }
+}
+
 

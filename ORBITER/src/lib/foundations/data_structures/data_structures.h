@@ -8,51 +8,81 @@
 // galois started:  August 12, 2005
 
 namespace orbiter {
-
+namespace foundations {
 
 // #############################################################################
-// int_vector.C:
+// classify_bitvectors.C:
 // #############################################################################
 
-//! vector on ints
+//! stores the canonical form of 0/1 matrices for the purposes of classification
 
-class int_vector {
+class classify_bitvectors {
 public:
 
-	int *M;
-	int m;
-	int alloc_length;
+	int nb_types;
+		// the number of isomorphism types
 
-	int_vector();
-	~int_vector();
+	int rep_len;
+		// the number of uchar we need to store the canonical form of
+		// one object
+
+
+	uchar **Type_data;
+		// Type_data[N][rep_len]
+		// the canonical form of the i-th representative is
+		// Type_data[i][rep_len]
+	int *Type_rep;
+		// Type_rep[N]
+		// Type_rep[i] is the index of the canidate which
+		// has been chosen as representative
+		// for the i-th isomorphism type
+	int *Type_mult;
+		// Type_mult[N]
+		// Type_mult[i] gives the number of candidates so far which
+		// are isomorphic to the i-th isomorphism class representative
+	void **Type_extra_data;
+		// Type_extra_data[N]
+		// Type_extra_data[i] is a pointer that is stored with the
+		// i-th isomorphism class representative
+
+	int N;
+		// number of candidates (or objects) that we will test
+	int n;
+		// number of candidates that we have already tested
+
+	int *type_of;
+		// type_of[N]
+		// type_of[i] is the isomorphism type of the i-th candidate
+
+	classify *C_type_of;
+		// the classification of type_of[N]
+		// this will be computed in finalize()
+
+	int *perm;
+		// the permutation which lists the orbit
+		// representative in the order
+		// in which they appear in the list of candidates
+
+	classify_bitvectors();
+	~classify_bitvectors();
 	void null();
 	void freeself();
-	void allocate(int len);
-	void allocate_and_init(int len, int *V);
-	void init_permutation_from_string(const char *s);
-	void read_ascii_file(const char *fname);
-	void read_binary_file_int4(const char *fname);
-	int &s_i(int i);
-	int &length();
-	void print(ostream &ost);
-	void zero();
-	int search(int a, int &idx);
-	void sort();
-	void make_space();
-	void append(int a);
-	void insert_at(int a, int idx);
-	void insert_if_not_yet_there(int a);
-	void sort_and_remove_duplicates();
-	void write_to_ascii_file(const char *fname);
-	void write_to_binary_file_int4(const char *fname);
-	void write_to_csv_file(const char *fname, const char *label);
-	int hash();
-	int minimum();
-	int maximum();
-
-	
+	void init(int N, int rep_len, int verbose_level);
+	int add(uchar *data, void *extra_data, int verbose_level);
+	void finalize(int verbose_level);
+	void print_reps();
+	void save(const char *prefix,
+		void (*encode_function)(void *extra_data,
+			int *&encoding, int &encoding_sz, void *global_data),
+		void (*get_group_order_or_NULL)(void *extra_data,
+			longinteger_object &go, void *global_data),
+		void *global_data,
+		int verbose_level);
 
 };
+
+int compare_func_for_bitvectors(void *a, void *b, void *data);
+
 
 // #############################################################################
 // data_file.C:
@@ -124,6 +154,50 @@ class fancy_set {
 	void complement(fancy_set *compl_set);
 	int is_subset(fancy_set *set2);
 	int is_equal(fancy_set *set2);
+
+};
+
+// #############################################################################
+// int_vector.C:
+// #############################################################################
+
+//! vector on ints
+
+class int_vector {
+public:
+
+	int *M;
+	int m;
+	int alloc_length;
+
+	int_vector();
+	~int_vector();
+	void null();
+	void freeself();
+	void allocate(int len);
+	void allocate_and_init(int len, int *V);
+	void init_permutation_from_string(const char *s);
+	void read_ascii_file(const char *fname);
+	void read_binary_file_int4(const char *fname);
+	int &s_i(int i);
+	int &length();
+	void print(ostream &ost);
+	void zero();
+	int search(int a, int &idx);
+	void sort();
+	void make_space();
+	void append(int a);
+	void insert_at(int a, int idx);
+	void insert_if_not_yet_there(int a);
+	void sort_and_remove_duplicates();
+	void write_to_ascii_file(const char *fname);
+	void write_to_binary_file_int4(const char *fname);
+	void write_to_csv_file(const char *fname, const char *label);
+	int hash();
+	int minimum();
+	int maximum();
+
+
 
 };
 
@@ -721,7 +795,7 @@ public:
 };
 
 }
-
+}
 
 
 

@@ -23,17 +23,17 @@ void blt_set::read_arguments(int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-schreier") == 0) {
 			f_override_schreier_depth = TRUE;
-			override_schreier_depth = std::atoi(argv[++i]);
+			override_schreier_depth = atoi(argv[++i]);
 			cout << "-schreier " << override_schreier_depth << endl;
 			}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_override_n = TRUE;
-			override_n = std::atoi(argv[++i]);
+			override_n = atoi(argv[++i]);
 			cout << "-override_n " << override_n << endl;
 			}
 		else if (strcmp(argv[i], "-epsilon") == 0) {
 			f_override_epsilon = TRUE;
-			override_epsilon = std::atoi(argv[++i]);
+			override_epsilon = atoi(argv[++i]);
 			cout << "-override_epsilon " << override_epsilon << endl;
 			}
 		else if (strcmp(argv[i], "-BLT") == 0) {
@@ -382,7 +382,7 @@ void blt_set::init2(int verbose_level)
 				"Poset->add_testing_without_group" << endl;
 		}
 	Poset->add_testing_without_group(
-				early_test_func_callback,
+			blt_set_early_test_func_callback,
 				this /* void *data */,
 				verbose_level);
 
@@ -393,7 +393,7 @@ void blt_set::init2(int verbose_level)
 
 
 	gen->f_print_function = TRUE;
-	gen->print_function = print_set;
+	gen->print_function = blt_set_print;
 	gen->print_function_data = (void *) this;
 	
 	
@@ -755,7 +755,7 @@ int blt_set::create_graph(
 		}
 	R->init_from_file(A, prefix_with_directory, 
 		starter_size, orbit_at_level, level_of_candidates_file, 
-		early_test_func_callback, 
+		blt_set_early_test_func_callback,
 		this /* early_test_func_callback_data */, 
 		verbose_level - 1
 		);
@@ -2653,7 +2653,7 @@ void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 
 
 
-void print_set(ostream &ost, int len, int *S, void *data)
+void blt_set_print(ostream &ost, int len, int *S, void *data)
 {
 	blt_set *Gen = (blt_set *) data;
 
@@ -2701,7 +2701,7 @@ void blt_set_lifting_prepare_function_new(
 
 
 
-void early_test_func_callback(int *S, int len,
+void blt_set_early_test_func_callback(int *S, int len,
 	int *candidates, int nb_candidates,
 	int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -2710,7 +2710,7 @@ void early_test_func_callback(int *S, int len,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "early_test_func for set ";
+		cout << "blt_set_early_test_func for set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -2719,18 +2719,18 @@ void early_test_func_callback(int *S, int len,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "early_test_func done" << endl;
+		cout << "blt_set_early_test_func done" << endl;
 		}
 }
 
-void callback_report(isomorph *Iso, void *data, int verbose_level)
+void blt_set_callback_report(isomorph *Iso, void *data, int verbose_level)
 {
 	blt_set *Gen = (blt_set *) data;
 
 	Gen->report(*Iso, verbose_level);
 }
 
-void callback_subset_orbits(isomorph *Iso, void *data, int verbose_level)
+void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level)
 {
 	blt_set *Gen = (blt_set *) data;
 

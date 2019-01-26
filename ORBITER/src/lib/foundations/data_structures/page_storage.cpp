@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 page_storage::page_storage()
@@ -586,4 +587,5 @@ void test_page_storage(int f_v)
 	}
 }
 
+}
 }

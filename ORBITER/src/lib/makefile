@@ -4,17 +4,17 @@ LIB =
 LFLAGS = -lm
 
 
-all: foundations groups_and_group_actions poset_classification discreta toplevel liborbiter.a
+all: foundations group_actions poset_classification discreta toplevel liborbiter.a
 
 
 foundations : foundations2 
-groups_and_group_actions : groups_and_group_actions2 
+group_actions : group_actions2 
 poset_classification : poset_classification2 
 discreta : discreta2 
 toplevel : toplevel2 
 
 foundations2 : ; cd foundations; $(MAKE)
-groups_and_group_actions2 : ; cd groups_and_group_actions; $(MAKE)
+group_actions2 : ; cd group_actions; $(MAKE)
 poset_classification2 : ; cd poset_classification; $(MAKE)
 discreta2 : ; cd DISCRETA; $(MAKE)
 toplevel2 : ; cd top_level; $(MAKE)
@@ -22,7 +22,7 @@ toplevel2 : ; cd top_level; $(MAKE)
 
 clean:
 	cd foundations; $(MAKE) clean
-	cd groups_and_group_actions; $(MAKE) clean
+	cd group_actions; $(MAKE) clean
 	cd poset_classification; $(MAKE) clean
 	cd DISCRETA; $(MAKE) clean
 	cd top_level; $(MAKE) clean
@@ -57,12 +57,12 @@ MODULES= \
 		foundations/coding_theory/mindist.o \
 		foundations/coding_theory/tensor.o \
 		foundations/combinatorics/brick_domain.o \
-		foundations/combinatorics/classify_bitvectors.o \
 		foundations/combinatorics/combinatorics.o \
-		foundations/data_structures/int_matrix.o \
-		foundations/data_structures/int_vector.o \
+		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/fancy_set.o \
+		foundations/data_structures/int_matrix.o \
+		foundations/data_structures/int_vector.o \
 		foundations/data_structures/page_storage.o \
 		foundations/data_structures/partitionstack.o \
 		foundations/data_structures/set_of_sets.o \
@@ -140,68 +140,68 @@ MODULES= \
 		foundations/solvers/dlx.o \
 		foundations/solvers/mckay.o \
 		foundations/statistics/classify.o \
-		groups_and_group_actions/data_structures/data_input_stream.o \
-		groups_and_group_actions/data_structures/group.o \
-		groups_and_group_actions/data_structures/object_in_projective_space_with_action.o \
-		groups_and_group_actions/data_structures/orbit_transversal.o \
-		groups_and_group_actions/data_structures/projective_space_with_action.o \
-		groups_and_group_actions/data_structures/schreier_vector_handler.o \
-		groups_and_group_actions/data_structures/schreier_vector.o \
-		groups_and_group_actions/data_structures/set_and_stabilizer.o \
-		groups_and_group_actions/data_structures/union_find.o \
-		groups_and_group_actions/data_structures/union_find_on_k_subsets.o \
-		groups_and_group_actions/data_structures/vector_ge.o \
-		groups_and_group_actions/group_actions/action.o \
-		groups_and_group_actions/group_actions/action_cb.o \
-		groups_and_group_actions/group_actions/action_global.o \
-		groups_and_group_actions/group_actions/action_indexing_cosets.o \
-		groups_and_group_actions/group_actions/action_induce.o \
-		groups_and_group_actions/group_actions/action_init.o \
-		groups_and_group_actions/group_actions/backtrack.o \
-		groups_and_group_actions/group_actions/interface.o \
-		groups_and_group_actions/group_actions/interface_direct_product.o \
-		groups_and_group_actions/group_actions/interface_matrix_group.o \
-		groups_and_group_actions/group_actions/interface_perm_group.o \
-		groups_and_group_actions/group_actions/interface_wreath_product.o \
-		groups_and_group_actions/group_theory/direct_product.o \
-		groups_and_group_actions/group_theory/linear_group.o \
-		groups_and_group_actions/group_theory/linear_group_description.o \
-		groups_and_group_actions/group_theory/matrix_group.o \
-		groups_and_group_actions/group_theory/perm_group.o \
-		groups_and_group_actions/group_theory/schreier.o \
-		groups_and_group_actions/group_theory/schreier_io.o \
-		groups_and_group_actions/group_theory/schreier_sims.o \
-		groups_and_group_actions/group_theory/sims.o \
-		groups_and_group_actions/group_theory/sims2.o \
-		groups_and_group_actions/group_theory/sims3.o \
-		groups_and_group_actions/group_theory/sims_global.o \
-		groups_and_group_actions/group_theory/strong_generators.o \
-		groups_and_group_actions/group_theory/strong_generators_groups.o \
-		groups_and_group_actions/group_theory/subgroup.o \
-		groups_and_group_actions/group_theory/wreath_product.o \
-		groups_and_group_actions/induced_actions/action_by_conjugation.o \
-		groups_and_group_actions/induced_actions/action_by_representation.o \
-		groups_and_group_actions/induced_actions/action_by_restriction.o \
-		groups_and_group_actions/induced_actions/action_by_right_multiplication.o \
-		groups_and_group_actions/induced_actions/action_by_subfield_structure.o \
-		groups_and_group_actions/induced_actions/action_on_andre.o \
-		groups_and_group_actions/induced_actions/action_on_bricks.o \
-		groups_and_group_actions/induced_actions/action_on_cosets.o \
-		groups_and_group_actions/induced_actions/action_on_determinant.o \
-		groups_and_group_actions/induced_actions/action_on_factor_space.o \
-		groups_and_group_actions/induced_actions/action_on_flags.o \
-		groups_and_group_actions/induced_actions/action_on_grassmannian.o \
-		groups_and_group_actions/induced_actions/action_on_homogeneous_polynomials.o \
-		groups_and_group_actions/induced_actions/action_on_k_subsets.o \
-		groups_and_group_actions/induced_actions/action_on_orbits.o \
-		groups_and_group_actions/induced_actions/action_on_orthogonal.o \
-		groups_and_group_actions/induced_actions/action_on_set_partitions.o \
-		groups_and_group_actions/induced_actions/action_on_sets.o \
-		groups_and_group_actions/induced_actions/action_on_sign.o \
-		groups_and_group_actions/induced_actions/action_on_spread_set.o \
-		groups_and_group_actions/induced_actions/action_on_subgroups.o \
-		groups_and_group_actions/induced_actions/action_on_wedge_product.o \
-		groups_and_group_actions/induced_actions/product_action.o \
+		group_actions/actions/action.o \
+		group_actions/actions/action_cb.o \
+		group_actions/actions/action_global.o \
+		group_actions/actions/action_indexing_cosets.o \
+		group_actions/actions/action_induce.o \
+		group_actions/actions/action_init.o \
+		group_actions/actions/backtrack.o \
+		group_actions/actions/interface.o \
+		group_actions/actions/interface_direct_product.o \
+		group_actions/actions/interface_matrix_group.o \
+		group_actions/actions/interface_perm_group.o \
+		group_actions/actions/interface_wreath_product.o \
+		group_actions/data_structures/data_input_stream.o \
+		group_actions/data_structures/group.o \
+		group_actions/data_structures/object_in_projective_space_with_action.o \
+		group_actions/data_structures/orbit_transversal.o \
+		group_actions/data_structures/projective_space_with_action.o \
+		group_actions/data_structures/schreier_vector_handler.o \
+		group_actions/data_structures/schreier_vector.o \
+		group_actions/data_structures/set_and_stabilizer.o \
+		group_actions/data_structures/union_find.o \
+		group_actions/data_structures/union_find_on_k_subsets.o \
+		group_actions/data_structures/vector_ge.o \
+		group_actions/groups/direct_product.o \
+		group_actions/groups/linear_group.o \
+		group_actions/groups/linear_group_description.o \
+		group_actions/groups/matrix_group.o \
+		group_actions/groups/perm_group.o \
+		group_actions/groups/schreier.o \
+		group_actions/groups/schreier_io.o \
+		group_actions/groups/schreier_sims.o \
+		group_actions/groups/sims.o \
+		group_actions/groups/sims2.o \
+		group_actions/groups/sims3.o \
+		group_actions/groups/sims_global.o \
+		group_actions/groups/strong_generators.o \
+		group_actions/groups/strong_generators_groups.o \
+		group_actions/groups/subgroup.o \
+		group_actions/groups/wreath_product.o \
+		group_actions/induced_actions/action_by_conjugation.o \
+		group_actions/induced_actions/action_by_representation.o \
+		group_actions/induced_actions/action_by_restriction.o \
+		group_actions/induced_actions/action_by_right_multiplication.o \
+		group_actions/induced_actions/action_by_subfield_structure.o \
+		group_actions/induced_actions/action_on_andre.o \
+		group_actions/induced_actions/action_on_bricks.o \
+		group_actions/induced_actions/action_on_cosets.o \
+		group_actions/induced_actions/action_on_determinant.o \
+		group_actions/induced_actions/action_on_factor_space.o \
+		group_actions/induced_actions/action_on_flags.o \
+		group_actions/induced_actions/action_on_grassmannian.o \
+		group_actions/induced_actions/action_on_homogeneous_polynomials.o \
+		group_actions/induced_actions/action_on_k_subsets.o \
+		group_actions/induced_actions/action_on_orbits.o \
+		group_actions/induced_actions/action_on_orthogonal.o \
+		group_actions/induced_actions/action_on_set_partitions.o \
+		group_actions/induced_actions/action_on_sets.o \
+		group_actions/induced_actions/action_on_sign.o \
+		group_actions/induced_actions/action_on_spread_set.o \
+		group_actions/induced_actions/action_on_subgroups.o \
+		group_actions/induced_actions/action_on_wedge_product.o \
+		group_actions/induced_actions/product_action.o \
 		poset_classification/classify/classification.o \
 		poset_classification/classify/flag_orbit_node.o \
 		poset_classification/classify/flag_orbits.o \

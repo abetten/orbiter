@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 // #############################################################################
@@ -61,4 +62,4 @@ void make_tensor_code_9_dimensional(int q,
 
 
 }
-
+}

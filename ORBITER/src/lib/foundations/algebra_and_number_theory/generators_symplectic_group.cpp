@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -324,5 +325,6 @@ int generators_symplectic_group::dot_product(int *u1, int *u2)
 	return c;
 }
 
+}
 }
 

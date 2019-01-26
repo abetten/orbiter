@@ -311,7 +311,7 @@ class matrix_access;
 class domain;
 class with;
 class printing_mode;
-class mp_graphics;
+//class mp_graphics;
 
 
 
@@ -350,7 +350,7 @@ int lcm_int(int m, int n);
 int invert_mod_integer(int i, int p);
 int remainder_mod(int i, int n);
 void factor_integer(int n, Vector& primes, Vector& exponents);
-void print_factorization(Vector& primes, Vector& exponents, ostream &o);
+void discreta_print_factorization(Vector& primes, Vector& exponents, ostream &o);
 void print_factorization_hollerith(Vector& primes, Vector& exponents, hollerith &h);
 int nb_primes(int n);
 //int is_prime(int n);
@@ -376,7 +376,7 @@ void Catalan_nk_matrix(int n, matrix &Cnk, int f_v);
 void Catalan_nk_star_matrix(int n, matrix &Cnk, int f_v);
 void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int f_v);
 
-int atoi(char *p);
+//int atoi(const char *p);
 void N_choose_K(discreta_base & n, int k, discreta_base & res);
 void Binomial(int n, int k, discreta_base & n_choose_k);
 void Krawtchouk(int n, int q, int i, int j, discreta_base & a);
@@ -393,8 +393,8 @@ void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx);
 void midpoint_of_5(int *Px, int *Py, int i1, int i2, int i3, int i4, int i5, int idx);
 void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, double r);
 
-void time_check_delta(int dt);
-void time_check(int t0);
+//void time_check_delta(int dt);
+//void time_check(int t0);
 int nb_of_bits();
 void bit_set(uint & g, int k);
 void bit_clear(uint & g, int k);

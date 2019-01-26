@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 clique_finder_control::clique_finder_control()
@@ -310,4 +311,5 @@ void clique_finder_control::all_cliques_weighted(colored_graph *CG,
 		}
 }
 
+}
 }

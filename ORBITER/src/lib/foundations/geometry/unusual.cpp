@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -1465,6 +1466,7 @@ void unusual_model::print_M5(orthogonal *O, int *M5)
 	print_2x2(v, f_semi);
 }
 
+}
 }
 
 

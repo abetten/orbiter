@@ -52,12 +52,12 @@ int BLT_set_create_description::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = std::atoi(argv[++i]);
+			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
 		else if (strcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = std::atoi(argv[++i]);
+			iso = atoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 			}
 		else if (strcmp(argv[i], "-family") == 0) {

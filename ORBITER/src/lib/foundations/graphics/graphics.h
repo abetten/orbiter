@@ -8,6 +8,7 @@
 // galois started:  August 12, 2005
 
 namespace orbiter {
+namespace foundations {
 
 
 // #############################################################################
@@ -841,6 +842,7 @@ public:
 
 int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 
+}
 }
 
 

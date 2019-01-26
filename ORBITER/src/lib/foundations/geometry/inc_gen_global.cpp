@@ -8,6 +8,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -204,4 +205,5 @@ void int_k2ij(int k, int & i, int & j, int n)
 	exit(1);
 }
 
+}
 }

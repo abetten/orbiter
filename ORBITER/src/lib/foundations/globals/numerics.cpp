@@ -13,6 +13,7 @@
 #define EPSILON 0.01
 
 namespace orbiter {
+namespace foundations {
 
 
 void double_vec_print(double *a, int len)
@@ -1609,6 +1610,7 @@ int line_centered(double *pt1_in, double *pt2_in,
 	return TRUE;
 }
 
+}
 }
 
 

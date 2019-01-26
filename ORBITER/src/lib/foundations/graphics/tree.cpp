@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 tree::tree()
@@ -278,6 +279,7 @@ void tree::compute_DFS_ranks(int &nb_nodes, int verbose_level)
 		}
 }
 
+}
 }
 
 

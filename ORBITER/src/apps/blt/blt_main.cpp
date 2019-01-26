@@ -160,8 +160,8 @@ int main(int argc, const char **argv)
 
 	IA->init(Gen.A, Gen.A, Gen.gen, 
 		Gen.target_size, Gen.prefix_with_directory, ECA,
-		callback_report,
-		callback_subset_orbits,
+		blt_set_callback_report,
+		blt_set_callback_subset_orbits,
 		&Gen,
 		verbose_level);
 
@@ -205,7 +205,7 @@ int main(int argc, const char **argv)
 		ECA->A = Gen.A;
 		ECA->A2 = Gen.A;
 		ECA->prepare_function_new = blt_set_lifting_prepare_function_new;
-		ECA->early_test_function = early_test_func_callback;
+		ECA->early_test_function = blt_set_early_test_func_callback;
 		ECA->early_test_function_data = (void *) &Gen;
 		
 		compute_lifts(ECA, verbose_level);

@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -109,4 +110,6 @@ int andre_construction_point_element::rank(int verbose_level)
 
 
 }
+}
+
 

@@ -3132,7 +3132,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		cout << "!s_ij(l, 1).is_zero()" << endl;
 		exit(1);
 		}
-	ql = orbiter::i_power_j(q, l);
+	ql = orbiter::foundations::i_power_j(q, l);
 	nb = nb_PG_elements(m - l - 2, q);
 	s = ql * ql * nb;
 	if (f_v) {
@@ -3161,7 +3161,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		cout << "a=" << a << endl;
 		}
 	for (l--; l >= 0; l--) {
-		ql = orbiter::i_power_j(q, l);
+		ql = orbiter::foundations::i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;
@@ -3174,18 +3174,18 @@ void matrix::PG_line_unrank(int a)
 	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_line_unrank() no finite field domain" << endl;
+		cout << "matrix::PG_line_unrank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	m = s_m();
 	n = s_n();
 	if (m <= 0) {
-		cout << "matrix::PG_line_unrank() matrix not allocated()" << endl;
+		cout << "matrix::PG_line_unrank matrix not allocated" << endl;
 		exit(1);
 		}
 	if (n != 2) {
-		cout << "matrix::PG_line_unrank() matrix not allocated()" << endl;
+		cout << "matrix::PG_line_unrank matrix not allocated" << endl;
 		exit(1);
 		}
 	
@@ -3193,10 +3193,12 @@ void matrix::PG_line_unrank(int a)
 	// cout << "matrix::PG_line_unrank() a=" << a << endl;
 	l = 0;
 	while (l < m) {
-		ql = orbiter::i_power_j(q, l);
+		ql = orbiter::foundations::i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
-		// cout << "matrix::PG_line_unrank() a=" << a << " l=" << l << " s=" << s << " ql=" << ql << " nb=" << nb << endl;
+		// cout << "matrix::PG_line_unrank() a=" << a
+		//<< " l=" << l << " s=" << s << " ql=" << ql
+		//<< " nb=" << nb << endl;
 		if (a >= s) {
 			a -= s;
 			l++;
@@ -3229,11 +3231,12 @@ void matrix::PG_line_unrank(int a)
 		PG_point_unrank(l + 1, 1, 1, 0, m - l - 1, a3);
 		return;
 		}
-	cout << "matrix::PG_line_unrank() a too large" << endl;
+	cout << "matrix::PG_line_unrank a too large" << endl;
 	exit(1);
 }
 
-void matrix::PG_point_normalize(int i0, int j0, int di, int dj, int length)
+void matrix::PG_point_normalize(int i0, int j0,
+		int di, int dj, int length)
 {
 	int i, j;
 	discreta_base a;
@@ -3251,23 +3254,24 @@ void matrix::PG_point_normalize(int i0, int j0, int di, int dj, int length)
 			return;
 			}
 		}
-	cout << "matrix::PG_point_normalize() zero vector()" << endl;
+	cout << "matrix::PG_point_normalize zero vector" << endl;
 	exit(1);
 }
 
-void matrix::PG_point_unrank(int i0, int j0, int di, int dj, int length, int a)
+void matrix::PG_point_unrank(int i0, int j0,
+		int di, int dj, int length, int a)
 {
 	domain *d;
 	int q, n, l, qhl, k, j, r, a1 = a;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_point_unrank() no finite field domain" << endl;
+		cout << "matrix::PG_point_unrank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	n = length;
 	if (n <= 0) {
-		cout << "matrix::PG_point_unrank() n <= 0" << endl;
+		cout << "matrix::PG_point_unrank n <= 0" << endl;
 		exit(1);
 		}
 	
@@ -3303,19 +3307,20 @@ void matrix::PG_point_unrank(int i0, int j0, int di, int dj, int length, int a)
 	exit(1);
 }
 
-void matrix::PG_point_rank(int i0, int j0, int di, int dj, int length, int &a)
+void matrix::PG_point_rank(int i0, int j0,
+		int di, int dj, int length, int &a)
 {
 	domain *d;
 	int i, j, q, q_power_j, b;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_point_rank() no finite field domain" << endl;
+		cout << "matrix::PG_point_rank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	PG_point_normalize(i0, j0, di, dj, length);
 	if (length <= 0) {
-		cout << "matrix::PG_point_rank() length <= 0" << endl;
+		cout << "matrix::PG_point_rank length <= 0" << endl;
 		exit(1);
 		}
 	for (i = length - 1; i >= 0; i--) {
@@ -3323,11 +3328,11 @@ void matrix::PG_point_rank(int i0, int j0, int di, int dj, int length, int &a)
 			break;
 		}
 	if (i < 0) {
-		cout << "matrix::PG_point_rank() zero vector" << endl;
+		cout << "matrix::PG_point_rank zero vector" << endl;
 		exit(1);
 		}
 	if (!s_ij(i0 + i * di, j0 + i * dj).is_one()) {
-		cout << "matrix::PG_point_rank() vector not normalized" << endl;
+		cout << "matrix::PG_point_rank vector not normalized" << endl;
 		exit(1);
 		}
 
@@ -3371,24 +3376,25 @@ void matrix::PG_element_normalize()
 				}
 			}
 		if (i == -1) {
-			cout << "matrix::PG_element_normalize() zero column()" << endl;
+			cout << "matrix::PG_element_normalize zero column" << endl;
 			exit(1);
 			}
 		}
 }
 
-void matrix::AG_point_rank(int i0, int j0, int di, int dj, int length, int &a)
+void matrix::AG_point_rank(int i0, int j0,
+		int di, int dj, int length, int &a)
 {
 	domain *d;
 	int q, i;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::AG_point_rank() no finite field domain" << endl;
+		cout << "matrix::AG_point_rank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	if (length <= 0) {
-		cout << "matrix::AG_point_rank() length <= 0" << endl;
+		cout << "matrix::AG_point_rank length <= 0" << endl;
 		exit(1);
 		}
 	a = 0;
@@ -3399,18 +3405,19 @@ void matrix::AG_point_rank(int i0, int j0, int di, int dj, int length, int &a)
 		}
 }
 
-void matrix::AG_point_unrank(int i0, int j0, int di, int dj, int length, int a)
+void matrix::AG_point_unrank(int i0, int j0,
+		int di, int dj, int length, int a)
 {
 	domain *d;
 	int q, i, b;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::AG_point_unrank() no finite field domain" << endl;
+		cout << "matrix::AG_point_unrank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	if (length <= 0) {
-		cout << "matrix::AG_point_unrank() length <= 0" << endl;
+		cout << "matrix::AG_point_unrank length <= 0" << endl;
 		exit(1);
 		}
 	for (i = 0; i < length; i++) {
@@ -3426,7 +3433,7 @@ int nb_PG_lines(int n, int q)
 	
 	m = n + 1;
 	for (l = 0; l < m; l++) {
-		ql = orbiter::i_power_j(q, l);
+		ql = orbiter::foundations::i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;

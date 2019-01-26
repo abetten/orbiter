@@ -564,7 +564,7 @@ void unipoly::Singer(int p, int f, int f_v, int f_vv)
 		cout << "unipoly::Singer(): p not prime\n";
 		exit(1);
 		}
-	m = orbiter::i_power_j(p, f) - 1;
+	m = orbiter::foundations::i_power_j(p, f) - 1;
 	factor_integer(m, vp, ve);
 	a = primitive_root(p, f_v);
 	for (b = 0; b < p; b++) {
@@ -620,7 +620,7 @@ void unipoly::get_an_irreducible_polynomial(int f, int verbose_level)
 			"searching for an irreducible polynomial of degree " << f <<
 			" over GF(" << q << ")" << endl;
 		}
-	low = orbiter::i_power_j(q, f);
+	low = orbiter::foundations::i_power_j(q, f);
 	high = low << 1; // only monic polynomials 
 	for (i = low; i <= high; i++) {
 		x.numeric_polynomial(i, q);

@@ -12,6 +12,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 grassmann::grassmann()
@@ -981,6 +982,8 @@ void grassmann::compute_dual_spread(
 }
 
 }
+}
+
 
 
 

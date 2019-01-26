@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 tdo_data::tdo_data()
@@ -570,4 +571,5 @@ void tdo_data::solve_second_system(int verbose_level,
 }
 
 
+}
 }

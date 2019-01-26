@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 void int_vec_search_vec(int *v, int len, int *A, int A_sz, int *Idx)
@@ -1733,4 +1734,6 @@ void find_points_by_multiplicity(int *data, int data_sz, int multiplicity, int *
 }
 
 }
+}
+
 

@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 int_vector::int_vector()
@@ -203,5 +204,6 @@ int int_vector::maximum()
 }
 
 
+}
 }
 

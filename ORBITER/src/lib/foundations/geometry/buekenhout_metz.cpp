@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -1398,4 +1399,6 @@ int buekenhout_metz_check_good_points(int len,
 }
 
 }
+}
+
 

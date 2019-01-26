@@ -13,6 +13,7 @@
 #define EPSILON 0.01
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -663,7 +664,7 @@ int scene::plane_through_three_points(int pt1, int pt2, int pt3)
 	cout << endl;
 #endif
 
-	orbiter::plane_through_three_points(p1, p2, p3, n, d);
+	orbiter::foundations::plane_through_three_points(p1, p2, p3, n, d);
 	return plane(n[0], n[1], n[2], d);
 }
 
@@ -2116,7 +2117,8 @@ void scene::rescale(int first_pt_idx, double rad_desired)
 	double rad = 1., a;
 
 	for (i = first_pt_idx; i < nb_points; i++) {
-		a = orbiter::distance_from_origin(Point_coords + i * 3, 3);
+		a = orbiter::foundations::distance_from_origin(
+				Point_coords + i * 3, 3);
 		if (i == first_pt_idx) {
 			rad = a;
 			}
@@ -2141,7 +2143,8 @@ double scene::euclidean_distance(int pt1, int pt2)
 double scene::distance_from_origin(int pt)
 {
 	double d;
-	d = orbiter::distance_from_origin(Point_coords[pt * 3 + 0],
+	d = orbiter::foundations::distance_from_origin(
+			Point_coords[pt * 3 + 0],
 			Point_coords[pt * 3 + 1], Point_coords[pt * 3 + 2]);
 	return d;
 }
@@ -3234,5 +3237,6 @@ void scene::create_surface_13_1(int verbose_level)
 }
 #endif
 
+}
 }
 

@@ -6,10 +6,11 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	int_matrix.o \
-	int_vector.o \
+	classify_bitvectors.o \
 	data_file.o \
 	fancy_set.o \
+	int_matrix.o \
+	int_vector.o \
 	page_storage.o \
 	partitionstack.o \
 	set_of_sets.o \

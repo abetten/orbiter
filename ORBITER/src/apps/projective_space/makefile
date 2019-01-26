@@ -12,6 +12,7 @@ LFLAGS = -lm
 all: analyze_projective_code.out  \
 	analyze_q_designs.out  \
 	baer_subplane.out \
+	canonical_form.out\
 	cheat_sheet_PG.out \
 	conic.out \
 	determine_conic.out \
@@ -30,7 +31,6 @@ all: analyze_projective_code.out  \
 	polar.out \
 	process.out\
 	process_PG.out\
-	projective_space_main.out\
 	projective_space.out \
 	projective_space2.out \
 	simeon.out \
@@ -52,6 +52,9 @@ analyze_q_designs.out:  analyze_q_designs.o;
 
 baer_subplane.out:   baer_subplane.o  ;
 	$(DISCRETA_CPP)  baer_subplane.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+canonical_form.out:  canonical_form.o ;
+	$(DISCRETA_CPP)  canonical_form.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 cheat_sheet_PG.out:  cheat_sheet_PG.o;
 	$(DISCRETA_CPP)  cheat_sheet_PG.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -109,9 +112,6 @@ process_PG.out:  process_PG.o ;
 
 process.out:  process.o ;
 	$(DISCRETA_CPP)  process.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-projective_space_main.out:  projective_space_main.o ;
-	$(DISCRETA_CPP)  projective_space_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 projective_space.out:  projective_space.o ;
 	$(DISCRETA_CPP)  projective_space.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

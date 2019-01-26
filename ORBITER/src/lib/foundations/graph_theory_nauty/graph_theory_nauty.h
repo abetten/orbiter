@@ -8,6 +8,7 @@
 // galois started:  August 12, 2005
 
 namespace orbiter {
+namespace foundations {
 
 
 // #############################################################################
@@ -45,6 +46,7 @@ void nauty_interface_matrix_int(int *M, int v, int b,
 	int *Base, int &Base_length, 
 	int *Transversal_length, int &Ago, int verbose_level);
 
+}
 }
 
 
