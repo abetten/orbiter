@@ -11,6 +11,7 @@ LFLAGS = -lm
 
 all: analyze_projective_code.out  \
 	analyze_q_designs.out  \
+	andre.out  \
 	baer_subplane.out \
 	canonical_form.out\
 	cheat_sheet_PG.out \
@@ -49,6 +50,9 @@ analyze_projective_code.out:  analyze_projective_code.o;
 
 analyze_q_designs.out:  analyze_q_designs.o;
 	$(DISCRETA_CPP)  analyze_q_designs.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+andre.out:  andre.o;
+	$(DISCRETA_CPP)  andre.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 baer_subplane.out:   baer_subplane.o  ;
 	$(DISCRETA_CPP)  baer_subplane.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

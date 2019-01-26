@@ -429,11 +429,6 @@ void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n);
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M);
 void fine_tune(finite_field *F, int *mtxD, int verbose_level);
 
-// in mindist.C:
-int mindist(int n, int k, int q, int *G, 
-	int f_v, int f_vv, int idx_zero, int idx_one, 
-	int *add_table, int *mult_table);
-
 // domain.C:
 
 int has_domain();

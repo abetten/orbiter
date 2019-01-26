@@ -8,6 +8,7 @@ LFLAGS = -lm
 
 
 all: \
+	a5_in_PSL.out \
 	BN_pair.out \
 	borel.out \
 	cheat_sheet_GF.out \
@@ -35,6 +36,9 @@ all: \
 	test_group.out \
 	three_squares.out
 
+
+a5_in_PSL.out:  a5_in_PSL.o;
+	$(DISCRETA_CPP)  a5_in_PSL.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 BN_pair.out:  BN_pair.o;
 	$(DISCRETA_CPP)  BN_pair.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
