@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -315,6 +316,7 @@ void int_matrix_delete_column_in_place(int *Mtx, int k, int n, int pivot);
 int int_matrix_max_log_of_entries(int *p, int m, int n);
 void int_matrix_print_ost(ostream &ost, int *p, int m, int n);
 void int_matrix_print(int *p, int m, int n);
+void int_matrix_print_tight(int *p, int m, int n);
 void int_matrix_print_ost(ostream &ost, int *p, int m, int n, int w);
 void int_matrix_print(int *p, int m, int n, int w);
 void int_matrix_print_tex(ostream &ost, int *p, int m, int n);
@@ -509,6 +511,7 @@ void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);
 
 
+}
 }
 
 

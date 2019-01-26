@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 void surface::print_equation(ostream &ost, int *coeffs)
@@ -852,4 +853,5 @@ void surface::print_half_double_sixes_in_GAP()
 	cout << "];" << endl;
 }
 
+}
 }

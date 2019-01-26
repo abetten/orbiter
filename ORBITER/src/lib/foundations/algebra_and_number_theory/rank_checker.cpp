@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 rank_checker::rank_checker()
@@ -321,3 +322,5 @@ int rank_checker::compute_rank_row_vectors(
 	return rk;
 }
 }
+}
+

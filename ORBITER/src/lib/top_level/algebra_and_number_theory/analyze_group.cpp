@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+using namespace orbiter::foundations;
+
 namespace orbiter {
 
 void analyze_group(action *A, sims *S,

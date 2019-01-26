@@ -108,17 +108,17 @@ void arc_generator::read_arguments(int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		
 		if (strcmp(argv[i], "-v") == 0) {
-			verbose_level = std::atoi(argv[++i]);
+			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 			}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = std::atoi(argv[++i]);
+			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
-			n = std::atoi(argv[++i]);
+			n = atoi(argv[++i]);
 			cout << "-n " << n << endl;
 			}
 		else if (strcmp(argv[i], "-poly") == 0) {
@@ -140,23 +140,23 @@ void arc_generator::read_arguments(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
-			target_size = std::atoi(argv[++i]);
+			target_size = atoi(argv[++i]);
 			cout << "-target_size " << target_size << endl;
 			}
 		else if (strcmp(argv[i], "-d") == 0) {
 			f_d = TRUE;
 			f_no_arc_testing = FALSE;
-			d = std::atoi(argv[++i]);
+			d = atoi(argv[++i]);
 			cout << "-d " << d << endl;
 			}
 		else if (strcmp(argv[i], "-list") == 0) {
 			f_list = TRUE;
-			list_depth = std::atoi(argv[++i]);
+			list_depth = atoi(argv[++i]);
 			cout << "-list " << list_depth << endl;
 			}
 		else if (strcmp(argv[i], "-simeon") == 0) {
 			f_simeon = TRUE;
-			simeon_s = std::atoi(argv[++i]);
+			simeon_s = atoi(argv[++i]);
 			cout << "-simeon " << simeon_s << endl;
 			}
 		else if (strcmp(argv[i], "-recognize") == 0) {
@@ -387,7 +387,7 @@ void arc_generator::init(finite_field *F,
 
 	IA->init(A, A, gen, 
 		target_size, prefix_with_directory, ECA,
-		callback_arc_report,
+		arc_generator_report,
 		NULL /* callback_subset_orbits */,
 		this,
 		verbose_level);
@@ -431,7 +431,7 @@ void arc_generator::prepare_generator(int verbose_level)
 	gen->read_arguments(argc, argv, 0);
 
 	gen->f_print_function = FALSE;
-	gen->print_function = callback_arc_print;
+	gen->print_function = arc_generator_print_arc;
 	gen->print_function_data = this;
 
 	
@@ -627,7 +627,7 @@ void arc_generator::compute_starter(int verbose_level)
 		
 		gen->list_all_orbits_at_level(depth, 
 			TRUE, 
-			callback_arc_print,
+			arc_generator_print_arc,
 			this, 
 			f_show_orbit_decomposition,
 			f_show_stab,
@@ -840,7 +840,7 @@ void arc_generator::print(int len, int *S)
 
 void arc_generator::print_set_in_affine_plane(int len, int *S)
 {
-	orbiter::print_set_in_affine_plane(*F, len, S);
+	orbiter::foundations::print_set_in_affine_plane(*F, len, S);
 }
 
 
@@ -1965,14 +1965,14 @@ void arc_generator_lifting_prepare_function_new(
 
 
 
-void print_arc(int len, int *S, void *data)
+void arc_generator_print_arc(int len, int *S, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	
 	Gen->print_set_in_affine_plane(len, S);
 }
 
-void print_point(int pt, void *data)
+void arc_generator_print_point(int pt, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	int v[3];
@@ -1982,7 +1982,7 @@ void print_point(int pt, void *data)
 	cout << "(" << v[0] << "," << v[1] << "," << v[2] << ")" << endl;
 }
 
-void callback_arc_report(
+void arc_generator_report(
 		isomorph *Iso, void *data, int verbose_level)
 {
 	arc_generator *Gen = (arc_generator *) data;
@@ -1990,7 +1990,7 @@ void callback_arc_report(
 	Gen->report(*Iso, verbose_level);
 }
 
-void callback_arc_print(
+void arc_generator_print_arc(
 		ostream &ost, int len, int *S, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;

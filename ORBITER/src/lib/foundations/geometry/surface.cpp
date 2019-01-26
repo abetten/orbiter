@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 surface::surface()
@@ -5087,3 +5088,5 @@ void surface::do_arc_lifting_with_two_lines(
 }
 
 }
+}
+

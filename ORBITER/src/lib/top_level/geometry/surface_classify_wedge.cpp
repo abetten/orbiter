@@ -116,11 +116,11 @@ void surface_classify_wedge::read_arguments(
 			Identify_label[nb_identify] = NEW_char(strlen(label) + 1);
 			strcpy(Identify_label[nb_identify], label);
 			for (j = 0; ; j++) {
-				coeff[j] = std::atoi(argv[++i]);
+				coeff[j] = atoi(argv[++i]);
 				if (coeff[j] == -1) {
 					break;
 					}
-				monomial[j] = std::atoi(argv[++i]);
+				monomial[j] = atoi(argv[++i]);
 				}
 			nb_terms = j;
 			Identify_coeff[nb_identify] = NEW_int(nb_terms);

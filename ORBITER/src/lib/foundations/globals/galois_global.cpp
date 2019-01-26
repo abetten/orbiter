@@ -14,6 +14,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 void test_unipoly()
@@ -1113,6 +1114,7 @@ void create_Levi_graph_from_incidence_matrix(
 		}
 }
 
+}
 }
 
 

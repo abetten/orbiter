@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 hermitian::hermitian()
@@ -957,6 +958,7 @@ int hermitian::Sbar_rank(int *v, int len, int verbose_level)
 }
 
 
+}
 }
 
 

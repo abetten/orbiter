@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -202,5 +203,6 @@ int andre_construction_line_element::make_affine_point(
 	return point_rank;
 }
 
+}
 }
 

@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 eckardt_point_info::eckardt_point_info()
@@ -321,4 +322,6 @@ void eckardt_point_info::init(projective_space *P,
 }
 
 }
+}
+
 

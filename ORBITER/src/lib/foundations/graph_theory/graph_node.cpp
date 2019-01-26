@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 graph_node::graph_node()
@@ -370,5 +371,7 @@ void graph_node::depth_first_rank_recursion(
 }
 
 }
+}
+
 
 

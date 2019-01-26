@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 int power_mod(int a, int n, int p)
@@ -993,6 +994,7 @@ void int_mult_fractions(int at, int ab,
 		}
 }
 
+}
 }
 
 

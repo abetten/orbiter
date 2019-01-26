@@ -7,6 +7,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -401,3 +402,5 @@ void desarguesian_spread::print_linear_set_element_tex(int a, int sz)
 }
 
 }
+}
+

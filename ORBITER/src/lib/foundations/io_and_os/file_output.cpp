@@ -7,6 +7,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 file_output::file_output()
@@ -86,5 +87,6 @@ void file_output::write_EOF(int nb_sol, int verbose_level)
 }
 
 
+}
 }
 

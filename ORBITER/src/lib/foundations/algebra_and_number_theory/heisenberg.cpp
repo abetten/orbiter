@@ -7,6 +7,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 heisenberg::heisenberg()
@@ -213,6 +214,7 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 		}
 }
 
+}
 }
 
 

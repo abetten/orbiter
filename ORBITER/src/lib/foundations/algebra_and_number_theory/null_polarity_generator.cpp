@@ -7,6 +7,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 null_polarity_generator::null_polarity_generator()
@@ -116,7 +117,8 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 	for (i = 0; i < n; i++) {
 		transversal_length[i] = 1;
 		}
-	count_strong_generators(nb_gens, transversal_length, first_moved, 0, verbose_level);
+	count_strong_generators(nb_gens, transversal_length,
+			first_moved, 0, verbose_level);
 
 	if (f_v) {
 		cout << "We found " << nb_gens << " strong generators" << endl;
@@ -153,7 +155,9 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 		}
 }
 
-int null_polarity_generator::count_strong_generators(int &nb, int *transversal_length, int &first_moved, int depth, int verbose_level)
+int null_polarity_generator::count_strong_generators(
+		int &nb, int *transversal_length, int &first_moved,
+		int depth, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int a;
@@ -167,25 +171,33 @@ int null_polarity_generator::count_strong_generators(int &nb, int *transversal_l
 		nb++;
 		return FALSE;
 		}
-	for (cur_candidate[depth] = 0; cur_candidate[depth] < nb_candidates[depth]; cur_candidate[depth]++) {
+	for (cur_candidate[depth] = 0;
+			cur_candidate[depth] < nb_candidates[depth];
+			cur_candidate[depth]++) {
 		if (cur_candidate[depth] && depth < first_moved) {
 			first_moved = depth;
 			}	
 		a = candidates[depth][cur_candidate[depth]];
 		if (FALSE) {
-			cout << "depth " << depth << " " << cur_candidate[depth] << " / " << nb_candidates[depth] << " which is " << a << endl;
+			cout << "depth " << depth << " " << cur_candidate[depth]
+				<< " / " << nb_candidates[depth]
+				<< " which is " << a << endl;
 			}
 		int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
-		if (!count_strong_generators(nb, transversal_length, first_moved, depth + 1, verbose_level) && depth > first_moved) {
+		if (!count_strong_generators(nb, transversal_length,
+				first_moved, depth + 1, verbose_level) &&
+				depth > first_moved) {
 			return FALSE;
 			}
 		}
 	return TRUE;
 }
 
-int null_polarity_generator::get_strong_generators(int *Data, int &nb, int &first_moved, int depth, int verbose_level)
+int null_polarity_generator::get_strong_generators(
+		int *Data, int &nb, int &first_moved, int depth,
+		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int a;
@@ -197,25 +209,31 @@ int null_polarity_generator::get_strong_generators(int *Data, int &nb, int &firs
 		nb++;
 		return FALSE;
 		}
-	for (cur_candidate[depth] = 0; cur_candidate[depth] < nb_candidates[depth]; cur_candidate[depth]++) {
+	for (cur_candidate[depth] = 0;
+			cur_candidate[depth] < nb_candidates[depth];
+			cur_candidate[depth]++) {
 		if (cur_candidate[depth] && depth < first_moved) {
 			first_moved = depth;
 			}	
 		a = candidates[depth][cur_candidate[depth]];
 		if (FALSE) {
-			cout << "depth " << depth << " " << cur_candidate[depth] << " / " << nb_candidates[depth] << " which is " << a << endl;
+			cout << "depth " << depth << " " << cur_candidate[depth]
+				<< " / " << nb_candidates[depth] << " which is "
+				<< a << endl;
 			}
 		int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
-		if (!get_strong_generators(Data, nb, first_moved, depth + 1, verbose_level) && depth > first_moved) {
+		if (!get_strong_generators(Data, nb, first_moved,
+				depth + 1, verbose_level) && depth > first_moved) {
 			return FALSE;
 			}
 		}
 	return TRUE;
 }
 
-void null_polarity_generator::backtrack_search(int &nb_sol, int depth, int verbose_level)
+void null_polarity_generator::backtrack_search(
+		int &nb_sol, int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a;
@@ -228,10 +246,15 @@ void null_polarity_generator::backtrack_search(int &nb_sol, int depth, int verbo
 		nb_sol++;
 		return;
 		}
-	for (cur_candidate[depth] = 0; cur_candidate[depth] < nb_candidates[depth]; cur_candidate[depth]++) {
+	for (cur_candidate[depth] = 0;
+			cur_candidate[depth] < nb_candidates[depth];
+			cur_candidate[depth]++) {
 		a = candidates[depth][cur_candidate[depth]];
 		if (FALSE) {
-			cout << "depth " << depth << " " << cur_candidate[depth] << " / " << nb_candidates[depth] << " which is " << a << endl;
+			cout << "depth " << depth << " "
+					<< cur_candidate[depth] << " / "
+					<< nb_candidates[depth]
+									 << " which is " << a << endl;
 			}
 		int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
@@ -240,13 +263,15 @@ void null_polarity_generator::backtrack_search(int &nb_sol, int depth, int verbo
 		}
 }
 
-void null_polarity_generator::create_first_candidate_set(int verbose_level)
+void null_polarity_generator::create_first_candidate_set(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, nb;
 
 	if (f_v) {
-		cout << "null_polarity_generator::create_first_candidate_set" << endl;
+		cout << "null_polarity_generator::create_"
+				"first_candidate_set" << endl;
 		}
 	nb = 0;
 	for (i = 0; i < qn; i++) {
@@ -258,17 +283,20 @@ void null_polarity_generator::create_first_candidate_set(int verbose_level)
 	nb_candidates[0] = nb;
 	
 	if (f_v) {
-		cout << "null_polarity_generator::create_first_candidate_set done" << endl;
+		cout << "null_polarity_generator::create_"
+				"first_candidate_set done" << endl;
 		}
 }
 
-void null_polarity_generator::create_next_candidate_set(int level, int verbose_level)
+void null_polarity_generator::create_next_candidate_set(
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, ai, nb;
 
 	if (f_v) {
-		cout << "null_polarity_generator::create_next_candidate_set level=" << level << endl;
+		cout << "null_polarity_generator::create_next_candidate_set "
+				"level=" << level << endl;
 		}
 	nb = 0;
 	int_vec_copy(Mtx + level * n, v, n);
@@ -282,7 +310,9 @@ void null_polarity_generator::create_next_candidate_set(int level, int verbose_l
 	nb_candidates[level + 1] = nb;
 	
 	if (f_v) {
-		cout << "null_polarity_generator::create_next_candidate_set done, found " << nb_candidates[level + 1] << " candidates at level " << level + 1 << endl;
+		cout << "null_polarity_generator::create_next_candidate_set "
+				"done, found " << nb_candidates[level + 1]
+				<< " candidates at level " << level + 1 << endl;
 		}
 }
 
@@ -303,4 +333,5 @@ int null_polarity_generator::dot_product(int *u1, int *u2)
 #endif
 }
 
+}
 }

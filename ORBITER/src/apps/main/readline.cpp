@@ -78,6 +78,7 @@ enum orbiter_token_symbol_type {
 };
 
 
+//! a class to tokenize orbiter commands
 
 class orbiter_token {
 public:
@@ -106,6 +107,10 @@ enum symbol_table_object_type {
 	t_poset,
 	t_poset_classification,
 };
+
+
+//! a symbol table entry for the orbiter run-time system
+
 
 class orbiter_symbol_table_entry {
 public:
@@ -199,6 +204,9 @@ void orbiter_symbol_table_entry::print()
 		}
 	}
 }
+
+
+//! a session for the orbiter run-time system
 
 
 class orbiter_session {

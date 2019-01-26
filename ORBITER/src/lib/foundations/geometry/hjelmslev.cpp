@@ -13,6 +13,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 hjelmslev::hjelmslev()
@@ -184,3 +185,5 @@ int hjelmslev::rank_int(int *M, int verbose_level)
 }
 
 }
+}
+

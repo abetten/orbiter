@@ -8,6 +8,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 mckay::tMCKAY::tMCKAY() {
@@ -978,5 +979,6 @@ void mckay::tMCKAY::log_12l(int current_node, int level)
 }
 
 
+}
 }
 

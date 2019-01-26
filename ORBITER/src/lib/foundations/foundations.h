@@ -213,8 +213,15 @@ typedef void *pvoid;
 #endif
 
 
+//! the orbiter library for the classification of combinatorial objects
 
 namespace orbiter {
+
+
+
+//! algebra, combinatorics and graph theory, geometry, data structures, solvers
+
+namespace foundations {
 
 
 class finite_field;
@@ -265,7 +272,7 @@ class int_vector;
 class projective_space;
 class buekenhout_metz;
 class a_domain;
-class diophant; // TODO: need to fix this
+class diophant;
 class null_polarity_generator;
 class layered_graph_draw_options;
 class klein_correspondence;
@@ -454,6 +461,7 @@ public:
 
 ostream& operator<<(ostream& ost, longinteger_object& p);
 
+}
 }
 
 #include "./algebra_and_number_theory/algebra_and_number_theory.h"

@@ -9,6 +9,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 finite_ring::finite_ring()
@@ -582,5 +583,6 @@ void display_all_PHG_elements(int n, int q)
 
 
 
+}
 }
 

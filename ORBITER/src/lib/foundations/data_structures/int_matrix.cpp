@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 int_matrix::int_matrix()
@@ -74,5 +75,6 @@ void int_matrix::print()
 	int_matrix_print(M, m, n);
 }
 
+}
 }
 

@@ -7,6 +7,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 int TDO_upper_bounds_v_max_init = 12;
@@ -425,5 +426,6 @@ int packing_number_via_maxfit(int n, int k)
 	return m - 1;
 }
 
+}
 }
 

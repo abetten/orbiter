@@ -15,20 +15,37 @@ namespace orbiter {
 
 polar::polar()
 {
-	A = NULL;
-	//AG = NULL;
-	Mtx = NULL;
-	tmp_M = NULL;
-	base_cols = NULL;
+	epsilon = 0;
+	n = 0; // vector space dimension
+	k = 0;
+	q = 0;
+	depth = 0;
+
+	f_print_generators = FALSE;
+
+	A = NULL; // the orthogonal action
+
+
+
+	Mtx = NULL; // only a copy of a pointer, not to be freed
+	O = NULL; // only a copy of a pointer, not to be freed
+	F = NULL; // only a copy of a pointer, not to be freed
+
+	tmp_M = NULL; // [n * n]
+	base_cols = NULL; // [n]
+
 	VS = NULL;
 	Poset = NULL;
 	Gen = NULL;
+
+	schreier_depth = 0;
+	f_use_invariant_subset_if_available = FALSE;
+	f_debug = FALSE;
+
 	f_has_strong_generators = FALSE;
 	f_has_strong_generators_allocated = FALSE;
 	Strong_gens = NULL;
-	//SG = NULL;
-	//tl = NULL;
-	f_print_generators = FALSE;
+
 	first_node = 0;
 	nb_orbits = 0;
 	nb_elements = 0;

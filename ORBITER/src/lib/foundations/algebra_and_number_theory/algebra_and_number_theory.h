@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 // #############################################################################
 // a_domain.cpp
@@ -1871,4 +1872,6 @@ void vector_space_unrank_point_callback(int *v, int rk, void *data);
 int vector_space_rank_point_callback(int *v, void *data);
 
 }
+}
+
 

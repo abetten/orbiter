@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 object_in_projective_space::object_in_projective_space()
@@ -228,6 +229,32 @@ void object_in_projective_space::init_packing_from_spread_table(
 		int_vec_copy(Spread_table + a * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 		}
+	if (verbose_level >= 5) {
+		cout << "object_in_projective_space::init_packing_"
+				"from_spread_table Sos:" << endl;
+		SoS->print_table();
+	}
+
+	// test if the object is a packing:
+	SoS->sort_all(FALSE /*verbose_level*/);
+	int *M;
+	int j;
+	SoS->pairwise_intersection_matrix(M, 0 /*verbose_level*/);
+	for (i = 0; i < SoS->nb_sets; i++) {
+		for (j = i + 1; j < SoS->nb_sets; j++) {
+			if (M[i * SoS->nb_sets + j]) {
+				cout << "object_in_projective_space::init_packing_"
+						"from_spread_table not a packing, spreads "
+						<< i << " and " << j << " meet in "
+						<< M[i * SoS->nb_sets + j] << " lines" << endl;
+				cout << "object_in_projective_space::init_packing_"
+						"from_spread_table Sos:" << endl;
+				SoS->print_table();
+				exit(1);
+
+			}
+		}
+	}
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_packing_"
@@ -834,6 +861,7 @@ void object_in_projective_space::klein(int verbose_level)
 		}
 }
 
+}
 }
 
 

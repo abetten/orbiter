@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 void do_cone_over(int n, finite_field *F, 
@@ -1638,5 +1639,7 @@ void create_Maruta_Hamada_arc(finite_field *F,
 }
 
 }
+}
+
 
 

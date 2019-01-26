@@ -7,7 +7,6 @@ LFLAGS = -lm
 
 MODULES = \
 		brick_domain.o \
-		classify_bitvectors.o \
 		combinatorics.o
 
 

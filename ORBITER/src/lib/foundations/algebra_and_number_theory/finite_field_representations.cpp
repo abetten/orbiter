@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 void finite_field::representing_matrix8_R(int *A,
 		int q, int a, int b, int c, int d)
@@ -976,4 +977,5 @@ int finite_field::T3product2(int a1, int a2)
 	return T3(x);
 }
 
+}
 }

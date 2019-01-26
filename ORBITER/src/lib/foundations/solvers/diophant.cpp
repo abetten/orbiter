@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -3987,6 +3988,7 @@ void solve_diophant(int *Inc,
 		}
 }
 
+}
 }
 
 

@@ -8,6 +8,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 vector_hashing::vector_hashing()
@@ -225,4 +226,5 @@ void vector_hashing::unrank(int rk, int *data)
 		}
 }
 
+}
 }

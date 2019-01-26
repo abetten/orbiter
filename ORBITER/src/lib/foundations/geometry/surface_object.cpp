@@ -11,6 +11,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 #define MAX_NUMBER_OF_PLANES_FOR_PLANE_TYPE 100000
@@ -3720,6 +3721,7 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 	ost << "\\end{array}" << endl;
 }
 
+}
 }
 
 

@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -802,6 +803,11 @@ void int_matrix_print(int *p, int m, int n)
 	
 	w = int_matrix_max_log_of_entries(p, m, n);
 	int_matrix_print(p, m, n, w);
+}
+
+void int_matrix_print_tight(int *p, int m, int n)
+{
+	int_matrix_print(p, m, n, 0);
 }
 
 void int_matrix_print_ost(ostream &ost, int *p, int m, int n, int w)
@@ -5298,5 +5304,6 @@ const char *strip_directory(const char *p)
 }
 
 
+}
 }
 

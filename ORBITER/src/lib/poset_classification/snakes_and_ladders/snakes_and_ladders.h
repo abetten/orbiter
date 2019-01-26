@@ -59,10 +59,11 @@ public:
 // orbit_based_testing.cpp
 // #############################################################################
 
-//! various test functions which define a G-invariant poset
 
 #define MAX_CALLBACK 100
 
+
+//! various test functions which define a G-invariant poset
 
 class orbit_based_testing {
 

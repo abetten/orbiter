@@ -20,6 +20,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -2329,4 +2330,6 @@ void get_projective_plane_list_of_lines(int *&list_of_lines,
 }
 
 }
+}
+
 

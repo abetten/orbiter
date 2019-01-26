@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -190,6 +191,7 @@ void andre_construction::points_on_line(
 		}
 }
 
+}
 }
 
 

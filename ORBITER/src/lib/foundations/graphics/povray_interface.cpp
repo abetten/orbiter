@@ -9,6 +9,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -412,5 +413,6 @@ void povray_ini(ostream &ost, const char *fname_pov,
 	ost << "Pause_when_Done=off" << endl;
 }
 
+}
 }
 

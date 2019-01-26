@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 orbiter_data_file::orbiter_data_file()
@@ -94,5 +95,6 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 }
 
 
+}
 }
 

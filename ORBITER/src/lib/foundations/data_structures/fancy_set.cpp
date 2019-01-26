@@ -7,6 +7,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 fancy_set::fancy_set()
@@ -183,7 +184,8 @@ void fancy_set::select_subset(int *elts, int nb)
 	
 	for (i = 0; i < nb; i++) {
 		if (!is_contained(elts[i])) {
-			cout << "fancy_set::select_subset  element is not contained" << endl;
+			cout << "fancy_set::select_subset "
+					"element is not contained" << endl;
 			exit(1);
 			}
 		swap(i, elts[i]);
@@ -245,7 +247,7 @@ int fancy_set::compare_lexicographically(fancy_set *second_set)
 {
 	sort();
 	second_set->sort();
-	return orbiter::compare_lexicographically(k, set,
+	return orbiter::foundations::compare_lexicographically(k, set,
 			second_set->k, second_set->set);
 	
 }
@@ -293,6 +295,7 @@ int fancy_set::is_equal(fancy_set *set2)
 	return FALSE;
 }
 
+}
 }
 
 

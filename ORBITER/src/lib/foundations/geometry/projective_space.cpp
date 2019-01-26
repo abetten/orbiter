@@ -11,7 +11,7 @@
 
 
 namespace orbiter {
-
+namespace foundations {
 
 
 projective_space::projective_space()
@@ -7419,5 +7419,7 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 }
 
 }
+}
+
 
 

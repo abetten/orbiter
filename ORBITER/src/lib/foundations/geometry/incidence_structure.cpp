@@ -9,6 +9,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -3853,6 +3854,7 @@ void incma_latex_override_unit_length_drop()
 
 
 
+}
 }
 
 

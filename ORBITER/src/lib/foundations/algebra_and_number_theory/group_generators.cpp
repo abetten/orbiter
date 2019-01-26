@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -1638,5 +1639,6 @@ void generators_for_stabilizer_of_triangle_in_PGL4(
 		}
 }
 
+}
 }
 

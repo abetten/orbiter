@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -834,6 +835,7 @@ void elliptic_curve::print_all_powers(int i)
 		}
 }
 
+}
 }
 
 

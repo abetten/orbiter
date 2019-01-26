@@ -26,6 +26,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -1253,4 +1254,5 @@ static int registry_key_pair_compare_by_location(void *K1v, void *K2v)
 }
 
 
+}
 }

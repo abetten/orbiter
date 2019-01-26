@@ -8,6 +8,7 @@
 // galois started:  August 12, 2005
 
 namespace orbiter {
+namespace foundations {
 
 
 // #############################################################################
@@ -39,79 +40,6 @@ public:
 };
 
 void brick_test(int q, int verbose_level);
-
-// #############################################################################
-// classify_bitvectors.C:
-// #############################################################################
-
-//! stores the canonical form of 0/1 matrices for the purposes of classification
-
-class classify_bitvectors {
-public:
-
-	int nb_types; 
-		// the number of isomorphism types
-
-	int rep_len;
-		// the number of uchar we need to store the canonical form of 
-		// one object
-
-
-	uchar **Type_data; 
-		// Type_data[N][rep_len]
-		// the canonical form of the i-th representative is 
-		// Type_data[i][rep_len]
-	int *Type_rep;
-		// Type_rep[N]
-		// Type_rep[i] is the index of the canidate which 
-		// has been chosen as representative 
-		// for the i-th isomorphism type
-	int *Type_mult; 
-		// Type_mult[N]
-		// Type_mult[i] gives the number of candidates so far which 
-		// are isomorphic to the i-th isomorphism class representative
-	void **Type_extra_data;
-		// Type_extra_data[N]
-		// Type_extra_data[i] is a pointer that is stored with the 
-		// i-th isomorphism class representative
-	
-	int N; 
-		// number of candidates (or objects) that we will test
-	int n; 
-		// number of candidates that we have already tested
-
-	int *type_of;
-		// type_of[N]
-		// type_of[i] is the isomorphism type of the i-th candidate
-
-	classify *C_type_of;
-		// the classification of type_of[N]
-		// this will be computed in finalize()
-
-	int *perm;
-		// the permutation which lists the orbit 
-		// representative in the order 
-		// in which they appear in the list of candidates
-	
-	classify_bitvectors();
-	~classify_bitvectors();
-	void null();
-	void freeself();
-	void init(int N, int rep_len, int verbose_level);
-	int add(uchar *data, void *extra_data, int verbose_level);
-	void finalize(int verbose_level);
-	void print_reps();
-	void save(const char *prefix, 
-		void (*encode_function)(void *extra_data, 
-			int *&encoding, int &encoding_sz, void *global_data),
-		void (*get_group_order_or_NULL)(void *extra_data, 
-			longinteger_object &go, void *global_data), 
-		void *global_data, 
-		int verbose_level);
-
-};
-
-int compare_func_for_bitvectors(void *a, void *b, void *data);
 
 // #############################################################################
 // combinatorics.C:
@@ -218,4 +146,5 @@ int generalized_binomial(int n, int k, int q);
 void print_tableau(int *Tableau, int l1, int l2, 
 	int *row_parts, int *col_parts);
 
+}
 }

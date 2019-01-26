@@ -57,12 +57,12 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = std::atoi(argv[++i]);
+			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
 		else if (strcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = std::atoi(argv[++i]);
+			iso = atoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 			}
 		else if (strcmp(argv[i], "-by_coefficients") == 0) {
@@ -72,7 +72,7 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			}
 		else if (strcmp(argv[i], "-family_S") == 0) {
 			f_family_S = TRUE;
-			parameter_a = std::atoi(argv[++i]);
+			parameter_a = atoi(argv[++i]);
 			cout << "-family_S " << parameter_a << endl;
 			}
 		else if (strcmp(argv[i], "-arc_lifting") == 0) {

@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 	// The Knarr construction of a GQ(q^2,q) from a BLT set of lines in W(3,q):
@@ -674,5 +675,6 @@ void knarr::incidence_matrix(int *&Inc,
 	FREE_int(Basis_V);
 }
 
+}
 }
 

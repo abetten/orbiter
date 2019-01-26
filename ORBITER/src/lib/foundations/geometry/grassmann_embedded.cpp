@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 grassmann_embedded::grassmann_embedded()
@@ -351,4 +352,5 @@ int grassmann_embedded::rank_int(
 	return rk;
 }
 
+}
 }

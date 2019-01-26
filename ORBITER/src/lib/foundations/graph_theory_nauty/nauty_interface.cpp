@@ -32,6 +32,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 static graph g[MAXN * MAXM];
 static graph canong[MAXN * MAXM];
@@ -630,6 +631,7 @@ static void nauty_interface_free_data()
 #endif
 
 
+}
 }
 
 

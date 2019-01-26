@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -374,4 +375,5 @@ set_of_sets *classify::get_set_partition_and_types(
 	return SoS;
 }
 
+}
 }

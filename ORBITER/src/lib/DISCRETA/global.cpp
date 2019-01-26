@@ -530,7 +530,7 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 		}
 }
 
-void print_factorization(Vector& primes, Vector& exponents, ostream &o)
+void discreta_print_factorization(Vector& primes, Vector& exponents, ostream &o)
 //Prints the factorization.
 {
 	int i, p, e, l;
@@ -1935,7 +1935,8 @@ void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int f_v)
 	a.swap(res);
 }
 
-int atoi(char *p)
+#if 0
+int atoi(const char *p)
 {
 	int x;
 	sscanf(p, "%d", &x);
@@ -1950,6 +1951,7 @@ int atoi(char *p)
 	return x;
 #endif
 }
+#endif
 
 #if 0
 void itoa(char *p, int len_of_p, int i)
@@ -2591,6 +2593,7 @@ void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, doubl
 	Py[idx_result] = Py[idx_from] + dy;
 }
 
+#if 0
 void time_check_delta(int dt)
 {
 	int tps, d, h, min, s;
@@ -2623,6 +2626,7 @@ void time_check(int t0)
 	dt = t1 - t0;
 	time_check_delta(dt);
 }
+#endif
 
 int nb_of_bits()
 {

@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 subfield_structure::subfield_structure()
@@ -301,6 +302,7 @@ void subfield_structure::retract_matrix(int *Mq,
 }
 
 
+}
 }
 
 

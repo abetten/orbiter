@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -97,3 +98,5 @@ void layered_graph_draw_options::init(
 }
 
 }
+}
+

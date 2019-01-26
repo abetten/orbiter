@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 void finite_field::PG_element_normalize(
 		int *v, int stride, int len)
@@ -3685,5 +3686,6 @@ void O4_find_tangent_plane(finite_field &F,
 #endif
 }
 
+}
 }
 

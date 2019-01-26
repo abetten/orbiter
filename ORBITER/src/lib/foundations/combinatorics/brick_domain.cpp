@@ -7,6 +7,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -181,4 +182,6 @@ void brick_test(int q, int verbose_level)
 }
 
 }
+}
+
 

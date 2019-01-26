@@ -6,6 +6,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 mp_graphics::mp_graphics()
@@ -2649,6 +2650,7 @@ void mp_graphics::output_y_tikz(int y)
 		}
 }
 
+}
 }
 
 

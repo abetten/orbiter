@@ -11,6 +11,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 norm_tables::norm_tables()
@@ -104,5 +105,6 @@ int norm_tables::choose_an_element_of_given_norm(
 	return gamma;
 }
 
+}
 }
 

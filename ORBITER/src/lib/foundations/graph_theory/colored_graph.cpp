@@ -10,6 +10,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 colored_graph::colored_graph()
@@ -2874,5 +2875,5 @@ int colored_graph_all_rainbow_cliques_nonrecursive(
 }
 
 }
-
+}
 

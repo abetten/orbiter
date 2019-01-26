@@ -13,6 +13,7 @@
 #include "foundations.h"
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -1515,7 +1516,7 @@ void all_cliques_of_given_size(int *Adj,
 			}
 		}
 	
-	C = new clique_finder;
+	C = NEW_OBJECT(clique_finder);
 	
 	if (f_v) {
 		cout << "all_cliques_of_given_size: before C->init" << endl;
@@ -1542,7 +1543,7 @@ void all_cliques_of_given_size(int *Adj,
 		cout << "all_cliques_of_given_size sz != clique_sz" << endl;
 		exit(1);
 		}	
-	delete C;
+	FREE_OBJECT(C);
 	FREE_int(adj_list_coded);
 	if (f_v) {
 		cout << "all_cliques_of_given_size done" << endl;
@@ -1961,4 +1962,5 @@ continuation_point:
 }
 
 
+}
 }

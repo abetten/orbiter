@@ -198,7 +198,7 @@ void print_clan_tex(discreta_base &t, discreta_base &v,
 	if (vp.s_l() > 1 || (vp.s_l() > 0 && ve.s_ii(0) > 1)) {
 		{
 		class printing_mode pm(printing_mode_latex);
-		print_factorization(vp, ve, cout);
+		discreta_print_factorization(vp, ve, cout);
 		}
 		}
 	else {

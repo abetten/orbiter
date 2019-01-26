@@ -12,6 +12,7 @@
 #define TABLE_Q_BINOMIALS_MAX 200
 
 namespace orbiter {
+namespace foundations {
 
 
 
@@ -2283,7 +2284,7 @@ int longinteger_domain::hamming_bound_for_d(
 			if (f_vv) {
 				cout << "B=" << B << " t=" << t << " d=" << d << endl;
 				}
-			return d;
+			break;
 			}
 		if (f_vv) {
 			cout << "e=" << e << " B=" << B << " is OK" << endl;
@@ -2294,6 +2295,7 @@ int longinteger_domain::hamming_bound_for_d(
 	if (f_v) {
 		cout << "longinteger_domain::hamming_bound_for_d done" << endl;
 		}
+	return d;
 }
 
 int longinteger_domain::plotkin_bound_for_d(
@@ -2751,6 +2753,7 @@ void longinteger_free_global_data()
 void longinteger_print_digits(char *rep, int len)
 {
 	for (int h = 0; h < len; h++) cout << (char)('0' + rep[h]) << " ";
+}
 }
 }
 

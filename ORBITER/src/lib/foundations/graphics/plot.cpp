@@ -7,6 +7,7 @@
 #include <math.h>
 
 namespace orbiter {
+namespace foundations {
 
 
 void draw_density(char *prefix, int *the_set, int set_size,
@@ -15,7 +16,8 @@ void draw_density(char *prefix, int *the_set, int set_size,
 	int f_circle, int circle_at, int circle_rad, 
 	int f_mu, int f_sigma, int nb_standard_deviations, 
 	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	int xmax, int ymax, int offset_x, int f_switch_x, int no, int f_embedded, 
+	int xmax, int ymax, int offset_x,
+	int f_switch_x, int no, int f_embedded,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -44,7 +46,8 @@ void draw_density(char *prefix, int *the_set, int set_size,
 		}
 	
 	if (f_vv) {
-		cout << "draw_density read the following " << set_size << " numbers:" << endl;
+		cout << "draw_density read the "
+				"following " << set_size << " numbers:" << endl;
 		for (i = 0; i < set_size; i++) {
 			cout << the_set[i] << endl;
 			}
@@ -82,7 +85,8 @@ void draw_density(char *prefix, int *the_set, int set_size,
 	
 	sprintf(fname_full, "%s_%d.mp", prefix, no);
 	{
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname_full,
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -108,7 +112,8 @@ void draw_density(char *prefix, int *the_set, int set_size,
 	G.footer();
 	}
 	if (f_v) {
-		cout << "draw_density written file " << fname_full << " of size " << file_size(fname_full) << endl;
+		cout << "draw_density written file " << fname_full
+				<< " of size " << file_size(fname_full) << endl;
 		}
 	FREE_int(set);
 	
@@ -182,9 +187,11 @@ void draw_density_multiple_curves(char *prefix,
 				}
 			}
 		if (f_v5) {
-			cout << "draw_density_multiple_curves outline of size " << outline_sz[curve] << ":" << endl;
+			cout << "draw_density_multiple_curves outline "
+					"of size " << outline_sz[curve] << ":" << endl;
 			for (i = 0; i < outline_sz[curve]; i++) {
-				cout << outline_value[curve][i] << " " << outline_number[curve][i] << endl;
+				cout << outline_value[curve][i] << " "
+						<< outline_number[curve][i] << endl;
 				}
 
 
@@ -196,7 +203,8 @@ void draw_density_multiple_curves(char *prefix,
 	
 	sprintf(fname_full, "%s_%d.mp", prefix, no);
 	{
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname_full,
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -222,7 +230,8 @@ void draw_density_multiple_curves(char *prefix,
 	G.footer();
 	}
 	if (f_v) {
-		cout << "draw_density written file " << fname_full << " of size " << file_size(fname_full) << endl;
+		cout << "draw_density written file " << fname_full
+				<< " of size " << file_size(fname_full) << endl;
 		}
 	for (curve = 0; curve < nb_data_sets; curve++) {
 		FREE_int(Data2[curve]);
@@ -522,18 +531,23 @@ void draw_density2_multiple_curves(mp_graphics &G, int no,
 
 	for (curve = 0; curve < nb_curves; curve++) {
 		if (f_v_logarithmic) {
-			get_coord_log(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, log_base, f_switch_x);
+			get_coord_log(Px, Py, 0,
+					min_x, min_y, min_x, min_y, max_x, max_y,
+					log_base, f_switch_x);
 			}
 		else {
-			get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, f_switch_x);
+			get_coord(Px, Py, 0,
+					min_x, min_y, min_x, min_y, max_x, max_y, f_switch_x);
 			}
 		for (i = 0; i < outline_sz[curve]; i++) {
 			if (f_v_logarithmic) {
-				get_coord_log(Px, Py, 2, outline_number[curve][i], outline_value[curve][i], 
+				get_coord_log(Px, Py, 2,
+					outline_number[curve][i], outline_value[curve][i],
 					min_x, min_y, max_x, max_y, log_base, f_switch_x);
 				}
 			else {
-				get_coord(Px, Py, 2, outline_number[curve][i], outline_value[curve][i], 
+				get_coord(Px, Py, 2,
+					outline_number[curve][i], outline_value[curve][i],
 					min_x, min_y, max_x, max_y, f_switch_x);
 				}
 			Px[1] = Px[0];
@@ -555,10 +569,14 @@ void draw_density2_multiple_curves(mp_graphics &G, int no,
 
 	
 	if (f_v_logarithmic) {
-		get_coord_log(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
-		get_coord_log(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
-		get_coord_log(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
-		get_coord_log(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+		get_coord_log(Px, Py, 0,
+				min_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+		get_coord_log(Px, Py, 1,
+				max_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+		get_coord_log(Px, Py, 2,
+				max_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+		get_coord_log(Px, Py, 3,
+				min_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
 		}
 	else {
 		get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
@@ -637,7 +655,9 @@ void draw_density2_multiple_curves(mp_graphics &G, int no,
 			delta = (log(max_y - min_y + 1) / log(log_base))/ h_grid;
 			for (i = 1; i <= h_grid - 1; i++) {
 				a = min_y + pow(log_base, i * delta);
-				get_coord_log(Px, Py, 2, min_x, (int)a, min_x, min_y, max_x, max_y, log_base, FALSE /* f_switch_x */);
+				get_coord_log(Px, Py, 2, min_x, (int)a,
+						min_x, min_y, max_x, max_y, log_base,
+						FALSE /* f_switch_x */);
 				Px[0] = Px[2];
 				Py[0] = Py[2];
 				Px[1] = 1000;
@@ -671,7 +691,8 @@ void draw_density2_multiple_curves(mp_graphics &G, int no,
 	
 }
 
-void get_coord(int *Px, int *Py, int idx, int x, int y, int min_x, int min_y, int max_x, int max_y, int f_switch_x)
+void get_coord(int *Px, int *Py, int idx, int x, int y,
+		int min_x, int min_y, int max_x, int max_y, int f_switch_x)
 {
 	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
 	if (f_switch_x) {
@@ -680,7 +701,9 @@ void get_coord(int *Px, int *Py, int idx, int x, int y, int min_x, int min_y, in
 	Py[idx] = (int)(1000 * (double)(y - min_y) / (double)(max_y - min_y));
 }
 
-void get_coord_log(int *Px, int *Py, int idx, int x, int y, int min_x, int min_y, int max_x, int max_y, double log_base, int f_switch_x)
+void get_coord_log(int *Px, int *Py, int idx, int x, int y,
+		int min_x, int min_y, int max_x, int max_y,
+		double log_base, int f_switch_x)
 {
 	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
 	if (f_switch_x) {
@@ -701,7 +724,8 @@ void read_numbers_from_file(const char *fname,
 	double d;
 	
 	if (f_v) {
-		cout << "read_numbers_from_file opening file " << fname << " of size " << file_size(fname) << " for reading" << endl;
+		cout << "read_numbers_from_file opening file " << fname
+				<< " of size " << file_size(fname) << " for reading" << endl;
 		}
 	ifstream f(fname);
 	
@@ -715,7 +739,9 @@ void read_numbers_from_file(const char *fname,
 		f >> d;
 		a = (int) d;
 		if (f_vv) {
-			cout << "read_set_from_file: the " << i << "-th number is " << d << " which becomes " << a << endl;
+			cout << "read_set_from_file: the " << i
+					<< "-th number is " << d << " which becomes "
+					<< a << endl;
 			}
 		if (a == -1)
 			break;
@@ -727,7 +753,8 @@ void read_numbers_from_file(const char *fname,
 		}
 	set_size = i;
 	if (f_v) {
-		cout << "read a set of size " << set_size << " from file " << fname << endl;
+		cout << "read a set of size " << set_size
+				<< " from file " << fname << endl;
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
@@ -776,7 +803,8 @@ void y_to_pt_on_curve(int y_in, int &x, int &y,
 
 }
 
-void projective_plane_draw_grid(const char *fname, int xmax, int ymax, int f_with_points, int rad, 
+void projective_plane_draw_grid(const char *fname,
+	int xmax, int ymax, int f_with_points, int rad,
 	int q, int *Table, int nb, 
 	int f_point_labels, char **Point_labels, 
 	int f_embedded, int f_sideways, 
@@ -795,7 +823,8 @@ void projective_plane_draw_grid(const char *fname, int xmax, int ymax, int f_wit
 		}
 	sprintf(fname_full, "%s.mp", fname);
 	{
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
+			f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -805,13 +834,15 @@ void projective_plane_draw_grid(const char *fname, int xmax, int ymax, int f_wit
 	G.header();
 	G.begin_figure(factor_1000);
 	
-	projective_plane_draw_grid2(G, q, Table, nb, f_with_points, rad, f_point_labels, Point_labels, verbose_level);
+	projective_plane_draw_grid2(G, q, Table, nb,
+			f_with_points, rad, f_point_labels, Point_labels, verbose_level);
 
 
 	G.end_figure();
 	G.footer();
 	}
-	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+	cout << "written file " << fname_full << " of size "
+			<< file_size(fname_full) << endl;
 	if (f_v) {
 		cout << "projective_plane_draw_grid done" << endl;
 		}
@@ -865,7 +896,8 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 		1 /* x_mod */, 1 /* y_mod */, 1, 1, 
 		-1. /* x_labels_offset */, -1. /* y_labels_offset */, 
 		0.5 /* x_tick_half_width */, 0.5 /* y_tick_half_width */, 
-		TRUE /* f_v_lines */, 1 /* subdivide_v */, TRUE /* f_h_lines */, 1 /* subdivide_h */);
+		TRUE /* f_v_lines */, 1 /* subdivide_v */,
+		TRUE /* f_h_lines */, 1 /* subdivide_h */);
 
 	Dx[0] = q;
 	Dy[0] = -1;
@@ -928,7 +960,8 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 			//get_ab(q, x1, x2, x3, a, b);
 			projective_plane_make_affine_point(q, x1, x2, x3, a, b);
 
-			cout << "point " << h << " : " << x1 << ", " << x2 << ", " << x3 << " : " << a << ", " << b << endl;
+			cout << "point " << h << " : " << x1 << ", " << x2
+					<< ", " << x3 << " : " << a << ", " << b << endl;
 			
 			Dx[0] = a;
 			Dy[0] = b;
@@ -965,7 +998,8 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 		}
 }
 
-void projective_plane_make_affine_point(int q, int x1, int x2, int x3, double &a, double &b)
+void projective_plane_make_affine_point(
+		int q, int x1, int x2, int x3, double &a, double &b)
 {
 	if (x3 == 0) {
 		if (x2 == 0) {
@@ -997,6 +1031,7 @@ void projective_plane_make_affine_point(int q, int x1, int x2, int x3, double &a
 		}
 }
 
+}
 }
 
 

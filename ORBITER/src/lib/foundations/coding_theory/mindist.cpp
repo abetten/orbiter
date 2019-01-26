@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace foundations {
 
 
 typedef struct mindist MINDIST;
@@ -715,4 +716,6 @@ static void vmmult(MINDIST *MD, int *v, int **mx, int *cv)
 }
 
 }
+}
+
 
