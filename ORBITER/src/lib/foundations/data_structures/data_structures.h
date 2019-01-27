@@ -267,7 +267,7 @@ void test_page_storage(int f_v);
 ostream& operator<<(ostream& ost, partitionstack& p);
 
 
-//! Leon type partitionstack class
+//! Leon type partitionstack for set partitions
 
 
 class partitionstack {

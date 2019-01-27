@@ -16,10 +16,12 @@ namespace foundations {
 
 classify::classify()
 {
+	data_length = 0;
 	data = NULL;
 	data_sorted = NULL;
 	sorting_perm = NULL;
 	sorting_perm_inv = NULL;
+	nb_types = 0;
 	type_first = NULL;
 	type_len = NULL;
 
@@ -27,8 +29,10 @@ classify::classify()
 	second_data_sorted = NULL;
 	second_sorting_perm = NULL;
 	second_sorting_perm_inv = NULL;
+	second_nb_types = 0;
 	second_type_first = NULL;
 	second_type_len = NULL;
+
 }
 
 classify::~classify()
@@ -69,30 +73,81 @@ void classify::init(int *data,
 	classify::data_length = data_length;
 	classify::f_second = f_second;
 	
+#if 0
 	int_vec_classify(data_length, data, data_sorted, 
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
+#endif
+
+	data_sorted = NEW_int(data_length);
+	sorting_perm = NEW_int(data_length);
+	sorting_perm_inv = NEW_int(data_length);
+	type_first = NEW_int(data_length);
+	type_len = NEW_int(data_length);
+
+	sort_and_classify();
+
+
 	
 	if (f_second) {
+
+		second_data_sorted = NEW_int(nb_types);
+		second_sorting_perm = NEW_int(nb_types);
+		second_sorting_perm_inv = NEW_int(nb_types);
+		second_type_first = NEW_int(nb_types);
+		second_type_len = NEW_int(nb_types);
+
+		sort_and_classify_second();
+
+#if 0
 		int_vec_classify(nb_types, type_len, second_data_sorted, 
 			second_sorting_perm, second_sorting_perm_inv, 
 			second_nb_types, second_type_first, second_type_len);
+#endif
+
 		}
 	if (f_v) {
 		cout << "classify::init done" << endl;
 		}
 }
 
-#if 0
-int classify::compare_type(int *type_coded, int nb_types)
+void classify::sort_and_classify()
 {
 	int i;
 	
-	for (i = 0; i < nb_types; i++) {
-		if (
+	for (i = 0; i < data_length; i++) {
+		data_sorted[i] = data[i];
 		}
+	int_vec_sorting_permutation(data_sorted,
+			data_length, sorting_perm, sorting_perm_inv,
+			TRUE /* f_increasingly */);
+	for (i = 0; i < data_length; i++) {
+		data_sorted[sorting_perm[i]] = data[i];
+		}
+
+	int_vec_sorted_collect_types(data_length, data_sorted,
+		nb_types, type_first, type_len);
+
 }
-#endif
+
+void classify::sort_and_classify_second()
+{
+	int i;
+
+	for (i = 0; i < nb_types; i++) {
+		second_data_sorted[i] = type_len[i];
+		}
+	int_vec_sorting_permutation(second_data_sorted,
+			nb_types, second_sorting_perm, second_sorting_perm_inv,
+			TRUE /* f_increasingly */);
+	for (i = 0; i < nb_types; i++) {
+		second_data_sorted[second_sorting_perm[i]] = type_len[i];
+		}
+
+	int_vec_sorted_collect_types(nb_types, second_data_sorted,
+			second_nb_types, second_type_first, second_type_len);
+
+}
 
 int classify::class_of(int pt_idx)
 {
