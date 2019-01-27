@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_orbits::action_on_orbits()
 {
@@ -30,7 +31,8 @@ void action_on_orbits::free()
 	null();
 }
 
-void action_on_orbits::init(action *A, schreier *Sch, int f_play_it_safe, int verbose_level)
+void action_on_orbits::init(action *A,
+		schreier *Sch, int f_play_it_safe, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -46,16 +48,19 @@ void action_on_orbits::init(action *A, schreier *Sch, int f_play_it_safe, int ve
 		}
 }
 
-int action_on_orbits::compute_image(int *Elt, int i, int verbose_level)
+int action_on_orbits::compute_image(int *Elt,
+		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j, j1, f, l, a, b, h;
 
 	if (f_v) {
-		cout << "action_on_orbits::compute_image i = " << i << endl;
+		cout << "action_on_orbits::compute_image "
+				"i = " << i << endl;
 		}
 	if (i < 0 || i >= degree) {
-		cout << "action_on_orbits::compute_image i = " << i << " out of range" << endl;
+		cout << "action_on_orbits::compute_image "
+				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
 	f = Sch->orbit_first[i];
@@ -63,7 +68,8 @@ int action_on_orbits::compute_image(int *Elt, int i, int verbose_level)
 	a = Sch->orbit[f];
 	b = A->element_image_of(a, Elt, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "action_on_orbits::compute_image image of " << a << " is " << b << endl;
+		cout << "action_on_orbits::compute_image "
+				"image of " << a << " is " << b << endl;
 		}
 	j = Sch->orbit_number(b); //Sch->orbit_no[Sch->orbit_inv[b]];
 	if (f_play_it_safe) {
@@ -72,7 +78,8 @@ int action_on_orbits::compute_image(int *Elt, int i, int verbose_level)
 			b = A->element_image_of(a, Elt, 0 /* verbose_level */);
 			j1 = Sch->orbit_number(b); //Sch->orbit_no[Sch->orbit_inv[b]];
 			if (j1 != j) {
-				cout << "action_on_orbits::compute_image playing it safe, there is a problem" << endl;
+				cout << "action_on_orbits::compute_image "
+						"playing it safe, there is a problem" << endl;
 				cout << "action_on_orbits::compute_image i = " << i << endl;
 				cout << "action_on_orbits::compute_image j = " << j << endl;
 				cout << "action_on_orbits::compute_image j1 = " << j1 << endl;
@@ -85,6 +92,6 @@ int action_on_orbits::compute_image(int *Elt, int i, int verbose_level)
 	return j;
 }
 
-}
+}}
 
 

@@ -8,6 +8,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 orbit_transversal::orbit_transversal()
 {
@@ -118,6 +119,6 @@ void orbit_transversal::read_from_file(
 }
 
 
-}
+}}
 
 

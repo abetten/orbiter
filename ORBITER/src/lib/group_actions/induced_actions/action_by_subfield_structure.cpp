@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_by_subfield_structure::action_by_subfield_structure()
 {
@@ -250,6 +251,6 @@ void action_by_subfield_structure::compute_image_int_low_level(
 		}
 }
 
-}
+}}
 
 

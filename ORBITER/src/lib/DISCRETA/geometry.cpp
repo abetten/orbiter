@@ -10,6 +10,8 @@
 
 
 namespace orbiter {
+namespace discreta {
+
 
 #undef GEOMETRY_CHANGE_KIND_VERBOSE
 #undef GEOMETRY_COPY_VERBOSE
@@ -979,5 +981,6 @@ int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f
 		<< geo_nr << " " << geo_label << " in file " << fname << endl;
 	exit(1);
 }
-}
+}}
+
 

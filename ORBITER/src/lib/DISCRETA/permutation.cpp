@@ -8,6 +8,9 @@
 
 
 namespace orbiter {
+namespace discreta {
+
+
 
 #undef PERMUTATION_CHANGE_KIND_VERBOSE
 #undef PERMUTATION_COPY_VERBOSE
@@ -1296,6 +1299,6 @@ char get_character(istream & is, int f_v)
 }
 #endif
 
-}
+}}
 
 

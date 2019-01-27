@@ -8,6 +8,8 @@
 
 namespace orbiter {
 
+namespace group_actions {
+
 
 // #############################################################################
 // action_by_conjugation.C:
@@ -916,7 +918,8 @@ public:
 };
 
 
-}
+}}
+
 
 
 

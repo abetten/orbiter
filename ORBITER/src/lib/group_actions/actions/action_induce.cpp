@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action *action::induced_action_on_set_partitions(
 		int universal_set_size, int partition_size,
@@ -2686,5 +2687,5 @@ void action::base_change(action *old_action,
 		}
 }
 
-}
+}}
 

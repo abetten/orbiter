@@ -11,6 +11,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 void strong_generators::init_linear_group_from_scratch(
 	action *&A,
@@ -3093,4 +3094,4 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 
 
 
-}
+}}

@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_by_conjugation::action_by_conjugation()
 {
@@ -139,4 +140,4 @@ int action_by_conjugation::multiply(action *A,
 	return k;
 }
 
-}
+}}

@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_k_subsets::action_on_k_subsets()
 {
@@ -36,7 +37,8 @@ void action_on_k_subsets::free()
 	null();
 }
 
-void action_on_k_subsets::init(action *A, int k, int verbose_level)
+void action_on_k_subsets::init(action *A,
+		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int n;
@@ -52,21 +54,25 @@ void action_on_k_subsets::init(action *A, int k, int verbose_level)
 	set2 = NEW_int(k);
 	if (f_v) {
 		cout << "action_on_k_subsets::init n=" << n << endl;
-		cout << "action_on_k_subsets::init n choose k=" << degree << endl;
+		cout << "action_on_k_subsets::init "
+				"n choose k=" << degree << endl;
 		}
 }
 
-void action_on_k_subsets::compute_image(int *Elt, int i, int &j, int verbose_level)
+void action_on_k_subsets::compute_image(
+		int *Elt, int i, int &j, int verbose_level)
 {
 	int u, a, b;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "action_on_k_subsets::compute_image i = " << i << endl;
+		cout << "action_on_k_subsets::compute_image "
+				"i = " << i << endl;
 		}
 	if (i < 0 || i >= degree) {
-		cout << "action_on_k_subsets::compute_image i = " << i << " out of range" << endl;
+		cout << "action_on_k_subsets::compute_image "
+				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
 	unrank_k_subset(i, set1, A->degree, k);
@@ -85,11 +91,12 @@ void action_on_k_subsets::compute_image(int *Elt, int i, int &j, int verbose_lev
 		cout << " = " << j << endl;
 		}
 	if (j < 0 || j >= degree) {
-		cout << "action_on_k_subsets::compute_image j = " << j << " out of range" << endl;
+		cout << "action_on_k_subsets::compute_image "
+				"j = " << j << " out of range" << endl;
 		exit(1);
 		}
 }
 
 
-}
+}}
 

@@ -210,7 +210,8 @@ void compute_lifts_new(
 		}
 	
 	if (f_v) {
-		cout << "compute_lifts_new before compute_liftings_new" << endl;
+		cout << "compute_lifts_new "
+				"before compute_liftings_new" << endl;
 		}
 
 	E->compute_liftings_new(f_solve, f_save, f_read_instead, 

@@ -15,13 +15,15 @@
 
 
 namespace orbiter {
+namespace discreta {
 
 #undef MATRIX_COPY_VERBOSE
 #undef DEBUG_S_IJ
 
 #undef DEBUG_CONTENT
 
-static int gfq_dep(int n, matrix& A, matrix& P, Vector& v, int m, permutation& rho, int verbose_level);
+static int gfq_dep(int n, matrix& A, matrix& P,
+		Vector& v, int m, permutation& rho, int verbose_level);
 
 
 
@@ -36,7 +38,8 @@ matrix::matrix()
 matrix::matrix(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "matrix::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	cout << "matrix::copy constructor for object: "
+			<< const_cast<discreta_base &>(x) << "\n";
 	clearself();
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
@@ -164,7 +167,8 @@ ostream& matrix::print(ostream& ost)
 		ost << "\\end{array}\n";
 		}
 	else {
-		ost << "current_printing_mode() = " << current_printing_mode() << " not yet implemented" << endl;
+		ost << "current_printing_mode() = "
+				<< current_printing_mode() << " not yet implemented" << endl;
 		}
 #ifdef PRint_WITH_TYPE
 	ost << ")";
@@ -1067,7 +1071,8 @@ void matrix::X_times_id_minus_self()
 		}
 }
 
-void matrix::smith_normal_form(matrix& P, matrix& Pv, matrix& Q, matrix& Qv, int verbose_level)
+void matrix::smith_normal_form(matrix& P, matrix& Pv,
+		matrix& Q, matrix& Qv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int m, n, i, j, l, ii, jj, stable;
@@ -1146,7 +1151,8 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv, matrix& Q, matrix& Qv, int
 					}
 				if (ii < m) {
 					if (f_v) {
-						cout << "adding column " << jj << " to column " << i << endl;
+						cout << "adding column " << jj
+								<< " to column " << i << endl;
 						}
 					multiply_2by2_from_right(i, jj, a1, a0, a1, a1, verbose_level - 2);
 					Q.multiply_2by2_from_right(i, jj, a1, a0, a1, a1, 0);
@@ -1172,7 +1178,8 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv, matrix& Q, matrix& Qv, int
 		}
 }
 
-int matrix::smith_eliminate_column(matrix& P, matrix& Pv, int i, int verbose_level)
+int matrix::smith_eliminate_column(matrix& P,
+		matrix& Pv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1188,7 +1195,8 @@ int matrix::smith_eliminate_column(matrix& P, matrix& Pv, int i, int verbose_lev
 		x = s_ij(i, i);
 		y = s_ij(j, i);
 		if (f_v) {
-			cout << "smith_eliminate_column() j=" << j << " x=" << x << " y=" << y << endl;
+			cout << "smith_eliminate_column() j=" << j
+					<< " x=" << x << " y=" << y << endl;
 			cout << "this=" << endl << *this << endl;
 			}
 		if (y.is_zero()) {
@@ -1203,7 +1211,8 @@ int matrix::smith_eliminate_column(matrix& P, matrix& Pv, int i, int verbose_lev
 		if (f_v) {
 			cout << *this;
 			cout << "i=" << i << " j=" << j << ": ";
-			cout << g << " = (" << u << ") * (" << x << ") + (" << v << ") * (" << y << ")" << endl;
+			cout << g << " = (" << u << ") * (" << x << ") + "
+					"(" << v << ") * (" << y << ")" << endl;
 			}
 		if (u.is_zero() && x.compare_with_euklidean(y) == 0) {
 			u.swap(v);
@@ -1212,7 +1221,8 @@ int matrix::smith_eliminate_column(matrix& P, matrix& Pv, int i, int verbose_lev
 				cout << "after switch:" << endl;
 				cout << "this=" << endl << *this << endl;
 				cout << "i=" << i << " j=" << j << ": ";
-				cout << g << " = (" << u << ") * (" << x << ") + (" << v << ") * (" << y << ")" << endl;
+				cout << g << " = (" << u << ") * (" << x << ") + "
+						"(" << v << ") * (" << y << ")" << endl;
 				}
 			}
 		x.integral_division_exact(g, x1);
@@ -1220,24 +1230,28 @@ int matrix::smith_eliminate_column(matrix& P, matrix& Pv, int i, int verbose_lev
 		y1.negate();
 		multiply_2by2_from_left(i, j, u, v, y1, x1, verbose_level - 2);
 		if (f_v) {
-			cout << "After multiply_2by2_from_left, this=" << endl << *this << endl;
+			cout << "After multiply_2by2_from_left, "
+					"this=" << endl << *this << endl;
 			}
 		P.multiply_2by2_from_left(i, j, u, v, y1, x1, 0);
 		if (f_v) {
-			cout << "After P.multiply_2by2_from_left, P=" << endl << P << endl;
+			cout << "After P.multiply_2by2_from_left, "
+					"P=" << endl << P << endl;
 			}
 		v.negate();
 		y1.negate();
 		Pv.multiply_2by2_from_right(i, j, x1, v, y1, u, 0);
 		if (f_v) {
-			cout << "After Pv.multiply_2by2_from_right, Pv=" << endl << Pv << endl;
+			cout << "After Pv.multiply_2by2_from_right, "
+					"Pv=" << endl << Pv << endl;
 			}
 		action = TRUE;
 		}
 	return action;
 }
 
-int matrix::smith_eliminate_row(matrix& Q, matrix& Qv, int i, int verbose_level)
+int matrix::smith_eliminate_row(matrix& Q,
+		matrix& Qv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1252,7 +1266,8 @@ int matrix::smith_eliminate_row(matrix& Q, matrix& Qv, int i, int verbose_level)
 		x = s_ij(i, i);
 		y = s_ij(i, j);
 		if (f_v) {
-			cout << "smith_eliminate_row() j=" << j << " x=" << x << " y=" << y << endl;
+			cout << "smith_eliminate_row() "
+					"j=" << j << " x=" << x << " y=" << y << endl;
 			}
 		if (y.is_zero())
 			continue;
@@ -1260,7 +1275,8 @@ int matrix::smith_eliminate_row(matrix& Q, matrix& Qv, int i, int verbose_level)
 		if (f_vv) {
 			cout << *this;
 			cout << "i=" << i << " j=" << j << ": ";
-			cout << g << " = (" << u << ") * (" << x << ") + (" << v << ") * (" << y << ")" << endl;
+			cout << g << " = (" << u << ") * (" << x << ") + "
+					"(" << v << ") * (" << y << ")" << endl;
 			}
 		if (u.is_zero() && x.compare_with_euklidean(y) == 0) {
 			u.swap(v);
@@ -1269,7 +1285,8 @@ int matrix::smith_eliminate_row(matrix& Q, matrix& Qv, int i, int verbose_level)
 				cout << "after switch:" << endl;
 				cout << *this;
 				cout << "i=" << i << " j=" << j << ": ";
-				cout << g << " = (" << u << ") * (" << x << ") + (" << v << ") * (" << y << ")" << endl;
+				cout << g << " = (" << u << ") * (" << x << ") + "
+						"(" << v << ") * (" << y << ")" << endl;
 				}
 			}
 		x.integral_division_exact(g, x1);
@@ -1289,7 +1306,8 @@ int matrix::smith_eliminate_row(matrix& Q, matrix& Qv, int i, int verbose_level)
 }
 
 void matrix::multiply_2by2_from_left(int i, int j, 
-	discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, int verbose_level)
+	discreta_base& aii, discreta_base& aij,
+	discreta_base& aji, discreta_base& ajj, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int k, n;
@@ -1315,7 +1333,8 @@ void matrix::multiply_2by2_from_left(int i, int j,
 }
 
 void matrix::multiply_2by2_from_right(int i, int j, 
-	discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, int verbose_level)
+	discreta_base& aii, discreta_base& aij,
+	discreta_base& aji, discreta_base& ajj, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int k, m;
@@ -1400,7 +1419,7 @@ void matrix::from_vector_of_columns(Vector& v)
 	
 	n = v.s_l();
 	if (n <= 0) {
-		cout << "matrix::from_vector_of_columns() n <= 0\n";
+		cout << "matrix::from_vector_of_columns n <= 0" << endl;
 		exit(1);
 		}
 	m = v[0].as_vector().s_l();
@@ -1430,7 +1449,9 @@ void matrix::evaluate_at(discreta_base& x)
 }
 
 
-static int gfq_dep(int n, matrix& A, matrix& P, Vector& v, int m, permutation& rho, int verbose_level)
+static int gfq_dep(int n, matrix& A,
+		matrix& P, Vector& v, int m, permutation& rho,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1524,7 +1545,7 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 		v = v1;
 		m++;
 		if (f_vv) {
-			cout << "matrix::KX_module_order_ideal() m=" << m << endl;
+			cout << "matrix::KX_module_order_ideal m=" << m << endl;
 			cout << "v=\n" << v << endl;
 			}
 		f_null = gfq_dep(n, A, P, v, m, rho, verbose_level - 2);
@@ -1532,7 +1553,7 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 			cout << "A=\n" << A << endl;
 			}
 		if (m == n && !f_null) {
-			cout << "gfq_order_ideal() m == n && !f_null\n";
+			cout << "gfq_order_ideal m == n && !f_null" << endl;
 			exit(1);
 			}
 		}
@@ -1544,7 +1565,8 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "matrix::KX_module_order_ideal() order ideal of e_" << i << ": " << mue << endl;
+		cout << "matrix::KX_module_order_ideal "
+				"order ideal of e_" << i << ": " << mue << endl;
 #if 0
 		v.m_l_n(n);
 		v[i].one();
@@ -1575,7 +1597,8 @@ void matrix::KX_module_apply(unipoly& p, Vector& v)
 }
 
 void matrix::KX_module_join(Vector& v1, unipoly& mue1, 
-	Vector& v2, unipoly& mue2, Vector& v3, unipoly& mue3, int verbose_level)
+	Vector& v2, unipoly& mue2, Vector& v3, unipoly& mue3,
+	int verbose_level)
 // compare Lueneburg~\cite{Lueneburg87a} p. 106.
 {
 	int f_v = (verbose_level >= 1);
@@ -1645,7 +1668,8 @@ void matrix::KX_module_join(Vector& v1, unipoly& mue1,
 		}
 }
 
-void matrix::KX_cyclic_module_generator(Vector& v, unipoly& mue, int verbose_level)
+void matrix::KX_cyclic_module_generator(Vector& v,
+		unipoly& mue, int verbose_level)
 {
 	int f_v = (verbose_level > 1);
 	int f_vv = (verbose_level > 2);
@@ -1671,14 +1695,16 @@ void matrix::KX_cyclic_module_generator(Vector& v, unipoly& mue, int verbose_lev
 		mue1 = mue3;
 		}
 	if (mue1.degree() < f) {
-		cout << "matrix::KX_cyclic_module_generator() error: mue1.degree() < f" << endl;
+		cout << "matrix::KX_cyclic_module_generator error: "
+				"mue1.degree < f" << endl;
 		exit(1);
 		}
 	v1.swap(v);
 	mue1.swap(mue);
 }
 
-void matrix::KX_module_minpol(unipoly& p, unipoly& m, unipoly& mue, int verbose_level)
+void matrix::KX_module_minpol(unipoly& p,
+		unipoly& m, unipoly& mue, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1756,7 +1782,7 @@ void matrix::KX_module_minpol(unipoly& p, unipoly& m, unipoly& mue, int verbose_
 			}
 		}
 	if (f_vv) {
-		cout << "y (coefficients must lie in the ground field):\n" << endl;
+		cout << "y (coefficients must lie in the ground field):" << endl;
 		for (i = 0; i <= l; i++) {
 			cout << y[i] << " * X^" << i << endl;
 			}
@@ -1770,7 +1796,8 @@ void matrix::KX_module_minpol(unipoly& p, unipoly& m, unipoly& mue, int verbose_
 		}
 }
 
-void matrix::binomial(int n_min, int n_max, int k_min, int k_max)
+void matrix::binomial(int n_min, int n_max,
+		int k_min, int k_max)
 {
 	int i, j, m, n;
 	
@@ -1779,12 +1806,13 @@ void matrix::binomial(int n_min, int n_max, int k_min, int k_max)
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::Binomial(n_min + i, k_min + j, s_ij(i, j));
+			::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			}
 		}
 }
 
-void matrix::stirling_second(int n_min, int n_max, int k_min, int k_max, int f_ordered)
+void matrix::stirling_second(int n_min, int n_max,
+		int k_min, int k_max, int f_ordered)
 {
 	int i, j, m, n;
 	int f_v = FALSE;
@@ -1794,12 +1822,14 @@ void matrix::stirling_second(int n_min, int n_max, int k_min, int k_max, int f_o
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::stirling_second(n_min + i, k_min + j, f_ordered, s_ij(i, j), f_v);
+			::stirling_second(n_min + i,
+					k_min + j, f_ordered, s_ij(i, j), f_v);
 			}
 		}
 }
 
-void matrix::stirling_first(int n_min, int n_max, int k_min, int k_max, int f_signless)
+void matrix::stirling_first(int n_min, int n_max,
+		int k_min, int k_max, int f_signless)
 {
 	int i, j, m, n;
 	int f_v = FALSE;
@@ -1809,12 +1839,14 @@ void matrix::stirling_first(int n_min, int n_max, int k_min, int k_max, int f_si
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::stirling_first(n_min + i, k_min + j, f_signless, s_ij(i, j), f_v);
+			::stirling_first(n_min + i, k_min + j,
+					f_signless, s_ij(i, j), f_v);
 			}
 		}
 }
 
-void matrix::binomial(int n_min, int n_max, int k_min, int k_max, int f_inverse)
+void matrix::binomial(int n_min, int n_max,
+		int k_min, int k_max, int f_inverse)
 {
 	int i, j, m, n;
 	
@@ -1823,7 +1855,7 @@ void matrix::binomial(int n_min, int n_max, int k_min, int k_max, int f_inverse)
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::Binomial(n_min + i, k_min + j, s_ij(i, j));
+			::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			if (f_inverse && ODD(n_min + i + k_min + j))
 				s_ij(i, j).negate();			
 			}
@@ -3650,4 +3682,4 @@ void matrix::save_as_inc(ofstream &f)
 }
 
 
-}
+}}

@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 product_action::product_action()
 {
@@ -55,7 +56,8 @@ void product_action::free()
 }
 
 
-void product_action::init(action *A1, action *A2, int f_use_projections, int verbose_level)
+void product_action::init(action *A1, action *A2,
+		int f_use_projections, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -72,7 +74,8 @@ void product_action::init(action *A1, action *A2, int f_use_projections, int ver
 		offset = 0;
 	degree = offset + A1->degree * A2->degree;
 	elt_size_in_int = A1->elt_size_in_int + A2->elt_size_in_int;
-	coded_elt_size_in_char = A1->coded_elt_size_in_char + A2->coded_elt_size_in_char;
+	coded_elt_size_in_char =
+			A1->coded_elt_size_in_char + A2->coded_elt_size_in_char;
 
 	Elt1 = NEW_int(elt_size_in_int);
 	Elt2 = NEW_int(elt_size_in_int);
@@ -84,13 +87,16 @@ void product_action::init(action *A1, action *A2, int f_use_projections, int ver
 
 	Elts = NEW_OBJECT(page_storage);
 	if (f_vv) {
-		cout << "matrix_group::init_linear() calling Elts->init()" << endl;
+		cout << "matrix_group::init_linear calling Elts->init" << endl;
 		}
-	Elts->init(coded_elt_size_in_char /* entry_size */, PAGE_LENGTH_LOG, f_vv);
+	Elts->init(
+			coded_elt_size_in_char /* entry_size */,
+			PAGE_LENGTH_LOG, f_vv);
 	//Elts->add_elt_print_function(elt_print, (void *) this);
 }
 
-int product_action::compute_image(action *A, int *Elt, int i, int verbose_level)
+int product_action::compute_image(action *A,
+		int *Elt, int i, int verbose_level)
 {
 	//verbose_level = 1;
 	int x, y, xx, yy, j;
@@ -129,7 +135,8 @@ int product_action::compute_image(action *A, int *Elt, int i, int verbose_level)
 		j = xx * A2->degree + yy;
 		}
 	if (f_v) {
-		cout << "product_action::compute_image image of " << i << " is " << j << endl;
+		cout << "product_action::compute_image "
+				"image of " << i << " is " << j << endl;
 		}
 	return j;
 }
@@ -154,16 +161,19 @@ int product_action::element_is_one(action *A, int *Elt, int verbose_level)
 void product_action::element_unpack(uchar *elt, int *Elt, int verbose_level)
 {
 	A1->element_unpack(elt, Elt, verbose_level);
-	A2->element_unpack(elt + A1->coded_elt_size_in_char, Elt + A1->elt_size_in_int, verbose_level);
+	A2->element_unpack(elt + A1->coded_elt_size_in_char,
+			Elt + A1->elt_size_in_int, verbose_level);
 }
 
 void product_action::element_pack(int *Elt, uchar *elt, int verbose_level)
 {
 	A1->element_pack(Elt, elt, verbose_level);
-	A2->element_pack(Elt + A1->elt_size_in_int, elt + A1->coded_elt_size_in_char, verbose_level);
+	A2->element_pack(Elt + A1->elt_size_in_int,
+			elt + A1->coded_elt_size_in_char, verbose_level);
 }
 
-void product_action::element_retrieve(action *A, int hdl, int *Elt, int verbose_level)
+void product_action::element_retrieve(action *A,
+		int hdl, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	uchar *p_elt;
@@ -173,7 +183,8 @@ void product_action::element_retrieve(action *A, int hdl, int *Elt, int verbose_
 		}
 	p_elt = Elts->s_i(hdl);
 	A1->element_unpack(p_elt, Elt, verbose_level);
-	A2->element_unpack(p_elt + A1->coded_elt_size_in_char, Elt + A1->elt_size_in_int, verbose_level);
+	A2->element_unpack(p_elt + A1->coded_elt_size_in_char,
+			Elt + A1->elt_size_in_int, verbose_level);
 }
 
 int product_action::element_store(action *A, int *Elt, int verbose_level)
@@ -193,25 +204,30 @@ int product_action::element_store(action *A, int *Elt, int verbose_level)
 void product_action::element_mult(int *A, int *B, int *AB, int verbose_level)
 {
 	A1->element_mult(A, B, AB, verbose_level);
-	A2->element_mult(A + A1->elt_size_in_int, B + A1->elt_size_in_int, AB + A1->elt_size_in_int, verbose_level);
+	A2->element_mult(A + A1->elt_size_in_int,
+			B + A1->elt_size_in_int,
+			AB + A1->elt_size_in_int, verbose_level);
 }
 
 void product_action::element_invert(int *A, int *Av, int verbose_level)
 {
 	A1->element_invert(A, Av, verbose_level);
-	A2->element_invert(A + A1->elt_size_in_int, Av + A1->elt_size_in_int, verbose_level);
+	A2->element_invert(A + A1->elt_size_in_int,
+			Av + A1->elt_size_in_int, verbose_level);
 }
 
 void product_action::element_transpose(int *A, int *At, int verbose_level)
 {
 	A1->element_transpose(A, At, verbose_level);
-	A2->element_transpose(A + A1->elt_size_in_int, At + A1->elt_size_in_int, verbose_level);
+	A2->element_transpose(A + A1->elt_size_in_int,
+			At + A1->elt_size_in_int, verbose_level);
 }
 
 void product_action::element_move(int *A, int *B, int verbose_level)
 {
 	A1->element_move(A, B, verbose_level);
-	A2->element_move(A + A1->elt_size_in_int, B + A1->elt_size_in_int, verbose_level);
+	A2->element_move(A + A1->elt_size_in_int,
+			B + A1->elt_size_in_int, verbose_level);
 }
 
 void product_action::element_print(int *A, ostream &ost)
@@ -239,6 +255,7 @@ void product_action::make_element(int *Elt, int *data, int verbose_level)
 		data + A1->make_element_size, verbose_level);
 }
 
-}
+}}
+
 
 

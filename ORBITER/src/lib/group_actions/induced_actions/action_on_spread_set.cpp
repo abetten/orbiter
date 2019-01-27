@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_spread_set::action_on_spread_set()
 {
@@ -51,7 +52,8 @@ void action_on_spread_set::free()
 	null();
 }
 
-void action_on_spread_set::init(action *A_PGL_n_q, action *A_PGL_k_q, sims *G_PGL_k_q, 
+void action_on_spread_set::init(action *A_PGL_n_q,
+	action *A_PGL_k_q, sims *G_PGL_k_q,
 	int k, finite_field *F, int verbose_level)
 // we are acting on the elements of G_PGL_k_q, so the degree of the action 
 // is the order of this group.
@@ -84,7 +86,8 @@ void action_on_spread_set::init(action *A_PGL_n_q, action *A_PGL_k_q, sims *G_PG
 	G_PGL_k_q->group_order(go);
 	degree = go.as_int();
 	if (f_v) {
-		cout << "action_on_spread_set::init the order of the group of matrices is " << degree << endl;
+		cout << "action_on_spread_set::init the order of "
+				"the group of matrices is " << degree << endl;
 		}
 
 	Elt1 = NEW_int(A_PGL_k_q->elt_size_in_int);
@@ -106,7 +109,8 @@ void action_on_spread_set::init(action *A_PGL_n_q, action *A_PGL_k_q, sims *G_PG
 		}
 }
 
-int action_on_spread_set::compute_image_int(int *Elt, int rk, int verbose_level)
+int action_on_spread_set::compute_image_int(int *Elt,
+		int rk, int verbose_level)
 {
 	//verbose_level = 2;
 	int f_v = (verbose_level >= 1);
@@ -114,16 +118,20 @@ int action_on_spread_set::compute_image_int(int *Elt, int rk, int verbose_level)
 	int i, rk2;
 	
 	if (f_v) {
-		cout << "action_on_spread_set::compute_image_int rk = " << rk << endl;
+		cout << "action_on_spread_set::compute_image_int "
+				"rk = " << rk << endl;
 		}
 
 	unrank_point(rk, mtx1, verbose_level - 1);
 	matrix_to_subspace(mtx1, subspace1, verbose_level);
 
 	if (f_vv) {
-		cout << "action_on_spread_set::compute_image_int after unrank_point" << endl;
-		print_integer_matrix_width(cout, subspace1, k, n, n, F->log10_of_q);
-		cout << "action_on_spread_set::compute_image_int group element:" << endl;
+		cout << "action_on_spread_set::compute_image_int "
+				"after unrank_point" << endl;
+		print_integer_matrix_width(cout,
+				subspace1, k, n, n, F->log10_of_q);
+		cout << "action_on_spread_set::compute_image_int "
+				"group element:" << endl;
 		int_matrix_print(Elt, n, n);
 		}
 
@@ -133,20 +141,24 @@ int action_on_spread_set::compute_image_int(int *Elt, int rk, int verbose_level)
 		}
 
 	if (f_vv) {
-		cout << "action_on_spread_set::compute_image_int after applying group element" << endl;
-		print_integer_matrix_width(cout, subspace2, k, n, n, F->log10_of_q);
+		cout << "action_on_spread_set::compute_image_int "
+				"after applying group element" << endl;
+		print_integer_matrix_width(cout,
+				subspace2, k, n, n, F->log10_of_q);
 		}
 
 	subspace_to_matrix(subspace2, mtx2, verbose_level - 1);
 	rk2 = rank_point(mtx2, verbose_level - 1);
 
 	if (f_v) {
-		cout << "action_on_spread_set::compute_image_int image of " << rk << " is " << rk2 << endl;
+		cout << "action_on_spread_set::compute_image_int "
+				"image of " << rk << " is " << rk2 << endl;
 		}
 	return rk2;
 }
 
-void action_on_spread_set::matrix_to_subspace(int *mtx, int *subspace, int verbose_level)
+void action_on_spread_set::matrix_to_subspace(
+		int *mtx, int *subspace, int verbose_level)
 {
 	int i, j;
 	
@@ -164,7 +176,8 @@ void action_on_spread_set::matrix_to_subspace(int *mtx, int *subspace, int verbo
 		}
 }
 
-void action_on_spread_set::subspace_to_matrix(int *subspace, int *mtx, int verbose_level)
+void action_on_spread_set::subspace_to_matrix(
+		int *subspace, int *mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, r;
@@ -175,11 +188,13 @@ void action_on_spread_set::subspace_to_matrix(int *subspace, int *mtx, int verbo
 	
 	r = F->Gauss_easy(subspace, k, n);
 	if (r != k) {
-		cout << "action_on_spread_set::subspace_to_matrix r != k" << endl;
+		cout << "action_on_spread_set::subspace_to_matrix "
+				"r != k" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "action_on_spread_set::subspace_to_matrix after Gauss_easy" << endl;
+		cout << "action_on_spread_set::subspace_to_matrix "
+				"after Gauss_easy" << endl;
 		}
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
@@ -187,16 +202,19 @@ void action_on_spread_set::subspace_to_matrix(int *subspace, int *mtx, int verbo
 			}
 		}
 	if (f_v) {
-		cout << "action_on_spread_set::subspace_to_matrix done" << endl;
+		cout << "action_on_spread_set::subspace_to_matrix "
+				"done" << endl;
 		}
 }
 
-void action_on_spread_set::unrank_point(int rk, int *mtx, int verbose_level)
+void action_on_spread_set::unrank_point(
+		int rk, int *mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "action_on_spread_set::unrank_point rk = " << rk << endl;
+		cout << "action_on_spread_set::unrank_point "
+				"rk = " << rk << endl;
 		}
 	G_PGL_k_q->element_unrank_int(rk, Elt1);
 	int_vec_copy(Elt1, mtx, k * k);
@@ -205,7 +223,8 @@ void action_on_spread_set::unrank_point(int rk, int *mtx, int verbose_level)
 		}
 }
 
-int action_on_spread_set::rank_point(int *mtx, int verbose_level)
+int action_on_spread_set::rank_point(
+		int *mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk;
@@ -222,7 +241,8 @@ int action_on_spread_set::rank_point(int *mtx, int verbose_level)
 	return rk;
 }
 
-void action_on_spread_set::compute_image_low_level(int *Elt, int *input, int *output, int verbose_level)
+void action_on_spread_set::compute_image_low_level(
+		int *Elt, int *input, int *output, int verbose_level)
 {
 	//verbose_level = 2;
 	int f_v = (verbose_level >= 1);
@@ -233,9 +253,11 @@ void action_on_spread_set::compute_image_low_level(int *Elt, int *input, int *ou
 		cout << "action_on_spread_set::compute_image_low_level" << endl;
 		}
 	if (f_vv) {
-		cout << "action_on_spread_set::compute_image_low_level input=" << endl;
+		cout << "action_on_spread_set::compute_image_low_level "
+				"input=" << endl;
 		int_matrix_print(input, k, k);
-		cout << "action_on_spread_set::compute_image_low_level matrix=" << endl;
+		cout << "action_on_spread_set::compute_image_low_level "
+				"matrix=" << endl;
 		int_matrix_print(Elt, n, n);
 		}
 
@@ -244,24 +266,30 @@ void action_on_spread_set::compute_image_low_level(int *Elt, int *input, int *ou
 
 	for (i = 0; i < k; i++) {
 		A_PGL_n_q->element_image_of_low_level(
-			subspace1 + i * n, subspace2 + i * n, Elt, verbose_level - 2);
+			subspace1 + i * n,
+			subspace2 + i * n,
+			Elt,
+			verbose_level - 2);
 		}
 	if (f_vv) {
-		cout << "action_on_spread_set::compute_image_low_level after mult=" << endl;
+		cout << "action_on_spread_set::compute_image_low_level "
+				"after mult=" << endl;
 		int_matrix_print(subspace2, k, n);
 		}
 
 	subspace_to_matrix(subspace2, output, verbose_level - 1);
 
 	if (f_vv) {
-		cout << "action_on_spread_set::compute_image_low_level output=" << endl;
+		cout << "action_on_spread_set::compute_image_low_level "
+				"output=" << endl;
 		int_matrix_print(output, k, k);
 		}
 
 	if (f_v) {
-		cout << "action_on_spread_set::compute_image_low_level done" << endl;
+		cout << "action_on_spread_set::compute_image_low_level "
+				"done" << endl;
 		}
 }
 
-}
+}}
 

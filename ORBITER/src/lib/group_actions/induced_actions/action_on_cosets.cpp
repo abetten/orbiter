@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_cosets::action_on_cosets()
 {
@@ -145,5 +146,5 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 
 
 
-}
+}}
 

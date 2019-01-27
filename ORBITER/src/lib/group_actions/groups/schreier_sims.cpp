@@ -8,6 +8,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 schreier_sims::schreier_sims()
 {
@@ -617,5 +618,5 @@ void schreier_sims::create_group(int verbose_level)
 		}
 }
 
-}
+}}
 

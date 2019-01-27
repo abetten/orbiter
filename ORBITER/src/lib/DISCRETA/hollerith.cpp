@@ -8,6 +8,8 @@
 
 
 namespace orbiter {
+namespace discreta {
+
 
 #undef HOLLERITH_COPY_VERBOSE
 
@@ -218,4 +220,5 @@ void hollerith::get_current_date()
 	init(str);
 }
 
-}
+}}
+

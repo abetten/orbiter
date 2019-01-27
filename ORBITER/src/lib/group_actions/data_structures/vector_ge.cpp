@@ -6,10 +6,11 @@
 #include "foundations/foundations.h"
 #include "group_actions.h"
 
-#undef PRint_WITH_TYPE
+#undef PRINT_WITH_TYPE
 #define RANGE_CHECKING
 
 namespace orbiter {
+namespace group_actions {
 
 vector_ge::vector_ge()
 {
@@ -78,7 +79,8 @@ void vector_ge::init_double(action *A, int *Elt1, int *Elt2)
 	A->element_move(Elt2, ith(1), 0);
 }
 
-void vector_ge::init_from_permutation_representation(action *A, int *data, 
+void vector_ge::init_from_permutation_representation(
+	action *A, int *data,
 	int nb_elements, int verbose_level)
 // data[nb_elements * A->degree]
 {
@@ -88,15 +90,18 @@ void vector_ge::init_from_permutation_representation(action *A, int *data,
 	int *Elt;
 
 	if (f_v) {
-		cout << "vector_ge::init_from_permutation_representation" << endl;
+		cout << "vector_ge::init_from_permutation_"
+				"representation" << endl;
 		}
 	Elt = NEW_int(A->elt_size_in_int);
 	init(A);
 	allocate(nb_elements);
 	for (i = 0; i < nb_elements; i++) {
-		A->make_element_from_permutation_representation(Elt, data + i * A->degree, 0/*verbose_level*/);
+		A->make_element_from_permutation_representation(
+				Elt, data + i * A->degree, 0/*verbose_level*/);
 		if (f_vv) {
-			cout << "vector_ge::init_from_permutation_representation generator " << i << ": " << endl;
+			cout << "vector_ge::init_from_permutation_"
+					"representation generator " << i << ": " << endl;
 			A->element_print_quick(Elt, cout);
 			}
 		A->element_move(Elt, ith(i), 0);
@@ -104,7 +109,8 @@ void vector_ge::init_from_permutation_representation(action *A, int *data,
 	
 	FREE_int(Elt);
 	if (f_v) {
-		cout << "vector_ge::init_from_permutation_representation done" << endl;
+		cout << "vector_ge::init_from_permutation_"
+				"representation done" << endl;
 		}
 }
 
@@ -125,7 +131,8 @@ void vector_ge::init_from_data(action *A, int *data,
 	for (i = 0; i < nb_elements; i++) {
 		A->make_element(Elt, data + i * elt_size, verbose_level);
 		if (f_vv) {
-			cout << "vector_ge::init_from_data generator " << i << ": " << endl;
+			cout << "vector_ge::init_from_data "
+					"generator " << i << ": " << endl;
 			A->element_print_quick(Elt, cout);
 			}
 		A->element_move(Elt, ith(i), 0);
@@ -137,7 +144,8 @@ void vector_ge::init_from_data(action *A, int *data,
 		}
 }
 
-void vector_ge::init_conjugate_svas_of(vector_ge *v, int *Elt, int verbose_level)
+void vector_ge::init_conjugate_svas_of(vector_ge *v,
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -168,7 +176,8 @@ void vector_ge::init_conjugate_svas_of(vector_ge *v, int *Elt, int verbose_level
 		}
 }
 
-void vector_ge::init_conjugate_sasv_of(vector_ge *v, int *Elt, int verbose_level)
+void vector_ge::init_conjugate_sasv_of(vector_ge *v,
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -203,7 +212,8 @@ int *vector_ge::ith(int i)
 {
 #ifdef RANGE_CHECKING
 	if (i < 0 || i >= len) {
-		cout << "vector_ge::ith() access error i = " << i << " len = " << len << endl;
+		cout << "vector_ge::ith() access error "
+				"i = " << i << " len = " << len << endl;
 		exit(1);
 		}
 #endif
@@ -227,7 +237,8 @@ ostream& vector_ge::print(ostream& ost)
 	int i;
 	
 	ost << "(" << endl;
-	//ost << "len=" << len << " A->elt_size_in_int=" << A->elt_size_in_int << " data=" << data << endl;
+	//ost << "len=" << len << " A->elt_size_in_int="
+	//<< A->elt_size_in_int << " data=" << data << endl;
 	for (i = 0; i < len; i++) {
 		if (data == NULL) {
 			cout << "vector_ge::print fatal: data == NULL" << endl;
@@ -268,7 +279,8 @@ ostream& vector_ge::print_tex(ostream& ost)
 	int i;
 	
 	//ost << "(" << endl;
-	//ost << "len=" << len << " A->elt_size_in_int=" << A->elt_size_in_int << " data=" << data << endl;
+	//ost << "len=" << len << " A->elt_size_in_int="
+	//<< A->elt_size_in_int << " data=" << data << endl;
 	for (i = 0; i < len; i++) {
 		if (data == NULL) {
 			cout << "vector_ge::print fatal: data == NULL" << endl;
@@ -323,7 +335,8 @@ void vector_ge::allocate(int length)
 {
 	if (data) {
 		FREE_int(data);
-		//cout << "vector_ge::allocate warning, data != NULL, we seem to be having a memory leak here" << endl;
+		//cout << "vector_ge::allocate warning, data != NULL, "
+		//"we seem to be having a memory leak here" << endl;
 		}
 	len = length;
 	data = NEW_int(length * A->elt_size_in_int);
@@ -541,30 +554,35 @@ void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
 		}
 }
 
-void vector_ge::extract_subset_of_elements_by_rank_text_vector(const char *rank_vector_text, sims *S, int verbose_level)
+void vector_ge::extract_subset_of_elements_by_rank_text_vector(
+		const char *rank_vector_text, sims *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "vector_ge::extract_subset_of_elements_by_rank_text_vector" << endl;
+		cout << "vector_ge::extract_subset_of_elements_"
+				"by_rank_text_vector" << endl;
 		}
 	int *v;
 	int len;
 
 	int_vec_scan(rank_vector_text, v, len);
 	if (f_v) {
-		cout << "vector_ge::extract_subset_of_elements_by_rank_text_vector after scanning: ";
+		cout << "vector_ge::extract_subset_of_elements_"
+				"by_rank_text_vector after scanning: ";
 		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 	extract_subset_of_elements_by_rank(v, len, S, verbose_level);
 	FREE_int(v);
 	if (f_v) {
-		cout << "vector_ge::extract_subset_of_elements_by_rank_text_vector done" << endl;
+		cout << "vector_ge::extract_subset_of_elements_"
+				"by_rank_text_vector done" << endl;
 		}
 }
 
-void vector_ge::extract_subset_of_elements_by_rank(int *rank_vector, int len, sims *S, int verbose_level)
+void vector_ge::extract_subset_of_elements_by_rank(
+		int *rank_vector, int len, sims *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, r;
@@ -618,7 +636,8 @@ int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
 		if (f_v) {
 			cout << "testing element " << i << " / " << len << endl;
 			}
-		if (!A2->test_if_set_stabilizes(ith(i), sz, set, 0 /* verbose_level*/)) {
+		if (!A2->test_if_set_stabilizes(ith(i),
+				sz, set, 0 /* verbose_level*/)) {
 			return FALSE;
 			}
 		}
@@ -628,6 +647,6 @@ int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
 	return TRUE;
 }
 
-}
+}}
 
 

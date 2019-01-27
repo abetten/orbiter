@@ -10,6 +10,7 @@
 
 
 namespace orbiter {
+namespace discreta {
 
 
 database::database() : Vector()
@@ -1170,4 +1171,4 @@ void database::file_read(void *p, int size, int nb)
 	fstream_table[idx]->read((char *) p, size * nb);
 }
 
-}
+}}

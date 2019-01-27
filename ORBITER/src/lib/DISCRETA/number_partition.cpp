@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace discreta {
 
 number_partition::number_partition() : Vector()
 {
@@ -449,4 +450,4 @@ int next_passport_i(Vector &pass, int n, int k, int i, int & S)
 		}
 }
 
-}
+}}

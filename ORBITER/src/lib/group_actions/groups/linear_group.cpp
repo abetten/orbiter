@@ -8,6 +8,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 
 
@@ -712,5 +713,6 @@ void linear_group::init_subgroup_from_file(char *prefix,
 }
 
 
-}
+}}
+
 

@@ -14,6 +14,8 @@ namespace orbiter {
 // #############################################################################
 
 
+//! poset classification and orbital matrices
+
 class kramer_mesner {
 
 public:

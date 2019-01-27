@@ -219,7 +219,7 @@ namespace orbiter {
 
 
 
-//! algebra, combinatorics and graph theory, geometry, data structures, solvers
+//! algebra, combinatorics and graph theory, geometry, data structures, solvers; no group theory
 
 namespace foundations {
 

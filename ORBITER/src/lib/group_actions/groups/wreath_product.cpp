@@ -11,6 +11,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 
 wreath_product::wreath_product()
@@ -916,4 +917,4 @@ void wreath_product::make_strong_generators_data(int *&data,
 	}
 }
 
-}
+}}

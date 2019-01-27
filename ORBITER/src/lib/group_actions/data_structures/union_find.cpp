@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 
 union_find::union_find()
@@ -214,5 +215,5 @@ void union_find::add_generator(int *Elt, int verbose_level)
 
 
 
-}
+}}
 

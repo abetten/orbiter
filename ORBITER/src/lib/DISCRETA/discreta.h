@@ -18,6 +18,10 @@
 
 namespace orbiter {
 
+//! legacy project DISCRETA provides typed objects
+
+namespace discreta {
+
 #define BITS_OF_int 32
 #define SYSTEMUNIX
 #undef SYSTEMMAC
@@ -34,50 +38,50 @@ namespace orbiter {
 /******************* Constants for type determination **********************/
 
 enum kind { 
-	BASE = 0,
-	INTEGER = 1,
-	VECTOR = 2,
-	NUMBER_PARTITION = 3, 
+	BASE = 0,                      //!< BASE
+	INTEGER = 1,                   //!< INTEGER
+	VECTOR = 2,                    //!< VECTOR
+	NUMBER_PARTITION = 3,          //!< NUMBER_PARTITION
 	// RATIONAL /* BRUCH */ = 4, 
-	PERMUTATION = 6,
+	PERMUTATION = 6,               //!< PERMUTATION
 	
 	
 	// POLYNOM = 9, 
 	
-	MATRIX = 11,
+	MATRIX = 11,                   //!< MATRIX
 
 	// MONOM = 21, 
-	LONGINTEGER = 22,
+	LONGINTEGER = 22,              //!< LONGINTEGER
 	
 	//SUBGROUP_LATTICE = 36, 
 	//SUBGROUP_ORBIT = 37, 
-	MEMORY = 39, 
+	MEMORY = 39,                   //!< MEMORY
 	
-	HOLLERITH = 44,
+	HOLLERITH = 44,                //!< HOLLERITH
 	
-	DATABASE = 50, 
-	BTREE = 51, 
+	DATABASE = 50,                 //!< DATABASE
+	BTREE = 51,                    //!< BTREE
 	
-	PERM_GROUP = 56,  
-	PERM_GROUP_STAB_CHAIN = 57,  
+	PERM_GROUP = 56,               //!< PERM_GROUP
+	PERM_GROUP_STAB_CHAIN = 57,    //!< PERM_GROUP_STAB_CHAIN
 
-	BT_KEY = 61,
+	BT_KEY = 61,                   //!< BT_KEY
 	
-	DESIGN_PARAMETER = 70,
+	DESIGN_PARAMETER = 70,         //!< DESIGN_PARAMETER
 	 
-	GROUP_SELECTION = 78, 
-	UNIPOLY = 79, 
+	GROUP_SELECTION = 78,          //!< GROUP_SELECTION
+	UNIPOLY = 79,                  //!< UNIPOLY
 
-	DESIGN_PARAMETER_SOURCE = 83,  
-	SOLID = 84, 
+	DESIGN_PARAMETER_SOURCE = 83,  //!< DESIGN_PARAMETER_SOURCE
+	SOLID = 84,                    //!< SOLID
 
-	BITMATRIX = 90,
+	BITMATRIX = 90,                //!< BITMATRIX
 	//PC_PRESENTATION = 91,
 	//PC_SUBGROUP = 92,
 	//GROUP_WORD = 93, 
 	//GROUP_TABLE = 94,
 	//ACTION = 95, 
-	GEOMETRY = 96
+	GEOMETRY = 96                  //!< GEOMETRY
 	
 };
 
@@ -2718,7 +2722,8 @@ void compute_Kramer_Mesner_matrix(poset_classification *gen,
 void matrix_to_diophant(matrix& M, diophant *&D, int verbose_level);
 
 
-}
+}}
+
 
 
 

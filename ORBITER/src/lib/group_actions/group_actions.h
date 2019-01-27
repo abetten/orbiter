@@ -12,6 +12,10 @@ using namespace orbiter::foundations;
 namespace orbiter {
 
 
+//! groups and group actions, induced group actions
+
+namespace group_actions {
+
 
 class action;
 class matrix_group;
@@ -220,7 +224,7 @@ public:
 		int *set, int sz, int verbose_level);
 };
 
-}
+}}
 
 #include "./actions/actions.h"
 #include "./data_structures/data_structures.h"

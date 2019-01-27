@@ -10,6 +10,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 
 typedef struct action_is_minimal_data action_is_minimal_data;
@@ -733,6 +734,7 @@ finish:
 	return ret;
 }
 
-}
+}}
+
 
 

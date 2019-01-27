@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_subgroups::action_on_subgroups()
 {
@@ -63,7 +64,9 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 	int f_vv = FALSE; //(verbose_level >= 5);
 	
 	if (f_v) {
-		cout << "action_on_subgroups::init nb_subgroups=" << nb_subgroups << " subgroup_order=" << subgroup_order << endl;
+		cout << "action_on_subgroups::init "
+				"nb_subgroups=" << nb_subgroups
+				<< " subgroup_order=" << subgroup_order << endl;
 		}
 	action_on_subgroups::A = A;
 	action_on_subgroups::S = S;
@@ -91,7 +94,9 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 			cout << endl;
 			}
 		}
-	quicksort_array_with_perm(nb_subgroups, (void **) sets, perm_inv, action_on_subgroups_compare, this);
+	quicksort_array_with_perm(nb_subgroups,
+			(void **) sets, perm_inv, action_on_subgroups_compare,
+			this);
 	perm_inverse(perm_inv, perm, nb_subgroups);
 
 	//test_sets();
@@ -125,22 +130,26 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 		}
 }
 
-int action_on_subgroups::compute_image(int *Elt, int a, int verbose_level)
+int action_on_subgroups::compute_image(
+		int *Elt, int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int idx, res, j, b, aa, s, t;
 
 	if (f_v) {
-		cout << "action_on_subgroups::compute_image a = " << a << endl;
+		cout << "action_on_subgroups::compute_image "
+				"a = " << a << endl;
 		}
 	if (a < 0 || a >= nb_subgroups) {
-		cout << "action_on_subgroups::compute_image a = " << a << " out of range" << endl;
+		cout << "action_on_subgroups::compute_image "
+				"a = " << a << " out of range" << endl;
 		exit(1);
 		}
 	aa = perm[a];
 	if (f_v) {
-		cout << "action_on_subgroups::compute_image perm[a] = " << aa << endl;
+		cout << "action_on_subgroups::compute_image "
+				"perm[a] = " << aa << endl;
 		}
 	if (f_vv) {
 		cout << "the element " << endl;
@@ -166,7 +175,8 @@ int action_on_subgroups::compute_image(int *Elt, int a, int verbose_level)
 
 	for (j = 0; j < subgroup_order; j++) {
 		s = sets[aa][j];
-		t = S->conjugate_by_rank_b_bv_given(s, Elt, Elt1, 0 /* verbose_level */);
+		t = S->conjugate_by_rank_b_bv_given(s, Elt, Elt1,
+				0 /* verbose_level */);
 		//t = S->conjugate_by_rank(s, r, 0);
 		image_set[j] = t;
 		}
@@ -191,7 +201,8 @@ int action_on_subgroups::compute_image(int *Elt, int a, int verbose_level)
 		this, nb_subgroups, image_set, idx, verbose_level)) {
 
 		int u;
-		cout << "action_on_subgroups::compute_image image set not found" << endl;
+		cout << "action_on_subgroups::compute_image "
+				"image set not found" << endl;
 		cout << "action = " << A->label << endl;
 
 		cout << "the element " << endl;
@@ -217,7 +228,8 @@ int action_on_subgroups::compute_image(int *Elt, int a, int verbose_level)
 		for (u = 0; u < subgroup_order; u++) {
 			s = sets[aa][u];
 			t = A->image_of(Elt, s);
-			cout << setw(3) << u << " : " << setw(3) << s << " : " << setw(3) << t << endl;
+			cout << setw(3) << u << " : " << setw(3) << s
+					<< " : " << setw(3) << t << endl;
 			}
 		exit(1);
 		}
@@ -226,14 +238,17 @@ int action_on_subgroups::compute_image(int *Elt, int a, int verbose_level)
 		}
 	res = action_on_subgroups_compare(image_set, sets[idx], this);
 	if (res != 0) {
-		cout << "action_on_subgroups::compute_image the set we found is not the right one" << endl;
+		cout << "action_on_subgroups::compute_image "
+				"the set we found is not the right one" << endl;
 		}
 	b = perm_inv[idx];
 	if (f_v) {
-		cout << "action_on_subgroups::compute_image b = perm_inv[idx] = " << b << endl;
+		cout << "action_on_subgroups::compute_image "
+				"b = perm_inv[idx] = " << b << endl;
 		}
 	if (b < 0 || b >= nb_subgroups) {
-		cout << "action_on_subgroups::compute_image b=" << b << " out of range" << endl;
+		cout << "action_on_subgroups::compute_image "
+				"b=" << b << " out of range" << endl;
 		exit(1);
 		}
 	return b;
@@ -264,5 +279,5 @@ int action_on_subgroups_compare_inverted(void *a, void *b, void *data)
 }
 
 
-}
+}}
 

@@ -7,6 +7,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace discreta {
 
 
 static void prepare_entry(Vector &entry, int i, int j,
@@ -2141,4 +2142,4 @@ void extract_subgroup(int q1, int q2, int u1, int v1, int f_cycle_index)
 
 
 
-}
+}}

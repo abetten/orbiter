@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_bricks::action_on_bricks()
 {
@@ -194,4 +195,4 @@ void action_on_bricks::compute_image_permutation_action(
 }
 
 
-}
+}}

@@ -11,6 +11,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 data_input_stream::data_input_stream()
 {
@@ -263,5 +264,5 @@ int data_input_stream::count_number_of_objects_to_test(
 }
 
 
-}
+}}
 

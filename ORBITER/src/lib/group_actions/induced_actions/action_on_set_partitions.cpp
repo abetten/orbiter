@@ -9,6 +9,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_set_partitions::action_on_set_partitions()
 {
@@ -142,6 +143,6 @@ int action_on_set_partitions::compute_image(
 	return b;
 }
 
-}
+}}
 
 

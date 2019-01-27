@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 matrix_group::matrix_group()
 {
@@ -2167,5 +2168,5 @@ void matrix_group::strong_generators_low_level(int *&data,
 		}
 }
 
-}
+}}
 

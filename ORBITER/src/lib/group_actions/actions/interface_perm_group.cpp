@@ -13,6 +13,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 // #############################################################################
 // interface functions: permutation group
@@ -408,7 +409,7 @@ void perm_group_print_point(action &A, int a, ostream &ost)
 		}
 }
 
-}
+}}
 
 
 

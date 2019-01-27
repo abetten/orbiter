@@ -4,6 +4,9 @@
 //
 // started:  September 20, 2007
 
+using namespace orbiter::foundations;
+using namespace orbiter::group_actions;
+
 
 namespace orbiter {
 

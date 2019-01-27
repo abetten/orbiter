@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_by_right_multiplication::action_by_right_multiplication()
 {
@@ -81,5 +82,5 @@ void action_by_right_multiplication::compute_image(action *A, int *Elt, int i, i
 		}
 }
 
-}
+}}
 

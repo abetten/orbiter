@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 namespace orbiter {
+namespace discreta {
 
 #undef INTEGER_M_I_VERBOSE
 
@@ -604,6 +605,7 @@ int integer::log2()
 
 
 
-}
+}}
+
 
 
