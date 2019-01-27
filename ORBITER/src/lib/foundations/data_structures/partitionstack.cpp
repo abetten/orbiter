@@ -30,6 +30,10 @@ ostream& operator<<(ostream& ost, partitionstack& p)
 
 partitionstack::partitionstack()
 {
+	n = 0;
+	ht = 0;
+	ht0 = 0;
+
 	pointList = NULL;
 	invPointList = NULL;
 	cellNumber = NULL;
@@ -38,11 +42,14 @@ partitionstack::partitionstack()
 	cellSize = NULL;
 	parent = NULL;
 
-
+	nb_subsets = 0;
 	subset = NULL;
 	subset_first = NULL;
 	subset_length = NULL;
 	subsets = NULL;
+
+	subset = NULL;
+	subset_size = 0;
 }
 
 partitionstack::~partitionstack()

@@ -42,6 +42,8 @@ int main(int argc, char **argv)
 	int Data_len = 0;
 	int f_q = FALSE;
 	int q = 0;
+	int f_file_M = FALSE;
+	const char *fname_M;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -59,6 +61,11 @@ int main(int argc, char **argv)
 			data = argv[++i];
 			cout << "-M " << size << " " << data << endl;
 			}
+		else if (strcmp(argv[i], "-file_M") == 0) {
+			f_file_M = TRUE;
+			fname_M = argv[++i];
+			cout << "-file_m " << fname_M << endl;
+			}
 		}
 
 	if (!f_q) {
@@ -67,18 +74,28 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	cout << "q=" << q << endl;
-	if (!f_M) {
-		cout << "please use option -M <size> <list of entries> "
+
+	if (f_M) {
+		int_vec_scan(data, Data, Data_len);
+		if (Data_len != size * size) {
+			cout << "Data_len != size * size" << endl;
+			exit(1);
+		}
+	}
+	else if (f_file_M) {
+		int m, n;
+		int_matrix_read_text(fname_M, Data, m, n);
+		cout << "read matrix of size " << m << " x " << n << endl;
+		if (m != n) {
+			cout << "eigenstuff needs square matrices" << endl;
+		}
+		size = m;
+	}
+	else {
+		cout << "please use option -M <size> <list of entries> or -file_M <fname>"
 			"to specify the matrix" << endl;
 		exit(1);
-		}
-	int_vec_scan(data, Data, Data_len);
-	if (Data_len != size * size) {
-		cout << "Data_len != size * size" << endl;
-		exit(1);
-		}
-	
-
+	}
 	do_eigenstuff(q, size, Data, verbose_level);
 	
 	the_end_quietly(t0);

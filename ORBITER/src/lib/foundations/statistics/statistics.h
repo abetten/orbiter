@@ -50,6 +50,8 @@ public:
 	~classify();
 	void init(int *data, int data_length, 
 		int f_second, int verbose_level);
+	void sort_and_classify();
+	void sort_and_classify_second();
 	int class_of(int pt_idx);
 	void print(int f_backwards);
 	void print_first(int f_backwards);
