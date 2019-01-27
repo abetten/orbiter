@@ -130,8 +130,7 @@ int main(int argc, const char **argv)
 		ECA->early_test_function = rls_generator_early_test_function;
 		ECA->early_test_function_data = (void *) &Gen;
 		
-		compute_lifts(ECA, verbose_level);
-			// in TOP_LEVEL/extra.C
+		ECA->compute_lifts(verbose_level);
 
 		}
 

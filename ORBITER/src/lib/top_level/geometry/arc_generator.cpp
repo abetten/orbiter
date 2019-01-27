@@ -243,8 +243,7 @@ void arc_generator::main(int verbose_level)
 				arc_generator_early_test_function;
 		ECA->early_test_function_data = (void *) this;
 		
-		compute_lifts(ECA, verbose_level);
-			// in TOP_LEVEL/extra.C
+		ECA->compute_lifts(verbose_level);
 
 		}
 

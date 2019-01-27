@@ -208,8 +208,7 @@ int main(int argc, const char **argv)
 		ECA->early_test_function = blt_set_early_test_func_callback;
 		ECA->early_test_function_data = (void *) &Gen;
 		
-		compute_lifts(ECA, verbose_level);
-			// in TOP_LEVEL/extra.C
+		ECA->compute_lifts(verbose_level);
 
 		}
 

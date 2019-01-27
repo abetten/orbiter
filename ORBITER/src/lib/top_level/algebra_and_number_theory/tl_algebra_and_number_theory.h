@@ -35,39 +35,6 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 	action *A0, strong_generators *Strong_gens, 
 	int *set, int set_size, int verbose_level);
 
-void compute_lifts(exact_cover_arguments *ECA, int verbose_level);
-void compute_lifts_new(
-	action *A, action *A2, 
-	void *user_data, 
-	const char *base_fname, 
-	const char *input_prefix, const char *output_prefix, 
-	const char *solution_prefix, 
-	int starter_size, int target_size, 
-	int f_lex, int f_split, int split_r, int split_m, 
-	int f_solve, int f_save, int f_read_instead, 
-	int f_draw_system, const char *fname_system, 
-	int f_write_tree, const char *fname_tree,
-	void (*prepare_function_new)(exact_cover *E, int starter_case, 
-		int *candidates, int nb_candidates, 
-		strong_generators *Strong_gens, 
-		diophant *&Dio, int *&col_label, 
-		int &f_ruled_out, 
-		int verbose_level), 
-	void (*early_test_function)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
-		void *data, int verbose_level), 
-	void *early_test_function_data,
-	int f_has_solution_test_function, 
-	int (*solution_test_func)(exact_cover *EC, 
-		int *S, int len, void *data, int verbose_level), 
-	void *solution_test_func_data,
-	int f_has_late_cleanup_function, 
-	void (*late_cleanup_function)(exact_cover *EC, 
-		int starter_case, int verbose_level), 
-	int verbose_level);
-
-
 
 // #############################################################################
 // factor_group.C:
