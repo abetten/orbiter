@@ -8,6 +8,8 @@
 
 namespace orbiter {
 
+namespace group_actions {
+
 
 // #############################################################################
 // direct_product.C:
@@ -1534,4 +1536,5 @@ public:
 			int &size, int &nb_gens, int verbose_level);
 };
 
-}
+}}
+

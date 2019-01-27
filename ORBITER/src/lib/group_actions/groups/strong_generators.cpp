@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 strong_generators::strong_generators()
 {
@@ -2612,6 +2613,6 @@ void strong_generators_array_read_from_file(const char *fname,
 
 }
 
-}
+}}
 
 

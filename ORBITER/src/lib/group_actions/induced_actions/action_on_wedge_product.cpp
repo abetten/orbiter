@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_wedge_product::action_on_wedge_product()
 {
@@ -240,6 +241,6 @@ void action_on_wedge_product::compute_image_int_low_level(
 		}
 }
 
-}
+}}
 
 

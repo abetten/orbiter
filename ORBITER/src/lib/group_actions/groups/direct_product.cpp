@@ -11,6 +11,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 
 direct_product::direct_product()
@@ -720,4 +721,4 @@ void direct_product::lift_generators(
 	}
 }
 
-}
+}}

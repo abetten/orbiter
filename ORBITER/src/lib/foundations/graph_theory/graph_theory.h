@@ -172,7 +172,7 @@ void all_cliques_of_given_size(int *Adj, int nb_pts, int clique_sz,
 
 #define CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS 100
 
-//! a class that controlls the clique finding process
+//! a class that controls the clique finding process
 
 
 class clique_finder_control {

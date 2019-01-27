@@ -14,6 +14,8 @@
 
 
 namespace orbiter {
+namespace group_actions {
+
 
 // #############################################################################
 // interface functions: matrix group
@@ -529,4 +531,4 @@ void matrix_group_print_point(action &A, int a, ostream &ost)
 }
 
 
-}
+}}

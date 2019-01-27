@@ -10,6 +10,9 @@
 #include <math.h> // for sqrt
 
 namespace orbiter {
+namespace discreta {
+
+
 
 #undef SOLID_CHANGE_KIND_VERBOSE
 #undef SOLID_COPY_VERBOSE
@@ -2061,4 +2064,4 @@ void solid::write_solidfile(char *fname)
 	fp << "</GRAPH>" << endl;
 }
 
-}
+}}

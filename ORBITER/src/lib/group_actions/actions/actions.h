@@ -8,12 +8,14 @@
 
 namespace orbiter {
 
+namespace group_actions {
+
 
 // #############################################################################
 // action.C:
 // #############################################################################
 
-//! The class action implements a permutation group in a fixed action.
+//! a permutation group in a fixed action.
 /*! The class action provides a unified interface to a permutation group.
  * A permutation group in Orbiter always acts on the set {0,...,degree-1},
  * where degree is the degree stored in the action class.
@@ -1274,5 +1276,6 @@ void wreath_product_group_element_print_verbose(action &A,
 void wreath_product_group_print_point(action &A,
 	int a, ostream &ost);
 
+}
 }
 

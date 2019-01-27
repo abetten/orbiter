@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_factor_space::action_on_factor_space()
 {
@@ -986,5 +987,5 @@ int action_on_factor_space::compute_image(action *A,
 	return j;
 }
 
-}
+}}
 

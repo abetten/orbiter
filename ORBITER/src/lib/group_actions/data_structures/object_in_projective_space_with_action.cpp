@@ -14,6 +14,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 object_in_projective_space_with_action::object_in_projective_space_with_action()
 {
@@ -55,4 +56,5 @@ void object_in_projective_space_with_action::init(
 }
 
 
-}
+}}
+

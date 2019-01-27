@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_by_representation::action_by_representation()
 {
@@ -176,5 +177,5 @@ void action_by_representation::compute_image_int_low_level(
 		}
 }
 
-}
+}}
 

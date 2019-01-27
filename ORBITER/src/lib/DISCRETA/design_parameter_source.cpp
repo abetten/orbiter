@@ -7,6 +7,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace discreta {
 
 
 design_parameter_source::design_parameter_source() : Vector()
@@ -262,7 +263,7 @@ void design_parameter_source::text012_extended(design_parameter& p, hollerith& s
 
 
 
-}
+}}
 
 
 

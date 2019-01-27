@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 schreier_vector_handler::schreier_vector_handler()
 {
@@ -451,5 +452,5 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 	return SoS;
 }
 
-}
+}}
 

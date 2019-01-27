@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 // #############################################################################
 // interface functions: direct product group
@@ -362,6 +363,7 @@ void direct_product_group_print_point(action &A, int a, ostream &ost)
 	exit(1);
 }
 
-}
+}}
+
 
 

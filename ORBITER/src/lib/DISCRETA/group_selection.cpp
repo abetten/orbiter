@@ -14,6 +14,7 @@
 
 
 namespace orbiter {
+namespace discreta {
 
 static double square_root(double x);
 static void add_gsel(Vector & gsel, group_selection_type type, int val1, int val2, char *s);
@@ -1588,4 +1589,5 @@ static int compose_group_of_solid(group_selection & gs, Vector & S, int & height
 }
 
 
-}
+}}
+

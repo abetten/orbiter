@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 void choose_random_generator_derived_group(sims *G,
 		int *Elt, int verbose_level)
@@ -161,5 +162,5 @@ void sims::build_up_subgroup_random_process(sims *G,
 		}
 }
 
-}
+}}
 

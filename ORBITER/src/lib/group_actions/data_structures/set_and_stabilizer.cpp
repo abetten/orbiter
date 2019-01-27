@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 set_and_stabilizer::set_and_stabilizer()
 {
@@ -641,6 +642,6 @@ void set_and_stabilizer::init_surface(surface *Surf,
 		}
 }
 
-}
+}}
 
 

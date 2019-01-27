@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_homogeneous_polynomials::action_on_homogeneous_polynomials()
 {
@@ -249,5 +250,5 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 		}
 }
 
-}
+}}
 

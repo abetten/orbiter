@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 
 // #############################################################################
@@ -3690,5 +3691,6 @@ matrix_group *action::get_matrix_group()
 	}
 }
 
-}
+}}
+
 

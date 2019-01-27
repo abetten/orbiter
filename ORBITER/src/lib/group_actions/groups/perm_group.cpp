@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 perm_group::perm_group()
 {
@@ -627,5 +628,5 @@ void perm_group_generators_direct_product(
 }
 #endif
 
-}
+}}
 

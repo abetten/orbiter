@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 subgroup::subgroup()
 {
@@ -66,5 +67,5 @@ int subgroup::contains_this_element(int elt)
 		}
 }
 
-}
+}}
 

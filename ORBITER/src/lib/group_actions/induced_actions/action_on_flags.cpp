@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_flags::action_on_flags()
 {
@@ -123,5 +124,5 @@ int action_on_flags::compute_image(int *Elt, int i, int verbose_level)
 }
 
 
-}
+}}
 

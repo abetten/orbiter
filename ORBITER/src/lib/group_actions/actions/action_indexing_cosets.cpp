@@ -9,6 +9,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 void action::coset_unrank(sims *G, sims *U, int rank, int *Elt, int verbose_level)
 {
@@ -594,5 +595,5 @@ done:
 	return rank;	
 }
 
-}
+}}
 

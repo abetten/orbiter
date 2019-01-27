@@ -6,6 +6,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace discreta {
 
 void free_global_data()
 {
@@ -372,5 +373,5 @@ void matrix_to_diophant(matrix& M, diophant *&D, int verbose_level)
 		}
 }
 
-}
+}}
 

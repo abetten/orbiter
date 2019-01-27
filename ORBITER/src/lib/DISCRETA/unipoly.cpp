@@ -8,6 +8,8 @@
 
 
 namespace orbiter {
+namespace discreta {
+
 
 #undef CHANGE_KIND_VERBOSE
 #undef COPY_VERBOSE
@@ -1092,5 +1094,6 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 	swap(charpoly);
 }
 
-}
+}}
+
 

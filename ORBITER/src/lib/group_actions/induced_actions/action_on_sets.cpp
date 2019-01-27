@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_sets::action_on_sets()
 {
@@ -300,7 +301,7 @@ int action_on_sets_compare_inverted(void *a, void *b, void *data)
 	return c;
 }
 
-}
+}}
 
 
 

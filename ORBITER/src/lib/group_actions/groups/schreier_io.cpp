@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 void schreier::latex(const char *fname)
 {
@@ -1673,4 +1674,4 @@ void schreier::read_file_binary(const char *fname, int verbose_level)
 		}
 }
 
-}
+}}

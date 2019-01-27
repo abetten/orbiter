@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_by_restriction::action_by_restriction()
 {
@@ -161,6 +162,6 @@ int action_by_restriction::compute_image(
 	return c;
 }
 
-}
+}}
 
 

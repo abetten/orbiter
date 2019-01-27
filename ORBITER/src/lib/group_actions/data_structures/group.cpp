@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 group::group()
 {
@@ -886,5 +887,5 @@ void group::print_strong_generators_with_different_action_verbose(
 		}
 }
 
-}
+}}
 

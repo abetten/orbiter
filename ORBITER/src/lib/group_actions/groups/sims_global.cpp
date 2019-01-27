@@ -10,8 +10,8 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
-// global functions:
 
 sims *create_sims_from_generators_with_target_group_order_factorized(
 	action *A,
@@ -348,5 +348,5 @@ sims *create_sims_for_centralizer_of_matrix(
 }
 
 
-}
+}}
 

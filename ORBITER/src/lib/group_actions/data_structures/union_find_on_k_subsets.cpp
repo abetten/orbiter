@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 union_find_on_k_subsets::union_find_on_k_subsets()
 {
@@ -260,4 +261,4 @@ int union_find_on_k_subsets::is_minimal(int rk, int verbose_level)
 }
 
 
-}
+}}

@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_sign::action_on_sign()
 {
@@ -53,16 +54,19 @@ void action_on_sign::init(action *A, int verbose_level)
 		}
 }
 
-void action_on_sign::compute_image(int *Elt, int i, int &j, int verbose_level)
+void action_on_sign::compute_image(int *Elt,
+		int i, int &j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int u, v, sgn;
 	
 	if (f_v) {
-		cout << "action_on_sign::compute_image i = " << i << endl;
+		cout << "action_on_sign::compute_image "
+				"i = " << i << endl;
 		}
 	if (i < 0 || i >= degree) {
-		cout << "action_on_sign::compute_image i = " << i << " out of range" << endl;
+		cout << "action_on_sign::compute_image "
+				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
 	for (u = 0; u < perm_degree; u++) {
@@ -78,9 +82,10 @@ void action_on_sign::compute_image(int *Elt, int i, int &j, int verbose_level)
 		}
 	
 	if (f_v) {
-		cout << "action_on_sign::compute_image  image of " << i << " is " << j << endl;
+		cout << "action_on_sign::compute_image "
+				"image of " << i << " is " << j << endl;
 		}
 }
 
-}
+}}
 

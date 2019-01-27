@@ -10,6 +10,8 @@
 
 
 namespace orbiter {
+namespace discreta {
+
 
 #define MAX_BTREE_PAGE_TABLE 100
 
@@ -436,4 +438,4 @@ void page_table::write_pages_to_file(btree *B, int buf_idx, int verbose_level)
 		}
 }
 
-}
+}}

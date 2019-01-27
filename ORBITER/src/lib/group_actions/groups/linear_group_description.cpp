@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 
 linear_group_description::linear_group_description()
@@ -329,13 +330,14 @@ int linear_group_description::read_arguments(
 			return i;
 			}
 		else {
-			cout << "linear_group_description::read_arguments unrecognized option " << argv[i] << endl;
+			cout << "linear_group_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
 		}
 	} // next i
 	cout << "linear_group_description::read_arguments done" << endl;
 	return i;
 }
 
-}
+}}
 
 

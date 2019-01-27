@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_orthogonal::action_on_orthogonal()
 {
@@ -47,7 +48,12 @@ void action_on_orthogonal::free()
 	null();
 }
 
-void action_on_orthogonal::init(action *original_action, orthogonal *O, int f_on_points, int f_on_lines, int f_on_points_and_lines, int verbose_level)
+void action_on_orthogonal::init(action *original_action,
+		orthogonal *O,
+		int f_on_points,
+		int f_on_lines,
+		int f_on_points_and_lines,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -56,7 +62,8 @@ void action_on_orthogonal::init(action *original_action, orthogonal *O, int f_on
 		cout << "f_on_lines=" << f_on_lines << endl;
 		}
 	if (!original_action->f_is_linear) {
-		cout << "action_on_orthogonal::init original_action not of linear type" << endl;
+		cout << "action_on_orthogonal::init "
+				"original_action not of linear type" << endl;
 		cout << "action " << original_action->group_prefix << endl;
 		exit(1);
 		}
@@ -82,11 +89,13 @@ void action_on_orthogonal::init(action *original_action, orthogonal *O, int f_on
 		degree = O->nb_points + O->nb_lines;
 		}
 	else {
-		cout << "action_on_orthogonal::init no type of action given" << endl;
+		cout << "action_on_orthogonal::init "
+				"no type of action given" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "action_on_orthogonal::init degree=" << degree << endl;
+		cout << "action_on_orthogonal::init "
+				"degree=" << degree << endl;
 		}
 	
 	if (f_v) {
@@ -94,7 +103,8 @@ void action_on_orthogonal::init(action *original_action, orthogonal *O, int f_on
 		}
 }
 
-int action_on_orthogonal::map_a_point(int *Elt, int i, int verbose_level)
+int action_on_orthogonal::map_a_point(
+		int *Elt, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j;
@@ -133,7 +143,9 @@ int action_on_orthogonal::map_a_line(int *Elt, int i, int verbose_level)
 	q2 = O->rank_point(w2, 1 /* stride */, 0 /* verbose_level */);
 	j = O->rank_line(q1, q2, 0 /*verbose_level */);
 	if (f_vv) {
-		cout << "action_on_orthogonal::map_a_line i=" << i << " p1=" << p1 << " p2=" << p2 << " q1=" << q1 << " q2=" << q2 << " j=" << j << endl;
+		cout << "action_on_orthogonal::map_a_line i=" << i
+				<< " p1=" << p1 << " p2=" << p2
+				<< " q1=" << q1 << " q2=" << q2 << " j=" << j << endl;
 		}
 	if (f_v) {
 		cout << "action_on_orthogonal::map_a_line done" << endl;
@@ -141,7 +153,8 @@ int action_on_orthogonal::map_a_line(int *Elt, int i, int verbose_level)
 	return j;
 }
 
-int action_on_orthogonal::compute_image_int(int *Elt, int i, int verbose_level)
+int action_on_orthogonal::compute_image_int(
+		int *Elt, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j;
@@ -150,14 +163,17 @@ int action_on_orthogonal::compute_image_int(int *Elt, int i, int verbose_level)
 	//A = original_action;
 
 	if (f_v) {
-		cout << "action_on_orthogonal::compute_image_int i = " << i << endl;
-		//cout << "A->low_level_point_size=" << A->low_level_point_size << endl;
+		cout << "action_on_orthogonal::compute_image_int "
+				"i = " << i << endl;
+		//cout << "A->low_level_point_size="
+		//<< A->low_level_point_size << endl;
 		//cout << "using action " << A->label << endl;
 		}
 
 	
 	if (i >= degree) {
-		cout << "action_on_orthogonal::compute_image_int i >= degree" << endl;
+		cout << "action_on_orthogonal::compute_image_int "
+				"i >= degree" << endl;
 		}
 	if (f_on_points) {
 		j = map_a_point(Elt, i, verbose_level - 1);
@@ -176,17 +192,19 @@ int action_on_orthogonal::compute_image_int(int *Elt, int i, int verbose_level)
 			}
 		}
 	else {
-		cout << "action_on_orthogonal::compute_image_int need to know the type of action" << endl;
+		cout << "action_on_orthogonal::compute_image_int "
+				"need to know the type of action" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "action_on_orthogonal::compute_image_int image of " << i << " is " << j << endl;
+		cout << "action_on_orthogonal::compute_image_int "
+				"image of " << i << " is " << j << endl;
 		}
 
 	return j;
 }
 
-}
+}}
 
 

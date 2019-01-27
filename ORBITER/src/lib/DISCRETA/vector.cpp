@@ -10,6 +10,7 @@
 #undef VECTOR_CHANGE_KIND_VERBOSE
 
 namespace orbiter {
+namespace discreta {
 
 
 Vector::Vector()
@@ -1887,4 +1888,4 @@ void Vector::get_element_orders(Vector &vec_of_orders)
 		}
 }
 
-}
+}}

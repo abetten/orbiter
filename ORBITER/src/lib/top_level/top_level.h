@@ -7,6 +7,12 @@
 // based on global.h, which was taken from reader.h: 3/22/09
 
 
+
+using namespace orbiter::foundations;
+using namespace orbiter::group_actions;
+using namespace orbiter::discreta;
+
+
 namespace orbiter {
 
 

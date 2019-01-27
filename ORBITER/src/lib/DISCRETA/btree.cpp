@@ -11,6 +11,7 @@
 
 
 namespace orbiter {
+namespace discreta {
 
 //int bt_debug = FALSE;
 
@@ -2202,5 +2203,5 @@ static void bt_item_copy(ItemTyp *a, ItemTyp *b)
 		pcb[i] = pca[i];
 }
 
-}
+}}
 

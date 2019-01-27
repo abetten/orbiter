@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 static void print_from_to(int d, int i, int j, int *v1, int *v2);
 
@@ -3963,4 +3964,4 @@ void create_action_and_compute_orbits_on_equations(
 }
 
 
-}
+}}

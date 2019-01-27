@@ -7,6 +7,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace discreta {
 
 static void schreier_trace(Vector & schreier, Vector & schreier_generator, 
 	Vector & generators, int i, discreta_base & p);
@@ -2018,4 +2019,4 @@ void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, int 
 	gen[0].as_permutation().singer_cycle_on_points_of_projective_plane(p, f_modified, f_v);
 }
 
-}
+}}

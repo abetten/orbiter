@@ -10,6 +10,7 @@
 #undef DEBUG_LONGintEGER_COMPARE
 
 namespace orbiter {
+namespace discreta {
 
 
 static void subtract_signless(longinteger &x, longinteger &y, longinteger &z);
@@ -916,5 +917,5 @@ int longinteger::Lucas_test_Mersenne(int m, int f_v)
 		return FALSE;
 }
 
-}
+}}
 

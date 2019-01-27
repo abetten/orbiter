@@ -12,6 +12,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 
 
@@ -1552,7 +1553,7 @@ void induced_action_print_point(action &A,
 		}
 }
 
-}
+}}
 
 
 

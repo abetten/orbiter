@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 sims::sims()
 {
@@ -5753,6 +5754,6 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 }
 
 
-}
+}}
 
 

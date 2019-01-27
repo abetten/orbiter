@@ -9,7 +9,9 @@
 
 #undef BASE_SETTYPE_VERBOSE
 
+
 namespace orbiter {
+namespace discreta {
 
 
 discreta_base::discreta_base()
@@ -241,7 +243,7 @@ void discreta_base::print_to_hollerith(hollerith& h)
 
 ostream& discreta_base::printobjectkind(ostream& ost)
 {
-	orbiter::printobjectkind(ost, s_kind());
+	::printobjectkind(ost, s_kind());
 	return ost;
 }
 
@@ -1576,4 +1578,4 @@ void discreta_base::load_file(char *fname)
 }
  
 
-}
+}}

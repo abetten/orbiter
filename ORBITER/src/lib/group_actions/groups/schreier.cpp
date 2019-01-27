@@ -8,6 +8,7 @@
 
 
 namespace orbiter {
+namespace group_actions {
 
 
 schreier::schreier()
@@ -2213,4 +2214,4 @@ schreier_vector *schreier::get_schreier_vector(
 	return Schreier_vector;
 }
 
-}
+}}

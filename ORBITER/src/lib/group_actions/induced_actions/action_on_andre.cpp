@@ -7,6 +7,7 @@
 #include "group_actions.h"
 
 namespace orbiter {
+namespace group_actions {
 
 action_on_andre::action_on_andre()
 {
@@ -220,6 +221,6 @@ int action_on_andre::compute_image_of_line(int *Elt,
 	return image;
 }
 
-}
+}}
 
 
