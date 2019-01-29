@@ -227,7 +227,7 @@ class integer;			// derived from base
 	// self contains the integer value as a C (long)integer (int)
 		
 class longinteger;		// derived from base
-	// self is a pointer to LONGintEGER_REPRESENTATION
+	// self is a pointer to LONGINTEGER_REPRESENTATION
 	// which contains the sign, the length 
 	// and a C array of chars containing 
 	// the decimal representation of the signless longinteger value 
@@ -847,14 +847,15 @@ class integer: public discreta_base
 	int is_m_one();
 
 	int compare_with_euklidean(discreta_base &a);
-	void integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level);
+	void integral_division(discreta_base &x,
+			discreta_base &q, discreta_base &r, int verbose_level);
 	
 	void rand(int low, int high);
 	int log2();
 };
 
-#define LONGintEGER_PRint_DOTS
-#define LONGintEGER_DIGITS_FOR_DOT 6
+#define LONGINTEGER_PRINT_DOTS
+#define LONGINTEGER_DIGITS_FOR_DOT 6
 
 
 

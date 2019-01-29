@@ -63,7 +63,7 @@ public:
 #define MAX_CALLBACK 100
 
 
-//! various test functions which define a G-invariant poset
+//! maintains a list of test functions which define a G-invariant poset
 
 class orbit_based_testing {
 
@@ -411,6 +411,8 @@ public:
 	void print();
 	void print_statistic_on_callbacks_naked();
 	void print_statistic_on_callbacks();
+	orbit_transversal *get_orbit_transversal(
+			int level, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int level, 
 		int orbit_at_level, int verbose_level);
 	void get_set_by_level(int level, int node, int *set);

@@ -259,34 +259,38 @@ MODULES= \
 		top_level/algebra_and_number_theory/extra.o \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/young.o \
-		top_level/geometry/BLT_set_create_description.o \
-		top_level/geometry/BLT_set_create.o \
-		top_level/geometry/blt_set.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
 		top_level/geometry/arc_lifting.o \
 		top_level/geometry/arc_orbits_on_pairs.o \
 		top_level/geometry/arc_partition.o \
+		top_level/geometry/BLT_set_create_description.o \
+		top_level/geometry/BLT_set_create.o \
+		top_level/geometry/blt_set.o \
 		top_level/geometry/choose_points_or_lines.o \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
 		top_level/geometry/decomposition.o \
 		top_level/geometry/incidence_structure.o \
+		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
+		top_level/geometry/packing_invariants.o \
+		top_level/geometry/packing.o \
+		top_level/geometry/packing2.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/projective_space.o \
 		top_level/geometry/recoordinatize.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
 		top_level/geometry/six_arcs_not_on_a_conic.o \
+		top_level/geometry/spread_create_description.o \
+		top_level/geometry/spread_create.o \
+		top_level/geometry/spread_lifting.o \
 		top_level/geometry/spread.o \
 		top_level/geometry/spread2.o \
-		top_level/geometry/spread_create.o \
-		top_level/geometry/spread_create_description.o \
-		top_level/geometry/spread_lifting.o \
 		top_level/geometry/surface_classify_wedge.o \
-		top_level/geometry/surface_create.o \
 		top_level/geometry/surface_create_description.o \
+		top_level/geometry/surface_create.o \
 		top_level/geometry/surface_object_with_action.o \
 		top_level/geometry/surface_with_action.o \
 		top_level/geometry/surfaces_arc_lifting.o \

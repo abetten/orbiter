@@ -1306,6 +1306,40 @@ void int_vec_print_types(ostream &ost,
 	ost << " )";
 }
 
+void int_vec_print_types_naked_stringstream(stringstream &sstr,
+	int f_backwards, int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l, a;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			sstr << a;
+			if (l > 1) {
+				sstr << "^" << l;
+				}
+			if (i)
+				sstr << ", ";
+			}
+		}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			sstr << a;
+			if (l > 1) {
+				sstr << "^" << l;
+				}
+			if (i < nb_types - 1)
+				sstr << ", ";
+			}
+		}
+}
+
 void int_vec_print_types_naked(ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)

@@ -90,7 +90,7 @@ ostream& integer::print(ostream& ost)
 {
 	domain *dom;
 #ifdef PRINT_WITH_TYPE
-	ost << "(intEGER, ";
+	ost << "(INTEGER, ";
 #endif
 #if 0
 	if (dom && dom->type == GFp) {

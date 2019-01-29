@@ -146,6 +146,10 @@ void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
 void arc_generator_print_arc(ostream &ost, int len, int *S, void *data);
 
 
+// #############################################################################
+// arc_lifting_simeon.C
+// #############################################################################
+
 
 //! arc lifting according to Simeon Ball and Ray Hill
 
@@ -878,7 +882,7 @@ void callback_partial_ovoid_test_early(int *S, int len,
 // #############################################################################
 
 
-//! to classify double triplets in PG(3,q)
+//! classification of double triplets in PG(3,q)
 
 
 class classify_trihedral_pairs {
@@ -1003,10 +1007,54 @@ int incidence_structure_find_blocking_set(incidence_structure *Inc,
 	int verbose_level);
 
 // #############################################################################
+// invariants_packing.C:
+// #############################################################################
+
+//! collection of invariants of a set of packings in PG(3,q)
+
+class invariants_packing {
+public:
+	spread *T;
+	packing *P;
+	isomorph *Iso; // the classification of packings
+
+
+	packing_invariants *Inv;
+	longinteger_object *Ago, *Ago_induced;
+	int *Ago_int;
+	int *Type_of_packing;
+		// [Iso->Reps->count * P->nb_spreads_up_to_isomorphism]
+	int *Type_idx_of_packing;
+		// [Iso->Reps->count]
+	int **List_of_types;
+	int *Frequency;
+	int nb_types;
+	int *Dual_idx;
+		// [Iso->Reps->count]
+	int *f_self_dual;
+		// [Iso->Reps->count]
+
+	invariants_packing();
+	~invariants_packing();
+	void null();
+	void freeself();
+	void init(isomorph *Iso, packing *P, int verbose_level);
+	void compute_dual_packings(
+		isomorph *Iso, int verbose_level);
+	void make_table(isomorph *Iso, ostream &ost,
+		int f_only_self_dual,
+		int f_only_not_self_dual,
+		int verbose_level);
+};
+
+int packing_types_compare_function(void *a, void *b, void *data);
+
+
+// #############################################################################
 // k_arc_generator.C:
 // #############################################################################
 
-//! to classify k-arcs in the projective plane PG(2,q)
+//! classification of k-arcs in the projective plane PG(2,q)
 
 
 
@@ -1040,6 +1088,283 @@ public:
 	void compute_line_type(int *set, int len, int verbose_level);
 	//void report_latex(ostream &ost);
 };
+
+// #############################################################################
+// packipacking_invariantsng.C:
+// #############################################################################
+
+//! geometric invariants of a packing in PG(3,q)
+
+class packing_invariants {
+public:
+	packing *P;
+
+	char prefix[1000];
+	char prefix_tex[1000];
+	int iso_cnt;
+
+	int *the_packing;
+		// [P->size_of_packing]
+
+	int *list_of_lines;
+		// [P->size_of_packing * P->spread_size]
+
+	int f_has_klein;
+	longinteger_object *R;
+	int **Pts_on_plane;
+	int *nb_pts_on_plane;
+	int nb_planes;
+
+	classify *C;
+	int nb_blocks;
+	int *block_to_plane; // [nb_blocks]
+	int *plane_to_block; // [nb_planes]
+	int nb_fake_blocks;
+	int nb_fake_points;
+	int total_nb_blocks;
+		// nb_blocks + nb_fake_blocks
+	int total_nb_points;
+		// P->size_of_packing * P->spread_size + nb_fake_points
+	int *Inc;
+		// [total_nb_points * total_nb_blocks]
+
+	incidence_structure *I;
+	partitionstack *Stack;
+	char fname_incidence_pic[1000];
+	char fname_row_scheme[1000];
+	char fname_col_scheme[1000];
+
+	packing_invariants();
+	~packing_invariants();
+	void null();
+	void freeself();
+	void init(packing *P,
+		char *prefix, char *prefix_tex, int iso_cnt,
+		int *the_packing, int verbose_level);
+	void init_klein_invariants(Vector &v, int verbose_level);
+	void compute_decomposition(int verbose_level);
+};
+
+
+// #############################################################################
+// packing.C:
+// #############################################################################
+
+//! classification of packings in PG(3,q)
+
+class packing {
+public:
+	spread *T;
+	finite_field *F;
+	int spread_size;
+	int nb_lines;
+	int search_depth;
+
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char prefix_with_directory[1000];
+
+
+	int f_lexorder_test;
+	int q;
+	int size_of_packing;
+		// the number of spreads in a packing,
+		// which is q^2 + q + 1
+
+	projective_space *P3;
+
+
+	int nb_spreads_up_to_isomorphism;
+		// the number of spreads
+		// from the classification
+	int *input_spreads;
+	int *input_spread_label;
+	int nb_input_spreads;
+
+	int nb_spreads;
+	int *Spread_table;
+		// [nb_spreads * spread_size]
+	int *Dual_spread_idx;
+		// [nb_spreads]
+	int *isomorphism_type_of_spread;
+		// [nb_spreads]
+	action *A_on_spreads;
+
+
+	uchar *bitvector_adjacency;
+	int bitvector_length;
+	int *degree;
+
+	poset *Poset;
+	poset_classification *gen;
+
+	int nb_needed;
+
+
+	int f_split_klein;
+	int split_klein_r;
+	int split_klein_m;
+
+	packing();
+	~packing();
+	void null();
+	void freeself();
+	void init(spread *T,
+		int f_packing_select_spread,
+		int *packing_select_spread, int packing_select_spread_nb,
+		const char *input_prefix, const char *base_fname,
+		int search_depth,
+		int f_lexorder_test,
+		int verbose_level);
+	void init2(int verbose_level);
+	void compute_spread_table(int verbose_level);
+	int test_if_orbit_is_partial_packing(
+		schreier *Orbits, int orbit_idx,
+		int *orbit1, int verbose_level);
+	int test_if_pair_of_orbits_are_adjacent(
+		schreier *Orbits, int a, int b,
+		int *orbit1, int *orbit2, int verbose_level);
+	// tests if every spread from orbit a
+	// is line-disjoint from every spread from orbit b
+	int test_if_pair_of_sets_are_adjacent(
+		int *set1, int sz1, int *set2, int sz2,
+		int verbose_level);
+	int test_if_spreads_are_disjoint_based_on_table(
+		int *Spread_table, int a, int b);
+	void init_P3(int verbose_level);
+	void load_input_spreads(int &N,
+		int f_packing_select_spread,
+		int *packing_select_spread, int packing_select_spread_nb,
+		int verbose_level);
+	void make_spread_table(
+		int N, int *input_spreads,
+		int nb_input_spreads, int *input_spread_label,
+		int **&Sets, int *&isomorphism_type_of_spread, int &nb_spreads,
+		int verbose_level);
+	void compute_dual_spreads(
+		int **Sets, int verbose_level);
+	void compute_adjacency_matrix(int verbose_level);
+	void prepare_generator(
+		int search_depth, int verbose_level);
+	void compute(int verbose_level);
+	int spreads_are_disjoint(int i, int j);
+	void lifting_prepare_function_new(
+		exact_cover *E, int starter_case,
+		int *candidates, int nb_candidates,
+		strong_generators *Strong_gens,
+		diophant *&Dio, int *&col_labels,
+		int &f_ruled_out,
+		int verbose_level);
+	void compute_covered_points(
+		int *&points_covered_by_starter,
+		int &nb_points_covered_by_starter,
+		int *starter, int starter_size,
+		int verbose_level);
+		// points_covered_by_starter are the lines
+		// that are contained in the spreads chosen for the starter
+	void compute_free_points2(
+		int *&free_points2, int &nb_free_points2, int *&free_point_idx,
+		int *points_covered_by_starter,
+		int nb_points_covered_by_starter,
+		int *starter, int starter_size,
+		int verbose_level);
+		// free_points2 are actually the free lines, i.e.,
+		// the lines that are not
+		// yet part of the partial packing
+	void compute_live_blocks2(
+		exact_cover *EC, int starter_case,
+		int *&live_blocks2, int &nb_live_blocks2,
+		int *points_covered_by_starter,
+		int nb_points_covered_by_starter,
+		int *starter, int starter_size,
+		int verbose_level);
+	int is_adjacent(int i, int j);
+	void read_spread_table(
+			const char *fname_spread_table,
+			const char *fname_spread_table_iso,
+			int verbose_level);
+	void create_action_on_spreads(int verbose_level);
+	void type_of_packing(
+			const char *fname_spread_table,
+			const char *fname_spread_table_iso,
+			const char *fname_packings,
+			int verbose_level);
+	void conjugacy_classes(int verbose_level);
+	void read_conjugacy_classes(char *fname,
+			int verbose_level);
+	void conjugacy_classes_and_normalizers(int verbose_level);
+	void read_conjugacy_classes_and_normalizers(
+			char *fname, int verbose_level);
+	void centralizer(const char *elt_string,
+			int verbose_level);
+	void report_fixed_objects(
+			int *Elt, char *fname_latex,
+			int verbose_level);
+	void make_element(int idx, int verbose_level);
+	void centralizer(int idx, int verbose_level);
+	void centralizer_of_element(
+		const char *element_description,
+		const char *label,
+		int verbose_level);
+
+	// packing2.C
+	void compute_list_of_lines_from_packing(
+			int *list_of_lines, int *packing,
+			int verbose_level);
+	void compute_klein_invariants(isomorph *Iso, int verbose_level);
+	void compute_dual_spreads(isomorph *Iso, int verbose_level);
+	void klein_invariants_fname(char *fname, char *prefix, int iso_cnt);
+	void save_klein_invariants(char *prefix,
+		int iso_cnt,
+		int *data, int data_size, int verbose_level);
+	void compute_plane_intersections(int *data, int data_size,
+		longinteger_object *&R,
+		int **&Pts_on_plane,
+		int *&nb_pts_on_plane,
+		int &nb_planes,
+		int verbose_level);
+	void report(isomorph *Iso, int verbose_level);
+	void report_whole(isomorph *Iso, ofstream &f, int verbose_level);
+	void report_title_page(isomorph *Iso, ofstream &f, int verbose_level);
+	void report_packings_by_ago(isomorph *Iso, ofstream &f,
+		invariants_packing *inv, classify &C_ago, int verbose_level);
+	void report_isomorphism_type(isomorph *Iso, ofstream &f,
+		int orbit, invariants_packing *inv, int verbose_level);
+	void report_packing_as_table(isomorph *Iso, ofstream &f,
+		int orbit, invariants_packing *inv, int *list_of_lines,
+		int verbose_level);
+	void report_klein_invariants(isomorph *Iso, ofstream &f,
+		int orbit, invariants_packing *inv, int verbose_level);
+	void report_stabilizer(isomorph &Iso, ofstream &f, int orbit,
+			int verbose_level);
+	void report_stabilizer_in_action(isomorph &Iso,
+			ofstream &f, int orbit, int verbose_level);
+	void report_stabilizer_in_action_gap(isomorph &Iso,
+			int orbit, int verbose_level);
+	void report_extra_stuff(isomorph *Iso, ofstream &f,
+			int verbose_level);
+};
+
+void callback_packing_compute_klein_invariants(
+		isomorph *Iso, void *data, int verbose_level);
+void callback_packing_report(isomorph *Iso,
+		void *data, int verbose_level);
+void packing_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
+	int *candidates, int nb_candidates,
+	strong_generators *Strong_gens,
+	diophant *&Dio, int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+void packing_early_test_function(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+int count(int *Inc, int n, int m, int *set, int t);
+int count_and_record(int *Inc, int n, int m,
+		int *set, int t, int *occurances);
+
+
 
 // #############################################################################
 // polar.C:
@@ -1157,7 +1482,7 @@ void create_Buekenhout_Metz(
 // recoordinatize.C
 // #############################################################################
 
-//! utility class to classify spreads
+//! three skew lines in PG(3,q), used to classify spreads
 
 
 class recoordinatize {
@@ -1225,7 +1550,7 @@ public:
 // search_blocking_set.C:
 // #############################################################################
 
-//! to classify blocking sets in projective planes
+//! classification of blocking sets in projective planes
 
 
 

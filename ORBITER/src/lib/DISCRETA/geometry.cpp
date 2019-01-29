@@ -313,7 +313,7 @@ void geometry::print_ascii(ostream& ost)
 				}
 			}
 		else {
-			ost << "intEGER_MATRIX" << endl;
+			ost << "INTEGER_MATRIX" << endl;
 			ost << X();
 			}
 		ost << "LABELLING_OF_POintS" << endl;
@@ -472,8 +472,8 @@ void geometry::scan_body(istream& f, int geo_nr, char *geo_label)
 				}
 			f_incidence_matrix() = TRUE;
 			}
-		else if (strncmp(buf, "intEGER_MATRIX", 16) == 0) {
-			// cout << "reading intEGER_MATRIX" << endl;
+		else if (strncmp(buf, "INTEGER_MATRIX", 16) == 0) {
+			// cout << "reading INTEGER_MATRIX" << endl;
 			X().m_mn_n(v, b);
 			for (i = 0; i < v; i++) {
 				if (f.eof()) {

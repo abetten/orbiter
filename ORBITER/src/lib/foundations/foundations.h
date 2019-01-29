@@ -79,6 +79,7 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
+#include <sstream>
 
 #include <map>
 #include <vector>

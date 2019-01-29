@@ -223,6 +223,23 @@ void classify::print_file_tex(ostream &ost, int f_backwards)
 		}
 }
 
+void classify::print_naked_stringstream(stringstream &sstr, int f_backwards)
+{
+	if (f_second) {
+		int_vec_print_types_naked_stringstream(
+			sstr, f_backwards, second_data_sorted,
+			second_nb_types, second_type_first, second_type_len);
+		//cout << endl;
+		}
+	else {
+		int_vec_print_types_naked_stringstream(
+			sstr, f_backwards, data_sorted,
+			nb_types, type_first, type_len);
+		//cout << endl;
+		}
+
+}
+
 void classify::print_naked(int f_backwards)
 {
 	if (f_second) {

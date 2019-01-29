@@ -632,6 +632,9 @@ void int_vec_print_classified(ostream &ost, int *vec, int len);
 void int_vec_print_types(ostream &ost, 
 	int f_backwards, int *the_vec_sorted, 
 	int nb_types, int *type_first, int *type_len);
+void int_vec_print_types_naked_stringstream(stringstream &sstr,
+	int f_backwards, int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len);
 void int_vec_print_types_naked(ostream &ost, int f_backwards, 
 	int *the_vec_sorted, 
 	int nb_types, int *type_first, int *type_len);

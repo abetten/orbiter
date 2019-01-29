@@ -16,83 +16,84 @@ using namespace orbiter::discreta;
 namespace orbiter {
 
 
-typedef class representatives representatives;
+class representatives;
 	// added 7/3/12
-typedef class isomorph isomorph;
+class isomorph;
 	// added 3/22/09
-typedef class search_blocking_set search_blocking_set;
+class search_blocking_set;
 	// added Nov 2, 2010
-typedef class choose_points_or_lines choose_points_or_lines;
+class choose_points_or_lines;
 	// added Nov 29, 2010
-typedef class subspace_orbits subspace_orbits;
+class subspace_orbits;
 	// added March 29, 2012 (started Jan 25, 2010)
-typedef struct factor_group factor_group;
-typedef class orbit_rep orbit_rep;
-typedef class orbit_of_sets orbit_of_sets;
+struct factor_group;
+class orbit_rep;
+class orbit_of_sets;
 	// added March 27, 2013
-typedef class singer_cycle singer_cycle;
+class singer_cycle;
 	// added March 27, 2013
-typedef class exact_cover exact_cover;
+class exact_cover;
 	// added April 30, 2013
-typedef class recoordinatize recoordinatize;
+class recoordinatize;
 	// added November 2, 2013
-typedef class spread spread;
+class spread;
 	// added November 2, 2013
-typedef class polar polar;
-typedef class orbit_of_subspaces orbit_of_subspaces;
+class polar;
+class orbit_of_subspaces;
 	// added April 10, 2014
-typedef class young young;
+class young;
 	// added March 16, 2015
-typedef class exact_cover_arguments exact_cover_arguments;
+class exact_cover_arguments;
 	// added January 12, 2016
-typedef class translation_plane_via_andre_model 
-	translation_plane_via_andre_model;
+class translation_plane_via_andre_model;
 	// added January 25, 2016
-typedef class isomorph_arguments isomorph_arguments;
+class isomorph_arguments;
 	// added January 27, 2016
-typedef struct isomorph_worker_data isomorph_worker_data;
-typedef class surface_classify_wedge surface_classify_wedge;
+struct isomorph_worker_data;
+class surface_classify_wedge;
 	// added September 2, 2016
-typedef class arc_generator arc_generator;
+class arc_generator;
 	// moved here February 23, 2017
-typedef class surface_with_action surface_with_action;
+class surface_with_action;
 	// added March 22, 2017
-typedef class surface_object_with_action surface_object_with_action;
+class surface_object_with_action;
 	// added October 4, 2017
-typedef class classify_trihedral_pairs classify_trihedral_pairs;
+class classify_trihedral_pairs;
 	// added October 9, 2017
-typedef class classify_double_sixes classify_double_sixes;
+class classify_double_sixes;
 	// added October 10, 2017
-typedef class surface_create_description surface_create_description;
+class surface_create_description;
 	// added January 14, 2018
-typedef class surface_create surface_create;
+class surface_create;
 	// added January 14, 2018
-typedef class arc_lifting arc_lifting;
+class arc_lifting;
 	// added January 14, 2018
-typedef class six_arcs_not_on_a_conic six_arcs_not_on_a_conic;
+class six_arcs_not_on_a_conic;
 	// added March 6, 2018
-typedef class BLT_set_create_description BLT_set_create_description;
+class BLT_set_create_description;
 	// added March 17, 2018
-typedef class BLT_set_create BLT_set_create;
+class BLT_set_create;
 	// added March 17, 2018
-typedef class spread_create_description spread_create_description;
+class spread_create_description;
 	// added March 22, 2018
-typedef class spread_create spread_create;
+class spread_create;
 	// added March 22, 2018
-typedef class spread_lifting spread_lifting;
+class spread_lifting;
 	// added April 1, 2018
-typedef class k_arc_generator k_arc_generator;
-typedef class arc_lifting_simeon arc_lifting_simeon;
+class k_arc_generator;
+class arc_lifting_simeon;
 	// added Jan 6, 2019
-typedef class blt_set blt_set;
+class blt_set;
 	// started 8/13/2006, added Jan 6, 2019
-typedef class surfaces_arc_lifting surfaces_arc_lifting;
+class surfaces_arc_lifting;
 	// started 1/9/2019
-typedef class arc_orbits_on_pairs arc_orbits_on_pairs;
+class arc_orbits_on_pairs;
 	// started 1/9/2019
-typedef class arc_partition arc_partition;
+class arc_partition;
 	// started 1/9/2019
-
+class packing;
+class packing_invariants;
+class invariants_packing;
 
 // #############################################################################
 // representatives.C

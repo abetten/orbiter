@@ -118,6 +118,31 @@ void orbit_transversal::read_from_file(
 		}
 }
 
+classify *orbit_transversal::get_ago_distribution(int *&ago,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "orbit_transversal::get_ago_distribution" << endl;
+	}
+	if (f_v) {
+		cout << "orbit_transversal::get_ago_distribution "
+				"nb_orbits = " << nb_orbits << endl;
+	}
+	ago = NEW_int(nb_orbits);
+	for (i = 0; i < nb_orbits; i++) {
+		ago[i] = Reps[i].group_order_as_int();
+	}
+	classify *C;
+	C = NEW_OBJECT(classify);
+	C->init(ago, nb_orbits, FALSE, 0);
+	if (f_v) {
+		cout << "orbit_transversal::get_ago_distribution done" << endl;
+	}
+	return C;
+}
 
 }}
 

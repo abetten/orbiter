@@ -1080,7 +1080,7 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 	
 	if (f_v) {
 		cout << "matrix::smith_normal_form" << endl;
-		cout << *this;
+		//cout << *this;
 		}
 	m = s_m();
 	n = s_n();
@@ -1112,7 +1112,7 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 			}
 		}
 	Qv = Q;
-	if (f_v) {
+	if (FALSE) {
 		cout << "this=" << endl << *this << endl;
 		cout << "P=" << endl << P << endl;
 		cout << "Q=" << endl << Q << endl;
@@ -1120,27 +1120,28 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 	l = MINIMUM(m, n);
 	for (i = 0; i < l; i++) {
 		if (f_v) {
-			cout << "pivot column is " << i << endl;
+			cout << "matrix::smith_normal_form "
+					"pivot column is " << i << " / " << l << endl;
 			}
 		stable = FALSE;
 		while (!stable) {
 			stable = TRUE;
 			if (f_v) {
 				cout << "before smith_eliminate_column " << i << endl;
-				cout << "this=" << endl << *this << endl;
-				cout << "P=" << endl << P << endl;
-				cout << "Q=" << endl << Q << endl;
+				//cout << "this=" << endl << *this << endl;
+				//cout << "P=" << endl << P << endl;
+				//cout << "Q=" << endl << Q << endl;
 				}
-			if (smith_eliminate_column(P, Pv, i, verbose_level)) {
+			if (smith_eliminate_column(P, Pv, i, 0 /*verbose_level*/)) {
 				stable = FALSE;
 				}
 			if (f_v) {
 				cout << "before smith_eliminate_row " << i << endl;
-				cout << "this=" << endl << *this << endl;
-				cout << "P=" << endl << P << endl;
-				cout << "Q=" << endl << Q << endl;
+				//cout << "this=" << endl << *this << endl;
+				//cout << "P=" << endl << P << endl;
+				//cout << "Q=" << endl << Q << endl;
 				}
-			if (smith_eliminate_row(Q, Qv, i, verbose_level - 1)) {
+			if (smith_eliminate_row(Q, Qv, i, 0 /*verbose_level - 1*/)) {
 				stable = FALSE;
 				}
 			for (jj = i + 1; jj < n; jj++) {
@@ -1159,7 +1160,7 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 					am1 = a1;
 					am1.negate();
 					Qv.multiply_2by2_from_left(i, jj, a1, a0, am1, a1, 0);
-					if (f_v) {
+					if (FALSE) {
 						cout << *this;
 						}
 					stable = FALSE;
@@ -1169,12 +1170,12 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 			}
 		}
 	if (f_v) {
-		cout << "smith normal form reached: " << endl;
-		cout << "this=" << endl << *this << endl;
-		cout << "P=" << endl << P << endl;
-		cout << "Pv=" << endl << Pv << endl;
-		cout << "Q=" << endl << Q << endl;
-		cout << "Qv=" << endl << Qv << endl;
+		cout << "smith normal form reached" << endl;
+		//cout << "this=" << endl << *this << endl;
+		//cout << "P=" << endl << P << endl;
+		//cout << "Pv=" << endl << Pv << endl;
+		//cout << "Q=" << endl << Q << endl;
+		//cout << "Qv=" << endl << Qv << endl;
 		}
 }
 
@@ -1188,7 +1189,7 @@ int matrix::smith_eliminate_column(matrix& P,
 	
 	if (f_v) {
 		cout << "matrix::smith_eliminate_column column " << i << endl;
-		cout << "this=" << endl << *this << endl;
+		//cout << "this=" << endl << *this << endl;
 		}
 	m = s_m();
 	for (j = i + 1; j < m; j++) {
@@ -1197,7 +1198,7 @@ int matrix::smith_eliminate_column(matrix& P,
 		if (f_v) {
 			cout << "smith_eliminate_column() j=" << j
 					<< " x=" << x << " y=" << y << endl;
-			cout << "this=" << endl << *this << endl;
+			//cout << "this=" << endl << *this << endl;
 			}
 		if (y.is_zero()) {
 			continue;
@@ -1888,7 +1889,7 @@ int matrix::hip1()
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			if (s_ij(i, j).s_kind() != INTEGER) {
-				cout << "matrix::hip1(): not intEGER\n";
+				cout << "matrix::hip1(): not INTEGER\n";
 				exit(1);
 				}
 			k = s_iji(i, j);

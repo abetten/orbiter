@@ -27,6 +27,7 @@ all: analyze_projective_code.out  \
 	make_something.out \
 	orthogonal_points.out \
 	ovoid.out \
+	packing_main.out \
 	plane_search.out \
 	points.out \
 	polar.out \
@@ -101,6 +102,9 @@ orthogonal_points.out:  orthogonal_points.o ;
 
 ovoid.out:  ovoid.o;
 	$(DISCRETA_CPP)  ovoid.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+packing_main.out:  packing_main.o;
+	$(DISCRETA_CPP)  packing_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 plane_search.out:  plane_search.o ;
 	$(DISCRETA_CPP)  plane_search.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

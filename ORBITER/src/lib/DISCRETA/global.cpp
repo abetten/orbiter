@@ -16,7 +16,7 @@ namespace discreta {
 
 #undef DEBUG_CALLOC_NOBJECTS_PLUS_LENGTH
 #undef TONELLI_VERBOSE
-#undef DEBUG_INVERT_MOD_intEGER
+#undef DEBUG_INVERT_MOD_INTEGER
 
 
 
@@ -212,14 +212,14 @@ const char *kind_ascii(kind k)
 {
 	switch(k) {
 		case BASE: return "BASE";
-		case INTEGER: return "intEGER";
+		case INTEGER: return "INTEGER";
 		case VECTOR: return "VECTOR";
 		case NUMBER_PARTITION: return "NUMBER_PARTITION";
 		case PERMUTATION: return "PERMUTATION";
 		
 		case MATRIX: return "MATRIX";
 
-		case LONGINTEGER: return "LONGintEGER";
+		case LONGINTEGER: return "LONGINTEGER";
 		//case SUBGROUP_LATTICE: return "SUBGROUP_LATTICE";
 		//case SUBGROUP_ORBIT: return "SUBGROUP_ORBIT";
 
@@ -349,13 +349,13 @@ int invert_mod_integer(int i, int p)
 {
 	integer a, b;
 	
-#ifdef DEBUG_INVERT_MOD_intEGER
+#ifdef DEBUG_INVERT_MOD_INTEGER
 	cout << "invert_mod_integer i=" << i << ", p=" << p << endl;
 #endif
 	a.m_i(i);
 	b.m_i(p);
 	a.power_int_mod(p - 2, b);
-#ifdef DEBUG_INVERT_MOD_intEGER
+#ifdef DEBUG_INVERT_MOD_INTEGER
 	cout << "i^-1=" << a.s_i() << endl;
 #endif
 	return a.s_i();
@@ -364,12 +364,12 @@ int invert_mod_integer(int i, int p)
 	with ww(GFp, p);
 	integer x;
 
-#ifdef DEBUG_INVERT_MOD_intEGER
+#ifdef DEBUG_INVERT_MOD_INTEGER
 	cout << "invert_mod_integer i=" << i << ", p=" << p << endl;
 #endif
 	x.m_i(i);
 	x.invert();
-#ifdef DEBUG_INVERT_MOD_intEGER
+#ifdef DEBUG_INVERT_MOD_INTEGER
 	cout << "i^-1=" << x.s_i() << endl;
 #endif
 	return x.s_i();
@@ -1035,7 +1035,9 @@ int sqrt_mod_involved(int a, int p)
 			}
 
 		
-		cout << round << " & " << A << " & " << B << " & " << X << " & " << X2 << " & " << Y << " & " << r << " & " << AB << " & " << Ypower << " & " << Bpower << " & ";
+		cout << round << " & " << A << " & " << B << " & " << X << " & "
+				<< X2 << " & " << Y << " & " << r << " & " << AB
+				<< " & " << Ypower << " & " << Bpower << " & ";
 
 		if (m == -1) {
 			cout << " & & & & \\\\" << endl;
@@ -1066,402 +1068,6 @@ int sqrt_mod_involved(int a, int p)
 		}
 	//exit(1);
 }
-
-#if 0
-void latex_head(ostream& ost, int f_book, int f_title, char *title, char *author, int f_toc, int f_landscape)
-{
-ost << "\\documentclass[12pt]{";
-if (f_book)
-	ost << "book";
-else
-	ost << "article";
-ost << "}\n"; 
-ost << "% a4paper\n";
-ost << endl;
-ost << "%\\usepackage[dvips]{epsfig}\n"; 
-ost << "%\\usepackage{cours11, cours}\n"; 
-ost << "%\\usepackage{fancyheadings}\n"; 
-ost << "%\\usepackage{amstex}\n"; 
-ost << "%\\usepackage{calc}\n"; 
-ost << "\\usepackage{amsmath}\n"; 
-ost << "\\usepackage{amssymb}\n"; 
-ost << "\\usepackage{latexsym}\n"; 
-ost << "\\usepackage{epsf}\n"; 
-ost << "\\usepackage{supertabular}\n"; 
-ost << "%\\usepackage{wrapfig}\n"; 
-ost << "%\\usepackage{blackbrd}\n"; 
-ost << "%\\usepackage{epic,eepic}\n"; 
-ost << "\\usepackage{rotating}\n"; 
-ost << "\\usepackage{multicol}\n"; 
-ost << "\\usepackage{multirow}\n"; 
-ost << "\\usepackage{makeidx} % additional command see\n"; 
-ost << "\\usepackage{epsfig}\n"; 
-ost << "%\\usepackage{amsmath,amsfonts} \n"; 
-ost << endl;
-ost << endl;
-ost << "%\\usepackage[mtbold,mtplusscr]{mathtime}\n"; 
-ost << "% lucidacal,lucidascr,\n"; 
-ost << endl;
-ost << "%\\usepackage{mathtimy}\n"; 
-ost << "%\\usepackage{bm}\n"; 
-ost << "%\\usepackage{avant}\n"; 
-ost << "%\\usepackage{basker}\n"; 
-ost << "%\\usepackage{bembo}\n"; 
-ost << "%\\usepackage{bookman}\n"; 
-ost << "%\\usepackage{chancery}\n"; 
-ost << "%\\usepackage{garamond}\n"; 
-ost << "%\\usepackage{helvet}\n"; 
-ost << "%\\usepackage{newcent}\n"; 
-ost << "%\\usepackage{palatino}\n"; 
-ost << "%\\usepackage{times}\n"; 
-ost << "%\\usepackage{pifont}\n"; 
-ost << endl;
-ost << endl;
-ost << endl;
-ost << "%\\parindent=0pt\n"; 
-ost << endl;
-ost << "\\renewcommand{\\baselinestretch}{1.5}\n"; 
-ost << endl;
-ost << "\\hoffset -1.2cm\n"; 
-ost << "\\voffset -3.7cm\n"; 
-ost << endl;
-ost << "%\\oddsidemargin=15pt\n"; 
-ost << endl;
-ost << "\\oddsidemargin 0pt\n"; 
-ost << "\\evensidemargin 0pt\n"; 
-ost << "%\\topmargin 0pt\n"; 
-ost << endl;
-ost << "%\\topmargin=0pt\n"; 
-ost << "%\\headsep=18pt\n"; 
-ost << "%\\footskip=45pt\n"; 
-ost << "%\\mathsurround=1pt\n"; 
-ost << "%\\evensidemargin=0pt\n"; 
-ost << "%\\oddsidemargin=15pt\n"; 
-ost << endl;
-if (f_landscape) {
-	ost << "\\textwidth = 25cm\n"; 
-	ost << "\\textheight= 17cm\n"; 
-	}
-else {
-	ost << "\\textwidth = 17cm\n"; 
-	ost << "\\textheight= 25cm\n"; 
-	}
-ost << endl;
-ost << "%\\setlength{\\textheight}{\\baselineskip*41+\\topskip}\n"; 
-ost << endl;
-
-ost << "\\newcommand{\\Aut}{{\\rm Aut}}\n"; 
-ost << "\\newcommand{\\Sym}{{\\rm Sym}}\n"; 
-ost << "\\newcommand{\\sFix}{{\\cal Fix}}\n"; 
-ost << "\\newcommand{\\sOrbits}{{\\cal Orbits}}\n"; 
-//ost << "\\newcommand{\\sFix}{{\\mathscr Fix}}\n"; 
-//ost << "\\newcommand{\\sOrbits}{{\\mathscr Orbits}}\n"; 
-ost << "\\newcommand{\\Stab}{{\\rm Stab}}\n"; 
-ost << "\\newcommand{\\Fix}{{\\rm Fix}}\n"; 
-ost << "\\newcommand{\\fix}{{\\rm fix}}\n"; 
-ost << "\\newcommand{\\Orbits}{{\\rm Orbits}}\n"; 
-ost << "\\newcommand{\\PG}{{\\rm PG}}\n"; 
-ost << "\\newcommand{\\AG}{{\\rm AG}}\n"; 
-ost << "\\newcommand{\\SQS}{{\\rm SQS}}\n"; 
-ost << "\\newcommand{\\STS}{{\\rm STS}}\n"; 
-//ost << "\\newcommand{\\Sp}{{\\rm Sp}}\n"; 
-ost << "\\newcommand{\\PSL}{{\\rm PSL}}\n"; 
-ost << "\\newcommand{\\PGL}{{\\rm PGL}}\n"; 
-ost << "\\newcommand{\\PSSL}{{\\rm P\\Sigma L}}\n"; 
-ost << "\\newcommand{\\PGGL}{{\\rm P\\Gamma L}}\n"; 
-ost << "\\newcommand{\\SL}{{\\rm SL}}\n"; 
-ost << "\\newcommand{\\GL}{{\\rm GL}}\n"; 
-ost << "\\newcommand{\\SSL}{{\\rm \\Sigma L}}\n"; 
-ost << "\\newcommand{\\GGL}{{\\rm \\Gamma L}}\n"; 
-ost << "\\newcommand{\\ASL}{{\\rm ASL}}\n"; 
-ost << "\\newcommand{\\AGL}{{\\rm AGL}}\n"; 
-ost << "\\newcommand{\\ASSL}{{\\rm A\\Sigma L}}\n"; 
-ost << "\\newcommand{\\AGGL}{{\\rm A\\Gamma L}}\n"; 
-ost << "\\newcommand{\\PSU}{{\\rm PSU}}\n"; 
-ost << "\\newcommand{\\HS}{{\\rm HS}}\n"; 
-ost << "\\newcommand{\\Hol}{{\\rm Hol}}\n"; 
-ost << "\\newcommand{\\SO}{{\\rm SO}}\n"; 
-ost << "\\newcommand{\\ASO}{{\\rm ASO}}\n"; 
-
-ost << "\\newcommand{\\la}{\\langle}\n"; 
-ost << "\\newcommand{\\ra}{\\rangle}\n"; 
-
-
-ost << "\\newcommand{\\cA}{{\\cal A}}\n"; 
-ost << "\\newcommand{\\cB}{{\\cal B}}\n"; 
-ost << "\\newcommand{\\cC}{{\\cal C}}\n"; 
-ost << "\\newcommand{\\cD}{{\\cal D}}\n"; 
-ost << "\\newcommand{\\cE}{{\\cal E}}\n"; 
-ost << "\\newcommand{\\cF}{{\\cal F}}\n"; 
-ost << "\\newcommand{\\cG}{{\\cal G}}\n"; 
-ost << "\\newcommand{\\cH}{{\\cal H}}\n"; 
-ost << "\\newcommand{\\cI}{{\\cal I}}\n"; 
-ost << "\\newcommand{\\cJ}{{\\cal J}}\n"; 
-ost << "\\newcommand{\\cK}{{\\cal K}}\n"; 
-ost << "\\newcommand{\\cL}{{\\cal L}}\n"; 
-ost << "\\newcommand{\\cM}{{\\cal M}}\n"; 
-ost << "\\newcommand{\\cN}{{\\cal N}}\n"; 
-ost << "\\newcommand{\\cO}{{\\cal O}}\n"; 
-ost << "\\newcommand{\\cP}{{\\cal P}}\n"; 
-ost << "\\newcommand{\\cQ}{{\\cal Q}}\n"; 
-ost << "\\newcommand{\\cR}{{\\cal R}}\n"; 
-ost << "\\newcommand{\\cS}{{\\cal S}}\n"; 
-ost << "\\newcommand{\\cT}{{\\cal T}}\n"; 
-ost << "\\newcommand{\\cU}{{\\cal U}}\n"; 
-ost << "\\newcommand{\\cV}{{\\cal V}}\n"; 
-ost << "\\newcommand{\\cW}{{\\cal W}}\n"; 
-ost << "\\newcommand{\\cX}{{\\cal X}}\n"; 
-ost << "\\newcommand{\\cY}{{\\cal Y}}\n"; 
-ost << "\\newcommand{\\cZ}{{\\cal Z}}\n"; 
-
-ost << "\\newcommand{\\rmA}{{\\rm A}}\n"; 
-ost << "\\newcommand{\\rmB}{{\\rm B}}\n"; 
-ost << "\\newcommand{\\rmC}{{\\rm C}}\n"; 
-ost << "\\newcommand{\\rmD}{{\\rm D}}\n"; 
-ost << "\\newcommand{\\rmE}{{\\rm E}}\n"; 
-ost << "\\newcommand{\\rmF}{{\\rm F}}\n"; 
-ost << "\\newcommand{\\rmG}{{\\rm G}}\n"; 
-ost << "\\newcommand{\\rmH}{{\\rm H}}\n"; 
-ost << "\\newcommand{\\rmI}{{\\rm I}}\n"; 
-ost << "\\newcommand{\\rmJ}{{\\rm J}}\n"; 
-ost << "\\newcommand{\\rmK}{{\\rm K}}\n"; 
-ost << "\\newcommand{\\rmL}{{\\rm L}}\n"; 
-ost << "\\newcommand{\\rmM}{{\\rm M}}\n"; 
-ost << "\\newcommand{\\rmN}{{\\rm N}}\n"; 
-ost << "\\newcommand{\\rmO}{{\\rm O}}\n"; 
-ost << "\\newcommand{\\rmP}{{\\rm P}}\n"; 
-ost << "\\newcommand{\\rmQ}{{\\rm Q}}\n"; 
-ost << "\\newcommand{\\rmR}{{\\rm R}}\n"; 
-ost << "\\newcommand{\\rmS}{{\\rm S}}\n"; 
-ost << "\\newcommand{\\rmT}{{\\rm T}}\n"; 
-ost << "\\newcommand{\\rmU}{{\\rm U}}\n"; 
-ost << "\\newcommand{\\rmV}{{\\rm V}}\n"; 
-ost << "\\newcommand{\\rmW}{{\\rm W}}\n"; 
-ost << "\\newcommand{\\rmX}{{\\rm X}}\n"; 
-ost << "\\newcommand{\\rmY}{{\\rm Y}}\n"; 
-ost << "\\newcommand{\\rmZ}{{\\rm Z}}\n"; 
-
-ost << "\\newcommand{\\bA}{{\\bf A}}\n"; 
-ost << "\\newcommand{\\bB}{{\\bf B}}\n"; 
-ost << "\\newcommand{\\bC}{{\\bf C}}\n"; 
-ost << "\\newcommand{\\bD}{{\\bf D}}\n"; 
-ost << "\\newcommand{\\bE}{{\\bf E}}\n"; 
-ost << "\\newcommand{\\bF}{{\\bf F}}\n"; 
-ost << "\\newcommand{\\bG}{{\\bf G}}\n"; 
-ost << "\\newcommand{\\bH}{{\\bf H}}\n"; 
-ost << "\\newcommand{\\bI}{{\\bf I}}\n"; 
-ost << "\\newcommand{\\bJ}{{\\bf J}}\n"; 
-ost << "\\newcommand{\\bK}{{\\bf K}}\n"; 
-ost << "\\newcommand{\\bL}{{\\bf L}}\n"; 
-ost << "\\newcommand{\\bM}{{\\bf M}}\n"; 
-ost << "\\newcommand{\\bN}{{\\bf N}}\n"; 
-ost << "\\newcommand{\\bO}{{\\bf O}}\n"; 
-ost << "\\newcommand{\\bP}{{\\bf P}}\n"; 
-ost << "\\newcommand{\\bQ}{{\\bf Q}}\n"; 
-ost << "\\newcommand{\\bR}{{\\bf R}}\n"; 
-ost << "\\newcommand{\\bS}{{\\bf S}}\n"; 
-ost << "\\newcommand{\\bT}{{\\bf T}}\n"; 
-ost << "\\newcommand{\\bU}{{\\bf U}}\n"; 
-ost << "\\newcommand{\\bV}{{\\bf V}}\n"; 
-ost << "\\newcommand{\\bW}{{\\bf W}}\n"; 
-ost << "\\newcommand{\\bX}{{\\bf X}}\n"; 
-ost << "\\newcommand{\\bY}{{\\bf Y}}\n"; 
-ost << "\\newcommand{\\bZ}{{\\bf Z}}\n"; 
-
-#if 0
-ost << "\\newcommand{\\sA}{{\\mathscr A}}\n"; 
-ost << "\\newcommand{\\sB}{{\\mathscr B}}\n"; 
-ost << "\\newcommand{\\sC}{{\\mathscr C}}\n"; 
-ost << "\\newcommand{\\sD}{{\\mathscr D}}\n"; 
-ost << "\\newcommand{\\sE}{{\\mathscr E}}\n"; 
-ost << "\\newcommand{\\sF}{{\\mathscr F}}\n"; 
-ost << "\\newcommand{\\sG}{{\\mathscr G}}\n"; 
-ost << "\\newcommand{\\sH}{{\\mathscr H}}\n"; 
-ost << "\\newcommand{\\sI}{{\\mathscr I}}\n"; 
-ost << "\\newcommand{\\sJ}{{\\mathscr J}}\n"; 
-ost << "\\newcommand{\\sK}{{\\mathscr K}}\n"; 
-ost << "\\newcommand{\\sL}{{\\mathscr L}}\n"; 
-ost << "\\newcommand{\\sM}{{\\mathscr M}}\n"; 
-ost << "\\newcommand{\\sN}{{\\mathscr N}}\n"; 
-ost << "\\newcommand{\\sO}{{\\mathscr O}}\n"; 
-ost << "\\newcommand{\\sP}{{\\mathscr P}}\n"; 
-ost << "\\newcommand{\\sQ}{{\\mathscr Q}}\n"; 
-ost << "\\newcommand{\\sR}{{\\mathscr R}}\n"; 
-ost << "\\newcommand{\\sS}{{\\mathscr S}}\n"; 
-ost << "\\newcommand{\\sT}{{\\mathscr T}}\n"; 
-ost << "\\newcommand{\\sU}{{\\mathscr U}}\n"; 
-ost << "\\newcommand{\\sV}{{\\mathscr V}}\n"; 
-ost << "\\newcommand{\\sW}{{\\mathscr W}}\n"; 
-ost << "\\newcommand{\\sX}{{\\mathscr X}}\n"; 
-ost << "\\newcommand{\\sY}{{\\mathscr Y}}\n"; 
-ost << "\\newcommand{\\sZ}{{\\mathscr Z}}\n"; 
-#else
-ost << "\\newcommand{\\sA}{{\\cal A}}\n"; 
-ost << "\\newcommand{\\sB}{{\\cal B}}\n"; 
-ost << "\\newcommand{\\sC}{{\\cal C}}\n"; 
-ost << "\\newcommand{\\sD}{{\\cal D}}\n"; 
-ost << "\\newcommand{\\sE}{{\\cal E}}\n"; 
-ost << "\\newcommand{\\sF}{{\\cal F}}\n"; 
-ost << "\\newcommand{\\sG}{{\\cal G}}\n"; 
-ost << "\\newcommand{\\sH}{{\\cal H}}\n"; 
-ost << "\\newcommand{\\sI}{{\\cal I}}\n"; 
-ost << "\\newcommand{\\sJ}{{\\cal J}}\n"; 
-ost << "\\newcommand{\\sK}{{\\cal K}}\n"; 
-ost << "\\newcommand{\\sL}{{\\cal L}}\n"; 
-ost << "\\newcommand{\\sM}{{\\cal M}}\n"; 
-ost << "\\newcommand{\\sN}{{\\cal N}}\n"; 
-ost << "\\newcommand{\\sO}{{\\cal O}}\n"; 
-ost << "\\newcommand{\\sP}{{\\cal P}}\n"; 
-ost << "\\newcommand{\\sQ}{{\\cal Q}}\n"; 
-ost << "\\newcommand{\\sR}{{\\cal R}}\n"; 
-ost << "\\newcommand{\\sS}{{\\cal S}}\n"; 
-ost << "\\newcommand{\\sT}{{\\cal T}}\n"; 
-ost << "\\newcommand{\\sU}{{\\cal U}}\n"; 
-ost << "\\newcommand{\\sV}{{\\cal V}}\n"; 
-ost << "\\newcommand{\\sW}{{\\cal W}}\n"; 
-ost << "\\newcommand{\\sX}{{\\cal X}}\n"; 
-ost << "\\newcommand{\\sY}{{\\cal Y}}\n"; 
-ost << "\\newcommand{\\sZ}{{\\cal Z}}\n"; 
-#endif
-
-ost << "\\newcommand{\\frakA}{{\\mathfrak A}}\n"; 
-ost << "\\newcommand{\\frakB}{{\\mathfrak B}}\n"; 
-ost << "\\newcommand{\\frakC}{{\\mathfrak C}}\n"; 
-ost << "\\newcommand{\\frakD}{{\\mathfrak D}}\n"; 
-ost << "\\newcommand{\\frakE}{{\\mathfrak E}}\n"; 
-ost << "\\newcommand{\\frakF}{{\\mathfrak F}}\n"; 
-ost << "\\newcommand{\\frakG}{{\\mathfrak G}}\n"; 
-ost << "\\newcommand{\\frakH}{{\\mathfrak H}}\n"; 
-ost << "\\newcommand{\\frakI}{{\\mathfrak I}}\n"; 
-ost << "\\newcommand{\\frakJ}{{\\mathfrak J}}\n"; 
-ost << "\\newcommand{\\frakK}{{\\mathfrak K}}\n"; 
-ost << "\\newcommand{\\frakL}{{\\mathfrak L}}\n"; 
-ost << "\\newcommand{\\frakM}{{\\mathfrak M}}\n"; 
-ost << "\\newcommand{\\frakN}{{\\mathfrak N}}\n"; 
-ost << "\\newcommand{\\frakO}{{\\mathfrak O}}\n"; 
-ost << "\\newcommand{\\frakP}{{\\mathfrak P}}\n"; 
-ost << "\\newcommand{\\frakQ}{{\\mathfrak Q}}\n"; 
-ost << "\\newcommand{\\frakR}{{\\mathfrak R}}\n"; 
-ost << "\\newcommand{\\frakS}{{\\mathfrak S}}\n"; 
-ost << "\\newcommand{\\frakT}{{\\mathfrak T}}\n"; 
-ost << "\\newcommand{\\frakU}{{\\mathfrak U}}\n"; 
-ost << "\\newcommand{\\frakV}{{\\mathfrak V}}\n"; 
-ost << "\\newcommand{\\frakW}{{\\mathfrak W}}\n"; 
-ost << "\\newcommand{\\frakX}{{\\mathfrak X}}\n"; 
-ost << "\\newcommand{\\frakY}{{\\mathfrak Y}}\n"; 
-ost << "\\newcommand{\\frakZ}{{\\mathfrak Z}}\n"; 
-
-ost << "\\newcommand{\\fraka}{{\\mathfrak a}}\n"; 
-ost << "\\newcommand{\\frakb}{{\\mathfrak b}}\n"; 
-ost << "\\newcommand{\\frakc}{{\\mathfrak c}}\n"; 
-ost << "\\newcommand{\\frakd}{{\\mathfrak d}}\n"; 
-ost << "\\newcommand{\\frake}{{\\mathfrak e}}\n"; 
-ost << "\\newcommand{\\frakf}{{\\mathfrak f}}\n"; 
-ost << "\\newcommand{\\frakg}{{\\mathfrak g}}\n"; 
-ost << "\\newcommand{\\frakh}{{\\mathfrak h}}\n"; 
-ost << "\\newcommand{\\fraki}{{\\mathfrak i}}\n"; 
-ost << "\\newcommand{\\frakj}{{\\mathfrak j}}\n"; 
-ost << "\\newcommand{\\frakk}{{\\mathfrak k}}\n"; 
-ost << "\\newcommand{\\frakl}{{\\mathfrak l}}\n"; 
-ost << "\\newcommand{\\frakm}{{\\mathfrak m}}\n"; 
-ost << "\\newcommand{\\frakn}{{\\mathfrak n}}\n"; 
-ost << "\\newcommand{\\frako}{{\\mathfrak o}}\n"; 
-ost << "\\newcommand{\\frakp}{{\\mathfrak p}}\n"; 
-ost << "\\newcommand{\\frakq}{{\\mathfrak q}}\n"; 
-ost << "\\newcommand{\\frakr}{{\\mathfrak r}}\n"; 
-ost << "\\newcommand{\\fraks}{{\\mathfrak s}}\n"; 
-ost << "\\newcommand{\\frakt}{{\\mathfrak t}}\n"; 
-ost << "\\newcommand{\\fraku}{{\\mathfrak u}}\n"; 
-ost << "\\newcommand{\\frakv}{{\\mathfrak v}}\n"; 
-ost << "\\newcommand{\\frakw}{{\\mathfrak w}}\n"; 
-ost << "\\newcommand{\\frakx}{{\\mathfrak x}}\n"; 
-ost << "\\newcommand{\\fraky}{{\\mathfrak y}}\n"; 
-ost << "\\newcommand{\\frakz}{{\\mathfrak z}}\n"; 
-
-
-ost << "\\newcommand{\\Tetra}{{\\mathfrak Tetra}}\n"; 
-ost << "\\newcommand{\\Cube}{{\\mathfrak Cube}}\n"; 
-ost << "\\newcommand{\\Octa}{{\\mathfrak Octa}}\n"; 
-ost << "\\newcommand{\\Dode}{{\\mathfrak Dode}}\n"; 
-ost << "\\newcommand{\\Ico}{{\\mathfrak Ico}}\n"; 
-
-ost << endl;
-ost << endl;
-ost << endl;
-ost << "%\\makeindex\n"; 
-ost << endl;
-ost << "\\begin{document} \n"; 
-ost << endl;	
-ost << "\\bibliographystyle{plain}\n"; 
-ost << "%\\large\n"; 
-ost << endl;
-ost << "{\\allowdisplaybreaks%\n"; 
-ost << endl;
-ost << endl;
-ost << endl;
-ost << endl;
-ost << "%\\makeindex\n"; 
-ost << endl;
-ost << "\\renewcommand{\\labelenumi}{(\\roman{enumi})}\n"; 
-ost << endl;
-
-if (f_title) {
-	ost << "\\title{" << title << "}\n"; 
-	ost << "\\author{" << author << "}%end author\n"; 
-	ost << "%\\date{}\n"; 
-	ost << "\\maketitle%\n"; 
-	}
-ost << "\\pagenumbering{roman}\n"; 
-ost << "%\\thispagestyle{empty}\n"; 
-if (f_toc) {
-	ost << "\\tableofcontents\n"; 
-	}
-ost << "%\\input et.tex%\n"; 
-ost << "%\\thispagestyle{empty}%\\phantom{page2}%\\clearpage%\n"; 
-ost << "%\\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%\n"; 
-ost << "%\\tableofcontents\n"; 
-ost << "%\\listofsymbols\n"; 
-if (f_toc){
-	ost << "\\clearpage\n"; 
-	ost << endl;
-	}
-ost << "\\pagenumbering{arabic}\n"; 
-ost << "%\\pagenumbering{roman}\n"; 
-ost << endl;
-ost << endl;
-ost << endl;
-}
-
-
-void latex_foot(ostream& ost)
-{
-ost << endl;
-ost << endl;
-ost << "%\\bibliographystyle{gerplain}% wird oben eingestellt\n"; 
-ost << "%\\addcontentsline{toc}{section}{References}\n"; 
-ost << "%\\bibliography{../MY_BIBLIOGRAPHY/anton}\n"; 
-ost << "% ACHTUNG: nicht vergessen:\n"; 
-ost << "% die Zeile\n"; 
-ost << "%\\addcontentsline{toc}{chapter}{Literaturverzeichnis}\n"; 
-ost << "% muss per Hand in d.bbl eingefuegt werden !\n"; 
-ost << "% nach \\begin{thebibliography}{100}\n"; 
-ost << endl;
-ost << "%\\begin{theindex}\n"; 
-ost << endl;
-ost << "%\\clearpage\n"; 
-ost << "%\\addcontentsline{toc}{chapter}{Index}\n"; 
-ost << "%\\input{apd.ind}\n"; 
-ost << endl;
-ost << "%\\printindex\n"; 
-ost << "%\\end{theindex}\n"; 
-ost << endl;
-ost << "}% allowdisplaybreaks\n"; 
-ost << endl;
-ost << "\\end{document}\n"; 
-ost << endl;
-ost << endl;
-}
-#endif
 
 void html_head(ostream& ost, char *title_long, char *title_short)
 {
