@@ -8,6 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 
 poset::poset()
@@ -393,4 +394,5 @@ int callback_test_independence_condition(orbit_based_testing *Obt,
 
 }
 
-}
+}}
+

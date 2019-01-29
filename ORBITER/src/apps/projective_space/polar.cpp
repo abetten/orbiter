@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 using namespace orbiter;
+using namespace orbiter::top_level;
 
 
 // global data:
@@ -18,7 +19,8 @@ using namespace orbiter;
 int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
-void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level);
+void init_orthogonal(action *A, int epsilon,
+		int n, finite_field *F, int verbose_level);
 
 
 

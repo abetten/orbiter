@@ -10,10 +10,12 @@
 
 using namespace orbiter::foundations;
 using namespace orbiter::group_actions;
+using namespace orbiter::classification;
 using namespace orbiter::discreta;
 
 
 namespace orbiter {
+namespace top_level {
 
 
 class representatives;
@@ -165,7 +167,7 @@ public:
 	void print_fusion_statistics();
 };
 
-}
+}}
 
 
 #include "./algebra_and_number_theory/tl_algebra_and_number_theory.h"

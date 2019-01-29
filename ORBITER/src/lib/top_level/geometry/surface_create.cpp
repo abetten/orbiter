@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 surface_create::surface_create()
 {
@@ -630,6 +631,6 @@ void surface_create::apply_transformations(
 		}
 }
 
-}
+}}
 
 

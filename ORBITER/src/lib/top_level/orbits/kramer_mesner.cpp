@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 kramer_mesner::~kramer_mesner()
@@ -700,4 +701,4 @@ int kramer_mesner_test_surface(int len, int *S, void *data, int verbose_level)
 }
 
 
-}
+}}

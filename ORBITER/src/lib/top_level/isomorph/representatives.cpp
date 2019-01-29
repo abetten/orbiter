@@ -10,6 +10,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 representatives::representatives()
@@ -421,6 +422,6 @@ void representatives::print_fusion_statistics()
 	cout << "nb_open = " << nb_open << endl;
 }
 
-}
+}}
 
 

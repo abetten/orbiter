@@ -14,6 +14,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 void blt_set::read_arguments(int argc, const char **argv)
 {
@@ -2737,7 +2738,7 @@ void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level
 	Gen->subset_orbits(*Iso, verbose_level);
 }
 
-}
+}}
 
 
 

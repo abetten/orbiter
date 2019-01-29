@@ -9,6 +9,7 @@
  */
 
 namespace orbiter {
+namespace classification {
 
 
 // #############################################################################
@@ -86,7 +87,8 @@ void wedge_product_export_magma(poset_classification *Gen, int n, int q,
 	int vector_space_dimension, int level, int verbose_level);
 
 
-}
+}}
+
 
 
 

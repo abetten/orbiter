@@ -8,6 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 poset_orbit_node::poset_orbit_node()
 {
@@ -933,5 +934,6 @@ int poset_orbit_node::nb_extension_points()
 }
 
 
-}
+}}
+
 

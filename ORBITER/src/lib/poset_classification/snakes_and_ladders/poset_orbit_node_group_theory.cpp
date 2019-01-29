@@ -10,6 +10,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 void poset_orbit_node::store_strong_generators(
 		poset_classification *gen,
@@ -793,4 +794,5 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 		}
 }
 
-}
+}}
+

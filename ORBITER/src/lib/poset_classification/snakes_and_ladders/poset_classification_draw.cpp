@@ -12,6 +12,7 @@
 //#define MAX_NODES_FOR_TREEFILE 6500
 
 namespace orbiter {
+namespace classification {
 
 static void print_table1_top(ofstream &fp);
 static void print_table1_bottom(ofstream &fp);
@@ -2383,5 +2384,6 @@ static void print_set_special(ofstream &fp, int *set, int sz)
 }
 
 
-}
+}}
+
 

@@ -14,6 +14,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 #define MY_BUFSIZE 1000000
 
@@ -2317,6 +2318,6 @@ void isomorph::read_everything_including_classification(
 		}
 }
 
-}
+}}
 
 

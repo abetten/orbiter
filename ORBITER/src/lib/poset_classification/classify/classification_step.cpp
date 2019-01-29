@@ -15,18 +15,19 @@
 
 
 namespace orbiter {
+namespace classification {
 
-classification::classification()
+classification_step::classification_step()
 {
 	null();
 }
 
-classification::~classification()
+classification_step::~classification_step()
 {
 	freeself();
 }
 
-void classification::null()
+void classification_step::null()
 {
 	A = NULL;
 	A2 = NULL;
@@ -37,7 +38,7 @@ void classification::null()
 	Rep = NULL;
 }
 
-void classification::freeself()
+void classification_step::freeself()
 {
 	if (Orbit) {
 		FREE_OBJECTS(Orbit);
@@ -48,31 +49,31 @@ void classification::freeself()
 	null();
 }
 
-void classification::init(action *A, action *A2, 
+void classification_step::init(action *A, action *A2,
 	int max_orbits, int representation_sz, 
 	longinteger_object &go, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification::init "
+		cout << "classification_step::init "
 				"group order = " << go
 				<< " representation_sz = " << representation_sz
 				<< " max_orbits = " << max_orbits << endl;
 		}
-	classification::A = A;
-	classification::A2 = A2;
-	go.assign_to(classification::go);
-	classification::max_orbits = max_orbits;
-	classification::representation_sz = representation_sz;
+	classification_step::A = A;
+	classification_step::A2 = A2;
+	go.assign_to(classification_step::go);
+	classification_step::max_orbits = max_orbits;
+	classification_step::representation_sz = representation_sz;
 	Orbit = NEW_OBJECTS(orbit_node, max_orbits);
 	Rep = NEW_int(max_orbits * representation_sz);
 	if (f_v) {
-		cout << "classification::init done" << endl;
+		cout << "classification_step::init done" << endl;
 		}
 }
 
-set_and_stabilizer *classification::get_set_and_stabilizer(
+set_and_stabilizer *classification_step::get_set_and_stabilizer(
 		int orbit_index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -81,7 +82,7 @@ set_and_stabilizer *classification::get_set_and_stabilizer(
 	strong_generators *Strong_gens;
 
 	if (f_v) {
-		cout << "classification::get_set_and_stabilizer" << endl;
+		cout << "classification_step::get_set_and_stabilizer" << endl;
 		}
 
 	SaS = NEW_OBJECT(set_and_stabilizer);
@@ -92,14 +93,14 @@ set_and_stabilizer *classification::get_set_and_stabilizer(
 			data, representation_sz);
 	
 	if (f_v) {
-		cout << "classification::get_set_and_stabilizer "
+		cout << "classification_step::get_set_and_stabilizer "
 				"before Orbit[orbit_index].gens->create_copy" << endl;
 		}
 
 	Strong_gens = Orbit[orbit_index].gens->create_copy();
 
 	if (f_v) {
-		cout << "classification::get_set_and_stabilizer "
+		cout << "classification_step::get_set_and_stabilizer "
 				"before SaS->init_everything" << endl;
 		}
 
@@ -108,19 +109,19 @@ set_and_stabilizer *classification::get_set_and_stabilizer(
 		Strong_gens, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "classification::get_set_and_stabilizer done" << endl;
+		cout << "classification_step::get_set_and_stabilizer done" << endl;
 		}
 
 	return SaS;
 }
 
-void classification::print_latex(ostream &ost, 
+void classification_step::print_latex(ostream &ost,
 	const char *title, int f_with_stabilizers)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	
-	cout << "classification::print_latex" << endl;
+	cout << "classification_step::print_latex" << endl;
 	
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{" << title << "}" << endl;
@@ -182,13 +183,13 @@ void classification::print_latex(ostream &ost,
 	ost << "The overall number of objects is: " << Ol << "\\\\" << endl;
 }
 
-void classification::write_file(ofstream &fp, int verbose_level)
+void classification_step::write_file(ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "classification::write_file" << endl;
+		cout << "classification_step::write_file" << endl;
 		}
 	fp.write((char *) &nb_orbits, sizeof(int));
 	fp.write((char *) &representation_sz, sizeof(int));
@@ -201,17 +202,17 @@ void classification::write_file(ofstream &fp, int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "classification::write_file finished" << endl;
+		cout << "classification_step::write_file finished" << endl;
 		}
 }
 
-void classification::read_file(ifstream &fp, int verbose_level)
+void classification_step::read_file(ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "classification::read_file" << endl;
+		cout << "classification_step::read_file" << endl;
 		}
 	fp.read((char *) &nb_orbits, sizeof(int));
 	fp.read((char *) &representation_sz, sizeof(int));
@@ -230,9 +231,10 @@ void classification::read_file(ifstream &fp, int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "classification::read_file finished" << endl;
+		cout << "classification_step::read_file finished" << endl;
 		}
 }
 
-}
+}}
+
 

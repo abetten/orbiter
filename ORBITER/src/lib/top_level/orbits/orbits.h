@@ -8,6 +8,9 @@
 
 
 namespace orbiter {
+namespace top_level {
+
+
 
 // #############################################################################
 // kramer_mesner.cpp
@@ -391,5 +394,6 @@ void subspace_orbits_early_test_func(int *S, int len,
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
 
-}
+}}
+
 

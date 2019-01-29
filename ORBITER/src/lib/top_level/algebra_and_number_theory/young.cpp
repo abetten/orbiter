@@ -10,6 +10,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 young::young()
 {
@@ -921,6 +922,6 @@ void young::Maschke(int *Rep,
 }
 
 
-}
+}}
 
 

@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 void isomorph_print_set(ostream &ost, int len, int *S, void *data)
 {
@@ -111,6 +112,7 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 
 
 
-}
+}}
+
 
 

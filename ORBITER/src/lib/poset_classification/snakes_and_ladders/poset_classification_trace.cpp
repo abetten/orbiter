@@ -9,6 +9,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 int poset_classification::find_isomorphism(
 		int *set1, int *set2, int sz,
@@ -750,4 +751,5 @@ int poset_classification::find_node_for_subspace_by_rank(
 	return node;
 }
 
-}
+}}
+

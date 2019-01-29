@@ -6,6 +6,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 exact_cover_arguments::exact_cover_arguments()
@@ -234,6 +235,6 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 	
 }
 
-}
+}}
 
 

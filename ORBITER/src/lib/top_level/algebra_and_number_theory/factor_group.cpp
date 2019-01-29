@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 void create_factor_group(action *A, sims *S, int goi, 
 	int size_subgroup, int *subgroup, factor_group *F,
@@ -133,5 +134,5 @@ void create_factor_group(action *A, sims *S, int goi,
 	FREE_int(Elt1);
 }
 
-}
+}}
 

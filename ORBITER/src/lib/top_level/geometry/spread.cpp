@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 spread::spread()
@@ -1244,7 +1245,7 @@ int callback_incremental_check_function(
 	return ret;
 }
 
-}
+}}
 
 
 

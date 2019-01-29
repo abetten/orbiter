@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 isomorph::isomorph()
@@ -1647,5 +1648,5 @@ void isomorph::init_high_level(action *A, poset_classification *gen,
 }
 
 
-}
+}}
 

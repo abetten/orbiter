@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 polar::polar()
@@ -1312,6 +1313,6 @@ void polar_callback_early_test_func(int *S, int len,
 		}
 }
 
-}
+}}
 
 

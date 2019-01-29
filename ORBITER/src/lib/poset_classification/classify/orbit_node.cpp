@@ -13,6 +13,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 orbit_node::orbit_node()
 {
@@ -33,7 +34,7 @@ void orbit_node::freeself()
 	null();
 }
 
-void orbit_node::init(classification *C, int orbit_index, 
+void orbit_node::init(classification_step *C, int orbit_index,
 	strong_generators *gens, int *Rep, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -82,4 +83,5 @@ void orbit_node::read_file(ifstream &fp, int verbose_level)
 }
 
 
-}
+}}
+

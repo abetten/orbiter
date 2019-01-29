@@ -9,6 +9,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 trace_result upstep_work::recognize(
 	int &final_node, int &final_ex, int f_tolerant,
@@ -739,5 +740,6 @@ trace_result upstep_work::start_over(
 	return r;
 }
 
-}
+}}
+
 

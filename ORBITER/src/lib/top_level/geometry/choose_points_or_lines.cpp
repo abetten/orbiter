@@ -8,6 +8,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 choose_points_or_lines::choose_points_or_lines()
@@ -559,5 +560,5 @@ int choose_points_or_lines::is_in_rep(int a)
 	return FALSE;
 }
 
-}
+}}
 

@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 void isomorph::iso_test_init(int verbose_level)
 {
@@ -1625,6 +1626,6 @@ int isomorph::handle_automorphism(int *set, sims *Stab,
 }
 
 
-}
+}}
 
 

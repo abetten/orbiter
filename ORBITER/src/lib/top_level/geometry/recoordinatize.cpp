@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 recoordinatize::recoordinatize()
 {
@@ -734,6 +735,6 @@ void recoordinatize::make_first_three(
 		}
 }
 
-}
+}}
 
 

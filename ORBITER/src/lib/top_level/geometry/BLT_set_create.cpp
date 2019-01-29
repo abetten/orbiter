@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 BLT_set_create::BLT_set_create()
 {
@@ -206,4 +207,4 @@ void BLT_set_create::apply_transformations(const char **transform_coeffs,
 }
 
 
-}
+}}

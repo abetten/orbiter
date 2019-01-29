@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 
 // #############################################################################
@@ -16,7 +17,7 @@ namespace orbiter {
 // #############################################################################
 
 
-//! wrapper class for exact cover problems arising with the lifting of combinatorial objects
+//! exact cover problems arising with the lifting of combinatorial objects
 
 
 class exact_cover {
@@ -206,4 +207,4 @@ public:
 	void compute_lifts(int verbose_level);
 };
 
-}
+}}

@@ -202,7 +202,7 @@ MODULES= \
 		group_actions/induced_actions/action_on_subgroups.o \
 		group_actions/induced_actions/action_on_wedge_product.o \
 		group_actions/induced_actions/product_action.o \
-		poset_classification/classify/classification.o \
+		poset_classification/classify/classification_step.o \
 		poset_classification/classify/flag_orbit_node.o \
 		poset_classification/classify/flag_orbits.o \
 		poset_classification/classify/orbit_node.o \

@@ -10,6 +10,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 int isomorph::identify_solution_relaxed(int *set, int *transporter, 
 	int f_implicit_fusion, int &orbit_no,
@@ -1476,6 +1477,6 @@ void isomorph::apply_isomorphism_oracle(
 
 }
 
-}
+}}
 
 

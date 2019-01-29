@@ -8,12 +8,12 @@
 
 #include <orbiter.h>
 
+
+
 using namespace orbiter;
+using namespace orbiter::top_level;
 
 #include "linear_set.h"
-
-
-using namespace orbiter;
 
 
 void linear_set::construct_semifield(int orbit_for_W, int verbose_level)

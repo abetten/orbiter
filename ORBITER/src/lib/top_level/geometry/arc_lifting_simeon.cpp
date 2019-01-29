@@ -9,6 +9,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 void early_test_func_for_arc_callback(int *S, int len,
 	int *candidates, int nb_candidates,
@@ -504,4 +505,4 @@ void early_test_func_for_arc_callback(int *S, int len,
 		}
 }
 
-}
+}}

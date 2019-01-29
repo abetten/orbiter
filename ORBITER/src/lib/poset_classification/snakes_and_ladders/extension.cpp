@@ -8,6 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 extension::extension()
 {
@@ -23,7 +24,8 @@ extension::~extension()
 {
 }
 
-}
+}}
+
 
 
 

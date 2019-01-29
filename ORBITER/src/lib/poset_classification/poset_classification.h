@@ -9,6 +9,7 @@ using namespace orbiter::group_actions;
 
 
 namespace orbiter {
+namespace classification {
 
 
 class extension;
@@ -20,7 +21,7 @@ class upstep_work;
 class compute_stabilizer;
 class flag_orbits;
 class flag_orbit_node;
-class classification;
+class classification_step;
 class orbit_node;
 class poset;
 class poset_description;
@@ -40,7 +41,7 @@ enum find_isomorphism_result {
 	fi_no_result 
 };
 
-}
+}}
 
 #include "./classify/classify.h"
 #include "./other/other.h"

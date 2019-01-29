@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 singer_cycle::singer_cycle()
@@ -389,6 +390,6 @@ void singer_cycle::init_lines(int verbose_level)
 		}
 }
 
-}
+}}
 
 

@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 spread_create_description::spread_create_description()
 {
@@ -81,4 +82,4 @@ int spread_create_description::read_arguments(int argc, const char **argv,
 }
 
 
-}
+}}
