@@ -13,6 +13,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 
 surface_with_action::surface_with_action()
@@ -1163,6 +1164,6 @@ void surface_with_action::arc_lifting_and_classify(
 
 }
 
-}
+}}
 
 

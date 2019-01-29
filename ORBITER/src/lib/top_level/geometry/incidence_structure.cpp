@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 void incidence_structure_compute_tda(partitionstack &S, 
 	incidence_structure *Inc, 
@@ -449,6 +450,6 @@ int incidence_structure_find_blocking_set(
 	return f_OK;
 }
 
-}
+}}
 
 

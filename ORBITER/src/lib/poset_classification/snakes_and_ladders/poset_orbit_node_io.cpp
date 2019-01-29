@@ -11,6 +11,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 void poset_orbit_node::read_memory_object(
 		poset_classification *PC,
@@ -596,7 +597,8 @@ void poset_orbit_node::draw_schreier_forest(
 	}
 }
 
-}
+}}
+
 
 
 

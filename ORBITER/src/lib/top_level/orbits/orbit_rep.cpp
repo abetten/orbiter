@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 orbit_rep::orbit_rep()
 {
@@ -103,7 +104,7 @@ void orbit_rep::init_from_file(
 
 }
 
-}
+}}
 
 
 

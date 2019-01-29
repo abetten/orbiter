@@ -9,6 +9,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 #define MY_OWN_BUFSIZE 1000000
 
@@ -903,7 +904,8 @@ void wedge_product_export_magma(poset_classification *Gen,
 }
 
 
-}
+}}
+
 
 
 

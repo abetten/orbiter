@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 subspace_orbits::subspace_orbits()
@@ -1112,7 +1113,7 @@ void subspace_orbits_early_test_func(int *S, int len,
 		}
 }
 
-}
+}}
 
 
 

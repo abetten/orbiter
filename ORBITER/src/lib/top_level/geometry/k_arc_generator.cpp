@@ -9,6 +9,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 k_arc_generator::k_arc_generator()
 {
@@ -220,6 +221,6 @@ void k_arc_generator::compute_line_type(int *set, int len,
 	
 }
 
-}
+}}
 
 

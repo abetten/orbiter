@@ -11,6 +11,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 surfaces_arc_lifting::surfaces_arc_lifting()
 {
@@ -770,5 +771,5 @@ void surfaces_arc_lifting::report(int verbose_level)
 		}
 }
 
-}
+}}
 

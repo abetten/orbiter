@@ -9,6 +9,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 {
@@ -227,7 +228,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 			"in $\\PG(2," << F->q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
-}
+}}
 
 
 

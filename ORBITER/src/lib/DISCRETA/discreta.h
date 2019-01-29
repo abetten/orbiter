@@ -15,12 +15,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+using namespace orbiter::classification;
+
 
 namespace orbiter {
 
 //! legacy project DISCRETA provides typed objects
 
 namespace discreta {
+
+
+
+
+
 
 #define BITS_OF_int 32
 #define SYSTEMUNIX

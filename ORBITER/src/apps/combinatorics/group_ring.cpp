@@ -7,6 +7,7 @@
 #include "orbiter.h"
 
 using namespace orbiter;
+using namespace orbiter::top_level;
 
 void do_it_for_sym_n(int n, int verbose_level);
 void do_it_for_sym_4(int n, int verbose_level);

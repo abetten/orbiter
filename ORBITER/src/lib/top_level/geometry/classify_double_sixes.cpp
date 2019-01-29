@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 classify_double_sixes::classify_double_sixes()
 {
@@ -1295,7 +1296,7 @@ void classify_double_sixes::upstep(int verbose_level)
 	int_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
-	Double_sixes = NEW_OBJECT(classification);
+	Double_sixes = NEW_OBJECT(classification_step);
 
 	longinteger_object go;
 	A->group_order(go);
@@ -1791,7 +1792,7 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	Flag_orbits->A2 = A;
 	Flag_orbits->read_file(fp, verbose_level);
 
-	Double_sixes = NEW_OBJECT(classification);
+	Double_sixes = NEW_OBJECT(classification_step);
 	Double_sixes->A = A;
 	Double_sixes->A2 = A2;
 
@@ -1841,7 +1842,7 @@ void callback_partial_ovoid_test_early(int *S, int len,
 		}
 }
 
-}
+}}
 
 
 

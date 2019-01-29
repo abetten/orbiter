@@ -10,6 +10,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 int upstep_work::upstep_subspace_action(int verbose_level)
 // This routine is called from upstep_work::init_extension_node
@@ -583,5 +584,6 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	return TRUE;
 }
 
-}
+}}
+
 

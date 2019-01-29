@@ -6,6 +6,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 isomorph_arguments::isomorph_arguments()
@@ -401,5 +402,5 @@ void isomorph_arguments::execute(int verbose_level)
 		}
 }
 
-}
+}}
 

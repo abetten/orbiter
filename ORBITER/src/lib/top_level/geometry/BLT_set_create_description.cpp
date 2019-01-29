@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 BLT_set_create_description::BLT_set_create_description()
@@ -73,5 +74,5 @@ int BLT_set_create_description::read_arguments(int argc, const char **argv,
 	return i;
 }
 
-}
+}}
 

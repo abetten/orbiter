@@ -8,6 +8,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 
 // #############################################################################
@@ -831,7 +832,7 @@ public:
 	
 	flag_orbits *Flag_orbits;
 
-	classification *Double_sixes;
+	classification_step *Double_sixes;
 
 
 	classify_double_sixes();
@@ -912,7 +913,7 @@ public:
 
 	int nb_orbits_trihedral_pairs;
 
-	classification *Trihedral_pairs;
+	classification_step *Trihedral_pairs;
 
 
 
@@ -2052,7 +2053,7 @@ public:
 	// classification of surfaces:
 	flag_orbits *Flag_orbits;
 
-	classification *Surfaces;
+	classification_step *Surfaces;
 
 
 
@@ -2372,7 +2373,7 @@ public:
 	// classification of surfaces:
 	flag_orbits *Flag_orbits;
 
-	classification *Surfaces;
+	classification_step *Surfaces;
 
 	surfaces_arc_lifting();
 	~surfaces_arc_lifting();
@@ -2454,4 +2455,4 @@ int translation_plane_via_andre_model_check_arc(int len, int *S,
 int translation_plane_via_andre_model_check_subplane(int len, int *S, 
 	void *data, int verbose_level);
 
-}
+}}

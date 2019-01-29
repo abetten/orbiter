@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 surface_create_description::surface_create_description()
@@ -104,7 +105,7 @@ int surface_create_description::get_q()
 	return q;
 }
 
-}
+}}
 
 
 

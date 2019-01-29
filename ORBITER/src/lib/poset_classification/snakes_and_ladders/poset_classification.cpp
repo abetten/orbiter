@@ -9,6 +9,7 @@
 
 
 namespace orbiter {
+namespace classification {
 
 int poset_classification::nb_orbits_at_level(int level)
 {
@@ -2311,7 +2312,8 @@ void poset_classification::rank_basis(
 	}
 }
 
-}
+}}
+
 
 
 

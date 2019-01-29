@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 
@@ -415,5 +416,5 @@ int packing_types_compare_function(void *a, void *b, void *data)
 }
 
 
-}
+}}
 

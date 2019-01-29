@@ -10,6 +10,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 surface_classify_wedge::surface_classify_wedge()
@@ -355,7 +356,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 	int_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
-	Surfaces = NEW_OBJECT(classification);
+	Surfaces = NEW_OBJECT(classification_step);
 
 	longinteger_object go;
 	A->group_order(go);
@@ -610,7 +611,7 @@ void surface_classify_wedge::read_file(
 	Flag_orbits->A2 = A;
 	Flag_orbits->read_file(fp, verbose_level);
 
-	Surfaces = NEW_OBJECT(classification);
+	Surfaces = NEW_OBJECT(classification_step);
 	Surfaces->A = A;
 	Surfaces->A2 = A2;
 
@@ -2066,6 +2067,6 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 }
 
 
-}
+}}
 
 

@@ -8,6 +8,8 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
+
 
 orbit_based_testing::orbit_based_testing()
 {
@@ -259,7 +261,8 @@ void orbit_based_testing::early_test_func_by_using_group(
 		}
 }
 
-}
+}}
+
 
 
 

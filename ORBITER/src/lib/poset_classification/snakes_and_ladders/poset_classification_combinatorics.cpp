@@ -11,6 +11,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 void poset_classification::Plesken_matrix_up(int depth,
 		int *&P, int &N, int verbose_level)
@@ -453,6 +454,7 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 }
 
 
-}
+}}
+
 
 

@@ -13,6 +13,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 flag_orbit_node::flag_orbit_node()
 {
@@ -134,6 +135,7 @@ void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
 		}
 }
 
-}
+}}
+
 
 

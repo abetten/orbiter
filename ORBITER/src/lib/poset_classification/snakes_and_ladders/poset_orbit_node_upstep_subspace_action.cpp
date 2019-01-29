@@ -8,6 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	poset_classification *gen,
@@ -191,6 +192,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		}
 }
 
-}
+}}
+
 
 

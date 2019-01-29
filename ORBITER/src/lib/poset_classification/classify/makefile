@@ -6,7 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	classification.o \
+	classification_step.o \
 	flag_orbit_node.o \
 	flag_orbits.o \
 	orbit_node.o

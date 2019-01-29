@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 
@@ -347,5 +348,5 @@ void packing_invariants::compute_decomposition(
 		}
 }
 
-}
+}}
 

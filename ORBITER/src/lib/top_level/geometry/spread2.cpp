@@ -14,6 +14,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 void spread::print_isomorphism_type(isomorph *Iso, 
 	int iso_cnt, sims *Stab, schreier &Orb, 
@@ -2599,5 +2600,5 @@ void callback_spread_print(ostream &ost, int len, int *S, void *data)
 	Spread->print_spread(ost, S, len);
 }
 
-}
+}}
 

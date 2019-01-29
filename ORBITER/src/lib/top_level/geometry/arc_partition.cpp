@@ -10,6 +10,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 arc_partition::arc_partition()
@@ -137,4 +138,4 @@ void arc_partition::init(
 }
 
 
-}
+}}

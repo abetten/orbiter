@@ -9,6 +9,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace classification {
 
 
 set_stabilizer_compute::set_stabilizer_compute()
@@ -775,5 +776,6 @@ void set_stabilizer_compute::compute_frequencies(int level,
 
 
 
-}
+}}
+
 

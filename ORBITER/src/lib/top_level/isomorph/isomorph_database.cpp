@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 void isomorph::setup_and_open_solution_database(int verbose_level)
 {
@@ -983,6 +984,6 @@ finish:
 }
 
 
-}
+}}
 
 

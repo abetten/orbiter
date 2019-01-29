@@ -11,6 +11,8 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
+
 
 int poset_classification::compute_orbits(int from_level, int to_level, 
 	int verbose_level)
@@ -714,6 +716,7 @@ void poset_classification::extend_node(
 		}
 }
 
-}
+}}
+
 
 

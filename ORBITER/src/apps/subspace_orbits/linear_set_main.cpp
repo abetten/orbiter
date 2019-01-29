@@ -9,13 +9,12 @@
 
 #include <orbiter.h>
 
+
+
 using namespace orbiter;
+using namespace orbiter::top_level;
 
 #include "linear_set.h"
-
-
-using namespace orbiter;
-
 
 // global data:
 

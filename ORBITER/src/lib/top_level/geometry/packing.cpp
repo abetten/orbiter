@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 
@@ -2278,5 +2279,5 @@ int count_and_record(int *Inc,
 }
 
 
-}
+}}
 

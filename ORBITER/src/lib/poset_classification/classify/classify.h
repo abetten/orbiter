@@ -9,17 +9,18 @@
  */
 
 namespace orbiter {
+namespace classification {
 
 
 
 // #############################################################################
-// classification.C:
+// classification_step.C:
 // #############################################################################
 
-//! a poset classification data structure
+//! a single step classification of combinatorial objects
 
 
-class classification {
+class classification_step {
 public:
 	action *A; // do not free
 	action *A2; // do not free
@@ -31,8 +32,8 @@ public:
 	int representation_sz;
 	int *Rep; // [nb_orbits * representation_sz]
 
-	classification();
-	~classification();
+	classification_step();
+	~classification_step();
 	void null();
 	void freeself();
 	void init(action *A, action *A2, int max_orbits, int representation_sz,
@@ -121,11 +122,11 @@ public:
 // orbit_node.C:
 // #############################################################################
 
-//! related to the class classification
+//! related to the class classification_step
 
 class orbit_node {
 public:
-	classification *C;
+	classification_step *C;
 	int orbit_index;
 	strong_generators *gens;
 
@@ -133,11 +134,12 @@ public:
 	~orbit_node();
 	void null();
 	void freeself();
-	void init(classification *C, int orbit_index, strong_generators *gens,
+	void init(classification_step *C, int orbit_index, strong_generators *gens,
 			int *Rep, int verbose_level);
 	void write_file(ofstream &fp, int verbose_level);
 	void read_file(ifstream &fp, int verbose_level);
 };
 
-}
+}}
+
 

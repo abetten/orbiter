@@ -15,6 +15,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 arc_generator::arc_generator()
 {
@@ -1997,7 +1998,7 @@ void arc_generator_print_arc(
 	Gen->print(len, S);
 }
 
-}
+}}
 
 
 

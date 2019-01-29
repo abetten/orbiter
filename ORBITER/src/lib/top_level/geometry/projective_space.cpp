@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 void Hill_cap56(int argc, const char **argv, 
@@ -479,7 +480,7 @@ void create_Buekenhout_Metz(
 
 }
 
-}
+}}
 
 
 

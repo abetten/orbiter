@@ -12,6 +12,7 @@
 
 
 namespace orbiter {
+namespace top_level {
 
 translation_plane_via_andre_model::translation_plane_via_andre_model()
 {
@@ -922,6 +923,6 @@ int translation_plane_via_andre_model_check_subplane(
 		}
 }
 
-}
+}}
 
 

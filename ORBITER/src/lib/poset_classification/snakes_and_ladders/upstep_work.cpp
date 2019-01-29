@@ -8,6 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 upstep_work::upstep_work()
 {
@@ -969,5 +970,6 @@ void print_coset_table(coset_table_entry *coset_table, int len)
 }
 
 
-}
+}}
+
 

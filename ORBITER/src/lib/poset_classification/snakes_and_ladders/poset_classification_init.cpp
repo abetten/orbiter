@@ -11,6 +11,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 poset_classification::poset_classification()
 {
@@ -1032,5 +1033,6 @@ void poset_classification::init_early_test_func(
 #endif
 
 
-}
+}}
+
 

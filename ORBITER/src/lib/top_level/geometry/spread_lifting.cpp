@@ -9,6 +9,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 spread_lifting::spread_lifting()
@@ -429,5 +430,5 @@ void spread_lifting::find_coloring(diophant *Dio,
 		}
 }
 
-}
+}}
 

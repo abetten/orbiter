@@ -9,6 +9,7 @@
  */
 
 namespace orbiter {
+namespace classification {
 
 
 
@@ -1427,6 +1428,7 @@ public:
 // in upstep_work.C:
 void print_coset_table(coset_table_entry *coset_table, int len);
 
-}
+}}
+
 
 

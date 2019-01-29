@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 arc_orbits_on_pairs::arc_orbits_on_pairs()
 {
@@ -201,5 +202,5 @@ void arc_orbits_on_pairs::init(
 		}
 }
 
-}
+}}
 

@@ -12,6 +12,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 classify_trihedral_pairs::classify_trihedral_pairs()
@@ -896,7 +897,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 	
-	Trihedral_pairs = NEW_OBJECT(classification);
+	Trihedral_pairs = NEW_OBJECT(classification_step);
 
 	longinteger_object go;
 	A->group_order(go);
@@ -1267,5 +1268,5 @@ void classify_trihedral_pairs_early_test_function_type2(int *S, int len,
 		}
 }
 
-}
+}}
 

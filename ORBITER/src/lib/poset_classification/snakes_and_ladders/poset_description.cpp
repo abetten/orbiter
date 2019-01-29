@@ -8,6 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 namespace orbiter {
+namespace classification {
 
 
 poset_description::poset_description()
@@ -115,4 +116,5 @@ int poset_description::read_arguments(
 	return i;
 }
 
-}
+}}
+

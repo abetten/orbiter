@@ -9,6 +9,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace classification {
 
 compute_stabilizer::compute_stabilizer()
 {
@@ -1037,6 +1038,7 @@ void compute_stabilizer::free1()
 		}
 }
 
-}
+}}
+
 
 

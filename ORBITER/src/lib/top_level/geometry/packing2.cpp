@@ -11,6 +11,7 @@
 #include "orbiter.h"
 
 namespace orbiter {
+namespace top_level {
 
 
 void packing::compute_list_of_lines_from_packing(
@@ -997,5 +998,5 @@ void packing::report_extra_stuff(
 	}
 }
 
-}
+}}
 
