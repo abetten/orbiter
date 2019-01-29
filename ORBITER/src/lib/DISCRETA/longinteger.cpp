@@ -6,8 +6,8 @@
 
 #include "orbiter.h"
 
-#undef DEBUG_LONGintEGER_DIVISION
-#undef DEBUG_LONGintEGER_COMPARE
+#undef DEBUG_LONGINTEGER_DIVISION
+#undef DEBUG_LONGINTEGER_COMPARE
 
 namespace orbiter {
 namespace discreta {
@@ -71,7 +71,8 @@ longinteger::longinteger(const char *s)
 longinteger::longinteger(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "longinteger::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	cout << "longinteger::copy constructor for object: "
+			<< const_cast<discreta_base &>(x) << "\n";
 	clearself();
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
@@ -125,7 +126,7 @@ ostream& longinteger::print(ostream& ost)
 	char c;
 		
 #ifdef PRINT_WITH_TYPE
-	ost << "(LONGintEGER, ";
+	ost << "(LONGINTEGER, ";
 #endif
 	if (s_rep() == NULL) {
 		ost << "NULL";
@@ -137,8 +138,8 @@ ostream& longinteger::print(ostream& ost)
 		for (i = l - 1; i >= 0; i--) {
 			c = '0' + s_rep()->p[i];
 			ost << c;
-#ifdef LONGintEGER_PRint_DOTS
-			if (i && (i % LONGintEGER_DIGITS_FOR_DOT) == 0)
+#ifdef LONGINTEGER_PRINT_DOTS
+			if (i && (i % LONGINTEGER_DIGITS_FOR_DOT) == 0)
 				ost << ".";
 #endif
 			}
@@ -241,7 +242,8 @@ int longinteger::compare_with(discreta_base &b)
 		}
 	if (b.s_kind() != LONGINTEGER) {
 		if (b.s_kind() != INTEGER) {
-			cout << "longinteger::compare_with() b is neither longinteger nor integer\n";
+			cout << "longinteger::compare_with() "
+					"b is neither longinteger nor integer\n";
 			exit(1);
 			}
 		longinteger b1;
@@ -350,7 +352,8 @@ void longinteger::mult_to(discreta_base &x, discreta_base &y)
 			}
 		if (carry) {
 			if (Y.s_p(lb + s_len()) != 0) {
-				cout << "longinteger:mult_to() error: carry && Y.s_p(lb + s_len()) != 0\n";
+				cout << "longinteger:mult_to() error: "
+						"carry && Y.s_p(lb + s_len()) != 0\n";
 				exit(1);
 				}
 			Y.s_p(lb + s_len()) = carry;

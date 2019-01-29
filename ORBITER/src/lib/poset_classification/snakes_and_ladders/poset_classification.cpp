@@ -241,6 +241,63 @@ void poset_classification::print_statistic_on_callbacks()
 	cout << endl;
 }
 
+orbit_transversal *poset_classification::get_orbit_transversal(
+		int level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbit_transversal *T;
+	int orbit_at_level;
+
+	if (f_v) {
+		cout << "poset_classification::get_orbit_transversal" << endl;
+		}
+	T = NEW_OBJECT(orbit_transversal);
+	T->A = Poset->A;
+	T->A2 = Poset->A2;
+
+
+	T->nb_orbits = nb_orbits_at_level(level);
+
+
+	if (f_v) {
+		cout << "poset_classification::get_orbit_transversal "
+				"processing " << T->nb_orbits
+				<< " orbit representatives" << endl;
+		}
+
+
+	T->Reps = NEW_OBJECTS(set_and_stabilizer, T->nb_orbits);
+
+	for (orbit_at_level = 0;
+			orbit_at_level < T->nb_orbits;
+			orbit_at_level++) {
+
+		set_and_stabilizer *SaS;
+
+		SaS = get_set_and_stabilizer(level,
+				orbit_at_level, verbose_level);
+
+
+
+		T->Reps[orbit_at_level].init_everything(
+				Poset->A, Poset->A2, SaS->data, level,
+				SaS->Strong_gens, 0 /* verbose_level */);
+
+		SaS->data = NULL;
+		SaS->Strong_gens = NULL;
+
+		FREE_OBJECT(SaS);
+
+		}
+
+
+
+	if (f_v) {
+		cout << "poset_classification::get_orbit_transversal done" << endl;
+		}
+	return T;
+}
+
 set_and_stabilizer *poset_classification::get_set_and_stabilizer(
 		int level, int orbit_at_level, int verbose_level)
 {

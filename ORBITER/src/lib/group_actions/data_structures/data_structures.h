@@ -172,6 +172,8 @@ public:
 	void freeself();
 	void read_from_file(action *A, action *A2, 
 		const char *fname, int verbose_level);
+	classify *get_ago_distribution(int *&ago,
+			int verbose_level);
 };
 
 

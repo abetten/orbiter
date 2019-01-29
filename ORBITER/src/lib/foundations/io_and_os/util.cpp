@@ -4479,6 +4479,23 @@ void int_vecs_write_csv(int *v1, int *v2, int len,
 	}
 }
 
+void int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
+	const char *fname,
+	const char *label1, const char *label2, const char *label3)
+{
+	int i;
+
+	{
+	ofstream f(fname);
+
+	f << "Case," << label1 << "," << label2 << "," << label3 << endl;
+	for (i = 0; i < len; i++) {
+		f << i << "," << v1[i] << "," << v2[i] << "," << v3[i] << endl;
+		}
+	f << "END" << endl;
+	}
+}
+
 void int_vec_array_write_csv(int nb_vecs, int **Vec, int len, 
 	const char *fname, const char **column_label)
 {

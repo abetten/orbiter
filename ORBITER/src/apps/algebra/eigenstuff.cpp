@@ -117,8 +117,8 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 			M.m_iji(i, j, a);
 			}
 		}
-	cout << "M=" << endl;
-	cout << M << endl;
+	//cout << "M=" << endl;
+	//cout << M << endl;
 
 	if (!is_prime_power(q, p, h)) {
 		cout << "q is not prime, we need a prime" << endl;
@@ -148,8 +148,12 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 	M.elements_to_unipoly();
 	M.minus_X_times_id();
 	M1 = M;
-	cout << "M - x * Id=" << endl << M << endl;
-	M.smith_normal_form(P, Pv, Q, Qv, 0 /*verbose_level*/);
+	cout << "M - x * Id has been computed" << endl;
+	//cout << "M - x * Id =" << endl << M << endl;
+
+	cout << "before M.smith_normal_form" << endl;
+	M.smith_normal_form(P, Pv, Q, Qv, verbose_level);
+	cout << "after M.smith_normal_form" << endl;
 
 	cout << "the Smith normal form is:" << endl;
 	cout << M << endl;

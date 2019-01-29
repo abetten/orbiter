@@ -58,6 +58,7 @@ public:
 	void print_second(int f_backwards);
 	void print_file(ostream &ost, int f_backwards);
 	void print_file_tex(ostream &ost, int f_backwards);
+	void print_naked_stringstream(stringstream &sstr, int f_backwards);
 	void print_naked(int f_backwards);
 	void print_naked_tex(ostream &ost, int f_backwards);
 	void print_types_naked_tex(ostream &ost, int f_backwards, 

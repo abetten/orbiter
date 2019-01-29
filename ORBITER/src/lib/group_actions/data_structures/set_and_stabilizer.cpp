@@ -58,11 +58,21 @@ void set_and_stabilizer::init(action *A, action *A2, int verbose_level)
 
 void set_and_stabilizer::group_order(longinteger_object &go)
 {
+	if (Strong_gens == NULL) {
+		cout << "set_and_stabilizer::group_order "
+				"Strong_gens == NULL" << endl;
+		exit(1);
+	}
 	Strong_gens->group_order(go);
 }
 
 int set_and_stabilizer::group_order_as_int()
 {
+	if (Strong_gens == NULL) {
+		cout << "set_and_stabilizer::group_order_as_int "
+				"Strong_gens == NULL" << endl;
+		exit(1);
+	}
 	return Strong_gens->group_order_as_int();
 }
 

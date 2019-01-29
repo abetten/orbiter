@@ -449,7 +449,7 @@ void design_parameter_database_closure(database &D,
 #if 0
 		if (f_vv) cout << "supplementary design:" << endl;
 		p.supplementary(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 			design_parameter_database_add_if_new(D, q,
 					highest_id, verbose_level - 2);
 			}
@@ -2114,7 +2114,8 @@ void extract_subgroup(int q1, int q2, int u1, int v1, int f_cycle_index)
 	int f_vv = FALSE;
 	hollerith label;
 	int f_write_generators_to_file = FALSE;
-	vec_generators_q1_q2_aubv(q1, q2, u1, v1, gen, label, f_write_generators_to_file, f_v, f_vv);
+	vec_generators_q1_q2_aubv(q1, q2, u1, v1,
+			gen, label, f_write_generators_to_file, f_v, f_vv);
 	int l;
 	
 	gen1.m_l(1);

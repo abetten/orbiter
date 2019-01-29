@@ -361,7 +361,7 @@ void bt_key_fill_in_int4(char **p_key, discreta_base& key_op)
 {
 	if (key_op.s_kind() != INTEGER) {
 		cout << "bt_key_fill_in_int4 "
-				"object not an intEGER" << endl;
+				"object not an INTEGER" << endl;
 		exit(1);
 		}
 	integer& key_op_int = key_op.as_integer();
@@ -381,7 +381,7 @@ void bt_key_fill_in_int2(char **p_key, discreta_base& key_op)
 {
 	if (key_op.s_kind() != INTEGER) {
 		cout << "bt_key_fill_in_int2 "
-				"object not an intEGER" << endl;
+				"object not an INTEGER" << endl;
 		exit(1);
 		}
 	integer& key_op_int = key_op.as_integer();
