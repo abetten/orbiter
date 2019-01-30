@@ -998,6 +998,64 @@ int orthogonal::collinearity_test(int size, int *set, int verbose_level)
 
 orthogonal::orthogonal()
 {
+	epsilon = n = m = q = 0;
+	f_even = FALSE;
+	form_c1 = form_c2 = form_c3 = 0;
+	Gram_matrix = NULL;
+	T1 = NULL;
+	T2 = NULL;
+	T3 = NULL;
+	pt_P = pt_Q = 0;
+	nb_points = 0;
+	nb_lines = 0;
+
+	T1_m = 0;
+	T1_mm1 = 0;
+	T1_mm2 = 0;
+	T2_m = 0;
+	T2_mm1 = 0;
+	T2_mm2 = 0;
+	N1_m = 0;
+	N1_mm1 = 0;
+	N1_mm2 = 0;
+	S_m = 0;
+	S_mm1 = 0;
+	S_mm2 = 0;
+	Sbar_m = 0;
+	Sbar_mm1 = 0;
+	Sbar_mm2 = 0;
+
+	alpha = beta = gamma = 0;
+	subspace_point_type = 0;
+	subspace_line_type = 0;
+
+	nb_point_classes = nb_line_classes = 0;
+	A = B = P = L = NULL;
+
+	p1 = p2 = p3 = p4 = p5 = p6 = 0;
+	l1 = l2 = l3 = l4 = l5 = l6 = l7 = 0;
+	a11 = a12 = a22 = a23 = a26 = a32 = a34 = a37 = 0;
+	a41 = a43 = a44 = a45 = a46 = a47 = a56 = a67 = 0;
+	b11 = b12 = b22 = b23 = b26 = b32 = b34 = b37 = 0;
+	b41 = b43 = b44 = b45 = b46 = b47 = b56 = b67 = 0;
+
+	p7 = l8 = 0;
+	a21 = a36 = a57 = a22a = a33 = a22b = 0;
+	a32b = a42b = a51 = a53 = a54 = a55 = a66 = a77 = 0;
+	b21 = b36 = b57 = b22a = b33 = b22b = 0;
+	b32b = b42b = b51 = b53 = b54 = b55 = b66 = b77 = 0;
+	a12b = a52a = 0;
+	b12b = b52a = 0;
+	delta = omega = lambda = mu = nu = zeta = 0;
+
+	minus_squares = NULL;
+	minus_squares_without = NULL;
+	minus_nonsquares = NULL;
+	f_is_minus_square = FALSE;
+	index_minus_square = NULL;
+	index_minus_square_without = NULL;
+	index_minus_nonsquare = NULL;
+
 	v1 = NULL;
 	v2 = NULL;
 	v3 = NULL;
@@ -1006,30 +1064,17 @@ orthogonal::orthogonal()
 	v_tmp = NULL;
 	v_tmp2 = NULL;
 	v_neighbor5 = NULL;
+
 	find_root_x = NULL;
 	find_root_y = NULL;
 	find_root_z = NULL;
-	T1 = NULL;
-	T2 = NULL;
-	T3 = NULL;
-	F = NULL;
-	A = NULL;
-	B = NULL;
-	P = NULL;
-	L = NULL;
-	Gram_matrix = NULL;
-	subspace = NULL;
 	line1 = NULL;
 	line2 = NULL;
 	line3 = NULL;
-	minus_squares = NULL;
-	minus_squares_without = NULL;
-	minus_nonsquares = NULL;
-	f_is_minus_square = NULL;
-	index_minus_square = NULL;
-	index_minus_square_without = NULL;
-	index_minus_nonsquare = NULL;
+	F = NULL;
+
 	rk_pt_v = NULL;
+
 	Sv1 = NULL;
 	Sv2 = NULL;
 	Sv3 = NULL;
@@ -1038,13 +1083,21 @@ orthogonal::orthogonal()
 	ST_N1 = NULL;
 	ST_N2 = NULL;
 	ST_w = NULL;
+	STr_B = STr_Bv = STr_w = STr_z = STr_x = NULL;
+
 	determine_line_v1 = NULL;
 	determine_line_v2 = NULL;
 	determine_line_v3 = NULL;
+
 	lines_on_point_coords1 = NULL;
 	lines_on_point_coords2 = NULL;
+
+	subspace = NULL;
+
 	line_pencil = NULL;
 	Perp1 = NULL;
+
+
 }
 
 orthogonal::~orthogonal()

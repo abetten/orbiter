@@ -359,7 +359,7 @@ public:
 // #############################################################################
 
 
-//! the desarguesian spread
+//! desarguesian spread
 
 
 
@@ -418,7 +418,7 @@ public:
 // eckardt_point_info.C:
 // #############################################################################
 
-//! information about the Eckardt points of a surface based on the Clebsch image arc
+//! information about the Eckardt points of a surface derived from a six-arc
 
 
 class eckardt_point_info {
@@ -492,7 +492,7 @@ public:
 // needs sqrt_mod_involved from DISCRETA/global.C
 
 
-//! represents a fixed elliptic curve in Weierstrass form
+//! a fixed elliptic curve in Weierstrass form
 
 
 
@@ -602,7 +602,7 @@ public:
 //#define FUSE_TYPE_MULTI 3
 //#define FUSE_TYPE_TDO 4
 
-//! input parameters for TDO-process
+//! decomposition stack of a linear space or incidence geometry
 
 
 
@@ -1040,7 +1040,7 @@ void int_k2ij(int k, int & i, int & j, int n);
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL 2
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_HJELMSLEV 3
 
-//! an incidence structure interface for many different types of geometries
+//! interface for various incidence geometries
 
 
 class incidence_structure {
@@ -3145,7 +3145,7 @@ struct solution_file_data {
 	char *solution_file[MAX_SOLUTION_FILE];
 };
 
-//! a TDO scheme captures the combinatorics of a decomposed incidence structure
+//! canonical tactical decomposition of an incidence structure
 
 class tdo_scheme {
 

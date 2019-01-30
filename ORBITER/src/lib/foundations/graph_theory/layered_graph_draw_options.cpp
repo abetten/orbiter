@@ -17,10 +17,6 @@ namespace foundations {
 
 layered_graph_draw_options::layered_graph_draw_options()
 {
-}
-
-layered_graph_draw_options::~layered_graph_draw_options()
-{
 	x_max = 10000;
 	y_max = 10000;
 	xmax = 1000000;
@@ -32,10 +28,14 @@ layered_graph_draw_options::~layered_graph_draw_options()
 	f_nodes_empty = FALSE;
 	f_select_layers = FALSE;
 	nb_layer_select = 0;
+	layer_select = NULL;
 
 	f_has_draw_begining_callback = FALSE;
+	draw_begining_callback = NULL;
 	f_has_draw_ending_callback = FALSE;
+	draw_ending_callback = NULL;
 	f_has_draw_vertex_callback = FALSE;
+	draw_vertex_callback = NULL;
 
 	f_show_level_info = FALSE;
 	f_embedded = FALSE;
@@ -46,6 +46,10 @@ layered_graph_draw_options::~layered_graph_draw_options()
 
 	global_scale = .45;
 	global_line_width = 1.5;
+}
+
+layered_graph_draw_options::~layered_graph_draw_options()
+{
 };
 
 void layered_graph_draw_options::init(

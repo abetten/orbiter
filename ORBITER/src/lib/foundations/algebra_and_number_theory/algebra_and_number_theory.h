@@ -119,7 +119,7 @@ public:
 // finite_field.cpp
 // #############################################################################
 
-//! a finite field Fq
+//! finite field Fq
 
 class finite_field {
 
@@ -928,7 +928,7 @@ void display_all_PHG_elements(int n, int q);
 // #############################################################################
 
 
-//! Auxilliary class to construct generators of the symplectic group
+//! to construct generators of the symplectic group
 
 
 class generators_symplectic_group {
@@ -973,7 +973,7 @@ public:
 // gl_classes.cpp
 // #############################################################################
 
-//! conjugacy classes in GL(n,q)
+//! to list all conjugacy classes in GL(n,q)
 
 class gl_classes {
 public:
@@ -1059,7 +1059,7 @@ public:
 
 };
 
-//! To represent a conjugacy class of matrices in GL(n,q)
+//! represents a conjugacy class of matrices in GL(n,q)
 
 class gl_class_rep {
 public:
@@ -1078,7 +1078,7 @@ public:
 		int verbose_level);
 };
 
-//! auxiliary class for conjugacy classes in GL(n,q)
+//! description of a conjugacy classes in GL(n,q)
 
 class matrix_block_data {
 public:
@@ -1199,7 +1199,7 @@ void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F,
 // heisenberg.cpp
 // #############################################################################
 
-//! The Heisenberg group of n x n matrices
+//! Heisenberg group of n x n matrices
 
 
 class heisenberg {
@@ -1238,7 +1238,7 @@ public:
 // homogeneous_polynomial_domain.cpp
 // #############################################################################
 
-//! Homogeneous polynomials in n variables over a finite field
+//! homogeneous polynomials in n variables over a finite field
 
 
 class homogeneous_polynomial_domain {
@@ -1332,7 +1332,7 @@ void homogeneous_polynomial_domain_swap_monomial(void *data,
 // longinteger_domain.cpp:
 // #############################################################################
 
-//! Domain to compute with objects of type longinteger
+//! domain to compute with objects of type longinteger
 
 class longinteger_domain {
 
@@ -1593,7 +1593,7 @@ void int_mult_fractions(int at, int ab, int bt, int bb,
 // #############################################################################
 
 
-//! used to check that any d-1 columns are linearly independent
+//! checking whether any d-1 columns are linearly independent
 
 
 class rank_checker {
@@ -1678,7 +1678,7 @@ public:
 // unipoly_domain.cpp:
 // #############################################################################
 
-//! domain to compute with polynomials in one variable over a finite field
+//! domain of polynomials in one variable over a finite field
 
 class unipoly_domain {
 public:
@@ -1826,7 +1826,7 @@ public:
 // #############################################################################
 
 
-//! a vector space over a finite field
+//! vector space over a finite field
 
 
 class vector_space {

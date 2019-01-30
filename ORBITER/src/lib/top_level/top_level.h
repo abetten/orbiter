@@ -15,6 +15,9 @@ using namespace orbiter::discreta;
 
 
 namespace orbiter {
+
+//! classes for combinatorial objects and their classification
+
 namespace top_level {
 
 

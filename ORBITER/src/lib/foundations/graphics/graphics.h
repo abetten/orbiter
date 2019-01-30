@@ -842,8 +842,7 @@ public:
 
 int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 
-}
-}
+}}
 
 
 

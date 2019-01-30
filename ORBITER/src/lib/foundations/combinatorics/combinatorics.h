@@ -15,7 +15,7 @@ namespace foundations {
 // brick_domain.C:
 // #############################################################################
 
-//! for a problem of Neil Sloane
+//! a problem of Neil Sloane
 
 class brick_domain {
 
@@ -146,5 +146,4 @@ int generalized_binomial(int n, int k, int q);
 void print_tableau(int *Tableau, int l1, int l2, 
 	int *row_parts, int *col_parts);
 
-}
-}
+}}
