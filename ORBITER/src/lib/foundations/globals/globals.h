@@ -145,7 +145,6 @@ void matrix_double_inverse(double *A, double *Av, int n, int verbose_level);
 int line_centered(double *pt1_in, double *pt2_in, 
 	double *pt1_out, double *pt2_out, double r);
 
-}
-}
+}}
 
 

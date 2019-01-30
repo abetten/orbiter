@@ -38,9 +38,10 @@ int largest_binomial2_below(int a2)
 		//cout << "b=" << b << " b2=" << b2 << " a2=" << a2 << endl;
 		if (b2 > a2) {
 			//cout << "return " << b - 1 << endl;
-			return b - 1;
+			break;
 			}
 		}
+	return b - 1;
 }
 
 int largest_binomial3_below(int a3)
@@ -52,9 +53,10 @@ int largest_binomial3_below(int a3)
 		//cout << "b=" << b << " b3=" << b3 << " a3=" << a3 << endl;
 		if (b3 > a3) {
 			//cout << "return " << b - 1 << endl;
-			return b - 1;
+			break;
 			}
 		}
+	return b - 1;
 }
 
 int binomial2(int a)

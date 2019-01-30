@@ -17,18 +17,29 @@ namespace foundations {
 
 unusual_model::unusual_model()
 {
+	//F = f = NULL;
+	q = qq = 0;
+	alpha = 0;
+	T_alpha = N_alpha = 0;
+	nb_terms = 0;
 	form_i = NULL;
 	form_j = NULL;
 	form_coeff = NULL;
 	Gram = NULL;
+	r_nb_terms = 0;
 	r_form_i = NULL;
 	r_form_j = NULL;
 	r_form_coeff = NULL;
 	r_Gram = NULL;
+	rr_nb_terms = 0;
 	rr_form_i = NULL;
 	rr_form_j = NULL;
 	rr_form_coeff = NULL;
 	rr_Gram = NULL;
+	//int hyperbolic_basis[4 * 4];
+	//int hyperbolic_basis_inverse[4 * 4];
+	//int basis[4 * 4];
+	//int basis_subspace[2 * 2];
 	M = NULL;
 	components = NULL;
 	embedding = NULL;

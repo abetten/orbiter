@@ -14,7 +14,7 @@ namespace foundations {
 // classify_bitvectors.C:
 // #############################################################################
 
-//! stores the canonical form of 0/1 matrices for the purposes of classification
+//! classification of 0/1 matrices using canonical forms
 
 class classify_bitvectors {
 public:
@@ -88,7 +88,7 @@ int compare_func_for_bitvectors(void *a, void *b, void *data);
 // data_file.C:
 // #############################################################################
 
-//! to read files of classifications from the poset classification algorithm
+//! to read data files from the poset classification algorithm
 
 
 class data_file {
@@ -119,7 +119,7 @@ class data_file {
 // fancy_set.C:
 // #############################################################################
 
-//! to store a subset of size k of a set of size n
+//! subset of size k of a set of size n
 
 
 class fancy_set {
@@ -205,9 +205,7 @@ public:
 // page_storage.C:
 // #############################################################################
 
-//! a data structure to store group elements in compressed form
-
-
+//! bulk storage of group elements in compressed form
 
 class page_storage {
 
@@ -267,7 +265,7 @@ void test_page_storage(int f_v);
 ostream& operator<<(ostream& ost, partitionstack& p);
 
 
-//! Leon type partitionstack for set partitions
+//! partitionstack for set partitions following Jeffrey Leon
 
 
 class partitionstack {
@@ -454,7 +452,7 @@ class partitionstack {
 // set_of_sets.C:
 // #############################################################################
 
-//! to store a set of sets
+//! set of sets
 
 
 class set_of_sets {
@@ -797,8 +795,7 @@ public:
 	void unrank(int rk, int *data);
 };
 
-}
-}
+}}
 
 
 

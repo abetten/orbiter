@@ -16,6 +16,7 @@ tree::tree()
 	max_depth = 0;
 	path = NULL;
 	f_count_leaves = FALSE;
+	leaf_count = 0;
 }
 
 tree::~tree()
@@ -25,7 +26,8 @@ tree::~tree()
 #define TREEPATHLEN 10000
 #define BUFSIZE_TREE 100000
 
-void tree::init(const char *fname, int xmax, int ymax, int verbose_level)
+void tree::init(const char *fname,
+		int xmax, int ymax, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
@@ -71,8 +73,9 @@ void tree::init(const char *fname, int xmax, int ymax, int verbose_level)
 	if (f_v) {
 		cout << "calling root->init" << endl;
 		}
-	root = new tree_node;
-	root->init(0 /* depth */, NULL, FALSE, 0, FALSE, 0, NULL, verbose_level - 1);
+	root = NEW_OBJECT(tree_node);
+	root->init(0 /* depth */,
+			NULL, FALSE, 0, FALSE, 0, NULL, verbose_level - 1);
 	
 	if (f_v) {
 		cout << "reading the file again" << endl;
@@ -93,7 +96,8 @@ void tree::init(const char *fname, int xmax, int ymax, int verbose_level)
 		if (l == -1)
 			break;
 		if (l >= TREEPATHLEN) {
-			cout << "tree::init overflow, please increase the value of TREEPATHLEN" << endl;
+			cout << "tree::init overflow, please increase "
+					"the value of TREEPATHLEN" << endl;
 			cout << "l=" << l << endl;
 			exit(1);
 			}
@@ -147,10 +151,12 @@ void tree::init(const char *fname, int xmax, int ymax, int verbose_level)
 
 }
 
-void tree::draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, int rad, 
+void tree::draw(char *fname,
+	int xmax_in, int ymax_in, int xmax, int ymax, int rad,
 	int f_circle, int f_circletext, int f_i, int f_edge_labels, 
 	int f_has_draw_vertex_callback, 
-	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, 
+	void (*draw_vertex_callback)(tree *T,
+			mp_graphics *G, int *v, int layer, tree_node *N,
 		int x, int y, int dx, int dy), 
 	int f_embedded, int f_sideways, int f_on_circle, 
 	double tikz_global_scale, double tikz_global_line_width
@@ -172,7 +178,8 @@ void tree::draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, int r
 
 	strcat(fname_full, ".mp");
 	{
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname_full,
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -199,7 +206,8 @@ void tree::draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, int r
 		}
 #endif
 
-	//root->draw_sideways(G, f_circletext, f_i, FALSE, 10000 - 0, 10000 - 0, max_depth, f_edge_labels);
+	//root->draw_sideways(G, f_circletext, f_i,
+	//FALSE, 10000 - 0, 10000 - 0, max_depth, f_edge_labels);
 
 	int *radii = NULL;
 	int x0, y0;
@@ -225,13 +233,19 @@ void tree::draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, int r
 	leaf_count = 0;
 
 
-	root->draw_edges(G, rad, f_circle, f_circletext, f_i, FALSE, 0, 0, max_depth, f_edge_labels, f_has_draw_vertex_callback, draw_vertex_callback, this);
+	root->draw_edges(G, rad, f_circle, f_circletext, f_i, FALSE, 0, 0,
+			max_depth, f_edge_labels,
+			f_has_draw_vertex_callback, draw_vertex_callback,
+			this);
 
 
 	G.sl_thickness(10); // 100 is normal
 
 
-	root->draw_vertices(G, rad, f_circle, f_circletext, f_i, FALSE, 0, 0, max_depth, f_edge_labels, f_has_draw_vertex_callback, draw_vertex_callback, this);
+	root->draw_vertices(G, rad, f_circle, f_circletext, f_i, FALSE, 0, 0,
+			max_depth, f_edge_labels,
+			f_has_draw_vertex_callback, draw_vertex_callback,
+			this);
 
 	if (f_on_circle) {
 		FREE_int(radii);
@@ -241,11 +255,13 @@ void tree::draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, int r
 	G.end_figure();
 	G.footer();
 	}
-	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+	cout << "written file " << fname_full << " of size "
+			<< file_size(fname_full) << endl;
 	
 }
 
-void tree::circle_center_and_radii(int xmax, int ymax, int max_depth, int &x0, int &y0, int *&rad)
+void tree::circle_center_and_radii(int xmax, int ymax,
+		int max_depth, int &x0, int &y0, int *&rad)
 {
 	int l, dy;
 	double y;

@@ -16,6 +16,8 @@ namespace foundations {
 
 grassmann_embedded::grassmann_embedded()
 {
+	big_n = n = k = q = 0;
+	F = NULL;
 	G = NULL;
 	M = NULL;
 	M_Gauss = NULL;
@@ -27,6 +29,7 @@ grassmann_embedded::grassmann_embedded()
 	Tmp3 = NULL;
 	tmp_M1 = NULL;
 	tmp_M2 = NULL;
+	degree = 0;
 }
 
 grassmann_embedded::~grassmann_embedded()

@@ -17,11 +17,24 @@ namespace foundations {
 
 tree_node::tree_node()
 {
+	parent = NULL;
 	depth = 0;
+	f_value = FALSE;
+	value = 0;
+
+	f_int_data = FALSE;
+	int_data = 0;
+	char_data = NULL;
 	nb_children = 0;
 	children = NULL;
-	f_int_data = FALSE;
-	char_data = NULL;
+
+
+	weight = 0;
+	placement_x = 0;
+	placement_y = 0;
+	width = 0;
+
+	DFS_rank = 0;
 }
 
 tree_node::~tree_node()
