@@ -26,7 +26,7 @@ namespace classification {
 #define EXTENSION_TYPE_NOT_CANONICAL 4
 
 
-//! a class representing a flag orbit
+//! to represent a flag; related to poset_orbit_node
 
 
 
@@ -119,11 +119,11 @@ public:
 };
 
 
-//! a poset on which a group acts
-
 // #############################################################################
 // poset.C:
 // #############################################################################
+
+//! a poset on which a group acts
 
 
 class poset {
@@ -190,13 +190,13 @@ public:
 int callback_test_independence_condition(orbit_based_testing *Obt,
 					int *S, int len, void *data, int verbose_level);
 
-//! description of a poset from the command line
 
 
 // #############################################################################
 // poset_description.C:
 // #############################################################################
 
+//! description of a poset from the command line
 
 
 class poset_description {
@@ -232,7 +232,7 @@ public:
 // poset_classification.C
 // #############################################################################
 
-//! the poset classification algorithm (Snakes and Ladders)
+//! the poset classification algorithm (aka Snakes and Ladders)
 
 
 class poset_classification {
@@ -859,8 +859,7 @@ void poset_classification_read_candidates_of_orbit(
 // #############################################################################
 
 
-//! a class representing one poset orbit, related to the class poset_classification
-
+//! to represent one poset orbit; related to the class poset_classification
 
 
 class poset_orbit_node {

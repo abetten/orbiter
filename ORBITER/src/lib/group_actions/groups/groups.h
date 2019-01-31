@@ -95,12 +95,12 @@ public:
 };
 
 
-//! used to create a linear group from command line arguments
 
 // #############################################################################
 // linear_group.C:
 // #############################################################################
 
+//! creates a linear group from command line arguments using linear_group_description
 
 class linear_group {
 public:
@@ -211,7 +211,7 @@ public:
 // matrix_group.C:
 // #############################################################################
 
-//! A linear group implemented as matrices
+//! a matrix group over a finite field in projective, linear or affine action
 
 class matrix_group {
 
@@ -375,7 +375,7 @@ public:
 // perm_group.C:
 // #############################################################################
 
-//! An abstract permutation group
+//! a domain for permutation groups whose elements are given in list notation
 
 class perm_group {
 
@@ -438,7 +438,7 @@ public:
 // schreier.C:
 // #############################################################################
 
-//! Schreier trees for orbits on points
+//! Schreier trees for orbits of groups on points
 
 class schreier {
 
@@ -698,7 +698,7 @@ public:
 // #############################################################################
 
 
-//! Schreier Sims algorithm
+//! Schreier Sims algorithm to create the stabilizer chain of a permutation group
 
 class schreier_sims {
 
@@ -783,7 +783,7 @@ public:
 // sims.C:
 // #############################################################################
 
-//! A stabilizer chain for a permutation group
+//! a stabilizer chain for a permutation group is used to represent a permutation group
 
 class sims {
 
@@ -1170,7 +1170,7 @@ sims *create_sims_for_centralizer_of_matrix(action *A,
 // strong_generators.C:
 // #############################################################################
 
-//! a strong generating set for a permutation group with group order
+//! a strong generating set for a permutation group with respect to a fixed action
 
 class strong_generators {
 public:
@@ -1412,7 +1412,7 @@ void strong_generators_array_read_from_file(const char *fname,
 // subgroup.C:
 // #############################################################################
 
-//! list a subgroup of a group by storing the element indices
+//! a subgroup of a group using a list of elements
 
 class subgroup {
 public:
@@ -1437,7 +1437,7 @@ public:
 // wreath_product.C:
 // #############################################################################
 
-//! the wreath product group  AGL(d,q) wreath Sym(n)
+//! the wreath product group GL(d,q) wreath Sym(n)
 
 class wreath_product {
 

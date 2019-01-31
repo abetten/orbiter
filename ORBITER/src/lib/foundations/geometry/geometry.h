@@ -1411,6 +1411,11 @@ public:
 		// t_LNS = a set of lines 
 		// t_PAC = a packing (i.e. q^2+q+1 sets of lines of size q^2+1)
 
+	const char *input_fname;
+	int input_idx;
+
+	char *set_as_string;
+
 	int *set;
 	int sz;
 		// set[sz] is used by t_PTS and t_LNS
@@ -1429,6 +1434,10 @@ public:
 	void freeself();
 	void print(ostream &ost);
 	void print_tex(ostream &ost);
+	void init_object_from_string(
+		int type,
+		const char *input_fname, int input_idx,
+		const char *set_as_string, int verbose_level);
 	void init_point_set(projective_space *P, int *set, int sz, 
 		int verbose_level);
 	void init_line_set(projective_space *P, int *set, int sz, 
@@ -1440,6 +1449,18 @@ public:
 	void init_packing_from_spread_table(projective_space *P, 
 		int *data, int *Spread_table, int nb_spreads, 
 		int spread_size, int verbose_level);
+	void encoding_size(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
+	void encoding_size_point_set(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
+	void encoding_size_line_set(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
+	void encoding_size_packing(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
 	void encode_incma(int *&Incma, int &nb_rows, int &nb_cols, 
 		int *&partition, int verbose_level);
 	void encode_point_set(int *&Incma, int &nb_rows, int &nb_cols, 

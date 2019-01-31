@@ -928,7 +928,7 @@ void display_all_PHG_elements(int n, int q);
 // #############################################################################
 
 
-//! to construct generators of the symplectic group
+//! generators of the symplectic group
 
 
 class generators_symplectic_group {
@@ -1059,7 +1059,7 @@ public:
 
 };
 
-//! represents a conjugacy class of matrices in GL(n,q)
+//! conjugacy class in GL(n,q) described using rational normal form
 
 class gl_class_rep {
 public:
@@ -1078,7 +1078,7 @@ public:
 		int verbose_level);
 };
 
-//! description of a conjugacy classes in GL(n,q)
+//! rational normal form of a matrix in GL(n,q) for gl_class_rep
 
 class matrix_block_data {
 public:
@@ -1502,7 +1502,7 @@ public:
 // null_polarity_generator.cpp:
 // #############################################################################
 
-//! internal class to compute generators for the group of null polarities
+//! all null polarities
 
 class null_polarity_generator {
 public:
@@ -1826,7 +1826,7 @@ public:
 // #############################################################################
 
 
-//! vector space over a finite field
+//! finite dimensional vector space over a finite field
 
 
 class vector_space {
@@ -1871,7 +1871,6 @@ public:
 void vector_space_unrank_point_callback(int *v, int rk, void *data);
 int vector_space_rank_point_callback(int *v, void *data);
 
-}
-}
+}}
 
 
