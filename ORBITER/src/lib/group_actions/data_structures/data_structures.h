@@ -137,6 +137,8 @@ public:
 		// do not free
 	strong_generators *Aut_gens;
 		// generators for the automorphism group
+	int nb_rows, nb_cols;
+	int *canonical_labeling;
 
 
 	object_in_projective_space_with_action();
@@ -144,7 +146,10 @@ public:
 	void null();
 	void freeself();
 	void init(object_in_projective_space *OiP,
-		strong_generators *Aut_gens, int verbose_level);
+		strong_generators *Aut_gens,
+		int nb_rows, int nb_cols,
+		int *canonical_labeling,
+		int verbose_level);
 };
 
 
@@ -232,7 +237,14 @@ public:
 		int f_compute_canonical_form, 
 		uchar *&canonical_form, 
 		int &canonical_form_len, 
+		int *canonical_labeling,
 		int verbose_level);
+		// canonical_labeling[nb_rows + nb_cols]
+		// where nb_rows and nb_cols is the encoding size,
+		// which can be computed using
+		// object_in_projective_space::encoding_size(
+		//   int &nb_rows, int &nb_cols,
+		//   int verbose_level)
 	void report_fixed_objects_in_PG_3_tex(
 		int *Elt, ostream &ost, 
 		int verbose_level);
@@ -242,14 +254,17 @@ public:
 	void report_decomposition_by_single_automorphism(
 		int *Elt, ostream &ost,
 		int verbose_level);
-	object_in_projective_space *create_object_from_string(
-		int type, const char *set_as_string, int verbose_level);
+	object_in_projective_space *
+	create_object_from_string(
+		int type, const char *input_fname, int input_idx,
+		const char *set_as_string, int verbose_level);
 	int process_object(
 		classify_bitvectors *CB,
 		object_in_projective_space *OiP,
 		int f_save_incma_in_and_out, const char *prefix,
 		int nb_objects_to_test,
 		strong_generators *&SG,
+		int *canonical_labeling,
 		int verbose_level);
 	void classify_objects_using_nauty(
 		data_input_stream *Data,
@@ -257,15 +272,9 @@ public:
 		classify_bitvectors *CB,
 		int f_save_incma_in_and_out, const char *prefix,
 		int verbose_level);
-#if 0
-	void incma_with_orbit_decomposition(
-		int row_type, int col_type,
-		schreier *Sch_on_rows, schreier *Sch_on_cols,
-		int *&Incma, int &nb_rows, int &nb_cols,
-		incidence_structure *&Inc,
-		partitionstack *&Stack,
-		int verbose_level);
-#endif
+	void save(const char *output_prefix,
+			classify_bitvectors *CB,
+			int verbose_level);
 };
 
 //globals:

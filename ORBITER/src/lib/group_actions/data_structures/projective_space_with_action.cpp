@@ -639,6 +639,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 }
 
 
+
 strong_generators
 *projective_space_with_action::set_stabilizer_of_object(
 	object_in_projective_space *OiP, 
@@ -647,7 +648,14 @@ strong_generators
 	int f_compute_canonical_form,
 	uchar *&canonical_form,
 	int &canonical_form_len,
+	int *canonical_labeling,
 	int verbose_level)
+// canonical_labeling[nb_rows, nb_cols]
+// where nb_rows and nb_cols is the encoding size ,
+// which can be computed using
+// object_in_projective_space::encoding_size(
+//   int &nb_rows, int &nb_cols,
+//   int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -656,7 +664,7 @@ strong_generators
 	action *A_linear;
 	int *Incma;
 	int *partition;
-	int *labeling;
+	//int *labeling;
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
@@ -693,9 +701,9 @@ strong_generators
 		int_matrix_print_tight(Incma, nb_rows, nb_cols);
 	}
 
-	labeling = NEW_int(nb_rows + nb_cols);
+	//canonical_labeling = NEW_int(nb_rows + nb_cols);
 	for (i = 0; i < nb_rows + nb_cols; i++) {
-		labeling[i] = i;
+		canonical_labeling[i] = i;
 		}
 
 
@@ -722,10 +730,10 @@ strong_generators
 		colored_graph *CG;
 		create_Levi_graph_from_incidence_matrix(CG,
 				Incma, nb_rows, nb_cols,
-				TRUE, labeling, verbose_level);
+				TRUE, canonical_labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_int(Incma);
-		delete CG;
+		FREE_OBJECT(CG);
 		}
 
 	N = nb_rows + nb_cols;
@@ -746,7 +754,7 @@ strong_generators
 		}
 	nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
-		labeling, partition, 
+		canonical_labeling, partition,
 		Aut, Aut_counter, 
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
@@ -760,7 +768,8 @@ strong_generators
 		int degree = nb_rows +  nb_cols;
 
 		for (h = 0; h < Aut_counter; h++) {
-			cout << "aut generator " << h << " / " << Aut_counter << " : " << endl;
+			cout << "aut generator " << h << " / "
+					<< Aut_counter << " : " << endl;
 			perm_print(cout, Aut + h * degree, degree);
 			cout << endl;
 		}
@@ -771,15 +780,15 @@ strong_generators
 	if (f_vvv) {
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object labeling:" << endl;
-		int_vec_print(cout, labeling, nb_rows + nb_cols);
+		int_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
 		cout << endl;
 		}
 
 	Incma_out = NEW_int(L);
 	for (i = 0; i < nb_rows; i++) {
-		ii = labeling[i];
+		ii = canonical_labeling[i];
 		for (j = 0; j < nb_cols; j++) {
-			jj = labeling[nb_rows + j] - nb_rows;
+			jj = canonical_labeling[nb_rows + j] - nb_rows;
 			//cout << "i=" << i << " j=" << j << " ii=" << ii
 			//<< " jj=" << jj << endl;
 			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
@@ -831,9 +840,9 @@ strong_generators
 		
 		cout << "labeling:" << endl;
 		int_vec_print_as_matrix(cout,
-				labeling, N, 10 /* width */, TRUE /* f_tex */);
+				canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
 
-		int_vec_write_csv(labeling, N,
+		int_vec_write_csv(canonical_labeling, N,
 				fname_labeling, "canonical labeling");
 		int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
@@ -841,7 +850,7 @@ strong_generators
 		colored_graph *CG;
 		create_Levi_graph_from_incidence_matrix(CG,
 				Incma_out, nb_rows, nb_cols,
-				TRUE, labeling, verbose_level);
+				TRUE, canonical_labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		FREE_OBJECT(CG);
 		}
@@ -1032,10 +1041,12 @@ strong_generators
 		cout << "before freeing partition" << endl;
 	}
 	FREE_int(partition);
+#if 0
 	if (f_v) {
 		cout << "before freeing labeling" << endl;
 	}
 	FREE_int(labeling);
+#endif
 	if (f_v) {
 		cout << "before freeing A_perm" << endl;
 	}
@@ -1459,8 +1470,10 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 }
 
 
-object_in_projective_space *projective_space_with_action::create_object_from_string(
-	int type, const char *set_as_string, int verbose_level)
+object_in_projective_space *
+projective_space_with_action::create_object_from_string(
+	int type, const char *input_fname, int input_idx,
+	const char *set_as_string, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1469,6 +1482,17 @@ object_in_projective_space *projective_space_with_action::create_object_from_str
 		cout << "type=" << type << endl;
 		}
 
+
+#if 1
+	object_in_projective_space *OiP;
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_object_from_string(
+			type, input_fname, input_idx,
+			set_as_string, verbose_level);
+
+#else
 
 	int *the_set_in;
 	int set_size_in;
@@ -1515,6 +1539,7 @@ object_in_projective_space *projective_space_with_action::create_object_from_str
 		}
 
 	FREE_int(the_set_in);
+#endif
 
 	if (f_v) {
 		cout << "projective_space_with_action::create_object_from_string"
@@ -1529,6 +1554,7 @@ int projective_space_with_action::process_object(
 	int f_save_incma_in_and_out, const char *prefix,
 	int nb_objects_to_test,
 	strong_generators *&SG,
+	int *canonical_labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1562,7 +1588,9 @@ int projective_space_with_action::process_object(
 		f_save_incma_in_and_out, save_incma_in_and_out_prefix,
 		TRUE /* f_compute_canonical_form */,
 		canonical_form, canonical_form_len,
+		canonical_labeling,
 		verbose_level - 2);
+
 
 	if (f_v) {
 		cout << "projective_space_with_action::process_object "
@@ -1650,18 +1678,29 @@ void projective_space_with_action::classify_objects_using_nauty(
 			strong_generators *SG;
 
 			OiP = create_object_from_string(t_PTS,
+					"command_line", CB->n,
 					Data->input_string[input_idx], verbose_level);
 
 			if (f_v) {
 				cout << "classify_objects_using_nauty "
 						"before process_object" << endl;
 				}
+			int nb_rows, nb_cols;
+			int *canonical_labeling;
+
+			OiP->encoding_size(
+					nb_rows, nb_cols,
+					verbose_level);
+			canonical_labeling = NEW_int(nb_rows + nb_cols);
 
 			ret = process_object(CB, OiP,
 					f_save_incma_in_and_out, prefix,
 					nb_objects_to_test,
 					SG,
+					canonical_labeling,
 					verbose_level);
+
+			FREE_int(canonical_labeling);
 
 			if (f_v) {
 				cout << "classify_objects_using_nauty "
@@ -1672,6 +1711,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 			if (!ret) {
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
+				FREE_int(canonical_labeling);
 				}
 			else {
 				cout << "New isomorphism type! The n e w number of "
@@ -1682,7 +1722,8 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-				OiPA->init(OiP, SG, verbose_level);
+				OiPA->init(OiP, SG, nb_rows, nb_cols,
+						canonical_labeling, verbose_level);
 				idx = CB->type_of[CB->n - 1];
 				CB->Type_extra_data[idx] = OiPA;
 
@@ -1698,15 +1739,28 @@ void projective_space_with_action::classify_objects_using_nauty(
 			strong_generators *SG;
 
 			OiP = create_object_from_string(t_LNS,
+					"command_line", CB->n,
 					Data->input_string[input_idx], verbose_level);
+
+			int nb_rows, nb_cols;
+			int *canonical_labeling;
+
+			OiP->encoding_size(
+					nb_rows, nb_cols,
+					verbose_level);
+			canonical_labeling = NEW_int(nb_rows + nb_cols);
+
+
 			if (!process_object(CB, OiP,
 				f_save_incma_in_and_out, prefix,
 				nb_objects_to_test,
 				SG,
+				canonical_labeling,
 				verbose_level)) {
 
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
+				FREE_int(canonical_labeling);
 				}
 			else {
 				cout << "New isomorphism type! The n e w number of "
@@ -1717,7 +1771,8 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-				OiPA->init(OiP, SG, verbose_level);
+				OiPA->init(OiP, SG, nb_rows, nb_cols,
+						canonical_labeling, verbose_level);
 				idx = CB->type_of[CB->n - 1];
 				CB->Type_extra_data[idx] = OiPA;
 
@@ -1733,15 +1788,27 @@ void projective_space_with_action::classify_objects_using_nauty(
 			strong_generators *SG;
 
 			OiP = create_object_from_string(t_PAC,
+					"command_line", CB->n,
 					Data->input_string[input_idx], verbose_level);
+
+			int nb_rows, nb_cols;
+			int *canonical_labeling;
+
+			OiP->encoding_size(
+					nb_rows, nb_cols,
+					verbose_level);
+			canonical_labeling = NEW_int(nb_rows + nb_cols);
+
 			if (!process_object(CB, OiP,
 				f_save_incma_in_and_out, prefix,
 				nb_objects_to_test,
 				SG,
+				canonical_labeling,
 				verbose_level)) {
 
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
+				FREE_int(canonical_labeling);
 				}
 			else {
 				cout << "New isomorphism type! The n e w number of "
@@ -1752,7 +1819,8 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-				OiPA->init(OiP, SG, verbose_level);
+				OiPA->init(OiP, SG, nb_rows, nb_cols,
+						canonical_labeling, verbose_level);
 				idx = CB->type_of[CB->n - 1];
 				CB->Type_extra_data[idx] = OiPA;
 
@@ -1850,15 +1918,52 @@ void projective_space_with_action::classify_objects_using_nauty(
 					cout << "unknown type" << endl;
 					exit(1);
 					}
+
+				stringstream sstr;
+				//sstr << set_size_in;
+				for (int k = 0; k < set_size_in; k++) {
+					sstr << the_set_in[k];
+					if (k < set_size_in - 1) {
+						sstr << ",";
+					}
+				}
+				string s = sstr.str();
+				//cout << s << endl;
+				//Ago_text[clique_no] = NEW_char(strlen(s.c_str()) + 1);
+				//strcpy(Ago_text[clique_no], s.c_str());
+
+				OiP->input_fname = Data->input_string[input_idx];
+				OiP->input_idx = h;
+
+				int l = strlen(s.c_str());
+
+				OiP->set_as_string = NEW_char(l + 1);
+				strcpy(OiP->set_as_string, s.c_str());
+
+
+
 				strong_generators *SG;
+
+
+				int nb_rows, nb_cols;
+				int *canonical_labeling;
+
+				OiP->encoding_size(
+						nb_rows, nb_cols,
+						verbose_level);
+				canonical_labeling = NEW_int(nb_rows + nb_cols);
+
+
 				if (!process_object(CB, OiP,
 					f_save_incma_in_and_out, prefix,
 					nb_objects_to_test,
 					SG,
+					canonical_labeling,
 					verbose_level - 3)) {
 
 					FREE_OBJECT(OiP);
 					FREE_OBJECT(SG);
+					FREE_int(canonical_labeling);
 					}
 				else {
 					t1 = os_ticks();
@@ -1879,7 +1984,8 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 					OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-					OiPA->init(OiP, SG, verbose_level);
+					OiPA->init(OiP, SG, nb_rows, nb_cols,
+							canonical_labeling, verbose_level);
 					idx = CB->type_of[CB->n - 1];
 					CB->Type_extra_data[idx] = OiPA;
 
@@ -1918,6 +2024,84 @@ void projective_space_with_action::classify_objects_using_nauty(
 }
 
 
+void projective_space_with_action::save(const char *output_prefix,
+		classify_bitvectors *CB,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char fname[1000];
+
+	if (f_v) {
+		cout << "projective_space_with_action::save" << endl;
+	}
+	sprintf(fname, "%s_classified.cvs", output_prefix);
+
+	{
+		ofstream fp(fname);
+		int i, j;
+
+		fp << "rep,ago,original_file,input_idx,input_set,nb_rows,nb_cols,canonical_form" << endl;
+		for (i = 0; i < CB->nb_types; i++) {
+
+			object_in_projective_space_with_action *OiPA;
+			object_in_projective_space *OiP;
+
+			cout << i << " / " << CB->nb_types << " is "
+				<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
+			OiPA = (object_in_projective_space_with_action *)
+					CB->Type_extra_data[i];
+			OiP = OiPA->OiP;
+			if (OiP == NULL) {
+				cout << "OiP == NULL" << endl;
+				exit(1);
+			}
+			if (OiP->type != t_PAC) {
+				OiP->print(cout);
+				}
+			OiP->print(cout);
+
+	#if 0
+			for (j = 0; j < rep_len; j++) {
+				cout << (int) Type_data[i][j];
+				if (j < rep_len - 1) {
+					cout << ", ";
+					}
+				}
+	#endif
+			cout << "before writing OiP->set_as_string:" << endl;
+			const char *p = "";
+
+			if (OiP->set_as_string) {
+				p = OiP->set_as_string;
+			}
+			fp << i << "," << OiPA->Aut_gens->group_order_as_int()
+					<< "," << OiP->input_fname
+					<< "," << OiP->input_idx
+					<< ",\"" << p << "\",";
+			cout << "before writing OiPA->nb_rows:" << endl;
+			fp << OiPA->nb_rows << "," << OiPA->nb_cols<< ",";
+
+			cout << "before writing canonical labeling:" << endl;
+			fp << "\"";
+			for (j = 0; j < OiPA->nb_rows + OiPA->nb_cols; j++) {
+				fp << OiPA->canonical_labeling[j];
+				if (j < OiPA->nb_rows + OiPA->nb_cols - 1) {
+					fp << ",";
+				}
+			}
+			fp << "\"";
+			fp << endl;
+			}
+		fp << "END" << endl;
+	}
+	cout << "written file " << fname << " of size "
+			<< file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::save done" << endl;
+	}
+}
 
 
 

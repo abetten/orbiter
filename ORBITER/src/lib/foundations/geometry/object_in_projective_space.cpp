@@ -29,6 +29,9 @@ object_in_projective_space::~object_in_projective_space()
 void object_in_projective_space::null()
 {
 	P = NULL;
+	input_fname = NULL;
+	input_idx = 0;
+	set_as_string = NULL;
 	set = NULL;
 	sz = 0;
 	SoS = NULL;
@@ -37,6 +40,9 @@ void object_in_projective_space::null()
 
 void object_in_projective_space::freeself()
 {
+	if (set_as_string) {
+		FREE_char(set_as_string);
+	}
 	if (set) {
 		FREE_int(set);
 		}
@@ -51,6 +57,10 @@ void object_in_projective_space::freeself()
 
 void object_in_projective_space::print(ostream &ost)
 {
+
+	if (set_as_string) {
+		cout << "set_as_string: " << set_as_string << endl;
+	}
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
 		int_vec_print(ost, set, sz);
@@ -87,6 +97,75 @@ void object_in_projective_space::print_tex(ostream &ost)
 		}
 }
 
+void object_in_projective_space::init_object_from_string(
+	int type,
+	const char *input_fname, int input_idx,
+	const char *set_as_string, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string" << endl;
+		cout << "type=" << type << endl;
+		}
+
+	object_in_projective_space::input_fname = input_fname;
+	object_in_projective_space::input_idx = input_idx;
+	int l = strlen(set_as_string);
+
+	object_in_projective_space::set_as_string = NEW_char(l + 1);
+	strcpy(object_in_projective_space::set_as_string, set_as_string);
+
+	int *the_set_in;
+	int set_size_in;
+
+	int_vec_scan(set_as_string, the_set_in, set_size_in);
+
+
+	if (f_v) {
+		cout << "The input set has size " << set_size_in << ":" << endl;
+		cout << "The input set is:" << endl;
+		int_vec_print(cout, the_set_in, set_size_in);
+		cout << endl;
+		cout << "The type is: ";
+		if (type == t_PTS) {
+			cout << "t_PTS" << endl;
+			}
+		else if (type == t_LNS) {
+			cout << "t_LNS" << endl;
+			}
+		else if (type == t_PAC) {
+			cout << "t_PAC" << endl;
+			}
+		}
+
+
+	if (type == t_PTS) {
+		init_point_set(P,
+				the_set_in, set_size_in, verbose_level - 1);
+		}
+	else if (type == t_LNS) {
+		init_line_set(P,
+				the_set_in, set_size_in, verbose_level - 1);
+		}
+	else if (type == t_PAC) {
+		init_packing_from_set(P,
+				the_set_in, set_size_in, verbose_level - 1);
+		}
+	else {
+		cout << "object_in_projective_space::init_object_from_string "
+				"unknown type" << endl;
+		exit(1);
+		}
+
+	FREE_int(the_set_in);
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string"
+				" done" << endl;
+		}
+}
+
 void object_in_projective_space::init_point_set(
 		projective_space *P, int *set, int sz,
 		int verbose_level)
@@ -103,7 +182,7 @@ void object_in_projective_space::init_point_set(
 	object_in_projective_space::sz = sz;
 	if (f_v) {
 		cout << "object_in_projective_space::init_point_set done" << endl;
-		}
+	}
 }
 
 void object_in_projective_space::init_line_set(
@@ -260,6 +339,106 @@ void object_in_projective_space::init_packing_from_spread_table(
 		cout << "object_in_projective_space::init_packing_"
 				"from_spread_table done" << endl;
 		}
+}
+
+void object_in_projective_space::encoding_size(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size" << endl;
+		}
+	if (type == t_PTS) {
+
+		encoding_size_point_set(
+				nb_rows, nb_cols, verbose_level);
+
+		}
+	else if (type == t_LNS) {
+
+		encoding_size_line_set(
+				nb_rows, nb_cols, verbose_level);
+
+		}
+	else if (type == t_PAC) {
+
+		encoding_size_packing(
+				nb_rows, nb_cols, verbose_level);
+
+		}
+	else {
+		cout << "object_in_projective_space::encoding_size "
+				"unknown type" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size done" << endl;
+		}
+}
+
+void object_in_projective_space::encoding_size_point_set(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_point_set" << endl;
+		}
+
+	C = NEW_OBJECT(classify);
+
+	C->init(set, sz, TRUE, 0);
+	if (C->second_nb_types > 1) {
+		cout << "object_in_projective_space::encoding_size_point_set "
+				"The set is a multiset:" << endl;
+		C->print(FALSE /*f_backwards*/);
+		}
+
+	if (f_v) {
+		cout << "The type of the set is:" << endl;
+		C->print(FALSE /*f_backwards*/);
+		cout << "C->second_nb_types = " << C->second_nb_types << endl;
+		}
+
+	nb_rows = P->N_points + 1;
+	nb_cols = P->N_lines + C->second_nb_types;
+	FREE_OBJECT(C);
+	C = NULL;
+
+}
+
+void object_in_projective_space::encoding_size_line_set(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_line_set" << endl;
+		}
+
+
+	nb_rows = P->N_points + 1;
+	nb_cols = P->N_lines + 1;
+
+}
+
+void object_in_projective_space::encoding_size_packing(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_packing" << endl;
+		}
+
+	nb_rows = P->N_points + SoS->nb_sets;
+	nb_cols = P->N_lines + 1;
+
 }
 
 void object_in_projective_space::encode_incma(

@@ -444,16 +444,6 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 	const char *prefix, 
 	int f_W, int f_w,
 	poset *Poset,
-#if 0
-	void (*early_test_func_callback)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
-		void *data, int verbose_level),
-	void *early_test_func_data, 
-	int (*candidate_incremental_check_func)(int len,
-			int *S, void *data, int verbose_level),
-	void *candidate_incremental_check_data, 
-#endif
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -490,21 +480,6 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 
 	strcpy(gen->fname_base, prefix);
 
-
-#if 0
-	if (early_test_func_callback) {
-		gen->init_early_test_func(
-			early_test_func_callback, 
-			early_test_func_data,  
-			verbose_level);
-		}
-
-	if (candidate_incremental_check_func) {
-		gen->init_incremental_check_func(
-			candidate_incremental_check_func, 
-			candidate_incremental_check_data);
-		}
-#endif
 
 	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	gen->init_root_node(verbose_level - 1);
@@ -552,13 +527,6 @@ void orbits_on_k_sets(
 	Gen->get_orbit_representatives(k, nb_orbits,
 			orbit_reps, verbose_level);
 	
-#if 0
-	nb_orbits = Gen->nb_orbits_at_level(k);
-	orbit_reps = NEW_int(k * nb_orbits);
-	for (i = 0; i < nb_orbits; i++) {
-		Gen->get_set_by_level(k, i, orbit_reps + i * k);
-		}
-#endif
 
 	if (f_v) {
 		cout << "orbits_on_k_sets: we found "

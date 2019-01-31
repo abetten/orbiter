@@ -17,7 +17,7 @@ namespace classification {
 // #############################################################################
 
 
-//! wrapper to compute the set stabilizer with the class compute_stabilizer
+//! to compute the stabilizer of a set under a given action
 
 
 class set_stabilizer_compute {
@@ -67,7 +67,7 @@ public:
 // compute_stabilizer.C:
 // #############################################################################
 
-//! wrapper to compute the set stabilizer using the poset classification algorithm
+//! to compute the stabilizer of a set under a given action
 
 class compute_stabilizer {
 

@@ -50,7 +50,7 @@ public:
 // flag_orbits.C:
 // #############################################################################
 
-//! related to the class classification
+//! stores the set of flag orbits; related to the class classification_step
 
 
 class flag_orbits {
@@ -83,7 +83,7 @@ public:
 // flag_orbit_node.C:
 // #############################################################################
 
-//! related to the class flag_orbits
+//! to represent a flag orbit; related to the class flag_orbits
 
 
 class flag_orbit_node {
@@ -122,7 +122,7 @@ public:
 // orbit_node.C:
 // #############################################################################
 
-//! related to the class classification_step
+//! to encode one group orbit, associated to the class classification_step
 
 class orbit_node {
 public:
