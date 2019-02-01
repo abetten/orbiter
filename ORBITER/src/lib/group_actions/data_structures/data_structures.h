@@ -150,6 +150,12 @@ public:
 		int nb_rows, int nb_cols,
 		int *canonical_labeling,
 		int verbose_level);
+	void init_known_ago(
+		object_in_projective_space *OiP,
+		int known_ago,
+		int nb_rows, int nb_cols,
+		int *canonical_labeling,
+		int verbose_level);
 };
 
 
@@ -268,12 +274,23 @@ public:
 		int verbose_level);
 	void classify_objects_using_nauty(
 		data_input_stream *Data,
-		int nb_objects_to_test,
 		classify_bitvectors *CB,
 		int f_save_incma_in_and_out, const char *prefix,
 		int verbose_level);
 	void save(const char *output_prefix,
 			classify_bitvectors *CB,
+			int verbose_level);
+	void merge_packings(
+			const char **fnames, int nb_files,
+			const char *file_of_spreads,
+			classify_bitvectors *&CB,
+			int verbose_level);
+	void latex_report(const char *fname,
+			const char *prefix,
+			classify_bitvectors *CB,
+			int f_save_incma_in_and_out,
+			int fixed_structure_order_list_sz,
+			int *fixed_structure_order_list,
 			int verbose_level);
 };
 

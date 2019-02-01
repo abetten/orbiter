@@ -1413,6 +1413,8 @@ public:
 
 	const char *input_fname;
 	int input_idx;
+	int f_has_known_ago;
+	int known_ago;
 
 	char *set_as_string;
 
