@@ -1649,7 +1649,6 @@ int projective_space_with_action::process_object(
 
 void projective_space_with_action::classify_objects_using_nauty(
 	data_input_stream *Data,
-	int nb_objects_to_test,
 	classify_bitvectors *CB,
 	int f_save_incma_in_and_out, const char *prefix,
 	int verbose_level)
@@ -1663,6 +1662,15 @@ void projective_space_with_action::classify_objects_using_nauty(
 	if (f_v) {
 		cout << "classify_objects_using_nauty" << endl;
 		}
+
+	int nb_objects_to_test;
+
+	if (f_v) {
+		cout << "classify_objects_using_nauty "
+				"before count_number_of_objects_to_test" << endl;
+		}
+	nb_objects_to_test = Data->count_number_of_objects_to_test(
+		verbose_level - 1);
 
 	t0 = os_ticks();
 
@@ -2024,7 +2032,8 @@ void projective_space_with_action::classify_objects_using_nauty(
 }
 
 
-void projective_space_with_action::save(const char *output_prefix,
+void projective_space_with_action::save(
+		const char *output_prefix,
 		classify_bitvectors *CB,
 		int verbose_level)
 {
@@ -2040,14 +2049,15 @@ void projective_space_with_action::save(const char *output_prefix,
 		ofstream fp(fname);
 		int i, j;
 
-		fp << "rep,ago,original_file,input_idx,input_set,nb_rows,nb_cols,canonical_form" << endl;
+		fp << "rep,ago,original_file,input_idx,input_set,"
+				"nb_rows,nb_cols,canonical_form" << endl;
 		for (i = 0; i < CB->nb_types; i++) {
 
 			object_in_projective_space_with_action *OiPA;
 			object_in_projective_space *OiP;
 
-			cout << i << " / " << CB->nb_types << " is "
-				<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
+			//cout << i << " / " << CB->nb_types << " is "
+			//	<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
 			OiPA = (object_in_projective_space_with_action *)
 					CB->Type_extra_data[i];
 			OiP = OiPA->OiP;
@@ -2056,9 +2066,9 @@ void projective_space_with_action::save(const char *output_prefix,
 				exit(1);
 			}
 			if (OiP->type != t_PAC) {
-				OiP->print(cout);
+				//OiP->print(cout);
 				}
-			OiP->print(cout);
+			//OiP->print(cout);
 
 	#if 0
 			for (j = 0; j < rep_len; j++) {
@@ -2068,20 +2078,29 @@ void projective_space_with_action::save(const char *output_prefix,
 					}
 				}
 	#endif
-			cout << "before writing OiP->set_as_string:" << endl;
+			//cout << "before writing OiP->set_as_string:" << endl;
 			const char *p = "";
 
 			if (OiP->set_as_string) {
 				p = OiP->set_as_string;
 			}
-			fp << i << "," << OiPA->Aut_gens->group_order_as_int()
+
+			int ago;
+
+			if (OiP->f_has_known_ago) {
+				ago = OiP->known_ago;
+			}
+			else {
+				ago = OiPA->Aut_gens->group_order_as_int();
+			}
+			fp << i << "," << ago
 					<< "," << OiP->input_fname
 					<< "," << OiP->input_idx
 					<< ",\"" << p << "\",";
-			cout << "before writing OiPA->nb_rows:" << endl;
+			//cout << "before writing OiPA->nb_rows:" << endl;
 			fp << OiPA->nb_rows << "," << OiPA->nb_cols<< ",";
 
-			cout << "before writing canonical labeling:" << endl;
+			//cout << "before writing canonical labeling:" << endl;
 			fp << "\"";
 			for (j = 0; j < OiPA->nb_rows + OiPA->nb_cols; j++) {
 				fp << OiPA->canonical_labeling[j];
@@ -2103,8 +2122,668 @@ void projective_space_with_action::save(const char *output_prefix,
 	}
 }
 
+void projective_space_with_action::merge_packings(
+		const char **fnames, int nb_files,
+		const char *file_of_spreads,
+		classify_bitvectors *&CB,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::merge_packings" << endl;
+	}
+
+	CB = NEW_OBJECT(classify_bitvectors);
 
 
+	// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
+	int *Spread_table;
+	int nb_spreads;
+	int spread_size;
+
+	if (f_v) {
+		cout << "projective_space_with_action::merge_packings "
+				"Reading spread table from file "
+				<< file_of_spreads << endl;
+	}
+	int_matrix_read_csv(file_of_spreads,
+			Spread_table, nb_spreads, spread_size,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "Reading spread table from file "
+				<< file_of_spreads << " done" << endl;
+		cout << "The spread table contains " << nb_spreads
+				<< " spreads" << endl;
+	}
+
+	int f, g, N, table_length, nb_reject = 0;
+
+	N = 0;
+
+	if (f_v) {
+		cout << "projective_space_with_action::merge_packings "
+				"counting the overall number of input packings" << endl;
+	}
+
+	for (f = 0; f < nb_files; f++) {
+
+		if (f_v) {
+			cout << "projective_space_with_action::merge_packings file "
+					<< f << " / " << nb_files << " : " << fnames[f] << endl;
+		}
+
+		spreadsheet *S;
+
+		S = NEW_OBJECT(spreadsheet);
+
+		S->read_spreadsheet(fnames[f], 0 /*verbose_level*/);
+
+		table_length = S->nb_rows - 1;
+		N += table_length;
+
+
+
+		FREE_OBJECT(S);
+
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::merge_packings file "
+				<< "we have " << N << " packings in "
+				<< nb_files << " files" << endl;
+	}
+
+	for (f = 0; f < nb_files; f++) {
+
+		if (f_v) {
+			cout << "projective_space_with_action::merge_packings file "
+					<< f << " / " << nb_files << " : " << fnames[f] << endl;
+		}
+
+		spreadsheet *S;
+
+		S = NEW_OBJECT(spreadsheet);
+
+		S->read_spreadsheet(fnames[f], 0 /*verbose_level*/);
+		if (FALSE /*f_v3*/) {
+			S->print_table(cout, FALSE);
+			}
+
+		int ago_idx, original_file_idx, input_idx_idx, input_set_idx;
+		int nb_rows_idx, nb_cols_idx, canonical_form_idx;
+
+		ago_idx = S->find_by_column("ago");
+		original_file_idx = S->find_by_column("original_file");
+		input_idx_idx = S->find_by_column("input_idx");
+		input_set_idx = S->find_by_column("input_set");
+		nb_rows_idx = S->find_by_column("nb_rows");
+		nb_cols_idx = S->find_by_column("nb_cols");
+		canonical_form_idx = S->find_by_column("canonical_form");
+
+		table_length = S->nb_rows - 1;
+
+		//rep,ago,original_file,input_idx,input_set,nb_rows,nb_cols,canonical_form
+
+
+		for (g = 0; g < table_length; g++) {
+
+			int ago;
+			char *text;
+			int *the_set_in;
+			int set_size_in;
+			int *canonical_labeling;
+			int canonical_labeling_sz;
+			int nb_rows, nb_cols;
+			object_in_projective_space *OiP;
+
+
+			ago = S->get_int(g + 1, ago_idx);
+			nb_rows = S->get_int(g + 1, nb_rows_idx);
+			nb_cols = S->get_int(g + 1, nb_cols_idx);
+
+			text = S->get_string(g + 1, input_set_idx);
+			int_vec_scan(text, the_set_in, set_size_in);
+
+
+			if (f_v) {
+				cout << "File " << f << " / " << nb_files
+						<< ", input set " << g << " / "
+						<< table_length << endl;
+				//int_vec_print(cout, the_set_in, set_size_in);
+				//cout << endl;
+				}
+
+			if (FALSE) {
+				cout << "canonical_form_idx=" << canonical_form_idx << endl;
+			}
+			text = S->get_string(g + 1, canonical_form_idx);
+			if (FALSE) {
+				cout << "text=" << text << endl;
+			}
+			int_vec_scan(text, canonical_labeling, canonical_labeling_sz);
+			if (FALSE) {
+				cout << "File " << f << " / " << nb_files
+						<< ", input set " << g << " / "
+						<< table_length << " canonical_labeling = ";
+				int_vec_print(cout, canonical_labeling, canonical_labeling_sz);
+				cout << endl;
+				}
+
+			if (canonical_labeling_sz != nb_rows + nb_cols) {
+				cout << "projective_space_with_action::merge_packings "
+						"canonical_labeling_sz != nb_rows + nb_cols" << endl;
+				exit(1);
+			}
+
+			OiP = NEW_OBJECT(object_in_projective_space);
+
+			if (FALSE) {
+				cout << "projective_space_with_action::merge_packings "
+						"before init_packing_from_spread_table" << endl;
+			}
+			OiP->init_packing_from_spread_table(P, the_set_in,
+				Spread_table, nb_spreads, spread_size,
+				0 /*verbose_level*/);
+			if (FALSE) {
+				cout << "projective_space_with_action::merge_packings "
+						"after init_packing_from_spread_table" << endl;
+			}
+			OiP->f_has_known_ago = TRUE;
+			OiP->known_ago = ago;
+
+			int *Incma_in;
+			int *Incma_out;
+			int nb_rows1, nb_cols1;
+			int *partition;
+			uchar *canonical_form;
+			int canonical_form_len;
+
+
+			if (FALSE) {
+				cout << "projective_space_with_action::merge_packings "
+						"before encode_incma" << endl;
+			}
+			OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
+					partition, 0 /*verbose_level - 1*/);
+			if (FALSE) {
+				cout << "projective_space_with_action::merge_packings "
+						"after encode_incma" << endl;
+			}
+			if (nb_rows1 != nb_rows) {
+				cout << "projective_space_with_action::merge_packings "
+						"nb_rows1 != nb_rows" << endl;
+				exit(1);
+			}
+			if (nb_cols1 != nb_cols) {
+				cout << "projective_space_with_action::merge_packings "
+						"nb_cols1 != nb_cols" << endl;
+				exit(1);
+			}
+
+			OiP->input_fname = S->get_string(g + 1, original_file_idx);
+			OiP->input_idx = S->get_int(g + 1, input_idx_idx);
+
+			text = S->get_string(g + 1, input_set_idx);
+			int l = strlen(text);
+
+			OiP->set_as_string = NEW_char(l + 1);
+			strcpy(OiP->set_as_string, text);
+
+			int i, j, ii, jj, a, ret;
+			int L = nb_rows * nb_cols;
+
+			Incma_out = NEW_int(L);
+			for (i = 0; i < nb_rows; i++) {
+				ii = canonical_labeling[i];
+				for (j = 0; j < nb_cols; j++) {
+					jj = canonical_labeling[nb_rows + j] - nb_rows;
+					//cout << "i=" << i << " j=" << j << " ii=" << ii
+					//<< " jj=" << jj << endl;
+					Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
+					}
+				}
+			if (FALSE) {
+				cout << "projective_space_with_action::merge_packings "
+						"before bitvector_allocate_and_coded_length" << endl;
+			}
+			canonical_form = bitvector_allocate_and_coded_length(
+					L, canonical_form_len);
+			for (i = 0; i < nb_rows; i++) {
+				for (j = 0; j < nb_cols; j++) {
+					if (Incma_out[i * nb_cols + j]) {
+						a = i * nb_cols + j;
+						bitvector_set_bit(canonical_form, a);
+						}
+					}
+				}
+
+			if (CB->n == 0) {
+				if (f_v) {
+					cout << "projective_space_with_action::merge_packings "
+							"before CB->init" << endl;
+				}
+				CB->init(N, canonical_form_len, verbose_level);
+				}
+			if (f_v) {
+				cout << "projective_space_with_action::merge_packings "
+						"before CB->add" << endl;
+			}
+			ret = CB->add(canonical_form, OiP, 0 /*verbose_level*/);
+			if (ret == 0) {
+				nb_reject++;
+			}
+			if (f_v) {
+				cout << "projective_space_with_action::merge_packings "
+						"CB->add returns " << ret
+						<< " nb iso = " << CB->nb_types
+						<< " nb_reject=" << nb_reject << endl;
+			}
+
+
+			int idx;
+
+			object_in_projective_space_with_action *OiPA;
+
+			OiPA = NEW_OBJECT(object_in_projective_space_with_action);
+
+			OiPA->init_known_ago(OiP, ago, nb_rows, nb_cols,
+					canonical_labeling, 0 /*verbose_level*/);
+			idx = CB->type_of[CB->n - 1];
+			CB->Type_extra_data[idx] = OiPA;
+
+
+			FREE_int(the_set_in);
+			//FREE_int(canonical_labeling);
+			FREE_int(Incma_in);
+			FREE_int(Incma_out);
+			FREE_int(partition);
+			//FREE_uchar(canonical_form);
+
+		} // next g
+
+
+
+	} // next f
+
+	if (f_v) {
+		cout << "projective_space_with_action::merge_packings done, "
+				"we found " << CB->nb_types << " isomorphism types "
+				"of packings" << endl;
+		}
+
+
+	//FREE_OBJECT(CB);
+	FREE_int(Spread_table);
+
+	if (f_v) {
+		cout << "projective_space_with_action::merge_packings done" << endl;
+	}
+}
+
+void projective_space_with_action::latex_report(const char *fname,
+		const char *prefix,
+		classify_bitvectors *CB,
+		int f_save_incma_in_and_out,
+		int fixed_structure_order_list_sz,
+		int *fixed_structure_order_list,
+		int verbose_level)
+{
+	int i, j;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::latex_report" << endl;
+	}
+	{
+	ofstream fp(fname);
+
+	latex_head_easy(fp);
+
+	int *Table;
+	int width = 4;
+	int *row_labels;
+	int *col_labels;
+	int row_part_first[2], row_part_len[1];
+	int nb_row_parts = 1;
+	int col_part_first[2], col_part_len[1];
+	int nb_col_parts = 1;
+
+
+
+	row_part_first[0] = 0;
+	row_part_first[1] = CB->nb_types;
+	row_part_len[0] = CB->nb_types;
+
+	col_part_first[0] = 0;
+	col_part_first[1] = width;
+	col_part_len[0] = width;
+
+	Table = NEW_int(CB->nb_types * width);
+	int_vec_zero(Table, CB->nb_types * width);
+
+	row_labels = NEW_int(CB->nb_types);
+	col_labels = NEW_int(width);
+	for (i = 0; i < CB->nb_types; i++) {
+		row_labels[i] = i;
+		}
+	for (j = 0; j < width; j++) {
+		col_labels[j] = j;
+		}
+
+	for (i = 0; i < CB->nb_types; i++) {
+
+		j = CB->perm[i];
+		Table[i * width + 0] = CB->Type_rep[j];
+		Table[i * width + 1] = CB->Type_mult[j];
+		Table[i * width + 2] = 0; // group order
+		Table[i * width + 3] = 0; // object list
+		}
+
+	fp << "\\section{Summary of Orbits}" << endl;
+	fp << "$$" << endl;
+	int_matrix_print_with_labels_and_partition(fp,
+			Table, CB->nb_types, 4,
+		row_labels, col_labels,
+		row_part_first, row_part_len, nb_row_parts,
+		col_part_first, col_part_len, nb_col_parts,
+		print_summary_table_entry,
+		CB /*void *data*/,
+		TRUE /* f_tex */);
+	fp << "$$" << endl;
+
+	compute_and_print_ago_distribution_with_classes(fp,
+			CB, verbose_level);
+
+	for (i = 0; i < CB->nb_types; i++) {
+
+		j = CB->perm[i];
+		object_in_projective_space_with_action *OiPA;
+		object_in_projective_space *OiP;
+
+		cout << "###################################################"
+				"#############################" << endl;
+		cout << "Orbit " << i << " / " << CB->nb_types
+				<< " is canonical form no " << j
+				<< ", original object no " << CB->Type_rep[j]
+				<< ", frequency " << CB->Type_mult[j]
+				<< " : " << endl;
+
+
+		{
+		int *Input_objects;
+		int nb_input_objects;
+		CB->C_type_of->get_class_by_value(Input_objects,
+			nb_input_objects, j, 0 /*verbose_level */);
+
+		cout << "This isomorphism type appears " << nb_input_objects
+				<< " times, namely for the following "
+						"input objects:" << endl;
+		int_vec_print_as_matrix(cout, Input_objects,
+				nb_input_objects, 10 /* width */,
+				FALSE /* f_tex */);
+
+		FREE_int(Input_objects);
+		}
+
+		OiPA = (object_in_projective_space_with_action *)
+				CB->Type_extra_data[j];
+		OiP = OiPA->OiP;
+		if (OiP->type != t_PAC) {
+			OiP->print(cout);
+			}
+
+		//OiP->init_point_set(PA->P, (int *)CB->Type_extra_data[j],
+		//sz, 0 /* verbose_level*/);
+
+
+
+		strong_generators *SG;
+		longinteger_object go;
+		char save_incma_in_and_out_prefix[1000];
+
+		if (f_save_incma_in_and_out) {
+			sprintf(save_incma_in_and_out_prefix,
+					"%s_iso_%d_%d", prefix, i, j);
+			}
+
+
+		uchar *canonical_form;
+		int canonical_form_len;
+
+		int nb_r, nb_c;
+		int *canonical_labeling;
+
+		OiP->encoding_size(
+				nb_r, nb_c,
+				verbose_level);
+		canonical_labeling = NEW_int(nb_r + nb_c);
+
+
+		SG = set_stabilizer_of_object(
+			OiP,
+			f_save_incma_in_and_out, save_incma_in_and_out_prefix,
+			TRUE /* f_compute_canonical_form */,
+			canonical_form, canonical_form_len,
+			canonical_labeling,
+			0 /* verbose_level */);
+
+		FREE_int(canonical_labeling);
+
+		SG->group_order(go);
+
+		fp << "\\section*{Orbit " << i << " / "
+			<< CB->nb_types << "}" << endl;
+		fp << "Orbit " << i << " / " << CB->nb_types <<  " stored at "
+			<< j << " is represented by input object "
+			<< CB->Type_rep[j] << " and appears "
+			<< CB->Type_mult[j] << " times: \\\\" << endl;
+		if (OiP->type != t_PAC) {
+			OiP->print(fp);
+			fp << "\\\\" << endl;
+			}
+		//int_vec_print(fp, OiP->set, OiP->sz);
+		fp << "Group order " << go << "\\\\" << endl;
+
+		fp << "Stabilizer:" << endl;
+		SG->print_generators_tex(fp);
+
+		{
+		int *Input_objects;
+		int nb_input_objects;
+		CB->C_type_of->get_class_by_value(Input_objects,
+				nb_input_objects, j, 0 /*verbose_level */);
+		int_vec_heapsort(Input_objects, nb_input_objects);
+
+		fp << "This isomorphism type appears " << nb_input_objects
+				<< " times, namely for the following "
+				<< nb_input_objects << " input objects: " << endl;
+		if (nb_input_objects < 10) {
+			fp << "$" << endl;
+			int_set_print_tex(fp, Input_objects, nb_input_objects);
+			fp << "$\\\\" << endl;
+			}
+		else {
+			fp << "$$" << endl;
+			int_vec_print_as_matrix(fp, Input_objects,
+				nb_input_objects, 10 /* width */, TRUE /* f_tex */);
+			fp << "$$" << endl;
+			}
+
+		FREE_int(Input_objects);
+		}
+
+
+		int *Incma;
+		int nb_rows, nb_cols;
+		int *partition;
+		incidence_structure *Inc;
+		partitionstack *Stack;
+
+
+		OiP->encode_incma_and_make_decomposition(
+			Incma, nb_rows, nb_cols, partition,
+			Inc,
+			Stack,
+			verbose_level);
+		FREE_int(Incma);
+		FREE_int(partition);
+	#if 0
+		cout << "set ";
+		int_vec_print(cout, OiP->set, OiP->sz);
+		cout << " go=" << go << endl;
+
+		cout << "Stabilizer:" << endl;
+		SG->print_generators_tex(cout);
+
+
+		incidence_structure *Inc;
+		partitionstack *Stack;
+
+		int Sz[1];
+		int *Subsets[1];
+
+		Sz[0] = OiP->sz;
+		Subsets[0] = OiP->set;
+
+		cout << "computing decomposition:" << endl;
+		PA->P->decomposition(1 /* nb_subsets */, Sz, Subsets,
+			Inc,
+			Stack,
+			verbose_level);
+
+	#if 0
+		cout << "the decomposition is:" << endl;
+		Inc->get_and_print_decomposition_schemes(*Stack);
+		Stack->print_classes(cout);
+	#endif
+
+
+
+
+	#if 0
+		fp << "canonical form: ";
+		for (i = 0; i < canonical_form_len; i++) {
+			fp << (int)canonical_form[i];
+			if (i < canonical_form_len - 1) {
+				fp << ", ";
+				}
+			}
+		fp << "\\\\" << endl;
+	#endif
+	#endif
+
+
+		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+			fp, TRUE /* f_enter_math */,
+			TRUE /* f_print_subscripts */, *Stack);
+
+	#if 0
+		Inc->get_and_print_tactical_decomposition_scheme_tex(
+			fp, TRUE /* f_enter_math */,
+			*Stack);
+	#endif
+
+
+
+		int f_refine_prev, f_refine, h;
+		int f_print_subscripts = TRUE;
+
+		f_refine_prev = TRUE;
+		for (h = 0; ; h++) {
+			if (EVEN(h)) {
+				f_refine = Inc->refine_column_partition_safe(
+						*Stack, verbose_level - 3);
+				}
+			else {
+				f_refine = Inc->refine_row_partition_safe(
+						*Stack, verbose_level - 3);
+				}
+
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe "
+						"h=" << h << " after refine" << endl;
+				}
+			if (EVEN(h)) {
+				//int f_list_incidences = FALSE;
+				Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+					fp, TRUE /* f_enter_math */,
+					f_print_subscripts, *Stack);
+				//get_and_print_col_decomposition_scheme(
+				//PStack, f_list_incidences, FALSE);
+				//PStack.print_classes_points_and_lines(cout);
+				}
+			else {
+				//int f_list_incidences = FALSE;
+				Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+					fp, TRUE /* f_enter_math */,
+					f_print_subscripts, *Stack);
+				//get_and_print_row_decomposition_scheme(
+				//PStack, f_list_incidences, FALSE);
+				//PStack.print_classes_points_and_lines(cout);
+				}
+
+			if (!f_refine_prev && !f_refine) {
+				break;
+				}
+			f_refine_prev = f_refine;
+			}
+
+		cout << "Classes of the partition:\\\\" << endl;
+		Stack->print_classes_tex(fp);
+
+
+
+		OiP->klein(verbose_level);
+
+
+		sims *Stab;
+		int *Elt;
+		int nb_trials;
+		int max_trials = 100;
+
+		Stab = SG->create_sims(verbose_level);
+		Elt = NEW_int(A->elt_size_in_int);
+
+		for (h = 0; h < fixed_structure_order_list_sz; h++) {
+			if (Stab->find_element_of_given_order_int(Elt,
+					fixed_structure_order_list[h], nb_trials, max_trials,
+					verbose_level)) {
+				fp << "We found an element of order "
+						<< fixed_structure_order_list[h] << ", which is:" << endl;
+				fp << "$$" << endl;
+				A->element_print_latex(Elt, fp);
+				fp << "$$" << endl;
+				report_fixed_objects_in_PG_3_tex(
+					Elt, fp,
+					verbose_level);
+				}
+			else {
+				fp << "We could not find an element of order "
+					<< fixed_structure_order_list[h] << "\\\\" << endl;
+				}
+			}
+
+
+		FREE_int(Elt);
+		FREE_OBJECT(Stack);
+		FREE_OBJECT(Inc);
+		FREE_OBJECT(SG);
+
+		}
+
+
+	latex_foot(fp);
+	}
+
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
+	//FREE_int(perm);
+	//FREE_int(v);
+	if (f_v) {
+		cout << "projective_space_with_action::latex_report done" << endl;
+	}
+}
 
 
 // #############################################################################

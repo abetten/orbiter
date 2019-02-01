@@ -713,7 +713,7 @@ public:
 		const char *heading);
 	void fill_column_with_row_index(int col_idx, 
 		const char *heading);
-	void add_token(char *label);
+	void add_token(const char *label);
 	void save(const char *fname, int verbose_level);
 	void read_spreadsheet(const char *fname, int verbose_level);
 	void print_table(ostream &ost, int f_enclose_in_parentheses);
@@ -729,7 +729,9 @@ public:
 	void print_table_with_row_selection(int *f_selected, 
 		ostream &ost);
 	void print_table_sorted(ostream &ost, const char *sort_by);
-	void add_column_with_constant_value(char *label, char *value);
+	void add_column_with_constant_value(const char *label, char *value);
+	void add_column_with_int(const char *label, int *Value);
+	void add_column_with_text(const char *label, char **Value);
 	void reallocate_table();
 	void reallocate_table_add_row();
 	int find_by_column(const char *join_by);

@@ -31,6 +31,8 @@ void object_in_projective_space::null()
 	P = NULL;
 	input_fname = NULL;
 	input_idx = 0;
+	f_has_known_ago = FALSE;
+	known_ago = 0;
 	set_as_string = NULL;
 	set = NULL;
 	sz = 0;

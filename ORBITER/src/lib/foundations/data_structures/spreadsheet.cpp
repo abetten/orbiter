@@ -245,7 +245,7 @@ void spreadsheet::fill_column_with_row_index(
 		}
 }
 
-void spreadsheet::add_token(char *label)
+void spreadsheet::add_token(const char *label)
 {
 	char **tokens2;
 	int i, j, len;
@@ -603,7 +603,7 @@ void spreadsheet::print_table_sorted(ostream &ost,
 }
 
 
-void spreadsheet::add_column_with_constant_value(char *label, char *value)
+void spreadsheet::add_column_with_constant_value(const char *label, char *value)
 {
 	int i;
 
@@ -615,6 +615,35 @@ void spreadsheet::add_column_with_constant_value(char *label, char *value)
 		Table[i * nb_cols + nb_cols - 1] = nb_tokens - 1;
 		}
 	
+}
+
+void spreadsheet::add_column_with_int(const char *label, int *Value)
+{
+	int i;
+	char str[1000];
+
+	reallocate_table();
+	add_token(label);
+	Table[0 * nb_cols + nb_cols - 1] = nb_tokens - 1;
+	for (i = 1; i < nb_rows; i++) {
+		sprintf(str, "%d", Value[i - 1]);
+		add_token(str);
+		Table[i * nb_cols + nb_cols - 1] = nb_tokens - 1;
+		}
+
+}
+void spreadsheet::add_column_with_text(const char *label, char **Value)
+{
+	int i;
+
+	reallocate_table();
+	add_token(label);
+	Table[0 * nb_cols + nb_cols - 1] = nb_tokens - 1;
+	for (i = 1; i < nb_rows; i++) {
+		add_token(Value[i - 1]);
+		Table[i * nb_cols + nb_cols - 1] = nb_tokens - 1;
+		}
+
 }
 
 void spreadsheet::reallocate_table()
@@ -1006,12 +1035,13 @@ void spreadsheet::get_value_double_or_NA(int i, int j,
 		val = get_double(i, j);
 		f_NA = FALSE;
 		}
+	FREE_char(str);
 }
 
 char *spreadsheet::get_string(int i, int j)
 {
 	int t;
-	char str[1000];
+	char *str;
 	char *s;
 	
 	t = Table[i * nb_cols + j];
@@ -1021,6 +1051,7 @@ char *spreadsheet::get_string(int i, int j)
 		strcpy(s, "");
 		}
 	else {
+		str = NEW_char(strlen(tokens[t]) + 1);
 		if (strlen(tokens[t]) >= 2 && tokens[t][0] == '"') {
 			strcpy(str, tokens[t] + 1);
 			str[strlen(str) - 1] = 0;
@@ -1031,6 +1062,7 @@ char *spreadsheet::get_string(int i, int j)
 
 		s = NEW_char(strlen(str) + 1);
 		strcpy(s, str);
+		FREE_char(str);
 		}
 	return s;
 }
@@ -1042,6 +1074,7 @@ int spreadsheet::get_int(int i, int j)
 
 	p = get_string(i, j);
 	a = atoi(p);
+	FREE_char(p);
 	return a;
 }
 
@@ -1052,6 +1085,7 @@ double spreadsheet::get_double(int i, int j)
 
 	p = get_string(i, j);
 	a = atof(p);
+	FREE_char(p);
 	return a;
 }
 
