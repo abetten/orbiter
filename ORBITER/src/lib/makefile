@@ -4,18 +4,18 @@ LIB =
 LFLAGS = -lm
 
 
-all: foundations group_actions poset_classification discreta toplevel liborbiter.a
+all: foundations group_actions classification discreta toplevel liborbiter.a
 
 
 foundations : foundations2 
 group_actions : group_actions2 
-poset_classification : poset_classification2 
+classification : classification2 
 discreta : discreta2 
 toplevel : toplevel2 
 
 foundations2 : ; cd foundations; $(MAKE)
 group_actions2 : ; cd group_actions; $(MAKE)
-poset_classification2 : ; cd poset_classification; $(MAKE)
+classification2 : ; cd classification; $(MAKE)
 discreta2 : ; cd DISCRETA; $(MAKE)
 toplevel2 : ; cd top_level; $(MAKE)
 
@@ -23,7 +23,7 @@ toplevel2 : ; cd top_level; $(MAKE)
 clean:
 	cd foundations; $(MAKE) clean
 	cd group_actions; $(MAKE) clean
-	cd poset_classification; $(MAKE) clean
+	cd classification; $(MAKE) clean
 	cd DISCRETA; $(MAKE) clean
 	cd top_level; $(MAKE) clean
 	- rm *.o *.a 
@@ -202,35 +202,35 @@ MODULES= \
 		group_actions/induced_actions/action_on_subgroups.o \
 		group_actions/induced_actions/action_on_wedge_product.o \
 		group_actions/induced_actions/product_action.o \
-		poset_classification/classify/classification_step.o \
-		poset_classification/classify/flag_orbit_node.o \
-		poset_classification/classify/flag_orbits.o \
-		poset_classification/classify/orbit_node.o \
-		poset_classification/other/snakes_and_ladders_global.o \
-		poset_classification/snakes_and_ladders/extension.o \
-		poset_classification/snakes_and_ladders/orbit_based_testing.o \
-		poset_classification/snakes_and_ladders/poset.o \
-		poset_classification/snakes_and_ladders/poset_description.o \
-		poset_classification/snakes_and_ladders/poset_classification.o \
-		poset_classification/snakes_and_ladders/poset_classification_classify.o \
-		poset_classification/snakes_and_ladders/poset_classification_combinatorics.o \
-		poset_classification/snakes_and_ladders/poset_classification_draw.o \
-		poset_classification/snakes_and_ladders/poset_classification_init.o \
-		poset_classification/snakes_and_ladders/poset_classification_io.o \
-		poset_classification/snakes_and_ladders/poset_classification_recognize.o \
-		poset_classification/snakes_and_ladders/poset_classification_trace.o \
-		poset_classification/snakes_and_ladders/poset_orbit_node.o \
-		poset_classification/snakes_and_ladders/poset_orbit_node_downstep.o \
-		poset_classification/snakes_and_ladders/poset_orbit_node_downstep_subspace_action.o \
-		poset_classification/snakes_and_ladders/poset_orbit_node_group_theory.o \
-		poset_classification/snakes_and_ladders/poset_orbit_node_io.o \
-		poset_classification/snakes_and_ladders/poset_orbit_node_upstep.o \
-		poset_classification/snakes_and_ladders/poset_orbit_node_upstep_subspace_action.o \
-		poset_classification/snakes_and_ladders/upstep_work.o \
-		poset_classification/snakes_and_ladders/upstep_work_subspace_action.o \
-		poset_classification/snakes_and_ladders/upstep_work_trace.o \
-		poset_classification/set_stabilizer/compute_stabilizer.o \
-		poset_classification/set_stabilizer/set_stabilizer_compute.o \
+		classification/classify/classification_step.o \
+		classification/classify/flag_orbit_node.o \
+		classification/classify/flag_orbits.o \
+		classification/classify/orbit_node.o \
+		classification/other/snakes_and_ladders_global.o \
+		classification/poset_classification/extension.o \
+		classification/poset_classification/orbit_based_testing.o \
+		classification/poset_classification/poset.o \
+		classification/poset_classification/poset_description.o \
+		classification/poset_classification/poset_classification.o \
+		classification/poset_classification/poset_classification_classify.o \
+		classification/poset_classification/poset_classification_combinatorics.o \
+		classification/poset_classification/poset_classification_draw.o \
+		classification/poset_classification/poset_classification_init.o \
+		classification/poset_classification/poset_classification_io.o \
+		classification/poset_classification/poset_classification_recognize.o \
+		classification/poset_classification/poset_classification_trace.o \
+		classification/poset_classification/poset_orbit_node.o \
+		classification/poset_classification/poset_orbit_node_downstep.o \
+		classification/poset_classification/poset_orbit_node_downstep_subspace_action.o \
+		classification/poset_classification/poset_orbit_node_group_theory.o \
+		classification/poset_classification/poset_orbit_node_io.o \
+		classification/poset_classification/poset_orbit_node_upstep.o \
+		classification/poset_classification/poset_orbit_node_upstep_subspace_action.o \
+		classification/poset_classification/upstep_work.o \
+		classification/poset_classification/upstep_work_subspace_action.o \
+		classification/poset_classification/upstep_work_trace.o \
+		classification/set_stabilizer/compute_stabilizer.o \
+		classification/set_stabilizer/set_stabilizer_compute.o \
 		DISCRETA/base.o \
 		DISCRETA/bt_key.o \
 		DISCRETA/btree.o \
