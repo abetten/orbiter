@@ -60,9 +60,13 @@ int main(int argc, const char **argv)
 		display_all_PG_elements(n - 1, GFq);
 		}
 	int f_basis = TRUE;
+	vector_ge *nice_gens;
 
 	A->init_projective_group(n, &GFq, 
-		f_semilinear, f_basis, verbose_level);
+		f_semilinear, f_basis,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	if (f_v) {
 		cout << "a permutation group of degree "
 				<< A->degree << endl;

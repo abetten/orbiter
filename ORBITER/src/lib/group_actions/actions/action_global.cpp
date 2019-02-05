@@ -96,6 +96,7 @@ void create_linear_group(sims *&S, action *&A,
 	finite_field *F, int m, 
 	int f_projective, int f_general, int f_affine, 
 	int f_semilinear, int f_special, 
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -116,7 +117,9 @@ void create_linear_group(sims *&S, action *&A,
 					<< " f_semilinear=" << f_semilinear << endl;
 			}
 		A->init_projective_group(m, F, f_semilinear, 
-			f_basis, verbose_level);
+			f_basis,
+			nice_gens,
+			verbose_level);
 		}
 	else if (f_general) {
 		if (f_v) {
@@ -125,7 +128,9 @@ void create_linear_group(sims *&S, action *&A,
 					<< " f_semilinear=" << f_semilinear << endl;
 			}
 		A->init_general_linear_group(m, F, f_semilinear, 
-			f_basis, verbose_level);
+			f_basis,
+			nice_gens,
+			verbose_level);
 		}
 	else if (f_affine) {
 		if (f_v) {
@@ -134,7 +139,9 @@ void create_linear_group(sims *&S, action *&A,
 					<< " f_semilinear=" << f_semilinear << endl;
 			}
 		A->init_affine_group(m, F, f_semilinear, 
-			f_basis, verbose_level);
+			f_basis,
+			nice_gens,
+			verbose_level);
 		}
 	else {
 		cout << "action_global.C create_linear_group "
@@ -778,6 +785,7 @@ void generators_to_strong_generators(action *A,
 
 void compute_generators_GL_n_q(int *&Gens,
 		int &nb_gens, int &elt_size, int n, finite_field *F,
+		vector_ge *&nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -794,7 +802,9 @@ void compute_generators_GL_n_q(int *&Gens,
 
 	A->init_projective_group(n, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, verbose_level - 2);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level - 2);
 
 	gens = A->Strong_gens->gens;
 
@@ -838,6 +848,7 @@ void order_of_PGGL_n_q(longinteger_object &go,
 	int verbose_level = 0;
 	action *A;
 	finite_field *F;
+	vector_ge *nice_gens;
 
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
@@ -845,9 +856,12 @@ void order_of_PGGL_n_q(longinteger_object &go,
 	F->init(q, 0);
 	A->init_projective_group(n, F, 
 		f_semilinear, 
-		TRUE /* f_basis */, verbose_level - 2);
+		TRUE /* f_basis */,
+		nice_gens,
+		verbose_level - 2);
 	A->group_order(go);
 	
+	FREE_OBJECT(nice_gens);
 	FREE_OBJECT(F);
 	FREE_OBJECT(A);
 }
@@ -940,10 +954,14 @@ void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 	action A;
 	finite_field *F;
 	int f_basis = TRUE;
-	
+	vector_ge *nice_gens;
+
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
-	A.init_projective_group(k, F, f_semilinear, f_basis, verbose_level);
+	A.init_projective_group(k, F, f_semilinear, f_basis,
+			nice_gens,
+			verbose_level);
+	FREE_OBJECT(nice_gens);
 	FREE_OBJECT(F);
 }
 
@@ -3894,10 +3912,13 @@ void do_canonical_form(int n, finite_field *F,
 
 	sims *Stab;
 	action *A_linear;
+	vector_ge *nice_gens;
 
 	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(n + 1, F, f_semilinear, 
-			TRUE /* f_basis */, verbose_level);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
 
 	if (f_v) {
 		cout << "do_canonical_form before "
@@ -3910,6 +3931,7 @@ void do_canonical_form(int n, finite_field *F,
 		verbose_level);
 	//P->draw_point_set_in_plane(fname_base, set, set_size,
 	// TRUE /*f_with_points*/, 0 /* verbose_level */);
+	FREE_OBJECT(nice_gens);
 	FREE_OBJECT(Stab);
 	FREE_OBJECT(A_linear);
 	FREE_OBJECT(P);

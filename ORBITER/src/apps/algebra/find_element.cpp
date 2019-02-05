@@ -60,6 +60,7 @@ void find_element(int q, int *mtx, int verbose_level)
 	longinteger_object Go;
 	int ord;
 	int *Elt6;
+	vector_ge *nice_gens;
 
 	int dataE[4];
 
@@ -72,8 +73,9 @@ void find_element(int q, int *mtx, int verbose_level)
 	A->init_projective_group(2 /* n */, F, 
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */,
+		nice_gens,
 		verbose_level);
-
+	FREE_OBJECT(nice_gens);
 
 
 	A->print_base();

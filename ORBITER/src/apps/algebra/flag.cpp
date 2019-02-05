@@ -148,6 +148,7 @@ void test_action(int n, int *type, int type_len,
 	int f_affine = FALSE;
 	int f_semilinear = FALSE;
 	int f_special = FALSE;
+	vector_ge *nice_gens;
 
 	if (f_v) {
 		cout << "test_action" << endl;
@@ -160,7 +161,9 @@ void test_action(int n, int *type, int type_len,
 		F, n, 
 		f_projective, f_general, f_affine, 
 		f_semilinear, f_special, 
+		nice_gens,
 		verbose_level);
+	FREE_OBJECT(nice_gens);
 	Mtx = A->G.matrix_grp;
 	
 	AF = NEW_OBJECT(action);

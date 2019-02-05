@@ -640,6 +640,8 @@ void direct_product_action::init(int argc, const char **argv,
 
 	if (q1 == 1) {
 
+		vector_ge *nice_gens;
+
 		F1->init(2, 0);
 		F2->init(2, 0);
 
@@ -647,13 +649,17 @@ void direct_product_action::init(int argc, const char **argv,
 
 		A1->init_projective_group(d1, F1,
 				FALSE /* f_semilinear */, TRUE /* f_basis */,
+				nice_gens,
 				verbose_level - 1);
 		M1 = A1->G.matrix_grp;
+		FREE_OBJECT(nice_gens);
 
 		A2->init_projective_group(d2, F2,
 				FALSE /* f_semilinear */, TRUE /* f_basis */,
+				nice_gens,
 				verbose_level - 1);
 		M2 = A1->G.matrix_grp;
+		FREE_OBJECT(nice_gens);
 
 #if 0
 		M1->init_projective_group(d1, F1,
@@ -860,6 +866,7 @@ void direct_product_action::init(int argc, const char **argv,
 		int *data;
 		int sz;
 		int nb_gens;
+		vector_ge *nice_gens;
 
 		int_vec_scan(subgroup_gens_text, data, sz);
 		nb_gens = sz / A->make_element_size;
@@ -872,7 +879,9 @@ void direct_product_action::init(int argc, const char **argv,
 				data,
 				nb_gens, A0->make_element_size,
 				subgroup_order_text,
+				nice_gens,
 				verbose_level + 2);
+		FREE_OBJECT(nice_gens);
 		if (f_v) {
 			cout << "action::init_direct_product_group "
 					"after Strong_gens->init_from_data_"

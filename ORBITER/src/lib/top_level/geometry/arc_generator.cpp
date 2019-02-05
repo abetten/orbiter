@@ -318,9 +318,13 @@ void arc_generator::init(finite_field *F,
 		cout << "arc_generator::init "
 				"calling init_projective_group" << endl;
 		}
-	A->init_projective_group(n + 1, F,
-			f_semilinear, f_basis, 0 /*verbose_level*/);
+	vector_ge *nice_gens;
 
+	A->init_projective_group(n + 1, F,
+			f_semilinear, f_basis,
+			nice_gens,
+			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
 	if (f_v) {
 		cout << "arc_generator::init "
 				"after init_projective_group" << endl;

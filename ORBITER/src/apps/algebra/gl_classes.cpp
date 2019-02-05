@@ -179,6 +179,7 @@ int main(int argc, char **argv)
 
 		action *A;
 		longinteger_object Go;
+		vector_ge *nice_gens;
 	
 		
 		A = new action;
@@ -186,7 +187,9 @@ int main(int argc, char **argv)
 				F,
 				FALSE /* f_semilinear */,
 				TRUE /* f_basis */,
+				nice_gens,
 				verbose_level);
+		FREE_OBJECT(nice_gens);
 		A->print_base();
 		A->group_order(Go);
 	
@@ -348,6 +351,7 @@ int main(int argc, char **argv)
 		action *A;
 		longinteger_object Go;
 		finite_field *F;
+		vector_ge *nice_gens;
 
 		F = new finite_field;
 		F->init(q, 0);
@@ -356,7 +360,9 @@ int main(int argc, char **argv)
 		A->init_projective_group(d /* n */, F,
 				FALSE /* f_semilinear */,
 				TRUE /* f_basis */,
+				nice_gens,
 				verbose_level);
+		FREE_OBJECT(nice_gens);
 		A->print_base();
 		A->group_order(Go);
 	
@@ -471,6 +477,7 @@ int main(int argc, char **argv)
 		action *A_PGL;
 		action *A_GL;
 		longinteger_object Go;
+		vector_ge *nice_gens;
 	
 		F = new finite_field;
 		F->init(q, 0);
@@ -478,14 +485,20 @@ int main(int argc, char **argv)
 		A_PGL = new action;
 		A_PGL->init_projective_group(d /* n */, F, 
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, 0 /*verbose_level*/);
+			TRUE /* f_basis */,
+			nice_gens,
+			0 /*verbose_level*/);
+		FREE_OBJECT(nice_gens);
 		A_PGL->print_base();
 		A_PGL->group_order(Go);
 
 		A_GL = new action;
 		A_GL->init_general_linear_group(d /* n */, F, 
 			FALSE /* f_semilinear */, 
-			TRUE /* f_basis */, 0 /*verbose_level*/);
+			TRUE /* f_basis */,
+			nice_gens,
+			0 /*verbose_level*/);
+		FREE_OBJECT(nice_gens);
 		A_GL->print_base();
 		A_GL->group_order(Go);
 
@@ -536,6 +549,7 @@ int main(int argc, char **argv)
 		action *A;
 		finite_field *F;
 		longinteger_object Go;
+		vector_ge *nice_gens;
 		int go, i;
 	
 		F = new finite_field;
@@ -544,7 +558,9 @@ int main(int argc, char **argv)
 		A->init_projective_group(d /* n */, F,
 				FALSE /* f_semilinear */,
 				TRUE /* f_basis */,
+				nice_gens,
 				0 /*verbose_level*/);
+		FREE_OBJECT(nice_gens);
 		A->print_base();
 		A->group_order(Go);
 
@@ -608,6 +624,7 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 
 	action *A;
 	longinteger_object Go;
+	vector_ge *nice_gens;
 	int a;
 	int *Mtx;
 	int *Elt;
@@ -617,7 +634,10 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 	A = new action;
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, verbose_level);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 	
@@ -712,12 +732,16 @@ void do_identify_all(int q, int d,
 	action *A;
 	longinteger_object Go;
 	int *Class_count;
+	vector_ge *nice_gens;
 	
 		
 	A = new action;
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, verbose_level);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 	
@@ -792,12 +816,16 @@ void do_identify_one(int q, int d,
 
 	action *A;
 	longinteger_object Go;
+	vector_ge *nice_gens;
 	
 		
 	A = new action;
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, verbose_level);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 	
@@ -877,12 +905,15 @@ void do_normal_form(int q, int d,
 
 	action *A;
 	longinteger_object Go;
+	vector_ge *nice_gens;
 	
 		
 	A = new action;
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */, TRUE /* f_basis */,
+			nice_gens,
 			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 	

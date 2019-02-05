@@ -113,11 +113,14 @@ void do_it(int p, int q, int verbose_level)
 			verbose_level - 2);		
 		}
 	else {
+		vector_ge *nice_gens;
 		cout << "Creating projective linear group:" << endl; 
 		A->init_projective_group(2, F, 
 			f_semilinear, 
 			f_basis, 
+			nice_gens,
 			verbose_level - 2);		
+		FREE_OBJECT(nice_gens);
 		}
 
 

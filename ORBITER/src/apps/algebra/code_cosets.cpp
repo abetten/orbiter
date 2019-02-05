@@ -348,16 +348,20 @@ void projective_group(int n, int q, int f_semilinear, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
+	vector_ge *nice_gens;
 
 	if (f_v) {
 		cout << "projective_group n=" << n << " q=" << q
 				<< " f_semilinear=" << f_semilinear << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_projective_group(n, F, 
-		f_semilinear, TRUE /* f_basis */, verbose_level);
+		f_semilinear, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go1);
 	cout << "Group of order " << Go1 << endl;
@@ -367,7 +371,7 @@ void projective_group(int n, int q, int f_semilinear, int verbose_level)
 
 void grassmannian(int n, int k, finite_field *F, int verbose_level)
 {
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 
 	Gr->init(n, k, F, 0 /* verbose_level */);
 }
@@ -381,7 +385,7 @@ void read_group(const char *fname, int verbose_level)
 		cout << "read_group file = " << fname << endl;
 		}
 
-	SG = new strong_generators;
+	SG = NEW_OBJECT(strong_generators);
 	cout << "reading generators from file " << fname << endl;
 
 	//SG->init(A, 0);

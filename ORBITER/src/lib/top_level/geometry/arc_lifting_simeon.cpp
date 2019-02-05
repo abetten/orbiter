@@ -77,12 +77,14 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
+	vector_ge *nice_gens;
 	create_linear_group(S, A,
 		F, n + 1,
 		f_projective, f_general, f_affine,
 		f_semilinear, f_special,
+		nice_gens,
 		verbose_level);
-
+	FREE_OBJECT(nice_gens);
 	A->group_order(go);
 	cout << "created a group of order " << go << endl;
 

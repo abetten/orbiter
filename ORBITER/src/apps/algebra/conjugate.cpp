@@ -84,13 +84,15 @@ void conjugate(int q, int *from_elt, int *to_elt, int verbose_level)
 
 	int f_semilinear = TRUE;
 	int f_basis = TRUE;
-
+	vector_ge *nice_gens;
 	F = new finite_field;
 	F->init(q, 0);
 	A2 = new action;
 	A2->init_projective_group(2/*n*/, F, 
-		f_semilinear, f_basis, verbose_level);
-
+		f_semilinear, f_basis,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	
 
 

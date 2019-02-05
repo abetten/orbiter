@@ -305,6 +305,7 @@ void translation_plane_via_andre_model::init(
 	
 
 	int f_basis = FALSE;
+	vector_ge *nice_gens;
 
 
 
@@ -319,7 +320,10 @@ void translation_plane_via_andre_model::init(
 		}
 	An = NEW_OBJECT(action);
 	An->init_projective_group(n, F, f_semilinear,
-			f_basis, 0 /* verbose_level */);
+			f_basis,
+			nice_gens,
+			0 /* verbose_level */);
+	FREE_OBJECT(nice_gens);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
@@ -327,8 +331,10 @@ void translation_plane_via_andre_model::init(
 		}
 	An1 = NEW_OBJECT(action);
 	An1->init_projective_group(n1, F, f_semilinear,
-			f_basis, 0 /*verbose_level */);
-
+			f_basis,
+			nice_gens,
+			0 /*verbose_level */);
+	FREE_OBJECT(nice_gens);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "

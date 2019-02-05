@@ -1201,16 +1201,19 @@ public:
 	void init_from_data(action *A, int *data, 
 		int nb_elements, int elt_size, 
 		int *transversal_length, 
+		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_target_go_ascii(action *A, 
 		int *data, 
 		int nb_elements, int elt_size, 
 		const char *ascii_target_go,
+		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_target_go(action *A, 
 		int *data_gens, 
 		int data_gens_size, int nb_gens, 
 		longinteger_object &target_go, 
+		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_point_stabilizer_of_arbitrary_point_through_schreier(
 		schreier *Sch, 
@@ -1318,6 +1321,7 @@ public:
 		finite_field *F, int n, 
 		int f_projective, int f_general, int f_affine, 
 		int f_semilinear, int f_special, 
+		vector_ge *&nice_gens,
 		int verbose_level);
 	void special_subgroup(int verbose_level);
 	void even_subgroup(int verbose_level);

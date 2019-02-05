@@ -137,6 +137,7 @@ void do_it(int q, int type,
 	int f_semilinear = FALSE;
 	int f_basis = TRUE;
 	//int target_go;
+	vector_ge *nice_gens;
 	
 	F = new finite_field;
 	F->init(q, 0);
@@ -161,7 +162,10 @@ void do_it(int q, int type,
 		}
 	n = dimension + 1;
 	A->init_projective_group(n,  F, 
-		f_semilinear, f_basis, verbose_level);
+		f_semilinear, f_basis,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	
 	cout << "A->f_has_sims=" << A->f_has_sims << endl;
 

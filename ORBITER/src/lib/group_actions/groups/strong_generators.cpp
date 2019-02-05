@@ -234,6 +234,7 @@ void strong_generators::init_from_permutation_representation(
 
 void strong_generators::init_from_data(action *A, int *data, 
 	int nb_elements, int elt_size, int *transversal_length, 
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -243,10 +244,14 @@ void strong_generators::init_from_data(action *A, int *data,
 		}
 	init(A, verbose_level - 2);
 	gens = NEW_OBJECT(vector_ge);
+	nice_gens = NEW_OBJECT(vector_ge);
 
 	gens->init_from_data(A, data, 
 		nb_elements, elt_size, verbose_level);
 	
+	nice_gens->init_from_data(A, data,
+		nb_elements, elt_size, verbose_level);
+
 	tl = NEW_int(A->base_len);
 	int_vec_copy(transversal_length, tl, A->base_len);
 
@@ -258,6 +263,7 @@ void strong_generators::init_from_data(action *A, int *data,
 void strong_generators::init_from_data_with_target_go_ascii(
 	action *A, int *data,
 	int nb_elements, int elt_size, const char *ascii_target_go,
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -271,6 +277,7 @@ void strong_generators::init_from_data_with_target_go_ascii(
 	target_go.create_from_base_10_string(ascii_target_go);
 	init_from_data_with_target_go(A, data, 
 		elt_size, nb_elements, target_go,
+		nice_gens,
 		verbose_level);
 	if (f_v) {
 		cout << "strong_generators::init_from_data_with_target_"
@@ -282,6 +289,7 @@ void strong_generators::init_from_data_with_target_go(
 	action *A, int *data_gens,
 	int data_gens_size, int nb_gens,
 	longinteger_object &target_go,
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -294,11 +302,11 @@ void strong_generators::init_from_data_with_target_go(
 
 	strong_generators::A = A;
 
-	vector_ge *my_gens;
+	//vector_ge *my_gens;
 
-	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A);
-	my_gens->allocate(nb_gens);
+	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens->init(A);
+	nice_gens->allocate(nb_gens);
 	for (i = 0; i < nb_gens; i++) {
 		if (f_v) {
 			cout << "strong_generators::init_from_data_"
@@ -306,7 +314,7 @@ void strong_generators::init_from_data_with_target_go(
 					<< i << " / " << nb_gens << endl;
 			}
 
-		A->make_element(my_gens->ith(i),
+		A->make_element(nice_gens->ith(i),
 				data_gens + i * data_gens_size,
 				verbose_level);
 		}
@@ -314,7 +322,7 @@ void strong_generators::init_from_data_with_target_go(
 		cout << "strong_generators::init_from_data_"
 				"with_target_go "
 				"generators are:" << endl;
-		my_gens->print_quick(cout);
+		nice_gens->print_quick(cout);
 	}
 
 	strong_generators *SG;
@@ -323,7 +331,7 @@ void strong_generators::init_from_data_with_target_go(
 	
 	generators_to_strong_generators(A, 
 		TRUE /* f_target_go */, target_go, 
-		my_gens, SG, 
+		nice_gens, SG,
 		0 /*verbose_level*/);
 
 	if (f_v) {
@@ -333,7 +341,7 @@ void strong_generators::init_from_data_with_target_go(
 		SG->print_generators();
 		}
 
-	FREE_OBJECT(my_gens);
+	//FREE_OBJECT(my_gens);
 
 	if (gens) {
 		FREE_OBJECT(gens);

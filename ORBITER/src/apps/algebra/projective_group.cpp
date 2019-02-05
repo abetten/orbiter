@@ -332,6 +332,7 @@ void make_generator_matrix(finite_field *F,
 void projective_group(int n, int q, int f_semilinear, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	vector_ge *nice_gens;
 	
 
 	if (f_v) {
@@ -342,7 +343,10 @@ void projective_group(int n, int q, int f_semilinear, int verbose_level)
 	F->init(q, 0);
 	A = NEW_OBJECT(action);
 	A->init_projective_group(n, F, 
-		f_semilinear, TRUE /* f_basis */, verbose_level);
+		f_semilinear, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go1);
 	cout << "Group of order " << Go1 << endl;

@@ -32,6 +32,7 @@ int main(int argc, const char **argv)
 	int verbose_level = 0;
 	int f_linear = FALSE;
 	//int q;
+	int f_orbits_on_points = FALSE;
 	int f_orbits_on_subsets = FALSE;
 	int orbits_on_subsets_size = 0;
 	int f_draw_poset = FALSE;
@@ -56,6 +57,10 @@ int main(int argc, const char **argv)
 			f_orbits_on_subsets = TRUE;
 			orbits_on_subsets_size = atoi(argv[++i]);
 			cout << "-orbits_on_subsets" << orbits_on_subsets_size << endl;
+			}
+		else if (strcmp(argv[i], "-orbits_on_points") == 0) {
+			f_orbits_on_points = TRUE;
+			cout << "-orbits_on_points" << endl;
 			}
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
@@ -117,47 +122,53 @@ int main(int argc, const char **argv)
 
 
 
+	cout << "The group acts on the points of PG(" << Descr->n - 1
+			<< "," << Descr->input_q << ")" << endl;
+
 	for (i = 0; i < A->degree; i++) {
 		cout << i << " & ";
 		A->print_point(i, cout);
 		cout << "\\\\" << endl;
 	}
-	cout << "computing orbits on points:" << endl;
-	//A->all_point_orbits(*Sch, verbose_level);
-	A->all_point_orbits_from_generators(*Sch,
-			LG->Strong_gens,
-			verbose_level);
+
+	if (f_orbits_on_points) {
+		cout << "computing orbits on points:" << endl;
+		//A->all_point_orbits(*Sch, verbose_level);
+		A->all_point_orbits_from_generators(*Sch,
+				LG->Strong_gens,
+				verbose_level);
 
 
 
-	cout << "computing orbits on points done." << endl;
+		cout << "computing orbits on points done." << endl;
 
-	Sch->print_and_list_orbits(cout);
+		Sch->print_and_list_orbits(cout);
 
-	char fname_tree_mask[1000];
+		char fname_tree_mask[1000];
 
-	sprintf(fname_tree_mask, "%s_%%d.layered_graph", LG->prefix);
+		sprintf(fname_tree_mask, "%s_%%d.layered_graph", LG->prefix);
 
-	Sch->export_tree_as_layered_graph(0 /* orbit_no */,
-			fname_tree_mask,
-			verbose_level - 1);
+		Sch->export_tree_as_layered_graph(0 /* orbit_no */,
+				fname_tree_mask,
+				verbose_level - 1);
 
-	int orbit_idx = 0;
-	schreier *shallow_tree;
+		int orbit_idx = 0;
+		schreier *shallow_tree;
 
-	cout << "computing shallow Schreier tree:" << endl;
+		cout << "computing shallow Schreier tree:" << endl;
 
-	Sch->shallow_tree_generators(orbit_idx,
-			shallow_tree,
-			verbose_level);
+		Sch->shallow_tree_generators(orbit_idx,
+				shallow_tree,
+				verbose_level);
 
-	cout << "computing shallow Schreier tree done." << endl;
+		cout << "computing shallow Schreier tree done." << endl;
 
-	sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", LG->prefix);
+		sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", LG->prefix);
 
-	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
-			fname_tree_mask,
-			verbose_level - 1);
+		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
+				fname_tree_mask,
+				verbose_level - 1);
+	}
 
 	if (f_orbits_on_subsets) {
 		cout << "computing orbits on subsets:" << endl;

@@ -302,6 +302,7 @@ void recoordinatize::stabilizer_of_first_three(
 	A0_linear = NEW_OBJECT(action);
 	gens2 = NEW_OBJECT(vector_ge);
 
+	vector_ge *nice_gens;
 
 	
 	if (f_v) {
@@ -310,8 +311,11 @@ void recoordinatize::stabilizer_of_first_three(
 		}
 	A0->init_projective_group(k, F, 
 		f_semilinear, 
-		TRUE /* f_basis */, 0 /* verbose_level */);
-		
+		TRUE /* f_basis */,
+		nice_gens,
+		0 /* verbose_level */);
+	FREE_OBJECT(nice_gens);
+
 	A0->group_order(target_go);
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
@@ -323,8 +327,11 @@ void recoordinatize::stabilizer_of_first_three(
 
 	A0_linear->init_projective_group(k, F, 
 		FALSE /*f_semilinear*/, 
-		TRUE /*f_basis*/, 0/*verbose_level - 2*/);
-		
+		TRUE /*f_basis*/,
+		nice_gens,
+		0/*verbose_level - 2*/);
+	FREE_OBJECT(nice_gens);
+
 	A0_linear->group_order(go_linear);
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "

@@ -78,6 +78,7 @@ void create_group_arcs8(int q, int verbose_level)
 	action *A;
 	sims *S;
 	set_and_stabilizer *SaS;
+	vector_ge *nice_gens;
 
 	F = NEW_OBJECT(finite_field);
 
@@ -89,7 +90,9 @@ void create_group_arcs8(int q, int verbose_level)
 		F, 3, 
 		TRUE /*f_projective*/, FALSE /* f_general*/, FALSE /* f_affine */, 
 		TRUE /* f_semilinear */, FALSE /* f_special */, 
+		nice_gens,
 		verbose_level);
+	FREE_OBJECT(nice_gens);
 	cout << "creating linear group done" << endl;
 		
 	SaS = NEW_OBJECT(set_and_stabilizer);
@@ -204,13 +207,16 @@ void create_group_arcs8(int q, int verbose_level)
 	int Data2[10];
 	vector_ge *gens;
 	strong_generators *Strong_gens;
+	//vector_ge *nice_gens;
 	
 	cout << "creating linear group over FQ" << endl;
 	create_linear_group(PGGL3Q, AQ, 
 		FQ, 3, 
 		TRUE /*f_projective*/, FALSE /* f_general*/, FALSE /* f_affine */, 
 		TRUE /* f_semilinear */, FALSE /* f_special */, 
+		nice_gens,
 		verbose_level);
+	FREE_OBJECT(nice_gens);
 	cout << "creating linear group over FQ done" << endl;
 
 	Elt1 = NEW_int(AQ->elt_size_in_int);

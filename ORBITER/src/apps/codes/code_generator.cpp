@@ -319,11 +319,14 @@ void code_generator::init(int argc, const char **argv)
 
 		v1 = NEW_int(nmk);
 		v2 = NEW_int(nmk);
+		vector_ge *nice_gens;
 
 		A->init_projective_group(nmk, F, 
 			f_semilinear, 
 			f_basis, 
+			nice_gens,
 			verbose_level - 2);
+		FREE_OBJECT(nice_gens);
 	
 		if (f_v) {
 			cout << "code_generator::init finished with "

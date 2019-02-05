@@ -82,6 +82,7 @@ void test_borel(int n, int q, int verbose_level)
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 	A = NEW_OBJECT(action);
+	vector_ge *nice_gens;
 
 	cout << "before create_linear_group" << endl;
 	create_linear_group(S, A, 
@@ -91,7 +92,9 @@ void test_borel(int n, int q, int verbose_level)
 		FALSE /* f_affine */,
 		FALSE /* f_semilinear */,
 		TRUE /* f_special */,
+		nice_gens,
 		verbose_level);
+	FREE_OBJECT(nice_gens);
 	cout << "after create_linear_group" << endl;
 
 	AP = NEW_OBJECT(action);

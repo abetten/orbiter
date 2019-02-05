@@ -156,6 +156,7 @@ void LunelliSce(int verbose_level)
 	//int f_semilinear = TRUE;
 	int v[3];
 	//int w[3];
+	vector_ge *nice_gens;
 
 	//F.init(q), verbose_level - 2);
 	F.init_override_polynomial(q, override_poly, verbose_level);
@@ -169,7 +170,10 @@ void LunelliSce(int verbose_level)
 	cout << "after P->init" << endl;
 
 	A = NEW_OBJECT(action);
-	A->init_general_linear_group(n, &F, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
+	A->init_general_linear_group(n, &F,
+			FALSE /* f_semilinear */, TRUE /* f_basis */,
+			nice_gens, verbose_level - 2);
+	FREE_OBJECT(nice_gens);
 	
 	
 	//Mtx = A->G.matrix_grp;
@@ -218,6 +222,7 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 	action *A;
 	int n = 3;
 	//int f_with_group = TRUE;
+	vector_ge *nice_gens;
 	
 	int v[3];
 	//int w[3];
@@ -233,7 +238,11 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 
 	cout << "after P->init" << endl;
 	A = NEW_OBJECT(action);
-	A->init_general_linear_group(n, &F, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
+	A->init_general_linear_group(n, &F,
+			FALSE /* f_semilinear */, TRUE /* f_basis */,
+			nice_gens,
+			verbose_level - 2);
+	FREE_OBJECT(nice_gens);
 	
 	int variety[100];
 	int variety_size = 0;

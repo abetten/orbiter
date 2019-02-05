@@ -195,8 +195,14 @@ void spread::init(int order, int n, int k, int max_depth,
 		cout << "spread::init "
 				"before init_projective_group" << endl;
 		}
+
+	vector_ge *nice_gens;
+
 	A->init_projective_group(n, F, f_semilinear,
-			f_basis, 0 /*verbose_level*/);
+			f_basis,
+			nice_gens,
+			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
 	
 	if (f_v) {
 		cout << "spread::init "

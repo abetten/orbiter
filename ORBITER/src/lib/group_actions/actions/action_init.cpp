@@ -11,781 +11,10 @@
 namespace orbiter {
 namespace group_actions {
 
-void action::init_direct_product_group_and_restrict(
-		matrix_group *M1, matrix_group *M2, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A_direct_product;
-	action *Adp;
-	direct_product *P;
-	int *points;
-	int nb_points;
-	int i;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict" << endl;
-		cout << "M1=" << M1->label << endl;
-		cout << "M2=" << M2->label << endl;
-		}
-	A_direct_product = NEW_OBJECT(action);
-	A_direct_product->init_direct_product_group(M1, M2, verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict "
-				"after A_direct_product->init_direct_product_group" << endl;
-	}
-
-	P = A_direct_product->G.direct_product_group;
-	nb_points = P->degree_of_product_action;
-	points = NEW_int(nb_points);
-	for (i = 0; i < nb_points; i++) {
-		points[i] = P->perm_offset_i[2] + i;
-	}
-
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict "
-				"before A_direct_product->restricted_action" << endl;
-	}
-	Adp = A_direct_product->restricted_action(points, nb_points,
-			verbose_level);
-	Adp->f_is_linear = FALSE;
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict "
-				"after A_direct_product->restricted_action" << endl;
-	}
-
-	memcpy(this, Adp, sizeof(action));
-	Adp->null();
-	delete Adp;
-}
-
-void action::init_direct_product_group(
-		matrix_group *M1, matrix_group *M2,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	direct_product *P;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group" << endl;
-		cout << "M1=" << M1->label << endl;
-		cout << "M2=" << M2->label << endl;
-		}
-
-	P = NEW_OBJECT(direct_product);
-
-
-
-	type_G = direct_product_t;
-	G.direct_product_group = P;
-	f_allocated = TRUE;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before P->init" << endl;
-		}
-	P->init(M1, M2, verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after P->init" << endl;
-		}
-
-	f_is_linear = FALSE;
-	dimension = 0;
-
-
-	low_level_point_size = 0;
-	if (f_v) {
-		cout << "action::init_direct_product_group low_level_point_size="
-			<< low_level_point_size<< endl;
-		}
-	strcpy(label, P->label);
-	strcpy(label_tex, P->label_tex);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"label=" << label << endl;
-		}
-
-	degree = P->degree_overall;
-	make_element_size = P->make_element_size;
-
-	init_function_pointers_direct_product_group();
-
-	elt_size_in_int = P->elt_size_int;
-	coded_elt_size_in_char = P->char_per_elt;
-	allocate_element_data();
-
-	strcpy(group_prefix, label);
-
-
-
-	degree = P->degree_overall;
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"degree=" << degree << endl;
-		}
-	base_len = P->base_length;
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"base_len=" << base_len << endl;
-		}
-
-	allocate_base_data(base_len);
-
-	int_vec_copy(P->the_base, base, base_len);
-	int_vec_copy(P->the_transversal_length,
-			transversal_length, base_len);
-
-	int *gens_data;
-	int gens_size;
-	int gens_nb;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before W->make_strong_generators_data" << endl;
-		}
-	P->make_strong_generators_data(gens_data,
-			gens_size, gens_nb, verbose_level - 1);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after W->make_strong_generators_data" << endl;
-		}
-	Strong_gens = NEW_OBJECT(strong_generators);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before Strong_gens->init_from_data" << endl;
-		}
-	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
-			transversal_length, verbose_level - 1);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after Strong_gens->init_from_data" << endl;
-		}
-	f_has_strong_generators = TRUE;
-	FREE_int(gens_data);
-
-	sims *S;
-
-	S = NEW_OBJECT(sims);
-
-	S->init(this);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before S->init_generators" << endl;
-		}
-	S->init_generators(*Strong_gens->gens, verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after S->init_generators" << endl;
-		}
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before S->compute_base_orbits_known_length" << endl;
-		}
-	S->compute_base_orbits_known_length(transversal_length, verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after S->compute_base_orbits_known_length" << endl;
-		}
-
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before init_sims" << endl;
-		}
-
-	init_sims(S, verbose_level);
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after init_sims" << endl;
-		}
-
-	if (f_v) {
-		cout << "action::init_direct_product_group, finished setting up "
-				<< group_prefix;
-		cout << ", a permutation group of degree " << degree << " ";
-		cout << "and of order ";
-		print_group_order(cout);
-		cout << endl;
-		//cout << "make_element_size=" << make_element_size << endl;
-		//cout << "base_len=" << base_len << endl;
-		//cout << "f_semilinear=" << f_semilinear << endl;
-		}
-}
-
-void action::init_wreath_product_group_and_restrict(
-		int nb_factors, int n,
-		finite_field *F, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A_wreath;
-	action *Awr;
-	wreath_product *W;
-	int *points;
-	int nb_points;
-	int i;
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group_and_restrict" << endl;
-		cout << "nb_factors=" << nb_factors
-				<< " n=" << n << " q=" << F->q << endl;
-		}
-	A_wreath = NEW_OBJECT(action);
-	A_wreath->init_wreath_product_group(nb_factors, n, F, verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group_and_restrict "
-				"after A_wreath->init_wreath_product_group" << endl;
-	}
-
-	W = A_wreath->G.wreath_product_group;
-	nb_points = W->degree_of_tensor_action;
-	points = NEW_int(nb_points);
-	for (i = 0; i < nb_points; i++) {
-		points[i] = W->perm_offset_i[nb_factors] + i;
-	}
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group_and_restrict "
-				"before A_wreath->restricted_action" << endl;
-	}
-	Awr = A_wreath->restricted_action(points, nb_points,
-			verbose_level);
-	Awr->f_is_linear = TRUE;
-	if (f_v) {
-		cout << "action::init_wreath_product_group_and_restrict "
-				"after A_wreath->restricted_action" << endl;
-	}
-
-	memcpy(this, Awr, sizeof(action));
-	Awr->null();
-	FREE_OBJECT(Awr);
-}
-
-
-void action::init_wreath_product_group(int nb_factors, int n,
-		finite_field *F,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A_mtx;
-	wreath_product *W;
-	matrix_group *M;
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group" << endl;
-		cout << "nb_factors=" << nb_factors
-				<< " n=" << n << " q=" << F->q << endl;
-		}
-
-	A_mtx = NEW_OBJECT(action);
-	M = NEW_OBJECT(matrix_group);
-	W = NEW_OBJECT(wreath_product);
-
-
-
-	type_G = wreath_product_t;
-	G.wreath_product_group = W;
-	f_allocated = TRUE;
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before M->init_general_linear_group" << endl;
-		}
-	M->init_general_linear_group(n,
-			F, FALSE /* f_semilinear */, A_mtx,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after M->init_general_linear_group" << endl;
-		}
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before W->init_tensor_wreath_product" << endl;
-		}
-	W->init_tensor_wreath_product(M, A_mtx, nb_factors, verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after W->init_tensor_wreath_product" << endl;
-		}
-
-	f_is_linear = TRUE;
-	dimension = W->dimension_of_tensor_action;
-
-
-	low_level_point_size = W->low_level_point_size;
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-			"low_level_point_size="
-			<< low_level_point_size<< endl;
-		}
-	strcpy(label, W->label);
-	strcpy(label_tex, W->label_tex);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"label=" << label << endl;
-		}
-
-	degree = W->degree_overall;
-	make_element_size = W->make_element_size;
-
-	init_function_pointers_wreath_product_group();
-
-	elt_size_in_int = W->elt_size_int;
-	coded_elt_size_in_char = W->char_per_elt;
-	allocate_element_data();
-
-	strcpy(group_prefix, label);
-
-
-
-	degree = W->degree_overall;
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"degree=" << degree << endl;
-		}
-	base_len = W->base_length;
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"base_len=" << base_len << endl;
-		}
-
-	allocate_base_data(base_len);
-
-	int_vec_copy(W->the_base, base, base_len);
-	int_vec_copy(W->the_transversal_length,
-			transversal_length, base_len);
-
-	int *gens_data;
-	int gens_size;
-	int gens_nb;
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before W->make_strong_generators_data" << endl;
-		}
-	W->make_strong_generators_data(gens_data,
-			gens_size, gens_nb, verbose_level - 1);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after W->make_strong_generators_data" << endl;
-		}
-	Strong_gens = NEW_OBJECT(strong_generators);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before Strong_gens->init_from_data" << endl;
-		}
-	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
-			transversal_length, verbose_level - 1);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after Strong_gens->init_from_data" << endl;
-		}
-	f_has_strong_generators = TRUE;
-	FREE_int(gens_data);
-
-	sims *S;
-
-	S = NEW_OBJECT(sims);
-
-	S->init(this);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before S->init_generators" << endl;
-		}
-	S->init_generators(*Strong_gens->gens, verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after S->init_generators" << endl;
-		}
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before S->compute_base_orbits_known_length" << endl;
-		}
-	S->compute_base_orbits_known_length(transversal_length, verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after S->compute_base_orbits_known_length" << endl;
-		}
-
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before init_sims" << endl;
-		}
-
-	init_sims(S, verbose_level);
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after init_sims" << endl;
-		}
-
-	if (f_v) {
-		cout << "action::init_wreath_product_group, finished setting up "
-				<< group_prefix;
-		cout << ", a permutation group of degree " << degree << " ";
-		cout << "and of order ";
-		print_group_order(cout);
-		cout << endl;
-		//cout << "make_element_size=" << make_element_size << endl;
-		//cout << "base_len=" << base_len << endl;
-		//cout << "f_semilinear=" << f_semilinear << endl;
-		}
-}
-
-void action::init_orthogonal_group(int epsilon, 
-	int n, finite_field *F, 
-	int f_on_points, int f_on_lines, int f_on_points_and_lines, 
-	int f_semilinear, 
-	int f_basis, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	action *A;
-	orthogonal *O;
-	action_on_orthogonal *AO;
-	int q = F->q;
-
-	if (f_v) {
-		cout << "action::init_orthogonal_group "
-				"verbose_level=" << verbose_level << endl;
-		}
-	A = NEW_OBJECT(action);
-	if (f_vv) {
-		cout << "action::init_orthogonal_group "
-				"before A->init_projective_group" << endl;
-		}
-	A->init_projective_group(n, F, f_semilinear,
-			TRUE /* f_basis */, verbose_level - 2);
-
-	O = NEW_OBJECT(orthogonal);
-	if (f_vv) {
-		cout << "action::init_orthogonal_group before O->init" << endl;
-		}
-	O->init(epsilon, n, F, verbose_level);
-	if (f_vv) {
-		cout << "action::init_orthogonal_group after O->init" << endl;
-		}
-
-	AO = NEW_OBJECT(action_on_orthogonal);
-	if (f_vv) {
-		cout << "action::init_orthogonal_group before AO->init" << endl;
-		}
-	AO->init(A, O, f_on_points, f_on_lines,
-			f_on_points_and_lines, verbose_level - 2);
-	
-	type_G = action_on_orthogonal_t;
-	G.AO = AO;
-
-	f_has_subaction = TRUE;
-	subaction = A;
-	degree = AO->degree;
-	low_level_point_size = A->low_level_point_size;
-	elt_size_in_int = A->elt_size_in_int;
-	coded_elt_size_in_char = A->coded_elt_size_in_char;
-	allocate_element_data();
-	init_function_pointers_induced_action();
-	make_element_size = A->make_element_size;
-
-	sprintf(group_prefix, "O%d_%d_%d", epsilon, n, q);
-	sprintf(label, "O^%s(%d,%d)", plus_minus_string(epsilon), n, q);
-	sprintf(label_tex, "O^{%s}(%d,%d)", plus_minus_string(epsilon), n, q);
-
-
-
-	if (f_basis) {
-		longinteger_object target_go;
-
-		if (f_vv) {
-			cout << "action::init_orthogonal_group "
-					"we will create the orthogonal group now" << endl;
-			}
-		
-		if (get_orthogonal_group_type_f_reflection()) {
-			if (f_vv) {
-				cout << "action::init_orthogonal_group "
-						"with reflections, before order_PO_epsilon" << endl;
-				}
-			order_PO_epsilon(f_semilinear, epsilon, n - 1, F->q,
-					target_go, verbose_level);
-			}
-		else {
-			if (f_vv) {
-				cout << "action::init_orthogonal_group "
-						"without reflections, before order_POmega_epsilon"
-						<< endl;
-				}
-			order_POmega_epsilon(epsilon, n - 1,
-					F->q, target_go, verbose_level);
-			}
-
-		if (f_vv) {
-			cout << "action::init_orthogonal_group "
-					"the target group order is " << target_go << endl;
-			}
-
-		if (f_vv) {
-			cout << "action::init_orthogonal_group "
-					"before create_orthogonal_group" << endl;
-			}
-		create_orthogonal_group(A /*subaction*/, 
-			TRUE /* f_has_target_go */, target_go, 
-			callback_choose_random_generator_orthogonal, 
-			verbose_level - 2);
-		if (f_vv) {
-			cout << "action::init_orthogonal_group "
-					"after create_orthogonal_group" << endl;
-			}
-		}
-
-	if (f_v) {
-		cout << "action::init_orthogonal_group done" << endl;
-		}
-}
-
-void action::init_BLT(finite_field *F, int f_basis,
-		int f_init_hash_table, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int p, hh, epsilon, n;
-	int f_semilinear = FALSE;
-	
-	if (f_v) {
-		cout << "action::init_BLT q=" << F->q
-				<< " f_init_hash_table=" << f_init_hash_table << endl;
-		cout << "f_basis=" << f_basis << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-		}
-	is_prime_power(F->q, p, hh);
-	if (hh > 1)
-		f_semilinear = TRUE;
-	else
-		f_semilinear = FALSE;
-	epsilon = 0;
-	n = 5;
-
-
-	if (f_v) {
-		cout << "action::init_BLT before init_orthogonal_group" << endl;
-		}
-	init_orthogonal_group(epsilon, n, F, 
-		TRUE /* f_on_points */, 
-		FALSE /* f_on_lines */, 
-		FALSE /* f_on_points_and_lines */, 
-		f_semilinear, 
-		f_basis, 
-		verbose_level - 2);
-	if (f_v) {
-		cout << "action::init_BLT after init_orthogonal_group" << endl;
-		}
-
-
-
-	if (f_v) {
-		cout << "action::init_BLT computing lex least base" << endl;
-		}
-	lex_least_base_in_place(verbose_level - 2);
-	if (f_v) {
-		cout << "action::init_BLT computing lex least base done" << endl;
-		cout << "base: ";
-		int_vec_print(cout, base, base_len);
-		cout << endl;
-		}
-
-	if (f_v) {
-		print_base();
-		}
-
-
-	if (f_has_strong_generators) {
-		if (f_v) {
-			cout << "action::init_BLT strong "
-					"generators have been computed" << endl;
-			}
-		if (f_vv) {
-			Strong_gens->print_generators();
-			}
-		}
-	else {
-		cout << "action::init_BLT we don't have strong generators" << endl;
-		exit(1);
-		}
-
-#if 0
-	if (f_init_hash_table) {
-		matrix_group *M;
-		orthogonal *O;
-
-		M = subaction->G.matrix_grp;
-		O = M->O;
-	
-		if (f_v) {
-			cout << "calling init_hash_table_parabolic" << endl;
-			}
-		init_hash_table_parabolic(*O->F, 4, 0 /* verbose_level */);
-		}
-#endif
-
-	if (f_v) {
-		print_info();
-		}
-	if (f_v) {
-		cout << "action::init_BLT done" << endl;
-		}
-}
-
-void action::init_group_from_strong_generators(
-	vector_ge *gens, sims *K,
-	int given_base_length, int *given_base,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	sims *G;
-	longinteger_object G_order;
-	int i;
-	
-	
-	if (f_v) {
-		cout << "action::init_group_from_strong_generators" << endl;
-		}
-	strcpy(label, "from sgs");
-	strcpy(label_tex, "from sgs");
-	if (f_vv) {
-		cout << "generators are" << endl;
-		gens->print(cout);
-		cout << endl;
-		}
-	
-
-	if (f_vv) {
-		cout << "calling allocate_base_data, initial base:";
-		int_vec_print(cout, given_base, given_base_length);
-		cout << " of length " << given_base_length << endl;
-		}
-	allocate_base_data(given_base_length);
-	base_len = given_base_length;
-	
-	for (i = 0; i < base_len; i++) {
-		base[i] = given_base[i];
-		}
-
-
-
-	if (f_vv) {
-		cout << "action::init_group_from_strong_generators, "
-				"now trying to set up the group "
-				"from the given generators" << endl;
-		}
-	
-	G = NEW_OBJECT(sims);
-	
-	G->init(this);
-	G->init_trivial_group(verbose_level - 1);
-	G->group_order(G_order);
-	
-	G->build_up_group_from_generators(K, gens, 
-		FALSE, NULL, /* target_go */
-		FALSE /* f_override_choose_next_base_point */,
-		NULL, 
-		verbose_level);
-	
-	G->group_order(G_order);
-
-
-	if (f_vvv) {
-		//G.print(TRUE);
-		//G.print_generator_depth_and_perm();
-		}
-
-	if (f_v) {
-		cout << "init_group_from_strong_generators: "
-				"found a group of order " << G_order << endl;
-		if (f_vv) {
-			cout << "transversal lengths:" << endl;
-			int_vec_print(cout, G->orbit_len, base_len);
-			cout << endl;
-			}
-		}
-	
-	if (f_vv) {
-		cout << "init_sims" << endl;
-		}
-	init_sims(G, 0/*verbose_level - 1*/);
-	if (f_vv) {
-		cout << "after init_sims" << endl;
-		}
-	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
-
-	if (f_v) {
-		print_info();
-		}
-}
-
-void action::init_projective_special_group(
-	int n, finite_field *F,
-	int f_semilinear, int f_basis, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "action::init_projective_special_group" << endl;
-		cout << "n=" << n << " q=" << F->q << endl;
-		cout << "f_semilinear=" << f_semilinear << endl;
-		cout << "f_basis=" << f_basis << endl;
-		}
-
-	if (f_v) {
-		cout << "action::init_projective_special_group "
-				"before init_projective_group" << endl;
-	}
-	init_projective_group(n, F,
-			f_semilinear, f_basis, verbose_level);
-	if (f_v) {
-		cout << "action::init_projective_special_group "
-				"after init_projective_group" << endl;
-	}
-
-	{
-		action A_on_det;
-		longinteger_object go;
-		strong_generators *gens;
-		sims *Sims2;
-		
-		gens = NEW_OBJECT(strong_generators);
-		
-		if (f_v) {
-			cout << "action::init_projective_special_group "
-					"computing intersection with special linear group" << endl;
-			}
-		A_on_det.induced_action_on_determinant(
-				Sims, verbose_level);
-		if (f_v) {
-			cout << "action::init_projective_special_group "
-					"induced_action_on_determinant finished" << endl;
-			A_on_det.Kernel->group_order(go);
-			cout << "action::init_projective_special_group "
-					"intersection has order " << go << endl;
-			}
-		gens->init_from_sims(A_on_det.Kernel, verbose_level - 1);
-		
-		
-		Sims2 = gens->create_sims(verbose_level - 1);
-
-		FREE_OBJECT(gens);
-		init_sims(Sims2, verbose_level);
-	}
-
-	if (f_v) {
-		cout << "action::init_projective_special_group done" << endl;
-		}
-}
-
 void action::init_projective_group(int n, finite_field *F, 
-	int f_semilinear, int f_basis, int verbose_level)
+	int f_semilinear, int f_basis,
+	vector_ge *&nice_gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	matrix_group *M;
@@ -848,7 +77,9 @@ void action::init_projective_group(int n, finite_field *F,
 					"before setup_linear_group_from_strong_generators"
 					<< endl;
 			}
-		setup_linear_group_from_strong_generators(M, verbose_level);
+		setup_linear_group_from_strong_generators(M,
+				nice_gens,
+				verbose_level);
 		if (f_v) {
 			cout << "action::init_projective_group "
 					"after setup_linear_group_from_strong_generators"
@@ -870,7 +101,9 @@ void action::init_projective_group(int n, finite_field *F,
 
 void action::init_affine_group(int n, finite_field *F, 
 	int f_semilinear, 
-	int f_basis, int verbose_level)
+	int f_basis,
+	vector_ge *&nice_gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	matrix_group *M;
@@ -919,7 +152,8 @@ void action::init_affine_group(int n, finite_field *F,
 	strcpy(group_prefix, label);
 
 	if (f_basis) {
-		setup_linear_group_from_strong_generators(M, verbose_level);
+		setup_linear_group_from_strong_generators(M,
+				nice_gens, verbose_level);
 		}
 	if (f_v) {
 		cout << "action::init_affine_group, finished setting up "
@@ -936,7 +170,9 @@ void action::init_affine_group(int n, finite_field *F,
 
 void action::init_general_linear_group(int n, finite_field *F, 
 	int f_semilinear, 
-	int f_basis, int verbose_level)
+	int f_basis,
+	vector_ge *&nice_gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	matrix_group *M;
@@ -988,7 +224,8 @@ void action::init_general_linear_group(int n, finite_field *F,
 	strcpy(group_prefix, label);
 
 	if (f_basis) {
-		setup_linear_group_from_strong_generators(M, verbose_level);
+		setup_linear_group_from_strong_generators(M,
+				nice_gens, verbose_level);
 		}
 	if (f_v) {
 		cout << "action::init_general_linear_group, "
@@ -1004,6 +241,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 }
 
 void action::setup_linear_group_from_strong_generators(matrix_group *M, 
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1015,7 +253,9 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 		cout << "action::setup_linear_group_from_strong_generators "
 				"before init_matrix_group_strong_generators_builtin" << endl;
 		}
-	init_matrix_group_strong_generators_builtin(M, verbose_level - 2);
+	init_matrix_group_strong_generators_builtin(M,
+			nice_gens,
+			verbose_level - 2);
 		// see below
 	if (f_v) {
 		cout << "action::setup_linear_group_from_strong_generators "
@@ -1056,8 +296,74 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 		}
 }
 
+void action::init_projective_special_group(
+	int n, finite_field *F,
+	int f_semilinear, int f_basis, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::init_projective_special_group" << endl;
+		cout << "n=" << n << " q=" << F->q << endl;
+		cout << "f_semilinear=" << f_semilinear << endl;
+		cout << "f_basis=" << f_basis << endl;
+		}
+
+	if (f_v) {
+		cout << "action::init_projective_special_group "
+				"before init_projective_group" << endl;
+	}
+
+	vector_ge *nice_gens;
+
+	init_projective_group(n, F,
+			f_semilinear, f_basis,
+			nice_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "action::init_projective_special_group "
+				"after init_projective_group" << endl;
+	}
+	FREE_OBJECT(nice_gens);
+
+	{
+		action A_on_det;
+		longinteger_object go;
+		strong_generators *gens;
+		sims *Sims2;
+
+		gens = NEW_OBJECT(strong_generators);
+
+		if (f_v) {
+			cout << "action::init_projective_special_group "
+					"computing intersection with special linear group" << endl;
+			}
+		A_on_det.induced_action_on_determinant(
+				Sims, verbose_level);
+		if (f_v) {
+			cout << "action::init_projective_special_group "
+					"induced_action_on_determinant finished" << endl;
+			A_on_det.Kernel->group_order(go);
+			cout << "action::init_projective_special_group "
+					"intersection has order " << go << endl;
+			}
+		gens->init_from_sims(A_on_det.Kernel, verbose_level - 1);
+
+
+		Sims2 = gens->create_sims(verbose_level - 1);
+
+		FREE_OBJECT(gens);
+		init_sims(Sims2, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "action::init_projective_special_group done" << endl;
+		}
+}
+
 void action::init_matrix_group_strong_generators_builtin(
 	matrix_group *M,
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1113,7 +419,9 @@ void action::init_matrix_group_strong_generators_builtin(
 	f_has_strong_generators = TRUE;
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_data(this, data, nb_gens, size,
-			transversal_length, 0 /*verbose_level - 1*/);
+			transversal_length,
+			nice_gens,
+			verbose_level - 1);
 
 	FREE_int(data);
 	
@@ -1730,6 +1038,736 @@ void action::create_orthogonal_group(action *subaction,
 				"done" << endl;
 		}
 }
+
+void action::init_direct_product_group_and_restrict(
+		matrix_group *M1, matrix_group *M2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A_direct_product;
+	action *Adp;
+	direct_product *P;
+	int *points;
+	int nb_points;
+	int i;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict" << endl;
+		cout << "M1=" << M1->label << endl;
+		cout << "M2=" << M2->label << endl;
+		}
+	A_direct_product = NEW_OBJECT(action);
+	A_direct_product->init_direct_product_group(M1, M2, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict "
+				"after A_direct_product->init_direct_product_group" << endl;
+	}
+
+	P = A_direct_product->G.direct_product_group;
+	nb_points = P->degree_of_product_action;
+	points = NEW_int(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = P->perm_offset_i[2] + i;
+	}
+
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict "
+				"before A_direct_product->restricted_action" << endl;
+	}
+	Adp = A_direct_product->restricted_action(points, nb_points,
+			verbose_level);
+	Adp->f_is_linear = FALSE;
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict "
+				"after A_direct_product->restricted_action" << endl;
+	}
+
+	memcpy(this, Adp, sizeof(action));
+	Adp->null();
+	delete Adp;
+}
+
+void action::init_direct_product_group(
+		matrix_group *M1, matrix_group *M2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	direct_product *P;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group" << endl;
+		cout << "M1=" << M1->label << endl;
+		cout << "M2=" << M2->label << endl;
+		}
+
+	P = NEW_OBJECT(direct_product);
+
+
+
+	type_G = direct_product_t;
+	G.direct_product_group = P;
+	f_allocated = TRUE;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before P->init" << endl;
+		}
+	P->init(M1, M2, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after P->init" << endl;
+		}
+
+	f_is_linear = FALSE;
+	dimension = 0;
+
+
+	low_level_point_size = 0;
+	if (f_v) {
+		cout << "action::init_direct_product_group low_level_point_size="
+			<< low_level_point_size<< endl;
+		}
+	strcpy(label, P->label);
+	strcpy(label_tex, P->label_tex);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"label=" << label << endl;
+		}
+
+	degree = P->degree_overall;
+	make_element_size = P->make_element_size;
+
+	init_function_pointers_direct_product_group();
+
+	elt_size_in_int = P->elt_size_int;
+	coded_elt_size_in_char = P->char_per_elt;
+	allocate_element_data();
+
+	strcpy(group_prefix, label);
+
+
+
+	degree = P->degree_overall;
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"degree=" << degree << endl;
+		}
+	base_len = P->base_length;
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"base_len=" << base_len << endl;
+		}
+
+	allocate_base_data(base_len);
+
+	int_vec_copy(P->the_base, base, base_len);
+	int_vec_copy(P->the_transversal_length,
+			transversal_length, base_len);
+
+	int *gens_data;
+	int gens_size;
+	int gens_nb;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before W->make_strong_generators_data" << endl;
+		}
+	P->make_strong_generators_data(gens_data,
+			gens_size, gens_nb, verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after W->make_strong_generators_data" << endl;
+		}
+	Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before Strong_gens->init_from_data" << endl;
+		}
+
+	vector_ge *nice_gens;
+
+	Strong_gens->init_from_data(this,
+			gens_data, gens_nb, gens_size,
+			transversal_length,
+			nice_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after Strong_gens->init_from_data" << endl;
+		}
+	FREE_OBJECT(nice_gens);
+	f_has_strong_generators = TRUE;
+	FREE_int(gens_data);
+
+	sims *S;
+
+	S = NEW_OBJECT(sims);
+
+	S->init(this);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before S->init_generators" << endl;
+		}
+	S->init_generators(*Strong_gens->gens, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after S->init_generators" << endl;
+		}
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before S->compute_base_orbits_known_length" << endl;
+		}
+	S->compute_base_orbits_known_length(transversal_length, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after S->compute_base_orbits_known_length" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before init_sims" << endl;
+		}
+
+	init_sims(S, verbose_level);
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after init_sims" << endl;
+		}
+
+	if (f_v) {
+		cout << "action::init_direct_product_group, finished setting up "
+				<< group_prefix;
+		cout << ", a permutation group of degree " << degree << " ";
+		cout << "and of order ";
+		print_group_order(cout);
+		cout << endl;
+		//cout << "make_element_size=" << make_element_size << endl;
+		//cout << "base_len=" << base_len << endl;
+		//cout << "f_semilinear=" << f_semilinear << endl;
+		}
+}
+
+void action::init_wreath_product_group_and_restrict(
+		int nb_factors, int n,
+		finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A_wreath;
+	action *Awr;
+	wreath_product *W;
+	int *points;
+	int nb_points;
+	int i;
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict" << endl;
+		cout << "nb_factors=" << nb_factors
+				<< " n=" << n << " q=" << F->q << endl;
+		}
+	A_wreath = NEW_OBJECT(action);
+	A_wreath->init_wreath_product_group(nb_factors, n, F, verbose_level);
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"after A_wreath->init_wreath_product_group" << endl;
+	}
+
+	W = A_wreath->G.wreath_product_group;
+	nb_points = W->degree_of_tensor_action;
+	points = NEW_int(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = W->perm_offset_i[nb_factors] + i;
+	}
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"before A_wreath->restricted_action" << endl;
+	}
+	Awr = A_wreath->restricted_action(points, nb_points,
+			verbose_level);
+	Awr->f_is_linear = TRUE;
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"after A_wreath->restricted_action" << endl;
+	}
+
+	memcpy(this, Awr, sizeof(action));
+	Awr->null();
+	FREE_OBJECT(Awr);
+}
+
+
+void action::init_wreath_product_group(int nb_factors, int n,
+		finite_field *F,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A_mtx;
+	wreath_product *W;
+	matrix_group *M;
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group" << endl;
+		cout << "nb_factors=" << nb_factors
+				<< " n=" << n << " q=" << F->q << endl;
+		}
+
+	A_mtx = NEW_OBJECT(action);
+	M = NEW_OBJECT(matrix_group);
+	W = NEW_OBJECT(wreath_product);
+
+
+
+	type_G = wreath_product_t;
+	G.wreath_product_group = W;
+	f_allocated = TRUE;
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before M->init_general_linear_group" << endl;
+		}
+	M->init_general_linear_group(n,
+			F, FALSE /* f_semilinear */, A_mtx,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after M->init_general_linear_group" << endl;
+		}
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before W->init_tensor_wreath_product" << endl;
+		}
+	W->init_tensor_wreath_product(M, A_mtx, nb_factors, verbose_level);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after W->init_tensor_wreath_product" << endl;
+		}
+
+	f_is_linear = TRUE;
+	dimension = W->dimension_of_tensor_action;
+
+
+	low_level_point_size = W->low_level_point_size;
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+			"low_level_point_size="
+			<< low_level_point_size<< endl;
+		}
+	strcpy(label, W->label);
+	strcpy(label_tex, W->label_tex);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"label=" << label << endl;
+		}
+
+	degree = W->degree_overall;
+	make_element_size = W->make_element_size;
+
+	init_function_pointers_wreath_product_group();
+
+	elt_size_in_int = W->elt_size_int;
+	coded_elt_size_in_char = W->char_per_elt;
+	allocate_element_data();
+
+	strcpy(group_prefix, label);
+
+
+
+	degree = W->degree_overall;
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"degree=" << degree << endl;
+		}
+	base_len = W->base_length;
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"base_len=" << base_len << endl;
+		}
+
+	allocate_base_data(base_len);
+
+	int_vec_copy(W->the_base, base, base_len);
+	int_vec_copy(W->the_transversal_length,
+			transversal_length, base_len);
+
+	int *gens_data;
+	int gens_size;
+	int gens_nb;
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before W->make_strong_generators_data" << endl;
+		}
+	W->make_strong_generators_data(gens_data,
+			gens_size, gens_nb, verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after W->make_strong_generators_data" << endl;
+		}
+	Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before Strong_gens->init_from_data" << endl;
+		}
+
+	vector_ge *nice_gens;
+	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
+			transversal_length,
+			nice_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after Strong_gens->init_from_data" << endl;
+		}
+	FREE_OBJECT(nice_gens);
+	f_has_strong_generators = TRUE;
+	FREE_int(gens_data);
+
+	sims *S;
+
+	S = NEW_OBJECT(sims);
+
+	S->init(this);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before S->init_generators" << endl;
+		}
+	S->init_generators(*Strong_gens->gens, verbose_level);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after S->init_generators" << endl;
+		}
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before S->compute_base_orbits_known_length" << endl;
+		}
+	S->compute_base_orbits_known_length(transversal_length, verbose_level);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after S->compute_base_orbits_known_length" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before init_sims" << endl;
+		}
+
+	init_sims(S, verbose_level);
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after init_sims" << endl;
+		}
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group, finished setting up "
+				<< group_prefix;
+		cout << ", a permutation group of degree " << degree << " ";
+		cout << "and of order ";
+		print_group_order(cout);
+		cout << endl;
+		//cout << "make_element_size=" << make_element_size << endl;
+		//cout << "base_len=" << base_len << endl;
+		//cout << "f_semilinear=" << f_semilinear << endl;
+		}
+}
+
+void action::init_orthogonal_group(int epsilon,
+	int n, finite_field *F,
+	int f_on_points, int f_on_lines, int f_on_points_and_lines,
+	int f_semilinear,
+	int f_basis, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	action *A;
+	orthogonal *O;
+	action_on_orthogonal *AO;
+	int q = F->q;
+
+	if (f_v) {
+		cout << "action::init_orthogonal_group "
+				"verbose_level=" << verbose_level << endl;
+		}
+	A = NEW_OBJECT(action);
+	if (f_vv) {
+		cout << "action::init_orthogonal_group "
+				"before A->init_projective_group" << endl;
+		}
+	vector_ge *nice_gens;
+	A->init_projective_group(n, F, f_semilinear,
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level - 2);
+	FREE_OBJECT(nice_gens);
+	O = NEW_OBJECT(orthogonal);
+	if (f_vv) {
+		cout << "action::init_orthogonal_group before O->init" << endl;
+		}
+	O->init(epsilon, n, F, verbose_level);
+	if (f_vv) {
+		cout << "action::init_orthogonal_group after O->init" << endl;
+		}
+
+	AO = NEW_OBJECT(action_on_orthogonal);
+	if (f_vv) {
+		cout << "action::init_orthogonal_group before AO->init" << endl;
+		}
+	AO->init(A, O, f_on_points, f_on_lines,
+			f_on_points_and_lines, verbose_level - 2);
+
+	type_G = action_on_orthogonal_t;
+	G.AO = AO;
+
+	f_has_subaction = TRUE;
+	subaction = A;
+	degree = AO->degree;
+	low_level_point_size = A->low_level_point_size;
+	elt_size_in_int = A->elt_size_in_int;
+	coded_elt_size_in_char = A->coded_elt_size_in_char;
+	allocate_element_data();
+	init_function_pointers_induced_action();
+	make_element_size = A->make_element_size;
+
+	sprintf(group_prefix, "O%d_%d_%d", epsilon, n, q);
+	sprintf(label, "O^%s(%d,%d)", plus_minus_string(epsilon), n, q);
+	sprintf(label_tex, "O^{%s}(%d,%d)", plus_minus_string(epsilon), n, q);
+
+
+
+	if (f_basis) {
+		longinteger_object target_go;
+
+		if (f_vv) {
+			cout << "action::init_orthogonal_group "
+					"we will create the orthogonal group now" << endl;
+			}
+
+		if (get_orthogonal_group_type_f_reflection()) {
+			if (f_vv) {
+				cout << "action::init_orthogonal_group "
+						"with reflections, before order_PO_epsilon" << endl;
+				}
+			order_PO_epsilon(f_semilinear, epsilon, n - 1, F->q,
+					target_go, verbose_level);
+			}
+		else {
+			if (f_vv) {
+				cout << "action::init_orthogonal_group "
+						"without reflections, before order_POmega_epsilon"
+						<< endl;
+				}
+			order_POmega_epsilon(epsilon, n - 1,
+					F->q, target_go, verbose_level);
+			}
+
+		if (f_vv) {
+			cout << "action::init_orthogonal_group "
+					"the target group order is " << target_go << endl;
+			}
+
+		if (f_vv) {
+			cout << "action::init_orthogonal_group "
+					"before create_orthogonal_group" << endl;
+			}
+		create_orthogonal_group(A /*subaction*/,
+			TRUE /* f_has_target_go */, target_go,
+			callback_choose_random_generator_orthogonal,
+			verbose_level - 2);
+		if (f_vv) {
+			cout << "action::init_orthogonal_group "
+					"after create_orthogonal_group" << endl;
+			}
+		}
+
+	if (f_v) {
+		cout << "action::init_orthogonal_group done" << endl;
+		}
+}
+
+void action::init_BLT(finite_field *F, int f_basis,
+		int f_init_hash_table, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int p, hh, epsilon, n;
+	int f_semilinear = FALSE;
+
+	if (f_v) {
+		cout << "action::init_BLT q=" << F->q
+				<< " f_init_hash_table=" << f_init_hash_table << endl;
+		cout << "f_basis=" << f_basis << endl;
+		cout << "verbose_level=" << verbose_level << endl;
+		}
+	is_prime_power(F->q, p, hh);
+	if (hh > 1)
+		f_semilinear = TRUE;
+	else
+		f_semilinear = FALSE;
+	epsilon = 0;
+	n = 5;
+
+
+	if (f_v) {
+		cout << "action::init_BLT before init_orthogonal_group" << endl;
+		}
+	init_orthogonal_group(epsilon, n, F,
+		TRUE /* f_on_points */,
+		FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
+		f_semilinear,
+		f_basis,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "action::init_BLT after init_orthogonal_group" << endl;
+		}
+
+
+
+	if (f_v) {
+		cout << "action::init_BLT computing lex least base" << endl;
+		}
+	lex_least_base_in_place(verbose_level - 2);
+	if (f_v) {
+		cout << "action::init_BLT computing lex least base done" << endl;
+		cout << "base: ";
+		int_vec_print(cout, base, base_len);
+		cout << endl;
+		}
+
+	if (f_v) {
+		print_base();
+		}
+
+
+	if (f_has_strong_generators) {
+		if (f_v) {
+			cout << "action::init_BLT strong "
+					"generators have been computed" << endl;
+			}
+		if (f_vv) {
+			Strong_gens->print_generators();
+			}
+		}
+	else {
+		cout << "action::init_BLT we don't have strong generators" << endl;
+		exit(1);
+		}
+
+#if 0
+	if (f_init_hash_table) {
+		matrix_group *M;
+		orthogonal *O;
+
+		M = subaction->G.matrix_grp;
+		O = M->O;
+
+		if (f_v) {
+			cout << "calling init_hash_table_parabolic" << endl;
+			}
+		init_hash_table_parabolic(*O->F, 4, 0 /* verbose_level */);
+		}
+#endif
+
+	if (f_v) {
+		print_info();
+		}
+	if (f_v) {
+		cout << "action::init_BLT done" << endl;
+		}
+}
+
+void action::init_group_from_strong_generators(
+	vector_ge *gens, sims *K,
+	int given_base_length, int *given_base,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	sims *G;
+	longinteger_object G_order;
+	int i;
+
+
+	if (f_v) {
+		cout << "action::init_group_from_strong_generators" << endl;
+		}
+	strcpy(label, "from sgs");
+	strcpy(label_tex, "from sgs");
+	if (f_vv) {
+		cout << "generators are" << endl;
+		gens->print(cout);
+		cout << endl;
+		}
+
+
+	if (f_vv) {
+		cout << "calling allocate_base_data, initial base:";
+		int_vec_print(cout, given_base, given_base_length);
+		cout << " of length " << given_base_length << endl;
+		}
+	allocate_base_data(given_base_length);
+	base_len = given_base_length;
+
+	for (i = 0; i < base_len; i++) {
+		base[i] = given_base[i];
+		}
+
+
+
+	if (f_vv) {
+		cout << "action::init_group_from_strong_generators, "
+				"now trying to set up the group "
+				"from the given generators" << endl;
+		}
+
+	G = NEW_OBJECT(sims);
+
+	G->init(this);
+	G->init_trivial_group(verbose_level - 1);
+	G->group_order(G_order);
+
+	G->build_up_group_from_generators(K, gens,
+		FALSE, NULL, /* target_go */
+		FALSE /* f_override_choose_next_base_point */,
+		NULL,
+		verbose_level);
+
+	G->group_order(G_order);
+
+
+	if (f_vvv) {
+		//G.print(TRUE);
+		//G.print_generator_depth_and_perm();
+		}
+
+	if (f_v) {
+		cout << "init_group_from_strong_generators: "
+				"found a group of order " << G_order << endl;
+		if (f_vv) {
+			cout << "transversal lengths:" << endl;
+			int_vec_print(cout, G->orbit_len, base_len);
+			cout << endl;
+			}
+		}
+
+	if (f_vv) {
+		cout << "init_sims" << endl;
+		}
+	init_sims(G, 0/*verbose_level - 1*/);
+	if (f_vv) {
+		cout << "after init_sims" << endl;
+		}
+	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+
+	if (f_v) {
+		print_info();
+		}
+}
+
 
 }}
 

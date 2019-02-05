@@ -127,6 +127,8 @@ void do_it(int q, int k, int no,
 
 	n = 2 * k;
 	int sz;
+	vector_ge *nice_gens;
+
 	spread_elements_numeric = Spread_representative(q, k, no, sz);
 
 	F = NEW_OBJECT(finite_field);
@@ -134,8 +136,10 @@ void do_it(int q, int k, int no,
 	
 	An = NEW_OBJECT(action);
 	An->init_projective_group(n, F, f_semilinear, 
-		f_basis, 0 /*verbose_level*/);
-
+		f_basis,
+		nice_gens,
+		0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
 
 	M = An->G.matrix_grp;
 
