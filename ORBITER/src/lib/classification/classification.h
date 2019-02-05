@@ -10,7 +10,7 @@ using namespace orbiter::group_actions;
 
 namespace orbiter {
 
-//! poset classification for combinatorial objects
+//! classification of combinatorial objects
 
 namespace classification {
 

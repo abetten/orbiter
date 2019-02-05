@@ -692,6 +692,16 @@ void assign_task(job_table *JT, int t, int j,
 
 job_table::job_table()
 {
+	f_task_assigned = FALSE;
+	task = 0;
+	the_case = 0;
+	job = 0;
+	//char target_fname[1000];
+	//char command[1000];
+	target_file_mask = NULL;
+	command_mask = NULL;
+	//char batch_fname[1000];
+	//char batch_file[10000];
 }
 
 job_table::~job_table()

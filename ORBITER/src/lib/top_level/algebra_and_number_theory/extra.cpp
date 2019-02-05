@@ -49,7 +49,7 @@ sims *create_sims_for_stabilizer(action *A,
 	Stab = Aut_gens->create_sims(verbose_level - 1);
 	
 
-	delete Aut_gens;
+	FREE_OBJECT(Aut_gens);
 	if (f_v) {
 		longinteger_object go;
 		Stab->group_order(go);
@@ -94,7 +94,7 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 	
 
 	FREE_OBJECT(Poset);
-	delete Aut_gens;
+	FREE_OBJECT(Aut_gens);
 
 	if (f_v) {
 		cout << "create_sims_for_stabilizer_with_input_group "

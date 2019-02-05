@@ -146,29 +146,6 @@ int wreath_product_group_element_is_one(action &A,
 			}
 		}
 	return ret;
-#if 0
-	if (f_v) {
-		cout << "wreath_product_group_element_is_one" << endl;
-		}
-	if (G.f_kernel_is_diagonal_matrices) {
-		f_is_one = G.GL_is_one(Elt);
-		}
-	else if (!G.f_projective) {
-		f_is_one = G.GL_is_one(Elt);
-		}
-	else {
-		cout << "matrix_group_element_is_one: warning: "
-				"using slow identity element test" << endl;
-		f_is_one = TRUE;
-		for (i = 0; i < A.degree; i++) {
-			j = A.element_image_of(i, elt, FALSE);
-			if (j != i) {
-				f_is_one = FALSE;
-				break;
-				}
-			}
-		}
-#endif
 }
 
 void wreath_product_group_element_unpack(action &A,
@@ -308,23 +285,6 @@ void wreath_product_group_element_transpose(action &A,
 	cout << "wreath_product_group_element_transpose "
 			"not yet implemented" << endl;
 	exit(1);
-#if 0
-	if (f_v) {
-		cout << "wreath_product_group_element_transpose" << endl;
-		}
-	if (f_vv) {
-		cout << "A=" << endl;
-		G.GL_print_easy(AA, cout);
-		}
-	G.GL_transpose(AA, Atv, verbose_level);
-	if (f_v) {
-		cout << "wreath_product_group_element_transpose done" << endl;
-		}
-	if (f_vv) {
-		cout << "At=" << endl;
-		W.element_print_easy(Atv, cout);
-		}
-#endif
 }
 
 void wreath_product_group_element_move(action &A,

@@ -12,6 +12,25 @@ namespace foundations {
 
 
 mckay::tMCKAY::tMCKAY() {
+	nb_calls_to_solve = 0;
+	first_moved = 0;
+	second_moved = 0;
+	problem_label = NULL;
+
+	_eqnanz = 0;
+	_varanz = 0;
+	//vector<bool> unitcoeffs;
+	//vector<bool> active;
+	rekurs = 0;
+	_break = false;
+
+	D = NULL;
+	//tLGS *_lgs;
+
+#ifdef MCKAY_DEBUG
+	//vector<int> range,split,branch;
+	ticks0 = 0;
+#endif
 };
 
 void mckay::tMCKAY::Init(diophant *lgs,

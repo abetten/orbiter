@@ -17,7 +17,7 @@ namespace foundations {
 // #############################################################################
 
 
-//! for diophantine systems of equations (i.e., linear systems over the integers)
+//! diophantine systems of equations (i.e., linear systems over the integers)
 
 //! there are three types of conditions:
 //! t_EQ: equality, the sum in row i on the left must equal RHS[i]
@@ -372,8 +372,7 @@ namespace mckay {
 }
 
 
-}
-}
+}}
 
 
 
