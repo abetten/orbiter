@@ -328,9 +328,7 @@ public:
 	vector_space *VS;
 
 
-	//int len; // length of vectors in large space
-	// len is now VS->dimension
-	//finite_field *F;
+	// VS->dimension = length of vectors in large space
 
 	int *subspace_basis; // [subspace_basis_size * VS->dimension]
 	int subspace_basis_size;
@@ -343,15 +341,15 @@ public:
 		// (i.e., the factor space)
 		// (q^factor_space_len - 1) / (q - 1), 
 		// as computed by compute_degree();
-	int large_degree; 
+	int large_degree;
 		// the number of projective points in the large space
 		// (q^len - 1) / (q - 1), 
 		// as computed by compute_large_degree();
 	
-	int factor_space_len; 
+	int factor_space_len;
 		// = VS->dimension - subspace_basis_size
 
-	int *embedding; 
+	int *embedding;
 		// [factor_space_len]
 		// the list of columns that are not pivot columns, 
 		// i.e. not in base_cols[] 

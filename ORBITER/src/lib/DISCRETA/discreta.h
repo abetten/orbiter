@@ -1742,7 +1742,7 @@ class printing_mode {
 	~printing_mode();
 };
 
-//! DISCRETA class to choose a group from the command line or from a UI
+//! DISCRETA class to parse a group description from the command line
 
 
 
@@ -2455,9 +2455,9 @@ void root_buf_free(int i);
 
 
 
-// ##########################################################################################################
+// #############################################################################
 // class page_table
-// ##########################################################################################################
+// #############################################################################
 
 
 
@@ -2586,24 +2586,6 @@ void design_parameter_database_clans(char *path_db, int f_html, int f_v, int f_v
 void design_parameter_database_family_report(char *path_db, int t, int v, int k, int lambda, int minimal_t);
 void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vector &clan_lambda, Vector & clan_member, Vector & clan_member_path);
 int Maxfit(int i, int j);
-#if 0
-void create_all_masks(char *label, 
-	int nb_row_partitions, char *row_partitions[], 
-	int nb_col_partitions, char *col_partitions[]);
-int create_masks(char *label, 
-	int nb_row_partitions, char *row_partitions[], 
-	int nb_col_partitions, char *col_partitions[], 
-	int ci, int cj);
-#endif
-#if 0
-void orbits_in_product_action(int n1, int n2, int f_v, int f_vv);
-void orbits_in_product_action_D_CC(int n1, int p1, int p2, int f_v, int f_vv);
-void orbits_in_product_action_CC_D(int p1, int p2, int n2, int f_v, int f_vv);
-void orbits_in_product_action_extended(int q1, int q2, int u, int v, int f_v, int f_vv);
-void orbits_in_product_action_extended_twice(int q1, int q2, int u1, int v1, int u2, int v2, 
-	int f_cycle_index, int f_cycle_index_on_pairs, int f_v, int f_vv);
-void extract_subgroup(int q1, int q2, int u1, int v1, int f_cycle_index);
-#endif
 
 
 //! DISCRETA class for design parameters

@@ -18,10 +18,6 @@ int t0 = 0;
 
 
 int main(int argc, const char **argv);
-void lift_single_arc(int *arc, int arc_size,
-		surface_with_action *Surf_A, int verbose_level);
-void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
-		surface_with_action *Surf_A, int verbose_level);
 
 
 int main(int argc, const char **argv)

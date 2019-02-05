@@ -23,7 +23,8 @@ int main(int argc, const char **argv);
 int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
 void wreath_product_print_set(ostream &ost, int len, int *S, void *data);
-void wreath_product_orbits_CUDA(wreath_product* W, strong_generators* SG, action* A, int*& result, int verbosity=0);
+void wreath_product_orbits_CUDA(wreath_product* W,
+		strong_generators* SG, action* A, int*& result, int verbosity=0);
 void wreath_product_testing(action *A, strong_generators *SG, int verbose_level);
 
 
@@ -1528,8 +1529,14 @@ void tensor_product::init(int argc, const char **argv,
 
 	int* result = NULL;
 
+	cout << "tensor_product::init "
+			"before wreath_product_orbits_CUDA:" << endl;
 	cout << __FILE__ << ":" << __LINE__ << endl;
+
 	wreath_product_orbits_CUDA(W, SG, A, result);
+
+	cout << "tensor_product::init "
+			"after wreath_product_orbits_CUDA:" << endl;
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
 

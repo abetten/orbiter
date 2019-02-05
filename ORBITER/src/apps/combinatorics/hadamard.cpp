@@ -47,7 +47,6 @@ public:
 
 int t0; // the system time when the program started
 
-void do_it(int n, int f_draw, int verbose_level);
 int dot_product(int a, int b, int n);
 void early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
@@ -97,7 +96,8 @@ int main(int argc, char **argv)
 
 }
 
-void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_clique)
+void hadamard::init(int n, int f_draw,
+		int verbose_level, int verbose_level_clique)
 {
 	int f_v = (verbose_level = 1);
 	int i, j, k, d, cnt, cnt1;
@@ -190,7 +190,8 @@ void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_cliq
 			if (bitvector_s_i(bitvector_adjacency, k) && d) {
 				cout << "something is wrong in entry i=" << i << " j=" << j << endl;
 				cout << "dotproduct i=" << i << " j=" << j << " is " << d << endl;
-				cout << "bitvector_s_i(bitvector_adjacency, k)=" << bitvector_s_i(bitvector_adjacency, k) << endl;
+				cout << "bitvector_s_i(bitvector_adjacency, k)="
+						<< bitvector_s_i(bitvector_adjacency, k) << endl;
 				exit(1);
 				}
 			k++;

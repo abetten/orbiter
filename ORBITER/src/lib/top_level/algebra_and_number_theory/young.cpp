@@ -297,7 +297,8 @@ void young::create_module(int *h_alpha,
 		}
 }
 
-void young::create_representations(int *Base, int *base_cols, int rk, int verbose_level)
+void young::create_representations(int *Base,
+		int *base_cols, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v3 = (verbose_level >= 3);
