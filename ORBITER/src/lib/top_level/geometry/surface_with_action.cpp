@@ -149,13 +149,20 @@ void surface_with_action::init_group(int f_semilinear,
 		cout << "surface_with_action::init_group "
 				"creating linear group" << endl;
 		}
+
+	vector_ge *nice_gens;
+
 	create_linear_group(S, A, 
 		F, 4, 
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
 		FALSE /* f_affine */,
 		f_semilinear, FALSE /* f_special */, 
+		nice_gens,
 		0 /* verbose_level*/);
+
+	FREE_OBJECT(nice_gens);
+
 	if (f_v) {
 		cout << "surface_with_action::init_group "
 				"creating linear group done" << endl;

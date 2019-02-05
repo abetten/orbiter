@@ -200,12 +200,16 @@ void test1(int verbose_level)
 	int *Elt1;
 	int *Elt2;
 	int i;
+	vector_ge *nice_gens;
 	
 	F = new finite_field;
 	F->init(q, 0);
 	A = new action;
 	A->init_projective_group(d /* n */, F, 
-		f_semilinear, TRUE /* f_basis */, verbose_level);
+		f_semilinear, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -388,13 +392,17 @@ void test5(int verbose_level)
 	finite_field *F;
 	action *A;
 	longinteger_object Go;
+	vector_ge *nice_gens;
 	
 		
 	F = new finite_field;
 	A = new action;
 	F->init(8, 0);
 	A->init_projective_group(3 /* n */, F, 
-		TRUE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		TRUE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 	
@@ -425,19 +433,26 @@ void test6(int verbose_level)
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6, *Elt7;
 	int *ELT1;
 	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
+	vector_ge *nice_gens;
 		
 	F = new finite_field;
 	A = new action;
 	F->init(67, 0);
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
 
 	A4 = new action;
 	A4->init_projective_group(4 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 	//go = Go.as_int();
@@ -790,18 +805,26 @@ void test7(int verbose_level)
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6; //, *Elt7;
 	//int *ELT1;
 	int *Elt_At, *Elt_As, *Elt_Bt, *Elt_Bs, *ELT_A, *ELT_B;
+	vector_ge *nice_gens;
 	
 	F = new finite_field;
 	F->init(67, 0);
 	A = new action;
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
 	A4 = new action;
 	A4->init_projective_group(4 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
+
 	A->print_base();
 	A->group_order(Go);
 	//go = Go.as_int();
@@ -903,12 +926,16 @@ void test8(int verbose_level)
 	longinteger_object Go;
 	int i;
 	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	A = new action;
 	F->init(7, 0);
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
@@ -944,12 +971,16 @@ void test9(int verbose_level)
 	longinteger_object Go;
 	//int go;
 	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	F->init(8, 0);
 	A = new action;
 	A->init_projective_group(3 /* n */, F, 
-		TRUE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		TRUE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
@@ -989,12 +1020,16 @@ void test10(int verbose_level)
 	longinteger_object Go;
 	//int go;
 	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	F->init(8, 0);
 	A = new action;
 	A->init_projective_group(3 /* n */, F, 
-		TRUE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		TRUE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
@@ -1036,12 +1071,16 @@ void test11(int verbose_level)
 	longinteger_object Go;
 	//int go;
 	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	F->init_override_polynomial(16, "19", 0);
 	A = new action;
 	A->init_projective_group(3 /* n */, F, 
-		TRUE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		TRUE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
@@ -1083,12 +1122,16 @@ void test12(int verbose_level)
 	longinteger_object Go;
 	//int go;
 	int *Elt1, *Elt2, *Elt3; //, *Elt4, *Elt5, *Elt6, *Elt7;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	F->init_override_polynomial(16, "19", 0);
 	A = new action;
 	A->init_projective_group(3 /* n */, F, 
-		TRUE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		TRUE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
@@ -1131,12 +1174,16 @@ void test13(int verbose_level)
 	longinteger_object Go;
 	//int go;
 	int *Elt1;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	A = new action;
 	F->init(4, 0);
 	A->init_projective_group(3 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
+		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
@@ -1469,7 +1516,8 @@ void test16(int verbose_level)
 	int *Pts;
 	int N = q + 1;
 	int *elt1;
-		
+	vector_ge *nice_gens;
+
 	A = new action;
 	
 	Fq = new finite_field;
@@ -1498,7 +1546,10 @@ void test16(int verbose_level)
 	A2 = new action;
 	A2->init_projective_group(2, Fq, 
 		FALSE /* f_semilinear */, 
-		TRUE /* f_basis */, verbose_level - 1);
+		TRUE /* f_basis */,
+		nice_gens,
+		verbose_level - 1);
+	FREE_OBJECT(nice_gens);
 	A2->lex_least_base_in_place(verbose_level - 1);
 	elt1 = NEW_int(A2->elt_size_in_int);
 		
@@ -1779,6 +1830,7 @@ void test17(int verbose_level)
 	int f_semilinear = FALSE;
 	//orthogonal *O4;
 	finite_field *Fq;
+	vector_ge *nice_gens;
 
 	Fq = new finite_field;
 	Fq->init(q, 0);
@@ -1787,7 +1839,10 @@ void test17(int verbose_level)
 		2, Fq, 
 		f_semilinear, 
 		TRUE /* f_basis */, 
+		nice_gens,
 		verbose_level - 1);
+	FREE_OBJECT(nice_gens);
+
 	A2->lex_least_base_in_place(verbose_level - 1);
 	
 	elt1 = NEW_int(A2->elt_size_in_int);
@@ -2125,6 +2180,7 @@ void test20(int verbose_level)
 	//int go;
 	int *Elt1, *Elt2, *Elt3;
 	int i;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	F->init(71 * 71, 0);
@@ -2132,7 +2188,10 @@ void test20(int verbose_level)
 	A->init_projective_group(
 		2 /* n */, F, 
 		FALSE /* f_semilinear */, 
-		TRUE /* f_basis */, verbose_level);
+		TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 
@@ -2341,13 +2400,17 @@ void test_bricks(int verbose_level)
 	int *Elt1; //, *Elt2, *Elt3;
 	int i;
 	int q = 5;
+	vector_ge *nice_gens;
 
 	F = new finite_field;
 	F->init(q, 0);
 	A = new action;
 	A->init_projective_group(3 /* n */, F, 
 		FALSE /* f_semilinear */, 
-		TRUE /* f_basis */, verbose_level);
+		TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 
 

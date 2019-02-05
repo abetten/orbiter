@@ -102,6 +102,9 @@ void projective_space_with_action::init_group(
 		cout << "projective_space_with_action::init_group "
 				"creating linear group" << endl;
 		}
+
+	vector_ge *nice_gens;
+
 	create_linear_group(S, A, 
 		F, d, 
 		TRUE /*f_projective*/,
@@ -109,11 +112,13 @@ void projective_space_with_action::init_group(
 		FALSE /* f_affine */,
 		f_semilinear,
 		FALSE /* f_special */,
+		nice_gens,
 		0 /* verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"creating linear group done" << endl;
 		}
+	FREE_OBJECT(nice_gens);
 
 
 	if (f_v) {

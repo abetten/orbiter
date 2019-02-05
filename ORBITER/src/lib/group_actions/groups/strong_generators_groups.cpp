@@ -18,6 +18,7 @@ void strong_generators::init_linear_group_from_scratch(
 	finite_field *F, int n, 
 	int f_projective, int f_general, int f_affine, 
 	int f_semilinear, int f_special, 
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -39,7 +40,9 @@ void strong_generators::init_linear_group_from_scratch(
 					"projective group" << endl;
 			}
 		A->init_projective_group(n, F, f_semilinear, 
-			f_basis, verbose_level);
+			f_basis,
+			nice_gens,
+			verbose_level);
 		}
 	else if (f_general) {
 		if (f_v) {
@@ -47,7 +50,9 @@ void strong_generators::init_linear_group_from_scratch(
 					"general linear group" << endl;
 			}
 		A->init_general_linear_group(n, F, f_semilinear, 
-			f_basis, verbose_level);
+			f_basis,
+			nice_gens,
+			verbose_level);
 		}
 	else if (f_affine) {
 		if (f_v) {
@@ -55,7 +60,9 @@ void strong_generators::init_linear_group_from_scratch(
 					"affine group" << endl;
 			}
 		A->init_affine_group(n, F, f_semilinear, 
-			f_basis, verbose_level);
+			f_basis,
+			nice_gens,
+			verbose_level);
 		}
 	else {
 		cout << "strong_generators::init_linear_group_from_scratch "
@@ -633,10 +640,18 @@ void strong_generators::generators_for_the_singer_cycle(
 	FX.create_object_by_rank(m, 0);
 	
 	if (f_v) {
-		cout << "search_for_primitive_polynomial_"
-				"of_given_degree p=" << q << " degree=" << n << endl;
+		cout << "strong_generators::generators_for_the_"
+				"singer_cycle before FX.get_a_primitive_polynomial "
+				"p=" << q << " degree=" << n << endl;
 		}
 	FX.get_a_primitive_polynomial(m, n, verbose_level - 1);
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_"
+				"singer_cycle after FX.get_a_primitive_polynomial" << endl;
+		cout << "m=";
+		FX.print_object(m, cout);
+		cout << endl;
+		}
 
 	int_vec_zero(data, n * n);
 
@@ -943,12 +958,16 @@ void strong_generators::generators_for_the_null_polarity_group(
 		}
 	N->init(F, n, verbose_level);
 	
+	vector_ge *nice_gens;
+
 	init_from_data(A, N->Data, 
 		N->nb_gens, n * n, N->transversal_length, 
+		nice_gens,
 		verbose_level);
 
 
 	FREE_OBJECT(N);
+	FREE_OBJECT(nice_gens);
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
@@ -988,11 +1007,15 @@ void strong_generators::generators_for_symplectic_group(
 		}
 	N->init(F, n, verbose_level);
 	
+	vector_ge *nice_gens;
+
 	init_from_data(A, N->Data, 
 		N->nb_gens, n * n, N->transversal_length, 
+		nice_gens,
 		verbose_level);
 
 
+	FREE_OBJECT(nice_gens);
 	FREE_OBJECT(N);
 	
 	if (f_v) {
@@ -1154,15 +1177,20 @@ void strong_generators::field_reduction(
 		cout << "strong_generators::field_reduction "
 				"creating AQ" << endl;
 		}
+
+	vector_ge *nice_gens;
+
 	AQ->init_general_linear_group(m,
 			FQ,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */,
+			nice_gens,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::field_reduction "
 				"creating AQ done" << endl;
 		}
+	FREE_OBJECT(nice_gens);
 
 	longinteger_object order_GLmQ;
 	longinteger_object target_go;
@@ -1495,10 +1523,17 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 		cout << "n=" << n << " k=" << k << " q=" << q << endl;
 		}
 
-	A_PGL_k_q = NEW_OBJECT(action);
-	A_PGL_k_q->init_projective_group(k, F, FALSE /*f_semilinear */, 
-		TRUE /* f_basis */, 0 /* verbose_level */);
+	vector_ge *nice_gens;
 
+
+	A_PGL_k_q = NEW_OBJECT(action);
+	A_PGL_k_q->init_projective_group(k,
+		F, FALSE /*f_semilinear */,
+		TRUE /* f_basis */,
+		nice_gens,
+		0 /* verbose_level */);
+
+	FREE_OBJECT(nice_gens);
 	my_gens = NEW_OBJECT(vector_ge);
 	
 	if (f_v) {
@@ -1595,9 +1630,15 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 		cout << "n=" << n << " k=" << k << " q=" << q << endl;
 		}
 
+	vector_ge *nice_gens;
+
 	A_PGL_k_q = NEW_OBJECT(action);
-	A_PGL_k_q->init_projective_group(k, F, FALSE /*f_semilinear */, 
-		TRUE /* f_basis */, 0 /* verbose_level */);
+	A_PGL_k_q->init_projective_group(k,
+		F, FALSE /*f_semilinear */,
+		TRUE /* f_basis */,
+		nice_gens,
+		0 /* verbose_level */);
+	FREE_OBJECT(nice_gens);
 	A_PGL_k_q->group_order(go);
 	D.mult(go, go, a);
 	if (Mtx->f_semilinear) {

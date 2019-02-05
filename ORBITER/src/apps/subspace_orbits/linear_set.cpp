@@ -253,11 +253,17 @@ void linear_set::init(int argc, const char **argv,
 		cout << "linear_set::init before init_general_linear_group "
 				"GL(" << n << "," << Fq->q << ")" << endl;
 		}
+
+	vector_ge *nice_gens;
+
 	Aq = NEW_OBJECT(action);
 	Aq->init_general_linear_group(n, Fq, 
 		FALSE /* f_semilinear */, 
 		TRUE /* f_basis */, 
+		nice_gens,
 		verbose_level - 2);
+	FREE_OBJECT(nice_gens);
+
 	if (f_v) {
 		cout << "linear_set::init after init_general_linear_group "
 				"GL(" << n << "," << Fq->q << ")" << endl;
@@ -273,7 +279,9 @@ void linear_set::init(int argc, const char **argv,
 	AQ->init_general_linear_group(m, FQ, 
 		FALSE /* f_semilinear */, 
 		TRUE /* f_basis */, 
+		nice_gens,
 		verbose_level - 2);
+	FREE_OBJECT(nice_gens);
 	if (f_v) {
 		cout << "linear_set::init after init_general_linear_group "
 				"GL(" << m << "," << FQ->q << ")" << endl;
@@ -294,7 +302,9 @@ void linear_set::init(int argc, const char **argv,
 	A_PGLQ->init_projective_group(m, FQ, 
 		FALSE /* f_semilinear */, 
 		TRUE /* f_basis */, 
+		nice_gens,
 		verbose_level - 2);
+	FREE_OBJECT(nice_gens);
 	if (f_v) {
 		cout << "linear_set::init after init_projective_group "
 				"PGL(" << m << "," << FQ->q << ")" << endl;

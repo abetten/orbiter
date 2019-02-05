@@ -51,6 +51,7 @@ void create_group(int verbose_level)
 	finite_field *F;
 	projective_space *P;
 	int i;
+	vector_ge *nice_gens;
 	
 	F = NEW_OBJECT(finite_field);
 	P = NEW_OBJECT(projective_space);
@@ -65,7 +66,9 @@ void create_group(int verbose_level)
 	A->init_general_linear_group(n + 1, F,
 			TRUE /* f_semilinear */,
 			TRUE /* f_basis */,
+			nice_gens,
 			verbose_level - 2);
+	FREE_OBJECT(nice_gens);
 	
 	cout << "Creating action on lines" << endl;
 	projective_space_init_line_action(P, A, A2, verbose_level);

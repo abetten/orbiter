@@ -164,13 +164,17 @@ int main(int argc, char **argv)
 		action *A;
 		strong_generators *Aut_gens;
 		//int t0 = os_ticks();
+		vector_ge *nice_gens;
 	
 		A = NEW_OBJECT(action);
 
 		cout << "before init_projective_group" << endl;
 		A->init_projective_group(3, &Fq, 
 			TRUE /* f_semilinear */, 
-			TRUE /* f_basis */, verbose_level);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+		FREE_OBJECT(nice_gens);
 
 	
 		cout << "computing stabilizer" << endl;

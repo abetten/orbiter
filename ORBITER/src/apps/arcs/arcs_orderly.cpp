@@ -207,6 +207,7 @@ void do_arc_lifting(projective_space *P, int k,
 	int *arc, int arc_sz, int target_sz, int verbose_level)
 {
 	int i;
+	vector_ge *nice_gens;
 
 	
 	::target_sz = target_sz;
@@ -238,7 +239,10 @@ void do_arc_lifting(projective_space *P, int k,
 		}
 	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(P->n + 1,
-			F, f_semilinear, TRUE /*f_basis */, 0 /*verbose_level*/);
+			F, f_semilinear, TRUE /*f_basis */,
+			nice_gens,
+			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
 	
 
 	Idx_table = NEW_int(target_sz * P->N_points);

@@ -470,6 +470,7 @@ void arc_lifting_from_classification_file(
 	int f_vvv = (verbose_level >= 3);
 	finite_field *F;
 	int q;
+	vector_ge *nice_gens;
 
 
 	if (f_v) {
@@ -504,7 +505,9 @@ void arc_lifting_from_classification_file(
 	A = NEW_OBJECT(action);
 	A->init_projective_group(3, F,
 			f_semilinear, f_basis,
+			nice_gens,
 			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
 
 	if (f_v) {
 		cout << "arc_generator::init after init_projective_group" << endl;

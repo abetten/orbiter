@@ -490,67 +490,35 @@ public:
 		// generator::orbit_element_rank
 
 	// action_init.C:
-	/** Create the direct product group M1 x M2 in product action
-	 * and restrict the action to the grid. */
-	void init_direct_product_group_and_restrict(
-			matrix_group *M1, matrix_group *M2, int verbose_level);
-
-	/** Create the direct product group M1 x M2 in product action */
-	void init_direct_product_group(
-			matrix_group *M1, matrix_group *M2,
-			int verbose_level);
-
-	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
-	 * in wreath product action
-	 * and restrict the action to the tensor space. */
-	void init_wreath_product_group_and_restrict(int nb_factors, int n,
-			finite_field *F, int verbose_level);
-
-	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
-	 * in wreath product action
-	 */
-	void init_wreath_product_group(int nb_factors, int n, finite_field *F,
-		int verbose_level);
-
-	/** Create the orthogonal group O(5,q) */
-	void init_BLT(finite_field *F, int f_basis, 
-		int f_init_hash_table, int verbose_level);
-
-
-	/** Create a group from generators */
-	void init_group_from_strong_generators(vector_ge *gens, sims *K, 
-		int given_base_length, int *given_base,
-		int verbose_level);
-
-
-	/** Create the orthogonal group O^epsilon(n,q) */
-	void init_orthogonal_group(int epsilon, 
-		int n, finite_field *F, 
-		int f_on_points, int f_on_lines, 
-		int f_on_points_and_lines, 
-		int f_semilinear, 
-		int f_basis, int verbose_level);
-
-	/** Create the projective special linear group PSL */
-	void init_projective_special_group(int n, finite_field *F, 
-		int f_semilinear, int f_basis, int verbose_level);
-
 	/** Create the projective linear (or semilinear) group PGL (or PGGL)*/
 	void init_projective_group(int n, finite_field *F, 
-		int f_semilinear, int f_basis, int verbose_level);
+		int f_semilinear, int f_basis,
+		vector_ge *&nice_gens,
+		int verbose_level);
 
 
 	/** Create the affine group AGL(n,q) */
 	void init_affine_group(int n, finite_field *F, 
 		int f_semilinear, 
-		int f_basis, int verbose_level);
+		int f_basis,
+		vector_ge *&nice_gens,
+		int verbose_level);
 
 	/** Create the general linear group GL(n,q) */
 	void init_general_linear_group(int n, finite_field *F, 
-		int f_semilinear, int f_basis, int verbose_level);
-	void setup_linear_group_from_strong_generators(matrix_group *M, 
+		int f_semilinear, int f_basis,
+		vector_ge *&nice_gens,
 		int verbose_level);
+
+	void setup_linear_group_from_strong_generators(matrix_group *M, 
+		vector_ge *&nice_gens,
+		int verbose_level);
+	/** Create the projective special linear group PSL */
+	void init_projective_special_group(int n, finite_field *F,
+		int f_semilinear, int f_basis, int verbose_level);
+
 	void init_matrix_group_strong_generators_builtin(matrix_group *M, 
+		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_permutation_group(int degree, int verbose_level);
 	void init_permutation_group_from_generators(int degree, 
@@ -585,6 +553,48 @@ public:
 		void (* callback_choose_random_generator)(int iteration, 
 			int *Elt, void *data, int verbose_level), 
 		int verbose_level);
+	/** Create the direct product group M1 x M2 in product action
+	 * and restrict the action to the grid. */
+	void init_direct_product_group_and_restrict(
+			matrix_group *M1, matrix_group *M2, int verbose_level);
+
+	/** Create the direct product group M1 x M2 in product action */
+	void init_direct_product_group(
+			matrix_group *M1, matrix_group *M2,
+			int verbose_level);
+
+	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
+	 * in wreath product action
+	 * and restrict the action to the tensor space. */
+	void init_wreath_product_group_and_restrict(int nb_factors, int n,
+			finite_field *F, int verbose_level);
+
+	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
+	 * in wreath product action
+	 */
+	void init_wreath_product_group(int nb_factors, int n, finite_field *F,
+		int verbose_level);
+
+	/** Create the orthogonal group O(5,q) */
+	void init_BLT(finite_field *F, int f_basis,
+		int f_init_hash_table, int verbose_level);
+
+
+	/** Create a group from generators */
+	void init_group_from_strong_generators(vector_ge *gens, sims *K,
+		int given_base_length, int *given_base,
+		int verbose_level);
+
+
+	/** Create the orthogonal group O^epsilon(n,q) */
+	void init_orthogonal_group(int epsilon,
+		int n, finite_field *F,
+		int f_on_points, int f_on_lines,
+		int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+
+
 	
 	// action_induce.C:
 
@@ -841,6 +851,7 @@ void create_linear_group(sims *&S, action *&A,
 	finite_field *F, int m, 
 	int f_projective, int f_general, int f_affine, 
 	int f_semilinear, int f_special, 
+	vector_ge *&nice_gens,
 	int verbose_level);
 action *create_induced_action_by_restriction(action *A, sims *S, 
 	int size, int *set, int f_induce, int verbose_level);
@@ -871,7 +882,9 @@ void generators_to_strong_generators(action *A,
 	vector_ge *gens, strong_generators *&Strong_gens, 
 	int verbose_level);
 void compute_generators_GL_n_q(int *&Gens, int &nb_gens, 
-	int &elt_size, int n, finite_field *F, int verbose_level);
+	int &elt_size, int n, finite_field *F,
+	vector_ge *&nice_gens,
+	int verbose_level);
 void order_of_PGGL_n_q(longinteger_object &go, int n, int q, 
 	int f_semilinear);
 void set_orthogonal_group_type(int f_siegel, 

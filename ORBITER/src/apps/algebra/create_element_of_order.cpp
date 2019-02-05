@@ -65,13 +65,16 @@ void create_element(int q, int k, int verbose_level)
 	int ord;
 	int *Elt7;
 	int *ELT1;
+	vector_ge *nice_gens;
 	
 	F = new finite_field;
 	F->init(q, 0);	
 	A = new action;
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level);
-
+		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		nice_gens,
+		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 	int f_semilinear = TRUE;
 	int f_basis = FALSE;
@@ -88,7 +91,9 @@ void create_element(int q, int k, int verbose_level)
 	A4->init_projective_group(4 /* n */, F, 
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */,
+		nice_gens,
 		verbose_level);
+	FREE_OBJECT(nice_gens);
 
 	A->print_base();
 	A->group_order(Go);

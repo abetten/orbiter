@@ -79,7 +79,10 @@ void linear_group::init(
 		description->f_affine,
 		description->f_semilinear,
 		description->f_special,
+		nice_gens,
 		verbose_level);
+
+	f_has_nice_gens = TRUE;
 
 
 	if (f_v) {

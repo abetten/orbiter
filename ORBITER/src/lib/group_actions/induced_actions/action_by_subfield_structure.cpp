@@ -128,10 +128,14 @@ void action_by_subfield_structure::init(action &A,
 				"before Aq->init_matrix_group" << endl;
 		}
 
+	vector_ge *nice_gens;
 
 	Aq->init_projective_group(m, Fq,
-			f_semilinear, f_basis, verbose_level - 2);
+			f_semilinear, f_basis,
+			nice_gens,
+			verbose_level - 2);
 	Mq = Aq->G.matrix_grp;
+	FREE_OBJECT(nice_gens);
 
 
 	cout << "action_by_subfield_structure::init "

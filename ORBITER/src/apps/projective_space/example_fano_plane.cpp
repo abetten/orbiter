@@ -29,6 +29,7 @@ int main()
 	int i;
 	int *v;
 	schreier *Sch;
+	vector_ge *nice_gens;
 
 		
 	v = NEW_int(d);
@@ -40,7 +41,9 @@ int main()
 		F, d, 
 		f_projective, f_general, f_affine, 
 		f_semilinear, f_special, 
+		nice_gens,
 		verbose_level);
+	FREE_OBJECT(nice_gens);
 	
 	A->group_order(go);
 	cout << "created a group of order " << go << endl;

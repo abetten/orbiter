@@ -82,9 +82,14 @@ void Hill_cap56(int argc, const char **argv,
 	if (f_v) {
 		cout << "after init_orthogonal" << endl;
 		}
+	vector_ge *nice_gens;
 
 	An->init_projective_group(n, F, TRUE /* f_semilinear */, 
-		TRUE /* f_basis */, verbose_level - 2);
+		TRUE /* f_basis */,
+		nice_gens,
+		verbose_level - 2);
+
+	FREE_OBJECT(nice_gens);
 
 	if (f_v) {
 		cout << "after init_projective_group" << endl;

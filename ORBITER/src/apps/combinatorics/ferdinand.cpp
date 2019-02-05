@@ -671,12 +671,16 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		}
 	else if (group == 4) {
 		int q = 2;
+		vector_ge *nice_gens;
 
 		F = NEW_OBJECT(finite_field);
 		F->init(q, 0);
 		A->init_affine_group(4, F, 
 			FALSE /* f_semilinear */, 
-			TRUE /* f_basis */, verbose_level);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+		FREE_OBJECT(nice_gens);
 		}
 	else {
 		cout << "group " << group << " not yet implemented" << endl;
@@ -928,12 +932,16 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 	if (group == 1) {
 		int q = 2;
+		vector_ge *nice_gens;
 
 		F = NEW_OBJECT(finite_field);
 		F->init(q, 0);
 		A->init_affine_group(5, F, 
 			FALSE /* f_semilinear */, 
-			TRUE /* f_basis */, verbose_level);
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+		FREE_OBJECT(nice_gens);
 		}
 	else {
 		cout << "group " << group << " not yet implemented" << endl;
