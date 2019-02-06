@@ -12,6 +12,7 @@ MODULES = \
 	action_indexing_cosets.o \
 	action_induce.o \
 	action_init.o \
+	action_pointer_table.o \
 	backtrack.o \
 	interface.o \
 	interface_direct_product.o \

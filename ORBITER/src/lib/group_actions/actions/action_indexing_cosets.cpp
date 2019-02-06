@@ -11,13 +11,15 @@
 namespace orbiter {
 namespace group_actions {
 
-void action::coset_unrank(sims *G, sims *U, int rank, int *Elt, int verbose_level)
+void action::coset_unrank(sims *G, sims *U,
+		int rank, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, base_idx = 0, base_pt, rank0, nb, rem_int, len, k, elt_k;
 	int *Elt_gk, *Elt1, *Elt2;
 	longinteger_domain D;
-	longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
+	longinteger_object G0_order, G_order;
+	longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
 
 	if (f_v) {
@@ -161,7 +163,8 @@ void action::coset_unrank(sims *G, sims *U, int rank, int *Elt, int verbose_leve
 		D.mult(G0_order, b, c);
 		D.integral_division(c, U_order, d, rem, 0);
 		if (!rem.is_zero()) {
-			cout << "action::coset_unrank: remainder is not zero, something is wrong" << endl;
+			cout << "action::coset_unrank: remainder is not zero, "
+					"something is wrong" << endl;
 			exit(1);
 			}
 		nb = d.as_int();
@@ -170,7 +173,8 @@ void action::coset_unrank(sims *G, sims *U, int rank, int *Elt, int verbose_leve
 
 		elt_k = U_orb.orbit[U_orb.orbit_first[k]];
 		if (f_v) {
-			cout << "double coset k=" << k << " elt_k=" << elt_k << " nb=" << nb << endl;
+			cout << "double coset k=" << k << " elt_k=" << elt_k
+					<< " nb=" << nb << endl;
 			}
 		if (rank0 + nb > rank) {
 			if (f_v) {
@@ -544,7 +548,8 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	if (im != elt_k) {
 		if (f_v) {
 			cout << "image of elt_k = " << elt_k << " is " << im << endl;
-			cout << "we are now dividing off an element of U from the right so that elt_k is fixed" << endl;
+			cout << "we are now dividing off an element of U "
+					"from the right so that elt_k is fixed" << endl;
 			}
 		
 		U_orb.coset_rep_inv(U_orb.orbit_inv[im]);
@@ -555,7 +560,9 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 			cout << "moves " << im << " to " << elt_k << endl;
 			}
 		if (element_image_of(im, Elt_u, 0) != elt_k) {
-			cout << "image of " << im << " is " << element_image_of(im, Elt_u, 0) << " but not " << elt_k << " fatal" << endl;
+			cout << "image of " << im << " is "
+					<< element_image_of(im, Elt_u, 0)
+					<< " but not " << elt_k << " fatal" << endl;
 			exit(1);
 			}
 		element_mult(Elt2, Elt_u, Elt3, 0);

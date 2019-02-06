@@ -13,8 +13,8 @@ namespace group_actions {
 int action::image_of(
 		void *elt, int a)
 {
-	nb_times_image_of_called++;
-	return (*ptr_element_image_of)(
+	ptr->nb_times_image_of_called++;
+	return (*ptr->ptr_element_image_of)(
 			*this, a, elt, 0);
 }
 
@@ -23,8 +23,8 @@ void action::image_of_low_level(
 		int *input, int *output,
 		int verbose_level)
 {
-	nb_times_image_of_low_level_called++;
-	(*ptr_element_image_of_low_level)(
+	ptr->nb_times_image_of_low_level_called++;
+	(*ptr->ptr_element_image_of_low_level)(
 			*this,
 			input, output, elt, verbose_level);
 }
@@ -32,20 +32,20 @@ void action::image_of_low_level(
 int action::linear_entry_ij(
 		void *elt, int i, int j)
 {
-	return (*ptr_element_linear_entry_ij)(
+	return (*ptr->ptr_element_linear_entry_ij)(
 			*this, elt, i, j, 0);
 }
 
 int action::linear_entry_frobenius(
 		void *elt)
 {
-	return (*ptr_element_linear_entry_frobenius)(
+	return (*ptr->ptr_element_linear_entry_frobenius)(
 			*this, elt, 0);
 }
 
 void action::one(void *elt)
 {
-	(*ptr_element_one)(*this, elt, 0);
+	(*ptr->ptr_element_one)(*this, elt, 0);
 }
 
 int action::is_one(void *elt)
@@ -56,37 +56,37 @@ int action::is_one(void *elt)
 
 void action::unpack(void *elt, void *Elt)
 {
-	nb_times_unpack_called++;
-	(*ptr_element_unpack)(
+	ptr->nb_times_unpack_called++;
+	(*ptr->ptr_element_unpack)(
 			*this, elt, Elt, 0);
 }
 
 void action::pack(void *Elt, void *elt)
 {
-	nb_times_pack_called++;
-	(*ptr_element_pack)(
+	ptr->nb_times_pack_called++;
+	(*ptr->ptr_element_pack)(
 			*this, Elt, elt, 0);
 }
 
 void action::retrieve(void *elt, int hdl)
 {
-	nb_times_retrieve_called++;
-	(*ptr_element_retrieve)(
+	ptr->nb_times_retrieve_called++;
+	(*ptr->ptr_element_retrieve)(
 			*this, hdl, elt, 0);
 }
 
 int action::store(void *elt)
 {
-	nb_times_store_called++;
-	return (*ptr_element_store)(
+	ptr->nb_times_store_called++;
+	return (*ptr->ptr_element_store)(
 			*this, elt, 0);
 }
 
 void action::mult(
 		void *a, void *b, void *ab)
 {
-	nb_times_mult_called++;
-	(*ptr_element_mult)(
+	ptr->nb_times_mult_called++;
+	(*ptr->ptr_element_mult)(
 			*this, a, b, ab, 0);
 }
 
@@ -94,9 +94,9 @@ void action::mult_apply_from_the_right(
 		void *a, void *b)
 // a := a * b
 {
-	(*ptr_element_mult)(
+	(*ptr->ptr_element_mult)(
 			*this, a, b, elt_mult_apply, 0);
-	(*ptr_element_move)(
+	(*ptr->ptr_element_move)(
 			*this, elt_mult_apply, a, 0);
 }
 
@@ -104,56 +104,56 @@ void action::mult_apply_from_the_left(
 		void *a, void *b)
 // b := a * b
 {
-	(*ptr_element_mult)(
+	(*ptr->ptr_element_mult)(
 			*this, a, b, elt_mult_apply, 0);
-	(*ptr_element_move)(
+	(*ptr->ptr_element_move)(
 			*this, elt_mult_apply, b, 0);
 }
 
 void action::invert(void *a, void *av)
 {
-	nb_times_invert_called++;
-	(*ptr_element_invert)(
+	ptr->nb_times_invert_called++;
+	(*ptr->ptr_element_invert)(
 			*this, a, av, 0);
 }
 
 void action::invert_in_place(void *a)
 {
-	(*ptr_element_invert)(
+	(*ptr->ptr_element_invert)(
 			*this, a, elt_mult_apply, 0);
-	(*ptr_element_move)(
+	(*ptr->ptr_element_move)(
 			*this, elt_mult_apply, a, 0);
 }
 
 void action::transpose(void *a, void *at)
 {
-	(*ptr_element_transpose)(
+	(*ptr->ptr_element_transpose)(
 			*this, a, at, 0);
 }
 
 void action::move(void *a, void *b)
 {
-	(*ptr_element_move)(
+	(*ptr->ptr_element_move)(
 			*this, a, b, 0);
 }
 
 void action::dispose(int hdl)
 {
-	(*ptr_element_dispose)(
+	(*ptr->ptr_element_dispose)(
 			*this, hdl, 0);
 }
 
 void action::print(
 		ostream &ost, void *elt)
 {
-	(*ptr_element_print)(
+	(*ptr->ptr_element_print)(
 			*this, elt, ost);
 }
 
 void action::print_quick(
 		ostream &ost, void *elt)
 {
-	(*ptr_element_print_quick)(
+	(*ptr->ptr_element_print_quick)(
 			*this, elt, ost);
 }
 
@@ -166,29 +166,25 @@ void action::print_as_permutation(
 void action::print_point(
 		int a, ostream &ost)
 {
-	return (*ptr_print_point)(
-			*this, a, ost);
+	return (*ptr->ptr_print_point)(*this, a, ost);
 }
 
 void action::code_for_make_element(
 		int *data, void *elt)
 {
-	(*ptr_element_code_for_make_element)(
-			*this, elt, data);
+	(*ptr->ptr_element_code_for_make_element)(*this, elt, data);
 }
 
 void action::print_for_make_element(
 		ostream &ost, void *elt)
 {
-	(*ptr_element_print_for_make_element)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_for_make_element)(*this, elt, ost);
 }
 
 void action::print_for_make_element_no_commas(
 		ostream &ost, void *elt)
 {
-	(*ptr_element_print_for_make_element_no_commas)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_for_make_element_no_commas)(*this, elt, ost);
 }
 
 
@@ -198,22 +194,21 @@ void action::print_for_make_element_no_commas(
 int action::element_image_of(
 		int a, void *elt, int verbose_level)
 {
-	nb_times_image_of_called++;
-	return (*ptr_element_image_of)(
-			*this, a, elt, verbose_level);
+	ptr->nb_times_image_of_called++;
+	return (*ptr->ptr_element_image_of)(*this, a, elt, verbose_level);
 }
 
 void action::element_image_of_low_level(
 		int *input, int *output, void *elt,
 		int verbose_level)
 {
-	if (ptr_element_image_of_low_level == NULL) {
+	if (ptr->ptr_element_image_of_low_level == NULL) {
 		cout << "action::element_image_of_low_level "
 				"ptr is NULL" << endl;
 		exit(1);
 		}
-	nb_times_image_of_low_level_called++;
-	(*ptr_element_image_of_low_level)(
+	ptr->nb_times_image_of_low_level_called++;
+	(*ptr->ptr_element_image_of_low_level)(
 			*this,
 			input, output, elt, verbose_level);
 }
@@ -221,7 +216,7 @@ void action::element_image_of_low_level(
 void action::element_one(
 		void *elt, int verbose_level)
 {
-	(*ptr_element_one)(
+	(*ptr->ptr_element_one)(
 			*this, elt, verbose_level);
 }
 
@@ -229,7 +224,7 @@ int action::element_linear_entry_ij(
 		void *elt,
 		int i, int j, int verbose_level)
 {
-	return (*ptr_element_linear_entry_ij)(
+	return (*ptr->ptr_element_linear_entry_ij)(
 			*this,
 			elt, i, j, verbose_level);
 }
@@ -238,7 +233,7 @@ int action::element_linear_entry_frobenius(
 		void *elt,
 		int verbose_level)
 {
-	return (*ptr_element_linear_entry_frobenius)(
+	return (*ptr->ptr_element_linear_entry_frobenius)(
 			*this,
 			elt, verbose_level);
 }
@@ -273,7 +268,7 @@ int action::element_is_one(
 		else
 			return FALSE;
 		}
-	ret = (*ptr_element_is_one)(*this, elt, verbose_level);
+	ret = (*ptr->ptr_element_is_one)(*this, elt, verbose_level);
 	if (f_v) {
 		cout << "action::element_is_one "
 				"returning " << ret << endl;
@@ -285,123 +280,123 @@ int action::element_is_one(
 void action::element_unpack(
 		void *elt, void *Elt, int verbose_level)
 {
-	nb_times_unpack_called++;
-	(*ptr_element_unpack)(
+	ptr->nb_times_unpack_called++;
+	(*ptr->ptr_element_unpack)(
 			*this, elt, Elt, verbose_level);
 }
 
 void action::element_pack(
 		void *Elt, void *elt, int verbose_level)
 {
-	nb_times_pack_called++;
-	(*ptr_element_pack)(
+	ptr->nb_times_pack_called++;
+	(*ptr->ptr_element_pack)(
 			*this, Elt, elt, verbose_level);
 }
 
 void action::element_retrieve(
 		int hdl, void *elt, int verbose_level)
 {
-	nb_times_retrieve_called++;
-	(*ptr_element_retrieve)(
+	ptr->nb_times_retrieve_called++;
+	(*ptr->ptr_element_retrieve)(
 			*this, hdl, elt, verbose_level);
 }
 
 int action::element_store(
 		void *elt, int verbose_level)
 {
-	nb_times_store_called++;
-	return (*ptr_element_store)(
+	ptr->nb_times_store_called++;
+	return (*ptr->ptr_element_store)(
 			*this, elt, verbose_level);
 }
 
 void action::element_mult(
 		void *a, void *b, void *ab, int verbose_level)
 {
-	nb_times_mult_called++;
-	(*ptr_element_mult)(
+	ptr->nb_times_mult_called++;
+	(*ptr->ptr_element_mult)(
 			*this, a, b, ab, verbose_level);
 }
 
 void action::element_invert(
 		void *a, void *av, int verbose_level)
 {
-	nb_times_invert_called++;
-	(*ptr_element_invert)(
+	ptr->nb_times_invert_called++;
+	(*ptr->ptr_element_invert)(
 			*this, a, av, verbose_level);
 }
 
 void action::element_transpose(
 		void *a, void *at, int verbose_level)
 {
-	(*ptr_element_transpose)(
+	(*ptr->ptr_element_transpose)(
 			*this, a, at, verbose_level);
 }
 
 void action::element_move(
 		void *a, void *b, int verbose_level)
 {
-	(*ptr_element_move)(
+	(*ptr->ptr_element_move)(
 			*this, a, b, verbose_level);
 }
 
 void action::element_dispose(
 		int hdl, int verbose_level)
 {
-	(*ptr_element_dispose)(
+	(*ptr->ptr_element_dispose)(
 			*this, hdl, verbose_level);
 }
 
 void action::element_print(
 		void *elt, ostream &ost)
 {
-	(*ptr_element_print)(
+	(*ptr->ptr_element_print)(
 			*this, elt, ost);
 }
 
 void action::element_print_quick(
 		void *elt, ostream &ost)
 {
-	if (ptr_element_print_quick == NULL) {
+	if (ptr->ptr_element_print_quick == NULL) {
 		cout << "action::element_print_quick "
 				"ptr_element_print_quick == NULL" << endl;
 		exit(1);
 		}
-	(*ptr_element_print_quick)(
+	(*ptr->ptr_element_print_quick)(
 			*this, elt, ost);
 }
 
 void action::element_print_latex(
 		void *elt, ostream &ost)
 {
-	(*ptr_element_print_latex)(
+	(*ptr->ptr_element_print_latex)(
 			*this, elt, ost);
 }
 
 void action::element_print_verbose(
 		void *elt, ostream &ost)
 {
-	(*ptr_element_print_verbose)(
+	(*ptr->ptr_element_print_verbose)(
 			*this, elt, ost);
 }
 
 void action::element_code_for_make_element(
 		void *elt, int *data)
 {
-	(*ptr_element_code_for_make_element)(
+	(*ptr->ptr_element_code_for_make_element)(
 			*this, elt, data);
 }
 
 void action::element_print_for_make_element(
 		void *elt, ostream &ost)
 {
-	(*ptr_element_print_for_make_element)(
+	(*ptr->ptr_element_print_for_make_element)(
 			*this, elt, ost);
 }
 
 void action::element_print_for_make_element_no_commas(
 		void *elt, ostream &ost)
 {
-	(*ptr_element_print_for_make_element_no_commas)(
+	(*ptr->ptr_element_print_for_make_element_no_commas)(
 			*this, elt, ost);
 }
 

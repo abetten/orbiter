@@ -53,7 +53,8 @@ action *action::induced_action_on_set_partitions(
 		cout << "action::induced_action_on_set_partitions "
 				"before init_function_pointers_induced_action" << endl;
 		}
-	A->init_function_pointers_induced_action();
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_induced_action();
 
 
 
@@ -197,7 +198,8 @@ void action::induced_action_by_representation_on_conic(
 	
 	degree = Rep->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	
 	
@@ -272,7 +274,8 @@ void action::induced_action_on_cosets(
 	
 	degree = A_on_cosets->nb_points;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	
 	
@@ -349,7 +352,8 @@ void action::induced_action_on_factor_space(action *A_old,
 	
 	degree = AF->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	
 	
@@ -419,7 +423,8 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 		cout << "action::induced_action_on_grassmannian "
 				"before init_function_pointers_induced_action" << endl;
 		}
-	A->init_function_pointers_induced_action();
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_induced_action();
 	
 	
 	
@@ -517,7 +522,8 @@ void action::induced_action_on_grassmannian(action *A_old,
 		cout << "action::induced_action_on_grassmannian "
 				"before init_function_pointers_induced_action" << endl;
 		}
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	
 	
@@ -604,7 +610,8 @@ void action::induced_action_on_spread_set(action *A_old,
 	
 	degree = AS->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	
 	
@@ -697,7 +704,8 @@ void action::induced_action_on_orthogonal(action *A_old,
 	
 	degree = AO->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	
 	
@@ -760,7 +768,8 @@ void action::induced_action_on_wedge_product(action *A_old,
 	
 	degree = AW->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
 	dimension = AW->wedge_dimension;
 	
@@ -828,7 +837,8 @@ void action::induced_action_by_subfield_structure(action *A_old,
 	
 	degree = SubfieldStructure->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
 	dimension = SubfieldStructure->m;
 	
@@ -894,7 +904,8 @@ void action::induced_action_on_determinant(
 	
 	degree = AD->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	allocate_base_data(0);
 	
@@ -944,7 +955,8 @@ void action::induced_action_on_sign(
 	
 	degree = OnSign->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	allocate_base_data(0);
 	
@@ -1000,7 +1012,8 @@ void action::induced_action_by_conjugation(sims *old_G,
 	
 	degree = goi;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	allocate_base_data(0);
 	
@@ -1062,7 +1075,8 @@ void action::induced_action_by_right_multiplication(
 	
 	degree = goi;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	allocate_base_data(0);
 	
@@ -1161,7 +1175,8 @@ void action::induced_action_on_sets(
 	
 	degree = nb_sets;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	if (f_v) {
 		cout << "action::induced_action_on_sets "
 				"calling allocate_base_data" << endl;
@@ -1263,7 +1278,8 @@ void action::induced_action_on_subgroups(
 	
 	degree = nb_subgroups;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	if (f_v) {
 		cout << "action::induced_action_on_subgroups "
 				"calling allocate_base_data" << endl;
@@ -1335,7 +1351,8 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	
 	degree = ABR->nb_points;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	if (FALSE) {
 		cout << "action::induced_action_by_restriction_"
 				"on_orbit_with_schreier_vector "
@@ -1402,7 +1419,8 @@ action *action::restricted_action(
 	
 	A->degree = nb_points;
 	A->base_len = 0;
-	A->init_function_pointers_induced_action();
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_induced_action();
 	if (FALSE) {
 		cout << "action::restricted_action "
 				"calling allocate_base_data" << endl;
@@ -1460,7 +1478,8 @@ void action::induced_action_by_restriction(
 	
 	degree = nb_points;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	if (FALSE) {
 		cout << "action::induced_action_by_restriction "
 				"calling allocate_base_data" << endl;
@@ -1517,7 +1536,8 @@ void action::induced_action_on_pairs(
 	
 	degree = int_n_choose_k(old_action.degree, 2);
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
@@ -1580,7 +1600,8 @@ void action::induced_action_on_ordered_pairs(
 	
 	degree = old_action.degree * (old_action.degree - 1);
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
@@ -1636,7 +1657,8 @@ void action::induced_action_on_k_subsets(
 	
 	degree = On_k_subsets->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
@@ -1689,7 +1711,8 @@ void action::induced_action_on_orbits(action *old_action,
 	
 	degree = On_orbits->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
@@ -1742,7 +1765,8 @@ void action::induced_action_on_flags(action *old_action,
 	
 	degree = On_flags->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
@@ -1791,7 +1815,8 @@ void action::induced_action_on_bricks(action &old_action,
 	
 	degree = B->nb_bricks;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
@@ -1842,7 +1867,8 @@ void action::induced_action_on_andre(action *An,
 	
 	degree = On_andre->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
@@ -1886,7 +1912,8 @@ void action::setup_product_action(action *A1, action *A2,
 	
 	base_len = 0;
 	
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	
 	allocate_base_data(0);
 	
@@ -1982,7 +2009,8 @@ void action::induced_action_on_homogeneous_polynomials(
 	
 	degree = OnHP->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
 	dimension = OnHP->dimension;
 	
@@ -2082,7 +2110,8 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	
 	degree = OnHP->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
 	dimension = OnHP->dimension;
 	
@@ -2643,7 +2672,8 @@ void action::base_change(action *old_action,
 	
 	degree = old_action->degree;
 	base_len = 0;
-	init_function_pointers_induced_action();
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
 
 	allocate_base_data(0);
 	

@@ -57,17 +57,7 @@ void action::null()
 	make_element_size = 0;
 	low_level_point_size = 0;
 
-	null_function_pointers();
-	
-	nb_times_image_of_called = 0;
-	nb_times_image_of_low_level_called = 0;
-	nb_times_unpack_called = 0;
-	nb_times_pack_called = 0;
-	nb_times_retrieve_called = 0;
-	nb_times_store_called = 0;
-	nb_times_mult_called = 0;
-	nb_times_invert_called = 0;
-
+	ptr = NULL;
 
 	f_allocated = FALSE;
 	f_has_subaction = FALSE;
@@ -373,6 +363,11 @@ void action::freeself()
 			cout << "action::freeself freeing Kernel finished" << endl;
 			}
 		}
+
+	if (ptr) {
+		FREE_OBJECT(ptr);
+	}
+
 	if (f_v) {
 		cout << "action::freeself "
 				"deleting action " << label << " done" << endl;
