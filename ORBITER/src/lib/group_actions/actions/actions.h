@@ -156,24 +156,24 @@ public:
 	/** the inverse orbit of  b_i */
 	int **orbit_inv;
 
-	/** how many int's we need to store one group element */
+	/** how many int we need to store one group element */
 	int elt_size_in_int;
 
-	/** how many char's (=char's) do we need
+	/** how many char do we need
 	 * to store a group element in the compressed form */
 	int coded_elt_size_in_char;
 
 	
-	/** the number of int's that are needed to
+	/** the number of int that are needed to
 	 * make an element of this group
 	 * using the make_element function */
 	int make_element_size;
 
 
-	/** the number of int's that are needed to
+	/** the number of int that are needed to
 	 * represent a point in low-level format
 	 * (input and output in element_image_of_low_level
-	 * point to that many int's) */
+	 * point to that many int) */
 	int low_level_point_size;
 	
 #if 0
@@ -186,7 +186,6 @@ public:
 	/** sims chain for the group */
 	sims *Sims;
 	
-	// this is n e w 1/1/2009:
 	int f_has_kernel;
 	/** kernel of the action */
 	sims *Kernel;
@@ -194,62 +193,8 @@ public:
 	int f_group_order_is_small;
 	int *path;
 	
-	/** function pointers for group actions */
-	int (*ptr_element_image_of)(action &A, int a, void *elt, 
-		int verbose_level);
-	void (*ptr_element_image_of_low_level)(action &A, 
-		int *input, int *output, void *elt, int verbose_level);
-	int (*ptr_element_linear_entry_ij)(action &A, 
-		void *elt, int i, int j, int verbose_level);
-	int (*ptr_element_linear_entry_frobenius)(action &A, 
-		void *elt, int verbose_level);
-	void (*ptr_element_one)(action &A, void *elt, int verbose_level);
-	int (*ptr_element_is_one)(action &A, void *elt, int verbose_level);
-	void (*ptr_element_unpack)(action &A, void *elt, 
-		void *Elt, int verbose_level);
-	void (*ptr_element_pack)(action &A, void *Elt, 
-		void *elt, int verbose_level);
-	void (*ptr_element_retrieve)(action &A, int hdl, 
-		void *elt, int verbose_level);
-	int (*ptr_element_store)(action &A, void *elt, 
-		int verbose_level);
-	void (*ptr_element_mult)(action &A, 
-		void *a, void *b, void *ab, int verbose_level);
-	void (*ptr_element_invert)(action &A, 
-		void *a, void *av, int verbose_level);
-	void (*ptr_element_transpose)(action &A, 
-		void *a, void *at, int verbose_level);
-	void (*ptr_element_move)(action &A, 
-		void *a, void *b, int verbose_level);
-	void (*ptr_element_dispose)(action &A, 
-		int hdl, int verbose_level);
-	void (*ptr_element_print)(action &A, 
-		void *elt, ostream &ost);
-	void (*ptr_element_print_quick)(action &A, 
-		void *elt, ostream &ost);
-	void (*ptr_element_print_latex)(action &A, 
-		void *elt, ostream &ost);
-	void (*ptr_element_print_verbose)(action &A, 
-		void *elt, ostream &ost);
-	void (*ptr_print_point)(action &A, int i, ostream &ost);
-	void (*ptr_element_code_for_make_element)(action &A, 
-		void *elt, int *data);
-	void (*ptr_element_print_for_make_element)(action &A, 
-		void *elt, ostream &ost);
-	void (*ptr_element_print_for_make_element_no_commas)(action &A, 
-		void *elt, ostream &ost);
-	
-	/** counters for how often a function has been called */
-	int nb_times_image_of_called;
-	int nb_times_image_of_low_level_called;
-	int nb_times_unpack_called;
-	int nb_times_pack_called;
-	int nb_times_retrieve_called;
-	int nb_times_store_called;
-	int nb_times_mult_called;
-	int nb_times_invert_called;
 
-
+	action_pointer_table *ptr;
 
 	/** temporary elements */
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
@@ -540,12 +485,6 @@ public:
 	void init_symmetric_group(int degree, int verbose_level);
 
 
-	void null_function_pointers();
-	void init_function_pointers_matrix_group();
-	void init_function_pointers_wreath_product_group();
-	void init_function_pointers_direct_product_group();
-	void init_function_pointers_permutation_group();
-	void init_function_pointers_induced_action();
 	void create_sims(int verbose_level);
 	void create_orthogonal_group(action *subaction, 
 		int f_has_target_group_order, 
@@ -1035,6 +974,81 @@ void create_action_and_compute_orbits_on_equations(
 	action *&A_on_equations, schreier *&Orb, int verbose_level);
 
 // #############################################################################
+// action_pointer_table.cpp
+// #############################################################################
+
+
+class action_pointer_table {
+
+public:
+
+	/** function pointers for group actions */
+	int (*ptr_element_image_of)(action &A, int a, void *elt,
+		int verbose_level);
+	void (*ptr_element_image_of_low_level)(action &A,
+		int *input, int *output, void *elt, int verbose_level);
+	int (*ptr_element_linear_entry_ij)(action &A,
+		void *elt, int i, int j, int verbose_level);
+	int (*ptr_element_linear_entry_frobenius)(action &A,
+		void *elt, int verbose_level);
+	void (*ptr_element_one)(action &A, void *elt, int verbose_level);
+	int (*ptr_element_is_one)(action &A, void *elt, int verbose_level);
+	void (*ptr_element_unpack)(action &A, void *elt,
+		void *Elt, int verbose_level);
+	void (*ptr_element_pack)(action &A, void *Elt,
+		void *elt, int verbose_level);
+	void (*ptr_element_retrieve)(action &A, int hdl,
+		void *elt, int verbose_level);
+	int (*ptr_element_store)(action &A, void *elt,
+		int verbose_level);
+	void (*ptr_element_mult)(action &A,
+		void *a, void *b, void *ab, int verbose_level);
+	void (*ptr_element_invert)(action &A,
+		void *a, void *av, int verbose_level);
+	void (*ptr_element_transpose)(action &A,
+		void *a, void *at, int verbose_level);
+	void (*ptr_element_move)(action &A,
+		void *a, void *b, int verbose_level);
+	void (*ptr_element_dispose)(action &A,
+		int hdl, int verbose_level);
+	void (*ptr_element_print)(action &A,
+		void *elt, ostream &ost);
+	void (*ptr_element_print_quick)(action &A,
+		void *elt, ostream &ost);
+	void (*ptr_element_print_latex)(action &A,
+		void *elt, ostream &ost);
+	void (*ptr_element_print_verbose)(action &A,
+		void *elt, ostream &ost);
+	void (*ptr_print_point)(action &A, int i, ostream &ost);
+	void (*ptr_element_code_for_make_element)(action &A,
+		void *elt, int *data);
+	void (*ptr_element_print_for_make_element)(action &A,
+		void *elt, ostream &ost);
+	void (*ptr_element_print_for_make_element_no_commas)(action &A,
+		void *elt, ostream &ost);
+
+	/** counters for how often a function has been called */
+	int nb_times_image_of_called;
+	int nb_times_image_of_low_level_called;
+	int nb_times_unpack_called;
+	int nb_times_pack_called;
+	int nb_times_retrieve_called;
+	int nb_times_store_called;
+	int nb_times_mult_called;
+	int nb_times_invert_called;
+
+	action_pointer_table();
+	~action_pointer_table();
+	void null_function_pointers();
+	void init_function_pointers_matrix_group();
+	void init_function_pointers_wreath_product_group();
+	void init_function_pointers_direct_product_group();
+	void init_function_pointers_permutation_group();
+	void init_function_pointers_induced_action();
+};
+
+
+// #############################################################################
 // interface.C
 // #############################################################################
 
@@ -1289,6 +1303,7 @@ void wreath_product_group_element_print_verbose(action &A,
 void wreath_product_group_print_point(action &A,
 	int a, ostream &ost);
 
-}
-}
+
+
+}}
 

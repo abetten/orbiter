@@ -556,11 +556,11 @@ void poset_classification::init(poset *Poset,
 	nb_poset_orbit_nodes_used = 0;
 	nb_poset_orbit_nodes_allocated = 0;
 
-	nb_times_image_of_called0 = Poset->A->nb_times_image_of_called;
-	nb_times_mult_called0 = Poset->A->nb_times_mult_called;
-	nb_times_invert_called0 = Poset->A->nb_times_invert_called;
-	nb_times_retrieve_called0 = Poset->A->nb_times_retrieve_called;
-	nb_times_store_called0 = Poset->A->nb_times_store_called;
+	nb_times_image_of_called0 = Poset->A->ptr->nb_times_image_of_called;
+	nb_times_mult_called0 = Poset->A->ptr->nb_times_mult_called;
+	nb_times_invert_called0 = Poset->A->ptr->nb_times_invert_called;
+	nb_times_retrieve_called0 = Poset->A->ptr->nb_times_retrieve_called;
+	nb_times_store_called0 = Poset->A->ptr->nb_times_store_called;
 
 
 	if (Poset->f_subspace_lattice) {

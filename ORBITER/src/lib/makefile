@@ -146,6 +146,7 @@ MODULES= \
 		group_actions/actions/action_indexing_cosets.o \
 		group_actions/actions/action_induce.o \
 		group_actions/actions/action_init.o \
+		group_actions/actions/action_pointer_table.o \
 		group_actions/actions/backtrack.o \
 		group_actions/actions/interface.o \
 		group_actions/actions/interface_direct_product.o \

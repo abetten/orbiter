@@ -268,7 +268,8 @@ void perm_group::init_with_base(int degree,
 		//cout << endl;
 		}
 
-	A.init_function_pointers_permutation_group();
+	A.ptr = NEW_OBJECT(action_pointer_table);
+	A.ptr->init_function_pointers_permutation_group();
 	
 	A.elt_size_in_int = elt_size_int;
 	A.coded_elt_size_in_char = char_per_elt;
