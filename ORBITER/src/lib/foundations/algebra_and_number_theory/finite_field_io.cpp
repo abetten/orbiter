@@ -516,6 +516,25 @@ void finite_field::print_element(ostream &ost, int a)
 	}
 }
 
+void finite_field::print_element_str(stringstream &ost, int a)
+{
+	int width;
+
+
+	if (e == 1) {
+		ost << a;
+	} else {
+		if (f_print_as_exponentials) {
+			width = 10;
+			}
+		else {
+			width = log10_of_q;
+			}
+		print_element_with_symbol_str(ost, a, f_print_as_exponentials,
+				width, symbol_for_print);
+	}
+}
+
 void finite_field::print_element_with_symbol(ostream &ost,
 		int a, int f_exponential, int width, const char *symbol)
 {
@@ -524,6 +543,43 @@ void finite_field::print_element_with_symbol(ostream &ost,
 	if (f_exponential) {
 		if (symbol == NULL) {
 			cout << "finite_field::print_element_with_symbol "
+					"symbol == NULL" << endl;
+			return;
+			}
+		if (a == 0) {
+			//print_repeated_character(ost, ' ', width - 1);
+			ost << "0";
+			}
+		else if (a == 1) {
+			//print_repeated_character(ost, ' ', width - 1);
+			ost << "1";
+			}
+		else {
+			b = log_alpha(a);
+			if (b == q - 1)
+				b = 0;
+			ost << symbol;
+			if (b > 1) {
+				ost << "^{" << b << "}";
+				}
+			else {
+				ost << " ";
+			}
+			}
+		}
+	else {
+		ost << setw((int) width) << a;
+		}
+}
+
+void finite_field::print_element_with_symbol_str(stringstream &ost,
+		int a, int f_exponential, int width, const char *symbol)
+{
+	int b;
+
+	if (f_exponential) {
+		if (symbol == NULL) {
+			cout << "finite_field::print_element_with_symbol_str "
 					"symbol == NULL" << endl;
 			return;
 			}
@@ -969,7 +1025,46 @@ void finite_field::cheat_sheet_bottom(ostream &f)
 	f << "$$" << endl;
 }
 
+
+void finite_field::display_table_of_projective_points(
+	ostream &ost, int *Pts, int nb_pts, int len)
+{
+	int i;
+	int *coords;
+
+	coords = NEW_int(len);
+	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i & a_i & P_{a_i}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_pts; i++) {
+		PG_element_unrank_modified(coords, 1, 3, Pts[i]);
+		ost << i << " & " << Pts[i] << " & ";
+		int_vec_print(ost, coords, len);
+		ost << "\\\\" << endl;
+		if (((i + 1) % 30) == 0) {
+			ost << "\\hline" << endl;
+			ost << "\\end{array}" << endl;
+			ost << "$$}%" << endl;
+			ost << "$$" << endl;
+			ost << "\\begin{array}{|c|c|c|}" << endl;
+			ost << "\\hline" << endl;
+			ost << "i & a_i & P_{a_i}\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+			}
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}%" << endl;
+	FREE_int(coords);
 }
-}
+
+
+
+}}
 
 

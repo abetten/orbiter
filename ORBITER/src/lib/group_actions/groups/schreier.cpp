@@ -1610,6 +1610,24 @@ strong_generators *schreier::stabilizer_any_point(
 }
 
 
+set_and_stabilizer *schreier::get_orbit_rep(action *default_action,
+		longinteger_object &full_group_order,
+		int orbit_idx, int verbose_level)
+{
+	set_and_stabilizer *SaS;
+	strong_generators *SG;
+	int *Set;
+
+	SaS = NEW_OBJECT(set_and_stabilizer);
+	SG = stabilizer_orbit_rep(default_action,
+			full_group_order, orbit_idx, verbose_level);
+	Set = NEW_int(1);
+	Set[0] = orbit[orbit_first[orbit_idx]];
+	SaS->init_everything(default_action, A, Set, 1 /* set_sz */,
+			SG, verbose_level);
+	return SaS;
+}
+
 strong_generators *schreier::stabilizer_orbit_rep(
 	action *default_action, 
 	longinteger_object &full_group_order, int orbit_idx, 

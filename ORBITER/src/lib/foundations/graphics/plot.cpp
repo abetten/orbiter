@@ -829,13 +829,24 @@ void projective_plane_draw_grid(const char *fname,
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
 	G.out_ymax() = ymax;
-	cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+	if (f_v) {
+		cout << "projective_plane_draw_grid" << endl;
+		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+		}
 	
 	G.header();
 	G.begin_figure(factor_1000);
 	
+	if (f_v) {
+		cout << "projective_plane_draw_grid "
+				"before projective_plane_draw_grid2" << endl;
+		}
 	projective_plane_draw_grid2(G, q, Table, nb,
 			f_with_points, rad, f_point_labels, Point_labels, verbose_level);
+	if (f_v) {
+		cout << "projective_plane_draw_grid "
+				"after projective_plane_draw_grid2" << endl;
+		}
 
 
 	G.end_figure();
@@ -872,21 +883,24 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 	int N = 1000;
 
 
+	if (f_v) {
+		cout << "projective_plane_draw_grid2" << endl;
+		}
+
+
 	Px = NEW_int(N);
 	Py = NEW_int(N);
 	Dx = new double[N];
 	Dy = new double[N];
 
 	
-	if (f_v) {
-		cout << "projective_plane_draw_grid2" << endl;
-		}
 
 
 
 
 	if (f_v) {
-		cout << "drawing grid" << endl;
+		cout << "projective_plane_draw_grid2 "
+				"before G.draw_axes_and_grid" << endl;
 		}
 
 
@@ -898,6 +912,12 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 		0.5 /* x_tick_half_width */, 0.5 /* y_tick_half_width */, 
 		TRUE /* f_v_lines */, 1 /* subdivide_v */,
 		TRUE /* f_h_lines */, 1 /* subdivide_h */);
+
+
+	if (f_v) {
+		cout << "projective_plane_draw_grid2 "
+				"after G.draw_axes_and_grid" << endl;
+		}
 
 	Dx[0] = q;
 	Dy[0] = -1;
@@ -943,7 +963,8 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 	if (f_with_points) {
 
 		if (f_v) {
-			cout << "drawing points, nb=" << nb << endl;
+			cout << "projective_plane_draw_grid2 "
+					"drawing points, nb=" << nb << endl;
 			}
 
 		G.sl_thickness(50);	
@@ -960,8 +981,11 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 			//get_ab(q, x1, x2, x3, a, b);
 			projective_plane_make_affine_point(q, x1, x2, x3, a, b);
 
-			cout << "point " << h << " : " << x1 << ", " << x2
-					<< ", " << x3 << " : " << a << ", " << b << endl;
+			if (f_v) {
+				cout << "projective_plane_draw_grid2 "
+						"point " << h << " : " << x1 << ", " << x2
+						<< ", " << x3 << " : " << a << ", " << b << endl;
+			}
 			
 			Dx[0] = a;
 			Dy[0] = b;
@@ -973,21 +997,23 @@ void projective_plane_draw_grid2(mp_graphics &G, int q,
 
 			//G.nice_circle(Px[a * Q + b], Py[a * Q + b], rad);
 			G.nice_circle(Px[0], Py[0], rad);
-			G.text(Px[0], Py[0], Point_labels[h]);
+			if (f_point_labels) {
+				G.text(Px[0], Py[0], Point_labels[h]);
 			}
-
-
 		}
+
+
+	}
 	else {
 		cout << "projective_plane_draw_grid2 not drawing any points" << endl;
-		}
+	}
 
 
 
 
 
-	delete [] Px;
-	delete [] Py;
+	FREE_int(Px);
+	FREE_int(Py);
 	delete [] Dx;
 	delete [] Dy;
 

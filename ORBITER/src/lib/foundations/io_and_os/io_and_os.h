@@ -280,12 +280,16 @@ void int_set_print_masked_tex(ostream &ost,
 	int *v, int len, const char *mask_begin, const char *mask_end);
 void int_set_print_tex_for_inline_text(ostream &ost, int *v, int len);
 void int_vec_print(ostream &ost, int *v, int len);
+void int_vec_print_str(stringstream &ost, int *v, int len);
 void int_vec_print_as_matrix(ostream &ost, 
 	int *v, int len, int width, int f_tex);
 void int_vec_print_as_table(ostream &ost, int *v, int len, int width);
 void int_vec_print_fully(ostream &ost, int *v, int len);
 void int_vec_print_Cpp(ostream &ost, int *v, int len);
 void int_vec_print_GAP(ostream &ost, int *v, int len);
+void int_vec_print_classified(int *v, int len);
+void int_vec_print_classified_str(stringstream &sstr,
+		int *v, int len, int f_backwards);
 void double_vec_print(ostream &ost, double *v, int len);
 void integer_vec_print(ostream &ost, int *v, int len);
 void print_integer_matrix(ostream &ost, int *p, int m, int n);

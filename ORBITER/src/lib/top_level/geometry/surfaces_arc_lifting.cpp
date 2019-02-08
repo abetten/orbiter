@@ -585,7 +585,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 		The_arc->print_set_tex(fp);
 		fp << "$$" << endl;
 
-		display_table_of_projective_points(fp, F,
+		F->display_table_of_projective_points(fp,
 			The_arc->data, 6, 3);
 
 

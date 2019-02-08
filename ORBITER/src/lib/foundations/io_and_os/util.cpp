@@ -1023,6 +1023,20 @@ void int_vec_print(ostream &ost, int *v, int len)
 		}
 }
 
+void int_vec_print_str(stringstream &ost, int *v, int len)
+{
+	int i;
+
+	ost << "(";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << ")";
+}
+
+
 void int_vec_print_as_matrix(ostream &ost, 
 	int *v, int len, int width, int f_tex)
 {
@@ -1097,6 +1111,25 @@ void int_vec_print_GAP(ostream &ost, int *v, int len)
 			ost << ", ";
 		}
 	ost << " ]";
+}
+
+void int_vec_print_classified(int *v, int len)
+{
+	classify C;
+
+	C.init(v, len, FALSE /*f_second */, 0);
+	C.print(TRUE /* f_backwards*/);
+	cout << endl;
+}
+
+void int_vec_print_classified_str(stringstream &sstr,
+		int *v, int len, int f_backwards)
+{
+	classify C;
+
+	C.init(v, len, FALSE /*f_second */, 0);
+	//C.print(TRUE /* f_backwards*/);
+	C.print_naked_stringstream(sstr, f_backwards);
 }
 
 void double_vec_print(ostream &ost, double *v, int len)

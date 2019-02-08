@@ -59,7 +59,6 @@ void determine_conic(int q, const char *override_poly, int *input_pts,
 	int nb_pts, int verbose_level);
 void compute_decomposition_of_graph_wrt_partition(int *Adj, int N, 
 	int *first, int *len, int nb_parts, int *&R, int verbose_level);
-void int_vec_print_classified(int *v, int len);
 void create_Levi_graph_from_incidence_matrix(colored_graph *&CG, int *M, 
 	int nb_rows, int nb_cols, 
 	int f_point_labels, int *point_labels, int verbose_level);

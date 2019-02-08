@@ -1319,7 +1319,7 @@ void int_vec_print_types_naked_stringstream(stringstream &sstr,
 			a = the_vec_sorted[f];
 			sstr << a;
 			if (l > 1) {
-				sstr << "^" << l;
+				sstr << "^{" << l << "}";
 				}
 			if (i)
 				sstr << ", ";
@@ -1332,7 +1332,7 @@ void int_vec_print_types_naked_stringstream(stringstream &sstr,
 			a = the_vec_sorted[f];
 			sstr << a;
 			if (l > 1) {
-				sstr << "^" << l;
+				sstr << "^{" << l << "}";
 				}
 			if (i < nb_types - 1)
 				sstr << ", ";

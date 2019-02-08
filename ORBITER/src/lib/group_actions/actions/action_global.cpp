@@ -2853,7 +2853,7 @@ static void print_from_to(int d, int i, int j, int *v1, int *v2)
 
 
 
-sims *set_stabilizer_in_projective_space(
+strong_generators *set_stabilizer_in_projective_space(
 	action *A_linear, projective_space *P, 
 	int *set, int set_size, int &canonical_pt, 
 	int *canonical_set_or_NULL, 
@@ -3124,7 +3124,8 @@ sims *set_stabilizer_in_projective_space(
 				}
 			}
 			if (h != set_size) {
-				cout << "set_stabilizer_in_projective_space h != set_size" << endl;
+				cout << "set_stabilizer_in_projective_space "
+						"h != set_size" << endl;
 				cout << "h=" << h << endl;
 				cout << "set_size=" << set_size << endl;
 				exit(1);
@@ -3317,10 +3318,18 @@ sims *set_stabilizer_in_projective_space(
 	FREE_int(Mtx);
 	FREE_int(Elt1);
 
+
+	strong_generators *SG;
+
+	SG = NEW_OBJECT(strong_generators);
+
+	SG->init_from_sims(S, 0);
+	FREE_OBJECT(S);
+
 	if (f_v) {
 		cout << "set_stabilizer_in_projective_space done" << endl;
 		}
-	return S;
+	return SG;
 }
 
 
@@ -3910,7 +3919,7 @@ void do_canonical_form(int n, finite_field *F,
 		cout << "do_canonical_form after P->init" << endl;
 		}
 
-	sims *Stab;
+	strong_generators *SG;
 	action *A_linear;
 	vector_ge *nice_gens;
 
@@ -3924,7 +3933,7 @@ void do_canonical_form(int n, finite_field *F,
 		cout << "do_canonical_form before "
 				"set_stabilizer_in_projective_space" << endl;
 		}
-	Stab = set_stabilizer_in_projective_space(
+	SG = set_stabilizer_in_projective_space(
 		A_linear, P, 
 		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */, 
 		FALSE, NULL, 
@@ -3932,7 +3941,7 @@ void do_canonical_form(int n, finite_field *F,
 	//P->draw_point_set_in_plane(fname_base, set, set_size,
 	// TRUE /*f_with_points*/, 0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
-	FREE_OBJECT(Stab);
+	FREE_OBJECT(SG);
 	FREE_OBJECT(A_linear);
 	FREE_OBJECT(P);
 

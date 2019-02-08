@@ -98,7 +98,8 @@ void mp_graphics::exit(ostream &ost, int verbose_level)
 		fp_log.close();
 		fp_tikz.close();
 		if (f_v) {
-			ost << "written file " << fname_mp
+			ost << "mp_graphics::exit "
+					"written file " << fname_mp
 					<< " of size " << file_size(fname_mp) << endl;
 			ost << "written file " << fname_log
 					<< " of size " << file_size(fname_log) << endl;
@@ -613,7 +614,7 @@ void mp_graphics::draw_axes_and_grid(
 			}
 		char str[1000];
 		sprintf(str, "%d", i);
-		cout << "str='" << str << "'" << endl;
+		//cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
 		j += 1;
 		}
@@ -640,7 +641,7 @@ void mp_graphics::draw_axes_and_grid(
 			}
 		char str[1000];
 		sprintf(str, "%d", i);
-		cout << "str='" << str << "'" << endl;
+		//cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
 		j += 1;
 		}
@@ -734,8 +735,8 @@ void mp_graphics::draw_axes_and_grid(
 		}
 
 	sl_thickness(100);	
-	delete [] Px;
-	delete [] Py;
+	FREE_int(Px);
+	FREE_int(Py);
 	delete [] Dx;
 	delete [] Dy;
 

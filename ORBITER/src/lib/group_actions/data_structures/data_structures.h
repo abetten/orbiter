@@ -165,7 +165,7 @@ public:
 // orbit_transversal.C:
 // #############################################################################
 
-//! a container data structure for a poset classification from Orbiter output
+//! a set of orbits using a vector of orbit representatives and stabilizers
 
 
 class orbit_transversal {
@@ -181,9 +181,25 @@ public:
 	~orbit_transversal();
 	void null();
 	void freeself();
+	void init_from_schreier(
+			schreier *Sch,
+			action *default_action,
+			longinteger_object &full_group_order,
+			int verbose_level);
 	void read_from_file(action *A, action *A2, 
 		const char *fname, int verbose_level);
 	classify *get_ago_distribution(int *&ago,
+			int verbose_level);
+	void print_table_latex(
+			ostream &f,
+			int f_has_callback,
+			void (*callback_print_function)(
+					stringstream &ost, void *data, void *callback_data),
+			void *callback_data,
+			int f_has_callback2,
+			void (*callback_print_function2)(
+					stringstream &ost, void *data, void *callback_data),
+			void *callback_data2,
 			int verbose_level);
 };
 
