@@ -708,8 +708,11 @@ public:
 		int *components, int *embedding, int *pair_embedding);
 	void print_indicator_square_nonsquare(int a);
 	void print_element(ostream &ost, int a);
+	void print_element_str(stringstream &ost, int a);
 	void print_element_with_symbol(ostream &ost,
 		int a, int f_exponential, int width, const char *symbol);
+	void print_element_with_symbol_str(stringstream &ost,
+			int a, int f_exponential, int width, const char *symbol);
 	void int_vec_print(ostream &ost, int *v, int len);
 	void int_vec_print_elements_exponential(ostream &ost,
 		int *v, int len, const char *symbol_for_print);
@@ -723,6 +726,8 @@ public:
 	void cheat_sheet(ostream &f, int verbose_level);
 	void cheat_sheet_top(ostream &f, int nb_cols);
 	void cheat_sheet_bottom(ostream &f);
+	void display_table_of_projective_points(
+		ostream &ost, int *Pts, int nb_pts, int len);
 };
 
 extern int nb_calls_to_finite_field_init;
@@ -777,8 +782,6 @@ int line_intersection_with_oval(finite_field &GFq,
 	int verbose_level);
 int get_base_line(finite_field &GFq, int plane1, int plane2,
 	int verbose_level);
-void display_table_of_projective_points(ostream &ost, finite_field *F,
-	int *v, int nb_pts, int len);
 void create_Fisher_BLT_set(int *Fisher_BLT, int q,
 	const char *poly_q, const char *poly_Q, int verbose_level);
 void create_Linear_BLT_set(int *BLT, int q,
@@ -1290,7 +1293,9 @@ public:
 	void print_monomial(ostream &ost, int i);
 	void print_monomial(ostream &ost, int *mon);
 	void print_monomial(char *str, int i);
+	void print_monomial_str(stringstream &ost, int i);
 	void print_equation(ostream &ost, int *coeffs);
+	void print_equation_str(stringstream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(ostream &ost, 
 		int *coeffs, int nb_terms_per_line, 
 		const char *new_line_text);

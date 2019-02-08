@@ -176,12 +176,6 @@ public:
 	 * point to that many int) */
 	int low_level_point_size;
 	
-#if 0
-	int f_has_transversal_reps;
-	int **transversal_reps;
-		// [base_len][transversal_length * elt_size_in_int]
-#endif
-	
 	int f_has_sims;
 	/** sims chain for the group */
 	sims *Sims;
@@ -380,6 +374,24 @@ public:
 	void stabilizer_of_spread_representative(int q,
 		int k, int no, vector_ge *&gens, const char *&stab_order, 
 		int verbose_level);
+	void point_stabilizer_any_point(int &pt,
+		schreier *&Sch, sims *&Stab,
+		strong_generators *&stab_gens,
+		int verbose_level);
+	void point_stabilizer_any_point_with_given_group(
+		strong_generators *input_gens,
+		int &pt,
+		schreier *&Sch, sims *&Stab,
+		strong_generators *&stab_gens,
+		int verbose_level);
+	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
+		int line_rk, int *Elt, int verbose_level);
+	void list_elements_as_permutations_vertically(vector_ge *gens,
+			ostream &ost);
+	matrix_group *get_matrix_group();
+
+
+	// action_group_theory.cpp:
 	void normalizer_using_MAGMA(const char *fname_magma_prefix,
 		sims *G, sims *H, strong_generators *&gens_N, int verbose_level);
 	void conjugacy_classes_using_MAGMA(const char *prefix, 
@@ -406,22 +418,12 @@ public:
 			int verbose_level);
 	void centralizer_using_MAGMA(const char *prefix, 
 		sims *G, int *Elt, int verbose_level);
-	void point_stabilizer_any_point(int &pt, 
-		schreier *&Sch, sims *&Stab, 
-		strong_generators *&stab_gens, 
-		int verbose_level);
-	void point_stabilizer_any_point_with_given_group(
-		strong_generators *input_gens, 
-		int &pt, 
-		schreier *&Sch, sims *&Stab, 
-		strong_generators *&stab_gens, 
-		int verbose_level);
-	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr, 
-		int line_rk, int *Elt, int verbose_level);
-	void list_elements_as_permutations_vertically(vector_ge *gens,
-			ostream &ost);
-	matrix_group *get_matrix_group();
-
+	void conjugacy_classes_and_normalizers(
+			int verbose_level);
+	void read_conjugacy_classes_and_normalizers(
+			char *fname, int verbose_level);
+	void report_fixed_objects(int *Elt,
+			char *fname_latex, int verbose_level);
 
 
 	// action_indexing_cosets.C:
@@ -458,6 +460,7 @@ public:
 	void setup_linear_group_from_strong_generators(matrix_group *M, 
 		vector_ge *&nice_gens,
 		int verbose_level);
+
 	/** Create the projective special linear group PSL */
 	void init_projective_special_group(int n, finite_field *F,
 		int f_semilinear, int f_basis, int verbose_level);
@@ -923,7 +926,7 @@ int reverse_engineer_semilinear_map(action *A,
 	projective_space *P, 
 	int *Elt, int *Mtx, int &frobenius, 
 	int verbose_level);
-sims *set_stabilizer_in_projective_space(
+strong_generators *set_stabilizer_in_projective_space(
 	action *A_linear, projective_space *P, 
 	int *set, int set_size, int &canonical_pt, 
 	int *canonical_set_or_NULL, 

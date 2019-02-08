@@ -1415,43 +1415,6 @@ int get_base_line(finite_field &GFq,
 	return line_rk;
 }
 
-void display_table_of_projective_points(
-	ostream &ost, finite_field *F, int *v, int nb_pts, int len)
-{
-	int i;
-	int *coords;
-	
-	coords = NEW_int(len);
-	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|c|c|c|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "i & a_i & P_{a_i}\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_pts; i++) {
-		F->PG_element_unrank_modified(coords, 1, 3, v[i]);
-		ost << i << " & " << v[i] << " & ";
-		int_vec_print(ost, coords, len);
-		ost << "\\\\" << endl;
-		if (((i + 1) % 30) == 0) {
-			ost << "\\hline" << endl;
-			ost << "\\end{array}" << endl;
-			ost << "$$}%" << endl;
-			ost << "$$" << endl;
-			ost << "\\begin{array}{|c|c|c|}" << endl;
-			ost << "\\hline" << endl;
-			ost << "i & a_i & P_{a_i}\\\\" << endl;
-			ost << "\\hline" << endl;
-			ost << "\\hline" << endl;
-			}
-		}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$}%" << endl;
-	FREE_int(coords);
-}
-
 
 void create_Fisher_BLT_set(int *Fisher_BLT,
 		int q, const char *poly_q, const char *poly_Q, int verbose_level)

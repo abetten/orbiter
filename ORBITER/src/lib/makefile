@@ -143,6 +143,7 @@ MODULES= \
 		group_actions/actions/action.o \
 		group_actions/actions/action_cb.o \
 		group_actions/actions/action_global.o \
+		group_actions/actions/action_group_theory.o \
 		group_actions/actions/action_indexing_cosets.o \
 		group_actions/actions/action_induce.o \
 		group_actions/actions/action_init.o \

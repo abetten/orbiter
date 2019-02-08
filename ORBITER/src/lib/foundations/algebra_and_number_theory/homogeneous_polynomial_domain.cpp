@@ -437,6 +437,22 @@ void homogeneous_polynomial_domain::print_monomial(char *str, int i)
 		}
 }
 
+void homogeneous_polynomial_domain::print_monomial_str(stringstream &ost, int i)
+{
+	int j, a;
+
+	for (j = 0; j < n; j++) {
+		a = Monomials[i * n + j];
+		if (a == 0) {
+			continue;
+			}
+		ost << symbols_latex[j];
+		if (a > 1) {
+			ost << "^" << a;
+			}
+		}
+}
+
 void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 {
 	int i, c;
@@ -459,6 +475,31 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 			//ost << c;
 			}
 		print_monomial(ost, i);
+		}
+}
+
+void homogeneous_polynomial_domain::print_equation_str(stringstream &ost, int *coeffs)
+{
+	int i, c;
+	int f_first = TRUE;
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		c = coeffs[i];
+		if (c == 0) {
+			continue;
+			}
+		if (f_first) {
+			f_first = FALSE;
+			}
+		else {
+			ost << " + ";
+			}
+		if (c > 1) {
+			F->print_element_str(ost, c);
+			//ost << c;
+			}
+		print_monomial_str(ost, i);
 		}
 }
 

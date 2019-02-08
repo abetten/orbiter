@@ -36,6 +36,7 @@ int main(int argc, const char **argv)
 	int f_orbits_on_subsets = FALSE;
 	int orbits_on_subsets_size = 0;
 	int f_draw_poset = FALSE;
+	int f_classes = FALSE;
 
 
 	int i;
@@ -65,6 +66,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset" << endl;
+			}
+		else if (strcmp(argv[i], "-classes") == 0) {
+			f_classes = TRUE;
+			cout << "-classes" << endl;
 			}
 	}
 
@@ -117,6 +122,20 @@ int main(int argc, const char **argv)
 	if (LG->f_has_nice_gens) {
 		cout << "we have nice generators, they are:" << endl;
 		LG->nice_gens->print(cout);
+		cout << "$$" << endl;
+		for (i = 0; i < LG->nice_gens->len; i++) {
+			//cout << "Generator " << i << " / " << gens->len
+			// << " is:" << endl;
+			A->element_print_latex(LG->nice_gens->ith(i), cout);
+			if (i < LG->nice_gens->len - 1) {
+				cout << ", " << endl;
+			}
+			if (((i + 1) % 3) == 0 && i < LG->nice_gens->len - 1) {
+				cout << "$$" << endl;
+				cout << "$$" << endl;
+				}
+			}
+		cout << "$$" << endl;
 		LG->nice_gens->print_as_permutation(cout);
 	}
 
@@ -129,6 +148,10 @@ int main(int argc, const char **argv)
 		cout << i << " & ";
 		A->print_point(i, cout);
 		cout << "\\\\" << endl;
+	}
+
+	if (f_classes) {
+		A->conjugacy_classes_and_normalizers(verbose_level);
 	}
 
 	if (f_orbits_on_points) {

@@ -9,6 +9,7 @@ MODULES = \
 	action.o \
 	action_cb.o \
 	action_global.o \
+	action_group_theory.o \
 	action_indexing_cosets.o \
 	action_induce.o \
 	action_init.o \

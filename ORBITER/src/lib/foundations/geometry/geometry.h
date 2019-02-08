@@ -1444,7 +1444,8 @@ public:
 		int verbose_level);
 	void init_line_set(projective_space *P, int *set, int sz, 
 		int verbose_level);
-	void init_packing_from_set(projective_space *P, int *packing, int sz, 
+	void init_packing_from_set(projective_space *P,
+		int *packing, int sz,
 		int verbose_level);
 	void init_packing_from_set_of_sets(projective_space *P, 
 		set_of_sets *SoS, int verbose_level);
@@ -2478,7 +2479,8 @@ public:
 		int verbose_level);
 	int dual_rank_of_plane_in_three_space(int plane_rank, 
 		int verbose_level);
-	void plane_equation_from_three_lines_in_three_space(int *three_lines, 
+	void plane_equation_from_three_lines_in_three_space(
+		int *three_lines,
 		int *plane_eqn4, int verbose_level);
 	void decomposition(int nb_subsets, int *sz, int **subsets, 
 		incidence_structure *&Inc, 

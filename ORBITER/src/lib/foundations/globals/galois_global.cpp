@@ -1049,15 +1049,6 @@ void compute_decomposition_of_graph_wrt_partition(
 		}
 }
 
-void int_vec_print_classified(int *v, int len)
-{
-	classify C;
-
-	C.init(v, len, FALSE /*f_second */, 0);
-	C.print(TRUE /* f_backwards*/);
-	cout << endl;
-}
-
 void create_Levi_graph_from_incidence_matrix(
 	colored_graph *&CG, int *M, int nb_rows, int nb_cols,
 	int f_point_labels, int *point_labels,

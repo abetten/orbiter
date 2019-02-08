@@ -6087,6 +6087,9 @@ void projective_space::elliptic_curve_addition_table(
 						"addition_table cannot find point pk" << endl;
 				cout << "i=" << i << " pi=" << pi << " j=" << j
 						<< " pj=" << pj << " pk=" << pk << endl;
+				cout << "Pts: ";
+				int_vec_print(cout, Pts, nb_pts);
+				cout << endl;
 				exit(1);
 				}
 			Table[i * nb_pts + j] = k;
@@ -6336,19 +6339,35 @@ void projective_space::draw_point_set_in_plane(
 			Labels[i] = NEW_char(strlen(str) + 1);
 			strcpy(Labels[i], str);
 			}
+		if (f_v) {
+			cout << "projective_space::draw_point_set_in_plane "
+					"before projective_plane_draw_grid" << endl;
+			}
 		projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad, 
 			q, Table, nb_pts, TRUE, Labels, 
 			f_embedded, f_sideways, 
-			0 /*verbose_level */);
+			verbose_level - 1);
+		if (f_v) {
+			cout << "projective_space::draw_point_set_in_plane "
+					"after projective_plane_draw_grid" << endl;
+			}
 		for (i = 0; i < nb_pts; i++) {
 			FREE_char(Labels[i]);
 			}
 		FREE_pchar(Labels);
 		}
 	else {
+		if (f_v) {
+			cout << "projective_space::draw_point_set_in_plane "
+					"before projective_plane_draw_grid" << endl;
+			}
 		projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad, 
 			q, Table, nb_pts, FALSE, NULL,
-			f_embedded, f_sideways, 0 /*verbose_level */);
+			f_embedded, f_sideways, verbose_level - 1);
+		if (f_v) {
+			cout << "projective_space::draw_point_set_in_plane "
+					"after projective_plane_draw_grid" << endl;
+			}
 		}
 	FREE_int(Table);
 	if (f_v) {

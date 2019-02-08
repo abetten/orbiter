@@ -286,7 +286,8 @@ void extend(int arc_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	sims *Stab;
+	//sims *Stab;
+	strong_generators *gens;
 	longinteger_object go;
 	int i, pt, nb, orb, h, idx, line, f;
 	int *line_type_before;
@@ -313,7 +314,7 @@ void extend(int arc_size, int verbose_level)
 	if (f_vv) {
 		cout << "computing stabilizer of the arc:" << endl;
 	}
-	Stab = set_stabilizer_in_projective_space(
+	gens = set_stabilizer_in_projective_space(
 		A_linear, P, 
 		Arc, arc_size, canonical_pt, canonical_set, 
 		FALSE, NULL, 
@@ -322,19 +323,19 @@ void extend(int arc_size, int verbose_level)
 	if (f_v) {
 		cout << "Node " << cnt << " level " << arc_size
 			<< " The stabilizer of the arc has been computed" << endl;
-		Stab->group_order(go);
+		gens->group_order(go);
 		cout << "It is a group of order " << go << endl;
 		cout << "canonical_pt = " << canonical_pt << endl;
 	}
 	
 	//exit(1);
 	
-	strong_generators *gens;
-
+#if 0
 	gens = NEW_OBJECT(strong_generators);
 
 	
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
+#endif
 
 	schreier *Sch;
 	
@@ -350,7 +351,7 @@ void extend(int arc_size, int verbose_level)
 			}
 			FREE_OBJECT(Sch);
 			FREE_OBJECT(gens);
-			FREE_OBJECT(Stab);
+			//FREE_OBJECT(Stab);
 			return;
 			}
 		else {
@@ -425,7 +426,7 @@ void extend(int arc_size, int verbose_level)
 		}
 		FREE_OBJECT(Sch);
 		FREE_OBJECT(gens);
-		FREE_OBJECT(Stab);
+		//FREE_OBJECT(Stab);
 		return;
 		}
 
@@ -479,7 +480,7 @@ void extend(int arc_size, int verbose_level)
 	}
 	FREE_OBJECT(Sch);
 	FREE_OBJECT(gens);
-	FREE_OBJECT(Stab);
+	//FREE_OBJECT(Stab);
 	if (f_v) {
 		cout << "Node " << cnt << " level " << arc_size << " after FREE" << endl;
 	}
