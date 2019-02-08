@@ -462,7 +462,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 {
 	int pt_loc, cur, cur_pt, total, i, next_pt;
 	int next_pt_loc, total1, cur1;
-	int f_v = TRUE;//(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;//(verbose_level >= 2);
 	//int f_vvv = FALSE; //(verbose_level >= 3);
 
