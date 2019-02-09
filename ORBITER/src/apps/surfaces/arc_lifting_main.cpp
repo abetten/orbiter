@@ -216,7 +216,7 @@ void lift_single_arc(int *arc, int arc_size,
 	fp << endl;
 
 	fp << "consisting of the following points:\\\\" << endl;
-	display_table_of_projective_points(fp, F, arc, 6, 3);
+	F->display_table_of_projective_points(fp, arc, 6, 3);
 	
 
 
@@ -447,7 +447,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 		The_arc->print_set_tex(fp);
 		fp << "$$" << endl;
 
-		display_table_of_projective_points(fp, F, 
+		F->display_table_of_projective_points(fp,
 			The_arc->data, 6, 3);
 
 

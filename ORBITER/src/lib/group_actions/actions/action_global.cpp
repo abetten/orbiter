@@ -2395,7 +2395,7 @@ void O4_isomorphism_2to4_embedded(action *A4, action *A5, finite_field *Fq,
 		print_integer_matrix_width(cout, mtx2x2_S, 2, 2, 2, 3);
 		}
 	
-	O4_isomorphism_2to4(Fq, mtx2x2_T, mtx2x2_S, f_switch, mtx4x4);
+	Fq->O4_isomorphism_2to4(mtx2x2_T, mtx2x2_S, f_switch, mtx4x4);
 	
 	A4->make_element(E1, mtx4x4, 0);
 	if (f_v) {
@@ -2568,7 +2568,7 @@ void print_4x4_as_2x2(action *A2, finite_field *Fq, int *mtx4x4)
 	int *elt1;
 		
 	elt1 = NEW_int(A2->elt_size_in_int);	
-	O4_isomorphism_4to2(Fq, small, small + 4,
+	Fq->O4_isomorphism_4to2(small, small + 4,
 			f_switch, mtx4x4, 0/*verbose_level*/);
 	cout << "after isomorphism:" << endl;
 	cout << "f_switch=" << f_switch << endl;

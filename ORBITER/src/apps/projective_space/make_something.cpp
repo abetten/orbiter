@@ -22,11 +22,6 @@ using namespace orbiter::top_level;
 int t0; // the system time when the program started
 
 
-void export_magma(finite_field *F,
-		int d, int *Pts, int nb_pts, char *fname);
-void export_gap(finite_field *F,
-		int d, int *Pts, int nb_pts, char *fname);
-
 
 
 int main(int argc, const char **argv)
@@ -109,6 +104,10 @@ int main(int argc, const char **argv)
 	int segre_variety_b;
 
 	int f_Maruta_Hamada_arc = FALSE;
+
+	int f_projective_variety = FALSE;
+	int variety_degree = 0;
+	const char *variety_coeffs = NULL;
 
 	t0 = os_ticks();
 
@@ -311,6 +310,14 @@ int main(int argc, const char **argv)
 			poly_Q = argv[++i];
 			cout << "-poly_Q " << poly_Q << endl;
 			}
+		else if (strcmp(argv[i], "-projective_variety") == 0) {
+			f_projective_variety = TRUE;
+			variety_degree = atoi(argv[++i]);
+			variety_coeffs = argv[++i];
+			cout << "-projective_variety "
+					<< variety_degree
+					<< " " << variety_coeffs << endl;
+			}
 		}
 	
 	if (!f_q) {
@@ -336,8 +343,8 @@ int main(int argc, const char **argv)
 			verbose_level);
 			// ACTION/geometric_object.C
 
-		export_magma(F, 3, Pts, nb_pts, fname);
-		export_gap(F, 3, Pts, nb_pts, fname);
+		F->export_magma(3, Pts, nb_pts, fname);
+		F->export_gap(3, Pts, nb_pts, fname);
 
 		}
 	else if (f_subiaco_oval) {
@@ -348,8 +355,8 @@ int main(int argc, const char **argv)
 			// ACTION/geometric_object.C
 
 
-		export_magma(F, 3, Pts, nb_pts, fname);
-		export_gap(F, 3, Pts, nb_pts, fname);
+		F->export_magma(3, Pts, nb_pts, fname);
+		F->export_gap(3, Pts, nb_pts, fname);
 
 
 		}
@@ -360,8 +367,8 @@ int main(int argc, const char **argv)
 			// ACTION/geometric_object.C
 
 
-		export_magma(F, 3, Pts, nb_pts, fname);
-		export_gap(F, 3, Pts, nb_pts, fname);
+		F->export_magma(3, Pts, nb_pts, fname);
+		F->export_gap(3, Pts, nb_pts, fname);
 
 		}
 	else if (f_adelaide_hyperoval) {
@@ -381,8 +388,8 @@ int main(int argc, const char **argv)
 			// ACTION/geometric_object.C
 
 
-		export_magma(F, 3, Pts, nb_pts, fname);
-		export_gap(F, 3, Pts, nb_pts, fname);
+		F->export_magma(3, Pts, nb_pts, fname);
+		F->export_gap(3, Pts, nb_pts, fname);
 
 		
 		FREE_OBJECT(S);
@@ -595,6 +602,16 @@ int main(int argc, const char **argv)
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
+	else if (f_projective_variety) {
+		//variety_nb_vars = atoi(argv[++i]);
+		//variety_degree = atoi(argv[++i]);
+		//variety_coeffs = argv[++i];
+		F->create_projective_variety(
+				n + 1, variety_degree,
+				variety_coeffs,
+				fname, nb_pts, Pts,
+				verbose_level);
+	}
 	else {
 		cout << "nothing to create" << endl;
 		exit(1);
@@ -622,130 +639,4 @@ int main(int argc, const char **argv)
 }
 
 
-void export_magma(finite_field *F,
-		int d, int *Pts, int nb_pts, char *fname)
-{
-	char fname2[1000];
-	int *v;
-	int h, i, a, b;
-
-	v = NEW_int(d);
-	strcpy(fname2, fname);
-	replace_extension_with(fname2, ".magma");
-	
-	{
-	ofstream fp(fname2);
-
-	fp << "G,I:=PGammaL(" << d << "," << F->q
-			<< ");F:=GF(" << F->q << ");" << endl;
-	fp << "S:={};" << endl;
-	fp << "a := F.1;" << endl;
-	for (h = 0; h < nb_pts; h++) {
-		F->PG_element_unrank_modified(v, 1, d, Pts[h]);
-
-		F->PG_element_normalize_from_front(v, 1, d);
-		
-		fp << "Include(~S,Index(I,[";
-		for (i = 0; i < d; i++) {
-			a = v[i];
-			if (a == 0) {
-				fp << "0";
-				}
-			else if (a == 1) {
-				fp << "1";
-				}
-			else {
-				b = F->log_alpha(a);
-				fp << "a^" << b;
-				}
-			if (i < d - 1) {
-				fp << ",";
-				}
-			}
-		fp << "]));" << endl;
-		}
-	fp << "Stab := Stabilizer(G,S);" << endl;
-	fp << "Size(Stab);" << endl;
-	fp << endl;
-	}
-	cout << "Written file " << fname2 << " of size "
-			<< file_size(fname2) << endl;
-
-	FREE_int(v);
-}
-
-void export_gap(finite_field *F,
-		int d, int *Pts, int nb_pts, char *fname)
-{
-	char fname2[1000];
-	int *v;
-	int h, i, a, b;
-
-	v = NEW_int(d);
-	strcpy(fname2, fname);
-	replace_extension_with(fname2, ".gap");
-	
-	{
-	ofstream fp(fname2);
-
-	fp << "LoadPackage(\"fining\");" << endl;
-	fp << "pg := ProjectiveSpace(" << d - 1 << "," << F->q << ");" << endl;
-	fp << "S:=[" << endl;
-	for (h = 0; h < nb_pts; h++) {
-		F->PG_element_unrank_modified(v, 1, d, Pts[h]);
-
-		F->PG_element_normalize_from_front(v, 1, d);
-		
-		fp << "[";
-		for (i = 0; i < d; i++) {
-			a = v[i];
-			if (a == 0) {
-				fp << "0*Z(" << F->q << ")";
-				}
-			else if (a == 1) {
-				fp << "Z(" << F->q << ")^0";
-				}
-			else {
-				b = F->log_alpha(a);
-				fp << "Z(" << F->q << ")^" << b;
-				}
-			if (i < d - 1) {
-				fp << ",";
-				}
-			}
-		fp << "]";
-		if (h < nb_pts - 1) {
-			fp << ",";
-			}
-		fp << endl;
-		}
-	fp << "];" << endl;
-	fp << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
-	fp << "g := CollineationGroup(pg);" << endl;
-	fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
-	fp << "Size(stab);" << endl;
-	}
-	cout << "Written file " << fname2 << " of size "
-			<< file_size(fname2) << endl;
-
-#if 0
-LoadPackage("fining");
-pg := ProjectiveSpace(2,4);
-#points := Points(pg);
-#pointslist := AsList(points);
-#Display(pointslist[1]);
-frame := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]]*Z(2)^0;
-frame := List(frame,x -> VectorSpaceToElement(pg,x));
-pairs := Combinations(frame,2);
-secants := List(pairs,p -> Span(p[1],p[2]));
-leftover := Filtered(pointslist,t->not ForAny(secants,s->t in s));
-hyperoval := Union(frame,leftover);
-g := CollineationGroup(pg);
-stab := Stabilizer(g,Set(hyperoval),OnSets);
-StructureDescription(stab);
-#endif
-
-
-	FREE_int(v);
-}
 

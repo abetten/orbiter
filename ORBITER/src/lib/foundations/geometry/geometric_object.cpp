@@ -386,7 +386,7 @@ void create_subiaco_oval(finite_field *F,
 		cout << "create_subiaco_oval" << endl;
 		}
 
-	Subiaco_oval(F, Pts, nb_pts, f_short, verbose_level);
+	F->Subiaco_oval(Pts, nb_pts, f_short, verbose_level);
 	if (f_short) {
 		sprintf(fname, "oval_subiaco_short_q%d.txt", q);
 		}
@@ -440,7 +440,7 @@ void create_subiaco_hyperoval(finite_field *F,
 		cout << "create_subiaco_hyperoval" << endl;
 		}
 
-	Subiaco_hyperoval(F, Pts, nb_pts, verbose_level);
+	F->Subiaco_hyperoval(Pts, nb_pts, verbose_level);
 	sprintf(fname, "subiaco_hyperoval_q%d.txt", q);
 	
 
@@ -490,7 +490,7 @@ void create_adelaide_hyperoval(subfield_structure *S,
 		cout << "create_adelaide_hyperoval" << endl;
 		}
 
-	Adelaide_hyperoval(S, Pts, nb_pts, verbose_level);
+	S->Adelaide_hyperoval(Pts, nb_pts, verbose_level);
 	sprintf(fname, "adelaide_hyperoval_q%d.txt", q);
 	
 

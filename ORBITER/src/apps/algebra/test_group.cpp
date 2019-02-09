@@ -491,7 +491,7 @@ void test6(int verbose_level)
 	A->make_element(Elt_Bs, dataBs, FALSE);
 
 	cout << "making elements A,B:" << endl;
-	O4_isomorphism_2to4(F, dataAt, dataAs, TRUE, mtxA);
+	F->O4_isomorphism_2to4(dataAt, dataAs, TRUE, mtxA);
 	A4->make_element(ELT_A, mtxA, verbose_level);
 	cout << "A:" << endl;
 	A4->element_print_quick(ELT_A, cout);
@@ -499,7 +499,7 @@ void test6(int verbose_level)
 	cout << "A has order " << ord << endl;
 
 
-	O4_isomorphism_2to4(F, dataBt, dataBs, TRUE, mtxB);
+	F->O4_isomorphism_2to4(dataBt, dataBs, TRUE, mtxB);
 	A4->make_element(ELT_B, mtxB, verbose_level);
 	cout << "B:" << endl;
 	A4->element_print_quick(ELT_B, cout);
@@ -643,7 +643,7 @@ void test6(int verbose_level)
 
 
 
-	O4_isomorphism_2to4(F, dataBt, dataBs, TRUE, mtxB);
+	F->O4_isomorphism_2to4(dataBt, dataBs, TRUE, mtxB);
 	A4->make_element(ELT1, mtxB, verbose_level);
 	cout << "B:" << endl;
 	A4->element_print_quick(ELT1, cout);
@@ -682,7 +682,7 @@ void test6(int verbose_level)
 	for (i = 0; i < 17; i++) {
 		tangent_planes[i] = new int[3 * 4];
 		cout << "i=" << i << endl;
-		O4_find_tangent_plane(*F, R_cur[0], R_cur[1], R_cur[2], R_cur[3],
+		F->O4_find_tangent_plane(R_cur[0], R_cur[1], R_cur[2], R_cur[3],
 			tangent_planes[i], verbose_level);
 		F->mult_vector_from_the_left(R_cur, mtxA, R_next, 4, 4);
 		R_cur[0] = R_next[0];
@@ -738,7 +738,7 @@ void O4_grid_action(action *A_PGL4, int *Elt, int verbose_level)
 		x = z / size;
 		y = z % size;
 		cout << "(" << x << "," << y << ") -> ";
-		O4_grid_coordinates_unrank(*F, x1, x2, x3, x4,
+		F->O4_grid_coordinates_unrank(x1, x2, x3, x4,
 			x, y, verbose_level);
 		v[0] = x1;
 		v[1] = x2;
@@ -751,7 +751,7 @@ void O4_grid_action(action *A_PGL4, int *Elt, int verbose_level)
 		cout << "w=";
 		int_vec_print(cout, w, 4);
 		cout << endl;
-		O4_grid_coordinates_rank(*F, w[0], w[1], w[2], w[3],
+		F->O4_grid_coordinates_rank(w[0], w[1], w[2], w[3],
 				xx, yy, verbose_level);
 		cout << "(" << xx << "," << yy << ")" << endl;
 		zz = xx * size + yy;
@@ -862,7 +862,7 @@ void test7(int verbose_level)
 	A->make_element(Elt_Bs, dataBs, FALSE);
 
 	cout << "making elements A,B (including fine_tune):" << endl;
-	O4_isomorphism_2to4(F, dataAt, dataAs, f_switchA, mtxA);
+	F->O4_isomorphism_2to4(dataAt, dataAs, f_switchA, mtxA);
 	fine_tune(F, mtxA, verbose_level);
 	A4->make_element(ELT_A, mtxA, verbose_level);
 	cout << "A:" << endl;
@@ -871,7 +871,7 @@ void test7(int verbose_level)
 	cout << "A has order " << ord << endl;
 
 
-	O4_isomorphism_2to4(F, dataBt, dataBs, f_switchB, mtxB);
+	F->O4_isomorphism_2to4(dataBt, dataBs, f_switchB, mtxB);
 	A4->make_element(ELT_B, mtxB, verbose_level);
 	fine_tune(F, mtxB, verbose_level);
 	cout << "B:" << endl;
@@ -1728,7 +1728,7 @@ void test16(int verbose_level)
 			
 			int small[8], f_switch;
 			
-			O4_isomorphism_4to2(Fq, small, small + 4, f_switch, data, verbose_level);
+			Fq->O4_isomorphism_4to2(small, small + 4, f_switch, data, verbose_level);
 			cout << "after isomorphism:" << endl;
 			cout << "f_switch=" << f_switch << endl;
 			for (r = 0; r < 2; r++) {

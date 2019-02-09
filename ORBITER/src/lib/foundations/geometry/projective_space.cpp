@@ -2707,7 +2707,7 @@ void projective_space::create_OKeefe_Penttila_hyperoval_32(
 		}
 
 	for (i = 0; i < q; i++) {
-		v[0] = OKeefe_Penttila_32(F, i);
+		v[0] = F->OKeefe_Penttila_32(i);
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = rank_point(v);		

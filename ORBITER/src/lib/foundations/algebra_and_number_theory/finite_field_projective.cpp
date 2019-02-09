@@ -14,6 +14,64 @@
 namespace orbiter {
 namespace foundations {
 
+void finite_field::create_projective_variety(
+		int variety_nb_vars, int variety_degree,
+		const char *variety_coeffs,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_projective_variety" << endl;
+	}
+
+	homogeneous_polynomial_domain *HPD;
+	int *coeff;
+
+	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	HPD->init(this, variety_nb_vars, variety_degree,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+
+	coeff = NEW_int(HPD->nb_monomials);
+	int_vec_zero(coeff, HPD->nb_monomials);
+
+	sprintf(fname, "variety_%d_%d_%d_%s.txt",
+			variety_nb_vars, variety_degree, q, variety_coeffs);
+	int *coeff_pairs;
+	int len;
+	int a, b, i;
+
+	int_vec_scan(variety_coeffs, coeff_pairs, len);
+	for (i = 0; i < len / 2; i++) {
+		a = coeff_pairs[2 * i];
+		b = coeff_pairs[2 * i + 1];
+		if (b >= HPD->nb_monomials) {
+			cout << "b >= HPD->nb_monomials" << endl;
+			exit(1);
+		}
+		if (b < 0) {
+			cout << "b < 0" << endl;
+			exit(1);
+		}
+		coeff[b] = a;
+	}
+
+	Pts = NEW_int(HPD->P->N_points);
+
+	HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
+
+	FREE_int(coeff_pairs);
+	FREE_int(coeff);
+	FREE_OBJECT(HPD);
+
+	if (f_v) {
+		cout << "finite_field::create_projective_variety done" << endl;
+	}
+}
+
 void finite_field::PG_element_normalize(
 		int *v, int stride, int len)
 // last non-zero element made one
@@ -680,6 +738,1165 @@ int finite_field::projective_point_rank(int n, int *v)
 	PG_element_rank_modified(v, 1 /* stride */, n + 1, rk);
 	return rk;
 }
+
+void finite_field::create_BLT_point(
+		int *v5, int a, int b, int c, int verbose_level)
+// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
+// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
+// b^2/4 + (-c)*a + -(b^2/4-ac)
+// = b^2/4 -ac -b^2/4 + ac = 0
+{
+	int f_v = (verbose_level >= 1);
+	int v0, v1, v2, v3, v4;
+	int half, four, quarter, minus_one;
+
+	if (f_v) {
+		cout << "finite_field::create_BLT_point" << endl;
+		}
+	four = 4 % p;
+	half = inverse(2);
+	quarter = inverse(four);
+	minus_one = negate(1);
+	if (f_v) {
+		cout << "finite_field::create_BLT_point "
+				"four=" << four << endl;
+		cout << "finite_field::create_BLT_point "
+				"half=" << half << endl;
+		cout << "finite_field::create_BLT_point "
+				"quarter=" << quarter << endl;
+		cout << "finite_field::create_BLT_point "
+				"minus_one=" << minus_one << endl;
+		}
+
+	v0 = mult(minus_one, mult(b, half));
+	v1 = mult(minus_one, c);
+	v2 = a;
+	v3 = mult(minus_one, add(
+			mult(mult(b, b), quarter), negate(mult(a, c))));
+	v4 = 1;
+	int_vec_init5(v5, v0, v1, v2, v3, v4);
+	if (f_v) {
+		cout << "finite_field::create_BLT_point done" << endl;
+		}
+
+}
+
+void finite_field::Segre_hyperoval(
+		int *&Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int N = q + 2;
+	int i, t, a, t6;
+	int *Mtx;
+
+	if (f_v) {
+		cout << "finite_field::Segre_hyperoval q=" << q << endl;
+		}
+	if (EVEN(e)) {
+		cout << "finite_field::Segre_hyperoval needs e odd" << endl;
+		exit(1);
+		}
+
+	nb_pts = N;
+
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
+	for (t = 0; t < q; t++) {
+		t6 = power(t, 6);
+		Mtx[t * 3 + 0] = 1;
+		Mtx[t * 3 + 1] = t;
+		Mtx[t * 3 + 2] = t6;
+		}
+	t = q;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 1;
+	Mtx[t * 3 + 2] = 0;
+	t = q + 1;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 0;
+	Mtx[t * 3 + 2] = 1;
+	for (i = 0; i < N; i++) {
+		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		Pts[i] = a;
+		}
+
+	FREE_int(Mtx);
+	if (f_v) {
+		cout << "finite_field::Segre_hyperoval "
+				"q=" << q << " done" << endl;
+		}
+}
+
+
+void finite_field::GlynnI_hyperoval(
+		int *&Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int N = q + 2;
+	int i, t, te, a;
+	int sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
+	int *Mtx;
+
+	if (f_v) {
+		cout << "finite_field::GlynnI_hyperoval q=" << q << endl;
+		}
+	if (EVEN(e)) {
+		cout << "finite_field::GlynnI_hyperoval needs e odd" << endl;
+		exit(1);
+		}
+
+	sigma = e - 1;
+	for (i = 0; i < e; i++) {
+		if (((i * i) % e) == sigma) {
+			gamma = i;
+			break;
+			}
+		}
+	if (i == e) {
+		cout << "finite_field::GlynnI_hyperoval "
+				"did not find gamma" << endl;
+		exit(1);
+		}
+
+	cout << "finite_field::GlynnI_hyperoval sigma = " << sigma
+			<< " gamma = " << gamma << endl;
+	//Gamma = i_power_j(2, gamma);
+	Sigma = i_power_j(2, sigma);
+
+	exponent = 3 * Sigma + 4;
+
+	nb_pts = N;
+
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
+	for (t = 0; t < q; t++) {
+		te = power(t, exponent);
+		Mtx[t * 3 + 0] = 1;
+		Mtx[t * 3 + 1] = t;
+		Mtx[t * 3 + 2] = te;
+		}
+	t = q;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 1;
+	Mtx[t * 3 + 2] = 0;
+	t = q + 1;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 0;
+	Mtx[t * 3 + 2] = 1;
+	for (i = 0; i < N; i++) {
+		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		Pts[i] = a;
+		}
+
+	FREE_int(Mtx);
+	if (f_v) {
+		cout << "finite_field::GlynnI_hyperoval "
+				"q=" << q << " done" << endl;
+		}
+}
+
+void finite_field::GlynnII_hyperoval(
+		int *&Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int N = q + 2;
+	int i, t, te, a;
+	int sigma, gamma = 0, Sigma, Gamma, exponent;
+	int *Mtx;
+
+	if (f_v) {
+		cout << "finite_field::GlynnII_hyperoval q=" << q << endl;
+		}
+	if (EVEN(e)) {
+		cout << "finite_field::GlynnII_hyperoval "
+				"needs e odd" << endl;
+		exit(1);
+		}
+
+	sigma = e - 1;
+	for (i = 0; i < e; i++) {
+		if (((i * i) % e) == sigma) {
+			gamma = i;
+			break;
+			}
+		}
+	if (i == e) {
+		cout << "finite_field::GlynnII_hyperoval "
+				"did not find gamma" << endl;
+		exit(1);
+		}
+
+	cout << "finite_field::GlynnII_hyperoval "
+			"sigma = " << sigma << " gamma = " << i << endl;
+	Gamma = i_power_j(2, gamma);
+	Sigma = i_power_j(2, sigma);
+
+	exponent = Sigma + Gamma;
+
+	nb_pts = N;
+
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
+	for (t = 0; t < q; t++) {
+		te = power(t, exponent);
+		Mtx[t * 3 + 0] = 1;
+		Mtx[t * 3 + 1] = t;
+		Mtx[t * 3 + 2] = te;
+		}
+	t = q;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 1;
+	Mtx[t * 3 + 2] = 0;
+	t = q + 1;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 0;
+	Mtx[t * 3 + 2] = 1;
+	for (i = 0; i < N; i++) {
+		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		Pts[i] = a;
+		}
+
+	FREE_int(Mtx);
+	if (f_v) {
+		cout << "finite_field::GlynnII_hyperoval "
+				"q=" << q << " done" << endl;
+		}
+}
+
+
+void finite_field::Subiaco_oval(
+		int *&Pts, int &nb_pts, int f_short, int verbose_level)
+// following Payne, Penttila, Pinneri:
+// Isomorphisms Between Subiaco q-Clan Geometries,
+// Bull. Belg. Math. Soc. 2 (1995) 197-222.
+// formula (53)
+{
+	int f_v = (verbose_level >= 1);
+	int N = q + 1;
+	int i, t, a, b, h, k, top, bottom;
+	int omega, omega2;
+	int t2, t3, t4, sqrt_t;
+	int *Mtx;
+
+	if (f_v) {
+		cout << "finite_field::Subiaco_oval "
+				"q=" << q << " f_short=" << f_short << endl;
+		}
+
+	nb_pts = N;
+	k = (q - 1) / 3;
+	if (k * 3 != q - 1) {
+		cout << "Subiaco_oval k * 3 != q - 1" << endl;
+		exit(1);
+		}
+	omega = power(alpha, k);
+	omega2 = mult(omega, omega);
+	if (add3(omega2, omega, 1) != 0) {
+		cout << "finite_field::Subiaco_oval "
+				"add3(omega2, omega, 1) != 0" << endl;
+		exit(1);
+		}
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
+	for (t = 0; t < q; t++) {
+		t2 = mult(t, t);
+		t3 = mult(t2, t);
+		t4 = mult(t2, t2);
+		sqrt_t = frobenius_power(t, e - 1);
+		if (mult(sqrt_t, sqrt_t) != t) {
+			cout << "finite_field::Subiaco_oval "
+					"mult(sqrt_t, sqrt_t) != t" << endl;
+			exit(1);
+			}
+		bottom = add3(t4, mult(omega2, t2), 1);
+		if (f_short) {
+			top = mult(omega2, add(t4, t));
+			}
+		else {
+			top = add3(t3, t2, mult(omega2, t));
+			}
+		if (FALSE) {
+			cout << "t=" << t << " top=" << top
+					<< " bottom=" << bottom << endl;
+			}
+		a = mult(top, inverse(bottom));
+		if (f_short) {
+			b = sqrt_t;
+			}
+		else {
+			b = mult(omega, sqrt_t);
+			}
+		h = add(a, b);
+		Mtx[t * 3 + 0] = 1;
+		Mtx[t * 3 + 1] = t;
+		Mtx[t * 3 + 2] = h;
+		}
+	t = q;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 1;
+	Mtx[t * 3 + 2] = 0;
+	for (i = 0; i < N; i++) {
+		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		Pts[i] = a;
+		}
+
+	FREE_int(Mtx);
+	if (f_v) {
+		cout << "finite_field::Subiaco_oval "
+				"q=" << q << " done" << endl;
+		}
+}
+
+
+
+
+void finite_field::Subiaco_hyperoval(
+		int *&Pts, int &nb_pts, int verbose_level)
+// email 12/27/2014
+//The o-polynomial of the Subiaco hyperoval is
+
+//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3
+// + d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
+
+//where d has absolute trace 1.
+
+//Best,
+//Tim
+
+//absolute trace of 1/d is 1 not d...
+
+{
+	int f_v = (verbose_level >= 1);
+	int N = q + 2;
+	int i, t, d, dv, d2, one_d_d2, a, h;
+	int t2, t3, t4, sqrt_t;
+	int top1, top2, top3, top4, top, bottom;
+	int *Mtx;
+
+	if (f_v) {
+		cout << "finite_field::Subiaco_hyperoval q=" << q << endl;
+		}
+
+	nb_pts = N;
+	for (d = 1; d < q; d++) {
+		dv = inverse(d);
+		if (absolute_trace(dv) == 1) {
+			break;
+			}
+		}
+	if (d == q) {
+		cout << "finite_field::Subiaco_hyperoval "
+				"cannot find element d" << endl;
+		exit(1);
+		}
+	d2 = mult(d, d);
+	one_d_d2 = add3(1, d, d2);
+
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
+	for (t = 0; t < q; t++) {
+		t2 = mult(t, t);
+		t3 = mult(t2, t);
+		t4 = mult(t2, t2);
+		sqrt_t = frobenius_power(t, e - 1);
+		if (mult(sqrt_t, sqrt_t) != t) {
+			cout << "finite_field::Subiaco_hyperoval "
+					"mult(sqrt_t, sqrt_t) != t" << endl;
+			exit(1);
+			}
+
+
+		bottom = add3(t4, mult(d2, t2), 1);
+
+		//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3 +
+		// d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
+
+		top1 = mult(d2,t4);
+		top2 = mult3(d2, one_d_d2, t3);
+		top3 = mult3(d2, one_d_d2, t2);
+		top4 = mult(d2, t);
+		top = add4(top1, top2, top3, top4);
+
+		if (f_v) {
+			cout << "t=" << t << " top=" << top
+					<< " bottom=" << bottom << endl;
+			}
+		a = mult(top, inverse(bottom));
+		h = add(a, sqrt_t);
+		Mtx[t * 3 + 0] = 1;
+		Mtx[t * 3 + 1] = t;
+		Mtx[t * 3 + 2] = h;
+		}
+	t = q;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 1;
+	Mtx[t * 3 + 2] = 0;
+	t = q + 1;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 0;
+	Mtx[t * 3 + 2] = 1;
+	for (i = 0; i < N; i++) {
+		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		Pts[i] = a;
+		}
+
+	FREE_int(Mtx);
+	if (f_v) {
+		cout << "finite_field::Subiaco_hyperoval "
+				"q=" << q << " done" << endl;
+		}
+}
+
+
+
+
+// From Bill Cherowitzo's web page:
+// In 1991, O'Keefe and Penttila [OKPe92]
+// by means of a detailed investigation
+// of the divisibility properties of the orders
+// of automorphism groups
+// of hypothetical hyperovals in this plane,
+// discovered a n e w hyperoval.
+// Its o-polynomial is given by:
+
+//f(x) = x4 + x16 + x28 + beta*11(x6 + x10 + x14 + x18 + x22 + x26)
+// + beta*20(x8 + x20) + beta*6(x12 + x24),
+//where ß is a primitive root of GF(32) satisfying beta^5 = beta^2 + 1.
+//The full automorphism group of this hyperoval has order 3.
+
+int finite_field::OKeefe_Penttila_32(int t)
+// needs the field generated by beta with beta^5 = beta^2+1
+// From Bill Cherowitzo's hyperoval page
+{
+	int *t_powers;
+	int a, b, c, d, e, beta6, beta11, beta20;
+
+	t_powers = NEW_int(31);
+
+	power_table(t, t_powers, 31);
+	a = add3(t_powers[4], t_powers[16], t_powers[28]);
+	b = add6(t_powers[6], t_powers[10], t_powers[14],
+			t_powers[18], t_powers[22], t_powers[26]);
+	c = add(t_powers[8], t_powers[20]);
+	d = add(t_powers[12], t_powers[24]);
+
+	beta6 = power(2, 6);
+	beta11 = power(2, 11);
+	beta20 = power(2, 20);
+
+	b = mult(b, beta11);
+	c = mult(c, beta20);
+	d = mult(d, beta6);
+
+	e = add4(a, b, c, d);
+
+	FREE_int(t_powers);
+	return e;
+}
+
+
+
+int finite_field::Subiaco64_1(int t)
+// needs the field generated by beta with beta^6 = beta+1
+// The first one from Bill Cherowitzo's hyperoval page
+{
+	int *t_powers;
+	int a, b, c, d, beta21, beta42;
+
+	t_powers = NEW_int(65);
+
+	power_table(t, t_powers, 65);
+	a = add6(t_powers[8], t_powers[12], t_powers[20],
+			t_powers[22], t_powers[42], t_powers[52]);
+	b = add6(t_powers[4], t_powers[10], t_powers[14],
+			t_powers[16], t_powers[30], t_powers[38]);
+	c = add6(t_powers[44], t_powers[48], t_powers[54],
+			t_powers[56], t_powers[58], t_powers[60]);
+	b = add3(b, c, t_powers[62]);
+	c = add7(t_powers[2], t_powers[6], t_powers[26],
+			t_powers[28], t_powers[32], t_powers[36], t_powers[40]);
+	beta21 = power(2, 21);
+	beta42 = mult(beta21, beta21);
+	d = add3(a, mult(beta21, b), mult(beta42, c));
+	FREE_int(t_powers);
+	return d;
+}
+
+int finite_field::Subiaco64_2(int t)
+// needs the field generated by beta with beta^6 = beta+1
+// The second one from Bill Cherowitzo's hyperoval page
+{
+	int *t_powers;
+	int a, b, c, d, beta21, beta42;
+
+	t_powers = NEW_int(65);
+
+	power_table(t, t_powers, 65);
+	a = add3(t_powers[24], t_powers[30], t_powers[62]);
+	b = add6(t_powers[4], t_powers[8], t_powers[10],
+			t_powers[14], t_powers[16], t_powers[34]);
+	c = add6(t_powers[38], t_powers[40], t_powers[44],
+			t_powers[46], t_powers[52], t_powers[54]);
+	b = add4(b, c, t_powers[58], t_powers[60]);
+	c = add5(t_powers[6], t_powers[12], t_powers[18],
+			t_powers[20], t_powers[26]);
+	d = add5(t_powers[32], t_powers[36], t_powers[42],
+			t_powers[48], t_powers[50]);
+	c = add(c, d);
+	beta21 = power(2, 21);
+	beta42 = mult(beta21, beta21);
+	d = add3(a, mult(beta21, b), mult(beta42, c));
+	FREE_int(t_powers);
+	return d;
+}
+
+int finite_field::Adelaide64(int t)
+// needs the field generated by beta with beta^6 = beta+1
+{
+	int *t_powers;
+	int a, b, c, d, beta21, beta42;
+
+	t_powers = NEW_int(65);
+
+	power_table(t, t_powers, 65);
+	a = add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34],
+			t_powers[42], t_powers[48], t_powers[62]);
+	b = add8(t_powers[6], t_powers[16], t_powers[26], t_powers[28],
+			t_powers[30], t_powers[32], t_powers[40], t_powers[58]);
+	c = add8(t_powers[10], t_powers[18], t_powers[24], t_powers[36],
+			t_powers[44], t_powers[50], t_powers[52], t_powers[60]);
+	beta21 = power(2, 21);
+	beta42 = mult(beta21, beta21);
+	d = add3(a, mult(beta21, b), mult(beta42, c));
+	FREE_int(t_powers);
+	return d;
+}
+
+
+
+void finite_field::LunelliSce(int *pts18, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//const char *override_poly = "19";
+	//finite_field F;
+	//int n = 3;
+	//int q = 16;
+	int v[3];
+	//int w[3];
+
+	if (f_v) {
+		cout << "finite_field::LunelliSce" << endl;
+		}
+	//F.init(q), verbose_level - 2);
+	//F.init_override_polynomial(q, override_poly, verbose_level);
+
+#if 0
+	int cubic1[100];
+	int cubic1_size = 0;
+	int cubic2[100];
+	int cubic2_size = 0;
+	int hoval[100];
+	int hoval_size = 0;
+#endif
+
+	int a, b, i, sz, N;
+
+	if (q != 16) {
+		cout << "finite_field::LunelliSce "
+				"field order must be 16" << endl;
+		exit(1);
+		}
+	N = nb_PG_elements(2, 16);
+	sz = 0;
+	for (i = 0; i < N; i++) {
+		PG_element_unrank_modified(v, 1, 3, i);
+		//cout << "i=" << i << " v=";
+		//int_vec_print(cout, v, 3);
+		//cout << endl;
+
+		a = LunelliSce_evaluate_cubic1(v);
+		b = LunelliSce_evaluate_cubic2(v);
+
+		// form the symmetric difference of the two cubics:
+		if ((a == 0 && b) || (b == 0 && a)) {
+			pts18[sz++] = i;
+			}
+		}
+	if (sz != 18) {
+		cout << "sz != 18" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "the size of the LinelliSce hyperoval is " << sz << endl;
+		cout << "the LinelliSce hyperoval is:" << endl;
+		int_vec_print(cout, pts18, sz);
+		cout << endl;
+		}
+
+#if 0
+	cout << "the size of cubic1 is " << cubic1_size << endl;
+	cout << "the cubic1 is:" << endl;
+	int_vec_print(cout, cubic1, cubic1_size);
+	cout << endl;
+	cout << "the size of cubic2 is " << cubic2_size << endl;
+	cout << "the cubic2 is:" << endl;
+	int_vec_print(cout, cubic2, cubic2_size);
+	cout << endl;
+#endif
+
+}
+
+int finite_field::LunelliSce_evaluate_cubic1(int *v)
+// computes X^3 + Y^3 + Z^3 + \eta^3 XYZ
+{
+	int a, b, c, d, e, eta3;
+
+	eta3 = power(2, 3);
+	//eta12 = power(2, 12);
+	a = power(v[0], 3);
+	b = power(v[1], 3);
+	c = power(v[2], 3);
+	d = product4(eta3, v[0], v[1], v[2]);
+	e = add4(a, b, c, d);
+	return e;
+}
+
+int finite_field::LunelliSce_evaluate_cubic2(int *v)
+// computes X^3 + Y^3 + Z^3 + \eta^{12} XYZ
+{
+	int a, b, c, d, e, eta12;
+
+	//eta3 = power(2, 3);
+	eta12 = power(2, 12);
+	a = power(v[0], 3);
+	b = power(v[1], 3);
+	c = power(v[2], 3);
+	d = product4(eta12, v[0], v[1], v[2]);
+	e = add4(a, b, c, d);
+	return e;
+}
+
+
+void finite_field::O4_isomorphism_4to2(
+		int *At, int *As, int &f_switch, int *B,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a, b, c, d, e, f, g, h;
+	int ev, fv;
+	int P[4], Q[4], R[4], S[4];
+	int Rx, Ry, Sx, Sy;
+	int /*b11,*/ b12, b13, b14;
+	int /*b21,*/ b22, b23, b24;
+	int /*b31,*/ b32, b33, b34;
+	int /*b41,*/ b42, b43, b44;
+
+	if (f_v) {
+		cout << "finite_field::O4_isomorphism_4to2" << endl;
+		}
+	//b11 = B[0 * 4 + 0];
+	b12 = B[0 * 4 + 1];
+	b13 = B[0 * 4 + 2];
+	b14 = B[0 * 4 + 3];
+	//b21 = B[1 * 4 + 0];
+	b22 = B[1 * 4 + 1];
+	b23 = B[1 * 4 + 2];
+	b24 = B[1 * 4 + 3];
+	//b31 = B[2 * 4 + 0];
+	b32 = B[2 * 4 + 1];
+	b33 = B[2 * 4 + 2];
+	b34 = B[2 * 4 + 3];
+	//b41 = B[3 * 4 + 0];
+	b42 = B[3 * 4 + 1];
+	b43 = B[3 * 4 + 2];
+	b44 = B[3 * 4 + 3];
+	O4_grid_coordinates_unrank(P[0], P[1], P[2], P[3],
+			0, 0, verbose_level);
+	if (f_vv) {
+		cout << "grid point (0,0) = ";
+		int_vec_print(cout, P, 4);
+		cout << endl;
+		}
+	O4_grid_coordinates_unrank(Q[0], Q[1], Q[2], Q[3],
+			1, 0, verbose_level);
+	if (f_vv) {
+		cout << "grid point (1,0) = ";
+		int_vec_print(cout, Q, 4);
+		cout << endl;
+		}
+	mult_vector_from_the_left(P, B, R, 4, 4);
+	mult_vector_from_the_left(Q, B, S, 4, 4);
+	O4_grid_coordinates_rank(R[0], R[1], R[2], R[3],
+			Rx, Ry, verbose_level);
+	O4_grid_coordinates_rank(S[0], S[1], S[2], S[3],
+			Sx, Sy, verbose_level);
+	if (f_vv) {
+		cout << "Rx=" << Rx << " Ry=" << Ry
+				<< " Sx=" << Sx << " Sy=" << Sy << endl;
+		}
+	if (Ry == Sy) {
+		f_switch = FALSE;
+		}
+	else {
+		f_switch = TRUE;
+		}
+	if (f_vv) {
+		cout << "f_switch=" << f_switch << endl;
+		}
+	if (f_switch) {
+		if (b22 == 0 && b24 == 0 && b32 == 0 && b34 == 0) {
+			a = 0;
+			b = 1;
+			f = b12;
+			h = b14;
+			e = b42;
+			g = b44;
+			if (e == 0) {
+				fv = inverse(f);
+				c = mult(fv, b33);
+				d = negate(mult(fv, b13));
+				}
+			else {
+				ev = inverse(e);
+				c = negate(mult(ev, b23));
+				d = negate(mult(ev, b43));
+				}
+			}
+		else {
+			a = 1;
+			e = b22;
+			g = b24;
+			f = negate(b32);
+			h = negate(b34);
+			if (e == 0) {
+				fv = inverse(f);
+				b = mult(fv, b12);
+				c = mult(fv, b33);
+				d = negate(mult(fv, b13));
+				}
+			else {
+				ev = inverse(e);
+				b = mult(ev, b42);
+				c = negate(mult(ev, b23));
+				d = negate(mult(ev, b43));
+				}
+			}
+		}
+	else {
+		// no switch
+		if (b22 == 0 && b24 == 0 && b42 == 0 && b44 == 0) {
+			a = 0;
+			b = 1;
+			f = b12;
+			h = b14;
+			e = negate(b32);
+			g = negate(b34);
+			if (e == 0) {
+				fv = inverse(f);
+				c = negate(mult(fv, b43));
+				d = negate(mult(fv, b13));
+				}
+			else {
+				ev = inverse(e);
+				c = negate(mult(ev, b23));
+				d = mult(ev, b33);
+				}
+			}
+		else {
+			a = 1;
+			e = b22;
+			g = b24;
+			f = b42;
+			h = b44;
+			if (e == 0) {
+				fv = inverse(f);
+				b = mult(fv, b12);
+				c = negate(mult(fv, b43));
+				d = negate(mult(fv, b13));
+				}
+			else {
+				ev = inverse(e);
+				b = negate(mult(ev, b32));
+				c = negate(mult(ev, b23));
+				d = mult(ev, b33);
+				}
+			}
+		}
+	if (f_vv) {
+		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
+		cout << "e=" << e << " f=" << f << " g=" << g << " h=" << h << endl;
+		}
+	At[0] = d;
+	At[1] = b;
+	At[2] = c;
+	At[3] = a;
+	As[0] = h;
+	As[1] = f;
+	As[2] = g;
+	As[3] = e;
+	if (f_v) {
+		cout << "At:" << endl;
+		print_integer_matrix_width(cout, At, 2, 2, 2, log10_of_q);
+		cout << "As:" << endl;
+		print_integer_matrix_width(cout, As, 2, 2, 2, log10_of_q);
+		}
+
+}
+
+void finite_field::O4_isomorphism_2to4(
+		int *At, int *As, int f_switch, int *B)
+{
+	int a, b, c, d, e, f, g, h;
+
+	a = At[3];
+	b = At[1];
+	c = At[2];
+	d = At[0];
+	e = As[3];
+	f = As[1];
+	g = As[2];
+	h = As[0];
+	if (f_switch) {
+		B[0 * 4 + 0] = mult(h, d);
+		B[0 * 4 + 1] = mult(f, b);
+		B[0 * 4 + 2] = negate(mult(f, d));
+		B[0 * 4 + 3] = mult(h, b);
+		B[1 * 4 + 0] = mult(g, c);
+		B[1 * 4 + 1] = mult(e, a);
+		B[1 * 4 + 2] = negate(mult(e, c));
+		B[1 * 4 + 3] = mult(g, a);
+		B[2 * 4 + 0] = negate(mult(h, c));
+		B[2 * 4 + 1] = negate(mult(f, a));
+		B[2 * 4 + 2] = mult(f, c);
+		B[2 * 4 + 3] = negate(mult(h, a));
+		B[3 * 4 + 0] = mult(g, d);
+		B[3 * 4 + 1] = mult(e, b);
+		B[3 * 4 + 2] = negate(mult(e, d));
+		B[3 * 4 + 3] = mult(g, b);
+		}
+	else {
+		B[0 * 4 + 0] = mult(h, d);
+		B[0 * 4 + 1] = mult(f, b);
+		B[0 * 4 + 2] = negate(mult(f, d));
+		B[0 * 4 + 3] = mult(h, b);
+		B[1 * 4 + 0] = mult(g, c);
+		B[1 * 4 + 1] = mult(e, a);
+		B[1 * 4 + 2] = negate(mult(e, c));
+		B[1 * 4 + 3] = mult(g, a);
+		B[2 * 4 + 0] = negate(mult(g, d));
+		B[2 * 4 + 1] = negate(mult(e, b));
+		B[2 * 4 + 2] = mult(e, d);
+		B[2 * 4 + 3] = negate(mult(g, b));
+		B[3 * 4 + 0] = mult(h, c);
+		B[3 * 4 + 1] = mult(f, a);
+		B[3 * 4 + 2] = negate(mult(f, c));
+		B[3 * 4 + 3] = mult(h, a);
+		}
+}
+
+void finite_field::O4_grid_coordinates_rank(
+		int x1, int x2, int x3, int x4, int &grid_x, int &grid_y,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, c, d, av, e;
+	int v[2], w[2];
+
+	a = x1;
+	b = x4;
+	c = negate(x3);
+	d = x2;
+
+	if (a) {
+		if (a != 1) {
+			av = inverse(a);
+			b = mult(b, av);
+			c = mult(c, av);
+			d = mult(d, av);
+			}
+		v[0] = 1;
+		w[0] = 1;
+		v[1] = c;
+		w[1] = b;
+		e = mult(c, b);
+		if (e != d) {
+			cout << "finite_field::O4_grid_coordinates_rank "
+					"e != d" << endl;
+			exit(1);
+			}
+		}
+	else if (b == 0) {
+		v[0] = 0;
+		v[1] = 1;
+		w[0] = c;
+		w[1] = d;
+		}
+	else {
+		if (c) {
+			cout << "a is zero, b and c are not" << endl;
+			exit(1);
+			}
+		w[0] = 0;
+		w[1] = 1;
+		v[0] = b;
+		v[1] = d;
+		}
+	PG_element_normalize_from_front(v, 1, 2);
+	PG_element_normalize_from_front(w, 1, 2);
+	if (f_v) {
+		int_vec_print(cout, v, 2);
+		int_vec_print(cout, w, 2);
+		cout << endl;
+		}
+
+	PG_element_rank_modified(v, 1, 2, grid_x);
+	PG_element_rank_modified(w, 1, 2, grid_y);
+}
+
+void finite_field::O4_grid_coordinates_unrank(
+		int &x1, int &x2, int &x3, int &x4,
+		int grid_x, int grid_y,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, c, d;
+	int v[2], w[2];
+
+	PG_element_unrank_modified(v, 1, 2, grid_x);
+	PG_element_unrank_modified(w, 1, 2, grid_y);
+	PG_element_normalize_from_front(v, 1, 2);
+	PG_element_normalize_from_front(w, 1, 2);
+	if (f_v) {
+		int_vec_print(cout, v, 2);
+		int_vec_print(cout, w, 2);
+		cout << endl;
+		}
+
+	a = mult(v[0], w[0]);
+	b = mult(v[0], w[1]);
+	c = mult(v[1], w[0]);
+	d = mult(v[1], w[1]);
+	x1 = a;
+	x2 = d;
+	x3 = negate(c);
+	x4 = b;
+}
+
+void finite_field::O4_find_tangent_plane(
+		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
+		int *tangent_plane,
+		int verbose_level)
+{
+	//int A[4];
+	int C[3 * 4];
+	int size, x, y, z, xx, yy, zz, h, k;
+	int x1, x2, x3, x4;
+	int y1, y2, y3, y4;
+	int f_special = FALSE;
+	int f_complete = FALSE;
+	int base_cols[4];
+	int f_P = FALSE;
+	int rk, det;
+	int vec2[2];
+
+
+	cout << "O4_find_tangent_plane pt_x1=" << pt_x1
+		<< " pt_x2=" << pt_x2
+		<< " pt_x3=" << pt_x3
+		<< " pt_x4=" << pt_x4 << endl;
+	size = q + 1;
+#if 0
+	A[0] = pt_x1;
+	A[3] = pt_x2;
+	A[2] = negate(pt_x3);
+	A[1] = pt_x4;
+#endif
+
+	int *secants1;
+	int *secants2;
+	int nb_secants = 0;
+	int *complement;
+	int nb_complement = 0;
+
+	secants1 = NEW_int(size * size);
+	secants2 = NEW_int(size * size);
+	complement = NEW_int(size * size);
+	for (x = 0; x < size; x++) {
+		for (y = 0; y < size; y++) {
+			z = x * size + y;
+
+			//cout << "trying grid point (" << x << "," << y << ")" << endl;
+			//cout << "nb_secants=" << nb_secants << endl;
+			O4_grid_coordinates_unrank(x1, x2, x3, x4, x, y, 0);
+
+			//cout << "x1=" << x1 << " x2=" << x2
+			//<< " x3=" << x3 << " x4=" << x4 << endl;
+
+
+
+
+			for (k = 0; k < size; k++) {
+				PG_element_unrank_modified(vec2, 1, 2, k);
+				y1 = add(mult(pt_x1, vec2[0]), mult(x1, vec2[1]));
+				y2 = add(mult(pt_x2, vec2[0]), mult(x2, vec2[1]));
+				y3 = add(mult(pt_x3, vec2[0]), mult(x3, vec2[1]));
+				y4 = add(mult(pt_x4, vec2[0]), mult(x4, vec2[1]));
+				det = add(mult(y1, y2), mult(y3, y4));
+				if (det != 0) {
+					continue;
+					}
+				O4_grid_coordinates_rank(y1, y2, y3, y4, xx, yy, 0);
+				zz = xx * size + yy;
+				if (zz == z)
+					continue;
+				C[0] = pt_x1;
+				C[1] = pt_x2;
+				C[2] = pt_x3;
+				C[3] = pt_x4;
+
+				C[4] = x1;
+				C[5] = x2;
+				C[6] = x3;
+				C[7] = x4;
+
+				C[8] = y1;
+				C[9] = y2;
+				C[10] = y3;
+				C[11] = y4;
+
+				rk = Gauss_int(C, f_special, f_complete, base_cols,
+					f_P, NULL, 3, 4, 4, 0);
+				if (rk < 3) {
+					secants1[nb_secants] = z;
+					secants2[nb_secants] = zz;
+					nb_secants++;
+					}
+
+				}
+
+#if 0
+
+			for (xx = 0; xx < size; xx++) {
+				for (yy = 0; yy < size; yy++) {
+					zz = xx * size + yy;
+					if (zz == z)
+						continue;
+					O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, 0);
+					//cout << "y1=" << y1 << " y2=" << y2
+					//<< " y3=" << y3 << " y4=" << y4 << endl;
+					C[0] = pt_x1;
+					C[1] = pt_x2;
+					C[2] = pt_x3;
+					C[3] = pt_x4;
+
+					C[4] = x1;
+					C[5] = x2;
+					C[6] = x3;
+					C[7] = x4;
+
+					C[8] = y1;
+					C[9] = y2;
+					C[10] = y3;
+					C[11] = y4;
+
+					rk = F.Gauss_int(C, f_special, f_complete, base_cols,
+						f_P, NULL, 3, 4, 4, 0);
+					if (rk < 3) {
+						secants1[nb_secants] = z;
+						secants2[nb_secants] = zz;
+						nb_secants++;
+						}
+					}
+				}
+#endif
+
+
+			}
+		}
+	cout << "nb_secants=" << nb_secants << endl;
+	int_vec_print(cout, secants1, nb_secants);
+	cout << endl;
+	int_vec_print(cout, secants2, nb_secants);
+	cout << endl;
+	h = 0;
+	for (zz = 0; zz < size * size; zz++) {
+		if (secants1[h] > zz) {
+			complement[nb_complement++] = zz;
+			}
+		else {
+			h++;
+			}
+		}
+	cout << "complement = tangents:" << endl;
+	int_vec_print(cout, complement, nb_complement);
+	cout << endl;
+
+	int *T;
+	T = NEW_int(4 * nb_complement);
+
+	for (h = 0; h < nb_complement; h++) {
+		z = complement[h];
+		x = z / size;
+		y = z % size;
+		cout << setw(3) << h << " : " << setw(4) << z
+				<< " : " << x << "," << y << " : ";
+		O4_grid_coordinates_unrank(y1, y2, y3, y4,
+				x, y, verbose_level);
+		cout << "y1=" << y1 << " y2=" << y2
+				<< " y3=" << y3 << " y4=" << y4 << endl;
+		T[h * 4 + 0] = y1;
+		T[h * 4 + 1] = y2;
+		T[h * 4 + 2] = y3;
+		T[h * 4 + 3] = y4;
+		}
+
+
+	rk = Gauss_int(T, f_special, f_complete, base_cols,
+		f_P, NULL, nb_complement, 4, 4, 0);
+	cout << "the rank of the tangent space is " << rk << endl;
+	cout << "basis:" << endl;
+	print_integer_matrix_width(cout, T, rk, 4, 4, log10_of_q);
+
+	if (rk != 3) {
+		cout << "rk = " << rk << " not equal to 3" << endl;
+		exit(1);
+		}
+	int i;
+	for (i = 0; i < 12; i++) {
+		tangent_plane[i] = T[i];
+		}
+	FREE_int(secants1);
+	FREE_int(secants2);
+	FREE_int(complement);
+	FREE_int(T);
+
+#if 0
+	for (h = 0; h < nb_secants; h++) {
+		z = secants1[h];
+		zz = secants2[h];
+		x = z / size;
+		y = z % size;
+		xx = zz / size;
+		yy = zz % size;
+		cout << "(" << x << "," << y << "),(" << xx
+				<< "," << yy << ")" << endl;
+		O4_grid_coordinates_unrank(F, x1, x2, x3, x4,
+				x, y, verbose_level);
+		cout << "x1=" << x1 << " x2=" << x2
+				<< " x3=" << x3 << " x4=" << x4 << endl;
+		O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, verbose_level);
+		cout << "y1=" << y1 << " y2=" << y2
+				<< " y3=" << y3 << " y4=" << y4 << endl;
+		}
+#endif
+}
+
 
 
 // #############################################################################
@@ -1504,1202 +2721,7 @@ void add_term(int n, finite_field &F,
 	nb_terms++;
 }
 
-void create_BLT_point(finite_field *F,
-		int *v5, int a, int b, int c, int verbose_level)
-// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
-// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
-// b^2/4 + (-c)*a + -(b^2/4-ac)
-// = b^2/4 -ac -b^2/4 + ac = 0
-{
-	int f_v = (verbose_level >= 1);
-	int v0, v1, v2, v3, v4;
-	int half, four, quarter, minus_one;
 
-	if (f_v) {
-		cout << "create_BLT_point" << endl;
-		}
-	four = 4 % F->p;
-	half = F->inverse(2);
-	quarter = F->inverse(four);
-	minus_one = F->negate(1);
-	if (f_v) {
-		cout << "create_BLT_point four=" << four << endl;
-		cout << "create_BLT_point half=" << half << endl;
-		cout << "create_BLT_point quarter=" << quarter << endl;
-		cout << "create_BLT_point minus_one=" << minus_one << endl;
-		}
-
-	v0 = F->mult(minus_one, F->mult(b, half));
-	v1 = F->mult(minus_one, c);
-	v2 = a;
-	v3 = F->mult(minus_one, F->add(
-			F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
-	v4 = 1;
-	int_vec_init5(v5, v0, v1, v2, v3, v4);
-	if (f_v) {
-		cout << "create_BLT_point done" << endl;
-		}
-
-}
-
-void create_FTWKB_BLT_set(orthogonal *O,
-		int *set, int verbose_level)
-// for q congruent 2 mod 3
-// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
-// together with the point (0, 0, 0, 1, 0)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int v[5];
-	int r, i, a, b, c;
-	finite_field *F;
-
-	F = O->F;
-	int q = F->q;
-	if (q <= 5) {
-		cout << "create_FTWKB_BLT_set q <= 5" << endl;
-		exit(1);
-		}
-	r = q % 3;
-	if (r != 2) {
-		cout << "create_FTWKB_BLT_set q mod 3 must be 2" << endl;
-		exit(1);
-		}
-	for (i = 0; i < q; i++) {
-		a = i;
-		b = F->mult(3, F->power(i, 2));
-		c = F->mult(3, F->power(i, 3));
-		if (f_vv) {
-			cout << "i=" << i << " a=" << a
-					<< " b=" << b << " c=" << c << endl;
-			}
-		create_BLT_point(F, v, a, b, c, verbose_level - 2);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	int_vec_init5(v, 0, 0, 0, 1, 0);
-	if (f_vv) {
-		cout << "point : ";
-		int_vec_print(cout, v, 5);
-		cout << endl;
-		}
-	set[q] = O->rank_point(v, 1, 0);
-	if (f_vv) {
-		cout << "rank " << set[q] << endl;
-		}
-	if (f_v) {
-		cout << "the BLT set FTWKB is ";
-		int_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
-}
-
-void create_K1_BLT_set(orthogonal *O, int *set, int verbose_level)
-// for a nonsquare m, and q=p^e
-// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
-// together with the point (0, 0, 0, 1, 0)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int v[5];
-	int i, m, minus_one, exponent, a, b, c;
-	finite_field *F;
-	int q;
-
-	F = O->F;
-	q = F->q;
-	m = F->p; // the primitive element is a nonsquare
-	exponent = F->p;
-	minus_one = F->negate(1);
-	if (f_v) {
-		cout << "m=" << m << endl;
-		cout << "exponent=" << exponent << endl;
-		cout << "minus_one=" << minus_one << endl;
-		}
-	for (i = 0; i < q; i++) {
-		a = i;
-		b = 0;
-		c = F->mult(minus_one, F->mult(m, F->power(i, exponent)));
-		if (f_vv) {
-			cout << "i=" << i << " a=" << a
-					<< " b=" << b << " c=" << c << endl;
-			}
-		create_BLT_point(F, v, a, b, c, verbose_level - 2);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	int_vec_init5(v, 0, 0, 0, 1, 0);
-	if (f_vv) {
-		cout << "point : ";
-		int_vec_print(cout, v, 5);
-		cout << endl;
-		}
-	set[q] = O->rank_point(v, 1, 0);
-	if (f_vv) {
-		cout << "rank " << set[q] << endl;
-		}
-	if (f_v) {
-		cout << "the BLT set K1 is ";
-		int_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
-}
-
-void create_K2_BLT_set(orthogonal *O, int *set, int verbose_level)
-// for q congruent 2 or 3 mod 5
-// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
-// together with the point (0, 0, 0, 1, 0)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int v[5];
-	int five, r, i, a, b, c;
-	finite_field *F;
-	int q;
-
-	F = O->F;
-	q = F->q;
-	if (q <= 5) {
-		cout << "create_K2_BLT_set q <= 5" << endl;
-		return;
-		}
-	r = q % 5;
-	if (r != 2 && r != 3) {
-		cout << "create_K2_BLT_set q mod 5 must be 2 or 3" << endl;
-		return;
-		}
-	five = 5 % F->p;
-	for (i = 0; i < q; i++) {
-		a = i;
-		b = F->mult(five, F->power(i, 3));
-		c = F->mult(five, F->power(i, 5));
-		if (f_vv) {
-			cout << "i=" << i << " a=" << a
-					<< " b=" << b << " c=" << c << endl;
-			}
-		create_BLT_point(F, v, a, b, c, verbose_level - 2);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	int_vec_init5(v, 0, 0, 0, 1, 0);
-	if (f_vv) {
-		cout << "point : ";
-		int_vec_print(cout, v, 5);
-		cout << endl;
-		}
-	set[q] = O->rank_point(v, 1, 0);
-	if (f_vv) {
-		cout << "rank " << set[q] << endl;
-		}
-	if (f_v) {
-		cout << "the BLT set K2 is ";
-		int_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
-}
-
-void create_LP_37_72_BLT_set(orthogonal *O,
-		int *set, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int v[5], v0, v1, v2, v3, v4;
-	int i;
-	int coordinates[] = {
-		0,0,0,0,1,
-		1,0,0,0,0,
-		1,20,1,33,5,
-		1,6,23,19,23,
-		1,32,11,35,17,
-		1,33,12,14,23,
-		1,25,8,12,6,
-		1,16,6,1,22,
-		1,23,8,5,6,
-		1,8,6,13,8,
-		1,22,19,20,13,
-		1,21,23,16,23,
-		1,28,6,9,8,
-		1,2,26,7,13,
-		1,5,9,36,35,
-		1,12,23,10,17,
-		1,14,16,25,23,
-		1,9,8,26,35,
-		1,1,11,8,19,
-		1,19,12,11,17,
-		1,18,27,22,22,
-		1,24,36,17,35,
-		1,26,27,23,5,
-		1,27,25,24,22,
-		1,36,21,32,35,
-		1,7,16,31,8,
-		1,35,5,15,5,
-		1,10,36,6,13,
-		1,30,4,3,5,
-		1,4,3,30,19,
-		1,17,13,2,19,
-		1,11,28,18,17,
-		1,13,16,27,22,
-		1,29,12,28,6,
-		1,15,10,34,19,
-		1,3,30,4,13,
-		1,31,9,21,8,
-		1,34,9,29,6
-		};
-	finite_field *F;
-	int q;
-
-	F = O->F;
-	q = F->q;
-	if (q != 37) {
-		cout << "create_LP_37_72_BLT_set q = 37" << endl;
-		return;
-		}
-	for (i = 0; i <= q; i++) {
-		v0 = coordinates[i * 5 + 2];
-		v1 = coordinates[i * 5 + 0];
-		v2 = coordinates[i * 5 + 4];
-		v3 = coordinates[i * 5 + 1];
-		v4 = coordinates[i * 5 + 3];
-		int_vec_init5(v, v0, v1, v2, v3, v4);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	if (f_v) {
-		cout << "the BLT set LP_37_72 is ";
-		int_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
-}
-
-void create_LP_37_4a_BLT_set(orthogonal *O, int *set, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int v[5], v0, v1, v2, v3, v4;
-	int i;
-	int coordinates[] = {
-		0,0,0,0,1,
-		1,0,0,0,0,
-		1,9,16,8,5,
-		1,13,20,26,2,
-		1,4,12,14,22,
-		1,19,23,5,5,
-		1,24,17,19,32,
-		1,18,18,10,14,
-		1,2,4,36,23,
-		1,7,5,24,29,
-		1,36,20,22,29,
-		1,14,10,13,14,
-		1,28,22,7,23,
-		1,32,28,20,19,
-		1,30,27,23,24,
-		1,3,30,28,15,
-		1,1,20,31,13,
-		1,11,36,33,6,
-		1,29,22,30,15,
-		1,20,10,4,5,
-		1,8,14,32,29,
-		1,25,15,9,31,
-		1,26,13,18,29,
-		1,23,19,6,19,
-		1,35,11,15,20,
-		1,22,11,25,32,
-		1,10,16,2,20,
-		1,17,18,27,31,
-		1,15,29,16,29,
-		1,31,18,1,15,
-		1,12,34,35,15,
-		1,33,23,17,20,
-		1,27,23,21,14,
-		1,34,22,3,6,
-		1,21,11,11,18,
-		1,5,33,12,35,
-		1,6,22,34,15,
-		1,16,31,29,18
-		};
-	finite_field *F;
-	int q;
-
-	F = O->F;
-	q = F->q;
-	if (q != 37) {
-		cout << "create_LP_37_4a_BLT_set q = 37" << endl;
-		return;
-		}
-	for (i = 0; i <= q; i++) {
-		v0 = coordinates[i * 5 + 2];
-		v1 = coordinates[i * 5 + 0];
-		v2 = coordinates[i * 5 + 4];
-		v3 = coordinates[i * 5 + 1];
-		v4 = coordinates[i * 5 + 3];
-		int_vec_init5(v, v0, v1, v2, v3, v4);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	if (f_v) {
-		cout << "the BLT set LP_37_4a is ";
-		int_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
-}
-
-void create_LP_37_4b_BLT_set(orthogonal *O, int *set, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int v[5], v0, v1, v2, v3, v4;
-	int i;
-	int coordinates[] = {
-		0,0,0,0,1,
-		1,0,0,0,0,
-		1,3,7,25,24,
-		1,35,30,32,15,
-		1,4,10,30,2,
-		1,14,8,17,31,
-		1,30,18,2,23,
-		1,19,0,10,32,
-		1,8,18,12,24,
-		1,34,2,20,19,
-		1,28,34,15,15,
-		1,2,21,23,31,
-		1,13,29,36,23,
-		1,23,13,8,17,
-		1,25,12,35,17,
-		1,1,14,4,22,
-		1,17,2,19,6,
-		1,12,17,1,32,
-		1,27,23,3,19,
-		1,20,2,21,20,
-		1,33,30,22,2,
-		1,11,16,31,32,
-		1,29,6,13,31,
-		1,16,17,7,6,
-		1,6,25,14,31,
-		1,32,27,29,8,
-		1,15,8,9,23,
-		1,5,17,24,35,
-		1,18,13,33,14,
-		1,7,36,26,2,
-		1,21,34,28,32,
-		1,10,22,16,22,
-		1,26,34,27,29,
-		1,31,13,34,35,
-		1,9,13,18,2,
-		1,22,28,5,31,
-		1,24,3,11,23,
-		1,36,27,6,17
-		};
-	finite_field *F;
-	int q;
-
-	F = O->F;
-	q = F->q;
-	if (q != 37) {
-		cout << "create_LP_37_4b_BLT_set q = 37" << endl;
-		return;
-		}
-	for (i = 0; i <= q; i++) {
-		v0 = coordinates[i * 5 + 2];
-		v1 = coordinates[i * 5 + 0];
-		v2 = coordinates[i * 5 + 4];
-		v3 = coordinates[i * 5 + 1];
-		v4 = coordinates[i * 5 + 3];
-		int_vec_init5(v, v0, v1, v2, v3, v4);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	if (f_v) {
-		cout << "the BLT set LP_37_4b is ";
-		int_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
-}
-
-void Segre_hyperoval(finite_field *F,
-		int *&Pts, int &nb_pts, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int q = F->q;
-	int e = F->e;
-	int N = q + 2;
-	int i, t, a, t6;
-	int *Mtx;
-
-	if (f_v) {
-		cout << "Segre_hyperoval q=" << q << endl;
-		}
-	if (EVEN(e)) {
-		cout << "Segre_hyperoval needs e odd" << endl;
-		exit(1);
-		}
-
-	nb_pts = N;
-
-	Pts = NEW_int(N);
-	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
-	for (t = 0; t < q; t++) {
-		t6 = F->power(t, 6);
-		Mtx[t * 3 + 0] = 1;
-		Mtx[t * 3 + 1] = t;
-		Mtx[t * 3 + 2] = t6;
-		}
-	t = q;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 1;
-	Mtx[t * 3 + 2] = 0;
-	t = q + 1;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 0;
-	Mtx[t * 3 + 2] = 1;
-	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
-		Pts[i] = a;
-		}
-
-	FREE_int(Mtx);
-	if (f_v) {
-		cout << "Segre_hyperoval q=" << q << " done" << endl;
-		}
-}
-
-
-void GlynnI_hyperoval(finite_field *F,
-		int *&Pts, int &nb_pts, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int q = F->q;
-	int e = F->e;
-	int N = q + 2;
-	int i, t, te, a;
-	int sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
-	int *Mtx;
-
-	if (f_v) {
-		cout << "GlynnI_hyperoval q=" << q << endl;
-		}
-	if (EVEN(e)) {
-		cout << "GlynnI_hyperoval needs e odd" << endl;
-		exit(1);
-		}
-
-	sigma = e - 1;
-	for (i = 0; i < e; i++) {
-		if (((i * i) % e) == sigma) {
-			gamma = i;
-			break;
-			}
-		}
-	if (i == e) {
-		cout << "GlynnI_hyperoval did not find gamma" << endl;
-		exit(1);
-		}
-
-	cout << "GlynnI_hyperoval sigma = " << sigma
-			<< " gamma = " << gamma << endl;
-	//Gamma = i_power_j(2, gamma);
-	Sigma = i_power_j(2, sigma);
-
-	exponent = 3 * Sigma + 4;
-
-	nb_pts = N;
-
-	Pts = NEW_int(N);
-	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
-	for (t = 0; t < q; t++) {
-		te = F->power(t, exponent);
-		Mtx[t * 3 + 0] = 1;
-		Mtx[t * 3 + 1] = t;
-		Mtx[t * 3 + 2] = te;
-		}
-	t = q;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 1;
-	Mtx[t * 3 + 2] = 0;
-	t = q + 1;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 0;
-	Mtx[t * 3 + 2] = 1;
-	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
-		Pts[i] = a;
-		}
-
-	FREE_int(Mtx);
-	if (f_v) {
-		cout << "GlynnI_hyperoval q=" << q << " done" << endl;
-		}
-}
-
-void GlynnII_hyperoval(finite_field *F,
-		int *&Pts, int &nb_pts, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int q = F->q;
-	int e = F->e;
-	int N = q + 2;
-	int i, t, te, a;
-	int sigma, gamma = 0, Sigma, Gamma, exponent;
-	int *Mtx;
-
-	if (f_v) {
-		cout << "GlynnII_hyperoval q=" << q << endl;
-		}
-	if (EVEN(e)) {
-		cout << "GlynnII_hyperoval needs e odd" << endl;
-		exit(1);
-		}
-
-	sigma = e - 1;
-	for (i = 0; i < e; i++) {
-		if (((i * i) % e) == sigma) {
-			gamma = i;
-			break;
-			}
-		}
-	if (i == e) {
-		cout << "GlynnII_hyperoval did not find gamma" << endl;
-		exit(1);
-		}
-
-	cout << "GlynnI_hyperoval sigma = " << sigma << " gamma = " << i << endl;
-	Gamma = i_power_j(2, gamma);
-	Sigma = i_power_j(2, sigma);
-
-	exponent = Sigma + Gamma;
-
-	nb_pts = N;
-
-	Pts = NEW_int(N);
-	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
-	for (t = 0; t < q; t++) {
-		te = F->power(t, exponent);
-		Mtx[t * 3 + 0] = 1;
-		Mtx[t * 3 + 1] = t;
-		Mtx[t * 3 + 2] = te;
-		}
-	t = q;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 1;
-	Mtx[t * 3 + 2] = 0;
-	t = q + 1;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 0;
-	Mtx[t * 3 + 2] = 1;
-	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
-		Pts[i] = a;
-		}
-
-	FREE_int(Mtx);
-	if (f_v) {
-		cout << "GlynnII_hyperoval q=" << q << " done" << endl;
-		}
-}
-
-
-
-//Date: Tue, 30 Dec 2014 21:08:19 -0700
-//From: Tim Penttila
-
-//To: "betten@math.cppolostate.edu" <betten@math.cppolostate.edu>
-//Subject: RE: Oops
-//Parts/Attachments:
-//   1   OK    ~3 KB     Text
-//   2 Shown   ~4 KB     Text
-//----------------------------------------
-//
-//Hi Anton,
-//
-//Friday is predicted to be 42 Celsius, here in Adelaide. So you are
-//right! (And I do like that!)
-//
-//Let b be an element of GF(q^2) of relative norm 1 over GF(q),i.e, b is
-//different from 1 but b^{q+1} = 1 . Consider the polynomial
-//
-//f(t) = (tr(b))^{−1}tr(b^{(q-1)/3})(t + 1) + (tr(b))^{−1}tr((bt +
-//b^q)^{(q-1)/3})(t + tr(b)t^{1/2}+ 1)^{1-(q-1)/3} + t^{1/2},
-//where tr(x) =x + x^q is the relative trace. When q = 2^h, with h even,
-//f(t) is an o-polynomial for the Adelaide hyperoval.
-//
-//Best,Tim
-
-
-void Adelaide_hyperoval(subfield_structure *S, int *&Pts, int &nb_pts, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	finite_field *Fq = S->Fq;
-	finite_field *FQ = S->FQ;
-	int q = Fq->q;
-	int e = Fq->e;
-	int N = q + 2;
-
-	int i, t, b, bq, bk, tr_b, tr_bk, tr_b_down, tr_bk_down, tr_b_down_inv;
-	int a, tr_a, tr_a_down, t_lift, alpha, k;
-	int sqrt_t, c, cv, d, f;
-	int top1, top2, u, v, w, r;
-	int *Mtx;
-
-	if (f_v) {
-		cout << "Adelaide_hyperoval q=" << q << endl;
-		}
-
-	if (ODD(e)) {
-		cout << "Adelaide_hyperoval need e even" << endl;
-		exit(1);
-		}
-	nb_pts = N;
-
-	k = (q - 1) / 3;
-	if (k * 3 != q - 1) {
-		cout << "Adelaide_hyperoval k * 3 != q - 1" << endl;
-		exit(1);
-		}
-
-	alpha = FQ->alpha;
-	b = FQ->power(alpha, q - 1);
-	if (FQ->power(b, q + 1) != 1) {
-		cout << "Adelaide_hyperoval FQ->power(b, q + 1) != 1" << endl;
-		exit(1);
-		}
-	bk = FQ->power(b, k);
-	bq = FQ->frobenius_power(b, e);
-	tr_b = FQ->add(b, bq);
-	tr_bk = FQ->add(bk, FQ->frobenius_power(bk, e));
-	tr_b_down = S->Fq_element[tr_b];
-	if (tr_b_down == -1) {
-		cout << "Adelaide_hyperoval tr_b_down == -1" << endl;
-		exit(1);
-		}
-	tr_bk_down = S->Fq_element[tr_bk];
-	if (tr_bk_down == -1) {
-		cout << "Adelaide_hyperoval tr_bk_down == -1" << endl;
-		exit(1);
-		}
-
-	tr_b_down_inv = Fq->inverse(tr_b_down);
-
-
-	Pts = NEW_int(N);
-	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
-	for (t = 0; t < q; t++) {
-
-		sqrt_t = Fq->frobenius_power(t, e - 1);
-		if (Fq->mult(sqrt_t, sqrt_t) != t) {
-			cout << "Adelaide_hyperoval Fq->mult(sqrt_t, sqrt_t) != t" << endl;
-			exit(1);
-			}
-
-
-		t_lift = S->FQ_embedding[t];
-		a = FQ->power(FQ->add(FQ->mult(b, t_lift), bq), k);
-		tr_a = FQ->add(a, FQ->frobenius_power(a, e));
-		tr_a_down = S->Fq_element[tr_a];
-		if (tr_a_down == -1) {
-			cout << "Adelaide_hyperoval tr_a_down == -1" << endl;
-			exit(1);
-			}
-
-		c = Fq->add3(t, Fq->mult(tr_b_down, sqrt_t), 1);
-		cv = Fq->inverse(c);
-		d = Fq->power(cv, k);
-		f = Fq->mult(c, d);
-
-		top1 = Fq->mult(tr_bk_down, Fq->add(t, 1));
-		u = Fq->mult(top1, tr_b_down_inv);
-
-		top2 = Fq->mult(tr_a_down, f);
-		v = Fq->mult(top2, tr_b_down_inv);
-
-
-		w = Fq->add3(u, v, sqrt_t);
-
-
-		Mtx[t * 3 + 0] = 1;
-		Mtx[t * 3 + 1] = t;
-		Mtx[t * 3 + 2] = w;
-		}
-	t = q;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 1;
-	Mtx[t * 3 + 2] = 0;
-	t = q + 1;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 0;
-	Mtx[t * 3 + 2] = 1;
-	for (i = 0; i < N; i++) {
-		Fq->PG_element_rank_modified(Mtx + i * 3, 1, 3, r);
-		Pts[i] = r;
-		}
-
-	FREE_int(Mtx);
-
-	if (f_v) {
-		cout << "Adelaide_hyperoval q=" << q << " done" << endl;
-		}
-
-
-
-}
-
-
-// following Payne, Penttila, Pinneri:
-// Isomorphisms Between Subiaco q-Clan Geometries,
-// Bull. Belg. Math. Soc. 2 (1995) 197-222.
-// formula (53)
-
-void Subiaco_oval(finite_field *F,
-		int *&Pts, int &nb_pts, int f_short, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int q = F->q;
-	int e = F->e;
-	int N = q + 1;
-	int i, t, a, b, h, alpha, k, top, bottom;
-	int omega, omega2;
-	int t2, t3, t4, sqrt_t;
-	int *Mtx;
-
-	if (f_v) {
-		cout << "Subiaco_oval q=" << q << " f_short=" << f_short << endl;
-		}
-
-	nb_pts = N;
-	k = (q - 1) / 3;
-	if (k * 3 != q - 1) {
-		cout << "Subiaco_oval k * 3 != q - 1" << endl;
-		exit(1);
-		}
-	alpha = F->alpha;
-	omega = F->power(alpha, k);
-	omega2 = F->mult(omega, omega);
-	if (F->add3(omega2, omega, 1) != 0) {
-		cout << "Subiaco_oval F->add3(omega2, omega, 1) != 0" << endl;
-		exit(1);
-		}
-	Pts = NEW_int(N);
-	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
-	for (t = 0; t < q; t++) {
-		t2 = F->mult(t, t);
-		t3 = F->mult(t2, t);
-		t4 = F->mult(t2, t2);
-		sqrt_t = F->frobenius_power(t, e - 1);
-		if (F->mult(sqrt_t, sqrt_t) != t) {
-			cout << "Subiaco_oval F->mult(sqrt_t, sqrt_t) != t" << endl;
-			exit(1);
-			}
-		bottom = F->add3(t4, F->mult(omega2, t2), 1);
-		if (f_short) {
-			top = F->mult(omega2, F->add(t4, t));
-			}
-		else {
-			top = F->add3(t3, t2, F->mult(omega2, t));
-			}
-		if (FALSE) {
-			cout << "t=" << t << " top=" << top
-					<< " bottom=" << bottom << endl;
-			}
-		a = F->mult(top, F->inverse(bottom));
-		if (f_short) {
-			b = sqrt_t;
-			}
-		else {
-			b = F->mult(omega, sqrt_t);
-			}
-		h = F->add(a, b);
-		Mtx[t * 3 + 0] = 1;
-		Mtx[t * 3 + 1] = t;
-		Mtx[t * 3 + 2] = h;
-		}
-	t = q;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 1;
-	Mtx[t * 3 + 2] = 0;
-	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
-		Pts[i] = a;
-		}
-
-	FREE_int(Mtx);
-	if (f_v) {
-		cout << "Subiaco_oval q=" << q << " done" << endl;
-		}
-}
-
-
-
-// email 12/27/2014
-//The o-polynomial of the Subiaco hyperoval is
-
-//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3
-// + d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
-
-//where d has absolute trace 1.
-
-//Best,
-//Tim
-
-//absolute trace of 1/d is 1 not d...
-
-
-void Subiaco_hyperoval(finite_field *F,
-		int *&Pts, int &nb_pts, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int q = F->q;
-	int e = F->e;
-	int N = q + 2;
-	int i, t, d, dv, d2, one_d_d2, a, h;
-	int t2, t3, t4, sqrt_t;
-	int top1, top2, top3, top4, top, bottom;
-	int *Mtx;
-
-	if (f_v) {
-		cout << "Subiaco_hyperoval q=" << q << endl;
-		}
-
-	nb_pts = N;
-	for (d = 1; d < q; d++) {
-		dv = F->inverse(d);
-		if (F->absolute_trace(dv) == 1) {
-			break;
-			}
-		}
-	if (d == q) {
-		cout << "Subiaco_hyperoval cannot find element d" << endl;
-		exit(1);
-		}
-	d2 = F->mult(d, d);
-	one_d_d2 = F->add3(1, d, d2);
-
-	Pts = NEW_int(N);
-	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
-	for (t = 0; t < q; t++) {
-		t2 = F->mult(t, t);
-		t3 = F->mult(t2, t);
-		t4 = F->mult(t2, t2);
-		sqrt_t = F->frobenius_power(t, e - 1);
-		if (F->mult(sqrt_t, sqrt_t) != t) {
-			cout << "Subiaco_hyperoval F->mult(sqrt_t, sqrt_t) != t" << endl;
-			exit(1);
-			}
-
-
-		bottom = F->add3(t4, F->mult(d2, t2), 1);
-
-		//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3 +
-		// d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
-
-		top1 = F->mult(d2,t4);
-		top2 = F->mult3(d2, one_d_d2, t3);
-		top3 = F->mult3(d2, one_d_d2, t2);
-		top4 = F->mult(d2, t);
-		top = F->add4(top1, top2, top3, top4);
-
-		if (f_v) {
-			cout << "t=" << t << " top=" << top
-					<< " bottom=" << bottom << endl;
-			}
-		a = F->mult(top, F->inverse(bottom));
-		h = F->add(a, sqrt_t);
-		Mtx[t * 3 + 0] = 1;
-		Mtx[t * 3 + 1] = t;
-		Mtx[t * 3 + 2] = h;
-		}
-	t = q;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 1;
-	Mtx[t * 3 + 2] = 0;
-	t = q + 1;
-	Mtx[t * 3 + 0] = 0;
-	Mtx[t * 3 + 1] = 0;
-	Mtx[t * 3 + 2] = 1;
-	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
-		Pts[i] = a;
-		}
-
-	FREE_int(Mtx);
-	if (f_v) {
-		cout << "Subiaco_hyperoval q=" << q << " done" << endl;
-		}
-}
-
-
-
-
-// From Bill Cherowitzo's web page:
-// In 1991, O'Keefe and Penttila [OKPe92]
-// by means of a detailed investigation
-// of the divisibility properties of the orders
-// of automorphism groups
-// of hypothetical hyperovals in this plane,
-// discovered a n e w hyperoval.
-// Its o-polynomial is given by:
-
-//f(x) = x4 + x16 + x28 + beta*11(x6 + x10 + x14 + x18 + x22 + x26)
-// + beta*20(x8 + x20) + beta*6(x12 + x24),
-//where ß is a primitive root of GF(32) satisfying beta^5 = beta^2 + 1.
-//The full automorphism group of this hyperoval has order 3.
-
-int OKeefe_Penttila_32(finite_field *F, int t)
-// needs the field generated by beta with beta^5 = beta^2+1
-// From Bill Cherowitzo's hyperoval page
-{
-	int *t_powers;
-	int a, b, c, d, e, beta6, beta11, beta20;
-
-	t_powers = NEW_int(31);
-
-	F->power_table(t, t_powers, 31);
-	a = F->add3(t_powers[4], t_powers[16], t_powers[28]);
-	b = F->add6(t_powers[6], t_powers[10], t_powers[14],
-			t_powers[18], t_powers[22], t_powers[26]);
-	c = F->add(t_powers[8], t_powers[20]);
-	d = F->add(t_powers[12], t_powers[24]);
-
-	beta6 = F->power(2, 6);
-	beta11 = F->power(2, 11);
-	beta20 = F->power(2, 20);
-
-	b = F->mult(b, beta11);
-	c = F->mult(c, beta20);
-	d = F->mult(d, beta6);
-
-	e = F->add4(a, b, c, d);
-
-	FREE_int(t_powers);
-	return e;
-}
-
-
-
-int Subiaco64_1(finite_field *F, int t)
-// needs the field generated by beta with beta^6 = beta+1
-// The first one from Bill Cherowitzo's hyperoval page
-{
-	int *t_powers;
-	int a, b, c, d, beta21, beta42;
-
-	t_powers = NEW_int(65);
-
-	F->power_table(t, t_powers, 65);
-	a = F->add6(t_powers[8], t_powers[12], t_powers[20],
-			t_powers[22], t_powers[42], t_powers[52]);
-	b = F->add6(t_powers[4], t_powers[10], t_powers[14],
-			t_powers[16], t_powers[30], t_powers[38]);
-	c = F->add6(t_powers[44], t_powers[48], t_powers[54],
-			t_powers[56], t_powers[58], t_powers[60]);
-	b = F->add3(b, c, t_powers[62]);
-	c = F->add7(t_powers[2], t_powers[6], t_powers[26],
-			t_powers[28], t_powers[32], t_powers[36], t_powers[40]);
-	beta21 = F->power(2, 21);
-	beta42 = F->mult(beta21, beta21);
-	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
-	FREE_int(t_powers);
-	return d;
-}
-
-int Subiaco64_2(finite_field *F, int t)
-// needs the field generated by beta with beta^6 = beta+1
-// The second one from Bill Cherowitzo's hyperoval page
-{
-	int *t_powers;
-	int a, b, c, d, beta21, beta42;
-
-	t_powers = NEW_int(65);
-
-	F->power_table(t, t_powers, 65);
-	a = F->add3(t_powers[24], t_powers[30], t_powers[62]);
-	b = F->add6(t_powers[4], t_powers[8], t_powers[10],
-			t_powers[14], t_powers[16], t_powers[34]);
-	c = F->add6(t_powers[38], t_powers[40], t_powers[44],
-			t_powers[46], t_powers[52], t_powers[54]);
-	b = F->add4(b, c, t_powers[58], t_powers[60]);
-	c = F->add5(t_powers[6], t_powers[12], t_powers[18],
-			t_powers[20], t_powers[26]);
-	d = F->add5(t_powers[32], t_powers[36], t_powers[42],
-			t_powers[48], t_powers[50]);
-	c = F->add(c, d);
-	beta21 = F->power(2, 21);
-	beta42 = F->mult(beta21, beta21);
-	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
-	FREE_int(t_powers);
-	return d;
-}
-
-int Adelaide64(finite_field *F, int t)
-// needs the field generated by beta with beta^6 = beta+1
-{
-	int *t_powers;
-	int a, b, c, d, beta21, beta42;
-
-	t_powers = NEW_int(65);
-
-	F->power_table(t, t_powers, 65);
-	a = F->add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34],
-			t_powers[42], t_powers[48], t_powers[62]);
-	b = F->add8(t_powers[6], t_powers[16], t_powers[26], t_powers[28],
-			t_powers[30], t_powers[32], t_powers[40], t_powers[58]);
-	c = F->add8(t_powers[10], t_powers[18], t_powers[24], t_powers[36],
-			t_powers[44], t_powers[50], t_powers[52], t_powers[60]);
-	beta21 = F->power(2, 21);
-	beta42 = F->mult(beta21, beta21);
-	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
-	FREE_int(t_powers);
-	return d;
-}
-
-
-
-void LunelliSce(finite_field *Fq, int *pts18, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//const char *override_poly = "19";
-	//finite_field F;
-	//int n = 3;
-	//int q = 16;
-	int v[3];
-	//int w[3];
-
-	if (f_v) {
-		cout << "LunelliSce" << endl;
-		}
-	//F.init(q), verbose_level - 2);
-	//F.init_override_polynomial(q, override_poly, verbose_level);
-
-#if 0
-	int cubic1[100];
-	int cubic1_size = 0;
-	int cubic2[100];
-	int cubic2_size = 0;
-	int hoval[100];
-	int hoval_size = 0;
-#endif
-
-	int a, b, i, sz, N;
-
-	if (Fq->q != 16) {
-		cout << "LunelliSce field order must be 16" << endl;
-		exit(1);
-		}
-	N = nb_PG_elements(2, 16);
-	sz = 0;
-	for (i = 0; i < N; i++) {
-		Fq->PG_element_unrank_modified(v, 1, 3, i);
-		//cout << "i=" << i << " v=";
-		//int_vec_print(cout, v, 3);
-		//cout << endl;
-
-		a = LunelliSce_evaluate_cubic1(Fq, v);
-		b = LunelliSce_evaluate_cubic2(Fq, v);
-
-		// form the symmetric difference of the two cubics:
-		if ((a == 0 && b) || (b == 0 && a)) {
-			pts18[sz++] = i;
-			}
-		}
-	if (sz != 18) {
-		cout << "sz != 18" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "the size of the LinelliSce hyperoval is " << sz << endl;
-		cout << "the LinelliSce hyperoval is:" << endl;
-		int_vec_print(cout, pts18, sz);
-		cout << endl;
-		}
-
-#if 0
-	cout << "the size of cubic1 is " << cubic1_size << endl;
-	cout << "the cubic1 is:" << endl;
-	int_vec_print(cout, cubic1, cubic1_size);
-	cout << endl;
-	cout << "the size of cubic2 is " << cubic2_size << endl;
-	cout << "the cubic2 is:" << endl;
-	int_vec_print(cout, cubic2, cubic2_size);
-	cout << endl;
-#endif
-
-}
-
-int LunelliSce_evaluate_cubic1(finite_field *F, int *v)
-// computes X^3 + Y^3 + Z^3 + \eta^3 XYZ
-{
-	int a, b, c, d, e, eta3;
-
-	eta3 = F->power(2, 3);
-	//eta12 = F->power(2, 12);
-	a = F->power(v[0], 3);
-	b = F->power(v[1], 3);
-	c = F->power(v[2], 3);
-	d = F->product4(eta3, v[0], v[1], v[2]);
-	e = F->add4(a, b, c, d);
-	return e;
-}
-
-int LunelliSce_evaluate_cubic2(finite_field *F, int *v)
-// computes X^3 + Y^3 + Z^3 + \eta^{12} XYZ
-{
-	int a, b, c, d, e, eta12;
-
-	//eta3 = F->power(2, 3);
-	eta12 = F->power(2, 12);
-	a = F->power(v[0], 3);
-	b = F->power(v[1], 3);
-	c = F->power(v[2], 3);
-	d = F->product4(eta12, v[0], v[1], v[2]);
-	e = F->add4(a, b, c, d);
-	return e;
-}
 
 
 // formerly DISCRETA/extras.cpp
@@ -3043,611 +3065,6 @@ void plane_invariant(int q, orthogonal *O, unusual_model *U,
 }
 
 
-
-void create_Law_71_BLT_set(orthogonal *O,
-		int *set, int verbose_level)
-// This example can be found in Maska Law's thesis on page 115.
-// Maska Law: Flocks, generalised quadrangles
-// and translatrion planes from BLT-sets,
-// The University of Western Australia, 2003.
-// Note the coordinates here are different (for an unknown reason).
-// Law suggests to construct an infinite family
-// starting form the subgroup A_4 of
-// the stabilizer of the Fisher/Thas/Walker/Kantor examples.
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int v[5], v0, v1, v2, v3, v4;
-	int i;
-	int coordinates[] = {
-#if 1
-		0,0,0,0,1,
-		1,0,0,0,0,
-		1,20,1,33,5,
-		1,6,23,19,23,
-		1,32,11,35,17,
-		1,33,12,14,23,
-		1,25,8,12,6,
-		1,16,6,1,22,
-		1,23,8,5,6,
-		1,8,6,13,8,
-		1,22,19,20,13,
-		1,21,23,16,23,
-		1,28,6,9,8,
-		1,2,26,7,13,
-		1,5,9,36,35,
-		1,12,23,10,17,
-		1,14,16,25,23,
-		1,9,8,26,35,
-		1,1,11,8,19,
-		1,19,12,11,17,
-		1,18,27,22,22,
-		1,24,36,17,35,
-		1,26,27,23,5,
-		1,27,25,24,22,
-		1,36,21,32,35,
-		1,7,16,31,8,
-		1,35,5,15,5,
-		1,10,36,6,13,
-		1,30,4,3,5,
-		1,4,3,30,19,
-		1,17,13,2,19,
-		1,11,28,18,17,
-		1,13,16,27,22,
-		1,29,12,28,6,
-		1,15,10,34,19,
-		1,3,30,4,13,
-		1,31,9,21,8,
-		1,34,9,29,6
-#endif
-		};
-	finite_field *F;
-	int q;
-
-	F = O->F;
-	q = F->q;
-	if (q != 71) {
-		cout << "create_LP_71_BLT_set q = 71" << endl;
-		return;
-		}
-	for (i = 0; i <= q; i++) {
-		v0 = coordinates[i * 5 + 2];
-		v1 = coordinates[i * 5 + 0];
-		v2 = coordinates[i * 5 + 4];
-		v3 = coordinates[i * 5 + 1];
-		v4 = coordinates[i * 5 + 3];
-		int_vec_init5(v, v0, v1, v2, v3, v4);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	if (f_v) {
-		cout << "the BLT set LP_71 is ";
-		int_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
-}
-
-void O4_isomorphism_4to2(finite_field *F,
-		int *At, int *As, int &f_switch, int *B,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int a, b, c, d, e, f, g, h;
-	int ev, fv;
-	int P[4], Q[4], R[4], S[4];
-	int Rx, Ry, Sx, Sy;
-	int /*b11,*/ b12, b13, b14;
-	int /*b21,*/ b22, b23, b24;
-	int /*b31,*/ b32, b33, b34;
-	int /*b41,*/ b42, b43, b44;
-
-	if (f_v) {
-		cout << "O4_isomorphism_4to2" << endl;
-		}
-	//b11 = B[0 * 4 + 0];
-	b12 = B[0 * 4 + 1];
-	b13 = B[0 * 4 + 2];
-	b14 = B[0 * 4 + 3];
-	//b21 = B[1 * 4 + 0];
-	b22 = B[1 * 4 + 1];
-	b23 = B[1 * 4 + 2];
-	b24 = B[1 * 4 + 3];
-	//b31 = B[2 * 4 + 0];
-	b32 = B[2 * 4 + 1];
-	b33 = B[2 * 4 + 2];
-	b34 = B[2 * 4 + 3];
-	//b41 = B[3 * 4 + 0];
-	b42 = B[3 * 4 + 1];
-	b43 = B[3 * 4 + 2];
-	b44 = B[3 * 4 + 3];
-	O4_grid_coordinates_unrank(*F, P[0], P[1], P[2], P[3],
-			0, 0, verbose_level);
-	if (f_vv) {
-		cout << "grid point (0,0) = ";
-		int_vec_print(cout, P, 4);
-		cout << endl;
-		}
-	O4_grid_coordinates_unrank(*F, Q[0], Q[1], Q[2], Q[3],
-			1, 0, verbose_level);
-	if (f_vv) {
-		cout << "grid point (1,0) = ";
-		int_vec_print(cout, Q, 4);
-		cout << endl;
-		}
-	F->mult_vector_from_the_left(P, B, R, 4, 4);
-	F->mult_vector_from_the_left(Q, B, S, 4, 4);
-	O4_grid_coordinates_rank(*F, R[0], R[1], R[2], R[3],
-			Rx, Ry, verbose_level);
-	O4_grid_coordinates_rank(*F, S[0], S[1], S[2], S[3],
-			Sx, Sy, verbose_level);
-	if (f_vv) {
-		cout << "Rx=" << Rx << " Ry=" << Ry
-				<< " Sx=" << Sx << " Sy=" << Sy << endl;
-		}
-	if (Ry == Sy) {
-		f_switch = FALSE;
-		}
-	else {
-		f_switch = TRUE;
-		}
-	if (f_vv) {
-		cout << "f_switch=" << f_switch << endl;
-		}
-	if (f_switch) {
-		if (b22 == 0 && b24 == 0 && b32 == 0 && b34 == 0) {
-			a = 0;
-			b = 1;
-			f = b12;
-			h = b14;
-			e = b42;
-			g = b44;
-			if (e == 0) {
-				fv = F->inverse(f);
-				c = F->mult(fv, b33);
-				d = F->negate(F->mult(fv, b13));
-				}
-			else {
-				ev = F->inverse(e);
-				c = F->negate(F->mult(ev, b23));
-				d = F->negate(F->mult(ev, b43));
-				}
-			}
-		else {
-			a = 1;
-			e = b22;
-			g = b24;
-			f = F->negate(b32);
-			h = F->negate(b34);
-			if (e == 0) {
-				fv = F->inverse(f);
-				b = F->mult(fv, b12);
-				c = F->mult(fv, b33);
-				d = F->negate(F->mult(fv, b13));
-				}
-			else {
-				ev = F->inverse(e);
-				b = F->mult(ev, b42);
-				c = F->negate(F->mult(ev, b23));
-				d = F->negate(F->mult(ev, b43));
-				}
-			}
-		}
-	else {
-		// no switch
-		if (b22 == 0 && b24 == 0 && b42 == 0 && b44 == 0) {
-			a = 0;
-			b = 1;
-			f = b12;
-			h = b14;
-			e = F->negate(b32);
-			g = F->negate(b34);
-			if (e == 0) {
-				fv = F->inverse(f);
-				c = F->negate(F->mult(fv, b43));
-				d = F->negate(F->mult(fv, b13));
-				}
-			else {
-				ev = F->inverse(e);
-				c = F->negate(F->mult(ev, b23));
-				d = F->mult(ev, b33);
-				}
-			}
-		else {
-			a = 1;
-			e = b22;
-			g = b24;
-			f = b42;
-			h = b44;
-			if (e == 0) {
-				fv = F->inverse(f);
-				b = F->mult(fv, b12);
-				c = F->negate(F->mult(fv, b43));
-				d = F->negate(F->mult(fv, b13));
-				}
-			else {
-				ev = F->inverse(e);
-				b = F->negate(F->mult(ev, b32));
-				c = F->negate(F->mult(ev, b23));
-				d = F->mult(ev, b33);
-				}
-			}
-		}
-	if (f_vv) {
-		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
-		cout << "e=" << e << " f=" << f << " g=" << g << " h=" << h << endl;
-		}
-	At[0] = d;
-	At[1] = b;
-	At[2] = c;
-	At[3] = a;
-	As[0] = h;
-	As[1] = f;
-	As[2] = g;
-	As[3] = e;
-	if (f_v) {
-		cout << "At:" << endl;
-		print_integer_matrix_width(cout, At, 2, 2, 2, F->log10_of_q);
-		cout << "As:" << endl;
-		print_integer_matrix_width(cout, As, 2, 2, 2, F->log10_of_q);
-		}
-
-}
-
-void O4_isomorphism_2to4(finite_field *F,
-		int *At, int *As, int f_switch, int *B)
-{
-	int a, b, c, d, e, f, g, h;
-
-	a = At[3];
-	b = At[1];
-	c = At[2];
-	d = At[0];
-	e = As[3];
-	f = As[1];
-	g = As[2];
-	h = As[0];
-	if (f_switch) {
-		B[0 * 4 + 0] = F->mult(h, d);
-		B[0 * 4 + 1] = F->mult(f, b);
-		B[0 * 4 + 2] = F->negate(F->mult(f, d));
-		B[0 * 4 + 3] = F->mult(h, b);
-		B[1 * 4 + 0] = F->mult(g, c);
-		B[1 * 4 + 1] = F->mult(e, a);
-		B[1 * 4 + 2] = F->negate(F->mult(e, c));
-		B[1 * 4 + 3] = F->mult(g, a);
-		B[2 * 4 + 0] = F->negate(F->mult(h, c));
-		B[2 * 4 + 1] = F->negate(F->mult(f, a));
-		B[2 * 4 + 2] = F->mult(f, c);
-		B[2 * 4 + 3] = F->negate(F->mult(h, a));
-		B[3 * 4 + 0] = F->mult(g, d);
-		B[3 * 4 + 1] = F->mult(e, b);
-		B[3 * 4 + 2] = F->negate(F->mult(e, d));
-		B[3 * 4 + 3] = F->mult(g, b);
-		}
-	else {
-		B[0 * 4 + 0] = F->mult(h, d);
-		B[0 * 4 + 1] = F->mult(f, b);
-		B[0 * 4 + 2] = F->negate(F->mult(f, d));
-		B[0 * 4 + 3] = F->mult(h, b);
-		B[1 * 4 + 0] = F->mult(g, c);
-		B[1 * 4 + 1] = F->mult(e, a);
-		B[1 * 4 + 2] = F->negate(F->mult(e, c));
-		B[1 * 4 + 3] = F->mult(g, a);
-		B[2 * 4 + 0] = F->negate(F->mult(g, d));
-		B[2 * 4 + 1] = F->negate(F->mult(e, b));
-		B[2 * 4 + 2] = F->mult(e, d);
-		B[2 * 4 + 3] = F->negate(F->mult(g, b));
-		B[3 * 4 + 0] = F->mult(h, c);
-		B[3 * 4 + 1] = F->mult(f, a);
-		B[3 * 4 + 2] = F->negate(F->mult(f, c));
-		B[3 * 4 + 3] = F->mult(h, a);
-		}
-}
-
-void O4_grid_coordinates_rank(finite_field &F,
-		int x1, int x2, int x3, int x4, int &grid_x, int &grid_y,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int a, b, c, d, av, e;
-	int v[2], w[2];
-
-	a = x1;
-	b = x4;
-	c = F.negate(x3);
-	d = x2;
-
-	if (a) {
-		if (a != 1) {
-			av = F.inverse(a);
-			b = F.mult(b, av);
-			c = F.mult(c, av);
-			d = F.mult(d, av);
-			}
-		v[0] = 1;
-		w[0] = 1;
-		v[1] = c;
-		w[1] = b;
-		e = F.mult(c, b);
-		if (e != d) {
-			cout << "O4_grid_coordinates e != d" << endl;
-			exit(1);
-			}
-		}
-	else if (b == 0) {
-		v[0] = 0;
-		v[1] = 1;
-		w[0] = c;
-		w[1] = d;
-		}
-	else {
-		if (c) {
-			cout << "a is zero, b and c are not" << endl;
-			exit(1);
-			}
-		w[0] = 0;
-		w[1] = 1;
-		v[0] = b;
-		v[1] = d;
-		}
-	F.PG_element_normalize_from_front(v, 1, 2);
-	F.PG_element_normalize_from_front(w, 1, 2);
-	if (f_v) {
-		int_vec_print(cout, v, 2);
-		int_vec_print(cout, w, 2);
-		cout << endl;
-		}
-
-	F.PG_element_rank_modified(v, 1, 2, grid_x);
-	F.PG_element_rank_modified(w, 1, 2, grid_y);
-}
-
-void O4_grid_coordinates_unrank(finite_field &F,
-		int &x1, int &x2, int &x3, int &x4,
-		int grid_x, int grid_y,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int a, b, c, d;
-	int v[2], w[2];
-
-	F.PG_element_unrank_modified(v, 1, 2, grid_x);
-	F.PG_element_unrank_modified(w, 1, 2, grid_y);
-	F.PG_element_normalize_from_front(v, 1, 2);
-	F.PG_element_normalize_from_front(w, 1, 2);
-	if (f_v) {
-		int_vec_print(cout, v, 2);
-		int_vec_print(cout, w, 2);
-		cout << endl;
-		}
-
-	a = F.mult(v[0], w[0]);
-	b = F.mult(v[0], w[1]);
-	c = F.mult(v[1], w[0]);
-	d = F.mult(v[1], w[1]);
-	x1 = a;
-	x2 = d;
-	x3 = F.negate(c);
-	x4 = b;
-}
-
-void O4_find_tangent_plane(finite_field &F,
-		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
-		int *tangent_plane,
-		int verbose_level)
-{
-	//int A[4];
-	int C[3 * 4];
-	int q, size, x, y, z, xx, yy, zz, h, k;
-	int x1, x2, x3, x4;
-	int y1, y2, y3, y4;
-	int f_special = FALSE;
-	int f_complete = FALSE;
-	int base_cols[4];
-	int f_P = FALSE;
-	int rk, det;
-	int vec2[2];
-
-
-	cout << "O4_find_tangent_plane pt_x1=" << pt_x1
-		<< " pt_x2=" << pt_x2
-		<< " pt_x3=" << pt_x3
-		<< " pt_x4=" << pt_x4 << endl;
-	q = F.q;
-	size = q + 1;
-#if 0
-	A[0] = pt_x1;
-	A[3] = pt_x2;
-	A[2] = F.negate(pt_x3);
-	A[1] = pt_x4;
-#endif
-
-	int *secants1;
-	int *secants2;
-	int nb_secants = 0;
-	int *complement;
-	int nb_complement = 0;
-
-	secants1 = NEW_int(size * size);
-	secants2 = NEW_int(size * size);
-	complement = NEW_int(size * size);
-	for (x = 0; x < size; x++) {
-		for (y = 0; y < size; y++) {
-			z = x * size + y;
-
-			//cout << "trying grid point (" << x << "," << y << ")" << endl;
-			//cout << "nb_secants=" << nb_secants << endl;
-			O4_grid_coordinates_unrank(F, x1, x2, x3, x4, x, y, 0);
-
-			//cout << "x1=" << x1 << " x2=" << x2
-			//<< " x3=" << x3 << " x4=" << x4 << endl;
-
-
-
-
-			for (k = 0; k < size; k++) {
-				F.PG_element_unrank_modified(vec2, 1, 2, k);
-				y1 = F.add(F.mult(pt_x1, vec2[0]), F.mult(x1, vec2[1]));
-				y2 = F.add(F.mult(pt_x2, vec2[0]), F.mult(x2, vec2[1]));
-				y3 = F.add(F.mult(pt_x3, vec2[0]), F.mult(x3, vec2[1]));
-				y4 = F.add(F.mult(pt_x4, vec2[0]), F.mult(x4, vec2[1]));
-				det = F.add(F.mult(y1, y2), F.mult(y3, y4));
-				if (det != 0) {
-					continue;
-					}
-				O4_grid_coordinates_rank(F, y1, y2, y3, y4, xx, yy, 0);
-				zz = xx * size + yy;
-				if (zz == z)
-					continue;
-				C[0] = pt_x1;
-				C[1] = pt_x2;
-				C[2] = pt_x3;
-				C[3] = pt_x4;
-
-				C[4] = x1;
-				C[5] = x2;
-				C[6] = x3;
-				C[7] = x4;
-
-				C[8] = y1;
-				C[9] = y2;
-				C[10] = y3;
-				C[11] = y4;
-
-				rk = F.Gauss_int(C, f_special, f_complete, base_cols,
-					f_P, NULL, 3, 4, 4, 0);
-				if (rk < 3) {
-					secants1[nb_secants] = z;
-					secants2[nb_secants] = zz;
-					nb_secants++;
-					}
-
-				}
-
-#if 0
-
-			for (xx = 0; xx < size; xx++) {
-				for (yy = 0; yy < size; yy++) {
-					zz = xx * size + yy;
-					if (zz == z)
-						continue;
-					O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, 0);
-					//cout << "y1=" << y1 << " y2=" << y2
-					//<< " y3=" << y3 << " y4=" << y4 << endl;
-					C[0] = pt_x1;
-					C[1] = pt_x2;
-					C[2] = pt_x3;
-					C[3] = pt_x4;
-
-					C[4] = x1;
-					C[5] = x2;
-					C[6] = x3;
-					C[7] = x4;
-
-					C[8] = y1;
-					C[9] = y2;
-					C[10] = y3;
-					C[11] = y4;
-
-					rk = F.Gauss_int(C, f_special, f_complete, base_cols,
-						f_P, NULL, 3, 4, 4, 0);
-					if (rk < 3) {
-						secants1[nb_secants] = z;
-						secants2[nb_secants] = zz;
-						nb_secants++;
-						}
-					}
-				}
-#endif
-
-
-			}
-		}
-	cout << "nb_secants=" << nb_secants << endl;
-	int_vec_print(cout, secants1, nb_secants);
-	cout << endl;
-	int_vec_print(cout, secants2, nb_secants);
-	cout << endl;
-	h = 0;
-	for (zz = 0; zz < size * size; zz++) {
-		if (secants1[h] > zz) {
-			complement[nb_complement++] = zz;
-			}
-		else {
-			h++;
-			}
-		}
-	cout << "complement = tangents:" << endl;
-	int_vec_print(cout, complement, nb_complement);
-	cout << endl;
-
-	int *T;
-	T = NEW_int(4 * nb_complement);
-
-	for (h = 0; h < nb_complement; h++) {
-		z = complement[h];
-		x = z / size;
-		y = z % size;
-		cout << setw(3) << h << " : " << setw(4) << z
-				<< " : " << x << "," << y << " : ";
-		O4_grid_coordinates_unrank(F, y1, y2, y3, y4,
-				x, y, verbose_level);
-		cout << "y1=" << y1 << " y2=" << y2
-				<< " y3=" << y3 << " y4=" << y4 << endl;
-		T[h * 4 + 0] = y1;
-		T[h * 4 + 1] = y2;
-		T[h * 4 + 2] = y3;
-		T[h * 4 + 3] = y4;
-		}
-
-
-	rk = F.Gauss_int(T, f_special, f_complete, base_cols,
-		f_P, NULL, nb_complement, 4, 4, 0);
-	cout << "the rank of the tangent space is " << rk << endl;
-	cout << "basis:" << endl;
-	print_integer_matrix_width(cout, T, rk, 4, 4, F.log10_of_q);
-
-	if (rk != 3) {
-		cout << "rk = " << rk << " not equal to 3" << endl;
-		exit(1);
-		}
-	int i;
-	for (i = 0; i < 12; i++) {
-		tangent_plane[i] = T[i];
-		}
-	FREE_int(secants1);
-	FREE_int(secants2);
-	FREE_int(complement);
-	FREE_int(T);
-
-#if 0
-	for (h = 0; h < nb_secants; h++) {
-		z = secants1[h];
-		zz = secants2[h];
-		x = z / size;
-		y = z % size;
-		xx = zz / size;
-		yy = zz % size;
-		cout << "(" << x << "," << y << "),(" << xx
-				<< "," << yy << ")" << endl;
-		O4_grid_coordinates_unrank(F, x1, x2, x3, x4,
-				x, y, verbose_level);
-		cout << "x1=" << x1 << " x2=" << x2
-				<< " x3=" << x3 << " x4=" << x4 << endl;
-		O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, verbose_level);
-		cout << "y1=" << y1 << " y2=" << y2
-				<< " y3=" << y3 << " y4=" << y4 << endl;
-		}
-#endif
-}
 
 }
 }

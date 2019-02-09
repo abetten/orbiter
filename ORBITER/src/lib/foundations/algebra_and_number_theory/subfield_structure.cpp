@@ -302,8 +302,163 @@ void subfield_structure::retract_matrix(int *Mq,
 }
 
 
+
+//Date: Tue, 30 Dec 2014 21:08:19 -0700
+//From: Tim Penttila
+
+//To: "betten@math.cppolostate.edu" <betten@math.colostate.edu>
+//Subject: RE: Oops
+//Parts/Attachments:
+//   1   OK    ~3 KB     Text
+//   2 Shown   ~4 KB     Text
+//----------------------------------------
+//
+//Hi Anton,
+//
+//Friday is predicted to be 42 Celsius, here in Adelaide. So you are
+//right! (And I do like that!)
+//
+//Let b be an element of GF(q^2) of relative norm 1 over GF(q),i.e, b is
+//different from 1 but b^{q+1} = 1 . Consider the polynomial
+//
+//f(t) = (tr(b))^{−1}tr(b^{(q-1)/3})(t + 1) + (tr(b))^{−1}tr((bt +
+//b^q)^{(q-1)/3})(t + tr(b)t^{1/2}+ 1)^{1-(q-1)/3} + t^{1/2},
+//where tr(x) =x + x^q is the relative trace. When q = 2^h, with h even,
+//f(t) is an o-polynomial for the Adelaide hyperoval.
+//
+//Best,Tim
+
+
+void subfield_structure::Adelaide_hyperoval(
+		int *&Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	int q = Fq->q;
+	int e = Fq->e;
+	int N = q + 2;
+
+	int i, t, b, bq, bk, tr_b, tr_bk, tr_b_down, tr_bk_down, tr_b_down_inv;
+	int a, tr_a, tr_a_down, t_lift, alpha, k;
+	int sqrt_t, c, cv, d, f;
+	int top1, top2, u, v, w, r;
+	int *Mtx;
+
+	if (f_v) {
+		cout << "subfield_structure::Adelaide_hyperoval "
+				"q=" << q << endl;
+		}
+
+	if (ODD(e)) {
+		cout << "subfield_structure::Adelaide_hyperoval "
+				"need e even" << endl;
+		exit(1);
+		}
+	nb_pts = N;
+
+	k = (q - 1) / 3;
+	if (k * 3 != q - 1) {
+		cout << "subfield_structure::Adelaide_hyperoval "
+				"k * 3 != q - 1" << endl;
+		exit(1);
+		}
+
+	alpha = FQ->alpha;
+	b = FQ->power(alpha, q - 1);
+	if (FQ->power(b, q + 1) != 1) {
+		cout << "subfield_structure::Adelaide_hyperoval "
+				"FQ->power(b, q + 1) != 1" << endl;
+		exit(1);
+		}
+	bk = FQ->power(b, k);
+	bq = FQ->frobenius_power(b, e);
+	tr_b = FQ->add(b, bq);
+	tr_bk = FQ->add(bk, FQ->frobenius_power(bk, e));
+	tr_b_down = Fq_element[tr_b];
+	if (tr_b_down == -1) {
+		cout << "subfield_structure::Adelaide_hyperoval "
+				"tr_b_down == -1" << endl;
+		exit(1);
+		}
+	tr_bk_down = Fq_element[tr_bk];
+	if (tr_bk_down == -1) {
+		cout << "subfield_structure::Adelaide_hyperoval "
+				"tr_bk_down == -1" << endl;
+		exit(1);
+		}
+
+	tr_b_down_inv = Fq->inverse(tr_b_down);
+
+
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
+	for (t = 0; t < q; t++) {
+
+		sqrt_t = Fq->frobenius_power(t, e - 1);
+		if (Fq->mult(sqrt_t, sqrt_t) != t) {
+			cout << "subfield_structure::Adelaide_hyperoval "
+					"Fq->mult(sqrt_t, sqrt_t) != t" << endl;
+			exit(1);
+			}
+
+
+		t_lift = FQ_embedding[t];
+		a = FQ->power(FQ->add(FQ->mult(b, t_lift), bq), k);
+		tr_a = FQ->add(a, FQ->frobenius_power(a, e));
+		tr_a_down = Fq_element[tr_a];
+		if (tr_a_down == -1) {
+			cout << "subfield_structure::Adelaide_hyperoval "
+					"tr_a_down == -1" << endl;
+			exit(1);
+			}
+
+		c = Fq->add3(t, Fq->mult(tr_b_down, sqrt_t), 1);
+		cv = Fq->inverse(c);
+		d = Fq->power(cv, k);
+		f = Fq->mult(c, d);
+
+		top1 = Fq->mult(tr_bk_down, Fq->add(t, 1));
+		u = Fq->mult(top1, tr_b_down_inv);
+
+		top2 = Fq->mult(tr_a_down, f);
+		v = Fq->mult(top2, tr_b_down_inv);
+
+
+		w = Fq->add3(u, v, sqrt_t);
+
+
+		Mtx[t * 3 + 0] = 1;
+		Mtx[t * 3 + 1] = t;
+		Mtx[t * 3 + 2] = w;
+		}
+	t = q;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 1;
+	Mtx[t * 3 + 2] = 0;
+	t = q + 1;
+	Mtx[t * 3 + 0] = 0;
+	Mtx[t * 3 + 1] = 0;
+	Mtx[t * 3 + 2] = 1;
+	for (i = 0; i < N; i++) {
+		Fq->PG_element_rank_modified(Mtx + i * 3, 1, 3, r);
+		Pts[i] = r;
+		}
+
+	FREE_int(Mtx);
+
+	if (f_v) {
+		cout << "subfield_structure::Adelaide_hyperoval "
+				"q=" << q << " done" << endl;
+		}
+
+
+
 }
-}
+
+
+
+}}
 
 
 

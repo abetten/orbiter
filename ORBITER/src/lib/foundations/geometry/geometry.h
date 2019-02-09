@@ -1910,6 +1910,13 @@ public:
 		int &sz, int verbose_level);
 	void perp_of_k_points(int *pts, int nb_pts, int *&Perp, 
 		int &sz, int verbose_level);
+	void create_FTWKB_BLT_set(int *set, int verbose_level);
+	void create_K1_BLT_set(int *set, int verbose_level);
+	void create_K2_BLT_set(int *set, int verbose_level);
+	void create_LP_37_72_BLT_set(int *set, int verbose_level);
+	void create_LP_37_4a_BLT_set(int *set, int verbose_level);
+	void create_LP_37_4b_BLT_set(int *set, int verbose_level);
+	void create_Law_71_BLT_set(int *set, int verbose_level);
 };
 
 // #############################################################################
