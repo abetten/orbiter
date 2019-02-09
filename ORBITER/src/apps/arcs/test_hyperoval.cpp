@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 	pts = NEW_int(n);
 
 	if (f_LunelliSce) {
-		LunelliSce(&Fq, pts, verbose_level);
+		Fq.LunelliSce(pts, verbose_level);
 		for (i = 0; i < n; i++) {
 			Fq.PG_element_unrank_modified(coords + i * 3, 1, 3, pts[i]);
 			}
@@ -116,13 +116,13 @@ int main(int argc, char **argv)
 				f = Fq.mult(t, t);
 				}
 			else if (f_Subiaco64_1) {
-				f = Subiaco64_1(&Fq, t);
+				f = Fq.Subiaco64_1(t);
 				}
 			else if (f_Subiaco64_2) {
-				f = Subiaco64_2(&Fq, t);
+				f = Fq.Subiaco64_2(t);
 				}
 			else if (f_Adelaide64) {
-				f = Adelaide64(&Fq, t);
+				f = Fq.Adelaide64(t);
 				}
 			coords[6 + t * 3 + 0] = f;
 			coords[6 + t * 3 + 1] = t;

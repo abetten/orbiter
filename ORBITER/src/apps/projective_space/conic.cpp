@@ -187,8 +187,8 @@ void LunelliSce(int verbose_level)
 
 	for (i = 0; i < P->N_points; i++) {
 		P->unrank_point(v, i);
-		a = LunelliSce_evaluate_cubic1(&F, v);
-		b = LunelliSce_evaluate_cubic2(&F, v);
+		a = F.LunelliSce_evaluate_cubic1(v);
+		b = F.LunelliSce_evaluate_cubic2(v);
 		if (a == 0) {
 			cubic1[cubic1_size++] = i;
 			}

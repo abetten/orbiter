@@ -1064,6 +1064,133 @@ void finite_field::display_table_of_projective_points(
 }
 
 
+void finite_field::export_magma(int d, int *Pts, int nb_pts, char *fname)
+{
+	char fname2[1000];
+	int *v;
+	int h, i, a, b;
+
+	v = NEW_int(d);
+	strcpy(fname2, fname);
+	replace_extension_with(fname2, ".magma");
+
+	{
+	ofstream fp(fname2);
+
+	fp << "G,I:=PGammaL(" << d << "," << q
+			<< ");F:=GF(" << q << ");" << endl;
+	fp << "S:={};" << endl;
+	fp << "a := F.1;" << endl;
+	for (h = 0; h < nb_pts; h++) {
+		PG_element_unrank_modified(v, 1, d, Pts[h]);
+
+		PG_element_normalize_from_front(v, 1, d);
+
+		fp << "Include(~S,Index(I,[";
+		for (i = 0; i < d; i++) {
+			a = v[i];
+			if (a == 0) {
+				fp << "0";
+				}
+			else if (a == 1) {
+				fp << "1";
+				}
+			else {
+				b = log_alpha(a);
+				fp << "a^" << b;
+				}
+			if (i < d - 1) {
+				fp << ",";
+				}
+			}
+		fp << "]));" << endl;
+		}
+	fp << "Stab := Stabilizer(G,S);" << endl;
+	fp << "Size(Stab);" << endl;
+	fp << endl;
+	}
+	cout << "Written file " << fname2 << " of size "
+			<< file_size(fname2) << endl;
+
+	FREE_int(v);
+}
+
+void finite_field::export_gap(int d, int *Pts, int nb_pts, char *fname)
+{
+	char fname2[1000];
+	int *v;
+	int h, i, a, b;
+
+	v = NEW_int(d);
+	strcpy(fname2, fname);
+	replace_extension_with(fname2, ".gap");
+
+	{
+	ofstream fp(fname2);
+
+	fp << "LoadPackage(\"fining\");" << endl;
+	fp << "pg := ProjectiveSpace(" << d - 1 << "," << q << ");" << endl;
+	fp << "S:=[" << endl;
+	for (h = 0; h < nb_pts; h++) {
+		PG_element_unrank_modified(v, 1, d, Pts[h]);
+
+		PG_element_normalize_from_front(v, 1, d);
+
+		fp << "[";
+		for (i = 0; i < d; i++) {
+			a = v[i];
+			if (a == 0) {
+				fp << "0*Z(" << q << ")";
+				}
+			else if (a == 1) {
+				fp << "Z(" << q << ")^0";
+				}
+			else {
+				b = log_alpha(a);
+				fp << "Z(" << q << ")^" << b;
+				}
+			if (i < d - 1) {
+				fp << ",";
+				}
+			}
+		fp << "]";
+		if (h < nb_pts - 1) {
+			fp << ",";
+			}
+		fp << endl;
+		}
+	fp << "];" << endl;
+	fp << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
+	fp << "g := CollineationGroup(pg);" << endl;
+	fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
+	fp << "Size(stab);" << endl;
+	}
+	cout << "Written file " << fname2 << " of size "
+			<< file_size(fname2) << endl;
+
+#if 0
+LoadPackage("fining");
+pg := ProjectiveSpace(2,4);
+#points := Points(pg);
+#pointslist := AsList(points);
+#Display(pointslist[1]);
+frame := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]]*Z(2)^0;
+frame := List(frame,x -> VectorSpaceToElement(pg,x));
+pairs := Combinations(frame,2);
+secants := List(pairs,p -> Span(p[1],p[2]));
+leftover := Filtered(pointslist,t->not ForAny(secants,s->t in s));
+hyperoval := Union(frame,leftover);
+g := CollineationGroup(pg);
+stab := Stabilizer(g,Set(hyperoval),OnSets);
+StructureDescription(stab);
+#endif
+
+
+	FREE_int(v);
+}
+
+
+
 
 }}
 

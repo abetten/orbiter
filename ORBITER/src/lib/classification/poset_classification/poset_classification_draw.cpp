@@ -1561,26 +1561,38 @@ void poset_classification::make_graph(int depth,
 
 
 			char text[1000];
+			char text2[1000];
 			longinteger_object go, go1;
 			int n;
 			
 			n = first_poset_orbit_node_at_level[lvl] + po;
-			get_stabilizer_order(lvl, po, go);
-			go.print_to_string(text);
-			LG->add_text(lvl, po, text, 0/*verbose_level*/);
+
 
 			get_set_by_level(lvl, po, the_set);
-			LG->add_node_vec_data(lvl, po, the_set, lvl, 0 /* verbose_level */);
 
 
-#if 1
+			get_stabilizer_order(lvl, po, go);
+			go.print_to_string(text);
+			if (lvl) {
+				sprintf(text2, "%d;%s", the_set[lvl - 1], text);
+			}
+			else {
+				sprintf(text2, "$\\emptyset$;%s", text);
+			}
+			LG->add_text(lvl, po, text2, 0/*verbose_level*/);
+
+			// if no vector data, the text will be printed:
+			//LG->add_node_vec_data(lvl, po, the_set, lvl, 0 /* verbose_level */);
+
+
+#if 0
 			if (lvl) {
 				// label the node with the point:
 				LG->add_node_data1(lvl, po, root[n].pt, 0/*verbose_level*/);
 				}
 #else
 			// label the node with the group order:
-			//LG->add_node_data1(lvl, po, go.as_int(), 0/*verbose_level*/);
+			LG->add_node_data1(lvl, po, go.as_int(), 0/*verbose_level*/);
 #endif
 			if (lvl) {
 				LG->add_node_data2(lvl, po, lvl - 1, 0/*verbose_level*/);

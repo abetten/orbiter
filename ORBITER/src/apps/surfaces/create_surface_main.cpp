@@ -641,8 +641,8 @@ int main(int argc, const char **argv)
 
 					fp << "The arc consists of the following "
 							"points:\\\\" << endl;
-					display_table_of_projective_points(fp,
-							SC->F, Arc2, 6, 3);
+					SC->F->display_table_of_projective_points(fp,
+							Arc2, 6, 3);
 
 					int orbit_at_level, idx;
 					Six_arcs->Gen->gen->identify(Arc2, 6,

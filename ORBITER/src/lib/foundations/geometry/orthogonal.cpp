@@ -8800,6 +8800,505 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 		} 
 }
 
+
+void orthogonal::create_FTWKB_BLT_set(int *set, int verbose_level)
+// for q congruent 2 mod 3
+// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
+// together with the point (0, 0, 0, 1, 0)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int r, i, a, b, c;
+
+	int q = F->q;
+
+	if (q <= 5) {
+		cout << "orthogonal::create_FTWKB_BLT_set q <= 5" << endl;
+		exit(1);
+		}
+	r = q % 3;
+	if (r != 2) {
+		cout << "orthogonal::create_FTWKB_BLT_set q mod 3 must be 2" << endl;
+		exit(1);
+		}
+	for (i = 0; i < q; i++) {
+		a = i;
+		b = F->mult(3, F->power(i, 2));
+		c = F->mult(3, F->power(i, 3));
+		if (f_vv) {
+			cout << "i=" << i << " a=" << a
+					<< " b=" << b << " c=" << c << endl;
+			}
+		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+			}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+			}
+		}
+	int_vec_init5(v, 0, 0, 0, 1, 0);
+	if (f_vv) {
+		cout << "point : ";
+		int_vec_print(cout, v, 5);
+		cout << endl;
+		}
+	set[q] = rank_point(v, 1, 0);
+	if (f_vv) {
+		cout << "rank " << set[q] << endl;
+		}
+	if (f_v) {
+		cout << "orthogonal::create_FTWKB_BLT_set the BLT set FTWKB is ";
+		int_vec_print(cout, set, q + 1);
+		cout << endl;
+		}
 }
+
+void orthogonal::create_K1_BLT_set(int *set, int verbose_level)
+// for a nonsquare m, and q=p^e
+// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
+// together with the point (0, 0, 0, 1, 0)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int i, m, minus_one, exponent, a, b, c;
+	int q;
+
+	q = F->q;
+	m = F->p; // the primitive element is a nonsquare
+	exponent = F->p;
+	minus_one = F->negate(1);
+	if (f_v) {
+		cout << "m=" << m << endl;
+		cout << "exponent=" << exponent << endl;
+		cout << "minus_one=" << minus_one << endl;
+		}
+	for (i = 0; i < q; i++) {
+		a = i;
+		b = 0;
+		c = F->mult(minus_one, F->mult(m, F->power(i, exponent)));
+		if (f_vv) {
+			cout << "i=" << i << " a=" << a
+					<< " b=" << b << " c=" << c << endl;
+			}
+		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+			}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+			}
+		}
+	int_vec_init5(v, 0, 0, 0, 1, 0);
+	if (f_vv) {
+		cout << "point : ";
+		int_vec_print(cout, v, 5);
+		cout << endl;
+		}
+	set[q] = rank_point(v, 1, 0);
+	if (f_vv) {
+		cout << "rank " << set[q] << endl;
+		}
+	if (f_v) {
+		cout << "orthogonal::create_K1_BLT_set the BLT set K1 is ";
+		int_vec_print(cout, set, q + 1);
+		cout << endl;
+		}
 }
+
+void orthogonal::create_K2_BLT_set(int *set, int verbose_level)
+// for q congruent 2 or 3 mod 5
+// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
+// together with the point (0, 0, 0, 1, 0)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int five, r, i, a, b, c;
+	int q;
+
+	q = F->q;
+	if (q <= 5) {
+		cout << "orthogonal::create_K2_BLT_set q <= 5" << endl;
+		return;
+		}
+	r = q % 5;
+	if (r != 2 && r != 3) {
+		cout << "orthogonal::create_K2_BLT_set "
+				"q mod 5 must be 2 or 3" << endl;
+		return;
+		}
+	five = 5 % F->p;
+	for (i = 0; i < q; i++) {
+		a = i;
+		b = F->mult(five, F->power(i, 3));
+		c = F->mult(five, F->power(i, 5));
+		if (f_vv) {
+			cout << "i=" << i << " a=" << a
+					<< " b=" << b << " c=" << c << endl;
+			}
+		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+			}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+			}
+		}
+	int_vec_init5(v, 0, 0, 0, 1, 0);
+	if (f_vv) {
+		cout << "point : ";
+		int_vec_print(cout, v, 5);
+		cout << endl;
+		}
+	set[q] = rank_point(v, 1, 0);
+	if (f_vv) {
+		cout << "rank " << set[q] << endl;
+		}
+	if (f_v) {
+		cout << "orthogonal::create_K2_BLT_set "
+				"the BLT set K2 is ";
+		int_vec_print(cout, set, q + 1);
+		cout << endl;
+		}
+}
+
+void orthogonal::create_LP_37_72_BLT_set(
+		int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
+		0,0,0,0,1,
+		1,0,0,0,0,
+		1,20,1,33,5,
+		1,6,23,19,23,
+		1,32,11,35,17,
+		1,33,12,14,23,
+		1,25,8,12,6,
+		1,16,6,1,22,
+		1,23,8,5,6,
+		1,8,6,13,8,
+		1,22,19,20,13,
+		1,21,23,16,23,
+		1,28,6,9,8,
+		1,2,26,7,13,
+		1,5,9,36,35,
+		1,12,23,10,17,
+		1,14,16,25,23,
+		1,9,8,26,35,
+		1,1,11,8,19,
+		1,19,12,11,17,
+		1,18,27,22,22,
+		1,24,36,17,35,
+		1,26,27,23,5,
+		1,27,25,24,22,
+		1,36,21,32,35,
+		1,7,16,31,8,
+		1,35,5,15,5,
+		1,10,36,6,13,
+		1,30,4,3,5,
+		1,4,3,30,19,
+		1,17,13,2,19,
+		1,11,28,18,17,
+		1,13,16,27,22,
+		1,29,12,28,6,
+		1,15,10,34,19,
+		1,3,30,4,13,
+		1,31,9,21,8,
+		1,34,9,29,6
+		};
+	int q;
+
+	q = F->q;
+	if (q != 37) {
+		cout << "orthogonal::create_LP_37_72_BLT_set q = 37" << endl;
+		return;
+		}
+	for (i = 0; i <= q; i++) {
+		v0 = coordinates[i * 5 + 2];
+		v1 = coordinates[i * 5 + 0];
+		v2 = coordinates[i * 5 + 4];
+		v3 = coordinates[i * 5 + 1];
+		v4 = coordinates[i * 5 + 3];
+		int_vec_init5(v, v0, v1, v2, v3, v4);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+			}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+			}
+		}
+	if (f_v) {
+		cout << "orthogonal::create_LP_37_72_BLT_set "
+				"the BLT set LP_37_72 is ";
+		int_vec_print(cout, set, q + 1);
+		cout << endl;
+		}
+}
+
+void orthogonal::create_LP_37_4a_BLT_set(int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
+		0,0,0,0,1,
+		1,0,0,0,0,
+		1,9,16,8,5,
+		1,13,20,26,2,
+		1,4,12,14,22,
+		1,19,23,5,5,
+		1,24,17,19,32,
+		1,18,18,10,14,
+		1,2,4,36,23,
+		1,7,5,24,29,
+		1,36,20,22,29,
+		1,14,10,13,14,
+		1,28,22,7,23,
+		1,32,28,20,19,
+		1,30,27,23,24,
+		1,3,30,28,15,
+		1,1,20,31,13,
+		1,11,36,33,6,
+		1,29,22,30,15,
+		1,20,10,4,5,
+		1,8,14,32,29,
+		1,25,15,9,31,
+		1,26,13,18,29,
+		1,23,19,6,19,
+		1,35,11,15,20,
+		1,22,11,25,32,
+		1,10,16,2,20,
+		1,17,18,27,31,
+		1,15,29,16,29,
+		1,31,18,1,15,
+		1,12,34,35,15,
+		1,33,23,17,20,
+		1,27,23,21,14,
+		1,34,22,3,6,
+		1,21,11,11,18,
+		1,5,33,12,35,
+		1,6,22,34,15,
+		1,16,31,29,18
+		};
+	int q;
+
+	q = F->q;
+	if (q != 37) {
+		cout << "orthogonal::create_LP_37_4a_BLT_set q = 37" << endl;
+		return;
+		}
+	for (i = 0; i <= q; i++) {
+		v0 = coordinates[i * 5 + 2];
+		v1 = coordinates[i * 5 + 0];
+		v2 = coordinates[i * 5 + 4];
+		v3 = coordinates[i * 5 + 1];
+		v4 = coordinates[i * 5 + 3];
+		int_vec_init5(v, v0, v1, v2, v3, v4);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+			}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+			}
+		}
+	if (f_v) {
+		cout << "orthogonal::create_LP_37_4a_BLT_set "
+				"the BLT set LP_37_4a is ";
+		int_vec_print(cout, set, q + 1);
+		cout << endl;
+		}
+}
+
+void orthogonal::create_LP_37_4b_BLT_set(int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
+		0,0,0,0,1,
+		1,0,0,0,0,
+		1,3,7,25,24,
+		1,35,30,32,15,
+		1,4,10,30,2,
+		1,14,8,17,31,
+		1,30,18,2,23,
+		1,19,0,10,32,
+		1,8,18,12,24,
+		1,34,2,20,19,
+		1,28,34,15,15,
+		1,2,21,23,31,
+		1,13,29,36,23,
+		1,23,13,8,17,
+		1,25,12,35,17,
+		1,1,14,4,22,
+		1,17,2,19,6,
+		1,12,17,1,32,
+		1,27,23,3,19,
+		1,20,2,21,20,
+		1,33,30,22,2,
+		1,11,16,31,32,
+		1,29,6,13,31,
+		1,16,17,7,6,
+		1,6,25,14,31,
+		1,32,27,29,8,
+		1,15,8,9,23,
+		1,5,17,24,35,
+		1,18,13,33,14,
+		1,7,36,26,2,
+		1,21,34,28,32,
+		1,10,22,16,22,
+		1,26,34,27,29,
+		1,31,13,34,35,
+		1,9,13,18,2,
+		1,22,28,5,31,
+		1,24,3,11,23,
+		1,36,27,6,17
+		};
+	int q;
+
+	q = F->q;
+	if (q != 37) {
+		cout << "orthogonal::create_LP_37_4b_BLT_set q = 37" << endl;
+		return;
+		}
+	for (i = 0; i <= q; i++) {
+		v0 = coordinates[i * 5 + 2];
+		v1 = coordinates[i * 5 + 0];
+		v2 = coordinates[i * 5 + 4];
+		v3 = coordinates[i * 5 + 1];
+		v4 = coordinates[i * 5 + 3];
+		int_vec_init5(v, v0, v1, v2, v3, v4);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+			}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+			}
+		}
+	if (f_v) {
+		cout << "orthogonal::create_LP_37_4b_BLT_set "
+				"the BLT set LP_37_4b is ";
+		int_vec_print(cout, set, q + 1);
+		cout << endl;
+		}
+}
+
+void orthogonal::create_Law_71_BLT_set(
+		int *set, int verbose_level)
+// This example can be found in Maska Law's thesis on page 115.
+// Maska Law: Flocks, generalised quadrangles
+// and translatrion planes from BLT-sets,
+// The University of Western Australia, 2003.
+// Note the coordinates here are different (for an unknown reason).
+// Law suggests to construct an infinite family
+// starting form the subgroup A_4 of
+// the stabilizer of the Fisher/Thas/Walker/Kantor examples.
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
+#if 1
+		0,0,0,0,1,
+		1,0,0,0,0,
+		1,20,1,33,5,
+		1,6,23,19,23,
+		1,32,11,35,17,
+		1,33,12,14,23,
+		1,25,8,12,6,
+		1,16,6,1,22,
+		1,23,8,5,6,
+		1,8,6,13,8,
+		1,22,19,20,13,
+		1,21,23,16,23,
+		1,28,6,9,8,
+		1,2,26,7,13,
+		1,5,9,36,35,
+		1,12,23,10,17,
+		1,14,16,25,23,
+		1,9,8,26,35,
+		1,1,11,8,19,
+		1,19,12,11,17,
+		1,18,27,22,22,
+		1,24,36,17,35,
+		1,26,27,23,5,
+		1,27,25,24,22,
+		1,36,21,32,35,
+		1,7,16,31,8,
+		1,35,5,15,5,
+		1,10,36,6,13,
+		1,30,4,3,5,
+		1,4,3,30,19,
+		1,17,13,2,19,
+		1,11,28,18,17,
+		1,13,16,27,22,
+		1,29,12,28,6,
+		1,15,10,34,19,
+		1,3,30,4,13,
+		1,31,9,21,8,
+		1,34,9,29,6
+#endif
+		};
+	int q;
+
+	q = F->q;
+	if (q != 71) {
+		cout << "orthogonal::create_Law_71_BLT_set q = 71" << endl;
+		return;
+		}
+	for (i = 0; i <= q; i++) {
+		v0 = coordinates[i * 5 + 2];
+		v1 = coordinates[i * 5 + 0];
+		v2 = coordinates[i * 5 + 4];
+		v3 = coordinates[i * 5 + 1];
+		v4 = coordinates[i * 5 + 3];
+		int_vec_init5(v, v0, v1, v2, v3, v4);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+			}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+			}
+		}
+	if (f_v) {
+		cout << "orthogonal::create_Law_71_BLT_set "
+				"the BLT set LP_71 is ";
+		int_vec_print(cout, set, q + 1);
+		cout << endl;
+		}
+}
+
+
+
+}}
 

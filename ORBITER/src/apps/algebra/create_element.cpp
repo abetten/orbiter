@@ -216,7 +216,7 @@ void create_element(int q, int k1, int k2, int verbose_level)
 	int f_switch = FALSE;
 
 	// remember that O4_isomorphism_2to4 switches a and d
-	O4_isomorphism_2to4(F, dataD1, dataD2, f_switch, mtxD);
+	F->O4_isomorphism_2to4(dataD1, dataD2, f_switch, mtxD);
 
 	cout << "mtxD:" << endl;
 	print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
@@ -289,7 +289,7 @@ void create_element_O4_isomorphism(int q,
 
 
 	// remember that O4_isomorphism_2to4 switches a and d
-	O4_isomorphism_2to4(F, data8, data8 + 4, f_switch, mtxD);
+	F->O4_isomorphism_2to4(data8, data8 + 4, f_switch, mtxD);
 
 	cout << "mtxD:" << endl;
 	print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);

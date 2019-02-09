@@ -192,7 +192,8 @@ int main(int argc, char **argv)
 				break;
 				}
 			set_size = tmp;
-			cout << "reading solution " << cnt << " / " << nb_input << ", a set of size " << set_size << endl;
+			cout << "reading solution " << cnt << " / " << nb_input
+					<< ", a set of size " << set_size << endl;
 			for (i = 0; i < set_size; i++) {
 				s_scan_int(&p_buf, &tmp);
 				set[i] = tmp;
@@ -209,7 +210,8 @@ int main(int argc, char **argv)
 			if (f_conic_type) {
 		
 				if (f_v) {
-					cout << "solution " << cnt << " / " << nb_input << ", computing the conic intersection type" << endl;
+					cout << "solution " << cnt << " / " << nb_input
+							<< ", computing the conic intersection type" << endl;
 					}
 
 				int *intersection_type;
@@ -224,7 +226,8 @@ int main(int argc, char **argv)
 					verbose_level - 2);
 
 				if (f_v) {
-					cout << "solution " << cnt << " / " << nb_input << ", the conic intersection type is:" << endl;
+					cout << "solution " << cnt << " / " << nb_input
+							<< ", the conic intersection type is:" << endl;
 					for (i = 0; i <= highest_intersection_number; i++) {
 						if (intersection_type[i]) {
 							cout << i << "^" << intersection_type[i] << " ";
@@ -236,7 +239,8 @@ int main(int argc, char **argv)
 				int *Inc;
 				int m, n;
 				
-				largest_sets->compute_incidence_matrix(Inc, m, n,  verbose_level);
+				largest_sets->compute_incidence_matrix(
+						Inc, m, n,  verbose_level);
 				int_matrix_print(Inc, m, n);
 
 				decomposition *D;
@@ -333,7 +337,8 @@ int main(int argc, char **argv)
 				D->init_incidence_matrix(m, n, M, verbose_level);
 				FREE_int(M);
 				
-				cout << "before D->compute_TDO, max_depth=" << max_depth << endl;
+				cout << "before D->compute_TDO, "
+						"max_depth=" << max_depth << endl;
 				D->compute_TDO(max_depth, verbose_level);
 				cout << "after D->compute_TDO" << endl;
 

@@ -1844,7 +1844,7 @@ void blt_set::Law_71(int verbose_level)
 	//M = A->subaction->G.matrix_grp;
 	//O = M->O;
 
-	create_Law_71_BLT_set(O, set, verbose_level);
+	O->create_Law_71_BLT_set(set, verbose_level);
 #if 0
 	if (!G->check_conditions(cout, q + 1, set, verbose_level)) {
 		cout << "the set is not a BLT set" << endl;
