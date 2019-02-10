@@ -106,8 +106,17 @@ int main(int argc, const char **argv)
 	int f_Maruta_Hamada_arc = FALSE;
 
 	int f_projective_variety = FALSE;
+	const char *variety_label = NULL;
 	int variety_degree = 0;
 	const char *variety_coeffs = NULL;
+
+
+	int f_projective_curve = FALSE;
+	const char *curve_label = NULL;
+	int curve_nb_vars = 0;
+	int curve_degree = 0;
+	const char *curve_coeffs = NULL;
+
 
 	t0 = os_ticks();
 
@@ -312,11 +321,25 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-projective_variety") == 0) {
 			f_projective_variety = TRUE;
+			variety_label = argv[++i];
 			variety_degree = atoi(argv[++i]);
 			variety_coeffs = argv[++i];
 			cout << "-projective_variety "
-					<< variety_degree
-					<< " " << variety_coeffs << endl;
+					<< variety_label << " "
+					<< variety_degree << " "
+					<< variety_coeffs << endl;
+			}
+		else if (strcmp(argv[i], "-projective_curve") == 0) {
+			f_projective_curve = TRUE;
+			curve_label = argv[++i];
+			curve_nb_vars = atoi(argv[++i]);
+			curve_degree = atoi(argv[++i]);
+			curve_coeffs = argv[++i];
+			cout << "-projective_curve "
+					<< curve_label << " "
+					<< curve_nb_vars << " "
+					<< curve_degree << " "
+					<< curve_coeffs << endl;
 			}
 		}
 	
@@ -603,12 +626,18 @@ int main(int argc, const char **argv)
 			verbose_level);
 		}
 	else if (f_projective_variety) {
-		//variety_nb_vars = atoi(argv[++i]);
-		//variety_degree = atoi(argv[++i]);
-		//variety_coeffs = argv[++i];
 		F->create_projective_variety(
+				variety_label,
 				n + 1, variety_degree,
 				variety_coeffs,
+				fname, nb_pts, Pts,
+				verbose_level);
+	}
+	else if (f_projective_curve) {
+		F->create_projective_curve(
+				curve_label,
+				curve_nb_vars, curve_degree,
+				curve_coeffs,
 				fname, nb_pts, Pts,
 				verbose_level);
 	}

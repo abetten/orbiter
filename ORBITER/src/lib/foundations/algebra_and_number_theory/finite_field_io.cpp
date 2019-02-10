@@ -1041,7 +1041,7 @@ void finite_field::display_table_of_projective_points(
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < nb_pts; i++) {
-		PG_element_unrank_modified(coords, 1, 3, Pts[i]);
+		PG_element_unrank_modified(coords, 1, len, Pts[i]);
 		ost << i << " & " << Pts[i] << " & ";
 		int_vec_print(ost, coords, len);
 		ost << "\\\\" << endl;

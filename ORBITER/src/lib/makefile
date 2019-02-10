@@ -41,12 +41,14 @@ MODULES= \
 		foundations/algebra_and_number_theory/finite_field.o \
 		foundations/algebra_and_number_theory/finite_ring.o \
 		foundations/algebra_and_number_theory/generators_symplectic_group.o \
+		foundations/algebra_and_number_theory/gl_class_rep.o \
 		foundations/algebra_and_number_theory/gl_classes.o \
 		foundations/algebra_and_number_theory/group_generators.o \
 		foundations/algebra_and_number_theory/heisenberg.o \
 		foundations/algebra_and_number_theory/homogeneous_polynomial_domain.o \
 		foundations/algebra_and_number_theory/longinteger_domain.o \
 		foundations/algebra_and_number_theory/longinteger_object.o \
+		foundations/algebra_and_number_theory/matrix_block_data.o \
 		foundations/algebra_and_number_theory/norm_tables.o \
 		foundations/algebra_and_number_theory/null_polarity_generator.o \
 		foundations/algebra_and_number_theory/number_theory.o \

@@ -138,6 +138,13 @@ int data_input_stream::read_arguments(
 				<< input_string2[nb_inputs] << endl;
 			nb_inputs++;
 			}
+		else if (strcmp(argv[i], "-file_of_point_set") == 0) {
+			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINT_SET;
+			input_string[nb_inputs] = argv[++i];
+			input_string2[nb_inputs] = NULL;
+			cout << "-file_of_point_set " << input_string[nb_inputs] << endl;
+			nb_inputs++;
+			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			return i;
@@ -244,6 +251,19 @@ int data_input_stream::count_number_of_objects_to_test(
 				}
 			nb_obj = count_number_of_orbits_in_file(
 				input_string[input_idx], 0 /* verbose_level*/);
+			if (f_v) {
+				cout << "The file " << input_string[input_idx]
+					<< " has " << nb_obj << " objects" << endl;
+				}
+
+			nb_objects_to_test += nb_obj;
+			}
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
+			if (f_v) {
+				cout << "input set of points from file "
+						<< input_string[input_idx] << ":" << endl;
+				}
+			nb_obj = 1;
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;

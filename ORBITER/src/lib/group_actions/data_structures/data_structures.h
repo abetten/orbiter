@@ -22,6 +22,7 @@ namespace group_actions {
 #define INPUT_TYPE_FILE_OF_LINES 5
 #define INPUT_TYPE_FILE_OF_PACKINGS 6
 #define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
+#define INPUT_TYPE_FILE_OF_POINT_SET 8
 
 
 
@@ -280,6 +281,10 @@ public:
 	create_object_from_string(
 		int type, const char *input_fname, int input_idx,
 		const char *set_as_string, int verbose_level);
+	object_in_projective_space *
+	create_object_from_int_vec(
+		int type, const char *input_fname, int input_idx,
+		int *the_set, int set_sz, int verbose_level);
 	int process_object(
 		classify_bitvectors *CB,
 		object_in_projective_space *OiP,

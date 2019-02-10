@@ -1488,66 +1488,46 @@ projective_space_with_action::create_object_from_string(
 		}
 
 
-#if 1
 	object_in_projective_space *OiP;
 
 	OiP = NEW_OBJECT(object_in_projective_space);
 
-	OiP->init_object_from_string(
+	OiP->init_object_from_string(P,
 			type, input_fname, input_idx,
 			set_as_string, verbose_level);
 
-#else
-
-	int *the_set_in;
-	int set_size_in;
-	object_in_projective_space *OiP;
-
-	int_vec_scan(set_as_string, the_set_in, set_size_in);
-
-
-	if (f_v) {
-		cout << "The input set has size " << set_size_in << ":" << endl;
-		cout << "The input set is:" << endl;
-		int_vec_print(cout, the_set_in, set_size_in);
-		cout << endl;
-		cout << "The type is: ";
-		if (type == t_PTS) {
-			cout << "t_PTS" << endl;
-			}
-		else if (type == t_LNS) {
-			cout << "t_LNS" << endl;
-			}
-		else if (type == t_PAC) {
-			cout << "t_PAC" << endl;
-			}
-		}
-
-
-	OiP = NEW_OBJECT(object_in_projective_space);
-
-	if (type == t_PTS) {
-		OiP->init_point_set(P,
-				the_set_in, set_size_in, verbose_level - 1);
-		}
-	else if (type == t_LNS) {
-		OiP->init_line_set(P,
-				the_set_in, set_size_in, verbose_level - 1);
-		}
-	else if (type == t_PAC) {
-		OiP->init_packing_from_set(P,
-				the_set_in, set_size_in, verbose_level - 1);
-		}
-	else {
-		cout << "create_object_from_string unknown type" << endl;
-		exit(1);
-		}
-
-	FREE_int(the_set_in);
-#endif
 
 	if (f_v) {
 		cout << "projective_space_with_action::create_object_from_string"
+				" done" << endl;
+		}
+	return OiP;
+}
+
+object_in_projective_space *
+projective_space_with_action::create_object_from_int_vec(
+	int type, const char *input_fname, int input_idx,
+	int *the_set, int set_sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_object_from_int_vec" << endl;
+		cout << "type=" << type << endl;
+		}
+
+
+	object_in_projective_space *OiP;
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_object_from_int_vec(P,
+			type, input_fname, input_idx,
+			the_set, set_sz, verbose_level);
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_object_from_int_vec"
 				" done" << endl;
 		}
 	return OiP;
@@ -1706,6 +1686,76 @@ void projective_space_with_action::classify_objects_using_nauty(
 					verbose_level);
 			canonical_labeling = NEW_int(nb_rows + nb_cols);
 
+			ret = process_object(CB, OiP,
+					f_save_incma_in_and_out, prefix,
+					nb_objects_to_test,
+					SG,
+					canonical_labeling,
+					verbose_level);
+
+			FREE_int(canonical_labeling);
+
+			if (f_v) {
+				cout << "classify_objects_using_nauty "
+						"after process_object, ret=" << ret << endl;
+				}
+
+
+			if (!ret) {
+				FREE_OBJECT(SG);
+				FREE_OBJECT(OiP);
+				FREE_int(canonical_labeling);
+				}
+			else {
+				cout << "New isomorphism type! The n e w number of "
+					"isomorphism types is " << CB->nb_types << endl;
+				int idx;
+
+				object_in_projective_space_with_action *OiPA;
+
+				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
+
+				OiPA->init(OiP, SG, nb_rows, nb_cols,
+						canonical_labeling, verbose_level);
+				idx = CB->type_of[CB->n - 1];
+				CB->Type_extra_data[idx] = OiPA;
+
+				//compute_and_print_ago_distribution(cout,
+				//		CB, verbose_level);
+				}
+			}
+		else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
+			cout << "input set of points from file "
+				<< Data->input_string[input_idx] << ":" << endl;
+
+			object_in_projective_space *OiP;
+			strong_generators *SG;
+			int *the_set;
+			int set_size;
+
+			read_set_from_file(Data->input_string[input_idx],
+				the_set, set_size, verbose_level);
+
+			OiP = create_object_from_int_vec(t_PTS,
+					Data->input_string[input_idx], CB->n,
+					the_set, set_size, verbose_level);
+
+			if (f_v) {
+				cout << "classify_objects_using_nauty "
+						"before encoding_size" << endl;
+				}
+			int nb_rows, nb_cols;
+			int *canonical_labeling;
+
+			OiP->encoding_size(
+					nb_rows, nb_cols,
+					verbose_level);
+			canonical_labeling = NEW_int(nb_rows + nb_cols);
+
+			if (f_v) {
+				cout << "classify_objects_using_nauty "
+						"before process_object" << endl;
+				}
 			ret = process_object(CB, OiP,
 					f_save_incma_in_and_out, prefix,
 					nb_objects_to_test,

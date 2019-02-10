@@ -15,6 +15,7 @@ namespace orbiter {
 namespace foundations {
 
 void finite_field::create_projective_variety(
+		const char *variety_label,
 		int variety_nb_vars, int variety_degree,
 		const char *variety_coeffs,
 		char *fname, int &nb_pts, int *&Pts,
@@ -35,11 +36,12 @@ void finite_field::create_projective_variety(
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
 
+	HPD->print_monomial_ordering(cout);
+
 	coeff = NEW_int(HPD->nb_monomials);
 	int_vec_zero(coeff, HPD->nb_monomials);
 
-	sprintf(fname, "variety_%d_%d_%d_%s.txt",
-			variety_nb_vars, variety_degree, q, variety_coeffs);
+	sprintf(fname, "%s.txt", variety_label);
 	int *coeff_pairs;
 	int len;
 	int a, b, i;
@@ -63,12 +65,91 @@ void finite_field::create_projective_variety(
 
 	HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
 
+	display_table_of_projective_points(
+			cout, Pts, nb_pts, variety_nb_vars);
+
 	FREE_int(coeff_pairs);
 	FREE_int(coeff);
 	FREE_OBJECT(HPD);
 
 	if (f_v) {
 		cout << "finite_field::create_projective_variety done" << endl;
+	}
+}
+
+void finite_field::create_projective_curve(
+		const char *variety_label,
+		int curve_nb_vars, int curve_degree,
+		const char *curve_coeffs,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_projective_curve" << endl;
+	}
+
+	homogeneous_polynomial_domain *HPD;
+	int *coeff;
+
+	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	HPD->init(this, 2, curve_degree,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+
+	HPD->print_monomial_ordering(cout);
+
+	coeff = NEW_int(HPD->nb_monomials);
+	int_vec_zero(coeff, HPD->nb_monomials);
+
+	sprintf(fname, "%s.txt", variety_label);
+	int *coeffs;
+	int len, i, j, a, b, c, s, t;
+	int *v;
+	int v2[2];
+
+	int_vec_scan(curve_coeffs, coeffs, len);
+	if (len != curve_degree + 1) {
+		cout << "finite_field::create_projective_curve "
+				"len != curve_degree + 1" << endl;
+		exit(1);
+	}
+
+	nb_pts = q + 1;
+
+	v = NEW_int(curve_nb_vars);
+	Pts = NEW_int(nb_pts);
+
+	for (i = 0; i < nb_pts; i++) {
+		PG_element_unrank_modified(v2, 1, 2, i);
+		s = v2[0];
+		t = v2[1];
+		for (j = 0; j < curve_nb_vars; j++) {
+			a = HPD->Monomials[j * 2 + 0];
+			b = HPD->Monomials[j * 2 + 1];
+			v[j] = mult3(coeffs[j], power(s, a), power(t, b));
+		}
+		PG_element_rank_modified(v, 1, curve_nb_vars, c);
+		Pts[i] = c;
+		if (f_v) {
+			cout << setw(4) << i << " : ";
+			int_vec_print(cout, v, curve_nb_vars);
+			cout << " : " << setw(5) << c << endl;
+			}
+		}
+
+	display_table_of_projective_points(
+			cout, Pts, nb_pts, curve_nb_vars);
+
+
+	FREE_int(v);
+	FREE_int(coeffs);
+	FREE_OBJECT(HPD);
+
+	if (f_v) {
+		cout << "finite_field::create_projective_curve done" << endl;
 	}
 }
 
@@ -1897,6 +1978,195 @@ void finite_field::O4_find_tangent_plane(
 #endif
 }
 
+void finite_field::oval_polynomial(
+	int *S, unipoly_domain &D, unipoly_object &poly,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, v[3], x; //, y;
+	int *map;
+
+	if (f_v) {
+		cout << "finite_field::oval_polynomial" << endl;
+		}
+	map = NEW_int(q);
+	for (i = 0; i < q; i++) {
+		PG_element_unrank_modified(
+				v, 1 /* stride */, 3 /* len */, S[2 + i]);
+		if (v[2] != 1) {
+			cout << "finite_field::oval_polynomial "
+					"not an affine point" << endl;
+			exit(1);
+			}
+		x = v[0];
+		//y = v[1];
+		//cout << "map[" << i << "] = " << xx << endl;
+		map[i] = x;
+		}
+	if (f_v) {
+		cout << "the map" << endl;
+		for (i = 0; i < q; i++) {
+			cout << map[i] << " ";
+			}
+		cout << endl;
+		}
+
+	D.create_Dickson_polynomial(poly, map);
+
+	FREE_int(map);
+	if (f_v) {
+		cout << "finite_field::oval_polynomial done" << endl;
+		}
+}
+
+
+void finite_field::all_PG_elements_in_subspace(
+		int *genma, int k, int n, int *&point_list, int &nb_points,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int *message;
+	int *word;
+	int i, j;
+
+	if (f_v) {
+		cout << "finite_field::all_PG_elements_in_subspace" << endl;
+		}
+	message = NEW_int(k);
+	word = NEW_int(n);
+	nb_points = generalized_binomial(k, 1, q);
+	point_list = NEW_int(nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		PG_element_unrank_modified(message, 1, k, i);
+		if (f_vv) {
+			cout << "message " << i << " / " << nb_points << " is ";
+			int_vec_print(cout, message, k);
+			cout << endl;
+			}
+		mult_vector_from_the_left(message, genma, word, k, n);
+		if (f_vv) {
+			cout << "yields word ";
+			int_vec_print(cout, word, n);
+			cout << endl;
+			}
+		PG_element_rank_modified(word, 1, n, j);
+		if (f_vv) {
+			cout << "which has rank " << j << endl;
+			}
+		point_list[i] = j;
+		}
+
+	FREE_int(message);
+	FREE_int(word);
+	if (f_v) {
+		cout << "finite_field::all_PG_elements_in_subspace "
+				"done" << endl;
+		}
+}
+
+void finite_field::all_PG_elements_in_subspace_array_is_given(
+		int *genma, int k, int n, int *point_list, int &nb_points,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int *message;
+	int *word;
+	int i, j;
+
+	if (f_v) {
+		cout << "finite_field::all_PG_elements_in_"
+				"subspace_array_is_given" << endl;
+		}
+	message = NEW_int(k);
+	word = NEW_int(n);
+	nb_points = generalized_binomial(k, 1, q);
+	//point_list = NEW_int(nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		PG_element_unrank_modified(message, 1, k, i);
+		if (f_vv) {
+			cout << "message " << i << " / " << nb_points << " is ";
+			int_vec_print(cout, message, k);
+			cout << endl;
+			}
+		mult_vector_from_the_left(message, genma, word, k, n);
+		if (f_vv) {
+			cout << "yields word ";
+			int_vec_print(cout, word, n);
+			cout << endl;
+			}
+		PG_element_rank_modified(word, 1, n, j);
+		if (f_vv) {
+			cout << "which has rank " << j << endl;
+			}
+		point_list[i] = j;
+		}
+
+	FREE_int(message);
+	FREE_int(word);
+	if (f_v) {
+		cout << "finite_field::all_PG_elements_in_"
+				"subspace_array_is_given "
+				"done" << endl;
+		}
+}
+
+void finite_field::display_all_PG_elements(int n)
+{
+	int *v = NEW_int(n + 1);
+	int l = nb_PG_elements(n, q);
+	int i, j, a;
+
+	for (i = 0; i < l; i++) {
+		PG_element_unrank_modified(v, 1, n + 1, i);
+		cout << i << " : ";
+		for (j = 0; j < n + 1; j++) {
+			cout << v[j] << " ";
+			}
+		PG_element_rank_modified(v, 1, n + 1, a);
+		cout << " : " << a << endl;
+		}
+	FREE_int(v);
+}
+
+void finite_field::display_all_PG_elements_not_in_subspace(int n, int m)
+{
+	int *v = NEW_int(n + 1);
+	int l = nb_PG_elements_not_in_subspace(n, m, q);
+	int i, j, a;
+
+	for (i = 0; i < l; i++) {
+		PG_element_unrank_modified_not_in_subspace(v, 1, n + 1, m, i);
+		cout << i << " : ";
+		for (j = 0; j < n + 1; j++) {
+			cout << v[j] << " ";
+			}
+		PG_element_rank_modified_not_in_subspace(v, 1, n + 1, m, a);
+		cout << " : " << a << endl;
+		}
+	FREE_int(v);
+}
+
+void finite_field::display_all_AG_elements(int n)
+{
+	int *v = NEW_int(n);
+	int l = nb_AG_elements(n, q);
+	int i, j;
+
+	for (i = 0; i < l; i++) {
+		AG_element_unrank(q, v, 1, n + 1, i);
+		cout << i << " : ";
+		for (j = 0; j < n; j++) {
+			cout << v[j] << " ";
+			}
+		cout << endl;
+		}
+	FREE_int(v);
+}
+
 
 
 // #############################################################################
@@ -1933,156 +2203,6 @@ int nb_AG_elements(int n, int q)
 // $q^n$
 {
 	return i_power_j(q, n);
-}
-
-void all_PG_elements_in_subspace(finite_field *F,
-		int *genma, int k, int n, int *&point_list, int &nb_points,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
-	int *message;
-	int *word;
-	int i, j;
-
-	if (f_v) {
-		cout << "all_PG_elements_in_subspace" << endl;
-		}
-	message = NEW_int(k);
-	word = NEW_int(n);
-	nb_points = generalized_binomial(k, 1, F->q);
-	point_list = NEW_int(nb_points);
-
-	for (i = 0; i < nb_points; i++) {
-		F->PG_element_unrank_modified(message, 1, k, i);
-		if (f_vv) {
-			cout << "message " << i << " / " << nb_points << " is ";
-			int_vec_print(cout, message, k);
-			cout << endl;
-			}
-		F->mult_vector_from_the_left(message, genma, word, k, n);
-		if (f_vv) {
-			cout << "yields word ";
-			int_vec_print(cout, word, n);
-			cout << endl;
-			}
-		F->PG_element_rank_modified(word, 1, n, j);
-		if (f_vv) {
-			cout << "which has rank " << j << endl;
-			}
-		point_list[i] = j;
-		}
-	if (f_v) {
-		cout << "before FREE_int(message);" << endl;
-		}
-
-	FREE_int(message);
-	FREE_int(word);
-	if (f_v) {
-		cout << "all_PG_elements_in_subspace done" << endl;
-		}
-}
-
-void all_PG_elements_in_subspace_array_is_given(finite_field *F,
-		int *genma, int k, int n, int *point_list, int &nb_points,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
-	int *message;
-	int *word;
-	int i, j;
-
-	if (f_v) {
-		cout << "all_PG_elements_in_subspace_array_is_given" << endl;
-		}
-	message = NEW_int(k);
-	word = NEW_int(n);
-	nb_points = generalized_binomial(k, 1, F->q);
-	//point_list = NEW_int(nb_points);
-
-	for (i = 0; i < nb_points; i++) {
-		F->PG_element_unrank_modified(message, 1, k, i);
-		if (f_vv) {
-			cout << "message " << i << " / " << nb_points << " is ";
-			int_vec_print(cout, message, k);
-			cout << endl;
-			}
-		F->mult_vector_from_the_left(message, genma, word, k, n);
-		if (f_vv) {
-			cout << "yields word ";
-			int_vec_print(cout, word, n);
-			cout << endl;
-			}
-		F->PG_element_rank_modified(word, 1, n, j);
-		if (f_vv) {
-			cout << "which has rank " << j << endl;
-			}
-		point_list[i] = j;
-		}
-	if (f_v) {
-		cout << "before FREE_int(message);" << endl;
-		}
-
-	FREE_int(message);
-	FREE_int(word);
-	if (f_v) {
-		cout << "all_PG_elements_in_subspace_array_is_given done" << endl;
-		}
-}
-
-void display_all_PG_elements(int n, finite_field &GFq)
-{
-	int *v = NEW_int(n + 1);
-	int l = nb_PG_elements(n, GFq.q);
-	int i, j, a;
-
-	for (i = 0; i < l; i++) {
-		GFq.PG_element_unrank_modified(v, 1, n + 1, i);
-		cout << i << " : ";
-		for (j = 0; j < n + 1; j++) {
-			cout << v[j] << " ";
-			}
-		GFq.PG_element_rank_modified(v, 1, n + 1, a);
-		cout << " : " << a << endl;
-		}
-	FREE_int(v);
-}
-
-void display_all_PG_elements_not_in_subspace(int n, int m,
-		finite_field &GFq)
-{
-	int *v = NEW_int(n + 1);
-	int l = nb_PG_elements_not_in_subspace(n, m, GFq.q);
-	int i, j, a;
-
-	for (i = 0; i < l; i++) {
-		GFq.PG_element_unrank_modified_not_in_subspace(v, 1, n + 1, m, i);
-		cout << i << " : ";
-		for (j = 0; j < n + 1; j++) {
-			cout << v[j] << " ";
-			}
-		GFq.PG_element_rank_modified_not_in_subspace(v, 1, n + 1, m, a);
-		cout << " : " << a << endl;
-		}
-	FREE_int(v);
-}
-
-void display_all_AG_elements(int n, finite_field &GFq)
-{
-	int *v = NEW_int(n);
-	int l = nb_AG_elements(n, GFq.q);
-	int i, j;
-
-	for (i = 0; i < l; i++) {
-		AG_element_unrank(GFq.q, v, 1, n + 1, i);
-		cout << i << " : ";
-		for (j = 0; j < n; j++) {
-			cout << v[j] << " ";
-			}
-		cout << endl;
-		}
-	FREE_int(v);
 }
 
 void PG_element_apply_frobenius(int n,
@@ -2236,136 +2356,22 @@ void PG_element_modified_not_in_subspace_perm(int n, int m,
 	FREE_int(v);
 }
 
-int PG2_line_on_point_unrank(finite_field &GFq,
-		int *v1, int rk)
-{
-	int v2[3];
-	
-	PG2_line_on_point_unrank_second_point(GFq, v1, v2, rk);
-	return PG2_line_rank(GFq, v1, v2, 1);
-}
-
-void PG2_line_on_point_unrank_second_point(
-		finite_field &GFq, int *v1, int *v2, int rk)
-{
-	int V[2];
-	int idx0, idx1, idx2;
-	
-	GFq.PG_element_normalize(v1, 1/* stride */, 3);
-	if (v1[2] == 1) {
-		idx0 = 2;
-		idx1 = 0;
-		idx2 = 1;
-		}
-	else if (v1[1] == 1) {
-		idx0 = 1;
-		idx1 = 0;
-		idx2 = 2;
-		}
-	else {
-		idx0 = 0;
-		idx1 = 1;
-		idx2 = 2;
-		}
-	GFq.PG_element_unrank_modified(V, 1/* stride */, 2, rk);
-	v2[idx0] = v1[idx0];
-	v2[idx1] = GFq.add(v1[idx1], V[0]);
-	v2[idx2] = GFq.add(v1[idx2], V[1]);
-}
-
-int PG2_line_rank(finite_field &GFq,
-		int *v1, int *v2, int stride)
-{
-	int A[9];
-	int base_cols[3];
-	int kernel_m, kernel_n;
-	int kernel[9];
-	int rk, line_rk;
-	
-	A[0] = v1[0];
-	A[1] = v1[1];
-	A[2] = v1[2];
-	A[3] = v2[0];
-	A[4] = v2[1];
-	A[5] = v2[2];
-	rk = GFq.Gauss_int(A,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, 2, 3, 3,
-		0 /* verbose_level */);
-	if (rk != 2) {
-		cout << "PG2_line_rank rk != 2" << endl;
-		exit(1);
-		}
-	GFq.matrix_get_kernel(A, 2, 3, base_cols, rk /*nb_base_cols*/, 
-		kernel_m, kernel_n, kernel);
-	if (kernel_m != 3) {
-		cout << "PG2_line_rank kernel_m != 3" << endl;
-		exit(1);
-		}
-	if (kernel_n != 1) {
-		cout << "PG2_line_rank kernel_n != 1" << endl;
-		exit(1);
-		}
-	GFq.PG_element_rank_modified(
-			kernel, 1 /* stride*/, 3, line_rk);
-	return line_rk;
-}
-
-void PG2_line_unrank(finite_field &GFq,
-		int *v1, int *v2, int stride, int line_rk)
-{
-	int A[9];
-	int base_cols[3];
-	int kernel_m, kernel_n;
-	int kernel[9];
-	int rk;
-	
-	GFq.PG_element_unrank_modified(
-			A, 1 /* stride*/, 3, line_rk);
-	rk = GFq.Gauss_int(A,
-		FALSE /* f_special */,
-		TRUE /* f_complete */,
-		base_cols, 
-		FALSE /* f_P */, NULL /*P*/, 1, 3, 3,
-		0 /* verbose_level */);
-	if (rk != 1) {
-		cout << "PG2_line_unrank rk != 1" << endl;
-		exit(1);
-		}
-	GFq.matrix_get_kernel(A,
-		1, 3, base_cols, rk /*nb_base_cols*/,
-		kernel_m, kernel_n, kernel);
-	if (kernel_m != 3) {
-		cout << "PG2_line_rank kernel_m != 3" << endl;
-		exit(1);
-		}
-	if (kernel_n != 2) {
-		cout << "PG2_line_rank kernel_n != 2" << endl;
-		exit(1);
-		}
-	v1[0] = kernel[0];
-	v2[0] = kernel[1];
-	v1[1] = kernel[2];
-	v2[1] = kernel[3];
-	v1[2] = kernel[4];
-	v2[2] = kernel[5];
-}
 
 void test_PG(int n, int q)
 {
-	finite_field GFq;
+	finite_field F;
 	int m;
 	int verbose_level = 1;
 	
-	GFq.init(q, verbose_level);
+	F.init(q, verbose_level);
 	
 	cout << "all elements of PG_" << n << "(" << q << ")" << endl;
-	display_all_PG_elements(n, GFq);
+	F.display_all_PG_elements(n);
 	
 	for (m = 0; m < n; m++) {
 		cout << "all elements of PG_" << n << "(" << q << "), "
 			"not in a subspace of dimension " << m << endl;
-		display_all_PG_elements_not_in_subspace(n, m, GFq);
+		F.display_all_PG_elements_not_in_subspace(n, m);
 		}
 	
 }
@@ -2453,47 +2459,6 @@ int consecutive_ones_property_in_affine_plane(
 		}
 	return TRUE;
 }
-
-void oval_polynomial(finite_field &GFq,
-	int *S, unipoly_domain &D, unipoly_object &poly,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, v[3], x; //, y;
-	int *map;
-	
-	if (f_v) {
-		cout << "oval_polynomial" << endl;
-		}
-	map = NEW_int(GFq.q);
-	for (i = 0; i < GFq.q; i++) {
-		GFq.PG_element_unrank_modified(
-				v, 1 /* stride */, 3 /* len */, S[2 + i]);
-		if (v[2] != 1) {
-			cout << "oval_polynomial not an affine point" << endl;
-			exit(1);
-			}
-		x = v[0];
-		//y = v[1];
-		//cout << "map[" << i << "] = " << xx << endl;
-		map[i] = x;
-		}
-	if (f_v) {
-		cout << "the map" << endl;
-		for (i = 0; i < GFq.q; i++) {
-			cout << map[i] << " ";
-			}
-		cout << endl;
-		}
-	
-	D.create_Dickson_polynomial(poly, map);
-	
-	FREE_int(map);
-	if (f_v) {
-		cout << "oval_polynomial done" << endl;
-		}
-}
-
 
 int line_intersection_with_oval(finite_field &GFq,
 	int *f_oval_point, int line_rk,
@@ -2724,348 +2689,7 @@ void add_term(int n, finite_field &F,
 
 
 
-// formerly DISCRETA/extras.cpp
-//
-// Anton Betten
-// Sept 17, 2010
-
-// plane_invariant started 2/23/09
 
 
-void plane_invariant(int q, orthogonal *O, unusual_model *U,
-	int size, int *set,
-	int &nb_planes, int *&intersection_matrix,
-	int &Block_size, int *&Blocks,
-	int verbose_level)
-// using hash values
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	int *Mtx;
-	int *Hash;
-	int rk, H, log2_of_q, n_choose_k;
-	int f_special = FALSE;
-	int f_complete = TRUE;
-	int base_col[1000];
-	int subset[1000];
-	int level = 3;
-	int n = 5;
-	int cnt;
-	int i;
-
-
-	n_choose_k = int_n_choose_k(size, level);
-	log2_of_q = int_log2(q);
-
-	Mtx = NEW_int(level * n);
-	Hash = NEW_int(n_choose_k);
-
-	first_k_subset(subset, size, level);
-	cnt = -1;
-
-	if (f_v) {
-		cout << "computing planes spanned by 3-subsets" << endl;
-		cout << "n_choose_k=" << n_choose_k << endl;
-		cout << "log2_of_q=" << log2_of_q << endl;
-		}
-	while (TRUE) {
-		cnt++;
-
-		for (i = 0; i < level; i++) {
-			Q_unrank(*O->F, Mtx + i * n, 1, n - 1, set[subset[i]]);
-			}
-		if (f_vvv) {
-			cout << "subset " << setw(5) << cnt << " : ";
-			int_vec_print(cout, subset, level);
-			cout << " : "; // << endl;
-			}
-		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-		rk = O->F->Gauss_int(Mtx, f_special, f_complete,
-				base_col, FALSE, NULL, level, n, n, 0);
-		if (f_vvv) {
-			cout << "after Gauss, rank = " << rk << endl;
-			print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-			}
-		H = 0;
-		for (i = 0; i < level * n; i++) {
-			H = hashing_fixed_width(H, Mtx[i], log2_of_q);
-			}
-		if (f_vvv) {
-			cout << "hash =" << setw(10) << H << endl;
-			}
-		Hash[cnt] = H;
-		if (!next_k_subset(subset, size, level)) {
-			break;
-			}
-		}
-	int *Hash_sorted, *sorting_perm, *sorting_perm_inv,
-		nb_types, *type_first, *type_len;
-
-	int_vec_classify(n_choose_k, Hash, Hash_sorted,
-		sorting_perm, sorting_perm_inv,
-		nb_types, type_first, type_len);
-
-
-	if (f_v) {
-		cout << nb_types << " types of planes" << endl;
-		}
-	if (f_vvv) {
-		for (i = 0; i < nb_types; i++) {
-			cout << setw(3) << i << " : "
-				<< setw(4) << type_first[i] << " : "
-				<< setw(4) << type_len[i] << " : "
-				<< setw(10) << Hash_sorted[type_first[i]] << endl;
-			}
-		}
-	int *type_len_sorted, *sorting_perm2, *sorting_perm_inv2,
-		nb_types2, *type_first2, *type_len2;
-
-	int_vec_classify(nb_types, type_len, type_len_sorted,
-		sorting_perm2, sorting_perm_inv2,
-		nb_types2, type_first2, type_len2);
-
-	if (f_v) {
-		cout << "multiplicities:" << endl;
-		for (i = 0; i < nb_types2; i++) {
-			//cout << setw(3) << i << " : "
-			//<< setw(4) << type_first2[i] << " : "
-			cout << setw(4) << type_len2[i] << " x "
-				<< setw(10) << type_len_sorted[type_first2[i]] << endl;
-			}
-		}
-	int f, ff, ll, j, u, ii, jj, idx;
-
-	f = type_first2[nb_types2 - 1];
-	nb_planes = type_len2[nb_types2 - 1];
-	if (f_v) {
-		if (nb_planes == 1) {
-			cout << "there is a unique plane that appears "
-					<< type_len_sorted[f]
-					<< " times among the 3-sets of points" << endl;
-			}
-		else {
-			cout << "there are " << nb_planes
-					<< " planes that each appear "
-					<< type_len_sorted[f]
-					<< " times among the 3-sets of points" << endl;
-			for (i = 0; i < nb_planes; i++) {
-				j = sorting_perm_inv2[f + i];
-				cout << "The " << i << "-th plane, which is " << j
-						<< ", appears " << type_len_sorted[f + i]
-						<< " times" << endl;
-				}
-			}
-		}
-	if (f_vvv) {
-		cout << "these planes are:" << endl;
-		for (i = 0; i < nb_planes; i++) {
-			cout << "plane " << i << endl;
-			j = sorting_perm_inv2[f + i];
-			ff = type_first[j];
-			ll = type_len[j];
-			for (u = 0; u < ll; u++) {
-				cnt = sorting_perm_inv[ff + u];
-				unrank_k_subset(cnt, subset, size, level);
-				cout << "subset " << setw(5) << cnt << " : ";
-				int_vec_print(cout, subset, level);
-				cout << " : " << endl;
-				}
-			}
-		}
-
-	//return;
-
-	//int *Blocks;
-	int *Block;
-	//int Block_size;
-
-
-	Block = NEW_int(size);
-	Blocks = NEW_int(nb_planes * size);
-
-	for (i = 0; i < nb_planes; i++) {
-		j = sorting_perm_inv2[f + i];
-		ff = type_first[j];
-		ll = type_len[j];
-		if (f_vv) {
-			cout << setw(3) << i << " : " << setw(3) << " : "
-				<< setw(4) << ff << " : "
-				<< setw(4) << ll << " : "
-				<< setw(10) << Hash_sorted[type_first[j]] << endl;
-			}
-		Block_size = 0;
-		for (u = 0; u < ll; u++) {
-			cnt = sorting_perm_inv[ff + u];
-			unrank_k_subset(cnt, subset, size, level);
-			if (f_vvv) {
-				cout << "subset " << setw(5) << cnt << " : ";
-				int_vec_print(cout, subset, level);
-				cout << " : " << endl;
-				}
-			for (ii = 0; ii < level; ii++) {
-				Q_unrank(*O->F, Mtx + ii * n, 1, n - 1, set[subset[ii]]);
-				}
-			for (ii = 0; ii < level; ii++) {
-				if (!int_vec_search(Block, Block_size, subset[ii], idx)) {
-					for (jj = Block_size; jj > idx; jj--) {
-						Block[jj] = Block[jj - 1];
-						}
-					Block[idx] = subset[ii];
-					Block_size++;
-					}
-				}
-			rk = O->F->Gauss_int(Mtx, f_special,
-					f_complete, base_col, FALSE, NULL, level, n, n, 0);
-			if (f_vvv)  {
-				cout << "after Gauss, rank = " << rk << endl;
-				print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-				}
-
-			H = 0;
-			for (ii = 0; ii < level * n; ii++) {
-				H = hashing_fixed_width(H, Mtx[ii], log2_of_q);
-				}
-			if (f_vvv) {
-				cout << "hash =" << setw(10) << H << endl;
-				}
-			}
-		if (f_vv) {
-			cout << "found Block ";
-			int_vec_print(cout, Block, Block_size);
-			cout << endl;
-			}
-		for (u = 0; u < Block_size; u++) {
-			Blocks[i * Block_size + u] = Block[u];
-			}
-		}
-	if (f_vv) {
-		cout << "Incidence structure between points "
-				"and high frequency planes:" << endl;
-		if (nb_planes < 30) {
-			print_integer_matrix_width(cout, Blocks,
-					nb_planes, Block_size, Block_size, 3);
-			}
-		}
-
-	int *Incma, *Incma_t, *IIt, *ItI;
-	int a;
-
-	Incma = NEW_int(size * nb_planes);
-	Incma_t = NEW_int(nb_planes * size);
-	IIt = NEW_int(size * size);
-	ItI = NEW_int(nb_planes * nb_planes);
-
-
-	for (i = 0; i < size * nb_planes; i++) {
-		Incma[i] = 0;
-		}
-	for (i = 0; i < nb_planes; i++) {
-		for (j = 0; j < Block_size; j++) {
-			a = Blocks[i * Block_size + j];
-			Incma[a * nb_planes + i] = 1;
-			}
-		}
-	if (f_vv) {
-		cout << "Incidence matrix:" << endl;
-		print_integer_matrix_width(cout, Incma,
-				size, nb_planes, nb_planes, 1);
-		}
-	for (i = 0; i < size; i++) {
-		for (j = 0; j < nb_planes; j++) {
-			Incma_t[j * size + i] = Incma[i * nb_planes + j];
-			}
-		}
-	for (i = 0; i < size; i++) {
-		for (j = 0; j < size; j++) {
-			a = 0;
-			for (u = 0; u < nb_planes; u++) {
-				a += Incma[i * nb_planes + u] * Incma_t[u * size + j];
-				}
-			IIt[i * size + j] = a;
-			}
-		}
-	if (f_vv) {
-		cout << "I * I^\\top = " << endl;
-		print_integer_matrix_width(cout, IIt, size, size, size, 2);
-		}
-	for (i = 0; i < nb_planes; i++) {
-		for (j = 0; j < nb_planes; j++) {
-			a = 0;
-			for (u = 0; u < size; u++) {
-				a += Incma[u * nb_planes + i] * Incma[u * nb_planes + j];
-				}
-			ItI[i * nb_planes + j] = a;
-			}
-		}
-	if (f_v) {
-		cout << "I^\\top * I = " << endl;
-		print_integer_matrix_width(cout, ItI,
-				nb_planes, nb_planes, nb_planes, 3);
-		}
-
-	intersection_matrix = NEW_int(nb_planes * nb_planes);
-	for (i = 0; i < nb_planes; i++) {
-		for (j = 0; j < nb_planes; j++) {
-			intersection_matrix[i * nb_planes + j] = ItI[i * nb_planes + j];
-			}
-		}
-
-#if 0
-	{
-		char fname[1000];
-
-		sprintf(fname, "plane_invariant_%d_%d.txt", q, k);
-
-		ofstream fp(fname);
-		fp << nb_planes << endl;
-		for (i = 0; i < nb_planes; i++) {
-			for (j = 0; j < nb_planes; j++) {
-				fp << ItI[i * nb_planes + j] << " ";
-				}
-			fp << endl;
-			}
-		fp << -1 << endl;
-		fp << "# Incidence structure between points "
-				"and high frequency planes:" << endl;
-		fp << l << " " << Block_size << endl;
-		print_integer_matrix_width(fp,
-				Blocks, nb_planes, Block_size, Block_size, 3);
-		fp << -1 << endl;
-
-	}
-#endif
-
-	FREE_int(Mtx);
-	FREE_int(Hash);
-	FREE_int(Block);
-	//FREE_int(Blocks);
-	FREE_int(Incma);
-	FREE_int(Incma_t);
-	FREE_int(IIt);
-	FREE_int(ItI);
-
-
-	FREE_int(Hash_sorted);
-	FREE_int(sorting_perm);
-	FREE_int(sorting_perm_inv);
-	FREE_int(type_first);
-	FREE_int(type_len);
-
-
-
-	FREE_int(type_len_sorted);
-	FREE_int(sorting_perm2);
-	FREE_int(sorting_perm_inv2);
-	FREE_int(type_first2);
-	FREE_int(type_len2);
-
-
-
-}
-
-
-
-}
-}
+}}
 

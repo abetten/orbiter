@@ -2310,7 +2310,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 	Gr->init(n - 1, k, F, 0 /* verbose_level */);
 	for (i = 0; i < order + 1; i++) {
 		Grass->unrank_int_here(Mtx, data[i], 0/*verbose_level - 4*/);
-		all_PG_elements_in_subspace(F, Mtx, k, n,
+		F->all_PG_elements_in_subspace(Mtx, k, n,
 				Pts[i], nb_points, 0 /* verbose_level */);
 		int_vec_heapsort(Pts[i], nb_points);
 		}

@@ -57,7 +57,7 @@ int main(int argc, const char **argv)
 	N = nb_PG_elements(n - 1, q);
 
 	if (f_v && N < 100) {
-		display_all_PG_elements(n - 1, GFq);
+		GFq.display_all_PG_elements(n - 1);
 		}
 	int f_basis = TRUE;
 	vector_ge *nice_gens;

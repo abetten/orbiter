@@ -121,7 +121,8 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 
 		nb_irred += Nb_irred[d];
 		if (f_v) {
-			cout << "gl_classes::init Nb_irred[" << d << "]=" << Nb_irred[d] << endl;
+			cout << "gl_classes::init Nb_irred[" << d << "]="
+					<< Nb_irred[d] << endl;
 			}
 		}
 	
@@ -169,7 +170,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 		}
 }
 
-void gl_classes::print_polynomials(ofstream &ost)
+void gl_classes::print_polynomials(ostream &ost)
 {
 	int d, i, j;
 	
@@ -360,7 +361,7 @@ int gl_classes::next(int *Select,
 
 
 void gl_classes::print_matrix_and_centralizer_order_latex(
-		ofstream &ost, gl_class_rep *R)
+		ostream &ost, gl_class_rep *R)
 {
 	int *Mtx;
 	longinteger_object go, co, cl, r, f, g;
@@ -418,13 +419,17 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	ost << "$" << endl;
 	ost << "$$" << endl;
 	ost << "\\left[" << endl;
-	F->latex_matrix(ost, f_elements_exponential, symbol_for_print, Mtx, k, k);
+	F->latex_matrix(ost,
+			f_elements_exponential, symbol_for_print, Mtx, k, k);
 	ost << "\\right]";
 	ost << "_{";
 	ost << co << "}" << endl;
 	ost << "$$" << endl;
-	ost << "co=$" << co << "$ cl=$" << cl << "$" << endl;
+
+	ost << "centralizer order $" << co << "$\\\\";
+	ost << "class size $" << cl << "$\\\\" << endl;
 	ost << endl;
+
 	FREE_int(Select_polynomial);
 	FREE_int(Select_Partition);
 	FREE_int(Mtx);
@@ -673,14 +678,16 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	longinteger_domain D;
 
 	if (f_v) {
-		cout << "gl_classes::make_classes k = " << k << " q = " << q << endl;
+		cout << "gl_classes::make_classes "
+				"k = " << k << " q = " << q << endl;
 		}
 	int *Select_polynomial;
 	int *Select_partition;
 	int i, m, p;
 
 	if (f_v) {
-		cout << "gl_classes::make_classes nb_irred = " << nb_irred << endl;
+		cout << "gl_classes::make_classes "
+				"nb_irred = " << nb_irred << endl;
 		}
 	Mtx = NEW_int(k * k);
 	Select_polynomial = NEW_int(nb_irred);
@@ -697,7 +704,8 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 		g.assign_to(go);
 		}
 	if (f_vv) {
-		cout << "gl_classes::make_classes The order of GL(k,q) is "
+		cout << "gl_classes::make_classes "
+				"The order of GL(k,q) is "
 				<< go << endl;
 		}
 
@@ -900,7 +908,8 @@ void gl_classes::identify_matrix(int *Mtx,
 				"k = " << k << " q = " << q << endl;
 		}
 	if (f_vv) {
-		cout << "gl_classes::identify_matrix input matrix=" << endl;
+		cout << "gl_classes::identify_matrix "
+				"input matrix=" << endl;
 		int_matrix_print(Mtx, k, k);
 		}
 
@@ -945,7 +954,8 @@ void gl_classes::identify_matrix(int *Mtx,
 		cout << endl;
 		}
 
-	identify2(Mtx, char_poly, Mult, Select_partition, Basis, verbose_level);
+	identify2(Mtx, char_poly, Mult,
+			Select_partition, Basis, verbose_level);
 
 	R->init(nb_irred, Mult, Select_partition, verbose_level);
 
@@ -1025,7 +1035,8 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 
 
 	if (f_v) {
-		cout << "gl_classes::identify2 before compute_data_on_blocks" << endl;
+		cout << "gl_classes::identify2 "
+				"before compute_data_on_blocks" << endl;
 		}
 
 	compute_data_on_blocks(Mtx, Irreds, nb_irreds,
@@ -1057,7 +1068,8 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 
 
 	if (f_vv) {
-		cout << "gl_classes::identify2 transformation matrix = " << endl;
+		cout << "gl_classes::identify2 "
+				"transformation matrix = " << endl;
 		int_matrix_print(Basis, k, k);
 		cout << endl;
 		}
@@ -1142,7 +1154,8 @@ void gl_classes::compute_data_on_blocks(
 }
 
 
-void gl_classes::compute_generalized_kernels(matrix_block_data *Data,
+void gl_classes::compute_generalized_kernels(
+		matrix_block_data *Data,
 		int *M2, int d, int b0, int m, int *poly_coeffs,
 		int verbose_level)
 {
@@ -2069,140 +2082,43 @@ int gl_classes::find_class_rep(gl_class_rep *Reps,
 	return i;
 }
 
-gl_class_rep::gl_class_rep()
-{
-}
-
-gl_class_rep::~gl_class_rep()
-{
-}
-
-void gl_class_rep::init(int nb_irred, int *Select_polynomial,
-		int *Select_partition, int verbose_level)
-{
-	int l, i;
-		
-	l = 0;
-	for (i = 0; i < nb_irred; i++) {
-		if (Select_polynomial[i]) {
-			l++;
-			}
-		}
-	type_coding.allocate(l, 3);
-	l = 0;
-	for (i = 0; i < nb_irred; i++) {
-		if (Select_polynomial[i]) {
-			type_coding.s_ij(l, 0) = i;
-			type_coding.s_ij(l, 1) = Select_polynomial[i];
-			type_coding.s_ij(l, 2) = Select_partition[i];
-			l++;
-			}
-		}
-}
-
-void gl_class_rep::compute_vector_coding(gl_classes *C,
-		int &nb_irred, int *&Poly_degree,
-		int *&Poly_mult, int *&Partition_idx,
-		int verbose_level)
+void gl_classes::report(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	//const char *fname = "Class_reps.tex";
+	int nb_classes;
+	gl_class_rep *R;
+
+	if (f_v) {
+		cout << "gl_classes::report" << endl;
+	}
+	make_classes(R, nb_classes,
+			FALSE /* f_no_eigenvalue_one */, verbose_level - 1);
+
+	{
+	ofstream fp(fname);
 	int i;
-	
+
+	latex_head_easy(fp);
+	fp << "\\section{Conjugacy Classes}" << endl;
+	for (i = 0; i < nb_classes; i++) {
+		fp << "Representative " << i << " / "
+				<< nb_classes << "\\\\" << endl;
+		print_matrix_and_centralizer_order_latex(fp, R + i);
+		}
+	latex_foot(fp);
+	}
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
+	FREE_OBJECTS(R);
 	if (f_v) {
-		cout << "gl_class_rep::compute_vector_coding" << endl;
-		}
-	nb_irred = type_coding.s_m();
-	if (f_v) {
-		cout << "gl_class_rep::compute_vector_coding "
-				"nb_irred=" << nb_irred << endl;
-		}
-	Poly_degree = NEW_int(nb_irred);
-	Poly_mult = NEW_int(nb_irred);
-	Partition_idx = NEW_int(nb_irred);
-	for (i = 0; i < nb_irred; i++) {
-		Poly_degree[i] = C->Degree[type_coding.s_ij(i, 0)];
-		Poly_mult[i] = type_coding.s_ij(i, 1);
-		Partition_idx[i] = type_coding.s_ij(i, 2);
-		}
-	if (f_v) {
-		cout << "gl_class_rep::compute_vector_coding done" << endl;
-		}
-}
-
-void gl_class_rep::centralizer_order_Kung(gl_classes *C,
-		longinteger_object &co, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *Poly_degree;
-	int *Poly_mult;
-	int *Partition_idx;
-	int nb_irred;
-	
-	if (f_v) {
-		cout << "gl_class_rep::centralizer_order_Kung" << endl;
-		}
-
-	compute_vector_coding(C, nb_irred, Poly_degree,
-			Poly_mult, Partition_idx, verbose_level);
-
-	C->centralizer_order_Kung_basic(nb_irred, 
-		Poly_degree, Poly_mult, Partition_idx, 
-		co, 
-		verbose_level);
-
-	FREE_int(Poly_degree);
-	FREE_int(Poly_mult);
-	FREE_int(Partition_idx);
-
-	if (f_v) {
-		cout << "gl_class_rep::centralizer_order_Kung done" << endl;
-		}
+		cout << "gl_classes::report done" << endl;
+	}
 }
 
 
 
-
-matrix_block_data::matrix_block_data()
-{
-	null();
-}
-
-matrix_block_data::~matrix_block_data()
-{
-	freeself();
-}
-
-void matrix_block_data::null()
-{
-	K = NULL;
-	part = NULL;
-	dual_part = NULL;
-	height = 0;
-}
-
-void matrix_block_data::freeself()
-{
-	if (K) {
-		FREE_OBJECTS(K);
-		}
-	if (dual_part) {
-		FREE_int(dual_part);
-		}
-	if (part) {
-		FREE_int(part);
-		}
-	null();
-}
-
-void matrix_block_data::allocate(int k)
-{
-	K = NEW_OBJECTS(int_matrix, k);
-	dual_part = NEW_int(k);
-	part = NEW_int(k);
-}
-
-
-}
-}
+}}
 
 

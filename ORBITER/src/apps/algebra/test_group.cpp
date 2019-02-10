@@ -1196,7 +1196,7 @@ void test13(int verbose_level)
 
 	int data1[] = {0,1,0,0,0,1,2,2,3};
 
-	display_all_PG_elements(2, *A->G.matrix_grp->GFq);
+	A->G.matrix_grp->GFq->display_all_PG_elements(2);
 
 	cout << "making element:" << endl;
 	A->make_element(Elt1, data1, FALSE);
@@ -1280,7 +1280,7 @@ void test14(int verbose_level)
 		0,16,13,10,2,
 		};
 
-	display_all_PG_elements(2, *A->G.matrix_grp->GFq);
+	A->G.matrix_grp->GFq->display_all_PG_elements(2);
 
 	cout << "making element:" << endl;
 	A->make_element(Elt1, data1, FALSE);
