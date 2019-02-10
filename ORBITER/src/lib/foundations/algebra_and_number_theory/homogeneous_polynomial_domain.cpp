@@ -220,13 +220,15 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 
 		int l;
 		
-		if (n == 3) {
-			label[0] = 'X' + i;
+		if (TRUE) {
+			label[0] = 'X';
+			label[1] = '0' + i;
+			label[2] = 0;
 			}
 		else {
 			label[0] = 'A' + i;
+			label[1] = 0;
 			}
-		label[1] = 0;
 		l = strlen(label);
 		symbols[i] = NEW_char(l + 1);
 		strcpy(symbols[i], label);
@@ -236,13 +238,16 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 
 		int l;
 		
-		if (n == 3) {
-			label[0] = 'X' + i;
+		if (TRUE) {
+			label[0] = 'X';
+			label[1] = '_';
+			label[2] = '0' + i;
+			label[3] = 0;
 			}
 		else {
 			label[0] = 'A' + i;
+			label[1] = 0;
 			}
-		label[1] = 0;
 		l = strlen(label);
 		symbols_latex[i] = NEW_char(l + 1);
 		strcpy(symbols_latex[i], label);
