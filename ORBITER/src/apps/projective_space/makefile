@@ -16,6 +16,7 @@ all: analyze_projective_code.out  \
 	canonical_form.out\
 	cheat_sheet_PG.out \
 	conic.out \
+	create_object.out \
 	determine_conic.out \
 	determine_cubic.out \
 	determine_quadric.out \
@@ -24,7 +25,6 @@ all: analyze_projective_code.out  \
 	make_BLT_set.out \
 	make_group.out \
 	make_grassmannian.out \
-	make_something.out \
 	orthogonal_points.out \
 	ovoid.out \
 	packing_main.out \
@@ -67,6 +67,9 @@ cheat_sheet_PG.out:  cheat_sheet_PG.o;
 conic.out:  conic.o;
 	$(DISCRETA_CPP)  conic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+create_object.out:  create_object.o ;
+	$(DISCRETA_CPP)  create_object.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 determine_conic.out:  determine_conic.o;
 	$(DISCRETA_CPP)  determine_conic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -93,9 +96,6 @@ make_grassmannian.out:  make_grassmannian.o;
 
 make_group.out:  make_group.o;
 	$(DISCRETA_CPP)  make_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-make_something.out:  make_something.o ;
-	$(DISCRETA_CPP)  make_something.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 orthogonal_points.out:  orthogonal_points.o ;
 	$(DISCRETA_CPP)  orthogonal_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

@@ -981,6 +981,8 @@ void create_action_and_compute_orbits_on_equations(
 // #############################################################################
 
 
+//! interface to the implementation functions for group actions
+
 class action_pointer_table {
 
 public:
