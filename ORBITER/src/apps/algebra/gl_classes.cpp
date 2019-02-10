@@ -615,7 +615,7 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 	finite_field *F;
 	int i;
 		
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	C.init(d, F, verbose_level);
@@ -631,7 +631,7 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 	
 		
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */,
@@ -657,13 +657,24 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 				<< nb_classes << " has rank " << a << endl;
 		int_matrix_print(Elt, d, d);
 
+		C.print_matrix_and_centralizer_order_latex(
+				cout, R + i);
+
 		}
+
+
+	char fname[1000];
+
+	sprintf(fname, "Class_reps_GL_%d_%d.tex", d, q);
+	C.report(fname, verbose_level);
+
+
 	//make_gl_classes(d, q, f_no_eigenvalue_one, verbose_level);
 
 	FREE_int(Mtx);
 	FREE_int(Elt);
-	delete A;
-	delete F;
+	FREE_OBJECT(A);
+	FREE_OBJECT(F);
 	delete [] R;
 }
 
@@ -805,7 +816,7 @@ void do_identify_one(int q, int d,
 	int nb_classes;
 	finite_field *F;
 		
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	C.init(d, F, verbose_level);
@@ -819,7 +830,7 @@ void do_identify_one(int q, int d,
 	vector_ge *nice_gens;
 	
 		
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */,
@@ -848,7 +859,7 @@ void do_identify_one(int q, int d,
 
 	gl_class_rep *R1;
 
-	R1 = new gl_class_rep;
+	R1 = NEW_OBJECT(gl_class_rep);
 		
 	C.identify_matrix(Elt, R1, Basis, verbose_level);
 
@@ -856,15 +867,15 @@ void do_identify_one(int q, int d,
 
 	cout << "class = " << class_rep << endl;
 
-	delete R1;
+	FREE_OBJECT(R1);
 
 
 		
 
 	FREE_int(Elt);
 	FREE_int(Basis);
-	delete A;
-	delete F;
+	FREE_OBJECT(A);
+	FREE_OBJECT(F);
 	delete [] Reps;
 }
 
@@ -881,7 +892,7 @@ void do_normal_form(int q, int d,
 	if (f_v) {
 		cout << "do_normal_form" << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	if (f_v) {
@@ -908,7 +919,7 @@ void do_normal_form(int q, int d,
 	vector_ge *nice_gens;
 	
 		
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */, TRUE /* f_basis */,
 			nice_gens,
@@ -940,7 +951,7 @@ void do_normal_form(int q, int d,
 
 	gl_class_rep *R1;
 
-	R1 = new gl_class_rep;
+	R1 = NEW_OBJECT(gl_class_rep);
 		
 	C.identify_matrix(Elt, R1, Basis, verbose_level);
 
@@ -949,16 +960,16 @@ void do_normal_form(int q, int d,
 
 	cout << "class = " << class_rep << endl;
 
-	delete R1;
+	FREE_OBJECT(R1);
 
 
 		
 
 	FREE_int(Elt);
 	FREE_int(Basis);
-	delete A;
-	delete F;
-	delete [] Reps;
+	FREE_OBJECT(A);
+	FREE_OBJECT(F);
+	FREE_OBJECTS(Reps);
 }
 
 

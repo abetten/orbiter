@@ -618,8 +618,15 @@ public:
 	// #########################################################################
 
 	void create_projective_variety(
+			const char *variety_label,
 			int variety_nb_vars, int variety_degree,
 			const char *variety_coeffs,
+			char *fname, int &nb_pts, int *&Pts,
+			int verbose_level);
+	void create_projective_curve(
+			const char *variety_label,
+			int curve_nb_vars, int curve_degree,
+			const char *curve_coeffs,
 			char *fname, int &nb_pts, int *&Pts,
 			int verbose_level);
 	void PG_element_normalize(
@@ -778,6 +785,18 @@ public:
 		ostream &ost, int *Pts, int nb_pts, int len);
 	void export_magma(int d, int *Pts, int nb_pts, char *fname);
 	void export_gap(int d, int *Pts, int nb_pts, char *fname);
+	void oval_polynomial(
+		int *S, unipoly_domain &D, unipoly_object &poly,
+		int verbose_level);
+	void all_PG_elements_in_subspace(
+			int *genma, int k, int n, int *&point_list, int &nb_points,
+			int verbose_level);
+	void all_PG_elements_in_subspace_array_is_given(
+			int *genma, int k, int n, int *point_list, int &nb_points,
+			int verbose_level);
+	void display_all_PG_elements(int n);
+	void display_all_PG_elements_not_in_subspace(int n, int m);
+	void display_all_AG_elements(int n);
 };
 
 extern int nb_calls_to_finite_field_init;
@@ -790,17 +809,6 @@ int nb_PG_elements(int n, int q);
 	// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 int nb_PG_elements_not_in_subspace(int n, int m, int q);
 int nb_AG_elements(int n, int q);
-void all_PG_elements_in_subspace(finite_field *F,
-	int *genma, int k, int n, int *&point_list,
-	int &nb_points, int verbose_level);
-void all_PG_elements_in_subspace_array_is_given(finite_field *F,
-	int *genma, int k, int n, int *point_list,
-	int &nb_points, int verbose_level);
-void display_all_PG_elements(int n, finite_field &GFq);
-void display_all_PG_elements_not_in_subspace(int n,
-	int m, finite_field &GFq);
-void display_all_AG_elements(int n,
-	finite_field &GFq);
 void PG_element_apply_frobenius(int n,
 	finite_field &GFq, int *v, int f);
 void AG_element_rank(int q, int *v, int stride, int len, int &a);
@@ -812,21 +820,12 @@ void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
 int PG_element_modified_is_in_subspace(int n, int m, int *v);
 void PG_element_modified_not_in_subspace_perm(int n, int m,
 	finite_field &GFq, int *orbit, int *orbit_inv, int verbose_level);
-int PG2_line_on_point_unrank(finite_field &GFq, int *v1, int rk);
-void PG2_line_on_point_unrank_second_point(finite_field &GFq,
-	int *v1, int *v2, int rk);
-int PG2_line_rank(finite_field &GFq, int *v1, int *v2, int stride);
-void PG2_line_unrank(finite_field &GFq, int *v1, int *v2,
-	int stride, int line_rk);
 void test_PG(int n, int q);
 void line_through_two_points(finite_field &GFq, int len,
 	int pt1, int pt2, int *line);
 void print_set_in_affine_plane(finite_field &GFq, int len, int *S);
 int consecutive_ones_property_in_affine_plane(ostream &ost,
 	finite_field &GFq, int len, int *S);
-void oval_polynomial(finite_field &GFq, int *S,
-	unipoly_domain &D, unipoly_object &poly,
-	int verbose_level);
 int line_intersection_with_oval(finite_field &GFq,
 	int *f_oval_point, int line_rk,
 	int verbose_level);
@@ -847,12 +846,6 @@ void make_Gram_matrix_from_list_coded_quadratic_form(
 void add_term(int n, finite_field &F, int &nb_terms,
 	int *form_i, int *form_j, int *form_coeff, int *Gram,
 	int i, int j, int coeff);
-void plane_invariant(int q, orthogonal *O, unusual_model *U,
-	int size, int *set,
-	int &nb_planes, int *&intersection_matrix,
-	int &Block_size, int *&Blocks,
-	int verbose_level);
-// using hash values
 
 
 
@@ -997,7 +990,7 @@ public:
 	void null();
 	void freeself();
 	void init(int k, finite_field *F, int verbose_level);
-	void print_polynomials(ofstream &ost);
+	void print_polynomials(ostream &ost);
 	int select_polynomial_first(int *Select, int verbose_level);
 	int select_polynomial_next(int *Select, int verbose_level);
 	int select_partition_first(int *Select, int *Select_partition, 
@@ -1006,7 +999,7 @@ public:
 		int verbose_level);
 	int first(int *Select, int *Select_partition, int verbose_level);
 	int next(int *Select, int *Select_partition, int verbose_level);
-	void print_matrix_and_centralizer_order_latex(ofstream &ost, 
+	void print_matrix_and_centralizer_order_latex(ostream &ost,
 		gl_class_rep *R);
 	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R, 
 		int verbose_level);
@@ -1060,6 +1053,7 @@ public:
 		int verbose_level);
 	int find_class_rep(gl_class_rep *Reps, int nb_reps, 
 		gl_class_rep *R, int verbose_level);
+	void report(const char *fname, int verbose_level);
 
 };
 
@@ -1075,6 +1069,8 @@ public:
 	~gl_class_rep();
 	void init(int nb_irred, int *Select_polynomial, 
 		int *Select_partition, int verbose_level);
+	void print(int nb_irred,  int *Select_polynomial,
+			int *Select_partition, int verbose_level);
 	void compute_vector_coding(gl_classes *C, int &nb_irred, 
 		int *&Poly_degree, int *&Poly_mult, int *&Partition_idx, 
 		int verbose_level);

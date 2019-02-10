@@ -158,7 +158,7 @@ void spread_lifting::compute_points_covered_by_starter(
 
 		a = starter[i];
 		S->Grass->unrank_int(a, 0/*verbose_level - 4*/);
-		all_PG_elements_in_subspace(S->F,
+		S->F->all_PG_elements_in_subspace(
 			S->Grass->M, S->k, S->n, point_list,
 			nb_points, 0 /*verbose_level - 2*/);
 			// in projective.C
@@ -306,7 +306,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 			cout << "Which is " << endl;
 			int_matrix_print(S->Grass->M, S->k, S->n);
 			}
-		all_PG_elements_in_subspace(S->F,
+		S->F->all_PG_elements_in_subspace(
 				S->Grass->M, S->k, S->n, point_list, nb_points,
 				0 /*verbose_level*/);
 		if (nb_points != S->block_size) {

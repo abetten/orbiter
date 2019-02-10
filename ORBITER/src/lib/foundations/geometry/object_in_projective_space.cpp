@@ -100,6 +100,7 @@ void object_in_projective_space::print_tex(ostream &ost)
 }
 
 void object_in_projective_space::init_object_from_string(
+	projective_space *P,
 	int type,
 	const char *input_fname, int input_idx,
 	const char *set_as_string, int verbose_level)
@@ -124,6 +125,7 @@ void object_in_projective_space::init_object_from_string(
 	int_vec_scan(set_as_string, the_set_in, set_size_in);
 
 
+#if 0
 	if (f_v) {
 		cout << "The input set has size " << set_size_in << ":" << endl;
 		cout << "The input set is:" << endl;
@@ -159,11 +161,88 @@ void object_in_projective_space::init_object_from_string(
 				"unknown type" << endl;
 		exit(1);
 		}
+#else
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string "
+				"before object_in_projective_space::init_object_from_"
+				"int_vec" << endl;
+	}
+	init_object_from_int_vec(
+		P,
+		type,
+		input_fname, input_idx,
+		the_set_in, set_size_in, verbose_level);
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string "
+				"after object_in_projective_space::init_object_from_"
+				"int_vec" << endl;
+	}
+
+#endif
 
 	FREE_int(the_set_in);
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_object_from_string"
+				" done" << endl;
+		}
+}
+
+void object_in_projective_space::init_object_from_int_vec(
+	projective_space *P,
+	int type,
+	const char *input_fname, int input_idx,
+	int *the_set_in, int the_set_sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_int_vec" << endl;
+		cout << "type=" << type << endl;
+		}
+
+	object_in_projective_space::input_fname = input_fname;
+	object_in_projective_space::input_idx = input_idx;
+
+
+	if (f_v) {
+		cout << "The input set has size " << the_set_sz << ":" << endl;
+		cout << "The input set is:" << endl;
+		int_vec_print(cout, the_set_in, the_set_sz);
+		cout << endl;
+		cout << "The type is: ";
+		if (type == t_PTS) {
+			cout << "t_PTS" << endl;
+			}
+		else if (type == t_LNS) {
+			cout << "t_LNS" << endl;
+			}
+		else if (type == t_PAC) {
+			cout << "t_PAC" << endl;
+			}
+		}
+
+
+	if (type == t_PTS) {
+		init_point_set(P,
+				the_set_in, the_set_sz, verbose_level - 1);
+		}
+	else if (type == t_LNS) {
+		init_line_set(P,
+				the_set_in, the_set_sz, verbose_level - 1);
+		}
+	else if (type == t_PAC) {
+		init_packing_from_set(P,
+				the_set_in, the_set_sz, verbose_level - 1);
+		}
+	else {
+		cout << "object_in_projective_space::init_object_from_int_vec "
+				"unknown type" << endl;
+		exit(1);
+		}
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_int_vec"
 				" done" << endl;
 		}
 }
@@ -354,18 +433,30 @@ void object_in_projective_space::encoding_size(
 		}
 	if (type == t_PTS) {
 
+		if (f_v) {
+			cout << "object_in_projective_space::encoding_size "
+					"before encoding_size_point_set" << endl;
+			}
 		encoding_size_point_set(
 				nb_rows, nb_cols, verbose_level);
 
 		}
 	else if (type == t_LNS) {
 
+		if (f_v) {
+			cout << "object_in_projective_space::encoding_size "
+					"before encoding_size_line_set" << endl;
+			}
 		encoding_size_line_set(
 				nb_rows, nb_cols, verbose_level);
 
 		}
 	else if (type == t_PAC) {
 
+		if (f_v) {
+			cout << "object_in_projective_space::encoding_size "
+					"before encoding_size_packing" << endl;
+			}
 		encoding_size_packing(
 				nb_rows, nb_cols, verbose_level);
 
@@ -406,9 +497,21 @@ void object_in_projective_space::encoding_size_point_set(
 		}
 
 	nb_rows = P->N_points + 1;
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_point_set nb_rows=" << nb_rows << endl;
+		}
 	nb_cols = P->N_lines + C->second_nb_types;
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_point_set nb_cols=" << nb_cols << endl;
+		}
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_point_set before FREE_OBJECT(C)" << endl;
+		}
 	FREE_OBJECT(C);
 	C = NULL;
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_point_set done" << endl;
+		}
 
 }
 

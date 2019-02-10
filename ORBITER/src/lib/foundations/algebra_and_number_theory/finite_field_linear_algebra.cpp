@@ -5676,7 +5676,6 @@ void finite_field::cubic_surface_family_24_generators(
 		}
 }
 
-}
-}
+}}
 
 

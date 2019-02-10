@@ -1437,9 +1437,15 @@ public:
 	void print(ostream &ost);
 	void print_tex(ostream &ost);
 	void init_object_from_string(
+		projective_space *P,
 		int type,
 		const char *input_fname, int input_idx,
 		const char *set_as_string, int verbose_level);
+	void init_object_from_int_vec(
+		projective_space *P,
+		int type,
+		const char *input_fname, int input_idx,
+		int *the_set_in, int the_set_sz, int verbose_level);
 	void init_point_set(projective_space *P, int *set, int sz, 
 		int verbose_level);
 	void init_line_set(projective_space *P, int *set, int sz, 
@@ -1917,6 +1923,11 @@ public:
 	void create_LP_37_4a_BLT_set(int *set, int verbose_level);
 	void create_LP_37_4b_BLT_set(int *set, int verbose_level);
 	void create_Law_71_BLT_set(int *set, int verbose_level);
+	void plane_invariant(unusual_model *U,
+		int size, int *set,
+		int &nb_planes, int *&intersection_matrix,
+		int &Block_size, int *&Blocks,
+		int verbose_level);
 };
 
 // #############################################################################
