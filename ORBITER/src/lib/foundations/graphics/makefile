@@ -12,7 +12,8 @@ MODULES = \
 	povray_interface.o \
 	scene.o \
 	tree.o \
-	tree_node.o
+	tree_node.o \
+	video_draw_options.o 
 
 
 all : $(MODULES)
