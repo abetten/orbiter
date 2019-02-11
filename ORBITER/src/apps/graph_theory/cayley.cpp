@@ -70,7 +70,8 @@ void do_D1(int n, int d, int verbose_level)
 	n_over_d = n / d;
 	phi_n = euler_function(n);
 	phi_n_over_d = euler_function(n_over_d);
-	cout << "n=" << n << " m=" << m << " d=" << d << " n_over_d=" << n_over_d << endl;
+	cout << "n=" << n << " m=" << m << " d=" << d
+			<< " n_over_d=" << n_over_d << endl;
 	cout << "phi_n = " << phi_n << endl;
 	cout << "phi_n_over_d = " << phi_n_over_d << endl;
 
@@ -131,7 +132,8 @@ void do_D1(int n, int d, int verbose_level)
 	gens_G->allocate(nb_G);
 
 	for (i = 0; i < nb_G; i++) {
-		A->make_element(gens_G->ith(i), perms + i * n, 0 /* verbose_level */);
+		A->make_element(gens_G->ith(i),
+				perms + i * n, 0 /* verbose_level */);
 		}
 
 
@@ -242,7 +244,8 @@ void do_D1(int n, int d, int verbose_level)
 			}
 		}
 
-	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
+	cout << "The adjacency matrix of a graph with " << goi
+			<< " vertices has been computed" << endl;
 	//int_matrix_print(Adj, goi, goi);
 
 
@@ -257,7 +260,8 @@ void do_D1(int n, int d, int verbose_level)
 
 	CG->save(fname, verbose_level);
 
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 	FREE_OBJECT(CG);
 	}
 
@@ -285,7 +289,8 @@ void do_D1(int n, int d, int verbose_level)
 
 	CG->save(fname, verbose_level);
 
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 	FREE_OBJECT(CG);
 	}
 
