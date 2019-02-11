@@ -306,6 +306,7 @@ class elliptic_curve;
 // added November 19, 2014
 class arc_lifting_with_two_lines;
 class page_storage;
+class video_draw_options;
 
 
 

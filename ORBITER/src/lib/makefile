@@ -133,6 +133,7 @@ MODULES= \
 		foundations/graphics/scene.o \
 		foundations/graphics/tree.o \
 		foundations/graphics/tree_node.o \
+		foundations/graphics/video_draw_options.o \
 		foundations/io_and_os/file_output.o \
 		foundations/io_and_os/memory.o \
 		foundations/io_and_os/memory_object.o \

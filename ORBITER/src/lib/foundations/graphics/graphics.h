@@ -842,6 +842,130 @@ public:
 
 int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 
+// #############################################################################
+// video_draw_options.cpp:
+// #############################################################################
+
+
+//! options for povray videos
+
+
+class video_draw_options {
+public:
+
+
+	int f_has_global_picture_scale;
+	double global_picture_scale;
+
+	int f_has_font_size;
+	int font_size;
+
+	int f_has_stroke_width;
+	int stroke_width;
+
+
+
+	int f_W;
+	int W;
+	int f_H;
+	int H;
+
+	int f_default_angle; // = FALSE;
+	int default_angle; // = 22;
+
+	int f_clipping_radius; // = TRUE;
+	double clipping_radius; // = 0.9;
+
+
+	int nb_clipping;
+	int clipping_round[1000];
+	double clipping_value[1000];
+
+	int nb_camera;
+	int camera_round[1000];
+	const char *camera_sky[1000];
+	const char *camera_location[1000];
+	const char *camera_look_at[1000];
+
+	int nb_zoom;
+	int zoom_round[1000];
+	int zoom_start[1000];
+	int zoom_end[1000];
+
+	int nb_zoom_sequence;
+	int zoom_sequence_round[1000];
+	const char *zoom_sequence_text[1000];
+
+	int nb_pan;
+	int pan_round[1000];
+	int pan_f_reverse[1000];
+	double pan_from_x[1000];
+	double pan_from_y[1000];
+	double pan_from_z[1000];
+	double pan_to_x[1000];
+	double pan_to_y[1000];
+	double pan_to_z[1000];
+	double pan_center_x[1000];
+	double pan_center_y[1000];
+	double pan_center_z[1000];
+
+	int nb_no_background;
+	int no_background_round[1000];
+
+	int nb_no_bottom_plane;
+	int no_bottom_plane_round[1000];
+
+	int cnt_nb_frames;
+	int nb_frames_round[1000];
+	int nb_frames_value[1000];
+
+	int nb_round_text;
+	int round_text_round[1000];
+	int round_text_sustain[1000];
+	const char *round_text_text[1000];
+
+	int nb_label;
+	int label_round[1000];
+	int label_start[1000];
+	int label_sustain[1000];
+	const char *label_gravity[1000];
+	const char *label_text[1000];
+
+	int nb_latex_label;
+	int latex_label_round[1000];
+	int latex_label_start[1000];
+	int latex_label_sustain[1000];
+	const char *latex_extras_for_praeamble[1000];
+	const char *latex_label_gravity[1000];
+	const char *latex_label_text[1000];
+	int latex_f_label_has_been_prepared[1000];
+	char *latex_fname_base[1000];
+
+
+	int nb_picture;
+	int picture_round[1000];
+	double picture_scale[1000];
+	const char *picture_fname[1000];
+	const char *picture_options[1000];
+
+	int latex_file_count;
+	int f_omit_bottom_plane;
+
+	const char *sky;
+	const char *location;
+	const char *look_at;
+
+
+	video_draw_options();
+	~video_draw_options();
+	int read_arguments(
+			int argc, const char **argv,
+			int verbose_level);
+};
+
+
+
+
 }}
 
 
