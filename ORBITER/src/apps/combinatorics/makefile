@@ -48,12 +48,6 @@ all_k_subsets.out:  all_k_subsets.o;
 burnside.out:  burnside.o;
 	$(DISCRETA_CPP)  burnside.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-cayley_sym_n.out:  cayley_sym_n.o;
-	$(DISCRETA_CPP)  cayley_sym_n.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-cayley.out:  cayley.o;
-	$(DISCRETA_CPP)  cayley.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 change_1_dollar.out:  change_1_dollar.o;
 	$(DISCRETA_CPP)  change_1_dollar.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 

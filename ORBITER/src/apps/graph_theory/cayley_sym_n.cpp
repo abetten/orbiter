@@ -11,7 +11,7 @@ using namespace orbiter;
 
 int t0;
 
-void do_it(int n, int f_special, int f_bubble,
+void do_it(int n, int f_special, int f_coxeter,
 		int f_pancake, int f_burnt_pancake, int verbose_level);
 void get_submatrices(int n, int *Adj,
 		int N, int N0, int **&P, int verbose_level);
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	int f_n = FALSE;
 	int n = 0;
 	int f_star = FALSE;
-	int f_bubble = FALSE;
+	int f_coxeter = FALSE;
 	int f_pancake = FALSE;
 	int f_burnt_pancake = FALSE;
 	
@@ -47,9 +47,9 @@ int main(int argc, char **argv)
 			f_star = TRUE;
 			cout << "-star" << endl;
 			}
-		else if (strcmp(argv[i], "-bubble") == 0) {
-			f_bubble = TRUE;
-			cout << "-bubble" << endl;
+		else if (strcmp(argv[i], "-coxeter") == 0) {
+			f_coxeter = TRUE;
+			cout << "-coxeter" << endl;
 			}
 		else if (strcmp(argv[i], "-pancake") == 0) {
 			f_pancake = TRUE;
@@ -68,12 +68,12 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	do_it(n, f_star, f_bubble,
+	do_it(n, f_star, f_coxeter,
 			f_pancake, f_burnt_pancake, verbose_level);
 	
 }
 
-void do_it(int n, int f_star, int f_bubble,
+void do_it(int n, int f_star, int f_coxeter,
 		int f_pancake, int f_burnt_pancake, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -96,7 +96,7 @@ void do_it(int n, int f_star, int f_bubble,
 	if (f_star) {
 		sprintf(fname_base, "Cayley_Sym_%d_star", n);
 		}
-	else if (f_bubble) {
+	else if (f_coxeter) {
 		sprintf(fname_base, "Cayley_Sym_%d_coxeter", n);
 		}
 	else if (f_pancake) {
@@ -117,7 +117,7 @@ void do_it(int n, int f_star, int f_bubble,
 		nb_gens = n - 1;
 		deg = n;
 		}
-	else if (f_bubble) {
+	else if (f_coxeter) {
 		nb_gens = n - 1;
 		deg = n;
 		}
@@ -207,7 +207,7 @@ void do_it(int n, int f_star, int f_bubble,
 			A->make_element(gens->ith(i), v, 0 /* verbose_level */);
 			}
 		}
-	else if (f_bubble) {
+	else if (f_coxeter) {
 		for (i = 0; i < nb_gens; i++) {
 			perm_identity(v, deg);
 			v[i] = i + 1;

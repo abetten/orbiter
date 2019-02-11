@@ -201,7 +201,9 @@ void do_it(int p, int q, int verbose_level)
 						continue;
 						}
 					if (a0 * a0 + a1 * a1 + a2 * a2 + a3 * a3 == p) {
-						cout << "solution " << nb_A4 << " : " << a0 << ", " << a1 << ", " << a2 << ", " << a3 << ", " << endl;
+						cout << "solution " << nb_A4 << " : " << a0
+								<< ", " << a1 << ", " << a2 << ", "
+								<< a3 << ", " << endl;
 						if (nb_A4 == p + 1) { 
 							cout << "too many solutions" << endl;
 							exit(1);
@@ -267,7 +269,9 @@ void do_it(int p, int q, int verbose_level)
 		a2 = a2 % q;
 		a3 = a3 % q;
 		if (f_vv) {
-			cout << "making generator " << i << ": a0=" << a0 << " a1=" << a1 << " a2=" << a2 << " a3=" << a3 << endl;
+			cout << "making generator " << i << ": a0=" << a0
+					<< " a1=" << a1 << " a2=" << a2
+					<< " a3=" << a3 << endl;
 			}
 		M4[0] = F->add(a0, F->mult(I, a1));
 		M4[1] = F->add(a2, F->mult(I, a3));
@@ -281,7 +285,8 @@ void do_it(int p, int q, int verbose_level)
 			}
 
 		if (f_special) {
-			det = F->add(F->mult(M4[0], M4[3]), F->negate(F->mult(M4[1], M4[2])));
+			det = F->add(F->mult(M4[0], M4[3]),
+					F->negate(F->mult(M4[1], M4[2])));
 
 			if (f_vv) {
 				cout << "det=" << det << endl;
@@ -295,7 +300,8 @@ void do_it(int p, int q, int verbose_level)
 				}
 			sv = F->inverse(s);
 			if (f_vv) {
-				cout << "det=" << det << " sqrt=" << s << " mutiplying by " << sv << endl;
+				cout << "det=" << det << " sqrt=" << s
+						<< " mutiplying by " << sv << endl;
 				}
 			for (j = 0; j < 4; j++) {
 				M4[j] = F->mult(sv, M4[j]);
@@ -348,7 +354,8 @@ void do_it(int p, int q, int verbose_level)
 			}
 		}
 
-	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
+	cout << "The adjacency matrix of a graph with " << goi
+			<< " vertices has been computed" << endl;
 	//int_matrix_print(Adj, goi, goi);
 
 	int k;

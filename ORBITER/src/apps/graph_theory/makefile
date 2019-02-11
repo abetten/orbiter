@@ -10,6 +10,8 @@ LFLAGS = -lm
 all: all_cliques.out \
 		all_cycles.out \
 		all_rainbow_cliques.out \
+		cayley_sym_n.out \
+		cayley.out \
 		colored_graph.out \
 		create_graph.out \
 		create_layered_graph_file.out \
@@ -51,6 +53,12 @@ all_cycles.out:  all_cycles.o
 
 all_rainbow_cliques.out:  all_rainbow_cliques.o 
 	$(DISCRETA_CPP)  all_rainbow_cliques.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+cayley_sym_n.out:  cayley_sym_n.o;
+	$(DISCRETA_CPP)  cayley_sym_n.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+cayley.out:  cayley.o;
+	$(DISCRETA_CPP)  cayley.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 colored_graph.out:  colored_graph.o 
 	$(DISCRETA_CPP)  colored_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
