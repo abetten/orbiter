@@ -168,7 +168,7 @@ public:
 		int verbose_level);
 	void multiply_A_x_to_RHS1();
 	void write_xml(ostream &ost, const char *label);
-	void read_xml(ifstream &f, char *label);
+	void read_xml(ifstream &f, char *label, int verbose_level);
 		// label will be set to the label that is in the file
 		// therefore, label must point to sufficient memory
 	void append_equation();
@@ -279,6 +279,9 @@ void DlxSearchRHS(int k, int verbose_level);
 // #############################################################################
 
 
+#define MCKAY_DEBUG
+
+
 //! a solver for systems of diophantine equations
 
 
@@ -292,7 +295,7 @@ namespace mckay {
 	/* bigger gets more diagnostic output */
 	//#define VERBOSE 0
 
-	#undef MCKAY_DEBUG
+	//#undef MCKAY_DEBUG
 	#define INTERVAL_IN_SECONDS 1
 
 	//! a term in a diophantine system of type tMCKAY
@@ -300,7 +303,7 @@ namespace mckay {
 	typedef struct {int var,coeff;} term;
 	typedef vector<term> equation;
 
-	//! solving diophantine system according to McKay
+	//! solves diophantine systems according to McKay
 
 	class tMCKAY {
 	public:
@@ -322,9 +325,11 @@ namespace mckay {
 		bool subtract(int eqn1, equation &e1, int l1, int lors1, 
 			int hirs1, int eqn2, equation &e2, int *pl2, 
 			int *plors2, int *phirs2, int verbose_level);
-		void pruneqn(vector<int> &lorhs, vector<int> &hirhs, 
-			vector<equation> &eqn, vector<int> &neqn, 
-			int numeqn, int verbose_level);
+		void pruneqn(vector<int> &lo, vector<int> &hi,
+				int numvar,
+				vector<int> &lorhs, vector<int> &hirhs,
+				vector<equation> &eqn, vector<int> &neqn,
+				int numeqn, int verbose_level);
 		void varprune(vector<int> &lo, vector<int> &hi, 
 			vector<int> &lorhs, vector<int> &hirhs, 
 			vector<equation> &eqn, vector<int> &neqn, 

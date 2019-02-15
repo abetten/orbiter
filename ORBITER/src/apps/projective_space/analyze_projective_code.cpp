@@ -106,9 +106,6 @@ void do_analyze_projective_code(int n, finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	//int f_with_group = FALSE;
-	//int f_semilinear = FALSE;
-	//int f_basis = FALSE;
 	int *genma;
 	int *v;
 	int d, i, j;
@@ -124,11 +121,7 @@ void do_analyze_projective_code(int n, finite_field *F,
 	P = NEW_OBJECT(projective_space);
 
 	P->init(n, F, 
-		//f_with_group, 
-		//FALSE /* f_line_action */, 
 		TRUE /* f_init_incidence_structure */, 
-		//f_semilinear, 
-		//f_basis, 
 		0 /*verbose_level*/);
 
 	

@@ -10,8 +10,6 @@ LFLAGS = -lm
 
 all: all_k_subsets.out \
 		burnside.out \
-		cayley_sym_n.out \
-		cayley.out \
 		change_1_dollar.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \

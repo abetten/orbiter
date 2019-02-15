@@ -2519,6 +2519,9 @@ public:
 			int *A3, int line1, int line2,
 			int *A4,
 			int verbose_level);
+	void andre_preimage(projective_space *P4,
+		int *set2, int sz2, int *set4, int &sz4, int verbose_level);
+	// we must be a projective plane
 };
 
 

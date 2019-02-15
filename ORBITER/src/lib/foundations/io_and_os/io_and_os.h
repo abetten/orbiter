@@ -516,6 +516,7 @@ void concatenate_files(const char *fname_in_mask, int N,
 	int verbose_level);
 void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);
+int is_all_whitespace(const char *str);
 
 
 }

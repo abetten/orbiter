@@ -76,7 +76,7 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-linear") == 0) {
 			f_linear = TRUE;
-			Descr = new linear_group_description;
+			Descr = NEW_OBJECT(linear_group_description);
 			i += Descr->read_arguments(argc - (i - 1), argv + i, verbose_level);
 
 			cout << "after Descr->read_arguments" << endl;

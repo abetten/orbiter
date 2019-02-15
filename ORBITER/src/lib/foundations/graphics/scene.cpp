@@ -1069,7 +1069,7 @@ void scene::draw_edges_with_selection(int *selection, int nb_select,
 			}	
 		ost << ">,<";
 		for (h = 0; h < 3; h++) {
-			output_double(Point_coords[pt2 * 3+ h], ost);
+			output_double(Point_coords[pt2 * 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}

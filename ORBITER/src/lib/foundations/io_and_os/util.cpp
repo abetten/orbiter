@@ -5354,6 +5354,31 @@ const char *strip_directory(const char *p)
 }
 
 
+int is_all_whitespace(const char *str)
+{
+	int i, l;
+
+	l = strlen(str);
+	for (i = 0; i < l; i++) {
+		if (str[i] == ' ') {
+			continue;
+			}
+		if (str[i] == '\\') {
+			i++;
+			if (str[i] == 0) {
+				return TRUE;
+				}
+			if (str[i] == 'n') {
+				continue;
+				}
+			}
+		return FALSE;
+		}
+	return TRUE;
+}
+
+
+
 }
 }
 

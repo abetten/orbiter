@@ -97,7 +97,8 @@ void Baer_subplane(int q, int verbose_level)
 			S[sz++] = i;
 			}
 		}
-	cout << "the Baer subplane PG(2," << q << ") inside PG(2," << Q << ") has size " << sz << ":" << endl;
+	cout << "the Baer subplane PG(2," << q << ") "
+			"inside PG(2," << Q << ") has size " << sz << ":" << endl;
 	for (i = 0; i < sz; i++) {
 		cout << S[i] << " ";
 		}

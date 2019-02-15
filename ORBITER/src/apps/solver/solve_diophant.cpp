@@ -226,7 +226,7 @@ int main(int argc, char **argv)
 			{
 			char label[1000];
 			ifstream f(fname);
-			Dio->read_xml(f, label);
+			Dio->read_xml(f, label, verbose_level);
 			}
 			}
 		else {
@@ -316,29 +316,35 @@ int main(int argc, char **argv)
 		}
 #endif
 
-	Dio->append_equation();
 
-	int j;
+	if (Dio->f_x_max) {
+		Dio->append_equation();
 
-	if (f_v) {
-		cout << "appending one equation for the sum" << endl;
+		int j;
+
+
+		if (f_v) {
+			cout << "appending one equation for the sum" << endl;
+			}
+
+		i = Dio->m - 1;
+		for (j = 0; j < Dio->n; j++) {
+			Dio->Aij(i, j) = 1;
+			}
+		Dio->type[i] = t_EQ;
+		Dio->RHS[i] = Dio->sum;
+
+#if 0
+		//Dio->f_x_max = TRUE;
+		for (j = 0; j < Dio->n; j++) {
+			Dio->x_max[j] = 1;
 		}
 
-	i = Dio->m - 1;
-	for (j = 0; j < Dio->n; j++) {
-		Dio->Aij(i, j) = 1;
-		}
-	Dio->type[i] = t_EQ;
-	Dio->RHS[i] = Dio->sum;
-
-	Dio->f_x_max = TRUE;
-	for (j = 0; j < Dio->n; j++) {
-		Dio->x_max[j] = 1;
-		}
-
-	for (i = 0; i < nb_xmax; i++) {
-		Dio->x_max[xmax_variable[i]] = xmax_value[i];
-		}
+		for (i = 0; i < nb_xmax; i++) {
+			Dio->x_max[xmax_variable[i]] = xmax_value[i];
+			}
+#endif
+	}
 
 	if (f_print) {
 		Dio->print();

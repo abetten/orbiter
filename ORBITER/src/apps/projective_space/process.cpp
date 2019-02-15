@@ -260,12 +260,15 @@ int main(int argc, char **argv)
 	char ext[1000];
 	
 	if (!f_file && !f_set) {
-		cout << "please use option -file <fname> to specify input file or -set <set_label> <list_of_elements>" << endl;
+		cout << "please use option -file <fname> "
+				"to specify input file or "
+				"-set <set_label> <list_of_elements>" << endl;
 		}
 	
 	if (f_file) {
 		read_set_from_file(fname, the_set_in, set_size_in, verbose_level - 1);
-		cout << "read set of size " << set_size_in << " from file " << fname << endl;
+		cout << "read set of size " << set_size_in
+				<< " from file " << fname << endl;
 		strcpy(fname_base, fname);
 		get_extension_if_present(fname_base, ext);
 		chop_off_extension_if_present(fname_base, ext);
@@ -580,8 +583,10 @@ int main(int argc, char **argv)
 		}
 
 	if (the_set_out && set_size_out) {
-		write_set_to_file(fname_out, the_set_out, set_size_out, verbose_level);
-		cout << "written file " << fname_out << " of size " << file_size(fname_out) << endl;
+		write_set_to_file(fname_out,
+				the_set_out, set_size_out, verbose_level);
+		cout << "written file " << fname_out
+				<< " of size " << file_size(fname_out) << endl;
 		}
 	
 	if (the_set_in) {
