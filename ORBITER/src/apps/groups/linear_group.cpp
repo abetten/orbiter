@@ -57,7 +57,7 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-orbits_on_subsets") == 0) {
 			f_orbits_on_subsets = TRUE;
 			orbits_on_subsets_size = atoi(argv[++i]);
-			cout << "-orbits_on_subsets" << orbits_on_subsets_size << endl;
+			cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
 			}
 		else if (strcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;

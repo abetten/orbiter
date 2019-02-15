@@ -1942,17 +1942,35 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 	minvarvalue.resize(n);
 	maxvarvalue.resize(n);
 	if (f_x_max) {
+		if (f_v) {
+			cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
+					"f_x_max=true" << endl;
+			cout << "x_max=";
+			int_vec_print(cout, x_max, n);
+			cout << endl;
+		}
 		for (j = 0; j < n; j++) {
 			minvarvalue[j] = 0;
 			maxvarvalue[j] = (int) x_max[j];
 			}
 		}
 	else {
+		if (f_v) {
+			cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
+					"f_x_max=false sum="  << sum << endl;
+		}
 		for (j = 0; j < n; j++) {
 			minvarvalue[j] = 0;
 			maxvarvalue[j] = (int) sum;
 			}
 		}
+	if (f_v) {
+		cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
+				"maxvarvalue=" << endl;
+		for (j = 0; j < n; j++) {
+			cout << j << " : " << maxvarvalue[j] << endl;
+		}
+	}
 #if 0
   for (j=1; j<=_eqnanz; j++) {
     minres[j-1] = _eqns[j-1].GetMinResult();
@@ -2938,14 +2956,19 @@ void diophant::write_xml(ostream &ost, const char *label)
 }
 
 
-void diophant::read_xml(ifstream &f, char *label)
+void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 {
 #ifdef SYSTEMUNIX
+	int f_v = (verbose_level >= 1);
 	string str, mapkey, mapval;
 	bool brk;
 	int eqpos, l, M = 0, N = 0, F_has_sum = 0, Sum = 0, F_x_max = 0, i, j, a;
 	char tmp[1000], c;
 
+
+	if (f_v) {
+		cout << "diophant::read_xml" << endl;
+	}
 	label[0] = 0;
 	f.ignore(INT_MAX, '<');
 	f >> str;
@@ -2994,6 +3017,9 @@ void diophant::read_xml(ifstream &f, char *label)
 	f_has_sum = F_has_sum;
 	sum = Sum;
 	f_x_max = F_x_max;
+	if (f_v) {
+		cout << "diophant::read_xml f_x_max=" << f_x_max << endl;
+	}
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			f >> a;
@@ -3036,10 +3062,17 @@ void diophant::read_xml(ifstream &f, char *label)
 		eqn_label[i][l] = 0;
 		}
 	if (f_x_max) {
-		for (j = 0;j < n; j++) {
+		if (f_v) {
+			cout << "diophant::read_xml reading x_max[]" << endl;
+		}
+		for (j = 0; j < n; j++) {
 			f >> x_max[j];
+			if (f_v) {
+				cout << "diophant::read_xml reading x_max[" << j << "]="
+						<< x_max[j] << endl;
 			}
 		}
+	}
 	write_xml(cout, label);
 #endif
 #ifdef SYSTEMWINDOWS

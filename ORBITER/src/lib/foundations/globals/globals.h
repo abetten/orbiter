@@ -53,8 +53,6 @@ void write_colored_graph(ofstream &ost, char *label,
 	int f_point_labels, int *point_label);
 int str2int(string &str);
 void print_longinteger_after_multiplying(ostream &ost, int *factors, int len);
-void andre_preimage(projective_space *P2, projective_space *P4, 
-	int *set2, int sz2, int *set4, int &sz4, int verbose_level);
 void determine_conic(int q, const char *override_poly, int *input_pts, 
 	int nb_pts, int verbose_level);
 void compute_decomposition_of_graph_wrt_partition(int *Adj, int N, 

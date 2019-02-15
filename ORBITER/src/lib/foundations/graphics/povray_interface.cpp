@@ -108,8 +108,10 @@ void povray_beginning(ostream &ost,
 	ost << "global_settings { max_trace_level 10 }" << endl;
 	ost << endl;
 	ost << "//Place a light" << endl;
-	ost << "light_source { <4,4,4> color White }  " << endl;
-	ost << "light_source { <-5,0,5> color White }" << endl;
+	//ost << "light_source { <4,4,4> color White }  " << endl;
+	//ost << "light_source { <-5,0,5> color White }" << endl;
+	ost << "light_source { <1,1,1>*120 color White }  " << endl;
+	ost << "light_source { " << location << " color White }" << endl;
 	ost << endl;
 
 	if (f_with_background) {

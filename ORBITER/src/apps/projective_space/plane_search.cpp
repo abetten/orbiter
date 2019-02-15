@@ -199,7 +199,8 @@ int check_row(finite_field *F, int row, int verbose_level)
 				f_column_entry[x1 * q + y] = FALSE;
 				}
 			if (f_v) {
-				cout << "check_row row=" << row << " x=" << x << " y=" << y << " fails" << endl;
+				cout << "check_row row=" << row
+						<< " x=" << x << " y=" << y << " fails" << endl;
 				}
 			return FALSE;
 			}
@@ -216,7 +217,9 @@ void remove_row(finite_field *F, int row)
 	for (x = 1; x < q; x++) {
 		y = M[row * q + x];
 		if (!f_column_entry[x * q + y]) {
-			cout << "remove_row row=" << row << " x=" << x << " y=" << y << " entry in f_column_entry is not there" << endl;
+			cout << "remove_row row=" << row
+					<< " x=" << x << " y=" << y
+					<< " entry in f_column_entry is not there" << endl;
 			exit(1);
 			}
 		f_column_entry[x * q + y] = FALSE;
