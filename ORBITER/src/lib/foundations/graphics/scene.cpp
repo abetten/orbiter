@@ -443,6 +443,38 @@ int scene::line_pt_and_dir(double *x6, double rad)
 		}
 }
 
+int scene::line_through_two_pts(double *x6, double rad)
+{
+	double pt[6];
+	double pt2[6];
+
+	pt[0] = x6[0];
+	pt[1] = x6[1];
+	pt[2] = x6[2];
+	pt[3] = x6[3];
+	pt[4] = x6[4];
+	pt[5] = x6[5];
+	if (line_centered(pt, pt + 3,
+		pt2, pt2 + 3,
+		rad)) {
+		Line_coords[nb_lines * 6 + 0] = pt2[0];
+		Line_coords[nb_lines * 6 + 1] = pt2[1];
+		Line_coords[nb_lines * 6 + 2] = pt2[2];
+		Line_coords[nb_lines * 6 + 3] = pt2[3];
+		Line_coords[nb_lines * 6 + 4] = pt2[4];
+		Line_coords[nb_lines * 6 + 5] = pt2[5];
+		nb_lines++;
+		if (nb_lines >= SCENE_MAX_LINES) {
+			cout << "too many lines" << endl;
+			exit(1);
+			}
+		return TRUE;
+		}
+	else {
+		return FALSE;
+		}
+}
+
 int scene::line6(double *x6)
 {
 	Line_coords[nb_lines * 6 + 0] = x6[0];

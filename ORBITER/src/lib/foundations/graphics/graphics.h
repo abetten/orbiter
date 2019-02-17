@@ -586,6 +586,7 @@ public:
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
 	int line_pt_and_dir(double *x6, double rad);
+	int line_through_two_pts(double *x6, double rad);
 	int line6(double *x6);
 	int line(double x1, double x2, double x3, 
 		double y1, double y2, double y3);
