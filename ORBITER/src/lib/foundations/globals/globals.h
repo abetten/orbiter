@@ -110,6 +110,8 @@ int general_prism(double *Pts, int nb_pts, double *Pts_xy,
 	int verbose_level);
 double rad2deg(double phi);
 void mult_matrix(double *v, double *R, double *vR);
+void mult_matrix_matrix(double *A, double *B, double *C, int m, int n, int o);
+// A is m x n, B is n x o, C is m x o
 void print_matrix(double *R);
 void make_Rz(double *R, double phi);
 void make_Ry(double *R, double psi);
@@ -129,6 +131,7 @@ void orthogonal_transformation_from_point_to_basis_vector(double *from,
 void output_double(double a, ostream &ost);
 void mult_matrix_4x4(double *v, double *R, double *vR);
 void transpose_matrix_4x4(double *A, double *At);
+void transpose_matrix_nxn(double *A, double *At, int n);
 void substitute_quadric_linear(double *coeff_in, double *coeff_out, 
 	double *A4_inv, int verbose_level);
 void substitute_cubic_linear(double *coeff_in, double *coeff_out, 
@@ -141,6 +144,12 @@ void make_transform_t_varphi_u_double(int n, double *varphi, double *u,
 void matrix_double_inverse(double *A, double *Av, int n, int verbose_level);
 int line_centered(double *pt1_in, double *pt2_in, 
 	double *pt1_out, double *pt2_out, double r);
+int sign_of(double a);
+void eigenvalues(double *A, int n, double *lambda, int verbose_level);
+void eigenvectors(double *A, double *Basis,
+		int n, double *lambda, int verbose_level);
+
+
 
 }}
 

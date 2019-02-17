@@ -841,6 +841,23 @@ void mult_matrix(double *v, double *R, double *vR)
 		}
 }
 
+void mult_matrix_matrix(double *A, double *B, double *C, int m, int n, int o)
+// A is m x n, B is n x o, C is m x o
+{
+	int i, j, h;
+	double c;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < o; j++) {
+			c = 0;
+			for (h = 0; h < n; h++) {
+				c += A[i * n + h] * B[h * o + j];
+			}
+			C[i * o + j] = c;
+		}
+	}
+}
+
 void print_matrix(double *R)
 {
 	int i, j;
@@ -863,10 +880,10 @@ void make_Rz(double *R, double phi)
 	for (i = 0; i < 9; i++) {
 		R[i] = 0.;
 		}
-	R[2 * 3 + 2] = 1;
+	R[2 * 3 + 2] = 1.;
 	R[0 * 3 + 0] = c;
 	R[0 * 3 + 1] = s;
-	R[1 * 3 + 0] = -1 * s;
+	R[1 * 3 + 0] = -1. * s;
 	R[1 * 3 + 1] = c;
 }
 
@@ -1176,6 +1193,17 @@ void transpose_matrix_4x4(double *A, double *At)
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			At[i * 4 + j] = A[j * 4 + i];
+			}
+		}
+}
+
+void transpose_matrix_nxn(double *A, double *At, int n)
+{
+	int i, j;
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			At[i * n + j] = A[j * n + i];
 			}
 		}
 }
@@ -1610,7 +1638,666 @@ int line_centered(double *pt1_in, double *pt2_in,
 	return TRUE;
 }
 
+
+int sign_of(double a)
+{
+	if (a < 0) {
+		return -1;
+	}
+	else if (a > 0) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
 }
+
+
+class polynomial_double;
+
+class polynomial_double_domain {
+public:
+	int alloc_length;
+	polynomial_double_domain();
+	~polynomial_double_domain();
+	void init(int alloc_length);
+	polynomial_double *create_object();
+	void mult(polynomial_double *A,
+			polynomial_double *B, polynomial_double *C);
+	void add(polynomial_double *A,
+			polynomial_double *B, polynomial_double *C);
+	void mult_by_scalar_in_place(
+			polynomial_double *A,
+			double lambda);
+	void copy(polynomial_double *A,
+			polynomial_double *B);
+	void determinant_over_polynomial_ring(
+			polynomial_double *P,
+			polynomial_double *det, int n, int verbose_level);
+	void find_all_roots(polynomial_double *p,
+			double *lambda, int verbose_level);
+	double divide_linear_factor(polynomial_double *p,
+			polynomial_double *q,
+			double lambda, int verbose_level);
+};
+
+class polynomial_double {
+public:
+	int alloc_length;
+	int degree;
+	double *coeff; // [alloc_length]
+	polynomial_double();
+	~polynomial_double();
+	void init(int alloc_length);
+	void print(ostream &ost);
+	double root_finder(int verbose_level);
+	double evaluate_at(double t);
+};
+
+
+polynomial_double_domain::polynomial_double_domain()
+{
+	alloc_length = 0;
 }
+
+polynomial_double_domain::~polynomial_double_domain()
+{
+	alloc_length = 0;
+}
+
+void polynomial_double_domain::init(int alloc_length)
+{
+	polynomial_double_domain::alloc_length = alloc_length;
+}
+
+polynomial_double *polynomial_double_domain::create_object()
+{
+	polynomial_double *p;
+
+	p = NEW_OBJECT(polynomial_double);
+	p->init(alloc_length);
+	return p;
+}
+
+void polynomial_double_domain::mult(polynomial_double *A,
+		polynomial_double *B, polynomial_double *C)
+{
+	int i, j;
+
+	C->degree = A->degree + B->degree;
+	for (i = 0; i <= C->degree; i++) {
+		C->coeff[i] = 0;
+	}
+
+	for (i = 0; i <= A->degree; i++) {
+		for (j = 0; j <= B->degree; j++) {
+			C->coeff[i + j] += A->coeff[i] * B->coeff[j];
+		}
+	}
+}
+
+void polynomial_double_domain::add(polynomial_double *A,
+		polynomial_double *B, polynomial_double *C)
+{
+	int i;
+	double a, b, c;
+
+	C->degree = MAXIMUM(A->degree, B->degree);
+	for (i = 0; i <= C->degree; i++) {
+		C->coeff[i] = 0;
+	}
+
+	for (i = 0; i <= C->degree; i++) {
+		if (i <= A->degree) {
+			a = A->coeff[i];
+		}
+		else {
+			a = 0.;
+		}
+		if (i <= B->degree) {
+			b = B->coeff[i];
+		}
+		else {
+			b = 0.;
+		}
+		c = a + b;
+		//cout << "add i=" << i << " a=" << a << " b=" << b << " c=" << c << endl;
+		C->coeff[i] = c;
+	}
+}
+
+void polynomial_double_domain::mult_by_scalar_in_place(
+		polynomial_double *A,
+		double lambda)
+{
+	int i;
+
+	for (i = 0; i <= A->degree; i++) {
+		A->coeff[i] *= lambda;
+		//cout << "scalar multiply: " << A->coeff[i] << endl;
+	}
+}
+
+void polynomial_double_domain::copy(polynomial_double *A,
+		polynomial_double *B)
+{
+	int i;
+
+	B->degree = A->degree;
+	for (i = 0; i <= A->degree; i++) {
+		B->coeff[i] = A->coeff[i];
+	}
+}
+
+void polynomial_double_domain::determinant_over_polynomial_ring(
+		polynomial_double *P,
+		polynomial_double *det, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	polynomial_double *Q;
+	polynomial_double *a, *b, *c, *d;
+	int i, j, h, u;
+
+	if (f_v) {
+		cout << "polynomial_double_domain::determinant_over_polynomial_ring" << endl;
+#if 0
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < n; j++) {
+				P[i * n + j].print(cout);
+				cout << "; ";
+			}
+		cout << endl;
+		}
+#endif
+	}
+	if (n == 1) {
+		copy(P, det);
+	}
+	else {
+		a = NEW_OBJECT(polynomial_double);
+		b = NEW_OBJECT(polynomial_double);
+		c = NEW_OBJECT(polynomial_double);
+		d = NEW_OBJECT(polynomial_double);
+
+		Q = NEW_OBJECTS(polynomial_double, (n - 1) * (n - 1));
+
+		a->init(n + 1);
+		b->init(n + 1);
+		c->init(n + 1);
+		d->init(n + 1);
+		for (i = 0; i < n - 1; i++) {
+			for (j = 0; j < n - 1; j++) {
+				Q[i * (n - 1) + j].init(n + 1);
+			}
+		}
+
+		c->degree = 0;
+		c->coeff[0] = 0;
+
+		for (h = 0; h < n; h++) {
+			//cout << "h=" << h << " / " << n << ":" << endl;
+
+			u = 0;
+			for (i = 0; i < n; i++) {
+				if (i == h) {
+					continue;
+				}
+				for (j = 1; j < n; j++) {
+					copy(&P[i * n + j], &Q[u * (n - 1) + j - 1]);
+				}
+				u++;
+			}
+			determinant_over_polynomial_ring(Q, a, n - 1, verbose_level);
+
+
+			mult(a, &P[h * n + 0], b);
+
+			if (h % 2) {
+				mult_by_scalar_in_place(b, -1.);
+			}
+
+
+			add(b, c, d);
+
+
+			copy(d, c);
+
+		}
+		copy(c, det);
+
+		FREE_OBJECTS(Q);
+		FREE_OBJECT(a);
+		FREE_OBJECT(b);
+		FREE_OBJECT(c);
+		FREE_OBJECT(d);
+	}
+#if 0
+	cout << "polynomial_double_domain::determinant_over_polynomial_ring "
+			"the determinant of " << endl;
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			P[i * n + j].print(cout);
+			cout << "; ";
+		}
+	cout << endl;
+	}
+	cout << "is: ";
+	det->print(cout);
+	cout << endl;
+#endif
+	if (f_v) {
+		cout << "polynomial_double_domain::determinant_over_"
+				"polynomial_ring done" << endl;
+	}
+
+}
+
+polynomial_double::polynomial_double()
+{
+	alloc_length = 0;
+	degree = 0;
+	coeff = NULL;
+}
+
+polynomial_double::~polynomial_double()
+{
+	if (coeff) {
+		delete [] coeff;
+	}
+}
+
+void polynomial_double::init(int alloc_length)
+{
+	int i;
+
+	polynomial_double::alloc_length = alloc_length;
+	polynomial_double::degree = 0;
+	coeff = new double[alloc_length];
+	for (i = 0; i < alloc_length; i++) {
+		coeff[i] = 0;
+	}
+}
+
+void polynomial_double::print(ostream &ost)
+{
+	int i;
+
+	for (i = 0; i <= degree; i++) {
+		if (i) {
+			ost << " + ";
+		}
+		ost << coeff[i];
+		if (i) {
+			ost << "* t";
+			if (i > 1) {
+				ost << "^" << i;
+			}
+		}
+	}
+}
+
+void polynomial_double_domain::find_all_roots(polynomial_double *p,
+		double *lambda, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, d;
+	double rem;
+
+	if (f_v) {
+		cout << "polynomial_double_domain::find_all_roots" << endl;
+	}
+
+	polynomial_double *q;
+	polynomial_double *r;
+
+	q = create_object();
+	r = create_object();
+	copy(p, q);
+
+	d = q->degree;
+	for (i = 0; i < d; i++) {
+		cout << "polynomial_double_domain::find_all_roots i=" << i
+				<< " / " << d << ":" << endl;
+		lambda[i] = q->root_finder(0 /*verbose_level*/);
+		cout << "polynomial_double_domain::find_all_roots i=" << i
+				<< " / " << d << ": lambda=" << lambda[i] << endl;
+		rem = divide_linear_factor(q,
+				r,
+				lambda[i], verbose_level);
+		cout << "quotient: ";
+		r->print(cout);
+		cout << endl;
+		cout << "remainder=" << rem << endl;
+		copy(r, q);
+	}
+	FREE_OBJECT(q);
+	FREE_OBJECT(r);
+	if (f_v) {
+		cout << "polynomial_double_domain::find_all_roots done" << endl;
+	}
+}
+
+double polynomial_double_domain::divide_linear_factor(
+		polynomial_double *p,
+		polynomial_double *q,
+		double lambda, int verbose_level)
+// divides p(X) by X-lambda, puts the result into q(X),
+// returns the remainder
+{
+	int f_v = (verbose_level >= 1);
+	int i, d;
+	double a, b;
+
+	if (f_v) {
+		cout << "polynomial_double_domain::divide_linear_factor" << endl;
+	}
+	d = p->degree;
+
+	a = p->coeff[d];
+	q->degree = d - 1;
+	q->coeff[d - 1] = a;
+	for (i = 1; i <= d - 1; i++) {
+		a = a * lambda + p->coeff[d - 1 - i + 1];
+		q->coeff[d - 1 - i] = a;
+	}
+	b = q->coeff[0] * lambda + p->coeff[0];
+	if (f_v) {
+		cout << "polynomial_double_domain::divide_linear_factor done" << endl;
+	}
+	return b;
+}
+
+
+double polynomial_double::root_finder(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double l, r, m;
+	double vl, vr, vm;
+	double eps = 0.0000001;
+
+	if (ABS(coeff[degree]) < eps) {
+		cout << "polynomial_double::root_finder error, ABS(coeff[degree]) < eps" << endl;
+		exit(1);
+	}
+	if (degree == 2) {
+		double a, b, c, d;
+
+		a = coeff[2];
+		b = coeff[1];
+		c = coeff[0];
+		if (b * b - 4 * a * c < 0) {
+			cout << "polynomial_double::root_finder error discriminant is negative" << endl;
+			exit(1);
+		}
+		d = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
+		return d;
+	}
+	else if (degree == 1) {
+		double a, b, d;
+		a = coeff[1];
+		b = coeff[0];
+		d = - b / a;
+		return d;
+	}
+	l = -1.;
+	r = 1.;
+	vl = evaluate_at(l);
+	vr = evaluate_at(r);
+	if (ABS(vl) < eps) {
+		return l;
+	}
+	if (ABS(vr) < eps) {
+		return r;
+	}
+	while (sign_of(evaluate_at(l)) == sign_of(evaluate_at(r))) {
+		l *= 2.;
+		r *= 2.;
+	}
+	vl = evaluate_at(l);
+	vr = evaluate_at(r);
+	if (f_v) {
+		cout << "polynomial_double::root_finder l=" << l << " r=" << r << endl;
+		cout << "value at l = " << vl << endl;
+		cout << "value at r = " << vr << endl;
+	}
+	m = (l + r) *.5;
+	vm = evaluate_at(m);
+	while (ABS(vm) > eps) {
+		if (f_v) {
+			cout << "polynomial_double::root_finder l=" << l << " r=" << r << endl;
+			cout << "value at l = " << vl << endl;
+			cout << "value at r = " << vr << endl;
+			cout << "r - l = " << r - l << endl;
+			cout << "m = " << m << endl;
+			cout << "vm = " << vm << endl;
+		}
+		if (f_v) {
+			cout << "m=" << m << " value=" << vm << " sign=" << sign_of(vm) << endl;
+		}
+
+		if (sign_of(vl) == sign_of(vm)) {
+			l = m;
+			vl = vm;
+		}
+		else if (sign_of(vm) == sign_of(vr)) {
+			r = m;
+			vr = vm;
+		}
+		else {
+			if (ABS(vm) < eps) {
+				if (TRUE) {
+					cout << "polynomial_double::root_finder hit on a root by chance" << endl;
+				}
+				return m;
+			}
+			else {
+				cout << "polynomial_double::root_finder problem" << endl;
+				cout << "polynomial_double::root_finder l=" << l << " m=" << m << " r=" << r << endl;
+				cout << "value at l = " << vl << endl;
+				cout << "value at r = " << vr << endl;
+				cout << "value at m = " << vm << endl;
+				exit(1);
+			}
+		}
+		m = (l + r) *.5;
+		vm = evaluate_at(m);
+	}
+	if (f_v) {
+		cout << "polynomial_double::root_finder l=" << l << " r=" << r << endl;
+		cout << "value at l = " << vl << endl;
+		cout << "value at r = " << vr << endl;
+	}
+	return m;
+
+}
+
+double polynomial_double::evaluate_at(double t)
+{
+	int i;
+	double a;
+
+	a = coeff[degree];
+	for (i = degree - 1; i >= 0; i--) {
+		a = a * t + coeff[i];
+	}
+	return a;
+}
+
+void eigenvalues(double *A, int n, double *lambda, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "eigenvalues" << endl;
+	}
+	polynomial_double_domain Poly;
+	polynomial_double *P;
+	polynomial_double *det;
+
+	Poly.init(n);
+	P = NEW_OBJECTS(polynomial_double, n * n);
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			P[i * n + j].init(n + 1);
+			if (i == j) {
+				P[i * n + j].coeff[0] = A[i * n + j];
+				P[i * n + j].coeff[1] = -1.;
+				P[i * n + j].degree = 1;
+			}
+			else {
+				P[i * n + j].coeff[0] = A[i * n + j];
+				P[i * n + j].degree = 0;
+			}
+		}
+	}
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			P[i * n + j].print(cout);
+			cout << "; ";
+		}
+	cout << endl;
+	}
+
+
+	det = NEW_OBJECT(polynomial_double);
+	det->init(n + 1);
+	Poly.determinant_over_polynomial_ring(
+			P,
+			det, n, 0 /*verbose_level*/);
+
+	cout << "characteristic polynomial ";
+	det->print(cout);
+	cout << endl;
+
+	//double *lambda;
+
+	//lambda = new double[n];
+
+	Poly.find_all_roots(det,
+			lambda, verbose_level);
+
+
+	// bubble sort:
+	for (i = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++) {
+			if (lambda[i] > lambda[j]) {
+				double a;
+
+				a = lambda[i];
+				lambda[i] = lambda[j];
+				lambda[j] = a;
+			}
+		}
+	}
+
+	cout << "The eigenvalues are: ";
+	for (i = 0; i < n; i++) {
+		cout << lambda[i];
+		if (i < n - 1) {
+			cout << ", ";
+		}
+	}
+	cout << endl;
+
+
+	if (f_v) {
+		cout << "eigenvalues done" << endl;
+	}
+}
+
+void eigenvectors(double *A, double *Basis,
+		int n, double *lambda, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "eigenvectors" << endl;
+	}
+
+	cout << "The eigenvalues are: ";
+	for (i = 0; i < n; i++) {
+		cout << lambda[i];
+		if (i < n - 1) {
+			cout << ", ";
+		}
+	}
+	cout << endl;
+	double *B, *K;
+	int u, v, h, k;
+	double uv, vv, s;
+
+	B = new double[n * n];
+	K = new double[n * n];
+
+	for (h = 0; h < n; ) {
+		cout << "eigenvector " << h << " / " << n << " is " << lambda[h] << ":" << endl;
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < n; j++) {
+				if (i == j) {
+					B[i * n + j] = A[i * n + j] - lambda[h];
+				}
+				else {
+					B[i * n + j] = A[i * n + j];
+				}
+			}
+		}
+		k = Null_space(B, n, n, K, verbose_level);
+		// K will be k x n
+		// where k is the return value.
+		cout << "the eigenvalue has multiplicity " << k << endl;
+		for (u = 0; u < k; u++) {
+			for (j = 0; j < n; j++) {
+				Basis[j * n + h + u] = K[u * n + j];
+			}
+			if (u) {
+				// perform Gram-Schmidt:
+				for (v = 0; v < u; v++) {
+					uv = 0;
+					for (i = 0; i < n; i++) {
+						uv += Basis[i * n + h + u] * Basis[i * n + h + v];
+					}
+					vv = 0;
+					for (i = 0; i < n; i++) {
+						vv += Basis[i * n + h + v] * Basis[i * n + h + v];
+					}
+					s = uv / vv;
+					for (i = 0; i < n; i++) {
+						Basis[i * n + h + u] -= s * Basis[i * n + h + v];
+					}
+				} // next v
+			} // if (u)
+		}
+		// perform normalization:
+		for (v = 0; v < k; v++) {
+			vv = 0;
+			for (i = 0; i < n; i++) {
+				vv += Basis[i * n + h + v] * Basis[i * n + h + v];
+			}
+			s = 1 / sqrt(vv);
+			for (i = 0; i < n; i++) {
+				Basis[i * n + h + v] *= s;
+			}
+		}
+		h += k;
+	} // next h
+
+	cout << "The orthonormal Basis is: " << endl;
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			cout << Basis[i * n + j] << "\t";
+		}
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "eigenvectors done" << endl;
+	}
+}
+
+
+
+}}
 
 
