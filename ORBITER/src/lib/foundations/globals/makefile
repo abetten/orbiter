@@ -8,7 +8,9 @@ LFLAGS = -lm
 MODULES = \
 	galois_global.o \
 	magma_interface.o \
-	numerics.o 
+	numerics.o \
+	polynomial_double_domain.o \
+	polynomial_double.o 
 
 
 all : $(MODULES)

@@ -307,7 +307,9 @@ class elliptic_curve;
 class arc_lifting_with_two_lines;
 class page_storage;
 class video_draw_options;
-
+class numerics;
+class polynomial_double;
+class polynomial_double_domain;
 
 
 #ifdef MEMORY_DEBUG

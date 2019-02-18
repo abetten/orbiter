@@ -160,8 +160,9 @@ void povray_animation_rotate_around_origin_and_given_vector(
 	double *v, ostream &ost)
 {
 	double A[9], Av[9];
+	numerics N;
 
-	orthogonal_transformation_from_point_to_basis_vector(v,
+	N.orthogonal_transformation_from_point_to_basis_vector(v,
 		A, Av, 0 /* verbose_level */);
 
 	ost << "	// the next three steps will perform a rotation" << endl;
@@ -170,25 +171,25 @@ void povray_animation_rotate_around_origin_and_given_vector(
 	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
-	output_double(A[0], ost);
+	N.output_double(A[0], ost);
 	ost << ",";
-	output_double(A[1], ost);
+	N.output_double(A[1], ost);
 	ost << ",";
-	output_double(A[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(A[3], ost);
-	ost << ",";
-	output_double(A[4], ost);
-	ost << ",";
-	output_double(A[5], ost);
+	N.output_double(A[2], ost);
 	ost << ",";
 	ost << "	";
-	output_double(A[6], ost);
+	N.output_double(A[3], ost);
 	ost << ",";
-	output_double(A[7], ost);
+	N.output_double(A[4], ost);
 	ost << ",";
-	output_double(A[8], ost);
+	N.output_double(A[5], ost);
+	ost << ",";
+	ost << "	";
+	N.output_double(A[6], ost);
+	ost << ",";
+	N.output_double(A[7], ost);
+	ost << ",";
+	N.output_double(A[8], ost);
 	ost << ",";
 	ost << endl;
 	ost << "	0,0,0>" << endl;
@@ -200,25 +201,25 @@ void povray_animation_rotate_around_origin_and_given_vector(
 	ost << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
-	output_double(Av[0], ost);
+	N.output_double(Av[0], ost);
 	ost << ",";
-	output_double(Av[1], ost);
+	N.output_double(Av[1], ost);
 	ost << ",";
-	output_double(Av[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(Av[3], ost);
-	ost << ",";
-	output_double(Av[4], ost);
-	ost << ",";
-	output_double(Av[5], ost);
+	N.output_double(Av[2], ost);
 	ost << ",";
 	ost << "	";
-	output_double(Av[6], ost);
+	N.output_double(Av[3], ost);
 	ost << ",";
-	output_double(Av[7], ost);
+	N.output_double(Av[4], ost);
 	ost << ",";
-	output_double(Av[8], ost);
+	N.output_double(Av[5], ost);
+	ost << ",";
+	ost << "	";
+	N.output_double(Av[6], ost);
+	ost << ",";
+	N.output_double(Av[7], ost);
+	ost << ",";
+	N.output_double(Av[8], ost);
 	ost << ",";
 	ost << endl;
 	ost << "	0,0,0>" << endl;
@@ -230,8 +231,9 @@ void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 	double *v, double angle_zero_one, ostream &ost)
 {
 	double A[9], Av[9];
+	numerics N;
 
-	orthogonal_transformation_from_point_to_basis_vector(v,
+	N.orthogonal_transformation_from_point_to_basis_vector(v,
 		A, Av, 0 /* verbose_level */);
 
 	ost << "	// the next three steps will perform a rotation" << endl;
@@ -240,25 +242,25 @@ void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
-	output_double(A[0], ost);
+	N.output_double(A[0], ost);
 	ost << ",";
-	output_double(A[1], ost);
+	N.output_double(A[1], ost);
 	ost << ",";
-	output_double(A[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(A[3], ost);
-	ost << ",";
-	output_double(A[4], ost);
-	ost << ",";
-	output_double(A[5], ost);
+	N.output_double(A[2], ost);
 	ost << ",";
 	ost << "	";
-	output_double(A[6], ost);
+	N.output_double(A[3], ost);
 	ost << ",";
-	output_double(A[7], ost);
+	N.output_double(A[4], ost);
 	ost << ",";
-	output_double(A[8], ost);
+	N.output_double(A[5], ost);
+	ost << ",";
+	ost << "	";
+	N.output_double(A[6], ost);
+	ost << ",";
+	N.output_double(A[7], ost);
+	ost << ",";
+	N.output_double(A[8], ost);
 	ost << ",";
 	ost << endl;
 	ost << "	0,0,0>" << endl;
@@ -270,25 +272,25 @@ void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 	ost << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
-	output_double(Av[0], ost);
+	N.output_double(Av[0], ost);
 	ost << ",";
-	output_double(Av[1], ost);
+	N.output_double(Av[1], ost);
 	ost << ",";
-	output_double(Av[2], ost);
-	ost << ",";
-	ost << "	";
-	output_double(Av[3], ost);
-	ost << ",";
-	output_double(Av[4], ost);
-	ost << ",";
-	output_double(Av[5], ost);
+	N.output_double(Av[2], ost);
 	ost << ",";
 	ost << "	";
-	output_double(Av[6], ost);
+	N.output_double(Av[3], ost);
 	ost << ",";
-	output_double(Av[7], ost);
+	N.output_double(Av[4], ost);
 	ost << ",";
-	output_double(Av[8], ost);
+	N.output_double(Av[5], ost);
+	ost << ",";
+	ost << "	";
+	N.output_double(Av[6], ost);
+	ost << ",";
+	N.output_double(Av[7], ost);
+	ost << ",";
+	N.output_double(Av[8], ost);
 	ost << ",";
 	ost << endl;
 	ost << "	0,0,0>" << endl;

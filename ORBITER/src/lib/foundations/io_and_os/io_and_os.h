@@ -243,7 +243,6 @@ int int_vec_find_first_nonzero_entry(int *v, int len);
 void int_vec_zero(int *v, int len);
 void int_vec_mone(int *v, int len);
 void int_vec_copy(int *from, int *to, int len);
-void double_vec_copy(double *from, double *to, int len);
 void int_vec_swap(int *v1, int *v2, int len);
 void int_vec_delete_element_assume_sorted(int *v, int &len, int a);
 uchar *bitvector_allocate(int length);
@@ -290,7 +289,6 @@ void int_vec_print_GAP(ostream &ost, int *v, int len);
 void int_vec_print_classified(int *v, int len);
 void int_vec_print_classified_str(stringstream &sstr,
 		int *v, int len, int f_backwards);
-void double_vec_print(ostream &ost, double *v, int len);
 void integer_vec_print(ostream &ost, int *v, int len);
 void print_integer_matrix(ostream &ost, int *p, int m, int n);
 void print_integer_matrix_width(ostream &ost, int *p, 
@@ -378,8 +376,6 @@ void print_incidence_structure(ostream &ost,
 		int m, int n, int len, int *S);
 void int_vec_scan(const char *s, int *&v, int &len);
 void int_vec_scan_from_stream(istream & is, int *&v, int &len);
-void double_vec_scan(const char *s, double *&v, int &len);
-void double_vec_scan_from_stream(istream & is, double *&v, int &len);
 void scan_permutation_from_string(const char *s, 
 	int *&perm, int &degree, int verbose_level);
 void scan_permutation_from_stream(istream & is, 

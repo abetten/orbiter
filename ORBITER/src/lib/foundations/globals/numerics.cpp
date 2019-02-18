@@ -15,8 +15,17 @@
 namespace orbiter {
 namespace foundations {
 
+numerics::numerics()
+{
 
-void double_vec_print(double *a, int len)
+}
+
+numerics::~numerics()
+{
+
+}
+
+void numerics::vec_print(double *a, int len)
 {
 	int i;
 	
@@ -30,7 +39,7 @@ void double_vec_print(double *a, int len)
 	cout << ")";
 }
 
-void double_vec_linear_combination1(double c1, double *v1,
+void numerics::vec_linear_combination1(double c1, double *v1,
 		double *w, int len)
 {
 	int i;
@@ -40,7 +49,7 @@ void double_vec_linear_combination1(double c1, double *v1,
 		}
 }
 
-void double_vec_linear_combination(double c1, double *v1,
+void numerics::vec_linear_combination(double c1, double *v1,
 		double c2, double *v2, double *v3, int len)
 {
 	int i;
@@ -50,7 +59,7 @@ void double_vec_linear_combination(double c1, double *v1,
 		}
 }
 
-void double_vec_linear_combination3(
+void numerics::vec_linear_combination3(
 		double c1, double *v1,
 		double c2, double *v2,
 		double c3, double *v3,
@@ -63,7 +72,7 @@ void double_vec_linear_combination3(
 		}
 }
 
-void double_vec_add(double *a, double *b, double *c, int len)
+void numerics::vec_add(double *a, double *b, double *c, int len)
 {
 	int i;
 	
@@ -72,7 +81,7 @@ void double_vec_add(double *a, double *b, double *c, int len)
 		}
 }
 
-void double_vec_subtract(double *a, double *b, double *c, int len)
+void numerics::vec_subtract(double *a, double *b, double *c, int len)
 {
 	int i;
 	
@@ -81,7 +90,7 @@ void double_vec_subtract(double *a, double *b, double *c, int len)
 		}
 }
 
-void double_vec_scalar_multiple(double *a, double lambda, int len)
+void numerics::vec_scalar_multiple(double *a, double lambda, int len)
 {
 	int i;
 	
@@ -90,7 +99,7 @@ void double_vec_scalar_multiple(double *a, double lambda, int len)
 		}
 }
 
-int Gauss_elimination(double *A, int m, int n, 
+int numerics::Gauss_elimination(double *A, int m, int n,
 	int *base_cols, int f_complete, 
 	int verbose_level)
 {
@@ -251,7 +260,7 @@ int Gauss_elimination(double *A, int m, int n,
 	return rank;
 }
 
-void print_system(double *A, int m, int n)
+void numerics::print_system(double *A, int m, int n)
 {
 	int i, j;
 	
@@ -263,7 +272,7 @@ void print_system(double *A, int m, int n)
 		}
 }
 
-void get_kernel(double *M, int m, int n, 
+void numerics::get_kernel(double *M, int m, int n,
 	int *base_cols, int nb_base_cols, 
 	int &kernel_m, int &kernel_n, 
 	double *kernel)
@@ -352,7 +361,7 @@ void get_kernel(double *M, int m, int n,
 	FREE_int(kcol);
 }
 
-int Null_space(double *M, int m, int n, double *K, 
+int numerics::Null_space(double *M, int m, int n, double *K,
 	int verbose_level)
 // K will be k x n
 // where k is the return value.
@@ -396,7 +405,7 @@ int Null_space(double *M, int m, int n, double *K,
 	return kernel_n;
 }
 
-void double_vec_normalize_from_back(double *v, int len)
+void numerics::vec_normalize_from_back(double *v, int len)
 {
 	int i, j;
 	double av;
@@ -407,7 +416,7 @@ void double_vec_normalize_from_back(double *v, int len)
 			}
 		}
 	if (i < 0) {
-		cout << "double_vec_normalize_from_back i < 0" << endl;
+		cout << "numerics::vec_normalize_from_back i < 0" << endl;
 		exit(1);
 		}
 	av = 1. / v[i];
@@ -416,7 +425,7 @@ void double_vec_normalize_from_back(double *v, int len)
 		}
 }
 
-void double_vec_normalize_to_minus_one_from_back(double *v, int len)
+void numerics::vec_normalize_to_minus_one_from_back(double *v, int len)
 {
 	int i, j;
 	double av;
@@ -427,7 +436,7 @@ void double_vec_normalize_to_minus_one_from_back(double *v, int len)
 			}
 		}
 	if (i < 0) {
-		cout << "double_vec_normalize_to_minus_one_from_back i < 0" << endl;
+		cout << "numerics::vec_normalize_to_minus_one_from_back i < 0" << endl;
 		exit(1);
 		}
 	av = -1. / v[i];
@@ -439,7 +448,7 @@ void double_vec_normalize_to_minus_one_from_back(double *v, int len)
 #define EPS 0.001
 
 
-int triangular_prism(double *P1, double *P2, double *P3, 
+int numerics::triangular_prism(double *P1, double *P2, double *P3,
 	double *abc3, double *angles3, double *T3, 
 	int verbose_level)
 {
@@ -461,23 +470,23 @@ int triangular_prism(double *P1, double *P2, double *P3,
 	double Rx[9];
 
 	if (f_v) {
-		cout << "triangular_prism" << endl;
+		cout << "numerics::triangular_prism" << endl;
 		}
 
 
 	if (f_vv) {
 		cout << "P1=";
-		double_vec_print(cout, P1, 3);
+		vec_print(cout, P1, 3);
 		cout << endl;
 		cout << "P2=";
-		double_vec_print(cout, P2, 3);
+		vec_print(cout, P2, 3);
 		cout << endl;
 		cout << "P3=";
-		double_vec_print(cout, P3, 3);
+		vec_print(cout, P3, 3);
 		cout << endl;
 		}
 
-	double_vec_copy(P1, T, 3);
+	vec_copy(P1, T, 3);
 	for (i = 0; i < 3; i++) {
 		P2[i] -= T[i];
 		}
@@ -488,10 +497,10 @@ int triangular_prism(double *P1, double *P2, double *P3,
 	if (f_vv) {
 		cout << "after translation:" << endl;
 		cout << "P2=";
-		double_vec_print(cout, P2, 3);
+		vec_print(cout, P2, 3);
 		cout << endl;
 		cout << "P3=";
-		double_vec_print(cout, P3, 3);
+		vec_print(cout, P3, 3);
 		cout << endl;
 		}
 
@@ -516,10 +525,10 @@ int triangular_prism(double *P1, double *P2, double *P3,
 		cout << "after rotation Rz by an angle of -1 * "
 				<< rad2deg(phi) << ":" << endl;
 		cout << "P4=";
-		double_vec_print(cout, P4, 3);
+		vec_print(cout, P4, 3);
 		cout << endl;
 		cout << "P5=";
-		double_vec_print(cout, P5, 3);
+		vec_print(cout, P5, 3);
 		cout << endl;
 		}
 	if (ABS(P4[1]) > EPS) {
@@ -550,10 +559,10 @@ int triangular_prism(double *P1, double *P2, double *P3,
 		cout << "after rotation Ry by an angle of "
 				<< rad2deg(psi) << ":" << endl;
 		cout << "P6=";
-		double_vec_print(cout, P6, 3);
+		vec_print(cout, P6, 3);
 		cout << endl;
 		cout << "P7=";
-		double_vec_print(cout, P7, 3);
+		vec_print(cout, P7, 3);
 		cout << endl;
 		}
 	if (ABS(P6[2]) > EPS) {
@@ -584,10 +593,10 @@ int triangular_prism(double *P1, double *P2, double *P3,
 		cout << "after rotation Rx by an angle of "
 				<< rad2deg(chi) << ":" << endl;
 		cout << "P8=";
-		double_vec_print(cout, P8, 3);
+		vec_print(cout, P8, 3);
 		cout << endl;
 		cout << "P9=";
-		double_vec_print(cout, P9, 3);
+		vec_print(cout, P9, 3);
 		cout << endl;
 		}
 	if (ABS(P9[1]) > EPS) {
@@ -607,12 +616,12 @@ int triangular_prism(double *P1, double *P2, double *P3,
 	abc3[1] = P9[0];
 	abc3[2] = P9[2];
 	if (f_v) {
-		cout << "triangular_prism done" << endl;
+		cout << "numerics::triangular_prism done" << endl;
 		}
 	return TRUE;
 }
 
-int general_prism(double *Pts, int nb_pts, double *Pts_xy, 
+int numerics::general_prism(double *Pts, int nb_pts, double *Pts_xy,
 	double *abc3, double *angles3, double *T3, 
 	int verbose_level)
 {
@@ -652,17 +661,17 @@ int general_prism(double *Pts, int nb_pts, double *Pts_xy,
 	
 	if (f_vv) {
 		cout << "P1=";
-		double_vec_print(cout, P1, 3);
+		vec_print(cout, P1, 3);
 		cout << endl;
 		cout << "P2=";
-		double_vec_print(cout, P2, 3);
+		vec_print(cout, P2, 3);
 		cout << endl;
 		cout << "P3=";
-		double_vec_print(cout, P3, 3);
+		vec_print(cout, P3, 3);
 		cout << endl;
 		}
 
-	double_vec_copy(P1, T, 3);
+	vec_copy(P1, T, 3);
 	for (h = 0; h < nb_pts; h++) {
 		for (i = 0; i < 3; i++) {
 			Moved_pts1[h * 3 + i] = Pts[h * 3 + i] - T[i];
@@ -679,10 +688,10 @@ int general_prism(double *Pts, int nb_pts, double *Pts_xy,
 	if (f_vv) {
 		cout << "after translation:" << endl;
 		cout << "P2=";
-		double_vec_print(cout, P2, 3);
+		vec_print(cout, P2, 3);
 		cout << endl;
 		cout << "P3=";
-		double_vec_print(cout, P3, 3);
+		vec_print(cout, P3, 3);
 		cout << endl;
 		}
 
@@ -710,10 +719,10 @@ int general_prism(double *Pts, int nb_pts, double *Pts_xy,
 		cout << "after rotation Rz by an angle of -1 * "
 				<< rad2deg(phi) << ":" << endl;
 		cout << "P4=";
-		double_vec_print(cout, P4, 3);
+		vec_print(cout, P4, 3);
 		cout << endl;
 		cout << "P5=";
-		double_vec_print(cout, P5, 3);
+		vec_print(cout, P5, 3);
 		cout << endl;
 		}
 	if (ABS(P4[1]) > EPS) {
@@ -747,10 +756,10 @@ int general_prism(double *Pts, int nb_pts, double *Pts_xy,
 		cout << "after rotation Ry by an angle of "
 				<< rad2deg(psi) << ":" << endl;
 		cout << "P6=";
-		double_vec_print(cout, P6, 3);
+		vec_print(cout, P6, 3);
 		cout << endl;
 		cout << "P7=";
-		double_vec_print(cout, P7, 3);
+		vec_print(cout, P7, 3);
 		cout << endl;
 		}
 	if (ABS(P6[2]) > EPS) {
@@ -784,10 +793,10 @@ int general_prism(double *Pts, int nb_pts, double *Pts_xy,
 		cout << "after rotation Rx by an angle of " 
 			<< rad2deg(chi) << ":" << endl;
 		cout << "P8=";
-		double_vec_print(cout, P8, 3);
+		vec_print(cout, P8, 3);
 		cout << endl;
 		cout << "P9=";
-		double_vec_print(cout, P9, 3);
+		vec_print(cout, P9, 3);
 		cout << endl;
 		}
 	if (ABS(P9[1]) > EPS) {
@@ -817,17 +826,12 @@ int general_prism(double *Pts, int nb_pts, double *Pts_xy,
 	delete [] Moved_pts4;
 
 	if (f_v) {
-		cout << "general_prism done" << endl;
+		cout << "numerics::general_prism done" << endl;
 		}
 	return TRUE;
 }
 
-double rad2deg(double phi)
-{
-	return phi * 180. / M_PI;
-}
-
-void mult_matrix(double *v, double *R, double *vR)
+void numerics::mult_matrix(double *v, double *R, double *vR)
 {
 	int i, j;
 	double c;
@@ -841,7 +845,8 @@ void mult_matrix(double *v, double *R, double *vR)
 		}
 }
 
-void mult_matrix_matrix(double *A, double *B, double *C, int m, int n, int o)
+void numerics::mult_matrix_matrix(
+		double *A, double *B, double *C, int m, int n, int o)
 // A is m x n, B is n x o, C is m x o
 {
 	int i, j, h;
@@ -858,7 +863,7 @@ void mult_matrix_matrix(double *A, double *B, double *C, int m, int n, int o)
 	}
 }
 
-void print_matrix(double *R)
+void numerics::print_matrix(double *R)
 {
 	int i, j;
 
@@ -870,7 +875,7 @@ void print_matrix(double *R)
 		}
 }
 
-void make_Rz(double *R, double phi)
+void numerics::make_Rz(double *R, double phi)
 {
 	double c, s;
 	int i;
@@ -887,7 +892,7 @@ void make_Rz(double *R, double phi)
 	R[1 * 3 + 1] = c;
 }
 
-void make_Ry(double *R, double psi)
+void numerics::make_Ry(double *R, double psi)
 {
 	double c, s;
 	int i;
@@ -905,7 +910,7 @@ void make_Ry(double *R, double psi)
 	R[2 * 3 + 2] = c;
 }
 
-void make_Rx(double *R, double chi)
+void numerics::make_Rx(double *R, double chi)
 {
 	double c, s;
 	int i;
@@ -923,7 +928,7 @@ void make_Rx(double *R, double chi)
 	R[2 * 3 + 2] = c;
 }
 
-double atan_xy(double x, double y)
+double numerics::atan_xy(double x, double y)
 {
 	double phi;
 
@@ -950,7 +955,7 @@ double atan_xy(double x, double y)
 	return phi;
 }
 
-double dot_product(double *u, double *v, int len)
+double numerics::dot_product(double *u, double *v, int len)
 {
 	double d;
 	int i;
@@ -962,14 +967,14 @@ double dot_product(double *u, double *v, int len)
 	return d;
 }
 
-void cross_product(double *u, double *v, double *n)
+void numerics::cross_product(double *u, double *v, double *n)
 {
 	n[0] = u[1] * v[2] - v[1] * u[2];
 	n[1] = u[2] * v[0] - u[0] * v[2];
 	n[2] = u[0] * v[1] - u[1] * v[0];
 }
 
-double distance_euclidean(double *x, double *y, int len)
+double numerics::distance_euclidean(double *x, double *y, int len)
 {
 	double d, a;
 	int i;
@@ -983,7 +988,7 @@ double distance_euclidean(double *x, double *y, int len)
 	return d;
 }
 
-double distance_from_origin(double x1, double x2, double x3)
+double numerics::distance_from_origin(double x1, double x2, double x3)
 {
 	double d;
 
@@ -991,7 +996,7 @@ double distance_from_origin(double x1, double x2, double x3)
 	return d;
 }
 
-double distance_from_origin(double *x, int len)
+double numerics::distance_from_origin(double *x, int len)
 {
 	double d;
 	int i;
@@ -1004,7 +1009,7 @@ double distance_from_origin(double *x, int len)
 	return d;
 }
 
-void make_unit_vector(double *v, int len)
+void numerics::make_unit_vector(double *v, int len)
 {
 	double d, dv;
 
@@ -1014,10 +1019,10 @@ void make_unit_vector(double *v, int len)
 		exit(1);
 		}
 	dv = 1. / d;
-	double_vec_scalar_multiple(v, dv, len);
+	vec_scalar_multiple(v, dv, len);
 }
 
-void center_of_mass(double *Pts, int len, 
+void numerics::center_of_mass(double *Pts, int len,
 	int *Pt_idx, int nb_pts, double *c)
 {
 	int i, h, idx;
@@ -1033,10 +1038,11 @@ void center_of_mass(double *Pts, int len,
 			}
 		}
 	a = 1. / nb_pts;
-	double_vec_scalar_multiple(c, a, len);
+	vec_scalar_multiple(c, a, len);
 }
 
-void plane_through_three_points(double *p1, double *p2, double *p3, 
+void numerics::plane_through_three_points(
+	double *p1, double *p2, double *p3,
 	double *n, double &d)
 {
 	int i;
@@ -1044,8 +1050,8 @@ void plane_through_three_points(double *p1, double *p2, double *p3,
 	double u[3];
 	double v[3];
 
-	double_vec_subtract(p2, p1, u, 3); // u = p2 - p1
-	double_vec_subtract(p3, p1, v, 3); // v = p3 - p1
+	vec_subtract(p2, p1, u, 3); // u = p2 - p1
+	vec_subtract(p3, p1, v, 3); // v = p3 - p1
 
 #if 0
 	cout << "u=" << endl;
@@ -1083,7 +1089,7 @@ void plane_through_three_points(double *p1, double *p2, double *p3,
 	d = dot_product(p1, n, 3);
 }
 
-void orthogonal_transformation_from_point_to_basis_vector(
+void numerics::orthogonal_transformation_from_point_to_basis_vector(
 	double *from, 
 	double *A, double *Av, int verbose_level)
 {
@@ -1092,10 +1098,10 @@ void orthogonal_transformation_from_point_to_basis_vector(
 	double d, a;
 
 	if (f_v) {
-		cout << "orthogonal_transformation_from_point_"
+		cout << "numerics::orthogonal_transformation_from_point_"
 				"to_basis_vector" << endl;
 		}
-	double_vec_copy(from, Av, 3);
+	vec_copy(from, Av, 3);
 	a = 0.;
 	i0 = -1;
 	for (i = 0; i < 3; i++) {
@@ -1156,12 +1162,12 @@ void orthogonal_transformation_from_point_to_basis_vector(
 		}
 
 	if (f_v) {
-		cout << "orthogonal_transformation_from_point_"
+		cout << "numerics::orthogonal_transformation_from_point_"
 				"to_basis_vector done" << endl;
 		}
 }
 
-void output_double(double a, ostream &ost)
+void numerics::output_double(double a, ostream &ost)
 {
 	if (ABS(a) < 0.0001) {
 		ost << 0;
@@ -1171,7 +1177,7 @@ void output_double(double a, ostream &ost)
 		}
 }
 
-void mult_matrix_4x4(double *v, double *R, double *vR)
+void numerics::mult_matrix_4x4(double *v, double *R, double *vR)
 {
 	int i, j;
 	double c;
@@ -1186,7 +1192,7 @@ void mult_matrix_4x4(double *v, double *R, double *vR)
 }
 
 
-void transpose_matrix_4x4(double *A, double *At)
+void numerics::transpose_matrix_4x4(double *A, double *At)
 {
 	int i, j;
 
@@ -1197,7 +1203,7 @@ void transpose_matrix_4x4(double *A, double *At)
 		}
 }
 
-void transpose_matrix_nxn(double *A, double *At, int n)
+void numerics::transpose_matrix_nxn(double *A, double *At, int n)
 {
 	int i, j;
 
@@ -1208,7 +1214,7 @@ void transpose_matrix_nxn(double *A, double *At, int n)
 		}
 }
 
-void substitute_quadric_linear(
+void numerics::substitute_quadric_linear(
 	double *coeff_in, double *coeff_out,
 	double *A4_inv, int verbose_level)
 // uses povray ordering of monomials
@@ -1326,7 +1332,8 @@ void substitute_quadric_linear(
 		}
 }
 
-void substitute_cubic_linear(double *coeff_in, double *coeff_out, 
+void numerics::substitute_cubic_linear(
+	double *coeff_in, double *coeff_out,
 	double *A4_inv, int verbose_level)
 // uses povray ordering of monomials
 // http://www.povray.org/documentation/view/3.6.1/298/
@@ -1494,7 +1501,7 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 		}
 }
 
-void make_transform_t_varphi_u_double(int n, 
+void numerics::make_transform_t_varphi_u_double(int n,
 	double *varphi, 
 	double *u, double *A, double *Av, 
 	int verbose_level)
@@ -1524,7 +1531,7 @@ void make_transform_t_varphi_u_double(int n,
 		}
 }
 
-void matrix_double_inverse(double *A, double *Av, int n, 
+void numerics::matrix_double_inverse(double *A, double *Av, int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1576,7 +1583,7 @@ void matrix_double_inverse(double *A, double *Av, int n,
 }
 
 
-int line_centered(double *pt1_in, double *pt2_in, 
+int numerics::line_centered(double *pt1_in, double *pt2_in,
 	double *pt1_out, double *pt2_out, double r)
 {
 	double v[3];
@@ -1616,13 +1623,13 @@ int line_centered(double *pt1_in, double *pt2_in,
 		cout << "b=" << b << endl;
 		cout << "c=" << c << endl;
 		cout << "pt1_in=";
-		double_vec_print(pt1_in, 3);
+		vec_print(pt1_in, 3);
 		cout << endl;
 		cout << "pt2_in=";
-		double_vec_print(pt2_in, 3);
+		vec_print(pt2_in, 3);
 		cout << endl;
 		cout << "v=";
-		double_vec_print(v, 3);
+		vec_print(v, 3);
 		cout << endl;
 		return FALSE;
 		}
@@ -1639,7 +1646,7 @@ int line_centered(double *pt1_in, double *pt2_in,
 }
 
 
-int sign_of(double a)
+int numerics::sign_of(double a)
 {
 	if (a < 0) {
 		return -1;
@@ -1653,477 +1660,10 @@ int sign_of(double a)
 }
 
 
-class polynomial_double;
-
-class polynomial_double_domain {
-public:
-	int alloc_length;
-	polynomial_double_domain();
-	~polynomial_double_domain();
-	void init(int alloc_length);
-	polynomial_double *create_object();
-	void mult(polynomial_double *A,
-			polynomial_double *B, polynomial_double *C);
-	void add(polynomial_double *A,
-			polynomial_double *B, polynomial_double *C);
-	void mult_by_scalar_in_place(
-			polynomial_double *A,
-			double lambda);
-	void copy(polynomial_double *A,
-			polynomial_double *B);
-	void determinant_over_polynomial_ring(
-			polynomial_double *P,
-			polynomial_double *det, int n, int verbose_level);
-	void find_all_roots(polynomial_double *p,
-			double *lambda, int verbose_level);
-	double divide_linear_factor(polynomial_double *p,
-			polynomial_double *q,
-			double lambda, int verbose_level);
-};
-
-class polynomial_double {
-public:
-	int alloc_length;
-	int degree;
-	double *coeff; // [alloc_length]
-	polynomial_double();
-	~polynomial_double();
-	void init(int alloc_length);
-	void print(ostream &ost);
-	double root_finder(int verbose_level);
-	double evaluate_at(double t);
-};
 
 
-polynomial_double_domain::polynomial_double_domain()
-{
-	alloc_length = 0;
-}
 
-polynomial_double_domain::~polynomial_double_domain()
-{
-	alloc_length = 0;
-}
-
-void polynomial_double_domain::init(int alloc_length)
-{
-	polynomial_double_domain::alloc_length = alloc_length;
-}
-
-polynomial_double *polynomial_double_domain::create_object()
-{
-	polynomial_double *p;
-
-	p = NEW_OBJECT(polynomial_double);
-	p->init(alloc_length);
-	return p;
-}
-
-void polynomial_double_domain::mult(polynomial_double *A,
-		polynomial_double *B, polynomial_double *C)
-{
-	int i, j;
-
-	C->degree = A->degree + B->degree;
-	for (i = 0; i <= C->degree; i++) {
-		C->coeff[i] = 0;
-	}
-
-	for (i = 0; i <= A->degree; i++) {
-		for (j = 0; j <= B->degree; j++) {
-			C->coeff[i + j] += A->coeff[i] * B->coeff[j];
-		}
-	}
-}
-
-void polynomial_double_domain::add(polynomial_double *A,
-		polynomial_double *B, polynomial_double *C)
-{
-	int i;
-	double a, b, c;
-
-	C->degree = MAXIMUM(A->degree, B->degree);
-	for (i = 0; i <= C->degree; i++) {
-		C->coeff[i] = 0;
-	}
-
-	for (i = 0; i <= C->degree; i++) {
-		if (i <= A->degree) {
-			a = A->coeff[i];
-		}
-		else {
-			a = 0.;
-		}
-		if (i <= B->degree) {
-			b = B->coeff[i];
-		}
-		else {
-			b = 0.;
-		}
-		c = a + b;
-		//cout << "add i=" << i << " a=" << a << " b=" << b << " c=" << c << endl;
-		C->coeff[i] = c;
-	}
-}
-
-void polynomial_double_domain::mult_by_scalar_in_place(
-		polynomial_double *A,
-		double lambda)
-{
-	int i;
-
-	for (i = 0; i <= A->degree; i++) {
-		A->coeff[i] *= lambda;
-		//cout << "scalar multiply: " << A->coeff[i] << endl;
-	}
-}
-
-void polynomial_double_domain::copy(polynomial_double *A,
-		polynomial_double *B)
-{
-	int i;
-
-	B->degree = A->degree;
-	for (i = 0; i <= A->degree; i++) {
-		B->coeff[i] = A->coeff[i];
-	}
-}
-
-void polynomial_double_domain::determinant_over_polynomial_ring(
-		polynomial_double *P,
-		polynomial_double *det, int n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	polynomial_double *Q;
-	polynomial_double *a, *b, *c, *d;
-	int i, j, h, u;
-
-	if (f_v) {
-		cout << "polynomial_double_domain::determinant_over_polynomial_ring" << endl;
-#if 0
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				P[i * n + j].print(cout);
-				cout << "; ";
-			}
-		cout << endl;
-		}
-#endif
-	}
-	if (n == 1) {
-		copy(P, det);
-	}
-	else {
-		a = NEW_OBJECT(polynomial_double);
-		b = NEW_OBJECT(polynomial_double);
-		c = NEW_OBJECT(polynomial_double);
-		d = NEW_OBJECT(polynomial_double);
-
-		Q = NEW_OBJECTS(polynomial_double, (n - 1) * (n - 1));
-
-		a->init(n + 1);
-		b->init(n + 1);
-		c->init(n + 1);
-		d->init(n + 1);
-		for (i = 0; i < n - 1; i++) {
-			for (j = 0; j < n - 1; j++) {
-				Q[i * (n - 1) + j].init(n + 1);
-			}
-		}
-
-		c->degree = 0;
-		c->coeff[0] = 0;
-
-		for (h = 0; h < n; h++) {
-			//cout << "h=" << h << " / " << n << ":" << endl;
-
-			u = 0;
-			for (i = 0; i < n; i++) {
-				if (i == h) {
-					continue;
-				}
-				for (j = 1; j < n; j++) {
-					copy(&P[i * n + j], &Q[u * (n - 1) + j - 1]);
-				}
-				u++;
-			}
-			determinant_over_polynomial_ring(Q, a, n - 1, verbose_level);
-
-
-			mult(a, &P[h * n + 0], b);
-
-			if (h % 2) {
-				mult_by_scalar_in_place(b, -1.);
-			}
-
-
-			add(b, c, d);
-
-
-			copy(d, c);
-
-		}
-		copy(c, det);
-
-		FREE_OBJECTS(Q);
-		FREE_OBJECT(a);
-		FREE_OBJECT(b);
-		FREE_OBJECT(c);
-		FREE_OBJECT(d);
-	}
-#if 0
-	cout << "polynomial_double_domain::determinant_over_polynomial_ring "
-			"the determinant of " << endl;
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < n; j++) {
-			P[i * n + j].print(cout);
-			cout << "; ";
-		}
-	cout << endl;
-	}
-	cout << "is: ";
-	det->print(cout);
-	cout << endl;
-#endif
-	if (f_v) {
-		cout << "polynomial_double_domain::determinant_over_"
-				"polynomial_ring done" << endl;
-	}
-
-}
-
-polynomial_double::polynomial_double()
-{
-	alloc_length = 0;
-	degree = 0;
-	coeff = NULL;
-}
-
-polynomial_double::~polynomial_double()
-{
-	if (coeff) {
-		delete [] coeff;
-	}
-}
-
-void polynomial_double::init(int alloc_length)
-{
-	int i;
-
-	polynomial_double::alloc_length = alloc_length;
-	polynomial_double::degree = 0;
-	coeff = new double[alloc_length];
-	for (i = 0; i < alloc_length; i++) {
-		coeff[i] = 0;
-	}
-}
-
-void polynomial_double::print(ostream &ost)
-{
-	int i;
-
-	for (i = 0; i <= degree; i++) {
-		if (i) {
-			ost << " + ";
-		}
-		ost << coeff[i];
-		if (i) {
-			ost << "* t";
-			if (i > 1) {
-				ost << "^" << i;
-			}
-		}
-	}
-}
-
-void polynomial_double_domain::find_all_roots(polynomial_double *p,
-		double *lambda, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, d;
-	double rem;
-
-	if (f_v) {
-		cout << "polynomial_double_domain::find_all_roots" << endl;
-	}
-
-	polynomial_double *q;
-	polynomial_double *r;
-
-	q = create_object();
-	r = create_object();
-	copy(p, q);
-
-	d = q->degree;
-	for (i = 0; i < d; i++) {
-		cout << "polynomial_double_domain::find_all_roots i=" << i
-				<< " / " << d << ":" << endl;
-		lambda[i] = q->root_finder(0 /*verbose_level*/);
-		cout << "polynomial_double_domain::find_all_roots i=" << i
-				<< " / " << d << ": lambda=" << lambda[i] << endl;
-		rem = divide_linear_factor(q,
-				r,
-				lambda[i], verbose_level);
-		cout << "quotient: ";
-		r->print(cout);
-		cout << endl;
-		cout << "remainder=" << rem << endl;
-		copy(r, q);
-	}
-	FREE_OBJECT(q);
-	FREE_OBJECT(r);
-	if (f_v) {
-		cout << "polynomial_double_domain::find_all_roots done" << endl;
-	}
-}
-
-double polynomial_double_domain::divide_linear_factor(
-		polynomial_double *p,
-		polynomial_double *q,
-		double lambda, int verbose_level)
-// divides p(X) by X-lambda, puts the result into q(X),
-// returns the remainder
-{
-	int f_v = (verbose_level >= 1);
-	int i, d;
-	double a, b;
-
-	if (f_v) {
-		cout << "polynomial_double_domain::divide_linear_factor" << endl;
-	}
-	d = p->degree;
-
-	a = p->coeff[d];
-	q->degree = d - 1;
-	q->coeff[d - 1] = a;
-	for (i = 1; i <= d - 1; i++) {
-		a = a * lambda + p->coeff[d - 1 - i + 1];
-		q->coeff[d - 1 - i] = a;
-	}
-	b = q->coeff[0] * lambda + p->coeff[0];
-	if (f_v) {
-		cout << "polynomial_double_domain::divide_linear_factor done" << endl;
-	}
-	return b;
-}
-
-
-double polynomial_double::root_finder(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	double l, r, m;
-	double vl, vr, vm;
-	double eps = 0.0000001;
-
-	if (ABS(coeff[degree]) < eps) {
-		cout << "polynomial_double::root_finder error, ABS(coeff[degree]) < eps" << endl;
-		exit(1);
-	}
-	if (degree == 2) {
-		double a, b, c, d;
-
-		a = coeff[2];
-		b = coeff[1];
-		c = coeff[0];
-		if (b * b - 4 * a * c < 0) {
-			cout << "polynomial_double::root_finder error discriminant is negative" << endl;
-			exit(1);
-		}
-		d = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
-		return d;
-	}
-	else if (degree == 1) {
-		double a, b, d;
-		a = coeff[1];
-		b = coeff[0];
-		d = - b / a;
-		return d;
-	}
-	l = -1.;
-	r = 1.;
-	vl = evaluate_at(l);
-	vr = evaluate_at(r);
-	if (ABS(vl) < eps) {
-		return l;
-	}
-	if (ABS(vr) < eps) {
-		return r;
-	}
-	while (sign_of(evaluate_at(l)) == sign_of(evaluate_at(r))) {
-		l *= 2.;
-		r *= 2.;
-	}
-	vl = evaluate_at(l);
-	vr = evaluate_at(r);
-	if (f_v) {
-		cout << "polynomial_double::root_finder l=" << l << " r=" << r << endl;
-		cout << "value at l = " << vl << endl;
-		cout << "value at r = " << vr << endl;
-	}
-	m = (l + r) *.5;
-	vm = evaluate_at(m);
-	while (ABS(vm) > eps) {
-		if (f_v) {
-			cout << "polynomial_double::root_finder l=" << l << " r=" << r << endl;
-			cout << "value at l = " << vl << endl;
-			cout << "value at r = " << vr << endl;
-			cout << "r - l = " << r - l << endl;
-			cout << "m = " << m << endl;
-			cout << "vm = " << vm << endl;
-		}
-		if (f_v) {
-			cout << "m=" << m << " value=" << vm << " sign=" << sign_of(vm) << endl;
-		}
-
-		if (sign_of(vl) == sign_of(vm)) {
-			l = m;
-			vl = vm;
-		}
-		else if (sign_of(vm) == sign_of(vr)) {
-			r = m;
-			vr = vm;
-		}
-		else {
-			if (ABS(vm) < eps) {
-				if (TRUE) {
-					cout << "polynomial_double::root_finder hit on a root by chance" << endl;
-				}
-				return m;
-			}
-			else {
-				cout << "polynomial_double::root_finder problem" << endl;
-				cout << "polynomial_double::root_finder l=" << l << " m=" << m << " r=" << r << endl;
-				cout << "value at l = " << vl << endl;
-				cout << "value at r = " << vr << endl;
-				cout << "value at m = " << vm << endl;
-				exit(1);
-			}
-		}
-		m = (l + r) *.5;
-		vm = evaluate_at(m);
-	}
-	if (f_v) {
-		cout << "polynomial_double::root_finder l=" << l << " r=" << r << endl;
-		cout << "value at l = " << vl << endl;
-		cout << "value at r = " << vr << endl;
-	}
-	return m;
-
-}
-
-double polynomial_double::evaluate_at(double t)
-{
-	int i;
-	double a;
-
-	a = coeff[degree];
-	for (i = degree - 1; i >= 0; i--) {
-		a = a * t + coeff[i];
-	}
-	return a;
-}
-
-void eigenvalues(double *A, int n, double *lambda, int verbose_level)
+void numerics::eigenvalues(double *A, int n, double *lambda, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -2206,7 +1746,7 @@ void eigenvalues(double *A, int n, double *lambda, int verbose_level)
 	}
 }
 
-void eigenvectors(double *A, double *Basis,
+void numerics::eigenvectors(double *A, double *Basis,
 		int n, double *lambda, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2294,6 +1834,149 @@ void eigenvectors(double *A, double *Basis,
 	if (f_v) {
 		cout << "eigenvectors done" << endl;
 	}
+}
+
+double numerics::rad2deg(double phi)
+{
+	return phi * 180. / M_PI;
+}
+
+void numerics::vec_copy(double *from, double *to, int len)
+{
+	int i;
+	double *p, *q;
+
+	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
+		*q = *p;
+		}
+}
+
+void numerics::vec_print(ostream &ost, double *v, int len)
+{
+	int i;
+
+	ost << "( ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " )";
+}
+
+void numerics::vec_scan(const char *s, double *&v, int &len)
+{
+
+	istringstream ins(s);
+	vec_scan_from_stream(ins, v, len);
+}
+
+void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
+{
+	int verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+	double a;
+	char s[10000], c;
+	int l, h;
+
+	len = 20;
+	v = new double [len];
+	h = 0;
+	l = 0;
+
+	while (TRUE) {
+		if (!is) {
+			len = h;
+			return;
+			}
+		l = 0;
+		if (is.eof()) {
+			//cout << "breaking off because of eof" << endl;
+			len = h;
+			return;
+			}
+		is >> c;
+		//c = get_character(is, verbose_level - 2);
+		if (c == 0) {
+			len = h;
+			return;
+			}
+		while (TRUE) {
+			while (c != 0) {
+
+				if (f_v) {
+					cout << "character \"" << c
+							<< "\", ascii=" << (int)c << endl;
+					}
+
+				if (c == '-') {
+					//cout << "c='" << c << "'" << endl;
+					if (is.eof()) {
+						//cout << "breaking off because of eof" << endl;
+						break;
+						}
+					s[l++] = c;
+					is >> c;
+					//c = get_character(is, verbose_level - 2);
+					}
+				else if ((c >= '0' && c <= '9') || c == '.') {
+					//cout << "c='" << c << "'" << endl;
+					if (is.eof()) {
+						//cout << "breaking off because of eof" << endl;
+						break;
+						}
+					s[l++] = c;
+					is >> c;
+					//c = get_character(is, verbose_level - 2);
+					}
+				else {
+					//cout << "breaking off because c='" << c << "'" << endl;
+					break;
+					}
+				if (c == 0) {
+					break;
+					}
+				//cout << "int_vec_scan_from_stream inside loop: \""
+				//<< c << "\", ascii=" << (int)c << endl;
+				}
+			s[l] = 0;
+			sscanf(s, "%lf", &a);
+			//a = atoi(s);
+			if (FALSE) {
+				cout << "digit as string: " << s << ", numeric: " << a << endl;
+				}
+			if (h == l) {
+				l += 20;
+				double *v2;
+
+				v2 = new double [l];
+				vec_copy(v, v2, h);
+				delete [] v;
+				v = v2;
+				}
+			v[h++] = a;
+			l = 0;
+			if (!is) {
+				len = h;
+				return;
+				}
+			if (c == 0) {
+				len = h;
+				return;
+				}
+			if (is.eof()) {
+				//cout << "breaking off because of eof" << endl;
+				len = h;
+				return;
+				}
+			is >> c;
+			//c = get_character(is, verbose_level - 2);
+			if (c == 0) {
+				len = h;
+				return;
+				}
+			}
+		}
 }
 
 
