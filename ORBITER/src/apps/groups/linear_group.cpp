@@ -167,6 +167,16 @@ int main(int argc, const char **argv)
 
 		Sch->print_and_list_orbits(cout);
 
+		char fname_orbits[1000];
+
+		sprintf(fname_orbits, "%s_orbits.tex", LG->prefix);
+
+
+		Sch->latex(fname_orbits);
+		cout << "Written file " << fname_orbits << " of size "
+				<< file_size(fname_orbits) << endl;
+
+
 		char fname_tree_mask[1000];
 
 		sprintf(fname_tree_mask, "%s_%%d.layered_graph", LG->prefix);

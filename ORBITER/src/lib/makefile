@@ -112,6 +112,8 @@ MODULES= \
 		foundations/globals/galois_global.o \
 		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
+		foundations/globals/polynomial_double_domain.o \
+		foundations/globals/polynomial_double.o \
 		foundations/graph_theory/clique_finder.o \
 		foundations/graph_theory/clique_finder_control.o \
 		foundations/graph_theory/colored_graph.o \

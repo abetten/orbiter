@@ -144,16 +144,6 @@ void int_vec_copy(int *from, int *to, int len)
 		}
 }
 
-void double_vec_copy(double *from, double *to, int len)
-{
-	int i;
-	double *p, *q;
-
-	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
-		*q = *p;
-		}
-}
-
 void int_vec_swap(int *v1, int *v2, int len)
 {
 	int i, a;
@@ -1130,19 +1120,6 @@ void int_vec_print_classified_str(stringstream &sstr,
 	C.init(v, len, FALSE /*f_second */, 0);
 	//C.print(TRUE /* f_backwards*/);
 	C.print_naked_stringstream(sstr, f_backwards);
-}
-
-void double_vec_print(ostream &ost, double *v, int len)
-{
-	int i;
-	
-	ost << "( ";
-	for (i = 0; i < len; i++) {
-		ost << v[i];
-		if (i < len - 1)
-			ost << ", ";
-		}
-	ost << " )";
 }
 
 void integer_vec_print(ostream &ost, int *v, int len)
@@ -2372,121 +2349,6 @@ void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 				v2 = NEW_int(len);
 				int_vec_copy(v, v2, h);
 				FREE_int(v);
-				v = v2;
-				}
-			v[h++] = a;
-			l = 0;
-			if (!is) {
-				len = h;
-				return;
-				}
-			if (c == 0) {
-				len = h;
-				return;
-				}
-			if (is.eof()) {
-				//cout << "breaking off because of eof" << endl;
-				len = h;
-				return;
-				}
-			is >> c;
-			//c = get_character(is, verbose_level - 2);
-			if (c == 0) {
-				len = h;
-				return;
-				}
-			}
-		}
-}
-
-void double_vec_scan(const char *s, double *&v, int &len)
-{
-
-	istringstream ins(s);
-	double_vec_scan_from_stream(ins, v, len);
-}
-
-void double_vec_scan_from_stream(istream & is, double *&v, int &len)
-{
-	int verbose_level = 1;
-	int f_v = (verbose_level >= 1);
-	double a;
-	char s[10000], c;
-	int l, h;
-		
-	len = 20;
-	v = new double [len];
-	h = 0;
-	l = 0;
-
-	while (TRUE) {
-		if (!is) {
-			len = h;
-			return;
-			}
-		l = 0;
-		if (is.eof()) {
-			//cout << "breaking off because of eof" << endl;
-			len = h;
-			return;
-			}
-		is >> c;
-		//c = get_character(is, verbose_level - 2);
-		if (c == 0) {
-			len = h;
-			return;
-			}
-		while (TRUE) {
-			while (c != 0) {
-
-				if (f_v) {
-					cout << "character \"" << c
-							<< "\", ascii=" << (int)c << endl;
-					}
-
-				if (c == '-') {
-					//cout << "c='" << c << "'" << endl;
-					if (is.eof()) {
-						//cout << "breaking off because of eof" << endl;
-						break;
-						}
-					s[l++] = c;
-					is >> c;
-					//c = get_character(is, verbose_level - 2);
-					}
-				else if ((c >= '0' && c <= '9') || c == '.') {
-					//cout << "c='" << c << "'" << endl;
-					if (is.eof()) {
-						//cout << "breaking off because of eof" << endl;
-						break;
-						}
-					s[l++] = c;
-					is >> c;
-					//c = get_character(is, verbose_level - 2);
-					}
-				else {
-					//cout << "breaking off because c='" << c << "'" << endl;
-					break;
-					}
-				if (c == 0) {
-					break;
-					}
-				//cout << "int_vec_scan_from_stream inside loop: \""
-				//<< c << "\", ascii=" << (int)c << endl;
-				}
-			s[l] = 0;
-			sscanf(s, "%lf", &a);
-			//a = atoi(s);
-			if (FALSE) {
-				cout << "digit as string: " << s << ", numeric: " << a << endl;
-				}
-			if (h == l) {
-				l += 20;
-				double *v2;
-
-				v2 = new double [l];
-				double_vec_copy(v, v2, h);
-				delete [] v;
 				v = v2;
 				}
 			v[h++] = a;

@@ -143,32 +143,33 @@ scene *scene::transformed_copy(double *A4, double *A4_inv,
 void scene::print()
 {
 	int i;
+	numerics N;
 	
 	cout << "scene:" << endl;
 	cout << "nb_lines=" << nb_lines << endl;
 	for (i = 0; i < nb_lines; i++) {
 		cout << i << " / " << nb_lines << " : ";
-		double_vec_print(Line_coords + i * 6 + 0, 3);
+		N.vec_print(Line_coords + i * 6 + 0, 3);
 		cout << ", ";
-		double_vec_print(Line_coords + i * 6 + 3, 3);
+		N.vec_print(Line_coords + i * 6 + 3, 3);
 		cout << endl;
 		}
 	cout << "nb_planes=" << nb_planes << endl;
 	for (i = 0; i < nb_planes; i++) {
 		cout << i << " / " << nb_planes << " : ";
-		double_vec_print(Plane_coords + i * 4, 4);
+		N.vec_print(Plane_coords + i * 4, 4);
 		cout << endl;
 		}
 	cout << "nb_points=" << nb_points << endl;
 	for (i = 0; i < nb_points; i++) {
 		cout << i << " / " << nb_points << " : ";
-		double_vec_print(Point_coords + i * 3, 3);
+		N.vec_print(Point_coords + i * 3, 3);
 		cout << endl;
 		}
 	cout << "nb_cubics=" << nb_cubics << endl;
 	for (i = 0; i < nb_cubics; i++) {
 		cout << i << " / " << nb_cubics << " : ";
-		double_vec_print(Cubic_coords + i * 20, 20);
+		N.vec_print(Cubic_coords + i * 20, 20);
 		cout << endl;
 		}
 
@@ -192,6 +193,7 @@ void scene::transform_lines(scene *S,
 	double xx[4], yy[4];
 	double xxx[4], yyy[4];
 	int i;
+	numerics N;
 	
 	
 	if (f_v) {
@@ -199,12 +201,12 @@ void scene::transform_lines(scene *S,
 		}
 
 	for (i = 0; i < nb_lines; i++) {
-		double_vec_copy(Line_coords + i * 6 + 0, x, 3);
+		N.vec_copy(Line_coords + i * 6 + 0, x, 3);
 		x[3] = 1.;
-		double_vec_copy(Line_coords + i * 6 + 3, y, 3);
+		N.vec_copy(Line_coords + i * 6 + 3, y, 3);
 		y[3] = 1.;
-		mult_matrix_4x4(x, A4, xx);
-		mult_matrix_4x4(y, A4, yy);
+		N.mult_matrix_4x4(x, A4, xx);
+		N.mult_matrix_4x4(y, A4, yy);
 		if (ABS(xx[3]) < 0.0001) {
 			cout << "scene::transform_lines warning, "
 					"point x is moved to infinity" << endl;
@@ -215,19 +217,19 @@ void scene::transform_lines(scene *S,
 					"point y is moved to infinity" << endl;
 			exit(1);
 			}
-		double_vec_normalize_from_back(xx, 4);
+		N.vec_normalize_from_back(xx, 4);
 		if (ABS(xx[3] - 1.) > 0.0001) {
 			cout << "scene::transform_lines warning, "
 					"point xx is not an affine point" << endl;
 			exit(1);
 			}
-		double_vec_normalize_from_back(yy, 4);
+		N.vec_normalize_from_back(yy, 4);
 		if (ABS(yy[3] - 1.) > 0.0001) {
 			cout << "scene::transform_lines warning, "
 					"point yy is not an affine point" << endl;
 			exit(1);
 			}
-		if (line_centered(xx, yy, xxx, yyy, 10.)) {
+		if (N.line_centered(xx, yy, xxx, yyy, 10.)) {
 			S->line(xxx[0], xxx[1], xxx[2], yyy[0], yyy[1], yyy[2]);
 			}
 		}
@@ -267,6 +269,7 @@ void scene::transform_points(scene *S, double *A4, double *A4_inv,
 	double x[4];
 	double xx[4];
 	int i;
+	numerics N;
 	
 	
 	if (f_v) {
@@ -274,15 +277,15 @@ void scene::transform_points(scene *S, double *A4, double *A4_inv,
 		}
 
 	for (i = 0; i < nb_points; i++) {
-		double_vec_copy(Point_coords + i * 3, x, 3);
+		N.vec_copy(Point_coords + i * 3, x, 3);
 		x[3] = 1.;
-		mult_matrix_4x4(x, A4, xx);
+		N.mult_matrix_4x4(x, A4, xx);
 		if (ABS(xx[3]) < 0.0001) {
 			cout << "scene::transform_lines warning, "
 					"point x is moved to infinity" << endl;
 			exit(1);
 			}
-		double_vec_normalize_from_back(xx, 4);
+		N.vec_normalize_from_back(xx, 4);
 		if (ABS(xx[3] - 1.) > 0.0001) {
 			cout << "scene::transform_lines warning, "
 					"point xx is not an affine point" << endl;
@@ -305,20 +308,21 @@ void scene::transform_planes(scene *S, double *A4, double *A4_inv,
 	double xx[4];
 	double Avt[16];
 	int i;
+	numerics N;
 	
 	
 	if (f_v) {
 		cout << "scene::transform_planes" << endl;
 		}
 
-	transpose_matrix_4x4(A4_inv, Avt);
+	N.transpose_matrix_4x4(A4_inv, Avt);
 	
 
 	for (i = 0; i < nb_planes; i++) {
-		double_vec_copy(Plane_coords + i * 4, x, 4);
+		N.vec_copy(Plane_coords + i * 4, x, 4);
 		x[3] *= -1.;
 
-		mult_matrix_4x4(x, Avt, xx);
+		N.mult_matrix_4x4(x, Avt, xx);
 
 		xx[3] *= -1.;
 		S->plane(xx[0], xx[1], xx[2], xx[3]);
@@ -337,6 +341,7 @@ void scene::transform_quadrics(scene *S, double *A4, double *A4_inv,
 	double coeff_in[10];
 	double coeff_out[10];
 	int i;
+	numerics N;
 	
 	
 	if (f_v) {
@@ -345,9 +350,9 @@ void scene::transform_quadrics(scene *S, double *A4, double *A4_inv,
 	
 
 	for (i = 0; i < nb_quadrics; i++) {
-		double_vec_copy(Quadric_coords + i * 10, coeff_in, 10);
+		N.vec_copy(Quadric_coords + i * 10, coeff_in, 10);
 
-		substitute_quadric_linear(coeff_in, coeff_out, 
+		N.substitute_quadric_linear(coeff_in, coeff_out,
 			A4_inv, verbose_level);
 
 		S->quadric(coeff_out);
@@ -366,6 +371,7 @@ void scene::transform_cubics(scene *S, double *A4, double *A4_inv,
 	double coeff_in[20];
 	double coeff_out[20];
 	int i;
+	numerics N;
 	
 	
 	if (f_v) {
@@ -374,9 +380,9 @@ void scene::transform_cubics(scene *S, double *A4, double *A4_inv,
 	
 
 	for (i = 0; i < nb_cubics; i++) {
-		double_vec_copy(Cubic_coords + i * 20, coeff_in, 20);
+		N.vec_copy(Cubic_coords + i * 20, coeff_in, 20);
 
-		substitute_cubic_linear(coeff_in, coeff_out, 
+		N.substitute_cubic_linear(coeff_in, coeff_out,
 			A4_inv, verbose_level);
 
 		S->cubic(coeff_out);
@@ -415,6 +421,7 @@ int scene::line_pt_and_dir(double *x6, double rad)
 {
 	double pt[6];
 	double pt2[6];
+	numerics N;
 
 	pt[0] = x6[0];
 	pt[1] = x6[1];
@@ -422,7 +429,7 @@ int scene::line_pt_and_dir(double *x6, double rad)
 	pt[3] = x6[0] + x6[3];
 	pt[4] = x6[1] + x6[4];
 	pt[5] = x6[2] + x6[5];
-	if (line_centered(pt, pt + 3, 
+	if (N.line_centered(pt, pt + 3,
 		pt2, pt2 + 3, 
 		rad)) {
 		Line_coords[nb_lines * 6 + 0] = pt2[0];
@@ -447,6 +454,7 @@ int scene::line_through_two_pts(double *x6, double rad)
 {
 	double pt[6];
 	double pt2[6];
+	numerics N;
 
 	pt[0] = x6[0];
 	pt[1] = x6[1];
@@ -454,7 +462,7 @@ int scene::line_through_two_pts(double *x6, double rad)
 	pt[3] = x6[3];
 	pt[4] = x6[4];
 	pt[5] = x6[5];
-	if (line_centered(pt, pt + 3,
+	if (N.line_centered(pt, pt + 3,
 		pt2, pt2 + 3,
 		rad)) {
 		Line_coords[nb_lines * 6 + 0] = pt2[0];
@@ -512,11 +520,12 @@ int scene::line_through_two_points(int pt1, int pt2, double rad)
 {
 	double x[3], y[3];
 	double xx[3], yy[3];
+	numerics N;
 
-	double_vec_copy(Point_coords + pt1 * 3, x, 3);
-	double_vec_copy(Point_coords + pt2 * 3, y, 3);
+	N.vec_copy(Point_coords + pt1 * 3, x, 3);
+	N.vec_copy(Point_coords + pt2 * 3, y, 3);
 
-	line_centered(x, y, xx, yy, 10.);
+	N.line_centered(x, y, xx, yy, 10.);
 
 	Line_coords[nb_lines * 6 + 0] = xx[0];
 	Line_coords[nb_lines * 6 + 1] = xx[1];
@@ -579,8 +588,9 @@ int scene::point_center_of_mass_of_edge(int edge_idx)
 int scene::point_center_of_mass(int *Pt_idx, int nb_pts)
 {
 	double x[3];
+	numerics N;
 
-	center_of_mass(Point_coords, 3 /* len */, Pt_idx, nb_pts, x);
+	N.center_of_mass(Point_coords, 3 /* len */, Pt_idx, nb_pts, x);
 	return point(x[0], x[1], x[2]);
 }
 
@@ -610,11 +620,12 @@ int scene::point_as_intersection_of_two_lines(int line1, int line2)
 	//int base_cols[3];
 	double lambda;
 	double Ker[9];
+	numerics N;
 
-	double_vec_copy(Line_coords + line1 * 6, x, 3);
-	double_vec_copy(Line_coords + line2 * 6, y, 3);
-	double_vec_subtract(Line_coords + line1 * 6 + 3, Line_coords + line1 * 6, u, 3);
-	double_vec_subtract(Line_coords + line2 * 6 + 3, Line_coords + line2 * 6, v, 3);
+	N.vec_copy(Line_coords + line1 * 6, x, 3);
+	N.vec_copy(Line_coords + line2 * 6, y, 3);
+	N.vec_subtract(Line_coords + line1 * 6 + 3, Line_coords + line1 * 6, u, 3);
+	N.vec_subtract(Line_coords + line2 * 6 + 3, Line_coords + line2 * 6, v, 3);
 
 	// we need to solve 
 	// x + lambda * u = y + mu * v
@@ -628,13 +639,13 @@ int scene::point_as_intersection_of_two_lines(int line1, int line2)
 		}
 	// rk = Gauss_elimination(System, 3, 3,
 	//base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
-	ker = Null_space(System, 3, 3, Ker, 0 /* verbose_level */);
+	ker = N.Null_space(System, 3, 3, Ker, 0 /* verbose_level */);
 	if (ker != 1) {
 		cout << "scene::point_as_intersection_of_two_lines ker != 1" << endl;
 		exit(1);
 		}
-	double_vec_normalize_from_back(Ker, 3);
-	double_vec_normalize_to_minus_one_from_back(Ker, 3);
+	N.vec_normalize_from_back(Ker, 3);
+	N.vec_normalize_to_minus_one_from_back(Ker, 3);
 	lambda = Ker[0];
 	for (i = 0; i < 3; i++) {
 		z[i] = x[i] + lambda * u[i];
@@ -679,10 +690,11 @@ int scene::plane(double x1, double x2, double x3, double a)
 int scene::plane_through_three_points(int pt1, int pt2, int pt3)
 {
 	double p1[3], p2[3], p3[3], n[3], d;
+	numerics N;
 
-	double_vec_copy(Point_coords + pt1 * 3, p1, 3);
-	double_vec_copy(Point_coords + pt2 * 3, p2, 3);
-	double_vec_copy(Point_coords + pt3 * 3, p3, 3);
+	N.vec_copy(Point_coords + pt1 * 3, p1, 3);
+	N.vec_copy(Point_coords + pt2 * 3, p2, 3);
+	N.vec_copy(Point_coords + pt3 * 3, p3, 3);
 
 #if 0
 	cout << "p1=" << endl;
@@ -696,7 +708,7 @@ int scene::plane_through_three_points(int pt1, int pt2, int pt3)
 	cout << endl;
 #endif
 
-	orbiter::foundations::plane_through_three_points(p1, p2, p3, n, d);
+	N.plane_through_three_points(p1, p2, p3, n, d);
 	return plane(n[0], n[1], n[2], d);
 }
 
@@ -712,27 +724,28 @@ int scene::quadric_through_three_lines(
 	double x, y, z;
 	int idx;
 	int i, k;
+	numerics N;
 
 	if (f_v) {
 		cout << "scene::quadric_through_three_lines" << endl;
 		}
-	double_vec_copy(Line_coords + line_idx1 * 6, points + 0, 3);
-	double_vec_copy(Line_coords + line_idx1 * 6 + 3, points + 3, 3);
-	double_vec_subtract(points + 3, points + 0, v, 3);
-	double_vec_scalar_multiple(v, 2., 3);
-	double_vec_add(points + 0, v, points + 6, 3);
+	N.vec_copy(Line_coords + line_idx1 * 6, points + 0, 3);
+	N.vec_copy(Line_coords + line_idx1 * 6 + 3, points + 3, 3);
+	N.vec_subtract(points + 3, points + 0, v, 3);
+	N.vec_scalar_multiple(v, 2., 3);
+	N.vec_add(points + 0, v, points + 6, 3);
 
-	double_vec_copy(Line_coords + line_idx2 * 6, points + 9, 3);
-	double_vec_copy(Line_coords + line_idx2 * 6 + 3, points + 12, 3);
-	double_vec_subtract(points + 12, points + 9, v, 3);
-	double_vec_scalar_multiple(v, 2., 3);
-	double_vec_add(points + 9, v, points + 15, 3);
+	N.vec_copy(Line_coords + line_idx2 * 6, points + 9, 3);
+	N.vec_copy(Line_coords + line_idx2 * 6 + 3, points + 12, 3);
+	N.vec_subtract(points + 12, points + 9, v, 3);
+	N.vec_scalar_multiple(v, 2., 3);
+	N.vec_add(points + 9, v, points + 15, 3);
 
-	double_vec_copy(Line_coords + line_idx3 * 6, points + 18, 3);
-	double_vec_copy(Line_coords + line_idx3 * 6 + 3, points + 21, 3);
-	double_vec_subtract(points + 21, points + 18, v, 3);
-	double_vec_scalar_multiple(v, 2., 3);
-	double_vec_add(points + 18, v, points + 24, 3);
+	N.vec_copy(Line_coords + line_idx3 * 6, points + 18, 3);
+	N.vec_copy(Line_coords + line_idx3 * 6 + 3, points + 21, 3);
+	N.vec_subtract(points + 21, points + 18, v, 3);
+	N.vec_scalar_multiple(v, 2., 3);
+	N.vec_add(points + 18, v, points + 24, 3);
 
 
 	for (i = 0; i < 9; i++) {
@@ -751,7 +764,7 @@ int scene::quadric_through_three_lines(
 		System[i * 10 + 9] = 1;
 		}
 
-	k = Null_space(System, 9, 10, coeff, 0 /* verbose_level */);
+	k = N.Null_space(System, 9, 10, coeff, 0 /* verbose_level */);
 	if (k != 1) {
 		cout << "scene::quadric_through_three_lines k != 1" << endl;
 		exit(1);
@@ -883,6 +896,7 @@ void scene::draw_lines_with_selection(int *selection, int nb_select,
 	const char *options, ostream &ost)
 {
 	int i, j, h, s;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
@@ -895,14 +909,14 @@ void scene::draw_lines_with_selection(int *selection, int nb_select,
 		j = s;
 		ost << "		cylinder{<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + h], ost);
+			N.output_double(Line_coords[j * 6 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
 			}
 		ost << ">,<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + 3 + h], ost);
+			N.output_double(Line_coords[j * 6 + 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
@@ -919,6 +933,7 @@ void scene::draw_line_with_selection(int line_idx,
 	const char *options, ostream &ost)
 {
 	int j, h, s;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
@@ -930,14 +945,14 @@ void scene::draw_line_with_selection(int line_idx,
 	j = s;
 	ost << "		cylinder{<";
 	for (h = 0; h < 3; h++) {
-		output_double(Line_coords[j * 6 + h], ost);
+		N.output_double(Line_coords[j * 6 + h], ost);
 		if (h < 2) {
 			ost << ", ";
 			}
 		}
 	ost << ">,<";
 	for (h = 0; h < 3; h++) {
-		output_double(Line_coords[j * 6 + 3 + h], ost);
+		N.output_double(Line_coords[j * 6 + 3 + h], ost);
 		if (h < 2) {
 			ost << ", ";
 			}
@@ -953,6 +968,7 @@ void scene::draw_lines_cij_with_selection(int *selection, int nb_select,
 	ostream &ost)
 {
 	int i, j, h, s;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // cij lines" << endl;
@@ -965,14 +981,14 @@ void scene::draw_lines_cij_with_selection(int *selection, int nb_select,
 		j = 12 + s;
 		ost << "		cylinder{<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + h], ost);
+			N.output_double(Line_coords[j * 6 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
 			}	
 		ost << ">,<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + 3 + h], ost);
+			N.output_double(Line_coords[j * 6 + 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
@@ -995,6 +1011,7 @@ void scene::draw_lines_ai_with_selection(int *selection, int nb_select,
 	ostream &ost)
 {
 	int s, i, j, h;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // ai lines" << endl;
@@ -1007,14 +1024,14 @@ void scene::draw_lines_ai_with_selection(int *selection, int nb_select,
 		j = 0 + s;
 		ost << "		cylinder{<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + h], ost);
+			N.output_double(Line_coords[j * 6 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
 			}	
 		ost << ">,<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + 3 + h], ost);
+			N.output_double(Line_coords[j * 6 + 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
@@ -1037,6 +1054,7 @@ void scene::draw_lines_bj_with_selection(int *selection, int nb_select,
 	ostream &ost)
 {
 	int s, i, j, h;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // bj lines" << endl;
@@ -1049,14 +1067,14 @@ void scene::draw_lines_bj_with_selection(int *selection, int nb_select,
 		j = 6 + s;
 		ost << "		cylinder{<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + h], ost);
+			N.output_double(Line_coords[j * 6 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
 			}	
 		ost << ">,<";
 		for (h = 0; h < 3; h++) {
-			output_double(Line_coords[j * 6 + 3 + h], ost);
+			N.output_double(Line_coords[j * 6 + 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
@@ -1081,6 +1099,7 @@ void scene::draw_edges_with_selection(int *selection, int nb_select,
 	const char *options, ostream &ost)
 {
 	int s, i, j, h, pt1, pt2;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // edges" << endl;
@@ -1094,14 +1113,14 @@ void scene::draw_edges_with_selection(int *selection, int nb_select,
 		pt2 = Edge_points[j * 2 + 1];
 		ost << "		cylinder{<";
 		for (h = 0; h < 3; h++) {
-			output_double(Point_coords[pt1 * 3 + h], ost);
+			N.output_double(Point_coords[pt1 * 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
 			}	
 		ost << ">,<";
 		for (h = 0; h < 3; h++) {
-			output_double(Point_coords[pt2 * 3 + h], ost);
+			N.output_double(Point_coords[pt2 * 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
@@ -1146,6 +1165,7 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	double abc3[3];
 	double angles3[3];
 	double T3[3];
+	numerics N;
 
 	nb_pts = Nb_face_points[idx];
 	pts = Face_points[idx];
@@ -1155,7 +1175,7 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 		cout << "scene::draw_face" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		double_vec_copy(Point_coords + pts[i] * 3, Pts_in + i * 3, 3);
+		N.vec_copy(Point_coords + pts[i] * 3, Pts_in + i * 3, 3);
 		if (f_v) {
 			cout << "vertex i= " << i << " pts[i] = " << pts[i]
 					<< " x=" << Pts_in[i * 3 + 0]
@@ -1166,11 +1186,11 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	}
 
 #if 0
-	triangular_prism(P1, P2, P3, 
+	N.triangular_prism(P1, P2, P3,
 		abc3, angles3, T3, 
 		0 /*verbose_level*/);
 #else
-	general_prism(Pts_in, nb_pts, Pts_out, 
+	N.general_prism(Pts_in, nb_pts, Pts_out,
 		abc3, angles3, T3, 
 		0 /*verbose_level*/);
 #endif
@@ -1180,24 +1200,24 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	//double thickness_half = 0.001;
 
 	ost << "\t\tprism { ";
-	output_double(-thickness_half, ost);
+	N.output_double(-thickness_half, ost);
 	ost << ", ";
-	output_double(thickness_half, ost);
+	N.output_double(thickness_half, ost);
 	ost << ", " << nb_pts + 1 << endl;
 	ost << "\t\t\t< 0, 0 >," << endl;
 	ost << "\t\t\t< ";
-	output_double(abc3[0], ost);
+	N.output_double(abc3[0], ost);
 	ost << ", " << 0 << " >," << endl;
 	ost << "\t\t\t< ";
-	output_double(abc3[1], ost);
+	N.output_double(abc3[1], ost);
 	ost << ", ";
-	output_double(abc3[2], ost);
+	N.output_double(abc3[2], ost);
 	ost << " >," << endl;
 	for (i = 3; i < nb_pts; i++) {
 		ost << "\t\t\t< ";
-		output_double(Pts_out[i * 2 + 0], ost);
+		N.output_double(Pts_out[i * 2 + 0], ost);
 		ost << ", ";
-		output_double(Pts_out[i * 2 + 1], ost);
+		N.output_double(Pts_out[i * 2 + 1], ost);
 		ost << " >," << endl;
 		}
 	ost << "\t\t\t< 0, 0 >" << endl;
@@ -1209,20 +1229,20 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	//ost << "\t\t\t}" << endl;
 	//ost << "rotate<" << -90 << ",0,0>" << endl;
 	ost << "\t\trotate<";
-	output_double(rad2deg(angles3[0]), ost);
+	N.output_double(N.rad2deg(angles3[0]), ost);
 	ost << ",0,0>" << endl;
 	ost << "\t\trotate<0, ";
-	output_double(rad2deg(angles3[1]), ost);
+	N.output_double(N.rad2deg(angles3[1]), ost);
 	ost << ",0>" << endl;
 	ost << "\t\trotate<0,0, ";
-	output_double(rad2deg(angles3[2]), ost);
+	N.output_double(N.rad2deg(angles3[2]), ost);
 	ost << ">" << endl;
 	ost << "\t\ttranslate<";
-	output_double(T3[0], ost);
+	N.output_double(T3[0], ost);
 	ost << ", ";
-	output_double(T3[1], ost);
+	N.output_double(T3[1], ost);
 	ost << ", ";
-	output_double(T3[2], ost);
+	N.output_double(T3[2], ost);
 	ost << ">" << endl;
 	ost << "\t\t}" << endl;
 
@@ -1248,6 +1268,7 @@ void scene::draw_text(const char *text,
 	double angles3[3];
 	double T3[3];
 	double u[3];
+	numerics N;
 
 	if (f_v) {
 		cout << "scene::draw_text" << endl;
@@ -1279,7 +1300,7 @@ void scene::draw_text(const char *text,
 	P3[1] = y + up_y;
 	P3[2] = z + up_z;
 	
-	triangular_prism(P1, P2, P3, 
+	N.triangular_prism(P1, P2, P3,
 		abc3, angles3, T3, 
 		verbose_level);
 	double offset[3];
@@ -1291,18 +1312,18 @@ void scene::draw_text(const char *text,
 	view[0] = view_x;
 	view[1] = view_y;
 	view[2] = view_z;
-	make_unit_vector(u, 3);
-	make_unit_vector(up, 3);
-	make_unit_vector(view, 3);
+	N.make_unit_vector(u, 3);
+	N.make_unit_vector(up, 3);
+	N.make_unit_vector(view, 3);
 	if (f_v) {
 		cout << "up normalized: ";
-		double_vec_print(up, 3);
+		N.vec_print(up, 3);
 		cout << endl;
 		cout << "u normalized: ";
-		double_vec_print(u, 3);
+		N.vec_print(u, 3);
 		cout << endl;
 		cout << "view normalized: ";
-		double_vec_print(view, 3);
+		N.vec_print(view, 3);
 		cout << endl;
 		}
 	
@@ -1312,7 +1333,7 @@ void scene::draw_text(const char *text,
 
 	if (f_v) {
 		cout << "offset: ";
-		double_vec_print(offset, 3);
+		N.vec_print(offset, 3);
 		cout << endl;
 		}
 
@@ -1324,20 +1345,20 @@ void scene::draw_text(const char *text,
 		ost << "\t\trotate<0,180,0>" << endl;
 		ost << "\t\trotate<90,0,0>" << endl;
 		ost << "\t\trotate<";
-		output_double(rad2deg(angles3[0]), ost);
+		N.output_double(N.rad2deg(angles3[0]), ost);
 		ost << ",0,0>" << endl;
 		ost << "\t\trotate<0, ";
-		output_double(rad2deg(angles3[1]), ost);
+		N.output_double(N.rad2deg(angles3[1]), ost);
 		ost << ",0>" << endl;
 		ost << "\t\trotate<0,0, ";
-		output_double(rad2deg(angles3[2]), ost);
+		N.output_double(N.rad2deg(angles3[2]), ost);
 		ost << ">" << endl;
 		ost << "\t\ttranslate<";
-		output_double(T3[0] + offset[0], ost);
+		N.output_double(T3[0] + offset[0], ost);
 		ost << ", ";
-		output_double(T3[1] + offset[1], ost);
+		N.output_double(T3[1] + offset[1], ost);
 		ost << ", ";
-		output_double(T3[2] + offset[2], ost);
+		N.output_double(T3[2] + offset[2], ost);
 		ost << ">" << endl;
 	ost << "\t\t}" << endl;
 		//pigment { BrightGold }
@@ -1356,6 +1377,7 @@ void scene::draw_planes_with_selection(
 // for instance color = "Orange transmit 0.5 "
 {
 	int i, j, h, s;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // planes" << endl;
@@ -1366,13 +1388,13 @@ void scene::draw_planes_with_selection(
 		j = s;
 		ost << "		plane{<";
 		for (h = 0; h < 3; h++) {
-			output_double(Plane_coords[j * 4 + h], ost);
+			N.output_double(Plane_coords[j * 4 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
 			}	
 		ost << ">, ";
-		output_double(Plane_coords[j * 4 + 3], ost);
+		N.output_double(Plane_coords[j * 4 + 3], ost);
 		ost << "}" << endl;
 		}
 	ost << endl;
@@ -1387,6 +1409,7 @@ void scene::draw_points_with_selection(
 // rad = 0.06 works
 {
 	int i, j, h, s;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // points" << endl;
@@ -1398,7 +1421,7 @@ void scene::draw_points_with_selection(
 		j = s;
 		ost << "		sphere{<";
 		for (h = 0; h < 3; h++) {
-			output_double(Point_coords[j * 3 + h], ost);
+			N.output_double(Point_coords[j * 3 + h], ost);
 			if (h < 2) {
 				ost << ", ";
 				}
@@ -1418,6 +1441,7 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 	const char *options, ostream &ost)
 {
 	int i, j, h, s;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // cubics" << endl;
@@ -1428,7 +1452,7 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 		ost << "		poly{3, <";
 
 		for (h = 0; h < 20; h++) {
-			output_double(Cubic_coords[j * 20 + h], ost);
+			N.output_double(Cubic_coords[j * 20 + h], ost);
 			if (h < 20 - 1) {
 				ost << ", ";
 				}
@@ -1449,6 +1473,7 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 	const char *options, ostream &ost)
 {
 	int i, j, h, s;
+	numerics N;
 		
 	ost << endl;
 	ost << "	union{ // quadrics" << endl;
@@ -1459,7 +1484,7 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 		ost << "		poly{2, <";
 
 		for (h = 0; h < 10; h++) {
-			output_double(Quadric_coords[j * 10 + h], ost);
+			N.output_double(Quadric_coords[j * 10 + h], ost);
 			if (h < 10 - 1) {
 				ost << ", ";
 				}
@@ -1487,6 +1512,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	int i;
 	double a, av;
 	double v[3];
+	numerics N;
 
 	if (f_v) {
 		cout << "scene::intersect_line_and_plane" << endl;
@@ -1577,17 +1603,17 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	if (f_vv) {
 		cout << "scene::intersect_line_and_plane "
 				"before Gauss elimination:" << endl;
-		print_system(M, 3, 4);
+		N.print_system(M, 3, 4);
 		}
 	
-	rk = Gauss_elimination(M, 3, 4,
+	rk = N.Gauss_elimination(M, 3, 4,
 			base_cols, TRUE /* f_complete */,
 			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "scene::intersect_line_and_plane "
 				"after Gauss elimination:" << endl;
-		print_system(M, 3, 4);
+		N.print_system(M, 3, 4);
 		}
 	
 
@@ -1626,6 +1652,7 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 	double M[9];
 	int i;
 	double v[3];
+	numerics N;
 
 	if (f_v) {
 		cout << "scene::intersect_line_and_line" << endl;
@@ -1675,17 +1702,17 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 	if (f_vv) {
 		cout << "scene::intersect_line_and_line "
 				"before Gauss elimination:" << endl;
-		print_system(M, 3, 3);
+		N.print_system(M, 3, 3);
 		}
 	
-	rk = Gauss_elimination(M, 3, 3,
+	rk = N.Gauss_elimination(M, 3, 3,
 			base_cols, TRUE /* f_complete */,
 			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "scene::intersect_line_and_line "
 				"after Gauss elimination:" << endl;
-		print_system(M, 3, 3);
+		N.print_system(M, 3, 3);
 		}
 	
 
@@ -1775,6 +1802,7 @@ void scene::map_a_line(int line1, int line2,
 	double direction[3], direction_step[3];
 	double line_pt[3];
 	int i, h;
+	numerics N;
 
 	if (f_v) {
 		cout << "map_a_line" << endl;
@@ -1782,9 +1810,9 @@ void scene::map_a_line(int line1, int line2,
 
 	nb_new_lines = 0;
 	nb_new_points = 0;
-	double_vec_copy(Line_coords + line_idx * 6, line_pt1_in, 3);
-	double_vec_copy(Line_coords + line_idx * 6 + 3, line_pt2_in, 3);
-	line_centered(line_pt1_in, line_pt2_in,
+	N.vec_copy(Line_coords + line_idx * 6, line_pt1_in, 3);
+	N.vec_copy(Line_coords + line_idx * 6 + 3, line_pt2_in, 3);
+	N.line_centered(line_pt1_in, line_pt2_in,
 			line_pt1, line_pt2, spread /* r */);
 	
 	for (i = 0; i < 3; i++) {
@@ -1836,75 +1864,76 @@ int scene::map_a_point(int line1, int line2,
 	double K3[4 * 4];
 	double K4[4 * 4];
 	int k1, k2, k3, i;
+	numerics N;
 
 	if (f_v) {
 		cout << "map_a_point" << endl;
 		}
 
-	double_vec_copy(Line_coords + line1 * 6, line1_pt1, 3);
+	N.vec_copy(Line_coords + line1 * 6, line1_pt1, 3);
 	line1_pt1[3] = 1.;
-	double_vec_copy(Line_coords + line1 * 6 + 3, line1_pt2, 3);
+	N.vec_copy(Line_coords + line1 * 6 + 3, line1_pt2, 3);
 	line1_pt2[3] = 1.;
 	
-	double_vec_copy(Line_coords + line2 * 6, line2_pt1, 3);
+	N.vec_copy(Line_coords + line2 * 6, line2_pt1, 3);
 	line2_pt1[3] = 1.;
-	double_vec_copy(Line_coords + line2 * 6 + 3, line2_pt2, 3);
+	N.vec_copy(Line_coords + line2 * 6 + 3, line2_pt2, 3);
 	line2_pt2[3] = 1.;
 
-	double_vec_copy(line1_pt1, M1, 4);
-	double_vec_copy(line1_pt2, M1 + 4, 4);
-	double_vec_copy(pt_in, M1 + 8, 3);
+	N.vec_copy(line1_pt1, M1, 4);
+	N.vec_copy(line1_pt2, M1 + 4, 4);
+	N.vec_copy(pt_in, M1 + 8, 3);
 	M1[8 + 3] = 1.;
 	if (f_vv) {
 		cout << "M1:" << endl;
-		print_system(M1, 3, 4);
+		N.print_system(M1, 3, 4);
 		}
 
-	double_vec_copy(line2_pt1, M2, 4);
-	double_vec_copy(line2_pt2, M2 + 4, 4);
-	double_vec_copy(pt_in, M2 + 8, 3);
+	N.vec_copy(line2_pt1, M2, 4);
+	N.vec_copy(line2_pt2, M2 + 4, 4);
+	N.vec_copy(pt_in, M2 + 8, 3);
 	M2[8 + 3] = 1.;
 	if (f_vv) {
 		cout << "M2:" << endl;
-		print_system(M1, 3, 4);
+		N.print_system(M1, 3, 4);
 		}
 
-	k1 = Null_space(M1, 3, 4, K1, 0 /* verbose_level */);
+	k1 = N.Null_space(M1, 3, 4, K1, 0 /* verbose_level */);
 	if (k1 != 1) {
 		cout << "map_a_point k1 != 1" << endl;
 		return FALSE;
 		}
 	if (f_vv) {
 		cout << "M1 after:" << endl;
-		print_system(M1, 3, 4);
+		N.print_system(M1, 3, 4);
 		cout << "K1:" << endl;
-		print_system(K1, 1, 4);
+		N.print_system(K1, 1, 4);
 		}
 
-	k2 = Null_space(M2, 3, 4, K2, 0 /* verbose_level */);
+	k2 = N.Null_space(M2, 3, 4, K2, 0 /* verbose_level */);
 	if (k2 != 1) {
 		cout << "map_a_point k2 != 1" << endl;
 		return FALSE;
 		}
 	if (f_vv) {
 		cout << "K2:" << endl;
-		print_system(K2, 1, 4);
+		N.print_system(K2, 1, 4);
 		}
 
-	double_vec_copy(K1, K3, 4);
-	double_vec_copy(K2, K3 + 4, 4);
-	k3 = Null_space(K3, 2, 4, K4, 0 /* verbose_level */);
+	N.vec_copy(K1, K3, 4);
+	N.vec_copy(K2, K3 + 4, 4);
+	k3 = N.Null_space(K3, 2, 4, K4, 0 /* verbose_level */);
 	if (k3 != 2) {
 		cout << "map_a_point k3 != 2" << endl;
 		return FALSE;
 		}
 	if (f_vv) {
 		cout << "K4:" << endl;
-		print_system(K4, 2, 4);
+		N.print_system(K4, 2, 4);
 		}
 
-	double_vec_normalize_from_back(K4, 4);
-	double_vec_normalize_from_back(K4 + 4, 4);
+	N.vec_normalize_from_back(K4, 4);
+	N.vec_normalize_from_back(K4 + 4, 4);
 	if (ABS(K4[3] - 1.) > 0.01 && ABS(K4[4 + 3] - 1.) > 0.01) {
 		cout << "K4 (1) and (2) are not affine points, "
 				"this is not good" << endl;
@@ -1914,7 +1943,7 @@ int scene::map_a_point(int line1, int line2,
 		for (i = 0; i < 4; i++) {
 			K4[i] = K4[i] + K4[4 + i];
 			}
-		double_vec_normalize_from_back(K4, 4);
+		N.vec_normalize_from_back(K4, 4);
 		if (ABS(K4[3] - 1.) > 0.01) {
 			cout << "after fixing, K4 (1) is not an affine point, "
 					"this is not good" << endl;
@@ -1925,7 +1954,7 @@ int scene::map_a_point(int line1, int line2,
 		for (i = 0; i < 4; i++) {
 			K4[4 + i] = K4[i] + K4[4 + i];
 			}
-		double_vec_normalize_from_back(K4 + 4, 4);
+		N.vec_normalize_from_back(K4 + 4, 4);
 		if (ABS(K4[4 + 3] - 1.) > 0.01) {
 			cout << "after fixing, K4 (2) is not an affine point, "
 					"this is not good" << endl;
@@ -2147,9 +2176,10 @@ void scene::rescale(int first_pt_idx, double rad_desired)
 {
 	int i;
 	double rad = 1., a;
+	numerics N;
 
 	for (i = first_pt_idx; i < nb_points; i++) {
-		a = orbiter::foundations::distance_from_origin(
+		a = N.distance_from_origin(
 				Point_coords + i * 3, 3);
 		if (i == first_pt_idx) {
 			rad = a;
@@ -2161,21 +2191,25 @@ void scene::rescale(int first_pt_idx, double rad_desired)
 			}
 		}
 	a = rad_desired / rad;
-	double_vec_scalar_multiple(Point_coords + first_pt_idx * 3,
+	N.vec_scalar_multiple(Point_coords + first_pt_idx * 3,
 			a, 3 * (nb_points - first_pt_idx));
 }
 
 double scene::euclidean_distance(int pt1, int pt2)
 {
 	double d;
-	d = distance_euclidean(Point_coords + pt1 * 3, Point_coords + pt2 * 3, 3);
+	numerics N;
+
+	d = N.distance_euclidean(Point_coords + pt1 * 3, Point_coords + pt2 * 3, 3);
 	return d;
 }
 
 double scene::distance_from_origin(int pt)
 {
 	double d;
-	d = orbiter::foundations::distance_from_origin(
+	numerics N;
+
+	d = N.distance_from_origin(
 			Point_coords[pt * 3 + 0],
 			Point_coords[pt * 3 + 1], Point_coords[pt * 3 + 2]);
 	return d;
@@ -2220,6 +2254,7 @@ void scene::hypercube(int n, double rad_desired)
 	double *Basis; // [n * 3];
 	double x[3];
 	double t, dt;
+	numerics Num;
 
 	int first_pt_idx;
 
@@ -2254,7 +2289,7 @@ void scene::hypercube(int n, double rad_desired)
 			}
 		}
 	for (i = 0; i < n; i++) {
-		make_unit_vector(Basis + i * 3, 3);
+		Num.make_unit_vector(Basis + i * 3, 3);
 		}
 
 	for (h = 0; h < N; h++) {
@@ -2479,6 +2514,7 @@ void scene::create_Hilbert_model(int verbose_level)
 	if (f_v) {
 		cout << "scene::create_Hilbert_model" << endl;
 	}
+	numerics N;
 	double p = 1.;
 	double m = -1.;
 	double px = p + 1;
@@ -2738,9 +2774,9 @@ void scene::create_Hilbert_model(int verbose_level)
 		};
 	double A4_inv[16];
 
-	matrix_double_inverse(A4, A4_inv, 4, 0 /* verbose_level*/);
+	N.matrix_double_inverse(A4, A4_inv, 4, 0 /* verbose_level*/);
 
-	substitute_cubic_linear(coeff_in, coeff_out, 
+	N.substitute_cubic_linear(coeff_in, coeff_out,
 			A4_inv, 0 /*verbose_level*/);
 
 	if (f_v) {
@@ -2854,7 +2890,7 @@ void scene::create_Hilbert_model(int verbose_level)
 			Line[5] = s1;
 			if (f_v) {
 				cout << "creating line " << i << " phi=" << phi << " ";
-				double_vec_print(Line, 6);
+				N.vec_print(Line, 6);
 				cout << endl;
 			}
 			if (line_pt_and_dir(Line, r)) {
@@ -2951,7 +2987,7 @@ void scene::create_affine_space(int q, int verbose_level)
 	if (f_v) {
 		cout << "scene::create_affine_space" << endl;
 	}
-
+	numerics N;
 	int x, y, z;
 	double half = 3.6 / sqrt(3);
 	double dx = 2 * half / (double) q;
@@ -2987,7 +3023,7 @@ void scene::create_affine_space(int q, int verbose_level)
 	for (x = 0; x < q; x++) {
 		for (y = 0; y < q; y++) {
 			for (z = 0; z < q; z++) {
-				double_vec_linear_combination3(
+				N.vec_linear_combination3(
 						-half + x * dx + dx_half, basis + 0,
 						-half + y * dx + dx_half, basis + 3,
 						-half + z * dx + dx_half, basis + 6,
