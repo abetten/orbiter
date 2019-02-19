@@ -444,8 +444,8 @@ int main(int argc, char **argv)
 
 		sims *Cent;
 
-		Cent = create_sims_from_generators_with_target_group_order_int(
-				A, gens, sz, 0 /* verbose_level */);
+		Cent = A->create_sims_from_generators_with_target_group_order_int(
+				gens, sz, 0 /* verbose_level */);
 		Cent->extract_strong_generators_in_order(*SG, tl,
 				0 /* verbose_level */);
 		cout << "strong generators for the centralizer are:" << endl;
@@ -580,7 +580,7 @@ int main(int argc, char **argv)
 			sims *Cent;
 			longinteger_object cent_go;
 
-			Cent = create_sims_for_centralizer_of_matrix(A,
+			Cent = A->create_sims_for_centralizer_of_matrix(
 					Elt, verbose_level);
 			Cent->group_order(cent_go);
 

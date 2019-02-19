@@ -216,7 +216,7 @@ void strong_generators::init_from_permutation_representation(
 	
 	sims *S;
 
-	S = create_sims_from_generators_with_target_group_order_int(A, 
+	S = A->create_sims_from_generators_with_target_group_order_int(
 			nice_gens, group_order, 0 /* verbose_level */);
 	
 	init_from_sims(S, 0 /* verbose_level */);
@@ -900,7 +900,7 @@ sims *strong_generators::create_sims(int verbose_level)
 				"gens == NULL" << endl;
 		exit(1);
 		}
-	S = create_sims_from_generators_with_target_group_order_factorized(A, 
+	S = A->create_sims_from_generators_with_target_group_order_factorized(
 		gens, tl, A->base_len, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -925,8 +925,7 @@ sims *strong_generators::create_sims_in_different_action(
 				"gens == NULL" << endl;
 		exit(1);
 		}
-	S = create_sims_from_generators_with_target_group_order_factorized(
-		A_given,
+	S = A_given->create_sims_from_generators_with_target_group_order_factorized(
 		gens, tl, A->base_len,
 		0 /* verbose_level */);
 

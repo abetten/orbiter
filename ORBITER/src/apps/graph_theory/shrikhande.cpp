@@ -164,7 +164,7 @@ void do_it(int verbose_level)
 	sims *G;
 
 
-	G = create_sims_from_generators_with_target_group_order_int(A, 
+	G = A->create_sims_from_generators_with_target_group_order_int(
 		gens_G, 16, verbose_level);
 
 	G->group_order(go);

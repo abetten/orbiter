@@ -2060,8 +2060,8 @@ void test18(int verbose_level)
 	sims *G;
 	longinteger_object go;
 
-	G = create_sims_from_generators_with_target_group_order_int(
-			A, gens, 68, verbose_level);
+	G = A->create_sims_from_generators_with_target_group_order_int(
+			gens, 68, verbose_level);
 
 	cout << "sims created" << endl;
 	G->group_order(go);
@@ -2155,8 +2155,8 @@ void test19(int verbose_level)
 	sims *G;
 	longinteger_object go;
 
-	G = create_sims_from_generators_without_target_group_order(
-		A, gens, verbose_level);
+	G = A->create_sims_from_generators_without_target_group_order(
+		gens, verbose_level);
 
 	cout << "sims created" << endl;
 	G->group_order(go);
@@ -2252,7 +2252,7 @@ void instant_insanity(int verbose_level)
 		}
 	Gens.print(cout);
 	
-	G = create_sims_from_generators_without_target_group_order(A, 
+	G = A->create_sims_from_generators_without_target_group_order(
 		&Gens, verbose_level);
 	G->group_order(go);
 	cout << "Group order is " << go << endl;
@@ -2472,7 +2472,7 @@ void test_bricks(int verbose_level)
 	
 	sims *S;
 
-	S = create_sims_from_generators_without_target_group_order(A, 
+	S = A->create_sims_from_generators_without_target_group_order(
 		&gens, verbose_level);
 
 	S->group_order(Go);

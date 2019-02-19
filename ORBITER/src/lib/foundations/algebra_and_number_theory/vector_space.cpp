@@ -287,7 +287,6 @@ int vector_space_rank_point_callback(int *v, void *data)
 
 }
 
-}
-}
+}}
 
 

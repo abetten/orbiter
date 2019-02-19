@@ -1143,29 +1143,6 @@ void choose_random_generator_derived_group(sims *G, int *Elt,
 	int verbose_level);
 
 
-// in sims_global.C:
-sims *create_sims_from_generators_with_target_group_order_factorized(
-		action *A, 
-		vector_ge *gens, int *tl, int len, int verbose_level);
-sims *create_sims_from_generators_with_target_group_order(action *A, 
-		vector_ge *gens, longinteger_object &target_go, 
-		int verbose_level);
-sims *create_sims_from_generators_with_target_group_order_int(action *A, 
-	vector_ge *gens, int target_go, int verbose_level);
-sims *create_sims_from_generators_without_target_group_order(action *A, 
-	vector_ge *gens, int verbose_level);
-sims *create_sims_from_single_generator_without_target_group_order(action *A, 
-	int *Elt, int verbose_level);
-sims *create_sims_from_generators_randomized(action *A, 
-	vector_ge *gens, int f_target_go, 
-	longinteger_object &target_go, int verbose_level);
-sims *create_sims_for_centralizer_of_matrix(action *A, 
-	int *Mtx, int verbose_level);
-
-
-
-
-
 
 
 

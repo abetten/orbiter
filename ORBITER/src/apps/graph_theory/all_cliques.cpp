@@ -167,6 +167,7 @@ void use_group(const char *fname, colored_graph *CG,
 	int *Adj;
 	action *Aut;
 	longinteger_object ago;
+	nauty_interface Nauty;
 
 	cout << "computing automorphism group of the graph:" << endl;
 	//Aut = create_automorphism_group_of_colored_graph_object(
@@ -184,7 +185,7 @@ void use_group(const char *fname, colored_graph *CG,
 		}
 
 	cout << "before create_automorphism_group_of_graph" << endl;
-	Aut = create_automorphism_group_of_graph(
+	Aut = Nauty.create_automorphism_group_of_graph(
 			Adj, CG->nb_points, verbose_level);
 		// in ACTION/action_global.C
 

@@ -325,12 +325,14 @@ void incidence_structure_compute_TDO_TDA(incidence_structure *Inc,
 
 	action *A;
 	longinteger_object ago;
+	nauty_interface Nauty;
+
 	
 	if (f_vv) {
 		cout << "before create_automorphism_group_of_"
 				"incidence_structure" << endl;
 		}
-	A = create_automorphism_group_of_incidence_structure(
+	A = Nauty.create_automorphism_group_of_incidence_structure(
 			Inc, 
 			verbose_level - 3);
 	A->group_order(ago);
@@ -386,8 +388,9 @@ int incidence_structure_find_blocking_set(
 
 
 	action *A;
+	nauty_interface Nauty;
 
-	A = create_automorphism_group_of_incidence_structure(
+	A = Nauty.create_automorphism_group_of_incidence_structure(
 		Inc, verbose_level);
 
 

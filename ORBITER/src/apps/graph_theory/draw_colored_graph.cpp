@@ -319,6 +319,7 @@ int main(int argc, char **argv)
 		int *Adj;
 		action *Aut;
 		longinteger_object ago;
+		nauty_interface Nauty;
 
 		cout << "computing automorphism group of the graph:" << endl;
 		//Aut = create_automorphism_group_of_colored_graph_object(
@@ -334,7 +335,7 @@ int main(int argc, char **argv)
 					}
 				}
 			}
-		Aut = create_automorphism_group_of_graph(Adj,
+		Aut = Nauty.create_automorphism_group_of_graph(Adj,
 				CG->nb_points, verbose_level);
 
 		Aut->group_order(ago);	
@@ -575,6 +576,7 @@ int main(int argc, char **argv)
 		int *Adj;
 		action *Aut;
 		longinteger_object ago;
+		nauty_interface Nauty;
 
 		cout << "computing automorphism group of the graph:" << endl;
 		//Aut = create_automorphism_group_of_colored_graph_object(
@@ -590,7 +592,7 @@ int main(int argc, char **argv)
 					}
 				}
 			}
-		Aut = create_automorphism_group_of_graph(Adj,
+		Aut = Nauty.create_automorphism_group_of_graph(Adj,
 				CG->nb_points, verbose_level);
 
 		Aut->group_order(ago);	

@@ -346,7 +346,11 @@ void hadamard::init(int n, int f_draw,
 		cout << "computing automorphism group of "
 				"uncolored graph:" << endl;
 		}
-	A = create_automorphism_group_of_graph_bitvec(
+
+	nauty_interface Nauty;
+
+
+	A = Nauty.create_automorphism_group_of_graph_bitvec(
 		CG->nb_points, bitvector_adjacency, 
 		verbose_level);
 	

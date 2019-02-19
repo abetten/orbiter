@@ -701,8 +701,8 @@ void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 	//Gen->get_stabilizer(gens, tl, depth, orbit_idx, verbose_level);
 
 	sims *S;
-	S = create_sims_from_generators_with_target_group_order_factorized(
-		A, Strong_gens->gens, Strong_gens->tl, A->base_len,
+	S = A->create_sims_from_generators_with_target_group_order_factorized(
+		Strong_gens->gens, Strong_gens->tl, A->base_len,
 		verbose_level);
 	longinteger_object go;
 

@@ -303,7 +303,7 @@ int main(int argc, char **argv)
 				cout << " please use option -n <n>" << endl;
 				exit(1);
 				}
-			do_embed_orthogonal(orthogonal_epsilon, n, F, 
+			F->do_embed_orthogonal(orthogonal_epsilon, n,
 				the_set_in, the_set_out, set_size_in, verbose_level - 1);
 			set_size_out = set_size_in;
 			sprintf(fname_out, "%s_embedded.txt", fname_base);
@@ -313,7 +313,7 @@ int main(int argc, char **argv)
 				cout << " please use option -n <n>" << endl;
 				exit(1);
 				}
-			do_embed_points(n, F, 
+			F->do_embed_points(n,
 				the_set_in, the_set_out, set_size_in, verbose_level - 1);
 			set_size_out = set_size_in;
 			sprintf(fname_out, "%s_embedded.txt", fname_base);
@@ -324,7 +324,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_cone_over(n, F, 
+		F->do_cone_over(n,
 			the_set_in, set_size_in, the_set_out, set_size_out, 
 			verbose_level - 1);
 		sprintf(fname_out, "%s_cone.txt", fname_base);
@@ -340,7 +340,7 @@ int main(int argc, char **argv)
 		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 		
-		do_andre(FQ, F, 
+		FQ->do_andre(F,
 			the_set_in, set_size_in, 
 			the_set_out, set_size_out, 
 			verbose_level - 1);
@@ -355,7 +355,7 @@ int main(int argc, char **argv)
 				cout << " please use option -n <n>" << endl;
 				exit(1);
 				}
-			do_print_lines_in_PG(n, F, 
+			F->do_print_lines_in_PG(n,
 				the_set_in, set_size_in);
 			}
 		else if (f_points_in_PG) {
@@ -363,7 +363,7 @@ int main(int argc, char **argv)
 				cout << " please use option -n <n>" << endl;
 				exit(1);
 				}
-			do_print_points_in_PG(n, F, 
+			F->do_print_points_in_PG(n,
 				the_set_in, set_size_in);
 			}
 		else if (f_points_on_grassmannian) {
@@ -375,7 +375,7 @@ int main(int argc, char **argv)
 				cout << " please use option -k <k>" << endl;
 				exit(1);
 				}
-			do_print_points_on_grassmannian(n, k, F, 
+			F->do_print_points_on_grassmannian(n, k,
 				the_set_in, set_size_in);
 			}
 		else if (f_orthogonal) {
@@ -383,7 +383,7 @@ int main(int argc, char **argv)
 				cout << " please use option -n <n>" << endl;
 				exit(1);
 				}
-			do_print_points_in_orthogonal_space(orthogonal_epsilon, n, F, 
+			F->do_print_points_in_orthogonal_space(orthogonal_epsilon, n,
 				the_set_in, set_size_in, verbose_level);
 			}
 		}
@@ -405,7 +405,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_line_type(n, F, 
+		F->do_line_type(n,
 			the_set_in, set_size_in, 
 			f_show, verbose_level);
 		}
@@ -417,7 +417,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_plane_type(n, F, 
+		F->do_plane_type(n,
 			the_set_in, set_size_in, 
 			intersection_type, highest_intersection_number, verbose_level);
 
@@ -451,7 +451,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_plane_type_failsafe(n, F, 
+		F->do_plane_type_failsafe(n,
 			the_set_in, set_size_in, 
 			verbose_level);
 
@@ -466,7 +466,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_conic_type(n, F, f_randomized, nb_times, 
+		F->do_conic_type(n, f_randomized, nb_times,
 			the_set_in, set_size_in, 
 			intersection_type, highest_intersection_number, verbose_level);
 			// in GALOIS/geometric_operations.C
@@ -486,7 +486,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_m_subspace_type(n, F, n - 1, 
+		F->do_m_subspace_type(n, n - 1,
 			the_set_in, set_size_in, 
 			f_show, verbose_level);
 		}
@@ -513,20 +513,20 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_blocking_set_family_3(n, F, 
+		F->do_blocking_set_family_3(n,
 			the_set_in, set_size_in, 
 			the_set_out, set_size_out, 
 			verbose_level);
 		sprintf(fname_out, "%s_bsf3.txt", fname_base);
 		}
 	else if (f_test_diagonals) {
-		do_test_diagonal_line(n, F, 
+		F->do_test_diagonal_line(n,
 			the_set_in, set_size_in, 
 			test_diagonals_fname, 
 			verbose_level);
 		}
 	else if (f_klein) {
-		do_Klein_correspondence(n, F, 
+		F->do_Klein_correspondence(n,
 			the_set_in, set_size_in, 
 			the_set_out, set_size_out, 
 			verbose_level);
@@ -537,7 +537,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_draw_points_in_plane(F, 
+		F->do_draw_points_in_plane(
 			the_set_in, set_size_in, fname_base, f_point_labels,
 			f_embedded, f_sideways, 
 			verbose_level);
@@ -560,7 +560,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		do_ideal(n, F, 
+		F->do_ideal(n,
 			the_set_in, set_size_in, ideal_degree, 
 			verbose_level);
 		}

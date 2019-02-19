@@ -456,6 +456,58 @@ void subfield_structure::Adelaide_hyperoval(
 
 }
 
+void subfield_structure::create_adelaide_hyperoval(
+	char *fname, int &nb_pts, int *&Pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F = Fq;
+	int q = F->q;
+
+	if (f_v) {
+		cout << "subfield_structure::create_adelaide_hyperoval" << endl;
+		}
+
+	Adelaide_hyperoval(Pts, nb_pts, verbose_level);
+	sprintf(fname, "adelaide_hyperoval_q%d.txt", q);
+
+
+	if (f_v) {
+		int i;
+		int n = 2, d = n + 1;
+		int *v;
+		projective_space *P;
+
+		v = NEW_int(d);
+		P = NEW_OBJECT(projective_space);
+
+
+		P->init(n, F,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
+		cout << "i : point : projective rank" << endl;
+		for (i = 0; i < nb_pts; i++) {
+			P->unrank_point(v, Pts[i]);
+			if (f_v) {
+				cout << setw(4) << i << " : ";
+				int_vec_print(cout, v, d);
+				cout << endl;
+				}
+			}
+		FREE_int(v);
+		FREE_OBJECT(P);
+		}
+
+	if (!test_if_set_with_return_value(Pts, nb_pts)) {
+		cout << "subfield_structure::create_adelaide_hyperoval "
+				"the set is not a set, "
+				"something is wrong" << endl;
+		exit(1);
+		}
+
+}
+
+
 
 
 }}
