@@ -20,7 +20,6 @@ MODULES = \
 	flag.o \
 	geo_parameter.o \
 	geometric_object.o \
-	geometric_operations.o \
 	grassmann.o \
 	grassmann_embedded.o \
 	hermitian.o \

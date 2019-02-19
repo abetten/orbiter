@@ -222,9 +222,10 @@ void canonical_form(int *Adj, int *Adj2,
 {
 	//action *A;
 	int i, j, ii, jj, e, nb_e;
+	nauty_interface Nauty;
 	
 
-	A = create_automorphism_group_and_canonical_labeling_of_graph(
+	A = Nauty.create_automorphism_group_and_canonical_labeling_of_graph(
 			Adj, n, labeling, verbose_level);
 	for (i = 0; i < n; i++) {
 		ii = labeling[i];
@@ -250,7 +251,7 @@ void canonical_form(int *Adj, int *Adj2,
 	delete A;
 
 	// and now we compute the automorphism group of the canonical graph:
-	A = create_automorphism_group_of_graph(Adj2, n, verbose_level);
+	A = Nauty.create_automorphism_group_of_graph(Adj2, n, verbose_level);
 	
 	cout << "generators for the automorphism group:" << endl;
 	A->Strong_gens->print_generators();

@@ -248,8 +248,9 @@ int main(int argc, const char **argv)
 
 				action *Aut;
 				longinteger_object ago;
+				nauty_interface Nauty;
 
-				Aut = create_automorphism_group_of_block_system(
+				Aut = Nauty.create_automorphism_group_of_block_system(
 					A->degree /* nb_points */,
 					orbit_length /* nb_blocks */,
 					depth /* block_size */, Orbit,
@@ -291,8 +292,9 @@ int main(int argc, const char **argv)
 
 				action *Aut;
 				longinteger_object ago;
+				nauty_interface Nauty;
 
-				Aut = create_automorphism_group_of_collection_of_two_block_systems(
+				Aut = Nauty.create_automorphism_group_of_collection_of_two_block_systems(
 					A->degree /* nb_points */,
 					orbit_length1 /* nb_blocks */,
 					depth /* block_size */, Orbit1,

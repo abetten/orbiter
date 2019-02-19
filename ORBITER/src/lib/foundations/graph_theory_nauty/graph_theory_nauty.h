@@ -30,7 +30,7 @@ void nauty_interface_int(int v, int b, int *X, int nb_inc,
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
 	int *Transversal_length, int &Ago);
-void nauty_interface(int v, int b, int *X, int nb_inc, 
+void nauty_interface_low_level(int v, int b, int *X, int nb_inc,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 

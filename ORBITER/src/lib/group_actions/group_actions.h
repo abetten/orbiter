@@ -68,7 +68,7 @@ class action_on_set_partitions;
 class object_in_projective_space_with_action;
 class data_input_stream;
 class action_pointer_table;
-
+class nauty_interface;
 
 //! enumeration to distinguish between the various types of group actions
 

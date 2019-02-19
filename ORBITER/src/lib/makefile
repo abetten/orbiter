@@ -86,7 +86,6 @@ MODULES= \
 		foundations/geometry/flag.o \
 		foundations/geometry/geo_parameter.o \
 		foundations/geometry/geometric_object.o \
-		foundations/geometry/geometric_operations.o \
 		foundations/geometry/grassmann.o \
 		foundations/geometry/grassmann_embedded.o \
 		foundations/geometry/hermitian.o \
@@ -153,12 +152,14 @@ MODULES= \
 		group_actions/actions/action_induce.o \
 		group_actions/actions/action_init.o \
 		group_actions/actions/action_pointer_table.o \
+		group_actions/actions/action_projective.o \
 		group_actions/actions/backtrack.o \
 		group_actions/actions/interface.o \
 		group_actions/actions/interface_direct_product.o \
 		group_actions/actions/interface_matrix_group.o \
 		group_actions/actions/interface_perm_group.o \
 		group_actions/actions/interface_wreath_product.o \
+		group_actions/actions/nauty_interface.o \
 		group_actions/data_structures/data_input_stream.o \
 		group_actions/data_structures/group.o \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
@@ -181,7 +182,6 @@ MODULES= \
 		group_actions/groups/sims.o \
 		group_actions/groups/sims2.o \
 		group_actions/groups/sims3.o \
-		group_actions/groups/sims_global.o \
 		group_actions/groups/strong_generators.o \
 		group_actions/groups/strong_generators_groups.o \
 		group_actions/groups/subgroup.o \

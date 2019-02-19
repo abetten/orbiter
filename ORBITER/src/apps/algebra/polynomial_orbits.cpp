@@ -405,8 +405,8 @@ int main(int argc, const char **argv)
 			int canonical_pt;
 
 			cout << "before set_stabilizer_in_projective_space" << endl;
-			SG = set_stabilizer_in_projective_space(
-				A, HPD->P, 
+			SG = A->set_stabilizer_in_projective_space(
+				HPD->P,
 				Pts, nb_pts,
 				canonical_pt, NULL,
 				FALSE, NULL, 
@@ -590,8 +590,8 @@ int main(int argc, const char **argv)
 			strong_generators *SG2;
 			longinteger_object stab_go;
 			int canonical_pt;
-			SG2 = set_stabilizer_in_projective_space(
-				A, HPD->P,
+			SG2 = A->set_stabilizer_in_projective_space(
+				HPD->P,
 				Pts, nb_pts, canonical_pt, NULL,
 				FALSE, NULL,
 				verbose_level + 3);

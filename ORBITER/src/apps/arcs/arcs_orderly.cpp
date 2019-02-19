@@ -314,8 +314,8 @@ void extend(int arc_size, int verbose_level)
 	if (f_vv) {
 		cout << "computing stabilizer of the arc:" << endl;
 	}
-	gens = set_stabilizer_in_projective_space(
-		A_linear, P, 
+	gens = A_linear->set_stabilizer_in_projective_space(
+		P,
 		Arc, arc_size, canonical_pt, canonical_set, 
 		FALSE, NULL, 
 		verbose_level - 2);

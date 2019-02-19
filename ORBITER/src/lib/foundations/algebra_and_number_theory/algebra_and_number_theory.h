@@ -724,6 +724,139 @@ public:
 	void O4_find_tangent_plane(
 		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
 		int *tangent_plane, int verbose_level);
+	void do_cone_over(int n,
+		int *set_in, int set_size_in, int *&set_out, int &set_size_out,
+		int verbose_level);
+	void do_blocking_set_family_3(int n,
+		int *set_in, int set_size,
+		int *&the_set_out, int &set_size_out,
+		int verbose_level);
+	void create_hyperoval(
+		int f_translation, int translation_exponent,
+		int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_subiaco_oval(
+		int f_short,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_subiaco_hyperoval(
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_ovoid(
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_Baer_substructure(int n,
+		finite_field *Fq,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	// the big field FQ is given
+	void create_BLT_from_database(int f_embedded,
+		int BLT_k,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_orthogonal(int epsilon, int n,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_hermitian(int n,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_cubic(
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_twisted_cubic(
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_elliptic_curve(
+		int elliptic_curve_b, int elliptic_curve_c,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_ttp_code(finite_field *Fq,
+		int f_construction_A, int f_hyperoval, int f_construction_B,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	// this is FQ
+	void create_unital_XXq_YZq_ZYq(
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_whole_space(int n,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_hyperplane(int n,
+		int pt,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_segre_variety(int a, int b,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_Maruta_Hamada_arc(
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	void create_desarguesian_line_spread_in_PG_3_q(
+		finite_field *Fq,
+		int f_embedded_in_PG_4_q,
+		char *fname, int &nb_lines, int *&Lines,
+		int verbose_level);
+	// this is FQ
+	void do_Klein_correspondence(int n,
+		int *set_in, int set_size,
+		int *&the_set_out, int &set_size_out,
+		int verbose_level);
+	void do_m_subspace_type(int n, int m,
+		int *set, int set_size,
+		int f_show, int verbose_level);
+	void do_m_subspace_type_fast(int n, int m,
+		int *set, int set_size,
+		int f_show, int verbose_level);
+	void do_line_type(int n,
+		int *set, int set_size,
+		int f_show, int verbose_level);
+	void do_plane_type(int n,
+		int *set, int set_size,
+		int *&intersection_type, int &highest_intersection_number,
+		int verbose_level);
+	void do_plane_type_failsafe(int n,
+		int *set, int set_size,
+		int verbose_level);
+	void do_conic_type(int n,
+		int f_randomized, int nb_times,
+		int *set, int set_size,
+		int *&intersection_type, int &highest_intersection_number,
+		int verbose_level);
+	void do_test_diagonal_line(int n,
+		int *set_in, int set_size,
+		char *fname_orbits_on_quadrangles,
+		int verbose_level);
+	void do_andre(finite_field *Fq,
+		int *the_set_in, int set_size_in,
+		int *&the_set_out, int &set_size_out,
+		int verbose_level);
+	// this is FQ
+	void do_print_lines_in_PG(int n,
+		int *set_in, int set_size);
+	void do_print_points_in_PG(int n,
+		int *set_in, int set_size);
+	void do_print_points_in_orthogonal_space(
+		int epsilon, int n,
+		int *set_in, int set_size, int verbose_level);
+	void do_print_points_on_grassmannian(
+		int n, int k,
+		int *set_in, int set_size);
+	void do_embed_orthogonal(
+		int epsilon, int n,
+		int *set_in, int *&set_out, int set_size,
+		int verbose_level);
+	void do_embed_points(int n,
+		int *set_in, int *&set_out, int set_size,
+		int verbose_level);
+	void do_draw_points_in_plane(
+		int *set, int set_size,
+		const char *fname_base, int f_point_labels,
+		int f_embedded, int f_sideways,
+		int verbose_level);
+	void do_ideal(int n,
+		int *set_in, int set_size, int degree,
+		int verbose_level);
 
 
 	// #########################################################################
@@ -1675,6 +1808,9 @@ public:
 		int verbose_level);
 	void Adelaide_hyperoval(
 			int *&Pts, int &nb_pts, int verbose_level);
+	void create_adelaide_hyperoval(
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
 
 };
 

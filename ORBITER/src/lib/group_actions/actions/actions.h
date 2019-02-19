@@ -536,6 +536,22 @@ public:
 		int f_semilinear,
 		int f_basis, int verbose_level);
 
+	sims *create_sims_from_generators_with_target_group_order_factorized(
+		vector_ge *gens, int *tl, int len, int verbose_level);
+	sims *create_sims_from_generators_with_target_group_order_int(
+		vector_ge *gens, int target_go, int verbose_level);
+	sims *create_sims_from_generators_with_target_group_order(
+		vector_ge *gens, longinteger_object &target_go,
+		int verbose_level);
+	sims *create_sims_from_generators_without_target_group_order(
+		vector_ge *gens, int verbose_level);
+	sims *create_sims_from_single_generator_without_target_group_order(
+		int *Elt, int verbose_level);
+	sims *create_sims_from_generators_randomized(
+		vector_ge *gens, int f_target_go, longinteger_object &target_go,
+		int verbose_level);
+	sims *create_sims_for_centralizer_of_matrix(
+			int *Mtx, int verbose_level);
 
 	
 	// action_induce.C:
@@ -760,6 +776,21 @@ public:
 	void random_element(sims *S, int *Elt, 
 		int verbose_level);
 
+
+	// in action_projective.cpp:
+	strong_generators *set_stabilizer_in_projective_space(
+		projective_space *P,
+		int *set, int set_size, int &canonical_pt,
+		int *canonical_set_or_NULL,
+		int f_save_incma_in_and_out,
+		const char *save_incma_in_and_out_prefix,
+		int verbose_level);
+	int reverse_engineer_semilinear_map(
+		projective_space *P,
+		int *Elt, int *Mtx, int &frobenius,
+		int verbose_level);
+	// uses the function A->element_image_of
+
 	// in backtrack.C:
 	int is_minimal(
 		int size, int *set, int &backtrack_level, 
@@ -848,64 +879,6 @@ void lift_generators_to_subfield_structure(
 	action *Aq, action *AQ, 
 	strong_generators *&Strong_gens, 
 	int verbose_level);
-#if 0
-action *create_automorphism_group_of_graph(
-	int n, int *Adj, 
-	int verbose_level);
-#endif
-action *create_automorphism_group_of_colored_graph_object(
-	colored_graph *CG, int verbose_level);
-action *create_automorphism_group_of_colored_graph(
-	int n, int f_bitvec, uchar *Adj_bitvec, int *Adj, 
-	int *vertex_colors, 
-	int verbose_level);
-action *create_automorphism_group_of_graph_bitvec(
-	int n, uchar *Adj_bitvec, 
-	int verbose_level);
-action *create_automorphism_group_of_graph_with_partition_and_labeling(
-	int n, 
-	int f_bitvector, uchar *Adj_bitvec, int *Adj, 
-	int nb_parts, int *parts, 
-	int *labeling, 
-	int verbose_level);
-void create_incidence_matrix_of_graph(int *Adj, int n, 
-	int *&M, int &nb_rows, int &nb_cols, int verbose_level);
-action *create_automorphism_group_of_graph(int *Adj, 
-	int n, int verbose_level);
-action *create_automorphism_group_and_canonical_labeling_of_graph(
-	int *Adj, int n, int *labeling, int verbose_level);
-// labeling[n]
-action *create_automorphism_group_of_block_system(
-	int nb_points, int nb_blocks, int block_size, int *Blocks, 
-	int verbose_level);
-action *create_automorphism_group_of_collection_of_two_block_systems(
-	int nb_points,
-	int nb_blocks1, int block_size1, int *Blocks1,
-	int nb_blocks2, int block_size2, int *Blocks2,
-	int verbose_level);
-action *create_automorphism_group_of_incidence_matrix(
-	int m, int n, int *Mtx, 
-	int verbose_level);
-action *create_automorphism_group_of_incidence_structure(
-	incidence_structure *Inc, 
-	int verbose_level);
-action *create_automorphism_group_of_incidence_structure_low_level(
-	int m, int n, int nb_inc, int *X, 
-	int verbose_level);
-action *create_automorphism_group_of_incidence_structure_with_partition(
-	int m, int n, int nb_inc, int *X, int *partition,
-	int verbose_level);
-void test_self_dual_self_polar(int input_no, 
-	int m, int n, int nb_inc, int *X, 
-	int &f_self_dual, int &f_self_polar, 
-	int verbose_level);
-void do_self_dual_self_polar(int input_no, 
-	int m, int n, int nb_inc, int *X, 
-	int &f_self_dual, int &f_self_polar, 
-	int verbose_level);
-void add_configuration_graph(ofstream &g, 
-	int m, int n, int nb_inc, int *X, int f_first, 
-	int verbose_level);
 // O4_model:
 void O4_isomorphism_2to4_embedded(action *A4, 
 	action *A5, finite_field *Fq, 
@@ -922,17 +895,6 @@ void O4_to_O5(action *A4, action *A5,
 void print_4x4_as_2x2(action *A2, 
 	finite_field *Fq, int *mtx4x4);
 
-int reverse_engineer_semilinear_map(action *A, 
-	projective_space *P, 
-	int *Elt, int *Mtx, int &frobenius, 
-	int verbose_level);
-strong_generators *set_stabilizer_in_projective_space(
-	action *A_linear, projective_space *P, 
-	int *set, int set_size, int &canonical_pt, 
-	int *canonical_set_or_NULL, 
-	int f_save_incma_in_and_out, 
-	const char *save_incma_in_and_out_prefix, 
-	int verbose_level);
 void projective_space_init_line_action(projective_space *P, 
 	action *A_points, action *&A_on_lines, 
 	int verbose_level);
@@ -1308,7 +1270,70 @@ void wreath_product_group_element_print_verbose(action &A,
 void wreath_product_group_print_point(action &A,
 	int a, ostream &ost);
 
+// #############################################################################
+// nauty_interface.cpp:
+// #############################################################################
 
+
+class nauty_interface {
+public:
+	nauty_interface();
+	~nauty_interface();
+	action *create_automorphism_group_of_colored_graph_object(
+		colored_graph *CG, int verbose_level);
+	action *create_automorphism_group_of_colored_graph(
+		int n, int f_bitvec, uchar *Adj_bitvec, int *Adj,
+		int *vertex_colors,
+		int verbose_level);
+	action *create_automorphism_group_of_graph_bitvec(
+		int n, uchar *Adj_bitvec,
+		int verbose_level);
+	action *create_automorphism_group_of_graph_with_partition_and_labeling(
+		int n,
+		int f_bitvector, uchar *Adj_bitvec, int *Adj,
+		int nb_parts, int *parts,
+		int *labeling,
+		int verbose_level);
+	void create_incidence_matrix_of_graph(int *Adj, int n,
+		int *&M, int &nb_rows, int &nb_cols, int verbose_level);
+	action *create_automorphism_group_of_graph(int *Adj,
+		int n, int verbose_level);
+	action *create_automorphism_group_and_canonical_labeling_of_graph(
+		int *Adj, int n, int *labeling, int verbose_level);
+	// labeling[n]
+	action *create_automorphism_group_of_block_system(
+		int nb_points, int nb_blocks, int block_size, int *Blocks,
+		int verbose_level);
+	action *create_automorphism_group_of_collection_of_two_block_systems(
+		int nb_points,
+		int nb_blocks1, int block_size1, int *Blocks1,
+		int nb_blocks2, int block_size2, int *Blocks2,
+		int verbose_level);
+	action *create_automorphism_group_of_incidence_matrix(
+		int m, int n, int *Mtx,
+		int verbose_level);
+	action *create_automorphism_group_of_incidence_structure(
+		incidence_structure *Inc,
+		int verbose_level);
+	action *create_automorphism_group_of_incidence_structure_low_level(
+		int m, int n, int nb_inc, int *X,
+		int verbose_level);
+	action *create_automorphism_group_of_incidence_structure_with_partition(
+		int m, int n, int nb_inc, int *X, int *partition,
+		int verbose_level);
+	void test_self_dual_self_polar(int input_no,
+		int m, int n, int nb_inc, int *X,
+		int &f_self_dual, int &f_self_polar,
+		int verbose_level);
+	void do_self_dual_self_polar(int input_no,
+		int m, int n, int nb_inc, int *X,
+		int &f_self_dual, int &f_self_polar,
+		int verbose_level);
+	void add_configuration_graph(ofstream &g,
+		int m, int n, int nb_inc, int *X, int f_first,
+		int verbose_level);
+
+};
 
 }}
 

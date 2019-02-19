@@ -190,8 +190,9 @@ int main(int argc, char **argv)
 
 
 		action *Aut2;
+		nauty_interface Nauty;
 
-		Aut2 = create_automorphism_group_of_graph(Adj2, sz, verbose_level);
+		Aut2 = Nauty.create_automorphism_group_of_graph(Adj2, sz, verbose_level);
 		cout << "The automorphism group of the distance graph has order ";
 		longinteger_object ago2;
 		Aut2->group_order(ago2);

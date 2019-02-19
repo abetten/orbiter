@@ -359,7 +359,7 @@ int main(int argc, const char **argv)
 	F->init_override_polynomial(q, poly, 0);
 	
 	if (f_hyperoval) {
-		create_hyperoval(F, 
+		F->create_hyperoval(
 			f_translation, translation_exponent, 
 			f_Segre, f_Payne, f_Cherowitzo, f_OKeefe_Penttila, 
 			fname, nb_pts, Pts, 
@@ -371,7 +371,7 @@ int main(int argc, const char **argv)
 
 		}
 	else if (f_subiaco_oval) {
-		create_subiaco_oval(F, 
+		F->create_subiaco_oval(
 			f_short, 
 			fname, nb_pts, Pts, 
 			verbose_level);
@@ -384,7 +384,7 @@ int main(int argc, const char **argv)
 
 		}
 	else if (f_subiaco_hyperoval) {
-		create_subiaco_hyperoval(F, 
+		F->create_subiaco_hyperoval(
 			fname, nb_pts, Pts, 
 			verbose_level);
 			// ACTION/geometric_object.C
@@ -405,7 +405,7 @@ int main(int argc, const char **argv)
 		S = NEW_OBJECT(subfield_structure);
 		S->init(FQ, F, verbose_level);
 		
-		create_adelaide_hyperoval(S, 
+		S->create_adelaide_hyperoval(
 			fname, nb_pts, Pts, 
 			verbose_level);
 			// ACTION/geometric_object.C
@@ -419,7 +419,7 @@ int main(int argc, const char **argv)
 		FREE_OBJECT(FQ);
 		}
 	else if (f_BLT_database) {
-		create_BLT_from_database(f_BLT_in_PG /* f_embedded */, F, BLT_k, 
+		F->create_BLT_from_database(f_BLT_in_PG /* f_embedded */, BLT_k,
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
@@ -470,7 +470,7 @@ int main(int argc, const char **argv)
 		}
 #endif
 	else if (f_ovoid) {
-		create_ovoid(F, 
+		F->create_ovoid(
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
@@ -492,7 +492,7 @@ int main(int argc, const char **argv)
 		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 
-		create_Baer_substructure(n, FQ, F, 
+		FQ->create_Baer_substructure(n, F,
 			fname, nb_pts, Pts, 
 			verbose_level);
 		FREE_OBJECT(FQ);
@@ -503,7 +503,7 @@ int main(int argc, const char **argv)
 					"using the option -n <n>" << endl;
 			exit(1);
 			}
-		create_orthogonal(orthogonal_epsilon, n, F, 
+		F->create_orthogonal(orthogonal_epsilon, n,
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
@@ -513,22 +513,22 @@ int main(int argc, const char **argv)
 					"using the option -n <n>" << endl;
 			exit(1);
 			}
-		create_hermitian(n, F, 
+		F->create_hermitian(n,
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
 	else if (f_cubic) {
-		create_cubic(F,
+		F->create_cubic(
 			fname, nb_pts, Pts,
 			verbose_level);
 		}
 	else if (f_twisted_cubic) {
-		create_twisted_cubic(F, 
+		F->create_twisted_cubic(
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
 	else if (f_elliptic_curve) {
-		create_elliptic_curve(F,
+		F->create_elliptic_curve(
 			elliptic_curve_b, elliptic_curve_c,
 			fname, nb_pts, Pts,
 			verbose_level);
@@ -550,14 +550,14 @@ int main(int argc, const char **argv)
 
 		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
-		create_ttp_code(FQ, F, 
+		FQ->create_ttp_code(F,
 			f_ttp_construction_A, f_ttp_hyperoval, f_ttp_construction_B, 
 			fname, nb_pts, Pts, 
 			verbose_level);
 		FREE_OBJECT(FQ);
 		}
 	else if (f_unital_XXq_YZq_ZYq) {
-		create_unital_XXq_YZq_ZYq(F, 
+		F->create_unital_XXq_YZq_ZYq(
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
@@ -574,7 +574,7 @@ int main(int argc, const char **argv)
 		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 
-		create_desarguesian_line_spread_in_PG_3_q(FQ, F, 
+		FQ->create_desarguesian_line_spread_in_PG_3_q(F,
 			f_embedded_in_PG_4_q,
 			fname, nb_pts, Pts, 
 			verbose_level);
@@ -600,7 +600,7 @@ int main(int argc, const char **argv)
 					"using the option -n <n>" << endl;
 			exit(1);
 			}
-		create_whole_space(n, F, 
+		F->create_whole_space(n,
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
@@ -610,18 +610,18 @@ int main(int argc, const char **argv)
 					"using the option -n <n>" << endl;
 			exit(1);
 			}
-		create_hyperplane(n, F, 
+		F->create_hyperplane(n,
 			pt, 
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
 	else if (f_segre_variety) {
-		create_segre_variety(F, segre_variety_a, segre_variety_b, 
+		F->create_segre_variety(segre_variety_a, segre_variety_b,
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}
 	else if (f_Maruta_Hamada_arc) {
-		create_Maruta_Hamada_arc(F, 
+		F->create_Maruta_Hamada_arc(
 			fname, nb_pts, Pts, 
 			verbose_level);
 		}

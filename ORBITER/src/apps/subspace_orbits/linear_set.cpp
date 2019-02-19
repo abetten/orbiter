@@ -1683,7 +1683,7 @@ void linear_set::do_compute_stabilizer(
 	target_go = go_int * group_index;
 	cout << "target_go = " << target_go << endl;
 	cout << "creating group of order " << target_go << ":" << endl;
-	Aut = create_sims_from_generators_with_target_group_order_int(Aq, 
+	Aut = Aq->create_sims_from_generators_with_target_group_order_int(
 		aut_gens, target_go, verbose_level);
 	cout << "Stabilizer created successfully" << endl;
 	

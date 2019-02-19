@@ -242,7 +242,9 @@ int main(int argc, const char **argv)
 
 		labeling = NEW_int(vb);
 
-		At = create_automorphism_group_of_graph_with_partition_and_labeling(
+		nauty_interface Nauty;
+
+		At = Nauty.create_automorphism_group_of_graph_with_partition_and_labeling(
 			vb, FALSE, NULL, Adj, 
 			nb_parts, parts, 
 			labeling, 
@@ -291,7 +293,7 @@ int main(int argc, const char **argv)
 		
 		sims *Stab2;
 
-		Stab2 = create_sims_from_generators_with_target_group_order(Ab, 
+		Stab2 = Ab->create_sims_from_generators_with_target_group_order(
 			&SG, ago1, verbose_level);
 		Stab2->extract_strong_generators_in_order(SG2, tl2, verbose_level - 2);
 		cout << "tl2=";

@@ -330,7 +330,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	U = NEW_OBJECT(sims);
 
 	cout << "The group U" << endl;
-	U = create_sims_from_generators_without_target_group_order(A, 
+	U = A->create_sims_from_generators_without_target_group_order(
 		U_gens, 0 /* verbose_level */);
 	U->group_order(U_go);
 	cout << "The order of U is " << U_go << endl;
@@ -616,7 +616,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		O = NEW_OBJECT(sims);
 
 		cout << "The group O" << endl;
-		O = create_sims_from_generators_without_target_group_order(A, 
+		O = A->create_sims_from_generators_without_target_group_order(
 			O_gens, 0 /* verbose_level */);
 		O->group_order(O_go);
 		cout << "The order of O is " << O_go << endl;

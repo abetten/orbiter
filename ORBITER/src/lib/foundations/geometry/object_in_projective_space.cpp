@@ -197,7 +197,8 @@ void object_in_projective_space::init_object_from_int_vec(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_in_projective_space::init_object_from_int_vec" << endl;
+		cout << "object_in_projective_space::init_object_"
+				"from_int_vec" << endl;
 		cout << "type=" << type << endl;
 		}
 
@@ -236,13 +237,15 @@ void object_in_projective_space::init_object_from_int_vec(
 				the_set_in, the_set_sz, verbose_level - 1);
 		}
 	else {
-		cout << "object_in_projective_space::init_object_from_int_vec "
+		cout << "object_in_projective_space::init_object_"
+				"from_int_vec "
 				"unknown type" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "object_in_projective_space::init_object_from_int_vec"
+		cout << "object_in_projective_space::init_object_"
+				"from_int_vec"
 				" done" << endl;
 		}
 }
@@ -498,19 +501,23 @@ void object_in_projective_space::encoding_size_point_set(
 
 	nb_rows = P->N_points + 1;
 	if (f_v) {
-		cout << "object_in_projective_space::encoding_size_point_set nb_rows=" << nb_rows << endl;
+		cout << "object_in_projective_space::encoding_size_point_set "
+				"nb_rows=" << nb_rows << endl;
 		}
 	nb_cols = P->N_lines + C->second_nb_types;
 	if (f_v) {
-		cout << "object_in_projective_space::encoding_size_point_set nb_cols=" << nb_cols << endl;
+		cout << "object_in_projective_space::encoding_size_point_set "
+				"nb_cols=" << nb_cols << endl;
 		}
 	if (f_v) {
-		cout << "object_in_projective_space::encoding_size_point_set before FREE_OBJECT(C)" << endl;
+		cout << "object_in_projective_space::encoding_size_point_set "
+				"before FREE_OBJECT(C)" << endl;
 		}
 	FREE_OBJECT(C);
 	C = NULL;
 	if (f_v) {
-		cout << "object_in_projective_space::encoding_size_point_set done" << endl;
+		cout << "object_in_projective_space::encoding_size_point_set "
+				"done" << endl;
 		}
 
 }

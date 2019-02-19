@@ -78,8 +78,9 @@ int main(int argc, char **argv)
 				longinteger_object a;
 				int b;
 				longinteger_domain D;
+				nauty_interface Nauty;
 
-				Aut = create_automorphism_group_of_graph(
+				Aut = Nauty.create_automorphism_group_of_graph(
 						Adj, N, 0/*verbose_level*/);
 				Aut->group_order(ago);
 				

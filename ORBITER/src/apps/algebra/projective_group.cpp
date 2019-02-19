@@ -188,8 +188,7 @@ int main(int argc, char **argv)
 			}
 
 		cout << "creating group S_perm of order " << Go2 << endl;
-		S_perm = create_sims_from_generators_with_target_group_order(
-			A_perm,
+		S_perm = A_perm->create_sims_from_generators_with_target_group_order(
 			gens, Go2, 0 /* verbose_level */);
 		S_perm->group_order(Go3);
 		cout << "created group S_perm of order " << Go3 << endl;

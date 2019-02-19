@@ -117,8 +117,9 @@ int main(int argc, char **argv)
 
 	int *M;
 	int nb_rows, nb_cols;
+	nauty_interface Nauty;
 	
-	create_incidence_matrix_of_graph(Adj,
+	Nauty.create_incidence_matrix_of_graph(Adj,
 			CG->nb_points, M, nb_rows, nb_cols, verbose_level);
 
 	if (nb_cols != CG->nb_edges) {
@@ -126,7 +127,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	Aut = create_automorphism_group_of_graph(Adj, CG->nb_points, verbose_level);
+	Aut = Nauty.create_automorphism_group_of_graph(Adj, CG->nb_points, verbose_level);
 
 	Aut->group_order(ago);	
 	cout << "ago=" << ago << endl;

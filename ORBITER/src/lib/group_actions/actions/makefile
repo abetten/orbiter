@@ -14,12 +14,14 @@ MODULES = \
 	action_induce.o \
 	action_init.o \
 	action_pointer_table.o \
+	action_projective.o \
 	backtrack.o \
 	interface.o \
 	interface_direct_product.o \
 	interface_matrix_group.o \
 	interface_perm_group.o \
-	interface_wreath_product.o
+	interface_wreath_product.o \
+	nauty_interface.o 
 	
 
 all : $(MODULES)

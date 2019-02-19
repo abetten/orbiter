@@ -502,7 +502,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 			cout << endl;
 			}
 		
-		if (reverse_engineer_semilinear_map(A_perm, P, 
+		if (A_perm->reverse_engineer_semilinear_map(P,
 			gens->ith(g), Mtx, frobenius, 
 			0 /*verbose_level - 2*/)) {
 
@@ -577,10 +577,10 @@ strong_generators *projective_space_with_action::set_stabilizer(
 				"we are now creating the group" << endl;
 		}
 
-	S = create_sims_from_generators_with_target_group_order(A_linear, 
+	S = A_linear->create_sims_from_generators_with_target_group_order(
 		gens1, ago, 0 /*verbose_level*/);
 #if 0
-	S = create_sims_from_generators_without_target_group_order(A_linear, 
+	S = A_linear->create_sims_from_generators_without_target_group_order(
 		gens1, 0 /*verbose_level - 4*/);
 #endif
 	
@@ -920,7 +920,7 @@ strong_generators
 			cout << endl;
 			}
 		
-		if (reverse_engineer_semilinear_map(A_perm, P, 
+		if (A_perm->reverse_engineer_semilinear_map(P,
 			gens->ith(g), Mtx, frobenius, 
 			0 /*verbose_level - 2*/)) {
 
@@ -996,7 +996,7 @@ strong_generators
 				"of_object we are now creating the group" << endl;
 		}
 
-	S = create_sims_from_generators_with_target_group_order(A_linear, 
+	S = A_linear->create_sims_from_generators_with_target_group_order(
 		gens1, ago, 0 /*verbose_level*/);
 	
 	S->group_order(go);

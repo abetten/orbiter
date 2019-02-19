@@ -189,7 +189,7 @@ void strong_generators::init_single(action *A,
 	if (f_v) {
 		cout << "strong_generators::init_single" << endl;
 		}
-	S = create_sims_from_single_generator_without_target_group_order(A, 
+	S = A->create_sims_from_single_generator_without_target_group_order(
 		Elt, verbose_level);
 	init_from_sims(S, verbose_level);
 	FREE_OBJECT(S);
@@ -382,7 +382,7 @@ void strong_generators::generators_for_the_monomial_group(
 		cout << "strong_generators::generators_for_the_"
 				"monomial_group creating group" << endl;
 		}
-	S = create_sims_from_generators_randomized(A, 
+	S = A->create_sims_from_generators_randomized(
 		my_gens, TRUE /* f_target_go */, 
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -525,7 +525,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 		cout << "strong_generators::generators_for_the_"
 				"diagonal_group creating group" << endl;
 		}
-	S = create_sims_from_generators_randomized(A, 
+	S = A->create_sims_from_generators_randomized(
 		my_gens, TRUE /* f_target_go */, 
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -702,7 +702,7 @@ void strong_generators::generators_for_the_singer_cycle(
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
-	S = create_sims_from_generators_randomized(A, 
+	S = A->create_sims_from_generators_randomized(
 		nice_gens,
 		TRUE /* f_target_go */,
 		target_go, 0 /*verbose_level - 1*/);
@@ -888,7 +888,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
-	S = create_sims_from_generators_randomized(A,
+	S = A->create_sims_from_generators_randomized(
 		nice_gens,
 		TRUE /* f_target_go */,
 		target_go, 0 /*verbose_level - 1*/);
@@ -1035,8 +1035,8 @@ void strong_generators::init_centralizer_of_matrix(
 		cout << "strong_generators::init_centralizer_"
 				"of_matrix" << endl;
 		}
-	S = create_sims_for_centralizer_of_matrix(
-			A, Mtx, verbose_level - 1);
+	S = A->create_sims_for_centralizer_of_matrix(
+			Mtx, verbose_level - 1);
 	init_from_sims(S, 0 /* verbose_level */);
 	FREE_OBJECT(S);
 	if (f_v) {
@@ -1064,8 +1064,8 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 		cout << "strong_generators::init_centralizer_of_"
 				"matrix_general_linear" << endl;
 		}
-	S = create_sims_for_centralizer_of_matrix(
-			A_projective, Mtx, 0/* verbose_level */);
+	S = A_projective->create_sims_for_centralizer_of_matrix(
+			Mtx, 0/* verbose_level */);
 	SG1 = NEW_OBJECT(strong_generators);
 	SG1->init_from_sims(S, 0 /* verbose_level */);
 	FREE_OBJECT(S);
@@ -1110,8 +1110,7 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 				"general_linear creating sims for the general "
 				"linear centralizer of order " << go << endl;
 		}
-	S = create_sims_from_generators_with_target_group_order(
-		A_general_linear,
+	S = A_general_linear->create_sims_from_generators_with_target_group_order(
 		new_gens, go, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "strong_generators::init_centralizer_of_matrix_"
@@ -1253,12 +1252,11 @@ void strong_generators::field_reduction(
 		cout << "strong_generators::field_reduction "
 				"creating lifted group:" << endl;
 		}
-	Sims = create_sims_from_generators_with_target_group_order(
-		Aq,
+	Sims = Aq->create_sims_from_generators_with_target_group_order(
 		gens1, target_go, 0 /* verbose_level */);
 
 #if 0
-	Sims = create_sims_from_generators_without_target_group_order(Aq, 
+	Sims = Aq->create_sims_from_generators_without_target_group_order(
 		gens1, MINIMUM(2, verbose_level - 3));
 #endif
 
@@ -1469,7 +1467,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		cout << "strong_generators::generators_for_translation_"
 				"plane_in_andre_model creating group" << endl;
 		}
-	S = create_sims_from_generators_with_target_group_order(A_PGL_n1_q, 
+	S = A_PGL_n1_q->create_sims_from_generators_with_target_group_order(
 		my_gens, target_go, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "strong_generators::generators_for_translation_"
