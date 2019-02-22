@@ -598,23 +598,23 @@ int longinteger::is_odd()
 	return ODD(d);
 }
 
-int longinteger::compare_with_euklidean(discreta_base &b)
+int longinteger::compare_with_euclidean(discreta_base &b)
 {
 	if (s_kind() != LONGINTEGER) {
-		cout << "longinteger::compare_with_euklidean "
+		cout << "longinteger::compare_with_euclidean "
 				"s_kind() != LONGINTEGER\n";
 		exit(1);
 		}
 	if (b.s_kind() != LONGINTEGER) {
 		if (b.s_kind() != INTEGER) {
-			cout << "longinteger::compare_with_euklidean "
+			cout << "longinteger::compare_with_euclidean "
 					"b is neither longinteger nor integer\n";
 			exit(1);
 			}
 		longinteger b1;
 		
 		b1.homo_z(b.s_i_i());
-		return compare_with_euklidean(b1);
+		return compare_with_euclidean(b1);
 		}
 	longinteger &B = b.as_longinteger();
 	int r;

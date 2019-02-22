@@ -148,7 +148,11 @@ int orbit_of_equations_compare_func(void *a, void *b, void *data);
 // #############################################################################
 
 
-//! Schreier tree for action on subsets
+#include <iterator>
+#include <map>
+
+
+//! Schreier tree for computing the orbits on subsets
 
 
 
@@ -165,6 +169,11 @@ public:
 	int used_length;
 	int **Sets;
 
+	multimap<uint32_t, int> Hashing;
+		// we use a multimap because the has values are not unique
+		// it happens that two sets have the save hash value.
+		// map cannot handle that.
+
 	orbit_of_sets();
 	~orbit_of_sets();
 	void null();
@@ -172,6 +181,7 @@ public:
 	void init(action *A, action *A2, int *set, int sz, 
 		vector_ge *gens, int verbose_level);
 	void compute(int verbose_level);
+	void dump_tables_of_hash_values();
 	void get_table_of_orbits(int *&Table, int &orbit_length, 
 		int &set_size, int verbose_level);
 };

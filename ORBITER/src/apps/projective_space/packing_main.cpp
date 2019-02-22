@@ -47,6 +47,7 @@ int main(int argc, const char **argv)
 	int f_embedded = FALSE;
 	int f_sideways = FALSE;
 
+	int f_compute_spread_table = FALSE;
 	int f_fname_spread_table = FALSE;
 	const char *fname_spread_table = NULL;
 	int f_fname_spread_table_iso = FALSE;
@@ -121,6 +122,11 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-starter") == 0) {
 			f_starter = TRUE;
 			cout << "-starter " << endl;
+			}
+
+		else if (strcmp(argv[i], "-compute_spread_table") == 0) {
+			f_compute_spread_table = TRUE;
+			cout << "-compute_spread_table " << endl;
 			}
 
 
@@ -297,7 +303,10 @@ int main(int argc, const char **argv)
 
 
 
-	if (f_type_of_packing) {
+	if (f_compute_spread_table) {
+		P->compute_spread_table(verbose_level);
+	}
+	else if (f_type_of_packing) {
 		cout << "before P->type_of_packing" << endl;
 		if (!f_fname_spread_table) {
 			cout << "please use option f_fname_spread_table <fname>" << endl;

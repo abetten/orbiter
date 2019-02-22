@@ -875,15 +875,15 @@ discreta_base& discreta_base::i_power_j(int i, int j)
 	return *this;
 }
 
-int discreta_base::compare_with_euklidean(discreta_base &a)
+int discreta_base::compare_with_euclidean(discreta_base &a)
 {
 	if (s_kind() != BASE) {
-		// cout << "compare_with_euklidean() not implemented for class ";
+		// cout << "compare_with_euclidean() not implemented for class ";
 		// printobjectkindln(cout);
 		// exit(1);
-		return compare_with_euklidean(a);
+		return compare_with_euclidean(a);
 		}
-	NOT_EXISTING_FUNCTION("discreta_base::compare_with_euklidean");
+	NOT_EXISTING_FUNCTION("discreta_base::compare_with_euclidean");
 	exit(1);
 }
 
@@ -980,7 +980,7 @@ void discreta_base::extended_gcd(discreta_base &n,
 		cout << "discreta_base::extended_gcd "
 				"m=" << *this << " n=" << n << endl;
 		}
-	c = compare_with_euklidean(n);
+	c = compare_with_euclidean(n);
 	if (c < 0) {
 		n.extended_gcd(*this, v, u, g, verbose_level);
 		return;

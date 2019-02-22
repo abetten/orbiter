@@ -176,7 +176,7 @@ public:
 // #############################################################################
 
 
-//! domain for polynomials with double couefficients
+//! domain for polynomials with double coefficients
 
 
 
@@ -212,7 +212,7 @@ public:
 // #############################################################################
 
 
-//! polynomials with double couefficients
+//! polynomials with double coefficients
 
 
 class polynomial_double {
