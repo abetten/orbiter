@@ -324,7 +324,7 @@ int unipoly::is_zero()
 	return s_i(0).is_zero();
 }
 
-int unipoly::compare_with_euklidean(discreta_base &a)
+int unipoly::compare_with_euclidean(discreta_base &a)
 {
 	int d1, d2;
 	unipoly &pa = a.as_unipoly();
@@ -338,7 +338,8 @@ int unipoly::compare_with_euklidean(discreta_base &a)
 	return 0;
 }
 
-void unipoly::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level)
+void unipoly::integral_division(discreta_base &x,
+		discreta_base &q, discreta_base &r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int dm, dn, dq, i, j, ii, jj;

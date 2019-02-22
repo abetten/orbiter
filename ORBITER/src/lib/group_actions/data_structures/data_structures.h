@@ -306,6 +306,12 @@ public:
 			const char *file_of_spreads,
 			classify_bitvectors *&CB,
 			int verbose_level);
+	void select_packings(
+			const char *fname,
+			const char *file_of_spreads,
+			const char *file_isomorphism_type_of_spreads,
+			classify_bitvectors *&CB,
+			int verbose_level);
 	void latex_report(const char *fname,
 			const char *prefix,
 			classify_bitvectors *CB,

@@ -523,15 +523,15 @@ int integer::is_m_one()
 		return FALSE;
 }
 
-int integer::compare_with_euklidean(discreta_base &a)
+int integer::compare_with_euclidean(discreta_base &a)
 {
 	int i, j;
 	
 	if (s_kind() != INTEGER) {
-		return compare_with_euklidean(a);
+		return compare_with_euclidean(a);
 		}
 	if (a.s_kind() != INTEGER) {
-		cout << "integer::compare_with_euklidean() a is not an integer\n";
+		cout << "integer::compare_with_euclidean() a is not an integer\n";
 		exit(1);
 		}
 	i = ABS(s_i());

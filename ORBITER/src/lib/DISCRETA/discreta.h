@@ -700,18 +700,20 @@ class discreta_base
 	discreta_base& i_power_j(int i, int j);
 		// this := i^j
 
-	virtual int compare_with_euklidean(discreta_base &a);
+	virtual int compare_with_euclidean(discreta_base &a);
 		// -1 iff this < a
 		// 0 iff this = a
 		// 1 iff this > a
-	virtual void integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level);
+	virtual void integral_division(discreta_base &x,
+			discreta_base &q, discreta_base &r, int verbose_level);
 	void integral_division_exact(discreta_base &x, discreta_base &q);
 	void integral_division_by_integer(int x, discreta_base &q, discreta_base &r);
 	void integral_division_by_integer_exact(int x, discreta_base &q);
 	void integral_division_by_integer_exact_apply(int x);
 	int is_divisor(discreta_base &y);
 	void modulo(discreta_base &p);
-	void extended_gcd(discreta_base &n, discreta_base &u, discreta_base &v, discreta_base &g, int verbose_level);
+	void extended_gcd(discreta_base &n, discreta_base &u,
+			discreta_base &v, discreta_base &g, int verbose_level);
 	void write_memory(memory &m, int debug_depth);
 	void read_memory(memory &m, int debug_depth);
 	int calc_size_on_file();
@@ -795,7 +797,8 @@ class hollerith: public discreta_base
 	int compare_with(discreta_base &a);
 
 	char * s_unchecked() { return self.char_pointer; } 
-	char * s() { if (self.char_pointer) return self.char_pointer; else return (char *) ""; }
+	char * s() { if (self.char_pointer)
+		return self.char_pointer; else return (char *) ""; }
 	void init(const char *p);
 	void append(const char *p);
 	void append_i(int i);
@@ -853,7 +856,7 @@ class integer: public discreta_base
 	int is_one();
 	int is_m_one();
 
-	int compare_with_euklidean(discreta_base &a);
+	int compare_with_euclidean(discreta_base &a);
 	void integral_division(discreta_base &x,
 			discreta_base &q, discreta_base &r, int verbose_level);
 	
@@ -922,8 +925,9 @@ class longinteger: public discreta_base
 	int is_even();
 	int is_odd();
 
-	int compare_with_euklidean(discreta_base &b);
-	void integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level);
+	int compare_with_euclidean(discreta_base &b);
+	void integral_division(discreta_base &x,
+			discreta_base &q, discreta_base &r, int verbose_level);
 	void square_root_floor(discreta_base &x);
 	longinteger& Mersenne(int n);
 	longinteger& Fermat(int n);
@@ -1099,9 +1103,11 @@ class Vector: public discreta_base
 	int hash(int hash0);
 	int is_subset_of(Vector &w);
 	void concatenation(Vector &v1, Vector &v2);
-	void print_word_nicely(ostream &ost, int f_generator_labels, Vector &generator_labels);
+	void print_word_nicely(ostream &ost,
+			int f_generator_labels, Vector &generator_labels);
 	void print_word_nicely2(ostream &ost);
-	void print_word_nicely_with_generator_labels(ostream &ost, Vector &generator_labels);
+	void print_word_nicely_with_generator_labels(
+			ostream &ost, Vector &generator_labels);
 	void vector_of_vectors_lengths(Vector &lengths);
 	void get_element_orders(Vector &vec_of_orders);
 };
@@ -1501,7 +1507,7 @@ class unipoly: public Vector
 	void x_to_the_i(int i);
 	int is_one();
 	int is_zero();
-	int compare_with_euklidean(discreta_base &a);
+	int compare_with_euclidean(discreta_base &a);
 	void integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level);
 	void derive();
 	int is_squarefree(int verbose_level);

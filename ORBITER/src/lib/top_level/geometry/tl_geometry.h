@@ -1091,7 +1091,7 @@ public:
 };
 
 // #############################################################################
-// packipacking_invariantsng.C:
+// packing_invariants.C:
 // #############################################################################
 
 //! geometric invariants of a packing in PG(3,q)
@@ -1244,6 +1244,7 @@ public:
 		int verbose_level);
 	void compute_dual_spreads(
 		int **Sets, int verbose_level);
+	int test_if_packing_is_self_dual(int *packing, int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
 		int search_depth, int verbose_level);
@@ -1364,6 +1365,8 @@ void packing_early_test_function(int *S, int len,
 int count(int *Inc, int n, int m, int *set, int t);
 int count_and_record(int *Inc, int n, int m,
 		int *set, int t, int *occurances);
+int packing_spread_compare_func(void *data, int i, int j, void *extra_data);
+void packing_swap_func(void *data, int i, int j, void *extra_data);
 
 
 

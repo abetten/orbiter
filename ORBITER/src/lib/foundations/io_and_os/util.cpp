@@ -249,13 +249,13 @@ int bitvector_s_i(uchar *bitvec, int i)
 }
 
 
-int int_vec_hash(int *data, int len)
+uint32_t int_vec_hash(int *data, int len)
 {
 	uint32_t h;
 
 	h = SuperFastHash ((const char *) data, 
 		(uint32_t) len * sizeof(int));
-	return (int) h;
+	return h;
 }
 
 int int_vec_hash_after_sorting(int *data, int len)

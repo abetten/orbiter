@@ -215,7 +215,7 @@ void packing::compute_spread_table(int verbose_level)
 	Spread_table = NEW_int(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
 		for (j = 0; j < spread_size; j++) {
-			Spread_table[i * spread_size + j] = Sets[i][j + 1];
+			Spread_table[i * spread_size + j] = Sets[i][j /*+ 1*/];
 			}
 		}
 	if (f_v) {
@@ -244,7 +244,11 @@ void packing::compute_spread_table(int verbose_level)
 		cout << "packing::compute_spread_table "
 				"before compute_dual_spreads" << endl;
 		}
-	compute_dual_spreads(Sets, 0 /*verbose_level - 4*/);
+	compute_dual_spreads(Sets, verbose_level - 1);
+	int_vec_write_csv(
+			Dual_spread_idx, nb_spreads,
+			"dual_spread_table.csv",
+			"dual_spread_idx");
 	if (f_v) {
 		cout << "packing::compute_spread_table "
 				"after compute_dual_spreads" << endl;
@@ -546,15 +550,17 @@ void packing::make_spread_table(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_v5 = (verbose_level >= 5);
-	int i, j, u, idx;
+	int i, j;
 
 	if (f_v) {
 		cout << "packing::make_spread_table" << endl;
 		}
 	Sets = NEW_pint(N);
 	isomorphism_type_of_spread = NEW_int(N);
-	nb_spreads = 0;
+
+	orbit_of_sets *SetOrb;
+
+	SetOrb = NEW_OBJECTS(orbit_of_sets, nb_input_spreads);
 
 	for (i = 0; i < nb_input_spreads; i++) {
 
@@ -564,11 +570,8 @@ void packing::make_spread_table(
 				<< nb_input_spreads << " computing orbits" << endl;
 			}
 
-		orbit_of_sets *SetOrb;
 
-		SetOrb = NEW_OBJECT(orbit_of_sets);
-
-		SetOrb->init(T->A, T->A2,
+		SetOrb[i].init(T->A, T->A2,
 				input_spreads + i * spread_size,
 				spread_size, T->A->Strong_gens->gens,
 				verbose_level);
@@ -578,56 +581,58 @@ void packing::make_spread_table(
 			cout << "packing::make_spread_table Spread "
 				<< input_spread_label[i] << " = " << i << " / "
 				<< nb_input_spreads << " has orbit length "
-				<< SetOrb->used_length << " nb_spreads = "
-				<< nb_spreads << endl;
+				<< SetOrb[i].used_length << endl;
 			}
-
-		// the entries in Sets are of size spread_size + 1,
-		// since the first entry is used as a hash value
-		// in orbits_of_sets
-
-		int v[1];
-
-		v[0] = spread_size + 1;
-			
-		for (j = 0; j < SetOrb->used_length; j++) {
-			if (vec_search((void **)Sets,
-				orbit_of_sets_compare_func, (void *) v,
-				nb_spreads, SetOrb->Sets[j], idx,
-				0 /* verbose_level */)) {
-				cout << "new set is already in the list, "
-						"at position " << idx << endl;
-				exit(1);
-				}
-			else {
-				for (u = nb_spreads; u > idx; u--) {
-					Sets[u] = Sets[u - 1];
-					isomorphism_type_of_spread[u] =
-							isomorphism_type_of_spread[u - 1];
-					}
-				Sets[idx] = NEW_int(spread_size + 1);
-				isomorphism_type_of_spread[idx] = input_spread_label[i];
-				int_vec_copy(SetOrb->Sets[j], Sets[idx], spread_size + 1);
-				nb_spreads++;
-				}
-			}
-
-		FREE_OBJECT(SetOrb);
 
 
 		} // next i
 
+	nb_spreads = 0;
+
+	for (i = 0; i < nb_input_spreads; i++) {
+
+		for (j = 0; j < SetOrb[i].used_length; j++) {
+
+			Sets[nb_spreads] = NEW_int(spread_size);
+
+			int_vec_copy(SetOrb[i].Sets[j], Sets[nb_spreads], spread_size);
+
+			isomorphism_type_of_spread[nb_spreads] = i;
+
+
+			nb_spreads++;
+
+		} // next j
+	} // next i
 
 	if (f_v) {
 		cout << "packing::make_spread_table We found "
 				<< nb_spreads << " labeled spreads" << endl;
 		}
-	if (f_v5) {
+
+
+	FREE_OBJECTS(SetOrb);
+
+	if (f_v) {
+		cout << "packing::make_spread_table before "
+				"sorting spread table of size " << nb_spreads << endl;
+	}
+	Heapsort_general(Sets, nb_spreads,
+			packing_spread_compare_func,
+			packing_swap_func,
+			this);
+	if (f_v) {
+		cout << "packing::make_spread_table after "
+				"sorting spread table of size " << nb_spreads << endl;
+	}
+
+
+	if (FALSE) {
 		cout << "packing::make_spread_table "
 				"The labeled spreads are:" << endl;
 		for (i = 0; i < nb_spreads; i++) {
 			cout << i << " : ";
-			int_vec_print(cout, Sets[i], spread_size + 1);
+			int_vec_print(cout, Sets[i], spread_size /* + 1*/);
 			cout << endl;
 			}
 		}
@@ -636,6 +641,7 @@ void packing::make_spread_table(
 		cout << "packing::make_spread_table done" << endl;
 		}
 }
+
 
 void packing::compute_dual_spreads(int **Sets, int verbose_level)
 {
@@ -647,18 +653,18 @@ void packing::compute_dual_spreads(int **Sets, int verbose_level)
 	if (f_v) {
 		cout << "packing::compute_dual_spreads" << endl;
 		}
-	dual_spread = NEW_int(spread_size + 1);
+	dual_spread = NEW_int(spread_size /*+ 1*/);
 	Dual_spread_idx = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
 		T->compute_dual_spread(
 				Spread_table + i * spread_size,
-				dual_spread + 1, verbose_level - 4);
-		int_vec_heapsort(dual_spread + 1, spread_size);
-		dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
+				dual_spread /*+ 1*/, verbose_level - 4);
+		int_vec_heapsort(dual_spread /*+ 1*/, spread_size);
+		//dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
 
 		int v[1];
 
-		v[0] = spread_size + 1;
+		v[0] = spread_size /*+ 1*/;
 
 		if (vec_search((void **)Sets,
 			orbit_of_sets_compare_func, (void *) v,
@@ -673,6 +679,9 @@ void packing::compute_dual_spreads(int **Sets, int verbose_level)
 			}
 		else {
 			cout << "The dual spread is not in the list, error!" << endl;
+			cout << "dual_spread: ";
+			int_vec_print(cout, dual_spread, spread_size);
+			cout << endl;
 			exit(1);
 			}
 		}
@@ -684,6 +693,42 @@ void packing::compute_dual_spreads(int **Sets, int verbose_level)
 		}
 
 }
+
+int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret = FALSE;
+	int *sorted_packing;
+	int *dual_packing;
+	int i, a, b;
+
+	if (f_v) {
+		cout << "packing::test_if_packing_is_self_dual" << endl;
+	}
+	sorted_packing = NEW_int(size_of_packing);
+	dual_packing = NEW_int(size_of_packing);
+	for (i = 0; i < size_of_packing; i++) {
+		a = packing[i];
+		sorted_packing[i] = a;
+	}
+	int_vec_heapsort(sorted_packing, size_of_packing);
+
+	for (i = 0; i < size_of_packing; i++) {
+		a = packing[i];
+		b = Dual_spread_idx[a];
+		dual_packing[i] = b;
+	}
+	int_vec_heapsort(dual_packing, size_of_packing);
+	if (int_vec_compare(sorted_packing, dual_packing, size_of_packing) == 0) {
+		ret = TRUE;
+	}
+
+	if (f_v) {
+		cout << "packing::test_if_packing_is_self_dual done" << endl;
+	}
+	return ret;
+}
+
 
 void packing::compute_adjacency_matrix(int verbose_level)
 {
@@ -2276,6 +2321,33 @@ int count_and_record(int *Inc,
 			}
 		}
 	return nb;
+}
+
+int packing_spread_compare_func(void *data, int i, int j, void *extra_data)
+{
+	packing *P = (packing *) extra_data;
+	int **Sets = (int **) data;
+	int ret;
+
+	ret = int_vec_compare(Sets[i], Sets[j], P->spread_size);
+	return ret;
+}
+
+void packing_swap_func(void *data, int i, int j, void *extra_data)
+{
+	packing *P = (packing *) extra_data;
+	int *d = P->isomorphism_type_of_spread;
+	int **Sets = (int **) data;
+	int *p;
+	int a;
+
+	p = Sets[i];
+	Sets[i] = Sets[j];
+	Sets[j] = p;
+
+	a = d[i];
+	d[i] = d[j];
+	d[j] = a;
 }
 
 

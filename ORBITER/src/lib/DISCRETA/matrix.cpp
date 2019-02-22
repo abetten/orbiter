@@ -1215,7 +1215,7 @@ int matrix::smith_eliminate_column(matrix& P,
 			cout << g << " = (" << u << ") * (" << x << ") + "
 					"(" << v << ") * (" << y << ")" << endl;
 			}
-		if (u.is_zero() && x.compare_with_euklidean(y) == 0) {
+		if (u.is_zero() && x.compare_with_euclidean(y) == 0) {
 			u.swap(v);
 			g = x;
 			if (f_v) {
@@ -1279,7 +1279,7 @@ int matrix::smith_eliminate_row(matrix& Q,
 			cout << g << " = (" << u << ") * (" << x << ") + "
 					"(" << v << ") * (" << y << ")" << endl;
 			}
-		if (u.is_zero() && x.compare_with_euklidean(y) == 0) {
+		if (u.is_zero() && x.compare_with_euclidean(y) == 0) {
 			u.swap(v);
 			g = x;
 			if (f_vv) {

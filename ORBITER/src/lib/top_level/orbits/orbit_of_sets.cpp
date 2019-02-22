@@ -68,7 +68,7 @@ void orbit_of_sets::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;//(verbose_level >= 2);
-	int i, cur, j, idx;
+	int i, cur, j;
 	int *cur_set;
 	int *new_set;
 	int *Q;
@@ -78,16 +78,18 @@ void orbit_of_sets::compute(int verbose_level)
 		cout << "orbit_of_sets::compute" << endl;
 		}
 	cur_set = NEW_int(sz);
-	new_set = NEW_int(sz + 1);
+	new_set = NEW_int(sz);
 	allocation_length = 1000;
 	Sets = NEW_pint(allocation_length);
-	Sets[0] = NEW_int(sz + 1);
-	for (i = 0; i < sz; i++) {
-		Sets[0][i + 1] = set[i];
-		}
+	Sets[0] = NEW_int(sz);
+	int_vec_copy(set, Sets[0], sz);
 	position_of_original_set = 0;
-	int_vec_heapsort(Sets[0] + 1, sz);
-	Sets[0][0] = int_vec_hash(Sets[0] + 1, sz);
+	int_vec_heapsort(Sets[0], sz);
+	uint32_t h;
+
+	h = int_vec_hash(Sets[0], sz);
+	Hashing.insert(pair<uint32_t, int>(h, 0));
+
 	used_length = 1;
 	Q = NEW_int(allocation_length);
 	Q[0] = 0;
@@ -104,44 +106,34 @@ void orbit_of_sets::compute(int verbose_level)
 			Q[i - 1] = Q[i];
 			}
 		Q_len--;
-		for (i = 0; i < sz; i++) {
-			cur_set[i] = Sets[cur][i + 1];
-			}
+		int_vec_copy(Sets[cur], cur_set, sz);
+
 		for (j = 0; j < gens->len; j++) {
 			if (f_vv) {
 				cout << "applying generator " << j << endl;
 				}
-			A2->map_a_set(cur_set, new_set + 1, sz, gens->ith(j),
+			A2->map_a_set(cur_set, new_set, sz, gens->ith(j),
 					0 /* verbose_level*/);
-			int_vec_heapsort(new_set + 1, sz);
-			new_set[0] = int_vec_hash(new_set + 1, sz);
+			int_vec_heapsort(new_set, sz);
+			h = int_vec_hash(new_set, sz);
 
-			int p[1];
+		    map<uint32_t, int>::iterator itr, itr1, itr2;
+		    int pos, f_found;
 
-			p[0] = sz + 1;
+		    itr1 = Hashing.lower_bound(h);
+		    itr2 = Hashing.upper_bound(h);
+		    f_found = FALSE;
+		    for (itr = itr1; itr != itr2; ++itr) {
+		        pos = itr->second;
+		        if (int_vec_compare(new_set, Sets[pos], sz) == 0) {
+		        	f_found = TRUE;
+		        	break;
+		        }
+		    }
+		    if (!f_found) {
 
-			if (vec_search(
-					(void **)Sets,
-					orbit_of_sets_compare_func,
-					(void *) p,
-					used_length,
-					new_set,
-					idx,
-					0 /* verbose_level */)) {
-				if (f_vv) {
-					cout << "n e w set is already in the list, "
-							"at position " << idx << endl;
-					}
-				}
-			else {
-				if (f_vv) {
-					cout << "Found a n e w set : ";
-					int_vec_print(cout, new_set, sz + 1);
-					cout << endl;
-					}
-				
 				if (used_length == allocation_length) {
-					int al2 = allocation_length + 1000;
+					int al2 = (allocation_length + 1000) * 2;
 					int **Sets2;
 					int *Q2;
 					if (f_vv) {
@@ -161,40 +153,83 @@ void orbit_of_sets::compute(int verbose_level)
 					Q = Q2;
 					allocation_length = al2;
 					}
-				for (i = used_length; i > idx; i--) {
-					Sets[i] = Sets[i - 1];
-					}
-				Sets[idx] = NEW_int(sz + 1);
-				for (i = 0; i < sz + 1; i++) {
-					Sets[idx][i] = new_set[i];
-					}
-				if (position_of_original_set >= idx) {
-					position_of_original_set++;
-					}
-				for (i = 0; i < Q_len; i++) {
-					if (Q[i] >= idx) {
-						Q[i]++;
-						}
-					}
-				used_length++;
-				if ((used_length % 10000) == 0) {
-					cout << "orbit_of_sets::compute " << used_length << endl;
-					}
-				Q[Q_len++] = idx;
-				if (f_vv) {
-					cout << "storing n e w set at position " << idx << endl;
-					}
 
 #if 0
-				for (i = 0; i < used_length; i++) {
-					cout << i << " : ";
-					int_vec_print(cout, Sets[i], sz + 1);
+				if (used_length == 70777 || used_length == 3248) {
+					cout << "adding entry " << used_length << endl;
+					int_vec_print(cout, new_set, sz);
 					cout << endl;
-					}
-#endif
+					cout << "h=" << h << endl;
 				}
+#endif
+
+				Sets[used_length] = NEW_int(sz);
+				int_vec_copy(new_set, Sets[used_length], sz);
+				used_length++;
+				if ((used_length % 10000) == 0) {
+					cout << "orbit_of_sets::compute " << used_length
+							<< " Q_len=" << Q_len
+							<< " allocation_length=" << allocation_length
+							<< endl;
+					}
+				Q[Q_len++] = used_length - 1;
+				Hashing.insert(pair<uint32_t, int>(h, used_length - 1));
+
+		    } // if (!f_found)
+
+
 			}
 		}
+
+
+#if 0
+    map<uint32_t, int>::iterator itr;
+    int pos;
+    //uint32_t h;
+
+    int cnt;
+
+    cout << "Testing hash values..." << endl;
+    for (itr = Hashing.begin(), cnt = 0; itr != Hashing.end(); ++itr, cnt++) {
+    	//cout << cnt << " : " << itr->first << " : " << itr->second << endl;
+    	pos = itr->second;
+    	h = int_vec_hash(Sets[pos], sz);
+    	if (h != itr->first) {
+    		cout << "h != itr->first" << endl;
+    		exit(1);
+    	}
+    }
+    cout << "test 2..." << endl;
+    int p;
+    for (p = 0; p < used_length; p++) {
+    	h = int_vec_hash(Sets[p], sz);
+	    map<uint32_t, int>::iterator itr, itr1, itr2;
+	    int pos, f_found;
+
+	    itr1 = Hashing.lower_bound(h);
+	    itr2 = Hashing.upper_bound(h);
+	    f_found = FALSE;
+	    for (itr = itr1; itr != itr2; ++itr) {
+	        pos = itr->second;
+	        if (p == pos) {
+	        	f_found = TRUE;
+	        	break;
+	        }
+	    }
+    	if (!f_found) {
+    		cout << "could not find entry " << p << " with hash " << h << endl;
+    		dump_tables_of_hash_values();
+    		cout << "could not find entry " << p << " with hash " << h << endl;
+    		int_vec_print(cout, Sets[p], sz);
+    		cout << endl;
+        	h = int_vec_hash(Sets[p], sz);
+        	cout << h << endl;
+    		exit(1);
+    	}
+    }
+#endif
+
+
 	if (f_v) {
 		cout << "orbit_of_sets::compute found an orbit of length "
 				<< used_length << endl;
@@ -205,6 +240,26 @@ void orbit_of_sets::compute(int verbose_level)
 	if (f_v) {
 		cout << "orbit_of_sets::compute done" << endl;
 		}
+}
+
+void orbit_of_sets::dump_tables_of_hash_values()
+{
+    map<uint32_t, int>::iterator itr;
+    int pos;
+    uint32_t h;
+
+    int cnt;
+
+    for (itr = Hashing.begin(), cnt = 0; itr != Hashing.end(); ++itr, cnt++) {
+    	cout << cnt << " : " << itr->first << " : " << itr->second << endl;
+    	pos = itr->second;
+    	h = int_vec_hash(Sets[pos], sz);
+    	if (h != itr->first) {
+    		cout << "h != itr->first" << endl;
+    		exit(1);
+    	}
+    }
+
 }
 
 void orbit_of_sets::get_table_of_orbits(int *&Table,
@@ -222,13 +277,14 @@ void orbit_of_sets::get_table_of_orbits(int *&Table,
 	Table = NEW_int(orbit_length * set_size);
 	for (i = 0; i < orbit_length; i++) {
 		for (j = 0; j < set_size; j++) {
-			Table[i * set_size + j] = Sets[i][j + 1];
+			Table[i * set_size + j] = Sets[i][j];
 			}
 		}
 	if (f_v) {
 		cout << "orbit_of_sets::get_table_of_orbits done" << endl;
 		}
 }
+
 
 
 int orbit_of_sets_compare_func(void *a, void *b, void *data)
@@ -249,6 +305,7 @@ int orbit_of_sets_compare_func(void *a, void *b, void *data)
 		}
 	return 0;
 }
+
 
 }}
 

@@ -251,7 +251,7 @@ void bitvector_m_ii(uchar *bitvec, int i, int a);
 void bitvector_set_bit(uchar *bitvec, int i);
 int bitvector_s_i(uchar *bitvec, int i);
 // returns 0 or 1
-int int_vec_hash(int *data, int len);
+uint32_t int_vec_hash(int *data, int len);
 int int_vec_hash_after_sorting(int *data, int len);
 const char *plus_minus_string(int epsilon);
 const char *plus_minus_letter(int epsilon);
