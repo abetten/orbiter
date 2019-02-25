@@ -192,7 +192,7 @@ void packing_invariants::compute_decomposition(
 	plane_to_block = NEW_int(nb_planes);
 
 
-	nb_fake_points = P->nb_spreads; //P->E->Reps->count;
+	nb_fake_points = P->Spread_tables->nb_spreads; //P->E->Reps->count;
 	nb_fake_blocks = P->size_of_packing;
 	total_nb_points =
 			P->size_of_packing * P->spread_size
@@ -234,7 +234,7 @@ void packing_invariants::compute_decomposition(
 		}	
 	for (h = 0; h < P->size_of_packing; h++) {
 		a = the_packing[h];
-		b = P->isomorphism_type_of_spread[a];
+		b = P->Spread_tables->spread_iso_type[a];
 		i = P->size_of_packing * P->spread_size + b;
 		j = nb_blocks + h;
 		Inc[i * total_nb_blocks + j] = 1;

@@ -308,8 +308,13 @@ public:
 			int verbose_level);
 	void select_packings(
 			const char *fname,
+			const char *file_of_dual_line_idx,
 			const char *file_of_spreads,
+			const char *file_of_spreads_lexleast,
 			const char *file_isomorphism_type_of_spreads,
+			const char *file_dual_spread,
+			int f_self_dual,
+			int f_ago, int select_ago,
 			classify_bitvectors *&CB,
 			int verbose_level);
 	void latex_report(const char *fname,
@@ -337,6 +342,9 @@ void compute_and_print_ago_distribution(ostream &ost,
 void compute_and_print_ago_distribution_with_classes(
 	ostream &ost,
 	classify_bitvectors *CB, int verbose_level);
+int table_of_sets_compare_func(void *data, int i,
+		int *search_object,
+		void *extra_data);
 
 
 // #############################################################################

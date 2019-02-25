@@ -310,6 +310,7 @@ class video_draw_options;
 class numerics;
 class polynomial_double;
 class polynomial_double_domain;
+class spread_tables;
 
 
 #ifdef MEMORY_DEBUG

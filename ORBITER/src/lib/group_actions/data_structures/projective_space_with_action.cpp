@@ -2478,12 +2478,18 @@ void projective_space_with_action::merge_packings(
 
 void projective_space_with_action::select_packings(
 		const char *fname,
+		const char *file_of_dual_line_idx,
 		const char *file_of_spreads,
+		const char *file_of_spreads_lexleast,
 		const char *file_isomorphism_type_of_spreads,
+		const char *file_dual_spread,
+		int f_self_dual,
+		int f_ago, int select_ago,
 		classify_bitvectors *&CB,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int nb_accept = 0;
 
 	if (f_v) {
 		cout << "projective_space_with_action::select_packings" << endl;
@@ -2493,11 +2499,31 @@ void projective_space_with_action::select_packings(
 
 
 	// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
+	int *dual_line_idx;
+	int nb_lines;
+	int *Spread_table_lexleast;
 	int *Spread_table;
 	int *Spread_iso;
 	int nb_spreads;
 	int spread_size;
+	int packing_size;
 	int a, b;
+	int *Dual_spread_idx;
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings "
+				"Reading dual line idx from file "
+				<< file_of_dual_line_idx << endl;
+	}
+	int_matrix_read_csv(file_of_dual_line_idx,
+			dual_line_idx, nb_lines, b,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "Reading spread table from file "
+				<< file_of_dual_line_idx << " done" << endl;
+		cout << "The table contains " << nb_lines
+				<< " lines" << endl;
+	}
 
 	if (f_v) {
 		cout << "projective_space_with_action::select_packings "
@@ -2512,6 +2538,29 @@ void projective_space_with_action::select_packings(
 				<< file_of_spreads << " done" << endl;
 		cout << "The spread table contains " << nb_spreads
 				<< " spreads" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings "
+				"Reading lexleast spread table from file "
+				<< file_of_spreads_lexleast << endl;
+	}
+	int_matrix_read_csv(file_of_spreads_lexleast,
+			Spread_table_lexleast, a, b,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "Reading spread table from file "
+				<< file_of_spreads_lexleast << " done" << endl;
+		cout << "The spread table contains " << a
+				<< " spreads" << endl;
+	}
+	if (a != nb_spreads) {
+		cout << "a != nb_spreads" << endl;
+		exit(1);
+	}
+	if (b != spread_size) {
+		cout << "b != spread_size" << endl;
+		exit(1);
 	}
 
 
@@ -2532,6 +2581,59 @@ void projective_space_with_action::select_packings(
 				<< file_isomorphism_type_of_spreads << " done" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings "
+				"Reading file_dual_spread table from file "
+				<< file_dual_spread << endl;
+	}
+	int_matrix_read_csv(file_dual_spread,
+			Dual_spread_idx, a, b,
+			0 /* verbose_level */);
+	if (a != nb_spreads) {
+		cout << "a != nb_spreads" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "Reading file_dual_spread table from file "
+				<< file_dual_spread << " done" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Reading file_isomorphism_type_of_spreads "
+				"computing s2l and l2s" << endl;
+	}
+
+	int *s2l, *l2s;
+	int i, idx;
+	int *set;
+	int extra_data[1];
+
+	extra_data[0] = spread_size;
+
+	set = NEW_int(spread_size);
+	s2l = NEW_int(nb_spreads);
+	l2s = NEW_int(nb_spreads);
+	for (i = 0; i < nb_spreads; i++) {
+		int_vec_copy(Spread_table + i * spread_size, set, spread_size);
+		int_vec_heapsort(set, spread_size);
+		if (!search_general(Spread_table_lexleast, nb_spreads, set, idx,
+				table_of_sets_compare_func,
+				extra_data, 0 /*verbose_level*/)) {
+			cout << "projective_space_with_action::select_packings "
+					"cannot find spread " << i << " = ";
+			int_vec_print(cout, set, spread_size);
+			cout << endl;
+			exit(1);
+		}
+		s2l[i] = idx;
+		l2s[idx] = i;
+	}
+	if (f_v) {
+		cout << "Reading file_isomorphism_type_of_spreads "
+				"computing s2l and l2s done" << endl;
+	}
 
 	int g, table_length, nb_reject = 0;
 
@@ -2576,7 +2678,9 @@ void projective_space_with_action::select_packings(
 		int canonical_labeling_sz;
 		int nb_rows, nb_cols;
 		object_in_projective_space *OiP;
-
+		int f_accept;
+		int *set1;
+		int *set2;
 
 		ago = S->get_int(g + 1, ago_idx);
 		nb_rows = S->get_int(g + 1, nb_rows_idx);
@@ -2585,14 +2689,62 @@ void projective_space_with_action::select_packings(
 		text = S->get_string(g + 1, input_set_idx);
 		int_vec_scan(text, the_set_in, set_size_in);
 
+		packing_size = set_size_in;
 
-		if (f_v) {
+		if (f_v && (g % 1000) == 0) {
 			cout << "File " << fname
 					<< ", input set " << g << " / "
 					<< table_length << endl;
 			//int_vec_print(cout, the_set_in, set_size_in);
 			//cout << endl;
 			}
+
+
+		if (f_self_dual) {
+			set1 = NEW_int(packing_size);
+			set2 = NEW_int(packing_size);
+
+			// test if self-dual:
+			for (i = 0; i < packing_size; i++) {
+				a = the_set_in[i];
+				b = s2l[a];
+				set1[i] = b;
+			}
+			int_vec_heapsort(set1, packing_size);
+			for (i = 0; i < packing_size; i++) {
+				a = set1[i];
+				b = Dual_spread_idx[a];
+				set2[i] = b;
+			}
+			int_vec_heapsort(set2, packing_size);
+
+#if 0
+			cout << "set1: ";
+			int_vec_print(cout, set1, packing_size);
+			cout << endl;
+			cout << "set2: ";
+			int_vec_print(cout, set2, packing_size);
+			cout << endl;
+#endif
+			if (int_vec_compare(set1, set2, packing_size) == 0) {
+				cout << "The packing is self-dual" << endl;
+				f_accept = TRUE;
+			}
+			else {
+				f_accept = FALSE;
+			}
+			FREE_int(set1);
+			FREE_int(set2);
+		}
+		if (f_ago) {
+			if (ago == select_ago) {
+				f_accept = TRUE;
+			}
+			else {
+				f_accept = FALSE;
+			}
+		}
+
 
 		if (FALSE) {
 			cout << "canonical_form_idx=" << canonical_form_idx << endl;
@@ -2698,40 +2850,48 @@ void projective_space_with_action::select_packings(
 				}
 			}
 
-		if (CB->n == 0) {
+		if (g == 0) {
 			if (f_v) {
 				cout << "projective_space_with_action::select_packings "
 						"before CB->init" << endl;
 			}
 			CB->init(table_length, canonical_form_len, verbose_level);
+		}
+
+		if (f_accept) {
+
+			nb_accept++;
+
+			if (f_v) {
+				cout << "projective_space_with_action::select_packings "
+						"before CB->add" << endl;
 			}
-		if (f_v) {
-			cout << "projective_space_with_action::select_packings "
-					"before CB->add" << endl;
+
+			ret = CB->add(canonical_form, OiP, 0 /*verbose_level*/);
+			if (ret == 0) {
+				nb_reject++;
+			}
+			if (f_v) {
+				cout << "projective_space_with_action::select_packings "
+						"CB->add returns " << ret
+						<< " nb iso = " << CB->nb_types
+						<< " nb_reject=" << nb_reject
+						<< " nb_accept=" << nb_accept
+						<< endl;
+			}
+
+
+			int idx;
+
+			object_in_projective_space_with_action *OiPA;
+
+			OiPA = NEW_OBJECT(object_in_projective_space_with_action);
+
+			OiPA->init_known_ago(OiP, ago, nb_rows, nb_cols,
+					canonical_labeling, 0 /*verbose_level*/);
+			idx = CB->type_of[CB->n - 1];
+			CB->Type_extra_data[idx] = OiPA;
 		}
-		ret = CB->add(canonical_form, OiP, 0 /*verbose_level*/);
-		if (ret == 0) {
-			nb_reject++;
-		}
-		if (f_v) {
-			cout << "projective_space_with_action::select_packings "
-					"CB->add returns " << ret
-					<< " nb iso = " << CB->nb_types
-					<< " nb_reject=" << nb_reject << endl;
-		}
-
-
-		int idx;
-
-		object_in_projective_space_with_action *OiPA;
-
-		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
-
-		OiPA->init_known_ago(OiP, ago, nb_rows, nb_cols,
-				canonical_labeling, 0 /*verbose_level*/);
-		idx = CB->type_of[CB->n - 1];
-		CB->Type_extra_data[idx] = OiPA;
-
 
 		FREE_int(the_set_in);
 		//FREE_int(canonical_labeling);
@@ -2748,7 +2908,7 @@ void projective_space_with_action::select_packings(
 	if (f_v) {
 		cout << "projective_space_with_action::select_packings done, "
 				"we found " << CB->nb_types << " isomorphism types "
-				"of packings" << endl;
+				"of packings. nb_accept = " << nb_accept << endl;
 		}
 
 
@@ -3343,5 +3503,21 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 	FREE_OBJECT(SoS);
 	FREE_OBJECT(C_ago);
 }
+
+
+int table_of_sets_compare_func(void *data, int i,
+		int *search_object,
+		void *extra_data)
+{
+	int *Data = (int *) data;
+	int *p = (int *) extra_data;
+	int len = p[0];
+	int ret;
+
+	ret = int_vec_compare(Data + i * len, search_object, len);
+	return ret;
+}
+
+
 
 }}

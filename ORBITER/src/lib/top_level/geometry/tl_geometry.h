@@ -1182,13 +1182,9 @@ public:
 	int *input_spread_label;
 	int nb_input_spreads;
 
-	int nb_spreads;
-	int *Spread_table;
-		// [nb_spreads * spread_size]
-	int *Dual_spread_idx;
-		// [nb_spreads]
-	int *isomorphism_type_of_spread;
-		// [nb_spreads]
+	spread_tables *Spread_tables;
+	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
+
 	action *A_on_spreads;
 
 
@@ -1219,31 +1215,21 @@ public:
 		int verbose_level);
 	void init2(int verbose_level);
 	void compute_spread_table(int verbose_level);
-	int test_if_orbit_is_partial_packing(
-		schreier *Orbits, int orbit_idx,
-		int *orbit1, int verbose_level);
-	int test_if_pair_of_orbits_are_adjacent(
-		schreier *Orbits, int a, int b,
-		int *orbit1, int *orbit2, int verbose_level);
-	// tests if every spread from orbit a
-	// is line-disjoint from every spread from orbit b
-	int test_if_pair_of_sets_are_adjacent(
-		int *set1, int sz1, int *set2, int sz2,
-		int verbose_level);
-	int test_if_spreads_are_disjoint_based_on_table(
-		int *Spread_table, int a, int b);
 	void init_P3(int verbose_level);
 	void load_input_spreads(int &N,
 		int f_packing_select_spread,
 		int *packing_select_spread, int packing_select_spread_nb,
 		int verbose_level);
 	void make_spread_table(
-		int N, int *input_spreads,
+		int nb_spreads, int *input_spreads,
 		int nb_input_spreads, int *input_spread_label,
-		int **&Sets, int *&isomorphism_type_of_spread, int &nb_spreads,
+		int **&Sets, int *&isomorphism_type_of_spread,
 		int verbose_level);
-	void compute_dual_spreads(
-		int **Sets, int verbose_level);
+	void compute_dual_spreads(int **Sets,
+			int *&Dual_spread_idx,
+			int *&self_dual_spread_idx,
+			int &nb_self_dual_spreads,
+			int verbose_level);
 	int test_if_packing_is_self_dual(int *packing, int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
@@ -1282,15 +1268,17 @@ public:
 		int verbose_level);
 	int is_adjacent(int i, int j);
 	void read_spread_table(
-			const char *fname_spread_table,
-			const char *fname_spread_table_iso,
+			//const char *fname_spread_table,
+			//const char *fname_spread_table_iso,
 			int verbose_level);
 	void create_action_on_spreads(int verbose_level);
+#if 0
 	void type_of_packing(
 			const char *fname_spread_table,
 			const char *fname_spread_table_iso,
 			const char *fname_packings,
 			int verbose_level);
+#endif
 	void conjugacy_classes(int verbose_level);
 	void read_conjugacy_classes(char *fname,
 			int verbose_level);
@@ -1308,6 +1296,18 @@ public:
 		const char *element_description,
 		const char *label,
 		int verbose_level);
+	int test_if_orbit_is_partial_packing(
+		schreier *Orbits, int orbit_idx,
+		int *orbit1, int verbose_level);
+	int test_if_pair_of_orbits_are_adjacent(
+		schreier *Orbits, int a, int b,
+		int *orbit1, int *orbit2, int verbose_level);
+	// tests if every spread from orbit a
+	// is line-disjoint from every spread from orbit b
+	int test_if_pair_of_sets_are_adjacent(
+		int *set1, int sz1, int *set2, int sz2,
+		int verbose_level);
+	int test_if_spreads_are_disjoint_based_on_table(int a, int b);
 
 	// packing2.C
 	void compute_list_of_lines_from_packing(

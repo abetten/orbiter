@@ -18,7 +18,53 @@ namespace top_level {
 
 packing::packing()
 {
-	null();
+	T = NULL;
+	F = NULL;
+	spread_size = 0;
+	nb_lines = 0;
+	search_depth = 0;
+
+	starter_directory_name[0] = 0;
+	prefix[0] = 0;
+	prefix_with_directory[0] = 0;
+
+
+	f_lexorder_test = TRUE;
+	q = 0;
+	size_of_packing = 0;
+		// the number of spreads in a packing,
+		// which is q^2 + q + 1
+
+	P3 = NULL;
+
+
+	nb_spreads_up_to_isomorphism = 0;
+		// the number of spreads
+		// from the classification
+	input_spreads = NULL;
+	input_spread_label = NULL;
+	nb_input_spreads = 0;
+
+	Spread_tables = NULL;
+	tmp_isomorphism_type_of_spread = NULL;
+
+	A_on_spreads = NULL;
+
+
+	bitvector_adjacency = NULL;
+	bitvector_length = 0;
+	degree = NULL;
+
+	Poset = NULL;
+	gen = NULL;
+
+	nb_needed = 0;
+
+
+	f_split_klein = FALSE;
+	split_klein_r = 0;
+	split_klein_m = 1;
+	//null();
 }
 
 packing::~packing()
@@ -28,15 +74,6 @@ packing::~packing()
 
 void packing::null()
 {
-	bitvector_adjacency = NULL;
-	f_split_klein = FALSE;
-	split_klein_r = 0;
-	split_klein_m = 1;
-	input_spreads = NULL;
-	input_spread_label = NULL;
-	Spread_table = NULL;
-	Dual_spread_idx = NULL;
-	P3 = NULL;
 }
 
 void packing::freeself()
@@ -50,12 +87,9 @@ void packing::freeself()
 	if (input_spread_label) {
 		FREE_int(input_spread_label);
 		}
-	if (Spread_table) {
-		FREE_int(Spread_table);
-		}
-	if (Dual_spread_idx) {
-		FREE_int(Dual_spread_idx);
-		}
+	if (Spread_tables) {
+		FREE_OBJECT(Spread_tables);
+	}
 	if (P3) {
 		delete P3;
 		}
@@ -115,18 +149,17 @@ void packing::init(spread *T,
 		}
 	
 
+	Spread_tables = NEW_OBJECT(spread_tables);
 
-	load_input_spreads(nb_spreads, f_packing_select_spread,
+	load_input_spreads(Spread_tables->nb_spreads,
+			f_packing_select_spread,
 			packing_select_spread, packing_select_spread_nb,
 			verbose_level - 1);
 
 	if (f_v) {
 		cout << "We have " << nb_input_spreads << " input spreads, "
-				"nb_spreads = " << nb_spreads << endl;
+				"nb_spreads = " << Spread_tables->nb_spreads << endl;
 		}
-
-
-
 
 
 	if (f_v) {
@@ -183,16 +216,20 @@ void packing::init2(int verbose_level)
 void packing::compute_spread_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
+	int i;
 	int **Sets;
+	int nb_spreads;
+	int *isomorphism_type_of_spread;
+	int *Spread_table;
 
 	if (f_v) {
 		cout << "packing::compute_spread_table" << endl;
 		}
 
+	nb_spreads = Spread_tables->nb_spreads;
 	Sets = NEW_pint(nb_spreads);
+
 	isomorphism_type_of_spread = NEW_int(nb_spreads);
-	//nb_spreads = 0;
 
 
 
@@ -202,7 +239,7 @@ void packing::compute_spread_table(int verbose_level)
 		}
 	make_spread_table(nb_spreads,
 		input_spreads, nb_input_spreads, input_spread_label,
-		Sets, isomorphism_type_of_spread, nb_spreads, 
+		Sets, isomorphism_type_of_spread,
 		verbose_level - 1);
 	if (f_v) {
 		cout << "packing::compute_spread_table "
@@ -210,49 +247,39 @@ void packing::compute_spread_table(int verbose_level)
 		}
 
 
-
-
 	Spread_table = NEW_int(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
-		for (j = 0; j < spread_size; j++) {
-			Spread_table[i * spread_size + j] = Sets[i][j /*+ 1*/];
-			}
-		}
-	if (f_v) {
-		cout << "packing::compute_spread_table Spread_table computed, "
-				"writing file" << endl;
+		int_vec_copy(Sets[i], Spread_table + i * spread_size, spread_size);
 		}
 
-	int_matrix_write_csv("Spread_table.csv",
-			Spread_table, nb_spreads, spread_size);
-	if (f_v) {
-		cout << "packing::compute_spread_table Spread_table computed, "
-				"written file Spread_table.csv" << endl;
-		}
 
-	int_vec_write_csv(
-			isomorphism_type_of_spread, nb_spreads,
-			"isomorphism_type_of_spread.csv",
-			"isomorphism_type_of_spread");
-	if (f_v) {
-		cout << "packing::compute_spread_table "
-				"Spread_table computed, "
-				"written file isomorphism_type_of_spread.csv" << endl;
-		}
+	Spread_tables->init(F, FALSE, verbose_level);
 
-	if (f_v) {
-		cout << "packing::compute_spread_table "
-				"before compute_dual_spreads" << endl;
-		}
-	compute_dual_spreads(Sets, verbose_level - 1);
-	int_vec_write_csv(
-			Dual_spread_idx, nb_spreads,
-			"dual_spread_table.csv",
-			"dual_spread_idx");
-	if (f_v) {
-		cout << "packing::compute_spread_table "
-				"after compute_dual_spreads" << endl;
-		}
+
+	Spread_tables->init_spread_table(nb_spreads,
+			Spread_table, isomorphism_type_of_spread,
+			verbose_level);
+
+	int *Dual_spread_idx;
+	int *self_dual_spread_idx;
+	int nb_self_dual_spreads;
+
+	compute_dual_spreads(Sets,
+				Dual_spread_idx,
+				self_dual_spread_idx,
+				nb_self_dual_spreads,
+				verbose_level);
+
+
+
+	Spread_tables->init_tables(nb_spreads,
+			Spread_table, isomorphism_type_of_spread,
+			Dual_spread_idx,
+			self_dual_spread_idx, nb_self_dual_spreads,
+			verbose_level);
+
+	Spread_tables->save(verbose_level);
+
 
 	if (nb_spreads < 10000) {
 		cout << "packing::compute_spread_table "
@@ -276,157 +303,6 @@ void packing::compute_spread_table(int verbose_level)
 	if (f_v) {
 		cout << "packing::compute_spread_table done" << endl;
 		}
-}
-
-
-int packing::test_if_orbit_is_partial_packing(
-	schreier *Orbits, int orbit_idx,
-	int *orbit1, int verbose_level)
-{
-	int f_v = FALSE; // (verbose_level >= 1);
-	int len;
-	int a, b;
-	int i, j, ret;
-
-	if (f_v) {
-		cout << "packing::test_if_orbit_is_partial_packing "
-				"orbit_idx = " << orbit_idx << endl;
-		}
-	Orbits->get_orbit(orbit_idx,
-			orbit1, len, 0 /* verbose_level*/);
-	for (i = 0; i < len; i++) {
-		a = orbit1[i];
-		for (j = i + 1; j < len; j++) {
-			b = orbit1[j];
-			if (!test_if_spreads_are_disjoint_based_on_table(
-					Spread_table, a, b)) {
-				break;
-				}
-			}
-		if (j < len) {
-			break;
-			}
-		}
-	if (i < len) {
-		//cout << "is NOT a partial packing" << endl;
-		ret = FALSE;
-		}
-	else {
-		ret = TRUE;
-		//cout << "IS a partial packing" << endl;
-		}
-	return ret;
-}
-
-int packing::test_if_pair_of_orbits_are_adjacent(
-	schreier *Orbits, int a, int b,
-	int *orbit1, int *orbit2,
-	int verbose_level)
-// tests if every spread from orbit a
-// is line-disjoint from every spread from orbit b
-{
-	int f_v = FALSE; // (verbose_level >= 1);
-	int len1, len2;
-	int s1, s2;
-	int i, j;
-
-	if (f_v) {
-		cout << "packing::test_if_pair_of_orbits_"
-				"are_adjacent a=" << a << " b=" << b << endl;
-		}
-	if (a == b) {
-		return FALSE;
-		}
-	Orbits->get_orbit(a, orbit1, len1, 0 /* verbose_level*/);
-	Orbits->get_orbit(b, orbit2, len2, 0 /* verbose_level*/);
-	for (i = 0; i < len1; i++) {
-		s1 = orbit1[i];
-		for (j = 0; j < len2; j++) {
-			s2 = orbit2[j];
-			if (!test_if_spreads_are_disjoint_based_on_table(
-					Spread_table, s1, s2)) {
-				break;
-				}
-			}
-		if (j < len2) {
-			break;
-			}
-		}
-	if (i < len1) {
-		return FALSE;
-		}
-	else {
-		return TRUE;
-		}
-}
-
-int packing::test_if_pair_of_sets_are_adjacent(
-		int *set1, int sz1,
-		int *set2, int sz2,
-		int verbose_level)
-{
-	int f_v = FALSE; // (verbose_level >= 1);
-	int s1, s2;
-	int i, j;
-
-	if (f_v) {
-		cout << "packing::test_if_"
-				"pair_of_sets_are_adjacent" << endl;
-		}
-	for (i = 0; i < sz1; i++) {
-		s1 = set1[i];
-		for (j = 0; j < sz2; j++) {
-			s2 = set2[j];
-			if (!test_if_spreads_are_disjoint_based_on_table(
-					Spread_table, s1, s2)) {
-				break;
-				}
-			}
-		if (j < sz2) {
-			break;
-			}
-		}
-	if (i < sz1) {
-		return FALSE;
-		}
-	else {
-		return TRUE;
-		}
-}
-
-int packing::test_if_spreads_are_disjoint_based_on_table(
-		int *Spread_table, int a, int b)
-{
-	int *p, *q;
-	int u, v;
-
-	p = Spread_table + a * spread_size;
-	q = Spread_table + b * spread_size;
-	u = v = 0;
-	while (u + v < 2 * spread_size) {
-		if (p[u] == q[v]) {
-			break;
-			}
-		if (u == spread_size) {
-			v++;
-			}
-		else if (v == spread_size) {
-			u++;
-			}
-		else if (p[u] < q[v]) {
-			u++;
-			}
-		else {
-			v++;
-			}
-		}
-	if (u + v < 2 * spread_size) {
-		return FALSE;	
-		}
-	else {
-		return TRUE;
-		}
-	
 }
 
 void packing::init_P3(int verbose_level)
@@ -543,20 +419,20 @@ void packing::load_input_spreads(int &N,
 
 
 void packing::make_spread_table(
-	int N, int *input_spreads,
+	int nb_spreads, int *input_spreads,
 	int nb_input_spreads, int *input_spread_label,
 	int **&Sets, int *&isomorphism_type_of_spread,
-	int &nb_spreads,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	int nb_spreads1;
 
 	if (f_v) {
 		cout << "packing::make_spread_table" << endl;
 		}
-	Sets = NEW_pint(N);
-	isomorphism_type_of_spread = NEW_int(N);
+	Sets = NEW_pint(nb_spreads);
+	isomorphism_type_of_spread = NEW_int(nb_spreads);
 
 	orbit_of_sets *SetOrb;
 
@@ -587,29 +463,34 @@ void packing::make_spread_table(
 
 		} // next i
 
-	nb_spreads = 0;
+	nb_spreads1 = 0;
 
 	for (i = 0; i < nb_input_spreads; i++) {
 
 		for (j = 0; j < SetOrb[i].used_length; j++) {
 
-			Sets[nb_spreads] = NEW_int(spread_size);
+			Sets[nb_spreads1] = NEW_int(spread_size);
 
-			int_vec_copy(SetOrb[i].Sets[j], Sets[nb_spreads], spread_size);
+			int_vec_copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
 
-			isomorphism_type_of_spread[nb_spreads] = i;
+			isomorphism_type_of_spread[nb_spreads1] = i;
 
 
-			nb_spreads++;
+			nb_spreads1++;
 
 		} // next j
 	} // next i
 
 	if (f_v) {
 		cout << "packing::make_spread_table We found "
-				<< nb_spreads << " labeled spreads" << endl;
+				<< nb_spreads1 << " labeled spreads" << endl;
 		}
 
+	if (nb_spreads1 != nb_spreads) {
+		cout << "packing::make_spread_table "
+				"nb_spreads1 != nb_spreads" << endl;
+		exit(1);
+	}
 
 	FREE_OBJECTS(SetOrb);
 
@@ -617,6 +498,8 @@ void packing::make_spread_table(
 		cout << "packing::make_spread_table before "
 				"sorting spread table of size " << nb_spreads << endl;
 	}
+	tmp_isomorphism_type_of_spread = isomorphism_type_of_spread;
+		// for packing_swap_func
 	Heapsort_general(Sets, nb_spreads,
 			packing_spread_compare_func,
 			packing_swap_func,
@@ -643,24 +526,59 @@ void packing::make_spread_table(
 }
 
 
-void packing::compute_dual_spreads(int **Sets, int verbose_level)
+void packing::compute_dual_spreads(int **Sets,
+		int *&Dual_spread_idx,
+		int *&self_dual_spread_idx,
+		int &nb_self_dual_spreads,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *dual_spread;
-	int i, idx;
+	int i, j, a, b, idx;
+	int nb_spreads;
 
 	if (f_v) {
 		cout << "packing::compute_dual_spreads" << endl;
 		}
-	dual_spread = NEW_int(spread_size /*+ 1*/);
+
+	nb_spreads = Spread_tables->nb_spreads;
+
+	dual_spread = NEW_int(spread_size);
 	Dual_spread_idx = NEW_int(nb_spreads);
+	self_dual_spread_idx = NEW_int(nb_spreads);
+
+	nb_self_dual_spreads = 0;
+
 	for (i = 0; i < nb_spreads; i++) {
+
+#if 0
 		T->compute_dual_spread(
 				Spread_table + i * spread_size,
 				dual_spread /*+ 1*/, verbose_level - 4);
-		int_vec_heapsort(dual_spread /*+ 1*/, spread_size);
+#else
+		for (j = 0; j < spread_size; j++) {
+			a = Spread_tables->spread_table[i * spread_size + j];
+			b = Spread_tables->dual_line_idx[a];
+			dual_spread[j] = b;
+		}
+#endif
+		if (f_v) {
+			cout << "packing::compute_dual_spreads spread "
+					<< i << " / " << nb_spreads << endl;
+			int_vec_print(cout,
+					Spread_tables->spread_table +
+					i * spread_size, spread_size);
+			cout << endl;
+			int_vec_print(cout, dual_spread, spread_size);
+			cout << endl;
+			}
+		int_vec_heapsort(dual_spread, spread_size);
 		//dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
+		if (f_v) {
+			int_vec_print(cout, dual_spread, spread_size);
+			cout << endl;
+		}
 
 		int v[1];
 
@@ -676,17 +594,28 @@ void packing::compute_dual_spreads(int **Sets, int verbose_level)
 						<< " is spread no " << idx << endl;
 				}
 			Dual_spread_idx[i] = idx;
+			if (idx == i) {
+				self_dual_spread_idx[nb_self_dual_spreads++] = i;
 			}
+		}
 		else {
 			cout << "The dual spread is not in the list, error!" << endl;
 			cout << "dual_spread: ";
 			int_vec_print(cout, dual_spread, spread_size);
 			cout << endl;
 			exit(1);
-			}
 		}
+	}
 
 	FREE_int(dual_spread);
+	if (f_v) {
+		cout << "packing::compute_dual_spreads we found "
+				<< nb_self_dual_spreads << " self dual spreads" << endl;
+		cout << "They are: ";
+		int_vec_print(cout, self_dual_spread_idx, nb_self_dual_spreads);
+		cout << endl;
+		}
+
 
 	if (f_v) {
 		cout << "packing::compute_dual_spreads done" << endl;
@@ -715,7 +644,7 @@ int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = packing[i];
-		b = Dual_spread_idx[a];
+		b = Spread_tables->dual_spread_idx[a];
 		dual_packing[i] = b;
 	}
 	int_vec_heapsort(dual_packing, size_of_packing);
@@ -733,98 +662,17 @@ int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
 void packing::compute_adjacency_matrix(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, k, cnt, N2;
 
 	if (f_v) {
 		cout << "packing::compute_adjacency_matrix" << endl;
 		}
 
+	Spread_tables->compute_adjacency_matrix(
+			bitvector_adjacency,
+			bitvector_length,
+			verbose_level);
 
-	N2 = (nb_spreads * nb_spreads) >> 1;
 	
-	bitvector_length = (N2 + 7) >> 3;
-
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-
-	if (f_v) {
-		cout << "after allocating adjacency bitvector" << endl;
-		cout << "computing adjacency matrix:" << endl;
-		}
-	k = 0;
-	cnt = 0;
-	for (i = 0; i < nb_spreads; i++) {
-		for (j = i + 1; j < nb_spreads; j++) {
-
-			int *p, *q;
-			int u, v;
-
-			p = Spread_table + i * spread_size;
-			q = Spread_table + j * spread_size;
-			u = v = 0;
-			while (u + v < 2 * spread_size) {
-				if (p[u] == q[v]) {
-					break;
-					}
-				if (u == spread_size) {
-					v++;
-					}
-				else if (v == spread_size) {
-					u++;
-					}
-				else if (p[u] < q[v]) {
-					u++;
-					}
-				else {
-					v++;
-					}
-				}
-			if (u + v < 2 * spread_size) {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
-					
-				}
-			else {
-				bitvector_m_ii(bitvector_adjacency, k, 1);
-				cnt++;
-				}
-
-			k++;
-			if ((k & ((1 << 21) - 1)) == 0) {
-				cout << "i=" << i << " j=" << j << " k=" << k
-						<< " / " << N2 << endl;
-				}
-			}
-		}
-
-
-
-
-
-	{
-	colored_graph *CG;
-	char fname[1000];
-
-	CG = NEW_OBJECT(colored_graph);
-	int *color;
-
-	color = NEW_int(nb_spreads);
-	int_vec_zero(color, nb_spreads);
-
-	CG->init(nb_spreads,
-			1, color, bitvector_adjacency,
-			FALSE, verbose_level);
-
-	sprintf(fname, "disjoint_spreads_%d.colored_graph", q);
-
-	CG->save(fname, verbose_level);
-
-	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
-
-	FREE_int(color);
-	FREE_OBJECT(CG);
-	}
-
-
 	if (f_v) {
 		cout << "packing::compute_adjacency_matrix done" << endl;
 		}
@@ -918,8 +766,8 @@ int packing::spreads_are_disjoint(int i, int j)
 {
 	int *p1, *p2;
 
-	p1 = Spread_table + i * spread_size;
-	p2 = Spread_table + j * spread_size;
+	p1 = Spread_tables->spread_table + i * spread_size;
+	p2 = Spread_tables->spread_table + j * spread_size;
 	if (test_if_sets_are_disjoint(p1, p2,
 			spread_size, spread_size)) {
 		return TRUE;
@@ -1056,7 +904,7 @@ void packing::lifting_prepare_function_new(
 	for (j = 0; j < nb_cols; j++) {
 		s = live_blocks2[j];
 		for (a = 0; a < spread_size; a++) {
-			i = Spread_table[s * spread_size + a];
+			i = Spread_tables->spread_table[s * spread_size + a];
 			u = free_point_idx[i];
 			if (u == -1) {
 				cout << "packing::lifting_prepare_function "
@@ -1093,7 +941,7 @@ void packing::compute_covered_points(
 	for (i = 0; i < starter_size; i++) {
 		s = starter[i];
 		for (j = 0; j < spread_size; j++) {
-			a = Spread_table[s * spread_size + j];
+			a = Spread_tables->spread_table[s * spread_size + j];
 			points_covered_by_starter[i * spread_size + j] = a;
 			}
 		}
@@ -1163,9 +1011,9 @@ void packing::compute_live_blocks2(
 	if (f_v) {
 		cout << "packing::compute_live_blocks2" << endl;
 		}
-	live_blocks2 = NEW_int(nb_spreads);
+	live_blocks2 = NEW_int(Spread_tables->nb_spreads);
 	nb_live_blocks2 = 0;
-	for (i = 0; i < nb_spreads; i++) {
+	for (i = 0; i < Spread_tables->nb_spreads; i++) {
 		for (j = 0; j < starter_size; j++) {
 			if (!is_adjacent(starter[j], i)) {
 				break;
@@ -1194,7 +1042,7 @@ int packing::is_adjacent(int i, int j)
 		return FALSE;
 		}
 	if (bitvector_adjacency) {
-		k = ij2k(i, j, nb_spreads);
+		k = ij2k(i, j, Spread_tables->nb_spreads);
 		if (bitvector_s_i(bitvector_adjacency, k)) {
 			return TRUE;
 			}
@@ -1212,48 +1060,32 @@ int packing::is_adjacent(int i, int j)
 		}
 }
 
-void packing::read_spread_table(
-		const char *fname_spread_table,
-		const char *fname_spread_table_iso,
-		int verbose_level)
+void packing::read_spread_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int m, n;
+	//int m, n;
 
 	if (f_v) {
 		cout << "packing::read_spread_table" << endl;
 		}
 
-	cout << "Reading file Spread_table.csv ..." << endl;
-	
-	int_matrix_read_csv(fname_spread_table,
-			Spread_table, nb_spreads, n,
-			0 /* verbose_level */);
-	
-	cout << "Read file " << fname_spread_table
-			<< " with " << nb_spreads
-			<< " spreads of size " << n << endl;
+	Spread_tables = NEW_OBJECT(spread_tables);
 
-	if (n != spread_size) {
-		cout << "n != spread_size" << endl;
-		exit(1);
+	if (f_v) {
+		cout << "packing::read_spread_table "
+				"before Spread_tables->init" << endl;
+		}
+
+	Spread_tables->init(F,
+			TRUE /* f_load */,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packing::read_spread_table "
+				"after Spread_tables->init" << endl;
 		}
 
 
-	cout << "Reading file " << fname_spread_table_iso << " ..." << endl;
-	
-	int_matrix_read_csv(
-		fname_spread_table_iso,
-		isomorphism_type_of_spread, m, n,
-		0 /* verbose_level */);
-	
-	cout << "Read file isomorphism_type_of_spread.csv "
-			"with " << m << " rows" << endl;
-
-	if (m != nb_spreads) {
-		cout << "m != nb_spreads" << endl;
-		exit(1);
-		}
 
 	if (f_v) {
 		cout << "packing::read_spread_table done" << endl;
@@ -1276,7 +1108,8 @@ void packing::create_action_on_spreads(int verbose_level)
 	A_on_spreads = create_induced_action_on_sets(
 			T->A2,
 			T->A->Sims,
-			nb_spreads, spread_size, Spread_table,
+			Spread_tables->nb_spreads, spread_size,
+			Spread_tables->spread_table,
 			f_induce, 0 /* verbose_level */);
 
 	cout << "created action on spreads" << endl;
@@ -1288,6 +1121,7 @@ void packing::create_action_on_spreads(int verbose_level)
 }
 
 
+#if 0
 void packing::type_of_packing(
 		const char *fname_spread_table,
 		const char *fname_spread_table_iso,
@@ -1340,6 +1174,7 @@ void packing::type_of_packing(
 		cout << "packing::type_of_packing done" << endl;
 		}
 }
+#endif
 
 void packing::conjugacy_classes(int verbose_level)
 {
@@ -2176,6 +2011,126 @@ void packing::centralizer_of_element(
 		}
 }
 
+int packing::test_if_orbit_is_partial_packing(
+	schreier *Orbits, int orbit_idx,
+	int *orbit1, int verbose_level)
+{
+	int f_v = FALSE; // (verbose_level >= 1);
+	int len;
+	int a, b;
+	int i, j, ret;
+
+	if (f_v) {
+		cout << "packing::test_if_orbit_is_partial_packing "
+				"orbit_idx = " << orbit_idx << endl;
+		}
+	Orbits->get_orbit(orbit_idx,
+			orbit1, len, 0 /* verbose_level*/);
+	for (i = 0; i < len; i++) {
+		a = orbit1[i];
+		for (j = i + 1; j < len; j++) {
+			b = orbit1[j];
+			if (!test_if_spreads_are_disjoint_based_on_table(
+					a, b)) {
+				break;
+				}
+			}
+		if (j < len) {
+			break;
+			}
+		}
+	if (i < len) {
+		//cout << "is NOT a partial packing" << endl;
+		ret = FALSE;
+		}
+	else {
+		ret = TRUE;
+		//cout << "IS a partial packing" << endl;
+		}
+	return ret;
+}
+
+int packing::test_if_pair_of_orbits_are_adjacent(
+	schreier *Orbits, int a, int b,
+	int *orbit1, int *orbit2,
+	int verbose_level)
+// tests if every spread from orbit a
+// is line-disjoint from every spread from orbit b
+{
+	int f_v = FALSE; // (verbose_level >= 1);
+	int len1, len2;
+	int s1, s2;
+	int i, j;
+
+	if (f_v) {
+		cout << "packing::test_if_pair_of_orbits_"
+				"are_adjacent a=" << a << " b=" << b << endl;
+		}
+	if (a == b) {
+		return FALSE;
+		}
+	Orbits->get_orbit(a, orbit1, len1, 0 /* verbose_level*/);
+	Orbits->get_orbit(b, orbit2, len2, 0 /* verbose_level*/);
+	for (i = 0; i < len1; i++) {
+		s1 = orbit1[i];
+		for (j = 0; j < len2; j++) {
+			s2 = orbit2[j];
+			if (!test_if_spreads_are_disjoint_based_on_table(
+					s1, s2)) {
+				break;
+				}
+			}
+		if (j < len2) {
+			break;
+			}
+		}
+	if (i < len1) {
+		return FALSE;
+		}
+	else {
+		return TRUE;
+		}
+}
+
+int packing::test_if_pair_of_sets_are_adjacent(
+		int *set1, int sz1,
+		int *set2, int sz2,
+		int verbose_level)
+{
+	int f_v = FALSE; // (verbose_level >= 1);
+	int s1, s2;
+	int i, j;
+
+	if (f_v) {
+		cout << "packing::test_if_"
+				"pair_of_sets_are_adjacent" << endl;
+		}
+	for (i = 0; i < sz1; i++) {
+		s1 = set1[i];
+		for (j = 0; j < sz2; j++) {
+			s2 = set2[j];
+			if (!test_if_spreads_are_disjoint_based_on_table(
+					s1, s2)) {
+				break;
+				}
+			}
+		if (j < sz2) {
+			break;
+			}
+		}
+	if (i < sz1) {
+		return FALSE;
+		}
+	else {
+		return TRUE;
+		}
+}
+
+int packing::test_if_spreads_are_disjoint_based_on_table(int a, int b)
+{
+		return Spread_tables->test_if_spreads_are_disjoint(a, b);
+}
+
 
 // #############################################################################
 // global functions:
@@ -2263,7 +2218,7 @@ void packing_early_test_function(int *S, int len,
 			continue;
 			}
 		if (P->bitvector_adjacency) {
-			k = ij2k(a, b, P->nb_spreads);
+			k = ij2k(a, b, P->Spread_tables->nb_spreads);
 			if (bitvector_s_i(P->bitvector_adjacency, k)) {
 				good_candidates[nb_good_candidates++] = b;
 				}
@@ -2336,7 +2291,7 @@ int packing_spread_compare_func(void *data, int i, int j, void *extra_data)
 void packing_swap_func(void *data, int i, int j, void *extra_data)
 {
 	packing *P = (packing *) extra_data;
-	int *d = P->isomorphism_type_of_spread;
+	int *d = P->tmp_isomorphism_type_of_spread;
 	int **Sets = (int **) data;
 	int *p;
 	int a;

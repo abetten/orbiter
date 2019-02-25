@@ -53,8 +53,10 @@ int main(int argc, const char **argv)
 	int f_fname_spread_table_iso = FALSE;
 	const char *fname_spread_table_iso = NULL;
 
+#if 0
 	int f_type_of_packing = FALSE;
 	const char *type_of_packing_fname = NULL;
+#endif
 	int f_conjugacy_classes = FALSE;
 	int f_conjugacy_classes_and_normalizers = FALSE;
 	int f_make_element = FALSE;
@@ -172,11 +174,13 @@ int main(int argc, const char **argv)
 			fname_spread_table_iso = argv[++i];
 			cout << "-fname_spread_table_iso " << fname_spread_table_iso << endl;
 			}
+#if 0
 		else if (strcmp(argv[i], "-type_of_packing") == 0) {
 			f_type_of_packing = TRUE;
 			type_of_packing_fname = argv[++i];
 			cout << "-type_of_packing " << type_of_packing_fname << endl;
 			}
+#endif
 		else if (strcmp(argv[i], "-conjugacy_classes") == 0) {
 			f_conjugacy_classes = TRUE;
 			cout << "-conjugacy_classes " << endl;
@@ -306,6 +310,7 @@ int main(int argc, const char **argv)
 	if (f_compute_spread_table) {
 		P->compute_spread_table(verbose_level);
 	}
+#if 0
 	else if (f_type_of_packing) {
 		cout << "before P->type_of_packing" << endl;
 		if (!f_fname_spread_table) {
@@ -324,6 +329,7 @@ int main(int argc, const char **argv)
 		cout << "after P->type_of_packing" << endl;
 		//exit(1);
 		}
+#endif
 	else if (f_conjugacy_classes) {
 		cout << "before P->conjugacy_classes" << endl;
 		P->conjugacy_classes(verbose_level);

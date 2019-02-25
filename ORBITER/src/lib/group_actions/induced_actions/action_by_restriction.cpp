@@ -150,6 +150,10 @@ int action_by_restriction::compute_image(
 				"this time with more output" << endl;
 		b = A->element_image_of(points[i],
 				Elt, 10 /* verbose_level - 2*/);
+		cout << "action_by_restriction::compute_image fatal: "
+				"image point " << b << " not found" << endl;
+		cout << "action: ";
+		A->print_info();
 		exit(1);
 		}
 	if (f_v) {

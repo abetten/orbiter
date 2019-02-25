@@ -133,7 +133,7 @@ void invariants_packing::init(isomorph *Iso,
 		
 		for (i = 0; i < Iso->size; i++) {
 			spread_iso_type[i] =
-					P->isomorphism_type_of_spread[the_packing[i]];
+					P->Spread_tables->spread_iso_type[the_packing[i]];
 			}
 		for (i = 0; i < Iso->size; i++) {
 			Type_of_packing[orbit *
@@ -259,7 +259,7 @@ void invariants_packing::compute_dual_packings(
 
 	
 		for (i = 0; i < Iso->size; i++) {
-			dual_packing[i] = P->Dual_spread_idx[packing[i]];
+			dual_packing[i] = P->Spread_tables->dual_spread_idx[packing[i]];
 			}
 		int_vec_heapsort(packing, Iso->size);
 		int_vec_heapsort(dual_packing, Iso->size);
@@ -283,8 +283,8 @@ void invariants_packing::compute_dual_packings(
 
 	int_vecs_write_csv(Dual_idx, f_self_dual, 
 		Iso->Reps->count, "Dual_idx.csv", "dual_idx", "f_self_dual");
-	int_vec_write_csv(P->Dual_spread_idx, 
-		P->nb_spreads, "Dual_spread_idx.csv", "dual_spread_idx");
+	int_vec_write_csv(P->Spread_tables->dual_spread_idx,
+		P->Spread_tables->nb_spreads, "Dual_spread_idx.csv", "dual_spread_idx");
 	
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings done" << endl;
