@@ -1173,7 +1173,7 @@ int diophant::solve_all_mckay(int &nb_backtrack_nodes, int verbose_level)
 				"verbose_level=" << verbose_level << endl;
 		}
 	solve_mckay(label, maxresults,
-			nb_backtrack_nodes, nb_sol, verbose_level);
+			nb_backtrack_nodes, nb_sol, verbose_level - 2);
 	if (f_v) {
 		cout << "diophant::solve_all_mckay found " << _resultanz
 				<< " solutions in " << nb_backtrack_nodes
@@ -2520,6 +2520,7 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 	int m, n, s;
 	int cnt, i, j, d, h, a, nb_types, t, val;
 	int f_has_sum1;
+	int f_has_var_labels_save = FALSE;
 	
 	if (f_v) {
 		cout << "diophant::read_general_format" << endl;
@@ -2562,7 +2563,7 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 		str = remainder3.substr(0, i);
 		s = atoi(str.c_str());
 		string remainder4 = remainder3.substr(i + 1);
-		f_has_var_labels = atoi(remainder4.c_str());
+		f_has_var_labels_save = atoi(remainder4.c_str());
 
 
 		//cout << "diophant::read_general_format "
@@ -2571,14 +2572,16 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 		//str = remainder3.substr(i + 1);
 		cout << "diophant::read_general_format "
 				"m=" << m << " n=" << n << " sum=" << s
-				<< " f_has_var_labels=" << f_has_var_labels << endl;
+				<< " f_has_var_labels=" << f_has_var_labels_save << endl;
 
 		open(m, n);
+		f_has_var_labels = f_has_var_labels_save;
 		f_has_sum = f_has_sum1;
 		sum = s;
 
 		if (f_has_var_labels) {
 
+			cout << "reading var labels" << endl;
 			var_labels = NEW_int(n);
 			getline (myfile, line);
 			for (j = 0; j < n; j++) {
@@ -2591,8 +2594,12 @@ void diophant::read_general_format(const char *fname, int verbose_level)
 				line = remainder;
 			}
 		}
+		else {
+			cout << "not reading var labels" << endl;
+		}
 
 		for (cnt = 0; cnt < m; cnt++) {
+			cout << "reading equation " << cnt << " / " << m << ":" << endl;
 			getline (myfile, line);
 			i = line.find(" ");
 			remainder = line.substr(i + 1);

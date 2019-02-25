@@ -375,9 +375,9 @@ void mckay::tMCKAY::solve(int level,
 	vector<equation> &eqn, vector<int> &neqn, 
 	int numeqn, int verbose_level)
 {
-	int f_v = TRUE;//(verbose_level >= 1);
-	int f_vv = TRUE;//(verbose_level >= 2);
-	int f_vvv = TRUE;//(verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
     int i,j;
 	vector<int> lo, hi;
 	lo.resize(_varanz);
@@ -390,7 +390,7 @@ void mckay::tMCKAY::solve(int level,
 
 	//current_node = nb_calls_to_solve;
 	nb_calls_to_solve++;
-#if 1
+#if 0
 	if (f_vv) {
 		log_12l(nb_calls_to_solve, level);
 		//log_12l(current_node, level);
@@ -446,7 +446,7 @@ void mckay::tMCKAY::solve(int level,
 		}
 
 
-	if (TRUE) {
+	if (FALSE) {
         	int nacc = 0;
 		cout << " SOLVE level "<<level<< endl;
 	            cout<<"Number of active equations: ";
@@ -494,7 +494,7 @@ void mckay::tMCKAY::solve(int level,
 		eqn, neqn, 
 		numeqn, f_restriction_made, verbose_level - 1)) {
 
-#if 1
+#if 0
 		if (f_vv) {
 			log_12l(nb_calls_to_solve, level);
 			//log_12l(current_node, level);
@@ -573,7 +573,7 @@ void mckay::tMCKAY::solve(int level,
 
 //#if VERBOSE > 2
 
-#if 1
+#if 0
 			if (f_vvv) {
 				log_12l(nb_calls_to_solve, level);
 				//log_12l(current_node, level);
@@ -594,7 +594,7 @@ void mckay::tMCKAY::solve(int level,
 */
 
 	
-#if 1
+#if 0
 		if (TRUE /*(f_v && (current_node % 10000) == 0) || f_vv*/) {
 			//log_12l(current_node, level);
 			log_12l(nb_calls_to_solve, level);
@@ -650,6 +650,7 @@ void mckay::tMCKAY::solve(int level,
 			    for (j = 0; j <= level; j++) {
 			    	cout << j << " : " << alo[j] << " : " << ahi[j] << endl;
 			    	}
+#if 0
 #ifdef MCKAY_DEBUG
 		        if (TRUE/*((os_ticks() - ticks0) / os_ticks_per_second())
 		        		> INTERVAL_IN_SECONDS*/) {
@@ -663,7 +664,8 @@ void mckay::tMCKAY::solve(int level,
 					}
 				}
 #else
-		        cout << "MCKAY_DEBUG is FALSE" << endl;
+		       // cout << "MCKAY_DEBUG is FALSE" << endl;
+#endif
 #endif
 			}
 			solve(level + 1, lo, hi, active, numvar,
@@ -677,7 +679,7 @@ void mckay::tMCKAY::solve(int level,
 			} // next i
         } // else
 
-#if 1
+#if 0
 	if (f_vv) {
 			log_12l(nb_calls_to_solve, level);
 			//log_12l(current_node, level);

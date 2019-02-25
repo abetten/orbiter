@@ -447,8 +447,9 @@ int induced_action_element_image_of(action &A,
 		exit(1);
 		}
 	if (f_v) {
-		cout << "induced_action_element_image_of "
-				"image of " << a << " is " << b << endl;
+		cout << "induced_action_element_image_of type=";
+			action_print_symmetry_group_type(cout, A.type_G);
+			cout << " image of " << a << " is " << b << endl;
 		}
 	return b;
 }

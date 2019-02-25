@@ -100,6 +100,7 @@ MODULES= \
 		foundations/geometry/packing.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/projective_space.o \
+		foundations/geometry/spread_tables.o \
 		foundations/geometry/surface_lines.o \
 		foundations/geometry/surface_io.o \
 		foundations/geometry/surface.o \

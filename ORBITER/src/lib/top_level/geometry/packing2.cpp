@@ -25,7 +25,7 @@ void packing::compute_list_of_lines_from_packing(
 		}
 	for (i = 0; i < size_of_packing; i++) {
 		a = packing[i];
-		int_vec_copy(Spread_table + a * spread_size,
+		int_vec_copy(Spread_tables->spread_table + a * spread_size,
 				list_of_lines + i * spread_size, spread_size);
 #if 0
 		for (j = 0; j < spread_size; j++) {
@@ -508,7 +508,7 @@ void packing::report_isomorphism_type(
 	
 	for (i = 0; i < Iso->size; i++) {
 		packing[i] = data[i];
-		dual_packing[i] = Dual_spread_idx[packing[i]];
+		dual_packing[i] = Spread_tables->dual_spread_idx[packing[i]];
 		}
 
 	compute_list_of_lines_from_packing(
@@ -519,7 +519,7 @@ void packing::report_isomorphism_type(
 	f << "\\bigskip" << endl;
 
 	for (i = 0; i < Iso->size; i++) {
-		spread_iso_type[i] = isomorphism_type_of_spread[packing[i]];
+		spread_iso_type[i] = Spread_tables->spread_iso_type[packing[i]];
 		}
 	f << "spread : isotype : dualspread \\\\" << endl;
 	for (i = 0; i < Iso->size; i++) {
@@ -527,7 +527,7 @@ void packing::report_isomorphism_type(
 		f << " : ";
 		f << spread_iso_type[i];
 		f << " : ";
-		f << Dual_spread_idx[packing[i]];
+		f << Spread_tables->dual_spread_idx[packing[i]];
 		f << "\\\\" << endl;
 		}
 	//f << "\\\\" << endl;
@@ -982,15 +982,15 @@ void packing::report_extra_stuff(
 	f << "\\chapter{The Spreads of PG$(3," << q << ")$}"
 			<< endl << endl;
 
-	f << "PG$(3," << q << ")$ has " << nb_spreads
+	f << "PG$(3," << q << ")$ has " << Spread_tables->nb_spreads
 			<< " labeled spreads\\\\" << endl;
 
-	for (u = 0; u < nb_spreads; u++) {
+	for (u = 0; u < Spread_tables->nb_spreads; u++) {
 		f << "Spread " << u << " is $";
 		int_vec_print_fully(f,
-				Spread_table + u * spread_size, spread_size);
+				Spread_tables->spread_table + u * spread_size, spread_size);
 		f << "$ isomorphism type "
-				<< isomorphism_type_of_spread[u] << "\\\\" << endl;
+				<< Spread_tables->spread_iso_type[u] << "\\\\" << endl;
 		
 		}
 #endif

@@ -2972,6 +2972,12 @@ void scene::create_Hilbert_model(int verbose_level)
 		}
 
 
+	point(1,0,0); // P39
+	point(0,1,0); // P40
+	point(0,0,1); // P41
+	edge(38,39); // E42
+	edge(38,40); // E42
+	edge(38,41); // E42
 
 	if (f_v) {
 		cout << "scene::create_Hilbert_model done" << endl;

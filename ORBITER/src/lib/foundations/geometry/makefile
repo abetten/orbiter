@@ -34,6 +34,7 @@ MODULES = \
 	packing.o \
 	point_line.o \
 	projective_space.o \
+	spread_tables.o \
 	surface_lines.o \
 	surface_io.o \
 	surface.o \

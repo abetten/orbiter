@@ -743,6 +743,9 @@ public:
 	void line_regulus_in_PG_3_q(int *&regulus, 
 		int &regulus_size, int verbose_level);
 		// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
+	void compute_dual_line_idx(int *&dual_line_idx,
+			int *&self_dual_lines, int &nb_self_dual_lines,
+			int verbose_level);
 	void compute_dual_spread(int *spread, int *dual_spread, 
 		int spread_size, int verbose_level);
 };
@@ -2378,6 +2381,66 @@ public:
 	// we must be a projective plane
 };
 
+// #############################################################################
+// spread_tables.cpp
+// #############################################################################
+
+//! tables with spreads in PG(3,q)
+
+
+class spread_tables {
+
+public:
+	int q;
+	int d; // = 4
+	finite_field *F;
+	projective_space *P; // PG(3,q)
+	grassmann *Gr; // Gr_{4,2}
+	int nb_lines;
+	int spread_size;
+
+	char prefix[1000];
+
+	char fname_dual_line_idx[1000];
+	char fname_self_dual_lines[1000];
+	char fname_spreads[1000];
+	char fname_isomorphism_type_of_spreads[1000];
+	char fname_dual_spread[1000];
+	char fname_self_dual_spreads[1000];
+
+	int *dual_line_idx;
+	int *self_dual_lines;
+	int nb_self_dual_lines;
+
+	int nb_spreads;
+	int *spread_table;
+	int *spread_iso_type;
+	int *dual_spread_idx;
+	int *self_dual_spreads;
+	int nb_self_dual_spreads;
+
+	spread_tables();
+	~spread_tables();
+	void init(finite_field *F,
+			int f_load,
+			int verbose_level);
+	void init_spread_table(int nb_spreads,
+			int *spread_table, int *spread_iso_type,
+			int verbose_level);
+	void init_tables(int nb_spreads,
+			int *spread_table, int *spread_iso_type,
+			int *dual_spread_idx,
+			int *self_dual_spreads, int nb_self_dual_spreads,
+			int verbose_level);
+	void save(int verbose_level);
+	void load(int verbose_level);
+	void compute_adjacency_matrix(
+			uchar *&bitvector_adjacency,
+			int &bitvector_length,
+			int verbose_level);
+	int test_if_spreads_are_disjoint(int a, int b);
+
+};
 
 // #############################################################################
 // surface.C
