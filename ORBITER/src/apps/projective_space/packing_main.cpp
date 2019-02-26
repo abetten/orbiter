@@ -48,6 +48,7 @@ int main(int argc, const char **argv)
 	int f_sideways = FALSE;
 
 	int f_compute_spread_table = FALSE;
+	int f_load_spread_table = FALSE;
 	int f_fname_spread_table = FALSE;
 	const char *fname_spread_table = NULL;
 	int f_fname_spread_table_iso = FALSE;
@@ -129,6 +130,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-compute_spread_table") == 0) {
 			f_compute_spread_table = TRUE;
 			cout << "-compute_spread_table " << endl;
+			}
+		else if (strcmp(argv[i], "-load_spread_table") == 0) {
+			f_load_spread_table = TRUE;
+			cout << "-load_spread_table " << endl;
 			}
 
 
@@ -310,6 +315,12 @@ int main(int argc, const char **argv)
 	if (f_compute_spread_table) {
 		P->compute_spread_table(verbose_level);
 	}
+	if (f_load_spread_table) {
+		P->read_spread_table(verbose_level);
+	}
+	else {
+		P->compute_spread_table(verbose_level);
+	}
 #if 0
 	else if (f_type_of_packing) {
 		cout << "before P->type_of_packing" << endl;
@@ -330,7 +341,7 @@ int main(int argc, const char **argv)
 		//exit(1);
 		}
 #endif
-	else if (f_conjugacy_classes) {
+	if (f_conjugacy_classes) {
 		cout << "before P->conjugacy_classes" << endl;
 		P->conjugacy_classes(verbose_level);
 		cout << "after P->conjugacy_classes" << endl;

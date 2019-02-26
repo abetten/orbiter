@@ -175,6 +175,7 @@ void packing::init2(int verbose_level)
 		cout << "packing::init2" << endl;
 		}
 
+#if 0
 	if (f_v) {
 		cout << "packing::init2 "
 				"before compute_spread_table" << endl;
@@ -184,7 +185,7 @@ void packing::init2(int verbose_level)
 		cout << "packing::init2 "
 				"after compute_spread_table" << endl;
 		}
-
+#endif
 
 	if (f_v) {
 		cout << "packing::init2 "
@@ -253,7 +254,8 @@ void packing::compute_spread_table(int verbose_level)
 		}
 
 
-	Spread_tables->init(F, FALSE, verbose_level);
+	Spread_tables->init(F, FALSE, nb_spreads_up_to_isomorphism,
+			verbose_level);
 
 
 	Spread_tables->init_spread_table(nb_spreads,
@@ -1063,7 +1065,7 @@ int packing::is_adjacent(int i, int j)
 void packing::read_spread_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int m, n;
+	int i;
 
 	if (f_v) {
 		cout << "packing::read_spread_table" << endl;
@@ -1077,8 +1079,39 @@ void packing::read_spread_table(int verbose_level)
 		}
 
 	Spread_tables->init(F,
-			TRUE /* f_load */,
+			TRUE /* f_load */, nb_spreads_up_to_isomorphism,
 			verbose_level);
+
+	{
+		int *type;
+		set_of_sets *SoS;
+		int a, b;
+
+		Spread_tables->classify_self_dual_spreads(type,
+				SoS,
+				verbose_level);
+		cout << "the self-dual spreads belong to the "
+				"following isomorphism types:" << endl;
+		for (i = 0; i < nb_spreads_up_to_isomorphism; i++) {
+			cout << i << " : " << type[i] << endl;
+		}
+		SoS->print();
+		for (a = 0; a < SoS->nb_sets; a++) {
+			if (SoS->Set_size[a] < 10) {
+				cout << "iso type " << a << endl;
+				int_vec_print(cout, SoS->Sets[a], SoS->Set_size[a]);
+				cout << endl;
+				for (i = 0; i < SoS->Set_size[a]; i++) {
+					b = SoS->Sets[a][i];
+					cout << i << " : " << b << " : ";
+					int_vec_print(cout, Spread_tables->spread_table +
+							b * spread_size, spread_size);
+					cout << endl;
+				}
+			}
+		}
+		FREE_int(type);
+	}
 
 	if (f_v) {
 		cout << "packing::read_spread_table "

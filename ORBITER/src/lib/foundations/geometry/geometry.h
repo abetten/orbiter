@@ -2398,6 +2398,7 @@ public:
 	grassmann *Gr; // Gr_{4,2}
 	int nb_lines;
 	int spread_size;
+	int nb_iso_types_of_spreads;
 
 	char prefix[1000];
 
@@ -2423,6 +2424,7 @@ public:
 	~spread_tables();
 	void init(finite_field *F,
 			int f_load,
+			int nb_iso_types_of_spreads,
 			int verbose_level);
 	void init_spread_table(int nb_spreads,
 			int *spread_table, int *spread_iso_type,
@@ -2431,6 +2433,9 @@ public:
 			int *spread_table, int *spread_iso_type,
 			int *dual_spread_idx,
 			int *self_dual_spreads, int nb_self_dual_spreads,
+			int verbose_level);
+	void classify_self_dual_spreads(int *&type,
+			set_of_sets *&SoS,
 			int verbose_level);
 	void save(int verbose_level);
 	void load(int verbose_level);

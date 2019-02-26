@@ -172,11 +172,13 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		cout << "verbose_level = " << verbose_level << endl;
 		cout << "set_size = " << set_size << endl;
 		}
+#if 0
 	if (P->incidence_bitvec == NULL) {
 		cout << "projective_space_with_action::set_stabilizer "
 				"P->incidence_bitvec == NULL" << endl;
 		exit(1);
 		}
+#endif
 
 	if (f_vv) {
 		cout << "computing the type of the set" << endl;
@@ -644,6 +646,98 @@ strong_generators *projective_space_with_action::set_stabilizer(
 }
 
 
+void projective_space_with_action::canonical_labeling(
+	object_in_projective_space *OiP,
+	int *canonical_labeling,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	action *A_linear;
+	int *Incma;
+	int *partition;
+	int nb_rows, nb_cols;
+	int *Aut, Aut_counter;
+	int *Base, Base_length;
+	int *Transversal_length, Ago;
+	int N, i, L;
+
+	A_linear = A;
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling"
+				<< endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+#if 0
+	if (P->incidence_bitvec == NULL) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"P->incidence_bitvec == NULL" << endl;
+		exit(1);
+		}
+#endif
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"before OiP->encode_incma" << endl;
+		}
+	OiP->encode_incma(Incma, nb_rows, nb_cols,
+			partition, verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"after OiP->encode_incma" << endl;
+		}
+	if (verbose_level > 5) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"Incma:" << endl;
+		int_matrix_print_tight(Incma, nb_rows, nb_cols);
+	}
+
+	//canonical_labeling = NEW_int(nb_rows + nb_cols);
+	for (i = 0; i < nb_rows + nb_cols; i++) {
+		canonical_labeling[i] = i;
+		}
+
+
+	N = nb_rows + nb_cols;
+	L = nb_rows * nb_cols;
+
+	if (f_vv) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"initializing Aut, Base, "
+				"Transversal_length" << endl;
+		}
+	Aut = NEW_int(N * N);
+	Base = NEW_int(N);
+	Transversal_length = NEW_int(N);
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"calling nauty_interface_matrix_int" << endl;
+		}
+	nauty_interface_matrix_int(
+		Incma, nb_rows, nb_cols,
+		canonical_labeling, partition,
+		Aut, Aut_counter,
+		Base, Base_length,
+		Transversal_length, Ago, verbose_level - 3);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"done with nauty_interface_matrix_int, "
+				"Ago=" << Ago << endl;
+		}
+	FREE_int(Aut);
+	FREE_int(Base);
+	FREE_int(Transversal_length);
+	FREE_int(Incma);
+	FREE_int(partition);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling done"
+				<< endl;
+		}
+}
 
 strong_generators
 *projective_space_with_action::set_stabilizer_of_object(
@@ -683,11 +777,13 @@ strong_generators
 				"of_object" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
+#if 0
 	if (P->incidence_bitvec == NULL) {
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object P->incidence_bitvec == NULL" << endl;
 		exit(1);
 		}
+#endif
 
 
 	if (f_v) {
@@ -1417,7 +1513,9 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 					"decomposition_by_single_automorphism "
 					"before Stack->split_cell (S1) i=" << i << endl;
 			}
-		Stack->split_cell(S1.pointList + S1.startCell[i], S1.cellSize[i], verbose_level);
+		Stack->split_cell(
+				S1.pointList + S1.startCell[i],
+				S1.cellSize[i], verbose_level);
 	}
 	int *set;
 	set = NEW_int(A_on_lines->degree);
@@ -2478,12 +2576,9 @@ void projective_space_with_action::merge_packings(
 
 void projective_space_with_action::select_packings(
 		const char *fname,
-		const char *file_of_dual_line_idx,
-		const char *file_of_spreads,
-		const char *file_of_spreads_lexleast,
-		const char *file_isomorphism_type_of_spreads,
-		const char *file_dual_spread,
-		int f_self_dual,
+		const char *file_of_spreads_original,
+		spread_tables *Spread_tables,
+		int f_self_polar,
 		int f_ago, int select_ago,
 		classify_bitvectors *&CB,
 		int verbose_level)
@@ -2498,106 +2593,38 @@ void projective_space_with_action::select_packings(
 	CB = NEW_OBJECT(classify_bitvectors);
 
 
-	// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
-	int *dual_line_idx;
-	int nb_lines;
-	int *Spread_table_lexleast;
+
 	int *Spread_table;
-	int *Spread_iso;
 	int nb_spreads;
 	int spread_size;
 	int packing_size;
 	int a, b;
-	int *Dual_spread_idx;
-
-	if (f_v) {
-		cout << "projective_space_with_action::select_packings "
-				"Reading dual line idx from file "
-				<< file_of_dual_line_idx << endl;
-	}
-	int_matrix_read_csv(file_of_dual_line_idx,
-			dual_line_idx, nb_lines, b,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "Reading spread table from file "
-				<< file_of_dual_line_idx << " done" << endl;
-		cout << "The table contains " << nb_lines
-				<< " lines" << endl;
-	}
 
 	if (f_v) {
 		cout << "projective_space_with_action::select_packings "
 				"Reading spread table from file "
-				<< file_of_spreads << endl;
+				<< file_of_spreads_original << endl;
 	}
-	int_matrix_read_csv(file_of_spreads,
+	int_matrix_read_csv(file_of_spreads_original,
 			Spread_table, nb_spreads, spread_size,
 			0 /* verbose_level */);
+	if (nb_spreads != Spread_tables->nb_spreads) {
+		cout << "projective_space_with_action::select_packings "
+				"nb_spreads != Spread_tables->nb_spreads" << endl;
+		exit(1);
+	}
+	if (spread_size != Spread_tables->spread_size) {
+		cout << "projective_space_with_action::select_packings "
+				"spread_size != Spread_tables->spread_size" << endl;
+		exit(1);
+	}
 	if (f_v) {
 		cout << "Reading spread table from file "
-				<< file_of_spreads << " done" << endl;
+				<< file_of_spreads_original << " done" << endl;
 		cout << "The spread table contains " << nb_spreads
 				<< " spreads" << endl;
 	}
 
-	if (f_v) {
-		cout << "projective_space_with_action::select_packings "
-				"Reading lexleast spread table from file "
-				<< file_of_spreads_lexleast << endl;
-	}
-	int_matrix_read_csv(file_of_spreads_lexleast,
-			Spread_table_lexleast, a, b,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "Reading spread table from file "
-				<< file_of_spreads_lexleast << " done" << endl;
-		cout << "The spread table contains " << a
-				<< " spreads" << endl;
-	}
-	if (a != nb_spreads) {
-		cout << "a != nb_spreads" << endl;
-		exit(1);
-	}
-	if (b != spread_size) {
-		cout << "b != spread_size" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::select_packings "
-				"Reading Spread_iso table from file "
-				<< file_isomorphism_type_of_spreads << endl;
-	}
-	int_matrix_read_csv(file_isomorphism_type_of_spreads,
-			Spread_iso, a, b,
-			0 /* verbose_level */);
-	if (a != nb_spreads) {
-		cout << "a != nb_spreads" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "Reading file_isomorphism_type_of_spreads table from file "
-				<< file_isomorphism_type_of_spreads << " done" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::select_packings "
-				"Reading file_dual_spread table from file "
-				<< file_dual_spread << endl;
-	}
-	int_matrix_read_csv(file_dual_spread,
-			Dual_spread_idx, a, b,
-			0 /* verbose_level */);
-	if (a != nb_spreads) {
-		cout << "a != nb_spreads" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "Reading file_dual_spread table from file "
-				<< file_dual_spread << " done" << endl;
-	}
 
 
 	if (f_v) {
@@ -2616,9 +2643,11 @@ void projective_space_with_action::select_packings(
 	s2l = NEW_int(nb_spreads);
 	l2s = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
-		int_vec_copy(Spread_table + i * spread_size, set, spread_size);
+		int_vec_copy(Spread_tables->spread_table +
+				i * spread_size, set, spread_size);
 		int_vec_heapsort(set, spread_size);
-		if (!search_general(Spread_table_lexleast, nb_spreads, set, idx,
+		if (!search_general(Spread_tables->spread_table,
+				nb_spreads, set, idx,
 				table_of_sets_compare_func,
 				extra_data, 0 /*verbose_level*/)) {
 			cout << "projective_space_with_action::select_packings "
@@ -2665,7 +2694,9 @@ void projective_space_with_action::select_packings(
 
 	table_length = S->nb_rows - 1;
 
-	//rep,ago,original_file,input_idx,input_set,nb_rows,nb_cols,canonical_form
+	//rep,ago,original_file,input_idx,
+	//input_set,nb_rows,nb_cols,canonical_form
+	int f_first = TRUE;
 
 
 	for (g = 0; g < table_length; g++) {
@@ -2700,11 +2731,11 @@ void projective_space_with_action::select_packings(
 			}
 
 
-		if (f_self_dual) {
+		if (f_self_polar) {
 			set1 = NEW_int(packing_size);
 			set2 = NEW_int(packing_size);
 
-			// test if self-dual:
+			// test if self-polar:
 			for (i = 0; i < packing_size; i++) {
 				a = the_set_in[i];
 				b = s2l[a];
@@ -2713,7 +2744,7 @@ void projective_space_with_action::select_packings(
 			int_vec_heapsort(set1, packing_size);
 			for (i = 0; i < packing_size; i++) {
 				a = set1[i];
-				b = Dual_spread_idx[a];
+				b = Spread_tables->dual_spread_idx[a];
 				set2[i] = b;
 			}
 			int_vec_heapsort(set2, packing_size);
@@ -2727,7 +2758,7 @@ void projective_space_with_action::select_packings(
 			cout << endl;
 #endif
 			if (int_vec_compare(set1, set2, packing_size) == 0) {
-				cout << "The packing is self-dual" << endl;
+				cout << "The packing is self-polar" << endl;
 				f_accept = TRUE;
 			}
 			else {
@@ -2746,129 +2777,134 @@ void projective_space_with_action::select_packings(
 		}
 
 
-		if (FALSE) {
-			cout << "canonical_form_idx=" << canonical_form_idx << endl;
-		}
-		text = S->get_string(g + 1, canonical_form_idx);
-		if (FALSE) {
-			cout << "text=" << text << endl;
-		}
-		int_vec_scan(text, canonical_labeling, canonical_labeling_sz);
-		if (FALSE) {
-			cout << "File " << fname
-					<< ", input set " << g << " / "
-					<< table_length << " canonical_labeling = ";
-			int_vec_print(cout, canonical_labeling, canonical_labeling_sz);
-			cout << endl;
-			}
-
-		if (canonical_labeling_sz != nb_rows + nb_cols) {
-			cout << "projective_space_with_action::select_packings "
-					"canonical_labeling_sz != nb_rows + nb_cols" << endl;
-			exit(1);
-		}
-
-		OiP = NEW_OBJECT(object_in_projective_space);
-
-		if (FALSE) {
-			cout << "projective_space_with_action::select_packings "
-					"before init_packing_from_spread_table" << endl;
-		}
-		OiP->init_packing_from_spread_table(P, the_set_in,
-			Spread_table, nb_spreads, spread_size,
-			0 /*verbose_level*/);
-		if (FALSE) {
-			cout << "projective_space_with_action::merge_packings "
-					"after init_packing_from_spread_table" << endl;
-		}
-		OiP->f_has_known_ago = TRUE;
-		OiP->known_ago = ago;
-
-		int *Incma_in;
-		int *Incma_out;
-		int nb_rows1, nb_cols1;
-		int *partition;
-		uchar *canonical_form;
-		int canonical_form_len;
-
-
-		if (FALSE) {
-			cout << "projective_space_with_action::select_packings "
-					"before encode_incma" << endl;
-		}
-		OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
-				partition, 0 /*verbose_level - 1*/);
-		if (FALSE) {
-			cout << "projective_space_with_action::select_packings "
-					"after encode_incma" << endl;
-		}
-		if (nb_rows1 != nb_rows) {
-			cout << "projective_space_with_action::select_packings "
-					"nb_rows1 != nb_rows" << endl;
-			exit(1);
-		}
-		if (nb_cols1 != nb_cols) {
-			cout << "projective_space_with_action::select_packings "
-					"nb_cols1 != nb_cols" << endl;
-			exit(1);
-		}
-
-		OiP->input_fname = S->get_string(g + 1, original_file_idx);
-		OiP->input_idx = S->get_int(g + 1, input_idx_idx);
-
-		text = S->get_string(g + 1, input_set_idx);
-		int l = strlen(text);
-
-		OiP->set_as_string = NEW_char(l + 1);
-		strcpy(OiP->set_as_string, text);
-
-		int i, j, ii, jj, a, ret;
-		int L = nb_rows * nb_cols;
-
-		Incma_out = NEW_int(L);
-		for (i = 0; i < nb_rows; i++) {
-			ii = canonical_labeling[i];
-			for (j = 0; j < nb_cols; j++) {
-				jj = canonical_labeling[nb_rows + j] - nb_rows;
-				//cout << "i=" << i << " j=" << j << " ii=" << ii
-				//<< " jj=" << jj << endl;
-				Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
-				}
-			}
-		if (FALSE) {
-			cout << "projective_space_with_action::select_packings "
-					"before bitvector_allocate_and_coded_length" << endl;
-		}
-		canonical_form = bitvector_allocate_and_coded_length(
-				L, canonical_form_len);
-		for (i = 0; i < nb_rows; i++) {
-			for (j = 0; j < nb_cols; j++) {
-				if (Incma_out[i * nb_cols + j]) {
-					a = i * nb_cols + j;
-					bitvector_set_bit(canonical_form, a);
-					}
-				}
-			}
-
-		if (g == 0) {
-			if (f_v) {
-				cout << "projective_space_with_action::select_packings "
-						"before CB->init" << endl;
-			}
-			CB->init(table_length, canonical_form_len, verbose_level);
-		}
 
 		if (f_accept) {
 
 			nb_accept++;
+
+
+			if (FALSE) {
+				cout << "canonical_form_idx=" << canonical_form_idx << endl;
+			}
+			text = S->get_string(g + 1, canonical_form_idx);
+			if (FALSE) {
+				cout << "text=" << text << endl;
+			}
+			int_vec_scan(text, canonical_labeling, canonical_labeling_sz);
+			if (FALSE) {
+				cout << "File " << fname
+						<< ", input set " << g << " / "
+						<< table_length << " canonical_labeling = ";
+				int_vec_print(cout, canonical_labeling, canonical_labeling_sz);
+				cout << endl;
+				}
+
+			if (canonical_labeling_sz != nb_rows + nb_cols) {
+				cout << "projective_space_with_action::select_packings "
+						"canonical_labeling_sz != nb_rows + nb_cols" << endl;
+				exit(1);
+			}
+
+			OiP = NEW_OBJECT(object_in_projective_space);
+
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings "
+						"before init_packing_from_spread_table" << endl;
+			}
+			OiP->init_packing_from_spread_table(P, the_set_in,
+				Spread_table, nb_spreads, spread_size,
+				0 /*verbose_level*/);
+			if (FALSE) {
+				cout << "projective_space_with_action::merge_packings "
+						"after init_packing_from_spread_table" << endl;
+			}
+			OiP->f_has_known_ago = TRUE;
+			OiP->known_ago = ago;
+
+			int *Incma_in;
+			int *Incma_out;
+			int nb_rows1, nb_cols1;
+			int *partition;
+			uchar *canonical_form;
+			int canonical_form_len;
+
+
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings "
+						"before encode_incma" << endl;
+			}
+			OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
+					partition, 0 /*verbose_level - 1*/);
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings "
+						"after encode_incma" << endl;
+			}
+			if (nb_rows1 != nb_rows) {
+				cout << "projective_space_with_action::select_packings "
+						"nb_rows1 != nb_rows" << endl;
+				exit(1);
+			}
+			if (nb_cols1 != nb_cols) {
+				cout << "projective_space_with_action::select_packings "
+						"nb_cols1 != nb_cols" << endl;
+				exit(1);
+			}
+
+			OiP->input_fname = S->get_string(g + 1, original_file_idx);
+			OiP->input_idx = S->get_int(g + 1, input_idx_idx);
+
+			text = S->get_string(g + 1, input_set_idx);
+			int l = strlen(text);
+
+			OiP->set_as_string = NEW_char(l + 1);
+			strcpy(OiP->set_as_string, text);
+
+			int i, j, ii, jj, a, ret;
+			int L = nb_rows * nb_cols;
+
+			Incma_out = NEW_int(L);
+			for (i = 0; i < nb_rows; i++) {
+				ii = canonical_labeling[i];
+				for (j = 0; j < nb_cols; j++) {
+					jj = canonical_labeling[nb_rows + j] - nb_rows;
+					//cout << "i=" << i << " j=" << j << " ii=" << ii
+					//<< " jj=" << jj << endl;
+					Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
+					}
+				}
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings "
+						"before bitvector_allocate_and_coded_length" << endl;
+			}
+			canonical_form = bitvector_allocate_and_coded_length(
+					L, canonical_form_len);
+			for (i = 0; i < nb_rows; i++) {
+				for (j = 0; j < nb_cols; j++) {
+					if (Incma_out[i * nb_cols + j]) {
+						a = i * nb_cols + j;
+						bitvector_set_bit(canonical_form, a);
+						}
+					}
+				}
+
+			if (f_first) {
+				if (f_v) {
+					cout << "projective_space_with_action::select_packings "
+							"before CB->init" << endl;
+				}
+				CB->init(table_length, canonical_form_len, verbose_level);
+				f_first = FALSE;
+			}
+
 
 			if (f_v) {
 				cout << "projective_space_with_action::select_packings "
 						"before CB->add" << endl;
 			}
 
-			ret = CB->add(canonical_form, OiP, 0 /*verbose_level*/);
+			ret = CB->add(canonical_form, OiP, verbose_level);
 			if (ret == 0) {
+				cout << "reject" << endl;
 				nb_reject++;
 			}
 			if (f_v) {
@@ -2877,6 +2913,8 @@ void projective_space_with_action::select_packings(
 						<< " nb iso = " << CB->nb_types
 						<< " nb_reject=" << nb_reject
 						<< " nb_accept=" << nb_accept
+						<< " CB->n=" << CB->n
+						<< " CB->nb_types=" << CB->nb_types
 						<< endl;
 			}
 
@@ -2891,14 +2929,17 @@ void projective_space_with_action::select_packings(
 					canonical_labeling, 0 /*verbose_level*/);
 			idx = CB->type_of[CB->n - 1];
 			CB->Type_extra_data[idx] = OiPA;
-		}
+
+			FREE_int(Incma_in);
+			FREE_int(Incma_out);
+			FREE_int(partition);
+			//FREE_int(canonical_labeling);
+			//FREE_uchar(canonical_form);
+		} // if (f_accept)
+
+
 
 		FREE_int(the_set_in);
-		//FREE_int(canonical_labeling);
-		FREE_int(Incma_in);
-		FREE_int(Incma_out);
-		FREE_int(partition);
-		//FREE_uchar(canonical_form);
 
 	} // next g
 
@@ -2908,7 +2949,10 @@ void projective_space_with_action::select_packings(
 	if (f_v) {
 		cout << "projective_space_with_action::select_packings done, "
 				"we found " << CB->nb_types << " isomorphism types "
-				"of packings. nb_accept = " << nb_accept << endl;
+				"of packings. nb_accept = " << nb_accept
+				<< " CB->n = " << CB->n
+				<< " CB->nb_types = " << CB->nb_types
+				<< endl;
 		}
 
 
@@ -2919,6 +2963,660 @@ void projective_space_with_action::select_packings(
 		cout << "projective_space_with_action::select_packings done" << endl;
 	}
 }
+
+
+
+void projective_space_with_action::select_packings_self_dual(
+		const char *fname,
+		const char *file_of_spreads_original,
+		int f_split, int split_r, int split_m,
+		spread_tables *Spread_tables,
+		classify_bitvectors *&CB,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_accept = 0;
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual" << endl;
+	}
+
+	CB = NEW_OBJECT(classify_bitvectors);
+
+
+
+	int *Spread_table_original;
+	int nb_spreads;
+	int spread_size;
+	int packing_size;
+	int a, b;
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"Reading spread table from file "
+				<< file_of_spreads_original << endl;
+	}
+	int_matrix_read_csv(file_of_spreads_original,
+			Spread_table_original, nb_spreads, spread_size,
+			0 /* verbose_level */);
+	if (nb_spreads != Spread_tables->nb_spreads) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"nb_spreads != Spread_tables->nb_spreads" << endl;
+		exit(1);
+	}
+	if (spread_size != Spread_tables->spread_size) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"spread_size != Spread_tables->spread_size" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "Reading spread table from file "
+				<< file_of_spreads_original << " done" << endl;
+		cout << "The spread table contains " << nb_spreads
+				<< " spreads" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "Reading file_isomorphism_type_of_spreads "
+				"computing s2l and l2s" << endl;
+	}
+
+	int *s2l, *l2s;
+	int i, idx;
+	int *set;
+	int extra_data[1];
+
+	extra_data[0] = spread_size;
+
+	set = NEW_int(spread_size);
+	s2l = NEW_int(nb_spreads);
+	l2s = NEW_int(nb_spreads);
+	for (i = 0; i < nb_spreads; i++) {
+		int_vec_copy(Spread_table_original +
+				i * spread_size, set, spread_size);
+		int_vec_heapsort(set, spread_size);
+		if (!search_general(Spread_tables->spread_table,
+				nb_spreads, set, idx,
+				table_of_sets_compare_func,
+				extra_data, 0 /*verbose_level*/)) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"cannot find spread " << i << " = ";
+			int_vec_print(cout, set, spread_size);
+			cout << endl;
+			exit(1);
+		}
+		s2l[i] = idx;
+		l2s[idx] = i;
+	}
+	if (f_v) {
+		cout << "Reading file_isomorphism_type_of_spreads "
+				"computing s2l and l2s done" << endl;
+	}
+
+	int g, table_length, nb_reject = 0;
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual file "
+				<< fname << endl;
+	}
+
+	spreadsheet *S;
+
+	S = NEW_OBJECT(spreadsheet);
+
+	S->read_spreadsheet(fname, 0 /*verbose_level*/);
+	if (FALSE /*f_v3*/) {
+		S->print_table(cout, FALSE);
+		}
+
+	int ago_idx, original_file_idx, input_idx_idx, input_set_idx;
+	int nb_rows_idx, nb_cols_idx, canonical_form_idx;
+
+	ago_idx = S->find_by_column("ago");
+	original_file_idx = S->find_by_column("original_file");
+	input_idx_idx = S->find_by_column("input_idx");
+	input_set_idx = S->find_by_column("input_set");
+	nb_rows_idx = S->find_by_column("nb_rows");
+	nb_cols_idx = S->find_by_column("nb_cols");
+	canonical_form_idx = S->find_by_column("canonical_form");
+
+	table_length = S->nb_rows - 1;
+
+	//rep,ago,original_file,input_idx,
+	//input_set,nb_rows,nb_cols,canonical_form
+	int f_first = TRUE;
+
+
+
+	// first pass: build up the database:
+
+	for (g = 0; g < table_length; g++) {
+
+		int ago;
+		char *text;
+		int *the_set_in;
+		int set_size_in;
+		int *canonical_labeling;
+		int canonical_labeling_sz;
+		int nb_rows, nb_cols;
+		object_in_projective_space *OiP;
+		int f_accept;
+
+		ago = S->get_int(g + 1, ago_idx);
+		nb_rows = S->get_int(g + 1, nb_rows_idx);
+		nb_cols = S->get_int(g + 1, nb_cols_idx);
+
+		text = S->get_string(g + 1, input_set_idx);
+		int_vec_scan(text, the_set_in, set_size_in);
+
+		packing_size = set_size_in;
+
+		if (f_v && (g % 1000) == 0) {
+			cout << "File " << fname
+					<< ", input set " << g << " / "
+					<< table_length << endl;
+			//int_vec_print(cout, the_set_in, set_size_in);
+			//cout << endl;
+			}
+
+
+		f_accept = TRUE;
+
+
+
+		if (f_accept) {
+
+			nb_accept++;
+
+
+			if (FALSE) {
+				cout << "canonical_form_idx=" << canonical_form_idx << endl;
+			}
+			text = S->get_string(g + 1, canonical_form_idx);
+			if (FALSE) {
+				cout << "text=" << text << endl;
+			}
+			int_vec_scan(text, canonical_labeling, canonical_labeling_sz);
+			if (FALSE) {
+				cout << "File " << fname
+						<< ", input set " << g << " / "
+						<< table_length << " canonical_labeling = ";
+				int_vec_print(cout, canonical_labeling, canonical_labeling_sz);
+				cout << endl;
+				}
+
+			if (canonical_labeling_sz != nb_rows + nb_cols) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"canonical_labeling_sz != nb_rows + nb_cols" << endl;
+				exit(1);
+			}
+
+			OiP = NEW_OBJECT(object_in_projective_space);
+
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"before init_packing_from_spread_table" << endl;
+			}
+			OiP->init_packing_from_spread_table(P, the_set_in,
+					Spread_table_original, nb_spreads, spread_size,
+				0 /*verbose_level*/);
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"after init_packing_from_spread_table" << endl;
+			}
+			OiP->f_has_known_ago = TRUE;
+			OiP->known_ago = ago;
+
+			int *Incma_in;
+			int *Incma_out;
+			int nb_rows1, nb_cols1;
+			int *partition;
+			uchar *canonical_form;
+			int canonical_form_len;
+
+
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"before encode_incma" << endl;
+			}
+			OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
+					partition, 0 /*verbose_level - 1*/);
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"after encode_incma" << endl;
+			}
+			if (nb_rows1 != nb_rows) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"nb_rows1 != nb_rows" << endl;
+				exit(1);
+			}
+			if (nb_cols1 != nb_cols) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"nb_cols1 != nb_cols" << endl;
+				exit(1);
+			}
+
+			OiP->input_fname = S->get_string(g + 1, original_file_idx);
+			OiP->input_idx = S->get_int(g + 1, input_idx_idx);
+
+			text = S->get_string(g + 1, input_set_idx);
+			int l = strlen(text);
+
+			OiP->set_as_string = NEW_char(l + 1);
+			strcpy(OiP->set_as_string, text);
+
+			int i, j, ii, jj, a, ret;
+			int L = nb_rows * nb_cols;
+
+			Incma_out = NEW_int(L);
+			for (i = 0; i < nb_rows; i++) {
+				ii = canonical_labeling[i];
+				for (j = 0; j < nb_cols; j++) {
+					jj = canonical_labeling[nb_rows + j] - nb_rows;
+					//cout << "i=" << i << " j=" << j << " ii=" << ii
+					//<< " jj=" << jj << endl;
+					Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
+					}
+				}
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"before bitvector_allocate_and_coded_length" << endl;
+			}
+			canonical_form = bitvector_allocate_and_coded_length(
+					L, canonical_form_len);
+			for (i = 0; i < nb_rows; i++) {
+				for (j = 0; j < nb_cols; j++) {
+					if (Incma_out[i * nb_cols + j]) {
+						a = i * nb_cols + j;
+						bitvector_set_bit(canonical_form, a);
+						}
+					}
+				}
+
+			if (f_first) {
+				if (f_v) {
+					cout << "projective_space_with_action::select_packings_self_dual "
+							"before CB->init" << endl;
+				}
+				CB->init(table_length, canonical_form_len, verbose_level);
+				f_first = FALSE;
+			}
+
+
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"before CB->add" << endl;
+			}
+
+			ret = CB->add(canonical_form, OiP, 0 /*verbose_level*/);
+			if (ret == 0) {
+				cout << "reject" << endl;
+				nb_reject++;
+			}
+			if (FALSE) {
+				cout << "projective_space_with_action::select_packings_self_dual "
+						"CB->add returns " << ret
+						<< " nb iso = " << CB->nb_types
+						<< " nb_reject=" << nb_reject
+						<< " nb_accept=" << nb_accept
+						<< " CB->n=" << CB->n
+						<< " CB->nb_types=" << CB->nb_types
+						<< endl;
+			}
+
+
+			int idx;
+
+			object_in_projective_space_with_action *OiPA;
+
+			OiPA = NEW_OBJECT(object_in_projective_space_with_action);
+
+			OiPA->init_known_ago(OiP, ago, nb_rows, nb_cols,
+					canonical_labeling, 0 /*verbose_level*/);
+			idx = CB->type_of[CB->n - 1];
+			CB->Type_extra_data[idx] = OiPA;
+
+			FREE_int(Incma_in);
+			FREE_int(Incma_out);
+			FREE_int(partition);
+			//FREE_int(canonical_labeling);
+			//FREE_uchar(canonical_form);
+		} // if (f_accept)
+
+
+
+		FREE_int(the_set_in);
+
+	} // next g
+
+
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual done, "
+				"we found " << CB->nb_types << " isomorphism types "
+				"of packings. nb_accept = " << nb_accept
+				<< " CB->n = " << CB->n
+				<< " CB->nb_types = " << CB->nb_types
+				<< endl;
+		}
+
+
+	// second pass:
+
+	int nb_self_dual = 0;
+	int g1 = 0;
+	int *self_dual_cases;
+	int nb_self_dual_cases = 0;
+
+
+	self_dual_cases = NEW_int(table_length);
+
+
+	for (g = 0; g < table_length; g++) {
+
+		int ago;
+		char *text;
+		int *the_set_in;
+		int set_size_in;
+		int *canonical_labeling1;
+		int *canonical_labeling2;
+		//int canonical_labeling_sz;
+		int nb_rows, nb_cols;
+		object_in_projective_space *OiP1;
+		object_in_projective_space *OiP2;
+		int *set1;
+		int *set2;
+
+		ago = S->get_int(g + 1, ago_idx);
+		nb_rows = S->get_int(g + 1, nb_rows_idx);
+		nb_cols = S->get_int(g + 1, nb_cols_idx);
+
+		text = S->get_string(g + 1, input_set_idx);
+		int_vec_scan(text, the_set_in, set_size_in);
+
+		packing_size = set_size_in;
+
+
+		if (f_split) {
+			if ((g % split_m) != split_r) {
+				continue;
+			}
+		}
+		g1++;
+		if (f_v && (g1 % 100) == 0) {
+			cout << "File " << fname
+					<< ", case " << g1 << " input set " << g << " / "
+					<< table_length
+					<< " nb_self_dual=" << nb_self_dual << endl;
+			//int_vec_print(cout, the_set_in, set_size_in);
+			//cout << endl;
+			}
+
+
+		set1 = NEW_int(packing_size);
+		set2 = NEW_int(packing_size);
+
+		for (i = 0; i < packing_size; i++) {
+			a = the_set_in[i];
+			b = s2l[a];
+			set1[i] = b;
+		}
+		int_vec_heapsort(set1, packing_size);
+		for (i = 0; i < packing_size; i++) {
+			a = set1[i];
+			b = Spread_tables->dual_spread_idx[a];
+			set2[i] = l2s[b];
+		}
+		for (i = 0; i < packing_size; i++) {
+			a = set1[i];
+			b = l2s[a];
+			set1[i] = b;
+		}
+		int_vec_heapsort(set1, packing_size);
+		int_vec_heapsort(set2, packing_size);
+
+#if 0
+		cout << "set1: ";
+		int_vec_print(cout, set1, packing_size);
+		cout << endl;
+		cout << "set2: ";
+		int_vec_print(cout, set2, packing_size);
+		cout << endl;
+#endif
+
+
+
+
+		OiP1 = NEW_OBJECT(object_in_projective_space);
+		OiP2 = NEW_OBJECT(object_in_projective_space);
+
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"before init_packing_from_spread_table" << endl;
+		}
+		OiP1->init_packing_from_spread_table(P, set1,
+				Spread_table_original, nb_spreads, spread_size,
+				0 /*verbose_level*/);
+		OiP2->init_packing_from_spread_table(P, set2,
+				Spread_table_original, nb_spreads, spread_size,
+				0 /*verbose_level*/);
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"after init_packing_from_spread_table" << endl;
+		}
+		OiP1->f_has_known_ago = TRUE;
+		OiP1->known_ago = ago;
+
+
+
+		uchar *canonical_form1;
+		uchar *canonical_form2;
+		int canonical_form_len;
+
+
+
+		int *Incma_in1;
+		int *Incma_out1;
+		int *Incma_in2;
+		int *Incma_out2;
+		int nb_rows1, nb_cols1;
+		int *partition;
+		//uchar *canonical_form1;
+		//uchar *canonical_form2;
+		//int canonical_form_len;
+
+
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"before encode_incma" << endl;
+		}
+		OiP1->encode_incma(Incma_in1, nb_rows1, nb_cols1,
+				partition, 0 /*verbose_level - 1*/);
+		OiP2->encode_incma(Incma_in2, nb_rows1, nb_cols1,
+				partition, 0 /*verbose_level - 1*/);
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"after encode_incma" << endl;
+		}
+		if (nb_rows1 != nb_rows) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"nb_rows1 != nb_rows" << endl;
+			exit(1);
+		}
+		if (nb_cols1 != nb_cols) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"nb_cols1 != nb_cols" << endl;
+			exit(1);
+		}
+
+
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"before PA->set_stabilizer_of_object" << endl;
+			}
+
+
+		canonical_labeling1 = NEW_int(nb_rows * nb_cols);
+		canonical_labeling2 = NEW_int(nb_rows * nb_cols);
+
+		canonical_labeling(
+				OiP1,
+				canonical_labeling1,
+				0 /*verbose_level - 2*/);
+		canonical_labeling(
+				OiP2,
+				canonical_labeling2,
+				0 /*verbose_level - 2*/);
+
+
+		OiP1->input_fname = S->get_string(g + 1, original_file_idx);
+		OiP1->input_idx = S->get_int(g + 1, input_idx_idx);
+		OiP2->input_fname = S->get_string(g + 1, original_file_idx);
+		OiP2->input_idx = S->get_int(g + 1, input_idx_idx);
+
+		text = S->get_string(g + 1, input_set_idx);
+		int l = strlen(text);
+
+		OiP1->set_as_string = NEW_char(l + 1);
+		strcpy(OiP1->set_as_string, text);
+
+		OiP2->set_as_string = NEW_char(l + 1);
+		strcpy(OiP2->set_as_string, text);
+
+		int i, j, ii, jj, a, ret;
+		int L = nb_rows * nb_cols;
+
+		Incma_out1 = NEW_int(L);
+		Incma_out2 = NEW_int(L);
+		for (i = 0; i < nb_rows; i++) {
+			ii = canonical_labeling1[i];
+			for (j = 0; j < nb_cols; j++) {
+				jj = canonical_labeling1[nb_rows + j] - nb_rows;
+				//cout << "i=" << i << " j=" << j << " ii=" << ii
+				//<< " jj=" << jj << endl;
+				Incma_out1[i * nb_cols + j] = Incma_in1[ii * nb_cols + jj];
+				}
+			}
+		for (i = 0; i < nb_rows; i++) {
+			ii = canonical_labeling2[i];
+			for (j = 0; j < nb_cols; j++) {
+				jj = canonical_labeling2[nb_rows + j] - nb_rows;
+				//cout << "i=" << i << " j=" << j << " ii=" << ii
+				//<< " jj=" << jj << endl;
+				Incma_out2[i * nb_cols + j] = Incma_in2[ii * nb_cols + jj];
+				}
+			}
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"before bitvector_allocate_and_coded_length" << endl;
+		}
+		canonical_form1 = bitvector_allocate_and_coded_length(
+				L, canonical_form_len);
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				if (Incma_out1[i * nb_cols + j]) {
+					a = i * nb_cols + j;
+					bitvector_set_bit(canonical_form1, a);
+					}
+				}
+			}
+		canonical_form2 = bitvector_allocate_and_coded_length(
+				L, canonical_form_len);
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				if (Incma_out2[i * nb_cols + j]) {
+					a = i * nb_cols + j;
+					bitvector_set_bit(canonical_form2, a);
+					}
+				}
+			}
+
+
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"before CB->search" << endl;
+		}
+
+		int idx1, idx2;
+
+		ret = CB->search(canonical_form1, idx1, 0 /*verbose_level*/);
+
+		if (ret == FALSE) {
+			cout << "cannot find the dual packing, something is wrong" << endl;
+			exit(1);
+		}
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"CB->search returns idx1=" << idx1 << endl;
+		}
+		ret = CB->search(canonical_form2, idx2, 0 /*verbose_level*/);
+
+		if (ret == FALSE) {
+			cout << "cannot find the dual packing, something is wrong" << endl;
+			exit(1);
+		}
+		if (FALSE) {
+			cout << "projective_space_with_action::select_packings_self_dual "
+					"CB->search returns idx2=" << idx2 << endl;
+		}
+
+		FREE_int(Incma_in1);
+		FREE_int(Incma_out1);
+		FREE_int(Incma_in2);
+		FREE_int(Incma_out2);
+		FREE_int(partition);
+		FREE_int(canonical_labeling1);
+		FREE_int(canonical_labeling2);
+		FREE_uchar(canonical_form1);
+		FREE_uchar(canonical_form2);
+
+		FREE_int(set1);
+		FREE_int(set2);
+
+		if (idx1 == idx2) {
+			cout << "self-dual" << endl;
+			nb_self_dual++;
+			self_dual_cases[nb_self_dual_cases++] = g;
+		}
+
+		FREE_int(the_set_in);
+
+	} // next g
+
+	char fname_base[1000];
+	char fname_self_dual[1000];
+
+	strcpy(fname_base, fname);
+	chop_off_extension(fname_base);
+	if (f_split) {
+		sprintf(fname_self_dual, "%s_self_dual_r%d_m%d.csv", fname_base, split_r, split_m);
+	}
+	else {
+		sprintf(fname_self_dual, "%s_self_dual.csv", fname_base);
+	}
+	cout << "saving self_dual_cases to file " << fname_self_dual << endl;
+	int_vec_write_csv(self_dual_cases, nb_self_dual_cases,
+			fname_self_dual, "self_dual_idx");
+	cout << "written file " << fname_self_dual
+			<< " of size " << file_size(fname_self_dual) << endl;
+
+
+
+	//FREE_OBJECT(CB);
+	FREE_int(Spread_table_original);
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"done, nb_self_dual = " << nb_self_dual << endl;
+	}
+}
+
+
+
 
 void projective_space_with_action::latex_report(const char *fname,
 		const char *prefix,

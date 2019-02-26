@@ -16,8 +16,10 @@ using namespace orbiter;
 #include "graph.h"
 
 
-int graph_generator_check_conditions(int len, int *S, void *data, int verbose_level);
-void graph_generator_print_set(ostream &ost, int len, int *S, void *data);
+int graph_generator_check_conditions(int len,
+		int *S, void *data, int verbose_level);
+void graph_generator_print_set(ostream &ost,
+		int len, int *S, void *data);
 
 graph_generator::graph_generator()
 {
@@ -897,7 +899,8 @@ void graph_generator::draw_graphs(int level,
 // #############################################################################
 
 
-int graph_generator_check_conditions(int len, int *S, void *data, int verbose_level)
+int graph_generator_check_conditions(int len,
+		int *S, void *data, int verbose_level)
 {
 	graph_generator *Gen = (graph_generator *) data;
 
@@ -909,7 +912,8 @@ int graph_generator_check_conditions(int len, int *S, void *data, int verbose_le
 		}
 }
 
-void graph_generator_print_set(ostream &ost, int len, int *S, void *data)
+void graph_generator_print_set(ostream &ost,
+		int len, int *S, void *data)
 {
 	graph_generator *Gen = (graph_generator *) data;
 	
