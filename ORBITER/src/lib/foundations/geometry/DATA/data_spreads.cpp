@@ -181,9 +181,9 @@ int Spreads_4_2_reps[] = {
 	0, 356, 25, 50, 76, 90, 114, 127, 159, 173, 204, 221, 233, 255, 287, 304, 322, 
 };
 const char *Spreads_4_2_stab_order[] = {
-"1200",
-"81600",
-"576",
+"1200", // Hall spread
+"81600", // Desarguesian spread
+"576", // Semifield spread
 };
 int Spreads_4_2_stab_gens[] = {
 1, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 3, 1, 1, 3, 3, 0, 

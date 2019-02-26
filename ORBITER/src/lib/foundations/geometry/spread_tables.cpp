@@ -23,6 +23,7 @@ spread_tables::spread_tables()
 	Gr = NULL; // Gr_{4,2}
 	nb_lines = 0;
 	spread_size = 0;
+	nb_iso_types_of_spreads = 0;
 
 	prefix[0] = 0;
 
@@ -75,6 +76,7 @@ spread_tables::~spread_tables()
 
 void spread_tables::init(finite_field *F,
 		int f_load,
+		int nb_iso_types_of_spreads,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -96,10 +98,13 @@ void spread_tables::init(finite_field *F,
 	Gr->init(d, 2, F, 0 /* verbose_level */);
 	nb_lines = Gr->nCkq.as_int();
 	spread_size = q * q + 1;
+	spread_tables::nb_iso_types_of_spreads = nb_iso_types_of_spreads;
 
 	if (f_v) {
 		cout << "spread_tables::init nb_lines=" << nb_lines << endl;
 		cout << "spread_tables::init spread_size=" << spread_size << endl;
+		cout << "spread_tables::init nb_iso_types_of_spreads="
+				<< nb_iso_types_of_spreads << endl;
 	}
 
 
@@ -169,6 +174,40 @@ void spread_tables::init_tables(int nb_spreads,
 	spread_tables::nb_self_dual_spreads = nb_self_dual_spreads;
 	if (f_v) {
 		cout << "spread_tables::init_tables done" << endl;
+	}
+}
+
+void spread_tables::classify_self_dual_spreads(int *&type,
+		set_of_sets *&SoS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a;
+
+	if (f_v) {
+		cout << "spread_tables::classify_self_dual_spreads" << endl;
+	}
+	type = NEW_int(nb_iso_types_of_spreads);
+	int_vec_zero(type, nb_iso_types_of_spreads);
+	for (i = 0; i < nb_self_dual_spreads; i++) {
+		a = spread_iso_type[i];
+		type[a]++;
+	}
+	SoS = NEW_OBJECT(set_of_sets);
+	SoS->init_basic(
+			nb_self_dual_spreads /* underlying_set_size */,
+			nb_iso_types_of_spreads /* nb_sets */,
+			type, 0 /* verbose_level */);
+	for (a = 0; a < nb_iso_types_of_spreads; a++) {
+		SoS->Set_size[a] = 0;
+	}
+	for (i = 0; i < nb_self_dual_spreads; i++) {
+		a = spread_iso_type[i];
+		SoS->Sets[a][SoS->Set_size[a]++] = i;
+	}
+
+	if (f_v) {
+		cout << "spread_tables::classify_self_dual_spreads done" << endl;
 	}
 }
 

@@ -101,6 +101,28 @@ void classify_bitvectors::init(int N, int rep_len, int verbose_level)
 		}
 }
 
+int classify_bitvectors::search(uchar *data,
+		int &idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, ret;
+
+	if (f_v) {
+		cout << "classify_bitvectors::search" << endl;
+		}
+	if (vec_search((void **) Type_data,
+			compare_func_for_bitvectors, (void *) this,
+		nb_types, data, idx, 0 /*verbose_level */)) {
+		ret = FALSE;
+	}
+	else {
+		ret = TRUE;
+	}
+	if (f_v) {
+		cout << "classify_bitvectors::search done ret=" << ret << endl;
+		}
+}
+
 int classify_bitvectors::add(uchar *data,
 		void *extra_data, int verbose_level)
 {
@@ -148,7 +170,8 @@ int classify_bitvectors::add(uchar *data,
 
 
 	if (f_v) {
-		cout << "classify_bitvectors::add done" << endl;
+		cout << "classify_bitvectors::add done, nb_types="
+				<< nb_types << " ret=" << ret << endl;
 		}
 	return ret;
 }
@@ -189,7 +212,8 @@ void classify_bitvectors::print_reps()
 	
 	cout << "We found " << nb_types << " types:" << endl;
 	for (i = 0; i < nb_types; i++) {
-		cout << i << " : " << Type_rep[i] << " : " << Type_mult[i] << " : ";
+		cout << i << " : " << Type_rep[i]
+				<< " : " << Type_mult[i] << " : ";
 
 #if 0
 		for (j = 0; j < rep_len; j++) {
@@ -338,7 +362,6 @@ int compare_func_for_bitvectors(void *a, void *b, void *data)
 	return 0;
 }
 
-}
-}
+}}
 
 

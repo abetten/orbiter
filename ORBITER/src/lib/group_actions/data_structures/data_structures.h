@@ -253,6 +253,10 @@ public:
 		int f_compute_canonical_form, 
 		uchar *&canonical_form, int &canonical_form_len, 
 		int verbose_level);
+	void canonical_labeling(
+		object_in_projective_space *OiP,
+		int *canonical_labeling,
+		int verbose_level);
 	strong_generators *set_stabilizer_of_object(
 		object_in_projective_space *OiP, 
 		int f_save_incma_in_and_out, 
@@ -308,13 +312,17 @@ public:
 			int verbose_level);
 	void select_packings(
 			const char *fname,
-			const char *file_of_dual_line_idx,
-			const char *file_of_spreads,
-			const char *file_of_spreads_lexleast,
-			const char *file_isomorphism_type_of_spreads,
-			const char *file_dual_spread,
+			const char *file_of_spreads_original,
+			spread_tables *Spread_tables,
 			int f_self_dual,
 			int f_ago, int select_ago,
+			classify_bitvectors *&CB,
+			int verbose_level);
+	void select_packings_self_dual(
+			const char *fname,
+			const char *file_of_spreads_original,
+			int f_split, int split_r, int split_m,
+			spread_tables *Spread_tables,
 			classify_bitvectors *&CB,
 			int verbose_level);
 	void latex_report(const char *fname,

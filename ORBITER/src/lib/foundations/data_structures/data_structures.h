@@ -68,6 +68,7 @@ public:
 	void null();
 	void freeself();
 	void init(int N, int rep_len, int verbose_level);
+	int search(uchar *data, int &idx, int verbose_level);
 	int add(uchar *data, void *extra_data, int verbose_level);
 	void finalize(int verbose_level);
 	void print_reps();
