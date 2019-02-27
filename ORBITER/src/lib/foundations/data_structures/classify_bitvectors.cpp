@@ -107,7 +107,7 @@ int classify_bitvectors::search(uchar *data,
 		int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, ret;
+	int ret;
 
 	if (f_v) {
 		cout << "classify_bitvectors::search" << endl;
@@ -115,10 +115,10 @@ int classify_bitvectors::search(uchar *data,
 	if (vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
 		nb_types, data, idx, verbose_level - 1)) {
-		ret = FALSE;
+		ret = TRUE;
 	}
 	else {
-		ret = TRUE;
+		ret = FALSE;
 	}
 	if (f_v) {
 		cout << "classify_bitvectors::search done ret=" << ret << endl;
