@@ -3575,6 +3575,14 @@ void projective_space_with_action::select_packings_self_dual(
 			ret = CB->search(canonical_form1, idx1, 5 /* verbose_level*/);
 			cout << "CB:" << endl;
 			CB->print_table();
+			cout << "canonical form1: ";
+			for (int j = 0; j < canonical_form_len; j++) {
+				cout << (int) canonical_form1[j];
+				if (j < canonical_form_len - 1) {
+					cout << ", ";
+					}
+				}
+			cout << endl;
 			exit(1);
 		}
 		if (FALSE) {
@@ -3588,6 +3596,13 @@ void projective_space_with_action::select_packings_self_dual(
 			ret = CB->search(canonical_form2, idx2, 5 /* verbose_level*/);
 			cout << "CB:" << endl;
 			CB->print_table();
+			cout << "canonical form2: ";
+			for (int j = 0; j < canonical_form_len; j++) {
+				cout << (int) canonical_form2[j];
+				if (j < canonical_form_len - 1) {
+					cout << ", ";
+					}
+				}
 			exit(1);
 		}
 		if (FALSE) {
