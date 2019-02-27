@@ -72,6 +72,7 @@ public:
 	int add(uchar *data, void *extra_data, int verbose_level);
 	void finalize(int verbose_level);
 	void print_reps();
+	void print_table();
 	void save(const char *prefix,
 		void (*encode_function)(void *extra_data,
 			int *&encoding, int &encoding_sz, void *global_data),
