@@ -11,6 +11,9 @@
 #include "orbiter.h"
 
 
+using namespace std;
+
+
 using namespace orbiter;
 
 typedef class cayley_graph_search cayley_graph_search;

@@ -8,6 +8,9 @@
 
 #include <stdlib.h> // for rand(), RAND_MAX
 
+using namespace std;
+
+
 namespace orbiter {
 namespace discreta {
 

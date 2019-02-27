@@ -277,7 +277,7 @@ public:
 
 
 	int f_print_function;
-	void (*print_function)(ostream &ost, int len, int *S, void *data);
+	void (*print_function)(std::ostream &ost, int len, int *S, void *data);
 	void *print_function_data;
 	
 	int nb_times_trace;
@@ -438,7 +438,7 @@ public:
 		longinteger_object *&agos, int *&multiplicities, 
 		int verbose_level);
 	void compute_and_print_automorphism_group_orders(int lvl, 
-		ostream &ost);
+			std::ostream &ost);
 	void stabilizer_order(int node, longinteger_object &go);
 	void orbit_length(int orbit_at_level, int level,
 		longinteger_object &len);
@@ -485,7 +485,7 @@ public:
 		int verbose_level);
 	void list_all_orbits_at_level(int depth, 
 		int f_has_print_function, 
-		void (*print_function)(ostream &ost, int len, int *S, void *data),
+		void (*print_function)(std::ostream &ost, int len, int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
@@ -498,7 +498,7 @@ public:
 	void list_selected_set_of_orbits_at_level(int depth, 
 		int nb_orbits, int *Orbit_idx, 
 		int f_has_print_function, 
-		void (*print_function)(ostream &ost, int len, int *S, void *data),
+		void (*print_function)(std::ostream &ost, int len, int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
@@ -512,14 +512,14 @@ public:
 	//	int verbose_level);
 	void list_whole_orbit(int depth, int orbit_idx, 
 		int f_has_print_function, 
-		void (*print_function)(ostream &ost, int len, int *S, void *data),
+		void (*print_function)(std::ostream &ost, int len, int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
 	void get_whole_orbit(
 		int depth, int orbit_idx,
 		int *&Orbit, int &orbit_length, int verbose_level);
-	void print_extensions_at_level(ostream &ost, int lvl);
+	void print_extensions_at_level(std::ostream &ost, int lvl);
 	void map_to_canonical_k_subset(int *the_set, int set_size, 
 		int subset_size, int subset_rk, 
 		int *reduced_set, int *transporter, int &local_idx, 
@@ -700,7 +700,7 @@ public:
 		int verbose_level);
 	
 	// poset_classification_draw.C:
-	void report_schreier_trees(ostream &ost, int verbose_level);
+	void report_schreier_trees(std::ostream &ost, int verbose_level);
 	void write_treefile_and_draw_tree(char *fname_base, 
 		int lvl, int xmax, int ymax, int rad, 
 		int f_embedded, int verbose_level);
@@ -757,16 +757,16 @@ public:
 		const char *fname, int verbose_level);
 	void write_data_file(int depth_completed,
 		const char *fname_base, int verbose_level);
-	void write_file(ofstream &fp, int depth_completed,
+	void write_file(std::ofstream &fp, int depth_completed,
 		int verbose_level);
-	void read_file(ifstream &fp, int &depth_completed,
+	void read_file(std::ifstream &fp, int &depth_completed,
 		int verbose_level);
 	void read_memory_object(int &depth_completed,
 		memory_object *m, int &nb_group_elements, int verbose_level);
 	void write_memory_object(int depth_completed,
 		memory_object *m, int &nb_group_elements, int verbose_level);
 	int calc_size_on_file(int depth_completed, int verbose_level);
-	void report(ostream &ost);
+	void report(std::ostream &ost);
 	void housekeeping(int i, int f_write_files, int t0, 
 		int verbose_level);
 	void housekeeping_no_data_file(int i, int t0, int verbose_level);
@@ -803,14 +803,14 @@ public:
 	void write_lvl_file(char *fname_base, int lvl, 
 		int t0, int f_with_stabilizer_generators, int f_long_version,
 		int verbose_level);
-	void write_lvl(ostream &f, int lvl, int t0, 
+	void write_lvl(std::ostream &f, int lvl, int t0,
 		int f_with_stabilizer_generators, int f_long_version,
 		int verbose_level);
 	void log_nodes_for_treefile(int cur, int depth, 
-		ostream &f, int f_recurse, int verbose_level);
-	void Log_nodes(int cur, int depth, ostream &f, 
+			std::ostream &f, int f_recurse, int verbose_level);
+	void Log_nodes(int cur, int depth, std::ostream &f,
 		int f_recurse, int verbose_level);
-	void log_current_node(ostream &f, int size);
+	void log_current_node(std::ostream &f, int size);
 	void make_spreadsheet_of_orbit_reps(spreadsheet *&Sp, 
 		int max_depth);
 	void make_spreadsheet_of_level_info(spreadsheet *&Sp, 
@@ -898,17 +898,17 @@ public:
 		int &idx, int hdl, int cur_depth, int *perm, int *perm_inv);
 	int find_extension_from_point(poset_classification *gen, int pt, 
 		int verbose_level);
-	void print_extensions(ostream &ost);
+	void print_extensions(std::ostream &ost);
 	void log_current_node_without_group(poset_classification *gen, 
-		int s, ostream &f, int verbose_level);
+		int s, std::ostream &f, int verbose_level);
 	void log_current_node(poset_classification *gen, int s, 
-		ostream &f, int f_with_stabilizer_poset_classifications, 
+			std::ostream &f, int f_with_stabilizer_poset_classifications,
 		int verbose_level);
 	void log_current_node_after_applying_group_element(
-		poset_classification *gen, int s, ostream &f, int hdl, 
+		poset_classification *gen, int s, std::ostream &f, int hdl,
 		int verbose_level);
 	void log_current_node_with_candidates(poset_classification *gen, 
-		int lvl, ostream &f, int verbose_level);
+		int lvl, std::ostream &f, int verbose_level);
 	int depth_of_node(poset_classification *gen);
 	void store_set(poset_classification *gen, int i);
 		// stores a set of size i + 1 to gen->S

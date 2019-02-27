@@ -28,6 +28,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 
@@ -416,7 +419,7 @@ main (int c, char **v)
         }
       if (sigwinch_received)
 	{
-	  rl_resize_terminal ();
+	  //rl_resize_terminal ();
 	  sigwinch_received = 0;
 	}
       if (r < 0)

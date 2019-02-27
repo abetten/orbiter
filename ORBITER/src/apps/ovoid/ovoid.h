@@ -24,7 +24,7 @@ extern int t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
 int check_conditions(int len, int *S, void *data, int verbose_level);
-void callback_print_set(ostream &ost, int len, int *S, void *data);
+void callback_print_set(std::ostream &ost, int len, int *S, void *data);
 //int callback_check_conditions(int len, int *S, void *data, int verbose_level);
 
 // #############################################################################
@@ -102,7 +102,7 @@ public:
 		int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	//int collinearity_test(int *S, int len, int verbose_level);
-	void print(ostream &ost, int *S, int len);
+	void print(std::ostream &ost, int *S, int len);
 	void make_graphs(orbiter_data_file *ODF,
 		int f_split, int split_r, int split_m,
 		int f_lexorder_test,

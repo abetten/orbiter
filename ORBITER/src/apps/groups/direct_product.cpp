@@ -9,6 +9,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 #define MAX_MASK_TESTS 1000

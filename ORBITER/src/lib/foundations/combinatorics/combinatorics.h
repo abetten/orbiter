@@ -53,7 +53,7 @@ void make_all_partitions_of_n(int n, int *&Table, int &nb, int verbose_level);
 int count_all_partitions_of_n(int n);
 int partition_first(int *v, int n);
 int partition_next(int *v, int n);
-void partition_print(ostream &ost, int *v, int n);
+void partition_print(std::ostream &ost, int *v, int n);
 int int_vec_is_regular_word(int *v, int len, int q);
 	// Returns TRUE if the word v of length len is regular, i.~e. 
 	// lies in an orbit of length $len$ under the action of the cyclic group 
@@ -79,7 +79,7 @@ int compare_lexicographically(int a_len, int *a, int b_len, int *b);
 int int_n_choose_k(int n, int k);
 void make_t_k_incidence_matrix(int v, int t, int k, int &m, int &n, int *&M, 
 	int verbose_level);
-void print_k_subsets_by_rank(ostream &ost, int v, int k);
+void print_k_subsets_by_rank(std::ostream &ost, int v, int k);
 int f_is_subset_of(int v, int t, int k, int rk_t_subset, int rk_k_subset);
 int rank_subset(int *set, int sz, int n);
 void rank_subset_recursion(int *set, int sz, int n, int a0, int &r);
@@ -116,14 +116,14 @@ void perm_inverse(int *a, int *b, int n);
 void perm_raise(int *a, int *b, int e, int n);
 // b := a^e (e >= 0)
 void perm_direct_product(int n1, int n2, int *perm1, int *perm2, int *perm3);
-void perm_print_list(ostream &ost, int *a, int n);
-void perm_print_list_offset(ostream &ost, int *a, int n, int offset);
-void perm_print_product_action(ostream &ost, int *a, int m_plus_n, int m, 
+void perm_print_list(std::ostream &ost, int *a, int n);
+void perm_print_list_offset(std::ostream &ost, int *a, int n, int offset);
+void perm_print_product_action(std::ostream &ost, int *a, int m_plus_n, int m,
 	int offset, int f_cycle_length);
-void perm_print(ostream &ost, int *a, int n);
-void perm_print_with_cycle_length(ostream &ost, int *a, int n);
-void perm_print_counting_from_one(ostream &ost, int *a, int n);
-void perm_print_offset(ostream &ost, int *a, int n, int offset, 
+void perm_print(std::ostream &ost, int *a, int n);
+void perm_print_with_cycle_length(std::ostream &ost, int *a, int n);
+void perm_print_counting_from_one(std::ostream &ost, int *a, int n);
+void perm_print_offset(std::ostream &ost, int *a, int n, int offset,
 	int f_cycle_length, 
 	int f_max_cycle_length, int max_cycle_length, int f_orbit_structure);
 void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles);
@@ -139,8 +139,8 @@ int philip_hall_test(int *A, int n, int k, int *memo, int verbose_level);
 // memo points to free memory of n int's
 int philip_hall_test_dual(int *A, int n, int k, int *memo, int verbose_level);
 // memo points to free memory of n int's
-void print_01_matrix_with_stars(ostream &ost, int *A, int m, int n);
-void print_int_matrix(ostream &ost, int *A, int m, int n);
+void print_01_matrix_with_stars(std::ostream &ost, int *A, int m, int n);
+void print_int_matrix(std::ostream &ost, int *A, int m, int n);
 int create_roots_H4(finite_field *F, int *roots);
 int generalized_binomial(int n, int k, int q);
 void print_tableau(int *Tableau, int l1, int l2, 

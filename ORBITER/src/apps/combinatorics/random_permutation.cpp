@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void choose_random_permutation(int n,

@@ -122,9 +122,9 @@ public:
 		// versus candidate points
 		// extended by external lines versus candidate points
 	void report(isomorph &Iso, int verbose_level);
-	void report_decompositions(isomorph &Iso, ofstream &f, int orbit, 
+	void report_decompositions(isomorph &Iso, std::ofstream &f, int orbit,
 		int *data, int verbose_level);
-	void report_stabilizer(isomorph &Iso, ofstream &f, int orbit, 
+	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
 		int verbose_level);
 	void simeon(int len, int *S, int s, int verbose_level);
 };
@@ -144,7 +144,7 @@ void arc_generator_lifting_prepare_function_new(
 void arc_generator_print_arc(int len, int *S, void *data);
 void arc_generator_print_point(int pt, void *data);
 void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
-void arc_generator_print_arc(ostream &ost, int len, int *S, void *data);
+void arc_generator_print_arc(std::ostream &ost, int len, int *S, void *data);
 
 
 // #############################################################################
@@ -313,23 +313,23 @@ public:
 		int verbose_level);
 	void create_clebsch_system(int *The_six_plane_equations, 
 		int lambda, int verbose_level);
-	void print(ostream &ost);
-	void print_Eckardt_point_data(ostream &ost);
-	void print_bisecants(ostream &ost);
-	void print_intersections(ostream &ost);
-	void print_conics(ostream &ost);
-	void print_Eckardt_points(ostream &ost);
-	void print_web_of_cubic_curves(ostream &ost);
-	void print_trihedral_plane_equations(ostream &ost);
-	void print_lines(ostream &ost);
-	void print_dual_point_ranks(ostream &ost);
-	void print_FG(ostream &ost);
+	void print(std::ostream &ost);
+	void print_Eckardt_point_data(std::ostream &ost);
+	void print_bisecants(std::ostream &ost);
+	void print_intersections(std::ostream &ost);
+	void print_conics(std::ostream &ost);
+	void print_Eckardt_points(std::ostream &ost);
+	void print_web_of_cubic_curves(std::ostream &ost);
+	void print_trihedral_plane_equations(std::ostream &ost);
+	void print_lines(std::ostream &ost);
+	void print_dual_point_ranks(std::ostream &ost);
+	void print_FG(std::ostream &ost);
 	void print_the_six_plane_equations(int *The_six_plane_equations, 
-		int *plane6, ostream &ost);
+		int *plane6, std::ostream &ost);
 	void print_surface_equations_on_line(int *The_surface_equations, 
-		int lambda, int lambda_rk, ostream &ost);
+		int lambda, int lambda_rk, std::ostream &ost);
 	void print_equations();
-	void print_isomorphism_types_of_trihedral_pairs(ostream &ost, 
+	void print_isomorphism_types_of_trihedral_pairs(std::ostream &ost,
 		vector_ge *cosets);
 };
 
@@ -602,7 +602,7 @@ public:
 		// the triple \{ x,y,a\}
 	int check_conditions(int len, int *S, int verbose_level);
 	int collinearity_test(int *S, int len, int verbose_level);
-	void print(ostream &ost, int *S, int len);
+	void print(std::ostream &ost, int *S, int len);
 
 	// blt_set2.C:
 	void find_free_points(int *S, int S_sz,
@@ -620,7 +620,7 @@ public:
 };
 
 // blt_set2.C:
-void blt_set_print(ostream &ost, int len, int *S, void *data);
+void blt_set_print(std::ostream &ost, int len, int *S, void *data);
 void blt_set_lifting_prepare_function_new(exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens,
 	diophant *&Dio, int *&col_labels,
@@ -865,11 +865,11 @@ public:
 	void classify(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
-	void print_five_plus_ones(ostream &ost);
+	void print_five_plus_ones(std::ostream &ost);
 	void identify_double_six(int *double_six, 
 		int *transporter, int &orbit_index, int verbose_level);
-	void write_file(ofstream &fp, int verbose_level);
-	void read_file(ifstream &fp, int verbose_level);
+	void write_file(std::ofstream &fp, int verbose_level);
+	void read_file(std::ifstream &fp, int verbose_level);
 
 };
 
@@ -924,8 +924,8 @@ public:
 	void init(surface_with_action *Surf_A, int verbose_level);
 
 	void classify_orbits_on_trihedra(int verbose_level);
-	void list_orbits_on_trihedra_type1(ostream &ost);
-	void list_orbits_on_trihedra_type2(ostream &ost);
+	void list_orbits_on_trihedra_type1(std::ostream &ost);
+	void list_orbits_on_trihedra_type2(std::ostream &ost);
 	void early_test_func_type1(int *S, int len, 
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
@@ -939,7 +939,7 @@ public:
 	void classify(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
-	void print_trihedral_pairs(ostream &ost, 
+	void print_trihedral_pairs(std::ostream &ost,
 		int f_with_stabilizers);
 	strong_generators *identify_trihedral_pair_and_get_stabilizer(
 		int *planes6, int *transporter, int &orbit_index, 
@@ -1042,7 +1042,7 @@ public:
 	void init(isomorph *Iso, packing *P, int verbose_level);
 	void compute_dual_packings(
 		isomorph *Iso, int verbose_level);
-	void make_table(isomorph *Iso, ostream &ost,
+	void make_table(isomorph *Iso, std::ostream &ost,
 		int f_only_self_dual,
 		int f_only_not_self_dual,
 		int verbose_level);
@@ -1326,24 +1326,24 @@ public:
 		int &nb_planes,
 		int verbose_level);
 	void report(isomorph *Iso, int verbose_level);
-	void report_whole(isomorph *Iso, ofstream &f, int verbose_level);
-	void report_title_page(isomorph *Iso, ofstream &f, int verbose_level);
-	void report_packings_by_ago(isomorph *Iso, ofstream &f,
+	void report_whole(isomorph *Iso, std::ofstream &f, int verbose_level);
+	void report_title_page(isomorph *Iso, std::ofstream &f, int verbose_level);
+	void report_packings_by_ago(isomorph *Iso, std::ofstream &f,
 		invariants_packing *inv, classify &C_ago, int verbose_level);
-	void report_isomorphism_type(isomorph *Iso, ofstream &f,
+	void report_isomorphism_type(isomorph *Iso, std::ofstream &f,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_packing_as_table(isomorph *Iso, ofstream &f,
+	void report_packing_as_table(isomorph *Iso, std::ofstream &f,
 		int orbit, invariants_packing *inv, int *list_of_lines,
 		int verbose_level);
-	void report_klein_invariants(isomorph *Iso, ofstream &f,
+	void report_klein_invariants(isomorph *Iso, std::ofstream &f,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_stabilizer(isomorph &Iso, ofstream &f, int orbit,
+	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
 			int verbose_level);
 	void report_stabilizer_in_action(isomorph &Iso,
-			ofstream &f, int orbit, int verbose_level);
+			std::ofstream &f, int orbit, int verbose_level);
 	void report_stabilizer_in_action_gap(isomorph &Iso,
 			int orbit, int verbose_level);
-	void report_extra_stuff(isomorph *Iso, ofstream &f,
+	void report_extra_stuff(isomorph *Iso, std::ofstream &f,
 			int verbose_level);
 };
 
@@ -1573,7 +1573,7 @@ public:
 	fancy_set *active_set;
 	int *sz_active_set; // [Inc->nb_cols + 1]
 
-	deque<vector<int> > solutions;
+	std::deque<std::vector<int> > solutions;
 	int nb_solutions;
 	int f_find_only_one;
 	int f_blocking_set_size_desired;
@@ -1678,7 +1678,7 @@ public:
 	void init(finite_field *F, projective_space *P2, 
 		int argc, const char **argv, 
 		int verbose_level);
-	void report_latex(ostream &ost);
+	void report_latex(std::ostream &ost);
 };
 
 // #############################################################################
@@ -1821,7 +1821,7 @@ public:
 	void save_klein_invariants(char *prefix, 
 		int iso_cnt, 
 		int *data, int data_size, int verbose_level);
-	void klein(ofstream &ost, 
+	void klein(std::ofstream &ost,
 		isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
 		int *data, int data_size, int verbose_level);
@@ -1841,15 +1841,15 @@ public:
 	void read_and_print_spread(const char *fname, int verbose_level);
 	void HMO(const char *fname, int verbose_level);
 	void get_spread_matrices(int *F, int *G, int *data, int verbose_level);
-	void print_spread(ostream &ost, int *data, int sz);
+	void print_spread(std::ostream &ost, int *data, int sz);
 	void report2(isomorph &Iso, int verbose_level);
 	void all_cooperstein_thas_quotients(isomorph &Iso, int verbose_level);
-	void cooperstein_thas_quotients(isomorph &Iso, ofstream &f, 
+	void cooperstein_thas_quotients(isomorph &Iso, std::ofstream &f,
 		int h, int &cnt, int verbose_level);
-	void orbit_info_short(ofstream &f, isomorph &Iso, int h);
-	void report_stabilizer(isomorph &Iso, ofstream &f, int orbit, 
+	void orbit_info_short(std::ofstream &f, isomorph &Iso, int h);
+	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
 		int verbose_level);
-	void print(ostream &ost, int len, int *S);
+	void print(std::ostream &ost, int len, int *S);
 };
 
 
@@ -1879,7 +1879,7 @@ int spread_check_function_callback(int len, int *S,
 void spread_callback_report(isomorph *Iso, void *data, int verbose_level);
 void spread_callback_make_quotients(isomorph *Iso, void *data, 
 	int verbose_level);
-void callback_spread_print(ostream &ost, int len, int *S, void *data);
+void callback_spread_print(std::ostream &ost, int len, int *S, void *data);
 
 // #############################################################################
 // spread_create.C:
@@ -2085,8 +2085,8 @@ public:
 	void classify_surfaces_from_double_sixes(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
-	void write_file(ofstream &fp, int verbose_level);
-	void read_file(ifstream &fp, int verbose_level);
+	void write_file(std::ofstream &fp, int verbose_level);
+	void read_file(std::ifstream &fp, int verbose_level);
 
 
 	void identify_surfaces(int verbose_level);
@@ -2109,8 +2109,8 @@ public:
 	void identify_surface(int *coeff_of_given_surface, 
 		int &isomorphic_to, int *Elt_isomorphism, 
 		int verbose_level);
-	void latex_surfaces(ostream &ost, int f_with_stabilizers);
-	void report_surface(ostream &ost, int orbit_index, int verbose_level);
+	void latex_surfaces(std::ostream &ost, int f_with_stabilizers);
+	void report_surface(std::ostream &ost, int orbit_index, int verbose_level);
 	void generate_source_code(int verbose_level);
 		// no longer produces nb_E[] and single_six[]
 
@@ -2270,17 +2270,17 @@ public:
 	void init_orbits_on_tritangent_planes(int verbose_level);
 	void init_orbits_on_trihedral_pairs(int verbose_level);
 	void init_orbits_on_points_not_on_lines(int verbose_level);
-	void print_automorphism_group(ostream &ost, 
+	void print_automorphism_group(std::ostream &ost,
 		int f_print_orbits, const char *fname_mask);
 	void compute_quartic(int pt_orbit, 
 		int &pt_A, int &pt_B, int *transporter, 
 		int *equation, int *equation_nice, int verbose_level);
-	void quartic(ostream &ost, int verbose_level);
-	void cheat_sheet(ostream &ost, 
+	void quartic(std::ostream &ost, int verbose_level);
+	void cheat_sheet(std::ostream &ost,
 		const char *label_txt, const char *label_tex, 
 		int f_print_orbits, const char *fname_mask, 
 		int verbose_level);
-	void cheat_sheet_quartic_curve(ostream &ost, 
+	void cheat_sheet_quartic_curve(std::ostream &ost,
 		const char *label_txt, const char *label_tex, 
 		int verbose_level);
 };
@@ -2331,7 +2331,7 @@ public:
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		int *five_lines, int transversal_line, 
 		int *double_six, int verbose_level);
-	void arc_lifting_and_classify(int f_log_fp, ofstream &fp, 
+	void arc_lifting_and_classify(int f_log_fp, std::ofstream &fp,
 		int *Arc6, 
 		const char *arc_label, const char *arc_label_short, 
 		int nb_surfaces, 

@@ -8,6 +8,9 @@
 #include <cstring>
 	// for memcpy
 
+using namespace std;
+
+
 namespace orbiter {
 namespace group_actions {
 

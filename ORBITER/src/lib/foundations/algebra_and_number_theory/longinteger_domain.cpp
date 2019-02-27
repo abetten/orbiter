@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+using namespace std;
+
+
 #define TABLE_Q_BINOMIALS_MAX 200
 
 namespace orbiter {

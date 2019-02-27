@@ -24,7 +24,7 @@ class file_output {
 public:
 	char fname[1000];
 	int f_file_is_open;
-	ofstream *fp;
+	std::ofstream *fp;
 	void *user_data;
 	
 	file_output();
@@ -141,10 +141,10 @@ public:
 	~mem_object_registry_entry();
 	void null();
 	void set_type_from_string(char *str);
-	void print_type(ostream &ost);
+	void print_type(std::ostream &ost);
 	int size_of();
 	void print(int line);
-	void print_csv(ostream &ost, int line);
+	void print_csv(std::ostream &ost, int line);
 };
 
 extern int f_memory_debug;
@@ -261,53 +261,53 @@ void int_vec_complement(int *v, int *w, int n, int k);
 // computes the complement of v[k] w[n - k] 
 void int_vec_init5(int *v, int a0, int a1, int a2, int a3, int a4);
 void dump_memory_chain(void *allocated_objects);
-void print_vector(ostream &ost, int *v, int size);
+void print_vector(std::ostream &ost, int *v, int size);
 int int_vec_minimum(int *v, int len);
 int int_vec_maximum(int *v, int len);
 //void int_vec_copy(int len, int *from, int *to);
 int int_vec_first_difference(int *p, int *q, int len);
 void itoa(char *p, int len_of_p, int i);
 void char_swap(char *p, char *q, int len);
-void int_vec_distribution_compute_and_print(ostream &ost, int *v, int v_len);
+void int_vec_distribution_compute_and_print(std::ostream &ost, int *v, int v_len);
 void int_vec_distribution(int *v, int len_v, int *&val, int *&mult, int &len);
-void int_distribution_print(ostream &ost, int *val, int *mult, int len);
+void int_distribution_print(std::ostream &ost, int *val, int *mult, int len);
 void int_swap(int& x, int& y);
 void int_set_print(int *v, int len);
-void int_set_print(ostream &ost, int *v, int len);
-void int_set_print_tex(ostream &ost, int *v, int len);
-void int_set_print_masked_tex(ostream &ost, 
+void int_set_print(std::ostream &ost, int *v, int len);
+void int_set_print_tex(std::ostream &ost, int *v, int len);
+void int_set_print_masked_tex(std::ostream &ost,
 	int *v, int len, const char *mask_begin, const char *mask_end);
-void int_set_print_tex_for_inline_text(ostream &ost, int *v, int len);
-void int_vec_print(ostream &ost, int *v, int len);
-void int_vec_print_str(stringstream &ost, int *v, int len);
-void int_vec_print_as_matrix(ostream &ost, 
+void int_set_print_tex_for_inline_text(std::ostream &ost, int *v, int len);
+void int_vec_print(std::ostream &ost, int *v, int len);
+void int_vec_print_str(std::stringstream &ost, int *v, int len);
+void int_vec_print_as_matrix(std::ostream &ost,
 	int *v, int len, int width, int f_tex);
-void int_vec_print_as_table(ostream &ost, int *v, int len, int width);
-void int_vec_print_fully(ostream &ost, int *v, int len);
-void int_vec_print_Cpp(ostream &ost, int *v, int len);
-void int_vec_print_GAP(ostream &ost, int *v, int len);
+void int_vec_print_as_table(std::ostream &ost, int *v, int len, int width);
+void int_vec_print_fully(std::ostream &ost, int *v, int len);
+void int_vec_print_Cpp(std::ostream &ost, int *v, int len);
+void int_vec_print_GAP(std::ostream &ost, int *v, int len);
 void int_vec_print_classified(int *v, int len);
-void int_vec_print_classified_str(stringstream &sstr,
+void int_vec_print_classified_str(std::stringstream &sstr,
 		int *v, int len, int f_backwards);
-void integer_vec_print(ostream &ost, int *v, int len);
-void print_integer_matrix(ostream &ost, int *p, int m, int n);
-void print_integer_matrix_width(ostream &ost, int *p, 
+void integer_vec_print(std::ostream &ost, int *v, int len);
+void print_integer_matrix(std::ostream &ost, int *p, int m, int n);
+void print_integer_matrix_width(std::ostream &ost, int *p,
 	int m, int n, int dim_n, int w);
-void print_01_matrix_tex(ostream &ost, int *p, int m, int n);
-void print_integer_matrix_tex(ostream &ost, int *p, int m, int n);
-void print_integer_matrix_with_labels(ostream &ost, int *p, 
+void print_01_matrix_tex(std::ostream &ost, int *p, int m, int n);
+void print_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
+void print_integer_matrix_with_labels(std::ostream &ost, int *p,
 	int m, int n, int *row_labels, int *col_labels, int f_tex);
-void print_integer_matrix_with_standard_labels(ostream &ost, 
+void print_integer_matrix_with_standard_labels(std::ostream &ost,
 	int *p, int m, int n, int f_tex);
-void print_integer_matrix_with_standard_labels_and_offset(ostream &ost, 
+void print_integer_matrix_with_standard_labels_and_offset(std::ostream &ost,
 	int *p, int m, int n, int m_offset, int n_offset, int f_tex);
-void print_integer_matrix_tex_block_by_block(ostream &ost, 
+void print_integer_matrix_tex_block_by_block(std::ostream &ost,
 	int *p, int m, int n, int block_width);
-void print_integer_matrix_with_standard_labels_and_offset_text(ostream &ost, 
+void print_integer_matrix_with_standard_labels_and_offset_text(std::ostream &ost,
 	int *p, int m, int n, int m_offset, int n_offset);
-void print_integer_matrix_with_standard_labels_and_offset_tex(ostream &ost, 
+void print_integer_matrix_with_standard_labels_and_offset_tex(std::ostream &ost,
 	int *p, int m, int n, int m_offset, int n_offset);
-void print_big_integer_matrix_tex(ostream &ost, int *p, int m, int n);
+void print_big_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
 void int_matrix_make_block_matrix_2x2(int *Mtx, int k, 
 	int *A, int *B, int *C, int *D);
 // makes the 2k x 2k block matrix 
@@ -316,14 +316,14 @@ void int_matrix_make_block_matrix_2x2(int *Mtx, int k,
 void int_matrix_delete_column_in_place(int *Mtx, int k, int n, int pivot);
 // afterwards, the matrix is k x (n - 1)
 int int_matrix_max_log_of_entries(int *p, int m, int n);
-void int_matrix_print_ost(ostream &ost, int *p, int m, int n);
+void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n);
 void int_matrix_print(int *p, int m, int n);
 void int_matrix_print_tight(int *p, int m, int n);
-void int_matrix_print_ost(ostream &ost, int *p, int m, int n, int w);
+void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
 void int_matrix_print(int *p, int m, int n, int w);
-void int_matrix_print_tex(ostream &ost, int *p, int m, int n);
+void int_matrix_print_tex(std::ostream &ost, int *p, int m, int n);
 void int_matrix_print_bitwise(int *p, int m, int n);
-void uchar_print_bitwise(ostream &ost, uchar u);
+void uchar_print_bitwise(std::ostream &ost, uchar u);
 void uchar_move(uchar *p, uchar *q, int len);
 void int_submatrix_all_rows(int *A, int m, int n, 
 	int nb_cols, int *cols, int *B);
@@ -343,9 +343,9 @@ int os_ticks_system();
 int os_ticks_per_second();
 void os_ticks_to_dhms(int ticks, int tps,
 		int &d, int &h, int &m, int &s);
-void time_check_delta(ostream &ost, int dt);
-void print_elapsed_time(ostream &ost, int d, int h, int m, int s);
-void time_check(ostream &ost, int t0);
+void time_check_delta(std::ostream &ost, int dt);
+void print_elapsed_time(std::ostream &ost, int d, int h, int m, int s);
+void time_check(std::ostream &ost, int t0);
 int delta_time(int t0);
 int file_size(const char *name);
 void delete_file(const char *fname);
@@ -353,34 +353,34 @@ void fwrite_int4(FILE *fp, int a);
 int_4 fread_int4(FILE *fp);
 void fwrite_uchars(FILE *fp, uchar *p, int len);
 void fread_uchars(FILE *fp, uchar *p, int len);
-void latex_head_easy(ostream& ost);
+void latex_head_easy(std::ostream& ost);
 void latex_head_easy_with_extras_in_the_praeamble(
-	ostream& ost, const char *extras);
-void latex_head_easy_sideways(ostream& ost);
-void latex_head(ostream& ost, int f_book, int f_title, 
+		std::ostream& ost, const char *extras);
+void latex_head_easy_sideways(std::ostream& ost);
+void latex_head(std::ostream& ost, int f_book, int f_title,
 	const char *title, const char *author, 
 	int f_toc, int f_landscape, int f_12pt, 
 	int f_enlarged_page, int f_pagenumbers, 
 	const char *extras_for_preamble);
-void latex_foot(ostream& ost);
+void latex_foot(std::ostream& ost);
 void seed_random_generator_with_system_time();
 void seed_random_generator(int seed);
 int random_integer(int p);
-void print_set(ostream &ost, int size, int *set);
+void print_set(std::ostream &ost, int size, int *set);
 void block_swap_chars(char *ptr, int size, int no);
 void code_int4(char *&p, int_4 i);
 int_4 decode_int4(char *&p);
 void code_uchar(char *&p, uchar a);
 void decode_uchar(char *&p, uchar &a);
-void print_incidence_structure(ostream &ost,
+void print_incidence_structure(std::ostream &ost,
 		int m, int n, int len, int *S);
 void int_vec_scan(const char *s, int *&v, int &len);
-void int_vec_scan_from_stream(istream & is, int *&v, int &len);
+void int_vec_scan_from_stream(std::istream & is, int *&v, int &len);
 void scan_permutation_from_string(const char *s, 
 	int *&perm, int &degree, int verbose_level);
-void scan_permutation_from_stream(istream & is, 
+void scan_permutation_from_stream(std::istream & is,
 	int *&perm, int &degree, int verbose_level);
-char get_character(istream & is, int verbose_level);
+char get_character(std::istream & is, int verbose_level);
 void replace_extension_with(char *p, const char *new_ext);
 void chop_off_extension(char *p);
 void chop_off_extension_if_present(char *p, const char *ext);
@@ -439,9 +439,9 @@ int inc_file_get_number_of_geometries(
 	char *inc_file_name, int verbose_level);
 
 void print_line_of_number_signs();
-void print_repeated_character(ostream &ost, char c, int n);
-void print_pointer_hex(ostream &ost, void *p);
-void print_hex_digit(ostream &ost, int digit);
+void print_repeated_character(std::ostream &ost, char c, int n);
+void print_pointer_hex(std::ostream &ost, void *p);
+void print_hex_digit(std::ostream &ost, int digit);
 void count_number_of_solutions_in_file(const char *fname, 
 	int &nb_solutions, 
 	int verbose_level);
@@ -455,7 +455,7 @@ void read_solutions_from_file_by_case(const char *fname,
 	int *nb_solutions, int *case_nb, int nb_cases, 
 	int **&Solutions, int solution_size, 
 	int verbose_level);
-void copy_file_to_ostream(ostream &ost, char *fname);
+void copy_file_to_ostream(std::ostream &ost, char *fname);
 void int_vec_write_csv(int *v, int len, 
 	const char *fname, const char *label);
 void int_vecs_write_csv(int *v1, int *v2, int len, 
@@ -493,7 +493,7 @@ void read_solution_file(char *fname,
 // sol_length must be constant
 void int_vec_print_to_str(char *str, int *data, int len);
 void int_vec_print_to_str_naked(char *str, int *data, int len);
-void int_matrix_print_with_labels_and_partition(ostream &ost, int *p, 
+void int_matrix_print_with_labels_and_partition(std::ostream &ost, int *p,
 	int m, int n, 
 	int *row_labels, int *col_labels, 
 	int *row_part_first, int *row_part_len, int nb_row_parts,  

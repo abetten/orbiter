@@ -9,6 +9,10 @@
 
 #include "foundations.h"
 
+
+using namespace std;
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -262,7 +266,13 @@ int video_draw_options::read_arguments(
 					<< camera_location[nb_camera] << " "
 					<< camera_look_at[nb_camera] << endl;
 			nb_camera++;
-			}
+
+			   //sky <1,1,1>
+			   	   //direction <1,0,0>
+			   	   //right <1,1,0>
+			   //location  <-3,1,3>
+			   //look_at  <0,0,0>
+}
 		else if (strcmp(argv[i], "-clipping") == 0) {
 			clipping_round[nb_clipping] = atoi(argv[++i]);
 			double d;

@@ -8,6 +8,8 @@
 #include "orbiter.h"
 #include <string.h>
 
+using namespace std;
+
 
 namespace orbiter {
 namespace discreta {

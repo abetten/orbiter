@@ -9,6 +9,9 @@
 
 #include "foundations.h"
 
+using namespace std;
+
+
 #define REGISTRY_SIZE 1000
 #define POINTER_TYPE_INVALID 0
 #define POINTER_TYPE_SMALLint 1

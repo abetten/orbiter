@@ -9,6 +9,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 int Phi_of(int n, int verbose_level);

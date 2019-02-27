@@ -9,6 +9,10 @@
 #include "foundations.h"
 
 
+using namespace std;
+
+
+
 #define EPSILON 0.01
 
 namespace orbiter {

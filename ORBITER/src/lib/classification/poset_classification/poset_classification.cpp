@@ -7,6 +7,7 @@
 #include "group_actions/group_actions.h"
 #include "classification/classification.h"
 
+using namespace std;
 
 namespace orbiter {
 namespace classification {

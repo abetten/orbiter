@@ -123,9 +123,9 @@ class mp_graphics {
 	char fname_mp[1000];
 	char fname_log[1000];
 	char fname_tikz[1000];
-	ofstream fp_mp;
-	ofstream fp_log;
-	ofstream fp_tikz;
+	std::ofstream fp_mp;
+	std::ofstream fp_log;
+	std::ofstream fp_tikz;
 	int f_file_open;
 	
 	
@@ -190,7 +190,7 @@ public:
 	void init(const char *file_name, 
 		int xmin, int ymin, int xmax, int ymax, 
 		int f_embedded, int f_sideways);
-	void exit(ostream &ost, int verbose_level);
+	void exit(std::ostream &ost, int verbose_level);
 	void setup(const char *fname_base, 
 		int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
 		int xmax, int ymax, int f_embedded, int f_sideways, 
@@ -199,7 +199,7 @@ public:
 	void set_scale(double scale);
 	void frame(double move_out);
 	void frame_constant_aspect_ratio(double move_out);
-	void finish(ostream &ost, int verbose_level);
+	void finish(std::ostream &ost, int verbose_level);
 
 	int& out_xmin();
 	int& out_ymin();
@@ -381,7 +381,7 @@ public:
 			int *Idx, int n, int f_cycle);
 	void bezier_idx_mp(int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
-	void color_tikz(ofstream &fp, int color);
+	void color_tikz(std::ofstream &fp, int color);
 	void fill_idx_mp(int *Px, int *Py, int *Idx, int n, 
 		const char *symbol, int f_cycle);
 	void output_xy_metapost(int x, int y);
@@ -407,7 +407,8 @@ public:
 			int *Idx, int n, int f_cycle);
 	void bezier_idx_tikz(int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
-	void fill_idx_tikz(ofstream &fp, int *Px, int *Py, int *Idx, int n, 
+	void fill_idx_tikz(std::ofstream &fp,
+		int *Px, int *Py, int *Idx, int n,
 		const char *symbol, int f_cycle);
 	void output_xy_tikz(int x, int y);
 	void output_x_tikz(int x);
@@ -482,22 +483,22 @@ void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
 // povray_interface.cpp
 // #############################################################################
 
-void povray_beginning(ostream &ost,
+void povray_beginning(std::ostream &ost,
 		double angle,
 		const char *sky,
 		const char *location,
 		const char *look_at,
 		int f_with_background);
-void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost);
+void povray_animation_rotate_around_origin_and_1_1_1(std::ostream &ost);
 void povray_animation_rotate_around_origin_and_given_vector(double *v,
-	ostream &ost);
+		std::ostream &ost);
 void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
-	double *v, double angle_zero_one, ostream &ost);
-void povray_union_start(ostream &ost);
-void povray_union_end(ostream &ost, double clipping_radius);
-void povray_bottom_plane(ostream &ost);
-void povray_rotate_111(int h, int nb_frames, ostream &fp);
-void povray_ini(ostream &ost, const char *fname_pov, int first_frame,
+	double *v, double angle_zero_one, std::ostream &ost);
+void povray_union_start(std::ostream &ost);
+void povray_union_end(std::ostream &ost, double clipping_radius);
+void povray_bottom_plane(std::ostream &ost);
+void povray_rotate_111(int h, int nb_frames, std::ostream &fp);
+void povray_ini(std::ostream &ost, const char *fname_pov, int first_frame,
 	int last_frame);
 
 
@@ -652,24 +653,24 @@ public:
 	int face4(int pt1, int pt2, int pt3, int pt4);
 	int face5(int pt1, int pt2, int pt3, int pt4, int pt5);
 	void draw_lines_with_selection(int *selection, int nb_select, 
-		const char *options, ostream &ost);
+		const char *options, std::ostream &ost);
 	void draw_line_with_selection(int line_idx, 
-		const char *options, ostream &ost);
+		const char *options, std::ostream &ost);
 	void draw_lines_cij_with_selection(int *selection, int nb_select, 
-		ostream &ost);
-	void draw_lines_cij(ostream &ost);
+			std::ostream &ost);
+	void draw_lines_cij(std::ostream &ost);
 	void draw_lines_ai_with_selection(int *selection, int nb_select, 
-		ostream &ost);
-	void draw_lines_ai(ostream &ost);
+			std::ostream &ost);
+	void draw_lines_ai(std::ostream &ost);
 	void draw_lines_bj_with_selection(int *selection, int nb_select, 
-		ostream &ost);
-	void draw_lines_bj(ostream &ost);
+			std::ostream &ost);
+	void draw_lines_bj(std::ostream &ost);
 	void draw_edges_with_selection(int *selection, int nb_select, 
-		const char *options, ostream &ost);
+		const char *options, std::ostream &ost);
 	void draw_faces_with_selection(int *selection, int nb_select, 
-		double thickness_half, const char *options, ostream &ost);
+		double thickness_half, const char *options, std::ostream &ost);
 	void draw_face(int idx, double thickness_half, const char *options, 
-		ostream &ost);
+			std::ostream &ost);
 	void draw_text(const char *text, double thickness_half, double extra_spacing, 
 			double scale, 
 			double off_x, double off_y, double off_z, 
@@ -677,15 +678,15 @@ public:
 			double x, double y, double z, 
 			double up_x, double up_y, double up_z, 
 			double view_x, double view_y, double view_z, 
-			ostream &ost, int verbose_level);
+			std::ostream &ost, int verbose_level);
 	void draw_planes_with_selection(int *selection, int nb_select, 
-		const char *options, ostream &ost);
+		const char *options, std::ostream &ost);
 	void draw_points_with_selection(int *selection, int nb_select, 
-		double rad, const char *options, ostream &ost);
+		double rad, const char *options, std::ostream &ost);
 	void draw_cubic_with_selection(int *selection, int nb_select, 
-		const char *options, ostream &ost);
+		const char *options, std::ostream &ost);
 	void draw_quadric_with_selection(int *selection, int nb_select, 
-		const char *options, ostream &ost);
+		const char *options, std::ostream &ost);
 	int intersect_line_and_plane(int line_idx, int plane_idx, 
 		int &intersection_point_idx, 
 		int verbose_level);

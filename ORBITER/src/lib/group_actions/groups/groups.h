@@ -83,7 +83,7 @@ public:
 	void put_digit(uchar *elt, int f, int i, int d);
 	int get_digit(uchar *elt, int f, int i);
 	void make_element(int *Elt, int *data, int verbose_level);
-	void element_print_easy(int *Elt, ostream &ost);
+	void element_print_easy(int *Elt, std::ostream &ost);
 	void compute_base_and_transversals(int verbose_level);
 	void make_strong_generators_data(int *&data,
 			int &size, int &nb_gens, int verbose_level);
@@ -335,13 +335,13 @@ public:
 	void GL_invert_internal(int *A, int *Ainv, int verbose_level);
 	void GL_unpack(uchar *elt, int *Elt, int verbose_level);
 	void GL_pack(int *Elt, uchar *elt);
-	void GL_print_easy(int *Elt, ostream &ost);
+	void GL_print_easy(int *Elt, std::ostream &ost);
 	void GL_code_for_make_element(int *Elt, int *data);
-	void GL_print_for_make_element(int *Elt, ostream &ost);
-	void GL_print_for_make_element_no_commas(int *Elt, ostream &ost);
-	void GL_print_easy_normalized(int *Elt, ostream &ost);
-	void GL_print_latex(int *Elt, ostream &ost);
-	void GL_print_easy_latex(int *Elt, ostream &ost);
+	void GL_print_for_make_element(int *Elt, std::ostream &ost);
+	void GL_print_for_make_element_no_commas(int *Elt, std::ostream &ost);
+	void GL_print_easy_normalized(int *Elt, std::ostream &ost);
+	void GL_print_latex(int *Elt, std::ostream &ost);
+	void GL_print_easy_latex(int *Elt, std::ostream &ost);
 	int get_digit(uchar *elt, int i, int j);
 	int get_digit_frobenius(uchar *elt);
 	void put_digit(uchar *elt, int i, int j, int d);
@@ -422,11 +422,11 @@ public:
 	void invert(int *A, int *Ainv);
 	void unpack(uchar *elt, int *Elt);
 	void pack(int *Elt, uchar *elt);
-	void print(int *Elt, ostream &ost);
+	void print(int *Elt, std::ostream &ost);
 	void code_for_make_element(int *Elt, int *data);
-	void print_for_make_element(int *Elt, ostream &ost);
-	void print_for_make_element_no_commas(int *Elt, ostream &ost);
-	void print_with_action(action *A, int *Elt, ostream &ost);
+	void print_for_make_element(int *Elt, std::ostream &ost);
+	void print_for_make_element_no_commas(int *Elt, std::ostream &ost);
+	void print_with_action(action *A, int *Elt, std::ostream &ost);
 	void make_element(int *Elt, int *data, int verbose_level);
 
 };
@@ -478,7 +478,7 @@ public:
 		// used in coset_rep / coset_rep_inv
 	
 	int f_print_function;
-	void (*print_function)(ostream &ost, int pt, void *data);
+	void (*print_function)(std::ostream &ost, int pt, void *data);
 	void *print_function_data;
 
 	schreier();
@@ -583,7 +583,7 @@ public:
 	int orbit_number(int pt);
 	void get_orbit_decomposition_scheme_of_graph(
 		int *Adj, int n, int *&Decomp_scheme, int verbose_level);
-	void list_elements_as_permutations_vertically(ostream &ost);
+	void list_elements_as_permutations_vertically(std::ostream &ost);
 	void create_point_list_sorted(
 			int *&point_list, int &point_list_length);
 	void shallow_tree_generators(int orbit_idx,
@@ -594,57 +594,57 @@ public:
 
 	// schreier_io.cpp:
 	void latex(const char *fname);
-	void print_orbit_lengths(ostream &ost);
-	void print_orbit_lengths_tex(ostream &ost);
-	void print_orbit_length_distribution(ostream &ost);
-	void print_orbit_reps(ostream &ost);
-	void print(ostream &ost);
-	void print_and_list_orbits(ostream &ost);
-	void print_and_list_orbits_tex(ostream &ost);
-	void print_and_list_orbits_of_given_length(ostream &ost,
+	void print_orbit_lengths(std::ostream &ost);
+	void print_orbit_lengths_tex(std::ostream &ost);
+	void print_orbit_length_distribution(std::ostream &ost);
+	void print_orbit_reps(std::ostream &ost);
+	void print(std::ostream &ost);
+	void print_and_list_orbits(std::ostream &ost);
+	void print_and_list_orbits_tex(std::ostream &ost);
+	void print_and_list_orbits_of_given_length(std::ostream &ost,
 		int len);
-	void print_and_list_orbits_and_stabilizer(ostream &ost,
+	void print_and_list_orbits_and_stabilizer(std::ostream &ost,
 		action *default_action, longinteger_object &go,
-		void (*print_point)(ostream &ost, int pt, void *data),
+		void (*print_point)(std::ostream &ost, int pt, void *data),
 			void *data);
-	void print_and_list_orbits_using_labels(ostream &ost,
+	void print_and_list_orbits_using_labels(std::ostream &ost,
 		int *labels);
-	void print_tables(ostream &ost, int f_with_cosetrep);
-	void print_tables_latex(ostream &ost, int f_with_cosetrep);
+	void print_tables(std::ostream &ost, int f_with_cosetrep);
+	void print_tables_latex(std::ostream &ost, int f_with_cosetrep);
 	void print_generators();
-	void print_generators_latex(ostream &ost);
+	void print_generators_latex(std::ostream &ost);
 	void print_generators_with_permutations();
 	void print_orbit(int orbit_no);
 	void print_orbit_using_labels(int orbit_no, int *labels);
-	void print_orbit(ostream &ost, int orbit_no);
-	void print_orbit_tex(ostream &ost, int orbit_no);
+	void print_orbit(std::ostream &ost, int orbit_no);
+	void print_orbit_tex(std::ostream &ost, int orbit_no);
 	void print_and_list_orbit_and_stabilizer_tex(int i,
 		action *default_action,
 		longinteger_object &full_group_order,
-		ostream &ost);
+		std::ostream &ost);
 	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		int i, action *default_action,
-		strong_generators *gens, ostream &ost);
-	void print_and_list_orbit_tex(int i, ostream &ost);
-	void print_and_list_orbits_sorted_by_length_tex(ostream &ost);
+		strong_generators *gens, std::ostream &ost);
+	void print_and_list_orbit_tex(int i, std::ostream &ost);
+	void print_and_list_orbits_sorted_by_length_tex(std::ostream &ost);
 	void print_and_list_orbits_and_stabilizer_sorted_by_length(
-		ostream &ost, int f_tex,
+			std::ostream &ost, int f_tex,
 		action *default_action,
 		longinteger_object &full_group_order);
 	void print_fancy(
-		ostream &ost, int f_tex,
+			std::ostream &ost, int f_tex,
 		action *default_action, strong_generators *gens_full_group);
-	void print_and_list_orbits_sorted_by_length(ostream &ost);
-	void print_and_list_orbits_sorted_by_length(ostream &ost, int f_tex);
-	void print_orbit_using_labels(ostream &ost, int orbit_no, int *labels);
-	void print_orbit_using_callback(ostream &ost, int orbit_no,
-		void (*print_point)(ostream &ost, int pt, void *data),
+	void print_and_list_orbits_sorted_by_length(std::ostream &ost);
+	void print_and_list_orbits_sorted_by_length(std::ostream &ost, int f_tex);
+	void print_orbit_using_labels(std::ostream &ost, int orbit_no, int *labels);
+	void print_orbit_using_callback(std::ostream &ost, int orbit_no,
+		void (*print_point)(std::ostream &ost, int pt, void *data),
 		void *data);
 	void print_orbit_type(int f_backwards);
-	void list_all_orbits_tex(ostream &ost);
-	void print_orbit_through_labels(ostream &ost,
+	void list_all_orbits_tex(std::ostream &ost);
+	void print_orbit_through_labels(std::ostream &ost,
 		int orbit_no, int *point_labels);
-	void print_orbit_sorted(ostream &ost, int orbit_no);
+	void print_orbit_sorted(std::ostream &ost, int orbit_no);
 	void print_orbit(int cur, int last);
 	void print_tree(int orbit_no);
 	void export_tree_as_layered_graph(int orbit_no,
@@ -684,14 +684,14 @@ public:
 		int left, int right, int i, int last);
 	int subtree_calc_weight(int *weight, int &max_depth,
 		int i, int last);
-	int subtree_depth_first(ostream &ost, int *path, int i, int last);
-	void print_path(ostream &ost, int *path, int l);
+	int subtree_depth_first(std::ostream &ost, int *path, int i, int last);
+	void print_path(std::ostream &ost, int *path, int l);
 	void write_to_memory_object(memory_object *m, int verbose_level);
 	void read_from_memory_object(memory_object *m, int verbose_level);
 	void write_file(char *fname, int verbose_level);
 	void read_file(const char *fname, int verbose_level);
-	void write_to_file_binary(ofstream &fp, int verbose_level);
-	void read_from_file_binary(ifstream &fp, int verbose_level);
+	void write_to_file_binary(std::ofstream &fp, int verbose_level);
+	void read_from_file_binary(std::ifstream &fp, int verbose_level);
 	void write_file_binary(char *fname, int verbose_level);
 	void read_file_binary(const char *fname, int verbose_level);
 };
@@ -896,7 +896,7 @@ public:
 	void print_orbit_len();
 	void print(int verbose_level);
 	void print_generators();
-	void print_generators_tex(ostream &ost);
+	void print_generators_tex(std::ostream &ost);
 	void print_generators_as_permutations();
 	void print_generators_as_permutations_override_action(
 		action *A);
@@ -913,8 +913,8 @@ public:
 		// which is moved by the given element
 	void group_order(longinteger_object &go);
 	int group_order_int();
-	void print_group_order(ostream &ost);
-	void print_group_order_factored(ostream &ost);
+	void print_group_order(std::ostream &ost);
+	void print_group_order_factored(std::ostream &ost);
 	int is_trivial_group();
 	int last_moved_base_point();
 		// j == -1 means the group is trivial
@@ -1234,19 +1234,19 @@ public:
 	void group_order(longinteger_object &go);
 	int group_order_as_int();
 	void print_generators();
-	void print_generators_ost(ostream &ost);
+	void print_generators_ost(std::ostream &ost);
 	void print_generators_in_source_code();
 	void print_generators_in_source_code_to_file(
 	const char *fname);
 	void print_generators_even_odd();
-	void print_generators_MAGMA(action *A, ostream &ost);
+	void print_generators_MAGMA(action *A, std::ostream &ost);
 	void print_generators_tex();
-	void print_generators_tex(ostream &ost);
+	void print_generators_tex(std::ostream &ost);
 	void print_generators_as_permutations();
-	void print_generators_as_permutations_tex(ostream &ost, action *A2);
-	void print_with_given_action(ostream &ost, action *A2);
-	void print_elements_ost(ostream &ost);
-	void print_elements_latex_ost(ostream &ost);
+	void print_generators_as_permutations_tex(std::ostream &ost, action *A2);
+	void print_with_given_action(std::ostream &ost, action *A2);
+	void print_elements_ost(std::ostream &ost);
+	void print_elements_latex_ost(std::ostream &ost);
 	void create_group_table(int *&Table, int &go, 
 		int verbose_level);
 	void list_of_elements_of_subgroup(
@@ -1272,8 +1272,8 @@ public:
 		int verbose_level);
 	void write_to_memory_object(memory_object *m, int verbose_level);
 	void read_from_memory_object(memory_object *m, int verbose_level);
-	void write_to_file_binary(ofstream &fp, int verbose_level);
-	void read_from_file_binary(action *A, ifstream &fp, 
+	void write_to_file_binary(std::ofstream &fp, int verbose_level);
+	void read_from_file_binary(action *A, std::ifstream &fp,
 		int verbose_level);
 	void write_file(const char *fname, int verbose_level);
 	void read_file(action *A, const char *fname, int verbose_level);
@@ -1514,7 +1514,7 @@ public:
 			int f, int *Elt_component);
 	void make_element_from_permutation(int *Elt, int *perm);
 	void make_element(int *Elt, int *data, int verbose_level);
-	void element_print_easy(int *Elt, ostream &ost);
+	void element_print_easy(int *Elt, std::ostream &ost);
 	void compute_base_and_transversals(int verbose_level);
 	void make_strong_generators_data(int *&data,
 			int &size, int &nb_gens, int verbose_level);

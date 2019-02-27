@@ -6,6 +6,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void count_nb_liftings(longinteger_object &N, int m, int n, int q);

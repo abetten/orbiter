@@ -7,6 +7,9 @@
 #include "foundations.h"
 //#include <stdlib.h>
 
+using namespace std;
+
+
 
 namespace orbiter {
 namespace foundations {

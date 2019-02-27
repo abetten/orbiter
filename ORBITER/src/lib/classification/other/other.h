@@ -80,7 +80,7 @@ void orbits_on_k_sets(
 poset_classification *orbits_on_k_sets_compute(
 	poset *Poset,
 	int k, int verbose_level);
-void print_extension_type(ostream &ost, int t);
+void print_extension_type(std::ostream &ost, int t);
 const char *trace_result_as_text(trace_result r);
 int trace_result_is_no_result(trace_result r);
 void wedge_product_export_magma(poset_classification *Gen, int n, int q,

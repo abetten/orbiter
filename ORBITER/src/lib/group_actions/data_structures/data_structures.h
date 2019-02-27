@@ -96,7 +96,7 @@ public:
 	void require_strong_generators();
 	void require_sims();
 	void group_order(longinteger_object &go);
-	void print_group_order(ostream &ost);
+	void print_group_order(std::ostream &ost);
 	void print_tl();
 	void code_ascii(int verbose_level);
 	void decode_ascii(int verbose_level);
@@ -112,12 +112,12 @@ public:
 		// H needs to have sims
 		// N and H may have different actions, 
 		// the action of N is taken for the extension.
-	void print_strong_generators(ostream &ost, 
+	void print_strong_generators(std::ostream &ost,
 		int f_print_as_permutation);
 	void print_strong_generators_with_different_action(
-		ostream &ost, action *A2);
+			std::ostream &ost, action *A2);
 	void print_strong_generators_with_different_action_verbose(
-		ostream &ost, action *A2, int verbose_level);
+			std::ostream &ost, action *A2, int verbose_level);
 
 };
 
@@ -192,14 +192,14 @@ public:
 	classify *get_ago_distribution(int *&ago,
 			int verbose_level);
 	void print_table_latex(
-			ostream &f,
+			std::ostream &f,
 			int f_has_callback,
 			void (*callback_print_function)(
-					stringstream &ost, void *data, void *callback_data),
+					std::stringstream &ost, void *data, void *callback_data),
 			void *callback_data,
 			int f_has_callback2,
 			void (*callback_print_function2)(
-					stringstream &ost, void *data, void *callback_data),
+					std::stringstream &ost, void *data, void *callback_data),
 			void *callback_data2,
 			int verbose_level);
 };
@@ -273,13 +273,13 @@ public:
 		//   int &nb_rows, int &nb_cols,
 		//   int verbose_level)
 	void report_fixed_objects_in_PG_3_tex(
-		int *Elt, ostream &ost, 
+		int *Elt, std::ostream &ost,
 		int verbose_level);
 	void report_orbits_in_PG_3_tex(
-		int *Elt, ostream &ost,
+		int *Elt, std::ostream &ost,
 		int verbose_level);
 	void report_decomposition_by_single_automorphism(
-		int *Elt, ostream &ost,
+		int *Elt, std::ostream &ost,
 		int verbose_level);
 	object_in_projective_space *
 	create_object_from_string(
@@ -345,10 +345,10 @@ void compute_ago_distribution(
 	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
 void compute_ago_distribution_permuted(
 	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
-void compute_and_print_ago_distribution(ostream &ost,
+void compute_and_print_ago_distribution(std::ostream &ost,
 	classify_bitvectors *CB, int verbose_level);
 void compute_and_print_ago_distribution_with_classes(
-	ostream &ost,
+		std::ostream &ost,
 	classify_bitvectors *CB, int verbose_level);
 int table_of_sets_compare_func(void *data, int i,
 		int *search_object,
@@ -502,9 +502,9 @@ public:
 		int verbose_level);
 	void init_stab_from_file(const char *fname_gens, 
 		int verbose_level);
-	void print_set_tex(ostream &ost);
-	void print_set_tex_for_inline_text(ostream &ost);
-	void print_generators_tex(ostream &ost);
+	void print_set_tex(std::ostream &ost);
+	void print_set_tex_for_inline_text(std::ostream &ost);
+	void print_generators_tex(std::ostream &ost);
 	//set_and_stabilizer *apply(int *Elt, int verbose_level);
 	void apply_to_self(int *Elt, int verbose_level);
 	void apply_to_self_inverse(int *Elt, int verbose_level);

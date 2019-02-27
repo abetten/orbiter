@@ -56,12 +56,12 @@ public:
 	void print(int f_backwards);
 	void print_first(int f_backwards);
 	void print_second(int f_backwards);
-	void print_file(ostream &ost, int f_backwards);
-	void print_file_tex(ostream &ost, int f_backwards);
-	void print_naked_stringstream(stringstream &sstr, int f_backwards);
+	void print_file(std::ostream &ost, int f_backwards);
+	void print_file_tex(std::ostream &ost, int f_backwards);
+	void print_naked_stringstream(std::stringstream &sstr, int f_backwards);
 	void print_naked(int f_backwards);
-	void print_naked_tex(ostream &ost, int f_backwards);
-	void print_types_naked_tex(ostream &ost, int f_backwards, 
+	void print_naked_tex(std::ostream &ost, int f_backwards);
+	void print_types_naked_tex(std::ostream &ost, int f_backwards,
 		int *the_vec_sorted, 
 		int nb_types, int *type_first, int *type_len);
 	double average();

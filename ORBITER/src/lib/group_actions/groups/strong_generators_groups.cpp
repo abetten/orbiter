@@ -10,6 +10,10 @@
 #include "group_actions.h"
 
 
+using namespace std;
+
+
+
 namespace orbiter {
 namespace group_actions {
 

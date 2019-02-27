@@ -4,6 +4,8 @@
 // May 27, 2018
 
 #include "orbiter.h"
+using namespace std;
+
 
 using namespace orbiter;
 

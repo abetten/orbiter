@@ -28,7 +28,7 @@ void presentation(action *A, sims *S, int goi, vector_ge *gens,
 // #############################################################################
 
 
-void isomorph_print_set(ostream &ost, int len, int *S, void *data);
+void isomorph_print_set(std::ostream &ost, int len, int *S, void *data);
 void print_from_to(int d, int i, int j, int *v1, int *v2);
 sims *create_sims_for_stabilizer(action *A, 
 	int *set, int set_size, int verbose_level);

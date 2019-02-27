@@ -40,7 +40,7 @@ int is_diagonal_matrix(int *A, int n);
 int is_association_scheme(int *color_graph, int n, int *&Pijk, 
 	int *&colors, int &nb_colors, int verbose_level);
 void print_Pijk(int *Pijk, int nb_colors);
-void write_colored_graph(ofstream &ost, char *label, 
+void write_colored_graph(std::ofstream &ost, char *label,
 	int point_offset, 
 	int nb_points, 
 	int f_has_adjacency_matrix, int *Adj, 
@@ -51,8 +51,8 @@ void write_colored_graph(ofstream &ost, char *label,
 	void *is_adjacent_callback_data, 
 	int f_colors, int nb_colors, int *point_color, 
 	int f_point_labels, int *point_label);
-int str2int(string &str);
-void print_longinteger_after_multiplying(ostream &ost, int *factors, int len);
+int str2int(std::string &str);
+void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
 void determine_conic(int q, const char *override_poly, int *input_pts, 
 	int nb_pts, int verbose_level);
 void compute_decomposition_of_graph_wrt_partition(int *Adj, int N, 
@@ -143,7 +143,7 @@ public:
 	void orthogonal_transformation_from_point_to_basis_vector(
 		double *from,
 		double *A, double *Av, int verbose_level);
-	void output_double(double a, ostream &ost);
+	void output_double(double a, std::ostream &ost);
 	void mult_matrix_4x4(double *v, double *R, double *vR);
 	void transpose_matrix_4x4(double *A, double *At);
 	void transpose_matrix_nxn(double *A, double *At, int n);
@@ -165,9 +165,9 @@ public:
 			int n, double *lambda, int verbose_level);
 	double rad2deg(double phi);
 	void vec_copy(double *from, double *to, int len);
-	void vec_print(ostream &ost, double *v, int len);
+	void vec_print(std::ostream &ost, double *v, int len);
 	void vec_scan(const char *s, double *&v, int &len);
-	void vec_scan_from_stream(istream & is, double *&v, int &len);
+	void vec_scan_from_stream(std::istream & is, double *&v, int &len);
 };
 
 
@@ -223,7 +223,7 @@ public:
 	polynomial_double();
 	~polynomial_double();
 	void init(int alloc_length);
-	void print(ostream &ost);
+	void print(std::ostream &ost);
 	double root_finder(int verbose_level);
 	double evaluate_at(double t);
 };

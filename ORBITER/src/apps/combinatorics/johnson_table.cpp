@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 int main(int argc, char **argv)

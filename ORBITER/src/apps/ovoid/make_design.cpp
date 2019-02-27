@@ -13,6 +13,9 @@
 #include "orbiter.h"
 #include "ovoid.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 

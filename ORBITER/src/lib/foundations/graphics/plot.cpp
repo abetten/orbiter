@@ -6,6 +6,10 @@
 #include "foundations.h"
 #include <math.h>
 
+
+using namespace std;
+
+
 namespace orbiter {
 namespace foundations {
 

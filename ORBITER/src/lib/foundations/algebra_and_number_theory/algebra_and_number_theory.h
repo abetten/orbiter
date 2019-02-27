@@ -151,7 +151,7 @@ public:
 	finite_field();
 	void null();
 	~finite_field();
-	void print_call_stats(ostream &ost);
+	void print_call_stats(std::ostream &ost);
 	void init(int q);
 	void init(int q, int verbose_level);
 	void init_symbol_for_print(const char *symbol);
@@ -479,7 +479,7 @@ public:
 		int len, int *basis, int *base_cols, 
 		int *v, int verbose_level);
 	void compute_and_print_projective_weights(
-		ostream &ost, int *M, int n, int k);
+			std::ostream &ost, int *M, int n, int k);
 	int code_minimum_distance(int n, int k, 
 		int *code, int verbose_level);
 		// code[k * n]
@@ -865,18 +865,18 @@ public:
 
 	void cheat_sheet_PG(int n,
 			int f_surface, int verbose_level);
-	void cheat_sheet_tables(ostream &f, int verbose_level);
+	void cheat_sheet_tables(std::ostream &f, int verbose_level);
 	void print_minimum_polynomial(int p, const char *polynomial);
 	void print();
 	void print_detailed(int f_add_mult_table);
 	void print_add_mult_tables();
 	void print_tables();
 	void print_tables_extension_field(const char *poly);
-	void display_T2(ostream &ost);
-	void display_T3(ostream &ost);
-	void display_N2(ostream &ost);
-	void display_N3(ostream &ost);
-	void print_integer_matrix_zech(ostream &ost,
+	void display_T2(std::ostream &ost);
+	void display_T3(std::ostream &ost);
+	void display_N2(std::ostream &ost);
+	void display_N3(std::ostream &ost);
+	void print_integer_matrix_zech(std::ostream &ost,
 		int *p, int m, int n);
 	void print_embedding(finite_field &subfield,
 		int *components, int *embedding, int *pair_embedding);
@@ -895,27 +895,27 @@ public:
 	void print_embedding_tex(finite_field &subfield,
 		int *components, int *embedding, int *pair_embedding);
 	void print_indicator_square_nonsquare(int a);
-	void print_element(ostream &ost, int a);
-	void print_element_str(stringstream &ost, int a);
-	void print_element_with_symbol(ostream &ost,
+	void print_element(std::ostream &ost, int a);
+	void print_element_str(std::stringstream &ost, int a);
+	void print_element_with_symbol(std::ostream &ost,
 		int a, int f_exponential, int width, const char *symbol);
-	void print_element_with_symbol_str(stringstream &ost,
+	void print_element_with_symbol_str(std::stringstream &ost,
 			int a, int f_exponential, int width, const char *symbol);
-	void int_vec_print(ostream &ost, int *v, int len);
-	void int_vec_print_elements_exponential(ostream &ost,
+	void int_vec_print(std::ostream &ost, int *v, int len);
+	void int_vec_print_elements_exponential(std::ostream &ost,
 		int *v, int len, const char *symbol_for_print);
-	void latex_addition_table(ostream &f,
+	void latex_addition_table(std::ostream &f,
 		int f_elements_exponential, const char *symbol_for_print);
-	void latex_multiplication_table(ostream &f,
+	void latex_multiplication_table(std::ostream &f,
 		int f_elements_exponential, const char *symbol_for_print);
-	void latex_matrix(ostream &f, int f_elements_exponential,
+	void latex_matrix(std::ostream &f, int f_elements_exponential,
 		const char *symbol_for_print, int *M, int m, int n);
 	void power_table(int t, int *power_table, int len);
-	void cheat_sheet(ostream &f, int verbose_level);
-	void cheat_sheet_top(ostream &f, int nb_cols);
-	void cheat_sheet_bottom(ostream &f);
+	void cheat_sheet(std::ostream &f, int verbose_level);
+	void cheat_sheet_top(std::ostream &f, int nb_cols);
+	void cheat_sheet_bottom(std::ostream &f);
 	void display_table_of_projective_points(
-		ostream &ost, int *Pts, int nb_pts, int len);
+			std::ostream &ost, int *Pts, int nb_pts, int len);
 	void export_magma(int d, int *Pts, int nb_pts, char *fname);
 	void export_gap(int d, int *Pts, int nb_pts, char *fname);
 	void oval_polynomial(
@@ -957,7 +957,7 @@ void test_PG(int n, int q);
 void line_through_two_points(finite_field &GFq, int len,
 	int pt1, int pt2, int *line);
 void print_set_in_affine_plane(finite_field &GFq, int len, int *S);
-int consecutive_ones_property_in_affine_plane(ostream &ost,
+int consecutive_ones_property_in_affine_plane(std::ostream &ost,
 	finite_field &GFq, int len, int *S);
 int line_intersection_with_oval(finite_field &GFq,
 	int *f_oval_point, int line_rk,
@@ -1123,7 +1123,7 @@ public:
 	void null();
 	void freeself();
 	void init(int k, finite_field *F, int verbose_level);
-	void print_polynomials(ostream &ost);
+	void print_polynomials(std::ostream &ost);
 	int select_polynomial_first(int *Select, int verbose_level);
 	int select_polynomial_next(int *Select, int verbose_level);
 	int select_partition_first(int *Select, int *Select_partition, 
@@ -1132,7 +1132,7 @@ public:
 		int verbose_level);
 	int first(int *Select, int *Select_partition, int verbose_level);
 	int next(int *Select, int *Select_partition, int verbose_level);
-	void print_matrix_and_centralizer_order_latex(ostream &ost,
+	void print_matrix_and_centralizer_order_latex(std::ostream &ost,
 		gl_class_rep *R);
 	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R, 
 		int verbose_level);
@@ -1420,13 +1420,13 @@ public:
 	void make_monomials(int verbose_level);
 	void rearrange_monomials_by_partition_type(int verbose_level);
 	int index_of_monomial(int *v);
-	void print_monomial(ostream &ost, int i);
-	void print_monomial(ostream &ost, int *mon);
+	void print_monomial(std::ostream &ost, int i);
+	void print_monomial(std::ostream &ost, int *mon);
 	void print_monomial(char *str, int i);
-	void print_monomial_str(stringstream &ost, int i);
-	void print_equation(ostream &ost, int *coeffs);
-	void print_equation_str(stringstream &ost, int *coeffs);
-	void print_equation_with_line_breaks_tex(ostream &ost, 
+	void print_monomial_str(std::stringstream &ost, int i);
+	void print_equation(std::ostream &ost, int *coeffs);
+	void print_equation_str(std::stringstream &ost, int *coeffs);
+	void print_equation_with_line_breaks_tex(std::ostream &ost,
 		int *coeffs, int nb_terms_per_line, 
 		const char *new_line_text);
 	void enumerate_points(int *coeff, int *Pts, int &nb_pts, 
@@ -1449,7 +1449,7 @@ public:
 	void vanishing_ideal(int *Pts, int nb_pts, int &r, int *Kernel, 
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
-	void print_monomial_ordering(ostream &ost);
+	void print_monomial_ordering(std::ostream &ost);
 
 
 };
@@ -1569,9 +1569,9 @@ public:
 		longinteger_object *&C, int Am, int An, int Bn);
 	void matrix_entries_integral_division_exact(longinteger_object *A, 
 		longinteger_object &b, int Am, int An);
-	void matrix_print_GAP(ostream &ost, longinteger_object *A, 
+	void matrix_print_GAP(std::ostream &ost, longinteger_object *A,
 		int Am, int An);
-	void matrix_print_tex(ostream &ost, longinteger_object *A, 
+	void matrix_print_tex(std::ostream &ost, longinteger_object *A,
 		int Am, int An);
 	void power_mod(char *aa, char *bb, char *nn, 
 		longinteger_object &result, int verbose_level);
@@ -1602,7 +1602,7 @@ void longinteger_collect_free(int &nb_agos,
 void longinteger_collect_add(int &nb_agos, 
 	longinteger_object *&agos, int *&multiplicities, 
 	longinteger_object &ago);
-void longinteger_collect_print(ostream &ost, int &nb_agos, 
+void longinteger_collect_print(std::ostream &ost, int &nb_agos,
 	longinteger_object *&agos, int *&multiplicities);
 void longinteger_free_global_data();
 void longinteger_print_digits(char *rep, int len);
@@ -1709,7 +1709,7 @@ void factor_prime_power(int q, int &p, int &e);
 int primitive_root(int p, int verbose_level);
 int Legendre(int a, int p, int verbose_level);
 int Jacobi(int a, int m, int verbose_level);
-int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level);
+int Jacobi_with_key_in_latex(std::ostream &ost, int a, int m, int verbose_level);
 int ny2(int x, int &x1);
 int ny_p(int n, int p);
 int sqrt_mod_simple(int a, int p);
@@ -1848,7 +1848,7 @@ public:
 	int rank(unipoly_object p);
 	void rank_longinteger(unipoly_object p, longinteger_object &rank);
 	int degree(unipoly_object p);
-	ostream& print_object(unipoly_object p, ostream& ost);
+	std::ostream& print_object(unipoly_object p, std::ostream& ost);
 	void assign(unipoly_object a, unipoly_object &b);
 	void one(unipoly_object p);
 	void m_one(unipoly_object p);

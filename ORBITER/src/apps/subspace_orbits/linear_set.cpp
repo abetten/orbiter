@@ -8,6 +8,8 @@
 
 #include <orbiter.h>
 
+using namespace std;
+
 
 
 using namespace orbiter;

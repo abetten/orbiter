@@ -324,19 +324,19 @@ public:
 		int f_group_order_target, const char *group_order_target, 
 		vector_ge *gens, strong_generators *&Strong_gens_out, 
 		int verbose_level);
-	void print_symmetry_group_type(ostream &ost);
-	void report(ostream &ost);
+	void print_symmetry_group_type(std::ostream &ost);
+	void report(std::ostream &ost);
 	void print_info();
 	void print_base();
 	void group_order(longinteger_object &go);
-	void print_group_order(ostream &ost);
-	void print_group_order_long(ostream &ost);
+	void print_group_order(std::ostream &ost);
+	void print_group_order_long(std::ostream &ost);
 	void print_vector(vector_ge &v);
 	void print_vector_as_permutation(vector_ge &v);
 	void element_print_base_images(int *Elt);
-	void element_print_base_images(int *Elt, ostream &ost);
+	void element_print_base_images(int *Elt, std::ostream &ost);
 	void element_print_base_images_verbose(int *Elt, 
-		ostream &ost, int verbose_level);
+			std::ostream &ost, int verbose_level);
 	void element_base_images(int *Elt, int *base_images);
 	void element_base_images_verbose(int *Elt, 
 		int *base_images, int verbose_level);
@@ -387,7 +387,7 @@ public:
 	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
 		int line_rk, int *Elt, int verbose_level);
 	void list_elements_as_permutations_vertically(vector_ge *gens,
-			ostream &ost);
+			std::ostream &ost);
 	matrix_group *get_matrix_group();
 
 
@@ -705,13 +705,13 @@ public:
 	void transpose(void *a, void *at);
 	void move(void *a, void *b);
 	void dispose(int hdl);
-	void print(ostream &ost, void *elt);
-	void print_quick(ostream &ost, void *elt);
-	void print_as_permutation(ostream &ost, void *elt);
-	void print_point(int a, ostream &ost);
+	void print(std::ostream &ost, void *elt);
+	void print_quick(std::ostream &ost, void *elt);
+	void print_as_permutation(std::ostream &ost, void *elt);
+	void print_point(int a, std::ostream &ost);
 	void code_for_make_element(int *data, void *elt);
-	void print_for_make_element(ostream &ost, void *elt);
-	void print_for_make_element_no_commas(ostream &ost, void *elt);
+	void print_for_make_element(std::ostream &ost, void *elt);
+	void print_for_make_element_no_commas(std::ostream &ost, void *elt);
 	
 	int element_image_of(int a, void *elt, int verbose_level);
 	void element_image_of_low_level(int *input, int *output, 
@@ -730,29 +730,29 @@ public:
 	void element_transpose(void *a, void *at, int verbose_level);
 	void element_move(void *a, void *b, int verbose_level);
 	void element_dispose(int hdl, int verbose_level);
-	void element_print(void *elt, ostream &ost);
-	void element_print_quick(void *elt, ostream &ost);
-	void element_print_latex(void *elt, ostream &ost);
-	void element_print_verbose(void *elt, ostream &ost);
+	void element_print(void *elt, std::ostream &ost);
+	void element_print_quick(void *elt, std::ostream &ost);
+	void element_print_latex(void *elt, std::ostream &ost);
+	void element_print_verbose(void *elt, std::ostream &ost);
 	void element_code_for_make_element(void *elt, int *data);
 	void element_print_for_make_element(void *elt, 
-		ostream &ost);
+			std::ostream &ost);
 	void element_print_for_make_element_no_commas(void *elt, 
-		ostream &ost);
+			std::ostream &ost);
 	void element_print_as_permutation(void *elt, 
-		ostream &ost);
+			std::ostream &ost);
 	void element_as_permutation(void *elt, 
 		int *perm, int verbose_level);
 	void element_print_as_permutation_verbose(void *elt, 
-		ostream &ost, int verbose_level);
+			std::ostream &ost, int verbose_level);
 	void element_print_as_permutation_with_offset(void *elt, 
-		ostream &ost, 
+			std::ostream &ost,
 		int offset, int f_do_it_anyway_even_for_big_degree, 
 		int f_print_cycles_of_length_one, 
 		int verbose_level);
 	void element_print_as_permutation_with_offset_and_max_cycle_length(
 		void *elt, 
-		ostream &ost, int offset, int max_cycle_length, 
+		std::ostream &ost, int offset, int max_cycle_length,
 		int f_orbit_structure);
 	void element_print_image_of_set(void *elt, 
 		int size, int *set);
@@ -770,9 +770,9 @@ public:
 	void element_read_from_memory_object(int *Elt, 
 		memory_object *m, int verbose_level);
 	void element_write_to_file_binary(int *Elt, 
-		ofstream &fp, int verbose_level);
+			std::ofstream &fp, int verbose_level);
 	void element_read_from_file_binary(int *Elt, 
-		ifstream &fp, int verbose_level);
+			std::ifstream &fp, int verbose_level);
 	void random_element(sims *S, int *Elt, 
 		int verbose_level);
 
@@ -840,7 +840,7 @@ void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets,
 	int nb_sets, int set_size, int *sets, int verbose_level);
 action *new_action_by_right_multiplication(sims *group_we_act_on, 
 	int f_transfer_ownership, int verbose_level);
-void action_print_symmetry_group_type(ostream &ost, symmetry_group_type a);
+void action_print_symmetry_group_type(std::ostream &ost, symmetry_group_type a);
 int choose_next_base_point_default_method(action *A, int *Elt, 
 	int verbose_level);
 void make_generators_stabilizer_of_three_components(
@@ -924,9 +924,9 @@ void group_ring_element_zero(action *A, sims *S,
 	int *elt);
 void group_ring_element_mult(action *A, sims *S, 
 	int *elt1, int *elt2, int *elt3);
-void perm_print_cycles_sorted_by_length(ostream &ost, 
+void perm_print_cycles_sorted_by_length(std::ostream &ost,
 	int degree, int *perm, int verbose_level);
-void perm_print_cycles_sorted_by_length_offset(ostream &ost, 
+void perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
 	int degree, int *perm, int offset, 
 	int f_do_it_anyway_even_for_big_degree, 
 	int f_print_cycles_of_length_one, int verbose_level);
@@ -979,20 +979,20 @@ public:
 	void (*ptr_element_dispose)(action &A,
 		int hdl, int verbose_level);
 	void (*ptr_element_print)(action &A,
-		void *elt, ostream &ost);
+		void *elt, std::ostream &ost);
 	void (*ptr_element_print_quick)(action &A,
-		void *elt, ostream &ost);
+		void *elt, std::ostream &ost);
 	void (*ptr_element_print_latex)(action &A,
-		void *elt, ostream &ost);
+		void *elt, std::ostream &ost);
 	void (*ptr_element_print_verbose)(action &A,
-		void *elt, ostream &ost);
-	void (*ptr_print_point)(action &A, int i, ostream &ost);
+		void *elt, std::ostream &ost);
+	void (*ptr_print_point)(action &A, int i, std::ostream &ost);
 	void (*ptr_element_code_for_make_element)(action &A,
 		void *elt, int *data);
 	void (*ptr_element_print_for_make_element)(action &A,
-		void *elt, ostream &ost);
+		void *elt, std::ostream &ost);
 	void (*ptr_element_print_for_make_element_no_commas)(action &A,
-		void *elt, ostream &ost);
+		void *elt, std::ostream &ost);
 
 	/** counters for how often a function has been called */
 	int nb_times_image_of_called;
@@ -1050,20 +1050,20 @@ void induced_action_element_move(action &A,
 void induced_action_element_dispose(action &A, 
 	int hdl, int verbose_level);
 void induced_action_element_print(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void induced_action_element_print_quick(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void induced_action_element_print_latex(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void induced_action_element_print_verbose(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void induced_action_element_code_for_make_element(action &A, 
 	void *elt, int *data);
 void induced_action_element_print_for_make_element(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void induced_action_element_print_for_make_element_no_commas(
-	action &A, void *elt, ostream &ost);
-void induced_action_print_point(action &A, int a, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
+void induced_action_print_point(action &A, int a, std::ostream &ost);
 
 
 // #############################################################################
@@ -1102,23 +1102,23 @@ void direct_product_group_element_move(action &A,
 void direct_product_group_element_dispose(action &A,
 	int hdl, int verbose_level);
 void direct_product_group_element_print(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void direct_product_group_element_code_for_make_element(
 	action &A, void *elt, int *data);
 void direct_product_group_element_print_for_make_element(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void direct_product_group_element_print_for_make_element_no_commas(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void direct_product_group_element_print_quick(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void direct_product_group_element_print_latex(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void direct_product_group_element_print_as_permutation(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void direct_product_group_element_print_verbose(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void direct_product_group_print_point(action &A,
-	int a, ostream &ost);
+	int a, std::ostream &ost);
 
 
 // #############################################################################
@@ -1157,23 +1157,23 @@ void matrix_group_element_move(action &A,
 void matrix_group_element_dispose(action &A, 
 	int hdl, int verbose_level);
 void matrix_group_element_print(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void matrix_group_element_code_for_make_element(
 	action &A, void *elt, int *data);
 void matrix_group_element_print_for_make_element(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void matrix_group_element_print_for_make_element_no_commas(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void matrix_group_element_print_quick(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void matrix_group_element_print_latex(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void matrix_group_element_print_as_permutation(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void matrix_group_element_print_verbose(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void matrix_group_print_point(action &A, 
-	int a, ostream &ost);
+	int a, std::ostream &ost);
 
 
 // #############################################################################
@@ -1203,18 +1203,18 @@ void perm_group_element_move(action &A,
 void perm_group_element_dispose(action &A, 
 	int hdl, int verbose_level);
 void perm_group_element_print(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void perm_group_element_print_latex(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void perm_group_element_print_verbose(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void perm_group_element_code_for_make_element(action &A, 
 	void *elt, int *data);
 void perm_group_element_print_for_make_element(action &A, 
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void perm_group_element_print_for_make_element_no_commas(
-	action &A, void *elt, ostream &ost);
-void perm_group_print_point(action &A, int a, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
+void perm_group_print_point(action &A, int a, std::ostream &ost);
 
 // #############################################################################
 // interface_wreath_product_group.C
@@ -1252,23 +1252,23 @@ void wreath_product_group_element_move(action &A,
 void wreath_product_group_element_dispose(action &A,
 	int hdl, int verbose_level);
 void wreath_product_group_element_print(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void wreath_product_group_element_code_for_make_element(
 	action &A, void *elt, int *data);
 void wreath_product_group_element_print_for_make_element(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void wreath_product_group_element_print_for_make_element_no_commas(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void wreath_product_group_element_print_quick(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void wreath_product_group_element_print_latex(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void wreath_product_group_element_print_as_permutation(
-	action &A, void *elt, ostream &ost);
+	action &A, void *elt, std::ostream &ost);
 void wreath_product_group_element_print_verbose(action &A,
-	void *elt, ostream &ost);
+	void *elt, std::ostream &ost);
 void wreath_product_group_print_point(action &A,
-	int a, ostream &ost);
+	int a, std::ostream &ost);
 
 // #############################################################################
 // nauty_interface.cpp:
@@ -1329,7 +1329,7 @@ public:
 		int m, int n, int nb_inc, int *X,
 		int &f_self_dual, int &f_self_polar,
 		int verbose_level);
-	void add_configuration_graph(ofstream &g,
+	void add_configuration_graph(std::ofstream &g,
 		int m, int n, int nb_inc, int *X, int f_first,
 		int verbose_level);
 

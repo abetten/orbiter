@@ -10,6 +10,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void make_generator_matrix(finite_field *F,

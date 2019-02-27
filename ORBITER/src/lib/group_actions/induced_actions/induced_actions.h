@@ -526,7 +526,7 @@ public:
 		int i, int verbose_level);
 	int compute_image_int_embedded(action *A, int *Elt, 
 		int i, int verbose_level);
-	void print_point(int a, ostream &ost);
+	void print_point(int a, std::ostream &ost);
 };
 
 // #############################################################################
@@ -910,8 +910,8 @@ public:
 	void element_invert(int *A, int *Av, int verbose_level);
 	void element_transpose(int *A, int *At, int verbose_level);
 	void element_move(int *A, int *B, int verbose_level);
-	void element_print(int *A, ostream &ost);
-	void element_print_latex(int *A, ostream &ost);
+	void element_print(int *A, std::ostream &ost);
+	void element_print_latex(int *A, std::ostream &ost);
 	void make_element(int *Elt, int *data, int verbose_level);
 };
 

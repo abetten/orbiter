@@ -9,6 +9,9 @@
 #include <stdlib.h> // for system
 #include <math.h> // for sqrt
 
+using namespace std;
+
+
 namespace orbiter {
 namespace discreta {
 
