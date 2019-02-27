@@ -3071,13 +3071,24 @@ void projective_space_with_action::select_packings_self_dual(
 
 	S = NEW_OBJECT(spreadsheet);
 
-	S->read_spreadsheet(fname, 0 /*verbose_level*/);
+	S->read_spreadsheet(fname, verbose_level);
 	if (FALSE /*f_v3*/) {
 		S->print_table(cout, FALSE);
 		}
 
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"read file " << fname << endl;
+	}
+
+
 	int ago_idx, original_file_idx, input_idx_idx, input_set_idx;
 	int nb_rows_idx, nb_cols_idx, canonical_form_idx;
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"finding column indices" << endl;
+	}
 
 	ago_idx = S->find_by_column("ago");
 	original_file_idx = S->find_by_column("original_file");
@@ -3094,6 +3105,10 @@ void projective_space_with_action::select_packings_self_dual(
 	int f_first = TRUE;
 
 
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"first pass, table_length=" << table_length << endl;
+	}
 
 	// first pass: build up the database:
 
@@ -3318,6 +3333,12 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 	self_dual_cases = NEW_int(table_length);
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"second pass, table_length=" << table_length << endl;
+	}
 
 
 	for (g = 0; g < table_length; g++) {
