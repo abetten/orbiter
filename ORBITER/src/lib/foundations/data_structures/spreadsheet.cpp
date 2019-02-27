@@ -758,55 +758,55 @@ void spreadsheet::tokenize(const char *fname,
 	ifstream fp(fname);
 	i = 0;
 	while (TRUE) {
-	if (fp.eof()) {
-		break;
-		}
-	fp.getline(buf, BUFSIZE, '\n');
-	if (f_vv) {
-		cout << "Line read :'" << buf << "'" << endl;
-		}
-	p_buf = buf;
-	if (strncmp(buf, "END", 3) == 0) {
-		break;
-		}
-
-#if 0
-	// delete negative characters:
-	int len = strlen(buf);
-	for (i = 0, j = 0; i < len; i++) {
-		if ((int) buf[i] >= 0) {
-			buf[j++] = buf[i];
-			}
-		else {
-			cout << "spreadsheet::tokenize skipping "
-					"negative character" << endl;
-			}
-		}
-	buf[j] = 0;
-#endif
-
-	//i = 0;
-	while (TRUE) {
-		if (*p_buf == 0) {
+		if (fp.eof()) {
 			break;
 			}
-		//s_scan_token(&p_buf, str);
-		//s_scan_token(&p_buf, str);
-		/* r =*/ s_scan_token_comma_separated(&p_buf, str);
-
+		fp.getline(buf, BUFSIZE, '\n');
 		if (f_vv) {
-			cout << "Token " << setw(6) << i << " is '"
-					<< str << "'" << endl;
+			cout << "Line read :'" << buf << "'" << endl;
 			}
+		p_buf = buf;
+		if (strncmp(buf, "END", 3) == 0) {
+			break;
+			}
+
 #if 0
-		if (strcmp(str, ",") == 0) {
-			continue;
+		// delete negative characters:
+		int len = strlen(buf);
+		for (i = 0, j = 0; i < len; i++) {
+			if ((int) buf[i] >= 0) {
+				buf[j++] = buf[i];
+				}
+			else {
+				cout << "spreadsheet::tokenize skipping "
+						"negative character" << endl;
+				}
 			}
+		buf[j] = 0;
 #endif
-		i++;
+
+		//i = 0;
+		while (TRUE) {
+			if (*p_buf == 0) {
+				break;
+				}
+			//s_scan_token(&p_buf, str);
+			//s_scan_token(&p_buf, str);
+			/* r =*/ s_scan_token_comma_separated(&p_buf, str);
+
+			if (f_vv) {
+				cout << "Token " << setw(6) << i << " is '"
+						<< str << "'" << endl;
+				}
+#if 0
+			if (strcmp(str, ",") == 0) {
+				continue;
+				}
+#endif
+			i++;
+			}
+		i++; // End of line
 		}
-	i++; // End of line
-	}
 	}
 	nb_tokens = i;
 

@@ -230,6 +230,25 @@ void classify_bitvectors::print_reps()
 		}
 }
 
+void classify_bitvectors::print_table()
+{
+	int i, j;
+
+	cout << "We found " << nb_types << " types:" << endl;
+	for (i = 0; i < nb_types; i++) {
+		cout << i << " : " << Type_rep[i]
+				<< " : " << Type_mult[i] << " : ";
+
+		for (j = 0; j < rep_len; j++) {
+			cout << (int) Type_data[i][j];
+			if (j < rep_len - 1) {
+				cout << ", ";
+				}
+			}
+		cout << endl;
+		}
+}
+
 void classify_bitvectors::save(const char *prefix, 
 	void (*encode_function)(void *extra_data,
 			int *&encoding, int &encoding_sz, void *global_data),
