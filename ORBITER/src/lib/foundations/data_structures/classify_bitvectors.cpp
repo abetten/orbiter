@@ -114,7 +114,7 @@ int classify_bitvectors::search(uchar *data,
 		}
 	if (vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
-		nb_types, data, idx, verbose_level - 1)) {
+		nb_types, data, idx, 0 /*verbose_level - 1*/)) {
 		ret = TRUE;
 	}
 	else {
