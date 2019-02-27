@@ -3573,6 +3573,7 @@ void projective_space_with_action::select_packings_self_dual(
 		if (ret == FALSE) {
 			cout << "cannot find the dual packing, something is wrong" << endl;
 			ret = CB->search(canonical_form1, idx1, 5 /* verbose_level*/);
+#if 0
 			cout << "CB:" << endl;
 			CB->print_table();
 			cout << "canonical form1: ";
@@ -3583,6 +3584,7 @@ void projective_space_with_action::select_packings_self_dual(
 					}
 				}
 			cout << endl;
+#endif
 			exit(1);
 		}
 		if (FALSE) {
@@ -3594,6 +3596,7 @@ void projective_space_with_action::select_packings_self_dual(
 		if (ret == FALSE) {
 			cout << "cannot find the dual packing, something is wrong" << endl;
 			ret = CB->search(canonical_form2, idx2, 5 /* verbose_level*/);
+#if 0
 			cout << "CB:" << endl;
 			CB->print_table();
 			cout << "canonical form2: ";
@@ -3603,6 +3606,7 @@ void projective_space_with_action::select_packings_self_dual(
 					cout << ", ";
 					}
 				}
+#endif
 			exit(1);
 		}
 		if (FALSE) {
