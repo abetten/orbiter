@@ -7,6 +7,7 @@
 // based on global.h, which was taken from reader.h: 3/22/09
 
 
+
 namespace orbiter {
 namespace top_level {
 
@@ -148,8 +149,6 @@ int orbit_of_equations_compare_func(void *a, void *b, void *data);
 // #############################################################################
 
 
-#include <iterator>
-#include <map>
 
 
 //! Schreier tree for computing the orbits on subsets
