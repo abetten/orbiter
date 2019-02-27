@@ -121,6 +121,7 @@ int classify_bitvectors::search(uchar *data,
 	if (f_v) {
 		cout << "classify_bitvectors::search done ret=" << ret << endl;
 		}
+	return ret;
 }
 
 int classify_bitvectors::add(uchar *data,
