@@ -6,6 +6,9 @@
 #include "orbiter.h"
 #include <string>
 
+using namespace std;
+
+
 using namespace orbiter;
 
 

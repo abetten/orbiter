@@ -5,6 +5,10 @@
 
 #include "foundations.h"
 
+
+using namespace std;
+
+
 #define MAX_NUMBER_OF_LINES_FOR_INCIDENCE_MATRIX 100000
 #define MAX_NUMBER_OF_LINES_FOR_LINE_TABLE 1000000
 #define MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE 1000000

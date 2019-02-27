@@ -94,7 +94,7 @@ public:
 	void freeself();
 	void init(int argc, const char **argv);
 	void main(int verbose_level);
-	void print(ostream &ost, int len, int *S);
+	void print(std::ostream &ost, int len, int *S);
 #if 0
 	void early_test_func_by_using_group(int *S, int len, 
 		int *candidates, int nb_candidates, 
@@ -104,7 +104,7 @@ public:
 	int Hamming_distance(int a, int b);
 };
 
-void print_code(ostream &ost, int len, int *S, void *data);
+void print_code(std::ostream &ost, int len, int *S, void *data);
 
 
 

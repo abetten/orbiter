@@ -9,6 +9,7 @@
 
 #undef BASE_SETTYPE_VERBOSE
 
+using namespace std;
 
 namespace orbiter {
 namespace discreta {

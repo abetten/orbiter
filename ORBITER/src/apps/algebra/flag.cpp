@@ -10,6 +10,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void test_indexing(int n, int *type, int type_len,

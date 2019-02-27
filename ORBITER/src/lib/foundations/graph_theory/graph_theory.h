@@ -29,7 +29,7 @@ public:
 	int f_write_tree;
 	int f_decision_nodes_only;
 	char fname_tree[1000];
-	ofstream *fp_tree;
+	std::ofstream *fp_tree;
 
 	
 	int f_maxdepth;
@@ -76,7 +76,7 @@ public:
 
 	// solution storage:
 	int f_store_solutions;
-	deque<vector<int> > solutions;
+	std::deque<std::vector<int> > solutions;
 	int nb_sol;
 
 
@@ -298,14 +298,14 @@ public:
 		int f_restrictions, int *restrictions, 
 		int &nb_sol, int &decision_step_counter, 
 		int verbose_level);
-	void all_rainbow_cliques(ofstream *fp, int f_output_solution_raw, 
+	void all_rainbow_cliques(std::ofstream *fp, int f_output_solution_raw,
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
 		int f_tree, int f_decision_nodes_only, const char *fname_tree,  
 		int print_interval, 
 		int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
 		int verbose_level);
-	void all_rainbow_cliques_with_additional_test_function(ofstream *fp, 
+	void all_rainbow_cliques_with_additional_test_function(std::ofstream *fp,
 		int f_output_solution_raw, 
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
@@ -668,7 +668,7 @@ public:
 	void null();
 	void freeself();
 
-	ofstream *fp_sol;
+	std::ofstream *fp_sol;
 	int f_output_solution_raw;
 	
 	colored_graph *graph;
@@ -689,7 +689,7 @@ public:
 	void *user_data;
 
 
-	void search(colored_graph *graph, ofstream *fp_sol, 
+	void search(colored_graph *graph, std::ofstream *fp_sol,
 		int f_output_solution_raw, 
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
@@ -700,7 +700,7 @@ public:
 		int &decision_steps, int &nb_sol, int &dt, 
 		int verbose_level);
 	void search_with_additional_test_function(colored_graph *graph, 
-		ofstream *fp_sol, int f_output_solution_raw, 
+			std::ofstream *fp_sol, int f_output_solution_raw,
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
 		int f_tree, int f_decision_nodes_only, 

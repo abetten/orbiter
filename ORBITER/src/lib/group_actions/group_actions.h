@@ -181,14 +181,14 @@ public:
 	void init_conjugate_sasv_of(vector_ge *v, int *Elt, 
 		int verbose_level);
 	int *ith(int i);
-	void print(ostream &ost);
+	void print(std::ostream &ost);
 	//ostream& print(ostream& ost);
-	ostream& print_quick(ostream& ost);
-	ostream& print_tex(ostream& ost);
+	std::ostream& print_quick(std::ostream& ost);
+	std::ostream& print_tex(std::ostream& ost);
 	void print_generators_tex(
 			foundations::longinteger_object &go,
-			ostream &ost);
-	ostream& print_as_permutation(ostream& ost);
+			std::ostream &ost);
+	std::ostream& print_as_permutation(std::ostream& ost);
 	void allocate(int length);
 	void reallocate(int new_length);
 	void reallocate_and_insert_at(int position, int *elt);
@@ -200,8 +200,8 @@ public:
 	void copy_out(int i, int *elt);
 	void conjugate_svas(int *Elt);
 	void conjugate_sasv(int *Elt);
-	void print_with_given_action(ostream &ost, action *A2);
-	void print(ostream &ost, int f_print_as_permutation, 
+	void print_with_given_action(std::ostream &ost, action *A2);
+	void print(std::ostream &ost, int f_print_as_permutation,
 		int f_offset, int offset, 
 		int f_do_it_anyway_even_for_big_degree, 
 		int f_print_cycles_of_length_one);
@@ -211,9 +211,9 @@ public:
 	void read_from_memory_object(
 		foundations::memory_object *m,
 		int verbose_level);
-	void write_to_file_binary(ofstream &fp, 
+	void write_to_file_binary(std::ofstream &fp,
 		int verbose_level);
-	void read_from_file_binary(ifstream &fp, 
+	void read_from_file_binary(std::ifstream &fp,
 		int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, sims *S, 

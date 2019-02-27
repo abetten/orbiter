@@ -13,6 +13,9 @@
 #undef DEBUG_intEGRAL_DIVISION
 
 
+using namespace std;
+
+
 namespace orbiter {
 namespace discreta {
 

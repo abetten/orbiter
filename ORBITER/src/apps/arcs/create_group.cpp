@@ -10,6 +10,10 @@
 
 #include "orbiter.h"
 
+
+using namespace std;
+
+
 using namespace orbiter;
 
 int main(int argc, const char **argv);

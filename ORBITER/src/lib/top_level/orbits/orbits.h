@@ -169,7 +169,7 @@ public:
 	int used_length;
 	int **Sets;
 
-	multimap<uint32_t, int> Hashing;
+	std::multimap<uint32_t, int> Hashing;
 		// we use a multimap because the has values are not unique
 		// it happens that two sets have the save hash value.
 		// map cannot handle that.
@@ -388,7 +388,7 @@ public:
 		int *&subspace_ranks, int &nb_subspaces, int verbose_level);
 	int test_dim_C_cap_Cperp_property(int len, int *S, int d);
 	int compute_minimum_distance(int len, int *S);
-	void print_set(ostream &ost, int len, int *S);
+	void print_set(std::ostream &ost, int len, int *S);
 	int test_set(int len, int *S, int verbose_level);
 	int test_minimum_distance(int len, int *S, 
 		int mindist, int verbose_level);

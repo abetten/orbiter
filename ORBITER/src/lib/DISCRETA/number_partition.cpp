@@ -7,6 +7,9 @@
 #include "orbiter.h"
 
 
+using namespace std;
+
+
 #undef PARTITION_CHANGE_KIND_VERBOSE
 #undef PARTITION_COPY_VERBOSE
 

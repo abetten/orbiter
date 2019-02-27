@@ -7,6 +7,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 typedef class hadamard hadamard;

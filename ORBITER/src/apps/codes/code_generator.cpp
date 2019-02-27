@@ -8,6 +8,8 @@
 
 #include "codes.h"
 
+using namespace std;
+
 
 using namespace orbiter;
 

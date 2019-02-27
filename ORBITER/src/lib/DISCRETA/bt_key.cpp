@@ -8,6 +8,9 @@
 
 #include <string.h> // strncmp
 
+using namespace std;
+
+
 namespace orbiter {
 namespace discreta {
 

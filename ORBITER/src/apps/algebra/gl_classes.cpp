@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level);

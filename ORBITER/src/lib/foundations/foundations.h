@@ -86,7 +86,7 @@
 #include <deque>
 
 
-using namespace std;
+//using namespace std;
 
 
 #include <iostream>
@@ -444,10 +444,10 @@ public:
 	void as_longinteger(longinteger_object &a);
 	void assign_to(longinteger_object &b);
 	void swap_with(longinteger_object &b);
-	ostream& print(ostream& ost);
-	ostream& print_not_scientific(ostream& ost);
+	std::ostream& print(std::ostream& ost);
+	std::ostream& print_not_scientific(std::ostream& ost);
 	int output_width();
-	void print_width(ostream& ost, int width);
+	void print_width(std::ostream& ost, int width);
 	void print_to_string(char *str);
 	void normalize();
 	void negate();
@@ -464,7 +464,7 @@ public:
 	int compare_with_int(int a);
 };
 
-ostream& operator<<(ostream& ost, longinteger_object& p);
+std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 
 }
 }

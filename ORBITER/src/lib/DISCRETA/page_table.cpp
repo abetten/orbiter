@@ -9,6 +9,9 @@
 #include <stdlib.h> // for system
 
 
+using namespace std;
+
+
 namespace orbiter {
 namespace discreta {
 

@@ -13,6 +13,9 @@
 
 //#include "partition_backtrack.h"
 
+using namespace std;
+
+
 
 namespace orbiter {
 namespace discreta {

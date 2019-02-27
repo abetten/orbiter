@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void rank_subsets(int n, int verbose_level);

@@ -6,6 +6,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 #undef DEBUG_LONGINTEGER_DIVISION
 #undef DEBUG_LONGINTEGER_COMPARE
 

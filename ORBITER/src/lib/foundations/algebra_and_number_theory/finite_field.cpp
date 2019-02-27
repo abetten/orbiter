@@ -9,6 +9,8 @@
 
 #include "foundations.h"
 
+using namespace std;
+
 
 #define CREATE_TABLE_UPPER_BOUND 1024
 

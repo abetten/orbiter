@@ -182,7 +182,7 @@ public:
 	void read_binary_file_int4(const char *fname);
 	int &s_i(int i);
 	int &length();
-	void print(ostream &ost);
+	void print(std::ostream &ost);
 	void zero();
 	int search(int a, int &idx);
 	void sort();
@@ -231,14 +231,14 @@ public:
 	long int nb_free_entries;
 
 	int f_elt_print_function;
-	void (* elt_print)(void *p, void *data, ostream &ost);
+	void (* elt_print)(void *p, void *data, std::ostream &ost);
 	void *elt_print_data;
 
 
 	void init(int entry_size, int page_length_log,
 		int verbose_level);
 	void add_elt_print_function(
-		void (* elt_print)(void *p, void *data, ostream &ost),
+		void (* elt_print)(void *p, void *data, std::ostream &ost),
 		void *elt_print_data);
 	void print();
 	uchar *s_i_and_allocate(long int i);
@@ -263,7 +263,7 @@ void test_page_storage(int f_v);
 // #############################################################################
 
 
-ostream& operator<<(ostream& ost, partitionstack& p);
+std::ostream& operator<<(std::ostream& ost, partitionstack& p);
 
 
 //! partitionstack for set partitions following Jeffrey Leon
@@ -319,15 +319,15 @@ class partitionstack {
 	void reverse_cell(int cell);
 	void check();
 	void print_raw();
-	void print_class(ostream& ost, int idx);
-	void print_classes_tex(ostream& ost);
-	void print_class_tex(ostream& ost, int idx);
-	void print_class_point_or_line(ostream& ost, int idx);
-	void print_classes(ostream& ost);
-	void print_classes_points_and_lines(ostream& ost);
-	ostream& print(ostream& ost);
+	void print_class(std::ostream& ost, int idx);
+	void print_classes_tex(std::ostream& ost);
+	void print_class_tex(std::ostream& ost, int idx);
+	void print_class_point_or_line(std::ostream& ost, int idx);
+	void print_classes(std::ostream& ost);
+	void print_classes_points_and_lines(std::ostream& ost);
+	std::ostream& print(std::ostream& ost);
 	void print_cell(int i);
-	void print_cell_latex(ostream &ost, int i);
+	void print_cell_latex(std::ostream &ost, int i);
 	void print_subset();
 	void write_cell_to_file(int i, char *fname, 
 		int verbose_level);
@@ -383,38 +383,38 @@ class partitionstack {
 		int marker1, int marker2);
 	void get_and_print_decomposition_schemes(orthogonal &O, 
 		int marker1, int marker2);
-	void print_decomposition_tex(ostream &ost, 
+	void print_decomposition_tex(std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes);
-	void print_decomposition_scheme(ostream &ost, 
+	void print_decomposition_scheme(std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *scheme, int marker1, int marker2);
-	void print_decomposition_scheme_tex(ostream &ost, 
+	void print_decomposition_scheme_tex(std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *scheme);
 	void print_tactical_decomposition_scheme_tex_internal(
-		ostream &ost, int f_enter_math_mode, 
+			std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *row_scheme, int *col_scheme, int f_print_subscripts);
-	void print_tactical_decomposition_scheme_tex(ostream &ost, 
+	void print_tactical_decomposition_scheme_tex(std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *row_scheme, int *col_scheme, int f_print_subscripts);
 	void print_row_tactical_decomposition_scheme_tex(
-		ostream &ost, int f_enter_math_mode, 
+			std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *row_scheme, int f_print_subscripts);
 	void print_column_tactical_decomposition_scheme_tex(
-		ostream &ost, int f_enter_math_mode, 
+			std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *col_scheme, int f_print_subscripts);
 	void print_non_tactical_decomposition_scheme_tex(
-		ostream &ost, int f_enter_math_mode, 
+			std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int f_print_subscripts);
@@ -496,7 +496,7 @@ public:
 	void add_element(int i, int a);
 	void print();
 	void print_table();
-	void print_table_tex(ostream &ost);
+	void print_table_tex(std::ostream &ost);
 	void dualize(set_of_sets *&S, int verbose_level);
 	void remove_sets_of_given_size(int k, 
 		set_of_sets &S, int *&Idx, 
@@ -509,9 +509,9 @@ public:
 		int verbose_level);
 	void compute_incidence_matrix(int *&Inc, int &m, int &n, 
 		int verbose_level);
-	void compute_and_print_tdo_row_scheme(ofstream &file, 
+	void compute_and_print_tdo_row_scheme(std::ofstream &file,
 		int verbose_level);
-	void compute_and_print_tdo_col_scheme(ofstream &file, 
+	void compute_and_print_tdo_col_scheme(std::ofstream &file,
 		int verbose_level);
 	void init_decomposition(decomposition *&D, int verbose_level);
 	void compute_tdo_decomposition(decomposition &D, 
@@ -613,7 +613,7 @@ int int_vec_search_first_occurence(int *v, int len, int a, int &idx,
 	// This function finds the first occurence of the element a.
 int longinteger_vec_search(longinteger_object *v, int len, 
 	longinteger_object &a, int &idx);
-void int_vec_classify_and_print(ostream &ost, int *v, int l);
+void int_vec_classify_and_print(std::ostream &ost, int *v, int l);
 void int_vec_values(int *v, int l, int *&w, int &w_len);
 void int_vec_multiplicities(int *v, int l, int *&w, int &w_len);
 void int_vec_values_and_multiplicities(int *v, int l, 
@@ -627,17 +627,17 @@ void int_vec_classify_with_arrays(int length,
 	int &nb_types, int *type_first, int *type_len);
 void int_vec_sorted_collect_types(int length, int *the_vec_sorted, 
 	int &nb_types, int *type_first, int *type_len);
-void int_vec_print_classified(ostream &ost, int *vec, int len);
-void int_vec_print_types(ostream &ost, 
+void int_vec_print_classified(std::ostream &ost, int *vec, int len);
+void int_vec_print_types(std::ostream &ost,
 	int f_backwards, int *the_vec_sorted, 
 	int nb_types, int *type_first, int *type_len);
-void int_vec_print_types_naked_stringstream(stringstream &sstr,
+void int_vec_print_types_naked_stringstream(std::stringstream &sstr,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len);
-void int_vec_print_types_naked(ostream &ost, int f_backwards, 
+void int_vec_print_types_naked(std::ostream &ost, int f_backwards,
 	int *the_vec_sorted, 
 	int nb_types, int *type_first, int *type_len);
-void int_vec_print_types_naked_tex(ostream &ost, int f_backwards, 
+void int_vec_print_types_naked_tex(std::ostream &ost, int f_backwards,
 	int *the_vec_sorted, 
 	int nb_types, int *type_first, int *type_len);
 void Heapsort(void *v, int len, int entry_size_in_chars, 
@@ -717,19 +717,19 @@ public:
 	void add_token(const char *label);
 	void save(const char *fname, int verbose_level);
 	void read_spreadsheet(const char *fname, int verbose_level);
-	void print_table(ostream &ost, int f_enclose_in_parentheses);
-	void print_table_latex_all_columns(ostream &ost, 
+	void print_table(std::ostream &ost, int f_enclose_in_parentheses);
+	void print_table_latex_all_columns(std::ostream &ost,
 		int f_enclose_in_parentheses);
-	void print_table_latex(ostream &ost, int *f_column_select, 
+	void print_table_latex(std::ostream &ost, int *f_column_select,
 		int f_enclose_in_parentheses);
 	void print_table_row(int row, int f_enclose_in_parentheses, 
-		ostream &ost);
+			std::ostream &ost);
 	void print_table_row_latex(int row, int *f_column_select, 
-		int f_enclose_in_parentheses, ostream &ost);
-	void print_table_row_detailed(int row, ostream &ost);
+		int f_enclose_in_parentheses, std::ostream &ost);
+	void print_table_row_detailed(int row, std::ostream &ost);
 	void print_table_with_row_selection(int *f_selected, 
-		ostream &ost);
-	void print_table_sorted(ostream &ost, const char *sort_by);
+			std::ostream &ost);
+	void print_table_sorted(std::ostream &ost, const char *sort_by);
 	void add_column_with_constant_value(const char *label, char *value);
 	void add_column_with_int(const char *label, int *Value);
 	void add_column_with_text(const char *label, char **Value);

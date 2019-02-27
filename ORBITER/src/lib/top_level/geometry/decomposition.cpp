@@ -12,6 +12,8 @@
 
 #include <fstream>
 
+using namespace std;
+
 namespace orbiter {
 namespace top_level {
 

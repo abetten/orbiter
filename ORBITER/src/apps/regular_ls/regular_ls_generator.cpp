@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 using namespace orbiter::top_level;
 

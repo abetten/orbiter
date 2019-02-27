@@ -5,6 +5,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void make_subset_lattice(layered_graph *&LG, int n, int f_tree,  

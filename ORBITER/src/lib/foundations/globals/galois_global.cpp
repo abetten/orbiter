@@ -13,6 +13,9 @@
 
 #include "foundations.h"
 
+using namespace std;
+
+
 namespace orbiter {
 namespace foundations {
 

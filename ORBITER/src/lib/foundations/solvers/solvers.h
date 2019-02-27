@@ -60,7 +60,7 @@ public:
 	int *X; // [n]
 	int *Y; // [m]
 	
-	deque<vector<int> > _results;
+	std::deque<std::vector<int> > _results;
 	int _maxresults;
 	int _resultanz;
 	int _cur_result;
@@ -145,7 +145,7 @@ public:
 		int maxresults, int &nb_backtrack_nodes, 
 		int minrhs, int &nb_sol, int verbose_level);
 	void latex_it();
-	void latex_it(ostream &ost);
+	void latex_it(std::ostream &ost);
 	void trivial_row_reductions(int &f_no_solution, int verbose_level);
 	int count_non_zero_coefficients_in_row(int i);
 	void coefficient_values_in_row(int i, int &nb_values, 
@@ -167,8 +167,8 @@ public:
 		int &nb_eqns_replaced, int *&eqns_replaced, 
 		int verbose_level);
 	void multiply_A_x_to_RHS1();
-	void write_xml(ostream &ost, const char *label);
-	void read_xml(ifstream &f, char *label, int verbose_level);
+	void write_xml(std::ostream &ost, const char *label);
+	void read_xml(std::ifstream &f, char *label, int verbose_level);
 		// label will be set to the label that is in the file
 		// therefore, label must point to sufficient memory
 	void append_equation();
@@ -301,7 +301,7 @@ namespace mckay {
 	//! a term in a diophantine system of type tMCKAY
 
 	typedef struct {int var,coeff;} term;
-	typedef vector<term> equation;
+	typedef std::vector<term> equation;
 
 	//! solves diophantine systems according to McKay
 
@@ -310,10 +310,10 @@ namespace mckay {
 		tMCKAY();
 		void Init(diophant *lgs, const char *label, 
 			int aEqnAnz, int aVarAnz);
-		void possolve(vector<int> &lo, vector<int> &hi, 
-			vector<equation> &eqn, 
-			vector<int> &lorhs, vector<int> &hirhs, 
-			vector<int> &neqn, int numeqn, int numvar, 
+		void possolve(std::vector<int> &lo, std::vector<int> &hi,
+				std::vector<equation> &eqn,
+				std::vector<int> &lorhs, std::vector<int> &hirhs,
+				std::vector<int> &neqn, int numeqn, int numvar,
 			int verbose_level);
 
 		int nb_calls_to_solve;
@@ -325,43 +325,43 @@ namespace mckay {
 		bool subtract(int eqn1, equation &e1, int l1, int lors1, 
 			int hirs1, int eqn2, equation &e2, int *pl2, 
 			int *plors2, int *phirs2, int verbose_level);
-		void pruneqn(vector<int> &lo, vector<int> &hi,
+		void pruneqn(std::vector<int> &lo, std::vector<int> &hi,
 				int numvar,
-				vector<int> &lorhs, vector<int> &hirhs,
-				vector<equation> &eqn, vector<int> &neqn,
+				std::vector<int> &lorhs, std::vector<int> &hirhs,
+				std::vector<equation> &eqn, std::vector<int> &neqn,
 				int numeqn, int verbose_level);
-		void varprune(vector<int> &lo, vector<int> &hi, 
-			vector<int> &lorhs, vector<int> &hirhs, 
-			vector<equation> &eqn, vector<int> &neqn, 
+		void varprune(std::vector<int> &lo, std::vector<int> &hi,
+				std::vector<int> &lorhs, std::vector<int> &hirhs,
+				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn, int verbose_level);
-		void puteqns(vector<int> &lo, vector<int> &hi, 
+		void puteqns(std::vector<int> &lo, std::vector<int> &hi,
 			int numvar, 
-			vector<int> &lorhs, vector<int> &hirhs, 
-			vector<equation> &eqn, vector<int> &neqn, 
+			std::vector<int> &lorhs, std::vector<int> &hirhs,
+			std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn);
-		int divideeqns(vector<int> &lorhs, vector<int> &hirhs, 
-			vector<equation> &eqn, vector<int> &neqn, 
+		int divideeqns(std::vector<int> &lorhs, std::vector<int> &hirhs,
+				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn);
 		int gcd(int n1,int n2);
 		void solve(int level, 
-			vector<int> &alo, vector<int> &ahi, 
-			vector<bool> &aactive, int numvar, 
-			vector<int> &lorhs, vector<int> &hirhs, 
-			vector<equation> &eqn, vector<int> &neqn, 
+				std::vector<int> &alo, std::vector<int> &ahi,
+				std::vector<bool> &aactive, int numvar,
+				std::vector<int> &lorhs, std::vector<int> &hirhs,
+				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn, int verbose_level);
 		int restrict_variables(int level, 
-			vector<int> &lo, vector<int> &hi, 
-			vector<bool> &active, int numvar, 
-			vector<int> &lorhs, vector<int> &hirhs, 
-			vector<equation> &eqn, vector<int> &neqn, 
+				std::vector<int> &lo, std::vector<int> &hi,
+				std::vector<bool> &active, int numvar,
+				std::vector<int> &lorhs, std::vector<int> &hirhs,
+				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn, int &f_restriction_made, 
 			int verbose_level);
 		void log_12l(int current_node, int level);
 
 		int _eqnanz;
 		int _varanz;
-		vector<bool> unitcoeffs;
-		vector<bool> active;
+		std::vector<bool> unitcoeffs;
+		std::vector<bool> active;
 		int rekurs;
 		bool _break;
 
@@ -369,7 +369,7 @@ namespace mckay {
 		//tLGS *_lgs;
 
 	#ifdef MCKAY_DEBUG
-		vector<int> range,split,branch;
+		std::vector<int> range,split,branch;
 		int ticks0;
 	#endif
 

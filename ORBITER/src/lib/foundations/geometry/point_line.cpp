@@ -1,6 +1,15 @@
+// point_line.C
+// Anton Betten
+//
+// started: ?
+
 
 
 #include "foundations.h"
+
+
+using namespace std;
+
 
 namespace orbiter {
 namespace foundations {

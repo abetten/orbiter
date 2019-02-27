@@ -9,6 +9,9 @@
 #undef VECTOR_COPY_VERBOSE
 #undef VECTOR_CHANGE_KIND_VERBOSE
 
+using namespace std;
+
+
 namespace orbiter {
 namespace discreta {
 

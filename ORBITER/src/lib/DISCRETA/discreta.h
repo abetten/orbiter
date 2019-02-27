@@ -346,13 +346,13 @@ discreta_base *calloc_nobjects_plus_length(int n, kind k);
 void free_nobjects_plus_length(discreta_base *p);
 discreta_base *calloc_m_times_n_objects(int m, int n, kind k);
 void free_m_times_n_objects(discreta_base *p);
-void printobjectkind(ostream& ost, kind k);
+void printobjectkind(std::ostream& ost, kind k);
 const char *kind_ascii(kind k);
 const char *action_kind_ascii(kind k);
 //void int_swap(int& x, int& y);
 void uint4_swap(uint_4& x, uint_4& y);
 
-ostream& operator<<(ostream& ost, class discreta_base& p);
+std::ostream& operator<<(std::ostream& ost, class discreta_base& p);
 // discreta_base operator * (discreta_base& x, discreta_base &y);
 // discreta_base operator + (discreta_base& x, discreta_base &y);
 
@@ -361,7 +361,7 @@ int lcm_int(int m, int n);
 int invert_mod_integer(int i, int p);
 int remainder_mod(int i, int n);
 void factor_integer(int n, Vector& primes, Vector& exponents);
-void discreta_print_factorization(Vector& primes, Vector& exponents, ostream &o);
+void discreta_print_factorization(Vector& primes, Vector& exponents, std::ostream &o);
 void print_factorization_hollerith(Vector& primes, Vector& exponents, hollerith &h);
 int nb_primes(int n);
 //int is_prime(int n);
@@ -374,8 +374,8 @@ int sqrt_mod(int a, int p);
 int sqrt_mod_involved(int a, int p);
 //void latex_head(ostream& ost, int f_book, int f_title, char *title, char *author, int f_toc, int f_landscape);
 //void latex_foot(ostream& ost);
-void html_head(ostream& ost, char *title_long, char *title_short);
-void html_foot(ostream& ost);
+void html_head(std::ostream& ost, char *title_long, char *title_short);
+void html_foot(std::ostream& ost);
 void sieve(Vector &primes, int factorbase, int f_v);
 void sieve_primes(Vector &v, int from, int to, int limit, int f_v);
 void print_intvec_mod_10(Vector &v);
@@ -397,7 +397,7 @@ void Krawtchouk(int n, int q, int i, int j, discreta_base & a);
 //void k2ij(int k, int & i, int & j, int n);
 void tuple2_rank(int rank, int &i, int &j, int n, int f_injective);
 int tuple2_unrank(int i, int j, int n, int f_injective);
-void output_texable_string(ostream & ost, char *in);
+void output_texable_string(std::ostream & ost, char *in);
 void texable_string(char *in, char *out);
 void the_first_n_primes(Vector &P, int n);
 void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx);
@@ -425,7 +425,7 @@ int queue_get_and_remove_first_element(Vector &Q);
 int queue_length(Vector &Q);
 void queue_append(Vector &Q, int elt);
 void print_classification_tex(Vector &content, Vector &multiplicities);
-void print_classification_tex(Vector &content, Vector &multiplicities, ostream& ost);
+void print_classification_tex(Vector &content, Vector &multiplicities, std::ostream& ost);
 void perm2permutation(int *a, int n, permutation &p);
 //void print_integer_matrix(ostream &ost, int *p, int m, int n);
 //void print_longinteger_matrix(ostream &ost, LONGint *p, int m, int n); removed Anton Betten Nov 1, 2011
@@ -598,15 +598,15 @@ class discreta_base
 	virtual void copyobject_to(discreta_base &x);
 		// x := this
 
-	virtual ostream& print(ostream&);
+	virtual std::ostream& print(std::ostream&);
 		// all kinds of printing, the current printing mode is determined 
 		// by the global variable printing_mode
 	void print_to_hollerith(hollerith& h);
-	ostream& println(ostream&);
+	std::ostream& println(std::ostream&);
 		// print() and newline
-	ostream& printobjectkind(ostream&);
+	std::ostream& printobjectkind(std::ostream&);
 		// prints the type of the object
-	ostream& printobjectkindln(ostream&);
+	std::ostream& printobjectkindln(std::ostream&);
 
 	int& s_i_i();
 		// select_as_integer_i
@@ -719,8 +719,8 @@ class discreta_base
 	int calc_size_on_file();
 	void pack(memory & M, int f_v, int debug_depth);
 	void unpack(memory & M, int f_v, int debug_depth);
-	void save_ascii(ostream & f);
-	void load_ascii(istream & f);
+	void save_ascii(std::ostream & f);
+	void load_ascii(std::istream & f);
 	void save_file(char *fname);
 	void load_file(char *fname);
 };
@@ -742,7 +742,7 @@ class memory: public discreta_base
 	void freeself_memory();
 	kind s_virtual_kind();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream& ost);
+	std::ostream& print(std::ostream& ost);
 	int & alloc_length() { return self.int_pointer[-3]; }
 	int & used_length() { return self.int_pointer[-2]; }
 	int & cur_pointer() { return self.int_pointer[-1]; }
@@ -793,7 +793,7 @@ class hollerith: public discreta_base
 	kind s_virtual_kind();
 	void copyobject_to(discreta_base &x);
 
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 	int compare_with(discreta_base &a);
 
 	char * s_unchecked() { return self.char_pointer; } 
@@ -832,7 +832,7 @@ class integer: public discreta_base
 	kind s_virtual_kind();
 	void copyobject_to(discreta_base &x);
 
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 
 	integer& m_i(int i);				// make_integer
 	int& s_i() { return self.integer_value; };	// select_integer
@@ -893,7 +893,7 @@ class longinteger: public discreta_base
 	kind s_virtual_kind();
 	void copyobject_to(discreta_base &x);
 
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 	
 	LONGINTEGER_REPRESENTATION *s_rep();
 	int& s_sign();
@@ -964,10 +964,10 @@ class Vector: public discreta_base
 	kind s_virtual_kind();
 	void copyobject_to(discreta_base &x);
 	
-	ostream& Print(ostream&);
-	ostream& print(ostream&);
-	ostream& print_unformatted(ostream& ost);
-	ostream& print_intvec(ostream& ost);
+	std::ostream& Print(std::ostream&);
+	std::ostream& print(std::ostream&);
+	std::ostream& print_unformatted(std::ostream& ost);
+	std::ostream& print_intvec(std::ostream& ost);
 	
 	discreta_base & s_i(int i);
 		// select i-th vector element
@@ -1103,11 +1103,11 @@ class Vector: public discreta_base
 	int hash(int hash0);
 	int is_subset_of(Vector &w);
 	void concatenation(Vector &v1, Vector &v2);
-	void print_word_nicely(ostream &ost,
+	void print_word_nicely(std::ostream &ost,
 			int f_generator_labels, Vector &generator_labels);
-	void print_word_nicely2(ostream &ost);
+	void print_word_nicely2(std::ostream &ost);
 	void print_word_nicely_with_generator_labels(
-			ostream &ost, Vector &generator_labels);
+			std::ostream &ost, Vector &generator_labels);
 	void vector_of_vectors_lengths(Vector &lengths);
 	void get_element_orders(Vector &vec_of_orders);
 };
@@ -1142,11 +1142,11 @@ class permutation: public Vector
 	~permutation();
 	void freeself_permutation();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
-	ostream& print_list(ostream& ost);
-	ostream& print_cycle(ostream& ost);
+	std::ostream& print(std::ostream&);
+	std::ostream& print_list(std::ostream& ost);
+	std::ostream& print_cycle(std::ostream& ost);
 	void sscan(const char *s, int f_v);
-	void scan(istream & is, int f_v);
+	void scan(std::istream & is, int f_v);
 
 	void m_l(int l);
 	int& s_i(int i);
@@ -1239,7 +1239,7 @@ class matrix: public discreta_base
 	kind s_virtual_kind();
 	void copyobject_to(discreta_base &x);
 
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 	int compare_with(discreta_base &a);
 
 	matrix& m_mn(int m, int n);
@@ -1339,18 +1339,18 @@ class matrix: public discreta_base
 		int f_col_perm, permutation &col_perm);
 	void apply_col_row_perm(permutation &p);
 	void apply_row_col_perm(permutation &p);
-	void incma_print_ascii_permuted_and_decomposed(ostream &ost, int f_tex, 
+	void incma_print_ascii_permuted_and_decomposed(std::ostream &ost, int f_tex,
 		Vector & decomp, permutation & p);
-	void print_decomposed(ostream &ost, Vector &row_decomp, Vector &col_decomp);
-	void incma_print_ascii(ostream &ost, int f_tex, 
+	void print_decomposed(std::ostream &ost, Vector &row_decomp, Vector &col_decomp);
+	void incma_print_ascii(std::ostream &ost, int f_tex,
 		int f_row_decomp, Vector &row_decomp, 
 		int f_col_decomp, Vector &col_decomp);
-	void incma_print_latex(ostream &f, 
+	void incma_print_latex(std::ostream &f,
 		int f_row_decomp, Vector &row_decomp, 
 		int f_col_decomp, Vector &col_decomp, 
 		int f_labelling_points, Vector &point_labels, 
 		int f_labelling_blocks, Vector &block_labels);
-	void incma_print_latex2(ostream &f, 
+	void incma_print_latex2(std::ostream &f,
 		int width, int width_10, 
 		int f_outline_thin, const char *unit_length, 
 		const char *thick_lines, const char *thin_lines, const char *geo_line_width, 
@@ -1412,7 +1412,7 @@ class matrix: public discreta_base
 #endif
 	void save_as_geometry(int number, char *label);
 	void save_as_inc_file(char *fname);
-	void save_as_inc(ofstream &f);
+	void save_as_inc(std::ofstream &f);
 };
 
 void determinant_map(discreta_base & x, discreta_base &d);
@@ -1492,8 +1492,8 @@ class unipoly: public Vector
 	~unipoly();
 	void freeself_unipoly();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
-	ostream& print_as_vector(ostream& ost);
+	std::ostream& print(std::ostream&);
+	std::ostream& print_as_vector(std::ostream& ost);
 
 	void m_l(int l);
 	int degree();
@@ -1567,7 +1567,7 @@ class number_partition: public Vector
 	~number_partition();
 	void freeself_number_partition();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 
 	int & s_type() { return Vector::s_i(0).as_integer().s_i(); }
 	Vector & s_self() { return Vector::s_i(1).as_vector(); }
@@ -1619,19 +1619,19 @@ class geometry: public Vector
 	~geometry();
 	void freeself_geometry();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
-	void print_latex(ostream& ost);
-	void print_head_latex(ostream& ost);
-	void print_incma_text_latex(ostream& ost);
-	void print_labellings_latex(ostream& ost);
-	void print_incma_latex_picture(ostream& ost);
+	std::ostream& print(std::ostream&);
+	void print_latex(std::ostream& ost);
+	void print_head_latex(std::ostream& ost);
+	void print_incma_text_latex(std::ostream& ost);
+	void print_labellings_latex(std::ostream& ost);
+	void print_incma_latex_picture(std::ostream& ost);
 	
-	void print_inc(ostream &ost);
-	void print_inc_only(ostream &ost);
-	void print_inc_header(ostream &ost);
-	void print_ascii(ostream& ost);
-	int scan(istream&);
-	void scan_body(istream& f, int geo_nr, char *geo_label);
+	void print_inc(std::ostream &ost);
+	void print_inc_only(std::ostream &ost);
+	void print_inc_header(std::ostream &ost);
+	void print_ascii(std::ostream& ost);
+	int scan(std::istream&);
+	void scan_body(std::istream& f, int geo_nr, char *geo_label);
 
 
 	int & number() { return Vector::s_i(0).as_integer().s_i(); }
@@ -1767,7 +1767,7 @@ class group_selection: public Vector
 	~group_selection();
 	void freeself_group_selection();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 
 	int & type() { return Vector::s_i(0).as_integer().s_i(); }
 	int & val1() { return Vector::s_i(1).as_integer().s_i(); }
@@ -1791,13 +1791,13 @@ void read_file_of_generators_xml(Vector & gen, char *fname, int &f_cyclic_notati
 void write_file_of_generators_xml_group_label(Vector & gen, char *group_label, int f_cyclic_notation);
 void write_file_of_generators_xml(Vector & gen, char *fname, int f_cyclic_notation);
 void read_file_of_generators(Vector & G, char *fname);
-void read_generators(Vector & G, ifstream & f);
+void read_generators(Vector & G, std::ifstream & f);
 void write_file_of_generators_group_label(Vector & gen, char *group_label);
 void write_file_of_generators(Vector & G, char *fname);
-void write_generators(Vector & G, ofstream & f);
+void write_generators(Vector & G, std::ofstream & f);
 void write_file_of_generators_gap_group_label(Vector & gen, char *group_label);
 void write_file_of_generators_gap(Vector & G, char *fname);
-void write_generators_gap(Vector & G, ofstream & f);
+void write_generators_gap(Vector & G, std::ofstream & f);
 void vec_induced_group_on_subset(Vector & V, Vector & subset, Vector & W);
 void vec_subgroup_of_hol_of_cyclic_group(Vector & V, int n, int i);
 void vec_hol_of_cyclic_group(Vector & V, int n);
@@ -1939,8 +1939,8 @@ class solid: public Vector
 	~solid();
 	void freeself_solid();
 	void copyobject_to(discreta_base &x);
-	ostream& print_list(ostream& ost);
-	ostream& print(ostream& ost);
+	std::ostream& print_list(std::ostream& ost);
+	std::ostream& print(std::ostream& ost);
 	void standard_vertex_labels(int f_start_with_zero);
 	void determine_neighbours();
 	void find_face(int e, int& f1, int& j1, int& f2, int& j2);
@@ -2040,7 +2040,7 @@ void km_read_lambda_values(char *KM_fname, Vector & lambda_values, Vector & lamb
 void km_get_solutions_from_solver(char *KM_fname, int lambda);
 int km_nb_of_solutions(char *KM_fname, int lambda);
 void km_get_solutions(char *KM_fname, int lambda, int from, int len, Vector& S);
-void km_read_until_lambdaend(ifstream & f);
+void km_read_until_lambdaend(std::ifstream & f);
 void Mtk_via_Mtr_Mrk(int t, int r, int k, matrix & Mtr, matrix & Mrk, matrix & Mtk, int f_v);
 void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k, int f_v);
 
@@ -2075,7 +2075,7 @@ void permutation_element_mult(void *a, void *b, void *ab, void *data, int f_v);
 void permutation_element_invert(void *a, void *av, void *data, int f_v);
 void permutation_element_move(void *a, void *b, void *data, int f_v);
 void permutation_element_dispose(int hdl, void *data, int f_v);
-void permutation_element_print(void *elt, void *data, ostream &ost);
+void permutation_element_print(void *elt, void *data, std::ostream &ost);
 
 
 
@@ -2098,7 +2098,7 @@ class bt_key: public Vector
 	~bt_key();
 	void freeself_bt_key();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 
 	enum bt_key_kind & type() { return (enum bt_key_kind&) Vector::s_i(0).as_integer().s_i(); }
 	int & output_size() { return Vector::s_i(1).as_integer().s_i(); }
@@ -2119,9 +2119,9 @@ class bt_key: public Vector
 int bt_lexicographic_cmp(char *p1, char *p2);
 int bt_key_int_cmp(char *p1, char *p2);
 int bt_key_int2_cmp(char *p1, char *p2);
-void bt_key_print_int4(char **key, ostream& ost);
-void bt_key_print_int2(char **key, ostream& ost);
-void bt_key_print(char *key, Vector& V, ostream& ost);
+void bt_key_print_int4(char **key, std::ostream& ost);
+void bt_key_print_int2(char **key, std::ostream& ost);
+void bt_key_print(char *key, Vector& V, std::ostream& ost);
 int bt_key_compare_int4(char **p_key1, char **p_key2);
 int bt_key_compare_int2(char **p_key1, char **p_key2);
 int bt_key_compare(char *key1, char *key2, Vector& V, int depth);
@@ -2181,7 +2181,7 @@ class database: public Vector
 	~database();
 	void freeself_database();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 
 	Vector & btree_access() { return Vector::s_i(0).as_vector(); }
 	btree & btree_access_i(int i) { return btree_access().s_i(i).as_btree(); }
@@ -2223,9 +2223,9 @@ class database: public Vector
 	void ith(int i, int btree_idx, 
 		KEYTYPE *key_type, DATATYPE *data_type,
 		int verbose_level);
-	void print_by_btree(int btree_idx, ostream& ost);
-	void print_by_btree_with_datref(int btree_idx, ostream& ost);
-	void print_subset(Vector& datrefs, ostream& ost);
+	void print_by_btree(int btree_idx, std::ostream& ost);
+	void print_by_btree_with_datref(int btree_idx, std::ostream& ost);
+	void print_subset(Vector& datrefs, std::ostream& ost);
 	void extract_subset(Vector& datrefs, 
 		char *out_path, int verbose_level);
 	void search_int4(int btree_idx, 
@@ -2328,7 +2328,7 @@ class btree: public Vector
 	~btree();
 	void freeself_btree();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 	
 	int & f_duplicatekeys() { return Vector::s_i(0).as_integer().s_i(); }
 	Vector & key() { return Vector::s_i(1).as_vector(); }
@@ -2347,7 +2347,7 @@ class btree: public Vector
 	void add_key_int2(int field1, int field2);
 	void add_key_string(int output_size, int field1, int field2);
 	void key_fill_in(char *the_key, Vector& the_object);
-	void key_print(char *the_key, ostream& ost);
+	void key_print(char *the_key, std::ostream& ost);
 
 	void create(int verbose_level);
 	void open(int verbose_level);
@@ -2433,11 +2433,11 @@ class btree: public Vector
 		int Node, int Path, int& Underflow,
 		int verbose_level);
 	
-	void print_all(ostream& ost);
-	void print_range(int first, int len, ostream& ost);
-	void print_page(int x, ostream& ost);
-	void page_print(Buffer *BF, ostream& ost);
-	void item_print(ItemTyp *item, int i, ostream& ost);
+	void print_all(std::ostream& ost);
+	void print_range(int first, int len, std::ostream& ost);
+	void print_page(int x, std::ostream& ost);
+	void page_print(Buffer *BF, std::ostream& ost);
+	void item_print(ItemTyp *item, int i, std::ostream& ost);
 	
 	void file_open();
 	void file_create();
@@ -2451,7 +2451,7 @@ class btree: public Vector
 
 
 extern int fstream_table_used[MAX_FSTREAM_TABLE];
-extern fstream *fstream_table[MAX_FSTREAM_TABLE];
+extern std::fstream *fstream_table[MAX_FSTREAM_TABLE];
 
 int fstream_table_get_free_entry();
 void database_init(int verbose_level);
@@ -2542,8 +2542,8 @@ class design_parameter_source: public Vector
 	~design_parameter_source();
 	void freeself_design_parameter_source();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
-	void print2(design_parameter& p, ostream& ost);
+	std::ostream& print(std::ostream&);
+	void print2(design_parameter& p, std::ostream& ost);
 	
 	int & prev() { return Vector::s_i(0).as_integer().s_i(); }
 	int & rule() { return Vector::s_i(1).as_integer().s_i(); }
@@ -2613,7 +2613,7 @@ class design_parameter: public Vector
 	~design_parameter();
 	void freeself_design_parameter();
 	void copyobject_to(discreta_base &x);
-	ostream& print(ostream&);
+	std::ostream& print(std::ostream&);
 	
 	int & id() { return Vector::s_i(0).as_integer().s_i(); }
 	int & t() { return Vector::s_i(1).as_integer().s_i(); }

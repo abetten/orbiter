@@ -9,6 +9,8 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
 namespace orbiter {
 namespace top_level {
 

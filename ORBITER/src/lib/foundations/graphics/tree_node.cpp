@@ -8,6 +8,10 @@
 
 #include "foundations.h"
 
+
+using namespace std;
+
+
 #define DONT_DRAW_ROOT_NODE 0
 
 namespace orbiter {

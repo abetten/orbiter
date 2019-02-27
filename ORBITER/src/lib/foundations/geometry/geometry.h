@@ -342,10 +342,10 @@ public:
 		// copies the incidence matrix
 	void setup_default_partition(int verbose_level);
 	void compute_TDO(int max_depth, int verbose_level);
-	void print_row_decomposition_tex(ostream &ost, 
+	void print_row_decomposition_tex(std::ostream &ost,
 		int f_enter_math, int f_print_subscripts, 
 		int verbose_level);
-	void print_column_decomposition_tex(ostream &ost, 
+	void print_column_decomposition_tex(std::ostream &ost,
 		int f_enter_math, int f_print_subscripts, 
 		int verbose_level);
 	void get_row_scheme(int verbose_level);
@@ -470,8 +470,8 @@ public:
 	void null();
 	void freeself();
 	void print();
-	void latex(ostream &ost);
-	void latex_index_only(ostream &ost);
+	void latex(std::ostream &ost);
+	void latex_index_only(std::ostream &ost);
 	void latex_to_str(char *str);
 	void latex_to_str_without_E(char *str);
 	void init2(int i, int j);
@@ -641,19 +641,19 @@ public:
 	~geo_parameter();
 	void append_to_part(int a);
 	void append_to_entries(int a1, int a2, int a3, int a4);
-	void write(ofstream &aStream, char *label);
-	void write_mode_single(ofstream &aStream, char *label);
-	void write_mode_stack(ofstream &aStream, char *label);
+	void write(std::ofstream &aStream, char *label);
+	void write_mode_single(std::ofstream &aStream, char *label);
+	void write_mode_stack(std::ofstream &aStream, char *label);
 	void convert_single_to_stack(int verbose_level);
 	int partition_number_row(int row_idx);
 	int partition_number_col(int col_idx);
-	int input(ifstream &aStream);
-	int input_mode_single(ifstream &aStream);
-	int input_mode_stack(ifstream &aStream, int verbose_level);
+	int input(std::ifstream &aStream);
+	int input_mode_single(std::ifstream &aStream);
+	int input_mode_stack(std::ifstream &aStream, int verbose_level);
 	void init_tdo_scheme(tdo_scheme &G, int verbose_level);
 	void print_schemes(tdo_scheme &G);
 	void print_schemes_tex(tdo_scheme &G);
-	void print_scheme_tex(ostream &ost, tdo_scheme &G, int h);
+	void print_scheme_tex(std::ostream &ost, tdo_scheme &G, int h);
 	void print_C_source();
 	void convert_single_to_stack_fuse_simple_pt(int verbose_level);
 	void convert_single_to_stack_fuse_simple_bt(int verbose_level);
@@ -715,9 +715,9 @@ public:
 	~grassmann();
 	void init(int n, int k, finite_field *F, int verbose_level);
 	int nb_of_subspaces(int verbose_level);
-	void print_single_generator_matrix_tex(ostream &ost, int a);
+	void print_single_generator_matrix_tex(std::ostream &ost, int a);
 	void print_set(int *v, int len);
-	void print_set_tex(ostream &ost, int *v, int len);
+	void print_set_tex(std::ostream &ost, int *v, int len);
 	int nb_points_covered(int verbose_level);
 	void points_covered(int *the_points, int verbose_level);
 	void unrank_int_here(int *Mtx, int rk, int verbose_level);
@@ -958,7 +958,7 @@ class incidence_structure {
 	int get_nb_inc();
 	void save_inc_file(char *fname);
 	void save_row_by_row_file(char *fname);
-	void print(ostream &ost);
+	void print(std::ostream &ost);
 	void compute_TDO_safe_first(partitionstack &PStack, 
 		int depth, int &step, int &f_refine, 
 		int &f_refine_prev, int verbose_level);
@@ -985,13 +985,13 @@ class incidence_structure {
 		int verbose_level);
 	void print_row_tactical_decomposition_scheme_incidences_tex(
 		partitionstack &PStack, 
-		ostream &ost, int f_enter_math_mode, 
+		std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int f_local_coordinates, int verbose_level);
 	void print_col_tactical_decomposition_scheme_incidences_tex(
 		partitionstack &PStack, 
-		ostream &ost, int f_enter_math_mode, 
+		std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int f_local_coordinates, int verbose_level);
@@ -1030,7 +1030,7 @@ class incidence_structure {
 	void get_and_print_decomposition_schemes(partitionstack &PStack);
 	void get_and_print_decomposition_schemes_tex(partitionstack &PStack);
 	void get_and_print_tactical_decomposition_scheme_tex(
-		ostream &ost, int f_enter_math, partitionstack &PStack);
+			std::ostream &ost, int f_enter_math, partitionstack &PStack);
 	void get_scheme(
 		int *&row_classes, int *&row_class_inv, int &nb_row_classes,
 		int *&col_classes, int *&col_class_inv, int &nb_col_classes,
@@ -1040,31 +1040,31 @@ class incidence_structure {
 		int *col_classes, int *col_class_inv, 
 		int *scheme);
 	void get_and_print_row_tactical_decomposition_scheme_tex(
-		ostream &ost, int f_enter_math, int f_print_subscripts, 
+			std::ostream &ost, int f_enter_math, int f_print_subscripts,
 		partitionstack &PStack);
 	void get_and_print_column_tactical_decomposition_scheme_tex(
-		ostream &ost, int f_enter_math, int f_print_subscripts, 
+			std::ostream &ost, int f_enter_math, int f_print_subscripts,
 		partitionstack &PStack);
 	void print_non_tactical_decomposition_scheme_tex(
-		ostream &ost, int f_enter_math, partitionstack &PStack);
-	void print_line(ostream &ost, partitionstack &P, 
+			std::ostream &ost, int f_enter_math, partitionstack &PStack);
+	void print_line(std::ostream &ost, partitionstack &P,
 		int row_cell, int i, int *col_classes, int nb_col_classes, 
 		int width, int f_labeled);
-	void print_column_labels(ostream &ost, partitionstack &P, 
+	void print_column_labels(std::ostream &ost, partitionstack &P,
 		int *col_classes, int nb_col_classes, int width);
-	void print_hline(ostream &ost, partitionstack &P, 
+	void print_hline(std::ostream &ost, partitionstack &P,
 		int *col_classes, int nb_col_classes, 
 		int width, int f_labeled);
-	void print_partitioned(ostream &ost, 
+	void print_partitioned(std::ostream &ost,
 		partitionstack &P, int f_labeled);
 	void point_collinearity_graph(int *Adj, int verbose_level);
 		// G[nb_points() * nb_points()]
 	void line_intersection_graph(int *Adj, int verbose_level);
 		// G[nb_lines() * nb_lines()]
-	void latex_it(ostream &ost, partitionstack &P);
+	void latex_it(std::ostream &ost, partitionstack &P);
 	void rearrange(int *&Vi, int &nb_V, 
 		int *&Bj, int &nb_B, int *&R, int *&X, partitionstack &P);
-	void decomposition_print_tex(ostream &ost, 
+	void decomposition_print_tex(std::ostream &ost,
 		partitionstack &PStack, int f_row_tactical, int f_col_tactical, 
 		int f_detailed, int f_local_coordinates, int verbose_level);
 	void do_tdo_high_level(partitionstack &S, 
@@ -1135,7 +1135,7 @@ class incidence_structure {
 
 // two functions from DISCRETA1:
 
-void incma_latex_picture(ostream &fp, 
+void incma_latex_picture(std::ostream &fp,
 	int width, int width_10, 
 	int f_outline_thin, const char *unit_length, 
 	const char *thick_lines, const char *thin_lines, 
@@ -1148,7 +1148,7 @@ void incma_latex_picture(ostream &fp,
 // width for one box in 0.1mm 
 // width_10 is 1 10th of width
 // example: width = 40, width_10 = 4 */
-void incma_latex(ostream &fp, 
+void incma_latex(std::ostream &fp,
 	int v, int b, 
 	int V, int B, int *Vi, int *Bj, 
 	int *R, int *X, int dim_X);
@@ -1291,8 +1291,8 @@ public:
 	~object_in_projective_space();
 	void null();
 	void freeself();
-	void print(ostream &ost);
-	void print_tex(ostream &ost);
+	void print(std::ostream &ost);
+	void print_tex(std::ostream &ost);
 	void init_object_from_string(
 		projective_space *P,
 		int type,
@@ -2017,7 +2017,7 @@ public:
 	int identify_field_not_of_prime_order(int f_v, int f_vv);
 	void init_projective_plane(int order, int f_v);
 	void free_projective_plane();
-	void plane_report(ostream &ost);
+	void plane_report(std::ostream &ost);
 	int plane_line_through_two_points(int pt1, int pt2);
 	int plane_line_intersection(int line1, int line2);
 	void plane_get_points_on_line(int line, int *pts);
@@ -2035,7 +2035,7 @@ public:
 	int &MOLSaddition(int a, int b);
 	int &MOLSmultiplication(int a, int b);
 	int ternary_field_is_linear(int *MOLS, int f_v);
-	void print_MOLS(ostream &ost);
+	void print_MOLS(std::ostream &ost);
 
 	int is_projective_plane(partitionstack &P, int &order, int f_v, int f_vv);
 		// if it is a projective plane, the order is returned.
@@ -2301,13 +2301,13 @@ public:
 	void Pluecker_coordinates(int line_rk, int *v6, int verbose_level);
 	void klein_correspondence_special_model(projective_space *P5, 
 		int *table, int verbose_level);
-	void cheat_sheet_points(ostream &f, int verbose_level);
-	void cheat_sheet_point_table(ostream &f, int verbose_level);
-	void cheat_sheet_points_on_lines(ostream &f, int verbose_level);
-	void cheat_sheet_lines_on_points(ostream &f, int verbose_level);
-	void cheat_sheet_subspaces(ostream &f, int k, int verbose_level);
-	void cheat_sheet_line_intersection(ostream &f, int verbose_level);
-	void cheat_sheet_line_through_pairs_of_points(ostream &f, 
+	void cheat_sheet_points(std::ostream &f, int verbose_level);
+	void cheat_sheet_point_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
+	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
+	void cheat_sheet_subspaces(std::ostream &f, int k, int verbose_level);
+	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
+	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
 		int verbose_level);
 	void conic_type_randomized(int nb_times, 
 		int *set, int set_size, 
@@ -2829,35 +2829,35 @@ public:
 		int *lines, int sz, int verbose_level);
 
 	// surface_io.cpp:
-	void print_equation(ostream &ost, int *coeffs);
-	void print_equation_tex(ostream &ost, int *coeffs);
-	void latex_double_six(ostream &ost, int *double_six);
+	void print_equation(std::ostream &ost, int *coeffs);
+	void print_equation_tex(std::ostream &ost, int *coeffs);
+	void latex_double_six(std::ostream &ost, int *double_six);
 	void make_spreadsheet_of_lines_in_three_kinds(spreadsheet *&Sp,
 		int *Wedge_rk, int *Line_rk, int *Klein_rk, int nb_lines,
 		int verbose_level);
-	void print_line(ostream &ost, int rk);
-	void print_Steiner_and_Eckardt(ostream &ost);
-	void latex_abstract_trihedral_pair(ostream &ost, int t_idx);
-	void latex_trihedral_pair(ostream &ost, int *T, int *TE);
-	void latex_table_of_trihedral_pairs(ostream &ost);
-	void print_trihedral_pairs(ostream &ost);
-	void latex_table_of_Eckardt_points(ostream &ost);
-	void latex_table_of_tritangent_planes(ostream &ost);
-	void print_web_of_cubic_curves(ostream &ost, int *Web_of_cubic_curves);
-	void print_equation_in_trihedral_form(ostream &ost,
+	void print_line(std::ostream &ost, int rk);
+	void print_Steiner_and_Eckardt(std::ostream &ost);
+	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
+	void latex_trihedral_pair(std::ostream &ost, int *T, int *TE);
+	void latex_table_of_trihedral_pairs(std::ostream &ost);
+	void print_trihedral_pairs(std::ostream &ost);
+	void latex_table_of_Eckardt_points(std::ostream &ost);
+	void latex_table_of_tritangent_planes(std::ostream &ost);
+	void print_web_of_cubic_curves(std::ostream &ost, int *Web_of_cubic_curves);
+	void print_equation_in_trihedral_form(std::ostream &ost,
 		int *the_six_plane_equations, int lambda, int *the_equation);
-	void print_equation_wrapped(ostream &ost, int *the_equation);
-	void print_lines_tex(ostream &ost, int *Lines);
-	void print_clebsch_P(ostream &ost);
-	void print_clebsch_P_matrix_only(ostream &ost);
-	void print_clebsch_cubics(ostream &ost);
-	void print_system(ostream &ost, int *system);
+	void print_equation_wrapped(std::ostream &ost, int *the_equation);
+	void print_lines_tex(std::ostream &ost, int *Lines);
+	void print_clebsch_P(std::ostream &ost);
+	void print_clebsch_P_matrix_only(std::ostream &ost);
+	void print_clebsch_cubics(std::ostream &ost);
+	void print_system(std::ostream &ost, int *system);
 	void print_trihedral_pair_in_dual_coordinates_in_GAP(
 		int *F_planes_rank, int *G_planes_rank);
-	void print_polynomial_domains(ostream &ost);
-	void print_line_labelling(ostream &ost);
-	void print_set_of_lines_tex(ostream &ost, int *v, int len);
-	void latex_table_of_clebsch_maps(ostream &ost);
+	void print_polynomial_domains(std::ostream &ost);
+	void print_line_labelling(std::ostream &ost);
+	void print_set_of_lines_tex(std::ostream &ost, int *v, int len);
+	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
 
 };
@@ -2948,37 +2948,37 @@ public:
 	void enumerate_points(int verbose_level);
 	void compute_adjacency_matrix_of_line_intersection_graph(
 		int verbose_level);
-	void print_neighbor_sets(ostream &ost);
+	void print_neighbor_sets(std::ostream &ost);
 	void compute_plane_type_by_points(int verbose_level);
 	void compute_tritangent_planes(int verbose_level);
 	void compute_planes_and_dual_point_ranks(int verbose_level);
-	void print_line_intersection_graph(ostream &ost);
-	void print_adjacency_matrix(ostream &ost);
-	void print_adjacency_matrix_with_intersection_points(ostream &ost);
-	void print_planes_in_trihedral_pairs(ostream &ost);
-	void print_tritangent_planes(ostream &ost);
-	void print_generalized_quadrangle(ostream &ost);
-	void print_plane_type_by_points(ostream &ost);
-	void print_lines(ostream &ost);
-	void print_lines_with_points_on_them(ostream &ost);
-	void print_equation(ostream &ost);
-	void print_general(ostream &ost);
-	void print_affine_points_in_source_code(ostream &ost);
-	void print_points(ostream &ost);
-	void print_double_sixes(ostream &ost);
-	void print_trihedral_pairs(ostream &ost);
-	void latex_table_of_trihedral_pairs_and_clebsch_system(ostream &ost, 
+	void print_line_intersection_graph(std::ostream &ost);
+	void print_adjacency_matrix(std::ostream &ost);
+	void print_adjacency_matrix_with_intersection_points(std::ostream &ost);
+	void print_planes_in_trihedral_pairs(std::ostream &ost);
+	void print_tritangent_planes(std::ostream &ost);
+	void print_generalized_quadrangle(std::ostream &ost);
+	void print_plane_type_by_points(std::ostream &ost);
+	void print_lines(std::ostream &ost);
+	void print_lines_with_points_on_them(std::ostream &ost);
+	void print_equation(std::ostream &ost);
+	void print_general(std::ostream &ost);
+	void print_affine_points_in_source_code(std::ostream &ost);
+	void print_points(std::ostream &ost);
+	void print_double_sixes(std::ostream &ost);
+	void print_trihedral_pairs(std::ostream &ost);
+	void latex_table_of_trihedral_pairs_and_clebsch_system(std::ostream &ost,
 		int *T, int nb_T);
-	void latex_table_of_trihedral_pairs(ostream &ost, int *T, int nb_T);
-	void latex_trihedral_pair(ostream &ost, int t_idx);
+	void latex_table_of_trihedral_pairs(std::ostream &ost, int *T, int nb_T);
+	void latex_trihedral_pair(std::ostream &ost, int t_idx);
 	void make_equation_in_trihedral_form(int t_idx, 
 		int *F_planes, int *G_planes, int &lambda, int *equation, 
 		int verbose_level);
-	void print_equation_in_trihedral_form(ostream &ost, 
+	void print_equation_in_trihedral_form(std::ostream &ost,
 		int *F_planes, int *G_planes, int lambda);
-	void print_equation_in_trihedral_form_equation_only(ostream &ost, 
+	void print_equation_in_trihedral_form_equation_only(std::ostream &ost,
 		int *F_planes, int *G_planes, int lambda);
-	void make_and_print_equation_in_trihedral_form(ostream &ost, int t_idx);
+	void make_and_print_equation_in_trihedral_form(std::ostream &ost, int t_idx);
 	void identify_double_six_from_trihedral_pair(int *Lines, 
 		int t_idx, int *nine_lines, int *double_sixes, 
 		int verbose_level);
@@ -3006,7 +3006,7 @@ public:
 		int forbidden_line2);
 	void identify_lines(int *lines, int nb_lines, int *line_idx, 
 		int verbose_level);
-	void print_nine_lines_latex(ostream &ost, int *nine_lines, 
+	void print_nine_lines_latex(std::ostream &ost, int *nine_lines,
 		int *nine_lines_idx);
 	int choose_tritangent_plane(int line_a, int line_b, 
 		int transversal_line, int verbose_level);
@@ -3030,11 +3030,11 @@ public:
 		int verbose_level);
 	// Clebsch_map[nb_pts]
 	// Clebsch_coeff[nb_pts * 4]
-	void clebsch_map_latex(ostream &ost, int *Clebsch_map, 
+	void clebsch_map_latex(std::ostream &ost, int *Clebsch_map,
 		int *Clebsch_coeff);
-	void print_Steiner_and_Eckardt(ostream &ost);
-	void latex_table_of_trihedral_pairs(ostream &ost);
-	void latex_trihedral_pair(ostream &ost, int *T, int *TE);
+	void print_Steiner_and_Eckardt(std::ostream &ost);
+	void latex_table_of_trihedral_pairs(std::ostream &ost);
+	void latex_trihedral_pair(std::ostream &ost, int *T, int *TE);
 
 
 };
@@ -3186,8 +3186,8 @@ public:
 	void get_row_split_partition(int verbose_level, partitionstack &P);
 	void print_all_schemes();
 	void print_scheme(int h, int f_v);
-	void print_scheme_tex(ostream &ost, int h);
-	void print_scheme_tex_fancy(ostream &ost,
+	void print_scheme_tex(std::ostream &ost, int h);
+	void print_scheme_tex_fancy(std::ostream &ost,
 			int h, int f_label, char *label);
 	void compute_whether_first_inc_must_be_moved(
 			int *f_first_inc_must_be_moved, int verbose_level);

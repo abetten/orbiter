@@ -10,6 +10,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 int distance(int n, int *seq1, int *seq2);

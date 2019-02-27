@@ -11,6 +11,8 @@
 #define MAX_NODES_FOR_TREEFILE 25000
 //#define MAX_NODES_FOR_TREEFILE 6500
 
+using namespace std;
+
 namespace orbiter {
 namespace classification {
 

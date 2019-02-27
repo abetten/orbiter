@@ -6,6 +6,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 
 namespace orbiter {
 namespace discreta {

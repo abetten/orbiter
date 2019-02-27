@@ -17,6 +17,10 @@
 #include <stdlib.h>
 
 
+using namespace std;
+
+
+
 #define HAS_NAUTY 1
 
 

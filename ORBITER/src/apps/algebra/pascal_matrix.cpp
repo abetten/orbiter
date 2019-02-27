@@ -10,6 +10,9 @@
 
 #include "orbiter.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 void do_it(int q, int k, int verbose_level);

@@ -207,7 +207,7 @@ public:
 	// for iso_test:
 
 
-	ofstream *fp_event_out;
+	std::ofstream *fp_event_out;
 
 	action *AA;
 	action *AA_perm;
@@ -362,12 +362,12 @@ public:
 	void decomposition_matrix(int verbose_level);
 	void compute_down_link(int *&down_link, int verbose_level);
 	void do_iso_test(int t0, sims *&Stab, 
-		int f_play_back, ifstream *play_back_file, 
+		int f_play_back, std::ifstream *play_back_file,
 		int &f_eof, int print_mod, 
 		int f_implicit_fusion, int verbose_level);
 	int next_subset(int t0, 
 		int &f_continue, sims *Stab, int *data, 
-		int f_play_back, ifstream *play_back_file, int &f_eof,
+		int f_play_back, std::ifstream *play_back_file, int &f_eof,
 		int verbose_level);
 	void process_rearranged_set(sims *Stab, int *data, 
 		int f_implicit_fusion, int verbose_level);
@@ -641,26 +641,26 @@ public:
 		int select_first, int select_len, 
 		int verbose_level);
 		// Calls print_set_function (if available)
-	void induced_action_on_set_and_kernel(ostream &file, 
+	void induced_action_on_set_and_kernel(std::ostream &file,
 		action *A, sims *Stab, int size, int *set, 
 		int verbose_level);
 	void handle_event_files(int nb_event_files, 
 		const char **event_file_name, int verbose_level);
 	void read_event_file(const char *event_file_name, 
 		int verbose_level);
-	void skip_through_event_file(ifstream &f, 
+	void skip_through_event_file(std::ifstream &f,
 		int verbose_level);
-	void skip_through_event_file1(ifstream &f, 
+	void skip_through_event_file1(std::ifstream &f,
 		int case_no, int orbit_no, int verbose_level);
 	void event_file_completed_cases(const char *event_file_name, 
 		int &nb_completed_cases, int *completed_cases, 
 		int verbose_level);
 	void event_file_read_case(const char *event_file_name, 
 		int case_no, int verbose_level);
-	void event_file_read_case1(ifstream &f, 
+	void event_file_read_case1(std::ifstream &f,
 		int case_no, int verbose_level);
 	int next_subset_play_back(int &subset_rank, 
-		ifstream *play_back_file, 
+			std::ifstream *play_back_file,
 		int &f_eof, int verbose_level);
 	void read_everything_including_classification(
 		const char *prefix_classify, int verbose_level);
@@ -841,10 +841,10 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	int verbose_level);
 void isomorph_report_data_in_source_code_inside_tex(
 	isomorph &Iso, const char *prefix, char *label_of_structure_plural, 
-	ostream &F, int verbose_level);
+	std::ostream &F, int verbose_level);
 void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	isomorph &Iso, const char *prefix, char *label_of_structure_plural, 
-	ostream &fp, int selection_size, int *selection, 
+	std::ostream &fp, int selection_size, int *selection,
 	int verbose_level);
 
 }}

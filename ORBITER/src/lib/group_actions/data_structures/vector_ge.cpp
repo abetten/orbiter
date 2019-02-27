@@ -6,6 +6,9 @@
 #include "foundations/foundations.h"
 #include "group_actions.h"
 
+using namespace std;
+
+
 #undef PRINT_WITH_TYPE
 #define RANGE_CHECKING
 

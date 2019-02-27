@@ -6,6 +6,9 @@
 #include "orbiter.h"
 #include "math.h"
 
+using namespace std;
+
+
 using namespace orbiter;
 
 
