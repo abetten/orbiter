@@ -304,7 +304,7 @@ void spreadsheet::read_spreadsheet(const char *fname, int verbose_level)
 	
 
 	
-	tokenize(fname, tokens, nb_tokens, verbose_level /* - 2*/);
+	tokenize(fname, tokens, nb_tokens, 0 /*verbose_level*/ /* - 2*/);
 
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet read file with "
@@ -319,7 +319,7 @@ void spreadsheet::read_spreadsheet(const char *fname, int verbose_level)
 
 
 
-	find_rows(verbose_level - 2);
+	find_rows(0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet Found "

@@ -677,6 +677,20 @@ int scene::plane(double x1, double x2, double x3, double a)
 // it can be represented by the equation 
 // A*x + B*y + C*z - D*sqrt(A^2 + B^2 + C^2) = 0.
 // see http://www.povray.org/documentation/view/3.6.1/297/
+// Example:
+// plane { <0, 1, 0>, 4 }
+// This is a plane where straight up is defined in the positive y-direction.
+// The plane is 4 units in that direction away from the origin.
+// Because most planes are defined with surface normals in the direction
+// of an axis you will often see planes defined using the x, y or z
+// built-in vector identifiers. The example above could be specified as:
+//  plane { y, 4 }
+
+
+//intersection {
+//  box { <-1.5, -1, -1>, <0.5, 1, 1> }
+//  cylinder { <0.5, 0, -1>, <0.5, 0, 1>, 1 }
+//  }
 {
 	Plane_coords[nb_planes * 4 + 0] = x1;
 	Plane_coords[nb_planes * 4 + 1] = x2;
@@ -1492,7 +1506,7 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 				ost << ", ";
 				}
 			}	
-		ost << ">";
+		ost << ">}" << endl;
 		}
 	ost << endl;
 	ost << "		" << options << " " << endl;
@@ -1500,7 +1514,6 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 	//ost << "		pigment{Cyan*1.3}" << endl;
 	//ost << "		finish { phong albedo 0.9 phong_size 60 ambient 0.4 "
 	//"diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} " << endl;
-	ost << "		}" << endl;
 	ost << "	}" << endl;
 }
 
