@@ -15,8 +15,10 @@ MODULES = \
 	BLT_set_create.o \
 	blt_set.o \
 	choose_points_or_lines.o \
+	classify_cubic_curves.o \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
+	cubic_curve_with_action.o \
 	decomposition.o \
 	incidence_structure.o \
 	invariants_packing.o \

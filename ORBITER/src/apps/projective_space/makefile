@@ -15,6 +15,7 @@ all: analyze_projective_code.out  \
 	baer_subplane.out \
 	canonical_form.out\
 	cheat_sheet_PG.out \
+	classify_cubic_curves.out \
 	conic.out \
 	create_object.out \
 	determine_conic.out \
@@ -63,6 +64,9 @@ canonical_form.out:  canonical_form.o ;
 
 cheat_sheet_PG.out:  cheat_sheet_PG.o;
 	$(DISCRETA_CPP)  cheat_sheet_PG.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+classify_cubic_curves.out:  classify_cubic_curves.o;
+	$(DISCRETA_CPP)  classify_cubic_curves.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 conic.out:  conic.o;
 	$(DISCRETA_CPP)  conic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

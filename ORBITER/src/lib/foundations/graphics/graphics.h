@@ -502,8 +502,9 @@ void povray_ini(std::ostream &ost, const char *fname_pov, int first_frame,
 	int last_frame);
 
 
+
 // #############################################################################
-// scene.C
+// scene.C:
 // #############################################################################
 
 #define SCENE_MAX_LINES 100000
@@ -514,9 +515,6 @@ void povray_ini(std::ostream &ost, const char *fname_pov, int first_frame,
 #define SCENE_MAX_CUBICS 10000
 #define SCENE_MAX_FACES 10000
 
-// #############################################################################
-// scene.C:
-// #############################################################################
 
 //! a collection of 3D geometry objects
 
@@ -687,6 +685,10 @@ public:
 		const char *options, std::ostream &ost);
 	void draw_quadric_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
+	void draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
+		const char *options, std::ostream &ost);
+	void draw_line_clipped_by_plane(int line_idx, int plane_idx,
+			const char *options, std::ostream &ost);
 	int intersect_line_and_plane(int line_idx, int plane_idx, 
 		int &intersection_point_idx, 
 		int verbose_level);

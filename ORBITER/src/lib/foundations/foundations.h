@@ -311,6 +311,7 @@ class numerics;
 class polynomial_double;
 class polynomial_double_domain;
 class spread_tables;
+class cubic_curve;
 
 
 #ifdef MEMORY_DEBUG

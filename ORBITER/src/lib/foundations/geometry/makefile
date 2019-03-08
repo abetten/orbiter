@@ -11,6 +11,7 @@ MODULES = \
 	andre_construction_point_element.o \
 	arc_lifting_with_two_lines.o \
 	buekenhout_metz.o \
+	cubic_curve.o \
 	data.o \
 	decomposition.o \
 	desarguesian_spread.o \
