@@ -255,6 +255,37 @@ int buekenhout_metz_check_good_points(int len, int *S, void *data,
 
 
 // #############################################################################
+// cubic_curve.cpp
+// #############################################################################
+
+//! cubic curves in PG(2,q)
+
+
+class cubic_curve {
+
+public:
+	int q;
+	finite_field *F;
+	projective_space *P; // PG(2,q)
+
+
+	int nb_monomials;
+
+
+	homogeneous_polynomial_domain *Poly;
+		// cubic polynomials in three variables
+
+
+	cubic_curve();
+	~cubic_curve();
+	void freeself();
+	void init(finite_field *F, int verbose_level);
+
+};
+
+
+
+// #############################################################################
 // data.C:
 // #############################################################################
 

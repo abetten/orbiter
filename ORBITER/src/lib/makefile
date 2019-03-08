@@ -77,6 +77,7 @@ MODULES= \
 		foundations/geometry/andre_construction_point_element.o \
 		foundations/geometry/arc_lifting_with_two_lines.o \
 		foundations/geometry/buekenhout_metz.o \
+		foundations/geometry/cubic_curve.o \
 		foundations/geometry/data.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \
@@ -276,8 +277,10 @@ MODULES= \
 		top_level/geometry/BLT_set_create.o \
 		top_level/geometry/blt_set.o \
 		top_level/geometry/choose_points_or_lines.o \
+		top_level/geometry/classify_cubic_curves.o \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
+		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/decomposition.o \
 		top_level/geometry/incidence_structure.o \
 		top_level/geometry/invariants_packing.o \

@@ -726,6 +726,53 @@ public:
 };
 
 // #############################################################################
+// classify_cubic_curves.cpp:
+// #############################################################################
+
+
+//! classification of cubic curves in PG(2,q)
+
+
+class classify_cubic_curves {
+
+public:
+
+	int q;
+	finite_field *F; // do not free
+	action *A; // do not free
+
+	cubic_curve_with_action *CCA; // do not free
+	cubic_curve *CC; // do not free
+
+	arc_generator *Arc_gen;
+
+
+
+	flag_orbits *Flag_orbits;
+
+	int nb_orbits_on_curves;
+
+	classification_step *Curves;
+
+
+
+	classify_cubic_curves();
+	~classify_cubic_curves();
+	void null();
+	void freeself();
+	void init(cubic_curve_with_action *CCA,
+			const char *starter_directory_name,
+			const char *base_fname,
+			int argc, const char **argv,
+			int verbose_level);
+	void compute_starter(int verbose_level);
+
+};
+
+
+
+
+// #############################################################################
 // classify_double_sixes.C:
 // #############################################################################
 
@@ -957,6 +1004,46 @@ void classify_trihedral_pairs_early_test_function_type2(int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
+
+
+
+// #############################################################################
+// cubic_curve_action.cpp:
+// #############################################################################
+
+//! cubic curves in projective space with automorphism group
+
+
+
+class cubic_curve_with_action {
+
+public:
+
+	int q;
+	finite_field *F; // do not free
+	int f_semilinear;
+
+	cubic_curve *CC; // do not free
+
+	action *A; // linear group PGGL(3,q)
+	action *A2; // linear group PGGL(3,q) acting on lines
+
+	int *Elt1;
+
+	action_on_homogeneous_polynomials *AonHPD_3_3;
+
+
+
+	cubic_curve_with_action();
+	~cubic_curve_with_action();
+	void null();
+	void freeself();
+	void init(cubic_curve *CC, int f_semilinear, int verbose_level);
+	void init_group(int f_semilinear,
+			int verbose_level);
+
+};
+
 
 
 // #############################################################################

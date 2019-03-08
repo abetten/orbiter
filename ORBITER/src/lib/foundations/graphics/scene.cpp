@@ -1517,6 +1517,92 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
+void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
+	const char *options, ostream &ost)
+{
+	int h;
+	numerics N;
+
+	ost << endl;
+	ost << "	object{ // quadric clipped by plane" << endl;
+	ost << endl;
+	ost << "		poly{2, <";
+	for (h = 0; h < 10; h++) {
+		N.output_double(Quadric_coords[quadric_idx * 10 + h], ost);
+		if (h < 10 - 1) {
+			ost << ", ";
+			}
+		}
+	ost << ">}" << endl;
+	ost << "		clipped_by{ plane{<";
+	N.output_double(Plane_coords[plane_idx * 4 + 0], ost);
+	ost << ",";
+	N.output_double(Plane_coords[plane_idx * 4 + 1], ost);
+	ost << ",";
+	N.output_double(Plane_coords[plane_idx * 4 + 2], ost);
+	ost << ">,";
+	N.output_double(Plane_coords[plane_idx * 4 + 3], ost);
+	ost << "}";
+	ost << "}" << endl;
+
+
+	ost << endl;
+	ost << "		" << options << " " << endl;
+	//ost << "		texture{ pigment{" << color << "}}" << endl;
+	//ost << "		pigment{Cyan*1.3}" << endl;
+	//ost << "		finish { phong albedo 0.9 phong_size 60 ambient 0.4 "
+	//"diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} " << endl;
+	ost << "	}" << endl;
+}
+
+
+void scene::draw_line_clipped_by_plane(int line_idx, int plane_idx,
+		const char *options, ostream &ost)
+{
+	int h;
+	numerics N;
+
+	ost << endl;
+	ost << "	object{ // line with clipping" << endl;
+	ost << endl;
+	ost << "	        #declare r=" << line_radius << "; " << endl;
+	//ost << "                #declare b=4;" << endl;
+	ost << endl;
+	ost << "		cylinder{<";
+	for (h = 0; h < 3; h++) {
+		N.output_double(Line_coords[line_idx * 6 + h], ost);
+		if (h < 2) {
+			ost << ", ";
+			}
+		}
+	ost << ">,<";
+	for (h = 0; h < 3; h++) {
+		N.output_double(Line_coords[line_idx * 6 + 3 + h], ost);
+		if (h < 2) {
+			ost << ", ";
+			}
+		}
+	ost << ">, r }" << endl;
+	ost << "		clipped_by{ plane{<";
+	N.output_double(Plane_coords[plane_idx * 4 + 0], ost);
+	ost << ",";
+	N.output_double(Plane_coords[plane_idx * 4 + 1], ost);
+	ost << ",";
+	N.output_double(Plane_coords[plane_idx * 4 + 2], ost);
+	ost << ">,";
+	N.output_double(Plane_coords[plane_idx * 4 + 3], ost);
+	ost << "}";
+	ost << "}" << endl;
+	ost << endl;
+	ost << "		" << options << "" << endl;
+	//ost << "		pigment{" << color << "}" << endl;
+	ost << "	}" << endl;
+}
+
+
+
+
+
 int scene::intersect_line_and_plane(int line_idx, int plane_idx, 
 	int &intersection_point_idx, 
 	int verbose_level)
