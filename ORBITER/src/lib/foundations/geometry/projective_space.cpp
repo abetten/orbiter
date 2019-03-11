@@ -1407,6 +1407,85 @@ int projective_space::determine_conic_in_plane(
 	return TRUE;
 }
 
+
+int projective_space::determine_cubic_in_plane(
+		homogeneous_polynomial_domain *Poly_3_3,
+		int nb_pts, int *Pts, int *coeff10,
+		int verbose_level)
+{
+	//verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+	int i, j, r, d;
+	int *Pt_coord;
+	int *System;
+	int *base_cols;
+
+	if (f_v) {
+		cout << "projective_space::determine_cubic_in_plane" << endl;
+		}
+	d = n + 1;
+	Pt_coord = NEW_int(nb_pts * d);
+	System = NEW_int(nb_pts * Poly_3_3->nb_monomials);
+	base_cols = NEW_int(Poly_3_3->nb_monomials);
+
+	if (f_v) {
+		cout << "projective_space::determine_cubic_in_plane list of "
+				"points:" << endl;
+		int_vec_print(cout, Pts, nb_pts);
+		cout << endl;
+		}
+	for (i = 0; i < nb_pts; i++) {
+		unrank_point(Pt_coord + i * d, Pts[i]);
+		}
+	if (f_v) {
+		cout << "projective_space::determine_cubic_in_plane matrix of "
+				"point coordinates:" << endl;
+		int_matrix_print(Pt_coord, nb_pts, d);
+		}
+
+	for (i = 0; i < nb_pts; i++) {
+		for (j = 0; j < Poly_3_3->nb_monomials; j++) {
+			System[i * Poly_3_3->nb_monomials + j] =
+				F->evaluate_monomial(
+					Poly_3_3->Monomials + j * d,
+					Pt_coord + i * d, d);
+			}
+		}
+	if (f_v) {
+		cout << "projective_space::determine_cubic_in_plane "
+				"The system:" << endl;
+		int_matrix_print(System, nb_pts, Poly_3_3->nb_monomials);
+		}
+	r = F->Gauss_simple(System, nb_pts, Poly_3_3->nb_monomials,
+		base_cols, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "projective_space::determine_cubic_in_plane "
+				"The system in RREF:" << endl;
+		int_matrix_print(System, r, Poly_3_3->nb_monomials);
+		}
+	if (f_v) {
+		cout << "projective_space::determine_cubic_in_plane "
+				"The system has rank " << r << endl;
+		}
+
+	if (r != 9) {
+		cout << "r != 9" << endl;
+		exit(1);
+	}
+	int kernel_m, kernel_n;
+
+	F->matrix_get_kernel(System, r, Poly_3_3->nb_monomials,
+		base_cols, r,
+		kernel_m, kernel_n, coeff10);
+
+
+	FREE_int(Pt_coord);
+	FREE_int(System);
+	FREE_int(base_cols);
+	return r;
+}
+
+
 void projective_space::determine_quadric_in_solid(
 	int *nine_pts_or_more,
 	int nb_pts, int *ten_coeffs, int verbose_level)
