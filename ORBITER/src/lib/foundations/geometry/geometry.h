@@ -280,6 +280,8 @@ public:
 	~cubic_curve();
 	void freeself();
 	void init(finite_field *F, int verbose_level);
+	int compute_system_in_RREF(
+			int nb_pts, int *pt_list, int verbose_level);
 
 };
 
@@ -2198,6 +2200,10 @@ public:
 		// returns FALSE is the rank of the 
 		// coefficient matrix is not 5. 
 		// TRUE otherwise.
+	int determine_cubic_in_plane(
+			homogeneous_polynomial_domain *Poly_3_3,
+			int nb_pts, int *Pts, int *coeff10,
+			int verbose_level);
 
 	void determine_quadric_in_solid(int *nine_pts_or_more, int nb_pts, 
 		int *ten_coeffs, int verbose_level);

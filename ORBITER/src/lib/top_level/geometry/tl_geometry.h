@@ -84,6 +84,7 @@ public:
 		
 	poset_classification *gen;
 
+
 	
 
 
@@ -746,9 +747,15 @@ public:
 
 	arc_generator *Arc_gen;
 
+	int nb_orbits_on_sets;
+	int nb; // number of orbits for which the rank is 9
+	int *Idx; // index set of those orbits for which the rank is 9
+
 
 
 	flag_orbits *Flag_orbits;
+
+	int *Po;
 
 	int nb_orbits_on_curves;
 
@@ -766,6 +773,10 @@ public:
 			int argc, const char **argv,
 			int verbose_level);
 	void compute_starter(int verbose_level);
+	void test_orbits(int verbose_level);
+	void downstep(int verbose_level);
+	void upstep(int verbose_level);
+	void do_classify(int verbose_level);
 
 };
 

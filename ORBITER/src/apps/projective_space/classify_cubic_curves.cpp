@@ -54,7 +54,7 @@ int main(int argc, const char **argv)
 
 	sprintf(base_fname, "cubic_curves_%d", q);
 
-
+	int f_v = (verbose_level >= 1);
 
 	int f_semilinear = FALSE;
 
@@ -91,6 +91,162 @@ int main(int argc, const char **argv)
 			verbose_level);
 
 	CCC->compute_starter(verbose_level);
+
+	CCC->test_orbits(verbose_level);
+
+	CCC->do_classify(verbose_level);
+
+	int f_with_stabilizers = TRUE;
+
+
+	if (f_v) {
+		cout << "surface_classify writing cheat sheet "
+				"on double sixes" << endl;
+		}
+	{
+	char fname[1000];
+	char title[1000];
+	char author[1000];
+	int *Pts;
+	int *type;
+
+	Pts = NEW_int(CCA->CC->P->N_points);
+	type = NEW_int(CCA->CC->P->N_lines);
+
+	sprintf(title, "Cubic Curves in PG$(2,%d)$", q);
+	sprintf(author, "");
+	sprintf(fname, "Cubic_curves_q%d.tex", q);
+
+		{
+		ofstream fp(fname);
+
+		//latex_head_easy(fp);
+		latex_head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+#if 0
+		CCC->Curves->print_latex(fp, title, f_with_stabilizers);
+#else
+		fp << "\\subsection*{" << title << "}" << endl;
+
+
+
+		{
+
+		fp << "The order of the group is ";
+		CCC->Curves->go.print_not_scientific(fp);
+		fp << "\\\\" << endl;
+
+		fp << "\\bigskip" << endl;
+		}
+
+		fp << "The group has " << CCC->Curves->nb_orbits << " orbits: \\\\" << endl;
+
+		int i;
+		longinteger_domain D;
+		longinteger_object go1, ol, Ol;
+		Ol.create(0);
+
+		for (i = 0; i < CCC->Curves->nb_orbits; i++) {
+
+			if (f_v) {
+				cout << "Curve " << i << " / " << CCC->Curves->nb_orbits << ":" << endl;
+			}
+
+			CCC->Curves->Orbit[i].gens->group_order(go1);
+
+			if (f_v) {
+				cout << "stab order " << go1 << endl;
+				}
+
+			D.integral_division_exact(CCC->Curves->go, go1, ol);
+
+			if (f_v) {
+				cout << "orbit length " << ol << endl;
+				}
+
+			int *data;
+			int *eqn;
+			int nb_pts;
+
+			data = CCC->Curves->Rep + i * CCC->Curves->representation_sz;
+			eqn = data + 9;
+
+			fp << "\\subsection*{Curve " << i << " / " << CCC->Curves->nb_orbits << "}" << endl;
+			//fp << "$" << i << " / " << CCC->Curves->nb_orbits << "$ $" << endl;
+
+			fp << "$";
+			int_set_print_tex_for_inline_text(fp,
+					data,
+					9 /*CCC->Curves->representation_sz*/);
+			fp << "_{";
+			go1.print_not_scientific(fp);
+			fp << "}$ orbit length $";
+			ol.print_not_scientific(fp);
+			fp << "$\\\\" << endl;
+
+			fp << "\\begin{eqnarray*}" << endl;
+			fp << "&&";
+
+
+			CCA->CC->Poly->enumerate_points(eqn, Pts, nb_pts,
+					verbose_level - 2);
+
+
+			CC->Poly->print_equation_with_line_breaks_tex(fp,
+					eqn,
+					5 /* nb_terms_per_line */,
+					"\\\\\n&&");
+			fp << "\\end{eqnarray*}" << endl;
+
+			fp << "The curve has " << nb_pts << " points.\\\\" << endl;
+
+			CCA->CC->P->line_intersection_type(
+					Pts, nb_pts /* set_size */,
+					type, 0 /*verbose_level*/);
+			// type[N_lines]
+
+			fp << "The line type is $";
+			classify C;
+			C.init(type, CCA->CC->P->N_lines, FALSE, 0);
+			C.print_naked_tex(fp, TRUE /* f_backwards*/);
+			fp << ".$ \\\\" << endl;
+
+
+			if (f_with_stabilizers) {
+				//ost << "Strong generators are:" << endl;
+				CCC->Curves->Orbit[i].gens->print_generators_tex(fp);
+				D.add_in_place(Ol, ol);
+				}
+
+
+			}
+
+		fp << "The overall number of objects is: " << Ol << "\\\\" << endl;
+#endif
+
+		latex_foot(fp);
+		FREE_int(Pts);
+		FREE_int(type);
+		}
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "surface_classify writing cheat sheet on "
+				"double sixes done" << endl;
+		}
+
+
+
 
 	the_end(t0);
 }

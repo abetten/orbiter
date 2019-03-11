@@ -95,5 +95,69 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 }
 
 
+int cubic_curve::compute_system_in_RREF(
+		int nb_pts, int *pt_list, int verbose_level)
+{
+	//verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+	int i, j, r;
+	int *Pts;
+	int *System;
+	int *base_cols;
+
+	if (f_v) {
+		cout << "cubic_curve::compute_system_in_RREF" << endl;
+		}
+	Pts = NEW_int(nb_pts * 3);
+	System = NEW_int(nb_pts * nb_monomials);
+	base_cols = NEW_int(nb_monomials);
+
+	if (FALSE) {
+		cout << "cubic_curve::compute_system_in_RREF list of "
+				"covered points by lines:" << endl;
+		int_matrix_print(pt_list, nb_pts, P->k);
+		}
+	for (i = 0; i < nb_pts; i++) {
+		P->unrank_point(Pts + i * 3, pt_list[i]);
+		}
+	if (f_v && FALSE) {
+		cout << "cubic_curve::compute_system_in_RREF list of "
+				"covered points in coordinates:" << endl;
+		int_matrix_print(Pts, nb_pts, 3);
+		}
+
+	for (i = 0; i < nb_pts; i++) {
+		for (j = 0; j < nb_monomials; j++) {
+			System[i * nb_monomials + j] =
+				F->evaluate_monomial(
+					Poly->Monomials + j * 3,
+					Pts + i * 3, 3);
+			}
+		}
+	if (f_v && FALSE) {
+		cout << "cubic_curve::compute_system_in_RREF "
+				"The system:" << endl;
+		int_matrix_print(System, nb_pts, nb_monomials);
+		}
+	r = F->Gauss_simple(System, nb_pts, nb_monomials,
+		base_cols, 0 /* verbose_level */);
+	if (FALSE) {
+		cout << "cubic_curve::compute_system_in_RREF "
+				"The system in RREF:" << endl;
+		int_matrix_print(System, nb_pts, nb_monomials);
+		}
+	if (f_v) {
+		cout << "cubic_curve::compute_system_in_RREF "
+				"The system has rank " << r << endl;
+		}
+	FREE_int(Pts);
+	FREE_int(System);
+	FREE_int(base_cols);
+	return r;
+}
+
+
+
+
 }}
 
