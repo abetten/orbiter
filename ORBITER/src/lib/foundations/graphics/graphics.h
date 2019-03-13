@@ -12,6 +12,36 @@ namespace foundations {
 
 
 // #############################################################################
+// animate.cpp
+// #############################################################################
+
+
+class animate {
+public:
+	scene *S;
+	const char *output_mask;
+	char fname_makefile[1000];
+	int nb_frames;
+	video_draw_options *Opt;
+	std::ofstream *fpm;
+	void (*draw_frame_callback)(animate *A, int frame,
+					int nb_frames_this_round, int round,
+					std::ostream &fp,
+					int verbose_level);
+
+	animate();
+	~animate();
+	void init(scene *S,
+			const char *output_mask,
+			int nb_frames,
+			video_draw_options *Opt,
+			int verbose_level);
+	void animate_one_round(
+		int round,
+		int verbose_level);
+};
+
+// #############################################################################
 // draw.C
 // #############################################################################
 
