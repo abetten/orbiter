@@ -130,6 +130,7 @@ MODULES= \
 		foundations/graph_theory_nauty/nauty.o \
 		foundations/graph_theory_nauty/nauty_interface.o \
 		foundations/graph_theory_nauty/schreier.o \
+		foundations/graphics/animate.o \
 		foundations/graphics/draw.o \
 		foundations/graphics/mp_graphics.o \
 		foundations/graphics/plot.o \

@@ -313,6 +313,7 @@ class polynomial_double_domain;
 class spread_tables;
 class cubic_curve;
 class partial_derivative;
+class animate;
 
 
 #ifdef MEMORY_DEBUG
