@@ -524,7 +524,8 @@ void tdo_parameter_calculation::do_row_refinement(
 			verbose_level - 2);
 		if (f_v) {
 			cout << "tdo_parameter_calculation::do_row_refinement "
-					"after do_all_row_refinements" << endl;
+					"after do_all_row_refinements, found "
+					<< nb_distributions << " refinements" << endl;
 			}
 				
 		nb_written += nb_distributions;

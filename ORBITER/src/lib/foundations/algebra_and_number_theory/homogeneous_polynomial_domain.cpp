@@ -546,18 +546,46 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
 		}
 }
 
+void homogeneous_polynomial_domain::algebraic_set(int *Eqns, int nb_eqns,
+		int *Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk, a, i;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::algebraic_set "
+				"P->N_points=" << P->N_points << endl;
+		}
+	nb_pts = 0;
+	for (rk = 0; rk < P->N_points; rk++) {
+		unrank_point(v, rk);
+		for (i = 0; i < nb_eqns; i++) {
+			a = evaluate_at_a_point(Eqns + i * nb_monomials, v);
+			if (a) {
+				break;
+			}
+		}
+		if (i == nb_eqns) {
+			Pts[nb_pts++] = rk;
+			}
+		}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::algebraic_set "
+				"done" << endl;
+		}
+}
+
 void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 		int *Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk, a;
-	//int *v;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::enumerate_points "
 				"P->N_points=" << P->N_points << endl;
 		}
-	//v = NEW_int(n);
 	nb_pts = 0;
 	for (rk = 0; rk < P->N_points; rk++) {
 		unrank_point(v, rk);
@@ -567,7 +595,6 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 			}
 		}
 
-	//FREE_int(v);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::enumerate_points "
 				"done" << endl;

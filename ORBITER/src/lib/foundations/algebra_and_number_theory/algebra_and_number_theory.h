@@ -1429,6 +1429,8 @@ public:
 	void print_equation_with_line_breaks_tex(std::ostream &ost,
 		int *coeffs, int nb_terms_per_line, 
 		const char *new_line_text);
+	void algebraic_set(int *Eqns, int nb_eqns,
+			int *Pts, int &nb_pts, int verbose_level);
 	void enumerate_points(int *coeff, int *Pts, int &nb_pts, 
 		int verbose_level);
 	int evaluate_at_a_point_by_rank(int *coeff, int pt);
@@ -1722,6 +1724,34 @@ void int_add_fractions(int at, int ab, int bt, int bb,
 void int_mult_fractions(int at, int ab, int bt, int bb, 
 	int &ct, int &cb, int verbose_level);
 
+// #############################################################################
+// partial_derivative.cpp
+// #############################################################################
+
+//! partial derivative connects two homogeneous polynomial domains
+
+
+class partial_derivative {
+
+public:
+	homogeneous_polynomial_domain *H;
+	homogeneous_polynomial_domain *Hd;
+	int variable_idx;
+	int *mapping; // [H->nb_monomials * H->nb_monomials]
+
+
+	partial_derivative();
+	~partial_derivative();
+	void freeself();
+	void null();
+	void init(homogeneous_polynomial_domain *H,
+			homogeneous_polynomial_domain *Hd,
+			int variable_idx,
+			int verbose_level);
+	void apply(int *eqn_in,
+			int *eqn_out,
+			int verbose_level);
+};
 
 // #############################################################################
 // rank_checker.cpp:

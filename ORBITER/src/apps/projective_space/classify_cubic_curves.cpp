@@ -108,9 +108,11 @@ int main(int argc, const char **argv)
 	char title[1000];
 	char author[1000];
 	int *Pts;
+	int *singular_Pts;
 	int *type;
 
 	Pts = NEW_int(CCA->CC->P->N_points);
+	singular_Pts = NEW_int(CCA->CC->P->N_points);
 	type = NEW_int(CCA->CC->P->N_lines);
 
 	sprintf(title, "Cubic Curves in PG$(2,%d)$", q);
@@ -176,6 +178,7 @@ int main(int argc, const char **argv)
 			int *data;
 			int *eqn;
 			int nb_pts;
+			int nb_singular_pts;
 
 			data = CCC->Curves->Rep + i * CCC->Curves->representation_sz;
 			eqn = data + 9;
@@ -209,6 +212,14 @@ int main(int argc, const char **argv)
 
 			fp << "The curve has " << nb_pts << " points.\\\\" << endl;
 
+
+			CC->compute_singular_points(
+					eqn, singular_Pts, nb_singular_pts,
+					verbose_level);
+
+			fp << "The curve has " << nb_singular_pts << " singular points.\\\\" << endl;
+
+
 			CCA->CC->P->line_intersection_type(
 					Pts, nb_pts /* set_size */,
 					type, 0 /*verbose_level*/);
@@ -235,6 +246,7 @@ int main(int argc, const char **argv)
 
 		latex_foot(fp);
 		FREE_int(Pts);
+		FREE_int(singular_Pts);
 		FREE_int(type);
 		}
 	cout << "Written file " << fname << " of size "
