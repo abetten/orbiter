@@ -52,6 +52,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/norm_tables.o \
 		foundations/algebra_and_number_theory/null_polarity_generator.o \
 		foundations/algebra_and_number_theory/number_theory.o \
+		foundations/algebra_and_number_theory/partial_derivative.o \
 		foundations/algebra_and_number_theory/rank_checker.o \
 		foundations/algebra_and_number_theory/subfield_structure.o \
 		foundations/algebra_and_number_theory/unipoly_domain.o \

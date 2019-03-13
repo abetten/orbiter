@@ -412,12 +412,18 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 	if (f_v) {
 		cout << "flag orbit : downstep_primary_orbit" << endl;
-		cout << "f : po" << endl;
-		for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
-			po = Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
-			cout << f << " : " << po << endl;
+		if (Flag_orbits->nb_flag_orbits < 1000) {
+			cout << "f : po" << endl;
+			for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
+				po = Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
+				cout << f << " : " << po << endl;
 			}
 		}
+		else {
+			cout << "classify_cubic_curves::upstep "
+					"too many flag orbits to print" << endl;
+		}
+	}
 	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
 
 		double progress;

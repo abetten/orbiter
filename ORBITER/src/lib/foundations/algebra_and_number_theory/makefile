@@ -26,6 +26,7 @@ MODULES = \
 	norm_tables.o \
 	null_polarity_generator.o \
 	number_theory.o \
+	partial_derivative.o \
 	rank_checker.o \
 	subfield_structure.o \
 	unipoly_domain.o \

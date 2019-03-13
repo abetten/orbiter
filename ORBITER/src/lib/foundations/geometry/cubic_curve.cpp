@@ -26,6 +26,11 @@ cubic_curve::cubic_curve()
 
 
 	Poly = NULL;
+	Poly2 = NULL;
+
+	Partials = NULL;
+
+	gradient = NULL;
 
 }
 
@@ -48,11 +53,21 @@ void cubic_curve::freeself()
 	if (Poly) {
 		FREE_OBJECT(Poly);
 	}
+	if (Poly2) {
+		FREE_OBJECT(Poly2);
+	}
+	if (Partials) {
+		FREE_OBJECTS(Partials);
+	}
+	if (gradient) {
+		FREE_int(gradient);
+	}
 }
 
 void cubic_curve::init(finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "cubic_curve::init" << endl;
@@ -83,11 +98,24 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
 
+	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	Poly2->init(F,
+			3 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+
 	nb_monomials = Poly->nb_monomials;
 	if (f_v) {
 		cout << "cubic_curve::init nb_monomials=" << nb_monomials << endl;
 		}
 
+	Partials = NEW_OBJECTS(partial_derivative, 3);
+	for (i = 0; i < 3; i++) {
+		Partials[i].init(Poly, Poly2, i, verbose_level);
+	}
+
+	gradient = NEW_int(3 * Poly2->nb_monomials);
 
 	if (f_v) {
 		cout << "cubic_curve::init done" << endl;
@@ -156,6 +184,41 @@ int cubic_curve::compute_system_in_RREF(
 	return r;
 }
 
+void cubic_curve::compute_gradient(
+		int *eqn_in, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "cubic_curve::compute_gradient" << endl;
+		}
+	for (i = 0; i < 3; i++) {
+		Partials[i].apply(eqn_in,
+				gradient + i * Poly2->nb_monomials,
+				verbose_level - 2);
+	}
+	if (f_v) {
+		cout << "cubic_curve::compute_gradient done" << endl;
+		}
+}
+
+void cubic_curve::compute_singular_points(
+		int *eqn_in, int *Pts, int &nb_pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cubic_curve::compute_singular_points" << endl;
+		}
+	compute_gradient(eqn_in, verbose_level - 2);
+	Poly2->algebraic_set(gradient, 3 /* nb_eqns */,
+			Pts, nb_pts, verbose_level);
+	if (f_v) {
+		cout << "cubic_curve::compute_singular_points done" << endl;
+		}
+}
 
 
 

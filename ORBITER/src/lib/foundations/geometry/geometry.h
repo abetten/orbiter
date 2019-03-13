@@ -274,6 +274,12 @@ public:
 
 	homogeneous_polynomial_domain *Poly;
 		// cubic polynomials in three variables
+	homogeneous_polynomial_domain *Poly2;
+		// quadratic polynomials in three variables
+
+	partial_derivative *Partials;
+
+	int *gradient; // 3 * Poly2->nb_monomials
 
 
 	cubic_curve();
@@ -282,6 +288,11 @@ public:
 	void init(finite_field *F, int verbose_level);
 	int compute_system_in_RREF(
 			int nb_pts, int *pt_list, int verbose_level);
+	void compute_gradient(
+			int *eqn_in, int verbose_level);
+	void compute_singular_points(
+			int *eqn_in, int *Pts, int &nb_pts,
+			int verbose_level);
 
 };
 
