@@ -790,6 +790,53 @@ int Jacobi_with_key_in_latex(ostream &ost,
 	exit(1);
 }
 
+int gcd_with_key_in_latex(ostream &ost,
+		int a, int b, int f_key, int verbose_level)
+//Computes gcd(a,b)
+{
+	int f_v = (verbose_level >= 1);
+	int a1, b1, q1, r1;
+
+	if (f_v) {
+		cout << "gcd_with_key_in_latex a=" << a << ", b=" << b << ":" << endl;
+		}
+	if (a > b) {
+		a1 = a;
+		b1 = b;
+	}
+	else {
+		a1 = b;
+		b1 = a;
+	}
+
+	while (TRUE) {
+
+
+		r1 = a1 % b1;
+		q1 = (a1 - r1) / b1;
+		if (f_key) {
+			ost << "=";
+			ost << " \\gcd\\big( " << b1 << ", " << r1 << "\\big) "
+					"\\qquad \\mbox{b/c} \\; " << a1 << " = " << q1
+					<< " \\cdot " << b1 << " + " << r1 << "\\\\" << endl;
+		}
+		if (f_v) {
+			cout << "gcd_with_key_in_latex  a1=" << a1 << " b1=" << b1 << " r1=" << r1 << " q1=" << q1
+					<< endl;
+			}
+		if (r1 == 0) {
+			break;
+		}
+		a1 = b1;
+		b1 = r1;
+	}
+	ost << "= " << b1 << "\\\\" << endl;
+	if (f_v) {
+		cout << "gcd_with_key_in_latex done" << endl;
+	}
+	return b1;
+}
+
 int ny2(int x, int &x1)
 //returns $n = \ny_2(x).$ 
 //Computes $x1 := \frac{x}{2^n}$. 

@@ -107,11 +107,13 @@ int main(int argc, const char **argv)
 	char fname[1000];
 	char title[1000];
 	char author[1000];
-	int *Pts;
+	int *Pts_on_curve;
+	int *inflexion_Pts;
 	int *singular_Pts;
 	int *type;
 
-	Pts = NEW_int(CCA->CC->P->N_points);
+	Pts_on_curve = NEW_int(CCA->CC->P->N_points);
+	inflexion_Pts = NEW_int(CCA->CC->P->N_points);
 	singular_Pts = NEW_int(CCA->CC->P->N_points);
 	type = NEW_int(CCA->CC->P->N_lines);
 
@@ -177,8 +179,9 @@ int main(int argc, const char **argv)
 
 			int *data;
 			int *eqn;
-			int nb_pts;
+			int nb_pts_on_curve;
 			int nb_singular_pts;
+			int nb_inflection_pts;
 
 			data = CCC->Curves->Rep + i * CCC->Curves->representation_sz;
 			eqn = data + 9;
@@ -196,11 +199,39 @@ int main(int argc, const char **argv)
 			ol.print_not_scientific(fp);
 			fp << "$\\\\" << endl;
 
+
+#if 0
+			int_vec_zero(eqn, 10);
+			// y = x^3 or X^3 - YZ^2
+			eqn[0] = 1;
+			eqn[8] = F->minus_one();
+			eqn[2] = 0;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+#if 0
+			int_vec_zero(eqn, 10);
+			// y = x^3 + x + 3
+			eqn[0] = 1;
+			eqn[2] = 3;
+			eqn[6] = 10;
+			eqn[7] = 1;
+#endif
+
+
 			fp << "\\begin{eqnarray*}" << endl;
 			fp << "&&";
 
 
-			CCA->CC->Poly->enumerate_points(eqn, Pts, nb_pts,
+			CCA->CC->Poly->enumerate_points(eqn, Pts_on_curve, nb_pts_on_curve,
 					verbose_level - 2);
 
 
@@ -210,7 +241,7 @@ int main(int argc, const char **argv)
 					"\\\\\n&&");
 			fp << "\\end{eqnarray*}" << endl;
 
-			fp << "The curve has " << nb_pts << " points.\\\\" << endl;
+			fp << "The curve has " << nb_pts_on_curve << " points.\\\\" << endl;
 
 
 			CC->compute_singular_points(
@@ -220,8 +251,19 @@ int main(int argc, const char **argv)
 			fp << "The curve has " << nb_singular_pts << " singular points.\\\\" << endl;
 
 
+			CC->compute_inflexion_points(
+					eqn,
+					Pts_on_curve, nb_pts_on_curve,
+					inflexion_Pts, nb_inflection_pts,
+					verbose_level);
+
+			fp << "The curve has " << nb_inflection_pts << " inflexion points: $";
+			int_vec_print(fp, inflexion_Pts, nb_inflection_pts);
+			fp << "$\\\\" << endl;
+
+
 			CCA->CC->P->line_intersection_type(
-					Pts, nb_pts /* set_size */,
+					Pts_on_curve, nb_pts_on_curve /* set_size */,
 					type, 0 /*verbose_level*/);
 			// type[N_lines]
 
@@ -238,6 +280,64 @@ int main(int argc, const char **argv)
 				D.add_in_place(Ol, ol);
 				}
 
+#if 1
+			if (nb_inflection_pts == 3) {
+				int Basis[9];
+				int Basis_t[9];
+				int Basis_inv[9];
+				int transformed_eqn[10];
+
+				CC->P->unrank_point(Basis, inflexion_Pts[0]);
+				CC->P->unrank_point(Basis + 3, inflexion_Pts[1]);
+
+				CC->P->F->extend_basis(2, 3, Basis,
+					verbose_level);
+
+				//CC->P->unrank_point(Basis + 6, inflexion_Pts[2]);
+				CC->F->transpose_matrix(Basis, Basis_t, 3, 3);
+				CC->F->invert_matrix(Basis, Basis_inv, 3);
+				CC->Poly->substitute_linear(eqn, transformed_eqn,
+						Basis /* int *Mtx_inv */, 0 /* verbose_level */);
+
+
+				fp << "The transformed equation is:\\\\" << endl;
+				fp << "\\begin{eqnarray*}" << endl;
+				fp << "&&";
+
+
+				CCA->CC->Poly->enumerate_points(transformed_eqn, Pts_on_curve, nb_pts_on_curve,
+						verbose_level - 2);
+
+
+				CC->Poly->print_equation_with_line_breaks_tex(fp,
+						transformed_eqn,
+						5 /* nb_terms_per_line */,
+						"\\\\\n&&");
+				fp << "\\end{eqnarray*}" << endl;
+
+				fp << "The transformed curve has " << nb_pts_on_curve << " points.\\\\" << endl;
+
+				CC->compute_singular_points(
+						transformed_eqn, singular_Pts, nb_singular_pts,
+						verbose_level);
+
+				fp << "The curve has " << nb_singular_pts << " singular points.\\\\" << endl;
+
+
+				CC->compute_inflexion_points(
+						transformed_eqn,
+						Pts_on_curve, nb_pts_on_curve,
+						inflexion_Pts, nb_inflection_pts,
+						verbose_level);
+
+				fp << "The transformed curve has " << nb_inflection_pts << " inflexion points: $";
+				int_vec_print(fp, inflexion_Pts, nb_inflection_pts);
+				fp << "$\\\\" << endl;
+
+
+
+			}
+#endif
 
 			}
 
@@ -245,7 +345,8 @@ int main(int argc, const char **argv)
 #endif
 
 		latex_foot(fp);
-		FREE_int(Pts);
+		FREE_int(Pts_on_curve);
+		FREE_int(inflexion_Pts);
 		FREE_int(singular_Pts);
 		FREE_int(type);
 		}
