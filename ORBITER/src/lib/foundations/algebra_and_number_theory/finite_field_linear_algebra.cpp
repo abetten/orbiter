@@ -1275,6 +1275,49 @@ after:
 		}
 }
 
+void finite_field::extend_basis(int m, int n, int *Basis,
+	int verbose_level)
+// Assumes that Basis is n x n, with the first m rows filled in.
+// Assumes that Basis has rank m.
+// Fills in the bottom n - m rows of Basis to extend to a Basis of F_q^n
+// Does not change the first m rows of Basis.
+{
+	int f_v = (verbose_level >= 1);
+	int *B;
+	int *base_cols;
+	int *embedding;
+	int i, j, rk;
+
+	if (f_v) {
+		cout << "finite_field::extend_basis" << endl;
+		cout << "matrix:" << endl;
+		print_integer_matrix_width(cout, Basis, m, n, n, log10_of_q);
+		}
+	int_vec_zero(Basis + m * n, (n - m) * n);
+	B = NEW_int(n * n);
+	base_cols = NEW_int(n);
+	embedding = NEW_int(n);
+	int_vec_zero(B, n * n);
+	int_vec_copy(Basis, B, m * n);
+	rk = base_cols_and_embedding(m, n, B,
+		base_cols, embedding, verbose_level);
+	if (rk != m) {
+		cout << "finite_field::extend_basis rk != m" << endl;
+		exit(1);
+	}
+	for (i = rk; i < n; i++) {
+		j = embedding[i - rk];
+		Basis[i * n + j] = 1;
+	}
+	FREE_int(B);
+	FREE_int(base_cols);
+	FREE_int(embedding);
+
+	if (f_v) {
+		cout << "finite_field::extend_basis done" << endl;
+	}
+}
+
 int finite_field::base_cols_and_embedding(int m, int n, int *A, 
 	int *base_cols, int *embedding, int verbose_level)
 // returns the rank rk of the matrix.

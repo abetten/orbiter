@@ -21,6 +21,7 @@ all: collect.out \
 	prepare_frames.out \
 	read_orbiter_file.out \
 	run_blt.out  \
+	run_lifting.out  \
 	scheduler.out \
 	split_spreadsheet.out \
 	split.out 
@@ -77,6 +78,9 @@ read_orbiter_file.out:  read_orbiter_file.o
 
 run_blt.out:  run_blt.o
 	$(DISCRETA_CPP)  run_blt.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+run_lifting.out:  run_lifting.o
+	$(DISCRETA_CPP)  run_lifting.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 scheduler.out:  scheduler.o
 	$(DISCRETA_CPP)  scheduler.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

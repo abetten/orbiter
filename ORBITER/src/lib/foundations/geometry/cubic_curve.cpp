@@ -220,6 +220,114 @@ void cubic_curve::compute_singular_points(
 		}
 }
 
+void cubic_curve::compute_inflexion_points(
+		int *eqn_in,
+		int *Pts_on_curve, int nb_pts_on_curve,
+		int *Pts, int &nb_pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, h, a;
+	int T[3];
+	int v[3];
+	int w[3];
+	int Basis[9];
+	int Basis2[6];
+	int eqn_restricted_to_line[4];
+
+	if (f_v) {
+		cout << "cubic_curve::compute_inflexion_points" << endl;
+		}
+	compute_gradient(eqn_in, verbose_level - 2);
+
+
+	nb_pts = 0;
+
+	for (h = 0; h < nb_pts_on_curve; h++) {
+		a = Pts_on_curve[h];
+		Poly->unrank_point(v, a);
+
+		if (f_v) {
+			cout << "cubic_curve::compute_inflexion_points testing point "
+					<< h << " / " << nb_pts_on_curve << " = " << a << " = ";
+			int_vec_print(cout, v, 3);
+			cout << endl;
+		}
+		for (i = 0; i < 3; i++) {
+			T[i] = Poly2->evaluate_at_a_point(
+					gradient + i * Poly2->nb_monomials, v);
+		}
+		for (i = 0; i < 3; i++) {
+			if (T[i]) {
+				break;
+			}
+		}
+		if (i < 3) {
+			// now we know that the tangent line at point a exists:
+
+			//int_vec_copy(v, Basis, 3);
+			int_vec_copy(T, Basis, 3);
+			if (f_v) {
+				cout << "cubic_curve::compute_inflexion_points "
+						"before F->perp_standard:" << endl;
+				int_matrix_print(Basis, 1, 3);
+			}
+			F->perp_standard(3, 1, Basis, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "cubic_curve::compute_inflexion_points "
+						"after F->perp_standard:" << endl;
+				int_matrix_print(Basis, 3, 3);
+			}
+			// test if the first basis vector is a multiple of v:
+			int_vec_copy(v, Basis2, 3);
+			int_vec_copy(Basis + 3, Basis2 + 3, 3);
+			if (F->rank_of_rectangular_matrix(Basis2,
+					2, 3, 0 /*verbose_level*/) == 1) {
+				int_vec_copy(Basis + 6, w, 3);
+			}
+			else {
+				int_vec_copy(Basis + 3, w, 3);
+
+			}
+			Poly->substitute_line(
+					eqn_in, eqn_restricted_to_line,
+					v /*int *Pt1_coeff*/, w /*int *Pt2_coeff*/,
+					0 /*verbose_level*/);
+				// coeff_in[nb_monomials], coeff_out[degree + 1]
+			if (f_v) {
+				cout << "cubic_curve::compute_inflexion_points "
+						"after Poly->substitute_line:" << endl;
+				int_vec_print(cout, eqn_restricted_to_line, 4);
+				cout << endl;
+			}
+			if (eqn_restricted_to_line[0] == 0 &&
+					eqn_restricted_to_line[1] == 0 &&
+					eqn_restricted_to_line[2] == 0) {
+				if (f_v) {
+					cout << "cubic_curve::compute_inflexion_points "
+							"inflexion point" << endl;
+				}
+				Pts[nb_pts++] = a;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "cubic_curve::compute_inflexion_points "
+						"the tangent line does not exist" << endl;
+			}
+		}
+	} // next h
+
+	if (f_v) {
+		cout << "cubic_curve::compute_inflexion_points "
+				"we found " << nb_pts << " inflexion points" << endl;
+	}
+
+	if (f_v) {
+		cout << "cubic_curve::compute_inflexion_points done" << endl;
+		}
+}
+
 
 
 }}

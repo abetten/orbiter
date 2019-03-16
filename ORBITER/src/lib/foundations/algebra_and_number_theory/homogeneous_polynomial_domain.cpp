@@ -112,6 +112,7 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int m;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init" << endl;
@@ -127,9 +128,13 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 
 	make_monomials(verbose_level);
 	
-	coeff2 = NEW_int(nb_monomials);
-	coeff3 = NEW_int(nb_monomials);
-	coeff4 = NEW_int(nb_monomials);
+	m = MAXIMUM(nb_monomials, degree + 1);
+		// substitute_semilinear needs [nb_monomials]
+		// substitute_line needs [degree + 1]
+
+	coeff2 = NEW_int(m);
+	coeff3 = NEW_int(m);
+	coeff4 = NEW_int(m);
 	factors = NEW_int(degree);
 
 	my_affine = NEW_int(degree);
@@ -775,6 +780,154 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 	int_vec_copy(coeff3, coeff_out, nb_monomials);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_semilinear "
+				"done" << endl;
+		}
+}
+
+void homogeneous_polynomial_domain::substitute_line(
+	int *coeff_in, int *coeff_out,
+	int *Pt1_coeff, int *Pt2_coeff,
+	int verbose_level)
+// coeff_in[nb_monomials], coeff_out[degree + 1]
+{
+	int f_v = (verbose_level >= 1);
+	int rk, b, c, i, j, idx;
+	int *A;
+	int *V;
+	int *Mtx;
+	int my_nb_affine, wt;
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::substitute_"
+				"line" << endl;
+		}
+
+	my_nb_affine = i_power_j(2, degree);
+
+	Mtx = NEW_int(n * 2);
+
+	for (i = 0; i < n; i++) {
+		Mtx[i * 2 + 0] = Pt1_coeff[i];
+		Mtx[i * 2 + 1] = Pt2_coeff[i];
+	}
+
+	int_vec_copy(coeff_in, coeff4, nb_monomials);
+
+
+	int_vec_zero(coeff3, degree + 1);
+
+	for (i = 0; i < nb_monomials; i++) {
+		c = coeff4[i];
+		if (c == 0) {
+			continue;
+			}
+
+#if 0
+		cout << "homogeneous_polynomial_domain::substitute_"
+				"line monomial " << c << " * ";
+		print_monomial(cout, i);
+		cout << endl;
+#endif
+
+		V = Variables + i * degree;
+			// a list of the indices of the variables
+			// which appear in the monomial
+			// (possibly with repeats)
+			// Example: the monomial x_0^3 becomes 0,0,0
+
+#if 0
+		cout << "variables: ";
+		int_vec_print(cout, V, degree);
+		cout << endl;
+
+		cout << "Mtx:" << endl;
+		int_matrix_print(Mtx, n, 2);
+#endif
+
+		int_vec_zero(coeff2, degree + 1);
+		for (rk = 0; rk < my_nb_affine; rk++) {
+
+			A = my_affine;
+			AG_element_unrank(2 /* q */, my_affine, 1, degree, rk);
+					// sequence of length degree over the alphabet  0,1.
+
+			wt = 0;
+			for (j = 0; j < degree; j++) {
+				if (my_affine[j]) {
+					wt++;
+				}
+			}
+			for (j = 0; j < degree; j++) {
+				//factors[j] = Mtx_inv[V[j] * n + A[j]];
+				factors[j] = Mtx[V[j] * 2 + A[j]];
+				}
+
+			b = F->product_n(factors, degree);
+
+#if 0
+			if (Affine_to_monomial) {
+				idx = Affine_to_monomial[a];
+				}
+			else {
+				int_vec_zero(v, n);
+				for (j = 0; j < degree; j++) {
+					a = Affine[i * degree + j];
+					v[a]++;
+					}
+				idx = index_of_monomial(v);
+				}
+#else
+			idx = wt;
+#endif
+
+#if 0
+			cout << "affine " << a << " / " << nb_affine << " : ";
+			int_vec_print(cout, A, 3);
+			cout << " factors ";
+			int_vec_print(cout, factors, 3);
+			cout << " b=" << b << " idx=" << idx << endl;
+#endif
+			coeff2[idx] = F->add(coeff2[idx], b);
+			}
+		for (j = 0; j <= degree; j++) {
+			coeff2[j] = F->mult(coeff2[j], c);
+			}
+
+#if 0
+		cout << "homogeneous_polynomial_domain::substitute_line "
+				"monomial " << c << " * ";
+		print_monomial(cout, i);
+		cout << " yields:" << endl;
+		int_vec_print(cout, coeff2, nb_monomials);
+		cout << endl;
+#endif
+
+		for (j = 0; j <= degree; j++) {
+			coeff3[j] = F->add(coeff2[j], coeff3[j]);
+			}
+		}
+#if 0
+	cout << "homogeneous_polynomial_domain::substitute_line "
+			"input:" << endl;
+	int_vec_print(cout, coeff_in, nb_monomials);
+	cout << endl;
+	cout << "homogeneous_polynomial_domain::substitute_line "
+			"output:" << endl;
+	int_vec_print(cout, coeff3, nb_monomials);
+	cout << endl;
+#endif
+
+
+
+
+
+	int_vec_copy(coeff3, coeff_out, degree + 1);
+
+	FREE_int(Mtx);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::substitute_line "
 				"done" << endl;
 		}
 }

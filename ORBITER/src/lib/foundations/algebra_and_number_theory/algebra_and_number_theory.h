@@ -333,6 +333,7 @@ public:
 		int len, int idx, int verbose_level);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
+	void extend_basis(int m, int n, int *Basis, int verbose_level);
 	int base_cols_and_embedding(int m, int n, int *A, 
 		int *base_cols, int *embedding, int verbose_level);
 		// returns the rank rk of the matrix.
@@ -1440,6 +1441,10 @@ public:
 	void substitute_semilinear(int *coeff_in, int *coeff_out, 
 		int f_semilinear, int frob_power, int *Mtx_inv, 
 		int verbose_level);
+	void substitute_line(
+		int *coeff_in, int *coeff_out,
+		int *Pt1_coeff, int *Pt2_coeff,
+		int verbose_level);
 	int is_zero(int *coeff);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
@@ -1712,6 +1717,8 @@ int primitive_root(int p, int verbose_level);
 int Legendre(int a, int p, int verbose_level);
 int Jacobi(int a, int m, int verbose_level);
 int Jacobi_with_key_in_latex(std::ostream &ost, int a, int m, int verbose_level);
+int gcd_with_key_in_latex(std::ostream &ost,
+		int a, int b, int f_key, int verbose_level);
 int ny2(int x, int &x1);
 int ny_p(int n, int p);
 int sqrt_mod_simple(int a, int p);
