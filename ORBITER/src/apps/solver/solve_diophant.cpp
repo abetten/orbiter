@@ -63,6 +63,7 @@ int main(int argc, char **argv)
 	int RHS_row_value[1000];
 	int f_betten = FALSE;
 	int f_McKay = FALSE;
+	int f_DLX = FALSE;
 	int nb_xmax = 0;
 	int xmax_value[1000];
 	int xmax_variable[1000];
@@ -182,6 +183,10 @@ int main(int argc, char **argv)
 		else if (strcmp(argv[i], "-McKay") == 0) {
 			f_McKay = TRUE;
 			cout << "-McKay " << endl;
+			}
+		else if (strcmp(argv[i], "-DLX") == 0) {
+			f_DLX = TRUE;
+			cout << "-DLX " << endl;
 			}
 		else if (strcmp(argv[i], "-xmax") == 0) {
 			xmax_variable[nb_xmax] = atoi(argv[++i]);
@@ -389,10 +394,15 @@ int main(int argc, char **argv)
 			Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
 			Dio->nb_steps_betten = nb_backtrack_nodes;
 			}
-		else {
+		else if (f_DLX) {
 			cout << "solving with DLX" << endl;
 			Dio->solve_all_DLX_with_RHS(f_tree, fname_tree, verbose_level - 2);
 			}
+		else {
+			cout << "please specify how to solve the system, "
+					"using one of -McKay -betten -DLX" << endl;
+			exit(1);
+		}
 		cout << "Found " << Dio->_resultanz << " solutions with "
 				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
