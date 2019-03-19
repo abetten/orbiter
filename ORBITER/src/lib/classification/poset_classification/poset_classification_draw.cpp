@@ -1576,10 +1576,12 @@ void poset_classification::make_graph(int depth,
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
 			if (lvl) {
-				sprintf(text2, "%d;%s", the_set[lvl - 1], text);
+				sprintf(text2, "%d", the_set[lvl - 1]);
+				//sprintf(text2, "%d;%s", the_set[lvl - 1], text);
 			}
 			else {
-				sprintf(text2, "$\\emptyset$;%s", text);
+				sprintf(text2, "$\\emptyset$");
+				//sprintf(text2, "$\\emptyset$;%s", text);
 			}
 			LG->add_text(lvl, po, text2, 0/*verbose_level*/);
 

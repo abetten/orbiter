@@ -194,9 +194,27 @@ void cubic_curve::compute_gradient(
 		cout << "cubic_curve::compute_gradient" << endl;
 		}
 	for (i = 0; i < 3; i++) {
+		if (f_v) {
+			cout << "cubic_curve::compute_gradient i=" << i << endl;
+			}
+		if (f_v) {
+			cout << "cubic_curve::compute_gradient eqn_in=";
+			int_vec_print(cout, eqn_in, Poly->nb_monomials);
+			cout << " = ";
+			Poly->print_equation(cout, eqn_in);
+			cout << endl;
+			}
 		Partials[i].apply(eqn_in,
 				gradient + i * Poly2->nb_monomials,
 				verbose_level - 2);
+		if (f_v) {
+			cout << "cubic_curve::compute_gradient partial=";
+			int_vec_print(cout, gradient + i * Poly2->nb_monomials,
+					Poly2->nb_monomials);
+			cout << " = ";
+			Poly2->print_equation(cout, gradient + i * Poly2->nb_monomials);
+			cout << endl;
+			}
 	}
 	if (f_v) {
 		cout << "cubic_curve::compute_gradient done" << endl;
@@ -204,17 +222,68 @@ void cubic_curve::compute_gradient(
 }
 
 void cubic_curve::compute_singular_points(
-		int *eqn_in, int *Pts, int &nb_pts,
+		int *eqn_in,
+		int *Pts_on_curve, int nb_pts_on_curve,
+		int *Pts, int &nb_pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int h, i, a, rk;
+	int nb_eqns = 3;
+	int v[3];
 
 	if (f_v) {
 		cout << "cubic_curve::compute_singular_points" << endl;
 		}
-	compute_gradient(eqn_in, verbose_level - 2);
-	Poly2->algebraic_set(gradient, 3 /* nb_eqns */,
-			Pts, nb_pts, verbose_level);
+	compute_gradient(eqn_in, verbose_level);
+
+	nb_pts = 0;
+
+	for (h = 0; h < nb_pts_on_curve; h++) {
+		if (f_vv) {
+			cout << "cubic_curve::compute_singular_points "
+					"h=" << h << " / " << nb_pts_on_curve << endl;
+			}
+		rk = Pts_on_curve[h];
+		if (f_vv) {
+			cout << "cubic_curve::compute_singular_points "
+					"rk=" << rk << endl;
+			}
+		Poly->unrank_point(v, rk);
+		if (f_vv) {
+			cout << "cubic_curve::compute_singular_points "
+					"v=";
+			int_vec_print(cout, v, 3);
+			cout << endl;
+			}
+		for (i = 0; i < nb_eqns; i++) {
+			if (f_vv) {
+				cout << "cubic_curve::compute_singular_points "
+						"gradient i=" << i << " / " << nb_eqns << endl;
+				}
+			if (f_vv) {
+				cout << "cubic_curve::compute_singular_points "
+						"gradient " << i << " = ";
+				int_vec_print(cout,
+						gradient + i * Poly2->nb_monomials,
+						Poly2->nb_monomials);
+				cout << endl;
+				}
+			a = Poly2->evaluate_at_a_point(
+					gradient + i * Poly2->nb_monomials, v);
+			if (f_vv) {
+				cout << "cubic_curve::compute_singular_points "
+						"value = " << a << endl;
+				}
+			if (a) {
+				break;
+			}
+		}
+		if (i == nb_eqns) {
+			Pts[nb_pts++] = rk;
+			}
+	}
 	if (f_v) {
 		cout << "cubic_curve::compute_singular_points done" << endl;
 		}
@@ -287,7 +356,14 @@ void cubic_curve::compute_inflexion_points(
 			}
 			else {
 				int_vec_copy(Basis + 3, w, 3);
-
+			}
+			int_vec_copy(v, Basis2, 3);
+			int_vec_copy(w, Basis2 + 3, 3);
+			if (F->rank_of_rectangular_matrix(Basis,
+					2, 3, 0 /*verbose_level*/) != 2) {
+				cout << "cubic_curve::compute_inflexion_points rank of "
+						"line spanned by v and w is not two" << endl;
+				exit(1);
 			}
 			Poly->substitute_line(
 					eqn_in, eqn_restricted_to_line,
@@ -305,7 +381,7 @@ void cubic_curve::compute_inflexion_points(
 					eqn_restricted_to_line[2] == 0) {
 				if (f_v) {
 					cout << "cubic_curve::compute_inflexion_points "
-							"inflexion point" << endl;
+							"found an inflexion point " << a << endl;
 				}
 				Pts[nb_pts++] = a;
 			}

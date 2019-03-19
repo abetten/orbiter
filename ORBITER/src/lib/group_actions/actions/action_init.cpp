@@ -497,7 +497,7 @@ void action::init_permutation_group_from_generators(int degree,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int i;
 	
 	if (f_v) {
@@ -569,10 +569,18 @@ void action::init_permutation_group_from_generators(int degree,
 		}
 	
 
+	if (f_vv) {
+		cout << "action::init_permutation_group_from_generators "
+				"before generators_to_strong_generators" << endl;
+		}
 	generators_to_strong_generators(this, 
 		f_target_go, target_go, 
 		generators, Strong_gens, 
 		verbose_level);
+	if (f_vv) {
+		cout << "action::init_permutation_group_from_generators "
+				"after generators_to_strong_generators" << endl;
+		}
 
 	sims *G;
 

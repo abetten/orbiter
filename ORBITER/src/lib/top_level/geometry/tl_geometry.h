@@ -777,6 +777,13 @@ public:
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void do_classify(int verbose_level);
+	int recognize(int *eqn_in,
+			int *Elt, int &iso_type, int verbose_level);
+	void family1_recognize(int *Iso_type, int verbose_level);
+	void family2_recognize(int *Iso_type, int verbose_level);
+	void familyE_recognize(int *Iso_type, int verbose_level);
+	void familyH_recognize(int *Iso_type, int verbose_level);
+	void familyG_recognize(int *Iso_type, int verbose_level);
 
 };
 

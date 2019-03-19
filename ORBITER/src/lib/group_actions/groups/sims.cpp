@@ -3129,7 +3129,7 @@ void sims::random_schreier_generator(int verbose_level)
 		cout << "sims::random_schreier_generator "
 				"after the while loop" << endl;
 		cout << "cosetrep:" << endl;
-		A->element_print(cosetrep, cout);
+		//A->element_print(cosetrep, cout);
 		cout << "maps " << pt << " to " << pt1
 				<< " : checking: " << pt << " -> ";
 		pt1b = A->element_image_of(pt, cosetrep, FALSE);
@@ -3141,14 +3141,14 @@ void sims::random_schreier_generator(int verbose_level)
 		cout << "sims::random_schreier_generator "
 				"after the while loop" << endl;
 		cout << "gen=" << endl;
-		A->element_print(gen, cout);
+		//A->element_print(gen, cout);
 		}
 	A->element_mult(cosetrep, gen, schreier_gen1, 0);
 	if (f_vv) {
 		cout << "sims::random_schreier_generator "
 				"after the while loop" << endl;
 		cout << "cosetrep * gen=" << endl;
-		A->element_print(schreier_gen1, cout);
+		//A->element_print(schreier_gen1, cout);
 		}
 	pt2 = A->element_image_of(pt, schreier_gen1, 0);
 

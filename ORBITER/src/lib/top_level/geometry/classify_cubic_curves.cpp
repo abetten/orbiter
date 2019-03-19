@@ -733,6 +733,423 @@ void classify_cubic_curves::do_classify(int verbose_level)
 }
 
 
+int classify_cubic_curves::recognize(int *eqn_in,
+		int *Elt, int &iso_type, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, r;
+	int idx_set[9];
+	int set[9];
+	int canonical_set[9];
+	int *Elt1;
+	int *Pts;
+	int *type;
+	int ret;
+
+	if (f_v) {
+		cout << "classify_cubic_curves::recognize" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Pts = NEW_int(CCA->CC->P->N_points);
+	type = NEW_int(CCA->CC->P->N_lines);
+
+
+	int nb_pts;
+	int N;
+	int orbit_index;
+	int f2;
+
+	CCA->CC->Poly->enumerate_points(eqn_in, Pts, nb_pts,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "classify_cubic_curves::recognize"
+				<< " we found a curve with " << nb_pts
+				<< " points" << endl;
+		}
+	CCA->CC->P->line_intersection_type(
+		Pts, nb_pts /* set_size */, type, 0 /*verbose_level*/);
+	// type[N_lines]
+
+	ret = TRUE;
+	for (j = 0; j < CCA->CC->P->N_lines; j++) {
+		if (type[j] > 3) {
+			ret = FALSE;
+			break;
+		}
+	}
+
+	if (ret) {
+		N = int_n_choose_k(nb_pts, 9);
+
+
+		for (i = 0; i < N; i++) {
+			if (f_v) {
+				cout << "classify_cubic_curves::recognize"
+						<< " i=" << i << " / " << N << endl;
+				}
+
+			unrank_k_subset(i, idx_set, nb_pts, 9);
+			for (j = 0; j < 9; j++) {
+				set[j] = Pts[idx_set[j]];
+			}
+
+			r = CC->compute_system_in_RREF(9,
+					set, 0 /*verbose_level*/);
+
+			if (r < 9) {
+				continue;
+			}
+
+			CCA->CC->P->line_intersection_type(
+				set, 9 /* set_size */, type, 0 /*verbose_level*/);
+			// type[N_lines]
+
+			for (j = 0; j < CCA->CC->P->N_lines; j++) {
+				if (type[j] > 3) {
+					break;
+				}
+			}
+			if (j < CCA->CC->P->N_lines) {
+				continue;
+			}
+
+
+			if (f_v) {
+				cout << "classify_cubic_curves::recognize"
+						<< " i=" << i << " / " << N
+						<< " before trace_set" << endl;
+				}
+
+
+			orbit_index = Arc_gen->gen->trace_set(
+					set, 9, 9,
+					canonical_set,
+					Elt,
+					verbose_level);
+
+
+			if (f_v) {
+				cout << "classify_cubic_curves::recognize"
+						<< " i=" << i << " / " << N
+						<< " after trace_set, "
+						"orbit_index=" << orbit_index << endl;
+				}
+
+			if (!int_vec_search(Po, Flag_orbits->nb_flag_orbits,
+					orbit_index, f2)) {
+				cout << "classify_cubic_curves::recognize "
+						"cannot find orbit " << orbit_index
+						<< " in Po" << endl;
+				cout << "Po=";
+				int_vec_print(cout, Po, Flag_orbits->nb_flag_orbits);
+				cout << endl;
+				exit(1);
+				}
+
+			if (f_v) {
+				cout << "classify_cubic_curves::recognize"
+						<< " i=" << i << " / " << N
+						<< " after trace_set, "
+						"f2=" << f2 << endl;
+				}
+
+			iso_type = Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit;
+
+			if (f_v) {
+				cout << "classify_cubic_curves::recognize"
+						<< " i=" << i << " / " << N
+						<< " after trace_set, "
+						"iso_type=" << iso_type << endl;
+				}
+
+			if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
+				A->element_mult(Elt,
+								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+								Elt1,
+								0);
+				A->element_move(Elt1,
+								Elt,
+								0);
+			}
+			break;
+
+		}
+		if (i == N) {
+			cout << "classify_cubic_curves::recognize "
+					"could not identify the curve" << endl;
+			ret = FALSE;
+		}
+		else {
+			ret = TRUE;
+		}
+	}
+
+
+	FREE_int(Elt1);
+	FREE_int(Pts);
+	FREE_int(type);
+
+	if (f_v) {
+		cout << "classify_cubic_curves::recognize done" << endl;
+		}
+	return ret;
+}
+
+void classify_cubic_curves::family1_recognize(int *Iso_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	int eqn[10];
+	int e, iso_type;
+
+	if (f_v) {
+		cout << "classify_cubic_curves::family1_recognize" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	for (e = 0; e < F->q; e++) {
+
+#if 1
+		int_vec_zero(eqn, 10);
+		// 0 = x0x1(x0 + x1) + ex2^3
+		// 0 = x0^2x1 + x0x1^2 + ex2^3
+		// 0 = X^2Y + XY^2 + eZ^3
+
+		eqn[3] = 1;
+		eqn[5] = 1;
+		eqn[2] = e;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+		if (recognize(eqn,
+				Elt, iso_type, verbose_level)) {
+			Iso_type[e] = iso_type;
+		}
+		else {
+			Iso_type[e] = -1;
+		}
+
+	}
+
+	FREE_int(Elt);
+}
+
+void classify_cubic_curves::family2_recognize(int *Iso_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	int eqn[10];
+	int e, iso_type;
+
+	if (f_v) {
+		cout << "classify_cubic_curves::family2_recognize" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	for (e = 0; e < F->q; e++) {
+
+#if 1
+		int_vec_zero(eqn, 10);
+		// 0 = x0x1(x0 + x1 + x2) + ex2^3
+		// 0 = x0^2x1 + x0x1^2 + x1x2x3 + ex2^3
+		// 0 = X^2Y + XY^2 + XYZ + eZ^3
+
+		eqn[3] = 1;
+		eqn[5] = 1;
+		eqn[2] = e;
+		eqn[9] = 1;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+		if (recognize(eqn,
+				Elt, iso_type, verbose_level)) {
+			Iso_type[e] = iso_type;
+		}
+		else {
+			Iso_type[e] = -1;
+		}
+
+	}
+
+	FREE_int(Elt);
+}
+
+void classify_cubic_curves::familyE_recognize(int *Iso_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	int eqn[10];
+	int d, iso_type;
+
+	if (f_v) {
+		cout << "classify_cubic_curves::familyE_recognize" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	for (d = 0; d < F->q; d++) {
+
+#if 1
+		int_vec_zero(eqn, 10);
+		// 0 = x2^2x1 + x0^3 - dx1^3
+		// 0 = Z^2Y + X^3 - dY^3
+
+		eqn[0] = 1;
+		eqn[1] = F->negate(d);
+		eqn[8] = 1;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+		if (recognize(eqn,
+				Elt, iso_type, verbose_level)) {
+			Iso_type[d] = iso_type;
+		}
+		else {
+			Iso_type[d] = -1;
+		}
+
+	}
+
+	FREE_int(Elt);
+}
+
+void classify_cubic_curves::familyH_recognize(int *Iso_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	int eqn[10];
+	int e, iso_type;
+
+	if (f_v) {
+		cout << "classify_cubic_curves::familyH_recognize" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	for (e = 0; e < F->q; e++) {
+
+#if 1
+		int_vec_zero(eqn, 10);
+		// 0 = x2^2x1 + x0^3 + ex0x1^2
+		// 0 = Z^2Y + X^3 + eXY^2
+
+		eqn[0] = 1;
+		eqn[5] = e;
+		eqn[8] = 1;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+		if (recognize(eqn,
+				Elt, iso_type, verbose_level)) {
+			Iso_type[e] = iso_type;
+		}
+		else {
+			Iso_type[e] = -1;
+		}
+
+	}
+
+	FREE_int(Elt);
+}
+
+
+void classify_cubic_curves::familyG_recognize(int *Iso_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	int eqn[10];
+	int c, d, iso_type;
+
+	if (f_v) {
+		cout << "classify_cubic_curves::familyG_recognize" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	for (c = 0; c < F->q; c++) {
+		for (d = 0; d < F->q; d++) {
+
+#if 1
+			int_vec_zero(eqn, 10);
+			// 0 = x2^2x1 + x0^3 + cx0x1^2 + dx1^3
+			// 0 = Z^2Y + X^3 + cXY^2 + dY^3
+
+			eqn[0] = 1;
+			eqn[2] = d;
+			eqn[5] = c;
+			eqn[8] = 1;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+			if (recognize(eqn,
+					Elt, iso_type, verbose_level)) {
+				Iso_type[c * q + d] = iso_type;
+			}
+			else {
+				Iso_type[c * q + d] = -1;
+			}
+		}
+
+	}
+
+	FREE_int(Elt);
+}
+
 
 
 }}

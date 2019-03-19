@@ -291,7 +291,9 @@ public:
 	void compute_gradient(
 			int *eqn_in, int verbose_level);
 	void compute_singular_points(
-			int *eqn_in, int *Pts, int &nb_pts,
+			int *eqn_in,
+			int *Pts_on_curve, int nb_pts_on_curve,
+			int *Pts, int &nb_pts,
 			int verbose_level);
 	void compute_inflexion_points(
 			int *eqn_in,

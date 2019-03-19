@@ -159,6 +159,18 @@ int main(int argc, const char **argv)
 		longinteger_object go1, ol, Ol;
 		Ol.create(0);
 
+		vector<string> References;
+		int *Ago;
+		int *Nb_points;
+		int *Nb_singular_points;
+		int *Nb_inflexions;
+		Ago = NEW_int(CCC->Curves->nb_orbits);
+		Nb_points = NEW_int(CCC->Curves->nb_orbits);
+		Nb_singular_points = NEW_int(CCC->Curves->nb_orbits);
+		Nb_inflexions = NEW_int(CCC->Curves->nb_orbits);
+
+
+
 		for (i = 0; i < CCC->Curves->nb_orbits; i++) {
 
 			if (f_v) {
@@ -170,6 +182,8 @@ int main(int argc, const char **argv)
 			if (f_v) {
 				cout << "stab order " << go1 << endl;
 				}
+
+			Ago[i] = go1.as_int();
 
 			D.integral_division_exact(CCC->Curves->go, go1, ol);
 
@@ -234,6 +248,8 @@ int main(int argc, const char **argv)
 			CCA->CC->Poly->enumerate_points(eqn, Pts_on_curve, nb_pts_on_curve,
 					verbose_level - 2);
 
+			Nb_points[i] = nb_pts_on_curve;
+
 
 			CC->Poly->print_equation_with_line_breaks_tex(fp,
 					eqn,
@@ -245,10 +261,13 @@ int main(int argc, const char **argv)
 
 
 			CC->compute_singular_points(
-					eqn, singular_Pts, nb_singular_pts,
+					eqn,
+					Pts_on_curve, nb_pts_on_curve,
+					singular_Pts, nb_singular_pts,
 					verbose_level);
 
 			fp << "The curve has " << nb_singular_pts << " singular points.\\\\" << endl;
+			Nb_singular_points[i] = nb_singular_pts;
 
 
 			CC->compute_inflexion_points(
@@ -256,6 +275,9 @@ int main(int argc, const char **argv)
 					Pts_on_curve, nb_pts_on_curve,
 					inflexion_Pts, nb_inflection_pts,
 					verbose_level);
+
+
+			Nb_inflexions[i] = nb_inflection_pts;
 
 			fp << "The curve has " << nb_inflection_pts << " inflexion points: $";
 			int_vec_print(fp, inflexion_Pts, nb_inflection_pts);
@@ -318,7 +340,9 @@ int main(int argc, const char **argv)
 				fp << "The transformed curve has " << nb_pts_on_curve << " points.\\\\" << endl;
 
 				CC->compute_singular_points(
-						transformed_eqn, singular_Pts, nb_singular_pts,
+						transformed_eqn,
+						Pts_on_curve, nb_pts_on_curve,
+						singular_Pts, nb_singular_pts,
 						verbose_level);
 
 				fp << "The curve has " << nb_singular_pts << " singular points.\\\\" << endl;
@@ -339,9 +363,181 @@ int main(int argc, const char **argv)
 			}
 #endif
 
-			}
 
+		} // next i
 		fp << "The overall number of objects is: " << Ol << "\\\\" << endl;
+
+
+
+
+		fp << "summary of the stabilizer orders:\\\\" << endl;
+
+
+		for (i = 0; i < CCC->Curves->nb_orbits; i++) {
+			string ref("");
+			References.push_back(ref);
+		}
+
+
+		int *Iso_type1;
+		int *Iso_type2;
+		int *Iso_typeE;
+		int *Iso_typeH;
+		int *Iso_typeG;
+		int e, c, d;
+
+		Iso_type1 = NEW_int(F->q);
+		Iso_type2 = NEW_int(F->q);
+		Iso_typeE = NEW_int(F->q);
+		Iso_typeH = NEW_int(F->q);
+		Iso_typeG = NEW_int(F->q * F->q);
+		CCC->family1_recognize(Iso_type1, verbose_level);
+		CCC->family2_recognize(Iso_type2, verbose_level);
+		CCC->familyE_recognize(Iso_typeE, verbose_level);
+		CCC->familyH_recognize(Iso_typeH, verbose_level);
+		CCC->familyG_recognize(Iso_typeG, verbose_level);
+
+		fp << "Families 1, 2, E, H: \\\\" << endl;
+		for (e = 0; e < F->q; e++) {
+			fp << "e=" << e
+					<< " iso1=" << Iso_type1[e]
+					<< " iso2=" << Iso_type2[e]
+					<< " isoE=" << Iso_typeE[e]
+					<< " isoH=" << Iso_typeH[e]
+					<< " \\\\" << endl;
+		}
+		for (c = 1; c < F->q; c++) {
+			for (d = 1; d < F->q; d++) {
+				fp << "c=" << c << " d=" << d
+						<< " isoG=" << Iso_typeG[c * F->q + d]
+						<< " \\\\" << endl;
+			}
+		}
+		for (e = 0; e < F->q; e++) {
+			if (Iso_type1[e] != -1) {
+				string ref;
+				char str[1000];
+				ref = References[Iso_type1[e]];
+				if (strlen(ref.c_str())) {
+					ref.append(",");
+				}
+				sprintf(str, "F1_{%d}", e);
+				ref.append(str);
+				References[Iso_type1[e]] = ref;
+			}
+		}
+		for (e = 0; e < F->q; e++) {
+			if (Iso_type2[e] != -1) {
+				string ref;
+				char str[1000];
+				ref = References[Iso_type2[e]];
+				if (strlen(ref.c_str())) {
+					ref.append(",");
+				}
+				sprintf(str, "F2_{%d}", e);
+				ref.append(str);
+				References[Iso_type2[e]] = ref;
+			}
+		}
+		for (e = 0; e < F->q; e++) {
+			if (Iso_typeE[e] != -1) {
+				string ref;
+				char str[1000];
+				ref = References[Iso_typeE[e]];
+				if (strlen(ref.c_str())) {
+					ref.append(",");
+				}
+				sprintf(str, "E_{%d}", e);
+				ref.append(str);
+				References[Iso_typeE[e]] = ref;
+			}
+		}
+		for (e = 0; e < F->q; e++) {
+			if (Iso_typeH[e] != -1) {
+				string ref;
+				char str[1000];
+				ref = References[Iso_typeH[e]];
+				if (strlen(ref.c_str())) {
+					ref.append(",");
+				}
+				sprintf(str, "H_{%d}", e);
+				ref.append(str);
+				References[Iso_typeH[e]] = ref;
+			}
+		}
+		for (c = 1; c < F->q; c++) {
+			for (d = 1; d < F->q; d++) {
+				int iso;
+
+				iso = Iso_typeG[c * F->q + d];
+				if (iso == -1) {
+					continue;
+				}
+				string ref;
+				char str[1000];
+				ref = References[iso];
+				if (strlen(ref.c_str())) {
+					ref.append(",");
+				}
+				sprintf(str, "G_{%d,%d}", c,d);
+				ref.append(str);
+				References[iso] = ref;
+			}
+		}
+
+
+
+		classify C;
+
+		C.init(Ago, CCC->Curves->nb_orbits, FALSE, 0);
+		fp << "Distribution: $(";
+		C.print_naked_tex(fp, TRUE /* f_backwards */);
+		fp << ")$\\\\" << endl;
+
+
+		fp << "$$" << endl;
+		fp << "\\begin{array}{|c||c|c|c|c|c|}";
+		fp << "\\hline";
+		fp << "\\mbox{Curve} & ";
+		fp << "\\mbox{Ago} & ";
+		fp << "\\mbox{Pts} & ";
+		fp << "\\mbox{s. Pts} & ";
+		fp << "\\mbox{Infl} & ";
+		fp << "\\mbox{References} \\\\";
+		fp << "\\hline";
+		for (i = 0; i < CCC->Curves->nb_orbits; i++) {
+			fp << i;
+			fp << " & " << Ago[i];
+			fp << " & " << Nb_points[i];
+			fp << " & " << Nb_singular_points[i];
+			fp << " & " << Nb_inflexions[i];
+			fp << " & " << References[i];
+			fp << "\\\\";
+		}
+		fp << "\\hline";
+		fp << "\\end{array}" << endl;
+		fp << "$$" << endl;
+
+		fp << "with canonical forms " << endl;
+		fp << "\\begin{eqnarray*}" << endl;
+		fp << "F1_e &=& X^2Y + XY^2 + eZ^3 \\\\" << endl;
+		fp << "F2_e &=& X^2Y + XY^2 + XYZ + eZ^3 \\\\" << endl;
+		fp << "E_d &=& Z^2Y + X^3 - dY^3 \\\\" << endl;
+		fp << "H_e &=& Z^2Y + X^3 + eXY^2 \\\\" << endl;
+		fp << "G_{c,d} &=&  Z^2Y + X^3 + cXY^2 + dY^3 \\\\" << endl;
+		fp << "\\end{eqnarray*}" << endl;
+		fp << "for $c,d,e \\in {\\mathbb F}_{" << F->q << "}$ \\\\" << endl;
+
+		FREE_int(Iso_type1);
+		FREE_int(Iso_type2);
+		FREE_int(Iso_typeE);
+		FREE_int(Iso_typeH);
+		FREE_int(Iso_typeG);
+		FREE_int(Ago);
+		FREE_int(Nb_points);
+		FREE_int(Nb_singular_points);
+		FREE_int(Nb_inflexions);
+
 #endif
 
 		latex_foot(fp);

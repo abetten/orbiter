@@ -198,7 +198,7 @@ int main(int argc, const char **argv)
 		}
 
 
-	cout << "We have created the following surface:" << endl;
+	cout << "We have created the surface " << SC->label_txt << ":" << endl;
 	cout << "$$" << endl;
 	SC->Surf->print_equation_tex(cout, SC->coeffs);
 	cout << endl;
@@ -212,9 +212,36 @@ int main(int argc, const char **argv)
 	if (SC->f_has_lines) {
 		cout << "The lines are:" << endl;
 		SC->Surf->Gr->print_set_tex(cout, SC->Lines, 27);
-		}
 
 	
+		surface_object *SO;
+
+		SO = NEW_OBJECT(surface_object);
+		if (f_v) {
+			cout << "before SO->init" << endl;
+			}
+		SO->init(SC->Surf, SC->Lines, SC->coeffs,
+				FALSE /*f_find_double_six_and_rearrange_lines */, verbose_level);
+		if (f_v) {
+			cout << "after SO->init" << endl;
+			}
+
+		char fname_points[1000];
+
+		sprintf(fname_points, "surface_%s_points.txt", SC->label_txt);
+		write_set_to_file(fname_points,
+				SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
+		cout << "Written file " << fname_points << " of size "
+				<< file_size(fname_points) << endl;
+	}
+	else {
+		cout << "The surface " << SC->label_txt
+				<< " does not come with lines" << endl;
+	}
+
+
+
+
 	if (SC->f_has_group) {
 
 		cout << "creating surface_object_with_action object" << endl;
