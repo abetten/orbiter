@@ -103,9 +103,9 @@ MODULES= \
 		foundations/geometry/point_line.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/spread_tables.o \
-		foundations/geometry/surface_lines.o \
-		foundations/geometry/surface_io.o \
-		foundations/geometry/surface.o \
+		foundations/geometry/surface_domain_lines.o \
+		foundations/geometry/surface_domain_io.o \
+		foundations/geometry/surface_domain.o \
 		foundations/geometry/surface_object.o \
 		foundations/geometry/tdo_data.o \
 		foundations/geometry/tdo_scheme.o \

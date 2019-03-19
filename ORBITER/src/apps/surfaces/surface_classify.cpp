@@ -36,7 +36,7 @@ int main(int argc, const char **argv)
 
 	{
 	finite_field *F;
-	surface *Surf;
+	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	linear_group_description *Descr;
 	linear_group *LG;
@@ -223,7 +223,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "surface_classify before Surf->init" << endl;
 		}
-	Surf = NEW_OBJECT(surface);
+	Surf = NEW_OBJECT(surface_domain);
 	Surf->init(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_classify after Surf->init" << endl;

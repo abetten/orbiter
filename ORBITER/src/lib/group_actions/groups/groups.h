@@ -319,7 +319,7 @@ public:
 	void general_linear_action_from_the_right(
 		int *v, int *A, int *vA, int verbose_level);
 	void substitute_surface_eqation(int *Elt,
-			int *coeff_in, int *coeff_out, surface *Surf,
+			int *coeff_in, int *coeff_out, surface_domain *Surf,
 			int verbose_level);
 	void GL_one(int *Elt);
 	void GL_one_internal(int *Elt);

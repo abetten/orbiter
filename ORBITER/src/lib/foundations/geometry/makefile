@@ -36,9 +36,9 @@ MODULES = \
 	point_line.o \
 	projective_space.o \
 	spread_tables.o \
-	surface_lines.o \
-	surface_io.o \
-	surface.o \
+	surface_domain_lines.o \
+	surface_domain_io.o \
+	surface_domain.o \
 	surface_object.o \
 	tdo_scheme.o \
 	tdo_data.o \

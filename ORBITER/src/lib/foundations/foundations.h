@@ -282,7 +282,7 @@ class generators_symplectic_group;
 class flag;
 class W3q; // added March 4, 2011
 class knarr; // added March 30, 2011
-class surface; // added July 26, 2016
+class surface_domain; // added July 26, 2016
 class homogeneous_polynomial_domain;
 // added Sept 9, 2016
 class eckardt_point;

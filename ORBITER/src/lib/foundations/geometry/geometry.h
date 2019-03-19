@@ -134,7 +134,7 @@ public:
 	int q;
 	finite_field *F; // do not free
 
-	surface *Surf; // do not free
+	surface_domain *Surf; // do not free
 
 	//surface_with_action *Surf_A;
 
@@ -165,7 +165,7 @@ public:
 	void null();
 	void freeself();
 	void create_surface(
-		surface *Surf,
+		surface_domain *Surf,
 		int *Arc6, int line1, int line2,
 		int verbose_level);
 };
@@ -529,7 +529,7 @@ public:
 	void init3(int ij, int kl, int mn);
 	void init6(int i, int j, int k, int l, int m, int n);
 	void init_by_rank(int rk);
-	void three_lines(surface *S, int *three_lines);
+	void three_lines(surface_domain *S, int *three_lines);
 	int rank();
 	void unrank(int rk, int &i, int &j, int &k, int &l, int &m, int &n);
 
@@ -2503,13 +2503,13 @@ public:
 };
 
 // #############################################################################
-// surface.C
+// surface_domain.C
 // #############################################################################
 
 //! cubic surfaces in PG(3,q) with 27 lines
 
 
-class surface {
+class surface_domain {
 
 public:
 	int q;
@@ -2636,8 +2636,8 @@ public:
 		// [27 * 27]
 
 
-	surface();
-	~surface();
+	surface_domain();
+	~surface_domain();
 	void freeself();
 	void null();
 	void init(finite_field *F, int verbose_level);
@@ -2930,7 +2930,7 @@ class surface_object {
 public:
 	int q;
 	finite_field *F;
-	surface *Surf;
+	surface_domain *Surf;
 
 	int Lines[27];
 	int eqn[20];
@@ -2994,9 +2994,9 @@ public:
 	~surface_object();
 	void freeself();
 	void null();
-	int init_equation(surface *Surf, int *eqn, int verbose_level);
+	int init_equation(surface_domain *Surf, int *eqn, int verbose_level);
 		// returns FALSE if the surface does not have 27 lines
-	void init(surface *Surf, int *Lines, int *eqn, 
+	void init(surface_domain *Surf, int *Lines, int *eqn,
 		int f_find_double_six_and_rearrange_lines, int verbose_level);
 	void compute_properties(int verbose_level);
 	void find_double_six_and_rearrange_lines(int *Lines, int verbose_level);

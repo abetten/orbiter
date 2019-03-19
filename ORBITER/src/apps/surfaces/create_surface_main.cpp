@@ -87,7 +87,7 @@ int main(int argc, const char **argv)
 	int q;
 	int f_semilinear;
 	finite_field *F;
-	surface *Surf;
+	surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	q = Descr->get_q();
@@ -108,7 +108,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "create_surface_main before Surf->init" << endl;
 		}
-	Surf = NEW_OBJECT(surface);
+	Surf = NEW_OBJECT(surface_domain);
 	Surf->init(F, verbose_level - 1);
 	if (f_v) {
 		cout << "create_surface_main after Surf->init" << endl;

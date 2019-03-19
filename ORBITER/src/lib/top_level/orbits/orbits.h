@@ -49,7 +49,7 @@ public:
 	int f_list;
 	int f_arc;
 	int f_surface;
-	surface *Surf;
+	surface_domain *Surf;
 	int f_KM;
 
 	int f_orbits_t;

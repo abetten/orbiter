@@ -518,7 +518,7 @@ public:
 	void print_restricted_action_on_the_set(int verbose_level);
 	void test_if_group_acts(int verbose_level);
 	
-	void init_surface(surface *Surf, action *A, action *A2, 
+	void init_surface(surface_domain *Surf, action *A, action *A2,
 		int q, int no, int verbose_level);
 };
 

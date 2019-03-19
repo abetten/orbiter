@@ -138,9 +138,9 @@ void finite_field::cheat_sheet_PG(int n,
 		}
 
 	if (f_surface) {
-		surface *S;
+		surface_domain *S;
 
-		S = NEW_OBJECT(surface);
+		S = NEW_OBJECT(surface_domain);
 		S->init(this, verbose_level + 2);
 
 		f << "\\clearpage" << endl << endl;

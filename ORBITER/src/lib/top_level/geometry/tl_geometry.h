@@ -215,7 +215,7 @@ public:
 	int q;
 	finite_field *F; // do not free
 
-	surface *Surf; // do not free
+	surface_domain *Surf; // do not free
 
 	surface_with_action *Surf_A;
 
@@ -808,7 +808,7 @@ public:
 	linear_group *LG; // do not free
 
 	surface_with_action *Surf_A; // do not free
-	surface *Surf; // do not free
+	surface_domain *Surf; // do not free
 
 
 	// pulled from surface_classify_wedge:
@@ -960,7 +960,7 @@ public:
 	action *A; // do not free
 
 	surface_with_action *Surf_A; // do not free
-	surface *Surf; // do not free
+	surface_domain *Surf; // do not free
 
 	strong_generators *gens_type1;
 	strong_generators *gens_type2;
@@ -2143,7 +2143,7 @@ public:
 	action *A; // the action of PGL(4,q) on points
 	action *A2; // the action on the wedge product
 
-	surface *Surf;
+	surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	int *Elt0;
@@ -2245,7 +2245,7 @@ public:
 
 	int f_semilinear;
 	
-	surface *Surf;
+	surface_domain *Surf;
 
 	surface_with_action *Surf_A;
 	
@@ -2324,7 +2324,7 @@ public:
 	int q;
 	finite_field *F; // do not free
 
-	surface *Surf; // do not free
+	surface_domain *Surf; // do not free
 	surface_with_action *Surf_A; // do not free
 
 	surface_object *SO; // do not free
@@ -2406,7 +2406,7 @@ public:
 	finite_field *F; // do not free
 	int f_semilinear;
 	
-	surface *Surf; // do not free
+	surface_domain *Surf; // do not free
 
 	action *A; // linear group PGGL(4,q)
 	action *A2; // linear group PGGL(4,q) acting on lines
@@ -2428,7 +2428,7 @@ public:
 	~surface_with_action();
 	void null();
 	void freeself();
-	void init(surface *Surf, int f_semilinear, int verbose_level);
+	void init(surface_domain *Surf, int f_semilinear, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	int create_double_six_safely(
 		int *five_lines, int transversal_line, 
@@ -2469,7 +2469,7 @@ public:
 	action *A4; // the action of PGL(4,q) on points
 	action *A3; // the action of PGL(3,q) on points
 
-	surface *Surf;
+	surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	six_arcs_not_on_a_conic *Six_arcs;
