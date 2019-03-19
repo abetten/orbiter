@@ -370,7 +370,8 @@ void draw_vertex_callback_standard(layered_graph *LG,
 				}
 			}
 		else {
-			cout << "does not have vector data" << endl;
+			cout << "does not have vector data, label = '"
+					<< LG->L[layer].Nodes[node].label << "'" << endl;
 			strcpy(str, LG->L[layer].Nodes[node].label);
 			}
 		}

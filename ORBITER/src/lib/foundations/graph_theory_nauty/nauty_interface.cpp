@@ -29,7 +29,7 @@ using namespace std;
 
 
 
-#define MAXN 20000
+#define MAXN 100000
 #include "nauty.h"
 
 #define MAX_WORKSPACE 50000

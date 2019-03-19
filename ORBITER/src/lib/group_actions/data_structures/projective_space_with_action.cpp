@@ -336,15 +336,28 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		cout << "projective_space_with_action::set_stabilizer "
 				"calling nauty_interface_matrix_int" << endl;
 		}
+
+	int t0, t1, dt, tps;
+	double delta_t_in_sec;
+
+	tps = os_ticks_per_second();
+	t0 = os_ticks();
+
 	nauty_interface_matrix_int(Incma, nb_rows, nb_cols, 
 		labeling, partition, 
 		Aut, Aut_counter, 
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
+
+	t1 = os_ticks();
+	dt = t1 - t0;
+	delta_t_in_sec = (double) t1 / (double) dt;
+
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer "
 				"done with nauty_interface_matrix_int, "
-				"Ago=" << Ago << endl;
+				"Ago=" << Ago << " dt=" << dt
+				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
 		}
 
 	int *Incma_out;
@@ -721,12 +734,33 @@ void projective_space_with_action::canonical_labeling(
 		cout << "projective_space_with_action::canonical_labeling "
 				"calling nauty_interface_matrix_int" << endl;
 		}
+
+
+	int t0, t1, dt, tps;
+	double delta_t_in_sec;
+
+	tps = os_ticks_per_second();
+	t0 = os_ticks();
+
 	nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
 		canonical_labeling, partition,
 		Aut, Aut_counter,
 		Base, Base_length,
 		Transversal_length, Ago, verbose_level - 3);
+
+	t1 = os_ticks();
+	dt = t1 - t0;
+	delta_t_in_sec = (double) t1 / (double) dt;
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"done with nauty_interface_matrix_int, "
+				"Ago=" << Ago << " dt=" << dt
+				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
+		}
+
+
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"done with nauty_interface_matrix_int, "
@@ -857,16 +891,28 @@ strong_generators
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object calling nauty_interface_matrix_int" << endl;
 		}
+	int t0, t1, dt, tps;
+	double delta_t_in_sec;
+
+	tps = os_ticks_per_second();
+	t0 = os_ticks();
+
 	nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
 		canonical_labeling, partition,
 		Aut, Aut_counter, 
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
+
+	t1 = os_ticks();
+	dt = t1 - t0;
+	delta_t_in_sec = (double) dt / (double) tps;
+
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object done with nauty_interface_matrix_int, "
-				"Ago=" << Ago << endl;
+				"Ago=" << Ago << " dt=" << dt
+				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
 		}
 	if (verbose_level > 5) {
 		int h;
@@ -975,10 +1021,10 @@ strong_generators
 		}
 	ago.create(Ago);
 	A_perm->init_permutation_group_from_generators(N, 
-		TRUE, ago, 
+		FALSE, ago,
 		Aut_counter, Aut, 
 		Base_length, Base,
-		0 /*verbose_level - 2 */);
+		verbose_level);
 
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer_"
@@ -1016,7 +1062,7 @@ strong_generators
 		if (f_vv) {
 			cout << "projective_space_with_action::set_stabilizer_"
 					"of_object strong generator " << g << ":" << endl;
-			A_perm->element_print(gens->ith(g), cout);
+			//A_perm->element_print(gens->ith(g), cout);
 			cout << endl;
 			}
 		

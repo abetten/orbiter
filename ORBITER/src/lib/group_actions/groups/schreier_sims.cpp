@@ -228,7 +228,7 @@ void schreier_sims::get_generator_internal(
 	if (f_vvv) {
 		cout << "schreier_sims::get_generator_internal "
 				"random element chosen:" << endl;
-		GA->element_print_quick(Elt, cout);
+		//GA->element_print_quick(Elt, cout);
 		cout << endl;
 		}
 }
@@ -255,7 +255,7 @@ void schreier_sims::get_generator_external(
 	if (FALSE /*f_vvv*/) {
 		cout << "schreier_sims::get_generator_external "
 				"we have chosen the following generator" << endl;
-		GA->element_print_quick(Elt, cout);
+		//GA->element_print_quick(Elt, cout);
 		cout << endl;
 		}
 }
@@ -427,7 +427,7 @@ void schreier_sims::create_group(int verbose_level)
 			cout << "schreier_sims::create_group "
 					"iteration " << iteration
 					<< " generator:" << endl;
-			GA->element_print_quick(Elt1, cout);
+			//GA->element_print_quick(Elt1, cout);
 			}
 
 		if (f_vvvv) {
@@ -442,7 +442,7 @@ void schreier_sims::create_group(int verbose_level)
 				if (f_vvvv) {
 					cout << "schreier_sims::create_group: "
 							"residue = " << endl;
-					GA->element_print_quick(Elt2, cout);
+					//GA->element_print_quick(Elt2, cout);
 					cout << endl;
 					}
 				}
@@ -480,7 +480,7 @@ void schreier_sims::create_group(int verbose_level)
 							if (f_vvvv) {
 								cout << "schreier_sims::create_group: "
 										"residue = " << endl;
-								KA->element_print_quick(Elt3, cout);
+								//KA->element_print_quick(Elt3, cout);
 								cout << endl;
 								K->print(FALSE);
 								K->print_basic_orbits();
@@ -500,7 +500,7 @@ void schreier_sims::create_group(int verbose_level)
 									"residue = " << endl;
 							cout << "but the element is not the "
 									"identity, something is wrong" << endl;
-							GA->element_print(Elt3, cout);
+							//GA->element_print(Elt3, cout);
 							cout << endl;
 							compute_group_orders();
 							print_group_orders();
