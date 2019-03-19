@@ -18,17 +18,17 @@ namespace orbiter {
 namespace foundations {
 
 
-void surface::print_equation(ostream &ost, int *coeffs)
+void surface_domain::print_equation(ostream &ost, int *coeffs)
 {
 	Poly3_4->print_equation(ost, coeffs);
 }
 
-void surface::print_equation_tex(ostream &ost, int *coeffs)
+void surface_domain::print_equation_tex(ostream &ost, int *coeffs)
 {
 	Poly3_4->print_equation(ost, coeffs);
 }
 
-void surface::latex_double_six(ostream &ost, int *double_six)
+void surface_domain::latex_double_six(ostream &ost, int *double_six)
 {
 	int i, j, a, u, v;
 
@@ -59,7 +59,7 @@ void surface::latex_double_six(ostream &ost, int *double_six)
 	ost << "\\end{array}" << endl;
 }
 
-void surface::make_spreadsheet_of_lines_in_three_kinds(
+void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 	spreadsheet *&Sp,
 	int *Wedge_rk, int *Line_rk, int *Klein_rk, int nb_lines,
 	int verbose_level)
@@ -74,7 +74,7 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 	char **Text_klein;
 
 	if (f_v) {
-		cout << "surface::make_spreadsheet_of_lines_in_three_kinds" << endl;
+		cout << "surface_domain::make_spreadsheet_of_lines_in_three_kinds" << endl;
 		}
 
 	Text_wedge = NEW_pchar(nb_lines);
@@ -134,12 +134,12 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 
 
 	if (f_v) {
-		cout << "surface::make_spreadsheet_of_lines_"
+		cout << "surface_domain::make_spreadsheet_of_lines_"
 				"in_three_kinds done" << endl;
 		}
 }
 
-void surface::print_line(ostream &ost, int rk)
+void surface_domain::print_line(ostream &ost, int rk)
 {
 	if (rk < 6) {
 		ost << "a_" << rk + 1 << endl;
@@ -156,7 +156,7 @@ void surface::print_line(ostream &ost, int rk)
 		}
 }
 
-void surface::print_Steiner_and_Eckardt(ostream &ost)
+void surface_domain::print_Steiner_and_Eckardt(ostream &ost)
 {
 	ost << "\\clearpage" << endl << endl;
 	ost << "\\section*{Eckardt Points}" << endl;
@@ -172,13 +172,13 @@ void surface::print_Steiner_and_Eckardt(ostream &ost)
 
 }
 
-void surface::latex_abstract_trihedral_pair(ostream &ost, int t_idx)
+void surface_domain::latex_abstract_trihedral_pair(ostream &ost, int t_idx)
 {
 	latex_trihedral_pair(ost, Trihedral_pairs + t_idx * 9,
 		Trihedral_to_Eckardt + t_idx * 6);
 }
 
-void surface::latex_trihedral_pair(ostream &ost, int *T, int *TE)
+void surface_domain::latex_trihedral_pair(ostream &ost, int *T, int *TE)
 {
 	int i, j;
 
@@ -202,7 +202,7 @@ void surface::latex_trihedral_pair(ostream &ost, int *T, int *TE)
 	ost << "\\end{array}" << endl;
 }
 
-void surface::latex_table_of_trihedral_pairs(ostream &ost)
+void surface_domain::latex_table_of_trihedral_pairs(ostream &ost)
 {
 	int i;
 
@@ -228,10 +228,10 @@ void surface::latex_table_of_trihedral_pairs(ostream &ost)
 
 	print_trihedral_pairs(ost);
 
-	cout << "surface::latex_table_of_trihedral_pairs done" << endl;
+	cout << "surface_domain::latex_table_of_trihedral_pairs done" << endl;
 }
 
-void surface::print_trihedral_pairs(ostream &ost)
+void surface_domain::print_trihedral_pairs(ostream &ost)
 {
 	int i, j;
 
@@ -268,7 +268,7 @@ void surface::print_trihedral_pairs(ostream &ost)
 }
 
 
-void surface::latex_table_of_Eckardt_points(ostream &ost)
+void surface_domain::latex_table_of_Eckardt_points(ostream &ost)
 {
 	int i, j;
 	int three_lines[3];
@@ -294,7 +294,7 @@ void surface::latex_table_of_Eckardt_points(ostream &ost)
 	cout << "surface::latex_table_of_Eckardt_points done" << endl;
 }
 
-void surface::latex_table_of_tritangent_planes(ostream &ost)
+void surface_domain::latex_table_of_tritangent_planes(ostream &ost)
 {
 	int i, j;
 	int three_lines[3];
@@ -314,10 +314,10 @@ void surface::latex_table_of_tritangent_planes(ostream &ost)
 		ost << "$\\\\" << endl;
 		}
 	ost << "\\end{multicols}" << endl;
-	cout << "surface::latex_table_of_tritangent_planes done" << endl;
+	cout << "surface_domain::latex_table_of_tritangent_planes done" << endl;
 }
 
-void surface::print_web_of_cubic_curves(ostream &ost,
+void surface_domain::print_web_of_cubic_curves(ostream &ost,
 	int *Web_of_cubic_curves)
 // curves[45 * 10]
 {
@@ -328,7 +328,7 @@ void surface::print_web_of_cubic_curves(ostream &ost,
 	ost << "$$" << endl;
 }
 
-void surface::print_equation_in_trihedral_form(ostream &ost,
+void surface_domain::print_equation_in_trihedral_form(ostream &ost,
 	int *the_six_plane_equations, int lambda, int *the_equation)
 {
 	ost << "\\begin{align*}" << endl;
@@ -359,7 +359,7 @@ void surface::print_equation_in_trihedral_form(ostream &ost,
 	ost << "\\end{align*}" << endl;
 }
 
-void surface::print_equation_wrapped(ostream &ost, int *the_equation)
+void surface_domain::print_equation_wrapped(ostream &ost, int *the_equation)
 {
 	ost << "\\begin{align*}" << endl;
 	ost << "0 & = " << endl;
@@ -368,7 +368,7 @@ void surface::print_equation_wrapped(ostream &ost, int *the_equation)
 	ost << "\\end{align*}" << endl;
 }
 
-void surface::print_lines_tex(ostream &ost, int *Lines)
+void surface_domain::print_lines_tex(ostream &ost, int *Lines)
 {
 	int i;
 
@@ -387,12 +387,12 @@ void surface::print_lines_tex(ostream &ost, int *Lines)
 
 }
 
-void surface::print_clebsch_P(ostream &ost)
+void surface_domain::print_clebsch_P(ostream &ost)
 {
 	int h, i, f_first;
 
 	if (!f_has_large_polynomial_domains) {
-		cout << "surface::print_clebsch_P f_has_large_polynomial_"
+		cout << "surface_domain::print_clebsch_P f_has_large_polynomial_"
 				"domains is FALSE" << endl;
 		//exit(1);
 		return;
@@ -453,7 +453,7 @@ void surface::print_clebsch_P(ostream &ost)
 	ost << "\\end{align*}" << endl;
 }
 
-void surface::print_clebsch_P_matrix_only(ostream &ost)
+void surface_domain::print_clebsch_P_matrix_only(ostream &ost)
 {
 	int i, j;
 
@@ -478,12 +478,12 @@ void surface::print_clebsch_P_matrix_only(ostream &ost)
 	ost << "\\right]" << endl;
 }
 
-void surface::print_clebsch_cubics(ostream &ost)
+void surface_domain::print_clebsch_cubics(ostream &ost)
 {
 	int i, h;
 
 	if (!f_has_large_polynomial_domains) {
-		cout << "surface::print_clebsch_cubics "
+		cout << "surface_domain::print_clebsch_cubics "
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		exit(1);
 		}
@@ -504,7 +504,7 @@ void surface::print_clebsch_cubics(ostream &ost)
 		}
 }
 
-void surface::print_system(ostream &ost, int *system)
+void surface_domain::print_system(ostream &ost, int *system)
 {
 	int i, j;
 
@@ -542,7 +542,7 @@ void surface::print_system(ostream &ost, int *system)
 	ost << "$$" << endl;
 }
 
-void surface::print_trihedral_pair_in_dual_coordinates_in_GAP(
+void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 	int *F_planes_rank, int *G_planes_rank)
 {
 	int i;
@@ -569,7 +569,7 @@ void surface::print_trihedral_pair_in_dual_coordinates_in_GAP(
 	cout << "];";
 }
 
-void surface::print_polynomial_domains(ostream &ost)
+void surface_domain::print_polynomial_domains(ostream &ost)
 {
 	ost << "The polynomial domain Poly3\\_4 is:" << endl;
 	Poly3_4->print_monomial_ordering(ost);
@@ -588,7 +588,7 @@ void surface::print_polynomial_domains(ostream &ost)
 
 }
 
-void surface::print_line_labelling(ostream &ost)
+void surface_domain::print_line_labelling(ostream &ost)
 {
 	int j, h;
 
@@ -613,7 +613,7 @@ void surface::print_line_labelling(ostream &ost)
 	ost << "$$" << endl;
 }
 
-void surface::print_set_of_lines_tex(ostream &ost, int *v, int len)
+void surface_domain::print_set_of_lines_tex(ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -627,7 +627,7 @@ void surface::print_set_of_lines_tex(ostream &ost, int *v, int len)
 	ost << "\\}";
 }
 
-void surface::latex_table_of_clebsch_maps(ostream &ost)
+void surface_domain::latex_table_of_clebsch_maps(ostream &ost)
 {
 	int e, line, j, l1, l2, t1, t2, t3, t4, c1, c2, cnt;
 	int three_lines[3];
@@ -635,7 +635,7 @@ void surface::latex_table_of_clebsch_maps(ostream &ost)
 	//int intersecting_lines[10];
 
 	cnt = 0;
-	cout << "surface::latex_table_of_clebsch_maps" << endl;
+	cout << "surface_domain::latex_table_of_clebsch_maps" << endl;
 	//ost << "\\begin{multicols}{2}" << endl;
 	for (e = 0; e < nb_Eckardt_points; e++) {
 
@@ -833,10 +833,10 @@ void surface::latex_table_of_clebsch_maps(ostream &ost)
 		ost << endl;
 	} // e
 	//ost << "\\end{multicols}" << endl;
-	cout << "surface::latex_table_of_clebsch_maps done" << endl;
+	cout << "surface_domain::latex_table_of_clebsch_maps done" << endl;
 }
 
-void surface::print_half_double_sixes_in_GAP()
+void surface_domain::print_half_double_sixes_in_GAP()
 {
 	int i, j;
 

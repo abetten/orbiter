@@ -212,7 +212,7 @@ void surface_object::null()
 	Line_intersection_pt_idx = NULL;
 }
 
-int surface_object::init_equation(surface *Surf, int *eqn, 
+int surface_object::init_equation(surface_domain *Surf, int *eqn,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -316,7 +316,7 @@ int surface_object::init_equation(surface *Surf, int *eqn,
 
 }
 
-void surface_object::init(surface *Surf, 
+void surface_object::init(surface_domain *Surf,
 	int *Lines, int *eqn, 
 	int f_find_double_six_and_rearrange_lines, 
 	int verbose_level)

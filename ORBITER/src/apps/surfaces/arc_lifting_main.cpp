@@ -41,12 +41,12 @@ int main(int argc, const char **argv)
 	t0 = os_ticks();
 
 
-	surface *Surf;
+	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	Surf = NEW_OBJECT(surface);
+	Surf = NEW_OBJECT(surface_domain);
 	Surf_A = NEW_OBJECT(surface_with_action);
 
 
@@ -162,7 +162,7 @@ void lift_single_arc(int *arc, int arc_size,
 {
 	int f_v = (verbose_level >= 1);
 	int q;
-	surface *Surf;
+	surface_domain *Surf;
 	finite_field *F;
 	char fname_arc_lifting[1000];
 
@@ -278,7 +278,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 {
 	int f_v = (verbose_level >= 1);
 	int q;
-	surface *Surf;
+	surface_domain *Surf;
 	finite_field *F;
 	int i, j, arc_idx;
 	

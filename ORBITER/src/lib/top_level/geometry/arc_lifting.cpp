@@ -176,7 +176,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 {
 	int f_v = (verbose_level >= 1);
 	int q;
-	surface *Surf;
+	surface_domain *Surf;
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface" << endl;

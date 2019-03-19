@@ -46,7 +46,7 @@ void arc_lifting_with_two_lines::freeself()
 }
 
 void arc_lifting_with_two_lines::create_surface(
-	surface *Surf,
+		surface_domain *Surf,
 	int *Arc6, int line1, int line2,
 	int verbose_level)
 // line1 = b1

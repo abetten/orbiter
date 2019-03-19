@@ -251,7 +251,7 @@ void kramer_mesner::init_group(sims *&S, int verbose_level)
 
 	if (f_surface) {
 
-		Surf = NEW_OBJECT(surface);
+		Surf = NEW_OBJECT(surface_domain);
 
 		if (f_v) {
 			cout << "kramer_mesner::init_group before Surf->init" << endl;

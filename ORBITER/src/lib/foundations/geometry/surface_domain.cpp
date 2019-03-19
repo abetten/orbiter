@@ -17,22 +17,22 @@ namespace orbiter {
 namespace foundations {
 
 
-surface::surface()
+surface_domain::surface_domain()
 {
 	null();
 }
 
-surface::~surface()
+surface_domain::~surface_domain()
 {
 	freeself();
 }
 
-void surface::freeself()
+void surface_domain::freeself()
 {
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "surface::freeself" << endl;
+		cout << "surface_domain::freeself" << endl;
 		}
 	if (v) {
 		FREE_int(v);
@@ -253,11 +253,11 @@ void surface::freeself()
 	}
 	null();
 	if (f_v) {
-		cout << "surface::freeself done" << endl;
+		cout << "surface_domain::freeself done" << endl;
 		}
 }
 
-void surface::null()
+void surface_domain::null()
 {
 	v = NULL;
 	v2 = NULL;
@@ -325,17 +325,17 @@ void surface::null()
 	adjacency_matrix_of_lines = NULL;
 }
 
-void surface::init(finite_field *F, int verbose_level)
+void surface_domain::init(finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface::init" << endl;
+		cout << "surface_domain::init" << endl;
 		}
 	
 	n = 4;
 	n2 = 2 * n;
-	surface::F = F;
+	surface_domain::F = F;
 	q = F->q;
 	nb_pts_on_surface = q * q + 7 * q + 1;
 	if (f_v) {
@@ -528,12 +528,12 @@ void surface::init(finite_field *F, int verbose_level)
 }
 
 
-void surface::init_polynomial_domains(int verbose_level)
+void surface_domain::init_polynomial_domains(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface::init_polynomial_domains" << endl;
+		cout << "surface_domain::init_polynomial_domains" << endl;
 		}
 	Poly1 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
@@ -609,16 +609,16 @@ void surface::init_polynomial_domains(int verbose_level)
 		cout << "nb_monomials = " << nb_monomials << endl;
 		}
 	if (f_v) {
-		cout << "surface::init_polynomial_domains done" << endl;
+		cout << "surface_domain::init_polynomial_domains done" << endl;
 		}
 }
 
-void surface::init_large_polynomial_domains(int verbose_level)
+void surface_domain::init_large_polynomial_domains(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface::init_large_polynomial_domains" << endl;
+		cout << "surface_domain::init_large_polynomial_domains" << endl;
 		}
 	f_has_large_polynomial_domains = TRUE;
 	Poly2_27 = NEW_OBJECT(homogeneous_polynomial_domain);
@@ -661,12 +661,12 @@ void surface::init_large_polynomial_domains(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "surface::init_large_polynomial_domains "
+		cout << "surface_domain::init_large_polynomial_domains "
 				"before clebsch_cubics" << endl;
 		}
 	clebsch_cubics(verbose_level - 1);
 	if (f_v) {
-		cout << "surface::init_large_polynomial_domains "
+		cout << "surface_domain::init_large_polynomial_domains "
 				"after clebsch_cubics" << endl;
 		}
 
@@ -675,7 +675,7 @@ void surface::init_large_polynomial_domains(int verbose_level)
 		}
 }
 
-void surface::label_variables_3(
+void surface_domain::label_variables_3(
 	homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
@@ -684,10 +684,10 @@ void surface::label_variables_3(
 	char label[1000];
 	
 	if (f_v) {
-		cout << "surface::label_variables_3" << endl;
+		cout << "surface_domain::label_variables_3" << endl;
 		}
 	if (HPD->n != 3) {
-		cout << "surface::label_variables_3 HPD->n != 3" << endl;
+		cout << "surface_domain::label_variables_3 HPD->n != 3" << endl;
 		exit(1);
 		}
 	if (HPD->symbols) {
@@ -717,12 +717,12 @@ void surface::label_variables_3(
 		strcpy(HPD->symbols_latex[i], label);
 		}
 	if (f_v) {
-		cout << "surface::label_variables_3 done" << endl;
+		cout << "surface_domain::label_variables_3 done" << endl;
 		}
 	
 }
 
-void surface::label_variables_x123(
+void surface_domain::label_variables_x123(
 	homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
@@ -731,10 +731,10 @@ void surface::label_variables_x123(
 	char label[1000];
 	
 	if (f_v) {
-		cout << "surface::label_variables_x123" << endl;
+		cout << "surface_domain::label_variables_x123" << endl;
 		}
 	if (HPD->n != 3) {
-		cout << "surface::label_variables_x123 "
+		cout << "surface_domain::label_variables_x123 "
 				"HPD->n != 3" << endl;
 		exit(1);
 		}
@@ -765,12 +765,12 @@ void surface::label_variables_x123(
 		strcpy(HPD->symbols_latex[i], label);
 		}
 	if (f_v) {
-		cout << "surface::label_variables_x123 done" << endl;
+		cout << "surface_domain::label_variables_x123 done" << endl;
 		}
 	
 }
 
-void surface::label_variables_4(
+void surface_domain::label_variables_4(
 	homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
@@ -779,10 +779,10 @@ void surface::label_variables_4(
 	char label[1000];
 	
 	if (f_v) {
-		cout << "surface::label_variables_4" << endl;
+		cout << "surface_domain::label_variables_4" << endl;
 		}
 	if (HPD->n != 4) {
-		cout << "surface::label_variables_4 HPD->n != 4" << endl;
+		cout << "surface_domain::label_variables_4 HPD->n != 4" << endl;
 		exit(1);
 		}
 	if (HPD->symbols) {
@@ -817,7 +817,7 @@ void surface::label_variables_4(
 	
 }
 
-void surface::label_variables_27(
+void surface_domain::label_variables_27(
 	homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
@@ -826,10 +826,10 @@ void surface::label_variables_27(
 	char label[1000];
 	
 	if (f_v) {
-		cout << "surface::label_variables_27" << endl;
+		cout << "surface_domain::label_variables_27" << endl;
 		}
 	if (HPD->n != 27) {
-		cout << "surface::label_variables_27 HPD->n != 27" << endl;
+		cout << "surface_domain::label_variables_27 HPD->n != 27" << endl;
 		exit(1);
 		}
 	if (HPD->symbols) {
@@ -891,12 +891,12 @@ void surface::label_variables_27(
 			}
 		}
 	if (f_v) {
-		cout << "surface::label_variables_27 done" << endl;
+		cout << "surface_domain::label_variables_27 done" << endl;
 		}
 	
 }
 
-void surface::label_variables_24(
+void surface_domain::label_variables_24(
 	homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
@@ -905,10 +905,10 @@ void surface::label_variables_24(
 	char label[1000];
 	
 	if (f_v) {
-		cout << "surface::label_variables_24" << endl;
+		cout << "surface_domain::label_variables_24" << endl;
 		}
 	if (HPD->n != 24) {
-		cout << "surface::label_variables_24 HPD->n != 24" << endl;
+		cout << "surface_domain::label_variables_24 HPD->n != 24" << endl;
 		exit(1);
 		}
 	if (HPD->symbols) {
@@ -958,17 +958,17 @@ void surface::label_variables_24(
 			}
 		}
 	if (f_v) {
-		cout << "surface::label_variables_24 done" << endl;
+		cout << "surface_domain::label_variables_24 done" << endl;
 		}
 	
 }
 
-void surface::init_system(int verbose_level)
+void surface_domain::init_system(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface::init_system" << endl;
+		cout << "surface_domain::init_system" << endl;
 		}
 
 	max_pts = 27 * (q + 1);
@@ -978,23 +978,23 @@ void surface::init_system(int verbose_level)
 	base_cols = NEW_int(nb_monomials);
 	
 	if (f_v) {
-		cout << "surface::init_system done" << endl;
+		cout << "surface_domain::init_system done" << endl;
 		}
 
 }
 
 
-int surface::index_of_monomial(int *v)
+int surface_domain::index_of_monomial(int *v)
 {
 	return Poly3_4->index_of_monomial(v);
 }
 
-void surface::unrank_point(int *v, int rk)
+void surface_domain::unrank_point(int *v, int rk)
 {
 	P->unrank_point(v, rk);
 }
 
-int surface::rank_point(int *v)
+int surface_domain::rank_point(int *v)
 {
 	int rk;
 
@@ -1002,12 +1002,12 @@ int surface::rank_point(int *v)
 	return rk;
 }
 
-void surface::unrank_plane(int *v, int rk)
+void surface_domain::unrank_plane(int *v, int rk)
 {
 	Gr3->unrank_int_here(v, rk, 0 /* verbose_level */);
 }
 
-int surface::rank_plane(int *v)
+int surface_domain::rank_plane(int *v)
 {
 	int rk;
 
@@ -1015,19 +1015,19 @@ int surface::rank_plane(int *v)
 	return rk;
 }
 
-int surface::test(int len, int *S, int verbose_level)
+int surface_domain::test(int len, int *S, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int r, ret;
 
 	if (f_v) {
-		cout << "surface::test" << endl;
+		cout << "surface_domain::test" << endl;
 		}
 
 	r = compute_system_in_RREF(len, S, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "surface::test The system has rank " << r << endl;
+		cout << "surface_domain::test The system has rank " << r << endl;
 		}
 	if (r < nb_monomials) {
 		ret = TRUE;
@@ -1036,27 +1036,27 @@ int surface::test(int len, int *S, int verbose_level)
 		ret = FALSE;
 		}
 	if (f_v) {
-		cout << "surface::test done ret = " << ret << endl;
+		cout << "surface_domain::test done ret = " << ret << endl;
 		}
 	return ret;
 }
 
-void surface::enumerate_points(int *coeff, 
+void surface_domain::enumerate_points(int *coeff,
 	int *Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface::enumerate_points" << endl;
+		cout << "surface_domain::enumerate_points" << endl;
 		}
 
 	Poly3_4->enumerate_points(coeff, Pts, nb_pts, verbose_level);
 	if (f_v) {
-		cout << "surface::enumerate_points done" << endl;
+		cout << "surface_domain::enumerate_points done" << endl;
 		}
 }
 
-void surface::substitute_semilinear(
+void surface_domain::substitute_semilinear(
 	int *coeff_in, int *coeff_out,
 	int f_semilinear, int frob, int *Mtx_inv,
 	int verbose_level)
@@ -1064,16 +1064,16 @@ void surface::substitute_semilinear(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface::substitute_semilinear" << endl;
+		cout << "surface_domain::substitute_semilinear" << endl;
 		}
 	Poly3_4->substitute_semilinear(coeff_in, coeff_out, 
 		f_semilinear, frob, Mtx_inv, verbose_level);
 	if (f_v) {
-		cout << "surface::substitute_semilinear done" << endl;
+		cout << "surface_domain::substitute_semilinear done" << endl;
 		}
 }
 
-int surface::test_special_form_alpha_beta(int *coeff, 
+int surface_domain::test_special_form_alpha_beta(int *coeff,
 	int &alpha, int &beta, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1084,46 +1084,46 @@ int surface::test_special_form_alpha_beta(int *coeff,
 	int a;
 	
 	if (f_v) {
-		cout << "surface::test_special_form_alpha_beta" << endl;
+		cout << "surface_domain::test_special_form_alpha_beta" << endl;
 		}
 	if (!int_vec_is_constant_on_subset(coeff, 
 		zeroes, sizeof(zeroes) / sizeof(int), a)) {
-		cout << "surface::test_special_form_alpha_beta "
+		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on zero set" << endl;
 		return FALSE;
 		}
 	if (a != 0) {
-		cout << "surface::test_special_form_alpha_beta "
+		cout << "surface_domain::test_special_form_alpha_beta "
 				"not zero on zero set" << endl;
 		return FALSE;
 		}
 	if (coeff[3] != 1) {
-		cout << "surface::test_special_form_alpha_beta "
+		cout << "surface_domain::test_special_form_alpha_beta "
 				"not normalized" << endl;
 		exit(1);
 		}
 	if (!int_vec_is_constant_on_subset(coeff, 
 		alphas, sizeof(alphas) / sizeof(int), a)) {
-		cout << "surface::test_special_form_alpha_beta "
+		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on alpha set" << endl;
 		return FALSE;
 		}
 	alpha = a;
 	if (!int_vec_is_constant_on_subset(coeff, 
 		betas, sizeof(betas) / sizeof(int), a)) {
-		cout << "surface::test_special_form_alpha_beta "
+		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on beta set" << endl;
 		return FALSE;
 		}
 	beta = a;
 
 	if (f_v) {
-		cout << "surface::test_special_form_alpha_beta done" << endl;
+		cout << "surface_domain::test_special_form_alpha_beta done" << endl;
 		}
 	return ret;
 }
 
-void surface::create_special_double_six(int *double_six, 
+void surface_domain::create_special_double_six(int *double_six,
 	int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1144,7 +1144,7 @@ void surface::create_special_double_six(int *double_six,
 	int i, c, ma, mb, av, mav;
 
 	if (f_v) {
-		cout << "surface::create_special_double_six "
+		cout << "surface_domain::create_special_double_six "
 				"a=" << a << " b=" << b << endl;
 		}
 	ma = F->negate(a);
@@ -1178,11 +1178,11 @@ void surface::create_special_double_six(int *double_six,
 				0 /* verbose_level */);
 		}
 	if (f_v) {
-		cout << "surface::create_special_double_six done" << endl;
+		cout << "surface_domain::create_special_double_six done" << endl;
 		}
 }
 
-void surface::create_special_fifteen_lines(int *fifteen_lines, 
+void surface_domain::create_special_fifteen_lines(int *fifteen_lines,
 	int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1216,7 +1216,7 @@ void surface::create_special_fifteen_lines(int *fifteen_lines,
 	// -5 stands for -3 inverse
 
 	if (f_v) {
-		cout << "surface::create_special_fifteen_lines "
+		cout << "surface_domain::create_special_fifteen_lines "
 				"a=" << a << " b=" << b << endl;
 		}
 	m1 = F->negate(1);
@@ -1228,7 +1228,7 @@ void surface::create_special_fifteen_lines(int *fifteen_lines,
 	//ba2m1 = F->mult(b, a2m1);
 
 	if (ba2p1 == 0) {
-		cout << "surface::create_special_fifteen_lines "
+		cout << "surface_domain::create_special_fifteen_lines "
 				"ba2p1 = 0, cannot invert" << endl;
 		exit(1);
 		}
@@ -1237,7 +1237,7 @@ void surface::create_special_fifteen_lines(int *fifteen_lines,
 	c3 = F->mult(a2m1, F->inverse(ba2p1));
 	cm3 = F->negate(c3);
 	if (a2m1 == 0) {
-		cout << "surface::create_special_fifteen_lines "
+		cout << "surface_domain::create_special_fifteen_lines "
 				"a2m1 = 0, cannot invert" << endl;
 		exit(1);
 		}
@@ -1245,13 +1245,13 @@ void surface::create_special_fifteen_lines(int *fifteen_lines,
 	cm4 = F->negate(c4);
 
 	if (c3 == 0) {
-		cout << "surface::create_special_fifteen_lines "
+		cout << "surface_domain::create_special_fifteen_lines "
 				"c3 = 0, cannot invert" << endl;
 		exit(1);
 		}
 	c5 = F->inverse(c3);
 	if (cm3 == 0) {
-		cout << "surface::create_special_fifteen_lines "
+		cout << "surface_domain::create_special_fifteen_lines "
 				"cm3 = 0, cannot invert" << endl;
 		exit(1);
 		}
@@ -1294,7 +1294,7 @@ void surface::create_special_fifteen_lines(int *fifteen_lines,
 			c = cm5;
 			}
 		else {
-			cout << "surface::create_special_fifteen_lines "
+			cout << "surface_domain::create_special_fifteen_lines "
 					"unknown value" << c << endl;
 			exit(1);
 			}
@@ -1305,18 +1305,18 @@ void surface::create_special_fifteen_lines(int *fifteen_lines,
 			Basis + i * 8, 0 /* verbose_level */);
 		}
 	if (f_v) {
-		cout << "surface::create_special_fifteen_lines done" << endl;
+		cout << "surface_domain::create_special_fifteen_lines done" << endl;
 		}
 }
 
-void surface::create_equation_Sab(int a, int b,
+void surface_domain::create_equation_Sab(int a, int b,
 		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int alpha, beta;
 
 	if (f_v) {
-		cout << "surface::create_equation_Sab" << endl;
+		cout << "surface_domain::create_equation_Sab" << endl;
 		}
 	alpha = F->negate(F->mult(b, b));
 	beta = F->mult(F->mult(F->power(b, 3), 
@@ -1330,11 +1330,11 @@ void surface::create_equation_Sab(int a, int b,
 	coeff[16] = beta;
 	//coeff[19] = beta;
 	if (f_v) {
-		cout << "surface::create_equation_Sab done" << endl;
+		cout << "surface_domain::create_equation_Sab done" << endl;
 		}
 }
 
-int surface::create_surface_ab(int a, int b,
+int surface_domain::create_surface_ab(int a, int b,
 	int *coeff20,
 	int *Lines27,
 	int &alpha, int &beta, int &nb_E,
@@ -1351,7 +1351,7 @@ int surface::create_surface_ab(int a, int b,
 	int v[4];
 
 	if (f_v) {
-		cout << "surface::create_surface_ab" << endl;
+		cout << "surface_domain::create_surface_ab" << endl;
 		}
 	alpha = -1;
 	beta = -1;
@@ -1363,7 +1363,8 @@ int surface::create_surface_ab(int a, int b,
 	a2p1 = F->add(a2, 1);
 	a2m1 = F->add(a2, F->negate(1));
 	if (a2p1 == 0 || a2m1 == 0) {
-		cout << "surface::create_surface_ab a2p1 == 0 || a2m1 == 0" << endl;
+		cout << "surface_domain::create_surface_ab "
+				"a2p1 == 0 || a2m1 == 0" << endl;
 		return FALSE;
 		}
 
@@ -1375,7 +1376,7 @@ int surface::create_surface_ab(int a, int b,
 	beta0 = F->mult(F->mult(F->power(b, 3), 
 		F->add(1, F->mult(a, a))), F->inverse(a));
 	if (f_v) {
-		cout << "surface::create_surface_ab a=" 
+		cout << "surface_domain::create_surface_ab a="
 			<< a << " b=" << b << " alpha0=" << alpha0 
 			<< " beta0=" << beta0 << endl;
 		}
@@ -1412,7 +1413,7 @@ int surface::create_surface_ab(int a, int b,
 #endif
 
 	if (f_v) {
-		cout << "surface::create_surface_ab The double six is:" << endl;
+		cout << "surface_domain::create_surface_ab The double six is:" << endl;
 		Gr->print_set(Oab, 12);
 		}
 
@@ -1424,7 +1425,7 @@ int surface::create_surface_ab(int a, int b,
 	nb = 12;
 
 	if (f_v) {
-		cout << "surface::create_surface_ab We have a set of "
+		cout << "surface_domain::create_surface_ab We have a set of "
 				"lines of size " << nb << ":";
 		int_vec_print(cout, Lines27, nb);
 		cout << endl;
@@ -1434,7 +1435,7 @@ int surface::create_surface_ab(int a, int b,
 		Lines27 + 12, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "surface::create_surface_ab The remaining 15 lines are:";
+		cout << "surface_domain::create_surface_ab The remaining 15 lines are:";
 		int_vec_print(cout, Lines27 + 12, 15);
 		cout << endl;
 		Gr->print_set(Lines27 + 12, 15);
@@ -1442,7 +1443,7 @@ int surface::create_surface_ab(int a, int b,
 
 
 	if (f_v) {
-		cout << "surface::create_surface_ab before create_special_"
+		cout << "surface_domain::create_surface_ab before create_special_"
 				"fifteen_lines" << endl;
 		}
 
@@ -1451,24 +1452,24 @@ int surface::create_surface_ab(int a, int b,
 	create_special_fifteen_lines(special_lines, a, b, verbose_level);
 	for (i = 0; i < 15; i++) {
 		if (special_lines[i] != Lines27[12 + i]) {
-			cout << "surface::create_surface_ab something is wrong "
+			cout << "surface_domain::create_surface_ab something is wrong "
 					"with the special line " << i << " / 15 " << endl;
 			exit(1);
 			}
 		}
 	if (f_v) {
-		cout << "surface::create_surface_ab after create_special_"
+		cout << "surface_domain::create_surface_ab after create_special_"
 				"fifteen_lines" << endl;
 		}
 
 	rk = compute_system_in_RREF(27, Lines27, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface::create_surface_ab a=" << a 
+		cout << "surface_domain::create_surface_ab a=" << a
 			<< " b=" << b << " rk=" << rk << endl;
 		}
 
 	if (rk != 19) {
-		cout << "surface::create_surface_ab rk != 19" << endl;
+		cout << "surface_domain::create_surface_ab rk != 19" << endl;
 		FREE_int(Pts);
 		//FREE_int(coeff);
 		exit(1);
@@ -1484,14 +1485,14 @@ int surface::create_surface_ab(int a, int b,
 
 
 	if (f_v) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"a=" << a << " b=" << b << " equation: ";
 		print_equation(cout, coeff20);
 		cout << endl;
 		}
 
 	if (nb_pts != nb_pts_on_surface) {
-		cout << "surface::create_surface_ab degenerate surface" << endl;
+		cout << "surface_domain::create_surface_ab degenerate surface" << endl;
 		cout << "nb_pts=" << nb_pts << endl;
 		cout << "should be =" << nb_pts_on_surface << endl;
 		alpha = -1;
@@ -1501,7 +1502,7 @@ int surface::create_surface_ab(int a, int b,
 		}
 
 	if (f_v) {
-		cout << "surface::create_surface_ab Pts: " << endl;
+		cout << "surface_domain::create_surface_ab Pts: " << endl;
 		int_vec_print_as_table(cout, Pts, nb_pts, 10);
 		}
 
@@ -1513,7 +1514,7 @@ int surface::create_surface_ab(int a, int b,
 	compute_adjacency_matrix_of_line_intersection_graph(
 		Adj, Lines27, 27, verbose_level);
 	if (f_v) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"The adjacency matrix is:" << endl;
 		int_matrix_print(Adj, 27, 27);
 		}
@@ -1526,7 +1527,7 @@ int surface::create_surface_ab(int a, int b,
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"The intersection points are:" << endl;
 		int_matrix_print(Intersection_pt_idx, 27, 27);
 		}
@@ -1536,7 +1537,7 @@ int surface::create_surface_ab(int a, int b,
 
 	C.init(Intersection_pt_idx, 27 * 27, FALSE, 0);
 	if (f_v) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"classification of points by multiplicity:" << endl;
 		C.print_naked(TRUE);
 		cout << endl;
@@ -1547,22 +1548,22 @@ int surface::create_surface_ab(int a, int b,
 
 	if (!test_special_form_alpha_beta(coeff20, alpha, beta,
 		0 /* verbose_level */)) {
-		cout << "surface::create_surface_ab not of special form" << endl;
+		cout << "surface_domain::create_surface_ab not of special form" << endl;
 		exit(1);
 		}
 
 
 	if (alpha != alpha0) {
-		cout << "surface::create_surface_ab alpha != alpha0" << endl;
+		cout << "surface_domain::create_surface_ab alpha != alpha0" << endl;
 		exit(1);
 		}
 	if (beta != beta0) {
-		cout << "surface::create_surface_ab beta != beta0" << endl;
+		cout << "surface_domain::create_surface_ab beta != beta0" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"determining all lines on the surface:" << endl;
 		}
 	{
@@ -1573,11 +1574,11 @@ int surface::create_surface_ab(int a, int b,
 	}
 	
 	if (f_v) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"nb_lines = " << nb_lines << endl;
 		}
 	if (nb_lines != 27) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"nb_lines != 27, something is wrong "
 				"with the surface" << endl;
 		exit(1);
@@ -1592,7 +1593,7 @@ int surface::create_surface_ab(int a, int b,
 
 
 	if (f_v) {
-		cout << "surface::create_surface_ab pts_on_lines: " << endl;
+		cout << "surface_domain::create_surface_ab pts_on_lines: " << endl;
 		pts_on_lines->print_table();
 		}
 
@@ -1601,7 +1602,7 @@ int surface::create_surface_ab(int a, int b,
 	pts_on_lines->get_eckardt_points(E, nb_E, 0 /* verbose_level */);
 	//nb_E = pts_on_lines->number_of_eckardt_points(verbose_level);
 	if (f_v) {
-		cout << "surface::create_surface_ab The surface contains " 
+		cout << "surface_domain::create_surface_ab The surface contains "
 			<< nb_E << " Eckardt points" << endl;
 		}
 
@@ -1620,7 +1621,7 @@ int surface::create_surface_ab(int a, int b,
 #endif
 
 	if (f_v) {
-		cout << "surface::create_surface_ab "
+		cout << "surface_domain::create_surface_ab "
 				"The Eckardt points are:" << endl;
 		for (i = 0; i < nb_E; i++) {
 			e = E[i];
@@ -1644,12 +1645,12 @@ int surface::create_surface_ab(int a, int b,
 	FREE_OBJECT(pts_on_lines);
 	FREE_OBJECT(lines_on_pt);
 	if (f_v) {
-		cout << "surface::create_surface_ab done" << endl;
+		cout << "surface_domain::create_surface_ab done" << endl;
 		}
 	return TRUE;
 }
 
-void surface::list_starter_configurations(
+void surface_domain::list_starter_configurations(
 	int *Lines, int nb_lines,
 	set_of_sets *line_intersections, int *&Table, int &N, 
 	int verbose_level)
@@ -1662,7 +1663,7 @@ void surface::list_starter_configurations(
 	int i, j, r;
 	
 	if (f_v) {
-		cout << "surface::list_starter_configurations" << endl;
+		cout << "surface_domain::list_starter_configurations" << endl;
 		}
 
 	N = 0;
@@ -1687,7 +1688,7 @@ void surface::list_starter_configurations(
 			}
 		}
 	if (f_v) {
-		cout << "surface::list_starter_configurations We found " 
+		cout << "surface_domain::list_starter_configurations We found "
 			<< N << " starter configurations on this surface" 
 			<< endl;
 		}
@@ -1720,11 +1721,11 @@ void surface::list_starter_configurations(
 		exit(1);
 		}
 	if (f_v) {
-		cout << "surface::list_starter_configurations done" << endl;
+		cout << "surface_domain::list_starter_configurations done" << endl;
 		}
 }
 
-void surface::create_starter_configuration(
+void surface_domain::create_starter_configuration(
 	int line_idx, int subset_idx, 
 	set_of_sets *line_neighbors, int *Lines, int *S, 
 	int verbose_level)
@@ -1735,7 +1736,7 @@ void surface::create_starter_configuration(
 	int h; //, nCk;
 	
 	if (f_v) {
-		cout << "surface::create_starter_configuration" << endl;
+		cout << "surface_domain::create_starter_configuration" << endl;
 		}
 	//nCk = int_n_choose_k(line_neighbors->Set_size[line_idx], 5);
 	unrank_k_subset(subset_idx, subset, 
@@ -1746,11 +1747,11 @@ void surface::create_starter_configuration(
 		}
 	S[5] = Lines[line_idx];
 	if (f_v) {
-		cout << "surface::create_starter_configuration done" << endl;
+		cout << "surface_domain::create_starter_configuration done" << endl;
 		}
 }
 
-void surface::wedge_to_klein(int *W, int *K)
+void surface_domain::wedge_to_klein(int *W, int *K)
 {
 	K[0] = W[0];
 	K[1] = W[5];
@@ -1760,7 +1761,7 @@ void surface::wedge_to_klein(int *W, int *K)
 	K[5] = W[3];
 }
 
-void surface::klein_to_wedge(int *K, int *W)
+void surface_domain::klein_to_wedge(int *K, int *W)
 {
 	W[0] = K[0];
 	W[1] = K[2];
@@ -1770,7 +1771,7 @@ void surface::klein_to_wedge(int *K, int *W)
 	W[5] = K[1];
 }
 
-int surface::line_to_wedge(int line_rk)
+int surface_domain::line_to_wedge(int line_rk)
 {
 	int a, b;
 	
@@ -1782,7 +1783,7 @@ int surface::line_to_wedge(int line_rk)
 	return b;
 }
 
-void surface::line_to_wedge_vec(
+void surface_domain::line_to_wedge_vec(
 		int *Line_rk, int *Wedge_rk, int len)
 {
 	int i;
@@ -1792,14 +1793,14 @@ void surface::line_to_wedge_vec(
 		}
 }
 
-void surface::line_to_klein_vec(
+void surface_domain::line_to_klein_vec(
 		int *Line_rk, int *Klein_rk, int len)
 {
 	int_vec_apply(Line_rk, Klein->Line_to_point_on_quadric,
 			Klein_rk, len);
 }
 
-int surface::klein_to_wedge(int klein_rk)
+int surface_domain::klein_to_wedge(int klein_rk)
 {
 	int b;
 	
@@ -1810,7 +1811,7 @@ int surface::klein_to_wedge(int klein_rk)
 	return b;
 }
 
-void surface::klein_to_wedge_vec(
+void surface_domain::klein_to_wedge_vec(
 		int *Klein_rk, int *Wedge_rk, int len)
 {
 	int i;
@@ -1820,7 +1821,7 @@ void surface::klein_to_wedge_vec(
 		}
 }
 
-void surface::save_lines_in_three_kinds(const char *fname_csv, 
+void surface_domain::save_lines_in_three_kinds(const char *fname_csv,
 	int *Lines_wedge, int *Lines, int *Lines_klein, int nb_lines)
 {
 	spreadsheet *Sp;
@@ -1833,7 +1834,7 @@ void surface::save_lines_in_three_kinds(const char *fname_csv,
 	FREE_OBJECT(Sp);
 }
 
-void surface::find_tritangent_planes_intersecting_in_a_line(
+void surface_domain::find_tritangent_planes_intersecting_in_a_line(
 	int line_idx,
 	int &plane1, int &plane2, int verbose_level)
 {
@@ -1842,7 +1843,7 @@ void surface::find_tritangent_planes_intersecting_in_a_line(
 	int three_lines[3];
 
 	if (f_v) {
-		cout << "surface::find_tritangent_planes_"
+		cout << "surface_domain::find_tritangent_planes_"
 				"intersecting_in_a_line" << endl;
 		}
 	for (plane1 = 0; plane1 < nb_Eckardt_points; plane1++) {
@@ -1856,7 +1857,7 @@ void surface::find_tritangent_planes_intersecting_in_a_line(
 				Eckardt_points[plane2].three_lines(this, three_lines);
 				if (int_vec_search_linear(three_lines, 3, line_idx, idx)) {
 					if (f_v) {
-						cout << "surface::find_tritangent_planes_"
+						cout << "surface_domain::find_tritangent_planes_"
 								"intersecting_in_a_line done" << endl;
 						}
 					return;
@@ -1864,14 +1865,14 @@ void surface::find_tritangent_planes_intersecting_in_a_line(
 				}
 			}
 		}
-	cout << "surface::find_tritangent_planes_"
+	cout << "surface_domain::find_tritangent_planes_"
 			"intersecting_in_a_line could not find "
 			"two planes" << endl;
 	exit(1);
 }
 
 
-void surface::make_trihedral_pairs(int *&T, 
+void surface_domain::make_trihedral_pairs(int *&T,
 	char **&T_label, int &nb_trihedral_pairs, 
 	int verbose_level)
 {
@@ -1884,7 +1885,7 @@ void surface::make_trihedral_pairs(int *&T,
 	char label[1000];
 
 	if (f_v) {
-		cout << "surface::make_trihedral_pairs" << endl;
+		cout << "surface_domain::make_trihedral_pairs" << endl;
 		}
 	nb_trihedral_pairs = 120;
 	T = NEW_int(nb_trihedral_pairs * 9);
@@ -1961,7 +1962,7 @@ void surface::make_trihedral_pairs(int *&T,
 		}
 
 	if (idx != 120) {
-		cout << "surface::make_trihedral_pairs idx != 120" << endl;
+		cout << "surface_domain::make_trihedral_pairs idx != 120" << endl;
 		exit(1);
 		}
 
@@ -1975,18 +1976,18 @@ void surface::make_trihedral_pairs(int *&T,
 		}
 
 	if (f_v) {
-		cout << "surface::make_trihedral_pairs done" << endl;
+		cout << "surface_domain::make_trihedral_pairs done" << endl;
 		}
 }
 
-void surface::process_trihedral_pairs(int verbose_level)
+void surface_domain::process_trihedral_pairs(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int subset[3];
 	int i, j, h, rk, a;
 
 	if (f_v) {
-		cout << "surface::process_trihedral_pairs" << endl;
+		cout << "surface_domain::process_trihedral_pairs" << endl;
 		}
 	Trihedral_pairs_row_sets = NEW_int(nb_trihedral_pairs * 3);
 	Trihedral_pairs_col_sets = NEW_int(nb_trihedral_pairs * 3);
@@ -2016,7 +2017,7 @@ void surface::process_trihedral_pairs(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "surface::process_trihedral_pairs "
+		cout << "surface_domain::process_trihedral_pairs "
 				"The trihedral pairs row sets:" << endl;
 		print_integer_matrix_with_standard_labels(cout, 
 			Trihedral_pairs_row_sets, 120, 3, 
@@ -2036,7 +2037,7 @@ void surface::process_trihedral_pairs(int verbose_level)
 		Trihedral_pairs_row_sets, 120 * 3, FALSE, 0);
 
 	if (f_v) {
-		cout << "surface::process_trihedral_pairs "
+		cout << "surface_domain::process_trihedral_pairs "
 				"sorted row values:" << endl;
 		print_integer_matrix_with_standard_labels(cout, 
 			Classify_trihedral_pairs_row_values->data_sorted, 
@@ -2052,18 +2053,18 @@ void surface::process_trihedral_pairs(int verbose_level)
 		120 * 3, FALSE, 0);
 
 	if (f_v) {
-		cout << "surface::process_trihedral_pairs "
+		cout << "surface_domain::process_trihedral_pairs "
 				"sorted col values:" << endl;
 		print_integer_matrix_with_standard_labels(cout, 
 			Classify_trihedral_pairs_col_values->data_sorted, 
 			120 * 3 / 10, 10, FALSE /* f_tex */);
 		}
 	if (f_v) {
-		cout << "surface::process_trihedral_pairs done" << endl;
+		cout << "surface_domain::process_trihedral_pairs done" << endl;
 		}
 }
 
-void surface::make_Tijk(int *T, int i, int j, int k)
+void surface_domain::make_Tijk(int *T, int i, int j, int k)
 {
 	T[0] = line_cij(j, k);
 	T[1] = line_bi(k);
@@ -2076,7 +2077,7 @@ void surface::make_Tijk(int *T, int i, int j, int k)
 	T[8] = line_cij(i, j);
 }
 
-void surface::make_Tlmnp(int *T, int l, int m, int n, int p)
+void surface_domain::make_Tlmnp(int *T, int l, int m, int n, int p)
 {
 	int subset[4];
 	int complement[2];
@@ -2103,7 +2104,7 @@ void surface::make_Tlmnp(int *T, int l, int m, int n, int p)
 	T[8] = line_cij(r, s);
 }
 
-void surface::make_Tdefght(int *T,
+void surface_domain::make_Tdefght(int *T,
 		int d, int e, int f, int g, int h, int t)
 {
 	T[0] = line_cij(d, g);
@@ -2117,14 +2118,14 @@ void surface::make_Tdefght(int *T,
 	T[8] = line_cij(e, g);
 }
 
-void surface::make_Eckardt_points(int verbose_level)
+void surface_domain::make_Eckardt_points(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l;
 	char str[1000];
 
 	if (f_v) {
-		cout << "surface::make_Eckardt_points" << endl;
+		cout << "surface_domain::make_Eckardt_points" << endl;
 		}
 	nb_Eckardt_points = 45;
 	Eckardt_points = NEW_OBJECTS(eckardt_point, nb_Eckardt_points);
@@ -2142,19 +2143,19 @@ void surface::make_Eckardt_points(int verbose_level)
 		strcpy(Eckard_point_label_tex[i], str);
 		}
 	if (f_v) {
-		cout << "surface::make_Eckardt_points done" << endl;
+		cout << "surface_domain::make_Eckardt_points done" << endl;
 		}
 }
 
 
-void surface::init_Trihedral_to_Eckardt(int verbose_level)
+void surface_domain::init_Trihedral_to_Eckardt(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk;
 	int tritangent_plane[3];
 
 	if (f_v) {
-		cout << "surface::init_Trihedral_to_Eckardt" << endl;
+		cout << "surface_domain::init_Trihedral_to_Eckardt" << endl;
 		}
 	nb_trihedral_to_Eckardt = nb_trihedral_pairs * 6;
 	Trihedral_to_Eckardt = NEW_int(nb_trihedral_to_Eckardt);
@@ -2166,7 +2167,7 @@ void surface::init_Trihedral_to_Eckardt(int verbose_level)
 				}
 #if 0
 			if (t == 111) {
-				cout << "surface::init_Trihedral_to_Eckardt "
+				cout << "surface_domain::init_Trihedral_to_Eckardt "
 						"t=" << t << " tritangent_plane row "
 						<< i << " = ";
 				int_vec_print(cout, tritangent_plane, 3);
@@ -2188,7 +2189,7 @@ void surface::init_Trihedral_to_Eckardt(int verbose_level)
 				}
 #if 0
 			if (t == 5) {
-				cout << "surface::init_Trihedral_to_Eckardt "
+				cout << "surface_domain::init_Trihedral_to_Eckardt "
 						"tritangent_plane=";
 				int_vec_print(cout, tritangent_plane, 3);
 				cout << endl;
@@ -2211,12 +2212,12 @@ void surface::init_Trihedral_to_Eckardt(int verbose_level)
 			FALSE /* f_tex */);
 		}
 	if (f_v) {
-		cout << "surface::init_Trihedral_to_Eckardt done" << endl;
+		cout << "surface_domain::init_Trihedral_to_Eckardt done" << endl;
 		}
 }
 
 
-int surface::Eckardt_point_from_tritangent_plane(
+int surface_domain::Eckardt_point_from_tritangent_plane(
 		int *tritangent_plane)
 {
 	int a, b, c, rk;
@@ -2231,7 +2232,7 @@ int surface::Eckardt_point_from_tritangent_plane(
 		}
 	else {
 		if (a < 12) {
-			cout << "surface::Eckardt_point_from_"
+			cout << "surface_domain::Eckardt_point_from_"
 					"tritangent_plane a < 12" << endl;
 			exit(1);
 			}
@@ -2244,14 +2245,14 @@ int surface::Eckardt_point_from_tritangent_plane(
 	return rk;
 }
 
-void surface::init_collinear_Eckardt_triples(int verbose_level)
+void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, rk;
 	int subset[3];
 
 	if (f_v) {
-		cout << "surface::init_collinear_Eckardt_triples" << endl;
+		cout << "surface_domain::init_collinear_Eckardt_triples" << endl;
 		}
 	nb_collinear_Eckardt_triples = nb_trihedral_pairs * 2;
 	collinear_Eckardt_triples_rank = NEW_int(nb_collinear_Eckardt_triples);
@@ -2277,11 +2278,11 @@ void surface::init_collinear_Eckardt_triples(int verbose_level)
 		FALSE, 0);
 	
 	if (f_v) {
-		cout << "surface::init_collinear_Eckardt_triples done" << endl;
+		cout << "surface_domain::init_collinear_Eckardt_triples done" << endl;
 		}
 }
 
-void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
+void surface_domain::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 	int *E_idx, int nb_E, 
 	int *&T_idx, int &nb_T, int verbose_level)
 {
@@ -2291,7 +2292,7 @@ void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 	int set[3];
 	
 	if (f_v) {
-		cout << "surface::find_trihedral_pairs_from_collinear_"
+		cout << "surface_domain::find_trihedral_pairs_from_collinear_"
 				"triples_of_Eckardt_points" << endl;
 		}
 	nCk = int_n_choose_k(nb_E, 3);
@@ -2412,12 +2413,12 @@ void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 			<< Trihedral_pair_labels[T_idx[i]] << "}" << endl;
 		}
 	if (f_v) {
-		cout << "surface::find_trihedral_pairs_from_collinear_"
+		cout << "surface_domain::find_trihedral_pairs_from_collinear_"
 				"triples_of_Eckardt_points done" << endl;
 		}
 }
 
-void surface::multiply_conic_times_linear(int *six_coeff, 
+void surface_domain::multiply_conic_times_linear(int *six_coeff,
 	int *three_coeff, int *ten_coeff, 
 	int verbose_level)
 {
@@ -2426,7 +2427,7 @@ void surface::multiply_conic_times_linear(int *six_coeff,
 	int M[3];
 
 	if (f_v) {
-		cout << "surface::multiply_conic_times_linear" << endl;
+		cout << "surface_domain::multiply_conic_times_linear" << endl;
 		}
 
 
@@ -2440,7 +2441,7 @@ void surface::multiply_conic_times_linear(int *six_coeff,
 				Poly1->Monomials + j * 3, M, 3);
 			idx = Poly3->index_of_monomial(M);
 			if (idx >= 10) {
-				cout << "surface::multiply_conic_times_linear "
+				cout << "surface_domain::multiply_conic_times_linear "
 						"idx >= 10" << endl;
 				exit(1);
 				}
@@ -2450,11 +2451,11 @@ void surface::multiply_conic_times_linear(int *six_coeff,
 	
 	
 	if (f_v) {
-		cout << "surface::multiply_conic_times_linear done" << endl;
+		cout << "surface_domain::multiply_conic_times_linear done" << endl;
 		}
 }
 
-void surface::multiply_linear_times_linear_times_linear(
+void surface_domain::multiply_linear_times_linear_times_linear(
 	int *three_coeff1, int *three_coeff2, int *three_coeff3, 
 	int *ten_coeff, int verbose_level)
 {
@@ -2463,7 +2464,7 @@ void surface::multiply_linear_times_linear_times_linear(
 	int M[3];
 
 	if (f_v) {
-		cout << "surface::multiply_linear_times_linear_"
+		cout << "surface_domain::multiply_linear_times_linear_"
 				"times_linear" << endl;
 		}
 
@@ -2492,12 +2493,12 @@ void surface::multiply_linear_times_linear_times_linear(
 	
 	
 	if (f_v) {
-		cout << "surface::multiply_linear_times_linear_"
+		cout << "surface_domain::multiply_linear_times_linear_"
 				"times_linear done" << endl;
 		}
 }
 
-void surface::multiply_linear_times_linear_times_linear_in_space(
+void surface_domain::multiply_linear_times_linear_times_linear_in_space(
 	int *four_coeff1, int *four_coeff2, int *four_coeff3, 
 	int *twenty_coeff, int verbose_level)
 {
@@ -2506,7 +2507,7 @@ void surface::multiply_linear_times_linear_times_linear_in_space(
 	int M[4];
 
 	if (f_v) {
-		cout << "surface::multiply_linear_times_linear_"
+		cout << "surface_domain::multiply_linear_times_linear_"
 				"times_linear_in_space" << endl;
 		}
 
@@ -2524,7 +2525,7 @@ void surface::multiply_linear_times_linear_times_linear_in_space(
 					M, 4);
 				idx = index_of_monomial(M);
 				if (idx >= 20) {
-					cout << "surface::multiply_linear_times_linear_"
+					cout << "surface_domain::multiply_linear_times_linear_"
 							"times_linear_in_space idx >= 20" << endl;
 					exit(1);
 					}
@@ -2535,12 +2536,12 @@ void surface::multiply_linear_times_linear_times_linear_in_space(
 	
 	
 	if (f_v) {
-		cout << "surface::multiply_linear_times_linear_"
+		cout << "surface_domain::multiply_linear_times_linear_"
 				"times_linear_in_space done" << endl;
 		}
 }
 
-void surface::multiply_Poly2_3_times_Poly2_3(
+void surface_domain::multiply_Poly2_3_times_Poly2_3(
 	int *input1, int *input2,
 	int *result, int verbose_level)
 {
@@ -2549,7 +2550,7 @@ void surface::multiply_Poly2_3_times_Poly2_3(
 	int M[3];
 
 	if (f_v) {
-		cout << "surface::multiply_Poly2_3_times_Poly2_3" << endl;
+		cout << "surface_domain::multiply_Poly2_3_times_Poly2_3" << endl;
 		}
 
 	int_vec_zero(result, Poly4_x123->nb_monomials);
@@ -2568,11 +2569,11 @@ void surface::multiply_Poly2_3_times_Poly2_3(
 	
 	
 	if (f_v) {
-		cout << "surface::multiply_Poly2_3_times_Poly2_3 done" << endl;
+		cout << "surface_domain::multiply_Poly2_3_times_Poly2_3 done" << endl;
 		}
 }
 
-void surface::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2, 
+void surface_domain::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
 	int *result, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2580,7 +2581,7 @@ void surface::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
 	int M[3];
 
 	if (f_v) {
-		cout << "surface::multiply_Poly1_3_times_Poly3_3" << endl;
+		cout << "surface_domain::multiply_Poly1_3_times_Poly3_3" << endl;
 		}
 
 	int_vec_zero(result, Poly4_x123->nb_monomials);
@@ -2597,11 +2598,11 @@ void surface::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
 		}
 	
 	if (f_v) {
-		cout << "surface::multiply_Poly1_3_times_Poly3_3 done" << endl;
+		cout << "surface_domain::multiply_Poly1_3_times_Poly3_3 done" << endl;
 		}
 }
 
-void surface::web_of_cubic_curves(int *arc6, int *&curves, 
+void surface_domain::web_of_cubic_curves(int *arc6, int *&curves,
 	int verbose_level)
 // curves[45 * 10]
 {
@@ -2650,7 +2651,7 @@ void surface::web_of_cubic_curves(int *arc6, int *&curves,
 		}
 
 	if (a != 45) {
-		cout << "surface::web_of_cubic_curves a != 45" << endl;
+		cout << "surface_domain::web_of_cubic_curves a != 45" << endl;
 		exit(1);
 		}
 
@@ -2663,11 +2664,11 @@ void surface::web_of_cubic_curves(int *arc6, int *&curves,
 	FREE_int(conics);
 
 	if (f_v) {
-		cout << "surface::web_of_cubic_curves done" << endl;
+		cout << "surface_domain::web_of_cubic_curves done" << endl;
 		}
 }
 
-void surface::web_of_cubic_curves_rank_of_foursubsets(
+void surface_domain::web_of_cubic_curves_rank_of_foursubsets(
 	int *Web_of_cubic_curves, 
 	int *&rk, int &N, int verbose_level)
 {
@@ -2676,7 +2677,7 @@ void surface::web_of_cubic_curves_rank_of_foursubsets(
 	int B[4 * 10];
 
 	if (f_v) {
-		cout << "surface::web_of_cubic_curves_rank_of_foursubsets" << endl;
+		cout << "surface_domain::web_of_cubic_curves_rank_of_foursubsets" << endl;
 		}
 	if (f_v) {
 		cout << "web of cubic curves:" << endl;
@@ -2700,12 +2701,12 @@ void surface::web_of_cubic_curves_rank_of_foursubsets(
 			4, 10, 0 /* verbose_level */);
 		}
 	if (f_v) {
-		cout << "surface::web_of_cubic_curves_rank_of_foursubsets done" << endl;
+		cout << "surface_domain::web_of_cubic_curves_rank_of_foursubsets done" << endl;
 		}
 }
 
 void
-surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(
+surface_domain::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(
 	int *arc6, int *base_curves4, 
 	int *&Web_of_cubic_curves, int *&The_plane_equations, 
 	int verbose_level)
@@ -2718,7 +2719,7 @@ surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_plane
 	int *curves_t;
 
 	if (f_v) {
-		cout << "surface::create_web_of_cubic_curves_and_equations_based_"
+		cout << "surface_domain::create_web_of_cubic_curves_and_equations_based_"
 				"on_four_tritangent_planes" << endl;
 		}
 
@@ -2813,12 +2814,12 @@ surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_plane
 	FREE_int(curves_t);
 
 	if (f_v) {
-		cout << "surface::create_web_of_cubic_curves_and_equations_"
+		cout << "surface_domain::create_web_of_cubic_curves_and_equations_"
 				"based_on_four_tritangent_planes done" << endl;
 		}
 }
 
-void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
+void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 	int *The_six_plane_equations, int *The_surface_equations, 
 	int verbose_level)
 // The_surface_equations[(q + 1) * 20]
@@ -2832,7 +2833,7 @@ void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 	int eqn_G2[20];
 
 	if (f_v) {
-		cout << "surface::create_equations_for_pencil_of_surfaces_"
+		cout << "surface_domain::create_equations_for_pencil_of_surfaces_"
 				"from_trihedral_pair" << endl;
 		}
 	
@@ -2862,12 +2863,12 @@ void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 		}
 
 	if (f_v) {
-		cout << "surface::create_equations_for_pencil_of_surfaces_"
+		cout << "surface_domain::create_equations_for_pencil_of_surfaces_"
 				"from_trihedral_pair done" << endl;
 		}
 }
 
-void surface::create_lambda_from_trihedral_pair_and_arc(
+void surface_domain::create_lambda_from_trihedral_pair_and_arc(
 	int *arc6, 
 	int *Web_of_cubic_curves, 
 	int *The_plane_equations, int t_idx, 
@@ -2887,7 +2888,7 @@ void surface::create_lambda_from_trihedral_pair_and_arc(
 	int a, b, ma, bv;
 
 	if (f_v) {
-		cout << "surface::create_lambda_from_trihedral_pair_and_arc "
+		cout << "surface_domain::create_lambda_from_trihedral_pair_and_arc "
 				"t_idx=" << t_idx << endl;
 		}
 	
@@ -2918,7 +2919,7 @@ void surface::create_lambda_from_trihedral_pair_and_arc(
 
 
 	if (f_v) {
-		cout << "surface::create_lambda_from_trihedral_pair_and_arc "
+		cout << "surface_domain::create_lambda_from_trihedral_pair_and_arc "
 				"before find_point_not_on_six_curves" << endl;
 		}
 	find_point_not_on_six_curves(arc6, six_curves, 
@@ -2928,7 +2929,7 @@ void surface::create_lambda_from_trihedral_pair_and_arc(
 		}
 	else {
 		if (f_v) {
-			cout << "surface::create_lambda_from_trihedral_pair_and_arc "
+			cout << "surface_domain::create_lambda_from_trihedral_pair_and_arc "
 					"after find_point_not_on_six_curves" << endl;
 			cout << "pt=" << pt << endl;
 			}
@@ -2993,13 +2994,13 @@ void surface::create_lambda_from_trihedral_pair_and_arc(
 	F->PG_element_rank_modified(w, 1, 2, lambda_rk);
 	
 	if (f_v) {
-		cout << "surface::create_lambda_from_trihedral_"
+		cout << "surface_domain::create_lambda_from_trihedral_"
 				"pair_and_arc done" << endl;
 		}
 }
 
 
-void surface::create_surface_equation_from_trihedral_pair(int *arc6, 
+void surface_domain::create_surface_equation_from_trihedral_pair(int *arc6,
 	int *Web_of_cubic_curves, 
 	int *The_plane_equations, int t_idx, int *surface_equation, 
 	int &lambda, 
@@ -3012,7 +3013,7 @@ void surface::create_surface_equation_from_trihedral_pair(int *arc6,
 	int lambda_rk;
 
 	if (f_v) {
-		cout << "surface::create_surface_equation_from_"
+		cout << "surface_domain::create_surface_equation_from_"
 				"trihedral_pair t_idx=" << t_idx << endl;
 		}
 	
@@ -3050,12 +3051,12 @@ void surface::create_surface_equation_from_trihedral_pair(int *arc6,
 	FREE_int(The_surface_equations);
 
 	if (f_v) {
-		cout << "surface::create_surface_equation_from_"
+		cout << "surface_domain::create_surface_equation_from_"
 				"trihedral_pair done" << endl;
 		}
 }
 
-void surface::extract_six_curves_from_web(
+void surface_domain::extract_six_curves_from_web(
 	int *Web_of_cubic_curves,
 	int *row_col_Eckardt_points, int *six_curves, 
 	int verbose_level)
@@ -3064,7 +3065,7 @@ void surface::extract_six_curves_from_web(
 	int i;
 	
 	if (f_v) {
-		cout << "surface::extract_six_curves_from_web" << endl;
+		cout << "surface_domain::extract_six_curves_from_web" << endl;
 		}
 	for (i = 0; i < 6; i++) {
 		int_vec_copy(Web_of_cubic_curves + row_col_Eckardt_points[i] * 10, 
@@ -3076,11 +3077,11 @@ void surface::extract_six_curves_from_web(
 		int_matrix_print(six_curves, 6, 10);
 		}
 	if (f_v) {
-		cout << "surface::extract_six_curves_from_web done" << endl;
+		cout << "surface_domain::extract_six_curves_from_web done" << endl;
 		}
 }
 
-void surface::find_point_not_on_six_curves(int *arc6,
+void surface_domain::find_point_not_on_six_curves(int *arc6,
 	int *six_curves,
 	int &pt, int &f_point_was_found, 
 	int verbose_level)
@@ -3091,8 +3092,8 @@ void surface::find_point_not_on_six_curves(int *arc6,
 	int idx, a;
 	
 	if (f_v) {
-		cout << "surface::find_point_not_on_six_curves" << endl;
-		cout << "surface::find_point_not_on_six_curves "
+		cout << "surface_domain::find_point_not_on_six_curves" << endl;
+		cout << "surface_domain::find_point_not_on_six_curves "
 			"P2->N_points="
 			<< P2->N_points << endl;
 		}
@@ -3121,12 +3122,12 @@ void surface::find_point_not_on_six_curves(int *arc6,
 		f_point_was_found = TRUE;
 		}
 	if (f_v) {
-		cout << "surface::find_point_not_on_six_curves "
+		cout << "surface_domain::find_point_not_on_six_curves "
 				"done" << endl;
 		}
 }
 
-int surface::plane_from_three_lines(int *three_lines, 
+int surface_domain::plane_from_three_lines(int *three_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3134,23 +3135,23 @@ int surface::plane_from_three_lines(int *three_lines,
 	int rk;
 	
 	if (f_v) {
-		cout << "surface::plane_from_three_lines" << endl;
+		cout << "surface_domain::plane_from_three_lines" << endl;
 		}
 	unrank_lines(Basis, three_lines, 3);
 	rk = F->Gauss_easy(Basis, 6, 4);
 	if (rk != 3) {
-		cout << "surface::plane_from_three_lines rk != 3" << endl;
+		cout << "surface_domain::plane_from_three_lines rk != 3" << endl;
 		exit(1);
 		}
 	rk = rank_plane(Basis);
 	
 	if (f_v) {
-		cout << "surface::plane_from_three_lines done" << endl;
+		cout << "surface_domain::plane_from_three_lines done" << endl;
 		}
 	return rk;
 }
 
-void surface::Trihedral_pairs_to_planes(int *Lines, int *Planes, 
+void surface_domain::Trihedral_pairs_to_planes(int *Lines, int *Planes,
 	int verbose_level)
 // Planes[nb_trihedral_pairs * 6]
 {
@@ -3160,7 +3161,7 @@ void surface::Trihedral_pairs_to_planes(int *Lines, int *Planes,
 	int three_lines[3];
 
 	if (f_v) {
-		cout << "surface::Trihedral_pairs_to_planes" << endl;
+		cout << "surface_domain::Trihedral_pairs_to_planes" << endl;
 		}
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 3; i++) {
@@ -3196,18 +3197,18 @@ void surface::Trihedral_pairs_to_planes(int *Lines, int *Planes,
 			Planes, nb_trihedral_pairs, 6, FALSE /* f_tex */);
 		}
 	if (f_v) {
-		cout << "surface::Trihedral_pairs_to_planes done" << endl;
+		cout << "surface_domain::Trihedral_pairs_to_planes done" << endl;
 		}
 }
 
-void surface::create_surface_family_S(int a,
+void surface_domain::create_surface_family_S(int a,
 	int *Lines27,
 	int *equation20, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface::create_surface_family_S" << endl;
+		cout << "surface_domain::create_surface_family_S" << endl;
 		}
 
 	int nb_E = 0;
@@ -3215,7 +3216,7 @@ void surface::create_surface_family_S(int a,
 	int alpha, beta;
 
 	if (f_v) {
-		cout << "surface::create_surface_family_S "
+		cout << "surface_domain::create_surface_family_S "
 				"creating surface for a=" << a << ":" << endl;
 		}
 
@@ -3226,7 +3227,7 @@ void surface::create_surface_family_S(int a,
 		0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "surface::create_surface_family_S "
+		cout << "surface_domain::create_surface_family_S "
 				"The double six is:" << endl;
 		int_matrix_print(Lines27, 2, 6);
 		cout << "The lines are : ";
@@ -3235,12 +3236,12 @@ void surface::create_surface_family_S(int a,
 		}
 
 	if (f_v) {
-		cout << "surface::create_surface_family_S "
+		cout << "surface_domain::create_surface_family_S "
 				"done" << endl;
 		}
 }
 
-void surface::compute_tritangent_planes(int *Lines, 
+void surface_domain::compute_tritangent_planes(int *Lines,
 	int *&Tritangent_planes, int &nb_tritangent_planes, 
 	int *&Unitangent_planes, int &nb_unitangent_planes, 
 	int *&Lines_in_tritangent_plane, 
@@ -3254,7 +3255,7 @@ void surface::compute_tritangent_planes(int *Lines,
 	int i, j, h, c;
 
 	if (f_v) {
-		cout << "surface::compute_tritangent_planes" << endl;
+		cout << "surface_domain::compute_tritangent_planes" << endl;
 		}
 	if (f_v) {
 		cout << "Lines=" << endl;
@@ -3278,7 +3279,7 @@ void surface::compute_tritangent_planes(int *Lines,
 
 	Plane_type.init(The_plane_type, nb_planes, FALSE, 0);
 	if (f_v) {
-		cout << "surface::compute_tritangent_planes The plane type is: ";
+		cout << "surface_domain::compute_tritangent_planes The plane type is: ";
 		Plane_type.print_naked(TRUE);
 		cout << endl;
 		}
@@ -3287,7 +3288,7 @@ void surface::compute_tritangent_planes(int *Lines,
 	Plane_type.get_class_by_value(Tritangent_planes, 
 		nb_tritangent_planes, 3 /* value */, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface::compute_tritangent_planes "
+		cout << "surface_domain::compute_tritangent_planes "
 				"The tritangent planes are: ";
 		int_vec_print(cout, Tritangent_planes, nb_tritangent_planes);
 		cout << endl;
@@ -3302,7 +3303,7 @@ void surface::compute_tritangent_planes(int *Lines,
 				}
 			}
 		if (c != 3) {
-			cout << "surface::compute_tritangent_planes c != 3" << endl;
+			cout << "surface_domain::compute_tritangent_planes c != 3" << endl;
 			exit(1);
 			}
 		}
@@ -3311,7 +3312,7 @@ void surface::compute_tritangent_planes(int *Lines,
 	Plane_type.get_class_by_value(Unitangent_planes, 
 		nb_unitangent_planes, 1 /* value */, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface::compute_tritangent_planes "
+		cout << "surface_domain::compute_tritangent_planes "
 				"The unitangent planes are: ";
 		int_vec_print(cout, Unitangent_planes, nb_unitangent_planes);
 		cout << endl;
@@ -3326,7 +3327,7 @@ void surface::compute_tritangent_planes(int *Lines,
 				}
 			}
 		if (c != 1) {
-			cout << "surface::compute_tritangent_planes c != 1" << endl;
+			cout << "surface_domain::compute_tritangent_planes c != 1" << endl;
 			exit(1);
 			}
 		}
@@ -3335,11 +3336,11 @@ void surface::compute_tritangent_planes(int *Lines,
 	FREE_int(The_plane_type);
 
 	if (f_v) {
-		cout << "surface::compute_tritangent_planes done" << endl;
+		cout << "surface_domain::compute_tritangent_planes done" << endl;
 		}
 }
 
-void surface::compute_external_lines_on_three_tritangent_planes(
+void surface_domain::compute_external_lines_on_three_tritangent_planes(
 	int *Lines, int *&External_lines, int &nb_external_lines, 
 	int verbose_level)
 {
@@ -3347,7 +3348,7 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 	int i, j;
 	
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_"
+		cout << "surface_domain::compute_external_lines_on_"
 				"three_tritangent_planes" << endl;
 		}
 
@@ -3360,7 +3361,7 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 	int *Line_in_unitangent_plane; // [nb_unitangent_planes]
 	
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_"
+		cout << "surface_domain::compute_external_lines_on_"
 				"three_tritangent_planes computing "
 				"tritangent planes:" << endl;
 		}
@@ -3372,7 +3373,7 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_"
+		cout << "surface_domain::compute_external_lines_on_"
 				"three_tritangent_planes Lines_in_"
 				"tritangent_plane: " << endl;
 		print_integer_matrix_with_standard_labels(cout, 
@@ -3389,7 +3390,7 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 
 
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_"
+		cout << "surface_domain::compute_external_lines_on_"
 				"three_tritangent_planes Computing intersection "
 				"matrix of tritangent planes:" << endl;
 		}
@@ -3421,7 +3422,7 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 		}
 
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_three_"
+		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes The tritangent planes intersecting "
 				"in surface lines:" << endl;
 		print_integer_matrix_with_standard_labels(cout, 
@@ -3435,7 +3436,7 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 	Plane_intersection_type.init(Plane_intersections, 
 		nb_tritangent_planes * nb_tritangent_planes, TRUE, 0);
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_three_"
+		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes The surface lines in terms "
 				"of plane intersections are: ";
 		Plane_intersection_type.print_naked(TRUE);
@@ -3444,7 +3445,7 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 
 
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_three_"
+		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes The tritangent planes "
 				"intersecting in general lines:" << endl;
 		print_integer_matrix_with_standard_labels(cout,
@@ -3469,12 +3470,12 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 	int_vec_heapsort(External_lines, nb_external_lines);
 
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_three_"
+		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes The non-surface lines which are on "
 				"three tritangent planes are:" << endl;
 		int_vec_print(cout, External_lines, nb_external_lines);
 		cout << endl;
-		cout << "surface::compute_external_lines_on_three_"
+		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes these lines are:" << endl;
 		P->Grass_lines->print_set(External_lines, nb_external_lines);
 		}
@@ -3488,12 +3489,12 @@ void surface::compute_external_lines_on_three_tritangent_planes(
 	FREE_int(Plane_intersections_general);
 
 	if (f_v) {
-		cout << "surface::compute_external_lines_on_three_"
+		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes done" << endl;
 		}
 }
 
-void surface::init_double_sixes(int verbose_level)
+void surface_domain::init_double_sixes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, k, ij, u, v, l, m, n, h, a, b, c;
@@ -3501,7 +3502,7 @@ void surface::init_double_sixes(int verbose_level)
 	int size_complement;
 	
 	if (f_v) {
-		cout << "surface::init_double_sixes" << endl;
+		cout << "surface_domain::init_double_sixes" << endl;
 		}
 	Double_six = NEW_int(36 * 12);
 	h = 0;
@@ -3566,7 +3567,7 @@ void surface::init_double_sixes(int verbose_level)
 		}
 
 	if (h != 36) {
-		cout << "surface::init_double_sixes h != 36" << endl;
+		cout << "surface_domain::init_double_sixes h != 36" << endl;
 		exit(1);
 		}
 
@@ -3606,11 +3607,11 @@ void surface::init_double_sixes(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "surface::init_double_sixes done" << endl;
+		cout << "surface_domain::init_double_sixes done" << endl;
 		}
 }
 
-void surface::create_half_double_sixes(int verbose_level)
+void surface_domain::create_half_double_sixes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, c, ij, v, l;
@@ -3618,7 +3619,7 @@ void surface::create_half_double_sixes(int verbose_level)
 	int size_complement;
 	
 	if (f_v) {
-		cout << "surface::create_half_double_sixes" << endl;
+		cout << "surface_domain::create_half_double_sixes" << endl;
 		}
 	Half_double_sixes = NEW_int(72 * 6);
 	Half_double_six_to_double_six = NEW_int(72);
@@ -3681,11 +3682,11 @@ void surface::create_half_double_sixes(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "surface::create_half_double_sixes done" << endl;
+		cout << "surface_domain::create_half_double_sixes done" << endl;
 		}
 }
 
-int surface::find_half_double_six(int *half_double_six)
+int surface_domain::find_half_double_six(int *half_double_six)
 {
 	int i;
 
@@ -3696,12 +3697,12 @@ int surface::find_half_double_six(int *half_double_six)
 			return i;
 			}
 		}
-	cout << "surface::find_half_double_six did not find "
+	cout << "surface_domain::find_half_double_six did not find "
 			"half double six" << endl;
 	exit(1);
 }
 
-void surface::ijklm2n(int i, int j, int k, int l, int m, int &n)
+void surface_domain::ijklm2n(int i, int j, int k, int l, int m, int &n)
 {
 	int v[6];
 	int size_complement;
@@ -3713,13 +3714,13 @@ void surface::ijklm2n(int i, int j, int k, int l, int m, int &n)
 	v[4] = m;
 	set_complement_safe(v, 5, v + 5, size_complement, 6);
 	if (size_complement != 1) {
-		cout << "surface::ijklm2n size_complement != 1" << endl;
+		cout << "surface_domain::ijklm2n size_complement != 1" << endl;
 		exit(1);
 		}
 	n = v[5];
 }
 
-void surface::ijkl2mn(int i, int j, int k, int l, int &m, int &n)
+void surface_domain::ijkl2mn(int i, int j, int k, int l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
@@ -3730,14 +3731,14 @@ void surface::ijkl2mn(int i, int j, int k, int l, int &m, int &n)
 	v[3] = l;
 	set_complement_safe(v, 4, v + 4, size_complement, 6);
 	if (size_complement != 2) {
-		cout << "surface::ijkl2mn size_complement != 2" << endl;
+		cout << "surface_domain::ijkl2mn size_complement != 2" << endl;
 		exit(1);
 		}
 	m = v[4];
 	n = v[5];
 }
 
-void surface::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
+void surface_domain::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
@@ -3745,12 +3746,12 @@ void surface::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 	v[0] = i;
 	v[1] = j;
 	v[2] = k;
-	cout << "surface::ijk2lmn v=";
+	cout << "surface_domain::ijk2lmn v=";
 	int_vec_print(cout, v, 3);
 	cout << endl;
 	set_complement_safe(v, 3, v + 3, size_complement, 6);
 	if (size_complement != 3) {
-		cout << "surface::ijk2lmn size_complement != 3" << endl;
+		cout << "surface_domain::ijk2lmn size_complement != 3" << endl;
 		cout << "size_complement=" << size_complement << endl;
 		exit(1);
 		}
@@ -3759,7 +3760,7 @@ void surface::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 	n = v[5];
 }
 
-void surface::ij2klmn(int i, int j, int &k, int &l, int &m, int &n)
+void surface_domain::ij2klmn(int i, int j, int &k, int &l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
@@ -3768,7 +3769,7 @@ void surface::ij2klmn(int i, int j, int &k, int &l, int &m, int &n)
 	v[1] = j;
 	set_complement_safe(v, 2, v + 2, size_complement, 6);
 	if (size_complement != 4) {
-		cout << "surface::ij2klmn size_complement != 4" << endl;
+		cout << "surface_domain::ij2klmn size_complement != 4" << endl;
 		exit(1);
 		}
 	k = v[2];
@@ -3777,7 +3778,7 @@ void surface::ij2klmn(int i, int j, int &k, int &l, int &m, int &n)
 	n = v[5];
 }
 
-void surface::get_half_double_six_associated_with_Clebsch_map(
+void surface_domain::get_half_double_six_associated_with_Clebsch_map(
 	int line1, int line2, int transversal, 
 	int hds[6],
 	int verbose_level)
@@ -3789,12 +3790,12 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 	int null;
 	
 	if (f_v) {
-		cout << "surface::get_half_double_six_associated_"
+		cout << "surface_domain::get_half_double_six_associated_"
 				"with_Clebsch_map" << endl;
 		}
 
 	if (line1 > line2) {
-		cout << "surface::get_half_double_six_associated_"
+		cout << "surface_domain::get_half_double_six_associated_"
 				"with_Clebsch_map line1 > line2" << endl;
 		exit(1);
 		}
@@ -3834,7 +3835,7 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 				hds[5] = line_bi(n);
 				}
 			else {
-				cout << "surface::get_half_doble_six_associated_"
+				cout << "surface_domain::get_half_doble_six_associated_"
 						"with_Clebsch_map not {i,j} = {i1,j1}" << endl;
 				exit(1);
 				}
@@ -3867,7 +3868,7 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 				hds[5] = line_ai(n);
 				}
 			else {
-				cout << "surface::get_half_doble_six_associated_"
+				cout << "surface_domain::get_half_doble_six_associated_"
 						"with_Clebsch_map not {i,j} = {i1,j1}" << endl;
 				exit(1);
 				}
@@ -3877,12 +3878,12 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 		index_of_line(line1, i, null);
 		index_of_line(line2, j, null);
 		if (j != i) {
-			cout << "surface::get_half_double_six_associated_"
+			cout << "surface_domain::get_half_double_six_associated_"
 					"with_Clebsch_map j != i" << endl;
 			exit(1);
 			}
 		if (t3 != 2) {
-			cout << "surface::get_half_double_six_associated_"
+			cout << "surface_domain::get_half_double_six_associated_"
 					"with_Clebsch_map t3 != 2" << endl;
 			exit(1);
 			}
@@ -3914,7 +3915,7 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 				l = i1;
 				}
 			else {
-				cout << "surface::get_half_double_six_associated_"
+				cout << "surface_domain::get_half_double_six_associated_"
 						"with_Clebsch_map error" << endl;
 				exit(1);
 				}
@@ -3936,7 +3937,7 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 				j = tmp;
 				}
 			if (j1 != j) {
-				cout << "surface::get_half_double_six_associated_"
+				cout << "surface_domain::get_half_double_six_associated_"
 						"with_Clebsch_map error" << endl;
 				exit(1);
 				}
@@ -3962,7 +3963,7 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 				l = i1;
 				}
 			else {
-				cout << "surface::get_half_double_six_associated_"
+				cout << "surface_domain::get_half_double_six_associated_"
 						"with_Clebsch_map error" << endl;
 				exit(1);
 				}
@@ -3984,7 +3985,7 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 				j = tmp;
 				}
 			if (j1 != j) {
-				cout << "surface::get_half_double_six_associated_"
+				cout << "surface_domain::get_half_double_six_associated_"
 						"with_Clebsch_map error" << endl;
 				exit(1);
 				}
@@ -4018,14 +4019,14 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 			k = i1;
 			}
 		else {
-			cout << "surface::get_half_double_six_associated_"
+			cout << "surface_domain::get_half_double_six_associated_"
 					"with_Clebsch_map error" << endl;
 			exit(1);
 			}
 		if (t3 == 0) { // ai
 			index_of_line(transversal, i1, null);
 			if (i1 != i) {
-				cout << "surface::get_half_double_six_associated_"
+				cout << "surface_domain::get_half_double_six_associated_"
 						"with_Clebsch_map error" << endl;
 				exit(1);
 				}
@@ -4041,7 +4042,7 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 		else if (t3 == 1) { // bi
 			index_of_line(transversal, i1, null);
 			if (i1 != i) {
-				cout << "surface::get_half_double_six_associated_"
+				cout << "surface_domain::get_half_double_six_associated_"
 						"with_Clebsch_map error" << endl;
 				exit(1);
 				}
@@ -4067,17 +4068,17 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 			}
 		}
 	else {
-		cout << "surface::get_half_double_six_associated_"
+		cout << "surface_domain::get_half_double_six_associated_"
 				"with_Clebsch_map error" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "surface::get_half_double_six_associated_"
+		cout << "surface_domain::get_half_double_six_associated_"
 				"with_Clebsch_map done" << endl;
 		}
 }
 
-void surface::prepare_clebsch_map(int ds, int ds_row, 
+void surface_domain::prepare_clebsch_map(int ds, int ds_row,
 	int &line1, int &line2, int &transversal, 
 	int verbose_level)
 {
@@ -4141,7 +4142,7 @@ void surface::prepare_clebsch_map(int ds, int ds_row,
 	
 }
 
-int surface::clebsch_map(int *Lines, int *Pts, int nb_pts, 
+int surface_domain::clebsch_map(int *Lines, int *Pts, int nb_pts,
 	int line_idx[2], int plane_rk, 
 	int *Image_rk, int *Image_coeff, 
 	int verbose_level)
@@ -4171,7 +4172,7 @@ int surface::clebsch_map(int *Lines, int *Pts, int nb_pts,
 	int base_cols[4];
 	
 	if (f_v) {
-		cout << "surface::clebsch_map" << endl;
+		cout << "surface_domain::clebsch_map" << endl;
 		}
 	P->Grass_planes->unrank_int_here(Plane, plane_rk,
 			0 /* verbose_level */);
@@ -4209,7 +4210,7 @@ int surface::clebsch_map(int *Lines, int *Pts, int nb_pts,
 			}
 		}
 	if (i == 2) {
-		cout << "surface::clebsch_map Line a lies "
+		cout << "surface_domain::clebsch_map Line a lies "
 				"inside the hyperplane" << endl;
 		return FALSE;
 		}
@@ -4228,7 +4229,7 @@ int surface::clebsch_map(int *Lines, int *Pts, int nb_pts,
 			}
 		}
 	if (i == 2) {
-		cout << "surface::clebsch_map Line b lies "
+		cout << "surface_domain::clebsch_map Line b lies "
 				"inside the hyperplane" << endl;
 		return FALSE;
 		}
@@ -4341,19 +4342,19 @@ int surface::clebsch_map(int *Lines, int *Pts, int nb_pts,
 		}
 	
 	if (f_v) {
-		cout << "surface::clebsch_map done" << endl;
+		cout << "surface_domain::clebsch_map done" << endl;
 		}
 	return TRUE;
 }
 
-void surface::clebsch_cubics(int verbose_level)
+void surface_domain::clebsch_cubics(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 
 
 	if (f_v) {
-		cout << "surface::clebsch_cubics" << endl;
+		cout << "surface_domain::clebsch_cubics" << endl;
 		}
 
 	if (!f_has_large_polynomial_domains) {
@@ -4401,7 +4402,7 @@ void surface::clebsch_cubics(int verbose_level)
 	int c0, c1;
 
 	if (f_v) {
-		cout << "surface::clebsch_cubics "
+		cout << "surface_domain::clebsch_cubics "
 				"Setting up the matrix P:" << endl;
 		}
 	for (i = 0; i < 3; i++) {
@@ -4427,7 +4428,7 @@ void surface::clebsch_cubics(int verbose_level)
 
 	
 	if (f_v) {
-		cout << "surface::clebsch_cubics the matrix "
+		cout << "surface_domain::clebsch_cubics the matrix "
 				"Clebsch_P is:" << endl;
 		}
 	for (i = 0; i < 3; i++) {
@@ -4446,7 +4447,7 @@ void surface::clebsch_cubics(int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface::clebsch_cubics allocating cubics" << endl;
+		cout << "surface_domain::clebsch_cubics allocating cubics" << endl;
 		}
 
 	Cubics = NEW_int(4 * nb_monomials6);
@@ -4465,7 +4466,7 @@ void surface::clebsch_cubics(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "surface::clebsch_cubics computing "
+		cout << "surface_domain::clebsch_cubics computing "
 				"C[3] = the determinant" << endl;
 		}
 	// compute C[3] as the negative of the determinant
@@ -4502,7 +4503,7 @@ void surface::clebsch_cubics(int verbose_level)
 	int size_complement, scalar;
 
 	if (f_v) {
-		cout << "surface::clebsch_cubics computing adjugate" << endl;
+		cout << "surface_domain::clebsch_cubics computing adjugate" << endl;
 		}
 	// compute adjugate:
 	for (i = 0; i < 3; i++) {
@@ -4525,7 +4526,7 @@ void surface::clebsch_cubics(int verbose_level)
 
 	// multiply adjugate * last column:
 	if (f_v) {
-		cout << "surface::clebsch_cubics multiply adjugate "
+		cout << "surface_domain::clebsch_cubics multiply adjugate "
 				"times last column" << endl;
 		}
 
@@ -4537,7 +4538,7 @@ void surface::clebsch_cubics(int verbose_level)
 		}
 	
 	if (f_v) {
-		cout << "surface::clebsch_cubics We have "
+		cout << "surface_domain::clebsch_cubics We have "
 				"computed the Clebsch cubics" << endl;
 		}
 	
@@ -4580,11 +4581,11 @@ void surface::clebsch_cubics(int verbose_level)
 	FREE_int(Adjugate);
 
 	if (f_v) {
-		cout << "surface::clebsch_cubics done" << endl;
+		cout << "surface_domain::clebsch_cubics done" << endl;
 		}
 }
 
-void surface::multiply_222_27_and_add(int *M1, int *M2, int *M3, 
+void surface_domain::multiply_222_27_and_add(int *M1, int *M2, int *M3,
 	int scalar, int *MM, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4592,11 +4593,11 @@ void surface::multiply_222_27_and_add(int *M1, int *M2, int *M3,
 	int M[27];
 
 	if (f_v) {
-		cout << "surface::multiply_222_27_and_add" << endl;
+		cout << "surface_domain::multiply_222_27_and_add" << endl;
 		}
 
 	if (!f_has_large_polynomial_domains) {
-		cout << "surface::multiply_222_27_and_add "
+		cout << "surface_domain::multiply_222_27_and_add "
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		exit(1);
 		}
@@ -4623,7 +4624,7 @@ void surface::multiply_222_27_and_add(int *M1, int *M2, int *M3,
 					M, 27);
 				idx = Poly6_27->index_of_monomial(M);
 				if (idx >= nb_monomials6) {
-					cout << "surface::multiply_222_27_and_add "
+					cout << "surface_domain::multiply_222_27_and_add "
 							"idx >= nb_monomials6" << endl;
 					exit(1);
 					}
@@ -4635,11 +4636,11 @@ void surface::multiply_222_27_and_add(int *M1, int *M2, int *M3,
 	
 	
 	if (f_v) {
-		cout << "surface::multiply_222_27_and_add done" << endl;
+		cout << "surface_domain::multiply_222_27_and_add done" << endl;
 		}
 }
 
-void surface::minor22(int **P3, int i1, int i2, int j1, int j2, 
+void surface_domain::minor22(int **P3, int i1, int i2, int j1, int j2,
 	int scalar, int *Ad, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4647,11 +4648,11 @@ void surface::minor22(int **P3, int i1, int i2, int j1, int j2,
 	int M[27];
 
 	if (f_v) {
-		cout << "surface::minor22" << endl;
+		cout << "surface_domain::minor22" << endl;
 		}
 
 	if (!f_has_large_polynomial_domains) {
-		cout << "surface::minor22 "
+		cout << "surface_domain::minor22 "
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		exit(1);
 		}
@@ -4672,7 +4673,7 @@ void surface::minor22(int **P3, int i1, int i2, int j1, int j2,
 				M, 27);
 			idx = Poly4_27->index_of_monomial(M);
 			if (idx >= nb_monomials4) {
-				cout << "surface::minor22 "
+				cout << "surface_domain::minor22 "
 						"idx >= nb_monomials4" << endl;
 				exit(1);
 				}
@@ -4696,7 +4697,7 @@ void surface::minor22(int **P3, int i1, int i2, int j1, int j2,
 				M, 27);
 			idx = Poly4_27->index_of_monomial(M);
 			if (idx >= nb_monomials4) {
-				cout << "surface::minor22 "
+				cout << "surface_domain::minor22 "
 						"idx >= nb_monomials4" << endl;
 				exit(1);
 				}
@@ -4708,11 +4709,11 @@ void surface::minor22(int **P3, int i1, int i2, int j1, int j2,
 	
 	
 	if (f_v) {
-		cout << "surface::minor22 done" << endl;
+		cout << "surface_domain::minor22 done" << endl;
 		}
 }
 
-void surface::multiply42_and_add(int *M1, int *M2,
+void surface_domain::multiply42_and_add(int *M1, int *M2,
 		int *MM, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4720,11 +4721,11 @@ void surface::multiply42_and_add(int *M1, int *M2,
 	int M[27];
 
 	if (f_v) {
-		cout << "surface::multiply42_and_add" << endl;
+		cout << "surface_domain::multiply42_and_add" << endl;
 		}
 
 	if (!f_has_large_polynomial_domains) {
-		cout << "surface::multiply42_and_add "
+		cout << "surface_domain::multiply42_and_add "
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		exit(1);
 		}
@@ -4744,7 +4745,7 @@ void surface::multiply42_and_add(int *M1, int *M2,
 				M, 27);
 			idx = Poly6_27->index_of_monomial(M);
 			if (idx >= nb_monomials6) {
-				cout << "surface::multiply42_and_add "
+				cout << "surface_domain::multiply42_and_add "
 						"idx >= nb_monomials6" << endl;
 				exit(1);
 				}
@@ -4753,11 +4754,11 @@ void surface::multiply42_and_add(int *M1, int *M2,
 		}
 	
 	if (f_v) {
-		cout << "surface::multiply42_and_add done" << endl;
+		cout << "surface_domain::multiply42_and_add done" << endl;
 		}
 }
 
-void surface::prepare_system_from_FG(int *F_planes, int *G_planes, 
+void surface_domain::prepare_system_from_FG(int *F_planes, int *G_planes,
 	int lambda, int *&system, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4765,7 +4766,7 @@ void surface::prepare_system_from_FG(int *F_planes, int *G_planes,
 
 
 	if (f_v) {
-		cout << "surface::prepare_system_from_FG" << endl;
+		cout << "surface_domain::prepare_system_from_FG" << endl;
 		}
 	system = NEW_int(3 * 4 * 3);
 	int_vec_zero(system, 3 * 4 * 3);
@@ -4790,12 +4791,12 @@ void surface::prepare_system_from_FG(int *F_planes, int *G_planes,
 			}
 		}
 	if (f_v) {
-		cout << "surface::prepare_system_from_FG done" << endl;
+		cout << "surface_domain::prepare_system_from_FG done" << endl;
 		}
 }
 
 
-void surface::compute_nine_lines(int *F_planes, int *G_planes, 
+void surface_domain::compute_nine_lines(int *F_planes, int *G_planes,
 	int *nine_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4803,7 +4804,7 @@ void surface::compute_nine_lines(int *F_planes, int *G_planes,
 	int Basis[16];
 
 	if (f_v) {
-		cout << "surface::compute_nine_lines" << endl;
+		cout << "surface_domain::compute_nine_lines" << endl;
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -4820,11 +4821,11 @@ void surface::compute_nine_lines(int *F_planes, int *G_planes,
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "surface::compute_nine_lines done" << endl;
+		cout << "surface_domain::compute_nine_lines done" << endl;
 		}
 }
 
-void surface::compute_nine_lines_by_dual_point_ranks(
+void surface_domain::compute_nine_lines_by_dual_point_ranks(
 	int *F_planes_rank,
 	int *G_planes_rank, int *nine_lines, int verbose_level)
 {
@@ -4835,7 +4836,7 @@ void surface::compute_nine_lines_by_dual_point_ranks(
 	int Basis[16];
 
 	if (f_v) {
-		cout << "surface::compute_nine_lines_by_dual_"
+		cout << "surface_domain::compute_nine_lines_by_dual_"
 				"point_ranks" << endl;
 		}
 	for (i = 0; i < 3; i++) {
@@ -4860,18 +4861,18 @@ void surface::compute_nine_lines_by_dual_point_ranks(
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "surface::compute_nine_lines_by_dual_"
+		cout << "surface_domain::compute_nine_lines_by_dual_"
 				"point_ranks done" << endl;
 		}
 }
 
-void surface::split_nice_equation(int *nice_equation, 
+void surface_domain::split_nice_equation(int *nice_equation,
 	int *&f1, int *&f2, int *&f3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface::split_nice_equation" << endl;
+		cout << "surface_domain::split_nice_equation" << endl;
 		}
 	int M[4];
 	int i, a, idx;
@@ -4890,7 +4891,7 @@ void surface::split_nice_equation(int *nice_equation,
 			}
 		int_vec_copy(Poly3_4->Monomials + i * 4, M, 4);
 		if (M[0] == 3) {
-			cout << "surface::split_nice_equation the x_0^3 "
+			cout << "surface_domain::split_nice_equation the x_0^3 "
 				"term is supposed to be zero" << endl;
 			exit(1);
 			}
@@ -4908,11 +4909,11 @@ void surface::split_nice_equation(int *nice_equation,
 			}
 		}
 	if (f_v) {
-		cout << "surface::split_nice_equation done" << endl;
+		cout << "surface_domain::split_nice_equation done" << endl;
 		}
 }
 
-void surface::assemble_tangent_quadric(
+void surface_domain::assemble_tangent_quadric(
 	int *f1, int *f2, int *f3,
 	int *&tangent_quadric, int verbose_level)
 // 2*x_0*f_1 + f_2
@@ -4920,7 +4921,7 @@ void surface::assemble_tangent_quadric(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface::assemble_tangent_quadric" << endl;
+		cout << "surface_domain::assemble_tangent_quadric" << endl;
 		}
 	int M[4];
 	int i, a, idx, two;
@@ -4952,11 +4953,11 @@ void surface::assemble_tangent_quadric(
 		tangent_quadric[idx] = a;
 		}
 	if (f_v) {
-		cout << "surface::assemble_tangent_quadric done" << endl;
+		cout << "surface_domain::assemble_tangent_quadric done" << endl;
 		}
 }
 
-void surface::tritangent_plane_to_trihedral_pair_and_position(
+void surface_domain::tritangent_plane_to_trihedral_pair_and_position(
 	int tritangent_plane_idx, 
 	int &trihedral_pair_idx, int &position, int verbose_level)
 {
@@ -5010,18 +5011,18 @@ void surface::tritangent_plane_to_trihedral_pair_and_position(
 		};
 
 	if (f_v) {
-		cout << "surface::tritangent_plane_to_trihedral_"
+		cout << "surface_domain::tritangent_plane_to_trihedral_"
 				"pair_and_position" << endl;
 		}
 	trihedral_pair_idx = Table[2 * tritangent_plane_idx + 0];
 	position = Table[2 * tritangent_plane_idx + 1];
 	if (f_v) {
-		cout << "surface::tritangent_plane_to_trihedral_"
+		cout << "surface_domain::tritangent_plane_to_trihedral_"
 				"pair_and_position done" << endl;
 		}
 }
 
-void surface::do_arc_lifting_with_two_lines(
+void surface_domain::do_arc_lifting_with_two_lines(
 	int *Arc6, int p1_idx, int p2_idx, int partition_rk,
 	int line1, int line2,
 	int *coeff20, int *lines27,
@@ -5033,7 +5034,7 @@ void surface::do_arc_lifting_with_two_lines(
 
 
 	if (f_v) {
-		cout << "surface::do_arc_lifting_with_two_lines" << endl;
+		cout << "surface_domain::do_arc_lifting_with_two_lines" << endl;
 		cout << "Arc6: ";
 		int_vec_print(cout, Arc6, 6);
 		cout << endl;
@@ -5046,7 +5047,7 @@ void surface::do_arc_lifting_with_two_lines(
 	P2 = Arc6[p2_idx];
 
 	if (f_v) {
-		cout << "surface::do_arc_lifting_with_two_lines before "
+		cout << "surface_domain::do_arc_lifting_with_two_lines before "
 				"P->rearrange_arc_for_lifting" << endl;
 		}
 	P->rearrange_arc_for_lifting(Arc6,
@@ -5054,7 +5055,7 @@ void surface::do_arc_lifting_with_two_lines(
 				verbose_level);
 
 	if (f_v) {
-		cout << "surface::do_arc_lifting_with_two_lines after "
+		cout << "surface_domain::do_arc_lifting_with_two_lines after "
 				"P->rearrange_arc_for_lifting" << endl;
 		cout << "arc: ";
 		int_vec_print(cout, arc, 6);
@@ -5067,12 +5068,12 @@ void surface::do_arc_lifting_with_two_lines(
 
 
 	if (f_v) {
-		cout << "surface::do_arc_lifting_with_two_lines before "
+		cout << "surface_domain::do_arc_lifting_with_two_lines before "
 				"AL->create_surface" << endl;
 		}
 	AL->create_surface(this, arc, line1, line2, verbose_level);
 	if (f_v) {
-		cout << "surface::do_arc_lifting_with_two_lines after "
+		cout << "surface_domain::do_arc_lifting_with_two_lines after "
 				"AL->create_surface" << endl;
 		cout << "equation: ";
 		int_vec_print(cout, AL->coeff, 20);
@@ -5087,7 +5088,7 @@ void surface::do_arc_lifting_with_two_lines(
 
 
 	if (f_v) {
-		cout << "surface::do_arc_lifting_with_two_lines done" << endl;
+		cout << "surface_domain::do_arc_lifting_with_two_lines done" << endl;
 	}
 }
 

@@ -195,7 +195,7 @@ void eckardt_point::init_by_rank(int rk)
 }
 
 
-void eckardt_point::three_lines(surface *S, int *three_lines)
+void eckardt_point::three_lines(surface_domain *S, int *three_lines)
 {
 	if (len == 2) {
 		three_lines[0] = S->line_ai(index[0]);

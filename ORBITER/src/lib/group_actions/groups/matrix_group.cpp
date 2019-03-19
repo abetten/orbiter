@@ -912,7 +912,7 @@ void matrix_group::general_linear_action_from_the_right(
 }
 
 void matrix_group::substitute_surface_eqation(int *Elt,
-		int *coeff_in, int *coeff_out, surface *Surf,
+		int *coeff_in, int *coeff_out, surface_domain *Surf,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

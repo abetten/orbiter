@@ -74,7 +74,7 @@ void surface_with_action::freeself()
 	null();
 }
 
-void surface_with_action::init(surface *Surf,
+void surface_with_action::init(surface_domain *Surf,
 		int f_semilinear, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
