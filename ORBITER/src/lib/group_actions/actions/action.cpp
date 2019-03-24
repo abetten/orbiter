@@ -220,6 +220,13 @@ void action::freeself()
 			FREE_OBJECT(G.AD);
 			G.AD = NULL;
 			}
+		else if (type_G == action_on_galois_group_t) {
+			if (f_vv) {
+				cout << "action::freeself freeing G.on_Galois_group" << endl;
+				}
+			FREE_OBJECT(G.on_Galois_group);
+			G.on_Galois_group = NULL;
+			}
 		else if (type_G == action_on_sign_t) {
 			if (f_vv) {
 				cout << "action::freeself freeing G.OnSign" << endl;
@@ -3127,75 +3134,195 @@ void action::list_elements_as_permutations_vertically(
 }
 
 
+int action::is_matrix_group()
+{
+	if (type_G == matrix_group_t) {
+			return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+int action::is_semilinear_matrix_group()
+{
+	if (!is_matrix_group()) {
+			cout << "action::is_semilinear_matrix_group "
+					"is not a matrix group" << endl;
+			exit(1);
+	}
+	else {
+		matrix_group *M;
+
+		M = get_matrix_group();
+		if (M->f_semilinear) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+}
+
+int action::is_projective()
+{
+	if (!is_matrix_group()) {
+			cout << "action::is_projective "
+					"is not a matrix group" << endl;
+			exit(1);
+	}
+	else {
+		matrix_group *M;
+
+		M = get_matrix_group();
+		if (M->f_projective) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+}
+
+int action::is_affine()
+{
+	if (!is_matrix_group()) {
+			cout << "action::is_affine "
+					"is not a matrix group" << endl;
+			exit(1);
+	}
+	else {
+		matrix_group *M;
+
+		M = get_matrix_group();
+		if (M->f_affine) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+}
+
+int action::is_general_linear()
+{
+	if (!is_matrix_group()) {
+			cout << "action::is_general_linear "
+					"is not a matrix group" << endl;
+			exit(1);
+	}
+	else {
+		matrix_group *M;
+
+		M = get_matrix_group();
+		if (M->f_general_linear) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+}
+
 matrix_group *action::get_matrix_group()
 {
 	if (type_G == unknown_symmetry_group_t) {
 		cout << "action::get_matrix_group type_G == "
 				"unknown_symmetry_group_t" << endl;
 		exit(1);
-	} else if (type_G == matrix_group_t) {
+	}
+	else if (type_G == matrix_group_t) {
 		return G.matrix_grp;
-	} else if (type_G == perm_group_t) {
+	}
+	else if (type_G == perm_group_t) {
 		cout << "action::get_matrix_group type_G == perm_group_t" << endl;
 		exit(1);
-	} else if (type_G == wreath_product_t) {
+	}
+	else if (type_G == wreath_product_t) {
 		cout << "action::get_matrix_group type_G == wreath_product_t" << endl;
 		exit(1);
-	} else if (type_G == direct_product_t) {
+	}
+	else if (type_G == direct_product_t) {
 		cout << "action::get_matrix_group type_G == direct_product_t" << endl;
 		exit(1);
-	} else if (type_G == action_on_sets_t) {
+	}
+	else if (type_G == action_on_sets_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_subgroups_t) {
+	}
+	else if (type_G == action_on_subgroups_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_k_subsets_t) {
+	}
+	else if (type_G == action_on_k_subsets_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_pairs_t) {
+	}
+	else if (type_G == action_on_pairs_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_ordered_pairs_t) {
+	}
+	else if (type_G == action_on_ordered_pairs_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == base_change_t) {
+	}
+	else if (type_G == base_change_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == product_action_t) {
+	}
+	else if (type_G == product_action_t) {
 		cout << "action::get_matrix_group type_G == product_action_t" << endl;
 		exit(1);
-	} else if (type_G == action_by_right_multiplication_t) {
+	}
+	else if (type_G == action_by_right_multiplication_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_by_restriction_t) {
+	}
+	else if (type_G == action_by_restriction_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_by_conjugation_t) {
+	}
+	else if (type_G == action_by_conjugation_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_determinant_t) {
+	}
+	else if (type_G == action_on_determinant_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_sign_t) {
+	}
+	else if (type_G == action_on_sign_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_grassmannian_t) {
+	}
+	else if (type_G == action_on_grassmannian_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_spread_set_t) {
+	}
+	else if (type_G == action_on_spread_set_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_orthogonal_t) {
+	}
+	else if (type_G == action_on_orthogonal_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_cosets_t) {
+	}
+	else if (type_G == action_on_cosets_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_factor_space_t) {
+	}
+	else if (type_G == action_on_factor_space_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_wedge_product_t) {
+	}
+	else if (type_G == action_on_wedge_product_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_by_representation_t) {
+	}
+	else if (type_G == action_by_representation_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_by_subfield_structure_t) {
+	}
+	else if (type_G == action_by_subfield_structure_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_bricks_t) {
+	}
+	else if (type_G == action_on_bricks_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_andre_t) {
+	}
+	else if (type_G == action_on_andre_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_orbits_t) {
+	}
+	else if (type_G == action_on_orbits_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_flags_t) {
+	}
+	else if (type_G == action_on_flags_t) {
 		return subaction->get_matrix_group();
-	} else if (type_G == action_on_homogeneous_polynomials_t) {
+	}
+	else if (type_G == action_on_homogeneous_polynomials_t) {
 		return subaction->get_matrix_group();
-	} else {
+	}
+	else {
 		cout << "action::get_matrix_group unknown type" << endl;
 		exit(1);
 	}

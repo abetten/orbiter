@@ -137,9 +137,10 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 	int f_vv = FALSE; // (verbose_level >= 2);
 	int i, r;
 	int S[9];
-	int *Pts;
+	int *Pts_on_curve;
+	int *singular_Pts;
 	int *type;
-	int nb_pts;
+	int nb_pts_on_curve; //, nb_singular_pts;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::test_orbits" << endl;
@@ -147,7 +148,8 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		}
 	nb_orbits_on_sets = Arc_gen->gen->nb_orbits_at_level(9);
 
-	Pts = NEW_int(CC->P->N_points);
+	Pts_on_curve = NEW_int(CC->P->N_points);
+	singular_Pts = NEW_int(CC->P->N_points);
 	type = NEW_int(CC->P->N_lines);
 
 	if (f_v) {
@@ -196,11 +198,12 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 					9 /* nb_pts */, S /* int *Pts */, eqn,
 					verbose_level - 5);
 
-			CC->Poly->enumerate_points(eqn, Pts, nb_pts,
+			CC->Poly->enumerate_points(eqn,
+					Pts_on_curve, nb_pts_on_curve,
 					verbose_level - 2);
 
 			CC->P->line_intersection_type(
-					Pts, nb_pts /* set_size */,
+					Pts_on_curve, nb_pts_on_curve /* set_size */,
 					type, 0 /*verbose_level*/);
 
 			classify Cl;
@@ -210,7 +213,21 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 
 			if (idx == -1) {
 
+#if 0
+				// third test: the curve should have no singular points:
+
+				CC->compute_singular_points(
+						eqn,
+						Pts_on_curve, nb_pts_on_curve,
+						singular_Pts, nb_singular_pts,
+						0 /*verbose_level*/);
+
+				if (nb_singular_pts == 0) {
+					Idx[nb++] = i;
+				}
+#else
 				Idx[nb++] = i;
+#endif
 			}
 		}
 	}
@@ -224,7 +241,8 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		cout << endl;
 		}
 
-	FREE_int(Pts);
+	FREE_int(Pts_on_curve);
+	FREE_int(singular_Pts);
 	FREE_int(type);
 
 	if (f_v) {
@@ -236,7 +254,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 void classify_cubic_curves::downstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE; // (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int f, i, nb_flag_orbits;
 
@@ -277,11 +295,13 @@ void classify_cubic_curves::downstep(int verbose_level)
 
 		i = Idx[f];
 		if (f_v) {
-			cout << "classify_cubic_curves::downstep "
-					"orbit " << f << " / " << nb
-					<< " with rank = 9 is orbit "
-					<< i << " / " << nb_orbits_on_sets << endl;
+			if ((f % 1000) == 0) {
+				cout << "classify_cubic_curves::downstep "
+						"orbit " << f << " / " << nb
+						<< " with rank = 9 is orbit "
+						<< i << " / " << nb_orbits_on_sets << endl;
 			}
+		}
 
 		set_and_stabilizer *R;
 		longinteger_object ol;
@@ -309,8 +329,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 
 		if (f_vv) {
 			cout << "classify_cubic_curves::downstep before "
-					"create_double_six_from_five_lines_with_"
-					"a_common_transversal" << endl;
+					"determine_cubic_in_plane" << endl;
 			}
 
 		CC->P->determine_cubic_in_plane(
@@ -722,7 +741,7 @@ void classify_cubic_curves::do_classify(int verbose_level)
 		cout << "classify_cubic_curves::do_classify "
 				"after upstep" << endl;
 		cout << "we found " << Curves->nb_orbits
-				<< " double sixes out of "
+				<< " cubic curves out of "
 				<< Flag_orbits->nb_flag_orbits
 				<< " flag orbits" << endl;
 		}
@@ -742,7 +761,8 @@ int classify_cubic_curves::recognize(int *eqn_in,
 	int set[9];
 	int canonical_set[9];
 	int *Elt1;
-	int *Pts;
+	int *Pts_on_curve;
+	int *singular_Pts;
 	int *type;
 	int ret;
 
@@ -753,24 +773,25 @@ int classify_cubic_curves::recognize(int *eqn_in,
 
 
 	Elt1 = NEW_int(A->elt_size_in_int);
-	Pts = NEW_int(CCA->CC->P->N_points);
+	Pts_on_curve = NEW_int(CCA->CC->P->N_points);
+	singular_Pts = NEW_int(CCA->CC->P->N_points);
 	type = NEW_int(CCA->CC->P->N_lines);
 
 
-	int nb_pts;
+	int nb_pts_on_curve; //, nb_singular_pts;
 	int N;
 	int orbit_index;
 	int f2;
 
-	CCA->CC->Poly->enumerate_points(eqn_in, Pts, nb_pts,
+	CCA->CC->Poly->enumerate_points(eqn_in, Pts_on_curve, nb_pts_on_curve,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "classify_cubic_curves::recognize"
-				<< " we found a curve with " << nb_pts
+				<< " we found a curve with " << nb_pts_on_curve
 				<< " points" << endl;
 		}
 	CCA->CC->P->line_intersection_type(
-		Pts, nb_pts /* set_size */, type, 0 /*verbose_level*/);
+			Pts_on_curve, nb_pts_on_curve /* set_size */, type, 0 /*verbose_level*/);
 	// type[N_lines]
 
 	ret = TRUE;
@@ -781,8 +802,22 @@ int classify_cubic_curves::recognize(int *eqn_in,
 		}
 	}
 
+#if 0
 	if (ret) {
-		N = int_n_choose_k(nb_pts, 9);
+		CCA->CC->compute_singular_points(
+				eqn_in,
+				Pts_on_curve, nb_pts_on_curve,
+				singular_Pts, nb_singular_pts,
+				0 /*verbose_level*/);
+
+		if (nb_singular_pts) {
+			ret = FALSE;
+		}
+	}
+#endif
+
+	if (ret) {
+		N = int_n_choose_k(nb_pts_on_curve, 9);
 
 
 		for (i = 0; i < N; i++) {
@@ -791,9 +826,9 @@ int classify_cubic_curves::recognize(int *eqn_in,
 						<< " i=" << i << " / " << N << endl;
 				}
 
-			unrank_k_subset(i, idx_set, nb_pts, 9);
+			unrank_k_subset(i, idx_set, nb_pts_on_curve, 9);
 			for (j = 0; j < 9; j++) {
-				set[j] = Pts[idx_set[j]];
+				set[j] = Pts_on_curve[idx_set[j]];
 			}
 
 			r = CC->compute_system_in_RREF(9,
@@ -828,7 +863,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 					set, 9, 9,
 					canonical_set,
 					Elt,
-					verbose_level);
+					verbose_level - 1);
 
 
 			if (f_v) {
@@ -840,6 +875,9 @@ int classify_cubic_curves::recognize(int *eqn_in,
 
 			if (!int_vec_search(Po, Flag_orbits->nb_flag_orbits,
 					orbit_index, f2)) {
+
+				continue;
+#if 0
 				cout << "classify_cubic_curves::recognize "
 						"cannot find orbit " << orbit_index
 						<< " in Po" << endl;
@@ -847,6 +885,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 				int_vec_print(cout, Po, Flag_orbits->nb_flag_orbits);
 				cout << endl;
 				exit(1);
+#endif
 				}
 
 			if (f_v) {
@@ -889,7 +928,8 @@ int classify_cubic_curves::recognize(int *eqn_in,
 
 
 	FREE_int(Elt1);
-	FREE_int(Pts);
+	FREE_int(Pts_on_curve);
+	FREE_int(singular_Pts);
 	FREE_int(type);
 
 	if (f_v) {
@@ -975,6 +1015,69 @@ void classify_cubic_curves::family2_recognize(int *Iso_type,
 		eqn[5] = 1;
 		eqn[2] = e;
 		eqn[9] = 1;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+		if (recognize(eqn,
+				Elt, iso_type, verbose_level)) {
+			Iso_type[e] = iso_type;
+		}
+		else {
+			Iso_type[e] = -1;
+		}
+
+	}
+
+	FREE_int(Elt);
+}
+
+void classify_cubic_curves::family3_recognize(int *Iso_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	int eqn[10];
+	int e, iso_type;
+	int three, six;
+	int three_e, six_e_plus_one;
+
+	if (f_v) {
+		cout << "classify_cubic_curves::family3_recognize" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		}
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	for (e = 0; e < F->q; e++) {
+
+#if 1
+		int_vec_zero(eqn, 10);
+		// 0 = x0x1x2 + e(x0 + x1 + x2)
+		// 0 = e(x0^3 + x1^3 + x2^3)
+		// + 3e(x0^2x1 + x0^2x2 + x1^2x0 + x1^2x2 + x2^2x0 + x2^2x1)
+		// + (6e+1)x0x1x2
+		three = F->Z_embedding(3);
+		six = F->Z_embedding(6);
+		three_e = F->mult(three, e);
+		six_e_plus_one = F->add(F->mult(six, e), 1);
+		eqn[0] = e;
+		eqn[1] = e;
+		eqn[2] = e;
+		eqn[3] = three_e;
+		eqn[4] = three_e;
+		eqn[5] = three_e;
+		eqn[6] = three_e;
+		eqn[7] = three_e;
+		eqn[8] = three_e;
+		eqn[9] = six_e_plus_one;
 //0 & X^3 & ( 3, 0, 0 )
 //1 & Y^3 & ( 0, 3, 0 )
 //2 & Z^3 & ( 0, 0, 3 )

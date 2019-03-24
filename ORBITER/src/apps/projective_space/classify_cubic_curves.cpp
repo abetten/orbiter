@@ -101,7 +101,7 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "surface_classify writing cheat sheet "
-				"on double sixes" << endl;
+				"on cubic curves" << endl;
 		}
 	{
 	char fname[1000];
@@ -152,7 +152,8 @@ int main(int argc, const char **argv)
 		fp << "\\bigskip" << endl;
 		}
 
-		fp << "The group has " << CCC->Curves->nb_orbits << " orbits: \\\\" << endl;
+		fp << "The group has " << CCC->Curves->nb_orbits
+				<< " orbits: \\\\" << endl;
 
 		int i;
 		longinteger_domain D;
@@ -174,7 +175,9 @@ int main(int argc, const char **argv)
 		for (i = 0; i < CCC->Curves->nb_orbits; i++) {
 
 			if (f_v) {
-				cout << "Curve " << i << " / " << CCC->Curves->nb_orbits << ":" << endl;
+				cout << "Curve " << i << " / "
+						<< CCC->Curves->nb_orbits << ": "
+						"verbose_level=" << verbose_level << endl;
 			}
 
 			CCC->Curves->Orbit[i].gens->group_order(go1);
@@ -200,7 +203,8 @@ int main(int argc, const char **argv)
 			data = CCC->Curves->Rep + i * CCC->Curves->representation_sz;
 			eqn = data + 9;
 
-			fp << "\\subsection*{Curve " << i << " / " << CCC->Curves->nb_orbits << "}" << endl;
+			fp << "\\subsection*{Curve " << i << " / "
+					<< CCC->Curves->nb_orbits << "}" << endl;
 			//fp << "$" << i << " / " << CCC->Curves->nb_orbits << "$ $" << endl;
 
 			fp << "$";
@@ -245,7 +249,8 @@ int main(int argc, const char **argv)
 			fp << "&&";
 
 
-			CCA->CC->Poly->enumerate_points(eqn, Pts_on_curve, nb_pts_on_curve,
+			CCA->CC->Poly->enumerate_points(eqn,
+					Pts_on_curve, nb_pts_on_curve,
 					verbose_level - 2);
 
 			Nb_points[i] = nb_pts_on_curve;
@@ -257,16 +262,18 @@ int main(int argc, const char **argv)
 					"\\\\\n&&");
 			fp << "\\end{eqnarray*}" << endl;
 
-			fp << "The curve has " << nb_pts_on_curve << " points.\\\\" << endl;
+			fp << "The curve has " << nb_pts_on_curve
+					<< " points.\\\\" << endl;
 
 
 			CC->compute_singular_points(
 					eqn,
 					Pts_on_curve, nb_pts_on_curve,
 					singular_Pts, nb_singular_pts,
-					verbose_level);
+					verbose_level - 2);
 
-			fp << "The curve has " << nb_singular_pts << " singular points.\\\\" << endl;
+			fp << "The curve has " << nb_singular_pts
+					<< " singular points.\\\\" << endl;
 			Nb_singular_points[i] = nb_singular_pts;
 
 
@@ -274,7 +281,7 @@ int main(int argc, const char **argv)
 					eqn,
 					Pts_on_curve, nb_pts_on_curve,
 					inflexion_Pts, nb_inflection_pts,
-					verbose_level);
+					verbose_level - 2);
 
 
 			Nb_inflexions[i] = nb_inflection_pts;
@@ -327,7 +334,8 @@ int main(int argc, const char **argv)
 				fp << "&&";
 
 
-				CCA->CC->Poly->enumerate_points(transformed_eqn, Pts_on_curve, nb_pts_on_curve,
+				CCA->CC->Poly->enumerate_points(transformed_eqn,
+						Pts_on_curve, nb_pts_on_curve,
 						verbose_level - 2);
 
 
@@ -337,24 +345,27 @@ int main(int argc, const char **argv)
 						"\\\\\n&&");
 				fp << "\\end{eqnarray*}" << endl;
 
-				fp << "The transformed curve has " << nb_pts_on_curve << " points.\\\\" << endl;
+				fp << "The transformed curve has " << nb_pts_on_curve
+						<< " points.\\\\" << endl;
 
 				CC->compute_singular_points(
 						transformed_eqn,
 						Pts_on_curve, nb_pts_on_curve,
 						singular_Pts, nb_singular_pts,
-						verbose_level);
+						verbose_level - 2);
 
-				fp << "The curve has " << nb_singular_pts << " singular points.\\\\" << endl;
+				fp << "The curve has " << nb_singular_pts
+						<< " singular points.\\\\" << endl;
 
 
 				CC->compute_inflexion_points(
 						transformed_eqn,
 						Pts_on_curve, nb_pts_on_curve,
 						inflexion_Pts, nb_inflection_pts,
-						verbose_level);
+						verbose_level - 2);
 
-				fp << "The transformed curve has " << nb_inflection_pts << " inflexion points: $";
+				fp << "The transformed curve has " << nb_inflection_pts
+						<< " inflexion points: $";
 				int_vec_print(fp, inflexion_Pts, nb_inflection_pts);
 				fp << "$\\\\" << endl;
 
@@ -381,6 +392,7 @@ int main(int argc, const char **argv)
 
 		int *Iso_type1;
 		int *Iso_type2;
+		int *Iso_type3;
 		int *Iso_typeE;
 		int *Iso_typeH;
 		int *Iso_typeG;
@@ -388,20 +400,23 @@ int main(int argc, const char **argv)
 
 		Iso_type1 = NEW_int(F->q);
 		Iso_type2 = NEW_int(F->q);
+		Iso_type3 = NEW_int(F->q);
 		Iso_typeE = NEW_int(F->q);
 		Iso_typeH = NEW_int(F->q);
 		Iso_typeG = NEW_int(F->q * F->q);
-		CCC->family1_recognize(Iso_type1, verbose_level);
-		CCC->family2_recognize(Iso_type2, verbose_level);
-		CCC->familyE_recognize(Iso_typeE, verbose_level);
-		CCC->familyH_recognize(Iso_typeH, verbose_level);
-		CCC->familyG_recognize(Iso_typeG, verbose_level);
+		CCC->family1_recognize(Iso_type1, verbose_level - 1);
+		CCC->family2_recognize(Iso_type2, verbose_level - 1);
+		CCC->family3_recognize(Iso_type3, verbose_level - 1);
+		CCC->familyE_recognize(Iso_typeE, verbose_level - 1);
+		CCC->familyH_recognize(Iso_typeH, verbose_level - 1);
+		CCC->familyG_recognize(Iso_typeG, verbose_level - 1);
 
-		fp << "Families 1, 2, E, H: \\\\" << endl;
+		fp << "Families 1, 2, 3, E, H: \\\\" << endl;
 		for (e = 0; e < F->q; e++) {
 			fp << "e=" << e
 					<< " iso1=" << Iso_type1[e]
 					<< " iso2=" << Iso_type2[e]
+					<< " iso3=" << Iso_type2[e]
 					<< " isoE=" << Iso_typeE[e]
 					<< " isoH=" << Iso_typeH[e]
 					<< " \\\\" << endl;
@@ -437,6 +452,19 @@ int main(int argc, const char **argv)
 				sprintf(str, "F2_{%d}", e);
 				ref.append(str);
 				References[Iso_type2[e]] = ref;
+			}
+		}
+		for (e = 0; e < F->q; e++) {
+			if (Iso_type3[e] != -1) {
+				string ref;
+				char str[1000];
+				ref = References[Iso_type3[e]];
+				if (strlen(ref.c_str())) {
+					ref.append(",");
+				}
+				sprintf(str, "F3_{%d}", e);
+				ref.append(str);
+				References[Iso_type3[e]] = ref;
 			}
 		}
 		for (e = 0; e < F->q; e++) {
@@ -522,6 +550,7 @@ int main(int argc, const char **argv)
 		fp << "\\begin{eqnarray*}" << endl;
 		fp << "F1_e &=& X^2Y + XY^2 + eZ^3 \\\\" << endl;
 		fp << "F2_e &=& X^2Y + XY^2 + XYZ + eZ^3 \\\\" << endl;
+		fp << "F3_e &=& XYZ + e(X + Y + Z)^3 \\\\" << endl;
 		fp << "E_d &=& Z^2Y + X^3 - dY^3 \\\\" << endl;
 		fp << "H_e &=& Z^2Y + X^3 + eXY^2 \\\\" << endl;
 		fp << "G_{c,d} &=&  Z^2Y + X^3 + cXY^2 + dY^3 \\\\" << endl;
@@ -530,6 +559,7 @@ int main(int argc, const char **argv)
 
 		FREE_int(Iso_type1);
 		FREE_int(Iso_type2);
+		FREE_int(Iso_type3);
 		FREE_int(Iso_typeE);
 		FREE_int(Iso_typeH);
 		FREE_int(Iso_typeG);

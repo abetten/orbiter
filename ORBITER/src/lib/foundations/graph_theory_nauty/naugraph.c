@@ -1,6 +1,6 @@
 /*****************************************************************************
 *                                                                            *
-*  Graph-specific auxiliary source file for version 2.6 of nauty.            *
+*  Graph-specific auxiliary source file for version 2.8 of nauty.            *
 *                                                                            *
 *   Copyright (1984-2016) Brendan McKay.  All rights reserved.               *
 *   Subject to waivers and disclaimers in nauty.h.                           *
@@ -22,7 +22,6 @@
 
 #define ONE_WORD_SETS
 #include "nauty.h"
-
 
     /* macros for hash-codes: */
 #define MASH(l,i) ((((l) ^ 065435) + (i)) & 077777)
@@ -636,7 +635,7 @@ targetcell(graph *g, int *lab, int *ptn, int level, int tc_level,
 *                                                                            *
 *  densenauty(g,lab,ptn,orbits,&options,&stats,m,n,h)                        *
 *  is a slightly simplified interface to nauty().  It allocates enough       *
-*  workspace for 20 automorphisms and checks that the densegraph dispatch     *
+*  workspace for 60 automorphisms and checks that the densegraph dispatch     *
 *  vector is in use.                                                         *
 *                                                                            *
 *****************************************************************************/
@@ -711,5 +710,3 @@ naugraph_freedyn(void)
     DYNFREE(dnwork,dnwork_sz);
 #endif
 }
-
-

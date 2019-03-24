@@ -17,6 +17,7 @@ MODULES = \
 	action_on_determinant.o \
 	action_on_factor_space.o \
 	action_on_flags.o \
+	action_on_galois_group.o \
 	action_on_grassmannian.o \
 	action_on_homogeneous_polynomials.o \
 	action_on_k_subsets.o \

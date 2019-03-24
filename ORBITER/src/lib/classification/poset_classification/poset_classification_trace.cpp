@@ -640,6 +640,7 @@ int poset_classification::trace_set(int *set, int size, int level,
 		cout << "tracing set ";
 		int_vec_print(cout, set, size);	
 		cout << endl;
+		cout << "verbose_level=" << verbose_level << endl;
 		cout << "level=" << level << endl;
 		cout << "f_lex=" << f_lex << endl;
 		}
@@ -658,7 +659,7 @@ int poset_classification::trace_set(int *set, int size, int level,
 		canonical_set, tmp_set1, tmp_set2, 
 		Elt_transporter, tmp_Elt, 
 		FALSE /*f_tolerant*/, 
-		verbose_level);
+		verbose_level - 1);
 	if (f_v) {
 		cout << "poset_classification::trace_set "
 				"after trace_set_recursion" << endl;

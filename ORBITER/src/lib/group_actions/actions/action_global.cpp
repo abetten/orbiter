@@ -398,6 +398,9 @@ void action_print_symmetry_group_type(ostream &ost,
 	else if (a == action_on_determinant_t) {
 		ost << "action_on_determinant_t";
 		}
+	else if (a == action_on_galois_group_t) {
+		ost << "action_on_galois_group_t";
+		}
 	else if (a == action_on_sign_t) {
 		ost << "action_on_sign_t";
 		}
@@ -1355,7 +1358,7 @@ void O4_to_O5(action *A4, action *A5, finite_field *Fq,
 			continue;
 			}
 		if (value != mtx_tmp2[i]) {
-			cout << "the transformed gram matrix has several values" << endl;
+			cout << "the transformed Gram matrix has several values" << endl;
 			exit(1);
 			}
 		value = mtx_tmp2[i];

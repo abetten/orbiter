@@ -868,6 +868,64 @@ void action::induced_action_by_subfield_structure(action *A_old,
 }
 
 
+void action::induced_action_on_Galois_group(
+		sims *old_G, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action_on_galois_group *AG;
+	action *A;
+	matrix_group *M;
+
+	if (f_v) {
+		cout << "action::induced_action_on_Galois_group" << endl;
+		}
+	A = old_G->A;
+	sprintf(group_prefix, "%s_det", A->label);
+	sprintf(label, "%s_det", A->label);
+	sprintf(label_tex, "%s det", A->label_tex);
+	if (f_v) {
+		cout << "the old_action " << A->label
+			<< " has base_length = " << A->base_len
+			<< " and degree " << A->degree << endl;
+		}
+	f_has_subaction = TRUE;
+	subaction = A;
+	if (A->type_G != matrix_group_t) {
+		cout << "action::induced_action_on_Galois_group "
+				"action not of matrix group type" << endl;
+		exit(1);
+		}
+	M = A->G.matrix_grp;
+	AG = NEW_OBJECT(action_on_galois_group);
+	AG->init(A, M->n, verbose_level);
+	type_G = action_on_galois_group_t;
+	G.on_Galois_group = AG;
+	f_allocated = TRUE;
+	make_element_size = A->make_element_size;
+
+	f_has_strong_generators = FALSE;
+
+	degree = AG->degree;
+	base_len = 0;
+	ptr = NEW_OBJECT(action_pointer_table);
+	ptr->init_function_pointers_induced_action();
+
+	allocate_base_data(0);
+
+
+	elt_size_in_int = A->elt_size_in_int;
+	coded_elt_size_in_char = A->coded_elt_size_in_char;
+
+	allocate_element_data();
+
+	induced_action_override_sims(*A, old_G, verbose_level - 2);
+	if (f_v) {
+		cout << "action::induced_action_on_Galois_group "
+				"finished, created action " << label << endl;
+		print_info();
+		}
+}
+
 void action::induced_action_on_determinant(
 		sims *old_G, int verbose_level)
 {

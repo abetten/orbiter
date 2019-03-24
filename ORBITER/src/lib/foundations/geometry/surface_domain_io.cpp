@@ -377,11 +377,13 @@ void surface_domain::print_lines_tex(ostream &ost, int *Lines)
 		Gr->unrank_int(Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
 		ost << "\\ell_{" << i << "} = "
-			<< Line_label_tex[i] << " = \\left[" << endl;
+			<< Line_label_tex[i] << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// Gr->M, k, n, n, F->log10_of_q + 1);
-		print_integer_matrix_tex(ost, Gr->M, 2, 4);
-		ost << "\\right]_{" << Lines[i] << "}" << endl;
+		Gr->latex_matrix(ost, Gr->M);
+		//print_integer_matrix_tex(ost, Gr->M, 2, 4);
+		//ost << "\\right]_{" << Lines[i] << "}" << endl;
+		ost << "_{" << Lines[i] << "}" << endl;
 		ost << "$$" << endl;
 		}
 

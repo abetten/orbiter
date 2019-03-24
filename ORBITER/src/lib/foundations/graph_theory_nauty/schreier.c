@@ -7,8 +7,6 @@
 
 #include "schreier.h" 
 
-
-
 TLS_ATTR long long multcount = 0;
 TLS_ATTR long long filtercount = 0;
 
@@ -51,7 +49,6 @@ static boolean filterschreier(schreier*,int*,permnode**,boolean,int,int);
 
 /************************************************************************/
 
-#if 0
 static void
 testispermutation(int id, int *p, int n)
 /* For debugging purposes, crash with a message if p[0..n-1] is
@@ -86,8 +83,7 @@ testispermutation(int id, int *p, int n)
         ADDELEMENT(seen,p[i]);
     }
 }
-#endif
-
+    
 /************************************************************************/
 
 int
@@ -1126,6 +1122,3 @@ schreier_freedyn(void)
 #endif
     clearfreelists();
 }
-
-
-

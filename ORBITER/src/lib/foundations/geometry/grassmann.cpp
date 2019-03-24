@@ -110,7 +110,8 @@ void grassmann::print_single_generator_matrix_tex(
 		ostream &ost, int a)
 {
 	unrank_int(a, 0 /*verbose_level*/);
-	print_integer_matrix_tex(ost, M, k, n);
+	latex_matrix(ost, M);
+	//print_integer_matrix_tex(ost, M, k, n);
 }
 
 void grassmann::print_set(int *v, int len)
@@ -121,8 +122,9 @@ void grassmann::print_set(int *v, int len)
 		cout << "subspace " << i << " / " << len
 				<< " is " << v[i] << ":" << endl;
 		unrank_int(v[i], 0 /*verbose_level*/);
-		print_integer_matrix_width(cout, M,
-				k, n, n, F->log10_of_q + 1);
+		latex_matrix(cout, M);
+		//print_integer_matrix_width(cout, M,
+		//		k, n, n, F->log10_of_q + 1);
 		}
 }
 
@@ -135,11 +137,12 @@ void grassmann::print_set_tex(ostream &ost, int *v, int len)
 				<< v[i] << ":\\\\" << endl;
 		unrank_int(v[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
-		ost << "\\left[" << endl;
+		//ost << "\\left[" << endl;
 		//print_integer_matrix_width(cout,
 		// M, k, n, n, F->log10_of_q + 1);
-		print_integer_matrix_tex(ost, M, k, n);
-		ost << "\\right]" << endl;
+		//print_integer_matrix_tex(ost, M, k, n);
+		//ost << "\\right]" << endl;
+		latex_matrix(ost, M);
 		ost << "$$" << endl;
 		}
 }
@@ -1036,8 +1039,29 @@ void grassmann::compute_dual_spread(
 		}
 }
 
+
+void grassmann::latex_matrix(ostream &ost, int *p)
+{
+	int i, j;
+
+	ost << "\\left[" << endl;
+	ost << "\\begin{array}{*{" << n << "}c}" << endl;
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < n; j++) {
+			F->print_element(ost, p[i * n + j]);
+			if (j < n - 1) {
+				ost << "  & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
 }
-}
+
+
+
+}}
 
 
 

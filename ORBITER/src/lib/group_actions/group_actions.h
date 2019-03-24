@@ -33,6 +33,7 @@ class action_by_restriction;
 class action_by_conjugation;
 class action_on_orbits;
 class action_on_flags;
+class action_on_galois_group;
 class action_by_representation;
 class action_by_subfield_structure;
 class action_on_grassmannian;
@@ -89,6 +90,7 @@ enum symmetry_group_type {
 	action_by_restriction_t,
 	action_by_conjugation_t,
 	action_on_determinant_t, 
+	action_on_galois_group_t,
 	action_on_sign_t, 
 	action_on_grassmannian_t, 
 	action_on_spread_set_t, 
@@ -130,6 +132,7 @@ union symmetry_group {
 	action_by_restriction *ABR;
 	action_by_conjugation *ABC;
 	action_on_determinant *AD;
+	action_on_galois_group *on_Galois_group;
 	action_on_sign *OnSign;
 	action_on_grassmannian *AG;
 	action_on_spread_set *AS;
