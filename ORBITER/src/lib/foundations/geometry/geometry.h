@@ -799,6 +799,7 @@ public:
 			int verbose_level);
 	void compute_dual_spread(int *spread, int *dual_spread, 
 		int spread_size, int verbose_level);
+	void latex_matrix(std::ostream &ost, int *p);
 };
 
 

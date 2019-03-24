@@ -781,6 +781,7 @@ public:
 			int *Elt, int &iso_type, int verbose_level);
 	void family1_recognize(int *Iso_type, int verbose_level);
 	void family2_recognize(int *Iso_type, int verbose_level);
+	void family3_recognize(int *Iso_type, int verbose_level);
 	void familyE_recognize(int *Iso_type, int verbose_level);
 	void familyH_recognize(int *Iso_type, int verbose_level);
 	void familyG_recognize(int *Iso_type, int verbose_level);
@@ -2331,6 +2332,8 @@ public:
 	strong_generators *Aut_gens; 
 		// generators for the automorphism group
 
+	strong_generators *projectivity_group_gens;
+
 	action *A_on_points;
 	action *A_on_Eckardt_points;
 	action *A_on_Double_points;
@@ -2366,6 +2369,7 @@ public:
 	void init_surface_object(surface_with_action *Surf_A, 
 		surface_object *SO, 
 		strong_generators *Aut_gens, int verbose_level);
+	void compute_projectivity_group(int verbose_level);
 	void compute_orbits_of_automorphism_group(int verbose_level);
 	void init_orbits_on_points(int verbose_level);
 	void init_orbits_on_Eckardt_points(int verbose_level);

@@ -1,8 +1,8 @@
 /*****************************************************************************
 *                                                                            *
-*  Main source file for version 2.6 of nauty.                                *
+*  Main source file for version 2.7 of nauty.                                *
 *                                                                            *
-*   Copyright (1984-2016) Brendan McKay.  All rights reserved.  Permission   *
+*   Copyright (1984-2018) Brendan McKay.  All rights reserved.  Permission   *
 *   Subject to the waivers and disclaimers in nauty.h.                       *
 *                                                                            *
 *   CHANGE HISTORY                                                           *
@@ -65,6 +65,7 @@
 *       15-Jan-12 : added TLS_ATTR to static declarations                    *
 *       18-Jan-13 : added signal aborting                                    *
 *       19-Jan-13 : added usercanonproc()                                    *
+*       14-Oct-17 : corrected code for n=0                                   *
 *                                                                            *
 *****************************************************************************/
 
@@ -75,8 +76,6 @@
 #ifdef NAUTY_IN_MAGMA
 #include "cleanup.e"
 #endif
-
-
 
 #define NAUTY_ABORTED (-11)
 #define NAUTY_KILLED (-12)
@@ -175,7 +174,7 @@ DYNALLSTAT(set,active,active_sz);
    needs one set (tcell) to represent the target cell.  This is 
    implemented by using a linked list of tcnode anchored at the root
    of the search tree.  Each node points to its child (if any) and to
-   the dynamically allocated tcell.  Apart from the the first node of
+   the dynamically allocated tcell.  Apart from the first node of
    the list, each node always has a tcell good for m up to alloc_m.
    tcnodes and tcells are kept between calls to nauty, except that
    they are freed and reallocated if m gets bigger than alloc_m.  */
@@ -248,13 +247,15 @@ static TLS_ATTR permnode *gens;
 *                                                                            *
 *****************************************************************************/
 
-/* Abdullah 2018 */
+/* Abdullah 2019 */
 int *aut;
 int aut_counter;
 int *base;
 int base_length;
 int ago;
 int *transversal_length;
+/* Abdullah 2019 */
+
 
 void
 nauty(graph *g_arg, int *lab, int *ptn, set *active_arg,
@@ -339,6 +340,17 @@ nauty(graph *g_arg, int *lab, int *ptn, set *active_arg,
         stats_arg->invapplics = 0;
         stats_arg->invsuccesses = 0;
         stats_arg->invarsuclevel = 0;
+
+        g = canong = NULL;
+        initstatus = 0;
+        OPTCALL(dispatch.init)(g_arg,&g,canong_arg,&canong,
+                lab,ptn,active,options,&initstatus,m,n);
+        if (initstatus) stats->errstatus = initstatus;
+
+        if (g == NULL) g = g_arg;
+        if (canong == NULL) canong = canong_arg;
+        OPTCALL(dispatch.cleanup)(g_arg,&g,canong_arg,&canong,
+                                      lab,ptn,options,stats_arg,m,n);
         return;
     }
 
@@ -492,9 +504,9 @@ nauty(graph *g_arg, int *lab, int *ptn, set *active_arg,
     invarsuclevel = NAUTY_INFINITY;
     invapplics = invsuccesses = 0;
 
-	/* Abdullah 2018 */
+	/* Abdullah 2019 */
 	ago = 1;
-	/* Done Abdullah 2018 */
+	/* Done Abdullah 2019 */
 #if !MAXN
     retval = firstpathnode0(lab,ptn,1,numcells,&tcnode0);
 #else   
@@ -691,13 +703,13 @@ firstpathnode(int *lab, int *ptn, int level, int numcells)
 
     if (domarkers)
         writemarker(level,tv1,index,tcellsize,stats->numorbits,numcells);
-	/* Abdullah 2018 */
+	/* Abdullah 2019 */
 	/*printf("nauty firstpathnode base[%d]=%d\n", base_length, tv1);*/
 	base[base_length] = tv1;
 	transversal_length[base_length] = index;
 	base_length++;
 	ago = stats->grpsize1;
-	/* Done Abdullah 2018 */
+	/* Done Abdullah 2019 */
     OPTCALL(userlevelproc)(lab,ptn,level,orbits,stats,tv1,index,tcellsize,
                                                     numcells,childcount,n);
     return level-1;
@@ -988,12 +1000,11 @@ processnode(int *lab, int *ptn, int level, int numcells)
             writeperm(outfile,workperm,cartesian,linelength,n);
 		/*printf("nauty before store_perm case 1\n");*/
 		store_perm(workperm, n);  // Abdullah !!!
-
         stats->numorbits = orbjoin(orbits,workperm,n);
         ++stats->numgenerators;
-		/* Abdullah 2018 */
+		/* Abdullah 2019 */
 		aut_counter = stats->numgenerators;
-		/* Done Abdullah 2018 */
+		/* Done Abdullah 2019 */
         OPTCALL(userautomproc)(stats->numgenerators,workperm,orbits,
                                     stats->numorbits,stabvertex,n);
         if (doschreier) addgenerator(&gp,&gens,workperm,n);
@@ -1016,7 +1027,9 @@ processnode(int *lab, int *ptn, int level, int numcells)
 		store_perm(workperm, n);  // Abdullah !!!
 
         ++stats->numgenerators;
-		aut_counter = stats->numgenerators;
+		/* Abdullah 2019 */
+		aut_counter = stats->numgenerators; 
+		/* Done Abdullah 2019 */
         OPTCALL(userautomproc)(stats->numgenerators,workperm,orbits,
                                     stats->numorbits,stabvertex,n);
         if (doschreier) addgenerator(&gp,&gens,workperm,n);
@@ -1124,30 +1137,30 @@ writemarker(int level, int tv, int index, int tcellsize,
 {
     char s[30];
 
-#define PUTint(i) itos(i,s); putstring(outfile,s)
+#define PUTINT(i) itos(i,s); putstring(outfile,s)
 #define PUTSTR(x) putstring(outfile,x)
 
     PUTSTR("level ");
-    PUTint(level);
+    PUTINT(level);
     PUTSTR(":  ");
     if (numcells != numorbits)
     {
-        PUTint(numcells);
+        PUTINT(numcells);
         PUTSTR(" cell");
         if (numcells == 1) PUTSTR("; ");
         else               PUTSTR("s; ");
     }
-    PUTint(numorbits);
+    PUTINT(numorbits);
     PUTSTR(" orbit");
     if (numorbits == 1) PUTSTR("; ");
     else                PUTSTR("s; ");
-    PUTint(tv+labelorg);
+    PUTINT(tv+labelorg);
     PUTSTR(" fixed; index ");
-    PUTint(index);
+    PUTINT(index);
     if (tcellsize != index)
     {
         PUTSTR("/");
-        PUTint(tcellsize);
+        PUTINT(tcellsize);
     }
     PUTSTR("\n");
 }
@@ -1191,7 +1204,7 @@ nauty_check(int wordsize, int m, int n, int version)
 
 /*****************************************************************************
 *                                                                            *
-*  extra_autom(p,n)  - add an extra automophism, hard to do correctly        *
+*  extra_autom(p,n)  - add an extra automorphism, hard to do correctly       *
 *                                                                            *
 *****************************************************************************/
 
@@ -1258,7 +1271,7 @@ nauty_freedyn(void)
 #endif  
 }
 
-/* Abdullah 2018 */
+/* Abdullah 2019 */
 void
 store_perm(permutation *perm, int n) // Abdullah !!!
 {
@@ -1270,7 +1283,4 @@ store_perm(permutation *perm, int n) // Abdullah !!!
 		}
 // 		aut_counter++;
 }
-/* Done Abdullah 2018 */
-
-
-
+/* Done Abdullah 2019 */

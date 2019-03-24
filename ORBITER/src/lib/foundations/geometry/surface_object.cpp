@@ -1501,7 +1501,7 @@ void surface_object::print_affine_points_in_source_code(ostream &ost)
 
 void surface_object::print_points(ostream &ost)
 {
-	int i, p, a, b, c;
+	int i, j, p, a, b, c;
 	int v[4];
 
 	//ost << "\\clearpage" << endl;
@@ -1568,10 +1568,56 @@ void surface_object::print_points(ostream &ost)
 		ost << Surf->Line_label_tex[a] << " \\cap ";
 		ost << Surf->Line_label_tex[b] << " \\cap ";
 		ost << Surf->Line_label_tex[c];
-		ost << "\\\\";
+		ost << "\\\\" << endl;
 		}
 	ost << "\\end{align*}" << endl;
 	//ost << "\\end{multicols}" << endl;
+
+
+
+	ost << "%%\\clearpage" << endl;
+	ost << "The Eckardt points on the surface are:\\\\" << endl;
+	//ost << "\\begin{multicols}{2}" << endl;
+	ost << "\\begin{align*}" << endl;
+	for (i = 0; i < nb_Eckardt_points; i++) {
+		p = Eckardt_points_index[i];
+		Surf->unrank_point(v, Eckardt_points[i]);
+		ost << "E_{" << i << "} &= P_{" << Eckardt_points[i] << "}=\\bP(";
+		//int_vec_print_fully(ost, v, 4);
+		for (j = 0; j < 4; j++) {
+			F->print_element(ost, v[j]);
+			if (j < 4 - 1) {
+				ost << ", ";
+			}
+		}
+		ost << ")";
+
+		if (lines_on_point->Set_size[p] != 3) {
+			cout << "Eckardt point is not on three lines" << endl;
+			exit(1);
+			}
+		a = lines_on_point->Sets[p][0];
+		b = lines_on_point->Sets[p][1];
+		c = lines_on_point->Sets[p][2];
+		ost << " = ";
+		//ost << "\\ell_{" << a << "} \\cap ";
+		//ost << "\\ell_{" << b << "} \\cap ";
+		//ost << "\\ell_{" << c << "}";
+		//ost << " = ";
+		ost << Surf->Line_label_tex[a] << " \\cap ";
+		ost << Surf->Line_label_tex[b] << " \\cap ";
+		ost << Surf->Line_label_tex[c];
+		if (i < nb_Eckardt_points - 1) {
+			ost << ",";
+		}
+		else {
+			ost << ".";
+		}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{align*}" << endl;
+
+
 
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsubsection*{Double Points}" << endl;

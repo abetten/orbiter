@@ -388,6 +388,11 @@ public:
 		int line_rk, int *Elt, int verbose_level);
 	void list_elements_as_permutations_vertically(vector_ge *gens,
 			std::ostream &ost);
+	int is_matrix_group();
+	int is_semilinear_matrix_group();
+	int is_projective();
+	int is_affine();
+	int is_general_linear();
 	matrix_group *get_matrix_group();
 
 
@@ -598,6 +603,8 @@ public:
 		int verbose_level);
 	void induced_action_on_determinant(sims *old_G, 
 		int verbose_level);
+	void induced_action_on_Galois_group(
+			sims *old_G, int verbose_level);
 	void induced_action_on_sign(sims *old_G, 
 		int verbose_level);
 	void induced_action_by_conjugation(sims *old_G, 

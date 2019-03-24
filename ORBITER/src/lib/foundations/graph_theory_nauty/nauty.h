@@ -1,5 +1,5 @@
 /**************************************************************************
-*    This is the header file for Version 2.6 of nauty().                  *
+*    This is the header file for Version 2.7 of nauty().                  *
 *    nauty.h.  Generated from nauty-h.in by configure.
 **************************************************************************/
 
@@ -18,19 +18,19 @@ it is necessary to check they are correct.
 #define HAVE_STDLIB_H  1    /* <stdlib.h> */
 #define HAVE_STRING_H  1    /* <string.h> */
 #define MALLOC_DEC 1  /* 1 = malloc() is declared in stdlib.h, */
-				 /* 2 = in malloc.h, 0 = in neither place */
+                                 /* 2 = in malloc.h, 0 = in neither place */
 #define HAS_MATH_INF 1 /* INFINITY is defined in math.h or */
-				 /* some system header likely to be used */
+                                 /* some system header likely to be used */
 #define HAS_STDIO_UNLOCK 1  /* Whether there are getc_unlocked, */
-		               /* putc_unlocked,flockfile and funlockfile*/
+                               /* putc_unlocked,flockfile and funlockfile*/
 
-#define DEFAULT_WORDSIZE 0
-#define SIZEOF_int 4
+#define DEFAULT_WORDSIZE 32
+#define SIZEOF_INT 4
 #define SIZEOF_LONG 8
 #define SIZEOF_LONG_LONG 8   /* 0 if nonexistent */
-#define SIZEOF_int128 16   /* 0 if nonexistent */
-
-#define HAVE_CONST 1    /* compiler properly supports const */
+#define SIZEOF_POINTER 8
+#define SIZEOF_INT128_T 16   /* 0 if nonexistent */
+#define SIZEOF_INT128 16   /* 0 if nonexistent */
 
 /* Note that the following is only for running nauty in multiple threads
    and will slow it down a little otherwise. */
@@ -48,9 +48,9 @@ it is necessary to check they are correct.
 #endif
 
 /* Support of gcc extensions __builtin_clz, __builtin_clzl, __builtin_clzll */
-#define HAVE_CLZ 1
-#define HAVE_CLZL 1
-#define HAVE_CLZLL 1
+#define HAVE_CLZ 0
+#define HAVE_CLZL 0
+#define HAVE_CLZLL 0
 
 /* Support of gcc extensions
       __builtin_popcount, __builtin_popcountl, __builtin_popcountll
@@ -60,10 +60,10 @@ it is necessary to check they are correct.
       _mm_popcnt_u32, _mm_popcnt_u64
    for the Intel compiler icc.  These need no compiler switch.
 */
-#define HAVE_HWPOPCNT 1
-#define HAVE_POPCNT 1
-#define HAVE_POPCNTL 1
-#define HAVE_POPCNTLL 1
+#define HAVE_HWPOPCNT 0
+#define HAVE_POPCNT 0
+#define HAVE_POPCNTL 0
+#define HAVE_POPCNTLL 0
 #define HAVE_MMPOP32 0
 #define HAVE_MMPOP64 0
 
@@ -84,10 +84,6 @@ it is necessary to check they are correct.
 
 #if defined(__unix) || defined(__unix__) || defined(unix)
 #define SYS_UNIX
-#endif
-
-#if !HAVE_CONST
-#define const
 #endif
 
 /*****************************************************************************
@@ -186,7 +182,7 @@ it is necessary to check they are correct.
 *        2-Jul-98 : - declared ALLBITS                                       *
 *       21-Oct-98 : - allow WORDSIZE==64 using unsigned long long            *
 *                   - added BIGNAUTY option for really big graphs            *
-*       11-Dec-99 : - made bit, leftbit and charcount static in each file    *
+*       11-Dec-99 : - made bit, leftbit and bytecount static in each file    *
 *        9-Jan-00 : - declared nauty_check() and nautil_check()              *
 *       12-Feb-00 : - Used #error for compile-time checks                    *
 *                   - Added DYNREALLOC                                       *
@@ -211,7 +207,7 @@ it is necessary to check they are correct.
 *                   - Now labelorg has a concrete declaration in nautil.c    *
 *                        and EXTDEFS is not needed                           *
 *        5-May-01 : - NILFUNCTION, NILSET, NILGRAPH now obsolete.  Use NULL. *
-*       11-Sep-01 : - setword is unsigned int in the event that uINT_MAX     *
+*       11-Sep-01 : - setword is unsigned int in the event that UINT_MAX     *
 *                     is defined and indicates it is big enough              *
 *       17-Oct-01 : - major rewrite for 2.1.  SYS_* variables gone!          *
 *                     Some modernity assumed, eg size_t                      *
@@ -249,7 +245,7 @@ it is necessary to check they are correct.
 *                   - declare shortish and permutation obsolete, now int     *
 *       14-Nov-10 : - SETWORDSNEEDED(n)                                      *
 *       23-May-10 : - declare densenauty()                                   *
-*       29-Jun-10 : - add PRint_COUNTER(f,x)                                 *
+*       29-Jun-10 : - add PRINT_COUNTER(f,x)                                 *
 *                   - add DEFAULTOPTIONS_DIGRAPH()                           *
 *       27-Mar-11 : - declare writegroupsize()                               *
 *       14-Jan-12 : - add HAVE_TLS and TLS_ATTR                              *
@@ -269,8 +265,11 @@ it is necessary to check they are correct.
 *                   - add Intel popcount intrinsics for icc                  *
 *       12-Jan-16 : - DYNFREE and CONDYNFREE now set the pointer to NULL     *
 *       16-Jan-16 : - Change NAUTY_INFINITY to 2 billion + 2                 *
-*                 : Froze 2.6                                                *
 *       12-Mar-16 : - Add const to alloc_error()                             *
+*                 : Froze 2.6                                                *
+*       29-Aug-16 : - Add SWHIBIT, REMOVEHIBIT and ATMOSTONEBIT              * 
+*       10-Mar-18 : - Add SETWORD_DEC_FORMAT for decimal output              *
+*                     Fix 64-bit SETWORD_FORMAT to use 0 padding.            *
 *                                                                            *
 * ++++++ This file is automatically generated, don't edit it by hand! ++++++
 *                                                                            *
@@ -365,7 +364,7 @@ it is necessary to check they are correct.
    Define setword thus:
       WORDSIZE==16 : unsigned short
       WORDSIZE==32 : unsigned int unless it is too small,
-			in which case unsigned long
+                        in which case unsigned long
       WORDSIZE==64 : the first of unsigned int, unsigned long,
                       unsigned long long, which is large enough.
 */
@@ -399,7 +398,7 @@ it is necessary to check they are correct.
 
 #ifdef NAUTY_IN_MAGMA
 typedef t_uint setword;
-#define SETWORD_int  /* Don't assume this is correct in Magma. */
+#define SETWORD_INT  /* Don't assume this is correct in Magma. */
 
 #else /* NAUTY_IN_MAGMA */
 
@@ -409,9 +408,9 @@ typedef unsigned short setword;
 #endif
 
 #if WORDSIZE==32
-#if SIZEOF_int>=4
+#if SIZEOF_INT>=4
 typedef unsigned int setword;
-#define SETWORD_int
+#define SETWORD_INT
 #else
 typedef unsigned long setword;
 #define SETWORD_LONG
@@ -419,9 +418,9 @@ typedef unsigned long setword;
 #endif
 
 #if WORDSIZE==64
-#if SIZEOF_int>=8
+#if SIZEOF_INT>=8
 typedef unsigned int setword;
-#define SETWORD_int
+#define SETWORD_INT
 #else
 #if SIZEOF_LONG>=8
 typedef unsigned long setword;
@@ -446,19 +445,19 @@ typedef unsigned long nauty_counter;
 #define COUNTER_FMT "%lu"
 #define COUNTER_FMT_RAW "lu"
 #endif
-#define PRint_COUNTER(f,x) fprintf(f,COUNTER_FMT,x)
+#define PRINT_COUNTER(f,x) fprintf(f,COUNTER_FMT,x)
 
-#define NAUTYVERSIONID (26040+HAVE_TLS)  /* 10000*version + HAVE_TLS */
+#define NAUTYVERSIONID (27000+HAVE_TLS)  /* 10000*version + HAVE_TLS */
 #define NAUTYREQUIRED NAUTYVERSIONID  /* Minimum compatible version */
 
 #if WORDSIZE==16
-#define NAUTYVERSION "2.6 (16 bits)"
+#define NAUTYVERSION "2.7 (16 bits)"
 #endif
 #if WORDSIZE==32
-#define NAUTYVERSION "2.6 (32 bits)"
+#define NAUTYVERSION "2.7 (32 bits)"
 #endif
 #if WORDSIZE==64
-#define NAUTYVERSION "2.6 (64 bits)"
+#define NAUTYVERSION "2.7 (64 bits)"
 #endif
 
 #ifndef  MAXN  /* maximum allowed n value; use 0 for dynamic sizing. */
@@ -554,12 +553,16 @@ typedef unsigned long nauty_counter;
 
 #define NOTSUBSET(word1,word2) ((word1) & ~(word2))  /* test if the 1-bits
                     in setword word1 do not form a subset of those in word2  */
-#define intERSECT(word1,word2) ((word1) &= (word2))  /* AND word2 into word1 */
+#define INTERSECT(word1,word2) ((word1) &= (word2))  /* AND word2 into word1 */
 #define UNION(word1,word2)     ((word1) |= (word2))  /* OR word2 into word1 */
 #define SETDIFF(word1,word2)   ((word1) &= ~(word2)) /* - word2 into word1 */
 #define XOR(word1,word2)       ((word1) ^= (word2))  /* XOR word2 into word1 */
 #define ZAPBIT(word,x) ((word) &= ~BITT[x])  /* delete bit x in setword */
 #define TAKEBIT(iw,w) {(iw) = FIRSTBITNZ(w); (w) ^= BITT[iw];}
+
+#define SWHIBIT(w) ((w)&(-(w)))   /* Lower order bit of unsigned type */
+#define REMOVEHIBIT(bit,w) {(bit) = SWHIBIT(w); (w) ^= (bit);}
+#define ATMOSTONEBIT(w) (((w)&(-(w)))==(w))  /* True if |w| <= 1 */
 
 #ifdef SETWORD_LONGLONG
 #define MSK3232 0xFFFFFFFF00000000ULL
@@ -597,7 +600,7 @@ typedef unsigned long nauty_counter;
 #define MSK8                  0xFFUL
 #endif
 
-#if defined(SETWORD_int) || defined(SETWORD_SHORT)
+#if defined(SETWORD_INT) || defined(SETWORD_SHORT)
 #define MSK3232 0xFFFFFFFF00000000U
 #define MSK1648 0xFFFF000000000000U
 #define MSK0856 0xFF00000000000000U
@@ -616,6 +619,7 @@ typedef unsigned long nauty_counter;
 #endif
 
 #if defined(SETWORD_LONGLONG)
+#define SETWORD_DEC_FORMAT "%llu"
 #if WORDSIZE==16
 #define SETWORD_FORMAT "%04llx"
 #endif
@@ -623,11 +627,12 @@ typedef unsigned long nauty_counter;
 #define SETWORD_FORMAT "%08llx"
 #endif
 #if WORDSIZE==64
-#define SETWORD_FORMAT "%16llx"
+#define SETWORD_FORMAT "%016llx"
 #endif
 #endif
 
 #if defined(SETWORD_LONG)
+#define SETWORD_DEC_FORMAT "%lu"
 #if WORDSIZE==16
 #define SETWORD_FORMAT "%04lx"
 #endif
@@ -635,11 +640,12 @@ typedef unsigned long nauty_counter;
 #define SETWORD_FORMAT "%08lx"
 #endif
 #if WORDSIZE==64
-#define SETWORD_FORMAT "%16lx"
+#define SETWORD_FORMAT "%016lx"
 #endif
 #endif
 
-#if defined(SETWORD_int)
+#if defined(SETWORD_INT)
+#define SETWORD_DEC_FORMAT "%u"
 #if WORDSIZE==16
 #define SETWORD_FORMAT "%04x"
 #endif
@@ -647,11 +653,12 @@ typedef unsigned long nauty_counter;
 #define SETWORD_FORMAT "%08x"
 #endif
 #if WORDSIZE==64
-#define SETWORD_FORMAT "%16x"
+#define SETWORD_FORMAT "%016x"
 #endif
 #endif
 
 #if defined(SETWORD_SHORT)
+#define SETWORD_DEC_FORMAT "%hu"
 #if WORDSIZE==16
 #define SETWORD_FORMAT "%04hx"
 #endif
@@ -659,7 +666,7 @@ typedef unsigned long nauty_counter;
 #define SETWORD_FORMAT "%08hx"
 #endif
 #if WORDSIZE==64
-#define SETWORD_FORMAT "%16hx"
+#define SETWORD_FORMAT "%016hx"
 #endif
 #endif
 
@@ -674,10 +681,10 @@ typedef unsigned long nauty_counter;
    ALLBITS     = all (numbered) bits in a setword  */
 
 #if  WORDSIZE==64
-#define POPCOUNTMAC(x) (charcount[(x)>>56 & 0xFF] + charcount[(x)>>48 & 0xFF] \
-                   + charcount[(x)>>40 & 0xFF] + charcount[(x)>>32 & 0xFF] \
-                   + charcount[(x)>>24 & 0xFF] + charcount[(x)>>16 & 0xFF] \
-                   + charcount[(x)>>8 & 0xFF]  + charcount[(x) & 0xFF])
+#define POPCOUNTMAC(x) (bytecount[(x)>>56 & 0xFF] + bytecount[(x)>>48 & 0xFF] \
+                   + bytecount[(x)>>40 & 0xFF] + bytecount[(x)>>32 & 0xFF] \
+                   + bytecount[(x)>>24 & 0xFF] + bytecount[(x)>>16 & 0xFF] \
+                   + bytecount[(x)>>8 & 0xFF]  + bytecount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK3232 ? \
                        (x) &   MSK1648 ? \
                          (x) & MSK0856 ? \
@@ -702,8 +709,8 @@ typedef unsigned long nauty_counter;
 #endif
 
 #if  WORDSIZE==32
-#define POPCOUNTMAC(x) (charcount[(x)>>24 & 0xFF] + charcount[(x)>>16 & 0xFF] \
-                        + charcount[(x)>>8 & 0xFF] + charcount[(x) & 0xFF])
+#define POPCOUNTMAC(x) (bytecount[(x)>>24 & 0xFF] + bytecount[(x)>>16 & 0xFF] \
+                        + bytecount[(x)>>8 & 0xFF] + bytecount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK1616 ? ((x) & MSK0824 ? \
                      leftbit[((x)>>24) & MSK8] : 8+leftbit[(x)>>16]) \
                     : ((x) & MSK0808 ? 16+leftbit[(x)>>8] : 24+leftbit[x]))
@@ -714,7 +721,7 @@ typedef unsigned long nauty_counter;
 #endif
 
 #if  WORDSIZE==16
-#define POPCOUNTMAC(x) (charcount[(x)>>8 & 0xFF] + charcount[(x) & 0xFF])
+#define POPCOUNTMAC(x) (bytecount[(x)>>8 & 0xFF] + bytecount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK0808 ? leftbit[((x)>>8) & MSK8] : 8+leftbit[x])
 #define BITMASK(x)  (MSK15C >> (x))
 #define ALLBITS  MSK16
@@ -733,7 +740,7 @@ typedef unsigned long nauty_counter;
 #define FIRSTBITNZ(x) __builtin_clzl(x)
 #define FIRSTBIT(x) ((x) ? FIRSTBITNZ(x) : WORDSIZE)
 #endif
-#if defined(SETWORD_int) && HAVE_CLZ
+#if defined(SETWORD_INT) && HAVE_CLZ
 #undef FIRSTBIT
 #undef FIRSTBITNZ
 #define FIRSTBITNZ(x) __builtin_clz(x)
@@ -747,7 +754,7 @@ typedef unsigned long nauty_counter;
 /* Use popcount instructions if available */
 #define POPCOUNT POPCOUNTMAC
 
-#ifdef __intEL_COMPILER
+#ifdef __INTEL_COMPILER
 #include <nmmintrin.h>
 #if WORDSIZE==64 && HAVE_MMPOP64
 #undef POPCOUNT
@@ -772,7 +779,7 @@ typedef unsigned long nauty_counter;
 #undef POPCOUNT
 #define POPCOUNT(x) __builtin_popcountl(x)
 #endif
-#if defined(SETWORD_int) && HAVE_POPCNT
+#if defined(SETWORD_INT) && HAVE_POPCNT
 #undef POPCOUNT
 #define POPCOUNT(x) __builtin_popcount(x)
 #endif
@@ -796,7 +803,7 @@ typedef unsigned long nauty_counter;
 #define FALSE    0
 #define TRUE     1
 
-#if SIZEOF_int>=4
+#if SIZEOF_INT>=4
 #define NAUTY_INFINITY 2000000002  /* Max graph size is 2 billion */
 #else
 #define NAUTY_INFINITY 0x7FFF
@@ -1016,7 +1023,7 @@ extern void free(void*);
 */
 
 #define DYNALLSTAT(type,name,name_sz) \
-	static TLS_ATTR type *name; static TLS_ATTR size_t name_sz=0
+        static TLS_ATTR type *name; static TLS_ATTR size_t name_sz=0
 #define DYNALLOC1(type,name,name_sz,sz,msg) \
  if ((size_t)(sz) > name_sz) \
  { if (name_sz) FREES(name); name_sz = (sz); \
@@ -1055,11 +1062,11 @@ extern int labelorg;   /* Declared in nautil.c */
 extern volatile int nauty_kill_request;  /* Also declared in nautil.c */
 
 #ifndef NAUTY_IN_MAGMA
-  /* Things equivalent to bit, charcount, leftbit are defined
+  /* Things equivalent to bit, bytecount, leftbit are defined
      in bs.h for Magma. */
 #if  EXTDEF_TYPE==1
 extern setword bit[];
-extern int charcount[];
+extern int bytecount[];
 extern int leftbit[];
 
 #else
@@ -1080,13 +1087,13 @@ setword bit[] = {01000000000000000000000LL,0400000000000000000000LL,
                  0100000000000000LL,040000000000000LL,020000000000000LL,
                  010000000000000LL,04000000000000LL,02000000000000LL,
                  01000000000000LL,0400000000000LL,0200000000000LL,
-		 0100000000000LL,040000000000LL,020000000000LL,010000000000LL,
-		 04000000000LL,02000000000LL,01000000000LL,0400000000LL,
-		 0200000000LL,0100000000LL,040000000LL,020000000LL,
-		 010000000LL,04000000LL,02000000LL,01000000LL,0400000LL,
-		 0200000LL,0100000LL,040000LL,020000LL,010000LL,04000LL,
+                 0100000000000LL,040000000000LL,020000000000LL,010000000000LL,
+                 04000000000LL,02000000000LL,01000000000LL,0400000000LL,
+                 0200000000LL,0100000000LL,040000000LL,020000000LL,
+                 010000000LL,04000000LL,02000000LL,01000000LL,0400000LL,
+                 0200000LL,0100000LL,040000LL,020000LL,010000LL,04000LL,
                  02000LL,01000LL,0400LL,0200LL,0100LL,040LL,020LL,010LL,
-		 04LL,02LL,01LL};
+                 04LL,02LL,01LL};
 #else
 EXTDEF_CLASS const
 setword bit[] = {01000000000000000000000,0400000000000000000000,
@@ -1124,9 +1131,9 @@ setword bit[] = {0100000,040000,020000,010000,04000,02000,01000,0400,0200,
                  0100,040,020,010,04,02,01};
 #endif
 
-    /*  array giving number of 1-bits in chars valued 0..255: */
+    /*  array giving number of 1-bits in bytes valued 0..255: */
 EXTDEF_CLASS const
-int charcount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
+int bytecount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
                    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
                    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
                    2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6,
@@ -1143,7 +1150,7 @@ int charcount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
                    3,4,4,5,4,5,5,6,4,5,5,6,5,6,6,7,
                    4,5,5,6,5,6,6,7,5,6,6,7,6,7,7,8};
 
-    /* array giving position (1..7) of high-order 1-bit in char: */
+    /* array giving position (1..7) of high-order 1-bit in byte: */
 EXTDEF_CLASS const
 int leftbit[] =   {8,7,6,6,5,5,5,5,4,4,4,4,4,4,4,4,
                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
@@ -1191,20 +1198,19 @@ extern void fmperm(int*,set*,set*,int,int);
 extern void fmptn(int*,int*,int,set*,set*,int,int);
 extern void longprune(set*,set*,set*,set*,int);
 extern void nauty(graph*,int*,int*,set*,int*,optionblk*,
-			statsblk*,set*,int,int,int,graph*);
-
-
-/* Abdullah 2018 */
-extern int *aut;
-extern int aut_counter;
-extern int *base;
-extern int base_length;
-extern int *transversal_length;
-extern int ago;
-extern void store_perm(permutation*,int);
-/* Done Abdullah 2018 */
+                  statsblk*,set*,int,int,int,graph*);
 				  
-			
+
+				  /* Abdullah 2019 */
+				  extern int *aut;
+				  extern int aut_counter;
+				  extern int *base;
+				  extern int base_length;
+				  extern int *transversal_length;
+				  extern int ago;
+				  extern void store_perm(permutation*,int);
+				  /* Done Abdullah 2019 */
+
 extern void maketargetcell(graph*,int*,int*,int,set*,int*,int*,int,boolean,
            int,int (*)(graph*,int*,int*,int,int,boolean,int,int,int),int,int);
 extern int nextelement(set*,int,int);
@@ -1225,7 +1231,7 @@ extern void nautil_check(int,int,int,int);
 extern void nautil_freedyn(void);
 extern void naugraph_freedyn(void);
 extern void densenauty(graph*,int*,int*,int*,
-			optionblk*,statsblk*,int,int,graph*);
+                        optionblk*,statsblk*,int,int,graph*);
 extern void writegroupsize(FILE*,double,int);
 
 #ifdef __cplusplus

@@ -153,6 +153,37 @@ void strong_generators::special_subgroup(int verbose_level)
 		}
 }
 
+void strong_generators::projectivity_subgroup(sims *S, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	action A_on_Galois;
+	longinteger_object go;
+
+	if (f_v) {
+		cout << "strong_generators::projectivity_subgroup "
+				"setting up action on Galois group" << endl;
+		}
+	A_on_Galois.induced_action_on_Galois_group(S, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::projectivity_subgroup "
+				"induced_action_on_Galois_group finished" << endl;
+		}
+	A_on_Galois.Kernel->group_order(go);
+	if (f_v) {
+		cout << "strong_generators::projectivity_subgroup "
+				"kernel has order " << go << endl;
+		}
+
+
+	init_from_sims(A_on_Galois.Kernel, verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::projectivity_subgroup "
+				"projectivity subgroup done" << endl;
+		}
+}
+
 void strong_generators::even_subgroup(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -181,6 +212,26 @@ void strong_generators::even_subgroup(int verbose_level)
 	if (f_v) {
 		cout << "strong_generators::even_subgroup "
 				"special linear group done" << endl;
+		}
+}
+
+void strong_generators::Sylow_subgroup(sims *S, int p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sims *P;
+	longinteger_object go;
+
+	if (f_v) {
+		cout << "strong_generators::Sylow_subgroup " << endl;
+		}
+
+	P = NEW_OBJECT(sims);
+	S->sylow_subgroup(p, P, verbose_level);
+	init_from_sims(P, verbose_level);
+	FREE_OBJECT(P);
+
+	if (f_v) {
+		cout << "strong_generators::Sylow_subgroup done" << endl;
 		}
 }
 

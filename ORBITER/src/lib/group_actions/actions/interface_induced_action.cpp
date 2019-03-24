@@ -1,4 +1,4 @@
-// interface.C
+// interface_induced_action.C
 //
 // Anton Betten
 //
@@ -120,6 +120,15 @@ int induced_action_element_image_of(action &A,
 			exit(1);
 			}
 		AD->compute_image(sub, Elt, a, b, verbose_level - 1);
+		}
+	else if (A.type_G == action_on_galois_group_t) {
+		if (f_v) {
+			cout << "induced_action_element_image_of "
+					"action_on_galois_group_t" << endl;
+			}
+		action_on_galois_group *AG = A.G.on_Galois_group;
+
+		AG->compute_image(Elt, a, b, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_sign_t) {
 		if (f_v) {
@@ -552,6 +561,14 @@ void induced_action_element_image_of_low_level(action &A,
 			}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_determinant_t not yet implemented" << endl;
+		exit(1);
+		}
+	else if (A.type_G == action_on_galois_group_t) {
+		if (f_v) {
+			cout << "action_on_galois_group_t" << endl;
+			}
+		cout << "induced_action_element_image_of_low_level "
+				"action_on_galois_group_t not yet implemented" << endl;
 		exit(1);
 		}
 	else if (A.type_G == action_on_sign_t) {
@@ -1384,6 +1401,11 @@ void induced_action_print_point(action &A,
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
 			}
+		ost << a;
+		}
+	else if (A.type_G == action_on_galois_group_t) {
+		//action_on_galois_group *AG = A.G.on_Galois_group;
+
 		ost << a;
 		}
 	else if (A.type_G == action_on_sign_t) {

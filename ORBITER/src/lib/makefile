@@ -158,8 +158,8 @@ MODULES= \
 		group_actions/actions/action_pointer_table.o \
 		group_actions/actions/action_projective.o \
 		group_actions/actions/backtrack.o \
-		group_actions/actions/interface.o \
 		group_actions/actions/interface_direct_product.o \
+		group_actions/actions/interface_induced_action.o \
 		group_actions/actions/interface_matrix_group.o \
 		group_actions/actions/interface_perm_group.o \
 		group_actions/actions/interface_wreath_product.o \
@@ -201,6 +201,7 @@ MODULES= \
 		group_actions/induced_actions/action_on_determinant.o \
 		group_actions/induced_actions/action_on_factor_space.o \
 		group_actions/induced_actions/action_on_flags.o \
+		group_actions/induced_actions/action_on_galois_group.o \
 		group_actions/induced_actions/action_on_grassmannian.o \
 		group_actions/induced_actions/action_on_homogeneous_polynomials.o \
 		group_actions/induced_actions/action_on_k_subsets.o \

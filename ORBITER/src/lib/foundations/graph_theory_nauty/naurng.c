@@ -45,7 +45,6 @@
 
 #include "naurng.h"
 
-
 #define KK 100                     /* the long lag */
 #define LL  37                     /* the short lag */
 #define MM (1L<<30)                 /* the modulus */
@@ -132,5 +131,3 @@ ran_nextran(void)
 {
     return (*ran_arr_ptr>=0 ? *ran_arr_ptr++ : ran_arr_cycle()); 
 }
-
-

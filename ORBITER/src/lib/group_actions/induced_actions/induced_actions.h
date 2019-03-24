@@ -16,7 +16,7 @@ namespace group_actions {
 // #############################################################################
 
 
-//! action by conjugation on the elements of a given group
+//! induced action by conjugation on the elements of a given group
 
 
 
@@ -45,7 +45,7 @@ public:
 // #############################################################################
 
 
-//! the action of PSL(2,q) on a conic (the only type implemented so far)
+//! induced  action of PSL(2,q) on a conic (the only type implemented so far)
 
 
 class action_by_representation {
@@ -108,7 +108,7 @@ public:
 // action_by_right_multiplication.C:
 // #############################################################################
 
-//! action on a the set of elements of a group by right multiplication
+//! induced action on a the set of elements of a group by right multiplication
 
 
 
@@ -134,7 +134,7 @@ public:
 // action_by_subfield_structure.C:
 // #############################################################################
 
-//! action on the vector space arising from a field over a subfield
+//! induced action on the vector space arising from a field over a subfield
 
 
 class action_by_subfield_structure {
@@ -181,7 +181,7 @@ public:
 // action_on_andre.C:
 // #############################################################################
 
-//! action on the elements of a projective plane constructed via Andre / Bruck / Bose
+//! induced action on the elements of a projective plane constructed via Andre / Bruck / Bose
 
 
 class action_on_andre {
@@ -245,7 +245,7 @@ public:
 // action_on_cosets.C:
 // #############################################################################
 
-//! action on the cosets of a subgroup by right multiplication
+//! induced action on the cosets of a subspace by right multiplication
 
 
 class action_on_cosets {
@@ -294,7 +294,7 @@ public:
 // action_on_determinant.C:
 // #############################################################################
 
-//! action on the determinant of a group of matrices (used to compute the subgroup PSL)
+//! induced action on the determinant of a group of matrices (used to compute the subgroup PSL)
 
 
 class action_on_determinant {
@@ -455,7 +455,7 @@ public:
 // #############################################################################
 
 
-//! action on flags
+//! induced action on flags
 
 
 class action_on_flags {
@@ -481,10 +481,35 @@ public:
 };
 
 // #############################################################################
+// action_on_galois_group.cpp:
+// #############################################################################
+
+//! induced action on the galois group (used to compute the projectivity subgroup of a collineation group)
+
+
+class action_on_galois_group {
+public:
+	action *A;
+	matrix_group *M;
+	int m;
+	int q;
+	int degree;
+
+	action_on_galois_group();
+	~action_on_galois_group();
+	void null();
+	void free();
+	void init(action *A, int m, int verbose_level);
+	void compute_image(int *Elt, int i, int &j,
+		int verbose_level);
+};
+
+
+// #############################################################################
 // action_on_grassmannian.C:
 // #############################################################################
 
-//! action on the grassmannian (subspaces of a fixed dimension of a vectors space)
+//! induced action on the grassmannian (subspaces of a fixed dimension of a vectors space)
 
 
 class action_on_grassmannian {
@@ -626,7 +651,7 @@ public:
 // #############################################################################
 
 
-//! action on the orthogonal geometry
+//! induced action on the orthogonal geometry
 
 
 class action_on_orthogonal {
@@ -724,7 +749,7 @@ int action_on_sets_compare_inverted(void *a, void *b, void *data);
 // action_on_sign.C:
 // #############################################################################
 
-//! action on the sign function of a permutation group (to compute the even subgroup)
+//! induced action on the sign function of a permutation group (to compute the even subgroup)
 
 
 class action_on_sign {
@@ -828,7 +853,7 @@ int action_on_subgroups_compare_inverted(void *a, void *b, void *data);
 // #############################################################################
 
 
-//! the wedge product action on exterior square of a vector space
+//! induced wedge product action on the exterior square of a vector space
 
 
 class action_on_wedge_product {
@@ -872,7 +897,7 @@ public:
 // product_action.C:
 // #############################################################################
 
-//! the product action of two group actions
+//! induced product action of two group actions
 
 
 class product_action {

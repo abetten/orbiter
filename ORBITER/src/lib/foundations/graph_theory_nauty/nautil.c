@@ -1,6 +1,6 @@
 /*****************************************************************************
 *                                                                            *
-*  Auxiliary source file for version 2.6 of nauty.                           *
+*  Auxiliary source file for version 2.7 of nauty.                           *
 *                                                                            *
 *   Copyright (1984-2013) Brendan McKay.  All rights reserved.               *
 *   Subject to waivers and disclaimers in nauty.h.                           *
@@ -66,8 +66,6 @@
 #ifdef NAUTY_IN_MAGMA
 #include "io.e"
 #endif
-
-
 
     /* macros for hash-codes: */
     /* Don't use NAUTY_INFINITY here as that would make the canonical
@@ -593,7 +591,7 @@ shortprune(set *set1, set *set2, int m)
 {
     int i;
 
-    for (i = 0; i < M; ++i) intERSECT(set1[i],set2[i]);
+    for (i = 0; i < M; ++i) INTERSECT(set1[i],set2[i]);
 }
 
 /*****************************************************************************
@@ -654,7 +652,7 @@ longprune(set *tcell, set *fix, set *bottom, set *top, int m)
         bottom += M;
 
         if (i == M)
-            for (i = 0; i < M; ++i) intERSECT(tcell[i],bottom[i]);
+            for (i = 0; i < M; ++i) INTERSECT(tcell[i],bottom[i]);
         bottom += M;
     }
 }
@@ -747,4 +745,3 @@ nautil_freedyn(void)
     DYNFREE(workperm,workperm_sz);
 #endif
 }
-

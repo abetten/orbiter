@@ -800,13 +800,13 @@ void surface_domain::label_variables_4(
 	HPD->symbols = NEW_pchar(4);
 	HPD->symbols_latex = NEW_pchar(4);
 	for (i = 0; i < 4; i++) {
-		sprintf(label, "x_%d", i);
+		sprintf(label, "X_%d", i);
 		l = strlen(label);
 		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 4; i++) {
-		sprintf(label, "x_{%d}", i);
+		sprintf(label, "X_{%d}", i);
 		l = strlen(label);
 		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
