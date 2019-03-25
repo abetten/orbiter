@@ -580,6 +580,65 @@ public:
 		int &group_order, int verbose_level);
 
 	// #########################################################################
+	// finite_field_linear_groups.cpp
+	// #########################################################################
+	void diagonal_orbit_perm(int n,
+			int *orbit, int *orbit_inv, int verbose_level);
+	void frobenius_orbit_perm(int n,
+		int *orbit, int *orbit_inv,
+		int verbose_level);
+	void projective_matrix_group_base_and_orbits(int n,
+		int f_semilinear,
+		int base_len, int degree,
+		int *base, int *transversal_length,
+		int **orbit, int **orbit_inv,
+		int verbose_level);
+	void projective_matrix_group_base_and_transversal_length(int n,
+		int f_semilinear,
+		int base_len, int degree,
+		int *base, int *transversal_length,
+		int verbose_level);
+	void affine_matrix_group_base_and_transversal_length(int n,
+		int f_semilinear,
+		int base_len, int degree,
+		int *base, int *transversal_length,
+		int verbose_level);
+	void general_linear_matrix_group_base_and_transversal_length(int n,
+		int f_semilinear,
+		int base_len, int degree,
+		int *base, int *transversal_length,
+		int verbose_level);
+	void strong_generators_for_projective_linear_group(
+		int n,
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void strong_generators_for_affine_linear_group(
+		int n,
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void strong_generators_for_general_linear_group(
+		int n,
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void generators_for_parabolic_subgroup(
+		int n,
+		int f_semilinear, int k,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void generators_for_stabilizer_of_triangle_in_PGL4(
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+
+
+	// #########################################################################
 	// finite_field_representations.cpp
 	// #########################################################################
 
@@ -618,6 +677,8 @@ public:
 	// finite_field_projective.cpp
 	// #########################################################################
 
+	void PG_element_apply_frobenius(int n,
+			int *v, int f);
 	void create_projective_variety(
 			const char *variety_label,
 			int variety_nb_vars, int variety_degree,
@@ -858,6 +919,10 @@ public:
 	void do_ideal(int n,
 		int *set_in, int set_size, int degree,
 		int verbose_level);
+	void PG_element_modified_not_in_subspace_perm(int n, int m,
+		int *orbit, int *orbit_inv,
+		int verbose_level);
+	void print_set_in_affine_plane(int len, int *S);
 
 
 	// #########################################################################
@@ -943,8 +1008,6 @@ int nb_PG_elements(int n, int q);
 	// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 int nb_PG_elements_not_in_subspace(int n, int m, int q);
 int nb_AG_elements(int n, int q);
-void PG_element_apply_frobenius(int n,
-	finite_field &GFq, int *v, int f);
 void AG_element_rank(int q, int *v, int stride, int len, int &a);
 void AG_element_unrank(int q, int *v, int stride, int len, int a);
 void AG_element_rank_longinteger(int q, int *v, int stride, int len,
@@ -952,12 +1015,10 @@ void AG_element_rank_longinteger(int q, int *v, int stride, int len,
 void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
 	longinteger_object &a);
 int PG_element_modified_is_in_subspace(int n, int m, int *v);
-void PG_element_modified_not_in_subspace_perm(int n, int m,
-	finite_field &GFq, int *orbit, int *orbit_inv, int verbose_level);
 void test_PG(int n, int q);
+#if 0
 void line_through_two_points(finite_field &GFq, int len,
 	int pt1, int pt2, int *line);
-void print_set_in_affine_plane(finite_field &GFq, int len, int *S);
 int consecutive_ones_property_in_affine_plane(std::ostream &ost,
 	finite_field &GFq, int len, int *S);
 int line_intersection_with_oval(finite_field &GFq,
@@ -965,6 +1026,7 @@ int line_intersection_with_oval(finite_field &GFq,
 	int verbose_level);
 int get_base_line(finite_field &GFq, int plane1, int plane2,
 	int verbose_level);
+#endif
 void create_Fisher_BLT_set(int *Fisher_BLT, int q,
 	const char *poly_q, const char *poly_Q, int verbose_level);
 void create_Linear_BLT_set(int *BLT, int q,
@@ -1241,10 +1303,6 @@ public:
 // #############################################################################
 
 
-void diagonal_orbit_perm(int n, finite_field &GFq, 
-	int *orbit, int *orbit_inv, int verbose_level);
-void frobenius_orbit_perm(int n, finite_field &GFq, 
-	int *orbit, int *orbit_inv, int verbose_level);
 void generators_symmetric_group(int deg, 
 	int &nb_perms, int *&perms, int verbose_level);
 void generators_cyclic_group(int deg, 
@@ -1281,52 +1339,6 @@ int matrix_group_base_len_affine_group(int n, int q,
 	int f_semilinear, int verbose_level);
 int matrix_group_base_len_general_linear_group(int n, int q, 
 	int f_semilinear, int verbose_level);
-void projective_matrix_group_base_and_orbits(int n, 
-	finite_field *F, int f_semilinear, 
-	int base_len, int degree, 
-	int *base, int *transversal_length, 
-	int **orbit, int **orbit_inv, 
-	int verbose_level);
-void projective_matrix_group_base_and_transversal_length(int n,
-	finite_field *F, int f_semilinear,
-	int base_len, int degree,
-	int *base, int *transversal_length,
-	int verbose_level);
-void affine_matrix_group_base_and_transversal_length(int n, 
-	finite_field *F, int f_semilinear, 
-	int base_len, int degree, 
-	int *base, int *transversal_length, 
-	int verbose_level);
-void general_linear_matrix_group_base_and_transversal_length(int n, 
-	finite_field *F, int f_semilinear, 
-	int base_len, int degree, 
-	int *base, int *transversal_length, 
-	int verbose_level);
-void strong_generators_for_projective_linear_group(int n, finite_field *F, 
-	int f_semilinear, 
-	int *&data, int &size, int &nb_gens, 
-	int verbose_level);
-void strong_generators_for_affine_linear_group(int n, finite_field *F, 
-	int f_semilinear, 
-	int *&data, int &size, int &nb_gens, 
-	int verbose_level);
-void strong_generators_for_general_linear_group(int n, finite_field *F, 
-	int f_semilinear, 
-	int *&data, int &size, int &nb_gens, 
-	int verbose_level);
-void generators_for_parabolic_subgroup(int n, finite_field *F, 
-	int f_semilinear, int k, 
-	int *&data, int &size, int &nb_gens, 
-	int verbose_level);
-void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
-	finite_field *F, 
-	int f_semilinear, 
-	int *&data, int &size, int &nb_gens, 
-	int verbose_level);
-void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F, 
-	int f_semilinear, 
-	int *&data, int &size, int &nb_gens, 
-	int verbose_level);
 
 
 // #############################################################################

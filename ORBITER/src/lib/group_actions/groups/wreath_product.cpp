@@ -247,9 +247,9 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	}
 	base_for_component = NEW_int(base_len_in_component);
 	tl_for_component = NEW_int(base_len_in_component);
-	general_linear_matrix_group_base_and_transversal_length(
+	F->general_linear_matrix_group_base_and_transversal_length(
 		dimension_of_matrix_group,
-		F, FALSE /* f_semilinear */,
+		FALSE /* f_semilinear */,
 		base_len_in_component, degree_of_matrix_group,
 		base_for_component, tl_for_component,
 		verbose_level - 1);
@@ -862,8 +862,8 @@ void wreath_product::make_strong_generators_data(int *&data,
 		cout << "wreath_product::make_strong_generators_data "
 				"before strong_generators_for_general_linear_group" << endl;
 	}
-	strong_generators_for_general_linear_group(
-		dimension_of_matrix_group, F,
+	F->strong_generators_for_general_linear_group(
+		dimension_of_matrix_group,
 		FALSE /*M->f_semilinear*/,
 		GL_data, GL_size, GL_nb_gens,
 		verbose_level - 1);

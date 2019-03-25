@@ -602,8 +602,8 @@ void matrix_group::init_base_projective(
 		cout << "matrix_group::init_base_projective "
 				"before projective_matrix_group_base_and_orbits" << endl;
 		}
-	projective_matrix_group_base_and_orbits(n, 
-		GFq, f_semilinear, 
+	GFq->projective_matrix_group_base_and_orbits(n,
+		f_semilinear,
 		A->base_len, A->degree, 
 		A->base, A->transversal_length, 
 		A->orbit, A->orbit_inv, 
@@ -643,8 +643,8 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 		cout << "matrix_group::init_base_affine before "
 				"affine_matrix_group_base_and_orbits" << endl;
 		}
-	affine_matrix_group_base_and_transversal_length(n, 
-		GFq, f_semilinear, 
+	GFq->affine_matrix_group_base_and_transversal_length(n,
+		f_semilinear,
 		A->base_len, A->degree, 
 		A->base, A->transversal_length, 
 		verbose_level - 1);
@@ -685,8 +685,8 @@ void matrix_group::init_base_general_linear(
 		cout << "matrix_group::init_base_general_linear before "
 				"affine_matrix_group_base_and_orbits" << endl;
 		}
-	general_linear_matrix_group_base_and_transversal_length(n, 
-		GFq, f_semilinear, 
+	GFq->general_linear_matrix_group_base_and_transversal_length(n,
+		f_semilinear,
 		A->base_len, A->degree, 
 		A->base, A->transversal_length, 
 		verbose_level - 1);
@@ -2116,20 +2116,20 @@ void matrix_group::base_and_transversal_length(
 		cout << "matrix_group::base_and_transversal_length" << endl;
 		}
 	if (f_projective) {
-		projective_matrix_group_base_and_transversal_length(n,
-			GFq, f_semilinear,
+		GFq->projective_matrix_group_base_and_transversal_length(n,
+			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
 			verbose_level);
 	} else if (f_affine) {
-		affine_matrix_group_base_and_transversal_length(n,
-			GFq, f_semilinear,
+		GFq->affine_matrix_group_base_and_transversal_length(n,
+			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
 			verbose_level);
 	} else if (f_general_linear) {
-		general_linear_matrix_group_base_and_transversal_length(n,
-			GFq, f_semilinear,
+		GFq->general_linear_matrix_group_base_and_transversal_length(n,
+			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
 			verbose_level);
@@ -2148,20 +2148,20 @@ void matrix_group::strong_generators_low_level(int *&data,
 		cout << "matrix_group::strong_generators_low_level" << endl;
 		}
 	if (f_projective) {
-		strong_generators_for_projective_linear_group(
-			n, GFq,
+		GFq->strong_generators_for_projective_linear_group(
+			n,
 			f_semilinear,
 			data, size, nb_gens,
 			verbose_level - 1);
 	} else if (f_affine) {
-		strong_generators_for_affine_linear_group(
-				n, GFq,
+		GFq->strong_generators_for_affine_linear_group(
+				n,
 				f_semilinear,
 				data, size, nb_gens,
 				verbose_level - 1);
 	} else if (f_general_linear) {
-		strong_generators_for_general_linear_group(
-			n, GFq,
+		GFq->strong_generators_for_general_linear_group(
+			n,
 			f_semilinear,
 			data, size, nb_gens,
 			verbose_level);

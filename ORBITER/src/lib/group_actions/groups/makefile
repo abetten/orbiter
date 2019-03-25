@@ -20,6 +20,7 @@ MODULES = \
 	strong_generators.o \
 	strong_generators_groups.o \
 	subgroup.o \
+	sylow_structure.o \
 	wreath_product.o 
 
 
