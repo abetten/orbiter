@@ -2333,6 +2333,7 @@ public:
 		// generators for the automorphism group
 
 	strong_generators *projectivity_group_gens;
+	sylow_structure *Syl;
 
 	action *A_on_points;
 	action *A_on_Eckardt_points;

@@ -14,7 +14,14 @@ namespace group_actions {
 
 subgroup::subgroup()
 {
-	null();
+	A = NULL;
+	Elements = NULL;
+	group_order = 0;
+	gens = NULL;
+	nb_gens = 0;
+	Sub = NULL;
+	SG = NULL;
+	//null();
 }
 
 subgroup::~subgroup()
@@ -24,8 +31,13 @@ subgroup::~subgroup()
 
 void subgroup::null()
 {
+	A = NULL;
 	Elements = NULL;
+	group_order = 0;
 	gens = NULL;
+	nb_gens = 0;
+	Sub = NULL;
+	SG = NULL;
 }
 
 void subgroup::freeself()
@@ -36,7 +48,44 @@ void subgroup::freeself()
 	if (gens) {
 		FREE_int(gens);
 		}
+	if (Sub) {
+		FREE_OBJECT(Sub);
+		}
+	if (SG) {
+		FREE_OBJECT(SG);
+		}
 	null();
+}
+
+void subgroup::init_from_sims(sims *S, sims *Sub,
+		strong_generators *SG, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	int i, rk;
+
+	if (f_v) {
+		cout << "subgroup::init_from_sims" << endl;
+	}
+	A = S->A;
+	subgroup::Sub = Sub;
+	subgroup::SG = SG;
+	group_order = SG->group_order_as_int();
+	if (f_v) {
+		cout << "subgroup::init_from_sims group_order=" << group_order << endl;
+	}
+	Elt = NEW_int(A->elt_size_in_int);
+	Elements = NEW_int(group_order);
+	for (i = 0; i < group_order; i++) {
+		Sub->element_unrank_int(i, Elt);
+		rk = S->element_rank_int(Elt);
+		Elements[i] = rk;
+	}
+	int_vec_heapsort(Elements, group_order);
+
+	if (f_v) {
+		cout << "subgroup::init_from_sims done" << endl;
+	}
 }
 
 void subgroup::init(int *Elements, int group_order, int *gens, int nb_gens)

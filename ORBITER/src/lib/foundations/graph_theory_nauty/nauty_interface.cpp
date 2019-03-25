@@ -1,4 +1,4 @@
-// nauty_interface.C
+// nauty_interface.cpp
 // 
 // Anton Betten
 // Abdullah Al-Azemi
@@ -27,6 +27,9 @@ using namespace std;
 #if HAS_NAUTY
 
 
+
+// don't make this too big, or otherwise the linker will complain on linux machine.
+// 100000 is too big for Linux under gcc, but OK for Macintosh with LLVM
 
 
 #define MAXN 20000

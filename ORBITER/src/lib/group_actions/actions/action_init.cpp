@@ -395,21 +395,21 @@ void action::init_matrix_group_strong_generators_builtin(
 		}
 
 	if (M->f_projective) {
-		strong_generators_for_projective_linear_group(n, F, 
+		F->strong_generators_for_projective_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
 			// in GALOIS/projective.C
 		}
 	else if (M->f_affine) {
-		strong_generators_for_affine_linear_group(n, F, 
+		F->strong_generators_for_affine_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
 			// in GALOIS/projective.C
 		}
 	else if (M->f_general_linear) {
-		strong_generators_for_general_linear_group(n, F, 
+		F->strong_generators_for_general_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);

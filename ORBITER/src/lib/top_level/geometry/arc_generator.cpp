@@ -846,7 +846,7 @@ void arc_generator::print(int len, int *S)
 
 void arc_generator::print_set_in_affine_plane(int len, int *S)
 {
-	orbiter::foundations::print_set_in_affine_plane(*F, len, S);
+	F->print_set_in_affine_plane(len, S);
 }
 
 

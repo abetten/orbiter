@@ -35,6 +35,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/finite_field_io.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
+		foundations/algebra_and_number_theory/finite_field_linear_groups.o \
 		foundations/algebra_and_number_theory/finite_field_projective.o \
 		foundations/algebra_and_number_theory/finite_field_representations.o \
 		foundations/algebra_and_number_theory/finite_field_tables.o \
@@ -189,6 +190,7 @@ MODULES= \
 		group_actions/groups/strong_generators.o \
 		group_actions/groups/strong_generators_groups.o \
 		group_actions/groups/subgroup.o \
+		group_actions/groups/sylow_structure.o \
 		group_actions/groups/wreath_product.o \
 		group_actions/induced_actions/action_by_conjugation.o \
 		group_actions/induced_actions/action_by_representation.o \

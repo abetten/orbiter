@@ -2206,7 +2206,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 				"parabolic_subgroup" << endl;
 		}
 
-	orbiter::foundations::generators_for_parabolic_subgroup(n, F,
+	F->generators_for_parabolic_subgroup(n,
 		Mtx->f_semilinear, k, 
 		data, size, nb_gens, 
 		verbose_level);
@@ -2308,8 +2308,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 				"for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
 		}
 
-	orbiter::foundations::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
-		F,
+	F->generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		Mtx->f_semilinear, 
 		data, size, nb_gens, 
 		verbose_level);
@@ -2415,7 +2414,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 				"stabilizer_of_triangle_in_PGL4" << endl;
 		}
 
-	orbiter::foundations::generators_for_stabilizer_of_triangle_in_PGL4(F,
+	F->generators_for_stabilizer_of_triangle_in_PGL4(
 		Mtx->f_semilinear, 
 		data, size, nb_gens, 
 		verbose_level);

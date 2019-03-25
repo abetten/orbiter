@@ -1395,27 +1395,55 @@ void strong_generators_array_read_from_file(const char *fname,
 	action *A, strong_generators *&p, int &nb, int verbose_level);
 
 // #############################################################################
-// subgroup.C:
+// subgroup.cpp:
 // #############################################################################
 
 //! a subgroup of a group using a list of elements
 
 class subgroup {
 public:
+	action *A;
 	int *Elements;
 	int group_order;
 	int *gens;
 	int nb_gens;
+	sims *Sub;
+	strong_generators *SG;
 
 
 	subgroup();
 	~subgroup();
 	void null();
 	void freeself();
+	void init_from_sims(sims *S, sims *Sub,
+			strong_generators *SG, int verbose_level);
 	void init(int *Elements, int group_order, int *gens, int nb_gens);
 	void print();
 	int contains_this_element(int elt);
 
+};
+
+// #############################################################################
+// sylow_structure.cpp:
+// #############################################################################
+
+//! The Sylow structure of a finite group
+
+class sylow_structure {
+public:
+	longinteger_object go;
+	int *primes;
+	int *exponents;
+	int nb_primes;
+
+	sims *S; // the group
+	subgroup *Sub;
+
+	sylow_structure();
+	~sylow_structure();
+	void null();
+	void freeself();
+	void init(sims *S, int verbose_level);
 };
 
 

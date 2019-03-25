@@ -17,6 +17,17 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+void finite_field::PG_element_apply_frobenius(int n,
+		int *v, int f)
+{
+	int i;
+
+	for (i = 0; i < n; i++) {
+		v[i] = frobenius_power(v[i], f);
+		}
+}
+
+
 void finite_field::create_projective_variety(
 		const char *variety_label,
 		int variety_nb_vars, int variety_degree,
@@ -5049,6 +5060,94 @@ void finite_field::do_ideal(int n,
 	FREE_int(w2);
 }
 
+void finite_field::PG_element_modified_not_in_subspace_perm(int n, int m,
+	int *orbit, int *orbit_inv,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *v = NEW_int(n + 1);
+	int l = nb_PG_elements(n, q);
+	int ll = nb_PG_elements_not_in_subspace(n, m, q);
+	int i, j1 = 0, j2 = ll, f_in, j;
+
+	if (f_v) {
+		cout << "finite_field::PG_element_modified_not_in_subspace_perm" << endl;
+	}
+	for (i = 0; i < l; i++) {
+		PG_element_unrank_modified(v, 1, n + 1, i);
+		f_in = PG_element_modified_is_in_subspace(n, m, v);
+		if (f_v) {
+			cout << i << " : ";
+			for (j = 0; j < n + 1; j++) {
+				cout << v[j] << " ";
+				}
+			}
+		if (f_in) {
+			if (f_v) {
+				cout << " is in the subspace" << endl;
+				}
+			orbit[j2] = i;
+			orbit_inv[i] = j2;
+			j2++;
+			}
+		else {
+			if (f_v) {
+				cout << " is not in the subspace" << endl;
+				}
+			orbit[j1] = i;
+			orbit_inv[i] = j1;
+			j1++;
+			}
+		}
+	if (j1 != ll) {
+		cout << "j1 != ll" << endl;
+		exit(1);
+		}
+	if (j2 != l) {
+		cout << "j2 != l" << endl;
+		exit(1);
+		}
+	FREE_int(v);
+	if (f_v) {
+		cout << "finite_field::PG_element_modified_not_in_subspace_perm done" << endl;
+	}
+}
+
+void finite_field::print_set_in_affine_plane(int len, int *S)
+{
+	int *A;
+	int i, j, x, y, v[3];
+
+
+	A = NEW_int(q * q);
+	for (x = 0; x < q; x++) {
+		for (y = 0; y < q; y++) {
+			A[(q - 1 - y) * q + x] = 0;
+			}
+		}
+	for (i = 0; i < len; i++) {
+		PG_element_unrank_modified(
+				v, 1 /* stride */, 3 /* len */, S[i]);
+		if (v[2] != 1) {
+			//cout << "my_generator::print_set_in_affine_plane
+			// not an affine point" << endl;
+			cout << "(" << v[0] << "," << v[1]
+					<< "," << v[2] << ")" << endl;
+			continue;
+			}
+		x = v[0];
+		y = v[1];
+		A[(q - 1 - y) * q + x] = 1;
+		}
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			cout << A[i * q + j];
+			}
+		cout << endl;
+		}
+	FREE_int(A);
+}
+
 
 
 
@@ -5089,16 +5188,6 @@ int nb_AG_elements(int n, int q)
 // $q^n$
 {
 	return i_power_j(q, n);
-}
-
-void PG_element_apply_frobenius(int n,
-		finite_field &GFq, int *v, int f)
-{
-	int i;
-
-	for (i = 0; i < n; i++) {
-		v[i] = GFq.frobenius_power(v[i], f);
-		}
 }
 
 void AG_element_rank(int q, int *v, int stride, int len, int &a)
@@ -5194,54 +5283,6 @@ int PG_element_modified_is_in_subspace(int n, int m, int *v)
 	return TRUE;
 }
 
-void PG_element_modified_not_in_subspace_perm(int n, int m, 
-	finite_field &GFq,
-	int *orbit, int *orbit_inv,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *v = NEW_int(n + 1);
-	int l = nb_PG_elements(n, GFq.q);
-	int ll = nb_PG_elements_not_in_subspace(n, m, GFq.q);
-	int i, j1 = 0, j2 = ll, f_in, j;
-	
-	for (i = 0; i < l; i++) {
-		GFq.PG_element_unrank_modified(v, 1, n + 1, i);
-		f_in = PG_element_modified_is_in_subspace(n, m, v);
-		if (f_v) {
-			cout << i << " : ";
-			for (j = 0; j < n + 1; j++) {
-				cout << v[j] << " ";
-				}
-			}
-		if (f_in) {
-			if (f_v) {
-				cout << " is in the subspace" << endl;
-				}
-			orbit[j2] = i;
-			orbit_inv[i] = j2;
-			j2++;
-			}
-		else {
-			if (f_v) {
-				cout << " is not in the subspace" << endl;
-				}
-			orbit[j1] = i;
-			orbit_inv[i] = j1;
-			j1++;
-			}
-		}
-	if (j1 != ll) {
-		cout << "j1 != ll" << endl;
-		exit(1);
-		}
-	if (j2 != l) {
-		cout << "j2 != l" << endl;
-		exit(1);
-		}
-	FREE_int(v);
-}
-
 
 void test_PG(int n, int q)
 {
@@ -5262,7 +5303,7 @@ void test_PG(int n, int q)
 	
 }
 
-
+#if 0
 void line_through_two_points(finite_field &GFq,
 		int len, int pt1, int pt2, int *line)
 {
@@ -5285,41 +5326,6 @@ void line_through_two_points(finite_field &GFq,
 		GFq.PG_element_rank_modified(
 				v3, 1 /* stride */, len, line[1 + alpha]);
 		}
-}
-
-void print_set_in_affine_plane(finite_field &GFq, int len, int *S)
-{
-	int *A;
-	int i, j, x, y, v[3];
-	
-	
-	A = NEW_int(GFq.q * GFq.q);
-	for (x = 0; x < GFq.q; x++) {
-		for (y = 0; y < GFq.q; y++) {
-			A[(GFq.q - 1 - y) * GFq.q + x] = 0;
-			}
-		}
-	for (i = 0; i < len; i++) {
-		GFq.PG_element_unrank_modified(
-				v, 1 /* stride */, 3 /* len */, S[i]);
-		if (v[2] != 1) {
-			//cout << "my_generator::print_set_in_affine_plane
-			// not an affine point" << endl;
-			cout << "(" << v[0] << "," << v[1]
-					<< "," << v[2] << ")" << endl;
-			continue;
-			}
-		x = v[0];
-		y = v[1];
-		A[(GFq.q - 1 - y) * GFq.q + x] = 1;
-		}
-	for (i = 0; i < GFq.q; i++) {
-		for (j = 0; j < GFq.q; j++) {
-			cout << A[i * GFq.q + j];
-			}
-		cout << endl;
-		}
-	FREE_int(A);
 }
 
 int consecutive_ones_property_in_affine_plane(
@@ -5482,7 +5488,7 @@ int get_base_line(finite_field &GFq,
 		}
 	return line_rk;
 }
-
+#endif
 
 void create_Fisher_BLT_set(int *Fisher_BLT,
 		int q, const char *poly_q, const char *poly_Q, int verbose_level)
