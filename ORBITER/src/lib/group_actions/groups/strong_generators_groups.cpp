@@ -2210,7 +2210,6 @@ void strong_generators::generators_for_parabolic_subgroup(
 		Mtx->f_semilinear, k, 
 		data, size, nb_gens, 
 		verbose_level);
-		// GALOIS/group_generators.C
 
 	my_gens = NEW_OBJECT(vector_ge);
 	my_gens->init(A_PGL_n_q);
@@ -2418,7 +2417,6 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 		Mtx->f_semilinear, 
 		data, size, nb_gens, 
 		verbose_level);
-		// GALOIS/group_generators.C
 
 	my_gens = NEW_OBJECT(vector_ge);
 	my_gens->init(A_PGL_4_q);
