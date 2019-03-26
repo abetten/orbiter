@@ -1288,9 +1288,12 @@ public:
 	~nauty_interface();
 	action *create_automorphism_group_of_colored_graph_object(
 		colored_graph *CG, int verbose_level);
-	action *create_automorphism_group_of_colored_graph(
+	action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
+			colored_graph *CG, int *labeling, int verbose_level);
+	action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
 		int n, int f_bitvec, uchar *Adj_bitvec, int *Adj,
 		int *vertex_colors,
+		int *labeling,
 		int verbose_level);
 	action *create_automorphism_group_of_graph_bitvec(
 		int n, uchar *Adj_bitvec,
