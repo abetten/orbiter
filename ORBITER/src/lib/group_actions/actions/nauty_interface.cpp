@@ -34,16 +34,23 @@ action *nauty_interface::create_automorphism_group_of_colored_graph_object(
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
+	int *labeling;
 
 	if (f_v) {
 		cout << "nauty_interface::create_automorphism_group_of_colored_graph" << endl;
 		}
 
-	A = create_automorphism_group_of_colored_graph(
+	labeling = NEW_int(CG->nb_points);
+
+
+	A = create_automorphism_group_and_canonical_labeling_of_colored_graph(
 		CG->nb_points, TRUE /* f_bitvec */,
 		CG->bitvector_adjacency, NULL /* int  *Adj */,
 		CG->point_color,
+		labeling,
 		verbose_level);
+
+	FREE_int(labeling);
 
 	if (f_v) {
 		cout << "nauty_interface::create_automorphism_group_of_colored_graph done" << endl;
@@ -51,23 +58,50 @@ action *nauty_interface::create_automorphism_group_of_colored_graph_object(
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_colored_graph(
+action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
+		colored_graph *CG, int *labeling, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A;
+
+	if (f_v) {
+		cout << "nauty_interface::create_automorphism_group_and_"
+				"canonical_labeling_of_colored_graph_object" << endl;
+		}
+
+	A = create_automorphism_group_and_canonical_labeling_of_colored_graph(
+		CG->nb_points, TRUE /* f_bitvec */,
+		CG->bitvector_adjacency, NULL /* int  *Adj */,
+		CG->point_color,
+		labeling,
+		verbose_level);
+
+	if (f_v) {
+		cout << "nauty_interface::create_automorphism_group_and_"
+				"canonical_labeling_of_colored_graph_object done" << endl;
+		}
+	return A;
+}
+
+action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_colored_graph(
 	int n, int f_bitvec, uchar *Adj_bitvec, int *Adj,
 	int *vertex_colors,
+	int *labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
 	uchar *Adj1;
-	int *labeling;
+	//int *labeling;
 	int *parts;
 	int nb_parts;
 	int i, j, k, n1, N, len, f_on = 0, c, nb_edges;
 
-	labeling = NEW_int(n);
+	//labeling = NEW_int(n);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_colored_graph" << endl;
+		cout << "nauty_interface::create_automorphism_group_"
+				"and_canonical_labeling_of_colored_graph" << endl;
 		}
 
 	classify C;
@@ -76,7 +110,8 @@ action *nauty_interface::create_automorphism_group_of_colored_graph(
 
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_colored_graph "
+		cout << "nauty_interface::create_automorphism_group_"
+				"and_canonical_labeling_of_colored_graph "
 				"nb_types = " << C.nb_types << endl;
 		}
 
@@ -84,7 +119,8 @@ action *nauty_interface::create_automorphism_group_of_colored_graph(
 	n1 = n + C.nb_types;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_colored_graph "
+		cout << "nauty_interface::create_automorphism_group_"
+				"and_canonical_labeling_of_colored_graph "
 				"n1 = " << n1 << endl;
 		}
 
@@ -98,6 +134,7 @@ action *nauty_interface::create_automorphism_group_of_colored_graph(
 	nb_edges = 0;
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
+			f_on = FALSE;
 			k = ij2k(i, j, n);
 			if (f_bitvec) {
 				if (bitvector_s_i(Adj_bitvec, k)) {
@@ -132,20 +169,41 @@ action *nauty_interface::create_automorphism_group_of_colored_graph(
 
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_colored_graph "
+		cout << "nauty_interface::create_automorphism_group_"
+				"and_canonical_labeling_of_colored_graph "
 				"before create_automorphism_group_of_graph_with_"
 				"partition_and_labeling" << endl;
 		cout << "nb_edges=" << nb_edges << endl;
+		cout << "extended adjacency matrix:" << endl;
+		int a;
+		for (i = 0; i < n1; i++) {
+			for (j = 0; j < n1; j++) {
+				if (i == j) {
+					a = 0;
+				}
+				else if (i < j) {
+					k = ij2k(i, j, n1);
+					a = bitvector_s_i(Adj1, k);
+				}
+				else {
+					k = ij2k(j, i, n1);
+					a = bitvector_s_i(Adj1, k);
+				}
+				cout << a << " ";
+			}
+			cout << endl;
 		}
+	}
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
 			n1, TRUE, Adj1, NULL,
 			nb_parts, parts, labeling, verbose_level);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_colored_graph done" << endl;
+		cout << "nauty_interface::create_automorphism_group_"
+				"and_canonical_labeling_of_colored_graph done" << endl;
 		}
 
 	FREE_int(parts);
-	FREE_int(labeling);
+	//FREE_int(labeling);
 	FREE_uchar(Adj1);
 	return A;
 }
