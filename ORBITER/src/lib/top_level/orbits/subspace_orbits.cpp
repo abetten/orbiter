@@ -214,14 +214,6 @@ void subspace_orbits::init_group(int verbose_level)
 
 
 #if 0
-	Gen->init_vector_space_action(n, 
-		F, 
-		subspace_orbits_rank_point_func, 
-		subspace_orbits_unrank_point_func, 
-		this, 
-		verbose_level);
-#endif
-#if 0
 	Gen->f_print_function = TRUE;
 	Gen->print_function = print_set;
 	Gen->print_function_data = this;

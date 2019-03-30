@@ -660,7 +660,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	int h, possible_image;
 	int *aut, idx;
 	trace_result r;
-	action A_by_restriction;
+	action *A_by_restriction;
 	int final_node, final_ex;
 	union_find UF;
 	
@@ -674,9 +674,11 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				<< f_indicate_not_canonicals << endl;
 		//cout << endl;
 		}
-	A_by_restriction.induced_action_by_restriction(*gen->Poset->A2,
-		FALSE /* f_induce_action */, NULL /*sims *old_G */, 
-		size, gen->S, 0 /*verbose_level - 2*/);
+	A_by_restriction = gen->Poset->A2->create_induced_action_by_restriction(
+		NULL /*sims *old_G */,
+		size, gen->S,
+		FALSE /* f_induce_action */,
+		0 /*verbose_level - 2*/);
 	
 	// the newly added point:
 	if (gen->S[size - 1] != pt) {
@@ -688,9 +690,9 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	if (f_v) {
 		print_level_extension_info();
 		cout << "initializing up_orbit with restricted action ";
-		A_by_restriction.print_info();
+		A_by_restriction->print_info();
 		}	
-	up_orbit.init(&A_by_restriction);
+	up_orbit.init(A_by_restriction);
 	//up_orbit.init(gen->A2);
 	if (f_v) {
 		print_level_extension_info();
@@ -715,7 +717,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		cout << "upstep_work::upstep_for_sets "
 				"initializing union_find:" << endl;
 		}
-	UF.init(&A_by_restriction, 0 /*verbose_level - 8*/);
+	UF.init(A_by_restriction, 0 /*verbose_level - 8*/);
 	if (f_vv) {
 		cout << "upstep_work::upstep_for_sets "
 				"adding generators to union_find:" << endl;
@@ -865,6 +867,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 					cout << "upstep_work::upstep_for_sets not canonical"
 							<< endl;
 					}
+				FREE_OBJECT(A_by_restriction);
 				return FALSE;
 				}
 #if 0
@@ -928,6 +931,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		cout << "upstep_work::upstep_for_sets done "
 				"nb_cosets_processed = " << nb_cosets_processed << endl;
 		}
+	FREE_OBJECT(A_by_restriction);
 	return TRUE;
 }
 

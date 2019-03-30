@@ -310,7 +310,7 @@ void subfield_structure::retract_matrix(int *Mq,
 //Date: Tue, 30 Dec 2014 21:08:19 -0700
 //From: Tim Penttila
 
-//To: "betten@math.cppolostate.edu" <betten@math.colostate.edu>
+//To: "betten@math.colostate.edu" <betten@math.colostate.edu>
 //Subject: RE: Oops
 //Parts/Attachments:
 //   1   OK    ~3 KB     Text

@@ -1312,9 +1312,12 @@ void test14(int verbose_level)
 	int f_induce_action = FALSE;
 
 	cout << "computing restricted action:" << endl;
-	AR = new action;
-	AR->induced_action_by_restriction(*A, f_induce_action, A->Sims, 
-		BLT_set_size, BLT_set, verbose_level);
+	//AR = new action;
+	AR = A->create_induced_action_by_restriction(
+		A->Sims,
+		BLT_set_size, BLT_set,
+		f_induce_action,
+		verbose_level);
 
 
 	cout << "Elt1:" << endl;
@@ -1636,9 +1639,12 @@ void test16(int verbose_level)
 
 	int f_induce_action = TRUE;
 	
-	A_restr = new action;
-	A_restr->induced_action_by_restriction(*A, f_induce_action, ss->G, 
-		N, Pts, verbose_level - 1);
+	//A_restr = new action;
+	A_restr = A->create_induced_action_by_restriction(
+		ss->G,
+		N, Pts,
+		f_induce_action,
+		verbose_level - 1);
 	if (f_v) {
 		cout << "after A_restr->induced_action_by_restriction" << endl;
 		}
@@ -1696,9 +1702,12 @@ void test16(int verbose_level)
 
 
 		action *A3;
-		A3 = new action;
-		A3->induced_action_by_restriction(*A, f_induce_action, ss3->G, 
-			N, Pts, verbose_level - 1);
+		//A3 = new action;
+		A3 = A->create_induced_action_by_restriction(
+			ss3->G,
+			N, Pts,
+			f_induce_action,
+			verbose_level - 1);
 		for (j = 0; j < nb_stab_gens; j++) {
 			cout << "generator " << setw(3) << j << " : ";
 			order = A3->element_order(gens->ith(j));

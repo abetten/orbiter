@@ -39,7 +39,10 @@ int main()
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
-	create_linear_group(S, A, 
+
+	A = NEW_OBJECT(action);
+
+	A->init_linear_group(S,
 		F, d, 
 		f_projective, f_general, f_affine, 
 		f_semilinear, f_special, 
@@ -82,7 +85,7 @@ int main()
 			A->Strong_gens,
 			verbose_level);
 
-	Gen = orbits_on_k_sets_compute(Poset,
+	Gen = Poset->orbits_on_k_sets_compute(
 		k, verbose_level);
 	Gen->print_orbit_numbers(k);
 

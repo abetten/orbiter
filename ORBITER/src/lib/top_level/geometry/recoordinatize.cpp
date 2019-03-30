@@ -377,7 +377,7 @@ void recoordinatize::stabilizer_of_first_three(
 		}
 
 
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go2, 
 		gens2, Strong_gens, verbose_level - 1);
 		// in ACTION/action_global.C

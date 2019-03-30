@@ -156,6 +156,7 @@ MODULES= \
 		group_actions/actions/action_indexing_cosets.o \
 		group_actions/actions/action_induce.o \
 		group_actions/actions/action_init.o \
+		group_actions/actions/action_io.o \
 		group_actions/actions/action_pointer_table.o \
 		group_actions/actions/action_projective.o \
 		group_actions/actions/backtrack.o \
@@ -177,6 +178,7 @@ MODULES= \
 		group_actions/data_structures/union_find_on_k_subsets.o \
 		group_actions/data_structures/vector_ge.o \
 		group_actions/groups/direct_product.o \
+		group_actions/groups/exceptional_isomorphism_O4.o \
 		group_actions/groups/linear_group.o \
 		group_actions/groups/linear_group_description.o \
 		group_actions/groups/matrix_group.o \

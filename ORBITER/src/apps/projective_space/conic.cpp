@@ -42,6 +42,8 @@ void get_ab(int q, int x1, int x2, int x3, int &a, int &b);
 void prepare_latex(char *fname_base, projective_space *P, int *pts, int nb_points, 
 	strong_generators *Aut_gens, int verbose_level);
 void prepare_latex_simple(char *fname_base, int verbose_level);
+void projective_space_init_line_action(projective_space *P,
+		action *A_points, action *&A_on_lines, int verbose_level);
 
 
 int main(int argc, char **argv)
@@ -525,24 +527,27 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 
 	
 	action *A2;
-	action A2r;
+	action *A2r;
 	int f_induce_action = TRUE;
 
 	projective_space_init_line_action(P, A, A2, verbose_level);
-	A2r.induced_action_by_restriction(*A2, 
-		f_induce_action, Stab, 
-		nb_external_lines, external_lines, verbose_level);
-	A2r.group_order(go2);
+	A2r = A2->create_induced_action_by_restriction(
+		Stab,
+		nb_external_lines, external_lines,
+		f_induce_action,
+		verbose_level);
+	A2r->group_order(go2);
 	cout << "induced action on external lines has order " << go2 << endl;
 
 	for (i = 0; i < Aut_gens->gens->len; i++) {
-		A2r.element_print_quick(Aut_gens->gens->ith(i), cout);
+		A2r->element_print_quick(Aut_gens->gens->ith(i), cout);
 		A2->element_print_as_permutation(Aut_gens->gens->ith(i), cout);
-		A2r.element_print_as_permutation(Aut_gens->gens->ith(i), cout);
+		A2r->element_print_as_permutation(Aut_gens->gens->ith(i), cout);
 		}
 	FREE_OBJECT(Aut_gens);
 	FREE_OBJECT(Stab);
 	FREE_OBJECT(Poset);
+	FREE_OBJECT(A2r);
 	FREE_OBJECT(A2);
 	}
 }
@@ -1033,6 +1038,70 @@ void prepare_latex_simple(char *fname_base, int verbose_level)
 
 }
 
+void projective_space_init_line_action(projective_space *P,
+		action *A_points, action *&A_on_lines, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action_on_grassmannian *AoL;
+
+	if (f_v) {
+		cout << "projective_space_init_line_action" << endl;
+		}
+	A_on_lines = NEW_OBJECT(action);
+
+	AoL = NEW_OBJECT(action_on_grassmannian);
+
+	AoL->init(*A_points, P->Grass_lines, verbose_level - 5);
+
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"action on grassmannian established" << endl;
+		}
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"initializing A_on_lines" << endl;
+		}
+	int f_induce_action = TRUE;
+	sims S;
+	longinteger_object go1;
+
+	S.init(A_points);
+	S.init_generators(*A_points->Strong_gens->gens,
+			0/*verbose_level*/);
+	S.compute_base_orbits_known_length(A_points->transversal_length,
+			0/*verbose_level - 1*/);
+	S.group_order(go1);
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"group order " << go1 << endl;
+		}
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"initializing action on grassmannian" << endl;
+		}
+	A_on_lines->induced_action_on_grassmannian(A_points, AoL,
+		f_induce_action, &S, verbose_level);
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"initializing A_on_lines done" << endl;
+		A_on_lines->print_info();
+		}
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"computing strong generators" << endl;
+		}
+	if (!A_on_lines->f_has_strong_generators) {
+		cout << "projective_space_init_line_action "
+				"induced action does not have strong generators" << endl;
+		}
+	if (f_v) {
+		cout << "projective_space_init_line_action done" << endl;
+		}
+}
 
 
 

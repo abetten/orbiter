@@ -1667,63 +1667,6 @@ void poset_classification::write_candidates_binary_using_sv(
 		}
 }
 
-void poset_classification_read_candidates_of_orbit(
-	const char *fname, int orbit_at_level,
-	int *&candidates, int &nb_candidates, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	FILE *fp;
-	int nb, cand_first, i;
-
-
-	if (f_v) {
-		cout << "poset_classification_read_candidates_of_orbit" << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-		cout << "orbit_at_level=" << orbit_at_level << endl;
-		}
-	
-	if (file_size(fname) <= 0) {
-		cout << "poset_classification_read_candidates_of_orbit file "
-				<< fname << " does not exist" << endl;
-		exit(1);
-		}
-
-	fp = fopen(fname, "rb");
-
-	nb = fread_int4(fp);
-	if (orbit_at_level >= nb) {
-		cout << "poset_classification_read_candidates_of_orbit "
-				"orbit_at_level >= nb" << endl;
-		cout << "orbit_at_level=" << orbit_at_level << endl;
-		cout << "nb=" << nb << endl;
-		exit(1);
-		}
-	if (f_vv) {
-		cout << "seeking position "
-				<< (1 + orbit_at_level * 2) * sizeof(int_4) << endl;
-		}
-	fseek(fp, (1 + orbit_at_level * 2) * sizeof(int_4), SEEK_SET);
-	nb_candidates = fread_int4(fp);
-	if (f_vv) {
-		cout << "nb_candidates=" << nb_candidates << endl;
-		}
-	cand_first = fread_int4(fp);
-	if (f_v) {
-		cout << "cand_first=" << cand_first << endl;
-		}
-	candidates = NEW_int(nb_candidates);
-	fseek(fp, (1 + nb * 2 + cand_first) * sizeof(int_4), SEEK_SET);
-	for (i = 0; i < nb_candidates; i++) {
-		candidates[i] = fread_int4(fp);
-		}
-	fclose(fp);
-	if (f_v) {
-		cout << "poset_classification_read_candidates_of_orbit "
-				"done" << endl;
-		}
-}
-
 void poset_classification::read_level_file(int level,
 		char *fname, int verbose_level)
 {
@@ -2589,6 +2532,214 @@ void poset_classification::make_fname_candidates_file_default(
 {
 	sprintf(fname, "%s_lvl_%d_candidates.bin", fname_base, level);
 }
+
+
+void poset_classification::wedge_product_export_magma(
+		int n, int q, int vector_space_dimension,
+		int level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "poset_classification::wedge_product_export_magma" << endl;
+		}
+
+	//int level;
+	int *the_set;
+	int *v;
+	int a, i, j, h, fst, len, ii, jj;
+	longinteger_object go;
+	int *Elt;
+
+	//level = depth_completed + 1;
+
+
+	the_set = NEW_int(level);
+	v = NEW_int(vector_space_dimension);
+	Elt = NEW_int(Poset->A->elt_size_in_int);
+
+	fst = first_poset_orbit_node_at_level[level];
+	len = first_poset_orbit_node_at_level[level + 1] - fst;
+	if (f_v) {
+		cout << "exporting to magma" << endl;
+		cout << "fst=" << fst << " len=" << len << endl;
+		}
+	poset_orbit_node *O;
+	char fname[1000];
+
+	sprintf(fname, "Wedge_n%d_q%d_d%d.magma", n, q, level);
+
+	{
+	ofstream f(fname);
+
+	f << "// file " << fname << endl;
+	f << "n := " << n << ";" << endl;
+	f << "q := " << q << ";" << endl;
+	f << "d := " << level << ";" << endl;
+	f << "n2 := " << vector_space_dimension << ";" << endl;
+	f << "V := VectorSpace (GF (q), n2);" << endl;
+	f << endl;
+	f << "/* list of orbit reps */" << endl;
+	f << "L := [" << endl;
+	f << endl;
+
+	for (i = 0; i < len; i++) {
+		O = root + fst + i;
+
+		f << "// orbit rep " << i << endl;
+		f << "[" << endl;
+		O->store_set_to(this, level - 1, the_set);
+	 	for (j = 0; j < level; j++) {
+			a = the_set[j];
+			unrank_point(v, a);
+			f << "[ ";
+			for (h = 0; h < vector_space_dimension; h++) {
+				f << v[h];
+				if (h < vector_space_dimension - 1)
+					f << ", ";
+				}
+			f << " ]";
+			if (j < level - 1) {
+				f << "," << endl;
+				}
+			else {
+				f << "]" << endl;
+				}
+			}
+		if (i < len - 1) {
+			f << "," << endl << endl;
+			}
+		else {
+			f << endl << "];" << endl << endl;
+			}
+		} // next i
+
+	f << "// list of orbit lengths " << endl;
+	f << "len := \[";
+
+	for (i = 0; i < len; i++) {
+
+		if ((i % 20) == 0) {
+			f << endl;
+			f << "// orbits " << i << " and following:" << endl;
+			}
+
+		orbit_length(i, level, go);
+		f << go;
+		if (i < len - 1) {
+			f << ", ";
+			}
+		}
+	f << "];" << endl << endl;
+
+
+	f << "// subspaces of vector space " << endl;
+	f << "L := [sub< V | L[i]>: i in [1..#L]];" << endl;
+
+	f << "// stabilisers " << endl;
+	f << "P := GL(n, q);" << endl;
+	f << "E := ExteriorSquare (P);" << endl;
+
+
+	f << "// base:" << endl;
+	f << "BV := VectorSpace (GF (q), n);" << endl;
+	f << "B := [ BV | " << endl;
+	for (i = 0; i < Poset->A->base_len; i++) {
+		a = Poset->A->base[i];
+		Poset->VS->F->PG_element_unrank_modified(v, 1, n, a);
+		//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
+		f << "[ ";
+		for (h = 0; h < n; h++) {
+			f << v[h];
+			if (h < n - 1)
+				f << ", ";
+			}
+        	if (i < Poset->A->base_len - 1)
+				f << "], " << endl;
+		else f << " ]" << endl;
+		}
+	f << "];" << endl;
+	f << endl;
+	f << "P`Base := B;" << endl;
+
+	f << "// list of stabilizer generators" << endl;
+	f << "S := [" << endl;
+	f << endl;
+
+	for (i = 0; i < len; i++) {
+		O = root + fst + i;
+
+		f << "// orbit rep " << i << " has "
+				<< O->nb_strong_generators << " strong generators";
+		if (O->nb_strong_generators) {
+			f << ", transversal lengths: ";
+			int_vec_print(f, O->tl, Poset->A->base_len);
+			}
+		f << endl;
+		f << "[" << endl;
+
+	 	for (j = 0; j < O->nb_strong_generators; j++) {
+
+			Poset->A->element_retrieve(
+					O->hdl_strong_generators[j], Elt, 0);
+
+				f << "[";
+			//Gen->A->element_print_quick(Elt, f);
+			for (ii = 0; ii < n; ii++) {
+				f << "[";
+				for (jj = 0; jj < n; jj++) {
+					a = Elt[ii * n + jj];
+					f << a;
+					if (jj < n - 1) {
+						f << ", ";
+						}
+					else {
+						f << "]";
+						}
+					}
+				if (ii < n - 1) {
+					f << "," << endl;
+					}
+				else {
+					f << "]";
+					}
+				}
+
+			if (j < O->nb_strong_generators - 1) {
+				f << "," << endl;
+				}
+			}
+			f << "]" << endl;
+		if (i < len - 1) {
+			f << "," << endl << endl;
+			}
+		else {
+			f << endl << "];" << endl << endl;
+			}
+		} // next i
+
+         f << endl << "T := [sub<GL(n, q) | [&cat (s): "
+        		 "s in S[i]]> : i in [1..#S]];"
+        		 << endl << endl;
+	} // file f
+
+	FREE_int(the_set);
+	FREE_int(v);
+	FREE_int(Elt);
+
+	if (f_v) {
+		cout << "written file " << fname << " of size "
+				<< file_size(fname) << endl;
+		}
+	if (f_v) {
+		cout << "poset_classification::wedge_product_export_magma "
+				"done" << endl;
+		}
+}
+
+
+
 
 }}
 

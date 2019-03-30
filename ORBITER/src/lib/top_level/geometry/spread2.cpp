@@ -2095,12 +2095,15 @@ void spread::report2(isomorph &Iso, int verbose_level)
 			longinteger_object go1, gok;
 
 			set = NEW_int(len);
-			A1 = NEW_OBJECT(action);
+			//A1 = NEW_OBJECT(action);
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 				}
-			A1->induced_action_by_restriction(*Iso.A,
-					TRUE, Stab, len, set, 0/*verbose_level*/);
+			A1 = Iso.A->create_induced_action_by_restriction(
+					Stab,
+					len, set,
+					TRUE,
+					0/*verbose_level*/);
 			if (f_v) {
 				cout << "after induced_action_by_restriction" << endl;
 				}
@@ -2136,14 +2139,17 @@ void spread::report2(isomorph &Iso, int verbose_level)
 			longinteger_object go1, gok;
 
 			set = NEW_int(len);
-			A1 = NEW_OBJECT(action);
+			//A1 = NEW_OBJECT(action);
 			gens = NEW_OBJECT(vector_ge);
 			tl = NEW_int(Iso.A_base->base_len);
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 				}
-			A1->induced_action_by_restriction(*Iso.A,
-					TRUE, Stab, len, set, 0/*verbose_level*/);
+			A1 = Iso.A->create_induced_action_by_restriction(
+					Stab,
+					len, set,
+					TRUE,
+					0/*verbose_level*/);
 			if (f_v) {
 				cout << "after induced_action_by_restriction" << endl;
 				}

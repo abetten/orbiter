@@ -12,8 +12,9 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
+
 action *action::induced_action_on_set_partitions(
-		int universal_set_size, int partition_size,
+		int partition_class_size,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -26,11 +27,11 @@ action *action::induced_action_on_set_partitions(
 	A = NEW_OBJECT(action);
 
 	sprintf(A->group_prefix, "%s_on_set_partitions_%d_%d",
-			label, universal_set_size, partition_size);
+			label, A->degree, partition_class_size);
 	sprintf(A->label, "%s_on_set_partitions_%d_%d",
-			label, universal_set_size, partition_size);
+			label, A->degree, partition_class_size);
 	sprintf(A->label_tex, "%s on set partitions %d %d",
-			label, universal_set_size, partition_size);
+			label, A->degree, partition_class_size);
 	if (f_v) {
 		cout << "the old_action " << label
 			<< " has base_length = " << base_len
@@ -40,7 +41,7 @@ action *action::induced_action_on_set_partitions(
 	A->subaction = this;
 	OSP = NEW_OBJECT(action_on_set_partitions);
 
-	OSP->init(universal_set_size, partition_size,
+	OSP->init(partition_class_size,
 			this, verbose_level);
 	A->type_G = action_on_set_partitions_t;
 	A->G.OnSetPartitions = OSP;
@@ -1502,7 +1503,26 @@ action *action::restricted_action(
 	return A;
 }
 
-void action::induced_action_by_restriction(
+action *action::create_induced_action_by_restriction(
+		sims *S, int size, int *set, int f_induce,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A2;
+
+	if (f_v) {
+		cout << "action::create_induced_action_by_restriction" << endl;
+		}
+	A2 = NEW_OBJECT(action);
+	A2->induced_action_by_restriction_internal_function(*this,
+			f_induce,  S, size, set, verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_induced_action_by_restriction done" << endl;
+		}
+	return A2;
+}
+
+void action::induced_action_by_restriction_internal_function(
 	action &old_action,
 	int f_induce_action, sims *old_G, 
 	int nb_points, int *points, int verbose_level)
@@ -1512,7 +1532,7 @@ void action::induced_action_by_restriction(
 	action_by_restriction *ABR;
 	
 	if (f_v) {
-		cout << "action::induced_action_by_restriction" << endl;
+		cout << "action::induced_action_by_restriction_internal_function" << endl;
 		cout << "old_action ";
 		old_action.print_info();
 		cout << "nb_points = " << nb_points << endl;
@@ -1542,7 +1562,7 @@ void action::induced_action_by_restriction(
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	if (FALSE) {
-		cout << "action::induced_action_by_restriction "
+		cout << "action::induced_action_by_restriction_internal_function "
 				"calling allocate_base_data" << endl;
 		}
 	allocate_base_data(0);
@@ -1555,14 +1575,14 @@ void action::induced_action_by_restriction(
 	
 	if (f_induce_action) {
 		if (f_v) {
-			cout << "action::induced_action_by_restriction "
+			cout << "action::induced_action_by_restriction_internal_function "
 					"calling induced_action_override_sims" << endl;
 			}
 		induced_action_override_sims(old_action,
 				old_G, verbose_level - 2);
 		}
 	if (f_v) {
-		cout << "action::induced_action_by_restriction "
+		cout << "action::induced_action_by_restriction_internal_function "
 				"finished, created action " << label << endl;
 		//Sims->print_transversal_lengths();
 		//cout << endl;
@@ -2777,6 +2797,205 @@ void action::base_change(action *old_action,
 		Sims->print_basic_orbits();
 		}
 }
+
+
+void action::create_orbits_on_subset_using_restricted_action(
+		action *&A_by_restriction,
+		schreier *&Orbits, sims *S,
+		int size, int *set,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_induce = FALSE;
+
+	if (f_v) {
+		cout << "action::create_orbits_on_subset_using_restricted_action" << endl;
+		}
+	A_by_restriction = create_induced_action_by_restriction(
+			S,
+			size, set,
+			f_induce,
+			verbose_level - 1);
+	Orbits = NEW_OBJECT(schreier);
+
+	A_by_restriction->compute_all_point_orbits(*Orbits,
+			S->gens, verbose_level - 2);
+	if (f_v) {
+		cout << "action::create_orbits_on_subset_using_restricted_action "
+				"done" << endl;
+		}
+
+}
+
+void action::create_orbits_on_sets_using_action_on_sets(
+		action *&A_on_sets,
+		schreier *&Orbits, sims *S,
+		int nb_sets, int set_size, int *sets,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_induce = FALSE;
+
+	if (f_v) {
+		cout << "action::create_orbits_on_sets_using_action_on_sets" << endl;
+		}
+
+	A_on_sets = create_induced_action_on_sets(
+			nb_sets, set_size, sets,
+			verbose_level);
+
+	Orbits = NEW_OBJECT(schreier);
+
+	A_on_sets->compute_all_point_orbits(*Orbits, S->gens, verbose_level - 2);
+	if (f_v) {
+		cout << "action::create_orbits_on_sets_using_action_on_sets "
+				"done" << endl;
+		}
+
+}
+
+
+#if 0
+action *action::new_action_by_right_multiplication(
+		sims *group_we_act_on,
+		int f_transfer_ownership,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A;
+
+	if (f_v) {
+		cout << "action::new_action_by_right_multiplication" << endl;
+		}
+	A = NEW_OBJECT(action);
+	A->induced_action_by_right_multiplication(FALSE /* f_basis */,
+		NULL /* sims *old_G */,
+		group_we_act_on, f_transfer_ownership /* f_ownership */,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "action::new_action_by_right_multiplication done" << endl;
+		}
+	return A;
+}
+#endif
+
+
+int action::choose_next_base_point_default_method(
+		int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int b;
+
+	if (f_v) {
+		cout << "action::choose_next_base_point_default_method" << endl;
+		cout << "calling A->find_non_fixed_point" << endl;
+		}
+	b = find_non_fixed_point(Elt, verbose_level - 1);
+	if (b == -1) {
+		if (f_v) {
+			cout << "action::choose_next_base_point_default_method "
+					"cannot find another base point" << endl;
+			}
+		return -1;
+		}
+	if (f_v) {
+		cout << "action::choose_next_base_point_default_method current base: ";
+		int_vec_print(cout, base, base_len);
+		cout << " choosing next base point to be " << b << endl;
+		}
+	return b;
+}
+
+void action::generators_to_strong_generators(
+	int f_target_go, longinteger_object &target_go,
+	vector_ge *gens, strong_generators *&Strong_gens,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::generators_to_strong_generators" << endl;
+		if (f_target_go) {
+			cout << "action::generators_to_strong_generators "
+					"trying to create a group of order " << target_go << endl;
+			}
+		}
+
+	sims *S;
+
+	if (f_v) {
+		cout << "action::generators_to_strong_generators "
+				"before create_sims_from_generators_randomized" << endl;
+		}
+
+	S = create_sims_from_generators_randomized(
+		gens, f_target_go,
+		target_go, verbose_level - 2);
+
+	if (f_v) {
+		cout << "action::generators_to_strong_generators "
+				"after create_sims_from_generators_randomized" << endl;
+		}
+
+	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens->init_from_sims(S, 0);
+
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "action::generators_to_strong_generators done" << endl;
+		}
+}
+
+void action::orbits_on_equations(
+	homogeneous_polynomial_domain *HPD,
+	int *The_equations, int nb_equations, strong_generators *gens,
+	action *&A_on_equations, schreier *&Orb, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::orbits_on_equations" << endl;
+		}
+
+	A_on_equations = NEW_OBJECT(action);
+
+	if (f_v) {
+		cout << "action::orbits_on_equations "
+				"creating the induced action on the equations:" << endl;
+		}
+	A_on_equations->induced_action_on_homogeneous_polynomials_given_by_equations(
+		this,
+		HPD,
+		The_equations, nb_equations,
+		FALSE /* f_induce_action */, NULL /* sims *old_G */,
+		0 /*verbose_level */);
+	if (f_v) {
+		cout << "action::orbits_on_equations "
+				"The induced action on the equations has been created, "
+				"degree = " << A_on_equations->degree << endl;
+		}
+
+	if (f_v) {
+		cout << "action::orbits_on_equations "
+				"computing orbits on the equations:" << endl;
+		}
+	Orb = gens->orbits_on_points_schreier(A_on_equations,
+			0 /* verbose_level + 10 */);
+
+	if (f_v) {
+		cout << "action::orbits_on_equations "
+				"We found " << Orb->nb_orbits
+				<< " orbits on the equations:" << endl;
+		Orb->print_and_list_orbits_tex(cout);
+		}
+
+	if (f_v) {
+		cout << "action::orbits_on_equations done" << endl;
+		}
+}
+
+
 
 }}
 

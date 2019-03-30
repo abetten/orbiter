@@ -254,7 +254,7 @@ const char *kind_ascii(kind k)
 		}
 }
 
-const char *action_kind_ascii(kind k)
+const char *action_kind_ascii(action_kind k)
 {
 	switch(k) {
 		case vector_entries: return "vector_entries";

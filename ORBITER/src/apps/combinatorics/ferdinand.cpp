@@ -554,7 +554,10 @@ void cayley_graph_search::init_group2(int verbose_level)
 
 
 	sprintf(fname_base, "Ferdinand%d_%d", level, group);
-	Aut = create_automorphism_group_from_group_table(fname_base, 
+
+	Aut = NEW_OBJECT(action);
+
+	Aut->init_automorphism_group_from_group_table(fname_base,
 		Table, go, generators, nb_generators, 
 		Aut_gens, 
 		verbose_level);
@@ -626,7 +629,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 		}
 	go_subgroup = go / 2;
 	target_go.create(go);
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		verbose_level);
@@ -891,13 +894,13 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 	target_go_subgroup.create(go_subgroup);
 
 	cout << "creating generators for the group:" << endl;
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		verbose_level);
 
 	cout << "creating generators for the subgroup:" << endl;
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go_subgroup, 
 		gens_subgroup, Strong_gens_subgroup, 
 		verbose_level);
@@ -1003,7 +1006,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 	target_go_subgroup.create(go_subgroup);
 
 	cout << "creating generators for the group:" << endl;
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		FALSE /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		verbose_level);
@@ -1015,7 +1018,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 
 	cout << "creating generators for the subgroup:" << endl;
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		FALSE /* f_target_go */, target_go_subgroup, 
 		gens_subgroup, Strong_gens_subgroup, 
 		verbose_level);
@@ -1085,7 +1088,9 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 			Aut_gens,
 			verbose_level);
 
-	compute_orbits_on_subsets(gen, 
+	gen = NEW_OBJECT(poset_classification);
+
+	gen->compute_orbits_on_subsets(
 		target_depth,
 		prefix, 
 		f_W, f_w,

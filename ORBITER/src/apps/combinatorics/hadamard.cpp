@@ -389,8 +389,9 @@ void hadamard::init(int n, int f_draw,
 			this /* void *data */,
 			verbose_level);
 
+	gen = NEW_OBJECT(poset_classification);
 
-	compute_orbits_on_subsets(gen, 
+	gen->compute_orbits_on_subsets(
 		n /* target_depth */,
 		prefix, 
 		TRUE /* f_W */, FALSE /* f_w */,

@@ -711,53 +711,6 @@ void arc_generator::early_test_func(int *S, int len,
 	
 }
 
-#if 0
-int arc_generator::check_arc(int *S, int len, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
-	int f_OK = TRUE;
-
-
-	if (f_v) {
-		cout << "checking set ";
-		print_set(cout, len, S);
-		}
-	if (!rc.check_rank(len, S, verbose_level - 1)) {
-		return FALSE;
-		}
-	
-	if (f_v) {
-		cout << "checking set ";
-		print_set(cout, len, S);
-		}
-	if (f_v) {
-		cout << endl;
-		//print_integer_matrix(cout, S, 1, len);
-		print_integer_matrix(cout, rc.M1, rc.m, len);
-		if (len > 2) {
-			print_set_in_affine_plane(len - 2, S + 2);
-			}
-		}
-
-
-
-	if (f_OK) {
-		if (f_v) {
-			cout << "accepted" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		if (f_v) {
-			cout << "rejected" << endl;
-			}
-		return FALSE;
-		}
-}
-#endif
-
 void arc_generator::print(int len, int *S)
 {
 	int i, a;
@@ -1089,33 +1042,6 @@ void arc_generator::lifting_prepare_function_new(
 		}
 }
 
-#if 0
-int arc_generator::arc_test(int *S, int len, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
-	int i;
-
-	if (f_v) {
-		cout << "arc_generator::arc_test for set ";
-		int_vec_print(cout, S, len);
-		cout << endl;
-		}
-
-	if (f_v) {
-		cout << "before compute_line_type" << endl;
-		}
-	compute_line_type(S, len, 0 /* verbose_level */);
-
-	for (i = 0; i < P->N_lines; i++) {
-		if (line_type[i] > d) {
-			ret = FALSE;
-			break;
-			}
-		}
-	return ret;
-}
-#endif
 
 void arc_generator::report(isomorph &Iso, int verbose_level)
 {
@@ -1770,126 +1696,11 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 	FREE_int(T);
 }
 
-#if 0
-int arc_generator::simeon_matrix_entry(int *Coord,
-	int *C, int *E, int *S, int len, int s,
-	int *T, int verbose_level)
-{
-	int k, u, d, d1, a, i;
-	
-	k = n + 1;
-	d = 1;
-	for (u = 0; u < s; u++) {
-		a = E[len - s + u];
-		int_vec_copy(Coord + a * k, T, k);
-		for (i = 0; i < k - 1; i++) {
-			a = C[i];
-			int_vec_copy(Coord + a * k, T + (i + 1) * k, k);
-			}
-		if (TRUE) {
-			cout << "u=" << u << " / " << s << " the matrix is:" << endl;
-			int_matrix_print(T, k, k);
-			}
-		d1 = F->matrix_determinant(T, k, 0 /* verbose_level */);
-		if (TRUE) {
-			cout << "determinant = " << d1 << endl;
-			}
-		d = F->mult(d, d1);
-		}
-	if (TRUE) {
-		cout << "d=" << d << endl;
-		}
-	return d;
-}
-#endif
-
 
 // #############################################################################
 // global functions
 // #############################################################################
 
-#if 0
-int callback_arc_test(exact_cover *EC,
-		int *S, int len, void *data, int verbose_level)
-{
-	arc_generator *Gen = (arc_generator *) data;
-	int f_OK;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "checking set ";
-		print_set(cout, len, S);
-		cout << endl;
-		}
-	f_OK = Gen->arc_test(S, len, verbose_level - 1);
-	if (f_OK) {
-		if (f_v) {
-			cout << "accepted" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		if (f_v) {
-			cout << "rejected" << endl;
-			}
-		return FALSE;
-		}
-}
-#endif
-
-#if 0
-int check_arc(int len, int *S, void *data, int verbose_level)
-{
-	arc_generator *Gen = (arc_generator *) data;
-	int f_OK;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "check_arc checking set ";
-		print_set(cout, len, S);
-		cout << endl;
-		}
-	f_OK = Gen->arc_test(S, len, verbose_level - 1);
-	if (f_OK) {
-		if (f_v) {
-			cout << "check_arc accepted" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		if (f_v) {
-			cout << "check_arc rejected" << endl;
-			}
-		return FALSE;
-		}
-}
-
-int placebo_test_function(int len, int *S, void *data, int verbose_level)
-{
-	//arc_generator *Gen = (arc_generator *) data;
-	int f_OK;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "checking set ";
-		print_set(cout, len, S);
-		cout << endl;
-		}
-	f_OK = TRUE;
-	if (f_OK) {
-		if (f_v) {
-			cout << "accepted" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		if (f_v) {
-			cout << "rejected" << endl;
-			}
-		return FALSE;
-		}
-}
-#endif
 
 void arc_generator_early_test_function(int *S, int len, 
 	int *candidates, int nb_candidates, 
@@ -1913,29 +1724,6 @@ void arc_generator_early_test_function(int *S, int len,
 		}
 }
 
-#if 0
-void placebo_early_test_function(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
-	void *data, int verbose_level)
-{
-	//arc_generator *Gen = (arc_generator *) data;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "placebo_early_test_function for set ";
-		print_set(cout, len, S);
-		cout << endl;
-		}
-
-	int_vec_copy(candidates, good_candidates, nb_candidates);
-	nb_good_candidates = nb_candidates;
-
-	if (f_v) {
-		cout << "placebo_early_test_function done" << endl;
-		}
-}
-#endif
 
 void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,

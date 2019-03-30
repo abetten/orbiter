@@ -81,7 +81,7 @@ void orbit_rep::init_from_file(
 	orbit_rep::early_test_func_callback_data =
 			early_test_func_callback_data;
 
-	read_orbit_rep_and_candidates_from_files_and_process(A, prefix, 
+	A->read_orbit_rep_and_candidates_from_files_and_process(prefix,
 		level, orbit_at_level, level_of_candidates_file, 
 		early_test_func_callback, 
 		early_test_func_callback_data, 
@@ -93,7 +93,6 @@ void orbit_rep::init_from_file(
 		nb_candidates,
 		nb_cases, 
 		verbose_level - 1);
-		// SNAKES_AND_LADDERS/snakes_and_ladders_global.C
 	
 	stab_go = NEW_OBJECT(longinteger_object);
 	Stab->group_order(*stab_go);

@@ -492,47 +492,6 @@ int extra_test_func(subspace_orbits *SubOrb,
 	return ret;
 }
 
-#if 0
-int mindist_test_func(subspace_orbits *SubOrb, 
-	int len, int *S, void *data, int verbose_level)
-{
-	int f_v = FALSE;//(verbose_level >= 1);
-	int *p_mindist = (int *) data;
-	int mindist = *p_mindist;
-	int ret;
-
-	ret = SubOrb->test_minimum_distance(len, S,
-			mindist, 0 /* verbose_level */);
-	if (f_v) {
-		if (ret) {
-			cout << "mindist_test_func the set is OK" << endl;
-			}
-		else {
-			cout << "mindist_test_func the set is not OK" << endl;
-			}
-		}
-	return ret;
-}
-
-int is_self_orthogonal_test_func(subspace_orbits *SubOrb, 
-	int len, int *S, void *data, int verbose_level)
-{
-	int f_v = FALSE;//(verbose_level >= 1);
-	int ret;
-
-	ret = SubOrb->test_if_self_orthogonal(len, S, 0 /* verbose_level */);
-	if (f_v) {
-		if (ret) {
-			cout << "is_self_orthogonal_test_func the set is OK" << endl;
-			}
-		else {
-			cout << "is_self_orthogonal_test_func the set is not OK" << endl;
-			}
-		}
-	return ret;
-}
-#endif
-
 int test_dim_C_cap_Cperp_property(int len, int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;

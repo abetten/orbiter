@@ -1348,7 +1348,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		Poset->init_subset_lattice(
 				Iso->A_base, Iso->AA, Strong_gens,
 				verbose_level);
-		orbits_on_k_sets(Poset,
+		Poset->orbits_on_k_sets(
 			Iso->level, orbit_reps, nb_orbits, verbose_level - 5);
 		FREE_OBJECT(Poset);
 		if (f_vv) {

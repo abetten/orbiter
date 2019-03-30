@@ -145,7 +145,9 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				verbose_level);
 
 
-	compute_orbits_on_subsets(orbits_on_trihedra_type1, 
+	orbits_on_trihedra_type1 = NEW_OBJECT(poset_classification);
+
+	orbits_on_trihedra_type1->compute_orbits_on_subsets(
 		3, /* target_depth */
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,
@@ -180,7 +182,9 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				this /* void *data */,
 				verbose_level);
 
-	compute_orbits_on_subsets(orbits_on_trihedra_type2, 
+	orbits_on_trihedra_type2 = NEW_OBJECT(poset_classification);
+
+	orbits_on_trihedra_type2->compute_orbits_on_subsets(
 		3, /* target_depth */
 		"", /* const char *prefix, */
 		FALSE /* int f_W */, FALSE /* f_w */,

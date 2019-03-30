@@ -333,7 +333,7 @@ void strong_generators::init_from_data_with_target_go(
 
 	SG = NEW_OBJECT(strong_generators);
 	
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		nice_gens, SG,
 		0 /*verbose_level*/);
@@ -455,7 +455,7 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 				"conjugate_group_avGa before generators_to_"
 				"strong_generators" << endl;
 		}
-	generators_to_strong_generators(SG->A, 
+	SG->A->generators_to_strong_generators(
 		TRUE /* f_target_go */, go, 
 		gens, SG1, 
 		0 /*verbose_level*/);
@@ -511,7 +511,7 @@ void strong_generators::init_generators_for_the_conjugate_group_aGav(
 				"conjugate_group_aGav before generators_to_strong_"
 				"generators" << endl;
 		}
-	generators_to_strong_generators(SG->A, 
+	SG->A->generators_to_strong_generators(
 		TRUE /* f_target_go */, go, 
 		gens, SG1, 
 		0 /*verbose_level*/);
@@ -565,7 +565,7 @@ void strong_generators::init_transposed_group(
 
 	strong_generators *SG1;
 	
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, go, 
 		gens, SG1, 
 		0 /*verbose_level*/);
@@ -619,7 +619,7 @@ void strong_generators::init_group_extension(
 				"target_go=" << target_go << endl;
 		}
 	
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level*/);
@@ -708,7 +708,7 @@ void strong_generators::init_group_extension(
 				"target_go=" << target_go << endl;
 		}
 
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level - 2*/);
@@ -789,7 +789,7 @@ void strong_generators::switch_to_subgroup(
 
 	SG = NEW_OBJECT(strong_generators);
 	
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level*/);
@@ -857,7 +857,7 @@ void strong_generators::init_subgroup(action *A,
 
 	SG = NEW_OBJECT(strong_generators);
 	
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level*/);
@@ -1934,6 +1934,7 @@ void strong_generators::read_file(action *A,
 		}
 }
 
+#if 0
 void strong_generators::generators_for_shallow_schreier_tree(
 		char *label, vector_ge *chosen_gens, int verbose_level)
 {
@@ -2076,7 +2077,7 @@ void strong_generators::generators_for_shallow_schreier_tree(
 				"schreier_tree done" << endl;
 		}
 }
-
+#endif
 
 void strong_generators::compute_ascii_coding(
 		char *&ascii_coding, int verbose_level)

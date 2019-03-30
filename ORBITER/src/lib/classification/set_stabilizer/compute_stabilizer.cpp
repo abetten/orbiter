@@ -148,10 +148,11 @@ void compute_stabilizer::init(int *the_set,
 	init_U(verbose_level);
 
 
-	A_on_the_set = NEW_OBJECT(action);
-	A_on_the_set->induced_action_by_restriction(*A2, 
-		FALSE, NULL, 
+	//A_on_the_set = NEW_OBJECT(action);
+	A_on_the_set = A2->create_induced_action_by_restriction(
+		NULL,
 		set_size, the_set, 
+		FALSE,
 		0 /*verbose_level - 3*/);
 
 	
@@ -414,10 +415,11 @@ void compute_stabilizer::restricted_action(int verbose_level)
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action computing induced action by restriction" << endl;
 		}
-	A_induced = NEW_OBJECT(action);
-	A_induced->induced_action_by_restriction(*A2, 
-		TRUE, G->S, 
+	//A_induced = NEW_OBJECT(action);
+	A_induced = A2->create_induced_action_by_restriction(
+		G->S,
 		nb_interesting_points, interesting_points, 
+		TRUE,
 		0 /*verbose_level - 3*/);
 	A_induced->group_order(induced_go);
 	A_induced->Kernel->group_order(K_go);

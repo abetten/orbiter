@@ -117,7 +117,7 @@ void arc_partition::init(
 		}
 
 	A_on_partition = A_on_rest->induced_action_on_set_partitions(
-			4, 2,
+			2,
 			verbose_level);
 
 	Orbits_on_partition = NEW_OBJECT(schreier);

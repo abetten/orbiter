@@ -80,7 +80,9 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	F->init(q, 0);
 
 	vector_ge *nice_gens;
-	create_linear_group(S, A,
+
+	A = NEW_OBJECT(action);
+	A->init_linear_group(S,
 		F, n + 1,
 		f_projective, f_general, f_affine,
 		f_semilinear, f_special,
@@ -142,7 +144,9 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 			verbose_level);
 
 
-	compute_orbits_on_subsets(Gen,
+	Gen = NEW_OBJECT(poset_classification);
+
+	Gen->compute_orbits_on_subsets(
 		k /* target_depth */,
 		"" /* const char *prefix */,
 		FALSE /* f_W */, FALSE /* f_w */,
@@ -356,7 +360,9 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 			SaS->Strong_gens,
 			verbose_level);
 
-	compute_orbits_on_subsets(Gen2,
+	Gen2 = NEW_OBJECT(poset_classification);
+
+	Gen2->compute_orbits_on_subsets(
 		target_depth,
 		"" /* const char *prefix */,
 		FALSE /* f_W */, FALSE /* f_w */,

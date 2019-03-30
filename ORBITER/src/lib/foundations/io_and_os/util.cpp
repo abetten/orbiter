@@ -5243,6 +5243,245 @@ int is_all_whitespace(const char *str)
 
 
 
+void poset_classification_read_candidates_of_orbit(
+	const char *fname, int orbit_at_level,
+	int *&candidates, int &nb_candidates, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	FILE *fp;
+	int nb, cand_first, i;
+
+
+	if (f_v) {
+		cout << "poset_classification_read_candidates_of_orbit" << endl;
+		cout << "verbose_level=" << verbose_level << endl;
+		cout << "orbit_at_level=" << orbit_at_level << endl;
+		}
+
+	if (file_size(fname) <= 0) {
+		cout << "poset_classification_read_candidates_of_orbit file "
+				<< fname << " does not exist" << endl;
+		exit(1);
+		}
+
+	fp = fopen(fname, "rb");
+
+	nb = fread_int4(fp);
+	if (orbit_at_level >= nb) {
+		cout << "poset_classification_read_candidates_of_orbit "
+				"orbit_at_level >= nb" << endl;
+		cout << "orbit_at_level=" << orbit_at_level << endl;
+		cout << "nb=" << nb << endl;
+		exit(1);
+		}
+	if (f_vv) {
+		cout << "seeking position "
+				<< (1 + orbit_at_level * 2) * sizeof(int_4) << endl;
+		}
+	fseek(fp, (1 + orbit_at_level * 2) * sizeof(int_4), SEEK_SET);
+	nb_candidates = fread_int4(fp);
+	if (f_vv) {
+		cout << "nb_candidates=" << nb_candidates << endl;
+		}
+	cand_first = fread_int4(fp);
+	if (f_v) {
+		cout << "cand_first=" << cand_first << endl;
+		}
+	candidates = NEW_int(nb_candidates);
+	fseek(fp, (1 + nb * 2 + cand_first) * sizeof(int_4), SEEK_SET);
+	for (i = 0; i < nb_candidates; i++) {
+		candidates[i] = fread_int4(fp);
+		}
+	fclose(fp);
+	if (f_v) {
+		cout << "poset_classification_read_candidates_of_orbit "
+				"done" << endl;
+		}
+}
+
+
+void read_candidates_for_one_orbit_from_file(char *prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		int *S,
+		void (*early_test_func_callback)(int *S, int len,
+			int *candidates, int nb_candidates,
+			int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
+		void *early_test_func_callback_data,
+		int *&candidates,
+		int &nb_candidates,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int h, orbit_idx;
+	int *candidates1 = NULL;
+	int nb_candidates1;
+
+	if (f_v) {
+		cout << "read_candidates_for_one_orbit_from_file" << endl;
+		cout << "level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " level_of_candidates_file="
+				<< level_of_candidates_file << endl;
+	}
+
+	orbit_idx = find_orbit_index_in_data_file(prefix,
+			level_of_candidates_file, S,
+			verbose_level);
+
+	if (f_v) {
+		cout << "read_candidates_for_one_orbit_from_file "
+				"orbit_idx=" << orbit_idx << endl;
+	}
+
+	if (f_v) {
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"before generator_read_candidates_of_orbit" << endl;
+		}
+	char fname2[1000];
+	sprintf(fname2, "%s_lvl_%d_candidates.bin",
+			prefix, level_of_candidates_file);
+	poset_classification_read_candidates_of_orbit(
+		fname2, orbit_idx,
+		candidates1, nb_candidates1, verbose_level - 1);
+
+
+	for (h = level_of_candidates_file; h < level; h++) {
+
+		int *candidates2;
+		int nb_candidates2;
+
+		if (f_v) {
+			cout << "read_orbit_rep_and_candidates_from_files_"
+					"and_process testing candidates at level " << h
+					<< " number of candidates = " << nb_candidates1 << endl;
+			}
+		candidates2 = NEW_int(nb_candidates1);
+
+		(*early_test_func_callback)(S, h + 1,
+			candidates1, nb_candidates1,
+			candidates2, nb_candidates2,
+			early_test_func_callback_data, 0 /*verbose_level - 1*/);
+
+		if (f_v) {
+			cout << "read_orbit_rep_and_candidates_from_files_"
+					"and_process number of candidates at level "
+					<< h + 1 << " reduced from " << nb_candidates1
+					<< " to " << nb_candidates2 << " by "
+					<< nb_candidates1 - nb_candidates2 << endl;
+			}
+
+		int_vec_copy(candidates2, candidates1, nb_candidates2);
+		nb_candidates1 = nb_candidates2;
+
+		FREE_int(candidates2);
+		}
+
+	candidates = candidates1;
+	nb_candidates = nb_candidates1;
+
+	if (f_v) {
+		cout << "read_candidates_for_one_orbit_from_file done" << endl;
+	}
+}
+
+
+#define MY_OWN_BUFSIZE 1000000
+
+
+int find_orbit_index_in_data_file(const char *prefix,
+		int level_of_candidates_file, int *starter,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char fname[1000];
+	int orbit_idx;
+
+	if (f_v) {
+		cout << "find_orbit_index_in_data_file" << endl;
+	}
+
+	sprintf(fname, "%s_lvl_%d", prefix, level_of_candidates_file);
+
+	if (file_size(fname) <= 0) {
+		cout << "find_orbit_index_in_data_file file "
+				<< fname << " does not exist" << endl;
+		exit(1);
+		}
+	ifstream f(fname);
+	int a, i, cnt;
+	int *S;
+	char buf[MY_OWN_BUFSIZE];
+	int len, str_len;
+	char *p_buf;
+
+	S = NEW_int(level_of_candidates_file);
+
+	cnt = 0;
+	f.getline(buf, MY_OWN_BUFSIZE, '\n'); // skip the first line
+
+	orbit_idx = 0;
+
+	while (TRUE) {
+		if (f.eof()) {
+			break;
+			}
+		f.getline(buf, MY_OWN_BUFSIZE, '\n');
+		//cout << "Read line " << cnt << "='" << buf << "'" << endl;
+		str_len = strlen(buf);
+		if (str_len == 0) {
+			cout << "read_orbit_rep_and_candidates_from_files "
+					"str_len == 0" << endl;
+			exit(1);
+			}
+
+		// check for comment line:
+		if (buf[0] == '#')
+			continue;
+
+		p_buf = buf;
+		s_scan_int(&p_buf, &a);
+		if (a == -1) {
+			break;
+			}
+		len = a;
+		if (a != level_of_candidates_file) {
+			cout << "a != level_of_candidates_file" << endl;
+			cout << "a=" << a << endl;
+			cout << "level_of_candidates_file="
+					<< level_of_candidates_file << endl;
+			exit(1);
+			}
+		for (i = 0; i < len; i++) {
+			s_scan_int(&p_buf, &S[i]);
+			}
+		for (i = 0; i < level_of_candidates_file; i++) {
+			if (S[i] != starter[i]) {
+				break;
+				}
+			}
+		if (i == level_of_candidates_file) {
+			// We found the representative that matches the prefix:
+			orbit_idx = cnt;
+			break;
+			}
+		else {
+			cnt++;
+			}
+		}
+	FREE_int(S);
+	if (f_v) {
+		cout << "find_orbit_index_in_data_file done" << endl;
+	}
+	return orbit_idx;
+}
+
+
+
+
+
+
 }
 }
 

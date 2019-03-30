@@ -154,7 +154,9 @@ void surface_with_action::init_group(int f_semilinear,
 
 	vector_ge *nice_gens;
 
-	create_linear_group(S, A, 
+	A = NEW_OBJECT(action);
+
+	A->init_linear_group(S,
 		F, 4, 
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,

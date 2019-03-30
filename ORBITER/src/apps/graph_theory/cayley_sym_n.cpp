@@ -172,7 +172,7 @@ void do_it(int n, int f_star, int f_coxeter,
 					perms + i * deg1, 0 /* verbose_level */);
 			}
 
-		generators_to_strong_generators(A, 
+		A->generators_to_strong_generators(
 			TRUE /* f_target_go */, target_go, 
 			G_gens, SG, verbose_level - 3);
 		

@@ -265,12 +265,14 @@ int main(int argc, const char **argv)
 		action *Ar;
 		int f_induce_action = TRUE;
 		
-		Ar = NEW_OBJECT(action);
+		//Ar = NEW_OBJECT(action);
 
 
-		Ar->induced_action_by_restriction(*At, 
-			f_induce_action, At->Sims, 
-			nb_points, points, verbose_level);
+		Ar = At->create_induced_action_by_restriction(
+			At->Sims,
+			nb_points, points,
+			f_induce_action,
+			verbose_level);
 		Ar->Sims->group_order(ago3);
 		if (D.compare(ago1, ago3)) {
 			cout << "Group orders differ: ago1=" << ago1

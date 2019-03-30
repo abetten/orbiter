@@ -19,7 +19,7 @@ using namespace orbiter;
 
 int t0; // the system time when the program started
 
-void do_it(int universal_set_size, int partition_size,
+void do_it(int universal_set_size, int partition_class_size,
 		int verbose_level);
 
 
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 
 }
 
-void do_it(int universal_set_size, int partition_size,
+void do_it(int universal_set_size, int partition_class_size,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -88,7 +88,7 @@ void do_it(int universal_set_size, int partition_size,
 			<< ") of order " << goi << endl;
 
 	A2 = A->induced_action_on_set_partitions(
-			universal_set_size, partition_size,
+			partition_class_size,
 			verbose_level);
 
 	A->Strong_gens->print_with_given_action(cout, A2);

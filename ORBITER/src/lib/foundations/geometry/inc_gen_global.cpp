@@ -115,49 +115,6 @@ void int_vec_bubblesort_increasing(int len, int *p)
 		}
 }
 
-#if 0
-int int_vec_search(int *v, int len, int a, int &idx)
-// returns TRUE if the value a has been found in the array v[] of size len, 
-// FALSE otherwise.
-// if a has been found, idx is the position where is occurs
-{
-	int l, r, m, res;
-	int f_found = FALSE;
-	
-	if (len == 0) {
-		idx = 0;
-		return FALSE;
-		}
-	l = 0;
-	r = len;
-	// invariant:
-	// v[i] <= a for i < l;
-	// v[i] >  a for i >= r;
-	// r - l is the length of the area to search in.
-	while (l < r) {
-		m = (l + r) >> 1;
-		// if the length of the search area is even
-		// we examine the element above the middle
-		res = v[m] - a;
-		//cout << "search l=" << l << " m=" << m << " r=" 
-		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
-		if (res <= 0) {
-			l = m + 1;
-			if (res == 0)
-				f_found = TRUE;
-			}
-		else
-			r = m;
-		}
-	// now: l == r; 
-	// and f_found is set accordingly */
-	if (f_found)
-		l--;
-	idx = l;
-	return f_found;
-}
-#endif
-
 void int_vec_print(int *v, int len)
 {
 	int i;
@@ -167,7 +124,6 @@ void int_vec_print(int *v, int len)
 	}
 }
 
-#if 1
 
 int integer_vec_compare(int *p, int *q, int len)
 {
@@ -181,7 +137,6 @@ int integer_vec_compare(int *p, int *q, int len)
 		}
 	return 0;
 }
-#endif
 
 int int_ij2k(int i, int j, int n)
 {

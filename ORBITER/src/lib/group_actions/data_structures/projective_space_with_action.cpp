@@ -109,7 +109,8 @@ void projective_space_with_action::init_group(
 
 	vector_ge *nice_gens;
 
-	create_linear_group(S, A, 
+	A = NEW_OBJECT(action);
+	A->init_linear_group(S,
 		F, d, 
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,

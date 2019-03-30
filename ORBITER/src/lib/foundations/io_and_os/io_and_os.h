@@ -513,6 +513,23 @@ void concatenate_files(const char *fname_in_mask, int N,
 void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);
 int is_all_whitespace(const char *str);
+void poset_classification_read_candidates_of_orbit(
+	const char *fname, int orbit_at_level,
+	int *&candidates, int &nb_candidates, int verbose_level);
+void read_candidates_for_one_orbit_from_file(char *prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		int *S,
+		void (*early_test_func_callback)(int *S, int len,
+			int *candidates, int nb_candidates,
+			int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
+		void *early_test_func_callback_data,
+		int *&candidates,
+		int &nb_candidates,
+		int verbose_level);
+int find_orbit_index_in_data_file(const char *prefix,
+		int level_of_candidates_file, int *starter,
+		int verbose_level);
 
 
 }

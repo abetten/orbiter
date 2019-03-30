@@ -87,8 +87,8 @@ void test_borel(int n, int q, int verbose_level)
 	A = NEW_OBJECT(action);
 	vector_ge *nice_gens;
 
-	cout << "before create_linear_group" << endl;
-	create_linear_group(S, A, 
+	cout << "before init_linear_group" << endl;
+	A->init_linear_group(S,
 		F, n, 
 		FALSE /* f_projective */,
 		TRUE /* f_general */,
@@ -98,7 +98,7 @@ void test_borel(int n, int q, int verbose_level)
 		nice_gens,
 		verbose_level);
 	FREE_OBJECT(nice_gens);
-	cout << "after create_linear_group" << endl;
+	cout << "after init_linear_group" << endl;
 
 	AP = NEW_OBJECT(action);
 	AP->init_symmetric_group(n, 0 /* verbose_level */);

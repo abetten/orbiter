@@ -90,7 +90,10 @@ void create_group_arcs8(int q, int verbose_level)
 	F->init_override_polynomial(q, "11", verbose_level);
 
 	cout << "creating linear group" << endl;
-	create_linear_group(S, A, 
+
+	A = NEW_OBJECT(action);
+
+	A->init_linear_group(S,
 		F, 3, 
 		TRUE /*f_projective*/, FALSE /* f_general*/, FALSE /* f_affine */, 
 		TRUE /* f_semilinear */, FALSE /* f_special */, 
@@ -214,7 +217,10 @@ void create_group_arcs8(int q, int verbose_level)
 	//vector_ge *nice_gens;
 	
 	cout << "creating linear group over FQ" << endl;
-	create_linear_group(PGGL3Q, AQ, 
+
+	AQ = NEW_OBJECT(action);
+
+	AQ->init_linear_group(PGGL3Q,
 		FQ, 3, 
 		TRUE /*f_projective*/, FALSE /* f_general*/, FALSE /* f_affine */, 
 		TRUE /* f_semilinear */, FALSE /* f_special */, 
@@ -249,7 +255,7 @@ void create_group_arcs8(int q, int verbose_level)
 	longinteger_object target_go;
 
 	target_go.create(27);
-	generators_to_strong_generators(AQ, 
+	AQ->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		verbose_level);

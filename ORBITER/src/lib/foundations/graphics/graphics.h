@@ -16,6 +16,9 @@ namespace foundations {
 // #############################################################################
 
 
+//! creates 3D animations using Povray
+
+
 class animate {
 public:
 	scene *S;

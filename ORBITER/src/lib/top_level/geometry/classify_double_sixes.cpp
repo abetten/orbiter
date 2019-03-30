@@ -208,9 +208,10 @@ void classify_double_sixes::init(
 		}
 
 	A_on_neighbors = NEW_OBJECT(action);
-	A_on_neighbors->induced_action_by_restriction(*A2, 
-		FALSE /* f_induce_action */, NULL, 
+	A_on_neighbors = A2->create_induced_action_by_restriction(
+		NULL,
 		nb_neighbors, Neighbors, 
+		FALSE /* f_induce_action */,
 		0 /* verbose_level */);
 
 	if (f_v) {

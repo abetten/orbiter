@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	direct_product.o \
+	exceptional_isomorphism_O4.o \
 	linear_group.o \
 	linear_group_description.o \
 	matrix_group.o \

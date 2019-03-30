@@ -175,7 +175,8 @@ void young::init(int n, int verbose_level)
 	S = A->Sims;
 
 	if (f_vv) {
-		cout << "Listing all elements in the group Sym(" << n << "):" << endl;
+		cout << "Listing all elements in the group "
+				"Sym(" << n << "):" << endl;
 		for (i = 0; i < goi; i++) {
 			S->element_unrank_int(i, Elt);
 			cout << "element " << i << " is ";
@@ -189,7 +190,7 @@ void young::init(int n, int verbose_level)
 		cout << "computing conjugacy classes:" << endl;
 		}
 
-	compute_conjugacy_classes(S, Aconj, ABC, Sch, 
+	S->compute_conjugacy_classes(Aconj, ABC, Sch,
 		SG, nb_classes, class_size, class_rep, 
 		verbose_level);
 		// in ACTION/action_global.C
@@ -344,7 +345,8 @@ void young::create_representations(int *Base,
 				D->copy(D->offset(Base, ii), D->offset(M4, ii), 0);
 				}
 			for (j = 0; j < sz; j++) {
-				D->make_integer(D->offset(M4, rk * sz + j), elt5[j], 0 /* verbose_level*/);
+				D->make_integer(D->offset(M4, rk * sz + j),
+						elt5[j], 0 /* verbose_level*/);
 				}
 			
 			
@@ -356,20 +358,26 @@ void young::create_representations(int *Base,
 
 			for (ii = 0; ii < rk; ii++) {
 				idx = base_cols[ii];
-				D->copy(D->offset(M4, rk * sz + idx), D->offset(Mtx, i * rk + ii), 0);
+				D->copy(D->offset(M4, rk * sz + idx),
+						D->offset(Mtx, i * rk + ii), 0);
 				}
 			
 			for (ii = 0; ii < rk; ii++) {
 				idx = base_cols[ii];
-				D->Gauss_step(D->offset(M4, ii * sz), D->offset(M4, rk * sz), sz, idx, 0 /* verbose_level */);
+				D->Gauss_step(D->offset(M4, ii * sz),
+						D->offset(M4, rk * sz), sz, idx,
+						0 /* verbose_level */);
 				if (f_v3) {
-					cout << "Row " << i << " basis vector " << ii << " has been subtracted" << endl;
+					cout << "Row " << i << " basis vector " << ii
+							<< " has been subtracted" << endl;
 					D->print_matrix(M4, rk + 1, sz);
 					}
 
 				}
-			if (!D->is_zero_vector(D->offset(M4, rk * sz), sz, 0 /* verbose_level */)) {
-				cout << "The vector does not lie in the span of the basis, something is wrong" << endl;
+			if (!D->is_zero_vector(D->offset(M4, rk * sz), sz,
+					0 /* verbose_level */)) {
+				cout << "The vector does not lie in the span of the "
+						"basis, something is wrong" << endl;
 				exit(1);
 				}
 
@@ -380,7 +388,8 @@ void young::create_representations(int *Base,
 			} // next i
 
 
-		cout << "Conjugacy class " << c << " is represented by group element " << h;
+		cout << "Conjugacy class " << c << " is represented "
+				"by group element " << h;
 		S->element_unrank_int(h, Elt);
 		cout << " which is ";
 		A->element_print(Elt, cout);
@@ -402,7 +411,9 @@ void young::create_representations(int *Base,
 		}
 }
 
-void young::create_representation(int *Base, int *Base_inv, int rk, int group_elt, int *Mtx, int verbose_level)
+void young::create_representation(int *Base,
+		int *Base_inv, int rk, int group_elt, int *Mtx,
+		int verbose_level)
 // Mtx[rk * rk * D->size_of_instance_in_int]
 {
 	int f_v = (verbose_level >= 1);
@@ -438,7 +449,8 @@ void young::create_representation(int *Base, int *Base_inv, int rk, int group_el
 			D->copy(D->offset(Base, ii), D->offset(M4, ii), 0);
 			}
 		for (j = 0; j < sz; j++) {
-			D->make_integer(D->offset(M4, rk * sz + j), elt5[j], 0 /* verbose_level*/);
+			D->make_integer(D->offset(M4, rk * sz + j), elt5[j],
+					0 /* verbose_level*/);
 			}
 		
 		
@@ -447,21 +459,28 @@ void young::create_representation(int *Base, int *Base_inv, int rk, int group_el
 			D->print_matrix(M4, rk + 1, sz);
 			}
 		
-		D->mult_matrix(D->offset(M4, rk * sz), Base_inv, D->offset(Mtx, i * rk), 1, rk, rk, 0);
+		D->mult_matrix(D->offset(M4, rk * sz), Base_inv,
+				D->offset(Mtx, i * rk), 1, rk, rk, 0);
 
 #if 0
 		for (ii = 0; ii < rk; ii++) {
 			idx = base_cols[ii];
-			D->copy(D->offset(M4, rk * sz + idx), D->offset(Mtx, i * rk + ii), 0);
-			D->Gauss_step(D->offset(M4, ii * sz), D->offset(M4, rk * sz), sz, idx, 0 /* verbose_level */);
+			D->copy(D->offset(M4, rk * sz + idx),
+					D->offset(Mtx, i * rk + ii), 0);
+			D->Gauss_step(D->offset(M4, ii * sz),
+					D->offset(M4, rk * sz), sz, idx,
+					0 /* verbose_level */);
 			if (f_v3) {
-				cout << "Row " << i << " basis vector " << ii << " has been subtracted" << endl;
+				cout << "Row " << i << " basis vector " << ii
+						<< " has been subtracted" << endl;
 				D->print_matrix(M4, rk + 1, sz);
 				}
 
 			}
-		if (!D->is_zero_vector(D->offset(M4, rk * sz), sz, 0 /* verbose_level */)) {
-			cout << "The vector does not lie in the span of the basis, something is wrong" << endl;
+		if (!D->is_zero_vector(D->offset(M4, rk * sz), sz,
+				0 /* verbose_level */)) {
+			cout << "The vector does not lie in the span of the "
+					"basis, something is wrong" << endl;
 			exit(1);
 			}
 #endif
@@ -473,7 +492,8 @@ void young::create_representation(int *Base, int *Base_inv, int rk, int group_el
 		} // next i
 
 	if (f_v) {
-		cout << "The element " << group_elt << " is represented by the matrix:" << endl;
+		cout << "The element " << group_elt << " is represented "
+				"by the matrix:" << endl;
 		D->print_matrix(Mtx, rk, rk);
 		cout << endl;
 		}
@@ -802,14 +822,16 @@ void young::Maschke(int *Rep,
 
 
 	if (f_v) {
-		cout << "young::Maschke checking if submodule is invariant" << endl;
+		cout << "young::Maschke checking if submodule "
+				"is invariant" << endl;
 		}
 	for (h = 0; h < goi; h++) {
 		A = Rep + h * sz;
 		for (i = 0; i < dim_of_submodule; i++) {
 			for (j = dim_of_submodule; j < dim_of_module; j++) {
 				if (!D->is_zero(D->offset(A, i * dim_of_module + j), 0)) {
-					cout << "The submodule is not invariant under the action" << endl;
+					cout << "The submodule is not invariant "
+							"under the action" << endl;
 					exit(1);
 					}
 				}
@@ -858,7 +880,8 @@ void young::Maschke(int *Rep,
 		// get Tau(hv):
 		for (i = 0; i < r; i++) {
 			for (j = 0; j < r; j++) {
-				D->copy(D->offset(Av, (k + i) * n + k + j), D->offset(Tau, i * r + j), 0);
+				D->copy(D->offset(Av, (k + i) * n + k + j),
+						D->offset(Tau, i * r + j), 0);
 				}
 			}
 
@@ -871,7 +894,8 @@ void young::Maschke(int *Rep,
 		// get Theta(h):
 		for (i = 0; i < r; i++) {
 			for (j = 0; j < k; j++) {
-				D->copy(D->offset(A, (k + i) * n + j), D->offset(Theta, i * k + j), 0);
+				D->copy(D->offset(A, (k + i) * n + j),
+						D->offset(Theta, i * k + j), 0);
 				}
 			}
 		if (f_vv) {
@@ -882,7 +906,8 @@ void young::Maschke(int *Rep,
 
 		// multiply Tau and Theta:
 
-		D->mult_matrix(Tau, Theta, TauTheta, r, r, k, 0 /* verbose_level */);
+		D->mult_matrix(Tau, Theta, TauTheta, r, r, k,
+				0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "TauTheta = " << endl;
@@ -892,7 +917,8 @@ void young::Maschke(int *Rep,
 		
 		// add to Mu:
 		
-		D->add_apply_matrix(Mu, TauTheta, r, k, 0 /* verbose_level */);
+		D->add_apply_matrix(Mu, TauTheta, r, k,
+				0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "Mu (partial sum) = " << endl;
@@ -902,7 +928,8 @@ void young::Maschke(int *Rep,
 
 		}
 
-	D->matrix_mult_apply_scalar(Mu, gv, r, k, 0 /* verbose_level */);
+	D->matrix_mult_apply_scalar(Mu, gv, r, k,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "Mu = " << endl;

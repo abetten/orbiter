@@ -200,15 +200,17 @@ void use_group(const char *fname, colored_graph *CG,
 	action *Aut_on_points;
 	int *points;
 
-	Aut_on_points = NEW_OBJECT(action);
+	//Aut_on_points = NEW_OBJECT(action);
 	points = NEW_int(CG->nb_points);
 	for (i = 0; i < CG->nb_points; i++) {
 		points[i] = i;
 		}
 
-	Aut_on_points->induced_action_by_restriction(*Aut, 
-		TRUE /* f_induce_action */, Aut->Sims, 
-		CG->nb_points /* nb_points */, points, verbose_level);
+	Aut_on_points = Aut->create_induced_action_by_restriction(
+		Aut->Sims,
+		CG->nb_points /* nb_points */, points,
+		TRUE /* f_induce_action */,
+		verbose_level);
 
 	Aut_on_points->group_order(ago);	
 	cout << "ago on points = " << ago << endl;
@@ -265,7 +267,8 @@ void use_group(const char *fname, colored_graph *CG,
 
 		}
 
-	compute_orbits_on_subsets(gen,
+	gen = NEW_OBJECT(poset_classification);
+	gen->compute_orbits_on_subsets(
 		CG->nb_points /* target_depth */,
 		prefix,
 		FALSE /* f_W */, FALSE /* f_w */,

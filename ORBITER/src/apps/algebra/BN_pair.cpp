@@ -303,10 +303,13 @@ void compute_N(action *A, int epsilon, int n,
 	longinteger_object go_induced;
 	int f_induce_action = TRUE;
 
-	A2 = NEW_OBJECT(action);
+	//A2 = NEW_OBJECT(action);
 	
-	A2->induced_action_by_restriction(*A, f_induce_action, Stab, 
-		the_set_size, the_set, verbose_level);
+	A2 = A->create_induced_action_by_restriction(
+		Stab,
+		the_set_size, the_set,
+		f_induce_action,
+		verbose_level);
 
 	if (f_v) {
 		cout << "created induced action: " << endl;

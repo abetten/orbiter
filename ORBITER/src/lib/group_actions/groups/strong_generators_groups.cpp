@@ -1620,7 +1620,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 	
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_PGL_n_q, 
+	A_PGL_n_q->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -1794,7 +1794,7 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 	
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_PGL_n_q, 
+	A_PGL_n_q->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -1933,7 +1933,7 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_linear, 
+	A_linear->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -2067,7 +2067,7 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_linear, 
+	A_linear->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -2158,7 +2158,7 @@ void strong_generators::generators_for_the_identity_subgroup(
 
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_linear, 
+	A_linear->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -2249,7 +2249,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 	
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_PGL_n_q, 
+	A_PGL_n_q->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -2356,7 +2356,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_PGL_4_q, 
+	A_PGL_4_q->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -2456,7 +2456,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	
 	strong_generators *SG;
 
-	generators_to_strong_generators(A_PGL_4_q, 
+	A_PGL_4_q->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
@@ -2529,7 +2529,7 @@ void strong_generators::generators_for_the_orthogonal_group(
 				"orthogonal_group before generators_to_"
 				"strong_generators" << endl;
 		}
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		&A2->Sims->gens, Strong_gens2, 
 		0 /* verbose_level */);
@@ -2603,7 +2603,7 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 				"stabilizer_of_the_cubic_surface before "
 				"generators_to_strong_generators" << endl;
 		}
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
 		0 /* verbose_level */);
@@ -2683,7 +2683,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 				"of_the_cubic_surface_family_24 before "
 				"generators_to_strong_generators" << endl;
 		}
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
 		0 /* verbose_level */);
@@ -2767,7 +2767,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 				"catalogue_stabilizer before "
 				"generators_to_strong_generators" << endl;
 		}
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
 		0 /* verbose_level */);
@@ -2851,7 +2851,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 				"spread_from_catalogue before "
 				"generators_to_strong_generators" << endl;
 		}
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
 		0 /* verbose_level */);
@@ -2947,7 +2947,7 @@ void strong_generators::Hall_reflection(
 				"before generators_to_strong_generators" << endl;
 		}
 
-	generators_to_strong_generators(A,
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go,
 		gens, SG, verbose_level - 3);
 
@@ -3053,7 +3053,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 				"before generators_to_strong_generators" << endl;
 		}
 
-	generators_to_strong_generators(A,
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go,
 		gens, SG, verbose_level - 3);
 
@@ -3161,7 +3161,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 
 	strong_generators *SG;
 
-	generators_to_strong_generators(A,
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go,
 		gens, SG, verbose_level - 3);
 

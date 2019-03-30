@@ -1134,18 +1134,18 @@ void packing::create_action_on_spreads(int verbose_level)
 	if (f_v) {
 		cout << "packing::create_action_on_spreads" << endl;
 		}
-	int f_induce = FALSE;
+	//int f_induce = FALSE;
 
 	if (f_v) {
 		cout << "packing::create_action_on_spreads "
 				"creating action A_on_spreads" << endl;
 		}
-	A_on_spreads = create_induced_action_on_sets(
-			T->A2,
-			T->A->Sims,
+	A_on_spreads = T->A2->create_induced_action_on_sets(
+			//T->A->Sims,
 			Spread_tables->nb_spreads, spread_size,
 			Spread_tables->spread_table,
-			f_induce, 0 /* verbose_level */);
+			//f_induce,
+			0 /* verbose_level */);
 
 	cout << "created action on spreads" << endl;
 

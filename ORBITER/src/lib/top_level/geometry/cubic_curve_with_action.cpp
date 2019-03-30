@@ -101,7 +101,9 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 	vector_ge *nice_gens;
 	sims *S;
 
-	create_linear_group(S, A,
+	A = NEW_OBJECT(action);
+
+	A->init_linear_group(S,
 		F, 3,
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,

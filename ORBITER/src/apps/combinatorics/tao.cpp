@@ -270,7 +270,9 @@ void difference_set_in_heisenberg_group::init(int n, int q, int verbose_level)
 	cout << "The automorphism group has order " << Aut_order << endl;
 #endif
 
-	A = create_automorphism_group_from_group_table(fname_base, 
+	A = NEW_OBJECT(action);
+
+	A->init_automorphism_group_from_group_table(fname_base,
 		Table, H->group_order, gens, nb_gens, 
 		Aut_gens, 
 		verbose_level);

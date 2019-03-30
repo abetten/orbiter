@@ -185,6 +185,10 @@ public:
 		int verbose_level);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
+	void orbits_on_k_sets(
+		int k, int *&orbit_reps, int &nb_orbits, int verbose_level);
+	poset_classification *orbits_on_k_sets_compute(
+		int k, int verbose_level);
 };
 
 int callback_test_independence_condition(orbit_based_testing *Obt,
@@ -596,6 +600,12 @@ public:
 		// This is done in init_root_node 
 
 	// poset_classification_classify.C
+	void compute_orbits_on_subsets(
+		int target_depth,
+		const char *prefix,
+		int f_W, int f_w,
+		poset *Poset,
+		int verbose_level);
 	int compute_orbits(int from_level, int to_level, 
 		int verbose_level);
 		// returns TRUE if there is at least one orbit 
@@ -821,6 +831,9 @@ public:
 	void create_shallow_schreier_tree_fname_mask_base(
 			char *fname_mask, int node);
 	void make_fname_candidates_file_default(char *fname, int level);
+	void wedge_product_export_magma(
+			int n, int q, int vector_space_dimension,
+			int level, int verbose_level);
 
 	// poset_classification_recognize.C:
 	void recognize_start_over(
@@ -844,10 +857,6 @@ public:
 
 };
 
-// in poset_classification_io.C:
-void poset_classification_read_candidates_of_orbit(
-	const char *fname, int orbit_at_level,
-	int *&candidates, int &nb_candidates, int verbose_level);
 
 
 
@@ -1105,7 +1114,7 @@ public:
 
 		// 1st level under downstep:
 	void schreier_forest(
-		poset_classification *gen, schreier &Schreier, action &AR, 
+		poset_classification *gen, schreier &Schreier, action *&AR,
 		int lvl, 
 		int f_use_invariant_subset_if_available, 
 		int &f_using_invariant_subset, 
@@ -1123,7 +1132,7 @@ public:
 		// Schreier.compute_all_point_orbits
 		// and possibly printed using downstep_orbits_print
 	void downstep_orbit_test_and_schreier_vector(
-		poset_classification *gen, schreier &Schreier, action &AR, 
+		poset_classification *gen, schreier &Schreier, action *AR,
 		int lvl, 
 		int f_use_invariant_subset_if_available, 
 		int f_using_invariant_subset,
@@ -1135,7 +1144,7 @@ public:
 		// create_schreier_vector_wrapper
 		// The order in which these two functions are called matters.
 	void downstep_implicit_fusion(
-		poset_classification *gen, schreier &Schreier, action &AR, 
+		poset_classification *gen, schreier &Schreier, action *AR,
 		int f_using_invariant_subset,
 		int lvl, 
 		int f_implicit_fusion, 
@@ -1145,7 +1154,7 @@ public:
 		// once downstep_orbit_test_and_schreier_vector is done
 		// calls test_orbits_for_implicit_fusion
 	void find_extensions(poset_classification *gen, 
-		schreier &O, action &AR, int f_using_invariant_subset, 
+		schreier &O, action *AR, int f_using_invariant_subset,
 		int lvl, 
 		int verbose_level);
 		// called by downstep
@@ -1173,7 +1182,7 @@ public:
 		// and calls test_point_using_check_functions otherwise
 
 	void check_orbits_wrapper(poset_classification *gen, 
-		schreier &Schreier, action &AR, int f_using_invariant_subset, 
+		schreier &Schreier, action *AR, int f_using_invariant_subset,
 		int lvl, 
 		int &nb_good_orbits1, int &nb_points1, 
 		int f_use_incremental_test_func_if_available, 
@@ -1185,14 +1194,14 @@ public:
 		// Calls check_orbits
 
 	void test_orbits_for_implicit_fusion(poset_classification *gen, 
-		schreier &Schreier, action &AR, 
+		schreier &Schreier, action *AR,
 		int f_using_invariant_subset, 
 		int lvl, int verbose_level);
 		// called from downstep_implicit_fusion
 		// eliminates implicit fusion orbits from the 
 		// Schreier data structure, 
 	void check_orbits(poset_classification *gen, 
-		schreier &Schreier, action &AR, 
+		schreier &Schreier, action *AR,
 		int f_using_invariant_subset, 
 		int lvl, 
 		int f_use_incremental_test_func_if_available, 
@@ -1212,11 +1221,11 @@ public:
 		// Otherwise, calls gen->check_the_set 
 		// (if gen->f_candidate_check_func).
 		// Otherwise accepts any point.
-	void relabel_schreier_vector(action &AR, int verbose_level);
+	void relabel_schreier_vector(action *AR, int verbose_level);
 		// called from compute_schreier_vector, 
 		// downstep_orbit_test_and_schreier_vector
 	void downstep_orbits_print(poset_classification *gen, 
-		schreier &Schreier, action &AR, 
+		schreier &Schreier, action *AR,
 		int lvl, 
 		int f_using_invariant_subset, int f_print_orbits, 
 		int max_orbits, int max_points_per_orbit);
