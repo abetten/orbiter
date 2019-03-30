@@ -178,7 +178,7 @@ void set_and_stabilizer::init_stab_from_data(int *data_gens,
 		A->make_element(gens->ith(i), data_gens + i * data_gens_size, 0);
 		}
 
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		0 /*verbose_level*/);
@@ -247,7 +247,7 @@ void set_and_stabilizer::init_stab_from_file(
 	FREE_int(data);
 	}
 
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		0 /*verbose_level*/);
@@ -331,7 +331,7 @@ void set_and_stabilizer::apply_to_self(int *Elt, int verbose_level)
 					"conjugate element does not stabilize the set" << endl;
 			}
 		}
-	generators_to_strong_generators(A, 
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, sg, 
 		0 /*verbose_level*/);

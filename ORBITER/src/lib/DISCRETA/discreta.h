@@ -348,7 +348,7 @@ discreta_base *calloc_m_times_n_objects(int m, int n, kind k);
 void free_m_times_n_objects(discreta_base *p);
 void printobjectkind(std::ostream& ost, kind k);
 const char *kind_ascii(kind k);
-const char *action_kind_ascii(kind k);
+const char *action_kind_ascii(action_kind k);
 //void int_swap(int& x, int& y);
 void uint4_swap(uint_4& x, uint_4& y);
 

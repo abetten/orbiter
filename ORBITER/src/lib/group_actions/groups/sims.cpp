@@ -3682,7 +3682,7 @@ void sims::build_up_group_random_process(sims *K,
 							GA->Elt2, verbose_level - 5);
 					}
 				else {
-					b = choose_next_base_point_default_method(GA,
+					b = GA->choose_next_base_point_default_method(
 							GA->Elt2, verbose_level - 5);
 					}
 
@@ -4031,8 +4031,8 @@ void sims::build_up_group_from_generators(sims *K,
 								GA, GA->Elt2, verbose_level);
 						}
 					else {
-						b = choose_next_base_point_default_method(
-								GA, GA->Elt2, verbose_level);
+						b = GA->choose_next_base_point_default_method(
+								GA->Elt2, verbose_level);
 						}
 					if (b == -1) {
 						if (f_vv) {
@@ -5756,6 +5756,85 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 		cout << "sims::write_as_magma_permutation_group done" << endl;
 		}
 }
+
+void sims::compute_conjugacy_classes(
+	action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
+	strong_generators *&SG, int &nb_classes,
+	int *&class_size, int *&class_rep,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, f;
+
+	if (f_v) {
+		cout << "sims::compute_conjugacy_classes" << endl;
+		}
+	Aconj = NEW_OBJECT(action);
+
+	if (f_v) {
+		cout << "sims::compute_conjugacy_classes "
+				"Creating action by conjugation" << endl;
+		}
+
+	Aconj->induced_action_by_conjugation(this,
+		this,
+		FALSE /* f_ownership */,
+		FALSE /* f_basis */,
+		verbose_level - 1);
+
+	if (f_v) {
+		cout << "Creating action by conjugation done" << endl;
+		}
+
+	ABC = Aconj->G.ABC;
+
+
+	Sch = NEW_OBJECT(schreier);
+
+	Sch->init(Aconj);
+
+
+	SG = NEW_OBJECT(strong_generators);
+
+	SG->init_from_sims(this, 0);
+
+
+	Sch->init_generators(*SG->gens);
+
+	if (f_v) {
+		cout << "sims::compute_conjugacy_classes "
+				"Computing conjugacy classes:" << endl;
+		}
+	Sch->compute_all_point_orbits(verbose_level);
+
+
+	nb_classes = Sch->nb_orbits;
+
+	class_size = NEW_int(nb_classes);
+	class_rep = NEW_int(nb_classes);
+
+	for (i = 0; i < nb_classes; i++) {
+		class_size[i] = Sch->orbit_len[i];
+		f = Sch->orbit_first[i];
+		class_rep[i] = Sch->orbit[f];
+		}
+
+	if (f_v) {
+		cout << "class size : ";
+		int_vec_print(cout, class_size, nb_classes);
+		cout << endl;
+		cout << "class rep : ";
+		int_vec_print(cout, class_rep, nb_classes);
+		cout << endl;
+		}
+
+
+	if (f_v) {
+		cout << "sims::compute_conjugacy_classes done" << endl;
+		}
+
+}
+
 
 
 }}

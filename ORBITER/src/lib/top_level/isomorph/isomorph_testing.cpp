@@ -1330,14 +1330,17 @@ void isomorph::induced_action_on_set_basic(sims *S,
 		AA = NULL;
 		}
 
-	AA = NEW_OBJECT(action);
+	//AA = NEW_OBJECT(action);
 
 	if (f_vv) {
 		cout << "isomorph::induced_action_on_set_basic "
 				"before induced_action_by_restriction" << endl;
 		}
-	AA->induced_action_by_restriction(*gen->Poset->A2,
-		TRUE, S, size, set, 0/*verbose_level*/);
+	AA = gen->Poset->A2->create_induced_action_by_restriction(
+		S,
+		size, set,
+		TRUE,
+		0/*verbose_level*/);
 	if (f_vv) {
 		cout << "isomorph::induced_action_on_set_basic "
 				"after induced_action_by_restriction" << endl;
@@ -1395,7 +1398,7 @@ void isomorph::induced_action_on_set(
 		FREE_OBJECT(UF);
 		UF = NULL;
 		}
-	AA = NEW_OBJECT(action);
+	//AA = NEW_OBJECT(action);
 	AA_perm = NEW_OBJECT(action);
 	AA_on_k_subsets = NEW_OBJECT(action);
 	
@@ -1404,8 +1407,11 @@ void isomorph::induced_action_on_set(
 		cout << "isomorph::induced_action_on_set "
 				"before induced_action_by_restriction" << endl;
 		}
-	AA->induced_action_by_restriction(*gen->Poset->A2,
-			TRUE, S, size, set, 0/*verbose_level*/);
+	AA = gen->Poset->A2->create_induced_action_by_restriction(
+			S,
+			size, set,
+			TRUE,
+			0/*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set "
 				"after induced_action_by_restriction" << endl;

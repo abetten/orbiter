@@ -138,15 +138,17 @@ int main(int argc, char **argv)
 	action *Aut_on_edges;
 	int *edges;
 	
-	Aut_on_edges = NEW_OBJECT(action);
+	//Aut_on_edges = NEW_OBJECT(action);
 	edges = NEW_int(nb_cols);
 	for (i = 0; i < nb_cols; i++) {
 		edges[i] = nb_rows + i;
 		}
 
-	Aut_on_edges->induced_action_by_restriction(*Aut, 
-		TRUE /* f_induce_action */, Aut->Sims, 
-		nb_cols /* nb_points */, edges, verbose_level);
+	Aut_on_edges = Aut->create_induced_action_by_restriction(
+		Aut->Sims,
+		nb_cols /* nb_points */, edges,
+		TRUE /* f_induce_action */,
+		verbose_level);
 	
 	Aut_on_edges->group_order(ago);	
 	cout << "ago on edges = " << ago << endl;
@@ -172,7 +174,9 @@ int main(int argc, char **argv)
 				verbose_level);
 
 
-	compute_orbits_on_subsets(gen, 
+	gen = NEW_OBJECT(poset_classification);
+
+	gen->compute_orbits_on_subsets(
 		depth /* target_depth */,
 		prefix, 
 		FALSE /* f_W */, FALSE /* f_w */,

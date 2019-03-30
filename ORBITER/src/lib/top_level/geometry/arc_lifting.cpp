@@ -1171,12 +1171,10 @@ void arc_lifting::create_action_on_equations_and_compute_orbits(
 	
 	if (f_v) {
 		cout << "arc_lifting::create_action_on_equations_and_"
-				"compute_orbits before create_action_and_compute_"
-				"orbits_on_equations" << endl;
+				"compute_orbits before orbits_on_equations" << endl;
 		}
 
-	create_action_and_compute_orbits_on_equations(
-		Surf_A->A,
+	Surf_A->A->orbits_on_equations(
 		Surf->Poly3_4, 
 		The_surface_equations, 
 		q + 1 /* nb_equations */, 

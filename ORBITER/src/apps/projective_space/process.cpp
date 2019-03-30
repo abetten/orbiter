@@ -25,6 +25,12 @@ using namespace orbiter;
 int t0; // the system time when the program started
 
 
+void do_canonical_form(int n, finite_field *F,
+	int *set, int set_size, int f_semilinear,
+	const char *fname_base, int verbose_level);
+
+
+
 int main(int argc, char **argv)
 {
 	int verbose_level = 0;
@@ -603,4 +609,62 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
+void do_canonical_form(int n, finite_field *F,
+	int *set, int set_size, int f_semilinear,
+	const char *fname_base, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	projective_space *P;
+	int canonical_pt;
+
+	if (f_v) {
+		cout << "do_canonical_form" << endl;
+		}
+
+	P = NEW_OBJECT(projective_space);
+
+	if (f_v) {
+		cout << "do_canonical_form before P->init" << endl;
+		}
+
+	P->init(n, F,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "do_canonical_form after P->init" << endl;
+		}
+
+	strong_generators *SG;
+	action *A_linear;
+	vector_ge *nice_gens;
+
+	A_linear = NEW_OBJECT(action);
+	A_linear->init_projective_group(n + 1, F, f_semilinear,
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "do_canonical_form before "
+				"set_stabilizer_in_projective_space" << endl;
+		}
+	SG = A_linear->set_stabilizer_in_projective_space(
+		P,
+		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */,
+		FALSE, NULL,
+		verbose_level);
+	//P->draw_point_set_in_plane(fname_base, set, set_size,
+	// TRUE /*f_with_points*/, 0 /* verbose_level */);
+	FREE_OBJECT(nice_gens);
+	FREE_OBJECT(SG);
+	FREE_OBJECT(A_linear);
+	FREE_OBJECT(P);
+
+	if (f_v) {
+		cout << "do_canonical_form done" << endl;
+		}
+
+}
 

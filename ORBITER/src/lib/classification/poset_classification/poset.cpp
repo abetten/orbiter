@@ -373,6 +373,116 @@ int poset::rank_point(int *v)
 	return rk;
 }
 
+void poset::orbits_on_k_sets(
+	int k, int *&orbit_reps, int &nb_orbits, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	poset_classification *Gen;
+
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets" << endl;
+		}
+
+	Gen = orbits_on_k_sets_compute(
+		k, verbose_level);
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets "
+				"done with orbits_on_k_sets_compute" << endl;
+		}
+
+	Gen->get_orbit_representatives(k, nb_orbits,
+			orbit_reps, verbose_level);
+
+
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets "
+				"we found "
+				<< nb_orbits << " orbits on " << k << "-sets" << endl;
+		}
+
+	FREE_OBJECT(Gen);
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets done" << endl;
+		}
+}
+
+poset_classification *poset::orbits_on_k_sets_compute(
+	int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	poset_classification *Gen;
+
+
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets_compute" << endl;
+		}
+	Gen = NEW_OBJECT(poset_classification);
+
+	sprintf(Gen->fname_base, "orbits_on_k_sets");
+
+
+	Gen->depth = k;
+
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets_compute calling Gen->init" << endl;
+		}
+	Gen->init(
+		this,
+		Gen->depth /* sz */, verbose_level - 1);
+	//Gen->init_check_func(
+	//	check_zero_lines,
+	//	this /* candidate_check_data */);
+	//Gen->init_incremental_check_func(
+		//check_mindist_incremental,
+		//this /* candidate_check_data */);
+
+
+#if 0
+	Gen->f_print_function = TRUE;
+	Gen->print_function = print_set;
+	Gen->print_function_data = this;
+#endif
+
+	int nb_poset_orbit_nodes = 1000;
+
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets_compute "
+				"calling Gen->init_poset_orbit_node" << endl;
+		}
+	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets_compute "
+				"calling Gen->init_root_node" << endl;
+		}
+	Gen->root[0].init_root_node(Gen, verbose_level - 1);
+
+	int schreier_depth = Gen->depth;
+	int f_use_invariant_subset_if_available = TRUE;
+	int f_debug = FALSE;
+	int t0 = os_ticks();
+
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets_compute "
+				"calling generator_main" << endl;
+		}
+	Gen->main(t0,
+		schreier_depth,
+		f_use_invariant_subset_if_available,
+		f_debug,
+		verbose_level - 1);
+
+
+	if (f_v) {
+		cout << "poset::orbits_on_k_sets_compute done" << endl;
+		}
+	return Gen;
+}
+
+
+
+//##############################################################################
+// global functions:
+//##############################################################################
 
 
 int callback_test_independence_condition(orbit_based_testing *Obt,

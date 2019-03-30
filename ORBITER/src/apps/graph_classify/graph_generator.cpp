@@ -19,8 +19,10 @@ using namespace orbiter;
 #include "graph.h"
 
 
-int graph_generator_check_conditions(int len,
-		int *S, void *data, int verbose_level);
+void graph_generator_test_function(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		void *data, int verbose_level);
 void graph_generator_print_set(ostream &ost,
 		int len, int *S, void *data);
 
@@ -56,6 +58,7 @@ graph_generator::graph_generator()
 	scale = 0.2;
 
 	f_depth = FALSE;
+	S1 = NULL;
 	
 	f_test_multi_edge = FALSE;
 	f_draw_poset = FALSE;
@@ -98,6 +101,9 @@ graph_generator::~graph_generator()
 		}
 	if (distance) {
 		FREE_int(distance);
+		}
+	if (S1) {
+		FREE_int(S1);
 		}
 	
 }
@@ -282,6 +288,8 @@ void graph_generator::init(int argc, const char **argv)
 		cout << "n2=" << n2 << endl;
 		}
 
+	S1 = NEW_int(n2);
+
 	A_base->init_symmetric_group(n, verbose_level - 3);
 	if (f_v) {
 		cout << "A_base->init_symmetric_group done" << endl;
@@ -380,11 +388,11 @@ void graph_generator::init(int argc, const char **argv)
 		target_depth, 
 		"", prefix, verbose_level - 1);
 	
-#if 0
-	// ToDo
-	gen->init_check_func(graph_generator_check_conditions,
-		(void *)this /* candidate_check_data */);
-#endif
+	Poset->add_testing_without_group(
+			graph_generator_test_function,
+			this,
+			verbose_level);
+
 	
 	gen->f_print_function = TRUE;
 	gen->print_function = graph_generator_print_set;
@@ -443,7 +451,8 @@ int graph_generator::check_conditions(int len,
 }
 
 int graph_generator::check_conditions_tournament(
-		int len, int *S, int verbose_level)
+		int len, int *S,
+		int verbose_level)
 {
 	//verbose_level = 2;
 
@@ -528,7 +537,8 @@ int graph_generator::check_conditions_tournament(
 
 
 int graph_generator::check_regularity(
-		int *S, int len, int verbose_level)
+		int *S, int len,
+		int verbose_level)
 {
 	int f_OK;
 	int f_v = (verbose_level >= 1);
@@ -902,17 +912,28 @@ void graph_generator::draw_graphs(int level,
 // #############################################################################
 
 
-int graph_generator_check_conditions(int len,
-		int *S, void *data, int verbose_level)
+void graph_generator_test_function(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		void *data, int verbose_level)
 {
 	graph_generator *Gen = (graph_generator *) data;
+	int i, f_OK;
 
-	if (Gen->f_tournament) {
-		return Gen->check_conditions_tournament(len, S, verbose_level);
+	int_vec_copy(S, Gen->S1, len);
+	nb_good_candidates = 0;
+	for (i = 0; i < nb_candidates; i++) {
+		Gen->S1[len] = candidates[i];
+		if (Gen->f_tournament) {
+			f_OK = Gen->check_conditions_tournament(len + 1, Gen->S1, verbose_level);
 		}
-	else {
-		return Gen->check_conditions(len, S, verbose_level);
+		else {
+			f_OK = Gen->check_conditions(len + 1, Gen->S1, verbose_level);
 		}
+		if (f_OK) {
+			good_candidates[nb_good_candidates++] = candidates[i];
+		}
+	}
 }
 
 void graph_generator_print_set(ostream &ost,

@@ -762,7 +762,7 @@ void diophant::write_solutions(const char *fname, int verbose_level)
 	{
 	ofstream fp(fname);
 
-		fp << _resultanz << " " << sum << endl;
+		fp << _resultanz << " " << n << endl;
 		for (i = 0; i < _resultanz; i++) {
 			res = _results.front();
 			h = 0;

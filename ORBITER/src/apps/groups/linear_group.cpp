@@ -215,7 +215,7 @@ int main(int argc, const char **argv)
 		Poset->init_subset_lattice(A, A,
 				A->Strong_gens,
 				verbose_level);
-		PC = orbits_on_k_sets_compute(Poset,
+		PC = Poset->orbits_on_k_sets_compute(
 				orbits_on_subsets_size, verbose_level);
 
 		int depth;

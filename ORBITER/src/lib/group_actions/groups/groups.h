@@ -94,6 +94,36 @@ public:
 			int verbose_level);
 };
 
+// #############################################################################
+// exceptional_isomorphism_O4.cpp
+// #############################################################################
+
+//! exceptional isomorphism between oerthogonal groups: O4, O5 and GL(2,q)
+
+class exceptional_isomorphism_O4 {
+public:
+	finite_field *Fq;
+	action *A2;
+	action *A4;
+	action *A5;
+
+	exceptional_isomorphism_O4();
+	~exceptional_isomorphism_O4();
+	void null();
+	void freeself();
+	void init(finite_field *Fq,
+			action *A2, action *A4, action *A5,
+			int verbose_level);
+	void apply_2to4_embedded(
+		int f_switch, int *mtx2x2_T, int *mtx2x2_S, int *Elt,
+		int verbose_level);
+	void apply_5_to_4(
+		int *mtx4x4, int *mtx5x5, int verbose_level);
+	void apply_4_to_5(
+		int *mtx4x4, int *mtx5x5, int verbose_level);
+	void print_as_2x2(int *mtx4x4);
+};
+
 
 
 // #############################################################################
@@ -1121,6 +1151,11 @@ public:
 	void create_group_table(int *&Table, int &n, int verbose_level);
 	void write_as_magma_permutation_group(const char *fname_base, 
 		vector_ge *gens, int verbose_level);
+	void compute_conjugacy_classes(
+		action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
+		strong_generators *&SG, int &nb_classes,
+		int *&class_size, int *&class_rep,
+		int verbose_level);
 
 	// sims2.C:
 	void build_up_subgroup_random_process(sims *G, 
@@ -1277,8 +1312,8 @@ public:
 		int verbose_level);
 	void write_file(const char *fname, int verbose_level);
 	void read_file(action *A, const char *fname, int verbose_level);
-	void generators_for_shallow_schreier_tree(char *label, 
-		vector_ge *chosen_gens, int verbose_level);
+	//void generators_for_shallow_schreier_tree(char *label,
+	//	vector_ge *chosen_gens, int verbose_level);
 	void compute_ascii_coding(char *&ascii_coding, int verbose_level);
 	void decode_ascii_coding(char *ascii_coding, int verbose_level);
 	void export_permutation_group_to_magma(const char *fname, 

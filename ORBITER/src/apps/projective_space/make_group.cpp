@@ -20,6 +20,8 @@ using namespace orbiter;
 int t0; // the system time when the program started
 
 void create_group(int verbose_level);
+void projective_space_init_line_action(projective_space *P,
+		action *A_points, action *&A_on_lines, int verbose_level);
 
 
 int main(int argc, char **argv)
@@ -118,4 +120,68 @@ void create_group(int verbose_level)
 }
 
 
+void projective_space_init_line_action(projective_space *P,
+		action *A_points, action *&A_on_lines, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action_on_grassmannian *AoL;
+
+	if (f_v) {
+		cout << "projective_space_init_line_action" << endl;
+		}
+	A_on_lines = NEW_OBJECT(action);
+
+	AoL = NEW_OBJECT(action_on_grassmannian);
+
+	AoL->init(*A_points, P->Grass_lines, verbose_level - 5);
+
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"action on grassmannian established" << endl;
+		}
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"initializing A_on_lines" << endl;
+		}
+	int f_induce_action = TRUE;
+	sims S;
+	longinteger_object go1;
+
+	S.init(A_points);
+	S.init_generators(*A_points->Strong_gens->gens,
+			0/*verbose_level*/);
+	S.compute_base_orbits_known_length(A_points->transversal_length,
+			0/*verbose_level - 1*/);
+	S.group_order(go1);
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"group order " << go1 << endl;
+		}
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"initializing action on grassmannian" << endl;
+		}
+	A_on_lines->induced_action_on_grassmannian(A_points, AoL,
+		f_induce_action, &S, verbose_level);
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"initializing A_on_lines done" << endl;
+		A_on_lines->print_info();
+		}
+
+	if (f_v) {
+		cout << "projective_space_init_line_action "
+				"computing strong generators" << endl;
+		}
+	if (!A_on_lines->f_has_strong_generators) {
+		cout << "projective_space_init_line_action "
+				"induced action does not have strong generators" << endl;
+		}
+	if (f_v) {
+		cout << "projective_space_init_line_action done" << endl;
+		}
+}
 

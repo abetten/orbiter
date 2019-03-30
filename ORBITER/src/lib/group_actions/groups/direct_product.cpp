@@ -714,7 +714,7 @@ void direct_product::lift_generators(
 	SG1->group_order(go1);
 	SG2->group_order(go2);
 	D.mult(go1, go2, go3);
-	generators_to_strong_generators(A,
+	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, go3,
 		gens, SG3,
 		verbose_level);

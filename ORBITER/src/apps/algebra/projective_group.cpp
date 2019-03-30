@@ -144,12 +144,14 @@ int main(int argc, char **argv)
 		cout << "the minimum distance of the code is " << d << endl;
 
 		Perms = NEW_int(SG->gens->len * code_sz);
-		A_cols = NEW_OBJECT(action);
+		//A_cols = NEW_OBJECT(action);
 
 		cout << "creating action on the columns:" << endl;
-		A_cols->induced_action_by_restriction(*A, 
-			FALSE /* f_induce_action */, NULL /* old_G */, 
-			code_sz, code, verbose_level);
+		A_cols = A->create_induced_action_by_restriction(
+			NULL /* old_G */,
+			code_sz, code,
+			FALSE /* f_induce_action */,
+			verbose_level);
 		cout << "action on the columns has been created" << endl;
 
 		

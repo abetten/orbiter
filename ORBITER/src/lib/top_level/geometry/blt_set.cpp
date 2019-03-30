@@ -2287,7 +2287,8 @@ void blt_set::report(isomorph &Iso, int verbose_level)
 		Poset->init_subset_lattice(Iso.AA, Iso.AA, Strong_gens,
 				verbose_level);
 
-		orbits_on_k_sets(Poset,
+
+		Poset->orbits_on_k_sets(
 			Iso.level, orbit_reps, nb_orbits, verbose_level);
 
 		FREE_OBJECT(Poset);
@@ -2550,7 +2551,7 @@ void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 		Poset->init_subset_lattice(Iso.AA, Iso.AA, Strong_gens,
 				verbose_level);
 
-		orbits_on_k_sets(Poset,
+		Poset->orbits_on_k_sets(
 			Iso.level, orbit_reps, nb_orbits, verbose_level);
 
 		FREE_OBJECT(Poset);

@@ -16,6 +16,77 @@ namespace orbiter {
 namespace classification {
 
 
+void poset_classification::compute_orbits_on_subsets(
+	int target_depth,
+	const char *prefix,
+	int f_W, int f_w,
+	poset *Poset,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_poset_orbit_nodes = 1000;
+	int schreier_depth = target_depth;
+	int f_use_invariant_subset_if_available = TRUE;
+	int f_debug = FALSE;
+	int t0 = os_ticks();
+
+
+	if (f_v) {
+		cout << "poset_classification::compute_orbits_on_subsets "
+				"verbose_level=" << verbose_level << endl;
+		}
+	//gen = NEW_OBJECT(poset_classification);
+
+
+	poset_classification::f_W = f_W;
+	depth = target_depth;
+	downstep_orbits_print_max_orbits = 50;
+	downstep_orbits_print_max_points_per_orbit = INT_MAX;
+
+
+	// !!!
+	f_allowed_to_show_group_elements = FALSE;
+
+	if (f_v) {
+		cout << "poset_classification::compute_orbits_on_subsets "
+				"calling gen->init" << endl;
+		}
+	init(Poset,
+		target_depth, verbose_level - 1);
+
+	strcpy(fname_base, prefix);
+
+
+	init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
+	init_root_node(verbose_level - 1);
+
+	main(t0,
+		schreier_depth,
+		f_use_invariant_subset_if_available,
+		f_debug,
+		verbose_level - 1);
+
+	int i, fst, len;
+
+	if (f_v) {
+		cout << "compute_orbits_on_subsets done" << endl;
+		cout << "depth : number of orbits" << endl;
+		}
+	for (i = 0; i < target_depth + 1; i++) {
+		fst = first_poset_orbit_node_at_level[i];
+		len = first_poset_orbit_node_at_level[i + 1] - fst;
+		if (f_v) {
+			cout << i << " : " << len << endl;
+			}
+		}
+	if (f_v) {
+		cout << "poset_classification::compute_orbits_on_subsets "
+				"done" << endl;
+		}
+}
+
+
+
 int poset_classification::compute_orbits(int from_level, int to_level, 
 	int verbose_level)
 // returns the last level that was computed.

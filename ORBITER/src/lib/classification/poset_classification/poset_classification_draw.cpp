@@ -1387,14 +1387,28 @@ void poset_classification::make_auxiliary_graph(int depth,
 				}
 
 
-			char text[1000];
+			char text1[1000];
+			char text2[1000];
 			longinteger_object go, go1;
 			int n, so, len, r;
 			
 			n = first_poset_orbit_node_at_level[lvl] + po;
 			get_stabilizer_order(lvl, po, go);
-			go.print_to_string(text);
-			LG->add_text(2 * lvl + 0, po, text, 0/*verbose_level*/);
+			go.print_to_string(text1);
+			if (lvl) {
+				sprintf(text2, "$%d_{%s}$", root[n].pt, text1);
+			}
+			else {
+				sprintf(text2, "$\\emptyset_{%s}$", text1);
+			}
+
+			// set label to be the automorphism group order:
+			//LG->add_text(2 * lvl + 0, po, text1, 0/*verbose_level*/);
+
+			// set label to be the pt:
+			LG->add_text(2 * lvl + 0, po, text2, 0/*verbose_level*/);
+
+
 			LG->add_node_data1(2 * lvl + 0, po, root[n].pt,
 					0/*verbose_level*/);
 			if (lvl) {
@@ -1412,8 +1426,16 @@ void poset_classification::make_auxiliary_graph(int depth,
 				extension *E = root[n].E + so;
 				len = E->orbit_len;
 				D.integral_division_by_int(go, len, go1, r);
-				go1.print_to_string(text);
-				LG->add_text(2 * lvl + 1, f + so, text, 0/*verbose_level*/);
+
+				go1.print_to_string(text1);
+				sprintf(text2, "$%d_{%s}$", E->pt, text1);
+
+				// set label to be the automorphism group order:
+				//LG->add_text(2 * lvl + 1, f + so, text1, 0/*verbose_level*/);
+				// set label to be the point:
+				LG->add_text(2 * lvl + 1, f + so, text2, 0/*verbose_level*/);
+
+
 				}
 			f += root[n].nb_extensions;
 			}

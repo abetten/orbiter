@@ -160,7 +160,9 @@ void test_action(int n, int *type, int type_len,
 
 	subspace = NEW_int(n * n);
 
-	create_linear_group(S, A, 
+	A = NEW_OBJECT(action);
+
+	A->init_linear_group(S,
 		F, n, 
 		f_projective, f_general, f_affine, 
 		f_semilinear, f_special, 

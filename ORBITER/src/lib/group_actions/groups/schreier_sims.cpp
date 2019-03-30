@@ -458,8 +458,8 @@ void schreier_sims::create_group(int verbose_level)
 							Elt2, verbose_level - 5);
 					}
 				else {
-					b = choose_next_base_point_default_method(
-							GA, Elt2, verbose_level - 5);
+					b = GA->choose_next_base_point_default_method(
+							Elt2, verbose_level - 5);
 					}
 
 				if (f_vv) {

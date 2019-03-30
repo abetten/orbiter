@@ -346,10 +346,12 @@ int main(int argc, const char **argv)
 
 		action *A_restr;
 
-		A_restr = new action;
-		A_restr->induced_action_by_restriction(A2, 
-			FALSE /* f_induce_action */, S, 
-			nb_maximals, Rank_maximals_int, verbose_level);
+		//A_restr = new action;
+		A_restr = A2.create_induced_action_by_restriction(
+			S,
+			nb_maximals, Rank_maximals_int,
+			FALSE /* f_induce_action */,
+			verbose_level);
 		for (i = 0; i < goi; i++) {
 			S->element_unrank_int(i, Elt);
 			order = A->element_order(Elt);
@@ -364,7 +366,7 @@ int main(int argc, const char **argv)
 			}
 	
 		// do not free AG
-		delete A_restr;
+		FREE_OBJECT(A_restr);
 		FREE_int(Elt);
 		FREE_int(Rank_maximals_int);
 		delete [] Rank_maximals;		

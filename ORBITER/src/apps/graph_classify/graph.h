@@ -59,6 +59,8 @@ public:
 	int f_depth;
 	int depth;
 
+	int *S1; // [n2]
+
 
 	int f_tournament;
 	int f_no_superking;
@@ -83,16 +85,21 @@ public:
 	void read_arguments(int argc, const char **argv);
 	void init(int argc, const char **argv);
 	int check_conditions(int len, int *S, int verbose_level);
-	int check_conditions_tournament(int len, int *S, int verbose_level);
-	int check_regularity(int *S, int len, int verbose_level);
+	int check_conditions_tournament(int len, int *S,
+			int verbose_level);
+	int check_regularity(int *S, int len,
+			int verbose_level);
 	int compute_degree_sequence(int *S, int len);
 	int girth_check(int *S, int len, int verbose_level);
-	int girth_test_vertex(int *S, int len, int vertex, int girth, int verbose_level);
+	int girth_test_vertex(int *S, int len,
+			int vertex, int girth, int verbose_level);
 	void get_adjacency(int *S, int len, int verbose_level);
 	void print(ostream &ost, int *S, int len);
 	void print_score_sequences(int level, int verbose_level);
 	void score_sequence(int n, int *set, int sz, int *score, int verbose_level);
-	void draw_graphs(int level, double scale, int xmax_in, int ymax_in, int xmax, int ymax, int f_embedded, int f_sideways, int verbose_level);
+	void draw_graphs(int level, double scale,
+			int xmax_in, int ymax_in, int xmax, int ymax,
+			int f_embedded, int f_sideways, int verbose_level);
 
 };
 

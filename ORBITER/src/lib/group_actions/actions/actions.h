@@ -442,6 +442,15 @@ public:
 		// generator::orbit_element_rank
 
 	// action_init.C:
+
+	/** Create any linear group */
+	void init_linear_group(sims *&S,
+		finite_field *F, int m,
+		int f_projective, int f_general, int f_affine,
+		int f_semilinear, int f_special,
+		vector_ge *&nice_gens,
+		int verbose_level);
+
 	/** Create the projective linear (or semilinear) group PGL (or PGGL)*/
 	void init_projective_group(int n, finite_field *F, 
 		int f_semilinear, int f_basis,
@@ -557,13 +566,19 @@ public:
 		int verbose_level);
 	sims *create_sims_for_centralizer_of_matrix(
 			int *Mtx, int verbose_level);
+	void init_automorphism_group_from_group_table(
+		const char *fname_base,
+		int *Table, int group_order, int *gens, int nb_gens,
+		strong_generators *&Aut_gens,
+		int verbose_level);
 
 	
 	// action_induce.C:
 
 	action *induced_action_on_set_partitions(
-			int universal_set_size, int partition_size,
+			int partition_class_size,
 			int verbose_level);
+
 	/** Create the induced action on lines in PG(n-1,q)
 	 * using an action_on_grassmannian object */
 	void init_action_on_lines(action *A, finite_field *F, 
@@ -635,7 +650,10 @@ public:
 		int pt, int verbose_level);
 	action *restricted_action(int *points, int nb_points, 
 		int verbose_level);
-	void induced_action_by_restriction(action &old_action, 
+	action *create_induced_action_by_restriction(
+			sims *S, int size, int *set, int f_induce,
+			int verbose_level);
+	void induced_action_by_restriction_internal_function(action &old_action,
 		int f_induce_action, sims *old_G, 
 		int nb_points, int *points, int verbose_level);
 		// uses action_by_restriction data type
@@ -688,7 +706,54 @@ public:
 	void base_change_in_place(int size, int *set, int verbose_level);
 	void base_change(action *old_action, 
 		int size, int *set, int verbose_level);
+	void create_orbits_on_subset_using_restricted_action(
+			action *&A_by_restriction,
+			schreier *&Orbits, sims *S,
+			int size, int *set,
+			int verbose_level);
+	void create_orbits_on_sets_using_action_on_sets(
+			action *&A_on_sets,
+			schreier *&Orbits, sims *S,
+			int nb_sets, int set_size, int *sets,
+			int verbose_level);
+	int choose_next_base_point_default_method(
+			int *Elt, int verbose_level);
+	void generators_to_strong_generators(
+		int f_target_go, longinteger_object &target_go,
+		vector_ge *gens, strong_generators *&Strong_gens,
+		int verbose_level);
+	void orbits_on_equations(
+		homogeneous_polynomial_domain *HPD,
+		int *The_equations, int nb_equations, strong_generators *gens,
+		action *&A_on_equations, schreier *&Orb, int verbose_level);
 
+	// action_io.cpp:
+	void read_orbit_rep_and_candidates_from_files_and_process(
+		char *prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		void (*early_test_func_callback)(int *S, int len,
+			int *candidates, int nb_candidates,
+			int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
+		void *early_test_func_callback_data,
+		int *&starter,
+		int &starter_sz,
+		sims *&Stab,
+		strong_generators *&Strong_gens,
+		int *&candidates,
+		int &nb_candidates,
+		int &nb_cases,
+		int verbose_level);
+	void read_orbit_rep_and_candidates_from_files(char *prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		int *&starter,
+		int &starter_sz,
+		sims *&Stab,
+		strong_generators *&Strong_gens,
+		int *&candidates,
+		int &nb_candidates,
+		int &nb_cases,
+		int verbose_level);
 
 	// action_cb.C:
 	int image_of(void *elt, int a);
@@ -823,33 +888,7 @@ public:
 // #############################################################################
 
 
-action *create_automorphism_group_from_group_table(const char *fname_base, 
-	int *Table, int group_order, int *gens, int nb_gens, 
-	strong_generators *&Aut_gens, 
-	int verbose_level);
-void create_linear_group(sims *&S, action *&A, 
-	finite_field *F, int m, 
-	int f_projective, int f_general, int f_affine, 
-	int f_semilinear, int f_special, 
-	vector_ge *&nice_gens,
-	int verbose_level);
-action *create_induced_action_by_restriction(action *A, sims *S, 
-	int size, int *set, int f_induce, int verbose_level);
-action *create_induced_action_on_sets(action *A, sims *S, 
-	int nb_sets, int set_size, int *sets, int f_induce, 
-	int verbose_level);
-void create_orbits_on_subset_using_restricted_action(
-	action *&A_by_restriction, schreier *&Orbits, 
-	action *A, sims *S, int size, int *set, 
-	int verbose_level);
-void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets, 
-	schreier *&Orbits, action *A, sims *S, 
-	int nb_sets, int set_size, int *sets, int verbose_level);
-action *new_action_by_right_multiplication(sims *group_we_act_on, 
-	int f_transfer_ownership, int verbose_level);
 void action_print_symmetry_group_type(std::ostream &ost, symmetry_group_type a);
-int choose_next_base_point_default_method(action *A, int *Elt, 
-	int verbose_level);
 void make_generators_stabilizer_of_three_components(
 	action *A_PGL_n_q, action *A_PGL_k_q, 
 	int k, vector_ge *gens, int verbose_level);
@@ -857,10 +896,6 @@ void make_generators_stabilizer_of_two_components(
 	action *A_PGL_n_q, action *A_PGL_k_q, 
 	int k, vector_ge *gens, int verbose_level);
 // used in semifield
-void generators_to_strong_generators(action *A, 
-	int f_target_go, longinteger_object &target_go, 
-	vector_ge *gens, strong_generators *&Strong_gens, 
-	int verbose_level);
 void compute_generators_GL_n_q(int *&Gens, int &nb_gens, 
 	int &elt_size, int n, finite_field *F,
 	vector_ge *&nice_gens,
@@ -886,41 +921,6 @@ void lift_generators_to_subfield_structure(
 	action *Aq, action *AQ, 
 	strong_generators *&Strong_gens, 
 	int verbose_level);
-// O4_model:
-void O4_isomorphism_2to4_embedded(action *A4, 
-	action *A5, finite_field *Fq, 
-	int f_switch, int *mtx2x2_T, int *mtx2x2_S, int *Elt, 
-	int verbose_level);
-void O5_to_O4(action *A4, action *A5, 
-	finite_field *Fq, 
-	int *mtx4x4, int *mtx5x5, 
-	int verbose_level);
-void O4_to_O5(action *A4, action *A5, 
-	finite_field *Fq, 
-	int *mtx4x4, int *mtx5x5, 
-	int verbose_level);
-void print_4x4_as_2x2(action *A2, 
-	finite_field *Fq, int *mtx4x4);
-
-void projective_space_init_line_action(projective_space *P, 
-	action *A_points, action *&A_on_lines, 
-	int verbose_level);
-void color_distribution_matrix(action *A, 
-	int *Elt, int n, uchar *Adj, int *colors, classify *C, 
-	int *&Mtx, int verbose_level);
-void test_color_distribution(action *A, 
-	vector_ge *gens, int n, uchar *Adj, int *colors, 
-	int verbose_level);
-void color_preserving_subgroup(action *A, 
-	int n, uchar *Adj, int *colors, sims *&Subgroup, 
-	int verbose_level);
-int test_automorphism_group_of_graph_bitvec(action *A, 
-	int n, uchar *Adj, int verbose_level);
-void compute_conjugacy_classes(sims *S, action *&Aconj, 
-	action_by_conjugation *&ABC, schreier *&Sch, 
-	strong_generators *&SG, int &nb_classes, 
-	int *&class_size, int *&class_rep, 
-	int verbose_level);
 int group_ring_element_size(action *A, sims *S);
 void group_ring_element_create(action *A, sims *S, int *&elt);
 void group_ring_element_free(action *A, sims *S, int *elt);
@@ -937,13 +937,7 @@ void perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
 	int degree, int *perm, int offset, 
 	int f_do_it_anyway_even_for_big_degree, 
 	int f_print_cycles_of_length_one, int verbose_level);
-void do_canonical_form(int n, finite_field *F, 
-	int *set, int set_size, int f_semilinear, 
-	const char *fname_base, int verbose_level);
-void create_action_and_compute_orbits_on_equations(
-	action *A, homogeneous_polynomial_domain *HPD, 
-	int *The_equations, int nb_equations, strong_generators *gens, 
-	action *&A_on_equations, schreier *&Orb, int verbose_level);
+
 
 // #############################################################################
 // action_pointer_table.cpp
@@ -1280,6 +1274,8 @@ void wreath_product_group_print_point(action &A,
 // #############################################################################
 // nauty_interface.cpp:
 // #############################################################################
+
+//! Interface to the graph canonization software Nauty
 
 
 class nauty_interface {

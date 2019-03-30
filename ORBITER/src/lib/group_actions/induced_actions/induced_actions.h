@@ -693,7 +693,7 @@ class action_on_set_partitions {
 public:
 	int nb_set_partitions;
 	int universal_set_size;
-	int partition_size;
+	int partition_class_size;
 	int nb_parts;
 	action *A;
 	int *v1;
@@ -703,7 +703,7 @@ public:
 	~action_on_set_partitions();
 	void null();
 	void free();
-	void init(int universal_set_size, int partition_size,
+	void init(int partition_size,
 		action *A,
 		int verbose_level);
 	int compute_image(

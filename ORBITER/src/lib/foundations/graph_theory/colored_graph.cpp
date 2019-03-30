@@ -746,7 +746,7 @@ void colored_graph::init_adjacency_upper_triangle(
 	// do not free bitvec here
 
 	if (f_v) {
-		cout << "colored_graph::init_adjacency_upper_triangle" << endl;
+		cout << "colored_graph::init_adjacency_upper_triangle done" << endl;
 		}
 
 }
