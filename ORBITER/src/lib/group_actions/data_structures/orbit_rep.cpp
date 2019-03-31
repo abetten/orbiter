@@ -8,13 +8,14 @@
 //
 //
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "group_actions.h"
 
 using namespace std;
 
 
 namespace orbiter {
-namespace top_level {
+namespace group_actions {
 
 orbit_rep::orbit_rep()
 {

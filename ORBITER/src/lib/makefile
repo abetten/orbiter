@@ -169,6 +169,7 @@ MODULES= \
 		group_actions/data_structures/data_input_stream.o \
 		group_actions/data_structures/group.o \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
+		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
 		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
@@ -222,7 +223,6 @@ MODULES= \
 		classification/classify/flag_orbit_node.o \
 		classification/classify/flag_orbits.o \
 		classification/classify/orbit_node.o \
-		classification/other/snakes_and_ladders_global.o \
 		classification/poset_classification/extension.o \
 		classification/poset_classification/orbit_based_testing.o \
 		classification/poset_classification/poset.o \
@@ -325,7 +325,6 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
-		top_level/orbits/orbit_rep.o \
 		top_level/orbits/subspace_orbits.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o

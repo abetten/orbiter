@@ -16,6 +16,7 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
+#if 0
 void isomorph_print_set(ostream &ost, int len, int *S, void *data)
 {
 	//isomorph *G = (isomorph *) data;
@@ -111,7 +112,7 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 		}
 	return Stab;
 }
-
+#endif
 
 
 }}

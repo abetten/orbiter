@@ -32,7 +32,6 @@ class choose_points_or_lines;
 class subspace_orbits;
 	// added March 29, 2012 (started Jan 25, 2010)
 struct factor_group;
-class orbit_rep;
 class orbit_of_sets;
 	// added March 27, 2013
 class singer_cycle;
