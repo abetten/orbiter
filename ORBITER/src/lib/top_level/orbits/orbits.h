@@ -273,54 +273,6 @@ public:
 int orbit_of_subspaces_compare_func(void *a, void *b, void *data);
 
 // #############################################################################
-// orbit_rep.C
-// #############################################################################
-
-
-//! to hold one orbit after reading files from Orbiters poset classification
-
-
-class orbit_rep {
-public:
-	char prefix[1000];
-	action *A;
-	void (*early_test_func_callback)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
-		void *data, int verbose_level);
-	void *early_test_func_callback_data;
-	
-	int level;
-	int orbit_at_level;
-	int nb_cases;
-
-	int *rep;
-
-	sims *Stab;
-	strong_generators *Strong_gens;
-
-	longinteger_object *stab_go;
-	int *candidates;
-	int nb_candidates;
-
-
-	orbit_rep();
-	~orbit_rep();
-	void null();
-	void freeself();
-	void init_from_file(action *A, char *prefix, 
-		int level, int orbit_at_level, int level_of_candidates_file, 
-		void (*early_test_func_callback)(int *S, int len, 
-			int *candidates, int nb_candidates, 
-			int *good_candidates, int &nb_good_candidates, 
-			void *data, int verbose_level), 
-		void *early_test_func_callback_data, 
-		int verbose_level);
-	
-};
-
-
-// #############################################################################
 // subspace_orbits.C
 // #############################################################################
 

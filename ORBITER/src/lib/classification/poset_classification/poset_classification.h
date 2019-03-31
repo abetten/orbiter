@@ -56,6 +56,10 @@ public:
 	~extension();
 };
 
+
+void print_extension_type(std::ostream &ost, int t);
+
+
 // #############################################################################
 // orbit_based_testing.cpp
 // #############################################################################
@@ -858,6 +862,8 @@ public:
 };
 
 
+const char *trace_result_as_text(trace_result r);
+int trace_result_is_no_result(trace_result r);
 
 
 

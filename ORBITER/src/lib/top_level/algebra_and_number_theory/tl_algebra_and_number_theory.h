@@ -27,15 +27,14 @@ void presentation(action *A, sims *S, int goi, vector_ge *gens,
 // extra.C:
 // #############################################################################
 
-
+#if 0
 void isomorph_print_set(std::ostream &ost, int len, int *S, void *data);
-void print_from_to(int d, int i, int j, int *v1, int *v2);
 sims *create_sims_for_stabilizer(action *A, 
 	int *set, int set_size, int verbose_level);
 sims *create_sims_for_stabilizer_with_input_group(action *A, 
 	action *A0, strong_generators *Strong_gens, 
 	int *set, int set_size, int verbose_level);
-
+#endif
 
 // #############################################################################
 // factor_group.C:
@@ -62,12 +61,6 @@ void create_factor_group(action *A, sims *S, int goi,
 	int size_subgroup, int *subgroup, factor_group *F, int verbose_level);
 
 
-// #############################################################################
-// top_level_global.C
-// #############################################################################
-
-
-int callback_partial_ovoid_test(int len, int *S, void *data, int verbose_level);
 
 // #############################################################################
 // young.C

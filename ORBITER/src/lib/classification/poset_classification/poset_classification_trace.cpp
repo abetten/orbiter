@@ -754,5 +754,50 @@ int poset_classification::find_node_for_subspace_by_rank(
 	return node;
 }
 
+// #############################################################################
+// global:
+// #############################################################################
+
+
+
+const char *trace_result_as_text(trace_result r)
+{
+	if (r == found_automorphism) {
+		return "found_automorphism";
+		}
+	else if (r == not_canonical) {
+		return "not_canonical";
+		}
+	else if (r == no_result_extension_not_found) {
+		return "no_result_extension_not_found";
+		}
+	else if (r == no_result_fusion_node_installed) {
+		return "no_result_fusion_node_installed";
+		}
+	else if (r == no_result_fusion_node_already_installed) {
+		return "no_result_fusion_node_already_installed";
+		}
+	else {
+		return "unkown trace result";
+		}
+}
+
+int trace_result_is_no_result(trace_result r)
+{
+	if (r == no_result_extension_not_found ||
+		r == no_result_fusion_node_installed ||
+		r == no_result_fusion_node_already_installed) {
+		return TRUE;
+		}
+	else {
+		return FALSE;
+		}
+}
+
+
+
+
+
+
 }}
 

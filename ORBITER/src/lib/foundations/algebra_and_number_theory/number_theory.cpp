@@ -821,7 +821,9 @@ int gcd_with_key_in_latex(ostream &ost,
 					<< " \\cdot " << b1 << " + " << r1 << "\\\\" << endl;
 		}
 		if (f_v) {
-			cout << "gcd_with_key_in_latex  a1=" << a1 << " b1=" << b1 << " r1=" << r1 << " q1=" << q1
+			cout << "gcd_with_key_in_latex "
+					"a1=" << a1 << " b1=" << b1
+					<< " r1=" << r1 << " q1=" << q1
 					<< endl;
 			}
 		if (r1 == 0) {

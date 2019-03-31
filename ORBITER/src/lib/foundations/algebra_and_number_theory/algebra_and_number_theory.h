@@ -1016,17 +1016,6 @@ void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
 	longinteger_object &a);
 int PG_element_modified_is_in_subspace(int n, int m, int *v);
 void test_PG(int n, int q);
-#if 0
-void line_through_two_points(finite_field &GFq, int len,
-	int pt1, int pt2, int *line);
-int consecutive_ones_property_in_affine_plane(std::ostream &ost,
-	finite_field &GFq, int len, int *S);
-int line_intersection_with_oval(finite_field &GFq,
-	int *f_oval_point, int line_rk,
-	int verbose_level);
-int get_base_line(finite_field &GFq, int plane1, int plane2,
-	int verbose_level);
-#endif
 void create_Fisher_BLT_set(int *Fisher_BLT, int q,
 	const char *poly_q, const char *poly_Q, int verbose_level);
 void create_Linear_BLT_set(int *BLT, int q,
