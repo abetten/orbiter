@@ -888,6 +888,76 @@ void strong_generators::init_subgroup(action *A,
 		}
 }
 
+void strong_generators::init_subgroup_by_generators(action *A,
+	int nb_subgroup_gens, const char **subgroup_gens,
+	const char *subgroup_order_text,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_object target_go;
+
+	if (f_v) {
+		cout << "strong_generators::init_subgroup_by_generators" << endl;
+		}
+
+
+	strong_generators::A = A;
+
+	vector_ge *my_gens;
+
+	my_gens = NEW_OBJECT(vector_ge);
+	my_gens->init(A);
+	my_gens->allocate(nb_subgroup_gens);
+	for (int h = 0; h < nb_subgroup_gens; h++) {
+		A->make_element_from_string(my_gens->ith(h),
+				subgroup_gens[h], verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "strong_generators::init_subgroup_by_generators "
+				"chosen generators:" << endl;
+		my_gens->print_quick(cout);
+		}
+
+	target_go.create_from_base_10_string(subgroup_order_text);
+
+
+	strong_generators *SG;
+
+	SG = NEW_OBJECT(strong_generators);
+
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		my_gens, SG,
+		0 /*verbose_level*/);
+
+	if (FALSE) {
+		cout << "strong_generators::init_subgroup_by_generators "
+				"strong generators are:" << endl;
+		SG->print_generators();
+		}
+
+	FREE_OBJECT(my_gens);
+
+	if (gens) {
+		FREE_OBJECT(gens);
+		}
+	gens = SG->gens;
+	SG->gens = NULL;
+	if (tl) {
+		FREE_int(tl);
+		}
+	tl = SG->tl;
+	SG->tl = NULL;
+
+	FREE_OBJECT(SG);
+
+	if (f_v) {
+		cout << "strong_generators::init_subgroup_by_generators done" << endl;
+		}
+}
+
 
 sims *strong_generators::create_sims(int verbose_level)
 {

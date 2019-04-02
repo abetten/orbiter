@@ -148,6 +148,14 @@ void linear_group::init(
 			description->subgroup_label,
 			verbose_level);
 		}
+	else if (description->f_subgroup_by_generators) {
+		init_subgroup_by_generators(prefix,
+			description->subgroup_label,
+			description->subgroup_order_text,
+			description->nb_subgroup_generators,
+			description->subgroup_generators_as_string,
+			verbose_level);
+	}
 	else {
 		A2 = A_linear;
 		vector_space_dimension = n;
@@ -680,10 +688,6 @@ void linear_group::init_subgroup_from_file(char *prefix,
 		cout << "label=" << subgroup_label << endl;
 		}
 
-	if (f_v) {
-		cout << "linear_group::init_subgroup_from_file "
-				"before field_reduction" << endl;
-		}
 
 	vector_space_dimension = n;
 	q = input_q;
@@ -716,6 +720,54 @@ void linear_group::init_subgroup_from_file(char *prefix,
 	if (f_v) {
 		cout << "linear_group::init_subgroup_from_file done" << endl;
 		}
+}
+
+void linear_group::init_subgroup_by_generators(char *prefix,
+	const char *subgroup_label,
+	const char *subgroup_order_text,
+	int nb_subgroup_generators,
+	const char **subgroup_generators_as_string,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "linear_group::init_subgroup_by_generators" << endl;
+		cout << "label=" << subgroup_label << endl;
+		}
+
+	Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "linear_group::init_subgroup_by_generators before "
+				"Strong_gens->init_subgroup_by_generators" << endl;
+		}
+
+	Strong_gens->init_subgroup_by_generators(A_linear,
+			nb_subgroup_generators, subgroup_generators_as_string,
+			subgroup_order_text,
+			verbose_level);
+
+	if (f_v) {
+		cout << "linear_group::init_subgroup_by_generators after "
+				"Strong_gens->init_subgroup_by_generators" << endl;
+		}
+
+	f_has_strong_generators = TRUE;
+
+	A2 = A_linear;
+
+	sprintf(prefix, "Subgroup_%s_%s",
+			subgroup_label, subgroup_order_text);
+	if (f_v) {
+		cout << "linear_group::init_subgroup_by_generators "
+				"created group " << prefix << endl;
+		}
+
+	if (f_v) {
+		cout << "linear_group::init_subgroup_by_generators done" << endl;
+		}
+
 }
 
 

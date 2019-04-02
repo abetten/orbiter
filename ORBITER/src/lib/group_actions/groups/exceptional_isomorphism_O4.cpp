@@ -22,7 +22,12 @@ exceptional_isomorphism_O4::exceptional_isomorphism_O4()
 	A2 = NULL;
 	A4 = NULL;
 	A5 = NULL;
-	//null();
+
+	E5a = NULL;
+	E4a = NULL;
+	E2a = NULL;
+	E2b = NULL;
+//null();
 }
 
 exceptional_isomorphism_O4::~exceptional_isomorphism_O4()
@@ -36,6 +41,11 @@ void exceptional_isomorphism_O4::null()
 	A2 = NULL;
 	A4 = NULL;
 	A5 = NULL;
+
+	E5a = NULL;
+	E4a = NULL;
+	E2a = NULL;
+	E2b = NULL;
 }
 
 void exceptional_isomorphism_O4::freeself()
@@ -62,6 +72,11 @@ void exceptional_isomorphism_O4::init(finite_field *Fq,
 	exceptional_isomorphism_O4::A2 = A2;
 	exceptional_isomorphism_O4::A4 = A4;
 	exceptional_isomorphism_O4::A5 = A5;
+
+	E5a = NEW_int(A5->elt_size_in_int);
+	E4a = NEW_int(A4->elt_size_in_int);
+	E2a = NEW_int(A2->elt_size_in_int);
+	E2b = NEW_int(A2->elt_size_in_int);
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::init done" << endl;
 	}
@@ -146,39 +161,29 @@ void exceptional_isomorphism_O4::apply_5_to_4(
 }
 
 void exceptional_isomorphism_O4::apply_4_to_5(
-	int *mtx4x4, int *mtx5x5, int verbose_level)
+	int *E4, int *E5, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ord;
 	int i, j;
 	int value;
 	int sqrt_value;
 	int discrete_log;
-	int *A4_Elt1;
-	int *A5_Elt1;
 	int gram[16];
-	int mtx_tr[16];
+	int M5[26];
+	int M4[16];
+	int M4t[16];
 	int mtx_tmp1[16];
 	int mtx_tmp2[16];
-	int mtx5[25];
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_4_to_5" << endl;
 		}
-	A4_Elt1 = NEW_int(A4->elt_size_in_int);
-	A5_Elt1 = NEW_int(A5->elt_size_in_int);
-
-	A4->make_element(A4_Elt1, mtx4x4, 0);
 	if (f_v) {
-		cout << "A4_Elt1:" << endl;
-		A4->element_print_quick(A4_Elt1, cout);
-		}
-	ord = A4->element_order(A4_Elt1);
-	if (f_v) {
-		cout << "A4_Elt1 has order " << ord << endl;
+		cout << "E4:" << endl;
+		A4->element_print_quick(E4, cout);
 		}
 
-
+	int_vec_copy(E4, M4, 16);
 	int_vec_zero(gram, 16);
 	gram[0 * 4 + 1] = 1;
 	gram[1 * 4 + 0] = 1;
@@ -186,20 +191,20 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	gram[3 * 4 + 2] = 1;
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			mtx_tr[i * 4 + j] = mtx4x4[j * 4 + i];
+			M4t[i * 4 + j] = M4[j * 4 + i];
 			}
 		}
 	if (f_v) {
 		cout << "Gram matrix:" << endl;
 		print_integer_matrix_width(cout, gram, 4, 4, 4, 3);
-		cout << "mtx4x4:" << endl;
-		print_integer_matrix_width(cout, mtx4x4, 4, 4, 4, 3);
-		cout << "mtx_tr:" << endl;
-		print_integer_matrix_width(cout, mtx_tr, 4, 4, 4, 3);
+		cout << "M4:" << endl;
+		print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
+		cout << "M4t:" << endl;
+		print_integer_matrix_width(cout, M4t, 4, 4, 4, 3);
 		}
-	Fq->mult_matrix_matrix(mtx4x4, gram, mtx_tmp1, 4, 4, 4,
+	Fq->mult_matrix_matrix(M4, gram, mtx_tmp1, 4, 4, 4,
 			0 /* verbose_level */);
-	Fq->mult_matrix_matrix(mtx_tmp1, mtx_tr, mtx_tmp2, 4, 4, 4,
+	Fq->mult_matrix_matrix(mtx_tmp1, M4t, mtx_tmp2, 4, 4, 4,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "transformed Gram matrix:" << endl;
@@ -216,7 +221,8 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 			continue;
 			}
 		if (value != mtx_tmp2[i]) {
-			cout << "the transformed Gram matrix has several values" << endl;
+			cout << "the transformed Gram matrix "
+					"has several values" << endl;
 			exit(1);
 			}
 		value = mtx_tmp2[i];
@@ -237,34 +243,94 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	sqrt_value = Fq->alpha_power(discrete_log >> 1);
 
 
-	for (i = 0 ; i < 25; i++) {
-		mtx5[i] = 0;
-		}
-	mtx5[0] = sqrt_value;
+	int_vec_zero(M5, 26); // 26 in case we are semilinear
+
+	M5[0] = sqrt_value;
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			mtx5[(i + 1) * 5 + j + 1] = mtx4x4[i * 4 + j];
+			M5[(i + 1) * 5 + j + 1] = M4[i * 4 + j];
 			}
 		}
 
-
-	A5->make_element(A5_Elt1, mtx5, 0);
+	A5->make_element(E5, M5, 0);
 	if (f_v) {
-		cout << "A5_Elt1:" << endl;
-		A5->element_print_quick(A5_Elt1, cout);
-		}
-	ord = A5->element_order_verbose(A5_Elt1, 0);
-	if (f_v) {
-		cout << "A5_Elt1 has order " << ord << endl;
-		}
-	for (i = 0; i < 25; i++) {
-		mtx5x5[i] = A5_Elt1[i];
-		}
-
-	FREE_int(A4_Elt1);
-	FREE_int(A5_Elt1);
+		cout << "E5:" << endl;
+		A5->element_print_quick(E5, cout);
+	}
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_4_to_5 done" << endl;
+		}
+}
+
+void exceptional_isomorphism_O4::apply_4_to_2(
+	int *E4, int &f_switch, int *E2_a, int *E2_b,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Data[16];
+	int M2a[4];
+	int M2b[4];
+
+	if (f_v) {
+		cout << "exceptional_isomorphism_O4::apply_4_to_2" << endl;
+		}
+	if (f_v) {
+		cout << "E4:" << endl;
+		A4->element_print_quick(E4, cout);
+		}
+	int_vec_copy(E4, Data, 16);
+	Fq->PG_element_normalize_from_front(Data, 1, 16);
+	if (f_v) {
+		cout << "as 4 x 4:" << endl;
+		print_integer_matrix_width(cout, Data, 4, 4, 4, 3);
+		}
+	Fq->O4_isomorphism_4to2(M2a, M2b,
+			f_switch, Data, 0 /*verbose_level*/);
+	A2->make_element(E2_a, M2a, 0);
+	A2->make_element(E2_b, M2b, 0);
+	if (f_v) {
+		cout << "as 2 x 2:" << endl;
+		cout << "f_switch=" << f_switch << endl;
+		cout << "E2_a=" << endl;
+		A2->element_print_quick(E2_a, cout);
+		cout << "E2_b=" << endl;
+		A2->element_print_quick(E2_b, cout);
+		}
+	if (f_v) {
+		cout << "exceptional_isomorphism_O4::apply_4_to_2 done" << endl;
+		}
+}
+
+void exceptional_isomorphism_O4::apply_2_to_4(
+	int &f_switch, int *E2_a, int *E2_b, int *E4,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Data[16];
+
+	if (f_v) {
+		cout << "exceptional_isomorphism_O4::apply_2_to_4" << endl;
+		}
+	if (f_v) {
+		cout << "as 2 x 2:" << endl;
+		cout << "f_switch=" << f_switch << endl;
+		cout << "E2_a=" << endl;
+		A2->element_print_quick(E2_a, cout);
+		cout << "E2_b=" << endl;
+		A2->element_print_quick(E2_b, cout);
+		}
+
+	Fq->O4_isomorphism_2to4(
+			E2_a, E2_b, f_switch, Data);
+
+	A4->make_element(E4, Data, 0);
+	if (f_v) {
+		cout << "E4:" << endl;
+		A4->element_print_quick(E4, cout);
+		}
+
+	if (f_v) {
+		cout << "exceptional_isomorphism_O4::apply_2_to_4 done" << endl;
 		}
 }
 

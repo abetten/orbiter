@@ -52,6 +52,11 @@ void linear_group_description::null()
 
 	f_on_k_subspaces = FALSE;
 	on_k_subspaces_k = 0;
+
+	f_subgroup_by_generators = FALSE;
+	subgroup_order_text = NULL;
+	nb_subgroup_generators = 0;
+	subgroup_generators_as_string = NULL;
 }
 
 void linear_group_description::freeself()
@@ -327,6 +332,22 @@ int linear_group_description::read_arguments(
 			f_orthogonal_group = TRUE;
 			orthogonal_group_epsilon = -1;
 			cout << "-O-" << endl;
+			}
+		else if (strcmp(argv[i], "-subgroup_by_generators") == 0) {
+			f_subgroup_by_generators = TRUE;
+			subgroup_label = argv[++i];
+			subgroup_order_text = argv[++i];
+			nb_subgroup_generators = atoi(argv[++i]);
+			subgroup_generators_as_string = (const char **) NEW_pchar(nb_subgroup_generators);
+			for (int h = 0; h < nb_subgroup_generators; h++) {
+				subgroup_generators_as_string[h] = argv[++i];
+			}
+			cout << "-subgroup_by_generators " << subgroup_label
+					<< " " << nb_subgroup_generators;
+			for (int h = 0; h < nb_subgroup_generators; h++) {
+				cout << " " << subgroup_generators_as_string[h];
+			}
+			cout << endl;
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

@@ -10,7 +10,7 @@ using namespace std;
 
 using namespace orbiter;
 
-void make_subset_lattice(layered_graph *&LG, int n, int f_tree,  
+void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 	int f_depth_first, int f_breadth_first, int verbose_level);
 
 
@@ -23,6 +23,8 @@ int main(int argc, char **argv)
 	int f_tree = FALSE;
 	int f_depth_first = FALSE;
 	int f_breadth_first = FALSE;
+	int f_depth = FALSE;
+	int depth = 0;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -46,10 +48,19 @@ int main(int argc, char **argv)
 			f_tree = TRUE;
 			cout << "-tree " << endl;
 			}
+		else if (strcmp(argv[i], "-depth") == 0) {
+			f_depth = TRUE;
+			depth = atoi(argv[++i]);
+			cout << "-depth " << depth << endl;
+			}
 		}
 
 	if (!f_n) {
 		cout << "Please use option -n <n>" << endl;
+		exit(1);
+		}
+	if (!f_depth) {
+		cout << "Please use option -depth <depth>" << endl;
 		exit(1);
 		}
 
@@ -62,7 +73,7 @@ int main(int argc, char **argv)
 		}
 	sprintf(fname + strlen(fname), ".layered_graph");
 	
-	make_subset_lattice(LG, n, f_tree, 
+	make_subset_lattice(LG, n, depth, f_tree,
 		f_depth_first, f_breadth_first, verbose_level);
 	
 	LG->write_file(fname, 0 /*verbose_level*/);
@@ -70,7 +81,7 @@ int main(int argc, char **argv)
 	delete LG;
 }
 
-void make_subset_lattice(layered_graph *&LG, int n, int f_tree,  
+void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 	int f_depth_first, int f_breadth_first, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -98,7 +109,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int f_tree,
 		cout << "generator::make_graph before LG->init" << endl;
 		}
 	LG->add_data1(0, 0/*verbose_level*/);
-	LG->init(nb_layers, Nb, "", verbose_level);
+	LG->init(depth + 1 /*nb_layers*/, Nb, "", verbose_level);
 	if (f_vv) {
 		cout << "generator::make_graph after LG->init" << endl;
 		}
@@ -108,7 +119,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int f_tree,
 		}
 
 	// create vertex labels:
-	for (k = 0; k <= n; k++) {
+	for (k = 0; k <= depth; k++) {
 		for (r = 0; r < Nb[k]; r++) {
 			unrank_k_subset(r, set1, n, k);
 			LG->add_node_data1(k, r, set1[k - 1], 0/*verbose_level*/);
@@ -158,7 +169,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int f_tree,
 		}
 
 	// create edges:
-	for (k = 1; k <= n; k++) {
+	for (k = 1; k <= depth; k++) {
 		for (r = 0; r < Nb[k]; r++) {
 			unrank_k_subset(r, set1, n, k);
 
