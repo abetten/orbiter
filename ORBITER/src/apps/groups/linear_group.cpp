@@ -40,6 +40,9 @@ int main(int argc, const char **argv)
 	int orbits_on_subsets_size = 0;
 	int f_draw_poset = FALSE;
 	int f_classes = FALSE;
+	int f_normalizer = FALSE;
+	int f_test_if_geometric = FALSE;
+	int test_if_geometric_depth = 0;
 
 
 	int i;
@@ -66,6 +69,11 @@ int main(int argc, const char **argv)
 			f_orbits_on_points = TRUE;
 			cout << "-orbits_on_points" << endl;
 			}
+		else if (strcmp(argv[i], "-test_if_geometric") == 0) {
+			f_test_if_geometric = TRUE;
+			test_if_geometric_depth = atoi(argv[++i]);
+			cout << "-test_if_geometric" << endl;
+			}
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset" << endl;
@@ -73,6 +81,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-classes") == 0) {
 			f_classes = TRUE;
 			cout << "-classes" << endl;
+			}
+		else if (strcmp(argv[i], "-normalizer") == 0) {
+			f_normalizer = TRUE;
+			cout << "-normalizer" << endl;
 			}
 	}
 
@@ -157,6 +169,41 @@ int main(int argc, const char **argv)
 		A->conjugacy_classes_and_normalizers(verbose_level);
 	}
 
+	if (f_normalizer) {
+		char fname_magma_prefix[1000];
+		sims *G;
+		sims *H;
+		strong_generators *gens_N;
+		longinteger_object N_order;
+
+
+		sprintf(fname_magma_prefix, "%s_normalizer", LG->prefix);
+
+		G = LG->initial_strong_gens->create_sims(verbose_level);
+		H = LG->Strong_gens->create_sims(verbose_level);
+
+		cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_int() << endl;
+		cout << "before A->normalizer_using_MAGMA" << endl;
+		A->normalizer_using_MAGMA(fname_magma_prefix,
+				G, H, gens_N, verbose_level);
+
+		cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_int() << endl;
+		gens_N->group_order(N_order);
+		cout << "group order N = " << N_order << endl;
+		cout << "Strong generators for the normalizer of H are:" << endl;
+		gens_N->print_generators_tex(cout);
+		cout << "Strong generators for the normalizer of H as permutations are:" << endl;
+		gens_N->print_generators_as_permutations();
+
+		sims *N;
+
+		N = gens_N->create_sims(verbose_level);
+		cout << "The elements of N are:" << endl;
+		N->print_all_group_elements();
+	}
+
 	if (f_orbits_on_points) {
 		cout << "computing orbits on points:" << endl;
 		//A->all_point_orbits(*Sch, verbose_level);
@@ -218,9 +265,11 @@ int main(int argc, const char **argv)
 		PC = Poset->orbits_on_k_sets_compute(
 				orbits_on_subsets_size, verbose_level);
 
-		int depth;
+		if (f_test_if_geometric) {
+			int depth = test_if_geometric_depth;
 
-		for (depth = 0; depth <= orbits_on_subsets_size; depth++) {
+			//for (depth = 0; depth <= orbits_on_subsets_size; depth++) {
+
 			cout << "Orbits on subsets of size " << depth << ":" << endl;
 			PC->list_all_orbits_at_level(depth,
 					FALSE /* f_has_print_function */,
@@ -312,8 +361,10 @@ int main(int argc, const char **argv)
 				FREE_int(Orbit1);
 				FREE_int(Orbit2);
 
-			}
-		}
+			} // if nb_orbits == 2
+		} // if (f_test_if_geometric)
+
+
 		if (f_draw_poset) {
 			{
 			char fname_poset[1000];

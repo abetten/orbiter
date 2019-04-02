@@ -306,6 +306,8 @@ public:
 	void make_element_from_base_image(int *Elt, int *data, 
 		int verbose_level);
 	void make_element_2x2(int *Elt, int a0, int a1, int a2, int a3);
+	void make_element_from_string(int *Elt,
+			const char *data_string, int verbose_level);
 	void make_element(int *Elt, int *data, int verbose_level);
 	void build_up_automorphism_group_from_aut_data(int nb_auts, 
 		int *aut_data, 

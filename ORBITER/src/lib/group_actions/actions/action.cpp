@@ -1801,6 +1801,39 @@ void action::make_element_2x2(int *Elt, int a0, int a1, int a2, int a3)
 	make_element(Elt, data, 0);
 }
 
+void action::make_element_from_string(int *Elt,
+		const char *data_string, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::make_element_from_string" << endl;
+		}
+	int *data;
+	int data_len;
+
+	int_vec_scan(data_string, data, data_len);
+
+	if (f_v) {
+		cout << "action::make_element_from_string data = ";
+		int_vec_print(cout, data, data_len);
+		cout << endl;
+		}
+
+	make_element(Elt, data, verbose_level);
+
+	FREE_int(data);
+
+	if (f_v) {
+		cout << "action::make_element_from_string Elt = " << endl;
+		element_print_quick(Elt, cout);
+		}
+
+	if (f_v) {
+		cout << "action::make_element_from_string done" << endl;
+		}
+}
+
 void action::make_element(int *Elt, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

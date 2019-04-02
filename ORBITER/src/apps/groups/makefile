@@ -57,6 +57,7 @@ all:
 not_cuda_all:  \
 	action_on_set_partitions.out \
 	direct_product.out \
+	exceptional_isomorphism_O4_main.out \
 	linear_group.out \
 	orthogonal_group.out \
 	wreath_product.out
@@ -68,6 +69,10 @@ action_on_set_partitions.out:  action_on_set_partitions.o;
 
 direct_product.out:  direct_product.o;
 	$(DISCRETA_CPP)  direct_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+exceptional_isomorphism_O4_main.out:  exceptional_isomorphism_O4_main.o;
+	$(DISCRETA_CPP)  exceptional_isomorphism_O4_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 linear_group.out:  linear_group.o;

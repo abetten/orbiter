@@ -94,7 +94,7 @@ int kramer_mesner_test_surface(int len, int *S, void *data, int verbose_level);
 // #############################################################################
 
 
-//! Schreier tree for action on homogeneous equations
+//! orbit of homogeneous equations using a Schreier tree
 
 
 class orbit_of_equations {
@@ -151,7 +151,7 @@ int orbit_of_equations_compare_func(void *a, void *b, void *data);
 
 
 
-//! Schreier tree for computing the orbits on subsets
+//! orbit of sets using a Schreier tree
 
 
 
@@ -193,7 +193,7 @@ int orbit_of_sets_compare_func(void *a, void *b, void *data);
 
 
 
-//! Schreier tree for action on subspaces
+//! orbit of subspaces using a Schreier tree
 
 
 
@@ -276,8 +276,7 @@ int orbit_of_subspaces_compare_func(void *a, void *b, void *data);
 // subspace_orbits.C
 // #############################################################################
 
-//! poset classification for orbits on subspaces
-
+//! poset classification for the orbits of a group acting on the subspace lattice
 
 
 class subspace_orbits {

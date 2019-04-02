@@ -90,9 +90,12 @@ finite_field::~finite_field()
 void finite_field::print_call_stats(ostream &ost)
 {
 	cout << "finite_field::print_call_stats" << endl;
-	cout << "nb_calls_to_mult_matrix_matrix=" << nb_calls_to_mult_matrix_matrix << endl;
-	cout << "nb_calls_to_PG_element_rank_modified=" << nb_calls_to_PG_element_rank_modified << endl;
-	cout << "nb_calls_to_PG_element_unrank_modified=" << nb_calls_to_PG_element_unrank_modified << endl;
+	cout << "nb_calls_to_mult_matrix_matrix="
+			<< nb_calls_to_mult_matrix_matrix << endl;
+	cout << "nb_calls_to_PG_element_rank_modified="
+			<< nb_calls_to_PG_element_rank_modified << endl;
+	cout << "nb_calls_to_PG_element_unrank_modified="
+			<< nb_calls_to_PG_element_unrank_modified << endl;
 }
 
 void finite_field::init(int q)
@@ -548,13 +551,17 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 	int i, a;
 	
 	if (f_v) {
-		cout << "create_alpha_table_prime_field, "
+		cout << "finite_field::create_alpha_table_prime_field, "
 				"q=" << q << " p=" << p << " e=" << e << endl;
 		}
 	alpha = orbiter::foundations::primitive_root(p, f_v);
 	if (f_v) {
 		cout << "primitive element is alpha=" << alpha << endl;
 		}
+	for (i = 0; i < p; i++) {
+		log_alpha_table[i] = -1;
+		alpha_power_table[i] = -1;
+	}
 	log_alpha_table[0] = -1;
 	a = 1;
 	for (i = 0; i < p; i++) {
@@ -563,7 +570,9 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 					"a = " << a << endl;
 			}
 		alpha_power_table[i] = a;
-		log_alpha_table[a] = i;
+		if (log_alpha_table[a] == -1) {
+			log_alpha_table[a] = i;
+		}
 
 		if (f_vv) {
 			cout << "alpha_power_table[" << i << "]=" << a << endl;
@@ -572,6 +581,15 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 		a *= alpha;
 		a %= p;
 		}
+	if (f_v) {
+		cout << "finite_field::create_alpha_table_prime_field "
+				"table, p=" << p << endl;
+		cout << "i : alpha_power_table[i] : log_alpha_table[i]" << endl;
+		for (i = 0; i < p; i++) {
+			cout << i << " : " << alpha_power_table[i] << " : "
+					<< log_alpha_table[i] << endl;
+		}
+	}
 }
 
 void finite_field::create_tables_prime_field(int verbose_level)

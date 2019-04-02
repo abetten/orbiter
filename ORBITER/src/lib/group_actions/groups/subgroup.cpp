@@ -72,7 +72,8 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 	subgroup::SG = SG;
 	group_order = SG->group_order_as_int();
 	if (f_v) {
-		cout << "subgroup::init_from_sims group_order=" << group_order << endl;
+		cout << "subgroup::init_from_sims "
+				"group_order=" << group_order << endl;
 	}
 	Elt = NEW_int(A->elt_size_in_int);
 	Elements = NEW_int(group_order);
@@ -88,7 +89,8 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 	}
 }
 
-void subgroup::init(int *Elements, int group_order, int *gens, int nb_gens)
+void subgroup::init(int *Elements,
+		int group_order, int *gens, int nb_gens)
 {
 	subgroup::Elements = NEW_int(group_order);
 	subgroup::gens = NEW_int(nb_gens);

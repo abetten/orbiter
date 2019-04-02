@@ -107,6 +107,11 @@ public:
 	action *A4;
 	action *A5;
 
+	int *E5a;
+	int *E4a;
+	int *E2a;
+	int *E2b;
+
 	exceptional_isomorphism_O4();
 	~exceptional_isomorphism_O4();
 	void null();
@@ -120,7 +125,13 @@ public:
 	void apply_5_to_4(
 		int *mtx4x4, int *mtx5x5, int verbose_level);
 	void apply_4_to_5(
-		int *mtx4x4, int *mtx5x5, int verbose_level);
+		int *E4, int *E5, int verbose_level);
+	void apply_4_to_2(
+		int *E4, int &f_switch, int *E2_a, int *E2_b,
+		int verbose_level);
+	void apply_2_to_4(
+		int &f_switch, int *E2_a, int *E2_b, int *E4,
+		int verbose_level);
 	void print_as_2x2(int *mtx4x4);
 };
 
@@ -179,6 +190,12 @@ public:
 	void init_subgroup_from_file(char *prefix, 
 		const char *subgroup_fname, const char *subgroup_label, 
 		int verbose_level);
+	void init_subgroup_by_generators(char *prefix,
+		const char *subgroup_label,
+		const char *subgroup_order_text,
+		int nb_subgroup_generators,
+		const char **subgroup_generators_as_string,
+		int verbose_level);
 };
 
 
@@ -224,6 +241,11 @@ public:
 
 	int f_on_k_subspaces;
 	int on_k_subspaces_k;
+
+	int f_subgroup_by_generators;
+	const char *subgroup_order_text;
+	int nb_subgroup_generators;
+	const char **subgroup_generators_as_string;
 
 
 	linear_group_description();
@@ -1258,6 +1280,10 @@ public:
 		int nb_subgroup_gens, 
 		const char *subgroup_order_text, 
 		sims *S, 
+		int verbose_level);
+	void init_subgroup_by_generators(action *A,
+		int nb_subgroup_gens, const char **subgroup_gens,
+		const char *subgroup_order_text,
 		int verbose_level);
 	sims *create_sims(int verbose_level);
 	sims *create_sims_in_different_action(action *A_given, 
