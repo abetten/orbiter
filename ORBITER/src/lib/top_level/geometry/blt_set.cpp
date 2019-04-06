@@ -18,49 +18,20 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
-void blt_set::read_arguments(int argc, const char **argv)
-{
-	int i;
-		
-	
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-schreier") == 0) {
-			f_override_schreier_depth = TRUE;
-			override_schreier_depth = atoi(argv[++i]);
-			cout << "-schreier " << override_schreier_depth << endl;
-			}
-		else if (strcmp(argv[i], "-n") == 0) {
-			f_override_n = TRUE;
-			override_n = atoi(argv[++i]);
-			cout << "-override_n " << override_n << endl;
-			}
-		else if (strcmp(argv[i], "-epsilon") == 0) {
-			f_override_epsilon = TRUE;
-			override_epsilon = atoi(argv[++i]);
-			cout << "-override_epsilon " << override_epsilon << endl;
-			}
-		else if (strcmp(argv[i], "-BLT") == 0) {
-			f_BLT = TRUE;
-			cout << "-BLT " << endl;
-			}
-		else if (strcmp(argv[i], "-ovoid") == 0) {
-			f_ovoid = TRUE;
-			cout << "-ovoid " << endl;
-			}
-		else if (strcmp(argv[i], "-semilinear") == 0) {
-			f_semilinear = TRUE;
-			cout << "-semilinear" << endl;
-			}
-		}
-	if (!f_BLT && !f_ovoid) {
-		cout << "please use either -BLT or -ovoid" << endl;
-		exit(1);
-		}
-}
 
 blt_set::blt_set()
 {
-	null();
+	Blt_set_domain = NULL;
+	f_semilinear = FALSE;
+	Poset = NULL;
+	gen = NULL;
+	q = 0;
+	degree = 0;
+	target_size = 0;
+	starter_size = 0;
+	A = NULL;
+	nb_sol = 0;
+	//null();
 }
 
 blt_set::~blt_set()
@@ -70,25 +41,6 @@ blt_set::~blt_set()
 
 void blt_set::null()
 {
-	//override_poly = NULL;
-	f_semilinear = FALSE;
-	Poset = NULL;
-	gen = NULL;
-	F = NULL;
-	A = NULL;
-	O = NULL;
-	f_BLT = FALSE;
-	f_ovoid = FALSE;
-	f_semilinear = FALSE;
-	f_orthogonal_allocated = FALSE;
-	nb_sol = 0;
-	f_override_schreier_depth = FALSE;
-	f_override_n = FALSE;
-	override_n = 0;
-	f_override_epsilon = FALSE;
-	override_epsilon = 0;
-	Pts = NULL;
-	Candidates = NULL;
 }
 
 void blt_set::freeself()
@@ -97,6 +49,10 @@ void blt_set::freeself()
 
 	if (f_v) {
 		cout << "blt_set::freeself before A" << endl;
+		}
+	if (Blt_set_domain) {
+		FREE_OBJECT(Blt_set_domain);
+		Blt_set_domain = NULL;
 		}
 	if (A) {
 		delete A;
@@ -113,22 +69,6 @@ void blt_set::freeself()
 		delete gen;
 		gen = NULL;
 		}
-	if (f_orthogonal_allocated) {
-		if (f_v) {
-			cout << "blt_set::freeself before O" << endl;
-			}
-		if (O) {
-			delete O;
-			}
-		f_orthogonal_allocated = FALSE;
-		O = NULL;
-		}
-	if (Pts) {
-		FREE_int(Pts);
-		}
-	if (Candidates) {
-		FREE_int(Candidates);
-		}
 	null();
 	if (f_v) {
 		cout << "blt_set::freeself done" << endl;
@@ -138,15 +78,15 @@ void blt_set::freeself()
 
 
 
-void blt_set::init_basic(finite_field *F, 
+void blt_set::init_basic(orthogonal *O,
+	int f_semilinear,
 	const char *input_prefix, 
 	const char *base_fname,
 	int starter_size,  
-	int argc, const char **argv, 
+	int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "blt_set::init_basic" << endl;
@@ -154,80 +94,48 @@ void blt_set::init_basic(finite_field *F,
 				"verbose_level = " << verbose_level << endl;
 		}
 
-	if (f_vv) {
-		cout << "blt_set::init_basic "
-				"before read_arguments" << endl;
-		}
-
-	read_arguments(argc, argv);
-
 
 	gen = NEW_OBJECT(poset_classification);
-	gen->read_arguments(argc, argv, 0);
+
+
+	if (f_v) {
+		cout << "blt_set::init_basic before gen->read_arguments" << endl;
+	}
+	gen->read_arguments(argc, argv, verbose_level);
+	if (f_v) {
+		cout << "blt_set::init_basic after gen->read_arguments" << endl;
+	}
 	
 
+	Blt_set_domain = NEW_OBJECT(blt_set_domain);
+	Blt_set_domain->init(O, verbose_level);
 
-	blt_set::F = F;
-	blt_set::q = F->q;
+	blt_set::f_semilinear = f_semilinear;
+
+	q = O->F->q;
+	degree = Blt_set_domain->degree;
+	target_size = Blt_set_domain->target_size;
+	blt_set::starter_size = starter_size;
 
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
 	sprintf(prefix_with_directory, "%s%s",
 			starter_directory_name, base_fname);
-	blt_set::starter_size = starter_size;
 
-	target_size = q + 1;
 	strcpy(gen->fname_base, prefix_with_directory);
 		
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "blt_set::init_basic q=" << q
 				<< " target_size = " << target_size << endl;
 		}
 	
-	n = 0;
-	epsilon = 0;
-	
-	
-	if (f_BLT) {
-		epsilon = 0;
-		n = 5;
-		}
-	else if (f_ovoid) {
-		if (f_override_n) {
-			n = override_n;
-			if (f_vv) {
-				cout << "blt_set::init_basic "
-						"override value of n=" << n << endl;
-				}
-			}
-		if (f_override_epsilon) {
-			epsilon = override_epsilon;
-			if (f_vv) {
-				cout << "blt_set::init_basic "
-						"override value of epsilon=" << epsilon << endl;
-				}
-			}
-		}
-	else {
-		cout << "neither f_BLT nor f_ovoid is TRUE" << endl;
-		exit(1);
-		}
-	
-	f_semilinear = TRUE;
-	if (is_prime(q)) {
-		f_semilinear = FALSE;
-		}
-	if (f_vv) {
-		cout << "blt_set::init_basic "
-				"f_semilinear=" << f_semilinear << endl;
-		}
 	if (f_v) {
 		cout << "blt_set::init_basic finished" << endl;
 		}
 }
 
-void blt_set::init_group(int verbose_level)
+void blt_set::init_group(int f_semilinear, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -236,23 +144,14 @@ void blt_set::init_group(int verbose_level)
 	if (f_v) {
 		cout << "blt_set::init_group" << endl;
 		}
-	if (f_vv) {
-		cout << "blt_set::init_group "
-				"epsilon=" << epsilon << endl;
-		cout << "blt_set::init_group "
-				"n=" << n << endl;
-		cout << "blt_set::init_group "
-				"q=" << q << endl;
-		cout << "blt_set::init_group "
-				"f_semilinear=" << f_semilinear << endl;
-		}
+
 	if (f_vv) {
 		cout << "blt_set::init_group "
 				"before A->init_orthogonal_group" << endl;
 		}
 	A = NEW_OBJECT(action);
 
-	A->init_orthogonal_group(epsilon, n, F, 
+	A->init_orthogonal_group_with_O(Blt_set_domain->O,
 		TRUE /* f_on_points */, 
 		FALSE /* f_on_lines */, 
 		FALSE /* f_on_points_and_lines */, 
@@ -281,7 +180,7 @@ void blt_set::init_group(int verbose_level)
 	action_on_orthogonal *AO;
 
 	AO = A->G.AO;
-	O = AO->O;
+	//O = AO->O;
 
 	if (f_v) {
 		cout << "blt_set::init_group "
@@ -290,6 +189,7 @@ void blt_set::init_group(int verbose_level)
 		
 	//init_orthogonal_hash(verbose_level);
 
+#if 0
 	if (A->degree < 200) {
 		if (f_v) {
 			cout << "blt_set::init_group "
@@ -297,6 +197,7 @@ void blt_set::init_group(int verbose_level)
 			}
 		test_Orthogonal(epsilon, n - 1, q);
 		}
+#endif
 	//A->Sims->print_all_group_elements();
 
 	if (FALSE) {
@@ -309,7 +210,7 @@ void blt_set::init_group(int verbose_level)
 
 
 	if (FALSE /*f_vv*/) {
-		O->F->print();
+		Blt_set_domain->O->F->print();
 		}
 
 
@@ -318,19 +219,6 @@ void blt_set::init_group(int verbose_level)
 		cout << "blt_set::init_group "
 				"allocating Pts and Candidates" << endl;
 		}
-	//int Pts_size = target_size * n;
-	Pts = NEW_int(target_size * n);
-
-#if 0
-	for (int i=0; i<Pts_size; i++) Pts[i] = 0;
-			// set all the points to an
-			// initial value of zero
-			// in order to prevent 
-			// finite_field::mult(int i, int j)
-			// from throwing an error.
-#endif
-
-	Candidates = NEW_int(degree * n);
 	
 	if (f_v) {
 		cout << "blt_set::init_group finished" << endl;
@@ -346,7 +234,8 @@ void blt_set::init_orthogonal_hash(int verbose_level)
 		cout << "blt_set::init_orthogonal_hash" << endl;
 		}
 
-	init_hash_table_parabolic(*O->F, 4, 0/*verbose_level*/);
+	init_hash_table_parabolic(*Blt_set_domain->O->F,
+			4, 0/*verbose_level*/);
 
 	if (f_v) {
 		cout << "blt_set::init_orthogonal finished" << endl;
@@ -395,7 +284,7 @@ void blt_set::init2(int verbose_level)
 
 
 
-	gen->f_print_function = TRUE;
+	gen->f_print_function = FALSE;
 	gen->print_function = blt_set_print;
 	gen->print_function_data = (void *) this;
 	
@@ -842,7 +731,7 @@ int blt_set::create_graph(
 	int *lines_on_pt;
 	
 	lines_on_pt = NEW_int(1 /*starter_size*/ * (q + 1));
-	O->lines_on_point_by_line_rank(
+	Blt_set_domain->O->lines_on_point_by_line_rank(
 			R->rep[0],
 			lines_on_pt, 0 /* verbose_level */);
 
@@ -856,7 +745,7 @@ int blt_set::create_graph(
 
 	special_line = lines_on_pt[0];
 
-	compute_colors(orbit_at_level, 
+	Blt_set_domain->compute_colors(orbit_at_level,
 		R->rep, starter_size, 
 		special_line, 
 		R->candidates, R->nb_candidates, 
@@ -942,7 +831,7 @@ int blt_set::create_graph(
 	int bitvector_length_in_bits;
 	int bitvector_length;
 
-	compute_adjacency_list_fast(R->rep[0], 
+	Blt_set_domain->compute_adjacency_list_fast(R->rep[0],
 		R->candidates, R->nb_candidates, point_color, 
 		bitvector_adjacency, bitvector_length_in_bits, bitvector_length, 
 		verbose_level - 2);
@@ -993,682 +882,6 @@ finish:
 
 
 
-void blt_set::compute_adjacency_list_fast(
-	int first_point_of_starter,
-	int *points, int nb_points, int *point_color, 
-	uchar *&bitvector_adjacency,
-	int &bitvector_length_in_bits,
-	int &bitvector_length,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int L;
-	int i, j, k, c1, c2;
-	int *Pts;
-	int *form_value;
-	int v1[5];
-	int m[5];
-	int f12, f13, f23, d;
-	uint cnt;
-	int two;
-	int *Pi, *Pj;
-
-	if (f_v) {
-		cout << "blt_set::compute_adjacency_list_fast" << endl;
-		}
-	L = (nb_points * (nb_points - 1)) >> 1;
-
-	bitvector_length_in_bits = L;
-	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-	for (i = 0; i < bitvector_length; i++) {
-		bitvector_adjacency[i] = 0;
-		}
-	
-	Pts = NEW_int(nb_points * 5);
-	form_value = NEW_int(nb_points);
-	O->unrank_point(v1, 1, first_point_of_starter, 0);
-	if (f_v) {
-		cout << "blt_set::compute_adjacency_list_fast "
-				"unranking points" << endl;
-		}
-	for (i = 0; i < nb_points; i++) {
-		O->unrank_point(Pts + i * 5, 1, points[i], 0);
-		form_value[i] = O->evaluate_bilinear_form(
-				v1, Pts + i * 5, 1);
-		}
-
-	if (f_v) {
-		cout << "blt_set::compute_adjacency_list_fast "
-				"computing adjacencies" << endl;
-		}
-
-	cnt = 0;
-	two = F->add(1, 1);
-	
-	for (i = 0; i < nb_points; i++) {
-		f12 = form_value[i];
-		c1 = point_color[i];
-		Pi = Pts + i * 5;
-		m[0] = F->mult(Pi[0], two);
-		m[1] = Pi[2];
-		m[2] = Pi[1];
-		m[3] = Pi[4];
-		m[4] = Pi[3];
-		
-		for (j = i + 1; j < nb_points; j++, cnt++) {
-			k = ij2k(i, j, nb_points);
-		
-			if ((cnt & ((1 << 25) - 1)) == 0 && cnt) {
-				cout << "blt_set::compute_adjacency_list_fast "
-						"nb_points=" << nb_points << " adjacency "
-						<< cnt << " / " << L << " i=" << i
-						<< " j=" << j << endl;
-				}
-			c2 = point_color[j];
-			if (c1 == c2) {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
-				continue;
-				}
-			f13 = form_value[j];
-			Pj = Pts + j * 5;
-			f23 = F->add5(
-				F->mult(m[0], Pj[0]), 
-				F->mult(m[1], Pj[1]), 
-				F->mult(m[2], Pj[2]), 
-				F->mult(m[3], Pj[3]), 
-				F->mult(m[4], Pj[4])
-				);
-			d = F->product3(f12, f13, f23);
-			if (d == 0) {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
-				}
-			else {
-				if (O->f_is_minus_square[d]) {
-					bitvector_m_ii(bitvector_adjacency, k, 0);
-					}
-				else {
-					bitvector_m_ii(bitvector_adjacency, k, 1);
-					}
-				}
-			
-			} // next j
-		} // next i
-
-
-
-	FREE_int(Pts);
-	FREE_int(form_value);
-	if (f_v) {
-		cout << "blt_set::compute_adjacency_list_fast done" << endl;
-		}
-}
-
-
-
-void blt_set::compute_colors(int orbit_at_level, 
-	int *starter, int starter_sz, 
-	int special_line, 
-	int *candidates, int nb_candidates, 
-	int *&point_color, int &nb_colors, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int p1, p2;
-	int v1[5];
-	int v2[5];
-	int v3[5];
-	int *pts_on_special_line;
-	int idx, i;
-
-
-	if (f_v) {
-		cout << "blt_set::compute_colors" << endl;
-		}
-	O->unrank_line(p1, p2, special_line, 0/*verbose_level*/);
-	if (f_vv) {
-		cout << "after unrank_line " << special_line << ":" << endl;
-		cout << "p1=" << p1 << " p2=" << p2 << endl;
-		}
-	O->unrank_point(v1, 1, p1, 0);
-	O->unrank_point(v2, 1, p2, 0);
-	if (f_vv) {
-		cout << "p1=" << p1 << " ";
-		int_vec_print(cout, v1, 5);
-		cout << endl;
-		cout << "p2=" << p2 << " ";
-		int_vec_print(cout, v2, 5);
-		cout << endl;
-		}
-	if (p1 != starter[0]) {
-		cout << "p1 != starter[0]" << endl;
-		exit(1);
-		}
-	
-	pts_on_special_line = NEW_int(q + 1);
-	O->points_on_line(p1, p2, pts_on_special_line,
-			0/*verbose_level*/);
-	
-	if (f_vv) {
-		cout << "pts_on_special_line:" << endl;
-		int_vec_print(cout, pts_on_special_line, q + 1);
-		cout << endl;
-		}
-
-	if (!int_vec_search(pts_on_special_line, q + 1, starter[0], idx)) {
-		cout << "cannot find the first point on the line" << endl;
-		exit(1);
-		}
-	for (i = idx; i < q + 1; i++) {
-		pts_on_special_line[i] = pts_on_special_line[i + 1];
-		}
-	if (f_vv) {
-		cout << "pts_on_special_line without the first "
-				"starter point:" << endl;
-		int_vec_print(cout, pts_on_special_line, q);
-		cout << endl;
-		}
-	
-	int a, b, t, c, j, h;
-	int *starter_t;
-	
-	starter_t = NEW_int(starter_sz);
-	starter_t[0] = -1;
-	for (i = 1; i < starter_sz; i++) {
-		O->unrank_point(v3, 1, starter[i], 0);
-		a = O->evaluate_bilinear_form(v1, v3, 1);
-		b = O->evaluate_bilinear_form(v2, v3, 1);
-		if (a == 0) {
-			cout << "a == 0, this should not be" << endl;
-			exit(1);
-			}
-		// <v3,t*v1+v2> = t*<v3,v1>+<v3,v2> = t*a+b = 0
-		// Thus, t = -b/a
-		t = O->F->mult(O->F->negate(b), O->F->inverse(a));
-		starter_t[i] = t;
-		}
-
-	if (f_vv) {
-		cout << "starter_t:" << endl;
-		int_vec_print(cout, starter_t, starter_sz);
-		cout << endl;
-		}
-
-	int *free_pts;
-	int *open_colors;
-	int *open_colors_inv;
-
-	free_pts = NEW_int(q);
-	open_colors = NEW_int(q);
-	open_colors_inv = NEW_int(q);
-
-	point_color = NEW_int(nb_candidates);
-
-	nb_colors = q - starter_sz + 1;
-	j = 0;
-	for (i = 0; i < q; i++) {
-		for (h = 1; h < starter_sz; h++) {
-			if (starter_t[h] == i)
-				break;
-			}
-		if (h == starter_sz) {
-			free_pts[j] = pts_on_special_line[i];
-			open_colors[j] = i;
-			j++;
-			}
-		}
-	if (j != nb_colors) {
-		cout << "extension_data::setup error: j != nb_colors" << endl;
-		exit(1);
-		}
-	if (f_vv) {
-		cout << "The " << nb_colors << " free points are :" << endl;
-		int_vec_print(cout, free_pts, nb_colors);
-		cout << endl;
-		cout << "The " << nb_colors << " open colors are :" << endl;
-		int_vec_print(cout, open_colors, nb_colors);
-		cout << endl;
-		}
-	for ( ; j < q; j++) {
-		open_colors[j] = starter_t[j - nb_colors + 1];
-		}
-	if (f_vv) {
-		cout << "open_colors :" << endl;
-		int_vec_print(cout, open_colors, q);
-		cout << endl;
-		}
-	for (i = 0; i < q; i++) {
-		j = open_colors[i];
-		open_colors_inv[j] = i;
-		}
-	if (f_vv) {
-		cout << "open_colors_inv :" << endl;
-		int_vec_print(cout, open_colors_inv, q);
-		cout << endl;
-		}
-
-
-	for (i = 0; i < nb_candidates; i++) {
-		O->unrank_point(v3, 1, candidates[i], 0);
-		if (f_vv) {
-			cout << "candidate " << i << " / " << nb_candidates
-					<< " is " << candidates[i] << " = ";
-			int_vec_print(cout, v3, 5);
-			cout << endl;
-			}
-		a = O->evaluate_bilinear_form(v1, v3, 1);
-		b = O->evaluate_bilinear_form(v2, v3, 1);
-		if (a == 0) {
-			cout << "a == 0, this should not be" << endl;
-			exit(1);
-			}
-		// <v3,t*v1+v2> = t*<v3,v1>+<v3,v2> = t*a+b = 0
-		// Thus, t = -b/a
-		t = O->F->mult(O->F->negate(b), O->F->inverse(a));
-		c = open_colors_inv[t];
-		if (c >= nb_colors) {
-			cout << "c >= nb_colors" << endl;
-			cout << "i=" << i << endl;
-			cout << "candidates[i]=" << candidates[i] << endl;
-			cout << "as vector: ";
-			int_vec_print(cout, v3, 5);
-			cout << endl;
-			cout << "a=" << a << endl;
-			cout << "b=" << b << endl;
-			cout << "t=" << t << endl;
-			cout << "c=" << c << endl;
-			cout << "nb_colors=" << nb_colors << endl;
-			
-			exit(1);
-			}
-		point_color[i] = c;
-		}
-
-	if (f_vv) {
-		cout << "point colors:" << endl;
-		int_vec_print(cout, point_color, nb_candidates);
-		cout << endl;
-		}
-
-	FREE_int(pts_on_special_line);
-	FREE_int(starter_t);
-	FREE_int(free_pts);
-	FREE_int(open_colors);
-	FREE_int(open_colors_inv);
-	if (f_v) {
-		cout << "blt_set::compute_colors done" << endl;
-		}
-}
-
-
-
-void blt_set::early_test_func(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, j, a;
-	int f_OK;
-	int v[5];
-	int *v1, *v2, *v3;
-	int m1[5];
-	int m3[5];
-	int two;
-	int fxy, fxz, fyz;
-		
-	if (f_v) {
-		cout << "blt_set::early_test_func checking set ";
-		print_set(cout, len, S);
-		cout << endl;
-		cout << "candidate set of size "
-				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
-		cout << endl;
-		if (f_vv) {
-			for (i = 0; i < nb_candidates; i++) {
-				O->unrank_point(v, 1, candidates[i],
-						0/*verbose_level - 4*/);
-				cout << "candidate " << i << "="
-						<< candidates[i] << ": ";
-				int_vec_print(cout, v, 5);
-				cout << endl;
-				}
-			}
-		}
-	for (i = 0; i < len; i++) {
-		O->unrank_point(Pts + i * 5, 1,
-				S[i], 0/*verbose_level - 4*/);
-		}
-	for (i = 0; i < nb_candidates; i++) {
-		O->unrank_point(Candidates + i * 5, 1, candidates[i],
-				0/*verbose_level - 4*/);
-		}
-	
-	two = O->F->add(1, 1);
-
-
-	if (len == 0) {
-		int_vec_copy(candidates, good_candidates, nb_candidates);
-		nb_good_candidates = nb_candidates;
-		}
-	else {
-		nb_good_candidates = 0;
-	
-		if (f_vv) {
-			cout << "blt_set::early_test_func before testing" << endl;
-			}
-		for (j = 0; j < nb_candidates; j++) {
-
-
-			if (f_vv) {
-				cout << "blt_set::early_test_func "
-						"testing " << j << " / "
-						<< nb_candidates << endl;
-				}
-
-			v1 = Pts;
-			v3 = Candidates + j * 5;
-
-			m1[0] = O->F->mult(two, v1[0]);
-			m1[1] = v1[2];
-			m1[2] = v1[1];
-			m1[3] = v1[4];
-			m1[4] = v1[3];
-
-			//fxz = evaluate_bilinear_form(v1, v3, 1);
-			// too slow !!!
-			fxz = O->F->add5(
-					O->F->mult(m1[0], v3[0]), 
-					O->F->mult(m1[1], v3[1]), 
-					O->F->mult(m1[2], v3[2]), 
-					O->F->mult(m1[3], v3[3]), 
-					O->F->mult(m1[4], v3[4]) 
-				);
-
-
-			if (fxz == 0) {
-				f_OK = FALSE;
-				}
-			else {
-				m3[0] = O->F->mult(two, v3[0]);
-				m3[1] = v3[2];
-				m3[2] = v3[1];
-				m3[3] = v3[4];
-				m3[4] = v3[3];
-
-				f_OK = TRUE;
-				for (i = 1; i < len; i++) {
-					//fxy = evaluate_bilinear_form(v1, v2, 1);
-
-					v2 = Pts + i * 5;
-		
-					fxy = O->F->add5(
-						O->F->mult(m1[0], v2[0]), 
-						O->F->mult(m1[1], v2[1]), 
-						O->F->mult(m1[2], v2[2]), 
-						O->F->mult(m1[3], v2[3]), 
-						O->F->mult(m1[4], v2[4]) 
-						);
-		
-					//fyz = evaluate_bilinear_form(v2, v3, 1);
-					fyz = O->F->add5(
-							O->F->mult(m3[0], v2[0]), 
-							O->F->mult(m3[1], v2[1]), 
-							O->F->mult(m3[2], v2[2]), 
-							O->F->mult(m3[3], v2[3]), 
-							O->F->mult(m3[4], v2[4]) 
-						);
-
-					a = O->F->product3(fxy, fxz, fyz);
-
-					if (a == 0) {
-						f_OK = FALSE;
-						break;
-						}
-					if (O->f_is_minus_square[a]) {
-						f_OK = FALSE;
-						break;
-						}
-
-					}
-				}
-			if (f_OK) {
-				good_candidates[nb_good_candidates++] =
-						candidates[j];
-				}
-			} // next j
-		} // else
-}
-
-int blt_set::pair_test(int a, int x, int y, int verbose_level)
-// We assume that a is an element
-// of a set S of size at least two such that
-// S \cup \{ x \} is BLT and 
-// S \cup \{ y \} is BLT.
-// In order to test if S \cup \{ x, y \}
-// is BLT, we only need to test
-// the triple \{ x,y,a\}
-{
-	int v1[5], v2[5], v3[5];
-	int f12, f13, f23;
-	int d;
-
-	O->unrank_point(v1, 1, a, 0);
-	O->unrank_point(v2, 1, x, 0);
-	O->unrank_point(v3, 1, y, 0);
-	f12 = O->evaluate_bilinear_form(v1, v2, 1);
-	f13 = O->evaluate_bilinear_form(v1, v3, 1);
-	f23 = O->evaluate_bilinear_form(v2, v3, 1);
-	d = O->F->product3(f12, f13, f23);
-	if (d == 0) {
-		return FALSE;
-		}
-	if (O->f_is_minus_square[d]) {
-		return FALSE;
-		}
-	else {
-		return TRUE;
-		}
-	
-}
-
-int blt_set::check_conditions(int len, int *S, int verbose_level)
-{
-	int f_OK = TRUE;
-	int f_BLT_test = FALSE;
-	int f_collinearity_test = FALSE;
-	//int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	
-	//f_v = TRUE;
-	//f_vv = TRUE;
-	
-	if (f_vv) {
-		cout << "checking set ";
-		print_set(cout, len, S);
-		}
-	if (!collinearity_test(S, len, verbose_level)) {
-		f_OK = FALSE;
-		f_collinearity_test = TRUE;
-		}
-	if (f_BLT) {
-		if (!O->BLT_test(len, S, verbose_level)) {
-			f_OK = FALSE;
-			f_BLT_test = TRUE;
-			}
-		}
-
-
-	if (f_OK) {
-		if (f_vv) {
-			cout << "OK" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		if (f_vv) {
-			cout << "not OK because of ";
-			if (f_BLT_test) {
-				cout << "BLT test";
-				}
-			if (f_collinearity_test) {
-				cout << "collinearity test";
-				}
-			cout << endl;
-			}
-		return FALSE;
-		}
-}
-
-int blt_set::collinearity_test(int *S, int len, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, x, y;
-	int f_OK = TRUE;
-	int fxy;
-	
-	if (f_v) {
-		cout << "collinearity test for" << endl;
-		for (i = 0; i < len; i++) {
-			O->unrank_point(O->v1, 1, S[i], 0);
-			int_vec_print(cout, O->v1, n);
-			cout << endl;
-			}
-		}
-	y = S[len - 1];
-	O->unrank_point(O->v1, 1, y, 0);
-	
-	for (i = 0; i < len - 1; i++) {
-		x = S[i];
-		O->unrank_point(O->v2, 1, x, 0);
-		fxy = O->evaluate_bilinear_form(O->v1, O->v2, 1);
-		
-		if (fxy == 0) {
-			f_OK = FALSE;
-			if (f_v) {
-				cout << "not OK; ";
-				cout << "{x,y}={" << x << ","
-						<< y << "} are collinear" << endl;
-				int_vec_print(cout, O->v1, n);
-				cout << endl;
-				int_vec_print(cout, O->v2, n);
-				cout << endl;
-				cout << "fxy=" << fxy << endl;
-				}
-			break;
-			}
-		}
-	
-	if (f_v) {
-		if (!f_OK) {
-			cout << "collinearity test fails" << endl;
-			}
-		}
-	return f_OK;
-}
-
-void blt_set::print(ostream &ost, int *S, int len)
-{
-	int i;
-	
-	for (i = 0; i < len; i++) {
-		O->unrank_point(O->v1, 1, S[i], 0);
-		int_vec_print(ost, O->v1, n);
-		ost << endl;
-		}
-}
-
-
-void blt_set::find_free_points(int *S, int S_sz,
-	int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int *lines_on_pt;
-	int *Perp;
-	int i, j, a, b, h, f, fst, len, pt;
-	classify C;
-
-	if (f_v) {
-		cout << "blt_set::find_free_points" << endl;
-		}
-	lines_on_pt = NEW_int(S_sz * (q + 1));
-	for (i = 0; i < S_sz; i++) {
-		O->lines_on_point_by_line_rank(S[i],
-				lines_on_pt + i * (q + 1),
-				0 /* verbose_level */);
-		}
-
-	if (f_vv) {
-		cout << "blt_set::find_free_points "
-				"Lines on partial BLT set:" << endl;
-		int_matrix_print(lines_on_pt, S_sz, q + 1);
-		}
-
-	Perp = NEW_int(S_sz * (q + 1) * (q + 1));
-	for (i = 0; i < S_sz; i++) {
-		for (j = 0; j < q + 1; j++) {
-			a = lines_on_pt[i * (q + 1) + j];
-			O->points_on_line_by_line_rank(a,
-					Perp + i * (q + 1) * (q + 1) + j * (q + 1),
-					0 /* verbose_level */);
-			}
-		}
-	if (f_vv) {
-		cout << "blt_set::find_free_points Perp:" << endl;
-		int_matrix_print(Perp, S_sz * (q + 1), q + 1);
-		}
-
-
-	C.init(Perp, S_sz * (q + 1) * (q + 1), TRUE, 0);
-
-	C.print(FALSE /* f_reverse */);
-
-
-	// find the points which are in Perp only once:
-	f = C.second_type_first[0];
-	nb_free_pts = C.second_type_len[0];
-	if (f_v) {
-		cout << "blt_set::find_free_points nb_free_pts="
-				<< nb_free_pts << endl;
-		}
-	free_pts = NEW_int(nb_free_pts);
-	free_pt_idx = NEW_int(O->nb_points);
-	for (h = 0; h < O->nb_points; h++) {
-		free_pt_idx[h] = -1;
-		}
-
-	for (h = 0; h < nb_free_pts; h++) {
-		b = C.second_sorting_perm_inv[f + h];
-		fst = C.type_first[b];
-		len = C.type_len[b];
-		if (len != 1) {
-			cout << "blt_set::find_free_points len != 1" << endl;
-			exit(1);
-			}
-		pt = C.data_sorted[fst];
-		//cout << "h=" << h << " b=" << b << " len="
-		//<< len << " pt=" << pt << endl;
-		free_pts[h] = pt;
-		free_pt_idx[pt] = h;
-		}
-
-	FREE_int(lines_on_pt);
-	FREE_int(Perp);
-
-	if (f_v) {
-		cout << "blt_set::find_free_points "
-				"There are " << nb_free_pts << " free points" << endl;
-		}
-	if (f_v) {
-		cout << "blt_set::find_free_points done" << endl;
-		}
-}
-
 void blt_set::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
 	int *candidates, int nb_candidates,
@@ -1712,7 +925,7 @@ void blt_set::lifting_prepare_function_new(
 				"before find_free_points" << endl;
 		}
 
-	find_free_points(E->starter, starter_size,
+	Blt_set_domain->find_free_points(E->starter, starter_size,
 		free_point_list, point_idx, nb_free_points,
 		verbose_level - 2);
 
@@ -1769,12 +982,12 @@ void blt_set::lifting_prepare_function_new(
 	Pts1 = NEW_int(nb_free_points * 5);
 	Pts2 = NEW_int(nb_cols * 5);
 	for (i = 0; i < nb_free_points; i++) {
-		O->unrank_point(Pts1 + i * 5, 1,
+		Blt_set_domain->O->unrank_point(Pts1 + i * 5, 1,
 				free_point_list[i],
 				0 /*verbose_level - 1*/);
 		}
 	for (i = 0; i < nb_cols; i++) {
-		O->unrank_point(Pts2 + i * 5, 1,
+		Blt_set_domain->O->unrank_point(Pts2 + i * 5, 1,
 				col_labels[i],
 				0 /*verbose_level - 1*/);
 		}
@@ -1799,7 +1012,7 @@ void blt_set::lifting_prepare_function_new(
 
 	for (i = 0; i < nb_free_points; i++) {
 		for (j = 0; j < nb_cols; j++) {
-			a = O->evaluate_bilinear_form(
+			a = Blt_set_domain->O->evaluate_bilinear_form(
 					Pts1 + i * 5,
 					Pts2 + j * 5, 1);
 			if (a == 0) {
@@ -1983,7 +1196,7 @@ void blt_set::report(isomorph &Iso, int verbose_level)
 #endif
 
 
-	P->init(4, F,
+	P->init(4, Blt_set_domain->F,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
 
@@ -1993,7 +1206,7 @@ void blt_set::report(isomorph &Iso, int verbose_level)
 
 	G = NEW_OBJECT(grassmann);
 
-	G->init(5, 3, F, 0 /*verbose_level - 2*/);
+	G->init(5, 3, Blt_set_domain->F, 0 /*verbose_level - 2*/);
 
 
 	longinteger_object **R;
@@ -2031,7 +1244,8 @@ void blt_set::report(isomorph &Iso, int verbose_level)
 		int v5[5];
 
 		for (i = 0; i < set_size; i++) {
-			O->unrank_point(v5, 1, data[i], 0 /* verbose_level */);
+			Blt_set_domain->O->unrank_point(
+					v5, 1, data[i], 0 /* verbose_level */);
 			data2[i] = P->rank_point(v5);
 			}
 
@@ -2341,7 +1555,8 @@ void blt_set::report(isomorph &Iso, int verbose_level)
 		f << "The points:\\\\" << endl;
 		int v5[5];
 		for (i = 0; i < target_size; i++) {
-			O->unrank_point(v5, 1, data[i], 0 /* verbose_level */);
+			Blt_set_domain->O->unrank_point(
+					v5, 1, data[i], 0 /* verbose_level */);
 			//Grass->unrank_int(data[i], 0/*verbose_level - 4*/);
 			if ((i % 4) == 0) {
 				if (i) {
@@ -2662,7 +1877,7 @@ void blt_set_print(ostream &ost, int len, int *S, void *data)
 	blt_set *Gen = (blt_set *) data;
 
 	//print_vector(ost, S, len);
-	Gen->print(ost, S, len);
+	Gen->Blt_set_domain->print(ost, S, len);
 }
 
 void blt_set_lifting_prepare_function_new(
@@ -2718,7 +1933,7 @@ void blt_set_early_test_func_callback(int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		}
-	BLT->early_test_func(S, len,
+	BLT->Blt_set_domain->early_test_func(S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);

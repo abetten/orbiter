@@ -78,6 +78,7 @@ MODULES= \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \
 		foundations/geometry/arc_lifting_with_two_lines.o \
+		foundations/geometry/blt_set_domain.o \
 		foundations/geometry/buekenhout_metz.o \
 		foundations/geometry/cubic_curve.o \
 		foundations/geometry/data.o \

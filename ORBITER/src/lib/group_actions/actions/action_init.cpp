@@ -1472,26 +1472,12 @@ void action::init_orthogonal_group(int epsilon,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	action *A;
 	orthogonal *O;
-	action_on_orthogonal *AO;
-	int q = F->q;
 
 	if (f_v) {
 		cout << "action::init_orthogonal_group "
 				"verbose_level=" << verbose_level << endl;
 		}
-	A = NEW_OBJECT(action);
-	if (f_vv) {
-		cout << "action::init_orthogonal_group "
-				"before A->init_projective_group" << endl;
-		}
-	vector_ge *nice_gens;
-	A->init_projective_group(n, F, f_semilinear,
-			TRUE /* f_basis */,
-			nice_gens,
-			verbose_level - 2);
-	FREE_OBJECT(nice_gens);
 	O = NEW_OBJECT(orthogonal);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group before O->init" << endl;
@@ -1501,9 +1487,47 @@ void action::init_orthogonal_group(int epsilon,
 		cout << "action::init_orthogonal_group after O->init" << endl;
 		}
 
+	init_orthogonal_group_with_O(O,
+			f_on_points, f_on_lines, f_on_points_and_lines,
+			f_semilinear,
+			f_basis, verbose_level);
+
+
+	if (f_v) {
+		cout << "action::init_orthogonal_group done" << endl;
+		}
+}
+
+void action::init_orthogonal_group_with_O(orthogonal *O,
+	int f_on_points, int f_on_lines, int f_on_points_and_lines,
+	int f_semilinear,
+	int f_basis, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	action *A;
+	action_on_orthogonal *AO;
+	int q = O->F->q;
+
+	if (f_v) {
+		cout << "action::init_orthogonal_group_with_O "
+				"verbose_level=" << verbose_level << endl;
+		}
+	A = NEW_OBJECT(action);
+	if (f_vv) {
+		cout << "action::init_orthogonal_group_with_O "
+				"before A->init_projective_group" << endl;
+		}
+	vector_ge *nice_gens;
+	A->init_projective_group(O->n, O->F, f_semilinear,
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level - 2);
+	FREE_OBJECT(nice_gens);
+
 	AO = NEW_OBJECT(action_on_orthogonal);
 	if (f_vv) {
-		cout << "action::init_orthogonal_group before AO->init" << endl;
+		cout << "action::init_orthogonal_group_with_O before AO->init" << endl;
 		}
 	AO->init(A, O, f_on_points, f_on_lines,
 			f_on_points_and_lines, verbose_level - 2);
@@ -1523,9 +1547,9 @@ void action::init_orthogonal_group(int epsilon,
 	ptr->init_function_pointers_induced_action();
 	make_element_size = A->make_element_size;
 
-	sprintf(group_prefix, "O%d_%d_%d", epsilon, n, q);
-	sprintf(label, "O^%s(%d,%d)", plus_minus_string(epsilon), n, q);
-	sprintf(label_tex, "O^{%s}(%d,%d)", plus_minus_string(epsilon), n, q);
+	sprintf(group_prefix, "O%d_%d_%d", O->epsilon, O->n, q);
+	sprintf(label, "O^%s(%d,%d)", plus_minus_string(O->epsilon), O->n, q);
+	sprintf(label_tex, "O^{%s}(%d,%d)", plus_minus_string(O->epsilon), O->n, q);
 
 
 
@@ -1542,7 +1566,7 @@ void action::init_orthogonal_group(int epsilon,
 				cout << "action::init_orthogonal_group "
 						"with reflections, before order_PO_epsilon" << endl;
 				}
-			order_PO_epsilon(f_semilinear, epsilon, n - 1, F->q,
+			order_PO_epsilon(f_semilinear, O->epsilon, O->n - 1, O->F->q,
 					target_go, verbose_level);
 			}
 		else {
@@ -1551,8 +1575,8 @@ void action::init_orthogonal_group(int epsilon,
 						"without reflections, before order_POmega_epsilon"
 						<< endl;
 				}
-			order_POmega_epsilon(epsilon, n - 1,
-					F->q, target_go, verbose_level);
+			order_POmega_epsilon(O->epsilon, O->n - 1,
+					O->F->q, target_go, verbose_level);
 			}
 
 		if (f_vv) {

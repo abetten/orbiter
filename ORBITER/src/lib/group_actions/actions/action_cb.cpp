@@ -461,6 +461,11 @@ void action::element_print_as_permutation_with_offset(
 		cout << "action::element_print_as_permutation_with_offset "
 				"degree=" << degree << endl;
 		}
+	if (degree > 1000) {
+		cout << "action::element_print_as_permutation_with_offset "
+				"the degree is too large, we won't print the permutation" << endl;
+		return;
+	}
 	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
 		if (f_vv) {

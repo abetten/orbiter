@@ -314,7 +314,7 @@ int linear_group_description::read_arguments(
 		else if (strcmp(argv[i], "-orthogonal") == 0) {
 			f_orthogonal_group = TRUE;
 			orthogonal_group_epsilon = atoi(argv[++i]);
-			cout << "-orthogonal" << orthogonal_group_epsilon << endl;
+			cout << "-orthogonal " << orthogonal_group_epsilon << endl;
 			}
 		else if (strcmp(argv[i], "-O") == 0) {
 			f_orthogonal_group = TRUE;

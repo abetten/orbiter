@@ -171,6 +171,71 @@ public:
 };
 
 
+// #############################################################################
+// blt_set_domain.cpp
+// #############################################################################
+
+//! BLT-sets in O(4,q)
+
+
+
+class blt_set_domain {
+
+public:
+	finite_field *F;
+	int f_semilinear; // from the command line
+	int epsilon; // the type of the quadric (0, 1 or -1)
+	int n; // algebraic dimension
+	int q; // field order
+	int target_size;
+	int degree; // number of points on the quadric
+
+
+	orthogonal *O;
+	int f_orthogonal_allocated;
+
+
+	int *Pts; // [target_size * n]
+	int *Candidates; // [degree * n]
+
+
+	blt_set_domain();
+	~blt_set_domain();
+	void null();
+	void freeself();
+	void init(orthogonal *O,
+		int verbose_level);
+	void compute_adjacency_list_fast(int first_point_of_starter,
+		int *points, int nb_points, int *point_color,
+		uchar *&bitvector_adjacency,
+		int &bitvector_length_in_bits, int &bitvector_length,
+		int verbose_level);
+	void compute_colors(int orbit_at_level,
+		int *starter, int starter_sz,
+		int special_line,
+		int *candidates, int nb_candidates,
+		int *&point_color, int &nb_colors,
+		int verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	int pair_test(int a, int x, int y, int verbose_level);
+		// We assume that a is an element of a set S
+		// of size at least two such that
+		// S \cup \{ x \} is BLT and
+		// S \cup \{ y \} is BLT.
+		// In order to test of S \cup \{ x, y \}
+		// is BLT, we only need to test
+		// the triple \{ x,y,a\}
+	int check_conditions(int len, int *S, int verbose_level);
+	int collinearity_test(int *S, int len, int verbose_level);
+	void print(std::ostream &ost, int *S, int len);
+	void find_free_points(int *S, int S_sz,
+		int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
+		int verbose_level);
+};
+
 
 // #############################################################################
 // buekenhout_metz.C:

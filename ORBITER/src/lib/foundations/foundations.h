@@ -314,6 +314,7 @@ class spread_tables;
 class cubic_curve;
 class partial_derivative;
 class animate;
+class blt_set_domain;
 
 
 #ifdef MEMORY_DEBUG

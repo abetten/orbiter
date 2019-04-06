@@ -500,12 +500,17 @@ public:
 class blt_set {
 
 public:
+
+	blt_set_domain *Blt_set_domain;
+
+	int f_semilinear;
+
+	#if 0
 	finite_field *F;
-	int f_semilinear; // from the command line
 	int epsilon; // the type of the quadric (0, 1 or -1)
 	int n; // algebraic dimension
+#endif
 	int q; // field order
-
 
 	char starter_directory_name[1000];
 	char prefix[1000];
@@ -517,17 +522,20 @@ public:
 	action *A;
 	int degree;
 
+#if 0
 	orthogonal *O;
 	int f_orthogonal_allocated;
+#endif
 
-	int f_BLT;
-	int f_ovoid;
+	//int f_BLT;
+	//int f_ovoid;
 
 
 	int target_size;
 
 	int nb_sol; // number of solutions so far
 
+#if 0
 	int f_override_schreier_depth;
 	int override_schreier_depth;
 
@@ -536,9 +544,10 @@ public:
 
 	int f_override_epsilon;
 	int override_epsilon;
+#endif
 
-	int *Pts; // [target_size * n]
-	int *Candidates; // [degree * n]
+	//int *Pts; // [target_size * n]
+	//int *Candidates; // [degree * n]
 
 
 	void read_arguments(int argc, const char **argv);
@@ -546,13 +555,14 @@ public:
 	~blt_set();
 	void null();
 	void freeself();
-	void init_basic(finite_field *F,
+	void init_basic(orthogonal *O,
+		int f_semilinear,
 		const char *input_prefix,
 		const char *base_fname,
 		int starter_size,
 		int argc, const char **argv,
 		int verbose_level);
-	void init_group(int verbose_level);
+	void init_group(int f_semilinear, int verbose_level);
 	//void init_orthogonal(int verbose_level);
 	void init_orthogonal_hash(int verbose_level);
 	void init2(int verbose_level);
@@ -577,38 +587,6 @@ public:
 		colored_graph *&CG,
 		int verbose_level);
 
-	void compute_colors(int orbit_at_level,
-		int *starter, int starter_sz,
-		int special_line,
-		int *candidates, int nb_candidates,
-		int *&point_color, int &nb_colors,
-		int verbose_level);
-	void compute_adjacency_list_fast(int first_point_of_starter,
-		int *points, int nb_points, int *point_color,
-		uchar *&bitvector_adjacency,
-		int &bitvector_length_in_bits, int &bitvector_length,
-		int verbose_level);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-	//int check_function_incremental(int len, int *S, int verbose_level);
-	int pair_test(int a, int x, int y, int verbose_level);
-		// We assume that a is an element of a set S
-		// of size at least two such that
-		// S \cup \{ x \} is BLT and
-		// S \cup \{ y \} is BLT.
-		// In order to test of S \cup \{ x, y \}
-		// is BLT, we only need to test
-		// the triple \{ x,y,a\}
-	int check_conditions(int len, int *S, int verbose_level);
-	int collinearity_test(int *S, int len, int verbose_level);
-	void print(std::ostream &ost, int *S, int len);
-
-	// blt_set2.C:
-	void find_free_points(int *S, int S_sz,
-		int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
-		int verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case,
 		int *candidates, int nb_candidates,
 		strong_generators *Strong_gens,
@@ -620,7 +598,7 @@ public:
 	void subset_orbits(isomorph &Iso, int verbose_level);
 };
 
-// blt_set2.C:
+// global functions:
 void blt_set_print(std::ostream &ost, int len, int *S, void *data);
 void blt_set_lifting_prepare_function_new(exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens,

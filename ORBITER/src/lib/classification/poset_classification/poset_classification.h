@@ -26,7 +26,7 @@ namespace classification {
 #define EXTENSION_TYPE_NOT_CANONICAL 4
 
 
-//! to represent a flag; related to poset_orbit_node
+//! represents a flag in the poset classification algorithm; related to poset_orbit_node
 
 
 
@@ -323,6 +323,7 @@ public:
 	int depth; // search depth
 	int f_w; // write output in level files (only last level)
 	int f_W; // write output in level files (each level)
+	int f_write_data_files;
 	int f_T; // draw tree file (each level)
 	int f_t; // draw tree file (only last level)
 	int f_Log; // log nodes (each level)
@@ -514,10 +515,6 @@ public:
 		int (*test_property_function)(int len, int *S, void *data), 
 		void *test_property_data, 
 		int &nb, int *&Orbit_idx);
-	//void print_schreier_vectors_at_depth(int depth,
-	//	int verbose_level);
-	//void print_schreier_vector(int depth, int orbit_idx,
-	//	int verbose_level);
 	void list_whole_orbit(int depth, int orbit_idx, 
 		int f_has_print_function, 
 		void (*print_function)(std::ostream &ost, int len, int *S, void *data),

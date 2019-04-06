@@ -19,7 +19,10 @@ int t0; // the system time when the program started
 
 void usage(int argc, char **argv);
 int main(int argc, char **argv);
-void do_it(int epsilon, int n, int q, int f_tree, int verbose_level);
+void do_it(int epsilon, int n, int q,
+		int f_draw_tree,
+		int f_orbit_of, int orbit_of_idx,
+		int verbose_level);
 
 void usage(int argc, char **argv)
 {
@@ -43,7 +46,9 @@ int main(int argc, char **argv)
 	int d = 0;
 	int f_q = FALSE;
 	int q = 0;
-	int f_tree = FALSE;
+	int f_draw_tree = FALSE;
+	int f_orbit_of = FALSE;
+	int orbit_of_idx = 0;
 
 	t0 = os_ticks();
 	
@@ -75,9 +80,14 @@ int main(int argc, char **argv)
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
-		else if (strcmp(argv[i], "-tree") == 0) {
-			f_tree = TRUE;
-			cout << "-tree " << endl;
+		else if (strcmp(argv[i], "-f_draw_tree") == 0) {
+			f_draw_tree = TRUE;
+			cout << "-f_draw_tree " << endl;
+			}
+		else if (strcmp(argv[i], "-orbit_of") == 0) {
+			f_orbit_of = TRUE;
+			orbit_of_idx = atoi(argv[++i]);
+			cout << "-orbit_of " << orbit_of_idx << endl;
 			}
 		}
 	if (!f_epsilon) {
@@ -95,12 +105,18 @@ int main(int argc, char **argv)
 		usage(argc, argv);
 		exit(1);
 		}	
-	do_it(epsilon, d, q, f_tree, verbose_level);
+	do_it(epsilon, d, q,
+			f_draw_tree,
+			f_orbit_of, orbit_of_idx,
+			verbose_level);
 
 	the_end_quietly(t0);
 }
 
-void do_it(int epsilon, int n, int q, int f_tree, int verbose_level)
+void do_it(int epsilon, int n, int q,
+		int f_draw_tree,
+		int f_orbit_of, int orbit_of_idx,
+		int verbose_level)
 {
 	finite_field *F;
 	action *A;
@@ -188,155 +204,168 @@ void do_it(int epsilon, int n, int q, int f_tree, int verbose_level)
 	}
 
 
-	schreier *Sch;
-	Sch = NEW_OBJECT(schreier);
+	if (f_orbit_of) {
 
-	cout << "computing orbits on points:" << endl;
-	A->all_point_orbits(*Sch, verbose_level);
+		schreier *Sch;
+		Sch = NEW_OBJECT(schreier);
 
+		cout << "computing orbit of point " << orbit_of_idx << ":" << endl;
 
-	cout << "computing orbits on points done." << endl;
+		//A->all_point_orbits(*Sch, verbose_level);
 
-	char fname_tree_mask[1000];
-
-	sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d.layered_graph", epsilon, n, q);
-
-	Sch->export_tree_as_layered_graph(0 /* orbit_no */,
-			fname_tree_mask,
-			verbose_level - 1);
-
-	int orbit_idx = 0;
-	schreier *shallow_tree;
-
-	cout << "computing shallow Schreier tree:" << endl;
-
-	Sch->shallow_tree_generators(orbit_idx,
-			shallow_tree,
-			verbose_level);
-
-	cout << "computing shallow Schreier tree done." << endl;
-
-	sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d_shallow.layered_graph", epsilon, n, q);
-
-	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
-			fname_tree_mask,
-			verbose_level - 1);
-
-	if (f_tree) {
-
-		cout << "drawing the Schreier tree" << endl;
-
-		char fname_tree[1000];
-		char fname_report[1000];
-		int xmax = 2000000;
-		int ymax = 1000000;
-		int f_circletext = TRUE;
-		int rad = 18000;
-		int f_embedded = FALSE;
-		int f_sideways = TRUE;
-		double scale = 0.35;
-		double line_width = 1.0;
-
-		sprintf(fname_tree, "O_%d_%d_%d_tree", epsilon, n, q);
-		sprintf(fname_report, "O_%d_%d_%d_report.tex", epsilon, n, q);
+		Sch->init(A);
+		if (!A->f_has_strong_generators) {
+			cout << "action::all_point_orbits !f_has_strong_generators" << endl;
+			exit(1);
+			}
+		Sch->init_generators(*A->Strong_gens->gens /* *strong_generators */);
+		Sch->initialize_tables();
+		Sch->compute_point_orbit(orbit_of_idx, verbose_level);
 
 
-		Sch->draw_tree(fname_tree, 0 /* orbit_no*/,
-				xmax, ymax, f_circletext, rad,
-				f_embedded, f_sideways,
-				scale, line_width,
-				FALSE /* f_has_point_labels */, NULL /*  *point_labels */,
+		cout << "computing orbit of point done." << endl;
+
+		char fname_tree_mask[1000];
+
+		sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d.layered_graph", epsilon, n, q);
+
+		Sch->export_tree_as_layered_graph(0 /* orbit_no */,
+				fname_tree_mask,
+				verbose_level - 1);
+
+		int orbit_idx = 0;
+		schreier *shallow_tree;
+
+		cout << "computing shallow Schreier tree:" << endl;
+
+		Sch->shallow_tree_generators(orbit_idx,
+				shallow_tree,
 				verbose_level);
 
+		cout << "computing shallow Schreier tree done." << endl;
 
-		{
-		ofstream fp(fname_report);
+		sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d_shallow.layered_graph", epsilon, n, q);
+
+		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
+				fname_tree_mask,
+				verbose_level - 1);
+
+		if (f_draw_tree) {
+
+			cout << "drawing the Schreier tree" << endl;
+
+			char fname_tree[1000];
+			char fname_report[1000];
+			int xmax = 2000000;
+			int ymax = 1000000;
+			int f_circletext = TRUE;
+			int rad = 18000;
+			int f_embedded = FALSE;
+			int f_sideways = TRUE;
+			double scale = 0.35;
+			double line_width = 1.0;
+
+			sprintf(fname_tree, "O_%d_%d_%d_tree", epsilon, n, q);
+			sprintf(fname_report, "O_%d_%d_%d_report.tex", epsilon, n, q);
 
 
-		latex_head_easy(fp);
-
-		SG->print_generators_tex(fp);
-
-		//fp << "Schreier tree:" << endl;
-		fp << "\\input " << fname_tree << ".tex" << endl;
-
-
-		if (q == 3 && n == 5) {
-			int u[] = { // singular vectors
-					0,0,1,1,0,
-					1,2,0,2,1,
-					0,0,0,1,0,
-					1,0,0,2,1,
-					1,1,2,0,2
-			};
-			int v[] = { // v is orthogonal to u
-					0,1,2,0,2,
-					2,0,1,2,2,
-					1,0,0,0,0,
-					2,0,2,0,1,
-					0,2,2,0,2
-			};
-			int w[] = {
-					1,1,1,1,0
-			};
-			int *Mtx;
-
-			Mtx = NEW_int(6 * 25);
-			for (i = 0; i < 5; i++) {
-				cout << "creating Siegel transformation " << i << " / 5:" << endl;
-				::Siegel_Transformation(*F, 0 /*epsilon */, n - 1,
-						1 /*form_c1*/, 0 /*form_c2*/, 0 /*form_c3*/,
-						Mtx + i * 25, v + i * 5, u + i * 5, verbose_level);
-				int_matrix_print(Mtx + i * 25, 5, 5);
-				cout << endl;
-			}
-			O->make_orthogonal_reflection(Mtx + 5 * 25, w, verbose_level - 1);
-			int_matrix_print(Mtx + 5 * 25, 5, 5);
-			cout << endl;
-			cout << "generators for O(5,3) are:" << endl;
-			int_matrix_print(Mtx, 6, 25);
-
-			vector_ge *gens;
-			gens = NEW_OBJECT(vector_ge);
-			gens->init_from_data(A, Mtx,
-					6 /* nb_elements */, 25 /* elt_size */, verbose_level);
-			gens->print(cout);
-			schreier *Sch2;
-			Sch2 = NEW_OBJECT(schreier);
-
-			cout << "computing orbits on points:" << endl;
-			Sch2->init(A);
-			Sch2->init_generators(*gens);
-			Sch2->compute_all_point_orbits(verbose_level);
-
-			char fname_tree2[1000];
-
-			sprintf(fname_tree2, "O_%d_%d_%d_tree2", epsilon, n, q);
-			Sch2->draw_tree(fname_tree2, 0 /* orbit_no*/,
+			Sch->draw_tree(fname_tree, 0 /* orbit_no*/,
 					xmax, ymax, f_circletext, rad,
 					f_embedded, f_sideways,
 					scale, line_width,
 					FALSE /* f_has_point_labels */, NULL /*  *point_labels */,
 					verbose_level);
 
-			longinteger_object go;
-			A->group_order(go);
 
-			gens->print_generators_tex(go, fp);
+			{
+			ofstream fp(fname_report);
 
+
+			latex_head_easy(fp);
+
+			SG->print_generators_tex(fp);
 
 			//fp << "Schreier tree:" << endl;
-			fp << "\\input " << fname_tree2 << ".tex" << endl;
+			fp << "\\input " << fname_tree << ".tex" << endl;
+
+
+			if (q == 3 && n == 5) {
+				int u[] = { // singular vectors
+						0,0,1,1,0,
+						1,2,0,2,1,
+						0,0,0,1,0,
+						1,0,0,2,1,
+						1,1,2,0,2
+				};
+				int v[] = { // v is orthogonal to u
+						0,1,2,0,2,
+						2,0,1,2,2,
+						1,0,0,0,0,
+						2,0,2,0,1,
+						0,2,2,0,2
+				};
+				int w[] = {
+						1,1,1,1,0
+				};
+				int *Mtx;
+
+				Mtx = NEW_int(6 * 25);
+				for (i = 0; i < 5; i++) {
+					cout << "creating Siegel transformation " << i << " / 5:" << endl;
+					::Siegel_Transformation(*F, 0 /*epsilon */, n - 1,
+							1 /*form_c1*/, 0 /*form_c2*/, 0 /*form_c3*/,
+							Mtx + i * 25, v + i * 5, u + i * 5, verbose_level);
+					int_matrix_print(Mtx + i * 25, 5, 5);
+					cout << endl;
+				}
+				O->make_orthogonal_reflection(Mtx + 5 * 25, w, verbose_level - 1);
+				int_matrix_print(Mtx + 5 * 25, 5, 5);
+				cout << endl;
+				cout << "generators for O(5,3) are:" << endl;
+				int_matrix_print(Mtx, 6, 25);
+
+				vector_ge *gens;
+				gens = NEW_OBJECT(vector_ge);
+				gens->init_from_data(A, Mtx,
+						6 /* nb_elements */, 25 /* elt_size */, verbose_level);
+				gens->print(cout);
+				schreier *Sch2;
+				Sch2 = NEW_OBJECT(schreier);
+
+				cout << "computing orbits on points:" << endl;
+				Sch2->init(A);
+				Sch2->init_generators(*gens);
+				Sch2->compute_all_point_orbits(verbose_level);
+
+				char fname_tree2[1000];
+
+				sprintf(fname_tree2, "O_%d_%d_%d_tree2", epsilon, n, q);
+				Sch2->draw_tree(fname_tree2, 0 /* orbit_no*/,
+						xmax, ymax, f_circletext, rad,
+						f_embedded, f_sideways,
+						scale, line_width,
+						FALSE /* f_has_point_labels */, NULL /*  *point_labels */,
+						verbose_level);
+
+				longinteger_object go;
+				A->group_order(go);
+
+				gens->print_generators_tex(go, fp);
+
+
+				//fp << "Schreier tree:" << endl;
+				fp << "\\input " << fname_tree2 << ".tex" << endl;
 
 
 
-		}
+			}
 
 
-		latex_foot(fp);
+			latex_foot(fp);
 
-		} // end fname_report
-	} // if (f_tree)
+			} // end fname_report
+		} // if (f_tree)
+	} // if (f_orbit_of)
 
 
 

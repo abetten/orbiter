@@ -599,6 +599,11 @@ void schreier_sims::create_group(int verbose_level)
 							"overshooting the expected group after "
 							<< iteration << " iterations" << endl;
 					print_group_orders();
+					if (KG_order.as_int() < 100) {
+						cout << "schreier_sims::create_group so far, "
+								"the group elements are:" << endl;
+						G->print_all_group_elements();
+					}
 					}
 				//break;
 				exit(1);

@@ -80,6 +80,7 @@ void poset_classification::null()
 		
 	f_w = FALSE;
 	f_W = FALSE;
+	f_write_data_files = FALSE;
 	f_t = FALSE;
 	f_T = FALSE;
 	f_log = FALSE;
@@ -232,6 +233,8 @@ void poset_classification::usage()
 	cout << "  write output in level files (only last level)" << endl;
 	cout << "-W" << endl;
 	cout << "  write output in level files (all levels)" << endl;
+	cout << "-write_data_files" << endl;
+	cout << "  write binary data files in level files (all levels)" << endl;
 	cout << "-depth <n>" << endl;
 	cout << "  compute up to depth n" << endl;
 	cout << "-prefix <s>" << endl;
@@ -309,6 +312,12 @@ void poset_classification::read_arguments(int argc,
 			f_W = TRUE;
 			if (f_v) {
 				cout << "-W" << endl;
+				}
+			}
+		else if (strcmp(argv[i], "-write_data_files") == 0) {
+			f_write_data_files = TRUE;
+			if (f_v) {
+				cout << "-write_data_files" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-t") == 0) {

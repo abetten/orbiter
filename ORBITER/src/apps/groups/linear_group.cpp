@@ -43,6 +43,12 @@ int main(int argc, const char **argv)
 	int f_normalizer = FALSE;
 	int f_test_if_geometric = FALSE;
 	int test_if_geometric_depth = 0;
+	int f_draw_tree = FALSE;
+	int f_orbit_of = FALSE;
+	int orbit_of_idx = 0;
+	int f_search_subgroup = FALSE;
+	int f_print_elements = FALSE;
+	int f_print_elements_tex = FALSE;
 
 
 	int i;
@@ -55,8 +61,8 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-linear") == 0) {
 			f_linear = TRUE;
 			Descr = NEW_OBJECT(linear_group_description);
-			i += Descr->read_arguments(argc - (i - 1),
-				argv + i, verbose_level);
+			i += Descr->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
 
 			cout << "-linear" << endl;
 			}
@@ -85,6 +91,27 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-normalizer") == 0) {
 			f_normalizer = TRUE;
 			cout << "-normalizer" << endl;
+			}
+		else if (strcmp(argv[i], "-f_draw_tree") == 0) {
+			f_draw_tree = TRUE;
+			cout << "-f_draw_tree " << endl;
+			}
+		else if (strcmp(argv[i], "-orbit_of") == 0) {
+			f_orbit_of = TRUE;
+			orbit_of_idx = atoi(argv[++i]);
+			cout << "-orbit_of " << orbit_of_idx << endl;
+			}
+		else if (strcmp(argv[i], "-search_subgroup") == 0) {
+			f_search_subgroup = TRUE;
+			cout << "-search_subgroup " << endl;
+			}
+		else if (strcmp(argv[i], "-print_elements") == 0) {
+			f_print_elements = TRUE;
+			cout << "-print_elements " << endl;
+			}
+		else if (strcmp(argv[i], "-print_elements_tex") == 0) {
+			f_print_elements_tex = TRUE;
+			cout << "-print_elements_tex " << endl;
 			}
 	}
 
@@ -159,10 +186,15 @@ int main(int argc, const char **argv)
 	cout << "The group acts on the points of PG(" << Descr->n - 1
 			<< "," << Descr->input_q << ")" << endl;
 
-	for (i = 0; i < A->degree; i++) {
-		cout << i << " & ";
-		A->print_point(i, cout);
-		cout << "\\\\" << endl;
+	if (A->degree < 1000) {
+		for (i = 0; i < A->degree; i++) {
+			cout << i << " & ";
+			A->print_point(i, cout);
+			cout << "\\\\" << endl;
+		}
+	}
+	else {
+		cout << "Too many points to print" << endl;
 	}
 
 	if (f_classes) {
@@ -198,11 +230,197 @@ int main(int argc, const char **argv)
 		gens_N->print_generators_as_permutations();
 
 		sims *N;
+		int N_goi;
 
 		N = gens_N->create_sims(verbose_level);
+		N_goi = N->group_order_int();
 		cout << "The elements of N are:" << endl;
 		N->print_all_group_elements();
+
+		if (N_goi < 30) {
+			cout << "creating group table:" << endl;
+
+			char fname[1000];
+			int *Table;
+			int n;
+			N->create_group_table(Table, n, verbose_level);
+			cout << "The group table of the normalizer is:" << endl;
+			int_matrix_print(Table, n, n, 2);
+			sprintf(fname, "normalizer_%d.tex", n);
+			{
+				ofstream fp(fname);
+				latex_head_easy(fp);
+
+				fp << "\\begin{sidewaystable}" << endl;
+				fp << "$$" << endl;
+				int_matrix_print_tex(fp, Table, n, n);
+				fp << "$$" << endl;
+				fp << "\\end{sidewaystable}" << endl;
+
+				N->print_all_group_elements_tex(fp);
+
+				latex_foot(fp);
+			}
+			FREE_int(Table);
+		}
 	}
+
+	if (f_print_elements) {
+		sims *H;
+
+		//G = LG->initial_strong_gens->create_sims(verbose_level);
+		H = LG->Strong_gens->create_sims(verbose_level);
+
+		//cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_int() << endl;
+
+		int *Elt;
+		longinteger_object go;
+		int i, cnt;
+
+		Elt = NEW_int(A->elt_size_in_int);
+		H->group_order(go);
+
+		cnt = 0;
+		for (i = 0; i < go.as_int(); i++) {
+			H->element_unrank_int(i, Elt);
+
+			cout << "Element " << setw(5) << i << " / "
+					<< go.as_int() << ":" << endl;
+			A->element_print(Elt, cout);
+			cout << endl;
+			A->element_print_as_permutation(Elt, cout);
+			cout << endl;
+		}
+		FREE_int(Elt);
+	}
+
+	if (f_print_elements_tex) {
+		sims *H;
+
+		//G = LG->initial_strong_gens->create_sims(verbose_level);
+		H = LG->Strong_gens->create_sims(verbose_level);
+
+		//cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_int() << endl;
+
+		int *Elt;
+		longinteger_object go;
+
+		Elt = NEW_int(A->elt_size_in_int);
+		H->group_order(go);
+
+		char fname[1000];
+
+		sprintf(fname, "%s_elements.tex", LG->prefix);
+
+
+				{
+					ofstream fp(fname);
+					latex_head_easy(fp);
+
+					H->print_all_group_elements_tex(fp);
+
+					latex_foot(fp);
+				}
+
+		FREE_int(Elt);
+	}
+
+	if (f_search_subgroup) {
+		sims *H;
+
+		//G = LG->initial_strong_gens->create_sims(verbose_level);
+		H = LG->Strong_gens->create_sims(verbose_level);
+
+		//cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_int() << endl;
+
+		int *Elt;
+		longinteger_object go;
+		int i, cnt;
+
+		Elt = NEW_int(A->elt_size_in_int);
+		H->group_order(go);
+
+		cnt = 0;
+		for (i = 0; i < go.as_int(); i++) {
+			H->element_unrank_int(i, Elt);
+
+#if 0
+			cout << "Element " << setw(5) << i << " / "
+					<< go.as_int() << ":" << endl;
+			A->element_print(Elt, cout);
+			cout << endl;
+			A->element_print_as_permutation(Elt, cout);
+			cout << endl;
+#endif
+			if (Elt[7] == 0 && Elt[8] == 0 &&
+					Elt[11] == 0 && Elt[14] == 0 &&
+					Elt[12] == 0 && Elt[19] == 0 &&
+					Elt[22] == 0 && Elt[23] == 0) {
+				cout << "Element " << setw(5) << i << " / "
+						<< go.as_int() << " = " << cnt << ":" << endl;
+				A->element_print(Elt, cout);
+				cout << endl;
+				//A->element_print_as_permutation(Elt, cout);
+				//cout << endl;
+				cnt++;
+			}
+		}
+		cout << "we found " << cnt << " group elements of the special form" << endl;
+
+		FREE_int(Elt);
+
+	}
+
+
+	if (f_orbit_of) {
+
+		schreier *Sch;
+		Sch = NEW_OBJECT(schreier);
+
+		cout << "computing orbit of point " << orbit_of_idx << ":" << endl;
+
+		//A->all_point_orbits(*Sch, verbose_level);
+
+		Sch->init(A);
+		if (!A->f_has_strong_generators) {
+			cout << "action::all_point_orbits !f_has_strong_generators" << endl;
+			exit(1);
+			}
+		Sch->init_generators(*LG->Strong_gens->gens /* *strong_generators */);
+		Sch->initialize_tables();
+		Sch->compute_point_orbit(orbit_of_idx, verbose_level);
+
+
+		cout << "computing orbit of point done." << endl;
+
+		char fname_tree_mask[1000];
+
+		sprintf(fname_tree_mask, "%s_orbit_of_point_%d.layered_graph",
+				LG->prefix, orbit_of_idx);
+
+		Sch->export_tree_as_layered_graph(0 /* orbit_no */,
+				fname_tree_mask,
+				verbose_level - 1);
+
+		strong_generators *SG_stab;
+		longinteger_object full_group_order;
+
+		LG->Strong_gens->group_order(full_group_order);
+
+		cout << "computing the stabilizer of the orbit rep:" << endl;
+		SG_stab = Sch->stabilizer_orbit_rep(
+				LG->A_linear,
+				full_group_order,
+				0 /* orbit_idx */, verbose_level);
+		cout << "The stabilizer of the orbit rep has been computed:" << endl;
+		SG_stab->print_generators();
+		SG_stab->print_generators_tex();
+
+	} // if (f_orbit_of)
+
 
 	if (f_orbits_on_points) {
 		cout << "computing orbits on points:" << endl;
