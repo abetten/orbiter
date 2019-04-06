@@ -1123,6 +1123,7 @@ public:
 	void print_all_group_elements_to_file(char *fname, 
 		int verbose_level);
 	void print_all_group_elements();
+	void print_all_group_elements_tex(std::ostream &ost);
 	void print_all_group_elements_as_permutations();
 	void print_all_group_elements_as_permutations_in_special_action(
 		action *A_special);

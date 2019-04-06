@@ -166,22 +166,33 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int value;
-	int sqrt_value;
+	int sqrt_value, sqrt_inv;
 	int discrete_log;
 	int gram[16];
 	int M5[26];
+	int M5t[26];
 	int M4[16];
 	int M4t[16];
 	int mtx_tmp1[16];
 	int mtx_tmp2[16];
+	int M5_tmp1[25];
+	int M5_tmp2[25];
+	int gram5[25];
+	int ord4, ord4b, ord5;
+	int *E4b;
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_4_to_5" << endl;
 		}
+	E4b = NEW_int(A4->elt_size_in_int);
 	if (f_v) {
 		cout << "E4:" << endl;
 		A4->element_print_quick(E4, cout);
 		}
+	ord4 = A4->element_order(E4);
+	if (f_v) {
+		cout << "ord4=" << ord4 << endl;
+	}
 
 	int_vec_copy(E4, M4, 16);
 	int_vec_zero(gram, 16);
@@ -189,11 +200,8 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	gram[1 * 4 + 0] = 1;
 	gram[2 * 4 + 3] = 1;
 	gram[3 * 4 + 2] = 1;
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 4; j++) {
-			M4t[i * 4 + j] = M4[j * 4 + i];
-			}
-		}
+
+	Fq->transpose_matrix(M4, M4t, 4, 4);
 	if (f_v) {
 		cout << "Gram matrix:" << endl;
 		print_integer_matrix_width(cout, gram, 4, 4, 4, 3);
@@ -237,15 +245,44 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 		cout << "discrete_log=" << discrete_log << endl;
 		}
 	if (ODD(discrete_log)) {
-		cout << "value is not a square" << endl;
+		cout << "value is not a square: discrete_log=" << discrete_log << endl;
 		exit(1);
 		}
 	sqrt_value = Fq->alpha_power(discrete_log >> 1);
+	if (f_v) {
+		cout << "prim elt=" << Fq->alpha_power(1) << endl;
+		}
+	if (f_v) {
+		cout << "sqrt_value=" << sqrt_value << endl;
+		}
+	sqrt_inv = Fq->inverse(sqrt_value);
+	if (f_v) {
+		cout << "sqrt_inv=" << sqrt_inv << endl;
+		}
+	for (i = 0; i < 16; i++) {
+		M4[i] = Fq->mult(M4[i], sqrt_inv);
+	}
+	A4->make_element(E4b, M4, 0);
+	if (f_v) {
+		cout << "E4b:" << endl;
+		A4->element_print_quick(E4b, cout);
+	}
+	ord4b = A4->element_order(E4b);
+	if (f_v) {
+		cout << "ord4b=" << ord4b << endl;
+	}
+	A4->element_power_int_in_place(E4b,
+			ord4b, 0 /*verbose_level*/);
 
+	if (f_v) {
+		cout << "E4b^" << ord4b << "=" << endl;
+		A4->element_print_quick(E4b, cout);
+	}
 
 	int_vec_zero(M5, 26); // 26 in case we are semilinear
 
-	M5[0] = sqrt_value;
+	M5[0] = 1;
+	//M5[0] = sqrt_value;
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			M5[(i + 1) * 5 + j + 1] = M4[i * 4 + j];
@@ -257,6 +294,37 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 		cout << "E5:" << endl;
 		A5->element_print_quick(E5, cout);
 	}
+
+
+	int_vec_zero(gram5, 25);
+	gram5[0 * 5 + 0] = Fq->add(1, 1);
+	gram5[1 * 5 + 2] = 1;
+	gram5[2 * 5 + 1] = 1;
+	gram5[3 * 5 + 4] = 1;
+	gram5[4 * 5 + 3] = 1;
+	Fq->transpose_matrix(M5, M5t, 5, 5);
+	if (f_v) {
+		cout << "Gram5 matrix:" << endl;
+		print_integer_matrix_width(cout, gram5, 5, 5, 5, 3);
+		cout << "M5:" << endl;
+		print_integer_matrix_width(cout, M5, 5, 5, 5, 3);
+		cout << "M5t:" << endl;
+		print_integer_matrix_width(cout, M5t, 5, 5, 5, 3);
+		}
+
+	Fq->mult_matrix_matrix(M5, gram5, M5_tmp1, 5, 5, 5,
+			0 /* verbose_level */);
+	Fq->mult_matrix_matrix(M5_tmp1, M5t, M5_tmp2, 5, 5, 5,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "transformed Gram5 matrix:" << endl;
+		print_integer_matrix_width(cout, M5_tmp2, 5, 5, 5, 3);
+		}
+	ord5 = A5->element_order(E5);
+	if (f_v) {
+		cout << "ord4=" << ord4 << " ord5=" << ord5 << endl;
+	}
+	FREE_int(E4b);
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_4_to_5 done" << endl;
 		}

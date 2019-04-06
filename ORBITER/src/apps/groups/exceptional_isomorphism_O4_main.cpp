@@ -160,36 +160,94 @@ void do_it(int q, int verbose_level)
 	cout << "group order O(5," << q << ") is " << go5 << " as int " << go5i << endl;
 
 
-	for (i = 0; i < goi; i++) {
-		cout << "i=" << i << " / " << goi << endl;
-		G->element_unrank_int(i, E4a);
+	if (goi < 1000) {
+		for (i = 0; i < goi; i++) {
+			cout << "i=" << i << " / " << goi << endl;
+			G->element_unrank_int(i, E4a);
 
-		cout << "E4a=" << endl;
-		A4->element_print_quick(E4a, cout);
+			cout << "E4a=" << endl;
+			A4->element_print_quick(E4a, cout);
 
 
-		Iso->apply_4_to_2(E4a, f_switch, E2a, E2b, 0 /*verbose_level*/);
-		cout << "after isomorphism:" << endl;
-		cout << "f_switch=" << f_switch << endl;
-		cout << "E2a=" << endl;
-		A2->element_print_quick(E2a, cout);
-		cout << "E2b=" << endl;
-		A2->element_print_quick(E2b, cout);
+			Iso->apply_4_to_2(E4a, f_switch, E2a, E2b, 0 /*verbose_level*/);
+			cout << "after isomorphism:" << endl;
+			cout << "f_switch=" << f_switch << endl;
+			cout << "E2a=" << endl;
+			A2->element_print_quick(E2a, cout);
+			cout << "E2b=" << endl;
+			A2->element_print_quick(E2b, cout);
 
-		Iso->apply_2_to_4(f_switch, E2a, E2b, E4b, 0 /*verbose_level*/);
-		j = G->element_rank_int(E4b);
-		cout << "rank returns j=" << j << endl;
-		if (j != i) {
-			cout << "j != i" << endl;
-			cout << "i=" << i << endl;
-			cout << "j=" << j << endl;
-			exit(1);
+			Iso->apply_2_to_4(f_switch, E2a, E2b, E4b, 0 /*verbose_level*/);
+			j = G->element_rank_int(E4b);
+			cout << "rank returns j=" << j << endl;
+			if (j != i) {
+				cout << "j != i" << endl;
+				cout << "i=" << i << endl;
+				cout << "j=" << j << endl;
+				exit(1);
+			}
+#if 0
+			Iso->apply_4_to_5(E4a, E5, 0 /*verbose_level*/);
+			cout << "E5=" << endl;
+			A5->element_print_quick(E5, cout);
+			j = G5->element_rank_int(E5);
+			cout << "rank in O(5,q)=" << j << endl;
+#endif
 		}
-		Iso->apply_4_to_5(E4a, E5, 0 /*verbose_level*/);
-		cout << "E5=" << endl;
-		A5->element_print_quick(E5, cout);
-		j = G5->element_rank_int(E5);
-		cout << "rank in O(5,q)=" << j << endl;
+	}
+	if (q == 71 || q == 23) {
+		int data23[] = {
+				// 3 generators for Sym(4) in PSL(2,23):
+				1,9,20,22,
+				1,7,2,22,
+				1,19,1,22
+		};
+		int data71[] = {
+				// 3 generators for Sym(4) in PSL(2,71):
+#if 0
+				1,1,64,70,
+				1,5,38,17,
+				1,29,10,70
+#else
+				1,29,10,70,
+				1,43,3,70,
+				1,7,22,70
+#endif
+		};
+		for (i = 0; i < 3; i++) {
+			if (q == 23) {
+				A2->make_element(E2a, data23 + i * 4, verbose_level);
+			}
+			else if (q == 71) {
+				A2->make_element(E2a, data71 + i * 4, verbose_level);
+			}
+			else {
+				cout << "unknown value of q" << endl;
+				exit(1);
+			}
+			A2->element_one(E2b, 0 /* verbose_level */);
+			f_switch = FALSE;
+			Iso->apply_2_to_4(f_switch, E2a, E2b, E4a, verbose_level);
+
+			cout << "E4a=" << endl;
+			A4->element_print_quick(E4a, cout);
+			//A4->element_print_quick(E4a, cout);
+			A4->print_for_make_element(cout, E4a);
+			cout << endl;
+
+			j = G->element_rank_int(E4a);
+			cout << "rank =" << j << endl;
+
+#if 1
+			Iso->apply_4_to_5(E4a, E5, verbose_level);
+			cout << "E5=" << endl;
+			A5->element_print_quick(E5, cout);
+			A5->print_for_make_element(cout, E5);
+			cout << endl;
+			j = G5->element_rank_int(E5);
+			cout << "rank in O(5,q)=" << j << endl;
+#endif
+		}
 	}
 
 }

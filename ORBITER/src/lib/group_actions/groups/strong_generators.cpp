@@ -1135,6 +1135,8 @@ void strong_generators::print_generators()
 				<< gens->len << " is:" << endl;
 		A->element_print(gens->ith(i), cout);
 		cout << endl;
+		A->element_print_for_make_element(gens->ith(i), cout);
+		cout << endl;
 		}
 }
 
@@ -1272,9 +1274,15 @@ void strong_generators::print_generators_as_permutations()
 		cout << "Generator " << i << " / "
 				<< gens->len << " is:" << endl;
 		A->element_print(gens->ith(i), cout);
-		A->element_print_as_permutation(gens->ith(i), cout);
-		cout << endl;
+		if (A->degree < 1000) {
+			A->element_print_as_permutation(gens->ith(i), cout);
+			cout << endl;
+		} else {
+			cout << "strong_generators::print_generators_as_permutations "
+					"the degree is too large, we won't print "
+					"the permutation representation" << endl;
 		}
+	}
 }
 
 void strong_generators::print_generators_as_permutations_tex(ostream &ost, action *A2)
@@ -1289,7 +1297,13 @@ void strong_generators::print_generators_as_permutations_tex(ostream &ost, actio
 		ost << "Generator " << i << " / "
 				<< gens->len << " is: $" << endl;
 		//A->element_print(gens->ith(i), cout);
-		A2->element_print_as_permutation(gens->ith(i), ost);
+		if (A->degree < 1000) {
+			A2->element_print_as_permutation(gens->ith(i), ost);
+		} else {
+			cout << "strong_generators::print_generators_as_permutations_tex "
+					"the degree is too large, we won't print "
+					"the permutation representation" << endl;
+		}
 		ost << "$\\\\" << endl;
 		}
 }
@@ -1305,7 +1319,13 @@ void strong_generators::print_with_given_action(
 		A2->element_print(gens->ith(i), cout);
 		cout << endl;
 		cout << "as permutation:" << endl;
-		A2->element_print_as_permutation(gens->ith(i), cout);
+		if (A->degree < 1000) {
+			A2->element_print_as_permutation(gens->ith(i), cout);
+		} else {
+			cout << "strong_generators::print_with_given_action "
+					"the degree is too large, we won't print "
+					"the permutation representation" << endl;
+		}
 		cout << endl;
 		}
 }

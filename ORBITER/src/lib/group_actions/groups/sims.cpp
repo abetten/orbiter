@@ -4375,6 +4375,29 @@ void sims::print_all_group_elements()
 	FREE_int(Elt);
 }
 
+void sims::print_all_group_elements_tex(ostream &ost)
+{
+	int *Elt;
+	longinteger_object go;
+	int i, ord;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+
+	for (i = 0; i < go.as_int(); i++) {
+		element_unrank_int(i, Elt);
+		ord = A->element_order(Elt);
+		ost << "Element " << setw(5) << i << " / "
+				<< go.as_int() << " of order " << ord << ":" << endl;
+		ost << "$$" << endl;
+		A->element_print_latex(Elt, ost);
+		ost << "$$" << endl;
+		//A->element_print_as_permutation(Elt, cout);
+		//cout << endl;
+		}
+	FREE_int(Elt);
+}
+
 void sims::print_all_group_elements_as_permutations()
 {
 	int *Elt;

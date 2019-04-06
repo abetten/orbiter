@@ -138,13 +138,15 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 		f_write_files = (f_W || (f_w && level == to_level - 1));
 	
 		
-		//housekeeping(level + 1, f_write_files,
-		//		os_ticks(), verbose_level - 1);
 
-
-		housekeeping_no_data_file(level + 1,
-				os_ticks(), verbose_level - 1);
-
+		if (f_write_data_files) {
+			housekeeping(level + 1, f_write_files,
+					os_ticks(), verbose_level - 1);
+		}
+		else {
+			housekeeping_no_data_file(level + 1,
+					os_ticks(), verbose_level - 1);
+		}
 
 		int nb_nodes;
 		nb_nodes = nb_orbits_at_level(level + 1);
@@ -311,9 +313,14 @@ int poset_classification::main(int t0,
 		f_write_files = (f_W || (f_w && size == target_depth - 1));
 	
 		
-		//housekeeping(size + 1, f_write_files, t0, vl);
-		housekeeping_no_data_file(size + 1,
-				os_ticks(), verbose_level - 1);
+		if (f_write_data_files) {
+			housekeeping(size + 1, f_write_files,
+					os_ticks(), verbose_level - 1);
+		}
+		else {
+			housekeeping_no_data_file(size + 1,
+					os_ticks(), verbose_level - 1);
+		}
 
 
 		int nb_nodes;

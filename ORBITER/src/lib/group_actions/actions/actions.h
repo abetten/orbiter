@@ -511,6 +511,12 @@ public:
 		void (* callback_choose_random_generator)(int iteration, 
 			int *Elt, void *data, int verbose_level), 
 		int verbose_level);
+
+	void init_orthogonal_group_with_O(orthogonal *O,
+		int f_on_points, int f_on_lines, int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+
 	/** Create the direct product group M1 x M2 in product action
 	 * and restrict the action to the grid. */
 	void init_direct_product_group_and_restrict(

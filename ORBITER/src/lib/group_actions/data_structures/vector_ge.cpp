@@ -324,12 +324,19 @@ ostream& vector_ge::print_as_permutation(ostream& ost)
 	ost << "(" << endl;
 	for (i = 0; i < len; i++) {
 		A->element_print(ith(i), ost);
-		cout << "is the permutation" << endl;
-		A->element_print_as_permutation(ith(i), ost);
+		if (A->degree < 1000) {
+			cout << "is the permutation" << endl;
+			A->element_print_as_permutation(ith(i), ost);
+		}
+		else {
+			cout << "vector_ge::print_as_permutation "
+					"the degree is too large, we won't print "
+					"the permutation" << endl;
+		}
 		if (i < len - 1) {
 			ost << ", " << endl;
 			}
-		}
+	}
 	ost << ")" << endl;
 	return ost;
 }

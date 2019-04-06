@@ -126,35 +126,43 @@ int main(int argc, const char **argv)
 		}
 
 	{
-	blt_set Gen;
+	blt_set *Blt_set;
 	int schreier_depth = ECA->starter_size;
 	int f_debug = FALSE;
+	int f_semilinear = FALSE;
 	
 	finite_field *F;
+	orthogonal *O;
 
 	F = NEW_OBJECT(finite_field);
+	O = NEW_OBJECT(orthogonal);
+	Blt_set = NEW_OBJECT(blt_set);
 
+	if (is_prime(q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
 	if (f_poly) {
 		F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 		}
 	else {
 		F->init(q, 0 /* verbose_level */);
 		}
+	O->init(0 /*epsilon*/, 5 /* n */, F, 0 /*verbose_level*/);
 
-	Gen.init_basic(F, 
+	Blt_set->init_basic(O,
+		f_semilinear,
 		ECA->input_prefix, ECA->base_fname, ECA->starter_size, 
 		argc, argv, verbose_level);
 	
 	
-	Gen.init_group(verbose_level);
+	Blt_set->init_group(f_semilinear, verbose_level);
 	
-	Gen.init2(verbose_level);
+	Blt_set->init2(verbose_level);
 	
 	int f_use_invariant_subset_if_available = TRUE;
-
-	if (Gen.f_override_schreier_depth) {
-		schreier_depth = Gen.override_schreier_depth;
-		}
 	
 	if (f_v) {
 		cout << "init finished, calling main, "
@@ -162,12 +170,12 @@ int main(int argc, const char **argv)
 		}
 
 
-	IA->init(Gen.A, Gen.A, Gen.gen, 
-		Gen.target_size, Gen.prefix_with_directory, ECA,
-		blt_set_callback_report,
-		blt_set_callback_subset_orbits,
-		&Gen,
-		verbose_level);
+	IA->init(Blt_set->A, Blt_set->A, Blt_set->gen,
+			Blt_set->target_size, Blt_set->prefix_with_directory, ECA,
+			blt_set_callback_report,
+			blt_set_callback_subset_orbits,
+			Blt_set,
+			verbose_level);
 
 	if (f_starter) {
 
@@ -175,22 +183,22 @@ int main(int argc, const char **argv)
 		int f_embedded = TRUE;
 		int f_sideways = FALSE;
 
-		depth = Gen.gen->main(t0, schreier_depth, 
+		depth = Blt_set->gen->main(t0, schreier_depth,
 			f_use_invariant_subset_if_available, 
 			f_debug, 
-			Gen.gen->verbose_level);
-		cout << "Gen.gen->main returns depth=" << depth << endl;
+			Blt_set->gen->verbose_level);
+		cout << "Blt_set->gen->main returns depth=" << depth << endl;
 		//Gen.gen->print_data_structure_tex(depth,
 		//Gen.gen->verbose_level);
 		if (f_draw_poset) {
-			Gen.gen->draw_poset(Gen.prefix_with_directory,
+			Blt_set->gen->draw_poset(Blt_set->prefix_with_directory,
 					ECA->starter_size, 0 /* data1 */,
-					f_embedded, f_sideways, Gen.gen->verbose_level);
+					f_embedded, f_sideways, Blt_set->gen->verbose_level);
 			}
 		if (f_list) {
 				{
 				spreadsheet *Sp;
-				Gen.gen->make_spreadsheet_of_orbit_reps(Sp, depth);
+				Blt_set->gen->make_spreadsheet_of_orbit_reps(Sp, depth);
 				char fname_csv[1000];
 				sprintf(fname_csv, "partial_BLT_sets_%d_%d.csv",
 						q, depth);
@@ -204,13 +212,13 @@ int main(int argc, const char **argv)
 	
 		cout << "lift" << endl;
 		
-		ECA->target_size = Gen.target_size;
-		ECA->user_data = (void *) &Gen;
-		ECA->A = Gen.A;
-		ECA->A2 = Gen.A;
+		ECA->target_size = Blt_set->target_size;
+		ECA->user_data = (void *) Blt_set;
+		ECA->A = Blt_set->A;
+		ECA->A2 = Blt_set->A;
 		ECA->prepare_function_new = blt_set_lifting_prepare_function_new;
 		ECA->early_test_function = blt_set_early_test_func_callback;
-		ECA->early_test_function_data = (void *) &Gen;
+		ECA->early_test_function_data = (void *) Blt_set;
 		
 		ECA->compute_lifts(verbose_level);
 
@@ -222,7 +230,7 @@ int main(int argc, const char **argv)
 			cout << "please use -output_prefix <output_prefix>" << endl;
 			exit(1);
 			}
-		Gen.create_graphs(
+		Blt_set->create_graphs(
 			create_graphs_r, create_graphs_m, 
 			create_graphs_level, 
 			ECA->output_prefix, 
@@ -235,7 +243,7 @@ int main(int argc, const char **argv)
 			cout << "please use -output_prefix <output_prefix>" << endl;
 			exit(1);
 			}
-		Gen.create_graphs_list_of_cases(
+		Blt_set->create_graphs_list_of_cases(
 			create_graphs_list_of_cases_prefix,
 			create_graphs_list_of_cases,
 			create_graphs_level, 
@@ -244,7 +252,7 @@ int main(int argc, const char **argv)
 			verbose_level);
 		}
 	else if (f_Law71) {
-		Gen.Law_71(verbose_level);
+		Blt_set->Law_71(verbose_level);
 		}
 
 	IA->execute(verbose_level);
