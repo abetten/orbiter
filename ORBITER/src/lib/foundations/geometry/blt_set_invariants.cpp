@@ -44,11 +44,31 @@ blt_set_invariants::blt_set_invariants()
 
 blt_set_invariants::~blt_set_invariants()
 {
-
+	null();
 }
 
 void blt_set_invariants::null()
 {
+	D = NULL;
+
+	set_size = 0;
+	the_set_in_orthogonal = NULL;
+	the_set_in_PG = NULL;
+
+	intersection_type = NULL;
+	highest_intersection_number = 0;
+	intersection_matrix = NULL;
+	nb_planes = 0;
+
+	Sos = NULL;
+	Sos2 = NULL;
+	Sos3 = NULL;
+
+	D2 = NULL;
+	D3 = NULL;
+
+	Sos2_idx = NULL;
+	Sos3_idx = NULL;
 
 }
 

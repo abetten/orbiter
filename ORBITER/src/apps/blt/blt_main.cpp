@@ -33,7 +33,7 @@ int main(int argc, const char **argv)
 
 
 	int i;
-	int f_Law71 = FALSE;
+	//int f_Law71 = FALSE;
 
 
 	int f_create_graphs = FALSE;
@@ -95,10 +95,12 @@ int main(int argc, const char **argv)
 					<< create_graphs_list_of_cases_prefix
 					<< " " << create_graphs_list_of_cases << endl;
 			}
+#if 0
 		else if (strcmp(argv[i], "-Law71") == 0) {
 			f_Law71 = TRUE;
 			cout << "-Law71" << endl;
 			}
+#endif
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
@@ -251,9 +253,12 @@ int main(int argc, const char **argv)
 			ECA->f_lex, f_eliminate_graphs_if_possible, 
 			verbose_level);
 		}
+
+#if 0
 	else if (f_Law71) {
 		Blt_set->Law_71(verbose_level);
 		}
+#endif
 
 	IA->execute(verbose_level);
 

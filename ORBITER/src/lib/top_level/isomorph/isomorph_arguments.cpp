@@ -170,11 +170,13 @@ void isomorph_arguments::init(action *A, action *A2,
 	isomorph_arguments::callback_data = callback_data;
 
 	if (!ECA->f_has_solution_prefix) {
-		cout << "isomorph_arguments::init please use -solution_prefix <solution_prefix>" << endl;
+		cout << "isomorph_arguments::init please "
+				"use -solution_prefix <solution_prefix>" << endl;
 		exit(1);
 		}
 	if (!ECA->f_has_base_fname) {
-		cout << "isomorph_arguments::init please use -base_fname <base_fname>" << endl;
+		cout << "isomorph_arguments::init please "
+				"use -base_fname <base_fname>" << endl;
 		exit(1);
 		}
 

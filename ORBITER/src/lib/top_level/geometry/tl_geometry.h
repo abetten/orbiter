@@ -505,11 +505,6 @@ public:
 
 	int f_semilinear;
 
-	#if 0
-	finite_field *F;
-	int epsilon; // the type of the quadric (0, 1 or -1)
-	int n; // algebraic dimension
-#endif
 	int q; // field order
 
 	char starter_directory_name[1000];
@@ -519,35 +514,11 @@ public:
 
 	poset *Poset;
 	poset_classification *gen;
-	action *A;
+	action *A; // orthogonal group
 	int degree;
-
-#if 0
-	orthogonal *O;
-	int f_orthogonal_allocated;
-#endif
-
-	//int f_BLT;
-	//int f_ovoid;
 
 
 	int target_size;
-
-	int nb_sol; // number of solutions so far
-
-#if 0
-	int f_override_schreier_depth;
-	int override_schreier_depth;
-
-	int f_override_n;
-	int override_n;
-
-	int f_override_epsilon;
-	int override_epsilon;
-#endif
-
-	//int *Pts; // [target_size * n]
-	//int *Candidates; // [degree * n]
 
 
 	void read_arguments(int argc, const char **argv);
@@ -593,7 +564,7 @@ public:
 		diophant *&Dio, int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
-	void Law_71(int verbose_level);
+	//void Law_71(int verbose_level);
 	void report_from_iso(isomorph &Iso, int verbose_level);
 	void report(orbit_transversal *T, int verbose_level);
 	//void subset_orbits(isomorph &Iso, int verbose_level);
@@ -613,6 +584,71 @@ void blt_set_early_test_func_callback(int *S, int len,
 void blt_set_callback_report(isomorph *Iso, void *data, int verbose_level);
 //void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
 
+
+
+// #############################################################################
+// blt_set_with_action.cpp
+// #############################################################################
+
+
+//! a BLT-set together with its stabilizer
+
+
+class blt_set_with_action {
+
+public:
+
+	blt_set *Blt_set;
+	blt_set_domain *Blt_set_domain;
+	strong_generators *Aut_gens;
+	blt_set_invariants *Inv;
+
+	action *A_on_points;
+	schreier *Orbits_on_points;
+
+#if 0
+	surface_domain *Surf; // do not free
+	surface_with_action *Surf_A; // do not free
+
+	surface_object *SO; // do not free
+	strong_generators *Aut_gens;
+		// generators for the automorphism group
+
+	strong_generators *projectivity_group_gens;
+	sylow_structure *Syl;
+
+	action *A_on_Eckardt_points;
+	action *A_on_Double_points;
+	action *A_on_the_lines;
+	action *A_single_sixes;
+	action *A_on_tritangent_planes;
+	action *A_on_trihedral_pairs;
+	action *A_on_pts_not_on_lines;
+
+
+	schreier *Orbits_on_Eckardt_points;
+	schreier *Orbits_on_Double_points;
+	schreier *Orbits_on_lines;
+	schreier *Orbits_on_single_sixes;
+	schreier *Orbits_on_tritangent_planes;
+	schreier *Orbits_on_trihedral_pairs;
+	schreier *Orbits_on_points_not_on_lines;
+#endif
+
+
+
+	blt_set_with_action();
+	~blt_set_with_action();
+	void null();
+	void freeself();
+	void init_set(
+		blt_set *Blt_set, int *set,
+		strong_generators *Aut_gens, int verbose_level);
+	void init_orbits_on_points(
+			int verbose_level);
+	void print_automorphism_group(
+		std::ostream &ost);
+};
 
 
 

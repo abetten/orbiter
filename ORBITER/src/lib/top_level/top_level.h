@@ -100,6 +100,7 @@ class packing_invariants;
 class invariants_packing;
 class classify_cubic_curves;
 class cubic_curve_with_action;
+class blt_set_with_action;
 
 // #############################################################################
 // representatives.C
