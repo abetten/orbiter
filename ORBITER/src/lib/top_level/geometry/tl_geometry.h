@@ -594,8 +594,9 @@ public:
 		int &f_ruled_out,
 		int verbose_level);
 	void Law_71(int verbose_level);
-	void report(isomorph &Iso, int verbose_level);
-	void subset_orbits(isomorph &Iso, int verbose_level);
+	void report_from_iso(isomorph &Iso, int verbose_level);
+	void report(orbit_transversal *T, int verbose_level);
+	//void subset_orbits(isomorph &Iso, int verbose_level);
 };
 
 // global functions:
@@ -610,7 +611,7 @@ void blt_set_early_test_func_callback(int *S, int len,
 	int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void blt_set_callback_report(isomorph *Iso, void *data, int verbose_level);
-void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
+//void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
 
 
 

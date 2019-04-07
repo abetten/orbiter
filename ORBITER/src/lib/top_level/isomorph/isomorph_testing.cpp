@@ -309,8 +309,8 @@ void isomorph::write_classification_matrix(int verbose_level)
 	starter_idx = NEW_int(nb_orbits);
 
 	for (i = 0; i < nb_starter; i++) {
-		f = starter_orbit_fst[i];
-		l = starter_nb_orbits[i];
+		f = flag_orbit_fst[i];
+		l = flag_orbit_len[i];
 		for (j = 0; j < l; j++) {
 			starter_idx[f + j] = i;
 			}
@@ -400,8 +400,8 @@ void isomorph::write_classification_graph(int verbose_level)
 		}
 
 	for (i = 0; i < nb_starter; i++) {
-		f = starter_orbit_fst[i];
-		l = starter_nb_orbits[i];
+		f = flag_orbit_fst[i];
+		l = flag_orbit_len[i];
 		if (f_vv) {
 			if (l) {
 				cout << "starter orbit " << i << " f=" << f
@@ -473,8 +473,8 @@ void isomorph::decomposition_matrix(int verbose_level)
 	compute_down_link(down_link, verbose_level);
 
 	for (i = 0; i < nb_starter; i++) {
-		f = starter_orbit_fst[i];
-		l = starter_nb_orbits[i];
+		f = flag_orbit_fst[i];
+		l = flag_orbit_len[i];
 		for (j = 0; j < l; j++) {
 			a = f + j;
 			b = down_link[a];

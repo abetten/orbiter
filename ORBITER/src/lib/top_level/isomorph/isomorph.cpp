@@ -40,8 +40,8 @@ void isomorph::null()
 	schreier_vector = NULL;
 	schreier_prev = NULL;
 	
-	starter_orbit_fst = NULL;
-	starter_nb_orbits = NULL;
+	flag_orbit_fst = NULL;
+	flag_orbit_len = NULL;
 	
 	Reps = NULL;
 
@@ -539,8 +539,8 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 
 	// added Dec 25, 2012:
 
-	starter_orbit_fst = NEW_int(nb_starter);
-	starter_nb_orbits = NEW_int(nb_starter);
+	flag_orbit_fst = NEW_int(nb_starter);
+	flag_orbit_len = NEW_int(nb_starter);
 
 	for (i = 0; i < N; i++) {
 		schreier_vector[i] = -2;
@@ -554,8 +554,8 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 					"i=" << i << " / " << nb_starter << endl;
 			}
 
-		starter_orbit_fst[i] = nb_orbits;
-		starter_nb_orbits[i] = 0;
+		flag_orbit_fst[i] = nb_orbits;
+		flag_orbit_len[i] = 0;
 
 		//oracle *O;
 		vector_ge gens;
@@ -604,7 +604,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 				orbit_fst[nb_orbits] =
 						orbit_fst[nb_orbits - 1] +
 						orbit_len[nb_orbits - 1];
-				starter_nb_orbits[i]++;
+				flag_orbit_len[i]++;
 				}
 			}
 		else {
@@ -626,7 +626,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 							<< " fall into " << nb_orbits - nb_orbits_prev
 							<< " orbits" << endl;
 					}
-				starter_nb_orbits[i] = nb_orbits - nb_orbits_prev;
+				flag_orbit_len[i] = nb_orbits - nb_orbits_prev;
 				}
 			}
 		if (f_v) {
@@ -1646,6 +1646,55 @@ void isomorph::init_high_level(action *A, poset_classification *gen,
 	setup_and_open_level_database(verbose_level - 1);
 	if (f_v) {
 		cout << "isomorph::init_high_level done" << endl;
+		}
+}
+
+
+void isomorph::get_orbit_transversal(orbit_transversal *&T,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph::get_orbit_transversal" << endl;
+		}
+	int h, rep, first, id;
+	longinteger_object go;
+
+	T = NEW_OBJECT(orbit_transversal);
+
+	T->A = A_base;
+	T->A2 = A;
+	T->nb_orbits = Reps->count;
+	T->Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
+
+
+	for (h = 0; h < Reps->count; h++) {
+		rep = Reps->rep[h];
+		first = orbit_fst[rep];
+		id = orbit_perm[first];
+
+		int *data;
+		data = NEW_int(size);
+
+		load_solution(id, data);
+
+		sims *Stab;
+
+		Stab = Reps->stab[h];
+		//T->Reps[h].init_data(data, size, 0 /* verbose_level */);
+
+		strong_generators *SG;
+
+		SG = NEW_OBJECT(strong_generators);
+
+		SG->init_from_sims(Stab, 0 /* verbose_level */);
+		T->Reps[h].init_everything(A_base, A, data, size,
+				SG, verbose_level);
+
+	}
+	if (f_v) {
+		cout << "isomorph::get_orbit_transversal done" << endl;
 		}
 }
 

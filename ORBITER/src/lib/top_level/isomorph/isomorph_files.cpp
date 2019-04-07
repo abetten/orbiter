@@ -1336,7 +1336,7 @@ void isomorph::write_starter_nb_orbits(int verbose_level)
 		cout << "isomorph::write_starter_nb_orbits" << endl;
 		}
 
-	int_vec_write_csv(starter_nb_orbits, nb_starter,
+	int_vec_write_csv(flag_orbit_fst, nb_starter,
 			fname_orbits_of_stabilizer_csv, "Stab_orbits");
 
 	cout << "isomorph::write_starter_nb_orbits Written file "
@@ -1377,13 +1377,13 @@ void isomorph::read_starter_nb_orbits(int verbose_level)
 		exit(1);
 		}
 
-	starter_orbit_fst = NEW_int(nb_starter + 1);
-	starter_nb_orbits = NEW_int(nb_starter);
-	starter_orbit_fst[0] = 0;
+	flag_orbit_fst = NEW_int(nb_starter + 1);
+	flag_orbit_len = NEW_int(nb_starter);
+	flag_orbit_fst[0] = 0;
 	for (i = 0; i < m; i++) {
-		starter_nb_orbits[i] = M[i];
-		starter_orbit_fst[i + 1] =
-				starter_orbit_fst[i] + starter_nb_orbits[i];
+		flag_orbit_len[i] = M[i];
+		flag_orbit_fst[i + 1] =
+				flag_orbit_fst[i] + flag_orbit_len[i];
 		}
 	
 	FREE_int(M);

@@ -147,7 +147,8 @@ void isomorph_arguments::read_arguments(int argc, const char **argv,
 
 void isomorph_arguments::init(action *A, action *A2,
 	poset_classification *gen,
-	int target_size, const char *prefix_with_directory, exact_cover_arguments *ECA, 
+	int target_size, const char *prefix_with_directory,
+	exact_cover_arguments *ECA,
 	void (*callback_report)(isomorph *Iso, void *data, int verbose_level), 
 	void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level), 
 	void *callback_data, 
@@ -193,7 +194,8 @@ void isomorph_arguments::execute(int verbose_level)
 		}
 	
 	if (!f_init_has_been_called) {
-		cout << "isomorph_arguments::execute please call init before execute" << endl;
+		cout << "isomorph_arguments::execute please "
+				"call init before execute" << endl;
 		exit(1);
 		}
 	
@@ -211,15 +213,18 @@ void isomorph_arguments::execute(int verbose_level)
 		char fname1[1000];
 		int nb_files = 1;
 		
-		//sprintf(fname1, "%s%s_solutions_%d_0_1.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size);
-		sprintf(fname1, "%s%s_depth_%d_solutions.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size);
+		sprintf(fname1, "%s%s_depth_%d_solutions.txt",
+				ECA->solution_prefix, ECA->base_fname,
+				ECA->starter_size);
 		fname[0] = fname1;
 
 
 		isomorph_read_solution_files(A, A2, gen, 
-			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
+			target_size, prefix_with_directory,
+			prefix_iso, ECA->starter_size,
 			fname, nb_files, 
-			f_has_final_test_function, final_test_function, final_test_data, 
+			f_has_final_test_function,
+			final_test_function, final_test_data,
 			verbose_level);
 
 		}
@@ -229,13 +234,16 @@ void isomorph_arguments::execute(int verbose_level)
 		char fname1[1000];
 		int nb_files = 1;
 		
-		sprintf(fname1, "%s%s_solutions_%d_0_1.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size);
-		//sprintf(fname1, "%s%s_depth_%d_solutions.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size);
+		sprintf(fname1, "%s%s_solutions_%d_0_1.txt",
+				ECA->solution_prefix, ECA->base_fname,
+				ECA->starter_size);
 		fname[0] = fname1;
 
 
-		isomorph_read_solution_files_from_clique_finder(A, A2, gen, 
-			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
+		isomorph_read_solution_files_from_clique_finder(
+			A, A2, gen,
+			target_size, prefix_with_directory,
+			prefix_iso, ECA->starter_size,
 			fname, nb_files, verbose_level);
 		}
 	else if (f_read_solutions_from_clique_finder_list_of_cases) {
@@ -245,7 +253,8 @@ void isomorph_arguments::execute(int verbose_level)
 		int *list_of_cases;
 		int nb_cases;
 
-		read_set_from_file(fname_list_of_cases, list_of_cases, nb_cases, verbose_level);
+		read_set_from_file(fname_list_of_cases,
+				list_of_cases, nb_cases, verbose_level);
 		cout << "nb_cases=" << nb_cases << endl;
 
 		char **fname;
@@ -255,8 +264,8 @@ void isomorph_arguments::execute(int verbose_level)
 		fname = NEW_pchar(nb_cases);
 		for (i = 0; i < nb_cases; i++) {
 			c = list_of_cases[i];
-			//cout << "read_solutions_from_clique_finder_list_of_cases case " << i << " / " << nb_cases << ":" << endl;
-			sprintf(fname1, "%s%s_solutions_%d.txt", ECA->solution_prefix, ECA->base_fname, c);
+			sprintf(fname1, "%s%s_solutions_%d.txt",
+					ECA->solution_prefix, ECA->base_fname, c);
 
 			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
@@ -285,7 +294,9 @@ void isomorph_arguments::execute(int verbose_level)
 		nb_files = read_solutions_split_m;
 		fname = NEW_pchar(nb_files);
 		for (i = 0; i < read_solutions_split_m; i++) {
-			sprintf(fname1, "%s%s_solutions_%d_%d_%d.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size, i, read_solutions_split_m);
+			sprintf(fname1, "%s%s_solutions_%d_%d_%d.txt",
+					ECA->solution_prefix, ECA->base_fname,
+					ECA->starter_size, i, read_solutions_split_m);
 			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
 			}
@@ -314,7 +325,9 @@ void isomorph_arguments::execute(int verbose_level)
 		nb_files = read_statistics_split_m;
 		fname = NEW_pchar(nb_files);
 		for (i = 0; i < read_statistics_split_m; i++) {
-			sprintf(fname1, "%s%s_solutions_%d_%d_%d_stats.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size, i, read_solutions_split_m);
+			sprintf(fname1, "%s%s_solutions_%d_%d_%d_stats.txt",
+					ECA->solution_prefix, ECA->base_fname,
+					ECA->starter_size, i, read_solutions_split_m);
 			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
 			}
@@ -325,7 +338,8 @@ void isomorph_arguments::execute(int verbose_level)
 
 		
 		isomorph_read_statistic_files(A, A2, gen, 
-			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
+			target_size, prefix_with_directory,
+			prefix_iso, ECA->starter_size,
 			(const char **) fname, nb_files, verbose_level);
 
 		for (i = 0; i < nb_files; i++) {
@@ -361,7 +375,8 @@ void isomorph_arguments::execute(int verbose_level)
 	else if (f_report) {
 
 		if (callback_report == NULL) {
-			cout << "isomorph_arguments::execute callback_report == NULL" << endl;
+			cout << "isomorph_arguments::execute "
+					"callback_report == NULL" << endl;
 			exit(1);
 			}
 		isomorph_worker(A, A2, gen, 
@@ -378,7 +393,8 @@ void isomorph_arguments::execute(int verbose_level)
 		WD.callback_data = callback_data;
 		
 		if (f_subset_orbits_file) {
-			read_set_from_file(subset_orbits_fname, WD.the_set, WD.set_size, verbose_level);
+			read_set_from_file(subset_orbits_fname,
+					WD.the_set, WD.set_size, verbose_level);
 			}
 		isomorph_worker(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, 
