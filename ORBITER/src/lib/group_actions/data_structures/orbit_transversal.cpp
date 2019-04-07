@@ -247,6 +247,135 @@ void orbit_transversal::print_table_latex(
 	}
 }
 
+void orbit_transversal::export_data_in_source_code_inside_tex(
+		const char *prefix,
+		char *label_of_structure, ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int h, i;
+	int size;
+
+	if (f_v) {
+		cout << "orbit_transversal::export_data_in_source_code_inside_tex" << endl;
+		}
+
+	ost << "\\section{The " << label_of_structure
+			<< " in Numeric Form}" << endl << endl;
+
+	if (nb_orbits == 0) {
+		cout << "orbit_transversal::export_data_in_source_code_inside_tex "
+				"nb_orbits == 0" << endl;
+		return;
+	}
+	size = Reps[0].sz;
+	//fp << "\\clearpage" << endl << endl;
+	for (h = 0; h < nb_orbits; h++) {
+		if (Reps[h].sz != size) {
+			cout << "the data has different sizes" << endl;
+			exit(1);
+		}
+		for (i = 0; i < size; i++) {
+			ost << Reps[h].data[i];
+			if (i < Reps[h].sz - 1) {
+				ost << ", ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\begin{verbatim}" << endl << endl;
+	ost << "int " << prefix << "_size = " << size << ";" << endl;
+	ost << "int " << prefix << "_nb_reps = " << nb_orbits << ";" << endl;
+	ost << "int " << prefix << "_reps[] = {" << endl;
+	for (h = 0; h < nb_orbits; h++) {
+		ost << "\t";
+		for (i = 0; i < size; i++) {
+			ost << Reps[h].data[i];
+			ost << ", ";
+			}
+		ost << endl;
+		}
+	ost << "};" << endl;
+	ost << "const char *" << prefix << "_stab_order[] = {" << endl;
+	for (h = 0; h < nb_orbits; h++) {
+
+		longinteger_object go;
+
+		if (Reps[h].Stab) {
+			Reps[h].Stab->group_order(go);
+			ost << "\"";
+			go.print_not_scientific(ost);
+			ost << "\"," << endl;
+			}
+		else {
+			ost << "\"";
+			ost << "1";
+			ost << "\"," << endl;
+			}
+		}
+	ost << "};" << endl;
+
+	{
+	int *stab_gens_first;
+	int *stab_gens_len;
+	int fst, j;
+
+	stab_gens_first = NEW_int(nb_orbits);
+	stab_gens_len = NEW_int(nb_orbits);
+	fst = 0;
+	ost << "int " << prefix << "_stab_gens[] = {" << endl;
+	for (h = 0; h < nb_orbits; h++) {
+
+		stab_gens_first[h] = fst;
+		stab_gens_len[h] = Reps[h].Strong_gens->gens->len;
+		fst += Reps[h].Strong_gens->gens->len;
+
+		for (j = 0; j < Reps[h].Strong_gens->gens->len; j++) {
+			if (f_vv) {
+				cout << "isomorph_report_data_in_source_code_inside_"
+						"tex_with_selection before extract_strong_"
+						"generators_in_order generator " << j
+						<< " / " << Reps[h].Strong_gens->gens->len << endl;
+				}
+			ost << "";
+			A->element_print_for_make_element(
+					Reps[h].Strong_gens->gens->ith(j), ost);
+			ost << endl;
+			}
+		}
+	ost << "};" << endl;
+	ost << "int " << prefix << "_stab_gens_fst[] = { ";
+	for (h = 0; h < nb_orbits; h++) {
+		ost << stab_gens_first[h];
+		if (h < nb_orbits - 1) {
+			ost << ", ";
+			}
+		}
+	ost << "};" << endl;
+	ost << "int " << prefix << "_stab_gens_len[] = { ";
+	for (h = 0; h < nb_orbits; h++) {
+		ost << stab_gens_len[h];
+		if (h < nb_orbits - 1) {
+			ost << ", ";
+			}
+		}
+	ost << "};" << endl;
+	ost << "int " << prefix << "_make_element_size = "
+			<< A->make_element_size << ";" << endl;
+	}
+	ost << "\\end{verbatim}" << endl << endl;
+
+
+	if (f_v) {
+		cout << "orbit_transversal::export_data_in_source_code_inside_tex" << endl;
+		}
+
+}
+
+
+
 
 }}
 

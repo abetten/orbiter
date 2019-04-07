@@ -33,6 +33,8 @@ blt_set_domain::blt_set_domain()
 	f_orthogonal_allocated = FALSE;
 	Pts = NULL;
 	Candidates = NULL;
+	P = NULL;
+	G53 = NULL;
 	//null();
 }
 
@@ -68,6 +70,12 @@ void blt_set_domain::freeself()
 	if (Candidates) {
 		FREE_int(Candidates);
 		}
+	if (P) {
+		FREE_OBJECT(P);
+	}
+	if (G53) {
+		FREE_OBJECT(G53);
+	}
 	null();
 	if (f_v) {
 		cout << "blt_set_domain::freeself done" << endl;
@@ -128,6 +136,25 @@ void blt_set_domain::init(orthogonal *O,
 	Candidates = NEW_int(degree * n);
 
 
+	P = NEW_OBJECT(projective_space);
+
+	if (f_v) {
+		cout << "blt_set_domain::init before P->init" << endl;
+		}
+
+
+	P->init(4, F,
+		FALSE /* f_init_incidence_structure */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "blt_set_domain::init after P->init" << endl;
+		}
+
+
+	G53 = NEW_OBJECT(grassmann);
+
+	G53->init(5, 3, F, 0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "blt_set_domain::init finished" << endl;
@@ -808,7 +835,174 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 		}
 }
 
+int blt_set_domain::create_graph(
+	int case_number, int nb_cases_total,
+	int *Starter_set, int starter_size,
+	int *candidates, int nb_candidates,
+	int f_eliminate_graphs_if_possible,
+	colored_graph *&CG,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+	int special_line;
+	int ret = TRUE;
 
+	if (f_v) {
+		cout << "blt_set_domain::create_graph" << endl;
+		}
+	int *point_color;
+	int nb_colors;
+
+	int *lines_on_pt;
+
+	lines_on_pt = NEW_int(1 /*starter_size*/ * (q + 1));
+	O->lines_on_point_by_line_rank(
+			Starter_set[0] /*R->rep[0]*/,
+			lines_on_pt, 0 /* verbose_level */);
+
+	if (f_vv) {
+		cout << "Case " << case_number /*orbit_at_level*/
+				<< " Lines on partial BLT set:" << endl;
+		int_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
+		}
+
+
+	special_line = lines_on_pt[0];
+
+	compute_colors(case_number,
+			Starter_set, starter_size,
+			special_line,
+			candidates, nb_candidates,
+			point_color, nb_colors,
+			verbose_level);
+
+
+	classify C;
+
+	C.init(point_color, nb_candidates, FALSE, 0);
+	if (f_vv) {
+		cout << "blt_set_domain::create_graph Case " << case_number
+				<< " / " << nb_cases_total /* R->nb_cases*/
+				<< " point colors (1st classification): ";
+		C.print(FALSE /* f_reverse */);
+		cout << endl;
+		}
+
+
+	classify C2;
+
+	C2.init(point_color, nb_candidates, TRUE, 0);
+	if (f_vv) {
+		cout << "blt_set_domain::create_graph Case " << case_number
+				<< " / " << nb_cases_total
+				<< " point colors (2nd classification): ";
+		C2.print(FALSE /* f_reverse */);
+		cout << endl;
+		}
+
+
+
+	int f, /*l,*/ idx;
+
+	f = C2.second_type_first[0];
+	//l = C2.second_type_len[0];
+	idx = C2.second_sorting_perm_inv[f + 0];
+	#if 0
+	if (C.type_len[idx] != minimal_type_multiplicity) {
+		cout << "idx != minimal_type" << endl;
+		cout << "idx=" << idx << endl;
+		cout << "minimal_type=" << minimal_type << endl;
+		cout << "C.type_len[idx]=" << C.type_len[idx] << endl;
+		cout << "minimal_type_multiplicity="
+				<< minimal_type_multiplicity << endl;
+		exit(1);
+		}
+	#endif
+	int minimal_type, minimal_type_multiplicity;
+
+	minimal_type = idx;
+	minimal_type_multiplicity = C2.type_len[idx];
+
+	if (f_vv) {
+		cout << "blt_set_domain::create_graph Case " << case_number
+				<< " / " << nb_cases_total << " minimal type is "
+				<< minimal_type << endl;
+		cout << "blt_set_domain::create_graph Case " << case_number
+				<< " / " << nb_cases_total << " minimal_type_multiplicity "
+				<< minimal_type_multiplicity << endl;
+		}
+
+	if (f_eliminate_graphs_if_possible) {
+		if (minimal_type_multiplicity == 0) {
+			cout << "blt_set_domain::create_graph Case " << case_number
+					<< " / " << nb_cases_total << " Color class "
+					<< minimal_type << " is empty, the case is "
+							"eliminated" << endl;
+			ret = FALSE;
+			goto finish;
+			}
+		}
+
+
+
+	if (f_vv) {
+		cout << "blt_set_domain::create_graph Case " << case_number
+				<< " / " << nb_cases_total << " Computing adjacency list, "
+						"nb_points=" << nb_candidates << endl;
+		}
+
+	uchar *bitvector_adjacency;
+	int bitvector_length_in_bits;
+	int bitvector_length;
+
+	compute_adjacency_list_fast(Starter_set[0],
+			candidates, nb_candidates, point_color,
+			bitvector_adjacency, bitvector_length_in_bits, bitvector_length,
+			verbose_level - 2);
+
+	if (f_vv) {
+		cout << "blt_set_domain::create_graph Case " << case_number
+				<< " / " << nb_cases_total << " Computing adjacency "
+						"list done" << endl;
+		cout << "blt_set_domain::create_graph Case " << case_number
+				<< " / " << nb_cases_total << " bitvector_length="
+				<< bitvector_length << endl;
+		}
+
+
+	if (f_v) {
+		cout << "blt_set_domain::create_graph creating colored_graph" << endl;
+		}
+
+	CG = NEW_OBJECT(colored_graph);
+
+	CG->init(nb_candidates /* nb_points */, nb_colors,
+		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
+		// the adjacency becomes part of the colored_graph object
+
+	int i;
+	for (i = 0; i < nb_candidates; i++) {
+		CG->points[i] = candidates[i];
+		}
+	CG->init_user_data(Starter_set, starter_size, verbose_level - 2);
+	sprintf(CG->fname_base, "graph_BLT_%d_%d_%d",
+			q, starter_size, case_number);
+
+
+	if (f_v) {
+		cout << "blt_set_domain::create_graph colored_graph created" << endl;
+		}
+
+finish:
+
+	FREE_int(lines_on_pt);
+	FREE_int(point_color);
+	if (f_v) {
+		cout << "blt_set_domain::create_graph done" << endl;
+		}
+	return ret;
+}
 
 
 }}

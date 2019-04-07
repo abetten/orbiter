@@ -79,6 +79,7 @@ MODULES= \
 		foundations/geometry/andre_construction_point_element.o \
 		foundations/geometry/arc_lifting_with_two_lines.o \
 		foundations/geometry/blt_set_domain.o \
+		foundations/geometry/blt_set_invariants.o \
 		foundations/geometry/buekenhout_metz.o \
 		foundations/geometry/cubic_curve.o \
 		foundations/geometry/data.o \
@@ -273,7 +274,6 @@ MODULES= \
 		DISCRETA/unipoly.o \
 		DISCRETA/vector.o \
 		top_level/algebra_and_number_theory/analyze_group.o \
-		top_level/algebra_and_number_theory/extra.o \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/geometry/arc_generator.o \

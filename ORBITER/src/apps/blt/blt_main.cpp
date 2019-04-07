@@ -173,7 +173,7 @@ int main(int argc, const char **argv)
 	IA->init(Blt_set->A, Blt_set->A, Blt_set->gen,
 			Blt_set->target_size, Blt_set->prefix_with_directory, ECA,
 			blt_set_callback_report,
-			blt_set_callback_subset_orbits,
+			NULL /*blt_set_callback_subset_orbits*/,
 			Blt_set,
 			verbose_level);
 

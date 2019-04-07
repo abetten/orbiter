@@ -11,6 +11,7 @@ MODULES = \
 	andre_construction_point_element.o \
 	arc_lifting_with_two_lines.o \
 	blt_set_domain.o \
+	blt_set_invariants.o \
 	buekenhout_metz.o \
 	cubic_curve.o \
 	data.o \

@@ -19,7 +19,7 @@ namespace top_level {
 // isomorph_files.C
 // #############################################################################
 
-//! hybrid algorithm to classify combinatorial bjects
+//! classification of combinatorial objects using subobjects
 
 
 class isomorph {
@@ -184,11 +184,11 @@ public:
 	// these variables are not used ?? (Oct 30, 2014)
 	// They are used, for instance in isomorph_testing.C 
 	// isomorph::write_classification_graph (May 3, 2015)
-	int *starter_orbit_fst;
+	int *flag_orbit_fst;
 		// [nb_starter + 1]
 		// the beginning of flag orbits 
 		// belonging to a given starter
-	int *starter_nb_orbits;
+	int *flag_orbit_len;
 		// [nb_starter]
 		// the number of flag orbits belonging to a given starter
 
@@ -346,7 +346,9 @@ public:
 	void init_high_level(action *A, poset_classification *gen,
 		int size, char *prefix_classify, char *prefix, 
 		int level, int verbose_level);
-	
+	void get_orbit_transversal(orbit_transversal *&T,
+		int verbose_level);
+
 
 
 	// isomorph_testing.C:
@@ -612,8 +614,8 @@ public:
 			void *final_test_data, int verbose_level),
 		void *final_test_data, 
 		int verbose_level);
-	void write_solution_first_and_len(); // previously write_case_len
-	void read_solution_first_and_len(); // previously read_case_len
+	void write_solution_first_and_len();
+	void read_solution_first_and_len();
 	void write_starter_nb_orbits(int verbose_level);
 	void read_starter_nb_orbits(int verbose_level);
 	void write_hash_and_datref_file(int verbose_level);

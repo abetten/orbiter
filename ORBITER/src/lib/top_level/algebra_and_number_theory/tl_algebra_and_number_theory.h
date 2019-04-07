@@ -24,19 +24,6 @@ void presentation(action *A, sims *S, int goi, vector_ge *gens,
 
 
 // #############################################################################
-// extra.C:
-// #############################################################################
-
-#if 0
-void isomorph_print_set(std::ostream &ost, int len, int *S, void *data);
-sims *create_sims_for_stabilizer(action *A, 
-	int *set, int set_size, int verbose_level);
-sims *create_sims_for_stabilizer_with_input_group(action *A, 
-	action *A0, strong_generators *Strong_gens, 
-	int *set, int set_size, int verbose_level);
-#endif
-
-// #############################################################################
 // factor_group.C:
 // #############################################################################
 

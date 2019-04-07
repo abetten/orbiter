@@ -315,6 +315,7 @@ class cubic_curve;
 class partial_derivative;
 class animate;
 class blt_set_domain;
+class blt_set_invariants;
 
 
 #ifdef MEMORY_DEBUG

@@ -175,7 +175,7 @@ public:
 // blt_set_domain.cpp
 // #############################################################################
 
-//! BLT-sets in O(4,q)
+//! BLT-sets in Q(4,q)
 
 
 
@@ -198,6 +198,8 @@ public:
 	int *Pts; // [target_size * n]
 	int *Candidates; // [degree * n]
 
+	projective_space *P;
+	grassmann *G53;
 
 	blt_set_domain();
 	~blt_set_domain();
@@ -234,6 +236,57 @@ public:
 	void find_free_points(int *S, int S_sz,
 		int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
 		int verbose_level);
+	int create_graph(
+		int case_number, int nb_cases_total,
+		int *Starter_set, int starter_size,
+		int *candidates, int nb_candidates,
+		int f_eliminate_graphs_if_possible,
+		colored_graph *&CG,
+		int verbose_level);
+};
+
+
+// #############################################################################
+// blt_set_invariants.cpp
+// #############################################################################
+
+//! invariants of a BLT-sets in Q(4,q)
+
+
+
+class blt_set_invariants {
+
+public:
+
+	blt_set_domain *D;
+
+	int set_size; // = D->q + 1
+	int *the_set_in_orthogonal; // [set_size]
+	int *the_set_in_PG; // [set_size]
+
+	int *intersection_type;
+	int highest_intersection_number;
+	int *intersection_matrix;
+	int nb_planes;
+
+	set_of_sets *Sos;
+	set_of_sets *Sos2;
+	set_of_sets *Sos3;
+
+	decomposition *D2;
+	decomposition *D3;
+
+	int *Sos2_idx;
+	int *Sos3_idx;
+
+	blt_set_invariants();
+	~blt_set_invariants();
+	void null();
+	void freeself();
+	void init(blt_set_domain *D, int *the_set,
+		int verbose_level);
+	void compute(int verbose_level);
+	void latex(std::ostream &ost, int verbose_level);
 };
 
 

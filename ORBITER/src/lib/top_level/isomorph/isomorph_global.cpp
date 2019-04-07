@@ -1515,7 +1515,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 		cout << "isomorph_report_data_in_source_code" << endl;
 		}
 
-	fp << "\\chapter{The " << label_of_structure_plural
+	fp << "\\section{The " << label_of_structure_plural
 			<< " in Numeric Form}" << endl << endl;
 
 	//fp << "\\clearpage" << endl << endl;
