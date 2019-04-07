@@ -13,6 +13,7 @@ MODULES = \
 	arc_partition.o \
 	BLT_set_create_description.o \
 	BLT_set_create.o \
+	blt_set_with_action.o \
 	blt_set.o \
 	choose_points_or_lines.o \
 	classify_cubic_curves.o \

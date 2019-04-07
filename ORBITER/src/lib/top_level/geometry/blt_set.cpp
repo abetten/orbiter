@@ -30,7 +30,6 @@ blt_set::blt_set()
 	target_size = 0;
 	starter_size = 0;
 	A = NULL;
-	nb_sol = 0;
 	//null();
 }
 
@@ -41,6 +40,15 @@ blt_set::~blt_set()
 
 void blt_set::null()
 {
+	Blt_set_domain = NULL;
+	f_semilinear = FALSE;
+	Poset = NULL;
+	gen = NULL;
+	q = 0;
+	degree = 0;
+	target_size = 0;
+	starter_size = 0;
+	A = NULL;
 }
 
 void blt_set::freeself()
@@ -706,7 +714,7 @@ int blt_set::create_graph(
 
 
 	// we must do this. 
-	// For instance, what of we have no points left, 
+	// For instance, what if we have no points left,
 	// then the minimal color stuff break down.
 	//if (f_eliminate_graphs_if_possible) {
 		if (R->nb_candidates < nb) {
@@ -726,7 +734,8 @@ int blt_set::create_graph(
 
 
 	if (f_v) {
-		cout << "blt_set::create_graph before Blt_set_domain->create_graph" << endl;
+		cout << "blt_set::create_graph before "
+				"Blt_set_domain->create_graph" << endl;
 		}
 	ret = Blt_set_domain->create_graph(
 			orbit_at_level, R->nb_cases,
@@ -736,7 +745,8 @@ int blt_set::create_graph(
 			CG,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "blt_set::create_graph after Blt_set_domain->create_graph" << endl;
+		cout << "blt_set::create_graph after "
+				"Blt_set_domain->create_graph" << endl;
 		}
 
 	FREE_OBJECT(R);
@@ -901,6 +911,7 @@ void blt_set::lifting_prepare_function_new(
 		}
 }
 
+#if 0
 void blt_set::Law_71(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -941,6 +952,7 @@ void blt_set::Law_71(int verbose_level)
 	cout << "Law_71 identified as r=" << r << endl;
 #endif
 }
+#endif
 
 
 void blt_set::report_from_iso(isomorph &Iso, int verbose_level)
@@ -1062,7 +1074,7 @@ void blt_set::report(orbit_transversal *T, int verbose_level)
 
 	cout << "Computing intersection and plane invariants done" << endl;
 
-	f << "\\section{Invariants}" << endl << endl;
+	//f << "\\section{Invariants}" << endl << endl;
 
 	f << "\\section{The BLT-Sets}" << endl << endl;
 
@@ -1165,6 +1177,9 @@ void blt_set::report(orbit_transversal *T, int verbose_level)
 
 
 
+		T->Reps[h].Strong_gens->print_generators_tex(f);
+
+#if 0
 		longinteger_object so;
 		int i;
 
@@ -1186,10 +1201,18 @@ void blt_set::report(orbit_transversal *T, int verbose_level)
 			f << "$$" << endl << "with " << n
 					<< " fixed points" << endl;
 			}
+#endif
 
 
+		blt_set_with_action *BA;
 
+		BA = NEW_OBJECT(blt_set_with_action);
+		BA->init_set(
+				this, T->Reps[h].data,
+				T->Reps[h].Strong_gens, verbose_level);
+		BA->print_automorphism_group(f);
 
+		FREE_OBJECT(BA);
 		}
 
 
