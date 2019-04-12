@@ -234,7 +234,7 @@ void clique_finder_control::all_cliques_weighted(colored_graph *CG,
 	}
 
 	diophant D;
-	int nb_backtrack_nodes;
+	long int nb_backtrack_nodes;
 	int nb_sol;
 	int *Sol_weights;
 	int j;

@@ -148,73 +148,22 @@ void finite_field::matrix_minor(int f_semilinear,
 		}
 }
 
-#if 0
-void finite_field::mult_matrix(int *A, int *B, int *C,
-		int ma, int na, int nb)
-{
-	int i, j, k, a, b, c;
-	
-	for (i = 0; i < ma; i++) {
-		for (k = 0; k < nb; k++) {
-			c = 0;
-			for (j = 0; j < na; j++) {
-				a = A[i * na + j];
-				b = B[j * nb + k];
-				c = add(c, mult(a, b));
-				}
-			C[i * nb + k] = c;
-			}
-		}
-}
-#endif
-
 void finite_field::mult_vector_from_the_left(int *v,
 		int *A, int *vA, int m, int n)
 // v[m], A[m][n], vA[n]
 {
-#if 0
-	int j, k, a, b, ab, c;
-	
-	for (j = 0; j < n; j++) {
-		c = 0;
-		for (k = 0; k < m; k++) {
-			a = v[k];
-			b = A[k * n + j];
-			ab = mult(a, b);
-			c = add(c, ab);
-			}
-		vA[j] = c;
-		}
-#else
 	mult_matrix_matrix(
 			v, A, vA,
 			1, m, n, 0 /*verbose_level */);
-#endif
 }
 
 void finite_field::mult_vector_from_the_right(int *A,
 		int *v, int *Av, int m, int n)
 // A[m][n], v[n], Av[m]
 {
-#if 0
-	int i, k, a, b, ab, c;
-	
-	for (i = 0; i < m; i++) {
-		c = 0;
-		for (k = 0; k < n; k++) {
-			a = A[i * n + k];
-			b = v[k];
-			ab = mult(a, b);
-			c = add(c, ab);
-			}
-		Av[i] = c;
-		}
-#else
 	mult_matrix_matrix(
 			A, v, Av,
 			m, n, 1, 0 /*verbose_level */);
-
-#endif
 }
 
 void finite_field::mult_matrix_matrix(
@@ -245,28 +194,6 @@ void finite_field::mult_matrix_matrix(
 			}
 		}
 }
-
-#if 0
-void finite_field::mult_matrix_matrix(int *A, int *B, int *C,
-		int m, int n, int o)
-// multiplies C := A * B,
-// where A is m x n and B is n x o, so that C is m by o
-// C must already be allocated
-{
-	int i, j, k, a, b;
-	
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < o; j++) {
-			a = 0;
-			for (k = 0; k < n; k++) {
-				b = mult(A[i * n + k], B[k * o + j]);
-				a = add(a, b);
-				}
-			C[i * o + j] = a;
-			}
-		}
-}
-#endif
 
 void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 // (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)

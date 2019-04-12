@@ -103,5 +103,22 @@ void sylow_structure::init(sims *S, int verbose_level)
 	}
 }
 
+void sylow_structure::report(ostream &ost)
+{
+	int idx;
+
+	for (idx = 0; idx < nb_primes; idx++) {
+		ost << "The " << primes[idx] << "-Sylow groups have order $"
+				<< primes[idx] << "^{" << exponents[idx] << "}$\\\\" << endl;
+	}
+	for (idx = 0; idx < nb_primes; idx++) {
+		ost << "One " << primes[idx] << "-Sylow group has "
+				"the following generators:\\\\" << endl;
+		Sub[idx].report(ost);
+	}
+}
+
+
+
 }}
 

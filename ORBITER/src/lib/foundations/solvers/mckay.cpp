@@ -702,7 +702,7 @@ int mckay::tMCKAY::restrict_variables(int level,
 	//int f_vvv = (verbose_level >= 3);
 	//int f_debug;
     int i, j;
-	int current_node;
+	long int current_node;
     int losum,hisum,eic,eiv,lx,hx;
 	int nfree,ok, xlo,xhi;
 	int save;
@@ -1047,7 +1047,7 @@ int mckay::tMCKAY::restrict_variables(int level,
 	return TRUE;
 }
 
-void mckay::tMCKAY::log_12l(int current_node, int level)
+void mckay::tMCKAY::log_12l(long int current_node, int level)
 {
 		cout << "solve " << problem_label 
 			<< " node " << current_node 

@@ -117,11 +117,11 @@ void matrix_group::init_projective_group(int n,
 
 	if (f_semilinear) {
 		sprintf(label, "PGGL_%d_%d", n, F->q);
-		sprintf(label_tex, "P\\Gamma L(%d,%d)", n, F->q);
+		sprintf(label_tex, "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
 		}
 	else {
 		sprintf(label, "PGL_%d_%d", n, F->q);
-		sprintf(label_tex, "PGL(%d,%d)", n, F->q);
+		sprintf(label_tex, "{\\rm PGL}(%d,%d)", n, F->q);
 		}
 
 
@@ -187,11 +187,11 @@ void matrix_group::init_affine_group(int n,
 
 	if (f_semilinear) {
 		sprintf(label, "AGGL_%d_%d", n, F->q);
-		sprintf(label_tex, "A\\Gamma L(%d,%d)", n, F->q);
+		sprintf(label_tex, "{\\rm A}\\Gamma {\\rm L}(%d,%d)", n, F->q);
 		}
 	else {
 		sprintf(label, "AGL_%d_%d", n, F->q);
-		sprintf(label_tex, "AGL(%d,%d)", n, F->q);
+		sprintf(label_tex, "{\\rm AGL}(%d,%d)", n, F->q);
 		}
 
 
@@ -256,11 +256,11 @@ void matrix_group::init_general_linear_group(int n,
 
 	if (f_semilinear) {
 		sprintf(label, "GGL_%d_%d", n, F->q);
-		sprintf(label_tex, "\\Gamma L(%d,%d)", n, F->q);
+		sprintf(label_tex, "\\Gamma {\\rm L}(%d,%d)", n, F->q);
 		}
 	else {
 		sprintf(label, "GL_%d_%d", n, F->q);
-		sprintf(label_tex, "GL(%d,%d)", n, F->q);
+		sprintf(label_tex, "{\\rm GL}(%d,%d)", n, F->q);
 		}
 
 
@@ -1437,9 +1437,19 @@ void matrix_group::GL_print_for_make_element(
 	int w;
 	
 	w = (int) GFq->log10_of_q;
+
+	int *D;
+	D = NEW_int(n * n);
+
+	int_vec_copy(Elt, D, n * n);
+
+	if (f_projective) {
+		GFq->PG_element_normalize_from_front(D, 1, n * n);
+		}
+
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
-			a = Elt[i * n + j];
+			a = D[i * n + j];
 			ost << setw(w) << a << ", ";
 			}
 		}
@@ -1457,6 +1467,9 @@ void matrix_group::GL_print_for_make_element(
 			ost << Elt[n * n] << ", ";
 			}
 		}
+
+	FREE_int(D);
+
 }
 
 void matrix_group::GL_print_for_make_element_no_commas(

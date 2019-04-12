@@ -168,7 +168,19 @@ void action::print_as_permutation(
 void action::print_point(
 		int a, ostream &ost)
 {
-	return (*ptr->ptr_print_point)(*this, a, ost);
+	(*ptr->ptr_print_point)(*this, a, ost);
+}
+
+void action::unrank_point(int rk, int *v)
+// v[low_level_point_size]
+{
+	(*ptr->ptr_unrank_point)(*this, rk, v);
+}
+
+int action::rank_point(int *v)
+// v[low_level_point_size]
+{
+	return (*ptr->ptr_rank_point)(*this, v);
 }
 
 void action::code_for_make_element(

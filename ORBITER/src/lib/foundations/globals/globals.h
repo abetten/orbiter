@@ -212,7 +212,7 @@ public:
 // #############################################################################
 
 
-//! polynomials with double coefficients
+//! polynomials with double coefficients, related to class polynomial_double_domain
 
 
 class polynomial_double {

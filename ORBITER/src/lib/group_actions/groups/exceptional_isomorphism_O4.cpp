@@ -73,7 +73,9 @@ void exceptional_isomorphism_O4::init(finite_field *Fq,
 	exceptional_isomorphism_O4::A4 = A4;
 	exceptional_isomorphism_O4::A5 = A5;
 
-	E5a = NEW_int(A5->elt_size_in_int);
+	if (A5) {
+		E5a = NEW_int(A5->elt_size_in_int);
+	}
 	E4a = NEW_int(A4->elt_size_in_int);
 	E2a = NEW_int(A2->elt_size_in_int);
 	E2b = NEW_int(A2->elt_size_in_int);
@@ -170,14 +172,15 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	int discrete_log;
 	int gram[16];
 	int M5[26];
-	int M5t[26];
+	//int M5t[26];
 	int M4[16];
 	int M4t[16];
 	int mtx_tmp1[16];
 	int mtx_tmp2[16];
-	int M5_tmp1[25];
-	int M5_tmp2[25];
-	int gram5[25];
+	//int M5_tmp1[25];
+	//int M5_tmp2[25];
+	int Gram5[25];
+	int Gram5_transformed[25];
 	int ord4, ord4b, ord5;
 	int *E4b;
 
@@ -296,29 +299,38 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	}
 
 
-	int_vec_zero(gram5, 25);
-	gram5[0 * 5 + 0] = Fq->add(1, 1);
-	gram5[1 * 5 + 2] = 1;
-	gram5[2 * 5 + 1] = 1;
-	gram5[3 * 5 + 4] = 1;
-	gram5[4 * 5 + 3] = 1;
-	Fq->transpose_matrix(M5, M5t, 5, 5);
+	int_vec_zero(Gram5, 25);
+	Gram5[0 * 5 + 0] = Fq->add(1, 1);
+	Gram5[1 * 5 + 2] = 1;
+	Gram5[2 * 5 + 1] = 1;
+	Gram5[3 * 5 + 4] = 1;
+	Gram5[4 * 5 + 3] = 1;
+
 	if (f_v) {
 		cout << "Gram5 matrix:" << endl;
-		print_integer_matrix_width(cout, gram5, 5, 5, 5, 3);
+		print_integer_matrix_width(cout, Gram5, 5, 5, 5, 3);
 		cout << "M5:" << endl;
 		print_integer_matrix_width(cout, M5, 5, 5, 5, 3);
-		cout << "M5t:" << endl;
-		print_integer_matrix_width(cout, M5t, 5, 5, 5, 3);
 		}
 
+
+	Fq->transform_form_matrix(M5, Gram5, Gram5_transformed, 5);
+	// computes Gram_transformed = A * Gram * A^\top
+
+
+#if 0
+	Fq->transpose_matrix(M5, M5t, 5, 5);
+#endif
+
+#if 0
 	Fq->mult_matrix_matrix(M5, gram5, M5_tmp1, 5, 5, 5,
 			0 /* verbose_level */);
 	Fq->mult_matrix_matrix(M5_tmp1, M5t, M5_tmp2, 5, 5, 5,
 			0 /* verbose_level */);
+#endif
 	if (f_v) {
 		cout << "transformed Gram5 matrix:" << endl;
-		print_integer_matrix_width(cout, M5_tmp2, 5, 5, 5, 3);
+		print_integer_matrix_width(cout, Gram5_transformed, 5, 5, 5, 3);
 		}
 	ord5 = A5->element_order(E5);
 	if (f_v) {

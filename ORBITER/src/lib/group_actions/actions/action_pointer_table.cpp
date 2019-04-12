@@ -59,6 +59,8 @@ void action_pointer_table::null_function_pointers()
 	ptr_element_print_for_make_element = NULL;
 	ptr_element_print_for_make_element_no_commas = NULL;
 	ptr_print_point = NULL;
+	ptr_unrank_point = NULL;
+	ptr_rank_point = NULL;
 }
 
 void action_pointer_table::init_function_pointers_matrix_group()
@@ -89,6 +91,8 @@ void action_pointer_table::init_function_pointers_matrix_group()
 	ptr_element_print_for_make_element_no_commas =
 			matrix_group_element_print_for_make_element_no_commas;
 	ptr_print_point = matrix_group_print_point;
+	ptr_unrank_point = matrix_group_unrank_point;
+	ptr_rank_point = matrix_group_rank_point;
 }
 
 void action_pointer_table::init_function_pointers_wreath_product_group()

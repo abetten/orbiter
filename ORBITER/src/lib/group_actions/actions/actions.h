@@ -169,7 +169,6 @@ public:
 	 * using the make_element function */
 	int make_element_size;
 
-
 	/** the number of int that are needed to
 	 * represent a point in low-level format
 	 * (input and output in element_image_of_low_level
@@ -329,7 +328,9 @@ public:
 	void print_symmetry_group_type(std::ostream &ost);
 	void report(std::ostream &ost);
 	void print_info();
+	void report_basic_orbits(std::ostream &ost);
 	void print_base();
+	void print_points(std::ostream &ost);
 	void group_order(longinteger_object &go);
 	void print_group_order(std::ostream &ost);
 	void print_group_order_long(std::ostream &ost);
@@ -427,7 +428,11 @@ public:
 		sims *G, int *Elt, int verbose_level);
 	void conjugacy_classes_and_normalizers(
 			int verbose_level);
+	void report_conjugacy_classes_and_normalizers(std::ostream &ost,
+			int verbose_level);
 	void read_conjugacy_classes_and_normalizers(
+			char *fname, int verbose_level);
+	void read_and_report_conjugacy_classes_and_normalizers(std::ostream &ost,
 			char *fname, int verbose_level);
 	void report_fixed_objects(int *Elt,
 			char *fname_latex, int verbose_level);
@@ -789,6 +794,8 @@ public:
 	void print_quick(std::ostream &ost, void *elt);
 	void print_as_permutation(std::ostream &ost, void *elt);
 	void print_point(int a, std::ostream &ost);
+	void unrank_point(int rk, int *v);
+	int rank_point(int *v);
 	void code_for_make_element(int *data, void *elt);
 	void print_for_make_element(std::ostream &ost, void *elt);
 	void print_for_make_element_no_commas(std::ostream &ost, void *elt);
@@ -1002,6 +1009,8 @@ public:
 		void *elt, std::ostream &ost);
 	void (*ptr_element_print_for_make_element_no_commas)(action &A,
 		void *elt, std::ostream &ost);
+	void (*ptr_unrank_point)(action &A, int rk, int *v);
+	int (*ptr_rank_point)(action &A, int *v);
 
 	/** counters for how often a function has been called */
 	int nb_times_image_of_called;
@@ -1183,6 +1192,8 @@ void matrix_group_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
 void matrix_group_print_point(action &A, 
 	int a, std::ostream &ost);
+void matrix_group_unrank_point(action &A, int rk, int *v);
+int matrix_group_rank_point(action &A, int *v);
 
 
 // #############################################################################

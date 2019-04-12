@@ -152,6 +152,7 @@ public:
 	int f_semilinear;
 
 	char prefix[1000];
+	char label_latex[1000];
 	strong_generators *initial_strong_gens;
 	action *A_linear;
 	matrix_group *Mtx;
@@ -171,26 +172,34 @@ public:
 	void freeself();
 	void init(linear_group_description *description, 
 		int verbose_level);
-	void init_PGL2q_OnConic(char *prefix, int verbose_level);
-	void init_wedge_action(char *prefix, int verbose_level);
-	void init_monomial_group(char *prefix, int verbose_level);
-	void init_diagonal_group(char *prefix, int verbose_level);
-	void init_singer_group(char *prefix, int singer_power, 
-		int verbose_level);
-	void init_singer_group_and_frobenius(char *prefix,
+	void init_PGL2q_OnConic(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_wedge_action(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_monomial_group(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_diagonal_group(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_singer_group(char *prefix, char *label_latex,
 			int singer_power, int verbose_level);
-	void init_null_polarity_group(char *prefix, int verbose_level);
-	void init_borel_subgroup_upper(char *prefix, int verbose_level);
-	void init_identity_subgroup(char *prefix, int verbose_level);
-	void init_symplectic_group(char *prefix, int verbose_level);
-	void init_subfield_structure_action(char *prefix, int s, 
-		int verbose_level);
-	void init_orthogonal_group(char *prefix, 
+	void init_singer_group_and_frobenius(char *prefix, char *label_latex,
+			int singer_power, int verbose_level);
+	void init_null_polarity_group(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_borel_subgroup_upper(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_identity_subgroup(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_symplectic_group(char *prefix, char *label_latex,
+			int verbose_level);
+	void init_subfield_structure_action(char *prefix, char *label_latex,
+			int s, int verbose_level);
+	void init_orthogonal_group(char *prefix, char *label_latex,
 		int epsilon, int verbose_level);
-	void init_subgroup_from_file(char *prefix, 
+	void init_subgroup_from_file(char *prefix, char *label_latex,
 		const char *subgroup_fname, const char *subgroup_label, 
 		int verbose_level);
-	void init_subgroup_by_generators(char *prefix,
+	void init_subgroup_by_generators(char *prefix, char *label_latex,
 		const char *subgroup_label,
 		const char *subgroup_order_text,
 		int nb_subgroup_generators,
@@ -1304,6 +1313,7 @@ public:
 	void print_generators_MAGMA(action *A, std::ostream &ost);
 	void print_generators_tex();
 	void print_generators_tex(std::ostream &ost);
+	void print_generators_for_make_element(std::ostream &ost);
 	void print_generators_as_permutations();
 	void print_generators_as_permutations_tex(std::ostream &ost, action *A2);
 	void print_with_given_action(std::ostream &ost, action *A2);
@@ -1482,7 +1492,7 @@ public:
 	void init(int *Elements, int group_order, int *gens, int nb_gens);
 	void print();
 	int contains_this_element(int elt);
-
+	void report(std::ostream &ost);
 };
 
 // #############################################################################
@@ -1506,6 +1516,7 @@ public:
 	void null();
 	void freeself();
 	void init(sims *S, int verbose_level);
+	void report(std::ostream &ost);
 };
 
 

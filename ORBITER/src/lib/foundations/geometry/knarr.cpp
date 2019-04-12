@@ -283,9 +283,14 @@ void knarr::points_and_lines(int verbose_level)
 			cout << endl;
 			}
 
+
+#if 0
 		for (i = 0; i < 3 * 6; i++) {
 			G63->M[i] = Basis2[i];
 			}
+#else
+		int_vec_copy(Basis2, G63->M, 3 * 6);
+#endif
 		i = G63->rank_int(0);
 		if (f_v4) {
 			cout << "This plane has rank " << i
@@ -305,9 +310,12 @@ void knarr::points_and_lines(int verbose_level)
 
 		for (jj = 0; jj < Gre->degree; jj++) {
 			Gre->unrank_int(subspace_basis, jj, 0);
+			int_vec_copy(subspace_basis, P5->Grass_lines->M, 2 * 6);
+#if 0
 			for (hh = 0; hh < 2 * 6; hh++) {
 				P5->Grass_lines->M[hh] = subspace_basis[hh];
 				}
+#endif
 			j = P5->Grass_lines->rank_int(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
@@ -368,10 +376,12 @@ void knarr::points_and_lines(int verbose_level)
 
 	for (i = 0; i < six_choose_three_q_int; i++) {
 		
-		G63->unrank_int(i, 0);
+		G63->unrank_int_here(Basis, i, 0);
+#if 0
 		for (h = 0; h < 3 * 6; h++) {
 			Basis[h] = G63->M[h];
 			}
+#endif
 		if (f_v4) {
 			cout << "Subspace i=" << i << " / "
 					<< six_choose_three_q_int << endl;
@@ -428,7 +438,7 @@ void knarr::points_and_lines(int verbose_level)
 			continue;
 			}
 
-		// now we figure out if this line belongs top a BLT-plane.
+		// now we figure out if this line belongs to a BLT-plane.
 		// Simply add P to the basis and rank to
 		// determine which plane it would be.
 		// Then check and see if this plane is a BLT-plane.
@@ -441,9 +451,13 @@ void knarr::points_and_lines(int verbose_level)
 		Basis_intersection[2 * 6 + 5] = 0;
 
 
+#if 0
 		for (h = 0; h < 3 * 6; h++) {
 			G63->M[h] = Basis_intersection[h];
 			}
+#else
+		int_vec_copy(Basis_intersection, G63->M, 3 * 6);
+#endif
 		j = G63->rank_int(0);
 		
 		if (type_b_lines->is_contained(j)) {
@@ -518,10 +532,12 @@ void knarr::points_and_lines(int verbose_level)
 					continue;
 					}
 				i = type_a_lines->set[u];
-				G63->unrank_int(i, 0);
+				G63->unrank_int_here(Basis, i, 0);
+#if 0
 				for (hh = 0; hh < 3 * 6; hh++) {
 					Basis[hh] = G63->M[hh];
 					}
+#endif
 				cout << "cnt = " << cnt << " Subspace i=" << i
 						<< " is totally isotropic and does "
 								"not contain P." << endl;
@@ -542,7 +558,7 @@ void knarr::incidence_matrix(int *&Inc,
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = FALSE;
 
-	int i, j, a, b, c, h;
+	int i, j, a, b, c;
 
 	int I, J, row, col, row0, col0, L1, L2;
 	int *Basis_U, dim_U;
@@ -560,9 +576,7 @@ void knarr::incidence_matrix(int *&Inc,
 	cout << "Computing the incidence matrix..." << endl;
 	
 	Inc = NEW_int(nb_points * nb_lines);
-	for (i = 0; i < nb_points * nb_lines; i++) {
-		Inc[i] = 0;
-		}
+	int_vec_zero(Inc, nb_points * nb_lines);
 	
 	for (I = 0; I < 3; I++) {
 		if (I == 0) {
@@ -587,10 +601,12 @@ void knarr::incidence_matrix(int *&Inc,
 				}
 			else if (I == 1) {
 				a = type_ii_points->set[i];
-				P5->Grass_lines->unrank_int(a, 0);
+				P5->Grass_lines->unrank_int_here(Basis_U, a, 0);
+#if 0
 				for (h = 0; h < 2 * 6; h++) {
 					Basis_U[h] = P5->Grass_lines->M[h];
 					}
+#endif
 				dim_U = 2;
 				}
 			else {
@@ -623,18 +639,22 @@ void knarr::incidence_matrix(int *&Inc,
 
 					if (J == 0) {
 						b = type_a_lines->set[j];
-						G63->unrank_int(b, 0);
+						G63->unrank_int_here(Basis_V, b, 0);
+#if 0
 						for (h = 0; h < 3 * 6; h++) {
 							Basis_V[h] = G63->M[h];
 							}
+#endif
 						dim_V = 3;
 						}
 					else {
 						b = type_b_lines->set[j];
-						G63->unrank_int(b, 0);
+						G63->unrank_int_here(Basis_V, b, 0);
+#if 0
 						for (h = 0; h < 3 * 6; h++) {
 							Basis_V[h] = G63->M[h];
 							}
+#endif
 						dim_V = 3;
 						}
 
@@ -678,6 +698,5 @@ void knarr::incidence_matrix(int *&Inc,
 	FREE_int(Basis_V);
 }
 
-}
-}
+}}
 

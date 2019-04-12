@@ -1178,6 +1178,7 @@ void blt_set::report(orbit_transversal *T, int verbose_level)
 
 
 		T->Reps[h].Strong_gens->print_generators_tex(f);
+		T->Reps[h].Strong_gens->print_generators_for_make_element(f);
 
 #if 0
 		longinteger_object so;

@@ -533,5 +533,45 @@ void matrix_group_print_point(action &A, int a, ostream &ost)
 	int_vec_print(ost, G->v1, G->n);
 }
 
+void matrix_group_unrank_point(action &A, int rk, int *v)
+{
+	matrix_group *G = A.G.matrix_grp;
+
+	if (G->f_projective) {
+		G->GFq->PG_element_unrank_modified(v, 1 /* stride */, G->n, rk);
+		}
+	else if (G->f_affine) {
+		AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
+		}
+	else if (G->f_general_linear) {
+		AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
+		}
+	else {
+		cout << "matrix_group_unrank_point unknown group type" << endl;
+		exit(1);
+		}
+}
+
+int matrix_group_rank_point(action &A, int *v)
+{
+	matrix_group *G = A.G.matrix_grp;
+	int rk;
+
+	if (G->f_projective) {
+		G->GFq->PG_element_rank_modified(v, 1 /* stride */, G->n, rk);
+		}
+	else if (G->f_affine) {
+		AG_element_rank(G->GFq->q, v, 1, G->n, rk);
+		}
+	else if (G->f_general_linear) {
+		AG_element_rank(G->GFq->q, v, 1, G->n, rk);
+		}
+	else {
+		cout << "matrix_group_unrank_point unknown group type" << endl;
+		exit(1);
+		}
+	return rk;
+}
+
 
 }}

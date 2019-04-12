@@ -765,8 +765,8 @@ int finite_field::evaluate_symplectic_form(int len, int *x, int *y)
 	int i, n, c;
 
 	if (ODD(len)) {
-		cout << "finite_field::evaluate_symplectic_form len must be even"
-				<< endl;
+		cout << "finite_field::evaluate_symplectic_form "
+				"len must be even" << endl;
 		cout << "len=" << len << endl;
 		exit(1);
 		}
@@ -776,6 +776,27 @@ int finite_field::evaluate_symplectic_form(int len, int *x, int *y)
 		c = add(c, add(
 				mult(x[2 * i + 0], y[2 * i + 1]),
 				negate(mult(x[2 * i + 1], y[2 * i + 0]))
+				));
+		}
+	return c;
+}
+
+int finite_field::evaluate_symmetric_form(int len, int *x, int *y)
+{
+	int i, n, c;
+
+	if (ODD(len)) {
+		cout << "finite_field::evaluate_symmetric_form "
+				"len must be even" << endl;
+		cout << "len=" << len << endl;
+		exit(1);
+		}
+	c = 0;
+	n = len >> 1;
+	for (i = 0; i < n; i++) {
+		c = add(c, add(
+				mult(x[2 * i + 0], y[2 * i + 1]),
+				mult(x[2 * i + 1], y[2 * i + 0])
 				));
 		}
 	return c;
