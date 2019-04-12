@@ -540,6 +540,40 @@ void action::conjugacy_classes_and_normalizers(
 }
 
 
+void action::report_conjugacy_classes_and_normalizers(ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char prefix[1000];
+	char fname1[1000];
+	char fname2[1000];
+
+
+	if (f_v) {
+		cout << "action::conjugacy_classes_and_normalizers" << endl;
+		}
+
+	sprintf(prefix, "%s", group_prefix);
+	sprintf(fname1, "%s_classes.magma", prefix);
+	sprintf(fname2, "%s_classes_out.txt", prefix);
+
+
+	if (file_size(fname2) > 0) {
+		read_and_report_conjugacy_classes_and_normalizers(ost,
+				fname2, verbose_level);
+		}
+	else {
+		conjugacy_classes_and_normalizers_using_MAGMA(prefix,
+				Sims, verbose_level);
+		}
+
+	if (f_v) {
+		cout << "action::conjugacy_classes_and_normalizers done" << endl;
+		}
+}
+
+
+
 void action::read_conjugacy_classes_and_normalizers(
 		char *fname, int verbose_level)
 {
@@ -765,6 +799,215 @@ void action::read_conjugacy_classes_and_normalizers(
 		cout << "action::read_conjugacy_classes_and_normalizers done" << endl;
 		}
 }
+
+void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
+		char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int nb_classes;
+	int *perms;
+	int *class_size;
+	int *class_order_of_element;
+	int *class_normalizer_order;
+	int *class_normalizer_number_of_generators;
+	int **normalizer_generators_perms;
+	//projective_space_with_action *PA;
+
+	if (f_v) {
+		cout << "action::read_and_report_conjugacy_classes_and_normalizers" << endl;
+		}
+
+	read_conjugacy_classes_and_normalizers_from_MAGMA(
+			fname,
+			nb_classes,
+			perms,
+			class_size,
+			class_order_of_element,
+			class_normalizer_order,
+			class_normalizer_number_of_generators,
+			normalizer_generators_perms,
+			verbose_level - 1);
+
+
+#if 0
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	int f_semilinear;
+
+	if (is_prime(q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+	PA->init(
+		F, 3 /* n */, f_semilinear,
+		FALSE /* f_init_incidence_structure */,
+		verbose_level);
+#endif
+
+
+	longinteger_object go;
+	longinteger_domain D;
+
+	group_order(go);
+	cout << "The group has order " << go << endl;
+
+	char fname_latex[1000];
+	strcpy(fname_latex, fname);
+
+	replace_extension_with(fname_latex, ".tex");
+
+
+	ost << "\\section{Conjugacy classes in $"
+			<< label_tex << "$}" << endl;
+
+
+	ost << "The group order is " << endl;
+	ost << "$$" << endl;
+	go.print_not_scientific(ost);
+	ost << endl;
+	ost << "$$" << endl;
+
+
+	cout << "The conjugacy classes are:" << endl;
+	for (i = 0; i < nb_classes; i++) {
+		strong_generators *gens;
+		longinteger_object go1, Class_size, centralizer_order;
+		int goi;
+		vector_ge *nice_gens;
+
+
+		goi = class_order_of_element[i];
+		gens = NEW_OBJECT(strong_generators);
+
+		gens->init_from_permutation_representation(this,
+			perms + i * degree,
+			1, goi, nice_gens,
+			verbose_level);
+
+		if (f_v) {
+			cout << "action::normalizer_using_MAGMA "
+				"after gens->init_from_permutation_"
+				"representation" << endl;
+		}
+
+		Class_size.create(class_size[i]);
+
+		D.integral_division_exact(go, Class_size, centralizer_order);
+
+
+
+		int ngo;
+		int nb_perms;
+		strong_generators *N_gens;
+		vector_ge *nice_gens_N;
+
+		ngo = class_normalizer_order[i];
+		nb_perms = class_normalizer_number_of_generators[i];
+
+		//int *class_normalizer_order;
+		//int *class_normalizer_number_of_generators;
+		//int **normalizer_generators_perms;
+
+		N_gens = NEW_OBJECT(strong_generators);
+		N_gens->init_from_permutation_representation(this,
+				normalizer_generators_perms[i],
+				nb_perms, ngo, nice_gens_N,
+				verbose_level - 1);
+
+		cout << "class " << i << " / " << nb_classes
+			<< " size = " << class_size[i]
+			<< " order of element = " << class_order_of_element[i]
+			<< " centralizer order = " << centralizer_order
+			<< " normalizer order = " << ngo
+			<< " : " << endl;
+		cout << "packing::read_conjugacy_classes_and_normalizers created "
+				"generators for a group" << endl;
+		gens->print_generators();
+		gens->print_generators_as_permutations();
+		gens->group_order(go1);
+		cout << "packing::read_conjugacy_classes_and_normalizers "
+				"The group has order " << go1 << endl;
+
+		ost << "\\bigskip" << endl;
+		ost << "\\subsection*{Class " << i << " / "
+				<< nb_classes << "}" << endl;
+		ost << "Order of element = " << class_order_of_element[i]
+				<< "\\\\" << endl;
+		ost << "Class size = " << class_size[i] << "\\\\" << endl;
+		ost << "Centralizer order = " << centralizer_order
+				<< "\\\\" << endl;
+		ost << "Normalizer order = " << ngo
+				<< "\\\\" << endl;
+
+		int *Elt = NULL;
+
+
+		if (class_order_of_element[i] > 1) {
+			Elt = nice_gens->ith(0);
+			ost << "Representing element is" << endl;
+			ost << "$$" << endl;
+			element_print_latex(Elt, ost);
+			ost << "$$" << endl;
+			ost << "$";
+			element_print_for_make_element(Elt, ost);
+			ost << "$\\\\" << endl;
+
+
+
+		}
+		ost << "The normalizer is generated by:\\\\" << endl;
+		N_gens->print_generators_tex(ost);
+
+
+#if 0
+		if (class_order_of_element[i] > 1) {
+			fp << "The fix structure is:\\\\" << endl;
+			PA->report_fixed_objects_in_PG_3_tex(
+					Elt, fp,
+					verbose_level);
+
+			fp << "The orbit structure is:\\\\" << endl;
+			PA->report_orbits_in_PG_3_tex(
+				Elt, fp,
+				verbose_level);
+		}
+		if (class_order_of_element[i] > 1) {
+
+			PA->report_decomposition_by_single_automorphism(
+					Elt, fp,
+					verbose_level);
+			// PA->
+			//action *A; // linear group PGGL(d,q)
+			//action *A_on_lines; // linear group PGGL(d,q) acting on lines
+
+
+		}
+#endif
+
+		FREE_int(normalizer_generators_perms[i]);
+
+		FREE_OBJECT(nice_gens_N);
+		FREE_OBJECT(nice_gens);
+		FREE_OBJECT(N_gens);
+		FREE_OBJECT(gens);
+		} // next i
+
+	FREE_int(perms);
+	FREE_int(class_size);
+	FREE_int(class_order_of_element);
+	FREE_int(class_normalizer_order);
+	FREE_int(class_normalizer_number_of_generators);
+	FREE_pint(normalizer_generators_perms);
+	//FREE_OBJECT(PA);
+
+	if (f_v) {
+		cout << "action::read_and_report_conjugacy_classes_and_normalizers done" << endl;
+		}
+}
+
 
 
 void action::report_fixed_objects(int *Elt,

@@ -3632,25 +3632,31 @@ public:
 // W3q.C:
 // #############################################################################
 
-//! a W(3,q) generalized quadrangle
+//! isomorphism between the W(3,q) and the Q(4,q) generalized quadrangles
 
 
 class W3q {
 public:
 	int q;
-	//int f_poly;
-	//char *poly;
+
 	projective_space *P3;
 	orthogonal *Q4;
 	finite_field *F;
-	int *Basis;
+	int *Basis; // [2 * 4]
 
 	int nb_lines;
 		// number of absolute lines of W(3,q)
 		// = number of points on Q(4,q)
 	int *Lines; // [nb_lines]
-	int *Q4_rk;
-	int *Line_idx;
+		// Lines[] is a list of all absolute lines of the symplectic polarity
+		// as lines in PG(3,q)
+
+	int *Q4_rk; // [nb_lines]
+	int *Line_idx; // [nb_lines]
+		// Q4_rk[] and Line_idx[] are inverse permutations
+		// for a line a, Q4_rk[a] is the point b on the quadric correponding to it.
+		// For a quadric point b, Line_idx[b] is the line index a corresponding to it
+
 	int v5[5];
 
 	W3q();
@@ -3658,8 +3664,13 @@ public:
 	void null();
 	void freeself();
 	void init(finite_field *F, int verbose_level);
+	void find_lines(int verbose_level);
+	void print_lines();
 	int evaluate_symplectic_form(int *x4, int *y4);
 	void isomorphism_Q4q(int *x4, int *y4, int *v);
+	void print_by_lines();
+	void print_by_points();
+	int find_line(int line);
 };
 
 

@@ -2239,11 +2239,64 @@ void action::print_info()
 
 }
 
+void action::report_basic_orbits(ostream &ost)
+{
+	int i;
+
+	ost << "The base has length " << base_len << "\\\\" << endl;
+	ost << "The basic orbits are: \\\\" << endl;
+	for (i = 0; i < base_len; i++) {
+		ost << "Basic orbit " << i << " is orbit of " << base[i]
+			<< " of length " << transversal_length[i] << "\\\\" << endl;
+	}
+}
+
 void action::print_base()
 {
 	cout << "action " << label << " has base ";
 	int_vec_print(cout, base, base_len);
 	cout << endl;
+}
+
+void action::print_points(ostream &ost)
+{
+	int i;
+	int *v;
+
+	v = NEW_int(low_level_point_size);
+	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i & P_{i}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < degree; i++) {
+		unrank_point(i, v);
+		ost << i << " & ";
+		int_vec_print(ost, v, low_level_point_size);
+		ost << "\\\\" << endl;
+		if (((i + 1) % 10) == 0) {
+			ost << "\\hline" << endl;
+			ost << "\\end{array}" << endl;
+			if (((i + 1) % 50) == 0) {
+				ost << "$$" << endl;
+				ost << "$$" << endl;
+			}
+			else {
+				ost << ", \\;" << endl;
+			}
+			ost << "\\begin{array}{|c|c|c|}" << endl;
+			ost << "\\hline" << endl;
+			ost << "i & P_{i}\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+		}
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}%" << endl;
+	FREE_int(v);
 }
 
 void action::group_order(longinteger_object &go)

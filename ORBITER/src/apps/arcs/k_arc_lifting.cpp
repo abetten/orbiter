@@ -32,7 +32,7 @@ void do_arc_lifting(
 	int *arc, int arc_sz, int target_sz, 
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
-	int &nb_backtrack_nodes,
+	long int &nb_backtrack_nodes,
 	int verbose_level);
 void user_callback_solution_found(
 	int *sol, int len, int nb_sol, void *data);
@@ -296,7 +296,7 @@ int main(int argc, char **argv)
 
 		int *the_arc;
 		int the_arc_sz;
-		int nb_backtrack_nodes;
+		long int nb_backtrack_nodes;
 		
 		int_vec_scan(arc_text, the_arc, the_arc_sz);
 		cout << "input arc of size " << the_arc_sz << " = ";
@@ -621,7 +621,7 @@ void arc_lifting_from_classification_file(
 				}
 			nb_sol = 0;
 			cnt = 0;
-			int nb_backtrack_nodes;
+			long int nb_backtrack_nodes;
 
 			Fp << "# start arc " << orbit_idx << endl;
 
@@ -704,7 +704,7 @@ void do_arc_lifting(
 	int *arc, int arc_sz, int target_sz, 
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
-	int &nb_backtrack_nodes,
+	long int &nb_backtrack_nodes,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

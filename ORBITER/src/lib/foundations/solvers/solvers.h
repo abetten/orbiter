@@ -64,7 +64,7 @@ public:
 	int _maxresults;
 	int _resultanz;
 	int _cur_result;
-	int nb_steps_betten;
+	long int nb_steps_betten;
 	int f_max_time;
 	int f_broken_off_because_of_maxtime;
 	int max_time_in_sec;
@@ -128,7 +128,7 @@ public:
 		void (*user_callback_solution_found)(int *sol, int len, 
 			int nb_sol, void *data), 
 		int verbose_level);
-	int solve_all_mckay(int &nb_backtrack_nodes, int verbose_level);
+	int solve_all_mckay(long int &nb_backtrack_nodes, int verbose_level);
 	int solve_once_mckay(int verbose_level);
 	int solve_all_betten(int verbose_level);
 	int solve_all_betten_with_conditions(int verbose_level, 
@@ -140,9 +140,9 @@ public:
 	int j_fst(int j, int verbose_level);
 	int j_nxt(int j, int verbose_level);
 	void solve_mckay(const char *label, int maxresults, 
-		int &nb_backtrack_nodes, int &nb_sol, int verbose_level);
+		long int &nb_backtrack_nodes, int &nb_sol, int verbose_level);
 	void solve_mckay_override_minrhs_in_inequalities(const char *label, 
-		int maxresults, int &nb_backtrack_nodes, 
+		int maxresults, long int &nb_backtrack_nodes,
 		int minrhs, int &nb_sol, int verbose_level);
 	void latex_it();
 	void latex_it(std::ostream &ost);
@@ -316,7 +316,7 @@ namespace mckay {
 				std::vector<int> &neqn, int numeqn, int numvar,
 			int verbose_level);
 
-		int nb_calls_to_solve;
+		long int nb_calls_to_solve;
 		int first_moved;
 		int second_moved;
 		const char *problem_label;
@@ -356,7 +356,7 @@ namespace mckay {
 				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn, int &f_restriction_made, 
 			int verbose_level);
-		void log_12l(int current_node, int level);
+		void log_12l(long int current_node, int level);
 
 		int _eqnanz;
 		int _varanz;

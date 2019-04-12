@@ -12,7 +12,6 @@ LFLAGS = -lm
 all: analyze_projective_code.out  \
 	analyze_q_designs.out  \
 	andre.out  \
-	baer_subplane.out \
 	canonical_form.out\
 	cheat_sheet_PG.out \
 	classify_cubic_curves.out \
@@ -27,7 +26,6 @@ all: analyze_projective_code.out  \
 	make_group.out \
 	make_grassmannian.out \
 	orthogonal_points.out \
-	ovoid.out \
 	packing_main.out \
 	plane_search.out \
 	points.out \
@@ -55,9 +53,6 @@ analyze_q_designs.out:  analyze_q_designs.o;
 
 andre.out:  andre.o;
 	$(DISCRETA_CPP)  andre.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-baer_subplane.out:   baer_subplane.o  ;
-	$(DISCRETA_CPP)  baer_subplane.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 canonical_form.out:  canonical_form.o ;
 	$(DISCRETA_CPP)  canonical_form.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -103,9 +98,6 @@ make_group.out:  make_group.o;
 
 orthogonal_points.out:  orthogonal_points.o ;
 	$(DISCRETA_CPP)  orthogonal_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-ovoid.out:  ovoid.o;
-	$(DISCRETA_CPP)  ovoid.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 packing_main.out:  packing_main.o;
 	$(DISCRETA_CPP)  packing_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

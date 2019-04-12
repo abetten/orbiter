@@ -188,12 +188,13 @@ public:
 	int *ith(int i);
 	void print(std::ostream &ost);
 	//ostream& print(ostream& ost);
-	std::ostream& print_quick(std::ostream& ost);
-	std::ostream& print_tex(std::ostream& ost);
+	void print_quick(std::ostream& ost);
+	//std::ostream& print_tex(std::ostream& ost);
+	void print_tex(std::ostream &ost);
 	void print_generators_tex(
 			foundations::longinteger_object &go,
 			std::ostream &ost);
-	std::ostream& print_as_permutation(std::ostream& ost);
+	void print_as_permutation(std::ostream& ost);
 	void allocate(int length);
 	void reallocate(int new_length);
 	void reallocate_and_insert_at(int position, int *elt);

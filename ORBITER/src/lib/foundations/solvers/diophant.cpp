@@ -673,7 +673,7 @@ int diophant::solve_first_mckay(int f_once, int verbose_level)
 	int j;
 	int maxresults = 10000000;
 	vector<int> res;
-	int nb_backtrack_nodes;
+	long int nb_backtrack_nodes;
 	int nb_sol;
 
 	//verbose_level = 4;
@@ -1163,11 +1163,11 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 	return _resultanz;
 }
 
-int diophant::solve_all_mckay(int &nb_backtrack_nodes, int verbose_level)
+int diophant::solve_all_mckay(long int &nb_backtrack_nodes, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int maxresults = 10000;
-	//int nb_backtrack_nodes;
+	//long int nb_backtrack_nodes;
 	int nb_sol;
 	
 	if (f_v) {
@@ -1188,7 +1188,7 @@ int diophant::solve_once_mckay(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int maxresults = 1;
-	int nb_backtrack_nodes;
+	long int nb_backtrack_nodes;
 	int nb_sol;
 
 	solve_mckay(label, maxresults,
@@ -1850,7 +1850,7 @@ int diophant::j_nxt(int j, int verbose_level)
 }
 
 void diophant::solve_mckay(const char *label, int maxresults, 
-	int &nb_backtrack_nodes, int &nb_sol, int verbose_level)
+	long int &nb_backtrack_nodes, int &nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1867,7 +1867,7 @@ void diophant::solve_mckay(const char *label, int maxresults,
 
 void diophant::solve_mckay_override_minrhs_in_inequalities(
 	const char *label,
-	int maxresults, int &nb_backtrack_nodes, 
+	int maxresults, long int &nb_backtrack_nodes,
 	int minrhs, int &nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

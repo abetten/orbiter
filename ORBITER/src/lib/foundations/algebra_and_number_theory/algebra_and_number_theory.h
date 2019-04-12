@@ -737,6 +737,7 @@ public:
 	int Pluecker_43(int *x4, int *y4);
 	int Pluecker_ij(int i, int j, int *x4, int *y4);
 	int evaluate_symplectic_form(int len, int *x, int *y);
+	int evaluate_symmetric_form(int len, int *x, int *y);
 	int evaluate_quadratic_form_x0x3mx1x2(int *x);
 	int is_totally_isotropic_wrt_symplectic_form(int k,
 		int n, int *Basis);
@@ -745,10 +746,10 @@ public:
 	int projective_point_rank(int n, int *v);
 	void create_BLT_point(
 			int *v5, int a, int b, int c, int verbose_level);
-	// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
-	// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
-	// b^2/4 + (-c)*a + -(b^2/4-ac)
-	// = b^2/4 -ac -b^2/4 + ac = 0
+		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
+		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
+		// b^2/4 + (-c)*a + -(b^2/4-ac)
+		// = b^2/4 -ac -b^2/4 + ac = 0
 	void Segre_hyperoval(
 			int *&Pts, int &nb_pts, int verbose_level);
 	void GlynnI_hyperoval(

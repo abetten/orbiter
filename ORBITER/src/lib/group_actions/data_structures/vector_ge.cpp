@@ -106,6 +106,7 @@ void vector_ge::init_from_permutation_representation(
 			cout << "vector_ge::init_from_permutation_"
 					"representation generator " << i << ": " << endl;
 			A->element_print_quick(Elt, cout);
+			A->element_print_latex(Elt, cout);
 			}
 		A->element_move(Elt, ith(i), 0);
 		}
@@ -257,7 +258,7 @@ ostream& vector_ge::print(ostream& ost)
 }
 #endif
 
-ostream& vector_ge::print_quick(ostream& ost)
+void vector_ge::print_quick(ostream& ost)
 {
 	int i;
 	
@@ -274,9 +275,9 @@ ostream& vector_ge::print_quick(ostream& ost)
 			}
 		}
 	ost << ")" << endl;
-	return ost;
 }
 
+#if 0
 ostream& vector_ge::print_tex(ostream& ost)
 {
 	int i;
@@ -297,6 +298,29 @@ ostream& vector_ge::print_tex(ostream& ost)
 	//ost << ")" << endl;
 	return ost;
 }
+#endif
+
+void vector_ge::print_tex(ostream &ost)
+{
+	int i;
+
+	ost << "$$" << endl;
+	for (i = 0; i < len; i++) {
+		//cout << "Generator " << i << " / " << gens->len
+		// << " is:" << endl;
+		A->element_print_latex(ith(i), ost);
+		if (i < len - 1) {
+			ost << ", " << endl;
+		}
+		if (((i + 1) % 3) == 0 && i < len - 1) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+			}
+		}
+	ost << "$$" << endl;
+}
+
+
 
 void vector_ge::print_generators_tex(
 		longinteger_object &go, ostream &ost)
@@ -317,7 +341,7 @@ void vector_ge::print_generators_tex(
 	ost << "$$" << endl;
 }
 
-ostream& vector_ge::print_as_permutation(ostream& ost)
+void vector_ge::print_as_permutation(ostream& ost)
 {
 	int i;
 	
@@ -338,7 +362,6 @@ ostream& vector_ge::print_as_permutation(ostream& ost)
 			}
 	}
 	ost << ")" << endl;
-	return ost;
 }
 
 void vector_ge::allocate(int length)

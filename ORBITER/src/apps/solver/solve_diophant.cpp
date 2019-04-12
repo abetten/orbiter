@@ -388,7 +388,7 @@ int main(int argc, char **argv)
 			Dio->solve_all_betten(verbose_level - 2);
 			}
 		else if (f_McKay) {
-			int nb_backtrack_nodes;
+			long int nb_backtrack_nodes;
 			
 			cout << "solving with mckay" << endl;
 			Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
