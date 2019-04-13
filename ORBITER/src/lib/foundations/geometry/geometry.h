@@ -1043,23 +1043,6 @@ public:
 };
 
 // #############################################################################
-// inc_gen_global.C:
-// #############################################################################
-
-int ijk_rank(int i, int j, int k, int n);
-void ijk_unrank(int &i, int &j, int &k, int n, int rk);
-int largest_binomial2_below(int a2);
-int largest_binomial3_below(int a3);
-int binomial2(int a);
-int binomial3(int a);
-int minus_one_if_positive(int i);
-void int_vec_bubblesort_increasing(int len, int *p);
-void int_vec_print(int *v, int len);
-int integer_vec_compare(int *p, int *q, int len);
-int int_ij2k(int i, int j, int n);
-void int_k2ij(int k, int & i, int & j, int n);
-
-// #############################################################################
 // incidence_structure.C
 // #############################################################################
 
@@ -1303,27 +1286,6 @@ class incidence_structure {
 
 
 
-// two functions from DISCRETA1:
-
-void incma_latex_picture(std::ostream &fp,
-	int width, int width_10, 
-	int f_outline_thin, const char *unit_length, 
-	const char *thick_lines, const char *thin_lines, 
-	const char *geo_line_width, 
-	int v, int b, 
-	int V, int B, int *Vi, int *Bj, 
-	int *R, int *X, int dim_X, 
-	int f_labelling_points, const char **point_labels, 
-	int f_labelling_blocks, const char **block_labels);
-// width for one box in 0.1mm 
-// width_10 is 1 10th of width
-// example: width = 40, width_10 = 4 */
-void incma_latex(std::ostream &fp,
-	int v, int b, 
-	int V, int B, int *Vi, int *Bj, 
-	int *R, int *X, int dim_X);
-void incma_latex_override_unit_length(const char *override_unit_length);
-void incma_latex_override_unit_length_drop();
 
 
 // #############################################################################

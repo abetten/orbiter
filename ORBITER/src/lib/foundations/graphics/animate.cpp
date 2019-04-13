@@ -599,11 +599,12 @@ void animate::animate_one_round(
 						cout << "end latex source" << endl;
 						{
 							ofstream fp(fname_tex);
+							latex_interface L;
 							//latex_head_easy(fp);
-							latex_head_easy_with_extras_in_the_praeamble(fp,
+							L.head_easy_with_extras_in_the_praeamble(fp,
 									Opt->latex_extras_for_praeamble[i]);
 							fp << Opt->latex_label_text[i] << endl;
-							latex_foot(fp);
+							L.foot(fp);
 
 
 						}

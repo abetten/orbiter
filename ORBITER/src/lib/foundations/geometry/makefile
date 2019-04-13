@@ -27,7 +27,6 @@ MODULES = \
 	grassmann_embedded.o \
 	hermitian.o \
 	hjelmslev.o \
-	inc_gen_global.o \
 	incidence_structure.o \
 	klein_correspondence.o \
 	knarr.o \

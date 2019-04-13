@@ -92,10 +92,11 @@ void cheat_sheet_GF(int q,
 
 	{
 	ofstream f(fname);
+	latex_interface L;
 	
 	//F.init(q), verbose_level - 2);
 	F.init_override_polynomial(q, override_poly, verbose_level);
-	latex_head(f, FALSE /* f_book*/, TRUE /* f_title */, 
+	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
 			TRUE /* f_12pt */, 
 			TRUE /* f_enlarged_page */, 	
@@ -107,7 +108,7 @@ void cheat_sheet_GF(int q,
 	
 	F.cheat_sheet_tables(f, verbose_level);
 
-	latex_foot(f);
+	L.foot(f);
 	}
 	cout << "written file " << fname << " of size " << file_size(fname) << endl;
 

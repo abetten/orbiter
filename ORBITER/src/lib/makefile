@@ -96,7 +96,6 @@ MODULES= \
 		foundations/geometry/grassmann_embedded.o \
 		foundations/geometry/hermitian.o \
 		foundations/geometry/hjelmslev.o \
-		foundations/geometry/inc_gen_global.o \
 		foundations/geometry/incidence_structure.o \
 		foundations/geometry/klein_correspondence.o \
 		foundations/geometry/knarr.o \
@@ -144,6 +143,7 @@ MODULES= \
 		foundations/graphics/tree_node.o \
 		foundations/graphics/video_draw_options.o \
 		foundations/io_and_os/file_output.o \
+		foundations/io_and_os/latex_interface.o \
 		foundations/io_and_os/memory.o \
 		foundations/io_and_os/memory_object.o \
 		foundations/io_and_os/orbiter_data_file.o \

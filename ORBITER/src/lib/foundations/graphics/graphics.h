@@ -53,7 +53,6 @@ void transform_dist(int *in, int *out, int &x, int &y);
 void transform_dist_x(int *in, int *out, int &x);
 void transform_dist_y(int *in, int *out, int &y);
 void transform_llur_double(double *in, double *out, double &x, double &y);
-//void draw(char *fname);
 void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad);
 int C3D(int i, int j, int k);
 int C2D(int i, int j);

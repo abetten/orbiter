@@ -1305,11 +1305,12 @@ void packing::read_conjugacy_classes(
 	{
 	ofstream fp(fname_latex);
 	char title[1000];
+	latex_interface L;
 
 	sprintf(title, "Conjugacy classes of $%s$",
 			T->A->label_tex);
 	
-	latex_head(fp,
+	L.head(fp,
 		FALSE /* f_book */, TRUE /* f_title */,
 		title, "computed by MAGMA" /* const char *author */, 
 		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */, 
@@ -1381,7 +1382,7 @@ void packing::read_conjugacy_classes(
 
 		FREE_OBJECT(gens);
 		}
-	latex_foot(fp);
+	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< file_size(fname_latex) << endl;
@@ -1484,11 +1485,12 @@ void packing::read_conjugacy_classes_and_normalizers(
 	{
 	ofstream fp(fname_latex);
 	char title[1000];
+	latex_interface L;
 
 	sprintf(title, "Conjugacy classes of $%s$",
 			T->A->label_tex);
 
-	latex_head(fp,
+	L.head(fp,
 		FALSE /* f_book */, TRUE /* f_title */,
 		title, "computed by MAGMA" /* const char *author */,
 		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
@@ -1628,7 +1630,7 @@ void packing::read_conjugacy_classes_and_normalizers(
 		FREE_OBJECT(N_gens);
 		FREE_OBJECT(gens);
 		}
-	latex_foot(fp);
+	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< file_size(fname_latex) << endl;
@@ -1662,10 +1664,11 @@ void packing::report_fixed_objects(int *Elt,
 	{
 	ofstream fp(fname_latex);
 	char title[1000];
+	latex_interface L;
 
 	sprintf(title, "Fixed Objects");
 	
-	latex_head(fp,
+	L.head(fp,
 		FALSE /* f_book */, TRUE /* f_title */,
 		title, "" /* const char *author */, 
 		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */, 
@@ -1767,7 +1770,7 @@ void packing::report_fixed_objects(int *Elt,
 	}
 
 
-	latex_foot(fp);
+	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< file_size(fname_latex) << endl;

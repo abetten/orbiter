@@ -40,6 +40,54 @@ public:
 };
 
 // #############################################################################
+// latex_interface.cpp
+// #############################################################################
+
+
+//! interface to create latex output files
+
+
+
+class latex_interface {
+public:
+	latex_interface();
+	~latex_interface();
+	void head_easy(std::ostream& ost);
+	void head_easy_with_extras_in_the_praeamble(
+			std::ostream& ost, const char *extras);
+	void head_easy_sideways(std::ostream& ost);
+	void head(std::ostream& ost, int f_book, int f_title,
+		const char *title, const char *author,
+		int f_toc, int f_landscape, int f_12pt,
+		int f_enlarged_page, int f_pagenumbers,
+		const char *extras_for_preamble);
+	void foot(std::ostream& ost);
+
+	// two functions from DISCRETA1:
+
+	void incma_latex_picture(std::ostream &fp,
+		int width, int width_10,
+		int f_outline_thin, const char *unit_length,
+		const char *thick_lines, const char *thin_lines,
+		const char *geo_line_width,
+		int v, int b,
+		int V, int B, int *Vi, int *Bj,
+		int *R, int *X, int dim_X,
+		int f_labelling_points, const char **point_labels,
+		int f_labelling_blocks, const char **block_labels);
+	// width for one box in 0.1mm
+	// width_10 is 1 10th of width
+	// example: width = 40, width_10 = 4 */
+	void incma_latex(std::ostream &fp,
+		int v, int b,
+		int V, int B, int *Vi, int *Bj,
+		int *R, int *X, int dim_X);
+	void incma_latex_override_unit_length(const char *override_unit_length);
+	void incma_latex_override_unit_length_drop();
+
+};
+
+// #############################################################################
 // memory.C:
 // #############################################################################
 
@@ -353,16 +401,6 @@ void fwrite_int4(FILE *fp, int a);
 int_4 fread_int4(FILE *fp);
 void fwrite_uchars(FILE *fp, uchar *p, int len);
 void fread_uchars(FILE *fp, uchar *p, int len);
-void latex_head_easy(std::ostream& ost);
-void latex_head_easy_with_extras_in_the_praeamble(
-		std::ostream& ost, const char *extras);
-void latex_head_easy_sideways(std::ostream& ost);
-void latex_head(std::ostream& ost, int f_book, int f_title,
-	const char *title, const char *author, 
-	int f_toc, int f_landscape, int f_12pt, 
-	int f_enlarged_page, int f_pagenumbers, 
-	const char *extras_for_preamble);
-void latex_foot(std::ostream& ost);
 void seed_random_generator_with_system_time();
 void seed_random_generator(int seed);
 int random_integer(int p);
@@ -530,6 +568,9 @@ void read_candidates_for_one_orbit_from_file(char *prefix,
 int find_orbit_index_in_data_file(const char *prefix,
 		int level_of_candidates_file, int *starter,
 		int verbose_level);
+
+
+
 
 
 }

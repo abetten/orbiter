@@ -154,8 +154,9 @@ int main(void)
 	{
 	const char *fname = "pentomino_all.tex";
 	ofstream fp(fname);
+	latex_interface La;
 
-	latex_head_easy(fp);
+	La.head_easy(fp);
 
 	fp << "\\noindent" << endl;
 	for (l = 0; l < nb_sol; l++) {
@@ -179,7 +180,7 @@ int main(void)
 #endif
 
 		}
-	latex_foot(fp);
+	La.foot(fp);
 	}
 
 	int nb_orbits;
@@ -201,8 +202,9 @@ int main(void)
 	{
 	const char *fname = "pentomino_orbits.tex";
 	ofstream fp(fname);
+	latex_interface La;
 
-	latex_head_easy(fp);
+	La.head_easy(fp);
 
 	fp << "\\noindent" << endl;
 	for (o = 0; o < nb_orbits; o++) {
@@ -222,7 +224,7 @@ int main(void)
 			}
 		
 		}
-	latex_foot(fp);
+	La.foot(fp);
 	}
 
 	int nb_orbits_without_I;
@@ -258,9 +260,10 @@ int main(void)
 	{
 	const char *fname = "pentomino_orbits_reduced.tex";
 	ofstream fp(fname);
+	latex_interface La;
 
 
-	latex_head_easy(fp);
+	La.head_easy(fp);
 
 	fp << "\\noindent" << endl;
 	for (p = 0; p < nb_orbits_without_I; p++) {
@@ -281,7 +284,7 @@ int main(void)
 			cout << endl << "\\clearpage" << endl << endl << "\\noindent" << endl;
 			}
 		}
-	latex_foot(fp);
+	La.foot(fp);
 	}
 
 #if 0

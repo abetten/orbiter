@@ -200,9 +200,10 @@ void lift_single_arc(int *arc, int arc_size,
 		}
 	sprintf(fname_arc_lifting + strlen(fname_arc_lifting), ".tex");
 	ofstream fp(fname_arc_lifting);
+	latex_interface L;
 
 
-	latex_head(fp,
+	L.head(fp,
 		FALSE /* f_book */,
 		TRUE /* f_title */,
 		title, author, 
@@ -262,7 +263,7 @@ void lift_single_arc(int *arc, int arc_size,
 
 	FREE_OBJECT(AL);
 	
-	latex_foot(fp);
+	L.foot(fp);
 	} // fp
 
 	cout << "Written file " << fname_arc_lifting << " of size "
@@ -316,9 +317,10 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 
 	sprintf(fname_arc_lifting, "arc_lifting_q%d.tex", q);
 	ofstream fp(fname_arc_lifting);
+	latex_interface L;
 
 
-	latex_head(fp,
+	L.head(fp,
 		FALSE /* f_book */,
 		TRUE /* f_title */,
 		title, author, 
@@ -542,7 +544,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 	FREE_int(Arc_identify);
 	FREE_int(Arc_identify_nb);
 
-	latex_foot(fp);
+	L.foot(fp);
 	} // fp
 
 	cout << "Written file " << fname_arc_lifting << " of size "

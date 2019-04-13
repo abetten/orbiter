@@ -3776,8 +3776,9 @@ void projective_space_with_action::latex_report(const char *fname,
 	}
 	{
 	ofstream fp(fname);
+	latex_interface L;
 
-	latex_head_easy(fp);
+	L.head_easy(fp);
 
 	int *Table;
 	int width = 4;
@@ -4112,7 +4113,7 @@ void projective_space_with_action::latex_report(const char *fname,
 		}
 
 
-	latex_foot(fp);
+	L.foot(fp);
 	}
 
 	cout << "Written file " << fname << " of size "

@@ -303,8 +303,9 @@ int main(int argc, const char **argv)
 		sprintf(fname_mask, "surface_%s_orbit_%%d", SC->prefix);
 		{
 			ofstream fp(fname);
+			latex_interface L;
 
-			latex_head_easy(fp);
+			L.head_easy(fp);
 
 
 			fp << "\\section{The Finite Field $\\mathbb F_{" << q << "}$}" << endl;
@@ -725,7 +726,7 @@ int main(int argc, const char **argv)
 			}
 
 	
-			latex_foot(fp);
+			L.foot(fp);
 		}
 		cout << "Written file " << fname << " of size "
 				<< file_size(fname) << endl;

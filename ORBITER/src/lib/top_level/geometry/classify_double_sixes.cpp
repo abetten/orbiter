@@ -474,9 +474,10 @@ void classify_double_sixes::classify_partial_ovoids(
 		sprintf(fname_report, "%s.tex", fname_base);
 		{
 		ofstream fp(fname_report);
+		latex_interface L;
 
 
-		latex_head(fp,
+		L.head(fp,
 			FALSE /* f_book */,
 			TRUE /* f_title */,
 			title, author,
@@ -491,7 +492,7 @@ void classify_double_sixes::classify_partial_ovoids(
 
 		Five_plus_one->report(fp);
 
-		latex_foot(fp);
+		L.foot(fp);
 
 		} // close fp
 	}

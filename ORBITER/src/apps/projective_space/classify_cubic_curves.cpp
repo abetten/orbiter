@@ -123,9 +123,10 @@ int main(int argc, const char **argv)
 
 		{
 		ofstream fp(fname);
+		latex_interface L;
 
 		//latex_head_easy(fp);
-		latex_head(fp,
+		L.head(fp,
 			FALSE /* f_book */,
 			TRUE /* f_title */,
 			title, author,
@@ -570,7 +571,7 @@ int main(int argc, const char **argv)
 
 #endif
 
-		latex_foot(fp);
+		L.foot(fp);
 		FREE_int(Pts_on_curve);
 		FREE_int(inflexion_Pts);
 		FREE_int(singular_Pts);
