@@ -95,7 +95,28 @@
 #include <deque>
 
 
+/*----------------------------------------------------------------------------*/
+/// Define some ANSI colour codes
+/*----------------------------------------------------------------------------*/
+#define RESET_COLOR_SCHEME	"\u001b[0m"
+#define BLACK "\u001b[30m"
+#define RED "\u001b[31m"
+#define GREEN "\u001b[32m"
+#define YELLOW "\u001b[33m"
+#define BLUE "\u001b[34m"
+#define MAGENTA "\u001b[35m"
+#define CYAN "\u001b[36m"
+#define WHITE "\u001b[37m"
 
+#define BRIGHT_BLACK "\u001b[30;1m"
+#define BRIGHT_RED "\u001b[31;1m"
+#define BRIGHT_GREEN "\u001b[32;1m"
+#define BRIGHT_YELLOW "\u001b[33;1m"
+#define BRIGHT_BLUE "\u001b[34;1m"
+#define BRIGHT_MAGENTA "\u001b[35;1m"
+#define BRIGHT_CYAN "\u001b[36;1m"
+#define BRIGHT_WHITE "\u001b[37;1m"
+/*----------------------------------------------------------------------------*/
 
 
 /*----------------------------------------------------------------------------*/
