@@ -26,7 +26,7 @@ void orthogonal::unrank_point(
 		cout << "orthogonal::unrank_point rk=" << rk
 				<< " epsilon=" << epsilon << " n=" << n << endl;
 		}
-	Q_epsilon_unrank(*F, v, stride, epsilon, n - 1,
+	F->Q_epsilon_unrank(v, stride, epsilon, n - 1,
 			form_c1, form_c2, form_c3, rk);
 }
 
@@ -44,7 +44,7 @@ int orthogonal::rank_point(int *v, int stride, int verbose_level)
 	for (i = 0; i < n; i++)
 		rk_pt_v[i] = v[i * stride];
 	
-	return Q_epsilon_rank(*F, rk_pt_v, 1, epsilon, n - 1,
+	return F->Q_epsilon_rank(rk_pt_v, 1, epsilon, n - 1,
 			form_c1, form_c2, form_c3);
 }
 
@@ -199,8 +199,8 @@ int orthogonal::evaluate_bilinear_form(int *u, int *v, int stride)
 		return evaluate_parabolic_bilinear_form(u, v, stride, m);
 		}
 	else if (epsilon == -1) {
-		return orbiter::foundations::evaluate_bilinear_form(
-				*F, u, v, n, Gram_matrix);
+		return F->evaluate_bilinear_form(
+				u, v, n, Gram_matrix);
 		}
 	else {
 		cout << "evaluate_bilinear_form epsilon = " << epsilon << endl;
@@ -1300,14 +1300,14 @@ void orthogonal::init(int epsilon, int n,
 	form_c2 = 0;
 	form_c3 = 0;
 	if (epsilon == -1) {
-		choose_anisotropic_form(*F,
+		F->choose_anisotropic_form(
 				form_c1, form_c2, form_c3, verbose_level);
 		}
 	if (f_v) {
 		cout << "orthogonal::init computing Gram matrix" << endl;
 		}
-	orbiter::foundations::Gram_matrix(
-			*F, epsilon, n - 1,
+	F->Gram_matrix(
+			epsilon, n - 1,
 			form_c1, form_c2, form_c3, Gram_matrix);
 	if (f_v) {
 		cout << "orthogonal::init "
@@ -1502,11 +1502,11 @@ void orthogonal::init(int epsilon, int n,
 		}
 	if (FALSE) {
 		for (i = 0; i < T1_m; i++) {
-			Q_epsilon_unrank(*F, v1, 1, epsilon, n - 1,
+			F->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
 					form_c1, form_c2, form_c3, i);
 			cout << i << " : ";
 			int_vec_print(cout, v1, n);
-			j = Q_epsilon_rank(*F, v1, 1, epsilon, n - 1,
+			j = F->Q_epsilon_rank(v1, 1, epsilon, n - 1,
 					form_c1, form_c2, form_c3);
 			cout << " : " << j << endl;
 			}
@@ -7682,9 +7682,9 @@ int orthogonal::last_non_zero_entry(int *u, int stride, int len)
 void orthogonal::Siegel_map_between_singular_points(int *T, 
 	int rk_from, int rk_to, int root, int verbose_level)
 {
-	orthogonal_Siegel_map_between_singular_points(T, 
+	F->Siegel_map_between_singular_points(T,
 		rk_from, rk_to, root, 
-		*F, epsilon, n, 
+		epsilon, n,
 		form_c1, form_c2, form_c3, Gram_matrix, 
 		verbose_level);
 }
@@ -7694,11 +7694,11 @@ void orthogonal::Siegel_map_between_singular_points_hyperbolic(int *T,
 {
 	int *Gram;
 	
-	orbiter::foundations::Gram_matrix(
-			*F, 1, 2 * m - 1, 0,0,0, Gram);
-	orthogonal_Siegel_map_between_singular_points(T, 
+	F->Gram_matrix(
+			1, 2 * m - 1, 0,0,0, Gram);
+	F->Siegel_map_between_singular_points(T,
 		rk_from, rk_to, root, 
-		*F, epsilon, 2 * m, 
+		epsilon, 2 * m,
 		0, 0, 0, Gram, 
 		verbose_level);
 	delete [] Gram;
@@ -7810,8 +7810,8 @@ void orthogonal::Siegel_Transformation3(int *T,
 		cout << endl;
 		}
 	
-	a = orbiter::foundations::evaluate_bilinear_form(*F, B, B + n, n, Gram);
-	b = orbiter::foundations::evaluate_bilinear_form(*F, B, w, n, Gram);
+	a = F->evaluate_bilinear_form(B, B + n, n, Gram);
+	b = F->evaluate_bilinear_form(B, w, n, Gram);
 	av = F->inverse(a);
 	bv = F->inverse(b);
 	for (i = 0; i < n; i++) {
@@ -8017,8 +8017,8 @@ void orthogonal::create_random_Siegel_transformation(
 
 #endif
 
-		alpha = orbiter::foundations::evaluate_bilinear_form(
-				*F, u, v, d, Gram_matrix);
+		alpha = F->evaluate_bilinear_form(
+				u, v, d, Gram_matrix);
 		if (alpha == 0) {
 			if (f_v) {
 				cout << "orthogonal::create_random_Siegel_transformation "
@@ -8041,8 +8041,8 @@ void orthogonal::create_random_Siegel_transformation(
 		cout << endl;
 		}
 		
-	orbiter::foundations::Siegel_Transformation(
-			*F, epsilon, d - 1,
+	F->Siegel_Transformation(
+			epsilon, d - 1,
 			form_c1, form_c2, form_c3,
 			Mtx, v, u, verbose_level - 1);
 
@@ -8123,7 +8123,7 @@ void orthogonal::create_random_semisimilarity(int *Mtx, int verbose_level)
 			}
 		else {
 			k = (F->p - 1) >> 1;
-			a = primitive_element(*F);
+			a = F->primitive_element();
 			b = F->power(a, k);
 			c = F->frobenius_power(b, F->e - 1);
 			Mtx[d * d - 1] = c;
@@ -8377,8 +8377,8 @@ void orthogonal::make_Siegel_Transformation(int *M, int *v, int *u,
 	int f_v = (verbose_level >= 1);
 	int i, j, Qv, e;
 	
-	Qv = orbiter::foundations::evaluate_quadratic_form(
-			*F, v, 1 /*stride*/,
+	Qv = F->evaluate_quadratic_form(
+			v, 1 /*stride*/,
 			epsilon, n - 1,
 			form_c1, form_c2, form_c3);
 	F->identity_matrix(M, n);
@@ -8436,7 +8436,7 @@ void orthogonal::unrank_S(int *v, int stride, int m, int rk)
 	if (m == 0) {
 		return;
 		}
-	S_unrank(*F, v, stride, m, rk);
+	F->S_unrank(v, stride, m, rk);
 }
 
 int orthogonal::rank_S(int *v, int stride, int m)
@@ -8447,14 +8447,14 @@ int orthogonal::rank_S(int *v, int stride, int m)
 	if (m == 0) {
 		return 0;
 		}
-	S_rank(*F, v, stride, m, rk);
+	F->S_rank(v, stride, m, rk);
 	return rk;
 }
 
 void orthogonal::unrank_N(int *v, int stride, int m, int rk)
 // m = Witt index
 {
-	N_unrank(*F, v, stride, m, rk);
+	F->N_unrank(v, stride, m, rk);
 }
 
 int orthogonal::rank_N(int *v, int stride, int m)
@@ -8462,14 +8462,14 @@ int orthogonal::rank_N(int *v, int stride, int m)
 {
 	int rk;
 	
-	N_rank(*F, v, stride, m, rk);
+	F->N_rank(v, stride, m, rk);
 	return rk;
 }
 
 void orthogonal::unrank_N1(int *v, int stride, int m, int rk)
 // m = Witt index
 {
-	N1_unrank(*F, v, stride, m, rk);
+	F->N1_unrank(v, stride, m, rk);
 }
 
 int orthogonal::rank_N1(int *v, int stride, int m)
@@ -8477,14 +8477,14 @@ int orthogonal::rank_N1(int *v, int stride, int m)
 {
 	int rk;
 	
-	N1_rank(*F, v, stride, m, rk);
+	F->N1_rank(v, stride, m, rk);
 	return rk;
 }
 
 void orthogonal::unrank_Sbar(int *v, int stride, int m, int rk)
 // m = Witt index
 {
-	Sbar_unrank(*F, v, stride, m, rk);
+	F->Sbar_unrank(v, stride, m, rk);
 }
 
 int orthogonal::rank_Sbar(int *v, int stride, int m)
@@ -8495,14 +8495,14 @@ int orthogonal::rank_Sbar(int *v, int stride, int m)
 	for (i = 0; i < 2 * m; i++) {
 		v_tmp[i] = v[i * stride];
 		}
-	Sbar_rank(*F, v_tmp, 1, m, rk);
+	F->Sbar_rank(v_tmp, 1, m, rk);
 	return rk;
 }
 
 void orthogonal::unrank_Nbar(int *v, int stride, int m, int rk)
 // m = Witt index
 {
-	Nbar_unrank(*F, v, stride, m, rk);
+	F->Nbar_unrank(v, stride, m, rk);
 }
 
 int orthogonal::rank_Nbar(int *v, int stride, int m)
@@ -8510,7 +8510,7 @@ int orthogonal::rank_Nbar(int *v, int stride, int m)
 {
 	int rk;
 	
-	Nbar_rank(*F, v, stride, m, rk);
+	F->Nbar_rank(v, stride, m, rk);
 	return rk;
 }
 
@@ -9353,7 +9353,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		cnt++;
 
 		for (i = 0; i < level; i++) {
-			Q_unrank(*F, Mtx + i * n, 1, n - 1, set[subset[i]]);
+			F->Q_unrank(Mtx + i * n, 1, n - 1, set[subset[i]]);
 			}
 		if (f_vvv) {
 			cout << "subset " << setw(5) << cnt << " : ";
@@ -9484,7 +9484,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				cout << " : " << endl;
 				}
 			for (ii = 0; ii < level; ii++) {
-				Q_unrank(*F, Mtx + ii * n, 1, n - 1, set[subset[ii]]);
+				F->Q_unrank(Mtx + ii * n, 1, n - 1, set[subset[ii]]);
 				}
 			for (ii = 0; ii < level; ii++) {
 				if (!int_vec_search(Block, Block_size, subset[ii], idx)) {

@@ -637,6 +637,79 @@ public:
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
 
+	// #########################################################################
+	// finite_field_orthogonal.cpp
+	// #########################################################################
+	void Q_epsilon_unrank(
+		int *v, int stride, int epsilon, int k,
+		int c1, int c2, int c3, int a);
+	int Q_epsilon_rank(
+		int *v, int stride, int epsilon, int k,
+		int c1, int c2, int c3);
+	void init_hash_table_parabolic(int k, int verbose_level);
+	void Q_unrank(int *v, int stride, int k, int a);
+	int Q_rank(int *v, int stride, int k);
+	void Q_unrank_directly(int *v, int stride, int k, int a);
+		// parabolic quadric
+		// k = projective dimension, must be even
+	int Q_rank_directly(int *v, int stride, int k);
+	void Qplus_unrank(int *v, int stride, int k, int a);
+		// hyperbolic quadric
+		// k = projective dimension, must be odd
+	int Qplus_rank(int *v, int stride, int k);
+	void Qminus_unrank(int *v,
+			int stride, int k, int a,
+			int c1, int c2, int c3);
+		// elliptic quadric
+		// k = projective dimension, must be odd
+		// the form is
+		// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
+		// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
+	int Qminus_rank(int *v, int stride, int k, int c1, int c2, int c3);
+	void S_unrank(int *v, int stride, int n, int a);
+	void N_unrank(int *v, int stride, int n, int a);
+	void N1_unrank(int *v, int stride, int n, int a);
+	void Sbar_unrank(int *v, int stride, int n, int a);
+	void Nbar_unrank(int *v, int stride, int n, int a);
+	void S_rank(int *v, int stride, int n, int &a);
+	void N_rank(int *v, int stride, int n, int &a);
+	void N1_rank(int *v, int stride, int n, int &a);
+	void Sbar_rank(int *v, int stride, int n, int &a);
+	void Nbar_rank(int *v, int stride, int n, int &a);
+	void Gram_matrix(int epsilon, int k,
+		int form_c1, int form_c2, int form_c3,
+		int *&Gram);
+	int evaluate_bilinear_form(
+			int *u, int *v, int d, int *Gram);
+	int evaluate_quadratic_form(int *v, int stride,
+		int epsilon, int k, int form_c1, int form_c2, int form_c3);
+	int evaluate_hyperbolic_quadratic_form(
+			int *v, int stride, int n);
+	int evaluate_hyperbolic_bilinear_form(
+			int *u, int *v, int n);
+	int primitive_element();
+	void Siegel_map_between_singular_points(int *T,
+		int rk_from, int rk_to, int root,
+		int epsilon, int algebraic_dimension,
+		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
+		int verbose_level);
+	// root is not perp to from and to.
+	void Siegel_Transformation(
+		int epsilon, int k,
+		int form_c1, int form_c2, int form_c3,
+		int *M, int *v, int *u, int verbose_level);
+		// if u is singular and v \in \la u \ra^\perp, then
+		// \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
+		// is called the Siegel transform (see Taylor p. 148)
+		// Here Q is the quadratic form
+		// and \beta is the corresponding bilinear form
+	int orthogonal_find_root(int rk2,
+		int epsilon, int algebraic_dimension,
+		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
+		int verbose_level);
+	void choose_anisotropic_form(
+			int &c1, int &c2, int &c3, int verbose_level);
+
 
 	// #########################################################################
 	// finite_field_representations.cpp
@@ -1034,6 +1107,10 @@ void add_term(int n, finite_field &F, int &nb_terms,
 	int i, int j, int coeff);
 
 
+// #############################################################################
+// finite_field_orthogonal.cpp
+// #############################################################################
+void orthogonal_points_free_global_data();
 
 // #############################################################################
 // finite_field_tables.cpp

@@ -36,6 +36,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/finite_field_io.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
 		foundations/algebra_and_number_theory/finite_field_linear_groups.o \
+		foundations/algebra_and_number_theory/finite_field_orthogonal.o \
 		foundations/algebra_and_number_theory/finite_field_projective.o \
 		foundations/algebra_and_number_theory/finite_field_representations.o \
 		foundations/algebra_and_number_theory/finite_field_tables.o \

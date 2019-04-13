@@ -386,18 +386,18 @@ int main(int argc, char **argv)
 		if (f_betten) {
 			cout << "solving with betten" << endl;
 			Dio->solve_all_betten(verbose_level - 2);
-			}
+		}
 		else if (f_McKay) {
 			long int nb_backtrack_nodes;
 			
 			cout << "solving with mckay" << endl;
 			Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
 			Dio->nb_steps_betten = nb_backtrack_nodes;
-			}
+		}
 		else if (f_DLX) {
 			cout << "solving with DLX" << endl;
 			Dio->solve_all_DLX_with_RHS(f_tree, fname_tree, verbose_level - 2);
-			}
+		}
 		else {
 			cout << "please specify how to solve the system, "
 					"using one of -McKay -betten -DLX" << endl;
@@ -410,12 +410,12 @@ int main(int argc, char **argv)
 			if (f_draw_solutions) {
 				Dio->m--; // delete the equation for the sum
 				Dio->draw_solutions(output_file, verbose_level);
-				}
+			}
 			else {
 				Dio->write_solutions(output_file, verbose_level);
-				}
 			}
 		}
+	}
 
 	
 	FREE_OBJECT(Dio);

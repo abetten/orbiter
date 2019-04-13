@@ -312,7 +312,7 @@ void do_it(int epsilon, int n, int q,
 				Mtx = NEW_int(6 * 25);
 				for (i = 0; i < 5; i++) {
 					cout << "creating Siegel transformation " << i << " / 5:" << endl;
-					::Siegel_Transformation(*F, 0 /*epsilon */, n - 1,
+					F->Siegel_Transformation(0 /*epsilon */, n - 1,
 							1 /*form_c1*/, 0 /*form_c2*/, 0 /*form_c3*/,
 							Mtx + i * 25, v + i * 5, u + i * 5, verbose_level);
 					int_matrix_print(Mtx + i * 25, 5, 5);

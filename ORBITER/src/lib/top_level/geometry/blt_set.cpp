@@ -242,8 +242,7 @@ void blt_set::init_orthogonal_hash(int verbose_level)
 		cout << "blt_set::init_orthogonal_hash" << endl;
 		}
 
-	init_hash_table_parabolic(*Blt_set_domain->O->F,
-			4, 0/*verbose_level*/);
+	Blt_set_domain->O->F->init_hash_table_parabolic(4, 0/*verbose_level*/);
 
 	if (f_v) {
 		cout << "blt_set::init_orthogonal finished" << endl;

@@ -1978,58 +1978,11 @@ int nb_pts_Qplus(int k, int q);
 // number of singular points on Q^+(k,q)
 int nb_pts_Qminus(int k, int q);
 // number of singular points on Q^-(k,q)
-int evaluate_quadratic_form(finite_field &GFq, int *v, int stride, 
-	int epsilon, int k, int form_c1, int form_c2, int form_c3);
-void Q_epsilon_unrank(finite_field &GFq, int *v, int stride, 
-	int epsilon, int k, int c1, int c2, int c3, int a);
-int Q_epsilon_rank(finite_field &GFq, int *v, int stride, 
-	int epsilon, int k, int c1, int c2, int c3);
-void init_hash_table_parabolic(finite_field &GFq, 
-	int k, int verbose_level);
-void Q_unrank(finite_field &GFq, int *v, 
-	int stride, int k, int a);
-int Q_rank(finite_field &GFq, int *v, int stride, int k);
-void Q_unrank_directly(finite_field &GFq, 
-	int *v, int stride, int k, int a);
-// k = projective dimension, must be even
-int Q_rank_directly(finite_field &GFq, int *v, int stride, int k);
-// k = projective dimension, must be even
-void Qplus_unrank(finite_field &GFq, int *v, int stride, int k, int a);
-// k = projective dimension, must be odd
-int Qplus_rank(finite_field &GFq, int *v, int stride, int k);
-// k = projective dimension, must be odd
-void Qminus_unrank(finite_field &GFq, int *v, int stride, int k, 
-	int a, int c1, int c2, int c3);
-// k = projective dimension, must be odd
-// the form is 
-// \sum_{i=0}^n x_{2i}x_{2i+1} 
-// + c1 x_{2n}^2 + c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
-int Qminus_rank(finite_field &GFq, int *v, int stride, int k, 
-	int c1, int c2, int c3);
-// k = projective dimension, must be odd
-// the form is 
-// \sum_{i=0}^n x_{2i}x_{2i+1} 
-// + c1 x_{2n}^2 + c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
 int nb_pts_S(int n, int q);
 int nb_pts_N(int n, int q);
 int nb_pts_N1(int n, int q);
 int nb_pts_Sbar(int n, int q);
 int nb_pts_Nbar(int n, int q);
-void S_unrank(finite_field &GFq, int *v, int stride, int n, int a);
-void N_unrank(finite_field &GFq, int *v, int stride, int n, int a);
-void N1_unrank(finite_field &GFq, int *v, int stride, int n, int a);
-void Sbar_unrank(finite_field &GFq, int *v, int stride, int n, int a);
-void Nbar_unrank(finite_field &GFq, int *v, int stride, int n, int a);
-void S_rank(finite_field &GFq, int *v, int stride, int n, int &a);
-void N_rank(finite_field &GFq, int *v, int stride, int n, int &a);
-void N1_rank(finite_field &GFq, int *v, int stride, int n, int &a);
-void Sbar_rank(finite_field &GFq, int *v, int stride, int n, int &a);
-void Nbar_rank(finite_field &GFq, int *v, int stride, int n, int &a);
-int evaluate_hyperbolic_quadratic_form(finite_field &GFq, 
-	int *v, int stride, int n);
-int evaluate_hyperbolic_bilinear_form(finite_field &GFq, 
-	int *u, int *v, int n);
-int primitive_element(finite_field &GFq);
 void order_POmega_epsilon(int epsilon, int m, int q, 
 	longinteger_object &o, int verbose_level);
 void order_PO_epsilon(int f_semilinear, int epsilon, int k, int q, 
@@ -2059,28 +2012,8 @@ void order_Pomega_parabolic(int m, int q, longinteger_object &o,
 	int verbose_level);
 // m = Witt index, the dimension is n = 2m + 1
 int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
-void Gram_matrix(finite_field &GFq, int epsilon, int k, 
-	int form_c1, int form_c2, int form_c3, int *&Gram);
-int evaluate_bilinear_form(finite_field &GFq, int *u, int *v, 
-	int d, int *Gram);
-void choose_anisotropic_form(finite_field &GFq, 
-	int &c1, int &c2, int &c3, int verbose_level);
-void Siegel_Transformation(finite_field &GFq, int epsilon, int k, 
-	int form_c1, int form_c2, int form_c3, 
-	int *M, int *v, int *u, int verbose_level);
 void test_Orthogonal(int epsilon, int k, int q);
 void test_orthogonal(int n, int q);
-void orthogonal_Siegel_map_between_singular_points(int *T, 
-	int rk_from, int rk_to, int root, 
-	finite_field &GFq, int epsilon, int algebraic_dimension, 
-	int form_c1, int form_c2, int form_c3, int *Gram_matrix, 
-	int verbose_level);
-// root is not perp to from and to.
-int orthogonal_find_root(int rk2, 
-	finite_field &GFq, int epsilon, int algebraic_dimension, 
-	int form_c1, int form_c2, int form_c3, int *Gram_matrix, 
-	int verbose_level);
-void orthogonal_points_free_global_data();
 
 
 // #############################################################################
