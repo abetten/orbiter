@@ -2126,12 +2126,13 @@ void action::init_automorphism_group_from_group_table(
 	int N_go;
 	longinteger_object go;
 	//int i;
+	magma_interface Magma;
 
 	if (f_v) {
 		cout << "action::init_automorphism_group_from_group_table" << endl;
 		}
 
-	magma_normalizer_in_Sym_n(fname_base,
+	Magma.normalizer_in_Sym_n(fname_base,
 		group_order, Table, gens, nb_gens,
 		N_gens, N_nb_gens, N_go, verbose_level);
 

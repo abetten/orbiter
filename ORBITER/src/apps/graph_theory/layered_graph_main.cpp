@@ -512,12 +512,12 @@ void draw_vertex_callback_graph(layered_graph *LG,
 
 			cout << "dinstingished edge = " << distinguished_edge << endl;
 
-			draw_graph_with_distinguished_edge(G, x, y, dx, dy,
+			G->draw_graph_with_distinguished_edge(x, y, dx, dy,
 					nb_V, D, len, distinguished_edge, 0 /*verbose_level*/);
 				// in GALOIS/draw.C
 			}
 		else {
-			draw_graph(G, x, y, dx, dy, nb_V, D, len);
+			G->draw_graph(x, y, dx, dy, nb_V, D, len);
 				// in GALOIS/draw.C
 			}
 		G->comment("graph_end");
@@ -545,7 +545,7 @@ void draw_vertex_callback_graph(layered_graph *LG,
 			sprintf(str + strlen(str), " %d", D[i]);
 			}
 		G->comment(str);
-		draw_graph(G, x, y, dx, dy, nb_V, D, depth);
+		G->draw_graph(x, y, dx, dy, nb_V, D, depth);
 			// in GALOIS/draw.C
 		G->comment("graph_end");
 		
@@ -582,8 +582,7 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 			sprintf(str + strlen(str), " %d", D[i]);
 			}
 		G->comment(str);
-		draw_tournament(G, x, y, dx, dy, nb_V, D, len, verbose_level);
-			// in GALOIS/draw.C
+		G->draw_tournament(x, y, dx, dy, nb_V, D, len, verbose_level);
 		G->comment("tournament_end");
 
 
@@ -609,8 +608,7 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 			sprintf(str + strlen(str), " %d", D[i]);
 			}
 		G->comment(str);
-		draw_tournament(G, x, y, dx, dy, nb_V, D, depth, verbose_level);
-			// in GALOIS/draw.C
+		G->draw_tournament(x, y, dx, dy, nb_V, D, depth, verbose_level);
 		G->comment("tournament_end");
 		
 		FREE_int(D);

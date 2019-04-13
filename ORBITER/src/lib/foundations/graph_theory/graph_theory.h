@@ -387,6 +387,10 @@ public:
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width);
 	int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
+	void create_Levi_graph_from_incidence_matrix(
+		int *M, int nb_rows, int nb_cols,
+		int f_point_labels, int *point_labels,
+		int verbose_level);
 
 };
 
@@ -426,6 +430,30 @@ void call_back_clique_found_using_file_output(clique_finder *CF,
 int colored_graph_all_rainbow_cliques_nonrecursive(const char *fname, 
 	int &nb_backtrack_nodes, 
 	int verbose_level);
+void save_as_colored_graph_easy(const char *fname_base, int n, int *Adj,
+	int verbose_level);
+void save_colored_graph(const char *fname, int nb_vertices, int nb_colors,
+	int *vertex_labels, int *vertex_colors,
+	int *data, int data_sz,
+	uchar *bitvector_adjacency, int bitvector_length,
+	int verbose_level);
+void load_colored_graph(const char *fname, int &nb_vertices, int &nb_colors,
+	int *&vertex_labels, int *&vertex_colors,
+	int *&user_data, int &user_data_size,
+	uchar *&bitvector_adjacency, int &bitvector_length,
+	int verbose_level);
+void write_colored_graph(std::ofstream &ost, char *label,
+	int point_offset,
+	int nb_points,
+	int f_has_adjacency_matrix, int *Adj,
+	int f_has_adjacency_list, int *adj_list,
+	int f_has_bitvector, uchar *bitvector_adjacency,
+	int f_has_is_adjacent_callback,
+	int (*is_adjacent_callback)(int i, int j, void *data),
+	void *is_adjacent_callback_data,
+	int f_colors, int nb_colors, int *point_color,
+	int f_point_labels, int *point_label);
+
 
 // #############################################################################
 // graph_layer.C

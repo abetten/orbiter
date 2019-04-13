@@ -1983,6 +1983,246 @@ void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 }
 
 
+#include <math.h>
+
+double numerics::cos_grad(double phi)
+{
+	double x;
+
+	x = (phi * M_PI) / 180.;
+	return cos(x);
+}
+
+double numerics::sin_grad(double phi)
+{
+	double x;
+
+	x = (phi * M_PI) / 180.;
+	return sin(x);
+}
+
+double numerics::tan_grad(double phi)
+{
+	double x;
+
+	x = (phi * M_PI) / 180.;
+	return tan(x);
+}
+
+double numerics::atan_grad(double x)
+{
+	double y, phi;
+
+	y = atan(x);
+	phi = (y * 180.) / M_PI;
+	return phi;
+}
+
+void numerics::adjust_coordinates_double(
+		double *Px, double *Py,
+		int *Qx, int *Qy,
+		int N, double xmin, double ymin, double xmax, double ymax,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	double in[4], out[4];
+	double x_min, x_max;
+	double y_min, y_max;
+	int i;
+	double x, y;
+
+	x_min = x_max = Px[0];
+	y_min = y_max = Py[0];
+
+	for (i = 1; i < N; i++) {
+		x_min = MINIMUM(x_min, Px[i]);
+		x_max = MAXIMUM(x_max, Px[i]);
+		y_min = MINIMUM(y_min, Py[i]);
+		y_max = MAXIMUM(y_max, Py[i]);
+		}
+	if (f_v) {
+		cout << "numerics::adjust_coordinates_double: x_min=" << x_min
+		<< "x_max=" << x_max
+		<< "y_min=" << y_min
+		<< "y_max=" << y_max << endl;
+		cout << "adjust_coordinates_double: ";
+		cout
+			<< "xmin=" << xmin
+			<< " xmax=" << xmax
+			<< " ymin=" << ymin
+			<< " ymax=" << ymax
+			<< endl;
+		}
+
+	in[0] = x_min;
+	in[1] = y_min;
+	in[2] = x_max;
+	in[3] = y_max;
+
+	out[0] = xmin;
+	out[1] = ymin;
+	out[2] = xmax;
+	out[3] = ymax;
+
+	for (i = 0; i < N; i++) {
+		x = Px[i];
+		y = Py[i];
+		if (f_vv) {
+			cout << "In:" << x << "," << y << " : ";
+			}
+		transform_llur_double(in, out, x, y);
+		Qx[i] = (int)x;
+		Qy[i] = (int)y;
+		if (f_vv) {
+			cout << " Out: " << Qx[i] << "," << Qy[i] << endl;
+			}
+		}
+}
+
+void numerics::Intersection_of_lines(double *X, double *Y,
+		double *a, double *b, double *c, int l1, int l2, int pt)
+{
+	intersection_of_lines(
+			a[l1], b[l1], c[l1],
+			a[l2], b[l2], c[l2],
+			X[pt], Y[pt]);
+}
+
+void numerics::intersection_of_lines(
+		double a1, double b1, double c1,
+		double a2, double b2, double c2,
+		double &x, double &y)
+{
+	double d;
+
+	d = a1 * b2 - a2 * b1;
+	d = 1. / d;
+	x = d * (b2 * -c1 + -b1 * -c2);
+	y = d * (-a2 * -c1 + a1 * -c2);
+}
+
+void numerics::Line_through_points(double *X, double *Y,
+		double *a, double *b, double *c,
+		int pt1, int pt2, int line_idx)
+{
+	line_through_points(X[pt1], Y[pt1], X[pt2], Y[pt2],
+			a[line_idx], b[line_idx], c[line_idx]);
+}
+
+void numerics::line_through_points(double pt1_x, double pt1_y,
+	double pt2_x, double pt2_y, double &a, double &b, double &c)
+{
+	double s, off;
+	const double MY_EPS = 0.01;
+
+	if (ABS(pt2_x - pt1_x) > MY_EPS) {
+		s = (pt2_y - pt1_y) / (pt2_x - pt1_x);
+		off = pt1_y - s * pt1_x;
+		a = s;
+		b = -1;
+		c = off;
+		}
+	else {
+		s = (pt2_x - pt1_x) / (pt2_y - pt1_y);
+		off = pt1_x - s * pt1_y;
+		a = 1;
+		b = -s;
+		c = -off;
+		}
+}
+
+void numerics::intersect_circle_line_through(double rad, double x0, double y0,
+	double pt1_x, double pt1_y,
+	double pt2_x, double pt2_y,
+	double &x1, double &y1, double &x2, double &y2)
+{
+	double a, b, c;
+
+	line_through_points(pt1_x, pt1_y, pt2_x, pt2_y, a, b, c);
+	//cout << "intersect_circle_line_through pt1_x=" << pt1_x
+	//<< " pt1_y=" << pt1_y << " pt2_x=" << pt2_x
+	//<< " pt2_y=" << pt2_y << endl;
+	//cout << "intersect_circle_line_through a=" << a << " b=" << b
+	//<< " c=" << c << endl;
+	intersect_circle_line(rad, x0, y0, a, b, c, x1, y1, x2, y2);
+	//cout << "intersect_circle_line_through x1=" << x1 << " y1=" << y1
+	//	<< " x2=" << x2 << " y2=" << y2 << endl << endl;
+}
+
+
+void numerics::intersect_circle_line(double rad, double x0, double y0,
+		double a, double b, double c,
+		double &x1, double &y1, double &x2, double &y2)
+{
+	double A, B, C;
+	double a2 = a * a;
+	double b2 = b * b;
+	double c2 = c * c;
+	double x02 = x0 * x0;
+	double y02 = y0 * y0;
+	double r2 = rad * rad;
+	double p, q, u, disc, d;
+
+	cout << "a=" << a << " b=" << b << " c=" << c << endl;
+	A = 1 + a2 / b2;
+	B = 2 * a * c / b2 - 2 * x0 + 2 * a * y0 / b;
+	C = c2 / b2 + 2 * c * y0 / b + x02 + y02 - r2;
+	cout << "A=" << A << " B=" << B << " C=" << C << endl;
+	p = B / A;
+	q = C / A;
+	u = -p / 2;
+	disc =  u * u - q;
+	d = sqrt(disc);
+	x1 = u + d;
+	x2 = u - d;
+	y1 = (-a * x1 - c) / b;
+	y2 = (-a * x2 - c) / b;
+}
+
+void numerics::affine_combination(double *X, double *Y,
+		int pt0, int pt1, int pt2, double alpha, int new_pt)
+//X[new_pt] = X[pt0] + alpha * (X[pt2] - X[pt1]);
+//Y[new_pt] = Y[pt0] + alpha * (Y[pt2] - Y[pt1]);
+{
+	X[new_pt] = X[pt0] + alpha * (X[pt2] - X[pt1]);
+	Y[new_pt] = Y[pt0] + alpha * (Y[pt2] - Y[pt1]);
+}
+
+
+void numerics::on_circle_double(double *Px, double *Py,
+		int idx, double angle_in_degree, double rad)
+{
+
+	Px[idx] = cos_grad(angle_in_degree) * rad;
+	Py[idx] = sin_grad(angle_in_degree) * rad;
+}
+
+void numerics::affine_pt1(int *Px, int *Py,
+		int p0, int p1, int p2, double f1, int p3)
+{
+	int x = Px[p0] + (int)(f1 * (double)(Px[p2] - Px[p1]));
+	int y = Py[p0] + (int)(f1 * (double)(Py[p2] - Py[p1]));
+	Px[p3] = x;
+	Py[p3] = y;
+}
+
+void numerics::affine_pt2(int *Px, int *Py,
+		int p0, int p1, int p1b,
+		double f1, int p2, int p2b, double f2, int p3)
+{
+	int x = Px[p0]
+			+ (int)(f1 * (double)(Px[p1b] - Px[p1]))
+			+ (int)(f2 * (double)(Px[p2b] - Px[p2]));
+	int y = Py[p0]
+			+ (int)(f1 * (double)(Py[p1b] - Py[p1]))
+			+ (int)(f2 * (double)(Py[p2b] - Py[p2]));
+	Px[p3] = x;
+	Py[p3] = y;
+}
+
+
+
 
 }}
 

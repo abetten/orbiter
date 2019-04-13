@@ -347,7 +347,7 @@ int main(int argc, char **argv)
 		Base[2] = (int)(dx * 0.0);
 		Base[3] = (int)(dy * 0.5); // sqrt(3) / 2
 		cout << "before draw_graph_on_2D_grid" << endl;
-		draw_graph_on_2D_grid(&G, 0 /* x */, 0 /* y */, 
+		G.draw_graph_on_2D_grid(0 /* x */, 0 /* y */,
 			dx, dy, rad, nb_V, E, nb_E, coords_2D, Base, 
 			f_point_labels, point_label_offset, f_directed);
 		}
@@ -359,7 +359,7 @@ int main(int argc, char **argv)
 			E2[i] = ij2k(E[2 * i + 0], E[2 * i + 1], nb_V);
 			}
 		//cout << "before draw_graph" << endl;
-		draw_graph(G, nb_V, nb_E, E2, f_directed, 
+		draw_graph(G, nb_V, nb_E, E2, f_directed,
 			f_no_point_labels, 
 			f_point_labels, point_labels, 
 			point_label_offset, f_edge_labels, 
@@ -466,6 +466,7 @@ void draw_graph(mp_graphics &G,
 	int *f_vertex_selected;
 	int vertex_selection_length;
 	int f_go = FALSE;
+	numerics Num;
 
 	if (f_v) {
 		cout << "draw_graph" << endl;
@@ -588,7 +589,7 @@ void draw_graph(mp_graphics &G,
 					s = e1;
 					t = e2;
 					}
-				affine_pt1(Px, Py, s, s, t, 0.80, nb_v);
+				Num.affine_pt1(Px, Py, s, s, t, 0.80, nb_v);
 				G.polygon2(Px, Py, s, nb_v);
 				G.sl_ends(0, 0);
 				G.polygon2(Px, Py, s, t);
@@ -597,7 +598,8 @@ void draw_graph(mp_graphics &G,
 				G.polygon2(Px, Py, e1, e2);
 				}
 			if (f_edge_labels) {
-				affine_pt1(Px, Py, e1, e1, e2, 0.25, nb_v);
+
+				Num.affine_pt1(Px, Py, e1, e1, e2, 0.25, nb_v);
 				itoa(str, 1000, E[i]);
 				G.aligned_text_array(Px, Py, nb_v, "", str);
 				}

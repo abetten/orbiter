@@ -319,7 +319,7 @@ void draw_graph_to_file(const char *fname,
 	//G.frame(0.05);
 
 
-	draw_graph(&G, x, y, dx, dy, n, set, sz);
+	G.draw_graph(x, y, dx, dy, n, set, sz);
 	
 	G.end_figure();
 	G.footer();

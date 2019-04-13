@@ -53,66 +53,10 @@ void transform_dist(int *in, int *out, int &x, int &y);
 void transform_dist_x(int *in, int *out, int &x);
 void transform_dist_y(int *in, int *out, int &y);
 void transform_llur_double(double *in, double *out, double &x, double &y);
-void draw(char *fname);
+//void draw(char *fname);
 void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad);
-void on_circle_double(double *Px, double *Py, int idx, 
-	double angle_in_degree, double rad);
-void polygon3D(mp_graphics &G, int *Px, int *Py, int dim, 
-	int x0, int y0, int z0, int x1, int y1, int z1);
-void integer_4pts(mp_graphics &G, int *Px, int *Py, 
-	int p1, int p2, int p3, int p4, 
-	const char *align, int a);
-void text_4pts(mp_graphics &G, int *Px, int *Py, 
-	int p1, int p2, int p3, int p4, 
-	const char *align, const char *str);
-void affine_pt1(int *Px, int *Py, int p0, int p1, int p2, 
-	double f1, int p3);
-void affine_pt2(int *Px, int *Py, int p0, int p1, int p1b, 
-	double f1, int p2, int p2b, double f2, int p3);
 int C3D(int i, int j, int k);
 int C2D(int i, int j);
-double cos_grad(double phi);
-double sin_grad(double phi);
-double tan_grad(double phi);
-double atan_grad(double x);
-void adjust_coordinates_double(double *Px, double *Py, int *Qx, int *Qy, 
-	int N, double xmin, double ymin, double xmax, double ymax, 
-	int verbose_level);
-void Intersection_of_lines(double *X, double *Y, 
-	double *a, double *b, double *c, int l1, int l2, int pt);
-void intersection_of_lines(double a1, double b1, double c1, 
-	double a2, double b2, double c2, 
-	double &x, double &y);
-void Line_through_points(double *X, double *Y, 
-	double *a, double *b, double *c, 
-	int pt1, int pt2, int line_idx);
-void line_through_points(double pt1_x, double pt1_y, 
-	double pt2_x, double pt2_y, double &a, double &b, double &c);
-void intersect_circle_line_through(double rad, double x0, double y0, 
-	double pt1_x, double pt1_y, 
-	double pt2_x, double pt2_y, 
-	double &x1, double &y1, double &x2, double &y2);
-void intersect_circle_line(double rad, double x0, double y0, 
-	double a, double b, double c, 
-	double &x1, double &y1, double &x2, double &y2);
-void affine_combination(double *X, double *Y, 
-	int pt0, int pt1, int pt2, double alpha, int new_pt);
-void draw_graph(mp_graphics *G, int x, int y, int dx, int dy, 
-	int nb_V, int *Edges, int nb_E);
-void draw_graph_with_distinguished_edge(mp_graphics *G, int x, int y, 
-	int dx, int dy, int nb_V, int *Edges, int nb_E, 
-	int distinguished_edge, int verbose_level);
-void draw_graph_on_multiple_circles(mp_graphics *G, int x, int y, 
-	int dx, int dy, int nb_V, 
-	int *Edges, int nb_E, int nb_circles);
-void draw_graph_on_2D_grid(mp_graphics *G, 
-	int x, int y, int dx, int dy, 
-	int rad, int nb_V, 
-	int *Edges, int nb_E, int *coords_2D, int *Base, 
-	int f_point_labels, int point_label_offset, int f_directed);
-void draw_tournament(mp_graphics *G, 
-	int x, int y, int dx, int dy, int nb_V, 
-	int *Edges, int nb_E, int verbose_level);
 void draw_bitmatrix(const char *fname_base, int f_dots, 
 	int f_partition, int nb_row_parts, int *row_part_first, 
 	int nb_col_parts, int *col_part_first, 
@@ -120,13 +64,6 @@ void draw_bitmatrix(const char *fname_base, int f_dots,
 	int f_bitmatrix, uchar *D, int *M, 
 	int m, int n, int xmax_in, int ymax_in, int xmax, int ymax, 
 	double scale, double line_width, 
-	int f_has_labels, int *labels);
-void draw_bitmatrix2(mp_graphics &G, int f_dots, 
-	int f_partition, int nb_row_parts, int *row_part_first, 
-	int nb_col_parts, int *col_part_first, 
-	int f_row_grid, int f_col_grid, 
-	int f_bitmatrix, uchar *D, int *M, 
-	int m, int n, int xmax, int ymax, 
 	int f_has_labels, int *labels);
 
 
@@ -447,9 +384,58 @@ public:
 	void output_x_tikz(int x);
 	void output_y_tikz(int y);
 
+	void polygon3D(int *Px, int *Py,
+			int dim, int x0, int y0, int z0, int x1, int y1, int z1);
+	void integer_4pts(int *Px, int *Py,
+			int p1, int p2, int p3, int p4,
+			const char *align, int a);
+	void text_4pts(int *Px, int *Py, int p1, int p2, int p3, int p4,
+		const char *align, const char *str);
 
 
+	void draw_graph(int x, int y,
+			int dx, int dy, int nb_V, int *Edges, int nb_E);
+	void draw_graph_with_distinguished_edge(
+		int x, int y,
+		int dx, int dy, int nb_V, int *Edges, int nb_E,
+		int distinguished_edge, int verbose_level);
+	void draw_graph_on_multiple_circles(int x, int y,
+			int dx, int dy, int nb_V, int *Edges, int nb_E, int nb_circles);
+	void draw_graph_on_2D_grid(
+			int x, int y, int dx, int dy, int rad, int nb_V,
+			int *Edges, int nb_E, int *coords_2D, int *Base,
+			int f_point_labels, int point_label_offset, int f_directed);
+	void draw_tournament(int x, int y,
+			int dx, int dy, int nb_V, int *Edges, int nb_E,
+			int verbose_level);
+	void draw_bitmatrix2(int f_dots,
+		int f_partition, int nb_row_parts, int *row_part_first,
+		int nb_col_parts, int *col_part_first,
+		int f_row_grid, int f_col_grid,
+		int f_bitmatrix, uchar *D, int *M,
+		int m, int n, int xmax, int ymax,
+		int f_has_labels, int *labels);
 
+	void draw_density2(int no,
+		int *outline_value, int *outline_number, int outline_sz,
+		int min_value, int max_value, int offset_x, int f_switch_x,
+		int f_title, const char *title,
+		const char *label_x,
+		int f_circle, int circle_at, int circle_rad,
+		int f_mu, int f_sigma, int nb_standard_deviations,
+		int f_v_grid, int v_grid, int f_h_grid, int h_grid);
+	void draw_density2_multiple_curves(int no,
+		int **outline_value, int **outline_number,
+		int *outline_sz, int nb_curves,
+		int min_x, int max_x, int min_y, int max_y,
+		int offset_x, int f_switch_x,
+		int f_title, const char *title,
+		const char *label_x,
+		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
+		int f_v_logarithmic, double log_base);
+	void projective_plane_draw_grid2(int q, int *Table,
+		int nb, int f_with_points, int rad,
+		int f_point_labels, char **Point_labels, int verbose_level);
 };
 
 
@@ -474,23 +460,6 @@ void draw_density_multiple_curves(char *prefix,
 	int xmax, int ymax, int offset_x, int f_switch_x, 
 	int f_v_logarithmic, double log_base, int no, int f_embedded, 
 	int verbose_level);
-void draw_density2(mp_graphics &G, int no, 
-	int *outline_value, int *outline_number, int outline_sz, 
-	int min_value, int max_value, int offset_x, int f_switch_x, 
-	int f_title, const char *title, 
-	const char *label_x, 
-	int f_circle, int circle_at, int circle_rad, 
-	int f_mu, int f_sigma, int nb_standard_deviations, 
-	int f_v_grid, int v_grid, int f_h_grid, int h_grid);
-void draw_density2_multiple_curves(mp_graphics &G, int no, 
-	int **outline_value, int **outline_number, 
-	int *outline_sz, int nb_curves, 
-	int min_x, int max_x, int min_y, int max_y, 
-	int offset_x, int f_switch_x, 
-	int f_title, const char *title, 
-	const char *label_x, 
-	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	int f_v_logarithmic, double log_base);
 void read_numbers_from_file(const char *fname, 
 	int *&the_set, int &set_size, int verbose_level);
 void get_coord(int *Px, int *Py, int idx, int x, int y, 
@@ -506,9 +475,6 @@ void projective_plane_draw_grid(const char *fname, int xmax, int ymax,
 	int f_point_labels, char **Point_labels, 
 	int f_embedded, int f_sideways, 
 	int verbose_level);
-void projective_plane_draw_grid2(mp_graphics &G, int q, int *Table, 
-	int nb, int f_with_points, int rad, 
-	int f_point_labels, char **Point_labels, int verbose_level);
 void projective_plane_make_affine_point(int q, int x1, int x2, int x3, 
 	double &a, double &b);
 
@@ -516,23 +482,34 @@ void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
 // povray_interface.cpp
 // #############################################################################
 
-void povray_beginning(std::ostream &ost,
-		double angle,
-		const char *sky,
-		const char *location,
-		const char *look_at,
-		int f_with_background);
-void povray_animation_rotate_around_origin_and_1_1_1(std::ostream &ost);
-void povray_animation_rotate_around_origin_and_given_vector(double *v,
-		std::ostream &ost);
-void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
-	double *v, double angle_zero_one, std::ostream &ost);
-void povray_union_start(std::ostream &ost);
-void povray_union_end(std::ostream &ost, double clipping_radius);
-void povray_bottom_plane(std::ostream &ost);
-void povray_rotate_111(int h, int nb_frames, std::ostream &fp);
-void povray_ini(std::ostream &ost, const char *fname_pov, int first_frame,
-	int last_frame);
+//! povray interface for 3D graphics
+
+
+
+class povray_interface {
+public:
+	povray_interface();
+	~povray_interface();
+	void beginning(std::ostream &ost,
+			double angle,
+			const char *sky,
+			const char *location,
+			const char *look_at,
+			int f_with_background);
+	void animation_rotate_around_origin_and_1_1_1(std::ostream &ost);
+	void animation_rotate_around_origin_and_given_vector(double *v,
+			std::ostream &ost);
+	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+		double *v, double angle_zero_one, std::ostream &ost);
+	void union_start(std::ostream &ost);
+	void union_end(std::ostream &ost, double clipping_radius);
+	void bottom_plane(std::ostream &ost);
+	void rotate_111(int h, int nb_frames, std::ostream &fp);
+	void ini(std::ostream &ost, const char *fname_pov, int first_frame,
+		int last_frame);
+};
+
+
 
 
 

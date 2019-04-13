@@ -291,6 +291,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, t;
 	int h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
+	magma_interface Magma;
 	
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::do_n2q3" << endl;
@@ -362,7 +363,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	sprintf(fname_magma_out, "%snormalizer.txt", prefix);
 
 
-	read_magma_permutation_group(fname_magma_out,
+	Magma.read_permutation_group(fname_magma_out,
 			H->group_order, N_gens, N_nb_gens, N_go, verbose_level);
 
 
