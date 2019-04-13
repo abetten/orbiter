@@ -143,8 +143,9 @@ void test_borel(int n, int q, int verbose_level)
 	sprintf(fname, "borel_SL_%d_%d.tex", n, q);
 	{
 	ofstream fp(fname);
+	latex_interface L;
 
-	latex_head_easy(fp);
+	L.head_easy(fp);
 
 	//fp << "\\setlength{\\extrarowheight}{20pt}" << endl;
 
@@ -235,7 +236,7 @@ void test_borel(int n, int q, int verbose_level)
 
 		}
 	bottom(fp);
-	latex_foot(fp);
+	L.foot(fp);
 	}
 	
 	int i;

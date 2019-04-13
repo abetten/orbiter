@@ -20,8 +20,9 @@ void schreier::latex(const char *fname)
 
 	{
 	ofstream fp(fname);
+	latex_interface L;
 
-	latex_head_easy(fp);
+	L.head_easy(fp);
 
 	print_generators_latex(fp);
 
@@ -29,7 +30,7 @@ void schreier::latex(const char *fname)
 
 	print_tables_latex(fp, f_with_cosetrep);
 
-	latex_foot(fp);
+	L.foot(fp);
 	}
 }
 

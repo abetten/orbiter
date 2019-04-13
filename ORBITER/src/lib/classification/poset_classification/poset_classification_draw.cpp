@@ -2146,8 +2146,9 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 	set = NEW_int(depth);
 	{
 		ofstream fp(fname);
+		latex_interface L;
 
-		latex_head_easy(fp);
+		L.head_easy(fp);
 
 		print_table1_top(fp);
 		cnt = 0;
@@ -2358,7 +2359,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 
 
 		
-		latex_foot(fp);
+		L.foot(fp);
 	}
 	FREE_int(set);
 	if (f_v) {

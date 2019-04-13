@@ -1019,9 +1019,10 @@ void one_by_one()
 	sprintf(fname, "one_by_one.tex");
 	{
 	ofstream file(fname);
+	latex_interface L;
 	cout << "opening file " << fname << endl;
 
-	latex_head(file, FALSE/* f_book*/, FALSE /* f_title */, NULL /*title*/, 
+	L.head(file, FALSE/* f_book*/, FALSE /* f_title */, NULL /*title*/,
 		"Anton Betten" /*char *author*/, FALSE/* f_toc*/, 
 		FALSE /* f_landscape*/,
 			FALSE /* f_12pt */, 
@@ -1049,7 +1050,7 @@ void one_by_one()
 		}
 	file << "\\end{array}" << endl;
 	file << "$$" << endl; 
-	latex_foot(file);
+	L.foot(file);
 	}
 
 	cout << "written file " << fname << " of size " << file_size(fname) << endl;

@@ -1069,6 +1069,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
+	latex_interface L;
 
 	if (target_size == q + 2) {
 		sprintf(title, "Hyperovals over ${\\mathbb F}_{%d}$", q);
@@ -1079,7 +1080,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		}
 	cout << "Writing file " << fname << " with "
 			<< Iso.Reps->count << " arcs:" << endl;
-	latex_head(f, f_book, f_title, 
+	L.head(f, f_book, f_title,
 		title, author, 
 		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers,
 		NULL /* extra_praeamble */);
@@ -1372,7 +1373,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 
 
 
-	latex_foot(f);
+	L.foot(f);
 	
 	FREE_int(Ago_int);
 	FREE_OBJECTS(Ago);

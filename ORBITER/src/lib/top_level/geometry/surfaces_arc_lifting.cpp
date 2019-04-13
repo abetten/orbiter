@@ -525,9 +525,10 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 	{
 	ofstream fp(fname_arc_lifting);
+	latex_interface L;
 
 
-	latex_head(fp,
+	L.head(fp,
 		FALSE /* f_book */,
 		TRUE /* f_title */,
 		title, author,
@@ -760,7 +761,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 
 
-	latex_foot(fp);
+	L.foot(fp);
 
 
 	}

@@ -145,5 +145,17 @@ int create_roots_H4(finite_field *F, int *roots);
 int generalized_binomial(int n, int k, int q);
 void print_tableau(int *Tableau, int l1, int l2, 
 	int *row_parts, int *col_parts);
+int ijk_rank(int i, int j, int k, int n);
+void ijk_unrank(int &i, int &j, int &k, int n, int rk);
+int largest_binomial2_below(int a2);
+int largest_binomial3_below(int a3);
+int binomial2(int a);
+int binomial3(int a);
+int minus_one_if_positive(int i);
+void int_vec_bubblesort_increasing(int len, int *p);
+void int_vec_print(int *v, int len);
+int integer_vec_compare(int *p, int *q, int len);
+int int_ij2k(int i, int j, int n);
+void int_k2ij(int k, int & i, int & j, int n);
 
 }}

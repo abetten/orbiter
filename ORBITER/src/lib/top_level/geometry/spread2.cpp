@@ -54,13 +54,14 @@ void spread::print_isomorphism_type(isomorph *Iso,
 	longinteger_f_print_scientific = FALSE;
 	{
 	ofstream file(fname);
+	latex_interface L;
 	//ofstream file_klein(fname_klein);
 	if (f_v) {
 		cout << "opening file " << fname << " for writing" << endl;
 		//cout << "opening file " << fname_klein << " for writing" << endl;
 		}
 
-	latex_head(file,
+	L.head(file,
 		FALSE/* f_book*/, FALSE /* f_title */, NULL /*title*/,
 		"Orbiter" /*char *author*/, FALSE/* f_toc*/, 
 		FALSE /* f_landscape*/,
@@ -197,7 +198,7 @@ void spread::print_isomorphism_type(isomorph *Iso,
 
 
 
-	latex_foot(file);
+	L.foot(file);
 	longinteger_f_print_scientific = save_longinteger_f_print_scientific;
 	}
 
@@ -1753,11 +1754,12 @@ void spread::report2(isomorph &Iso, int verbose_level)
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
+	latex_interface L;
 
 	sprintf(title, "$%d$-Spreads of PG($%d,%d$)", k - 1, 2 * k - 1, q);
 	cout << "Writing file " << fname << " with "
 			<< Iso.Reps->count << " spreads:" << endl;
-	latex_head(f, f_book, f_title, 
+	L.head(f, f_book, f_title,
 		title, author, 
 		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers, 
 		NULL /* extra_praeamble */);
@@ -2191,7 +2193,7 @@ void spread::report2(isomorph &Iso, int verbose_level)
 
 
 
-	latex_foot(f);
+	L.foot(f);
 	
 	FREE_int(Ago_int);
 	FREE_OBJECTS(Ago);

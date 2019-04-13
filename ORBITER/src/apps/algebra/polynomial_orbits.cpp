@@ -212,8 +212,9 @@ int main(int argc, const char **argv)
 	sprintf(author, "Orbiter");
 	{
 		ofstream f(fname);
+		latex_interface L;
 
-		latex_head(f,
+		L.head(f,
 				FALSE /* f_book*/,
 				TRUE /* f_title */,
 				title, author,
@@ -324,7 +325,7 @@ int main(int argc, const char **argv)
 			FREE_int(Kernel);
 			FREE_int(v);
 			}
-		latex_foot(f);
+		L.foot(f);
 
 	}
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
@@ -451,8 +452,9 @@ int main(int argc, const char **argv)
 
 			{
 			ofstream fp(fname);
+			latex_interface L;
 			
-			latex_head_easy(fp);
+			L.head_easy(fp);
 
 
 			A->Strong_gens->print_generators_tex(fp);
@@ -461,7 +463,7 @@ int main(int argc, const char **argv)
 
 			Sch->print_tables_latex(fp, TRUE /* f_with_cosetrep */);
 
-			latex_foot(fp);
+			L.foot(fp);
 			}
 			cout << "Written file " << fname << " of size "
 					<< file_size(fname) << endl;

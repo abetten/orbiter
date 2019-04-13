@@ -1008,11 +1008,12 @@ void blt_set::report(orbit_transversal *T, int verbose_level)
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
+	latex_interface L;
 
 	sprintf(title, "BLT-sets of Q$(4,%d)$", q);
 	cout << "Writing file " << fname << " with "
 			<< T->nb_orbits << " BLT-sets:" << endl;
-	latex_head(f, f_book, f_title,
+	L.head(f, f_book, f_title,
 		title,
 		author,
 		f_toc,
@@ -1228,7 +1229,7 @@ void blt_set::report(orbit_transversal *T, int verbose_level)
 			verbose_level);
 
 
-	latex_foot(f);
+	L.foot(f);
 	FREE_OBJECTS(Ago);
 	FREE_OBJECTS(Inv);
 	}

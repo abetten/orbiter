@@ -2103,15 +2103,16 @@ void gl_classes::report(const char *fname, int verbose_level)
 	{
 	ofstream fp(fname);
 	int i;
+	latex_interface L;
 
-	latex_head_easy(fp);
+	L.head_easy(fp);
 	fp << "\\section{Conjugacy Classes}" << endl;
 	for (i = 0; i < nb_classes; i++) {
 		fp << "Representative " << i << " / "
 				<< nb_classes << "\\\\" << endl;
 		print_matrix_and_centralizer_order_latex(fp, R + i);
 		}
-	latex_foot(fp);
+	L.foot(fp);
 	}
 	cout << "Written file " << fname << " of size "
 			<< file_size(fname) << endl;

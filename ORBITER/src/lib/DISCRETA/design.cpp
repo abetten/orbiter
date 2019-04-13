@@ -673,8 +673,9 @@ void design_parameter_database_export_tex(char *path_db)
 
 
 	ofstream f("designs.tex", ios::trunc);
+	latex_interface L;
 
-	latex_head(f, TRUE /* f_book */, TRUE /* f_title */, 
+	L.head(f, TRUE /* f_book */, TRUE /* f_title */,
 		"$t$-Designs", "DISCRETA", TRUE /* f_toc */, 
 		FALSE /* f_landscape */,
 		TRUE /* f_12pt */, 
@@ -942,7 +943,7 @@ void design_parameter_database_export_tex(char *path_db)
 		f << "\\smallskip" << endl;
 		}
 	
-	latex_foot(f);
+	L.foot(f);
 
 	for (page = 0; page <= highest_page; page++) {
 		cout << "ID >= " << page * 100 << endl;

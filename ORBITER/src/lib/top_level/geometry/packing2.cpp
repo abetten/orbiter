@@ -366,7 +366,8 @@ void packing::report_whole(isomorph *Iso,
 	report_extra_stuff(Iso, f, verbose_level);
 	
 
-	latex_foot(f);
+	latex_interface L;
+	L.foot(f);
 	if (inv) {
 		FREE_OBJECT(inv);
 		}
@@ -384,9 +385,10 @@ void packing::report_title_page(
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
+	latex_interface L;
 
 	sprintf(title, "The Packings of PG$(%d,%d)$", (int)3, (int)q);
-	latex_head(f, f_book, f_title, 
+	L.head(f, f_book, f_title,
 		title, author, 
 		f_toc, f_landscape, f_12pt,
 		f_enlarged_page, f_pagenumbers,

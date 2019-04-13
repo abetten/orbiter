@@ -339,6 +339,7 @@ class blt_set_domain;
 class blt_set_invariants;
 class magma_interface;
 class povray_interface;
+class latex_interface;
 
 
 #ifdef MEMORY_DEBUG

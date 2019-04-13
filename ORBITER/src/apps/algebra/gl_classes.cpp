@@ -322,8 +322,9 @@ int main(int argc, char **argv)
 
 		{
 		ofstream fp(fname);
+		latex_interface L;
 
-		latex_head(fp, FALSE /* f_book */, FALSE /* f_title */, 
+		L.head(fp, FALSE /* f_book */, FALSE /* f_title */,
 			"" /*const char *title */, "" /*const char *author */, 
 			FALSE /* f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
 			FALSE /* f_enlarged_page */, FALSE /* f_pagenumbers */, 
@@ -334,7 +335,7 @@ int main(int argc, char **argv)
 
 
 		
-		latex_foot(fp);
+		L.foot(fp);
 
 		}
 

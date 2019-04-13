@@ -255,7 +255,8 @@ int main(int argc, const char **argv)
 			sprintf(fname, "normalizer_%d.tex", n);
 			{
 				ofstream fp(fname);
-				latex_head_easy(fp);
+				latex_interface L;
+				L.head_easy(fp);
 
 				fp << "\\begin{sidewaystable}" << endl;
 				fp << "$$" << endl;
@@ -265,7 +266,7 @@ int main(int argc, const char **argv)
 
 				N->print_all_group_elements_tex(fp);
 
-				latex_foot(fp);
+				L.foot(fp);
 			}
 			FREE_int(Table);
 		}
@@ -327,11 +328,12 @@ int main(int argc, const char **argv)
 
 				{
 					ofstream fp(fname);
-					latex_head_easy(fp);
+					latex_interface L;
+					L.head_easy(fp);
 
 					H->print_all_group_elements_tex(fp);
 
-					latex_foot(fp);
+					L.foot(fp);
 				}
 
 		FREE_int(Elt);
@@ -640,8 +642,9 @@ void report(linear_group *LG, int verbose_level)
 
 	{
 		ofstream fp(fname);
+		latex_interface L;
 		//latex_head_easy(fp);
-		latex_head(fp,
+		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
 			title, author,
 			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
@@ -695,7 +698,7 @@ void report(linear_group *LG, int verbose_level)
 		A->report_conjugacy_classes_and_normalizers(fp,
 				verbose_level);
 
-		latex_foot(fp);
+		L.foot(fp);
 	}
 
 	FREE_int(Elt);

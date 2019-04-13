@@ -7,8 +7,9 @@ LFLAGS = -lm
 
 MODULES = \
 	file_output.o \
-	memory.o \
+	latex_interface.o \
 	memory_object.o \
+	memory.o \
 	orbiter_data_file.o \
 	util.o
 

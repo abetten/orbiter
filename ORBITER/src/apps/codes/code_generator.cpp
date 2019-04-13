@@ -612,9 +612,10 @@ void code_generator::main(int verbose_level)
 		sprintf(fname_report, "%s.tex", fname_base);
 		{
 		ofstream fp(fname_report);
+		latex_interface L;
 
 
-		latex_head(fp,
+		L.head(fp,
 			FALSE /* f_book */,
 			TRUE /* f_title */,
 			title, author,
@@ -629,7 +630,7 @@ void code_generator::main(int verbose_level)
 
 		gen->report(fp);
 
-		latex_foot(fp);
+		L.foot(fp);
 
 		} // close fp
 

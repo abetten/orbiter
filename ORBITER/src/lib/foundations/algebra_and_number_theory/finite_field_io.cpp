@@ -41,8 +41,9 @@ void finite_field::cheat_sheet_PG(int n,
 
 	{
 	ofstream f(fname);
+	latex_interface L;
 
-	latex_head(f,
+	L.head(f,
 			FALSE /* f_book*/,
 			TRUE /* f_title */,
 			title, author,
@@ -168,7 +169,7 @@ void finite_field::cheat_sheet_PG(int n,
 		FREE_OBJECT(S);
 		}
 
-	latex_foot(f);
+	L.foot(f);
 	}
 	cout << "written file " << fname << " of size "
 			<< file_size(fname) << endl;

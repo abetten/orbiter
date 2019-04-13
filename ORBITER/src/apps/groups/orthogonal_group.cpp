@@ -279,9 +279,10 @@ void do_it(int epsilon, int n, int q,
 
 			{
 			ofstream fp(fname_report);
+			latex_interface L;
 
 
-			latex_head_easy(fp);
+			L.head_easy(fp);
 
 			SG->print_generators_tex(fp);
 
@@ -361,7 +362,7 @@ void do_it(int epsilon, int n, int q,
 			}
 
 
-			latex_foot(fp);
+			L.foot(fp);
 
 			} // end fname_report
 		} // if (f_tree)

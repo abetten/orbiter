@@ -359,9 +359,10 @@ int main(int argc, const char **argv)
 
 		{
 		ofstream fp(fname);
+		latex_interface L;
 		
 		//latex_head_easy(fp);
-		latex_head(fp,
+		L.head(fp,
 			FALSE /* f_book */,
 			TRUE /* f_title */,
 			title, author, 
@@ -378,7 +379,7 @@ int main(int argc, const char **argv)
 		SCW->Classify_double_sixes->Double_sixes->print_latex(fp, 
 			"Double Sixes", FALSE /* f_with_stabilizers*/);
 
-		latex_foot(fp);
+		L.foot(fp);
 		}
 	cout << "Written file " << fname << " of size "
 			<< file_size(fname) << endl;
@@ -472,9 +473,10 @@ int main(int argc, const char **argv)
 
 			{
 			ofstream fp(fname);
+			latex_interface L;
 		
 			//latex_head_easy(fp);
-			latex_head(fp,
+			L.head(fp,
 				FALSE /* f_book */,
 				TRUE /* f_title */,
 				title, author, 
@@ -488,7 +490,7 @@ int main(int argc, const char **argv)
 
 			SCW->latex_surfaces(fp, f_with_stabilizers);
 
-			latex_foot(fp);
+			L.foot(fp);
 			}
 		cout << "Written file " << fname << " of size "
 				<< file_size(fname) << endl;
