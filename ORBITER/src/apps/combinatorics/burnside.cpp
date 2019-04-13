@@ -804,6 +804,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 	int *Choice;
 	int *Nb;
 	int t, h, i, /*idx,*/ j;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "compute_Distribution_table" << endl;
@@ -817,7 +818,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 	Nb = NEW_int(t_max + 1);
 
 	for (t = 1; t <= t_max; t++) {
-		Nb[t] = i_power_j(nb_gens, t);
+		Nb[t] = NT.i_power_j(nb_gens, t);
 		}
 
 	if (f_v) {

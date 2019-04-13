@@ -106,6 +106,7 @@ void do_it(int q, int verbose_level)
 	int f_semilinear = FALSE;
 	int f_basis = TRUE;
 	int p, h, i, j;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "do_it q=" << q << endl;
@@ -113,7 +114,7 @@ void do_it(int q, int verbose_level)
 	A5 = NEW_OBJECT(action);
 	A4 = NEW_OBJECT(action);
 	A2 = NEW_OBJECT(action);
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	if (h > 1)
 		f_semilinear = TRUE;
 	else
@@ -309,13 +310,14 @@ void do_2to4(int q, int nb_gens,
 	int f_semilinear = FALSE;
 	int f_basis = TRUE;
 	int p, h, i, j;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "do_2to4 q=" << q << endl;
 	}
 	A4 = NEW_OBJECT(action);
 	A2 = NEW_OBJECT(action);
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	if (h > 1)
 		f_semilinear = TRUE;
 	else
@@ -424,13 +426,14 @@ void do_4to5(int q, int nb_gens,
 	int f_semilinear = FALSE;
 	int f_basis = TRUE;
 	int p, h;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "do_4to5 q=" << q << endl;
 	}
 	A4 = NEW_OBJECT(action);
 	A5 = NEW_OBJECT(action);
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	if (h > 1)
 		f_semilinear = TRUE;
 	else

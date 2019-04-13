@@ -108,13 +108,14 @@ void finite_field::init(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	const char *poly;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_field::init q=" << q << endl;
 		}
 	nb_calls_to_finite_field_init++;
 	finite_field::q = q;
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	init_symbol_for_print("g");
 	
 	if (e > 1) {
@@ -145,6 +146,7 @@ void finite_field::init_override_polynomial(int q,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, l;
+	number_theory_domain NT;
 	
 	//f_v = TRUE;
 	//f_vv = TRUE;
@@ -154,7 +156,7 @@ void finite_field::init_override_polynomial(int q,
 		}
 	override_poly = poly;
 	finite_field::q = q;
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 #if 0
 	if (e > 1) {
 		f_v = TRUE;
@@ -204,7 +206,7 @@ void finite_field::init_override_polynomial(int q,
 		}
 	
 	finite_field::q = q;
-	log10_of_q = int_log10(q);
+	log10_of_q = NT.int_log10(q);
 	v1 = NEW_int(e);
 	v2 = NEW_int(e);
 	v3 = NEW_int(e);
@@ -287,12 +289,13 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int p1, e1, q1, i, j, jj, subgroup_index;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::compute_subfield_polynomial "
 				"for subfield of order " << order_subfield << endl;
 		}
-	factor_prime_power(order_subfield, p1, e1);
+	NT.factor_prime_power(order_subfield, p1, e1);
 	if (p1 != p) {
 		cout << "the subfield must have the same characteristic" << endl;
 		exit(1);
@@ -322,7 +325,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		}
 	K = NEW_int(e);
 	base_cols = NEW_int(e);
-	q1 = i_power_j(p, e1);
+	q1 = NT.i_power_j(p, e1);
 	subgroup_index = (q - 1) / (q1 - 1);
 	cout << "subfield " << p << "^" << e1 << " : subgroup_index = "
 			<< subgroup_index << endl;
@@ -393,7 +396,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		unipoly_object elt;
 		
 		FX.create_object_by_rank(elt, a);
-		cout << "subfield of order " << i_power_j(p, e1)
+		cout << "subfield of order " << NT.i_power_j(p, e1)
 				<< " : " << a << " = ";
 		Fq.print_object(elt, cout);
 		cout << endl;
@@ -410,6 +413,7 @@ void finite_field::compute_subfields(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int e1;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_field::compute_subfields" << endl;
@@ -432,12 +436,12 @@ void finite_field::compute_subfields(int verbose_level)
 			int poly;
 
 			poly = compute_subfield_polynomial(
-					i_power_j(p, e1), verbose_level);
+					NT.i_power_j(p, e1), verbose_level);
 			{
 				unipoly_object elt;
 				
 				FX.create_object_by_rank(elt, poly);
-				cout << "subfield of order " << i_power_j(p, e1)
+				cout << "subfield of order " << NT.i_power_j(p, e1)
 						<< " : " << poly << " = ";
 				Fq.print_object(elt, cout);
 				cout << endl;
@@ -549,12 +553,13 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int i, a;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_field::create_alpha_table_prime_field, "
 				"q=" << q << " p=" << p << " e=" << e << endl;
 		}
-	alpha = orbiter::foundations::primitive_root(p, f_v);
+	alpha = NT.primitive_root(p, verbose_level);
 	if (f_v) {
 		cout << "primitive element is alpha=" << alpha << endl;
 		}
@@ -1207,12 +1212,13 @@ void finite_field::retract_int_vec(finite_field &subfield,
 {
 	int f_v = (verbose_level >= 1);
 	int a, b, i, j, idx, m, n, k;
+	number_theory_domain NT;
 		
 	if (f_v) {
 		cout << "finite_field::retract_int_vec index=" << index << endl;
 		}
 	n = e / index;
-	m = i_power_j(p, n);
+	m = NT.i_power_j(p, n);
 	if (m != subfield.q) {
 		cout << "finite_field::retract_int_vec subfield "
 				"order does not match" << endl;
@@ -1251,6 +1257,7 @@ int finite_field::embed(finite_field &subfield,
 {
 	int f_v = (verbose_level >= 1);
 	int a, i, j, idx, m, n;
+	number_theory_domain NT;
 		
 	if (f_v) {
 		cout << "finite_field::embed index=" << index
@@ -1262,7 +1269,7 @@ int finite_field::embed(finite_field &subfield,
 		}
 	j = subfield.log_alpha(b);
 	n = e / index;
-	m = i_power_j(p, n);
+	m = NT.i_power_j(p, n);
 	if (m != subfield.q) {
 		cout << "finite_field::embed subfield order does not match" << endl;
 		exit(1);

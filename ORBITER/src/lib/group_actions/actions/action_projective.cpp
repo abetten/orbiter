@@ -515,6 +515,7 @@ int action::reverse_engineer_semilinear_map(
 	int /*q,*/ h, hh, i, j, l, e, frobenius_inv, lambda, rk, c, cv;
 	int *system;
 	int *base_cols;
+	number_theory_domain NT;
 
 
 	if (f_v) {
@@ -710,7 +711,7 @@ int action::reverse_engineer_semilinear_map(
 			cout << "l=" << l << endl;
 			}
 		for (i = 0; i < F->e; i++) {
-			if (i_power_j(F->p, i) == l) {
+			if (NT.i_power_j(F->p, i) == l) {
 				frobenius = i;
 				break;
 				}

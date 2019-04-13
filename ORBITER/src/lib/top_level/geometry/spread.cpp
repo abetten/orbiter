@@ -131,6 +131,7 @@ void spread::init(int order, int n, int k, int max_depth,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	longinteger_object go;
+	number_theory_domain NT;
 	
 	
 	if (f_v) {
@@ -173,7 +174,7 @@ void spread::init(int order, int n, int k, int max_depth,
 	f_basis = TRUE;
 	f_induce_action = FALSE;
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		if (f_v) {
 			cout << "spread::init q=" << q << " is a prime, "
 					"putting f_semilinear = FALSE" << endl;

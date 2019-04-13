@@ -163,6 +163,7 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h, idx, t;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials" << endl;
@@ -294,7 +295,7 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 			}
 		}
 
-	nb_affine = i_power_j(n, degree);
+	nb_affine = NT.i_power_j(n, degree);
 
 	if (nb_affine < ONE_MILLION) {
 		Affine = NEW_int(nb_affine * degree);
@@ -796,6 +797,7 @@ void homogeneous_polynomial_domain::substitute_line(
 	int *V;
 	int *Mtx;
 	int my_nb_affine, wt;
+	number_theory_domain NT;
 
 
 	if (f_v) {
@@ -803,7 +805,7 @@ void homogeneous_polynomial_domain::substitute_line(
 				"line" << endl;
 		}
 
-	my_nb_affine = i_power_j(2, degree);
+	my_nb_affine = NT.i_power_j(2, degree);
 
 	Mtx = NEW_int(n * 2);
 

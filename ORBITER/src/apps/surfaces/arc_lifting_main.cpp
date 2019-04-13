@@ -85,8 +85,9 @@ int main(int argc, const char **argv)
 		}
 
 	int f_semilinear;
+	number_theory_domain NT;
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {

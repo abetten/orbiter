@@ -1968,6 +1968,7 @@ void orthogonal::init_hyperbolic(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "init_hyperbolic" << endl;
@@ -1981,7 +1982,7 @@ void orthogonal::init_hyperbolic(int verbose_level)
 	p5 = p6 = 1;
 	p4 = T1_mm1;
 	p2 = p3 = (q - 1) * T1_mm1;
-	p1 = i_power_j(q, 2 * m - 2) - 1 - p2;
+	p1 = NT.i_power_j(q, 2 * m - 2) - 1 - p2;
 	l6 = l7 = T1_mm1;
 	l5 = T2_mm1;
 	l3 = l4 = (q - 1) * T1_mm2 * T1_mm1;
@@ -9332,11 +9333,12 @@ void orthogonal::plane_invariant(unusual_model *U,
 	int cnt;
 	int i;
 	int q;
+	number_theory_domain NT;
 
 
 	q = F->q;
 	n_choose_k = int_n_choose_k(size, level);
-	log2_of_q = int_log2(q);
+	log2_of_q = NT.int_log2(q);
 
 	Mtx = NEW_int(level * n);
 	Hash = NEW_int(n_choose_k);

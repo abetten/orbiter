@@ -1256,12 +1256,13 @@ void numerics::substitute_quadric_linear(
 	int h, i, j, a, nb_affine, idx;
 	int A[2];
 	int v[4];
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "substitute_quadric_linear" << endl;
 		}
 
-	nb_affine = i_power_j(n, degree);
+	nb_affine = NT.i_power_j(n, degree);
 
 	for (i = 0; i < nb_affine; i++) {
 		AG_element_unrank(n /* q */, A, 1, degree, i);
@@ -1396,12 +1397,13 @@ void numerics::substitute_cubic_linear(
 	int h, i, j, a, nb_affine, idx;
 	int A[3];
 	int v[4];
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "substitute_cubic_linear" << endl;
 		}
 
-	nb_affine = i_power_j(n, degree);
+	nb_affine = NT.i_power_j(n, degree);
 
 
 	if (FALSE) {

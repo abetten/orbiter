@@ -1297,6 +1297,7 @@ int diophant::solve_first_betten(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int k, total_max;
+	number_theory_domain NT;
 
 	if (!f_has_sum) {
 		cout << "diophant::solve_first_betten !f_has_sum" << endl;
@@ -1356,7 +1357,7 @@ int diophant::solve_first_betten(int verbose_level)
 				Gij(i, j) = g;
 				j--;
 				for (; j >= 0; j--) {
-					g = gcd_int(Aij(i, j + 1), g);
+					g = NT.gcd_int(Aij(i, j + 1), g);
 					Gij(i, j) = g;
 					}
 				}

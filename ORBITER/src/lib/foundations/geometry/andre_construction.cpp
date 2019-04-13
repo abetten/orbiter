@@ -75,6 +75,7 @@ void andre_construction::init(finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "andre_construction::init" << endl;
@@ -82,7 +83,7 @@ void andre_construction::init(finite_field *F,
 	andre_construction::F = F;
 	q = F->q;
 	andre_construction::k = k;
-	order = i_power_j(q, k);
+	order = NT.i_power_j(q, k);
 	spread_size = order + 1;
 	n = 2 * k;
 	N = order * order + order + 1;

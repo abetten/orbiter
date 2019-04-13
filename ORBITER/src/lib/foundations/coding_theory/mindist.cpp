@@ -63,8 +63,9 @@ int mindist(int n, int k, int q, int *G,
 	int p, e;
 	//vector vp, ve;
 	int wt_rows, w;
+	number_theory_domain NT;
 
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	MD.f_v = f_v;
 	MD.f_vv = f_vv;
 	MD.f_vvv = FALSE;
@@ -197,7 +198,8 @@ int mindist(int n, int k, int q, int *G,
 	if (f_v) {
 		cout << "the minimum distance is " << d 
 			<< "\nThis was determined by looking at " << MD.weight_computations 
-			<< " codewords\n(rather than " << i_power_j(q, k) << " codewords)" << endl;
+			<< " codewords\n(rather than "
+			<< NT.i_power_j(q, k) << " codewords)" << endl;
 		}
 	
 	if (d != wt_rows) {
@@ -545,11 +547,12 @@ static int weight_of_linear_combinations(MINDIST *MD, int l)
 	int q = MD->q;
 	int M = MD->M;
 	int d1;
-int d_l;		     /* minimum-weight by combining l rows       */  
-int lc, dec, h;
-int i, j, z, w;
-int *v,*linc,*lcv;
+	int d_l;		     /* minimum-weight by combining l rows       */
+	int lc, dec, h;
+	int i, j, z, w;
+	int *v,*linc,*lcv;
 	int *sub;
+	number_theory_domain NT;
 	
 	/* for l = 1 the weight of a multiple of a generating codevector 
 		    is equal to the weight of that codevector (p = prim) */
@@ -587,7 +590,7 @@ int *v,*linc,*lcv;
 		linc = (int*)calloc(k+2,sizeof(int)); 
 		lcv = (int*)calloc(n+2,sizeof(int));
 
-		lc = (int) i_power_j(q-1, l);
+		lc = NT.i_power_j(q-1, l);
 #if 0
 		lc = expo(p-1,l);   	/* number of possibilities to replace one 
 				     	 * subset with entries 1,...,p-1 */

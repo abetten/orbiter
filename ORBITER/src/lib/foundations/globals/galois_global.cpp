@@ -128,6 +128,7 @@ void search_for_primitive_polynomials(
 {
 	int f_v = (verbose_level >= 1);
 	int d, p;
+	number_theory_domain NT;
 	
 
 	longinteger_f_print_scientific = FALSE;
@@ -139,7 +140,7 @@ void search_for_primitive_polynomials(
 				<< " n_min=" << n_min << " n_max=" << n_max << endl;
 		}
 	for (p = p_min; p <= p_max; p++) {
-		if (!is_prime(p)) {
+		if (!NT.is_prime(p)) {
 			continue;
 			}
 		if (f_v) {

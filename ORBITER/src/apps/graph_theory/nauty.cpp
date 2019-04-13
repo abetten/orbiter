@@ -82,6 +82,7 @@ int main(int argc, char **argv)
 	int *edges2;
 	int *labeling;
 	int e, n2;
+	number_theory_domain NT;
 
 	n2 = (n * (n - 1)) >> 1;
 
@@ -130,7 +131,7 @@ int main(int argc, char **argv)
 		ofstream fp(fname);
 
 		set = NEW_int(n2);
-		N = i_power_j(2, n2);
+		N = NT.i_power_j(2, n2);
 		fp << "\\begin{tabular}{|c|l|c|c|l|c|l|}" << endl;
 		fp << "\\hline" << endl;
 		for (E = 0; E < N; E++) {

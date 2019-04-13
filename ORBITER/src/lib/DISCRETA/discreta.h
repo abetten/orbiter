@@ -356,7 +356,7 @@ std::ostream& operator<<(std::ostream& ost, class discreta_base& p);
 // discreta_base operator * (discreta_base& x, discreta_base &y);
 // discreta_base operator + (discreta_base& x, discreta_base &y);
 
-int lcm_int(int m, int n);
+//int lcm_int(int m, int n);
 //void extended_gcd_int(int m, int n, int &u, int &v, int &g);
 int invert_mod_integer(int i, int p);
 int remainder_mod(int i, int n);

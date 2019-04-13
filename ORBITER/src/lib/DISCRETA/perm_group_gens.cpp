@@ -351,14 +351,15 @@ void vec_subgroup_of_hol_of_cyclic_group(Vector & V, int n, int i)
 	int m, m1, g, alpha, alpha1, j, jj;
 	permutation p;
 	int f_v = TRUE;
+	number_theory_domain NT;
 	
-	if (!is_prime(n)) {
+	if (!NT.is_prime(n)) {
 		cout << "vec_subgroup_of_hol_of_cyclic_group() n must be a prime !" << endl;
 		exit(1);
 		}
 	m = n - 1;
 	m1 = m / i;
-	g = gcd_int(m, i);
+	g = NT.gcd_int(m, i);
 	if (m1 * i != m) {
 		i = g;
 		cout << "WARNING: vec_subgroup_of_hol_of_cyclic_group(): "
@@ -369,7 +370,7 @@ void vec_subgroup_of_hol_of_cyclic_group(Vector & V, int n, int i)
 	cout << "vec_subgroup_of_hol_of_cyclic_group() creating group "
 		"$" << n << " \\unlhd " << m1 << "$" << endl;
 
-	alpha = primitive_root(n, f_v);
+	alpha = NT.primitive_root(n, f_v);
 	alpha1 = alpha;
 	for (j = 2; j <= g; j++) {
 		alpha1 = (alpha1 * alpha) % n;

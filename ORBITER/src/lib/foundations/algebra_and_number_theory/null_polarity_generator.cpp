@@ -78,6 +78,7 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "null_polarity_generator::init" << endl;
@@ -85,7 +86,7 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 	null_polarity_generator::F = F;
 	null_polarity_generator::n = n;
 	q = F->q;
-	qn = i_power_j(q, n);
+	qn = NT.i_power_j(q, n);
 	nb_candidates = NEW_int(n + 1);
 	cur_candidate = NEW_int(n);
 	candidates = NEW_pint(n + 1);

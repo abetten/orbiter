@@ -27,7 +27,7 @@ MODULES = \
 	matrix_block_data.o \
 	norm_tables.o \
 	null_polarity_generator.o \
-	number_theory.o \
+	number_theory_domain.o \
 	partial_derivative.o \
 	rank_checker.o \
 	subfield_structure.o \

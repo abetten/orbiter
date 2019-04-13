@@ -68,10 +68,11 @@ void hermitian::init(finite_field *F, int nb_vars, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
+	number_theory_domain NT;
 	
 	hermitian::F = F;
 	hermitian::Q = F->q;
-	hermitian::q = i_power_j(F->p, F->e >> 1);
+	hermitian::q = NT.i_power_j(F->p, F->e >> 1);
 	hermitian::k = nb_vars;
 	if (f_v) {
 		cout << "hermitian::init Q=" << F->q << " q=" << q

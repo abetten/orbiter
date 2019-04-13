@@ -953,6 +953,7 @@ void finite_field::GlynnI_hyperoval(
 	int i, t, te, a;
 	int sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
 	int *Mtx;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::GlynnI_hyperoval q=" << q << endl;
@@ -978,7 +979,7 @@ void finite_field::GlynnI_hyperoval(
 	cout << "finite_field::GlynnI_hyperoval sigma = " << sigma
 			<< " gamma = " << gamma << endl;
 	//Gamma = i_power_j(2, gamma);
-	Sigma = i_power_j(2, sigma);
+	Sigma = NT.i_power_j(2, sigma);
 
 	exponent = 3 * Sigma + 4;
 
@@ -1021,6 +1022,7 @@ void finite_field::GlynnII_hyperoval(
 	int i, t, te, a;
 	int sigma, gamma = 0, Sigma, Gamma, exponent;
 	int *Mtx;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::GlynnII_hyperoval q=" << q << endl;
@@ -1046,8 +1048,8 @@ void finite_field::GlynnII_hyperoval(
 
 	cout << "finite_field::GlynnII_hyperoval "
 			"sigma = " << sigma << " gamma = " << i << endl;
-	Gamma = i_power_j(2, gamma);
-	Sigma = i_power_j(2, sigma);
+	Gamma = NT.i_power_j(2, gamma);
+	Sigma = NT.i_power_j(2, sigma);
 
 	exponent = Sigma + Gamma;
 
@@ -2742,6 +2744,7 @@ void finite_field::create_Baer_substructure(int n,
 	int *v;
 	int d = n + 1;
 	int i, j, a, b, index, f_is_in_subfield;
+	number_theory_domain NT;
 
 	//Q = q * q;
 	P2 = NEW_OBJECT(projective_space);
@@ -2750,7 +2753,7 @@ void finite_field::create_Baer_substructure(int n,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
 
-	if (q != i_power_j(p, e >> 1)) {
+	if (q != NT.i_power_j(p, e >> 1)) {
 		cout << "q != i_power_j(p, e >> 1)" << endl;
 		exit(1);
 		}
@@ -5208,7 +5211,9 @@ int nb_PG_elements_not_in_subspace(int n, int m, int q)
 int nb_AG_elements(int n, int q)
 // $q^n$
 {
-	return i_power_j(q, n);
+	number_theory_domain NT;
+
+	return NT.i_power_j(q, n);
 }
 
 void AG_element_rank(int q, int *v, int stride, int len, int &a)

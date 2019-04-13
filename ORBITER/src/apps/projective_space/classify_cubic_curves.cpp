@@ -57,8 +57,9 @@ int main(int argc, const char **argv)
 	int f_v = (verbose_level >= 1);
 
 	int f_semilinear = FALSE;
+	number_theory_domain NT;
 
-	if (!is_prime(q)) {
+	if (!NT.is_prime(q)) {
 		f_semilinear = TRUE;
 	}
 	finite_field *F;

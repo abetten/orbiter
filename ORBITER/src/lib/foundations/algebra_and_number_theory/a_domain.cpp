@@ -64,6 +64,7 @@ void a_domain::init_integer_fractions(int verbose_level)
 int a_domain::as_int(int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::as_int" << endl;
@@ -79,7 +80,7 @@ int a_domain::as_int(int *elt, int verbose_level)
 		if (at == 0) {
 			return 0;
 			}
-		g = gcd_int(at, ab);
+		g = NT.gcd_int(at, ab);
 		at /= g;
 		ab /= g;
 		if (ab != 1 && ab != -1) {
@@ -226,6 +227,7 @@ int a_domain::is_one(int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::is_one" << endl;
@@ -247,7 +249,7 @@ int a_domain::is_one(int *elt, int verbose_level)
 			ret = FALSE;
 			}
 		else {
-			g = gcd_int(at, ab);
+			g = NT.gcd_int(at, ab);
 			at = at / g;
 			ab = ab / g;
 			if (ab < 0) {
@@ -350,6 +352,7 @@ void a_domain::swap(int *elt1, int *elt2, int verbose_level)
 void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::add" << endl;
@@ -365,7 +368,7 @@ void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 		bt = elt_b[0];
 		bb = elt_b[1];
 		
-		int_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		NT.int_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 
 		elt_c[0] = ct;
 		elt_c[1] = cb;
@@ -379,6 +382,7 @@ void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::add_apply" << endl;
@@ -394,7 +398,7 @@ void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
 		bt = elt_b[0];
 		bb = elt_b[1];
 		
-		int_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		NT.int_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 
 		elt_a[0] = ct;
 		elt_a[1] = cb;
@@ -408,6 +412,7 @@ void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
 void a_domain::subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::subtract" << endl;
@@ -422,7 +427,7 @@ void a_domain::subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 		ab = elt_a[1];
 		bt = elt_b[0];
 		bb = elt_b[1];
-		g = gcd_int(ab, bb);
+		g = NT.gcd_int(ab, bb);
 		a1 = ab / g;
 		b1 = bb / g;
 		cb = a1 * g;
@@ -471,6 +476,7 @@ void a_domain::negate_vector(int *elt, int len, int verbose_level)
 void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::mult" << endl;
@@ -487,7 +493,7 @@ void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 		bb = elt_b[1];
 
 
-		int_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		NT.int_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 		
 		elt_c[0] = ct;
 		elt_c[1] = cb;
@@ -501,6 +507,7 @@ void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 void a_domain::mult_apply(int *elt_a, int *elt_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::mult_apply" << endl;
@@ -517,7 +524,7 @@ void a_domain::mult_apply(int *elt_a, int *elt_b, int verbose_level)
 		bb = elt_b[1];
 
 
-		int_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		NT.int_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 		
 		//cout << "a_domain::mult_apply " << at << "/" << ab
 		//<< " * " << bt << "/" << bb << " = " << ct << "/" << bb << endl;
@@ -595,6 +602,7 @@ void a_domain::mult_by_integer(int *elt, int n, int verbose_level)
 void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::divide_by_integer" << endl;
@@ -614,7 +622,7 @@ void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 
 		a = elt[0];
 		b = elt[1];
-		g = gcd_int(a, n);
+		g = NT.gcd_int(a, n);
 		a /= g;
 		n1 = n / g;
 		b *= n1;	
@@ -631,6 +639,7 @@ void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::divide" << endl;
@@ -642,7 +651,7 @@ void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 			cout << "a_domain::divide division by zero" << endl;
 			exit(1);
 			}
-		g = gcd_int(elt_a[0], elt_b[0]);
+		g = NT.gcd_int(elt_a[0], elt_b[0]);
 		elt_c[0] = elt_a[0] / g;
 		}
 	else if (kind == domain_integer_fractions) {
@@ -658,7 +667,7 @@ void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 			exit(1);
 			}
 
-		int_mult_fractions(at, ab, bb, bt, ct, cb, 0 /* verbose_level */);
+		NT.int_mult_fractions(at, ab, bb, bt, ct, cb, 0 /* verbose_level */);
 
 		elt_c[0] = ct;
 		elt_c[1] = cb;

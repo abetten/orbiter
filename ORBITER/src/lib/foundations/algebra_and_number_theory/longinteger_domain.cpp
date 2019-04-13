@@ -1449,6 +1449,7 @@ void longinteger_domain::factor_into_longintegers(
 	longinteger_object n, q, pp, r;
 	longinteger_domain D;
 	int p, last_prime = 0, i;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "factoring " << a << endl;
@@ -1528,7 +1529,7 @@ void longinteger_domain::factor_into_longintegers(
 		q.assign_to(n);
 		if (f_v) {
 			cout << "partial factorization: " << a << " = ";
-			print_longfactorization(nb_primes, primes, exponents);
+			NT.print_longfactorization(nb_primes, primes, exponents);
 			cout << "   * " << n;
 			cout << endl;
 			}
@@ -1536,7 +1537,7 @@ void longinteger_domain::factor_into_longintegers(
 		}
 	if (f_v) {
 		cout << "factor(): " << a << " = ";
-		print_longfactorization(nb_primes, primes, exponents);
+		NT.print_longfactorization(nb_primes, primes, exponents);
 		cout << endl;
 		}
 }
@@ -1548,6 +1549,7 @@ void longinteger_domain::factor(longinteger_object &a,
 	int f_v = (verbose_level >= 1);
 	longinteger_object n, q;
 	int p, last_prime = 2, i, r;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "factoring " << a << endl;
@@ -1613,7 +1615,7 @@ void longinteger_domain::factor(longinteger_object &a,
 		q.assign_to(n);
 		if (f_v) {
 			cout << "partial factorization: " << a << " = ";
-			print_factorization(nb_primes, primes, exponents);
+			NT.print_factorization(nb_primes, primes, exponents);
 			cout << "   * " << n;
 			cout << endl;
 			}
@@ -1621,7 +1623,7 @@ void longinteger_domain::factor(longinteger_object &a,
 		}
 	if (f_v) {
 		cout << "factor(): " << a << " = ";
-		print_factorization(nb_primes, primes, exponents);
+		NT.print_factorization(nb_primes, primes, exponents);
 		cout << endl;
 		}
 }
@@ -2211,8 +2213,9 @@ void longinteger_domain::group_order_PGL(
 	int *x;
 	int i, l;
 	int p, e;
+	number_theory_domain NT;
 	
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	l = n;
 	if (f_semilinear) {
 		l++;
@@ -2220,7 +2223,7 @@ void longinteger_domain::group_order_PGL(
 	
 	x = NEW_int(l);
 	for (i = 0; i < n; i++) {
-		x[i] = i_power_j(q, n) - i_power_j(q, i);
+		x[i] = NT.i_power_j(q, n) - NT.i_power_j(q, i);
 		if (i == 0) {
 			x[i] = x[i] / (q - 1);
 			}

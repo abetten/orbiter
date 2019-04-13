@@ -225,11 +225,12 @@ void welch(int q, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, lambda, k, ci, alpha, j, n, p, e;
 	finite_field *F;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "welch q=" << q << endl;
 		}
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	if (e > 1) {
 		cout << "Error, Welch needs q to be a prime! Continuing anyway" << endl;
 		//exit(1);
@@ -246,7 +247,7 @@ void welch(int q, int verbose_level)
 
 	for (lambda = 1; lambda < q; lambda++) {
 		for (k = 1; k < q; k++) {
-			if (gcd_int(k, q - 1) == 1) {
+			if (NT.gcd_int(k, q - 1) == 1) {
 				alpha = F->alpha_power(k);
 				for (i = 0; i < q - 1; i++) {
 					ci = F->mult(lambda, F->power(alpha, i));
@@ -319,6 +320,7 @@ void Lempel_Golomb(int q, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int n, i, k1, k2, k2v, alpha, beta, ai, bi, l1, l2, g, v, j;
 	finite_field *F;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "Lempel_Golomb q=" << q << endl;
@@ -334,12 +336,12 @@ void Lempel_Golomb(int q, int verbose_level)
 	F->init(q, 0);
 
 	for (k1 = 1; k1 < q; k1++) {
-		if (gcd_int(k1, q - 1) == 1) {
+		if (NT.gcd_int(k1, q - 1) == 1) {
 			alpha = F->alpha_power(k1);
 			for (k2 = 1; k2 < q; k2++) {
-				if (gcd_int(k2, q - 1) == 1) {
+				if (NT.gcd_int(k2, q - 1) == 1) {
 					//cout << "before extended_gcd k2=" << k2 << " q-1=" << q - 1 << endl;
-					extended_gcd_int(k2, q - 1, g, k2v, v);
+					NT.extended_gcd_int(k2, q - 1, g, k2v, v);
 					//cout << "k2v=" << k2v << endl;
 					while (k2v < 0) {
 						k2v += q - 1;
@@ -352,7 +354,7 @@ void Lempel_Golomb(int q, int verbose_level)
 						bi = F->add(1, F->negate(ai));
 						l1 = F->log_alpha(bi);
 						//cout << "before mult_mod l1=" << l1 << " k2v=" << k2v << endl;
-						l2 = mult_mod(l1, k2v, q - 1);
+						l2 = NT.mult_mod(l1, k2v, q - 1);
 						//cout << "after mult_mod, l2=" << l2 << endl;
 						if (F->power(beta, l2) != bi) {
 							cout << "l2 is incorrect" << endl;

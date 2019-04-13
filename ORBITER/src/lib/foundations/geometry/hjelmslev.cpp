@@ -81,7 +81,8 @@ void hjelmslev::init(finite_ring *R,
 
 int hjelmslev::number_of_submodules()
 {
-	return n_choose_k_p * i_power_j(R->p, (R->e - 1) * k * (n - k));
+	number_theory_domain NT;
+	return n_choose_k_p * NT.i_power_j(R->p, (R->e - 1) * k * (n - k));
 }
 
 void hjelmslev::unrank_int(int *M, int rk, int verbose_level)

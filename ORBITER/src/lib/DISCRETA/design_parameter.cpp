@@ -332,10 +332,12 @@ int design_parameter::residual_inverse(design_parameter& p)
 	return TRUE;
 }
 
-void design_parameter::ancestor(design_parameter& p, Vector & path, int f_v, int f_vv)
+void design_parameter::ancestor(design_parameter& p, Vector & path,
+		int f_v, int f_vv)
 {
 	design_parameter s, q;
 	int f_special = FALSE;
+	number_theory_domain NT;
 	
 	path.m_l_n(3);
 	s = *this;
@@ -344,8 +346,10 @@ void design_parameter::ancestor(design_parameter& p, Vector & path, int f_v, int
 		}
 	if (s.lambda().is_one()) {
 		if (s.t() + 1 == s.K()) {
-			if (is_prime(s.v() - s.t())) {
-				cout << "determining ancestor of steiner system " << s.t() << "(" << s.v() << "," << s.K() << "1) with v - t prime" << endl;
+			if (NT.is_prime(s.v() - s.t())) {
+				cout << "determining ancestor of steiner system "
+						<< s.t() << "(" << s.v() << "," << s.K()
+						<< "1) with v - t prime" << endl;
 				f_special = TRUE;
 				}
 			}
@@ -568,6 +572,7 @@ void design_parameter::supplementary(design_parameter& p)
 	discreta_base lambda_new, a;
 	design_parameter_source S;
 	int num, denom, n, d, g, i;
+	number_theory_domain NT;
 	
 	num = 1;
 	denom = 1;
@@ -578,14 +583,14 @@ void design_parameter::supplementary(design_parameter& p)
 		denom *= d;
 		n--;
 		d--;
-		g = gcd_int(num, denom);
+		g = NT.gcd_int(num, denom);
 		if (g != 1 && g != -1) {
 			num /= g;
 			denom /= g;
 			}
 		}
 	if (denom != 1) {
-		cout << "design_parameter::supplementary() error: denom != 1" << endl;
+		cout << "design_parameter::supplementary error: denom != 1" << endl;
 		exit(1);
 		}
 	lambda_new.m_i_i(num);

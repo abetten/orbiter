@@ -138,6 +138,7 @@ void unusual_model::setup2(int q,
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 2);
 	int Q, i, j, b, p, h;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "unusual_model::setup q=" << q
@@ -150,7 +151,7 @@ void unusual_model::setup2(int q,
 	//const char *override_poly_Q = NULL;
 	//const char *override_poly_q = NULL;
 	
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	
 #if 0
 	if (h > 1) {

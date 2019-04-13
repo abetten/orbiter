@@ -3091,12 +3091,13 @@ void write_colored_graph(ofstream &ost, char *label,
 {
 	int i, j, d, aij = 0;
     int w;
+	number_theory_domain NT;
 
 	cout << "write_graph " << label
 		<< " with " << nb_points
 		<< " points, point_offset=" <<  point_offset
 		<< endl;
-	w = (int) int_log10(nb_points);
+	w = NT.int_log10(nb_points);
 	cout << "w=" << w << endl;
 	ost << "<GRAPH label=\"" << label << "\" num_pts=\"" << nb_points
 		<< "\" f_has_colors=\"" <<  f_colors

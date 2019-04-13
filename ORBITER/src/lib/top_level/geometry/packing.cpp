@@ -1437,6 +1437,7 @@ void packing::read_conjugacy_classes_and_normalizers(
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
 	projective_space_with_action *PA;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "packing::read_conjugacy_classes_and_normalizers" << endl;
@@ -1458,7 +1459,7 @@ void packing::read_conjugacy_classes_and_normalizers(
 
 	int f_semilinear;
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 	}
 	else {

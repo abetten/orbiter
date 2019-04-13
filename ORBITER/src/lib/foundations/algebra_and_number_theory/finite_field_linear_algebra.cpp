@@ -200,11 +200,12 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 {
 	int i, j, k, a, b, ab, c, f1, f2, f1inv;
 	int *B2;
+	number_theory_domain NT;
 	
 	B2 = NEW_int(n * n);
 	f1 = A[n * n];
 	f2 = B[n * n];
-	f1inv = irem(-f1, e);
+	f1inv = NT.irem(-f1, e);
 	int_vec_copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
@@ -222,7 +223,7 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 			AB[i * n + j] = c;
 			}
 		}
-	AB[n * n] = irem(f1 + f2, e);
+	AB[n * n] = NT.irem(f1 + f2, e);
 	//vector_frobenius_power_in_place(B, n * n, f1);
 	FREE_int(B2);
 }
@@ -233,11 +234,12 @@ void finite_field::semilinear_matrix_mult_memory_given(
 {
 	int i, j, k, a, b, ab, c, f1, f2, f1inv;
 	int *B2 = tmp_B;
+	number_theory_domain NT;
 	
 	//B2 = NEW_int(n * n);
 	f1 = A[n * n];
 	f2 = B[n * n];
-	f1inv = irem(-f1, e);
+	f1inv = NT.irem(-f1, e);
 	int_vec_copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
@@ -255,7 +257,7 @@ void finite_field::semilinear_matrix_mult_memory_given(
 			AB[i * n + j] = c;
 			}
 		}
-	AB[n * n] = irem(f1 + f2, e);
+	AB[n * n] = NT.irem(f1 + f2, e);
 	//vector_frobenius_power_in_place(B, n * n, f1);
 	//FREE_int(B2);
 }
@@ -316,6 +318,7 @@ void finite_field::semilinear_matrix_mult_affine(
 	int *b1, *b2, *b3;
 	int *A1, *A2, *A3;
 	int *T;
+	number_theory_domain NT;
 	
 	T = NEW_int(n * n);
 	A1 = A;
@@ -327,8 +330,8 @@ void finite_field::semilinear_matrix_mult_affine(
 	
 	f1 = A[n * n + n];
 	f2 = B[n * n + n];
-	f12 = irem(f1 + f2, e);
-	f1inv = irem(-f1, e);
+	f12 = NT.irem(f1 + f2, e);
+	f1inv = NT.irem(-f1, e);
 	
 	int_vec_copy(A2, T, n * n);
 	vector_frobenius_power_in_place(T, n * n, f1inv);
@@ -549,6 +552,7 @@ void finite_field::semilinear_matrix_invert(int *A,
 	int f, finv;
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_field::semilinear_matrix_invert" << endl;
@@ -558,7 +562,7 @@ void finite_field::semilinear_matrix_invert(int *A,
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 	f = A[n * n];
 	vector_frobenius_power_in_place(Ainv, n * n, f);
-	finv = irem(-f, e);
+	finv = NT.irem(-f, e);
 	Ainv[n * n] = finv;
 	if (f_v) {
 		cout << "the inverse is" << endl;
@@ -577,6 +581,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 	int *b1, *b2;
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_field::semilinear_matrix_invert_affine" << endl;
@@ -589,7 +594,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 	b2 = Ainv + n * n;
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 	f = A[n * n + n];
-	finv = irem(-f, e);
+	finv = NT.irem(-f, e);
 	vector_frobenius_power_in_place(Ainv, n * n, f);
 
 	mult_matrix_matrix(b1, Ainv, b2, 1, n, n, 0 /* verbose_level */);
@@ -2513,13 +2518,14 @@ void finite_field::affine_translation(int n,
 {
 	int i, j, l, a;
 	int *v;
+	number_theory_domain NT;
 	
 	cout << "finite_field::affine_translation "
 			"coordinate_idx=" << coordinate_idx
 			<< " field_base_idx=" << field_base_idx << endl;
 	v = NEW_int(n);
 	l = nb_AG_elements(n, q);
-	a = i_power_j(p, field_base_idx);
+	a = NT.i_power_j(p, field_base_idx);
 	for (i = 0; i < l; i++) {
 		AG_element_unrank(q, v, 1, l, i);
 		v[coordinate_idx] = add(v[coordinate_idx], a);
@@ -3397,6 +3403,7 @@ int finite_field::lexleast_canonical_form_ranked(
 	int *tmp;
 	int i, j, h, N, a, sz, Sz;
 	int rk;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::lexleast_canonical_form_ranked" << endl;
@@ -3433,7 +3440,7 @@ int finite_field::lexleast_canonical_form_ranked(
 		int_vec_print(cout, base_cols, rk);
 		cout << endl;
 		}
-	N = i_power_j(q, rk);
+	N = NT.i_power_j(q, rk);
 	M2 = NEW_int(N * vector_space_dimension);
 	list_of_ranks = NEW_int(N);
 	list_of_ranks_PG = NEW_int(N);
@@ -4434,11 +4441,12 @@ void finite_field::random_invertible_matrix(int *M,
 	int f_vv = (verbose_level >= 2);
 	int *N;
 	int i, qk, r, rk;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::random_invertible_matrix" << endl;
 		}
-	qk = i_power_j(q, k);
+	qk = NT.i_power_j(q, k);
 	N = NEW_int(k * k);
 	for (i = 0; i < k; i++) {
 		if (f_vv) {
@@ -4482,6 +4490,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	int f_vv = (verbose_level >= 2);
 	int p, e, i, Q;
 	int cnt;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
@@ -4501,9 +4510,9 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	Table = NEW_int(nb * (d + 1));
 
 
-	Q = i_power_j(q, d);
+	Q = NT.i_power_j(q, d);
 	
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
@@ -4644,19 +4653,20 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 	int f_vv = (verbose_level >= 2);
 	int p, e, i, Q;
 	int cnt;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"d=" << d << " q=" << q << endl;
 		}
 
-	Q = i_power_j(q, d);
+	Q = NT.i_power_j(q, d);
 	
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"Q=" << Q << endl;
 		}
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
@@ -4961,6 +4971,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 	int *z;
 	int i, j, b;
 	int ret = TRUE;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
@@ -5017,9 +5028,9 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 	int a;
 
 	while (TRUE) {
-		if (coset >= i_power_j(q, k)) {
+		if (coset >= NT.i_power_j(q, k)) {
 			if (f_vv) {
-				cout << "coset = " << coset << " = " << i_power_j(q, k)
+				cout << "coset = " << coset << " = " << NT.i_power_j(q, k)
 						<< " break" << endl;
 				}
 			ret = FALSE;

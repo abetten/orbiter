@@ -111,6 +111,7 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 	finite_field Fq;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
+	number_theory_domain NT;
 
 	M.m_mn(size, size);
 	k = 0;
@@ -123,7 +124,7 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 	//cout << "M=" << endl;
 	//cout << M << endl;
 
-	if (!is_prime_power(q, p, h)) {
+	if (!NT.is_prime_power(q, p, h)) {
 		cout << "q is not prime, we need a prime" << endl;
 		exit(1);
 		}

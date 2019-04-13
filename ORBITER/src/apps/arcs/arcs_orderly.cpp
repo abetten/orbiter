@@ -211,6 +211,7 @@ void do_arc_lifting(projective_space *P, int k,
 {
 	int i;
 	vector_ge *nice_gens;
+	number_theory_domain NT;
 
 	
 	::target_sz = target_sz;
@@ -234,7 +235,7 @@ void do_arc_lifting(projective_space *P, int k,
 	
 	int f_semilinear;
 
-	if (is_prime(F->q)) {
+	if (NT.is_prime(F->q)) {
 		f_semilinear = FALSE;
 		}
 	else {

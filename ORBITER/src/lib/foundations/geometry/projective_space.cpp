@@ -2711,6 +2711,7 @@ void projective_space::create_Cherowitzo_hyperoval(
 	int h;
 	int sigma;
 	int exponent, one_half, e1, e2, e3;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space::create_Cherowitzo_hyperoval" << endl;
@@ -2733,7 +2734,7 @@ void projective_space::create_Cherowitzo_hyperoval(
 		}
 	exponent = q - 1;
 	one_half = (h + 1) >> 1;
-	sigma = i_power_j(2, one_half);
+	sigma = NT.i_power_j(2, one_half);
 	e1 = sigma;
 	e2 = (sigma + 2) % exponent;
 	e3 = (3 * sigma + 4) % exponent;
@@ -3591,6 +3592,7 @@ void projective_space::Baer_subline(int *pts3,
 	int rk;
 	int len;
 	int i, j;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space::Baer_subline" << endl;
@@ -3745,7 +3747,7 @@ void projective_space::Baer_subline(int *pts3,
 	int q0, index, t;
 
 
-	q0 = i_power_j(F->p, F->e >> 1);
+	q0 = NT.i_power_j(F->p, F->e >> 1);
 	index = (F->q - 1) / (q0 - 1);
 	
 	nb_pts = q0 + 1;
@@ -3964,6 +3966,7 @@ int projective_space::determine_hermitian_form_in_plane(
 	int i, x, y, z, xq, yq, zq, rk;
 	int Q, q, little_e;
 	int kernel_m, kernel_n;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space::determine_hermitian_"
@@ -3978,7 +3981,7 @@ int projective_space::determine_hermitian_form_in_plane(
 		exit(1);
 		}
 	little_e = F->e >> 1;
-	q = i_power_j(F->p, little_e);
+	q = NT.i_power_j(F->p, little_e);
 	if (f_v) {
 		cout << "projective_space::determine_hermitian_"
 				"form_in_plane Q=" << Q << " q=" << q << endl;

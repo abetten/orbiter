@@ -35,6 +35,7 @@ int main(int argc, char **argv)
 	int f_set = FALSE;
 	int sz = 0;
 	int set[1000];
+	number_theory_domain NT;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -87,7 +88,7 @@ int main(int argc, char **argv)
 		}
 #endif
 
-	N = i_power_j(q, n);
+	N = NT.i_power_j(q, n);
 	
 
 	Adj = NEW_int(N * N);
@@ -99,7 +100,8 @@ int main(int argc, char **argv)
 	
 
 
-	cout << "There are " << N << " words of length " << n << " over an alphabet of size " << q << ":" << endl;
+	cout << "There are " << N << " words of length " << n
+			<< " over an alphabet of size " << q << ":" << endl;
 	for (i = 0; i < N; i++) {
 		AG_element_unrank(q, seq1, 1, n, i);
 		cout << i << " : ";

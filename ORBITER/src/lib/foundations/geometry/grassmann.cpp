@@ -186,7 +186,7 @@ void grassmann::unrank_embedded_subspace_int(int rk, int verbose_level)
 	int i, j;
 	
 	if (f_v) {
-		cout << "unrank_embedded_subspace_int " << rk << endl;
+		cout << "grassmann::unrank_embedded_subspace_int " << rk << endl;
 		}
 	unrank_int(rk, verbose_level);
 	int_vec_zero(M + k * n, (n - k) * n);
@@ -210,7 +210,7 @@ int grassmann::rank_embedded_subspace_int(int verbose_level)
 	int rk;
 	
 	if (f_v) {
-		cout << "rank_embedded_subspace_int " << endl;
+		cout << "grassmann::rank_embedded_subspace_int " << endl;
 		}
 	rk = rank_int(verbose_level);
 	return rk;
@@ -221,9 +221,10 @@ void grassmann::unrank_int(int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int r, h, a = 1, A, nb_free_cols = 0, Q, b, c, i, j;
+	number_theory_domain NT;
 	
 	if (f_v) {
-		cout << "unrank_int " << rk << endl;
+		cout << "grassmann::unrank_int " << rk << endl;
 		}
 	if (k == 0) {
 		return;
@@ -248,7 +249,7 @@ void grassmann::unrank_int(int rk, int verbose_level)
 					<< "]_" << q << " = " << a << endl;
 			}
 		nb_free_cols = n - h - 1 - (k - 1);
-		Q = i_power_j(q, nb_free_cols);
+		Q = NT.i_power_j(q, nb_free_cols);
 		if (f_v) {
 			cout << "Q=" << Q << endl;
 			}
@@ -361,10 +362,11 @@ int grassmann::rank_int(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int k1, r, h, a, A, nb_free_cols, Q, b, c, i, j;
+	number_theory_domain NT;
 	
 	r = 0;
 	if (f_v) {
-		cout << "rank_int " << endl;
+		cout << "grassmann::rank_int " << endl;
 		print_integer_matrix_width(cout,
 				M, k, n, n, F->log10_of_q + 1);
 		}
@@ -377,37 +379,37 @@ int grassmann::rank_int(int verbose_level)
 		0 /* verbose_level */);
 	
 	if (f_v) {
-		cout << "after Gauss:" << endl;
+		cout << "grassmann::rank_int after Gauss:" << endl;
 		print_integer_matrix_width(cout,
 				M, k, n, n, F->log10_of_q + 1);
 		}
 	if (k1 != k) {
-		cout << "error, does not have full rank" << endl;
+		cout << "grassmann::rank_int error, does not have full rank" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "base_cols: ";
+		cout << "grassmann::rank_int base_cols: ";
 		int_vec_print(cout, base_cols, k);
 		cout << endl;
 		}
 	
 
 	if (f_v) {
-		cout << "calling int_vec_complement n=" << n
+		cout << "grassmann::rank_int calling int_vec_complement n=" << n
 				<< " k=" << k << " : ";
 		int_vec_print(cout, base_cols, k);
 		cout << endl;
 		}
 	int_vec_complement(base_cols, n, k);
 	if (f_v) {
-		cout << "complement : ";
+		cout << "grassmann::rank_int complement : ";
 		int_vec_print(cout, base_cols + k, n - k);
 		cout << endl;
 		}
 
 	for (h = 0; h < base_cols[0]; h++) {
 		nb_free_cols = n - h - 1 - (k - 1);
-		Q = i_power_j(q, nb_free_cols);
+		Q = NT.i_power_j(q, nb_free_cols);
 		a = generalized_binomial(n - h - 1, k - 1, q);
 		A = a * Q;
 		r += A;
@@ -417,7 +419,7 @@ int grassmann::rank_int(int verbose_level)
 	
 	// now h has been determined
 	if (f_v) {
-		cout << "rank h=" << h << " nb_free_cols="
+		cout << "grassmann::rank_int h=" << h << " nb_free_cols="
 				<< nb_free_cols << " r=" << r << endl;
 		}
 
@@ -461,7 +463,7 @@ int grassmann::rank_int(int verbose_level)
 		b = 0;
 		}
 	if (f_v) {
-		cout << "coset " << b << " = ";
+		cout << "grassmann::rank_int coset " << b << " = ";
 		int_vec_print(cout, coset, nb_free_cols);
 		cout << endl;
 		}
@@ -471,9 +473,9 @@ int grassmann::rank_int(int verbose_level)
 	// and the rank c of the subspace:
 	r += b * a + c;	
 	if (f_v) {
-		cout << "b * a + c = " << b << " * "
+		cout << "grassmann::rank_int b * a + c = " << b << " * "
 				<< a << " + " << c << endl;
-		cout << "r=" << r << " coset " << b
+		cout << "grassmann::rank_int r=" << r << " coset " << b
 				<< " subspace rank " << c << endl;
 		}
 	return r;

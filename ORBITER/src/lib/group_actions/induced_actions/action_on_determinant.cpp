@@ -39,6 +39,7 @@ void action_on_determinant::init(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object go;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "action_on_determinant::init" << endl;
@@ -55,7 +56,7 @@ void action_on_determinant::init(action &A,
 	M = A.G.matrix_grp;
 	q = M->GFq->q;
 	if (f_projective) {
-		degree = gcd_int(m, q - 1);
+		degree = NT.gcd_int(m, q - 1);
 		}
 	else {
 		degree = q - 1;

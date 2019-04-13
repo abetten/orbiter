@@ -296,6 +296,7 @@ void strong_generators::generators_for_the_monomial_group(
 	vector_ge *my_gens;
 	int *data;
 	int i, h, hh, h1, j, a, b, nb_gens;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
@@ -414,7 +415,7 @@ void strong_generators::generators_for_the_monomial_group(
 			for (j = 0; j < n; j++) {
 				data[n * n + j] = 0;
 				}
-			data[n * n + a] = i_power_j(F->p, b);
+			data[n * n + a] = NT.i_power_j(F->p, b);
 				// elements of a field basis of F_q over F_p
 			}
 		if (f_v) {
@@ -639,6 +640,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	//vector_ge *my_gens;
 	int *data;
 	int i;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
@@ -661,7 +663,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	
 	go_factored[0] = nb_PG_elements(n - 1, q);
 	int g;
-	g = gcd_int(go_factored[0], power_of_singer);
+	g = NT.gcd_int(go_factored[0], power_of_singer);
 	go_factored[0] = go_factored[0] / g;
 
 	D.multiply_up(target_go, go_factored, 1);
@@ -680,7 +682,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	{
 	finite_field Fp;
 	
-	if (!is_prime(q)) {
+	if (!NT.is_prime(q)) {
 		cout << "strong_generators::generators_for_the_"
 				"singer_cycle field order must be a prime" << endl;
 		exit(1);
@@ -813,6 +815,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	int *data1;
 	int *data2;
 	int i;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle_"
@@ -836,7 +839,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 
 	go_factored[0] = nb_PG_elements(n - 1, q);
 	int g;
-	g = gcd_int(go_factored[0], power_of_singer);
+	g = NT.gcd_int(go_factored[0], power_of_singer);
 	go_factored[0] = go_factored[0] / g;
 	go_factored[1] = n;
 
@@ -856,7 +859,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	{
 	finite_field Fp;
 
-	if (!is_prime(q)) {
+	if (!NT.is_prime(q)) {
 		cout << "strong_generators::generators_for_the_singer_cycle_"
 				"and_the_Frobenius field order must be a prime" << endl;
 		exit(1);
@@ -1199,12 +1202,13 @@ void strong_generators::field_reduction(
 	int *EltQ;
 	int *Eltq;
 	int *Mtx;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "strong_generators::field_reduction" << endl;
 		}
 	q = Fq->q;
-	Q = i_power_j(q, s);
+	Q = NT.i_power_j(q, s);
 	m = n / s;
 	if (m * s != n) {
 		cout << "strong_generators::field_reduction "
@@ -2284,6 +2288,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	int *data;
 	int size;
 	int nb_gens;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_"
@@ -2337,7 +2342,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	b.create(q + 1);
 	c.create(q);
 	d.create(q - 1);
-	e.create(i_power_j(q, 4));
+	e.create(NT.i_power_j(q, 4));
 	D.mult_in_place(target_go, a);
 	D.mult_in_place(target_go, b);
 	D.mult_in_place(target_go, c);
@@ -2390,6 +2395,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	int *data;
 	int size;
 	int nb_gens;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_"
@@ -2437,8 +2443,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 
 
 	target_go.create(1);
-	a.create(i_power_j(q, 3));
-	b.create(i_power_j(q - 1, 3));
+	a.create(NT.i_power_j(q, 3));
+	b.create(NT.i_power_j(q - 1, 3));
 	c.create(6);
 	D.mult_in_place(target_go, a);
 	D.mult_in_place(target_go, b);

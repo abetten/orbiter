@@ -63,6 +63,7 @@ void surface_create::init_with_data(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -75,7 +76,7 @@ void surface_create::init_with_data(
 	surface_create::Surf_A = Surf_A;
 
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {
@@ -113,6 +114,7 @@ void surface_create::init(surface_create_description *Descr,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -136,7 +138,7 @@ void surface_create::init(surface_create_description *Descr,
 		cout << "surface_create::init F->q != q" << endl;
 		exit(1);
 	}
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {

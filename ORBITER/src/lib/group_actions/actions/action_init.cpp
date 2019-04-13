@@ -1610,6 +1610,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 	int f_vv = (verbose_level >= 2);
 	int p, hh, epsilon, n;
 	int f_semilinear = FALSE;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "action::init_BLT q=" << F->q
@@ -1617,7 +1618,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 		cout << "f_basis=" << f_basis << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	is_prime_power(F->q, p, hh);
+	NT.is_prime_power(F->q, p, hh);
 	if (hh > 1)
 		f_semilinear = TRUE;
 	else

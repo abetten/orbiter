@@ -270,6 +270,7 @@ void arc_generator::init(finite_field *F,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "arc_generator::init "
@@ -310,7 +311,7 @@ void arc_generator::init(finite_field *F,
 	nb_points_total = nb_PG_elements(n, q); // q * q + q + 1;
 
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 

@@ -712,6 +712,7 @@ void lift_generators_to_subfield_structure(
 	finite_field *Fq;
 	//finite_field *FQ;
 	sims *Sims;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "lift_generators_to_subfield_structure" << endl;
@@ -719,7 +720,7 @@ void lift_generators_to_subfield_structure(
 	Fq = S->Fq;
 	//FQ = S->FQ;
 	q = Fq->q;
-	Q = i_power_j(q, s);
+	Q = NT.i_power_j(q, s);
 	m = n / s;
 	if (m * s != n) {
 		cout << "lift_generators_to_subfield_structure "

@@ -175,8 +175,9 @@ void code_generator::read_arguments(int argc, const char **argv)
 	f_irreducibility_test = TRUE;
 	
 	int p, h;
+	number_theory_domain NT;
 	
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	if (h > 1) {
 		f_semilinear = TRUE;
 		}
@@ -644,6 +645,7 @@ void code_generator::print(ostream &ost, int len, int *S)
 {
 	int N, j;
 	int *codewords;
+	number_theory_domain NT;
 
 	if (len == 0) {
 		return;
@@ -660,7 +662,7 @@ void code_generator::print(ostream &ost, int len, int *S)
 
 		int_matrix_print_tex(ost, rc.M1, nmk, len);
 
-		N = i_power_j(F->q, nmk);
+		N = NT.i_power_j(F->q, nmk);
 		codewords = NEW_int(N);
 		F->codewords_affine(len, nmk,
 			rc.M1,
@@ -693,7 +695,7 @@ void code_generator::print(ostream &ost, int len, int *S)
 
 			k1 = len - nmk;
 
-			N = i_power_j(F->q, k1);
+			N = NT.i_power_j(F->q, k1);
 			codewords = NEW_int(N);
 			F->codewords_affine(len, k1,
 				B,

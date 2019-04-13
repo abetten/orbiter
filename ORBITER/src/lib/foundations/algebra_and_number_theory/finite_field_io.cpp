@@ -395,8 +395,9 @@ void finite_field::print_integer_matrix_zech(ostream &ost,
 {
 	int i, j, a, h;
     int w;
+	number_theory_domain NT;
 
-	w = (int) int_log10(q);
+	w = (int) NT.int_log10(q);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			a = p[i * n + j];
@@ -753,6 +754,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	int f_first;
 	int a, h;
 	const char *symbol_for_print = "\\alpha";
+	number_theory_domain NT;
 
 
 	if (f_v) {
@@ -777,7 +779,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 	f << "$Z_i = \\log_\\alpha (1 + \\alpha^i)$\\\\" << endl;
 
-	if (e > 1 && !is_prime(e)) {
+	if (e > 1 && !NT.is_prime(e)) {
 	f << "Subfields:" << endl;
 	f << "$$" << endl;
 	f << "\\begin{array}{|r|r|r|}" << endl;
@@ -793,7 +795,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 			int poly;
 
 			poly = compute_subfield_polynomial(
-					i_power_j(p, h), verbose_level);
+					NT.i_power_j(p, h), verbose_level);
 			{
 				finite_field GFp;
 				GFp.init(p, 0);
@@ -807,7 +809,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 				unipoly_object elt;
 
 				FX.create_object_by_rank(elt, poly);
-				f << i_power_j(p, h) << " & " << poly << " & ";
+				f << NT.i_power_j(p, h) << " & " << poly << " & ";
 				Fq.print_object(elt, f);
 				f << "\\\\" << endl;
 				Fq.delete_object(elt);

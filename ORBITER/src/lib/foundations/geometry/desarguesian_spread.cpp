@@ -50,6 +50,7 @@ void desarguesian_spread::init(int n, int m, int s,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "desarguesian_spread::init m=" << m
@@ -67,7 +68,7 @@ void desarguesian_spread::init(int n, int m, int s,
 		cout << "desarguesian_spread::init q=" << q << endl;
 		cout << "desarguesian_spread::init Q=" << Q << endl;
 		}
-	if (i_power_j(q, s) != Q) {
+	if (NT.i_power_j(q, s) != Q) {
 		cout << "desarguesian_spread::init "
 				"i_power_j(q, s) != Q" << endl;
 		exit(1);

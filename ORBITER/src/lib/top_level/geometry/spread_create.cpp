@@ -53,6 +53,7 @@ void spread_create::freeself()
 void spread_create::init(spread_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -78,7 +79,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 	
 
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {

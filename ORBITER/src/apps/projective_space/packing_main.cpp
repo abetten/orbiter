@@ -234,8 +234,9 @@ int main(int argc, const char **argv)
 		}
 
 	int p, e, e1, n, k, q;
+	number_theory_domain NT;
 	
-	factor_prime_power(order, p, e);
+	NT.factor_prime_power(order, p, e);
 	cout << "order = " << order << " = " << p << "^" << e << endl;
 
 	if (f_dim_over_kernel) {
@@ -246,7 +247,7 @@ int main(int argc, const char **argv)
 		e1 = e / dim_over_kernel;
 		n = 2 * dim_over_kernel;
 		k = dim_over_kernel;
-		q = i_power_j(p, e1);
+		q = NT.i_power_j(p, e1);
 		cout << "order=" << order << " n=" << n
 				<< " k=" << k << " q=" << q << endl;
 		}

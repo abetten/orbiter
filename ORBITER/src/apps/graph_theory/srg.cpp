@@ -32,6 +32,7 @@ void list_parameters(int v_max)
 	int v, v2, k, lambda, mu, cnt = 0;
 	int top, top2, bottom, b, tb;
 	int i, f, g, r, s;
+	number_theory_domain NT;
 	
 	for (v = 2; v <= v_max; v++) {
 		v2 = v >> 1;
@@ -45,7 +46,9 @@ void list_parameters(int v_max)
 					top2 = top * top;
 					bottom = (mu - lambda) * (mu - lambda) + 4 * (k - mu);
 					cnt++;
-					cout << "cnt=" << cnt << " v=" << v << " k=" << k << " lambda=" << lambda << " mu=" << mu << " top=" << top << " bottom=" << bottom << endl;
+					cout << "cnt=" << cnt << " v=" << v << " k=" << k
+							<< " lambda=" << lambda << " mu=" << mu
+							<< " top=" << top << " bottom=" << bottom << endl;
 					if (top2 % bottom) {
 						cout << "is ruled out by integrality condition" << endl;
 						continue;
@@ -53,7 +56,7 @@ void list_parameters(int v_max)
 
 					int nb;
 					int *primes, *exponents;
-					nb = factor_int(bottom, primes, exponents);
+					nb = NT.factor_int(bottom, primes, exponents);
 					for (i = 0; i < nb; i++) {
 						if (ODD(exponents[i])) {
 							break;
@@ -68,7 +71,7 @@ void list_parameters(int v_max)
 						}
 					b = 1;
 					for (i = 0; i < nb; i++) {
-						b *= i_power_j(primes[i], exponents[i]);
+						b *= NT.i_power_j(primes[i], exponents[i]);
 						}
 					cout << "b=" << b << endl;
 					tb = top / b;

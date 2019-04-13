@@ -459,17 +459,18 @@ void matrix_group::compute_elt_size(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "matrix_group::compute_elt_size" << endl;
 		}
 	if (f_semilinear && GFq->e > 1) {
-		bits_extension_degree = int_log2(GFq->e - 1);
+		bits_extension_degree = NT.int_log2(GFq->e - 1);
 		}
 	else {
 		bits_extension_degree = 0;
 		}
-	bits_per_digit = int_log2(GFq->q - 1);
+	bits_per_digit = NT.int_log2(GFq->q - 1);
 	if (f_projective) {
 		bits_per_elt = n * n * bits_per_digit + bits_extension_degree;
 		}

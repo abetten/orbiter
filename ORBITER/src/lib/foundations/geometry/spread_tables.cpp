@@ -84,6 +84,7 @@ void spread_tables::init(finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_tables::init" << endl;
@@ -112,7 +113,7 @@ void spread_tables::init(finite_field *F,
 	}
 
 
-	sprintf(prefix, "spread_%d", i_power_j(q, 2));
+	sprintf(prefix, "spread_%d", NT.i_power_j(q, 2));
 
 	sprintf(fname_dual_line_idx, "%s_dual_line_idx.csv", prefix);
 	sprintf(fname_self_dual_lines, "%s_self_dual_lines.csv", prefix);

@@ -762,15 +762,16 @@ void int_matrix_delete_column_in_place(int *Mtx,
 int int_matrix_max_log_of_entries(int *p, int m, int n)
 {
 	int i, j, a, w = 1, w1;
+	number_theory_domain NT;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			a = p[i * n + j];
 			if (a > 0) {
-				w1 = int_log10(a);
+				w1 = NT.int_log10(a);
 				}
 			else if (a < 0) {
-				w1 = int_log10(-a) + 1;
+				w1 = NT.int_log10(-a) + 1;
 				}
 			else {
 				w1 = 1;

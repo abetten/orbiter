@@ -141,11 +141,12 @@ void do_it(int q, int type,
 	int f_basis = TRUE;
 	//int target_go;
 	vector_ge *nice_gens;
+	number_theory_domain NT;
 	
 	F = new finite_field;
 	F->init(q, 0);
 	A = new action;
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	if (h > 1)
 		f_semilinear = TRUE;
 	else
@@ -982,6 +983,7 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 	int i, j, ii, a, b, c;
 	int *Elt1;
 	int max_length = 100;
+	number_theory_domain NT;
 	
 	Elt1 = new int[A->elt_size_in_int];
 	
@@ -1000,7 +1002,7 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 	Elements_by_length = new pint[max_length];
 	
 	for (length = 0; length < max_length; length++) {
-		nb_words = i_power_j(nb_gens, length);
+		nb_words = NT.i_power_j(nb_gens, length);
 		cout << endl << "computing words whose reduced "
 			"length is " << length << endl;
 		//cout << "nb_words=" << nb_words << endl;
