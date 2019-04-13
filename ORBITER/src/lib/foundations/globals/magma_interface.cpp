@@ -15,7 +15,15 @@ namespace orbiter {
 namespace foundations {
 
 
-void magma_write_permutation_group(const char *fname_base,
+magma_interface::magma_interface()
+{
+}
+
+magma_interface::~magma_interface()
+{
+}
+
+void magma_interface::write_permutation_group(const char *fname_base,
 	int group_order, int *Table, int *gens, int nb_gens,
 	int verbose_level)
 {
@@ -41,7 +49,7 @@ void magma_write_permutation_group(const char *fname_base,
 			<< file_size(fname) << endl;
 }
 
-void magma_normalizer_in_Sym_n(
+void magma_interface::normalizer_in_Sym_n(
 	const char *fname_base,
 	int group_order, int *Table, int *gens, int nb_gens,
 	int *&N_gens, int &N_nb_gens, int &N_go,
@@ -99,7 +107,7 @@ void magma_normalizer_in_Sym_n(
 		<< fname_output << " of size " << file_size(fname_output) << endl;
 	
 
-	read_magma_permutation_group(fname_output,
+	read_permutation_group(fname_output,
 			group_order, N_gens, N_nb_gens, N_go, verbose_level);
 
 #if 0
@@ -123,7 +131,7 @@ void magma_normalizer_in_Sym_n(
 
 }
 
-void read_magma_permutation_group(const char *fname,
+void magma_interface::read_permutation_group(const char *fname,
 	int degree, int *&gens, int &nb_gens, int &go,
 	int verbose_level)
 {

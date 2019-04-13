@@ -1473,7 +1473,10 @@ static int compose_group_of_solid(group_selection & gs, Vector & S, int & height
 			exit(1);
 			}
 		solid &s1 = S[height - 1].as_solid();
-		double r = 1. / (2. + square_root(2. * (1. - cos_grad(108))));
+
+		numerics Num;
+
+		double r = 1. / (2. + square_root(2. * (1. - Num.cos_grad(108))));
 		s1.cut_vertices(r, s);
 		S[height - 1] = s;
 		if (f_v) {

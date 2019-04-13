@@ -339,13 +339,11 @@ void draw_vertex_callback_graph(tree *T,
 
 
 	if (f_multiple_circles) {
-		draw_graph_on_multiple_circles(G,
+		G->draw_graph_on_multiple_circles(
 				x, y, dx, dy, graph_nb_V, v, layer, nb_circles);
-			// in GALOIS/draw.C
 		}
 	else {
-		draw_graph(G, x, y, dx, dy, graph_nb_V, v, layer);
-			// in GALOIS/draw.C
+		G->draw_graph(x, y, dx, dy, graph_nb_V, v, layer);
 		}
 
 }

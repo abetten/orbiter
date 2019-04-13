@@ -1105,6 +1105,8 @@ void make_Gram_matrix_from_list_coded_quadratic_form(
 void add_term(int n, finite_field &F, int &nb_terms,
 	int *form_i, int *form_j, int *form_coeff, int *Gram,
 	int i, int j, int coeff);
+void determine_conic(int q, const char *override_poly, int *input_pts,
+	int nb_pts, int verbose_level);
 
 
 // #############################################################################

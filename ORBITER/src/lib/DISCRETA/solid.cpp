@@ -254,9 +254,10 @@ void solid::determine_neighbours()
 void On_circle_int(Vector& Px, Vector& Py, int idx, int angle_in_degree, int rad)
 {
 	int x, y;
+	numerics Num;
 	
-	x = (int)(cos_grad(angle_in_degree) * (double) rad);
-	y = (int)(sin_grad(angle_in_degree) * (double) rad);
+	x = (int)(Num.cos_grad(angle_in_degree) * (double) rad);
+	y = (int)(Num.sin_grad(angle_in_degree) * (double) rad);
 	Px.m_ii(idx, x);
 	Py.m_ii(idx, y);
 }
@@ -1779,6 +1780,7 @@ void solid::octahedron(int r)
 void solid::dodecahedron(int r)
 {
 	permutation P;
+	numerics Num;
 	
 	init();
 	double phi, /* phi_2, */ sin_phi_2, R, RR, s, d, dr, h, hh, H, hH;
@@ -1811,10 +1813,10 @@ void solid::dodecahedron(int r)
 	phi = 72.;
 	//phi_2 = 36.;
 	// cout << "angles: phi = " << phi << ", phi/2 = " << phi_2 << endl;
-	sin_phi_2 = sin_grad(phi * .5);
+	sin_phi_2 = Num.sin_grad(phi * .5);
 	s = 2. * (double) r * sin_phi_2;
 	// cout << "s = " << s << endl;
-	d = 2. * (double) r * sin_grad(phi);
+	d = 2. * (double) r * Num.sin_grad(phi);
 	// cout << "d = " << d << endl;
 	R = 0.5 * d / sin_phi_2;
 	// cout << "R = " << R << endl;

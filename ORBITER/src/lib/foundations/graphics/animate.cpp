@@ -98,6 +98,7 @@ void animate::animate_one_round(
 	//double ww, sww;
 	double zz, szz;
 	double pan_alpha, pan_delta;
+	povray_interface Pov;
 
 	nb_frames_this_round = nb_frames;
 	for (i = 0; i < Opt->nb_camera; i++) {
@@ -393,7 +394,7 @@ void animate::animate_one_round(
 			cout << "look_at_string=" << look_at_string << endl;
 
 
-			povray_beginning(fp,
+			Pov.beginning(fp,
 					angle,
 					sky_string,
 					location_string,
@@ -402,14 +403,14 @@ void animate::animate_one_round(
 
 		} else {
 			if (f_has_camera) {
-				povray_beginning(fp,
+				Pov.beginning(fp,
 						angle,
 						camera_sky,
 						camera_location,
 						camera_look_at,
 						f_with_background);
 			} else {
-				povray_beginning(fp,
+				Pov.beginning(fp,
 						angle,
 						Opt->sky,
 						Opt->location,
@@ -441,7 +442,7 @@ void animate::animate_one_round(
 				}
 
 			if (f_has_bottom_plane) {
-				povray_bottom_plane(fp);
+				Pov.bottom_plane(fp);
 			}
 			}
 		}

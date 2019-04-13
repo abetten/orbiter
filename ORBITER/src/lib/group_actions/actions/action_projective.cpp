@@ -162,7 +162,10 @@ strong_generators *action::set_stabilizer_in_projective_space(
 			}
 
 		colored_graph *CG;
-		create_Levi_graph_from_incidence_matrix(CG,
+
+		CG = NEW_OBJECT(colored_graph);
+
+		CG->create_Levi_graph_from_incidence_matrix(
 				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_int(Incma);
@@ -259,7 +262,10 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 
 		colored_graph *CG;
-		create_Levi_graph_from_incidence_matrix(CG,
+
+		CG = NEW_OBJECT(colored_graph);
+
+		CG->create_Levi_graph_from_incidence_matrix(
 				Incma_out, nb_rows, nb_cols, TRUE, labeling,
 				verbose_level);
 		CG->save(fname_bin, verbose_level);

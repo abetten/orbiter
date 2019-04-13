@@ -2219,7 +2219,9 @@ void diophant::save_as_Levi_graph(const char *fname, int verbose_level)
 
 	get_coefficient_matrix(M, nb_rows, nb_cols, verbose_level - 1);
 	
-	create_Levi_graph_from_incidence_matrix(CG, 
+	CG = NEW_OBJECT(colored_graph);
+
+	CG->create_Levi_graph_from_incidence_matrix(
 		M, nb_rows, nb_cols, 
 		FALSE /* f_point_labels */, 
 		NULL /* *point_labels */, 

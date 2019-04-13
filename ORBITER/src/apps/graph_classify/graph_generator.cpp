@@ -888,10 +888,10 @@ void graph_generator::draw_graphs(int level,
 
 
 		if (f_tournament) {
-			draw_tournament(&G, x, y, dx, dy, n, set, level, 0);
+			G.draw_tournament(x, y, dx, dy, n, set, level, 0);
 			}
 		else {
-			draw_graph(&G, x, y, dx, dy, n, set, level);
+			G.draw_graph(x, y, dx, dy, n, set, level);
 			}
 		
 		G.end_figure();
@@ -925,7 +925,8 @@ void graph_generator_test_function(int *S, int len,
 	for (i = 0; i < nb_candidates; i++) {
 		Gen->S1[len] = candidates[i];
 		if (Gen->f_tournament) {
-			f_OK = Gen->check_conditions_tournament(len + 1, Gen->S1, verbose_level);
+			f_OK = Gen->check_conditions_tournament(
+					len + 1, Gen->S1, verbose_level);
 		}
 		else {
 			f_OK = Gen->check_conditions(len + 1, Gen->S1, verbose_level);

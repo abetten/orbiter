@@ -15,9 +15,18 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+povray_interface::povray_interface()
+{
+
+}
+
+povray_interface::~povray_interface()
+{
+
+}
 
 
-void povray_beginning(ostream &ost,
+void povray_interface::beginning(ostream &ost,
 		double angle,
 		const char *sky,
 		const char *location,
@@ -134,7 +143,7 @@ void povray_beginning(ostream &ost,
 }
 
 
-void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost)
+void povray_interface::animation_rotate_around_origin_and_1_1_1(ostream &ost)
 {
 	ost << "	// the next three steps will perform a rotation" << endl;
 	ost << "	// around the axis of symmetry 1,1,1:" << endl;
@@ -160,7 +169,7 @@ void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost)
 	ost << endl;
 }
 
-void povray_animation_rotate_around_origin_and_given_vector(
+void povray_interface::animation_rotate_around_origin_and_given_vector(
 	double *v, ostream &ost)
 {
 	double A[9], Av[9];
@@ -231,7 +240,7 @@ void povray_animation_rotate_around_origin_and_given_vector(
 	ost << endl;
 }
 
-void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 	double *v, double angle_zero_one, ostream &ost)
 {
 	double A[9], Av[9];
@@ -302,7 +311,7 @@ void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 	ost << endl;
 }
 
-void povray_union_start(ostream &ost)
+void povray_interface::union_start(ostream &ost)
 {
 	ost << "union{ " << endl;
 	ost << endl;
@@ -327,7 +336,7 @@ void povray_union_start(ostream &ost)
 	ost << "} */" << endl;
 }
 
-void povray_union_end(ostream &ost, double clipping_radius)
+void povray_interface::union_end(ostream &ost, double clipping_radius)
 {
 	ost << endl;
 	ost << " 	scale  1.0" << endl;
@@ -339,7 +348,7 @@ void povray_union_end(ostream &ost, double clipping_radius)
 	ost << "} // union" << endl;
 }
 
-void povray_bottom_plane(ostream &ost)
+void povray_interface::bottom_plane(ostream &ost)
 {
 
 	ost << endl;
@@ -388,7 +397,7 @@ void povray_bottom_plane(ostream &ost)
 
 }
 
-void povray_rotate_111(int h, int nb_frames, ostream &fp)
+void povray_interface::rotate_111(int h, int nb_frames, ostream &fp)
 {
 	//int nb_frames_per_rotation;
 	//nb_frames_per_rotation = nb_frames;
@@ -397,12 +406,12 @@ void povray_rotate_111(int h, int nb_frames, ostream &fp)
 
 	double v[3] = {1.,1.,1.};
 
-	povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+	animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 		v, angle_zero_one, fp);
 }
 
 
-void povray_ini(ostream &ost, const char *fname_pov,
+void povray_interface::ini(ostream &ost, const char *fname_pov,
 	int first_frame, int last_frame)
 {
 	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;

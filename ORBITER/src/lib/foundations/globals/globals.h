@@ -24,55 +24,39 @@ void search_for_primitive_polynomials(int p_min, int p_max,
 void make_linear_irreducible_polynomials(int q, int &nb, int *&table, 
 	int verbose_level);
 void gl_random_matrix(int k, int q, int verbose_level);
-void save_as_colored_graph_easy(const char *fname_base, int n, int *Adj, 
-	int verbose_level);
-void save_colored_graph(const char *fname, int nb_vertices, int nb_colors, 
-	int *vertex_labels, int *vertex_colors, 
-	int *data, int data_sz, 
-	uchar *bitvector_adjacency, int bitvector_length,
-	int verbose_level);
-void load_colored_graph(const char *fname, int &nb_vertices, int &nb_colors, 
-	int *&vertex_labels, int *&vertex_colors, 
-	int *&user_data, int &user_data_size, 
-	uchar *&bitvector_adjacency, int &bitvector_length,
-	int verbose_level);
 int is_diagonal_matrix(int *A, int n);
 int is_association_scheme(int *color_graph, int n, int *&Pijk, 
 	int *&colors, int &nb_colors, int verbose_level);
 void print_Pijk(int *Pijk, int nb_colors);
-void write_colored_graph(std::ofstream &ost, char *label,
-	int point_offset, 
-	int nb_points, 
-	int f_has_adjacency_matrix, int *Adj, 
-	int f_has_adjacency_list, int *adj_list, 
-	int f_has_bitvector, uchar *bitvector_adjacency, 
-	int f_has_is_adjacent_callback, 
-	int (*is_adjacent_callback)(int i, int j, void *data), 
-	void *is_adjacent_callback_data, 
-	int f_colors, int nb_colors, int *point_color, 
-	int f_point_labels, int *point_label);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
-void determine_conic(int q, const char *override_poly, int *input_pts, 
-	int nb_pts, int verbose_level);
 void compute_decomposition_of_graph_wrt_partition(int *Adj, int N, 
 	int *first, int *len, int nb_parts, int *&R, int verbose_level);
-void create_Levi_graph_from_incidence_matrix(colored_graph *&CG, int *M, 
-	int nb_rows, int nb_cols, 
-	int f_point_labels, int *point_labels, int verbose_level);
 
 
 // #############################################################################
 // magma_interface.C
 // #############################################################################
 
-void magma_write_permutation_group(const char *fname_base, int group_order, 
-	int *Table, int *gens, int nb_gens, int verbose_level);
-void magma_normalizer_in_Sym_n(const char *fname_base, int group_order, 
-	int *Table, int *gens, int nb_gens, 
-	int *&N_gens, int &N_nb_gens, int &N_go, int verbose_level);
-void read_magma_permutation_group(const char *fname, int degree, 
-	int *&gens, int &nb_gens, int &go, int verbose_level);
+//! interface to the computer algebra system MAGMA
+
+class magma_interface {
+public:
+	magma_interface();
+	~magma_interface();
+	void write_permutation_group(const char *fname_base,
+		int group_order, int *Table, int *gens, int nb_gens,
+		int verbose_level);
+	void normalizer_in_Sym_n(
+		const char *fname_base,
+		int group_order, int *Table, int *gens, int nb_gens,
+		int *&N_gens, int &N_nb_gens, int &N_go,
+		int verbose_level);
+	void read_permutation_group(const char *fname,
+		int degree, int *&gens, int &nb_gens, int &go,
+		int verbose_level);
+};
+
 
 // #############################################################################
 // numerics.C:
@@ -168,6 +152,40 @@ public:
 	void vec_print(std::ostream &ost, double *v, int len);
 	void vec_scan(const char *s, double *&v, int &len);
 	void vec_scan_from_stream(std::istream & is, double *&v, int &len);
+
+
+	double cos_grad(double phi);
+	double sin_grad(double phi);
+	double tan_grad(double phi);
+	double atan_grad(double x);
+	void adjust_coordinates_double(double *Px, double *Py, int *Qx, int *Qy,
+		int N, double xmin, double ymin, double xmax, double ymax,
+		int verbose_level);
+	void Intersection_of_lines(double *X, double *Y,
+		double *a, double *b, double *c, int l1, int l2, int pt);
+	void intersection_of_lines(double a1, double b1, double c1,
+		double a2, double b2, double c2,
+		double &x, double &y);
+	void Line_through_points(double *X, double *Y,
+		double *a, double *b, double *c,
+		int pt1, int pt2, int line_idx);
+	void line_through_points(double pt1_x, double pt1_y,
+		double pt2_x, double pt2_y, double &a, double &b, double &c);
+	void intersect_circle_line_through(double rad, double x0, double y0,
+		double pt1_x, double pt1_y,
+		double pt2_x, double pt2_y,
+		double &x1, double &y1, double &x2, double &y2);
+	void intersect_circle_line(double rad, double x0, double y0,
+		double a, double b, double c,
+		double &x1, double &y1, double &x2, double &y2);
+	void affine_combination(double *X, double *Y,
+		int pt0, int pt1, int pt2, double alpha, int new_pt);
+	void on_circle_double(double *Px, double *Py, int idx,
+		double angle_in_degree, double rad);
+	void affine_pt1(int *Px, int *Py, int p0, int p1, int p2,
+		double f1, int p3);
+	void affine_pt2(int *Px, int *Py, int p0, int p1, int p1b,
+		double f1, int p2, int p2b, double f2, int p3);
 };
 
 
