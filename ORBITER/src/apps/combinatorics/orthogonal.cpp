@@ -88,20 +88,20 @@ int main(int argc, char **argv)
 		c1 = 1;
 		}
 	else if (epsilon == -1) {
-		choose_anisotropic_form(*F, c1, c2, c3, verbose_level - 2);
+		F->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
 		//cout << "incma.C: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
 		}
-	Gram_matrix(*F, epsilon, n, c1, c2, c3, Gram);
+	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram);
 	cout << "Gram matrix" << endl;
 	print_integer_matrix_width(cout, Gram, d, d, d, 2);
 	
 	if (f_list_points) {
 		for (i = 0; i < N; i++) {
-			Q_epsilon_unrank(*F, v, 1, epsilon, n, c1, c2, c3, i);
+			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
 			cout << i << " : ";
 			int_vec_print(cout, v, n + 1);
-			j = Q_epsilon_rank(*F, v, 1, epsilon, n, c1, c2, c3);
+			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3);
 			cout << " : " << j << endl;
 		
 			}
@@ -115,10 +115,10 @@ int main(int argc, char **argv)
 	nb_inc = 0;
 	for (i = 0; i < N; i++) {
 		//cout << i << " : ";
-		Q_epsilon_unrank(*F, v, 1, epsilon, n, c1, c2, c3, i);
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
 		for (j = i + 1; j < N; j++) {
-			Q_epsilon_unrank(*F, v2, 1, epsilon, n, c1, c2, c3, j);
-			a = evaluate_bilinear_form(*F, v, v2, n + 1, Gram);
+			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j);
+			a = F->evaluate_bilinear_form(v, v2, n + 1, Gram);
 			if (a == 0) {
 				//cout << j << " ";
 				//k = ij2k(i, j, N);

@@ -2695,9 +2695,9 @@ void finite_field::create_ovoid(
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
 		}
-	choose_anisotropic_form(*this, c1, c2, c3, verbose_level);
+	choose_anisotropic_form(c1, c2, c3, verbose_level);
 	for (i = 0; i < nb_pts; i++) {
-		Q_epsilon_unrank(*this, v, 1, epsilon, n, c1, c2, c3, i);
+		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
 		for (h = 0; h < d; h++) {
 			w[h] = v[h];
 			}
@@ -2827,7 +2827,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 		cout << "i : orthogonal rank : point : projective rank" << endl;
 		}
 	for (i = 0; i < nb_pts; i++) {
-		Q_epsilon_unrank(*this, v, 1, epsilon, n, c1, c2, c3, BLT[i]);
+		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, BLT[i]);
 		if (f_embedded) {
 			PG_element_rank_modified(v, 1, d, j);
 			}
@@ -2835,7 +2835,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 			j = BLT[i];
 			}
 		// recreate v:
-		Q_epsilon_unrank(*this, v, 1, epsilon, n, c1, c2, c3, BLT[i]);
+		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, BLT[i]);
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : " << setw(4) << BLT[i] << " : ";
@@ -2886,7 +2886,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 	Pts = NEW_int(nb_pts);
 
 	if (epsilon == -1) {
-		choose_anisotropic_form(*this, c1, c2, c3, verbose_level);
+		choose_anisotropic_form(c1, c2, c3, verbose_level);
 		if (f_v) {
 			cout << "c1=" << c1 << " c2=" << c2 << " c3=" << c3 << endl;
 			}
@@ -2895,7 +2895,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 		cout << "orthogonal rank : point : projective rank" << endl;
 		}
 	for (i = 0; i < nb_pts; i++) {
-		Q_epsilon_unrank(*this, v, 1, epsilon, n, c1, c2, c3, i);
+		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
 		PG_element_rank_modified(v, 1, d, j);
 		Pts[i] = j;
 		if (f_v) {
@@ -4905,7 +4905,7 @@ void finite_field::do_embed_orthogonal(
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	if (epsilon == -1) {
-		choose_anisotropic_form(*this, c1, c2, c3, verbose_level);
+		choose_anisotropic_form(c1, c2, c3, verbose_level);
 		}
 
 	v = NEW_int(d);
@@ -4913,7 +4913,7 @@ void finite_field::do_embed_orthogonal(
 
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
-		Q_epsilon_unrank(*this, v, 1, epsilon, n, c1, c2, c3, a);
+		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, a);
 		b = P->rank_point(v);
 		set_out[h] = b;
 		}

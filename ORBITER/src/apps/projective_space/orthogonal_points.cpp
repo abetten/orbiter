@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 		cout << "orthogonal rank : point : projective rank" << endl;
 		}
 	if (epsilon == -1) {
-		choose_anisotropic_form(GFq, c1, c2, c3, verbose_level);
+		GFq.choose_anisotropic_form(c1, c2, c3, verbose_level);
 		}
 	else {
 		c1 = 0;
@@ -119,7 +119,7 @@ int main(int argc, char **argv)
 		c3 = 0;
 		}
 	for (i = 0; i < N; i++) {
-		Q_epsilon_unrank(GFq, v, 1, epsilon, n, c1, c2, c3, i);
+		GFq.Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
 		GFq.PG_element_rank_modified(v, 1, d, j);
 		L[i] = j;
 		if (f_v) {

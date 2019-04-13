@@ -151,19 +151,19 @@ void orthogonal_points(int epsilon, int n, int q,
 	if (epsilon == 0)
 		c123[0] = 1;
 	else if (epsilon == -1) {
-		choose_anisotropic_form(*F, c123[0], c123[1], c123[2], verbose_level - 2);
+		F->choose_anisotropic_form(c123[0], c123[1], c123[2], verbose_level - 2);
 		//cout << "incma.C: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
 		}
-	Gram_matrix(*F, epsilon, n, c123[0], c123[1], c123[2], G);
+	F->Gram_matrix(epsilon, n, c123[0], c123[1], c123[2], G);
 	cout << "Gram matrix" << endl;
 	print_integer_matrix_width(cout, G, d, d, d, 2);
 	
 	for (i = 0; i < N; i++) {
-		Q_epsilon_unrank(*F, v, 1, epsilon, n, c123[0], c123[1], c123[2], i);
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c123[0], c123[1], c123[2], i);
 		cout << "P_{" << i << "} & ";
 		int_vec_print(cout, v, n + 1);
-		j = Q_epsilon_rank(*F, v, 1, epsilon, n, c123[0], c123[1], c123[2]);
+		j = F->Q_epsilon_rank(v, 1, epsilon, n, c123[0], c123[1], c123[2]);
 		cout << "\\\\" << endl;
 		if (j != i) {
 			cout << "orthogonal_points j != i" << endl;
