@@ -664,13 +664,14 @@ void create_geometry(int verbose_level)
 	int i, j, h, a, b_1, b_2, b_3, ii, jj;
 	int *x;
 	int *y;
+	number_theory_domain NT;
 	
 	x = NEW_int(n);
 	y = NEW_int(n);
-	nb_points = i_power_j(2, n);
-	nb_lines = i_power_j(2, n - 1) * n;
-	nb_planes = i_power_j(2, n - 2) * n * (n - 1) / 2;
-	nb_solids = i_power_j(2, n - 3) * n * (n - 1) * (n - 2) / 6;
+	nb_points = NT.i_power_j(2, n);
+	nb_lines = NT.i_power_j(2, n - 1) * n;
+	nb_planes = NT.i_power_j(2, n - 2) * n * (n - 1) / 2;
+	nb_solids = NT.i_power_j(2, n - 3) * n * (n - 1) * (n - 2) / 6;
 	
 	cout << "nb_points=" << nb_points << endl;
 	cout << "nb_lines=" << nb_lines << endl;

@@ -28,6 +28,7 @@ int main(int argc, char **argv)
 	int *Q, *Rdq, *G, nb_primes = 0;
 	longinteger_domain D;
 	longinteger_object r2, r3, A, B;
+	number_theory_domain NT;
 	
 	//formula(2, 64, r2, 1);
 
@@ -38,7 +39,7 @@ int main(int argc, char **argv)
 	G = new int[Q_max * H_max];
 	
 	for (q = 2; q <= Q_max; q++) {
-		if (is_prime_power(q, p, e)) {
+		if (NT.is_prime_power(q, p, e)) {
 			Q[nb_primes] = q;
 			
 			cout << "studying prime power " << q << endl;
@@ -122,6 +123,7 @@ void formula_subprimitive(int d, int q,
 	int nb_primes, *primes, *exponents;
 	longinteger_domain D;
 	longinteger_object Theta, M1, Qm1, A, B, C, R;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "d=" << d << " q=" << q << endl;
@@ -135,12 +137,12 @@ void formula_subprimitive(int d, int q,
 	D.integral_division(A, Qm1, Theta, C, 0);
 	cout << "theta = " << Theta << endl;
 	D.integral_division_by_int(Theta, q - 1, C, theta_mod_qm1);
-	g = gcd_int(q - 1, theta_mod_qm1);
+	g = NT.gcd_int(q - 1, theta_mod_qm1);
 	cout << "g = " << g << endl;
 	D.factor(Theta, nb_primes, primes, exponents, verbose_level);
 	if (f_v) {
 		cout << "theta = " << Theta << endl;
-		print_factorization(nb_primes, primes, exponents);
+		NT.print_factorization(nb_primes, primes, exponents);
 		cout << endl;
 		}
 	R.create(1);
@@ -190,6 +192,7 @@ void formula(int d, int q, longinteger_object &Rdq, int verbose_level)
 	int nb_primes, *primes, *exponents;
 	longinteger_domain D;
 	longinteger_object Theta, M1, Qm1, A, B, C, R;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "d=" << d << " q=" << q << endl;
@@ -204,12 +207,12 @@ void formula(int d, int q, longinteger_object &Rdq, int verbose_level)
 	cout << "theta = " << Theta << endl;
 	D.integral_division_by_int(Theta, 
 		q - 1, C, theta_mod_qm1);
-	g = gcd_int(q - 1, theta_mod_qm1);
+	g = NT.gcd_int(q - 1, theta_mod_qm1);
 	cout << "g = " << g << endl;
 	D.factor(Theta, nb_primes, primes, exponents, verbose_level);
 	if (f_v) {
 		cout << "theta = " << Theta << endl;
-		print_factorization(nb_primes, primes, exponents);
+		NT.print_factorization(nb_primes, primes, exponents);
 		cout << endl;
 		}
 	R.create(1);
@@ -258,8 +261,9 @@ void formula(int d, int q, longinteger_object &Rdq, int verbose_level)
 int subprimitive(int q, int h)
 {
 	int Q, f, i, j, k, s, c, l, r;
+	number_theory_domain NT;
 	
-	Q = i_power_j(q, h);
+	Q = NT.i_power_j(q, h);
 	f = (Q - 1) / (q - 1);
 	cout << "q=" << q << " h=" << h << endl;
 	//cout << " Q=" << Q << " f=" << f << endl;
@@ -359,9 +363,10 @@ int period_of_sequence(int *v, int l)
 void subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c)
 {
 	int a, g;
+	number_theory_domain NT;
 	
 	a = j + k * (q - 1);
-	g = gcd_int(a, f);
+	g = NT.gcd_int(a, f);
 	s = f / g;
 	c = a / g;
 	c = c % (q - 1);

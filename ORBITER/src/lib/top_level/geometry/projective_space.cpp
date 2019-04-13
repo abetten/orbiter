@@ -28,6 +28,7 @@ void Hill_cap56(int argc, const char **argv,
 	action *A;
 	action *An;
 	finite_field *F;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "Hill_cap" << endl;
@@ -49,7 +50,7 @@ void Hill_cap56(int argc, const char **argv,
 
 	int f_semilinear;
 	
-	if (is_prime(F->q)) {
+	if (NT.is_prime(F->q)) {
 		f_semilinear = FALSE;
 		}
 	else {

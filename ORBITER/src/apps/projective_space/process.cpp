@@ -302,6 +302,7 @@ int main(int argc, char **argv)
 		}
 
 	finite_field *F;
+	number_theory_domain NT;
 
 	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
@@ -557,7 +558,7 @@ int main(int argc, char **argv)
 			exit(1);
 			}
 		int f_semilinear = FALSE;
-		if (!is_prime(q)) {
+		if (!NT.is_prime(q)) {
 			f_semilinear = TRUE;
 			}
 		do_canonical_form(n, F, 

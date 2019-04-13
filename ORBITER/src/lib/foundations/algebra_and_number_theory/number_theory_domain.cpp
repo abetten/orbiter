@@ -1,4 +1,4 @@
-// number_theory.C
+// number_theory_domain.cpp
 //
 // Anton Betten
 // April 3, 2003
@@ -12,7 +12,18 @@ namespace orbiter {
 namespace foundations {
 
 
-int power_mod(int a, int n, int p)
+number_theory_domain::number_theory_domain()
+{
+
+}
+
+number_theory_domain::~number_theory_domain()
+{
+
+}
+
+
+int number_theory_domain::power_mod(int a, int n, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, N, M;
@@ -24,7 +35,7 @@ int power_mod(int a, int n, int p)
 	return A.as_int();
 }
 
-int inverse_mod(int a, int p)
+int number_theory_domain::inverse_mod(int a, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, U, V, G;
@@ -40,7 +51,7 @@ int inverse_mod(int a, int p)
 	return u;
 }
 
-int mult_mod(int a, int b, int p)
+int number_theory_domain::mult_mod(int a, int b, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, C, P;
@@ -52,7 +63,7 @@ int mult_mod(int a, int b, int p)
 	return C.as_int();
 }
 
-int add_mod(int a, int b, int p)
+int number_theory_domain::add_mod(int a, int b, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, C, P, Q;
@@ -67,7 +78,7 @@ int add_mod(int a, int b, int p)
 	return r;
 }
 
-int int_abs(int a)
+int number_theory_domain::int_abs(int a)
 {
 	if (a < 0) {
 		return -a;
@@ -77,7 +88,7 @@ int int_abs(int a)
 		}
 }
 
-int irem(int a, int m)
+int number_theory_domain::irem(int a, int m)
 {
 	int b;
 	
@@ -88,7 +99,7 @@ int irem(int a, int m)
 	return a % m;
 }
 
-int gcd_int(int m, int n)
+int number_theory_domain::gcd_int(int m, int n)
 {
 #if 0
 	longinteger_domain D;
@@ -128,7 +139,7 @@ int gcd_int(int m, int n)
 #endif
 }
 
-void extended_gcd_int(int m, int n, int &g, int &u, int &v)
+void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v)
 {
 	longinteger_domain D;
 	longinteger_object M, N, G, U, V;
@@ -142,7 +153,7 @@ void extended_gcd_int(int m, int n, int &g, int &u, int &v)
 	v = V.as_int();
 }
 
-int i_power_j_safe(int i, int j)
+int number_theory_domain::i_power_j_safe(int i, int j)
 {
 	longinteger_domain D;
 
@@ -165,7 +176,7 @@ int i_power_j_safe(int i, int j)
 	return res;
 }
 
-int i_power_j(int i, int j)
+int number_theory_domain::i_power_j(int i, int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
 {
@@ -179,7 +190,7 @@ int i_power_j(int i, int j)
 	return r;
 }
 
-int order_mod_p(int a, int p)
+int number_theory_domain::order_mod_p(int a, int p)
 //Computes the order of $a$ mod $p$, i.~e. the smallest $k$ 
 //s.~th. $a^k \equiv 1$ mod $p$.
 {
@@ -204,7 +215,7 @@ int order_mod_p(int a, int p)
 	return o;
 }
 
-int int_log2(int n)
+int number_theory_domain::int_log2(int n)
 // returns $\log_2(n)$ 
 {	int i;
 	
@@ -218,7 +229,7 @@ int int_log2(int n)
 	return i;
 }
 
-int int_log10(int n)
+int number_theory_domain::int_log10(int n)
 // returns $\log_{10}(n)$ 
 {
 	int j;
@@ -236,7 +247,7 @@ int int_log10(int n)
 	return j;
 }
 
-int int_logq(int n, int q)
+int number_theory_domain::int_logq(int n, int q)
 // returns the number of digits in base q representation
 {	int i;
 	
@@ -252,7 +263,7 @@ int int_logq(int n, int q)
 	return i;
 }
 
-int is_strict_prime_power(int q)
+int number_theory_domain::is_strict_prime_power(int q)
 // assuming that q is a prime power, this fuction tests 
 // whether or not q is a srict prime power
 {
@@ -265,7 +276,7 @@ int is_strict_prime_power(int q)
 		return FALSE;
 }
 
-int is_prime(int p)
+int number_theory_domain::is_prime(int p)
 {
 	int p1;
 	
@@ -276,14 +287,14 @@ int is_prime(int p)
 		return TRUE;
 }
 
-int is_prime_power(int q)
+int number_theory_domain::is_prime_power(int q)
 {
 	int p, h;
 
 	return is_prime_power(q, p, h);
 }
 
-int is_prime_power(int q, int &p, int &h)
+int number_theory_domain::is_prime_power(int q, int &p, int &h)
 {
 	int i;
 	
@@ -303,7 +314,7 @@ int is_prime_power(int q, int &p, int &h)
 	return TRUE;
 }
 
-int smallest_primedivisor(int n)
+int number_theory_domain::smallest_primedivisor(int n)
 //Computes the smallest prime dividing $n$. 
 //The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
 {
@@ -329,7 +340,7 @@ int smallest_primedivisor(int n)
 		}
 }
 
-int sp_ge(int n, int p_min)
+int number_theory_domain::sp_ge(int n, int p_min)
 // Computes the smalles prime dividing $n$ 
 // which is greater than or equal to p\_min. 
 {
@@ -388,7 +399,7 @@ int sp_ge(int n, int p_min)
 #endif
 }
 
-int factor_int(int a, int *&primes, int *&exponents)
+int number_theory_domain::factor_int(int a, int *&primes, int *&exponents)
 {
 	int alloc_len = 10, len = 0;
 	int p, i;
@@ -441,7 +452,7 @@ int factor_int(int a, int *&primes, int *&exponents)
 	return len;
 }
 
-void factor_prime_power(int q, int &p, int &e)
+void number_theory_domain::factor_prime_power(int q, int &p, int &e)
 {
 	if (q == 1) {
 		cout << "factor_prime_power q is one" << endl;
@@ -460,7 +471,7 @@ void factor_prime_power(int q, int &p, int &e)
 		}
 }
 
-int primitive_root(int p, int verbose_level)
+int number_theory_domain::primitive_root(int p, int verbose_level)
 // Computes a primitive element for $\bbZ_p$, i.~e. an integer $k$ 
 // with $2 \le k \le p - 1$ s.~th. the order of $k$ mod $p$ is $p-1$.
 {
@@ -486,13 +497,13 @@ int primitive_root(int p, int verbose_level)
 	exit(1);
 }
 
-int Legendre(int a, int p, int verbose_level)
+int number_theory_domain::Legendre(int a, int p, int verbose_level)
 // Computes the Legendre symbol $\left( \frac{a}{p} \right)$.
 {
 	return Jacobi(a, p, verbose_level);
 }
 
-int Jacobi(int a, int m, int verbose_level)
+int number_theory_domain::Jacobi(int a, int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
 	int f_v = (verbose_level >= 1);
@@ -576,7 +587,7 @@ int Jacobi(int a, int m, int verbose_level)
 	exit(1);
 }
 
-int Jacobi_with_key_in_latex(ostream &ost,
+int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		int a, int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
@@ -790,7 +801,7 @@ int Jacobi_with_key_in_latex(ostream &ost,
 	exit(1);
 }
 
-int gcd_with_key_in_latex(ostream &ost,
+int number_theory_domain::gcd_with_key_in_latex(ostream &ost,
 		int a, int b, int f_key, int verbose_level)
 //Computes gcd(a,b)
 {
@@ -839,7 +850,7 @@ int gcd_with_key_in_latex(ostream &ost,
 	return b1;
 }
 
-int ny2(int x, int &x1)
+int number_theory_domain::ny2(int x, int &x1)
 //returns $n = \ny_2(x).$ 
 //Computes $x1 := \frac{x}{2^n}$. 
 {
@@ -871,7 +882,7 @@ int ny2(int x, int &x1)
 	return n1;
 }
 
-int ny_p(int n, int p)
+int number_theory_domain::ny_p(int n, int p)
 //Returns $\nu_p(n),$ the integer $k$ with $n=p^k n'$ and $p \nmid n'$.
 {
 	int ny_p;
@@ -892,7 +903,7 @@ int ny_p(int n, int p)
 	return ny_p;
 }
 
-int sqrt_mod_simple(int a, int p)
+int number_theory_domain::sqrt_mod_simple(int a, int p)
 // solves x^2 = a mod p. Returns x
 {
 	int a1, x;
@@ -907,7 +918,7 @@ int sqrt_mod_simple(int a, int p)
 	exit(1);
 }
 
-void print_factorization(int nb_primes, int *primes, int *exponents)
+void number_theory_domain::print_factorization(int nb_primes, int *primes, int *exponents)
 {
 	int i;
 	
@@ -920,7 +931,7 @@ void print_factorization(int nb_primes, int *primes, int *exponents)
 		}
 }
 
-void print_longfactorization(int nb_primes,
+void number_theory_domain::print_longfactorization(int nb_primes,
 		longinteger_object *primes, int *exponents)
 {
 	int i;
@@ -934,7 +945,7 @@ void print_longfactorization(int nb_primes,
 		}
 }
 
-int euler_function(int n)
+int number_theory_domain::euler_function(int n)
 //Computes Eulers $\varphi$-function for $n$.
 //Uses the prime factorization of $n$. before: eulerfunc
 {
@@ -959,7 +970,7 @@ int euler_function(int n)
 	return k;
 }
 
-void int_add_fractions(int at, int ab,
+void number_theory_domain::int_add_fractions(int at, int ab,
 		int bt, int bb, int &ct, int &cb,
 		int verbose_level)
 {
@@ -997,7 +1008,7 @@ void int_add_fractions(int at, int ab,
 		}
 }
 
-void int_mult_fractions(int at, int ab,
+void number_theory_domain::int_mult_fractions(int at, int ab,
 		int bt, int bb, int &ct, int &cb,
 		int verbose_level)
 {

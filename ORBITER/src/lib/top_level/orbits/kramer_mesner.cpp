@@ -196,11 +196,12 @@ void kramer_mesner::init_group(sims *&S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "kramer_mesner::init_group q=" << q << endl;
 		}
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 
 
 

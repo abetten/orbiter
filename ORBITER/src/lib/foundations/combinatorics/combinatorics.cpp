@@ -502,6 +502,7 @@ int rank_subset(int *set, int sz, int n)
 void rank_subset_recursion(int *set, int sz, int n, int a0, int &r)
 {
 	int a;
+	number_theory_domain NT;
 	
 	if (sz == 0) {
 		return;
@@ -513,7 +514,7 @@ void rank_subset_recursion(int *set, int sz, int n, int a0, int &r)
 			return;
 			}
 		else {
-			r += i_power_j(2, n - a - 1);
+			r += NT.i_power_j(2, n - a - 1);
 			}
 		}
 }
@@ -528,13 +529,14 @@ void unrank_subset(int *set, int &sz, int n, int r)
 void unrank_subset_recursion(int *set, int &sz, int n, int a0, int &r)
 {
 	int a, b;
+	number_theory_domain NT;
 	
 	if (r == 0) {
 		return;
 		}
 	r--;
 	for (a = a0; a < n; a++) {
-		b = i_power_j(2, n - a - 1);
+		b = NT.i_power_j(2, n - a - 1);
 		if (r >= b) {
 			r -= b;
 			}
@@ -1362,6 +1364,7 @@ int perm_order(int *a, int n)
 {
 	int *have_seen;
 	int i, l, l1, first, next, len, order = 1;
+	number_theory_domain NT;
 		
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
@@ -1402,7 +1405,7 @@ int perm_order(int *a, int n)
 		if (len == 1) {
 			continue;
 			}
-		order = len * order / gcd_int(order, len);
+		order = len * order / NT.gcd_int(order, len);
 		}
 	FREE_int(have_seen);
 	return order;
@@ -1813,22 +1816,23 @@ int create_roots_H4(finite_field *F, int *roots)
 int generalized_binomial(int n, int k, int q)
 {
 	int a, b, c, a1, b1, c1, d, e, g;
+	number_theory_domain NT;
 	
 	if (n == k || k == 0)
 		return 1;
 	// now n >= 2
 	c = generalized_binomial(n - 1, k - 1, q);
-	a = i_power_j(q, n) - 1;
+	a = NT.i_power_j(q, n) - 1;
 	
-	b = i_power_j(q, k) - 1;
+	b = NT.i_power_j(q, k) - 1;
 	
-	g = gcd_int(a, b);
+	g = NT.gcd_int(a, b);
 	a1 = a / g;
 	b1 = b / g;
 	a = a1;
 	b = b1;
 
-	g = gcd_int(c, b);
+	g = NT.gcd_int(c, b);
 	c1 = c / g;
 	b1 = b / g;
 	c = c1;

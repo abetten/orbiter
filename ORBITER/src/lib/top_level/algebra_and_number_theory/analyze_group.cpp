@@ -28,6 +28,7 @@ void analyze_group(action *A, sims *S,
 	int *exponents;
 	int factorization_length;
 	int nb_primes, nb_gens2;
+	number_theory_domain NT;
 	
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -37,9 +38,9 @@ void analyze_group(action *A, sims *S,
 	S->group_order(go);
 	goi = go.as_int();
 
-	factorization_length = factor_int(goi, primes, exponents);
+	factorization_length = NT.factor_int(goi, primes, exponents);
 	cout << "analyzing a group of order " << goi << " = ";
-	print_factorization(factorization_length, primes, exponents);
+	NT.print_factorization(factorization_length, primes, exponents);
 	cout << endl;
 	
 	nb_primes = 0;

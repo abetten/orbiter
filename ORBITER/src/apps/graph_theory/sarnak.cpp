@@ -88,10 +88,11 @@ void do_it(int p, int q, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, h, l, f_special = FALSE;
+	number_theory_domain NT;
 
 
 
-	l = Legendre(p, q, 0);
+	l = NT.Legendre(p, q, 0);
 	cout << "Legendre(" << p << ", " << q << ")=" << l << endl;
 
 

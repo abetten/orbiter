@@ -91,6 +91,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 	int i, k, r, a, b, r0;
 	int *set1;
 	int *set2;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "make_subset_lattice n=" << n << endl;
@@ -141,8 +142,8 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 					cout << "i=" << i << " set1[i]=" << set1[i] << endl;
 					for (j = j0 + 1; j < set1[i]; j++) {
 						cout << "i = " << i << " j=" << j << " adding "
-								 << i_power_j(2, n - j - 1) << endl;
-						a += i_power_j(2, n - j - 1);
+								 << NT.i_power_j(2, n - j - 1) << endl;
+						a += NT.i_power_j(2, n - j - 1);
 						}
 					}
 				a += k;

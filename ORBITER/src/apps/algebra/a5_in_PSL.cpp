@@ -81,9 +81,10 @@ void A5_in_PSL_(int q, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int p, f;
 	matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
+	number_theory_domain NT;
 	
 	
-	factor_prime_power(q, p, f);
+	NT.factor_prime_power(q, p, f);
 	domain *dom;
 
 	if (f_v) {

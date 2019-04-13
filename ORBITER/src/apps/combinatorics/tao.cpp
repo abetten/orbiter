@@ -718,8 +718,9 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		int u, t, ff, ll, v, k, di, dj;
 		int i, j;
 		int nb_good, nb_bad;
+		number_theory_domain NT;
 
-		N = i_power_j(2, nb_pairs_of_long_orbits);
+		N = NT.i_power_j(2, nb_pairs_of_long_orbits);
 		cout << "N=" << N << endl;
 		selection = NEW_int(nb_pairs_of_long_orbits);
 		D = NEW_int(H->group_order);
@@ -1282,6 +1283,7 @@ void zuppo_list(sims *S,
 	int *Elt2;
 	int *f_done;
 	action *A;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "zuppo_list" << endl;
@@ -1310,7 +1312,7 @@ void zuppo_list(sims *S,
 		if (o == 1) {
 			continue;
 			}
-		if (!is_prime_power(o)) {
+		if (!NT.is_prime_power(o)) {
 			continue;
 			}
 		cout << "element " << rk << " / " << goi << " has order "
@@ -1319,7 +1321,7 @@ void zuppo_list(sims *S,
 		Zuppos[nb_zuppos++] = rk;
 		f_done[rk] = TRUE;
 		for (i = 1; i < o; i++) {
-			if (gcd_int(i, o) == 1) {
+			if (NT.gcd_int(i, o) == 1) {
 				A->element_move(Elt1, Elt2, 0);
 				A->element_power_int_in_place(Elt2,
 						i, 0 /* verbose_level*/);

@@ -115,6 +115,7 @@ void ovoid_generator::init(int argc, const char **argv,
 {
 	int f_semilinear;
 	int f_basis = TRUE;
+	number_theory_domain NT;
 
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
@@ -137,7 +138,7 @@ void ovoid_generator::init(int argc, const char **argv,
 	tmp1 = NEW_int(d);
 
 	int p, h;
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 
 
 	if (h > 1) {
@@ -213,13 +214,13 @@ void ovoid_generator::init(int argc, const char **argv,
 		}
 	else {
 		if (epsilon == 1) {
-			depth = i_power_j(q, m - 1) + 1;
+			depth = NT.i_power_j(q, m - 1) + 1;
 			}
 		else if (epsilon == -1) {
-			depth = i_power_j(q, m + 1) + 1;
+			depth = NT.i_power_j(q, m + 1) + 1;
 			}
 		else if (epsilon == 0) {
-			depth = i_power_j(q, m) + 1;
+			depth = NT.i_power_j(q, m) + 1;
 			}
 		else {
 			cout << "epsilon must be 0, 1, or -1" << endl;

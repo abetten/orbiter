@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 	int n;
 	int *set;
 	int N, r, sz;
+	number_theory_domain NT;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -38,7 +39,7 @@ int main(int argc, char **argv)
 		}
 	set = NEW_int(n);
 
-	N = i_power_j(2, n);
+	N = NT.i_power_j(2, n);
 	for (i = 0; i < N; i++) {
 		cout << " rank " << i << " : ";
 		unrank_subset(set, sz, n, i);
@@ -56,7 +57,7 @@ int main(int argc, char **argv)
 	{
 	ofstream fp(fname);
 	
-	N = i_power_j(2, n);
+	N = NT.i_power_j(2, n);
 	for (h = 0; h < N; h++) {
 		unrank_subset(set, sz, n, h);
 		fp << sz;

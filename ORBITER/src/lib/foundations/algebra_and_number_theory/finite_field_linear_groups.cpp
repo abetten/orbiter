@@ -321,6 +321,7 @@ void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i, c;
+	number_theory_domain NT;
 
 
 	if (f_v) {
@@ -328,11 +329,11 @@ void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 		}
 	c = 0;
 	base[c] = 0;
-	transversal_length[c] = i_power_j(q, n);
+	transversal_length[c] = NT.i_power_j(q, n);
 	c++;
 	for (i = 0; i < n; i++) {
-		base[c] = i_power_j(q, i);
-		transversal_length[c] = i_power_j(q, n) - i_power_j(q, i);
+		base[c] = NT.i_power_j(q, i);
+		transversal_length[c] = NT.i_power_j(q, n) - NT.i_power_j(q, i);
 		c++;
 		}
 	if (f_semilinear) {
@@ -369,6 +370,7 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i, c;
+	number_theory_domain NT;
 
 
 	if (f_v) {
@@ -377,8 +379,8 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 		}
 	c = 0;
 	for (i = 0; i < n; i++) {
-		base[c] = i_power_j(q, i);
-		transversal_length[c] = i_power_j(q, n) - i_power_j(q, i);
+		base[c] = NT.i_power_j(q, i);
+		transversal_length[c] = NT.i_power_j(q, n) - NT.i_power_j(q, i);
 		c++;
 		}
 	if (f_semilinear) {
@@ -420,6 +422,7 @@ void finite_field::strong_generators_for_projective_linear_group(
 	int f_vv = (verbose_level >= 2);
 	int h, u, cur;
 	int *M;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::strong_generators_for_projective_linear_group" << endl;
@@ -476,7 +479,7 @@ void finite_field::strong_generators_for_projective_linear_group(
 			}
 		for (u = 0; u < e; u++) {
 			identity_matrix(M, n);
-			M[(n - 1) * n + h] = i_power_j(p, u);
+			M[(n - 1) * n + h] = NT.i_power_j(p, u);
 			if (f_semilinear) {
 				M[n * n] = 0;
 				}
@@ -525,6 +528,7 @@ void finite_field::strong_generators_for_affine_linear_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int h, u, cur;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::strong_generators_for_affine_linear_group" << endl;
@@ -567,7 +571,7 @@ void finite_field::strong_generators_for_affine_linear_group(
 			int_vec_zero(data + cur * size, size);
 			identity_matrix(data + cur * size, n);
 
-			data[cur * size + (n - 1) * n + h] = i_power_j(p, u);
+			data[cur * size + (n - 1) * n + h] = NT.i_power_j(p, u);
 			if (f_semilinear) {
 				data[cur * size + n * n + n] = 0;
 				}
@@ -616,7 +620,7 @@ void finite_field::strong_generators_for_affine_linear_group(
 			int_vec_zero(data + cur * size, size);
 			identity_matrix(data + cur * size, n);
 
-			data[cur * size + n * n + h] = i_power_j(p, u);
+			data[cur * size + n * n + h] = NT.i_power_j(p, u);
 			if (f_semilinear) {
 				data[cur * size + n * n + n] = 0;
 				}
@@ -643,6 +647,7 @@ void finite_field::strong_generators_for_general_linear_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int h, u, cur;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::strong_generators_for_general_linear_group" << endl;
@@ -684,7 +689,7 @@ void finite_field::strong_generators_for_general_linear_group(
 			int_vec_zero(data + cur * size, size);
 			identity_matrix(data + cur * size, n);
 
-			data[cur * size + (n - 1) * n + h] = i_power_j(p, u);
+			data[cur * size + (n - 1) * n + h] = NT.i_power_j(p, u);
 			if (f_semilinear) {
 				data[cur * size + n * n] = 0;
 				}
@@ -748,6 +753,7 @@ void finite_field::generators_for_parabolic_subgroup(
 	int f_vv = (verbose_level >= 2);
 	int h, g, u, cur;
 	int *M;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::generators_for_parabolic_subgroup" << endl;
@@ -805,7 +811,7 @@ void finite_field::generators_for_parabolic_subgroup(
 	for (h = 0; h < k - 1; h++) {
 		for (u = 0; u < e; u++) {
 			identity_matrix(M, n);
-			M[(k - 1) * n + h] = i_power_j(p, u);
+			M[(k - 1) * n + h] = NT.i_power_j(p, u);
 			if (f_semilinear) {
 				M[n * n] = 0;
 				}
@@ -816,7 +822,7 @@ void finite_field::generators_for_parabolic_subgroup(
 	for (h = k - 1; h < n - 1; h++) {
 		for (u = 0; u < e; u++) {
 			identity_matrix(M, n);
-			M[(n - 1) * n + h] = i_power_j(p, u);
+			M[(n - 1) * n + h] = NT.i_power_j(p, u);
 			if (f_semilinear) {
 				M[n * n] = 0;
 				}
@@ -834,7 +840,7 @@ void finite_field::generators_for_parabolic_subgroup(
 		for (h = 0; h < k; h++) {
 			for (u = 0; u < e; u++) {
 				identity_matrix(M, n);
-				M[g * n + h] = i_power_j(p, u);
+				M[g * n + h] = NT.i_power_j(p, u);
 				if (f_semilinear) {
 					M[n * n] = 0;
 					}
@@ -898,6 +904,7 @@ void finite_field::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	int u, cur, i, j;
 	int *M;
 	int n = 4;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::generators_for_stabilizer_of_three_collinear_"
@@ -987,7 +994,7 @@ void finite_field::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		for (j = 0; j < 2; j++) {
 			for (u = 0; u < e; u++) {
 				identity_matrix(M, n);
-				M[i * n + j] = i_power_j(p, u);
+				M[i * n + j] = NT.i_power_j(p, u);
 				if (f_semilinear) {
 					M[n * n] = 0;
 					}
@@ -1012,7 +1019,7 @@ void finite_field::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	// PGL2 in lower right, bottom row
 	for (u = 0; u < e; u++) {
 		identity_matrix(M, n);
-		M[3 * n + 2] = i_power_j(p, u);
+		M[3 * n + 2] = NT.i_power_j(p, u);
 		if (f_semilinear) {
 			M[n * n] = 0;
 			}
@@ -1049,6 +1056,7 @@ void finite_field::generators_for_stabilizer_of_triangle_in_PGL4(
 	int u, cur, j;
 	int *M;
 	int n = 4;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::generators_for_stabilizer_of_triangle_in_PGL4" << endl;
@@ -1147,7 +1155,7 @@ void finite_field::generators_for_stabilizer_of_triangle_in_PGL4(
 	for (j = 0; j < 3; j++) {
 		for (u = 0; u < e; u++) {
 			identity_matrix(M, n);
-			M[3 * n + j] = i_power_j(p, u);
+			M[3 * n + j] = NT.i_power_j(p, u);
 			if (f_semilinear) {
 				M[n * n] = 0;
 				}

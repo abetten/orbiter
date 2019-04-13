@@ -57,6 +57,7 @@ void do_D1(int n, int d, int verbose_level)
 	int n_over_d;
 	int phi_n, phi_n_over_d;
 	int *Rn, *Rn_over_d;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "do_D1" << endl;
@@ -70,8 +71,8 @@ void do_D1(int n, int d, int verbose_level)
 	m = (n - 1) >> 1;
 
 	n_over_d = n / d;
-	phi_n = euler_function(n);
-	phi_n_over_d = euler_function(n_over_d);
+	phi_n = NT.euler_function(n);
+	phi_n_over_d = NT.euler_function(n_over_d);
 	cout << "n=" << n << " m=" << m << " d=" << d
 			<< " n_over_d=" << n_over_d << endl;
 	cout << "phi_n = " << phi_n << endl;
@@ -80,7 +81,7 @@ void do_D1(int n, int d, int verbose_level)
 	Rn = NEW_int(phi_n);
 	j = 0;
 	for (i = 0; i < n; i++) {
-		if (gcd_int(i, n) == 1) {
+		if (NT.gcd_int(i, n) == 1) {
 			Rn[j++] = i;
 			}
 		}
@@ -95,7 +96,7 @@ void do_D1(int n, int d, int verbose_level)
 	Rn_over_d = NEW_int(phi_n_over_d);
 	j = 0;
 	for (i = 0; i < n_over_d; i++) {
-		if (gcd_int(i, n_over_d) == 1) {
+		if (NT.gcd_int(i, n_over_d) == 1) {
 			Rn_over_d[j++] = i;
 			}
 		}

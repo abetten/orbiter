@@ -607,6 +607,7 @@ void incidence_structure::save_row_by_row_file(char *fname)
 {
     int i, j; //, nb_inc;
     int w;
+	number_theory_domain NT;
 
 	//nb_inc = get_nb_inc();
 	
@@ -616,7 +617,7 @@ void incidence_structure::save_row_by_row_file(char *fname)
 		exit(1);
 		}
 	ofstream f(fname);
-	w = (int) int_log10(nb_cols) + 1;
+	w = NT.int_log10(nb_cols) + 1;
 	f << nb_rows << " " << nb_cols << " " << r << endl;
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < r; j++) {
@@ -2402,10 +2403,11 @@ void incidence_structure::print_partitioned(
 	int I, i, cell, l;
 	int width;
 	int mn;
+	number_theory_domain NT;
 	
 	mn = nb_points() * nb_lines();
 	
-	width = int_log10(mn) + 1;
+	width = NT.int_log10(mn) + 1;
 	
 	//A = get_incidence_matrix();
 		

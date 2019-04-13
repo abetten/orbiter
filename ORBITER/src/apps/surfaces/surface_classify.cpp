@@ -191,6 +191,7 @@ int main(int argc, const char **argv)
 	}
 
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 	
 
 	F = NEW_OBJECT(finite_field);
@@ -199,7 +200,7 @@ int main(int argc, const char **argv)
 	Descr->F = F;
 	q = Descr->input_q;
 	
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {

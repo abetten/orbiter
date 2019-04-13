@@ -120,6 +120,7 @@ void finite_field::init_hash_table_parabolic(int k, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int n, ln2q, N, i, j;
 	int *v;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::init_hash_table_parabolic" << endl;
@@ -127,7 +128,7 @@ void finite_field::init_hash_table_parabolic(int k, int verbose_level)
 		cout << "k=" << k << endl;
 		}
 
-	ln2q = int_log2(q);
+	ln2q = NT.int_log2(q);
 	Hash_table_parabolic = NEW_OBJECT(vector_hashing);
 	Hash_table_parabolic_q = q;
 	Hash_table_parabolic_k = k;
@@ -1232,8 +1233,10 @@ int finite_field::evaluate_hyperbolic_bilinear_form(
 
 int finite_field::primitive_element()
 {
+	number_theory_domain NT;
+
 	if (e == 1) {
-		return orbiter::foundations::primitive_root(p, FALSE);
+		return NT.primitive_root(p, FALSE);
 		}
 	return p;
 }

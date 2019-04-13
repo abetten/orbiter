@@ -175,6 +175,7 @@ void linear_set::init(int argc, const char **argv,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "linear_set::init" << endl;
@@ -194,7 +195,7 @@ void linear_set::init(int argc, const char **argv,
 		}
 
 
-	Q = i_power_j(q, s);
+	Q = NT.i_power_j(q, s);
 	m = n / s;
 	if (m * s != n) {
 		cout << "linear_set::init s must divide n" << endl;
@@ -206,7 +207,7 @@ void linear_set::init(int argc, const char **argv,
 		}
 
 	vector_space_dimension = n;
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {
@@ -471,7 +472,7 @@ void linear_set::init(int argc, const char **argv,
 		int f_recoordinatize = TRUE;
 		
 		k = n >> 1;
-		order = i_power_j(q, k);
+		order = NT.i_power_j(q, k);
 
 		if (f_v) {
 			cout << "Classifying spreads of order " << order << endl;

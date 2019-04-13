@@ -1680,9 +1680,10 @@ void vec_generators_aut_cube_nd(int n, Vector &gen)
 	permutation p;
 	int i, j, a, b, x, l, ll;
 	int *v, *w;
+	number_theory_domain NT;
 	
 	// printf("vec_generators_aut_cube_nd()\n");
-	l = i_power_j(2, n);
+	l = NT.i_power_j(2, n);
 	v = new int[n];
 	w = new int[n];
 	vec_generators_symmetric_group(gen2, n);

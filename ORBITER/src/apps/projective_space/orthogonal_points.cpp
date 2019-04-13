@@ -36,6 +36,7 @@ int main(int argc, char **argv)
 	int verbose_level = 0;
 	int i;
 	int d, n, q, epsilon;
+	number_theory_domain NT;
 
 	if (argc <= 3) {
 		print_usage();
@@ -63,7 +64,7 @@ int main(int argc, char **argv)
 	nb = 0;
 	nb2 = 0;
 	if (epsilon == 0) {
-		nb = (i_power_j(q, n) - 1) / (q - 1);
+		nb = (NT.i_power_j(q, n) - 1) / (q - 1);
 		m = n >> 1;
 		Sbar = nb_pts_Sbar(m, q);
 		N1 = nb_pts_N1(m, q);
@@ -74,7 +75,7 @@ int main(int argc, char **argv)
 	else if (epsilon == -1) {
 		m1 = (n + 1) >> 1;
 		m2 = (n - 1) >> 1;
-		nb = ((i_power_j(q, m1) + 1) *  (i_power_j(q, m2) - 1)) / (q - 1);
+		nb = ((NT.i_power_j(q, m1) + 1) *  (NT.i_power_j(q, m2) - 1)) / (q - 1);
 		m = n >> 1;
 		Sbar = nb_pts_Sbar(m, q);
 		N1 = nb_pts_N1(m, q);
@@ -87,7 +88,7 @@ int main(int argc, char **argv)
 		m1 = (n + 1) >> 1;
 		m2 = (n - 1) >> 1;
 		m = (n + 1) >> 1;
-		nb = ((i_power_j(q, m1) - 1) *  (i_power_j(q, m2) + 1)) / (q - 1);
+		nb = ((NT.i_power_j(q, m1) - 1) *  (NT.i_power_j(q, m2) + 1)) / (q - 1);
 		nb2 = nb_pts_Sbar(m, q);
 		//test_orthogonal(m, q);
 		}

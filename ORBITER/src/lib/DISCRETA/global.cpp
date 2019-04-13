@@ -313,6 +313,7 @@ discreta_base operator + (discreta_base& x, discreta_base &y)
 }
 #endif
 
+#if 0
 int lcm_int(int m, int n)
 {
 	int g = gcd_int(m, n);
@@ -321,6 +322,7 @@ int lcm_int(int m, int n)
 	r *= n;
 	return r;
 }
+#endif
 
 #if 0
 int gcd_int(int m, int n)
@@ -500,6 +502,7 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 //the vector exponents holds the $e_i$.
 {
 	int d, last_prime = 2, l;
+	number_theory_domain NT;
 	
 	if (n == 0) {
 		cout << "factor_integer(): n == 0\n";
@@ -510,7 +513,7 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 		exponents.m_l(0);
 		return;
 		}
-	d = sp_ge(n, last_prime);
+	d = NT.sp_ge(n, last_prime);
 	primes.m_l(1);
 	exponents.m_l(1);
 	l = 1;
@@ -519,7 +522,7 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 	last_prime = d;
 	n /= d;
 	while (n != 1) {
-		d = sp_ge(n, last_prime);
+		d = NT.sp_ge(n, last_prime);
 		// cout << "n=" << n << " last_prime=" << last_prime << " next_prime=" << d << endl;
 		if (d == last_prime) {
 			exponents.m_ii(l - 1, exponents.s_ii(l - 1) + 1);
@@ -633,11 +636,12 @@ int nb_primes(int n)
 {
 	int i = 0;
 	int d;
+	number_theory_domain NT;
 	
 	if (n < 0)
 		n = -n;
 	while (n != 1) {
-		d = smallest_primedivisor(n);
+		d = NT.smallest_primedivisor(n);
 		i++;
 		n /= d;
 		}
@@ -718,6 +722,7 @@ int Euler(int n)
 {
 	Vector p, e;
 	int i, k, p1, e1, l;
+	number_theory_domain NT;
 	
 	factor_integer(n, p, e);
 	k = 1;
@@ -726,7 +731,7 @@ int Euler(int n)
 		p1 = p.s_ii(i);
 		e1 = e.s_ii(i);
 		if (e1 > 1)
-			k *= i_power_j(p1, e1 - 1);
+			k *= NT.i_power_j(p1, e1 - 1);
 		k *= (p1 - 1);
 		}
 	return k;
@@ -892,6 +897,7 @@ int sqrt_mod_involved(int a, int p)
 	longinteger P, m1;
 	longinteger A, X, a2, a4, b, X2;
 	int round;
+	number_theory_domain NT;
 	
 	A.homo_z(a);
 	P.homo_z(p);
@@ -951,7 +957,7 @@ int sqrt_mod_involved(int a, int p)
 		} while (r >= 0);
 #else
 	for (n = 1; n < p - 1; n++) {
-		r = Legendre(n, p, verbose_level - 1);
+		r = NT.Legendre(n, p, verbose_level - 1);
 		if (r == -1) {
 			break;
 			}
@@ -3020,6 +3026,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int i;
 	int q = F->q;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "fine_tune: tuning matrix:" << endl;
@@ -3082,7 +3089,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 		cout << "cv = " << cv << endl;
 		}
 	int p, h, s;
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	if (h > 1) {
 		cout << "q is not a prime" << endl;
 		exit(1);

@@ -84,6 +84,7 @@ void generators_symplectic_group::init(finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "generators_symplectic_group::init" << endl;
@@ -97,7 +98,7 @@ void generators_symplectic_group::init(finite_field *F,
 		}
 	n_half = n >> 1;
 	q = F->q;
-	qn = i_power_j(q, n);
+	qn = NT.i_power_j(q, n);
 	nb_candidates = NEW_int(n + 1);
 	cur_candidate = NEW_int(n);
 	candidates = NEW_pint(n + 1);

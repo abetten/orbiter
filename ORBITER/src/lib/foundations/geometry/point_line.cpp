@@ -23,6 +23,7 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 	int slope, b, x, f_slope, f_b, f_x;
 	int f_found_quadrangle = FALSE;
 	int aa;
+	number_theory_domain NT;
 	
 	if (f_vv) {
 		cout << "is_desarguesian_plane plane_order ="
@@ -83,14 +84,14 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 	if (f_vv) {
 		cout << "plane coordinatized" << endl;
 		}
-	plane_prime = smallest_primedivisor(plane_order);
+	plane_prime = NT.smallest_primedivisor(plane_order);
 	aa = plane_order;
 	plane_exponent = 0;
 	while (aa > 1) {
 		plane_exponent++;
 		aa /= plane_prime;
 		}
-	if (i_power_j(plane_prime, plane_exponent) != plane_order) {
+	if (NT.i_power_j(plane_prime, plane_exponent) != plane_order) {
 		cout << "plane order not a power of a prime." << endl;
 		return FALSE;
 		}

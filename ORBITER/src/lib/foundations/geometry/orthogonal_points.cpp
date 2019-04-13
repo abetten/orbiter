@@ -39,13 +39,15 @@ int count_N1(int n, int q)
 int count_T1(int epsilon, int n, int q)
 // n = Witt index
 {
+	number_theory_domain NT;
+
 	if (n < 0) {
 		//cout << "count_T1 n is negative. n=" << n << endl;
 		return 0;
 		}
 	if (epsilon == 1) {
-		return ((i_power_j(q, n) - 1) *
-				(i_power_j(q, n - 1) + 1)) / (q - 1);
+		return ((NT.i_power_j(q, n) - 1) *
+				(NT.i_power_j(q, n - 1) + 1)) / (q - 1);
 		}
 	else if (epsilon == 0) {
 		return count_T1(1, n, q) + count_N1(n, q);
@@ -60,12 +62,14 @@ int count_T1(int epsilon, int n, int q)
 
 int count_T2(int n, int q)
 {
+	number_theory_domain NT;
+
 	if (n <= 0) {
 		return 0;
 		}
-	return (i_power_j(q, 2 * n - 2) - 1) *
-			(i_power_j(q, n) - 1) *
-			(i_power_j(q, n - 2) + 1) / ((q - 1) * (i_power_j(q, 2) - 1));
+	return (NT.i_power_j(q, 2 * n - 2) - 1) *
+			(NT.i_power_j(q, n) - 1) *
+			(NT.i_power_j(q, n - 2) + 1) / ((q - 1) * (NT.i_power_j(q, 2) - 1));
 }
 
 int nb_pts_Qepsilon(int epsilon, int k, int q)
@@ -405,6 +409,7 @@ void order_PO_epsilon(int f_semilinear,
 {
 	int f_v = (verbose_level >= 1);
 	int m;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "order_PO_epsilon" << endl;
@@ -418,7 +423,7 @@ void order_PO_epsilon(int f_semilinear,
 		int p, e;
 		longinteger_domain D;
 		
-		factor_prime_power(q, p, e);
+		NT.factor_prime_power(q, p, e);
 		D.mult_integer_in_place(go, e);
 		}
 	if (f_v) {

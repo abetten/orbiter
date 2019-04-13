@@ -561,18 +561,19 @@ void unipoly::Singer(int p, int f, int f_v, int f_vv)
 	int m, i, a, b, low, high;
 	Vector vp, ve;
 	unipoly x;
+	number_theory_domain NT;
 	
 	if (p <= 1) {
 		cout << "unipoly::Singer(): p <= 1\n";
 		exit(1);
 		}
-	if (!is_prime(p)) {
+	if (!NT.is_prime(p)) {
 		cout << "unipoly::Singer(): p not prime\n";
 		exit(1);
 		}
-	m = orbiter::foundations::i_power_j(p, f) - 1;
+	m = NT.i_power_j(p, f) - 1;
 	factor_integer(m, vp, ve);
-	a = primitive_root(p, f_v);
+	a = NT.primitive_root(p, f_v);
 	for (b = 0; b < p; b++) {
 		x.singer_candidate(p, f, b, a);
 		if (f_v) {
@@ -612,6 +613,7 @@ void unipoly::get_an_irreducible_polynomial(int f, int verbose_level)
 	int low, high, q, i;
 	domain *d;
 	unipoly x;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "unipoly::get_an_irreducible_polynomial" << endl;
@@ -626,7 +628,7 @@ void unipoly::get_an_irreducible_polynomial(int f, int verbose_level)
 			"searching for an irreducible polynomial of degree " << f <<
 			" over GF(" << q << ")" << endl;
 		}
-	low = orbiter::foundations::i_power_j(q, f);
+	low = NT.i_power_j(q, f);
 	high = low << 1; // only monic polynomials 
 	for (i = low; i <= high; i++) {
 		x.numeric_polynomial(i, q);
@@ -910,11 +912,12 @@ void unipoly::Phi(int n, int f_v)
 static int multiply(Vector & vp, Vector & ve)
 {
 	int i, l, n, m;
+	number_theory_domain NT;
 	
 	n = 1;
 	l = vp.s_l();
 	for (i = 0; i < l; i++) {
-		m = i_power_j(vp.s_ii(i), ve.s_ii(i));
+		m = NT.i_power_j(vp.s_ii(i), ve.s_ii(i));
 		n *= m;
 		}
 	return n;
@@ -993,6 +996,7 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 	finite_field Fq;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "unipoly::charpoly" << endl;
@@ -1010,7 +1014,7 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 		cout << M << endl;
 		}
 
-	if (!is_prime_power(q, p, h)) {
+	if (!NT.is_prime_power(q, p, h)) {
 		cout << "q is not prime, we need a prime" << endl;
 		exit(1);
 		}

@@ -62,12 +62,13 @@ void finite_ring::init(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_ring::init q=" << q << endl;
 		}
 	finite_ring::q = q;
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	add_table = NEW_int(q * q);
 	mult_table = NEW_int(q * q);
 	f_is_unit_table = NEW_int(q);

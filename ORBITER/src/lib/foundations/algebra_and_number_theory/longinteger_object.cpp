@@ -54,6 +54,7 @@ void longinteger_object::create(int i)
 {
 	int ii, j, dj;
 	int f_v = FALSE;
+	number_theory_domain NT;
 
 	ii = i;
 	freeself();
@@ -70,7 +71,7 @@ void longinteger_object::create(int i)
 		l = 1;
 		return;
 		}
-	l = (int) int_log10(i);
+	l = NT.int_log10(i);
 	if (f_v) {
 		cout << "longinteger_object::create "
 				"i=" << i << " log =  " << l << endl;

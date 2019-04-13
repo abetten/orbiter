@@ -86,6 +86,7 @@ int main(int argc, const char **argv)
 
 	int Q;
 	int m;
+	number_theory_domain NT;
 
 	m = n / s;
 	if (m * s != n) {
@@ -93,7 +94,7 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	Q = i_power_j(q, s);
+	Q = NT.i_power_j(q, s);
 	
 	finite_field *Fq;
 	finite_field *FQ;

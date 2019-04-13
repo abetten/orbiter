@@ -103,6 +103,7 @@ void translation_plane_via_andre_model::init(
 	//int f_v4 = (verbose_level >= 6);
 	int f_v10 = (verbose_level >= 10);
 	int i, j, h, u, v, i1, i2, j1, j2;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init" << endl;
@@ -129,7 +130,7 @@ void translation_plane_via_andre_model::init(
 		cout << "translation_plane_via_andre_model::init "
 				"spread_elements_numeric:" << endl;
 		int_vec_print(cout, spread_elements_numeric,
-				i_power_j(q, k) + 1);
+				NT.i_power_j(q, k) + 1);
 		cout << endl;
 		}
 
@@ -312,7 +313,7 @@ void translation_plane_via_andre_model::init(
 
 
 	f_semilinear = FALSE;
-	if (!is_prime(q)) {
+	if (!NT.is_prime(q)) {
 		f_semilinear = TRUE;
 		}
 	

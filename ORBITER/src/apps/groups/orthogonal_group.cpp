@@ -124,9 +124,10 @@ void do_it(int epsilon, int n, int q,
 	int f_basis = TRUE;
 	int p, h, i, j, a;
 	int *v;
+	number_theory_domain NT;
 	
 	A = NEW_OBJECT(action);
-	is_prime_power(q, p, h);
+	NT.is_prime_power(q, p, h);
 	if (h > 1)
 		f_semilinear = TRUE;
 	else

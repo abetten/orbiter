@@ -52,6 +52,7 @@ void heisenberg::init(finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "heisenberg::init n=" << n << " q=" << F->q << endl;
@@ -60,7 +61,7 @@ void heisenberg::init(finite_field *F, int n, int verbose_level)
 	heisenberg::F = F;
 	heisenberg::n = n;
 	len = 2 * n + 1;
-	group_order = i_power_j(q, len);
+	group_order = NT.i_power_j(q, len);
 
 	Elt1 = NEW_int(len);
 	Elt2 = NEW_int(len);
@@ -178,6 +179,7 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i, j, cnt, k;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "heisenberg::generating_set" << endl;
@@ -188,7 +190,7 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < F->e; j++) {
 			unrank_element(Elt1, 0);
-			Elt1[i] = i_power_j(F->p, j);
+			Elt1[i] = NT.i_power_j(F->p, j);
 			k = rank_element(Elt1);
 			gens[cnt++] = k;
 			}
@@ -196,7 +198,7 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < F->e; j++) {
 			unrank_element(Elt1, 0);
-			Elt1[n + i] = i_power_j(F->p, j);
+			Elt1[n + i] = NT.i_power_j(F->p, j);
 			k = rank_element(Elt1);
 			gens[cnt++] = k;
 			}
@@ -204,7 +206,7 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 
 	for (j = 0; j < F->e; j++) {
 		unrank_element(Elt1, 0);
-		Elt1[2 * n] = i_power_j(F->p, j);
+		Elt1[2 * n] = NT.i_power_j(F->p, j);
 		k = rank_element(Elt1);
 		gens[cnt++] = k;
 		}

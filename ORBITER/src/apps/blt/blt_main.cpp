@@ -132,6 +132,7 @@ int main(int argc, const char **argv)
 	int schreier_depth = ECA->starter_size;
 	int f_debug = FALSE;
 	int f_semilinear = FALSE;
+	number_theory_domain NT;
 	
 	finite_field *F;
 	orthogonal *O;
@@ -140,7 +141,7 @@ int main(int argc, const char **argv)
 	O = NEW_OBJECT(orthogonal);
 	Blt_set = NEW_OBJECT(blt_set);
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 	}
 	else {

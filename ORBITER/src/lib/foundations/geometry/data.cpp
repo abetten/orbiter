@@ -2021,8 +2021,9 @@ const char *override_polynomial_subfield(int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
+	number_theory_domain NT;
 	
-	if (!is_prime_power(q, p, h)) {
+	if (!NT.is_prime_power(q, p, h)) {
 		cout << "override_polynomial_subfield "
 				"q is not a prime power" << endl;
 		exit(1);
@@ -2082,8 +2083,9 @@ const char *override_polynomial_extension_field(int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
+	number_theory_domain NT;
 	
-	if (!is_prime_power(q, p, h)) {
+	if (!NT.is_prime_power(q, p, h)) {
 		cout << "override_polynomial_extension_field "
 				"q is not a prime power" << endl;
 		exit(1);

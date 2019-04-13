@@ -1763,54 +1763,62 @@ public:
 };
 
 // #############################################################################
-// number_theory.cpp:
+// number_theory_domain.cpp:
 // #############################################################################
 
+//! basic number theoretic functions
 
-int power_mod(int a, int n, int p);
-int inverse_mod(int a, int p);
-int mult_mod(int a, int b, int p);
-int add_mod(int a, int b, int p);
-int int_abs(int a);
-int irem(int a, int m);
-int gcd_int(int m, int n);
-void extended_gcd_int(int m, int n, int &g, int &u, int &v);
-int i_power_j_safe(int i, int j);
-int i_power_j(int i, int j);
-int order_mod_p(int a, int p);
-int int_log2(int n);
-int int_log10(int n);
-int int_logq(int n, int q);
-// returns the number of digits in base q representation
-int is_strict_prime_power(int q);
-// assuming that q is a prime power, this fuction tests 
-// whether or not q is a strict prime power
-int is_prime(int p);
-int is_prime_power(int q);
-int is_prime_power(int q, int &p, int &h);
-int smallest_primedivisor(int n);
-//Computes the smallest prime dividing $n$. 
-//The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
-int sp_ge(int n, int p_min);
-int factor_int(int a, int *&primes, int *&exponents);
-void factor_prime_power(int q, int &p, int &e);
-int primitive_root(int p, int verbose_level);
-int Legendre(int a, int p, int verbose_level);
-int Jacobi(int a, int m, int verbose_level);
-int Jacobi_with_key_in_latex(std::ostream &ost, int a, int m, int verbose_level);
-int gcd_with_key_in_latex(std::ostream &ost,
-		int a, int b, int f_key, int verbose_level);
-int ny2(int x, int &x1);
-int ny_p(int n, int p);
-int sqrt_mod_simple(int a, int p);
-void print_factorization(int nb_primes, int *primes, int *exponents);
-void print_longfactorization(int nb_primes, 
-	longinteger_object *primes, int *exponents);
-int euler_function(int n);
-void int_add_fractions(int at, int ab, int bt, int bb, 
-	int &ct, int &cb, int verbose_level);
-void int_mult_fractions(int at, int ab, int bt, int bb, 
-	int &ct, int &cb, int verbose_level);
+
+class number_theory_domain {
+
+public:
+	number_theory_domain();
+	~number_theory_domain();
+	int power_mod(int a, int n, int p);
+	int inverse_mod(int a, int p);
+	int mult_mod(int a, int b, int p);
+	int add_mod(int a, int b, int p);
+	int int_abs(int a);
+	int irem(int a, int m);
+	int gcd_int(int m, int n);
+	void extended_gcd_int(int m, int n, int &g, int &u, int &v);
+	int i_power_j_safe(int i, int j);
+	int i_power_j(int i, int j);
+	int order_mod_p(int a, int p);
+	int int_log2(int n);
+	int int_log10(int n);
+	int int_logq(int n, int q);
+	// returns the number of digits in base q representation
+	int is_strict_prime_power(int q);
+	// assuming that q is a prime power, this fuction tests
+	// whether or not q is a strict prime power
+	int is_prime(int p);
+	int is_prime_power(int q);
+	int is_prime_power(int q, int &p, int &h);
+	int smallest_primedivisor(int n);
+	//Computes the smallest prime dividing $n$.
+	//The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
+	int sp_ge(int n, int p_min);
+	int factor_int(int a, int *&primes, int *&exponents);
+	void factor_prime_power(int q, int &p, int &e);
+	int primitive_root(int p, int verbose_level);
+	int Legendre(int a, int p, int verbose_level);
+	int Jacobi(int a, int m, int verbose_level);
+	int Jacobi_with_key_in_latex(std::ostream &ost, int a, int m, int verbose_level);
+	int gcd_with_key_in_latex(std::ostream &ost,
+			int a, int b, int f_key, int verbose_level);
+	int ny2(int x, int &x1);
+	int ny_p(int n, int p);
+	int sqrt_mod_simple(int a, int p);
+	void print_factorization(int nb_primes, int *primes, int *exponents);
+	void print_longfactorization(int nb_primes,
+		longinteger_object *primes, int *exponents);
+	int euler_function(int n);
+	void int_add_fractions(int at, int ab, int bt, int bb,
+		int &ct, int &cb, int verbose_level);
+	void int_mult_fractions(int at, int ab, int bt, int bb,
+		int &ct, int &cb, int verbose_level);
+};
 
 // #############################################################################
 // partial_derivative.cpp

@@ -67,6 +67,7 @@ void do_it(int q, int f_index, int index, int verbose_level)
 	int i, j, h, u, p, k, co_index, q1, relative_norm;
 	int *N1;
 	int *Adj;
+	number_theory_domain NT;
 	
 
 	F = NEW_OBJECT(finite_field);
@@ -83,7 +84,7 @@ void do_it(int q, int f_index, int index, int verbose_level)
 		cout << "the index has to divide the field degree" << endl;
 		exit(1);
 		}
-	q1 = i_power_j(p, co_index);
+	q1 = NT.i_power_j(p, co_index);
 
 	k = (q - 1) / (q1 - 1);
 

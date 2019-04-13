@@ -115,15 +115,16 @@ void do_it(int q, int k, int no,
 	const char *stab_order;
 	longinteger_object stab_go;
 	int order_of_plane;
+	number_theory_domain NT;
 
 
 	//n = Andre->n;
 	//n1 = n + 1;
 
-	order_of_plane = i_power_j(q, k);
+	order_of_plane = NT.i_power_j(q, k);
 	
 	f_semilinear = FALSE;
-	if (!is_prime(q)) {
+	if (!NT.is_prime(q)) {
 		f_semilinear = TRUE;
 		}
 

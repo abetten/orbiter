@@ -34,11 +34,12 @@ void spread::print_isomorphism_type(isomorph *Iso,
 	//action *AA; // the action induced on the set
 	int *pt_list;
 	int f, l, j, idx, pt;
+	number_theory_domain NT;
 
 	//AA = Orb.A;
 
 
-	factor_prime_power(q, p, h);
+	NT.factor_prime_power(q, p, h);
 	if (h > 1) {
 		f_elements_exponential = TRUE;
 		}
@@ -1271,7 +1272,8 @@ void spread::make_spread(int *data,
 	int sz = order + 1;
 	int M[8];
 	int h, i, h1, s, t, sq, tq, x, y, w, z, eta, exponent;
-	int q1 = i_power_j(F->p, (F->e >> 1));
+	number_theory_domain NT;
+	int q1 = NT.i_power_j(F->p, (F->e >> 1));
 
 	if (f_v) {
 		cout << "spread::make_spread q=" << q << " q1=" << q1 << endl;
@@ -1362,6 +1364,7 @@ void spread::make_spread_from_q_clan(int *data,
 	int h, h1, i, s, t, t2, t3, t4, t5, t7, t9;
 	int a_t = 0, b_t = 0, c_t = 0, x, y, w, z, r;
 	int three, five, nonsquare = 0, minus_nonsquare = 0, nonsquare_inv = 0;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread::make_spread_from_q_clan" << endl;
@@ -1418,7 +1421,7 @@ void spread::make_spread_from_q_clan(int *data,
 					cout << "KANTOR needs q to be odd" << endl;
 					exit(1);
 					}
-				if (is_prime(q)) {
+				if (NT.is_prime(q)) {
 					cout << "KANTOR needs q to be a prime power" << endl;
 					exit(1);
 					}
@@ -2266,6 +2269,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 	int *List;
 	grassmann *Gr;
 	longinteger_domain Dom;
+	number_theory_domain NT;
 
 
 
@@ -2420,7 +2424,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 
 		char fname[1000];
 		sprintf(fname, "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
-				i_power_j(q, k), h, u, orbit_length);
+				NT.i_power_j(q, k), h, u, orbit_length);
 		write_set_to_file(fname, data2, order, 0 /* verbose_level*/);
 		cnt++;
 

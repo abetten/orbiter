@@ -201,6 +201,7 @@ void knarr::points_and_lines(int verbose_level)
 	int f_v4 = (verbose_level >= 4);
 
 	int i, j, a, c, jj, h, hh, rk, u;
+	number_theory_domain NT;
 
 
 	if (f_v) {
@@ -218,7 +219,7 @@ void knarr::points_and_lines(int verbose_level)
 	// figure out type i) points:
 
 	q2 = q * q;
-	q5 = i_power_j(q, 5);
+	q5 = NT.i_power_j(q, 5);
 	type_i_points->init(P5->N_points, 0);
 	for (i = 0; i < q5; i++) {
 		AG_element_unrank(q, v5, 1, 5, i);

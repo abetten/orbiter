@@ -89,11 +89,12 @@ int main(int argc, const char **argv)
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
+	number_theory_domain NT;
 
 	q = Descr->get_q();
 	cout << "q=" << q << endl;
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {

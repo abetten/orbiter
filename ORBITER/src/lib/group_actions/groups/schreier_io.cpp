@@ -528,6 +528,7 @@ void schreier::print_tables(ostream &ost,
 {
     int i;
     int w; //  j, k;
+	number_theory_domain NT;
 
 #if 0
 	ost << gens.len << " generators:" << endl;
@@ -541,7 +542,7 @@ void schreier::print_tables(ostream &ost,
 		}
 	ost << endl;
 #endif
-	w = (int) int_log10(A->degree) + 1;
+	w = NT.int_log10(A->degree) + 1;
 	ost << "i : orbit[i] : orbit_inv[i] : prev[i] : label[i]";
 	if (f_with_cosetrep)
 		ost << " : coset_rep";
@@ -571,6 +572,7 @@ void schreier::print_tables_latex(ostream &ost,
 {
     int i;
     int w; //  j, k;
+	number_theory_domain NT;
 
 #if 0
 	ost << gens.len << " generators:" << endl;
@@ -584,7 +586,7 @@ void schreier::print_tables_latex(ostream &ost,
 		}
 	ost << endl;
 #endif
-	w = (int) int_log10(A->degree) + 1;
+	w = NT.int_log10(A->degree) + 1;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|c|c|" << endl;
 	if (f_with_cosetrep) {

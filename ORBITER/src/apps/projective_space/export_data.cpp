@@ -51,6 +51,7 @@ int main(int argc, char **argv)
 
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
+	number_theory_domain NT;
 
 
 	if (f_spread) {
@@ -61,7 +62,7 @@ int main(int argc, char **argv)
 		
 		sprintf(fname, "Spread_%d_%d.csv", q, k);
 		nb_reps = Spread_nb_reps(q, k);
-		width = i_power_j(q, k) + 1;
+		width = NT.i_power_j(q, k) + 1;
 		Table = NEW_int(nb_reps * width);
 		for (i = 0; i < nb_reps; i++) {
 			int sz;

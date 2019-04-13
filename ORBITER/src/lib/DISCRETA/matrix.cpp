@@ -3074,6 +3074,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 	domain *d;
 	int q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
 	discreta_base x;
+	number_theory_domain NT;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::PG_line_rank() no finite field domain" << endl;
@@ -3168,7 +3169,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		cout << "!s_ij(l, 1).is_zero()" << endl;
 		exit(1);
 		}
-	ql = orbiter::foundations::i_power_j(q, l);
+	ql = NT.i_power_j(q, l);
 	nb = nb_PG_elements(m - l - 2, q);
 	s = ql * ql * nb;
 	if (f_v) {
@@ -3197,7 +3198,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		cout << "a=" << a << endl;
 		}
 	for (l--; l >= 0; l--) {
-		ql = orbiter::foundations::i_power_j(q, l);
+		ql = NT.i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;
@@ -3208,6 +3209,7 @@ void matrix::PG_line_unrank(int a)
 {
 	domain *d;
 	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
+	number_theory_domain NT;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::PG_line_unrank no finite field domain" << endl;
@@ -3229,7 +3231,7 @@ void matrix::PG_line_unrank(int a)
 	// cout << "matrix::PG_line_unrank() a=" << a << endl;
 	l = 0;
 	while (l < m) {
-		ql = orbiter::foundations::i_power_j(q, l);
+		ql = NT.i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		// cout << "matrix::PG_line_unrank() a=" << a
@@ -3466,10 +3468,11 @@ void matrix::AG_point_unrank(int i0, int j0,
 int nb_PG_lines(int n, int q)
 {
 	int l, ql, nb, s, a = 0, m;
+	number_theory_domain NT;
 	
 	m = n + 1;
 	for (l = 0; l < m; l++) {
-		ql = orbiter::foundations::i_power_j(q, l);
+		ql = NT.i_power_j(q, l);
 		nb = nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;

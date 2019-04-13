@@ -119,7 +119,8 @@ void unipoly_domain::create_object_of_degree_with_coefficients(
 void unipoly_domain::create_object_by_rank(
 	unipoly_object &p, int rk)
 {
-	int len = int_logq(rk, gfq->q);
+	number_theory_domain NT;
+	int len = NT.int_logq(rk, gfq->q);
 	
 	if (f_factorring) {
 		if (len > factor_degree) {
@@ -2702,13 +2703,14 @@ void unipoly_domain::BCH_generator_polynomial(
 	int e, i, j, r;
 	longinteger_object q, b, m1, qm1;
 	longinteger_domain D;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "unipoly_domain::BCH_generator_polynomial "
 				"n=" << n << " designed_distance="
 				<< designed_distance << " p=" << p << endl;
 		}
-	e = order_mod_p(p, n);
+	e = NT.order_mod_p(p, n);
 	q.create(p);
 	m1.create(-1);
 	D.power_int(q, e);

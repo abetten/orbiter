@@ -374,6 +374,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	int i, a, m, p, b;
 	int f_elements_exponential = FALSE;
 	const char *symbol_for_print = "\\alpha";
+	number_theory_domain NT;
 
 	Mtx = NEW_int(k * k);
 
@@ -392,9 +393,9 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 
 	go.create(1);
-	a = i_power_j(q, k);
+	a = NT.i_power_j(q, k);
 	for (i = 0; i < k; i++) {
-		b = a - i_power_j(q, i);
+		b = a - NT.i_power_j(q, i);
 		f.create(b);
 		D.mult(go, f, g);
 		g.assign_to(go);
@@ -579,6 +580,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 	longinteger_domain D;
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "gl_classes::centralizer_order_Kung_basic" << endl;
@@ -606,8 +608,8 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 				for (j = 1; j <= b; j++) {
 					mue_i = Kung_mue_i(part, i, m);
 						// in combinatorics.C
-					aa = i_power_j(q, d * mue_i);
-					bb = i_power_j(q, d * (mue_i - j));
+					aa = NT.i_power_j(q, d * mue_i);
+					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;
 					e.create(cc);
 					D.mult(e, co1, f);
@@ -634,6 +636,7 @@ void gl_classes::centralizer_order_Kung(int *Select_polynomial,
 	longinteger_domain D;
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
+	number_theory_domain NT;
 
 	co.create(1);
 	for (a = nb_irred - 1; a >= 0; a--) { // for all polynomials: 
@@ -652,8 +655,8 @@ void gl_classes::centralizer_order_Kung(int *Select_polynomial,
 					}
 				for (j = 1; j <= b; j++) {
 					mue_i = Kung_mue_i(part, i, m);
-					aa = i_power_j(q, d * mue_i);
-					bb = i_power_j(q, d * (mue_i - j));
+					aa = NT.i_power_j(q, d * mue_i);
+					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;
 					e.create(cc);
 					D.mult(e, co1, f);
@@ -680,6 +683,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	int a, b;
 	longinteger_object go, co, f, g, cl, r, sum;
 	longinteger_domain D;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "gl_classes::make_classes "
@@ -700,9 +704,9 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 
 
 	go.create(1);
-	a = i_power_j(q, k);
+	a = NT.i_power_j(q, k);
 	for (i = 0; i < k; i++) {
-		b = a - i_power_j(q, i);
+		b = a - NT.i_power_j(q, i);
 		f.create(b);
 		D.mult(go, f, g);
 		g.assign_to(go);

@@ -78,18 +78,19 @@ void factor_cyclotomic(int n, int q, int d,
 	int field_degree, subgroup_index;
 	finite_field FQ;
 	finite_field Fq;
+	number_theory_domain NT;
 	
-	factor_prime_power(q, p, e);
+	NT.factor_prime_power(q, p, e);
 	if (f_v) {
 		cout << "factor_cyclotomic q=" << q << " p=" << q
 			<< " e=" << e << " n=" << n << endl;
 		}
-	m = order_mod_p(q, n);
+	m = NT.order_mod_p(q, n);
 	if (f_v) {
 		cout << "order mod q is m=" << m << endl;
 		}
 	field_degree = e * m;
-	Q = i_power_j(p, field_degree);
+	Q = NT.i_power_j(p, field_degree);
 	
 	
 	if (f_poly) {
@@ -173,7 +174,7 @@ void factor_cyclotomic(int n, int q, int d,
 	longinteger_object C, N, A, B, G, U, V;
 	
 	for (c = 0; c < n; c++) {
-		if (gcd_int(c, n) != 1)
+		if (NT.gcd_int(c, n) != 1)
 			continue;
 		C.create(c);
 		N.create(n);

@@ -385,12 +385,13 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 	int p, hh, f_semilinear;
 	int f_basis = TRUE;
 	int q = F->q;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "init_orthogonal epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
 		}
 
-	is_prime_power(q, p, hh);
+	NT.is_prime_power(q, p, hh);
 	if (hh > 1) {
 		f_semilinear = TRUE;
 		}

@@ -89,6 +89,7 @@ void blt_set_domain::init(orthogonal *O,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "blt_set_domain::init" << endl;
@@ -116,7 +117,7 @@ void blt_set_domain::init(orthogonal *O,
 
 
 	f_semilinear = TRUE;
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	if (f_v) {

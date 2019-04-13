@@ -474,6 +474,7 @@ void arc_lifting_from_classification_file(
 	finite_field *F;
 	int q;
 	vector_ge *nice_gens;
+	number_theory_domain NT;
 
 
 	if (f_v) {
@@ -498,7 +499,7 @@ void arc_lifting_from_classification_file(
 		cout << "arc_generator::init calling init_matrix_group" << endl;
 		}
 
-	if (is_prime(q)) {
+	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {
@@ -711,6 +712,7 @@ void do_arc_lifting(
 	int f_vv = (verbose_level >= 2);
 	int *Coord;
 	int i, j, a, d, pt, h;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "do_arc_lifting" << endl;
@@ -770,7 +772,7 @@ void do_arc_lifting(
 	longinteger_object go;
 	int f_semilinear;
 
-	if (is_prime(F->q)) {
+	if (NT.is_prime(F->q)) {
 		f_semilinear = FALSE;
 		}
 	else {

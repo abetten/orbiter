@@ -211,6 +211,7 @@ void finite_field::representing_matrix9_U(int *A,
 {
 	int beta_q, delta, gamma;
 	int r, q, q1,q2,tq, tq1; //, tq2;
+	number_theory_domain NT;
 	
 	r = e >> 1;
 	if (e != 2 * r) {
@@ -218,7 +219,7 @@ void finite_field::representing_matrix9_U(int *A,
 				"field does not have a quadratic subfield" << endl;
 		exit(1);
 		}
-	q = i_power_j(p, r);
+	q = NT.i_power_j(p, r);
 	q1 = q + 1;
 	q2 = q + 2;
 	tq = 2 * q;
@@ -329,6 +330,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	int gamma3, gamma4, gamma5, gamma6, gamma7, gamma8;
 	int *eta, *M1, *B1;
 	int *zeta, *M2, *B2;
+	number_theory_domain NT;
 	
 	
 	
@@ -340,7 +342,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 		}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
 	
-	q = i_power_j(p, r);
+	q = NT.i_power_j(p, r);
 	beta_2 = beta_trinomial(q, beta, 0, 0, 2);
 	beta_11 = beta_trinomial(q, beta, 0, 1, 1);
 	beta_22 = beta_trinomial(q, beta, 0, 2, 2);
@@ -520,6 +522,7 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 	int delta1, delta2;
 	int beta_21, beta_12, beta_123, beta_132;
 	int r, q, i, j;
+	number_theory_domain NT;
 	
 	
 	
@@ -531,7 +534,7 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 		}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
 	
-	q = i_power_j(p, r);
+	q = NT.i_power_j(p, r);
 	beta_21 = beta_trinomial(q, beta, 0, 2, 1);
 	beta_12 = beta_trinomial(q, beta, 0, 1, 2);
 	beta_123 = beta_trinomial(q, beta, 1, 2, 3);
@@ -750,6 +753,7 @@ A[7 * 8 + 7] = N3(a);
 void finite_field::representing_matrix8b(int *A, int beta)
 {
 	int r, q, delta, omega, i;
+	number_theory_domain NT;
 	
 	r = e / 3;
 	if (e != 3 * r) {
@@ -757,7 +761,7 @@ void finite_field::representing_matrix8b(int *A, int beta)
 				"field does not have a cubic subfield" << endl;
 		exit(1);
 		}
-	q = i_power_j(p, r);
+	q = NT.i_power_j(p, r);
 
 	delta = inverse(add(T3(power(beta, 2*q+1)),negate(T3(power(beta,q+2)))));
 	omega = inverse(add(T3(power(beta,q*q+2*q+3)),negate(T3(power(beta,q*q+3*q+2)))));

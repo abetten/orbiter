@@ -93,6 +93,7 @@ void count(int n, int k, finite_field *F, int verbose_level)
 	int m, N, r;
 	int *M;
 	int *Rk;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "count" << endl;
@@ -100,7 +101,7 @@ void count(int n, int k, finite_field *F, int verbose_level)
 	
 	m = MAXIMUM(k, n);
 	q = F->q;
-	N = i_power_j(q, kn);
+	N = NT.i_power_j(q, kn);
 	M = NEW_int(kn);
 	Rk = NEW_int(m + 1);
 	int_vec_zero(Rk, m + 1);

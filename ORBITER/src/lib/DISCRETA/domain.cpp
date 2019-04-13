@@ -57,15 +57,17 @@ domain_type domain::type()
 
 int domain::order_int()
 {
+	number_theory_domain NT;
+
 	if (the_type == GFp)
 		return the_prime.s_i_i();
 	if (the_type == GFq) {
 		int q = the_sub_domain->order_int();
 		int f = the_factor_poly->degree();
-		int Q = i_power_j(q, f);
+		int Q = NT.i_power_j(q, f);
 		return Q;
 		}
-	cout << "domain::order_int() no finite field domain" << endl;
+	cout << "domain::order_int no finite field domain" << endl;
 	exit(1);
 }
 
@@ -77,7 +79,7 @@ int domain::order_subfield_int()
 		int q = the_sub_domain->order_int();
 		return q;
 		}
-	cout << "domain::order_subfield_int() no finite field domain" << endl;
+	cout << "domain::order_subfield_int no finite field domain" << endl;
 	exit(1);
 }
 
@@ -225,6 +227,7 @@ int finite_field_domain_primitive_root()
 {
 	domain *d;
 	int q;
+	number_theory_domain NT;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "finite_field_domain_primitive_root() no finite field domain" << endl;
@@ -232,7 +235,7 @@ int finite_field_domain_primitive_root()
 		}
 	q = finite_field_domain_order_int(d);
 	if (is_GFp_domain(d)) {
-		return primitive_root(q, FALSE /* f_v */);
+		return NT.primitive_root(q, FALSE /* f_v */);
 		}
 	else {
 		integer a;
@@ -261,6 +264,7 @@ void finite_field_domain_base_over_subfield(Vector & b)
 {
 	domain *d, *sd;
 	int q, f, a, i;
+	number_theory_domain NT;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "finite_field_domain_base_over_subfield "
@@ -280,7 +284,7 @@ void finite_field_domain_base_over_subfield(Vector & b)
 		q = sd->order_int();
 		b.m_l(f);
 		for (i = 0; i < f; i++) {
-			a = i_power_j(q, i);
+			a = NT.i_power_j(q, i);
 			b.m_ii(i, a);
 			}
 		}	
@@ -323,13 +327,14 @@ domain *allocate_finite_field_domain(int q, int f_v)
 {
 	FF_MEMORY *ffm = new FF_MEMORY;
 	int p, f;
+	number_theory_domain NT;
 	
 	if (nb_ffm >= MAX_FF_DOMAIN) {
 		cout << "allocate_finite_field_domain() too many finite field domains" << endl;
 		exit(1);
 		}
 	ffm->q = q;
-	factor_prime_power(q, p, f);
+	NT.factor_prime_power(q, p, f);
 	ffm->p = p;
 	ffm->f = f;
 	if (f_v) {

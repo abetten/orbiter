@@ -879,6 +879,7 @@ int action::element_order_verbose(void *elt, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int *have_seen;
 	int l, l1, first, next, len, g, n, order = 1;
+	number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "action::element_order_verbose" << endl;
@@ -927,7 +928,7 @@ int action::element_order_verbose(void *elt, int verbose_level)
 		if (len == 1) {
 			continue;
 			}
-		g = gcd_int(len, order);
+		g = NT.gcd_int(len, order);
 		order *= len / g;
 		}
 	FREE_int(have_seen);
@@ -945,6 +946,7 @@ int action::element_order_if_divisor_of(void *elt, int o)
 {
 	int *have_seen;
 	int l, l1, first, next, len, g, n, order = 1;
+	number_theory_domain NT;
 	
 	n = degree;
 	have_seen = NEW_int(n);
@@ -987,7 +989,7 @@ int action::element_order_if_divisor_of(void *elt, int o)
 			FREE_int(have_seen);
 			return 0;
 			}
-		g = gcd_int(len, order);
+		g = NT.gcd_int(len, order);
 		order *= len / g;
 		}
 	FREE_int(have_seen);

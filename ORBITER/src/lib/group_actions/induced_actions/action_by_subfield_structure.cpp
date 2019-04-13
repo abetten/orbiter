@@ -71,6 +71,7 @@ void action_by_subfield_structure::init(action &A,
 	int p1, h1;
 	int p, h;
 	int q;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "action_by_subfield_structure::init" << endl;
@@ -90,8 +91,8 @@ void action_by_subfield_structure::init(action &A,
 	Q = FQ->q;
 	action_by_subfield_structure::q = q;
 
-	is_prime_power(q, p1, h1);
-	is_prime_power(Q, p, h);
+	NT.is_prime_power(q, p1, h1);
+	NT.is_prime_power(Q, p, h);
 	if (p1 != p) {
 		cout << "action_by_subfield_structure::init "
 				"different characteristics of the fields" << endl;

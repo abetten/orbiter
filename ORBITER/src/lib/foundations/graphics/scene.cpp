@@ -2357,11 +2357,12 @@ void scene::hypercube(int n, double rad_desired)
 	double x[3];
 	double t, dt;
 	numerics Num;
+	number_theory_domain NT;
 
 	int first_pt_idx;
 
 	first_pt_idx = nb_points;
-	N = i_power_j(2, n);
+	N = NT.i_power_j(2, n);
 
 	Basis = new double [n * 3];
 	v = NEW_int(n);

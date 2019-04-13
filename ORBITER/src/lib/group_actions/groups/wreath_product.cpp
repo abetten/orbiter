@@ -136,6 +136,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product" << endl;
@@ -167,12 +168,12 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	degree_of_matrix_group = M->degree;
 	dimension_of_matrix_group = M->n;
 	dimension_of_tensor_action =
-			i_power_j(dimension_of_matrix_group, nb_factors);
+			NT.i_power_j(dimension_of_matrix_group, nb_factors);
 	low_level_point_size = dimension_of_tensor_action;
 	make_element_size = nb_factors + nb_factors *
 			dimension_of_matrix_group * dimension_of_matrix_group;
 	degree_of_tensor_action =
-			(i_power_j_safe(q, dimension_of_tensor_action) - 1) / (q - 1);
+			(NT.i_power_j_safe(q, dimension_of_tensor_action) - 1) / (q - 1);
 		// warning: int overflow possible
 	degree_overall = nb_factors + nb_factors *
 			degree_of_matrix_group + degree_of_tensor_action;
@@ -205,7 +206,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	}
 	mtx_size = NEW_int(nb_factors);
 	for (i = 0; i < nb_factors; i++) {
-		mtx_size[i] = i_power_j(dimension_of_matrix_group, i + 1);
+		mtx_size[i] = NT.i_power_j(dimension_of_matrix_group, i + 1);
 	}
 	index_set1 = NEW_int(nb_factors);
 	index_set2 = NEW_int(nb_factors);
