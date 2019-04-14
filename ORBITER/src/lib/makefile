@@ -45,7 +45,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/generators_symplectic_group.o \
 		foundations/algebra_and_number_theory/gl_class_rep.o \
 		foundations/algebra_and_number_theory/gl_classes.o \
-		foundations/algebra_and_number_theory/group_generators.o \
+		foundations/algebra_and_number_theory/group_generators_domain.o \
 		foundations/algebra_and_number_theory/heisenberg.o \
 		foundations/algebra_and_number_theory/homogeneous_polynomial_domain.o \
 		foundations/algebra_and_number_theory/longinteger_domain.o \

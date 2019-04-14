@@ -124,10 +124,11 @@ void do_D1(int n, int d, int verbose_level)
 	int nb_G;
 	int *perms;
 	vector_ge *gens_G;
+	group_generators_domain GG;
 
 
 
-	generators_dihedral_group(n, nb_G, perms, verbose_level);
+	GG.generators_dihedral_group(n, nb_G, perms, verbose_level);
 
 
 	gens_G = NEW_OBJECT(vector_ge);

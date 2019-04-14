@@ -1368,46 +1368,81 @@ public:
 };
 
 // #############################################################################
-// group_generators.cpp
+// group_generators_domain.cpp
 // #############################################################################
 
+//! generators for various classes of groups
 
-void generators_symmetric_group(int deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_cyclic_group(int deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_dihedral_group(int deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_dihedral_involution(int deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_identity_group(int deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_Hall_reflection(int nb_pairs,
-		int &nb_perms, int *&perms, int &degree,
-		int verbose_level);
-void generators_Hall_reflection_normalizer_group(int nb_pairs,
-		int &nb_perms, int *&perms, int &degree,
-		int verbose_level);
-void order_Hall_reflection_normalizer_factorized(int nb_pairs,
+class group_generators_domain {
+public:
+	group_generators_domain();
+	~group_generators_domain();
+	void generators_symmetric_group(int deg,
+		int &nb_perms, int *&perms, int verbose_level);
+	void generators_cyclic_group(int deg,
+		int &nb_perms, int *&perms, int verbose_level);
+	void generators_dihedral_group(int deg,
+		int &nb_perms, int *&perms, int verbose_level);
+	void generators_dihedral_involution(int deg,
+		int &nb_perms, int *&perms, int verbose_level);
+	void generators_identity_group(int deg,
+		int &nb_perms, int *&perms, int verbose_level);
+	void generators_Hall_reflection(int nb_pairs,
+			int &nb_perms, int *&perms, int &degree,
+			int verbose_level);
+	void generators_Hall_reflection_normalizer_group(int nb_pairs,
+			int &nb_perms, int *&perms, int &degree,
+			int verbose_level);
+	void order_Hall_reflection_normalizer_factorized(int nb_pairs,
+			int *&factors, int &nb_factors);
+	void order_Bn_group_factorized(int n,
 		int *&factors, int &nb_factors);
-void order_Bn_group_factorized(int n, 
-	int *&factors, int &nb_factors);
-void generators_Bn_group(int n, int &deg, 
-	int &nb_perms, int *&perms, int verbose_level);
-void generators_direct_product(int deg1, int nb_perms1, int *perms1, 
-	int deg2, int nb_perms2, int *perms2, 
-	int &deg3, int &nb_perms3, int *&perms3, 
-	int verbose_levels);
-void generators_concatenate(int deg1, int nb_perms1, int *perms1, 
-	int deg2, int nb_perms2, int *perms2, 
-	int &deg3, int &nb_perms3, int *&perms3, 
-	int verbose_level);
-int matrix_group_base_len_projective_group(int n, int q, 
-	int f_semilinear, int verbose_level);
-int matrix_group_base_len_affine_group(int n, int q, 
-	int f_semilinear, int verbose_level);
-int matrix_group_base_len_general_linear_group(int n, int q, 
-	int f_semilinear, int verbose_level);
+	void generators_Bn_group(int n, int &deg,
+		int &nb_perms, int *&perms, int verbose_level);
+	void generators_direct_product(int deg1, int nb_perms1, int *perms1,
+		int deg2, int nb_perms2, int *perms2,
+		int &deg3, int &nb_perms3, int *&perms3,
+		int verbose_levels);
+	void generators_concatenate(int deg1, int nb_perms1, int *perms1,
+		int deg2, int nb_perms2, int *perms2,
+		int &deg3, int &nb_perms3, int *&perms3,
+		int verbose_level);
+	int matrix_group_base_len_projective_group(int n, int q,
+		int f_semilinear, int verbose_level);
+	int matrix_group_base_len_affine_group(int n, int q,
+		int f_semilinear, int verbose_level);
+	int matrix_group_base_len_general_linear_group(int n, int q,
+		int f_semilinear, int verbose_level);
+	void order_POmega_epsilon(int epsilon, int m, int q,
+		longinteger_object &o, int verbose_level);
+	void order_PO_epsilon(int f_semilinear, int epsilon, int k, int q,
+		longinteger_object &go, int verbose_level);
+	// k is projective dimension
+	void order_PO(int epsilon, int m, int q,
+		longinteger_object &o,
+		int verbose_level);
+	void order_Pomega(int epsilon, int k, int q,
+		longinteger_object &go,
+		int verbose_level);
+	void order_PO_plus(int m, int q,
+		longinteger_object &o, int verbose_level);
+	void order_PO_minus(int m, int q,
+		longinteger_object &o, int verbose_level);
+	// m = Witt index, the dimension is n = 2m+2
+	void order_PO_parabolic(int m, int q,
+		longinteger_object &o, int verbose_level);
+	void order_Pomega_plus(int m, int q,
+		longinteger_object &o, int verbose_level);
+	// m = Witt index, the dimension is n = 2m
+	void order_Pomega_minus(int m, int q,
+		longinteger_object &o, int verbose_level);
+	// m = half the dimension,
+	// the dimension is n = 2m, the Witt index is m - 1
+	void order_Pomega_parabolic(int m, int q, longinteger_object &o,
+		int verbose_level);
+	// m = Witt index, the dimension is n = 2m + 1
+	int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
+};
 
 
 // #############################################################################
