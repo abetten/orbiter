@@ -83,7 +83,6 @@ MODULES= \
 		foundations/geometry/blt_set_invariants.o \
 		foundations/geometry/buekenhout_metz.o \
 		foundations/geometry/cubic_curve.o \
-		foundations/geometry/data.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \
 		foundations/geometry/eckardt_point_info.o \
@@ -99,6 +98,7 @@ MODULES= \
 		foundations/geometry/incidence_structure.o \
 		foundations/geometry/klein_correspondence.o \
 		foundations/geometry/knarr.o \
+		foundations/geometry/knowledge_base.o \
 		foundations/geometry/object_in_projective_space.o \
 		foundations/geometry/orthogonal.o \
 		foundations/geometry/orthogonal_points.o \

@@ -2578,13 +2578,14 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 	const char *ascii_target_go;
 	longinteger_object target_go;
 	int i;
+	knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
 				"stabilizer_of_the_cubic_surface before "
 				"cubic_surface_stab_gens" << endl;
 		}
-	cubic_surface_stab_gens(F->q, iso,
+	K.cubic_surface_stab_gens(F->q, iso,
 			data, nb_gens, data_size, ascii_target_go);
 		// in GALOIS/data.C
 
@@ -2732,12 +2733,13 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	const char *ascii_target_go;
 	longinteger_object target_go;
 	int i;
+	knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::BLT_set_from_"
 				"catalogue_stabilizer before BLT_stab_gens" << endl;
 		}
-	BLT_stab_gens(F->q, iso, data, nb_gens, data_size, ascii_target_go);
+	K.BLT_stab_gens(F->q, iso, data, nb_gens, data_size, ascii_target_go);
 		// in GALOIS/data.C
 	if (f_v) {
 		cout << "strong_generators::BLT_set_from_"
@@ -2816,12 +2818,13 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	const char *ascii_target_go;
 	longinteger_object target_go;
 	int i;
+	knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_"
 				"spread_from_catalogue before BLT_stab_gens" << endl;
 		}
-	Spread_stab_gens(q, k, iso, data, nb_gens, data_size, ascii_target_go);
+	K.Spread_stab_gens(q, k, iso, data, nb_gens, data_size, ascii_target_go);
 		// in GALOIS/data.C
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_"

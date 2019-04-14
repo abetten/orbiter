@@ -131,6 +131,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, a;
+	knowledge_base K;
 	
 	knarr::F = F;
 	knarr::q = F->q;
@@ -166,7 +167,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 		cout << "Number of planes in P5 = " << six_choose_three_q_int << endl;
 		}
 
-	BLT = BLT_representative(q, BLT_no);
+	BLT = K.BLT_representative(q, BLT_no);
 	BLT_line_idx = NEW_int(q + 1);
 	Basis = NEW_int(4 * 6);
 	Basis2 = NEW_int(4 * 6);

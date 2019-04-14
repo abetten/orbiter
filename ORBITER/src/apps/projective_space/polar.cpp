@@ -386,6 +386,7 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 	int f_basis = TRUE;
 	int q = F->q;
 	number_theory_domain NT;
+	knowledge_base K;
 
 	if (f_v) {
 		cout << "init_orthogonal epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
@@ -399,7 +400,7 @@ void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose
 		f_semilinear = FALSE;
 		}
 
-	override_poly = override_polynomial_subfield(q);
+	override_poly = K.override_polynomial_subfield(q);
 	if (f_v && override_poly) {
 		cout << "override_poly=" << override_poly << endl;
 		}

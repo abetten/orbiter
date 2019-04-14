@@ -591,6 +591,7 @@ void set_and_stabilizer::init_surface(surface_domain *Surf,
 	int *Lines;
 	//int *Lines_wedge;
 	//int double_six[12];
+	knowledge_base K;
 	
 #if 0
 	starter_configuration = cubic_surface_single_six(q, no);
@@ -624,7 +625,7 @@ void set_and_stabilizer::init_surface(surface_domain *Surf,
 
 #else
 
-	Lines = cubic_surface_Lines(q, no);
+	Lines = K.cubic_surface_Lines(q, no);
 
 	if (FALSE) {
 		cout << "The lines are: ";
@@ -634,7 +635,7 @@ void set_and_stabilizer::init_surface(surface_domain *Surf,
 #endif
 
 
-	cubic_surface_stab_gens(q, no,
+	K.cubic_surface_stab_gens(q, no,
 			data, nb_gens, data_size, stab_order);
 
 

@@ -2818,10 +2818,11 @@ void finite_field::create_BLT_from_database(int f_embedded,
 	int d = 5;
 	int *BLT;
 	int *v;
+	knowledge_base K;
 
 	nb_pts = q + 1;
 
-	BLT = BLT_representative(q, BLT_k);
+	BLT = K.BLT_representative(q, BLT_k);
 
 	v = NEW_int(d);
 	Pts = NEW_int(nb_pts);

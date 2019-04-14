@@ -14,7 +14,6 @@ MODULES = \
 	blt_set_invariants.o \
 	buekenhout_metz.o \
 	cubic_curve.o \
-	data.o \
 	decomposition.o \
 	desarguesian_spread.o \
 	eckardt_point_info.o \
@@ -30,6 +29,7 @@ MODULES = \
 	incidence_structure.o \
 	klein_correspondence.o \
 	knarr.o \
+	knowledge_base.o \
 	object_in_projective_space.o \
 	orthogonal.o \
 	orthogonal_points.o \

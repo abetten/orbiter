@@ -116,6 +116,7 @@ void do_it(int q, int k, int no,
 	longinteger_object stab_go;
 	int order_of_plane;
 	number_theory_domain NT;
+	knowledge_base K;
 
 
 	//n = Andre->n;
@@ -133,7 +134,7 @@ void do_it(int q, int k, int no,
 	int sz;
 	vector_ge *nice_gens;
 
-	spread_elements_numeric = Spread_representative(q, k, no, sz);
+	spread_elements_numeric = K.Spread_representative(q, k, no, sz);
 
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);

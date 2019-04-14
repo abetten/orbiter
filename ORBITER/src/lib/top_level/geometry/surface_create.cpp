@@ -255,14 +255,15 @@ void surface_create::init2(int verbose_level)
 		int *p_lines;
 		int nb_iso;
 		//int nb_E = 0;
+		knowledge_base K;
 
-		nb_iso = cubic_surface_nb_reps(q);
+		nb_iso = K.cubic_surface_nb_reps(q);
 		if (Descr->iso >= nb_iso) {
 			cout << "surface_create::init2 iso >= nb_iso, "
 					"this cubic surface does not exist" << endl;
 			exit(1);
 			}
-		p_lines = cubic_surface_Lines(q, Descr->iso);
+		p_lines = K.cubic_surface_Lines(q, Descr->iso);
 		int_vec_copy(p_lines, Lines, 27);
 		//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
 

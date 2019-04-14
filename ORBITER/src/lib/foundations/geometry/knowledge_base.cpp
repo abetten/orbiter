@@ -1,4 +1,4 @@
-// data.cpp
+// knowldege_base.cpp
 //
 // Anton Betten
 //
@@ -70,13 +70,24 @@ namespace foundations {
 #include "./DATA/planes_16.cpp"
 
 
+knowledge_base::knowledge_base()
+{
+
+}
+
+knowledge_base::~knowledge_base()
+{
+
+}
+
+
 // #############################################################################
 // Cubic surfaces:
 // #############################################################################
 
 
 
-int cubic_surface_nb_reps(int q)
+int knowledge_base::cubic_surface_nb_reps(int q)
 {
 	int nb;
 
@@ -184,7 +195,7 @@ int cubic_surface_nb_reps(int q)
 	return nb;
 }
 
-int *cubic_surface_representative(int q, int i)
+int *knowledge_base::cubic_surface_representative(int q, int i)
 // i starts from 0
 {
 	int *p, nb, sz;
@@ -367,7 +378,7 @@ int *cubic_surface_representative(int q, int i)
 	return p;
 }
 
-void cubic_surface_stab_gens(int q, int i,
+void knowledge_base::cubic_surface_stab_gens(int q, int i,
 		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
 	int *Reps;
@@ -650,7 +661,7 @@ void cubic_surface_stab_gens(int q, int i,
 	data = Reps + f * make_element_size;
 }
 
-int cubic_surface_nb_Eckardt_points(int q, int i)
+int knowledge_base::cubic_surface_nb_Eckardt_points(int q, int i)
 // i starts from 0
 {
 	int *p, nb; //, sz;
@@ -1017,7 +1028,7 @@ int *cubic_surface_single_six(int q, int i)
 }
 #endif
 
-int *cubic_surface_Lines(int q, int i)
+int *knowledge_base::cubic_surface_Lines(int q, int i)
 // i starts from 0
 {
 	int *p, nb; //, sz;
@@ -1174,7 +1185,7 @@ int *cubic_surface_Lines(int q, int i)
 // #############################################################################
 
 
-int hyperoval_nb_reps(int q)
+int knowledge_base::hyperoval_nb_reps(int q)
 {
 	int nb;
 
@@ -1195,7 +1206,7 @@ int hyperoval_nb_reps(int q)
 	return nb;
 }
 
-int *hyperoval_representative(int q, int i)
+int *knowledge_base::hyperoval_representative(int q, int i)
 // i starts from 0
 {
 	int *p, nb, sz;
@@ -1233,7 +1244,7 @@ int *hyperoval_representative(int q, int i)
 	return p;
 }
 
-void hyperoval_gens(int q, int i,
+void knowledge_base::hyperoval_gens(int q, int i,
 		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
 	int *Reps;
@@ -1294,7 +1305,7 @@ void hyperoval_gens(int q, int i,
 
 
 
-int DH_nb_reps(int k, int n)
+int knowledge_base::DH_nb_reps(int k, int n)
 {
 	int nb;
 
@@ -1312,7 +1323,7 @@ int DH_nb_reps(int k, int n)
 	return nb;
 }
 
-int *DH_representative(int k, int n, int i)
+int *knowledge_base::DH_representative(int k, int n, int i)
 // i starts from 0
 {
 	int *p, nb, sz;
@@ -1345,7 +1356,7 @@ int *DH_representative(int k, int n, int i)
 	return p;
 }
 
-void DH_stab_gens(int k, int n, int i,
+void knowledge_base::DH_stab_gens(int k, int n, int i,
 		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
 	int *Reps;
@@ -1399,7 +1410,7 @@ void DH_stab_gens(int k, int n, int i,
 
 
 
-int Spread_nb_reps(int q, int k)
+int knowledge_base::Spread_nb_reps(int q, int k)
 {
 	int nb;
 
@@ -1430,7 +1441,7 @@ int Spread_nb_reps(int q, int k)
 }
 
 
-int *Spread_representative(int q, int k, int i, int &sz)
+int *knowledge_base::Spread_representative(int q, int k, int i, int &sz)
 // i starts from 0
 {
 	int *p, nb;
@@ -1484,7 +1495,7 @@ int *Spread_representative(int q, int k, int i, int &sz)
 	return p;
 }
 
-void Spread_stab_gens(int q, int k, int i,
+void knowledge_base::Spread_stab_gens(int q, int k, int i,
 		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
 	int *Reps;
@@ -1567,7 +1578,7 @@ void Spread_stab_gens(int q, int k, int i,
 
 
 
-int BLT_nb_reps(int q)
+int knowledge_base::BLT_nb_reps(int q)
 {
 	int nb;
 
@@ -1651,7 +1662,7 @@ int BLT_nb_reps(int q)
 	return nb;
 }
 
-int *BLT_representative(int q, int no)
+int *knowledge_base::BLT_representative(int q, int no)
 // i starts from 0
 {
 	int *p, nb, sz;
@@ -1795,7 +1806,7 @@ int *BLT_representative(int q, int no)
 	return p;
 }
 
-void BLT_stab_gens(int q, int no,
+void knowledge_base::BLT_stab_gens(int q, int no,
 		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
 	int *Reps;
@@ -2017,7 +2028,7 @@ void BLT_stab_gens(int q, int no,
 
 
 
-const char *override_polynomial_subfield(int q)
+const char *knowledge_base::override_polynomial_subfield(int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
@@ -2079,7 +2090,7 @@ const char *override_polynomial_subfield(int q)
 	return override_poly;
 }
 
-const char *override_polynomial_extension_field(int q)
+const char *knowledge_base::override_polynomial_extension_field(int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
@@ -2215,7 +2226,8 @@ const char *override_polynomial_extension_field(int q)
 // planes
 // #############################################################################
 
-void get_projective_plane_list_of_lines(int *&list_of_lines,
+void knowledge_base::get_projective_plane_list_of_lines(
+		int *&list_of_lines,
 		int &order, int &nb_lines, int &line_size,
 		const char *label, int verbose_level)
 {
@@ -2223,7 +2235,7 @@ void get_projective_plane_list_of_lines(int *&list_of_lines,
 	int i;
 
 	if (f_v) {
-		cout << "get_projective_plane_list_of_lines" << endl;
+		cout << "knowledge_base::get_projective_plane_list_of_lines" << endl;
 	}
 	if (strcmp(label, "Mathon_16") == 0) {
 		order = 16;
@@ -2325,11 +2337,11 @@ void get_projective_plane_list_of_lines(int *&list_of_lines,
 		}
 	}
 	else {
-		cout << "get_projective_plane_list_of_lines unrecognized type" << endl;
+		cout << "knowledge_base::get_projective_plane_list_of_lines unrecognized type" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "get_projective_plane_list_of_lines done" << endl;
+		cout << "knowledge_base::get_projective_plane_list_of_lines done" << endl;
 	}
 }
 

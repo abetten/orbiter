@@ -142,8 +142,9 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 			cout << "BLT_set_create::init BLT set from catalogue" << endl;
 			}
 		int nb_iso;
+		knowledge_base K;
 
-		nb_iso = BLT_nb_reps(q);
+		nb_iso = K.BLT_nb_reps(q);
 		if (Descr->iso >= nb_iso) {
 			cout << "BLT_set_create::init iso >= nb_iso, "
 					"this BLT set does not exist" << endl;
@@ -151,7 +152,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 			}
 
 		set = NEW_int(q + 1);
-		int_vec_copy(BLT_representative(q, Descr->iso), set, q + 1);
+		int_vec_copy(K.BLT_representative(q, Descr->iso), set, q + 1);
 
 		Sg = NEW_OBJECT(strong_generators);
 

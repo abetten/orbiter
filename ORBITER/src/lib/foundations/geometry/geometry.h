@@ -424,50 +424,6 @@ public:
 
 
 // #############################################################################
-// data.C:
-// #############################################################################
-
-// i starts from 0 in all of below:
-
-
-int cubic_surface_nb_reps(int q);
-int *cubic_surface_representative(int q, int i);
-void cubic_surface_stab_gens(int q, int i, int *&data, int &nb_gens, 
-	int &data_size, const char *&stab_order);
-int cubic_surface_nb_Eckardt_points(int q, int i);
-//int *cubic_surface_single_six(int q, int i);
-int *cubic_surface_Lines(int q, int i);
-
-int hyperoval_nb_reps(int q);
-int *hyperoval_representative(int q, int i);
-void hyperoval_gens(int q, int i, int *&data, int &nb_gens, 
-	int &data_size, const char *&stab_order);
-
-
-int DH_nb_reps(int k, int n);
-int *DH_representative(int k, int n, int i);
-void DH_stab_gens(int k, int n, int i, int *&data, int &nb_gens, 
-	int &data_size, const char *&stab_order);
-
-int Spread_nb_reps(int q, int k);
-int *Spread_representative(int q, int k, int i, int &sz);
-void Spread_stab_gens(int q, int k, int i, int *&data, int &nb_gens, 
-	int &data_size, const char *&stab_order);
-
-int BLT_nb_reps(int q);
-int *BLT_representative(int q, int no);
-void BLT_stab_gens(int q, int no, int *&data, int &nb_gens, 
-	int &data_size, const char *&stab_order);
-
-void get_projective_plane_list_of_lines(int *&list_of_lines,
-		int &order, int &nb_lines, int &line_size,
-		const char *label, int verbose_level);
-
-
-const char *override_polynomial_subfield(int q);
-const char *override_polynomial_extension_field(int q);
-
-// #############################################################################
 // decomposition.C:
 // #############################################################################
 
@@ -1382,6 +1338,57 @@ public:
 		int &nb_lines, int verbose_level);
 	
 };
+
+// #############################################################################
+// knowledge_base.cpp:
+// #############################################################################
+
+// i starts from 0 in all of below:
+
+
+class knowledge_base {
+public:
+	knowledge_base();
+	~knowledge_base();
+	int cubic_surface_nb_reps(int q);
+	int *cubic_surface_representative(int q, int i);
+	void cubic_surface_stab_gens(int q, int i, int *&data, int &nb_gens,
+		int &data_size, const char *&stab_order);
+	int cubic_surface_nb_Eckardt_points(int q, int i);
+	//int *cubic_surface_single_six(int q, int i);
+	int *cubic_surface_Lines(int q, int i);
+
+	int hyperoval_nb_reps(int q);
+	int *hyperoval_representative(int q, int i);
+	void hyperoval_gens(int q, int i, int *&data, int &nb_gens,
+		int &data_size, const char *&stab_order);
+
+
+	int DH_nb_reps(int k, int n);
+	int *DH_representative(int k, int n, int i);
+	void DH_stab_gens(int k, int n, int i, int *&data, int &nb_gens,
+		int &data_size, const char *&stab_order);
+
+	int Spread_nb_reps(int q, int k);
+	int *Spread_representative(int q, int k, int i, int &sz);
+	void Spread_stab_gens(int q, int k, int i, int *&data, int &nb_gens,
+		int &data_size, const char *&stab_order);
+
+	int BLT_nb_reps(int q);
+	int *BLT_representative(int q, int no);
+	void BLT_stab_gens(int q, int no, int *&data, int &nb_gens,
+		int &data_size, const char *&stab_order);
+
+	const char *override_polynomial_subfield(int q);
+	const char *override_polynomial_extension_field(int q);
+
+	void get_projective_plane_list_of_lines(int *&list_of_lines,
+			int &order, int &nb_lines, int &line_size,
+			const char *label, int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // object_in_projective_space.C:
