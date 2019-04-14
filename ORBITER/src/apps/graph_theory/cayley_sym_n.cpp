@@ -142,6 +142,7 @@ void do_it(int n, int f_star, int f_coxeter,
 	cout << "Created group Sym(" << deg << ") of size " << goi << endl;
 
 	strong_generators *SG;
+	group_generators_domain GG;
 
 
 	if (f_burnt_pancake) {
@@ -157,12 +158,12 @@ void do_it(int n, int f_star, int f_coxeter,
 		
 		G_gens = NEW_OBJECT(vector_ge);
 		
-		order_Bn_group_factorized(n, factors, nb_factors);
+		GG.order_Bn_group_factorized(n, factors, nb_factors);
 
 		D.multiply_up(target_go, factors, nb_factors);
 		cout << "target group order = " << target_go << endl;
 
-		generators_Bn_group(n, deg1, nb_perms, perms, verbose_level);
+		GG.generators_Bn_group(n, deg1, nb_perms, perms, verbose_level);
 		
 		G_gens->init(A);
 		G_gens->allocate(nb_perms);

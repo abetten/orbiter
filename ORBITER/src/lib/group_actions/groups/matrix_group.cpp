@@ -580,6 +580,7 @@ void matrix_group::init_base_projective(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
 	int q = GFq->q;
+	group_generators_domain GG;
 	
 	if (f_v) {
 		cout << "matrix_group::init_base_projective "
@@ -590,7 +591,7 @@ void matrix_group::init_base_projective(
 		cout << "matrix_group::init_base_projective "
 				"degree=" << degree << endl;
 		}
-	A->base_len = matrix_group_base_len_projective_group(
+	A->base_len = GG.matrix_group_base_len_projective_group(
 			n, q, f_semilinear, verbose_level - 1);
 	if (f_vv) {
 		cout << "matrix_group::init_base_projective "
@@ -621,6 +622,7 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
 	int q = GFq->q;
+	group_generators_domain GG;
 	
 	if (f_v) {
 		cout << "matrix_group::init_base_affine "
@@ -631,7 +633,7 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 		cout << "matrix_group::init_base_affine degree="
 				<< degree << endl;
 		}
-	A->base_len = matrix_group_base_len_affine_group(
+	A->base_len = GG.matrix_group_base_len_affine_group(
 			n, q, f_semilinear, verbose_level - 1);
 	if (f_vv) {
 		cout << "matrix_group::init_base_affine base_len="
@@ -662,6 +664,7 @@ void matrix_group::init_base_general_linear(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
 	int q = GFq->q;
+	group_generators_domain GG;
 	
 	if (f_v) {
 		cout << "matrix_group::init_base_general_linear "
@@ -672,7 +675,7 @@ void matrix_group::init_base_general_linear(
 		cout << "matrix_group::init_base_general_linear "
 				"degree=" << degree << endl;
 		}
-	A->base_len = matrix_group_base_len_general_linear_group(
+	A->base_len = GG.matrix_group_base_len_general_linear_group(
 			n, q, f_semilinear, verbose_level - 1);
 	// in GALOIS/group_generators.C
 	if (f_vv) {
@@ -2091,21 +2094,22 @@ int matrix_group::base_len(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int base_len;
+	group_generators_domain GG;
 
 
 	if (f_v) {
 		cout << "matrix_group::base_len" << endl;
 		}
 	if (f_projective) {
-		base_len = matrix_group_base_len_projective_group(
+		base_len = GG.matrix_group_base_len_projective_group(
 					n, GFq->q,
 					f_semilinear, verbose_level - 1);
 	} else if (f_affine) {
-		base_len = matrix_group_base_len_affine_group(
+		base_len = GG.matrix_group_base_len_affine_group(
 					n, GFq->q,
 					f_semilinear, verbose_level - 1);
 	} else if (f_general_linear) {
-		base_len = matrix_group_base_len_general_linear_group(
+		base_len = GG.matrix_group_base_len_general_linear_group(
 					n, GFq->q,
 					f_semilinear, verbose_level - 1);
 	} else {

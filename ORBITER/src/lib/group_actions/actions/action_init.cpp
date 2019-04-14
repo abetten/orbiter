@@ -1508,6 +1508,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	action *A;
 	action_on_orthogonal *AO;
 	int q = O->F->q;
+	group_generators_domain GG;
 
 	if (f_v) {
 		cout << "action::init_orthogonal_group_with_O "
@@ -1566,7 +1567,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 				cout << "action::init_orthogonal_group "
 						"with reflections, before order_PO_epsilon" << endl;
 				}
-			order_PO_epsilon(f_semilinear, O->epsilon, O->n - 1, O->F->q,
+			GG.order_PO_epsilon(f_semilinear, O->epsilon, O->n - 1, O->F->q,
 					target_go, verbose_level);
 			}
 		else {
@@ -1575,7 +1576,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 						"without reflections, before order_POmega_epsilon"
 						<< endl;
 				}
-			order_POmega_epsilon(O->epsilon, O->n - 1,
+			GG.order_POmega_epsilon(O->epsilon, O->n - 1,
 					O->F->q, target_go, verbose_level);
 			}
 

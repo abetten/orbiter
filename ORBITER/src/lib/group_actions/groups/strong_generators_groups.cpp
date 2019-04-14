@@ -2886,6 +2886,7 @@ void strong_generators::Hall_reflection(
 	int nb_perms;
 	int *perms;
 	vector_ge *gens;
+	group_generators_domain GG;
 
 	if (f_v) {
 		cout << "strong_generators::Hall_reflection" << endl;
@@ -2897,7 +2898,7 @@ void strong_generators::Hall_reflection(
 				"before generators_Hall_reflection" << endl;
 		}
 
-	generators_Hall_reflection(nb_pairs,
+	GG.generators_Hall_reflection(nb_pairs,
 			nb_perms, perms, degree,
 			verbose_level);
 
@@ -2981,6 +2982,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	int nb_perms;
 	int *perms;
 	vector_ge *gens;
+	group_generators_domain GG;
 
 	if (f_v) {
 		cout << "strong_generators::normalizer_"
@@ -2994,7 +2996,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 				"reflection_normalizer_group" << endl;
 		}
 
-	generators_Hall_reflection_normalizer_group(nb_pairs,
+	GG.generators_Hall_reflection_normalizer_group(nb_pairs,
 			nb_perms, perms, degree,
 			verbose_level);
 
@@ -3031,7 +3033,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	longinteger_object target_go;
 
 
-	order_Hall_reflection_normalizer_factorized(nb_pairs,
+	GG.order_Hall_reflection_normalizer_factorized(nb_pairs,
 			factors, nb_factors);
 
 	target_go.create_product(nb_factors, factors);

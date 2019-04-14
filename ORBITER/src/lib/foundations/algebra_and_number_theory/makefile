@@ -19,7 +19,7 @@ MODULES = \
 	generators_symplectic_group.o \
 	gl_class_rep.o \
 	gl_classes.o \
-	group_generators.o \
+	group_generators_domain.o \
 	heisenberg.o \
 	homogeneous_polynomial_domain.o \
 	longinteger_domain.o \

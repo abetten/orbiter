@@ -137,6 +137,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	int f_v = (verbose_level >= 1);
 	int i;
 	number_theory_domain NT;
+	group_generators_domain GG;
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product" << endl;
@@ -239,7 +240,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << "wreath_product::init_tensor_wreath_product "
 				"char_per_elt = " << char_per_elt << endl;
 	}
-	base_len_in_component = matrix_group_base_len_general_linear_group(
+	base_len_in_component = GG.matrix_group_base_len_general_linear_group(
 			dimension_of_matrix_group, q,
 			FALSE /*f_semilinear */, verbose_level - 1);
 	if (f_v) {

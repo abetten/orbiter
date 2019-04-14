@@ -1945,35 +1945,6 @@ int nb_pts_N(int n, int q);
 int nb_pts_N1(int n, int q);
 int nb_pts_Sbar(int n, int q);
 int nb_pts_Nbar(int n, int q);
-void order_POmega_epsilon(int epsilon, int m, int q, 
-	longinteger_object &o, int verbose_level);
-void order_PO_epsilon(int f_semilinear, int epsilon, int k, int q, 
-	longinteger_object &go, int verbose_level);
-// k is projective dimension
-void order_PO(int epsilon, int m, int q, 
-	longinteger_object &o, 
-	int verbose_level);
-void order_Pomega(int epsilon, int k, int q, 
-	longinteger_object &go, 
-	int verbose_level);
-void order_PO_plus(int m, int q, 
-	longinteger_object &o, int verbose_level);
-void order_PO_minus(int m, int q, 
-	longinteger_object &o, int verbose_level);
-// m = Witt index, the dimension is n = 2m+2
-void order_PO_parabolic(int m, int q, 
-	longinteger_object &o, int verbose_level);
-void order_Pomega_plus(int m, int q, 
-	longinteger_object &o, int verbose_level);
-// m = Witt index, the dimension is n = 2m
-void order_Pomega_minus(int m, int q, 
-	longinteger_object &o, int verbose_level);
-// m = half the dimension, 
-// the dimension is n = 2m, the Witt index is m - 1
-void order_Pomega_parabolic(int m, int q, longinteger_object &o, 
-	int verbose_level);
-// m = Witt index, the dimension is n = 2m + 1
-int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
 void test_Orthogonal(int epsilon, int k, int q);
 void test_orthogonal(int n, int q);
 
