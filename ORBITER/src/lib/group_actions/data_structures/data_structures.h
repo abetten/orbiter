@@ -482,6 +482,9 @@ public:
 	void freeself();
 	void init(int gen_hdl_first, int nb_gen, int *sv,
 			int verbose_level);
+	void init_local_generators(
+			vector_ge *gens,
+			int verbose_level);
 	void set_sv(int *sv, int verbose_level);
 	int *points();
 	int *prev();
@@ -509,6 +512,7 @@ public:
 			const char *fname_mask,
 			int verbose_level);
 	void trace_back(int pt, int &depth);
+	void print();
 };
 
 int schreier_vector_determine_depth_recursion(

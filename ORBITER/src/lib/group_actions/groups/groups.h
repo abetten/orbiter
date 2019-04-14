@@ -652,6 +652,12 @@ public:
 			int verbose_level);
 	schreier_vector *get_schreier_vector(
 			int gen_hdl_first, int nb_gen, int verbose_level);
+	void shallow_tree_generators_ai(int verbose_level) ;
+	int get_num_points();
+		// This function returns the number of points in the schreier forest
+	double get_average_word_length();
+		// This function returns the average word length of the forest.
+	double get_average_word_length(int orbit_idx);
 
 	// schreier_io.cpp:
 	void latex(const char *fname);

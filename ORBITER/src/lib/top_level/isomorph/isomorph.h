@@ -760,94 +760,97 @@ struct isomorph_worker_data {
 // isomorph_global.C:
 // #############################################################################
 
-void isomorph_read_statistic_files(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix, int level, 
-	const char **fname, int nb_files, int verbose_level);
-void isomorph_build_db(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, int verbose_level);
-void isomorph_read_solution_files(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	const char **fname, int nb_files, 
-	int f_has_final_test_function, 
-	int (*final_test_function)(int *data, int sz, 
-		void *final_test_data, int verbose_level),
-	void *final_test_data, 
-	int verbose_level);
-void isomorph_init_solutions_from_memory(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	int **Solutions, int *Nb_sol, int verbose_level);
-void isomorph_read_solution_files_from_clique_finder_case_by_case(
-	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	const char **fname, int *list_of_cases, 
-	int nb_files, int verbose_level);
-void isomorph_read_solution_files_from_clique_finder(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	const char **fname, int nb_files, int verbose_level);
-void isomorph_compute_orbits(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, int verbose_level);
-void isomorph_testing(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	int f_play_back, const char *old_event_file, 
-	int print_mod, int verbose_level);
-void isomorph_classification_graph(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	int verbose_level);
-void isomorph_identify(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	int identify_nb_files, const char **fname, int *Iso_type, 
-	int f_save, int verbose_level);
-void isomorph_identify_table(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, 
-	const char *prefix_iso, int level, 
-	int nb_rows, int *Table, int *Iso_type, 
-	int verbose_level);
-	// Table[nb_rows * size]
-void isomorph_worker(action *A_base, action *A,
-	poset_classification *gen,
-	int size, const char *prefix_classify, const char *prefix_iso, 
-	void (*work_callback)(isomorph *Iso, void *data, int verbose_level), 
-	void *work_data, 
-	int level, int verbose_level);
-void isomorph_compute_down_orbits(action *A_base, 
-	action *A, poset_classification *gen,
-	int size, const char *prefix_classify, const char *prefix, 
-	void *data, 
-	int level, int verbose_level);
-void isomorph_compute_down_orbits_worker(isomorph *Iso, 
-	void *data, int verbose_level);
-void isomorph_compute_down_orbits_for_isomorphism_type(
-	isomorph *Iso, int orbit, 
-	int &cnt_orbits, int &cnt_special_orbits, 
-	int *&special_orbit_identify, 
-	int verbose_level);
-void isomorph_report_data_in_source_code_inside_tex(
-	isomorph &Iso, const char *prefix, char *label_of_structure_plural, 
-	std::ostream &F, int verbose_level);
-void isomorph_report_data_in_source_code_inside_tex_with_selection(
-	isomorph &Iso, const char *prefix, char *label_of_structure_plural, 
-	std::ostream &fp, int selection_size, int *selection,
-	int verbose_level);
+
+	void isomorph_read_statistic_files(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix, int level,
+		const char **fname, int nb_files, int verbose_level);
+	void isomorph_build_db(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level, int verbose_level);
+	void isomorph_read_solution_files(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		const char **fname, int nb_files,
+		int f_has_final_test_function,
+		int (*final_test_function)(int *data, int sz,
+			void *final_test_data, int verbose_level),
+		void *final_test_data,
+		int verbose_level);
+	void isomorph_init_solutions_from_memory(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		int **Solutions, int *Nb_sol, int verbose_level);
+	void isomorph_read_solution_files_from_clique_finder_case_by_case(
+		action *A_base, action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		const char **fname, int *list_of_cases,
+		int nb_files, int verbose_level);
+	void isomorph_read_solution_files_from_clique_finder(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		const char **fname, int nb_files, int verbose_level);
+	void isomorph_compute_orbits(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level, int verbose_level);
+	void isomorph_testing(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		int f_play_back, const char *old_event_file,
+		int print_mod, int verbose_level);
+	void isomorph_classification_graph(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		int verbose_level);
+	void isomorph_identify(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		int identify_nb_files, const char **fname, int *Iso_type,
+		int f_save, int verbose_level);
+	void isomorph_identify_table(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify,
+		const char *prefix_iso, int level,
+		int nb_rows, int *Table, int *Iso_type,
+		int verbose_level);
+		// Table[nb_rows * size]
+	void isomorph_worker(action *A_base, action *A,
+		poset_classification *gen,
+		int size, const char *prefix_classify, const char *prefix_iso,
+		void (*work_callback)(isomorph *Iso, void *data, int verbose_level),
+		void *work_data,
+		int level, int verbose_level);
+	void isomorph_compute_down_orbits(action *A_base,
+		action *A, poset_classification *gen,
+		int size, const char *prefix_classify, const char *prefix,
+		void *data,
+		int level, int verbose_level);
+	void isomorph_compute_down_orbits_worker(isomorph *Iso,
+		void *data, int verbose_level);
+	void isomorph_compute_down_orbits_for_isomorphism_type(
+		isomorph *Iso, int orbit,
+		int &cnt_orbits, int &cnt_special_orbits,
+		int *&special_orbit_identify,
+		int verbose_level);
+	void isomorph_report_data_in_source_code_inside_tex(
+		isomorph &Iso, const char *prefix, char *label_of_structure_plural,
+		std::ostream &F, int verbose_level);
+	void isomorph_report_data_in_source_code_inside_tex_with_selection(
+		isomorph &Iso, const char *prefix, char *label_of_structure_plural,
+		std::ostream &fp, int selection_size, int *selection,
+		int verbose_level);
+
+
 
 }}
 

@@ -163,7 +163,7 @@ void blt_set::init_group(int f_semilinear, int verbose_level)
 		TRUE /* f_on_points */, 
 		FALSE /* f_on_lines */, 
 		FALSE /* f_on_points_and_lines */, 
-		f_semilinear, f_basis, verbose_level - 1);
+		f_semilinear, f_basis, 0 /* verbose_level - 1*/);
 	degree = A->degree;
 	if (f_vv) {
 		cout << "blt_set::init_group "
@@ -176,7 +176,7 @@ void blt_set::init_group(int f_semilinear, int verbose_level)
 		cout << "blt_set::init_group "
 				"computing lex least base" << endl;
 		}
-	A->lex_least_base_in_place(verbose_level - 2);
+	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
 	if (f_vv) {
 		cout << "blt_set::init_group "
 				"computing lex least base done" << endl;

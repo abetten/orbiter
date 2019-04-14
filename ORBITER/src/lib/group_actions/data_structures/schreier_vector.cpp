@@ -69,6 +69,24 @@ void schreier_vector::init(
 	}
 }
 
+void schreier_vector::init_local_generators(
+		vector_ge *gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier_vector::init_local_generators" << endl;
+	}
+
+	gens->copy(local_gens);
+	f_has_local_generators = TRUE;
+
+	if (f_v) {
+		cout << "schreier_vector::init_local_generators done" << endl;
+	}
+}
+
 void schreier_vector::set_sv(
 		int *sv,
 		int verbose_level)
@@ -1095,6 +1113,43 @@ int schreier_vector_determine_depth_recursion(
 	ancestor[pos] = ancestor[pt_loc];
 	return d;
 }
+
+
+void schreier_vector::print()
+{
+	int i, n;
+	int *pts;
+
+	cout << "schreier_vector::print:" << endl;
+	if (sv == NULL) {
+		cout << "schreier_vector::print "
+				"sv == NULL" << endl;
+		return;
+	}
+	n = sv[0];
+	pts = sv + 1;
+	if (nb_gen == 0) {
+		cout << "nb_gen == 0" << endl;
+	}
+	else {
+		cout << "nb_gen=" << nb_gen << endl;
+		int *prev;
+		int *label;
+
+		prev = pts + n;
+		label = prev + n;
+		cout << "i : pts[i] : prev[i] : label[i]" << endl;
+		for (i = 0; i < n; i++) {
+			cout
+				<< setw(5) << i << " : "
+				<< setw(5) << pts[i] << " : "
+				<< setw(5) << prev[i] << " : "
+				<< setw(5) << label[i] << " : "
+				<< endl;
+		}
+	}
+}
+
 
 
 }}

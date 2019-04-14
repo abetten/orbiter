@@ -1107,6 +1107,13 @@ void add_term(int n, finite_field &F, int &nb_terms,
 	int i, int j, int coeff);
 void determine_conic(int q, const char *override_poly, int *input_pts,
 	int nb_pts, int verbose_level);
+int test_if_arc(finite_field *Fq, int *pt_coords, int *set,
+	int set_sz, int k, int verbose_level);
+void create_Buekenhout_Metz(
+	finite_field *Fq, finite_field *FQ,
+	int f_classical, int f_Uab, int parameter_a, int parameter_b,
+	char *fname, int &nb_pts, int *&Pts,
+	int verbose_level);
 
 
 // #############################################################################

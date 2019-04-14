@@ -56,6 +56,18 @@ void vector_ge::init(action *A)
 	len = 0;
 }
 
+void vector_ge::copy(vector_ge *&vector_copy)
+{
+	int i;
+
+	vector_copy = NEW_OBJECT(vector_ge);
+	vector_copy->init(A);
+	vector_copy->allocate(len);
+	for (i = 0; i < len; i++) {
+		A->element_move(ith(i), vector_copy->ith(i), 0);
+	}
+}
+
 void vector_ge::init_by_hdl(action *A, int *gen_hdl, int nb_gen)
 {
 	int i;

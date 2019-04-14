@@ -371,6 +371,11 @@ void poset_orbit_node::compute_schreier_vector(
 
 	if (f_using_invariant_subset) {
 		relabel_schreier_vector(AR, verbose_level - 1);
+		if (f_v) {
+			cout << "poset_orbit_node::compute_schreier_vector: "
+					"after relabeling: Schreier vector is" << endl;
+			//Schreier_vector->print();
+			}
 		}
 
 	FREE_OBJECT(AR);
@@ -648,6 +653,7 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 			if (f_v) {
 				gen->print_level_info(lvl, node);
 				cout << " : after relabeling Schreier vector." << endl;
+				//Schreier_vector->print();
 				}
 			}
 		}

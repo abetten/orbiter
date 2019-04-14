@@ -10,38 +10,38 @@
 // 32
 
 
-int arcs_8_10_size = 10;
-int arcs_8_10_nb_reps = 1;
-int arcs_8_10_reps[] = {
+static int arcs_8_10_size = 10;
+static int arcs_8_10_nb_reps = 1;
+static int arcs_8_10_reps[] = {
 	0, 1, 2, 3, 29, 35, 47, 52, 64, 70, 
 };
-const char *arcs_8_10_stab_order[] = {
+static const char *arcs_8_10_stab_order[] = {
 "1512",
 };
-int arcs_8_10_stab_gens[] = {
+static int arcs_8_10_stab_gens[] = {
 6, 0, 0, 0, 5, 0, 0, 0, 3, 2, 
 2, 0, 0, 0, 4, 0, 5, 5, 5, 1, 
 1, 0, 0, 0, 4, 0, 7, 2, 6, 1, 
 5, 0, 0, 0, 0, 5, 5, 5, 5, 1, 
 0, 0, 2, 2, 0, 0, 0, 2, 0, 1, 
 };
-int arcs_8_10_stab_gens_fst[] = { 0};
-int arcs_8_10_stab_gens_len[] = { 5};
-int arcs_8_10_make_element_size = 10;
+static int arcs_8_10_stab_gens_fst[] = { 0};
+static int arcs_8_10_stab_gens_len[] = { 5};
+static int arcs_8_10_make_element_size = 10;
 
 
 
-int arcs_16_18_size = 18;
-int arcs_16_18_nb_reps = 2;
-int arcs_16_18_reps[] = {
+static int arcs_16_18_size = 18;
+static int arcs_16_18_nb_reps = 2;
+static int arcs_16_18_reps[] = {
 	0, 1, 2, 3, 52, 67, 89, 106, 126, 141, 159, 176, 184, 199, 220, 235, 245, 262, 
 	0, 1, 2, 3, 52, 70, 83, 109, 127, 139, 156, 174, 186, 199, 217, 229, 256, 264, 
 };
-const char *arcs_16_18_stab_order[] = {
+static const char *arcs_16_18_stab_order[] = {
 "144",
 "16320",
 };
-int arcs_16_18_stab_gens[] = {
+static int arcs_16_18_stab_gens[] = {
  2,  0,  0,  0,  2,  0,  2,  2,  2, 0, 
  2,  0,  0,  0,  2,  0,  9,  8,  2, 1, 
  0, 15,  0, 15,  0,  0,  7,  8, 15, 0, 
@@ -54,14 +54,14 @@ int arcs_16_18_stab_gens[] = {
  4, 11, 14,  0, 15,  0,  4,  4,  4, 0, 
  0,  0,  8,  0,  1,  0,  3,  0,  0, 0, 
 };
-int arcs_16_18_stab_gens_fst[] = { 0, 4};
-int arcs_16_18_stab_gens_len[] = { 4, 7};
-int arcs_16_18_make_element_size = 10;
+static int arcs_16_18_stab_gens_fst[] = { 0, 4};
+static int arcs_16_18_stab_gens_len[] = { 4, 7};
+static int arcs_16_18_make_element_size = 10;
 
 
-int arcs_32_34_size = 34;
-int arcs_32_34_nb_reps = 6;
-int arcs_32_34_reps[] = {
+static int arcs_32_34_size = 34;
+static int arcs_32_34_nb_reps = 6;
+static int arcs_32_34_reps[] = {
 	0, 1, 2, 3, 100, 131, 169, 220, 256, 274, 299, 349, 376, 389, 431, 468, 487, 538, 560, 599, 620, 665, 682, 721, 763, 774, 808, 845, 894, 927, 949, 979, 1014, 1038, 
 	0, 1, 2, 3, 100, 131, 169, 212, 256, 274, 315, 342, 362, 409, 424, 455, 506, 526, 549, 606, 620, 661, 696, 723, 747, 774, 831, 847, 881, 912, 951, 988, 1021, 1037, 
 	0, 1, 2, 3, 100, 131, 169, 218, 256, 269, 294, 348, 367, 406, 424, 464, 503, 541, 565, 590, 639, 652, 683, 723, 761, 773, 827, 852, 894, 906, 946, 984, 1009, 1031, 
@@ -69,7 +69,7 @@ int arcs_32_34_reps[] = {
 	0, 1, 2, 3, 100, 133, 184, 199, 236, 270, 311, 328, 380, 414, 443, 468, 496, 531, 555, 586, 617, 655, 678, 729, 765, 789, 831, 864, 867, 918, 945, 978, 1018, 1037, 
 	0, 1, 2, 3, 100, 134, 163, 207, 241, 287, 320, 333, 377, 412, 440, 457, 498, 517, 560, 584, 637, 666, 695, 734, 750, 790, 819, 844, 875, 923, 949, 980, 1002, 1031, 
 };
-const char *arcs_32_34_stab_order[] = {
+static const char *arcs_32_34_stab_order[] = {
 "10",
 "5",
 "3",
@@ -77,7 +77,7 @@ const char *arcs_32_34_stab_order[] = {
 "4960",
 "163680",
 };
-int arcs_32_34_stab_gens[] = {
+static int arcs_32_34_stab_gens[] = {
 31,  7,  8, 26, 22,  5,  0,  0, 18, 1, 
  0,  5,  0, 13, 24,  2, 28, 15,  5, 1, 
  6,  8, 25, 28, 10, 21, 23, 15,  1, 3, 
@@ -97,7 +97,7 @@ int arcs_32_34_stab_gens[] = {
 21, 16, 19,  0,  5,  0, 21, 21, 21, 0, 
  0,  0,  8,  0, 24,  0, 13,  0,  0, 0, 
 };
-int arcs_32_34_stab_gens_fst[] = { 0, 2, 3, 4, 7, 11};
-int arcs_32_34_stab_gens_len[] = { 2, 1, 1, 3, 4, 7};
-int arcs_32_34_make_element_size = 10;
+static int arcs_32_34_stab_gens_fst[] = { 0, 2, 3, 4, 7, 11};
+static int arcs_32_34_stab_gens_len[] = { 2, 1, 1, 3, 4, 7};
+static int arcs_32_34_make_element_size = 10;
 
