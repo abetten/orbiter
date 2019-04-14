@@ -173,6 +173,7 @@ public:
 	void null();
 	void freeself();
 	void init(action *A);
+	void copy(vector_ge *&vector_copy);
 	void init_by_hdl(action *A, int *gen_hdl, int nb_gen);
 	void init_single(action *A, int *Elt);
 	void init_double(action *A, int *Elt1, int *Elt2);

@@ -15,7 +15,7 @@ namespace top_level {
 // arc_generator.C
 // #############################################################################
 
-//! poset classification for arcs in desarguesian projective planes
+//! classification of arcs in desarguesian projective planes
 
 
 class arc_generator {
@@ -422,7 +422,7 @@ public:
 // BLT_set_create.C:
 // #############################################################################
 
-//! to create a BLT-set from a known construction
+//! to create a BLT-set from a description using class BLT_set_create_description
 
 
 
@@ -464,7 +464,7 @@ public:
 // BLT_set_create_description.C:
 // #############################################################################
 
-//! to describe a BLT set with a known construction from the command line
+//! to create BLT set with a description from the command line
 
 
 
@@ -656,7 +656,7 @@ public:
 // choose_points_or_lines.C:
 // #############################################################################
 
-//! to classify objects in projective planes
+//! classification of objects in projective planes
 
 
 class choose_points_or_lines {
@@ -810,7 +810,7 @@ public:
 // classify_double_sixes.C:
 // #############################################################################
 
-//! to classify double sixes in PG(3,q)
+//! classification of double sixes in PG(3,q)
 
 
 class classify_double_sixes {
@@ -1045,7 +1045,7 @@ void classify_trihedral_pairs_early_test_function_type2(int *S, int len,
 // cubic_curve_action.cpp:
 // #############################################################################
 
-//! cubic curves in projective space with automorphism group
+//! domain for cubic curves in projective space with automorphism group
 
 
 
@@ -1087,7 +1087,6 @@ public:
 
 void decomposition_projective_space(int k, finite_field *F, 
 	int nb_subsets, int *sz, int **subsets, 
-	//int f_semilinear, int f_basis, 
 	int verbose_level);
 
 // #############################################################################
@@ -1208,7 +1207,6 @@ public:
 		int argc, const char **argv, 
 		int verbose_level);
 	void compute_line_type(int *set, int len, int verbose_level);
-	//void report_latex(ostream &ost);
 };
 
 // #############################################################################
@@ -1393,13 +1391,6 @@ public:
 			//const char *fname_spread_table_iso,
 			int verbose_level);
 	void create_action_on_spreads(int verbose_level);
-#if 0
-	void type_of_packing(
-			const char *fname_spread_table,
-			const char *fname_spread_table_iso,
-			const char *fname_packings,
-			int verbose_level);
-#endif
 	void conjugacy_classes(int verbose_level);
 	void read_conjugacy_classes(char *fname,
 			int verbose_level);
@@ -1496,7 +1487,7 @@ void packing_swap_func(void *data, int i, int j, void *extra_data);
 // #############################################################################
 
 	
-//! the orthogonal geometry as a polar space
+//! the polar space arising from an orthogonal geometry
 
 
 class polar {
@@ -1595,13 +1586,6 @@ void Hill_cap56(int argc, const char **argv,
 	char *fname, int &nb_Pts, int *&Pts, 
 	int verbose_level);
 void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
-int test_if_arc(finite_field *Fq, int *pt_coords, int *set, 
-	int set_sz, int k, int verbose_level);
-void create_Buekenhout_Metz(
-	finite_field *Fq, finite_field *FQ, 
-	int f_classical, int f_Uab, int parameter_a, int parameter_b, 
-	char *fname, int &nb_pts, int *&Pts, 
-	int verbose_level);
 
 // #############################################################################
 // recoordinatize.C
@@ -1774,7 +1758,7 @@ public:
 // six_arcs_not_on_a_conic.C:
 // #############################################################################
 
-//! to classify six-arcs not on a conic in PG(2,q)
+//! classification of six-arcs not on a conic in PG(2,q)
 
 
 class six_arcs_not_on_a_conic {
@@ -2006,7 +1990,7 @@ void callback_spread_print(std::ostream &ost, int len, int *S, void *data);
 // spread_create.C:
 // #############################################################################
 
-//! to create a known spread
+//! to create a known spread using a description from class spread_create_description
 
 
 
@@ -2081,7 +2065,7 @@ public:
 // spread_lifting.C
 // #############################################################################
 
-//! create spreads from smaller spreads
+//! creates spreads from partial spreads using class exact_cover
 
 
 class spread_lifting {
@@ -2143,7 +2127,7 @@ public:
 // surface_classify_wedge.C
 // #############################################################################
 
-//! to classify cubic surfaces using double sixes as substructures
+//! classification of cubic surfaces using double sixes as substructures
 
 
 class surface_classify_wedge {
@@ -2242,7 +2226,7 @@ public:
 // #############################################################################
 
 
-//! to create a cubic surface from a known construction
+//! to create a cubic surface from a description using class surface_create_description
 
 
 class surface_create {
@@ -2296,7 +2280,7 @@ public:
 // #############################################################################
 
 
-//! to describe a known construction of a cubic surface from the command line
+//! to describe a cubic surface from the command line
 
 
 class surface_create_description {
@@ -2472,7 +2456,7 @@ public:
 // surfaces_arc_lifting.cpp
 // #############################################################################
 
-//! to classify cubic surfaces using lifted arcs
+//! classification of cubic surfaces using lifted 6-arcs
 
 
 class surfaces_arc_lifting {
@@ -2520,7 +2504,7 @@ public:
 // translation_plane_via_andre_model.C
 // #############################################################################
 
-//! a translation plane created via Andre / Bruck / Bose
+//! Andre / Bruck / Bose model of a translation plane
 
 
 

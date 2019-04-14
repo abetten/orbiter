@@ -5670,6 +5670,135 @@ void determine_conic(int q, const char *override_poly,
 }
 
 
+int test_if_arc(finite_field *Fq, int *pt_coords,
+		int *set, int set_sz, int k, int verbose_level)
+// Used by Hill_cap56()
+{
+	int f_v = FALSE; //(verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int subset[3];
+	int subset1[3];
+	int *Mtx;
+	int ret = FALSE;
+	int i, j, a, rk;
+
+
+	if (f_v) {
+		cout << "test_if_arc testing set" << endl;
+		int_vec_print(cout, set, set_sz);
+		cout << endl;
+		}
+	Mtx = NEW_int(3 * k);
+
+	first_k_subset(subset, set_sz, 3);
+	while (TRUE) {
+		for (i = 0; i < 3; i++) {
+			subset1[i] = set[subset[i]];
+			}
+		int_vec_sort(3, subset1);
+		if (f_vv) {
+			cout << "testing subset ";
+			int_vec_print(cout, subset1, 3);
+			cout << endl;
+			}
+
+		for (i = 0; i < 3; i++) {
+			a = subset1[i];
+			for (j = 0; j < k; j++) {
+				Mtx[i * k + j] = pt_coords[a * k + j];
+				}
+			}
+		if (f_vv) {
+			cout << "matrix:" << endl;
+			print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
+			}
+		rk = Fq->Gauss_easy(Mtx, 3, k);
+		if (rk < 3) {
+			if (f_v) {
+				cout << "not an arc" << endl;
+				}
+			goto done;
+			}
+		if (!next_k_subset(subset, set_sz, 3)) {
+			break;
+			}
+		}
+	if (f_v) {
+		cout << "passes the arc test" << endl;
+		}
+	ret = TRUE;
+done:
+
+	FREE_int(Mtx);
+	return ret;
+}
+
+void create_Buekenhout_Metz(
+	finite_field *Fq, finite_field *FQ,
+	int f_classical, int f_Uab, int parameter_a, int parameter_b,
+	char *fname, int &nb_pts, int *&Pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, rk, d = 3;
+	int v[3];
+	buekenhout_metz *BM;
+		// in TOP_LEVEL/buekenhout_metz.C
+
+	if (f_v) {
+		cout << "create_Buekenhout_Metz" << endl;
+		}
+
+
+	BM = NEW_OBJECT(buekenhout_metz);
+
+	BM->init(Fq, FQ,
+		f_Uab, parameter_a, parameter_b, f_classical, verbose_level);
+
+
+	if (BM->f_Uab) {
+		BM->init_ovoid_Uab_even(
+				BM->parameter_a, BM->parameter_b,
+				verbose_level);
+		}
+	else {
+		BM->init_ovoid(verbose_level);
+		}
+
+	BM->create_unital(verbose_level);
+
+	//BM->write_unital_to_file();
+
+	nb_pts = BM->sz;
+	Pts = NEW_int(nb_pts);
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = BM->U[i];
+		}
+
+
+	if (f_v) {
+		cout << "i : point : projective rank" << endl;
+		}
+	for (i = 0; i < nb_pts; i++) {
+		rk = Pts[i];
+		BM->P2->unrank_point(v, rk);
+		if (f_v) {
+			cout << setw(4) << i << " : ";
+			int_vec_print(cout, v, d);
+			cout << " : " << setw(5) << rk << endl;
+			}
+		}
+
+
+
+	strcpy(fname, "unital_");
+	BM->get_name(fname + strlen(fname));
+	strcat(fname, ".txt");
+
+	FREE_OBJECT(BM);
+
+}
+
 
 
 

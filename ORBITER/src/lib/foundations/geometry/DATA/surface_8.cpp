@@ -1,23 +1,23 @@
-int surface_8_nb_reps = 1;
-int surface_8_size = 20;
-int surface_8_reps[] = {
+static int surface_8_nb_reps = 1;
+static int surface_8_size = 20;
+static int surface_8_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 6, 0, 0, 6, 0, 5, 0, 0, 4, 7, 7, 0, 
 };
-const char *surface_8_stab_order[] = {
+static const char *surface_8_stab_order[] = {
 	"576",
 };
-int surface_8_nb_E[] = { 
+static int surface_8_nb_E[] = {
 	13};
-int surface_8_single_six[] = { 
+static int surface_8_single_six[] = {
 	0, 64, 4680, 138, 362, 825, 
 };
-int surface_8_Lines[] = { 
+static int surface_8_Lines[] = {
 	0, 1, 64, 4680, 4744, 138, 825, 362, 1507, 579, 3969, 4104, 81, 472, 340, 272, 543, 158, 4154, 4742, 1899, 3033, 3062, 1508, 1530, 2871, 2914, 
 };
-int surface_8_make_element_size = 17;
-int surface_8_stab_gens_fst[] = { 0};
-int surface_8_stab_gens_len[] = { 5};
-int surface_8_stab_gens[] = {
+static int surface_8_make_element_size = 17;
+static int surface_8_stab_gens_fst[] = { 0};
+static int surface_8_stab_gens_len[] = { 5};
+static int surface_8_stab_gens[] = {
 	6, 0, 0, 0, 0, 4, 0, 0, 4, 0, 4, 0, 0, 1, 0, 1, 2, 
 	2, 0, 0, 0, 2, 2, 0, 0, 2, 0, 2, 0, 2, 2, 2, 2, 0, 
 	3, 0, 0, 0, 6, 3, 0, 0, 6, 0, 3, 0, 4, 5, 5, 3, 0, 

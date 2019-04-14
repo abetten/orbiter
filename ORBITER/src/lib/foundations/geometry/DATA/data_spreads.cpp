@@ -26,24 +26,24 @@
 // translation planes of order 4
 
 
-int Spreads_2_2_size = 5;
-int Spreads_2_2_nb_reps = 1;
-int Spreads_2_2_reps[] = {
+static int Spreads_2_2_size = 5;
+static int Spreads_2_2_nb_reps = 1;
+static int Spreads_2_2_reps[] = {
 	0, 9, 17, 22, 34, 
 };
-const char *Spreads_2_2_stab_order[] = {
+static const char *Spreads_2_2_stab_order[] = {
 "360",
 };
-int Spreads_2_2_stab_gens[] = {
+static int Spreads_2_2_stab_gens[] = {
 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 
 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 
 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 
 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 
 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 
 };
-int Spreads_2_2_stab_gens_fst[] = { 0};
-int Spreads_2_2_stab_gens_len[] = { 5};
-int Spreads_2_2_make_element_size = 16;
+static int Spreads_2_2_stab_gens_fst[] = { 0};
+static int Spreads_2_2_stab_gens_len[] = { 5};
+static int Spreads_2_2_make_element_size = 16;
 
 
 
@@ -51,17 +51,17 @@ int Spreads_2_2_make_element_size = 16;
 // translation planes of order 9
 
 
-int Spreads_3_2_size = 10;
-int Spreads_3_2_nb_reps = 2;
-int Spreads_3_2_reps[] = {
+static int Spreads_3_2_size = 10;
+static int Spreads_3_2_nb_reps = 2;
+static int Spreads_3_2_reps[] = {
 	0, 129, 16, 32, 41, 57, 73, 79, 95, 111, 
 	0, 129, 16, 32, 41, 59, 69, 79, 99, 109, 
 };
-const char *Spreads_3_2_stab_order[] = {
+static const char *Spreads_3_2_stab_order[] = {
 "5760",
 "1920",
 };
-int Spreads_3_2_stab_gens[] = {
+static int Spreads_3_2_stab_gens[] = {
 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 
 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 
 1, 0, 0, 0, 0, 2, 0, 0, 1, 0, 1, 0, 0, 2, 0, 2, 
@@ -76,9 +76,9 @@ int Spreads_3_2_stab_gens[] = {
 2, 0, 2, 0, 0, 2, 0, 2, 1, 0, 2, 0, 0, 1, 0, 2, 
 0, 0, 2, 1, 0, 0, 1, 1, 2, 1, 0, 0, 1, 1, 0, 0, 
 };
-int Spreads_3_2_stab_gens_fst[] = { 0, 6};
-int Spreads_3_2_stab_gens_len[] = { 6, 7};
-int Spreads_3_2_make_element_size = 16;
+static int Spreads_3_2_stab_gens_fst[] = { 0, 6};
+static int Spreads_3_2_stab_gens_len[] = { 6, 7};
+static int Spreads_3_2_make_element_size = 16;
 
 
 
@@ -87,9 +87,9 @@ int Spreads_3_2_make_element_size = 16;
 
 
 
-int Spreads_2_4_size = 17;
-int Spreads_2_4_nb_reps = 8;
-int Spreads_2_4_reps[] = {
+static int Spreads_2_4_size = 17;
+static int Spreads_2_4_nb_reps = 8;
+static int Spreads_2_4_reps[] = {
 	0, 200786, 13245, 25835, 36460, 53911, 64304, 77172, 90153, 103952, 114577, 126672, 139917, 145715, 156340, 168891, 182136, 
 	0, 200786, 13245, 25835, 36460, 53911, 64304, 77172, 90153, 104355, 114980, 126208, 139453, 145334, 158579, 169333, 179958, 
 	0, 200786, 13245, 25835, 36460, 53911, 64304, 80390, 91430, 97407, 116501, 121428, 137934, 146763, 159757, 172738, 181177, 
@@ -99,7 +99,7 @@ int Spreads_2_4_reps[] = {
 	0, 200786, 13245, 25835, 36460, 52745, 66006, 78060, 88733, 102654, 115822, 127969, 138549, 144661, 157919, 169976, 180646, 
 	0, 200786, 13245, 25835, 36460, 52745, 65974, 78060, 88701, 102741, 115738, 128072, 138449, 144562, 157543, 170381, 180774, 
 };
-const char *Spreads_2_4_stab_order[] = {
+static const char *Spreads_2_4_stab_order[] = {
 "1008",
 "1008",
 "1728",
@@ -109,7 +109,7 @@ const char *Spreads_2_4_stab_order[] = {
 "3600",
 "244800",
 };
-int Spreads_2_4_stab_gens[] = {
+static int Spreads_2_4_stab_gens[] = {
 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 
 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 
 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 
@@ -164,28 +164,28 @@ int Spreads_2_4_stab_gens[] = {
 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 
 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 
 };
-int Spreads_2_4_stab_gens_fst[] = { 0, 6, 15, 20, 25, 30, 35, 43};
-int Spreads_2_4_stab_gens_len[] = { 6, 9, 5, 5, 5, 5, 8, 10};
-int Spreads_2_4_make_element_size = 64;
+static int Spreads_2_4_stab_gens_fst[] = { 0, 6, 15, 20, 25, 30, 35, 43};
+static int Spreads_2_4_stab_gens_len[] = { 6, 9, 5, 5, 5, 5, 8, 10};
+static int Spreads_2_4_make_element_size = 64;
 
 
 // line spreads of PG(3,4):
 // translation planes of order 16 with kernel F_4
 
 
-int Spreads_4_2_size = 17;
-int Spreads_4_2_nb_reps = 3;
-int Spreads_4_2_reps[] = {
+static int Spreads_4_2_size = 17;
+static int Spreads_4_2_nb_reps = 3;
+static int Spreads_4_2_reps[] = {
 	0, 356, 25, 50, 75, 97, 114, 127, 153, 179, 191, 224, 236, 262, 288, 297, 322, 
 	0, 356, 25, 50, 75, 93, 118, 127, 152, 182, 199, 216, 233, 259, 276, 309, 326, 
 	0, 356, 25, 50, 76, 90, 114, 127, 159, 173, 204, 221, 233, 255, 287, 304, 322, 
 };
-const char *Spreads_4_2_stab_order[] = {
+static const char *Spreads_4_2_stab_order[] = {
 "1200", // Hall spread
 "81600", // Desarguesian spread
 "576", // Semifield spread
 };
-int Spreads_4_2_stab_gens[] = {
+static int Spreads_4_2_stab_gens[] = {
 1, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 3, 1, 1, 3, 3, 0, 
 2, 0, 0, 0, 1, 2, 0, 0, 3, 0, 2, 0, 2, 3, 1, 2, 0, 
 1, 0, 0, 0, 2, 2, 0, 0, 1, 0, 3, 0, 2, 2, 1, 1, 1, 
@@ -204,18 +204,18 @@ int Spreads_4_2_stab_gens[] = {
 0, 0, 0, 3, 0, 0, 3, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 
 3, 0, 0, 3, 2, 2, 3, 0, 3, 1, 0, 0, 3, 0, 0, 0, 0, 
 };
-int Spreads_4_2_stab_gens_fst[] = { 0, 5, 10};
-int Spreads_4_2_stab_gens_len[] = { 5, 5, 7};
-int Spreads_4_2_make_element_size = 17;
+static int Spreads_4_2_stab_gens_fst[] = { 0, 5, 10};
+static int Spreads_4_2_stab_gens_len[] = { 5, 5, 7};
+static int Spreads_4_2_make_element_size = 17;
 
 
 // line spreads of PG(3,5):
 // translation planes of order 25
 
 
-int Spreads_5_2_size = 26;
-int Spreads_5_2_nb_reps = 21;
-int Spreads_5_2_reps[] = {
+static int Spreads_5_2_size = 26;
+static int Spreads_5_2_nb_reps = 21;
+static int Spreads_5_2_reps[] = {
 	0, 805, 36, 72, 108, 144, 178, 194, 218, 261, 298, 321, 347, 375, 419, 455, 469, 518, 541, 565, 607, 622, 675, 694, 722, 761, 
 	0, 805, 36, 72, 108, 144, 178, 193, 218, 261, 298, 326, 350, 375, 425, 445, 477, 502, 551, 562, 607, 634, 659, 699, 734, 746, 
 	0, 805, 36, 72, 108, 144, 178, 193, 218, 261, 297, 326, 362, 375, 409, 445, 477, 515, 551, 562, 598, 634, 659, 699, 735, 746, 
@@ -238,7 +238,7 @@ int Spreads_5_2_reps[] = {
 	0, 805, 36, 72, 109, 146, 174, 189, 223, 268, 290, 311, 362, 389, 417, 442, 483, 498, 550, 571, 598, 627, 655, 706, 725, 759, 
 	0, 805, 36, 72, 109, 146, 166, 194, 241, 250, 298, 327, 347, 375, 417, 454, 483, 508, 534, 581, 590, 629, 655, 703, 728, 757, 
 };
-const char *Spreads_5_2_stab_order[] = {
+static const char *Spreads_5_2_stab_order[] = {
 "144",
 "576",
 "1440",
@@ -261,7 +261,7 @@ const char *Spreads_5_2_stab_order[] = {
 "720",
 "1920",
 };
-int Spreads_5_2_stab_gens[] = {
+static int Spreads_5_2_stab_gens[] = {
 1, 0, 0, 0, 0, 1, 0, 0, 4, 0, 4, 0, 0, 4, 0, 4, 
 3, 0, 0, 0, 0, 2, 0, 0, 2, 3, 2, 1, 1, 3, 2, 3, 
 1, 3, 0, 0, 4, 1, 0, 0, 0, 0, 1, 3, 0, 0, 4, 1, 
@@ -374,9 +374,9 @@ int Spreads_5_2_stab_gens[] = {
 4, 1, 0, 0, 1, 1, 0, 0, 1, 4, 1, 4, 4, 4, 4, 4, 
 0, 4, 0, 3, 3, 3, 1, 1, 0, 0, 0, 1, 0, 0, 2, 2, 
 };
-int Spreads_5_2_stab_gens_fst[] = { 0, 6, 13, 21, 26, 30, 34, 40, 45, 51, 58, 65, 69, 77, 81, 84, 87, 90, 95, 99, 104};
-int Spreads_5_2_stab_gens_len[] = { 6, 7, 8, 5, 4, 4, 6, 5, 6, 7, 7, 4, 8, 4, 3, 3, 3, 5, 4, 5, 7};
-int Spreads_5_2_make_element_size = 16;
+static int Spreads_5_2_stab_gens_fst[] = { 0, 6, 13, 21, 26, 30, 34, 40, 45, 51, 58, 65, 69, 77, 81, 84, 87, 90, 95, 99, 104};
+static int Spreads_5_2_stab_gens_len[] = { 6, 7, 8, 5, 4, 4, 6, 5, 6, 7, 7, 4, 8, 4, 3, 3, 3, 5, 4, 5, 7};
+static int Spreads_5_2_make_element_size = 16;
 
 
 
@@ -386,9 +386,9 @@ int Spreads_5_2_make_element_size = 16;
 
 
 
-int Spreads_3_3_size = 28;
-int Spreads_3_3_nb_reps = 7;
-int Spreads_3_3_reps[] = {
+static int Spreads_3_3_size = 28;
+static int Spreads_3_3_nb_reps = 7;
+static int Spreads_3_3_reps[] = {
 	0, 33879, 1339, 2678, 3994, 5333, 6672, 7988, 9327, 10666, 11062, 12401, 13353, 15056, 16395, 17347, 19041, 20380, 21332, 22124, 23076, 24415, 26109, 27061, 28400, 30103, 31055, 32394, 
 	0, 33879, 1339, 2678, 3994, 5333, 6672, 7988, 9327, 10666, 11064, 12403, 13355, 15055, 16394, 17346, 19040, 20379, 21331, 22125, 23077, 24416, 26110, 27062, 28401, 30101, 31053, 32392, 
 	0, 33879, 1339, 2678, 3994, 5333, 6672, 7988, 9364, 10666, 11062, 12423, 14127, 15056, 16411, 17244, 19095, 19781, 21332, 21825, 23997, 24415, 25856, 26720, 28400, 30103, 31101, 32119, 
@@ -397,7 +397,7 @@ int Spreads_3_3_reps[] = {
 	0, 33879, 1339, 2678, 3994, 5340, 6904, 8006, 9127, 10723, 11056, 12401, 13726, 14962, 16657, 17919, 19041, 19575, 21153, 22562, 23615, 24732, 25754, 27633, 27878, 29721, 31055, 31550, 
 	0, 33879, 1339, 2679, 3992, 5340, 6773, 8085, 8924, 10610, 10978, 13073, 14194, 15382, 16422, 17466, 18734, 19411, 20753, 22075, 23411, 24426, 26057, 27396, 28888, 30045, 30571, 32077, 
 };
-const char *Spreads_3_3_stab_order[] = {
+static const char *Spreads_3_3_stab_order[] = {
 "766584",
 "2106",
 "1014",
@@ -406,7 +406,7 @@ const char *Spreads_3_3_stab_order[] = {
 "84",
 "84",
 };
-int Spreads_3_3_stab_gens[] = {
+static int Spreads_3_3_stab_gens[] = {
 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 
 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 
 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 2, 2, 1, 2, 0, 2, 0, 2, 0, 1, 2, 2, 1, 0, 2, 2, 1, 
@@ -438,9 +438,9 @@ int Spreads_3_3_stab_gens[] = {
 0, 0, 0, 2, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 2, 1, 1, 2, 2, 2, 0, 2, 1, 1, 1, 2, 
 1, 2, 0, 2, 0, 0, 0, 0, 1, 2, 1, 0, 0, 2, 1, 1, 2, 1, 1, 0, 1, 2, 0, 1, 1, 1, 2, 0, 0, 2, 2, 2, 0, 0, 1, 1, 
 };
-int Spreads_3_3_stab_gens_fst[] = { 0, 7, 12, 17, 21, 25, 27};
-int Spreads_3_3_stab_gens_len[] = { 7, 5, 5, 4, 4, 2, 3};
-int Spreads_3_3_make_element_size = 36;
+static int Spreads_3_3_stab_gens_fst[] = { 0, 7, 12, 17, 21, 25, 27};
+static int Spreads_3_3_stab_gens_len[] = { 7, 5, 5, 4, 4, 2, 3};
+static int Spreads_3_3_make_element_size = 36;
 
 
 

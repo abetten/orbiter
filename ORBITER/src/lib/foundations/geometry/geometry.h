@@ -1343,19 +1343,22 @@ public:
 // knowledge_base.cpp:
 // #############################################################################
 
-// i starts from 0 in all of below:
+//! provides access to precomputed combinatorial data
 
 
 class knowledge_base {
 public:
 	knowledge_base();
 	~knowledge_base();
+
+
+	// i starts from 0 in all of below:
+
 	int cubic_surface_nb_reps(int q);
 	int *cubic_surface_representative(int q, int i);
 	void cubic_surface_stab_gens(int q, int i, int *&data, int &nb_gens,
 		int &data_size, const char *&stab_order);
 	int cubic_surface_nb_Eckardt_points(int q, int i);
-	//int *cubic_surface_single_six(int q, int i);
 	int *cubic_surface_Lines(int q, int i);
 
 	int hyperoval_nb_reps(int q);

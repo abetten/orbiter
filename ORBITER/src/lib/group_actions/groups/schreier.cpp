@@ -2201,7 +2201,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 		}
 }
 
-
+#if 0
 schreier_vector *schreier::get_schreier_vector(
 	int gen_hdl_first, int nb_gen, int verbose_level)
 {
@@ -2230,10 +2230,341 @@ schreier_vector *schreier::get_schreier_vector(
 			f_trivial_group, verbose_level);
 #endif
 
+	if (nb_gen) {
+		Schreier_vector->init_local_generators(
+				&gens,
+				0 /*verbose_level */);
+	}
+
 	if (f_v) {
 		cout << "schreier::get_schreier_vector done" << endl;
 	}
 	return Schreier_vector;
+}
+#else
+schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::get_schreier_vector" << endl;
+	}
+//int *sv;
+	schreier_vector * Schreier_vector;
+	int f_trivial_group = FALSE;
+
+	if (nb_gen == 0) {
+		f_trivial_group = TRUE;
+	}
+
+	Schreier_vector = NEW_OBJECT(schreier_vector);
+//get_schreier_vector_compact(sv, f_trivial_group);
+	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
+
+#if 0
+	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
+
+#elif 0
+	Schreier_vector->init_shallow_schreier_forest(this,
+			f_trivial_group,
+			verbose_level);
+	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
+
+#elif 1
+	//cout << "Orbit partition before:" << endl;
+	//this->print_and_list_orbits(cout);
+
+	if (f_v) {
+		cout << "schreier::get_schreier_vector before this->shallow_tree_generators_ai" << endl;
+	}
+	this->shallow_tree_generators_ai(verbose_level);
+	if (f_v) {
+		cout << "schreier::get_schreier_vector after this->shallow_tree_generators_ai" << endl;
+	}
+
+	//cout << "Orbit partition after:" << endl;
+	//this->print_and_list_orbits(cout);
+
+	//cout << BRIGHT_BLUE << __FILE__ << ":" << __LINE__;
+	//cout << ":moving on to init_from_schreier" << RESET_COLOR_SCHEME << endl;
+
+	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
+
+#endif
+
+	if (nb_gen) {
+		Schreier_vector->init_local_generators(&gens, 0 /*verbose_level */);
+	}
+
+	//cout << "Printing Schreier Vector Data Structure" << endl;
+	//Schreier_vector->print();
+
+	if (f_v) {
+		cout << "schreier::get_schreier_vector done" << endl;
+	}
+	return Schreier_vector;
+}
+#endif
+
+
+void schreier::shallow_tree_generators_ai(int verbose_level)
+{
+
+//	cout << BRIGHT_GREEN << endl;
+//	this->print_and_list_orbits(cout);
+//	cout << RESET_COLOR_SCHEME << endl;
+
+//	if (this->nb_orbits == 0) {
+//	cout <<__FILE__<<":"<<__LINE__<<":nb_orbits is zero"<<endl;
+//	return;
+//	}
+
+	//verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+	int fst, len, root, cnt, l;
+	int i, a, f, o;
+	int *Elt1;
+	const char LINE[] = "################################################################################";
+
+	if (f_v) {
+		cout << "schreier::shallow_tree_generators_ai" << endl;
+	}
+
+
+	if (A->degree == 0) {
+		if (f_v) {
+			cout << "schreier::shallow_tree_generators_ai degree is zero, returning" << endl;
+		}
+		return;
+	}
+	Elt1 = NEW_int(A->elt_size_in_int);
+
+
+	/*------------------------------------------------------------------------*/
+// This structure is only for storing information related to the shallow
+// schreier forest AI code. The following structure stores information
+// such as the average and optimal word lengths of the original forest,
+// the number of nodes in the original forest etc.
+	/*------------------------------------------------------------------------*/
+	struct shallow_tree_generators_ai_info {
+		int total_points_in_old_forest;
+		double average_word_length_of_old_forest;
+		int num_generators_in_old_forest;
+		int old_nb_orbits;
+		int* original_num_nodes_in_old_tree;
+
+		int total_points_in_new_forest;
+		double average_word_length_of_new_forest;
+		int num_generators_in_new_forest;
+		int new_nb_orbits;
+		int* original_num_nodes_in_new_tree;
+		int steps_taken;
+	};
+
+	shallow_tree_generators_ai_info forest_info = {
+			.total_points_in_old_forest = get_num_points(),
+			.average_word_length_of_old_forest = get_average_word_length(),
+			.num_generators_in_old_forest = this->gens.len, .old_nb_orbits =
+					nb_orbits };
+
+	forest_info.original_num_nodes_in_old_tree = NEW_int(this->nb_orbits);
+	forest_info.original_num_nodes_in_new_tree = NEW_int(this->nb_orbits);
+
+// fill original number of nodes in old tree
+	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		forest_info.original_num_nodes_in_old_tree[orbit_idx] =
+				orbit_len[orbit_idx];
+	}
+	/*------------------------------------------------------------------------*/
+
+// Make a copy of the current generators
+	vector_ge* gens = NEW_OBJECT(vector_ge);
+	gens->init(A);
+	for (int el = 0; el < this->gens.len; el++)
+		gens->append(this->gens.ith(el));
+
+// Create a new schreier forest with the same generators
+	schreier* S = NEW_OBJECT(schreier);
+	S->init(A);
+	S->init_generators(*gens);
+	S->compute_all_point_orbits(verbose_level);
+
+	//if (this->nb_orbits) {
+		for (int step = 0, ns = 5; step < ns; ++step) {
+
+			schreier* previous_schreier = S;
+
+//
+			int random_orbit_idx = random_integer(S->nb_orbits);
+			int random_orbit_idx_cpy = random_orbit_idx;
+			int random_point_idx = random_integer(
+					S->orbit_len[random_orbit_idx]);
+			int random_point = S->orbit[S->orbit_first[random_orbit_idx]
+					+ random_point_idx];
+			int random_generator_idx = random_integer(gens->len);
+
+			transporter_from_orbit_rep_to_point(random_point,
+					random_orbit_idx_cpy, Elt1, 0 /*verbose_level*/);
+
+// Create a new generating set with the new element
+			vector_ge* new_gens = NEW_OBJECT(vector_ge);
+			new_gens->init(A);
+			for (int el = 0; el < gens->len; el++) {
+				(el != random_generator_idx) ?
+						new_gens->append(gens->ith(el)) :
+						new_gens->append(Elt1);
+			}
+			FREE_OBJECT(gens);
+			gens = new_gens;
+
+//
+			S = NEW_OBJECT(schreier);
+			S->init(A);
+			S->init_generators(*gens);
+			S->compute_all_point_orbits(verbose_level);
+
+			if (S->get_num_points() != forest_info.total_points_in_old_forest
+					|| S->nb_orbits != this->nb_orbits) {
+// if the number of points in the new forest is not
+// equal to the number of nodes in the old forest,
+// then an invalid move has been made.
+				FREE_OBJECT(S);
+				S = previous_schreier;
+				break;
+			}
+
+			FREE_OBJECT(previous_schreier);
+
+			forest_info.steps_taken = step + 1;
+			forest_info.total_points_in_new_forest = S->get_num_points();
+			forest_info.average_word_length_of_new_forest =
+					S->get_average_word_length();
+			forest_info.num_generators_in_new_forest = S->gens.len;
+			forest_info.new_nb_orbits = S->nb_orbits;
+			for (int orbit_idx = 0; orbit_idx < S->nb_orbits; orbit_idx++) {
+				forest_info.original_num_nodes_in_new_tree[orbit_idx] =
+						S->orbit_len[orbit_idx];
+			}
+
+		}
+
+		this->init(A);
+		this->init_generators(S->gens);
+		this->compute_all_point_orbits(verbose_level);
+	//}
+
+	//cout << endl;
+	//cout << BRIGHT_RED;
+//	cout << LINE << endl;
+//	cout << "Information of shallow forest" << endl;
+//	cout << LINE << endl;
+//
+//	cout << "Information of old forest:" << endl;
+//	cout << "  Total Points: ";
+//	cout << forest_info.total_points_in_old_forest << endl;
+//	cout << "  Average Word Length: ";
+//	cout << forest_info.average_word_length_of_old_forest << endl;
+//	cout << "  Num. Generators: ";
+//	cout << forest_info.num_generators_in_old_forest << endl;
+//	cout << "  nb_orbits: ";
+//	cout << forest_info.old_nb_orbits << endl;
+//	cout << "  Nodes in each orbit: [";
+//	for (int orbit_idx = 0; orbit_idx < forest_info.old_nb_orbits;
+//			orbit_idx++) {
+//		cout << forest_info.original_num_nodes_in_old_tree[orbit_idx];
+//		if (orbit_idx + 1 != nb_orbits) {
+//			cout << ", ";
+//		}
+//	}
+//	cout << "]" << endl;
+//
+//	cout << endl;
+//
+//	cout << "Information of new forest:" << endl;
+//	cout << "  Total Points: ";
+//	cout << forest_info.total_points_in_new_forest << endl;
+//	cout << "  Average Word Length: ";
+//	cout << forest_info.average_word_length_of_new_forest << endl;
+//	cout << "  Num. Generators: ";
+//	cout << forest_info.num_generators_in_new_forest << endl;
+//	cout << "  nb_orbits: ";
+//	cout << forest_info.new_nb_orbits << endl;
+//	cout << "  Nodes in each orbit: [";
+//	for (int orbit_idx = 0; orbit_idx < forest_info.new_nb_orbits;
+//			orbit_idx++) {
+//		cout << forest_info.original_num_nodes_in_new_tree[orbit_idx];
+//		if (orbit_idx + 1 != nb_orbits) {
+//			cout << ", ";
+//		}
+//	}
+//	cout << "]" << endl;
+//	cout << "  steps taken: ";
+//	cout << forest_info.steps_taken << endl;
+//
+//	cout << LINE << endl;
+//	cout << RESET_COLOR_SCHEME << endl;
+
+	FREE_OBJECT(S);
+	FREE_OBJECT(gens);
+	FREE_int(Elt1);
+
+// Free memory in shallow_tree_generators_ai_info struct
+	FREE_int(forest_info.original_num_nodes_in_new_tree);
+	FREE_int(forest_info.original_num_nodes_in_old_tree);
+
+//	cout << BRIGHT_GREEN << endl;
+//	this->print_and_list_orbits(cout);
+//	cout << RESET_COLOR_SCHEME << endl;
+	if (f_v) {
+		cout << "schreier::shallow_tree_generators_ai done" << endl;
+	}
+
+}
+
+
+int schreier::get_num_points() {
+	// This function returns the number of points in the schreier forest
+
+	int total_points_in_forest = 0;
+
+	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		total_points_in_forest += this->orbit_len[orbit_idx];
+	}
+
+	return total_points_in_forest;
+}
+
+double schreier::get_average_word_length() {
+	// This function returns the average word length of the forest.
+
+	double avgwl = 0.0;
+	int total_points_in_forest = get_num_points();
+
+	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		avgwl += get_average_word_length(orbit_idx) * orbit_len[orbit_idx]
+				/ total_points_in_forest;
+	}
+
+	return avgwl;
+}
+
+double schreier::get_average_word_length(int orbit_idx)
+{
+	int fst = orbit_first[orbit_idx];
+	//int len = orbit_len[orbit_idx];
+	//int root = orbit[fst];
+	int l;
+
+	// Average and optimal word lengths of old tree
+	int last = orbit_first[orbit_idx + 1];
+	int L = 0, N = last - fst;
+	for (int j = 0; j < last; j++) {
+		trace_back(NULL, orbit[j], l);
+		L += l;
+	}
+
+	return L / double(N);
 }
 
 }}
