@@ -194,8 +194,9 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 					"spread from catalogue" << endl;
 			}
 		int nb_iso;
+		knowledge_base K;
 
-		nb_iso = Spread_nb_reps(q, k);
+		nb_iso = K.Spread_nb_reps(q, k);
 		if (Descr->iso >= nb_iso) {
 			cout << "spread_create::init "
 					"iso >= nb_iso, this spread does not exist" << endl;
@@ -204,7 +205,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 
 		int *rep;
 
-		rep = Spread_representative(q, k, Descr->iso, sz);
+		rep = K.Spread_representative(q, k, Descr->iso, sz);
 		set = NEW_int(sz);
 		int_vec_copy(rep, set, sz);
 

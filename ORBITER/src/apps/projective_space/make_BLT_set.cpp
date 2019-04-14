@@ -57,8 +57,9 @@ int main(int argc, char **argv)
 
 	int *BLT;
 	char fname[1000];
+	knowledge_base K;
 
-	BLT = BLT_representative(q, k);
+	BLT = K.BLT_representative(q, k);
 	sprintf(fname, "BLT_%d_%d.txt", q, k);
 	write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
 	if (f_v) {

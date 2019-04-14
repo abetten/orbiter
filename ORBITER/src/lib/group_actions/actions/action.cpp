@@ -2963,11 +2963,12 @@ void action::stabilizer_of_dual_hyperoval_representative(
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
 	int i;
+	knowledge_base K;
 
 	if (f_v) {
 		cout << "action::stabilizer_of_dual_hyperoval_representative" << endl;
 		}
-	DH_stab_gens(k, n, no, data, nb_gens, data_size, stab_order);
+	K.DH_stab_gens(k, n, no, data, nb_gens, data_size, stab_order);
 
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(this);
@@ -2995,12 +2996,13 @@ void action::stabilizer_of_spread_representative(
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
 	int i;
+	knowledge_base K;
 
 	if (f_v) {
 		cout << "action::stabilizer_of_spread_representative"
 				<< endl;
 		}
-	Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
+	K.Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
 
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(this);

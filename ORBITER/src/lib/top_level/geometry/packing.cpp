@@ -339,6 +339,7 @@ void packing::load_input_spreads(int &N,
 	int f_do_it, idx, no, orbit_length;
 	longinteger_object go, stab_go;
 	longinteger_domain D;
+	knowledge_base K;
 
 	if (f_v) {
 		cout << "packing::load_input_spreads" << endl;
@@ -350,7 +351,7 @@ void packing::load_input_spreads(int &N,
 	T->A->Sims->group_order(go);
 
 
-	nb_spreads_up_to_isomorphism = Spread_nb_reps(q, T->k);
+	nb_spreads_up_to_isomorphism = K.Spread_nb_reps(q, T->k);
 
 	input_spreads = NEW_int(nb_spreads_up_to_isomorphism * spread_size);
 	input_spread_label = NEW_int(nb_spreads_up_to_isomorphism);
@@ -381,7 +382,7 @@ void packing::load_input_spreads(int &N,
 			int *rep;
 			int sz;
 
-			rep = Spread_representative(
+			rep = K.Spread_representative(
 					q, T->k, no, sz);
 			int_vec_copy(rep,
 					input_spreads + nb_input_spreads * spread_size,

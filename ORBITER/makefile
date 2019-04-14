@@ -1,6 +1,7 @@
 all: ;
-	cd src; $(MAKE) all
+	cd SRC; $(MAKE) all
 
 clean: ;
-	cd src; $(MAKE) clean
+	cd SRC; $(MAKE) clean
+	#cd RUN; $(MAKE) clean
 

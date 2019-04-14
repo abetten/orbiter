@@ -59,15 +59,16 @@ int main(int argc, char **argv)
 		int *p;
 		int *Table;
 		int width;
+		knowledge_base K;
 		
 		sprintf(fname, "Spread_%d_%d.csv", q, k);
-		nb_reps = Spread_nb_reps(q, k);
+		nb_reps = K.Spread_nb_reps(q, k);
 		width = NT.i_power_j(q, k) + 1;
 		Table = NEW_int(nb_reps * width);
 		for (i = 0; i < nb_reps; i++) {
 			int sz;
 			
-			p = Spread_representative(q, k, i, sz);
+			p = K.Spread_representative(q, k, i, sz);
 			int_vec_copy(p, Table + i * width, width);
 			}
 		int_matrix_write_csv(fname, Table, nb_reps, width);
@@ -75,8 +76,9 @@ int main(int argc, char **argv)
 		}
 	else if (f_BLT) {
 		int *BLT;
+		knowledge_base K;
 
-		BLT = BLT_representative(q, k);
+		BLT = K.BLT_representative(q, k);
 		sprintf(fname, "BLT_%d_%d.txt", q, k);
 		write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
 		}
