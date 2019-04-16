@@ -398,7 +398,6 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(
 void classify_double_sixes::classify_partial_ovoids(
 	int f_draw_poset,
 	int f_draw_poset_full, 
-	int f_report,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -458,44 +457,6 @@ void classify_double_sixes::classify_partial_ovoids(
 				0 /* verbose_level */);
 		}
 		}
-	if (f_report) {
-		char fname_base[1000];
-		char fname_report[1000];
-		char title[10000];
-		char author[10000];
-
-		author[0] = 0;
-		//sprintf(author, "");
-
-
-		sprintf(title, "Classification of Five-Plus-Ones over GF(%d)", q);
-		sprintf(fname_base, "five_plus_one_q%d", q);
-
-		sprintf(fname_report, "%s.tex", fname_base);
-		{
-		ofstream fp(fname_report);
-		latex_interface L;
-
-
-		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
-
-		A->report(fp);
-
-		Five_plus_one->report(fp);
-
-		L.foot(fp);
-
-		} // close fp
-	}
 	if (q < 20) {
 		{
 		spreadsheet *Sp;
@@ -512,7 +473,78 @@ void classify_double_sixes::classify_partial_ovoids(
 		}
 }
 
+void classify_double_sixes::report(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+
+	if (f_v) {
+		cout << "classify_double_sixes::report" << endl;
+		}
+
+#if 0
+	char fname_base[1000];
+	char fname_report[1000];
+	char title[10000];
+	char author[10000];
+
+	author[0] = 0;
+	//sprintf(author, "");
+
+	cout << "f_report" << endl;
+
+	sprintf(title, "Classification of Five-Plus-Ones over GF(%d)", q);
+	sprintf(fname_base, "five_plus_one_q%d", q);
+
+	sprintf(fname_report, "%s.tex", fname_base);
+	{
+	ofstream fp(fname_report);
+	latex_interface L;
+
+
+	L.head(fp,
+		FALSE /* f_book */,
+		TRUE /* f_title */,
+		title, author,
+		FALSE /*f_toc */,
+		FALSE /* f_landscape */,
+		FALSE /* f_12pt */,
+		TRUE /*f_enlarged_page */,
+		TRUE /* f_pagenumbers*/,
+		NULL /* extra_praeamble */);
+#endif
+
+	ost << "\\section{The Groups}" << endl;
+	ost << "\\subsection{The semilinear group}" << endl;
+	A->report(ost);
+	A->print_points(ost);
+
+	ost << "\\subsection{The orthogonal group}" << endl;
+	A2->report(ost);
+	if (A2->degree < 100) {
+		A2->print_points(ost);
+	}
+
+	ost << "\\subsection{The group stabilizing the fixed line}" << endl;
+	A_on_neighbors->report(ost);
+	A_on_neighbors->print_points(ost);
+
+	ost << "{\\small\\arraycolsep=2pt" << endl;
+	SG_line_stab->print_generators_tex(ost);
+	ost << "}" << endl;
+
+	Five_plus_one->report(ost);
+
+#if 0
+	L.foot(fp);
+
+	} // close fp
+#endif
+
+	if (f_v) {
+		cout << "classify_double_sixes::report done" << endl;
+		}
+}
 
 void classify_double_sixes::partial_ovoid_test_early(int *S, int len,
 	int *candidates, int nb_candidates,
@@ -1128,6 +1160,7 @@ void classify_double_sixes::classify(int verbose_level)
 		}
 }
 
+
 void classify_double_sixes::downstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1564,6 +1597,7 @@ void classify_double_sixes::upstep(int verbose_level)
 		cout << "classify_double_sixes::upstep done" << endl;
 		}
 }
+
 
 void classify_double_sixes::print_five_plus_ones(ostream &ost)
 {

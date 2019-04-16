@@ -2204,9 +2204,14 @@ void action::report(ostream &ost)
 		int_vec_print(ost, base, base_len);
 		ost << "$\\\\" << endl;
 		}
-	ost << "{\\tiny\\arraycolsep=2pt" << endl;
-	Strong_gens->print_generators_tex(ost);
-	ost << "}" << endl;
+	if (f_has_strong_generators) {
+		ost << "{\\small\\arraycolsep=2pt" << endl;
+		Strong_gens->print_generators_tex(ost);
+		ost << "}" << endl;
+	}
+	else {
+		ost << "Does not have strong generators.\\\\" << endl;
+	}
 }
 
 void action::print_info()
@@ -2265,6 +2270,8 @@ void action::print_points(ostream &ost)
 	int i;
 	int *v;
 
+	cout << "action::print_points "
+			"low_level_point_size=" << low_level_point_size <<  endl;
 	v = NEW_int(low_level_point_size);
 	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
@@ -2299,6 +2306,7 @@ void action::print_points(ostream &ost)
 	ost << "\\end{array}" << endl;
 	ost << "$$}%" << endl;
 	FREE_int(v);
+	cout << "action::print_points done" << endl;
 }
 
 void action::group_order(longinteger_object &go)

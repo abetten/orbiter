@@ -219,6 +219,8 @@ void action_pointer_table::init_function_pointers_induced_action()
 	ptr_element_print_for_make_element_no_commas =
 			induced_action_element_print_for_make_element_no_commas;
 	ptr_print_point = induced_action_print_point;
+	ptr_unrank_point = induced_action_unrank_point;
+	ptr_rank_point = induced_action_rank_point;
 }
 
 }}

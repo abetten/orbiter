@@ -534,6 +534,123 @@ void schreier_vector::relabel_points(
 		}
 }
 
+void schreier_vector::orbit_stats(
+		int &nb_orbits, int *&orbit_reps, int *&orbit_length, int *&total_depth,
+		int verbose_level)
+{
+	int i, idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+
+	if (f_v) {
+		cout << "schreier_vector::orbit_stats" << endl;
+		}
+	int n;
+	int *pts;
+	int *depth;
+	int *ancestor;
+
+
+	n = sv[0];
+	pts = sv + 1;
+
+
+	if (nb_gen == 0) {
+		nb_orbits = n;
+		orbit_reps = NEW_int(nb_orbits);
+		orbit_length = NEW_int(nb_orbits);
+		total_depth = NEW_int(nb_orbits);
+		int_vec_copy(pts, orbit_reps, nb_orbits);
+		for (i = 0; i < nb_orbits; i++) {
+			orbit_length[i] = 1;
+			total_depth[i] = 1;
+		}
+		return;
+	}
+
+	int *prev;
+	int *label;
+	prev = pts + n;
+	label = prev + n;
+	if (f_v) {
+		cout << "schreier_vector::orbit_stats "
+				"schreier vector of length " << n << endl;
+		}
+
+	depth = NEW_int(n);
+	ancestor = NEW_int(n);
+
+	for (i = 0; i < n; i++) {
+		depth[i] = -1;
+		ancestor[i] = -1;
+		}
+	if (f_vv) {
+		cout << "schreier_vector::orbit_stats "
+				"determining depth using schreier_vector_determine_"
+				"depth_recursion" << endl;
+		}
+	for (i = 0; i < n; i++) {
+		schreier_vector_determine_depth_recursion(n,
+				pts, prev, depth, ancestor, i);
+		}
+	if (f_vv) {
+		cout << "schreier_vector::orbit_stats "
+				"determining depth using schreier_vector_"
+				"determine_depth_recursion done" << endl;
+		}
+	if (f_vvv && n < 100) {
+		cout << "i : pts[i] : prev[i] : label[i] : "
+				"depth[i] : ancestor[i]" << endl;
+		for (i = 0; i < n; i++) {
+			cout
+				<< setw(5) << i << " : "
+				<< setw(5) << pts[i] << " : "
+				<< setw(5) << prev[i] << " : "
+				<< setw(5) << label[i] << " : "
+				<< setw(5) << depth[i] << " : "
+				<< setw(5) << ancestor[i]
+				<< endl;
+			}
+		}
+
+	nb_orbits = 0;
+	for (i = 0; i < n; i++) {
+		if (prev[i] == -1) {
+			nb_orbits++;
+			}
+	}
+	orbit_reps = NEW_int(nb_orbits);
+	orbit_length = NEW_int(nb_orbits);
+	total_depth = NEW_int(nb_orbits);
+
+	int nb_orb, a;
+
+	nb_orb = 0;
+	for (i = 0; i < n; i++) {
+		if (prev[i] == -1) {
+			orbit_reps[nb_orb] = pts[i];
+			orbit_length[nb_orb] = 1;
+			total_depth[nb_orb] = 1;
+			nb_orb++;
+		}
+	}
+	for (i = 0; i < n; i++) {
+		if (prev[i] > 0) {
+			a = ancestor[i];
+			if (!int_vec_search(orbit_reps, nb_orbits, a, idx)) {
+				cout << "schreier_vector::orbit_stats "
+						"cannot find ancestor in list of orbit reps" << endl;
+				exit(1);
+			}
+			orbit_length[idx]++;
+			total_depth[idx] += depth[i] + 1;
+		}
+	}
+	FREE_int(depth);
+	FREE_int(ancestor);
+}
+
 void schreier_vector::orbit_of_point(
 		int pt, int *&orbit_elts, int &orbit_len,
 		int verbose_level)

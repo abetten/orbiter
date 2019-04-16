@@ -1291,7 +1291,7 @@ void poset_classification::get_stabilizer_group(
 		}
 }
 
-void poset_classification::get_stabilizer_generators(
+void poset_classification::get_stabilizer_generators_cleaned_up(
 	strong_generators *&gens,
 	int level, int orbit_at_level, int verbose_level)
 {
@@ -1299,7 +1299,7 @@ void poset_classification::get_stabilizer_generators(
 
 	if (f_v) {
 		cout << "poset_classification::"
-				"get_stabilizer_generators level=" << level
+				"get_stabilizer_generators_cleaned_up level=" << level
 				<< " orbit_at_level=" << orbit_at_level << endl;
 		}
 	group *G;
@@ -1313,12 +1313,44 @@ void poset_classification::get_stabilizer_generators(
 	FREE_OBJECT(G);
 	if (f_v) {
 		cout << "poset_classification::"
+				"get_stabilizer_generators_cleaned_up level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " done" << endl;
+		}
+
+}
+
+void poset_classification::get_stabilizer_generators(
+	strong_generators *&gens,
+	int level, int orbit_at_level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::"
+				"get_stabilizer_generators level=" << level
+				<< " orbit_at_level=" << orbit_at_level << endl;
+		}
+
+	poset_orbit_node *O;
+	int node;
+
+	node = first_poset_orbit_node_at_level[level] + orbit_at_level;
+	O = root + node;
+
+	O->get_stabilizer_generators(this,
+			gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "poset_classification::"
 				"get_stabilizer_generators level=" << level
 				<< " orbit_at_level=" << orbit_at_level
 				<< " done" << endl;
 		}
 
 }
+
 
 void poset_classification::change_extension_type(int level,
 		int node, int cur_ext, int type, int verbose_level)

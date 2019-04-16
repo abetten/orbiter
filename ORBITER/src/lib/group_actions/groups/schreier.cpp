@@ -2276,11 +2276,13 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 	//this->print_and_list_orbits(cout);
 
 	if (f_v) {
-		cout << "schreier::get_schreier_vector before this->shallow_tree_generators_ai" << endl;
+		cout << "schreier::get_schreier_vector before "
+				"this->shallow_tree_generators_ai" << endl;
 	}
 	this->shallow_tree_generators_ai(verbose_level);
 	if (f_v) {
-		cout << "schreier::get_schreier_vector after this->shallow_tree_generators_ai" << endl;
+		cout << "schreier::get_schreier_vector after "
+				"this->shallow_tree_generators_ai" << endl;
 	}
 
 	//cout << "Orbit partition after:" << endl;

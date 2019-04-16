@@ -929,8 +929,8 @@ public:
 	void classify_partial_ovoids(
 		int f_draw_poset,
 		int f_draw_poset_full, 
-		int f_report,
 		int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 	void partial_ovoid_test_early(int *S, int len,
 		int *candidates, int nb_candidates,
 		int *good_candidates, int &nb_good_candidates,

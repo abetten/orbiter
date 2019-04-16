@@ -208,6 +208,39 @@ void flag_orbits::read_file(ifstream &fp, int verbose_level)
 		}
 }
 
+void flag_orbits::print_latex(ostream &ost,
+	const char *title, int f_print_stabilizer_gens)
+{
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "flag_orbits::print_latex" << endl;
+	}
+
+	//ost << "\\clearpage" << endl;
+	ost << "\\subsection*{" << title << "}" << endl;
+
+
+	ost << "The number of primary orbits below is " << nb_primary_orbits_lower << "\\\\" << endl;
+	ost << "The number of primary orbits above is " << nb_primary_orbits_upper << "\\\\" << endl;
+	ost << "The number of flag orbits is " << nb_flag_orbits << "\\\\" << endl;
+
+	int i;
+
+	ost << "The flag orbits are:" << endl;
+	ost << "\\begin{enumerate}[(1)]" << endl;
+	for (i = 0; i < nb_flag_orbits; i++) {
+		flag_orbit_node *F;
+
+		F = &Flag_orbit_node[i];
+		ost << "\\item" << endl;
+		F->print_latex(this, ost, f_print_stabilizer_gens);
+	}
+	ost << "\\end{enumerate}" << endl;
+
+}
+
 
 }}
 

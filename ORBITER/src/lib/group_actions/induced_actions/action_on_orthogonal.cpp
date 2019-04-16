@@ -106,6 +106,19 @@ void action_on_orthogonal::init(action *original_action,
 		}
 }
 
+void action_on_orthogonal::unrank_point(int *v, int rk)
+{
+	O->unrank_point(v, 1 /* stride */, rk, 0 /* verbose_level */);
+}
+
+int action_on_orthogonal::rank_point(int *v)
+{
+	int rk;
+
+	rk = O->rank_point(v, 1 /* stride */, 0 /* verbose_level */);
+	return rk;
+}
+
 int action_on_orthogonal::map_a_point(
 		int *Elt, int i, int verbose_level)
 {

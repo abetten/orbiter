@@ -692,7 +692,7 @@ void poset_classification::report(ostream &ost)
 	ost << "Poset classification up to depth " << depth << "\\\\" << endl;
 
 	ost << endl;
-	ost << "\\section{Orbits}" << endl;
+	ost << "\\section{The orbits}" << endl;
 	ost << endl;
 
 
@@ -715,27 +715,34 @@ void poset_classification::report(ostream &ost)
 	ost << "$$" << endl;
 
 	ost << endl;
-	ost << "\\section{Orbit Representatives and Stabilizers}" << endl;
+	ost << "\\section{Orbit representatives and stabilizers}" << endl;
 	ost << endl;
 
+	ost << "N = node\\\\" << endl;
+	ost << "D = depth or level\\\\" << endl;
+	ost << "O = orbit with a level\\\\" << endl;
+	ost << "Rep = orbit representative\\\\" << endl;
+	ost << "SO = (order of stabilizer, orbit length)\\\\" << endl;
+	ost << "L = number of live points\\\\" << endl;
+	ost << "F = number of flags\\\\" << endl;
+	ost << "FO = number of flag orbits\\\\" << endl;
+	ost << "Gen = number of generators for the stabilizer of the orbit rep.\\\\" << endl;
 	ost << "\\begin{center}" << endl;
-	ost << "\\begin{longtable}{|r|r|r|l|r|r|r|r|r|}" << endl;
+	ost << "\\begin{longtable}{|r|r|r|p{3cm}|r|r|r|r|r|}" << endl;
 	ost << "\\caption{Orbit Representatives}\\\\" << endl;
 	ost << endl;
-	ost << "\\hline Node & Level & Orbit & Representative & "
-			"$($Stab, Orb-Length$)$ & Nb Live-Pts & Nb Ext "
-			"& Nb Orb & Nb Gen\\\\ \\hline " << endl;
+	ost << "\\hline N & D & O & Rep & SO "
+			"& L & F & FO & Gen\\\\ \\hline " << endl;
 	ost << "\\endfirsthead" << endl;
 	ost << endl;
-	ost << "\\multicolumn{8}{c}%" << endl;
+	ost << "\\multicolumn{9}{c}%" << endl;
 	ost << "{{\\bfseries \\tablename\\ \\thetable{} -- continued "
 			"from previous page}} \\\\" << endl;
-	ost << "\\hline Node & Level & Orbit & Representative & "
-			"$($Stab, Orb-Length$)$ & Nb Live-Pts & Nb Ext "
-			"& Nb Orb & Nb Gen\\\\ \\hline " << endl;
+	ost << "\\hline N & D & O & Rep & SO "
+			"& L & F & FO & Gen\\\\ \\hline " << endl;
 	ost << "\\endhead" << endl;
 	ost << endl;
-	ost << "\\hline \\multicolumn{8}{|r|}{{Continued on next page}} "
+	ost << "\\hline \\multicolumn{9}{|r|}{{Continued on next page}} "
 			"\\\\ \\hline" << endl;
 	ost << "\\endfoot" << endl;
 	ost << endl;
@@ -761,6 +768,12 @@ void poset_classification::report(ostream &ost)
 			get_set_by_level(level, i, rep);
 			int_vec_print_to_str_naked(str, rep, level);
 
+#if 0
+			get_orbit_length_and_stabilizer_order_with_given_group_order(
+					i, level,
+					go,
+					stab_order, orbit_length);
+#endif
 			get_orbit_length_and_stabilizer_order(i, level,
 				stab_order, orbit_length);
 
@@ -789,13 +802,34 @@ void poset_classification::report(ostream &ost)
 			}
 
 			ost << cnt << " & " << level << " & " << i
-					<< " & $\\{" << str << "\\}$ & ("
+					<< " & $\\{$ " << str << " $\\}$ & ("
 					<< stab_order << ", "
-					<< orbit_length << ") & "
-					<< nb_live_pts << " & "
-					<< nb_extensions << " & "
-					<< nbo << " & "
-					<< nbg << "\\\\" << endl;
+					<< orbit_length << ") & ";
+
+			if (nb_live_pts >= 0) {
+				ost << nb_live_pts << " & ";
+			}
+			else {
+				ost << " & ";
+			}
+			if (nb_extensions >= 0) {
+				ost << nb_extensions << " & ";
+			}
+			else {
+				ost << " & ";
+			}
+			if (nbo >= 0) {
+				ost << nbo << " & ";
+			}
+			else {
+				ost << " & ";
+			}
+			if (nbg >= 0) {
+				ost << nbg << "\\\\" << endl;
+			}
+			else {
+				ost << "\\\\" << endl;
+			}
 
 
 			cnt++;
@@ -805,10 +839,8 @@ void poset_classification::report(ostream &ost)
 
 	ost << "\\end{longtable}" << endl;
 	ost << "\\end{center}" << endl;
-	FREE_int(rep);
-
 	ost << endl;
-	ost << "\\section{Poset of Orbits}" << endl;
+	ost << "\\section{Poset of orbits}" << endl;
 	ost << endl;
 
 
@@ -829,10 +861,10 @@ void poset_classification::report(ostream &ost)
 		"-xin 1000000 -yin 1000000 "
 		"-xout 1000000 -yout 1000000 "
 		"-y_stretch 0.75 "
-		"-rad 6000 "
-		"-nodes_empty "
-		/*"-corners "*/
-		/*"-embedded "*/
+		"-rad 20000 "
+		//"-nodes_empty "
+		"-corners "
+		//"-embedded "
 		"-line_width 0.30 "
 		"-spanning_tree",
 		tools_path);
@@ -852,10 +884,10 @@ void poset_classification::report(ostream &ost)
 
 
 	ost << endl;
-	ost << "\\section{Stabilizers and Schreier Trees}" << endl;
+	ost << "\\section{Stabilizers and Schreier trees}" << endl;
 	ost << endl;
 
-	int orbit_at_level, j;
+	int orbit_at_level, j, nb_gens;
 
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
@@ -877,7 +909,7 @@ void poset_classification::report(ostream &ost)
 
 			get_stabilizer_generators(gens,
 					level, orbit_at_level, verbose_level);
-			get_orbit_length_and_stabilizer_order(i, level,
+			get_orbit_length_and_stabilizer_order(orbit_at_level, level,
 				stab_order, orbit_length);
 
 			stab_order.print_to_string(str);
@@ -888,8 +920,10 @@ void poset_classification::report(ostream &ost)
 
 
 			ost << "\\subsection*{Node " << O->node << " at Level "
-					<< level << " Orbit " << orbit_at_level << "}" << endl;
+					<< level << " Orbit " << orbit_at_level
+					<< " / " << nb_orbits << "}" << endl;
 
+			get_set_by_level(level, orbit_at_level, rep);
 
 			ost << "$$" << endl;
 			int_set_print_tex(ost, rep, level);
@@ -902,6 +936,7 @@ void poset_classification::report(ostream &ost)
 			gens->print_generators_tex(ost);
 			ost << "}" << endl;
 
+			nb_gens = gens->gens->len;
 
 			nb_extensions = O->nb_extensions;
 			//ost << "There are " << nbo << " orbits\\\\" << endl;
@@ -912,6 +947,42 @@ void poset_classification::report(ostream &ost)
 
 			if (Schreier_vector) {
 				int nb_orbits_sv = Schreier_vector->number_of_orbits;
+
+				if (Schreier_vector->f_has_local_generators) {
+
+					ost << "Generators for the Schreier trees:\\\\" << endl;
+					ost << "{\\tiny\\arraycolsep=2pt" << endl;
+					Schreier_vector->local_gens->print_generators_tex(stab_order, ost);
+					ost << "}" << endl;
+
+					nb_gens = Schreier_vector->local_gens->len;
+				}
+
+				int nb_o, h;
+				int *orbit_reps;
+				int *orbit_length;
+				int *total_depth;
+				Schreier_vector->orbit_stats(
+						nb_o, orbit_reps, orbit_length, total_depth,
+						0 /*verbose_level*/);
+				if (nb_o != nb_orbits_sv) {
+					cout << "nb_o != nb_orbits_sv" << endl;
+					exit(1);
+				}
+				for (h = 0; h < nb_o; h++) {
+					ost << "\\noindent Orbit " << h << " / " << nb_o
+							<< ": Point " << orbit_reps[h]
+							<< " lies in an orbit of length "
+							<< orbit_length[h] << " with average word length "
+							<< (double) total_depth[h] / (double) orbit_length[h];
+					if (nb_gens > 1) {
+						ost << " $H_{" << nb_gens << "} = "
+							<< (double) log(total_depth[h]) / log(nb_gens) << "$";
+					}
+					ost << "\\\\" << endl;
+				}
+
+
 				for (j = 0; j < nb_orbits_sv; j++) {
 
 					//char fname_base[1000];
@@ -939,8 +1010,8 @@ void poset_classification::report(ostream &ost)
 						"-y_stretch 0.3 "
 						"-rad 2000 "
 						"-nodes_empty "
-						/*"-corners "*/
-						/*"-embedded "*/
+						"-corners "
+						//"-embedded "
 						"-line_width 0.30 "
 						"-spanning_tree",
 						tools_path, fname_layered_graph);
@@ -951,9 +1022,10 @@ void poset_classification::report(ostream &ost)
 					cout << "executing: " << cmd << endl;
 					system(cmd);
 
-					ost << "\\subsection*{Node " << O->node << "="
-							<< level << "/" << orbit_at_level
-							<< " Orbit " << j << "}" << endl;
+					ost << "\\subsubsection*{Node " << O->node << " at Level "
+							<< level << " Orbit " << orbit_at_level
+							<< " / " << nb_orbits
+							<< " Tree " << j << " / " << nb_orbits_sv << "}" << endl;
 
 					nbo = Schreier_vector->number_of_orbits;
 					if (Schreier_vector->f_has_local_generators) {
@@ -974,6 +1046,8 @@ void poset_classification::report(ostream &ost)
 			FREE_OBJECT(gens);
 		}
 	}
+	FREE_int(rep);
+
 
 }
 

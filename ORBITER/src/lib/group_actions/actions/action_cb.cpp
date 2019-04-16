@@ -174,12 +174,18 @@ void action::print_point(
 void action::unrank_point(int rk, int *v)
 // v[low_level_point_size]
 {
+	if (ptr->ptr_unrank_point == NULL) {
+		cout << "action::unrank_point ptr_unrank_point == NULL" << endl;
+	}
 	(*ptr->ptr_unrank_point)(*this, rk, v);
 }
 
 int action::rank_point(int *v)
 // v[low_level_point_size]
 {
+	if (ptr->ptr_unrank_point == NULL) {
+		cout << "action::rank_point ptr_rank_point == NULL" << endl;
+	}
 	return (*ptr->ptr_rank_point)(*this, v);
 }
 

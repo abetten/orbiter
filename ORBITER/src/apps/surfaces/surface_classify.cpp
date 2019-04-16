@@ -301,7 +301,7 @@ int main(int argc, const char **argv)
 		SCW->Classify_double_sixes->classify_partial_ovoids(
 			f_draw_poset,
 			f_draw_poset_full, 
-			f_report_5p1,
+			//f_report_5p1,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify after SCW->Classify_"
@@ -342,7 +342,10 @@ int main(int argc, const char **argv)
 				<< file_size(fname) << endl;
 		}
 		
-		}
+
+
+
+	}
 
 
 	if (f_v) {
@@ -469,7 +472,7 @@ int main(int argc, const char **argv)
 		int f_with_stabilizers = TRUE;
 
 		sprintf(title, "Cubic Surfaces with 27 Lines over GF(%d) ", q);
-		sprintf(author, "");
+		sprintf(author, "Orbiter");
 		sprintf(fname, "Surfaces_q%d.tex", q);
 
 			{
@@ -488,6 +491,15 @@ int main(int argc, const char **argv)
 				TRUE /* f_pagenumbers*/,
 				NULL /* extra_praeamble */);
 
+
+			SCW->Classify_double_sixes->report(fp, verbose_level);
+
+			SCW->Classify_double_sixes->print_five_plus_ones(fp);
+			SCW->Classify_double_sixes->Flag_orbits->print_latex(fp, "Flag orbits for double sixes", TRUE);
+			SCW->Classify_double_sixes->Double_sixes->print_latex(fp, "Double Sixes", TRUE);
+
+			SCW->Flag_orbits->print_latex(fp, "Flag orbits for surfaces", TRUE);
+			SCW->Surfaces->print_latex(fp, "Surfaces", TRUE);
 
 			SCW->latex_surfaces(fp, f_with_stabilizers);
 

@@ -1082,6 +1082,8 @@ void induced_action_element_print_for_make_element(action &A,
 void induced_action_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
 void induced_action_print_point(action &A, int a, std::ostream &ost);
+void induced_action_unrank_point(action &A, int rk, int *v);
+int induced_action_rank_point(action &A, int *v);
 
 
 // #############################################################################

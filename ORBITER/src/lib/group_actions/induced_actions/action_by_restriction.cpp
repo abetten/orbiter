@@ -96,6 +96,24 @@ void action_by_restriction::init(int nb_points, int *points,
 		}
 }
 
+int action_by_restriction::original_point(int pt)
+{
+	return points[pt];
+}
+
+int action_by_restriction::restricted_point_idx(int pt)
+{
+	int idx;
+
+	if (!int_vec_search(points_sorted, nb_points, pt, idx)) {
+		cout << "action_by_restriction::restricted_point_idx fatal: "
+				"point " << pt << " not found" << endl;
+		exit(1);
+		}
+	return perm_inv[idx];
+}
+
+
 int action_by_restriction::compute_image(
 		action *A, int *Elt, int i, int verbose_level)
 {
