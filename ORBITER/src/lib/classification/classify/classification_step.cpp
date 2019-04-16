@@ -116,7 +116,7 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 }
 
 void classification_step::print_latex(ostream &ost,
-	const char *title, int f_with_stabilizers)
+	const char *title, int f_print_stabilizer_gens)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -144,6 +144,8 @@ void classification_step::print_latex(ostream &ost,
 	longinteger_object go1, ol, Ol;
 	Ol.create(0);
 
+	ost << "The orbits are:" << endl;
+	ost << "\\begin{enumerate}[(1)]" << endl;
 	for (i = 0; i < nb_orbits; i++) {
 
 		if (f_v) {
@@ -162,6 +164,7 @@ void classification_step::print_latex(ostream &ost,
 			cout << "orbit length " << ol << endl;
 			}
 		
+		ost << "\\item" << endl;
 		ost << "$" << i << " / " << nb_orbits << "$ $" << endl;
 		int_set_print_tex_for_inline_text(ost,
 				Rep + i * representation_sz,
@@ -171,14 +174,15 @@ void classification_step::print_latex(ostream &ost,
 		ost << "}$ orbit length $";
 		ol.print_not_scientific(ost);
 		ost << "$\\\\" << endl;
-		if (f_with_stabilizers) {
+		if (f_print_stabilizer_gens) {
 			//ost << "Strong generators are:" << endl;
 			Orbit[i].gens->print_generators_tex(ost);
-			D.add_in_place(Ol, ol);
 			}
+		D.add_in_place(Ol, ol);
 
 
 		}
+	ost << "\\end{enumerate}" << endl;
 
 	ost << "The overall number of objects is: " << Ol << "\\\\" << endl;
 }

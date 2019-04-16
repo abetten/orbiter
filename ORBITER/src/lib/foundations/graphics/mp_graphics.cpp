@@ -160,18 +160,65 @@ void mp_graphics::set_scale(double scale)
 
 void mp_graphics::frame(double move_out)
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	int Px[30];
 	int Py[30];
 	int x, y, dx, dy, ox, oy, Ox, Oy;
 	int xmin, ymin, xmax, ymax;
 	
-	xmin = out_xmin();
-	xmax = out_xmax();
-	ymin = out_ymin();
-	ymax = out_ymax();
-	
-	dx = xmax - xmin;
-	dy = ymax - ymin;
+
+	if (f_v) {
+		cout << "mp_graphics::frame" << endl;
+	}
+
+
+	if (f_min_max_set) {
+
+		if (f_v) {
+			cout << "mp_graphics::frame f_min_max_set" << endl;
+			cout << "out_xmin()=" << out_xmin() << endl;
+			cout << "out_xmax()=" << out_xmax() << endl;
+			cout << "out_ymin()=" << out_ymin() << endl;
+			cout << "out_ymax()=" << out_ymax() << endl;
+			cout << "x_min=" << x_min << endl;
+			cout << "x_max=" << x_max << endl;
+			cout << "y_min=" << y_min << endl;
+			cout << "y_max=" << y_max << endl;
+		}
+		int xmin_d, xmax_d;
+		int ymin_d, ymax_d;
+
+		xmin_d = x_min;
+		xmax_d = x_max;
+		ymin_d = y_min;
+		ymax_d = y_max;
+		user2dev(xmin_d, ymin_d);
+		user2dev(xmax_d, ymax_d);
+		if (f_v) {
+			cout << "xmin_d=" << xmin_d << endl;
+			cout << "xmax_d=" << xmax_d << endl;
+			cout << "ymin_d=" << ymin_d << endl;
+			cout << "ymax_d=" << ymax_d << endl;
+		}
+
+		xmin = out_xmin();
+		xmax = out_xmax();
+		ymin = ymin_d;
+		ymax = ymax_d;
+
+	}
+	else {
+		xmin = out_xmin();
+		xmax = out_xmax();
+		ymin = out_ymin();
+		ymax = out_ymax();
+
+
+	}
+
+	dx = out_xmax() - out_xmin();
+	dy = out_ymax() - out_ymin();
 	
 	ox = (int)(dx * .05);
 	oy = (int)(dy * .05);
@@ -181,6 +228,7 @@ void mp_graphics::frame(double move_out)
 	xmax += Ox;
 	ymin -= Oy;
 	ymax += Oy;
+
 
 	x = xmin;
 	y = ymin;
@@ -249,6 +297,14 @@ void mp_graphics::frame(double move_out)
 	dev2user(x, y);
 	Px[11] = x;
 	Py[11] = y;
+
+	if (f_v) {
+		for (int i = 0; i < 12; i++) {
+			cout << "Px[" << i << "]=" << Px[i] << " ";
+			cout << "Py[" << i << "]=" << Py[i] << " ";
+			cout << endl;
+		}
+	}
 
 	polygon3(Px, Py, 2, 0, 1);
 	polygon3(Px, Py, 4, 3, 5);

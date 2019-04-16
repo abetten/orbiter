@@ -500,6 +500,9 @@ public:
 	void relabel_points(
 		action_on_factor_space *AF,
 		int verbose_level);
+	void orbit_stats(
+			int &nb_orbits, int *&orbit_reps, int *&orbit_length, int *&total_depth,
+			int verbose_level);
 	void orbit_of_point(
 			int pt, int *&orbit_elts, int &orbit_len,
 			int verbose_level);

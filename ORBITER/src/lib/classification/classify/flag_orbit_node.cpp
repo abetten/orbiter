@@ -137,6 +137,40 @@ void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
 		}
 }
 
+void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
+		ostream &ost,
+		int f_print_stabilizer_gens)
+{
+	longinteger_object go;
+
+	ost << "Flag orbit " << flag_orbit_index << " / " << Flag_orbits->nb_flag_orbits
+			<< " down=(" << downstep_primary_orbit
+			<< "," << downstep_secondary_orbit
+			<< ")"
+			<< " up=(" << upstep_primary_orbit
+			<< "," << upstep_secondary_orbit
+			<< ")";
+	if (f_fusion_node) {
+		ost << " fuse to " << fusion_with;
+	}
+	ost << " is ";
+	int_vec_print(ost, Flag_orbits->Pt +
+			flag_orbit_index * Flag_orbits->pt_representation_sz,
+			Flag_orbits->pt_representation_sz);
+	ost << " with a stabilizer of order ";
+	gens->group_order(go);
+	ost << go << "\\\\" << endl;
+	if (f_print_stabilizer_gens) {
+		gens->print_generators_tex(ost);
+	}
+	if (f_fusion_node) {
+		ost << "Fusion element:\\\\" << endl;
+		ost << "$$" << endl;
+		Flag_orbits->A->element_print_latex(fusion_elt, ost);
+		ost << "$$" << endl;
+	}
+}
+
 }}
 
 

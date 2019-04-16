@@ -477,6 +477,8 @@ public:
 		longinteger_object &go);
 	void get_stabilizer_group(group *&G,  
 		int level, int orbit_at_level, int verbose_level);
+	void get_stabilizer_generators_cleaned_up(strong_generators *&gens,
+		int level, int orbit_at_level, int verbose_level);
 	void get_stabilizer_generators(strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
 	void change_extension_type(int level, int node, int cur_ext, 

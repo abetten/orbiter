@@ -40,7 +40,7 @@ public:
 			longinteger_object &go, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
-	void print_latex(std::ostream &ost, const char *title, int f_with_stabilizers);
+	void print_latex(std::ostream &ost, const char *title, int f_print_stabilizer_gens);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 
@@ -76,6 +76,8 @@ public:
 		int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
+	void print_latex(std::ostream &ost,
+		const char *title, int f_print_stabilizer_gens);
 
 };
 
@@ -115,6 +117,9 @@ public:
 			strong_generators *Strong_gens, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
+	void print_latex(flag_orbits *Flag_orbits,
+			std::ostream &ost,
+			int f_print_stabilizer_gens);
 
 };
 

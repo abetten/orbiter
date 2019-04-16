@@ -1579,6 +1579,512 @@ void induced_action_print_point(action &A,
 		}
 }
 
+
+void induced_action_unrank_point(action &A, int rk, int *v)
+{
+	//cout << "induced_action_unrank_point" << endl;
+
+	if (A.type_G == action_by_right_multiplication_t) {
+		//action_by_right_multiplication *ABRM = A.G.ABRM;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		//ABRM->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_by_restriction_t) {
+		action_by_restriction *ABR = A.G.ABR;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		int rk0;
+		rk0 = ABR->original_point(rk);
+		sub->unrank_point(rk0, v);
+		}
+	else if (A.type_G == action_by_conjugation_t) {
+		//action_by_conjugation *ABC = A.G.ABC;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		//ABC->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_on_determinant_t) {
+		//action_on_determinant *AD = A.G.AD;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_galois_group_t) {
+		//action_on_galois_group *AG = A.G.on_Galois_group;
+
+		//ost << a;
+		}
+	else if (A.type_G == action_on_sign_t) {
+		//action_on_sign *OnSign = A.G.OnSign;
+		//ost << a;
+		}
+	else if (A.type_G == action_on_sets_t) {
+		//action_on_sets *AOS = A.G.on_sets;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		//AOS->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_on_subgroups_t) {
+		//action_on_subgroups *AOS = A.G.on_subgroups;
+		//ost << a;
+		//AOS->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_on_k_subsets_t) {
+		//action_on_k_subsets *On_k_subsets = A.G.on_k_subsets;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_orbits_t) {
+		//action_on_orbits *On_orbits = A.G.OnOrbits;
+#if 0
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+#endif
+		//ost << a;
+		}
+	else if (A.type_G == action_on_bricks_t) {
+		//action_on_bricks *On_bricks = A.G.OnBricks;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_andre_t) {
+		//action_on_andre *OnAndre = A.G.OnAndre;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_pairs_t) {
+		action *sub;
+		//int i, j;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point "
+					"no subaction, type = action_on_pairs_t" << endl;
+			exit(1);
+			}
+		//k2ij(a, i, j, sub->degree);
+		//cout << "a={" << i << "," << j << "}";
+		}
+	else if (A.type_G == action_on_ordered_pairs_t) {
+		action *sub;
+		//int a2, swap, tmp, i, j;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point "
+					"no subaction, type = action_on_ordered_pairs_t" << endl;
+			exit(1);
+			}
+#if 0
+		swap = a % 2;
+		a2 = a / 2;
+		k2ij(a2, i, j, sub->degree);
+		if (swap) {
+			tmp = i;
+			i = j;
+			j = tmp;
+			}
+		cout << "a=(" << i << "," << j << ")";
+#endif
+		}
+	else if (A.type_G == base_change_t) {
+		action *sub;
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point "
+					"no subaction, type = base_change_t" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == product_action_t) {
+		//product_action *PA;
+
+		//PA = A.G.product_action_data;
+		//ost << a;
+		}
+	else if (A.type_G == action_on_grassmannian_t) {
+		if (FALSE) {
+			cout << "action_on_grassmannian_t" << endl;
+			}
+		//action_on_grassmannian *AG = A.G.AG;
+
+#if 0
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point "
+					"no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+#endif
+		//AG->print_point(a, ost);
+		//b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
+		}
+	else if (A.type_G == action_on_spread_set_t) {
+		if (FALSE) {
+			cout << "action_on_spread_set_t" << endl;
+			}
+		//action_on_spread_set *AS = A.G.AS;
+
+		//ost << a;
+		}
+	else if (A.type_G == action_on_orthogonal_t) {
+		if (FALSE) {
+			cout << "action_on_orthogonal_t" << endl;
+			}
+		action_on_orthogonal *AO = A.G.AO;
+
+		AO->unrank_point(v, rk);
+		//ost << a;
+
+#if 0
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point no subaction" << endl;
+			exit(1);
+			}
+		ost << a;
+#endif
+		}
+	else if (A.type_G == action_on_wedge_product_t) {
+		if (FALSE) {
+			cout << "induced_action_unrank_point "
+					"action_on_wedge_product_t" << endl;
+			}
+		action_on_wedge_product *AW = A.G.AW;
+
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_unrank_point "
+					"no subaction" << endl;
+			exit(1);
+			}
+		AW->unrank_point(v, rk);
+		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
+		}
+	else {
+		cout << "induced_action_unrank_point type_G unknown:: type_G = ";
+		action_print_symmetry_group_type(cout, A.type_G);
+		cout << endl;
+		exit(1);
+		}
+
+}
+
+int induced_action_rank_point(action &A, int *v)
+{
+	//cout << "induced_action_rank_point" << endl;
+	int rk = -1;
+
+	if (A.type_G == action_by_right_multiplication_t) {
+		//action_by_right_multiplication *ABRM = A.G.ABRM;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		//ABRM->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_by_restriction_t) {
+		action_by_restriction *ABR = A.G.ABR;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		int rk0;
+		rk0 = sub->rank_point(v);
+		rk = ABR->restricted_point_idx(rk0);
+		}
+	else if (A.type_G == action_by_conjugation_t) {
+		//action_by_conjugation *ABC = A.G.ABC;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		//ABC->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_on_determinant_t) {
+		//action_on_determinant *AD = A.G.AD;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_galois_group_t) {
+		//action_on_galois_group *AG = A.G.on_Galois_group;
+
+		//ost << a;
+		}
+	else if (A.type_G == action_on_sign_t) {
+		//action_on_sign *OnSign = A.G.OnSign;
+		//ost << a;
+		}
+	else if (A.type_G == action_on_sets_t) {
+		//action_on_sets *AOS = A.G.on_sets;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		//AOS->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_on_subgroups_t) {
+		//action_on_subgroups *AOS = A.G.on_subgroups;
+		//ost << a;
+		//AOS->compute_image(sub, Elt, a, b, verbose_level);
+		}
+	else if (A.type_G == action_on_k_subsets_t) {
+		//action_on_k_subsets *On_k_subsets = A.G.on_k_subsets;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_orbits_t) {
+		//action_on_orbits *On_orbits = A.G.OnOrbits;
+#if 0
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+#endif
+		//ost << a;
+		}
+	else if (A.type_G == action_on_bricks_t) {
+		//action_on_bricks *On_bricks = A.G.OnBricks;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_andre_t) {
+		//action_on_andre *OnAndre = A.G.OnAndre;
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == action_on_pairs_t) {
+		action *sub;
+		//int i, j;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point "
+					"no subaction, type = action_on_pairs_t" << endl;
+			exit(1);
+			}
+		//k2ij(a, i, j, sub->degree);
+		//cout << "a={" << i << "," << j << "}";
+		}
+	else if (A.type_G == action_on_ordered_pairs_t) {
+		action *sub;
+		//int a2, swap, tmp, i, j;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point "
+					"no subaction, type = action_on_ordered_pairs_t" << endl;
+			exit(1);
+			}
+#if 0
+		swap = a % 2;
+		a2 = a / 2;
+		k2ij(a2, i, j, sub->degree);
+		if (swap) {
+			tmp = i;
+			i = j;
+			j = tmp;
+			}
+		cout << "a=(" << i << "," << j << ")";
+#endif
+		}
+	else if (A.type_G == base_change_t) {
+		action *sub;
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point "
+					"no subaction, type = base_change_t" << endl;
+			exit(1);
+			}
+		//ost << a;
+		}
+	else if (A.type_G == product_action_t) {
+		//product_action *PA;
+
+		//PA = A.G.product_action_data;
+		//ost << a;
+		}
+	else if (A.type_G == action_on_grassmannian_t) {
+		if (FALSE) {
+			cout << "action_on_grassmannian_t" << endl;
+			}
+		//action_on_grassmannian *AG = A.G.AG;
+
+#if 0
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point "
+					"no subaction" << endl;
+			exit(1);
+			}
+		//ost << a;
+#endif
+		//AG->print_point(a, ost);
+		//b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
+		}
+	else if (A.type_G == action_on_spread_set_t) {
+		if (FALSE) {
+			cout << "action_on_spread_set_t" << endl;
+			}
+		//action_on_spread_set *AS = A.G.AS;
+
+		//ost << a;
+		}
+	else if (A.type_G == action_on_orthogonal_t) {
+		if (FALSE) {
+			cout << "action_on_orthogonal_t" << endl;
+			}
+		action_on_orthogonal *AO = A.G.AO;
+
+		rk = AO->rank_point(v);
+		//ost << a;
+
+#if 0
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point no subaction" << endl;
+			exit(1);
+			}
+		ost << a;
+#endif
+		}
+	else if (A.type_G == action_on_wedge_product_t) {
+		if (FALSE) {
+			cout << "induced_action_rank_point "
+					"action_on_wedge_product_t" << endl;
+			}
+		action_on_wedge_product *AW = A.G.AW;
+
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_rank_point "
+					"no subaction" << endl;
+			exit(1);
+			}
+		rk = AW->rank_point(v);
+		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
+		}
+	else {
+		cout << "induced_action_rank_point type_G unknown:: type_G = ";
+		action_print_symmetry_group_type(cout, A.type_G);
+		cout << endl;
+		exit(1);
+		}
+
+	return rk;
+}
+
+
+
+
 }}
 
 

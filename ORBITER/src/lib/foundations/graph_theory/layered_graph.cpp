@@ -295,7 +295,7 @@ void layered_graph::draw_with_options(const char *fname,
 	int y_min = 0; //, y_max = 10000;
 	int factor_1000 = 1000;
 	char fname_full[1000];
-	double move_out = 0.005;
+	double move_out = 0.01;
 	int edge_label = 1;
 	
 	strcpy(fname_full, fname);
@@ -316,10 +316,6 @@ void layered_graph::draw_with_options(const char *fname,
 	G.header();
 	G.begin_figure(factor_1000);
 
-	if (O->f_corners) {
-		G.frame(move_out);
-		}
-	
 	int i, j, h, id, n, l;
 	//int rad = 50;
 	int rad_x_twice, rad_y_twice;
@@ -774,6 +770,10 @@ void layered_graph::draw_with_options(const char *fname,
 			}
 		}
 
+
+	if (O->f_corners) {
+		G.frame(move_out);
+		}
 
 
 

@@ -1167,9 +1167,9 @@ void surface_object::print_tritangent_planes(ostream &ost)
 		ost << "$$" << endl;
 		ost << "\\pi_{" << Surf->Eckard_point_label_tex[i] << "} = ";
 		ost << "\\pi_{" << i << "} = " << plane_rk << " = ";
-		ost << "\\left[" << endl;
+		//ost << "\\left[" << endl;
 		Surf->Gr3->print_single_generator_matrix_tex(ost, plane_rk);
-		ost << "\\right]" << endl;
+		//ost << "\\right]" << endl;
 
 		Surf->Gr3->unrank_int_here_and_compute_perp(Mtx, plane_rk, 
 			0 /*verbose_level */);

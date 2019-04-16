@@ -101,6 +101,8 @@ public:
 			int pt, int verbose_level);
 	void init(int nb_points, int *points, int verbose_level);
 		// the array points must be orderd
+	int original_point(int pt);
+	int restricted_point_idx(int pt);
 	int compute_image(action *A, int *Elt, int i, int verbose_level);
 };
 
@@ -675,6 +677,8 @@ public:
 	void init(action *original_action, orthogonal *O, 
 		int f_on_points, int f_on_lines, int f_on_points_and_lines, 
 		int verbose_level);
+	void unrank_point(int *v, int rk);
+	int rank_point(int *v);
 	int map_a_point(int *Elt, int i, int verbose_level);
 	int map_a_line(int *Elt, int i, int verbose_level);
 	int compute_image_int(int *Elt, int i, int verbose_level);
