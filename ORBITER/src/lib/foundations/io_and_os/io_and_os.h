@@ -150,10 +150,10 @@ public:
 	void free_puchar(uchar **p, const char *file, int line);
 	void **allocate_pvoid(long int n, const char *file, int line);
 	void free_pvoid(void **p, const char *file, int line);
-	void *allocate_OBJECTS(void *p, long int n, int size_of,
+	void *allocate_OBJECTS(void *p, long int n, std::size_t size_of,
 			const char *extra_type_info, const char *file, int line);
 	void free_OBJECTS(void *p, const char *file, int line);
-	void *allocate_OBJECT(void *p, int size_of,
+	void *allocate_OBJECT(void *p, std::size_t size_of,
 			const char *extra_type_info, const char *file, int line);
 	void free_OBJECT(void *p, const char *file, int line);
 	int search(void *p, int &idx);

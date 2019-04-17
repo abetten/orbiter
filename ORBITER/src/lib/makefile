@@ -276,6 +276,7 @@ MODULES= \
 		DISCRETA/vector.o \
 		top_level/algebra_and_number_theory/analyze_group.o \
 		top_level/algebra_and_number_theory/factor_group.o \
+		top_level/algebra_and_number_theory/semifield_classify.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \

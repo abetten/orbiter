@@ -597,16 +597,19 @@ void code_generator::main(int verbose_level)
 
 		if (f_linear) {
 			if (f_nmk) {
-				sprintf(title, "Classification of Optimal Linear Codes by Redundancy");
+				sprintf(title, "Classification of ${\\mathbb F}_{%d}$-linear codes "
+						"with redundancy %d and distance at least %d", q, nmk, d);
 				sprintf(fname_base, "codes_linear_nmk%d_q%d_d%d", nmk, q, d);
 				}
 			else {
-				sprintf(title, "Classification of Optimal Linear Codes");
+				sprintf(title, "Classification of linear "
+						"$[%d,%d,%d]$ codes over ${\\mathbb F}_{%d}$", n, k, d, q);
 				sprintf(fname_base, "codes_linear_n%d_k%d_q%d_d%d", n, k, q, d);
 				}
 			}
 		else if (f_nonlinear) {
-			sprintf(title, "Classification of Optimal Nonlinear Codes");
+			sprintf(title, "Classification of optimal nonlinear codes of "
+					"length %d over the field ${\\mathbb F}_{%d}$", n, q);
 			sprintf(fname_base, "codes_nonlinear_n%d_k%d_d%d", n, k, d);
 			}
 
@@ -627,7 +630,15 @@ void code_generator::main(int verbose_level)
 			TRUE /* f_pagenumbers*/,
 			NULL /* extra_praeamble */);
 
+		fp << "\\section{The field of order " << F->q << "}" << endl;
+		fp << "\\noindent The field ${\\mathbb F}_{"
+				<< F->q
+				<< "}$ :\\\\" << endl;
+		F->cheat_sheet(fp, verbose_level);
+
+		fp << "\\section{The group $" << A->label_tex << "$}" << endl;
 		A->report(fp);
+		A->print_points(fp);
 
 		gen->report(fp);
 
@@ -719,105 +730,6 @@ void code_generator::print(ostream &ost, int len, int *S)
 		}
 }
 
-#if 0
-void code_generator::early_test_func_by_using_group(
-	int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	if (f_v) {
-		cout << "code_generator::early_test_func_by_using_group" << endl;
-		}
-
-	if (f_vv) {
-		cout << "S=";
-		int_vec_print(cout, S, len);
-		cout << " testing " << nb_candidates << " candidates" << endl;
-		//int_vec_print(cout, candidates, nb_candidates);
-		//cout << endl;
-		}
-
-	int i, j, node, f, l, pt, nb_good_orbits;
-	poset_orbit_node *O;
-	int f_orbit_is_good;
-	int s, a;
-
-	node = gen->find_poset_orbit_node_for_set(len, S,
-		FALSE /* f_tolerant */, 0);
-	O = gen->root + node;
-
-	if (f_v) {
-		cout << "code_generator::early_test_func_by_using_group for ";
-		O->print_set(gen);
-		cout << endl;
-		}
-
-	schreier Schreier;
-
-	Schreier.init(gen->Poset->A2);
-
-	Schreier.init_generators_by_hdl(
-		O->nb_strong_generators, O->hdl_strong_generators, 0);
-
-	Schreier.orbits_on_invariant_subset_fast(
-		nb_candidates, candidates, 
-		0/*verbose_level*/);
-
-	if (f_v) {
-		cout << "code_generator::early_test_func_by_"
-				"using_group after Schreier.compute_all_orbits_"
-				"on_invariant_subset, we found "
-		<< Schreier.nb_orbits << " orbits" << endl;
-		}
-	nb_good_candidates = 0;
-	nb_good_orbits = 0;
-	for (i = 0; i < Schreier.nb_orbits; i++) {
-		f = Schreier.orbit_first[i];
-		l = Schreier.orbit_len[i];
-		pt = Schreier.orbit[f];
-		S[len] = pt;
-		if (f_linear) {
-			if (rc.check_rank_last_two_are_fixed(len + 1, 
-				S, verbose_level - 1)) {
-				f_orbit_is_good = TRUE;
-				}
-			else {
-				f_orbit_is_good = FALSE;
-				}
-			}
-		else {
-			f_orbit_is_good = TRUE;
-			for (s = 0; s < len; s++) {
-				a = S[s];
-				if (Hamming_distance(a, pt) < d) {
-					f_orbit_is_good = FALSE;
-					break;
-					}
-				}
-			}
-		if (f_orbit_is_good) {
-			for (j = 0; j < l; j++) {
-				pt = Schreier.orbit[f + j];
-				good_candidates[nb_good_candidates++] = pt;
-				}	
-			nb_good_orbits++;
-			}
-		}
-
-	int_vec_heapsort(good_candidates, nb_good_candidates);
-	if (f_v) {
-		cout << "code_generator::early_test_func_by_using_group "
-			"after Schreier.compute_all_orbits_on_invariant_subset, "
-			"we found "
-			<< nb_good_candidates << " good candidates in " 
-			<< nb_good_orbits << " good orbits" << endl;
-		}
-}
-#endif
 
 int code_generator::Hamming_distance(int a, int b)
 {

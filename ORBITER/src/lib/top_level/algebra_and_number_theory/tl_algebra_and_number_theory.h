@@ -50,6 +50,85 @@ void create_factor_group(action *A, sims *S, int goi,
 
 
 // #############################################################################
+// semifield_classify.cpp
+// #############################################################################
+
+
+
+class semifield_classify {
+public:
+
+	int k;
+	int k2; // = k * k
+	finite_field *F;
+	int q;
+	int order; // q^k
+
+	int f_level_two_prefix;
+	const char *level_two_prefix;
+
+	int f_level_three_prefix;
+	const char *level_three_prefix;
+
+
+	spread *T;
+
+	action *A; // = T->A = PGL_n_q
+	int *Elt1;
+	sims *G; // = T->R->A0_linear->Sims
+
+	action *A0;
+	action *A0_linear;
+
+
+	action_on_spread_set *A_on_S;
+	action *AS;
+
+	strong_generators *Strong_gens;
+		// the stabilizer of two components in a spread:
+		// infinity and zero
+
+
+	poset *Poset;
+	poset_classification *Gen;
+	sims *Symmetry_group;
+
+	//semifield_starter *SFS;
+
+
+	int vector_space_dimension; // = k * k
+	int schreier_depth;
+
+	semifield_classify();
+	~semifield_classify();
+	void null();
+	void freeself();
+	void init(int argc, const char **argv,
+		int order, int n, int k,
+		finite_field *F,
+		const char *prefix,
+		int verbose_level);
+	void compute_orbits(int depth, int verbose_level);
+	void list_points();
+	int rank_point(int *v, int verbose_level);
+	void unrank_point(int *v, int rk, int verbose_level);
+	void matrix_unrank(int rk, int *Mtx);
+	int matrix_rank(int *Mtx);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+};
+
+void semifield_classify_early_test_func(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+int semifield_classify_rank_point_func(int *v, void *data);
+void semifield_classify_unrank_point_func(int *v, int rk, void *data);
+
+
+// #############################################################################
 // young.C
 // #############################################################################
 

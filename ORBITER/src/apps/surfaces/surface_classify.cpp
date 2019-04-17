@@ -491,6 +491,11 @@ int main(int argc, const char **argv)
 				TRUE /* f_pagenumbers*/,
 				NULL /* extra_praeamble */);
 
+			fp << "\\section{The field of order " << LG->F->q << "}" << endl;
+			fp << "\\noindent The field ${\\mathbb F}_{"
+					<< LG->F->q
+					<< "}$ :\\\\" << endl;
+			LG->F->cheat_sheet(fp, verbose_level);
 
 			SCW->Classify_double_sixes->report(fp, verbose_level);
 
