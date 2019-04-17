@@ -1442,6 +1442,8 @@ void surface_object::print_equation(ostream &ost)
 	ost << "$$" << endl;
 	Surf->print_equation_tex(ost, eqn);
 	ost << endl << "=0\n$$" << endl;
+	int_vec_print(ost, eqn, 20);
+	ost << "\\\\" << endl;
 	ost << "Number of points on the surface " << nb_pts << "\\\\" << endl;
 }
 

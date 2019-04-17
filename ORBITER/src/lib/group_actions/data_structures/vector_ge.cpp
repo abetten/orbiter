@@ -351,6 +351,10 @@ void vector_ge::print_generators_tex(
 			}
 		}
 	ost << "$$" << endl;
+	for (i = 0; i < len; i++) {
+		A->element_print_for_make_element(ith(i), ost);
+		ost << "\\\\" << endl;
+	}
 }
 
 void vector_ge::print_as_permutation(ostream& ost)

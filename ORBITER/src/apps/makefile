@@ -12,6 +12,7 @@ all:
 	cd ovoid; $(MAKE) all
 	cd projective_space; $(MAKE) all
 	cd regular_ls; $(MAKE) all
+	cd semifield; $(MAKE) all
 	cd solver; $(MAKE) all
 	cd spread; $(MAKE) all
 	cd subspace_orbits; $(MAKE) all
@@ -33,6 +34,7 @@ clean:
 	cd ovoid; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
 	cd regular_ls; $(MAKE) clean
+	cd semifield; $(MAKE) clean
 	cd solver; $(MAKE) clean
 	cd spread; $(MAKE) clean
 	cd subspace_orbits; $(MAKE) clean

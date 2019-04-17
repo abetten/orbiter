@@ -1238,6 +1238,8 @@ void poset_classification::make_full_poset_graph(
 
 void poset_classification::make_auxiliary_graph(int depth,
 		layered_graph *&LG, int data1, int verbose_level)
+// makes a graph of the poset of orbits with 2 * depth + 1 layers.
+// The middle layers represent the flag orbits.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1272,20 +1274,24 @@ void poset_classification::make_auxiliary_graph(int depth,
 	
 	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
-		cout << "poset_classification::make_auxiliary_graph before LG->init" << endl;
+		cout << "poset_classification::make_auxiliary_graph "
+				"before LG->init" << endl;
 		}
 	LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level - 1);
 	if (f_vv) {
-		cout << "poset_classification::make_auxiliary_graph after LG->init" << endl;
+		cout << "poset_classification::make_auxiliary_graph "
+				"after LG->init" << endl;
 		}
 	LG->place(verbose_level - 1);
 	if (f_vv) {
-		cout << "poset_classification::make_auxiliary_graph after LG->place" << endl;
+		cout << "poset_classification::make_auxiliary_graph "
+				"after LG->place" << endl;
 		}
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_vv) {
-			cout << "poset_classification::make_auxiliary_graph adding edges "
+			cout << "poset_classification::make_auxiliary_graph "
+					"adding edges "
 					"lvl=" << lvl << " / " << depth << endl;
 			}
 		f = 0;
@@ -1302,7 +1308,8 @@ void poset_classification::make_auxiliary_graph(int depth,
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (f_v4) {
-					cout << "poset_classification::make_auxiliary_graph adding edges "
+					cout << "poset_classification::make_auxiliary_graph "
+							"adding edges "
 							"lvl=" << lvl << " po=" << po
 							<< " so=" << so << endl;
 					}
@@ -1450,6 +1457,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 
 void poset_classification::make_graph(int depth,
 		layered_graph *&LG, int data1, int f_tree, int verbose_level)
+// makes a graph  of the poset of orbits with depth + 1 layers.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -1494,6 +1502,9 @@ void poset_classification::make_graph(int depth,
 	if (f_vv) {
 		cout << "poset_classification::make_graph after LG->place" << endl;
 		}
+
+
+	// make edges:
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_v) {
 			cout << "poset_classification::make_graph adding edges "
@@ -1561,24 +1572,29 @@ void poset_classification::make_graph(int depth,
 			
 			}
 		if (f_vv) {
-			cout << "poset_classification::make_graph after LG->add_edge (1)" << endl;
+			cout << "poset_classification::make_graph "
+					"after LG->add_edge (1)" << endl;
 			}
 		}
 
 
+	// create vertex labels:
 	if (f_vv) {
-		cout << "poset_classification::make_graph now making vertex labels" << endl;
+		cout << "poset_classification::make_graph "
+				"now making vertex labels" << endl;
 		}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		if (f_vv) {
-			cout << "poset_classification::make_graph now making vertex labels "
+			cout << "poset_classification::make_graph "
+					"now making vertex labels "
 					"lvl " << lvl << " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 
 			if (f_vv) {
-				cout << "poset_classification::make_graph now making vertex "
+				cout << "poset_classification::make_graph "
+						"now making vertex "
 						"labels lvl " << lvl << " / " << depth << " po="
 						<< po << " / " << nb_orbits_at_level(lvl) << endl;
 				}
@@ -1643,6 +1659,8 @@ void poset_classification::make_graph(int depth,
 
 void poset_classification::make_level_graph(int depth,
 		layered_graph *&LG, int data1, int level, int verbose_level)
+// makes a graph with 4 levels showing the relation between
+// orbits at level 'level' and orbits at level 'level' + 1
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1681,7 +1699,8 @@ void poset_classification::make_level_graph(int depth,
 
 	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
-		cout << "poset_classification::make_level_graph before LG->init" << endl;
+		cout << "poset_classification::make_level_graph "
+				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
 		int_vec_print(cout, Nb, 4);
@@ -1690,17 +1709,20 @@ void poset_classification::make_level_graph(int depth,
 	LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_vv) {
-		cout << "poset_classification::make_level_graph after LG->init" << endl;
+		cout << "poset_classification::make_level_graph "
+				"after LG->init" << endl;
 		}
 	LG->place(verbose_level);
 	if (f_vv) {
-		cout << "poset_classification::make_level_graph after LG->place" << endl;
+		cout << "poset_classification::make_level_graph "
+				"after LG->place" << endl;
 		}
 	f = 0;
 	for (po = 0; po < nb_orbits_at_level(level); po++) {
 
 		if (f_vv) {
-			cout << "poset_classification::make_level_graph adding edges "
+			cout << "poset_classification::make_level_graph "
+					"adding edges "
 					"level=" << level << " po=" << po << " / "
 					<< nb_orbits_at_level(level) << endl;
 			}
@@ -1757,12 +1779,15 @@ void poset_classification::make_level_graph(int depth,
 		f += root[n].nb_extensions;
 		}
 	if (f_vv) {
-		cout << "poset_classification::make_level_graph after LG->add_edge" << endl;
+		cout << "poset_classification::make_level_graph "
+				"after LG->add_edge" << endl;
 		}
 
 
+	// creates vertex labels for orbits at level 'level' and 'level' + 1:
 	if (f_vv) {
-		cout << "poset_classification::make_level_graph now making vertex labels" << endl;
+		cout << "poset_classification::make_level_graph "
+				"now making vertex labels" << endl;
 		}
 	for (lvl = level; lvl <= level + 1; lvl++) {
 		f = 0;
@@ -1865,6 +1890,8 @@ void poset_classification::make_level_graph(int depth,
 
 void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 		int data1, int max_depth, int verbose_level)
+// creates the poset graph, with two middle layers at each level.
+// In total, the graph that is created will have 3 * depth + 1 layers.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1938,7 +1965,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 		}
 
 
-
+	// adding edges:
 	if (f_vv) {
 		cout << "poset_classification::make_poset_graph_detailed "
 				"adding edges" << endl;
@@ -2021,6 +2048,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 		}
 
 
+	// adding vertex labels:
 	if (f_vv) {
 		cout << "poset_classification::make_poset_graph_detailed "
 				"now making vertex labels" << endl;

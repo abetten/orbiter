@@ -782,7 +782,7 @@ void mem_object_registry::free_pvoid(void **p,
 }
 
 void *mem_object_registry::allocate_OBJECTS(void *p,
-		long int n, int size_of,
+		long int n, std::size_t size_of,
 		const char *extra_type_info, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
@@ -793,7 +793,7 @@ void *mem_object_registry::allocate_OBJECTS(void *p,
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_OBJECTS, n, size_of,
+				POINTER_TYPE_OBJECTS, n, (int) size_of,
 				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}
@@ -822,7 +822,7 @@ void mem_object_registry::free_OBJECTS(void *p,
 	//delete [] p;
 }
 
-void *mem_object_registry::allocate_OBJECT(void *p, int size_of,
+void *mem_object_registry::allocate_OBJECT(void *p, std::size_t size_of,
 		const char *extra_type_info, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
@@ -833,7 +833,7 @@ void *mem_object_registry::allocate_OBJECT(void *p, int size_of,
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_OBJECT, 1, size_of,
+				POINTER_TYPE_OBJECT, 1, (int) size_of,
 				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}

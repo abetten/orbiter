@@ -8,6 +8,7 @@ LFLAGS = -lm
 MODULES = \
 	analyze_group.o \
 	factor_group.o \
+	semifield_classify.o \
 	young.o 
 
 

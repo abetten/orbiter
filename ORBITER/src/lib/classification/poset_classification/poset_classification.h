@@ -753,16 +753,27 @@ public:
 	void make_full_poset_graph(int depth, layered_graph *&LG, 
 		int data1, double x_stretch, 
 		int verbose_level);
+		// Draws the full poset: each element of each orbit is drawn.
+		// The orbits are indicated by grouping the elements closer together.
+		// Uses int_vec_sort_and_test_if_contained to test containment relation.
+		// This is only good for actions on sets, not for actions on subspaces
 	void make_auxiliary_graph(int depth, 
 		layered_graph *&LG, int data1, 
 		int verbose_level);
+		// makes a graph of the poset of orbits with 2 * depth + 1 layers.
+		// The middle layers represent the flag orbits.
 	void make_graph(int depth, layered_graph *&LG, 
 		int data1, int f_tree, int verbose_level);
+		// makes a graph  of the poset of orbits with depth + 1 layers.
 	void make_level_graph(int depth, layered_graph *&LG, 
 		int data1, int level, int verbose_level);
-	void print_data_structure_tex(int depth, int verbose_level);
+		// makes a graph with 4 levels showing the relation between
+		// orbits at level 'level' and orbits at level 'level' + 1
 	void make_poset_graph_detailed(layered_graph *&LG, 
 		int data1, int max_depth, int verbose_level);
+		// creates the poset graph, with two middle layers at each level.
+		// In total, the graph that is created will have 3 * depth + 1 layers.
+	void print_data_structure_tex(int depth, int verbose_level);
 
 
 	// in poset_classification_io.C:

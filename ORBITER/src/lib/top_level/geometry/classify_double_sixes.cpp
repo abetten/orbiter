@@ -514,7 +514,7 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 		NULL /* extra_praeamble */);
 #endif
 
-	ost << "\\section{The Groups}" << endl;
+	ost << "\\section{The groups}" << endl;
 	ost << "\\subsection{The semilinear group}" << endl;
 	A->report(ost);
 	A->print_points(ost);

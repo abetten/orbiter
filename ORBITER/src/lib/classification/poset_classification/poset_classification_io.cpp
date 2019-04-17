@@ -696,7 +696,7 @@ void poset_classification::report(ostream &ost)
 	ost << endl;
 
 
-	ost << "Number of orbits at depth:" << endl;
+	ost << "\\subsection{Number of orbits at depth}" << endl;
 	N = NEW_int(depth + 1);
 	for (i = 0; i <= depth; i++) {
 		N[i] = nb_orbits_at_level(i);
@@ -715,7 +715,7 @@ void poset_classification::report(ostream &ost)
 	ost << "$$" << endl;
 
 	ost << endl;
-	ost << "\\section{Orbit representatives and stabilizers}" << endl;
+	ost << "\\subsection{Orbit representatives: overview}" << endl;
 	ost << endl;
 
 	ost << "N = node\\\\" << endl;
@@ -725,24 +725,24 @@ void poset_classification::report(ostream &ost)
 	ost << "SO = (order of stabilizer, orbit length)\\\\" << endl;
 	ost << "L = number of live points\\\\" << endl;
 	ost << "F = number of flags\\\\" << endl;
-	ost << "FO = number of flag orbits\\\\" << endl;
+	//ost << "FO = number of flag orbits\\\\" << endl;
 	ost << "Gen = number of generators for the stabilizer of the orbit rep.\\\\" << endl;
 	ost << "\\begin{center}" << endl;
-	ost << "\\begin{longtable}{|r|r|r|p{3cm}|r|r|r|r|r|}" << endl;
+	ost << "\\begin{longtable}{|r|r|r|p{3cm}|r|r|r|r|}" << endl;
 	ost << "\\caption{Orbit Representatives}\\\\" << endl;
 	ost << endl;
 	ost << "\\hline N & D & O & Rep & SO "
-			"& L & F & FO & Gen\\\\ \\hline " << endl;
+			"& L & F & Gen\\\\ \\hline " << endl;
 	ost << "\\endfirsthead" << endl;
 	ost << endl;
-	ost << "\\multicolumn{9}{c}%" << endl;
+	ost << "\\multicolumn{8}{c}%" << endl;
 	ost << "{{\\bfseries \\tablename\\ \\thetable{} -- continued "
 			"from previous page}} \\\\" << endl;
 	ost << "\\hline N & D & O & Rep & SO "
-			"& L & F & FO & Gen\\\\ \\hline " << endl;
+			"& L & F & Gen\\\\ \\hline " << endl;
 	ost << "\\endhead" << endl;
 	ost << endl;
-	ost << "\\hline \\multicolumn{9}{|r|}{{Continued on next page}} "
+	ost << "\\hline \\multicolumn{8}{|r|}{{Continued on next page}} "
 			"\\\\ \\hline" << endl;
 	ost << "\\endfoot" << endl;
 	ost << endl;
@@ -787,7 +787,7 @@ void poset_classification::report(ostream &ost)
 			if (level < depth) {
 				nb_live_pts = O->get_nb_of_live_points();
 				nb_extensions = O->nb_extensions;
-				nbo = O->get_nb_of_orbits_under_stabilizer();
+				//nbo = O->get_nb_of_orbits_under_stabilizer();
 				if (Schreier_vector->f_has_local_generators) {
 					nbg = Schreier_vector->local_gens->len;
 				}
@@ -797,7 +797,7 @@ void poset_classification::report(ostream &ost)
 			} else {
 				nb_live_pts = -1;
 				nb_extensions = -1;
-				nbo = -1;
+				//nbo = -1;
 				nbg = O->nb_strong_generators;
 			}
 
@@ -818,12 +818,14 @@ void poset_classification::report(ostream &ost)
 			else {
 				ost << " & ";
 			}
+#if 0
 			if (nbo >= 0) {
 				ost << nbo << " & ";
 			}
 			else {
 				ost << " & ";
 			}
+#endif
 			if (nbg >= 0) {
 				ost << nbg << "\\\\" << endl;
 			}
@@ -840,7 +842,7 @@ void poset_classification::report(ostream &ost)
 	ost << "\\end{longtable}" << endl;
 	ost << "\\end{center}" << endl;
 	ost << endl;
-	ost << "\\section{Poset of orbits}" << endl;
+	ost << "\\section{The poset of orbits}" << endl;
 	ost << endl;
 
 
@@ -892,6 +894,13 @@ void poset_classification::report(ostream &ost)
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
 
+
+		ost << endl;
+		ost << "\\subsection{Stabilizers and Schreier trees "
+				"at level " << level << "}" << endl;
+		ost << endl;
+
+
 		nb_orbits = nb_orbits_at_level(level);
 		for (orbit_at_level = 0;
 				orbit_at_level < nb_orbits;
@@ -932,7 +941,7 @@ void poset_classification::report(ostream &ost)
 			ost << "}";
 			ost << "$$" << endl;
 
-			ost << "{\\tiny\\arraycolsep=2pt" << endl;
+			ost << "{\\small\\arraycolsep=2pt" << endl;
 			gens->print_generators_tex(ost);
 			ost << "}" << endl;
 
@@ -951,7 +960,7 @@ void poset_classification::report(ostream &ost)
 				if (Schreier_vector->f_has_local_generators) {
 
 					ost << "Generators for the Schreier trees:\\\\" << endl;
-					ost << "{\\tiny\\arraycolsep=2pt" << endl;
+					ost << "{\\small\\arraycolsep=2pt" << endl;
 					Schreier_vector->local_gens->print_generators_tex(stab_order, ost);
 					ost << "}" << endl;
 
@@ -1041,7 +1050,65 @@ void poset_classification::report(ostream &ost)
 					//ost << "\\input " << fname_tex << endl;
 					ost << "\\includegraphics[width=160mm]{"
 							<< fname_1 << "}\\" << endl;
+					int e;
+
+					e = O->find_extension_from_point(this, orbit_reps[j],
+							0 /* verbose_level */);
+
+					if (e >= 0) {
+						ost << endl;
+						ost << "\\noindent Extension number " << e << "\\\\" << endl;
+						ost << "Orbit representative " << orbit_reps[j] << "\\\\" << endl;
+						ost << "Flag orbit length " << O->E[e].orbit_len << "\\\\" << endl;
+
+						if (O->E[e].type == EXTENSION_TYPE_UNPROCESSED) {
+							ost << "Flag orbit is unprocessed.\\\\" << endl;
+						}
+						else if (O->E[e].type == EXTENSION_TYPE_EXTENSION) {
+							ost << "Flag orbit is defining new orbit " << O->E[e].data << " at level " << level + 1 << "\\\\" << endl;
+						}
+						else if (O->E[e].type == EXTENSION_TYPE_FUSION) {
+							ost << "Flag orbit is fused to node " << O->E[e].data1 << " extension " << O->E[e].data2 << "\\\\" << endl;
+							ost << "Fusion element:\\\\" << endl;
+							ost << "$$" << endl;
+
+							Poset->A->element_retrieve(O->E[e].data, Elt1, 0);
+
+							Poset->A->element_print_latex(Elt1, ost);
+							ost << "$$" << endl;
+							Poset->A->element_print_for_make_element(Elt1, ost);
+							ost << "\\\\" << endl;
+						}
+					}
+					else {
+						ost << endl;
+						ost << "Cannot find an extension for point " << orbit_reps[j] << "\\\\" << endl;
+					}
+#if 0
+					int pt;
+					int orbit_len;
+					int type;
+						// EXTENSION_TYPE_UNPROCESSED = unprocessed
+						// EXTENSION_TYPE_EXTENSION = extension node
+						// EXTENSION_TYPE_FUSION = fusion node
+						// EXTENSION_TYPE_PROCESSING = currently processing
+						// EXTENSION_TYPE_NOT_CANONICAL = no extension formed
+						// because it is not canonical
+					int data;
+						// if EXTENSION_TYPE_EXTENSION: a handle to the next
+						//  poset_orbit_node
+						// if EXTENSION_TYPE_FUSION: a handle to a fusion element
+					int data1;
+						// if EXTENSION_TYPE_FUSION: node to which we are fusing
+					int data2;
+						// if EXTENSION_TYPE_FUSION: extension within that
+						// node to which we are fusing
+#endif
+
 				}
+				FREE_int(orbit_reps);
+				FREE_int(orbit_length);
+				FREE_int(total_depth);
 			}
 			FREE_OBJECT(gens);
 		}
