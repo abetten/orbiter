@@ -17,7 +17,15 @@ COUNT=0;
 echo $LINE
 echo "[# LINES] => [FILE]"
 echo $LINE
-for f in $(find . -type f -name '*.cpp' -name '*.CPP' -name '*.c' -name '*.C' -name '*.h' -name '*.H' -name '*.hpp' -name '*.HPP'); do 
+for f in $(find . -type f \
+		-name '*.cpp' -o \
+		-name '*.CPP' -o \
+		-name '*.c' -o \
+		-name '*.C' -o \
+		-name '*.h' -o \
+		-name '*.H' -o \
+		-name '*.hpp' -o \
+		-name '*.HPP'); do 
 	tmp=$(wc -l < $f); 
 	echo "$tmp => $f";
 	COUNT=$[COUNT+tmp]; 
