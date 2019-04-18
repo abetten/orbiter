@@ -102,6 +102,14 @@ class classify_cubic_curves;
 class cubic_curve_with_action;
 class blt_set_with_action;
 class semifield_classify;
+class semifield_level_two;
+class semifield_lifting;
+class semifield_downstep_node;
+class semifield_middle_layer_node;
+class semifield_trace;
+
+
+
 
 // #############################################################################
 // representatives.C

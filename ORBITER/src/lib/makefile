@@ -277,6 +277,11 @@ MODULES= \
 		top_level/algebra_and_number_theory/analyze_group.o \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/semifield_classify.o \
+		top_level/algebra_and_number_theory/semifield_downstep_node.o \
+		top_level/algebra_and_number_theory/semifield_level_two.o \
+		top_level/algebra_and_number_theory/semifield_lifting.o \
+		top_level/algebra_and_number_theory/semifield_middle_layer_node.o \
+		top_level/algebra_and_number_theory/semifield_trace.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
