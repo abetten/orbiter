@@ -552,12 +552,16 @@ void action_on_factor_space::compute_projection_table(
 
 int action_on_factor_space::compute_degree()
 {
-	return nb_PG_elements(factor_space_len - 1, VS->F->q);
+	geometry_global Gg;
+
+	return Gg.nb_PG_elements(factor_space_len - 1, VS->F->q);
 }
 
 int action_on_factor_space::compute_large_degree()
 {
-	return nb_PG_elements(VS->dimension - 1, VS->F->q);
+	geometry_global Gg;
+
+	return Gg.nb_PG_elements(VS->dimension - 1, VS->F->q);
 }
 
 void action_on_factor_space::list_all_elements()
@@ -623,6 +627,7 @@ int action_on_factor_space::lexleast_element_in_coset(int rk,
 	int *w;
 	int *v1;
 	int *v2;
+	geometry_global Gg;
 
 
 	if (f_v) {
@@ -655,14 +660,14 @@ int action_on_factor_space::lexleast_element_in_coset(int rk,
 	//v1 = NEW_int(len);
 	//v2 = NEW_int(len);
 	
-	N = nb_AG_elements(subspace_basis_size, VS->F->q);
+	N = Gg.nb_AG_elements(subspace_basis_size, VS->F->q);
 	if (f_vv) {
 		cout << "looping over all " << N
 				<< " elements in the subspace" << endl;
 		}
 	rk1 = rk;
 	for (i = 0; i < N; i++) {
-		AG_element_unrank(VS->F->q, w, 1, subspace_basis_size, i);
+		Gg.AG_element_unrank(VS->F->q, w, 1, subspace_basis_size, i);
 		VS->F->mult_matrix_matrix(w, subspace_basis,
 				v1, 1, subspace_basis_size, VS->dimension,
 				0 /* verbose_level */);

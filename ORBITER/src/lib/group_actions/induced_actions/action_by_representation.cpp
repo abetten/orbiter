@@ -50,6 +50,7 @@ void action_by_representation::init_action_on_conic(
 		action &A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_by_representation::init_action_on_conic" << endl;
@@ -70,7 +71,7 @@ void action_by_representation::init_action_on_conic(
 		}
 	type = representation_type_PSL2_on_conic;
 	dimension = 3;
-	degree = nb_PG_elements(dimension - 1, q);
+	degree = Gg.nb_PG_elements(dimension - 1, q);
 	low_level_point_size = 3;
 	v1 = NEW_int(dimension);
 	v2 = NEW_int(dimension);

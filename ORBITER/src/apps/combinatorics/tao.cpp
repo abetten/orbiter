@@ -719,6 +719,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		int i, j;
 		int nb_good, nb_bad;
 		number_theory_domain NT;
+		geometry_global Gg;
 
 		N = NT.i_power_j(2, nb_pairs_of_long_orbits);
 		cout << "N=" << N << endl;
@@ -728,7 +729,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		nb_good = 0;
 		nb_bad = 0;
 		for (u = 0; u < N; u++) {
-			AG_element_unrank(2, selection, 1,
+			Gg.AG_element_unrank(2, selection, 1,
 					nb_pairs_of_long_orbits, u);
 			D_sz = 0;
 			for (t = 0; t < nb_pairs_of_long_orbits; t++) {

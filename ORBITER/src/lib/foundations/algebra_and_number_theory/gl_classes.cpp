@@ -1026,6 +1026,13 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 
 		} // next h
 
+#if 0
+	if (i != nb_irred) {
+		cout << "gl_classes::identify2 i != nb_irred" << endl;
+		exit(1);
+	}
+#endif
+
 		
 	if (f_v) {
 		cout << "gl_classes::identify2 "
@@ -1072,7 +1079,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 
 
 
-	delete [] Data;
+	FREE_OBJECTS(Data);
 
 
 	if (f_vv) {
@@ -2090,11 +2097,10 @@ int gl_classes::find_class_rep(gl_class_rep *Reps,
 	return i;
 }
 
-void gl_classes::report(const char *fname, int verbose_level)
+void gl_classes::report(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	//const char *fname = "Class_reps.tex";
 	int nb_classes;
 	gl_class_rep *R;
 
@@ -2102,24 +2108,17 @@ void gl_classes::report(const char *fname, int verbose_level)
 		cout << "gl_classes::report" << endl;
 	}
 	make_classes(R, nb_classes,
-			FALSE /* f_no_eigenvalue_one */, verbose_level - 1);
+			FALSE /* f_no_eigenvalue_one */,
+			verbose_level - 1);
 
-	{
-	ofstream fp(fname);
 	int i;
-	latex_interface L;
 
-	L.head_easy(fp);
-	fp << "\\section{Conjugacy Classes}" << endl;
+	ost << "\\section{Conjugacy Classes}" << endl;
 	for (i = 0; i < nb_classes; i++) {
-		fp << "Representative " << i << " / "
+		ost << "Representative " << i << " / "
 				<< nb_classes << "\\\\" << endl;
-		print_matrix_and_centralizer_order_latex(fp, R + i);
+		print_matrix_and_centralizer_order_latex(ost, R + i);
 		}
-	L.foot(fp);
-	}
-	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
 	FREE_OBJECTS(R);
 	if (f_v) {
 		cout << "gl_classes::report done" << endl;

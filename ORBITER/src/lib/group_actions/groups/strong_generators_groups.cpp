@@ -641,6 +641,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	int *data;
 	int i;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
@@ -661,7 +662,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	// = (q^n - 1) / (q - 1) if projective
 	// = q^n - 1 if general_linear
 	
-	go_factored[0] = nb_PG_elements(n - 1, q);
+	go_factored[0] = Gg.nb_PG_elements(n - 1, q);
 	int g;
 	g = NT.gcd_int(go_factored[0], power_of_singer);
 	go_factored[0] = go_factored[0] / g;
@@ -816,6 +817,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	int *data2;
 	int i;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle_"
@@ -837,7 +839,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	// = (q^n - 1) / (q - 1) if projective
 	// = q^n - 1 if general_linear
 
-	go_factored[0] = nb_PG_elements(n - 1, q);
+	go_factored[0] = Gg.nb_PG_elements(n - 1, q);
 	int g;
 	g = NT.gcd_int(go_factored[0], power_of_singer);
 	go_factored[0] = go_factored[0] / g;

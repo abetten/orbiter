@@ -139,6 +139,7 @@ void unusual_model::setup2(int q,
 	int f_vvv = (verbose_level >= 2);
 	int Q, i, j, b, p, h;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "unusual_model::setup q=" << q
@@ -326,24 +327,24 @@ void unusual_model::setup2(int q,
 	for (i = 0; i < 4 * 4; i++)
 		Gram[i] = 0;
 	if (f_sum_of_squares) {
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 1, 1, 1);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 2, 2, 1);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 3, 3, 1);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 1, 1, 1);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 2, 2, 1);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 3, 3, 1);
 		}
 	else {
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 0, 1, T_alpha);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 1, 1, N_alpha);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 2, 2, 1);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 2, 3, T_alpha);
-		add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 3, 3, N_alpha);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 0, 1, T_alpha);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 1, 1, N_alpha);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 2, 2, 1);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 2, 3, T_alpha);
+		Gg.add_term(4, F, nb_terms, form_i, form_j, form_coeff, Gram, 3, 3, N_alpha);
 		}
 	if (f_vv) {
 		cout << "Gram matrix:" << endl;
 		print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
 		cout << "quadratic form:" << endl;
-		print_quadratic_form_list_coded(nb_terms, form_i, form_j, form_coeff);
+		Gg.print_quadratic_form_list_coded(nb_terms, form_i, form_j, form_coeff);
 		}
 	
 	if (f_vv) {
@@ -378,12 +379,12 @@ void unusual_model::setup2(int q,
 	
 	if (f_vv) {
 		cout << "restricted quadratic form:" << endl;
-		print_quadratic_form_list_coded(r_nb_terms,
+		Gg.print_quadratic_form_list_coded(r_nb_terms,
 				r_form_i, r_form_j, r_form_coeff);
 		}
 	r_Gram = NEW_int(2 * 2);
 	
-	make_Gram_matrix_from_list_coded_quadratic_form(2, f, 
+	Gg.make_Gram_matrix_from_list_coded_quadratic_form(2, f,
 		r_nb_terms, r_form_i, r_form_j, r_form_coeff, r_Gram);
 	if (f_vv) {
 		cout << "restricted Gram matrix:" << endl;
@@ -433,7 +434,7 @@ void unusual_model::setup2(int q,
 		verbose_level - 2);
 	if (f_vv) {
 		cout << "restricted quadratic form:" << endl;
-		print_quadratic_form_list_coded(rr_nb_terms,
+		Gg.print_quadratic_form_list_coded(rr_nb_terms,
 				rr_form_i, rr_form_j, rr_form_coeff);
 		}
 	

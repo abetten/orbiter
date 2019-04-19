@@ -6,8 +6,12 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all:  semifield_main.out 
+all:  semifield_classify_main.out \
+	semifield_main.out 
 
+
+semifield_classify_main.out:  semifield_classify_main.o  ;
+	$(DISCRETA_CPP)  semifield_classify_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 semifield_main.out:  semifield_main.o  ;
 	$(DISCRETA_CPP)  semifield_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

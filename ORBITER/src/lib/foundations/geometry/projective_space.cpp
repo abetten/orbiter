@@ -2896,6 +2896,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 	int *f_taken;
 	int nb_pts_in_hyperplane;
 	int idx;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "projective_space::line_intersection_type_through_"
@@ -2933,7 +2934,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 
 	// do the line type in the hyperplane:
 	line_intersection_type_basic(set1, sz1, type, verbose_level);
-	nb_pts_in_hyperplane = nb_PG_elements(n - 1, q);
+	nb_pts_in_hyperplane = Gg.nb_PG_elements(n - 1, q);
 	if (f_vv) {
 		cout << "projective_space::line_intersection_type_through_"
 				"hyperplane nb_pts_in_hyperplane="
@@ -5414,6 +5415,7 @@ void projective_space::conic_type_randomized(int nb_times,
 	longinteger_object conic_rk, aa;
 	int *pts_on_conic;
 	int allocation_length;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "projective_space::conic_type_randomized" << endl;
@@ -5493,7 +5495,7 @@ void projective_space::conic_type_randomized(int nb_times,
 
 
 		F->PG_element_normalize(six_coeffs, 1, 6);
-		AG_element_rank_longinteger(F->q, six_coeffs, 1, 6, conic_rk);
+		Gg.AG_element_rank_longinteger(F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
 			int_vec_print(cout, subset, 5);
@@ -5752,6 +5754,7 @@ void projective_space::conic_type(
 	longinteger_object conic_rk, aa;
 	int *pts_on_conic;
 	int allocation_length;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "projective_space::conic_type" << endl;
@@ -5830,7 +5833,7 @@ void projective_space::conic_type(
 
 
 		F->PG_element_normalize(six_coeffs, 1, 6);
-		AG_element_rank_longinteger(F->q,
+		Gg.AG_element_rank_longinteger(F->q,
 				six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
@@ -7154,6 +7157,7 @@ void projective_space::find_two_lines_for_arc_lifting(
 	int Basis_search_copy[16];
 	int base_cols[4];
 	int i, N, rk;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "projective_space::find_two_lines_for_arc_lifting" << endl;
@@ -7181,7 +7185,7 @@ void projective_space::find_two_lines_for_arc_lifting(
 	}
 	int_vec_zero(Basis + 8, 8);
 
-	N = nb_PG_elements(3, q);
+	N = Gg.nb_PG_elements(3, q);
 	for (i = 0; i < N; i++) {
 		int_vec_copy(Basis, Basis_search, 4);
 		int_vec_copy(Basis + 4, Basis_search + 4, 4);

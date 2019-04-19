@@ -119,17 +119,18 @@ void rank_binary_trees(int n, int verbose_level)
 	int *v;
 	int N, r;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	v = NEW_int(n);
 
 	N = NT.i_power_j(2, n);
 	for (i = 0; i < N; i++) {
 		cout << " rank " << i << " : ";
-		AG_element_unrank(2 /* q */, v, 1, n, i);
+		Gg.AG_element_unrank(2 /* q */, v, 1, n, i);
 		cout << " : bitstring ";
 		int_vec_print(cout, v, n);
 		cout << " : ";
-		AG_element_rank(2 /* q */, v, 1, n, r);
+		Gg.AG_element_rank(2 /* q */, v, 1, n, r);
 		cout << " has rank " << r << endl;
 		if (r != i) {
 			cout << "r != i, something is wrong" << endl;
@@ -146,7 +147,7 @@ void rank_binary_trees(int n, int verbose_level)
 
 	N = NT.i_power_j(2, n);
 	for (h = 0; h < N; h++) {
-		AG_element_unrank(2 /* q */, v, 1, n, h);
+		Gg.AG_element_unrank(2 /* q */, v, 1, n, h);
 		fp << n;
 		for (i = 0; i < n; i++) {
 			fp << " " << 2 * i + v[i];

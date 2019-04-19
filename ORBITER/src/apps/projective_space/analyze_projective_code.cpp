@@ -151,10 +151,12 @@ void do_analyze_projective_code(int n, finite_field *F,
 	int N;
 	int min_d;
 	int *weights;
+	geometry_global Gg;
+
 	F->code_projective_weights(set_size, d,
 			genma, weights, verbose_level);
 
-	N = nb_PG_elements(n, q);
+	N = Gg.nb_PG_elements(n, q);
 	min_d = weights[0];
 	for (i = 1; i < N; i++) {
 		if (weights[i] < min_d) {

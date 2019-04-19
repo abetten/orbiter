@@ -587,11 +587,12 @@ int main(int argc, const char **argv)
 	else if (f_Buekenhout_Metz) {
 
 		finite_field *FQ;
+		geometry_global Gg;
 
 		FQ = NEW_OBJECT(finite_field);
 		FQ->init_override_polynomial(Q, poly_Q, 0);
 
-		create_Buekenhout_Metz(F, FQ, 
+		Gg.create_Buekenhout_Metz(F, FQ,
 			f_classical, f_Uab, parameter_a, parameter_b, 
 			fname, nb_pts, Pts, 
 			verbose_level);

@@ -130,9 +130,10 @@ void orthogonal_points(int epsilon, int n, int q,
 	int *v;
 	int *v2;
 	int *G;
+	geometry_global Gg;
 	
 	d = n + 1;
-	N = nb_pts_Qepsilon(epsilon, n, q);
+	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
 	
 	cout << "number of points = " << N << endl;
 

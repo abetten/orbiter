@@ -927,6 +927,7 @@ int subspace_orbits::test_minimum_distance(
 	int *msg;
 	int *word;
 	int *M;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "subspace_orbits::test_minimum_distance" << endl;
@@ -942,7 +943,7 @@ int subspace_orbits::test_minimum_distance(
 		print_integer_matrix_width(cout,
 				M, len, n, n, F->log10_of_q);
 		}
-	N = nb_PG_elements(k - 1, q);
+	N = Gg.nb_PG_elements(k - 1, q);
 	msg = v;
 	word = w;
 	for (h = 0; h < N; h++) {

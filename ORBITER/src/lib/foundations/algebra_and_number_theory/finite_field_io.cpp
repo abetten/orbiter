@@ -836,8 +836,10 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 	cheat_sheet_top(f, nb_cols);
 
+	geometry_global Gg;
+
 	for (i = 0; i < q; i++) {
-		AG_element_unrank(p, v, 1, e, i);
+		Gg.AG_element_unrank(p, v, 1, e, i);
 		f << setw(3) << i << " & ";
 		f_first = TRUE;
 		for (j = e - 1; j >= 0; j--) {

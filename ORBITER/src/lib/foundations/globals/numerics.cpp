@@ -1257,6 +1257,7 @@ void numerics::substitute_quadric_linear(
 	int A[2];
 	int v[4];
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "substitute_quadric_linear" << endl;
@@ -1265,7 +1266,7 @@ void numerics::substitute_quadric_linear(
 	nb_affine = NT.i_power_j(n, degree);
 
 	for (i = 0; i < nb_affine; i++) {
-		AG_element_unrank(n /* q */, A, 1, degree, i);
+		Gg.AG_element_unrank(n /* q */, A, 1, degree, i);
 		int_vec_zero(v, n);
 		for (j = 0; j < degree; j++) {
 			a = A[j];
@@ -1305,7 +1306,7 @@ void numerics::substitute_quadric_linear(
 			}
 		for (a = 0; a < nb_affine; a++) {
 
-			AG_element_unrank(n /* q */, A, 1, degree, a);
+			Gg.AG_element_unrank(n /* q */, A, 1, degree, a);
 				// sequence of length degree
 				// over the alphabet  0,...,n-1.
 			b = 1.;
@@ -1398,6 +1399,7 @@ void numerics::substitute_cubic_linear(
 	int A[3];
 	int v[4];
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "substitute_cubic_linear" << endl;
@@ -1424,7 +1426,7 @@ void numerics::substitute_cubic_linear(
 		}
 
 	for (i = 0; i < nb_affine; i++) {
-		AG_element_unrank(n /* q */, A, 1, degree, i);
+		Gg.AG_element_unrank(n /* q */, A, 1, degree, i);
 		int_vec_zero(v, n);
 		for (j = 0; j < degree; j++) {
 			a = A[j];
@@ -1474,7 +1476,7 @@ void numerics::substitute_cubic_linear(
 			}
 		for (a = 0; a < nb_affine; a++) {
 
-			AG_element_unrank(n /* q */, A, 1, degree, a);
+			Gg.AG_element_unrank(n /* q */, A, 1, degree, a);
 				// sequence of length degree 
 				// over the alphabet  0,...,n-1.
 			b = 1.;

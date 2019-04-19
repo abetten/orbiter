@@ -222,6 +222,7 @@ void grassmann::unrank_int(int rk, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int r, h, a = 1, A, nb_free_cols = 0, Q, b, c, i, j;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "grassmann::unrank_int " << rk << endl;
@@ -291,7 +292,7 @@ void grassmann::unrank_int(int rk, int verbose_level)
 	
 	// unrank the coset:
 	if (nb_free_cols) {
-		AG_element_unrank(q, coset, 1, nb_free_cols, b);
+		Gg.AG_element_unrank(q, coset, 1, nb_free_cols, b);
 		}
 	if (f_v) {
 		cout << "grassmann::unrank_int coset " << b << " = ";
@@ -363,6 +364,7 @@ int grassmann::rank_int(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int k1, r, h, a, A, nb_free_cols, Q, b, c, i, j;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	r = 0;
 	if (f_v) {
@@ -457,7 +459,7 @@ int grassmann::rank_int(int verbose_level)
 		}
 	// rank the coset:
 	if (nb_free_cols) {
-		AG_element_rank(q, coset, 1, nb_free_cols, b);
+		Gg.AG_element_rank(q, coset, 1, nb_free_cols, b);
 		}
 	else {
 		b = 0;
@@ -502,6 +504,7 @@ void grassmann::unrank_longinteger(
 	longinteger_object r, r1, a, A, mA, Q, b, c;
 	longinteger_domain D;
 	int i, j, h, nb_free_cols = 0;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "unrank_longinteger " << rk << endl;
@@ -562,7 +565,7 @@ void grassmann::unrank_longinteger(
 	
 	// unrank the coset:
 	if (nb_free_cols) {
-		AG_element_unrank_longinteger(q, coset, 1, nb_free_cols, b);
+		Gg.AG_element_unrank_longinteger(q, coset, 1, nb_free_cols, b);
 		}
 	if (f_v) {
 		cout << "grassmann::unrank_longinteger coset " << b << " = ";
@@ -637,6 +640,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
 	longinteger_domain D;
 	int k1, nb_free_cols, h, i, j;
+	geometry_global Gg;
 	
 	r.create(0);
 	if (f_v) {
@@ -747,7 +751,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 		}
 	// rank the coset:
 	if (nb_free_cols) {
-		AG_element_rank_longinteger(q, coset, 1, nb_free_cols, b);
+		Gg.AG_element_rank_longinteger(q, coset, 1, nb_free_cols, b);
 		if (f_v) {
 			cout << "AG_element_rank_longinteger for coset ";
 			int_vec_print(cout, coset, nb_free_cols);

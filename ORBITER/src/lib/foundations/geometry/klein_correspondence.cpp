@@ -78,6 +78,7 @@ void klein_correspondence::init(finite_field *F,
 	int f_vv = (verbose_level >= 2);
 	int d = 6;
 	int i, u, v;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "klein_correspondence::init" << endl;
@@ -260,7 +261,7 @@ void klein_correspondence::init(finite_field *F,
 			}
 		}
 
-	nb_pts_PG = nb_PG_elements(d - 1, q);
+	nb_pts_PG = Gg.nb_PG_elements(d - 1, q);
 	if (f_v) {
 		cout << "klein_correspondence::init "
 				"nb_pts_PG = " << nb_pts_PG << endl;

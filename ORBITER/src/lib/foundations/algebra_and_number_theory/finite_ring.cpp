@@ -453,6 +453,7 @@ int PHG_element_rank(finite_ring &R,
 	int f_v = FALSE;
 	int *w;
 	int *embedding;
+	geometry_global Gg;
 
 	if (len <= 0) {
 		cout << "PHG_element_rank len <= 0" << endl;
@@ -495,10 +496,10 @@ int PHG_element_rank(finite_ring &R,
 		int_vec_print(cout, w, len - 1);
 		cout << endl;
 		}
-	AG_element_rank(R.e, w, 1, len - 1, r1);
+	Gg.AG_element_rank(R.e, w, 1, len - 1, r1);
 	R.Fp->PG_element_rank_modified(v, stride, len, r2);
 
-	N = nb_PG_elements(len - 1, R.p);
+	N = Gg.nb_PG_elements(len - 1, R.p);
 	rk = r1 * N + r2;
 
 	FREE_int(w);
@@ -514,6 +515,7 @@ void PHG_element_unrank(finite_ring &R,
 	int f_v = FALSE;
 	int *w;
 	int *embedding;
+	geometry_global Gg;
 
 	if (len <= 0) {
 		cout << "PHG_element_unrank len <= 0" << endl;
@@ -523,11 +525,11 @@ void PHG_element_unrank(finite_ring &R,
 	w = NEW_int(len - 1);
 	embedding = NEW_int(len - 1);
 
-	N = nb_PG_elements(len - 1, R.p);
+	N = Gg.nb_PG_elements(len - 1, R.p);
 	r2 = rk % N;
 	r1 = (rk - r2) / N;
 
-	AG_element_unrank(R.e, w, 1, len - 1, r1);
+	Gg.AG_element_unrank(R.e, w, 1, len - 1, r1);
 	R.Fp->PG_element_unrank_modified(v, stride, len, r2);
 
 	if (f_v) {
@@ -558,9 +560,10 @@ void PHG_element_unrank(finite_ring &R,
 int nb_PHG_elements(int n, finite_ring &R)
 {
 	int N1, N2;
+	geometry_global Gg;
 
-	N1 = nb_PG_elements(n, R.p);
-	N2 = nb_AG_elements(n, R.e);
+	N1 = Gg.nb_PG_elements(n, R.p);
+	N2 = Gg.nb_AG_elements(n, R.e);
 	return N1 * N2;
 }
 

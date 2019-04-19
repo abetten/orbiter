@@ -805,6 +805,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 	int *Nb;
 	int t, h, i, /*idx,*/ j;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "compute_Distribution_table" << endl;
@@ -830,7 +831,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 	for (t = 1; t <= t_max; t++) {
 		cout << "t=" << t << " Nb[t]=" << Nb[t] << endl;
 		for (h = 0; h < Nb[t]; h++) {
-			AG_element_unrank(nb_gens, Choice, 1, t, h);
+			Gg.AG_element_unrank(nb_gens, Choice, 1, t, h);
 
 			if (f_vvv) {
 				cout << "h=" << h << " Choice=";

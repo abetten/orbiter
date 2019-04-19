@@ -1234,10 +1234,11 @@ void orthogonal::init(int epsilon, int n,
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int i, j;
+	geometry_global Gg;
 	
 	
 	orthogonal::epsilon = epsilon;
-	orthogonal::m = Witt_index(epsilon, n - 1);
+	orthogonal::m = Gg.Witt_index(epsilon, n - 1);
 	orthogonal::F = F;
 	orthogonal::q = F->q;
 	orthogonal::n = n;
@@ -1314,18 +1315,18 @@ void orthogonal::init(int epsilon, int n,
 				"computing Gram matrix done" << endl;
 		}
 	
-	T1_m = count_T1(epsilon, m, q);
+	T1_m = Gg.count_T1(epsilon, m, q);
 	if (f_vvv) {
 		cout << "T1_m(" << epsilon << ","
 				<< m << "," << q << ") = " << T1_m << endl;
 		}
-	T1_mm1 = count_T1(epsilon, m - 1, q);
+	T1_mm1 = Gg.count_T1(epsilon, m - 1, q);
 	if (f_vvv) {
 		cout << "T1_mm1(" << epsilon << ","
 				<< m - 1 << "," << q << ") = " << T1_mm1 << endl;
 		}
 	if (m > 1) {
-		T1_mm2 = count_T1(epsilon, m - 2, q);
+		T1_mm2 = Gg.count_T1(epsilon, m - 2, q);
 		if (f_vvv) {
 			cout << "T1_mm2(" << epsilon << ","
 					<< m - 2 << "," << q << ") = " << T1_mm2 << endl;
@@ -1334,34 +1335,34 @@ void orthogonal::init(int epsilon, int n,
 	else {
 		T1_mm2 = 0;
 		}
-	T2_m = count_T2(m, q);
-	T2_mm1 = count_T2(m - 1, q);
+	T2_m = Gg.count_T2(m, q);
+	T2_mm1 = Gg.count_T2(m - 1, q);
 	if (m > 1) {
-		T2_mm2 = count_T2(m - 2, q);
+		T2_mm2 = Gg.count_T2(m - 2, q);
 		}
 	else {
 		T2_mm2 = 0;
 		}
-	N1_m = count_N1(m, q);
-	N1_mm1 = count_N1(m - 1, q);
+	N1_m = Gg.count_N1(m, q);
+	N1_mm1 = Gg.count_N1(m - 1, q);
 	if (m > 1) {
-		N1_mm2 = count_N1(m - 2, q);
+		N1_mm2 = Gg.count_N1(m - 2, q);
 		}
 	else {
 		N1_mm2 = 0;
 		}
-	S_m = count_S(m, q);
-	S_mm1 = count_S(m - 1, q);
+	S_m = Gg.count_S(m, q);
+	S_mm1 = Gg.count_S(m - 1, q);
 	if (m > 1) {
-		S_mm2 = count_S(m - 2, q);
+		S_mm2 = Gg.count_S(m - 2, q);
 		}
 	else {
 		S_mm2 = 0;
 		}
-	Sbar_m = count_Sbar(m, q);
-	Sbar_mm1 = count_Sbar(m - 1, q);
+	Sbar_m = Gg.count_Sbar(m, q);
+	Sbar_mm1 = Gg.count_Sbar(m - 1, q);
 	if (m > 1) {
-		Sbar_mm2 = count_Sbar(m - 2, q);
+		Sbar_mm2 = Gg.count_Sbar(m - 2, q);
 		}
 	else {
 		Sbar_mm2 = 0;
@@ -1401,7 +1402,7 @@ void orthogonal::init(int epsilon, int n,
 #if 1
 		int u;
 		
-		u = nb_pts_Qepsilon(epsilon, 2 * m - 1, q);
+		u = Gg.nb_pts_Qepsilon(epsilon, 2 * m - 1, q);
 		if (T1_m != u) {
 			cout << "T1_m != nb_pts_Qepsilon" << endl;
 			cout << "T1_m=" << T1_m << endl;
@@ -1421,7 +1422,7 @@ void orthogonal::init(int epsilon, int n,
 			}
 		}
 	else if (epsilon == -1) {
-		nb_points = nb_pts_Qepsilon(epsilon, n - 1, q);
+		nb_points = Gg.nb_pts_Qepsilon(epsilon, n - 1, q);
 		nb_lines = 0;
 		if (f_v) {
 			cout << "nb_points=" << nb_points << endl;
@@ -1537,6 +1538,7 @@ void orthogonal::init_parabolic(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	geometry_global Gg;
 
 	//int a, b, c;
 	
@@ -1582,8 +1584,8 @@ void orthogonal::init_parabolic(int verbose_level)
 	L[6] = l7;
 	L[7] = l8;
 
-	pt_P = count_T1(1, m - 1, q);
-	pt_Q = pt_P + count_S(m - 1, q);
+	pt_P = Gg.count_T1(1, m - 1, q);
+	pt_Q = pt_P + Gg.count_S(m - 1, q);
 
 	for (j = 0; j < nb_line_classes; j++) {
 		if (L[j] == 0) {
@@ -1600,16 +1602,17 @@ void orthogonal::init_parabolic(int verbose_level)
 void orthogonal::init_parabolic_even(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "init_parabolic_even" << endl;
 		}
 	if (m >= 2)
-		beta = count_T1(0, m - 2, q);
+		beta = Gg.count_T1(0, m - 2, q);
 	else
 		beta = 0;
 	if (m >= 1) {
-		alpha = count_T1(0, m - 1, q);
+		alpha = Gg.count_T1(0, m - 1, q);
 		gamma = alpha * beta / (q + 1);
 		}
 	else {
@@ -1715,19 +1718,20 @@ void orthogonal::init_parabolic_odd(int verbose_level)
 {
 	int a, b, c, i, j;
 	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "init_parabolic_odd" << endl;
 		cout << "count_N1(" << m - 1 << "," << q << ")=";
-		cout << count_N1(m - 1, q) << endl;
+		cout << Gg.count_N1(m - 1, q) << endl;
 		cout << "count_S(" << m - 1 << "," << q << ")=";
-		cout << count_S(m - 1, q) << endl;
+		cout << Gg.count_S(m - 1, q) << endl;
 		}
-	a = count_N1(m - 1, q) * (q - 1) / 2;
-	b = count_S(m - 1, q) * (q - 1);
-	c = (((q - 1) / 2) - 1) * (q - 1) * count_N1(m - 1, q);
+	a = Gg.count_N1(m - 1, q) * (q - 1) / 2;
+	b = Gg.count_S(m - 1, q) * (q - 1);
+	c = (((q - 1) / 2) - 1) * (q - 1) * Gg.count_N1(m - 1, q);
 	p1 = a + b + c;
-	p2 = a + ((q - 1) / 2) * (q - 1) * count_N1(m - 1, q);
+	p2 = a + ((q - 1) / 2) * (q - 1) * Gg.count_N1(m - 1, q);
 	if (f_v) {
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
@@ -1737,11 +1741,11 @@ void orthogonal::init_parabolic_odd(int verbose_level)
 		}
 		
 	if (m >= 2)
-		beta = count_T1(0, m - 2, q);
+		beta = Gg.count_T1(0, m - 2, q);
 	else
 		beta = 0;
 	if (m >= 1) {
-		alpha = count_T1(0, m - 1, q);
+		alpha = Gg.count_T1(0, m - 1, q);
 		gamma = alpha * beta / (q + 1);
 		}
 	else {
@@ -1762,9 +1766,9 @@ void orthogonal::init_parabolic_odd(int verbose_level)
 		cout << "p6=" << p6 << endl;
 		}
 		
-	omega = (q - 1) * count_S(m - 2, q) + 
-		count_N1(m - 2, q) * (q - 1) / 2 + 
-		count_N1(m - 2, q) * ((q - 1) / 2 - 1) * (q - 1);
+	omega = (q - 1) * Gg.count_S(m - 2, q) +
+		Gg.count_N1(m - 2, q) * (q - 1) / 2 +
+		Gg.count_N1(m - 2, q) * ((q - 1) / 2 - 1) * (q - 1);
 	if (f_v) {
 		cout << "omega=" << omega << endl;
 		}

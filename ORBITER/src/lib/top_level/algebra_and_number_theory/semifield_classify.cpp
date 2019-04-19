@@ -516,15 +516,6 @@ int semifield_classify::rank_point(int *v, int verbose_level)
 		cout << "semifield_classify::rank_point" << endl;
 		}
 	int_vec_copy(v, A_on_S->mtx1, k2);
-#if 0
-	int_vec_copy(v, A_on_S->mtx2, k2);
-	r = A_on_S->F->Gauss_easy(A_on_S->mtx2, k, k);
-	if (r != k) {
-		cout << "semifield_classify::rank_point "
-				"r != k" << endl;
-		exit(1);
-		}
-#endif
 	G->A->make_element(Elt1, A_on_S->mtx1, 0);
 	if (f_vv) {
 		cout << "semifield_classify::rank_point "
@@ -580,6 +571,7 @@ void semifield_classify::early_test_func(int *S, int len,
 	int *v, *w;
 	int i, j, N, r;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::early_test_func" << endl;
@@ -592,9 +584,13 @@ void semifield_classify::early_test_func(int *S, int len,
 			}
 		return;
 		}
-	M = NEW_int((len + 1) * k2);
-	v = NEW_int(len + 1);
-	w = NEW_int(k2);
+	//M = NEW_int((len + 1) * k2);
+	//v = NEW_int(len + 1);
+	//w = NEW_int(k2);
+	v = test_v; // [n]
+	w = test_w; // [k2]
+	M = test_Basis; // [k * k2]
+
 	N = NT.i_power_j(q, len);
 	for (i = 0; i < len; i++) {
 		unrank_point(M + i * k2, S[i], 0 /*verbose_level - 2*/);
@@ -619,7 +615,7 @@ void semifield_classify::early_test_func(int *S, int len,
 		unrank_point(M + len * k2, candidates[i], 0 /*verbose_level - 2*/);
 		for (j = 0; j < N; j++) {
 			if (len) {
-				AG_element_unrank(q, v, 1, len, j);
+				Gg.AG_element_unrank(q, v, 1, len, j);
 				}
 			v[len] = 1;
 			F->mult_matrix_matrix(v, M, w, 1, len + 1, k2,
@@ -655,9 +651,9 @@ void semifield_classify::early_test_func(int *S, int len,
 			int_matrix_print(M, k, k);
 			}
 		}
-	FREE_int(M);
-	FREE_int(v);
-	FREE_int(w);
+	//FREE_int(M);
+	//FREE_int(v);
+	//FREE_int(w);
 	if (f_v) {
 		cout << "semifield_classify::early_test_func done" << endl;
 		cout << "Out of " << nb_candidates << " candidates, "
@@ -676,6 +672,7 @@ int semifield_classify::test_candidate(
 	int *base_cols;
 	int N, h, i, j, a, b, c, r;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::test_candidate" << endl;
@@ -693,7 +690,7 @@ int semifield_classify::test_candidate(
 	//w = NEW_int(k2);
 	N = NT.i_power_j(q, stack_size);
 	for (h = 0; h < N; h++) {
-		AG_element_unrank(q, v, 1, stack_size, h);
+		Gg.AG_element_unrank(q, v, 1, stack_size, h);
 		for (i = 0; i < k2; i++) {
 			c = 0;
 			for (j = 0; j < stack_size; j++) {
@@ -773,6 +770,7 @@ int semifield_classify::test_partial_semifield(
 	int *v;
 	int *w;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::test_partial_semifield" << endl;
@@ -787,7 +785,7 @@ int semifield_classify::test_partial_semifield(
 
 	N = NT.i_power_j(q, n);
 	for (h = 1; h < N; h++) {
-		AG_element_unrank(q, v, 1, n, h);
+		Gg.AG_element_unrank(q, v, 1, n, h);
 		for (i = 0; i < k2; i++) {
 			c = 0;
 			for (j = 0; j < n; j++) {
@@ -973,6 +971,134 @@ void semifield_classify::apply_element_and_copy_back(int *Elt,
 
 
 
+void semifield_classify::candidates_classify_by_first_column(
+	int *Input_set, int input_set_sz,
+	int window_bottom, int window_size,
+	int **&Set, int *&Set_sz, int &Nb_sets,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *window;
+	int *Mtx;
+	int *Tmp_sz;
+	int h, a, b, u, i;
+	number_theory_domain NT;
+	geometry_global Gg;
+
+
+	if (f_v) {
+		cout << "semifield_classify::candidates_classify_"
+				"by_first_column input_set_sz = " << input_set_sz << endl;
+		}
+	Nb_sets = NT.i_power_j(q, window_size);
+	window = NEW_int(window_size);
+	Mtx = NEW_int(k * k);
+	Set_sz = NEW_int(Nb_sets);
+	Tmp_sz = NEW_int(Nb_sets);
+	int_vec_zero(Set_sz, Nb_sets);
+	int_vec_zero(Tmp_sz, Nb_sets);
+	for (h = 0; h < input_set_sz; h++) {
+		if ((h % (256 * 1024)) == 0) {
+			cout << "semifield_classify::candidates_classify_"
+					"by_first_column " << h << " / "
+					<< input_set_sz << endl;
+			}
+		a = Input_set[h];
+		matrix_unrank(a, Mtx);
+		for (u = 0; u < window_size; u++) {
+			a = Mtx[(window_bottom - u) * k + 0];
+			window[u] = a;
+			}
+		Gg.AG_element_rank(q, window, 1, window_size, a);
+		Set_sz[a]++;
+		}
+	if (f_vv) {
+		cout << "semifield_classify::candidates_classify_"
+				"by_first_column" << endl;
+		cout << "a : #" << endl;
+		for (u = 0; u < Nb_sets; u++) {
+			cout << u << " : " << Set_sz[u] << endl;
+			}
+		}
+
+	if (f_vv) {
+		cout << "semifield_classify::candidates_classify_"
+				"by_first_column computing efficient "
+				"representations input_set_sz = " << input_set_sz << endl;
+		}
+	Set = NEW_pint(Nb_sets);
+	for (u = 0; u < Nb_sets; u++) {
+		Set[u] = NEW_int(Set_sz[u]);
+		}
+	for (h = 0; h < input_set_sz; h++) {
+		if ((h % (256 * 1024)) == 0) {
+			cout << "semifield_classify::candidates_classify_"
+					"by_first_column " << h << " / " << input_set_sz << endl;
+			}
+		a = Input_set[h];
+		matrix_unrank(a, Mtx);
+		for (u = 0; u < window_size; u++) {
+			a = Mtx[(window_bottom - u) * k + 0];
+			window[u] = a;
+			}
+		Gg.AG_element_rank(q, window, 1, window_size, b);
+
+		// zero out the first column to make it fit into a machine word:
+
+		for (i = 0; i < k; i++) {
+			Mtx[i * k + 0] = 0;
+			}
+		a = matrix_rank(Mtx);
+
+
+		Set[b][Tmp_sz[b]++] = a; //Input_set[h];
+		}
+	for (u = 0; u < Nb_sets; u++) {
+		if (Tmp_sz[u] != Set_sz[u]) {
+			cout << "semifield_classify::candidates_classify_"
+					"by_first_column Tmp_sz[u] != Set_sz[u]" << endl;
+			exit(1);
+			}
+		}
+
+
+	FREE_int(window);
+	FREE_int(Mtx);
+	FREE_int(Tmp_sz);
+	if (f_v) {
+		cout << "semifield_classify::candidates_classify_"
+				"by_first_column done" << endl;
+		}
+}
+
+void semifield_classify::make_fname_candidates_at_level_two_orbit(
+	char *fname, int orbit)
+{
+	if (f_level_two_prefix) {
+		sprintf(fname, "%sCandidates_lvl_2_orbit_%d",
+				level_two_prefix, orbit);
+		}
+	else {
+		sprintf(fname, "Candidates_lvl_2_orbit_%d", orbit);
+		}
+}
+
+void semifield_classify::make_fname_candidates_at_level_three_orbit(
+	char *fname, int orbit)
+{
+	if (f_level_three_prefix) {
+		sprintf(fname, "%sCandidates_lvl_3_orbit_%d",
+				level_three_prefix, orbit);
+		}
+	else {
+		sprintf(fname, "Candidates_lvl_3_orbit_%d", orbit);
+		}
+}
+
+
+
+
 //##############################################################################
 // global function:
 //##############################################################################
@@ -1041,6 +1167,8 @@ void semifield_classify_unrank_point_func(int *v, int rk, void *data)
 		cout << "semifield_classify_unrank_point_func done" << endl;
 		}
 }
+
+
 
 
 

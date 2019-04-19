@@ -646,6 +646,7 @@ void create_roots_E6(finite_field *F)
 	int i, j, s1, s2, k, n, h;
 	int v[8];
 	int one, m_one, half;
+	geometry_global Gg;
 	
 	one = 1;
 	m_one = F->negate(one);
@@ -683,10 +684,10 @@ void create_roots_E6(finite_field *F)
 	int N;
 	int cnt;
 	
-	N = nb_AG_elements(5, 2);
+	N = Gg.nb_AG_elements(5, 2);
 
 	for (i = 0; i < N; i++) {
-		AG_element_unrank(2, w, 1, 5, i);
+		Gg.AG_element_unrank(2, w, 1, 5, i);
 		cnt = 0;
 		for (j = 0; j < 5; j++) {
 			cnt += w[j];
@@ -984,6 +985,7 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 	int *Elt1;
 	int max_length = 100;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	Elt1 = new int[A->elt_size_in_int];
 	
@@ -1015,7 +1017,7 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 			W[length] = new int[nb_words];
 			for (i = 0; i < nb_words; i++) {
 				if (length) {
-					AG_element_unrank(nb_gens, word, 1, length, i);
+					Gg.AG_element_unrank(nb_gens, word, 1, length, i);
 					}
 				for (j = 0; j < length; j++) {
 					a = word[j];

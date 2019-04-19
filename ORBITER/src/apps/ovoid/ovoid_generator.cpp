@@ -116,6 +116,7 @@ void ovoid_generator::init(int argc, const char **argv,
 	int f_semilinear;
 	int f_basis = TRUE;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
@@ -293,7 +294,7 @@ void ovoid_generator::init(int argc, const char **argv,
 
 		K->init(F, O, verbose_level);
 		color_table = NEW_int(N);
-		nb_colors = nb_AG_elements(2, F->q);
+		nb_colors = Gg.nb_AG_elements(2, F->q);
 		O->unrank_point(u, 1, 0, 0);
 		for (i = 0; i < N; i++) {
 			O->unrank_point(v, 1, i, 0);
@@ -313,7 +314,7 @@ void ovoid_generator::init(int argc, const char **argv,
 					cout << "The shape of B is wrong" << endl;
 					exit(1);
 				}
-				AG_element_rank(F->q, B, 1, 2, c);
+				Gg.AG_element_rank(F->q, B, 1, 2, c);
 			} else {
 				c = -1;
 			}
@@ -357,6 +358,7 @@ void ovoid_generator::read_arguments(
 	int f_epsilon = FALSE;
 	int f_n = FALSE;
 	int f_q = FALSE;
+	geometry_global Gg;
 	
 	if (argc < 1) {
 		usage(argc, argv);
@@ -427,7 +429,7 @@ void ovoid_generator::read_arguments(
 		cout << "Please use option -q <q>" << endl;
 		exit(1);
 		}
-	m = Witt_index(epsilon, n);
+	m = Gg.Witt_index(epsilon, n);
 	d = n + 1;
 	cout << "epsilon=" << epsilon << endl;
 	cout << "projective dimension n=" << n << endl;

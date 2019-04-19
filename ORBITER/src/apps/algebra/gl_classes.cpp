@@ -670,8 +670,14 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 	char fname[1000];
 
 	sprintf(fname, "Class_reps_GL_%d_%d.tex", d, q);
-	C.report(fname, verbose_level);
+	{
+	ofstream fp(fname);
+	latex_interface L;
 
+	L.head_easy(fp);
+	C.report(fp, verbose_level);
+	L.foot(fp);
+	}
 
 	//make_gl_classes(d, q, f_no_eigenvalue_one, verbose_level);
 

@@ -516,15 +516,16 @@ void matrix_group_element_print_verbose(action &A,
 void matrix_group_print_point(action &A, int a, ostream &ost)
 {
 	matrix_group *G = A.G.matrix_grp;
+	geometry_global Gg;
 	
 	if (G->f_projective) {
 		G->GFq->PG_element_unrank_modified(G->v1, 1, G->n, a);
 		}
 	else if (G->f_affine) {
-		AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
+		Gg.AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
 		}
 	else if (G->f_general_linear) {
-		AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
+		Gg.AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
 		}
 	else {
 		cout << "matrix_group_print_point unknown group type" << endl;
@@ -536,15 +537,16 @@ void matrix_group_print_point(action &A, int a, ostream &ost)
 void matrix_group_unrank_point(action &A, int rk, int *v)
 {
 	matrix_group *G = A.G.matrix_grp;
+	geometry_global Gg;
 
 	if (G->f_projective) {
 		G->GFq->PG_element_unrank_modified(v, 1 /* stride */, G->n, rk);
 		}
 	else if (G->f_affine) {
-		AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
+		Gg.AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
 		}
 	else if (G->f_general_linear) {
-		AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
+		Gg.AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
 		}
 	else {
 		cout << "matrix_group_unrank_point unknown group type" << endl;
@@ -556,15 +558,16 @@ int matrix_group_rank_point(action &A, int *v)
 {
 	matrix_group *G = A.G.matrix_grp;
 	int rk;
+	geometry_global Gg;
 
 	if (G->f_projective) {
 		G->GFq->PG_element_rank_modified(v, 1 /* stride */, G->n, rk);
 		}
 	else if (G->f_affine) {
-		AG_element_rank(G->GFq->q, v, 1, G->n, rk);
+		Gg.AG_element_rank(G->GFq->q, v, 1, G->n, rk);
 		}
 	else if (G->f_general_linear) {
-		AG_element_rank(G->GFq->q, v, 1, G->n, rk);
+		Gg.AG_element_rank(G->GFq->q, v, 1, G->n, rk);
 		}
 	else {
 		cout << "matrix_group_unrank_point unknown group type" << endl;

@@ -10,7 +10,6 @@ all:  cc2widor.out \
 		maxfit.out \
 		packing.out \
 		parameters.out \
-		tdo_can.out \
 		tdo_start.out \
 		tdo_refine.out \
 		tdo_print.out \
@@ -27,9 +26,6 @@ packing.out:  packing.o ;
 
 parameters.out:  parameters.o ;
 	$(DISCRETA_CPP)  parameters.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-tdo_can.out:  tdo_can.o ;
-	$(DISCRETA_CPP)  tdo_can.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 tdo_start.out:  tdo_start.o ;
 	$(DISCRETA_CPP)  tdo_start.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

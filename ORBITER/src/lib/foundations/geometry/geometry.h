@@ -801,18 +801,86 @@ int tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
 		int h, int class_first, int class_len);
 
 
-
 // #############################################################################
-// geometric_object.C:
+// geometry_global.cpp
 // #############################################################################
 
-void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq, 
-	int f_Linear,
-	int f_Fisher,
-	int f_Mondello,
-	int f_FTWKB,
-	char *fname, int &nb_pts, int *&Pts, 
-	int verbose_level);
+
+//! various functions related to geometries
+
+
+
+class geometry_global {
+public:
+
+	geometry_global();
+	~geometry_global();
+	int nb_PG_elements(int n, int q);
+		// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
+	int nb_PG_elements_not_in_subspace(int n, int m, int q);
+	int nb_AG_elements(int n, int q);
+	void AG_element_rank(int q, int *v, int stride, int len, int &a);
+	void AG_element_unrank(int q, int *v, int stride, int len, int a);
+	void AG_element_rank_longinteger(int q, int *v, int stride, int len,
+		longinteger_object &a);
+	void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
+		longinteger_object &a);
+	int PG_element_modified_is_in_subspace(int n, int m, int *v);
+	void test_PG(int n, int q);
+	void create_Fisher_BLT_set(int *Fisher_BLT, int q,
+		const char *poly_q, const char *poly_Q, int verbose_level);
+	void create_Linear_BLT_set(int *BLT, int q,
+		const char *poly_q, const char *poly_Q, int verbose_level);
+	void create_Mondello_BLT_set(int *BLT, int q,
+		const char *poly_q, const char *poly_Q, int verbose_level);
+	void print_quadratic_form_list_coded(int form_nb_terms,
+		int *form_i, int *form_j, int *form_coeff);
+	void make_Gram_matrix_from_list_coded_quadratic_form(
+		int n, finite_field &F,
+		int nb_terms, int *form_i, int *form_j,
+		int *form_coeff, int *Gram);
+	void add_term(int n, finite_field &F, int &nb_terms,
+		int *form_i, int *form_j, int *form_coeff, int *Gram,
+		int i, int j, int coeff);
+	void determine_conic(int q, const char *override_poly, int *input_pts,
+		int nb_pts, int verbose_level);
+	int test_if_arc(finite_field *Fq, int *pt_coords, int *set,
+		int set_sz, int k, int verbose_level);
+	void create_Buekenhout_Metz(
+		finite_field *Fq, finite_field *FQ,
+		int f_classical, int f_Uab, int parameter_a, int parameter_b,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+	int count_Sbar(int n, int q);
+	int count_S(int n, int q);
+	int count_N1(int n, int q);
+	int count_T1(int epsilon, int n, int q);
+	int count_T2(int n, int q);
+	int nb_pts_Qepsilon(int epsilon, int k, int q);
+	// number of singular points on Q^epsilon(k,q)
+	int dimension_given_Witt_index(int epsilon, int n);
+	int Witt_index(int epsilon, int k);
+	int nb_pts_Q(int k, int q);
+	// number of singular points on Q(k,q)
+	int nb_pts_Qplus(int k, int q);
+	// number of singular points on Q^+(k,q)
+	int nb_pts_Qminus(int k, int q);
+	// number of singular points on Q^-(k,q)
+	int nb_pts_S(int n, int q);
+	int nb_pts_N(int n, int q);
+	int nb_pts_N1(int n, int q);
+	int nb_pts_Sbar(int n, int q);
+	int nb_pts_Nbar(int n, int q);
+	void test_Orthogonal(int epsilon, int k, int q);
+	void test_orthogonal(int n, int q);
+	void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq,
+		int f_Linear,
+		int f_Fisher,
+		int f_Mondello,
+		int f_FTWKB,
+		char *fname, int &nb_pts, int *&Pts,
+		int verbose_level);
+};
 
 
 // #############################################################################
@@ -1929,34 +1997,6 @@ public:
 		int verbose_level);
 };
 
-// #############################################################################
-// orthogonal_points.C:
-// #############################################################################
-
-
-
-int count_Sbar(int n, int q);
-int count_S(int n, int q);
-int count_N1(int n, int q);
-int count_T1(int epsilon, int n, int q);
-int count_T2(int n, int q);
-int nb_pts_Qepsilon(int epsilon, int k, int q);
-// number of singular points on Q^epsilon(k,q)
-int dimension_given_Witt_index(int epsilon, int n);
-int Witt_index(int epsilon, int k);
-int nb_pts_Q(int k, int q);
-// number of singular points on Q(k,q)
-int nb_pts_Qplus(int k, int q);
-// number of singular points on Q^+(k,q)
-int nb_pts_Qminus(int k, int q);
-// number of singular points on Q^-(k,q)
-int nb_pts_S(int n, int q);
-int nb_pts_N(int n, int q);
-int nb_pts_N1(int n, int q);
-int nb_pts_Sbar(int n, int q);
-int nb_pts_Nbar(int n, int q);
-void test_Orthogonal(int epsilon, int k, int q);
-void test_orthogonal(int n, int q);
 
 
 // #############################################################################

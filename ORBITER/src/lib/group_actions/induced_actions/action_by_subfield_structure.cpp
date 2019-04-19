@@ -72,6 +72,7 @@ void action_by_subfield_structure::init(action &A,
 	int p, h;
 	int q;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_by_subfield_structure::init" << endl;
@@ -114,7 +115,7 @@ void action_by_subfield_structure::init(action &A,
 		}
 
 
-	degree = nb_PG_elements(m - 1, q);
+	degree = Gg.nb_PG_elements(m - 1, q);
 	low_level_point_size = m;
 	v1 = NEW_int(m);
 	v2 = NEW_int(m);

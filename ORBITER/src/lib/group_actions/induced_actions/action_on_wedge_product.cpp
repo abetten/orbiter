@@ -49,6 +49,7 @@ void action_on_wedge_product::free()
 void action_on_wedge_product::init(action &A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_on_wedge_product::init" << endl;
@@ -65,7 +66,7 @@ void action_on_wedge_product::init(action &A, int verbose_level)
 	q = F->q;
 	wedge_dimension = (n * (n - 1)) >> 1;
 	//degree = i_power_j(q, wedge_dimension);
-	degree = nb_PG_elements(wedge_dimension - 1, q);
+	degree = Gg.nb_PG_elements(wedge_dimension - 1, q);
 	low_level_point_size = wedge_dimension;
 	wedge_v1 = NEW_int(wedge_dimension);
 	wedge_v2 = NEW_int(wedge_dimension);

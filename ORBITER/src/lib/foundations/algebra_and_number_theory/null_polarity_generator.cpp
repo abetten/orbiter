@@ -79,6 +79,7 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "null_polarity_generator::init" << endl;
@@ -99,7 +100,7 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 	w = NEW_int(n);
 	Points = NEW_int(qn * n);
 	for (i = 0; i < qn; i++) {
-		AG_element_unrank(q, Points + i * n, 1, n, i);
+		Gg.AG_element_unrank(q, Points + i * n, 1, n, i);
 		}
 
 	create_first_candidate_set(verbose_level);

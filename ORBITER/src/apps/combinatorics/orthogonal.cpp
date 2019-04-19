@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 	int c1 = 0, c2 = 0, c3 = 0;
 	int *v, *v2;
 	int *Gram; // Gram matrix
+	geometry_global Gg;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -75,7 +76,7 @@ int main(int argc, char **argv)
 	
 	cout << "epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
 	
-	N = nb_pts_Qepsilon(epsilon, n, q);
+	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
 	
 	cout << "number of points = " << N << endl;
 	

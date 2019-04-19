@@ -451,6 +451,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	int *Adj;
 	int **M;
 	int witt;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "polar::dual_polar_graph" << endl;
@@ -462,7 +463,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	M1 = NEW_int(k * n);
 	M2 = NEW_int(k * n);
 
-	witt = Witt_index(epsilon, n - 1);
+	witt = Gg.Witt_index(epsilon, n - 1);
 		
 	node2 = Gen->first_poset_orbit_node_at_level[depth] + orbit_idx;
 	O2 = &Gen->root[node2];
@@ -926,6 +927,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	int nb_candidates_expanded;
 	int *tmp_candidates;
 	int nb_tmp_candidates;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
@@ -944,9 +946,9 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		return;
 		}
 
-	nb = nb_PG_elements(len - 1, F->q);
+	nb = Gg.nb_PG_elements(len - 1, F->q);
 	if (len >= 2) {
-		nb0 = nb_PG_elements(len - 2, F->q);
+		nb0 = Gg.nb_PG_elements(len - 2, F->q);
 		}
 	else {
 		nb0 = 1;

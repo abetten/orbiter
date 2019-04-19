@@ -271,6 +271,7 @@ void arc_generator::init(finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_generator::init "
@@ -308,7 +309,7 @@ void arc_generator::init(finite_field *F,
 		cout << "arc_generator::init" << endl;
 		}
 
-	nb_points_total = nb_PG_elements(n, q); // q * q + q + 1;
+	nb_points_total = Gg.nb_PG_elements(n, q); // q * q + q + 1;
 
 
 	if (NT.is_prime(q)) {

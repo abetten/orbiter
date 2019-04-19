@@ -1223,10 +1223,11 @@ int linear_set::test_set_secondary(int len, int *S, int verbose_level)
 		// need to make sure that the whole space
 		// consists of allowable vectors:
 
+		geometry_global Gg;
 
 		v = NEW_int(len);
 		w = NEW_int(n);
-		nb = nb_PG_elements(len - 1, q);
+		nb = Gg.nb_PG_elements(len - 1, q);
 
 	
 		for (i = 0; i < nb; i++) {
@@ -1758,9 +1759,10 @@ int linear_set_rank_point_func(int *v, void *data)
 {
 	linear_set *LS;
 	int rk;
+	geometry_global Gg;
 	
 	LS = (linear_set *) data;
-	AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
+	Gg.AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
 	//PG_element_rank_modified(*LS->Fq, v, 1,
 	//LS->vector_space_dimension, rk);
 	return rk;
@@ -1769,9 +1771,10 @@ int linear_set_rank_point_func(int *v, void *data)
 void linear_set_unrank_point_func(int *v, int rk, void *data)
 {
 	linear_set *LS;
+	geometry_global Gg;
 	
 	LS = (linear_set *) data;
-	AG_element_unrank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
+	Gg.AG_element_unrank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
 	//PG_element_unrank_modified(*LS->Fq, v, 1,
 	//LS->vector_space_dimension, rk);
 }

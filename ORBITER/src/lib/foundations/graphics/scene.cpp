@@ -2358,6 +2358,7 @@ void scene::hypercube(int n, double rad_desired)
 	double t, dt;
 	numerics Num;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	int first_pt_idx;
 
@@ -2396,7 +2397,7 @@ void scene::hypercube(int n, double rad_desired)
 		}
 
 	for (h = 0; h < N; h++) {
-		AG_element_unrank(2, v, 1, n, h);
+		Gg.AG_element_unrank(2, v, 1, n, h);
 		for (j = 0; j < 3; j++) {
 			x[j] = 0.;
 			}
@@ -2415,9 +2416,9 @@ void scene::hypercube(int n, double rad_desired)
 		point(x[0], x[1], x[2]);
 		}
 	for (h = 0; h < N; h++) {
-		AG_element_unrank(2, v, 1, n, h);
+		Gg.AG_element_unrank(2, v, 1, n, h);
 		for (k = h + 1; k < N; k++) {
-			AG_element_unrank(2, w, 1, n, k);
+			Gg.AG_element_unrank(2, w, 1, n, k);
 			d = 0;
 			for (i = 0; i < n; i++) {
 				if (v[i] != w[i]) {

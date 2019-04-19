@@ -231,9 +231,10 @@ int int_vec_is_regular_word(int *v, int len, int q)
 int int_vec_first_regular_word(int *v, int len, int Q, int q)
 {
 	int a;
+	geometry_global Gg;
 
 	for (a = 0; a < Q; a++) {
-		AG_element_unrank(q, v, 1, len, a);
+		Gg.AG_element_unrank(q, v, 1, len, a);
 		if (int_vec_is_regular_word(v, len, q)) {
 			return TRUE;
 			}
@@ -244,11 +245,12 @@ int int_vec_first_regular_word(int *v, int len, int Q, int q)
 int int_vec_next_regular_word(int *v, int len, int Q, int q)
 {
 	int a;
+	geometry_global Gg;
 
-	AG_element_rank(q, v, 1, len, a);
+	Gg.AG_element_rank(q, v, 1, len, a);
 	//cout << "int_vec_next_regular_word current rank = " << a << endl;
 	for (a++; a < Q; a++) {
-		AG_element_unrank(q, v, 1, len, a);
+		Gg.AG_element_unrank(q, v, 1, len, a);
 		//cout << "int_vec_next_regular_word testing ";
 		//int_vec_print(cout, v, len);
 		//cout << endl;

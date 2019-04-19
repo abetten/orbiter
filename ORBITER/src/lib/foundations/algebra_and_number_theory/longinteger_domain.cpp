@@ -1017,13 +1017,6 @@ static longinteger_object *tab_q_binomials = NULL;
 static int tab_q_binomials_size = 0;
 static int tab_q_binomials_q = 0;
 
-void longinteger_domain_free_tab_q_binomials()
-{
-	if (tab_q_binomials) {
-		FREE_OBJECTS(tab_q_binomials);
-		tab_q_binomials = NULL;
-	}
-}
 
 static void q_binomial_with_table(longinteger_object &a, 
 	int n, int k, int q, int verbose_level)
@@ -2426,6 +2419,7 @@ int longinteger_domain::griesmer_bound_for_n(
 // global functions:
 //##############################################################################
 
+#if 0
 void test_longinteger()
 {
 	longinteger_domain D;
@@ -2731,6 +2725,7 @@ void longinteger_collect_print(ostream &ost,
 		}
 	ost << ")" << endl;
 }
+#endif
 
 void longinteger_free_global_data()
 {
@@ -2760,6 +2755,16 @@ void longinteger_print_digits(char *rep, int len)
 {
 	for (int h = 0; h < len; h++) cout << (char)('0' + rep[h]) << " ";
 }
+
+void longinteger_domain_free_tab_q_binomials()
+{
+	if (tab_q_binomials) {
+		FREE_OBJECTS(tab_q_binomials);
+		tab_q_binomials = NULL;
+	}
 }
-}
+
+
+
+}}
 

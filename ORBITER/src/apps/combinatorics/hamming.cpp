@@ -898,26 +898,30 @@ void create_geometry(int verbose_level)
 int point_rank(int *x)
 {
 	int rk;
+	geometry_global Gg;
 	
-	AG_element_rank(2, x, 1, n, rk);
+	Gg.AG_element_rank(2, x, 1, n, rk);
 	return rk;
 }
 
 void point_unrank(int *x, int rk)
 {
-	AG_element_unrank(2, x, 1, n, rk);
+	geometry_global Gg;
+
+	Gg.AG_element_unrank(2, x, 1, n, rk);
 }
 
 int line_rank(int *x, int b_1, int verbose_level)
 {
 	int *y;
 	int rk, rk1, co_rank;
+	geometry_global Gg;
 	
 	x[b_1] = 0;
 	y = NEW_int(n);
 	co_rank = b_1;
 	compress1(x, y, b_1);
-	AG_element_rank(2, y, 1, n - 1, rk1);
+	Gg.AG_element_rank(2, y, 1, n - 1, rk1);
 	rk = rk1 * n + co_rank;
 	FREE_int(y);
 	return rk;
@@ -927,12 +931,13 @@ void line_unrank(int rk, int *x, int &b_1, int verbose_level)
 {
 	int *y;
 	int rk1, co_rank;
+	geometry_global Gg;
 	
 	y = NEW_int(n);
 	co_rank = rk % n;
 	rk1 = rk / n;
 	b_1 = co_rank;
-	AG_element_unrank(2, y, 1, n - 1, rk1);
+	Gg.AG_element_unrank(2, y, 1, n - 1, rk1);
 	expand1(x, y, b_1);
 	x[b_1] = 0;
 	FREE_int(y);
@@ -944,6 +949,7 @@ int plane_rank(int *x, int b_1, int b_2, int verbose_level)
 	int rk, rk1, co_rank;
 	int n2;
 	int subset[2];
+	geometry_global Gg;
 	
 	n2 = n * (n - 1) / 2;
 	x[b_1] = 0;
@@ -953,7 +959,7 @@ int plane_rank(int *x, int b_1, int b_2, int verbose_level)
 	y = NEW_int(n);
 	co_rank = rank_k_subset(subset, n, 2);
 	compress2(x, y, b_1, b_2);
-	AG_element_rank(2, y, 1, n - 2, rk1);
+	Gg.AG_element_rank(2, y, 1, n - 2, rk1);
 	rk = rk1 * n2 + co_rank;
 	FREE_int(y);
 	return rk;
@@ -965,6 +971,7 @@ void plane_unrank(int rk, int *x, int &b_1, int &b_2, int verbose_level)
 	int rk1, co_rank;
 	int n2;
 	int subset[2];
+	geometry_global Gg;
 
 	n2 = n * (n - 1) / 2;
 	
@@ -974,7 +981,7 @@ void plane_unrank(int rk, int *x, int &b_1, int &b_2, int verbose_level)
 	unrank_k_subset(co_rank, subset, n, 2);
 	b_1 = subset[0];
 	b_2 = subset[1];
-	AG_element_unrank(2, y, 1, n - 2, rk1);
+	Gg.AG_element_unrank(2, y, 1, n - 2, rk1);
 	expand2(x, y, b_1, b_2);
 	x[b_1] = 0;
 	x[b_2] = 0;
@@ -987,6 +994,7 @@ int solid_rank(int *x, int b_1, int b_2, int b_3, int verbose_level)
 	int rk, rk1, co_rank;
 	int n3;
 	int subset[3];
+	geometry_global Gg;
 	
 	n3 = n * (n - 1) * (n - 2) / 6;
 	x[b_1] = 0;
@@ -998,7 +1006,7 @@ int solid_rank(int *x, int b_1, int b_2, int b_3, int verbose_level)
 	y = NEW_int(n);
 	co_rank = rank_k_subset(subset, n, 3);
 	compress3(x, y, b_1, b_2, b_3);
-	AG_element_rank(2, y, 1, n - 3, rk1);
+	Gg.AG_element_rank(2, y, 1, n - 3, rk1);
 	rk = rk1 * n3 + co_rank;
 	FREE_int(y);
 	return rk;
@@ -1010,6 +1018,7 @@ void solid_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3, int verbose_leve
 	int rk1, co_rank;
 	int n3;
 	int subset[3];
+	geometry_global Gg;
 
 	n3 = n * (n - 1) * (n - 2) / 6;
 	
@@ -1020,7 +1029,7 @@ void solid_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3, int verbose_leve
 	b_1 = subset[0];
 	b_2 = subset[1];
 	b_3 = subset[2];
-	AG_element_unrank(2, y, 1, n - 3, rk1);
+	Gg.AG_element_unrank(2, y, 1, n - 3, rk1);
 	expand3(x, y, b_1, b_2, b_3);
 	x[b_1] = 0;
 	x[b_2] = 0;
@@ -1039,7 +1048,8 @@ int line_vertex_pair_rank(int *x, int b_1, int c_1, int verbose_level)
 	return rk;
 }
 
-void line_vertex_pair_unrank(int rk, int *x, int &b_1, int &c_1, int verbose_level)
+void line_vertex_pair_unrank(int rk,
+		int *x, int &b_1, int &c_1, int verbose_level)
 {
 	int rk1, co_rank;
 
@@ -1049,7 +1059,9 @@ void line_vertex_pair_unrank(int rk, int *x, int &b_1, int &c_1, int verbose_lev
 	c_1 = co_rank;
 }
 
-int solid_diagonal_pair_rank(int *x, int b_1, int b_2, int b_3, int c_1, int c_2, int c_3, int verbose_level)
+int solid_diagonal_pair_rank(int *x,
+		int b_1, int b_2, int b_3, int c_1, int c_2, int c_3,
+		int verbose_level)
 {
 	int rk, rk1, co_rank;
 	int c[3];
