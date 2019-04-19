@@ -90,7 +90,7 @@ MODULES= \
 		foundations/geometry/elliptic_curve.o \
 		foundations/geometry/flag.o \
 		foundations/geometry/geo_parameter.o \
-		foundations/geometry/geometric_object.o \
+		foundations/geometry/geometry_global.o \
 		foundations/geometry/grassmann.o \
 		foundations/geometry/grassmann_embedded.o \
 		foundations/geometry/hermitian.o \
@@ -101,7 +101,6 @@ MODULES= \
 		foundations/geometry/knowledge_base.o \
 		foundations/geometry/object_in_projective_space.o \
 		foundations/geometry/orthogonal.o \
-		foundations/geometry/orthogonal_points.o \
 		foundations/geometry/packing.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/projective_space.o \

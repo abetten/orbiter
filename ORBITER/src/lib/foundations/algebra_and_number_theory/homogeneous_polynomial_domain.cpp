@@ -164,6 +164,7 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h, idx, t;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials" << endl;
@@ -304,7 +305,7 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 					"Affine, nb_affine=" << nb_affine << endl;
 			}
 		for (h = 0; h < nb_affine; h++) {
-			AG_element_unrank(n /* q */, Affine + h * degree, 1, degree, h);
+			Gg.AG_element_unrank(n /* q */, Affine + h * degree, 1, degree, h);
 			}
 		if (FALSE) {
 			cout << "homogeneous_polynomial_domain::make_monomials  "
@@ -662,6 +663,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 	int a, b, c, i, j, idx;
 	int *A;
 	int *V;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_"
@@ -716,7 +718,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 				}
 			else {
 				A = my_affine;
-				AG_element_unrank(n /* q */, my_affine, 1, degree, a);
+				Gg.AG_element_unrank(n /* q */, my_affine, 1, degree, a);
 					// sequence of length degree over the alphabet  0,...,n-1.
 				}
 			for (j = 0; j < degree; j++) {
@@ -798,6 +800,7 @@ void homogeneous_polynomial_domain::substitute_line(
 	int *Mtx;
 	int my_nb_affine, wt;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 
 	if (f_v) {
@@ -851,7 +854,7 @@ void homogeneous_polynomial_domain::substitute_line(
 		for (rk = 0; rk < my_nb_affine; rk++) {
 
 			A = my_affine;
-			AG_element_unrank(2 /* q */, my_affine, 1, degree, rk);
+			Gg.AG_element_unrank(2 /* q */, my_affine, 1, degree, rk);
 					// sequence of length degree over the alphabet  0,1.
 
 			wt = 0;

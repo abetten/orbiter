@@ -1349,6 +1349,7 @@ int surface_domain::create_surface_ab(int a, int b,
 	//int *coeff;
 	int *Pts;
 	int v[4];
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_ab" << endl;
@@ -1369,7 +1370,7 @@ int surface_domain::create_surface_ab(int a, int b,
 		}
 
 
-	Pts = NEW_int(nb_PG_elements(3, F->q));
+	Pts = NEW_int(Gg.nb_PG_elements(3, F->q));
 	
 	//coeff = NEW_int(20);
 	alpha0 = F->negate(F->mult(b, b));

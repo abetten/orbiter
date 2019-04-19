@@ -1074,46 +1074,6 @@ public:
 
 extern int nb_calls_to_finite_field_init;
 
-// #############################################################################
-// finite_field_projective.cpp
-// #############################################################################
-
-int nb_PG_elements(int n, int q);
-	// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
-int nb_PG_elements_not_in_subspace(int n, int m, int q);
-int nb_AG_elements(int n, int q);
-void AG_element_rank(int q, int *v, int stride, int len, int &a);
-void AG_element_unrank(int q, int *v, int stride, int len, int a);
-void AG_element_rank_longinteger(int q, int *v, int stride, int len,
-	longinteger_object &a);
-void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
-	longinteger_object &a);
-int PG_element_modified_is_in_subspace(int n, int m, int *v);
-void test_PG(int n, int q);
-void create_Fisher_BLT_set(int *Fisher_BLT, int q,
-	const char *poly_q, const char *poly_Q, int verbose_level);
-void create_Linear_BLT_set(int *BLT, int q,
-	const char *poly_q, const char *poly_Q, int verbose_level);
-void create_Mondello_BLT_set(int *BLT, int q,
-	const char *poly_q, const char *poly_Q, int verbose_level);
-void print_quadratic_form_list_coded(int form_nb_terms,
-	int *form_i, int *form_j, int *form_coeff);
-void make_Gram_matrix_from_list_coded_quadratic_form(
-	int n, finite_field &F,
-	int nb_terms, int *form_i, int *form_j,
-	int *form_coeff, int *Gram);
-void add_term(int n, finite_field &F, int &nb_terms,
-	int *form_i, int *form_j, int *form_coeff, int *Gram,
-	int i, int j, int coeff);
-void determine_conic(int q, const char *override_poly, int *input_pts,
-	int nb_pts, int verbose_level);
-int test_if_arc(finite_field *Fq, int *pt_coords, int *set,
-	int set_sz, int k, int verbose_level);
-void create_Buekenhout_Metz(
-	finite_field *Fq, finite_field *FQ,
-	int f_classical, int f_Uab, int parameter_a, int parameter_b,
-	char *fname, int &nb_pts, int *&Pts,
-	int verbose_level);
 
 
 // #############################################################################
@@ -1325,8 +1285,7 @@ public:
 		int verbose_level);
 	int find_class_rep(gl_class_rep *Reps, int nb_reps, 
 		gl_class_rep *R, int verbose_level);
-	void report(const char *fname, int verbose_level);
-
+	void report(std::ostream &ost, int verbose_level);
 };
 
 //! conjugacy class in GL(n,q) described using rational normal form
@@ -1715,6 +1674,7 @@ public:
 	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
 };
 
+#if 0
 void test_longinteger();
 void test_longinteger2();
 void test_longinteger3();
@@ -1734,10 +1694,10 @@ void longinteger_collect_add(int &nb_agos,
 	longinteger_object &ago);
 void longinteger_collect_print(std::ostream &ost, int &nb_agos,
 	longinteger_object *&agos, int *&multiplicities);
+#endif
 void longinteger_free_global_data();
 void longinteger_print_digits(char *rep, int len);
 void longinteger_domain_free_tab_q_binomials();
-
 
 
 // #############################################################################

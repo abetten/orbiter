@@ -203,6 +203,7 @@ void knarr::points_and_lines(int verbose_level)
 
 	int i, j, a, c, jj, h, hh, rk, u;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 
 	if (f_v) {
@@ -223,7 +224,7 @@ void knarr::points_and_lines(int verbose_level)
 	q5 = NT.i_power_j(q, 5);
 	type_i_points->init(P5->N_points, 0);
 	for (i = 0; i < q5; i++) {
-		AG_element_unrank(q, v5, 1, 5, i);
+		Gg.AG_element_unrank(q, v5, 1, 5, i);
 		v6[0] = v5[0];
 		v6[1] = 1;
 		v6[2] = v5[1];

@@ -36,6 +36,7 @@ int main(int argc, char **argv)
 	int sz = 0;
 	int set[1000];
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -103,16 +104,16 @@ int main(int argc, char **argv)
 	cout << "There are " << N << " words of length " << n
 			<< " over an alphabet of size " << q << ":" << endl;
 	for (i = 0; i < N; i++) {
-		AG_element_unrank(q, seq1, 1, n, i);
+		Gg.AG_element_unrank(q, seq1, 1, n, i);
 		cout << i << " : ";
 		int_vec_print(cout, seq1, n);
 		cout << endl;
 		}
 
 	for (i = 0; i < N; i++) {
-		AG_element_unrank(q, seq1, 1, n, i);
+		Gg.AG_element_unrank(q, seq1, 1, n, i);
 		for (j = i + 1; j < N; j++) {
-			AG_element_unrank(q, seq2, 1, n, j);
+			Gg.AG_element_unrank(q, seq2, 1, n, j);
 
 			s = distance(n, seq1, seq2);
 			if (s >= d) {
@@ -147,7 +148,7 @@ int main(int argc, char **argv)
 
 		for (i = 0; i < sz; i++) {
 			a = set[i];
-			AG_element_unrank(q, seq1, 1, n, a);
+			Gg.AG_element_unrank(q, seq1, 1, n, a);
 			cout << i << " : " << a << " : ";
 			int_vec_print(cout, seq1, n);
 			cout << endl;
@@ -162,13 +163,13 @@ int main(int argc, char **argv)
 		
 		for (i = 0; i < sz; i++) {
 			a = set[i];
-			AG_element_unrank(q, seq1, 1, n, a);
+			Gg.AG_element_unrank(q, seq1, 1, n, a);
 			for (j = 0; j < sz; j++) {
 				if (j == i) {
 					continue;
 					}
 				b = set[j];
-				AG_element_unrank(q, seq2, 1, n, b);
+				Gg.AG_element_unrank(q, seq2, 1, n, b);
 
 				s = distance(n, seq1, seq2);
 				D[i * sz + j] = s;

@@ -62,8 +62,9 @@ int main(int argc, char **argv)
 
 	int q = 8;
 	int five_pts[] = {48,55,38,29,60};
+	geometry_global Gg;
 
-	determine_conic(q, NULL /* override_poly */, five_pts, 5, verbose_level);
+	Gg.determine_conic(q, NULL /* override_poly */, five_pts, 5, verbose_level);
 
 
 	//draw_empty_grid(5, TRUE /* int f_include_line_at_infinity  */,  0); exit(1);

@@ -68,6 +68,7 @@ void andre_construction_point_element::unrank(
 		int point_rank, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "andre_construction_point_element::unrank "
@@ -81,7 +82,7 @@ void andre_construction_point_element::unrank(
 	else {
 		f_is_at_infinity = FALSE;
 		point_rank -= spread_size;
-		AG_element_unrank(q, coordinates, 1, n, point_rank);
+		Gg.AG_element_unrank(q, coordinates, 1, n, point_rank);
 		}
 	if (f_v) {
 		cout << "andre_construction_point_element::unrank done" << endl;
@@ -92,6 +93,7 @@ int andre_construction_point_element::rank(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "andre_construction_point_element::rank" << endl;
@@ -102,7 +104,7 @@ int andre_construction_point_element::rank(int verbose_level)
 		}
 	else {
 		point_rank = spread_size;
-		AG_element_rank(q, coordinates, 1, n, a);
+		Gg.AG_element_rank(q, coordinates, 1, n, a);
 		point_rank += a;
 		}
 	if (f_v) {

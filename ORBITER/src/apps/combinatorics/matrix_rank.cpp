@@ -94,6 +94,7 @@ void count(int n, int k, finite_field *F, int verbose_level)
 	int *M;
 	int *Rk;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "count" << endl;
@@ -107,7 +108,7 @@ void count(int n, int k, finite_field *F, int verbose_level)
 	int_vec_zero(Rk, m + 1);
 
 	for (h = 0; h < N; h++) {
-		AG_element_unrank(q, M, 1, kn, h);
+		Gg.AG_element_unrank(q, M, 1, kn, h);
 		r = F->rank_of_rectangular_matrix(M, k, n, 0 /* verbose_level */);
 		Rk[r]++;
 		}

@@ -29,6 +29,7 @@ void Hill_cap56(int argc, const char **argv,
 	action *An;
 	finite_field *F;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "Hill_cap" << endl;
@@ -36,7 +37,7 @@ void Hill_cap56(int argc, const char **argv,
 	epsilon = -1;
 	n = 6;
 	q = 3;
-	w = Witt_index(epsilon, n - 1);
+	w = Gg.Witt_index(epsilon, n - 1);
 	
 	P = NEW_OBJECT(polar);
 	A = NEW_OBJECT(action);
@@ -234,49 +235,49 @@ void Hill_cap56(int argc, const char **argv,
 		//cout << "after append_orbit_and_adjust_size :";
 		//int_vec_print(cout, set, sz[1]);
 		//cout << endl;
-		if (!test_if_arc(F, pt_coords, set, sz[1], n, verbose_level)) {
+		if (!Gg.test_if_arc(F, pt_coords, set, sz[1], n, verbose_level)) {
 			continue;
 			}
 		for (i2 = i1 + 1; i2 < N; i2++) {
 			sz[2] = sz[1];
 			append_orbit_and_adjust_size(Orb, i2, set, sz[2]);
-			if (!test_if_arc(F, pt_coords, set, sz[2], n, verbose_level)) {
+			if (!Gg.test_if_arc(F, pt_coords, set, sz[2], n, verbose_level)) {
 				continue;
 				}
 			for (i3 = i2 + 1; i3 < N; i3++) {
 				sz[3] = sz[2];
 				append_orbit_and_adjust_size(Orb, i3, set, sz[3]);
-				if (!test_if_arc(F, pt_coords, set, sz[3], n, verbose_level)) {
+				if (!Gg.test_if_arc(F, pt_coords, set, sz[3], n, verbose_level)) {
 					continue;
 					}
 				for (i4 = i3 + 1; i4 < N; i4++) {
 					sz[4] = sz[3];
 					append_orbit_and_adjust_size(Orb, i4, set, sz[4]);
-					if (!test_if_arc(F, pt_coords, set, sz[4], n, verbose_level)) {
+					if (!Gg.test_if_arc(F, pt_coords, set, sz[4], n, verbose_level)) {
 						continue;
 						}
 					for (i5 = i4 + 1; i5 < N; i5++) {
 						sz[5] = sz[4];
 						append_orbit_and_adjust_size(Orb, i5, set, sz[5]);
-						if (!test_if_arc(F, pt_coords, set, sz[5], n, verbose_level)) {
+						if (!Gg.test_if_arc(F, pt_coords, set, sz[5], n, verbose_level)) {
 							continue;
 							}
 						for (i6 = i5 + 1; i6 < N; i6++) {
 							sz[6] = sz[5];
 							append_orbit_and_adjust_size(Orb, i6, set, sz[6]);
-							if (!test_if_arc(F, pt_coords, set, sz[6], n, verbose_level)) {
+							if (!Gg.test_if_arc(F, pt_coords, set, sz[6], n, verbose_level)) {
 								continue;
 								}
 							for (i7 = i6 + 1; i7 < N; i7++) {
 								sz[7] = sz[6];
 								append_orbit_and_adjust_size(Orb, i7, set, sz[7]);
-								if (!test_if_arc(F, pt_coords, set, sz[7], n, verbose_level)) {
+								if (!Gg.test_if_arc(F, pt_coords, set, sz[7], n, verbose_level)) {
 									continue;
 									}
 								for (i8 = i7 + 1; i8 < N; i8++) {
 									sz[8] = sz[7];
 									append_orbit_and_adjust_size(Orb, i8, set, sz[8]);
-									if (!test_if_arc(F, pt_coords, set, sz[8], n, verbose_level)) {
+									if (!Gg.test_if_arc(F, pt_coords, set, sz[8], n, verbose_level)) {
 										continue;
 										}
 

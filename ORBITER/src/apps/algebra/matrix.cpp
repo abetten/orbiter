@@ -28,6 +28,7 @@ int main(int argc, const char **argv)
 	int verbose_level = 0;
 	int i;
 	int n, q, o;
+	geometry_global Gg;
 
 	if (argc <= 3) {
 		print_usage();
@@ -57,7 +58,7 @@ int main(int argc, const char **argv)
 	int *Elt1;
 	
 	A = NEW_OBJECT(action);
-	N = nb_PG_elements(n - 1, q);
+	N = Gg.nb_PG_elements(n - 1, q);
 
 	if (f_v && N < 100) {
 		GFq.display_all_PG_elements(n - 1);

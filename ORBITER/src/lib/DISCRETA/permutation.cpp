@@ -1139,10 +1139,11 @@ void permutation::induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int 
 	domain *dom;
 	int nb_pts, nb_lines;
 	int i, j, p1, p2, q1, q2;
+	geometry_global Gg;
 	
 	dom = allocate_finite_field_domain(q, f_v);
 	matrix L;
-	nb_pts = nb_PG_elements(k, q);
+	nb_pts = Gg.nb_PG_elements(k, q);
 	nb_lines = nb_PG_lines(k, q);
 	if (f_v) {
 		cout << "nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
@@ -1197,12 +1198,13 @@ void permutation::singer_cycle_on_points_of_projective_plane(int p, int f_modifi
 	matrix M;
 	int l;
 	int f_action_from_right = TRUE;
+	geometry_global Gg;
 	
 	a.Singer(p, 3, FALSE, FALSE);
 	cout << "permutation::singer_cycle_on_points_of_projective_plane(): primitive polynomial: " << a << endl;
 	
 	domain *dom = allocate_finite_field_domain(p, f_v);
-	l = nb_PG_elements(2, p);
+	l = Gg.nb_PG_elements(2, p);
 	m_l(l);
 	{
 	with ww(dom);

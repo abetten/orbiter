@@ -528,8 +528,9 @@ void group_generators_domain::order_POmega_epsilon(
 // k is projective dimension
 {
 	int w, m;
+	geometry_global Gg;
 
-	w = Witt_index(epsilon, k);
+	w = Gg.Witt_index(epsilon, k);
 	if (epsilon == -1) {
 		m = w + 1;
 		}
@@ -570,11 +571,12 @@ void group_generators_domain::order_PO_epsilon(
 	int f_v = (verbose_level >= 1);
 	int m;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "order_PO_epsilon" << endl;
 		}
-	m = Witt_index(epsilon, k);
+	m = Gg.Witt_index(epsilon, k);
 	if (f_v) {
 		cout << "Witt index = " << m << endl;
 		}
@@ -647,6 +649,7 @@ void group_generators_domain::order_PO_plus(
 	longinteger_domain D;
 	longinteger_object O, Q, R, S, T, Two, minusone;
 	int i;
+	geometry_global Gg;
 
 
 	Two.create(2);
@@ -695,7 +698,7 @@ void group_generators_domain::order_PO_plus(
 
 	if (f_v) {
 		cout << "order_PO_plus the order of PO" << "("
-				<< dimension_given_Witt_index(1, m) << ","
+				<< Gg.dimension_given_Witt_index(1, m) << ","
 				<< q << ") is " << o << endl;
 		}
 }
@@ -709,6 +712,7 @@ void group_generators_domain::order_PO_minus(
 	longinteger_domain D;
 	longinteger_object O, Q, R, S, T, Two, plusone, minusone;
 	int i;
+	geometry_global Gg;
 
 
 	Two.create(2);
@@ -759,7 +763,7 @@ void group_generators_domain::order_PO_minus(
 
 	if (f_v) {
 		cout << "order_PO_minus the order of PO^-" << "("
-			<< dimension_given_Witt_index(-1, m) << ","
+			<< Gg.dimension_given_Witt_index(-1, m) << ","
 			<< q << ") is " << o << endl;
 		}
 }
@@ -773,6 +777,7 @@ void group_generators_domain::order_PO_parabolic(
 	longinteger_domain D;
 	longinteger_object O, Q, R, S, T, minusone;
 	int i;
+	geometry_global Gg;
 
 
 	minusone.create(-1);
@@ -804,7 +809,7 @@ void group_generators_domain::order_PO_parabolic(
 
 	if (f_v) {
 		cout << "order_PO_parabolic the order of PO" << "("
-			<< dimension_given_Witt_index(0, m) << ","
+			<< Gg.dimension_given_Witt_index(0, m) << ","
 			<< q << ") is " << o << endl;
 		}
 }
@@ -819,6 +824,7 @@ void group_generators_domain::order_Pomega_plus(
 	longinteger_domain D;
 	longinteger_object O, Q, R, S, S1, T, minusone;
 	int i, r;
+	geometry_global Gg;
 
 
 	minusone.create(-1);
@@ -863,7 +869,7 @@ void group_generators_domain::order_Pomega_plus(
 
 	if (f_v) {
 		cout << "the order of P\\Omega^1" << "("
-			<< dimension_given_Witt_index(1, m) << ","
+			<< Gg.dimension_given_Witt_index(1, m) << ","
 			<< q << ") is " << o << endl;
 		}
 }
@@ -878,6 +884,7 @@ void group_generators_domain::order_Pomega_minus(
 	longinteger_domain D;
 	longinteger_object O, Q, R, S, S1, T, minusone, plusone;
 	int i, r;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "order_Pomega_minus m=" << m << " q=" << q << endl;
@@ -931,7 +938,7 @@ void group_generators_domain::order_Pomega_minus(
 
 	if (f_v) {
 		cout << "the order of P\\Omega^-1" << "("
-			<< dimension_given_Witt_index(-1, m - 1) << ","
+			<< Gg.dimension_given_Witt_index(-1, m - 1) << ","
 			<< q << ") is " << o << endl;
 		}
 }
@@ -945,6 +952,7 @@ void group_generators_domain::order_Pomega_parabolic(
 	longinteger_domain D;
 	longinteger_object O, Q, R, S, T, minusone;
 	int i, r;
+	geometry_global Gg;
 
 
 	minusone.create(-1);
@@ -973,7 +981,7 @@ void group_generators_domain::order_Pomega_parabolic(
 		}
 	if (f_v) {
 		cout << "the order of P\\Omega" << "("
-			<< dimension_given_Witt_index(0, m) << ","
+			<< Gg.dimension_given_Witt_index(0, m) << ","
 			<< q << ") is " << o << endl;
 		}
 }

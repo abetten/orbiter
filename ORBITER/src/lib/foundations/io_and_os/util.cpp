@@ -4541,6 +4541,8 @@ int os_seconds_past_1970()
 void test_typedefs()
 {
 	cout << "test_typedefs()" << endl;
+	cout << "sizeof(int)=" << sizeof(int) << endl;
+	cout << "sizeof(long int)=" << sizeof(long int) << endl;
 	if (sizeof(int_2) != 2) {
 		cout << "warning: sizeof(int_2)=" << sizeof(int_2) << endl;
 		}

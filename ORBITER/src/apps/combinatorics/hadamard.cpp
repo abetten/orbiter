@@ -104,6 +104,7 @@ void hadamard::init(int n, int f_draw,
 {
 	int f_v = (verbose_level = 1);
 	int i, j, k, d, cnt, cnt1;
+	geometry_global Gg;
 
 	if (n > (int)sizeof(int) * 8) {
 		cout << "n > sizeof(uint) * 8" << endl;
@@ -127,7 +128,7 @@ void hadamard::init(int n, int f_draw,
 		cout << "N2 = (N * (N - 1)) >> 1 =" << N2 << endl;
 		cout << "list of points:" << endl;
 		for (i = 0; i < N; i++) {
-			AG_element_unrank(2, v, 1, n, i);
+			Gg.AG_element_unrank(2, v, 1, n, i);
 			cout << i << " : ";
 			for (j = 0; j < n; j++) {
 				if (v[j]) {

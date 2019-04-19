@@ -31,9 +31,6 @@ semifield_lifting::semifield_lifting()
 	f_prefix = FALSE;
 	prefix = NULL;
 
-	Candidates = NULL;
-	Nb_candidates = NULL;
-
 	Downstep_nodes = NULL;
 	nb_middle_layer_nodes = 0;
 	Middle_layer_nodes = NULL;

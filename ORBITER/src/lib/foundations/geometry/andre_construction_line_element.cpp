@@ -82,6 +82,7 @@ void andre_construction_line_element::unrank(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "andre_construction_line_element::unrank "
@@ -96,7 +97,7 @@ void andre_construction_line_element::unrank(
 		line_rank -= 1;
 		coset_idx = line_rank % Andre->order;
 		parallel_class_idx = line_rank / Andre->order;
-		AG_element_unrank(q, coset, 1, n - k, coset_idx);
+		Gg.AG_element_unrank(q, coset, 1, n - k, coset_idx);
 		int_vec_copy(
 			Andre->spread_elements_genma + parallel_class_idx * k * n,
 			coordinates, k * n);
@@ -125,6 +126,7 @@ int andre_construction_line_element::rank(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, rk, idx;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "andre_construction_line_element::rank" << endl;
@@ -154,7 +156,7 @@ int andre_construction_line_element::rank(int verbose_level)
 			a = coordinates[k * n + j];
 			coset[i] = a;
 			}
-		AG_element_rank(q, coset, 1, n - k, coset_idx);
+		Gg.AG_element_rank(q, coset, 1, n - k, coset_idx);
 
 		rk = Andre->Grass->rank_int_here(
 				coordinates, 0 /* verbose_level*/);
@@ -181,6 +183,7 @@ int andre_construction_line_element::make_affine_point(
 	int *vec1;
 	int *vec2;
 	int point_rank, a;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "andre_construction_line_element::make_"
@@ -188,13 +191,13 @@ int andre_construction_line_element::make_affine_point(
 		}
 	vec1 = NEW_int(k + 1);
 	vec2 = NEW_int(n);
-	AG_element_unrank(q, vec1, 1, k, idx);
+	Gg.AG_element_unrank(q, vec1, 1, k, idx);
 	vec1[k] = 1;
 
 	F->mult_vector_from_the_left(vec1, coordinates, vec2, k + 1, n);
 
 	point_rank = spread_size;
-	AG_element_rank(q, vec2, 1, n, a);
+	Gg.AG_element_rank(q, vec2, 1, n, a);
 	point_rank += a;
 
 	FREE_int(vec1);

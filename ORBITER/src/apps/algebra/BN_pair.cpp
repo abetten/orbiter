@@ -174,12 +174,13 @@ void compute_B(action *A, int epsilon, int n,
 	int depth;
 	action_on_orthogonal *AO;
 	orthogonal *O;
+	geometry_global Gg;
 	
 
 	AO = A->G.AO;
 	O = AO->O;
 
-	depth = Witt_index(epsilon, n - 1);
+	depth = Gg.Witt_index(epsilon, n - 1);
 	
 	P.init(0, NULL, A, O, epsilon, n,
 			depth, F, depth, verbose_level);

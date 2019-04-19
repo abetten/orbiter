@@ -2432,6 +2432,7 @@ void finite_field::builtin_transversal_rep_GLnq(int *A,
 	
 	int transversal_length;
 	int ii, jj, i0, a;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "finite_field::builtin_transversal_rep_GLnq  "
@@ -2459,7 +2460,7 @@ void finite_field::builtin_transversal_rep_GLnq(int *A,
 		A[n * n] = j;
 		}
 	else if (i == n && q > 2) {
-		transversal_length = nb_AG_elements(n - 1, q - 1);
+		transversal_length = Gg.nb_AG_elements(n - 1, q - 1);
 		if (j >= transversal_length) {
 			cout << "finite_field::builtin_transversal_rep_GLnq "
 					"j = " << j << " >= transversal_length = "
@@ -2467,7 +2468,7 @@ void finite_field::builtin_transversal_rep_GLnq(int *A,
 			exit(1);
 			}
 		int *v = NEW_int(n);
-		AG_element_unrank(q - 1, v, 1, n - 1, j);
+		Gg.AG_element_unrank(q - 1, v, 1, n - 1, j);
 		A[0] = 1;
 		for (jj = 0; jj < n - 1; jj++) {
 			A[(jj + 1) * n + (jj + 1)] = v[jj] + 1;
@@ -2519,17 +2520,18 @@ void finite_field::affine_translation(int n,
 	int i, j, l, a;
 	int *v;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	cout << "finite_field::affine_translation "
 			"coordinate_idx=" << coordinate_idx
 			<< " field_base_idx=" << field_base_idx << endl;
 	v = NEW_int(n);
-	l = nb_AG_elements(n, q);
+	l = Gg.nb_AG_elements(n, q);
 	a = NT.i_power_j(p, field_base_idx);
 	for (i = 0; i < l; i++) {
-		AG_element_unrank(q, v, 1, l, i);
+		Gg.AG_element_unrank(q, v, 1, l, i);
 		v[coordinate_idx] = add(v[coordinate_idx], a);
-		AG_element_rank(q, v, 1, l, j);
+		Gg.AG_element_rank(q, v, 1, l, j);
 		perm[i] = j;
 		}
 	FREE_int(v);
@@ -2544,6 +2546,7 @@ void finite_field::affine_multiplication(int n,
 	int i, j, l, k;
 	int alpha_power, a;
 	int *v;
+	geometry_global Gg;
 	
 	v = NEW_int(n);
 	alpha_power = (q - 1) / multiplication_order;
@@ -2553,13 +2556,13 @@ void finite_field::affine_multiplication(int n,
 		exit(1);
 		}
 	a = power(alpha, alpha_power);
-	l = nb_AG_elements(n, q);
+	l = Gg.nb_AG_elements(n, q);
 	for (i = 0; i < l; i++) {
-		AG_element_unrank(q, v, 1, l, i);
+		Gg.AG_element_unrank(q, v, 1, l, i);
 		for (k = 0; k < n; k++) {
 			v[k] = mult(v[k], a);
 			}
-		AG_element_rank(q, v, 1, l, j);
+		Gg.AG_element_rank(q, v, 1, l, j);
 		perm[i] = j;
 		}
 	FREE_int(v);
@@ -2573,15 +2576,16 @@ void finite_field::affine_frobenius(int n, int k, int *perm)
 {
 	int i, j, l, u;
 	int *v;
+	geometry_global Gg;
 	
 	v = NEW_int(n);
-	l = nb_AG_elements(n, q);
+	l = Gg.nb_AG_elements(n, q);
 	for (i = 0; i < l; i++) {
-		AG_element_unrank(q, v, 1, l, i);
+		Gg.AG_element_unrank(q, v, 1, l, i);
 		for (u = 0; u < n; u++) {
 			v[u] = frobenius_power(v[u], k);
 			}
-		AG_element_rank(q, v, 1, l, j);
+		Gg.AG_element_rank(q, v, 1, l, j);
 		perm[i] = j;
 		}
 	FREE_int(v);
@@ -2600,8 +2604,9 @@ void finite_field::all_affine_translations(int n, int *gens)
 {
 	int i, j, k = 0;
 	int degree;
+	geometry_global Gg;
 	
-	degree = nb_AG_elements(n, q);
+	degree = Gg.nb_AG_elements(n, q);
 	
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < e; j++, k++) {
@@ -2618,8 +2623,9 @@ void finite_field::affine_generators(int n,
 	int &base_len, int *&the_base)
 {
 	int k, h;
+	geometry_global Gg;
 	
-	degree = nb_AG_elements(n, q);
+	degree = Gg.nb_AG_elements(n, q);
 	nb_gens = 0;
 	base_len = 0;
 	if (f_translations) {
@@ -2714,14 +2720,15 @@ void finite_field::find_singular_vector_brute_force(int n,
 	int f_v = (verbose_level >= 1);
 	int N, a, i;
 	int *v1;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "finite_field::find_singular_vector_brute_force" << endl;
 		}
 	v1 = NEW_int(n);
-	N = nb_AG_elements(n, q);
+	N = Gg.nb_AG_elements(n, q);
 	for (i = 2; i < N; i++) {
-		AG_element_unrank(q, v1, 1, n, i);
+		Gg.AG_element_unrank(q, v1, 1, n, i);
 		a = evaluate_quadratic_form(n, form_nb_terms,
 				form_i, form_j, form_coeff, v1);
 		if (f_v) {
@@ -2750,6 +2757,7 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 	int f_v = (verbose_level >= 1);
 	int a, b, c, d, r3, x, y, i, k3;
 	int *v1, *v2, *v3, *v2_coords, *v3_coords, *intersection;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "finite_field::find_singular_vector" << endl;
@@ -2766,7 +2774,7 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 	intersection = NEW_int(n * n);
 
 	//N = nb_AG_elements(n, q);
-	AG_element_unrank(q, v1, 1, n, 1);
+	Gg.AG_element_unrank(q, v1, 1, n, 1);
 	a = evaluate_quadratic_form(n, form_nb_terms,
 			form_i, form_j, form_coeff, v1);
 	if (f_v) {
@@ -2784,7 +2792,7 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		cout << "v1 perp:" << endl;
 		print_integer_matrix_width(cout, v1 + n, n - 1, n, n, 2);
 		}
-	AG_element_unrank(q, v2_coords, 1, n - 1, 1);
+	Gg.AG_element_unrank(q, v2_coords, 1, n - 1, 1);
 	mult_matrix_matrix(v2_coords, v1 + n, v2, 1, n - 1, n,
 			0 /* verbose_level */);
 	b = evaluate_quadratic_form(n, form_nb_terms,
@@ -2814,7 +2822,7 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		cout << "r3 = " << r3 << " should be " << n - 2 << endl;
 		exit(1);
 		}
-	AG_element_unrank(q, v3_coords, 1, n - 2, 1);
+	Gg.AG_element_unrank(q, v3_coords, 1, n - 2, 1);
 	mult_matrix_matrix(v3_coords, intersection, v3, 1, n - 2, n,
 			0 /* verbose_level */);
 	c = evaluate_quadratic_form(n, form_nb_terms,
@@ -3404,6 +3412,7 @@ int finite_field::lexleast_canonical_form_ranked(
 	int i, j, h, N, a, sz, Sz;
 	int rk;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "finite_field::lexleast_canonical_form_ranked" << endl;
@@ -3449,11 +3458,11 @@ int finite_field::lexleast_canonical_form_ranked(
 	size_list = 0;
 	list_of_ranks_PG[0] = -1;
 	for (a = 0; a < N; a++) {
-		AG_element_unrank(q, v, 1, rk, a);
+		Gg.AG_element_unrank(q, v, 1, rk, a);
 		mult_matrix_matrix(v, M1, M2 + a * vector_space_dimension, 
 			1, rk, vector_space_dimension,
 			0 /* verbose_level */);
-		AG_element_rank(q, M2 + a * vector_space_dimension, 1,
+		Gg.AG_element_rank(q, M2 + a * vector_space_dimension, 1,
 				vector_space_dimension, list_of_ranks[a]);
 		if (a == 0) {
 			continue;
@@ -3531,7 +3540,7 @@ int finite_field::lexleast_canonical_form_ranked(
 				}
 			}
 		for (j = sz; j < Sz; j++) {
-			AG_element_unrank(q, v, 1, i + 1, j);
+			Gg.AG_element_unrank(q, v, 1, i + 1, j);
 			if (f_v) {
 				cout << "j=" << j << " v=";
 				int_vec_print(cout, v, i + 1);
@@ -3793,11 +3802,12 @@ void finite_field::codewords_affine(int n, int k,
 	int N, h, rk;
 	int *msg;
 	int *word;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "finite_field::codewords_affine" << endl;
 		}
-	N = nb_AG_elements(k, q);
+	N = Gg.nb_AG_elements(k, q);
 	if (f_v) {
 		cout << N << " messages" << endl;
 		}
@@ -3805,9 +3815,9 @@ void finite_field::codewords_affine(int n, int k,
 	word = NEW_int(n);
 
 	for (h = 0; h < N; h++) {
-		AG_element_unrank(q, msg, 1, k, h);
+		Gg.AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
-		AG_element_rank(q, word, 1, n, rk);
+		Gg.AG_element_rank(q, word, 1, n, rk);
 		codewords[h] = rk;
 		}
 	FREE_int(msg);
@@ -3829,13 +3839,14 @@ void finite_field::code_projective_weight_enumerator(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
+	geometry_global Gg;
 	
 	t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_projective_weight_enumerator" << endl;
 		}
-	N = nb_AG_elements(k, q);
+	N = Gg.nb_AG_elements(k, q);
 	if (f_v) {
 		cout << N << " messages" << endl;
 		}
@@ -3861,7 +3872,7 @@ void finite_field::code_projective_weight_enumerator(
 					}
 				}
 			}
-		AG_element_unrank(q, msg, 1, k, h);
+		Gg.AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
@@ -3899,13 +3910,14 @@ void finite_field::code_weight_enumerator(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
+	geometry_global Gg;
 	
 	t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_weight_enumerator" << endl;
 		}
-	N = nb_AG_elements(k, q);
+	N = Gg.nb_AG_elements(k, q);
 	if (f_v) {
 		cout << N << " messages" << endl;
 		}
@@ -3931,7 +3943,7 @@ void finite_field::code_weight_enumerator(
 					}
 				}
 			}
-		AG_element_unrank(q, msg, 1, k, h);
+		Gg.AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
@@ -3969,13 +3981,14 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 	int *msg;
 	int *word;
 	int t0, t1, dt;
+	geometry_global Gg;
 	
 	t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_weight_enumerator" << endl;
 		}
-	N = nb_PG_elements(k - 1, q);
+	N = Gg.nb_PG_elements(k - 1, q);
 	if (f_v) {
 		cout << N << " projective messages" << endl;
 		}
@@ -4052,13 +4065,14 @@ void finite_field::code_projective_weights(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
+	geometry_global Gg;
 	
 	t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_projective_weights" << endl;
 		}
-	N = nb_PG_elements(k - 1, q);
+	N = Gg.nb_PG_elements(k - 1, q);
 	if (f_v) {
 		cout << N << " projective messages" << endl;
 		}
@@ -4442,6 +4456,7 @@ void finite_field::random_invertible_matrix(int *M,
 	int *N;
 	int i, qk, r, rk;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "finite_field::random_invertible_matrix" << endl;
@@ -4457,7 +4472,7 @@ void finite_field::random_invertible_matrix(int *M,
 			if (f_vv) {
 				cout << "r=" << r << endl;
 				}
-			AG_element_unrank(q, M + i * k, 1, k, r);
+			Gg.AG_element_unrank(q, M + i * k, 1, k, r);
 			if (f_vv) {
 				orbiter::foundations::int_matrix_print(M, i + 1, k);
 				}
@@ -4972,6 +4987,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 	int i, j, b;
 	int ret = TRUE;
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
@@ -5036,7 +5052,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 			ret = FALSE;
 			break;
 			}
-		AG_element_unrank(q, w, 1, k, coset);
+		Gg.AG_element_unrank(q, w, 1, k, coset);
 
 		if (f_vv) {
 			cout << "coset=" << coset << " w=";
@@ -5163,8 +5179,9 @@ int finite_field::nb_points_in_PG(int n)
 // n is projective dimension
 {
 	int N;
+	geometry_global Gg;
 
-	N = nb_PG_elements(n, q);
+	N = Gg.nb_PG_elements(n, q);
 	return N;
 }
 

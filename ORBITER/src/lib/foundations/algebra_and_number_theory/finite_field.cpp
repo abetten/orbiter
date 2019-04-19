@@ -318,6 +318,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	int *K;
 	int *base_cols;
 	int rk, kernel_m, kernel_n, a;
+	geometry_global Gg;
 
 	M = NEW_int(e * (e1 + 1));
 	for (i = 0; i < e * (e1 + 1); i++) {
@@ -332,7 +333,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	for (i = 0; i <= e1; i++) {
 		j = i * subgroup_index;
 		jj = alpha_power(j);
-		AG_element_unrank(p, M + i, e1 + 1, e, jj);
+		Gg.AG_element_unrank(p, M + i, e1 + 1, e, jj);
 		{
 			unipoly_object elt;
 		
@@ -391,7 +392,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		int_vec_print(cout, K, e1 + 1);
 		cout << endl;
 		}
-	AG_element_rank(p, K, 1, e1 + 1, a);
+	Gg.AG_element_rank(p, K, 1, e1 + 1, a);
 	if (f_v) {
 		unipoly_object elt;
 		
@@ -636,18 +637,19 @@ void finite_field::create_tables_extension_field(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, l, k, ii, jj, kk;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "finite_field::create_tables_extension_field" << endl;
 		}
 	for (i = 0; i < q; i++) {
-		AG_element_unrank(p, v1, 1, e, i);
+		Gg.AG_element_unrank(p, v1, 1, e, i);
 		for (j = 0; j < q; j++) {
-			AG_element_unrank(p, v2, 1, e, j);
+			Gg.AG_element_unrank(p, v2, 1, e, j);
 			for (l = 0; l < e; l++) {
 				v3[l] = (v1[l] + v2[l]) % p;
 				}
-			AG_element_rank(p, v3, 1, e, k);
+			Gg.AG_element_rank(p, v3, 1, e, k);
 			add_table[i * q + j] = k;
 			if (k == 0)
 				negate_table[i] = j;
@@ -849,6 +851,8 @@ int finite_field::Z_embedding(int k)
 
 int finite_field::add(int i, int j)
 {
+	geometry_global Gg;
+
 	if (i < 0 || i >= q) {
 		cout << "finite_field::add i = " << i << endl;
 		exit(1);
@@ -863,12 +867,12 @@ int finite_field::add(int i, int j)
 	else {
 		int l, k;
 		
-		AG_element_unrank(p, v1, 1, e, i);
-		AG_element_unrank(p, v2, 1, e, j);
+		Gg.AG_element_unrank(p, v1, 1, e, i);
+		Gg.AG_element_unrank(p, v2, 1, e, j);
 		for (l = 0; l < e; l++) {
 			v3[l] = (v1[l] + v2[l]) % p;
 			}
-		AG_element_rank(p, v3, 1, e, k);
+		Gg.AG_element_rank(p, v3, 1, e, k);
 		return k;
 		}
 }
@@ -945,6 +949,8 @@ int finite_field::add8(int i1, int i2, int i3, int i4, int i5,
 
 int finite_field::negate(int i)
 {
+	geometry_global Gg;
+
 	if (i < 0 || i >= q) {
 		cout << "finite_field::negate i = " << i << endl;
 		exit(1);
@@ -955,11 +961,11 @@ int finite_field::negate(int i)
 	else {
 		int l, k;
 		
-		AG_element_unrank(p, v1, 1, e, i);
+		Gg.AG_element_unrank(p, v1, 1, e, i);
 		for (l = 0; l < e; l++) {
 			v2[l] = (p - v1[l]) % p;
 			}
-		AG_element_rank(p, v2, 1, e, k);
+		Gg.AG_element_rank(p, v2, 1, e, k);
 		return k;
 		}
 }

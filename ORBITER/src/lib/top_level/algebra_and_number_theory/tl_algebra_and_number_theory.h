@@ -65,6 +65,7 @@ public:
 	int q;
 	int order; // q^k
 
+
 	int f_level_two_prefix;
 	const char *level_two_prefix;
 
@@ -143,6 +144,15 @@ public:
 	void apply_element_and_copy_back(int *Elt,
 		int *basis_in, int *basis_out,
 		int first, int last_plus_one, int verbose_level);
+	void candidates_classify_by_first_column(
+		int *Input_set, int input_set_sz,
+		int window_bottom, int window_size,
+		int **&Set, int *&Set_sz, int &Nb_sets,
+		int verbose_level);
+	void make_fname_candidates_at_level_two_orbit(
+		char *fname, int orbit);
+	void make_fname_candidates_at_level_three_orbit(
+		char *fname, int orbit);
 };
 
 void semifield_classify_early_test_func(int *S, int len,
@@ -168,8 +178,6 @@ public:
 	int k;
 	int k2;
 	int q;
-
-	int f_orbits_light;
 
 	action *A; // PGL(n,q)
 	action *A_PGLk; // PGL(k,q)
@@ -209,7 +217,7 @@ public:
 	int *Fusion_idx; // [nb_down_orbits]
 	int **Fusion_elt; // [nb_down_orbits]
 
-	int Level_two_nb_orbits;
+	int nb_orbits;
 	int *up_orbit_rep;
 	strong_generators *Stabilizer_gens;
 		// reps at level two
@@ -223,21 +231,22 @@ public:
 
 	gl_class_rep *R1, *R2;
 
+	int **Candidates;
+		// candidates for the generator matrix,
+		// [nb_orbits]
+	int *Nb_candidates;
+		// [nb_orbits]
+
 
 	semifield_level_two();
 	~semifield_level_two();
-	void init(semifield_classify *SC,
-			int f_orbits_light, int verbose_level);
+	void init(semifield_classify *SC, int verbose_level);
 	void init_desired_pivots(int verbose_level);
 	void conjugacy_class(int c, int verbose_level);
-	void compute_level_two(int f_write_class_reps,
-		int f_write_reps_tex, int f_make_graphs, int f_save_strong_generators,
-		int verbose_level);
-	void downstep(int f_write_class_reps, int verbose_level);
+	void compute_level_two(int verbose_level);
+	void downstep(int verbose_level);
 	void compute_stabilizers_downstep(int verbose_level);
 	void upstep(int verbose_level);
-	void print_representatives(
-		int verbose_level);
 	void setup_stabilizer(
 			strong_generators *Sk, strong_generators *Sn,
 			int verbose_level);
@@ -256,6 +265,23 @@ public:
 	void compute_candidates_at_level_two_case(
 		int orbit,
 		int *&Candidates, int &nb_candidates, int verbose_level);
+	void allocate_candidates_at_level_two(
+			int verbose_level);
+	int test_if_file_exists_candidates_at_level_two_case(
+		int orbit, int verbose_level);
+	void find_all_candidates_at_level_two(
+			int verbose_level);
+	void read_candidates_at_level_two_case(
+		int *&Candidates, int &Nb_candidates, int orbit,
+		int verbose_level);
+	void write_candidates_at_level_two_case(
+		int *Candidates, int Nb_candidates, int orbit,
+		int verbose_level);
+	void read_candidates_at_level_two_by_type(
+			set_of_sets *&Candidates_by_type, int orbit,
+			int verbose_level);
+	void print_representatives(std::ofstream &ost,
+		int verbose_level);
 };
 
 
@@ -279,11 +305,6 @@ public:
 	int f_prefix;
 	const char *prefix;
 
-	int **Candidates;
-		// candidates for the generator matrix,
-		// [Level_two_nb_orbits]
-	int *Nb_candidates;
-		// [Level_two_nb_orbits]
 
 	semifield_downstep_node *Downstep_nodes;
 

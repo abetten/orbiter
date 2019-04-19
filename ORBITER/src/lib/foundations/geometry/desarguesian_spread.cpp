@@ -51,6 +51,7 @@ void desarguesian_spread::init(int n, int m, int s,
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "desarguesian_spread::init m=" << m
@@ -78,18 +79,18 @@ void desarguesian_spread::init(int n, int m, int s,
 				"s != SubS->s" << endl;
 		exit(1);
 		}
-	nb_points = nb_PG_elements(n - 1, q);
+	nb_points = Gg.nb_PG_elements(n - 1, q);
 	if (f_v) {
 		cout << "desarguesian_spread::init "
 				"nb_points = " << nb_points << endl;
 		}
 
-	N = nb_PG_elements(m - 1, Q);
+	N = Gg.nb_PG_elements(m - 1, Q);
 	if (f_v) {
 		cout << "desarguesian_spread::init N = " << N << endl;
 		}
 
-	nb_points_per_spread_element = nb_PG_elements(s - 1, q);
+	nb_points_per_spread_element = Gg.nb_PG_elements(s - 1, q);
 	if (f_v) {
 		cout << "desarguesian_spread::init "
 				"nb_points_per_spread_element = "

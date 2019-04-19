@@ -90,6 +90,7 @@ void hjelmslev::unrank_int(int *M, int rk, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int a, b, c, i, j, h;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "hjelmslev::unrank_int " << rk << endl;
@@ -104,7 +105,7 @@ void hjelmslev::unrank_int(int *M, int rk, int verbose_level)
 		cout << "rk=" << rk << " a=" << a << " b=" << b << endl;
 		}
 	G->unrank_int(a, 0);
-	AG_element_unrank(R->e, v, 1, k * (n - k), b);
+	Gg.AG_element_unrank(R->e, v, 1, k * (n - k), b);
 	if (f_vv) {
 		print_integer_matrix_width(cout, G->M, k, n, n, 5);
 		int_vec_print(cout, v, k * (n - k));
@@ -132,6 +133,7 @@ int hjelmslev::rank_int(int *M, int verbose_level)
 	int a, b, c, i, j, h, rk, rk_mtx;
 	int f_special = FALSE;
 	int f_complete = TRUE;
+	geometry_global Gg;
 	
 	if (f_v) {
 		cout << "hjelmslev::rank_int " << endl;
@@ -178,7 +180,7 @@ int hjelmslev::rank_int(int *M, int verbose_level)
 		int_vec_print(cout, v, k * (n - k));
 		cout << endl;
 		}
-	AG_element_rank(R->e, v, 1, k * (n - k), b);
+	Gg.AG_element_rank(R->e, v, 1, k * (n - k), b);
 	a = G->rank_int(0);
 	rk = b * n_choose_k_p + a;
 	if (f_v) {

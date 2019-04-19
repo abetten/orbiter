@@ -54,31 +54,32 @@ int main(int argc, char **argv)
 	q = atoi(argv[argc - 1]);
 
 	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
 
 	n = d - 1; // projective dimension
 		
 	int m, m1, m2, nb, nb2, nb3, Sbar, N1;
 	
-	nb3 = nb_pts_Qepsilon(epsilon, n, q);
+	nb3 = Gg.nb_pts_Qepsilon(epsilon, n, q);
 	
 	nb = 0;
 	nb2 = 0;
 	if (epsilon == 0) {
 		nb = (NT.i_power_j(q, n) - 1) / (q - 1);
 		m = n >> 1;
-		Sbar = nb_pts_Sbar(m, q);
-		N1 = nb_pts_N1(m, q);
+		Sbar = Gg.nb_pts_Sbar(m, q);
+		N1 = Gg.nb_pts_N1(m, q);
 		nb2 = Sbar + N1;
-		cout << "nb_pts_Sbar = " << nb_pts_Sbar(m, q) << endl;
-		cout << "nb_pts_N1 = " << nb_pts_N1(m, q) << endl;
+		cout << "nb_pts_Sbar = " << Gg.nb_pts_Sbar(m, q) << endl;
+		cout << "nb_pts_N1 = " << Gg.nb_pts_N1(m, q) << endl;
 		}
 	else if (epsilon == -1) {
 		m1 = (n + 1) >> 1;
 		m2 = (n - 1) >> 1;
 		nb = ((NT.i_power_j(q, m1) + 1) *  (NT.i_power_j(q, m2) - 1)) / (q - 1);
 		m = n >> 1;
-		Sbar = nb_pts_Sbar(m, q);
-		N1 = nb_pts_N1(m, q);
+		Sbar = Gg.nb_pts_Sbar(m, q);
+		N1 = Gg.nb_pts_N1(m, q);
 		nb2 = Sbar + (q + 1) * N1;
 		cout << "nb_pts_Sbar = " << Sbar << endl;
 		cout << "nb_pts_N1 = " << N1 << endl;
@@ -89,13 +90,13 @@ int main(int argc, char **argv)
 		m2 = (n - 1) >> 1;
 		m = (n + 1) >> 1;
 		nb = ((NT.i_power_j(q, m1) - 1) *  (NT.i_power_j(q, m2) + 1)) / (q - 1);
-		nb2 = nb_pts_Sbar(m, q);
+		nb2 = Gg.nb_pts_Sbar(m, q);
 		//test_orthogonal(m, q);
 		}
 	cout << "nb=" << nb << endl;
 	cout << "nb2=" << nb2 << endl;
 	cout << "nb3=" << nb3 << endl;
-	test_Orthogonal(epsilon, n, q);
+	Gg.test_Orthogonal(epsilon, n, q);
 	
 	int c1 = 1, c2 = 0, c3 = 0;
 	int N, j;
@@ -103,7 +104,7 @@ int main(int argc, char **argv)
 	int *v, *L;
 
 	GFq.init(q, verbose_level);
-	N = nb_pts_Qepsilon(epsilon, n, q);
+	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
 
 	v = NEW_int(d);
 	L = NEW_int(N);

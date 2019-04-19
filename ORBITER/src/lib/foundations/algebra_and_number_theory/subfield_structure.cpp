@@ -114,6 +114,7 @@ void subfield_structure::init_with_given_basis(
 {
 	int f_v = (verbose_level >= 1);
 	int /*alpha,*/ /*omega,*/ i, j, h;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "subfield_structure::init_with_given_basis" << endl;
@@ -163,7 +164,7 @@ void subfield_structure::init_with_given_basis(
 		}
 
 	for (i = 0; i < Q; i++) {
-		AG_element_unrank(q, v, 1, s, i);
+		Gg.AG_element_unrank(q, v, 1, s, i);
 		j = evaluate_over_Fq(v);
 		embedding[i] = j;
 		embedding_inv[j] = i;
@@ -181,11 +182,12 @@ void subfield_structure::init_with_given_basis(
 void subfield_structure::print_embedding()
 {
 	int i, j;
+	geometry_global Gg;
 	
 	cout << "subfield_structure::print_embedding:" << endl;
 	cout << "i : vector over F_q : embedding" << endl;
 	for (i = 0; i < Q; i++) {
-		AG_element_unrank(q, v, 1, s, i);
+		Gg.AG_element_unrank(q, v, 1, s, i);
 		j = evaluate_over_Fq(v);
 		cout << setw(4) << i << " : ";
 		int_vec_print(cout, v, s);
@@ -194,7 +196,7 @@ void subfield_structure::print_embedding()
 	cout << "subfield_structure::print_embedding in reverse:" << endl;
 	cout << "element i in F_Q : vector over F_q : vector AG_rank" << endl;
 	for (i = 0; i < Q; i++) {
-		AG_element_rank(q, components + i * s, 1, s, j);
+		Gg.AG_element_rank(q, components + i * s, 1, s, j);
 		cout << setw(4) << i << " : ";
 		int_vec_print(cout, components + i * s, s);
 		cout << " : " << j << endl;
@@ -264,6 +266,7 @@ void subfield_structure::retract_matrix(int *Mq,
 	int f_v = (verbose_level >= 1);
 	int *vec;
 	int i, j, I, J, u, v, d, b, bv, a, rk;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "subfield_structure::retract_matrix" << endl;
@@ -281,7 +284,7 @@ void subfield_structure::retract_matrix(int *Mq,
 				for (v = 0; v < s; v++) {
 					vec[v] = Mq[(I + u) * n + J + v];
 					}
-				AG_element_rank(q, vec, 1, s, rk);
+				Gg.AG_element_rank(q, vec, 1, s, rk);
 				d = embedding[rk];
 				b = Basis[u];
 				bv = FQ->inverse(b);

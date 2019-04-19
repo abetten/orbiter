@@ -74,14 +74,16 @@ void heisenberg::init(finite_field *F, int n, int verbose_level)
 
 void heisenberg::unrank_element(int *Elt, int rk)
 {
-	AG_element_unrank(q, Elt, 1, len, rk);
+	geometry_global Gg;
+	Gg.AG_element_unrank(q, Elt, 1, len, rk);
 }
 
 int heisenberg::rank_element(int *Elt)
 {
 	int rk;
+	geometry_global Gg;
 	
-	AG_element_rank(q, Elt, 1, len, rk);
+	Gg.AG_element_rank(q, Elt, 1, len, rk);
 	return rk;
 }
 

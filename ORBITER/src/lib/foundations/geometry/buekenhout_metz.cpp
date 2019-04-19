@@ -290,13 +290,14 @@ void buekenhout_metz::init_ovoid(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "buekenhout_metz::init_ovoid" << endl;
 		}
 	int X0, X1, Y1, Z, i, a;
 	
-	theta_3 = nb_PG_elements(3, q);
+	theta_3 = Gg.nb_PG_elements(3, q);
 	ovoid = NEW_int(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {
@@ -380,6 +381,7 @@ void buekenhout_metz::init_ovoid_Uab_even(
 	int X0, X1, Y1, Z, i, aa;
 	int a1, a2, /*b1,*/ b2, delta, delta2;
 	int lambda, lambda_big, c1, c2, c3;
+	geometry_global Gg;
 	
 	a1 = components[a * 2 + 0];
 	a2 = components[a * 2 + 1];
@@ -409,7 +411,7 @@ void buekenhout_metz::init_ovoid_Uab_even(
 		cout << "c3=" << c3 << endl;
 		}
 	
-	theta_3 = nb_PG_elements(3, q);
+	theta_3 = Gg.nb_PG_elements(3, q);
 	ovoid = NEW_int(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {

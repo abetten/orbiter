@@ -93,6 +93,7 @@ void matrix_group::init_projective_group(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int page_length_log = PAGE_LENGTH_LOG;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "matrix_group::init_projective_group" << endl;
@@ -113,7 +114,7 @@ void matrix_group::init_projective_group(int n,
 		make_element_size++;
 	}
 	f_kernel_is_diagonal_matrices = TRUE;
-	degree = nb_PG_elements(n - 1, F->q);
+	degree = Gg.nb_PG_elements(n - 1, F->q);
 
 	if (f_semilinear) {
 		sprintf(label, "PGGL_%d_%d", n, F->q);
@@ -166,6 +167,7 @@ void matrix_group::init_affine_group(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int page_length_log = PAGE_LENGTH_LOG;
+	geometry_global Gg;
 
 	if (f_vv) {
 		cout << "matrix_group::init_affine_group" << endl;
@@ -179,7 +181,7 @@ void matrix_group::init_affine_group(int n,
 	f_GFq_is_allocated = FALSE;
 	low_level_point_size = n;
 	f_kernel_is_diagonal_matrices = FALSE;
-	degree = nb_AG_elements(n, F->q);
+	degree = Gg.nb_AG_elements(n, F->q);
 	make_element_size = n * n + n;
 	if (f_semilinear) {
 		make_element_size++;
@@ -235,6 +237,7 @@ void matrix_group::init_general_linear_group(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int page_length_log = PAGE_LENGTH_LOG;
+	geometry_global Gg;
 
 	if (f_vv) {
 		cout << "matrix_group::init_general_linear_group" << endl;
@@ -248,7 +251,7 @@ void matrix_group::init_general_linear_group(int n,
 	f_GFq_is_allocated = FALSE;
 	low_level_point_size = n;
 	f_kernel_is_diagonal_matrices = FALSE;
-	degree = nb_AG_elements(n, F->q);
+	degree = Gg.nb_AG_elements(n, F->q);
 	make_element_size = n * n;
 	if (f_semilinear) {
 		make_element_size++;
@@ -826,16 +829,17 @@ int matrix_group::GL_image_of_AG_element(
 {
 	int f_v = (verbose_level >= 1);
 	int b;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_AG_element" << endl;
 		}
 	
-	AG_element_unrank(GFq->q, v1, 1, n, a);
+	Gg.AG_element_unrank(GFq->q, v1, 1, n, a);
 
 	action_from_the_right_all_types(v1, Elt, v2, verbose_level - 1);
 
-	AG_element_rank(GFq->q, v2, 1, n, b);
+	Gg.AG_element_rank(GFq->q, v2, 1, n, b);
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_AG_element done" << endl;

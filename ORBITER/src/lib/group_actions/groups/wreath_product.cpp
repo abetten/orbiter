@@ -299,6 +299,7 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f, a0, b, c;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "wreath_product::element_image_of" << endl;
@@ -321,10 +322,10 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 							"we are in component " << f
 							<< " reduced input a=" << a << endl;
 				}
-				AG_element_unrank(q, u, 1, M->n, a);
+				Gg.AG_element_unrank(q, u, 1, M->n, a);
 				F->mult_vector_from_the_left(u, Elt + offset_i(f), v,
 						M->n, M->n);
-				AG_element_rank(q, v, 1, M->n, c);
+				Gg.AG_element_rank(q, v, 1, M->n, c);
 				if (f_v) {
 					cout << "wreath_product::element_image_of "
 							"we are in component " << f
@@ -537,16 +538,17 @@ void wreath_product::element_invert(int *A, int *Av, int verbose_level)
 void wreath_product::compute_induced_permutation(int *Elt, int *perm)
 {
 	int i, j, h, k, a;
+	geometry_global Gg;
 
 	for (i = 0; i < dimension_of_tensor_action; i++) {
-		AG_element_unrank(dimension_of_matrix_group,
+		Gg.AG_element_unrank(dimension_of_matrix_group,
 				index_set1, 1, nb_factors, i);
 		for (h = 0; h < nb_factors; h++) {
 			a = index_set1[h];
 			k = Elt[h];
 			index_set2[k] = a;
 		}
-		AG_element_rank(dimension_of_matrix_group,
+		Gg.AG_element_rank(dimension_of_matrix_group,
 				index_set2, 1, nb_factors, j);
 		perm[i] = j;
 	}

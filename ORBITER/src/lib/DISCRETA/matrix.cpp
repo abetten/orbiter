@@ -2751,6 +2751,7 @@ void matrix::PG_rep(permutation &p, int f_action_from_right, int f_modified)
 	domain *d;
 	int m, q, l, i, j;
 	Vector v, w;
+	geometry_global Gg;
 	
 	m = s_m();
 	if (!is_finite_field_domain(d)) {
@@ -2758,7 +2759,7 @@ void matrix::PG_rep(permutation &p, int f_action_from_right, int f_modified)
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
-	l = nb_PG_elements(m - 1, q);
+	l = Gg.nb_PG_elements(m - 1, q);
 	p.m_l(l);
 	v.m_l_n(m);
 	for (i = 0; i < l; i++) {
@@ -2789,6 +2790,7 @@ void matrix::AG_rep(permutation &p, int f_action_from_right)
 	domain *d;
 	int m, q, l, i, j;
 	Vector v, w;
+	geometry_global Gg;
 	
 	m = s_m();
 	if (!is_finite_field_domain(d)) {
@@ -2796,7 +2798,7 @@ void matrix::AG_rep(permutation &p, int f_action_from_right)
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
-	l = nb_AG_elements(m, q);
+	l = Gg.nb_AG_elements(m, q);
 	p.m_l(l);
 	v.m_l_n(m);
 	for (i = 0; i < l; i++) {
@@ -2830,6 +2832,7 @@ void matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
 {
 	with ww(dom);
 	domain *dom1 = NULL;
+	geometry_global Gg;
 	
 	int q = finite_field_domain_order_int(dom1);
 	int k, n, i, j, h;
@@ -2837,7 +2840,7 @@ void matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
 	
 	k = s_m();
 	n = s_n();
-	int l = nb_AG_elements(k, q);
+	int l = Gg.nb_AG_elements(k, q);
 
 	w.m_l(k);
 	v.m_l_n(n + 1);
@@ -2857,9 +2860,10 @@ void matrix::Simplex_code_generator_matrix(domain *dom, int k, int f_v)
 	domain *dom1 = NULL;
 	Vector w;
 	int i, j;
+	geometry_global Gg;
 	
 	int q = finite_field_domain_order_int(dom1);
-	int n = nb_PG_elements(k - 1, q);
+	int n = Gg.nb_PG_elements(k - 1, q);
 	m_mn(k, n);
 	w.m_l_n(k);
 	for (j = 0; j < n; j++) {
@@ -2878,9 +2882,10 @@ void matrix::PG_design_point_vs_hyperplane(domain *dom, int k, int f_v)
 {
 	with ww(dom);
 	int i, j, l;
+	geometry_global Gg;
 	
 	int q = dom->order_int();
-	l = nb_PG_elements(k, q);
+	l = Gg.nb_PG_elements(k, q);
 	m_mn_n(l, l);
 	Vector v, w;
 	discreta_base a;
@@ -2908,9 +2913,10 @@ void matrix::PG_k_q_design(domain *dom, int k, int f_v, int f_vv)
 	int ii, i, j, nb_pts, nb_lines, r;
 	matrix v, w, z;
 	discreta_base a;
+	geometry_global Gg;
 		
 	int q = dom->order_int();
-	nb_pts = nb_PG_elements(k, q);
+	nb_pts = Gg.nb_PG_elements(k, q);
 	nb_lines = nb_PG_lines(k, q);
 	if (f_v) {
 		cout << "nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
@@ -3075,6 +3081,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 	int q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
 	discreta_base x;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::PG_line_rank() no finite field domain" << endl;
@@ -3170,7 +3177,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		exit(1);
 		}
 	ql = NT.i_power_j(q, l);
-	nb = nb_PG_elements(m - l - 2, q);
+	nb = Gg.nb_PG_elements(m - l - 2, q);
 	s = ql * ql * nb;
 	if (f_v) {
 		cout << "l=" << l << " ql=" << ql << " nb=" << nb << " s=" << s << endl;
@@ -3199,7 +3206,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		}
 	for (l--; l >= 0; l--) {
 		ql = NT.i_power_j(q, l);
-		nb = nb_PG_elements(m - l - 2, q);
+		nb = Gg.nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;
 		}
@@ -3210,6 +3217,7 @@ void matrix::PG_line_unrank(int a)
 	domain *d;
 	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::PG_line_unrank no finite field domain" << endl;
@@ -3232,7 +3240,7 @@ void matrix::PG_line_unrank(int a)
 	l = 0;
 	while (l < m) {
 		ql = NT.i_power_j(q, l);
-		nb = nb_PG_elements(m - l - 2, q);
+		nb = Gg.nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		// cout << "matrix::PG_line_unrank() a=" << a
 		//<< " l=" << l << " s=" << s << " ql=" << ql
@@ -3469,11 +3477,12 @@ int nb_PG_lines(int n, int q)
 {
 	int l, ql, nb, s, a = 0, m;
 	number_theory_domain NT;
+	geometry_global Gg;
 	
 	m = n + 1;
 	for (l = 0; l < m; l++) {
 		ql = NT.i_power_j(q, l);
-		nb = nb_PG_elements(m - l - 2, q);
+		nb = Gg.nb_PG_elements(m - l - 2, q);
 		s = ql * ql * nb;
 		a += s;
 		}

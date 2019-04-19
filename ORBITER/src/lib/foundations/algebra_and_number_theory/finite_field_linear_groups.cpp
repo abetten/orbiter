@@ -24,8 +24,10 @@ void finite_field::diagonal_orbit_perm(int n,
 {
 	int f_v = (verbose_level >= 1);
 	int *v = NEW_int(n + 1);
-	int l = nb_PG_elements(n - 1, q);
-	int ll = nb_AG_elements(n - 1, q - 1);
+	geometry_global Gg;
+	int l, ll;
+	l = Gg.nb_PG_elements(n - 1, q);
+	ll = Gg.nb_AG_elements(n - 1, q - 1);
 	int a, b, c;
 	int i, j;
 
@@ -39,7 +41,7 @@ void finite_field::diagonal_orbit_perm(int n,
 		}
 	for (i = 0; i < ll; i++) {
 		v[0] = 1;
-		AG_element_unrank(q - 1, v + 1, 1, n - 1, i);
+		Gg.AG_element_unrank(q - 1, v + 1, 1, n - 1, i);
 		for (j = 1; j < n; j++) {
 			v[j]++;
 			}
@@ -72,7 +74,8 @@ void finite_field::frobenius_orbit_perm(int n,
 {
 	int f_v = (verbose_level >= 1);
 	int *v = NEW_int(n);
-	int l = nb_PG_elements(n - 1, q);
+	geometry_global Gg;
+	int l = Gg.nb_PG_elements(n - 1, q);
 	int ll = e;
 	int a, b, c;
 	int i, j;
@@ -135,6 +138,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
+	geometry_global Gg;
 
 
 	if (f_v) {
@@ -153,7 +157,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 	//transversal_length[0] = nb_PG_elements(n - 1, q);
 	for (i = 0; i < n; i++) {
 		transversal_length[i] =
-				nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
+				Gg.nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"transversal " << i << " of length "
@@ -180,7 +184,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 			}
 		}
 	if (q > 2) {
-		transversal_length[i] = nb_AG_elements(n - 1, q - 1);
+		transversal_length[i] = Gg.nb_AG_elements(n - 1, q - 1);
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits: "
 					"diagonal transversal " << i << " of length "
@@ -255,6 +259,7 @@ void finite_field::projective_matrix_group_base_and_transversal_length(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
+	geometry_global Gg;
 
 
 	if (f_v) {
@@ -273,7 +278,7 @@ void finite_field::projective_matrix_group_base_and_transversal_length(int n,
 	//transversal_length[0] = nb_PG_elements(n - 1, q);
 	for (i = 0; i < n; i++) {
 		transversal_length[i] =
-				nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
+				Gg.nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_transversal_length "
 					"transversal " << i << " of length "
@@ -281,7 +286,7 @@ void finite_field::projective_matrix_group_base_and_transversal_length(int n,
 			}
 		}
 	if (q > 2) {
-		transversal_length[i] = nb_AG_elements(n - 1, q - 1);
+		transversal_length[i] = Gg.nb_AG_elements(n - 1, q - 1);
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_transversal_length: "
 					"diagonal transversal " << i << " of length "

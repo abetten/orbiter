@@ -62,6 +62,7 @@ void action_on_homogeneous_polynomials::init(action *A,
 		homogeneous_polynomial_domain *HPD, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::init" << endl;
@@ -84,7 +85,7 @@ void action_on_homogeneous_polynomials::init(action *A,
 		exit(1);
 		}
 	dimension = HPD->nb_monomials;
-	degree = nb_PG_elements(dimension - 1, q);
+	degree = Gg.nb_PG_elements(dimension - 1, q);
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::init "
 				"dimension = " << dimension << endl;
