@@ -338,14 +338,15 @@ void MacNeish_product(int *A, int m, int *B, int n, int *C)
 void test1()
 {
 	int n, k, a, b, S;
+	combinatorics_domain Combi;
 	
 	cout << "test1" << endl;
 	for (n = 1; n <= 15; n++) {
 		S = 0;
 		for (k = 1; k <= 10; k++) {
-			a = int_n_choose_k(n - 1, k - 1);
+			a = Combi.int_n_choose_k(n - 1, k - 1);
 			//cout << n - 1 << " choose " << k - 1 << " = " << a << endl;
-			b = int_n_choose_k(10, k);
+			b = Combi.int_n_choose_k(10, k);
 			//cout << 10 << " choose " << k << " = " << b << endl;
 			//cout << "together = " << a * b << endl;
 			S += a * b;
@@ -369,12 +370,13 @@ void test2()
 void Niketa()
 {
 	int n, k, a, S;
+	combinatorics_domain Combi;
 	
 	cout << "Niketa" << endl;
 	for (n = 1; n <= 15; n++) {
 		S = 0;
 		for (k = 0; k <= 9; k++) {
-			a = int_n_choose_k(n + k - 1, n - 1);
+			a = Combi.int_n_choose_k(n + k - 1, n - 1);
 			S += a;
 			}
 		S--;
@@ -385,10 +387,11 @@ void Niketa()
 void Eric()
 {
 	int n, S;
+	combinatorics_domain Combi;
 	
 	cout << "Eric" << endl;
 	for (n = 1; n <= 15; n++) {
-		S = int_n_choose_k(n + 10 - 1, n) - 1;
+		S = Combi.int_n_choose_k(n + 10 - 1, n) - 1;
 		cout << setw(3) << n << " : " << setw(10) << S << endl;
 		}
 }
@@ -397,10 +400,11 @@ void Eric()
 void NateBurch()
 {
 	int n, S;
+	combinatorics_domain Combi;
 	
 	cout << "NateBurch" << endl;
 	for (n = 1; n <= 15; n++) {
-		S = int_n_choose_k(n + 9, 9) - 1;
+		S = Combi.int_n_choose_k(n + 9, 9) - 1;
 		cout << setw(3) << n << " : " << setw(10) << S << endl;
 		}
 }
@@ -409,13 +413,14 @@ void NateBurch()
 void PatrickWahl()
 {
 	int n, i, j, a, S;
+	combinatorics_domain Combi;
 	
 	cout << "PatrickWahl" << endl;
 	for (n = 1; n <= 15; n++) {
 		S = 1;
 		for (i = 0; i <= n - 1; i++) {
 			for (j = 0; j <= 8; j++) {
-				a = int_n_choose_k(i + j, i);
+				a = Combi.int_n_choose_k(i + j, i);
 				//cout << i + j << " choose " << i << " = " << a << endl;
 				S += a;
 				}
@@ -1180,15 +1185,16 @@ void rank_set()
 	int set[] = {11,50,51};
 	int *set1;
 	int rk;
+	combinatorics_domain Combi;
 
 	set1 = NEW_int(k);
-	rk = rank_k_subset(set, n, k);
+	rk = Combi.rank_k_subset(set, n, k);
 	cout << "the rank of the set ";
 	int_vec_print(cout, set, k);
 	cout << " with n=" << n;
 	cout << " is " << rk << endl;
 
-	unrank_k_subset(rk, set1, n, k);
+	Combi.unrank_k_subset(rk, set1, n, k);
 	cout << "after unrank: ";
 	int_vec_print(cout, set1, k);
 	cout << endl;

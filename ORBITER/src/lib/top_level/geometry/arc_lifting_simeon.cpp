@@ -246,11 +246,12 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 	int nb_external_lines;
 	int h, i, j, pi, pj;
 	int nb_bisecants, nb_c2points, bi, bj, a, idx, u, pt;
+	combinatorics_domain Combi;
 
 	original_arc = SaS->data;
 	original_arc_sz = SaS->sz;
 
-	nb_bisecants = int_n_choose_k(original_arc_sz, 2);
+	nb_bisecants = Combi.int_n_choose_k(original_arc_sz, 2);
 	nb_c2points = nb_bisecants * nb_bisecants;
 	type = NEW_int(P->N_lines);
 	external_lines = NEW_int(P->N_lines);

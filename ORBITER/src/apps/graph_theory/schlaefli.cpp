@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 	int q;
 	int n = 4;
 	int k = 2;
+	combinatorics_domain Combi;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -58,7 +59,7 @@ int main(int argc, char **argv)
 	M2 = NEW_int(k * n);
 	M = NEW_int(2 * k * n);
 
-	N = generalized_binomial(n, k, q);
+	N = Combi.generalized_binomial(n, k, q);
 
 	List = NEW_int(N);
 	sz = 0;

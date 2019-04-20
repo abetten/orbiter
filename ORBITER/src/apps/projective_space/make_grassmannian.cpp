@@ -103,9 +103,10 @@ void create_grassmannian(int n, int k, finite_field *F, int verbose_level)
 	int N, i, j, h, col;
 	int *v, *B, *A, *L, *subset;
 	int q = F->q;
+	combinatorics_domain Combi;
 
 	d = n + 1;
-	nk = int_n_choose_k(d, k + 1);
+	nk = Combi.int_n_choose_k(d, k + 1);
 	P = NEW_OBJECT(projective_space);
 	P2 = NEW_OBJECT(projective_space);
 	B = NEW_int((k + 1) * d);
@@ -171,7 +172,7 @@ void create_grassmannian(int n, int k, finite_field *F, int verbose_level)
 			if (f_v) {
 				cout << "subset " << h << endl;
 				}
-			unrank_k_subset(h, subset, d, k + 1);
+			Combi.unrank_k_subset(h, subset, d, k + 1);
 			if (f_v) {
 				int_vec_print(cout, subset, k + 1);
 				cout << endl;

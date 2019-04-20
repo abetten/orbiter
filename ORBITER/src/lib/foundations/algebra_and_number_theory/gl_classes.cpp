@@ -73,6 +73,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::init" << endl;
@@ -155,7 +156,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 		}
 	for (d = 1; d <= k; d++) {
 
-		make_all_partitions_of_n(d, Partitions[d],
+		Combi.make_all_partitions_of_n(d, Partitions[d],
 				Nb_part[d], verbose_level - 2);
 
 		}
@@ -581,6 +582,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::centralizer_order_Kung_basic" << endl;
@@ -606,7 +608,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 					continue;
 					}
 				for (j = 1; j <= b; j++) {
-					mue_i = Kung_mue_i(part, i, m);
+					mue_i = Combi.Kung_mue_i(part, i, m);
 						// in combinatorics.C
 					aa = NT.i_power_j(q, d * mue_i);
 					bb = NT.i_power_j(q, d * (mue_i - j));
@@ -637,6 +639,7 @@ void gl_classes::centralizer_order_Kung(int *Select_polynomial,
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	co.create(1);
 	for (a = nb_irred - 1; a >= 0; a--) { // for all polynomials: 
@@ -654,7 +657,7 @@ void gl_classes::centralizer_order_Kung(int *Select_polynomial,
 					continue;
 					}
 				for (j = 1; j <= b; j++) {
-					mue_i = Kung_mue_i(part, i, m);
+					mue_i = Combi.Kung_mue_i(part, i, m);
 					aa = NT.i_power_j(q, d * mue_i);
 					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;
@@ -684,6 +687,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	longinteger_object go, co, f, g, cl, r, sum;
 	longinteger_domain D;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::make_classes "
@@ -750,7 +754,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 					if (!f_first) {
 						cout << ", ";
 						}
-					partition_print(cout, Partitions[m] + p * m, m);
+					Combi.partition_print(cout, Partitions[m] + p * m, m);
 					}
 				f_first = FALSE;
 				}
@@ -835,7 +839,7 @@ loop1:
 					if (!f_first) {
 						cout << ", ";
 						}
-					partition_print(cout, Partitions[m] + p * m, m);
+					Combi.partition_print(cout, Partitions[m] + p * m, m);
 					f_first = FALSE;
 					}
 				}
@@ -1179,6 +1183,7 @@ void gl_classes::compute_generalized_kernels(
 	int cnt, c, rank;
 	int *M3, *M4;
 	int *base_cols;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::compute_generalized_kernels" << endl;
@@ -1239,15 +1244,15 @@ void gl_classes::compute_generalized_kernels(
 	if (f_v) {
 		cout << "height=" << Data->height << endl;
 		cout << "gl_classes::compute_generalized_kernels dual_part = ";
-		partition_print(cout, Data->dual_part, m);
+		Combi.partition_print(cout, Data->dual_part, m);
 		cout << endl;
 		}
 
-	partition_dual(Data->dual_part, Data->part, m, verbose_level);
+	Combi.partition_dual(Data->dual_part, Data->part, m, verbose_level);
 
 	if (f_v) {
 		cout << "gl_classes::compute_generalized_kernels part = ";
-		partition_print(cout, Data->part, m);
+		Combi.partition_print(cout, Data->part, m);
 		cout << endl;
 		}
 

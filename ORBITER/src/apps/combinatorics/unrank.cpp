@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 	int i;
 	int f_k_subset = FALSE;
 	int n, k, r;
+	combinatorics_domain Combi;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -35,7 +36,7 @@ int main(int argc, char **argv)
 	
 	if (f_k_subset) {
 		int *set = NEW_int(k);
-		unrank_k_subset(r, set, n, k);
+		Combi.unrank_k_subset(r, set, n, k);
 		cout << "set of rank " << r << " is ";
 		int_vec_print(cout, set, k);
 		cout << endl;

@@ -277,6 +277,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	int image[2];
 	int pt_coord[4 * 4];
 	int nb_pts;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_"
@@ -311,13 +312,13 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	// For every 4-subset \{a_1,\ldots,a_5\} \setminus \{a_i\},
 	// let b_i be the unique second transversal:
 	
-	nb_subsets = int_n_choose_k(5, 4);
+	nb_subsets = Combi.int_n_choose_k(5, 4);
 
 	for (rk = 0; rk < nb_subsets; rk++) {
 
 		// Determine a subset a_{i1},a_{i2},a_{i3},a_{i4};a_{i5}
-		unrank_k_subset(rk, subset, 5, 4);
-		set_complement(subset, 4, subset + 4, size_complement, 5);		
+		Combi.unrank_k_subset(rk, subset, 5, 4);
+		Combi.set_complement(subset, 4, subset + 4, size_complement, 5);
 		for (i = 0; i < 5; i++) {
 			four_lines[i] = five_lines[subset[i]];
 			}

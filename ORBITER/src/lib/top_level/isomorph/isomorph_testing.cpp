@@ -40,6 +40,7 @@ void isomorph::iso_test_init2(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "isomorph::iso_test_init2" << endl;
@@ -60,7 +61,7 @@ void isomorph::iso_test_init2(int verbose_level)
 		cout << "isomorph::iso_test_init2 "
 				"before int_n_choose_k" << endl;
 		}
-	NCK = int_n_choose_k(size, level);
+	NCK = Combi.int_n_choose_k(size, level);
 	if (f_v) {
 		cout << "isomorph::iso_test_init2 "
 				"after int_n_choose_k" << endl;
@@ -80,6 +81,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	longinteger_object go;
 	int data[1000];
 	int i, id;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "isomorph::probe for flag orbit " << flag_orbit
@@ -133,7 +135,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	
 	Reps->calc_fusion_statistics();
 
-	unrank_k_subset(subset_rk, subset, size, level);
+	Combi.unrank_k_subset(subset_rk, subset, size, level);
 
 	if (f_v) {
 		cout << "isomorph::probe the subset with rank "
@@ -555,6 +557,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	int id;
 	int data[1000];
 	int f_continue;
+	combinatorics_domain Combi;
 	
 	
 	if (f_v) {
@@ -611,8 +614,8 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	cnt_minimal = 0;
 	Reps->calc_fusion_statistics();
 
-	first_k_subset(subset, size, level);
-	subset_rank = rank_k_subset(subset, size, level);
+	Combi.first_k_subset(subset, size, level);
+	subset_rank = Combi.rank_k_subset(subset, size, level);
 
 	f_continue = FALSE;
 
@@ -667,7 +670,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 		
 		Reps->calc_fusion_statistics();
 
-		if (!next_k_subset(subset, size, level)) {
+		if (!Combi.next_k_subset(subset, size, level)) {
 			break;
 			}
 		}
@@ -705,6 +708,7 @@ int isomorph::next_subset(int t0,
 	int f_v6 = (verbose_level >= 6);
 	int f_is_minimal;
 	int i;
+	combinatorics_domain Combi;
 
 	f_continue = FALSE;
 	
@@ -714,7 +718,7 @@ int isomorph::next_subset(int t0,
 			return FALSE;
 			}
 		}
-	subset_rank = rank_k_subset(subset, size, level);
+	subset_rank = Combi.rank_k_subset(subset, size, level);
 
 		
 		
@@ -732,7 +736,7 @@ int isomorph::next_subset(int t0,
 	
 		//cout << "next subset at backtrack_level="
 		//<< backtrack_level << endl;
-		if (!next_k_subset(subset, size, level)) {
+		if (!Combi.next_k_subset(subset, size, level)) {
 			// in GALOIS/combinatorics.C
 
 			return FALSE;
@@ -990,8 +994,9 @@ void isomorph::process_rearranged_set(
 int isomorph::is_minimal(int verbose_level)
 {
 	int rk, rk0;
+	combinatorics_domain Combi;
 	
-	rk = rank_k_subset(subset, size, level);
+	rk = Combi.rank_k_subset(subset, size, level);
 	rk0 = UF->ancestor(rk);
 	if (rk0 == rk) {
 		return TRUE;
@@ -1024,6 +1029,7 @@ void isomorph::stabilizer_action_init(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int h, i, j;
 	int *Elt;
+	combinatorics_domain Combi;
 	
 	nb_sets_reached = 0;
 	nb_is_minimal_called = 0;
@@ -1054,7 +1060,7 @@ void isomorph::stabilizer_action_init(int verbose_level)
 		if (f_v) {
 			cout << "generator " << h << ":" << endl;
 			A->element_print_quick(Elt, cout);
-			perm_print(cout, stabilizer_generators[h], size);
+			Combi.perm_print(cout, stabilizer_generators[h], size);
 			cout << endl;
 			}
 		}
@@ -1066,6 +1072,7 @@ void isomorph::stabilizer_action_add_generator(int *Elt, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int **new_gens;
 	int h, i, j;
+	combinatorics_domain Combi;
 	
 	AA->group_order(stabilizer_group_order);
 	if (f_v) {
@@ -1086,7 +1093,7 @@ void isomorph::stabilizer_action_add_generator(int *Elt, int verbose_level)
 	if (f_vv) {
 		cout << "generator " << h << ":" << endl;
 		A->element_print_quick(Elt, cout);
-		perm_print(cout, new_gens[h], size);
+		Combi.perm_print(cout, new_gens[h], size);
 		cout << endl;
 		}
 	stabilizer_nb_generators++;
@@ -1134,6 +1141,7 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 	int t1, dt;
 	int nb, N;
 	double f1; //, f2;
+	combinatorics_domain Combi;
 	
 	t1 = os_ticks();
 	dt = t1 - t0;
@@ -1141,7 +1149,7 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 	//cout << "time_check t1=" << t1 << endl;
 	//cout << "time_check dt=" << dt << endl;
 	time_check_delta(cout, dt);
-	subset_rank = rank_k_subset(subset, size, level);
+	subset_rank = Combi.rank_k_subset(subset, size, level);
 	Stab->group_order(go);
 	AA->group_order(AA_go);
 	//progress = (double)nb_sets_reached / (double)NCK;

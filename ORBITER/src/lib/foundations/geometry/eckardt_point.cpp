@@ -34,11 +34,12 @@ void eckardt_point::freeself()
 void eckardt_point::print()
 {
 	int t, i, j;
+	combinatorics_domain Combi;
 	
 	if (len == 3) {
 		cout << "E_{";
 		for (t = 0; t < 3; t++) {
-			k2ij(index[t], i, j, 6);
+			Combi.k2ij(index[t], i, j, 6);
 			cout << i + 1 << j + 1;
 			if (t < 2) {
 				cout << ",";
@@ -58,11 +59,12 @@ void eckardt_point::print()
 void eckardt_point::latex(ostream &ost)
 {
 	int t, i, j;
+	combinatorics_domain Combi;
 	
 	if (len == 3) {
 		ost << "E_{";
 		for (t = 0; t < 3; t++) {
-			k2ij(index[t], i, j, 6);
+			Combi.k2ij(index[t], i, j, 6);
 			ost << i + 1 << j + 1;
 			if (t < 2) {
 				ost << ",";
@@ -82,10 +84,11 @@ void eckardt_point::latex(ostream &ost)
 void eckardt_point::latex_index_only(ostream &ost)
 {
 	int t, i, j;
+	combinatorics_domain Combi;
 	
 	if (len == 3) {
 		for (t = 0; t < 3; t++) {
-			k2ij(index[t], i, j, 6);
+			Combi.k2ij(index[t], i, j, 6);
 			ost << i + 1 << j + 1;
 			if (t < 2) {
 				ost << ",";
@@ -104,12 +107,13 @@ void eckardt_point::latex_index_only(ostream &ost)
 void eckardt_point::latex_to_str(char *str)
 {
 	int t, i, j;
+	combinatorics_domain Combi;
 	
 	str[0] = 0;
 	if (len == 3) {
 		sprintf(str + strlen(str), "E_{");
 		for (t = 0; t < 3; t++) {
-			k2ij(index[t], i, j, 6);
+			Combi.k2ij(index[t], i, j, 6);
 			sprintf(str + strlen(str), "%d%d", i + 1, j + 1);
 			if (t < 2) {
 				sprintf(str + strlen(str), ",");
@@ -129,12 +133,13 @@ void eckardt_point::latex_to_str(char *str)
 void eckardt_point::latex_to_str_without_E(char *str)
 {
 	int t, i, j;
-	
+	combinatorics_domain Combi;
+
 	str[0] = 0;
 	if (len == 3) {
 		//sprintf(str + strlen(str), "{");
 		for (t = 0; t < 3; t++) {
-			k2ij(index[t], i, j, 6);
+			Combi.k2ij(index[t], i, j, 6);
 			sprintf(str + strlen(str), "%d%d", i + 1, j + 1);
 			if (t < 2) {
 				sprintf(str + strlen(str), ",");
@@ -170,33 +175,39 @@ void eckardt_point::init3(int ij, int kl, int mn)
 
 void eckardt_point::init6(int i, int j, int k, int l, int m, int n)
 {
+	combinatorics_domain Combi;
+
 	len = 3;
-	index[0] = ij2k(i, j, 6);
-	index[1] = ij2k(k, l, 6);
-	index[2] = ij2k(m, n, 6);
+	index[0] = Combi.ij2k(i, j, 6);
+	index[1] = Combi.ij2k(k, l, 6);
+	index[2] = Combi.ij2k(m, n, 6);
 }
 
 void eckardt_point::init_by_rank(int rk)
 {
+	combinatorics_domain Combi;
+
 	if (rk < 30) {
 		len = 2;
-		ordered_pair_unrank(rk, index[0], index[1], 6);
+		Combi.ordered_pair_unrank(rk, index[0], index[1], 6);
 		}
 	else {
 		int i, j, k, l, m, n;
 		
 		len = 3;
 		rk -= 30;
-		unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
-		index[0] = ij2k(i, j, 6);
-		index[1] = ij2k(k, l, 6);
-		index[2] = ij2k(m, n, 6);
+		Combi.unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
+		index[0] = Combi.ij2k(i, j, 6);
+		index[1] = Combi.ij2k(k, l, 6);
+		index[2] = Combi.ij2k(m, n, 6);
 		}
 }
 
 
 void eckardt_point::three_lines(surface_domain *S, int *three_lines)
 {
+	combinatorics_domain Combi;
+
 	if (len == 2) {
 		three_lines[0] = S->line_ai(index[0]);
 		three_lines[1] = S->line_bi(index[1]);
@@ -205,11 +216,11 @@ void eckardt_point::three_lines(surface_domain *S, int *three_lines)
 	else if (len == 3) {
 		int i, j;
 
-		k2ij(index[0], i, j, 6);
+		Combi.k2ij(index[0], i, j, 6);
 		three_lines[0] = S->line_cij(i, j);
-		k2ij(index[1], i, j, 6);
+		Combi.k2ij(index[1], i, j, 6);
 		three_lines[1] = S->line_cij(i, j);
-		k2ij(index[2], i, j, 6);
+		Combi.k2ij(index[2], i, j, 6);
 		three_lines[2] = S->line_cij(i, j);
 		}
 	else {
@@ -221,18 +232,19 @@ void eckardt_point::three_lines(surface_domain *S, int *three_lines)
 int eckardt_point::rank()
 {
 	int a;
+	combinatorics_domain Combi;
 	
 	if (len == 2) {
-		a = ordered_pair_rank(index[0], index[1], 6);
+		a = Combi.ordered_pair_rank(index[0], index[1], 6);
 		return a;
 		}
 	else if (len == 3) {
 		int i, j, k, l, m, n;
 
-		k2ij(index[0], i, j, 6);
-		k2ij(index[1], k, l, 6);
-		k2ij(index[2], m, n, 6);
-		a = unordered_triple_pair_rank(i, j, k, l, m, n);
+		Combi.k2ij(index[0], i, j, 6);
+		Combi.k2ij(index[1], k, l, 6);
+		Combi.k2ij(index[2], m, n, 6);
+		a = Combi.unordered_triple_pair_rank(i, j, k, l, m, n);
 		return 30 + a;
 		}
 	else {
@@ -244,16 +256,18 @@ int eckardt_point::rank()
 void eckardt_point::unrank(int rk,
 		int &i, int &j, int &k, int &l, int &m, int &n)
 {
+	combinatorics_domain Combi;
+
 	if (rk < 30) {
 		len = 2;
-		ordered_pair_unrank(rk, index[0], index[1], 6);
+		Combi.ordered_pair_unrank(rk, index[0], index[1], 6);
 		}
 	else {
 		rk -= 30;
-		unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
-		index[0] = ij2k(i, j, 6);
-		index[1] = ij2k(k, l, 6);
-		index[2] = ij2k(m, n, 6);
+		Combi.unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
+		index[0] = Combi.ij2k(i, j, 6);
+		index[1] = Combi.ij2k(k, l, 6);
+		index[2] = Combi.ij2k(m, n, 6);
 		}
 }
 

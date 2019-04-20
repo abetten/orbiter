@@ -345,6 +345,7 @@ void regular_ls_generator::early_test_func(int *S, int len,
 	int f_vv = (verbose_level >= 2);
 	int i, j, a, b, p;
 	int f_OK;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "regular_ls_generator::early_test_func checking set ";
@@ -364,11 +365,11 @@ void regular_ls_generator::early_test_func(int *S, int len,
 		}
 	for (i = 0; i < len; i++) {
 
-		unrank_k_subset(S[i], v1, m, k);
+		Combi.unrank_k_subset(S[i], v1, m, k);
 		for (a = 0; a < k; a++) {
 			row_sum[v1[a]]++;
 			for (b = a + 1; b < k; b++) {
-				p = ij2k(v1[a], v1[b], m);
+				p = Combi.ij2k(v1[a], v1[b], m);
 				pairs[p] = TRUE;
 				}
 			}
@@ -392,7 +393,7 @@ void regular_ls_generator::early_test_func(int *S, int len,
 			}
 
 		// do some testing
-		unrank_k_subset(candidates[j], v1, m, k);
+		Combi.unrank_k_subset(candidates[j], v1, m, k);
 		if (f_vv) {
 			cout << "Testing candidate " << j << " = "
 					<< candidates[j] << " = ";
@@ -405,7 +406,7 @@ void regular_ls_generator::early_test_func(int *S, int len,
 				break;
 				}
 			for (b = a + 1; b < k; b++) {
-				p = ij2k(v1[a], v1[b], m);
+				p = Combi.ij2k(v1[a], v1[b], m);
 				if (pairs[p]) {
 					f_OK = FALSE;
 					break;
@@ -502,6 +503,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 	int i, a, h1, h2, p, idx;
 	int nb_needed;
 	int nb_open_rows, nb_open_pairs;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "regular_ls_generator::lifting_prepare_function_new "
@@ -522,11 +524,11 @@ void regular_ls_generator::lifting_prepare_function_new(
 		}
 	for (i = 0; i < E->starter_size; i++) {
 
-		unrank_k_subset(E->starter[i], v1, m, k);
+		Combi.unrank_k_subset(E->starter[i], v1, m, k);
 		for (h1 = 0; h1 < k; h1++) {
 			row_sum[v1[h1]]++;
 			for (h2 = h1 + 1; h2 < k; h2++) {
-				p = ij2k(v1[h1], v1[h2], m);
+				p = Combi.ij2k(v1[h1], v1[h2], m);
 				pairs[p] = TRUE;
 				}
 			}
@@ -603,7 +605,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 		a = col_labels[i];
 
 
-		unrank_k_subset(a, v1, m, k);
+		Combi.unrank_k_subset(a, v1, m, k);
 
 		for (h1 = 0; h1 < k; h1++) {
 
@@ -616,7 +618,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 			Dio->Aij(idx, i) = 1;
 			
 			for (h2 = h1 + 1; h2 < k; h2++) {
-				p = ij2k(v1[h1], v1[h2], m);
+				p = Combi.ij2k(v1[h1], v1[h2], m);
 				if (pairs[p]) {
 					cout << "regular_ls_generator::lifting_prepare_"
 							"function_new pairs[p]" << endl;

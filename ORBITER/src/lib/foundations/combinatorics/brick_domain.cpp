@@ -52,7 +52,8 @@ void brick_domain::init(finite_field *F, int verbose_level)
 		}
 }
 
-void brick_domain::unrank(int rk, int &f_vertical, int &x0, int &y0, int verbose_level)
+void brick_domain::unrank(int rk,
+		int &f_vertical, int &x0, int &y0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -62,7 +63,9 @@ void brick_domain::unrank(int rk, int &f_vertical, int &x0, int &y0, int verbose
 	rk /= q;
 	y0 = rk;
 	if (f_v) {
-		cout << "brick_domain::unrank rk=" << rk << " f_vertical=" << f_vertical << " x0=" << x0 << " y0=" << y0 << endl;
+		cout << "brick_domain::unrank rk=" << rk
+				<< " f_vertical=" << f_vertical
+				<< " x0=" << x0 << " y0=" << y0 << endl;
 		}
 }
 
@@ -79,12 +82,16 @@ int brick_domain::rank(int f_vertical, int x0, int y0, int verbose_level)
 		rk++;
 		}
 	if (f_v) {
-		cout << "brick_domain::rank rk=" << rk << " f_vertical=" << f_vertical << " x0=" << x0 << " y0=" << y0 << endl;
+		cout << "brick_domain::rank rk=" << rk
+				<< " f_vertical=" << f_vertical
+				<< " x0=" << x0 << " y0=" << y0 << endl;
 		}
 	return rk;
 }
 
-void brick_domain::unrank_coordinates(int rk, int &x1, int &y1, int &x2, int &y2, int verbose_level)
+void brick_domain::unrank_coordinates(int rk,
+		int &x1, int &y1, int &x2, int &y2,
+		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int x0, y0, f_vertical;
@@ -102,7 +109,8 @@ void brick_domain::unrank_coordinates(int rk, int &x1, int &y1, int &x2, int &y2
 		}
 }
 
-int brick_domain::rank_coordinates(int x1, int y1, int x2, int y2, int verbose_level)
+int brick_domain::rank_coordinates(int x1, int y1,
+		int x2, int y2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk;
@@ -137,7 +145,8 @@ int brick_domain::rank_coordinates(int x1, int y1, int x2, int y2, int verbose_l
 			}
 		}
 	else {
-		cout << "brick_domain::rank_coordinates neither vertical nor horizontal" << endl;
+		cout << "brick_domain::rank_coordinates "
+				"neither vertical nor horizontal" << endl;
 		exit(1);
 		}
 	rk = y0;
@@ -148,7 +157,9 @@ int brick_domain::rank_coordinates(int x1, int y1, int x2, int y2, int verbose_l
 		rk++;
 		}
 	if (f_v) {
-		cout << "brick_domain::rank_coordinates rk=" << rk << " f_vertical=" << f_vertical << " x0=" << x0 << " y0=" << y0 << endl;
+		cout << "brick_domain::rank_coordinates rk=" << rk
+				<< " f_vertical=" << f_vertical
+				<< " x0=" << x0 << " y0=" << y0 << endl;
 		}
 	return rk;
 }

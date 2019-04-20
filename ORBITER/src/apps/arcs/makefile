@@ -8,12 +8,12 @@ LFLAGS = -lm
 
 
 all: arcs_main.out \
+	arcs_orderly.out \
 	test_hyperoval.out \
 	create_group.out \
-	test_arc.out \
-	k_arc_lifting.out \
 	k_arc_generator_main.out \
-	arcs_orderly.out 
+	k_arc_lifting.out \
+	test_arc.out
 
 
 arcs_main.out:  arcs_main.o ;

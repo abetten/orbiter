@@ -1276,6 +1276,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	int f_vvv = (verbose_level >= 3);
 	int id, rep, first; //, c;
 	int data[1000];
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
@@ -1331,7 +1332,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		}
 
 	if (FALSE /*go1.is_one()*/) {
-		cnt_orbits = int_n_choose_k(Iso->size, Iso->level);
+		cnt_orbits = Combi.int_n_choose_k(Iso->size, Iso->level);
 		cnt_special_orbits = 1;
 		}
 	else {

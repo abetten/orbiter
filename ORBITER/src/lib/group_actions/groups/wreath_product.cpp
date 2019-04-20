@@ -480,11 +480,12 @@ void wreath_product::element_mult(int *A, int *B, int *AB,
 {
 	int f_v = (verbose_level >= 1);
 	int f, g;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::element_mult" << endl;
 	}
-	perm_mult(A, B, AB, nb_factors);
+	Combi.perm_mult(A, B, AB, nb_factors);
 	for (f = 0; f < nb_factors; f++) {
 		g = A[f];
 		M->GL_mult(A + offset_i(f),
@@ -521,11 +522,12 @@ void wreath_product::element_invert(int *A, int *Av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f, g;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::element_invert" << endl;
 	}
-	perm_inverse(A, Av, nb_factors);
+	Combi.perm_inverse(A, Av, nb_factors);
 	for (f = 0; f < nb_factors; f++) {
 		g = A[f];
 		M->GL_invert(A + offset_i(f), Av + offset_i(g));
@@ -858,6 +860,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 	int GL_nb_gens;
 	int h, k, f, g;
 	int *dat;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::make_strong_generators_data" << endl;
@@ -886,7 +889,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 	// generators for the components:
 	for (f = nb_factors - 1; f >= 0; f--) {
 		for (g = 0; g < GL_nb_gens; g++) {
-			perm_identity(dat, nb_factors);
+			Combi.perm_identity(dat, nb_factors);
 			for (k = 0; k < nb_factors; k++) {
 				if (k == f) {
 					int_vec_copy(GL_data + g * GL_size,
@@ -905,7 +908,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 #if 1
 	// create the elementary swap permutations:
 	for (k = nb_factors - 2; k >= 0; k--) {
-		perm_elementary_transposition(dat, nb_factors, k);
+		Combi.perm_elementary_transposition(dat, nb_factors, k);
 		for (f = 0; f < nb_factors; f++) {
 			F->identity_matrix(dat + nb_factors + f * M->elt_size_int_half,
 					dimension_of_matrix_group);

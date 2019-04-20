@@ -112,6 +112,7 @@ int main(int argc, const char **argv)
 	int *Adj;
 	int nb_points;
 	int *points;
+	combinatorics_domain Combi;
 
 	action *Ab;
 	
@@ -173,7 +174,7 @@ int main(int argc, const char **argv)
 			}
 		for (j = 0; j < b; j++) {
 			a = Sets[h][j];
-			unrank_k_subset(a, v1, v, k);
+			Combi.unrank_k_subset(a, v1, v, k);
 			if (f_vvv) {
 				cout << a << " = ";
 				int_vec_print(cout, v1, k);
@@ -198,7 +199,7 @@ int main(int argc, const char **argv)
 				cout << "row " << i << " u != r" << endl;
 				exit(1);
 				}
-			a = rank_k_subset(v2, b, r);
+			a = Combi.rank_k_subset(v2, b, r);
 			new_set[i] = a;
 			}
 		if (f_vv) {

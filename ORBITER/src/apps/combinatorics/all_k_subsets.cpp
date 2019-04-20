@@ -48,16 +48,18 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	
+	combinatorics_domain Combi;
+
 	sprintf(fname, "all_k_subsets_%d_%d.tree", n, k);
 	set = NEW_int(k);
-	N = int_n_choose_k(n, k);
+	N = Combi.int_n_choose_k(n, k);
 
 	
 	{
 	ofstream fp(fname);
 	
 	for (h = 0; h < N; h++) {
-		unrank_k_subset(h, set, n, k);
+		Combi.unrank_k_subset(h, set, n, k);
 		fp << k;
 		for (i = 0; i < k; i++) {
 			fp << " " << set[i];

@@ -96,6 +96,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 	int *parts;
 	int nb_parts;
 	int i, j, k, n1, N, len, f_on = 0, c, nb_edges;
+	combinatorics_domain Combi;
 
 	//labeling = NEW_int(n);
 
@@ -135,7 +136,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
 			f_on = FALSE;
-			k = ij2k(i, j, n);
+			k = Combi.ij2k(i, j, n);
 			if (f_bitvec) {
 				if (bitvector_s_i(Adj_bitvec, k)) {
 					f_on = TRUE;
@@ -145,7 +146,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 				f_on = Adj[i * n + j];
 				}
 			if (f_on) {
-				k = ij2k(i, j, n1);
+				k = Combi.ij2k(i, j, n1);
 				bitvector_m_ii(Adj1, k, 1);
 				nb_edges++;
 				}
@@ -154,7 +155,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 	for (i = 0; i < n; i++) {
 		c = C.class_of(i);
 		j = n + c;
-		k = ij2k(i, j, n1);
+		k = Combi.ij2k(i, j, n1);
 		bitvector_m_ii(Adj1, k, 1);
 		}
 
@@ -182,11 +183,11 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 					a = 0;
 				}
 				else if (i < j) {
-					k = ij2k(i, j, n1);
+					k = Combi.ij2k(i, j, n1);
 					a = bitvector_s_i(Adj1, k);
 				}
 				else {
-					k = ij2k(j, i, n1);
+					k = Combi.ij2k(j, i, n1);
 					a = bitvector_s_i(Adj1, k);
 				}
 				cout << a << " ";
@@ -1153,6 +1154,7 @@ void nauty_interface::add_configuration_graph(ofstream &g,
 	int n1, nb_inc1;
 	action *A;
 	longinteger_object ago;
+	combinatorics_domain Combi;
 
 	A = create_automorphism_group_of_incidence_structure_low_level(
 			m, n, nb_inc, X,
@@ -1176,7 +1178,7 @@ void nauty_interface::add_configuration_graph(ofstream &g,
 				}
 			}
 		}
-	nb_missing_pairs = int_n_choose_k(m, 2) - nb_joined_pairs;
+	nb_missing_pairs = Combi.int_n_choose_k(m, 2) - nb_joined_pairs;
 	n1 = n + nb_missing_pairs;
 	M1 = NEW_int(m * n1);
 	for (i = 0; i < m * n1; i++) {

@@ -368,6 +368,7 @@ int induced_action_element_image_of(action &A,
 					"action_on_pairs_t" << endl;
 			}
 		action *sub;
+		combinatorics_domain Combi;
 		int i, j, u, v;
 		
 		sub = A.subaction;
@@ -376,10 +377,10 @@ int induced_action_element_image_of(action &A,
 					"no subaction, type = action_on_pairs_t" << endl;
 			exit(1);
 			}
-		k2ij(a, i, j, sub->degree);
+		Combi.k2ij(a, i, j, sub->degree);
 		u = sub->element_image_of(i, elt, verbose_level - 1);
 		v = sub->element_image_of(j, elt, verbose_level - 1);
-		b = ij2k(u, v, sub->degree);
+		b = Combi.ij2k(u, v, sub->degree);
 		}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		if (f_v) {
@@ -387,6 +388,7 @@ int induced_action_element_image_of(action &A,
 					"action_on_ordered_pairs_t" << endl;
 			}
 		action *sub;
+		combinatorics_domain Combi;
 		int a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
 		
 		sub = A.subaction;
@@ -397,7 +399,7 @@ int induced_action_element_image_of(action &A,
 			}
 		swap = a % 2;
 		a2 = a / 2;
-		k2ij(a2, i, j, sub->degree);
+		Combi.k2ij(a2, i, j, sub->degree);
 		if (swap) {
 			tmp = i;
 			i = j;
@@ -415,7 +417,7 @@ int induced_action_element_image_of(action &A,
 			v2 = v;
 			swap2 = 0;
 			}
-		b2 = ij2k(u2, v2, sub->degree);
+		b2 = Combi.ij2k(u2, v2, sub->degree);
 		b = 2 * b2 + swap2;
 #if 0
 		cout << "induced_action_element_image_of "
@@ -1477,6 +1479,7 @@ void induced_action_print_point(action &A,
 		}
 	else if (A.type_G == action_on_pairs_t) {
 		action *sub;
+		combinatorics_domain Combi;
 		int i, j;
 		
 		sub = A.subaction;
@@ -1485,11 +1488,12 @@ void induced_action_print_point(action &A,
 					"no subaction, type = action_on_pairs_t" << endl;
 			exit(1);
 			}
-		k2ij(a, i, j, sub->degree);
+		Combi.k2ij(a, i, j, sub->degree);
 		cout << "a={" << i << "," << j << "}";
 		}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		action *sub;
+		combinatorics_domain Combi;
 		int a2, swap, tmp, i, j;
 		
 		sub = A.subaction;
@@ -1500,7 +1504,7 @@ void induced_action_print_point(action &A,
 			}
 		swap = a % 2;
 		a2 = a / 2;
-		k2ij(a2, i, j, sub->degree);
+		Combi.k2ij(a2, i, j, sub->degree);
 		if (swap) {
 			tmp = i;
 			i = j;

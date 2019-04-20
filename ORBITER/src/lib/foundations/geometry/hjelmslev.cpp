@@ -59,6 +59,7 @@ void hjelmslev::init(finite_ring *R,
 		int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "hjelmslev::init n=" << n << " k=" << k
@@ -67,7 +68,7 @@ void hjelmslev::init(finite_ring *R,
 	hjelmslev::R = R;
 	hjelmslev::n = n;
 	hjelmslev::k = k;
-	n_choose_k_p = generalized_binomial(n, k, R->p);
+	n_choose_k_p = Combi.generalized_binomial(n, k, R->p);
 	if (f_v) {
 		cout << "hjelmslev::init n_choose_k_p = "
 				<< n_choose_k_p << endl;

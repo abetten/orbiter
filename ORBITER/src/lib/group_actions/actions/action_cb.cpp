@@ -474,6 +474,7 @@ void action::element_print_as_permutation_with_offset(
 	int f_max_cycle_length = FALSE;
 	int max_cycle_length = 50;
 	int f_orbit_structure = FALSE;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action::element_print_as_permutation_with_offset "
@@ -499,7 +500,7 @@ void action::element_print_as_permutation_with_offset(
 		v[i] = j;
 		}
 	//perm_print(ost, v, degree);
-	perm_print_offset(ost, v, degree, offset,
+	Combi.perm_print_offset(ost, v, degree, offset,
 			f_cycle_length,
 			f_max_cycle_length, max_cycle_length,
 			f_orbit_structure);
@@ -538,6 +539,7 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 	int *v, i, j;
 	int f_cycle_length = FALSE;
 	int f_max_cycle_length = TRUE;
+	combinatorics_domain Combi;
 	
 	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
@@ -545,7 +547,7 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 		v[i] = j;
 		}
 	//perm_print(ost, v, degree);
-	perm_print_offset(ost, v, degree, offset, f_cycle_length,
+	Combi.perm_print_offset(ost, v, degree, offset, f_cycle_length,
 			f_max_cycle_length, max_cycle_length, f_orbit_structure);
 	FREE_int(v);
 }
@@ -565,13 +567,14 @@ int action::element_signum_of_permutation(void *elt)
 {
 	int *v;
 	int i, j, sgn;
-	
+	combinatorics_domain Combi;
+
 	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
 		j = element_image_of(i, elt, FALSE);
 		v[i] = j;
 		}
-	sgn = perm_signum(v, degree);
+	sgn = Combi.perm_signum(v, degree);
 	FREE_int(v);
 	return sgn;
 }

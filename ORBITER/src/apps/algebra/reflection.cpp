@@ -536,6 +536,7 @@ void create_roots_H4(finite_field *F)
 	int L[4], P[4], sgn;
 	int one, m_one, half, quarter, c, c2;
 	int tau, tau_inv, a, b, m_a, m_b, m_half;
+	combinatorics_domain Combi;
 	
 	one = 1;
 	m_one = F->negate(one);
@@ -623,16 +624,16 @@ void create_roots_H4(finite_field *F)
 					v[2] = b;
 				else
 					v[2] = m_b;
-				first_lehmercode(4, L);
+				Combi.first_lehmercode(4, L);
 				while (TRUE) {
-					lehmercode_to_permutation(4, L, P);
-					sgn = perm_signum(P, 4);
+					Combi.lehmercode_to_permutation(4, L, P);
+					sgn = Combi.perm_signum(P, 4);
 					if (sgn == 1) {
 						for (k = 0; k < 4; k++)
 							roots[n * 4 + k] = v[P[k]];
 						n++;
 						}
-					if (!next_lehmercode(4, L))
+					if (!Combi.next_lehmercode(4, L))
 						break;
 					}
 				}

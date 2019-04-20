@@ -3228,6 +3228,7 @@ void diophant::draw_partitioned(const char *fname_base,
 	double scale = 0.5;
 	double line_width = 0.5;
 	int i, ii, j, jj;
+	combinatorics_domain Combi;
 	
 	
 	if (f_v) {
@@ -3286,7 +3287,7 @@ void diophant::draw_partitioned(const char *fname_base,
 		part_col[2] = n;
 
 		int_vec_copy(solution, col_perm + n - solution_sz, solution_sz);
-		set_complement(solution, solution_sz, col_perm, size_complement, n);
+		Combi.set_complement(solution, solution_sz, col_perm, size_complement, n);
 		
 		if (size_complement != n - solution_sz) {
 			cout << "diophant::draw_partitioned size_complement "
@@ -3562,7 +3563,7 @@ void diophant::make_clique_graph_adjacency_matrix(uchar *&Adj,
 {
 	int f_v = (verbose_level >= 1);
 	int j1, j2, L, k, i;
-	//int length;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "diophant::make_clique_graph_adjacency_matrix" << endl;
@@ -3590,7 +3591,7 @@ void diophant::make_clique_graph_adjacency_matrix(uchar *&Adj,
 					continue;
 					}
 				// now: j1 and j2 do not go together
-				k = ij2k(j1, j2, n);
+				k = Combi.ij2k(j1, j2, n);
 				bitvector_m_ii(Adj, k, 0);
 				}
 			}

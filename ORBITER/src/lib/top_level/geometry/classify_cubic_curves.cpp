@@ -404,6 +404,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 	int canonical_set[9];
 	int *Pts;
 	int *type;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::upstep" << endl;
@@ -517,7 +518,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 					<< " points" << endl;
 			}
 
-		N = int_n_choose_k(nb_pts, 9);
+		N = Combi.int_n_choose_k(nb_pts, 9);
 
 		coset_reps = NEW_OBJECT(vector_ge);
 		coset_reps->init(CCA->A);
@@ -530,7 +531,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 						<< " i=" << i << " / " << N << endl;
 				}
 
-			unrank_k_subset(i, idx_set, nb_pts, 9);
+			Combi.unrank_k_subset(i, idx_set, nb_pts, 9);
 			for (j = 0; j < 9; j++) {
 				set[j] = Pts[idx_set[j]];
 			}
@@ -765,6 +766,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 	int *singular_Pts;
 	int *type;
 	int ret;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::recognize" << endl;
@@ -817,7 +819,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 #endif
 
 	if (ret) {
-		N = int_n_choose_k(nb_pts_on_curve, 9);
+		N = Combi.int_n_choose_k(nb_pts_on_curve, 9);
 
 
 		for (i = 0; i < N; i++) {
@@ -826,7 +828,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 						<< " i=" << i << " / " << N << endl;
 				}
 
-			unrank_k_subset(i, idx_set, nb_pts_on_curve, 9);
+			Combi.unrank_k_subset(i, idx_set, nb_pts_on_curve, 9);
 			for (j = 0; j < 9; j++) {
 				set[j] = Pts_on_curve[idx_set[j]];
 			}

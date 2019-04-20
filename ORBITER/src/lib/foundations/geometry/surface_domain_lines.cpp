@@ -158,6 +158,7 @@ int surface_domain::line_bi(int i)
 int surface_domain::line_cij(int i, int j)
 {
 	int a;
+	combinatorics_domain Combi;
 
 	if (i > j) {
 		return line_cij(j, i);
@@ -174,7 +175,7 @@ int surface_domain::line_cij(int i, int j)
 		cout << "surface_domain::line_cij j >= 6" << endl;
 		exit(1);
 		}
-	a = ij2k(i, j, 6);
+	a = Combi.ij2k(i, j, 6);
 	return 12 + a;
 }
 
@@ -200,6 +201,7 @@ void surface_domain::index_of_line(int line, int &i, int &j)
 // returns i for a_i, i for b_i and (i,j) for c_ij
 {
 	int a;
+	combinatorics_domain Combi;
 
 	if (line < 6) { // ai
 		i = line;
@@ -209,7 +211,7 @@ void surface_domain::index_of_line(int line, int &i, int &j)
 		}
 	else if (line < 27) { // c_ij
 		a = line - 12;
-		k2ij(a, i, j, 6);
+		Combi.k2ij(a, i, j, 6);
 		}
 	else {
 		cout << "surface_domain::index_of_line error" << endl;
@@ -628,8 +630,9 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 	int lines[2];
 	int opposites[5];
 	int transversal = 0;
+	combinatorics_domain Combi;
 
-	nb_subsets = int_n_choose_k(5, 4);
+	nb_subsets = Combi.int_n_choose_k(5, 4);
 	Perp = NEW_pint(nb_subsets);
 	Perp_sz = NEW_int(nb_subsets);
 #if 0
@@ -638,7 +641,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		}
 #endif
 	for (rk = 0; rk < nb_subsets; rk++) {
-		unrank_k_subset(rk, subset, 5, 4);
+		Combi.unrank_k_subset(rk, subset, 5, 4);
 		for (i = 0; i < 4; i++) {
 			pts[i] = o_rank[subset[i]];
 			}
@@ -815,6 +818,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	int o_rank[12];
 	int i, j;
 	int ret = FALSE;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::create_double_six_from_six_disjoint_lines" << endl;
@@ -869,11 +873,11 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	int six2, six3, six4, six5, rk, rk2;
 	int subset[6];
 
-	six2 = int_n_choose_k(6, 2);
+	six2 = Combi.int_n_choose_k(6, 2);
 	I2 = NEW_pint(six2);
 	I2_sz = NEW_int(six2);
 	for (rk = 0; rk < six2; rk++) {
-		unrank_k_subset(rk, subset, 6, 2);
+		Combi.unrank_k_subset(rk, subset, 6, 2);
 		int_vec_intersect(
 			Perp_without_pt[subset[0]],
 			perp_sz,
@@ -887,13 +891,13 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 			cout << endl;
 			}
 		}
-	six3 = int_n_choose_k(6, 3);
+	six3 = Combi.int_n_choose_k(6, 3);
 	I3 = NEW_pint(six3);
 	I3_sz = NEW_int(six3);
 	for (rk = 0; rk < six3; rk++) {
-		unrank_k_subset(rk, subset, 6, 3);
-		rk2 = rank_k_subset(subset, 6, 2);
-		unrank_k_subset(rk, subset, 6, 3);
+		Combi.unrank_k_subset(rk, subset, 6, 3);
+		rk2 = Combi.rank_k_subset(subset, 6, 2);
+		Combi.unrank_k_subset(rk, subset, 6, 3);
 		int_vec_intersect(I2[rk2], I2_sz[rk2],
 			Perp_without_pt[subset[2]],
 			perp_sz,
@@ -907,13 +911,13 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 			}
 		}
 
-	six4 = int_n_choose_k(6, 4);
+	six4 = Combi.int_n_choose_k(6, 4);
 	I4 = NEW_pint(six4);
 	I4_sz = NEW_int(six4);
 	for (rk = 0; rk < six4; rk++) {
-		unrank_k_subset(rk, subset, 6, 4);
-		rk2 = rank_k_subset(subset, 6, 3);
-		unrank_k_subset(rk, subset, 6, 4);
+		Combi.unrank_k_subset(rk, subset, 6, 4);
+		rk2 = Combi.rank_k_subset(subset, 6, 3);
+		Combi.unrank_k_subset(rk, subset, 6, 4);
 		int_vec_intersect(I3[rk2], I3_sz[rk2],
 			Perp_without_pt[subset[3]], perp_sz,
 			I4[rk], I4_sz[rk]);
@@ -927,13 +931,13 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 			}
 		}
 
-	six5 = int_n_choose_k(6, 5);
+	six5 = Combi.int_n_choose_k(6, 5);
 	I5 = NEW_pint(six5);
 	I5_sz = NEW_int(six5);
 	for (rk = 0; rk < six5; rk++) {
-		unrank_k_subset(rk, subset, 6, 5);
-		rk2 = rank_k_subset(subset, 6, 4);
-		unrank_k_subset(rk, subset, 6, 5);
+		Combi.unrank_k_subset(rk, subset, 6, 5);
+		rk2 = Combi.rank_k_subset(subset, 6, 4);
+		Combi.unrank_k_subset(rk, subset, 6, 5);
 		int_vec_intersect(I4[rk2], I4_sz[rk2],
 			Perp_without_pt[subset[4]], perp_sz,
 			I5[rk], I5_sz[rk]);
@@ -1351,14 +1355,15 @@ int surface_domain::compute_rank_of_any_four(
 	int four_lines[4];
 	int i, rk;
 	int ret = TRUE;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::compute_rank_of_any_four" << endl;
 		}
-	nb_subsets = int_n_choose_k(sz, 4);
+	nb_subsets = Combi.int_n_choose_k(sz, 4);
 	Rk = NEW_int(nb_subsets);
 	for (rk = 0; rk < nb_subsets; rk++) {
-		unrank_k_subset(rk, subset, sz, 4);
+		Combi.unrank_k_subset(rk, subset, sz, 4);
 		for (i = 0; i < 4; i++) {
 			four_lines[i] = lines[subset[i]];
 			}
@@ -1957,14 +1962,15 @@ int surface_domain::compute_transversals_of_any_four(
 	int four_lines[4];
 	int i, rk, perp_sz;
 	int ret = TRUE;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::compute_transversals_of_any_four" << endl;
 		}
-	nb_subsets = int_n_choose_k(sz, 4);
+	nb_subsets = Combi.int_n_choose_k(sz, 4);
 	Trans = NEW_int(nb_subsets * 2);
 	for (rk = 0; rk < nb_subsets; rk++) {
-		unrank_k_subset(rk, subset, sz, 4);
+		Combi.unrank_k_subset(rk, subset, sz, 4);
 		for (i = 0; i < 4; i++) {
 			four_lines[i] = lines[subset[i]];
 			}

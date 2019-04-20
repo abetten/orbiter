@@ -736,6 +736,7 @@ int code_generator::Hamming_distance(int a, int b)
 	int f_v = TRUE;
 	int d = 0;
 	int i;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "code_generator::Hamming_distance "
@@ -743,7 +744,7 @@ int code_generator::Hamming_distance(int a, int b)
 		}
 	if (f_nonlinear) {
 		if (q == 2) {
-			d = Hamming_distance_binary(a, b, n);
+			d = Combi.Hamming_distance_binary(a, b, n);
 			}
 		else {
 			cout << "code_generator::Hamming_distance "

@@ -1,4 +1,4 @@
-// combinatorics.C
+// combinatorics_domain.cpp
 //
 // Anton Betten
 // April 3, 2003
@@ -11,8 +11,17 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+combinatorics_domain::combinatorics_domain()
+{
 
-int Hamming_distance_binary(int a, int b, int n)
+}
+
+combinatorics_domain::~combinatorics_domain()
+{
+
+}
+
+int combinatorics_domain::Hamming_distance_binary(int a, int b, int n)
 {
 	int i, d, u, v;
 
@@ -29,7 +38,7 @@ int Hamming_distance_binary(int a, int b, int n)
 	return d;
 }
 
-int int_factorial(int a)
+int combinatorics_domain::int_factorial(int a)
 {
 	int n, i;
 
@@ -40,7 +49,7 @@ int int_factorial(int a)
 	return n;
 }
 
-int Kung_mue_i(int *part, int i, int m)
+int combinatorics_domain::Kung_mue_i(int *part, int i, int m)
 {
 	int k, mue;
 	
@@ -54,7 +63,8 @@ int Kung_mue_i(int *part, int i, int m)
 	return mue;
 }
 
-void partition_dual(int *part, int *dual_part, int n, int verbose_level)
+void combinatorics_domain::partition_dual(
+		int *part, int *dual_part, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -101,7 +111,7 @@ void partition_dual(int *part, int *dual_part, int n, int verbose_level)
 		}
 }
 
-void make_all_partitions_of_n(int n,
+void combinatorics_domain::make_all_partitions_of_n(int n,
 		int *&Table, int &nb, int verbose_level)
 {
 	int *v;
@@ -123,7 +133,7 @@ void make_all_partitions_of_n(int n,
 	FREE_int(v);
 }
 
-int count_all_partitions_of_n(int n)
+int combinatorics_domain::count_all_partitions_of_n(int n)
 {
 	int *v;
 	int cnt;
@@ -142,14 +152,14 @@ int count_all_partitions_of_n(int n)
 	return cnt;
 }
 
-int partition_first(int *v, int n)
+int combinatorics_domain::partition_first(int *v, int n)
 {
 	int_vec_zero(v, n);
 	v[n - 1] = 1;
 	return TRUE;
 }
 
-int partition_next(int *v, int n)
+int combinatorics_domain::partition_next(int *v, int n)
 // next partition in exponential notation
 {
 	int i, j, a, s;
@@ -173,7 +183,7 @@ int partition_next(int *v, int n)
 	return FALSE;
 }
 
-void partition_print(ostream &ost, int *v, int n)
+void combinatorics_domain::partition_print(ostream &ost, int *v, int n)
 {
 	int i, a;
 	int f_first = TRUE;
@@ -197,7 +207,7 @@ void partition_print(ostream &ost, int *v, int n)
 	ost << "]";
 }
 
-int int_vec_is_regular_word(int *v, int len, int q)
+int combinatorics_domain::int_vec_is_regular_word(int *v, int len, int q)
 // Returns TRUE if the word v of length n is regular, i.~e. 
 // lies in an orbit of length $n$ under the action of the cyclic group 
 // $C_n$ acting on the coordinates. 
@@ -228,7 +238,7 @@ int int_vec_is_regular_word(int *v, int len, int q)
 	return f_is_regular;
 }
 
-int int_vec_first_regular_word(int *v, int len, int Q, int q)
+int combinatorics_domain::int_vec_first_regular_word(int *v, int len, int Q, int q)
 {
 	int a;
 	geometry_global Gg;
@@ -242,7 +252,7 @@ int int_vec_first_regular_word(int *v, int len, int Q, int q)
 	return FALSE;
 }
 
-int int_vec_next_regular_word(int *v, int len, int Q, int q)
+int combinatorics_domain::int_vec_next_regular_word(int *v, int len, int Q, int q)
 {
 	int a;
 	geometry_global Gg;
@@ -261,7 +271,7 @@ int int_vec_next_regular_word(int *v, int len, int Q, int q)
 	return FALSE;
 }
 
-int is_subset_of(int *A, int sz_A, int *B, int sz_B)
+int combinatorics_domain::is_subset_of(int *A, int sz_A, int *B, int sz_B)
 {
 	int *B2;
 	int i, idx;
@@ -283,7 +293,7 @@ done:
 	return ret;
 }
 
-int set_find(int *elts, int size, int a)
+int combinatorics_domain::set_find(int *elts, int size, int a)
 {
 	int idx;
 	
@@ -297,7 +307,8 @@ int set_find(int *elts, int size, int a)
 	return idx;
 }
 
-void set_complement(int *subset, int subset_size,
+void combinatorics_domain::set_complement(
+		int *subset, int subset_size,
 		int *complement, int &size_complement,
 		int universal_set_size)
 // subset must be in increasing order
@@ -315,7 +326,8 @@ void set_complement(int *subset, int subset_size,
 		}
 }
 
-void set_complement_safe(int *subset, int subset_size,
+void combinatorics_domain::set_complement_safe(
+		int *subset, int subset_size,
 		int *complement, int &size_complement,
 		int universal_set_size)
 // subset does not need to be in increasing order
@@ -339,7 +351,8 @@ void set_complement_safe(int *subset, int subset_size,
 	FREE_int(subset2);
 }
 
-void set_add_elements(int *elts, int &size,
+void combinatorics_domain::set_add_elements(
+		int *elts, int &size,
 		int *elts_to_add, int nb_elts_to_add)
 {
 	int i;
@@ -349,7 +362,7 @@ void set_add_elements(int *elts, int &size,
 		}
 }
 
-void set_add_element(int *elts, int &size, int a)
+void combinatorics_domain::set_add_element(int *elts, int &size, int a)
 {
 	int idx, i;
 	
@@ -363,7 +376,7 @@ void set_add_element(int *elts, int &size, int a)
 	size++;
 }
 
-void set_delete_elements(int *elts, int &size,
+void combinatorics_domain::set_delete_elements(int *elts, int &size,
 		int *elts_to_delete, int nb_elts_to_delete)
 {
 	int i;
@@ -374,7 +387,7 @@ void set_delete_elements(int *elts, int &size,
 }
 
 
-void set_delete_element(int *elts, int &size, int a)
+void combinatorics_domain::set_delete_element(int *elts, int &size, int a)
 {
 	int idx, i;
 	
@@ -388,7 +401,8 @@ void set_delete_element(int *elts, int &size, int a)
 }
 
 
-int compare_lexicographically(int a_len, int *a, int b_len, int *b)
+int combinatorics_domain::compare_lexicographically(
+		int a_len, int *a, int b_len, int *b)
 {
 	int i, l;
 	
@@ -408,7 +422,7 @@ int compare_lexicographically(int a_len, int *a, int b_len, int *b)
 	return 0;
 }
 
-int int_n_choose_k(int n, int k)
+int combinatorics_domain::int_n_choose_k(int n, int k)
 {
 	int r;
 	longinteger_object a;
@@ -419,7 +433,7 @@ int int_n_choose_k(int n, int k)
 	return r;
 }
 
-void make_t_k_incidence_matrix(int v, int t, int k,
+void combinatorics_domain::make_t_k_incidence_matrix(int v, int t, int k,
 	int &m, int &n, int *&M,
 	int verbose_level)
 {
@@ -446,7 +460,7 @@ void make_t_k_incidence_matrix(int v, int t, int k,
 		}
 }
 
-void print_k_subsets_by_rank(ostream &ost, int v, int k)
+void combinatorics_domain::print_k_subsets_by_rank(ostream &ost, int v, int k)
 {
 	int *set;
 	int i, nb;
@@ -462,7 +476,7 @@ void print_k_subsets_by_rank(ostream &ost, int v, int k)
 	FREE_int(set);
 }
 
-int f_is_subset_of(int v, int t, int k,
+int combinatorics_domain::f_is_subset_of(int v, int t, int k,
 		int rk_t_subset, int rk_k_subset)
 {
 	int *set1, *set2;
@@ -493,7 +507,7 @@ int f_is_subset_of(int v, int t, int k,
 	return f_subset;
 }
 
-int rank_subset(int *set, int sz, int n)
+int combinatorics_domain::rank_subset(int *set, int sz, int n)
 {
 	int r = 0;
 
@@ -501,7 +515,8 @@ int rank_subset(int *set, int sz, int n)
 	return r;
 }
 
-void rank_subset_recursion(int *set, int sz, int n, int a0, int &r)
+void combinatorics_domain::rank_subset_recursion(
+		int *set, int sz, int n, int a0, int &r)
 {
 	int a;
 	number_theory_domain NT;
@@ -521,14 +536,15 @@ void rank_subset_recursion(int *set, int sz, int n, int a0, int &r)
 		}
 }
 
-void unrank_subset(int *set, int &sz, int n, int r)
+void combinatorics_domain::unrank_subset(int *set, int &sz, int n, int r)
 {
 	sz = 0;
 	
 	unrank_subset_recursion(set, sz, n, 0, r);
 }
 
-void unrank_subset_recursion(int *set, int &sz, int n, int a0, int &r)
+void combinatorics_domain::unrank_subset_recursion(
+		int *set, int &sz, int n, int a0, int &r)
 {
 	int a, b;
 	number_theory_domain NT;
@@ -551,7 +567,7 @@ void unrank_subset_recursion(int *set, int &sz, int n, int a0, int &r)
 }
 
 
-int rank_k_subset(int *set, int n, int k)
+int combinatorics_domain::rank_k_subset(int *set, int n, int k)
 {
 	int r = 0, i, j;
 	longinteger_object a, b;
@@ -576,7 +592,7 @@ int rank_k_subset(int *set, int n, int k)
 	return r;
 }
 
-void unrank_k_subset(int rk, int *set, int n, int k)
+void combinatorics_domain::unrank_k_subset(int rk, int *set, int n, int k)
 {
 	int r1, i, j;
 	longinteger_object a, b;
@@ -600,7 +616,7 @@ void unrank_k_subset(int rk, int *set, int n, int k)
 		}
 }
 
-int first_k_subset(int *set, int n, int k)
+int combinatorics_domain::first_k_subset(int *set, int n, int k)
 {
 	int i;
 	
@@ -613,7 +629,7 @@ int first_k_subset(int *set, int n, int k)
 	return TRUE;
 }
 
-int next_k_subset(int *set, int n, int k)
+int combinatorics_domain::next_k_subset(int *set, int n, int k)
 {
 	int i, ii, a;
 	
@@ -630,7 +646,8 @@ int next_k_subset(int *set, int n, int k)
 	return FALSE;
 }
 
-int next_k_subset_at_level(int *set, int n, int k, int backtrack_level)
+int combinatorics_domain::next_k_subset_at_level(
+		int *set, int n, int k, int backtrack_level)
 {
 	int i, ii, a, start;
 	
@@ -648,7 +665,7 @@ int next_k_subset_at_level(int *set, int n, int k, int backtrack_level)
 	return FALSE;
 }
 
-void subset_permute_up_front(int n, int k,
+void combinatorics_domain::subset_permute_up_front(int n, int k,
 		int *set, int *k_subset_idx, int *permuted_set)
 {
 	int i, ii, j;
@@ -672,7 +689,7 @@ void subset_permute_up_front(int n, int k,
 		}
 }
 
-int ordered_pair_rank(int i, int j, int n)
+int combinatorics_domain::ordered_pair_rank(int i, int j, int n)
 {
 	int a;
 	
@@ -692,7 +709,7 @@ int ordered_pair_rank(int i, int j, int n)
 		}
 }
 
-void ordered_pair_unrank(int rk, int &i, int &j, int n)
+void combinatorics_domain::ordered_pair_unrank(int rk, int &i, int &j, int n)
 {
 	int a;
 	
@@ -712,7 +729,8 @@ void ordered_pair_unrank(int rk, int &i, int &j, int n)
 		}
 }
 
-int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n)
+int combinatorics_domain::unordered_triple_pair_rank(
+		int i, int j, int k, int l, int m, int n)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -792,7 +810,7 @@ int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n)
 	return rk;
 }
 
-void set_partition_4_into_2_unrank(int rk, int *v)
+void combinatorics_domain::set_partition_4_into_2_unrank(int rk, int *v)
 {
 	if (rk == 0) {
 		v[0] = 0;
@@ -814,7 +832,7 @@ void set_partition_4_into_2_unrank(int rk, int *v)
 	}
 }
 
-int set_partition_4_into_2_rank(int *v)
+int combinatorics_domain::set_partition_4_into_2_rank(int *v)
 {
 	if (v[0] > v[1]) {
 		int a = v[1];
@@ -853,7 +871,7 @@ int set_partition_4_into_2_rank(int *v)
 	}
 }
 
-void unordered_triple_pair_unrank(int rk,
+void combinatorics_domain::unordered_triple_pair_unrank(int rk,
 	int &i, int &j, int &k, int &l, int &m, int &n)
 {
 	int a, b, u;
@@ -916,7 +934,7 @@ void unordered_triple_pair_unrank(int rk,
 
 
 
-int ij2k(int i, int j, int n)
+int combinatorics_domain::ij2k(int i, int j, int n)
 {
 	if (i == j) {
 		cout << "ij2k() i == j" << endl;
@@ -930,7 +948,7 @@ int ij2k(int i, int j, int n)
 		}
 }
 
-void k2ij(int k, int & i, int & j, int n)
+void combinatorics_domain::k2ij(int k, int & i, int & j, int n)
 {
 	int ii, k_save = k;
 	
@@ -947,7 +965,7 @@ void k2ij(int k, int & i, int & j, int n)
 	exit(1);
 }
 
-int ijk2h(int i, int j, int k, int n)
+int combinatorics_domain::ijk2h(int i, int j, int k, int n)
 {
 	int set[3];
 	int h;
@@ -959,7 +977,7 @@ int ijk2h(int i, int j, int k, int n)
 	return h;
 }
 
-void h2ijk(int h, int &i, int &j, int &k, int n)
+void combinatorics_domain::h2ijk(int h, int &i, int &j, int &k, int n)
 {
 	int set[3];
 
@@ -970,7 +988,7 @@ void h2ijk(int h, int &i, int &j, int &k, int n)
 }
 
 
-void random_permutation(int *random_permutation, int n)
+void combinatorics_domain::random_permutation(int *random_permutation, int n)
 {
 	int i, l, a;
 	int *available_digits;
@@ -1005,7 +1023,7 @@ void random_permutation(int *random_permutation, int n)
 	FREE_int(available_digits);
 }
 
-void perm_move(int *from, int *to, int n)
+void combinatorics_domain::perm_move(int *from, int *to, int n)
 {
 	int i;
 	
@@ -1014,7 +1032,7 @@ void perm_move(int *from, int *to, int n)
 		}
 }
 
-void perm_identity(int *a, int n)
+void combinatorics_domain::perm_identity(int *a, int n)
 {
 	int i;
 	
@@ -1023,7 +1041,7 @@ void perm_identity(int *a, int n)
 		}
 }
 
-int perm_is_identity(int *a, int n)
+int combinatorics_domain::perm_is_identity(int *a, int n)
 {
 	int i;
 
@@ -1035,7 +1053,7 @@ int perm_is_identity(int *a, int n)
 	return TRUE;
 }
 
-void perm_elementary_transposition(int *a, int n, int f)
+void combinatorics_domain::perm_elementary_transposition(int *a, int n, int f)
 {
 	int i;
 
@@ -1050,7 +1068,7 @@ void perm_elementary_transposition(int *a, int n, int f)
 	a[f + 1] = f;
 }
 
-void perm_mult(int *a, int *b, int *c, int n)
+void combinatorics_domain::perm_mult(int *a, int *b, int *c, int n)
 {
 	int i, j, k;
 	
@@ -1071,7 +1089,7 @@ void perm_mult(int *a, int *b, int *c, int n)
 		}
 }
 
-void perm_conjugate(int *a, int *b, int *c, int n)
+void combinatorics_domain::perm_conjugate(int *a, int *b, int *c, int n)
 // c := a^b = b^-1 * a * b
 {
 	int i, j, k;
@@ -1085,7 +1103,7 @@ void perm_conjugate(int *a, int *b, int *c, int n)
 		}
 }
 
-void perm_inverse(int *a, int *b, int n)
+void combinatorics_domain::perm_inverse(int *a, int *b, int n)
 // b := a^-1
 {
 	int i, j;
@@ -1096,7 +1114,7 @@ void perm_inverse(int *a, int *b, int n)
 		}
 }
 
-void perm_raise(int *a, int *b, int e, int n)
+void combinatorics_domain::perm_raise(int *a, int *b, int e, int n)
 // b := a^e (e >= 0)
 {
 	int i, j, k;
@@ -1110,7 +1128,7 @@ void perm_raise(int *a, int *b, int e, int n)
 		}
 }
 
-void perm_direct_product(int n1, int n2,
+void combinatorics_domain::perm_direct_product(int n1, int n2,
 		int *perm1, int *perm2, int *perm3)
 {
 	int i, j, a, b, c;
@@ -1125,7 +1143,7 @@ void perm_direct_product(int n1, int n2,
 		}
 }
 
-void perm_print_list(ostream &ost, int *a, int n)
+void combinatorics_domain::perm_print_list(ostream &ost, int *a, int n)
 {
 	int i;
 	
@@ -1139,7 +1157,8 @@ void perm_print_list(ostream &ost, int *a, int n)
 	cout << endl;
 }
 
-void perm_print_list_offset(ostream &ost, int *a, int n, int offset)
+void combinatorics_domain::perm_print_list_offset(
+		ostream &ost, int *a, int n, int offset)
 {
 	int i;
 	
@@ -1153,7 +1172,8 @@ void perm_print_list_offset(ostream &ost, int *a, int n, int offset)
 	cout << endl;
 }
 
-void perm_print_product_action(ostream &ost, int *a,
+void combinatorics_domain::perm_print_product_action(
+		ostream &ost, int *a,
 		int m_plus_n, int m, int offset, int f_cycle_length)
 {
 	//cout << "perm_print_product_action" << endl;
@@ -1167,22 +1187,24 @@ void perm_print_product_action(ostream &ost, int *a,
 	//cout << "perm_print_product_action done" << endl;
 }
 
-void perm_print(ostream &ost, int *a, int n)
+void combinatorics_domain::perm_print(ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 0, FALSE, FALSE, 0, FALSE);
 }
 
-void perm_print_with_cycle_length(ostream &ost, int *a, int n)
+void combinatorics_domain::perm_print_with_cycle_length(
+		ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 0, TRUE, FALSE, 0, TRUE);
 }
 
-void perm_print_counting_from_one(ostream &ost, int *a, int n)
+void combinatorics_domain::perm_print_counting_from_one(
+		ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 1, FALSE, FALSE, 0, FALSE);
 }
 
-void perm_print_offset(ostream &ost,
+void combinatorics_domain::perm_print_offset(ostream &ost,
 	int *a, int n,
 	int offset, int f_cycle_length,
 	int f_max_cycle_length,
@@ -1299,7 +1321,8 @@ void perm_print_offset(ostream &ost,
 	FREE_int(have_seen);
 }
 
-void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles)
+void combinatorics_domain::perm_cycle_type(
+		int *perm, int degree, int *cycles, int &nb_cycles)
 {
 	int *have_seen;
 	int i, l, l1, first, next, len;
@@ -1362,7 +1385,7 @@ void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles)
 	FREE_int(have_seen);
 }
 
-int perm_order(int *a, int n)
+int combinatorics_domain::perm_order(int *a, int n)
 {
 	int *have_seen;
 	int i, l, l1, first, next, len, order = 1;
@@ -1413,7 +1436,7 @@ int perm_order(int *a, int n)
 	return order;
 }
 
-int perm_signum(int *perm, int n)
+int combinatorics_domain::perm_signum(int *perm, int n)
 {
 	int i, j, a, b, f;
 	// f = number of inversions
@@ -1438,7 +1461,7 @@ int perm_signum(int *perm, int n)
 		}
 }
 
-int is_permutation(int *perm, int n)
+int combinatorics_domain::is_permutation(int *perm, int n)
 {
 	int *perm2;
 	int i;
@@ -1460,7 +1483,7 @@ int is_permutation(int *perm, int n)
 	}
 }
 
-void first_lehmercode(int n, int *v)
+void combinatorics_domain::first_lehmercode(int n, int *v)
 {
 	int i;
 	
@@ -1469,7 +1492,7 @@ void first_lehmercode(int n, int *v)
 		}
 }
 
-int next_lehmercode(int n, int *v)
+int combinatorics_domain::next_lehmercode(int n, int *v)
 {
 	int i;
 	
@@ -1485,7 +1508,8 @@ int next_lehmercode(int n, int *v)
 	return FALSE;
 }
 
-void lehmercode_to_permutation(int n, int *code, int *perm)
+void combinatorics_domain::lehmercode_to_permutation(
+		int n, int *code, int *perm)
 {
 	int *digits;
 	int i, j, k;
@@ -1508,7 +1532,7 @@ void lehmercode_to_permutation(int n, int *code, int *perm)
 	FREE_int(digits);
 }
 
-int disjoint_binary_representation(int u, int v)
+int combinatorics_domain::disjoint_binary_representation(int u, int v)
 {
 	int u1, v1;
 	
@@ -1524,7 +1548,8 @@ int disjoint_binary_representation(int u, int v)
 	return TRUE;
 }
 
-int hall_test(int *A, int n, int kmax, int *memo, int verbose_level)
+int combinatorics_domain::hall_test(
+		int *A, int n, int kmax, int *memo, int verbose_level)
 {
 	int f_vv = (verbose_level >= 2);
 	int k;
@@ -1546,7 +1571,8 @@ int hall_test(int *A, int n, int kmax, int *memo, int verbose_level)
 	return TRUE;
 }
 
-int philip_hall_test(int *A, int n, int k, int *memo, int verbose_level)
+int combinatorics_domain::philip_hall_test(
+		int *A, int n, int k, int *memo, int verbose_level)
 // memo points to free memory of n int's
 {
 	int f_v = (verbose_level >= 1);
@@ -1597,7 +1623,8 @@ int philip_hall_test(int *A, int n, int k, int *memo, int verbose_level)
 	return TRUE;
 }
 
-int philip_hall_test_dual(int *A, int n, int k,
+int combinatorics_domain::philip_hall_test_dual(
+		int *A, int n, int k,
 		int *memo, int verbose_level)
 // memo points to free memory of n int's
 {
@@ -1649,7 +1676,8 @@ int philip_hall_test_dual(int *A, int n, int k,
 	return TRUE;
 }
 
-void print_01_matrix_with_stars(ostream &ost, int *A, int m, int n)
+void combinatorics_domain::print_01_matrix_with_stars(
+		ostream &ost, int *A, int m, int n)
 {
 	int i, j;
 	
@@ -1666,7 +1694,8 @@ void print_01_matrix_with_stars(ostream &ost, int *A, int m, int n)
 		}
 }
 
-void print_int_matrix(ostream &ost, int *A, int m, int n)
+void combinatorics_domain::print_int_matrix(
+		ostream &ost, int *A, int m, int n)
 {
 	int i, j;
 	
@@ -1678,7 +1707,8 @@ void print_int_matrix(ostream &ost, int *A, int m, int n)
 		}
 }
 
-int create_roots_H4(finite_field *F, int *roots)
+int combinatorics_domain::create_roots_H4(
+		finite_field *F, int *roots)
 {
 	int i, j, k, j1, j2, j3, j4, n;
 	int v[4];
@@ -1815,7 +1845,7 @@ int create_roots_H4(finite_field *F, int *roots)
 }
 
 
-int generalized_binomial(int n, int k, int q)
+int combinatorics_domain::generalized_binomial(int n, int k, int q)
 {
 	int a, b, c, a1, b1, c1, d, e, g;
 	number_theory_domain NT;
@@ -1854,7 +1884,7 @@ int generalized_binomial(int n, int k, int q)
 	return e;
 }
 
-void print_tableau(int *Tableau, int l1, int l2,
+void combinatorics_domain::print_tableau(int *Tableau, int l1, int l2,
 		int *row_parts, int *col_parts)
 {
 	int i, j, a, b;
@@ -1869,7 +1899,7 @@ void print_tableau(int *Tableau, int l1, int l2,
 		}
 }
 
-int ijk_rank(int i, int j, int k, int n)
+int combinatorics_domain::ijk_rank(int i, int j, int k, int n)
 {
 	int set[3];
 
@@ -1879,14 +1909,14 @@ int ijk_rank(int i, int j, int k, int n)
 	return rank_k_subset(set, n, 3);
 }
 
-void ijk_unrank(int &i, int &j, int &k, int n, int rk)
+void combinatorics_domain::ijk_unrank(int &i, int &j, int &k, int n, int rk)
 {
 	int set[3];
 
 	unrank_k_subset(rk, set, n, 3);
 }
 
-int largest_binomial2_below(int a2)
+int combinatorics_domain::largest_binomial2_below(int a2)
 {
 	int b, b2;
 
@@ -1901,7 +1931,7 @@ int largest_binomial2_below(int a2)
 	return b - 1;
 }
 
-int largest_binomial3_below(int a3)
+int combinatorics_domain::largest_binomial3_below(int a3)
 {
 	int b, b3;
 
@@ -1916,7 +1946,7 @@ int largest_binomial3_below(int a3)
 	return b - 1;
 }
 
-int binomial2(int a)
+int combinatorics_domain::binomial2(int a)
 {
 	if (a == 0)
 		return 0;
@@ -1926,7 +1956,7 @@ int binomial2(int a)
 		return a * (a >> 1);
 }
 
-int binomial3(int a)
+int combinatorics_domain::binomial3(int a)
 {
 	int r;
 	if (a <= 2)
@@ -1948,77 +1978,24 @@ int binomial3(int a)
 	exit(1);
 }
 
-int minus_one_if_positive(int i)
+int combinatorics_domain::minus_one_if_positive(int i)
 {
 	if (i)
 		return i - 1;
 	return 0;
 }
 
-void int_vec_bubblesort_increasing(int len, int *p)
+//##############################################################################
+// global functions, for instance for nauty_interface.cpp:
+//##############################################################################
+
+
+int callback_ij2k(int i, int j, int n)
 {
-	int i, j, a;
-	for (i = 0; i < len; i++) {
-		for (j = i + 1; j < len; j++) {
-			if (p[i] > p[j]) {
-				a = p[i];
-				p[i] = p[j];
-				p[j] = a;
-				}
-			}
-		}
+	combinatorics_domain Combi;
+
+	return Combi.ij2k(i, j, n);
 }
-
-void int_vec_print(int *v, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		cout << i << " : " << v[i] << endl;
-	}
-}
-
-
-int integer_vec_compare(int *p, int *q, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
-			return -1;
-		if (p[i] > q[i])
-			return 1;
-		}
-	return 0;
-}
-
-int int_ij2k(int i, int j, int n)
-{
-	if (i == j) {
-		cout << "ij2k() i == j" << endl;
-		exit(1);
-		}
-	if (i > j)
-		return (int) ij2k(j, i, n);
-	return ((n - i) * i + ((i * (i - 1)) >> 1) + j - i - 1);
-}
-
-void int_k2ij(int k, int & i, int & j, int n)
-{
-	int ii, k_save = k;
-
-	for (ii = 0; ii < n; ii++) {
-		if (k < n - ii - 1) {
-			i = ii;
-			j = k + ii + 1;
-			return;
-			}
-		k -= (n - ii - 1);
-		}
-	cout << "k2ij: k too large: k = " << k_save << " n = " << n << endl;
-	exit(1);
-}
-
 
 }}
 

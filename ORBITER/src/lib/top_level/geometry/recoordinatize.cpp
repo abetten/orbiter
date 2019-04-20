@@ -73,6 +73,7 @@ void recoordinatize::init(int n, int k,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "recoordinatize::init" << endl;
@@ -91,7 +92,7 @@ void recoordinatize::init(int n, int k,
 		= check_function_incremental;
 	recoordinatize::check_function_incremental_data
 		= check_function_incremental_data;
-	nCkq = generalized_binomial(n, k, q);
+	nCkq = Combi.generalized_binomial(n, k, q);
 	
 
 	M = NEW_int((3 * k) * n);

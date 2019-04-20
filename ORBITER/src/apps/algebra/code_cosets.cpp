@@ -162,6 +162,8 @@ int main(int argc, char **argv)
 		
 		for (i = 0; i < SG->gens->len; i++) {
 
+			combinatorics_domain Combi;
+
 			cout << "generator " << i << " / " << SG->gens->len << ":" << endl;
 			Elt = SG->gens->ith(i);
 			for (j = 0; j < code_sz; j++) {
@@ -169,7 +171,7 @@ int main(int argc, char **argv)
 						A_on_cols->element_image_of(j,
 								Elt, 0 /*verbose_level */);
 				}
-			perm_print_list(cout, Perms + i * code_sz, code_sz);
+			Combi.perm_print_list(cout, Perms + i * code_sz, code_sz);
 			cout << endl;
 			}
 

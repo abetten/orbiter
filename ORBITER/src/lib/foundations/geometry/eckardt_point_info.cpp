@@ -71,6 +71,7 @@ void eckardt_point_info::init(projective_space *P,
 	int i, j, h, pi, pj, bi, bj, p;
 	int multiplicity = 6;
 	int t, f, l, s, u;
+	combinatorics_domain Combi;
 
 	int arc5[5];
 	int *H1; // [6]
@@ -217,7 +218,7 @@ void eckardt_point_info::init(projective_space *P,
 			cout << "E_{";
 			for (l = 0; l < 3; l++) {
 				h = B_pts_label[s * 3 + l];
-				k2ij(h, i, j, 6);
+				Combi.k2ij(h, i, j, 6);
 				cout << i + 1 << j + 1;
 				if (l < 2) {
 					cout << ",";

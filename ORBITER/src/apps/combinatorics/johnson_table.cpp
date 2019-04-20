@@ -21,6 +21,7 @@ int main(int argc, char **argv)
 	int f_n_max = FALSE;
 	int n_max;
 	int n, k, n2, s;
+	combinatorics_domain Combi;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -53,7 +54,7 @@ int main(int argc, char **argv)
 			
 				cout << "n=" << n << " k=" << k << " s=" << s << endl;
 				
-				N = int_n_choose_k(n, k);
+				N = Combi.int_n_choose_k(n, k);
 
 				Adj = NEW_int(N * N);
 				int_vec_zero(Adj, N * N);
@@ -63,9 +64,9 @@ int main(int argc, char **argv)
 				set3 = NEW_int(k);
 	
 				for (i = 0; i < N; i++) {
-					unrank_k_subset(i, set1, n, k);
+					Combi.unrank_k_subset(i, set1, n, k);
 					for (j = i + 1; j < N; j++) {
-						unrank_k_subset(j, set2, n, k);
+						Combi.unrank_k_subset(j, set2, n, k);
 
 						int_vec_intersect_sorted_vectors(
 								set1, k, set2, k, set3, sz);

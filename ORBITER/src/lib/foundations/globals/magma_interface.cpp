@@ -29,6 +29,7 @@ void magma_interface::write_permutation_group(const char *fname_base,
 {
 	char fname[1000];
 	int i;
+	combinatorics_domain Combi;
 
 	sprintf(fname, "%s.magma", fname_base);
 	{
@@ -36,7 +37,7 @@ void magma_interface::write_permutation_group(const char *fname_base,
 	
 	fp << "G := PermutationGroup< " << group_order << " | " << endl;
 	for (i = 0; i < nb_gens; i++) {
-		perm_print_counting_from_one(fp,
+		Combi.perm_print_counting_from_one(fp,
 				Table + gens[i] * group_order,
 				group_order);
 		if (i < nb_gens - 1) {
@@ -59,6 +60,7 @@ void magma_interface::normalizer_in_Sym_n(
 	char fname_output[1000];
 	//char cmd[1000];
 	int i;
+	combinatorics_domain Combi;
 
 	sprintf(fname_magma, "%s.magma", fname_base);
 	sprintf(fname_output, "%s.txt", fname_base);
@@ -71,7 +73,7 @@ void magma_interface::normalizer_in_Sym_n(
 
 	fp << "G := PermutationGroup< " << group_order << " | " << endl;
 	for (i = 0; i < nb_gens; i++) {
-		perm_print_counting_from_one(fp,
+		Combi.perm_print_counting_from_one(fp,
 			Table + gens[i] * group_order, group_order);
 		if (i < nb_gens - 1) {
 			fp << ", " << endl;

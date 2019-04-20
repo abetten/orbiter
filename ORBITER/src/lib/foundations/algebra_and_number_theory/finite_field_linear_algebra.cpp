@@ -2417,7 +2417,9 @@ void finite_field::projective_action_on_columns_from_the_left(
 		}
 	if (f_v) {
 		//cout << "column permutation: ";
-		perm_print_with_cycle_length(cout, perm, n);
+		combinatorics_domain Combi;
+
+		Combi.perm_print_with_cycle_length(cout, perm, n);
 		cout << endl;
 		}
 	FREE_int(AM);
@@ -4545,6 +4547,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	unipoly_object m;
 	unipoly_object g;
 	unipoly_object minpol;
+	combinatorics_domain Combi;
 
 
 	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
@@ -4591,7 +4594,8 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 		}
 
 	cnt = 0;
-	int_vec_first_regular_word(v, d, Q, q);
+
+	Combi.int_vec_first_regular_word(v, d, Q, q);
 	while (TRUE) {
 		if (f_vv) {
 			cout << "finite_field::make_all_irreducible_polynomials_"
@@ -4633,7 +4637,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 		cnt++;
 
 
-		if (!int_vec_next_regular_word(v, d, Q, q)) {
+		if (!Combi.int_vec_next_regular_word(v, d, Q, q)) {
 			break;
 			}
 
@@ -4669,6 +4673,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 	int p, e, i, Q;
 	int cnt;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
@@ -4758,7 +4763,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 		}
 
 	cnt = 0;
-	int_vec_first_regular_word(v, d, Q, q);
+	Combi.int_vec_first_regular_word(v, d, Q, q);
 	while (TRUE) {
 		if (f_vv) {
 			cout << "finite_field::count_all_irreducible_polynomials_"
@@ -4810,7 +4815,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 		
 		cnt++;
 
-		if (!int_vec_next_regular_word(v, d, Q, q)) {
+		if (!Combi.int_vec_next_regular_word(v, d, Q, q)) {
 			break;
 			}
 
@@ -5469,6 +5474,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	int *subset; // [d + k + 1]
 	int nCk;
 	int cnt, overall_cnt;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "finite_field::map_points_to_points_projectively" << endl;
@@ -5497,10 +5503,10 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	
 
 	overall_cnt = 0;
-	nCk = int_n_choose_k(d + k + 1, d + 1);
+	nCk = Combi.int_n_choose_k(d + k + 1, d + 1);
 	for (h = 0; h < nCk; h++) {
-		unrank_k_subset(h, subset, d + k + 1, d + 1);
-		set_complement(subset, d + 1, subset + d + 1, k, d + k + 1);
+		Combi.unrank_k_subset(h, subset, d + k + 1, d + 1);
+		Combi.set_complement(subset, d + 1, subset + d + 1, k, d + k + 1);
 
 		if (f_v) {
 			cout << "subset " << h << " / " << nCk << " is ";
@@ -5521,14 +5527,14 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 			}
 		
 		cnt = 0;
-		first_lehmercode(d + 1, lehmercode);
+		Combi.first_lehmercode(d + 1, lehmercode);
 		while (TRUE) {
 			if (f_v) {
 				cout << "lehmercode: ";
 				orbiter::foundations::int_vec_print(cout, lehmercode, d + 1);
 				cout << endl;
 				}
-			lehmercode_to_permutation(d + 1, lehmercode, perm);
+			Combi.lehmercode_to_permutation(d + 1, lehmercode, perm);
 			if (f_v) {
 				cout << "permutation: ";
 				orbiter::foundations::int_vec_print(cout, perm, d + 1);
@@ -5558,7 +5564,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 				cnt++;
 				}
 			
-			if (!next_lehmercode(d + 1, lehmercode)) {
+			if (!Combi.next_lehmercode(d + 1, lehmercode)) {
 				break;
 				}
 			}

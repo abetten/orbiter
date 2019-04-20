@@ -1081,11 +1081,12 @@ void set_of_sets::all_pairwise_intersections(
 	int N, i, j, k;
 	int *v;
 	int l;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "set_of_sets::all_pairwise_intersections" << endl;
 		}
-	N = int_n_choose_k(nb_sets, 2);
+	N = Combi.int_n_choose_k(nb_sets, 2);
 
 
 	Intersections = NEW_OBJECT(set_of_sets);
@@ -1095,7 +1096,7 @@ void set_of_sets::all_pairwise_intersections(
 	v = NEW_int(underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
-			k = ij2k(i, j, nb_sets);	
+			k = Combi.ij2k(i, j, nb_sets);
 			int_vec_intersect_sorted_vectors(
 					Sets[i], Set_size[i], Sets[j], Set_size[j], v, l);
 			Intersections->Sets[k] = NEW_int(l);
@@ -1151,11 +1152,12 @@ void set_of_sets::all_triple_intersections(
 	int *v;
 	int *w;
 	int l1, l2;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "set_of_sets::all_triple_intersections" << endl;
 		}
-	N = int_n_choose_k(nb_sets, 3);
+	N = Combi.int_n_choose_k(nb_sets, 3);
 
 
 	Intersections = NEW_OBJECT(set_of_sets);
@@ -1171,7 +1173,7 @@ void set_of_sets::all_triple_intersections(
 
 			for (k = j + 1; k < nb_sets; k++) {
 			
-				h = ijk2h(i, j, k, nb_sets);	
+				h = Combi.ijk2h(i, j, k, nb_sets);
 				int_vec_intersect_sorted_vectors(v, l1,
 						Sets[k], Set_size[k], w, l2);
 				Intersections->Sets[h] = NEW_int(l2);

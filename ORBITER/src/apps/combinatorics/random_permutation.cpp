@@ -51,6 +51,7 @@ void choose_random_permutation(int n,
 		int f_save, const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "choose_random_permutation" << endl;
@@ -59,7 +60,7 @@ void choose_random_permutation(int n,
 	int *P;
 
 	P = NEW_int(n);
-	random_permutation(P, n);
+	Combi.random_permutation(P, n);
 
 	if (f_save) {
 		int_vec_write_csv(P, n, fname, "perm");

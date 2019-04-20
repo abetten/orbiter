@@ -1373,6 +1373,7 @@ void arc_lifting::print_bisecants(ostream &ost)
 {
 	int i, j, h, a;
 	int Mtx[9];
+	combinatorics_domain Combi;
 	
 	ost << "The 15 bisecants are:\\\\" << endl;
 	ost << "$$" << endl;
@@ -1384,7 +1385,7 @@ void arc_lifting::print_bisecants(ostream &ost)
 	ost << "\\hline" << endl;
 	for (h = 0; h < 15; h++) {
 		a = E->bisecants[h];
-		k2ij(h, i, j, 6);
+		Combi.k2ij(h, i, j, 6);
 		ost << h << " & P_{" << i + 1 << "}P_{" << j + 1
 				<< "} & " << a << " & " << endl;
 		ost << "\\left[ " << endl;
@@ -1467,6 +1468,8 @@ void arc_lifting::print_Eckardt_points(ostream &ost)
 
 void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 {
+	combinatorics_domain Combi;
+
 	ost << "The web of cubic curves is:\\\\" << endl;
 
 #if 0
@@ -1511,8 +1514,8 @@ void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 		ost << str;
 		ost << " = ";
 		if (h < 30) {
-			ordered_pair_unrank(h, i, j, 6);
-			ij = ij2k(i, j, 6);
+			Combi.ordered_pair_unrank(h, i, j, 6);
+			ij = Combi.ij2k(i, j, 6);
 			ost << "C_" << j + 1
 				<< "P_{" << i + 1 << "}P_{" << j + 1 << "} = ";
 			ost << "\\big(";
@@ -1525,10 +1528,10 @@ void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 			//bisecants + ij * 3, ten_coeff, 0 /* verbose_level */);
 			}
 		else {
-			unordered_triple_pair_unrank(h - 30, i, j, k, l, m, n);
-			ij = ij2k(i, j, 6);
-			kl = ij2k(k, l, 6);
-			mn = ij2k(m, n, 6);
+			Combi.unordered_triple_pair_unrank(h - 30, i, j, k, l, m, n);
+			ij = Combi.ij2k(i, j, 6);
+			kl = Combi.ij2k(k, l, 6);
+			mn = Combi.ij2k(m, n, 6);
 			ost << "P_{" << i + 1 << "}P_{" << j + 1 << "},P_{"
 					<< k + 1 << "}P_{" << l + 1 << "},P_{"
 					<< m + 1 << "}P_{" << n + 1 << "} = ";
@@ -2165,13 +2168,14 @@ static void intersection_matrix_entry_print(int *p,
 	//arc_lifting *AL;
 	//AL = (arc_lifting *) data;
 	int a, b;
+	combinatorics_domain Combi;
 	
 	if (i == -1) {
-		k2ij(j, a, b, 6);
+		Combi.k2ij(j, a, b, 6);
 		sprintf(output, "P_%dP_%d", a + 1, b + 1);
 		}
 	else if (j == -1) {
-		k2ij(i, a, b, 6);
+		Combi.k2ij(i, a, b, 6);
 		sprintf(output, "P_%dP_%d", a + 1, b + 1);
 		}
 	else {

@@ -137,7 +137,9 @@ int main(int argc, char **argv)
 			}
 		}
 	
-	first_k_subset(subset, n, 3);
+	combinatorics_domain Combi;
+
+	Combi.first_k_subset(subset, n, 3);
 	while (TRUE) {
 		cout << "testing subset ";
 		int_vec_print(cout, subset, 3);
@@ -154,7 +156,7 @@ int main(int argc, char **argv)
 			cout << "not a hyperoval" << endl;
 			exit(1);
 			}
-		if (!next_k_subset(subset, n, 3)) {
+		if (!Combi.next_k_subset(subset, n, 3)) {
 			break;
 			}
 		}

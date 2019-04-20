@@ -17,8 +17,6 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
-double norm_of_vector(int x1, int x2, int y1, int y2);
-
 
 layered_graph::layered_graph()
 {
@@ -326,6 +324,7 @@ void layered_graph::draw_with_options(const char *fname,
 	int xoffset = 3 * O->rad / 2;
 	int yoffset = 0;
 	int own_id;
+	numerics Num;
 	
 	rad_x_twice = O->rad >> 3;
 	rad_y_twice = O->rad >> 3;
@@ -462,10 +461,10 @@ void layered_graph::draw_with_options(const char *fname,
 #if 1
 						Px[0] = x;
 						Px[1] = (int)(x + ((double)(x2 - x)) /
-							norm_of_vector(x, x2, y, y2) * rad_x_twice);
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_x_twice);
 						Py[0] = y;
 						Py[1] = (int)(y + ((double)(y2 - y)) /
-							norm_of_vector(x, x2, y, y2) * rad_y_twice);
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_y_twice);
 #endif
 						}
 					else {
@@ -531,10 +530,10 @@ void layered_graph::draw_with_options(const char *fname,
 #if 1
 						Px[0] = x;
 						Px[1] = x + ((double)(x2 - x)) /
-								norm_of_vector(x, x2, y, y2) * rad_x_twice;
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_x_twice;
 						Py[0] = y;
 						Py[1] = y + ((double)(y2 - y)) /
-								norm_of_vector(x, x2, y, y2) * rad_y_twice;
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_y_twice;
 #endif
 						}
 					else {
@@ -1058,10 +1057,6 @@ void layered_graph::set_radius_factor_for_all_nodes_at_level(
 
 
 
-double norm_of_vector(int x1, int x2, int y1, int y2)
-{
-	return sqrt((double)(x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-}
 
 }
 }

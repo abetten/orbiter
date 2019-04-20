@@ -1595,6 +1595,7 @@ void action::induced_action_on_pairs(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_pairs" << endl;
@@ -1615,7 +1616,7 @@ void action::induced_action_on_pairs(
 	
 	f_has_strong_generators = FALSE;
 	
-	degree = int_n_choose_k(old_action.degree, 2);
+	degree = Combi.int_n_choose_k(old_action.degree, 2);
 	base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();

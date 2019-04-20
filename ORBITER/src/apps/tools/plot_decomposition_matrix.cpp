@@ -295,6 +295,7 @@ void read_orbit_data(const char *fname,
 // and computed orbit_perm_inv[N]
 {
 	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
 	
 	ifstream f(fname);
 	int i, a;
@@ -329,7 +330,7 @@ void read_orbit_data(const char *fname,
 		f >> schreier_prev[i];
 		}
 	orbit_fst[nb_orbits] = N;
-	perm_inverse(orbit_perm, orbit_perm_inv, N);
+	Combi.perm_inverse(orbit_perm, orbit_perm_inv, N);
 	f >> a;
 	if (a != -1) {
 		cout << "problem in read_orbit_data" << endl;

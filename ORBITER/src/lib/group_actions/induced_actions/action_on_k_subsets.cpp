@@ -45,6 +45,7 @@ void action_on_k_subsets::init(action *A,
 {
 	int f_v = (verbose_level >= 1);
 	int n;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_k_subsets::init k=" << k << endl;
@@ -52,7 +53,7 @@ void action_on_k_subsets::init(action *A,
 	action_on_k_subsets::A = A;
 	action_on_k_subsets::k = k;
 	n = A->degree;
-	degree = int_n_choose_k(n, k);
+	degree = Combi.int_n_choose_k(n, k);
 	set1 = NEW_int(k);
 	set2 = NEW_int(k);
 	if (f_v) {
@@ -68,6 +69,7 @@ void action_on_k_subsets::compute_image(
 	int u, a, b;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "action_on_k_subsets::compute_image "
@@ -78,14 +80,14 @@ void action_on_k_subsets::compute_image(
 				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
-	unrank_k_subset(i, set1, A->degree, k);
+	Combi.unrank_k_subset(i, set1, A->degree, k);
 	for (u = 0; u < k; u++) {
 		a = set1[u];
 		b = A->image_of(Elt, a);
 		set2[u] = b;
 		}
 	int_vec_heapsort(set2, k);
-	j = rank_k_subset(set2, A->degree, k);
+	j = Combi.rank_k_subset(set2, A->degree, k);
 	if (f_vv) {
 		cout << "set " << i << " = ";
 		int_vec_print(cout, set1, k);

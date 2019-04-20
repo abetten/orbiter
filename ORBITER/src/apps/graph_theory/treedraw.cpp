@@ -315,6 +315,7 @@ void draw_vertex_callback_graph(tree *T,
 {
 	//int d1;
 	//char str[1000];
+	combinatorics_domain Combi;
 
 	cout << "draw_vertex_callback_graph x=" << x
 			<< " y=" << y << " dx = " << dx << " dy=" << dy << endl;
@@ -329,10 +330,10 @@ void draw_vertex_callback_graph(tree *T,
 		int i, a, b, x, y, x1, y1;
 		for (i = 0; i < layer; i++) {
 			a = v[i];
-			k2ij(a, x, y, graph_nb_V);
+			Combi.k2ij(a, x, y, graph_nb_V);
 			x1 = graph_perm[x];
 			y1 = graph_perm[y];
-			b = ij2k(x1, y1, graph_nb_V);
+			b = Combi.ij2k(x1, y1, graph_nb_V);
 			v[i] = b;
 			}
 		}

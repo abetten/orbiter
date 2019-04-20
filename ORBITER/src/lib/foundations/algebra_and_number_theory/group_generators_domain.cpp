@@ -35,6 +35,7 @@ void group_generators_domain::generators_symmetric_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
+	combinatorics_domain Combi;
 	
 	if (deg <= 1) {
 		nb_perms = 0;
@@ -44,7 +45,7 @@ void group_generators_domain::generators_symmetric_group(int deg,
 	nb_perms = deg - 1;
 	perms = NEW_int(nb_perms * deg);
 	for (i = 0; i < nb_perms; i++) {
-		perm_identity(perms + i * deg, deg);
+		Combi.perm_identity(perms + i * deg, deg);
 		perms[i * deg + i] = i + 1;
 		perms[i * deg + i + 1] = i;
 		}
@@ -54,7 +55,7 @@ void group_generators_domain::generators_symmetric_group(int deg,
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
+			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 			}
 		}
@@ -66,6 +67,7 @@ void group_generators_domain::generators_cyclic_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j;
+	combinatorics_domain Combi;
 	
 	if (deg <= 1) {
 		nb_perms = 0;
@@ -84,7 +86,7 @@ void group_generators_domain::generators_cyclic_group(int deg,
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
+			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 			}
 		}
@@ -96,6 +98,7 @@ void group_generators_domain::generators_dihedral_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j, d2;
+	combinatorics_domain Combi;
 	
 	if (deg <= 1) {
 		nb_perms = 0;
@@ -120,7 +123,7 @@ void group_generators_domain::generators_dihedral_group(int deg,
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
+			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 			}
 		}
@@ -132,6 +135,7 @@ void group_generators_domain::generators_dihedral_involution(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j, d2;
+	combinatorics_domain Combi;
 	
 	if (deg <= 1) {
 		nb_perms = 0;
@@ -152,7 +156,7 @@ void group_generators_domain::generators_dihedral_involution(int deg,
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
+			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 			}
 		}
@@ -164,6 +168,7 @@ void group_generators_domain::generators_identity_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j;
+	combinatorics_domain Combi;
 	
 	if (deg <= 1) {
 		nb_perms = 0;
@@ -181,7 +186,7 @@ void group_generators_domain::generators_identity_group(int deg,
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
+			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 			}
 		}
@@ -195,6 +200,7 @@ void group_generators_domain::generators_Hall_reflection(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "group_generators_domain::generators_"
@@ -203,7 +209,7 @@ void group_generators_domain::generators_Hall_reflection(
 	degree = nb_pairs * 2;
 	nb_perms = 1;
 	perms = NEW_int(nb_perms * degree);
-	perm_identity(perms, degree);
+	Combi.perm_identity(perms, degree);
 	for (i = 0; i < nb_pairs; i++) {
 		perms[2 * i] = 2 * i + 1;
 		perms[2 * i + 1] = 2 * i;
@@ -217,7 +223,7 @@ void group_generators_domain::generators_Hall_reflection(
 		}
 	if (f_vv) {
 		for (i = 0; i < 1; i++) {
-			perm_print(cout, perms + i * degree, degree);
+			Combi.perm_print(cout, perms + i * degree, degree);
 			cout << endl;
 			}
 		}
@@ -235,6 +241,7 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "group_generators_domain::generators_Hall_"
@@ -245,12 +252,12 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 	perms = NEW_int(nb_perms * degree);
 	h = 0;
 	for (i = 0; i < nb_pairs; i++, h++) {
-		perm_identity(perms + h * degree, degree);
+		Combi.perm_identity(perms + h * degree, degree);
 		perms[h * degree + 2 * i] = 2 * i + 1;
 		perms[h * degree + 2 * i + 1] = 2 * i;
 	}
 	for (i = 0; i < nb_pairs - 1; i++, h++) {
-		perm_identity(perms + h * degree, degree);
+		Combi.perm_identity(perms + h * degree, degree);
 		perms[h * degree + 2 * i] = 2 * (i + 1);
 		perms[h * degree + 2 * i + 1] = 2 * (i + 1) + 1;
 		perms[h * degree + 2 * (i + 1)] = 2 * i;
@@ -271,7 +278,7 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * degree, degree);
+			Combi.perm_print(cout, perms + i * degree, degree);
 			cout << endl;
 			}
 		}
@@ -333,6 +340,7 @@ void group_generators_domain::generators_Bn_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_Bn_group" << endl;
@@ -342,14 +350,14 @@ void group_generators_domain::generators_Bn_group(
 	perms = NEW_int(nb_perms * deg);
 	j = 0;
 	for (i = 0; i < n - 1; i++, j++) {
-		perm_identity(perms + j * deg, deg);
+		Combi.perm_identity(perms + j * deg, deg);
 		perms[j * deg + 2 * i] = 2 * (i + 1);
 		perms[j * deg + 2 * i + 1] = 2 * (i + 1) + 1;
 		perms[j * deg + 2 * (i + 1)] = 2 * i;
 		perms[j * deg + 2 * (i + 1) + 1] = 2 * i + 1;
 		}
 	for (i = 0; i < n; i++, j++) {
-		perm_identity(perms + j * deg, deg);
+		Combi.perm_identity(perms + j * deg, deg);
 		perms[j * deg + 2 * i] = 2 * i + 1;
 		perms[j * deg + 2 * i + 1] = 2 * i;
 		}
@@ -363,7 +371,7 @@ void group_generators_domain::generators_Bn_group(
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			perm_print(cout, perms + i * deg, deg);
+			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 			}
 		}
@@ -382,22 +390,23 @@ void group_generators_domain::generators_direct_product(
 	int f_vv = (verbose_level >= 2);
 	int i, k = 0;
 	int *id1, *id2;
+	combinatorics_domain Combi;
 	
 	deg3 = deg1 * deg2;
 	nb_perms3 = nb_perms1 + nb_perms2;
 	perms3 = NEW_int(nb_perms3 * deg3);
 	id1 = NEW_int(deg1);
 	id2 = NEW_int(deg2);
-	perm_identity(id1, deg1);
-	perm_identity(id2, deg2);
+	Combi.perm_identity(id1, deg1);
+	Combi.perm_identity(id2, deg2);
 	
 	for (i = 0; i < nb_perms1; i++) {
-		perm_direct_product(deg1, deg2,
+		Combi.perm_direct_product(deg1, deg2,
 				perms1 + i * deg1, id2, perms3 + k * deg3);
 		k++;
 		}
 	for (i = 0; i < nb_perms2; i++) {
-		perm_direct_product(deg1, deg2, id1,
+		Combi.perm_direct_product(deg1, deg2, id1,
 				perms2 + i * deg2, perms3 + k * deg3);
 		k++;
 		}
@@ -408,7 +417,7 @@ void group_generators_domain::generators_direct_product(
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms3; i++) {
-			perm_print(cout, perms3 + i * deg3, deg3);
+			Combi.perm_print(cout, perms3 + i * deg3, deg3);
 			cout << endl;
 			}
 		}
@@ -423,6 +432,7 @@ void group_generators_domain::generators_concatenate(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, k = 0;
+	combinatorics_domain Combi;
 	
 	if (deg1 != deg2) {
 		cout << "group_generators_domain::generators_concatenate:"
@@ -435,11 +445,11 @@ void group_generators_domain::generators_concatenate(
 	
 	k = 0;
 	for (i = 0; i < nb_perms1; i++) {
-		perm_move(perms1 + i * deg1, perms3 + k * deg3, deg3);
+		Combi.perm_move(perms1 + i * deg1, perms3 + k * deg3, deg3);
 		k++;
 		}
 	for (i = 0; i < nb_perms2; i++) {
-		perm_move(perms2 + i * deg1, perms3 + k * deg3, deg3);
+		Combi.perm_move(perms2 + i * deg1, perms3 + k * deg3, deg3);
 		k++;
 		}
 	if (f_v) {
@@ -447,7 +457,7 @@ void group_generators_domain::generators_concatenate(
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms3; i++) {
-			perm_print(cout, perms3 + i * deg3, deg3);
+			Combi.perm_print(cout, perms3 + i * deg3, deg3);
 			cout << endl;
 			}
 		}

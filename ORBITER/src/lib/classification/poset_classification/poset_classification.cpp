@@ -877,10 +877,11 @@ void poset_classification::print_lex_rank(int *set, int sz)
 {
 	int r1, r2;
 	int n;
+	combinatorics_domain Combi;
 	
 	n = Poset->A2->degree;
-	r1 = rank_subset(set, sz, n);
-	r2 = rank_k_subset(set, n, sz);
+	r1 = Combi.rank_subset(set, sz, n);
+	r2 = Combi.rank_k_subset(set, n, sz);
 
 	cout << "lex rank = " << r1 << " lex rank as "
 			<< sz << "-subset = " << r2;
@@ -1951,6 +1952,7 @@ void poset_classification::map_to_canonical_k_subset(
 	int i, j, k; //, idx;
 	int reduced_set_size;
 	//int f_implicit_fusion = TRUE;
+	combinatorics_domain Combi;
 	
 	our_set = NEW_int(set_size);
 	subset = NEW_int(set_size);
@@ -1959,7 +1961,7 @@ void poset_classification::map_to_canonical_k_subset(
 	reduced_set_size = set_size - subset_size;
 
 	// unrank the k-subset and its complement to our_set[set_size]:
-	unrank_k_subset(subset_rk, our_set, set_size, subset_size);
+	Combi.unrank_k_subset(subset_rk, our_set, set_size, subset_size);
 	j = 0;
 	k = 0;
 	for (i = 0; i < set_size; i++) {
@@ -2189,8 +2191,9 @@ void poset_classification::trace_all_k_subsets(
 	int *Elt;
 	int subset_rk, local_idx, i;
 	//int f_implicit_fusion = TRUE;
+	combinatorics_domain Combi;
 
-	nCk = int_n_choose_k(n, k);
+	nCk = Combi.int_n_choose_k(n, k);
 	if (f_v) {
 		cout << "poset_classification::trace_all_k_subsets "
 				"n = " << n << " k = " << k
@@ -2206,7 +2209,7 @@ void poset_classification::trace_all_k_subsets(
 	
 	int_vec_zero(isotype, nCk);
 
-	first_k_subset(index_set, n, k);
+	Combi.first_k_subset(index_set, n, k);
 	subset_rk = 0;
 
 	while (TRUE) {
@@ -2265,7 +2268,7 @@ void poset_classification::trace_all_k_subsets(
 
 			}
 		subset_rk++;
-		if (!next_k_subset(index_set, n, k)) {
+		if (!Combi.next_k_subset(index_set, n, k)) {
 			break;
 			}
 		}

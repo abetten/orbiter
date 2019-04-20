@@ -205,13 +205,14 @@ void design_properties(incidence_structure *Incidence, int verbose_level)
 
 	int *set;
 	int Nt, a, t, h;
+	combinatorics_domain Combi;
 	
 	set = NEW_int(set_size);
 	for (t = 2; t <= 4; t++) {
 		int *Freq;
 		
 		cout << "Checking strength t=" << t << endl;
-		Nt = int_n_choose_k(set_size, t);
+		Nt = Combi.int_n_choose_k(set_size, t);
 		cout << "There are " << Nt << " " << t
 				<< "-subsets of an " << set_size << "-set" << endl;
 
@@ -220,7 +221,7 @@ void design_properties(incidence_structure *Incidence, int verbose_level)
 			if ((h % 100000) == 0) {
 				cout << "checking subset " << h << " / " << Nt << endl;
 				}
-			unrank_k_subset(h, set, set_size, t);
+			Combi.unrank_k_subset(h, set, set_size, t);
 			a = number_of_blocks_through_set_of_points(Incidence, set, t);
 			//a = count(Inc, set_size, nb_blocks, set, t);
 			Freq[h] = a;

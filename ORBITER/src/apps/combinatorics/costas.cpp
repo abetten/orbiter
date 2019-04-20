@@ -197,9 +197,11 @@ void read(const char *fname, int verbose_level)
 	cout << "The solutions are:" << endl;
 	int_matrix_print(Sol, nb_sol, sz);
 
+	combinatorics_domain Combi;
+
 	for (i = 0; i < nb_sol; i++) {
 		cout << i << " : ";
-		perm_print(cout, Sol + i * n, n);
+		Combi.perm_print(cout, Sol + i * n, n);
 		cout << endl;
 		}
 

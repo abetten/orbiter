@@ -94,6 +94,7 @@ void flag::init_recursion(int n,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "flag::init_recursion type_len = "
@@ -150,7 +151,7 @@ void flag::init_recursion(int n,
 	else {
 		N0 = Flag->N;
 		}
-	N1 = generalized_binomial(s2, s1, F->q);
+	N1 = Combi.generalized_binomial(s2, s1, F->q);
 	N = N0 * N1;
 	if (f_v) {
 		cout << "flag::init_recursion type_len = " << type_len

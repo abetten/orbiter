@@ -262,21 +262,22 @@ void perm_group_element_mult(action &A,
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "perm_group_element_mult degree=" << G.degree << endl;
 		cout << "A=" << endl;
-		perm_print_list(cout, AA, G.degree);
+		Combi.perm_print_list(cout, AA, G.degree);
 		G.print(AA, cout);
 		cout << "B=" << endl;
-		perm_print_list(cout, BB, G.degree);
+		Combi.perm_print_list(cout, BB, G.degree);
 		G.print(BB, cout);
 		}
 	G.mult(AA, BB, AB);
 	if (f_v) {
 		cout << "degree=" << G.degree << endl;
 		cout << "AB=" << endl;
-		perm_print_list(cout, AB, G.degree);
+		Combi.perm_print_list(cout, AB, G.degree);
 		G.print(AB, cout);
 		}
 }

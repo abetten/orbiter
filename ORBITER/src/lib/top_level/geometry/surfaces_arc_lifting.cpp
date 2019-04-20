@@ -181,6 +181,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 	int nb_orbits;
 	int pt_representation_sz;
 	int *Flag;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::downstep" << endl;
@@ -328,7 +329,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				// Flag[33..59] : 27 for the lines of the surface
 
 
-				set_partition_4_into_2_unrank(partition_rk, part);
+				Combi.set_partition_4_into_2_unrank(partition_rk, part);
 				for (h = 0; h < 2; h++) {
 					int_vec_print(cout, part + h * 2, 2);
 				}
@@ -510,6 +511,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 void surfaces_arc_lifting::report(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -667,7 +669,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 				orbit_rep = Sch->orbit[f + 0];
 				fp << "orbit of $" << orbit_rep << "$ has length " << l
 						<< ", and corresponds to the partition $";
-				set_partition_4_into_2_unrank(orbit_rep, part);
+				Combi.set_partition_4_into_2_unrank(orbit_rep, part);
 				for (h = 0; h < 2; h++) {
 					int_vec_print(fp, part + h * 2, 2);
 				}

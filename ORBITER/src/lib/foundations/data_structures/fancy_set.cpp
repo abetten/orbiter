@@ -249,9 +249,11 @@ void fancy_set::sort()
 	
 int fancy_set::compare_lexicographically(fancy_set *second_set)
 {
+	combinatorics_domain Combi;
+
 	sort();
 	second_set->sort();
-	return orbiter::foundations::compare_lexicographically(k, set,
+	return Combi.compare_lexicographically(k, set,
 			second_set->k, second_set->set);
 	
 }

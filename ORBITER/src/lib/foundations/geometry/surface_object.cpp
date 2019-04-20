@@ -2179,6 +2179,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 	int i, j, k, l, m, n;
 	int T[9];
 	int h;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_object::identify_double_six_from_"
@@ -2195,8 +2196,8 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 			cout << h << " : " << nine_line_idx[h] << endl;
 			}
 		}
-	unrank_k_subset(t_idx, subset, 6, 3);
-	set_complement(subset, 3, subset + 3, size_complement, 6);
+	Combi.unrank_k_subset(t_idx, subset, 6, 3);
+	Combi.set_complement(subset, 3, subset + 3, size_complement, 6);
 	i = subset[0];
 	j = subset[1];
 	k = subset[2];
@@ -2487,6 +2488,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	int size_complement;
 	int l, m, n, p;
 	int c1, c2;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_object::identify_double_six_from_"
@@ -2497,9 +2499,9 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	rk_h = idx / 6;
 	rk_s = idx % 6;
 
-	unrank_k_subset(rk_h, subset, 6, 4);
-	unrank_k_subset(rk_s, second_subset, 4, 2);
-	set_complement(second_subset, 2, complement, size_complement, 4);
+	Combi.unrank_k_subset(rk_h, subset, 6, 4);
+	Combi.unrank_k_subset(rk_s, second_subset, 4, 2);
+	Combi.set_complement(second_subset, 2, complement, size_complement, 4);
 	l = subset[second_subset[0]];
 	m = subset[second_subset[1]];
 	n = subset[complement[0]];
@@ -2516,7 +2518,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	subset2[2] = n;
 	subset2[3] = p;
 	int_vec_heapsort(subset2, 4);
-	set_complement(subset2, 4, complement2, size_complement, 6);
+	Combi.set_complement(subset2, 4, complement2, size_complement, 6);
 	r = complement2[0];
 	s = complement2[1];
 	if (f_v) {

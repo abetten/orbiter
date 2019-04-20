@@ -611,6 +611,7 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 void set_stabilizer_compute::print_interesting_subsets(int lvl, int nb_interesting_subsets, int *interesting_subsets)
 {
 	int i, j;
+	combinatorics_domain Combi;
 	
 	cout << "the ranks of the corresponding subsets are:" << endl;
 	int_vec_print(cout, interesting_subsets, nb_interesting_subsets);
@@ -622,7 +623,7 @@ void set_stabilizer_compute::print_interesting_subsets(int lvl, int nb_interesti
 		for (i = 0; i < nb_interesting_subsets; i++) {
 			int ii;
 			j = interesting_subsets[i];
-			unrank_k_subset(j, set, set_size, lvl);
+			Combi.unrank_k_subset(j, set, set_size, lvl);
 			cout << setw(3) << i << " : " << setw(6) << j << " : (";
 			for (ii = 0; ii < lvl; ii++) {
 				cout << setw(3) << set[ii];
@@ -668,12 +669,13 @@ void set_stabilizer_compute::compute_frequencies(int level,
 	int /*idx, f,*/ local_idx, subset_rk, print_mod;
 	int *Elt1;
 	//int f_implicit_fusion = TRUE;
+	combinatorics_domain Combi;
 	
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 
 	nb_orbits = gen->nb_orbits_at_level(level);
-	n_choose_k = int_n_choose_k(set_size, level);
+	n_choose_k = Combi.int_n_choose_k(set_size, level);
 	
 	if (f_v) {
 		cout << "set_stabilizer_compute::compute_frequencies "
@@ -686,7 +688,7 @@ void set_stabilizer_compute::compute_frequencies(int level,
 	
 	int_vec_zero(frequency, nb_orbits);
 
-	first_k_subset(set, set_size, level);
+	Combi.first_k_subset(set, set_size, level);
 	subset_rk = 0;
 	if (n_choose_k > 100000) {
 		print_mod = 10000;
@@ -725,14 +727,16 @@ void set_stabilizer_compute::compute_frequencies(int level,
 		else {
 
 			if (FALSE) {
-				cout << "set_stabilizer_compute::compute_frequencies before trace_set" << endl;
+				cout << "set_stabilizer_compute::compute_frequencies "
+						"before trace_set" << endl;
 				}
 			local_idx = gen->trace_set(subset, level, level, 
 				canonical_subset, Elt1, 
 				//f_implicit_fusion, 
 				verbose_level - 3);
 			if (FALSE) {
-				cout << "set_stabilizer_compute::compute_frequencies after trace_set, local_idx = " << local_idx << endl;
+				cout << "set_stabilizer_compute::compute_frequencies "
+						"after trace_set, local_idx = " << local_idx << endl;
 				}
 			//idx = local_idx + f;
 			
@@ -749,7 +753,7 @@ void set_stabilizer_compute::compute_frequencies(int level,
 
 			}
 		subset_rk++;
-		if (!next_k_subset(set, set_size, level)) {
+		if (!Combi.next_k_subset(set, set_size, level)) {
 			break;
 			}
 		}

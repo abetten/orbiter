@@ -1470,6 +1470,7 @@ int tdo_scheme::geometric_test_for_row_scheme_level_s(
 	int set[1000];
 	int J, L1, L2, len, max, cur, u, D, d, c;
 	int nb_inc, e, f, nb_ordererd_pairs;
+	combinatorics_domain Combi;
 	
 	if (f_vvv) {
 		cout << "geometric_test_for_row_scheme_level_s s=" << s << endl;
@@ -1479,7 +1480,7 @@ int tdo_scheme::geometric_test_for_row_scheme_level_s(
 		exit(1);
 		}
 	row_refinement_L1_L2(P, f_omit1, omit1, L1, L2, verbose_level - 3);
-	first_k_subset(set, nb_non_zero_blocks, s);
+	Combi.first_k_subset(set, nb_non_zero_blocks, s);
 	while (TRUE) {
 		D = 0;
 		for (u = 0; u < s; u++) {
@@ -1521,7 +1522,7 @@ int tdo_scheme::geometric_test_for_row_scheme_level_s(
 				return FALSE;
 				}
 			} // next J
-		if (!next_k_subset(set, nb_non_zero_blocks, s))
+		if (!Combi.next_k_subset(set, nb_non_zero_blocks, s))
 			break;
 		}
 	return TRUE;
@@ -1624,6 +1625,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	char label[100];
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "refine_rows_easy" << endl;
@@ -1646,7 +1648,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 		
 	// 1st equation: connections within the same row-partition
 	for (J = 0; J < nb_vars; J++) {
-		D.Aij(0, J) = minus_one_if_positive(the_col_scheme[0 * l2 + J]);
+		D.Aij(0, J) = Combi.minus_one_if_positive(the_col_scheme[0 * l2 + J]);
 		}
 	D.Aij(0, nb_vars - 1) = 0;
 	if (f_vv) {
@@ -1750,10 +1752,10 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 		len = col_classes_len[COL][j];
 		for (i = 0; i < Nb_vars; i++) {
 			a = point_types[i * point_type_len + j];
-			a2 = binomial2(a);
+			a2 = Combi.binomial2(a);
 			D2.Aij(l2 + j, i) = a2;
 			}
-		D2.RHS[l2 + j] = binomial2(len);
+		D2.RHS[l2 + j] = Combi.binomial2(len);
 		D2.type[l2 + j] = t_LE;
 		sprintf(label, "J_{%d}", j + 1);
 		D2.init_eqn_label(l2 + j, label);
@@ -2176,6 +2178,7 @@ int tdo_scheme::tdo_rows_setup_first_system(int verbose_level,
 	int S, s_default, s_or_s_default, R, l1, l2, L1, L2;
 	int J, r2, i, j, s, f, l;
 	int nb_vars, nb_eqns;
+	combinatorics_domain Combi;
 	
 	if (!f_omit)
 		omit = 0;
@@ -2210,7 +2213,7 @@ int tdo_scheme::tdo_rows_setup_first_system(int verbose_level,
 				for (j = 0; j < l; j++) {
 					J = f + i + j; // +i for the slack variables
 					T.D1->Aij(r2, J) =
-						minus_one_if_positive(
+						Combi.minus_one_if_positive(
 								the_col_scheme[r2 * l2 + f + j]);
 					}
 				T.D1->Aij(r2, f + i + l) = 0;
@@ -2318,6 +2321,7 @@ int tdo_scheme::tdo_rows_setup_second_system(int verbose_level,
 	int nb_eqns_joining, nb_eqns_counting, nb_eqns_packing, nb_eqns_used = 0;
 	int Nb_vars, Nb_eqns;
 	int l2, i, j, len, r, L1, L2;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "tdo_rows_setup_second_system" << endl;
@@ -2330,7 +2334,7 @@ int tdo_scheme::tdo_rows_setup_second_system(int verbose_level,
 
 	row_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
 
-	nb_eqns_joining = L2 + binomial2(L2);
+	nb_eqns_joining = L2 + Combi.binomial2(L2);
 	nb_eqns_counting = T.nb_multiple_types * (L2 + 1);
 	nb_eqns_packing = 0;
 	if (f_use_packing_numbers) {
@@ -2433,6 +2437,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 	int l2, I1, I2, k, b, ab, i, j, r, I, J;
 	int f, l, c, a, a2, rr, p, u, h, L1, L2;
 	char label[100];
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "tdo_scheme::tdo_rows_setup_second_system_"
@@ -2454,7 +2459,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 		}
 	for (I1 = 0; I1 < L2; I1++) {
 		for (I2 = I1 + 1; I2 < L2; I2++) {
-			k = ij2k(I1, I2, L2);
+			k = Combi.ij2k(I1, I2, L2);
 			sprintf(label, "J_{%d,%d}", I1 + 1, I2 + 1);
 			T.D2->init_eqn_label(eqn_offset + L2 + k, label);
 			}
@@ -2471,12 +2476,12 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 			J = T.types_first2[i] + j;
 			for (I = 0; I < L2; I++) {
 				a = point_types[c * L2 + I];
-				a2 = binomial2(a);
+				a2 = Combi.binomial2(a);
 				T.D2->Aij(eqn_offset + I, J) = a2;
 				}
 			for (I1 = 0; I1 < L2; I1++) {
 				for (I2 = I1 + 1; I2 < L2; I2++) {
-					k = ij2k(I1, I2, L2);
+					k = Combi.ij2k(I1, I2, L2);
 					a = point_types[c * L2 + I1];
 					b = point_types[c * L2 + I2];
 					ab = a * b;
@@ -2491,7 +2496,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 		}
 	for (I = 0; I < L2; I++) {
 		a = col_classes_len[COL][I];
-		a2 = binomial2(a);
+		a2 = Combi.binomial2(a);
 		T.D2->RHS[eqn_offset + I] = a2;
 		if (f_dual_is_linear_space) {
 			T.D2->type[eqn_offset + I] = t_EQ;
@@ -2504,7 +2509,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 		a = col_classes_len[COL][I1];
 		for (I2 = I1 + 1; I2 < L2; I2++) {
 			b = col_classes_len[COL][I2];
-			k = ij2k(I1, I2, L2);
+			k = Combi.ij2k(I1, I2, L2);
 			T.D2->RHS[eqn_offset + L2 + k] = a * b;
 			if (f_dual_is_linear_space) {
 				T.D2->type[eqn_offset + L2 + k] = t_EQ;
@@ -2524,7 +2529,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 		u = T.types_first[rr];
 		for (I = 0; I < L2; I++) {
 			a = point_types[u * L2 + I];
-			a2 = binomial2(a);
+			a2 = Combi.binomial2(a);
 			T.D2->RHS[eqn_offset + I] -= a2 * p;
 			if (T.D2->RHS[eqn_offset + I] < 0) {
 				if (f_vv) {
@@ -2549,7 +2554,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 			a = point_types[u * L2 + I1];
 			for (I2 = I1 + 1; I2 < L2; I2++) {
 				b = point_types[u * L2 + I2];
-				k = ij2k(I1, I2, L2);
+				k = Combi.ij2k(I1, I2, L2);
 				ab = a * b * p;
 				T.D2->RHS[eqn_offset + L2 + k] -= ab;
 				if (T.D2->RHS[eqn_offset + L2 + k] < 0) {
@@ -3212,6 +3217,7 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 	int f_vv = (verbose_level >= 2);
 	int i, j, f, l, I, J, rr, R, S, a, a2, s, /*l1, l2,*/ L1, L2;
 	int h, u, d, d2, o, e, p, eqn_number, nb_vars, nb_eqns;
+	combinatorics_domain Combi;
 	
 	// create all partitions which are refined line types
 
@@ -3269,7 +3275,7 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 	eqn_number = L1;
 	
 	for (i = 0; i < L2; i++) {
-		a = minus_one_if_positive(the_row_scheme[i * R + r]);
+		a = Combi.minus_one_if_positive(the_row_scheme[i * R + r]);
 		T.D1->Aij(eqn_number, i) = a;
 		}
 	T.D1->RHS[eqn_number] = col_classes_len[ROW][r] - 1;
@@ -3303,9 +3309,9 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 				continue;
 			d = row_classes_len[ROW][j];
 			p = col_classes_len[COL][rr];
-			d2 = binomial2(d);
+			d2 = Combi.binomial2(d);
 			a = line_types[u * nb_vars + j];
-			a2 = binomial2(a);
+			a2 = Combi.binomial2(a);
 			o = d2 - a2 * p;
 			if (o < 0) {
 				if (f_vv) {
@@ -3315,7 +3321,7 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 					}
 				return FALSE;
 				}
-			e = largest_binomial2_below(o);
+			e = Combi.largest_binomial2_below(o);
 			T.D1->x_max[j] = MINIMUM(T.D1->x_max[j], e);
 			}
 		}
@@ -3347,6 +3353,7 @@ int tdo_scheme::tdo_columns_setup_second_system(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, len, r, I, J, L1, L2, Nb_eqns, Nb_vars;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "tdo_scheme::tdo_columns_setup_second_system" << endl;
@@ -3362,7 +3369,7 @@ int tdo_scheme::tdo_columns_setup_second_system(
 
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
 	
-	nb_eqns_joining = L2 + binomial2(L2);
+	nb_eqns_joining = L2 + Combi.binomial2(L2);
 	nb_eqns_counting = T.nb_multiple_types * (L2 + 1);
 	nb_eqns_upper_bound = 0;
 	if (f_use_packing_numbers) {
@@ -3467,6 +3474,7 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_joining(
 	int l2, L1, L2, i, r, f, l, j, c;
 	int J, I, I1, I2, a, b, ab, a2, k, h, rr, p, u;
 	char label[100];
+	combinatorics_domain Combi;
 	
 	l2 = nb_row_classes[ROW];
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
@@ -3477,7 +3485,7 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_joining(
 		}
 	for (I1 = 0; I1 < L2; I1++) {
 		for (I2 = I1 + 1; I2 < L2; I2++) {
-			k = ij2k(I1, I2, L2);
+			k = Combi.ij2k(I1, I2, L2);
 			sprintf(label, "J_{%d,%d}", I1 + 1, I2 + 1);
 			T.D2->init_eqn_label(eqn_start + L2 + k, label);
 			}
@@ -3491,12 +3499,12 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_joining(
 			J = T.types_first2[i] + j;
 			for (I = 0; I < L2; I++) {
 				a = line_types[c * L2 + I];
-				a2 = binomial2(a);
+				a2 = Combi.binomial2(a);
 				T.D2->Aij(eqn_start + I, J) = a2;
 				}
 			for (I1 = 0; I1 < L2; I1++) {
 				for (I2 = I1 + 1; I2 < L2; I2++) {
-					k = ij2k(I1, I2, L2);
+					k = Combi.ij2k(I1, I2, L2);
 					a = line_types[c * L2 + I1];
 					b = line_types[c * L2 + I2];
 					ab = a * b;
@@ -3510,14 +3518,14 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_joining(
 	
 	for (I = 0; I < L2; I++) {
 		a = row_classes_len[ROW][I];
-		a2 = binomial2(a);
+		a2 = Combi.binomial2(a);
 		T.D2->RHS[eqn_start + I] = a2;
 		}
 	for (I1 = 0; I1 < L2; I1++) {
 		a = row_classes_len[ROW][I1];
 		for (I2 = I1 + 1; I2 < L2; I2++) {
 			b = row_classes_len[ROW][I2];
-			k = ij2k(I1, I2, L2);
+			k = Combi.ij2k(I1, I2, L2);
 			T.D2->RHS[eqn_start + l2 + k] = a * b;
 			}
 		}
@@ -3529,7 +3537,7 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_joining(
 		u = T.types_first[rr];
 		for (I = 0; I < L2; I++) {
 			a = line_types[u * L2 + I];
-			a2 = binomial2(a);
+			a2 = Combi.binomial2(a);
 			T.D2->RHS[eqn_start + I] -= a2 * p;
 			if (T.D2->RHS[eqn_start + I] < 0) {
 				if (f_v) {
@@ -3544,7 +3552,7 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_joining(
 			a = line_types[u * L2 + I1];
 			for (I2 = I1 + 1; I2 < L2; I2++) {
 				b = line_types[u * L2 + I2];
-				k = ij2k(I1, I2, L2);
+				k = Combi.ij2k(I1, I2, L2);
 				ab = a * b * p;
 				T.D2->RHS[eqn_start + L2 + k] -= ab;
 				if (T.D2->RHS[eqn_start + L2 + k] < 0) {
@@ -3872,6 +3880,7 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 	int f_vvv = (verbose_level >= 3);
 	int i, j, R, l1, l2, r2, r3, S, I, J, f, l, s;
 	int eqn_offset, eqn_cnt;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "tdo_scheme::td3_rows_setup_first_system "
@@ -3905,7 +3914,7 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 			// connections within the same row-partition
 			for (J = 0; J < nb_vars; J++) {
 				T.D1->A[r2 * nb_vars + J] =
-					minus_one_if_positive(the_col_scheme[r2 * l2 + J]);
+					Combi.minus_one_if_positive(the_col_scheme[r2 * l2 + J]);
 				}
 			T.D1->RHS[r2] = (row_classes_len[ROW][r2] - 1) * lambda2;
 			}
@@ -3929,18 +3938,18 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 			// connections to pairs within the same row-partition
 			for (J = 0; J < nb_vars; J++) {
 				T.D1->A[(eqn_offset + r2) * nb_vars + J] =
-					binomial2(minus_one_if_positive(
+					Combi.binomial2(Combi.minus_one_if_positive(
 							the_col_scheme[r2 * l2 + J]));
 				}
 			T.D1->RHS[eqn_offset + r2] =
-				binomial2((row_classes_len[ROW][r2] - 1)) * lambda3;
+				Combi.binomial2((row_classes_len[ROW][r2] - 1)) * lambda3;
 			}
 		else {
 			// connections to pairs with one
 			// in the same and one in the other part
 			for (J = 0; J < nb_vars; J++) {
 				T.D1->A[(eqn_offset + r2) * nb_vars + J] =
-					minus_one_if_positive(the_col_scheme[r * l2 + J])
+					Combi.minus_one_if_positive(the_col_scheme[r * l2 + J])
 						* the_col_scheme[r2 * l2 + J];
 				}
 			T.D1->RHS[eqn_offset + r2] =
@@ -3962,9 +3971,9 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 		// connections to pairs from one different row-partition
 		for (J = 0; J < nb_vars; J++) {
 			T.D1->A[(eqn_offset + eqn_cnt) * nb_vars + J] =
-				binomial2(the_col_scheme[r2 * l2 + J]);
+				Combi.binomial2(the_col_scheme[r2 * l2 + J]);
 			}
-		T.D1->RHS[eqn_offset + eqn_cnt] = binomial2(
+		T.D1->RHS[eqn_offset + eqn_cnt] = Combi.binomial2(
 				row_classes_len[ROW][r2]) * lambda3;
 		eqn_cnt++;
 		}
@@ -4326,6 +4335,7 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 	int f_vvv = (verbose_level >= 3);
 	int j, R, l1, l2, S, I, J, f, l, a, a2;
 	int s, d, d2, d3, o, h, rr, p, u, a3, e;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "td3_columns_setup_first_system r=" << r << endl;
@@ -4373,7 +4383,7 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 		if (T.D1->x_max[j] == 0)
 			continue;
 		d = row_classes_len[ROW][j];
-		d2 = binomial2(d) * lambda2;
+		d2 = Combi.binomial2(d) * lambda2;
 		o = d2;
 		for (h = 0; h < T.nb_only_one_type; h++) {
 			rr = T.only_one_type[h];
@@ -4383,7 +4393,7 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 			//cout << "u=" << u << endl;
 				
 			a = line_types[u * nb_vars + j];
-			a2 = binomial2(a);
+			a2 = Combi.binomial2(a);
 			o -= a2 * p;
 			if (o < 0) {
 				if (f_vvv) {
@@ -4394,7 +4404,7 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 				return FALSE;
 				}
 			}
-		e = largest_binomial2_below(o);
+		e = Combi.largest_binomial2_below(o);
 		T.D1->x_max[j] = MINIMUM(T.D1->x_max[j], e);
 		}
 	for (j = 0; j < nb_vars; j++) {
@@ -4402,7 +4412,7 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 		if (T.D1->x_max[j] == 0)
 			continue;
 		d = row_classes_len[ROW][j];
-		d3 = binomial3(d) * lambda3;
+		d3 = Combi.binomial3(d) * lambda3;
 		o = d3;
 		for (h = 0; h < T.nb_only_one_type; h++) {
 			rr = T.only_one_type[h];
@@ -4411,7 +4421,7 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 			//cout << "u=" << u << endl;
 			
 			a = line_types[u * nb_vars + j];
-			a3 = binomial3(a);
+			a3 = Combi.binomial3(a);
 			o -= a3 * p;
 			if (o < 0) {
 				if (f_vvv) {
@@ -4422,7 +4432,7 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 				return FALSE;
 				}
 			}
-		e = largest_binomial3_below(o);
+		e = Combi.largest_binomial3_below(o);
 		T.D1->x_max[j] = MINIMUM(T.D1->x_max[j], e);
 		}
 		
@@ -4453,15 +4463,16 @@ int tdo_scheme::td3_columns_setup_second_system(
 	int S;
 	int nb_eqns_joining, nb_eqns_joining_pairs;
 	int nb_eqns_joining_triples, nb_eqns_counting;
+	combinatorics_domain Combi;
 
 	l2 = nb_row_classes[ROW];
 	
-	nb_eqns_joining_triples = l2 + l2 * (l2 - 1) + binomial3(l2);
+	nb_eqns_joining_triples = l2 + l2 * (l2 - 1) + Combi.binomial3(l2);
 		// l2 times: triples within a given class
 		// l2 * (l2 - 1) times (ordered pairs from an l2 set): 
 		//     triples with 2 in a given class, 1 in another given class
 		// binomial3(l2) triples from different classes
-	nb_eqns_joining_pairs = l2 + binomial2(l2);
+	nb_eqns_joining_pairs = l2 + Combi.binomial2(l2);
 		// l2 times: pairs within a given class
 		// binomial2(l2) pairs from different classes
 	nb_eqns_joining = nb_eqns_joining_triples + nb_eqns_joining_pairs;
@@ -4591,6 +4602,7 @@ int tdo_scheme::td3_columns_triples_same_class(int verbose_level,
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int I, i, r, f, l, j, c, J, a, a3, rr, p, u, l2, h;
+	combinatorics_domain Combi;
 
 	l2 = nb_row_classes[ROW];
 	
@@ -4608,20 +4620,20 @@ int tdo_scheme::td3_columns_triples_same_class(int verbose_level,
 				c = f + j;
 				J = T.types_first2[i] + j;
 				a = line_types[c * nb_vars + I];
-				a3 = binomial3(a);
+				a3 = Combi.binomial3(a);
 				// joining triples from the same class:
 				T.D2->A[(eqn_offset + I) * Nb_vars + J] = a3;
 				}
 			}
 		a = row_classes_len[ROW][I];
-		a3 = binomial3(a);
+		a3 = Combi.binomial3(a);
 		T.D2->RHS[eqn_offset + I] = a3 * lambda3;
 		for (h = 0; h < T.nb_only_one_type; h++) {
 			rr = T.only_one_type[h];
 			p = col_classes_len[COL][rr];
 			u = T.types_first[rr];
 			a = line_types[u * nb_vars + I];
-			a3 = binomial3(a);
+			a3 = Combi.binomial3(a);
 			T.D2->RHS[eqn_offset + I] -= a3 * p;
 			if (T.D2->RHS[eqn_offset + I] < 0) {
 				if (f_v) {
@@ -4649,6 +4661,7 @@ int tdo_scheme::td3_columns_pairs_same_class(int verbose_level,
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int I, i, r, f, l, j, c, J, a, a2, rr, p, u, l2, h;
+	combinatorics_domain Combi;
 
 	l2 = nb_row_classes[ROW];
 	
@@ -4666,20 +4679,20 @@ int tdo_scheme::td3_columns_pairs_same_class(int verbose_level,
 				c = f + j;
 				J = T.types_first2[i] + j;
 				a = line_types[c * nb_vars + I];
-				a2 = binomial2(a);
+				a2 = Combi.binomial2(a);
 				// joining pairs from the same class:
 				T.D2->A[(eqn_offset + I) * Nb_vars + J] = a2;
 				}
 			}
 		a = row_classes_len[ROW][I];
-		a2 = binomial2(a);
+		a2 = Combi.binomial2(a);
 		T.D2->RHS[eqn_offset + I] = a2 * lambda2;
 		for (h = 0; h < T.nb_only_one_type; h++) {
 			rr = T.only_one_type[h];
 			p = col_classes_len[COL][rr];
 			u = T.types_first[rr];
 			a = line_types[u * nb_vars + I];
-			a2 = binomial2(a);
+			a2 = Combi.binomial2(a);
 			T.D2->RHS[eqn_offset + I] -= a2 * p;
 			if (T.D2->RHS[eqn_offset + I] < 0) {
 				if (f_v) {
@@ -4789,6 +4802,7 @@ int tdo_scheme::td3_columns_lambda2_joining_pairs_from_different_classes(
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int I1, I2, i, r, f, l, j, c, J, a, b, ab, k, rr, p, u, l2, h;
+	combinatorics_domain Combi;
 
 	l2 = nb_row_classes[ROW];
 	
@@ -4799,7 +4813,7 @@ int tdo_scheme::td3_columns_lambda2_joining_pairs_from_different_classes(
 	// lambda2: joining pairs from different classes
 	for (I1 = 0; I1 < l2; I1++) {
 		for (I2 = I1 + 1; I2 < l2; I2++) {
-			k = ij2k(I1, I2, l2);
+			k = Combi.ij2k(I1, I2, l2);
 			for (i = 0; i < T.nb_multiple_types; i++) {
 				r = T.multiple_types[i];
 				f = T.types_first[r];
@@ -4857,6 +4871,7 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(
 	int f_vvv = (verbose_level >= 3);
 	int I1, I2, i, r, f, l, j, c, J, a, a2, ab, b, k, rr, p, u, l2, h;
 	int length_first, length_first2, length_second;
+	combinatorics_domain Combi;
 
 	l2 = nb_row_classes[ROW];
 	
@@ -4868,12 +4883,12 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(
 	// class and one in the second class
 	for (I1 = 0; I1 < l2; I1++) {
 		length_first = row_classes_len[ROW][I1];
-		length_first2 = binomial2(length_first);
+		length_first2 = Combi.binomial2(length_first);
 		for (I2 = 0; I2 < l2; I2++) {
 			if (I2 == I1)
 				continue;
 			length_second = row_classes_len[ROW][I2];
-			k = ordered_pair_rank(I1, I2, l2);
+			k = Combi.ordered_pair_rank(I1, I2, l2);
 			for (i = 0; i < T.nb_multiple_types; i++) {
 				r = T.multiple_types[i];
 				f = T.types_first[r];
@@ -4883,7 +4898,7 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(
 					J = T.types_first2[i] + j;
 					a = line_types[c * nb_vars + I1];
 					b = line_types[c * nb_vars + I2];
-					ab = binomial2(a) * b;
+					ab = Combi.binomial2(a) * b;
 					T.D2->A[(l2 + k) * Nb_vars + J] = ab;
 					}
 				}
@@ -4893,7 +4908,7 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_2_1(
 				p = col_classes_len[COL][rr];
 				u = T.types_first[rr];
 				a = line_types[u * nb_vars + I1];
-				a2 = binomial2(a);
+				a2 = Combi.binomial2(a);
 				b = line_types[u * nb_vars + I2];
 				T.D2->RHS[l2 + k] -= a2 * b * p;
 				if (T.D2->RHS[l2 + k] < 0) {
@@ -4928,6 +4943,7 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(
 	int f_vvv = (verbose_level >= 3);
 	int I1, I2, I3, i, r, f, l, j, c, J, a, b, k, rr, p, u, l2, h, g;
 	int length_first, length_second, length_third;
+	combinatorics_domain Combi;
 
 	l2 = nb_row_classes[ROW];
 	
@@ -4942,7 +4958,7 @@ int tdo_scheme::td3_columns_lambda3_joining_triples_1_1_1(
 			length_second = row_classes_len[ROW][I2];
 			for (I3 = I2 + 1; I3 < l2; I3++) {
 				length_third = row_classes_len[ROW][I3];
-				k = ijk_rank(I1, I2, I3, l2);
+				k = Combi.ijk_rank(I1, I2, I3, l2);
 				for (i = 0; i < T.nb_multiple_types; i++) {
 					r = T.multiple_types[i];
 					f = T.types_first[r];

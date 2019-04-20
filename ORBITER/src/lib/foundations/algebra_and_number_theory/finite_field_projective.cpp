@@ -2067,13 +2067,14 @@ void finite_field::all_PG_elements_in_subspace(
 	int *message;
 	int *word;
 	int i, j;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "finite_field::all_PG_elements_in_subspace" << endl;
 		}
 	message = NEW_int(k);
 	word = NEW_int(n);
-	nb_points = generalized_binomial(k, 1, q);
+	nb_points = Combi.generalized_binomial(k, 1, q);
 	point_list = NEW_int(nb_points);
 
 	for (i = 0; i < nb_points; i++) {
@@ -2113,6 +2114,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 	int *message;
 	int *word;
 	int i, j;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "finite_field::all_PG_elements_in_"
@@ -2120,7 +2122,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 		}
 	message = NEW_int(k);
 	word = NEW_int(n);
-	nb_points = generalized_binomial(k, 1, q);
+	nb_points = Combi.generalized_binomial(k, 1, q);
 	//point_list = NEW_int(nb_points);
 
 	for (i = 0; i < nb_points; i++) {
@@ -2310,6 +2312,7 @@ void finite_field::do_blocking_set_family_3(int n,
 	int nb, pt, sz;
 	int i, j;
 	int basis[6];
+	combinatorics_domain Combi;
 
 	fancy_set *S;
 
@@ -2323,7 +2326,7 @@ void finite_field::do_blocking_set_family_3(int n,
 #if 1
 	while (TRUE) {
 		cout << "choosing random permutation" << endl;
-		random_permutation(idx, set_size);
+		Combi.random_permutation(idx, set_size);
 
 		cout << idx[0] << ", ";
 		cout << idx[1] << ", ";

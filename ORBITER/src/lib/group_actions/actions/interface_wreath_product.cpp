@@ -467,6 +467,7 @@ void wreath_product_group_element_print_as_permutation(
 	int f_v = FALSE;
 	int *Elt = (int *) elt;
 	int i, j;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_print_as_permutation "
@@ -483,7 +484,7 @@ void wreath_product_group_element_print_as_permutation(
 		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 		}
-	perm_print(ost, p, A.degree);
+	Combi.perm_print(ost, p, A.degree);
 	FREE_int(p);
 }
 

@@ -634,6 +634,7 @@ void action::init_permutation_group_from_generators(int degree,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action::init_permutation_group_from_generators "
@@ -649,7 +650,7 @@ void action::init_permutation_group_from_generators(int degree,
 		for (i = 0; i < nb_gens; i++) {
 			cout << i << " : ";
 			if (degree < 20) {
-				perm_print(cout, gens + i * degree, degree);
+				Combi.perm_print(cout, gens + i * degree, degree);
 				}
 			else {
 				cout << "too large to print";

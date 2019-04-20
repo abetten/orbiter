@@ -1200,6 +1200,7 @@ int projective_space::arc_test(int *input_pts, int nb_pts,
 	int set[3];
 	int ret = TRUE;
 	int h, i, N;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space::arc_test" << endl;
@@ -1213,9 +1214,9 @@ int projective_space::arc_test(int *input_pts, int nb_pts,
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(Pts + i * 3, input_pts[i]);
 		}
-	N = int_n_choose_k(nb_pts, 3);
+	N = Combi.int_n_choose_k(nb_pts, 3);
 	for (h = 0; h < N; h++) {
-		unrank_k_subset(h, set, nb_pts, 3);
+		Combi.unrank_k_subset(h, set, nb_pts, 3);
 		int_vec_copy(Pts + set[0] * 3, Mtx, 3);
 		int_vec_copy(Pts + set[1] * 3, Mtx + 3, 3);
 		int_vec_copy(Pts + set[2] * 3, Mtx + 6, 3);
@@ -4081,6 +4082,7 @@ void projective_space::circle_type_of_line_subset(
 	int idx_set[3];
 	int sz;
 	int i, idx, a, b;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space::circle_type_of_line_subset "
@@ -4094,7 +4096,7 @@ void projective_space::circle_type_of_line_subset(
 		circle_type[i] = 0;
 		}
 	
-	first_k_subset(idx_set, nb_pts, 3);
+	Combi.first_k_subset(idx_set, nb_pts, 3);
 	do {
 		for (i = 0; i < 3; i++) {
 			subset[i] = pts[idx_set[i]];
@@ -4123,7 +4125,7 @@ void projective_space::circle_type_of_line_subset(
 
 		FREE_int(subline);
 		circle_type[b]++;
-		} while (next_k_subset(idx_set, nb_pts, 3));
+		} while (Combi.next_k_subset(idx_set, nb_pts, 3));
 
 	if (f_vv) {
 		cout << "projective_space::circle_type_of_line_subset "
@@ -4132,7 +4134,7 @@ void projective_space::circle_type_of_line_subset(
 		cout << endl;
 		}
 	for (i = 4; i < nb_pts; i++) {
-		a = int_n_choose_k(i, 3);
+		a = Combi.int_n_choose_k(i, 3);
 		if (circle_type[i] % a) {
 			cout << "projective_space::circle_type_of_line_subset "
 					"circle_type[i] % a" << endl;
@@ -4622,6 +4624,7 @@ void projective_space::plane_intersection_type_fast(
 	int subset3[3];
 	longinteger_object plane_rk, aa;
 	int *pts_on_plane;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_fast" << endl;
@@ -4637,7 +4640,7 @@ void projective_space::plane_intersection_type_fast(
 		}
 	d = n + 1;
 	N_planes = nb_rk_k_subspaces_as_int(3);
-	N = int_n_choose_k(set_size, 3);
+	N = Combi.int_n_choose_k(set_size, 3);
 
 	if (f_v) {
 		cout << "N_planes=" << N_planes << endl;
@@ -4671,7 +4674,7 @@ void projective_space::plane_intersection_type_fast(
 
 	len = 0;
 	for (rk = 0; rk < N; rk++) {
-		unrank_k_subset(rk, subset, set_size, 3);
+		Combi.unrank_k_subset(rk, subset, set_size, 3);
 		if (f_v) {
 			cout << rk << "-th subset ";
 			int_vec_print(cout, subset, 3);
@@ -4818,13 +4821,13 @@ void projective_space::plane_intersection_type_fast(
 
 
 
-				N2 = int_n_choose_k(l, 3);
+				N2 = Combi.int_n_choose_k(l, 3);
 				for (i = 0; i < N2; i++) {
-					unrank_k_subset(i, subset2, l, 3);
+					Combi.unrank_k_subset(i, subset2, l, 3);
 					for (h = 0; h < 3; h++) {
 						subset3[h] = pts_on_plane[subset2[h]];
 						}
-					rr = rank_k_subset(subset3, set_size, 3);
+					rr = Combi.rank_k_subset(subset3, set_size, 3);
 					if (f_v) {
 						cout << i << "-th subset3 ";
 						int_vec_print(cout, subset3, 3);
@@ -5257,6 +5260,7 @@ void projective_space::cheat_sheet_subspaces(
 	int nb_k_subspaces;
 	int i, j, u;
 	int f_need_comma = FALSE;
+	combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -5276,7 +5280,7 @@ void projective_space::cheat_sheet_subspaces(
 
 
 	//nb_points = N_points;
-	nb_k_subspaces = generalized_binomial(n1, k1, q);
+	nb_k_subspaces = Combi.generalized_binomial(n1, k1, q);
 
 
 	f << "PG$(" << n << ", " << q << ")$ has "
@@ -5416,6 +5420,7 @@ void projective_space::conic_type_randomized(int nb_times,
 	int *pts_on_conic;
 	int allocation_length;
 	geometry_global Gg;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space::conic_type_randomized" << endl;
@@ -5435,7 +5440,7 @@ void projective_space::conic_type_randomized(int nb_times,
 		exit(1);
 		}
 	//d = n + 1;
-	N = int_n_choose_k(set_size, 5);
+	N = Combi.int_n_choose_k(set_size, 5);
 
 	if (f_v) {
 		cout << "set_size=" << set_size << endl;
@@ -5452,7 +5457,7 @@ void projective_space::conic_type_randomized(int nb_times,
 	for (cnt = 0; cnt < nb_times; cnt++) {
 
 		rk = random_integer(N);
-		unrank_k_subset(rk, subset, set_size, 5);
+		Combi.unrank_k_subset(rk, subset, set_size, 5);
 		if (cnt && ((cnt % 1000) == 0)) {
 			cout << cnt << " / " << nb_times << " : ";
 			int_vec_print(cout, subset, 5);
@@ -5755,6 +5760,7 @@ void projective_space::conic_type(
 	int *pts_on_conic;
 	int allocation_length;
 	geometry_global Gg;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space::conic_type" << endl;
@@ -5773,7 +5779,7 @@ void projective_space::conic_type(
 		exit(1);
 		}
 	//d = n + 1;
-	N = int_n_choose_k(set_size, 5);
+	N = Combi.int_n_choose_k(set_size, 5);
 
 	if (f_v) {
 		cout << "set_size=" << set_size << endl;
@@ -5789,7 +5795,7 @@ void projective_space::conic_type(
 	len = 0;
 	for (rk = 0; rk < N; rk++) {
 
-		unrank_k_subset(rk, subset, set_size, 5);
+		Combi.unrank_k_subset(rk, subset, set_size, 5);
 		if (f_v3 || (rk && ((rk % 1000) == 0))) {
 			cout << rk << " / " << N << " : ";
 			int_vec_print(cout, subset, 5);
@@ -6983,6 +6989,7 @@ void projective_space::arc_lifting_diophant(
 	int i, j, h, pt;
 	int *free_points;
 	int nb_free_points;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space::arc_lifting_diophant" << endl;
@@ -6990,7 +6997,7 @@ void projective_space::arc_lifting_diophant(
 
 	free_points = NEW_int(N_points);
 
-	set_complement(arc, arc_sz,
+	Combi.set_complement(arc, arc_sz,
 			free_points, nb_free_points, N_points);
 
 
@@ -7107,6 +7114,7 @@ void projective_space::rearrange_arc_for_lifting(int *Arc6,
 	int i, a, h;
 	int part[4];
 	int pts[4];
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space::rearrange_arc_for_lifting" << endl;
@@ -7129,7 +7137,7 @@ void projective_space::rearrange_arc_for_lifting(int *Arc6,
 	// now arc[2], arc[3], arc[4], arc[5] are the remaining four points
 	// of the arc.
 
-	set_partition_4_into_2_unrank(partition_rk, part);
+	Combi.set_partition_4_into_2_unrank(partition_rk, part);
 
 	int_vec_copy(arc + 2, pts, 4);
 

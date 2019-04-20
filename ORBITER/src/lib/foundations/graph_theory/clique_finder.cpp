@@ -739,6 +739,7 @@ void clique_finder::m_iji(int i, int j, int a)
 int clique_finder::s_ij(int i, int j)
 {
 	int k, aij;
+	combinatorics_domain Combi;
 	
 	if ( i < 0 || i >= n ) {
 		cout << "clique_finder::s_ij() addressing error, i = "
@@ -764,7 +765,7 @@ int clique_finder::s_ij(int i, int j)
 		if (i == j) {
 			return 0;
 			}
-		k = ij2k(i, j, n);
+		k = Combi.ij2k(i, j, n);
 		aij = adj_list_coded[k];
 		return aij;
 		}
@@ -772,7 +773,7 @@ int clique_finder::s_ij(int i, int j)
 		if (i == j) {
 			return 0;
 			}
-		k = ij2k(i, j, n);
+		k = Combi.ij2k(i, j, n);
 		aij = bitvector_s_i(bitvector_adjacency, k);
 		return aij;
 		}

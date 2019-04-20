@@ -2756,6 +2756,7 @@ void mp_graphics::draw_graph(int x, int y,
 	int Px[2];
 	int Py[2];
 	int rad = (int)(dx * .05);
+	combinatorics_domain Combi;
 
 	//cout << "draw_graph nb_V=" << nb_V << endl;
 
@@ -2769,7 +2770,7 @@ void mp_graphics::draw_graph(int x, int y,
 		}
 	for (i = 0; i < nb_E; i++) {
 		e = Edges[i];
-		k2ij(e, u, v, nb_V);
+		Combi.k2ij(e, u, v, nb_V);
 		Px[0] = x + (int) X[u];
 		Py[0] = y + (int) Y[u];
 		Px[1] = x + (int) X[v];
@@ -2799,6 +2800,7 @@ void mp_graphics::draw_graph_with_distinguished_edge(
 	int Px[2];
 	int Py[2];
 	int rad = (int)(dx * .05);
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "mp_graphics::draw_graph_with_distinguished_edge "
@@ -2815,7 +2817,7 @@ void mp_graphics::draw_graph_with_distinguished_edge(
 
 	for (i = 0; i < nb_E; i++) {
 		e = Edges[i];
-		k2ij(e, u, v, nb_V);
+		Combi.k2ij(e, u, v, nb_V);
 		Px[0] = x + (int) X[u];
 		Py[0] = y + (int) Y[u];
 		Px[1] = x + (int) X[v];
@@ -2849,6 +2851,7 @@ void mp_graphics::draw_graph_on_multiple_circles(int x, int y,
 	int Py[2];
 	int rad = (int)(dx * .05);
 	int nb_per_circle;
+	combinatorics_domain Combi;
 
 	cout << "mp_graphics::draw_graph_on_multiple_circles "
 			"nb_V=" << nb_V << endl;
@@ -2867,7 +2870,7 @@ void mp_graphics::draw_graph_on_multiple_circles(int x, int y,
 		}
 	for (i = 0; i < nb_E; i++) {
 		e = Edges[i];
-		k2ij(e, u, v, nb_V);
+		Combi.k2ij(e, u, v, nb_V);
 		Px[0] = x + (int) X[u];
 		Py[0] = y + (int) Y[u];
 		Px[1] = x + (int) X[v];
@@ -2956,6 +2959,7 @@ void mp_graphics::draw_tournament(int x, int y,
 	int Px[3];
 	int Py[3];
 	int rad = (int)(dx * .05);
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "mp_graphics::draw_tournament nb_V=" << nb_V << endl;
@@ -2975,7 +2979,7 @@ void mp_graphics::draw_tournament(int x, int y,
 
 		swap = a % 2;
 		a2 = a / 2;
-		k2ij(a2, u, v, nb_V);
+		Combi.k2ij(a2, u, v, nb_V);
 
 
 

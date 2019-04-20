@@ -173,11 +173,12 @@ void schreier::init2()
 
 void schreier::initialize_tables()
 {
+	combinatorics_domain Combi;
 	int i;
 	
 	nb_orbits = 0;
-	perm_identity(orbit, A->degree);
-	perm_identity(orbit_inv, A->degree);
+	Combi.perm_identity(orbit, A->degree);
+	Combi.perm_identity(orbit_inv, A->degree);
 	orbit_first[0] = 0;
 	for (i = 0; i < A->degree; i++) {
 		prev[i] = -1;

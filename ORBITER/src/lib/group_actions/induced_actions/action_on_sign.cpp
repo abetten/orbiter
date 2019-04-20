@@ -62,6 +62,7 @@ void action_on_sign::compute_image(int *Elt,
 {
 	int f_v = (verbose_level >= 1);
 	int u, v, sgn;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_sign::compute_image "
@@ -76,7 +77,7 @@ void action_on_sign::compute_image(int *Elt,
 		v = A->element_image_of(u, Elt, FALSE);
 		perm[u] = v;
 		}
-	sgn = perm_signum(perm, perm_degree);
+	sgn = Combi.perm_signum(perm, perm_degree);
 	if (sgn == -1) {
 		j = (i + 1) % 2;
 		}

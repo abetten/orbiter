@@ -950,6 +950,7 @@ int plane_rank(int *x, int b_1, int b_2, int verbose_level)
 	int n2;
 	int subset[2];
 	geometry_global Gg;
+	combinatorics_domain Combi;
 	
 	n2 = n * (n - 1) / 2;
 	x[b_1] = 0;
@@ -957,7 +958,7 @@ int plane_rank(int *x, int b_1, int b_2, int verbose_level)
 	subset[0] = b_1;
 	subset[1] = b_2;
 	y = NEW_int(n);
-	co_rank = rank_k_subset(subset, n, 2);
+	co_rank = Combi.rank_k_subset(subset, n, 2);
 	compress2(x, y, b_1, b_2);
 	Gg.AG_element_rank(2, y, 1, n - 2, rk1);
 	rk = rk1 * n2 + co_rank;
@@ -972,13 +973,14 @@ void plane_unrank(int rk, int *x, int &b_1, int &b_2, int verbose_level)
 	int n2;
 	int subset[2];
 	geometry_global Gg;
+	combinatorics_domain Combi;
 
 	n2 = n * (n - 1) / 2;
 	
 	y = NEW_int(n);
 	co_rank = rk % n2;
 	rk1 = rk / n2;
-	unrank_k_subset(co_rank, subset, n, 2);
+	Combi.unrank_k_subset(co_rank, subset, n, 2);
 	b_1 = subset[0];
 	b_2 = subset[1];
 	Gg.AG_element_unrank(2, y, 1, n - 2, rk1);
@@ -995,7 +997,8 @@ int solid_rank(int *x, int b_1, int b_2, int b_3, int verbose_level)
 	int n3;
 	int subset[3];
 	geometry_global Gg;
-	
+	combinatorics_domain Combi;
+
 	n3 = n * (n - 1) * (n - 2) / 6;
 	x[b_1] = 0;
 	x[b_2] = 0;
@@ -1004,7 +1007,7 @@ int solid_rank(int *x, int b_1, int b_2, int b_3, int verbose_level)
 	subset[1] = b_2;
 	subset[2] = b_3;
 	y = NEW_int(n);
-	co_rank = rank_k_subset(subset, n, 3);
+	co_rank = Combi.rank_k_subset(subset, n, 3);
 	compress3(x, y, b_1, b_2, b_3);
 	Gg.AG_element_rank(2, y, 1, n - 3, rk1);
 	rk = rk1 * n3 + co_rank;
@@ -1012,20 +1015,22 @@ int solid_rank(int *x, int b_1, int b_2, int b_3, int verbose_level)
 	return rk;
 }
 
-void solid_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3, int verbose_level)
+void solid_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3,
+		int verbose_level)
 {
 	int *y;
 	int rk1, co_rank;
 	int n3;
 	int subset[3];
 	geometry_global Gg;
+	combinatorics_domain Combi;
 
 	n3 = n * (n - 1) * (n - 2) / 6;
 	
 	y = NEW_int(n);
 	co_rank = rk % n3;
 	rk1 = rk / n3;
-	unrank_k_subset(co_rank, subset, n, 3);
+	Combi.unrank_k_subset(co_rank, subset, n, 3);
 	b_1 = subset[0];
 	b_2 = subset[1];
 	b_3 = subset[2];
