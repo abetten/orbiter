@@ -62,6 +62,7 @@ void invariants_packing::init(isomorph *Iso,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int orbit, i;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "invariants_packing::init" << endl;
@@ -154,7 +155,7 @@ void invariants_packing::init(isomorph *Iso,
 			cout << "invariants_packing::init "
 					"orbit=" << orbit << endl;
 			}
-		if (vec_search((void **)List_of_types,
+		if (Sorting.vec_search((void **)List_of_types,
 				packing_types_compare_function, this,
 				nb_types,
 				Type_of_packing + orbit * P->nb_spreads_up_to_isomorphism,
@@ -203,7 +204,7 @@ void invariants_packing::init(isomorph *Iso,
 
 	Type_idx_of_packing = NEW_int(Iso->Reps->count);
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
-		if (vec_search((void **)List_of_types,
+		if (Sorting.vec_search((void **)List_of_types,
 			packing_types_compare_function, this,
 			nb_types,
 			Type_of_packing + orbit * P->nb_spreads_up_to_isomorphism,
@@ -241,6 +242,7 @@ void invariants_packing::compute_dual_packings(
 	int orbit, i;
 	int packing[1000];
 	int dual_packing[1000];
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings" << endl;
@@ -263,8 +265,8 @@ void invariants_packing::compute_dual_packings(
 		for (i = 0; i < Iso->size; i++) {
 			dual_packing[i] = P->Spread_tables->dual_spread_idx[packing[i]];
 			}
-		int_vec_heapsort(packing, Iso->size);
-		int_vec_heapsort(dual_packing, Iso->size);
+		Sorting.int_vec_heapsort(packing, Iso->size);
+		Sorting.int_vec_heapsort(dual_packing, Iso->size);
 		for (i = 0; i < Iso->size; i++) {
 			if (packing[i] != dual_packing[i]) {
 				break;

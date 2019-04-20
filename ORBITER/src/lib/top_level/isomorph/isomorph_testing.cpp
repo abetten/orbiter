@@ -82,6 +82,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	int data[1000];
 	int i, id;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::probe for flag orbit " << flag_orbit
@@ -145,7 +146,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
 		}
-	rearrange_subset(size, level, data,
+	Sorting.rearrange_subset(size, level, data,
 			subset, rearranged_set, verbose_level - 3);
 		// in GALOIS/sorting.C
 		
@@ -709,6 +710,7 @@ int isomorph::next_subset(int t0,
 	int f_is_minimal;
 	int i;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	f_continue = FALSE;
 	
@@ -771,7 +773,7 @@ int isomorph::next_subset(int t0,
 		//AA->print_vector_as_permutation(Stab->gens);
 		}
 	
-	rearrange_subset(size, level, data,
+	Sorting.rearrange_subset(size, level, data,
 		subset, rearranged_set, verbose_level - 3);
 		// in GALOIS/sorting.C
 		
@@ -1222,6 +1224,7 @@ int isomorph::identify_database_is_open(int *set,
 	//database DD1, DD2;
 	int data0[1000];
 	int orbit_no0, id0, f;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::identify_database_is_open" << endl;
@@ -1307,7 +1310,7 @@ int isomorph::identify_database_is_open(int *set,
 
 	int idx;
 
-	if (!int_vec_search(Reps->rep, Reps->count, f, idx)) {
+	if (!Sorting.int_vec_search(Reps->rep, Reps->count, f, idx)) {
 		cout << "representative not found f=" << f << endl;
 		exit(1);
 		}

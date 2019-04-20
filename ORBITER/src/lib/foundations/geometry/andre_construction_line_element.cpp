@@ -128,6 +128,7 @@ int andre_construction_line_element::rank(int verbose_level)
 	int i, j, a, rk, idx;
 	geometry_global Gg;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "andre_construction_line_element::rank" << endl;
@@ -161,7 +162,7 @@ int andre_construction_line_element::rank(int verbose_level)
 
 		rk = Andre->Grass->rank_int_here(
 				coordinates, 0 /* verbose_level*/);
-		if (!int_vec_search(Andre->spread_elements_numeric_sorted,
+		if (!Sorting.int_vec_search(Andre->spread_elements_numeric_sorted,
 				spread_size, rk, idx)) {
 			cout << "andre_construction_line_element::rank cannot "
 					"find the spread element in the sorted list" << endl;

@@ -276,14 +276,15 @@ int combinatorics_domain::is_subset_of(int *A, int sz_A, int *B, int sz_B)
 	int *B2;
 	int i, idx;
 	int ret = FALSE;
+	sorting Sorting;
 
 	B2 = NEW_int(sz_B);
 	for (i = 0; i < sz_B; i++) {
 		B2[i] = B[i];
 		}
-	int_vec_heapsort(B2, sz_B);
+	Sorting.int_vec_heapsort(B2, sz_B);
 	for (i = 0; i < sz_A; i++) {
-		if (!int_vec_search(B2, sz_B, A[i], idx)) {
+		if (!Sorting.int_vec_search(B2, sz_B, A[i], idx)) {
 			goto done;
 			}
 		}
@@ -296,8 +297,9 @@ done:
 int combinatorics_domain::set_find(int *elts, int size, int a)
 {
 	int idx;
+	sorting Sorting;
 	
-	if (!int_vec_search(elts, size, a, idx)) {
+	if (!Sorting.int_vec_search(elts, size, a, idx)) {
 		cout << "set_find fatal: did not find" << endl;
 		cout << "a=" << a << endl;
 		int_vec_print(cout, elts, size);
@@ -334,10 +336,11 @@ void combinatorics_domain::set_complement_safe(
 {
 	int i, j;
 	int *subset2;
+	sorting Sorting;
 
 	subset2 = NEW_int(subset_size);
 	int_vec_copy(subset, subset2, subset_size);
-	int_vec_heapsort(subset2, subset_size);
+	Sorting.int_vec_heapsort(subset2, subset_size);
 	
 	j = 0;
 	size_complement = 0;
@@ -365,8 +368,9 @@ void combinatorics_domain::set_add_elements(
 void combinatorics_domain::set_add_element(int *elts, int &size, int a)
 {
 	int idx, i;
+	sorting Sorting;
 	
-	if (int_vec_search(elts, size, a, idx)) {
+	if (Sorting.int_vec_search(elts, size, a, idx)) {
 		return;
 		}
 	for (i = size; i > idx; i--) {
@@ -390,8 +394,9 @@ void combinatorics_domain::set_delete_elements(int *elts, int &size,
 void combinatorics_domain::set_delete_element(int *elts, int &size, int a)
 {
 	int idx, i;
+	sorting Sorting;
 	
-	if (!int_vec_search(elts, size, a, idx)) {
+	if (!Sorting.int_vec_search(elts, size, a, idx)) {
 		return;
 		}
 	for (i = idx; i < size; i++) {
@@ -737,6 +742,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 	int a, b, u, rk;
 	int six[5];
 	int sz;
+	sorting Sorting;
 	
 
 	if (f_v) {
@@ -767,7 +773,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 	sz = 2;
 
 
-	int_vec_search(six, sz, l, b);
+	Sorting.int_vec_search(six, sz, l, b);
 	for (u = sz; u > b; u--) {
 		six[u] = six[u - 1];
 		}
@@ -798,7 +804,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 		}
 
 
-	int_vec_search(six, sz, j, a);
+	Sorting.int_vec_search(six, sz, j, a);
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b
@@ -1465,10 +1471,11 @@ int combinatorics_domain::is_permutation(int *perm, int n)
 {
 	int *perm2;
 	int i;
+	sorting Sorting;
 
 	perm2 = NEW_int(n);
 	int_vec_copy(perm, perm2, n);
-	int_vec_heapsort(perm2, n);
+	Sorting.int_vec_heapsort(perm2, n);
 	for (i = 0; i < n; i++) {
 		if (perm2[i] != i) {
 			break;

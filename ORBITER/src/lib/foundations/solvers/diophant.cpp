@@ -2140,6 +2140,7 @@ void diophant::coefficient_values_in_row(int i, int &nb_values,
 {
 	int f_v = (verbose_level >= 1);
 	int a, j, k, idx;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "diophant::coefficient_values_in_row" << endl;
@@ -2150,7 +2151,7 @@ void diophant::coefficient_values_in_row(int i, int &nb_values,
 	for (j = 0; j < n; j++) {
 		a = Aij(i, j);
 		if (a) {
-			if (!int_vec_search(values, nb_values, a, idx)) {
+			if (!Sorting.int_vec_search(values, nb_values, a, idx)) {
 				for (k = nb_values; k > idx; k--) {
 					values[k] = values[k - 1];
 					multiplicities[k] = multiplicities[k - 1];

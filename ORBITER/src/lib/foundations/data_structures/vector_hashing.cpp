@@ -81,12 +81,16 @@ void vector_hashing::compute_tables(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, idx;
+	sorting Sorting;
+
 	
 	if (f_v) {
 		cout << "vector_hashing::compute_tables" << endl;
 		}
 	for (i = 0; i < N; i++) {
-		H[i] = int_vec_hash(vector_data + i * data_size, data_size, bit_length);
+		H[i] = int_vec_hash(
+				vector_data + i * data_size,
+				data_size, bit_length);
 		}
 #if 0
 	cout << "H:" << endl;
@@ -94,7 +98,7 @@ void vector_hashing::compute_tables(int verbose_level)
 	cout << endl;
 #endif
 
-	int_vec_classify(N, H, H_sorted, perm, perm_inv, 
+	Sorting.int_vec_classify(N, H, H_sorted, perm, perm_inv,
 		nb_types, type_first, type_len);
 	
 	if (f_v) {
@@ -108,7 +112,8 @@ void vector_hashing::compute_tables(int verbose_level)
 		type_value[i] = H_sorted[idx];
 		}
 	
-	//int_vec_sorting_permutation(H, N, perm, perm_inv, TRUE /* f_increasingly */);
+	//int_vec_sorting_permutation(H, N, perm, perm_inv,
+	//TRUE /* f_increasingly */);
 	
 	
 #if 0
@@ -124,7 +129,8 @@ void vector_hashing::compute_tables(int verbose_level)
 	cout << endl;
 #endif
 	if (f_vv) {
-		cout << "vector_hashing::compute_tables() N=" << N << " nb_types=" << nb_types << endl;
+		cout << "vector_hashing::compute_tables() N=" << N
+				<< " nb_types=" << nb_types << endl;
 		for (i = 0; i < nb_types; i++) {
 			if (type_len[i] == 1)
 				continue;
@@ -184,10 +190,12 @@ void vector_hashing::print()
 int vector_hashing::rank(int *data)
 {
 	int h, idx, f, l, i, I;
+	sorting Sorting;
 	
 	h = int_vec_hash(data, data_size, bit_length);
-	if (!int_vec_search(type_value, nb_types, h, idx)) {
-		cout << "vector_hashing::rank did not find hash value h=" << h << endl;
+	if (!Sorting.int_vec_search(type_value, nb_types, h, idx)) {
+		cout << "vector_hashing::rank did not "
+				"find hash value h=" << h << endl;
 		exit(1);
 		}
 	f = type_first[idx];
@@ -195,11 +203,13 @@ int vector_hashing::rank(int *data)
 	for (i = 0; i < l; i++) {
 		I = f + i;
 		idx = perm_inv[I];
-		if (int_vec_compare(vector_data + idx * data_size, data, data_size) == 0) {
+		if (int_vec_compare(vector_data + idx * data_size,
+				data, data_size) == 0) {
 			return idx;
 			}
 		}
-	cout << "vector_hashing::rank did not find data f=" << f << " l=" << l << endl;
+	cout << "vector_hashing::rank did not find "
+			"data f=" << f << " l=" << l << endl;
 	cout << "data:" << endl;
 	int_vec_print(cout, data, data_size);
 	cout << endl;

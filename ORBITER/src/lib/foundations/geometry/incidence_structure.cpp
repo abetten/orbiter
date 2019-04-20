@@ -1344,6 +1344,7 @@ incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex(
 	int u, v, x, a, b, c, J;
 	int *row_scheme;
 	int *S;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "incidence_structure::print_row_tactical_"
@@ -1413,7 +1414,7 @@ incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex(
 					S[v] = a;
 					//ost << a << " ";
 					}
-				int_vec_heapsort(S, rij);
+				Sorting.int_vec_heapsort(S, rij);
 				ost << "$\\{";
 				for (v = 0; v < rij; v++) {
 					ost << "\\ell_{" << setw(4) << S[v] << "}";
@@ -1449,6 +1450,7 @@ incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex(
 	int u, v, y, a, b, c, I;
 	int *col_scheme;
 	int *S;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "incidence_structure::print_col_tactical_"
@@ -1519,7 +1521,7 @@ incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex(
 					S[v] = a;
 					//ost << a << " ";
 					}
-				int_vec_heapsort(S, kij);
+				Sorting.int_vec_heapsort(S, kij);
 				ost << "$\\{";
 				for (v = 0; v < kij; v++) {
 					ost << "P_{" << setw(4) << S[v] << "}";
@@ -2554,6 +2556,7 @@ void incidence_structure::rearrange(int *&Vi, int &nb_V,
 	int i, j, ii, jj, c, a, h;
 	//int *R;
 	//int *X;
+	sorting Sorting;
 
 	row_classes = NEW_int(nb_points() + nb_lines());
 	col_classes = NEW_int(nb_points() + nb_lines());
@@ -2608,7 +2611,7 @@ void incidence_structure::rearrange(int *&Vi, int &nb_V,
 			j = col_perm[jj];
 			X[i * max_r + h] = j;
 			}
-		int_vec_heapsort(X + i * max_r, nb_lines_on_point[ii]);
+		Sorting.int_vec_heapsort(X + i * max_r, nb_lines_on_point[ii]);
 		} 
 	
 
@@ -3353,6 +3356,7 @@ void incidence_structure::compute_extended_collinearity_graph(
 	int v1, v2, v3;
 	int my_nb_col_parts;
 	int *my_col_parts;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "incidence_structure::compute_extended_"
@@ -3374,11 +3378,11 @@ void incidence_structure::compute_extended_collinearity_graph(
 		}
 	
 	for (i = 0; i < nb_distinguished_point_sets; i++) {
-		int_vec_heapsort(distinguished_point_sets[i],
+		Sorting.int_vec_heapsort(distinguished_point_sets[i],
 				distinguished_point_set_size[i]);
 		}
 	for (i = 0; i < nb_distinguished_line_sets; i++) {
-		int_vec_heapsort(distinguished_line_sets[i],
+		Sorting.int_vec_heapsort(distinguished_line_sets[i],
 				distinguished_line_set_size[i]);
 		}
 	partition = NEW_int(v);
@@ -3461,7 +3465,7 @@ void incidence_structure::compute_extended_collinearity_graph(
 	// finally, we record the distinguished point sets:
 	for (i = 0; i < m; i++) {
 		for (h = 0; h < nb_distinguished_point_sets; h++) {
-			if (int_vec_search(distinguished_point_sets[h],
+			if (Sorting.int_vec_search(distinguished_point_sets[h],
 					distinguished_point_set_size[h], i, idx)) {
 				Adj[i * v + v2 + h] = 1;
 				Adj[(v2 + h) * v + i] = 1;

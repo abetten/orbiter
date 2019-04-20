@@ -1471,6 +1471,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 	int i, j, l, len, ii, jj, c, idx;
 	int nb_points_subgraph;
 	uchar *bitvec;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "colored_graph::compute_neighborhood_subgraph "
@@ -1514,7 +1515,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 
 	for (i = 0; i < nb_points_subgraph; i++) {
 		c = color_in_graph[i];
-		if (!int_vec_search(
+		if (!Sorting.int_vec_search(
 			color_subset->set, color_subset->k, c, idx)) {
 			cout << "error, did not find color" << endl;
 			exit(1);
@@ -1564,6 +1565,7 @@ colored_graph
 	int i, j, l, len, ii, jj, c, idx;
 	int nb_points_subgraph;
 	uchar *bitvec;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "colored_graph::compute_neighborhood_subgraph_with_"
@@ -1611,7 +1613,7 @@ colored_graph
 
 	for (i = 0; i < nb_points_subgraph; i++) {
 		c = color_in_graph[i];
-		if (!int_vec_search(color_subset->set,
+		if (!Sorting.int_vec_search(color_subset->set,
 				color_subset->k, c, idx)) {
 			cout << "error, did not find color" << endl;
 			exit(1);

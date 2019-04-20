@@ -1015,6 +1015,7 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 void mem_object_registry::sort_by_size(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_size" << endl;
@@ -1023,7 +1024,7 @@ void mem_object_registry::sort_by_size(int verbose_level)
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_size before Heapsort" << endl;
 	}
-	Heapsort(entries, nb_entries_used,
+	Sorting.Heapsort(entries, nb_entries_used,
 		sizeof(mem_object_registry_entry),
 		registry_key_pair_compare_by_size);
 	if (f_v) {
@@ -1041,6 +1042,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_location_"
@@ -1089,7 +1091,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 
 	int_vec_copy(type_len, frequency, nb_types);
 
-	int_vec_sorting_permutation(frequency, nb_types,
+	Sorting.int_vec_sorting_permutation(frequency, nb_types,
 			perm, perm_inv, FALSE /* f_increasingly */);
 
 	for (t = nb_types - 1; t >= 0; t--) {
@@ -1132,6 +1134,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 void mem_object_registry::sort_by_type(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_type" << endl;
@@ -1141,7 +1144,7 @@ void mem_object_registry::sort_by_type(int verbose_level)
 		cout << "mem_object_registry::sort_by_type "
 				"before Heapsort" << endl;
 	}
-	Heapsort(entries, nb_entries_used,
+	Sorting.Heapsort(entries, nb_entries_used,
 		sizeof(mem_object_registry_entry),
 		registry_key_pair_compare_by_type);
 	if (f_v) {
@@ -1159,6 +1162,7 @@ void mem_object_registry::sort_by_type(int verbose_level)
 void mem_object_registry::sort_by_location(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_location" << endl;
@@ -1168,7 +1172,7 @@ void mem_object_registry::sort_by_location(int verbose_level)
 		cout << "mem_object_registry::sort_by_location "
 				"before Heapsort" << endl;
 	}
-	Heapsort(entries, nb_entries_used,
+	Sorting.Heapsort(entries, nb_entries_used,
 		sizeof(mem_object_registry_entry),
 		registry_key_pair_compare_by_location);
 

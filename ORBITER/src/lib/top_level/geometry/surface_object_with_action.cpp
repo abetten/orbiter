@@ -885,6 +885,7 @@ void surface_object_with_action::quartic(
 {
 	int f_v = (verbose_level >= 1);
 	//int *Elt;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_object_with_action::quartic" << endl;
@@ -1067,7 +1068,7 @@ void surface_object_with_action::quartic(
 	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
 			<< " points.\\\\" << endl;
 
-	int_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
+	Sorting.int_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 	ost << "The points on the tangent quadric are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
@@ -1126,7 +1127,7 @@ void surface_object_with_action::quartic(
 	int *Pts_intersection;
 	int nb_pts_intersection;
 
-	int_vec_intersect(Pts_on_surface, nb_pts_on_surface, 
+	Sorting.int_vec_intersect(Pts_on_surface, nb_pts_on_surface,
 		Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 
 		Pts_intersection, nb_pts_intersection);
 
@@ -1553,6 +1554,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 	strong_generators *gens_copy;
 	set_and_stabilizer *moved_surface;
 	strong_generators *stab_gens_P0;
+	sorting Sorting;
 
 	int two, four, mfour;
 	int i;
@@ -1697,7 +1699,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
 			<< " points.\\\\" << endl;
 
-	int_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
+	Sorting.int_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 	ost << "The points on the tangent quadric are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
@@ -1713,7 +1715,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 
 
 
-	int_vec_intersect(Pts_on_surface, nb_pts_on_surface, 
+	Sorting.int_vec_intersect(Pts_on_surface, nb_pts_on_surface,
 		Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 
 		Pts_intersection, nb_pts_intersection);
 

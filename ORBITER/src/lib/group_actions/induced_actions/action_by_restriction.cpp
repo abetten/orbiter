@@ -76,6 +76,7 @@ void action_by_restriction::init(int nb_points, int *points,
 {
 	int i;
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_by_restriction::init nb_points="
@@ -90,7 +91,7 @@ void action_by_restriction::init(int nb_points, int *points,
 		points_sorted[i] = points[i];
 		perm_inv[i] = i;
 		}
-	int_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
+	Sorting.int_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
 	if (f_v) {
 		cout << "action_by_restriction::init finished" << endl;
 		}
@@ -104,8 +105,9 @@ int action_by_restriction::original_point(int pt)
 int action_by_restriction::restricted_point_idx(int pt)
 {
 	int idx;
+	sorting Sorting;
 
-	if (!int_vec_search(points_sorted, nb_points, pt, idx)) {
+	if (!Sorting.int_vec_search(points_sorted, nb_points, pt, idx)) {
 		cout << "action_by_restriction::restricted_point_idx fatal: "
 				"point " << pt << " not found" << endl;
 		exit(1);
@@ -120,6 +122,7 @@ int action_by_restriction::compute_image(
 	int idx, b, c, h;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "action_by_restriction::compute_image i = " << i << endl;
@@ -141,7 +144,7 @@ int action_by_restriction::compute_image(
 	if (f_vv) {
 		cout << "image of " << points[i] << " is " << b << endl;
 		}
-	if (!int_vec_search(points_sorted, nb_points, b, idx)) {
+	if (!Sorting.int_vec_search(points_sorted, nb_points, b, idx)) {
 		cout << "action_by_restriction::compute_image fatal: "
 				"image point " << b << " not found" << endl;
 		cout << "action: ";

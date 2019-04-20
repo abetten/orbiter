@@ -229,7 +229,8 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 	int n = 3;
 	//int f_with_group = TRUE;
 	vector_ge *nice_gens;
-	
+	sorting Sorting;
+
 	int v[3];
 	//int w[3];
 
@@ -385,7 +386,7 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 				tangents[i] * P->N_lines + tangents[j]];
 			}
 		}
-	int_vec_heapsort(exterior_points, nb_exterior_points);
+	Sorting.int_vec_heapsort(exterior_points, nb_exterior_points);
 	cout << "the " << nb_exterior_points << " exterior points are: ";
 	int_vec_print(cout, exterior_points, nb_exterior_points);
 	cout << endl;
@@ -398,7 +399,7 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 				points[i] * P->N_points + points[j]];
 			}
 		}
-	int_vec_heapsort(secants, nb_secants);
+	Sorting.int_vec_heapsort(secants, nb_secants);
 	cout << "the " << nb_secants << " secants are: ";
 	int_vec_print(cout, secants, nb_secants);
 	cout << endl;
@@ -428,7 +429,7 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 		for (j = i + 1; j < nb_external_lines; j++) {
 			a = P->Line_intersection[
 				external_lines[i] * P->N_lines + external_lines[j]];
-			if (int_vec_search(exterior_points, nb_exterior_points, a, idx)) {
+			if (Sorting.int_vec_search(exterior_points, nb_exterior_points, a, idx)) {
 				adjacency[i * nb_external_lines + j] = 1;
 				adjacency[j * nb_external_lines + i] = 1;
 				}

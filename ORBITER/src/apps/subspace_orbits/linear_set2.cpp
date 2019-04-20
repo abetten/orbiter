@@ -24,6 +24,7 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "linear_set::construct_semifield orbit_for_W=" << orbit_for_W << endl;
@@ -158,7 +159,7 @@ void linear_set::construct_semifield(int orbit_for_W, int verbose_level)
 
 	for (i = 0; i < small_linear_set_sz; i++) {
 		a = small_linear_set[i];
-		if (!int_vec_search(large_linear_set,
+		if (!Sorting.int_vec_search(large_linear_set,
 				large_linear_set_sz, a, idx)) {
 			cout << "Cannot find embedded spread element "
 					"in large linear set, something is wrong" << endl;

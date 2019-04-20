@@ -465,6 +465,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 	int nb_starter;
 	int l, line_idx, subset_idx;
 	int S3[6];
+	sorting Sorting;
 
 
 
@@ -535,8 +536,8 @@ void surface_object::find_double_six_and_rearrange_lines(
 		}
 
 	int_vec_copy(Lines1, Lines, 27);
-	int_vec_heapsort(Lines0, 27);
-	int_vec_heapsort(Lines1, 27);
+	Sorting.int_vec_heapsort(Lines0, 27);
+	Sorting.int_vec_heapsort(Lines1, 27);
 
 	int i;
 	for (i = 0; i < 27; i++) {
@@ -564,6 +565,7 @@ void surface_object::enumerate_points(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "surface_object::enumerate_points" << endl;
@@ -578,7 +580,7 @@ void surface_object::enumerate_points(int verbose_level)
 				"Surf->nb_pts_on_surface" << endl;
 		exit(1);
 		}
-	int_vec_heapsort(Pts, nb_pts);
+	Sorting.int_vec_heapsort(Pts, nb_pts);
 	if (f_v) {
 		cout << "surface_object::enumerate_points we found "
 				<< nb_pts << " points on the surface" << endl;
@@ -639,7 +641,7 @@ void surface_object::enumerate_points(int verbose_level)
 		}
 	Type_lines_on_point->get_class_by_value(Eckardt_points_index, 
 		nb_Eckardt_points, 3 /* value */, 0 /* verbose_level */);
-	int_vec_heapsort(Eckardt_points_index, nb_Eckardt_points);
+	Sorting.int_vec_heapsort(Eckardt_points_index, nb_Eckardt_points);
 	if (f_v) {
 		cout << "computing Eckardt points done, we found "
 				<< nb_Eckardt_points << " Eckardt points" << endl;
@@ -667,7 +669,7 @@ void surface_object::enumerate_points(int verbose_level)
 		}
 	Type_lines_on_point->get_class_by_value(Double_points_index, 
 		nb_Double_points, 2 /* value */, 0 /* verbose_level */);
-	int_vec_heapsort(Double_points_index, nb_Double_points);
+	Sorting.int_vec_heapsort(Double_points_index, nb_Double_points);
 	if (f_v) {
 		cout << "computing Double points done, we found "
 				<< nb_Double_points << " Double points" << endl;
@@ -702,7 +704,7 @@ void surface_object::enumerate_points(int verbose_level)
 			a = pts_on_lines->Sets[i][j];
 			b = Pts[a];
 
-			if (int_vec_search(Pts_not_on_lines, 
+			if (Sorting.int_vec_search(Pts_not_on_lines,
 				nb_pts_not_on_lines, b, idx)) {
 				for (h = idx + 1; h < nb_pts_not_on_lines; h++) {
 					Pts_not_on_lines[h - 1] = Pts_not_on_lines[h];
@@ -1075,6 +1077,7 @@ void surface_object::print_adjacency_matrix_with_intersection_points(
 void surface_object::print_neighbor_sets(ostream &ost)
 {
 	int i, j, h, p, idx;
+	sorting Sorting;
 
 	//ost << "\\clearpage" << endl;
 	ost << "Neighbor sets in the line intersection graph:\\\\" << endl;
@@ -1098,7 +1101,7 @@ void surface_object::print_neighbor_sets(ostream &ost)
 		for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
 			j = Line_neighbors->Sets[i][h];
 			p = Line_intersection_pt[i * 27 + j];
-			if (!int_vec_search_linear(Pts, nb_pts, p, idx)) {
+			if (!Sorting.int_vec_search_linear(Pts, nb_pts, p, idx)) {
 				cout << "surface_object::print_line_intersection_graph "
 						"did not find intersection point" << endl;
 				exit(1);
@@ -2128,6 +2131,7 @@ void surface_object::identify_double_six_from_trihedral_pair(
 	int f_v = (verbose_level >= 1);
 	int nine_line_idx[9];
 	int i, idx;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_object::identify_double_six_from_"
@@ -2139,7 +2143,7 @@ void surface_object::identify_double_six_from_trihedral_pair(
 		}
 
 	for (i = 0; i < 9; i++) {
-		if (!int_vec_search_linear(Lines, 27, nine_lines[i], idx)) {
+		if (!Sorting.int_vec_search_linear(Lines, 27, nine_lines[i], idx)) {
 			cout << "surface_object::identify_double_six_from_"
 					"trihedral_pair cannot find line" << endl;
 			exit(1);
@@ -2489,6 +2493,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	int l, m, n, p;
 	int c1, c2;
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "surface_object::identify_double_six_from_"
@@ -2517,7 +2522,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	subset2[1] = m;
 	subset2[2] = n;
 	subset2[3] = p;
-	int_vec_heapsort(subset2, 4);
+	Sorting.int_vec_heapsort(subset2, 4);
 	Combi.set_complement(subset2, 4, complement2, size_complement, 6);
 	r = complement2[0];
 	s = complement2[1];
@@ -2622,11 +2627,11 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 		cout << endl;
 		}
 	X5_len = 0;
-	int_vec_heapsort(X2, X2_len);
-	int_vec_heapsort(X4, X4_len);
+	Sorting.int_vec_heapsort(X2, X2_len);
+	Sorting.int_vec_heapsort(X4, X4_len);
 	for (i = 0; i < X2_len; i++) {
 		a = X2[i];
-		if (int_vec_search(X4, X4_len, a, idx)) {
+		if (Sorting.int_vec_search(X4, X4_len, a, idx)) {
 			X5[X5_len++] = a;
 			}
 		}
@@ -2876,10 +2881,11 @@ int surface_object::find_tritangent_plane_through_two_lines(
 	int line_a, int line_b)
 {
 	int i, idx, pi;
+	sorting Sorting;
 
 	for (i = 0; i < 5; i++) {
 		pi = Tritangent_planes_on_lines[line_a * 5 + i];
-		if (int_vec_search_linear(
+		if (Sorting.int_vec_search_linear(
 				Lines_in_tritangent_plane + pi * 3, 3,
 				line_b, idx)) {
 			return pi;
@@ -2955,12 +2961,13 @@ void surface_object::identify_lines(int *lines, int nb_lines,
 {
 	int f_v = (verbose_level >= 1);
 	int i, idx;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_object::identify_lines" << endl;
 		}
 	for (i = 0; i < nb_lines; i++) {
-		if (!int_vec_search_linear(Lines, 27, lines[i], idx)) {
+		if (!Sorting.int_vec_search_linear(Lines, 27, lines[i], idx)) {
 			cout << "surface_object::identify_lines could "
 					"not find lines[" << i << "]=" << lines[i]
 					<< " in Lines[]" << endl;
@@ -3031,7 +3038,8 @@ int surface_object::choose_tritangent_plane(
 {
 	int f_v = TRUE; // (verbose_level >= 1);
 	int i, plane, idx, a;
-	
+	sorting Sorting;
+
 	if (f_v) {
 		cout << "surface_object::choose_tritangent_plane" << endl;
 		cout << "line_a=" << line_a << endl;
@@ -3052,14 +3060,14 @@ int surface_object::choose_tritangent_plane(
 		if (f_v) {
 			cout << "testing plane " << a << " = " << plane << endl;
 			}
-		if (int_vec_search_linear(
+		if (Sorting.int_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_a, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_a" << endl;
 				}
 			continue;
 			}
-		if (int_vec_search_linear(
+		if (Sorting.int_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_b, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_b" << endl;
@@ -3086,6 +3094,7 @@ void surface_object::find_all_tritangent_planes(
 {
 	int f_v = TRUE; // (verbose_level >= 1);
 	int i, plane, idx, a, nb;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "surface_object::find_all_tritangent_planes" << endl;
@@ -3108,14 +3117,14 @@ void surface_object::find_all_tritangent_planes(
 		if (f_v) {
 			cout << "testing plane " << a << " = " << plane << endl;
 			}
-		if (int_vec_search_linear(
+		if (Sorting.int_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_a, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_a" << endl;
 				}
 			continue;
 			}
-		if (int_vec_search_linear(
+		if (Sorting.int_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_b, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_b" << endl;

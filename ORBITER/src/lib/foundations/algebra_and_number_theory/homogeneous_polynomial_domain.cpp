@@ -355,13 +355,14 @@ void homogeneous_polynomial_domain::rearrange_monomials_by_partition_type(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::rearrange_monomials_by_"
 				"partition_type" << endl;
 		}
 
-	Heapsort_general(Monomials, nb_monomials, 
+	Sorting.Heapsort_general(Monomials, nb_monomials,
 		homogeneous_polynomial_domain_compare_monomial, 
 		homogeneous_polynomial_domain_swap_monomial, 
 		this);
@@ -375,6 +376,7 @@ void homogeneous_polynomial_domain::rearrange_monomials_by_partition_type(
 
 int homogeneous_polynomial_domain::index_of_monomial(int *v)
 {
+	sorting Sorting;
 
 #if 0
 	int i, j;
@@ -392,7 +394,7 @@ int homogeneous_polynomial_domain::index_of_monomial(int *v)
 #endif
 	int idx;
 	
-	if (!search_general(Monomials, nb_monomials, v, idx, 
+	if (!Sorting.search_general(Monomials, nb_monomials, v, idx,
 		homogeneous_polynomial_domain_compare_monomial_with, 
 		this /* extra_data */, 0 /* verbose_level */)) {
 		cout << "homogeneous_polynomial_domain::index_of_monomial "

@@ -103,6 +103,7 @@ int main(int argc, char **argv)
 	int nb_symbols = 0;
 	const char *symbol_key[1000];
 	const char *symbol_value[1000];
+	sorting Sorting;
 
 
 	cout << "scheduler.out" << endl;
@@ -306,7 +307,7 @@ int main(int argc, char **argv)
 			}
 		}
 
-	int_vec_heapsort(excluded_cases, nb_excluded_cases);
+	Sorting.int_vec_heapsort(excluded_cases, nb_excluded_cases);
 	cout << "There are " << nb_excluded_cases << " excluded cases: ";
 	int_vec_print(cout, excluded_cases, nb_excluded_cases);
 	cout << endl;
@@ -336,7 +337,8 @@ int main(int argc, char **argv)
 
 }
 
-void do_collate(int N, const char *collate_output_file_mask, const char *collated_fname, int verbose_level)
+void do_collate(int N, const char *collate_output_file_mask,
+		const char *collated_fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char output_fname[1000];
@@ -407,12 +409,15 @@ void do_collate(int N, const char *collate_output_file_mask, const char *collate
 		fp << " the file is complete" << endl;
 		}
 	else {
-		fp << " the file is incomplete, " << nb_missing_cases << " cases are missing, they are ";
+		fp << " the file is incomplete, " << nb_missing_cases
+				<< " cases are missing, they are ";
 		int_vec_print(fp, missing_cases, nb_missing_cases);
 		fp << endl;
 		}
 	}
-	cout << "written file " << collated_fname << " of size " << file_size(collated_fname) << " with " << total_sol << " solutions. Number of missing cases = " << nb_missing_cases << endl;
+	cout << "written file " << collated_fname << " of size "
+			<< file_size(collated_fname) << " with " << total_sol
+			<< " solutions. Number of missing cases = " << nb_missing_cases << endl;
 	cout << "missing cases: ";
 	int_vec_print(cout, missing_cases, nb_missing_cases);
 	cout << endl;
@@ -436,6 +441,7 @@ void do_scheduling(int N, int *list_of_cases,
 {
 	int f_v = (verbose_level >= 1);
 	int i, c;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "do_scheduling" << endl;
@@ -480,7 +486,8 @@ void do_scheduling(int N, int *list_of_cases,
 			cout << "int_matrix_read_csv m != N" << endl;
 			exit(1);
 			}
-		cout << "read the random permutation of degree " << m << " from file " << randomized_fname << endl;
+		cout << "read the random permutation of degree " << m << " from "
+				"file " << randomized_fname << endl;
 		}
 
 	
@@ -492,7 +499,8 @@ void do_scheduling(int N, int *list_of_cases,
 			sprintf(input_fname, input_file_mask, c);
 			sprintf(target_fname, target_file_mask, c);
 			if (file_size(input_fname) <= 0) {
-				cout << "The input file does not exist: please check the file " << input_fname << endl;
+				cout << "The input file does not exist: please check "
+						"the file " << input_fname << endl;
 				exit(1);
 				}
 			}
@@ -505,7 +513,8 @@ void do_scheduling(int N, int *list_of_cases,
 			}
 		}
 	
-	cout << "number of completed tasks = " << nb_tasks_completed << " / " << N << endl;
+	cout << "number of completed tasks = " << nb_tasks_completed
+			<< " / " << N << endl;
 
 	cout << "there are " << N - nb_tasks_completed << " open tasks" << endl;
 	for (i = 0; i < N; i++) {
@@ -542,7 +551,8 @@ void do_scheduling(int N, int *list_of_cases,
 					tt = t;
 					}
 				if (task_completed[tt] == 0 && 
-					!int_vec_search(excluded_cases, nb_excluded_cases, tt, idx)) {
+					!Sorting.int_vec_search(excluded_cases,
+							nb_excluded_cases, tt, idx)) {
 					j = find_free_job(JT, J);
 					if (j == -1) {
 						break;
@@ -577,7 +587,8 @@ void do_scheduling(int N, int *list_of_cases,
 					}
 				}
 	
-			cout << "number of completed tasks = " << nb_tasks_completed << " / " << N << endl;
+			cout << "number of completed tasks = "
+					<< nb_tasks_completed << " / " << N << endl;
 
 			cout << "there are " << N - nb_tasks_completed << " open tasks" << endl;
 
@@ -618,7 +629,8 @@ int find_free_job(job_table *JT, int J)
 
 void assign_task(job_table *JT, int t, int j, 
 	int *list_of_cases, const char *log_prefix, 
-	int f_batch, const char *job_fname, const char *batch_template, int template_nb_times, 
+	int f_batch, const char *job_fname,
+	const char *batch_template, int template_nb_times,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -627,7 +639,8 @@ void assign_task(job_table *JT, int t, int j,
 
 	c = list_of_cases[t];
 	if (f_v) {
-		cout << "assign_task assigning task " << t << " which is case " << c << " to job " << j << endl;
+		cout << "assign_task assigning task " << t << " which is case "
+				<< c << " to job " << j << endl;
 		}
 	sprintf(JT[j].target_fname, JT[j].target_file_mask, c);
 	sprintf(JT[j].command, JT[j].command_mask, c, c, c);
@@ -686,7 +699,8 @@ void assign_task(job_table *JT, int t, int j,
 				}
 			//fp << JT[j].batch_file << endl;
 		}
-		cout << "Written file " << JT[j].batch_fname << " of size " << file_size(JT[j].batch_fname) << endl;
+		cout << "Written file " << JT[j].batch_fname << " of size "
+				<< file_size(JT[j].batch_fname) << endl;
 		}
 	cout << "target_fname: " << JT[j].target_fname << endl;
 	cout << "assign task: " << JT[j].command << endl;

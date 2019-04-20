@@ -344,6 +344,7 @@ class number_theory_domain;
 class group_generators_domain;
 class knowledge_base;
 class combinatorics_domain;
+class sorting;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

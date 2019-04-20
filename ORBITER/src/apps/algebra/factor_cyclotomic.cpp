@@ -172,6 +172,7 @@ void factor_cyclotomic(int n, int q, int d,
 	
 	longinteger_domain D;
 	longinteger_object C, N, A, B, G, U, V;
+	sorting Sorting;
 	
 	for (c = 0; c < n; c++) {
 		if (NT.gcd_int(c, n) != 1)
@@ -197,7 +198,7 @@ void factor_cyclotomic(int n, int q, int d,
 			while (roots2[i] < 0)
 				roots2[i] += n;
 			}
-		int_vec_quicksort_increasingly(roots2, nb_roots);
+		Sorting.int_vec_quicksort_increasingly(roots2, nb_roots);
 		t = 0;
 		for (i = 0; i < nb_roots; i++) {
 			r1 = roots2[i];

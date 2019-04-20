@@ -78,6 +78,7 @@ void set_stabilizer_compute::init(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	longinteger_object go;
+	sorting Sorting;
 
 	if (f_v) {
 		Poset->A->group_order(go);
@@ -87,7 +88,7 @@ void set_stabilizer_compute::init(
 			<< ", set of size " << size << endl;
 		}
 	
-	if (!test_if_set_with_return_value(set, size)) {
+	if (!Sorting.test_if_set_with_return_value(set, size)) {
 		cout << "set_stabilizer_compute::init "
 				"the set is not a set" << endl;
 		exit(1);
@@ -116,6 +117,7 @@ void set_stabilizer_compute::init_with_strong_generators(
 	int f_vv = (verbose_level >= 2);
 	int t;
 	longinteger_object go;
+	sorting Sorting;
 	
 	set_stabilizer_compute::A = Poset->A;
 	set_stabilizer_compute::A2 = Poset->A2;
@@ -138,7 +140,7 @@ void set_stabilizer_compute::init_with_strong_generators(
 	int_vec_copy(set, the_set, set_size);
 	int_vec_copy(set, the_set_sorted, set_size);
 
-	int_vec_sorting_permutation(the_set_sorted, set_size, 
+	Sorting.int_vec_sorting_permutation(the_set_sorted, set_size,
 		the_set_sorting_perm, 
 		the_set_sorting_perm_inv, TRUE /* f_increasingly */);
 	for (t = 0; t < set_size; t++) {
@@ -536,7 +538,9 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 		int nb_interesting_subsets;
 
 		
-		cout << "set_stabilizer_compute::handle_frequencies we decide to go for subsets of size " << lvl << ", selected_frequency = " << selected_frequency << endl;
+		cout << "set_stabilizer_compute::handle_frequencies we decide "
+				"to go for subsets of size " << lvl
+				<< ", selected_frequency = " << selected_frequency << endl;
 		first = C.type_first[selected_type];
 		len = C.type_len[selected_type];
 		orb_idx = C.sorting_perm_inv[first];
@@ -547,14 +551,17 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 			exit(1);
 			}
 			
-		cout << "orbit " << orb_idx << " has frequency " << nb_interesting_subsets << " first=" << first << " len=" << len << endl;
+		cout << "orbit " << orb_idx << " has frequency "
+				<< nb_interesting_subsets << " first=" << first
+				<< " len=" << len << endl;
 		cout << "n_choose_k=" << n_choose_k << endl;
 		j = 0;
 		interesting_subsets = NEW_int(nb_interesting_subsets);
 		for (i = 0; i < n_choose_k; i++) {
 			if (orbit_idx_of_subset[i] == orb_idx) {
 				interesting_subsets[j++] = i;
-				//cout << "subset of rank " << i << " is isomorphic to orbit " << orb_idx << " j=" << j << endl;
+				//cout << "subset of rank " << i << " is isomorphic "
+				//"to orbit " << orb_idx << " j=" << j << endl;
 				}
 			}
 		if (j != nb_interesting_subsets) {
@@ -562,7 +569,8 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 			exit(1);
 			}
 		if (f_vv) {
-			print_interesting_subsets(lvl, nb_interesting_subsets, interesting_subsets);
+			print_interesting_subsets(lvl,
+					nb_interesting_subsets, interesting_subsets);
 			}
 		
 		
@@ -573,13 +581,17 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 		//int nodes;
 
 
-		//compute_stabilizer_function(the_set, set_size, A, A, gen, lvl, orb_idx, orb_mult, interesting_subsets, Stab, nodes, verbose_level);
+		//compute_stabilizer_function(the_set, set_size,
+		//A, A, gen, lvl, orb_idx, orb_mult, interesting_subsets,
+		//Stab, nodes, verbose_level);
 
 		compute_stabilizer *CS;
 
 		CS = NEW_OBJECT(compute_stabilizer);
 
-		CS->init(the_set, set_size, gen, A, A2, lvl, orb_idx, nb_interesting_subsets, interesting_subsets, verbose_level);
+		CS->init(the_set, set_size, gen, A, A2, lvl,
+				orb_idx, nb_interesting_subsets,
+				interesting_subsets, verbose_level);
 
 		
 		Aut_gens = NEW_OBJECT(strong_generators);
@@ -587,9 +599,12 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 		Aut_gens->init_from_sims(CS->Stab, verbose_level);
 
 		if (f_v) {
-			cout << "set_stabilizer_compute::handle_frequencies done with compute_stabilizer" << endl;
-			cout << "compute_stabilizer::init backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
-			cout << "compute_stabilizer::init backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
+			cout << "set_stabilizer_compute::handle_frequencies done "
+					"with compute_stabilizer" << endl;
+			cout << "compute_stabilizer::init backtrack_nodes_first_time = "
+					<< CS->backtrack_nodes_first_time << endl;
+			cout << "compute_stabilizer::init backtrack_nodes_total_in_loop = "
+					<< CS->backtrack_nodes_total_in_loop << endl;
 			}
 
 
@@ -599,7 +614,8 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 
 		FREE_int(interesting_subsets);
 
-		cout << "set_stabilizer_compute::handle_frequencies: Stabilizer computation finished.";
+		cout << "set_stabilizer_compute::handle_frequencies: "
+				"Stabilizer computation finished.";
 		//the_end_quietly(t0);
 		//exit(0);
 		return TRUE;
@@ -608,7 +624,8 @@ int set_stabilizer_compute::handle_frequencies(int lvl,
 	return FALSE;
 }
 
-void set_stabilizer_compute::print_interesting_subsets(int lvl, int nb_interesting_subsets, int *interesting_subsets)
+void set_stabilizer_compute::print_interesting_subsets(int lvl,
+		int nb_interesting_subsets, int *interesting_subsets)
 {
 	int i, j;
 	combinatorics_domain Combi;

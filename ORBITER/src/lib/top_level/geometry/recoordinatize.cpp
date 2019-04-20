@@ -558,6 +558,7 @@ void recoordinatize::compute_live_points_low_level(
 	longinteger_object go_linear;
 	int gos;
 	int i, j, h, a;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -672,7 +673,7 @@ void recoordinatize::compute_live_points_low_level(
 				"sorting" << endl;
 		}
 
-	int_vec_heapsort(live_points, nb_live_points);
+	Sorting.int_vec_heapsort(live_points, nb_live_points);
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level done" << endl;
 		}

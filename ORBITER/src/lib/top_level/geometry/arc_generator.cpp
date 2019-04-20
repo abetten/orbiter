@@ -1049,6 +1049,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_generator::report" << endl;
@@ -1171,7 +1172,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 			set[v] = i;
 			}
 
-		int_vec_heapsort(set, length);
+		Sorting.int_vec_heapsort(set, length);
 
 		for (v = 0; v < length; v++, cnt++) {
 
@@ -1219,7 +1220,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 			set[v] = i;
 			}
 
-		int_vec_heapsort(set, length);
+		Sorting.int_vec_heapsort(set, length);
 
 
 		for (v = 0; v < length; v++) {
@@ -1560,6 +1561,7 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 	int nb_A, nb_U;
 	int a, u, ac, i, d, idx, mtx_rank;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_generator::simeon s=" << s << endl;
@@ -1649,7 +1651,7 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 			
 				// test if A is a subset of C:
 				for (i = 0; i < k - 2; i++) {
-					if (!int_vec_search_linear(C, k - 1, A[i], idx)) {
+					if (!Sorting.int_vec_search_linear(C, k - 1, A[i], idx)) {
 						//cout << "did not find A[" << i << "] in C" << endl;
 						break;
 						}

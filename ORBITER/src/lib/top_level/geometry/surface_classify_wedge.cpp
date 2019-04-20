@@ -1210,6 +1210,7 @@ void surface_classify_wedge::identify_surface(
 	int f_v = (verbose_level >= 1);
 	int line_idx, subset_idx;
 	int double_six_orbit, iso_type, /*orb2,*/ idx2;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_surface" << endl;
@@ -1376,7 +1377,7 @@ void surface_classify_wedge::identify_surface(
 #endif
 
 
-	if (!int_vec_search(Classify_double_sixes->Po,
+	if (!Sorting.int_vec_search(Classify_double_sixes->Po,
 			Classify_double_sixes->Flag_orbits->nb_flag_orbits,
 			idx2, f)) {
 		cout << "cannot find orbit in Po" << endl;

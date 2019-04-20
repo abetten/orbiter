@@ -428,6 +428,7 @@ void isomorph::list_solutions_by_starter()
 	int data[1000];
 	int data2[1000];
 	int verbose_level = 0;
+	sorting Sorting;
 	
 	setup_and_open_solution_database(verbose_level - 1);
 	
@@ -450,7 +451,7 @@ void isomorph::list_solutions_by_starter()
 				for (h = 0; h < size; h++) {
 					data2[h] = data[h];
 					}
-				int_vec_heapsort(data2, size);
+				Sorting.int_vec_heapsort(data2, size);
 				cout << i << " : " << j << " : "
 						<< idx << " : " << id << endl;
 				int_vec_print(cout, data, size);
@@ -472,6 +473,7 @@ void isomorph::list_solutions_by_orbit()
 	int data[1000];
 	int data2[1000];
 	int verbose_level = 0;
+	sorting Sorting;
 	
 	setup_and_open_solution_database(verbose_level - 1);
 
@@ -487,7 +489,7 @@ void isomorph::list_solutions_by_orbit()
 			for (h = 0; h < size; h++) {
 				data2[h] = data[h];
 				}
-			int_vec_heapsort(data2, size);
+			Sorting.int_vec_heapsort(data2, size);
 			cout << j << " : " << idx << " : " << id << endl;
 			int_vec_print(cout, data, size);
 			cout << endl;
@@ -762,6 +764,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	schreier *Schreier;
 	int *sets;
 	int h, p, prev, b, hdl;
+	sorting Sorting;
 			
 	sets = NEW_int(l * size);
 	S = NEW_OBJECT(sims);
@@ -792,7 +795,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 			int_vec_print(cout, sets + j * size, size);
 			cout << endl;
 			}
-		int_vec_heapsort(sets + j * size, size);
+		Sorting.int_vec_heapsort(sets + j * size, size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << " sorted : ";
 			int_vec_print(cout, sets + j * size, size);
@@ -1085,6 +1088,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
 	longinteger_object go, so, so1;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::compute_stabilizer "
@@ -1148,7 +1152,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 		}
 	for (j = 0; j < l; j++) {
 		load_solution(f + j, sets + j * size);
-		int_vec_heapsort(sets + j * size, size);
+		Sorting.int_vec_heapsort(sets + j * size, size);
 		}
 	if (f_v) {
 		cout << "isomorph::compute_stabilizer "
@@ -1364,7 +1368,8 @@ int isomorph::test_edge(int n1,
 	int r, r0, id, id0;
 	int data1[1000];
 	int data2[1000];
-	
+	sorting Sorting;
+
 
 
 	setup_and_open_solution_database(verbose_level - 1);
@@ -1379,7 +1384,7 @@ int isomorph::test_edge(int n1,
 	
 	load_solution(id, data1);
 		
-	rearrange_subset(size, level, data1,
+	Sorting.rearrange_subset(size, level, data1,
 			subset1, data2, verbose_level - 1);
 		
 	int f_failure_to_find_point;
@@ -1499,6 +1504,7 @@ void isomorph::test_hash(int verbose_level)
 	int data[1000];
 	int id, case_nb, f, l, i;
 	int *H;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -1517,7 +1523,7 @@ void isomorph::test_hash(int verbose_level)
 			//id = orbit_perm[f + i];
 			id = f + i;
 			load_solution(id, data);
-			int_vec_heapsort(data, size);
+			Sorting.int_vec_heapsort(data, size);
 			H[i] = int_vec_hash(data, size);
 			}
 		{

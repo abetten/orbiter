@@ -82,6 +82,7 @@ void grassmann_embedded::init(int big_n, int n,
 	int i, j, rk, idx;
 	longinteger_object deg;
 	longinteger_domain D;
+	sorting Sorting;
 	
 	grassmann_embedded::big_n = big_n;
 	grassmann_embedded::G = G;
@@ -157,7 +158,7 @@ void grassmann_embedded::init(int big_n, int n,
 		}
 	j = 0;
 	for (i = 0; i < big_n; i++) {
-		if (!int_vec_search(base_cols, n, i, idx)) {
+		if (!Sorting.int_vec_search(base_cols, n, i, idx)) {
 			embedding[j++] = i;
 			}
 		}

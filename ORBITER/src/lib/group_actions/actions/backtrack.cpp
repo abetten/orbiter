@@ -75,6 +75,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 	int *next_set;
 	int i, idx, coset, cmp, ret, a;
 	action *A;
+	sorting Sorting;
 	
 	D->backtrack_node++;
 	A = D->A;
@@ -177,8 +178,8 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		base_point = A->orbit[depth][0];
 		image_point = A->orbit[depth][i];
 		if (D->is_minimal_base_point[depth] &&
-				int_vec_search(current_set, D->size, base_point, idx)) {
-			if (int_vec_search(current_set, D->size, image_point, idx)) {
+				Sorting.int_vec_search(current_set, D->size, base_point, idx)) {
+			if (Sorting.int_vec_search(current_set, D->size, image_point, idx)) {
 				f_accept = TRUE;
 				}
 			}
@@ -260,7 +261,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			int_vec_print(cout, next_set, D->size);
 			cout << endl;
 			}
-		int_vec_quicksort_increasingly(next_set, D->size);
+		Sorting.int_vec_quicksort_increasingly(next_set, D->size);
 		if (f_vv) {
 			cout << "sorted image : ";
 			int_vec_print(cout, next_set, D->size);
@@ -473,7 +474,8 @@ int action::is_minimal_witness(int size, int *set,
 	int f_vv = (verbose_level >= 4);
 	int f_vvv = (verbose_level >= 5);
 	int f_vvvv = (verbose_level >= 7);
-	
+	sorting Sorting;
+
 	if (f_vv) {
 		cout << "action::is_minimal_witness" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
@@ -549,7 +551,7 @@ int action::is_minimal_witness(int size, int *set,
 
 	D.the_set = NEW_int((A.base_len + 1) * size);
 	int_vec_copy(set, D.the_set, size);
-	int_vec_quicksort_increasingly(D.the_set, size);
+	Sorting.int_vec_quicksort_increasingly(D.the_set, size);
 	
 	D.backtrack_node = 0;
 	D.choices = NEW_int(A.base_len * A.degree);
@@ -667,7 +669,7 @@ finish:
 			witness[i] = A.image_of(transporter_witness, set[i]);
 			}
 		//int_vec_sort(size, witness);
-		int_vec_heapsort(witness, size);
+		Sorting.int_vec_heapsort(witness, size);
 		}
 	
 

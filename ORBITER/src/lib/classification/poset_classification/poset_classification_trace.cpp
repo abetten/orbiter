@@ -305,6 +305,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 	int f_v = (verbose_level >= 1);
 	int next_node;
 	poset_orbit_node *O;
+	sorting Sorting;
 
 	O = &root[current_node];
 
@@ -354,7 +355,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 		int_vec_copy(set_tmp, set_out, size);
 		}
 	else {
-		int_vec_heapsort(set_tmp, level + 1);
+		Sorting.int_vec_heapsort(set_tmp, level + 1);
 		int_vec_copy(set_tmp, set_out, size);
 		if (f_v) {
 			cout << "poset_classification::poset_"
@@ -403,6 +404,7 @@ int poset_classification::trace_set_recursion(
 	int pt, pt0, current_extension, i, t, next_node;
 	int f_failure_to_find_point;
 	poset_orbit_node *O = &root[cur_node];
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "poset_classification::trace_set_recursion "
@@ -437,7 +439,7 @@ int poset_classification::trace_set_recursion(
 		// this can only happen if f_lex is TRUE
 		// we need to sort and restart the trace:
 
-		int_vec_heapsort(canonical_set, cur_level + 1);
+		Sorting.int_vec_heapsort(canonical_set, cur_level + 1);
 		
 		
 		if (f_v) {

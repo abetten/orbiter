@@ -340,6 +340,7 @@ void packing::load_input_spreads(int &N,
 	longinteger_object go, stab_go;
 	longinteger_domain D;
 	knowledge_base K;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "packing::load_input_spreads" << endl;
@@ -370,7 +371,7 @@ void packing::load_input_spreads(int &N,
 
 		f_do_it = FALSE;	
 		if (f_packing_select_spread) {
-			if (int_vec_search_linear(packing_select_spread,
+			if (Sorting.int_vec_search_linear(packing_select_spread,
 					packing_select_spread_nb, no, idx)) {
 				f_do_it = TRUE;
 				}
@@ -432,6 +433,7 @@ void packing::make_spread_table(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int nb_spreads1;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "packing::make_spread_table" << endl;
@@ -505,7 +507,7 @@ void packing::make_spread_table(
 	}
 	tmp_isomorphism_type_of_spread = isomorphism_type_of_spread;
 		// for packing_swap_func
-	Heapsort_general(Sets, nb_spreads,
+	Sorting.Heapsort_general(Sets, nb_spreads,
 			packing_spread_compare_func,
 			packing_swap_func,
 			this);
@@ -542,6 +544,7 @@ void packing::compute_dual_spreads(int **Sets,
 	int *dual_spread;
 	int i, j, a, b, idx;
 	int nb_spreads;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "packing::compute_dual_spreads" << endl;
@@ -578,7 +581,7 @@ void packing::compute_dual_spreads(int **Sets,
 			int_vec_print(cout, dual_spread, spread_size);
 			cout << endl;
 			}
-		int_vec_heapsort(dual_spread, spread_size);
+		Sorting.int_vec_heapsort(dual_spread, spread_size);
 		//dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
 		if (f_v) {
 			int_vec_print(cout, dual_spread, spread_size);
@@ -589,7 +592,7 @@ void packing::compute_dual_spreads(int **Sets,
 
 		v[0] = spread_size /*+ 1*/;
 
-		if (vec_search((void **)Sets,
+		if (Sorting.vec_search((void **)Sets,
 			orbit_of_sets_compare_func, (void *) v,
 			nb_spreads, dual_spread, idx,
 			0 /* verbose_level */)) {
@@ -635,6 +638,7 @@ int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
 	int *sorted_packing;
 	int *dual_packing;
 	int i, a, b;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "packing::test_if_packing_is_self_dual" << endl;
@@ -645,14 +649,14 @@ int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
 		a = packing[i];
 		sorted_packing[i] = a;
 	}
-	int_vec_heapsort(sorted_packing, size_of_packing);
+	Sorting.int_vec_heapsort(sorted_packing, size_of_packing);
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = packing[i];
 		b = Spread_tables->dual_spread_idx[a];
 		dual_packing[i] = b;
 	}
-	int_vec_heapsort(dual_packing, size_of_packing);
+	Sorting.int_vec_heapsort(dual_packing, size_of_packing);
 	if (int_vec_compare(sorted_packing, dual_packing, size_of_packing) == 0) {
 		ret = TRUE;
 	}

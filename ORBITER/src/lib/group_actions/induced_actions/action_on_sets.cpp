@@ -61,6 +61,7 @@ void action_on_sets::init(int nb_sets,
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 5);
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_sets::init "
@@ -82,14 +83,14 @@ void action_on_sets::init(int nb_sets,
 		for (j = 0; j < set_size; j++) {
 			sets[i][j] = input_sets[i * set_size + j];
 			}
-		int_vec_quicksort_increasingly(sets[i], set_size);
+		Sorting.int_vec_quicksort_increasingly(sets[i], set_size);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";
 			int_vec_print(cout, sets[i], set_size);
 			cout << endl;
 			}
 		}
-	quicksort_array_with_perm(nb_sets,
+	Sorting.quicksort_array_with_perm(nb_sets,
 			(void **) sets, perm_inv,
 			action_on_sets_compare,
 			this);
@@ -132,6 +133,7 @@ void action_on_sets::compute_image(action *A,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int idx, res;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_sets::compute_image "
@@ -178,7 +180,7 @@ void action_on_sets::compute_image(action *A,
 			cout << endl;
 			}
 		}
-	if (!vec_search(
+	if (!Sorting.vec_search(
 			(void **)sets,
 			action_on_sets_compare_inverted,
 			this,

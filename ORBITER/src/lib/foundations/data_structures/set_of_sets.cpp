@@ -1046,11 +1046,12 @@ int set_of_sets::is_member(int i, int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret, idx;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "set_of_sets::is_member" << endl;
 		}
-	ret = int_vec_search(Sets[i], Set_size[i], a, idx);
+	ret = Sorting.int_vec_search(Sets[i], Set_size[i], a, idx);
 	if (f_v) {
 		cout << "set_of_sets::is_member done" << endl;
 		}
@@ -1061,12 +1062,13 @@ void set_of_sets::sort_all(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "set_of_sets::sort_all" << endl;
 		}
 	for (i = 0; i < nb_sets; i++) {
-		int_vec_heapsort(Sets[i], Set_size[i]);
+		Sorting.int_vec_heapsort(Sets[i], Set_size[i]);
 		}
 
 	if (f_v) {
@@ -1082,6 +1084,7 @@ void set_of_sets::all_pairwise_intersections(
 	int *v;
 	int l;
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "set_of_sets::all_pairwise_intersections" << endl;
@@ -1097,7 +1100,7 @@ void set_of_sets::all_pairwise_intersections(
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
 			k = Combi.ij2k(i, j, nb_sets);
-			int_vec_intersect_sorted_vectors(
+			Sorting.int_vec_intersect_sorted_vectors(
 					Sets[i], Set_size[i], Sets[j], Set_size[j], v, l);
 			Intersections->Sets[k] = NEW_int(l);
 			int_vec_copy(v, Intersections->Sets[k], l);
@@ -1118,6 +1121,7 @@ void set_of_sets::pairwise_intersection_matrix(int *&M, int verbose_level)
 	int i, j;
 	int *v;
 	int l;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "set_of_sets::pairwise_intersection_matrix" << endl;
@@ -1130,7 +1134,7 @@ void set_of_sets::pairwise_intersection_matrix(int *&M, int verbose_level)
 	v = NEW_int(underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
-			int_vec_intersect_sorted_vectors(Sets[i],
+			Sorting.int_vec_intersect_sorted_vectors(Sets[i],
 					Set_size[i], Sets[j], Set_size[j], v, l);
 			M[i * nb_sets + j] = l;
 			M[j * nb_sets + i] = l;
@@ -1153,6 +1157,7 @@ void set_of_sets::all_triple_intersections(
 	int *w;
 	int l1, l2;
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "set_of_sets::all_triple_intersections" << endl;
@@ -1168,13 +1173,13 @@ void set_of_sets::all_triple_intersections(
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
 
-			int_vec_intersect_sorted_vectors(Sets[i],
+			Sorting.int_vec_intersect_sorted_vectors(Sets[i],
 					Set_size[i], Sets[j], Set_size[j], v, l1);
 
 			for (k = j + 1; k < nb_sets; k++) {
 			
 				h = Combi.ijk2h(i, j, k, nb_sets);
-				int_vec_intersect_sorted_vectors(v, l1,
+				Sorting.int_vec_intersect_sorted_vectors(v, l1,
 						Sets[k], Set_size[k], w, l2);
 				Intersections->Sets[h] = NEW_int(l2);
 				int_vec_copy(w, Intersections->Sets[h], l2);
@@ -1245,8 +1250,9 @@ int set_of_sets::find_common_element_in_two_sets(
 		int idx1, int idx2, int &common_elt)
 {
 	int pos1, pos2;
+	sorting Sorting;
 	
-	if (int_vecs_find_common_element(Sets[idx1],
+	if (Sorting.int_vecs_find_common_element(Sets[idx1],
 			Set_size[idx1], Sets[idx2], Set_size[idx2], pos1, pos2)) {
 		common_elt = Sets[idx1][pos1];
 		return TRUE;
@@ -1258,15 +1264,18 @@ int set_of_sets::find_common_element_in_two_sets(
 void set_of_sets::sort()
 {
 	int i;
+	sorting Sorting;
 	
 	for (i = 0; i < nb_sets; i++) {
-		int_vec_heapsort(Sets[i], Set_size[i]);
+		Sorting.int_vec_heapsort(Sets[i], Set_size[i]);
 		}
 }
 
 void set_of_sets::sort_big(int verbose_level)
 {
-	Heapsort_general(this, nb_sets, 
+	sorting Sorting;
+
+	Sorting.Heapsort_general(this, nb_sets,
 		set_of_sets_compare_func, 
 		set_of_sets_swap_func, NULL);
 }

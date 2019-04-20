@@ -2700,6 +2700,7 @@ void projective_space_with_action::select_packings(
 	int i, idx;
 	int *set;
 	int extra_data[1];
+	sorting Sorting;
 
 	extra_data[0] = spread_size;
 
@@ -2709,8 +2710,8 @@ void projective_space_with_action::select_packings(
 	for (i = 0; i < nb_spreads; i++) {
 		int_vec_copy(Spread_tables->spread_table +
 				i * spread_size, set, spread_size);
-		int_vec_heapsort(set, spread_size);
-		if (!search_general(Spread_tables->spread_table,
+		Sorting.int_vec_heapsort(set, spread_size);
+		if (!Sorting.search_general(Spread_tables->spread_table,
 				nb_spreads, set, idx,
 				table_of_sets_compare_func,
 				extra_data, 0 /*verbose_level*/)) {
@@ -2805,13 +2806,13 @@ void projective_space_with_action::select_packings(
 				b = s2l[a];
 				set1[i] = b;
 			}
-			int_vec_heapsort(set1, packing_size);
+			Sorting.int_vec_heapsort(set1, packing_size);
 			for (i = 0; i < packing_size; i++) {
 				a = set1[i];
 				b = Spread_tables->dual_spread_idx[a];
 				set2[i] = b;
 			}
-			int_vec_heapsort(set2, packing_size);
+			Sorting.int_vec_heapsort(set2, packing_size);
 
 #if 0
 			cout << "set1: ";
@@ -3092,6 +3093,7 @@ void projective_space_with_action::select_packings_self_dual(
 	int i, idx;
 	int *set;
 	int extra_data[1];
+	sorting Sorting;
 
 	extra_data[0] = spread_size;
 
@@ -3101,8 +3103,8 @@ void projective_space_with_action::select_packings_self_dual(
 	for (i = 0; i < nb_spreads; i++) {
 		int_vec_copy(Spread_table_original +
 				i * spread_size, set, spread_size);
-		int_vec_heapsort(set, spread_size);
-		if (!search_general(Spread_tables->spread_table,
+		Sorting.int_vec_heapsort(set, spread_size);
+		if (!Sorting.search_general(Spread_tables->spread_table,
 				nb_spreads, set, idx,
 				table_of_sets_compare_func,
 				extra_data, 0 /*verbose_level*/)) {
@@ -3468,7 +3470,7 @@ void projective_space_with_action::select_packings_self_dual(
 			b = s2l[a];
 			set1[i] = b;
 		}
-		int_vec_heapsort(set1, packing_size);
+		Sorting.int_vec_heapsort(set1, packing_size);
 		for (i = 0; i < packing_size; i++) {
 			a = set1[i];
 			b = Spread_tables->dual_spread_idx[a];
@@ -3479,8 +3481,8 @@ void projective_space_with_action::select_packings_self_dual(
 			b = l2s[a];
 			set1[i] = b;
 		}
-		int_vec_heapsort(set1, packing_size);
-		int_vec_heapsort(set2, packing_size);
+		Sorting.int_vec_heapsort(set1, packing_size);
+		Sorting.int_vec_heapsort(set2, packing_size);
 
 #if 0
 		cout << "set1: ";
@@ -3771,6 +3773,7 @@ void projective_space_with_action::latex_report(const char *fname,
 {
 	int i, j;
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_with_action::latex_report" << endl;
@@ -3934,7 +3937,7 @@ void projective_space_with_action::latex_report(const char *fname,
 		int nb_input_objects;
 		CB->C_type_of->get_class_by_value(Input_objects,
 				nb_input_objects, j, 0 /*verbose_level */);
-		int_vec_heapsort(Input_objects, nb_input_objects);
+		Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
 		fp << "This isomorphism type appears " << nb_input_objects
 				<< " times, namely for the following "
@@ -4170,6 +4173,7 @@ void print_summary_table_entry(int *Table,
 	void *extra_data;
 	longinteger_object go;
 	int h;
+	sorting Sorting;
 
 	CB = (classify_bitvectors *) data;
 
@@ -4209,7 +4213,7 @@ void print_summary_table_entry(int *Table,
 			int nb_input_objects;
 			CB->C_type_of->get_class_by_value(Input_objects,
 				nb_input_objects, CB->perm[i], 0 /*verbose_level */);
-			int_vec_heapsort(Input_objects, nb_input_objects);
+			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
 			output[0] = 0;
 			for (h = 0; h < nb_input_objects; h++) {

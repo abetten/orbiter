@@ -181,6 +181,7 @@ void SOLS_recursion(int n, int i, int j, int *A, int *pairs)
 	int prev[100];
 	int alphabet[100];
 	int u, h, k, l, p1, p2, a, b, ii, jj;
+	sorting Sorting;
 	
 	if (FALSE) {
 		cout << "SOLS_recursion i=" << i << " j=" << j << endl;
@@ -209,7 +210,7 @@ void SOLS_recursion(int n, int i, int j, int *A, int *pairs)
 	for (jj = 0; jj < j; jj++) {
 		prev[l++] = A[i * n + jj];
 		}
-	int_vec_sort(l, prev);
+	Sorting.int_vec_sort(l, prev);
 	//cout << "prev=";
 	//int_vec_print(cout, prev, l);
 	//cout << endl;
@@ -293,6 +294,7 @@ int is_self_orthogonal(int *A, int n)
 {
 	int *vec;
 	int i, j, a, b, c;
+	sorting Sorting;
 	
 	vec = new int[n * n];
 	for (i = 0; i < n; i++) {
@@ -303,7 +305,7 @@ int is_self_orthogonal(int *A, int n)
 			vec[i * n + j] = c;
 			}
 		}
-	int_vec_sort(n * n, vec);
+	Sorting.int_vec_sort(n * n, vec);
 	for (i = 0; i < n * n; i++) {
 		if (vec[i] != i)
 			return FALSE;
@@ -1066,6 +1068,7 @@ void MISSISSIPPI()
 	int word[4];
 	int m[4];
 	int i0, i1, i2, i3, i, cnt = 0;
+	sorting Sorting;
 	
 	
 	for (i0 = 0; i0 < 4; i0++) {
@@ -1086,7 +1089,7 @@ void MISSISSIPPI()
 						continue;
 					if (m[1] > 2)
 						continue;
-					int_vec_quicksort_decreasingly(m, 4);
+					Sorting.int_vec_quicksort_decreasingly(m, 4);
 					if (m[0] != 2)
 						continue;
 					if (m[1] != 2)

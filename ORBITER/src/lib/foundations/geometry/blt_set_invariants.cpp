@@ -191,6 +191,7 @@ void blt_set_invariants::compute(int verbose_level)
 void blt_set_invariants::latex(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "blt_set_invariants::latex" << endl;
@@ -278,7 +279,7 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 				a = D3->Stack->pointList[fst + u] - fst_col;
 				Cell[u] = a;
 				}
-			int_vec_heapsort(Cell, len);
+			Sorting.int_vec_heapsort(Cell, len);
 #if 0
 			for (u = 0; u < len; u++) {
 				a = Cell[u];

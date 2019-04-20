@@ -96,12 +96,14 @@ void action_on_andre::compute_image(int *Elt, int i, int &j, int verbose_level)
 		}
 }
 
-int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_level)
+int action_on_andre::compute_image_of_point(int *Elt,
+		int pt_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	andre_construction_point_element Pt;
 	int i, image, rk, idx, parallel_class_idx;
-	
+	sorting Sorting;
+
 	if (f_v) {
 		cout << "action_on_andre::compute_image_of_point" << endl;
 		}
@@ -109,10 +111,13 @@ int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_le
 	Pt.unrank(pt_idx, 0 /* verbose_level*/);
 	if (Pt.f_is_at_infinity) {
 		if (f_v) {
-			cout << "action_on_andre::compute_image_of_point point is at infinity, at_infinity_idx=" << Pt.at_infinity_idx << endl;
+			cout << "action_on_andre::compute_image_of_point "
+					"point is at infinity, at_infinity_idx="
+					<< Pt.at_infinity_idx << endl;
 			}
 		for (i = 0; i < k; i++) {
-			int_vec_copy(Andre->spread_elements_genma + Pt.at_infinity_idx * k * n + i * n, coords1 + i * n1, n);
+			int_vec_copy(Andre->spread_elements_genma +
+					Pt.at_infinity_idx * k * n + i * n, coords1 + i * n1, n);
 			coords1[i * n1 + n] = 0;
 			}
 		if (f_v) {
@@ -120,7 +125,8 @@ int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_le
 			int_matrix_print(coords1, k, n1);
 			}
 		for (i = 0; i < k; i++) {
-			An1->element_image_of_low_level(coords1 + i * n1, coords2 + i * n1, Elt, verbose_level - 1);
+			An1->element_image_of_low_level(coords1 + i * n1,
+					coords2 + i * n1, Elt, verbose_level - 1);
 			}
 		if (f_v) {
 			cout << "Image of spread element:" << endl;
@@ -137,8 +143,11 @@ int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_le
 		if (f_v) {
 			cout << "rk=" << rk << endl;
 			}
-		if (!int_vec_search(Andre->spread_elements_numeric_sorted, Andre->spread_size, rk, idx)) {
-			cout << "andre_construction_line_element::rank annot find the spread element in the sorted list" << endl;
+		if (!Sorting.int_vec_search(
+				Andre->spread_elements_numeric_sorted,
+				Andre->spread_size, rk, idx)) {
+			cout << "andre_construction_line_element::rank "
+					"cannot find the spread element in the sorted list" << endl;
 			exit(1);
 			}
 		if (f_v) {
@@ -154,7 +163,8 @@ int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_le
 		int_vec_copy(Pt.coordinates, coords1, n);
 		coords1[n] = 1;
 
-		An1->element_image_of_low_level(coords1, coords2, Elt, verbose_level - 1);
+		An1->element_image_of_low_level(coords1, coords2,
+				Elt, verbose_level - 1);
 
 		Andre->F->PG_element_normalize(coords2, 1, n1);
 		int_vec_copy(coords2, Pt.coordinates, n);

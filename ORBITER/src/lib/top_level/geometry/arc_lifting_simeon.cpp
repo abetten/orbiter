@@ -247,6 +247,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 	int h, i, j, pi, pj;
 	int nb_bisecants, nb_c2points, bi, bj, a, idx, u, pt;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	original_arc = SaS->data;
 	original_arc_sz = SaS->sz;
@@ -303,11 +304,11 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 				bj = bisecants[j];
 				a = P->line_intersection(bi, bj);
 
-				if (int_vec_search_linear(original_arc,
+				if (Sorting.int_vec_search_linear(original_arc,
 						original_arc_sz, a, idx)) {
 					}
 				else {
-					if (!int_vec_search(c2_points, h, a, idx)) {
+					if (!Sorting.int_vec_search(c2_points, h, a, idx)) {
 						for (u = h; u > idx; u--) {
 							c2_points[u] = c2_points[u - 1];
 							}
@@ -334,7 +335,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 		cnt = 0;
 		for (j = 0; j < q + 1; j++) {
 			pt = P->Lines[a * (q + 1) + j];
-			if (int_vec_search(c2_points, h, pt, idx)) {
+			if (Sorting.int_vec_search(c2_points, h, pt, idx)) {
 				cnt++;
 				}
 			}
@@ -442,13 +443,13 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 
 			sz = nb_external_lines;
 			int_vec_copy(external_lines, S, nb_external_lines);
-			int_vec_heapsort(S, nb_external_lines);
+			Sorting.int_vec_heapsort(S, nb_external_lines);
 
 
 			for (u = 0; u < target_depth; u++) {
 				a = SaS->data[u];
 				a = filtered_lines[a];
-				if (!int_vec_search(S, sz, a, idx)) {
+				if (!Sorting.int_vec_search(S, sz, a, idx)) {
 					cout << "the element a=" << a << " cannot be "
 							"found in the set of external lines" << endl;
 					exit(1);

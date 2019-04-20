@@ -604,6 +604,7 @@ void surface_with_action::arc_lifting_and_classify(
 {
 	int f_v = (verbose_level >= 1);
 	int q, j;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -1114,7 +1115,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 		int idx;
 			
-		if (!int_vec_search(Six_arcs->Not_on_conic_idx, 
+		if (!Sorting.int_vec_search(Six_arcs->Not_on_conic_idx,
 			Six_arcs->nb_arcs_not_on_conic, orbit_at_level, idx)) {
 			cout << "could not find orbit" << endl;
 			exit(1);

@@ -470,6 +470,7 @@ void subfield_structure::create_adelaide_hyperoval(
 	int f_v = (verbose_level >= 1);
 	finite_field *F = Fq;
 	int q = F->q;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "subfield_structure::create_adelaide_hyperoval" << endl;
@@ -505,7 +506,7 @@ void subfield_structure::create_adelaide_hyperoval(
 		FREE_OBJECT(P);
 		}
 
-	if (!test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
 		cout << "subfield_structure::create_adelaide_hyperoval "
 				"the set is not a set, "
 				"something is wrong" << endl;

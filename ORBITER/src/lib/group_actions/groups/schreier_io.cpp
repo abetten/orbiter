@@ -44,8 +44,9 @@ void schreier::print_orbit_lengths(ostream &ost)
 	int nb_types;
 	int *type_first;
 	int *type_len;
+	sorting Sorting;
 
-	int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
+	Sorting.int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
 		sorting_perm, sorting_perm_inv,
 		nb_types, type_first, type_len);
 
@@ -79,8 +80,9 @@ void schreier::print_orbit_lengths_tex(ostream &ost)
 	int nb_types;
 	int *type_first;
 	int *type_len;
+	sorting Sorting;
 
-	int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
+	Sorting.int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
 		sorting_perm, sorting_perm_inv,
 		nb_types, type_first, type_len);
 
@@ -254,6 +256,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	int i, action *default_action,
 	strong_generators *gens, ostream &ost)
 {
+	sorting Sorting;
 	longinteger_object full_group_order;
 
 	gens->group_order(full_group_order);
@@ -280,7 +283,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 			Subgroup_elements_by_index, sz_subgroup,
 			0 /* verbose_level */);
 
-		int_vec_heapsort(Subgroup_elements_by_index,
+		Sorting.int_vec_heapsort(Subgroup_elements_by_index,
 				sz_subgroup);
 
 		ost << "The subgroup consists of the following "
@@ -317,12 +320,13 @@ void schreier::print_and_list_orbits_sorted_by_length(
 	int *Len;
 	int *Perm;
 	int *Perm_inv;
+	sorting Sorting;
 
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
 	int_vec_copy(orbit_len, Len, nb_orbits);
-	int_vec_sorting_permutation(Len, nb_orbits,
+	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
 	ost << "There are " << nb_orbits
@@ -374,12 +378,13 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	int *Len;
 	int *Perm;
 	int *Perm_inv;
+	sorting Sorting;
 
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
 	int_vec_copy(orbit_len, Len, nb_orbits);
-	int_vec_sorting_permutation(Len, nb_orbits,
+	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
 	ost << "There are " << nb_orbits << " orbits under a group with "
@@ -432,13 +437,14 @@ void schreier::print_fancy(
 	int *Perm;
 	int *Perm_inv;
 	longinteger_object full_group_order;
+	sorting Sorting;
 
 	gens_full_group->group_order(full_group_order);
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
 	int_vec_copy(orbit_len, Len, nb_orbits);
-	int_vec_sorting_permutation(Len, nb_orbits,
+	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
 	ost << "There are " << nb_orbits << " orbits under a group with "
@@ -752,6 +758,7 @@ void schreier::print_orbit_using_labels(ostream &ost,
 {
 	int i, first, len;
 	int *v;
+	sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -760,7 +767,7 @@ void schreier::print_orbit_using_labels(ostream &ost,
 		v[i] = labels[orbit[first + i]];
 		}
 	//int_vec_print(ost, v, len);
-	int_vec_heapsort(v, len);
+	Sorting.int_vec_heapsort(v, len);
 	int_vec_print_fully(ost, v, len);
 
 	FREE_int(v);
@@ -816,6 +823,7 @@ void schreier::print_orbit_through_labels(ostream &ost,
 {
 	int i, first, len;
 	int *v;
+	sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -823,7 +831,7 @@ void schreier::print_orbit_through_labels(ostream &ost,
 	for (i = 0; i < len; i++) {
 		v[i] = point_labels[orbit[first + i]];
 		}
-	int_vec_heapsort(v, len);
+	Sorting.int_vec_heapsort(v, len);
 	int_vec_print_fully(ost, v, len);
 	FREE_int(v);
 }
@@ -832,13 +840,14 @@ void schreier::print_orbit_sorted(ostream &ost, int orbit_no)
 {
 	int i, len;
 	int *v;
+	sorting Sorting;
 
 	len = orbit_first[orbit_no + 1] - orbit_first[orbit_no];
 	v = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		v[i] = orbit[orbit_first[orbit_no] + i];
 		}
-	int_vec_sort(len, v);
+	Sorting.int_vec_sort(len, v);
 
 	ost << "{ ";
 	for (i = 0; i < len; i++) {

@@ -955,8 +955,9 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	int nb_types;
 	int *type_first;
 	int *type_len;
+	sorting Sorting;
 	
-	int_vec_classify(S.nb_orbits, S.orbit_len, orbit_len_sorted, 
+	Sorting.int_vec_classify(S.nb_orbits, S.orbit_len, orbit_len_sorted,
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 

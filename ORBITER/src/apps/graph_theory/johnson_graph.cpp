@@ -63,6 +63,7 @@ int main(int argc, char **argv)
 		}
 
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	N = Combi.int_n_choose_k(n, k);
 	
@@ -79,7 +80,7 @@ int main(int argc, char **argv)
 		for (j = i + 1; j < N; j++) {
 			Combi.unrank_k_subset(j, set2, n, k);
 
-			int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
+			Sorting.int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
 			if (sz == s) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + 1] = 1;

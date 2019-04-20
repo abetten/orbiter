@@ -464,6 +464,7 @@ int graph_generator::check_conditions_tournament(
 	int a, a2, swap, swap2, b2, b, i, idx;
 	int *S_sorted;
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "graph_generator::check_conditions_tournament "
@@ -473,7 +474,7 @@ int graph_generator::check_conditions_tournament(
 
 	S_sorted = NEW_int(len);
 	int_vec_copy(S, S_sorted, len);
-	int_vec_heapsort(S_sorted, len);
+	Sorting.int_vec_heapsort(S_sorted, len);
 
 	for (i = 0; i < len; i++) {
 		a = S_sorted[i];
@@ -482,7 +483,7 @@ int graph_generator::check_conditions_tournament(
 		swap2 = 1 - swap;
 		b2 = a2;
 		b = 2 * b2 + swap2;
-		if (int_vec_search(S_sorted, len, b, idx)) {
+		if (Sorting.int_vec_search(S_sorted, len, b, idx)) {
 			if (f_vv) {
 				cout << "graph_generator::check_conditions_tournament "
 						"elements " << a << " and " << b

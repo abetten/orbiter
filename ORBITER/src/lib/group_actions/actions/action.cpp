@@ -628,7 +628,8 @@ int action::test_if_set_stabilizes(int *Elt,
 	int *set1, *set2;
 	int i, cmp;
 	int f_v = (verbose_level >= 1);
-	
+	sorting Sorting;
+
 	if (f_v) {
 		cout << "action::test_if_set_stabilizes" << endl;
 		}
@@ -637,9 +638,9 @@ int action::test_if_set_stabilizes(int *Elt,
 	for (i = 0; i < size; i++) {
 		set1[i] = set[i];
 		}
-	int_vec_quicksort_increasingly(set1, size);
+	Sorting.int_vec_quicksort_increasingly(set1, size);
 	map_a_set(set1, set2, size, Elt, 0);
-	int_vec_quicksort_increasingly(set2, size);
+	Sorting.int_vec_quicksort_increasingly(set2, size);
 	cmp = int_vec_compare(set1, set2, size);
 	if (f_v) {
 		cout << "the elements takes " << endl;
@@ -700,8 +701,10 @@ void action::map_a_set(int *set,
 void action::map_a_set_and_reorder(int *set,
 		int *image_set, int n, int *Elt, int verbose_level)
 {
+	sorting Sorting;
+
 	map_a_set(set, image_set, n, Elt, verbose_level);
-	int_vec_heapsort(image_set, n);
+	Sorting.int_vec_heapsort(image_set, n);
 }
 
 
@@ -1329,16 +1332,17 @@ int action::check_if_in_set_stabilizer(int *Elt,
 	int i, a, b, idx;
 	int *ordered_set;
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 	
 	ordered_set = NEW_int(size);
 	for (i = 0; i < size; i++) {
 		ordered_set[i] = set[i];
 		}
-	int_vec_sort(size, ordered_set);
+	Sorting.int_vec_sort(size, ordered_set);
 	for (i = 0; i < size; i++) {
 		a = ordered_set[i];
 		b = element_image_of(a, Elt, 0);
-		if (!int_vec_search(ordered_set, size, b, idx)) {
+		if (!Sorting.int_vec_search(ordered_set, size, b, idx)) {
 			if (f_v) {
 				cout << "action::check_if_in_set_stabilizer fails" << endl;
 				cout << "set: ";
@@ -1367,6 +1371,7 @@ int action::check_if_transporter_for_set(int *Elt,
 	int *ordered_set2;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
+	sorting Sorting;
 	
 	if (f_vv) {
 		cout << "action::check_if_transporter_for_set "
@@ -1382,7 +1387,7 @@ int action::check_if_transporter_for_set(int *Elt,
 	for (i = 0; i < size; i++) {
 		ordered_set2[i] = set2[i];
 		}
-	int_vec_sort(size, ordered_set2);
+	Sorting.int_vec_sort(size, ordered_set2);
 	if (f_vv) {
 		cout << "sorted target set:" << endl;
 		int_vec_print(cout, ordered_set2, size);
@@ -1397,7 +1402,7 @@ int action::check_if_transporter_for_set(int *Elt,
 		if (FALSE) {
 			cout << "i=" << i << " a=" << a << " b=" << b << endl;
 			}
-		if (!int_vec_search(ordered_set2, size, b, idx)) {
+		if (!Sorting.int_vec_search(ordered_set2, size, b, idx)) {
 			if (f_v) {
 				cout << "action::check_if_transporter_for_set fails" << endl;
 				cout << "set1   : ";
@@ -1433,6 +1438,7 @@ void action::compute_set_orbit(vector_ge &gens,
 	int **New_Transporter;
 	int nb_finished, allocated_nb_sets;
 	int new_allocated_nb_sets, nb_gens, i, j, h;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "action::compute_set_orbit: ";
@@ -1451,7 +1457,7 @@ void action::compute_set_orbit(vector_ge &gens,
 	for (i = 0; i < size; i++) {
 		Sets[0][i] = set[i];
 		}
-	int_vec_sort(size, Sets[0]);
+	Sorting.int_vec_sort(size, Sets[0]);
 	
 	Transporter[0] = NEW_int(elt_size_in_int);
 	element_one(Transporter[0], FALSE);

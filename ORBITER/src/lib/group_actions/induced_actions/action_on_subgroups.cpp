@@ -66,6 +66,7 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 5);
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_subgroups::init "
@@ -91,14 +92,14 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 	for (i = 0; i < nb_subgroups; i++) {
 		sets[i] = NEW_int(subgroup_order);
 		int_vec_copy(Subgroups[i]->Elements, sets[i], subgroup_order);
-		int_vec_quicksort_increasingly(sets[i], subgroup_order);
+		Sorting.int_vec_quicksort_increasingly(sets[i], subgroup_order);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";
 			int_vec_print(cout, sets[i], subgroup_order);
 			cout << endl;
 			}
 		}
-	quicksort_array_with_perm(nb_subgroups,
+	Sorting.quicksort_array_with_perm(nb_subgroups,
 			(void **) sets, perm_inv, action_on_subgroups_compare,
 			this);
 	Combi.perm_inverse(perm_inv, perm, nb_subgroups);
@@ -140,6 +141,7 @@ int action_on_subgroups::compute_image(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int idx, res, j, b, aa, s, t;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_subgroups::compute_image "
@@ -184,7 +186,7 @@ int action_on_subgroups::compute_image(
 		//t = S->conjugate_by_rank(s, r, 0);
 		image_set[j] = t;
 		}
-	int_vec_heapsort(image_set, subgroup_order);
+	Sorting.int_vec_heapsort(image_set, subgroup_order);
 	
 #if 0
 	A->map_a_set_and_reorder(sets[perm[a]], image_set, set_size, Elt, 0);
@@ -201,7 +203,7 @@ int action_on_subgroups::compute_image(
 		}
 
 
-	if (!vec_search((void **)sets, action_on_subgroups_compare_inverted, 
+	if (!Sorting.vec_search((void **)sets, action_on_subgroups_compare_inverted,
 		this, nb_subgroups, image_set, idx, verbose_level)) {
 
 		int u;

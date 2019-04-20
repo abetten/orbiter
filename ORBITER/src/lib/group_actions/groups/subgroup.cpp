@@ -63,6 +63,7 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 	int f_v = (verbose_level >= 1);
 	int *Elt;
 	int i, rk;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "subgroup::init_from_sims" << endl;
@@ -82,7 +83,7 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 		rk = S->element_rank_int(Elt);
 		Elements[i] = rk;
 	}
-	int_vec_heapsort(Elements, group_order);
+	Sorting.int_vec_heapsort(Elements, group_order);
 
 	if (f_v) {
 		cout << "subgroup::init_from_sims done" << endl;
@@ -112,8 +113,9 @@ void subgroup::print()
 int subgroup::contains_this_element(int elt)
 {
 	int idx;
+	sorting Sorting;
 	
-	if (int_vec_search(Elements, group_order, elt, idx)) {
+	if (Sorting.int_vec_search(Elements, group_order, elt, idx)) {
 		return TRUE;
 		}
 	else {

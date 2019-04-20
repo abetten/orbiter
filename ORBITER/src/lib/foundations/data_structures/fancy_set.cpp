@@ -239,8 +239,9 @@ void fancy_set::subtract_set(fancy_set *set_to_subtract)
 void fancy_set::sort()
 {
 	int i, a;
+	sorting Sorting;
 	
-	int_vec_heapsort(set, k);
+	Sorting.int_vec_heapsort(set, k);
 	for (i = 0; i < k; i++) {
 		a = set[i];
 		set_inv[a] = i;

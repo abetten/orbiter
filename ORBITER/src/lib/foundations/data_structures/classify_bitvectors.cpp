@@ -108,11 +108,12 @@ int classify_bitvectors::search(uchar *data,
 {
 	int f_v = (verbose_level >= 1);
 	int ret;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_bitvectors::search" << endl;
 		}
-	if (vec_search((void **) Type_data,
+	if (Sorting.vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
 		nb_types, data, idx, 0 /*verbose_level - 1*/)) {
 		ret = TRUE;
@@ -131,6 +132,7 @@ int classify_bitvectors::add(uchar *data,
 {
 	int f_v = (verbose_level >= 1);
 	int idx, i, ret;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "classify_bitvectors::add" << endl;
@@ -142,7 +144,7 @@ int classify_bitvectors::add(uchar *data,
 		cout << "N=" << N << endl;
 		exit(1);
 		}
-	if (vec_search((void **) Type_data,
+	if (Sorting.vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
 		nb_types, data, idx, 0 /*verbose_level */)) {
 		type_of[n] = idx;
@@ -182,6 +184,7 @@ int classify_bitvectors::add(uchar *data,
 void classify_bitvectors::finalize(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_bitvectors::finalize" << endl;
@@ -200,7 +203,7 @@ void classify_bitvectors::finalize(int verbose_level)
 		perm[i] = i;
 		v[i] = Type_rep[i];
 		}
-	int_vec_heapsort_with_log(v, perm, nb_types);
+	Sorting.int_vec_heapsort_with_log(v, perm, nb_types);
 
 	FREE_int(v);
 	

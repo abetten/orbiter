@@ -40,6 +40,7 @@ trace_result upstep_work::recognize(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int len = size - 1;
+	sorting Sorting;
 	
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -82,7 +83,7 @@ trace_result upstep_work::recognize(
 #endif
 	
 	int_vec_copy(gen->set[0], gen->set0, size);
-	int_vec_heapsort(gen->set0, size - 1);
+	Sorting.int_vec_heapsort(gen->set0, size - 1);
 		// important: we keep the last point separate
 	
 	if (f_v) {
@@ -686,6 +687,7 @@ trace_result upstep_work::start_over(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	sorting Sorting;
 
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -704,7 +706,7 @@ trace_result upstep_work::start_over(
 		}
 
 
-	int_vec_heapsort(gen->set[lvl + 1], size - 1);
+	Sorting.int_vec_heapsort(gen->set[lvl + 1], size - 1);
 		// we keep the last point (i.e., the (len + 1)-th) extra
 	int_vec_copy(gen->set[lvl + 1], gen->set[0], size);
 

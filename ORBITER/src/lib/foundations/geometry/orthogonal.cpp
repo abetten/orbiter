@@ -383,6 +383,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk, rk1, root1, root2, pt2;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "lines_on_point" << endl;
@@ -426,7 +427,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		line_pencil_line_ranks[i] =
 				rank_line(pt, pt2, verbose_level);
 		}
-	int_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
+	Sorting.int_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_v) {
 		cout << "line pencil on point " << pt << " by line rank : ";
 		int_vec_print(cout, line_pencil_line_ranks, alpha);
@@ -8627,6 +8628,7 @@ void orthogonal::perp(int pt,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "orthogonal::perp pt=" << pt << endl;
@@ -8651,7 +8653,7 @@ void orthogonal::perp(int pt,
 		int_matrix_print(Perp1, alpha, q + 1);
 		}
 
-	int_vec_heapsort(Perp1, alpha * (q + 1));
+	Sorting.int_vec_heapsort(Perp1, alpha * (q + 1));
 	if (f_v) {
 		cout << "orthogonal::perp after sorting:" << endl;
 		int_vec_print(cout, Perp1, alpha * (q + 1));
@@ -8665,7 +8667,7 @@ void orthogonal::perp(int pt,
 			}
 		}
 	sz = j;
-	int_vec_heapsort(Perp1, sz);
+	Sorting.int_vec_heapsort(Perp1, sz);
 	if (f_v) {
 		cout << "orthogonal::perp after removing "
 				"pt and sorting:" << endl;
@@ -8688,6 +8690,7 @@ void orthogonal::perp_of_two_points(int pt1, int pt2,
 	int *Perp2;
 	int *Perp3;
 	int sz1, sz2;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "orthogonal::perp_of_two_points "
@@ -8698,7 +8701,7 @@ void orthogonal::perp_of_two_points(int pt1, int pt2,
 	Perp2 = NEW_int(alpha * (q + 1));
 	perp(pt1, Perp1, sz1, 0 /*verbose_level*/);
 	perp(pt2, Perp2, sz2, 0 /*verbose_level*/);
-	int_vec_intersect(Perp1, sz1, Perp2, sz2, Perp3, sz);
+	Sorting.int_vec_intersect(Perp1, sz1, Perp2, sz2, Perp3, sz);
 	int_vec_copy(Perp3, Perp, sz);
 	FREE_int(Perp1);
 	FREE_int(Perp2);
@@ -8738,6 +8741,7 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 	int *Intersection2 = NULL;
 	int sz2;
 	int sz0, perp_sz = 0;
+	sorting Sorting;
 
 	sz0 = alpha * q;
 	Perp_without_pt = NEW_pint(nb_pts);
@@ -8762,7 +8766,7 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 			exit(1);
 			}
 		}
-	int_vec_intersect(Perp_without_pt[0], perp_sz,
+	Sorting.int_vec_intersect(Perp_without_pt[0], perp_sz,
 			Perp_without_pt[1], perp_sz, Intersection1, sz1);
 	if (f_v) {
 		cout << "orthogonal::perp_of_k_points intersection of "
@@ -8774,7 +8778,7 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 		if (f_v) {
 			cout << "intersecting with perp[" << i << "]" << endl;
 			}
-		int_vec_intersect(Intersection1, sz1,
+		Sorting.int_vec_intersect(Intersection1, sz1,
 				Perp_without_pt[i], sz0, Intersection2, sz2);
 
 		if (f_v) {
@@ -9340,6 +9344,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 	int q;
 	number_theory_domain NT;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 
 	q = F->q;
@@ -9390,7 +9395,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 	int *Hash_sorted, *sorting_perm, *sorting_perm_inv,
 		nb_types, *type_first, *type_len;
 
-	int_vec_classify(n_choose_k, Hash, Hash_sorted,
+	Sorting.int_vec_classify(n_choose_k, Hash, Hash_sorted,
 		sorting_perm, sorting_perm_inv,
 		nb_types, type_first, type_len);
 
@@ -9409,7 +9414,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 	int *type_len_sorted, *sorting_perm2, *sorting_perm_inv2,
 		nb_types2, *type_first2, *type_len2;
 
-	int_vec_classify(nb_types, type_len, type_len_sorted,
+	Sorting.int_vec_classify(nb_types, type_len, type_len_sorted,
 		sorting_perm2, sorting_perm_inv2,
 		nb_types2, type_first2, type_len2);
 
@@ -9495,7 +9500,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				F->Q_unrank(Mtx + ii * n, 1, n - 1, set[subset[ii]]);
 				}
 			for (ii = 0; ii < level; ii++) {
-				if (!int_vec_search(Block, Block_size, subset[ii], idx)) {
+				if (!Sorting.int_vec_search(Block, Block_size, subset[ii], idx)) {
 					for (jj = Block_size; jj > idx; jj--) {
 						Block[jj] = Block[jj - 1];
 						}

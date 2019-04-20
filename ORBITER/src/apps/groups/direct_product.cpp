@@ -1752,6 +1752,7 @@ int direct_product_action::check_conditions(
 	int f_bad_col = FALSE;
 	int f_bad_mask = FALSE;
 	int pt, idx;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "direct_product_action::check_conditions "
@@ -1762,7 +1763,7 @@ int direct_product_action::check_conditions(
 		}
 
 	pt = S[len - 1];
-	if (int_vec_search_linear(S, len - 1, pt, idx)) {
+	if (Sorting.int_vec_search_linear(S, len - 1, pt, idx)) {
 		if (f_v) {
 			cout << "direct_product_action::check_conditions "
 					"not OK, "

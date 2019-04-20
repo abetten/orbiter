@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	int n_max;
 	int n, k, n2, s;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -68,7 +69,7 @@ int main(int argc, char **argv)
 					for (j = i + 1; j < N; j++) {
 						Combi.unrank_k_subset(j, set2, n, k);
 
-						int_vec_intersect_sorted_vectors(
+						Sorting.int_vec_intersect_sorted_vectors(
 								set1, k, set2, k, set3, sz);
 						if (sz == s) {
 							Adj[i * N + j] = 1;

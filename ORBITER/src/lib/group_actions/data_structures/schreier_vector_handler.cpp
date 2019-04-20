@@ -151,6 +151,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int hdl, pt_loc, pr, la, n;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv_recursion "
@@ -161,7 +162,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 	//cout << "schreier_vector_coset_rep_inv_compact_general "
 	//"pt = " << pt << endl;
 	n = S->sv[0];
-	if (!int_vec_search(S->sv + 1, S->sv[0], pt, pt_loc)) {
+	if (!Sorting.int_vec_search(S->sv + 1, S->sv[0], pt, pt_loc)) {
 		if (f_allow_failure) {
 			if (f_v) {
 				cout << "schreier_vector_handler::coset_rep_inv_recursion "

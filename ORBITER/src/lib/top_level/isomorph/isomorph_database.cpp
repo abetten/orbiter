@@ -334,6 +334,7 @@ int isomorph::find_extension_search_interval(int *set,
 {
 	int *data = find_extension_set1;
 	int i, id = 0;
+	sorting Sorting;
 	
 	for (i = 0; i < len; i++) {
 		if (f_btree_idx) {
@@ -348,7 +349,7 @@ int isomorph::find_extension_search_interval(int *set,
 				}
 			load_solution(id, data);
 			}
-		int_vec_heapsort(data + level, size - level);
+		Sorting.int_vec_heapsort(data + level, size - level);
 		if (int_vec_compare(set + level, data + level, size - level) == 0) {
 			break;
 			}
@@ -368,12 +369,13 @@ int isomorph::find_extension_easy_old(int *set,
 {
 	int f_v = (verbose_level >= 1);
 	int first, len, ret;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_old" << endl;
 		cout << "case_nb=" << case_nb << endl;
 		}
-	int_vec_heapsort(set + level, size - level);
+	Sorting.int_vec_heapsort(set + level, size - level);
 	first = solution_first[case_nb];
 	len = solution_len[case_nb];
 	ret = find_extension_search_interval(set, 
@@ -398,11 +400,12 @@ int isomorph::find_extension_easy_new(int *set,
 	//int f_vv = FALSE; // (verbose_level >= 2);
 	int ret;
 	int f_found, first, idx2, len;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new" << endl;
 		}
-	int_vec_heapsort(set + level, size - level);
+	Sorting.int_vec_heapsort(set + level, size - level);
 	
 	int h;
 
@@ -416,7 +419,7 @@ int isomorph::find_extension_easy_new(int *set,
 		cout << "isomorph::find_extension_easy_new before "
 				"int_vec_search_first_occurence(h)" << endl;
 		}
-	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
+	f_found = Sorting.int_vec_search_first_occurence(hash_vs_id_hash,
 			N, h, first, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new after "
@@ -431,7 +434,7 @@ int isomorph::find_extension_easy_new(int *set,
 		cout << "isomorph::find_extension_easy_new before "
 				"int_vec_search_first_occurence(h + 1) h+1=" << h + 1 << endl;
 		}
-	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
+	f_found = Sorting.int_vec_search_first_occurence(hash_vs_id_hash,
 			N, h + 1, idx2, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new after "
@@ -588,7 +591,8 @@ void isomorph::create_level_database(int level, int verbose_level)
 	int set1[1000];
 	int set2[1000];
 	//char *elt;
-	
+	sorting Sorting;
+
 	if (f_v) {
 		cout << "isomorph::create_level_database "
 				"level = " << level << endl;
@@ -703,7 +707,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				
 
 				gen->Poset->A2->map_a_set(set1, set2, level + 1, gen->Elt1, 0);
-				int_vec_heapsort(set2, level + 1);
+				Sorting.int_vec_heapsort(set2, level + 1);
 
 				if (f_vv /*f_vv && (i % print_mod) == 0*/) {
 					cout << "mapping ";

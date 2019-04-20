@@ -973,6 +973,7 @@ void ovoid_generator::compute_coloring(
 {
 	int f_v (verbose_level >= 1);
 	int i, j, c, pos;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "ovoid_generator::compute_coloring" << endl;
@@ -1001,7 +1002,7 @@ void ovoid_generator::compute_coloring(
 			exit(1);
 		}
 	}
-	int_vec_heapsort(colors, starter_size - 1);
+	Sorting.int_vec_heapsort(colors, starter_size - 1);
 	cout << "colors:";
 	int_vec_print(cout, colors, starter_size - 1);
 	cout << endl;

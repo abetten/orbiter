@@ -70,6 +70,7 @@ void action_on_k_subsets::compute_image(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_k_subsets::compute_image "
@@ -86,7 +87,7 @@ void action_on_k_subsets::compute_image(
 		b = A->image_of(Elt, a);
 		set2[u] = b;
 		}
-	int_vec_heapsort(set2, k);
+	Sorting.int_vec_heapsort(set2, k);
 	j = Combi.rank_k_subset(set2, A->degree, k);
 	if (f_vv) {
 		cout << "set " << i << " = ";

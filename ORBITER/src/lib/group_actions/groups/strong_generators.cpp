@@ -1658,6 +1658,7 @@ void strong_generators::orbits_light(action *A_given,
 	int Orbit_reps_allocated;
 	int nb_reached;
 	int *Generator_idx;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_light "
@@ -1739,7 +1740,7 @@ void strong_generators::orbits_light(action *A_given,
 							"under generator " << h
 							<< " it maps to " << b << endl;
 					}
-				if (!int_vec_search(Orbit, Orbit_len, b, idx)) {
+				if (!Sorting.int_vec_search(Orbit, Orbit_len, b, idx)) {
 					if (Orbit_len == Orbit_allocated) {
 						int new_oa;
 						int *O;

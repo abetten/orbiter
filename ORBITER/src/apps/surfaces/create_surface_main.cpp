@@ -90,6 +90,7 @@ int main(int argc, const char **argv)
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	number_theory_domain NT;
+	sorting Sorting;
 
 	q = Descr->get_q();
 	cout << "q=" << q << endl;
@@ -629,7 +630,7 @@ int main(int argc, const char **argv)
 						perm[h] = h;
 						}
 
-					int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
+					Sorting.int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
 					for (h = 0; h < 6; h++) {
 						Arc2[h] = Arc[perm[h]];
 						}
@@ -682,7 +683,7 @@ int main(int argc, const char **argv)
 							0 /*verbose_level */);
 
 
-					if (!int_vec_search(Six_arcs->Not_on_conic_idx,
+					if (!Sorting.int_vec_search(Six_arcs->Not_on_conic_idx,
 						Six_arcs->nb_arcs_not_on_conic,
 						orbit_at_level,
 						idx)) {

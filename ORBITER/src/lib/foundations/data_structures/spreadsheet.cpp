@@ -566,6 +566,7 @@ void spreadsheet::print_table_sorted(ostream &ost,
 	int idx;
 	int *perm;
 	char **labels;
+	sorting Sorting;
 	
 	idx = find_by_column(sort_by);
 	perm = NEW_int(nb_rows - 1);
@@ -589,7 +590,7 @@ void spreadsheet::print_table_sorted(ostream &ost,
 			}
 		}
 	
-	quicksort_array_with_perm(nb_rows - 1, (void **) labels, perm, 
+	Sorting.quicksort_array_with_perm(nb_rows - 1, (void **) labels, perm,
 		compare_strings, NULL /*void *data*/);
 
 	

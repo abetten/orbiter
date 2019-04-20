@@ -325,7 +325,8 @@ void layered_graph::draw_with_options(const char *fname,
 	int yoffset = 0;
 	int own_id;
 	numerics Num;
-	
+	sorting Sorting;
+
 	rad_x_twice = O->rad >> 3;
 	rad_y_twice = O->rad >> 3;
 	G.user2dev_dist_x(rad_x_twice);
@@ -354,7 +355,7 @@ void layered_graph::draw_with_options(const char *fname,
 		if (O->f_select_layers) {
 			int idx;
 			
-			if (!int_vec_search_linear(O->layer_select,
+			if (!Sorting.int_vec_search_linear(O->layer_select,
 					O->nb_layer_select, i, idx)) {
 				continue;
 				}
@@ -423,7 +424,7 @@ void layered_graph::draw_with_options(const char *fname,
 				if (O->f_select_layers) {
 					int idx;
 			
-					if (!int_vec_search_linear(O->layer_select,
+					if (!Sorting.int_vec_search_linear(O->layer_select,
 							O->nb_layer_select, l, idx)) {
 						continue;
 						}			
@@ -619,7 +620,7 @@ void layered_graph::draw_with_options(const char *fname,
 		if (O->f_select_layers) {
 			int idx;
 			
-			if (!int_vec_search_linear(O->layer_select,
+			if (!Sorting.int_vec_search_linear(O->layer_select,
 					O->nb_layer_select, i, idx)) {
 				continue;
 				}

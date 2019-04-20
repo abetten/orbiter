@@ -58,6 +58,7 @@ int main(int argc, char **argv)
 	double scale = .45;
 	int f_line_width = FALSE;
 	double line_width = 1.5;
+	sorting Sorting;
 
 	t0 = os_ticks();
 
@@ -200,7 +201,7 @@ int main(int argc, char **argv)
 		col = M2[i * n2 + 0];
 		sol_idx = M2[i * n2 + 2];
 		orb = orbit_number[orbit_perm_inv[sol_idx]];
-		if (!int_vec_search(up_fst, m + 1, orb, idx)) {
+		if (!Sorting.int_vec_search(up_fst, m + 1, orb, idx)) {
 			// find the last occurence 
 			idx--;
 			}

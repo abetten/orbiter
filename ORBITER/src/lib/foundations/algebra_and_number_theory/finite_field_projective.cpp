@@ -2502,6 +2502,7 @@ void finite_field::create_hyperoval(
 	int n = 2;
 	int i, d;
 	int *v;
+	sorting Sorting;
 
 	d = n + 1;
 	P = NEW_OBJECT(projective_space);
@@ -2562,7 +2563,7 @@ void finite_field::create_hyperoval(
 			}
 		}
 
-	if (!test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
 		cout << "create_hyperoval the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
@@ -2579,6 +2580,7 @@ void finite_field::create_subiaco_oval(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::create_subiaco_oval" << endl;
@@ -2619,7 +2621,7 @@ void finite_field::create_subiaco_oval(
 		FREE_OBJECT(P);
 		}
 
-	if (!test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
 		cout << "create_subiaco_oval the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
@@ -2633,6 +2635,7 @@ void finite_field::create_subiaco_hyperoval(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::create_subiaco_hyperoval" << endl;
@@ -2668,7 +2671,7 @@ void finite_field::create_subiaco_hyperoval(
 		FREE_OBJECT(P);
 		}
 
-	if (!test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
 		cout << "finite_field::create_subiaco_hyperoval "
 				"the set is not a set, "
 				"something is wrong" << endl;
@@ -3738,6 +3741,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 	int d = n + 1;
 	int *v;
 	int *intersection_numbers;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type" << endl;
@@ -3822,7 +3826,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
 				}
-			int_vec_quicksort_increasingly(S, l);
+			Sorting.int_vec_quicksort_increasingly(S, l);
 			if (f_v) {
 				int_vec_print(cout, S, l);
 				cout << endl;
@@ -3962,6 +3966,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 	int *Blocks;
 	int f, a, b, j, nb_planes, intersection_size, u;
 	int *S;
+	sorting Sorting;
 	//int *basis;
 	//grassmann *G;
 
@@ -3978,7 +3983,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		b = C.sorting_perm_inv[f + j];
 		S[j] = b;
 		}
-	int_vec_quicksort_increasingly(S, nb_planes);
+	Sorting.int_vec_quicksort_increasingly(S, nb_planes);
 	if (f_v) {
 		int_vec_print(cout, S, nb_planes);
 		cout << endl;
@@ -4018,7 +4023,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 
 		for (j = 0; j < intersection_size; j++) {
 			a = intersection_set[j];
-			if (!int_vec_search_linear(set, set_size, a, b)) {
+			if (!Sorting.int_vec_search_linear(set, set_size, a, b)) {
 				cout << "did not find point" << endl;
 				exit(1);
 				}
@@ -4158,6 +4163,7 @@ void finite_field::do_line_type(int n,
 
 	classify C;
 	int f_second = FALSE;
+	sorting Sorting;
 
 	C.init(intersection_numbers, P->N_lines, f_second, 0);
 	if (TRUE) {
@@ -4183,7 +4189,7 @@ void finite_field::do_line_type(int n,
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
 				}
-			int_vec_quicksort_increasingly(S, l);
+			Sorting.int_vec_quicksort_increasingly(S, l);
 			if (f_v) {
 				int_vec_print(cout, S, l);
 				cout << endl;
@@ -4205,7 +4211,7 @@ void finite_field::do_line_type(int n,
 					continue;
 					}
 				L = P->Lines + b * P->k;
-				int_vec_intersect(L, P->k, set, set_size, I, sz);
+				Sorting.int_vec_intersect(L, P->k, set, set_size, I, sz);
 
 				if (f_show) {
 					cout << "intersects in " << sz << " points : ";
@@ -4411,6 +4417,7 @@ void finite_field::do_test_diagonal_line(int n,
 	char **Aut_ascii;
 
 	int *Nb;
+	sorting Sorting;
 
 
 #if 0
@@ -4457,7 +4464,7 @@ void finite_field::do_test_diagonal_line(int n,
 		for (i = 0; i < 4; i++) {
 			a = sets[h][i];
 			pt[i] = a;
-			if (!int_vec_search_linear(set_in, set_size, a, j)) {
+			if (!Sorting.int_vec_search_linear(set_in, set_size, a, j)) {
 				cout << "the point " << a << " is not contained "
 						"in the hyperoval" << endl;
 				exit(1);

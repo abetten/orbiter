@@ -387,12 +387,13 @@ void clique_finder::init_suspicous_points(int nb, int *point_list)
 {
 	int i, j, idx;
 	int *point_list_ordered;
+	sorting Sorting;
 	
 	point_list_ordered = NEW_int(nb);
 	for (i = 0; i < nb; i++) {
 		point_list_ordered[i] = point_list[i];
 		}
-	int_vec_sort(nb, point_list_ordered);
+	Sorting.int_vec_sort(nb, point_list_ordered);
 	point_is_suspicous = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		point_is_suspicous[i] = FALSE;
@@ -404,7 +405,7 @@ void clique_finder::init_suspicous_points(int nb, int *point_list)
 		else {
 			j = i;
 			}
-		if (int_vec_search(point_list_ordered, nb, j, idx)) {
+		if (Sorting.int_vec_search(point_list_ordered, nb, j, idx)) {
 			point_is_suspicous[i] = TRUE;
 			}
 		}
@@ -528,20 +529,9 @@ void clique_finder::log_choice(int depth)
 
 void clique_finder::swap_point(int idx1, int idx2)
 {
-	int_vec_swap_points(pt_list, pt_list_inv, idx1, idx2);
-#if 0
-	int p1, p2;
-	
-	if (idx1 == idx2) {
-		return;
-		}
-	p1 = pt_list[idx1];
-	p2 = pt_list[idx2];
-	pt_list[idx1] = p2;
-	pt_list[idx2] = p1;
-	pt_list_inv[p1] = idx2;
-	pt_list_inv[p2] = idx1;
-#endif
+	sorting Sorting;
+
+	Sorting.int_vec_swap_points(pt_list, pt_list_inv, idx1, idx2);
 }
 
 void clique_finder::degree_of_point_statistic(int depth,

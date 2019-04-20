@@ -1259,6 +1259,7 @@ int finite_field::base_cols_and_embedding(int m, int n, int *A,
 	int f_v = (verbose_level >= 1);
 	int *B;
 	int i, j, rk, idx;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::base_cols_and_embedding" << endl;
@@ -1270,7 +1271,7 @@ int finite_field::base_cols_and_embedding(int m, int n, int *A,
 	rk = Gauss_simple(B, m, n, base_cols, verbose_level - 3);
 	j = 0;
 	for (i = 0; i < n; i++) {
-		if (!int_vec_search(base_cols, rk, i, idx)) {
+		if (!Sorting.int_vec_search(base_cols, rk, i, idx)) {
 			embedding[j++] = i;
 			}
 		}
@@ -3415,6 +3416,7 @@ int finite_field::lexleast_canonical_form_ranked(
 	int rk;
 	number_theory_domain NT;
 	geometry_global Gg;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::lexleast_canonical_form_ranked" << endl;
@@ -3472,7 +3474,7 @@ int finite_field::lexleast_canonical_form_ranked(
 		PG_element_rank_modified(
 				M2 + a * vector_space_dimension, 1,
 				vector_space_dimension, list_of_ranks_PG[a]);
-		if (!int_vec_search(list_of_ranks_PG_sorted,
+		if (!Sorting.int_vec_search(list_of_ranks_PG_sorted,
 				size_list, list_of_ranks_PG[a], idx)) {
 			for (h = size_list; h > idx; h--) {
 				list_of_ranks_PG_sorted[h] = list_of_ranks_PG_sorted[h - 1];
@@ -4850,6 +4852,7 @@ void finite_field::adjust_basis(int *V, int *U,
 	int i, j, ii, b;
 	int *base_cols;
 	int *M;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::adjust_basis" << endl;
@@ -4873,7 +4876,7 @@ void finite_field::adjust_basis(int *V, int *U,
 			Gauss_step(M + b * n, M + (d + ii) * n,
 					n, b, 0 /* verbose_level */);
 			}
-		if (int_vec_is_zero(M + (d + ii) * n, n)) {
+		if (Sorting.int_vec_is_zero(M + (d + ii) * n, n)) {
 			}
 		else {
 			ii++;
@@ -4902,6 +4905,7 @@ void finite_field::choose_vector_in_here_but_not_in_here_column_spaces(
 	int *Gen;
 	int *base_cols;
 	int i, j, ii, b;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
@@ -4942,7 +4946,7 @@ void finite_field::choose_vector_in_here_but_not_in_here_column_spaces(
 		b = base_cols[i];
 		Gauss_step(Gen + b * n, Gen + (d + ii) * n,
 				n, b, 0 /* verbose_level */);
-		if (int_vec_is_zero(Gen + (d + ii) * n, n)) {
+		if (Sorting.int_vec_is_zero(Gen + (d + ii) * n, n)) {
 			}
 		else {
 			ii++;
@@ -4993,6 +4997,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 	int ret = TRUE;
 	number_theory_domain NT;
 	geometry_global Gg;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
@@ -5096,7 +5101,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 
 		
 		// see if we got something nonzero:
-		if (!int_vec_is_zero(Gen + rk * n, n)) {
+		if (!Sorting.int_vec_is_zero(Gen + rk * n, n)) {
 			break;
 			}
 		// keep moving on to the next vector
@@ -5475,6 +5480,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	int nCk;
 	int cnt, overall_cnt;
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "finite_field::map_points_to_points_projectively" << endl;
@@ -5494,7 +5500,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 		PG_element_rank_modified(B1 + i * d, 1, d, a);
 		B_set[i] = a;
 		}
-	int_vec_heapsort(B_set, d + k + 1);
+	Sorting.int_vec_heapsort(B_set, d + k + 1);
 	if (f_v) {
 		cout << "B_set = ";
 		orbiter::foundations::int_vec_print(cout, B_set, d + k + 1);
@@ -5553,7 +5559,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);
 				cout << endl;
 				}
-			int_vec_heapsort(image_set, d + k + 1);
+			Sorting.int_vec_heapsort(image_set, d + k + 1);
 			if (f_v) {
 				cout << "image_set after sorting: ";
 				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);

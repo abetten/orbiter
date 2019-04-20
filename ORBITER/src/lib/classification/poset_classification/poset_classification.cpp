@@ -51,6 +51,7 @@ int poset_classification::poset_structure_is_contained(
 	int f_vv = (verbose_level >= 2);
 	int f_contained;
 	int i, rk1, rk2;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_structure_is_contained" << endl;
@@ -109,7 +110,7 @@ int poset_classification::poset_structure_is_contained(
 			FREE_int(B2);
 			}
 		else {
-			f_contained = int_vec_sort_and_test_if_contained(
+			f_contained = Sorting.int_vec_sort_and_test_if_contained(
 					set1, sz1, set2, sz2);
 			}
 		}
