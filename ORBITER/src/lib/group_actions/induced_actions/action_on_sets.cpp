@@ -60,6 +60,7 @@ void action_on_sets::init(int nb_sets,
 	int i, j;
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 5);
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_sets::init "
@@ -92,7 +93,7 @@ void action_on_sets::init(int nb_sets,
 			(void **) sets, perm_inv,
 			action_on_sets_compare,
 			this);
-	perm_inverse(perm_inv, perm, nb_sets);
+	Combi.perm_inverse(perm_inv, perm, nb_sets);
 
 	test_sets();
 

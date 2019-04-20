@@ -490,6 +490,7 @@ void int_vec_sorting_permutation(int *v, int len,
 	FREE_pint(pairs);
 #else
 	int i;
+	combinatorics_domain Combi;
 	
 	for (i = 0; i < len; i++) {
 		perm_inv[i] = i;
@@ -508,7 +509,7 @@ void int_vec_sorting_permutation(int *v, int len,
 			perm_inv[len - 1 - i] = a;
 			}
 		}
-	perm_inverse(perm_inv, perm, len);
+	Combi.perm_inverse(perm_inv, perm, len);
 #endif
 }
 
@@ -1755,6 +1756,45 @@ void find_points_by_multiplicity(int *data, int data_sz, int multiplicity, int *
 	C.init(data, data_sz, FALSE, 0);
 	C.get_data_by_multiplicity(pts, nb_pts, multiplicity, 0 /* verbose_level */);
 }
+
+void int_vec_bubblesort_increasing(int len, int *p)
+{
+	int i, j, a;
+	for (i = 0; i < len; i++) {
+		for (j = i + 1; j < len; j++) {
+			if (p[i] > p[j]) {
+				a = p[i];
+				p[i] = p[j];
+				p[j] = a;
+				}
+			}
+		}
+}
+
+void int_vec_print(int *v, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		cout << i << " : " << v[i] << endl;
+	}
+}
+
+
+int integer_vec_compare(int *p, int *q, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (p[i] < q[i])
+			return -1;
+		if (p[i] > q[i])
+			return 1;
+		}
+	return 0;
+}
+
+
 
 }
 }

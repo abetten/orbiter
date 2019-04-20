@@ -283,13 +283,14 @@ void points(int d, int q, int verbose_level)
 	int N_points, n, i, j;
 	finite_field F;
 	int *v;
+	combinatorics_domain Combi;
 	
 	n = d + 1;
 	v = NEW_int(n);
 
 	F.init(q, 0);
 	
-	N_points = generalized_binomial(n, 1, q);
+	N_points = Combi.generalized_binomial(n, 1, q);
 	cout << "number of points = " << N_points << endl;
 	for (i = 0; i < N_points; i++) {
 		F.PG_element_unrank_modified(v, 1, n, i);

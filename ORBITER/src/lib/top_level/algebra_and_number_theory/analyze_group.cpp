@@ -322,6 +322,7 @@ void compute_regular_representation(action *A, sims *S,
 {
 	longinteger_object go;
 	int goi, i;
+	combinatorics_domain Combi;
 	
 	S->group_order(go);
 	goi = go.as_int();
@@ -335,7 +336,7 @@ void compute_regular_representation(action *A, sims *S,
 		}
 	cout << endl;
 	for (i = 0; i < SG->len; i++) {
-		perm_print_offset(cout,
+		Combi.perm_print_offset(cout,
 			perm + i * goi, goi, 1 /* offset */,
 			FALSE /* f_cycle_length */, FALSE, 0,
 			TRUE /* f_orbit_structure */);

@@ -92,6 +92,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 	int *set1;
 	int *set2;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "make_subset_lattice n=" << n << endl;
@@ -99,7 +100,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 
 	Nb = NEW_int(nb_layers);
 	for (i = 0; i <= n; i++) {
-		Nb[i] = int_n_choose_k(n, i);
+		Nb[i] = Combi.int_n_choose_k(n, i);
 		}
 
 	set1 = NEW_int(n);
@@ -122,7 +123,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 	// create vertex labels:
 	for (k = 0; k <= depth; k++) {
 		for (r = 0; r < Nb[k]; r++) {
-			unrank_k_subset(r, set1, n, k);
+			Combi.unrank_k_subset(r, set1, n, k);
 			LG->add_node_data1(k, r, set1[k - 1], 0/*verbose_level*/);
 
 			char text[1000];
@@ -172,7 +173,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 	// create edges:
 	for (k = 1; k <= depth; k++) {
 		for (r = 0; r < Nb[k]; r++) {
-			unrank_k_subset(r, set1, n, k);
+			Combi.unrank_k_subset(r, set1, n, k);
 
 			if (f_tree) {
 				for (a = k - 1; a >= k - 1; a--) {
@@ -180,7 +181,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}
-					r0 = rank_k_subset(set2, n, k - 1);
+					r0 = Combi.rank_k_subset(set2, n, k - 1);
 					LG->add_edge(k - 1, r0, k, r, 0 /*verbose_level*/);
 					}
 				}
@@ -190,7 +191,7 @@ void make_subset_lattice(layered_graph *&LG, int n, int depth, int f_tree,
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}
-					r0 = rank_k_subset(set2, n, k - 1);
+					r0 = Combi.rank_k_subset(set2, n, k - 1);
 					LG->add_edge(k - 1, r0, k, r, 0 /*verbose_level*/);
 					}
 				}

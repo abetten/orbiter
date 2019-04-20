@@ -59,6 +59,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, aj, rk, f_OK = TRUE;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "rank_checker::check_rank: checking the set ";
@@ -87,7 +88,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 
 	// M2 will be used as a m x (d1 + 1) matrix	
 	
-	first_k_subset(set, len - 1, d1);
+	Combi.first_k_subset(set, len - 1, d1);
 	while (TRUE) {
 	
 		// get the subset of columns:
@@ -126,7 +127,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 				}
 			break;
 			}
-		if (!next_k_subset(set, len - 1, d1))
+		if (!Combi.next_k_subset(set, len - 1, d1))
 			break;
 		}
 	if (!f_OK)
@@ -140,6 +141,7 @@ int rank_checker::check_rank_matrix_input(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, aj, rk, f_OK = TRUE;
+	combinatorics_domain Combi;
 	
 	// S is a m x len matrix
 	if (len <= 1)
@@ -154,7 +156,7 @@ int rank_checker::check_rank_matrix_input(
 
 	// M2 will be used as a m x (d1 + 1) matrix	
 	
-	first_k_subset(set, len - 1, d1);
+	Combi.first_k_subset(set, len - 1, d1);
 	while (TRUE) {
 	
 		// get the subset of columns:
@@ -192,7 +194,7 @@ int rank_checker::check_rank_matrix_input(
 				}
 			break;
 			}
-		if (!next_k_subset(set, len - 1, d1))
+		if (!Combi.next_k_subset(set, len - 1, d1))
 			break;
 		}
 	if (!f_OK)
@@ -206,6 +208,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, aj, rk, f_OK = TRUE;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "rank_checker::check_rank_last_two_are_fixed: "
@@ -235,7 +238,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 
 	// M2 will be used as a m x (d1 + 2) matrix	
 	
-	first_k_subset(set, len - 2, d1);
+	Combi.first_k_subset(set, len - 2, d1);
 	while (TRUE) {
 	
 		// get the subset of columns:
@@ -275,7 +278,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 				}
 			break;
 			}
-		if (!next_k_subset(set, len - 2, d1))
+		if (!Combi.next_k_subset(set, len - 2, d1))
 			break;
 		}
 	if (!f_OK)
@@ -325,6 +328,7 @@ int rank_checker::compute_rank_row_vectors(
 
 	return rk;
 }
-}
-}
+
+
+}}
 

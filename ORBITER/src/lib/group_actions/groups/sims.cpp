@@ -378,10 +378,11 @@ void sims::reallocate_base(int old_base_len, int verbose_level)
 
 void sims::initialize_table(int i)
 {
+	combinatorics_domain Combi;
 	int j;
 	
-	perm_identity(orbit[i], A->degree);
-	perm_identity(orbit_inv[i], A->degree);
+	Combi.perm_identity(orbit[i], A->degree);
+	Combi.perm_identity(orbit_inv[i], A->degree);
 	for (j = 0; j < A->degree; j++) {
 		prev[i][j] = -1;
 		label[i][j] = -1;
@@ -4531,6 +4532,7 @@ void sims::regular_representation(int *Elt,
 	int goi, i, j;
 	int *Elt1;
 	int *Elt2;
+	combinatorics_domain Combi;
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -4547,7 +4549,7 @@ void sims::regular_representation(int *Elt,
 		A->print(cout, Elt);
 		cout << endl;
 		cout << "is:" << endl;
-		perm_print(cout, perm, goi);
+		Combi.perm_print(cout, perm, goi);
 		cout << endl;
 		}
 	FREE_int(Elt1);
@@ -5709,6 +5711,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 	int *Elt1;
 	int *Elt2;
 	int *Table;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group" << endl;
@@ -5761,7 +5764,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 	
 	fp << "G := PermutationGroup< " << n << " | " << endl;
 	for (i = 0; i < l; i++) {
-		perm_print_counting_from_one(fp, Table + i * n, n);
+		Combi.perm_print_counting_from_one(fp, Table + i * n, n);
 		if (i < l - 1) {
 			fp << ", " << endl;
 			}

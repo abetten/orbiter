@@ -141,6 +141,8 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 
 void surface_domain::print_line(ostream &ost, int rk)
 {
+	combinatorics_domain Combi;
+
 	if (rk < 6) {
 		ost << "a_" << rk + 1 << endl;
 		}
@@ -151,7 +153,7 @@ void surface_domain::print_line(ostream &ost, int rk)
 		int i, j;
 
 		rk -= 12;
-		k2ij(rk, i, j, 6);
+		Combi.k2ij(rk, i, j, 6);
 		ost << "c_{" << i + 1 << j + 1 << "}";
 		}
 }

@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 	int n;
 	//int *set;
 	int N;
+	combinatorics_domain Combi;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -48,7 +49,7 @@ int main(int argc, char **argv)
 	}
 	//set = NEW_int(k);
 
-	N = int_n_choose_k(n, k);
+	N = Combi.int_n_choose_k(n, k);
 
 
 #if 0

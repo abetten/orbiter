@@ -462,6 +462,7 @@ void matrix_group_element_print_as_permutation(action &A,
 	int f_v = FALSE;
 	int *Elt = (int *) elt;
 	int i, j;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "matrix_group_element_print_as_permutation "
@@ -478,7 +479,7 @@ void matrix_group_element_print_as_permutation(action &A,
 		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 		}
-	perm_print(ost, p, A.degree);
+	Combi.perm_print(ost, p, A.degree);
 	FREE_int(p);
 }
 
@@ -487,6 +488,7 @@ void matrix_group_element_print_verbose(action &A,
 {
 	matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
+	combinatorics_domain Combi;
 
 	G.GL_print_easy(Elt, ost);
 	ost << "\n";
@@ -498,7 +500,7 @@ void matrix_group_element_print_verbose(action &A,
 			j = A.element_image_of(i, Elt, FALSE);
 			p[i] = j;
 			}
-		perm_print(ost, p, A.degree);
+		Combi.perm_print(ost, p, A.degree);
 		FREE_int(p);
 		}
 	else {

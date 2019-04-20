@@ -713,6 +713,7 @@ void do_arc_lifting(
 	int *Coord;
 	int i, j, a, d, pt, h;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "do_arc_lifting" << endl;
@@ -729,7 +730,7 @@ void do_arc_lifting(
 
 	free_points = NEW_int(P->N_points);
 
-	set_complement(arc, arc_sz,
+	Combi.set_complement(arc, arc_sz,
 			free_points, nb_free_points,
 			P->N_points);
 

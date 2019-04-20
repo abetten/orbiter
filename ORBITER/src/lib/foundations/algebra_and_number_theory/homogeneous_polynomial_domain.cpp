@@ -165,12 +165,13 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 	int i, j, a, h, idx, t;
 	number_theory_domain NT;
 	geometry_global Gg;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials" << endl;
 		}
 	
-	nb_monomials = int_n_choose_k(n + degree - 1, n - 1);
+	nb_monomials = Combi.int_n_choose_k(n + degree - 1, n - 1);
 
 	diophant *D;
 

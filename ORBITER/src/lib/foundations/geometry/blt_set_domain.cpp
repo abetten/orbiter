@@ -181,6 +181,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 	uint cnt;
 	int two;
 	int *Pi, *Pj;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast" << endl;
@@ -226,7 +227,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 		m[4] = Pi[3];
 
 		for (j = i + 1; j < nb_points; j++, cnt++) {
-			k = ij2k(i, j, nb_points);
+			k = Combi.ij2k(i, j, nb_points);
 
 			if ((cnt & ((1 << 25) - 1)) == 0 && cnt) {
 				cout << "blt_set_domain::compute_adjacency_list_fast "

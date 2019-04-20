@@ -1559,14 +1559,15 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 	int *U1;
 	int nb_A, nb_U;
 	int a, u, ac, i, d, idx, mtx_rank;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "arc_generator::simeon s=" << s << endl;
 		}
 	k = n + 1;
-	nb_cols = int_n_choose_k(len, k - 1);
-	nb_r1 = int_n_choose_k(len, s);
-	nb_r2 = int_n_choose_k(len - s, k - 2);
+	nb_cols = Combi.int_n_choose_k(len, k - 1);
+	nb_r1 = Combi.int_n_choose_k(len, s);
+	nb_r2 = Combi.int_n_choose_k(len - s, k - 2);
 	nb_rows = nb_r1 * nb_r2;
 	cout << "nb_r1=" << nb_r1 << endl;
 	cout << "nb_r2=" << nb_r2 << endl;
@@ -1590,8 +1591,8 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 		}
 
 	
-	nb_A = int_n_choose_k(len, k - 2);
-	nb_U = int_n_choose_k(len - (k - 2), k - 1);
+	nb_A = Combi.int_n_choose_k(len, k - 2);
+	nb_U = Combi.int_n_choose_k(len - (k - 2), k - 1);
 	if (nb_A * nb_U != nb_rows) {
 		cout << "nb_A * nb_U != nb_rows" << endl;
 		exit(1);
@@ -1607,8 +1608,8 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 		if (f_vv) {
 			cout << "a=" << a << " / " << nb_A << ":" << endl;
 			}
-		unrank_k_subset(a, A, len, k - 2);
-		set_complement(A, k - 2, Ac, ac, len);
+		Combi.unrank_k_subset(a, A, len, k - 2);
+		Combi.set_complement(A, k - 2, Ac, ac, len);
 		if (ac != len - (k - 2)) {
 			cout << "arc_generator::simeon ac != len - (k - 2)" << endl;
 			exit(1);
@@ -1622,7 +1623,7 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 
 		for (u = 0; u < nb_U; u++, row++) {
 
-			unrank_k_subset(u, U, len - (k - 2), k - 1);
+			Combi.unrank_k_subset(u, U, len - (k - 2), k - 1);
 			for (i = 0; i < k - 1; i++) {
 				U1[i] = Ac[U[i]];
 				}
@@ -1638,7 +1639,7 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 							<< " col=" << col << " / "
 							<< nb_cols << ":" << endl;
 					}
-				unrank_k_subset(col, C, len, k - 1);
+				Combi.unrank_k_subset(col, C, len, k - 1);
 				if (f_vv) {
 					cout << "C: ";
 					int_vec_print(cout, C, k - 1);

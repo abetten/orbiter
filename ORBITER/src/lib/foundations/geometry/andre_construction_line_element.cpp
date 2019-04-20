@@ -127,6 +127,7 @@ int andre_construction_line_element::rank(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, a, rk, idx;
 	geometry_global Gg;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "andre_construction_line_element::rank" << endl;
@@ -141,7 +142,7 @@ int andre_construction_line_element::rank(int verbose_level)
 		F->Gauss_simple(coordinates,
 				k, n, pivots,
 				0 /* verbose_level */);
-		set_complement(pivots, k, non_pivots, a, n);
+		Combi.set_complement(pivots, k, non_pivots, a, n);
 
 		for (i = 0; i < k; i++) {
 			F->Gauss_step(coordinates + i * n,

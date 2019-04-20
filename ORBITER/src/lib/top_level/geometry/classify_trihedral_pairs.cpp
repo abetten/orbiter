@@ -636,6 +636,7 @@ void classify_trihedral_pairs::identify_three_planes(
 	int rk;
 	int size_complement;
 	int c1, c2, c3, c4, a, b, c, d, e, f, lambda, mu, det, det_inv;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_three_planes" << endl;
@@ -646,7 +647,7 @@ void classify_trihedral_pairs::identify_three_planes(
 	int_vec_copy(M1, M2, 12);
 	rk = F->rank_of_rectangular_matrix_memory_given(M2, 3, 4,
 			M3, base_cols, 0 /* verbose_level */);
-	set_complement(base_cols, rk, base_cols + rk, size_complement, 4);
+	Combi.set_complement(base_cols, rk, base_cols + rk, size_complement, 4);
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_three_planes "
 				"rk=" << rk << endl;

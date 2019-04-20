@@ -236,6 +236,7 @@ void graph_generator::init(int argc, const char **argv)
 	int N;
 	int target_depth;
 	char prefix[1000];
+	combinatorics_domain Combi;
 	
 	A_base = NEW_OBJECT(action);
 	A_on_edges = NEW_OBJECT(action);
@@ -283,7 +284,7 @@ void graph_generator::init(int argc, const char **argv)
 		}
 	
 	
-	n2 = int_n_choose_k(n, 2);	
+	n2 = Combi.int_n_choose_k(n, 2);
 	if (f_v) {
 		cout << "n2=" << n2 << endl;
 		}
@@ -462,6 +463,7 @@ int graph_generator::check_conditions_tournament(
 	int f_vv = (verbose_level >= 2);
 	int a, a2, swap, swap2, b2, b, i, idx;
 	int *S_sorted;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "graph_generator::check_conditions_tournament "
@@ -502,7 +504,7 @@ int graph_generator::check_conditions_tournament(
 			a = S_sorted[i];
 			swap = a % 2;
 			a2 = a / 2;
-			k2ij(a2, u, v, n);
+			Combi.k2ij(a2, u, v, n);
 			if (swap) {
 				score[v]++;
 				if (score[v] == n - 1) {
@@ -564,6 +566,7 @@ int graph_generator::check_regularity(
 int graph_generator::compute_degree_sequence(int *S, int len)
 {
 	int h, a, i, j;
+	combinatorics_domain Combi;
 	
 	if (f_tournament) {
 		cout << "graph_generator::compute_degree_sequence "
@@ -573,7 +576,7 @@ int graph_generator::compute_degree_sequence(int *S, int len)
 	int_vec_zero(degree_sequence, n);
 	for (h = 0; h < len; h++) {
 		a = S[h];
-		k2ij(a, i, j, n);
+		Combi.k2ij(a, i, j, n);
 		degree_sequence[i]++;
 		if (degree_sequence[i] > regularity) {
 			return FALSE;
@@ -685,6 +688,7 @@ void graph_generator::get_adjacency(int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, j, a;
+	combinatorics_domain Combi;
 	
 	int_vec_zero(adjacency, n * n);
 
@@ -695,7 +699,7 @@ void graph_generator::get_adjacency(int *S, int len, int verbose_level)
 			a = S[h];
 			swap = a % 2;
 			a2 = a / 2;
-			k2ij(a2, i, j, n);
+			Combi.k2ij(a2, i, j, n);
 			if (!swap) {
 				adjacency[i * n + j] = 1;
 				adjacency[j * n + i] = 0;
@@ -709,7 +713,7 @@ void graph_generator::get_adjacency(int *S, int len, int verbose_level)
 	else {
 		for (h = 0; h < len; h++) {
 			a = S[h];
-			k2ij(a, i, j, n);
+			Combi.k2ij(a, i, j, n);
 			adjacency[i * n + j] = 1;
 			adjacency[j * n + i] = 1;
 			}
@@ -792,6 +796,7 @@ void graph_generator::score_sequence(int n,
 		int *set, int sz, int *score, int verbose_level)
 {
 	int i, a, swap, a2, u, v;
+	combinatorics_domain Combi;
 
 	int_vec_zero(score, n);
 	for (i = 0; i < sz; i++) {
@@ -801,7 +806,7 @@ void graph_generator::score_sequence(int n,
 
 		swap = a % 2;
 		a2 = a / 2;
-		k2ij(a2, u, v, n);
+		Combi.k2ij(a2, u, v, n);
 
 		if (swap) {
 			// edge from v to u

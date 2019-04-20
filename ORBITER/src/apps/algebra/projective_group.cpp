@@ -54,6 +54,7 @@ int main(int argc, char **argv)
 	int code[1000];
 	int code2[1000];
 	int code_sz = 0;
+	combinatorics_domain Combi;
 		
 	for (i = 1; i < argc - 1; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -163,7 +164,7 @@ int main(int argc, char **argv)
 				Perms[i * code_sz + j] = A_cols->element_image_of(j,
 						Elt, 0 /*verbose_level */);
 				}
-			perm_print_list(cout, Perms + i * code_sz, code_sz);
+			Combi.perm_print_list(cout, Perms + i * code_sz, code_sz);
 			cout << endl;
 			}
 

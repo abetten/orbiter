@@ -69,17 +69,18 @@ void rank_subsets(int n, int verbose_level)
 	int *set;
 	int N, r, sz;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	set = NEW_int(n);
 
 	N = NT.i_power_j(2, n);
 	for (i = 0; i < N; i++) {
 		cout << " rank " << i << " : ";
-		unrank_subset(set, sz, n, i);
+		Combi.unrank_subset(set, sz, n, i);
 		cout << " : set ";
 		int_vec_print(cout, set, sz);
 		cout << " : ";
-		r = rank_subset(set, sz, n);
+		r = Combi.rank_subset(set, sz, n);
 		cout << " has rank " << r << endl;
 		}
 
@@ -92,7 +93,7 @@ void rank_subsets(int n, int verbose_level)
 
 	N = NT.i_power_j(2, n);
 	for (h = 0; h < N; h++) {
-		unrank_subset(set, sz, n, h);
+		Combi.unrank_subset(set, sz, n, h);
 		fp << sz;
 		for (i = 0; i < sz; i++) {
 			fp << " " << set[i];

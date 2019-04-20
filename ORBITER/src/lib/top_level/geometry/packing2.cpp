@@ -941,9 +941,10 @@ void packing::report_extra_stuff(
 	int nb_lines;
 	int v[4];
 	int i, j, u;
+	combinatorics_domain Combi;
 
 	nb_points = P3->N_points;
-	nb_lines = generalized_binomial(4, 2, q);
+	nb_lines = Combi.generalized_binomial(4, 2, q);
 
 	f << "PG$(3," << q << ")$ has " << nb_points
 			<< " points:\\\\" << endl;

@@ -83,6 +83,7 @@ int main(int argc, char **argv)
 	int *labeling;
 	int e, n2;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	n2 = (n * (n - 1)) >> 1;
 
@@ -97,7 +98,7 @@ int main(int argc, char **argv)
 		int_vec_zero(Adj2, n * n);
 		for (h = 0; h < nb_edges; h++) {
 			e = edges[h];
-			k2ij(e, i, j, n);
+			Combi.k2ij(e, i, j, n);
 			Adj[i * n + j] = 1;
 			Adj[j * n + i] = 1;
 			}
@@ -139,7 +140,7 @@ int main(int argc, char **argv)
 			fp << E << " & ";
 			int_vec_zero(Adj, n * n);
 			int_vec_zero(Adj2, n * n);
-			unrank_subset(set, sz, n2, E);
+			Combi.unrank_subset(set, sz, n2, E);
 			int_set_print_tex(fp, set, sz);
 
 			make_graph_fname(fname1, fname1_tex, n, set, sz);
@@ -150,7 +151,7 @@ int main(int argc, char **argv)
 					<< fname1_tex << " } ";
 			for (h = 0; h < sz; h++) {
 				e = set[h];
-				k2ij(e, i, j, n);
+				Combi.k2ij(e, i, j, n);
 				Adj[i * n + j] = 1;
 				Adj[j * n + i] = 1;
 				}
@@ -227,6 +228,7 @@ void canonical_form(int *Adj, int *Adj2,
 	//action *A;
 	int i, j, ii, jj, e, nb_e;
 	nauty_interface Nauty;
+	combinatorics_domain Combi;
 	
 
 	A = Nauty.create_automorphism_group_and_canonical_labeling_of_graph(
@@ -242,7 +244,7 @@ void canonical_form(int *Adj, int *Adj2,
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
 			if (Adj2[i * n + j]) {
-				e = ij2k(i, j, n);
+				e = Combi.ij2k(i, j, n);
 				edges2[nb_e++] = e;
 				}
 			}

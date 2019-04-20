@@ -92,6 +92,7 @@ int action_on_set_partitions::compute_image(
 {
 	int f_v = (verbose_level >= 1);
 	int i, b;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "action_on_set_partitions::compute_image "
@@ -103,7 +104,7 @@ int action_on_set_partitions::compute_image(
 		exit(1);
 		}
 	if (universal_set_size == 6 && partition_class_size == 2) {
-		unordered_triple_pair_unrank(a, v1[0], v1[1], v1[2],
+		Combi.unordered_triple_pair_unrank(a, v1[0], v1[1], v1[2],
 			v1[3], v1[4], v1[5]);
 		for (i = 0; i < 6; i++) {
 			v2[i] = A->element_image_of(v1[i], Elt, 0 /*verbose_level*/);
@@ -111,18 +112,18 @@ int action_on_set_partitions::compute_image(
 		for (i = 0; i < nb_parts; i++) {
 			int_vec_heapsort(v2 + i * partition_class_size, partition_class_size);
 		}
-		b = unordered_triple_pair_rank(v2[0], v2[1], v2[2],
+		b = Combi.unordered_triple_pair_rank(v2[0], v2[1], v2[2],
 				v2[3], v2[4], v2[5]);
 	}
 	else if (universal_set_size == 4 && partition_class_size == 2) {
-		set_partition_4_into_2_unrank(a, v1);
+		Combi.set_partition_4_into_2_unrank(a, v1);
 		for (i = 0; i < 4; i++) {
 			v2[i] = A->element_image_of(v1[i], Elt, 0 /*verbose_level*/);
 		}
 		for (i = 0; i < nb_parts; i++) {
 			int_vec_heapsort(v2 + i * partition_class_size, partition_class_size);
 		}
-		b = set_partition_4_into_2_rank(v2);
+		b = Combi.set_partition_4_into_2_rank(v2);
 	}
 	else {
 		cout << "action_on_set_partitions::compute_image set partitions "

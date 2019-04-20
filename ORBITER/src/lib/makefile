@@ -62,7 +62,7 @@ MODULES= \
 		foundations/coding_theory/mindist.o \
 		foundations/coding_theory/tensor.o \
 		foundations/combinatorics/brick_domain.o \
-		foundations/combinatorics/combinatorics.o \
+		foundations/combinatorics/combinatorics_domain.o \
 		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/fancy_set.o \

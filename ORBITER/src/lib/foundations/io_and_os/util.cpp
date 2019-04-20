@@ -1884,6 +1884,7 @@ void scan_permutation_from_stream(istream & is,
 	int i, a_last, a, dig, ci;
 	char s[10000], c;
 	int si, largest_point = 0;
+	combinatorics_domain Combi;
 	
 	cycle = NEW_int(l);
 	perm = NEW_int(l);
@@ -1891,7 +1892,7 @@ void scan_permutation_from_stream(istream & is,
 	//l = s_l();
 	//perm.m_l(l);
 	//cycle.m_l_n(l);
-	perm_identity(perm, l);
+	Combi.perm_identity(perm, l);
 	//perm.one();
 	while (TRUE) {
 		c = get_character(is, verbose_level - 2);
@@ -2021,7 +2022,7 @@ void scan_permutation_from_stream(istream & is,
 	degree = largest_point + 1;
 	if (f_v) {
 		cout << "read permutation: ";
-		perm_print(cout, perm, degree);
+		Combi.perm_print(cout, perm, degree);
 		cout << endl;
 		}
 	FREE_int(cycle);

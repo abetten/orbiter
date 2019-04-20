@@ -7,7 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 		brick_domain.o \
-		combinatorics.o
+		combinatorics_domain.o
 
 
 all : $(MODULES)

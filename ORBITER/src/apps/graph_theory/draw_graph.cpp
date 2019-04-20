@@ -71,6 +71,7 @@ int main(int argc, char **argv)
 	int f_no_point_labels = FALSE;
 	int f_point_labels = FALSE;
 	int *point_labels = NULL;
+	combinatorics_domain Combi;
 
 
 	//int t0 = os_ticks();
@@ -115,7 +116,7 @@ int main(int argc, char **argv)
 				if (e == -1) {
 					break;
 					}
-				k2ij(e, u, v, nb_V);
+				Combi.k2ij(e, u, v, nb_V);
 				E[2 * nb_E + 0] = u;
 				E[2 * nb_E + 1] = v;
 				nb_E++;
@@ -233,7 +234,7 @@ int main(int argc, char **argv)
 		int_vec_scan(edge_set, Edges, nb_edges);
 		nb_E = 0;
 		for (i = 0; i < nb_edges; i++) {
-			k2ij(Edges[i], u, v, nb_V);
+			Combi.k2ij(Edges[i], u, v, nb_V);
 			E[2 * nb_E + 0] = u;
 			E[2 * nb_E + 1] = v;
 			nb_E++;
@@ -356,7 +357,7 @@ int main(int argc, char **argv)
 
 		E2 = NEW_int(nb_E);
 		for (i = 0; i < nb_E; i++) {
-			E2[i] = ij2k(E[2 * i + 0], E[2 * i + 1], nb_V);
+			E2[i] = Combi.ij2k(E[2 * i + 0], E[2 * i + 1], nb_V);
 			}
 		//cout << "before draw_graph" << endl;
 		draw_graph(G, nb_V, nb_E, E2, f_directed,
@@ -467,6 +468,7 @@ void draw_graph(mp_graphics &G,
 	int vertex_selection_length;
 	int f_go = FALSE;
 	numerics Num;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "draw_graph" << endl;
@@ -549,7 +551,7 @@ void draw_graph(mp_graphics &G,
 		if (f_directed) {
 			f_swap = E[i] % 2;
 			a = E[i] >> 1;
-			k2ij(a, e1, e2, nb_v);
+			Combi.k2ij(a, e1, e2, nb_v);
 			if (f_swap) {
 				//cout << "directed edge " << i << " from " << e2 << " to " << e1 << endl;
 				}
@@ -558,7 +560,7 @@ void draw_graph(mp_graphics &G,
 				}
 			}
 		else {
-			k2ij(E[i], e1, e2, nb_v);
+			Combi.k2ij(E[i], e1, e2, nb_v);
 			//cout << "edge " << i << " from " << e1 << " to " << e2 << endl;
 			}
 

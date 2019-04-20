@@ -166,6 +166,8 @@ void do_it_for_sym_n(int n, int verbose_level)
 	int *Fst;
 	int *Len;
 	int cnt, s, i, j;
+	combinatorics_domain Combi;
+
 
 	part = NEW_int(n);
 	parts = NEW_int(n);
@@ -177,7 +179,7 @@ void do_it_for_sym_n(int n, int verbose_level)
 	Fst[0] = 0;
 	
 		// create the first partition in exponential notation:
-	partition_first(part, n);
+	Combi.partition_first(part, n);
 	cnt = 0;
 
 
@@ -253,7 +255,7 @@ void do_it_for_sym_n(int n, int verbose_level)
 		
 
 			// create the next partition in exponential notation:
-		if (!partition_next(part, n)) {
+		if (!Combi.partition_next(part, n)) {
 			break;
 			}
 		cnt++;

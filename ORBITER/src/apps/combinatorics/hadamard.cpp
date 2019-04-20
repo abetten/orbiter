@@ -464,12 +464,13 @@ void hadamard::init(int n, int f_draw,
 int hadamard::clique_test(int *set, int sz)
 {
 	int i, j, a, b, idx;
+	combinatorics_domain Combi;
 
 	for (i = 0; i < n; i++) {
 		a = set[i];
 		for (j = i + 1; j < n; j++) {
 			b = set[j];
-			idx = ij2k(a, b, N);
+			idx = Combi.ij2k(a, b, N);
 			if (bitvector_s_i(bitvector_adjacency, idx)) {
 				//cout << "pair (" << i << "," << j << ") vertices " << a << " and " << b << " are adjacent" << endl;
 				}

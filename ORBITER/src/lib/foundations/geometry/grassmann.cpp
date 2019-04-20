@@ -101,8 +101,9 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 int grassmann::nb_of_subspaces(int verbose_level)
 {
 	int nb;
+	combinatorics_domain Combi;
 
-	nb = generalized_binomial(n, k, q);
+	nb = Combi.generalized_binomial(n, k, q);
 	return nb;
 }
 
@@ -150,8 +151,9 @@ void grassmann::print_set_tex(ostream &ost, int *v, int len)
 int grassmann::nb_points_covered(int verbose_level)
 {
 	int nb;
+	combinatorics_domain Combi;
 
-	nb = generalized_binomial(k, 1, q);
+	nb = Combi.generalized_binomial(k, 1, q);
 	return nb;
 }
 
@@ -223,6 +225,7 @@ void grassmann::unrank_int(int rk, int verbose_level)
 	int r, h, a = 1, A, nb_free_cols = 0, Q, b, c, i, j;
 	number_theory_domain NT;
 	geometry_global Gg;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "grassmann::unrank_int " << rk << endl;
@@ -244,7 +247,7 @@ void grassmann::unrank_int(int rk, int verbose_level)
 		}
 	h = 0;
 	while (h < n) {
-		a = generalized_binomial(n - h - 1, k - 1, q);
+		a = Combi.generalized_binomial(n - h - 1, k - 1, q);
 		if (f_v) {
 			cout << "[" << n - h - 1 << " choose " << k - 1
 					<< "]_" << q << " = " << a << endl;
@@ -365,6 +368,7 @@ int grassmann::rank_int(int verbose_level)
 	int k1, r, h, a, A, nb_free_cols, Q, b, c, i, j;
 	number_theory_domain NT;
 	geometry_global Gg;
+	combinatorics_domain Combi;
 	
 	r = 0;
 	if (f_v) {
@@ -412,12 +416,12 @@ int grassmann::rank_int(int verbose_level)
 	for (h = 0; h < base_cols[0]; h++) {
 		nb_free_cols = n - h - 1 - (k - 1);
 		Q = NT.i_power_j(q, nb_free_cols);
-		a = generalized_binomial(n - h - 1, k - 1, q);
+		a = Combi.generalized_binomial(n - h - 1, k - 1, q);
 		A = a * Q;
 		r += A;
 		}
 	nb_free_cols = n - h - 1 - (k - 1);
-	a = generalized_binomial(n - h - 1, k - 1, q);
+	a = Combi.generalized_binomial(n - h - 1, k - 1, q);
 	
 	// now h has been determined
 	if (f_v) {

@@ -339,6 +339,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 	int *Mtx;
 	int ret = FALSE;
 	int i, j, a, rk;
+	combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -348,7 +349,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 		}
 	Mtx = NEW_int(3 * k);
 
-	first_k_subset(subset, set_sz, 3);
+	Combi.first_k_subset(subset, set_sz, 3);
 	while (TRUE) {
 		for (i = 0; i < 3; i++) {
 			subset1[i] = set[subset[i]];
@@ -377,7 +378,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 				}
 			goto done;
 			}
-		if (!next_k_subset(subset, set_sz, 3)) {
+		if (!Combi.next_k_subset(subset, set_sz, 3)) {
 			break;
 			}
 		}

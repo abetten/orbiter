@@ -3048,8 +3048,10 @@ void scene::create_Hilbert_model(int verbose_level)
 	cubic(coeff_surf_lifted); // cubic 8, arc_lifting
 	}
 
+	combinatorics_domain Combi;
+
 	int set[3];
-	int nCk = int_n_choose_k(8, 3);
+	int nCk = Combi.int_n_choose_k(8, 3);
 	int rk;
 	int first_three_face;
 
@@ -3058,7 +3060,7 @@ void scene::create_Hilbert_model(int verbose_level)
 		cout << "first_three_face = " << first_three_face << endl;
 	}
 	for (rk = 0; rk < nCk; rk++) {
-		unrank_k_subset(rk, set, 8 /*n*/, 3 /*k*/);
+		Combi.unrank_k_subset(rk, set, 8 /*n*/, 3 /*k*/);
 		face3(set[0], set[1], set[2]);
 		if (f_v) {
 			cout << "rk=" << rk << " set=";

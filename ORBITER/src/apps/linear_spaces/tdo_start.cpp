@@ -73,6 +73,7 @@ int main(int argc, char **argv)
 	int line_multiplicity[1000];
 	char *label_base;
 	char label[1000];
+	combinatorics_domain Combi;
 
 	cout << version << endl;
 	if (argc <= 1) {
@@ -193,10 +194,10 @@ int main(int argc, char **argv)
 	{
 	
 	if (f_linearspace) {
-		m2 = binomial2(m);
+		m2 = Combi.binomial2(m);
 		for (i = 0; i < nb_lines; i++) {
 			a = line_size[i];
-			a2 = binomial2(a);
+			a2 = Combi.binomial2(a);
 			a2 *= line_multiplicity[i];
 			m2 -= a2;
 			}
@@ -278,6 +279,7 @@ void create_all_linetypes(char *label_base, int m, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
+	combinatorics_domain Combi;
 	
 	cout << "create all line types of linear spaces on " << m << " points" << endl;
 	lines = new int[m];
@@ -289,13 +291,13 @@ void create_all_linetypes(char *label_base, int m, int verbose_level)
 	
 	for (i = 2; i <= m; i++) {
 		//cout << "i = " << i << " : " << 0 * nb_vars + i - 2 << " : " << binomial2(i) << endl;
-		D.A[0 * nb_vars + nb_vars - i] = binomial2(i);
+		D.A[0 * nb_vars + nb_vars - i] = Combi.binomial2(i);
 		}
 	D.A[0 * nb_vars + m - 1] = 0;
 	for (i = 0; i < nb_vars; i++) {
 		D.A[1 * nb_vars + i] = 1;
 		}
-	m2 = binomial2(m);
+	m2 = Combi.binomial2(m);
 	D.RHS[0] = m2;
 	D.RHS[1] = m2;
 	D.type[0] = t_EQ;

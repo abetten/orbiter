@@ -325,8 +325,10 @@ int perm_group::is_one(int *Elt)
 
 void perm_group::mult(int *A, int *B, int *AB)
 {
+	combinatorics_domain Combi;
+
 	//cout << "in perm_group::mult()" << endl;
-	perm_mult(A, B, AB, degree);
+	Combi.perm_mult(A, B, AB, degree);
 	//cout << "in perm_group::mult()
 	// finished with perm_mult" << endl;
 }
@@ -342,7 +344,9 @@ void perm_group::copy(int *A, int *B)
 
 void perm_group::invert(int *A, int *Ainv)
 {
-	perm_inverse(A, Ainv, degree);
+	combinatorics_domain Combi;
+
+	Combi.perm_inverse(A, Ainv, degree);
 }
 
 void perm_group::unpack(uchar *elt, int *Elt)
@@ -375,8 +379,10 @@ void perm_group::pack(int *Elt, uchar *elt)
 
 void perm_group::print(int *Elt, ostream &ost)
 {
+	combinatorics_domain Combi;
+
 	//cout << "perm_group::print before perm_print" << endl;
-	perm_print(ost, Elt, degree);
+	Combi.perm_print(ost, Elt, degree);
 	//ost << endl;
 	//cout << "perm_group::print done" << endl;
 }
@@ -411,6 +417,7 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 	//ost << endl;
 	int i, bi, a;
 	int x1, y1, x2, y2; // if in product action
+	combinatorics_domain Combi;
 	
 	if (A->base_len < A->degree) {
 		for (i = 0; i < A->base_len; i++) {
@@ -446,11 +453,11 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 		}
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
-	perm_print_offset(ost, Elt, degree, 0 /* offset */,
+	Combi.perm_print_offset(ost, Elt, degree, 0 /* offset */,
 			FALSE /* f_cycle_length */, FALSE, 0,
 			FALSE /* f_orbit_structure */);
 	ost << " : ";
-	perm_print_list_offset(ost, Elt, degree, 1);
+	Combi.perm_print_list_offset(ost, Elt, degree, 1);
 	ost << endl;
 }
 

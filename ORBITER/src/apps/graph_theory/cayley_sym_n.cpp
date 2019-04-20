@@ -187,6 +187,7 @@ void do_it(int n, int f_star, int f_coxeter,
 
 	sims *G;
 	longinteger_object G_go;
+	combinatorics_domain Combi;
 
 	cout << "creating group G:" << endl;
 	G = SG->create_sims(0 /* verbose_level */);
@@ -205,7 +206,7 @@ void do_it(int n, int f_star, int f_coxeter,
 
 	if (f_star) {
 		for (i = 0; i < nb_gens; i++) {
-			perm_identity(v, deg);
+			Combi.perm_identity(v, deg);
 			v[0] = i + 1;
 			v[i + 1] = 0;
 			A->make_element(gens->ith(i), v, 0 /* verbose_level */);
@@ -213,7 +214,7 @@ void do_it(int n, int f_star, int f_coxeter,
 		}
 	else if (f_coxeter) {
 		for (i = 0; i < nb_gens; i++) {
-			perm_identity(v, deg);
+			Combi.perm_identity(v, deg);
 			v[i] = i + 1;
 			v[i + 1] = i;
 			A->make_element(gens->ith(i), v, 0 /* verbose_level */);
@@ -221,7 +222,7 @@ void do_it(int n, int f_star, int f_coxeter,
 		}
 	else if (f_pancake) {
 		for (i = 0; i < nb_gens; i++) {
-			perm_identity(v, deg);
+			Combi.perm_identity(v, deg);
 			for (j = 0; j <= 1 + i; j++) {
 				v[j] = 1 + i - j;
 				}
@@ -230,7 +231,7 @@ void do_it(int n, int f_star, int f_coxeter,
 		}
 	else if (f_burnt_pancake) {
 		for (i = 0; i < nb_gens; i++) {
-			perm_identity(v, deg);
+			Combi.perm_identity(v, deg);
 			for (j = 0; j <= 1 + i; j++) {
 				v[2 * j + 0] = 2 * (1 + i - j) + 1;
 				v[2 * j + 1] = 2 * (1 + i - j) + 0;

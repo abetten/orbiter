@@ -6,13 +6,13 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	isomorph.o \
 	isomorph_arguments.o \
 	isomorph_database.o \
 	isomorph_files.o \
 	isomorph_global.o \
 	isomorph_testing.o \
 	isomorph_trace.o \
+	isomorph.o \
 	representatives.o
 
 

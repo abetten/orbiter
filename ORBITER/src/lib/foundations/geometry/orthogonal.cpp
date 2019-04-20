@@ -7779,6 +7779,7 @@ void orthogonal::Siegel_Transformation3(int *T,
 	int *Gram;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "Siegel_Transformation3" << endl;
@@ -7788,7 +7789,7 @@ void orthogonal::Siegel_Transformation3(int *T,
 	if (f_v) {
 		cout << "n=" << n << endl;
 		cout << "Gram matrix:" << endl;
-		print_int_matrix(cout, Gram, n, n);
+		Combi.print_int_matrix(cout, Gram, n, n);
 		}
 	
 	//Q_epsilon_unrank(*F, B, 1, epsilon, k,
@@ -9338,16 +9339,17 @@ void orthogonal::plane_invariant(unusual_model *U,
 	int i;
 	int q;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 
 	q = F->q;
-	n_choose_k = int_n_choose_k(size, level);
+	n_choose_k = Combi.int_n_choose_k(size, level);
 	log2_of_q = NT.int_log2(q);
 
 	Mtx = NEW_int(level * n);
 	Hash = NEW_int(n_choose_k);
 
-	first_k_subset(subset, size, level);
+	Combi.first_k_subset(subset, size, level);
 	cnt = -1;
 
 	if (f_v) {
@@ -9381,7 +9383,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			cout << "hash =" << setw(10) << H << endl;
 			}
 		Hash[cnt] = H;
-		if (!next_k_subset(subset, size, level)) {
+		if (!Combi.next_k_subset(subset, size, level)) {
 			break;
 			}
 		}
@@ -9452,7 +9454,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			ll = type_len[j];
 			for (u = 0; u < ll; u++) {
 				cnt = sorting_perm_inv[ff + u];
-				unrank_k_subset(cnt, subset, size, level);
+				Combi.unrank_k_subset(cnt, subset, size, level);
 				cout << "subset " << setw(5) << cnt << " : ";
 				int_vec_print(cout, subset, level);
 				cout << " : " << endl;
@@ -9483,7 +9485,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		Block_size = 0;
 		for (u = 0; u < ll; u++) {
 			cnt = sorting_perm_inv[ff + u];
-			unrank_k_subset(cnt, subset, size, level);
+			Combi.unrank_k_subset(cnt, subset, size, level);
 			if (f_vvv) {
 				cout << "subset " << setw(5) << cnt << " : ";
 				int_vec_print(cout, subset, level);

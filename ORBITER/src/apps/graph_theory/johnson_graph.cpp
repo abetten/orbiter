@@ -62,7 +62,9 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	N = int_n_choose_k(n, k);
+	combinatorics_domain Combi;
+
+	N = Combi.int_n_choose_k(n, k);
 	
 
 	Adj = NEW_int(N * N);
@@ -73,9 +75,9 @@ int main(int argc, char **argv)
 	set3 = NEW_int(k);
 	
 	for (i = 0; i < N; i++) {
-		unrank_k_subset(i, set1, n, k);
+		Combi.unrank_k_subset(i, set1, n, k);
 		for (j = i + 1; j < N; j++) {
-			unrank_k_subset(j, set2, n, k);
+			Combi.unrank_k_subset(j, set2, n, k);
 
 			int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
 			if (sz == s) {

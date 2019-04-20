@@ -1662,6 +1662,7 @@ void surface_domain::list_starter_configurations(
 	int S3[6];
 	int N1, nCk, h;
 	int i, j, r;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::list_starter_configurations" << endl;
@@ -1672,9 +1673,9 @@ void surface_domain::list_starter_configurations(
 		if (line_intersections->Set_size[i] < 5) {
 			continue;
 			}
-		nCk = int_n_choose_k(line_intersections->Set_size[i], 5);
+		nCk = Combi.int_n_choose_k(line_intersections->Set_size[i], 5);
 		for (j = 0; j < nCk; j++) {
-			unrank_k_subset(j, subset, 
+			Combi.unrank_k_subset(j, subset,
 				line_intersections->Set_size[i], 5);
 			for (h = 0; h < 5; h++) {
 				subset2[h] = 
@@ -1699,9 +1700,9 @@ void surface_domain::list_starter_configurations(
 		if (line_intersections->Set_size[i] < 5) {
 			continue;
 			}
-		nCk = int_n_choose_k(line_intersections->Set_size[i], 5);
+		nCk = Combi.int_n_choose_k(line_intersections->Set_size[i], 5);
 		for (j = 0; j < nCk; j++) {
-			unrank_k_subset(j, subset, 
+			Combi.unrank_k_subset(j, subset,
 				line_intersections->Set_size[i], 5);
 			for (h = 0; h < 5; h++) {
 				subset2[h] = 
@@ -1735,12 +1736,13 @@ void surface_domain::create_starter_configuration(
 	int subset[5];
 	int subset2[5];
 	int h; //, nCk;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::create_starter_configuration" << endl;
 		}
 	//nCk = int_n_choose_k(line_neighbors->Set_size[line_idx], 5);
-	unrank_k_subset(subset_idx, subset, 
+	Combi.unrank_k_subset(subset_idx, subset,
 		line_neighbors->Set_size[line_idx], 5);
 	for (h = 0; h < 5; h++) {
 		subset2[h] = line_neighbors->Sets[line_idx][subset[h]];
@@ -1884,6 +1886,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 	int complement[6];
 	int size_complement;
 	char label[1000];
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::make_trihedral_pairs" << endl;
@@ -1896,7 +1899,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 
 	// the first type (20 of them):
 	for (h = 0; h < 20; h++, idx++) {
-		unrank_k_subset(h, subset, 6, 3);
+		Combi.unrank_k_subset(h, subset, 6, 3);
 #if 0
 		if (h == 16) {
 			cout << "h=16: subset=";
@@ -1920,10 +1923,10 @@ void surface_domain::make_trihedral_pairs(int *&T,
 
 	// the second type (90 of them):
 	for (h = 0; h < 15; h++) {
-		unrank_k_subset(h, subset, 6, 4);
+		Combi.unrank_k_subset(h, subset, 6, 4);
 		for (s = 0; s < 6; s++, idx++) {
-			unrank_k_subset(s, second_subset, 4, 2);
-			set_complement(second_subset, 2, complement, 
+			Combi.unrank_k_subset(s, second_subset, 4, 2);
+			Combi.set_complement(second_subset, 2, complement,
 				size_complement, 4);
 			make_Tlmnp(T + idx * 9, 
 				subset[second_subset[0]], 
@@ -1942,11 +1945,11 @@ void surface_domain::make_trihedral_pairs(int *&T,
 
 	// the third type (10 of them):
 	for (h = 0; h < 10; h++, idx++) {
-		unrank_k_subset(h, subset + 1, 5, 2);
+		Combi.unrank_k_subset(h, subset + 1, 5, 2);
 		subset[0] = 0;
 		subset[1]++;
 		subset[2]++;
-		set_complement(subset, 3, complement, 
+		Combi.set_complement(subset, 3, complement,
 			size_complement, 6);
 		make_Tdefght(T + idx * 9, 
 			subset[0], subset[1], subset[2], 
@@ -1986,6 +1989,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int subset[3];
 	int i, j, h, rk, a;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::process_trihedral_pairs" << endl;
@@ -1999,7 +2003,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 				subset[h] = a;
 				}
 			int_vec_heapsort(subset, 3);
-			rk = rank_k_subset(subset, 27, 3);
+			rk = Combi.rank_k_subset(subset, 27, 3);
 			//rk = Eckardt_point_from_tritangent_plane(subset);
 			Trihedral_pairs_row_sets[i * 3 + j] = rk;
 			}
@@ -2011,7 +2015,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 				subset[h] = a;
 				}
 			int_vec_heapsort(subset, 3);
-			rk = rank_k_subset(subset, 27, 3);
+			rk = Combi.rank_k_subset(subset, 27, 3);
 			//rk = Eckardt_point_from_tritangent_plane(subset);
 			Trihedral_pairs_col_sets[i * 3 + j] = rk;
 			}
@@ -2084,13 +2088,14 @@ void surface_domain::make_Tlmnp(int *T, int l, int m, int n, int p)
 	int complement[2];
 	int size_complement;
 	int r, s;
+	combinatorics_domain Combi;
 
 	subset[0] = l;
 	subset[1] = m;
 	subset[2] = n;
 	subset[3] = p;
 	int_vec_heapsort(subset, 4);
-	set_complement(subset, 4, complement, size_complement, 6);
+	Combi.set_complement(subset, 4, complement, size_complement, 6);
 	r = complement[0];
 	s = complement[1];
 
@@ -2251,6 +2256,7 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int t, i, rk;
 	int subset[3];
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::init_collinear_Eckardt_triples" << endl;
@@ -2262,7 +2268,7 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 			int_vec_copy(Trihedral_to_Eckardt + 6 * t + i * 3, 
 				subset, 3);
 			int_vec_heapsort(subset, 3);
-			rk = rank_k_subset(subset, nb_Eckardt_points, 3);
+			rk = Combi.rank_k_subset(subset, nb_Eckardt_points, 3);
 			collinear_Eckardt_triples_rank[t * 2 + i] = rk;
 			}
 		}
@@ -2291,17 +2297,18 @@ void surface_domain::find_trihedral_pairs_from_collinear_triples_of_Eckardt_poin
 	int nCk, h, k, rk, idx, i, t_idx;
 	int subset[3];
 	int set[3];
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::find_trihedral_pairs_from_collinear_"
 				"triples_of_Eckardt_points" << endl;
 		}
-	nCk = int_n_choose_k(nb_E, 3);
+	nCk = Combi.int_n_choose_k(nb_E, 3);
 	T_idx = NEW_int(nCk);
 	nb_T = 0;
 	for (h = 0; h < nCk; h++) {
 		//cout << "subset " << h << " / " << nCk << ":";
-		unrank_k_subset(h, subset, nb_E, 3);
+		Combi.unrank_k_subset(h, subset, nb_E, 3);
 		//int_vec_print(cout, subset, 3);
 		//cout << " = ";
 
@@ -2312,7 +2319,7 @@ void surface_domain::find_trihedral_pairs_from_collinear_triples_of_Eckardt_poin
 		//cout << " = ";
 		int_vec_heapsort(set, 3);
 		
-		rk = rank_k_subset(set, nb_Eckardt_points, 3);
+		rk = Combi.rank_k_subset(set, nb_Eckardt_points, 3);
 
 
 		//int_vec_print(cout, set, 3);
@@ -2613,6 +2620,7 @@ void surface_domain::web_of_cubic_curves(int *arc6, int *&curves,
 	int ten_coeff[10];
 	int a, rk, i, j, k, l, m, n;
 	int ij, kl, mn;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface::web_of_cubic_curves" << endl;
@@ -2627,8 +2635,8 @@ void surface_domain::web_of_cubic_curves(int *arc6, int *&curves,
 
 	// the first 30 curves:
 	for (rk = 0; rk < 30; rk++, a++) {
-		ordered_pair_unrank(rk, i, j, 6);
-		ij = ij2k(i, j, 6);
+		Combi.ordered_pair_unrank(rk, i, j, 6);
+		ij = Combi.ij2k(i, j, 6);
 		multiply_conic_times_linear(conics + j * 6, 
 			bisecants + ij * 3, 
 			ten_coeff, 
@@ -2638,10 +2646,10 @@ void surface_domain::web_of_cubic_curves(int *arc6, int *&curves,
 
 	// the next 15 curves:
 	for (rk = 0; rk < 15; rk++, a++) {
-		unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
-		ij = ij2k(i, j, 6);
-		kl = ij2k(k, l, 6);
-		mn = ij2k(m, n, 6);
+		Combi.unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
+		ij = Combi.ij2k(i, j, 6);
+		kl = Combi.ij2k(k, l, 6);
+		mn = Combi.ij2k(m, n, 6);
 		multiply_linear_times_linear_times_linear(
 			bisecants + ij * 3, 
 			bisecants + kl * 3, 
@@ -2676,6 +2684,7 @@ void surface_domain::web_of_cubic_curves_rank_of_foursubsets(
 	int f_v = (verbose_level >= 1);
 	int set[4], i, j, a;
 	int B[4 * 10];
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::web_of_cubic_curves_rank_of_foursubsets" << endl;
@@ -2684,10 +2693,10 @@ void surface_domain::web_of_cubic_curves_rank_of_foursubsets(
 		cout << "web of cubic curves:" << endl;
 		int_matrix_print(Web_of_cubic_curves, 45, 10);
 		}
-	N = int_n_choose_k(45, 4);
+	N = Combi.int_n_choose_k(45, 4);
 	rk = NEW_int(N);
 	for (i = 0; i < N; i++) {
-		unrank_k_subset(i, set, 45, 4);
+		Combi.unrank_k_subset(i, set, 45, 4);
 		if (f_v) {
 			cout << "subset " << i << " / " << N << " is ";
 			int_vec_print(cout, set, 4);
@@ -3501,6 +3510,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 	int i, j, k, ij, u, v, l, m, n, h, a, b, c;
 	int set[6];
 	int size_complement;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::init_double_sixes" << endl;
@@ -3519,10 +3529,10 @@ void surface_domain::init_double_sixes(int verbose_level)
 	// a_2, b_2, c_13, c_14, c_15, c_16
 	for (ij = 0; ij < 15; ij++, h++) {
 		//cout << "second type " << ij << " / " << 15 << endl;
-		k2ij(ij, i, j, 6);
+		Combi.k2ij(ij, i, j, 6);
 		set[0] = i;
 		set[1] = j;
-		set_complement(set, 2 /* subset_size */, set + 2, 
+		Combi.set_complement(set, 2 /* subset_size */, set + 2,
 			size_complement, 6 /* universal_set_size */);
 		//cout << "set : ";
 		//int_vec_print(cout, set, 6);
@@ -3544,8 +3554,8 @@ void surface_domain::init_double_sixes(int verbose_level)
 	// c_23, c_13, c_12, b_4, b_5, b_6 
 	for (v = 0; v < 20; v++, h++) {
 		//cout << "third type " << v << " / " << 20 << endl;
-		unrank_k_subset(v, set, 6, 3);
-		set_complement(set, 3 /* subset_size */, set + 3, 
+		Combi.unrank_k_subset(v, set, 6, 3);
+		Combi.set_complement(set, 3 /* subset_size */, set + 3,
 			size_complement, 6 /* universal_set_size */);
 		i = set[0];
 		j = set[1];
@@ -3581,17 +3591,17 @@ void surface_domain::init_double_sixes(int verbose_level)
 			}
 		else if (i < 1 + 15) {
 			ij = i - 1;
-			k2ij(ij, a, b, 6);
+			Combi.k2ij(ij, a, b, 6);
 			set[0] = a;
 			set[1] = b;
-			set_complement(set, 2 /* subset_size */, set + 2, 
+			Combi.set_complement(set, 2 /* subset_size */, set + 2,
 				size_complement, 6 /* universal_set_size */);
 			sprintf(str, "D_{%d%d}", a + 1, b + 1);
 			}
 		else {
 			v = i - 16;
-			unrank_k_subset(v, set, 6, 3);
-			set_complement(set, 3 /* subset_size */, set + 3, 
+			Combi.unrank_k_subset(v, set, 6, 3);
+			Combi.set_complement(set, 3 /* subset_size */, set + 3,
 				size_complement, 6 /* universal_set_size */);
 			a = set[0];
 			b = set[1];
@@ -3618,6 +3628,7 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 	int i, j, a, b, c, ij, v, l;
 	int set[6];
 	int size_complement;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::create_half_double_sixes" << endl;
@@ -3645,18 +3656,18 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 				}
 			else if (i < 1 + 15) {
 				ij = i - 1;
-				k2ij(ij, a, b, 6);
+				Combi.k2ij(ij, a, b, 6);
 				set[0] = a;
 				set[1] = b;
-				set_complement(set, 2 /* subset_size */, 
+				Combi.set_complement(set, 2 /* subset_size */,
 					set + 2, size_complement, 
 					6 /* universal_set_size */);
 				sprintf(str, "D_{%d%d}", a + 1, b + 1);
 				}
 			else {
 				v = i - 16;
-				unrank_k_subset(v, set, 6, 3);
-				set_complement(set, 3 /* subset_size */, 
+				Combi.unrank_k_subset(v, set, 6, 3);
+				Combi.set_complement(set, 3 /* subset_size */,
 					set + 3, size_complement, 
 					6 /* universal_set_size */);
 				a = set[0];
@@ -3707,13 +3718,14 @@ void surface_domain::ijklm2n(int i, int j, int k, int l, int m, int &n)
 {
 	int v[6];
 	int size_complement;
+	combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
 	v[2] = k;
 	v[3] = l;
 	v[4] = m;
-	set_complement_safe(v, 5, v + 5, size_complement, 6);
+	Combi.set_complement_safe(v, 5, v + 5, size_complement, 6);
 	if (size_complement != 1) {
 		cout << "surface_domain::ijklm2n size_complement != 1" << endl;
 		exit(1);
@@ -3725,12 +3737,13 @@ void surface_domain::ijkl2mn(int i, int j, int k, int l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
+	combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
 	v[2] = k;
 	v[3] = l;
-	set_complement_safe(v, 4, v + 4, size_complement, 6);
+	Combi.set_complement_safe(v, 4, v + 4, size_complement, 6);
 	if (size_complement != 2) {
 		cout << "surface_domain::ijkl2mn size_complement != 2" << endl;
 		exit(1);
@@ -3743,6 +3756,7 @@ void surface_domain::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
+	combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
@@ -3750,7 +3764,7 @@ void surface_domain::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 	cout << "surface_domain::ijk2lmn v=";
 	int_vec_print(cout, v, 3);
 	cout << endl;
-	set_complement_safe(v, 3, v + 3, size_complement, 6);
+	Combi.set_complement_safe(v, 3, v + 3, size_complement, 6);
 	if (size_complement != 3) {
 		cout << "surface_domain::ijk2lmn size_complement != 3" << endl;
 		cout << "size_complement=" << size_complement << endl;
@@ -3765,10 +3779,11 @@ void surface_domain::ij2klmn(int i, int j, int &k, int &l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
+	combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
-	set_complement_safe(v, 2, v + 2, size_complement, 6);
+	Combi.set_complement_safe(v, 2, v + 2, size_complement, 6);
 	if (size_complement != 4) {
 		cout << "surface_domain::ij2klmn size_complement != 4" << endl;
 		exit(1);
@@ -4085,6 +4100,7 @@ void surface_domain::prepare_clebsch_map(int ds, int ds_row,
 {
 	int ij, i, j, k, l, m, n, size_complement;
 	int set[6];
+	combinatorics_domain Combi;
 	
 	if (ds == 0) {
 		if (ds_row == 0) {
@@ -4103,7 +4119,7 @@ void surface_domain::prepare_clebsch_map(int ds, int ds_row,
 	ds--;
 	if (ds < 15) {
 		ij = ds;
-		k2ij(ij, i, j, 6);
+		Combi.k2ij(ij, i, j, 6);
 		
 		if (ds_row == 0) {
 			line1 = line_ai(j);
@@ -4119,8 +4135,8 @@ void surface_domain::prepare_clebsch_map(int ds, int ds_row,
 			}
 		}
 	ds -= 15;
-	unrank_k_subset(ds, set, 6, 3);
-	set_complement(set, 3 /* subset_size */, set + 3, 
+	Combi.unrank_k_subset(ds, set, 6, 3);
+	Combi.set_complement(set, 3 /* subset_size */, set + 3,
 		size_complement, 6 /* universal_set_size */);
 	i = set[0];
 	j = set[1];
@@ -4502,6 +4518,7 @@ void surface_domain::clebsch_cubics(int verbose_level)
 	int I[3];
 	int J[3];
 	int size_complement, scalar;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surface_domain::clebsch_cubics computing adjugate" << endl;
@@ -4509,10 +4526,10 @@ void surface_domain::clebsch_cubics(int verbose_level)
 	// compute adjugate:
 	for (i = 0; i < 3; i++) {
 		I[0] = i;
-		set_complement(I, 1, I + 1, size_complement, 3);
+		Combi.set_complement(I, 1, I + 1, size_complement, 3);
 		for (j = 0; j < 3; j++) {
 			J[0] = j;
-			set_complement(J, 1, J + 1, size_complement, 3);
+			Combi.set_complement(J, 1, J + 1, size_complement, 3);
 			
 			if ((i + j) % 2) {
 				scalar = m1;

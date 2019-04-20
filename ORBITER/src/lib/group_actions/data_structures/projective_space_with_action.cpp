@@ -814,6 +814,7 @@ strong_generators
 	int *Base, Base_length;
 	int *Transversal_length, Ago;
 	int N, i, j, a, L;
+	combinatorics_domain Combi;
 
 	A_linear = A;
 
@@ -931,7 +932,7 @@ strong_generators
 		for (h = 0; h < Aut_counter; h++) {
 			cout << "aut generator " << h << " / "
 					<< Aut_counter << " : " << endl;
-			perm_print(cout, Aut + h * degree, degree);
+			Combi.perm_print(cout, Aut + h * degree, degree);
 			cout << endl;
 		}
 	}

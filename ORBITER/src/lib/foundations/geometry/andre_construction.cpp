@@ -76,6 +76,7 @@ void andre_construction::init(finite_field *F,
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "andre_construction::init" << endl;
@@ -147,7 +148,7 @@ void andre_construction::init(finite_field *F,
 	for (i = 0; i < spread_size; i++) {
 		F->Gauss_simple(spread_elements_genma + i * k * n,
 				k, n, pivot + i * k, 0 /*verbose_level*/);
-		set_complement(pivot + i * k, k, non_pivot + i * (n - k), a, n);
+		Combi.set_complement(pivot + i * k, k, non_pivot + i * (n - k), a, n);
 		if (a != n - k) {
 			cout << "andre_construction::init "
 					"problem in set_complement" << endl;

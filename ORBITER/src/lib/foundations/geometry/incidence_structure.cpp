@@ -3289,6 +3289,7 @@ void incidence_structure::print_aut_generators(
 {
 	int m, n, i, j, h;
 	int *AUT;
+	combinatorics_domain Combi;
 	
 	m = nb_points();
 	n = nb_lines();
@@ -3319,7 +3320,7 @@ void incidence_structure::print_aut_generators(
 		for (i = 0; i < m + n; i++)
 			cout << AUT[i] << " ";
 		cout << endl;
-		perm_print_product_action(cout, AUT, m + n, m,
+		Combi.perm_print_product_action(cout, AUT, m + n, m,
 				0 /* offset */, FALSE /* f_cycle_length */);
 		cout << endl;
 		//for ( j = 0; j < m + n; j++ ){

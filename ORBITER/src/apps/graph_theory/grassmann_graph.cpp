@@ -28,6 +28,7 @@ int main(int argc, char **argv)
 	int n = 0; // vector space dimension of whole space
 	int f_r = FALSE;
 	int r = 0; // two subspaces are incident if the rank of their span is r
+	combinatorics_domain Combi;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -81,7 +82,7 @@ int main(int argc, char **argv)
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, k, F, verbose_level);
 
-	N = generalized_binomial(n, k, q);
+	N = Combi.generalized_binomial(n, k, q);
 
 	M1 = NEW_int(k * n);
 	M2 = NEW_int(k * n);

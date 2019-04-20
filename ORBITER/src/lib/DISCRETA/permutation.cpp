@@ -741,6 +741,7 @@ void permutation::induce2(permutation & b)
 {
 	int n;
 	int i, j, k, i1, j1, k1, m;
+	combinatorics_domain Combi;
 	
 	n = s_l();
 	m = (n * (n - 1)) >> 1;
@@ -749,8 +750,8 @@ void permutation::induce2(permutation & b)
 		i1 = s_ii(i);
 		for (j = i + 1; j < n; j++) {
 			j1 = s_ii(j);
-			k = ij2k(i, j, n);
-			k1 = ij2k(i1, j1, n);
+			k = Combi.ij2k(i, j, n);
+			k1 = Combi.ij2k(i1, j1, n);
 			b.m_ii(k, k1);
 			}
 		}

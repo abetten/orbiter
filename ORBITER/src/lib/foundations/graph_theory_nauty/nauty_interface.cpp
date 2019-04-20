@@ -52,7 +52,7 @@ using namespace std;
 typedef unsigned char uchar;
 
 int bitvector_s_i(uchar *bitvec, int i);
-int ij2k(int i, int j, int n);
+int callback_ij2k(int i, int j, int n);
 
 static void nauty_interface_allocate_data(int n);
 static void nauty_interface_free_data();
@@ -103,7 +103,7 @@ void nauty_interface_graph_bitvec(int v, uchar *bitvector_adjacency,
 	
 	for (i = 0; i < v; i++) {
 		for (j = i + 1; j < v; j++) {
-			k = ij2k(i, j, v);
+			k = callback_ij2k(i, j, v);
 			if (bitvector_s_i(bitvector_adjacency, k)) {
 				row = GRAPHROW(g, i, m);
 				ADDELEMENT(row, j);

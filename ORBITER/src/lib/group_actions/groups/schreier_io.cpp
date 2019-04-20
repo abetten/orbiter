@@ -1468,6 +1468,7 @@ void schreier::read_from_memory_object(
 {
 	int f_v = (verbose_level >= 1);
 	int i, deg, dummy, a, version;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "schreier::read_from_memory_object" << endl;
@@ -1508,7 +1509,7 @@ void schreier::read_from_memory_object(
 			}
 		//m->read_int(&orbit_no[i]);
 		}
-	perm_inverse(orbit, orbit_inv, A->degree);
+	Combi.perm_inverse(orbit, orbit_inv, A->degree);
 	gens.init(A);
 	gens.read_from_memory_object(m, verbose_level - 1);
 	gens_inv.init(A);
@@ -1589,6 +1590,7 @@ void schreier::read_from_file_binary(ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, deg, dummy, a, version;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "schreier::read_from_file_binary" << endl;
@@ -1629,7 +1631,7 @@ void schreier::read_from_file_binary(ifstream &fp, int verbose_level)
 			//fp.read((char *) &orbit_no[i], sizeof(int));
 			}
 		}
-	perm_inverse(orbit, orbit_inv, A->degree);
+	Combi.perm_inverse(orbit, orbit_inv, A->degree);
 
 	gens.init(A);
 	gens.read_from_file_binary(fp, verbose_level - 1);

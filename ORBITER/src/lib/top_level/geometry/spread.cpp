@@ -132,6 +132,7 @@ void spread::init(int order, int n, int k, int max_depth,
 	int f_vv = (verbose_level >= 2);
 	longinteger_object go;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 	
 	
 	if (f_v) {
@@ -231,9 +232,9 @@ void spread::init(int order, int n, int k, int max_depth,
 	Grass = NEW_OBJECT(grassmann);
 	Grass->init(n, k, F, 0 /*MINIMUM(verbose_level - 1, 1)*/);
 	
-	nCkq = generalized_binomial(n, k, q);
-	block_size = r = generalized_binomial(k, 1, q);
-	nb_points_total = nb_pts = generalized_binomial(n, 1, q);
+	nCkq = Combi.generalized_binomial(n, k, q);
+	block_size = r = Combi.generalized_binomial(k, 1, q);
+	nb_points_total = nb_pts = Combi.generalized_binomial(n, 1, q);
 	
 	if (f_v) {
 		cout << "spread::init "
@@ -366,7 +367,7 @@ void spread::init(int order, int n, int k, int max_depth,
 					"-recoordinatize" << endl;
 			//exit(1);
 			}
-		Nb = generalized_binomial(n, k, q); //R->nCkq; // this makes no sense
+		Nb = Combi.generalized_binomial(n, k, q); //R->nCkq; // this makes no sense
 		}
 
 	if (f_v) {

@@ -90,6 +90,7 @@ void colored_graph::compute_edges(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, nb, a;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "colored_graph::compute_edges" << endl;
@@ -112,7 +113,7 @@ void colored_graph::compute_edges(int verbose_level)
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
 			if (is_adjacent(i, j)) {
-				a = ij2k(i, j, nb_points);
+				a = Combi.ij2k(i, j, nb_points);
 				list_of_edges[nb_edges++] = a;
 				}
 			}
@@ -133,6 +134,8 @@ void colored_graph::compute_edges(int verbose_level)
 
 int colored_graph::is_adjacent(int i, int j)
 {
+	combinatorics_domain Combi;
+
 	if (i == j) {
 		return FALSE;
 		}
@@ -141,14 +144,16 @@ int colored_graph::is_adjacent(int i, int j)
 		}
 	int k;
 	
-	k = ij2k(i, j, nb_points);
+	k = Combi.ij2k(i, j, nb_points);
 	return bitvector_s_i(bitvector_adjacency, k);
 }
 
 void colored_graph::set_adjacency(int i, int j, int a)
 {
+	combinatorics_domain Combi;
 	int k;
-	k = ij2k(i, j, nb_points);
+
+	k = Combi.ij2k(i, j, nb_points);
 	bitvector_m_ii(bitvector_adjacency, k, a);
 }
 
@@ -675,6 +680,7 @@ void colored_graph::init_adjacency(int nb_points, int nb_colors,
 	int i, j, k;
 	int bitvector_length;
 	uchar *bitvec;
+	combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -692,7 +698,7 @@ void colored_graph::init_adjacency(int nb_points, int nb_colors,
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
 			if (Adj[i * nb_points + j]) {
-				k = ij2k(i, j, nb_points);
+				k = Combi.ij2k(i, j, nb_points);
 				bitvector_m_ii(bitvec, k, 1);
 				}
 			}
@@ -717,6 +723,7 @@ void colored_graph::init_adjacency_upper_triangle(
 	int i, j, k;
 	int bitvector_length;
 	uchar *bitvec;
+	combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -733,7 +740,7 @@ void colored_graph::init_adjacency_upper_triangle(
 		}
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
-			k = ij2k(i, j, nb_points);
+			k = Combi.ij2k(i, j, nb_points);
 			if (Adj[k]) {
 				bitvector_m_ii(bitvec, k, 1);
 				}
@@ -1174,6 +1181,7 @@ void colored_graph::draw(const char *fname,
 	uchar *D = NULL;
 	int len, i, j, k;
 	int nb_vertices;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "colored_graph::draw" << endl;
@@ -1192,7 +1200,7 @@ void colored_graph::draw(const char *fname,
 		}
 	for (i = 0; i < nb_vertices; i++) {
 		for (j = i + 1; j < nb_vertices; j++) {
-			k = ij2k(i, j, nb_vertices);
+			k = Combi.ij2k(i, j, nb_vertices);
 			if (bitvector_s_i(bitvector_adjacency, k)) {
 				bitvector_m_ii(D, i * nb_vertices + j, 1);
 				bitvector_m_ii(D, j * nb_vertices + i, 1);
@@ -1232,6 +1240,7 @@ void colored_graph::draw_Levi(const char *fname,
 	int f_dots = FALSE;
 	uchar *D = NULL;
 	int len, i, j, k;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "colored_graph::draw_Levi" << endl;
@@ -1257,7 +1266,7 @@ void colored_graph::draw_Levi(const char *fname,
 		}
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			k = ij2k(i, m + j, nb_points);
+			k = Combi.ij2k(i, m + j, nb_points);
 			if (bitvector_s_i(bitvector_adjacency, k)) {
 				bitvector_m_ii(D, i * n + j, 1);
 				}
@@ -1315,6 +1324,7 @@ void colored_graph::draw_with_a_given_partition(
 	uchar *D = NULL;
 	int i, j, k, len;
 	int *P;
+	combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -1341,7 +1351,7 @@ void colored_graph::draw_with_a_given_partition(
 
 	for (i = 0; i < nb_vertices; i++) {
 		for (j = i + 1; j < nb_vertices; j++) {
-			k = ij2k(i, j, nb_vertices);
+			k = Combi.ij2k(i, j, nb_vertices);
 			if (bitvector_s_i(bitvector_adjacency, k)) {
 				bitvector_m_ii(D, i * nb_vertices + j, 1);
 				bitvector_m_ii(D, j * nb_vertices + i, 1);
@@ -1381,6 +1391,7 @@ void colored_graph::draw_partitioned(const char *fname,
 	//int ymax_out = 1000000;
 	int len, i, j, k, ii, jj;
 	int nb_vertices;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "colored_graph::draw_partitioned" << endl;
@@ -1411,7 +1422,7 @@ void colored_graph::draw_partitioned(const char *fname,
 		ii = C.sorting_perm_inv[i];
 		for (j = i + 1; j < nb_vertices; j++) {
 			jj = C.sorting_perm_inv[j];
-			k = ij2k(ii, jj, nb_vertices);
+			k = Combi.ij2k(ii, jj, nb_vertices);
 			if (bitvector_s_i(bitvector_adjacency, k)) {
 				bitvector_m_ii(D, i * nb_vertices + j, 1);
 				bitvector_m_ii(D, j * nb_vertices + i, 1);
@@ -2058,6 +2069,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	//int f_vv = (verbose_level >= 2);
 	int i, j, a, b, /*pt,*/ x, y;
 	int *v;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_path_and_"
@@ -2083,7 +2095,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	for (i = 0; i < len; i++) {
 		a = S[i];
 		b = list_of_edges[a];
-		k2ij(b, x, y, nb_points);
+		Combi.k2ij(b, x, y, nb_points);
 		v[x]++;
 		v[y]++;
 		}
@@ -2092,7 +2104,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	for (j = 0; j < nb_candidates; j++) {
 		a = candidates[j];
 		b = list_of_edges[a];
-		k2ij(b, x, y, nb_points);
+		Combi.k2ij(b, x, y, nb_points);
 		
 		if (v[x] < 2 && v[y] < 2) {
 			good_candidates[nb_good_candidates++] = a;
@@ -2109,6 +2121,7 @@ int colored_graph::is_cycle(int nb_e, int *edges,
 	int i, a, b, x, y;
 	int *v;
 	//int ret = TRUE;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "colored_graph::is_cycle" << endl;
@@ -2119,7 +2132,7 @@ int colored_graph::is_cycle(int nb_e, int *edges,
 	for (i = 0; i < nb_e; i++) {
 		a = edges[i];
 		b = list_of_edges[a];
-		k2ij(b, x, y, nb_points);
+		Combi.k2ij(b, x, y, nb_points);
 		v[x]++;
 		v[y]++;
 		}
@@ -2153,6 +2166,7 @@ void colored_graph::draw_it(const char *fname_base,
 
 	int L, length, i, j, k, a;
 	uchar *bitvec;
+	combinatorics_domain Combi;
 
 	L = nb_points * nb_points;
 	length = (L + 7) >> 3;
@@ -2162,7 +2176,7 @@ void colored_graph::draw_it(const char *fname_base,
 		}
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
-			k = ij2k(i, j, nb_points);
+			k = Combi.ij2k(i, j, nb_points);
 			a = bitvector_s_i(bitvector_adjacency, k);
 			if (a) {
 				k = i * nb_points + j;
@@ -2562,6 +2576,7 @@ void colored_graph::create_Levi_graph_from_incidence_matrix(
 	int L, /*bitvector_length_in_bits,*/ bitvector_length;
 	int i, j, k, r, c;
 	int N;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "colored_graph::create_Levi_graph_from_incidence_matrix" << endl;
@@ -2582,7 +2597,7 @@ void colored_graph::create_Levi_graph_from_incidence_matrix(
 		for (c = 0; c < nb_cols; c++) {
 			if (M[r * nb_cols + c]) {
 				j = nb_rows + c;
-				k = ij2k(i, j, N);
+				k = Combi.ij2k(i, j, N);
 				bitvector_m_ii(bitvector_adjacency, k, 1);
 				}
 			}
@@ -3092,6 +3107,7 @@ void write_colored_graph(ofstream &ost, char *label,
 	int i, j, d, aij = 0;
     int w;
 	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 	cout << "write_graph " << label
 		<< " with " << nb_points
@@ -3118,20 +3134,20 @@ void write_colored_graph(ofstream &ost, char *label,
 			else if (f_has_adjacency_list) {
 				int h;
 				if (i < j) {
-					h = ij2k(i, j, nb_points);
+					h = Combi.ij2k(i, j, nb_points);
 					}
 				else {
-					h = ij2k(j, i, nb_points);
+					h = Combi.ij2k(j, i, nb_points);
 					}
 				aij = adj_list[h];
 				}
 			else if (f_has_bitvector) {
 				int h;
 				if (i < j) {
-					h = ij2k(i, j, nb_points);
+					h = Combi.ij2k(i, j, nb_points);
 					}
 				else {
-					h = ij2k(j, i, nb_points);
+					h = Combi.ij2k(j, i, nb_points);
 					}
 				aij = bitvector_s_i(bitvector_adjacency, h);
 				}
@@ -3159,20 +3175,20 @@ void write_colored_graph(ofstream &ost, char *label,
 			else if (f_has_adjacency_list) {
 				int h;
 				if (i < j) {
-					h = ij2k(i, j, nb_points);
+					h = Combi.ij2k(i, j, nb_points);
 					}
 				else {
-					h = ij2k(j, i, nb_points);
+					h = Combi.ij2k(j, i, nb_points);
 					}
 				aij = adj_list[h];
 				}
 			else if (f_has_bitvector) {
 				int h;
 				if (i < j) {
-					h = ij2k(i, j, nb_points);
+					h = Combi.ij2k(i, j, nb_points);
 					}
 				else {
-					h = ij2k(j, i, nb_points);
+					h = Combi.ij2k(j, i, nb_points);
 					}
 				aij = bitvector_s_i(bitvector_adjacency, h);
 				}

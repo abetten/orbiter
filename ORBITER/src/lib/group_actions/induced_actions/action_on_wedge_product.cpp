@@ -134,9 +134,10 @@ int action_on_wedge_product::element_entry_ij(
 		action &A, int *Elt, int I, int J, int verbose_level)
 {
 	int i, j, k, l, w;
+	combinatorics_domain Combi;
 
-	k2ij(I, i, j, n);
-	k2ij(J, k, l, n);
+	Combi.k2ij(I, i, j, n);
+	Combi.k2ij(J, k, l, n);
 	w = element_entry_ijkl(A, Elt, i, j, k, l, verbose_level);
 	return w;
 }
@@ -173,6 +174,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, ij, k, l, kl, c, w, z, xkl;
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_wedge_product::compute_image_int_low_level" << endl;
@@ -185,13 +187,13 @@ void action_on_wedge_product::compute_image_int_low_level(
 	// (i,j) = row index
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
-			ij = ij2k(i, j, n);
+			ij = Combi.ij2k(i, j, n);
 			c = 0;
 
 			// (k,l) = column index
 			for (k = 0; k < n; k++) {
 				for (l = k + 1; l < n; l++) {
-					kl = ij2k(k, l, n);
+					kl = Combi.ij2k(k, l, n);
 					xkl = x[kl];
 
 

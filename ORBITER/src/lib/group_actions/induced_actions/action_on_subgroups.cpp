@@ -65,6 +65,7 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 	int i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 5);
+	combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_subgroups::init "
@@ -100,7 +101,7 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 	quicksort_array_with_perm(nb_subgroups,
 			(void **) sets, perm_inv, action_on_subgroups_compare,
 			this);
-	perm_inverse(perm_inv, perm, nb_subgroups);
+	Combi.perm_inverse(perm_inv, perm, nb_subgroups);
 
 	//test_sets();
 

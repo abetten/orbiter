@@ -186,6 +186,7 @@ public:
 		double f1, int p3);
 	void affine_pt2(int *Px, int *Py, int p0, int p1, int p1b,
 		double f1, int p2, int p2b, double f2, int p3);
+	double norm_of_vector_2D(int x1, int x2, int y1, int y2);
 };
 
 

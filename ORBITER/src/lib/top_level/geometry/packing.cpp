@@ -1042,12 +1042,13 @@ void packing::compute_live_blocks2(
 int packing::is_adjacent(int i, int j)
 {
 	int k;
+	combinatorics_domain Combi;
 	
 	if (i == j) {
 		return FALSE;
 		}
 	if (bitvector_adjacency) {
-		k = ij2k(i, j, Spread_tables->nb_spreads);
+		k = Combi.ij2k(i, j, Spread_tables->nb_spreads);
 		if (bitvector_s_i(bitvector_adjacency, k)) {
 			return TRUE;
 			}
@@ -2243,6 +2244,7 @@ void packing_early_test_function(int *S, int len,
 	packing *P = (packing *) data;
 	int f_v = (verbose_level >= 1);
 	int i, k, a, b;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "packing_early_test_function for set ";
@@ -2258,7 +2260,7 @@ void packing_early_test_function(int *S, int len,
 			continue;
 			}
 		if (P->bitvector_adjacency) {
-			k = ij2k(a, b, P->Spread_tables->nb_spreads);
+			k = Combi.ij2k(a, b, P->Spread_tables->nb_spreads);
 			if (bitvector_s_i(P->bitvector_adjacency, k)) {
 				good_candidates[nb_good_candidates++] = b;
 				}

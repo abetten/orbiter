@@ -405,14 +405,15 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 
 	int *external_lines;
 	int nb_external_lines;
+	combinatorics_domain Combi;
 	
 	external_lines = NEW_int(P->N_lines);
 	for (i = 0; i < P->N_lines; i++) {
 		external_lines[i] = i;
 		}
 	nb_external_lines = P->N_lines;
-	set_delete_elements(external_lines, nb_external_lines, tangents, nb_points);
-	set_delete_elements(external_lines, nb_external_lines, secants, nb_secants);
+	Combi.set_delete_elements(external_lines, nb_external_lines, tangents, nb_points);
+	Combi.set_delete_elements(external_lines, nb_external_lines, secants, nb_secants);
 
 	cout << "the " << nb_external_lines << " external lines are: ";
 	int_vec_print(cout, external_lines, nb_external_lines);

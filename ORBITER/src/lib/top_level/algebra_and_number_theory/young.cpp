@@ -517,6 +517,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, a, b, h;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "young::young_symmetrizer" << endl;
@@ -564,7 +565,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	
 	if (f_v) {
 		cout << "We are using the following tableau:" << endl;
-		print_tableau(Tableau, l1, l2, row_parts, col_parts);
+		Combi.print_tableau(Tableau, l1, l2, row_parts, col_parts);
 			// in GALOIS/combinatorics.C
 		}
 
@@ -660,7 +661,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 		S2->element_unrank_int(i, Elt);
 		j = S->element_rank_int(Elt);
 
-		s = perm_signum(Elt, n);
+		s = Combi.perm_signum(Elt, n);
 		
 		elt2[j] += s;
 		}
@@ -698,6 +699,7 @@ void young::compute_generators(int &go1, int &go2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "young::compute_generators" << endl;
@@ -739,7 +741,7 @@ void young::compute_generators(int &go1, int &go2, int verbose_level)
 	for (i = 0; i < l1; i++) {
 		a = row_parts[i];
 		if (a > 1) {
-			go1 *= int_factorial(a);
+			go1 *= Combi.int_factorial(a);
 			for (j = 1; j < a; j++, h++) {
 				for (u = 0; u < n; u++) {
 					v[u] = u;
@@ -766,7 +768,7 @@ void young::compute_generators(int &go1, int &go2, int verbose_level)
 	for (i = 0; i < l2; i++) {
 		a = col_parts[i];
 		if (a > 1) {
-			go2 *= int_factorial(a);
+			go2 *= Combi.int_factorial(a);
 			for (j = 1; j < a; j++, h++) {
 				for (u = 0; u < n; u++) {
 					v[u] = u;

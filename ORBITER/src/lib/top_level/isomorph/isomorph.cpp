@@ -1021,6 +1021,7 @@ void isomorph::test_identify_solution(int verbose_level)
 	int perm[1000];
 	int i, k;
 	int *transporter;
+	combinatorics_domain Combi;
 	
 	transporter = NEW_int(A->elt_size_in_int);
 
@@ -1037,7 +1038,7 @@ void isomorph::test_identify_solution(int verbose_level)
 		//cout << "k=" << k << " r=" << r << endl;
 	
 		load_solution(id, data1);
-		random_permutation(perm, size);
+		Combi.random_permutation(perm, size);
 		for (i = 0; i < size; i++) {
 			data2[i] = data1[perm[i]];
 			}

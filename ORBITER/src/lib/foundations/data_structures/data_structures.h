@@ -678,6 +678,9 @@ void Heapsort_swap(void *v, int i, int j, int entry_size_in_chars);
 int is_all_digits(char *p);
 void find_points_by_multiplicity(int *data, int data_sz, int multiplicity, 
 	int *&pts, int &nb_pts);
+void int_vec_bubblesort_increasing(int len, int *p);
+void int_vec_print(int *v, int len);
+int integer_vec_compare(int *p, int *q, int len);
 
 // #############################################################################
 // spreadsheet.C:

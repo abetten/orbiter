@@ -224,6 +224,7 @@ void Hill_cap56(int argc, const char **argv,
 
 	int *Sets; // [max_sol * 56]
 	int max_sol = 100;
+	combinatorics_domain Combi;
 	
 	Sets = NEW_int(max_sol * 56);
 	
@@ -313,7 +314,7 @@ void Hill_cap56(int argc, const char **argv,
 			} // next i2
 		} // next i1
 	cout << "there are " << nb_sol << " solutions" << endl;
-	cout << "out of " << int_n_choose_k(N, 8) << " possibilities" << endl;
+	cout << "out of " << Combi.int_n_choose_k(N, 8) << " possibilities" << endl;
 
 
 	for (i = 0; i < nb_sol; i++) {

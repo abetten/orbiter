@@ -1536,6 +1536,7 @@ void isomorph::read_orbit_data(int verbose_level)
 // and computed orbit_perm_inv[N]
 {
 	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
 	
 	ifstream f(fname_staborbits);
 	int i, a;
@@ -1570,7 +1571,7 @@ void isomorph::read_orbit_data(int verbose_level)
 		f >> schreier_prev[i];
 		}
 	orbit_fst[nb_orbits] = N;
-	perm_inverse(orbit_perm, orbit_perm_inv, N);
+	Combi.perm_inverse(orbit_perm, orbit_perm_inv, N);
 	f >> a;
 	if (a != -1) {
 		cout << "problem in read_orbit_data" << endl;
@@ -2203,6 +2204,7 @@ int isomorph::next_subset_play_back(int &subset_rank,
 	char token[1000];
 	char buf[MY_BUFSIZE];
 	int rank;
+	combinatorics_domain Combi;
 		
 	f_eof = FALSE;
 	if (play_back_file->eof()) {
@@ -2264,8 +2266,8 @@ int isomorph::next_subset_play_back(int &subset_rank,
 			exit(1);
 			}
 #endif
-		unrank_k_subset(rank, subset, size, level);
-		subset_rank = rank_k_subset(subset, size, level);
+		Combi.unrank_k_subset(rank, subset, size, level);
+		subset_rank = Combi.rank_k_subset(subset, size, level);
 		if (f_v) {
 			cout << "moved to set " << subset_rank << endl;
 			}
