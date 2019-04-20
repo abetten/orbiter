@@ -21,9 +21,93 @@ namespace group_actions {
 // #############################################################################
 
 
+static int wreath_product_group_element_image_of(action &A, int a,
+	void *elt, int verbose_level);
+static void wreath_product_group_element_image_of_low_level(action &A,
+	int *input, int *output, void *elt, int verbose_level);
+static int wreath_product_group_element_linear_entry_ij(action &A,
+	void *elt, int i, int j, int verbose_level);
+static int wreath_product_group_element_linear_entry_frobenius(action &A,
+	void *elt, int verbose_level);
+static void wreath_product_group_element_one(action &A,
+	void *elt, int verbose_level);
+static int wreath_product_group_element_is_one(action &A,
+	void *elt, int verbose_level);
+static void wreath_product_group_element_unpack(action &A,
+	void *elt, void *Elt, int verbose_level);
+static void wreath_product_group_element_pack(action &A,
+	void *Elt, void *elt, int verbose_level);
+static void wreath_product_group_element_retrieve(action &A,
+	int hdl, void *elt, int verbose_level);
+static int wreath_product_group_element_store(action &A,
+	void *elt, int verbose_level);
+static void wreath_product_group_element_mult(action &A,
+	void *a, void *b, void *ab, int verbose_level);
+static void wreath_product_group_element_invert(action &A,
+	void *a, void *av, int verbose_level);
+static void wreath_product_group_element_transpose(action &A,
+	void *a, void *at, int verbose_level);
+static void wreath_product_group_element_move(action &A,
+	void *a, void *b, int verbose_level);
+static void wreath_product_group_element_dispose(action &A,
+	int hdl, int verbose_level);
+static void wreath_product_group_element_print(action &A,
+	void *elt, std::ostream &ost);
+static void wreath_product_group_element_code_for_make_element(
+	action &A, void *elt, int *data);
+static void wreath_product_group_element_print_for_make_element(
+	action &A, void *elt, std::ostream &ost);
+static void wreath_product_group_element_print_for_make_element_no_commas(
+	action &A, void *elt, std::ostream &ost);
+static void wreath_product_group_element_print_quick(action &A,
+	void *elt, std::ostream &ost);
+static void wreath_product_group_element_print_latex(action &A,
+	void *elt, std::ostream &ost);
+#if 0
+static void wreath_product_group_element_print_as_permutation(
+	action &A, void *elt, std::ostream &ost);
+#endif
+static void wreath_product_group_element_print_verbose(action &A,
+	void *elt, std::ostream &ost);
+static void wreath_product_group_print_point(action &A,
+	int a, std::ostream &ost);
 
 
-int wreath_product_group_element_image_of(action &A,
+void action_pointer_table::init_function_pointers_wreath_product_group()
+{
+	ptr_element_image_of = wreath_product_group_element_image_of;
+	ptr_element_image_of_low_level =
+			wreath_product_group_element_image_of_low_level;
+	ptr_element_linear_entry_ij = wreath_product_group_element_linear_entry_ij;
+	ptr_element_linear_entry_frobenius =
+			wreath_product_group_element_linear_entry_frobenius;
+	ptr_element_one = wreath_product_group_element_one;
+	ptr_element_is_one = wreath_product_group_element_is_one;
+	ptr_element_unpack = wreath_product_group_element_unpack;
+	ptr_element_pack = wreath_product_group_element_pack;
+	ptr_element_retrieve = wreath_product_group_element_retrieve;
+	ptr_element_store = wreath_product_group_element_store;
+	ptr_element_mult = wreath_product_group_element_mult;
+	ptr_element_invert = wreath_product_group_element_invert;
+	ptr_element_transpose = wreath_product_group_element_transpose;
+	ptr_element_move = wreath_product_group_element_move;
+	ptr_element_dispose = wreath_product_group_element_dispose;
+	ptr_element_print = wreath_product_group_element_print;
+	ptr_element_print_quick = wreath_product_group_element_print_quick;
+	ptr_element_print_latex = wreath_product_group_element_print_latex;
+	ptr_element_print_verbose = wreath_product_group_element_print_verbose;
+	ptr_element_code_for_make_element =
+			wreath_product_group_element_code_for_make_element;
+	ptr_element_print_for_make_element =
+			wreath_product_group_element_print_for_make_element;
+	ptr_element_print_for_make_element_no_commas =
+			wreath_product_group_element_print_for_make_element_no_commas;
+	ptr_print_point = wreath_product_group_print_point;
+}
+
+
+
+static int wreath_product_group_element_image_of(action &A,
 		int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -45,7 +129,7 @@ int wreath_product_group_element_image_of(action &A,
 	return b;
 }
 
-void wreath_product_group_element_image_of_low_level(action &A,
+static void wreath_product_group_element_image_of_low_level(action &A,
 		int *input, int *output, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -69,7 +153,7 @@ void wreath_product_group_element_image_of_low_level(action &A,
 		}
 }
 
-int wreath_product_group_element_linear_entry_ij(action &A,
+static int wreath_product_group_element_linear_entry_ij(action &A,
 		void *elt, int i, int j, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -90,7 +174,7 @@ int wreath_product_group_element_linear_entry_ij(action &A,
 #endif
 }
 
-int wreath_product_group_element_linear_entry_frobenius(action &A,
+static int wreath_product_group_element_linear_entry_frobenius(action &A,
 		void *elt, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -110,7 +194,7 @@ int wreath_product_group_element_linear_entry_frobenius(action &A,
 #endif
 }
 
-void wreath_product_group_element_one(action &A,
+static void wreath_product_group_element_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -124,7 +208,7 @@ void wreath_product_group_element_one(action &A,
 	W.element_one(Elt);
 }
 
-int wreath_product_group_element_is_one(action &A,
+static int wreath_product_group_element_is_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -150,7 +234,7 @@ int wreath_product_group_element_is_one(action &A,
 	return ret;
 }
 
-void wreath_product_group_element_unpack(action &A,
+static void wreath_product_group_element_unpack(action &A,
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -164,7 +248,7 @@ void wreath_product_group_element_unpack(action &A,
 	W.element_unpack(elt1, Elt1);
 }
 
-void wreath_product_group_element_pack(action &A,
+static void wreath_product_group_element_pack(action &A,
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -178,7 +262,7 @@ void wreath_product_group_element_pack(action &A,
 	W.element_pack(Elt1, elt1);
 }
 
-void wreath_product_group_element_retrieve(action &A,
+static void wreath_product_group_element_retrieve(action &A,
 		int hdl, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -200,7 +284,7 @@ void wreath_product_group_element_retrieve(action &A,
 		}
 }
 
-int wreath_product_group_element_store(action &A,
+static int wreath_product_group_element_store(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -220,7 +304,7 @@ int wreath_product_group_element_store(action &A,
 	return hdl;
 }
 
-void wreath_product_group_element_mult(action &A,
+static void wreath_product_group_element_mult(action &A,
 		void *a, void *b, void *ab, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -249,7 +333,7 @@ void wreath_product_group_element_mult(action &A,
 		}
 }
 
-void wreath_product_group_element_invert(action &A,
+static void wreath_product_group_element_invert(action &A,
 		void *a, void *av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -275,7 +359,7 @@ void wreath_product_group_element_invert(action &A,
 		}
 }
 
-void wreath_product_group_element_transpose(action &A,
+static void wreath_product_group_element_transpose(action &A,
 		void *a, void *at, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -289,7 +373,7 @@ void wreath_product_group_element_transpose(action &A,
 	exit(1);
 }
 
-void wreath_product_group_element_move(action &A,
+static void wreath_product_group_element_move(action &A,
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -303,7 +387,7 @@ void wreath_product_group_element_move(action &A,
 	W.element_move(AA, BB, 0 /* verbose_level */);
 }
 
-void wreath_product_group_element_dispose(action &A,
+static void wreath_product_group_element_dispose(action &A,
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -316,7 +400,7 @@ void wreath_product_group_element_dispose(action &A,
 	W.Elts->dispose(hdl);
 }
 
-void wreath_product_group_element_print(action &A,
+static void wreath_product_group_element_print(action &A,
 		void *elt, ostream &ost)
 {
 	wreath_product &W = *A.G.wreath_product_group;
@@ -354,7 +438,7 @@ void wreath_product_group_element_print(action &A,
 #endif
 }
 
-void wreath_product_group_element_code_for_make_element(action &A,
+static void wreath_product_group_element_code_for_make_element(action &A,
 		void *elt, int *data)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
@@ -372,7 +456,7 @@ void wreath_product_group_element_code_for_make_element(action &A,
 #endif
 }
 
-void wreath_product_group_element_print_for_make_element(action &A,
+static void wreath_product_group_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
@@ -390,7 +474,7 @@ void wreath_product_group_element_print_for_make_element(action &A,
 #endif
 }
 
-void wreath_product_group_element_print_for_make_element_no_commas(
+static void wreath_product_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
@@ -408,7 +492,7 @@ void wreath_product_group_element_print_for_make_element_no_commas(
 #endif
 }
 
-void wreath_product_group_element_print_quick(
+static void wreath_product_group_element_print_quick(
 		action &A, void *elt, ostream &ost)
 {
 	wreath_product &W = *A.G.wreath_product_group;
@@ -445,7 +529,7 @@ void wreath_product_group_element_print_quick(
 #endif
 }
 
-void wreath_product_group_element_print_latex(
+static void wreath_product_group_element_print_latex(
 		action &A, void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
@@ -460,7 +544,8 @@ void wreath_product_group_element_print_latex(
 #endif
 }
 
-void wreath_product_group_element_print_as_permutation(
+#if 0
+static void wreath_product_group_element_print_as_permutation(
 		action &A, void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
@@ -487,8 +572,9 @@ void wreath_product_group_element_print_as_permutation(
 	Combi.perm_print(ost, p, A.degree);
 	FREE_int(p);
 }
+#endif
 
-void wreath_product_group_element_print_verbose(
+static void wreath_product_group_element_print_verbose(
 		action &A, void *elt, ostream &ost)
 {
 	wreath_product &W = *A.G.wreath_product_group;
@@ -521,7 +607,7 @@ void wreath_product_group_element_print_verbose(
 
 }
 
-void wreath_product_group_print_point(action &A, int a, ostream &ost)
+static void wreath_product_group_print_point(action &A, int a, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
 

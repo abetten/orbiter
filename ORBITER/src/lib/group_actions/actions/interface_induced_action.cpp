@@ -23,8 +23,92 @@ namespace group_actions {
 // interface functions: induced action
 // #############################################################################
 
+static int induced_action_element_image_of(action &A, int a,
+	void *elt, int verbose_level);
+static void induced_action_element_image_of_low_level(action &A,
+	int *input, int *output, void *elt, int verbose_level);
+#if 0
+static int induced_action_element_linear_entry_ij(action &A,
+	void *elt, int i, int j, int verbose_level);
+static int induced_action_element_linear_entry_frobenius(action &A,
+	void *elt, int verbose_level);
+#endif
+static void induced_action_element_one(action &A,
+	void *elt, int verbose_level);
+static int induced_action_element_is_one(action &A,
+	void *elt, int verbose_level);
+static void induced_action_element_unpack(action &A,
+	void *elt, void *Elt, int verbose_level);
+static void induced_action_element_pack(action &A,
+	void *Elt, void *elt, int verbose_level);
+static void induced_action_element_retrieve(action &A,
+	int hdl, void *elt, int verbose_level);
+static int induced_action_element_store(action &A,
+	void *elt, int verbose_level);
+static void induced_action_element_mult(action &A,
+	void *a, void *b, void *ab, int verbose_level);
+static void induced_action_element_invert(action &A,
+	void *a, void *av, int verbose_level);
+static void induced_action_element_transpose(action &A,
+	void *a, void *at, int verbose_level);
+static void induced_action_element_move(action &A,
+	void *a, void *b, int verbose_level);
+static void induced_action_element_dispose(action &A,
+	int hdl, int verbose_level);
+static void induced_action_element_print(action &A,
+	void *elt, std::ostream &ost);
+static void induced_action_element_print_quick(action &A,
+	void *elt, std::ostream &ost);
+static void induced_action_element_print_latex(action &A,
+	void *elt, std::ostream &ost);
+static void induced_action_element_print_verbose(action &A,
+	void *elt, std::ostream &ost);
+static void induced_action_element_code_for_make_element(action &A,
+	void *elt, int *data);
+static void induced_action_element_print_for_make_element(action &A,
+	void *elt, std::ostream &ost);
+static void induced_action_element_print_for_make_element_no_commas(
+	action &A, void *elt, std::ostream &ost);
+static void induced_action_print_point(action &A, int a, std::ostream &ost);
+static void induced_action_unrank_point(action &A, int rk, int *v);
+static int induced_action_rank_point(action &A, int *v);
 
-int induced_action_element_image_of(action &A,
+
+void action_pointer_table::init_function_pointers_induced_action()
+{
+	//ptr_get_transversal_rep = induced_action_get_transversal_rep;
+	ptr_element_image_of = induced_action_element_image_of;
+	ptr_element_image_of_low_level = induced_action_element_image_of_low_level;
+	ptr_element_linear_entry_ij = NULL;
+	ptr_element_linear_entry_frobenius = NULL;
+	ptr_element_one = induced_action_element_one;
+	ptr_element_is_one = induced_action_element_is_one;
+	ptr_element_unpack = induced_action_element_unpack;
+	ptr_element_pack = induced_action_element_pack;
+	ptr_element_retrieve = induced_action_element_retrieve;
+	ptr_element_store = induced_action_element_store;
+	ptr_element_mult = induced_action_element_mult;
+	ptr_element_invert = induced_action_element_invert;
+	ptr_element_transpose = induced_action_element_transpose;
+	ptr_element_move = induced_action_element_move;
+	ptr_element_dispose = induced_action_element_dispose;
+	ptr_element_print = induced_action_element_print;
+	ptr_element_print_quick = induced_action_element_print_quick;
+	ptr_element_print_latex = induced_action_element_print_latex;
+	ptr_element_print_verbose = induced_action_element_print_verbose;
+	ptr_element_code_for_make_element =
+			induced_action_element_code_for_make_element;
+	ptr_element_print_for_make_element =
+			induced_action_element_print_for_make_element;
+	ptr_element_print_for_make_element_no_commas =
+			induced_action_element_print_for_make_element_no_commas;
+	ptr_print_point = induced_action_print_point;
+	ptr_unrank_point = induced_action_unrank_point;
+	ptr_rank_point = induced_action_rank_point;
+}
+
+
+static int induced_action_element_image_of(action &A,
 		int a, void *elt, int verbose_level)
 {
 	int *Elt = (int *) elt;
@@ -468,7 +552,7 @@ int induced_action_element_image_of(action &A,
 	return b;
 }
 
-void induced_action_element_image_of_low_level(action &A,
+static void induced_action_element_image_of_low_level(action &A,
 		int *input, int *output, void *elt, int verbose_level)
 {
 	int *Elt = (int *) elt;
@@ -818,7 +902,8 @@ void induced_action_element_image_of_low_level(action &A,
 		}
 }
 
-int induced_action_element_linear_entry_ij(action &A,
+#if 0
+static int induced_action_element_linear_entry_ij(action &A,
 		void *elt, int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -854,7 +939,7 @@ int induced_action_element_linear_entry_ij(action &A,
 	return b;
 }
 
-int induced_action_element_linear_entry_frobenius(
+static int induced_action_element_linear_entry_frobenius(
 		action &A, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -889,9 +974,10 @@ int induced_action_element_linear_entry_frobenius(
 		}
 	return b;
 }
+#endif
 
 
-void induced_action_element_one(action &A,
+static void induced_action_element_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -917,7 +1003,7 @@ void induced_action_element_one(action &A,
 		}
 }
 
-int induced_action_element_is_one(action &A,
+static int induced_action_element_is_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -943,7 +1029,7 @@ int induced_action_element_is_one(action &A,
 		}
 }
 
-void induced_action_element_unpack(action &A,
+static void induced_action_element_unpack(action &A,
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -969,7 +1055,7 @@ void induced_action_element_unpack(action &A,
 		}
 }
 
-void induced_action_element_pack(action &A,
+static void induced_action_element_pack(action &A,
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -996,7 +1082,7 @@ void induced_action_element_pack(action &A,
 		}
 }
 
-void induced_action_element_retrieve(action &A,
+static void induced_action_element_retrieve(action &A,
 		int hdl, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1023,7 +1109,7 @@ void induced_action_element_retrieve(action &A,
 		}
 }
 
-int induced_action_element_store(action &A,
+static int induced_action_element_store(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1050,7 +1136,7 @@ int induced_action_element_store(action &A,
 		}
 }
 
-void induced_action_element_mult(action &A,
+static void induced_action_element_mult(action &A,
 		void *a, void *b, void *ab, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1077,7 +1163,7 @@ void induced_action_element_mult(action &A,
 		}
 }
 
-void induced_action_element_invert(action &A,
+static void induced_action_element_invert(action &A,
 		void *a, void *av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1104,7 +1190,7 @@ void induced_action_element_invert(action &A,
 		}
 }
 
-void induced_action_element_transpose(action &A,
+static void induced_action_element_transpose(action &A,
 		void *a, void *at, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1131,7 +1217,7 @@ void induced_action_element_transpose(action &A,
 		}
 }
 
-void induced_action_element_move(action &A,
+static void induced_action_element_move(action &A,
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1158,7 +1244,7 @@ void induced_action_element_move(action &A,
 		}
 }
 
-void induced_action_element_dispose(action &A,
+static void induced_action_element_dispose(action &A,
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1184,7 +1270,7 @@ void induced_action_element_dispose(action &A,
 		}
 }
 
-void induced_action_element_print(action &A,
+static void induced_action_element_print(action &A,
 		void *elt, ostream &ost)
 {
 	if (A.type_G == product_action_t) {
@@ -1226,7 +1312,7 @@ void induced_action_element_print(action &A,
 		}
 }
 
-void induced_action_element_print_quick(action &A,
+static void induced_action_element_print_quick(action &A,
 		void *elt, ostream &ost)
 {
 	if (A.type_G == product_action_t) {
@@ -1254,7 +1340,7 @@ void induced_action_element_print_quick(action &A,
 		}
 }
 
-void induced_action_element_print_latex(action &A,
+static void induced_action_element_print_latex(action &A,
 		void *elt, ostream &ost)
 {
 	if (A.type_G == product_action_t) {
@@ -1275,7 +1361,7 @@ void induced_action_element_print_latex(action &A,
 		}
 }
 
-void induced_action_element_print_verbose(action &A,
+static void induced_action_element_print_verbose(action &A,
 		void *elt, ostream &ost)
 {
 	if (A.type_G == product_action_t) {
@@ -1297,7 +1383,7 @@ void induced_action_element_print_verbose(action &A,
 		}
 }
 
-void induced_action_element_code_for_make_element(action &A,
+static void induced_action_element_code_for_make_element(action &A,
 		void *elt, int *data)
 {
 	//int *Elt = (int *) elt;
@@ -1316,7 +1402,7 @@ void induced_action_element_code_for_make_element(action &A,
 	//exit(1);
 }
 
-void induced_action_element_print_for_make_element(action &A,
+static void induced_action_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
 	//int *Elt = (int *) elt;
@@ -1335,7 +1421,7 @@ void induced_action_element_print_for_make_element(action &A,
 	//exit(1);
 }
 
-void induced_action_element_print_for_make_element_no_commas(
+static void induced_action_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
 	//int *Elt = (int *) elt;
@@ -1354,7 +1440,7 @@ void induced_action_element_print_for_make_element_no_commas(
 	//exit(1);
 }
 
-void induced_action_print_point(action &A,
+static void induced_action_print_point(action &A,
 		int a, ostream &ost)
 {
 
@@ -1584,7 +1670,7 @@ void induced_action_print_point(action &A,
 }
 
 
-void induced_action_unrank_point(action &A, int rk, int *v)
+static void induced_action_unrank_point(action &A, int rk, int *v)
 {
 	//cout << "induced_action_unrank_point" << endl;
 
@@ -1834,7 +1920,7 @@ void induced_action_unrank_point(action &A, int rk, int *v)
 
 }
 
-int induced_action_rank_point(action &A, int *v)
+static int induced_action_rank_point(action &A, int *v)
 {
 	//cout << "induced_action_rank_point" << endl;
 	int rk = -1;
