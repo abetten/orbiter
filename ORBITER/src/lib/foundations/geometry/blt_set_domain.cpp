@@ -291,6 +291,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	int v3[5];
 	int *pts_on_special_line;
 	int idx, i;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -326,7 +327,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		cout << endl;
 		}
 
-	if (!int_vec_search(pts_on_special_line, q + 1, starter[0], idx)) {
+	if (!Sorting.int_vec_search(pts_on_special_line, q + 1, starter[0], idx)) {
 		cout << "cannot find the first point on the line" << endl;
 		exit(1);
 		}

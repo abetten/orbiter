@@ -22,6 +22,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	int f_v = (verbose_level >= 1);
 	int next_node;
 	int *set;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism" << endl;
@@ -80,7 +81,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 		int_vec_copy(set, gen->set[lvl + 1], len + 1);
 		}
 	else {
-		int_vec_heapsort(set, lvl + 1);
+		Sorting.int_vec_heapsort(set, lvl + 1);
 		int_vec_copy(set, gen->set[lvl + 1], len + 1);
 		if (f_v) {
 			cout << "poset_orbit_node::apply_isomorphism after sorting: ";
@@ -120,6 +121,7 @@ void poset_orbit_node::install_fusion_node(
 	int f_v = (verbose_level >= 1);
 	//int f_v10 = (verbose_level >= 10);
 	int hdl, cmp;	
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node "
@@ -265,7 +267,7 @@ void poset_orbit_node::install_fusion_node(
 #endif
 		}
 	else {
-		int_vec_heapsort(gen->set3, lvl);
+		Sorting.int_vec_heapsort(gen->set3, lvl);
 		cmp = int_vec_compare(gen->set3, gen->set0, lvl + 1);
 		}
 

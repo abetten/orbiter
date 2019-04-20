@@ -339,6 +339,7 @@ int main(int argc, const char **argv)
 	int nb_pts;
 	int *Kernel;
 	int h, pt, orbit_idx;
+	sorting Sorting;
 
 
 	Pts = NEW_int(HPD->P->N_points);
@@ -735,7 +736,7 @@ int main(int argc, const char **argv)
 		HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
 		cout << "We found " << nb_pts << " points on the curve" << endl;
 
-		int_vec_heapsort(Pts, nb_pts);
+		Sorting.int_vec_heapsort(Pts, nb_pts);
 
 		cout << "They are : ";
 		int_vec_print(cout, Pts, nb_pts);
@@ -767,7 +768,7 @@ int main(int argc, const char **argv)
 			cout << "We found " << nb_pts2
 					<< " points on the curve" << endl;
 
-			int_vec_heapsort(Pts2, nb_pts);
+			Sorting.int_vec_heapsort(Pts2, nb_pts);
 
 			cout << "They are : ";
 			int_vec_print(cout, Pts2, nb_pts2);
@@ -791,7 +792,7 @@ int main(int argc, const char **argv)
 
 			A->map_a_set_and_reorder(Pts, Pts3, nb_pts, Elt1,
 					verbose_level);
-			int_vec_heapsort(Pts3, nb_pts);
+			Sorting.int_vec_heapsort(Pts3, nb_pts);
 
 			cout << "after apply : ";
 			int_vec_print(cout, Pts3, nb_pts);

@@ -253,8 +253,9 @@ void W3q::print_by_points()
 int W3q::find_line(int line)
 {
 	int idx;
+	sorting Sorting;
 
-	if (!int_vec_search(Lines, nb_lines, line, idx)) {
+	if (!Sorting.int_vec_search(Lines, nb_lines, line, idx)) {
 		cout << "W3q::find_line could not find the line" << endl;
 		exit(1);
 	}

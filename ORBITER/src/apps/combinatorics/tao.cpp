@@ -461,14 +461,15 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	classify Pair_orbit_type;
 	Pair_orbit_type.init(Pair_orbit_length, nb_paired_orbits, FALSE, 0);
 
+	sorting Sorting;
 
 
 	Pair_orbit_type.get_class_by_value(Pairs_of_type1,
 			nb_pairs_of_type1, 1, 0 /* verbose_level */);
 	Pair_orbit_type.get_class_by_value(Pairs_of_type2,
 			nb_pairs_of_type2, 3, 0 /* verbose_level */);
-	int_vec_heapsort(Pairs_of_type1, nb_pairs_of_type1);
-	int_vec_heapsort(Pairs_of_type2, nb_pairs_of_type2);
+	Sorting.int_vec_heapsort(Pairs_of_type1, nb_pairs_of_type1);
+	Sorting.int_vec_heapsort(Pairs_of_type2, nb_pairs_of_type2);
 	cout << "We found " << 	nb_pairs_of_type1
 			<< " pairs of short orbits, they are:" << endl;
 	int_vec_print(cout, Pairs_of_type1, nb_pairs_of_type1);
@@ -566,6 +567,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 
 
@@ -683,7 +685,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 		Overgroup_orbit_type.get_class_by_value(
 				long_orbits, nb_long_orbits, 3, 0 /* verbose_level */);
-		int_vec_heapsort(long_orbits, nb_long_orbits);
+		Sorting.int_vec_heapsort(long_orbits, nb_long_orbits);
 		cout << "We found " << 	nb_long_orbits
 				<< " long orbits, they are:" << endl;
 		int_vec_print(cout, long_orbits, nb_long_orbits);
@@ -1350,12 +1352,13 @@ void dimino(sims *S,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, k, c, idx, new_coset_rep, nb_cosets;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "dimino new_gen = " << new_gen << endl;
 		}
 	int_vec_copy(subgroup, group, subgroup_sz);
-	int_vec_heapsort(group, subgroup_sz);
+	Sorting.int_vec_heapsort(group, subgroup_sz);
 	group_sz = subgroup_sz;
 	
 	cosets[0] = 0;
@@ -1373,7 +1376,7 @@ void dimino(sims *S,
 				cout << "coset rep " << i << " times generator "
 						<< j << " is " << c << endl;
 				}
-			if (int_vec_search(group, group_sz, c, idx)) {
+			if (Sorting.int_vec_search(group, group_sz, c, idx)) {
 				if (f_vv) {
 					cout << "already there" << endl;
 					}
@@ -1388,7 +1391,7 @@ void dimino(sims *S,
 				c = S->mult_by_rank(subgroup[k], new_coset_rep);
 				group[group_sz++] = c;
 				}
-			int_vec_heapsort(group, group_sz);
+			Sorting.int_vec_heapsort(group, group_sz);
 			if (f_vv) {
 				cout << "new group size = " << group_sz << endl;
 				}

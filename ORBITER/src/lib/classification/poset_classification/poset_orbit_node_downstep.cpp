@@ -900,6 +900,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int ret = FALSE;
+	sorting Sorting;
 	
 
 	n = -1;
@@ -1016,7 +1017,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 				subset[i] = O->E[i].pt;
 				}
 			}
-		int_vec_heapsort(subset, len);
+		Sorting.int_vec_heapsort(subset, len);
 		n = len;
 		f_subset_is_allocated = TRUE;
 		ret = TRUE;

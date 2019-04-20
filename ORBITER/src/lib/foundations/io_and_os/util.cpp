@@ -76,9 +76,10 @@ void int_vec_take_away(int *v, int &len,
 	// v must be sorted
 {
 	int i, j, idx;
+	sorting Sorting;
 	
 	for (i = 0; i < nb_take_away; i++) {
-		if (!int_vec_search(v, len, take_away[i], idx)) {
+		if (!Sorting.int_vec_search(v, len, take_away[i], idx)) {
 			continue;
 			}
 		for (j = idx; j < len; j++) {
@@ -162,8 +163,9 @@ void int_vec_delete_element_assume_sorted(int *v,
 	int &len, int a)
 {
 	int idx, i;
+	sorting Sorting;
 
-	if (!int_vec_search(v, len, a, idx)) {
+	if (!Sorting.int_vec_search(v, len, a, idx)) {
 		cout << "int_vec_delete_element_assume_sorted "
 				"cannot find the element" << endl;
 		exit(1);
@@ -264,12 +266,13 @@ int int_vec_hash_after_sorting(int *data, int len)
 {
 	int *data2;
 	int i, h;
+	sorting Sorting;
 
 	data2 = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		data2[i] = data[i];
 		}
-	int_vec_heapsort(data2, len);
+	Sorting.int_vec_heapsort(data2, len);
 	h = int_vec_hash(data2, len);
 	FREE_int(data2);
 	return h;
@@ -878,6 +881,7 @@ void int_vec_distribution_compute_and_print(ostream &ost,
 void int_vec_distribution(int *v, 
 	int len_v, int *&val, int *&mult, int &len)
 {
+	sorting Sorting;
 	int i, j, a, idx;
 	
 	val = NEW_int(len_v);
@@ -885,7 +889,7 @@ void int_vec_distribution(int *v,
 	len = 0;
 	for (i = 0; i < len_v; i++) {
 		a = v[i];
-		if (int_vec_search(val, len, a, idx)) {
+		if (Sorting.int_vec_search(val, len, a, idx)) {
 			mult[idx]++;
 			}
 		else {
@@ -4097,6 +4101,7 @@ void int_matrix_read_text(const char *fname, int *&M, int &m, int &n)
 
 int compare_sets(int *set1, int *set2, int sz1, int sz2)
 {
+	sorting Sorting;
 	int *S1, *S2;
 	int u, ret;
 
@@ -4104,8 +4109,8 @@ int compare_sets(int *set1, int *set2, int sz1, int sz2)
 	S2 = NEW_int(sz2);
 	int_vec_copy(set1, S1, sz1);
 	int_vec_copy(set2, S2, sz2);
-	int_vec_heapsort(S1, sz1);
-	int_vec_heapsort(S2, sz2);
+	Sorting.int_vec_heapsort(S1, sz1);
+	Sorting.int_vec_heapsort(S2, sz2);
 	for ( u = 0; u < sz1 + sz2; u++) {
 		if (u < sz1 && u < sz2) {
 			if (S1[u] < S2[u]) {
@@ -4142,6 +4147,7 @@ int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2)
 {
 	int *S1, *S2;
 	int i, u, v, ret;
+	sorting Sorting;
 
 	S1 = NEW_int(sz1);
 	S2 = NEW_int(sz2);
@@ -4151,8 +4157,8 @@ int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2)
 	for (i = 0; i < sz2; i++) {
 		S2[i] = set2[i];
 		}
-	int_vec_heapsort(S1, sz1);
-	int_vec_heapsort(S2, sz2);
+	Sorting.int_vec_heapsort(S1, sz1);
+	Sorting.int_vec_heapsort(S2, sz2);
 	u = v = 0;
 	while (u + v < sz1 + sz2) {
 		if (u < sz1 && v < sz2) {
@@ -4969,6 +4975,29 @@ int find_orbit_index_in_data_file(const char *prefix,
 }
 
 
+#include <ctype.h>
+
+int is_all_digits(char *p)
+{
+	int i, l;
+
+	l = strlen(p);
+	for (i = 0; i < l; i++) {
+		if (!isdigit(p[i])) {
+			return FALSE;
+			}
+		}
+	return TRUE;
+}
+
+void int_vec_print(int *v, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		cout << i << " : " << v[i] << endl;
+	}
+}
 
 
 

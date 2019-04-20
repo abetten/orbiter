@@ -836,6 +836,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, h, a, b;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "buekenhout_metz::compute_the_design" << endl;
@@ -881,7 +882,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	for (h = 0; h < nb_tangent_lines; h++) {
 		a = tangent_lines[h];
 		f_is_tangent_line[a] = TRUE;
-		int_vec_intersect(P2->Lines + a * P2->k, P2->k,
+		Sorting.int_vec_intersect(P2->Lines + a * P2->k, P2->k,
 				U, sz, block, block_size);
 		if (block_size != 1) {
 			cout << "block_size != 1" << endl;
@@ -925,7 +926,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	Design_blocks = NEW_int(nb_secant_lines * (q + 1));
 	for (h = 0; h < nb_secant_lines; h++) {
 		a = secant_lines[h];
-		int_vec_intersect(P2->Lines + a * P2->k,
+		Sorting.int_vec_intersect(P2->Lines + a * P2->k,
 				P2->k, U, sz, block, block_size);
 		if (block_size != q + 1) {
 			cout << "block_size != q + 1" << endl;
@@ -1381,6 +1382,7 @@ int buekenhout_metz_check_good_points(int len,
 	int i, a, idx;
 	int f_v = FALSE;
 	buekenhout_metz *BM = (buekenhout_metz *) data;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "buekenhout_metz_check_good_points checking the set ";
@@ -1389,7 +1391,7 @@ int buekenhout_metz_check_good_points(int len,
 		}
 	for (i = 0; i < len; i++) {
 		a = S[i];
-		if (!int_vec_search_linear(BM->good_points,
+		if (!Sorting.int_vec_search_linear(BM->good_points,
 				BM->nb_good_points, a, idx)) {
 			if (f_v) {
 				cout << "The set is rejected" << endl;

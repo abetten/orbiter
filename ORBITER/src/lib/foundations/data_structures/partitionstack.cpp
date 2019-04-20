@@ -284,6 +284,7 @@ void partitionstack::sort_cells()
 void partitionstack::sort_cell(int cell)
 {
 	int i, first, len, a;
+	sorting Sorting;
 
 	first = startCell[cell];
 	len = cellSize[cell];
@@ -295,7 +296,7 @@ void partitionstack::sort_cell(int cell)
 		}
 	cout << endl;
 #endif
-	int_vec_quicksort_increasingly(pointList + first, len);
+	Sorting.int_vec_quicksort_increasingly(pointList + first, len);
 #if 0
 	cout << "after sort, cell " << cell << " : " << endl;
 	for (i = 0; i < len; i++) {
@@ -384,6 +385,7 @@ void partitionstack::print_class(ostream& ost, int idx)
 {
 	int first, len, j;
 	int *S;
+	sorting Sorting;
 	
 	S = NEW_int(n);
 	first = startCell[idx];
@@ -393,7 +395,7 @@ void partitionstack::print_class(ostream& ost, int idx)
 	for (j = 0; j < len; j++) {
 		S[j] = pointList[first + j];
 		}
-	int_vec_heapsort(S, len);
+	Sorting.int_vec_heapsort(S, len);
 	int_set_print(ost, S, len);
 	ost << "_{" << len << "}" << endl;
 	FREE_int(S);
@@ -415,6 +417,7 @@ void partitionstack::print_class_tex(ostream& ost, int idx)
 	int first_column_element = startCell[1];
 	int first, len, j;
 	int *S;
+	sorting Sorting;
 	
 	S = NEW_int(n);
 	first = startCell[idx];
@@ -428,7 +431,7 @@ void partitionstack::print_class_tex(ostream& ost, int idx)
 			S[j] -= first_column_element;
 			}
 		}
-	int_vec_heapsort(S, len);
+	Sorting.int_vec_heapsort(S, len);
 	ost << "\\{ ";
 	for (j = 0; j < len; j++) {
 		ost << S[j];
@@ -445,6 +448,7 @@ void partitionstack::print_class_point_or_line(ostream& ost, int idx)
 	int first_column_element = startCell[1];
 	int first, len, j;
 	int *S;
+	sorting Sorting;
 	
 	S = NEW_int(n);
 	first = startCell[idx];
@@ -459,7 +463,7 @@ void partitionstack::print_class_point_or_line(ostream& ost, int idx)
 			S[j] -= first_column_element;
 			}
 		}
-	int_vec_heapsort(S, len);
+	Sorting.int_vec_heapsort(S, len);
 	//int_set_print(ost, S, len);
 	if (is_col_class(idx)) {
 		ost << "lines {";

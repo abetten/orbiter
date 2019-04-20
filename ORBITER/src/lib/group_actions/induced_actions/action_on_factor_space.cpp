@@ -296,6 +296,7 @@ void action_on_factor_space::init_coset_table(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_factor_space::init_coset_table" << endl;
@@ -323,7 +324,8 @@ void action_on_factor_space::init_coset_table(
 				projection_table[i] = -1;
 				continue;
 				}
-			if (int_vec_search(coset_reps_Gauss, nb_cosets, p, idx)) {
+			if (Sorting.int_vec_search(coset_reps_Gauss,
+					nb_cosets, p, idx)) {
 				projection_table[i] = idx;
 				continue;
 				}
@@ -414,6 +416,7 @@ void action_on_factor_space::init2(action &A_base,
 	int f_vv = (verbose_level >= 1);
 	//int f_v8 = (verbose_level >= 8);
 	int i, j, idx, rk;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -468,7 +471,7 @@ void action_on_factor_space::init2(action &A_base,
 	Tmp2 = NEW_int(VS->dimension);
 	j = 0;
 	for (i = 0; i < VS->dimension; i++) {
-		if (!int_vec_search(base_cols,
+		if (!Sorting.int_vec_search(base_cols,
 				subspace_basis_size, i, idx)) {
 			embedding[j++] = i;
 			}
@@ -874,6 +877,8 @@ void action_on_factor_space::unrank(
 
 int action_on_factor_space::rank(int *v, int verbose_level)
 {
+	sorting Sorting;
+
 	if (f_table_mode) {
 		int p, idx;
 		int *w;
@@ -883,7 +888,7 @@ int action_on_factor_space::rank(int *v, int verbose_level)
 		int_vec_copy(v, w, VS->dimension);
 		reduce_mod_subspace(v, verbose_level - 1);
 		p = rank_in_large_space(v);
-		if (!int_vec_search(coset_reps_Gauss, nb_cosets, p, idx)) {
+		if (!Sorting.int_vec_search(coset_reps_Gauss, nb_cosets, p, idx)) {
 			cout << "action_on_factor_space::rank fatal: "
 					"did not find Gauss coset representative"
 					<< endl;

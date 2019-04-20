@@ -608,6 +608,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 	int Nine_lines[9];
 	int *v;
 	int sz;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_lifting::loop_over_trihedral_pairs" << endl;
@@ -680,7 +681,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 			cout << endl;
 			}
 
-		int_vec_intersect(Nine_lines0, 9, Nine_lines, 9, v, sz);
+		Sorting.int_vec_intersect(Nine_lines0, 9, Nine_lines, 9, v, sz);
 
 		if (FALSE) {
 			cout << "arc_lifting::loop_over_trihedral_pairs "

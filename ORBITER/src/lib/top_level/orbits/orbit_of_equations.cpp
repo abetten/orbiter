@@ -598,10 +598,11 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 
 int orbit_of_equations::search_data(int *data, int &idx)
 {
+	sorting Sorting;
 	int p[1];
 	p[0] = sz_for_compare;
 
-	if (vec_search((void **)Equations,
+	if (Sorting.vec_search((void **)Equations,
 			orbit_of_equations_compare_func,
 			p,
 		used_length, data, idx, 0 /* verbose_level */)) {

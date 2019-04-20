@@ -1154,6 +1154,7 @@ void distribution_reverse_sorting(int f_increasing,
 	int i, j;
 	int *D;
 	int **P;
+	sorting Sorting;
 
 	D = new int[nb_distributions * nb_types];
 	P = new pint[nb_distributions];
@@ -1170,11 +1171,11 @@ void distribution_reverse_sorting(int f_increasing,
 	p[0] = nb_types;
 
 	if (f_increasing) {
-		quicksort_array(nb_distributions, (void **) P,
+		Sorting.quicksort_array(nb_distributions, (void **) P,
 				compare_func_int_vec_inverse, (void *)p);
 		}
 	else {
-		quicksort_array(nb_distributions, (void **) P,
+		Sorting.quicksort_array(nb_distributions, (void **) P,
 				compare_func_int_vec, (void *)p);
 		}
 

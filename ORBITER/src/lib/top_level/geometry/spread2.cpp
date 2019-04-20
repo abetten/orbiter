@@ -35,6 +35,7 @@ void spread::print_isomorphism_type(isomorph *Iso,
 	int *pt_list;
 	int f, l, j, idx, pt;
 	number_theory_domain NT;
+	sorting Sorting;
 
 	//AA = Orb.A;
 
@@ -169,7 +170,7 @@ void spread::print_isomorphism_type(isomorph *Iso,
 			pt_list[j] = pt;
 			}
 		
-		int_vec_sort(l, pt_list);
+		Sorting.int_vec_sort(l, pt_list);
 		
 		for (j = 0; j < l; j++) {		
 			file << pt_list[j] + 1;
@@ -1758,6 +1759,7 @@ void spread::report2(isomorph &Iso, int verbose_level)
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
 	latex_interface L;
+	sorting Sorting;
 
 	sprintf(title, "$%d$-Spreads of PG($%d,%d$)", k - 1, 2 * k - 1, q);
 	cout << "Writing file " << fname << " with "
@@ -1853,7 +1855,7 @@ void spread::report2(isomorph &Iso, int verbose_level)
 			set[v] = i;
 			}
 
-		int_vec_heapsort(set, length);
+		Sorting.int_vec_heapsort(set, length);
 
 		for (v = 0; v < length; v++, cnt++) {
 
@@ -1901,7 +1903,7 @@ void spread::report2(isomorph &Iso, int verbose_level)
 			set[v] = i;
 			}
 
-		int_vec_heapsort(set, length);
+		Sorting.int_vec_heapsort(set, length);
 
 
 		for (v = 0; v < length; v++) {
@@ -2270,6 +2272,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 	grassmann *Gr;
 	longinteger_domain Dom;
 	number_theory_domain NT;
+	sorting Sorting;
 
 
 
@@ -2326,7 +2329,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 		Grass->unrank_int_here(Mtx, data[i], 0/*verbose_level - 4*/);
 		F->all_PG_elements_in_subspace(Mtx, k, n,
 				Pts[i], nb_points, 0 /* verbose_level */);
-		int_vec_heapsort(Pts[i], nb_points);
+		Sorting.int_vec_heapsort(Pts[i], nb_points);
 		}
 
 	for (u = 0; u < Orb.nb_orbits; u++) {
@@ -2351,7 +2354,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 			// GALOIS/util.C
 
 		for (i = 0; i < order + 1; i++) {
-			if (int_vec_search(Pts[i], nb_points, the_point, idx)) {
+			if (Sorting.int_vec_search(Pts[i], nb_points, the_point, idx)) {
 				break;
 				}
 			}

@@ -386,6 +386,7 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 {
 	int f_v = (verbose_level >= 1);
 	int j1, j2, a1, a2, pt, idx;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_domain::compute_intersection_points_"
@@ -400,7 +401,7 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 			a2 = Lines[j2];
 			if (Adj[j1 * nb_lines + j2]) {
 				pt = P->line_intersection(a1, a2);
-				if (!int_vec_search(Points, nb_points,
+				if (!Sorting.int_vec_search(Points, nb_points,
 					pt, idx)) {
 					cout << "surface_domain::compute_intersection_points_"
 							"and_indices cannot find point "
@@ -819,6 +820,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	int i, j;
 	int ret = FALSE;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_domain::create_double_six_from_six_disjoint_lines" << endl;
@@ -878,7 +880,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	I2_sz = NEW_int(six2);
 	for (rk = 0; rk < six2; rk++) {
 		Combi.unrank_k_subset(rk, subset, 6, 2);
-		int_vec_intersect(
+		Sorting.int_vec_intersect(
 			Perp_without_pt[subset[0]],
 			perp_sz,
 			Perp_without_pt[subset[1]],
@@ -898,7 +900,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 		Combi.unrank_k_subset(rk, subset, 6, 3);
 		rk2 = Combi.rank_k_subset(subset, 6, 2);
 		Combi.unrank_k_subset(rk, subset, 6, 3);
-		int_vec_intersect(I2[rk2], I2_sz[rk2],
+		Sorting.int_vec_intersect(I2[rk2], I2_sz[rk2],
 			Perp_without_pt[subset[2]],
 			perp_sz,
 			I3[rk], I3_sz[rk]);
@@ -918,7 +920,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 		Combi.unrank_k_subset(rk, subset, 6, 4);
 		rk2 = Combi.rank_k_subset(subset, 6, 3);
 		Combi.unrank_k_subset(rk, subset, 6, 4);
-		int_vec_intersect(I3[rk2], I3_sz[rk2],
+		Sorting.int_vec_intersect(I3[rk2], I3_sz[rk2],
 			Perp_without_pt[subset[3]], perp_sz,
 			I4[rk], I4_sz[rk]);
 		if (f_v) {
@@ -938,7 +940,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 		Combi.unrank_k_subset(rk, subset, 6, 5);
 		rk2 = Combi.rank_k_subset(subset, 6, 4);
 		Combi.unrank_k_subset(rk, subset, 6, 5);
-		int_vec_intersect(I4[rk2], I4_sz[rk2],
+		Sorting.int_vec_intersect(I4[rk2], I4_sz[rk2],
 			Perp_without_pt[subset[4]], perp_sz,
 			I5[rk], I5_sz[rk]);
 		if (f_v) {
@@ -1474,6 +1476,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 	int S3[6];
 	int i, idx;
 	int nb_lines = 27;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -1492,7 +1495,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 
 	int Line_idx[27];
 	for (i = 0; i < 6; i++) {
-		if (!int_vec_search_linear(Lines, nb_lines, S3[i], idx)) {
+		if (!Sorting.int_vec_search_linear(Lines, nb_lines, S3[i], idx)) {
 			cout << "could not find the line" << endl;
 			exit(1);
 			}

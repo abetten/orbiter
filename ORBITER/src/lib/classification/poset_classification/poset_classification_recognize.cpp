@@ -23,6 +23,7 @@ void poset_classification::recognize_start_over(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::recognize_start_over" << endl;
@@ -38,7 +39,7 @@ void poset_classification::recognize_start_over(
 		}
 
 
-	int_vec_heapsort(set[lvl + 1], size /* - 1 */);
+	Sorting.int_vec_heapsort(set[lvl + 1], size /* - 1 */);
 		// we don't keep the last point (i.e., the (len + 1)-th) extra
 	int_vec_copy(set[lvl + 1], set[0], size);
 	//int_vec_copy(size, set[lvl + 1], gen->set[0]);

@@ -928,6 +928,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	int *tmp_candidates;
 	int nb_tmp_candidates;
 	geometry_global Gg;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
@@ -998,7 +999,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		for (i = 0; i < nb_candidates; i++) {
 			c = candidates[i];
 			candidates_expanded[nb_candidates_expanded++] = c;
-			if (int_vec_search(S, len, c, idx)) {
+			if (Sorting.int_vec_search(S, len, c, idx)) {
 				continue;
 				}
 			O->unrank_point(v, 1, c, 0);
@@ -1031,7 +1032,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 					candidates_expanded, nb_candidates_expanded);
 			cout << endl;
 			}
-		int_vec_heapsort(candidates_expanded, nb_candidates_expanded);
+		Sorting.int_vec_heapsort(candidates_expanded, nb_candidates_expanded);
 		if (f_v) {
 			cout << "expanded candidate set after sort:" << endl;
 			int_vec_print(cout, candidates_expanded, nb_candidates_expanded);
@@ -1050,7 +1051,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	nb_tmp_candidates = 0;
 	for (i = 0; i < nb_candidates_expanded; i++) {
 		c = candidates_expanded[i];
-		if (int_vec_search(S, len, c, idx)) {
+		if (Sorting.int_vec_search(S, len, c, idx)) {
 			tmp_candidates[nb_tmp_candidates++] = c;
 			continue;
 			}
@@ -1072,7 +1073,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 					cout << endl;
 					}
 				d = O->rank_point(w, 1, 0);
-				if (!int_vec_search(candidates_expanded,
+				if (!Sorting.int_vec_search(candidates_expanded,
 						nb_candidates_expanded, d, idx)) {
 					if (f_vv) {
 						cout << "polar::test_if_closed_under_cosets "
@@ -1101,7 +1102,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		c = candidates[i];
-		if (int_vec_search(tmp_candidates, nb_tmp_candidates, c, idx)) {
+		if (Sorting.int_vec_search(tmp_candidates, nb_tmp_candidates, c, idx)) {
 			good_candidates[nb_good_candidates++] = c;
 			continue;
 			}

@@ -75,6 +75,7 @@ void orbit_of_sets::compute(int verbose_level)
 	int *new_set;
 	int *Q;
 	int Q_len;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "orbit_of_sets::compute" << endl;
@@ -86,7 +87,7 @@ void orbit_of_sets::compute(int verbose_level)
 	Sets[0] = NEW_int(sz);
 	int_vec_copy(set, Sets[0], sz);
 	position_of_original_set = 0;
-	int_vec_heapsort(Sets[0], sz);
+	Sorting.int_vec_heapsort(Sets[0], sz);
 	uint32_t h;
 
 	h = int_vec_hash(Sets[0], sz);
@@ -116,7 +117,7 @@ void orbit_of_sets::compute(int verbose_level)
 				}
 			A2->map_a_set(cur_set, new_set, sz, gens->ith(j),
 					0 /* verbose_level*/);
-			int_vec_heapsort(new_set, sz);
+			Sorting.int_vec_heapsort(new_set, sz);
 			h = int_vec_hash(new_set, sz);
 
 		    map<uint32_t, int>::iterator itr, itr1, itr2;

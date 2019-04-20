@@ -293,6 +293,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b, c;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors" << endl;
@@ -334,7 +335,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 			Neighbors, nb_neighbors);
 
 	// Sort the set Neighbors:
-	int_vec_heapsort(Neighbors, nb_neighbors);
+	Sorting.int_vec_heapsort(Neighbors, nb_neighbors);
 
 
 
@@ -1037,6 +1038,7 @@ void classify_double_sixes::identify_five_plus_one(
 	int W1[5];
 	int W2[5];
 	int N1[5];
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_double_sixes::identify_five_plus_one" << endl;
@@ -1081,7 +1083,7 @@ void classify_double_sixes::identify_five_plus_one(
 		cout << endl;
 	}
 
-	int_vec_search_vec(Neighbors, nb_neighbors,
+	Sorting.int_vec_search_vec(Neighbors, nb_neighbors,
 			W2, 5, N1);
 
 	if (f_v) {
@@ -1322,6 +1324,7 @@ void classify_double_sixes::upstep(int verbose_level)
 	int f, po, so;
 	int *f_processed;
 	int nb_processed;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_double_sixes::upstep" << endl;
@@ -1456,7 +1459,7 @@ void classify_double_sixes::upstep(int verbose_level)
 					A->element_print_quick(Elt3, cout);
 					}
 
-				if (!int_vec_search(Po, Flag_orbits->nb_flag_orbits,
+				if (!Sorting.int_vec_search(Po, Flag_orbits->nb_flag_orbits,
 						orbit_index, f2)) {
 					cout << "cannot find orbit " << orbit_index
 							<< " in Po" << endl;
@@ -1688,6 +1691,7 @@ void classify_double_sixes::identify_double_six(int *double_six,
 	int five_lines[5];
 	int five_lines_out_as_neighbors[5];
 	int po;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_double_sixes::identify_double_six" << endl;
@@ -1714,7 +1718,7 @@ void classify_double_sixes::identify_double_six(int *double_six,
 		}
 
 	
-	if (!int_vec_search(Po, Flag_orbits->nb_flag_orbits, po, f)) {
+	if (!Sorting.int_vec_search(Po, Flag_orbits->nb_flag_orbits, po, f)) {
 		cout << "classify_double_sixes::identify_double_six "
 				"did not find po in Po" << endl;
 		exit(1);

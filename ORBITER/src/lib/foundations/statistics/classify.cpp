@@ -117,18 +117,19 @@ void classify::init(int *data,
 void classify::sort_and_classify()
 {
 	int i;
+	sorting Sorting;
 	
 	for (i = 0; i < data_length; i++) {
 		data_sorted[i] = data[i];
 		}
-	int_vec_sorting_permutation(data_sorted,
+	Sorting.int_vec_sorting_permutation(data_sorted,
 			data_length, sorting_perm, sorting_perm_inv,
 			TRUE /* f_increasingly */);
 	for (i = 0; i < data_length; i++) {
 		data_sorted[sorting_perm[i]] = data[i];
 		}
 
-	int_vec_sorted_collect_types(data_length, data_sorted,
+	Sorting.int_vec_sorted_collect_types(data_length, data_sorted,
 		nb_types, type_first, type_len);
 
 }
@@ -136,18 +137,19 @@ void classify::sort_and_classify()
 void classify::sort_and_classify_second()
 {
 	int i;
+	sorting Sorting;
 
 	for (i = 0; i < nb_types; i++) {
 		second_data_sorted[i] = type_len[i];
 		}
-	int_vec_sorting_permutation(second_data_sorted,
+	Sorting.int_vec_sorting_permutation(second_data_sorted,
 			nb_types, second_sorting_perm, second_sorting_perm_inv,
 			TRUE /* f_increasingly */);
 	for (i = 0; i < nb_types; i++) {
 		second_data_sorted[second_sorting_perm[i]] = type_len[i];
 		}
 
-	int_vec_sorted_collect_types(nb_types, second_data_sorted,
+	Sorting.int_vec_sorted_collect_types(nb_types, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 
 }
@@ -179,7 +181,9 @@ void classify::print(int f_backwards)
 
 void classify::print_first(int f_backwards)
 {
-	int_vec_print_types(cout, f_backwards, data_sorted, 
+	sorting Sorting;
+
+	Sorting.int_vec_print_types(cout, f_backwards, data_sorted,
 		nb_types, type_first, type_len);
 	cout << endl;	
 }
@@ -187,7 +191,9 @@ void classify::print_first(int f_backwards)
 void classify::print_second(int f_backwards)
 {
 	if (f_second) {
-		int_vec_print_types(cout, f_backwards, second_data_sorted, 
+		sorting Sorting;
+
+		Sorting.int_vec_print_types(cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		cout << endl;	
 		}
@@ -196,13 +202,15 @@ void classify::print_second(int f_backwards)
 
 void classify::print_file(ostream &ost, int f_backwards)
 {
+	sorting Sorting;
+
 	if (f_second) {
-		int_vec_print_types_naked(ost, f_backwards, second_data_sorted, 
+		Sorting.int_vec_print_types_naked(ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		ost << endl;	
 		}
 	else {
-		int_vec_print_types_naked(ost, f_backwards, data_sorted, 
+		Sorting.int_vec_print_types_naked(ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		ost << endl;	
 		}
@@ -210,16 +218,18 @@ void classify::print_file(ostream &ost, int f_backwards)
 
 void classify::print_file_tex(ostream &ost, int f_backwards)
 {
+	sorting Sorting;
+
 	if (f_second) {
 		ost << "$(";
-		int_vec_print_types_naked_tex(ost, f_backwards, second_data_sorted, 
+		Sorting.int_vec_print_types_naked_tex(ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		ost << ")$";
 		ost << endl;	
 		}
 	else {
 		ost << "$(";
-		int_vec_print_types_naked_tex(ost, f_backwards, data_sorted, 
+		Sorting.int_vec_print_types_naked_tex(ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		ost << ")$";
 		ost << endl;	
@@ -228,14 +238,16 @@ void classify::print_file_tex(ostream &ost, int f_backwards)
 
 void classify::print_naked_stringstream(stringstream &sstr, int f_backwards)
 {
+	sorting Sorting;
+
 	if (f_second) {
-		int_vec_print_types_naked_stringstream(
+		Sorting.int_vec_print_types_naked_stringstream(
 			sstr, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;
 		}
 	else {
-		int_vec_print_types_naked_stringstream(
+		Sorting.int_vec_print_types_naked_stringstream(
 			sstr, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//cout << endl;
@@ -245,13 +257,15 @@ void classify::print_naked_stringstream(stringstream &sstr, int f_backwards)
 
 void classify::print_naked(int f_backwards)
 {
+	sorting Sorting;
+
 	if (f_second) {
-		int_vec_print_types_naked(cout, f_backwards, second_data_sorted, 
+		Sorting.int_vec_print_types_naked(cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;	
 		}
 	else {
-		int_vec_print_types_naked(cout, f_backwards, data_sorted, 
+		Sorting.int_vec_print_types_naked(cout, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//cout << endl;	
 		}

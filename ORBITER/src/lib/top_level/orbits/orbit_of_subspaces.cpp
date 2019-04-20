@@ -801,10 +801,11 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action,
 
 int orbit_of_subspaces::search_data(int *data, int &idx)
 {
+	sorting Sorting;
 	int p[1];
 
 	p[0] = sz_for_compare;
-	if (vec_search((void **)Subspaces,
+	if (Sorting.vec_search((void **)Subspaces,
 			orbit_of_subspaces_compare_func,
 			(void *) p,
 		used_length, data, idx, 0 /* verbose_level */)) {

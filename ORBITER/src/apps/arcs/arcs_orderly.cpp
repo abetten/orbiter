@@ -52,6 +52,7 @@ int main(int argc, char **argv)
 	const char *arc_text = NULL;
 	int f_fining = FALSE;
 	int i;
+	sorting Sorting;
 
 	t0 = os_ticks();
 	cout << argv[0] << endl;
@@ -185,7 +186,7 @@ int main(int argc, char **argv)
 			cout << endl;
 			}
 
-		int_vec_heapsort(the_arc, the_arc_sz);
+		Sorting.int_vec_heapsort(the_arc, the_arc_sz);
 
 		cout << "input arc in orbiter labels sorted= ";
 		int_vec_print(cout, the_arc, the_arc_sz);
@@ -298,6 +299,7 @@ void extend(int arc_size, int verbose_level)
 	int *line_type_after;
 	int *Idx;
 	int canonical_pt;
+	sorting Sorting;
 
 	cnt++;
 	if (f_v) {
@@ -384,7 +386,7 @@ void extend(int arc_size, int verbose_level)
 			cout << "Node " << cnt << " level " << arc_size << " testing orbit " << orb
 					<< " / " << Sch->nb_orbits << " pt=" << pt << " ";
 		}
-		if (int_vec_search(Arc, arc_size, pt, idx)) {
+		if (Sorting.int_vec_search(Arc, arc_size, pt, idx)) {
 			if (f_vv) {
 				cout << "fail (already in the set)" << endl;
 			}

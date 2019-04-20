@@ -568,6 +568,8 @@ void read_candidates_for_one_orbit_from_file(char *prefix,
 int find_orbit_index_in_data_file(const char *prefix,
 		int level_of_candidates_file, int *starter,
 		int verbose_level);
+int is_all_digits(char *p);
+void int_vec_print(int *v, int len);
 
 
 

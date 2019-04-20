@@ -154,6 +154,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group" << endl;
@@ -253,7 +254,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 			}
 		}
 
-	int_vec_heapsort(good_candidates, nb_good_candidates);
+	Sorting.int_vec_heapsort(good_candidates, nb_good_candidates);
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group "
 			"after Schreier.compute_all_orbits_on_invariant_subset, "

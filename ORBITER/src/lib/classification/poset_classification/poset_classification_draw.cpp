@@ -319,6 +319,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	int set1[100];
 	char str[1000];
 	int rad = 200 >> 3;
+	sorting Sorting;
 	
 	Px = NEW_int(nb_nodes);
 	Py = NEW_int(nb_nodes);
@@ -438,7 +439,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	
 					Poset->A2->map_a_set(set0, set1, depth + 1, Elt1, 0);
 
-					int_vec_heapsort(set1, depth + 1);
+					Sorting.int_vec_heapsort(set1, depth + 1);
 				
 					if (f_vvv) {
 						cout << "mapping the set to = ";
@@ -926,6 +927,7 @@ void poset_classification::make_full_poset_graph(
 	int *set2;
 	int f_contained;
 	//longinteger_domain D;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph" << endl;
@@ -1059,7 +1061,7 @@ void poset_classification::make_full_poset_graph(
 				cout << endl;
 				}
 
-			int_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
+			Sorting.int_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
 			if (f_vv) {
 				cout << "poset_classification::make_full_poset_graph adding edges "
 						"lvl=" << lvl << " po=" << po

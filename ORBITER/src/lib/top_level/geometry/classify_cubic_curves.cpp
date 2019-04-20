@@ -405,6 +405,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 	int *Pts;
 	int *type;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::upstep" << endl;
@@ -563,7 +564,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 					Elt,
 					verbose_level - 2);
 
-			if (!int_vec_search(Po, Flag_orbits->nb_flag_orbits,
+			if (!Sorting.int_vec_search(Po, Flag_orbits->nb_flag_orbits,
 					orbit_index, f2)) {
 				cout << "cannot find orbit " << orbit_index
 						<< " in Po" << endl;
@@ -767,6 +768,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 	int *type;
 	int ret;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::recognize" << endl;
@@ -875,7 +877,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 						"orbit_index=" << orbit_index << endl;
 				}
 
-			if (!int_vec_search(Po, Flag_orbits->nb_flag_orbits,
+			if (!Sorting.int_vec_search(Po, Flag_orbits->nb_flag_orbits,
 					orbit_index, f2)) {
 
 				continue;

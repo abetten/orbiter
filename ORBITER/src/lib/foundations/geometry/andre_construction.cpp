@@ -77,6 +77,7 @@ void andre_construction::init(finite_field *F,
 	int i, j, a;
 	number_theory_domain NT;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "andre_construction::init" << endl;
@@ -120,7 +121,7 @@ void andre_construction::init(finite_field *F,
 	for (i = 0; i < spread_size; i++) {
 		spread_elements_perm_inv[i] = i;
 		}
-	int_vec_heapsort_with_log(
+	Sorting.int_vec_heapsort_with_log(
 			spread_elements_numeric_sorted,
 			spread_elements_perm_inv,
 			spread_size);

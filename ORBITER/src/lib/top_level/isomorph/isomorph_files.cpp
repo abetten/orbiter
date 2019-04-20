@@ -27,6 +27,7 @@ void isomorph::init_solutions(int **Solutions, int *Nb_sol,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::init_solutions "
@@ -105,7 +106,7 @@ void isomorph::init_solutions(int **Solutions, int *Nb_sol,
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::init_solutions "
 				"after sorting hash_vs_id_hash" << endl;
@@ -278,6 +279,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	sorting Sorting;
 
 	int i, no = 0;
 	int print_mod = 1000;
@@ -349,7 +351,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::read_solutions_from_clique_finder_case_by_case "
 				"after sorting hash_vs_id_hash" << endl;
@@ -379,6 +381,7 @@ void isomorph::read_solutions_from_clique_finder(
 	int i, no = 0;
 	//int *data;
 	int print_mod = 1000;
+	sorting Sorting;
 
 	
 	if (f_v) {
@@ -482,7 +485,7 @@ void isomorph::read_solutions_from_clique_finder(
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::read_solutions_from_clique_finder "
 				"after sorting hash_vs_id_hash" << endl;
@@ -574,6 +577,7 @@ void isomorph::build_up_database(int nb_files,
 	int print_mod = 1000;
 	uint_4 datref;
 	int nb_fail = 0;
+	sorting Sorting;
 
 	
 	if (f_v) {
@@ -721,7 +725,7 @@ void isomorph::build_up_database(int nb_files,
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::build_up_database "
 				"after sorting hash_vs_id_hash" << endl;
@@ -1297,6 +1301,8 @@ void isomorph::write_solution_first_and_len()
 
 void isomorph::read_solution_first_and_len()
 {
+	sorting Sorting;
+
 	cout << "isomorph::read_solution_first_and_len "
 			"reading from file "
 		<< fname_case_len << " of size "
@@ -1322,7 +1328,7 @@ void isomorph::read_solution_first_and_len()
 		exit(1);
 		}
 	cout << "isomorph::read_solution_first_and_len:" << endl;
-	int_vec_print_classified(cout, solution_len, nb_starter);
+	Sorting.int_vec_print_classified(cout, solution_len, nb_starter);
 	cout << endl;
 	cout << "isomorph::read_solution_first_and_len done" << endl; 
 }
@@ -1430,6 +1436,7 @@ void isomorph::read_hash_and_datref_file(int verbose_level)
 // Called from init_solution
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "isomorph::read_hash_and_datref_file" << endl;
@@ -1468,7 +1475,7 @@ void isomorph::read_hash_and_datref_file(int verbose_level)
 				"EOF marker missing" << endl;
 		exit(1);
 		}
-	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 
 	print_hash_vs_id();
 

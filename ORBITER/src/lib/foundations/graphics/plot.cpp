@@ -38,6 +38,7 @@ void draw_density(char *prefix, int *the_set, int set_size,
 	int *outline_number;
 	int outline_sz = 0;
 	int f_sideways = FALSE;
+	sorting Sorting;
 	
 
 	if (f_v) {
@@ -57,7 +58,7 @@ void draw_density(char *prefix, int *the_set, int set_size,
 			}
 		}
 
-	int_vec_heapsort(set, set_size);
+	Sorting.int_vec_heapsort(set, set_size);
 	if (f_vv) {
 		cout << "draw_density after sorting:" << endl;
 		for (i = 0; i < set_size; i++) {
@@ -148,6 +149,7 @@ void draw_density_multiple_curves(char *prefix,
 	int *outline_sz;
 	int curve;
 	int f_sideways = FALSE;
+	sorting Sorting;
 	
 
 	if (f_v) {
@@ -160,7 +162,7 @@ void draw_density_multiple_curves(char *prefix,
 		for (i = 0; i < Data_size[curve]; i++) {
 			Data2[curve][i] = Data[curve][i];
 			}
-		int_vec_heapsort(Data2[curve], Data_size[curve]);
+		Sorting.int_vec_heapsort(Data2[curve], Data_size[curve]);
 		if (f_v5) {
 			cout << "after sorting:" << endl;
 			for (i = 0; i < Data_size[curve]; i++) {
@@ -327,8 +329,9 @@ void y_to_pt_on_curve(int y_in, int &x, int &y,
 {
 	int f_v = FALSE;
 	int idx, f_found;
+	sorting Sorting;
 
-	f_found = int_vec_search(outline_value, outline_sz, y_in, idx);
+	f_found = Sorting.int_vec_search(outline_value, outline_sz, y_in, idx);
 	if (f_found) {
 		x = outline_number[idx];
 		y = outline_value[idx];

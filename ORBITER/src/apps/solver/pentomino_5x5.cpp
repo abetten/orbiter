@@ -606,6 +606,7 @@ void compute_image_function(set_of_sets *S,
 	int *set1;
 	int *set2;
 	int sz, i, a, b, h, r, t, idx;
+	sorting Sorting;
 
 	set1 = S->Sets[elt_idx];
 	sz = S->Set_size[elt_idx];
@@ -642,8 +643,8 @@ void compute_image_function(set_of_sets *S,
 			}
 		set2[i] = b;
 		}
-	int_vec_heapsort(set2, sz);
-	if (!vec_search_general(S, 
+	Sorting.int_vec_heapsort(set2, sz);
+	if (!Sorting.vec_search_general(S,
 		compare_func, 
 		NULL /* void *data_for_compare */, 
 		S->nb_sets, set2, idx, 0 /*verbose_level*/)) {
@@ -682,6 +683,7 @@ int compare_func(void *vec, void *a, int b, void *data_for_compare)
 void turn_piece(int &h, int &r, int &t, int verbose_level)
 {
 	int tx, ty, txx = 0, tyy = 0, tt;
+	sorting Sorting;
 
 	tt = T[h][t];
 	tx = tt % 5;
@@ -707,7 +709,7 @@ void turn_piece(int &h, int &r, int &t, int verbose_level)
 	r++;
 	r %= R_length[h];
 	tt = tyy * 5 + txx;
-	if (!int_vec_search_linear(T[h], T_length[h], tt, t)) {
+	if (!Sorting.int_vec_search_linear(T[h], T_length[h], tt, t)) {
 		cout << "turn_piece cannot find "
 				"tt=" << tt << " for h=" << h << endl;
 		exit(1);
@@ -719,6 +721,7 @@ void flip_piece(int &h, int &r, int &t, int verbose_level)
 	//int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int tx, ty, txx = 0, tyy = 0, tt;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "flip_piece" << endl;
@@ -865,7 +868,7 @@ void flip_piece(int &h, int &r, int &t, int verbose_level)
 	if (f_v) {
 		cout << "r=" << r << " x'=" << txx << " y'=" << tyy << " tt=" << tt << endl;
 		}
-	if (!int_vec_search_linear(T[h], T_length[h], tt, t)) {
+	if (!Sorting.int_vec_search_linear(T[h], T_length[h], tt, t)) {
 		cout << "flip_piece cannot find tt=" << tt << " for h=" << h << endl;
 		exit(1);
 		}

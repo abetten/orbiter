@@ -221,7 +221,8 @@ void test6()
 		};
 	int nb_names = 14;
 	int c;
-	
+	sorting Sorting;
+
 	for (c = 0; c < nb_names; c++) {
 
 		const char *name = Names[c];
@@ -233,7 +234,7 @@ void test6()
 		for (i = 0; i < len; i++) {
 			set[i] = (int)(name[i] - 'a');
 			}
-		int_vec_sort(len, set);
+		Sorting.int_vec_sort(len, set);
 		j = 0;
 		for (i = 1; i < len; i++) {
 			if (set[i] != set[j]) {

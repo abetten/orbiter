@@ -112,12 +112,16 @@ void int_vector::zero()
 
 int int_vector::search(int a, int &idx)
 {
-	return int_vec_search(M, m, a, idx);
+	sorting Sorting;
+
+	return Sorting.int_vec_search(M, m, a, idx);
 }
 
 void int_vector::sort()
 {
-	int_vec_sort(m, M);
+	sorting Sorting;
+
+	Sorting.int_vec_sort(m, M);
 }
 
 void int_vector::make_space()
@@ -174,7 +178,9 @@ void int_vector::insert_if_not_yet_there(int a)
 
 void int_vector::sort_and_remove_duplicates()
 {
-	int_vec_sort_and_remove_duplicates(M, m);
+	sorting Sorting;
+
+	Sorting.int_vec_sort_and_remove_duplicates(M, m);
 }
 
 void int_vector::write_to_ascii_file(const char *fname)

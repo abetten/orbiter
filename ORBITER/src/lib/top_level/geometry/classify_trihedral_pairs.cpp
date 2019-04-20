@@ -346,6 +346,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 	int i, j, a, rk; //, idx; //, f_bad, rk0, ;
 	int Lines[9];
 	int Lines2[9];
+	sorting Sorting;
 		
 	if (f_v) {
 		cout << "classify_trihedral_pairs::early_test_func_type1 "
@@ -447,7 +448,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 			}
 
 
-		int_vec_heapsort(Lines2, (len + 1) * 3);
+		Sorting.int_vec_heapsort(Lines2, (len + 1) * 3);
 
 		for (j = 1; j < (len + 1) * 3; j++) {
 			if (Lines2[j] == Lines2[j - 1]) {
@@ -519,7 +520,8 @@ void classify_trihedral_pairs::early_test_func_type2(int *S, int len,
 	//int M2[12];
 	//int M3[16];
 	//int base_cols[4];
-		
+	sorting Sorting;
+
 	if (f_v) {
 		cout << "classify_trihedral_pairs::early_test_func_type2 "
 				"checking set ";
@@ -590,7 +592,7 @@ void classify_trihedral_pairs::early_test_func_type2(int *S, int len,
 			}
 
 
-		int_vec_heapsort(Lines2, (len + 1) * 3);
+		Sorting.int_vec_heapsort(Lines2, (len + 1) * 3);
 
 		for (j = 1; j < (len + 1) * 3; j++) {
 			if (Lines2[j] == Lines2[j - 1]) {

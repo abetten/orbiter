@@ -1277,6 +1277,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	int id, rep, first; //, c;
 	int data[1000];
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
@@ -1393,7 +1394,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 
 
 
-			rearrange_subset(Iso->size, Iso->level, data,
+			Sorting.rearrange_subset(Iso->size, Iso->level, data,
 				orbit_reps + u * Iso->level, rearranged_set,
 				0/*verbose_level - 3*/);
 				// in GALOIS/sorting.C

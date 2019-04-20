@@ -96,6 +96,7 @@ int main(int argc, char **argv)
 	int loop_start = -1;
 	int loop_increment = 0;
 	int i;
+	sorting Sorting;
 
 	t0 = os_ticks();
 	cout << argv[0] << endl;
@@ -360,7 +361,7 @@ int main(int argc, char **argv)
 
 		}
 
-		int_vec_heapsort(the_arc, the_arc_sz);
+		Sorting.int_vec_heapsort(the_arc, the_arc_sz);
 
 		cout << "input arc in orbiter labels sorted= ";
 		int_vec_print(cout, the_arc, the_arc_sz);
@@ -714,6 +715,7 @@ void do_arc_lifting(
 	int i, j, a, d, pt, h;
 	number_theory_domain NT;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "do_arc_lifting" << endl;
@@ -895,7 +897,7 @@ void do_arc_lifting(
 			
 				// test it pt is already in the arc,
 				// skip if so.
-				if (!int_vec_search(arc, arc_sz, pt, idx)) {
+				if (!Sorting.int_vec_search(arc, arc_sz, pt, idx)) {
 
 					// otherwise, put it in the Cook table:
 					Cook_table[i * w + h++] = pt;
@@ -968,7 +970,7 @@ void do_arc_lifting(
 
 
 		int_vec_copy(Sz, Sz2, nb_km1_lines);
-		int_vec_sorting_permutation(Sz2,
+		Sorting.int_vec_sorting_permutation(Sz2,
 				nb_km1_lines, perm, perm_inv,
 				FALSE /* f_increasingly */);
 

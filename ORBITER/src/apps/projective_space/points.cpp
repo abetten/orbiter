@@ -190,6 +190,7 @@ void orthogonal_lines(finite_field *F,
 	int p1, p2, i, j, a, len;
 	int d, q;
 	int *L;
+	sorting Sorting;
 	
 	d = n + 1;
 	q = F->q;
@@ -248,7 +249,7 @@ void orthogonal_lines(finite_field *F,
 
 #if 1
 		O.points_on_line(p1, p2, O.line1, 0 /*verbose_level - 1*/);
-		int_vec_sort(q + 1, O.line1);
+		Sorting.int_vec_sort(q + 1, O.line1);
 		
 		int_set_print_masked_tex(cout, O.line1, q + 1, "P_{", "}");
 		cout << "\\\\" << endl;

@@ -55,7 +55,8 @@ int main(int argc, char **argv)
 	int code2[1000];
 	int code_sz = 0;
 	combinatorics_domain Combi;
-		
+	sorting Sorting;
+
 	for (i = 1; i < argc - 1; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
@@ -257,7 +258,7 @@ int main(int argc, char **argv)
 			}
 #endif
 
-		int_vec_heapsort(Ranks, nb_cosets);
+		Sorting.int_vec_heapsort(Ranks, nb_cosets);
 		cout << "The sorted ranks of the code images are:" << endl; 
 		for (i = 0; i < nb_cosets; i++) {
 			cout << i << " : " << Ranks[i] << endl;

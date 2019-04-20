@@ -874,6 +874,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int *labels, *perm, *perm_inv;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits_with_"
@@ -899,7 +900,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 				"with_preferred_labels allocating tables done, "
 				"sorting" << endl;
 		}
-	int_vec_sorting_permutation(labels, A->degree,
+	Sorting.int_vec_sorting_permutation(labels, A->degree,
 			perm, perm_inv, TRUE /* f_increasingly */);
 
 	if (f_v) {
@@ -1935,9 +1936,10 @@ int schreier::orbit_number(int pt)
 {
 	int pos;
 	int idx;
+	sorting Sorting;
 
 	pos = orbit_inv[pt];
-	if (int_vec_search(orbit_first, nb_orbits, pos, idx)) {
+	if (Sorting.int_vec_search(orbit_first, nb_orbits, pos, idx)) {
 		;
 		}
 	else {
@@ -2040,6 +2042,7 @@ void schreier::create_point_list_sorted(
 		int *&point_list, int &point_list_length)
 {
 	int i, j, k, f, l, ff, p;
+	sorting Sorting;
 
 	point_list_length = 0;
 	for (k = 0; k < nb_orbits; k++) {
@@ -2063,7 +2066,7 @@ void schreier::create_point_list_sorted(
 				"ff != point_list_length" << endl;
 		exit(1);
 		}
-	int_vec_heapsort(point_list, point_list_length);
+	Sorting.int_vec_heapsort(point_list, point_list_length);
 }
 
 void schreier::shallow_tree_generators(int orbit_idx,

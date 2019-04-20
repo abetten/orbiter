@@ -414,6 +414,7 @@ void packing::report_packings_by_ago(
 	invariants_packing *inv, classify &C_ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "packing::report_packings_by_ago" << endl;
@@ -458,7 +459,7 @@ void packing::report_packings_by_ago(
 			set[v] = a;
 			}
 
-		int_vec_heapsort(set, length);
+		Sorting.int_vec_heapsort(set, length);
 
 		for (v = 0; v < length; v++, cnt++) {
 

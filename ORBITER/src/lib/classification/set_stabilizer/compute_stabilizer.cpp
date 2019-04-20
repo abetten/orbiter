@@ -235,6 +235,7 @@ void compute_stabilizer::compute_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, k, f, l, ii, jj, a;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "compute_stabilizer::compute_orbits "
@@ -313,9 +314,12 @@ void compute_stabilizer::compute_orbits(int verbose_level)
 		}
 	
 	if (f_v) {
-		cout << "compute_stabilizer::compute_orbits reduced_set_size = " << reduced_set_size << endl;
-		cout << "compute_stabilizer::compute_orbits nb_interesting_orbits = " << nb_interesting_orbits << endl;
-		cout << "compute_stabilizer::compute_orbits nb_interesting_points = " << nb_interesting_points << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"reduced_set_size = " << reduced_set_size << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"nb_interesting_orbits = " << nb_interesting_orbits << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"nb_interesting_points = " << nb_interesting_points << endl;
 		}
 
 
@@ -358,7 +362,8 @@ void compute_stabilizer::compute_orbits(int verbose_level)
 		int_vec_print(cout, interesting_points, nb_interesting_points);
 		cout << endl;
 		cout << "by interesting orbits:" << endl;
-		cout << "k : interesting_orbits[k] : interesting_orbit_first[k] : interesting_orbit_len[k]" << endl;
+		cout << "k : interesting_orbits[k] : interesting_orbit_first[k] "
+				": interesting_orbit_len[k]" << endl;
 		for (k = 0; k < nb_interesting_orbits; k++) {
 			cout << setw(3) << k << " : " 
 				<< setw(4) << interesting_orbits[k] << " : " 
@@ -367,7 +372,8 @@ void compute_stabilizer::compute_orbits(int verbose_level)
 			}
 		}
 
-	// Let reduced_set1_n_e_w_labels[] be the set reduced_set1[] in the restricted action,
+	// Let reduced_set1_n_e_w_labels[] be the set
+	// reduced_set1[] in the restricted action,
 	// and let the set be ordered increasingly:
 
 	for (i = 0; i < reduced_set_size; i++) {
@@ -384,18 +390,21 @@ void compute_stabilizer::compute_orbits(int verbose_level)
 			}
 		}
 	if (FALSE) {
-		cout << "compute_stabilizer::compute_orbits reduced_set1_new_labels:" << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"reduced_set1_new_labels:" << endl;
 		int_vec_print(cout, reduced_set1_n_e_w_labels, reduced_set_size);
 		cout << endl;
 		}
-	int_vec_heapsort(reduced_set1_n_e_w_labels, reduced_set_size);
+	Sorting.int_vec_heapsort(reduced_set1_n_e_w_labels, reduced_set_size);
 	if (FALSE) {
-		cout << "compute_stabilizer::compute_orbits compute_stabilizer sorted:" << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"compute_stabilizer sorted:" << endl;
 		int_vec_print(cout, reduced_set1_n_e_w_labels, reduced_set_size);
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "compute_stabilizer::compute_orbits computing orbits on points done" << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"computing orbits on points done" << endl;
 		}
 }
 
@@ -413,7 +422,8 @@ void compute_stabilizer::restricted_action(int verbose_level)
 	// interesting points and call it A_induced :
 	// Determine the kernel
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action computing induced action by restriction" << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"computing induced action by restriction" << endl;
 		}
 	//A_induced = NEW_OBJECT(action);
 	A_induced = A2->create_induced_action_by_restriction(
@@ -424,7 +434,8 @@ void compute_stabilizer::restricted_action(int verbose_level)
 	A_induced->group_order(induced_go);
 	A_induced->Kernel->group_order(K_go);
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action induced action by restriction: group order = " << induced_go << endl;
+		cout << "compute_stabilizer::restricted_action induced action "
+				"by restriction: group order = " << induced_go << endl;
 		cout << "kernel group order = " << K_go << endl;
 		//cout << "strong generators for induced action:" << endl;
 		//A_induced.strong_generators->print_as_permutation(cout);
@@ -447,7 +458,8 @@ void compute_stabilizer::restricted_action(int verbose_level)
 	
 	A_induced->Kernel->group_order(K_go);
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action kernel has order " << K_go << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"kernel has order " << K_go << endl;
 		}
 
 	// conjugates the Kernel so that it is a subgroup of 
@@ -458,11 +470,13 @@ void compute_stabilizer::restricted_action(int verbose_level)
 		FALSE, 0 /*verbose_level - 3*/);
 	Kernel_original->group_order(K_go);
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action after conjugation, kernel has order " << K_go << endl;
+		cout << "compute_stabilizer::restricted_action after conjugation, "
+				"kernel has order " << K_go << endl;
 		}
 	
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action adding kernel of order " << K_go 
+		cout << "compute_stabilizer::restricted_action "
+				"adding kernel of order " << K_go
 			<< " to the stabilizer (in action " << Stab->A->label << ")" << endl;
 		}
 	Stab->build_up_group_random_process(K, Kernel_original, 
@@ -470,16 +484,21 @@ void compute_stabilizer::restricted_action(int verbose_level)
 	Stab->group_order(stab_order);
 	
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action kernel of action on the set has been added to stabilizer" << endl;
-		cout << "compute_stabilizer::restricted_action current stabilizer order " << stab_order << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"kernel of action on the set has been "
+				"added to stabilizer" << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"current stabilizer order " << stab_order << endl;
 		}
 #if 0
-	if (!Stab->test_if_in_set_stabilizer(A, the_set, set_size, verbose_level)) {
+	if (!Stab->test_if_in_set_stabilizer(A,
+			the_set, set_size, verbose_level)) {
 		cout << "set stabilizer does not stabilize" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "set stabilizer of order " << stab_order << " is OK" << endl;
+		cout << "set stabilizer of order "
+				<< stab_order << " is OK" << endl;
 		}
 #endif
 	// here we need the stabilizer of the set the_set[]
@@ -494,7 +513,8 @@ void compute_stabilizer::restricted_action(int verbose_level)
 	// computes the stabilizer of reduced_set[] in the stabilizer 
 	// of the k-subset and in the induced action: 
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action before A_induced.make_canonical" << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"before A_induced.make_canonical" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	A_induced->make_canonical(
@@ -503,23 +523,27 @@ void compute_stabilizer::restricted_action(int verbose_level)
 		TRUE, Aut, 
 		verbose_level /*- 3*/);
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action after A_induced.make_canonical" << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"after A_induced.make_canonical" << endl;
 		}
 
-	// Now, Aut is the stabilizer of canonical_set1 in the induced action (A_induced)
+	// Now, Aut is the stabilizer of canonical_set1
+	// in the induced action (A_induced)
 
 	backtrack_nodes_first_time = nodes;
 
 
 	Aut->group_order(ago);
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action backtrack_nodes=" << nodes << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"backtrack_nodes=" << nodes << endl;
 #if 0
 		cout << "canonical set1: ";
 		int_vec_print(cout, canonical_set1, reduced_set_size);
 		cout << endl;
 #endif
-		cout << "compute_stabilizer::restricted_action automorphism group order " << ago << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"automorphism group order " << ago << endl;
 		}
 	if (FALSE) {
 		cout << "transporter1:" << endl;
@@ -532,7 +556,8 @@ void compute_stabilizer::restricted_action(int verbose_level)
 #if 0
 	if (f_v) {
 		cout << "testing stabilizer of canonical set" << endl;
-		if (!Aut.test_if_in_set_stabilizer(&A_induced, canonical_set1, reduced_set_size, verbose_level)) {
+		if (!Aut.test_if_in_set_stabilizer(&A_induced,
+				canonical_set1, reduced_set_size, verbose_level)) {
 			cout << "set stabilizer does not stabilize" << endl;
 			exit(1);
 			}
@@ -556,25 +581,33 @@ void compute_stabilizer::restricted_action(int verbose_level)
 		TRUE /* f_overshooting_OK */, 0 /*verbose_level - 3*/);
 	Aut_original->group_order(ago1);
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action after conjugation, group in action " << Aut_original->A->label << endl;
-		cout << "compute_stabilizer::restricted_action automorphism group order before = " << ago << endl;
-		cout << "compute_stabilizer::restricted_action automorphism group order after = " << ago1 << endl;
+		cout << "compute_stabilizer::restricted_action after conjugation, "
+				"group in action " << Aut_original->A->label << endl;
+		cout << "compute_stabilizer::restricted_action automorphism group "
+				"order before = " << ago << endl;
+		cout << "compute_stabilizer::restricted_action automorphism group "
+				"order after = " << ago1 << endl;
 		}
 	
 	D.mult(K_go, ago, target_go);
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action target_go=" << target_go << endl;
-		cout << "compute_stabilizer::restricted_action adding automorphisms to set-stabilizer" << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"target_go=" << target_go << endl;
+		cout << "compute_stabilizer::restricted_action adding automorphisms "
+				"to set-stabilizer" << endl;
 		}
 	Stab->build_up_group_random_process(K, Aut_original, 
 		target_go, FALSE, NULL, 0 /*verbose_level - 3*/);
 	Stab->group_order(stab_order);	
 	if (f_v) {
-		cout << "compute_stabilizer::restricted_action set stabilizer is added to stabilizer" << endl;
-		cout << "compute_stabilizer::restricted_action current stabilizer order " << stab_order << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"set stabilizer is added to stabilizer" << endl;
+		cout << "compute_stabilizer::restricted_action "
+				"current stabilizer order " << stab_order << endl;
 		}
 #if 0
-	if (!Stab->test_if_in_set_stabilizer(A, the_set, set_size, verbose_level)) {
+	if (!Stab->test_if_in_set_stabilizer(A,
+			the_set, set_size, verbose_level)) {
 		cout << "set stabilizer does not stabilize" << endl;
 		exit(1);
 		}
@@ -619,8 +652,10 @@ void compute_stabilizer::main_loop(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "compute_stabilizer::main_loop nb_interesting_subsets = " << nb_interesting_subsets;
-		cout << " nb_times_orbit_count_does_not_match_up = " << nb_times_orbit_count_does_not_match_up << endl;
+		cout << "compute_stabilizer::main_loop "
+				"nb_interesting_subsets = " << nb_interesting_subsets;
+		cout << " nb_times_orbit_count_does_not_match_up = "
+				<< nb_times_orbit_count_does_not_match_up << endl;
 		}
 	if (f_v) {
 		cout << "compute_stabilizer::main_loop done" << endl;
@@ -635,7 +670,9 @@ void compute_stabilizer::main_loop_handle_case(int cnt, int verbose_level)
 	int cmp;
 	
 	if (f_v || ((cnt % 10) == 0)) {
-		cout << "compute_stabilizer::main_loop_handle_case STABILIZER loop " << cnt << " / " << nb_interesting_subsets << " stab_order=" << stab_order << endl;
+		cout << "compute_stabilizer::main_loop_handle_case "
+				"STABILIZER loop " << cnt << " / " << nb_interesting_subsets
+				<< " stab_order=" << stab_order << endl;
 		}
 
 	map_the_second_set(cnt, verbose_level);
@@ -648,7 +685,11 @@ void compute_stabilizer::main_loop_handle_case(int cnt, int verbose_level)
 	if (!check_orbit_count()) {
 		nb_times_orbit_count_does_not_match_up++;
 		if (f_vv) {
-			cout << "compute_stabilizer::main_loop_handle_case STABILIZER loop " << cnt << " / " << nb_interesting_subsets << " orbit count does not match up, we skip, nb_times_orbit_count_does_not_match_up=" << nb_times_orbit_count_does_not_match_up << endl;
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"STABILIZER loop " << cnt << " / " << nb_interesting_subsets
+					<< " orbit count does not match up, we skip, "
+					"nb_times_orbit_count_does_not_match_up="
+					<< nb_times_orbit_count_does_not_match_up << endl;
 			}
 		return;
 		}
@@ -656,7 +697,8 @@ void compute_stabilizer::main_loop_handle_case(int cnt, int verbose_level)
 
 	if (!compute_second_reduced_set()) {
 		if (f_vv) {
-			cout << "compute_stabilizer::main_loop_handle_case did not find point, we skip" << endl;
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"did not find point, we skip" << endl;
 			}
 		return;
 		}
@@ -665,7 +707,8 @@ void compute_stabilizer::main_loop_handle_case(int cnt, int verbose_level)
 
 	
 	if (f_vv) {
-		cout << "compute_stabilizer::main_loop_handle_case before make_canonical_second_set" << endl;
+		cout << "compute_stabilizer::main_loop_handle_case "
+				"before make_canonical_second_set" << endl;
 		}
 
 	make_canonical_second_set(verbose_level);
@@ -679,13 +722,17 @@ void compute_stabilizer::main_loop_handle_case(int cnt, int verbose_level)
 	
 	if (cmp != 0) {
 		if (f_vv) {
-			cout << "compute_stabilizer::main_loop_handle_case the two canonical sets are not the same, so we skip" << endl;
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"the two canonical sets are not the same, "
+					"so we skip" << endl;
 			}
 		return;
 		}
 	else {
 		if (f_v) {
-			cout << "compute_stabilizer::main_loop_handle_case the two canonical sets are the same, so we are looking for an automorphism" << endl;
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"the two canonical sets are the same, "
+					"so we are looking for an automorphism" << endl;
 			}
 		}
 	
@@ -704,21 +751,27 @@ void compute_stabilizer::main_loop_handle_case(int cnt, int verbose_level)
 
 
 	if (f_v || ((cnt % 10) == 0)) {
-		cout << "compute_stabilizer::main_loop_handle_case STABILIZER loop " << cnt << " / " << nb_interesting_subsets << " stab_order=" << stab_order << " done" << endl;
+		cout << "compute_stabilizer::main_loop_handle_case STABILIZER "
+				"loop " << cnt << " / " << nb_interesting_subsets
+				<< " stab_order=" << stab_order << " done" << endl;
 		}
 }
 
 void compute_stabilizer::map_the_first_set(int cnt, int verbose_level)
 {
+	sorting Sorting;
 
-	gen->map_to_canonical_k_subset(the_set, set_size, level /* subset_size */, interesting_subsets[cnt], 
-		reduced_set1, elt1 /*transporter */, local_idx1, verbose_level - 4);
+	gen->map_to_canonical_k_subset(the_set, set_size,
+			 level /* subset_size */, interesting_subsets[cnt],
+			 reduced_set1, elt1 /*transporter */,
+			 local_idx1, verbose_level - 4);
 		// reduced_set1 has size set_size - level (=reduced_set_size)
 
 
-	int_vec_heapsort(reduced_set1, reduced_set_size);
+	Sorting.int_vec_heapsort(reduced_set1, reduced_set_size);
 	if (FALSE) {
-		cout << setw(4) << 0 << " : " << setw(4) << interesting_subsets[0] << " : ";
+		cout << setw(4) << 0 << " : " << setw(4)
+				<< interesting_subsets[0] << " : ";
 		int_vec_print(cout, reduced_set1, reduced_set_size);
 		cout << endl;
 		}
@@ -730,28 +783,35 @@ void compute_stabilizer::map_the_first_set(int cnt, int verbose_level)
 
 
 	// compute orbit_count1[] for reduced_set1[].
-	// orbit_count1[i] is the number of points from reduced_set1[] contained in orbit i
+	// orbit_count1[i] is the number of points from
+	// reduced_set1[] contained in orbit i
 
-	Stab_orbits->compute_orbit_statistic(reduced_set1, reduced_set_size, orbit_count1, verbose_level - 1);
+	Stab_orbits->compute_orbit_statistic(reduced_set1,
+			reduced_set_size, orbit_count1, verbose_level - 1);
 }
 
 
 void compute_stabilizer::map_the_second_set(int cnt, int verbose_level)
 {
+	sorting Sorting;
 	
-	gen->map_to_canonical_k_subset(the_set, set_size, level /* subset_size */, interesting_subsets[cnt], 
+	gen->map_to_canonical_k_subset(the_set, set_size,
+			level /* subset_size */, interesting_subsets[cnt],
 		reduced_set2, elt2 /*transporter */, local_idx2, verbose_level - 4);
 		// reduced_set2 has size set_size - level (=reduced_set_size)
 
 
-	int_vec_heapsort(reduced_set2, reduced_set_size);
+	Sorting.int_vec_heapsort(reduced_set2, reduced_set_size);
 	if (FALSE) {
-		cout << "compute_stabilizer::map_the_second_set STABILIZER " << setw(4) << cnt << " : " << setw(4) << interesting_subsets[cnt] << " : ";
+		cout << "compute_stabilizer::map_the_second_set STABILIZER "
+				<< setw(4) << cnt << " : " << setw(4)
+				<< interesting_subsets[cnt] << " : ";
 		int_vec_print(cout, reduced_set2, reduced_set_size);
 		cout << endl;
 		}
 	
-	Stab_orbits->compute_orbit_statistic(reduced_set2, reduced_set_size, orbit_count2, verbose_level - 1);
+	Stab_orbits->compute_orbit_statistic(reduced_set2,
+			reduced_set_size, orbit_count2, verbose_level - 1);
 }
 
 void compute_stabilizer::update_stabilizer(int verbose_level)
@@ -764,7 +824,8 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 	cmp = D.compare_unsigned(n_e_w_stab_order, stab_order);
 	if (cmp) {
 		char fname[1000];
-		cout << "compute_stabilizer::update_stabilizer n_e_w stabilizer order is " << n_e_w_stab_order << endl;
+		cout << "compute_stabilizer::update_stabilizer "
+				"n_e_w stabilizer order is " << n_e_w_stab_order << endl;
 		n_e_w_stab_order.assign_to(stab_order);
 
 
@@ -778,7 +839,8 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 
 		sprintf(fname, "stab_order_%d.txt", n_e_w_stab_order.as_int());
 		Stab->write_sgs(fname, 0 /*verbose_level */);
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << file_size(fname) << endl;
 
 
 		FREE_OBJECT(U);
@@ -808,9 +870,11 @@ void compute_stabilizer::add_automorphism(int verbose_level)
 	//Stab->print_transversal_lengths();
 	//cout << endl;
 	
-	if (Stab->strip(n_e_w_automorphism, Elt4, drop_out_level, image, 0/*verbose_level - 3*/)) {
+	if (Stab->strip(n_e_w_automorphism, Elt4,
+			drop_out_level, image, 0/*verbose_level - 3*/)) {
 		if (f_v4) {
-			cout << "compute_stabilizer::main_loop_handle_case element strips through" << endl;
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"element strips through" << endl;
 			if (FALSE) {
 				cout << "compute_stabilizer residue:" << endl;
 				A->element_print(Elt4, cout);
@@ -823,20 +887,25 @@ void compute_stabilizer::add_automorphism(int verbose_level)
 	else {
 		//f_added = TRUE;
 		if (f_v4) {
-			cout << "compute_stabilizer::main_loop_handle_case element needs to be inserted at level = " 
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"element needs to be inserted at level = "
 				<< drop_out_level << " with image " << image << endl;
 			if (FALSE) {
 				A->element_print(Elt4, cout);
 				cout  << endl;
 				}
 			}
-		if (!A2->check_if_in_set_stabilizer(Elt4, set_size, the_set, 0/*verbose_level*/)) {
-			cout << "compute_stabilizer::main_loop_handle_case residue does not stabilize original set" << endl;
+		if (!A2->check_if_in_set_stabilizer(Elt4,
+				set_size, the_set, 0/*verbose_level*/)) {
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"residue does not stabilize original set" << endl;
 			exit(1);
 			}
-		Stab->add_generator_at_level(Elt4, drop_out_level, 0/*verbose_level - 3*/);
+		Stab->add_generator_at_level(Elt4,
+				drop_out_level, 0/*verbose_level - 3*/);
 		if (f_v) {
-			cout << "compute_stabilizer::main_loop_handle_case calling closure_group" << endl;
+			cout << "compute_stabilizer::main_loop_handle_case "
+					"calling closure_group" << endl;
 			}
 		Stab->closure_group(2000, 0 /*verbose_level - 1*/);			
 		}
@@ -848,19 +917,24 @@ void compute_stabilizer::retrieve_automorphism(int verbose_level)
 	
 	A->element_mult(T2, T1v, n_e_w_automorphism, FALSE);
 	if (f_v) {
-		cout << "compute_stabilizer::retrieve_automorphism found automorphism" << endl;
+		cout << "compute_stabilizer::retrieve_automorphism "
+				"found automorphism" << endl;
 		}
 	if (FALSE) {
-		cout << "compute_stabilizer::retrieve_automorphism automorphism:" << endl;
+		cout << "compute_stabilizer::retrieve_automorphism "
+				"automorphism:" << endl;
 		A->element_print(n_e_w_automorphism, cout);
 		cout << endl;
 		}
-	if (!A2->check_if_in_set_stabilizer(n_e_w_automorphism, set_size, the_set, verbose_level)) {
-		cout << "compute_stabilizer::retrieve_automorphism does not stabilize original set" << endl;
+	if (!A2->check_if_in_set_stabilizer(n_e_w_automorphism,
+			set_size, the_set, verbose_level)) {
+		cout << "compute_stabilizer::retrieve_automorphism "
+				"does not stabilize original set" << endl;
 		exit(1);
 		}
 	if (FALSE) {
-		cout << "compute_stabilizer::retrieve_automorphism is in the set stabilizer" << endl;
+		cout << "compute_stabilizer::retrieve_automorphism "
+				"is in the set stabilizer" << endl;
 		}
 
 	cout << "the automorphism is: " << endl;
@@ -883,15 +957,18 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 		0 /*verbose_level - 1*/);
 	backtrack_nodes_total_in_loop += nodes;
 	if (f_v) {
-		cout << "compute_stabilizer::make_canonical_second_set nodes=" << nodes << endl;
+		cout << "compute_stabilizer::make_canonical_second_set "
+				"nodes=" << nodes << endl;
 		}
 	if (f_v4) {
-		cout << "compute_stabilizer::make_canonical_second_set canonical set2: ";
+		cout << "compute_stabilizer::make_canonical_second_set "
+				"canonical set2: ";
 		int_vec_print(cout, canonical_set2, reduced_set_size);
 		cout << endl;
 		}
 	if (FALSE) {
-		cout << "compute_stabilizer::make_canonical_second_set transporter2:" << endl;
+		cout << "compute_stabilizer::make_canonical_second_set "
+				"transporter2:" << endl;
 		A_induced->element_print(transporter2, cout);
 		cout << endl;
 		A_induced->element_print_as_permutation(transporter2, cout);
@@ -899,7 +976,8 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 		}
 	A->mult(elt2, transporter2, T2);
 	if (FALSE) {
-		cout << "compute_stabilizer::make_canonical_second_set T2:" << endl;
+		cout << "compute_stabilizer::make_canonical_second_set "
+				"T2:" << endl;
 		A->element_print(T2, cout);
 		cout << endl;
 		//A_induced.element_print_as_permutation(transporter2, cout);
@@ -911,7 +989,8 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 int compute_stabilizer::compute_second_reduced_set()
 {
 	int i, j, a;
-	
+	sorting Sorting;
+
 	for (i = 0; i < reduced_set_size; i++) {
 		a = reduced_set2[i];
 		for (j = 0; j < nb_interesting_points; j++) {
@@ -928,7 +1007,7 @@ int compute_stabilizer::compute_second_reduced_set()
 		return FALSE;
 		}
 
-	int_vec_heapsort(reduced_set2_n_e_w_labels, reduced_set_size);
+	Sorting.int_vec_heapsort(reduced_set2_n_e_w_labels, reduced_set_size);
 #if 0
 	if (f_vv) {
 		cout << "reduced_set2_n_e_w_labels:" << endl;

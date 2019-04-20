@@ -340,6 +340,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 	int ret = FALSE;
 	int i, j, a, rk;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -354,7 +355,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 		for (i = 0; i < 3; i++) {
 			subset1[i] = set[subset[i]];
 			}
-		int_vec_sort(3, subset1);
+		Sorting.int_vec_sort(3, subset1);
 		if (f_vv) {
 			cout << "testing subset ";
 			int_vec_print(cout, subset1, 3);

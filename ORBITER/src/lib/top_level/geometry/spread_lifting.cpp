@@ -146,7 +146,8 @@ void spread_lifting::compute_points_covered_by_starter(
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
 	int i, a;
-	
+	sorting Sorting;
+
 	if (f_v) {
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter" << endl;
@@ -189,7 +190,7 @@ void spread_lifting::compute_points_covered_by_starter(
 
 		FREE_int(point_list);
 		}
-	int_vec_heapsort(points_covered_by_starter,
+	Sorting.int_vec_heapsort(points_covered_by_starter,
 			nb_points_covered_by_starter);
 	if (f_vv) {
 		cout << "spread_lifting::compute_points_"
@@ -215,6 +216,7 @@ void spread_lifting::prepare_free_points(
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
 	int i, j, idx;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "spread_lifting::prepare_free_points" << endl;
@@ -229,7 +231,7 @@ void spread_lifting::prepare_free_points(
 	point_idx = NEW_int(S->nb_points_total);
 	j = 0;
 	for (i = 0; i < S->nb_points_total; i++) {
-		if (int_vec_search(points_covered_by_starter,
+		if (Sorting.int_vec_search(points_covered_by_starter,
 				nb_points_covered_by_starter, i, idx)) {
 			point_idx[i] = -1;
 			}

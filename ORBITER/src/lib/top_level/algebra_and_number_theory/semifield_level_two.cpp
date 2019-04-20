@@ -1426,6 +1426,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int N, N1, v[2], j, h, b1, b2, r;
 	number_theory_domain NT;
 	geometry_global Gg;
+	sorting Sorting;
 
 	N = NT.i_power_j(q, k);
 	N1 = NT.i_power_j(q, 2);
@@ -1522,7 +1523,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 #endif
 
 			r = SC->matrix_rank(Mtx1);
-			int_vec_append_and_reallocate_if_necessary(
+			Sorting.int_vec_append_and_reallocate_if_necessary(
 					Candidates, nb_candidates, alloc_length, r,
 					0 /*verbose_level*/);
 
@@ -1537,7 +1538,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 				<< ": nb_tested = " << nb_tested << ", found "
 				<< nb_candidates << " candidates, sorting them now." << endl;
 		}
-	int_vec_heapsort(Candidates, nb_candidates);
+	Sorting.int_vec_heapsort(Candidates, nb_candidates);
 
 
 

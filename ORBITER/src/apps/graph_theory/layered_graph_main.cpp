@@ -734,6 +734,8 @@ void draw_ending_callback(layered_graph *LG,
 		mp_graphics *G, int x_max, int y_max,
 		int f_rotated, int dx, int dy)
 {
+	sorting Sorting;
+
 	cout << "draw_ending_callback" << endl;
 
 	if (f_text_underneath) {
@@ -748,7 +750,7 @@ void draw_ending_callback(layered_graph *LG,
 			if (f_select_layer) {
 				int idx;
 			
-				if (!int_vec_search_linear(select_layer,
+				if (!Sorting.int_vec_search_linear(select_layer,
 						nb_select_layer, i, idx)) {
 					continue;
 					}

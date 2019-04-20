@@ -868,6 +868,7 @@ void poset_orbit_node::reconstruct_extensions_from_sv(
 	int *ancestor;
 	int *depth;
 	int *orbit_reps;
+	sorting Sorting;
 
 
 	if (f_v) {
@@ -909,7 +910,7 @@ void poset_orbit_node::reconstruct_extensions_from_sv(
 		}
 	for (i = 0; i < n; i++) {
 		a = ancestor[i];
-		if (!int_vec_search(orbit_reps, nb, a, idx)) {
+		if (!Sorting.int_vec_search(orbit_reps, nb, a, idx)) {
 			cout << "poset_orbit_node::reconstruct_extensions_from_sv "
 					"did not find orbit rep" << endl;
 			exit(1);

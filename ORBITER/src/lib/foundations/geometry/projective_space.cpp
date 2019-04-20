@@ -1951,6 +1951,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	int i, j, b, h, idx;
 	int L[3];
 	int v[3];
+	sorting Sorting;
 
 	if (n != 2) {
 		cout << "projective_space::PG_2_8_create_conic_"
@@ -1980,7 +1981,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
-			if (int_vec_search(the_arc, size, b, idx)) {
+			if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 				continue;
 				}
 			for (j = size; j > idx; j--) {
@@ -2000,7 +2001,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		v[1] = i;
 		v[2] = F->mult(i, i);
 		b = rank_point(v);
-		if (int_vec_search(the_arc, size, b, idx)) {
+		if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 			continue;
 			}
 		for (j = size; j > idx; j--) {
@@ -2026,6 +2027,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	int i, j, b, h, idx;
 	int L[3];
 	int v[3];
+	sorting Sorting;
 
 	if (n != 2) {
 		cout << "projective_space::PG_2_8_create_conic_plus_"
@@ -2055,7 +2057,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
-			if (int_vec_search(the_arc, size, b, idx)) {
+			if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 				continue;
 				}
 			for (j = size; j > idx; j--) {
@@ -2082,7 +2084,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 			v[2] = F->mult(i, i);
 			}
 		b = rank_point(v);
-		if (int_vec_search(the_arc, size, b, idx)) {
+		if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 			continue;
 			}
 		for (j = size; j > idx; j--) {
@@ -2116,6 +2118,7 @@ void projective_space::create_Maruta_Hamada_arc(
 	int i, j, b, h, idx;
 	int L[4];
 	int v[3];
+	sorting Sorting;
 
 	if (n != 2) {
 		cout << "projective_space::create_Maruta_Hamada_arc "
@@ -2166,7 +2169,7 @@ void projective_space::create_Maruta_Hamada_arc(
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
-			if (int_vec_search(the_arc, size, b, idx)) {
+			if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 				continue;
 				}
 			for (j = size; j > idx; j--) {
@@ -2188,7 +2191,7 @@ void projective_space::create_Maruta_Hamada_arc(
 	for (i = 0; i < 16; i++) {
 		cout << "removing point " << i << " : "
 				<< points[i] << endl;
-		if (!int_vec_search(the_arc, size, points[i], idx)) {
+		if (!Sorting.int_vec_search(the_arc, size, points[i], idx)) {
 			cout << "error, cannot find point to be removed" << endl;
 			exit(1);
 			}
@@ -2200,7 +2203,7 @@ void projective_space::create_Maruta_Hamada_arc(
 
 	// add points 16-19:
 	for (i = 16; i < 20; i++) {
-		if (int_vec_search(the_arc, size, points[i], idx)) {
+		if (Sorting.int_vec_search(the_arc, size, points[i], idx)) {
 			cout << "error, special point already there" << endl;
 			exit(1);
 			}
@@ -2285,6 +2288,7 @@ void projective_space::create_pasch_arc(
 	int points[5];
 	int i, j, b, h, idx;
 	int L[4];
+	sorting Sorting;
 
 	if (n != 2) {
 		cout << "projective_space::create_pasch_arc "
@@ -2323,7 +2327,7 @@ void projective_space::create_pasch_arc(
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
-			if (int_vec_search(the_arc, size, b, idx)) {
+			if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 				continue;
 				}
 			for (j = size; j > idx; j--) {
@@ -2344,7 +2348,7 @@ void projective_space::create_pasch_arc(
 	v[1] = 1;
 	v[2] = 0;
 	b = rank_point(v);
-	if (int_vec_search(the_arc, size, b, idx)) {
+	if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 		cout << "error, special point already there" << endl;
 		exit(1);
 		}
@@ -2374,6 +2378,7 @@ void projective_space::create_Cheon_arc(
 	int L[3];
 	int pencil[9];
 	int Pencil[21];
+	sorting Sorting;
 
 	if (n != 2) {
 		cout << "projective_space::create_Cheon_arc n != 2" << endl;
@@ -2415,7 +2420,7 @@ void projective_space::create_Cheon_arc(
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
-			if (int_vec_search(the_arc, size, b, idx)) {
+			if (Sorting.int_vec_search(the_arc, size, b, idx)) {
 				continue;
 				}
 			for (j = size; j > idx; j--) {
@@ -2477,7 +2482,7 @@ void projective_space::create_Cheon_arc(
 			if (f_v) {
 				cout << "c=" << c << endl;
 				}
-			if (int_vec_search(the_arc, size, c, idx)) {
+			if (Sorting.int_vec_search(the_arc, size, c, idx)) {
 				continue;
 				}
 			for (t = size; t > idx; t--) {
@@ -2898,6 +2903,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 	int nb_pts_in_hyperplane;
 	int idx;
 	geometry_global Gg;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::line_intersection_type_through_"
@@ -2925,7 +2931,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 			}
 		}
 
-	int_vec_heapsort(set1, sz1);
+	Sorting.int_vec_heapsort(set1, sz1);
 	
 	if (f_vv) {
 		cout << "projective_space::line_intersection_type_through_"
@@ -2955,7 +2961,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 		// i1 is the rank of the hyperplane point
 		// inside the larger space:
 		//unrank_point(Pts1 + i * d, set1[i]);
-		if (int_vec_search(set1, sz1, i1, idx)) {
+		if (Sorting.int_vec_search(set1, sz1, i1, idx)) {
 			cnt1[i] = 1;
 			}
 		}
@@ -3028,6 +3034,7 @@ void projective_space::find_secant_lines(int *set, int set_size,
 	int f_v = (verbose_level >= 1);
 	int i, j, rk, d, h, idx;
 	int *M;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::find_secant_lines "
@@ -3042,7 +3049,7 @@ void projective_space::find_secant_lines(int *set, int set_size,
 			unrank_point(M + d, set[j]);
 			rk = Grass_lines->rank_int_here(M, 0 /* verbose_level */);
 
-			if (!int_vec_search(lines, nb_lines, rk, idx)) {
+			if (!Sorting.int_vec_search(lines, nb_lines, rk, idx)) {
 				if (nb_lines == max_lines) {
 					cout << "projective_space::find_secant_lines "
 							"nb_lines == max_lines" << endl;
@@ -3085,6 +3092,7 @@ void projective_space::find_lines_which_are_contained(
 	int *set2;
 	int sz1, sz2;
 	int *f_taken;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::find_lines_which_are_contained "
@@ -3115,8 +3123,8 @@ void projective_space::find_lines_which_are_contained(
 
 	// set1 is the set of points whose last coordinate is zero.
 	// set2 is the set of points whose last coordinate is nonzero.
-	int_vec_heapsort(set1, sz1);
-	int_vec_heapsort(set2, sz2);
+	Sorting.int_vec_heapsort(set1, sz1);
+	Sorting.int_vec_heapsort(set2, sz2);
 	
 	if (f_vv) {
 		cout << "projective_space::find_lines_which_are_contained "
@@ -3176,7 +3184,7 @@ void projective_space::find_lines_which_are_contained(
 			// rank the test point and see
 			// if it belongs to the surface:
 			F->PG_element_rank_modified(M2 + 2 * d, 1, d, b);
-			if (!int_vec_search(set1, sz1, b, idx)) {
+			if (!Sorting.int_vec_search(set1, sz1, b, idx)) {
 				break;
 				}
 			}
@@ -3261,7 +3269,7 @@ void projective_space::find_lines_which_are_contained(
 					}
 				// row 2 of M2 contains the coordinates of the point P3:
 				F->PG_element_rank_modified(M2 + 2 * d, 1, d, b);
-				if (!int_vec_search(set2, sz2, b, idx)) {
+				if (!Sorting.int_vec_search(set2, sz2, b, idx)) {
 					break;
 					}
 				else {
@@ -3915,6 +3923,7 @@ int projective_space::is_contained_in_Baer_subline(
 	int sz;
 	int i, idx, a;
 	int ret = TRUE;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::is_contained_in_Baer_subline "
@@ -3931,10 +3940,10 @@ int projective_space::is_contained_in_Baer_subline(
 		int_vec_print(cout, subline, sz);
 		cout << endl;
 		}
-	int_vec_heapsort(subline, sz);
+	Sorting.int_vec_heapsort(subline, sz);
 	for (i = 0; i < nb_pts; i++) {
 		a = pts[i];
-		if (!int_vec_search(subline, sz, a, idx)) {
+		if (!Sorting.int_vec_search(subline, sz, a, idx)) {
 			ret = FALSE;
 			if (f_vv) {
 				cout << "did not find " << i << "-th point " << a
@@ -4083,6 +4092,7 @@ void projective_space::circle_type_of_line_subset(
 	int sz;
 	int i, idx, a, b;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::circle_type_of_line_subset "
@@ -4103,10 +4113,10 @@ void projective_space::circle_type_of_line_subset(
 			}
 		Baer_subline(subset, subline, sz, verbose_level - 2);
 		b = 0;
-		int_vec_heapsort(subline, sz);
+		Sorting.int_vec_heapsort(subline, sz);
 		for (i = 0; i < nb_pts; i++) {
 			a = pts[i];
-			if (int_vec_search(subline, sz, a, idx)) {
+			if (Sorting.int_vec_search(subline, sz, a, idx)) {
 				b++;
 				}
 			}
@@ -4521,6 +4531,7 @@ void projective_space::plane_intersection_type_slow(
 	int *Basis;
 	int *Basis_save;
 	int *Coords;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_slow" << endl;
@@ -4528,7 +4539,7 @@ void projective_space::plane_intersection_type_slow(
 	if (f_vv) {
 		print_set_numerical(set, set_size);
 		}
-	if (!test_if_set_with_return_value(set, set_size)) {
+	if (!Sorting.test_if_set_with_return_value(set, set_size)) {
 		cout << "projective_space::plane_intersection_type_slow "
 				"the input set if not a set" << endl;
 		exit(1);
@@ -4625,6 +4636,7 @@ void projective_space::plane_intersection_type_fast(
 	longinteger_object plane_rk, aa;
 	int *pts_on_plane;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_fast" << endl;
@@ -4633,7 +4645,7 @@ void projective_space::plane_intersection_type_fast(
 		print_set_numerical(set, set_size);
 		}
 
-	if (!test_if_set_with_return_value(set, set_size)) {
+	if (!Sorting.test_if_set_with_return_value(set, set_size)) {
 		cout << "projective_space::plane_intersection_type_fast "
 				"the input set if not a set" << endl;
 		exit(1);
@@ -4718,7 +4730,7 @@ void projective_space::plane_intersection_type_fast(
 			cout << " plane_rk=" << plane_rk << endl;
 			}
 
-		if (longinteger_vec_search(R, len, plane_rk, idx)) {
+		if (Sorting.longinteger_vec_search(R, len, plane_rk, idx)) {
 			//rank_idx[rk] = idx;
 			// this case should never happen:
 			cout << "projective_space::plane_intersection_type_fast "
@@ -5421,6 +5433,7 @@ void projective_space::conic_type_randomized(int nb_times,
 	int allocation_length;
 	geometry_global Gg;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::conic_type_randomized" << endl;
@@ -5434,7 +5447,7 @@ void projective_space::conic_type_randomized(int nb_times,
 		print_set_numerical(set, set_size);
 		}
 
-	if (!test_if_set_with_return_value(set, set_size)) {
+	if (!Sorting.test_if_set_with_return_value(set, set_size)) {
 		cout << "projective_space::conic_type_randomized "
 				"the input set if not a set" << endl;
 		exit(1);
@@ -5465,7 +5478,7 @@ void projective_space::conic_type_randomized(int nb_times,
 			}
 
 		for (i = 0; i < len; i++) {
-			if (int_vec_is_subset_of(subset, 5,
+			if (Sorting.int_vec_is_subset_of(subset, 5,
 					Pts_on_conic[i], nb_pts_on_conic[i])) {
 
 #if 0
@@ -5761,6 +5774,7 @@ void projective_space::conic_type(
 	int allocation_length;
 	geometry_global Gg;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::conic_type" << endl;
@@ -5773,7 +5787,7 @@ void projective_space::conic_type(
 		print_set_numerical(set, set_size);
 		}
 
-	if (!test_if_set_with_return_value(set, set_size)) {
+	if (!Sorting.test_if_set_with_return_value(set, set_size)) {
 		cout << "projective_space::conic_type the input "
 				"set if not a set" << endl;
 		exit(1);
@@ -5803,7 +5817,7 @@ void projective_space::conic_type(
 			}
 
 		for (i = 0; i < len; i++) {
-			if (int_vec_is_subset_of(subset, 5,
+			if (Sorting.int_vec_is_subset_of(subset, 5,
 					Pts_on_conic[i], nb_pts_on_conic[i])) {
 
 #if 0
@@ -5998,6 +6012,7 @@ void projective_space::find_nucleus(
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, l, sz, idx, t1, t2;
 	int *Lines;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::find_nucleus" << endl;
@@ -6023,12 +6038,12 @@ void projective_space::find_nucleus(
 		Lines[i] = Lines_on_point[a * r + i];
 		}
 	sz = r;
-	int_vec_heapsort(Lines, r);
+	Sorting.int_vec_heapsort(Lines, r);
 
 	for (i = 0; i < set_size - 1; i++) {
 		b = set[1 + i];
 		l = line_through_two_points(a, b);
-		if (!int_vec_search(Lines, sz, l, idx)) {
+		if (!Sorting.int_vec_search(Lines, sz, l, idx)) {
 			cout << "projective_space::find_nucleus "
 					"cannot find secant in pencil" << endl;
 			exit(1);
@@ -6054,7 +6069,7 @@ void projective_space::find_nucleus(
 		Lines[i] = Lines_on_point[a * r + i];
 		}
 	sz = r;
-	int_vec_heapsort(Lines, r);
+	Sorting.int_vec_heapsort(Lines, r);
 
 	for (i = 0; i < set_size - 1; i++) {
 		if (i == 0) {
@@ -6064,7 +6079,7 @@ void projective_space::find_nucleus(
 			b = set[1 + i];
 			}
 		l = line_through_two_points(a, b);
-		if (!int_vec_search(Lines, sz, l, idx)) {
+		if (!Sorting.int_vec_search(Lines, sz, l, idx)) {
 			cout << "projective_space::find_nucleus "
 					"cannot find secant in pencil" << endl;
 			exit(1);
@@ -6109,6 +6124,7 @@ void projective_space::points_on_projective_triangle(
 	int three_lines[3];
 	int *Pts;
 	int sz, h, i, a;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::points_on_projective_triangle" << endl;
@@ -6149,7 +6165,7 @@ void projective_space::points_on_projective_triangle(
 				"h != set_size" << endl;
 		exit(1);
 		}
-	int_vec_heapsort(set, set_size);
+	Sorting.int_vec_heapsort(set, set_size);
 	
 	FREE_int(Pts);
 	if (f_v) {
@@ -6165,6 +6181,7 @@ void projective_space::elliptic_curve_addition_table(
 	int f_v = (verbose_level >= 1);
 	int i, j, k;
 	int pi, pj, pk;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::elliptic_curve_"
@@ -6177,7 +6194,7 @@ void projective_space::elliptic_curve_addition_table(
 			pj = Pts[j];
 			pk = elliptic_curve_addition(A6, pi, pj,
 					0 /* verbose_level */);
-			if (!int_vec_search(Pts, nb_pts, pk, k)) {
+			if (!Sorting.int_vec_search(Pts, nb_pts, pk, k)) {
 				cout << "projective_space::elliptic_curve_"
 						"addition_table cannot find point pk" << endl;
 				cout << "i=" << i << " pi=" << pi << " j=" << j

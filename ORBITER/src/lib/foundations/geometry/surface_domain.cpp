@@ -1350,6 +1350,7 @@ int surface_domain::create_surface_ab(int a, int b,
 	int *Pts;
 	int v[4];
 	geometry_global Gg;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_ab" << endl;
@@ -1482,7 +1483,7 @@ int surface_domain::create_surface_ab(int a, int b,
 
 
 	enumerate_points(coeff20, Pts, nb_pts, 0 /* verbose_level */);
-	int_vec_heapsort(Pts, nb_pts);
+	Sorting.int_vec_heapsort(Pts, nb_pts);
 
 
 	if (f_v) {
@@ -1844,6 +1845,7 @@ void surface_domain::find_tritangent_planes_intersecting_in_a_line(
 	int f_v = (verbose_level >= 1);
 	int idx;
 	int three_lines[3];
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_domain::find_tritangent_planes_"
@@ -1852,13 +1854,13 @@ void surface_domain::find_tritangent_planes_intersecting_in_a_line(
 	for (plane1 = 0; plane1 < nb_Eckardt_points; plane1++) {
 
 		Eckardt_points[plane1].three_lines(this, three_lines);
-		if (int_vec_search_linear(three_lines, 3, line_idx, idx)) {
+		if (Sorting.int_vec_search_linear(three_lines, 3, line_idx, idx)) {
 			for (plane2 = plane1 + 1;
 					plane2 < nb_Eckardt_points;
 					plane2++) {
 
 				Eckardt_points[plane2].three_lines(this, three_lines);
-				if (int_vec_search_linear(three_lines, 3, line_idx, idx)) {
+				if (Sorting.int_vec_search_linear(three_lines, 3, line_idx, idx)) {
 					if (f_v) {
 						cout << "surface_domain::find_tritangent_planes_"
 								"intersecting_in_a_line done" << endl;
@@ -1990,6 +1992,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 	int subset[3];
 	int i, j, h, rk, a;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_domain::process_trihedral_pairs" << endl;
@@ -2002,7 +2005,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 				a = Trihedral_pairs[i * 9 + j * 3 + h];
 				subset[h] = a;
 				}
-			int_vec_heapsort(subset, 3);
+			Sorting.int_vec_heapsort(subset, 3);
 			rk = Combi.rank_k_subset(subset, 27, 3);
 			//rk = Eckardt_point_from_tritangent_plane(subset);
 			Trihedral_pairs_row_sets[i * 3 + j] = rk;
@@ -2014,7 +2017,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 				a = Trihedral_pairs[i * 9 + h * 3 + j];
 				subset[h] = a;
 				}
-			int_vec_heapsort(subset, 3);
+			Sorting.int_vec_heapsort(subset, 3);
 			rk = Combi.rank_k_subset(subset, 27, 3);
 			//rk = Eckardt_point_from_tritangent_plane(subset);
 			Trihedral_pairs_col_sets[i * 3 + j] = rk;
@@ -2089,12 +2092,13 @@ void surface_domain::make_Tlmnp(int *T, int l, int m, int n, int p)
 	int size_complement;
 	int r, s;
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	subset[0] = l;
 	subset[1] = m;
 	subset[2] = n;
 	subset[3] = p;
-	int_vec_heapsort(subset, 4);
+	Sorting.int_vec_heapsort(subset, 4);
 	Combi.set_complement(subset, 4, complement, size_complement, 6);
 	r = complement[0];
 	s = complement[1];
@@ -2228,8 +2232,9 @@ int surface_domain::Eckardt_point_from_tritangent_plane(
 {
 	int a, b, c, rk;
 	eckardt_point E;
+	sorting Sorting;
 
-	int_vec_heapsort(tritangent_plane, 3);
+	Sorting.int_vec_heapsort(tritangent_plane, 3);
 	a = tritangent_plane[0];
 	b = tritangent_plane[1];
 	c = tritangent_plane[2];
@@ -2257,6 +2262,7 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 	int t, i, rk;
 	int subset[3];
 	combinatorics_domain Combi;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_domain::init_collinear_Eckardt_triples" << endl;
@@ -2267,7 +2273,7 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 		for (i = 0; i < 2; i++) {
 			int_vec_copy(Trihedral_to_Eckardt + 6 * t + i * 3, 
 				subset, 3);
-			int_vec_heapsort(subset, 3);
+			Sorting.int_vec_heapsort(subset, 3);
 			rk = Combi.rank_k_subset(subset, nb_Eckardt_points, 3);
 			collinear_Eckardt_triples_rank[t * 2 + i] = rk;
 			}
@@ -2298,6 +2304,7 @@ void surface_domain::find_trihedral_pairs_from_collinear_triples_of_Eckardt_poin
 	int subset[3];
 	int set[3];
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "surface_domain::find_trihedral_pairs_from_collinear_"
@@ -2317,7 +2324,7 @@ void surface_domain::find_trihedral_pairs_from_collinear_triples_of_Eckardt_poin
 			}
 		//int_vec_print(cout, set, 3);
 		//cout << " = ";
-		int_vec_heapsort(set, 3);
+		Sorting.int_vec_heapsort(set, 3);
 		
 		rk = Combi.rank_k_subset(set, nb_Eckardt_points, 3);
 
@@ -2325,7 +2332,7 @@ void surface_domain::find_trihedral_pairs_from_collinear_triples_of_Eckardt_poin
 		//int_vec_print(cout, set, 3);
 		//cout << " rk=" << rk << endl;
 
-		if (int_vec_search(
+		if (Sorting.int_vec_search(
 			Classify_collinear_Eckardt_triples->data_sorted, 
 			nb_collinear_Eckardt_triples, rk, idx)) {
 			//cout << "idx=" << idx << endl;
@@ -2727,6 +2734,7 @@ surface_domain::create_web_of_cubic_curves_and_equations_based_on_four_tritangen
 	int *base_curves;
 	int *curves;
 	int *curves_t;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_domain::create_web_of_cubic_curves_and_equations_based_"
@@ -2761,7 +2769,7 @@ surface_domain::create_web_of_cubic_curves_and_equations_based_on_four_tritangen
 			cout << "h=" << h << " / " << 45 << ":" << endl;
 			}
 		
-		if (int_vec_search_linear(base_curves4, 4, h, idx)) {
+		if (Sorting.int_vec_search_linear(base_curves4, 4, h, idx)) {
 			int_vec_zero(The_plane_equations + h * 4, 4);
 			The_plane_equations[h * 4 + idx] = 1;
 			}
@@ -3100,6 +3108,7 @@ void surface_domain::find_point_not_on_six_curves(int *arc6,
 	int v[3];
 	int i;
 	int idx, a;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "surface_domain::find_point_not_on_six_curves" << endl;
@@ -3109,7 +3118,7 @@ void surface_domain::find_point_not_on_six_curves(int *arc6,
 		}
 	pt = -1;
 	for (pt = 0; pt < P2->N_points; pt++) {
-		if (int_vec_search_linear(arc6, 6, pt, idx)) {
+		if (Sorting.int_vec_search_linear(arc6, 6, pt, idx)) {
 			continue;
 			}
 		Poly3->unrank_point(v, pt);
@@ -3396,6 +3405,7 @@ void surface_domain::compute_external_lines_on_three_tritangent_planes(
 	int *Plane_intersections;
 	int *Plane_intersections_general;
 	int rk, idx;
+	sorting Sorting;
 
 
 
@@ -3419,7 +3429,7 @@ void surface_domain::compute_external_lines_on_three_tritangent_planes(
 			Plane_intersections_general[i * nb_tritangent_planes + j] = -1;
 			if (j != i) {
 				rk = Intersection_matrix[i * nb_tritangent_planes + j];
-				if (int_vec_search_linear(
+				if (Sorting.int_vec_search_linear(
 					Lines, 27, rk, idx)) {
 					Plane_intersections[i * nb_tritangent_planes + j] = idx;
 					}
@@ -3477,7 +3487,7 @@ void surface_domain::compute_external_lines_on_three_tritangent_planes(
 	Plane_intersection_type2.get_data_by_multiplicity(
 		External_lines, nb_external_lines, 6, 0 /* verbose_level */);
 
-	int_vec_heapsort(External_lines, nb_external_lines);
+	Sorting.int_vec_heapsort(External_lines, nb_external_lines);
 
 	if (f_v) {
 		cout << "surface_domain::compute_external_lines_on_three_"
@@ -3629,6 +3639,7 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 	int set[6];
 	int size_complement;
 	combinatorics_domain Combi;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "surface_domain::create_half_double_sixes" << endl;
@@ -3640,7 +3651,7 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 	int_vec_copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
-			int_vec_heapsort(
+			Sorting.int_vec_heapsort(
 				Half_double_sixes + (2 * i + j) * 6, 6);
 			Half_double_six_to_double_six[2 * i + j] = i;
 			Half_double_six_to_double_six_row[2 * i + j] = j;
@@ -3701,8 +3712,9 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 int surface_domain::find_half_double_six(int *half_double_six)
 {
 	int i;
+	sorting Sorting;
 
-	int_vec_heapsort(half_double_six, 6);
+	Sorting.int_vec_heapsort(half_double_six, 6);
 	for (i = 0; i < 72; i++) {
 		if (int_vec_compare(half_double_six, 
 			Half_double_sixes + i * 6, 6) == 0) {

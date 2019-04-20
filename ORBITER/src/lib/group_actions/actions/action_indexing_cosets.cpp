@@ -24,6 +24,7 @@ void action::coset_unrank(sims *G, sims *U,
 	longinteger_object G0_order, G_order;
 	longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "action::coset_unrank rank=" << rank << endl;
@@ -122,12 +123,7 @@ void action::coset_unrank(sims *G, sims *U,
 
 	orbit = NEW_int(orbit_len);
 	int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
-#if 0
-	for (i = 0; i < orbit_len; i++) {
-		orbit[i] = G->orbit[base_idx][i];
-		}
-#endif
-	int_vec_heapsort(orbit, orbit_len);
+	Sorting.int_vec_heapsort(orbit, orbit_len);
 
 	if (f_v) {
 		cout << "orbit of length " << orbit_len << ":";
@@ -292,6 +288,7 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	longinteger_domain D;
 	longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "##################################" << endl;
@@ -386,12 +383,7 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 
 	orbit = NEW_int(orbit_len);
 	int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
-#if 0
-	for (i = 0; i < orbit_len; i++) {
-		orbit[i] = G->orbit[base_idx][i];
-		}
-#endif
-	int_vec_heapsort(orbit, orbit_len);
+	Sorting.int_vec_heapsort(orbit, orbit_len);
 
 	if (f_v) {
 		cout << "G-orbit of length " << orbit_len << ":";

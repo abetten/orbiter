@@ -64,7 +64,9 @@ void action_on_cosets::init(int nb_points, int *Points,
 	int i;
 
 	if (f_v) {
-		cout << "action_on_cosets::init nb_points=" << nb_points << " dimension_of_subspace=" << dimension_of_subspace << " n=" << n << endl;
+		cout << "action_on_cosets::init nb_points=" << nb_points
+				<< " dimension_of_subspace=" << dimension_of_subspace
+				<< " n=" << n << endl;
 		}
 	action_on_cosets::nb_points = nb_points;
 	action_on_cosets::Points = Points;
@@ -81,7 +83,8 @@ void action_on_cosets::init(int nb_points, int *Points,
 	v2 = NEW_int(n);
 	for (i = 0; i < nb_points - 1; i++) {
 		if (Points[i] >= Points[i + 1]) {
-			cout << "action_on_cosets::init the array Points[] is not sorted increasingly" << endl;
+			cout << "action_on_cosets::init the array Points[] "
+					"is not sorted increasingly" << endl;
 			exit(1);
 			}
 		}
@@ -102,12 +105,14 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int r, idx;
+	sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_cosets::compute_image i = " << i << endl;
 		}
 	if (i >= nb_points) {
-		cout << "action_on_cosets::compute_image i = " << i << " i >= nb_points" << endl;
+		cout << "action_on_cosets::compute_image "
+				"i = " << i << " i >= nb_points" << endl;
 		exit(1);
 		}
 	(*unrank_point)(v1, Points[i], rank_unrank_data);
@@ -117,10 +122,12 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 		cout << endl;
 		}
 	
-	A_linear->element_image_of_low_level(v1, v2, Elt, 0/*verbose_level - 1*/);
+	A_linear->element_image_of_low_level(v1, v2,
+			Elt, 0/*verbose_level - 1*/);
 
 	if (f_vv) {
-		cout << "action_on_cosets::compute_image after element_image_of_low_level:";
+		cout << "action_on_cosets::compute_image "
+				"after element_image_of_low_level:";
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
@@ -128,21 +135,25 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 	reduce_mod_subspace(v2, 0 /* verbose_level */);
 	
 	if (f_vv) {
-		cout << "action_on_cosets::compute_image after reduce_mod_subspace:";
+		cout << "action_on_cosets::compute_image "
+				"after reduce_mod_subspace:";
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 
 	r = (*rank_point)(v2, rank_unrank_data);
 	if (f_vv) {
-		cout << "action_on_cosets::compute_image after rank, r = " << r << endl;
+		cout << "action_on_cosets::compute_image after "
+				"rank, r = " << r << endl;
 		}
-	if (!int_vec_search(Points, nb_points, r, idx)) {
-		cout << "action_on_cosets::compute_image image " << r << " not found in list pf points" << endl;
+	if (!Sorting.int_vec_search(Points, nb_points, r, idx)) {
+		cout << "action_on_cosets::compute_image image "
+				<< r << " not found in list pf points" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "action_on_cosets::compute_image image of " << i << " is " << idx << endl;
+		cout << "action_on_cosets::compute_image image "
+				"of " << i << " is " << idx << endl;
 		}
 	return idx;
 }

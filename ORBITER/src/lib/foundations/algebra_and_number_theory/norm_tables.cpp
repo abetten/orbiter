@@ -65,13 +65,14 @@ void norm_tables::init(unusual_model &U, int verbose_level)
 {
 	int qq = U.F.q;
 	int i, f, l, j, a, b, c, jj;
+	sorting Sorting;
 	
 	norm_table = NEW_int(qq);
 	for (i = 1; i < qq; i++) {
 		norm_table[i - 1] = U.N2(i);
 		}
 	
-	int_vec_classify(qq - 1, norm_table, norm_table_sorted, 
+	Sorting.int_vec_classify(qq - 1, norm_table, norm_table_sorted,
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 	
@@ -100,8 +101,9 @@ int norm_tables::choose_an_element_of_given_norm(
 		int norm, int verbose_level)
 {
 	int idx, f, gamma;
+	sorting Sorting;
 	
-	int_vec_search(the_type, nb_types, norm, idx);
+	Sorting.int_vec_search(the_type, nb_types, norm, idx);
 	f = type_first[idx];
 	//l = type_len[idx];
 	gamma = sorting_perm_inv[f + 0] + 1;

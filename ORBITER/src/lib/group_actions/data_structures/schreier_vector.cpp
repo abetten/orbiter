@@ -234,6 +234,7 @@ int schreier_vector::determine_depth_recursion(
 	int *depth, int *ancestor, int pos)
 {
 	int pt, pt_loc, d;
+	sorting Sorting;
 
 	pt = prev[pos];
 	if (pt == -1) {
@@ -241,7 +242,7 @@ int schreier_vector::determine_depth_recursion(
 		ancestor[pos] = pts[pos];
 		return 0;
 		}
-	if (!int_vec_search(pts, n, pt, pt_loc)) {
+	if (!Sorting.int_vec_search(pts, n, pt, pt_loc)) {
 		int i;
 
 		cout << "schreier_vector::determine_depth_recursion, "
@@ -297,6 +298,7 @@ void schreier_vector::relabel_points(
 
 	int nb_old_orbit_reps = 0, idx, j;
 	int *old_orbit_reps = NULL;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::relabel_points" << endl;
@@ -335,7 +337,7 @@ void schreier_vector::relabel_points(
 				}
 			new_pts[i] = q;
 			}
-		int_vec_heapsort(new_pts, n);
+		Sorting.int_vec_heapsort(new_pts, n);
 		for (i = 0; i < n + 1; i++) {
 			sv[i] = new_sv[i];
 			}
@@ -377,7 +379,7 @@ void schreier_vector::relabel_points(
 				old_orbit_reps[j++] = pts[i];
 				}
 			}
-		int_vec_heapsort(old_orbit_reps, nb_old_orbit_reps);
+		Sorting.int_vec_heapsort(old_orbit_reps, nb_old_orbit_reps);
 		int_vec_print(cout, old_orbit_reps, nb_old_orbit_reps);
 		cout << endl;
 		cout << "schreier_vector::relabel_points "
@@ -392,7 +394,7 @@ void schreier_vector::relabel_points(
 		cout << "schreier_vector::relabel_points "
 				"before:" << endl;
 		for (i = 0; i < n; i++) {
-			if (int_vec_search(old_orbit_reps,
+			if (Sorting.int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pts[i], idx)) {
 				cout << setw(5) << i << " : "
 						<< setw(5) << pts[i] << endl;
@@ -415,7 +417,7 @@ void schreier_vector::relabel_points(
 		q = AF->project_onto_Gauss_reduced_vector(
 				pre, 0 /*verbose_level - 2*/);
 		if (FALSE) {
-			if (int_vec_search(old_orbit_reps,
+			if (Sorting.int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pt, idx)) {
 				cout << "i=" << i << " pt=" << pt
 						<< " pre=" << pre << " q=" << q << endl << endl;
@@ -427,7 +429,7 @@ void schreier_vector::relabel_points(
 		//cout << "after:" << endl;
 		cout << "i : pts[i] : new_pts[i]" << endl;
 		for (i = 0; i < n; i++) {
-			if (int_vec_search(old_orbit_reps,
+			if (Sorting.int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pts[i], idx)) {
 				cout << setw(5) << i << " : "
 						<< setw(5) << pts[i] << " : "
@@ -442,13 +444,13 @@ void schreier_vector::relabel_points(
 	for (i = 0; i < n; i++) {
 		new_pts_sorted[i] = new_pts[i];
 		}
-	int_vec_heapsort_with_log(new_pts_sorted, perm, n);
+	Sorting.int_vec_heapsort_with_log(new_pts_sorted, perm, n);
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
 				"after sorting:" << endl;
 		cout << "i : pts[i] : new_pts_sorted[i] : perm[i]" << endl;
 		for (i = 0; i < n; i++) {
-			if (int_vec_search(old_orbit_reps,
+			if (Sorting.int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pts[i], idx)) {
 				cout << setw(5) << i << " : "
 					<< setw(5) << pts[i] << " : "
@@ -550,6 +552,7 @@ void schreier_vector::orbit_stats(
 	int *pts;
 	int *depth;
 	int *ancestor;
+	sorting Sorting;
 
 
 	n = sv[0];
@@ -638,7 +641,7 @@ void schreier_vector::orbit_stats(
 	for (i = 0; i < n; i++) {
 		if (prev[i] > 0) {
 			a = ancestor[i];
-			if (!int_vec_search(orbit_reps, nb_orbits, a, idx)) {
+			if (!Sorting.int_vec_search(orbit_reps, nb_orbits, a, idx)) {
 				cout << "schreier_vector::orbit_stats "
 						"cannot find ancestor in list of orbit reps" << endl;
 				exit(1);
@@ -659,6 +662,7 @@ void schreier_vector::orbit_of_point(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::orbit_of_point "
@@ -691,7 +695,7 @@ void schreier_vector::orbit_of_point(
 				"schreier vector of length " << n << endl;
 		}
 
-	if (!int_vec_search(pts, n, pt, idx)) {
+	if (!Sorting.int_vec_search(pts, n, pt, idx)) {
 		cout << "schreier_vector::orbit_of_point "
 				"fatal: point " << pt << " not found" << endl;
 		exit(1);
@@ -831,6 +835,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 	int n;
 	int *point_list;
 	int *svec;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::init_shallow_schreier_forest" << endl;
@@ -895,7 +900,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 				pt = Shallow_tree->orbit[fst + i];
 				pr = Shallow_tree->prev[fst + i];
 				la = Shallow_tree->label[fst + i];
-				if (!int_vec_search(points, n, pt, j)) {
+				if (!Sorting.int_vec_search(points, n, pt, j)) {
 					cout << "schreier_vector::init_shallow_schreier_forest "
 							"could not find point" << endl;
 					exit(1);
@@ -959,6 +964,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	int *orbit_depth;
 	int *points;
 	int orbit_len;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph" << endl;
@@ -985,7 +991,7 @@ void schreier_vector::export_tree_as_layered_graph(
 		prev = points + n;
 		max_depth = 0;
 		for (j = 0; j < len; j++) {
-			if (!int_vec_search(points, n, orbit_elts[j], pos)) {
+			if (!Sorting.int_vec_search(points, n, orbit_elts[j], pos)) {
 				cout << "schreier_vector::export_tree_as_layered_graph "
 						"could not find point" << endl;
 				exit(1);
@@ -1091,7 +1097,7 @@ void schreier_vector::export_tree_as_layered_graph(
 			if (orbit_prev[n1] != -1) {
 				int pt;
 				pt = orbit_prev[n1];
-				if (!int_vec_search(orbit_elts, len, pt, n2)) {
+				if (!Sorting.int_vec_search(orbit_elts, len, pt, n2)) {
 					cout << "schreier_vector::export_tree_as_layered_graph "
 							"could not find point" << endl;
 					exit(1);
@@ -1154,6 +1160,7 @@ void schreier_vector::trace_back(int pt, int &depth)
 	int pr, n, pos;
 	int *points;
 	int *prev;
+	sorting Sorting;
 
 	n = sv[0];
 	points = sv + 1;
@@ -1163,7 +1170,7 @@ void schreier_vector::trace_back(int pt, int &depth)
 	}
 	depth = 1;
 	while (TRUE) {
-		if (!int_vec_search(points, n, pt, pos)) {
+		if (!Sorting.int_vec_search(points, n, pt, pos)) {
 			cout << "schreier_vector::trace_back "
 					"could not find point" << endl;
 			exit(1);
@@ -1189,6 +1196,7 @@ int schreier_vector_determine_depth_recursion(
 	int *depth, int *ancestor, int pos)
 {
 	int pt, pt_loc, d;
+	sorting Sorting;
 
 	pt = prev[pos];
 	if (pt == -1) {
@@ -1196,7 +1204,7 @@ int schreier_vector_determine_depth_recursion(
 		ancestor[pos] = pts[pos];
 		return 0;
 		}
-	if (!int_vec_search(pts, n, pt, pt_loc)) {
+	if (!Sorting.int_vec_search(pts, n, pt, pt_loc)) {
 		int i;
 
 		cout << "schreier_vector_determine_depth_recursion, "
