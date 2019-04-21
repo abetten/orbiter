@@ -5,7 +5,6 @@
 // Betten, Fripertinger et al.~\cite{BettenCodes98}.
 
 #include "foundations.h"
-//#include <stdlib.h>
 
 using namespace std;
 
@@ -51,7 +50,7 @@ static void padic(int ind, int *v, int L, int A);
 static int nextsub(int k, int l, int *sub);
 static void vmmult(MINDIST *MD, int *v, int **mx, int *cv);
 
-int mindist(int n, int k, int q, int *G, 
+int coding_theory_domain::mindist(int n, int k, int q, int *G,
 	int f_v, int f_vv, int idx_zero, int idx_one, 
 	int *add_table, int *mult_table)
 //Main routine for the code minimum distance computation.
@@ -197,7 +196,8 @@ int mindist(int n, int k, int q, int *G,
 
 	if (f_v) {
 		cout << "the minimum distance is " << d 
-			<< "\nThis was determined by looking at " << MD.weight_computations 
+			<< "\nThis was determined by looking at "
+			<< MD.weight_computations
 			<< " codewords\n(rather than "
 			<< NT.i_power_j(q, k) << " codewords)" << endl;
 		}
@@ -205,7 +205,8 @@ int mindist(int n, int k, int q, int *G,
 	if (d != wt_rows) {
 		if (f_v) {
 			cout << "min weight = " << d << 
-				" is less than the weight of the vectors in the rows, which is " << wt_rows << endl;
+				" is less than the weight of the vectors in "
+				"the rows, which is " << wt_rows << endl;
 			print_matrix(&MD, MD.G);
 			}
 		//cin >> i;
@@ -243,10 +244,10 @@ static int min_weight(MINDIST *MD)
 {
 	int n = MD->n;
 	int k = MD->k;
- int i,j,t;
+	int i,j,t;
 	int a, b;
- int w_c,w_t,w_r; /* minimum-weight of code /regarded /not regarded codevectors */
- int size = 0; /* number of information subsets */
+	int w_c,w_t,w_r; /* minimum-weight of code /regarded /not regarded codevectors */
+	int size = 0; /* number of information subsets */
  //int w_1 = -1;
 	
 	/* allocate base pointer for the (k,n)-generator matrices */

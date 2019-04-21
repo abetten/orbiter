@@ -6,8 +6,8 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-		mindist.o \
-		tensor.o
+		coding_theory_domain.o \
+		mindist.o 
 
 
 all : $(MODULES)

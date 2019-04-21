@@ -1626,6 +1626,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 	int f_vv = (verbose_level >= 2);
 	char label[100];
 	combinatorics_domain Combi;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "refine_rows_easy" << endl;
@@ -1795,7 +1796,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 				f_used = TRUE;
 				}
 			if (f_used) {
-				int bound = TDO_upper_bound(len, k);
+				int bound = Gg.TDO_upper_bound(len, k);
 				D2.RHS[l2 + nb_eqns_joining + nb_eqns_upper_bound] = bound;
 				D2.type[l2 + nb_eqns_joining + nb_eqns_upper_bound] = t_LE;
 				sprintf(label, "P_{%d,%d} \\,\\mbox{using}\\, "
@@ -2661,6 +2662,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_packing(
 	int rr, p, u, a, len, f_used, L1, L2;
 	char label[100];
 	//int nb_vars = T.D1->n;
+	geometry_global Gg;
 	
 	//l2 = nb_col_classes[COL];
 	row_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
@@ -2688,7 +2690,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_packing(
 				} // next i
 			if (f_used) {
 				int bound;
-				bound = TDO_upper_bound(len, k);
+				bound = Gg.TDO_upper_bound(len, k);
 				T.D2->RHS[eqn_start + nb_eqns_packing] = bound;
 				T.D2->type[eqn_start + nb_eqns_packing] = t_LE;
 				for (h = 0; h < T.nb_only_one_type; h++) {
@@ -3659,7 +3661,8 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_upper_bound(
 	int /*l2,*/ L1, L2, i, r, f, l, j, c, J, I;
 	int k, h, rr, p, u, a, len, f_used;
 	char label[100];
-	
+	geometry_global Gg;
+
 	nb_eqns_packing = 0;
 	//l2 = nb_row_classes[ROW];
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
@@ -3686,7 +3689,7 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_upper_bound(
 			if (f_used) {
 				int bound;
 				
-				bound = TDO_upper_bound(len, k);
+				bound = Gg.TDO_upper_bound(len, k);
 				T.D2->RHS[eqn_start + nb_eqns_packing] = bound;
 				T.D2->type[eqn_start + nb_eqns_packing] = t_LE;
 				for (h = 0; h < T.nb_only_one_type; h++) {
