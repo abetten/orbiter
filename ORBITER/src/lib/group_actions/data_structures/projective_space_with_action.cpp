@@ -169,6 +169,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	int *Base, Base_length;
 	int *Transversal_length, Ago;
 	int N, i, j, h, a, L;
+	file_io Fio;
 
 	A_linear = A;
 
@@ -286,7 +287,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
 			labeling[i] = i;
@@ -453,9 +454,9 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
-		int_vec_write_csv(labeling, N,
+		Fio.int_vec_write_csv(labeling, N,
 				fname_labeling, "canonical labeling");
-		int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
 		
 		colored_graph *CG;
@@ -815,6 +816,7 @@ strong_generators
 	int *Transversal_length, Ago;
 	int N, i, j, a, L;
 	combinatorics_domain Combi;
+	file_io Fio;
 
 	A_linear = A;
 
@@ -872,7 +874,7 @@ strong_generators
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		colored_graph *CG;
 
@@ -1004,9 +1006,9 @@ strong_generators
 		int_vec_print_as_matrix(cout,
 				canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
 
-		int_vec_write_csv(canonical_labeling, N,
+		Fio.int_vec_write_csv(canonical_labeling, N,
 				fname_labeling, "canonical labeling");
-		int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
 		
 		colored_graph *CG;
@@ -1805,6 +1807,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 	int f_vvv = (verbose_level >= 3);
 	int input_idx, ret;
 	int t0, t1, dt;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "classify_objects_using_nauty" << endl;
@@ -1895,7 +1898,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 			int *the_set;
 			int set_size;
 
-			read_set_from_file(Data->input_string[input_idx],
+			Fio.read_set_from_file(Data->input_string[input_idx],
 				the_set, set_size, verbose_level);
 
 			OiP = create_object_from_int_vec(t_PTS,
@@ -2083,7 +2086,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				cout << "Reading spread table from file "
 					<< Data->input_string2[input_idx] << endl;
-				int_matrix_read_csv(Data->input_string2[input_idx],
+				Fio.int_matrix_read_csv(Data->input_string2[input_idx],
 						Spread_table, nb_spreads, spread_size,
 						0 /* verbose_level */);
 				cout << "Reading spread table from file "
@@ -2256,6 +2259,7 @@ void projective_space_with_action::save(
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "projective_space_with_action::save" << endl;
@@ -2331,7 +2335,7 @@ void projective_space_with_action::save(
 		fp << "END" << endl;
 	}
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 
 	if (f_v) {
@@ -2346,6 +2350,7 @@ void projective_space_with_action::merge_packings(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "projective_space_with_action::merge_packings" << endl;
@@ -2364,7 +2369,7 @@ void projective_space_with_action::merge_packings(
 				"Reading spread table from file "
 				<< file_of_spreads << endl;
 	}
-	int_matrix_read_csv(file_of_spreads,
+	Fio.int_matrix_read_csv(file_of_spreads,
 			Spread_table, nb_spreads, spread_size,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -2649,6 +2654,7 @@ void projective_space_with_action::select_packings(
 {
 	int f_v = (verbose_level >= 1);
 	int nb_accept = 0;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "projective_space_with_action::select_packings" << endl;
@@ -2669,7 +2675,7 @@ void projective_space_with_action::select_packings(
 				"Reading spread table from file "
 				<< file_of_spreads_original << endl;
 	}
-	int_matrix_read_csv(file_of_spreads_original,
+	Fio.int_matrix_read_csv(file_of_spreads_original,
 			Spread_table, nb_spreads, spread_size,
 			0 /* verbose_level */);
 	if (nb_spreads != Spread_tables->nb_spreads) {
@@ -3041,6 +3047,7 @@ void projective_space_with_action::select_packings_self_dual(
 {
 	int f_v = (verbose_level >= 1);
 	int nb_accept = 0;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "projective_space_with_action::"
@@ -3062,7 +3069,7 @@ void projective_space_with_action::select_packings_self_dual(
 				"Reading spread table from file "
 				<< file_of_spreads_original << endl;
 	}
-	int_matrix_read_csv(file_of_spreads_original,
+	Fio.int_matrix_read_csv(file_of_spreads_original,
 			Spread_table_original, nb_spreads, spread_size,
 			0 /* verbose_level */);
 	if (nb_spreads != Spread_tables->nb_spreads) {
@@ -3743,10 +3750,10 @@ void projective_space_with_action::select_packings_self_dual(
 		sprintf(fname_self_dual, "%s_self_dual.csv", fname_base);
 	}
 	cout << "saving self_dual_cases to file " << fname_self_dual << endl;
-	int_vec_write_csv(self_dual_cases, nb_self_dual_cases,
+	Fio.int_vec_write_csv(self_dual_cases, nb_self_dual_cases,
 			fname_self_dual, "self_dual_idx");
 	cout << "written file " << fname_self_dual
-			<< " of size " << file_size(fname_self_dual) << endl;
+			<< " of size " << Fio.file_size(fname_self_dual) << endl;
 
 
 
@@ -3774,6 +3781,7 @@ void projective_space_with_action::latex_report(const char *fname,
 	int i, j;
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "projective_space_with_action::latex_report" << endl;
@@ -4121,7 +4129,7 @@ void projective_space_with_action::latex_report(const char *fname,
 	}
 
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	//FREE_int(perm);
 	//FREE_int(v);
 	if (f_v) {

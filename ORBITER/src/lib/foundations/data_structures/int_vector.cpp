@@ -75,7 +75,9 @@ void int_vector::read_ascii_file(const char *fname)
 	int verbose_level = 0;
 	int *the_set;
 	int set_size;
-	read_set_from_file(fname, the_set, set_size, verbose_level);
+	file_io Fio;
+
+	Fio.read_set_from_file(fname, the_set, set_size, verbose_level);
 	allocate_and_init(set_size, the_set);
 	FREE_int(the_set);
 }
@@ -85,7 +87,9 @@ void int_vector::read_binary_file_int4(const char *fname)
 	int verbose_level = 0;
 	int *the_set;
 	int set_size;
-	read_set_from_file_int4(fname, the_set, set_size, verbose_level);
+	file_io Fio;
+
+	Fio.read_set_from_file_int4(fname, the_set, set_size, verbose_level);
 	allocate_and_init(set_size, the_set);
 	FREE_int(the_set);
 }
@@ -185,17 +189,23 @@ void int_vector::sort_and_remove_duplicates()
 
 void int_vector::write_to_ascii_file(const char *fname)
 {
-	write_set_to_file(fname, M, m, 0 /*verbose_level*/);
+	file_io Fio;
+
+	Fio.write_set_to_file(fname, M, m, 0 /*verbose_level*/);
 }
 
 void int_vector::write_to_binary_file_int4(const char *fname)
 {
-	write_set_to_file_as_int4(fname, M, m, 0 /*verbose_level*/);
+	file_io Fio;
+
+	Fio.write_set_to_file_as_int4(fname, M, m, 0 /*verbose_level*/);
 }
 
 void int_vector::write_to_csv_file(const char *fname, const char *label)
 {
-	int_vec_write_csv(M, m, fname, label);
+	file_io Fio;
+
+	Fio.int_vec_write_csv(M, m, fname, label);
 }
 
 int int_vector::hash()

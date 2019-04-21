@@ -187,11 +187,12 @@ int main(int argc, const char **argv)
 	sprintf(fname_out, "%s", fname_base);
 		
 	tree T;
+	file_io Fio;
 
 	cout << "Trying to read file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
-	if (file_size(fname) <= 0) {
+	if (Fio.file_size(fname) <= 0) {
 		cout << "treedraw.out the input file " << fname
 				<< " does not exist" << endl;
 		exit(1);

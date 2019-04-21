@@ -485,11 +485,12 @@ void code_generator::main(int verbose_level)
 	if (f_table_of_nodes) {
 		int *Table;
 		int nb_rows, nb_cols;
+		file_io Fio;
 
 		gen->get_table_of_nodes(Table, 
 			nb_rows, nb_cols, 0 /*verbose_level*/);
 	
-		int_matrix_write_csv("data.csv", Table, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv("data.csv", Table, nb_rows, nb_cols);
 
 
 		FREE_int(Table);

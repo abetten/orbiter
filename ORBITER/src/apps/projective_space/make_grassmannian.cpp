@@ -246,7 +246,10 @@ void create_grassmannian(int n, int k, finite_field *F, int verbose_level)
 
 	char fname[1000];
 	sprintf(fname, "G_%d_%d_%d.txt", n, k, q);
-	write_set_to_file(fname, L, N, verbose_level);
+
+	file_io Fio;
+
+	Fio.write_set_to_file(fname, L, N, verbose_level);
 
 
 	FREE_OBJECT(P);

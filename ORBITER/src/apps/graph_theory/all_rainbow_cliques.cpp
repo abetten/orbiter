@@ -166,6 +166,7 @@ int main(int argc, char **argv)
 		}
 
 	graph_theory_domain Graph;
+	file_io Fio;
 
 
 
@@ -375,7 +376,7 @@ int main(int argc, char **argv)
 		replace_extension_with(fname_stats, "_stats.csv");
 
 
-		read_set_from_file(fname_list_of_cases,
+		Fio.read_set_from_file(fname_list_of_cases,
 				list_of_cases, nb_cases, verbose_level);
 		cout << "nb_cases=" << nb_cases << endl;
 
@@ -391,9 +392,9 @@ int main(int argc, char **argv)
 		
 		FREE_int(list_of_cases);
 		cout << "all_rainbow_cliques.out written file " << fname_sol
-				<< " of size " << file_size(fname_sol) << endl;
+				<< " of size " << Fio.file_size(fname_sol) << endl;
 		cout << "all_rainbow_cliques.out written file " << fname_stats
-				<< " of size " << file_size(fname_stats) << endl;
+				<< " of size " << Fio.file_size(fname_stats) << endl;
 		}
 	else if (f_input_list_of_files) {
 		
@@ -428,9 +429,9 @@ int main(int argc, char **argv)
 			verbose_level);
 
 		cout << "all_rainbow_cliques.out written file " << fname_sol
-			<< " of size " << file_size(fname_sol) << endl;
+			<< " of size " << Fio.file_size(fname_sol) << endl;
 		cout << "all_rainbow_cliques.out written file " << fname_stats
-			<< " of size " << file_size(fname_stats) << endl;
+			<< " of size " << Fio.file_size(fname_stats) << endl;
 
 
 
@@ -448,7 +449,7 @@ int main(int argc, char **argv)
 		fp << "Success" << endl;
 		}
 		cout << "Written file " << success_fname << " of size "
-				<< file_size(success_fname) << endl;
+				<< Fio.file_size(success_fname) << endl;
 		}
 
 	cout << "all_rainbow_cliques.out is done" << endl;

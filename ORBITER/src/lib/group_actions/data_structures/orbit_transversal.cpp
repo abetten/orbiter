@@ -90,12 +90,13 @@ void orbit_transversal::read_from_file(
 	int *Casenumbers;
 	int nb_cases, nb_cases_mod;
 	int i;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file "
 				"before read_and_parse_data_file_fancy" << endl;
 		}
-	read_and_parse_data_file_fancy(fname, 
+	Fio.read_and_parse_data_file_fancy(fname,
 		FALSE /*f_casenumbers */, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -144,7 +145,7 @@ void orbit_transversal::read_from_file(
 		}
 	
 
-	free_data_fancy(nb_cases, 
+	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets, 
 		Ago_ascii, Aut_ascii, 
 		Casenumbers);

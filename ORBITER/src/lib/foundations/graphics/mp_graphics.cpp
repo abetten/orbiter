@@ -13,6 +13,10 @@ namespace orbiter {
 namespace foundations {
 
 
+static void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
+	double &a, double &b);
+
+
 mp_graphics::mp_graphics()
 {
 	default_values();
@@ -96,7 +100,8 @@ void mp_graphics::init(const char *file_name,
 void mp_graphics::exit(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	
+	file_io Fio;
+
 	if (f_file_open) {
 		fp_mp.close();
 		fp_log.close();
@@ -104,11 +109,11 @@ void mp_graphics::exit(ostream &ost, int verbose_level)
 		if (f_v) {
 			ost << "mp_graphics::exit "
 					"written file " << fname_mp
-					<< " of size " << file_size(fname_mp) << endl;
+					<< " of size " << Fio.file_size(fname_mp) << endl;
 			ost << "written file " << fname_log
-					<< " of size " << file_size(fname_log) << endl;
+					<< " of size " << Fio.file_size(fname_log) << endl;
 			ost << "written file " << fname_tikz
-					<< " of size " << file_size(fname_tikz) << endl;
+					<< " of size " << Fio.file_size(fname_tikz) << endl;
 			}
 		f_file_open = FALSE;
 		}
@@ -464,22 +469,30 @@ int& mp_graphics::out_ymax()
 
 void mp_graphics::user2dev(int &x, int &y)
 {
-	transform_llur(user, dev, x, y);
+	numerics Num;
+
+	Num.transform_llur(user, dev, x, y);
 }
 
 void mp_graphics::dev2user(int &x, int &y)
 {
-	transform_llur(dev, user, x, y);
+	numerics Num;
+
+	Num.transform_llur(dev, user, x, y);
 }
 
 void mp_graphics::user2dev_dist_x(int &x)
 {
-	transform_dist_x(user, dev, x);
+	numerics Num;
+
+	Num.transform_dist_x(user, dev, x);
 }
 
 void mp_graphics::user2dev_dist_y(int &y)
 {
-	transform_dist_y(user, dev, y);
+	numerics Num;
+
+	Num.transform_dist_y(user, dev, y);
 }
 
 void mp_graphics::draw_polar_grid(double r_max,
@@ -3812,6 +3825,39 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 
 	if (f_v) {
 		cout << "projective_plane_draw_grid2 done" << endl;
+		}
+}
+
+static void projective_plane_make_affine_point(
+		int q, int x1, int x2, int x3, double &a, double &b)
+{
+	if (x3 == 0) {
+		if (x2 == 0) {
+			a = 3 * q / 2;
+			b = q / 2;
+			}
+		else {
+			a = q / 2 + x1;
+			b = 3 * q / 2 - x1;
+			}
+		// make it lie on the rim:
+		// if x1 < q/2, we decrease the y coordinate.
+		// if x1 > q/2, we decrease the x coordinate.
+		if (x2 == 0) {
+			a = q;
+			}
+		else {
+			if (x1 < (q / 2)) {
+				b = q;
+				}
+			if (x1 > q / 2) {
+				a = q;
+				}
+			}
+		}
+	else {
+		a = x1;
+		b = x2;
 		}
 }
 

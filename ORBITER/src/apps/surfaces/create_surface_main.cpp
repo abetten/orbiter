@@ -91,6 +91,7 @@ int main(int argc, const char **argv)
 	surface_with_action *Surf_A;
 	number_theory_domain NT;
 	sorting Sorting;
+	file_io Fio;
 
 	q = Descr->get_q();
 	cout << "q=" << q << endl;
@@ -231,10 +232,10 @@ int main(int argc, const char **argv)
 		char fname_points[1000];
 
 		sprintf(fname_points, "surface_%s_points.txt", SC->label_txt);
-		write_set_to_file(fname_points,
+		Fio.write_set_to_file(fname_points,
 				SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
 		cout << "Written file " << fname_points << " of size "
-				<< file_size(fname_points) << endl;
+				<< Fio.file_size(fname_points) << endl;
 	}
 	else {
 		cout << "The surface " << SC->label_txt
@@ -731,7 +732,7 @@ int main(int argc, const char **argv)
 			L.foot(fp);
 		}
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 
 
 

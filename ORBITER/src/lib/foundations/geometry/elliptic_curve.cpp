@@ -400,8 +400,10 @@ void elliptic_curve::draw_grid(char *fname,
 	G.end_figure();
 	G.footer();
 	}
+	file_io Fio;
+
 	cout << "written file " << fname_full << " of size "
-			<< file_size(fname_full) << endl;
+			<< Fio.file_size(fname_full) << endl;
 	if (f_v) {
 		cout << "draw_grid done" << endl;
 		}

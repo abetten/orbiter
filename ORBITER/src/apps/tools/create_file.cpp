@@ -137,6 +137,8 @@ int main(int argc, char **argv)
 		}
 #endif
 
+	file_io Fio;
+
 	if (f_read_cases) {
 
 		char fname[1000];
@@ -145,7 +147,7 @@ int main(int argc, char **argv)
 		int nb_cases;
 		int n, c;
 		
-		int_matrix_read_csv(read_cases_fname,
+		Fio.int_matrix_read_csv(read_cases_fname,
 				Cases, nb_cases, n, 0 /* verbose_level */);
 		
 		if (n != 1) {
@@ -176,7 +178,7 @@ int main(int argc, char **argv)
 						}
 					}
 				cout << "Written file " << fname << " of size "
-						<< file_size(fname) << endl;
+						<< Fio.file_size(fname) << endl;
 
 				char log_entry[1000];
 				
@@ -185,7 +187,7 @@ int main(int argc, char **argv)
 				}
 			}
 			cout << "Written file " << log_fname << " of size "
-					<< file_size(log_fname) << endl;
+					<< Fio.file_size(log_fname) << endl;
 		}
 	else if (f_read_cases_text) {
 		cout << "read_cases_text" << endl;
@@ -254,6 +256,7 @@ void create_files(int N,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	file_io Fio;
 
 	char fname[1000];
 	char str[1000];
@@ -296,13 +299,13 @@ void create_files(int N,
 			}
 		}
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 	
 		}
 
 	}
 	cout << "Written file " << makefile_fname << " of size "
-			<< file_size(makefile_fname) << endl;
+			<< Fio.file_size(makefile_fname) << endl;
 
 
 	if (f_v) {
@@ -325,6 +328,7 @@ void create_files_list_of_cases(spreadsheet *S,
 
 	char fname[1000];
 	char str[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "create_files_list_of_cases" << endl;
@@ -424,13 +428,13 @@ void create_files_list_of_cases(spreadsheet *S,
 			} // close fp(fname)
 
 			cout << "Written file " << fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 
 		} // next i
 
 	}
 	cout << "Written file " << makefile_fname << " of size "
-			<< file_size(makefile_fname) << endl;
+			<< Fio.file_size(makefile_fname) << endl;
 
 	const char *mask_submit_script_piecewise = "submit_jobs_%d.sh";
 	char fname_submit_piecewise[1000];
@@ -457,7 +461,7 @@ void create_files_list_of_cases(spreadsheet *S,
 			}
 		}
 		cout << "Written file " << fname_submit_piecewise << " of size "
-			<< file_size(fname_submit_piecewise) << endl;
+			<< Fio.file_size(fname_submit_piecewise) << endl;
 		sprintf(cmd, "chmod +x %s", fname_submit_piecewise);
 		system(cmd);
 	}

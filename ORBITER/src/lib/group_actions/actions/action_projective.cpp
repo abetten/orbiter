@@ -38,6 +38,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	int *Base, Base_length;
 	int *Transversal_length, Ago;
 	int N, i, j, h;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "action::set_stabilizer_in_projective_space" << endl;
@@ -155,7 +156,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
 			labeling[i] = i;
@@ -258,7 +259,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
 
 		colored_graph *CG;

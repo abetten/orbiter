@@ -419,8 +419,10 @@ void words(action *A, finite_field *F, sims *S,
 		}
 	f << -1 << endl;
 	}
+	file_io Fio;
+
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 
 

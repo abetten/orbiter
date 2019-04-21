@@ -189,7 +189,8 @@ void isomorph::isomorph_testing(int t0,
 	sims *Stab;
 	longinteger_object go;
 	int f_eof;
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "isomorph::isomorph_testing" << endl;
 		}
@@ -278,7 +279,7 @@ void isomorph::isomorph_testing(int t0,
 	*fp_event_out << "-1" << endl;
 	delete fp_event_out;
 	cout << "Written file " << event_out_fname << " of size "
-			<< file_size(event_out_fname) << endl;
+			<< Fio.file_size(event_out_fname) << endl;
 	
 	cout << "We found " << Reps->count << " isomorphism types" << endl;
 
@@ -358,6 +359,7 @@ void isomorph::write_classification_graph(int verbose_level)
 	int *Nb;
 	int *Fst;
 	int i, j, f, l, d;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::write_classification_graph" << endl;
@@ -443,7 +445,7 @@ void isomorph::write_classification_graph(int verbose_level)
 	if (f_v) {
 		cout << "isomorph::write_classification_graph "
 				"Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 
 
@@ -460,6 +462,7 @@ void isomorph::decomposition_matrix(int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	int m, n, i, j, a, b, f, l;
 	int *M;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::decomposition_matrix" << endl;
@@ -490,7 +493,7 @@ void isomorph::decomposition_matrix(int verbose_level)
 	
 	sprintf(fname_base1, "%sdecomposition_matrix", prefix);
 	sprintf(fname, "%s.csv", fname_base1);
-	int_matrix_write_csv(fname, M, m, n);
+	Fio.int_matrix_write_csv(fname, M, m, n);
 
 	FREE_int(down_link);
 	FREE_int(M);

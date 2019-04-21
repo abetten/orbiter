@@ -292,9 +292,10 @@ int main(int argc, char **argv)
 		}
 
 	int *list_of_cases;
+	file_io Fio;
 
 	if (f_list_of_cases) {
-		read_set_from_file(fname_list_of_cases, list_of_cases, N, verbose_level);
+		Fio.read_set_from_file(fname_list_of_cases, list_of_cases, N, verbose_level);
 		cout << "nb_cases=N=" << N << endl;
 		cout << "list of cases from file: ";
 		int_vec_print(cout, list_of_cases, N);
@@ -347,6 +348,7 @@ void do_collate(int N, const char *collate_output_file_mask,
 	int nb_missing_cases = 0;
 	char buf[MY_BUFSIZE];
 	char *p_buf;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "do_collate" << endl;
@@ -358,7 +360,7 @@ void do_collate(int N, const char *collate_output_file_mask,
 	ofstream fp(collated_fname);
 	for (i = 0; i < N; i++) {
 		sprintf(output_fname, collate_output_file_mask, i);
-		if (file_size(output_fname) <= 0) {
+		if (Fio.file_size(output_fname) <= 0) {
 			cout << "output file in case " << i << " / " << N << " is missing" << endl;
 			missing_cases[nb_missing_cases++] = i;
 			}
@@ -416,7 +418,7 @@ void do_collate(int N, const char *collate_output_file_mask,
 		}
 	}
 	cout << "written file " << collated_fname << " of size "
-			<< file_size(collated_fname) << " with " << total_sol
+			<< Fio.file_size(collated_fname) << " with " << total_sol
 			<< " solutions. Number of missing cases = " << nb_missing_cases << endl;
 	cout << "missing cases: ";
 	int_vec_print(cout, missing_cases, nb_missing_cases);
@@ -442,6 +444,7 @@ void do_scheduling(int N, int *list_of_cases,
 	int f_v = (verbose_level >= 1);
 	int i, c;
 	sorting Sorting;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "do_scheduling" << endl;
@@ -477,7 +480,7 @@ void do_scheduling(int N, int *list_of_cases,
 	if (f_randomized) {
 		int m, n;
 		
-		int_matrix_read_csv(randomized_fname, random_perm, m, n, verbose_level);
+		Fio.int_matrix_read_csv(randomized_fname, random_perm, m, n, verbose_level);
 		if (n != 1) {
 			cout << "int_matrix_read_csv n != n" << endl;
 			exit(1);
@@ -498,13 +501,13 @@ void do_scheduling(int N, int *list_of_cases,
 		if (f_input_file_mask) {
 			sprintf(input_fname, input_file_mask, c);
 			sprintf(target_fname, target_file_mask, c);
-			if (file_size(input_fname) <= 0) {
+			if (Fio.file_size(input_fname) <= 0) {
 				cout << "The input file does not exist: please check "
 						"the file " << input_fname << endl;
 				exit(1);
 				}
 			}
-		if (file_size(target_fname) > 0) {
+		if (Fio.file_size(target_fname) > 0) {
 			task_completed[i] = 1;
 			nb_tasks_completed++;
 			}
@@ -579,7 +582,7 @@ void do_scheduling(int N, int *list_of_cases,
 				t = JT[i].task;
 				c = JT[i].the_case;
 				//sprintf(target_fname, target_file_mask, c);
-				if (file_size(JT[i].target_fname) > 0) {
+				if (Fio.file_size(JT[i].target_fname) > 0) {
 					cout << "task completed: " << t << " = " << c << endl;
 					task_completed[t] = 1;
 					JT[i].f_task_assigned = FALSE;
@@ -636,6 +639,7 @@ void assign_task(job_table *JT, int t, int j,
 	int f_v = (verbose_level >= 1);
 	char str[1000];
 	int c;
+	file_io Fio;
 
 	c = list_of_cases[t];
 	if (f_v) {
@@ -700,7 +704,7 @@ void assign_task(job_table *JT, int t, int j,
 			//fp << JT[j].batch_file << endl;
 		}
 		cout << "Written file " << JT[j].batch_fname << " of size "
-				<< file_size(JT[j].batch_fname) << endl;
+				<< Fio.file_size(JT[j].batch_fname) << endl;
 		}
 	cout << "target_fname: " << JT[j].target_fname << endl;
 	cout << "assign task: " << JT[j].command << endl;

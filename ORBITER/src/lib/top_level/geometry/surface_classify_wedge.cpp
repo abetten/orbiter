@@ -2061,8 +2061,10 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 	}
 	}
 
+	file_io Fio;
+
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	if (f_v) {
 		cout << "surface_classify_wedge::generate_source_"
 				"code done" << endl;

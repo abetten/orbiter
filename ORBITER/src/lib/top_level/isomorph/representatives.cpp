@@ -116,7 +116,8 @@ void representatives::write_fusion(int verbose_level)
 // (i.e., if fusion[i] == i) then the identity element is written.
 {
 	int f_v = (verbose_level >= 1);
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "representatives::write_fusion" << endl;
 		}
@@ -149,9 +150,9 @@ void representatives::write_fusion(int verbose_level)
 	if (f_v) {
 		cout << "representatives::write_fusion finished" << endl;
 		cout << "written file " << fname_fusion << " of size "
-				<< file_size(fname_fusion) << endl;
+				<< Fio.file_size(fname_fusion) << endl;
 		cout << "written file " << fname_fusion_ge << " of size "
-				<< file_size(fname_fusion_ge) << endl;
+				<< Fio.file_size(fname_fusion_ge) << endl;
 		}
 	
 }
@@ -161,6 +162,7 @@ void representatives::read_fusion(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b, i;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "representatives::read_fusion nb_objects="
@@ -169,7 +171,7 @@ void representatives::read_fusion(int verbose_level)
 	if (f_v) {
 		cout << "representatives::read_fusion reading file "
 				<< fname_fusion << " of size "
-				<< file_size(fname_fusion) << endl;
+				<< Fio.file_size(fname_fusion) << endl;
 		}
 	{
 		ifstream f1(fname_fusion);
@@ -192,7 +194,7 @@ void representatives::read_fusion(int verbose_level)
 	if (f_v) {
 		cout << "representatives::read_fusion reading file "
 				<< fname_fusion_ge << " of size "
-				<< file_size(fname_fusion_ge) << endl;
+				<< Fio.file_size(fname_fusion_ge) << endl;
 		}
 	{
 		FILE *f2;
@@ -213,7 +215,8 @@ void representatives::write_representatives_and_stabilizers(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "representatives::write_representatives_"
 				"and_stabilizers" << endl;
@@ -268,9 +271,9 @@ void representatives::write_representatives_and_stabilizers(
 		cout << "representatives::write_representatives_and_"
 				"stabilizers finished" << endl;
 		cout << "written file " << fname_rep << " of size "
-				<< file_size(fname_rep) << endl;
+				<< Fio.file_size(fname_rep) << endl;
 		cout << "written file " << fname_stabgens << " of size "
-				<< file_size(fname_stabgens) << endl;
+				<< Fio.file_size(fname_stabgens) << endl;
 		}
 	
 }

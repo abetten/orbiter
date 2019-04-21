@@ -106,13 +106,15 @@ int main(int argc, const char **argv)
 		}
 
 	int h, j;
+	file_io Fio;
+
 	{
 		ofstream fp("makefile_lifting");
 		int nb_solutions;
 		int *Solutions;
 		int solution_size = sz_in;
 
-		read_solutions_from_file(input_file_name,
+		Fio.read_solutions_from_file(input_file_name,
 			nb_solutions, Solutions, solution_size,
 			verbose_level);
 

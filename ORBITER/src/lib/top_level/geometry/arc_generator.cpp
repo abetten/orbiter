@@ -1050,6 +1050,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
 	sorting Sorting;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "arc_generator::report" << endl;
@@ -1384,7 +1385,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 	}
 
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 }
 

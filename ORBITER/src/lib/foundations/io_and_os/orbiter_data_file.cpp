@@ -52,6 +52,7 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	char **data;
 	int i;
+	file_io Fio;
 
 
 	if (f_v) {
@@ -60,7 +61,7 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 		}
 
 
-	if (!try_to_read_file(fname,
+	if (!Fio.try_to_read_file(fname,
 			nb_cases, data, verbose_level)) {
 		cout << "orbiter_data_file::load couldn't read file " 
 			<< fname << endl;
@@ -76,7 +77,7 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 				"parsing sets" << endl;
 		}
 	
-	parse_sets(nb_cases, data,
+	Fio.parse_sets(nb_cases, data,
 		FALSE /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 

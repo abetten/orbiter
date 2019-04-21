@@ -1223,6 +1223,7 @@ void packing::conjugacy_classes(int verbose_level)
 	char prefix[1000];
 	char fname1[1000];
 	char fname2[1000];
+	file_io Fio;
 
 
 	if (f_v) {
@@ -1234,7 +1235,7 @@ void packing::conjugacy_classes(int verbose_level)
 	sprintf(fname2, "%sconjugacy_classes.txt", prefix);
 
 
-	if (file_size(fname2) > 0) {
+	if (Fio.file_size(fname2) > 0) {
 		read_conjugacy_classes(fname2, verbose_level);
 		}
 	else {
@@ -1256,7 +1257,8 @@ void packing::read_conjugacy_classes(
 	int *perms;
 	int *class_size;
 	int *class_order_of_element;
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "packing::read_conjugacy_classes" << endl;
 		}
@@ -1391,7 +1393,7 @@ void packing::read_conjugacy_classes(
 	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
-			<< file_size(fname_latex) << endl;
+			<< Fio.file_size(fname_latex) << endl;
 	
 	if (f_v) {
 		cout << "packing::read_conjugacy_classes done" << endl;
@@ -1405,6 +1407,7 @@ void packing::conjugacy_classes_and_normalizers(int verbose_level)
 	char prefix[1000];
 	char fname1[1000];
 	char fname2[1000];
+	file_io Fio;
 
 
 	if (f_v) {
@@ -1416,7 +1419,7 @@ void packing::conjugacy_classes_and_normalizers(int verbose_level)
 	sprintf(fname2, "%sconjugacy_classes_and_normalizers.txt", prefix);
 
 
-	if (file_size(fname2) > 0) {
+	if (Fio.file_size(fname2) > 0) {
 		read_conjugacy_classes_and_normalizers(fname2, verbose_level);
 		}
 	else {
@@ -1444,6 +1447,7 @@ void packing::read_conjugacy_classes_and_normalizers(
 	int **normalizer_generators_perms;
 	projective_space_with_action *PA;
 	number_theory_domain NT;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "packing::read_conjugacy_classes_and_normalizers" << endl;
@@ -1640,7 +1644,7 @@ void packing::read_conjugacy_classes_and_normalizers(
 	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
-			<< file_size(fname_latex) << endl;
+			<< Fio.file_size(fname_latex) << endl;
 
 	FREE_int(perms);
 	FREE_int(class_size);
@@ -1662,7 +1666,8 @@ void packing::report_fixed_objects(int *Elt,
 	int f_v = (verbose_level >= 1);
 	int i, j, cnt;
 	int v[4];
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "packing::report_fixed_objects" << endl;
 		}
@@ -1780,7 +1785,7 @@ void packing::report_fixed_objects(int *Elt,
 	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
-			<< file_size(fname_latex) << endl;
+			<< Fio.file_size(fname_latex) << endl;
 
 	
 	if (f_v) {

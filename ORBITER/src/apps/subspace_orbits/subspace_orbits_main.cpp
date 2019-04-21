@@ -374,6 +374,7 @@ int main(int argc, const char **argv)
 			0 /* data1 */, f_embedded, f_sideways,
 			0 /* gen->verbose_level */);
 		}
+	file_io Fio;
 
 
 	if (f_table_of_nodes) {
@@ -399,7 +400,7 @@ int main(int argc, const char **argv)
 			cout << "writing to file " << fname << endl;
 			}
 
-		int_matrix_write_csv(fname, Table, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname, Table, nb_rows, nb_cols);
 
 
 		FREE_int(Table);
@@ -426,10 +427,10 @@ int main(int argc, const char **argv)
 	else {
 		sprintf(exec_log_fname, "subspace_orbits_run.csv");
 		}
-	int_matrix_write_csv_with_labels(
+	Fio.int_matrix_write_csv_with_labels(
 			exec_log_fname, M, 1, 3, column_labels);
 	cout << "Written file " << exec_log_fname << " of size "
-			<< file_size(exec_log_fname) << endl;
+			<< Fio.file_size(exec_log_fname) << endl;
 
 	FREE_OBJECT(LG);
 	FREE_OBJECT(Descr);

@@ -819,6 +819,7 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 	//int f_v = (verbose_level >= 1);
 	longinteger_domain D;
 	int cmp;
+	file_io Fio;
 	
 	Stab->group_order(n_e_w_stab_order);
 	cmp = D.compare_unsigned(n_e_w_stab_order, stab_order);
@@ -840,7 +841,7 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 		sprintf(fname, "stab_order_%d.txt", n_e_w_stab_order.as_int());
 		Stab->write_sgs(fname, 0 /*verbose_level */);
 		cout << "Written file " << fname
-				<< " of size " << file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname) << endl;
 
 
 		FREE_OBJECT(U);

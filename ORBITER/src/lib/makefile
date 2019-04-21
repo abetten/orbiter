@@ -112,7 +112,6 @@ MODULES= \
 		foundations/geometry/tdo_scheme.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \
-		foundations/globals/galois_global.o \
 		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
 		foundations/globals/polynomial_double_domain.o \
@@ -133,7 +132,6 @@ MODULES= \
 		foundations/graph_theory_nauty/nauty_interface.o \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
-		foundations/graphics/draw.o \
 		foundations/graphics/mp_graphics.o \
 		foundations/graphics/plot.o \
 		foundations/graphics/povray_interface.o \
@@ -141,6 +139,7 @@ MODULES= \
 		foundations/graphics/tree.o \
 		foundations/graphics/tree_node.o \
 		foundations/graphics/video_draw_options.o \
+		foundations/io_and_os/file_io.o \
 		foundations/io_and_os/file_output.o \
 		foundations/io_and_os/latex_interface.o \
 		foundations/io_and_os/memory.o \

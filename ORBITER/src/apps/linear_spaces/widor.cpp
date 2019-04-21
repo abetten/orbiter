@@ -83,6 +83,7 @@ int main(int argc, char **argv)
 		}
 	g << "-1 " << i << endl;
 	}
-	cout << "written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	file_io Fio;
+	cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
 }
 

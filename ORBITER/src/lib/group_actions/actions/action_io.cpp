@@ -114,6 +114,7 @@ void action::read_orbit_rep_and_candidates_from_files(char *prefix,
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_at_candidate_level = -1;
+	file_io Fio;
 
 
 	if (f_v) {
@@ -161,7 +162,7 @@ void action::read_orbit_rep_and_candidates_from_files(char *prefix,
 		// of this set.
 
 		orbit_at_candidate_level =
-				find_orbit_index_in_data_file(prefix,
+				Fio.find_orbit_index_in_data_file(prefix,
 				level_of_candidates_file, starter,
 				verbose_level);
 		}
@@ -181,7 +182,7 @@ void action::read_orbit_rep_and_candidates_from_files(char *prefix,
 	char fname2[1000];
 	sprintf(fname2, "%s_lvl_%d_candidates.bin", prefix,
 			level_of_candidates_file);
-	poset_classification_read_candidates_of_orbit(
+	Fio.poset_classification_read_candidates_of_orbit(
 		fname2, orbit_at_candidate_level,
 		candidates, nb_candidates, verbose_level - 1);
 

@@ -754,6 +754,7 @@ void diophant::write_solutions(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
 	vector<int> res;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "diophant::write_solutions" << endl;
@@ -794,7 +795,7 @@ void diophant::write_solutions(const char *fname, int verbose_level)
 	}
 	if (f_v) {
 		cout << "diophant::write_solutions written file " << fname
-				<< " of size " << file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname) << endl;
 		}
 }
 
@@ -804,15 +805,16 @@ void diophant::read_solutions_from_file(const char *fname_sol,
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	vector<int> res;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "diophant::read_solutions_from_file" << endl;
 		}
 	if (f_v) {
 		cout << "diophant::read_solutions_from_file reading file "
-				<< fname_sol << " of size " << file_size(fname_sol) << endl;
+				<< fname_sol << " of size " << Fio.file_size(fname_sol) << endl;
 		}
-	if (file_size(fname_sol) <= 0) {
+	if (Fio.file_size(fname_sol) <= 0) {
 		cout << "diophant::read_solutions_from_file file "
 				<< fname_sol << " does not exist" << endl;
 		exit(1);
@@ -844,7 +846,7 @@ void diophant::read_solutions_from_file(const char *fname_sol,
 	if (f_v) {
 		cout << "diophant::read_solutions_from_file read " << _resultanz
 			<< " solutions from file " << fname_sol << " of size "
-			<< file_size(fname_sol) << endl;
+			<< Fio.file_size(fname_sol) << endl;
 		}
 }
 
@@ -2245,6 +2247,7 @@ void diophant::save_in_compact_format(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, d;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "diophant::save_in_compact_format" << endl;
@@ -2293,7 +2296,7 @@ void diophant::save_in_compact_format(const char *fname, int verbose_level)
 	if (f_v) {
 		cout << "diophant::save_in_compact_format done, " << endl;
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 }
 
@@ -2427,6 +2430,7 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, d, h, val;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "diophant::save_in_general_format" << endl;
@@ -2516,7 +2520,7 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 	if (f_v) {
 		cout << "diophant::save_in_general_format done, " << endl;
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 }
 
@@ -2712,6 +2716,7 @@ void diophant::save_in_wassermann_format(
 	int f_v = (verbose_level >= 1);
 	int cnt_inequalities = 0, cur_inequality, f_need_slack;
 	int i, j, a;
+	file_io Fio;
 	
 	for (i = 0; i < m; i++) {
 		if (type[i] == t_LE) {
@@ -2757,7 +2762,7 @@ void diophant::save_in_wassermann_format(
 		}
 	}
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 void diophant::solve_wassermann(int verbose_level)
@@ -2767,6 +2772,7 @@ void diophant::solve_wassermann(int verbose_level)
 	char *fname_solutions = (char *) "solutions";
 	char cmd[1000];
 	char *buf;
+	file_io Fio;
 	//int lambda, c0_factor = 20, beta = 120;
 	//int p = 14, xmax, silence_level = 0;
 	
@@ -2786,8 +2792,8 @@ void diophant::solve_wassermann(int verbose_level)
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 	cout << "found file " << fname_solutions << " of size "
-			<< file_size(fname_solutions) << endl;
-	if (file_size(fname_solutions) < 0) {
+			<< Fio.file_size(fname_solutions) << endl;
+	if (Fio.file_size(fname_solutions) < 0) {
 		cout << "did not find solution file" << endl;
 		exit(1);
 		}
@@ -3167,6 +3173,8 @@ void diophant::delete_equation(int I)
 void diophant::write_gurobi_binary_variables(const char *fname)
 {
 	int i, j, a;
+	file_io Fio;
+
 	{
 	ofstream f(fname);
 	f << "Maximize" << endl;
@@ -3193,7 +3201,7 @@ void diophant::write_gurobi_binary_variables(const char *fname)
 	f << "End" << endl;
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 void diophant::draw_it(const char *fname_base,
@@ -3206,9 +3214,10 @@ void diophant::draw_it(const char *fname_base,
 	int f_col_grid = FALSE;
 	double scale = 0.5;
 	double line_width = 0.5;
-	
+	graph_theory_domain Graph;
 
-	draw_bitmatrix(fname_base, f_dots, 
+
+	Graph.draw_bitmatrix(fname_base, f_dots,
 		f_partition, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL, A, 
@@ -3230,6 +3239,7 @@ void diophant::draw_partitioned(const char *fname_base,
 	double line_width = 0.5;
 	int i, ii, j, jj;
 	combinatorics_domain Combi;
+	graph_theory_domain Graph;
 	
 	
 	if (f_v) {
@@ -3339,7 +3349,7 @@ void diophant::draw_partitioned(const char *fname_base,
 	int f_col_grid = FALSE;
 
 
-	draw_bitmatrix(fname_base, f_dots, 
+	Graph.draw_bitmatrix(fname_base, f_dots,
 		TRUE /* f_partition */, C.nb_types, part, col_part_size, part_col, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL, A2, 
@@ -3470,11 +3480,12 @@ void diophant::test_solution_file(const char *solution_file,
 	int *Sol;
 	int nb_sol, sol_length;
 	int i;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "diophant::test_solution_file" << endl;
 		}
-	int_matrix_read_text(solution_file, Sol, nb_sol, sol_length);
+	Fio.int_matrix_read_text(solution_file, Sol, nb_sol, sol_length);
 	
 	for (i = 0; i < nb_sol; i++) {
 		if (f_vv) {

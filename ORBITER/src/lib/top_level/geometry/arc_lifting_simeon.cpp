@@ -480,8 +480,10 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 	FREE_int(S);
 
 	}
+	file_io Fio;
+
 	cout << "number of solutions = " << nb_sol << endl;
-	cout << "written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 #endif
 

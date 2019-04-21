@@ -44,27 +44,6 @@ public:
 		int verbose_level);
 };
 
-// #############################################################################
-// draw.C
-// #############################################################################
-
-void transform_llur(int *in, int *out, int &x, int &y);
-void transform_dist(int *in, int *out, int &x, int &y);
-void transform_dist_x(int *in, int *out, int &x);
-void transform_dist_y(int *in, int *out, int &y);
-void transform_llur_double(double *in, double *out, double &x, double &y);
-void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad);
-int C3D(int i, int j, int k);
-int C2D(int i, int j);
-void draw_bitmatrix(const char *fname_base, int f_dots, 
-	int f_partition, int nb_row_parts, int *row_part_first, 
-	int nb_col_parts, int *col_part_first, 
-	int f_row_grid, int f_col_grid, 
-	int f_bitmatrix, uchar *D, int *M, 
-	int m, int n, int xmax_in, int ymax_in, int xmax, int ymax, 
-	double scale, double line_width, 
-	int f_has_labels, int *labels);
-
 
 // #############################################################################
 // mp_graphics.C:
@@ -459,8 +438,6 @@ void draw_density_multiple_curves(char *prefix,
 	int xmax, int ymax, int offset_x, int f_switch_x, 
 	int f_v_logarithmic, double log_base, int no, int f_embedded, 
 	int verbose_level);
-void read_numbers_from_file(const char *fname, 
-	int *&the_set, int &set_size, int verbose_level);
 void get_coord(int *Px, int *Py, int idx, int x, int y, 
 	int min_x, int min_y, int max_x, int max_y, int f_switch_x);
 void get_coord_log(int *Px, int *Py, int idx, int x, int y, 
@@ -474,8 +451,6 @@ void projective_plane_draw_grid(const char *fname, int xmax, int ymax,
 	int f_point_labels, char **Point_labels, 
 	int f_embedded, int f_sideways, 
 	int verbose_level);
-void projective_plane_make_affine_point(int q, int x1, int x2, int x3, 
-	double &a, double &b);
 
 // #############################################################################
 // povray_interface.cpp

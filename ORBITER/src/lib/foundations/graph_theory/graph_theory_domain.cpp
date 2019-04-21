@@ -217,6 +217,7 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_files(
 	int i, c;
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
 	int search_steps, decision_steps, nb_sol, dt;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques_list_of_files" << endl;
@@ -245,7 +246,7 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_files(
 				<< " in file " << fname << endl;
 			}
 
-		if (file_size(fname) <= 0) {
+		if (Fio.file_size(fname) <= 0) {
 			cout << "colored_graph_all_cliques_list_of_files file "
 				<< fname << " does not exist" << endl;
 			exit(1);
@@ -327,6 +328,7 @@ void graph_theory_domain::save_as_colored_graph_easy(
 {
 	char fname[1000];
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "save_as_colored_graph_easy" << endl;
@@ -345,7 +347,7 @@ void graph_theory_domain::save_as_colored_graph_easy(
 
 	if (f_v) {
 		cout << "save_as_colored_graph_easy Written file "
-				<< fname << " of size " << file_size(fname) << endl;
+				<< fname << " of size " << Fio.file_size(fname) << endl;
 		}
 }
 
@@ -359,6 +361,7 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 	int f_v = (verbose_level >= 1);
 	FILE *fp;
 	int i;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "save_colored_graph" << endl;
@@ -373,22 +376,22 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 
 	fp = fopen(fname, "wb");
 
-	fwrite_int4(fp, nb_vertices);
-	fwrite_int4(fp, nb_colors);
-	fwrite_int4(fp, data_sz);
+	Fio.fwrite_int4(fp, nb_vertices);
+	Fio.fwrite_int4(fp, nb_colors);
+	Fio.fwrite_int4(fp, data_sz);
 	for (i = 0; i < data_sz; i++) {
-		fwrite_int4(fp, data[i]);
+		Fio.fwrite_int4(fp, data[i]);
 		}
 	for (i = 0; i < nb_vertices; i++) {
 		if (points) {
-			fwrite_int4(fp, points[i]);
+			Fio.fwrite_int4(fp, points[i]);
 			}
 		else {
-			fwrite_int4(fp, 0);
+			Fio.fwrite_int4(fp, 0);
 			}
-		fwrite_int4(fp, point_color[i]);
+		Fio.fwrite_int4(fp, point_color[i]);
 		}
-	fwrite_uchars(fp, bitvector_adjacency, bitvector_length);
+	Fio.fwrite_uchars(fp, bitvector_adjacency, bitvector_length);
 	fclose(fp);
 
 
@@ -408,14 +411,15 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 	int f_v = (verbose_level >= 1);
 	FILE *fp;
 	int i, L;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "load_colored_graph" << endl;
 		}
 	fp = fopen(fname, "rb");
 
-	nb_vertices = fread_int4(fp);
-	nb_colors = fread_int4(fp);
+	nb_vertices = Fio.fread_int4(fp);
+	nb_colors = Fio.fread_int4(fp);
 	if (f_v) {
 		cout << "load_colored_graph nb_vertices=" << nb_vertices
 			<< " nb_colors=" << nb_colors << endl;
@@ -430,19 +434,19 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 		cout << "load_colored_graph user_data_size="
 				<< user_data_size << endl;
 		}
-	user_data_size = fread_int4(fp);
+	user_data_size = Fio.fread_int4(fp);
 	user_data = NEW_int(user_data_size);
 
 	for (i = 0; i < user_data_size; i++) {
-		user_data[i] = fread_int4(fp);
+		user_data[i] = Fio.fread_int4(fp);
 		}
 
 	vertex_labels = NEW_int(nb_vertices);
 	vertex_colors = NEW_int(nb_vertices);
 
 	for (i = 0; i < nb_vertices; i++) {
-		vertex_labels[i] = fread_int4(fp);
-		vertex_colors[i] = fread_int4(fp);
+		vertex_labels[i] = Fio.fread_int4(fp);
+		vertex_colors[i] = Fio.fread_int4(fp);
 		if (vertex_colors[i] >= nb_colors) {
 			cout << "colored_graph::load" << endl;
 			cout << "vertex_colors[i] >= nb_colors" << endl;
@@ -454,7 +458,7 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 		}
 
 	bitvector_adjacency = NEW_uchar(bitvector_length);
-	fread_uchars(fp, bitvector_adjacency, bitvector_length);
+	Fio.fread_uchars(fp, bitvector_adjacency, bitvector_length);
 
 
 	fclose(fp);
@@ -830,6 +834,50 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 	if (f_v) {
 		cout << "compute_decomposition_of_graph_wrt_partition done" << endl;
 		}
+}
+
+void graph_theory_domain::draw_bitmatrix(const char *fname_base, int f_dots,
+	int f_partition, int nb_row_parts, int *row_part_first,
+	int nb_col_parts, int *col_part_first,
+	int f_row_grid, int f_col_grid,
+	int f_bitmatrix, uchar *D, int *M,
+	int m, int n, int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+	double scale, double line_width,
+	int f_has_labels, int *labels)
+{
+	mp_graphics G;
+	char fname_base2[1000];
+	char fname[1000];
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
+	//double scale = .3;
+	//double line_width = 1.0;
+	file_io Fio;
+
+	sprintf(fname_base2, "%s", fname_base);
+	sprintf(fname, "%s.mp", fname_base2);
+	{
+	G.setup(fname_base2, 0, 0,
+		xmax_in /* ONE_MILLION */, ymax_in /* ONE_MILLION */,
+		xmax_out, ymax_out,
+		f_embedded, f_sideways,
+		scale, line_width);
+
+	//G.frame(0.05);
+
+	G.draw_bitmatrix2(f_dots,
+		f_partition, nb_row_parts, row_part_first,
+		nb_col_parts, col_part_first,
+		f_row_grid, f_col_grid,
+		f_bitmatrix, D, M,
+		m, n,
+		xmax_in, ymax_in,
+		f_has_labels, labels);
+
+	G.finish(cout, TRUE);
+	}
+	cout << "draw_it written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
 }
 
 

@@ -96,6 +96,7 @@ int main(int argc, char **argv)
 
 	int idx;
 	mem_object_registry **M;
+	file_io Fio;
 
 	M = (mem_object_registry **) NEW_pvoid(nb_files);
 	for (idx = 0; idx < nb_files; idx++) {
@@ -110,7 +111,7 @@ int main(int argc, char **argv)
 		S = NEW_OBJECT(spreadsheet);
 
 		cout << "Reading table " << fnames[idx] << endl;
-		if (file_size(fnames[idx]) <= 0) {
+		if (Fio.file_size(fnames[idx]) <= 0) {
 			cout << "error: the file " << fnames[idx]
 				<< " does not exist" << endl;
 			exit(1);

@@ -115,6 +115,9 @@ void do_it()
 	print_integer_matrix_width(cout, M, v, v, v, 4);
 
 	strcpy(fname, "design.inc");
-	write_incidence_matrix_to_file(fname, M, v, v, 1 /* verbose_level */);
+
+	file_io Fio;
+
+	Fio.write_incidence_matrix_to_file(fname, M, v, v, 1 /* verbose_level */);
 }
 

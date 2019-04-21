@@ -767,8 +767,10 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 
 	}
+	file_io Fio;
+
 	cout << "Written file " << fname_arc_lifting << " of size "
-			<< file_size(fname_arc_lifting) << endl;
+			<< Fio.file_size(fname_arc_lifting) << endl;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::report done" << endl;

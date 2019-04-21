@@ -635,6 +635,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 	
 	char magma_fname[1000];
+	file_io Fio;
 
 	sprintf(magma_fname, "surface_q%d_iso%d_group.magma",
 			q, nb_surfaces);
@@ -643,7 +644,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 	if (f_v) {
 		cout << "written file " << magma_fname << " of size "
-				<< file_size(magma_fname) << endl;
+				<< Fio.file_size(magma_fname) << endl;
 		}
 
 	longinteger_object go;

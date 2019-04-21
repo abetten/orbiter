@@ -266,9 +266,10 @@ void lift_single_arc(int *arc, int arc_size,
 	
 	L.foot(fp);
 	} // fp
+	file_io Fio;
 
 	cout << "Written file " << fname_arc_lifting << " of size "
-			<< file_size(fname_arc_lifting) << endl;
+			<< Fio.file_size(fname_arc_lifting) << endl;
 
 	if (f_v) {
 		cout << "lift_single_arc done" << endl;
@@ -548,8 +549,10 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 	L.foot(fp);
 	} // fp
 
+	file_io Fio;
+
 	cout << "Written file " << fname_arc_lifting << " of size "
-			<< file_size(fname_arc_lifting) << endl;
+			<< Fio.file_size(fname_arc_lifting) << endl;
 	//delete Gen;
 	//delete F;
 

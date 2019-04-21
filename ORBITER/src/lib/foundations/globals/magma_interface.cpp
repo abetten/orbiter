@@ -30,6 +30,7 @@ void magma_interface::write_permutation_group(const char *fname_base,
 	char fname[1000];
 	int i;
 	combinatorics_domain Combi;
+	file_io Fio;
 
 	sprintf(fname, "%s.magma", fname_base);
 	{
@@ -47,7 +48,7 @@ void magma_interface::write_permutation_group(const char *fname_base,
 	fp << " >;" << endl;
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 void magma_interface::normalizer_in_Sym_n(
@@ -61,6 +62,7 @@ void magma_interface::normalizer_in_Sym_n(
 	//char cmd[1000];
 	int i;
 	combinatorics_domain Combi;
+	file_io Fio;
 
 	sprintf(fname_magma, "%s.magma", fname_base);
 	sprintf(fname_output, "%s.txt", fname_base);
@@ -93,7 +95,7 @@ void magma_interface::normalizer_in_Sym_n(
 	}
 
 
-	if (file_size(fname_output) == 0) {
+	if (Fio.file_size(fname_output) == 0) {
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
 		cout << "/usr/local/magma/magma " << fname_magma << endl;
@@ -106,7 +108,7 @@ void magma_interface::normalizer_in_Sym_n(
 #endif
 
 	cout << "normalizer command in MAGMA has finished, written file "
-		<< fname_output << " of size " << file_size(fname_output) << endl;
+		<< fname_output << " of size " << Fio.file_size(fname_output) << endl;
 	
 
 	read_permutation_group(fname_output,

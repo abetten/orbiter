@@ -130,7 +130,10 @@ int main(int argc, char **argv)
 			S->print_table_with_row_selection(f_selected, fp);
 			fp << "END" << endl;
 		}
-		cout << "Written file " << fname_save << " of size " << file_size(fname_save) << endl;
+		file_io Fio;
+
+		cout << "Written file " << fname_save << " of size "
+				<< Fio.file_size(fname_save) << endl;
 	}
 
 #if 0

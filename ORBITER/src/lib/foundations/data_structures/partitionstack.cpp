@@ -596,6 +596,7 @@ void partitionstack::write_cell_to_file(int i,
 	int f_v = (verbose_level >= 1);
 	int j, first, len;
 	int *set;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "partitionstack::write_cell_to_file "
@@ -607,7 +608,7 @@ void partitionstack::write_cell_to_file(int i,
 	for (j = 0; j < len; j++) {
 		set[j] = pointList[first + j];
 		}
-	write_set_to_file(fname, set, len, verbose_level - 1);
+	Fio.write_set_to_file(fname, set, len, verbose_level - 1);
 	FREE_int(set);
 }
 
@@ -617,6 +618,7 @@ void partitionstack::write_cell_to_file_points_or_lines(int i,
 	int f_v = (verbose_level >= 1);
 	int j, first, len, m = 0;
 	int *set;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "partitionstack::write_cell_to_file_points_or_lines "
@@ -631,7 +633,7 @@ void partitionstack::write_cell_to_file_points_or_lines(int i,
 	for (j = 0; j < len; j++) {
 		set[j] = pointList[first + j] - m;
 		}
-	write_set_to_file(fname, set, len, verbose_level - 1);
+	Fio.write_set_to_file(fname, set, len, verbose_level - 1);
 	FREE_int(set);
 }
 

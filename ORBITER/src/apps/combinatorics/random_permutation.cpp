@@ -52,6 +52,7 @@ void choose_random_permutation(int n,
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics_domain Combi;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "choose_random_permutation" << endl;
@@ -63,7 +64,7 @@ void choose_random_permutation(int n,
 	Combi.random_permutation(P, n);
 
 	if (f_save) {
-		int_vec_write_csv(P, n, fname, "perm");
+		Fio.int_vec_write_csv(P, n, fname, "perm");
 		}
 	if (f_v) {
 		cout << "choose_random_permutation done" << endl;

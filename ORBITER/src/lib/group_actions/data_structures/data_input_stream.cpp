@@ -166,6 +166,7 @@ int data_input_stream::count_number_of_objects_to_test(
 	int f_v = (verbose_level >= 1);
 	int input_idx, nb_obj;
 	int nb_objects_to_test;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "data_input_stream::count_number_of_objects_to_test" << endl;
@@ -207,7 +208,7 @@ int data_input_stream::count_number_of_objects_to_test(
 				cout << "input sets of points from file "
 						<< input_string[input_idx] << ":" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(
+			nb_obj = Fio.count_number_of_orbits_in_file(
 					input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
@@ -221,7 +222,7 @@ int data_input_stream::count_number_of_objects_to_test(
 				cout << "input sets of lines from file "
 					<< input_string[input_idx] << ":" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(
+			nb_obj = Fio.count_number_of_orbits_in_file(
 				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
@@ -235,7 +236,7 @@ int data_input_stream::count_number_of_objects_to_test(
 				cout << "input sets of packings from file "
 					<< input_string[input_idx] << ":" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(
+			nb_obj = Fio.count_number_of_orbits_in_file(
 				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
@@ -252,7 +253,7 @@ int data_input_stream::count_number_of_objects_to_test(
 				cout << "through spread table "
 					<< input_string2[input_idx] << " :" << endl;
 				}
-			nb_obj = count_number_of_orbits_in_file(
+			nb_obj = Fio.count_number_of_orbits_in_file(
 				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]

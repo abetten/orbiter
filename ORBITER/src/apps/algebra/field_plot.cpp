@@ -128,13 +128,14 @@ void draw_end(char *fname, mp_graphics *G, int xmax, int ymax, int verbose_level
 	//int y_min = 0, y_max = 1000;
 	//int factor_1000 = 1000;
 	char fname_full[1000];
-	
+	file_io Fio;
+
 	sprintf(fname_full, "%s.mp", fname);
 	G->end_figure();
 	G->footer();
 	FREE_OBJECT(G);
 	
-	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+	cout << "written file " << fname_full << " of size " << Fio.file_size(fname_full) << endl;
 	
 }
 

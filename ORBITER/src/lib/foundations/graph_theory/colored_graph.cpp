@@ -827,6 +827,7 @@ void colored_graph::load(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	graph_theory_domain Graph;
+	file_io Fio;
 
 
 	Graph.load_colored_graph(fname,
@@ -844,7 +845,7 @@ void colored_graph::load(const char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "colored_graph::load Read file " << fname
-				<< " of size " << file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname) << endl;
 		}
 }
 
@@ -1060,6 +1061,7 @@ void colored_graph::draw_on_circle(char *fname,
 	double tikz_global_scale, double tikz_global_line_width)
 {
 	char fname_full[1000];
+	file_io Fio;
 	
 	sprintf(fname_full, "%s.mp", fname);
 	{
@@ -1081,7 +1083,7 @@ void colored_graph::draw_on_circle(char *fname,
 	G.finish(cout, TRUE);
 	}
 	cout << "written file " << fname_full << " of size "
-			<< file_size(fname_full) << endl;
+			<< Fio.file_size(fname_full) << endl;
 	
 }
 
@@ -1097,6 +1099,7 @@ void colored_graph::draw_on_circle_2(
 	double rad1 = 500000;
 	double rad2 = 5000;
 	//char str[1000];
+	numerics Num;
 	
 	Px = NEW_int(n);
 	Py = NEW_int(n);
@@ -1107,7 +1110,7 @@ void colored_graph::draw_on_circle_2(
 		rad2 = radius;
 		}
 	for (i = 0; i < n; i++) {
-		on_circle_int(Px, Py, i,
+		Num.on_circle_int(Px, Py, i,
 				((int)(90. + (double)i * phi)) % 360, rad1);
 		//cout << "i=" << i << " Px=" << Px[i]
 		// << " Py=" << Py[i] << endl;
@@ -1119,7 +1122,7 @@ void colored_graph::draw_on_circle_2(
 		rad_big = (int)((double)rad1 * 1.1);
 		cout << "rad_big=" << rad_big << endl;
 		for (i = 0; i < n; i++) {
-			on_circle_int(Px1, Py1, i,
+			Num.on_circle_int(Px1, Py1, i,
 					((int)(90. + (double)i * phi)) % 360, rad_big);
 			//cout << "i=" << i << " Px=" << Px[i]
 			// << " Py=" << Py[i] << endl;
@@ -1184,6 +1187,7 @@ void colored_graph::draw(const char *fname,
 	int len, i, j, k;
 	int nb_vertices;
 	combinatorics_domain Combi;
+	graph_theory_domain Graph;
 	
 	if (f_v) {
 		cout << "colored_graph::draw" << endl;
@@ -1213,7 +1217,7 @@ void colored_graph::draw(const char *fname,
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
 	
-	draw_bitmatrix(fname, f_dots, 
+	Graph.draw_bitmatrix(fname, f_dots,
 		FALSE, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, D, NULL, 
@@ -1243,6 +1247,7 @@ void colored_graph::draw_Levi(const char *fname,
 	uchar *D = NULL;
 	int len, i, j, k;
 	combinatorics_domain Combi;
+	graph_theory_domain Graph;
 	
 	if (f_v) {
 		cout << "colored_graph::draw_Levi" << endl;
@@ -1289,7 +1294,7 @@ void colored_graph::draw_Levi(const char *fname,
 		cout << endl;
 		}
 	
-	draw_bitmatrix(fname, f_dots, 
+	Graph.draw_bitmatrix(fname, f_dots,
 		//FALSE, 0, NULL, 0, NULL, 
 		f_partition, nb_row_parts, row_part_first,
 			nb_col_parts, col_part_first,
@@ -1327,6 +1332,7 @@ void colored_graph::draw_with_a_given_partition(
 	int i, j, k, len;
 	int *P;
 	combinatorics_domain Combi;
+	graph_theory_domain Graph;
 
 
 	if (f_v) {
@@ -1361,7 +1367,7 @@ void colored_graph::draw_with_a_given_partition(
 			}
 		}
 
-	draw_bitmatrix(fname, f_dots, 
+	Graph.draw_bitmatrix(fname, f_dots,
 		TRUE, nb_parts, P, nb_parts, P, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, D, NULL, 
@@ -1394,6 +1400,7 @@ void colored_graph::draw_partitioned(const char *fname,
 	int len, i, j, k, ii, jj;
 	int nb_vertices;
 	combinatorics_domain Combi;
+	graph_theory_domain Graph;
 	
 	if (f_v) {
 		cout << "colored_graph::draw_partitioned" << endl;
@@ -1443,7 +1450,7 @@ void colored_graph::draw_partitioned(const char *fname,
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
 
-	draw_bitmatrix(fname, f_dots, 
+	Graph.draw_bitmatrix(fname, f_dots,
 		TRUE, C.nb_types, part, C.nb_types, part, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, D, NULL, 
@@ -1659,6 +1666,7 @@ void colored_graph::export_to_magma(
 	int i, j;
 	int *neighbors;
 	int nb_neighbors;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_magma" << endl;
@@ -1705,7 +1713,7 @@ void colored_graph::export_to_magma(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_magma" << endl;
@@ -1718,6 +1726,7 @@ void colored_graph::export_to_maple(
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
 	int nb_edges;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_maple" << endl;
@@ -1771,7 +1780,7 @@ void colored_graph::export_to_maple(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_maple" << endl;
@@ -1783,6 +1792,7 @@ void colored_graph::export_to_file(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
@@ -1819,7 +1829,7 @@ void colored_graph::export_to_file(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
@@ -1831,6 +1841,7 @@ void colored_graph::export_to_text(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_text" << endl;
@@ -1867,7 +1878,7 @@ void colored_graph::export_to_text(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_text" << endl;
@@ -1879,6 +1890,7 @@ void colored_graph::export_laplacian_to_file(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_laplacian_to_file" << endl;
@@ -1929,7 +1941,7 @@ void colored_graph::export_laplacian_to_file(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_laplacian_to_file" << endl;
@@ -1941,6 +1953,7 @@ void colored_graph::export_to_file_matlab(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file_matlab" << endl;
@@ -1977,7 +1990,7 @@ void colored_graph::export_to_file_matlab(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
@@ -2171,6 +2184,7 @@ void colored_graph::draw_it(const char *fname_base,
 	int L, length, i, j, k, a;
 	uchar *bitvec;
 	combinatorics_domain Combi;
+	graph_theory_domain Graph;
 
 	L = nb_points * nb_points;
 	length = (L + 7) >> 3;
@@ -2191,7 +2205,7 @@ void colored_graph::draw_it(const char *fname_base,
 			}
 		}
 
-	draw_bitmatrix(fname_base, f_dots, 
+	Graph.draw_bitmatrix(fname_base, f_dots,
 		f_partition, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, bitvec, NULL, 

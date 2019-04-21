@@ -64,11 +64,12 @@ int main(int argc, char **argv)
 	int *Casenumbers;
 	int nb_cases;
 	int j, h;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "before read_and_parse_data_file_fancy" << endl;
 		}
-	read_and_parse_data_file_fancy(fname, 
+	Fio.read_and_parse_data_file_fancy(fname,
 		FALSE /*f_casenumbers */, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 

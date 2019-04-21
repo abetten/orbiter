@@ -35,11 +35,13 @@ void clique_finder::open_tree_file(const char *fname_base,
 
 void clique_finder::close_tree_file()
 {
+	file_io Fio;
+
 	*fp_tree << -1 << endl;
 	fp_tree->close();
 	delete fp_tree;
 	cout << "written file " << fname_tree << " of size "
-			<< file_size(fname_tree) << endl;
+			<< Fio.file_size(fname_tree) << endl;
 }
 
 void clique_finder::init(const char *label, int n, 

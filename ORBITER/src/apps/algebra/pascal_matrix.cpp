@@ -103,15 +103,16 @@ void do_it(int q, int k, int verbose_level)
 
 	char fname[1000];
 	//char label[1000];
+	file_io Fio;
 
 	//sprintf(label, "Pascal_%d_%d", k, q);
 	sprintf(fname, "Pascal_%d_%d.csv", k, q);
 
-	int_matrix_write_csv(fname, set, 1, q + 1);
+	Fio.int_matrix_write_csv(fname, set, 1, q + 1);
 	//write_set_to_file(fname, set, q, 0 /*verbose_level*/);
 	//int_vec_write_csv(set, q, fname, label);
 	cout << "Written file " << fname
-			<< " of size " << file_size(fname) << endl;
+			<< " of size " << Fio.file_size(fname) << endl;
 }
 
 int entry_ij(finite_field *F, int m, int n)

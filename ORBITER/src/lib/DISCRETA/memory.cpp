@@ -312,8 +312,9 @@ void memory::read_file(char *fname, int f_v)
 	FILE *fp;
 	int fsize;
 	char *pc;
+	file_io Fio;
 
-	fsize = file_size(fname);
+	fsize = Fio.file_size(fname);
 	alloc(fsize);
 	pc = self.char_pointer;
 	fp = fopen(fname, "r");
@@ -334,6 +335,7 @@ void memory::write_file(char *fname, int f_v)
 	FILE *fp;
 	int size;
 	char *pc;
+	file_io Fio;
 
 	size = used_length();
 	pc = self.char_pointer;
@@ -343,7 +345,7 @@ void memory::write_file(char *fname, int f_v)
 	fwrite(pc, 1 /* size */, size /* items */, fp);
 	
 	fclose(fp);
-	if (file_size(fname) != size) {
+	if (Fio.file_size(fname) != size) {
 		cout << "memory::write_file() error: file_size(fname) != size\n";
 		exit(1);
 		}

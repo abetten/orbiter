@@ -86,6 +86,7 @@ int main(int argc, char **argv)
 		cout << "Please use option -EOF_marker <EOF_marker>" << endl;
 		exit(1);
 		}
+	file_io Fio;
 
 	if (f_loop) {
 		int h;
@@ -98,13 +99,13 @@ int main(int argc, char **argv)
 			sprintf(fname_out_processed, fname_out, h);
 			cout << "h=" << h << " fname_in_mask_processed="
 					<< fname_in_mask_processed << endl;
-			concatenate_files(fname_in_mask_processed, N, 
+			Fio.concatenate_files(fname_in_mask_processed, N,
 				fname_out_processed, EOF_marker, f_title_line, 
 				verbose_level);
 			}
 		}
 	else {
-		concatenate_files(fname_in_mask, N, 
+		Fio.concatenate_files(fname_in_mask, N,
 			fname_out, EOF_marker, f_title_line, 
 			verbose_level);
 		}

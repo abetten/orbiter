@@ -113,10 +113,11 @@ int main(int argc, const char **argv)
 	int nb_points;
 	int *points;
 	combinatorics_domain Combi;
+	file_io Fio;
 
 	action *Ab;
 	
-	read_and_parse_data_file_fancy(fname_in, 
+	Fio.read_and_parse_data_file_fancy(fname_in,
 		f_casenumbers, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -341,7 +342,7 @@ int main(int argc, const char **argv)
 	fp << -1 << endl;
 	}
 	cout << "Written file " << fname_out << " of size "
-			<< file_size(fname_out) << endl;
+			<< Fio.file_size(fname_out) << endl;
 	
 	the_end(t0);
 	//the_end_quietly(t0);

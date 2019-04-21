@@ -204,12 +204,13 @@ void set_and_stabilizer::init_stab_from_file(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	vector_ge *gens;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "set_and_stabilizer::init_stab_from_file" << endl;
 		}
 
-	if (file_size(fname_gens) <= 0) {
+	if (Fio.file_size(fname_gens) <= 0) {
 		cout << "set_and_stabilizer::init_stab_from_file "
 				"the file " << fname_gens
 				<< " does not exist or is empty" << endl;

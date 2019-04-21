@@ -617,13 +617,14 @@ void orbit_of_equations::save_csv(const char *fname, int verbose_level)
 {
 	int i;
 	int *Data;
+	file_io Fio;
 
 	Data = NEW_int(used_length * nb_monomials);
 	for (i = 0; i < used_length; i++) {
 		int_vec_copy(Equations[i] + 1,
 				Data + i * nb_monomials, nb_monomials);
 		}
-	int_matrix_write_csv(fname, Data, used_length, nb_monomials);
+	Fio.int_matrix_write_csv(fname, Data, used_length, nb_monomials);
 }
 
 

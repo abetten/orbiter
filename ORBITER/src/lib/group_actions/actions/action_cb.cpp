@@ -619,6 +619,7 @@ void action::element_write_file(int *Elt,
 		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	FILE *f2;
 	f2 = fopen(fname, "wb");
@@ -627,7 +628,7 @@ void action::element_write_file(int *Elt,
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 }
 
@@ -635,11 +636,12 @@ void action::element_read_file(int *Elt,
 		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "element_read_file: "
 				"reading from file " << fname
-				<< " of size " << file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname) << endl;
 		}
 	FILE *f2;
 	f2 = fopen(fname, "rb");

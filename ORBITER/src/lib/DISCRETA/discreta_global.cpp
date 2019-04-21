@@ -21,6 +21,8 @@ void free_global_data()
 
 void the_end(int t0)
 {
+	file_io Fio;
+
 	cout << "***************** The End **********************" << endl;
 	cout << "nb_calls_to_finite_field_init="
 			<< nb_calls_to_finite_field_init << endl;
@@ -38,7 +40,7 @@ void the_end(int t0)
 
 	mem_usage = os_memory_usage();
 	sprintf(fname, "memory_usage.csv");
-	int_matrix_write_csv(fname, &mem_usage, 1, 1);
+	Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
 }
 
 void the_end_quietly(int t0)

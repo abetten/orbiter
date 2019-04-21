@@ -130,6 +130,7 @@ int main(int argc, const char **argv)
 
 
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 
 	F = NEW_OBJECT(finite_field);
@@ -454,7 +455,7 @@ int main(int argc, const char **argv)
 
 		Sch->latex(fname_orbits);
 		cout << "Written file " << fname_orbits << " of size "
-				<< file_size(fname_orbits) << endl;
+				<< Fio.file_size(fname_orbits) << endl;
 
 
 		char fname_tree_mask[1000];

@@ -396,6 +396,7 @@ int main(int argc, const char **argv)
 	{
 	finite_field *F;
 	semifield_classify S;
+	file_io Fio;
 
 
 	F = NEW_OBJECT(finite_field);
@@ -438,7 +439,7 @@ int main(int argc, const char **argv)
 		sprintf(fname, "%s_lvl_%d", prefix,
 				print_representatives_depth);
 
-		nb = count_number_of_orbits_in_file(fname, verbose_level);
+		nb = Fio.count_number_of_orbits_in_file(fname, verbose_level);
 
 		cout << "there are " << nb << " orbit representatives "
 				"in the file " << fname << endl;

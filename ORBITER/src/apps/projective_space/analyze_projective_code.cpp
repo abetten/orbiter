@@ -82,12 +82,13 @@ int main(int argc, char **argv)
 		}
 
 	finite_field *F;
+	file_io Fio;
 
 	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 
 	if (f_file) {
-		read_set_from_file(file_name, the_set, set_size, verbose_level - 2);
+		Fio.read_set_from_file(file_name, the_set, set_size, verbose_level - 2);
 		if (set_size > MY_MAX_SET_SIZE) {
 			cout << "set is too big, please increase MY_MAX_SET_SIZE" << endl;
 			exit(1);

@@ -139,53 +139,54 @@ int main(int argc, char **argv)
 
 	sprintf(fname, "memory_usage.csv");
 	t[0] = os_seconds_past_1970();
+	file_io Fio;
 
 
 	system(cmd1);
 	t[1] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[0] = M[0];
 	FREE_int(M);
 
 	system(cmd2);
 	t[2] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[1] = M[0];
 	FREE_int(M);
 
 	system(cmd3);
 	t[3] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[2] = M[0];
 	FREE_int(M);
 
 	system(cmd4);
 	t[4] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[3] = M[0];
 	FREE_int(M);
 
 	system(cmd5);
 	t[5] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[4] = M[0];
 	FREE_int(M);
 
 	system(cmd6);
 	t[6] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[5] = M[0];
 	FREE_int(M);
 
 	system(cmd7);
 	t[7] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[6] = M[0];
 	FREE_int(M);
 
 	system(cmd8);
 	t[8] = os_seconds_past_1970();
-	int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[7] = M[0];
 	FREE_int(M);
 
@@ -201,9 +202,9 @@ int main(int argc, char **argv)
 	int_vec_copy(Mem, Stats + 9, 8);
 
 	sprintf(fname2, "BLT_%d_stats.csv", q);
-	int_matrix_write_csv(fname2, Stats, 1, 17);
+	Fio.int_matrix_write_csv(fname2, Stats, 1, 17);
 
-	cout << "Written file " << fname2 << " of size " << file_size(fname2) << endl;
+	cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
 }
 
 

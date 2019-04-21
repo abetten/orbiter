@@ -123,12 +123,13 @@ void analyze(int n, int k, int t, int q,
 	grassmann *Gr_k;
 	grassmann *Gr_tk;
 	int i;
+	file_io Fio;
 
 
 	if (f_v) {
 		cout << "analyze" << endl;
 		}
-	int_matrix_read_csv(fname,
+	Fio.int_matrix_read_csv(fname,
 			Designs, nb_designs, len, 0 /* verbose_level */);
 
 	cout << "read " << nb_designs << " from file " << fname << endl;
@@ -242,12 +243,13 @@ void test_group(int n, int k, int t, int q,
 	action *A2;
 	sims *S;
 	int i;
+	file_io Fio;
 
 
 	if (f_v) {
 		cout << "test_group" << endl;
 		}
-	int_matrix_read_csv(fname, Designs,
+	Fio.int_matrix_read_csv(fname, Designs,
 			nb_designs, len, 0 /* verbose_level */);
 
 	cout << "read " << nb_designs << " from file " << fname << endl;

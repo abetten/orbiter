@@ -1261,6 +1261,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet" << endl;
@@ -1449,7 +1450,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 				magma_fname, verbose_level - 2);
 		if (f_v) {
 			cout << "written file " << magma_fname << " of size "
-					<< file_size(magma_fname) << endl;
+					<< Fio.file_size(magma_fname) << endl;
 			}
 
 		ost << "\\clearpage\\subsection*{Magma Export}" << endl;
@@ -1482,7 +1483,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 				gap_fname, verbose_level - 2);
 		if (f_v) {
 			cout << "written file " << gap_fname << " of size "
-					<< file_size(gap_fname) << endl;
+					<< Fio.file_size(gap_fname) << endl;
 			}
 
 		ost << "\\clearpage\\subsection*{GAP Export}" << endl;

@@ -6,7 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	galois_global.o \
 	magma_interface.o \
 	numerics.o \
 	polynomial_double_domain.o \

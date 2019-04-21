@@ -1698,8 +1698,10 @@ void direct_product_action::write_pair_orbit_file(
 			}
 		}
 	}
+	file_io Fio;
+
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	if (f_v) {
 		cout << "direct_product_action::write_pair_"
 				"orbit_file done" << endl;

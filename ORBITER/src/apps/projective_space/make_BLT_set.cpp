@@ -38,6 +38,7 @@ int main(int argc, char **argv)
 	int verbose_level = 0;
 	int i;
 	int q, k;
+	file_io Fio;
 
 	if (argc <= 2) {
 		print_usage();
@@ -61,9 +62,9 @@ int main(int argc, char **argv)
 
 	BLT = K.BLT_representative(q, k);
 	sprintf(fname, "BLT_%d_%d.txt", q, k);
-	write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
+	Fio.write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
 	if (f_v) {
-		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 	the_end(t0);
 }

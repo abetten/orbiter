@@ -267,7 +267,8 @@ int main(int argc, char **argv)
 	char fname_out[1000];
 	char fname_base[1000];
 	char ext[1000];
-	
+	file_io Fio;
+
 	if (!f_file && !f_set) {
 		cout << "please use option -file <fname> "
 				"to specify input file or "
@@ -275,7 +276,7 @@ int main(int argc, char **argv)
 		}
 	
 	if (f_file) {
-		read_set_from_file(fname, the_set_in, set_size_in, verbose_level - 1);
+		Fio.read_set_from_file(fname, the_set_in, set_size_in, verbose_level - 1);
 		cout << "read set of size " << set_size_in
 				<< " from file " << fname << endl;
 		strcpy(fname_base, fname);
@@ -593,10 +594,10 @@ int main(int argc, char **argv)
 		}
 
 	if (the_set_out && set_size_out) {
-		write_set_to_file(fname_out,
+		Fio.write_set_to_file(fname_out,
 				the_set_out, set_size_out, verbose_level);
 		cout << "written file " << fname_out
-				<< " of size " << file_size(fname_out) << endl;
+				<< " of size " << Fio.file_size(fname_out) << endl;
 		}
 	
 	if (the_set_in) {

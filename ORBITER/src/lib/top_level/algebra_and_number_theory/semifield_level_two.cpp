@@ -1595,9 +1595,10 @@ int semifield_level_two::test_if_file_exists_candidates_at_level_two_case(
 {
 	char fname[1000];
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	SC->make_fname_candidates_at_level_two_orbit(fname, orbit);
-	if (file_size(fname) > 0) {
+	if (Fio.file_size(fname) > 0) {
 		if (f_v) {
 			cout << "semifield_level_two::test_if_file_exists_"
 					"candidates_at_level_two_case file "
@@ -1621,6 +1622,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 {
 	int f_v = (verbose_level >= 1);
 	int orbit;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::find_all_candidates_"
@@ -1683,7 +1685,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 					orbit, (int) 0);
 			}
 
-		if (file_size(fname_test) >= 1) {
+		if (Fio.file_size(fname_test) >= 1) {
 			cout << "Type files for orbit " << orbit
 					<< " exist" << endl;
 			}
@@ -1716,11 +1718,11 @@ void semifield_level_two::find_all_candidates_at_level_two(
 					sprintf(fname, "C2_orbit%d_type%d_int4.bin",
 							orbit, h);
 					}
-				write_set_to_file_as_int4(fname,
+				Fio.write_set_to_file_as_int4(fname,
 					Set[h], Set_sz[h],
 					verbose_level);
 				cout << "Written file " << fname << " of size "
-						<< file_size(fname) << endl;
+						<< Fio.file_size(fname) << endl;
 				}
 
 			for (h = 0; h < Nb_sets; h++) {
@@ -1754,6 +1756,7 @@ void semifield_level_two::read_candidates_at_level_two_case(
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::read_candidates_"
@@ -1761,17 +1764,17 @@ void semifield_level_two::read_candidates_at_level_two_case(
 		}
 	SC->make_fname_candidates_at_level_two_orbit(fname, orbit);
 
-	if (file_size(fname) > 0) {
+	if (Fio.file_size(fname) > 0) {
 		if (f_v) {
 			cout << "Reading candidates from file "
 					<< fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 			}
-		read_set_from_file(fname,
+		Fio.read_set_from_file(fname,
 				Candidates, Nb_candidates, verbose_level);
 		if (f_v) {
 			cout << "Reading candidates from file "
-					<< fname << " of size " << file_size(fname)
+					<< fname << " of size " << Fio.file_size(fname)
 					<< " done" << endl;
 			}
 		}
@@ -1794,6 +1797,7 @@ void semifield_level_two::write_candidates_at_level_two_case(
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::write_candidates_"
@@ -1802,12 +1806,12 @@ void semifield_level_two::write_candidates_at_level_two_case(
 
 	SC->make_fname_candidates_at_level_two_orbit(fname, orbit);
 
-	write_set_to_file(fname,
+	Fio.write_set_to_file(fname,
 			Candidates, Nb_candidates, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 
 	if (f_v) {
@@ -1836,6 +1840,7 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 	int window_bottom, window_size;
 	int h;
 	number_theory_domain NT;
+	file_io Fio;
 
 	window_bottom = k - 1;
 	window_size = k - 2;
@@ -1854,14 +1859,14 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 			sprintf(fname, "C2_orbit%d_type%d_int4.bin", orbit, h);
 			}
 		cout << "Reading file " << fname << " of size "
-				<< file_size(fname) << endl;
-		if (file_size(fname) <= 0) {
+				<< Fio.file_size(fname) << endl;
+		if (Fio.file_size(fname) <= 0) {
 			cout << "semifield_level_two::read_candidates_at_"
 					"level_two_by_type file " << fname
 					<< " does not exist" << endl;
 			exit(1);
 			}
-		read_set_from_file_int4(fname,
+		Fio.read_set_from_file_int4(fname,
 			Set[h], Set_sz[h],
 			verbose_level);
 		}

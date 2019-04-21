@@ -151,15 +151,16 @@ int main(int argc, char **argv)
 	int *set;
 	int set_size;
 	int nb_input;
+	file_io Fio;
 
 
-	if (file_size(fname) <= 0) {
+	if (Fio.file_size(fname) <= 0) {
 		cout << "The file " << fname << " does not exist or is empty" << endl;
 		exit(1);
 		}
 
 
-	nb_input = count_number_of_orbits_in_file(fname, 0 /*verbose_level */);
+	nb_input = Fio.count_number_of_orbits_in_file(fname, 0 /*verbose_level */);
 
 	cout << "The file " << fname << " contains " << nb_input << " solutions" << endl;
 
@@ -289,9 +290,9 @@ int main(int argc, char **argv)
 				
 				get_fname_base(fname, fname_base);
 				sprintf(fname2, "%s_hyperoval_%d.txt", fname_base, cnt);
-				write_set_to_file(fname2, set2, sz2, verbose_level);
+				Fio.write_set_to_file(fname2, set2, sz2, verbose_level);
 				cout << "Written file " << fname2 << " of size "
-						<< file_size(fname2) << endl;
+						<< Fio.file_size(fname2) << endl;
 				}
 
 			else if (f_TDO) {

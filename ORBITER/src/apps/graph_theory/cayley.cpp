@@ -252,6 +252,8 @@ void do_D1(int n, int d, int verbose_level)
 			<< " vertices has been computed" << endl;
 	//int_matrix_print(Adj, goi, goi);
 
+	file_io Fio;
+
 
 	{
 	colored_graph *CG;
@@ -265,7 +267,7 @@ void do_D1(int n, int d, int verbose_level)
 	CG->save(fname, verbose_level);
 
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	FREE_OBJECT(CG);
 	}
 
@@ -294,7 +296,7 @@ void do_D1(int n, int d, int verbose_level)
 	CG->save(fname, verbose_level);
 
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	FREE_OBJECT(CG);
 	}
 

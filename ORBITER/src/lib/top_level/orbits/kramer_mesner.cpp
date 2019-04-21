@@ -376,7 +376,8 @@ void kramer_mesner::orbits(
 	int schreier_depth = 1000;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
-	
+	file_io Fio;
+
 	
 	if (f_v) {
 		cout << "kramer_mesner::orbits computing orbits" << endl;
@@ -416,7 +417,7 @@ void kramer_mesner::orbits(
 					0 /* verbose_level */);
 		}
 		cout << "kramer_mesner::orbits written file " << fname
-				<< " of size " << file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 	if (f_v) {
@@ -434,7 +435,7 @@ void kramer_mesner::orbits(
 					0 /* verbose_level */);
 		}
 		cout << "kramer_mesner::orbits written file " << fname
-				<< " of size " << file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 

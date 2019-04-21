@@ -454,10 +454,12 @@ void recoordinatize::compute_live_points(int verbose_level)
 
 	sprintf(fname, "live_points.txt");
 
-	if (file_size(fname) > 1) {
+	file_io Fio;
+
+	if (Fio.file_size(fname) > 1) {
 		cout << "recoordinatize::compute_live_points "
 				"reading live points from file " << fname << endl;
-		read_set_from_file(fname,
+		Fio.read_set_from_file(fname,
 				live_points, nb_live_points, verbose_level);
 		cout << "recoordinatize::compute_live_points "
 				"we found " << nb_live_points << " live points" << endl;
@@ -469,7 +471,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 		compute_live_points_low_level(
 				live_points, nb_live_points, verbose_level - 1);
 
-		write_set_to_file(fname,
+		Fio.write_set_to_file(fname,
 				live_points, nb_live_points, verbose_level);
 		if (f_v) {
 			cout << "recoordinatize::compute_live_points "

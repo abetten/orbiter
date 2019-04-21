@@ -62,6 +62,7 @@ void exact_cover::init_basic(void *user_data,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "exact_cover::init_basic" << endl;
@@ -96,12 +97,12 @@ void exact_cover::init_basic(void *user_data,
 		cout << "exact_cover::init_basic counting number "
 				"of orbits from file " << fname << endl;
 		}
-	if (file_size(fname) <= 0) {
+	if (Fio.file_size(fname) <= 0) {
 		cout << "exact_cover::init_basic the file " << fname
 				<< " does not exist" << endl;
 		exit(1);
 		}
-	starter_nb_cases = count_number_of_orbits_in_file(fname,
+	starter_nb_cases = Fio.count_number_of_orbits_in_file(fname,
 			verbose_level + 2);
 	if (f_v) {
 		cout << "exact_cover::init_basic starter_nb_cases = "
@@ -200,6 +201,7 @@ void exact_cover::randomize(const char *random_permutation_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "exact_cover::randomize" << endl;
@@ -208,7 +210,7 @@ void exact_cover::randomize(const char *random_permutation_fname,
 	
 	f_randomized = TRUE;
 	exact_cover::random_permutation_fname = random_permutation_fname;
-	int_matrix_read_csv(random_permutation_fname,
+	Fio.int_matrix_read_csv(random_permutation_fname,
 			random_permutation, m, n, verbose_level);
 	if (n != 1) {
 		cout << "exact_cover::randomize after int_matrix_read_csv "
@@ -274,6 +276,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 	int nb_deleted_solutions = 0;
 	int starter_case;
 	int the_starter_case;
+	file_io Fio;
 
 
 
@@ -483,7 +486,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 	fp << -1 << " " << Nb_sol_total << endl;
 	}
 	cout << "written file " << fname_solutions << " of size "
-			<< file_size(fname_solutions) << endl;
+			<< Fio.file_size(fname_solutions) << endl;
 	cout << "total_solutions = " << Nb_sol_total << endl;
 	cout << "nb_deleted_solutions=" << nb_deleted_solutions << endl;
 	
@@ -497,12 +500,12 @@ void exact_cover::compute_liftings_new(int f_solve,
 	Vec[4] = Dt;
 	Vec[5] = Dt_in_sec;
 	
-	int_vec_array_write_csv(6, Vec, nb_cases,
+	Fio.int_vec_array_write_csv(6, Vec, nb_cases,
 			fname_statistics, column_labels);
 	//int_vecs_write_csv(Nb_sol, Nb_col, nb_cases,
 	//fname_statistics, "Nb_sol", "Nb_col");
 	cout << "written file " << fname_statistics << " of size "
-			<< file_size(fname_statistics) << endl;
+			<< Fio.file_size(fname_statistics) << endl;
 	
 
 	
@@ -530,6 +533,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
 	char str[1000];
+	file_io Fio;
 
 
 	if (f_v) {
@@ -712,7 +716,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 				if (f_v) {
 					cout << "exact_cover::compute_liftings_single_case_new "
 							"trying to read solution file " << fname_sol
-							<< " of size " << file_size(fname_sol) << endl;
+							<< " of size " << Fio.file_size(fname_sol) << endl;
 					}
 
 				Dio->read_solutions_from_file(fname_sol, 0 /*verbose_level - 2*/);
@@ -745,7 +749,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 					}
 
 				if (f_save) {
-					int_matrix_write_text(fname_sol,
+					Fio.int_matrix_write_text(fname_sol,
 							Solutions, nb_sol, sol_length);
 					}
 				for (i = 0; i < nb_sol; i++) {
