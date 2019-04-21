@@ -25,13 +25,8 @@ void make_linear_irreducible_polynomials(int q, int &nb, int *&table,
 	int verbose_level);
 void gl_random_matrix(int k, int q, int verbose_level);
 int is_diagonal_matrix(int *A, int n);
-int is_association_scheme(int *color_graph, int n, int *&Pijk, 
-	int *&colors, int &nb_colors, int verbose_level);
-void print_Pijk(int *Pijk, int nb_colors);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
-void compute_decomposition_of_graph_wrt_partition(int *Adj, int N, 
-	int *first, int *len, int nb_parts, int *&R, int verbose_level);
 
 
 // #############################################################################

@@ -78,6 +78,7 @@ int main(int argc, char **argv)
 	int f_Levi_discrete = FALSE;
 	int f_radius = FALSE;
 	double radius = 1000;
+	graph_theory_domain Graph;
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -395,7 +396,7 @@ int main(int argc, char **argv)
 		//int *colors;
 		//int nb_colors;
 		
-		if (is_association_scheme(Adj, n, Pijk, 
+		if (Graph.is_association_scheme(Adj, n, Pijk,
 			CG->point_color, CG->nb_colors, verbose_level)) {
 			cout << "Is an association scheme" << endl;
 			}

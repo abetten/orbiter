@@ -94,6 +94,7 @@ void do_it(int n, int f_star, int f_coxeter,
 	int deg = 0;
 	vector_ge *gens;
 	char fname_base[1000];
+	graph_theory_domain Graph;
 
 
 	if (f_star) {
@@ -266,7 +267,7 @@ void do_it(int n, int f_star, int f_coxeter,
 	//int_matrix_print(Adj, goi, goi);
 
 
-	save_as_colored_graph_easy(fname_base, goi,
+	Graph.save_as_colored_graph_easy(fname_base, goi,
 			Adj, 0 /* verbose_level */);
 
 

@@ -165,6 +165,8 @@ int main(int argc, char **argv)
 			}
 		}
 
+	graph_theory_domain Graph;
+
 
 
 	if (f_file) {
@@ -308,7 +310,7 @@ int main(int argc, char **argv)
 						"colored_graph_all_rainbow_cliques_nonrecursive"
 						<< endl;
 
-				nb_sol = colored_graph_all_rainbow_cliques_nonrecursive(
+				nb_sol = Graph.colored_graph_all_rainbow_cliques_nonrecursive(
 					fname, nb_backtrack_nodes, verbose_level);
 
 				cout << "nb_sol = " << nb_sol << endl;
@@ -326,7 +328,7 @@ int main(int argc, char **argv)
 				int search_steps, decision_steps, nb_sol, dt;
 
 
-				colored_graph_all_cliques(fname, f_output_solution_raw, 
+				Graph.colored_graph_all_cliques(fname, f_output_solution_raw,
 					f_output_file, output_file, 
 					f_maxdepth, maxdepth, 
 					f_restrictions, restrictions, 
@@ -377,7 +379,7 @@ int main(int argc, char **argv)
 				list_of_cases, nb_cases, verbose_level);
 		cout << "nb_cases=" << nb_cases << endl;
 
-		colored_graph_all_cliques_list_of_cases(
+		Graph.colored_graph_all_cliques_list_of_cases(
 			list_of_cases, nb_cases, f_output_solution_raw,
 			fname_template, 
 			fname_sol, fname_stats, 
@@ -414,7 +416,7 @@ int main(int argc, char **argv)
 		replace_extension_with(fname_stats, "_stats.csv");
 
 
-		colored_graph_all_cliques_list_of_files(
+		Graph.colored_graph_all_cliques_list_of_files(
 			input_list_of_files_nb /* nb_cases */,
 			input_list_of_files_case /* Case_number */,
 			input_list_of_files_fname /* Case_fname */,
