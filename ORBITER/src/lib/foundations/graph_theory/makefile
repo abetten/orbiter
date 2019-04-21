@@ -11,6 +11,7 @@ MODULES = \
 	colored_graph.o \
 	graph_layer.o \
 	graph_node.o \
+	graph_theory_domain.o \
 	layered_graph.o \
 	layered_graph_draw_options.o \
 	rainbow_cliques.o 

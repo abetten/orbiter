@@ -122,6 +122,7 @@ MODULES= \
 		foundations/graph_theory/colored_graph.o \
 		foundations/graph_theory/graph_layer.o \
 		foundations/graph_theory/graph_node.o \
+		foundations/graph_theory/graph_theory_domain.o \
 		foundations/graph_theory/layered_graph.o \
 		foundations/graph_theory/layered_graph_draw_options.o \
 		foundations/graph_theory/rainbow_cliques.o \

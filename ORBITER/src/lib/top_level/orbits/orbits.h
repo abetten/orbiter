@@ -153,23 +153,29 @@ int orbit_of_equations_compare_func(void *a, void *b, void *data);
 
 //! orbit of sets using a Schreier tree
 
-
+// used in packing::make_spread_table
 
 class orbit_of_sets {
 public:
 	action *A;
 	action *A2;
 	vector_ge *gens;
-	int *set;
+	int *set; // the set whose orbit we want to compute; it has size 'sz'
 	int sz;
 
-	int position_of_original_set;
-	int allocation_length;
-	int used_length;
+	int position_of_original_set; // = 0; never changes
+	int allocation_length; // number of entries allocated in Sets
+	int used_length; // number of sets currently stored in Sets
 	int **Sets;
+		// the sets in the order in which they
+		// are discovered and added to the tree
 
 	std::multimap<uint32_t, int> Hashing;
-		// we use a multimap because the has values are not unique
+		// we store the pair (hash, idx)
+		// where hash is the hash value of the set and idx is the
+		// index in the table Sets where the set is stored.
+		//
+		// we use a multimap because the hash values are not unique
 		// it happens that two sets have the save hash value.
 		// map cannot handle that.
 

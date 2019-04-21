@@ -2471,7 +2471,7 @@ public:
 // spread_tables.cpp
 // #############################################################################
 
-//! tables with spreads in PG(3,q)
+//! tables with spreads in PG(3,q), used by class packing
 
 
 class spread_tables {
