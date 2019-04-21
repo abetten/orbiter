@@ -228,9 +228,10 @@ int main(int argc, const char **argv)
 		}
 
 	layered_graph *LG;
+	file_io Fio;
 
 	LG = NEW_OBJECT(layered_graph);
-	if (file_size(fname) <= 0) {
+	if (Fio.file_size(fname) <= 0) {
 		cout << "file " << fname << " does not exist" << endl;
 		exit(1);
 		}

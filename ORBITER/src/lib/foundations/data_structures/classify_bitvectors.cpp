@@ -336,10 +336,12 @@ void classify_bitvectors::save(const char *prefix,
 		}
 	fp << "-1 " << nb_types << " " << N << endl;
 	}
+	file_io Fio;
+
 	if (f_v) {
 		cout << "classify_bitvectors::save Written "
 				"file " << fname_txt
-			<< " of size " << file_size(fname_txt) 
+			<< " of size " << Fio.file_size(fname_txt)
 			<< " with " << nb_types
 			<< " orbit representatives obtained from "
 			<< N << " candidates, encoding size = " << sz << endl;
@@ -349,12 +351,12 @@ void classify_bitvectors::save(const char *prefix,
 		cout << "classify_bitvectors::save writing "
 				"file " << fname_csv << endl;
 		}
-	int_matrix_write_csv(fname_csv, Reps, nb_types, sz);
+	Fio.int_matrix_write_csv(fname_csv, Reps, nb_types, sz);
 
 	if (f_v) {
 		cout << "classify_bitvectors::save "
 				"Written file " << fname_csv
-			<< " of size " << file_size(fname_csv) 
+			<< " of size " << Fio.file_size(fname_csv)
 			<< " with " << nb_types
 			<< " orbit representatives obtained from "
 			<< N << " candidates, encoding size = " << sz << endl;

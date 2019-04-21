@@ -22,6 +22,7 @@ void poset_classification::read_data_file(int &depth_completed,
 	int size;
 	int nb_group_elements;
 	memory_object *m;
+	file_io Fio;
 
 
 	if (f_v) {
@@ -33,7 +34,7 @@ void poset_classification::read_data_file(int &depth_completed,
 				<< Poset->A->coded_elt_size_in_char << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	size = file_size(fname);
+	size = Fio.file_size(fname);
 	if (f_v) {
 		cout << "file size = " << size << endl;
 		}
@@ -103,6 +104,7 @@ void poset_classification::write_data_file(int depth_completed,
 	int nb_group_elements;
 	int size0;
 	int verbose_level1;
+	file_io Fio;
 
 	sprintf(fname, "%s_%d.data", fname_base, depth_completed);
 
@@ -174,7 +176,7 @@ void poset_classification::write_data_file(int depth_completed,
 	if (f_v) {
 		cout << "poset_classification::write_data_file "
 			"finished written file "
-			<< fname << " of size " << file_size(fname) << endl;
+			<< fname << " of size " << Fio.file_size(fname) << endl;
 		cout << " nb_group_elements=" << nb_group_elements << endl;
 		}
 }
@@ -1364,9 +1366,10 @@ int poset_classification::test_sv_level_file_binary(
 		int level, char *fname_base)
 {
 	char fname[1000];
+	file_io Fio;
 	
 	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
-	if (file_size(fname) >= 1)
+	if (Fio.file_size(fname) >= 1)
 		return TRUE;
 	else
 		return FALSE;
@@ -1380,13 +1383,14 @@ void poset_classification::read_sv_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
+	file_io Fio;
 	
 	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::read_sv_level_file_binary "
 				"reading file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 
 
@@ -1410,7 +1414,8 @@ void poset_classification::write_sv_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
-	
+	file_io Fio;
+
 	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
@@ -1432,7 +1437,7 @@ void poset_classification::write_sv_level_file_binary(
 	if (f_v) {
 		cout << "poset_classification::write_sv_level_file_binary "
 			"finished written file "
-			<< fname << " of size " << file_size(fname) << endl;
+			<< fname << " of size " << Fio.file_size(fname) << endl;
 		}
 }
 
@@ -1445,7 +1450,8 @@ void poset_classification::read_sv_level_file_binary2(
 	int f, i, nb_nodes;
 	int f_v = (verbose_level >= 1);
 	int_4 I;
-	
+	file_io Fio;
+
 	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
@@ -1460,19 +1466,19 @@ void poset_classification::read_sv_level_file_binary2(
 			}
 		}
 	// version number of this file format
-	I = fread_int4(fp);
+	I = Fio.fread_int4(fp);
 	if (I != 1) { 
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"unknown file version" << endl;
 		exit(1);
 		}
-	I = fread_int4(fp);
+	I = Fio.fread_int4(fp);
 	if (I != level) {
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"level does not match" << endl;
 		exit(1);
 		}
-	I = fread_int4(fp);
+	I = Fio.fread_int4(fp);
 	if (I != nb_nodes) {
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"nb_nodes does not match" << endl;
@@ -1493,7 +1499,7 @@ void poset_classification::read_sv_level_file_binary2(
 			root[f + i].Schreier_vector = NULL;
 			}
 		}
-	I = fread_int4(fp);
+	I = Fio.fread_int4(fp);
 	if (I != MAGIC_SYNC) {
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"MAGIC_SYNC does not match" << endl;
@@ -1513,6 +1519,7 @@ void poset_classification::write_sv_level_file_binary2(
 {
 	int f, i, nb_nodes;
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 	
 	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
@@ -1521,9 +1528,9 @@ void poset_classification::write_sv_level_file_binary2(
 				<< nb_nodes << " nodes" << endl;
 		}
 	// version number of this file format
-	fwrite_int4(fp, 1);
-	fwrite_int4(fp, level);
-	fwrite_int4(fp, nb_nodes);
+	Fio.fwrite_int4(fp, 1);
+	Fio.fwrite_int4(fp, level);
+	Fio.fwrite_int4(fp, nb_nodes);
 	for (i = 0; i < nb_nodes; i++) {
 		if (f_split) {
 			if ((i % split_mod) != split_case)
@@ -1531,7 +1538,7 @@ void poset_classification::write_sv_level_file_binary2(
 			}
 		root[f + i].sv_write_file(this, fp, verbose_level - 2);
 		}
-	fwrite_int4(fp, MAGIC_SYNC);
+	Fio.fwrite_int4(fp, MAGIC_SYNC);
 	// a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "poset_classification::write_sv_level_file_binary2 "
@@ -1545,16 +1552,17 @@ void poset_classification::read_level_file_binary(int level,
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
 	int nb_group_elements;
+	file_io Fio;
 	
 	sprintf(fname, "%s_lvl_%d.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary "
 				"reading file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 
-	if (file_size(fname) < 0) {
+	if (Fio.file_size(fname) < 0) {
 		cout << "poset_classification::read_level_file_binary "
 				"probems while reading file " << fname << endl;
 		exit(1);
@@ -1578,7 +1586,8 @@ void poset_classification::write_level_file_binary(int level,
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
 	int nb_group_elements;
-	
+	file_io Fio;
+
 	sprintf(fname, "%s_lvl_%d.data", fname_base, level);
 	
 	if (f_v) {
@@ -1599,7 +1608,7 @@ void poset_classification::write_level_file_binary(int level,
 	if (f_v) {
 		cout << "poset_classification::write_level_file_binary "
 				"finished written file "
-			<< fname << " of size " << file_size(fname) 
+			<< fname << " of size " << Fio.file_size(fname)
 			<< " nb_group_elements=" << nb_group_elements << endl;
 		}
 }
@@ -1612,27 +1621,28 @@ void poset_classification::read_level_file_binary2(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int_4 I;
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary2" << endl;
 		}
 	f = first_poset_orbit_node_at_level[level];
 	nb_group_elements = 0;
-	I = fread_int4(fp);
+	I = Fio.fread_int4(fp);
 	if (I != 1) {
 		cout << "poset_classification::read_level_file_binary2 "
 				"version = " << I << " unknown" << endl;
 		exit(1);
 		}
 
-	I = fread_int4(fp);
+	I = Fio.fread_int4(fp);
 	if (I != level) {
 		cout << "poset_classification::read_level_file_binary2 "
 				"level = " << I << " should be " << level << endl;
 		exit(1);
 		}
 
-	nb_nodes = fread_int4(fp);
+	nb_nodes = Fio.fread_int4(fp);
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary, "
 				"nb_nodes = " << nb_nodes << endl;
@@ -1659,7 +1669,7 @@ void poset_classification::read_level_file_binary2(
 	if (f_v) {
 		cout << "reading nodes completed" << endl;
 		}
-	magic_sync = fread_int4(fp);
+	magic_sync = Fio.fread_int4(fp);
 	if (magic_sync != MAGIC_SYNC) {
 		cout << "poset_classification::read_level_file_binary2 "
 				"could not read MAGIC_SYNC, file is corrupt" << endl;
@@ -1683,7 +1693,8 @@ void poset_classification::write_level_file_binary2(
 {
 	int f, i, nb_nodes;
 	int f_v = FALSE;//(verbose_level >= 1);
-	
+	file_io Fio;
+
 	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
@@ -1692,14 +1703,14 @@ void poset_classification::write_level_file_binary2(
 		}
 	nb_group_elements = 0;
 	// version number of this file format
-	fwrite_int4(fp, 1);
-	fwrite_int4(fp, level);
-	fwrite_int4(fp, nb_nodes);
+	Fio.fwrite_int4(fp, 1);
+	Fio.fwrite_int4(fp, level);
+	Fio.fwrite_int4(fp, nb_nodes);
 	for (i = 0; i < nb_nodes; i++) {
 		root[f + i].write_file(Poset->A, fp,
 				nb_group_elements, verbose_level - 2);
 		}
-	fwrite_int4(fp, MAGIC_SYNC);
+	Fio.fwrite_int4(fp, MAGIC_SYNC);
 	// a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "poset_classification::write_level_file_binary2 "
@@ -1729,6 +1740,7 @@ void poset_classification::write_candidates_binary_using_sv(
 	int *subset;
 	int *Cand;
 	int i, j, node, nb, pos;
+	file_io Fio;
 
 	fst = first_poset_orbit_node_at_level[lvl];
 	len = nb_orbits_at_level(lvl);
@@ -1781,20 +1793,20 @@ void poset_classification::write_candidates_binary_using_sv(
 		}
 	fp = fopen(fname1, "wb");
 
-	fwrite_int4(fp, len);
+	Fio.fwrite_int4(fp, len);
 	for (i = 0; i < len; i++) {
-		fwrite_int4(fp, nb_cand[i]);
-		fwrite_int4(fp, cand_first[i]);
+		Fio.fwrite_int4(fp, nb_cand[i]);
+		Fio.fwrite_int4(fp, cand_first[i]);
 		}
 	for (i = 0; i < total_nb_cand; i++) {
-		fwrite_int4(fp, Cand[i]);
+		Fio.fwrite_int4(fp, Cand[i]);
 		}
 
 
 	fclose(fp);
 	if (f_v) {
 		cout << "written file " << fname1 << " of size "
-				<< file_size(fname1) << endl;
+				<< Fio.file_size(fname1) << endl;
 		}
 
 
@@ -1820,6 +1832,7 @@ void poset_classification::read_level_file(int level,
 	int nb_nodes, first_at_level;
 	int i, I, J;
 	poset_orbit_node *O;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "poset_classification::read_level_file "
@@ -1827,7 +1840,7 @@ void poset_classification::read_level_file(int level,
 		}
 	
 #if 1
-	read_and_parse_data_file(fname, nb_cases,
+	Fio.read_and_parse_data_file(fname, nb_cases,
 			data, sets, set_sizes, verbose_level - 1);
 	
 #else
@@ -1963,6 +1976,7 @@ void poset_classification::write_lvl_file_with_candidates(
 {
 	int f_v = (verbose_level >= 1);
 	char fname1[1000];
+	file_io Fio;
 	
 	sprintf(fname1, "%s_lvl_%d_candidates.txt", fname_base, lvl);
 	{
@@ -1984,7 +1998,7 @@ void poset_classification::write_lvl_file_with_candidates(
 	}
 	if (f_v) {
 		cout << "written file " << fname1
-				<< " of size " << file_size(fname1) << endl;
+				<< " of size " << Fio.file_size(fname1) << endl;
 		}
 }
 
@@ -1998,10 +2012,13 @@ void poset_classification::write_lvl_file(
 	int f_v = (verbose_level >= 1);
 	char fname1[1000];
 	sprintf(fname1, "%s_lvl_%d", fname_base, lvl);
+	file_io Fio;
+
+
 	{
 	ofstream f(fname1);
 	int i, fst, len;
-	
+
 
 	fst = first_poset_orbit_node_at_level[lvl];
 	len = nb_orbits_at_level(lvl);
@@ -2021,7 +2038,7 @@ void poset_classification::write_lvl_file(
 	}
 	if (f_v) {
 		cout << "written file " << fname1
-				<< " of size " << file_size(fname1) << endl;
+				<< " of size " << Fio.file_size(fname1) << endl;
 		}
 }
 
@@ -2517,6 +2534,7 @@ void poset_classification::generate_source_code(
 	int /*f,*/ nb_iso;
 	int *set;
 	longinteger_object go;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::generate_source_code" << endl;
@@ -2643,7 +2661,7 @@ void poset_classification::generate_source_code(
 	}
 
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	if (f_v) {
 		cout << "poset_classification::generate_source_code done" << endl;
 		}
@@ -2680,6 +2698,7 @@ void poset_classification::wedge_product_export_magma(
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 
 	if (f_v) {
@@ -2871,7 +2890,7 @@ void poset_classification::wedge_product_export_magma(
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	if (f_v) {
 		cout << "poset_classification::wedge_product_export_magma "

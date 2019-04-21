@@ -80,6 +80,7 @@ int main(int argc, char **argv)
 	Set_sz = NEW_int(N);
 
 	int M, h;
+	file_io Fio;
 
 	M = 0;
 
@@ -89,7 +90,7 @@ int main(int argc, char **argv)
 		sprintf(fname, file_mask, i, i, i, i, i);
 		
 		cout << "Reading file " << fname << endl;
-		read_set_from_file(fname,
+		Fio.read_set_from_file(fname,
 				Sets[i], Set_sz[i], 0 /* verbose_level */);
 
 		M += Set_sz[i];
@@ -127,7 +128,8 @@ int main(int argc, char **argv)
 		}
 	cout << "Saving table to file " << save_fname << endl;
 	S->save(save_fname, verbose_level);
-	cout << "Written file " << save_fname << " of size " << file_size(save_fname) << endl;
+	cout << "Written file " << save_fname << " of size "
+			<< Fio.file_size(save_fname) << endl;
 
 }
 

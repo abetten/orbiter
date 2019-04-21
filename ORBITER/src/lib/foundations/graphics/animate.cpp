@@ -446,8 +446,10 @@ void animate::animate_one_round(
 			}
 			}
 		}
+		file_io Fio;
+
 		cout << "Written file " << fname_pov << " of size "
-				<< file_size(fname_pov) << endl;
+				<< Fio.file_size(fname_pov) << endl;
 
 
 		for (i = 0; i < Opt->nb_picture; i++) {

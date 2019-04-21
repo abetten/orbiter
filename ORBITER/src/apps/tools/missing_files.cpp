@@ -86,6 +86,7 @@ int main(int argc, char **argv)
 	int *Missing = NULL;
 	char fname[1000];
 	int missing_n;
+	file_io Fio;
 
 
 	if (f_N2) {
@@ -106,7 +107,7 @@ int main(int argc, char **argv)
 				}
 			for (j = 0; j < N2; j++) {
 				sprintf(fname, mask, i, j);
-				if (file_size(fname) <= 0) {
+				if (Fio.file_size(fname) <= 0) {
 					Missing[nb_missing * 2 + 0] = i;
 					Missing[nb_missing * 2 + 1] = j;
 					nb_missing++;
@@ -130,7 +131,7 @@ int main(int argc, char **argv)
 					}
 				}
 			sprintf(fname, mask, i);
-			if (file_size(fname) <= 0) {
+			if (Fio.file_size(fname) <= 0) {
 				Missing[nb_missing] = i;
 				nb_missing++;
 				}
@@ -141,7 +142,7 @@ int main(int argc, char **argv)
 
 	if (f_save) {
 		if (is_csv_file(fname_out)) {
-			int_matrix_write_csv(fname_out,
+			Fio.int_matrix_write_csv(fname_out,
 					Missing, nb_missing, missing_n);
 			}
 		else {
@@ -150,11 +151,11 @@ int main(int argc, char **argv)
 						"cannot use write_set_to_file" << endl;
 				exit(1);
 				}
-			write_set_to_file(fname_out, Missing, nb_missing,
+			Fio.write_set_to_file(fname_out, Missing, nb_missing,
 					verbose_level);
 			}
 		cout << "Written file " << fname_out
-				<< " of size " << file_size(fname_out) << endl;
+				<< " of size " << Fio.file_size(fname_out) << endl;
 		}
 
 	the_end(t0);

@@ -25,6 +25,7 @@ void action::normalizer_using_MAGMA(
 	char fname_magma[1000];
 	char fname_output[1000];
 	char cmd[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA" << endl;
@@ -70,7 +71,7 @@ void action::normalizer_using_MAGMA(
 	fp << "UnsetOutputFile();" << endl;
 	}
 
-	if (file_size(fname_output) > 0) {
+	if (Fio.file_size(fname_output) > 0) {
 		if (f_v) {
 			cout << "file " << fname_output
 					<< " exists, reading it" << endl;
@@ -448,6 +449,7 @@ void action::centralizer_using_MAGMA(const char *prefix,
 	char fname_magma[1000];
 	char fname_output[1000];
 	char cmd[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "action::centralizer_using_MAGMA" << endl;
@@ -490,7 +492,7 @@ void action::centralizer_using_MAGMA(const char *prefix,
 	fp << "UnsetOutputFile();" << endl;
 	}
 	cout << "Written file " << fname_magma
-			<< " of size " << file_size(fname_magma) << endl;
+			<< " of size " << Fio.file_size(fname_magma) << endl;
 
 	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
 	cout << "executing centralizer command in MAGMA" << endl;
@@ -515,6 +517,7 @@ void action::conjugacy_classes_and_normalizers(
 	char prefix[1000];
 	char fname1[1000];
 	char fname2[1000];
+	file_io Fio;
 
 
 	if (f_v) {
@@ -526,7 +529,7 @@ void action::conjugacy_classes_and_normalizers(
 	sprintf(fname2, "%s_classes_out.txt", prefix);
 
 
-	if (file_size(fname2) > 0) {
+	if (Fio.file_size(fname2) > 0) {
 		read_conjugacy_classes_and_normalizers(fname2, verbose_level);
 		}
 	else {
@@ -547,6 +550,7 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 	char prefix[1000];
 	char fname1[1000];
 	char fname2[1000];
+	file_io Fio;
 
 
 	if (f_v) {
@@ -558,7 +562,7 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 	sprintf(fname2, "%s_classes_out.txt", prefix);
 
 
-	if (file_size(fname2) > 0) {
+	if (Fio.file_size(fname2) > 0) {
 		read_and_report_conjugacy_classes_and_normalizers(ost,
 				fname2, verbose_level);
 		}
@@ -587,6 +591,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
 	//projective_space_with_action *PA;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "action::read_conjugacy_classes_and_normalizers" << endl;
@@ -786,7 +791,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
-			<< file_size(fname_latex) << endl;
+			<< Fio.file_size(fname_latex) << endl;
 
 	FREE_int(perms);
 	FREE_int(class_size);
@@ -1017,6 +1022,7 @@ void action::report_fixed_objects(int *Elt,
 	int f_v = (verbose_level >= 1);
 	//int i, j, cnt;
 	//int v[4];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "action::report_fixed_objects" << endl;
@@ -1137,7 +1143,7 @@ void action::report_fixed_objects(int *Elt,
 	L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
-			<< file_size(fname_latex) << endl;
+			<< Fio.file_size(fname_latex) << endl;
 
 
 	if (f_v) {

@@ -134,6 +134,7 @@ int main(int argc, char **argv)
 	int *M2;
 	int m2, n2;
 	uchar *D; // bitvector
+	file_io Fio;
 
 	int m, n;
 	int *up_fst;
@@ -141,9 +142,9 @@ int main(int argc, char **argv)
 	int j, a, col, orb, idx, row, len, sol_idx;
 
 	cout << "reading file " << fname1 << endl;
-	int_matrix_read_csv(fname1, M1, m1, n1, verbose_level - 1);
+	Fio.int_matrix_read_csv(fname1, M1, m1, n1, verbose_level - 1);
 	cout << "reading file " << fname2 << endl;
-	int_matrix_read_csv(fname2, M2, m2, n2, verbose_level - 1);
+	Fio.int_matrix_read_csv(fname2, M2, m2, n2, verbose_level - 1);
 
 	m = m1;
 	n = M2[(m2 - 1) * n2 + 0] + 1;
@@ -352,7 +353,8 @@ void draw_it(const char *fname_base,
 	char fname[1000];
 	int f_embedded = TRUE;
 	int f_sideways = TRUE;
-	
+	file_io Fio;
+
 	sprintf(fname_base2, "%s_%d", fname_base, idx);
 	sprintf(fname, "%s.mp", fname_base2);
 	{
@@ -368,7 +370,7 @@ void draw_it(const char *fname_base,
 	G.finish(cout, TRUE);
 	}
 	cout << "draw_it written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 void draw_it2(mp_graphics &G,

@@ -83,6 +83,7 @@ int main(int argc, char **argv)
 	int *Nb_rows;
 	int *Nb_cols;
 	int f_has_ago = FALSE;
+	file_io Fio;
 
 	Data = NEW_pint(N);
 	Ago = NEW_pint(N);
@@ -101,7 +102,7 @@ int main(int argc, char **argv)
 			Nb_cols[i] = 0;
 			}
 		else if (strcmp(ext, ".csv") == 0) {
-			int_matrix_read_csv(fname, Data[i], 
+			Fio.int_matrix_read_csv(fname, Data[i],
 				Nb_rows[i], Nb_cols[i], verbose_level);
 			cout << "read file " << fname << " with "
 				<< Nb_rows[i] << " rows" << endl;
@@ -126,7 +127,7 @@ int main(int argc, char **argv)
 #endif
 
 			cout << "before try_to_read_file" << endl;
-			if (try_to_read_file(fname, Nb_rows[i],
+			if (Fio.try_to_read_file(fname, Nb_rows[i],
 					data, 0 /* verbose_level */)) {
 				cout << "read file " << fname
 						<< " nb_cases = " << Nb_rows[i] << endl;
@@ -137,7 +138,7 @@ int main(int argc, char **argv)
 				}
 
 			cout << "before parse_sets" << endl;
-			parse_sets(Nb_rows[i], data, FALSE /* f_casenumbers */, 
+			Fio.parse_sets(Nb_rows[i], data, FALSE /* f_casenumbers */,
 				Set_sizes, Sets, Ago_ascii, Aut_ascii, 
 				Casenumbers, 
 				verbose_level);
@@ -168,9 +169,9 @@ int main(int argc, char **argv)
 	cout << "total = " << total << endl;
 
 	if (f_save) {
-		int_vec_write_csv(Nb_rows, N, save_fname_csv, save_col_label);
+		Fio.int_vec_write_csv(Nb_rows, N, save_fname_csv, save_col_label);
 		cout << "Written file " << save_fname_csv << " of size "
-			<< file_size(save_fname_csv) << endl;
+			<< Fio.file_size(save_fname_csv) << endl;
 		}
 
 	if (f_has_ago) {
@@ -199,12 +200,12 @@ int main(int argc, char **argv)
 			const char *column_label[] = {"i", "j", "ago"};
 
 			cout << "saving file " << fname << endl;
-			int_matrix_write_csv_with_labels(fname, 
+			Fio.int_matrix_write_csv_with_labels(fname,
 				T, total, 3, column_label);
 			
 			//int_vec_write_csv(Nb_rows, N, fname, "Nb");
 			cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 			}
 		FREE_int(T);
 		}

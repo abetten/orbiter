@@ -124,8 +124,9 @@ void read(const char *fname, int verbose_level)
 	int nb_sol, nb_sol1;
 	int a, sz, i, j, n;
 	int *Sol;
+	file_io Fio;
 
-	if (file_size(fname) < 0) {
+	if (Fio.file_size(fname) < 0) {
 		return;
 		}
 	

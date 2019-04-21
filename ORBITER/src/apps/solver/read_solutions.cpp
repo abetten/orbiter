@@ -97,14 +97,15 @@ int main(int argc, char **argv)
 	int nb_existing = 0;
 	int *Existing = NULL;
 	char fname[1000];
-	
+	file_io Fio;
+
 	
 	Missing = NEW_int(N);
 	Existing = NEW_int(N);
 
 	for (i = 0; i < N; i++) {
 		sprintf(fname, file_mask_success, i);
-		if (file_size(fname) <= 0) {
+		if (Fio.file_size(fname) <= 0) {
 			Missing[nb_missing] = i;
 			nb_missing++;
 			}
@@ -240,7 +241,8 @@ int main(int argc, char **argv)
 		
 		}
 	
-	cout << "done reading solutions, we found " << nb_data_sets_used << " solutions" << endl;
+	cout << "done reading solutions, we found " << nb_data_sets_used
+			<< " solutions" << endl;
 	int *Data_sorted;
 	int *FstLen;
 
@@ -249,7 +251,9 @@ int main(int argc, char **argv)
 	h = 0;
 	for (o = 0; o < nb_cases; o++) {
 		if (f_solution_read[o]) {
-			int_vec_copy(Data_sets + solution_first[o] * data_set_size, Data_sorted + h * data_set_size, nb_solutions[o] * data_set_size);
+			int_vec_copy(Data_sets + solution_first[o] * data_set_size,
+					Data_sorted + h * data_set_size,
+					nb_solutions[o] * data_set_size);
 			solution_first[o] = h;
 			h += nb_solutions[o];
 			}
@@ -294,16 +298,19 @@ int main(int argc, char **argv)
 		char fname_FstLen[1000];
 	
 		sprintf(fname_FstLen, "%s_FstLen.csv", save_prefix);
-		int_matrix_write_csv(fname_FstLen, FstLen, nb_cases, 2);
+		Fio.int_matrix_write_csv(fname_FstLen, FstLen, nb_cases, 2);
 
-		cout << "Written file " << fname_FstLen << " of size " << file_size(fname_FstLen) << endl;
+		cout << "Written file " << fname_FstLen << " of size "
+				<< Fio.file_size(fname_FstLen) << endl;
 
 		char fname_Data[1000];
 	
 		sprintf(fname_Data, "%s_Data.csv", save_prefix);
-		int_matrix_write_csv(fname_Data, Data_sorted, nb_data_sets_used, data_set_size);
+		Fio.int_matrix_write_csv(fname_Data,
+				Data_sorted, nb_data_sets_used, data_set_size);
 
-		cout << "Written file " << fname_Data << " of size " << file_size(fname_Data) << endl;
+		cout << "Written file " << fname_Data << " of size "
+				<< Fio.file_size(fname_Data) << endl;
 		}
 }
 

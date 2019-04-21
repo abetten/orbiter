@@ -47,6 +47,7 @@ int main(int argc, char **argv)
 	int q = 0;
 	int f_file_M = FALSE;
 	const char *fname_M;
+	file_io Fio;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -87,7 +88,7 @@ int main(int argc, char **argv)
 	}
 	else if (f_file_M) {
 		int m, n;
-		int_matrix_read_text(fname_M, Data, m, n);
+		Fio.int_matrix_read_text(fname_M, Data, m, n);
 		cout << "read matrix of size " << m << " x " << n << endl;
 		if (m != n) {
 			cout << "eigenstuff needs square matrices" << endl;

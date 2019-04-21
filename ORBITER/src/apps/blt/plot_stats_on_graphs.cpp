@@ -47,6 +47,7 @@ int main(int argc, char **argv)
 	char fname_out[1000];
 	char prefix[1000];
 	char ext[1000];
+	file_io Fio;
 
 	if (!f_file) {
 		cout << "please use option -file <fname>" << endl;
@@ -59,13 +60,13 @@ int main(int argc, char **argv)
 
 	sprintf(fname_out, "plot_%s", fname);
 
-	cout << "Reading data from file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Reading data from file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 
 	int *Data;
 	int m, n;
 	
-	int_matrix_read_csv(fname, Data, m, n, verbose_level);
+	Fio.int_matrix_read_csv(fname, Data, m, n, verbose_level);
 	
 	while (m) {
 		if (Data[(m - 1) * n + n - 1] == 0) {
@@ -122,7 +123,7 @@ int main(int argc, char **argv)
 		fp << endl;
 		fp << endl;
 	}
-	cout << "Written file " << fname1 << " of size " << file_size(fname1) << endl;
+	cout << "Written file " << fname1 << " of size " << Fio.file_size(fname1) << endl;
 
 	{
 		ofstream fp(fname2);
@@ -136,7 +137,7 @@ int main(int argc, char **argv)
 		fp << "set key bottom right" << endl;
 		fp << "plot '" << fname1 << "' using 1:2 title 'BLT(" << q << ")'" << endl;
 	}
-	cout << "Written file " << fname2 << " of size " << file_size(fname2) << endl;
+	cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
 
 	sprintf(cmd, "gnuplot %s >%s", fname2, fname3);
 	cout << "Executing command: " << cmd << endl;

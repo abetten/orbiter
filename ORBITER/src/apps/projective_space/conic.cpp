@@ -230,6 +230,7 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 	//int f_with_group = TRUE;
 	vector_ge *nice_gens;
 	sorting Sorting;
+	file_io Fio;
 
 	int v[3];
 	//int w[3];
@@ -490,7 +491,7 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 	f << -1 << endl;
 	
 	}
-	cout << "written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	int colors[] = {0,1};
 	int C = 2;
@@ -672,13 +673,14 @@ void draw_end(char *fname, mp_graphics *G, int xmax, int ymax, int verbose_level
 	//int y_min = 0, y_max = 1000;
 	//int factor_1000 = 1000;
 	char fname_full[1000];
-	
+	file_io Fio;
+
 	sprintf(fname_full, "%s.mp", fname);
 	G->end_figure();
 	G->footer();
 	FREE_OBJECT(G);
 	
-	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+	cout << "written file " << fname_full << " of size " << Fio.file_size(fname_full) << endl;
 	
 }
 

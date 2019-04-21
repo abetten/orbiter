@@ -445,13 +445,14 @@ void subspace_orbits::Kramer_Mesner_matrix(
 				}
 			}
 		char fname[1000];
+		file_io Fio;
 		
 		strcpy(fname, solution_fname);
 		replace_extension_with(fname, "_designs.csv");
-		int_matrix_write_csv(fname, Subspace_ranks1,
+		Fio.int_matrix_write_csv(fname, Subspace_ranks1,
 				nb_sol, nb_subspaces);
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		
 		FREE_int(Subspace_ranks1);
 		FREE_int(Sol);

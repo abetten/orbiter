@@ -51,6 +51,7 @@ void packing::compute_klein_invariants(
 	int *list_of_lines;
 	int orbit, id;
 	int f_split, split_r, split_m;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "packing::compute_klein_invariants" << endl;
@@ -73,8 +74,8 @@ void packing::compute_klein_invariants(
 		char fname[1000];
 	
 		klein_invariants_fname(fname, Iso->prefix_invariants, orbit);
-		cout << "file size of " << fname << " is " << file_size(fname) << endl;
-		if (file_size(fname) > 0) {
+		cout << "file size of " << fname << " is " << Fio.file_size(fname) << endl;
+		if (Fio.file_size(fname) > 0) {
 			if (f_v) {
 				cout << "file " << fname << " exists, skipping" << endl;
 				}
@@ -271,6 +272,7 @@ void packing::report(isomorph *Iso, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	char fname[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "packing::report" << endl;
@@ -289,7 +291,7 @@ void packing::report(isomorph *Iso, int verbose_level)
 	} // close file f
 	if (f_v) {
 		cout << "packing::report written file " << fname
-				<< " of size " << file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname) << endl;
 		}
 	
 
@@ -746,6 +748,7 @@ void packing::report_klein_invariants(
 {
 	//int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	file_io Fio;
 
 		// klein invariants:
 		{
@@ -754,7 +757,7 @@ void packing::report_klein_invariants(
 			
 			klein_invariants_fname(fname_klein,
 					Iso->prefix_invariants, orbit);
-			if (file_size(fname_klein) > 0) {
+			if (Fio.file_size(fname_klein) > 0) {
 				if (f_vv) {
 					cout << "packing::report loading "
 							"file " << fname_klein << endl;
@@ -767,18 +770,18 @@ void packing::report_klein_invariants(
 		
 				inv->Inv[orbit].compute_decomposition(verbose_level - 1);
 				f << "\\bigskip" << endl << endl;
-				if (file_size(inv->Inv[orbit].fname_row_scheme) < 1000) {
+				if (Fio.file_size(inv->Inv[orbit].fname_row_scheme) < 1000) {
 					f << "\\[" << endl;
 					cout << "copying file "
 							<< inv->Inv[orbit].fname_row_scheme
 							<< " in" << endl;
-					copy_file_to_ostream(f,
+					Fio.copy_file_to_ostream(f,
 							inv->Inv[orbit].fname_row_scheme);
 					//f << "\\input "
 					//<< inv->Inv[orbit].fname_row_scheme << endl;
 					f << "\\]" << endl;
 					f << "\\[" << endl;
-					copy_file_to_ostream(f,
+					Fio.copy_file_to_ostream(f,
 							inv->Inv[orbit].fname_col_scheme);
 					//f << "\\input "
 					//<< inv->Inv[orbit].fname_col_scheme << endl;

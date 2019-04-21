@@ -263,6 +263,9 @@ int main(int argc, const char **argv)
 		cout << "surface_classify after SCW->init" << endl;
 		}
 
+
+	file_io Fio;
+
 	if (f_read_double_sixes) {
 
 
@@ -271,7 +274,7 @@ int main(int argc, const char **argv)
 	
 		sprintf(fname, "Double_sixes_q%d.data", q);
 		cout << "Reading file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		{
 
 		ifstream fp(fname);
@@ -339,7 +342,7 @@ int main(int argc, const char **argv)
 			}
 		}
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 		
 
@@ -386,7 +389,7 @@ int main(int argc, const char **argv)
 		L.foot(fp);
 		}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	}
 	if (f_v) {
 		cout << "surface_classify writing cheat sheet on "
@@ -408,7 +411,7 @@ int main(int argc, const char **argv)
 	
 		sprintf(fname, "Surfaces_q%d.data", q);
 		cout << "Reading file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		{
 
 		ifstream fp(fname);
@@ -456,7 +459,7 @@ int main(int argc, const char **argv)
 			}
 		}
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 
 
@@ -511,7 +514,7 @@ int main(int argc, const char **argv)
 			L.foot(fp);
 			}
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 		}
 

@@ -144,6 +144,7 @@ int main(int argc, char **argv)
 	//char fname_out[1000];
 	char prefix[1000];
 	char ext[1000];
+	file_io Fio;
 
 	if (!f_file) {
 		cout << "please use option -file <fname>" << endl;
@@ -153,7 +154,7 @@ int main(int argc, char **argv)
 	//sprintf(fname_out, "plot_%s", fname);
 
 	cout << "Reading data from file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	spreadsheet *Sp;
 	int *Idx1, idx2;
@@ -391,7 +392,7 @@ int main(int argc, char **argv)
 			}
 	}
 	cout << "Written file " << fname_dat << " of size "
-			<< file_size(fname_dat) << endl;
+			<< Fio.file_size(fname_dat) << endl;
 
 
 	cout << "writing gnuplot control file " << fname_txt << endl;
@@ -456,7 +457,7 @@ int main(int argc, char **argv)
 			}
 	}
 	cout << "Written file " << fname_txt << " of size "
-			<< file_size(fname_txt) << endl;
+			<< Fio.file_size(fname_txt) << endl;
 
 	sprintf(cmd, "gnuplot %s >%s", fname_txt, fname_out);
 	cout << "Executing command: " << cmd << endl;

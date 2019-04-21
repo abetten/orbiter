@@ -359,6 +359,9 @@ int main(int argc, char **argv)
 		Dio->print_tight();
 		}
 
+
+	file_io Fio;
+
 	if (f_print_tex) {
 		char fname_base[1000];
 
@@ -369,7 +372,7 @@ int main(int argc, char **argv)
 			Dio->latex_it(fp);
 		}
 		cout << "Written file " << fname_base << " of size "
-				<< file_size(fname_base) << endl;
+				<< Fio.file_size(fname_base) << endl;
 		}
 	
 	if (f_analyze) {

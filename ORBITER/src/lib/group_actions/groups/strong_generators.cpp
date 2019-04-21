@@ -1180,6 +1180,7 @@ void strong_generators::print_generators_in_source_code_to_file(
 {
 	int i;
 	longinteger_object go;
+	file_io Fio;
 
 	{
 	ofstream f(fname);
@@ -1193,7 +1194,7 @@ void strong_generators::print_generators_in_source_code_to_file(
 		}
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 void strong_generators::print_generators_even_odd()
@@ -2027,11 +2028,12 @@ void strong_generators::read_file(action *A,
 {
 	int f_v = (verbose_level >= 1);
 	memory_object M;
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "strong_generators::read_file reading "
 				"file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	init(A, 0);
 	M.read_file(fname, verbose_level - 1);
@@ -2308,6 +2310,7 @@ void strong_generators::export_permutation_group_to_magma(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "strong_generators::export_permutation_"
@@ -2332,7 +2335,7 @@ void strong_generators::export_permutation_group_to_magma(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "strong_generators::export_permutation_"
@@ -2345,6 +2348,7 @@ void strong_generators::export_permutation_group_to_GAP(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "strong_generators::export_permutation_"
@@ -2369,7 +2373,7 @@ void strong_generators::export_permutation_group_to_GAP(
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "strong_generators::export_permutation_"
@@ -2654,6 +2658,7 @@ void strong_generators_array_write_file(const char *fname,
 	int f_v = (verbose_level >= 1);
 	memory_object M;
 	int i;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "strong_generators_array_write_file" << endl;
@@ -2668,7 +2673,7 @@ void strong_generators_array_write_file(const char *fname,
 		}
 	M.write_file(fname, verbose_level - 1);
 	cout << "strong_generators_array_write_file written file "
-			<< fname << " of size " << file_size(fname) << endl;
+			<< fname << " of size " << Fio.file_size(fname) << endl;
 }
 
 void strong_generators_array_read_from_file(const char *fname,
@@ -2677,6 +2682,7 @@ void strong_generators_array_read_from_file(const char *fname,
 	int f_v = (verbose_level >= 1);
 	memory_object M;
 	int i;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "strong_generators_array_read_from_file" << endl;
@@ -2686,7 +2692,7 @@ void strong_generators_array_read_from_file(const char *fname,
 	if (f_v) {
 		cout << "strong_generators_array_read_from_file "
 				"reading file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	M.cur_pointer = 0;
 

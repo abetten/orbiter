@@ -208,8 +208,11 @@ int main(int argc, char **argv)
 		fp << "\\end{tabular}" << endl;
 
 		}
+
+		file_io Fio;
+
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 
 		FREE_int(set);
 		}
@@ -300,6 +303,7 @@ void draw_graph_to_file(const char *fname,
 	int x_min = 0, x_max = 1000000;
 	int y_min = 0, y_max = 1000000;
 	int x, y, dx, dy;
+	file_io Fio;
 
 	x = (x_max - x_min) >> 1;
 	y = (y_max - y_min) >> 1;
@@ -328,7 +332,7 @@ void draw_graph_to_file(const char *fname,
 	G.footer();
 	}
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 

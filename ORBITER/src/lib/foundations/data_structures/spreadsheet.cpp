@@ -278,6 +278,7 @@ void spreadsheet::add_token(const char *label)
 void spreadsheet::save(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 
 	{
@@ -287,7 +288,7 @@ void spreadsheet::save(const char *fname, int verbose_level)
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 }
 
@@ -296,10 +297,11 @@ void spreadsheet::read_spreadsheet(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int i;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet reading file "
-			<< fname << " of size " << file_size(fname) << endl;
+			<< fname << " of size " << Fio.file_size(fname) << endl;
 		}
 	
 
@@ -373,7 +375,7 @@ void spreadsheet::read_spreadsheet(const char *fname, int verbose_level)
 	
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet reading file "
-				<< fname << " of size " << file_size(fname)
+				<< fname << " of size " << Fio.file_size(fname)
 				<< " done" << endl;
 		}
 	

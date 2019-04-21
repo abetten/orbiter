@@ -1245,8 +1245,10 @@ void cayley_graph_search::write_file(int verbose_level)
 		delete Adj;
 		} // end of fp
 
+		file_io Fio;
+
 	cout << "written file " << fname_graphs << " of size "
-			<< file_size(fname_graphs) << endl;
+			<< Fio.file_size(fname_graphs) << endl;
 	} // next sz
 
 

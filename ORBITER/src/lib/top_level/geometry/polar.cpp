@@ -668,9 +668,12 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	f << endl;
 	f << -1 << endl;
 	}
+
+	file_io Fio;
+
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	}
 

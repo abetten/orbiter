@@ -485,7 +485,8 @@ void draw_action(char *fname_base,
 	char fname_full[1000];
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
-	
+	file_io Fio;
+
 	sprintf(fname_full, "%s.mp", fname_base);
 	{
 	mp_graphics G(fname_full,
@@ -506,7 +507,7 @@ void draw_action(char *fname_base,
 	G.footer();
 	}
 	cout << "written file " << fname_full << " of size "
-			<< file_size(fname_full) << endl;
+			<< Fio.file_size(fname_full) << endl;
 	
 }
 
@@ -1060,7 +1061,9 @@ void one_by_one()
 	L.foot(file);
 	}
 
-	cout << "written file " << fname << " of size " << file_size(fname) << endl;
+	file_io Fio;
+
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
 void MISSISSIPPI()

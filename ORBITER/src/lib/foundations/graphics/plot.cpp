@@ -116,9 +116,11 @@ void draw_density(char *prefix, int *the_set, int set_size,
 	G.end_figure();
 	G.footer();
 	}
+	file_io Fio;
+
 	if (f_v) {
 		cout << "draw_density written file " << fname_full
-				<< " of size " << file_size(fname_full) << endl;
+				<< " of size " << Fio.file_size(fname_full) << endl;
 		}
 	FREE_int(set);
 	
@@ -235,9 +237,11 @@ void draw_density_multiple_curves(char *prefix,
 	G.end_figure();
 	G.footer();
 	}
+	file_io Fio;
+
 	if (f_v) {
 		cout << "draw_density written file " << fname_full
-				<< " of size " << file_size(fname_full) << endl;
+				<< " of size " << Fio.file_size(fname_full) << endl;
 		}
 	for (curve = 0; curve < nb_data_sets; curve++) {
 		FREE_int(Data2[curve]);
@@ -275,54 +279,6 @@ void get_coord_log(int *Px, int *Py, int idx, int x, int y,
 }
 
 
-
-void read_numbers_from_file(const char *fname, 
-	int *&the_set, int &set_size, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, a;
-	double d;
-	
-	if (f_v) {
-		cout << "read_numbers_from_file opening file " << fname
-				<< " of size " << file_size(fname) << " for reading" << endl;
-		}
-	ifstream f(fname);
-	
-	set_size = 1000;
-	the_set = NEW_int(set_size);
-	
-	for (i = 0; TRUE; i++) {
-		if (f.eof()) {
-			break;
-			}
-		f >> d;
-		a = (int) d;
-		if (f_vv) {
-			cout << "read_set_from_file: the " << i
-					<< "-th number is " << d << " which becomes "
-					<< a << endl;
-			}
-		if (a == -1)
-			break;
-		the_set[i] = a;
-		if (i >= set_size) {
-			cout << "i >= set_size" << endl;
-			exit(1);
-			}
-		}
-	set_size = i;
-	if (f_v) {
-		cout << "read a set of size " << set_size
-				<< " from file " << fname << endl;
-		}
-	if (f_vv) {
-		cout << "the set is:" << endl;
-		int_vec_print(cout, the_set, set_size);
-		cout << endl;
-		}
-}
 
 void y_to_pt_on_curve(int y_in, int &x, int &y,  
 	int *outline_value, int *outline_number, int outline_sz)
@@ -415,8 +371,10 @@ void projective_plane_draw_grid(const char *fname,
 	G.end_figure();
 	G.footer();
 	}
+	file_io Fio;
+
 	cout << "written file " << fname_full << " of size "
-			<< file_size(fname_full) << endl;
+			<< Fio.file_size(fname_full) << endl;
 	if (f_v) {
 		cout << "projective_plane_draw_grid done" << endl;
 		}
@@ -424,38 +382,6 @@ void projective_plane_draw_grid(const char *fname,
 }
 
 
-void projective_plane_make_affine_point(
-		int q, int x1, int x2, int x3, double &a, double &b)
-{
-	if (x3 == 0) {
-		if (x2 == 0) {
-			a = 3 * q / 2;
-			b = q / 2;
-			}
-		else {
-			a = q / 2 + x1;
-			b = 3 * q / 2 - x1;
-			}
-		// make it lie on the rim:
-		// if x1 < q/2, we decrease the y coordinate.
-		// if x1 > q/2, we decrease the x coordinate.
-		if (x2 == 0) {
-			a = q;
-			}
-		else {
-			if (x1 < (q / 2)) {
-				b = q;
-				}
-			if (x1 > q / 2) {
-				a = q;
-				}
-			}
-		}
-	else {
-		a = x1;
-		b = x2;
-		}
-}
 
 }
 }

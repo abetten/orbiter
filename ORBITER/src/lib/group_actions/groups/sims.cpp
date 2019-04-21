@@ -627,6 +627,7 @@ void sims::create_group_tree(const char *fname,
 	longinteger_object Go;
 	int *Elt;
 	int *Fst;
+	file_io Fio;
 	
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(Go);
@@ -690,7 +691,7 @@ void sims::create_group_tree(const char *fname,
 	fp << "-1" << endl;
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	FREE_int(Elt);
 	FREE_int(Fst);
 }
@@ -4308,6 +4309,7 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	longinteger_object go;
 	FILE *fp;
 	int i;
+	file_io Fio;
 	
 	Elt = NEW_int(A->elt_size_in_int);
 	//elt = NEW_char(A->coded_elt_size_in_char);
@@ -4321,7 +4323,7 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	fclose(fp);
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	FREE_int(Elt);
 	//FREE_char(elt);
@@ -4334,6 +4336,7 @@ void sims::print_all_group_elements_to_file(char *fname,
 	int *Elt;
 	longinteger_object go;
 	int i;
+	file_io Fio;
 	
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
@@ -4350,7 +4353,7 @@ void sims::print_all_group_elements_to_file(char *fname,
 	}
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	FREE_int(Elt);
 }
@@ -4913,6 +4916,7 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 	FILE *f2;
 	int goi, i;
 	longinteger_object go;
+	file_io Fio;
 
 	group_order(go);
 	goi = go.as_int();
@@ -4935,7 +4939,7 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 }
 
@@ -4946,8 +4950,9 @@ void sims::read_list_of_elements(action *A, char *fname,
 	int *Elt1, *Elt2;
 	FILE *f2;
 	int goi, i;
+	file_io Fio;
 
-	goi = file_size(fname) / A->coded_elt_size_in_char;
+	goi = Fio.file_size(fname) / A->coded_elt_size_in_char;
 	if (f_v) {
 		cout << "sims::read_list_of_elements(): reading "
 				<< goi << " elements from file " << fname << endl;
@@ -4969,7 +4974,7 @@ void sims::read_list_of_elements(action *A, char *fname,
 	FREE_int(Elt2);
 	if (f_v) {
 		cout << "read file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 }
 
@@ -5004,6 +5009,7 @@ void sims::write_sgs(const char *fname, int verbose_level)
 	int i;
 	vector_ge SG;
 	int *tl;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "sims::write_sgs fname=" << fname << endl;
@@ -5045,7 +5051,7 @@ void sims::write_sgs(const char *fname, int verbose_level)
 	}
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	FREE_int(Elt);
 	FREE_char(elt);
@@ -5074,6 +5080,7 @@ void sims::read_sgs(const char *fname,
 	int make_element_size1;
 	int *data; // [nb_gens * make_element_size1]
 	//char str[1000];
+	file_io Fio;
 
 	if (f_v) {
 		cout << "sims::read_sgs fname=" << fname << endl;
@@ -5086,7 +5093,7 @@ void sims::read_sgs(const char *fname,
 	
 	if (f_v) {
 		cout << "reading file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	{
 		ifstream fp(fname);
@@ -5712,6 +5719,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 	int *Elt2;
 	int *Table;
 	combinatorics_domain Combi;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group" << endl;
@@ -5772,7 +5780,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 	fp << " >;" << endl;
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	
 	FREE_int(Elt1);
 	FREE_int(Elt2);

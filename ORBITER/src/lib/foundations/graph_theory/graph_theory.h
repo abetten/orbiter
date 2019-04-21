@@ -574,6 +574,14 @@ public:
 	void print_Pijk(int *Pijk, int nb_colors);
 	void compute_decomposition_of_graph_wrt_partition(int *Adj, int N,
 		int *first, int *len, int nb_parts, int *&R, int verbose_level);
+	void draw_bitmatrix(const char *fname_base, int f_dots,
+		int f_partition, int nb_row_parts, int *row_part_first,
+		int nb_col_parts, int *col_part_first,
+		int f_row_grid, int f_col_grid,
+		int f_bitmatrix, uchar *D, int *M,
+		int m, int n, int xmax_in, int ymax_in, int xmax, int ymax,
+		double scale, double line_width,
+		int f_has_labels, int *labels);
 
 };
 

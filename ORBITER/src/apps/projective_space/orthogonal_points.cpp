@@ -139,8 +139,11 @@ int main(int argc, char **argv)
 	cout << endl;
 
 	char fname[1000];
+
+	file_io Fio;
+
 	sprintf(fname, "Q%s_%d_%d.txt", plus_minus_letter(epsilon), n, q);
-	write_set_to_file(fname, L, N, verbose_level);
+	Fio.write_set_to_file(fname, L, N, verbose_level);
 
 
 	FREE_int(v);

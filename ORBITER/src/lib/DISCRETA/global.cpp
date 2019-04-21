@@ -48,6 +48,7 @@ void discreta_init()
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	char str[1000];
+	file_io Fio;
 	
 	discreta_home = getenv("DISCRETA_HOME");
 	if (discreta_home == NULL) {
@@ -69,7 +70,7 @@ void discreta_init()
 		strcat(str, "/lib/this_is");
 		
 #if 1
-		if (file_size(str) <= 0) {
+		if (Fio.file_size(str) <= 0) {
 			if (f_v) {
 				cout << "discreta_init(): WARNING: can't find my library (DISCRETA_HOME/lib) !" << endl;
 				}

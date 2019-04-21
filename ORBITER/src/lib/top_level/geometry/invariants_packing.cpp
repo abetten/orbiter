@@ -285,9 +285,11 @@ void invariants_packing::compute_dual_packings(
 			f_implicit_fusion, verbose_level - 3);
 		}
 
-	int_vecs_write_csv(Dual_idx, f_self_dual, 
+	file_io Fio;
+
+	Fio.int_vecs_write_csv(Dual_idx, f_self_dual,
 		Iso->Reps->count, "Dual_idx.csv", "dual_idx", "f_self_dual");
-	int_vec_write_csv(P->Spread_tables->dual_spread_idx,
+	Fio.int_vec_write_csv(P->Spread_tables->dual_spread_idx,
 		P->Spread_tables->nb_spreads, "Dual_spread_idx.csv", "dual_spread_idx");
 	
 	if (f_v) {
@@ -304,6 +306,7 @@ void invariants_packing::make_table(
 	//int f_vv = (verbose_level >= 2);
 	int i;
 	char fname[1000];
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "invariants_packing::make_table" << endl;
@@ -378,7 +381,7 @@ void invariants_packing::make_table(
 			ago[j] = Ago_int[a];
 			}
 
-		int_vecs_write_csv(set, ago, nb, fname, "ID", "ago");
+		Fio.int_vecs_write_csv(set, ago, nb, fname, "ID", "ago");
 
 		classify C;
 

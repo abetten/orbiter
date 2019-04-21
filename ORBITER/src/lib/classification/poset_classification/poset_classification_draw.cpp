@@ -55,7 +55,8 @@ int poset_classification::write_treefile(char *fname_base,
 	int f_vv = (verbose_level >= 2);
 	char fname1[1000];
 	int i, level;
-		
+	file_io Fio;
+
 	if (f_v) {
 		cout << "poset_classification::write_treefile" << endl;
 		}
@@ -91,7 +92,7 @@ int poset_classification::write_treefile(char *fname_base,
 		}
 		if (f_vv) {
 			cout << "written file " << fname1
-					<< " of size " << file_size(fname1) << endl;
+					<< " of size " << Fio.file_size(fname1) << endl;
 			}
 		if (f_v) {
 			cout << "poset_classification::write_treefile done" << endl;
@@ -128,6 +129,7 @@ void poset_classification::draw_tree(char *fname_base, int lvl,
 	int f_draw_points = TRUE;
 	int f_draw_extension_points = FALSE;
 	int f_draw_aut_group_order = FALSE;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::draw_tree" << endl;
@@ -135,7 +137,7 @@ void poset_classification::draw_tree(char *fname_base, int lvl,
 	sprintf(fname, "%s_%d", fname_base, lvl);
 	sprintf(fname1, "%s_%d.tree", fname_base, lvl);
 			
-	if (file_size(fname1)) {
+	if (Fio.file_size(fname1)) {
 		if (f_vv) {
 			cout << "reading treefile" << endl;
 			}
@@ -243,6 +245,7 @@ void poset_classification::draw_tree_low_level(char *fname, int nb_nodes,
 	char fname_full[1000];
 	double scale = 0.3;
 	double line_width = 1.0;
+	file_io Fio;
 	
 	if (xmax == -1)
 		xmax = 2000;
@@ -290,7 +293,7 @@ void poset_classification::draw_tree_low_level(char *fname, int nb_nodes,
 	if (f_v) {
 		cout << "poset_classification::draw_tree_low_level "
 				"written file " << fname_full
-				<< " of size " << file_size(fname_full) << endl;
+				<< " of size " << Fio.file_size(fname_full) << endl;
 		}
 	
 }

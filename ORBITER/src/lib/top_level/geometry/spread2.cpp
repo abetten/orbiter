@@ -204,12 +204,14 @@ void spread::print_isomorphism_type(isomorph *Iso,
 	longinteger_f_print_scientific = save_longinteger_f_print_scientific;
 	}
 
+	file_io Fio;
+
 	if (f_v) {
 		cout << "spread::print_isomorphism_type written file "
-				<< fname << " of size " << file_size(fname) << endl;
+				<< fname << " of size " << Fio.file_size(fname) << endl;
 		cout << "spread::print_isomorphism_type written file "
 				<< fname_klein << " of size "
-				<< file_size(fname_klein) << endl;
+				<< Fio.file_size(fname_klein) << endl;
 		}
 
 
@@ -560,6 +562,7 @@ void spread::czerwinski_oakden(int level, int verbose_level)
 	int data[26];
 	int M[8];
 	int h, u, i, a = 0, b = 0, c = 0, d = 0;
+	file_io Fio;
 	int spreads[] = 	
 		{
 			// S1:
@@ -1210,13 +1213,13 @@ void spread::czerwinski_oakden(int level, int verbose_level)
 		fp << endl;
 
 		sprintf(fname2, "Czerwinski_Oakden_%s.txt", label[h]);
-		write_set_to_file(fname2, data, sz, 0/*verbose_level*/);
+		Fio.write_set_to_file(fname2, data, sz, 0/*verbose_level*/);
 		cout << "Written file " << fname2 << " of size "
-				<< file_size(fname2) << endl;
+				<< Fio.file_size(fname2) << endl;
 		} // next h
 	fp << -1 << endl;
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
 void spread::write_spread_to_file(int type_of_spread, int verbose_level)
@@ -1251,6 +1254,8 @@ void spread::write_spread_to_file(int type_of_spread, int verbose_level)
 		sprintf(fname, "spread_q%d_Hudson.txt", q);
 		}
 
+	file_io Fio;
+
 	data = NEW_int(sz);
 	if (type_of_spread == SPREAD_OF_TYPE_DICKSON_KANTOR ||
 		type_of_spread == SPREAD_OF_TYPE_HUDSON) {
@@ -1259,9 +1264,9 @@ void spread::write_spread_to_file(int type_of_spread, int verbose_level)
 	else {
 		make_spread_from_q_clan(data, type_of_spread, verbose_level);
 		}
-	write_set_to_file(fname, data, sz, 0/*verbose_level*/);
+	Fio.write_set_to_file(fname, data, sz, 0/*verbose_level*/);
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	FREE_int(data);
 }
 
@@ -1531,8 +1536,9 @@ void spread::read_and_print_spread(const char *fname, int verbose_level)
 {
 	int *data;
 	int sz;
-	
-	read_set_from_file(fname, data, sz, verbose_level);
+	file_io Fio;
+
+	Fio.read_set_from_file(fname, data, sz, verbose_level);
 	print_spread(cout, data, sz);
 	FREE_int(data);
 }
@@ -1546,12 +1552,13 @@ void spread::HMO(const char *fname, int verbose_level)
 	int *GG, *HH;
 	int alpha, beta, omega, x, y, tmp1, tmp2, f, z;
 	int M[8];
-	
+	file_io Fio;
+
 	if (order != q * q) {
 		cout << "spread::print_spread order != q * q" << endl;
 		exit(1);
 		}
-	read_set_from_file(fname, data, sz, verbose_level);
+	Fio.read_set_from_file(fname, data, sz, verbose_level);
 	G = NEW_int(order);
 	H = NEW_int(order);
 	Ge = NEW_int(order);
@@ -1649,7 +1656,7 @@ void spread::HMO(const char *fname, int verbose_level)
 	char fname2[1000];
 	sprintf(fname2, "HMO_%s", fname);
 
-	write_set_to_file(fname2, Data2, Sz, verbose_level);
+	Fio.write_set_to_file(fname2, Data2, Sz, verbose_level);
 	
 	FREE_int(Data2);
 	FREE_OBJECT(Gq2);
@@ -2204,9 +2211,10 @@ void spread::report2(isomorph &Iso, int verbose_level)
 	FREE_OBJECTS(Ago);
 	FREE_OBJECTS(Ago_induced);
 	}
+	file_io Fio;
 
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 }
 
@@ -2240,8 +2248,10 @@ void spread::all_cooperstein_thas_quotients(
 
 	f << -1 << endl;
 	}
+	file_io Fio;
+
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 
 	//Iso.close_solution_database(verbose_level - 1);
@@ -2273,6 +2283,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 	longinteger_domain Dom;
 	number_theory_domain NT;
 	sorting Sorting;
+	file_io Fio;
 
 
 
@@ -2428,7 +2439,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 		char fname[1000];
 		sprintf(fname, "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
 				NT.i_power_j(q, k), h, u, orbit_length);
-		write_set_to_file(fname, data2, order, 0 /* verbose_level*/);
+		Fio.write_set_to_file(fname, data2, order, 0 /* verbose_level*/);
 		cnt++;
 
 

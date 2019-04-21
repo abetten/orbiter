@@ -50,19 +50,19 @@ struct dlx_node {
     int  col; // col index
 };
 
-int DLX_f_write_tree = FALSE;
-int DLX_write_tree_cnt = 0;
-ofstream *DLX_fp_tree = NULL;
+static int DLX_f_write_tree = FALSE;
+static int DLX_write_tree_cnt = 0;
+static ofstream *DLX_fp_tree = NULL;
 
 
-int nRow;
-int nCol;
+static int nRow;
+static int nCol;
 
-int f_has_RHS = FALSE; // [nCol]
-int *target_RHS = NULL; // [nCol]
-int *current_RHS = NULL; // [nCol]
-int *current_row = NULL; // [nCol]
-int *current_row_save = NULL; // [sum_rhs]
+static int f_has_RHS = FALSE; // [nCol]
+static int *target_RHS = NULL; // [nCol]
+static int *current_RHS = NULL; // [nCol]
+static int *current_row = NULL; // [nCol]
+static int *current_row_save = NULL; // [sum_rhs]
 
 
 // we allow three types of conditions:
@@ -70,62 +70,62 @@ int *current_row_save = NULL; // [sum_rhs]
 // inequalities t_LE
 // zero or a fixed value t_ZOR
 
-int f_type = FALSE;
-diophant_equation_type *type = NULL; // [nCol]
-int *changed_type_columns = NULL; // [nCol]
-int *nb_changed_type_columns = NULL; // [sum_rhs]
-int nb_changed_type_columns_total;
+static int f_type = FALSE;
+static diophant_equation_type *type = NULL; // [nCol]
+static int *changed_type_columns = NULL; // [nCol]
+static int *nb_changed_type_columns = NULL; // [sum_rhs]
+static int nb_changed_type_columns_total;
 
-int *Result; // [nRow]
-int *Nb_choices; // [nRow]
-int *Cur_choice; // [nRow]
+static int *Result; // [nRow]
+static int *Nb_choices; // [nRow]
+static int *Cur_choice; // [nRow]
 int *DLX_Cur_col; // [nRow]
-int *Nb_col_nodes; // [nCol]
-int dlx_nb_sol = 0;
-int dlx_nb_backtrack_nodes;
-dlx_node *DLX_Matrix = NULL; // [nRow * nCol]
-dlx_node *DLX_Root = NULL;
-int dlx_f_write_to_file = FALSE;
-ofstream *dlx_fp_sol = NULL;
-int f_has_callback_solution_found = FALSE;
-void (*callback_solution_found)(
+static int *Nb_col_nodes; // [nCol]
+static int dlx_nb_sol = 0;
+static int dlx_nb_backtrack_nodes;
+static dlx_node *DLX_Matrix = NULL; // [nRow * nCol]
+static dlx_node *DLX_Root = NULL;
+static int dlx_f_write_to_file = FALSE;
+static ofstream *dlx_fp_sol = NULL;
+static int f_has_callback_solution_found = FALSE;
+static void (*callback_solution_found)(
 		int *solution, int len, int nb_sol, void *data);
-void *callback_solution_found_data;
+static void *callback_solution_found_data;
 
-inline int dataLeft(int i) { return i-1<0?nCol-1:i-1; }
-inline int dataRight(int i) { return (i+1)%nCol; }
-inline int dataUp(int i) { return i-1<0?nRow-1:i-1; }
-inline int dataDown(int i) { return (i+1)%nRow; }
+static  int dataLeft(int i) { return i-1<0?nCol-1:i-1; }
+static  int dataRight(int i) { return (i+1)%nCol; }
+static  int dataUp(int i) { return i-1<0?nRow-1:i-1; }
+static  int dataDown(int i) { return (i+1)%nRow; }
 
-void open_solution_file(int f_write_file,
+static void open_solution_file(int f_write_file,
 		const char *solution_fname, int verbose_level);
-void close_solution_file(int f_write_file);
-void open_tree_file(int f_write_tree_file,
+static void close_solution_file(int f_write_file);
+static void open_tree_file(int f_write_tree_file,
 		const char *tree_fname, int verbose_level);
-void close_tree_file(int f_write_tree_file);
-void print_position(dlx_node *p);
-void Create_RHS(int nb_cols, int *RHS,
+static void close_tree_file(int f_write_tree_file);
+//static void print_position(dlx_node *p);
+static void Create_RHS(int nb_cols, int *RHS,
 		int f_has_type, diophant_equation_type *type, int verbose_level);
-void Delete_RHS();
-void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level);
-void DeleteMatrix();
-dlx_node *get_column_header(int c);
-dlx_node *ChooseColumnFancy(void);
-dlx_node *ChooseColumn(void);
-dlx_node *ChooseColumnFancyRHS(void);
-dlx_node *ChooseColumnRHS(void);
-void print_root();
-void write_tree(int k);
-void print_if_necessary(int k);
-void process_solution(int k);
-void count_nb_choices(int k, dlx_node *Column);
-int IsDone();
-int IsColumnDone(int c);
-int IsColumnNotDone(int c);
-void DlxSearch(int k);
+static void Delete_RHS();
+static void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level);
+static void DeleteMatrix();
+static dlx_node *get_column_header(int c);
+static dlx_node *ChooseColumnFancy(void);
+static dlx_node *ChooseColumn(void);
+static dlx_node *ChooseColumnFancyRHS(void);
+static dlx_node *ChooseColumnRHS(void);
+//static void print_root();
+static void write_tree(int k);
+static void print_if_necessary(int k);
+static void process_solution(int k);
+static void count_nb_choices(int k, dlx_node *Column);
+static int IsDone();
+static int IsColumnDone(int c);
+static int IsColumnNotDone(int c);
+static void DlxSearch(int k);
 void DlxSearchRHS(int k, int verbose_level);
-void Cover(dlx_node *ColNode);
-void UnCover(dlx_node *ColNode);
+static void Cover(dlx_node *ColNode);
+static void UnCover(dlx_node *ColNode);
 
 
 void install_callback_solution_found(
@@ -430,10 +430,12 @@ void close_tree_file(int f_write_tree_file)
 		}
 }
 
+#if 0
 void print_position(dlx_node *p)
 {
 	cout << p->row << "/" << p->col;
 }
+#endif
 
 void Create_RHS(int nb_cols, int *RHS, int f_has_type,
 		diophant_equation_type *type, int verbose_level)
@@ -736,6 +738,7 @@ dlx_node *ChooseColumnRHS(void)
 	exit(1);
 }
 
+#if 0
 void print_root()
 {
 	dlx_node *Node, *N;
@@ -751,6 +754,7 @@ void print_root()
 			}
 		}
 }
+#endif
 
 void write_tree(int k)
 {

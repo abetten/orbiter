@@ -2610,12 +2610,12 @@ void action::read_representatives(char *fname,
 	char **Aut_ascii; 
 	int *Casenumbers;
 	int i, j;
-	
+	file_io Fio;
 
 	cout << "action::read_file_and_print_representatives "
 			"reading file " << fname << endl;
 	
-	read_and_parse_data_file_fancy(fname, 
+	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -2629,7 +2629,7 @@ void action::read_representatives(char *fname,
 			Reps[i * size + j] = Sets[i][j];
 			}
 		}
-	free_data_fancy(nb_cases, 
+	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets, 
 		Ago_ascii, Aut_ascii, 
 		Casenumbers);
@@ -2647,12 +2647,13 @@ void action::read_representatives_and_strong_generators(
 	//char **Aut_ascii; 
 	int *Casenumbers;
 	int i, j;
+	file_io Fio;
 	
 
 	cout << "action::read_file_and_print_representatives "
 			"reading file " << fname << endl;
 	
-	read_and_parse_data_file_fancy(fname, 
+	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -2666,7 +2667,7 @@ void action::read_representatives_and_strong_generators(
 			Reps[i * size + j] = Sets[i][j];
 			}
 		}
-	free_data_fancy(nb_cases, 
+	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets, 
 		Ago_ascii, NULL /*Aut_ascii*/, 
 		Casenumbers);
@@ -2683,13 +2684,14 @@ void action::read_file_and_print_representatives(
 	char **Aut_ascii; 
 	int *Casenumbers;
 	int i;
+	file_io Fio;
 	
 
 	cout << "action::read_file_and_print_representatives "
 			"reading file "
 			<< fname << endl;
 	
-	read_and_parse_data_file_fancy(fname, 
+	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -2731,7 +2733,7 @@ void action::read_file_and_print_representatives(
 		FREE_int(tl);
 
 		}
-	free_data_fancy(nb_cases, 
+	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets, 
 		Ago_ascii, Aut_ascii, 
 		Casenumbers);
@@ -2755,6 +2757,7 @@ void action::read_set_and_stabilizer(const char *fname,
 	int *Casenumbers;
 	group *G;
 	int i;
+	file_io Fio;
 	
 
 	if (f_v) {
@@ -2763,7 +2766,7 @@ void action::read_set_and_stabilizer(const char *fname,
 				<< " no=" << no << endl;
 		}
 	
-	read_and_parse_data_file_fancy(fname, 
+	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -2820,7 +2823,7 @@ void action::read_set_and_stabilizer(const char *fname,
 		cout << "action::read_set_and_stabilizer "
 				"after FREE_OBJECT  G" << endl;
 		}
-	free_data_fancy(nb_cases, 
+	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets, 
 		Ago_ascii, Aut_ascii, 
 		Casenumbers);

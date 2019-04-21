@@ -227,8 +227,9 @@ void set_of_sets::init_from_csv_file(int underlying_set_size,
 
 	int *Data;
 	int m, n;
-	
-	int_matrix_read_csv(fname, Data, m, n, verbose_level);
+	file_io Fio;
+
+	Fio.int_matrix_read_csv(fname, Data, m, n, verbose_level);
 
 	if (f_v) {
 		cout << "set_of_sets::init_from_csv_file "
@@ -256,12 +257,13 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "set_of_sets::init_from_orbiter_file "
 				"fname=" << fname << endl;
 		}
-	nb_sets = count_number_of_orbits_in_file(fname, verbose_level - 1);
+	nb_sets = Fio.count_number_of_orbits_in_file(fname, verbose_level - 1);
 	if (f_v) {
 		cout << "set_of_sets::init_from_orbiter_file "
 				"nb_sets=" << nb_sets << endl;

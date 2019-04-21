@@ -1079,13 +1079,14 @@ void spread::lifting_prepare_function_new(
 		}
 	
 	char fname_clique_graph[1000];
+	file_io Fio;
 
 	sprintf(fname_clique_graph, "%sgraph_%d.bin",
 			E->output_prefix, starter_case);
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
 		cout << "Written file " << fname_clique_graph
-				<< " of size " << file_size(fname_clique_graph) << endl;
+				<< " of size " << Fio.file_size(fname_clique_graph) << endl;
 		}
 
 	FREE_OBJECT(CG);

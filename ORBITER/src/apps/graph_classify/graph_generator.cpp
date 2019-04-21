@@ -903,8 +903,10 @@ void graph_generator::draw_graphs(int level,
 		G.end_figure();
 		G.footer();
 		}
+		file_io Fio;
+
 		cout << "written file " << fname_full
-				<< " of size " << file_size(fname_full) << endl;
+				<< " of size " << Fio.file_size(fname_full) << endl;
 
 		delete Strong_gens;
 		}

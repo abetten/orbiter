@@ -578,8 +578,10 @@ int main(int argc, const char **argv)
 		FREE_int(singular_Pts);
 		FREE_int(type);
 		}
-	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+		file_io Fio;
+
+		cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 	}
 	if (f_v) {
 		cout << "surface_classify writing cheat sheet on "

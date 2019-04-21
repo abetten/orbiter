@@ -55,7 +55,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 	char fname[1000];
 	char fname_pic[1000];
 	char fname_scheme[1000];
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "TDA:" << endl;
 		cout << "extra.C: incidence_structure_compute_TDA_general" << endl;
@@ -202,11 +203,11 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		}
 		if (f_v) {
 			cout << "written file " << fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 			cout << "written file " << fname_pic << " of size "
-					<< file_size(fname_pic) << endl;
+					<< Fio.file_size(fname_pic) << endl;
 			cout << "written file " << fname_scheme << " of size "
-					<< file_size(fname_scheme) << endl;
+					<< Fio.file_size(fname_scheme) << endl;
 			}
 		}
 
@@ -229,7 +230,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		Inc2->save_inc_file(fname);
 		if (f_v) {
 			cout << "written file " << fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 			}
 		}
 

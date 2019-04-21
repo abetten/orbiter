@@ -219,6 +219,7 @@ void do_it(int verbose_level)
 
 	colored_graph *CG;
 	char fname[1000];
+	file_io Fio;
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
@@ -227,7 +228,7 @@ void do_it(int verbose_level)
 
 	CG->save(fname, verbose_level);
 
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 
 	FREE_OBJECT(CG);

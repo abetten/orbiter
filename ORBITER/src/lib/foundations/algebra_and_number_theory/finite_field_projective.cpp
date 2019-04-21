@@ -4416,6 +4416,7 @@ void finite_field::do_test_diagonal_line(int n,
 	int *set_sizes;
 	char **Ago_ascii;
 	char **Aut_ascii;
+	file_io Fio;
 
 	int *Nb;
 	sorting Sorting;
@@ -4426,7 +4427,7 @@ void finite_field::do_test_diagonal_line(int n,
 		nb_cases, data, sets, set_sizes);
 #endif
 
-	read_and_parse_data_file_fancy(fname_orbits_on_quadrangles,
+	Fio.read_and_parse_data_file_fancy(fname_orbits_on_quadrangles,
 		f_casenumbers,
 		nb_cases,
 		set_sizes, sets, Ago_ascii, Aut_ascii,

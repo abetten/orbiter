@@ -46,7 +46,8 @@ int main(int argc, char **argv)
 		cout << "please use -file <file>" << endl;
 		exit(1);
 		}
-	
+	file_io Fio;
+
 
 #if 0
 	int nb_orbits;
@@ -92,7 +93,7 @@ int main(int argc, char **argv)
 
 	sprintf(fname, "%s", file_name);
 	sprintf(candidates_fname, "%s_candidates.bin", fname);
-	if (file_size(candidates_fname) > 0) {
+	if (Fio.file_size(candidates_fname) > 0) {
 		f_has_candidates = TRUE;
 	}
 	ODF = NEW_OBJECT(orbiter_data_file);

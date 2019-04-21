@@ -137,8 +137,10 @@ int main(int argc, char **argv)
 		FALSE /* f_enclose_in_parentheses */);
 	}
 
+	file_io Fio;
+
 	cout << "Written file " << save_fname << " of size "
-		<< file_size(save_fname) << endl;
+		<< Fio.file_size(save_fname) << endl;
 	
 	
 }

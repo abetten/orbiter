@@ -110,7 +110,10 @@ void cheat_sheet_GF(int q,
 
 	L.foot(f);
 	}
-	cout << "written file " << fname << " of size " << file_size(fname) << endl;
+
+	file_io Fio;
+
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 
 	//F.compute_subfields(verbose_level);

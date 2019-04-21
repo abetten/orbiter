@@ -60,6 +60,7 @@ int main(int argc, const char **argv)
 
 
 	char fname_out[1000];
+	file_io Fio;
 
 	sprintf(fname_out, "%s", fname);
 
@@ -69,7 +70,7 @@ int main(int argc, const char **argv)
 	LG->write_file(fname_out, 0 /*verbose_level*/);
 
 	cout << "Written file " << fname_out << " of size "
-			<< file_size(fname_out) << endl;
+			<< Fio.file_size(fname_out) << endl;
 
 	delete LG;
 }

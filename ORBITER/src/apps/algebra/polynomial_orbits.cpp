@@ -328,7 +328,9 @@ int main(int argc, const char **argv)
 		L.foot(f);
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	file_io Fio;
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	int f, l, a, r;
 	longinteger_object go, go1;
@@ -467,7 +469,7 @@ int main(int argc, const char **argv)
 			L.foot(fp);
 			}
 			cout << "Written file " << fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 			
 			}
 			}

@@ -804,10 +804,12 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 	D.close(0/*verbose_level - 1*/);
 	fclose(fp);
+
+	file_io Fio;
 	if (f_v) {
 		cout << "number of group elements in " << fname_db_level_ge
 				<< " is " << cnt << endl;
-		cout << "file size is " << file_size(fname_db_level_ge) << endl;
+		cout << "file size is " << Fio.file_size(fname_db_level_ge) << endl;
 		cout << "gen->A->coded_elt_size_in_char="
 				<< gen->Poset->A->coded_elt_size_in_char << endl;
 		}

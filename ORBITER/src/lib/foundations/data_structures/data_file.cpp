@@ -74,15 +74,16 @@ void data_file::read(const char *fname,
 		int f_casenumbers, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "data_file::read trying to read file "
-				<< fname << " of size " << file_size(fname) << endl;
+				<< fname << " of size " << Fio.file_size(fname) << endl;
 		cout << "f_casenumbers=" << f_casenumbers << endl;
 		}
 	strcpy(data_file::fname, fname);
 	
-	read_and_parse_data_file_fancy(fname, 
+	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers, 
 		nb_cases, 
 		set_sizes, sets, Ago_ascii, Aut_ascii, 
@@ -98,11 +99,12 @@ void data_file::read_candidates(const char *candidates_fname,
 {
 	int f_v = (verbose_level >= 1);
 	int i, cnt, a, b;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "data_file::read_candidates trying to read "
 				"candidates file " << candidates_fname << " of size "
-				<< file_size(candidates_fname) << endl;
+				<< Fio.file_size(candidates_fname) << endl;
 		}
 
 	nb_candidates = NEW_int(nb_cases);

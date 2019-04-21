@@ -1352,12 +1352,13 @@ void buekenhout_metz::investigate_line_orbit(int h, int verbose_level)
 void buekenhout_metz::write_unital_to_file()
 {
 	char fname_unital[1000];
+	file_io Fio;
 	
 	get_name(fname_unital);
 	strcat(fname_unital, ".txt");
-	write_set_to_file(fname_unital, U, sz, 0 /* verbose_level */);
+	Fio.write_set_to_file(fname_unital, U, sz, 0 /* verbose_level */);
 	cout << "written file " << fname_unital << " of size "
-			<< file_size(fname_unital) << endl;
+			<< Fio.file_size(fname_unital) << endl;
 }
 
 

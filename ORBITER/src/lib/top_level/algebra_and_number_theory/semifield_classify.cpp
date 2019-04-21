@@ -420,6 +420,7 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t0 = os_ticks();
+	file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_classify::compute_orbits "
@@ -469,14 +470,14 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 			}
 		int_vec_copy(set, Table + i * k, k);
 		}
-	int_matrix_write_csv(fname, Table, nb_orbits, k);
+	Fio.int_matrix_write_csv(fname, Table, nb_orbits, k);
 
 	FREE_int(set);
 	FREE_int(Table);
 	FREE_int(v);
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 

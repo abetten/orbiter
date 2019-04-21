@@ -205,6 +205,7 @@ int main(int argc, char **argv)
 		}
 
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 	
 	cout << "k=" << k << endl;
 	cout << "q=" << q << endl;
@@ -382,7 +383,7 @@ int main(int argc, char **argv)
 			nb_backtrack_nodes,
 			verbose_level);
 		}
-		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 	else if (f_classification) {
 		cout << "processing classification" << endl;
@@ -394,7 +395,7 @@ int main(int argc, char **argv)
 
 			for (cnt = loop_start; TRUE; cnt += loop_increment) {
 				sprintf(classification_fname2, classification_fname, cnt);
-				if (file_size(classification_fname2) <= 0) {
+				if (Fio.file_size(classification_fname2) <= 0) {
 					cout << "The file " << classification_fname2
 							<< " does not exist, we break off" << endl;
 					break;
@@ -689,8 +690,9 @@ void arc_lifting_from_classification_file(
 			}
 		Fp << -1 << endl;
 	}
+	file_io Fio;
 	cout << "Written file " << solution_fname << " of size "
-			<< file_size(solution_fname) << endl;
+			<< Fio.file_size(solution_fname) << endl;
 	{
 	ofstream fp(success_fname);
 	fp << "success" << endl;

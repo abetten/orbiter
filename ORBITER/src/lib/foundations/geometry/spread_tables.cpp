@@ -219,6 +219,7 @@ void spread_tables::classify_self_dual_spreads(int *&type,
 void spread_tables::save(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::save" << endl;
@@ -229,7 +230,7 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_spreads << endl;
 		}
 
-	int_matrix_write_csv(fname_spreads,
+	Fio.int_matrix_write_csv(fname_spreads,
 			spread_table, nb_spreads, spread_size);
 	if (f_v) {
 		cout << "spread_tables::save "
@@ -241,7 +242,7 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_isomorphism_type_of_spreads
 				<< endl;
 		}
-	int_vec_write_csv(
+	Fio.int_vec_write_csv(
 			spread_iso_type, nb_spreads,
 			fname_isomorphism_type_of_spreads,
 			"isomorphism_type_of_spread");
@@ -256,7 +257,7 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_dual_spread
 				<< endl;
 		}
-	int_vec_write_csv(
+	Fio.int_vec_write_csv(
 			dual_spread_idx, nb_spreads,
 			fname_dual_spread,
 			"dual_spread_idx");
@@ -271,7 +272,7 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_self_dual_spreads
 				<< endl;
 		}
-	int_vec_write_csv(
+	Fio.int_vec_write_csv(
 			self_dual_spreads, nb_self_dual_spreads,
 			fname_self_dual_spreads,
 			"self_dual_spreads");
@@ -292,6 +293,7 @@ void spread_tables::load(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::load" << endl;
@@ -302,7 +304,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_spreads << endl;
 		}
 
-	int_matrix_read_csv(fname_spreads,
+	Fio.int_matrix_read_csv(fname_spreads,
 			spread_table, nb_spreads, b,
 			0 /* verbose_level */);
 	if (b != spread_size) {
@@ -319,7 +321,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_isomorphism_type_of_spreads
 				<< endl;
 		}
-	int_matrix_read_csv(fname_isomorphism_type_of_spreads,
+	Fio.int_matrix_read_csv(fname_isomorphism_type_of_spreads,
 			spread_iso_type, a, b,
 			0 /* verbose_level */);
 	if (a != nb_spreads) {
@@ -337,7 +339,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_dual_spread
 				<< endl;
 		}
-	int_matrix_read_csv(fname_dual_spread,
+	Fio.int_matrix_read_csv(fname_dual_spread,
 			dual_spread_idx, a, b,
 			0 /* verbose_level */);
 	if (a != nb_spreads) {
@@ -355,7 +357,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_self_dual_spreads
 				<< endl;
 		}
-	int_matrix_read_csv(fname_self_dual_spreads,
+	Fio.int_matrix_read_csv(fname_self_dual_spreads,
 			self_dual_spreads, nb_self_dual_spreads, b,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -446,6 +448,7 @@ void spread_tables::compute_adjacency_matrix(
 	{
 	colored_graph *CG;
 	char fname[1000];
+	file_io Fio;
 
 	CG = NEW_OBJECT(colored_graph);
 	int *color;
@@ -462,7 +465,7 @@ void spread_tables::compute_adjacency_matrix(
 	CG->save(fname, verbose_level);
 
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	FREE_int(color);
 	FREE_OBJECT(CG);

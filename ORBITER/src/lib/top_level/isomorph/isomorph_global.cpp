@@ -39,6 +39,7 @@ void isomorph_read_statistic_files(
 	{
 	isomorph Iso;
 	int f_use_database_for_starter = TRUE;
+	file_io Fio;
 
 
 	if (f_v) {
@@ -169,11 +170,11 @@ void isomorph_read_statistic_files(
 		"Dt_in_sec" 
 		};
 	const char *fname_collected = "stats_collected.csv";
-	int_matrix_write_csv_with_labels(fname_collected,
+	Fio.int_matrix_write_csv_with_labels(fname_collected,
 			Stats_short, Nb_cases, 6, Column_label);
 
 	cout << "Written file " << fname_collected << " of size "
-			<< file_size(fname_collected) << endl;
+			<< Fio.file_size(fname_collected) << endl;
 	
 	
 	Nb_sol = 0;
@@ -699,6 +700,7 @@ void isomorph_testing(
 	{
 	isomorph Iso;
 	int f_use_database_for_starter = FALSE;
+	file_io Fio;
 
 	
 	if (f_v) {
@@ -811,7 +813,7 @@ void isomorph_testing(
 	
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 	
 	Iso.close_solution_database(verbose_level - 1);
 
@@ -913,6 +915,7 @@ void isomorph_identify(
 	{
 	isomorph Iso;
 	int f_use_database_for_starter = FALSE;
+	file_io Fio;
 
 	
 	if (f_v) {
@@ -934,7 +937,7 @@ void isomorph_identify(
 	
 	for (i = 0; i < identify_nb_files; i++) {
 	
-		read_set_from_file(fname[i], the_set, set_size, verbose_level);
+		Fio.read_set_from_file(fname[i], the_set, set_size, verbose_level);
 		if (f_v) {
 			cout << "isomorph_identify read file " << fname[i] << endl;
 			cout << "the_set = ";
@@ -963,7 +966,7 @@ void isomorph_identify(
 	
 			fclose(f2);
 			cout << "isomorph_identify written file " << fname_transporter
-					<< " of size " << file_size(fname_transporter) << endl;
+					<< " of size " << Fio.file_size(fname_transporter) << endl;
 			}
 
 
@@ -1193,6 +1196,7 @@ void isomorph_compute_down_orbits_worker(
 	int **Down_orbit_identify;
 	int *Down_identify;
 	int h, i, idx;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_worker" << endl;
@@ -1231,7 +1235,7 @@ void isomorph_compute_down_orbits_worker(
 
 		}
 
-	int_matrix_write_csv("Nb_down_orbits.csv",
+	Fio.int_matrix_write_csv("Nb_down_orbits.csv",
 			Nb_orbits, Iso->Reps->count, 2);
 	
 	if (f_v) {
@@ -1252,7 +1256,7 @@ void isomorph_compute_down_orbits_worker(
 			}
 		}
 	
-	int_matrix_write_csv("Down_identify.csv",
+	Fio.int_matrix_write_csv("Down_identify.csv",
 			Down_identify, nb_special_orbits, 3);
 
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {

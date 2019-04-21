@@ -1550,10 +1550,11 @@ void schreier::read_file(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	memory_object M;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "schreier::read_file reading file "
-				<< fname << " of size " << file_size(fname) << endl;
+				<< fname << " of size " << Fio.file_size(fname) << endl;
 		}
 	M.read_file(fname, verbose_level - 1);
 	if (f_v) {
@@ -1655,6 +1656,7 @@ void schreier::read_from_file_binary(ifstream &fp, int verbose_level)
 void schreier::write_file_binary(char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "schreier::write_file_binary" << endl;
@@ -1665,7 +1667,7 @@ void schreier::write_file_binary(char *fname, int verbose_level)
 		write_to_file_binary(fp, verbose_level - 1);
 	}
 	cout << "schreier::write_file_binary Written file "
-			<< fname << " of size " << file_size(fname) << endl;
+			<< fname << " of size " << Fio.file_size(fname) << endl;
 	if (f_v) {
 		cout << "schreier::write_file_binary done" << endl;
 		}
@@ -1674,13 +1676,14 @@ void schreier::write_file_binary(char *fname, int verbose_level)
 void schreier::read_file_binary(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "schreier::read_file_binary reading file "
-				<< fname << " of size " << file_size(fname) << endl;
+				<< fname << " of size " << Fio.file_size(fname) << endl;
 		}
 	cout << "schreier::read_file_binary Reading file "
-			<< fname << " of size " << file_size(fname) << endl;
+			<< fname << " of size " << Fio.file_size(fname) << endl;
 	{
 		ifstream fp(fname, ios::binary);
 

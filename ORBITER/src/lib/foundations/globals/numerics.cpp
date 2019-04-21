@@ -2231,6 +2231,114 @@ double numerics::norm_of_vector_2D(int x1, int x2, int y1, int y2)
 	return sqrt((double)(x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
+#undef DEBUG_TRANSFORM_LLUR
+
+void numerics::transform_llur(int *in, int *out, int &x, int &y)
+{
+	int dx, dy; //, rad;
+	double a, b; //, f;
+
+#ifdef DEBUG_TRANSFORM_LLUR
+	cout << "transform_llur: ";
+	cout << "In=" << in[0] << "," << in[1] << "," << in[2] << "," << in[3] << endl;
+	cout << "Out=" << out[0] << "," << out[1] << "," << out[2] << "," << out[3] << endl;
+#endif
+	dx = x - in[0];
+	dy = y - in[1];
+	//rad = MIN(out[2] - out[0], out[3] - out[1]);
+	a = (double) dx / (double)(in[2] - in[0]);
+	b = (double) dy / (double)(in[3] - in[1]);
+	//a = a / 300000.;
+	//b = b / 300000.;
+#ifdef DEBUG_TRANSFORM_LLUR
+	cout << "transform_llur: (x,y)=(" << x << "," << y << ") in[2] - in[0]=" << in[2] - in[0] << " in[3] - in[1]=" << in[3] - in[1] << " (a,b)=(" << a << "," << b << ") -> ";
+#endif
+
+	// projection on a disc of radius 1:
+	//f = 300000 / sqrt(1. + a * a + b * b);
+#ifdef DEBUG_TRANSFORM_LLUR
+	cout << "f=" << f << endl;
+#endif
+	//a = f * a;
+	//b = f * b;
+
+	//dx = (int)(a * f);
+	//dy = (int)(b * f);
+	dx = (int)(a * (double)(out[2] - out[0]));
+	dy = (int)(b * (double)(out[3] - out[1]));
+	x = dx + out[0];
+	y = dy + out[1];
+#ifdef DEBUG_TRANSFORM_LLUR
+	cout << x << "," << y << " a=" << a << " b=" << b << endl;
+#endif
+}
+
+void numerics::transform_dist(int *in, int *out, int &x, int &y)
+{
+	int dx, dy;
+	double a, b;
+
+	a = (double) x / (double)(in[2] - in[0]);
+	b = (double) y / (double)(in[3] - in[1]);
+	dx = (int)(a * (double) (out[2] - out[0]));
+	dy = (int)(b * (double) (out[3] - out[1]));
+	x = dx;
+	y = dy;
+}
+
+void numerics::transform_dist_x(int *in, int *out, int &x)
+{
+	int dx;
+	double a;
+
+	a = (double) x / (double)(in[2] - in[0]);
+	dx = (int)(a * (double) (out[2] - out[0]));
+	x = dx;
+}
+
+void numerics::transform_dist_y(int *in, int *out, int &y)
+{
+	int dy;
+	double b;
+
+	b = (double) y / (double)(in[3] - in[1]);
+	dy = (int)(b * (double) (out[3] - out[1]));
+	y = dy;
+}
+
+void numerics::transform_llur_double(double *in, double *out, double &x, double &y)
+{
+	double dx, dy;
+	double a, b;
+
+#ifdef DEBUG_TRANSFORM_LLUR
+	cout << "transform_llur_double: " << x << "," << y << " -> ";
+#endif
+	dx = x - in[0];
+	dy = y - in[1];
+	a = dx / (in[2] - in[0]);
+	b =  dy / (in[3] - in[1]);
+	dx = a * (out[2] - out[0]);
+	dy = b * (out[3] - out[1]);
+	x = dx + out[0];
+	y = dy + out[1];
+#ifdef DEBUG_TRANSFORM_LLUR
+	cout << x << "," << y << endl;
+#endif
+}
+
+
+
+void numerics::on_circle_int(int *Px, int *Py,
+		int idx, int angle_in_degree, int rad)
+{
+	numerics Num;
+
+	Px[idx] = (int)(Num.cos_grad(angle_in_degree) * (double) rad);
+	Py[idx] = (int)(Num.sin_grad(angle_in_degree) * (double) rad);
+}
+
+
 
 }}
 

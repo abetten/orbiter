@@ -450,6 +450,7 @@ int main(int argc, const char **argv)
 		T.HMO(fname_HMO, verbose_level);
 	}
 
+	file_io Fio;
 
 	if (f_print_representatives) {
 		orbit_rep *R;
@@ -466,7 +467,7 @@ int main(int argc, const char **argv)
 		sprintf(fname, "%s_lvl_%d",
 				representatives_fname, representatives_size);
 
-		nb = count_number_of_orbits_in_file(fname, verbose_level);
+		nb = Fio.count_number_of_orbits_in_file(fname, verbose_level);
 
 		cout << "there are " << nb << " orbit representatives "
 				"in the file " << fname << endl;

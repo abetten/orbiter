@@ -190,6 +190,7 @@ void isomorph_arguments::init(action *A, action *A2,
 void isomorph_arguments::execute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph_arguments::execute" << endl;
@@ -255,7 +256,7 @@ void isomorph_arguments::execute(int verbose_level)
 		int *list_of_cases;
 		int nb_cases;
 
-		read_set_from_file(fname_list_of_cases,
+		Fio.read_set_from_file(fname_list_of_cases,
 				list_of_cases, nb_cases, verbose_level);
 		cout << "nb_cases=" << nb_cases << endl;
 
@@ -395,7 +396,7 @@ void isomorph_arguments::execute(int verbose_level)
 		WD.callback_data = callback_data;
 		
 		if (f_subset_orbits_file) {
-			read_set_from_file(subset_orbits_fname,
+			Fio.read_set_from_file(subset_orbits_fname,
 					WD.the_set, WD.set_size, verbose_level);
 			}
 		isomorph_worker(A, A2, gen, 

@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	file_io.o \
 	file_output.o \
 	latex_interface.o \
 	memory_object.o \

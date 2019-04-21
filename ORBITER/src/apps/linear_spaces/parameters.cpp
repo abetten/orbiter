@@ -109,7 +109,9 @@ void write_widor(char *fname, int m, int n, int *v, int *b, int *aij)
 	f << endl;
 	f << "</HTDO>" << endl;
 	}
-	cout << "written file " << fname << " of size " << file_size(fname) << endl;
+	file_io Fio;
+
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
 

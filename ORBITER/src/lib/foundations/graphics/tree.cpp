@@ -258,8 +258,10 @@ void tree::draw(char *fname,
 	G.end_figure();
 	G.footer();
 	}
+	file_io Fio;
+
 	cout << "written file " << fname_full << " of size "
-			<< file_size(fname_full) << endl;
+			<< Fio.file_size(fname_full) << endl;
 	
 }
 

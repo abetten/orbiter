@@ -130,11 +130,12 @@ void do_it(const char *fname, int verbose_level)
 	int *M;
 	int *Inc;
 	int i, j, h, m, n, k;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "Reading matrix from file " << fname << endl;
 		}
-	int_matrix_read_csv(fname, M, m, k, verbose_level - 1);
+	Fio.int_matrix_read_csv(fname, M, m, k, verbose_level - 1);
 
 	cout << "Read matrix of size " << m << " x " << k << endl;
 	int_matrix_print(M, m, k);

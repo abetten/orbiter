@@ -11,23 +11,6 @@ namespace orbiter {
 namespace foundations {
 
 
-// #############################################################################
-// galois_global.C:
-// #############################################################################
-
-void test_unipoly();
-void test_unipoly2();
-char *search_for_primitive_polynomial_of_given_degree(int p, 
-	int degree, int verbose_level);
-void search_for_primitive_polynomials(int p_min, int p_max, 
-	int n_min, int n_max, int verbose_level);
-void make_linear_irreducible_polynomials(int q, int &nb, int *&table, 
-	int verbose_level);
-void gl_random_matrix(int k, int q, int verbose_level);
-int is_diagonal_matrix(int *A, int n);
-int str2int(std::string &str);
-void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
-
 
 // #############################################################################
 // magma_interface.C
@@ -182,6 +165,12 @@ public:
 	void affine_pt2(int *Px, int *Py, int p0, int p1, int p1b,
 		double f1, int p2, int p2b, double f2, int p3);
 	double norm_of_vector_2D(int x1, int x2, int y1, int y2);
+	void transform_llur(int *in, int *out, int &x, int &y);
+	void transform_dist(int *in, int *out, int &x, int &y);
+	void transform_dist_x(int *in, int *out, int &x);
+	void transform_dist_y(int *in, int *out, int &y);
+	void transform_llur_double(double *in, double *out, double &x, double &y);
+	void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad);
 };
 
 

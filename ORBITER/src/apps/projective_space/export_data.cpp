@@ -52,6 +52,7 @@ int main(int argc, char **argv)
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
 	number_theory_domain NT;
+	file_io Fio;
 
 
 	if (f_spread) {
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
 			p = K.Spread_representative(q, k, i, sz);
 			int_vec_copy(p, Table + i * width, width);
 			}
-		int_matrix_write_csv(fname, Table, nb_reps, width);
+		Fio.int_matrix_write_csv(fname, Table, nb_reps, width);
 		FREE_int(Table);
 		}
 	else if (f_BLT) {
@@ -80,11 +81,11 @@ int main(int argc, char **argv)
 
 		BLT = K.BLT_representative(q, k);
 		sprintf(fname, "BLT_%d_%d.txt", q, k);
-		write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
+		Fio.write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
 		}
 	if (f_v) {
 		cout << "written file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	the_end(t0);
 }

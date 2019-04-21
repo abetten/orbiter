@@ -383,11 +383,12 @@ void memory_object::read_file(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	FILE *fp;
 	int fsize;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "memory_object::read_file" << endl;
 		}
-	fsize = file_size(fname);
+	fsize = Fio.file_size(fname);
 	alloc(fsize, 0);
 	fp = fopen(fname, "r");
 	if ((int) fread(data,
@@ -409,6 +410,7 @@ void memory_object::write_file(const char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	FILE *fp;
 	int size;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "memory_object::write_file" << endl;
@@ -420,7 +422,7 @@ void memory_object::write_file(const char *fname, int verbose_level)
 	fwrite(data, 1 /* size */, size /* items */, fp);
 	
 	fclose(fp);
-	if (file_size(fname) != size) {
+	if (Fio.file_size(fname) != size) {
 		cout << "memory_object::write_file error "
 				"file_size(fname) != size" << endl;
 		exit(1);

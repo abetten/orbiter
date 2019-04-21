@@ -358,6 +358,7 @@ void blt_set::create_graphs(
 
 	int *Time;
 	int time_idx;
+	file_io Fio;
 
 
 
@@ -370,7 +371,7 @@ void blt_set::create_graphs(
 			output_prefix, prefix, starter_size,
 			orbit_at_level_r, orbit_at_level_m);
 
-	nb_orbits = count_number_of_orbits_in_file(fname, 0);
+	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
 		cout << "blt_set::create_graphs There are "
 				<< nb_orbits << " starters" << endl;
@@ -448,20 +449,20 @@ void blt_set::create_graphs(
 		cout << "blt_set::create_graphs writing file "
 				<< fname_time << endl;
 		}
-	int_matrix_write_csv(fname_time, Time, time_idx, 2);
+	Fio.int_matrix_write_csv(fname_time, Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set::create_graphs Written file "
 				<< fname_time << " of size "
-				<< file_size(fname_time) << endl;
+				<< Fio.file_size(fname_time) << endl;
 		}
 
-	write_set_to_file(fname_list_of_cases,
+	Fio.write_set_to_file(fname_list_of_cases,
 			list_of_cases, nb_of_cases,
 			0 /*verbose_level */);
 	if (f_v) {
 		cout << "blt_set::create_graphs Written file "
 				<< fname_list_of_cases << " of size "
-				<< file_size(fname_list_of_cases) << endl;
+				<< Fio.file_size(fname_list_of_cases) << endl;
 		}
 
 	FREE_int(Time);
@@ -514,6 +515,7 @@ void blt_set::create_graphs_list_of_cases(
 	int *list_of_cases_created;
 	int nb_of_cases_created;
 	int c;
+	file_io Fio;
 
 
 
@@ -522,7 +524,7 @@ void blt_set::create_graphs_list_of_cases(
 	sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt",
 			output_prefix, case_label);
 
-	nb_orbits = count_number_of_orbits_in_file(fname, 0);
+	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
 		cout << "blt_set::create_graphs_list_of_cases "
 				"There are " << nb_orbits << " starters" << endl;
@@ -588,13 +590,13 @@ void blt_set::create_graphs_list_of_cases(
 			}
 		}
 
-	write_set_to_file(fname_list_of_cases,
+	Fio.write_set_to_file(fname_list_of_cases,
 			list_of_cases_created, nb_of_cases_created,
 			0 /*verbose_level */);
 	if (f_v) {
 		cout << "blt_set::create_graphs_list_of_cases "
 				"Written file " << fname_list_of_cases
-				<< " of size " << file_size(fname_list_of_cases) << endl;
+				<< " of size " << Fio.file_size(fname_list_of_cases) << endl;
 		}
 	if (f_v) {
 		cout << "blt_set::create_graphs_list_of_cases "
@@ -1234,9 +1236,10 @@ void blt_set::report(orbit_transversal *T, int verbose_level)
 	FREE_OBJECTS(Inv);
 	}
 
+	file_io Fio;
 
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 
 

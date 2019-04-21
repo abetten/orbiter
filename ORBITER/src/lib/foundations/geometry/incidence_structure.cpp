@@ -2799,6 +2799,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 	int f_vv = (verbose_level >= 2);
 	char fname[1000];
 	int f_list_incidences = FALSE;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "incidence_structure_compute_tdo" << endl;
@@ -2853,7 +2854,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 		}
 		if (f_v) {
 			cout << "written file " << fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 			}
 
 		sprintf(fname, "%s_tdo.tex", label);
@@ -2876,7 +2877,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 		}
 		if (f_v) {
 			cout << "written file " << fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 			}
 		}
 
@@ -2900,6 +2901,7 @@ void incidence_structure::compute_tdo_stepwise(
 	int step, f_refine, f_refine_prev, f_done;
 	int f_local_coordinates = FALSE;
 	int f_list_incidences = FALSE;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "incidence_structure::compute_tdo_stepwise" << endl;
@@ -3007,13 +3009,13 @@ void incidence_structure::compute_tdo_stepwise(
 			}
 			if (f_v) {
 				cout << "written file " << fname << " of size "
-						<< file_size(fname) << endl;
+						<< Fio.file_size(fname) << endl;
 				cout << "written file " << fname_pic << " of size "
-						<< file_size(fname_pic) << endl;
+						<< Fio.file_size(fname_pic) << endl;
 				cout << "written file " << fname_scheme << " of size "
-						<< file_size(fname_scheme) << endl;
+						<< Fio.file_size(fname_scheme) << endl;
 				cout << "written file " << fname_extra << " of size "
-						<< file_size(fname_extra) << endl;
+						<< Fio.file_size(fname_extra) << endl;
 				}
 			}
 		if (f_done) {
@@ -3080,11 +3082,11 @@ void incidence_structure::compute_tdo_stepwise(
 		}
 		if (f_v) {
 			cout << "written file " << fname << " of size "
-					<< file_size(fname) << endl;
+					<< Fio.file_size(fname) << endl;
 			cout << "written file " << fname_pic << " of size "
-					<< file_size(fname_pic) << endl;
+					<< Fio.file_size(fname_pic) << endl;
 			cout << "written file " << fname_scheme << " of size "
-					<< file_size(fname_scheme) << endl;
+					<< Fio.file_size(fname_scheme) << endl;
 			}
 		}
 

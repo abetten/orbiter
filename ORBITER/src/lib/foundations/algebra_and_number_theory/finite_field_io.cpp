@@ -171,8 +171,10 @@ void finite_field::cheat_sheet_PG(int n,
 
 	L.foot(f);
 	}
+	file_io Fio;
+
 	cout << "written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 }
 
 
@@ -1117,8 +1119,10 @@ void finite_field::export_magma(int d, int *Pts, int nb_pts, char *fname)
 	fp << "Size(Stab);" << endl;
 	fp << endl;
 	}
+	file_io Fio;
+
 	cout << "Written file " << fname2 << " of size "
-			<< file_size(fname2) << endl;
+			<< Fio.file_size(fname2) << endl;
 
 	FREE_int(v);
 }
@@ -1173,8 +1177,10 @@ void finite_field::export_gap(int d, int *Pts, int nb_pts, char *fname)
 	fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
 	fp << "Size(stab);" << endl;
 	}
+	file_io Fio;
+
 	cout << "Written file " << fname2 << " of size "
-			<< file_size(fname2) << endl;
+			<< Fio.file_size(fname2) << endl;
 
 #if 0
 LoadPackage("fining");

@@ -623,6 +623,7 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 	int f_v3 = (verbose_level >= 3);
 	char fname_graph[1000];
 	int level;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "ovoid_generator::make_graphs" << endl;
@@ -656,7 +657,7 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 
 		cout << "ovoid_generator::make_graphs before read_candidates_"
 				"for_one_orbit_from_file prefix=" << prefix << endl;
-		read_candidates_for_one_orbit_from_file(prefix,
+		Fio.read_candidates_for_one_orbit_from_file(prefix,
 				level,
 				orbit_idx,
 				level - 1 /* level_of_candidates_file */,
@@ -760,6 +761,7 @@ void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
 {
 	int f_v = (verbose_level >= 1);
 	int level;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "ovoid_generator::make_one_graph" << endl;
@@ -774,7 +776,7 @@ void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
 
 	cout << "ovoid_generator::make_one_graph before read_candidates_"
 			"for_one_orbit_from_file prefix=" << prefix << endl;
-	read_candidates_for_one_orbit_from_file(prefix,
+	Fio.read_candidates_for_one_orbit_from_file(prefix,
 			level, orbit_idx, level - 1 /* level_of_candidates_file */,
 			ODF->sets[orbit_idx],
 			ovoid_generator_early_test_func_callback,

@@ -660,9 +660,11 @@ int main(int argc, const char **argv)
 		}
 	cout << endl;
 
-	write_set_to_file(fname, Pts, nb_pts, verbose_level);
+	file_io Fio;
+
+	Fio.write_set_to_file(fname, Pts, nb_pts, verbose_level);
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 
 	if (Pts) {

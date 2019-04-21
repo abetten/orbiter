@@ -129,6 +129,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::count_solutions_from_clique_finder_case_by_case "
@@ -142,7 +143,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 	for (i = 0; i < nb_files; i++) {
 		int nb_solutions;
 		
-		count_number_of_solutions_in_file(fname[i], 
+		Fio.count_number_of_solutions_in_file(fname[i],
 			nb_solutions, 
 			verbose_level - 2);
 
@@ -199,6 +200,7 @@ void isomorph::count_solutions_from_clique_finder(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h, c, n;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::count_solutions_from_clique_finder "
@@ -217,7 +219,7 @@ void isomorph::count_solutions_from_clique_finder(
 		int *case_nb;
 		int nb_cases;
 		
-		count_number_of_solutions_in_file_by_case(fname[i], 
+		Fio.count_number_of_solutions_in_file_by_case(fname[i],
 			nb_solutions, case_nb, nb_cases, 
 			verbose_level - 2);
 
@@ -280,6 +282,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	sorting Sorting;
+	file_io Fio;
 
 	int i, no = 0;
 	int print_mod = 1000;
@@ -315,7 +318,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 		int nb_solutions;
 		int *Solutions;
 		
-		read_solutions_from_file(fname[i], 
+		Fio.read_solutions_from_file(fname[i],
 			nb_solutions, 
 			Solutions, size /* solution_size */, 
 			verbose_level - 2);
@@ -382,6 +385,7 @@ void isomorph::read_solutions_from_clique_finder(
 	//int *data;
 	int print_mod = 1000;
 	sorting Sorting;
+	file_io Fio;
 
 	
 	if (f_v) {
@@ -423,12 +427,12 @@ void isomorph::read_solutions_from_clique_finder(
 		chop_off_extension_if_present(fname_summary, extension);
 		strcat(fname_summary, "_summary.csv");
 
-		count_number_of_solutions_in_file_by_case(fname[i], 
+		Fio.count_number_of_solutions_in_file_by_case(fname[i],
 			nb_solutions, case_nb, nb_cases, 
 			verbose_level - 2);
 
 		
-		int_vecs_write_csv(case_nb, nb_solutions, nb_cases, 
+		Fio.int_vecs_write_csv(case_nb, nb_solutions, nb_cases,
 			fname_summary, "Case_nb", "Nb_sol");
 		
 		nb_solutions_total = 0;
@@ -436,7 +440,7 @@ void isomorph::read_solutions_from_clique_finder(
 			nb_solutions_total += nb_solutions[h];
 			}
 
-		read_solutions_from_file_by_case(fname[i], 
+		Fio.read_solutions_from_file_by_case(fname[i],
 			nb_solutions, case_nb, nb_cases, 
 			Solutions, size /* solution_size */, 
 			verbose_level - 2);
@@ -578,6 +582,7 @@ void isomorph::build_up_database(int nb_files,
 	uint_4 datref;
 	int nb_fail = 0;
 	sorting Sorting;
+	file_io Fio;
 
 	
 	if (f_v) {
@@ -605,7 +610,7 @@ void isomorph::build_up_database(int nb_files,
 		if (f_v) {
 			cout << "isomorph::build_up_database "
 					"reading file " << fname[i] << " of size "
-					<< file_size(fname[i]) << endl;
+					<< Fio.file_size(fname[i]) << endl;
 			}
 
 		while (TRUE) {
@@ -1001,7 +1006,8 @@ void isomorph::get_statistics(int nb_files,
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	char fname_summary[1000];
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "get_statistics: reading "
 				<< nb_files << " files" << endl;
@@ -1028,9 +1034,9 @@ void isomorph::get_statistics(int nb_files,
 		if (f_v) {
 			cout << "file " << i << " / " << nb_files
 					<< ", reading file " << fname_summary
-					<< " of size " << file_size(fname[i]) << endl;
+					<< " of size " << Fio.file_size(fname[i]) << endl;
 			}
-		if (file_size(fname_summary) <= 0) {
+		if (Fio.file_size(fname_summary) <= 0) {
 			cout << "problems reading file " << fname_summary << endl;
 			return;
 			}
@@ -1059,6 +1065,8 @@ void isomorph::get_statistics(int nb_files,
 
 void isomorph::write_statistics()
 {
+	file_io Fio;
+
 	{
 	ofstream f(fname_statistics);
 	int i;
@@ -1074,7 +1082,7 @@ void isomorph::write_statistics()
 	f << "-1" << endl;
 	}
 	cout << "written file " << fname_statistics << " of size "
-			<< file_size(fname_statistics) << endl;
+			<< Fio.file_size(fname_statistics) << endl;
 }
 
 void isomorph::evaluate_statistics(int verbose_level)
@@ -1165,7 +1173,8 @@ void isomorph::count_solutions2(int nb_files, const char **fname,
 	Vector v;
 	char str[1000];
 	int nb_fail = 0;
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "count_solutions2: reading " << nb_files << " files" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
@@ -1187,8 +1196,8 @@ void isomorph::count_solutions2(int nb_files, const char **fname,
 
 		ifstream f(fname[i]);
 		cout << "reading file " << fname[i] << " of size "
-				<< file_size(fname[i]) << endl;
-		if (file_size(fname[i]) <= 0) {
+				<< Fio.file_size(fname[i]) << endl;
+		if (Fio.file_size(fname[i]) <= 0) {
 			cout << "problems reading file " << fname[i] << endl;
 			exit(1);
 			}
@@ -1302,11 +1311,12 @@ void isomorph::write_solution_first_and_len()
 void isomorph::read_solution_first_and_len()
 {
 	sorting Sorting;
+	file_io Fio;
 
 	cout << "isomorph::read_solution_first_and_len "
 			"reading from file "
 		<< fname_case_len << " of size "
-		<< file_size(fname_case_len) << endl;
+		<< Fio.file_size(fname_case_len) << endl;
 	
 	ifstream f(fname_case_len);
 	int i, a;
@@ -1336,18 +1346,19 @@ void isomorph::read_solution_first_and_len()
 void isomorph::write_starter_nb_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 
 	if (f_v) {
 		cout << "isomorph::write_starter_nb_orbits" << endl;
 		}
 
-	int_vec_write_csv(flag_orbit_fst, nb_starter,
+	Fio.int_vec_write_csv(flag_orbit_fst, nb_starter,
 			fname_orbits_of_stabilizer_csv, "Stab_orbits");
 
 	cout << "isomorph::write_starter_nb_orbits Written file "
 			<< fname_orbits_of_stabilizer_csv << " of size "
-			<< file_size(fname_orbits_of_stabilizer_csv) << endl;
+			<< Fio.file_size(fname_orbits_of_stabilizer_csv) << endl;
 	
 	if (f_v) {
 		cout << "isomorph::write_starter_nb_orbits done" << endl;
@@ -1357,6 +1368,7 @@ void isomorph::write_starter_nb_orbits(int verbose_level)
 void isomorph::read_starter_nb_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 
 	if (f_v) {
@@ -1367,9 +1379,9 @@ void isomorph::read_starter_nb_orbits(int verbose_level)
 
 	cout << "isomorph::read_starter_nb_orbits Reading file "
 			<< fname_orbits_of_stabilizer_csv << " of size "
-			<< file_size(fname_orbits_of_stabilizer_csv) << endl;
+			<< Fio.file_size(fname_orbits_of_stabilizer_csv) << endl;
 
-	int_matrix_read_csv(fname_orbits_of_stabilizer_csv,
+	Fio.int_matrix_read_csv(fname_orbits_of_stabilizer_csv,
 			M, m, n, verbose_level);
 	
 	if (m != nb_starter) {
@@ -1405,7 +1417,8 @@ void isomorph::write_hash_and_datref_file(int verbose_level)
 // containing id_to_hash[] and id_to_datref[]
 {
 	int f_v = (verbose_level >= 1);
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "isomorph::write_hash_and_datref_file" << endl;
 		}
@@ -1425,7 +1438,7 @@ void isomorph::write_hash_and_datref_file(int verbose_level)
 		cout << "isomorph::write_hash_and_datref_file finished" << endl;
 		cout << "isomorph::write_hash_and_datref_file written file "
 				<< fname_hash_and_datref << " of size "
-				<< file_size(fname_hash_and_datref) << endl;
+				<< Fio.file_size(fname_hash_and_datref) << endl;
 		}
 }
 
@@ -1500,7 +1513,8 @@ void isomorph::write_orbit_data(int verbose_level)
 // Writes the file 'fname_staborbits'
 {
 	int f_v = (verbose_level >= 1);
-	
+	file_io Fio;
+
 	if (f_v) {
 		cout << "write_orbit_data" << endl;
 		}
@@ -1527,7 +1541,7 @@ void isomorph::write_orbit_data(int verbose_level)
 	if (f_v) {
 		cout << "write_orbit_data finished" << endl;
 		cout << "written file " << fname_staborbits << " of size "
-				<< file_size(fname_staborbits) << endl;
+				<< Fio.file_size(fname_staborbits) << endl;
 		}
 }
 

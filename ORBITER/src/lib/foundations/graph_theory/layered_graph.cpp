@@ -295,6 +295,7 @@ void layered_graph::draw_with_options(const char *fname,
 	char fname_full[1000];
 	double move_out = 0.01;
 	int edge_label = 1;
+	file_io Fio;
 	
 	strcpy(fname_full, fname);
 	strcat(fname_full, ".mp");
@@ -782,7 +783,7 @@ void layered_graph::draw_with_options(const char *fname,
 	}
 	if (f_v) {
 		cout << "layered_graph::draw written file " << fname_full
-				<< " of size " << file_size(fname_full) << endl;
+				<< " of size " << Fio.file_size(fname_full) << endl;
 		}
 	
 }
@@ -862,11 +863,12 @@ void layered_graph::read_file(const char *fname,
 {
 	int f_v = (verbose_level >= 1);
 	memory_object M;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "layered_graph::read_file "
 				"reading file " << fname << " of size "
-				<< file_size(fname) << endl;
+				<< Fio.file_size(fname) << endl;
 		}
 	M.read_file(fname, verbose_level - 1);
 	if (f_v) {

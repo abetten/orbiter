@@ -423,8 +423,9 @@ int main(int argc, char **argv)
 
 			
 		}
+		file_io Fio;
 		cout << "Written file " << fname_export << " of size "
-				<< file_size(fname_export) << endl;
+				<< Fio.file_size(fname_export) << endl;
 		FREE_int(Adj);
 		}
 	G.finish(cout, TRUE);
@@ -524,15 +525,15 @@ void draw_graph(mp_graphics &G,
 		}
 	else {
 		for (i = 0; i < nb_v; i++) {
-			on_circle_int(Px, Py, i, ((int)(phi0 + i * phi)) % 360, rad1);
+			Num.on_circle_int(Px, Py, i, ((int)(phi0 + i * phi)) % 360, rad1);
 			//cout << "i=" << i << " Px=" << Px[i] << " Py=" << Py[i] << endl;
 			}
 		for (i = 0; i < nb_v; i++) {
-			on_circle_int(Qx, Qy, 2 * i, ((int)(phi0 + i * phi - phi_half)) % 360, rad1a);
+			Num.on_circle_int(Qx, Qy, 2 * i, ((int)(phi0 + i * phi - phi_half)) % 360, rad1a);
 			//cout << "i=" << i << " Qx=" << Qx[2 * i] << " Qy=" << Qy[2 * i] << endl;
 			}
 		for (i = 0; i < nb_v; i++) {
-			on_circle_int(Qx, Qy, 2 * i + 1, ((int)(phi0 + i * phi - phi_half)) % 360, rad1b);
+			Num.on_circle_int(Qx, Qy, 2 * i + 1, ((int)(phi0 + i * phi - phi_half)) % 360, rad1b);
 			//cout << "i=" << i << " Qx=" << Qx[2 * i + 1] << " Qy=" << Qy[2 * i + 1] << endl;
 			}
 		if (f_partition) {
@@ -540,7 +541,7 @@ void draw_graph(mp_graphics &G,
 				double m;
 
 				m = (double) partition_first[i] + (double) partition[i] * 0.5;
-				on_circle_int(Rx, Ry, i, ((int)(phi0 + m * phi - phi_half)) % 360, rad1c);
+				Num.on_circle_int(Rx, Ry, i, ((int)(phi0 + m * phi - phi_half)) % 360, rad1c);
 				}
 			}
 		}

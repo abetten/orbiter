@@ -111,6 +111,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	colored_graph *CG;
+	file_io Fio;
 
 	CG = NEW_OBJECT(colored_graph);
 
@@ -141,7 +142,7 @@ int main(int argc, char **argv)
 				verbose_level - 2);
 
 			cout << "Written file " << solution_fname << " of size "
-					<< file_size(solution_fname) << endl;
+					<< Fio.file_size(solution_fname) << endl;
 			cout << "nb_sol = " << nb_sol << endl;
 			cout << "decision_step_counter = "
 					<< decision_step_counter << endl;
@@ -377,6 +378,7 @@ void save_orbits_at_level(const char *fname,
 	//longinteger_object go, ol, ago;
 	//longinteger_domain D;
 	int i, j, nb_orbits;
+	file_io Fio;
 
 	set = NEW_int(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
@@ -425,7 +427,7 @@ void save_orbits_at_level(const char *fname,
 
 	}
 	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
+			<< Fio.file_size(fname) << endl;
 
 	FREE_int(set);
 }
