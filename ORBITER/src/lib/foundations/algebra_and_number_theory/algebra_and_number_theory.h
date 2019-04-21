@@ -1288,6 +1288,10 @@ public:
 	void report(std::ostream &ost, int verbose_level);
 };
 
+// #############################################################################
+// gl_class_rep.cpp
+// #############################################################################
+
 //! conjugacy class in GL(n,q) described using rational normal form
 
 class gl_class_rep {
@@ -1307,30 +1311,6 @@ public:
 		int verbose_level);
 	void centralizer_order_Kung(gl_classes *C, longinteger_object &co, 
 		int verbose_level);
-};
-
-//! rational normal form of a matrix in GL(n,q) for gl_class_rep
-
-class matrix_block_data {
-public:
-	int d;
-	int m;
-	int *poly_coeffs;
-	int b0;
-	int b1;
-	
-	int_matrix *K;
-	int cnt;
-	int *dual_part;
-	int *part;
-	int height;
-	int part_idx;
-	
-	matrix_block_data();
-	~matrix_block_data();
-	void null();
-	void freeself();
-	void allocate(int k);
 };
 
 // #############################################################################
@@ -1699,6 +1679,34 @@ void longinteger_free_global_data();
 void longinteger_print_digits(char *rep, int len);
 void longinteger_domain_free_tab_q_binomials();
 
+
+// #############################################################################
+// matrix_block_data.cpp
+// #############################################################################
+
+//! rational normal form of a matrix in GL(n,q) for gl_class_rep
+
+class matrix_block_data {
+public:
+	int d;
+	int m;
+	int *poly_coeffs;
+	int b0;
+	int b1;
+
+	int_matrix *K;
+	int cnt;
+	int *dual_part;
+	int *part;
+	int height;
+	int part_idx;
+
+	matrix_block_data();
+	~matrix_block_data();
+	void null();
+	void freeself();
+	void allocate(int k);
+};
 
 // #############################################################################
 // norm_tables.cpp:

@@ -606,37 +606,6 @@ public:
 	action *A_on_points;
 	schreier *Orbits_on_points;
 
-#if 0
-	surface_domain *Surf; // do not free
-	surface_with_action *Surf_A; // do not free
-
-	surface_object *SO; // do not free
-	strong_generators *Aut_gens;
-		// generators for the automorphism group
-
-	strong_generators *projectivity_group_gens;
-	sylow_structure *Syl;
-
-	action *A_on_Eckardt_points;
-	action *A_on_Double_points;
-	action *A_on_the_lines;
-	action *A_single_sixes;
-	action *A_on_tritangent_planes;
-	action *A_on_trihedral_pairs;
-	action *A_on_pts_not_on_lines;
-
-
-	schreier *Orbits_on_Eckardt_points;
-	schreier *Orbits_on_Double_points;
-	schreier *Orbits_on_lines;
-	schreier *Orbits_on_single_sixes;
-	schreier *Orbits_on_tritangent_planes;
-	schreier *Orbits_on_trihedral_pairs;
-	schreier *Orbits_on_points_not_on_lines;
-#endif
-
-
-
 	blt_set_with_action();
 	~blt_set_with_action();
 	void null();

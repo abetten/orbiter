@@ -20,15 +20,16 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	int *P;
 	int i, j, a, b, f_one_seen;
+	geometry_global Gg;
 	
-	a = maxfit(35, 7);
-	b = maxfit(35, 8);
+	a = Gg.maxfit(35, 7);
+	b = Gg.maxfit(35, 8);
 	cout << "maxfit 35 7 = " << a << endl;
 	cout << "maxfit 35 8 = " << b << endl;
 	P = new int[N * N];
 	for (i = N - 1; i >= 1; i--) {
 		for (j = i; j >= 2; j--) {
-			a = TDO_upper_bound(i, j);
+			a = Gg.TDO_upper_bound(i, j);
 			P[(i - 1) * N + j - 1] = a;
 			}
 		}

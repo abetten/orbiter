@@ -32,7 +32,6 @@ MODULES = \
 	knowledge_base.o \
 	object_in_projective_space.o \
 	orthogonal.o \
-	packing.o \
 	point_line.o \
 	projective_space.o \
 	spread_tables.o \

@@ -59,8 +59,8 @@ MODULES= \
 		foundations/algebra_and_number_theory/subfield_structure.o \
 		foundations/algebra_and_number_theory/unipoly_domain.o \
 		foundations/algebra_and_number_theory/vector_space.o \
+		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/mindist.o \
-		foundations/coding_theory/tensor.o \
 		foundations/combinatorics/brick_domain.o \
 		foundations/combinatorics/combinatorics_domain.o \
 		foundations/data_structures/classify_bitvectors.o \
@@ -101,7 +101,6 @@ MODULES= \
 		foundations/geometry/knowledge_base.o \
 		foundations/geometry/object_in_projective_space.o \
 		foundations/geometry/orthogonal.o \
-		foundations/geometry/packing.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/spread_tables.o \
