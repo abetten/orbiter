@@ -26,6 +26,7 @@ all: \
 	flag.out \
 	get_poly.out \
 	gl_classes.out \
+	long_orbit.out \
 	matrix.out \
 	move_point_orthogonal.out \
 	pascal_matrix.out \
@@ -90,6 +91,9 @@ get_poly.out:  get_poly.o ;
 
 gl_classes.out:  gl_classes.o ;
 	$(DISCRETA_CPP)  gl_classes.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+long_orbit.out:  long_orbit.o ;
+	$(DISCRETA_CPP)  long_orbit.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 matrix.out:  matrix.o ;
 	$(DISCRETA_CPP)  matrix.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

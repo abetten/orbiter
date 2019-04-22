@@ -13,6 +13,137 @@ namespace foundations {
 
 
 
+
+// #############################################################################
+// file_io.C:
+// #############################################################################
+
+//! a collection of functions related to file io
+
+
+
+
+class file_io {
+public:
+	file_io();
+	~file_io();
+
+	void concatenate_files(const char *fname_in_mask, int N,
+		const char *fname_out, const char *EOF_marker, int f_title_line,
+		int verbose_level);
+	void poset_classification_read_candidates_of_orbit(
+		const char *fname, int orbit_at_level,
+		int *&candidates, int &nb_candidates, int verbose_level);
+	void read_candidates_for_one_orbit_from_file(char *prefix,
+			int level, int orbit_at_level, int level_of_candidates_file,
+			int *S,
+			void (*early_test_func_callback)(int *S, int len,
+				int *candidates, int nb_candidates,
+				int *good_candidates, int &nb_good_candidates,
+				void *data, int verbose_level),
+			void *early_test_func_callback_data,
+			int *&candidates,
+			int &nb_candidates,
+			int verbose_level);
+	int find_orbit_index_in_data_file(const char *prefix,
+			int level_of_candidates_file, int *starter,
+			int verbose_level);
+	void write_exact_cover_problem_to_file(int *Inc, int nb_rows,
+		int nb_cols, const char *fname);
+	void read_solution_file(char *fname,
+		int *Inc, int nb_rows, int nb_cols,
+		int *&Solutions, int &sol_length, int &nb_sol,
+		int verbose_level);
+	void count_number_of_solutions_in_file(const char *fname,
+		int &nb_solutions,
+		int verbose_level);
+	void count_number_of_solutions_in_file_by_case(const char *fname,
+		int *&nb_solutions, int *&case_nb, int &nb_cases,
+		int verbose_level);
+	void read_solutions_from_file(const char *fname,
+		int &nb_solutions, int *&Solutions, int solution_size,
+		int verbose_level);
+	void read_solutions_from_file_by_case(const char *fname,
+		int *nb_solutions, int *case_nb, int nb_cases,
+		int **&Solutions, int solution_size,
+		int verbose_level);
+	void copy_file_to_ostream(std::ostream &ost, char *fname);
+	void int_vec_write_csv(int *v, int len,
+		const char *fname, const char *label);
+	void int_vecs_write_csv(int *v1, int *v2, int len,
+		const char *fname,
+		const char *label1, const char *label2);
+	void int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
+		const char *fname,
+		const char *label1, const char *label2, const char *label3);
+	void int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
+		const char *fname, const char **column_label);
+	void int_matrix_write_csv(const char *fname, int *M, int m, int n);
+	void double_matrix_write_csv(const char *fname,
+		double *M, int m, int n);
+	void int_matrix_write_csv_with_labels(const char *fname,
+		int *M, int m, int n, const char **column_label);
+	void int_matrix_read_csv(const char *fname, int *&M,
+		int &m, int &n, int verbose_level);
+	void double_matrix_read_csv(const char *fname, double *&M,
+		int &m, int &n, int verbose_level);
+	void int_matrix_write_text(const char *fname,
+		int *M, int m, int n);
+	void int_matrix_read_text(const char *fname,
+		int *&M, int &m, int &n);
+	void parse_sets(int nb_cases, char **data, int f_casenumbers,
+		int *&Set_sizes, int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
+		int *&Casenumbers,
+		int verbose_level);
+	void parse_sets_and_check_sizes_easy(int len, int nb_cases,
+		char **data, int **&sets);
+	void parse_line(char *line, int &len, int *&set,
+		char *ago_ascii, char *aut_ascii);
+	int count_number_of_orbits_in_file(const char *fname, int verbose_level);
+	int count_number_of_lines_in_file(const char *fname, int verbose_level);
+	int try_to_read_file(const char *fname, int &nb_cases,
+		char **&data, int verbose_level);
+	void read_and_parse_data_file(const char *fname, int &nb_cases,
+		char **&data, int **&sets, int *&set_sizes, int verbose_level);
+	void free_data_fancy(int nb_cases,
+		int *Set_sizes, int **Sets,
+		char **Ago_ascii, char **Aut_ascii,
+		int *Casenumbers);
+	void read_and_parse_data_file_fancy(const char *fname,
+		int f_casenumbers,
+		int &nb_cases,
+		int *&Set_sizes, int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
+		int *&Casenumbers,
+		int verbose_level);
+	void read_set_from_file(const char *fname,
+		int *&the_set, int &set_size, int verbose_level);
+	void write_set_to_file(const char *fname,
+		int *the_set, int set_size, int verbose_level);
+	void read_set_from_file_int4(const char *fname,
+		int *&the_set, int &set_size, int verbose_level);
+	void write_set_to_file_as_int4(const char *fname,
+		int *the_set, int set_size, int verbose_level);
+	void write_set_to_file_as_int8(const char *fname,
+		int *the_set, int set_size, int verbose_level);
+	void read_k_th_set_from_file(const char *fname, int k,
+		int *&the_set, int &set_size, int verbose_level);
+	void write_incidence_matrix_to_file(char *fname,
+		int *Inc, int m, int n, int verbose_level);
+	void read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
+		char *inc_file_name, int inc_file_idx, int verbose_level);
+	int inc_file_get_number_of_geometries(
+		char *inc_file_name, int verbose_level);
+	int file_size(const char *name);
+	void delete_file(const char *fname);
+	void fwrite_int4(FILE *fp, int a);
+	int_4 fread_int4(FILE *fp);
+	void fwrite_uchars(FILE *fp, uchar *p, int len);
+	void fread_uchars(FILE *fp, uchar *p, int len);
+	void read_numbers_from_file(const char *fname,
+		int *&the_set, int &set_size, int verbose_level);
+};
+
+
 // #############################################################################
 // file_output.C:
 // #############################################################################
@@ -474,134 +605,6 @@ int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
 
 
-// #############################################################################
-// file_io.C:
-// #############################################################################
-
-//! a collection of functions related to file io
-
-
-
-
-class file_io {
-public:
-	file_io();
-	~file_io();
-
-	void concatenate_files(const char *fname_in_mask, int N,
-		const char *fname_out, const char *EOF_marker, int f_title_line,
-		int verbose_level);
-	void poset_classification_read_candidates_of_orbit(
-		const char *fname, int orbit_at_level,
-		int *&candidates, int &nb_candidates, int verbose_level);
-	void read_candidates_for_one_orbit_from_file(char *prefix,
-			int level, int orbit_at_level, int level_of_candidates_file,
-			int *S,
-			void (*early_test_func_callback)(int *S, int len,
-				int *candidates, int nb_candidates,
-				int *good_candidates, int &nb_good_candidates,
-				void *data, int verbose_level),
-			void *early_test_func_callback_data,
-			int *&candidates,
-			int &nb_candidates,
-			int verbose_level);
-	int find_orbit_index_in_data_file(const char *prefix,
-			int level_of_candidates_file, int *starter,
-			int verbose_level);
-	void write_exact_cover_problem_to_file(int *Inc, int nb_rows,
-		int nb_cols, const char *fname);
-	void read_solution_file(char *fname,
-		int *Inc, int nb_rows, int nb_cols,
-		int *&Solutions, int &sol_length, int &nb_sol,
-		int verbose_level);
-	void count_number_of_solutions_in_file(const char *fname,
-		int &nb_solutions,
-		int verbose_level);
-	void count_number_of_solutions_in_file_by_case(const char *fname,
-		int *&nb_solutions, int *&case_nb, int &nb_cases,
-		int verbose_level);
-	void read_solutions_from_file(const char *fname,
-		int &nb_solutions, int *&Solutions, int solution_size,
-		int verbose_level);
-	void read_solutions_from_file_by_case(const char *fname,
-		int *nb_solutions, int *case_nb, int nb_cases,
-		int **&Solutions, int solution_size,
-		int verbose_level);
-	void copy_file_to_ostream(std::ostream &ost, char *fname);
-	void int_vec_write_csv(int *v, int len,
-		const char *fname, const char *label);
-	void int_vecs_write_csv(int *v1, int *v2, int len,
-		const char *fname,
-		const char *label1, const char *label2);
-	void int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
-		const char *fname,
-		const char *label1, const char *label2, const char *label3);
-	void int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
-		const char *fname, const char **column_label);
-	void int_matrix_write_csv(const char *fname, int *M, int m, int n);
-	void double_matrix_write_csv(const char *fname,
-		double *M, int m, int n);
-	void int_matrix_write_csv_with_labels(const char *fname,
-		int *M, int m, int n, const char **column_label);
-	void int_matrix_read_csv(const char *fname, int *&M,
-		int &m, int &n, int verbose_level);
-	void double_matrix_read_csv(const char *fname, double *&M,
-		int &m, int &n, int verbose_level);
-	void int_matrix_write_text(const char *fname,
-		int *M, int m, int n);
-	void int_matrix_read_text(const char *fname,
-		int *&M, int &m, int &n);
-	void parse_sets(int nb_cases, char **data, int f_casenumbers,
-		int *&Set_sizes, int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
-		int *&Casenumbers,
-		int verbose_level);
-	void parse_sets_and_check_sizes_easy(int len, int nb_cases,
-		char **data, int **&sets);
-	void parse_line(char *line, int &len, int *&set,
-		char *ago_ascii, char *aut_ascii);
-	int count_number_of_orbits_in_file(const char *fname, int verbose_level);
-	int count_number_of_lines_in_file(const char *fname, int verbose_level);
-	int try_to_read_file(const char *fname, int &nb_cases,
-		char **&data, int verbose_level);
-	void read_and_parse_data_file(const char *fname, int &nb_cases,
-		char **&data, int **&sets, int *&set_sizes, int verbose_level);
-	void free_data_fancy(int nb_cases,
-		int *Set_sizes, int **Sets,
-		char **Ago_ascii, char **Aut_ascii,
-		int *Casenumbers);
-	void read_and_parse_data_file_fancy(const char *fname,
-		int f_casenumbers,
-		int &nb_cases,
-		int *&Set_sizes, int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
-		int *&Casenumbers,
-		int verbose_level);
-	void read_set_from_file(const char *fname,
-		int *&the_set, int &set_size, int verbose_level);
-	void write_set_to_file(const char *fname,
-		int *the_set, int set_size, int verbose_level);
-	void read_set_from_file_int4(const char *fname,
-		int *&the_set, int &set_size, int verbose_level);
-	void write_set_to_file_as_int4(const char *fname,
-		int *the_set, int set_size, int verbose_level);
-	void write_set_to_file_as_int8(const char *fname,
-		int *the_set, int set_size, int verbose_level);
-	void read_k_th_set_from_file(const char *fname, int k,
-		int *&the_set, int &set_size, int verbose_level);
-	void write_incidence_matrix_to_file(char *fname,
-		int *Inc, int m, int n, int verbose_level);
-	void read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
-		char *inc_file_name, int inc_file_idx, int verbose_level);
-	int inc_file_get_number_of_geometries(
-		char *inc_file_name, int verbose_level);
-	int file_size(const char *name);
-	void delete_file(const char *fname);
-	void fwrite_int4(FILE *fp, int a);
-	int_4 fread_int4(FILE *fp);
-	void fwrite_uchars(FILE *fp, uchar *p, int len);
-	void fread_uchars(FILE *fp, uchar *p, int len);
-	void read_numbers_from_file(const char *fname,
-		int *&the_set, int &set_size, int verbose_level);
-};
 
 
 }}
