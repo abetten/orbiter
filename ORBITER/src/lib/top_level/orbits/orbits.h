@@ -176,7 +176,7 @@ public:
 		// index in the table Sets where the set is stored.
 		//
 		// we use a multimap because the hash values are not unique
-		// it happens that two sets have the save hash value.
+		// it happens that two sets have the same hash value.
 		// map cannot handle that.
 
 	orbit_of_sets();
