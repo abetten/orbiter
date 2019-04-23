@@ -114,10 +114,17 @@ void combinatorics_domain::partition_dual(
 void combinatorics_domain::make_all_partitions_of_n(int n,
 		int *&Table, int &nb, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int *v;
 	int cnt;
 
+	if (f_v) {
+		cout << "combinatorics_domain::make_all_partitions_of_n n=" << n << endl;
+	}
 	nb = count_all_partitions_of_n(n);
+	if (f_v) {
+		cout << "combinatorics_domain::make_all_partitions_of_n nb=" << nb << endl;
+	}
 	v = NEW_int(n);
 	Table = NEW_int(nb * n);
 	cnt = 0;
@@ -131,13 +138,22 @@ void combinatorics_domain::make_all_partitions_of_n(int n,
 		}
 
 	FREE_int(v);
+	if (f_v) {
+		cout << "combinatorics_domain::make_all_partitions_of_n done" << endl;
+	}
 }
 
 int combinatorics_domain::count_all_partitions_of_n(int n)
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	int *v;
 	int cnt;
 
+	if (f_v) {
+		cout << "combinatorics_domain::count_all_partitions_of_n "
+				"n=" << n << endl;
+	}
 	v = NEW_int(n);
 	partition_first(v, n);
 	cnt = 1;
@@ -149,6 +165,10 @@ int combinatorics_domain::count_all_partitions_of_n(int n)
 		}
 
 	FREE_int(v);
+	if (f_v) {
+		cout << "combinatorics_domain::count_all_partitions_of_n "
+				"done, cnt=" << cnt << endl;
+	}
 	return cnt;
 }
 
@@ -164,7 +184,9 @@ int combinatorics_domain::partition_next(int *v, int n)
 {
 	int i, j, a, s;
 
-
+	if (n == 1) {
+		return FALSE;
+	}
 	s = v[0];
 	for (i = 1; i < n; i++) {
 		a = v[i];

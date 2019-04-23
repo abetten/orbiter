@@ -86,7 +86,8 @@ void gl_class_rep::compute_vector_coding(gl_classes *C,
 	Poly_mult = NEW_int(nb_irred);
 	Partition_idx = NEW_int(nb_irred);
 	for (i = 0; i < nb_irred; i++) {
-		Poly_degree[i] = C->Degree[type_coding.s_ij(i, 0)];
+		Poly_degree[i] = C->Table_of_polynomials->Degree
+				[type_coding.s_ij(i, 0)];
 		Poly_mult[i] = type_coding.s_ij(i, 1);
 		Partition_idx[i] = type_coding.s_ij(i, 2);
 		}

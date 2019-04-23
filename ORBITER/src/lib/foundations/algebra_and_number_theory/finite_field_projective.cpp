@@ -4376,7 +4376,7 @@ void finite_field::do_conic_type(int n,
 
 void finite_field::do_test_diagonal_line(int n,
 	int *set_in, int set_size,
-	char *fname_orbits_on_quadrangles,
+	const char *fname_orbits_on_quadrangles,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5031,6 +5031,7 @@ void finite_field::do_draw_points_in_plane(
 
 void finite_field::do_ideal(int n,
 	int *set_in, int set_size, int degree,
+	int *&set_out, int &size_out,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5040,12 +5041,14 @@ void finite_field::do_ideal(int n,
 	int *w2;
 	int *Pts;
 	int nb_pts;
-	int r, h, ns, N;
+	int r, h, ns;
 	geometry_global Gg;
 
 	if (f_v) {
 		cout << "finite_field::do_ideal" << endl;
 		}
+
+	size_out = 0;
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
@@ -5076,6 +5079,7 @@ void finite_field::do_ideal(int n,
 	cout << "looping over all generators of the ideal:" << endl;
 	for (h = 0; h < ns; h++) {
 		cout << "generator " << h << " / " << ns << ":" << endl;
+
 		HPD->enumerate_points(Kernel + h * HPD->nb_monomials,
 				Pts, nb_pts, verbose_level);
 		cout << "We found " << nb_pts << " points on the curve" << endl;
@@ -5083,7 +5087,21 @@ void finite_field::do_ideal(int n,
 		int_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		HPD->P->print_set_numerical(Pts, nb_pts);
+
+
+		if (h == 0) {
+			size_out = HPD->nb_monomials;
+			set_out = NEW_int(size_out);
+			int_vec_copy(Kernel + h * HPD->nb_monomials, set_out, size_out);
+			break;
 		}
+
+	}
+	FREE_int(Pts);
+
+#if 0
+	int N;
+	int *Pts;
 	cout << "looping over all elements of the ideal:" << endl;
 	N = Gg.nb_PG_elements(ns - 1, q);
 	for (h = 0; h < N; h++) {
@@ -5096,10 +5114,10 @@ void finite_field::do_ideal(int n,
 		HPD->enumerate_points(w2, Pts, nb_pts, verbose_level);
 		cout << " We found " << nb_pts << " points on this curve" << endl;
 		}
+#endif
 
 	FREE_OBJECT(HPD);
 	FREE_int(Kernel);
-	FREE_int(Pts);
 	FREE_int(w1);
 	FREE_int(w2);
 }

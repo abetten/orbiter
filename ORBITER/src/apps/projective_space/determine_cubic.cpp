@@ -108,7 +108,8 @@ int main(int argc, char **argv)
 
 
 	Poly_3_3->init(F,
-			3 /* n */, 3 /* degree */, FALSE /* f_init_incidence_structure */,
+			3 /* n */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */,
 			verbose_level);
 
 	int coeff10[10];
