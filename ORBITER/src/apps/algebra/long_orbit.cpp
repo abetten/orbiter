@@ -550,7 +550,6 @@ void compute_orbit(int n, int k, int q, int print_mod, int verbose_level)
 	int i, length, nb_processed = 0;
 	int f_found;
 	int *M1, *M2;
-	sorting Sorting;
 	int alloc_length = 500000;
 	int old_length = alloc_length;
 	int next_length = 0;
@@ -593,9 +592,6 @@ void compute_orbit(int n, int k, int q, int print_mod, int verbose_level)
 	hash = int_vec_hash(Orbit[0], kn);
 	Hashing.insert(pair<uint32_t, int>(hash, 0));
 	length = 1;
-
-	//Hash[0] = int_vec_hash(initial_M, k * n, bit_length);
-	//Idx[0] = 0;
 
 	while (nb_processed < length) {
 

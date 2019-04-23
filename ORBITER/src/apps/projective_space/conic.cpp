@@ -31,10 +31,13 @@ int t0; // the system time when the program started
 
 void draw_empty_grid(int q, int f_include_line_at_infinity, int verbose_level);
 void LunelliSce(int verbose_level);
-void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int verbose_level);
+void conic(int q, int *six_coeffs,
+		int xmax, int ymax, int f_do_stabilizer, int verbose_level);
 void find_collinear_triple(projective_space *P, int *pts, int sz);
-int analyze_color_graph(int C, int *colors, int n, int *M, int *Pijk, int verbose_level);
-void draw_beginning(char *fname, mp_graphics *&G, int xmax, int ymax, int verbose_level);
+int analyze_color_graph(int C, int *colors,
+		int n, int *M, int *Pijk, int verbose_level);
+void draw_beginning(char *fname, mp_graphics *&G,
+		int xmax, int ymax, int verbose_level);
 void draw_end(char *fname, mp_graphics *G, int xmax, int ymax, int verbose_level);
 void draw_grid_(mp_graphics &G, int q, int f_include_line_at_infinity, int verbose_level);
 void draw_points(mp_graphics &G, projective_space *P, int *pts, int nb_points, int verbose_level);
@@ -154,14 +157,9 @@ void LunelliSce(int verbose_level)
 	finite_field F;
 	projective_space *P;
 	action *A;
-	//matrix_group *Mtx;
 	int n = 3;
 	int q = 16;
-	//int f_with_group = TRUE;
-	//int f_basis = TRUE;
-	//int f_semilinear = TRUE;
 	int v[3];
-	//int w[3];
 	vector_ge *nice_gens;
 
 	//F.init(q), verbose_level - 2);
@@ -220,7 +218,8 @@ void LunelliSce(int verbose_level)
 	
 }
 
-void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int verbose_level) 
+void conic(int q, int *six_coeffs,
+		int xmax, int ymax, int f_do_stabilizer, int verbose_level)
 {
 	const char *override_poly = NULL;
 	finite_field F;
@@ -334,12 +333,15 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 				A->Strong_gens,
 				verbose_level);
 
-		STAB.init(Poset, variety, variety_size /* points, nb_points*/ , verbose_level);
-		STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level + 10);
+		STAB.init(Poset, variety,
+				variety_size /* points, nb_points*/ , verbose_level);
+		STAB.compute_set_stabilizer(t0, nb_backtrack_nodes,
+				Aut_gens, verbose_level + 10);
 		longinteger_object go, go2;
 		Stab = Aut_gens->create_sims(verbose_level - 1);
 		Stab->group_order(go);
-		cout << "computing stabilizer of conic done, found a group of order " << go << endl;
+		cout << "computing stabilizer of conic done, "
+				"found a group of order " << go << endl;
 
 		FREE_OBJECT(Poset);
 		FREE_OBJECT(Stab);
@@ -358,7 +360,8 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 
 	//variety_size = 0;
 	draw_grid_(*G, q, f_include_line_at_infinity, verbose_level);
-	draw_points(*G, P, /*variety + 3, 5*/ variety, variety_size /*points, nb_points*/, verbose_level);
+	draw_points(*G, P, /*variety + 3, 5*/ variety,
+			variety_size /*points, nb_points*/, verbose_level);
 	draw_end(fname, G, xmax, ymax, verbose_level);
 	}
 	if (f_do_stabilizer) {
@@ -491,14 +494,16 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 	f << -1 << endl;
 	
 	}
-	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 	int colors[] = {0,1};
 	int C = 2;
 	int *Pijk;
 	
 	Pijk = NEW_int(C * C * C);
-	if (analyze_color_graph(C, colors, nb_external_lines, adjacency, Pijk, verbose_level)) {
+	if (analyze_color_graph(C, colors, nb_external_lines,
+			adjacency, Pijk, verbose_level)) {
 		cout << "is association scheme" << endl;
 		}
 	else {
@@ -523,11 +528,13 @@ void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int 
 			A->Strong_gens,
 			verbose_level);
 	STAB.init(Poset, points, nb_points, verbose_level);
-	STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level + - 2);
+	STAB.compute_set_stabilizer(t0, nb_backtrack_nodes,
+			Aut_gens, verbose_level + - 2);
 	Stab = Aut_gens->create_sims(verbose_level - 1);
 	longinteger_object go, go2;
 	Stab->group_order(go);
-	cout << "computing stabilizer of conic done, found a group of order " << go << endl;
+	cout << "computing stabilizer of conic done, found "
+			"a group of order " << go << endl;
 
 	
 	action *A2;
@@ -570,14 +577,16 @@ void find_collinear_triple(projective_space *P, int *pts, int sz)
 				P->unrank_point(M + 6, pts[i3]);
 				rk = P->F->Gauss_simple(M, 3, 3, base_cols, 0);
 				if (rk < 3) {
-					cout << "collinear points " << pts[i1] << ", " << pts[i2] << ", " << pts[i3] << endl;
+					cout << "collinear points " << pts[i1] << ", "
+							<< pts[i2] << ", " << pts[i3] << endl;
 					}
 				}
 			}
 		}
 }
 
-int analyze_color_graph(int C, int *colors, int n, int *M, int *Pijk, int verbose_level)
+int analyze_color_graph(int C, int *colors, int n,
+		int *M, int *Pijk, int verbose_level)
 {
 	int k, i, j, u, v, w, pijk, pijk1;
 	
@@ -641,7 +650,8 @@ int analyze_color_graph(int C, int *colors, int n, int *M, int *Pijk, int verbos
 }
 
 
-void draw_beginning(char *fname, mp_graphics *&G, int xmax, int ymax, int verbose_level)
+void draw_beginning(char *fname, mp_graphics *&G,
+		int xmax, int ymax, int verbose_level)
 {
 	int x_min = 0, x_max = 1000;
 	int y_min = 0, y_max = 1000;

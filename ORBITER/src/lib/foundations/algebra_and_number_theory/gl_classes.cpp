@@ -19,7 +19,14 @@ namespace foundations {
 
 gl_classes::gl_classes()
 {
-	null();
+	k = q = 0;
+	F = NULL;
+	Table_of_polynomials = NULL;
+	Nb_part = NULL;
+	Partitions = NULL;
+	v = NULL;
+	w = NULL;
+	//null();
 }
 
 gl_classes::~gl_classes()
@@ -29,33 +36,17 @@ gl_classes::~gl_classes()
 
 void gl_classes::null()
 {
-	F = NULL;
-	Nb_irred = NULL;
-	First_irred = NULL;
-	Nb_part = NULL;
-	Tables = NULL;
-	Partitions = NULL;
-	Degree = NULL;
 }
 
 void gl_classes::freeself()
 {
 	int i;
 	
-	if (Nb_irred) {
-		FREE_int(Nb_irred);
-		}
-	if (First_irred) {
-		FREE_int(First_irred);
-		}
+	if (Table_of_polynomials) {
+		FREE_OBJECT(Table_of_polynomials);
+	}
 	if (Nb_part) {
 		FREE_int(Nb_part);
-		}
-	if (Tables) {
-		for (i = 1; i <= k; i++) {
-			FREE_int(Tables[i]);
-			}
-		FREE_pint(Tables);
 		}
 	if (Partitions) {
 		for (i = 1; i <= k; i++) {
@@ -63,8 +54,11 @@ void gl_classes::freeself()
 			}
 		FREE_pint(Partitions);
 		}
-	if (Degree) {
-		FREE_int(Degree);
+	if (v) {
+		FREE_int(v);
+		}
+	if (w) {
+		FREE_int(w);
 		}
 	null();
 }
@@ -72,7 +66,7 @@ void gl_classes::freeself()
 void gl_classes::init(int k, finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, d;
+	int d;
 	combinatorics_domain Combi;
 
 	if (f_v) {
@@ -85,79 +79,28 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 		cout << "gl_classes::init k = " << k << " q = " << q << endl;
 		}
 
-	Nb_irred = NEW_int(k + 1);
-	First_irred = NEW_int(k + 1);
-	Nb_part = NEW_int(k + 1);
-	Tables = NEW_pint(k + 1);
-	Partitions = NEW_pint(k + 1);
+	Table_of_polynomials = NEW_OBJECT(table_of_irreducible_polynomials);
 
-	nb_irred = 0;
-
-	First_irred[1] = 0;
 	if (f_v) {
-		cout << "gl_classes::init before make_linear_"
-				"irreducible_polynomials" << endl;
+		cout << "gl_classes before Table_of_polynomials->init" << endl;
 		}
-	make_linear_irreducible_polynomials(q, Nb_irred[1],
-			Tables[1], verbose_level - 2);
+	Table_of_polynomials->init(k, F, verbose_level);
 	if (f_v) {
-		cout << "gl_classes::init after make_linear_"
-				"irreducible_polynomials" << endl;
-		}
-	nb_irred += Nb_irred[1];
-	//First_irred[2] = First_irred[1] + Nb_irred[1];
-	
-	for (d = 2; d <= k; d++) {
-		if (f_v) {
-			cout << "gl_classes::init degree " << d << " / " << k << endl;
-			}
-		First_irred[d] = First_irred[d - 1] + Nb_irred[d - 1];
-
-		if (f_v) {
-			cout << "gl_classes::init before F->make_all_irreducible_"
-					"polynomials_of_degree_d" << endl;
-			}
-		F->make_all_irreducible_polynomials_of_degree_d(d,
-				Nb_irred[d], Tables[d], verbose_level - 2);
-		if (f_v) {
-			cout << "gl_classes::init after F->make_all_irreducible_"
-					"polynomials_of_degree_d" << endl;
-			}
-
-		nb_irred += Nb_irred[d];
-		if (f_v) {
-			cout << "gl_classes::init Nb_irred[" << d << "]="
-					<< Nb_irred[d] << endl;
-			}
-		}
-	
-	if (f_v) {
-		cout << "gl_classes::init k = " << k << " q = " << q
-				<< " nb_irred = " << nb_irred << endl;
-		}
-	Degree = NEW_int(nb_irred);
-	
-	j = 0;
-	for (d = 1; d <= k; d++) {
-		for (i = 0; i < Nb_irred[d]; i++) {
-			Degree[j + i] = d;
-			}
-		j += Nb_irred[d];
-		}
-	if (f_v) {
-		cout << "gl_classes k = " << k << " q = " << q << " Degree = ";
-		int_vec_print(cout, Degree, nb_irred);
-		cout << endl;
+		cout << "gl_classes after Table_of_polynomials->init" << endl;
 		}
 
 
 	if (f_v) {
 		cout << "gl_classes::init making partitions" << endl;
 		}
+	Partitions = NEW_pint(k + 1);
+	Nb_part = NEW_int(k + 1);
 	for (d = 1; d <= k; d++) {
 
-		Combi.make_all_partitions_of_n(d, Partitions[d],
-				Nb_part[d], verbose_level - 2);
+		Combi.make_all_partitions_of_n(d,
+				Partitions[d],
+				Nb_part[d],
+				verbose_level);
 
 		}
 	if (f_v) {
@@ -167,7 +110,8 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 		cout << endl;
 		}
 
-
+	v = NEW_int(k);
+	w = NEW_int(k);
 
 	if (f_v) {
 		cout << "gl_classes::init k = " << k
@@ -175,126 +119,15 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 		}
 }
 
-void gl_classes::print_polynomials(ostream &ost)
-{
-	int d, i, j;
-	
-	for (d = 1; d <= k; d++) {
-		for (i = 0; i < Nb_irred[d]; i++) {
-			for (j = 0; j <= d; j++) {
-				ost << Tables[d][i * (d + 1) + j];
-				if (j < d) {
-					ost << ", ";
-					}
-				}
-			ost << endl;
-			}
-		}
-}
-
-int gl_classes::select_polynomial_first(int *Select, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, k1 = k, d, m;
-
-	if (f_v) {
-		cout << "gl_classes::select_polynomial_first" << endl;
-		}
-	int_vec_zero(Select, nb_irred);
-	for (i = nb_irred - 1; i >= 0; i--) {
-		d = Degree[i];
-		m = k1 / d;
-		Select[i] = m;
-		k1 -= m * d;
-		if (k1 == 0) {
-			return TRUE;
-			}
-		}
-	if (k1 == 0) {
-		if (f_v) {
-			cout << "gl_classes::select_polynomial_first "
-					"returns TRUE" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		if (f_v) {
-			cout << "gl_classes::select_polynomial_first "
-					"returns FALSE" << endl;
-			}
-		return FALSE;
-		}
-}
-
-int gl_classes::select_polynomial_next(int *Select, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, ii, k1, d, m;
-	
-	if (f_v) {
-		cout << "gl_classes::select_polynomial_next" << endl;
-		}
-	k1 = Select[0] * Degree[0];
-	Select[0] = 0;
-	do {
-		for (i = 1; i < nb_irred; i++) {
-			m = Select[i];
-			if (m) {
-				k1 += Degree[i];
-				m--;
-				Select[i] = m;
-				break;
-				}
-			}
-		if (i == nb_irred) {
-			if (f_v) {
-				cout << "gl_classes::select_polynomial_next "
-						"return FALSE" << endl;
-				}
-			return FALSE;
-			}
-		if (f_vv) {
-			cout << "k1=" << k1 << endl;
-			}
-		for (ii = i - 1; ii >= 0; ii--) {
-			d = Degree[ii];
-			m = k1 / d;
-			Select[ii] = m;
-			k1 -= m * d;
-			if (f_vv) {
-				cout << "Select[" << ii << "]=" << m
-						<< ", k1=" << k1 << endl;
-				}
-			if (k1 == 0) {
-				if (f_v) {
-					cout << "gl_classes::select_polynomial_next "
-							"return FALSE" << endl;
-					}
-				return TRUE;
-				}
-			}
-		k1 += Select[0] * Degree[0];
-		Select[0] = 0;
-		} while (k1);
-	if (f_v) {
-		cout << "gl_classes::select_polynomial_next return FALSE" << endl;
-		}
-	return FALSE;
-}
-
 int gl_classes::select_partition_first(int *Select,
 		int *Select_partition, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 	
 	if (f_v) {
 		cout << "gl_classes::select_partition_first" << endl;
 		}
-	for (i = nb_irred - 1; i >= 0; i--) {
-		Select_partition[i] = 0;
-		}
+	int_vec_zero(Select_partition, Table_of_polynomials->nb_irred);
 	return TRUE;
 }
 
@@ -307,7 +140,7 @@ int gl_classes::select_partition_next(int *Select,
 	if (f_v) {
 		cout << "gl_classes::select_partition_next" << endl;
 		}
-	for (i = nb_irred - 1; i >= 0; i--) {
+	for (i = Table_of_polynomials->nb_irred - 1; i >= 0; i--) {
 		m = Select[i];
 		if (m > 1) {
 			if (Select_partition[i] < Nb_part[m] - 1) {
@@ -328,7 +161,8 @@ int gl_classes::first(int *Select,
 	if (f_v) {
 		cout << "gl_classes::first" << endl;
 		}
-	if (!select_polynomial_first(Select, verbose_level)) {
+	if (!Table_of_polynomials->select_polynomial_first(
+			Select, verbose_level)) {
 		return FALSE;
 		}
 	while (TRUE) {
@@ -336,7 +170,8 @@ int gl_classes::first(int *Select,
 			Select_partition, verbose_level)) {
 			return TRUE;
 			}
-		if (!select_polynomial_next(Select, verbose_level)) {
+		if (!Table_of_polynomials->select_polynomial_next(
+				Select, verbose_level)) {
 			return FALSE;
 			}
 		}
@@ -354,7 +189,8 @@ int gl_classes::next(int *Select,
 		return TRUE;
 		}
 	while (TRUE) {
-		if (!select_polynomial_next(Select, verbose_level)) {
+		if (!Table_of_polynomials->select_polynomial_next(
+				Select, verbose_level)) {
 			return FALSE;
 			}
 		if (select_partition_first(Select,
@@ -379,10 +215,10 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 	Mtx = NEW_int(k * k);
 
-	Select_polynomial = NEW_int(nb_irred);
-	Select_Partition = NEW_int(nb_irred);
-	int_vec_zero(Select_polynomial, nb_irred);
-	int_vec_zero(Select_Partition, nb_irred);
+	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
+	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
+	int_vec_zero(Select_polynomial, Table_of_polynomials->nb_irred);
+	int_vec_zero(Select_Partition, Table_of_polynomials->nb_irred);
 
 	for (i = 0; i < R->type_coding.m; i++) {
 		a = R->type_coding.s_ij(i, 0);
@@ -451,10 +287,10 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 	if (f_v) {
 		cout << "gl_classes::make_matrix_from_class_rep" << endl;
 		}
-	Select = NEW_int(nb_irred);
-	Select_Partition = NEW_int(nb_irred);
-	int_vec_zero(Select, nb_irred);
-	int_vec_zero(Select_Partition, nb_irred);
+	Select = NEW_int(Table_of_polynomials->nb_irred);
+	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
+	int_vec_zero(Select, Table_of_polynomials->nb_irred);
+	int_vec_zero(Select_Partition, Table_of_polynomials->nb_irred);
 
 	for (i = 0; i < R->type_coding.m; i++) {
 		a = R->type_coding.s_ij(i, 0);
@@ -463,7 +299,9 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 		Select[a] = m;
 		Select_Partition[a] = p;
 		}
-	make_matrix(Mtx, Select, Select_Partition, verbose_level - 1);
+	make_matrix_in_rational_normal_form(
+			Mtx, Select, Select_Partition,
+			verbose_level - 1);
 	FREE_int(Select);
 	FREE_int(Select_Partition);
 	if (f_v) {
@@ -472,8 +310,10 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 }
 
 
-void gl_classes::make_matrix(int *Mtx,
-		int *Select, int *Select_Partition, int verbose_level)
+void gl_classes::make_matrix_in_rational_normal_form(
+		int *Mtx,
+		int *Select, int *Select_Partition,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, m, p, d, tt;
@@ -482,15 +322,16 @@ void gl_classes::make_matrix(int *Mtx,
 	int *part;
 
 	if (f_v) {
-		cout << "gl_classes::make_matrix" << endl;
+		cout << "gl_classes::make_matrix_in_rational_normal_form" << endl;
 		cout << "Select=";
-		int_vec_print(cout, Select, nb_irred);
+		int_vec_print(cout, Select, Table_of_polynomials->nb_irred);
 		cout << endl;
 		cout << "Select_Partition=";
-		int_vec_print(cout, Select_Partition, nb_irred);
+		int_vec_print(cout, Select_Partition, Table_of_polynomials->nb_irred);
 		cout << endl;
 		cout << "Degree=";
-		int_vec_print(cout, Degree, nb_irred);
+		int_vec_print(cout, Table_of_polynomials->Degree,
+				Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
@@ -499,13 +340,13 @@ void gl_classes::make_matrix(int *Mtx,
 
 	// take care of the irreducible polynomial blocks first:
 	i0 = 0;
-	for (a = nb_irred - 1; a >= 0; a--) {
+	for (a = Table_of_polynomials->nb_irred - 1; a >= 0; a--) {
 		m = Select[a];
 		p = Select_Partition[a];
-		d = Degree[a];
+		d = Table_of_polynomials->Degree[a];
 		if (m) {
-			tt = a - First_irred[d];
-			pol = Tables[d] + tt * (d + 1);
+			tt = a - Table_of_polynomials->First_irred[d];
+			pol = Table_of_polynomials->Tables[d] + tt * (d + 1);
 			for (aa = 0; aa < m; aa++) {
 				// fill in m companion matrices of type pol of size d x d: 
 
@@ -523,19 +364,20 @@ void gl_classes::make_matrix(int *Mtx,
 			}
 		}
 	if (i0 != k) {
-		cout << "gl_classes::make_matrix i0 != k (first time)" << endl;
+		cout << "gl_classes::make_matrix_in_rational_normal_form "
+				"i0 != k (first time)" << endl;
 		exit(1);
 		}
 
 	// now take care of the partition:
 	i0 = 0;
-	for (a = nb_irred - 1; a >= 0; a--) {
+	for (a = Table_of_polynomials->nb_irred - 1; a >= 0; a--) {
 		m = Select[a];
 		p = Select_Partition[a];
-		d = Degree[a];
+		d = Table_of_polynomials->Degree[a];
 		if (m) {
-			tt = a - First_irred[d];
-			pol = Tables[d] + tt * (d + 1);
+			tt = a - Table_of_polynomials->First_irred[d];
+			pol = Table_of_polynomials->Tables[d] + tt * (d + 1);
 			if (m > 1) {
 				int ii, jj, b;
 
@@ -560,12 +402,13 @@ void gl_classes::make_matrix(int *Mtx,
 			}
 		}
 	if (i0 != k) {
-		cout << "gl_classes::make_matrix i0 != k (second time)" << endl;
+		cout << "gl_classes::make_matrix_in_rational_normal_form "
+				"i0 != k (second time)" << endl;
 		exit(1);
 		}
 	
 	if (f_v) {
-		cout << "gl_classes::make_matrix done" << endl;
+		cout << "gl_classes::make_matrix_in_rational_normal_form done" << endl;
 		}
 }
 
@@ -588,7 +431,11 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 		cout << "gl_classes::centralizer_order_Kung_basic" << endl;
 		}
 	co.create(1);
-	for (a = 0; a < nb_irreds; a++) { // for all irreducible polynomials: 
+
+	for (a = 0; a < nb_irreds; a++) {
+
+		// loop over all polynomials:
+
 		d = poly_degree[a];
 		m = poly_mult[a];
 		p = partition_idx[a];
@@ -597,7 +444,12 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 					"a=" << a << " d=" << d
 					<< " m=" << m << " p=" << p << endl;
 			}
+
+		// does the polynomial appear?
 		if (m) {
+
+			// yes!
+
 			part = Partitions[m] + p * m;
 			
 			// here comes Kung's formula: 
@@ -628,7 +480,8 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 		}
 }
 
-void gl_classes::centralizer_order_Kung(int *Select_polynomial,
+void gl_classes::centralizer_order_Kung(
+	int *Select_polynomial,
 	int *Select_partition, longinteger_object &co,
 	int verbose_level)
 // Computes the centralizer order of a matrix in GL(k,q) 
@@ -642,11 +495,20 @@ void gl_classes::centralizer_order_Kung(int *Select_polynomial,
 	combinatorics_domain Combi;
 
 	co.create(1);
-	for (a = nb_irred - 1; a >= 0; a--) { // for all polynomials: 
+	for (a = Table_of_polynomials->nb_irred - 1; a >= 0; a--) {
+
+		// loop over all polynomials:
+
 		m = Select_polynomial[a];
-		d = Degree[a];
+		d = Table_of_polynomials->Degree[a];
 		p = Select_partition[a];
+
+
+		// does the polynomial appear?
 		if (m) {
+
+			// yes:
+
 			part = Partitions[m] + p * m;
 			
 			// here comes Kung's formula: 
@@ -699,11 +561,11 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 
 	if (f_v) {
 		cout << "gl_classes::make_classes "
-				"nb_irred = " << nb_irred << endl;
+				"nb_irred = " << Table_of_polynomials->nb_irred << endl;
 		}
 	Mtx = NEW_int(k * k);
-	Select_polynomial = NEW_int(nb_irred);
-	Select_partition = NEW_int(nb_irred);
+	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
+	Select_partition = NEW_int(Table_of_polynomials->nb_irred);
 
 
 
@@ -739,11 +601,12 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 
 		if (f_vv) {
 			cout << "The class " << cnt << " is:" << endl;
-			int_vec_print(cout, Select_polynomial, nb_irred);
+			int_vec_print(cout, Select_polynomial,
+					Table_of_polynomials->nb_irred);
 			cout << " : ";
 
 			int f_first = TRUE;
-			for (i = 0; i < nb_irred; i++) {
+			for (i = 0; i < Table_of_polynomials->nb_irred; i++) {
 				m = Select_polynomial[i];
 				//d = Degree[i];
 				p = Select_partition[i];
@@ -761,7 +624,8 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 			cout << endl;
 			}
 
-		make_matrix(Mtx, Select_polynomial, Select_partition,
+		make_matrix_in_rational_normal_form(
+				Mtx, Select_polynomial, Select_partition,
 				verbose_level - 2);
 
 		if (f_vv) {
@@ -825,10 +689,11 @@ loop1:
 
 		if (f_vv) {
 			cout << "The class " << cnt << " is:" << endl;
-			int_vec_print(cout, Select_polynomial, nb_irred);
+			int_vec_print(cout, Select_polynomial,
+					Table_of_polynomials->nb_irred);
 			cout << " : ";
 			int f_first = TRUE;
-			for (i = 0; i < nb_irred; i++) {
+			for (i = 0; i < Table_of_polynomials->nb_irred; i++) {
 				m = Select_polynomial[i];
 				//d = Degree[i];
 				p = Select_partition[i];
@@ -847,11 +712,13 @@ loop1:
 			}
 
 
-		R[cnt].init(nb_irred,
+		R[cnt].init(Table_of_polynomials->nb_irred,
 				Select_polynomial, Select_partition, verbose_level);
 
-		make_matrix(Mtx,
-				Select_polynomial, Select_partition, verbose_level - 2);
+		make_matrix_in_rational_normal_form(
+				Mtx,
+				Select_polynomial, Select_partition,
+				verbose_level - 2);
 
 		if (f_vv) {
 			cout << "Representative:" << endl;
@@ -929,8 +796,8 @@ void gl_classes::identify_matrix(int *Mtx,
 	M3 = NEW_int(k * k);
 	//Basis = NEW_int(k * k);
 	Basis_inv = NEW_int(k * k);
-	Mult = NEW_int(nb_irred);
-	Select_partition = NEW_int(nb_irred);
+	Mult = NEW_int(Table_of_polynomials->nb_irred);
+	Select_partition = NEW_int(Table_of_polynomials->nb_irred);
 	
 	{
 	unipoly_domain U(F);
@@ -949,7 +816,10 @@ void gl_classes::identify_matrix(int *Mtx,
 		cout << endl;
 		}
 
-	U.substitute_matrix_in_polynomial(char_poly, Mtx, M2, k, verbose_level);
+	U.substitute_matrix_in_polynomial(
+			char_poly,
+			Mtx, M2, k,
+			verbose_level);
 
 	if (f_vv) {
 		cout << "gl_classes::identify_matrix "
@@ -959,23 +829,26 @@ void gl_classes::identify_matrix(int *Mtx,
 
 
 
-	factor_polynomial(char_poly, Mult, verbose_level);
+	Table_of_polynomials->factor_polynomial(
+			char_poly, Mult, verbose_level);
 	if (f_v) {
 		cout << "gl_classes::identify_matrix factorization: ";
-		int_vec_print(cout, Mult, nb_irred);
+		int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
 	identify2(Mtx, char_poly, Mult,
 			Select_partition, Basis, verbose_level);
 
-	R->init(nb_irred, Mult, Select_partition, verbose_level);
+	R->init(Table_of_polynomials->nb_irred,
+			Mult, Select_partition, verbose_level);
 
 
 	
 	F->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
 
 	F->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k, 0 /* verbose_level */);
+
 	F->mult_matrix_matrix(M2, Basis, M3, k, k, k, 0 /* verbose_level */);
 
 	if (f_vv) {
@@ -1015,13 +888,17 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 		cout << "gl_classes::identify2 k = " << k << " q = " << q << endl;
 		}
 
-	nb_irreds = int_vec_count_number_of_nonzero_entries(Mult, nb_irred);
+	nb_irreds = int_vec_count_number_of_nonzero_entries(
+			Mult, Table_of_polynomials->nb_irred);
+
+	// nb_irreds is the number of distinct irreducible factors
+	// of the characteristic polynomial (not counting multiplicities)
 
 	Irreds = NEW_int(nb_irreds);
 
 	
 	i = 0;
-	for (h = nb_irred - 1; h >= 0; h--) {
+	for (h = Table_of_polynomials->nb_irred - 1; h >= 0; h--) {
 
 		if (Mult[h] == 0) {
 			continue;
@@ -1030,12 +907,12 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 
 		} // next h
 
-#if 0
-	if (i != nb_irred) {
-		cout << "gl_classes::identify2 i != nb_irred" << endl;
+
+	if (i != nb_irreds) {
+		cout << "gl_classes::identify2 i != nb_irreds" << endl;
 		exit(1);
 	}
-#endif
+
 
 		
 	if (f_v) {
@@ -1055,11 +932,18 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 
 	if (f_v) {
 		cout << "gl_classes::identify2 "
-				"before compute_data_on_blocks" << endl;
+				"before compute_generalized_kernels_for_each_block" << endl;
 		}
 
-	compute_data_on_blocks(Mtx, Irreds, nb_irreds,
-			Degree, Mult, Data, verbose_level);
+	compute_generalized_kernels_for_each_block(
+			Mtx, Irreds, nb_irreds,
+			Table_of_polynomials->Degree, Mult, Data,
+			verbose_level);
+
+	if (f_v) {
+		cout << "gl_classes::identify2 "
+				"after compute_generalized_kernels_for_each_block" << endl;
+		}
 
 	int_vec_zero(Select_partition, nb_irreds);
 	for (i = 0; i < nb_irreds; i++) {
@@ -1082,10 +966,6 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 		}
 
 
-
-	FREE_OBJECTS(Data);
-
-
 	if (f_vv) {
 		cout << "gl_classes::identify2 "
 				"transformation matrix = " << endl;
@@ -1094,6 +974,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 		}
 
 
+	FREE_OBJECTS(Data);
 	FREE_int(Irreds);
 	
 	if (f_v) {
@@ -1102,7 +983,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 		}
 }
 
-void gl_classes::compute_data_on_blocks(
+void gl_classes::compute_generalized_kernels_for_each_block(
 	int *Mtx, int *Irreds, int nb_irreds,
 	int *Degree, int *Mult, matrix_block_data *Data,
 	int verbose_level)
@@ -1115,7 +996,7 @@ void gl_classes::compute_data_on_blocks(
 	int *M2;
 
 	if (f_v) {
-		cout << "gl_classes::compute_data_on_blocks" << endl;
+		cout << "gl_classes::compute_generalized_kernels_for_each_block" << endl;
 		}
 	
 	M2 = NEW_int(k * k);
@@ -1124,26 +1005,33 @@ void gl_classes::compute_data_on_blocks(
 	b0 = 0;
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_vv) {
-			cout << "gl_classes::compute_data_on_blocks "
+			cout << "gl_classes::compute_generalized_kernels_for_each_block "
 					"polynomial " << h << " / " << nb_irreds << endl;
 			}
 		u = Irreds[h];
 		d = Degree[u];
-		tt = u - First_irred[d];
-		poly_coeffs = Tables[d] + tt * (d + 1);
+
+		tt = u - Table_of_polynomials->First_irred[d];
+
+		poly_coeffs = Table_of_polynomials->Tables[d] + tt * (d + 1);
+
 		U.delete_object(P);
-		U.create_object_of_degree_with_coefficients(P, d, poly_coeffs);
+		U.create_object_of_degree_with_coefficients(
+				P, d, poly_coeffs);
 
 		if (f_vv) {
-			cout << "gl_classes::compute_data_on_blocks polynomial = ";
+			cout << "gl_classes::compute_generalized_kernels_for_each_block "
+					"polynomial = ";
 			U.print_object(P, cout);
 			cout << endl;
 			}
 
-		U.substitute_matrix_in_polynomial(P, Mtx, M2, k, verbose_level);
+		U.substitute_matrix_in_polynomial(
+				P, Mtx, M2, k,
+				verbose_level);
 
 		if (f_vv) {
-			cout << "gl_classes::compute_data_on_blocks "
+			cout << "gl_classes::compute_generalized_kernels_for_each_block "
 					"matrix substituted into polynomial = " << endl;
 			int_matrix_print(M2, k, k);
 			cout << endl;
@@ -1151,14 +1039,16 @@ void gl_classes::compute_data_on_blocks(
 
 		
 
-		compute_generalized_kernels(Data + h, M2, d, b0,
-				Mult[u], poly_coeffs, verbose_level);
+		compute_generalized_kernels(
+				Data + h, M2, d, b0,
+				Mult[u], poly_coeffs,
+				verbose_level);
 
 		b0 += d * Mult[u];
 
 	
 		if (f_v) {
-			cout << "gl_classes::compute_data_on_blocks "
+			cout << "gl_classes::compute_generalized_kernels_for_each_block "
 					"after compute_generalized_kernels" << endl;
 			}
 
@@ -1168,7 +1058,7 @@ void gl_classes::compute_data_on_blocks(
 	FREE_int(M2);
 	
 	if (f_v) {
-		cout << "gl_classes::compute_data_on_blocks done" << endl;
+		cout << "gl_classes::compute_generalized_kernels_for_each_block done" << endl;
 		}
 }
 
@@ -1212,7 +1102,9 @@ void gl_classes::compute_generalized_kernels(
 			cout << endl;
 			}
 		int_vec_copy(M3, M4, k * k);
+
 		rank = F->Gauss_simple(M4, k, k, base_cols, 0 /*verbose_level*/);
+
 		F->matrix_get_kernel_as_int_matrix(M4, k, k,
 				base_cols, rank, &Data->K[cnt]);
 
@@ -1248,15 +1140,19 @@ void gl_classes::compute_generalized_kernels(
 		cout << endl;
 		}
 
-	Combi.partition_dual(Data->dual_part, Data->part, m, verbose_level);
+	Combi.partition_dual(Data->dual_part,
+			Data->part, m,
+			verbose_level);
 
 	if (f_v) {
 		cout << "gl_classes::compute_generalized_kernels part = ";
-		Combi.partition_print(cout, Data->part, m);
+		Combi.partition_print(cout,
+				Data->part, m);
 		cout << endl;
 		}
 
-	Data->part_idx = identify_partition(Data->part, m, verbose_level - 2);
+	Data->part_idx = identify_partition(Data->part,
+			m, verbose_level - 2);
 
 	if (f_v) {
 		cout << "gl_classes::compute_generalized_kernels "
@@ -1330,8 +1226,10 @@ void gl_classes::choose_basis_for_rational_normal_form(
 					<< h << " / " << nb_irreds << " b = " << b << endl;
 			}
 
-		choose_basis_for_rational_normal_form_block(Mtx,
-				Data + h, Basis, b, verbose_level - 2);
+		choose_basis_for_rational_normal_form_block(
+				Mtx,
+				Data + h, Basis, b,
+				verbose_level - 2);
 
 
 		if (f_vv) {
@@ -1358,10 +1256,13 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 	int *Mtx, matrix_block_data *Data,
 	int *Basis, int &b, 
 	int verbose_level)
+// chooses a basis for the block associated
+// with one particular irreducible polynomial
+// b is the number of columns in Basis before and after
 {
 	int f_v = (verbose_level >= 1);
 	int c, e, f, af, B0, b0, g, ii, coeff, i, j;
-	int *v, *w;
+	//int *v, *w;
 
 
 	if (f_v) {
@@ -1371,8 +1272,8 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 
 	B0 = b;
 
-	v = NEW_int(k);
-	w = NEW_int(k);
+	//v = NEW_int(k);
+	//w = NEW_int(k);
 		
 	for (f = Data->height; f >= 1; f--) {
 		af = Data->part[f - 1];
@@ -1470,8 +1371,8 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 			} // next e
 		} // next f
 
-	FREE_int(v);
-	FREE_int(w);
+	//FREE_int(v);
+	//FREE_int(w);
 
 	if (f_v) {
 		cout << "gl_classes::choose_basis_for_rational_normal_"
@@ -1508,8 +1409,8 @@ void gl_classes::generators_for_centralizer(
 	M2 = NEW_int(k * k);
 	M3 = NEW_int(k * k);
 	Basis_inv = NEW_int(k * k);
-	Mult = NEW_int(nb_irred);
-	Select_partition = NEW_int(nb_irred);
+	Mult = NEW_int(Table_of_polynomials->nb_irred);
+	Select_partition = NEW_int(Table_of_polynomials->nb_irred);
 	
 	{
 	unipoly_domain U(F);
@@ -1538,18 +1439,20 @@ void gl_classes::generators_for_centralizer(
 
 
 
-	factor_polynomial(char_poly, Mult, verbose_level);
+	Table_of_polynomials->factor_polynomial(char_poly, Mult, verbose_level);
 	if (f_v) {
 		cout << "gl_classes::generators_for_centralizer factorization: ";
-		int_vec_print(cout, Mult, nb_irred);
+		int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
 
 	nb_gens = 0;
-	centralizer_generators(Mtx, char_poly, Mult, Select_partition, 
-		Basis, Gens, nb_gens, nb_alloc,  
-		verbose_level - 2);
+
+	centralizer_generators(
+			Mtx, char_poly, Mult, Select_partition,
+			Basis, Gens, nb_gens, nb_alloc,
+			verbose_level - 2);
 
 	
 	if (f_v) {
@@ -1587,7 +1490,8 @@ void gl_classes::generators_for_centralizer(
 		}
 
 
-	R->init(nb_irred, Mult, Select_partition, verbose_level);
+	R->init(Table_of_polynomials->nb_irred,
+			Mult, Select_partition, verbose_level);
 
 
 	
@@ -1639,13 +1543,14 @@ void gl_classes::centralizer_generators(int *Mtx,
 				"k = " << k << " q = " << q << endl;
 		}
 
-	nb_irreds = int_vec_count_number_of_nonzero_entries(Mult, nb_irred);
+	nb_irreds = int_vec_count_number_of_nonzero_entries(
+			Mult, Table_of_polynomials->nb_irred);
 
 	Irreds = NEW_int(nb_irreds);
 
 	
 	i = 0;
-	for (h = nb_irred - 1; h >= 0; h--) {
+	for (h = Table_of_polynomials->nb_irred - 1; h >= 0; h--) {
 
 		if (Mult[h] == 0) {
 			continue;
@@ -1675,8 +1580,10 @@ void gl_classes::centralizer_generators(int *Mtx,
 				"before compute_data_on_blocks" << endl;
 		}
 
-	compute_data_on_blocks(Mtx, Irreds, nb_irreds,
-			Degree, Mult, Data, verbose_level);
+	compute_generalized_kernels_for_each_block(
+			Mtx, Irreds, nb_irreds,
+			Table_of_polynomials->Degree, Mult, Data,
+			verbose_level);
 
 
 	int_vec_zero(Select_partition, nb_irreds);
@@ -1692,8 +1599,10 @@ void gl_classes::centralizer_generators(int *Mtx,
 
 
 
-	choose_basis_for_rational_normal_form(Mtx, Data,
-			nb_irreds, Basis, verbose_level);
+	choose_basis_for_rational_normal_form(
+			Mtx, Data,
+			nb_irreds, Basis,
+			verbose_level);
 
 
 	if (f_v) {
@@ -1743,7 +1652,8 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 	int *Basis;
 
 	if (f_v) {
-		cout << "gl_classes::centralizer_generators_block h = " << h << endl;
+		cout << "gl_classes::centralizer_generators_block "
+				"h = " << h << endl;
 		}
 
 	Basis = NEW_int(k * k);
@@ -1774,9 +1684,10 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 
 				int b = 0;
 				for (i = 0; i < h; i++) {
-					choose_basis_for_rational_normal_form_block(Mtx, Data + i, 
-						Basis, b, 
-						verbose_level - 2);
+					choose_basis_for_rational_normal_form_block(
+							Mtx, Data + i,
+							Basis, b,
+							verbose_level - 2);
 					}
 
 				if (f_vv) {
@@ -1792,7 +1703,8 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 					}
 				if (!choose_basis_for_rational_normal_form_coset(
 						level1, level2, coset,
-					Mtx, Data + h, b, Basis, verbose_level - 2)) {
+						Mtx, Data + h, b, Basis,
+						verbose_level - 2)) {
 					break;
 					}
 
@@ -1802,9 +1714,10 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 					exit(1);
 					}
 				for (i = h + 1; i < nb_irreds; i++) {
-					choose_basis_for_rational_normal_form_block(Mtx, Data + i, 
-						Basis, b, 
-						verbose_level - 2);
+					choose_basis_for_rational_normal_form_block(
+							Mtx, Data + i,
+							Basis, b,
+							verbose_level - 2);
 					}
 				if (b != k) {
 					cout << "gl_classes::centralizer_generators_block "
@@ -1866,7 +1779,8 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 
 	if (f_v) {
 		cout << "gl_classes::choose_basis_for_rational_normal_form_coset "
-				"level1 = " << level1 << " level2 = " << level2
+				"level1 = " << level1
+				<< " level2 = " << level2
 				<< " coset = " << coset << endl;
 		}
 
@@ -1893,7 +1807,8 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 
 			for (j = 0; j < b - B0; j++) {
 				for (i = 0; i < k; i++) {
-					Forbidden_subspace->s_ij(i, j) = Basis[i * k + B0 + j];
+					Forbidden_subspace->s_ij(i, j) =
+							Basis[i * k + B0 + j];
 					}
 				}
 				
@@ -1924,7 +1839,8 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 					//	"choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset" << endl;
 					if (!F->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
 							coset, &Data->K[f], Dummy_subspace,
-							Forbidden_subspace, v, verbose_level - 2)) {
+							Forbidden_subspace, v,
+							verbose_level - 2)) {
 						ret = FALSE;
 						}
 					}
@@ -2005,71 +1921,6 @@ the_end:
 	return ret;
 }
 
-void gl_classes::factor_polynomial(
-		unipoly_object &poly, int *Mult, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	unipoly_domain U(F);
-	unipoly_object Poly, P, Q, R;
-	int i, d_poly, d, tt;
-
-	if (f_v) {
-		cout << "gl_classes::factor_polynomial "
-				"k = " << k << " q = " << q << endl;
-		}
-	U.create_object_by_rank(Poly, 0);
-	U.create_object_by_rank(P, 0);
-	U.create_object_by_rank(Q, 0);
-	U.create_object_by_rank(R, 0);
-	U.assign(poly, Poly);
-
-
-	int_vec_zero(Mult, nb_irred);
-	for (i = 0; i < nb_irred; i++) {
-		d_poly = U.degree(Poly);
-		d = Degree[i];
-		if (d > d_poly) {
-			continue;
-			}
-		tt = i - First_irred[d];
-		U.delete_object(P);
-		U.create_object_of_degree_with_coefficients(P, d,
-				Tables[d] + tt * (d + 1));
-
-		if (f_vv) {
-			cout << "gl_classes::factor_polynomial trial division by = ";
-			U.print_object(P, cout);
-			cout << endl;
-			}
-		U.integral_division(Poly, P, Q, R, 0 /*verbose_level*/);
-
-		if (U.is_zero(R)) {
-			Mult[i]++;
-			i--;
-			U.assign(Q, Poly);
-			}
-		}
-
-	if (f_v) {
-		cout << "gl_classes::factor_polynomial factorization: ";
-		int_vec_print(cout, Mult, nb_irred);
-		cout << endl;
-		cout << "gl_classes::factor_polynomial remaining polynomial = ";
-		U.print_object(Poly, cout);
-		cout << endl;
-		}
-	
-	U.delete_object(Poly);
-	U.delete_object(P);
-	U.delete_object(Q);
-	U.delete_object(R);
-	
-	if (f_v) {
-		cout << "gl_classes::factor_polynomial "
-				"k = " << k << " q = " << q << " done" << endl;
-		}
-}
 
 int gl_classes::find_class_rep(gl_class_rep *Reps,
 		int nb_reps, gl_class_rep *R, int verbose_level)

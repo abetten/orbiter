@@ -3012,34 +3012,6 @@ void search_for_primitive_polynomials(
 }
 
 
-void make_linear_irreducible_polynomials(int q, int &nb,
-		int *&table, int verbose_level)
-{
-	int i;
-
-	finite_field F;
-	F.init(q, 0 /*verbose_level*/);
-#if 0
-	if (f_no_eigenvalue_one) {
-		nb = q - 2;
-		table = NEW_int(nb * 2);
-		for (i = 0; i < nb; i++) {
-			table[i * 2 + 0] = F.negate(i + 2);
-			table[i * 2 + 1] = 1;
-			}
-		}
-	else {
-#endif
-		nb = q - 1;
-		table = NEW_int(nb * 2);
-		for (i = 0; i < nb; i++) {
-			table[i * 2 + 0] = F.negate(i + 1);
-			table[i * 2 + 1] = 1;
-			}
-#if 0
-		}
-#endif
-}
 
 
 

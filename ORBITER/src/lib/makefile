@@ -57,6 +57,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/partial_derivative.o \
 		foundations/algebra_and_number_theory/rank_checker.o \
 		foundations/algebra_and_number_theory/subfield_structure.o \
+		foundations/algebra_and_number_theory/table_of_irreducible_polynomials.o \
 		foundations/algebra_and_number_theory/unipoly_domain.o \
 		foundations/algebra_and_number_theory/vector_space.o \
 		foundations/coding_theory/coding_theory_domain.o \

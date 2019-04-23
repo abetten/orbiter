@@ -961,7 +961,7 @@ public:
 		int verbose_level);
 	void do_test_diagonal_line(int n,
 		int *set_in, int set_size,
-		char *fname_orbits_on_quadrangles,
+		const char *fname_orbits_on_quadrangles,
 		int verbose_level);
 	void do_andre(finite_field *Fq,
 		int *the_set_in, int set_size_in,
@@ -992,6 +992,7 @@ public:
 		int verbose_level);
 	void do_ideal(int n,
 		int *set_in, int set_size, int degree,
+		int *&set_out, int &size_out,
 		int verbose_level);
 	void PG_element_modified_not_in_subspace_perm(int n, int m,
 		int *orbit, int *orbit_inv,
@@ -1209,22 +1210,23 @@ public:
 	int k;
 	int q;
 	finite_field *F;
+	table_of_irreducible_polynomials *Table_of_polynomials;
+#if 0
 	int nb_irred;
 	int *Nb_irred;
 	int *First_irred;
-	int *Nb_part;
 	int **Tables;
+#endif
+	int *Nb_part;
 	int **Partitions;
-	int *Degree;
+	//int *Degree;
+	int *v, *w; // [k], used in choose_basis_for_rational_normal_form_block
 
 	gl_classes();
 	~gl_classes();
 	void null();
 	void freeself();
 	void init(int k, finite_field *F, int verbose_level);
-	void print_polynomials(std::ostream &ost);
-	int select_polynomial_first(int *Select, int verbose_level);
-	int select_polynomial_next(int *Select, int verbose_level);
 	int select_partition_first(int *Select, int *Select_partition, 
 		int verbose_level);
 	int select_partition_next(int *Select, int *Select_partition, 
@@ -1235,8 +1237,9 @@ public:
 		gl_class_rep *R);
 	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R, 
 		int verbose_level);
-	void make_matrix(int *Mtx, int *Select, int *Select_Partition, 
-		int verbose_level);
+	void make_matrix_in_rational_normal_form(
+			int *Mtx, int *Select, int *Select_Partition,
+			int verbose_level);
 	void centralizer_order_Kung_basic(int nb_irreds, 
 		int *poly_degree, int *poly_mult, int *partition_idx, 
 		longinteger_object &co, 
@@ -1252,7 +1255,8 @@ public:
 		int verbose_level);
 	void identify2(int *Mtx, unipoly_object &poly, int *Mult, 
 		int *Select_partition, int *Basis, int verbose_level);
-	void compute_data_on_blocks(int *Mtx, int *Irreds, int nb_irreds, 
+	void compute_generalized_kernels_for_each_block(
+		int *Mtx, int *Irreds, int nb_irreds,
 		int *Degree, int *Mult, matrix_block_data *Data,
 		int verbose_level);
 	void compute_generalized_kernels(matrix_block_data *Data, int *M2, 
@@ -1280,8 +1284,6 @@ public:
 	int choose_basis_for_rational_normal_form_coset(int level1, 
 		int level2, int &coset, 
 		int *Mtx, matrix_block_data *Data, int &b, int *Basis, 
-		int verbose_level);
-	void factor_polynomial(unipoly_object &char_poly, int *Mult, 
 		int verbose_level);
 	int find_class_rep(gl_class_rep *Reps, int nb_reps, 
 		gl_class_rep *R, int verbose_level);
@@ -1949,6 +1951,36 @@ public:
 		int verbose_level);
 
 };
+
+// #############################################################################
+// table_of_irreducible_polynomials.cpp
+// #############################################################################
+
+//! a table of all irreducible polynomials over GF(q) of degree less than a certain value
+
+class table_of_irreducible_polynomials {
+public:
+	int k;
+	int q;
+	finite_field *F;
+	int nb_irred;
+	int *Nb_irred;
+	int *First_irred;
+	int **Tables;
+	int *Degree;
+
+	table_of_irreducible_polynomials();
+	~table_of_irreducible_polynomials();
+	void init(int k, finite_field *F, int verbose_level);
+	void print_polynomials(std::ostream &ost);
+	int select_polynomial_first(
+			int *Select, int verbose_level);
+	int select_polynomial_next(
+			int *Select, int verbose_level);
+	void factor_polynomial(unipoly_object &char_poly, int *Mult,
+		int verbose_level);
+};
+
 
 // #############################################################################
 // unipoly_domain.cpp:

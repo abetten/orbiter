@@ -31,6 +31,7 @@ MODULES = \
 	partial_derivative.o \
 	rank_checker.o \
 	subfield_structure.o \
+	table_of_irreducible_polynomials.o \
 	unipoly_domain.o \
 	vector_space.o
 

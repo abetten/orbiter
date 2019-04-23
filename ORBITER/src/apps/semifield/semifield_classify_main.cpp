@@ -51,6 +51,8 @@ int main(int argc, const char **argv)
 	int f_report = FALSE;
 
 
+	f_memory_debug = TRUE;
+
 	test_typedefs();
 
 	t0 = os_ticks();
@@ -347,6 +349,7 @@ int main(int argc, const char **argv)
 
 	if (f_report) {
 
+		cout << "before report" << endl;
 		char fname[1000];
 		sprintf(fname, "Semifields_%d.tex", order);
 
@@ -362,6 +365,7 @@ int main(int argc, const char **argv)
 
 			L.foot(fp);
 		}
+		cout << "after report" << endl;
 	}
 
 
@@ -500,9 +504,11 @@ int main(int argc, const char **argv)
 		}
 #endif
 
-
+	cout << "before FREE_OBJECT(F)" << endl;
 	FREE_OBJECT(F);
+	cout << "before leaving scope" << endl;
 	}
+	cout << "after leaving scope" << endl;
 
 //the_end:
 
