@@ -143,7 +143,8 @@ MODULES= \
 		foundations/io_and_os/file_io.o \
 		foundations/io_and_os/file_output.o \
 		foundations/io_and_os/latex_interface.o \
-		foundations/io_and_os/memory.o \
+		foundations/io_and_os/mem_object_registry_entry.o \
+		foundations/io_and_os/mem_object_registry.o \
 		foundations/io_and_os/memory_object.o \
 		foundations/io_and_os/orbiter_data_file.o \
 		foundations/io_and_os/util.o \
@@ -277,9 +278,9 @@ MODULES= \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/semifield_classify.o \
 		top_level/algebra_and_number_theory/semifield_downstep_node.o \
+		top_level/algebra_and_number_theory/semifield_flag_orbit_node.o \
 		top_level/algebra_and_number_theory/semifield_level_two.o \
 		top_level/algebra_and_number_theory/semifield_lifting.o \
-		top_level/algebra_and_number_theory/semifield_middle_layer_node.o \
 		top_level/algebra_and_number_theory/semifield_trace.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/geometry/arc_generator.o \

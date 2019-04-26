@@ -158,6 +158,182 @@ void magma_interface::read_permutation_group(const char *fname,
 	}
 }
 
+void magma_interface::orbit_of_matrix_group_on_vector(
+	const char *fname_base,
+	int d, int q,
+	int *initial_vector, int **gens, int nb_gens,
+	int &orbit_length,
+	int verbose_level)
+{
+	char fname_magma[1000];
+	char fname_output[1000];
+	//char cmd[1000];
+	int i, j;
+	combinatorics_domain Combi;
+	file_io Fio;
+
+	sprintf(fname_magma, "%s.magma", fname_base);
+	sprintf(fname_output, "%s.txt", fname_base);
+
+	{
+	ofstream fp(fname_magma);
+
+
+	fp << "G := MatrixGroup< " << d << ", GF(" << q << ") | " << endl;
+	for (i = 0; i < nb_gens; i++) {
+		fp << "[";
+		for (j = 0; j < d * d; j++) {
+			fp << gens[i][j];
+			if (j < d * d - 1) {
+				fp << ",";
+				}
+		}
+		fp << "]";
+		if (i < nb_gens - 1) {
+			fp << ", " << endl;
+			}
+		}
+	fp << " >;" << endl;
+
+	fp << "V := RSpace(G);" << endl;
+	fp << "u := V![";
+	for (j = 0; j < d; j++) {
+		fp << initial_vector[j];
+		if (j < d - 1) {
+			fp << ",";
+			}
+	}
+
+	fp << "];" << endl;
+	fp << "O := Orbit(G,u);" << endl;
+
+
+	fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
+	fp << "printf \"%o\", #O; printf \"\\n\";" << endl;
+	fp << "UnsetOutputFile();" << endl;
+	}
+
+
+	if (Fio.file_size(fname_output) == 0) {
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << "/usr/local/magma/magma " << fname_magma << endl;
+		exit(1);
+		}
+#if 0
+	sprintf(cmd, "/usr/local/magma/magma %s", fname_magma);
+	cout << "executing normalizer command in MAGMA" << endl;
+	system(cmd);
+#endif
+
+	cout << "orbit command in MAGMA has finished, written file "
+		<< fname_output << " of size " << Fio.file_size(fname_output) << endl;
+
+
+
+	{
+	ifstream fp(fname_output);
+
+
+	fp >> orbit_length;
+	}
+
 }
+
+
+void magma_interface::orbit_of_matrix_group_on_subspaces(
+	const char *fname_base,
+	int d, int q, int k,
+	int *initial_subspace, int **gens, int nb_gens,
+	int &orbit_length,
+	int verbose_level)
+{
+	char fname_magma[1000];
+	char fname_output[1000];
+	//char cmd[1000];
+	int i, j;
+	combinatorics_domain Combi;
+	file_io Fio;
+
+	sprintf(fname_magma, "%s.magma", fname_base);
+	sprintf(fname_output, "%s.txt", fname_base);
+
+	{
+	ofstream fp(fname_magma);
+
+
+	fp << "G := MatrixGroup< " << d << ", GF(" << q << ") | " << endl;
+	for (i = 0; i < nb_gens; i++) {
+		fp << "[";
+		for (j = 0; j < d * d; j++) {
+			fp << gens[i][j];
+			if (j < d * d - 1) {
+				fp << ",";
+				}
+		}
+		fp << "]";
+		if (i < nb_gens - 1) {
+			fp << ", " << endl;
+			}
+		}
+	fp << " >;" << endl;
+
+	fp << "V := RSpace(G);" << endl;
+	for (i = 0; i < k; i++) {
+		fp << "u" << i << " := V![";
+		for (j = 0; j < d; j++) {
+			fp << initial_subspace[i * d + j];
+			if (j < d - 1) {
+				fp << ",";
+				}
+		}
+		fp << "];" << endl;
+	}
+
+	fp << "W := sub< V | ";
+	for (i = 0; i < k; i++) {
+		fp << "u" << i;
+		if (i < k - 1) {
+			fp << ", ";
+		}
+	}
+	fp << " >;" << endl;
+	fp << "O := Orbit(G,W);" << endl;
+
+
+	fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
+	fp << "printf \"%o\", #O; printf \"\\n\";" << endl;
+	fp << "UnsetOutputFile();" << endl;
+	}
+
+
+	if (Fio.file_size(fname_output) == 0) {
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << "/usr/local/magma/magma " << fname_magma << endl;
+		exit(1);
+		}
+#if 0
+	sprintf(cmd, "/usr/local/magma/magma %s", fname_magma);
+	cout << "executing normalizer command in MAGMA" << endl;
+	system(cmd);
+#endif
+
+	cout << "orbit command in MAGMA has finished, written file "
+		<< fname_output << " of size " << Fio.file_size(fname_output) << endl;
+
+
+
+	{
+	ifstream fp(fname_output);
+
+
+	fp >> orbit_length;
+	}
+
 }
+
+
+
+}}
 

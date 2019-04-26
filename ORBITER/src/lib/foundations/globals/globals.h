@@ -33,6 +33,18 @@ public:
 	void read_permutation_group(const char *fname,
 		int degree, int *&gens, int &nb_gens, int &go,
 		int verbose_level);
+	void orbit_of_matrix_group_on_vector(
+		const char *fname_base,
+		int d, int q,
+		int *initial_vector, int **gens, int nb_gens,
+		int &orbit_length,
+		int verbose_level);
+	void orbit_of_matrix_group_on_subspaces(
+		const char *fname_base,
+		int d, int q, int k,
+		int *initial_subspace, int **gens, int nb_gens,
+		int &orbit_length,
+		int verbose_level);
 };
 
 

@@ -201,82 +201,6 @@ int gl_classes::next(int *Select,
 }
 
 
-void gl_classes::print_matrix_and_centralizer_order_latex(
-		ostream &ost, gl_class_rep *R)
-{
-	int *Mtx;
-	longinteger_object go, co, cl, r, f, g;
-	longinteger_domain D;
-	int *Select_polynomial, *Select_Partition;
-	int i, a, m, p, b;
-	int f_elements_exponential = FALSE;
-	const char *symbol_for_print = "\\alpha";
-	number_theory_domain NT;
-
-	Mtx = NEW_int(k * k);
-
-	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
-	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
-	int_vec_zero(Select_polynomial, Table_of_polynomials->nb_irred);
-	int_vec_zero(Select_Partition, Table_of_polynomials->nb_irred);
-
-	for (i = 0; i < R->type_coding.m; i++) {
-		a = R->type_coding.s_ij(i, 0);
-		m = R->type_coding.s_ij(i, 1);
-		p = R->type_coding.s_ij(i, 2);
-		Select_polynomial[a] = m;
-		Select_Partition[a] = p;
-		}
-
-
-	go.create(1);
-	a = NT.i_power_j(q, k);
-	for (i = 0; i < k; i++) {
-		b = a - NT.i_power_j(q, i);
-		f.create(b);
-		D.mult(go, f, g);
-		g.assign_to(go);
-		}
-
-
-
-	make_matrix_from_class_rep(Mtx, R, 0 /* verbose_level */);
-
-	centralizer_order_Kung(Select_polynomial,
-			Select_Partition, co, 0 /*verbose_level - 2*/);
-	
-	D.integral_division(go, co, cl, r, 0 /* verbose_level */);
-
-
-	ost << "$";
-	for (i = 0; i < R->type_coding.m; i++) {
-		a = R->type_coding.s_ij(i, 0);
-		m = R->type_coding.s_ij(i, 1);
-		p = R->type_coding.s_ij(i, 2);
-		ost << a << "," << m << "," << p;
-		if (i < R->type_coding.m - 1) {
-			ost << ";";
-			}
-		}
-	ost << "$" << endl;
-	ost << "$$" << endl;
-	ost << "\\left[" << endl;
-	F->latex_matrix(ost,
-			f_elements_exponential, symbol_for_print, Mtx, k, k);
-	ost << "\\right]";
-	ost << "_{";
-	ost << co << "}" << endl;
-	ost << "$$" << endl;
-
-	ost << "centralizer order $" << co << "$\\\\";
-	ost << "class size $" << cl << "$\\\\" << endl;
-	ost << endl;
-
-	FREE_int(Select_polynomial);
-	FREE_int(Select_Partition);
-	FREE_int(Mtx);
-}
-
 void gl_classes::make_matrix_from_class_rep(int *Mtx,
 		gl_class_rep *R, int verbose_level)
 {
@@ -773,7 +697,6 @@ void gl_classes::identify_matrix(int *Mtx,
 		gl_class_rep *R, int *Basis, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
 	int *M2;
 	int *M3;
 	//int *Basis;
@@ -786,7 +709,7 @@ void gl_classes::identify_matrix(int *Mtx,
 		cout << "gl_classes::identify_matrix "
 				"k = " << k << " q = " << q << endl;
 		}
-	if (f_vv) {
+	if (f_v) {
 		cout << "gl_classes::identify_matrix "
 				"input matrix=" << endl;
 		int_matrix_print(Mtx, k, k);
@@ -809,7 +732,7 @@ void gl_classes::identify_matrix(int *Mtx,
 		
 	U.characteristic_polynomial(Mtx, k, char_poly, verbose_level - 2);
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "gl_classes::identify_matrix "
 				"The characteristic polynomial is ";
 		U.print_object(char_poly, cout);
@@ -821,27 +744,50 @@ void gl_classes::identify_matrix(int *Mtx,
 			Mtx, M2, k,
 			verbose_level);
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "gl_classes::identify_matrix "
 				"After substitution, the matrix is " << endl;
 		int_matrix_print(M2, k, k);
 		}
 
 
+	if (f_v) {
+		cout << "gl_classes::identify_matrix before factorize_polynomial" << endl;
+		}
 
-	Table_of_polynomials->factor_polynomial(
+	Table_of_polynomials->factorize_polynomial(
 			char_poly, Mult, verbose_level);
+
+	if (f_v) {
+		cout << "gl_classes::identify_matrix after factorize_polynomial" << endl;
+		}
+
 	if (f_v) {
 		cout << "gl_classes::identify_matrix factorization: ";
 		int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
-	identify2(Mtx, char_poly, Mult,
-			Select_partition, Basis, verbose_level);
+	if (f_v) {
+		cout << "gl_classes::identify_matrix before identify2" << endl;
+		}
 
+	identify2(Mtx, char_poly, Mult,
+			Select_partition, Basis,
+			verbose_level);
+
+	if (f_v) {
+		cout << "gl_classes::identify_matrix after identify2" << endl;
+		}
+
+	if (f_v) {
+		cout << "gl_classes::identify_matrix before R->init" << endl;
+		}
 	R->init(Table_of_polynomials->nb_irred,
 			Mult, Select_partition, verbose_level);
+	if (f_v) {
+		cout << "gl_classes::identify_matrix after R->init" << endl;
+		}
 
 
 	
@@ -851,7 +797,7 @@ void gl_classes::identify_matrix(int *Mtx,
 
 	F->mult_matrix_matrix(M2, Basis, M3, k, k, k, 0 /* verbose_level */);
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "gl_classes::identify_matrix B^-1 * A * B = " << endl;
 		int_matrix_print(M3, k, k);
 		cout << endl;
@@ -1439,7 +1385,16 @@ void gl_classes::generators_for_centralizer(
 
 
 
-	Table_of_polynomials->factor_polynomial(char_poly, Mult, verbose_level);
+	if (f_v) {
+		cout << "gl_classes::generators_for_centralizer before factorize_polynomial" << endl;
+		}
+
+	Table_of_polynomials->factorize_polynomial(char_poly, Mult, verbose_level);
+
+	if (f_v) {
+		cout << "gl_classes::generators_for_centralizer after factorize_polynomial" << endl;
+		}
+
 	if (f_v) {
 		cout << "gl_classes::generators_for_centralizer factorization: ";
 		int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
@@ -1449,10 +1404,18 @@ void gl_classes::generators_for_centralizer(
 
 	nb_gens = 0;
 
+	if (f_v) {
+		cout << "gl_classes::generators_for_centralizer "
+				"before centralizer_generators" << endl;
+		}
 	centralizer_generators(
 			Mtx, char_poly, Mult, Select_partition,
 			Basis, Gens, nb_gens, nb_alloc,
-			verbose_level - 2);
+			verbose_level);
+	if (f_v) {
+		cout << "gl_classes::generators_for_centralizer "
+				"after centralizer_generators" << endl;
+		}
 
 	
 	if (f_v) {
@@ -1979,6 +1942,82 @@ void gl_classes::report(ostream &ost, int verbose_level)
 	if (f_v) {
 		cout << "gl_classes::report done" << endl;
 	}
+}
+
+void gl_classes::print_matrix_and_centralizer_order_latex(
+		ostream &ost, gl_class_rep *R)
+{
+	int *Mtx;
+	longinteger_object go, co, cl, r, f, g;
+	longinteger_domain D;
+	int *Select_polynomial, *Select_Partition;
+	int i, a, m, p, b;
+	int f_elements_exponential = FALSE;
+	const char *symbol_for_print = "\\alpha";
+	number_theory_domain NT;
+
+	Mtx = NEW_int(k * k);
+
+	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
+	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
+	int_vec_zero(Select_polynomial, Table_of_polynomials->nb_irred);
+	int_vec_zero(Select_Partition, Table_of_polynomials->nb_irred);
+
+	for (i = 0; i < R->type_coding.m; i++) {
+		a = R->type_coding.s_ij(i, 0);
+		m = R->type_coding.s_ij(i, 1);
+		p = R->type_coding.s_ij(i, 2);
+		Select_polynomial[a] = m;
+		Select_Partition[a] = p;
+		}
+
+
+	go.create(1);
+	a = NT.i_power_j(q, k);
+	for (i = 0; i < k; i++) {
+		b = a - NT.i_power_j(q, i);
+		f.create(b);
+		D.mult(go, f, g);
+		g.assign_to(go);
+		}
+
+
+
+	make_matrix_from_class_rep(Mtx, R, 0 /* verbose_level */);
+
+	centralizer_order_Kung(Select_polynomial,
+			Select_Partition, co, 0 /*verbose_level - 2*/);
+
+	D.integral_division(go, co, cl, r, 0 /* verbose_level */);
+
+
+	ost << "$";
+	for (i = 0; i < R->type_coding.m; i++) {
+		a = R->type_coding.s_ij(i, 0);
+		m = R->type_coding.s_ij(i, 1);
+		p = R->type_coding.s_ij(i, 2);
+		ost << a << "," << m << "," << p;
+		if (i < R->type_coding.m - 1) {
+			ost << ";";
+			}
+		}
+	ost << "$" << endl;
+	ost << "$$" << endl;
+	ost << "\\left[" << endl;
+	F->latex_matrix(ost,
+			f_elements_exponential, symbol_for_print, Mtx, k, k);
+	ost << "\\right]";
+	ost << "_{";
+	ost << co << "}" << endl;
+	ost << "$$" << endl;
+
+	ost << "centralizer order $" << co << "$\\\\";
+	ost << "class size $" << cl << "$\\\\" << endl;
+	ost << endl;
+
+	FREE_int(Select_polynomial);
+	FREE_int(Select_Partition);
+	FREE_int(Mtx);
 }
 
 

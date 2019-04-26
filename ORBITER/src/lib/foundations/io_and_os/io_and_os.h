@@ -219,8 +219,63 @@ public:
 };
 
 // #############################################################################
-// memory.C:
+// mem_object_registry_entry.cpp
 // #############################################################################
+
+//! a class related to mem_object_registry
+
+
+class mem_object_registry_entry {
+public:
+	int time_stamp;
+	void *pointer;
+	int object_type;
+	long int object_n;
+	int object_size_of;
+		// needed for objects of type class
+	const char *extra_type_info;
+	const char *source_file;
+	int source_line;
+
+	mem_object_registry_entry();
+	~mem_object_registry_entry();
+	void null();
+	void set_type_from_string(char *str);
+	void print_type(std::ostream &ost);
+	int size_of();
+	void print(int line);
+	void print_csv(std::ostream &ost, int line);
+};
+
+extern int f_memory_debug;
+extern int memory_debug_verbose_level;
+extern mem_object_registry global_mem_object_registry;
+
+void start_memory_debug();
+void stop_memory_debug();
+
+
+// #############################################################################
+// mem_object_registry.cpp:
+// #############################################################################
+
+
+
+
+#define REGISTRY_SIZE 1000
+#define POINTER_TYPE_INVALID 0
+#define POINTER_TYPE_SMALLint 1
+#define POINTER_TYPE_SMALLpint 2
+#define POINTER_TYPE_int 3
+#define POINTER_TYPE_pint 4
+#define POINTER_TYPE_ppint 5
+#define POINTER_TYPE_char 6
+#define POINTER_TYPE_uchar 7
+#define POINTER_TYPE_pchar 8
+#define POINTER_TYPE_puchar 9
+#define POINTER_TYPE_PVOID 10
+#define POINTER_TYPE_OBJECT 11
+#define POINTER_TYPE_OBJECTS 12
 
 
 
@@ -300,38 +355,6 @@ public:
 	void sort_by_type(int verbose_level);
 	void sort_by_location(int verbose_level);
 };
-
-//! a class related to mem_object_registry
-
-
-class mem_object_registry_entry {
-public:
-	int time_stamp;
-	void *pointer;
-	int object_type;
-	long int object_n;
-	int object_size_of;
-		// needed for objects of type class
-	const char *extra_type_info;
-	const char *source_file;
-	int source_line;
-
-	mem_object_registry_entry();
-	~mem_object_registry_entry();
-	void null();
-	void set_type_from_string(char *str);
-	void print_type(std::ostream &ost);
-	int size_of();
-	void print(int line);
-	void print_csv(std::ostream &ost, int line);
-};
-
-extern int f_memory_debug;
-extern int memory_debug_verbose_level;
-extern mem_object_registry global_mem_object_registry;
-
-void start_memory_debug();
-void stop_memory_debug();
 
 
 
@@ -431,6 +454,7 @@ void bitvector_set_bit(uchar *bitvec, int i);
 int bitvector_s_i(uchar *bitvec, int i);
 // returns 0 or 1
 uint32_t int_vec_hash(int *data, int len);
+uint32_t char_vec_hash(char *data, int len);
 int int_vec_hash_after_sorting(int *data, int len);
 const char *plus_minus_string(int epsilon);
 const char *plus_minus_letter(int epsilon);

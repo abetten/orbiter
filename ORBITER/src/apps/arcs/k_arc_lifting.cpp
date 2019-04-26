@@ -1055,6 +1055,8 @@ void do_arc_lifting(
 		FREE_int(col);
 		FREE_int(Arc);
 		FREE_int(Line_type_after);
+		cout << "before FREE_OBJECT(line_type)" << endl;
+		FREE_int(line_type);
 
 		}
 	else if (f_DLX) {
@@ -1086,6 +1088,7 @@ void do_arc_lifting(
 		if (f_v) {
 			cout << "after solve_all_mckay "
 					"nb_sol = " << nb_sol << endl;
+			cout << "D->sum = " << D->sum << endl;
 			}
 		if (nb_sol) {
 			int *Sol;
@@ -1099,9 +1102,9 @@ void do_arc_lifting(
 			if (f_v) {
 				cout << "before D->get_solutions" << endl;
 				}
-			D->get_solutions(Sol, nb_sol, 0 /* verbose_level */);
+			D->get_solutions(Sol, nb_sol, verbose_level);
 			if (f_v) {
-				cout << "after D->get_solutions" << endl;
+				cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
 				}
 			for (i = 0; i < nb_sol; i++) {
 				for (j = 0; j < D->sum; j++) {
@@ -1136,7 +1139,7 @@ void do_arc_lifting(
 			FREE_int(Sol);
 			}
 		if (f_v) {
-			cout << "after solve_once_mckay" << endl;
+			cout << "after writing the lifted arcs" << endl;
 			}
 		}
 	else {
@@ -1190,13 +1193,16 @@ void do_arc_lifting(
 #endif
 	
 
+	//cout << "before FREE_OBJECT(D)" << endl;
 	FREE_OBJECT(D);
 	//FREE_OBJECT(A_linear);
+	//cout << "before FREE_OBJECT(type_collected)" << endl;
 	FREE_int(type_collected);
+	//cout << "before FREE_OBJECT(Coord)" << endl;
 	FREE_int(Coord);
 
+	//cout << "before FREE_OBJECT(free_points)" << endl;
 	FREE_int(free_points);
-	FREE_int(line_type);
 }
 
 

@@ -363,7 +363,9 @@ void semifield_level_two::init_desired_pivots(int verbose_level)
 		}
 }
 
-void semifield_level_two::conjugacy_class(int c, int verbose_level)
+void semifield_level_two::list_all_elements_is_conjugacy_class(
+		int c, int verbose_level)
+// This function lists all elements in a conjugacy class
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -375,7 +377,8 @@ void semifield_level_two::conjugacy_class(int c, int verbose_level)
 	int rk, cl, r;
 
 	if (f_v) {
-		cout << "semifield_starter::conjugacy_class c=" << c << endl;
+		cout << "semifield_starter::list_all_elements_is_conjugacy_class "
+				"c=" << c << endl;
 		}
 
 	Centralizer_gens = NEW_OBJECT(strong_generators);
@@ -447,7 +450,7 @@ void semifield_level_two::conjugacy_class(int c, int verbose_level)
 	FREE_OBJECT(U);
 	FREE_OBJECT(Centralizer_gens);
 	if (f_v) {
-		cout << "semifield_level_two::conjugacy_class done" << endl;
+		cout << "semifield_level_two::list_all_elements_is_conjugacy_class done" << endl;
 		}
 }
 
@@ -460,11 +463,13 @@ void semifield_level_two::compute_level_two(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "semifield_level_two::compute_level_two before downstep" << endl;
+		cout << "semifield_level_two::compute_level_two "
+				"before downstep" << endl;
 		}
 	downstep(verbose_level);
 	if (f_v) {
-		cout << "semifield_level_two::compute_level_two after downstep" << endl;
+		cout << "semifield_level_two::compute_level_two "
+				"after downstep" << endl;
 		}
 
 	if (f_v) {
@@ -1006,6 +1011,15 @@ void semifield_level_two::upstep(int verbose_level)
 void semifield_level_two::setup_stabilizer(
 		strong_generators *Sk, strong_generators *Sn,
 		int verbose_level)
+// Embeds all generators from Sk in GL(k,q) into GL(n,k)
+// by repeating each matrix A twice on the diagonal
+// to form
+// diag(A,A).
+// The new group is isomorphic to the old one,
+// but has twice the dimension.
+// This function is used in upstep
+// to compute the stabilizer of the flag
+// from the original generators of the centralizer.
 {
 	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
@@ -1056,6 +1070,7 @@ void semifield_level_two::setup_stabilizer(
 void semifield_level_two::trace(int ext, int coset,
 		int a, int b, int &f_automorphism, int *&Aut,
 		int verbose_level)
+// a and b are the ranks of two matrices whose span we consider.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1894,11 +1909,46 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 
 }
 
+void semifield_level_two::get_basis_and_pivots(int po,
+		int *basis, int *pivots, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int ext, idx, a;
+
+
+	if (f_v) {
+		cout << "semifield_level_two::get_basis_and_pivots"
+				"pivots po=" << po << endl;
+		}
+
+	F->identity_matrix(basis, k);
+
+	ext = up_orbit_rep[po];
+	idx = down_orbit_classes[ext * 2 + 0];
+	a = class_rep_rank[idx];
+
+
+	SC->matrix_unrank(a, basis + k2);
+
+	pivots[0] = 0;
+	pivots[1] = k;
+
+
+	if (f_v) {
+		cout << "semifield_level_two::get_basis_and_pivots"
+				"pivots po=" << po << " done" << endl;
+		}
+}
+
 void semifield_level_two::print_representatives(
 	ofstream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, ext, a, b, idx;
+
+
 	if (f_v) {
 		cout << "semifield_level_two::print_representatives" << endl;
 	}
@@ -1916,6 +1966,10 @@ void semifield_level_two::print_representatives(
 
 		F->identity_matrix(Mtx_Id, k);
 
+		if (f_v) {
+			cout << "semifield_level_two::print_representatives before Conjugacy classes" << endl;
+		}
+
 		ost << "\\section{Conjugacy classes}" << endl;
 
 		ost << "There are " << nb_classes << " conjugacy classes:\\\\" << endl;
@@ -1930,7 +1984,11 @@ void semifield_level_two::print_representatives(
 
 			a = class_rep_rank[i];
 			b = class_rep_plus_I_rank[i];
-			ost << "Representative of class " << i << " / " << nb_orbits
+			if (f_v) {
+				cout << "Representative of class " << i << " / " << nb_classes
+						<< " is matrix " << a << ":\\\\" << endl;
+			}
+			ost << "Representative of class " << i << " / " << nb_classes
 					<< " is matrix " << a << ":\\\\" << endl;
 			SC->matrix_unrank(a, Mtx);
 			ost << "$$" << endl;
@@ -1950,16 +2008,27 @@ void semifield_level_two::print_representatives(
 			int *down_orbit_of_class;
 #endif
 
+			ost << "$A+I$ belongs to class " << R_i_plus_I_class_idx[i] << "\\\\" << endl;
+			ost << "down\\_orbit\\_of\\_class = " << down_orbit_of_class[i] << "\\\\" << endl;
+
+#if 0
 			longinteger_object go;
 
+			if (f_v) {
+				cout << "working on centralizer" << endl;
+			}
 			Centralizer_gens[i].group_order(go);
 			ost << "Centralizer has order " << go << "\\\\" << endl;
 			Centralizer_gens[i].print_generators_tex(ost);
-			ost << "$A+I$ belongs to class " << R_i_plus_I_class_idx[i] << "\\\\" << endl;
-			ost << "down\\_orbit\\_of\\_class = " << down_orbit_of_class[i] << "\\\\" << endl;
+#endif
 		}
 		ost << "\\end{enumerate}" << endl;
 		ost << endl;
+
+		if (f_v) {
+			cout << "semifield_level_two::print_representatives before Orbits at level 2" << endl;
+		}
+
 
 		ost << "\\section{Orbits at level 2}" << endl;
 
@@ -2022,6 +2091,9 @@ void semifield_level_two::print_representatives(
 		}
 		ost << "\\end{enumerate}" << endl;
 		ost << endl;
+		if (f_v) {
+			cout << "semifield_level_two::print_representatives after Orbits at level 2" << endl;
+		}
 
 
 		FREE_int(Mtx_Id);

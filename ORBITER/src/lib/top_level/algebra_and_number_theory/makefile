@@ -10,9 +10,9 @@ MODULES = \
 	factor_group.o \
 	semifield_classify.o \
 	semifield_downstep_node.o \
+	semifield_flag_orbit_node.o \
 	semifield_level_two.o \
 	semifield_lifting.o \
-	semifield_middle_layer_node.o \
 	semifield_trace.o \
 	young.o 
 

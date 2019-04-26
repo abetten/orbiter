@@ -1211,12 +1211,6 @@ public:
 	int q;
 	finite_field *F;
 	table_of_irreducible_polynomials *Table_of_polynomials;
-#if 0
-	int nb_irred;
-	int *Nb_irred;
-	int *First_irred;
-	int **Tables;
-#endif
 	int *Nb_part;
 	int **Partitions;
 	//int *Degree;
@@ -1233,8 +1227,6 @@ public:
 		int verbose_level);
 	int first(int *Select, int *Select_partition, int verbose_level);
 	int next(int *Select, int *Select_partition, int verbose_level);
-	void print_matrix_and_centralizer_order_latex(std::ostream &ost,
-		gl_class_rep *R);
 	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R, 
 		int verbose_level);
 	void make_matrix_in_rational_normal_form(
@@ -1288,6 +1280,8 @@ public:
 	int find_class_rep(gl_class_rep *Reps, int nb_reps, 
 		gl_class_rep *R, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+	void print_matrix_and_centralizer_order_latex(std::ostream &ost,
+		gl_class_rep *R);
 };
 
 // #############################################################################
@@ -1977,7 +1971,7 @@ public:
 			int *Select, int verbose_level);
 	int select_polynomial_next(
 			int *Select, int verbose_level);
-	void factor_polynomial(unipoly_object &char_poly, int *Mult,
+	void factorize_polynomial(unipoly_object &char_poly, int *Mult,
 		int verbose_level);
 };
 

@@ -403,9 +403,16 @@ int main(int argc, const char **argv)
 	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 
 	cout << "before S.init" << endl;
-	S.init(argc, argv, order, n, k, F, prefix,
+	S.init(argc, argv, order, n, k, F,
 			4 /* MINIMUM(verbose_level - 1, 2) */);
 	cout << "after S.init" << endl;
+
+	cout << "before S.init_poset_classification" << endl;
+	S.init_poset_classification(
+			argc, argv,
+			prefix,
+			verbose_level);
+	cout << "after S.init_poset_classification" << endl;
 
 	if (f_compute) {
 		cout << "before S.compute_orbits" << endl;

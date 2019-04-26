@@ -105,7 +105,7 @@ class semifield_classify;
 class semifield_level_two;
 class semifield_lifting;
 class semifield_downstep_node;
-class semifield_middle_layer_node;
+class semifield_flag_orbit_node;
 class semifield_trace;
 
 

@@ -8,15 +8,6 @@
 
 
 
-/*
- * semifield_main.cpp
- *
- *  Created on: Apr 17, 2019
- *      Author: betten
- */
-
-
-
 
 #include "orbiter.h"
 
@@ -51,7 +42,7 @@ int main(int argc, const char **argv)
 	int f_report = FALSE;
 
 
-	f_memory_debug = TRUE;
+	start_memory_debug();
 
 	test_typedefs();
 
@@ -326,26 +317,40 @@ int main(int argc, const char **argv)
 
 	{
 	finite_field *F;
-	semifield_classify SC;
-	semifield_level_two L2;
+	semifield_classify *SC;
+	semifield_level_two *L2;
+	semifield_lifting *L3;
 
 
 	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 
-	cout << "before SC.init" << endl;
-	SC.init(argc, argv, order, n, k, F, prefix,
+	SC = NEW_OBJECT(semifield_classify);
+	cout << "before SC->init" << endl;
+	SC->init(argc, argv, order, n, k, F,
 			4 /* MINIMUM(verbose_level - 1, 2) */);
-	cout << "after SC.init" << endl;
+	cout << "after SC->init" << endl;
 
-	cout << "before L2.init" << endl;
-	L2.init(&SC, verbose_level);
-	cout << "after L2.init" << endl;
+	L2 = NEW_OBJECT(semifield_level_two);
+	cout << "before L2->init" << endl;
+	L2->init(SC, verbose_level);
+	cout << "after L2->init" << endl;
 
 
-	cout << "before L2.compute_level_two" << endl;
-	L2.compute_level_two(verbose_level);
-	cout << "after L2.compute_level_two" << endl;
+	cout << "before L2->compute_level_two" << endl;
+	L2->compute_level_two(verbose_level);
+	cout << "after L2->compute_level_two" << endl;
+
+
+	L3 = NEW_OBJECT(semifield_lifting);
+	cout << "before L3->compute_level_three" << endl;
+	L3->init_level_three(L2, verbose_level);
+	cout << "after L3->compute_level_three" << endl;
+
+	cout << "before L3->compute_level_three" << endl;
+	L3->compute_level_three(verbose_level);
+	cout << "after L3->compute_level_three" << endl;
+
 
 	if (f_report) {
 
@@ -360,15 +365,30 @@ int main(int argc, const char **argv)
 			L.head_easy(fp);
 
 
-			L2.C->report(fp, verbose_level);
-			L2.print_representatives(fp, verbose_level - 2);
+			cout << "before L2->C->report" << endl;
+			L2->C->report(fp, verbose_level);
+			cout << "before L2->print_representatives" << endl;
+			L2->print_representatives(fp, verbose_level);
+			cout << "after L2->print_representatives" << endl;
 
 			L.foot(fp);
 		}
 		cout << "after report" << endl;
 	}
 
+	cout << "before global_mem_object_registry.dump_to_csv_file" << endl;
+	global_mem_object_registry.dump_to_csv_file("memory.csv");
+	cout << "after global_mem_object_registry.dump_to_csv_file" << endl;
 
+	cout << "before FREE_OBJECT(L2)" << endl;
+	FREE_OBJECT(L2);
+	cout << "before FREE_OBJECT(SC)" << endl;
+	FREE_OBJECT(SC);
+	cout << "before FREE_OBJECT(F)" << endl;
+	FREE_OBJECT(F);
+	cout << "before leaving scope" << endl;
+	}
+	cout << "after leaving scope" << endl;
 #if 0
 	else if (f_break_symmetry) {
 		S.init_semifield_starter(f_orbits_light, verbose_level);
@@ -504,11 +524,6 @@ int main(int argc, const char **argv)
 		}
 #endif
 
-	cout << "before FREE_OBJECT(F)" << endl;
-	FREE_OBJECT(F);
-	cout << "before leaving scope" << endl;
-	}
-	cout << "after leaving scope" << endl;
 
 //the_end:
 

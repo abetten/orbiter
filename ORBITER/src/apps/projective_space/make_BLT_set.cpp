@@ -3,6 +3,9 @@
 // Anton Betten
 //
 // started:  May 9, 2011
+//
+// outdated. Use blt/create_BLT_set_main.out
+//
 
 
 
@@ -26,7 +29,8 @@ void print_usage();
 void print_usage()
 {
 	cout << "usage: make_BLT_set.out [options] <q> <k>" << endl;
-	cout << "Write the file BLT_<q>_<k>.txt containing the k-th BLT set in Q(4,q)" << endl;
+	cout << "Write the file BLT_<q>_<k>.txt "
+			"containing the k-th BLT set in Q(4,q)" << endl;
 	cout << "where options can be:" << endl;
 	cout << "-v <k>" << endl;
 	cout << "   verbose level k" << endl;
