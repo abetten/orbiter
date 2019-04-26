@@ -44,7 +44,7 @@ semifield_downstep_node::~semifield_downstep_node()
 
 void semifield_downstep_node::init(
 		semifield_lifting *SL, int level, int orbit_number,
-		int *Candidates, int nb_candidates,
+		long int *Candidates, int nb_candidates,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -91,7 +91,7 @@ void semifield_downstep_node::init(
 		cout << "semifield_downstep_node::init "
 				"sorting the " << nb_candidates << " candidates" << endl;
 		}
-	Sorting.int_vec_heapsort(Candidates, nb_candidates);
+	Sorting.lint_vec_heapsort(Candidates, nb_candidates);
 	if (f_vv) {
 		cout << "downstep_node::init "
 				"sorting done" << endl;
@@ -104,7 +104,7 @@ void semifield_downstep_node::init(
 		cout << "semifield_downstep_node::init "
 				"initializing on_cosets:" << endl;
 		}
-	on_cosets->init(
+	on_cosets->init_lint(
 		nb_candidates, Candidates,
 		SC->AS,
 		F,
@@ -221,7 +221,7 @@ int semifield_downstep_node::find_point(int a)
 	int idx;
 	sorting Sorting;
 
-	if (!Sorting.int_vec_search(Candidates, nb_candidates, a, idx)) {
+	if (!Sorting.lint_vec_search(Candidates, nb_candidates, a, idx)) {
 		cout << "semifield_downstep_node::find_point point " << a
 				<< " cannot be found in the Candidates array" << endl;
 		//cout << "The " << nb_candidates << " Candidates:" << endl;
@@ -238,7 +238,7 @@ int semifield_downstep_node::find_point(int a)
 // #############################################################################
 
 
-void coset_action_unrank_point(int *v, int a, void *data)
+void coset_action_unrank_point(int *v, long int a, void *data)
 {
 	semifield_downstep_node *DN = (semifield_downstep_node *) data;
 	semifield_classify *SC = DN->SC;
@@ -246,7 +246,7 @@ void coset_action_unrank_point(int *v, int a, void *data)
 	SC->matrix_unrank(a, v);
 }
 
-int coset_action_rank_point(int *v, void *data)
+long int coset_action_rank_point(int *v, void *data)
 {
 	semifield_downstep_node *DN = (semifield_downstep_node *) data;
 	semifield_classify *SC = DN->SC;

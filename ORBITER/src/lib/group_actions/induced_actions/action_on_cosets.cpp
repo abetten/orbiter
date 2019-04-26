@@ -68,6 +68,7 @@ void action_on_cosets::init(int nb_points, int *Points,
 				<< " dimension_of_subspace=" << dimension_of_subspace
 				<< " n=" << n << endl;
 		}
+	f_lint = FALSE;
 	action_on_cosets::nb_points = nb_points;
 	action_on_cosets::Points = Points;
 	action_on_cosets::A_linear = A_linear;
@@ -93,6 +94,53 @@ void action_on_cosets::init(int nb_points, int *Points,
 		}
 }
 
+void action_on_cosets::init_lint(int nb_points, long int *Points,
+	action *A_linear,
+	finite_field *F,
+	int dimension_of_subspace,
+	int n,
+	int *subspace_basis,
+	int *base_cols,
+	void (*unrank_point)(int *v, long int a, void *data),
+	long int (*rank_point)(int *v, void *data),
+	void *rank_unrank_data,
+	int verbose_level)
+{
+	int f_v = FALSE;
+	int i;
+
+	if (f_v) {
+		cout << "action_on_cosets::init_lint nb_points=" << nb_points
+				<< " dimension_of_subspace=" << dimension_of_subspace
+				<< " n=" << n << endl;
+		}
+
+	f_lint = TRUE;
+	action_on_cosets::nb_points = nb_points;
+	action_on_cosets::lint_Points = Points;
+	action_on_cosets::A_linear = A_linear;
+	action_on_cosets::F = F;
+	action_on_cosets::dimension_of_subspace = dimension_of_subspace;
+	action_on_cosets::n = n;
+	action_on_cosets::subspace_basis = subspace_basis;
+	action_on_cosets::base_cols = base_cols;
+	action_on_cosets::unrank_point_lint = unrank_point;
+	action_on_cosets::rank_point_lint = rank_point;
+	action_on_cosets::rank_unrank_data = rank_unrank_data;
+	v1 = NEW_int(n);
+	v2 = NEW_int(n);
+	for (i = 0; i < nb_points - 1; i++) {
+		if (Points[i] >= Points[i + 1]) {
+			cout << "action_on_cosets::init_lint the array Points[] "
+					"is not sorted increasingly" << endl;
+			exit(1);
+			}
+		}
+	if (f_v) {
+		cout << "action_on_cosets::init done" << endl;
+		}
+}
+
 void action_on_cosets::reduce_mod_subspace(int *v, int verbose_level)
 {
 	F->reduce_mod_subspace(dimension_of_subspace, n, 
@@ -104,7 +152,7 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int r, idx;
+	int idx;
 	sorting Sorting;
 	
 	if (f_v) {
@@ -115,7 +163,12 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 				"i = " << i << " i >= nb_points" << endl;
 		exit(1);
 		}
-	(*unrank_point)(v1, Points[i], rank_unrank_data);
+	if (f_lint) {
+		(*unrank_point_lint)(v1, lint_Points[i], rank_unrank_data);
+	}
+	else {
+		(*unrank_point)(v1, Points[i], rank_unrank_data);
+	}
 	if (f_vv) {
 		cout << "action_on_cosets::compute_image after unrank:";
 		int_vec_print(cout, v1, n);
@@ -140,17 +193,34 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
+	if (f_lint) {
+		long int R;
 
-	r = (*rank_point)(v2, rank_unrank_data);
-	if (f_vv) {
-		cout << "action_on_cosets::compute_image after "
-				"rank, r = " << r << endl;
-		}
-	if (!Sorting.int_vec_search(Points, nb_points, r, idx)) {
-		cout << "action_on_cosets::compute_image image "
-				<< r << " not found in list pf points" << endl;
-		exit(1);
-		}
+		R = (*rank_point_lint)(v2, rank_unrank_data);
+		if (f_vv) {
+			cout << "action_on_cosets::compute_image after "
+					"rank, R = " << R << endl;
+			}
+		if (!Sorting.lint_vec_search(lint_Points, nb_points, R, idx)) {
+			cout << "action_on_cosets::compute_image image "
+					<< R << " not found in list of points" << endl;
+			exit(1);
+			}
+	}
+	else {
+		int r;
+
+		r = (*rank_point)(v2, rank_unrank_data);
+		if (f_vv) {
+			cout << "action_on_cosets::compute_image after "
+					"rank, r = " << r << endl;
+			}
+		if (!Sorting.int_vec_search(Points, nb_points, r, idx)) {
+			cout << "action_on_cosets::compute_image image "
+					<< r << " not found in list of points" << endl;
+			exit(1);
+			}
+	}
 	if (f_v) {
 		cout << "action_on_cosets::compute_image image "
 				"of " << i << " is " << idx << endl;

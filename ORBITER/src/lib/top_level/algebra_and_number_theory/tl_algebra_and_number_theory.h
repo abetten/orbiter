@@ -133,9 +133,9 @@ public:
 	int test_partial_semifield(
 			int *Basis, int n, int verbose_level);
 	void test_rank_unrank();
-	void matrix_unrank(int rk, int *Mtx); // long int
-	int matrix_rank(int *Mtx); // long int
-	int matrix_rank_without_first_column(int *Mtx);
+	void matrix_unrank(long int rk, int *Mtx);
+	long int matrix_rank(int *Mtx);
+	long int matrix_rank_without_first_column(int *Mtx);
 	void basis_print(int *Mtx, int sz);
 	void basis_print_numeric(int *Rk, int sz);
 	void matrix_print(int *Mtx);
@@ -148,9 +148,9 @@ public:
 		int *basis_in, int *basis_out,
 		int first, int last_plus_one, int verbose_level);
 	void candidates_classify_by_first_column(
-		int *Input_set, int input_set_sz,
+		long int *Input_set, int input_set_sz,
 		int window_bottom, int window_size,
-		int **&Set, int *&Set_sz, int &Nb_sets,
+		long int **&Set, int *&Set_sz, int &Nb_sets,
 		int verbose_level);
 	void make_fname_candidates_at_level_two_orbit(
 		char *fname, int orbit);
@@ -200,8 +200,8 @@ public:
 	int *Basis, *Mtx, *Mtx_Id, *Mtx_2, *Elt, *Elt2;
 
 	// the following arrays are all [nb_classes]
-	int *class_rep_rank; // long int
-	int *class_rep_plus_I_rank; // long int
+	long int *class_rep_rank;
+	long int *class_rep_plus_I_rank;
 	int **class_rep_plus_I_Basis;
 	int **class_rep_plus_I_Basis_inv;
 	int *R_i_plus_I_class_idx;
@@ -231,7 +231,7 @@ public:
 
 	gl_class_rep *R1, *R2;
 
-	int **Candidates; // long int
+	long int **Candidates;
 		// candidates for the generator matrix,
 		// [nb_orbits]
 	int *Nb_candidates;
@@ -252,7 +252,7 @@ public:
 			strong_generators *Sk, strong_generators *Sn,
 			int verbose_level);
 	void trace(int ext, int coset,
-			int a, int b, int &f_automorphism, int *&Aut,
+			long int a, long int b, int &f_automorphism, int *&Aut,
 			int verbose_level);
 	void multiply_to_the_right(
 			int *ELT1, int *Mtx, int *ELT2, int *ELT3,
@@ -265,7 +265,8 @@ public:
 		// After this, ELT1 * ELT2 will be stored in ELT3
 	void compute_candidates_at_level_two_case(
 		int orbit,
-		int *&Candidates, int &nb_candidates, int verbose_level);
+		long int *&Candidates, int &nb_candidates,
+		int verbose_level);
 	void allocate_candidates_at_level_two(
 			int verbose_level);
 	int test_if_file_exists_candidates_at_level_two_case(
@@ -273,13 +274,13 @@ public:
 	void find_all_candidates_at_level_two(
 			int verbose_level);
 	void read_candidates_at_level_two_case(
-		int *&Candidates, int &Nb_candidates, int orbit,
+		long int *&Candidates, int &Nb_candidates, int orbit,
 		int verbose_level);
 	void write_candidates_at_level_two_case(
-		int *Candidates, int Nb_candidates, int orbit,
+		long int *Candidates, int Nb_candidates, int orbit,
 		int verbose_level);
 	void read_candidates_at_level_two_by_type(
-			set_of_sets *&Candidates_by_type, int orbit,
+			set_of_sets_lint *&Candidates_by_type, int orbit,
 			int verbose_level);
 	void get_basis_and_pivots(int po,
 			int *basis, int *pivots, int verbose_level);
@@ -312,7 +313,7 @@ public:
 	const char *prefix;
 
 	strong_generators *Prev_stabilizer_gens;
-	int **Candidates; // long int
+	long int **Candidates;
 		// candidates for the generator matrix,
 		// [nb_orbits]
 	int *Nb_candidates;
@@ -335,7 +336,7 @@ public:
 	int *Po; // [nb_orbits]
 	int *So; // [nb_orbits]
 	int *Mo; // [nb_orbits]
-	int *Pt; // [nb_orbits]
+	long int *Pt; // [nb_orbits]
 	strong_generators *Stabilizer_gens; // [nb_orbits]
 
 	semifield_lifting();
@@ -367,7 +368,6 @@ public:
 		int level, int orbit_idx,
 		int verbose_level);
 	void trace_very_general(
-		//int cur_level,
 		int *input_basis, int basis_sz,
 		int *basis_after_trace, int *transporter,
 		int &trace_po, int &trace_so,
@@ -397,7 +397,7 @@ public:
 	int level;
 	int orbit_number;
 
-	int *Candidates; // long int
+	long int *Candidates;
 	int nb_candidates;
 
 	int *subspace_basis;
@@ -415,7 +415,7 @@ public:
 	void null();
 	void freeself();
 	void init(semifield_lifting *SL, int level, int orbit_number,
-		int *Candidates, int nb_candidates,
+		long int *Candidates, int nb_candidates,
 		int verbose_level);
 	int find_point(int a);
 #if 0
@@ -429,8 +429,8 @@ public:
 };
 
 // semifield_downstep_node.cpp:
-void coset_action_unrank_point(int *v, int a, void *data);
-int coset_action_rank_point(int *v, void *data);
+void coset_action_unrank_point(int *v, long int a, void *data);
+long int coset_action_rank_point(int *v, void *data);
 
 
 // #############################################################################
@@ -445,7 +445,7 @@ public:
 	int downstep_primary_orbit;
 	int downstep_secondary_orbit;
 	int pt_local;
-	int pt; // long int
+	long int pt;
 	int downstep_orbit_len;
 	int f_long_orbit;
 	int upstep_orbit; // if !f_fusion_node
@@ -461,7 +461,7 @@ public:
 	void null();
 	void freeself();
 	void init(int downstep_primary_orbit, int downstep_secondary_orbit,
-		int pt_local, int pt, int downstep_orbit_len, int f_long_orbit,
+		int pt_local, long int pt, int downstep_orbit_len, int f_long_orbit,
 		int verbose_level);
 	void group_order(longinteger_object &go);
 	int group_order_as_int();

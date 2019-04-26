@@ -194,6 +194,7 @@ typedef unsigned int uint_8;
 
 
 typedef int *pint;
+typedef long int *plint;
 typedef int **ppint;
 typedef short SHORT;
 typedef SHORT *PSHORT;
@@ -348,10 +349,13 @@ class sorting;
 class coding_theory_domain;
 class file_io;
 class table_of_irreducible_polynomials;
+class set_of_sets_lint;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
 #define NEW_pint(n) global_mem_object_registry.allocate_pint(n, __FILE__, __LINE__)
+#define NEW_lint(n) global_mem_object_registry.allocate_lint(n, __FILE__, __LINE__)
+#define NEW_plint(n) global_mem_object_registry.allocate_plint(n, __FILE__, __LINE__)
 #define NEW_ppint(n) global_mem_object_registry.allocate_ppint(n, __FILE__, __LINE__)
 #define NEW_char(n) global_mem_object_registry.allocate_char(n, __FILE__, __LINE__)
 #define NEW_uchar(n) global_mem_object_registry.allocate_uchar(n, __FILE__, __LINE__)
@@ -362,6 +366,8 @@ class table_of_irreducible_polynomials;
 #define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, sizeof(type), #type, __FILE__, __LINE__)
 #define FREE_int(p) global_mem_object_registry.free_int(p, __FILE__, __LINE__)
 #define FREE_pint(p) global_mem_object_registry.free_pint(p, __FILE__, __LINE__)
+#define FREE_lint(p) global_mem_object_registry.free_lint(p, __FILE__, __LINE__)
+#define FREE_plint(p) global_mem_object_registry.free_plint(p, __FILE__, __LINE__)
 #define FREE_ppint(p) global_mem_object_registry.free_ppint(p, __FILE__, __LINE__)
 #define FREE_char(p) global_mem_object_registry.free_char(p, __FILE__, __LINE__)
 #define FREE_uchar(p) global_mem_object_registry.free_uchar(p, __FILE__, __LINE__)
@@ -373,6 +379,8 @@ class table_of_irreducible_polynomials;
 #else
 #define NEW_int(n) new int[n]
 #define NEW_pint(n) new pint[n]
+#define NEW_lint(n) new long int[n]
+#define NEW_lint(n) new (long int *)[n]
 #define NEW_ppint(n) new ppint[n]
 #define NEW_char(n) new char[n]
 #define NEW_uchar(n) new uchar[n]
@@ -383,6 +391,8 @@ class table_of_irreducible_polynomials;
 #define NEW_OBJECTS(type, n) new type[n]
 #define FREE_int(p) delete [] p
 #define FREE_pint(p) delete [] p
+#define FREE_lint(p) delete [] p
+#define FREE_plint(p) delete [] p
 #define FREE_ppint(p) delete [] p
 #define FREE_char(p) delete [] p
 #define FREE_uchar(p) delete [] p

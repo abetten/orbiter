@@ -262,14 +262,18 @@ public:
 		// to be used if a vector v[len] 
 		// is reduced modulo a subspace
 	
+	int f_lint;
 	int nb_points;
 	int *Points; // ordered list of point ranks
+	long int *lint_Points; // ordered list of point ranks
 
 	int *v1;
 	int *v2;
 	
 	void (*unrank_point)(int *v, int a, void *data);
 	int (*rank_point)(int *v, void *data);
+	void (*unrank_point_lint)(int *v, long int a, void *data);
+	long int (*rank_point_lint)(int *v, void *data);
 	void *rank_unrank_data;
 
 	action_on_cosets();
@@ -286,6 +290,17 @@ public:
 		void (*unrank_point)(int *v, int a, void *data), 
 		int (*rank_point)(int *v, void *data), 
 		void *rank_unrank_data, 
+		int verbose_level);
+	void init_lint(int nb_points, long int *Points,
+		action *A_linear,
+		finite_field *F,
+		int dimension_of_subspace,
+		int n,
+		int *subspace_basis,
+		int *base_cols,
+		void (*unrank_point)(int *v, long int a, void *data),
+		long int (*rank_point)(int *v, void *data),
+		void *rank_unrank_data,
 		int verbose_level);
 	void reduce_mod_subspace(int *v, int verbose_level);
 	int compute_image(int *Elt, int i, int verbose_level);

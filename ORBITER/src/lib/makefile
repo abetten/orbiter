@@ -71,6 +71,7 @@ MODULES= \
 		foundations/data_structures/int_vector.o \
 		foundations/data_structures/page_storage.o \
 		foundations/data_structures/partitionstack.o \
+		foundations/data_structures/set_of_sets_lint.o \
 		foundations/data_structures/set_of_sets.o \
 		foundations/data_structures/sorting.o \
 		foundations/data_structures/spreadsheet.o \

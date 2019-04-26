@@ -451,6 +451,36 @@ class partitionstack {
 };
 
 // #############################################################################
+// set_of_sets_lint.C:
+// #############################################################################
+
+//! set of sets with entries over long int
+
+
+class set_of_sets_lint {
+
+public:
+
+	long int underlying_set_size;
+	int nb_sets;
+	long int **Sets;
+	int *Set_size;
+
+
+	set_of_sets_lint();
+	~set_of_sets_lint();
+	void null();
+	void freeself();
+	void init(long int underlying_set_size,
+			int nb_sets, long int **Pts, int *Sz, int verbose_level);
+	void init_basic(long int underlying_set_size,
+			int nb_sets, int *Sz, int verbose_level);
+};
+
+
+
+
+// #############################################################################
 // set_of_sets.C:
 // #############################################################################
 
@@ -547,6 +577,7 @@ public:
 int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);
 void set_of_sets_swap_func(void *data, int i, int j, void *extra_data);
 
+
 // #############################################################################
 // sorting.C:
 // #############################################################################
@@ -574,6 +605,9 @@ public:
 		int &used_length, int &alloc_length, int a, int verbose_level);
 	void int_vec_append_and_reallocate_if_necessary(int *&vec,
 		int &used_length, int &alloc_length, int a, int verbose_level);
+	void lint_vec_append_and_reallocate_if_necessary(long int *&vec,
+			int &used_length, int &alloc_length, long int a,
+			int verbose_level);
 	int int_vec_is_zero(int *v, int len);
 	int test_if_sets_are_equal(int *set1, int *set2, int set_size);
 	void test_if_set(int *set, int set_size);
@@ -607,6 +641,11 @@ public:
 	int int_vec_search_and_insert_if_necessary(int *v, int &len, int a);
 	int int_vec_search_and_remove_if_found(int *v, int &len, int a);
 	int int_vec_search(int *v, int len, int a, int &idx);
+		// This function finds the last occurence of the element a.
+		// If a is not found, it returns in idx the position
+		// where it should be inserted if
+		// the vector is assumed to be in increasing order.
+	int lint_vec_search(long int *v, int len, long int a, int &idx);
 		// This function finds the last occurence of the element a.
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
@@ -658,8 +697,10 @@ public:
 		// where it should be inserted if
 		// the vector is assumed to be in increasing order.
 	void int_vec_heapsort(int *v, int len);
+	void lint_vec_heapsort(long int *v, int len);
 	void int_vec_heapsort_with_log(int *v, int *w, int len);
 	void heapsort_make_heap(int *v, int len);
+	void lint_heapsort_make_heap(long int *v, int len);
 	void heapsort_make_heap_with_log(int *v, int *w, int len);
 	void Heapsort_make_heap(void *v, int len, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
@@ -668,6 +709,7 @@ public:
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
 	void heapsort_sift_down(int *v, int start, int end);
+	void lint_heapsort_sift_down(long int *v, int start, int end);
 	void heapsort_sift_down_with_log(int *v, int *w, int start, int end);
 	void Heapsort_sift_down(void *v, int start, int end, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
@@ -676,6 +718,7 @@ public:
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
 	void heapsort_swap(int *v, int i, int j);
+	void lint_heapsort_swap(long int *v, int i, int j);
 	void Heapsort_swap(void *v, int i, int j, int entry_size_in_chars);
 	void find_points_by_multiplicity(int *data, int data_sz, int multiplicity,
 		int *&pts, int &nb_pts);

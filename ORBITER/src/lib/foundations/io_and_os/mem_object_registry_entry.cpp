@@ -50,30 +50,42 @@ void mem_object_registry_entry::null()
 void mem_object_registry_entry::set_type_from_string(char *str)
 {
 	if (strcmp(str, "int") == 0) {
-		object_type = POINTER_TYPE_SMALLint;
-	} else if (strcmp(str, "pint") == 0) {
-		object_type = POINTER_TYPE_SMALLpint;
-	} else if (strcmp(str, "int") == 0) {
 		object_type = POINTER_TYPE_int;
-	} else if (strcmp(str, "pint") == 0) {
+	}
+	else if (strcmp(str, "pint") == 0) {
 		object_type = POINTER_TYPE_pint;
-	} else if (strcmp(str, "ppint") == 0) {
+	}
+	else if (strcmp(str, "lint") == 0) {
+		object_type = POINTER_TYPE_lint;
+	}
+	else if (strcmp(str, "plint") == 0) {
+		object_type = POINTER_TYPE_plint;
+	}
+	else if (strcmp(str, "ppint") == 0) {
 		object_type = POINTER_TYPE_ppint;
-	} else if (strcmp(str, "char") == 0) {
+	}
+	else if (strcmp(str, "char") == 0) {
 		object_type = POINTER_TYPE_char;
-	} else if (strcmp(str, "uchar") == 0) {
+	}
+	else if (strcmp(str, "uchar") == 0) {
 		object_type = POINTER_TYPE_uchar;
-	} else if (strcmp(str, "pchar") == 0) {
+	}
+	else if (strcmp(str, "pchar") == 0) {
 		object_type = POINTER_TYPE_pchar;
-	} else if (strcmp(str, "puchar") == 0) {
+	}
+	else if (strcmp(str, "puchar") == 0) {
 		object_type = POINTER_TYPE_puchar;
-	} else if (strcmp(str, "pvoid") == 0) {
+	}
+	else if (strcmp(str, "pvoid") == 0) {
 		object_type = POINTER_TYPE_PVOID;
-	} else if (strcmp(str, "OBJECT") == 0) {
+	}
+	else if (strcmp(str, "OBJECT") == 0) {
 		object_type = POINTER_TYPE_OBJECT;
-	} else if (strcmp(str, "OBJECTS") == 0) {
+	}
+	else if (strcmp(str, "OBJECTS") == 0) {
 		object_type = POINTER_TYPE_OBJECTS;
-	} else {
+	}
+	else {
 		object_type = POINTER_TYPE_INVALID;
 	}
 }
@@ -83,17 +95,17 @@ void mem_object_registry_entry::print_type(ostream &ost)
 	if (object_type == POINTER_TYPE_INVALID) {
 		ost << "invalid entry";
 		}
-	if (object_type == POINTER_TYPE_SMALLint) {
-		ost << "int";
-		}
-	else if (object_type == POINTER_TYPE_SMALLpint) {
-		ost << "pint";
-		}
 	else if (object_type == POINTER_TYPE_int) {
 		ost << "int";
 		}
 	else if (object_type == POINTER_TYPE_pint) {
 		ost << "pint";
+		}
+	else if (object_type == POINTER_TYPE_lint) {
+		ost << "lint";
+		}
+	else if (object_type == POINTER_TYPE_plint) {
+		ost << "plint";
 		}
 	else if (object_type == POINTER_TYPE_ppint) {
 		ost << "ppint";
@@ -131,17 +143,17 @@ int mem_object_registry_entry::size_of()
 		cout << "mem_object_registry_entry::size_of invalid entry" << endl;
 		exit(1);
 		}
-	if (object_type == POINTER_TYPE_SMALLint) {
-		return sizeof(int) * object_n;
-		}
-	else if (object_type == POINTER_TYPE_SMALLpint) {
-		return sizeof(int *) * object_n;
-		}
 	else if (object_type == POINTER_TYPE_int) {
 		return sizeof(int) * object_n;
 		}
 	else if (object_type == POINTER_TYPE_pint) {
 		return sizeof(int *) * object_n;
+		}
+	else if (object_type == POINTER_TYPE_lint) {
+		return sizeof(long int) * object_n;
+		}
+	else if (object_type == POINTER_TYPE_plint) {
+		return sizeof(long int *) * object_n;
 		}
 	else if (object_type == POINTER_TYPE_ppint) {
 		return sizeof(int **) * object_n;

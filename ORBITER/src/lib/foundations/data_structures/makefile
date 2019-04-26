@@ -13,6 +13,7 @@ MODULES = \
 	int_vector.o \
 	page_storage.o \
 	partitionstack.o \
+	set_of_sets_lint.o \
 	set_of_sets.o \
 	sorting.o \
 	spreadsheet.o \

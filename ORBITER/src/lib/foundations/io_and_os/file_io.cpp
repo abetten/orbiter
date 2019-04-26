@@ -1723,6 +1723,84 @@ void file_io::write_set_to_file(const char *fname,
 		}
 }
 
+void file_io::read_set_from_file_lint(const char *fname,
+	long int *&the_set, int &set_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	long int a;
+
+	if (f_v) {
+		cout << "read_set_from_file_lint opening file " << fname
+			<< " of size " << file_size(fname)
+			<< " for reading" << endl;
+		}
+	ifstream f(fname);
+
+	f >> set_size;
+	if (f_v) {
+		cout << "read_set_from_file_lint allocating set of size "
+			<< set_size << endl;
+		}
+	the_set = NEW_lint(set_size);
+
+	if (f_v) {
+		cout << "read_set_from_file_lint reading set of size "
+			<< set_size << endl;
+		}
+	for (i = 0; i < set_size; i++) {
+		f >> a;
+		//if (f_v) {
+			//cout << "read_set_from_file: the " << i
+			//<< "-th number is " << a << endl;
+			//}
+		if (a == -1)
+			break;
+		the_set[i] = a;
+		}
+	if (f_v) {
+		cout << "read a set of size " << set_size
+			<< " from file " << fname << endl;
+		}
+	if (f_vv) {
+		cout << "the set is:" << endl;
+		lint_vec_print(cout, the_set, set_size);
+		cout << endl;
+		}
+}
+
+void file_io::write_set_to_file_lint(const char *fname,
+	long int *the_set, int set_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "write_set_to_file_lint opening file "
+			<< fname << " for writing" << endl;
+		}
+	{
+	ofstream f(fname);
+
+	f << set_size << endl;
+
+	for (i = 0; i < set_size; i++) {
+#if 0
+		if (i && ((i % 10) == 0)) {
+			f << endl;
+			}
+#endif
+		f << the_set[i] << " ";
+		}
+	f << endl << -1 << endl;
+	}
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
+		}
+}
+
 void file_io::read_set_from_file_int4(const char *fname,
 	int *&the_set, int &set_size, int verbose_level)
 {
@@ -1760,6 +1838,48 @@ void file_io::read_set_from_file_int4(const char *fname,
 	if (f_vv) {
 		cout << "the set is:" << endl;
 		int_vec_print(cout, the_set, set_size);
+		cout << endl;
+		}
+}
+
+void file_io::read_set_from_file_int8(const char *fname,
+	long int *&the_set, int &set_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	long int b;
+	int_8 a;
+
+	if (f_v) {
+		cout << "read_set_from_file_int8 opening file " << fname
+			<< " of size " << file_size(fname)
+			<< " for reading" << endl;
+		}
+	ifstream f(fname, ios::binary);
+
+	f.read((char *) &a, sizeof(int_8));
+	set_size = a;
+	the_set = NEW_lint(set_size);
+
+	for (i = 0; i < set_size; i++) {
+		f.read((char *) &a, sizeof(int_8));
+		b = a;
+		//if (f_v) {
+			//cout << "read_set_from_file: the " << i
+			//<< "-th number is " << a << endl;
+			//}
+		if (b == -1)
+			break;
+		the_set[i] = b;
+		}
+	if (f_v) {
+		cout << "read a set of size " << set_size
+			<< " from file " << fname << endl;
+		}
+	if (f_vv) {
+		cout << "the set is:" << endl;
+		lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 }
@@ -1812,7 +1932,7 @@ void file_io::write_set_to_file_as_int4(const char *fname,
 }
 
 void file_io::write_set_to_file_as_int8(const char *fname,
-	int *the_set, int set_size, int verbose_level)
+	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
