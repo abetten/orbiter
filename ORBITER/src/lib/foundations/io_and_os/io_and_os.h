@@ -119,12 +119,18 @@ public:
 		int *&the_set, int &set_size, int verbose_level);
 	void write_set_to_file(const char *fname,
 		int *the_set, int set_size, int verbose_level);
+	void read_set_from_file_lint(const char *fname,
+		long int *&the_set, int &set_size, int verbose_level);
+	void write_set_to_file_lint(const char *fname,
+		long int *the_set, int set_size, int verbose_level);
 	void read_set_from_file_int4(const char *fname,
 		int *&the_set, int &set_size, int verbose_level);
+	void read_set_from_file_int8(const char *fname,
+		long int *&the_set, int &set_size, int verbose_level);
 	void write_set_to_file_as_int4(const char *fname,
 		int *the_set, int set_size, int verbose_level);
 	void write_set_to_file_as_int8(const char *fname,
-		int *the_set, int set_size, int verbose_level);
+		long int *the_set, int set_size, int verbose_level);
 	void read_k_th_set_from_file(const char *fname, int k,
 		int *&the_set, int &set_size, int verbose_level);
 	void write_incidence_matrix_to_file(char *fname,
@@ -264,10 +270,10 @@ void stop_memory_debug();
 
 #define REGISTRY_SIZE 1000
 #define POINTER_TYPE_INVALID 0
-#define POINTER_TYPE_SMALLint 1
-#define POINTER_TYPE_SMALLpint 2
-#define POINTER_TYPE_int 3
-#define POINTER_TYPE_pint 4
+#define POINTER_TYPE_int 1
+#define POINTER_TYPE_pint 2
+#define POINTER_TYPE_lint 3
+#define POINTER_TYPE_plint 4
 #define POINTER_TYPE_ppint 5
 #define POINTER_TYPE_char 6
 #define POINTER_TYPE_uchar 7
@@ -324,6 +330,10 @@ public:
 	void free_int(int *p, const char *file, int line);
 	int **allocate_pint(long int n, const char *file, int line);
 	void free_pint(int **p, const char *file, int line);
+	long int *allocate_lint(long int n, const char *file, int line);
+	void free_lint(long int *p, const char *file, int line);
+	long int **allocate_plint(long int n, const char *file, int line);
+	void free_plint(long int **p, const char *file, int line);
 	int ***allocate_ppint(long int n, const char *file, int line);
 	void free_ppint(int ***p, const char *file, int line);
 	char *allocate_char(long int n, const char *file, int line);
@@ -445,6 +455,7 @@ int int_vec_find_first_nonzero_entry(int *v, int len);
 void int_vec_zero(int *v, int len);
 void int_vec_mone(int *v, int len);
 void int_vec_copy(int *from, int *to, int len);
+void lint_vec_copy(long int *from, long int *to, int len);
 void int_vec_swap(int *v1, int *v2, int len);
 void int_vec_delete_element_assume_sorted(int *v, int &len, int a);
 uchar *bitvector_allocate(int length);
@@ -482,11 +493,13 @@ void int_set_print_masked_tex(std::ostream &ost,
 	int *v, int len, const char *mask_begin, const char *mask_end);
 void int_set_print_tex_for_inline_text(std::ostream &ost, int *v, int len);
 void int_vec_print(std::ostream &ost, int *v, int len);
+void lint_vec_print(std::ostream &ost, long int *v, int len);
 void int_vec_print_str(std::stringstream &ost, int *v, int len);
 void int_vec_print_as_matrix(std::ostream &ost,
 	int *v, int len, int width, int f_tex);
 void int_vec_print_as_table(std::ostream &ost, int *v, int len, int width);
 void int_vec_print_fully(std::ostream &ost, int *v, int len);
+void lint_vec_print_fully(std::ostream &ost, long int *v, int len);
 void int_vec_print_Cpp(std::ostream &ost, int *v, int len);
 void int_vec_print_GAP(std::ostream &ost, int *v, int len);
 void int_vec_print_classified(int *v, int len);

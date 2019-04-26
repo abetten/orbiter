@@ -169,7 +169,7 @@ void semifield_lifting::level_two_down(int verbose_level)
 
 
 	int Level_two_nb_orbits;
-	int **Level_two_Candidates;
+	long int **Level_two_Candidates;
 	int *Level_two_Nb_candidates;
 
 	Level_two_nb_orbits = L2->nb_orbits;
@@ -352,7 +352,8 @@ void semifield_lifting::compute_flag_orbits(
 	int f_vvv = (verbose_level >= 3);
 	int f_v4 = (verbose_level >= 4);
 	int po;
-	int so, f, pt_local, pt, len;
+	int so, f, pt_local, len;
+	long int pt;
 	longinteger_domain D;
 	int *Mtx1;
 
@@ -545,7 +546,8 @@ void semifield_lifting::upstep(
 	int *changed_space;
 	int *changed_space_after_trace;
 	int *set;
-	int i, N, h, po, so, pt_local, pt;
+	int i, N, h, po, so, pt_local;
+	long int pt;
 	int trace_po, trace_so;
 	combinatorics_domain Combi;
 
@@ -565,7 +567,7 @@ void semifield_lifting::upstep(
 	Po = NEW_int(nb_flag_orbits);
 	So = NEW_int(nb_flag_orbits);
 	Mo = NEW_int(nb_flag_orbits);
-	Pt = NEW_int(nb_flag_orbits);
+	Pt = NEW_lint(nb_flag_orbits);
 
 	nb_orbits = 0;
 	for (m = 0; m < nb_flag_orbits; m++) {

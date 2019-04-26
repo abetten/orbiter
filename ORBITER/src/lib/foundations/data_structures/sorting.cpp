@@ -306,6 +306,49 @@ void sorting::int_vec_append_and_reallocate_if_necessary(int *&vec,
 		}
 }
 
+void sorting::lint_vec_append_and_reallocate_if_necessary(long int *&vec,
+		int &used_length, int &alloc_length, long int a,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int t;
+
+	if (f_v) {
+		cout << "lint_vec_append_and_reallocate_if_necessary" << endl;
+		}
+	if (used_length == alloc_length) {
+		long int *C;
+		int new_alloc_length;
+
+		new_alloc_length = 2 * alloc_length;
+		cout << "reallocating to length " << new_alloc_length << endl;
+		C = NEW_lint(new_alloc_length);
+		for (t = 0; t < used_length; t++) {
+			C[t] = vec[t];
+			}
+		FREE_lint(vec);
+		vec = C;
+		alloc_length = new_alloc_length;
+		}
+	vec[used_length] = a;
+	used_length++;
+	if (FALSE) {
+		cout << "element " << a << " has been appended to the list "
+				"at position " << used_length - 1 << " n e w "
+				"length = " << used_length << endl;
+		}
+	if (f_v) {
+		if ((used_length & (1024 - 1)) == 0) {
+			cout << "used_length = " << used_length << endl;
+			}
+		}
+	if (f_v) {
+		cout << "lint_vec_append_and_reallocate_if_necessary "
+				"done" << endl;
+		}
+}
+
 int sorting::int_vec_is_zero(int *v, int len)
 {
 	int i;
@@ -789,6 +832,70 @@ int sorting::int_vec_search(int *v, int len, int a, int &idx)
 			}
 		}
 	// now: l == r; 
+	// and f_found is set accordingly */
+#if 1
+	if (f_found) {
+		l--;
+		}
+#endif
+	idx = l;
+	return f_found;
+}
+
+int sorting::lint_vec_search(long int *v, int len, long int a, int &idx)
+// This function finds the last occurence of the element a.
+// If a is not found, it returns in idx the position
+// where it should be inserted if
+// the vector is assumed to be in increasing order.
+
+{
+	int l, r, m;
+	long int res;
+	int f_found = FALSE;
+	int f_v = FALSE;
+
+	if (len == 0) {
+		idx = 0;
+		return FALSE;
+		}
+	l = 0;
+	r = len;
+	// invariant:
+	// v[i] <= a for i < l;
+	// v[i] >  a for i >= r;
+	// r - l is the length of the area to search in.
+	while (l < r) {
+		m = (l + r) >> 1;
+		// if the length of the search area is even
+		// we examine the element above the middle
+		res = v[m] - a;
+		if (f_v) {
+			cout << "l=" << l << " r=" << r<< " m=" << m
+				<< " v[m]=" << v[m] << " res=" << res << endl;
+			}
+		//cout << "search l=" << l << " m=" << m << " r="
+		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
+		// so, res is
+		// positive if v[m] > a,
+		// zero if v[m] == a,
+		// negative if v[m] < a
+		if (res <= 0) {
+			l = m + 1;
+			if (f_v) {
+				cout << "moving to the right" << endl;
+				}
+			if (res == 0) {
+				f_found = TRUE;
+				}
+			}
+		else {
+			if (f_v) {
+				cout << "moving to the left" << endl;
+				}
+			r = m;
+			}
+		}
+	// now: l == r;
 	// and f_found is set accordingly */
 #if 1
 	if (f_found) {
@@ -1374,6 +1481,19 @@ void sorting::int_vec_heapsort(int *v, int len)
 	
 }
 
+void sorting::lint_vec_heapsort(long int *v, int len)
+{
+	int end;
+
+	lint_heapsort_make_heap(v, len);
+	for (end = len - 1; end > 0; ) {
+		lint_heapsort_swap(v, 0, end);
+		end--;
+		lint_heapsort_sift_down(v, 0, end);
+		}
+
+}
+
 void sorting::int_vec_heapsort_with_log(int *v, int *w, int len)
 {
 	int end;
@@ -1394,6 +1514,15 @@ void sorting::heapsort_make_heap(int *v, int len)
 	
 	for (start = (len - 2) >> 1 ; start >= 0; start--) {
 		heapsort_sift_down(v, start, len - 1);
+		}
+}
+
+void sorting::lint_heapsort_make_heap(long int *v, int len)
+{
+	int start;
+
+	for (start = (len - 2) >> 1 ; start >= 0; start--) {
+		lint_heapsort_sift_down(v, start, len - 1);
 		}
 }
 
@@ -1444,6 +1573,26 @@ void sorting::heapsort_sift_down(int *v, int start, int end)
 			}
 		if (v[root] < v[child]) {
 			heapsort_swap(v, root, child);
+			root = child;
+			}
+		else {
+			return;
+			}
+		}
+}
+
+void sorting::lint_heapsort_sift_down(long int *v, int start, int end)
+{
+	int root, child;
+
+	root = start;
+	while (2 * root + 1 <= end) {
+		child = 2 * root + 1; // left child
+		if (child + 1 <= end && v[child] < v[child + 1]) {
+			child++;
+			}
+		if (v[root] < v[child]) {
+			lint_heapsort_swap(v, root, child);
 			root = child;
 			}
 		else {
@@ -1548,6 +1697,15 @@ void sorting::heapsort_swap(int *v, int i, int j)
 	v[j] = a;
 }
 
+void sorting::lint_heapsort_swap(long int *v, int i, int j)
+{
+	int a;
+
+	a = v[i];
+	v[i] = v[j];
+	v[j] = a;
+}
+
 void sorting::Heapsort_swap(void *v, int i, int j, int entry_size_in_chars)
 {
 	int a, h, I, J;
@@ -1564,7 +1722,9 @@ void sorting::Heapsort_swap(void *v, int i, int j, int entry_size_in_chars)
 }
 
 
-void sorting::find_points_by_multiplicity(int *data, int data_sz, int multiplicity, int *&pts, int &nb_pts)
+void sorting::find_points_by_multiplicity(
+		int *data, int data_sz, int multiplicity,
+		int *&pts, int &nb_pts)
 {
 	classify C;
 	C.init(data, data_sz, FALSE, 0);

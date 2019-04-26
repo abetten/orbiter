@@ -44,7 +44,7 @@ semifield_flag_orbit_node::~semifield_flag_orbit_node()
 
 void semifield_flag_orbit_node::init(
 	int downstep_primary_orbit, int downstep_secondary_orbit,
-	int pt_local, int pt, int downstep_orbit_len, int f_long_orbit,
+	int pt_local, long int pt, int downstep_orbit_len, int f_long_orbit,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

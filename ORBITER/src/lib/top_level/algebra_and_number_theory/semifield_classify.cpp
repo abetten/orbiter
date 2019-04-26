@@ -133,9 +133,9 @@ void semifield_classify::init(int argc, const char **argv,
 		exit(1);
 		}
 
-	if (sizeof(int) * 8 - 1 < k2) {
-		cout << "sizeof(int) * 8 - 1 < k2, overflow will happen" << endl;
-		cout << "sizeof(int)=" << sizeof(int) << endl;
+	if (sizeof(long int) * 8 - 1 < k2) {
+		cout << "sizeof(long int) * 8 - 1 < k2, overflow will happen" << endl;
+		cout << "sizeof(long int)=" << sizeof(long int) << endl;
 		cout << "k2=" << k2 << endl;
 		exit(1);
 	}
@@ -860,9 +860,10 @@ void semifield_classify::test_rank_unrank()
 		}
 }
 
-void semifield_classify::matrix_unrank(int rk, int *Mtx)
+void semifield_classify::matrix_unrank(long int rk, int *Mtx)
 {
 	int i, j, a;
+
 	for (j = k - 1; j >= 0; j--) {
 		for (i = k - 1; i >= 0; i--) {
 			a = rk % q;
@@ -877,9 +878,10 @@ void semifield_classify::matrix_unrank(int rk, int *Mtx)
 		}
 }
 
-int semifield_classify::matrix_rank(int *Mtx)
+long int semifield_classify::matrix_rank(int *Mtx)
 {
-	int i, j, rk;
+	int i, j;
+	long int rk;
 
 	rk = 0;
 	for (j = 0; j < k; j++) {
@@ -891,9 +893,10 @@ int semifield_classify::matrix_rank(int *Mtx)
 	return rk;
 }
 
-int semifield_classify::matrix_rank_without_first_column(int *Mtx)
+long int semifield_classify::matrix_rank_without_first_column(int *Mtx)
 {
-	int i, j, rk;
+	int i, j;
+	long int rk;
 
 	rk = 0;
 	for (j = 1; j < k; j++) {
@@ -1004,9 +1007,9 @@ void semifield_classify::apply_element_and_copy_back(int *Elt,
 
 
 void semifield_classify::candidates_classify_by_first_column(
-	int *Input_set, int input_set_sz,
+	long int *Input_set, int input_set_sz,
 	int window_bottom, int window_size,
-	int **&Set, int *&Set_sz, int &Nb_sets,
+	long int **&Set, int *&Set_sz, int &Nb_sets,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1014,7 +1017,8 @@ void semifield_classify::candidates_classify_by_first_column(
 	int *window;
 	int *Mtx;
 	int *Tmp_sz;
-	int h, a, b, u, i;
+	int h, u, i, t, w;
+	long int a;
 	number_theory_domain NT;
 	geometry_global Gg;
 
@@ -1039,11 +1043,11 @@ void semifield_classify::candidates_classify_by_first_column(
 		a = Input_set[h];
 		matrix_unrank(a, Mtx);
 		for (u = 0; u < window_size; u++) {
-			a = Mtx[(window_bottom - u) * k + 0];
-			window[u] = a;
+			t = Mtx[(window_bottom - u) * k + 0];
+			window[u] = t;
 			}
-		Gg.AG_element_rank(q, window, 1, window_size, a);
-		Set_sz[a]++;
+		Gg.AG_element_rank(q, window, 1, window_size, w);
+		Set_sz[w]++;
 		}
 	if (f_vv) {
 		cout << "semifield_classify::candidates_classify_"
@@ -1059,9 +1063,9 @@ void semifield_classify::candidates_classify_by_first_column(
 				"by_first_column computing efficient "
 				"representations input_set_sz = " << input_set_sz << endl;
 		}
-	Set = NEW_pint(Nb_sets);
+	Set = NEW_plint(Nb_sets);
 	for (u = 0; u < Nb_sets; u++) {
-		Set[u] = NEW_int(Set_sz[u]);
+		Set[u] = NEW_lint(Set_sz[u]);
 		}
 	for (h = 0; h < input_set_sz; h++) {
 		if ((h % (256 * 1024)) == 0) {
@@ -1071,10 +1075,10 @@ void semifield_classify::candidates_classify_by_first_column(
 		a = Input_set[h];
 		matrix_unrank(a, Mtx);
 		for (u = 0; u < window_size; u++) {
-			a = Mtx[(window_bottom - u) * k + 0];
-			window[u] = a;
+			t = Mtx[(window_bottom - u) * k + 0];
+			window[u] = t;
 			}
-		Gg.AG_element_rank(q, window, 1, window_size, b);
+		Gg.AG_element_rank(q, window, 1, window_size, w);
 
 		// zero out the first column to make it fit into a machine word:
 
@@ -1084,7 +1088,7 @@ void semifield_classify::candidates_classify_by_first_column(
 		a = matrix_rank(Mtx);
 
 
-		Set[b][Tmp_sz[b]++] = a; //Input_set[h];
+		Set[w][Tmp_sz[w]++] = a; //Input_set[h];
 		}
 	for (u = 0; u < Nb_sets; u++) {
 		if (Tmp_sz[u] != Set_sz[u]) {

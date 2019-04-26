@@ -116,10 +116,10 @@ semifield_level_two::~semifield_level_two()
 
 
 	if (class_rep_rank) {
-		FREE_int(class_rep_rank);
+		FREE_lint(class_rep_rank);
 		}
 	if (class_rep_plus_I_rank) {
-		FREE_int(class_rep_plus_I_rank);
+		FREE_lint(class_rep_plus_I_rank);
 		}
 	if (class_rep_plus_I_Basis) {
 		for (i = 0; i < nb_classes; i++) {
@@ -235,9 +235,9 @@ semifield_level_two::~semifield_level_two()
 		}
 	if (Candidates) {
 		for (i = 0; i < nb_orbits; i++) {
-			FREE_int(Candidates[i]);
+			FREE_lint(Candidates[i]);
 		}
-		FREE_pint(Candidates);
+		FREE_plint(Candidates);
 	}
 	if (Nb_candidates) {
 		FREE_int(Nb_candidates);
@@ -577,8 +577,8 @@ void semifield_level_two::downstep(int verbose_level)
 		}
 
 
-	class_rep_rank = NEW_int(nb_classes);
-	class_rep_plus_I_rank = NEW_int(nb_classes);
+	class_rep_rank = NEW_lint(nb_classes);
+	class_rep_plus_I_rank = NEW_lint(nb_classes);
 	R_i_plus_I_class_idx = NEW_int(nb_classes);
 	class_rep_plus_I_Basis = NEW_pint(nb_classes);
 	class_rep_plus_I_Basis_inv = NEW_pint(nb_classes);
@@ -809,7 +809,8 @@ void semifield_level_two::upstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int ext, coset, idx, a, b, i;
+	int ext, coset, idx, i;
+	long int a, b;
 
 	if (f_v) {
 		cout << "semifield_level_two::upstep "
@@ -1068,7 +1069,7 @@ void semifield_level_two::setup_stabilizer(
 }
 
 void semifield_level_two::trace(int ext, int coset,
-		int a, int b, int &f_automorphism, int *&Aut,
+		long int a, long int b, int &f_automorphism, int *&Aut,
 		int verbose_level)
 // a and b are the ranks of two matrices whose span we consider.
 {
@@ -1076,7 +1077,9 @@ void semifield_level_two::trace(int ext, int coset,
 	int f_vv = (verbose_level >= 2);
 	int i, j;
 	int idx1, idx2;
-	int c1, c2, rk1, rk2, d1, d2, d, cc1, cc2;
+	int c1, c2;
+	long int rk1, rk2;
+	int d1, d2, d, cc1, cc2;
 
 	if (f_v) {
 		cout << "semifield_level_two::trace" << endl;
@@ -1344,14 +1347,15 @@ void semifield_level_two::multiply_to_the_right(
 
 void semifield_level_two::compute_candidates_at_level_two_case(
 	int orbit,
-	int *&Candidates, int &nb_candidates, int verbose_level)
+	long int *&Candidates, int &nb_candidates, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int *Mtx_A;
 	int **Mtx_stack;
 	int ext, idx;
-	int i, a;
+	int i;
+	long int a;
 	sims *G;
 	//int *Elt1;
 	int total_nb_candidates;
@@ -1365,7 +1369,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 		}
 	nb_candidates = 0;
 	alloc_length = 1024;
-	Candidates = NEW_int(alloc_length);
+	Candidates = NEW_lint(alloc_length);
 
 	//Elt1 = NEW_int(A_PGLk->elt_size_in_int);
 	Mtx_A = NEW_int(k * k);
@@ -1438,7 +1442,8 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int *Mtx1, *Mtx2;
 	int *B;
 	int *base_cols;
-	int N, N1, v[2], j, h, b1, b2, r;
+	int N, N1, v[2], j, h, b1, b2;
+	long int r;
 	number_theory_domain NT;
 	geometry_global Gg;
 	sorting Sorting;
@@ -1538,7 +1543,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 #endif
 
 			r = SC->matrix_rank(Mtx1);
-			Sorting.int_vec_append_and_reallocate_if_necessary(
+			Sorting.lint_vec_append_and_reallocate_if_necessary(
 					Candidates, nb_candidates, alloc_length, r,
 					0 /*verbose_level*/);
 
@@ -1553,7 +1558,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 				<< ": nb_tested = " << nb_tested << ", found "
 				<< nb_candidates << " candidates, sorting them now." << endl;
 		}
-	Sorting.int_vec_heapsort(Candidates, nb_candidates);
+	Sorting.lint_vec_heapsort(Candidates, nb_candidates);
 
 
 
@@ -1575,7 +1580,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 		cout << "Level 2: orbit " << orbit << " / "
 				<< nb_orbits << ": found "
 				<< nb_candidates << " candidates:" << endl;
-		SC->print_set_of_matrices_numeric(Candidates, nb_candidates);
+		//SC->print_set_of_matrices_numeric(Candidates, nb_candidates);
 		}
 	if (f_v) {
 		cout << "semifield_level_two::compute_candidates_at_"
@@ -1594,7 +1599,7 @@ void semifield_level_two::allocate_candidates_at_level_two(
 		cout << "semifield_level_two::allocate_candidates_"
 				"at_level_two" << endl;
 		}
-	Candidates = NEW_pint(nb_orbits);
+	Candidates = NEW_plint(nb_orbits);
 	Nb_candidates = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		Candidates[i] = NULL;
@@ -1707,7 +1712,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 		else {
 			cout << "Type files for orbit " << orbit
 					<< " do not exist" << endl;
-			int **Set;
+			long int **Set;
 			int *Set_sz;
 			int Nb_sets;
 			int window_bottom, window_size;
@@ -1733,7 +1738,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 					sprintf(fname, "C2_orbit%d_type%d_int4.bin",
 							orbit, h);
 					}
-				Fio.write_set_to_file_as_int4(fname,
+				Fio.write_set_to_file_as_int8(fname,
 					Set[h], Set_sz[h],
 					verbose_level);
 				cout << "Written file " << fname << " of size "
@@ -1741,9 +1746,9 @@ void semifield_level_two::find_all_candidates_at_level_two(
 				}
 
 			for (h = 0; h < Nb_sets; h++) {
-				FREE_int(Set[h]);
+				FREE_lint(Set[h]);
 				}
-			FREE_pint(Set);
+			FREE_plint(Set);
 			FREE_int(Set_sz);
 			}
 
@@ -1766,7 +1771,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 }
 
 void semifield_level_two::read_candidates_at_level_two_case(
-	int *&Candidates, int &Nb_candidates, int orbit,
+	long int *&Candidates, int &Nb_candidates, int orbit,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1785,7 +1790,7 @@ void semifield_level_two::read_candidates_at_level_two_case(
 					<< fname << " of size "
 					<< Fio.file_size(fname) << endl;
 			}
-		Fio.read_set_from_file(fname,
+		Fio.read_set_from_file_lint(fname,
 				Candidates, Nb_candidates, verbose_level);
 		if (f_v) {
 			cout << "Reading candidates from file "
@@ -1807,7 +1812,7 @@ void semifield_level_two::read_candidates_at_level_two_case(
 }
 
 void semifield_level_two::write_candidates_at_level_two_case(
-	int *Candidates, int Nb_candidates, int orbit,
+	long int *Candidates, int Nb_candidates, int orbit,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1821,7 +1826,7 @@ void semifield_level_two::write_candidates_at_level_two_case(
 
 	SC->make_fname_candidates_at_level_two_orbit(fname, orbit);
 
-	Fio.write_set_to_file(fname,
+	Fio.write_set_to_file_lint(fname,
 			Candidates, Nb_candidates, 0 /*verbose_level*/);
 
 	if (f_v) {
@@ -1837,7 +1842,7 @@ void semifield_level_two::write_candidates_at_level_two_case(
 }
 
 void semifield_level_two::read_candidates_at_level_two_by_type(
-		set_of_sets *&Candidates_by_type, int orbit,
+		set_of_sets_lint *&Candidates_by_type, int orbit,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1847,9 +1852,9 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 				"two_by_type" << endl;
 		}
 
-	Candidates_by_type = NEW_OBJECT(set_of_sets);
+	Candidates_by_type = NEW_OBJECT(set_of_sets_lint);
 
-	int **Set;
+	long int **Set;
 	int *Set_sz;
 	int Nb_sets;
 	int window_bottom, window_size;
@@ -1861,7 +1866,7 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 	window_size = k - 2;
 	Nb_sets = NT.i_power_j(q, window_size);
 
-	Set = NEW_pint(Nb_sets);
+	Set = NEW_plint(Nb_sets);
 	Set_sz = NEW_int(Nb_sets);
 	for (h = 0; h < Nb_sets; h++) {
 		char fname[1000];
@@ -1881,7 +1886,7 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 					<< " does not exist" << endl;
 			exit(1);
 			}
-		Fio.read_set_from_file_int4(fname,
+		Fio.read_set_from_file_int8(fname,
 			Set[h], Set_sz[h],
 			verbose_level);
 		}
@@ -1897,9 +1902,9 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 
 
 	for (h = 0; h < Nb_sets; h++) {
-		FREE_int(Set[h]);
+		FREE_lint(Set[h]);
 		}
-	FREE_pint(Set);
+	FREE_plint(Set);
 	FREE_int(Set_sz);
 
 	if (f_v) {
@@ -1967,7 +1972,8 @@ void semifield_level_two::print_representatives(
 		F->identity_matrix(Mtx_Id, k);
 
 		if (f_v) {
-			cout << "semifield_level_two::print_representatives before Conjugacy classes" << endl;
+			cout << "semifield_level_two::print_representatives "
+					"before Conjugacy classes" << endl;
 		}
 
 		ost << "\\section{Conjugacy classes}" << endl;

@@ -196,6 +196,16 @@ void int_vec_copy(int *from, int *to, int len)
 		}
 }
 
+void lint_vec_copy(long int *from, long int *to, int len)
+{
+	int i;
+	long int *p, *q;
+
+	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
+		*q = *p;
+		}
+}
+
 void int_vec_swap(int *v1, int *v2, int len)
 {
 	int i, a;
@@ -1078,6 +1088,30 @@ void int_vec_print(ostream &ost, int *v, int len)
 		}
 }
 
+void lint_vec_print(ostream &ost, long int *v, int len)
+{
+	int i;
+
+	if (len > 50) {
+		ost << "( ";
+		for (i = 0; i < 50; i++) {
+			ost << v[i];
+			if (i < len - 1)
+				ost << ", ";
+			}
+		ost << "...";
+		for (i = len - 3; i < len; i++) {
+			ost << v[i];
+			if (i < len - 1)
+				ost << ", ";
+			}
+		ost << " )";
+		}
+	else {
+		lint_vec_print_fully(ost, v, len);
+		}
+}
+
 void int_vec_print_str(stringstream &ost, int *v, int len)
 {
 	int i;
@@ -1128,6 +1162,19 @@ void int_vec_print_fully(ostream &ost, int *v, int len)
 {
 	int i;
 	
+	ost << "( ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " )";
+}
+
+void lint_vec_print_fully(ostream &ost, long int *v, int len)
+{
+	int i;
+
 	ost << "( ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];
