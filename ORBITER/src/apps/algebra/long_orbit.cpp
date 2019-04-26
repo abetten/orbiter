@@ -547,9 +547,10 @@ void compute_orbit(int n, int k, int q, int print_mod, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int kn = k * n;
-	int i, length, nb_processed = 0;
+	int length, nb_processed = 0;
 	int f_found;
 	int *M1, *M2;
+	char *M2c;
 	int alloc_length = 500000;
 	int old_length = alloc_length;
 	int next_length = 0;
@@ -577,21 +578,37 @@ void compute_orbit(int n, int k, int q, int print_mod, int verbose_level)
 
 
 	M2 = NEW_int(k * n);
+	M2c = NEW_char(k * n);
 	cout << "allocating Orbit" << endl;
 	Orbit = NEW_pint(alloc_length);
 
 
 
 	prepare(n, k, &F);
+
 	F.Gauss_simple(initial_M, k, n, base_cols, 0/* verbose_level*/);
 	Orbit[0] = NEW_int(k * n);
 	int_vec_copy(initial_M, Orbit[0], kn);
+
+	magma_interface Magma;
+	int orbit_length;
+
+	Magma.orbit_of_matrix_group_on_subspaces(
+			"orbit",
+			n, q, k,
+			initial_M, gens, nb_gens,
+			orbit_length,
+			verbose_level);
+
 
 	uint32_t hash;
 
 	hash = int_vec_hash(Orbit[0], kn);
 	Hashing.insert(pair<uint32_t, int>(hash, 0));
 	length = 1;
+
+	int h;
+	//int i, j, t, a;
 
 	while (nb_processed < length) {
 
@@ -604,14 +621,34 @@ void compute_orbit(int n, int k, int q, int print_mod, int verbose_level)
 #endif
 
 		M1 = Orbit[nb_processed];
-		for (i = 0; i < nb_gens; i++) {
+		for (h = 0; h < nb_gens; h++) {
 
-			F.mult_matrix_matrix(M1, gens[i], M2, k, n, n,
+#if 1
+			F.mult_matrix_matrix(M1, gens[h], M2, k, n, n,
 					0 /* verbose_level */);
+#else
+			int *A = M1;
+			int *B = gens[h];
+			int *C = M2;
+			for (i = 0; i < k; i++) {
+				for (j = 0; j < n; j++) {
+					a = 0;
+					for (t = 0; t < n; t++) {
+						a = (a + A[i * n + t] * B[t * n + j]) % q;
+						}
+					C[i * n + j] = a;
+					}
+				}
+
+#endif
 			F.Gauss_simple(M2, k, n, base_cols, 0/* verbose_level*/);
 
 			f_found = FALSE;
-			hash = int_vec_hash(M2, kn);
+
+			for (int j = 0; j < kn; j++) {
+				M2c[j] = (char) M2[j];
+			}
+			hash = char_vec_hash(M2c, kn);
 
 		    map<uint32_t, int>::iterator itr, itr1, itr2;
 		    int pos, f_found;

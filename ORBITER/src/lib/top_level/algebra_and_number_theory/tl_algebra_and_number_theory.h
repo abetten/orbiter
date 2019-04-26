@@ -58,7 +58,7 @@ void create_factor_group(action *A, sims *S, int goi,
 
 class semifield_classify {
 public:
-
+	int n;
 	int k;
 	int k2; // = k * k
 	finite_field *F;
@@ -112,8 +112,11 @@ public:
 	void init(int argc, const char **argv,
 		int order, int n, int k,
 		finite_field *F,
-		const char *prefix,
 		int verbose_level);
+	void init_poset_classification(
+			int argc, const char **argv,
+			const char *prefix,
+			int verbose_level);
 	void compute_orbits(int depth, int verbose_level);
 	void list_points();
 	int rank_point(int *v, int verbose_level);
@@ -130,8 +133,8 @@ public:
 	int test_partial_semifield(
 			int *Basis, int n, int verbose_level);
 	void test_rank_unrank();
-	void matrix_unrank(int rk, int *Mtx);
-	int matrix_rank(int *Mtx);
+	void matrix_unrank(int rk, int *Mtx); // long int
+	int matrix_rank(int *Mtx); // long int
 	int matrix_rank_without_first_column(int *Mtx);
 	void basis_print(int *Mtx, int sz);
 	void basis_print_numeric(int *Rk, int sz);
@@ -174,7 +177,7 @@ void semifield_classify_unrank_point_func(int *v, int rk, void *data);
 class semifield_level_two {
 public:
 	semifield_classify *SC;
-	int n; // = 2 * n
+	int n; // = 2 * k
 	int k;
 	int k2;
 	int q;
@@ -197,22 +200,19 @@ public:
 	int *Basis, *Mtx, *Mtx_Id, *Mtx_2, *Elt, *Elt2;
 
 	// the following arrays are all [nb_classes]
-	int *class_rep_rank;
-	int *class_rep_plus_I_rank;
+	int *class_rep_rank; // long int
+	int *class_rep_plus_I_rank; // long int
 	int **class_rep_plus_I_Basis;
 	int **class_rep_plus_I_Basis_inv;
 	int *R_i_plus_I_class_idx;
-	strong_generators *Centralizer_gens;
 	int *down_orbit_of_class;
 
-	int nb_down_orbits;
-	int *down_orbit_classes;
-		// [nb_down_orbits * 2]
-	int *down_orbit_number_of_matrices;
-		// [nb_down_orbits]
-	int *down_orbit_length;
-		// [nb_down_orbits]
 
+	int nb_down_orbits;
+	strong_generators *Centralizer_gens; // [nb_down_orbits]
+	int *down_orbit_classes;  // [nb_down_orbits * 2]
+	int *down_orbit_number_of_matrices; // [nb_down_orbits]
+	int *down_orbit_length; // [nb_down_orbits]
 	int *f_Fusion; // [nb_down_orbits]
 	int *Fusion_idx; // [nb_down_orbits]
 	int **Fusion_elt; // [nb_down_orbits]
@@ -231,7 +231,7 @@ public:
 
 	gl_class_rep *R1, *R2;
 
-	int **Candidates;
+	int **Candidates; // long int
 		// candidates for the generator matrix,
 		// [nb_orbits]
 	int *Nb_candidates;
@@ -242,7 +242,8 @@ public:
 	~semifield_level_two();
 	void init(semifield_classify *SC, int verbose_level);
 	void init_desired_pivots(int verbose_level);
-	void conjugacy_class(int c, int verbose_level);
+	void list_all_elements_is_conjugacy_class(
+			int c, int verbose_level);
 	void compute_level_two(int verbose_level);
 	void downstep(int verbose_level);
 	void compute_stabilizers_downstep(int verbose_level);
@@ -280,6 +281,8 @@ public:
 	void read_candidates_at_level_two_by_type(
 			set_of_sets *&Candidates_by_type, int orbit,
 			int verbose_level);
+	void get_basis_and_pivots(int po,
+			int *basis, int *pivots, int verbose_level);
 	void print_representatives(std::ofstream &ost,
 		int verbose_level);
 };
@@ -296,21 +299,33 @@ public:
 class semifield_lifting {
 public:
 	semifield_classify *SC;
-	semifield_level_two *L2;
-	semifield_lifting *Prev;
+	semifield_level_two *L2; // only if cur_level == 3
+	semifield_lifting *Prev; // only if cur_level > 3
+	int n;
+	int k;
+	int k2;
 
-	int level;
+	int cur_level;
 	int prev_level_nb_orbits;
 
 	int f_prefix;
 	const char *prefix;
 
+	strong_generators *Prev_stabilizer_gens;
+	int **Candidates; // long int
+		// candidates for the generator matrix,
+		// [nb_orbits]
+	int *Nb_candidates;
+		// [nb_orbits]
+
 
 	semifield_downstep_node *Downstep_nodes;
 
-	int nb_middle_layer_nodes;
+	int nb_flag_orbits;
 
-	semifield_middle_layer_node *Middle_layer_nodes;
+	semifield_flag_orbit_node *Flag_orbits;
+
+	grassmann *Gr;
 
 	// po = primary orbit
 	// so = secondary orbit
@@ -325,6 +340,41 @@ public:
 
 	semifield_lifting();
 	~semifield_lifting();
+	void init_level_three(semifield_level_two *L2, int verbose_level);
+	void compute_level_three(int verbose_level);
+	void level_two_down(int verbose_level);
+	void level_two_flag_orbits(int verbose_level);
+	void level_two_upstep(int verbose_level);
+	void downstep(
+		int level,
+		int verbose_level);
+	// level is the previous level
+	void compute_flag_orbits(
+		int level,
+		int verbose_level);
+	// level is the previous level
+	void upstep(
+		int level,
+		int verbose_level);
+	// level is the level that we want to classify
+	void find_all_candidates(
+		int level,
+		int verbose_level);
+	void get_basis_and_pivots(
+			int level, int po, int *Basis, int *pivots,
+			int verbose_level);
+	strong_generators *get_stabilizer_generators(
+		int level, int orbit_idx,
+		int verbose_level);
+	void trace_very_general(
+		//int cur_level,
+		int *input_basis, int basis_sz,
+		int *basis_after_trace, int *transporter,
+		int &trace_po, int &trace_so,
+		int verbose_level);
+		// input basis is input_basis of size basis_sz x k2
+		// there is a check if input_basis defines a semifield
+	void print_stabilizer_orders();
 
 };
 
@@ -347,7 +397,7 @@ public:
 	int level;
 	int orbit_number;
 
-	int *Candidates;
+	int *Candidates; // long int
 	int nb_candidates;
 
 	int *subspace_basis;
@@ -358,7 +408,7 @@ public:
 
 	schreier *Sch;
 
-	int first_middle_orbit;
+	int first_flag_orbit;
 
 	semifield_downstep_node();
 	~semifield_downstep_node();
@@ -367,12 +417,14 @@ public:
 	void init(semifield_lifting *SL, int level, int orbit_number,
 		int *Candidates, int nb_candidates,
 		int verbose_level);
+	int find_point(int a);
+#if 0
 	void orbits_light(semifield_lifting *SL,
 		int level, int orbit_number,
 		int *Candidates, int nb_candidates,
 		strong_generators *sg,
 		int verbose_level);
-	int find_point(int a);
+#endif
 
 };
 
@@ -382,18 +434,18 @@ int coset_action_rank_point(int *v, void *data);
 
 
 // #############################################################################
-// semifield_middle_layer_node.cpp
+// semifield_flag_orbit_node.cpp
 // #############################################################################
 
 
 //! auxiliary class for classifying semifields
 
-class semifield_middle_layer_node {
+class semifield_flag_orbit_node {
 public:
 	int downstep_primary_orbit;
 	int downstep_secondary_orbit;
 	int pt_local;
-	int pt;
+	int pt; // long int
 	int downstep_orbit_len;
 	int f_long_orbit;
 	int upstep_orbit; // if !f_fusion_node
@@ -404,18 +456,21 @@ public:
 	longinteger_object go;
 	strong_generators *gens;
 
-	semifield_middle_layer_node();
-	~semifield_middle_layer_node();
+	semifield_flag_orbit_node();
+	~semifield_flag_orbit_node();
 	void null();
 	void freeself();
 	void init(int downstep_primary_orbit, int downstep_secondary_orbit,
-		int pt_local, int pt, int downstep_orbit_len, int f_long_orbit);
+		int pt_local, int pt, int downstep_orbit_len, int f_long_orbit,
+		int verbose_level);
 	void group_order(longinteger_object &go);
 	int group_order_as_int();
+#if 0
 	void write_to_file_binary(semifield_lifting *SL,
 		std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(semifield_lifting *SL,
 		std::ifstream &fp, int verbose_level);
+#endif
 
 };
 

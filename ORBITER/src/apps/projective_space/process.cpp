@@ -4,10 +4,9 @@
 // July 28, 2011
 //
 // 
-// -embed -orthogonal <epsilon> turns points
-// from Q^<epsilon>(n,q) into points from PG(n,q)
-//
-//
+// Performs some task for each input set.
+// The input sets are defined using the data_input_stream class.
+// An output file is generated.
 
 #include "orbiter.h"
 
@@ -25,19 +24,19 @@ using namespace orbiter;
 int t0; // the system time when the program started
 
 
-void do_canonical_form(int n, finite_field *F,
-	int *set, int set_size, int f_semilinear,
-	const char *fname_base, int verbose_level);
-void perform_job(int input_idx, projective_space_with_action *PA,
-	object_in_projective_space *OiP,
-	int *&the_set_out,
-	int &set_size_out,
-	int verbose_level);
 void back_end(int input_idx,
 		projective_space_with_action *PA,
 		object_in_projective_space *OiP,
 		ostream &fp,
 		int verbose_level);
+void perform_job(int input_idx, projective_space_with_action *PA,
+	object_in_projective_space *OiP,
+	int *&the_set_out,
+	int &set_size_out,
+	int verbose_level);
+void do_canonical_form(int n, finite_field *F,
+	int *set, int set_size, int f_semilinear,
+	const char *fname_base, int verbose_level);
 
 
 int f_Q = FALSE;
@@ -497,66 +496,34 @@ int main(int argc, const char **argv)
 	the_end(t0);
 }
 
-void do_canonical_form(int n, finite_field *F,
-	int *set, int set_size, int f_semilinear,
-	const char *fname_base, int verbose_level)
+void back_end(int input_idx,
+		projective_space_with_action *PA,
+		object_in_projective_space *OiP,
+		ostream &fp,
+		int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	projective_space *P;
-	int canonical_pt;
+	int *the_set_out = NULL;
+	int set_size_out = 0;
 
-	if (f_v) {
-		cout << "do_canonical_form" << endl;
-		}
-
-	P = NEW_OBJECT(projective_space);
-
-	if (f_v) {
-		cout << "do_canonical_form before P->init" << endl;
-		}
-
-	P->init(n, F,
-		TRUE /* f_init_incidence_structure */,
-		verbose_level);
-
-	if (f_v) {
-		cout << "do_canonical_form after P->init" << endl;
-		}
-
-	strong_generators *SG;
-	action *A_linear;
-	vector_ge *nice_gens;
-
-	A_linear = NEW_OBJECT(action);
-	A_linear->init_projective_group(n + 1, F, f_semilinear,
-			TRUE /* f_basis */,
-			nice_gens,
+	perform_job(input_idx, PA,
+			OiP,
+			the_set_out, set_size_out,
 			verbose_level);
 
-	if (f_v) {
-		cout << "do_canonical_form before "
-				"set_stabilizer_in_projective_space" << endl;
-		}
-	SG = A_linear->set_stabilizer_in_projective_space(
-		P,
-		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */,
-		FALSE, NULL,
-		verbose_level);
-	//P->draw_point_set_in_plane(fname_base, set, set_size,
-	// TRUE /*f_with_points*/, 0 /* verbose_level */);
-	FREE_OBJECT(nice_gens);
-	FREE_OBJECT(SG);
-	FREE_OBJECT(A_linear);
-	FREE_OBJECT(P);
+	fp << set_size_out;
+	for (int i = 0; i < set_size_out; i++) {
+		fp << " " << the_set_out[i];
+	}
+	fp << endl;
 
-	if (f_v) {
-		cout << "do_canonical_form done" << endl;
-		}
+	if (the_set_out) {
+		FREE_int(the_set_out);
+	}
 
 }
 
-void perform_job(int input_idx, projective_space_with_action *PA,
+void perform_job(int input_idx,
+	projective_space_with_action *PA,
 	object_in_projective_space *OiP,
 	int *&the_set_out,
 	int &set_size_out,
@@ -740,7 +707,8 @@ void perform_job(int input_idx, projective_space_with_action *PA,
 		}
 	else if (f_draw_points_in_plane) {
 		F->do_draw_points_in_plane(
-			the_set_in, set_size_in, draw_points_in_plane_fname_base, f_point_labels,
+			the_set_in, set_size_in,
+			draw_points_in_plane_fname_base, f_point_labels,
 			f_embedded, f_sideways,
 			verbose_level);
 		}
@@ -751,7 +719,8 @@ void perform_job(int input_idx, projective_space_with_action *PA,
 			f_semilinear = FALSE;
 			}
 		do_canonical_form(n, F,
-			the_set_in, set_size_in, f_semilinear, canonical_form_fname_base,
+			the_set_in, set_size_in,
+			f_semilinear, canonical_form_fname_base,
 			verbose_level);
 		}
 	else if (f_ideal) {
@@ -770,29 +739,63 @@ void perform_job(int input_idx, projective_space_with_action *PA,
 
 }
 
-void back_end(int input_idx,
-		projective_space_with_action *PA,
-		object_in_projective_space *OiP,
-		ostream &fp,
-		int verbose_level)
+void do_canonical_form(int n, finite_field *F,
+	int *set, int set_size, int f_semilinear,
+	const char *fname_base, int verbose_level)
 {
-	int *the_set_out = NULL;
-	int set_size_out = 0;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	projective_space *P;
+	int canonical_pt;
 
-	perform_job(input_idx, PA,
-			OiP,
-			the_set_out, set_size_out,
+	if (f_v) {
+		cout << "do_canonical_form" << endl;
+		}
+
+	P = NEW_OBJECT(projective_space);
+
+	if (f_v) {
+		cout << "do_canonical_form before P->init" << endl;
+		}
+
+	P->init(n, F,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "do_canonical_form after P->init" << endl;
+		}
+
+	strong_generators *SG;
+	action *A_linear;
+	vector_ge *nice_gens;
+
+	A_linear = NEW_OBJECT(action);
+	A_linear->init_projective_group(n + 1, F, f_semilinear,
+			TRUE /* f_basis */,
+			nice_gens,
 			verbose_level);
 
-	fp << set_size_out;
-	for (int i = 0; i < set_size_out; i++) {
-		fp << " " << the_set_out[i];
-	}
-	fp << endl;
+	if (f_v) {
+		cout << "do_canonical_form before "
+				"set_stabilizer_in_projective_space" << endl;
+		}
+	SG = A_linear->set_stabilizer_in_projective_space(
+		P,
+		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */,
+		FALSE, NULL,
+		verbose_level);
+	//P->draw_point_set_in_plane(fname_base, set, set_size,
+	// TRUE /*f_with_points*/, 0 /* verbose_level */);
+	FREE_OBJECT(nice_gens);
+	FREE_OBJECT(SG);
+	FREE_OBJECT(A_linear);
+	FREE_OBJECT(P);
 
-	if (the_set_out) {
-		FREE_int(the_set_out);
-	}
+	if (f_v) {
+		cout << "do_canonical_form done" << endl;
+		}
 
 }
+
 

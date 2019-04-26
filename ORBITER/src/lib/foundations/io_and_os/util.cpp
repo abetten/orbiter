@@ -311,6 +311,15 @@ uint32_t int_vec_hash(int *data, int len)
 	return h;
 }
 
+uint32_t char_vec_hash(char *data, int len)
+{
+	uint32_t h;
+
+	h = SuperFastHash ((const char *) data,
+		(uint32_t) len);
+	return h;
+}
+
 int int_vec_hash_after_sorting(int *data, int len)
 {
 	int *data2;

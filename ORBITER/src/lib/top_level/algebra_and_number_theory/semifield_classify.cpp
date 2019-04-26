@@ -17,6 +17,7 @@ namespace top_level {
 
 semifield_classify::semifield_classify()
 {
+	n = 0;
 	k = 0;
 	k2 = 0;
 	F = NULL;
@@ -109,7 +110,6 @@ void semifield_classify::freeself()
 void semifield_classify::init(int argc, const char **argv,
 	int order, int n, int k,
 	finite_field *F,
-	const char *prefix,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -121,6 +121,7 @@ void semifield_classify::init(int argc, const char **argv,
 		cout << "semifield_classify::init" << endl;
 		}
 
+	semifield_classify::n = n;
 	semifield_classify::k = k;
 	k2 = k * k;
 	semifield_classify::F = F;
@@ -132,9 +133,17 @@ void semifield_classify::init(int argc, const char **argv,
 		exit(1);
 		}
 
+	if (sizeof(int) * 8 - 1 < k2) {
+		cout << "sizeof(int) * 8 - 1 < k2, overflow will happen" << endl;
+		cout << "sizeof(int)=" << sizeof(int) << endl;
+		cout << "k2=" << k2 << endl;
+		exit(1);
+	}
+
 	if (f_v) {
 		cout << "semifield_classify::init q=" << q << endl;
 		cout << "semifield_classify::init k=" << k << endl;
+		cout << "semifield_classify::init n=" << n << endl;
 		cout << "semifield_classify::init order=" << order << endl;
 		}
 
@@ -150,7 +159,14 @@ void semifield_classify::init(int argc, const char **argv,
 			cout << "-level3_prefix " << level_three_prefix << endl;
 			}
 		}
+
 	vector_space_dimension = k2;
+
+	// for test_partial_semifield:
+	test_base_cols = NEW_int(n);
+	test_v = NEW_int(n);
+	test_w = NEW_int(n);
+	test_Basis = NEW_int(k * k2);
 
 
 	T = NEW_OBJECT(spread);
@@ -332,6 +348,29 @@ void semifield_classify::init(int argc, const char **argv,
 	Symmetry_group = Strong_gens->create_sims(verbose_level);
 
 
+
+
+
+
+
+	if (f_v) {
+		cout << "semifield_classify::init done" << endl;
+		}
+}
+
+
+void semifield_classify::init_poset_classification(
+		int argc, const char **argv,
+		const char *prefix,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_object go;
+
+	if (f_v) {
+		cout << "semifield_classify::init_poset_classification" << endl;
+		}
+
 	Poset = NEW_OBJECT(poset);
 	vector_space *VS;
 	VS = NEW_OBJECT(vector_space);
@@ -402,19 +441,11 @@ void semifield_classify::init(int argc, const char **argv,
 
 	schreier_depth = Gen->depth;
 
-	// for test_partial_semifield:
-	test_base_cols = NEW_int(n);
-	test_v = NEW_int(n);
-	test_w = NEW_int(n);
-	test_Basis = NEW_int(k * k2);
-
-
-
-
 	if (f_v) {
-		cout << "semifield_classify::init done" << endl;
+		cout << "semifield_classify::init_poset_classification done" << endl;
 		}
 }
+
 
 void semifield_classify::compute_orbits(int depth, int verbose_level)
 {
