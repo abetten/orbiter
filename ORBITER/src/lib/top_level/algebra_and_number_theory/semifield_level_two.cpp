@@ -1472,6 +1472,17 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	i = 0;
 	while (i >= 0) {
 		for (Cnt[i]++; Cnt[i] < N; Cnt[i]++) {
+
+#if 0
+			// for debug purposes:
+			if (i == 0) {
+				if (Cnt[i] > 2) {
+					continue;
+				}
+			}
+#endif
+
+
 			int_vec_copy(Affine_k + Cnt[i] * k, Mtx1 + i * k, k);
 			//AG_element_unrank(q, Mtx1 + i * k, 1, k, Cnt[i]);
 			if (i < 2 && Mtx1[i * k + 0]) {
@@ -1543,6 +1554,13 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 #endif
 
 			r = SC->matrix_rank(Mtx1);
+			if (r < 0) {
+				cout << "semifield_level_two::compute_candidates_at_"
+					"level_two_case orbit r < 0" << endl;
+				cout << "Mtx1:" << endl;
+				int_matrix_print(Mtx1, k, k);
+				exit(1);
+			}
 			Sorting.lint_vec_append_and_reallocate_if_necessary(
 					Candidates, nb_candidates, alloc_length, r,
 					0 /*verbose_level*/);
@@ -1553,7 +1571,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 		} // while
 
 
-	if (TRUE) {
+	if (f_v) {
 		cout << "Level 2: orbit " << orbit << " / " << nb_orbits
 				<< ": nb_tested = " << nb_tested << ", found "
 				<< nb_candidates << " candidates, sorting them now." << endl;
@@ -1697,11 +1715,11 @@ void semifield_level_two::find_all_candidates_at_level_two(
 		char fname_test[1000];
 
 		if (SC->f_level_two_prefix) {
-			sprintf(fname_test, "%sC2_orbit%d_type%d_int4.bin",
+			sprintf(fname_test, "%sC2_orbit%d_type%d_int8.bin",
 					SC->level_two_prefix, orbit, (int) 0);
 			}
 		else {
-			sprintf(fname_test, "C2_orbit%d_type%d_int4.bin",
+			sprintf(fname_test, "C2_orbit%d_type%d_int8.bin",
 					orbit, (int) 0);
 			}
 
@@ -1731,11 +1749,11 @@ void semifield_level_two::find_all_candidates_at_level_two(
 				char fname[1000];
 
 				if (SC->f_level_two_prefix) {
-					sprintf(fname, "%sC2_orbit%d_type%d_int4.bin",
+					sprintf(fname, "%sC2_orbit%d_type%d_int8.bin",
 							SC->level_two_prefix, orbit, h);
 					}
 				else {
-					sprintf(fname, "C2_orbit%d_type%d_int4.bin",
+					sprintf(fname, "C2_orbit%d_type%d_int8.bin",
 							orbit, h);
 					}
 				Fio.write_set_to_file_as_int8(fname,
@@ -1872,11 +1890,11 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 		char fname[1000];
 
 		if (SC->f_level_two_prefix) {
-			sprintf(fname, "%sC2_orbit%d_type%d_int4.bin",
+			sprintf(fname, "%sC2_orbit%d_type%d_int8.bin",
 					SC->level_two_prefix, orbit, h);
 			}
 		else {
-			sprintf(fname, "C2_orbit%d_type%d_int4.bin", orbit, h);
+			sprintf(fname, "C2_orbit%d_type%d_int8.bin", orbit, h);
 			}
 		cout << "Reading file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

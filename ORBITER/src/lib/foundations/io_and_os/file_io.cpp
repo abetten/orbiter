@@ -1027,6 +1027,43 @@ void file_io::int_matrix_read_csv(const char *fname,
 
 }
 
+void file_io::lint_matrix_read_csv(const char *fname,
+	long int *&M, int &m, int &n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	long int a;
+
+	if (f_v) {
+		cout << "lint_matrix_read_csv reading file " << fname << endl;
+		}
+	if (file_size(fname) <= 0) {
+		cout << "int_matrix_read_csv file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << file_size(fname) << endl;
+		exit(1);
+		}
+	{
+	spreadsheet S;
+
+	S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+	m = S.nb_rows - 1;
+	n = S.nb_cols - 1;
+	M = NEW_lint(m * n);
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = my_atol(S.get_string(i + 1, j + 1));
+			M[i * n + j] = a;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "lint_matrix_read_csv done" << endl;
+		}
+
+}
+
 void file_io::double_matrix_read_csv(const char *fname,
 	double *&M, int &m, int &n, int verbose_level)
 {

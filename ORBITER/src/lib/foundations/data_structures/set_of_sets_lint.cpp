@@ -50,6 +50,26 @@ void set_of_sets_lint::freeself()
 	null();
 }
 
+void set_of_sets_lint::init_simple(long int underlying_set_size,
+		int nb_sets, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "set_of_sets_lint::init_simple nb_sets=" << nb_sets
+				<< " underlying_set_size=" << underlying_set_size << endl;
+		}
+	set_of_sets_lint::nb_sets = nb_sets;
+	set_of_sets_lint::underlying_set_size = underlying_set_size;
+	Sets = NEW_plint(nb_sets);
+	Set_size = NEW_int(nb_sets);
+	for (i = 0; i < nb_sets; i++) {
+		Sets[i] = NULL;
+		}
+	int_vec_zero(Set_size, nb_sets);
+}
+
 void set_of_sets_lint::init(long int underlying_set_size,
 		int nb_sets, long int **Pts, int *Sz, int verbose_level)
 {
@@ -95,6 +115,32 @@ void set_of_sets_lint::init_basic(long int underlying_set_size,
 		}
 }
 
+
+void set_of_sets_lint::init_set(int idx_of_set,
+		long int *set, int sz, int verbose_level)
+// Stores a copy of the given set.
+{
+	int f_v = (verbose_level >= 1);
+	int j;
+
+	if (f_v) {
+		cout << "set_of_sets_lint::init_set" << endl;
+		}
+	if (Sets[idx_of_set]) {
+		cout << "set_of_sets_lint::init_set Sets[idx_of_set] "
+				"is allocated" << endl;
+		exit(1);
+		}
+	Sets[idx_of_set] = NEW_lint(sz);
+	Set_size[idx_of_set] = sz;
+	for (j = 0; j < sz; j++) {
+		Sets[idx_of_set][j] = set[j];
+		}
+
+	if (f_v) {
+		cout << "set_of_sets_lint::init_set done" << endl;
+		}
+}
 
 
 

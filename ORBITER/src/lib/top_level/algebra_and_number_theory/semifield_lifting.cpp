@@ -48,12 +48,27 @@ semifield_lifting::semifield_lifting()
 	Mo = NULL;
 	Pt = NULL;
 	Stabilizer_gens = NULL;
+
+	Matrix0 = Matrix1 = Matrix2 = NULL;
+	window_in = NULL;
 }
 
 semifield_lifting::~semifield_lifting()
 {
 	if (Gr) {
 		FREE_OBJECT(Gr);
+	}
+	if (Matrix0) {
+		FREE_int(Matrix0);
+	}
+	if (Matrix1) {
+		FREE_int(Matrix1);
+	}
+	if (Matrix2) {
+		FREE_int(Matrix2);
+	}
+	if (window_in) {
+		FREE_int(window_in);
 	}
 }
 
@@ -77,6 +92,12 @@ void semifield_lifting::init_level_three(
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(level, level - 1, SC->F, 0/*verbose_level - 10*/);
+
+	Matrix0 = NEW_int(k2);
+	Matrix1 = NEW_int(k2);
+	Matrix2 = NEW_int(k2);
+	window_in = NEW_int(k2);
+
 
 	if (f_v) {
 		cout << "semifield_lifting::init_level_three done" << endl;
@@ -805,14 +826,7 @@ void semifield_lifting::upstep(
 						"saving information" << endl;
 		}
 
-#if 0
-	write_level_file(level,
-			nb_orbits,
-			Stabilizer_gens,
-		Po, So, Mo, Pt,
-		verbose_level);
-#endif
-
+	write_level_file(verbose_level);
 
 
 	FREE_int(transporter);
@@ -1863,6 +1877,239 @@ int semifield_lifting::trace_to_level_three(
 }
 #endif
 
+void semifield_lifting::deep_search(
+	int orbit_r, int orbit_m,
+	int f_out_path, const char *out_path,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				"orbit_r=" << orbit_r
+				<< " orbit_m=" << orbit_m << endl;
+		}
+
+
+#if 0
+	nb_sol = 0;
+
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				"before compute_level_two" << endl;
+		}
+	compute_level_two(
+		FALSE /* f_write_class_reps */,
+		FALSE /* f_write_reps_tex */,
+		FALSE /* f_make_graphs */,
+		FALSE /* f_save_strong_generators */,
+		verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				"after compute_level_two" << endl;
+		}
+#endif
+
+
+	L2->allocate_candidates_at_level_two(verbose_level);
+
+	//read_info_file_for_level_three(verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				"after read_info_file_for_level_three" << endl;
+		}
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				"before deep_search_at_level_three" << endl;
+		}
+
+	int nb_sol;
+
+	deep_search_at_level_three(orbit_r, orbit_m,
+			f_out_path, out_path,
+			nb_sol,
+			verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				"after deep_search_at_level_three "
+				"nb_sol=" << nb_sol << endl;
+	}
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				" orbit_r=" << orbit_r
+				<< " orbit_m=" << orbit_m << " done" << endl;
+		}
+
+}
+
+void semifield_lifting::deep_search_at_level_three(
+	int orbit_r, int orbit_m,
+	int f_out_path, const char *out_path,
+	int &nb_sol,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int orbit;
+	int *Basis;
+	int *pivots;
+	int i;
+	char fname[1000];
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search_at_level_three" << endl;
+		}
+
+	nb_sol = 0;
+	if (f_out_path) {
+		sprintf(fname, "%ssol_%d_%d.txt", out_path, orbit_r, orbit_m);
+		}
+	else {
+		sprintf(fname, "sol_%d_%d.txt", orbit_r, orbit_m);
+		}
+
+
+	{
+	ofstream fp(fname);
+
+
+	Basis = NEW_int(k * k2);
+	pivots = NEW_int(k2);
+
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search_at_level_three "
+			"Level_three_nb_orbits = " << nb_orbits << endl;
+		}
+
+	for (orbit = 0; orbit < nb_orbits; orbit++) {
+
+		if ((orbit % orbit_m) != orbit_r) {
+			continue;
+			}
+
+		cout << "semifield_lifting::deep_search_at_level_three orbit "
+			<< orbit << " / " << nb_orbits << ":" << endl;
+
+		get_basis_and_pivots(orbit,
+				Basis, pivots, verbose_level - 1);
+		for (i = 0; i < 3; i++) {
+			cout << "matrix " << i << ":" << endl;
+			int_matrix_print(Basis + i * k2, k, k);
+			}
+		cout << "pivots: ";
+		int_vec_print(cout, pivots, 3);
+		cout << endl;
+
+
+		if (k == 6) {
+			deep_search_at_level_three_orbit(orbit,
+				Basis, pivots, fp, nb_sol, verbose_level);
+			}
+#if 0
+		else if (k == 5) {
+			deep_search_at_level_three_orbit_depth2(orbit,
+				Basis, pivots, fp, verbose_level);
+			}
+#endif
+
+		}
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	if (f_out_path) {
+		sprintf(fname, "%ssuc_%d_%d.txt", out_path, orbit_r, orbit_m);
+		}
+	else {
+		sprintf(fname, "suc_%d_%d.txt", orbit_r, orbit_m);
+		}
+	{
+	ofstream fp(fname);
+	fp << "Case " << orbit_r << " mod " << orbit_m
+			<< " is done" << endl;
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+	FREE_int(Basis);
+	FREE_int(pivots);
+	if (f_v) {
+		cout << "semifield_lifting::deep_search_at_level_three "
+				"done" << endl;
+		}
+}
+
+void semifield_lifting::get_basis_and_pivots(
+	int po3, int *basis, int *pivots, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int po, so, mo;
+	long int pt;
+	long int a;
+	int ext, idx, i;
+
+	if (f_v) {
+		cout << "semifield_lifting::get_basis_and_pivots "
+				"po3 = " << po3 << endl;
+		}
+
+	SC->F->identity_matrix(basis, k);
+
+	po = Po[po3];
+	so = So[po3];
+	mo = Mo[po3];
+	pt = Pt[po3];
+
+	if (f_vv) {
+		cout << "po=" << po << " so=" << so << " mo=" << mo
+				<< " pt=" << pt << endl;
+		}
+
+
+	ext = L2->up_orbit_rep[po];
+	idx = L2->down_orbit_classes[ext * 2 + 0];
+	a = L2->class_rep_rank[idx];
+
+	SC->matrix_unrank(a, basis + 1 * k2);
+
+	SC->matrix_unrank(pt, basis + 2 * k2);
+
+	pivots[0] = 0;
+	pivots[1] = k;
+	for (i = k - 1; i >= 2; i--) { // for (i = 2; i < k; i++)
+		if (basis[2 * k2 + i * k + 0]) {
+			pivots[2] = i * k;
+			break;
+			}
+		}
+	if (i == k) {
+		cout << "Could not find pivot element" << endl;
+		exit(1);
+		}
+	if (f_vv) {
+		cout << "semifield_lifting::get_basis_and_pivots "
+				"Basis:" << endl;
+		int_matrix_print(basis, 3, k2);
+		cout << "semifield_lifting::get_basis_and_pivots "
+				"pivots: ";
+		int_vec_print(cout, pivots, 3);
+		cout << endl;
+		}
+
+
+	if (f_v) {
+		cout << "semifield_lifting::get_basis_and_pivots "
+				"po=" << po << " done" << endl;
+		}
+}
+
 void semifield_lifting::print_stabilizer_orders()
 {
 	int *Go;
@@ -1877,6 +2124,565 @@ void semifield_lifting::print_stabilizer_orders()
 	cout << "distribution of stabilizer orders at level " << cur_level << " : ";
 	C.print(TRUE /* f_backwards */);
 	FREE_int(Go);
+}
+
+void semifield_lifting::deep_search_at_level_three_orbit(
+	int orbit, int *Basis, int *pivots,
+	ofstream &fp,
+	int &nb_sol,
+	int verbose_level)
+// deep search for levels three to six
+// this function is called from
+// semifield_starter::deep_search_at_level_three
+// in semifield_starter_level_three.C
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
+	int f_v4 = FALSE; //(verbose_level >= 3);
+	int po;
+	long int a1, a2, a3;
+	int cur_pivot_row;
+	int u;
+	set_of_sets_lint *C3; // Level two candidates sorted by type
+	set_of_sets_lint *C4; // those that are compatible with A_3
+	set_of_sets_lint *C5; // those that are compatible with A_4
+	set_of_sets_lint *C6; // those that are compatible with A_5
+
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search_at_level_three_orbit "
+				<< orbit << " / " << nb_orbits << endl;
+		}
+
+	cur_pivot_row = pivots[2] / k;
+	if (f_vv) {
+		cout << "semifield_lifting::deep_search_at_level_three_orbit "
+				"cur_pivot_row = " << cur_pivot_row << endl;
+		}
+
+	if (cur_pivot_row != k - 1) {
+		cout << "semifield_lifting::deep_search_at_level_three_orbit "
+				"cur_pivot_row != k - 1" << endl;
+
+		fp << "start orbit " << orbit << endl;
+		fp << "finish orbit " << orbit << " " << nb_sol << endl;
+
+		if (f_v) {
+			cout << "semifield_lifting::deep_search_at_level_three_orbit "
+					<< orbit << " / " << nb_orbits
+					<< " skipped because pivot is not in the last row, "
+							"nb_sol = " << nb_sol << endl;
+			}
+
+		return;
+		//exit(1);
+		}
+
+
+	fp << "start orbit " << orbit << endl;
+
+	level_three_get_a1_a2_a3(orbit, a1, a2, a3, verbose_level);
+
+	po = Po[orbit];
+
+
+
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search_at_level_three_orbit "
+				<< orbit << " / " << nb_orbits
+				<< " reading candidates by type, po = " << po << endl;
+		}
+	L2->read_candidates_at_level_two_by_type(C3, po, verbose_level - 2);
+		// semifield_starter_level_two.C
+		// reads the files "C2_orbit%d_type%d_int4.bin"
+		// this function allocates C3
+
+	C4 = NEW_OBJECT(set_of_sets_lint);
+	C5 = NEW_OBJECT(set_of_sets_lint);
+	C6 = NEW_OBJECT(set_of_sets_lint);
+
+	long int underlying_set_size;
+	int max_l = 0;
+	long int *Tmp1;
+	long int *Tmp2;
+	number_theory_domain NT;
+
+	underlying_set_size = NT.i_power_j(SC->q, k2);
+
+	C4->init_simple(underlying_set_size, NT.i_power_j(SC->q, k - 3),
+			0 /*verbose_level - 2*/);
+	C5->init_simple(underlying_set_size, NT.i_power_j(SC->q, k - 4),
+			0 /*verbose_level - 2*/);
+	C6->init_simple(underlying_set_size, NT.i_power_j(SC->q, k - 5),
+			0 /*verbose_level - 2*/);
+
+	for (u = 0; u < C3->nb_sets; u++) {
+		max_l = MAXIMUM(max_l, C3->Set_size[u]);
+		}
+	Tmp1 = NEW_lint(max_l);
+	Tmp2 = NEW_lint(max_l);
+
+
+	for (u = 0; u < C4->nb_sets; u++) {
+		C4->init_set(u, C3->Sets[2 * u], C3->Set_size[2 * u],
+				0 /*verbose_level*/);
+		}
+	for (u = 0; u < C5->nb_sets; u++) {
+		C5->init_set(u, C4->Sets[2 * u], C4->Set_size[2 * u],
+				0 /*verbose_level*/);
+		}
+	for (u = 0; u < C6->nb_sets; u++) {
+		C6->init_set(u, C5->Sets[2 * u], C5->Set_size[2 * u],
+				0 /*verbose_level*/);
+		}
+
+
+	if (f_vv) {
+		cout << "semifield_lifting::deep_search_at_level_three_orbit "
+				"computing candidates C4" << endl;
+		}
+
+	candidate_testing(orbit,
+		Basis + 2 * k2, k - 1, k - 2,
+		C3, C4,
+		Tmp1, Tmp2,
+		verbose_level - 1);
+		// in deep_search.C
+
+	if (f_vv) {
+		cout << "semifield_lifting::deep_search_at_level_three_orbit "
+				"computing candidates C4 done" << endl;
+		}
+
+
+
+	int c4, a4;
+	long int A4;
+	int nb_sol0;
+
+
+	for (c4 = 0; c4 < C4->Set_size[1]; c4++) {
+
+
+
+		nb_sol0 = nb_sol;
+
+		a4 = C4->Sets[1][c4];
+		SC->matrix_unrank(a4, Basis + 3 * k2);
+
+		// put the pivot element:
+		Basis[3 * k2 + (k - 2) * k + 0] = 1;
+
+		A4 = SC->matrix_rank(Basis + 3 * k2);
+
+		if (f_v3) {
+			cout << "Level 3, orbit " << orbit << " / "
+					<< nb_orbits << " level 4 case "
+					<< c4 << " / " << C4->Set_size[1] << " is matrix" << endl;
+			int_matrix_print(Basis + 3 * k2, k, k);
+			}
+
+		pivots[3] = (k - 2) * k;
+
+
+
+
+		if (f_v4) {
+			cout << "semifield_lifting::deep_search_at_level_three_orbit "
+					"computing candidates C5" << endl;
+			}
+
+		if (!candidate_testing(orbit,
+			Basis + 3 * k2, k - 2, k - 3,
+			C4, C5,
+			Tmp1, Tmp2,
+			0 /*verbose_level - 1*/)) {
+			goto done4;
+			}
+
+		if (f_v4) {
+			cout << "semifield_lifting::deep_search_at_level_three_orbit "
+					"computing candidates C5 done" << endl;
+			}
+
+
+		int c5, a5;
+		long int A5;
+		for (c5 = 0; c5 < C5->Set_size[1]; c5++) {
+
+
+			a5 = C5->Sets[1][c5];
+			SC->matrix_unrank(a5, Basis + 4 * k2);
+
+			// put the pivot element:
+			Basis[4 * k2 + (k - 3) * k + 0] = 1;
+
+			A5 = SC->matrix_rank(Basis + 4 * k2);
+
+			if (f_v3) {
+				cout << "Level 3, orbit " << orbit << " / "
+						<< nb_orbits << " level 4 case "
+						<< c4 << " / " << C4->Set_size[1] << " level 5 case "
+						<< c5 << " / " << C5->Set_size[1]
+						<< " is matrix" << endl;
+				int_matrix_print(Basis + 4 * k2, k, k);
+				}
+
+			pivots[4] = (k - 3) * k;
+
+
+
+			if (f_v4) {
+				cout << "semifield_lifting::deep_search_at_level_"
+						"three_orbit computing candidates C6" << endl;
+				}
+
+			if (!candidate_testing(orbit,
+				Basis + 4 * k2, k - 3, k - 4,
+				C5, C6,
+				Tmp1, Tmp2,
+				0 /*verbose_level - 1*/)) {
+				continue;
+				}
+
+			if (f_v4) {
+				cout << "semifield_lifting::deep_search_at_level_"
+						"three_orbit computing candidates C6 done" << endl;
+				}
+
+			int c6, a6;
+			long int A6;
+			for (c6 = 0; c6 < C6->Set_size[1]; c6++) {
+
+
+				a6 = C6->Sets[1][c6];
+				SC->matrix_unrank(a6, Basis + 5 * k2);
+
+				// put the pivot element:
+				Basis[5 * k2 + (k - 4) * k + 0] = 1;
+
+				A6 = SC->matrix_rank(Basis + 5 * k2);
+
+				fp << "SOL " << orbit << " " << c4 << " " << c5 << " "
+						<< c6 << " " << a1 << " " << a2 << " " << a3
+						<< " " << A4 << " " << A5 << " " << A6 << endl;
+				cout << "SEMIFIELD " << nb_sol << " : " << a1 << ", "
+						<< a2 << ", " << a3 << ", " << A4 << ", "
+						<< A5 << ", " << A6 << endl;
+
+				long int A[6];
+
+				A[0] = a1;
+				A[1] = a2;
+				A[2] = a3;
+				A[3] = A4;
+				A[4] = A5;
+				A[5] = A6;
+				//compute_automorphism_group(6, 3, orbit, A, verbose_level);
+				nb_sol++;
+
+				}
+
+
+
+			} // next c5
+
+
+done4:
+
+		if (f_v && ((c4 % 1000) == 0)) {
+			cout << "Level 3, orbit " << orbit << " / "
+					<< nb_orbits << ", L4 case " << c4
+					<< " / " << C4->Set_size[1] << " done, "
+					"yields nb_sol = " << nb_sol - nb_sol0
+					<< " solutions, nb_sol = " << nb_sol << endl;
+			}
+
+		} // next c4
+
+
+
+
+	fp << "finish orbit " << orbit << " " << nb_sol << endl;
+
+
+
+
+
+	FREE_OBJECT(C3);
+	FREE_OBJECT(C4);
+	FREE_OBJECT(C5);
+	FREE_OBJECT(C6);
+
+	FREE_lint(Tmp1);
+	FREE_lint(Tmp2);
+
+
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_lifting::deep_search_at_level_three_orbit "
+				<< orbit << " / " << nb_orbits << " done, "
+						"nb_sol = " << nb_sol << endl;
+		}
+}
+
+int semifield_lifting::candidate_testing(
+	int orbit,
+	int *last_mtx, int window_bottom, int window_size,
+	set_of_sets_lint *C_in, set_of_sets_lint *C_out,
+	long int *Tmp1, long int *Tmp2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int u, v, w;
+	int h, l;
+	int Nb_sets_new;
+	int window_bottom_new, window_size_new;
+	int pivot_row;
+	long int last_mtx_numeric;
+	number_theory_domain NT;
+	geometry_global Gg;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "semifield_lifting::candidate_testing" << endl;
+		}
+
+	last_mtx_numeric = SC->matrix_rank_without_first_column(last_mtx);
+
+
+	pivot_row = window_bottom;
+
+	window_bottom_new = pivot_row - 1;
+	window_size_new = window_size - 1;
+
+	Nb_sets_new = NT.i_power_j(SC->q, window_size_new);
+
+
+	for (u = 1; u < Nb_sets_new; u++) {
+
+
+		v = 2 * u;
+		w = v + 1;
+		l = C_in->Set_size[v];
+		Gg.AG_element_unrank(SC->q, window_in, 1, window_size, v);
+		if (f_v) {
+			cout << "Level 3, Orbit " << orbit << " / "
+					<< nb_orbits << ": testing "
+					<< u << " / " << Nb_sets_new << " v=" << v
+					<< " w=" << w << " testing " << l
+					<< " points, pattern: ";
+			int_vec_print(cout, window_in, window_size);
+			cout << endl;
+			}
+
+
+		int set_sz;
+
+		for (h = 0; h < l; h++) {
+			Tmp1[h] = C_in->Sets[v][h] ^ last_mtx_numeric;
+			}
+
+		Sorting.lint_vec_heapsort(Tmp1, l);
+
+		Sorting.lint_vec_intersect_sorted_vectors(
+				Tmp1, l,
+				C_in->Sets[w], C_in->Set_size[w],
+				Tmp2, set_sz);
+
+		for (h = 0; h < set_sz; h++) {
+			Tmp2[h] ^= last_mtx_numeric;
+			}
+		Sorting.lint_vec_heapsort(Tmp2, set_sz);
+		for (h = 0; h < set_sz; h++) {
+			C_out->Sets[u][h] = Tmp2[h];
+			}
+		C_out->Set_size[u] = set_sz;
+
+		if (u && C_out->Set_size[u] == 0) {
+			return FALSE;
+			}
+
+		} // next u
+
+
+
+	if (f_v) {
+		cout << "semifield_lifting::candidate_testing "
+				"done" << endl;
+		}
+	return TRUE;
+}
+
+void semifield_lifting::level_three_get_a1_a2_a3(
+	int po3, long int &a1, long int &a2, long int &a3,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int po, so, mo;
+	long int pt, a;
+	int ext, idx;
+	int *basis;
+
+	if (f_v) {
+		cout << "semifield_lifting::level_three_get_a1_a2_a3 "
+				"po3 = " << po3 << endl;
+		}
+	po = Po[po3];
+	so = So[po3];
+	mo = Mo[po3];
+	pt = Pt[po3];
+
+
+	ext = L2->up_orbit_rep[po];
+	idx = L2->down_orbit_classes[ext * 2 + 0];
+	a = L2->class_rep_rank[idx];
+
+	basis = NEW_int(k2);
+
+	SC->F->identity_matrix(basis, k);
+
+	a1 = SC->matrix_rank(basis);
+
+	FREE_int(basis);
+
+	a2 = a;
+	a3 = pt;
+	if (f_v) {
+		cout << "semifield_lifting::level_three_get_a1_a2_a3 "
+				" a1 = " << a1
+				<< " a2 = " << a2
+				<< " a3 = " << a3
+				<< endl;
+		}
+}
+
+void semifield_lifting::write_level_file(
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_lifting::write_level_file "
+				"level=" << cur_level << endl;
+		}
+	int *Go;
+	int i;
+	Go = NEW_int(nb_orbits);
+	for (i = 0; i < nb_orbits; i++) {
+		Go[i] = Stabilizer_gens[i].group_order_as_int();
+		}
+	//int *Vec[5];
+	int nb_vecs = 5;
+	const char *column_label[] = {
+		"Go",
+		"Po",
+		"So",
+		"Mo",
+		"Pt"
+		};
+	char fname[1000];
+
+	sprintf(fname, "Level_%d_info.csv", cur_level);
+
+#if 0
+	Vec[0] = Go;
+	Vec[1] = Po;
+	Vec[2] = So;
+	Vec[3] = Mo;
+	Vec[4] = Pt;
+#endif
+
+	{
+	ofstream f(fname);
+	int j;
+
+	f << "Row";
+	for (j = 0; j < nb_vecs; j++) {
+		f << "," << column_label[j];
+		}
+	f << endl;
+	for (i = 0; i < nb_orbits; i++) {
+		f << i;
+		f << "," << Go[i] << "," << Po[i] << "," << So[i] << "," << Mo[i] << "," << Pt[i] << endl;
+		}
+	f << "END" << endl;
+	}
+
+	cout << "Written file " << fname << " of size"
+			<< Fio.file_size(fname) << endl;
+	FREE_int(Go);
+	if (f_v) {
+		cout << "semifield_lifting::write_level_file done" << endl;
+		}
+
+}
+
+
+void semifield_lifting::read_info_file_for_level_three(
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char fname[1000];
+	long int *M;
+	int m, n, i;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_lifting::read_info_file_for_level_"
+			"three" << endl;
+		}
+	if (SC->f_level_three_prefix) {
+		sprintf(fname, "%sLevel_3_info.csv", SC->level_three_prefix);
+		}
+	else {
+		sprintf(fname, "Level_3_info.csv");
+		}
+
+	cout << "semifield_lifting::read_info_file_for_level_three "
+		"trying to read file " << fname << endl;
+
+	if (Fio.file_size(fname) <= 0) {
+		cout << "semifield_lifting::read_info_file_for_level_three "
+			"error trying to read the file " << fname << endl;
+		exit(1);
+		}
+
+	Fio.lint_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+		// Row,Go,Po,So,Mo,Pt
+
+	nb_orbits = m;
+
+	Po = NEW_int(m);
+	So = NEW_int(m);
+	Mo = NEW_int(m);
+	Pt = NEW_lint(m);
+
+	nb_flag_orbits = 0;
+
+	for (i = 0; i < m; i++) {
+		Po[i] = M[i * n + 1];
+		So[i] = M[i * n + 2];
+		Mo[i] = M[i * n + 3];
+
+		nb_flag_orbits = MAXIMUM(
+				nb_flag_orbits, Mo[i]);
+
+		Pt[i] = M[i * n + 4];
+		}
+
+	nb_flag_orbits++;
+
+	FREE_lint(M);
+
+	if (f_v) {
+		cout << "semifield_starter::read_info_file_for_"
+			"level_three done" << endl;
+		}
 }
 
 
