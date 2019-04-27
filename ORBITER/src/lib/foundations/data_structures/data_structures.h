@@ -471,10 +471,14 @@ public:
 	~set_of_sets_lint();
 	void null();
 	void freeself();
+	void init_simple(long int underlying_set_size,
+			int nb_sets, int verbose_level);
 	void init(long int underlying_set_size,
 			int nb_sets, long int **Pts, int *Sz, int verbose_level);
 	void init_basic(long int underlying_set_size,
 			int nb_sets, int *Sz, int verbose_level);
+	void init_set(int idx_of_set,
+			long int *set, int sz, int verbose_level);
 };
 
 
@@ -619,6 +623,8 @@ public:
 		int *&v3, int &len3);
 	void int_vec_intersect_sorted_vectors(int *v1, int len1,
 		int *v2, int len2, int *v3, int &len3);
+	void lint_vec_intersect_sorted_vectors(long int *v1, int len1,
+			long int *v2, int len2, long int *v3, int &len3);
 	void int_vec_sorting_permutation(int *v, int len, int *perm,
 		int *perm_inv, int f_increasingly);
 	// perm and perm_inv must be allocated to len elements
@@ -812,8 +818,6 @@ public:
 
 };
 
-int my_atoi(char *str);
-int compare_strings(void *a, void *b, void *data);
 
 // #############################################################################
 // super_fast_hash.C:

@@ -85,6 +85,8 @@ public:
 		int *M, int m, int n, const char **column_label);
 	void int_matrix_read_csv(const char *fname, int *&M,
 		int &m, int &n, int verbose_level);
+	void lint_matrix_read_csv(const char *fname,
+		long int *&M, int &m, int &n, int verbose_level);
 	void double_matrix_read_csv(const char *fname, double *&M,
 		int &m, int &n, int verbose_level);
 	void int_matrix_write_text(const char *fname,
@@ -638,6 +640,10 @@ void gl_random_matrix(int k, int q, int verbose_level);
 int is_diagonal_matrix(int *A, int n);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
+int my_atoi(char *str);
+long int my_atol(char *str);
+int compare_strings(void *a, void *b, void *data);
+int strcmp_with_or_without(char *p, char *q);
 
 
 

@@ -129,7 +129,7 @@ public:
 			int **Mtx_stack, int stack_size, int *Mtx,
 			int verbose_level);
 	int test_partial_semifield_numerical_data(
-			int *data, int data_sz, int verbose_level);
+			long int *data, int data_sz, int verbose_level);
 	int test_partial_semifield(
 			int *Basis, int n, int verbose_level);
 	void test_rank_unrank();
@@ -137,10 +137,10 @@ public:
 	long int matrix_rank(int *Mtx);
 	long int matrix_rank_without_first_column(int *Mtx);
 	void basis_print(int *Mtx, int sz);
-	void basis_print_numeric(int *Rk, int sz);
+	void basis_print_numeric(long int *Rk, int sz);
 	void matrix_print(int *Mtx);
-	void matrix_print_numeric(int rk);
-	void print_set_of_matrices_numeric(int *Rk, int nb);
+	void matrix_print_numeric(long int rk);
+	void print_set_of_matrices_numeric(long int *Rk, int nb);
 	void apply_element(int *Elt,
 		int *basis_in, int *basis_out,
 		int first, int last_plus_one, int verbose_level);
@@ -339,6 +339,11 @@ public:
 	long int *Pt; // [nb_orbits]
 	strong_generators *Stabilizer_gens; // [nb_orbits]
 
+	// deep_search:
+	int *Matrix0, *Matrix1, *Matrix2;
+	int *window_in;
+
+
 	semifield_lifting();
 	~semifield_lifting();
 	void init_level_three(semifield_level_two *L2, int verbose_level);
@@ -374,7 +379,34 @@ public:
 		int verbose_level);
 		// input basis is input_basis of size basis_sz x k2
 		// there is a check if input_basis defines a semifield
+	void deep_search(
+		int orbit_r, int orbit_m,
+		int f_out_path, const char *out_path,
+		int verbose_level);
+	void deep_search_at_level_three(
+		int orbit_r, int orbit_m,
+		int f_out_path, const char *out_path,
+		int &nb_sol,
+		int verbose_level);
+	void get_basis_and_pivots(
+		int po3, int *basis, int *pivots, int verbose_level);
 	void print_stabilizer_orders();
+	void deep_search_at_level_three_orbit(
+		int orbit, int *Basis, int *pivots,
+		std::ofstream &fp,
+		int &nb_sol,
+		int verbose_level);
+	int candidate_testing(
+		int orbit,
+		int *last_mtx, int window_bottom, int window_size,
+		set_of_sets_lint *C_in, set_of_sets_lint *C_out,
+		long int *Tmp1, long int *Tmp2,
+		int verbose_level);
+	void level_three_get_a1_a2_a3(
+		int po3, long int &a1, long int &a2, long int &a3,
+		int verbose_level);
+	void write_level_file(int verbose_level);
+	void read_info_file_for_level_three(int verbose_level);
 
 };
 

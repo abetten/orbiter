@@ -527,6 +527,35 @@ void sorting::int_vec_intersect_sorted_vectors(int *v1, int len1,
 		}
 }
 
+void sorting::lint_vec_intersect_sorted_vectors(long int *v1, int len1,
+		long int *v2, int len2, long int *v3, int &len3)
+{
+	int i, j, a, b;
+
+	len3 = 0;
+	i = 0;
+	j = 0;
+	while (TRUE) {
+		if (i >= len1 || j >= len2) {
+			break;
+			}
+		a = v1[i];
+		b = v2[j];
+
+		if (a == b) {
+			v3[len3++] = a;
+			i++;
+			j++;
+			}
+		else if (a < b) {
+			i++;
+			}
+		else {
+			j++;
+			}
+		}
+}
+
 
 void sorting::int_vec_sorting_permutation(int *v, int len,
 	int *perm, int *perm_inv, int f_increasingly)
@@ -1699,7 +1728,7 @@ void sorting::heapsort_swap(int *v, int i, int j)
 
 void sorting::lint_heapsort_swap(long int *v, int i, int j)
 {
-	int a;
+	long int a;
 
 	a = v[i];
 	v[i] = v[j];

@@ -3163,6 +3163,64 @@ void print_longinteger_after_multiplying(
 	ost << a;
 }
 
+int my_atoi(char *str)
+{
+	int a;
+	if (strlen(str)) {
+		sscanf(str, "%d", &a); // don't use atoi, it fails for large numbers.
+		return a;
+		}
+	return 0;
+}
+
+long int my_atol(char *str)
+{
+	long int a;
+	if (strlen(str)) {
+		sscanf(str, "%ld", &a); // don't use atoi, it fails for large numbers.
+		return a;
+		}
+	return 0;
+}
+
+int compare_strings(void *a, void *b, void *data)
+{
+	char *A = (char *) a;
+	char *B = (char *) b;
+	return strcmp(A, B);
+}
+
+int strcmp_with_or_without(char *p, char *q)
+{
+	char *str1;
+	char *str2;
+	int ret;
+
+	if (p[0] == '"') {
+		str1 = NEW_char(strlen(p) + 1);
+		strcpy(str1, p);
+		}
+	else {
+		str1 = NEW_char(strlen(p) + 3);
+		strcpy(str1, "\"");
+		strcpy(str1 + strlen(str1), p);
+		strcpy(str1 + strlen(str1), "\"");
+		}
+	if (q[0] == '"') {
+		str2 = NEW_char(strlen(q) + 1);
+		strcpy(str2, q);
+		}
+	else {
+		str2 = NEW_char(strlen(q) + 3);
+		strcpy(str2, "\"");
+		strcpy(str2 + strlen(str2), q);
+		strcpy(str2 + strlen(str2), "\"");
+		}
+	ret = strcmp(str1, str2);
+	FREE_char(str1);
+	FREE_char(str2);
+	return ret;
+}
 
 
 

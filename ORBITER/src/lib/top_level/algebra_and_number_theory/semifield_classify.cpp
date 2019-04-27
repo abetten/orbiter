@@ -749,7 +749,7 @@ int semifield_classify::test_candidate(
 }
 
 int semifield_classify::test_partial_semifield_numerical_data(
-		int *data, int data_sz, int verbose_level)
+		long int *data, int data_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -919,7 +919,7 @@ void semifield_classify::basis_print(int *Mtx, int sz)
 		}
 }
 
-void semifield_classify::basis_print_numeric(int *Rk, int sz)
+void semifield_classify::basis_print_numeric(long int *Rk, int sz)
 {
 	int i;
 
@@ -935,7 +935,7 @@ void semifield_classify::matrix_print(int *Mtx)
 	int_matrix_print(Mtx, k, k);
 }
 
-void semifield_classify::matrix_print_numeric(int rk)
+void semifield_classify::matrix_print_numeric(long int rk)
 {
 	int *Mtx;
 
@@ -946,7 +946,7 @@ void semifield_classify::matrix_print_numeric(int rk)
 }
 
 void semifield_classify::print_set_of_matrices_numeric(
-		int *Rk, int nb)
+		long int *Rk, int nb)
 {
 	int *Mtx;
 	int i;
