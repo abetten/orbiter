@@ -72,6 +72,8 @@ class action_pointer_table;
 class nauty_interface;
 class exceptional_isomorphism_O4;
 class orbit_rep;
+class projective_space_with_action;
+class projective_space_job_description;
 
 //! enumeration to distinguish between the various types of group actions
 

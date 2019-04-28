@@ -1,0 +1,882 @@
+/*
+ * projective_space_job_description.cpp
+ *
+ *  Created on: Apr 28, 2019
+ *      Author: betten
+ */
+
+
+
+
+#include "foundations/foundations.h"
+#include "group_actions.h"
+
+
+using namespace std;
+
+
+namespace orbiter {
+namespace group_actions {
+
+
+projective_space_job_description::projective_space_job_description()
+{
+	t0 = 0;
+	F = NULL;
+	PA = NULL;
+
+	f_input = FALSE;
+	Data = NULL;
+
+	f_fname_base_out = FALSE;
+	fname_base_out = NULL;
+
+	f_q = FALSE;
+	q = 0;
+	f_n = FALSE;
+	n = 0;
+	f_poly = FALSE;
+	poly = NULL;
+
+	f_embed = FALSE;
+		// follow up option for f_print:
+		//f_orthogonal, orthogonal_epsilon
+
+	f_andre = FALSE;
+		// follow up option for f_andre:
+		f_Q = FALSE;
+		Q = 0;
+		f_poly_Q = FALSE;
+		poly_Q = NULL;
+
+
+	f_print = FALSE;
+		// follow up option for f_print:
+		f_lines_in_PG = FALSE;
+		f_points_in_PG = FALSE;
+		f_points_on_grassmannian = FALSE;
+		points_on_grassmannian_k = 0;
+		f_orthogonal = FALSE;
+		orthogonal_epsilon = 0;
+		f_homogeneous_polynomials = FALSE;
+		homogeneous_polynomials_degree = 0;
+		f_homogeneous_polynomial_domain_has_been_allocated = FALSE;
+		HPD = NULL;
+
+
+	f_list_group_elements = FALSE;
+	f_line_type = FALSE;
+	f_plane_type = FALSE;
+	f_plane_type_failsafe = FALSE;
+	f_conic_type = FALSE;
+		// follow up option for f_conic_type:
+		f_randomized = FALSE;
+		nb_times = 0;
+
+	f_hyperplane_type = FALSE;
+	// follow up option for f_hyperplane_type:
+		f_show = FALSE;
+
+
+	f_cone_over = FALSE;
+
+	f_bsf3 = FALSE;
+	f_test_diagonals = FALSE;
+	test_diagonals_fname = NULL;
+	f_klein = FALSE;
+
+	f_draw_points_in_plane = FALSE;
+		draw_points_in_plane_fname_base = NULL;
+		// follow up option for f_draw_points_in_plane:
+
+		f_point_labels = FALSE;
+		f_embedded = FALSE;
+		f_sideways = FALSE;
+
+	f_canonical_form = FALSE;
+	canonical_form_fname_base = NULL;
+	f_ideal = FALSE;
+	ideal_degree = 0;
+
+	f_intersect_with_set_from_file = FALSE;
+	intersect_with_set_from_file_fname = NULL;
+	intersect_with_set_from_file_set_has_beed_read = FALSE;
+	intersect_with_set_from_file_set = NULL;
+	intersect_with_set_from_file_set_size = 0;
+
+}
+
+projective_space_job_description::~projective_space_job_description()
+{
+
+}
+
+void projective_space_job_description::read_arguments_from_string(
+		const char *str, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	int argc;
+	char **argv;
+	int i;
+
+	if (f_v) {
+		cout << "projective_space_job_description::read_arguments_from_string" << endl;
+	}
+	chop_string(str, argc, argv);
+
+	if (f_vv) {
+		cout << "argv:" << endl;
+		for (i = 0; i < argc; i++) {
+			cout << i << " : " << argv[i] << endl;
+		}
+	}
+
+
+	read_arguments(
+		argc, (const char **) argv,
+		verbose_level);
+
+	for (i = 0; i < argc; i++) {
+		FREE_char(argv[i]);
+	}
+	FREE_pchar(argv);
+	if (f_v) {
+		cout << "projective_space_job_description::read_arguments_from_string "
+				"done" << endl;
+	}
+}
+
+int projective_space_job_description::read_arguments(
+	int argc, const char **argv,
+	int verbose_level)
+{
+	int i;
+
+	cout << "projective_space_job_description::read_arguments" << endl;
+	for (i = 0; i < argc; i++) {
+
+		if (strcmp(argv[i], "-v") == 0) {
+			verbose_level = atoi(argv[++i]);
+			cout << "-v " << verbose_level << endl;
+			}
+		else if (strcmp(argv[i], "-q") == 0) {
+			f_q = TRUE;
+			q = atoi(argv[++i]);
+			cout << "-q " << q << endl;
+			}
+		else if (strcmp(argv[i], "-Q") == 0) {
+			f_Q = TRUE;
+			Q = atoi(argv[++i]);
+			cout << "-Q " << Q << endl;
+			}
+		else if (strcmp(argv[i], "-n") == 0) {
+			f_n = TRUE;
+			n = atoi(argv[++i]);
+			cout << "-n " << n << endl;
+			}
+		else if (strcmp(argv[i], "-poly") == 0) {
+			f_poly = TRUE;
+			poly = argv[++i];
+			cout << "-poly " << poly << endl;
+			}
+		else if (strcmp(argv[i], "-poly_Q") == 0) {
+			f_poly_Q = TRUE;
+			poly_Q = argv[++i];
+			cout << "-poly_Q " << poly_Q << endl;
+			}
+		else if (strcmp(argv[i], "-input") == 0) {
+			f_input = TRUE;
+			Data = NEW_OBJECT(data_input_stream);
+			cout << "-input" << endl;
+			i += Data->read_arguments(argc - i,
+				argv + i + 1, verbose_level);
+			cout << "finished reading -input" << endl;
+			}
+		else if (strcmp(argv[i], "-fname_base_out") == 0) {
+			f_fname_base_out = TRUE;
+			fname_base_out = argv[++i];
+			cout << "-fname_base_out " << fname_base_out << endl;
+			}
+		else if (strcmp(argv[i], "-embed") == 0) {
+			f_embed = TRUE;
+			cout << "-embed" << endl;
+			}
+		else if (strcmp(argv[i], "-orthogonal") == 0) {
+			f_orthogonal = TRUE;
+			orthogonal_epsilon = atoi(argv[++i]);
+			cout << "-orthogonal " << orthogonal_epsilon << endl;
+			}
+		else if (strcmp(argv[i], "-homogeneous_polynomials") == 0) {
+			f_homogeneous_polynomials = TRUE;
+			homogeneous_polynomials_degree = atoi(argv[++i]);
+			cout << "-homogeneous_polynomials " << homogeneous_polynomials_degree << endl;
+			}
+		else if (strcmp(argv[i], "-andre") == 0) {
+			f_andre = TRUE;
+			cout << "-andre " << endl;
+			}
+		else if (strcmp(argv[i], "-print") == 0) {
+			f_print = TRUE;
+			cout << "-print " << endl;
+			}
+		else if (strcmp(argv[i], "-lines_in_PG") == 0) {
+			f_lines_in_PG = TRUE;
+			cout << "-lines_in_PG " << endl;
+			}
+		else if (strcmp(argv[i], "-points_in_PG") == 0) {
+			f_points_in_PG = TRUE;
+			cout << "-points_in_PG " << endl;
+			}
+		else if (strcmp(argv[i], "-points_on_grassmannian") == 0) {
+			f_points_on_grassmannian = TRUE;
+			points_on_grassmannian_k = atoi(argv[++i]);
+			cout << "-points_on_grassmannian " << points_on_grassmannian_k << endl;
+			}
+		else if (strcmp(argv[i], "-list_group_elements") == 0) {
+			f_list_group_elements = TRUE;
+			cout << "-list_group_elements" << endl;
+			}
+		else if (strcmp(argv[i], "-line_type") == 0) {
+			f_line_type = TRUE;
+			cout << "-line_type" << endl;
+			}
+		else if (strcmp(argv[i], "-plane_type") == 0) {
+			f_plane_type = TRUE;
+			cout << "-plane_type" << endl;
+			}
+		else if (strcmp(argv[i], "-plane_type_failsafe") == 0) {
+			f_plane_type_failsafe = TRUE;
+			cout << "-plane_type_failsafe" << endl;
+			}
+		else if (strcmp(argv[i], "-conic_type") == 0) {
+			f_conic_type = TRUE;
+			cout << "-conic_type " << endl;
+			}
+		else if (strcmp(argv[i], "-randomized") == 0) {
+			f_randomized = TRUE;
+			nb_times = atoi(argv[++i]);
+			cout << "-randomized " << nb_times << endl;
+			}
+		else if (strcmp(argv[i], "-hyperplane_type") == 0) {
+			f_hyperplane_type = TRUE;
+			cout << "-hyperplane_type" << endl;
+			}
+		else if (strcmp(argv[i], "-show") == 0) {
+			f_show = TRUE;
+			cout << "-show" << endl;
+			}
+		else if (strcmp(argv[i], "-cone_over") == 0) {
+			f_cone_over = TRUE;
+			cout << "-cone_over" << endl;
+			}
+		else if (strcmp(argv[i], "-bsf3") == 0) {
+			f_bsf3 = TRUE;
+			cout << "-bsf3" << endl;
+			}
+		else if (strcmp(argv[i], "-test_diagonals") == 0) {
+			f_test_diagonals = TRUE;
+			test_diagonals_fname = argv[++i];
+			cout << "-test_diagonals " << test_diagonals_fname << endl;
+			}
+		else if (strcmp(argv[i], "-klein") == 0) {
+			f_klein = TRUE;
+			cout << "-klein" << endl;
+			}
+		else if (strcmp(argv[i], "-draw_points_in_plane") == 0) {
+			f_draw_points_in_plane = TRUE;
+			draw_points_in_plane_fname_base = argv[++i];
+			cout << "-draw_points_in_plane" << endl;
+			}
+		else if (strcmp(argv[i], "-point_labels") == 0) {
+			f_point_labels = TRUE;
+			cout << "-point_labels" << endl;
+			}
+		else if (strcmp(argv[i], "-canonical_form") == 0) {
+			f_canonical_form = TRUE;
+			canonical_form_fname_base = argv[++i];
+			cout << "-canonical_form" << canonical_form_fname_base << endl;
+			}
+		else if (strcmp(argv[i], "-ideal") == 0) {
+			f_ideal = TRUE;
+			ideal_degree = atoi(argv[++i]);
+			cout << "-ideal " << ideal_degree << endl;
+			}
+		else if (strcmp(argv[i], "-embedded") == 0) {
+			f_embedded = TRUE;
+			cout << "-embedded" << endl;
+			}
+		else if (strcmp(argv[i], "-sideways") == 0) {
+			f_sideways = TRUE;
+			cout << "-sideways" << endl;
+			}
+		else if (strcmp(argv[i], "-intersect_with_set_from_file") == 0) {
+			f_intersect_with_set_from_file = TRUE;
+			intersect_with_set_from_file_fname = argv[++i];
+			cout << "-intersect_with_set_from_file " << intersect_with_set_from_file_fname << endl;
+			}
+		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "-end" << endl;
+			break;
+		}
+		else {
+			cout << "projective_space_job_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+		}
+	} // next i
+	cout << "projective_space_job_description::read_arguments done" << endl;
+	return i;
+}
+
+void projective_space_job_description::perform_job(int verbose_level)
+{
+	number_theory_domain NT;
+
+	F = NEW_OBJECT(finite_field);
+	F->init_override_polynomial(q, poly, 0);
+
+
+	projective_space_with_action *PA;
+	int nb_objects_to_test;
+	int input_idx;
+	int f_semilinear;
+	int f_init_incidence_structure = TRUE;
+
+	if (NT.is_prime(q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	PA->init(
+		F, n, f_semilinear,
+		f_init_incidence_structure,
+		verbose_level);
+
+
+	nb_objects_to_test = Data->count_number_of_objects_to_test(
+		verbose_level - 1);
+
+	cout << "nb_objects_to_test = " << nb_objects_to_test << endl;
+
+	t0 = os_ticks();
+
+	file_io Fio;
+	char fname_out_txt[1000];
+	char fname_out_tex[1000];
+
+	sprintf(fname_out_txt, "%s.txt", fname_base_out);
+	sprintf(fname_out_tex, "%s.tex", fname_base_out);
+
+	{
+		ofstream fp(fname_out_txt);
+		ofstream fp_tex(fname_out_tex);
+
+		latex_interface L;
+
+		L.head_easy(fp_tex);
+
+		for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
+			cout << "input " << input_idx << " / " << Data->nb_inputs
+				<< " is:" << endl;
+
+
+			if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+				cout << "input set of points "
+					<< Data->input_string[input_idx] << ":" << endl;
+
+				object_in_projective_space *OiP;
+				OiP = PA->create_object_from_string(t_PTS,
+						"command_line", n,
+						Data->input_string[input_idx], verbose_level);
+				back_end(input_idx,
+						OiP,
+						fp,
+						fp_tex,
+						verbose_level);
+				FREE_OBJECT(OiP);
+
+			}
+			else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
+				cout << "input set of points from file "
+					<< Data->input_string[input_idx] << ":" << endl;
+
+				int *the_set;
+				int set_size;
+
+				Fio.read_set_from_file(Data->input_string[input_idx],
+					the_set, set_size, verbose_level);
+
+				object_in_projective_space *OiP;
+				OiP = PA->create_object_from_int_vec(t_PTS,
+						Data->input_string[input_idx], n,
+						the_set, set_size, verbose_level);
+
+				back_end(input_idx,
+						OiP,
+						fp,
+						fp_tex,
+						verbose_level);
+				FREE_OBJECT(OiP);
+
+			}
+			else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
+					Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
+					Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
+					Data->input_type[input_idx] ==
+							INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+				cout << "input from file " << Data->input_string[input_idx]
+					<< ":" << endl;
+
+				set_of_sets *SoS;
+
+				SoS = NEW_OBJECT(set_of_sets);
+
+				cout << "Reading the file " << Data->input_string[input_idx] << endl;
+				SoS->init_from_file(
+						PA->P->N_points /* underlying_set_size */,
+						Data->input_string[input_idx], verbose_level);
+				cout << "Read the file " << Data->input_string[input_idx] << endl;
+
+				int h;
+
+
+				// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
+				int *Spread_table;
+				int nb_spreads;
+				int spread_size;
+
+				if (Data->input_type[input_idx] ==
+						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+					cout << "Reading spread table from file "
+						<< Data->input_string2[input_idx] << endl;
+					Fio.int_matrix_read_csv(Data->input_string2[input_idx],
+							Spread_table, nb_spreads, spread_size,
+							0 /* verbose_level */);
+					cout << "Reading spread table from file "
+							<< Data->input_string2[input_idx] << " done" << endl;
+					cout << "The spread table contains " << nb_spreads
+							<< " spreads" << endl;
+					}
+
+				cout << "processing " << SoS->nb_sets << " objects" << endl;
+
+				for (h = 0; h < SoS->nb_sets; h++) {
+
+
+					int *the_set_in;
+					int set_size_in;
+					object_in_projective_space *OiP;
+
+					OiP = NEW_OBJECT(object_in_projective_space);
+
+					set_size_in = SoS->Set_size[h];
+					the_set_in = SoS->Sets[h];
+
+					cout << "The input set " << h << " / " << SoS->nb_sets
+						<< " has size " << set_size_in << ":" << endl;
+
+#if 0
+					if (f_vv || ((h % 1024) == 0)) {
+						cout << "The input set " << h << " / " << SoS->nb_sets
+							<< " has size " << set_size_in << ":" << endl;
+						}
+
+					if (f_vvv) {
+						cout << "The input set is:" << endl;
+						int_vec_print(cout, the_set_in, set_size_in);
+						cout << endl;
+						}
+#endif
+
+					if (Data->input_type[input_idx] ==
+							INPUT_TYPE_FILE_OF_POINTS) {
+						OiP->init_point_set(PA->P, the_set_in, set_size_in,
+								0 /* verbose_level*/);
+						}
+					else if (Data->input_type[input_idx] ==
+							INPUT_TYPE_FILE_OF_LINES) {
+						OiP->init_line_set(PA->P, the_set_in, set_size_in,
+								0 /* verbose_level*/);
+						}
+					else if (Data->input_type[input_idx] ==
+							INPUT_TYPE_FILE_OF_PACKINGS) {
+						OiP->init_packing_from_set(PA->P,
+								the_set_in, set_size_in, verbose_level);
+						}
+					else if (Data->input_type[input_idx] ==
+							INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+						OiP->init_packing_from_spread_table(PA->P, the_set_in,
+							Spread_table, nb_spreads, spread_size,
+							verbose_level);
+						}
+					else {
+						cout << "unknown type" << endl;
+						exit(1);
+						}
+
+					back_end(input_idx,
+							OiP,
+							fp,
+							fp_tex,
+							verbose_level);
+					FREE_OBJECT(OiP);
+
+				}
+			}
+			else {
+				cout << "unknown type of input object" << endl;
+				exit(1);
+			}
+
+		} // next input_idx
+
+		L.foot(fp_tex);
+		fp << -1 << endl;
+	}
+	cout << "Written file " << fname_out_txt << " of size "
+			<< Fio.file_size(fname_out_txt) << endl;
+
+	cout << "Written file " << fname_out_tex << " of size "
+			<< Fio.file_size(fname_out_tex) << endl;
+}
+
+void projective_space_job_description::back_end(int input_idx,
+		object_in_projective_space *OiP,
+		ostream &fp,
+		ostream &fp_tex,
+		int verbose_level)
+{
+	int *the_set_out = NULL;
+	int set_size_out = 0;
+
+	perform_job_for_one_set(input_idx,
+			OiP,
+			the_set_out, set_size_out,
+			fp_tex,
+			verbose_level);
+
+	fp << set_size_out;
+	for (int i = 0; i < set_size_out; i++) {
+		fp << " " << the_set_out[i];
+	}
+	fp << endl;
+
+	if (the_set_out) {
+		FREE_int(the_set_out);
+	}
+
+}
+
+void projective_space_job_description::perform_job_for_one_set(
+	int input_idx,
+	object_in_projective_space *OiP,
+	int *&the_set_out,
+	int &set_size_out,
+	ostream &fp_tex,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *the_set_in;
+	int set_size_in;
+
+	if (f_v) {
+		cout << "perform_job_for_one_set" << endl;
+	}
+	the_set_in = OiP->set;
+	set_size_in = OiP->sz;
+
+	if (f_embed) {
+		if (f_orthogonal) {
+			F->do_embed_orthogonal(orthogonal_epsilon, n,
+				the_set_in, the_set_out, set_size_in, verbose_level - 1);
+			set_size_out = set_size_in;
+			}
+		else {
+			F->do_embed_points(n,
+				the_set_in, the_set_out, set_size_in, verbose_level - 1);
+			set_size_out = set_size_in;
+			}
+		}
+	else if (f_cone_over) {
+		F->do_cone_over(n,
+			the_set_in, set_size_in, the_set_out, set_size_out,
+			verbose_level - 1);
+		}
+	else if (f_andre) {
+		if (!f_Q) {
+			cout << "please use option -Q <Q>" << endl;
+			exit(1);
+			}
+
+		finite_field *FQ;
+
+		FQ = NEW_OBJECT(finite_field);
+		FQ->init_override_polynomial(Q, poly_Q, 0);
+
+		FQ->do_andre(F,
+			the_set_in, set_size_in,
+			the_set_out, set_size_out,
+			verbose_level - 1);
+
+		FREE_OBJECT(FQ);
+
+		}
+	else if (f_print) {
+		if (f_lines_in_PG) {
+			F->do_print_lines_in_PG(n,
+				the_set_in, set_size_in);
+		}
+		else if (f_points_in_PG) {
+			F->do_print_points_in_PG(n,
+				the_set_in, set_size_in);
+		}
+		else if (f_points_on_grassmannian) {
+			F->do_print_points_on_grassmannian(n, points_on_grassmannian_k,
+				the_set_in, set_size_in);
+		}
+		else if (f_orthogonal) {
+			F->do_print_points_in_orthogonal_space(orthogonal_epsilon, n,
+				the_set_in, set_size_in, verbose_level);
+		}
+		else if (f_homogeneous_polynomials) {
+			if (!f_homogeneous_polynomial_domain_has_been_allocated) {
+				HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+				HPD->init(F, n + 1, homogeneous_polynomials_degree,
+					FALSE /* f_init_incidence_structure */,
+					verbose_level);
+				f_homogeneous_polynomial_domain_has_been_allocated = TRUE;
+			}
+			else {
+				fp_tex << "$";
+				HPD->print_equation(fp_tex, the_set_in);
+				fp_tex << "$\\\\" << endl;
+			}
+
+		}
+	}
+	else if (f_line_type) {
+		F->do_line_type(n,
+			the_set_in, set_size_in,
+			f_show, verbose_level);
+		}
+	else if (f_plane_type) {
+		int *intersection_type;
+		int highest_intersection_number;
+
+		F->do_plane_type(n,
+			the_set_in, set_size_in,
+			intersection_type, highest_intersection_number, verbose_level);
+
+		for (int i = 0; i <= highest_intersection_number; i++) {
+			if (intersection_type[i]) {
+				cout << i << "^" << intersection_type[i] << " ";
+				}
+			}
+		cout << endl;
+
+		FREE_int(intersection_type);
+		}
+	else if (f_plane_type_failsafe) {
+
+		F->do_plane_type_failsafe(n,
+			the_set_in, set_size_in,
+			verbose_level);
+
+
+		}
+	else if (f_conic_type) {
+
+		if (n > 2) {
+			vector<int> plane_ranks;
+			int s = 5;
+
+			PA->P->find_planes_which_intersect_in_at_least_s_points(
+					the_set_in, set_size_in,
+					s,
+					plane_ranks,
+					verbose_level);
+			int len;
+
+			len = plane_ranks.size();
+			cout << "we found " << len << " planes which intersect in "
+					"at least " << s << " points" << endl;
+			cout << "They are: ";
+			for (int i = 0; i < len; i++) {
+				cout << plane_ranks[i];
+				if (i < len - 1) {
+					cout << ", ";
+				}
+			}
+			cout << endl;
+		}
+		else {
+			int *intersection_type;
+			int highest_intersection_number;
+
+			F->do_conic_type(n, f_randomized, nb_times,
+				the_set_in, set_size_in,
+				intersection_type, highest_intersection_number, verbose_level);
+
+
+			for (int i = 0; i <= highest_intersection_number; i++) {
+				if (intersection_type[i]) {
+					cout << i << "^" << intersection_type[i] << " ";
+					}
+				}
+			cout << endl;
+
+			FREE_int(intersection_type);
+		}
+		}
+	else if (f_hyperplane_type) {
+		F->do_m_subspace_type(n, n - 1,
+			the_set_in, set_size_in,
+			f_show, verbose_level);
+		}
+	else if (f_bsf3) {
+		F->do_blocking_set_family_3(n,
+			the_set_in, set_size_in,
+			the_set_out, set_size_out,
+			verbose_level);
+		}
+	else if (f_test_diagonals) {
+		F->do_test_diagonal_line(n,
+			the_set_in, set_size_in,
+			test_diagonals_fname,
+			verbose_level);
+		}
+	else if (f_klein) {
+		F->do_Klein_correspondence(n,
+			the_set_in, set_size_in,
+			the_set_out, set_size_out,
+			verbose_level);
+		}
+	else if (f_draw_points_in_plane) {
+		F->do_draw_points_in_plane(
+			the_set_in, set_size_in,
+			draw_points_in_plane_fname_base, f_point_labels,
+			f_embedded, f_sideways,
+			verbose_level);
+		}
+	else if (f_canonical_form) {
+		int f_semilinear = TRUE;
+		number_theory_domain NT;
+		if (NT.is_prime(F->q)) {
+			f_semilinear = FALSE;
+			}
+		do_canonical_form(
+			the_set_in, set_size_in,
+			f_semilinear, canonical_form_fname_base,
+			verbose_level);
+		}
+	else if (f_ideal) {
+		F->do_ideal(n,
+			the_set_in, set_size_in, ideal_degree,
+			the_set_out, set_size_out,
+			verbose_level);
+		}
+	else if (f_intersect_with_set_from_file) {
+		if (!intersect_with_set_from_file_set_has_beed_read) {
+			file_io Fio;
+			sorting Sorting;
+
+			Fio.read_set_from_file(intersect_with_set_from_file_fname,
+					intersect_with_set_from_file_set,
+					intersect_with_set_from_file_set_size,
+					verbose_level);
+			Sorting.int_vec_heapsort(intersect_with_set_from_file_set,
+					intersect_with_set_from_file_set_size);
+
+			intersect_with_set_from_file_set_has_beed_read = TRUE;
+		}
+
+		if (intersect_with_set_from_file_set_has_beed_read) {
+			sorting Sorting;
+
+			cout << "before intersecting the sets of size " << set_size_in
+					<< " and " << intersect_with_set_from_file_set_size
+					<< ":" << endl;
+
+			the_set_out = NEW_int(set_size_in);
+			Sorting.int_vec_intersect_sorted_vectors(the_set_in, set_size_in,
+					intersect_with_set_from_file_set,
+					intersect_with_set_from_file_set_size,
+					the_set_out, set_size_out);
+
+			cout << "the intersection has size " << set_size_out << endl;
+		}
+	}
+
+
+}
+
+
+void projective_space_job_description::do_canonical_form(
+	int *set, int set_size, int f_semilinear,
+	const char *fname_base, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	projective_space *P;
+	int canonical_pt;
+
+	if (f_v) {
+		cout << "projective_space_job_description::do_canonical_form" << endl;
+		}
+
+	P = NEW_OBJECT(projective_space);
+
+	if (f_v) {
+		cout << "projective_space_job_description::do_canonical_form before P->init" << endl;
+		}
+
+	P->init(n, F,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_job_description::do_canonical_form after P->init" << endl;
+		}
+
+	strong_generators *SG;
+	action *A_linear;
+	vector_ge *nice_gens;
+
+	A_linear = NEW_OBJECT(action);
+	A_linear->init_projective_group(n + 1, F, f_semilinear,
+			TRUE /* f_basis */,
+			nice_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_job_description::do_canonical_form before "
+				"set_stabilizer_in_projective_space" << endl;
+		}
+	SG = A_linear->set_stabilizer_in_projective_space(
+		P,
+		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */,
+		FALSE, NULL,
+		verbose_level);
+	//P->draw_point_set_in_plane(fname_base, set, set_size,
+	// TRUE /*f_with_points*/, 0 /* verbose_level */);
+	FREE_OBJECT(nice_gens);
+	FREE_OBJECT(SG);
+	FREE_OBJECT(A_linear);
+	FREE_OBJECT(P);
+
+	if (f_v) {
+		cout << "projective_space_job_description::do_canonical_form done" << endl;
+		}
+
+}
+
+
+
+}}
+

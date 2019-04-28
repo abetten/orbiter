@@ -175,6 +175,7 @@ MODULES= \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
+		group_actions/data_structures/projective_space_job_description.o \
 		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
 		group_actions/data_structures/schreier_vector.o \

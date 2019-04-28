@@ -5122,6 +5122,7 @@ void finite_field::do_ideal(int n,
 	FREE_int(w2);
 }
 
+
 void finite_field::PG_element_modified_not_in_subspace_perm(int n, int m,
 	int *orbit, int *orbit_inv,
 	int verbose_level)

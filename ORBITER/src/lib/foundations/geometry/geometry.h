@@ -2375,6 +2375,11 @@ public:
 		longinteger_object *&R, int **&Pts_on_plane, 
 		int *&nb_pts_on_plane, int &len, 
 		int verbose_level);
+	void find_planes_which_intersect_in_at_least_s_points(
+		int *set, int set_size,
+		int s,
+		std::vector<int> &plane_ranks,
+		int verbose_level);
 	void klein_correspondence(projective_space *P5, 
 		int *set_in, int set_size, int *set_out, int verbose_level);
 		// Computes the Pluecker coordinates for a line in PG(3,q) 

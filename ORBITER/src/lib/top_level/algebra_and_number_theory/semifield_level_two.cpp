@@ -1404,37 +1404,6 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 
 	SC->matrix_unrank(a, Mtx_stack[1]);
 
-#if 0
-	for (u = 0; u < go; u++) {
-		if ((u & 1024 - 1) == 0) {
-			cout << "Looking at element " << u << " / " << go
-					<< " nb_candidates=" << nb_candidates << endl;
-			}
-		SC->matrix_unrank(u, Elt1); //G->element_unrank_int(u, Elt1);
-		if (Elt1[0 * k + 0]) {
-			continue;
-			}
-		if (Elt1[1 * k + 0]) {
-			continue;
-			}
-
-		if (test_candidate(Mtx_stack, 2, Elt1, verbose_level - 2)) {
-
-
-			int_vec_insert_and_reallocate_if_necessary(Candidates,
-					nb_candidates, alloc_length, u, verbose_level);
-
-			if (f_v) {
-				if ((nb_candidates & (1024 - 1)) == 0) {
-					cout << "Number of candidates = " << nb_candidates
-						<< " orbit " << orbit << " / "
-						<< nb_up_orbits << endl;
-					}
-				}
-			} // if test_candidate()
-		}
-#endif
-
 	int nb_tested;
 	int *Affine_k;
 	int *Affine_2;

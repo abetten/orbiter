@@ -289,6 +289,35 @@ void orbit_of_sets::get_table_of_orbits(int *&Table,
 }
 
 
+void orbit_of_sets::get_table_of_orbits_and_hash_values(int *&Table,
+		int &orbit_length, int &set_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	uint32_t h;
+
+	set_size = sz + 1;
+	orbit_length = used_length;
+	if (f_v) {
+		cout << "orbit_of_sets::get_table_of_orbits_and_hash_values orbit_length="
+				<< orbit_length << endl;
+		}
+	Table = NEW_int(orbit_length * set_size);
+	for (i = 0; i < orbit_length; i++) {
+
+		h = int_vec_hash(Sets[i], sz);
+
+		Table[i * set_size + 0] = h;
+		for (j = 1; j < set_size; j++) {
+			Table[i * set_size + j] = Sets[i][j - 1];
+			}
+		}
+	if (f_v) {
+		cout << "orbit_of_sets::get_table_of_orbits_and_hash_values done" << endl;
+		}
+}
+
+
 
 int orbit_of_sets_compare_func(void *a, void *b, void *data)
 {

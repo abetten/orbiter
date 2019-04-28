@@ -14,6 +14,7 @@ using namespace std;
 
 
 using namespace orbiter;
+using namespace orbiter::top_level;
 
 // global data:
 
@@ -48,6 +49,12 @@ int main(int argc, const char **argv)
 	int f_draw_tree = FALSE;
 	int f_orbit_of = FALSE;
 	int orbit_of_idx = 0;
+	int f_orbits_on_set_system_from_file = FALSE;
+	const char *orbits_on_set_system_from_file_fname = NULL;
+	int orbits_on_set_system_first_column = 0;
+	int orbits_on_set_system_number_of_columns = 0;
+	int f_orbit_of_set_from_file = FALSE;
+	const char *orbit_of_set_from_file_fname = NULL;
 	int f_search_subgroup = FALSE;
 	int f_print_elements = FALSE;
 	int f_print_elements_tex = FALSE;
@@ -106,6 +113,20 @@ int main(int argc, const char **argv)
 			f_orbit_of = TRUE;
 			orbit_of_idx = atoi(argv[++i]);
 			cout << "-orbit_of " << orbit_of_idx << endl;
+			}
+		else if (strcmp(argv[i], "-orbit_of_set_from_file") == 0) {
+			f_orbit_of_set_from_file = TRUE;
+			orbit_of_set_from_file_fname = argv[++i];
+			cout << "-orbit_of_set_from_file" << orbit_of_set_from_file_fname << endl;
+			}
+		else if (strcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
+			f_orbits_on_set_system_from_file = TRUE;
+			orbits_on_set_system_from_file_fname = argv[++i];
+			orbits_on_set_system_first_column = atoi(argv[++i]);
+			orbits_on_set_system_number_of_columns = atoi(argv[++i]);
+			cout << "-orbits_on_set_system_from_file" << orbits_on_set_system_from_file_fname
+					<< " " << orbits_on_set_system_first_column << " "
+					<< orbits_on_set_system_number_of_columns << endl;
 			}
 		else if (strcmp(argv[i], "-search_subgroup") == 0) {
 			f_search_subgroup = TRUE;
@@ -387,6 +408,165 @@ int main(int argc, const char **argv)
 
 	}
 
+
+	if (f_orbits_on_set_system_from_file) {
+		cout << "computing orbits on set system from file "
+				<< orbits_on_set_system_from_file_fname << ":" << endl;
+		file_io Fio;
+		int *M;
+		int m, n;
+		int *Table;
+		int j;
+
+		Fio.int_matrix_read_csv(orbits_on_set_system_from_file_fname, M,
+				m, n, verbose_level);
+		cout << "read a matrix of size " << m << " x " << n << endl;
+
+
+		//orbits_on_set_system_first_column = atoi(argv[++i]);
+		//orbits_on_set_system_number_of_columns = atoi(argv[++i]);
+
+
+		Table = NEW_int(m * orbits_on_set_system_number_of_columns);
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < orbits_on_set_system_number_of_columns; j++) {
+				Table[i * orbits_on_set_system_number_of_columns + j] =
+						M[i * n + orbits_on_set_system_first_column + j];
+			}
+		}
+		action *A_on_sets;
+		int set_size;
+
+		set_size = orbits_on_set_system_number_of_columns;
+
+		cout << "creating action on sets:" << endl;
+		A_on_sets = A->create_induced_action_on_sets(m /* nb_sets */,
+				set_size, Table,
+				verbose_level);
+
+		schreier *Sch;
+		int first, a;
+
+		cout << "computing orbits on sets:" << endl;
+		A_on_sets->compute_orbits_on_points(Sch,
+				LG->Strong_gens->gens, verbose_level);
+
+		cout << "The orbit lengths are:" << endl;
+		Sch->print_orbit_lengths(cout);
+
+		cout << "The orbits are:" << endl;
+		//Sch->print_and_list_orbits(cout);
+		for (i = 0; i < Sch->nb_orbits; i++) {
+			cout << " Orbit " << i << " / " << Sch->nb_orbits
+					<< " : " << Sch->orbit_first[i] << " : " << Sch->orbit_len[i];
+			cout << " : ";
+
+			first = Sch->orbit_first[i];
+			a = Sch->orbit[first + 0];
+			cout << a << " : ";
+			int_vec_print(cout, Table + a * set_size, set_size);
+			cout << endl;
+			//Sch->print_and_list_orbit_tex(i, ost);
+			}
+		char fname[1000];
+
+		strcpy(fname, orbits_on_set_system_from_file_fname);
+		chop_off_extension(fname);
+		strcat(fname, "_orbit_reps.txt");
+
+		{
+			ofstream ost(fname);
+
+			for (i = 0; i < Sch->nb_orbits; i++) {
+
+				first = Sch->orbit_first[i];
+				a = Sch->orbit[first + 0];
+				ost << set_size;
+				for (j = 0; j < set_size; j++) {
+					ost << " " << Table[a * set_size + j];
+				}
+				ost << endl;
+			}
+			ost << -1 << " " << Sch->nb_orbits << endl;
+		}
+
+	}
+
+	if (f_orbit_of_set_from_file) {
+
+		cout << "computing orbit of set from file "
+				<< orbit_of_set_from_file_fname << ":" << endl;
+		file_io Fio;
+		int *the_set;
+		int set_sz;
+
+		Fio.read_set_from_file(orbit_of_set_from_file_fname,
+				the_set, set_sz, verbose_level);
+		cout << "read a set of size " << set_sz << endl;
+
+		orbit_of_sets *OS;
+
+		OS = NEW_OBJECT(orbit_of_sets);
+
+		OS->init(A, A, the_set, set_sz,
+				LG->Strong_gens->gens, verbose_level);
+
+		//OS->compute(verbose_level);
+
+		cout << "Found an orbit of length " << OS->used_length << endl;
+
+		int *Table;
+		int orbit_length, set_size;
+
+		cout << "before OS->get_table_of_orbits" << endl;
+		OS->get_table_of_orbits_and_hash_values(Table,
+				orbit_length, set_size, verbose_level);
+		cout << "after OS->get_table_of_orbits" << endl;
+
+		char str[1000];
+		strcpy(str, orbit_of_set_from_file_fname);
+		chop_off_extension(str);
+
+		char fname[1000];
+		sprintf(fname, "orbit_of_%s_under_%s_with_hash.csv", str, LG->prefix);
+		cout << "Writing table to file " << fname << endl;
+		Fio.int_matrix_write_csv(fname,
+				Table, orbit_length, set_size);
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+		FREE_int(Table);
+
+		cout << "before OS->get_table_of_orbits" << endl;
+		OS->get_table_of_orbits(Table,
+				orbit_length, set_size, verbose_level);
+		cout << "after OS->get_table_of_orbits" << endl;
+
+		strcpy(str, orbit_of_set_from_file_fname);
+		chop_off_extension(str);
+		sprintf(fname, "orbit_of_%s_under_%s.txt", str, LG->prefix);
+		cout << "Writing table to file " << fname << endl;
+		{
+			ofstream ost(fname);
+			for (i = 0; i < orbit_length; i++) {
+				ost << set_size;
+				for (int j = 0; j < set_size; j++) {
+					ost << " " << Table[i * set_size + j];
+				}
+				ost << endl;
+			}
+			ost << -1 << " " << orbit_length << endl;
+		}
+		//Fio.int_matrix_write_csv(fname,
+		//		Table, orbit_length, set_size);
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+
+		cout << "before FREE_OBJECT(OS)" << endl;
+		FREE_OBJECT(OS);
+		cout << "after FREE_OBJECT(OS)" << endl;
+	}
 
 	if (f_orbit_of) {
 
