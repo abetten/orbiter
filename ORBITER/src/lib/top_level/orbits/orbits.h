@@ -189,6 +189,8 @@ public:
 	void dump_tables_of_hash_values();
 	void get_table_of_orbits(int *&Table, int &orbit_length, 
 		int &set_size, int verbose_level);
+	void get_table_of_orbits_and_hash_values(int *&Table,
+			int &orbit_length, int &set_size, int verbose_level);
 };
 
 int orbit_of_sets_compare_func(void *a, void *b, void *data);

@@ -257,6 +257,139 @@ public:
 };
 
 
+// #############################################################################
+// projective_space_job_description.C:
+// #############################################################################
+
+
+
+
+
+//! description of a job to be applied to a set in projective space PG(n,q)
+
+
+
+class projective_space_job_description {
+
+	int t0;
+	finite_field *F;
+	projective_space_with_action *PA;
+
+public:
+
+	int f_input;
+	data_input_stream *Data;
+
+
+	int f_fname_base_out;
+	const char *fname_base_out;
+
+
+	int f_q;
+	int q;
+	int f_n;
+	int n;
+	int f_poly;
+	const char *poly;
+
+	int f_embed;
+		// follow up option for f_print:
+		//f_orthogonal, orthogonal_epsilon
+
+	int f_andre;
+		// follow up option for f_andre:
+		int f_Q;
+		int Q;
+		int f_poly_Q;
+		const char *poly_Q;
+
+
+	int f_print;
+		// follow up option for f_print:
+		int f_lines_in_PG;
+		int f_points_in_PG;
+		int f_points_on_grassmannian;
+		int points_on_grassmannian_k;
+		int f_orthogonal;
+		int orthogonal_epsilon;
+		int f_homogeneous_polynomials;
+		int homogeneous_polynomials_degree;
+		int f_homogeneous_polynomial_domain_has_been_allocated;
+		homogeneous_polynomial_domain *HPD;
+
+
+	//int f_group = FALSE;
+	int f_list_group_elements;
+	int f_line_type;
+	int f_plane_type;
+	int f_plane_type_failsafe;
+	int f_conic_type;
+		// follow up option for f_conic_type:
+		int f_randomized;
+		int nb_times;
+
+	int f_hyperplane_type;
+	// follow up option for f_hyperplane_type:
+		int f_show;
+
+
+	int f_cone_over;
+
+	//int f_move_line = FALSE;
+	//int from_line = 0, to_line = 0;
+
+	int f_bsf3;
+	int f_test_diagonals;
+	const char *test_diagonals_fname;
+	int f_klein;
+
+	int f_draw_points_in_plane;
+		const char *draw_points_in_plane_fname_base;
+		// follow up option for f_draw_points_in_plane:
+
+		int f_point_labels;
+		int f_embedded;
+		int f_sideways;
+
+	int f_canonical_form;
+	const char *canonical_form_fname_base;
+	int f_ideal;
+	int ideal_degree;
+	//int f_find_Eckardt_points_from_arc = FALSE;
+
+	int f_intersect_with_set_from_file;
+	const char *intersect_with_set_from_file_fname;
+	int intersect_with_set_from_file_set_has_beed_read;
+	int *intersect_with_set_from_file_set;
+	int intersect_with_set_from_file_set_size;
+
+
+
+	projective_space_job_description();
+	~projective_space_job_description();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+	void perform_job(int verbose_level);
+	void back_end(int input_idx,
+			object_in_projective_space *OiP,
+			std::ostream &fp,
+			std::ostream &fp_tex,
+			int verbose_level);
+	void perform_job_for_one_set(int input_idx,
+		object_in_projective_space *OiP,
+		int *&the_set_out,
+		int &set_size_out,
+		std::ostream &fp_tex,
+		int verbose_level);
+	void do_canonical_form(
+		int *set, int set_size, int f_semilinear,
+		const char *fname_base, int verbose_level);
+
+};
+
 
 // #############################################################################
 // projective_space_with_action.C:

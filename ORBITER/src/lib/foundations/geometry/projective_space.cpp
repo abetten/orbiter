@@ -4578,8 +4578,8 @@ void projective_space::plane_intersection_type_slow(
 						<< rk << " / " << N_planes << endl;
 				}
 			}
-		G->unrank_int(rk, 0 /* verbose_level */);
-		int_vec_copy(G->M, Basis_save, 3 * d);
+		G->unrank_int_here(Basis_save, rk, 0 /* verbose_level */);
+		//int_vec_copy(G->M, Basis_save, 3 * d);
 		int *pts_on_plane;
 		int nb = 0;
 	
@@ -4878,6 +4878,108 @@ void projective_space::plane_intersection_type_fast(
 	FREE_int(f_subset_done);
 	FREE_int(rank_idx);
 	FREE_int(Coords);
+}
+
+void projective_space::find_planes_which_intersect_in_at_least_s_points(
+	int *set, int set_size,
+	int s,
+	vector<int> &plane_ranks,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_v3 = (verbose_level >= 3);
+	int r, rk, i, u, d, N_planes;
+
+	int *Basis;
+	int *Basis_save;
+	int *Coords;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "projective_space::find_planes_which_intersect_"
+				"in_at_least_s_points" << endl;
+		}
+	if (f_vv) {
+		print_set_numerical(set, set_size);
+		}
+	if (!Sorting.test_if_set_with_return_value(set, set_size)) {
+		cout << "projective_space::find_planes_which_intersect_"
+				"in_at_least_s_points "
+				"the input set if not a set" << endl;
+		exit(1);
+		}
+	d = n + 1;
+	N_planes = nb_rk_k_subspaces_as_int(3);
+
+	if (f_v) {
+		cout << "N_planes=" << N_planes << endl;
+		}
+
+	// allocate temporary data:
+	Basis = NEW_int(4 * d);
+	Basis_save = NEW_int(4 * d);
+	Coords = NEW_int(set_size * d);
+
+	for (i = 0; i < set_size; i++) {
+		unrank_point(Coords + i * d, set[i]);
+		}
+	if (f_vv) {
+		cout << "projective_space::find_planes_which_intersect_"
+				"in_at_least_s_points "
+				"Coords:" << endl;
+		int_matrix_print(Coords, set_size, d);
+		}
+
+	int one_percent = 0;
+
+	if (N_planes > 1000000) {
+		one_percent = N_planes / 100;
+	}
+	for (rk = 0; rk < N_planes; rk++) {
+
+		if (one_percent > 0) {
+			if ((rk % one_percent) == 0) {
+				cout << "projective_space::find_planes_which_intersect_"
+						"in_at_least_s_points "
+						<< rk << " / " << N_planes << " which is "
+						<< rk / one_percent << " percent done" << endl;
+				}
+			}
+		Grass_planes->unrank_int_here(Basis_save, rk, 0 /* verbose_level */);
+		//int_vec_copy(G->M, Basis_save, 3 * d);
+
+		int nb_pts_on_plane = 0;
+
+		for (u = 0; u < set_size; u++) {
+			int_vec_copy(Basis_save, Basis, 3 * d);
+			int_vec_copy(Coords + u * d, Basis + 3 * d, d);
+			r = F->rank_of_rectangular_matrix(Basis,
+					4, d, 0 /* verbose_level */);
+			if (r < 4) {
+				nb_pts_on_plane++;
+				}
+			}
+
+		if (nb_pts_on_plane >= s) {
+			plane_ranks.push_back(rk);
+		}
+	} // rk
+	if (f_v) {
+		cout << "projective_space::find_planes_which_intersect_"
+				"in_at_least_s_points we found "
+				<< plane_ranks.size() << " planes which intersect "
+						"in at least " << s << " points" << endl;
+		}
+
+	FREE_int(Basis);
+	FREE_int(Basis_save);
+	FREE_int(Coords);
+	if (f_v) {
+		cout << "projective_space::find_planes_which_intersect_"
+				"in_at_least_s_points "
+				"done" << endl;
+		}
 }
 
 

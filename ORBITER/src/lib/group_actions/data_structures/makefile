@@ -11,6 +11,7 @@ MODULES = \
 	object_in_projective_space_with_action.o \
 	orbit_rep.o \
 	orbit_transversal.o \
+	projective_space_job_description.o \
 	projective_space_with_action.o \
 	schreier_vector_handler.o \
 	schreier_vector.o \
