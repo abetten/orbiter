@@ -127,7 +127,7 @@ void eckardt_point_info::init(projective_space *P,
 				p = -1;
 			}
 			else {
-				p = P->line_intersection(bi, bj);
+				p = P->intersection_of_two_lines_in_a_plane(bi, bj);
 			}
 			Intersections[i * 15 + j] = p;
 		}

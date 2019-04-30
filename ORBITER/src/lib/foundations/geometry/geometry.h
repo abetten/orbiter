@@ -2236,7 +2236,7 @@ public:
 	int line_through_two_points(int p1, int p2);
 	int test_if_lines_are_disjoint(int l1, int l2);
 	int test_if_lines_are_disjoint_from_scratch(int l1, int l2);
-	int line_intersection(int l1, int l2);
+	int intersection_of_two_lines_in_a_plane(int l1, int l2);
 		// works only for projective planes, i.e., n = 2
 	
 	int arc_test(int *input_pts, int nb_pts, int verbose_level);
@@ -2380,6 +2380,15 @@ public:
 		int s,
 		std::vector<int> &plane_ranks,
 		int verbose_level);
+	void plane_intersection(int plane_rank,
+			int *set, int set_size,
+			std::vector<int> &point_indices,
+			std::vector<int> &point_local_coordinates,
+			int verbose_level);
+	void line_intersection(int line_rank,
+			int *set, int set_size,
+			std::vector<int> &point_indices,
+			int verbose_level);
 	void klein_correspondence(projective_space *P5, 
 		int *set_in, int set_size, int *set_out, int verbose_level);
 		// Computes the Pluecker coordinates for a line in PG(3,q) 

@@ -24,6 +24,7 @@ projective_space_job_description::projective_space_job_description()
 	t0 = 0;
 	F = NULL;
 	PA = NULL;
+	back_end_counter = 0;
 
 	f_input = FALSE;
 	Data = NULL;
@@ -331,13 +332,17 @@ int projective_space_job_description::read_arguments(
 
 void projective_space_job_description::perform_job(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "projective_space_job_description::perform_job" << endl;
+	}
 
 	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 
 
-	projective_space_with_action *PA;
 	int nb_objects_to_test;
 	int input_idx;
 	int f_semilinear;
@@ -554,7 +559,7 @@ void projective_space_job_description::back_end(int input_idx,
 	int *the_set_out = NULL;
 	int set_size_out = 0;
 
-	perform_job_for_one_set(input_idx,
+	perform_job_for_one_set(back_end_counter,
 			OiP,
 			the_set_out, set_size_out,
 			fp_tex,
@@ -566,6 +571,8 @@ void projective_space_job_description::back_end(int input_idx,
 	}
 	fp << endl;
 
+	back_end_counter++;
+
 	if (the_set_out) {
 		FREE_int(the_set_out);
 	}
@@ -573,7 +580,7 @@ void projective_space_job_description::back_end(int input_idx,
 }
 
 void projective_space_job_description::perform_job_for_one_set(
-	int input_idx,
+	int back_end_counter,
 	object_in_projective_space *OiP,
 	int *&the_set_out,
 	int &set_size_out,
@@ -652,20 +659,64 @@ void projective_space_job_description::perform_job_for_one_set(
 					verbose_level);
 				f_homogeneous_polynomial_domain_has_been_allocated = TRUE;
 			}
-			else {
-				fp_tex << "$";
-				HPD->print_equation(fp_tex, the_set_in);
-				fp_tex << "$\\\\" << endl;
-			}
+			fp_tex << back_end_counter << ": $";
+			HPD->print_equation(fp_tex, the_set_in);
+			fp_tex << "$\\\\" << endl;
 
 		}
 	}
 	else if (f_line_type) {
+#if 0
 		F->do_line_type(n,
 			the_set_in, set_size_in,
 			f_show, verbose_level);
+#endif
+		int N_lines;
+		N_lines = PA->P->nb_rk_k_subspaces_as_int(2);
+
+		int *type;
+		type = NEW_int(N_lines);
+		for (int i = 0; i < N_lines; i++) {
+			vector<int> point_indices;
+			PA->P->line_intersection(i,
+					the_set_in, set_size_in,
+					point_indices,
+					verbose_level);
+			type[i] = point_indices.size();
+		}
+		classify C;
+
+		C.init(type, N_lines, FALSE, 0);
+		fp_tex << back_end_counter << ": ";
+		C.print_file_tex(fp_tex, TRUE);
+		fp_tex << "\\\\" << endl;
 		}
 	else if (f_plane_type) {
+
+		int N_planes;
+		N_planes = PA->P->nb_rk_k_subspaces_as_int(3);
+
+		int *type;
+		type = NEW_int(N_planes);
+		for (int i = 0; i < N_planes; i++) {
+			vector<int> point_indices;
+			vector<int> point_local_coordinates;
+			PA->P->plane_intersection(i,
+					the_set_in, set_size_in,
+					point_indices,
+					point_local_coordinates,
+					verbose_level);
+			type[i] = point_indices.size();
+		}
+		classify C;
+
+		C.init(type, N_planes, FALSE, 0);
+		fp_tex << back_end_counter << ": ";
+		C.print_file_tex(fp_tex, TRUE);
+		fp_tex << "\\\\" << endl;
+
+
+#if 0
 		int *intersection_type;
 		int highest_intersection_number;
 
@@ -681,6 +732,7 @@ void projective_space_job_description::perform_job_for_one_set(
 		cout << endl;
 
 		FREE_int(intersection_type);
+#endif
 		}
 	else if (f_plane_type_failsafe) {
 
@@ -693,9 +745,20 @@ void projective_space_job_description::perform_job_for_one_set(
 	else if (f_conic_type) {
 
 		if (n > 2) {
+
+			projective_space *P2;
+
+			P2 = NEW_OBJECT(projective_space);
+			P2->init(2, F,
+					FALSE /* f_init_incidence_structure */,
+					verbose_level);
+
+			cout << "conic_type n > 2:" << endl;
 			vector<int> plane_ranks;
 			int s = 5;
 
+			cout << "conic_type before PA->P->find_planes_"
+					"which_intersect_in_at_least_s_points" << endl;
 			PA->P->find_planes_which_intersect_in_at_least_s_points(
 					the_set_in, set_size_in,
 					s,
@@ -714,14 +777,82 @@ void projective_space_job_description::perform_job_for_one_set(
 				}
 			}
 			cout << endl;
+			the_set_out = NEW_int(plane_ranks.size());
+			set_size_out = plane_ranks.size();
+			for (int i = 0; i < len; i++) {
+				the_set_out[i] = plane_ranks[i];
+			}
+
+			cout << "we will compute the non-degenerate conic "
+					"type of all these planes" << endl;
+
+			int *type;
+			type = NEW_int(len);
+			int_vec_zero(type, len);
+			for (int i = 0; i < len; i++) {
+				vector<int> point_indices;
+				vector<int> point_local_coordinates;
+				PA->P->plane_intersection(plane_ranks[i],
+						the_set_in, set_size_in,
+						point_indices,
+						point_local_coordinates,
+						verbose_level - 2);
+
+				int *pts;
+				int nb_pts;
+
+				nb_pts = point_local_coordinates.size();
+				pts = NEW_int(nb_pts);
+				for (int j = 0; j < nb_pts; j++) {
+					pts[j] = point_local_coordinates[j];
+				}
+				cout << "plane " << i << " is " << plane_ranks[i]
+					<< " has " << nb_pts << " points, in local "
+							"coordinates they are ";
+				int_vec_print(cout, pts, nb_pts);
+				cout << endl;
+
+				int **Pts_on_conic;
+				int *nb_pts_on_conic;
+				int len1;
+				P2->conic_type(
+						pts, nb_pts,
+						Pts_on_conic, nb_pts_on_conic, len1,
+						verbose_level);
+				for (int j = 0; j < len1; j++) {
+					if (nb_pts_on_conic[j] == q + 1) {
+						type[i]++;
+					}
+				}
+				for (int j = 0; j < len1; j++) {
+					FREE_int(Pts_on_conic[j]);
+				}
+				FREE_pint(Pts_on_conic);
+				FREE_int(nb_pts_on_conic);
+				FREE_int(pts);
+			}
+
+
+
+
+			classify C;
+
+			C.init(type, len, FALSE, 0);
+			fp_tex << back_end_counter << ": ";
+			C.print_file_tex(fp_tex, TRUE);
+			fp_tex << "\\\\" << endl;
+
+			FREE_OBJECT(P2);
 		}
-		else {
+		else if (n == 2) {
+			cout << "conic_type n == 2:" << endl;
 			int *intersection_type;
 			int highest_intersection_number;
 
 			F->do_conic_type(n, f_randomized, nb_times,
 				the_set_in, set_size_in,
-				intersection_type, highest_intersection_number, verbose_level);
+				intersection_type, highest_intersection_number,
+				verbose_level);
 
 
 			for (int i = 0; i <= highest_intersection_number; i++) {
@@ -732,6 +863,10 @@ void projective_space_job_description::perform_job_for_one_set(
 			cout << endl;
 
 			FREE_int(intersection_type);
+		}
+		else {
+			cout << "conic type needs n >= 2" << endl;
+			exit(1);
 		}
 		}
 	else if (f_hyperplane_type) {
@@ -811,6 +946,9 @@ void projective_space_job_description::perform_job_for_one_set(
 
 			cout << "the intersection has size " << set_size_out << endl;
 		}
+	}
+	if (f_v) {
+		cout << "perform_job_for_one_set done" << endl;
 	}
 
 

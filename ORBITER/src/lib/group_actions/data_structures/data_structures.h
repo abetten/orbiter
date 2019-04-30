@@ -274,6 +274,7 @@ class projective_space_job_description {
 	int t0;
 	finite_field *F;
 	projective_space_with_action *PA;
+	int back_end_counter;
 
 public:
 

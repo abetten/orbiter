@@ -221,18 +221,18 @@ void classify::print_file_tex(ostream &ost, int f_backwards)
 	sorting Sorting;
 
 	if (f_second) {
-		ost << "$(";
+		//ost << "(";
 		Sorting.int_vec_print_types_naked_tex(ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
-		ost << ")$";
-		ost << endl;	
+		//ost << ")";
+		//ost << endl;
 		}
 	else {
-		ost << "$(";
+		//ost << "$(";
 		Sorting.int_vec_print_types_naked_tex(ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
-		ost << ")$";
-		ost << endl;	
+		//ost << ")$";
+		//ost << endl;
 		}
 }
 
