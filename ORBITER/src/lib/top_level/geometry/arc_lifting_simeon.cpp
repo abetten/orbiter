@@ -302,7 +302,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 				}
 			else {
 				bj = bisecants[j];
-				a = P->line_intersection(bi, bj);
+				a = P->intersection_of_two_lines_in_a_plane(bi, bj);
 
 				if (Sorting.int_vec_search_linear(original_arc,
 						original_arc_sz, a, idx)) {

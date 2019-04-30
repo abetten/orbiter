@@ -367,7 +367,7 @@ void surface_domain::compute_intersection_points(int *Adj,
 		for (j2 = j1 + 1; j2 < nb_lines; j2++) {
 			a2 = Lines[j2];
 			if (Adj[j1 * nb_lines + j2]) {
-				pt = P->line_intersection(a1, a2);
+				pt = P->intersection_of_two_lines_in_a_plane(a1, a2);
 				Intersection_pt[j1 * nb_lines + j2] = pt;
 				Intersection_pt[j2 * nb_lines + j1] = pt;
 				}
@@ -400,7 +400,7 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 		for (j2 = j1 + 1; j2 < nb_lines; j2++) {
 			a2 = Lines[j2];
 			if (Adj[j1 * nb_lines + j2]) {
-				pt = P->line_intersection(a1, a2);
+				pt = P->intersection_of_two_lines_in_a_plane(a1, a2);
 				if (!Sorting.int_vec_search(Points, nb_points,
 					pt, idx)) {
 					cout << "surface_domain::compute_intersection_points_"

@@ -1116,7 +1116,7 @@ int projective_space::test_if_lines_are_disjoint_from_scratch(
 		}
 }
 
-int projective_space::line_intersection(int l1, int l2)
+int projective_space::intersection_of_two_lines_in_a_plane(int l1, int l2)
 // works only for projective planes, i.e., n = 2
 {
 	int *Mtx1;
@@ -1127,7 +1127,7 @@ int projective_space::line_intersection(int l1, int l2)
 	int i;
 	
 	if (n != 2) {
-		cout << "projective_space::line_intersection n != 2" << endl;
+		cout << "projective_space::intersection_of_two_lines_in_a_plane n != 2" << endl;
 		exit(1);
 		}
 	Mtx1 = NEW_int(3 * 3);
@@ -1171,12 +1171,12 @@ int projective_space::line_intersection(int l1, int l2)
 	int_vec_copy(Mtx1 + 2 * d, Mtx3 + (d - 2) * d, (d - 2) * d);
 	r = F->Gauss_easy(Mtx3, 2 * (d - 2), d);
 	if (r < d - 1) {
-		cout << "projective_space::line_intersection r < d - 1, "
+		cout << "projective_space::intersection_of_two_lines_in_a_plane r < d - 1, "
 				"the lines do not intersect" << endl;
 		exit(1);
 		}
 	if (r > d - 1) {
-		cout << "projective_space::line_intersection r > d - 1, "
+		cout << "projective_space::intersection_of_two_lines_in_a_plane r > d - 1, "
 				"something is wrong" << endl;
 		exit(1);
 		}
@@ -1346,9 +1346,11 @@ int projective_space::determine_conic_in_plane(
 		}
 
 	if (!arc_test(input_pts, nb_pts, verbose_level)) {
-		cout << "projective_space::determine_conic_in_plane "
-				"some 3 of the points are collinear" << endl;
-		exit(1);
+		if (f_v) {
+			cout << "projective_space::determine_conic_in_plane "
+					"some 3 of the points are collinear" << endl;
+		}
+		return FALSE;
 		}
 
 
@@ -2264,7 +2266,7 @@ void projective_space::create_Maruta_Hamada_arc2(
 	size = 0;
 	for (i = 0; i < 9; i++) {
 		for (j = i + 1; j < 9; j++) {
-			a = line_intersection(L[i], L[j]);
+			a = intersection_of_two_lines_in_a_plane(L[i], L[j]);
 			the_arc[size++] = a;
 			}
 		}
@@ -4982,7 +4984,130 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 		}
 }
 
+void projective_space::plane_intersection(int plane_rank,
+		int *set, int set_size,
+		vector<int> &point_indices,
+		vector<int> &point_local_coordinates,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int r, i, u, d;
 
+	int *Basis;
+	int *Basis_save;
+	int *Coords;
+	int base_cols[3];
+	int coefficients[3];
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "projective_space::plane_intersection" << endl;
+		}
+	d = n + 1;
+	// allocate temporary data:
+	Basis = NEW_int(4 * d);
+	Basis_save = NEW_int(4 * d);
+	Coords = NEW_int(set_size * d);
+
+	for (i = 0; i < set_size; i++) {
+		unrank_point(Coords + i * d, set[i]);
+		}
+	if (f_vv) {
+		cout << "projective_space::plane_intersection "
+				"Coords:" << endl;
+		int_matrix_print(Coords, set_size, d);
+		}
+
+	Grass_planes->unrank_int_here(Basis_save, plane_rank, 0 /* verbose_level */);
+
+	int nb_pts_on_plane = 0;
+	int local_rank;
+
+	for (u = 0; u < set_size; u++) {
+		int_vec_copy(Basis_save, Basis, 3 * d);
+		int_vec_copy(Coords + u * d, Basis + 3 * d, d);
+		r = F->rank_of_rectangular_matrix(Basis,
+				4, d, 0 /* verbose_level */);
+		if (r < 4) {
+			nb_pts_on_plane++;
+			point_indices.push_back(u);
+
+			int_vec_copy(Basis_save, Basis, 3 * d);
+			int_vec_copy(Coords + u * d, Basis + 3 * d, d);
+
+			F->Gauss_simple(Basis, 3, d,
+					base_cols, 0 /*verbose_level */);
+			F->reduce_mod_subspace_and_get_coefficient_vector(
+				3, d, Basis, base_cols,
+				Basis + 3 * d, coefficients, verbose_level);
+			F->PG_element_rank_modified(
+					coefficients, 1, 3, local_rank);
+			point_local_coordinates.push_back(local_rank);
+		}
+	}
+
+	FREE_int(Basis);
+	FREE_int(Basis_save);
+	FREE_int(Coords);
+	if (f_v) {
+		cout << "projective_space::plane_intersection "
+				"done" << endl;
+		}
+}
+
+void projective_space::line_intersection(int line_rank,
+		int *set, int set_size,
+		vector<int> &point_indices,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int r, i, u, d;
+
+	int *Basis;
+	int *Basis_save;
+	int *Coords;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "projective_space::line_intersection" << endl;
+		}
+	d = n + 1;
+	// allocate temporary data:
+	Basis = NEW_int(3 * d);
+	Basis_save = NEW_int(3 * d);
+	Coords = NEW_int(set_size * d);
+
+	for (i = 0; i < set_size; i++) {
+		unrank_point(Coords + i * d, set[i]);
+		}
+	if (f_vv) {
+		cout << "projective_space::line_intersection "
+				"Coords:" << endl;
+		int_matrix_print(Coords, set_size, d);
+		}
+
+	Grass_lines->unrank_int_here(Basis_save, line_rank, 0 /* verbose_level */);
+
+	for (u = 0; u < set_size; u++) {
+		int_vec_copy(Basis_save, Basis, 2 * d);
+		int_vec_copy(Coords + u * d, Basis + 2 * d, d);
+		r = F->rank_of_rectangular_matrix(Basis,
+				3, d, 0 /* verbose_level */);
+		if (r < 3) {
+			point_indices.push_back(u);
+			}
+		}
+
+	FREE_int(Basis);
+	FREE_int(Basis_save);
+	FREE_int(Coords);
+	if (f_v) {
+		cout << "projective_space::line_intersection "
+				"done" << endl;
+		}
+}
 void projective_space::klein_correspondence(
 	projective_space *P5, 
 	int *set_in, int set_size, int *set_out, 
@@ -5912,8 +6037,8 @@ void projective_space::conic_type(
 	for (rk = 0; rk < N; rk++) {
 
 		Combi.unrank_k_subset(rk, subset, set_size, 5);
-		if (f_v3 || (rk && ((rk % 1000) == 0))) {
-			cout << rk << " / " << N << " : ";
+		if (f_v) {
+			cout << "projective_space::conic_type rk=" << rk << " / " << N << " : ";
 			int_vec_print(cout, subset, 5);
 			cout << endl;
 			}
@@ -5941,7 +6066,7 @@ void projective_space::conic_type(
 			a = subset[j];
 			input_pts[j] = set[a];
 			}
-		if (f_v3) {
+		if (f_v) {
 			cout << "subset: ";
 			int_vec_print(cout, subset, 5);
 			cout << "input_pts: ";
@@ -5950,6 +6075,9 @@ void projective_space::conic_type(
 
 		if (!determine_conic_in_plane(input_pts, 5,
 				six_coeffs, verbose_level - 2)) {
+			if (f_v) {
+				cout << "determine_conic_in_plane returns FALSE" << endl;
+			}
 			continue;
 			}
 
@@ -6021,7 +6149,7 @@ void projective_space::conic_type(
 				}
 
 
-			if (l >= 6) {
+			if (l >= 3) {
 
 				if (f_v) {
 					cout << "We found an " << l << "-conic, "
@@ -6200,7 +6328,7 @@ void projective_space::find_nucleus(
 		cout << "projective_space::find_nucleus t2 = " << t2 << endl;
 		}
 	
-	nucleus = line_intersection(t1, t2);
+	nucleus = intersection_of_two_lines_in_a_plane(t1, t2);
 	if (f_v) {
 		cout << "projective_space::find_nucleus "
 				"nucleus = " << nucleus << endl;

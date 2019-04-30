@@ -5,7 +5,7 @@ CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 # specific for tx1:
-LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
+#LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 
@@ -34,10 +34,7 @@ all: analyze_projective_code.out  \
 	polar.out \
 	process.out\
 	process_PG.out\
-	projective_space.out \
-	projective_space2.out \
-	simeon.out \
-	test_PG.out 
+	simeon.out 
 
 
 
@@ -119,17 +116,8 @@ process_PG.out:  process_PG.o ;
 process.out:  process.o ;
 	$(DISCRETA_CPP)  process.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-projective_space.out:  projective_space.o ;
-	$(DISCRETA_CPP)  projective_space.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-projective_space2.out:  projective_space2.o ;
-	$(DISCRETA_CPP)  projective_space2.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 simeon.out:  simeon.o ;
 	$(DISCRETA_CPP)  simeon.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-test_PG.out:  test_PG.o;
-	$(DISCRETA_CPP)  test_PG.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 
