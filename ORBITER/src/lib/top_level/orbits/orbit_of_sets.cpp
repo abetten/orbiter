@@ -19,7 +19,25 @@ namespace top_level {
 
 orbit_of_sets::orbit_of_sets()
 {
-	null();
+	A = NULL;
+	A2 = NULL;
+	gens = NULL;
+	set = NULL; // the set whose orbit we want to compute; it has size 'sz'
+	sz = 0;
+
+	position_of_original_set = 0; // = 0; never changes
+	allocation_length = 0; // number of entries allocated in Sets
+	old_length = 0;
+	used_length = 0; // number of sets currently stored in Sets
+	Sets = NULL;
+		// the sets ar stored in the order in which they
+		// are discovered and added to the tree
+	Extra = NULL;
+	cosetrep = NULL;
+	cosetrep_tmp = NULL;
+
+	//std::multimap<uint32_t, int> Hashing;
+	//null();
 }
 
 orbit_of_sets::~orbit_of_sets()
@@ -29,7 +47,7 @@ orbit_of_sets::~orbit_of_sets()
 
 void orbit_of_sets::null()
 {
-	Sets = NULL;
+	//Sets = NULL;
 }
 
 void orbit_of_sets::freeself()
@@ -39,9 +57,18 @@ void orbit_of_sets::freeself()
 	if (Sets) {
 		for (i = 0; i < used_length; i++) {
 			FREE_int(Sets[i]);
-			}
-		FREE_pint(Sets);
 		}
+		FREE_pint(Sets);
+	}
+	if (Extra) {
+		FREE_int(Extra);
+	}
+	if (cosetrep) {
+		FREE_int(cosetrep);
+	}
+	if (cosetrep_tmp) {
+		FREE_int(cosetrep_tmp);
+	}
 	null();
 }
 
@@ -52,18 +79,21 @@ void orbit_of_sets::init(action *A, action *A2,
 
 	if (f_v) {
 		cout << "orbit_of_sets::init" << endl;
-		}
+	}
 	orbit_of_sets::A = A;
 	orbit_of_sets::A2 = A2;
 	orbit_of_sets::gens = gens;
 	orbit_of_sets::set = set;
 	orbit_of_sets::sz = sz;
 	
+	cosetrep = NEW_int(A->elt_size_in_int);
+	cosetrep_tmp = NEW_int(A->elt_size_in_int);
+
 	compute(verbose_level);
 
 	if (f_v) {
 		cout << "orbit_of_sets::init done" << endl;
-		}
+	}
 }
 
 void orbit_of_sets::compute(int verbose_level)
@@ -79,15 +109,22 @@ void orbit_of_sets::compute(int verbose_level)
 
 	if (f_v) {
 		cout << "orbit_of_sets::compute" << endl;
-		}
+	}
 	cur_set = NEW_int(sz);
 	new_set = NEW_int(sz);
 	allocation_length = 1000;
+	old_length = allocation_length;
 	Sets = NEW_pint(allocation_length);
+	Extra = NEW_int(allocation_length * 2);
 	Sets[0] = NEW_int(sz);
 	int_vec_copy(set, Sets[0], sz);
 	position_of_original_set = 0;
 	Sorting.int_vec_heapsort(Sets[0], sz);
+
+	Extra[0 * 2 + 0] = -1;
+	Extra[0 * 2 + 1] = -1;
+
+
 	uint32_t h;
 
 	h = int_vec_hash(Sets[0], sz);
@@ -103,18 +140,18 @@ void orbit_of_sets::compute(int verbose_level)
 					<< used_length << " : ";
 			int_vec_print(cout, Q, Q_len);
 			cout << endl;
-			}
+		}
 		cur = Q[0];
 		for (i = 1; i < Q_len; i++) {
 			Q[i - 1] = Q[i];
-			}
+		}
 		Q_len--;
 		int_vec_copy(Sets[cur], cur_set, sz);
 
 		for (j = 0; j < gens->len; j++) {
 			if (f_vv) {
 				cout << "applying generator " << j << endl;
-				}
+			}
 			A2->map_a_set(cur_set, new_set, sz, gens->ith(j),
 					0 /* verbose_level*/);
 			Sorting.int_vec_heapsort(new_set, sz);
@@ -136,53 +173,59 @@ void orbit_of_sets::compute(int verbose_level)
 		    if (!f_found) {
 
 				if (used_length == allocation_length) {
-					int al2 = (allocation_length + 1000) * 2;
+					int al2 = allocation_length + old_length;
 					int **Sets2;
+					int *Extra2;
 					int *Q2;
 					if (f_vv) {
 						cout << "reallocating to length " << al2 << endl;
-						}
+					}
+
+					// reallocate Sets:
 					Sets2 = NEW_pint(al2);
 					for (i = 0; i < allocation_length; i++) {
 						Sets2[i] = Sets[i];
-						}
+					}
 					FREE_pint(Sets);
 					Sets = Sets2;
+
+					// reallocate Extra:
+					Extra2 = NEW_int(al2 * 2);
+					int_vec_copy(Extra, Extra2, al2 * 2);
+					FREE_int(Extra);
+					Extra = Extra2;
+
+					// reallocate Q2:
 					Q2 = NEW_int(al2);
-					for (i = 0; i < Q_len; i++) {
-						Q2[i] = Q[i];
-						}
+					int_vec_copy(Q, Q2, Q_len);
 					FREE_int(Q);
 					Q = Q2;
-					allocation_length = al2;
-					}
 
-#if 0
-				if (used_length == 70777 || used_length == 3248) {
-					cout << "adding entry " << used_length << endl;
-					int_vec_print(cout, new_set, sz);
-					cout << endl;
-					cout << "h=" << h << endl;
+					old_length = allocation_length;
+					allocation_length = al2;
 				}
-#endif
 
 				Sets[used_length] = NEW_int(sz);
 				int_vec_copy(new_set, Sets[used_length], sz);
+				Extra[used_length * 2 + 0] = cur;
+				Extra[used_length * 2 + 1] = j;
 				used_length++;
+
 				if ((used_length % 10000) == 0) {
 					cout << "orbit_of_sets::compute " << used_length
 							<< " Q_len=" << Q_len
 							<< " allocation_length=" << allocation_length
 							<< endl;
-					}
+				}
+
 				Q[Q_len++] = used_length - 1;
 				Hashing.insert(pair<uint32_t, int>(h, used_length - 1));
 
 		    } // if (!f_found)
 
 
-			}
 		}
+	}
 
 
 #if 0
@@ -236,13 +279,13 @@ void orbit_of_sets::compute(int verbose_level)
 	if (f_v) {
 		cout << "orbit_of_sets::compute found an orbit of length "
 				<< used_length << endl;
-		}
+	}
 
 
 	FREE_int(Q);
 	if (f_v) {
 		cout << "orbit_of_sets::compute done" << endl;
-		}
+	}
 }
 
 void orbit_of_sets::dump_tables_of_hash_values()
@@ -317,8 +360,28 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(int *&Table,
 		}
 }
 
+void orbit_of_sets::coset_rep(int j)
+// result is in cosetrep
+// determines an element in the group
+// that moves the orbit representative
+// to the j-th element in the orbit.
+{
+	int *gen;
+
+	if (Extra[2 * j + 0] != -1) {
+		coset_rep(Extra[2 * j + 0]);
+		gen = gens->ith(Extra[2 * j + 1]);
+		A->element_mult(cosetrep, gen, cosetrep_tmp, 0);
+		A->element_move(cosetrep_tmp, cosetrep, 0);
+		}
+	else {
+		A->element_one(cosetrep, 0);
+		}
+}
 
 
+
+#if 1
 int orbit_of_sets_compare_func(void *a, void *b, void *data)
 {
 	int *A = (int *)a;
@@ -337,6 +400,7 @@ int orbit_of_sets_compare_func(void *a, void *b, void *data)
 		}
 	return 0;
 }
+#endif
 
 
 }}

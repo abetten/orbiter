@@ -23,10 +23,6 @@ all: analyze_projective_code.out  \
 	determine_cubic.out \
 	determine_quadric.out \
 	example_fano_plane.out \
-	export_data.out \
-	make_BLT_set.out \
-	make_group.out \
-	make_grassmannian.out \
 	orthogonal_points.out \
 	packing_main.out \
 	plane_search.out \
@@ -80,20 +76,8 @@ determine_quadric.out:  determine_quadric.o;
 example_fano_plane.out:  example_fano_plane.o ;
 	$(DISCRETA_CPP)  example_fano_plane.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-export_data.out:  export_data.o ;
-	$(DISCRETA_CPP)  export_data.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 hill.out:  hill.o;
 	$(DISCRETA_CPP)  hill.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-make_BLT_set.out:  make_BLT_set.o;
-	$(DISCRETA_CPP)  make_BLT_set.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-make_grassmannian.out:  make_grassmannian.o;
-	$(DISCRETA_CPP)  make_grassmannian.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-make_group.out:  make_group.o;
-	$(DISCRETA_CPP)  make_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 orthogonal_points.out:  orthogonal_points.o ;
 	$(DISCRETA_CPP)  orthogonal_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

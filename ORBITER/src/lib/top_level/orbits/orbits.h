@@ -165,10 +165,19 @@ public:
 
 	int position_of_original_set; // = 0; never changes
 	int allocation_length; // number of entries allocated in Sets
+	int old_length;
 	int used_length; // number of sets currently stored in Sets
 	int **Sets;
-		// the sets in the order in which they
+		// the sets are stored in the order in which they
 		// are discovered and added to the tree
+	int *Extra; // [allocation_length * 2]
+		// Extra[i * 2 + 0] is the index of the ancestor node of node i.
+		// Extra[i * 2 + 1] is the label of the generator that maps
+		// the ancestor of node i to node i.
+		// Here, node i means the set in Sets[i].
+		// Node 0 is the root node, i.e. the set in 'set'.
+	int *cosetrep; // the result of coset_rep()
+	int *cosetrep_tmp; // temporary storage for coset_rep()
 
 	std::multimap<uint32_t, int> Hashing;
 		// we store the pair (hash, idx)
@@ -191,6 +200,11 @@ public:
 		int &set_size, int verbose_level);
 	void get_table_of_orbits_and_hash_values(int *&Table,
 			int &orbit_length, int &set_size, int verbose_level);
+	void coset_rep(int j);
+		// result is in cosetrep
+		// determines an element in the group
+		// that moves the orbit representative
+	// to the j-th element in the orbit.
 };
 
 int orbit_of_sets_compare_func(void *a, void *b, void *data);

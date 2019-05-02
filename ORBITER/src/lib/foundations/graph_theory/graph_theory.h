@@ -70,8 +70,8 @@ public:
 
 	int *current_clique; // [max_depth]
 
-	uint counter; // number of backtrack nodes
-	uint decision_step_counter;
+	unsigned int counter; // number of backtrack nodes
+	unsigned int decision_step_counter;
 		// number of backtrack nodes that are decision nodes
 
 	// solution storage:
