@@ -2266,7 +2266,7 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 //get_schreier_vector_compact(sv, f_trivial_group);
 	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
 
-#if 0
+#if 1
 	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
 
 #elif 0
@@ -2275,7 +2275,7 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 			verbose_level);
 	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
 
-#elif 1
+#elif 0
 	//cout << "Orbit partition before:" << endl;
 	//this->print_and_list_orbits(cout);
 

@@ -1369,6 +1369,48 @@ void sorting::int_vec_print_types_naked_tex(ostream &ost,
 		}
 }
 
+void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(ostream &ost,
+	int f_backwards, int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l, a;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << a;
+			if (l > 9) {
+				ost << "^{" << l << "}";
+				}
+			else if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i)
+				ost << ",\\,";
+			ost << " ";
+			}
+		}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << a;
+			if (l > 9) {
+				ost << "^{" << l << "}";
+				}
+			else if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i < nb_types - 1)
+				ost << ",\\,";
+			ost << " ";
+			}
+		}
+}
+
 void sorting::Heapsort(void *v, int len, int entry_size_in_chars,
 	int (*compare_func)(void *v1, void *v2))
 {

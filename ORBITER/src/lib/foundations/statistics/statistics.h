@@ -58,6 +58,7 @@ public:
 	void print_second(int f_backwards);
 	void print_file(std::ostream &ost, int f_backwards);
 	void print_file_tex(std::ostream &ost, int f_backwards);
+	void print_file_tex_we_are_in_math_mode(std::ostream &ost, int f_backwards);
 	void print_naked_stringstream(std::stringstream &sstr, int f_backwards);
 	void print_naked(int f_backwards);
 	void print_naked_tex(std::ostream &ost, int f_backwards);
@@ -69,6 +70,8 @@ public:
 	void get_data_by_multiplicity(int *&Pts, int &nb_pts, 
 		int multiplicity, int verbose_level);
 	int determine_class_by_value(int value);
+	int get_value_of_class(int class_idx);
+	int get_largest_value();
 	void get_class_by_value(int *&Pts, int &nb_pts, int value, 
 		int verbose_level);
 	set_of_sets *get_set_partition_and_types(int *&types, 

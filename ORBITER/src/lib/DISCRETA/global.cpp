@@ -2247,6 +2247,7 @@ void time_check(int t0)
 }
 #endif
 
+#if 0
 int nb_of_bits()
 {
 	return sizeof (uint) * 8;
@@ -2280,6 +2281,7 @@ void bitset2vector(uint g, Vector &v)
 		g >>= 1;
 		}
 }
+#endif
 
 void frobenius_in_PG(domain *dom, int n, permutation &p)
 // n is the projective dimension

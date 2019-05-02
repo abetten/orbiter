@@ -98,7 +98,7 @@ public:
 // exceptional_isomorphism_O4.cpp
 // #############################################################################
 
-//! exceptional isomorphism between oerthogonal groups: O4, O5 and GL(2,q)
+//! exceptional isomorphism between orthogonal groups: O4, O5 and GL(2,q)
 
 class exceptional_isomorphism_O4 {
 public:

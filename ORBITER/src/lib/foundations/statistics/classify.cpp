@@ -236,6 +236,26 @@ void classify::print_file_tex(ostream &ost, int f_backwards)
 		}
 }
 
+void classify::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
+{
+	sorting Sorting;
+
+	if (f_second) {
+		//ost << "(";
+		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(ost, f_backwards, second_data_sorted,
+			second_nb_types, second_type_first, second_type_len);
+		//ost << ")";
+		//ost << endl;
+		}
+	else {
+		//ost << "$(";
+		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(ost, f_backwards, data_sorted,
+			nb_types, type_first, type_len);
+		//ost << ")$";
+		//ost << endl;
+		}
+}
+
 void classify::print_naked_stringstream(stringstream &sstr, int f_backwards)
 {
 	sorting Sorting;
@@ -402,6 +422,24 @@ int classify::determine_class_by_value(int value)
 		}
 	}
 	return -1;
+}
+
+int classify::get_value_of_class(int class_idx)
+{
+	int f, a;
+
+	f = type_first[class_idx];
+	a = data_sorted[f];
+	return a;
+}
+
+int classify::get_largest_value()
+{
+	int f, a;
+
+	f = type_first[nb_types - 1];
+	a = data_sorted[f];
+	return a;
 }
 
 void classify::get_class_by_value(

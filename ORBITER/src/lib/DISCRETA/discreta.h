@@ -406,11 +406,13 @@ void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, doubl
 
 //void time_check_delta(int dt);
 //void time_check(int t0);
+#if 0
 int nb_of_bits();
 void bit_set(uint & g, int k);
 void bit_clear(uint & g, int k);
 int bit_test(uint & g, int k);
 void bitset2vector(uint g, Vector &v);
+#endif
 void frobenius_in_PG(domain *dom, int n, permutation &p);
 // n is the projective dimension
 void frobenius_in_AG(domain *dom, int n, permutation &p);

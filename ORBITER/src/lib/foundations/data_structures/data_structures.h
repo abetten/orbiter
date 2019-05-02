@@ -688,6 +688,9 @@ public:
 	void int_vec_print_types_naked_tex(std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
+	void int_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
+		int f_backwards, int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
 	void Heapsort(void *v, int len, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
 	void Heapsort_general(void *data, int len,

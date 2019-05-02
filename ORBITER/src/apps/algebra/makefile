@@ -13,8 +13,6 @@ all: \
 	borel.out \
 	cheat_sheet_GF.out \
 	code_cosets.out \
-	conjugate.out \
-	conjugate_O4.out \
 	counting_flags.out \
 	create_element_of_order.out \
 	create_element.out \
@@ -27,14 +25,11 @@ all: \
 	get_poly.out \
 	gl_classes.out \
 	long_orbit.out \
-	matrix.out \
-	move_point_orthogonal.out \
 	pascal_matrix.out \
 	polynomial_orbits.out \
 	projective_group.out  \
 	reflection.out \
 	subprimitive.out \
-	test_group.out \
 	three_squares.out
 
 
@@ -52,12 +47,6 @@ cheat_sheet_GF.out:  cheat_sheet_GF.o;
 
 code_cosets.out:  code_cosets.o ;
 	$(DISCRETA_CPP)  code_cosets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-conjugate.out:  conjugate.o;
-	$(DISCRETA_CPP)  conjugate.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-conjugate_O4.out:  conjugate_O4.o;
-	$(DISCRETA_CPP)  conjugate_O4.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 counting_flags.out:  counting_flags.o ;
 	$(DISCRETA_CPP)  counting_flags.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -95,12 +84,6 @@ gl_classes.out:  gl_classes.o ;
 long_orbit.out:  long_orbit.o ;
 	$(DISCRETA_CPP)  long_orbit.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-matrix.out:  matrix.o ;
-	$(DISCRETA_CPP)  matrix.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-move_point_orthogonal.out:  move_point_orthogonal.o;
-	$(DISCRETA_CPP)  move_point_orthogonal.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 pascal_matrix.out:  pascal_matrix.o ;
 	$(DISCRETA_CPP)  pascal_matrix.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -115,9 +98,6 @@ reflection.out:  reflection.o;
 
 subprimitive.out:  subprimitive.o;
 	$(DISCRETA_CPP)  subprimitive.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-test_group.out:  test_group.o;
-	$(DISCRETA_CPP)  test_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 three_squares.out:  three_squares.o ;
 	$(DISCRETA_CPP)  three_squares.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
