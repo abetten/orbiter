@@ -3222,6 +3222,25 @@ int strcmp_with_or_without(char *p, char *q)
 	return ret;
 }
 
+void print_cycle_tex_with_special_point_labels(
+		ostream &ost, int *pts, int nb_pts,
+		void (*point_label)(stringstream &sstr, int pt, void *data),
+		void *point_label_data)
+{
+	int i, pt;
+
+	ost << "(";
+	for (i = 0; i < nb_pts; i++) {
+		pt = pts[i];
+		stringstream sstr;
+		(*point_label)(sstr, pt, point_label_data);
+		ost << sstr;
+		if (i < nb_pts - 1) {
+			ost << ", ";
+		}
+	}
+	ost << ")";
+}
 
 
 

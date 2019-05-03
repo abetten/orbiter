@@ -67,6 +67,11 @@ static void matrix_group_element_print_quick(action &A,
 	void *elt, std::ostream &ost);
 static void matrix_group_element_print_latex(action &A,
 	void *elt, std::ostream &ost);
+static void matrix_group_element_print_latex_with_print_point_function(
+	action &A,
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data);
 static void matrix_group_element_print_as_permutation(
 	action &A, void *elt, std::ostream &ost);
 static void matrix_group_element_print_verbose(action &A,
@@ -97,6 +102,8 @@ void action_pointer_table::init_function_pointers_matrix_group()
 	ptr_element_print = matrix_group_element_print;
 	ptr_element_print_quick = matrix_group_element_print_quick;
 	ptr_element_print_latex = matrix_group_element_print_latex;
+	ptr_element_print_latex_with_print_point_function =
+			matrix_group_element_print_latex_with_print_point_function;
 	ptr_element_print_verbose = matrix_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			matrix_group_element_code_for_make_element;
@@ -531,6 +538,19 @@ static void matrix_group_element_print_quick(action &A,
 
 static void matrix_group_element_print_latex(action &A,
 		void *elt, ostream &ost)
+{
+	matrix_group &G = *A.G.matrix_grp;
+	int *Elt = (int *) elt;
+
+	G.GL_print_latex(Elt, ost);
+	//G.GL_print_easy_latex(Elt, ost);
+}
+
+static void matrix_group_element_print_latex_with_print_point_function(
+	action &A,
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data)
 {
 	matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;

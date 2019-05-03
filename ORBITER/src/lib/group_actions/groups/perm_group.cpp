@@ -387,6 +387,19 @@ void perm_group::print(int *Elt, ostream &ost)
 	//cout << "perm_group::print done" << endl;
 }
 
+void perm_group::print_with_print_point_function(int *Elt,
+		ostream &ost,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data)
+{
+	combinatorics_domain Combi;
+
+	//cout << "perm_group::print before perm_print" << endl;
+	Combi.perm_print_with_print_point_function(ost, Elt, degree, point_label, point_label_data);
+	//ost << endl;
+	//cout << "perm_group::print done" << endl;
+}
+
 void perm_group::code_for_make_element(int *Elt, int *data)
 {
 	int_vec_copy(Elt, data, degree);
@@ -455,7 +468,8 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 	ost << " : ";
 	Combi.perm_print_offset(ost, Elt, degree, 0 /* offset */,
 			FALSE /* f_cycle_length */, FALSE, 0,
-			FALSE /* f_orbit_structure */);
+			FALSE /* f_orbit_structure */,
+			NULL, NULL);
 	ost << " : ";
 	Combi.perm_print_list_offset(ost, Elt, degree, 1);
 	ost << endl;

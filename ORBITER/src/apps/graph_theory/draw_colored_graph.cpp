@@ -225,6 +225,10 @@ int main(int argc, char **argv)
 
 		}
 
+	if (!f_coordinates) {
+		cout << "Please use -f_coordinates ..." << endl;
+		exit(1);
+		}
 	if (!f_file) {
 		cout << "Please specify the file name using -file <fname>" << endl;
 		exit(1);

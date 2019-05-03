@@ -753,6 +753,7 @@ void schreier::print_orbit_tex(ostream &ost, int orbit_no)
 	FREE_int(v);
 }
 
+
 void schreier::print_orbit_using_labels(ostream &ost,
 	int orbit_no, int *labels)
 {

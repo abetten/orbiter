@@ -128,11 +128,21 @@ public:
 	void perm_print_product_action(std::ostream &ost, int *a, int m_plus_n, int m,
 		int offset, int f_cycle_length);
 	void perm_print(std::ostream &ost, int *a, int n);
+	void perm_print_with_print_point_function(
+			std::ostream &ost,
+			int *a, int n,
+			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void *point_label_data);
 	void perm_print_with_cycle_length(std::ostream &ost, int *a, int n);
 	void perm_print_counting_from_one(std::ostream &ost, int *a, int n);
-	void perm_print_offset(std::ostream &ost, int *a, int n, int offset,
-		int f_cycle_length,
-		int f_max_cycle_length, int max_cycle_length, int f_orbit_structure);
+	void perm_print_offset(std::ostream &ost,
+		int *a, int n,
+		int offset, int f_cycle_length,
+		int f_max_cycle_length,
+		int max_cycle_length,
+		int f_orbit_structure,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data);
 	void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles);
 	int perm_order(int *a, int n);
 	int perm_signum(int *perm, int n);

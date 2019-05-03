@@ -50,6 +50,11 @@ static void perm_group_element_print(action &A,
 	void *elt, std::ostream &ost);
 static void perm_group_element_print_latex(action &A,
 	void *elt, std::ostream &ost);
+static void perm_group_element_print_latex_with_print_point_function(
+	action &A,
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data);
 static void perm_group_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
 static void perm_group_element_code_for_make_element(action &A,
@@ -81,6 +86,8 @@ void action_pointer_table::init_function_pointers_permutation_group()
 	ptr_element_print = perm_group_element_print;
 	ptr_element_print_quick = perm_group_element_print; // no quick version here!
 	ptr_element_print_latex = perm_group_element_print_latex;
+	ptr_element_print_latex_with_print_point_function =
+			perm_group_element_print_latex_with_print_point_function;
 	ptr_element_print_verbose = perm_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			perm_group_element_code_for_make_element;
@@ -420,6 +427,20 @@ static void perm_group_element_print_latex(action &A,
 
 	G.print(Elt, ost);
 	//G.print_with_action(&A, Elt, ost);
+}
+
+static void perm_group_element_print_latex_with_print_point_function(
+	action &A,
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data)
+{
+	perm_group &G = *A.G.perm_grp;
+	int *Elt = (int *) elt;
+
+	G.print_with_print_point_function(Elt, ost, point_label, point_label_data);
+	//G.print_with_action(&A, Elt, ost);
+
 }
 
 static void perm_group_element_print_verbose(action &A,

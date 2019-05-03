@@ -904,7 +904,7 @@ int action::element_order_verbose(void *elt, int verbose_level)
 			l++;
 			continue;
 			}
-		/* work on cycle, starting with l: */
+		// work on cycle, starting with l:
 		first = l;
 		l1 = l;
 		len = 1;
@@ -912,7 +912,7 @@ int action::element_order_verbose(void *elt, int verbose_level)
 			have_seen[l1] = TRUE;
 			next = element_image_of(l1, elt, 0);
 			if (next > n) {
-				cout << "perm_print(): next = " 
+				cout << "action::element_order_verbose: next = "
 					<< next << " > n = " << n << endl;
 				// print_list(ost);
 				exit(1);
@@ -921,8 +921,8 @@ int action::element_order_verbose(void *elt, int verbose_level)
 				break;
 				}
 			if (have_seen[next]) {
-				cout << "action::element_order_if_divisor_of: "
-						"have_seen[next]\n";
+				cout << "action::element_order_verbose "
+						"have_seen[next]" << endl;
 				exit(1);
 				}
 			l1 = next;

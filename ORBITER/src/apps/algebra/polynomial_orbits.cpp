@@ -611,20 +611,20 @@ int main(int argc, const char **argv)
 			SG2->print_generators_tex();
 			FREE_OBJECT(SG2);
 
-			sims *Stab;
-			action *AR;
+			//sims *Stab;
+			//action *AR;
 			int *perm;
 			int *Elt;
 
 			Elt = NEW_int(A->elt_size_in_int);
 			perm = NEW_int(nb_pts);
-			Stab = SG->create_sims(0 /*verbose_level*/);
+			//Stab = SG->create_sims(0 /*verbose_level*/);
 			cout << "creating restricted action on the curve:" << endl;
-			AR = A->restricted_action(Pts, nb_pts, 0 /* verbose_level */);
+			//AR = A->restricted_action(Pts, nb_pts, 0 /* verbose_level */);
 
 
 			int a1, a2, a3, a4, a6;
-			int A6[6];
+			//int A6[6];
 	
 			if (!HPD->test_weierstrass_form(pt,
 				a1, a2, a3, a4, a6, 0 /* verbose_level */)) {
@@ -637,12 +637,14 @@ int main(int argc, const char **argv)
 					<< " a3=" << a3
 					<< " a4=" << a4
 					<< " a6=" << a6 << endl;
+#if 0
 			A6[0] = a1;
 			A6[1] = a2;
 			A6[2] = a3;
 			A6[3] = a4;
 			A6[4] = 0;
 			A6[5] = a6;
+#endif
 
 			//c = HPD->P->elliptic_curve_addition(A6,
 			//Pts[0], Pts[1], 2 /*verbose_level*/);

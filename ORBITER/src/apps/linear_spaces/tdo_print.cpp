@@ -76,7 +76,6 @@ int main(int argc, char **argv)
 	int i, f_doit;
 	int f_w = FALSE;
 	int nb_written = 0;
-	int f_v, f_vv, f_vvv;
 
 	t0 = os_ticks();
 	if (argc <= 1) {
@@ -163,9 +162,11 @@ int main(int argc, char **argv)
 	if (f_texfile) {
 		texfile = new ofstream(texfile_name);
 		}
+
+	int f_v, f_vv;
 	f_v = (verbose_level >= 1);
 	f_vv = (verbose_level >= 2);
-	f_vvv = (verbose_level >= 3);
+	//f_vvv = (verbose_level >= 3);
 
 	
 	geo_parameter GP;

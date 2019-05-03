@@ -1623,6 +1623,68 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 	FREE_int(D);
 }
 
+void matrix_group::GL_print_latex_with_print_point_function(int *Elt,
+		ostream &ost,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data)
+{
+	cout << "matrix_group::GL_print_latex_with_print_point_function nyi" << endl;
+#if 0
+	int i, j, a;
+	//int w;
+
+	//w = (int) GFq->log10_of_q;
+
+	int *D;
+	D = NEW_int(n * n);
+
+	int_vec_copy(Elt, D, n * n);
+
+	if (f_projective) {
+		GFq->PG_element_normalize_from_front(D, 1, n * n);
+		}
+
+	ost << "\\left[" << endl;
+	ost << "\\begin{array}{*{" << n << "}{r}}" << endl;
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			a = D[i * n + j];
+
+#if 0
+			if (is_prime(GFq->q)) {
+				ost << setw(w) << a << " ";
+				}
+			else {
+				ost << a;
+				// GFq->print_element(ost, a);
+				}
+#else
+			GFq->print_element(ost, a);
+#endif
+
+			if (j < n - 1)
+				ost << " & ";
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+	if (f_affine) {
+		int_vec_print(ost, Elt + n * n, n);
+		if (f_semilinear) {
+			ost << "_{" << Elt[n * n + n] << "}" << endl;
+			}
+		}
+	else {
+		if (f_semilinear) {
+			ost << "_{" << Elt[n * n] << "}" << endl;
+			}
+		}
+	FREE_int(D);
+#endif
+
+}
+
 void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 {
     int i, j, a;

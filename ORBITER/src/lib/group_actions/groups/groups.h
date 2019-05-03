@@ -402,6 +402,10 @@ public:
 	void GL_print_for_make_element_no_commas(int *Elt, std::ostream &ost);
 	void GL_print_easy_normalized(int *Elt, std::ostream &ost);
 	void GL_print_latex(int *Elt, std::ostream &ost);
+	void GL_print_latex_with_print_point_function(int *Elt,
+			std::ostream &ost,
+			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void *point_label_data);
 	void GL_print_easy_latex(int *Elt, std::ostream &ost);
 	int get_digit(uchar *elt, int i, int j);
 	int get_digit_frobenius(uchar *elt);
@@ -484,6 +488,10 @@ public:
 	void unpack(uchar *elt, int *Elt);
 	void pack(int *Elt, uchar *elt);
 	void print(int *Elt, std::ostream &ost);
+	void print_with_print_point_function(int *Elt,
+			std::ostream &ost,
+			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void *point_label_data);
 	void code_for_make_element(int *Elt, int *data);
 	void print_for_make_element(int *Elt, std::ostream &ost);
 	void print_for_make_element_no_commas(int *Elt, std::ostream &ost);
@@ -1194,6 +1202,8 @@ public:
 		strong_generators *&SG, int &nb_classes,
 		int *&class_size, int *&class_rep,
 		int verbose_level);
+	void compute_all_powers(int elt_idx, int n, int *power_elt,
+			int verbose_level);
 
 	// sims2.C:
 	void build_up_subgroup_random_process(sims *G, 
@@ -1319,12 +1329,22 @@ public:
 	void print_generators_MAGMA(action *A, std::ostream &ost);
 	void print_generators_tex();
 	void print_generators_tex(std::ostream &ost);
+	void print_generators_tex_with_print_point_function(
+			action *A,
+			std::ostream &ost,
+			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void *point_label_data);
 	void print_generators_for_make_element(std::ostream &ost);
 	void print_generators_as_permutations();
 	void print_generators_as_permutations_tex(std::ostream &ost, action *A2);
 	void print_with_given_action(std::ostream &ost, action *A2);
 	void print_elements_ost(std::ostream &ost);
 	void print_elements_latex_ost(std::ostream &ost);
+	void print_elements_latex_ost_with_print_point_function(
+			action *A,
+			std::ostream &ost,
+			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void *point_label_data);
 	void create_group_table(int *&Table, int &go, 
 		int verbose_level);
 	void list_of_elements_of_subgroup(

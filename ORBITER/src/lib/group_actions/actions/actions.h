@@ -820,6 +820,10 @@ public:
 	void element_print(void *elt, std::ostream &ost);
 	void element_print_quick(void *elt, std::ostream &ost);
 	void element_print_latex(void *elt, std::ostream &ost);
+	void element_print_latex_with_print_point_function(
+		void *elt, std::ostream &ost,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data);
 	void element_print_verbose(void *elt, std::ostream &ost);
 	void element_code_for_make_element(void *elt, int *data);
 	void element_print_for_make_element(void *elt, 
@@ -1000,6 +1004,10 @@ public:
 		void *elt, std::ostream &ost);
 	void (*ptr_element_print_latex)(action &A,
 		void *elt, std::ostream &ost);
+	void (*ptr_element_print_latex_with_print_point_function)(action &A,
+		void *elt, std::ostream &ost,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data);
 	void (*ptr_element_print_verbose)(action &A,
 		void *elt, std::ostream &ost);
 	void (*ptr_print_point)(action &A, int i, std::ostream &ost);

@@ -775,6 +775,7 @@ void do_arc_lifting(
 		}
 	
 	longinteger_object go;
+#if 0
 	int f_semilinear;
 
 	if (NT.is_prime(F->q)) {
@@ -783,7 +784,6 @@ void do_arc_lifting(
 	else {
 		f_semilinear = TRUE;
 		}
-#if 0
 	action *A_linear;
 
 	A_linear = NEW_OBJECT(action);

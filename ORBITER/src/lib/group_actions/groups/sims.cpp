@@ -5869,6 +5869,40 @@ void sims::compute_conjugacy_classes(
 
 }
 
+void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+
+	if (f_v) {
+		cout << "sims::compute_all_powers" << endl;
+		}
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	element_unrank_int(elt_idx, Elt1);
+	A->element_move(Elt1, Elt2, 0);
+	power_elt[0] = elt_idx;
+	for (i = 2; i <= n; i++) {
+		A->element_mult(Elt1, Elt2, Elt3, 0);
+		a = element_rank_int(Elt3);
+		power_elt[i - 1] = a;
+		A->element_move(Elt3, Elt1, 0);
+		}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+
+	if (f_v) {
+		cout << "sims::create_group_table done" << endl;
+		}
+}
+
 
 
 }}

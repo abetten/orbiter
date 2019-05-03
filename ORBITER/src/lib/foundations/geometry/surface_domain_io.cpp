@@ -861,5 +861,28 @@ void surface_domain::print_half_double_sixes_in_GAP()
 	cout << "];" << endl;
 }
 
+
+void surface_domain::sstr_line_label(stringstream &sstr, int pt)
+{
+	if (pt >= 27) {
+		cout << "surface_domain::sstr_line_label pt >= 27, pt=" << pt << endl;
+		exit(1);
+	}
+	if (pt < 0) {
+		cout << "surface_domain::sstr_line_label pt < 0, pt=" << pt << endl;
+		exit(1);
+	}
+	sstr << Line_label_tex[pt];
 }
+
+void callback_surface_domain_sstr_line_label(stringstream &sstr, int pt, void *data)
+{
+	surface_domain *D = (surface_domain *) data;
+
+	//cout << "callback_surface_domain_sstr_line_label pt=" << pt << endl;
+	D->sstr_line_label(sstr, pt);
 }
+
+
+
+}}

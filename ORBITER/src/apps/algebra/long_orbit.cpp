@@ -548,7 +548,7 @@ void compute_orbit(int n, int k, int q, int print_mod, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int kn = k * n;
 	int length, nb_processed = 0;
-	int f_found;
+	//int f_found;
 	int *M1, *M2;
 	char *M2c;
 	int alloc_length = 500000;
@@ -643,7 +643,7 @@ void compute_orbit(int n, int k, int q, int print_mod, int verbose_level)
 #endif
 			F.Gauss_simple(M2, k, n, base_cols, 0/* verbose_level*/);
 
-			f_found = FALSE;
+			//f_found = FALSE;
 
 			for (int j = 0; j < kn; j++) {
 				M2c[j] = (char) M2[j];
