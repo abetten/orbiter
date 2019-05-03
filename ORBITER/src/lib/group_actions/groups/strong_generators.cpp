@@ -1457,7 +1457,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 	group_order(go);
 	power_elt = NEW_int(go.as_int());
 	nb_fix_points = NEW_int(go.as_int());
-	cycle_type = NEW_int(A->degree);
+	cycle_type = NEW_int(A_given->degree);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
 	int_vec_print(ost, tl, A->base_len);
@@ -1469,7 +1469,10 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		}
 	for (i = 0; i < m; i++) {
 		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
-		order = A->element_order_and_cycle_type(Elt, cycle_type);
+		cout << "element " << i << " / " << m << " before A->element_order" << endl;
+		order = A->element_order(Elt);
+		cout << "element " << i << " / " << m << " before A->element_order_and_cycle_type" << endl;
+		A_given->element_order_and_cycle_type(Elt, cycle_type);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
 		A->element_print_latex(Elt, ost);

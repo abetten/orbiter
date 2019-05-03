@@ -883,8 +883,8 @@ int action::element_order(void *elt)
 	return order;
 }
 
-int action::element_order_and_cycle_type(int *cycle_type,
-		void *elt)
+int action::element_order_and_cycle_type(
+		void *elt, int *cycle_type)
 {
 	return element_order_and_cycle_type_verbose(
 			elt, cycle_type, 0);

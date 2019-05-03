@@ -532,7 +532,7 @@ void surface_object_with_action::init_orbits_on_lines(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "clebsch::init_orbits_on_lines" << endl;
+		cout << "surface_object_with_action::init_orbits_on_lines" << endl;
 		}
 
 	if (f_v) {
@@ -722,7 +722,7 @@ void surface_object_with_action::print_generators_on_lines(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "clebsch::print_generators_on_lines" << endl;
+		cout << "surface_object_with_action::print_generators_on_lines" << endl;
 		}
 	//Aut_gens->print_generators_tex(ost);
 	Aut_gens->print_generators_tex_with_print_point_function(
@@ -741,7 +741,7 @@ void surface_object_with_action::print_elements_on_lines(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "clebsch::print_elements_on_lines" << endl;
+		cout << "surface_object_with_action::print_elements_on_lines" << endl;
 		}
 	//Aut_gens->print_generators_tex(ost);
 	Aut_gens->print_elements_latex_ost_with_print_point_function(
@@ -1306,8 +1306,6 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet" << endl;
 		}
 	
-	cout << "surface_object_with_action::cheat_sheet "
-			"before New_clebsch->init_surface_equation_given" << endl;
 
 
 
@@ -1354,7 +1352,8 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 				ost,
 				projectivity_group_gens,
 				verbose_level);
-		ost << "The elements of the projectivity group in the action on the lines:\\\\" << endl;
+		ost << "The elements of the projectivity group "
+				"in the action on the lines:\\\\" << endl;
 		print_elements_on_lines(
 				ost,
 				projectivity_group_gens,
@@ -1867,7 +1866,6 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 
 
 	gens_copy = Aut_gens->create_copy();
-	//gens_copy = New_clebsch->SaS->Strong_gens->create_copy();
 
 	moved_surface = NEW_OBJECT(set_and_stabilizer);
 
