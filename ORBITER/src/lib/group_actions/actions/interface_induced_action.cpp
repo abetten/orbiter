@@ -61,6 +61,11 @@ static void induced_action_element_print_quick(action &A,
 	void *elt, std::ostream &ost);
 static void induced_action_element_print_latex(action &A,
 	void *elt, std::ostream &ost);
+static void induced_action_element_print_latex_with_print_point_function(
+	action &A,
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data);
 static void induced_action_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
 static void induced_action_element_code_for_make_element(action &A,
@@ -95,6 +100,8 @@ void action_pointer_table::init_function_pointers_induced_action()
 	ptr_element_print = induced_action_element_print;
 	ptr_element_print_quick = induced_action_element_print_quick;
 	ptr_element_print_latex = induced_action_element_print_latex;
+	ptr_element_print_latex_with_print_point_function =
+			induced_action_element_print_latex_with_print_point_function;
 	ptr_element_print_verbose = induced_action_element_print_verbose;
 	ptr_element_code_for_make_element =
 			induced_action_element_code_for_make_element;
@@ -1359,6 +1366,63 @@ static void induced_action_element_print_latex(action &A,
 			}
 		sub->element_print_latex(elt, ost);
 		}
+}
+
+static void induced_action_element_print_latex_with_print_point_function(
+	action &A,
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data)
+{
+	int f_v = FALSE;
+	int *Elt = (int *) elt;
+	int i, j;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "induced_action_element_print_latex_with_print_point_function "
+				"degree = " << A.degree << endl;
+		}
+	int *p = NEW_int(A.degree);
+	for (i = 0; i < A.degree; i++) {
+		//cout << "matrix_group_element_print_as_permutation
+		//computing image of i=" << i << endl;
+		//if (i == 3)
+			//f_v = TRUE;
+		//else
+			//f_v = FALSE;
+		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
+		p[i] = j;
+		}
+	//Combi.perm_print(ost, p, A.degree);
+	//ost << ";";
+	Combi.perm_print_with_print_point_function(ost, p,
+			A.degree, point_label, point_label_data);
+	FREE_int(p);
+
+
+
+
+#if 0
+	if (A.type_G == product_action_t) {
+		product_action *PA;
+
+		PA = A.G.product_action_data;
+		PA->element_print_latex((int *)elt, ost);
+		}
+	else {
+		action *sub;
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_element_print_latex "
+					"no subaction" << endl;
+			exit(1);
+			}
+		sub->element_print_latex_with_print_point_function(
+				elt, ost, point_label, point_label_data);
+		}
+#endif
+
 }
 
 static void induced_action_element_print_verbose(action &A,

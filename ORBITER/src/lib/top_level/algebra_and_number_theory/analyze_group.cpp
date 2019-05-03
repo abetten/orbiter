@@ -339,7 +339,8 @@ void compute_regular_representation(action *A, sims *S,
 		Combi.perm_print_offset(cout,
 			perm + i * goi, goi, 1 /* offset */,
 			FALSE /* f_cycle_length */, FALSE, 0,
-			TRUE /* f_orbit_structure */);
+			TRUE /* f_orbit_structure */,
+			NULL, NULL);
 		cout << endl;
 		}
 }

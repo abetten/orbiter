@@ -644,6 +644,10 @@ int my_atoi(char *str);
 long int my_atol(char *str);
 int compare_strings(void *a, void *b, void *data);
 int strcmp_with_or_without(char *p, char *q);
+void print_cycle_tex_with_special_point_labels(
+		std::ostream &ost, int orbit_no,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data);
 
 
 

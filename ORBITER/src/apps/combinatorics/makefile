@@ -15,16 +15,13 @@ all: all_k_subsets.out \
 		costas.out \
 		design.out \
 		ferdinand.out \
-		fibonacci.out \
 		group_ring.out \
 		had.out \
 		hadamard.out \
 		hamming.out \
 		johnson_table.out \
 		kramer_mesner.out \
-		lehmer.out \
 		matrix_rank.out \
-		nondecreasing.out \
 		orthogonal.out \
 		partitions.out \
 		poset_of_subsets.out \
@@ -32,11 +29,8 @@ all: all_k_subsets.out \
 		random.out \
 		rank_anything.out \
 		rank_subsets_lex.out \
-		sequences.out \
 		subsets.out \
 		tao.out \
-		test.out \
-		test2.out \
 		unrank.out 
 
 
@@ -61,9 +55,6 @@ design.out:  design.o;
 ferdinand.out:  ferdinand.o;
 	$(DISCRETA_CPP)  ferdinand.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-fibonacci.out:  fibonacci.o;
-	$(DISCRETA_CPP)  fibonacci.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 group_ring.out:  group_ring.o;
 	$(DISCRETA_CPP)  group_ring.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -82,14 +73,8 @@ johnson_table.out:  johnson_table.o;
 kramer_mesner.out:  kramer_mesner.o;
 	$(DISCRETA_CPP)  kramer_mesner.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-lehmer.out:  lehmer.o;
-	$(DISCRETA_CC)  lehmer.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 matrix_rank.out:  matrix_rank.o;
 	$(DISCRETA_CPP)  matrix_rank.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-nondecreasing.out:  nondecreasing.o;
-	$(DISCRETA_CPP)  nondecreasing.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 orthogonal.out:  orthogonal.o;
 	$(DISCRETA_CPP)  orthogonal.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -112,20 +97,11 @@ rank_anything.out:  rank_anything.o;
 rank_subsets_lex.out:  rank_subsets_lex.o;
 	$(DISCRETA_CPP)  rank_subsets_lex.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-sequences.out:  sequences.o;
-	$(DISCRETA_CPP)  sequences.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 subsets.out:  subsets.o;
 	$(DISCRETA_CPP)  subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 tao.out:  tao.o;
 	$(DISCRETA_CPP)  tao.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-test.out:  test.o;
-	$(DISCRETA_CPP)  test.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-test2.out:  test2.o;
-	$(DISCRETA_CPP)  test2.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 test_group.out:  test_group.o;
 	$(DISCRETA_CPP)  test_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

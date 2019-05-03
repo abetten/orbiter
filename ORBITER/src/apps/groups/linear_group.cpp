@@ -58,6 +58,11 @@ int main(int argc, const char **argv)
 	int f_search_subgroup = FALSE;
 	int f_print_elements = FALSE;
 	int f_print_elements_tex = FALSE;
+	int f_multiply = FALSE;
+	const char *multiply_a = NULL;
+	const char *multiply_b = NULL;
+	int f_inverse = FALSE;
+	const char *inverse_a = NULL;
 
 
 	int i;
@@ -117,14 +122,16 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-orbit_of_set_from_file") == 0) {
 			f_orbit_of_set_from_file = TRUE;
 			orbit_of_set_from_file_fname = argv[++i];
-			cout << "-orbit_of_set_from_file" << orbit_of_set_from_file_fname << endl;
+			cout << "-orbit_of_set_from_file"
+					<< orbit_of_set_from_file_fname << endl;
 			}
 		else if (strcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
 			f_orbits_on_set_system_from_file = TRUE;
 			orbits_on_set_system_from_file_fname = argv[++i];
 			orbits_on_set_system_first_column = atoi(argv[++i]);
 			orbits_on_set_system_number_of_columns = atoi(argv[++i]);
-			cout << "-orbits_on_set_system_from_file" << orbits_on_set_system_from_file_fname
+			cout << "-orbits_on_set_system_from_file"
+					<< orbits_on_set_system_from_file_fname
 					<< " " << orbits_on_set_system_first_column << " "
 					<< orbits_on_set_system_number_of_columns << endl;
 			}
@@ -139,6 +146,17 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-print_elements_tex") == 0) {
 			f_print_elements_tex = TRUE;
 			cout << "-print_elements_tex " << endl;
+			}
+		else if (strcmp(argv[i], "-multiply") == 0) {
+			f_multiply = TRUE;
+			multiply_a = argv[++i];
+			multiply_b = argv[++i];
+			cout << "-multiply " << multiply_a << " " << multiply_b << endl;
+			}
+		else if (strcmp(argv[i], "-inverse") == 0) {
+			f_inverse = TRUE;
+			inverse_a = argv[++i];
+			cout << "-inverse " << inverse_a << endl;
 			}
 	}
 
@@ -227,6 +245,61 @@ int main(int argc, const char **argv)
 
 	if (f_classes) {
 		A->conjugacy_classes_and_normalizers(verbose_level);
+	}
+
+	if (f_multiply) {
+		cout << "multiplying" << endl;
+		cout << "A=" << multiply_a << endl;
+		cout << "B=" << multiply_b << endl;
+		int *Elt1;
+		int *Elt2;
+		int *Elt3;
+
+		Elt1 = NEW_int(A->elt_size_in_int);
+		Elt2 = NEW_int(A->elt_size_in_int);
+		Elt3 = NEW_int(A->elt_size_in_int);
+
+		A->make_element_from_string(Elt1,
+				multiply_a, verbose_level);
+		cout << "A=" << endl;
+		A->element_print_quick(Elt1, cout);
+
+		A->make_element_from_string(Elt2,
+				multiply_b, verbose_level);
+		cout << "B=" << endl;
+		A->element_print_quick(Elt2, cout);
+
+		A->element_mult(Elt1, Elt2, Elt3, 0);
+		cout << "A*B=" << endl;
+		A->element_print_quick(Elt3, cout);
+		A->element_print_for_make_element(Elt3, cout);
+		cout << endl;
+		FREE_int(Elt1);
+		FREE_int(Elt2);
+		FREE_int(Elt3);
+	}
+
+	if (f_inverse) {
+		cout << "computing the inverse" << endl;
+		cout << "A=" << inverse_a << endl;
+		int *Elt1;
+		int *Elt2;
+
+		Elt1 = NEW_int(A->elt_size_in_int);
+		Elt2 = NEW_int(A->elt_size_in_int);
+
+		A->make_element_from_string(Elt1,
+				multiply_a, verbose_level);
+		cout << "A=" << endl;
+		A->element_print_quick(Elt1, cout);
+
+		A->element_invert(Elt1, Elt2, 0);
+		cout << "A^-1=" << endl;
+		A->element_print_quick(Elt2, cout);
+		A->element_print_for_make_element(Elt2, cout);
+		cout << endl;
+		FREE_int(Elt1);
+		FREE_int(Elt2);
 	}
 
 	if (f_normalizer) {

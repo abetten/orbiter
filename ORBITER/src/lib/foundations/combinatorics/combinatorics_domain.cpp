@@ -1207,29 +1207,39 @@ void combinatorics_domain::perm_print_product_action(
 	//cout << "perm_print_product_action" << endl;
 	ost << "(";
 	perm_print_offset(ost, a, m, offset,
-			f_cycle_length, FALSE, 0, FALSE);
+			f_cycle_length, FALSE, 0, FALSE, NULL, NULL);
 	ost << "; ";
 	perm_print_offset(ost, a + m, m_plus_n - m,
-			offset + m, f_cycle_length, FALSE, 0, FALSE);
+			offset + m, f_cycle_length, FALSE, 0, FALSE, NULL, NULL);
 	ost << ")";
 	//cout << "perm_print_product_action done" << endl;
 }
 
 void combinatorics_domain::perm_print(ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 0, FALSE, FALSE, 0, FALSE);
+	perm_print_offset(ost, a, n, 0, FALSE, FALSE, 0, FALSE, NULL, NULL);
+}
+
+void combinatorics_domain::perm_print_with_print_point_function(
+		ostream &ost,
+		int *a, int n,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data)
+{
+	perm_print_offset(ost, a, n, 0, FALSE, FALSE, 0, FALSE,
+			point_label, point_label_data);
 }
 
 void combinatorics_domain::perm_print_with_cycle_length(
 		ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 0, TRUE, FALSE, 0, TRUE);
+	perm_print_offset(ost, a, n, 0, TRUE, FALSE, 0, TRUE, NULL, NULL);
 }
 
 void combinatorics_domain::perm_print_counting_from_one(
 		ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 1, FALSE, FALSE, 0, FALSE);
+	perm_print_offset(ost, a, n, 1, FALSE, FALSE, 0, FALSE, NULL, NULL);
 }
 
 void combinatorics_domain::perm_print_offset(ostream &ost,
@@ -1237,7 +1247,9 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 	int offset, int f_cycle_length,
 	int f_max_cycle_length,
 	int max_cycle_length,
-	int f_orbit_structure)
+	int f_orbit_structure,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data)
 {
 	int *have_seen;
 	int i, l, l1, first, next, len;
@@ -1303,9 +1315,11 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 		if (f_orbit_structure) {
 			orbit_length[nb_orbits++] = len;
 			}
+#if 0
 		if (len == 1) {
 			continue;
 			}
+#endif
 		if (f_max_cycle_length && len > max_cycle_length) {
 			continue;
 			}
@@ -1314,7 +1328,15 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 		l1 = first;
 		ost << "(";
 		while (TRUE) {
-			ost << l1 + offset;
+			if (point_label) {
+				stringstream sstr;
+
+				(*point_label)(sstr, l1, point_label_data);
+				ost << sstr.str();
+			}
+			else {
+				ost << l1 + offset;
+			}
 			next = a[l1];
 			if (next == first) {
 				break;

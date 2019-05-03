@@ -1269,6 +1269,38 @@ void strong_generators::print_generators_tex(ostream &ost)
 	}
 }
 
+void strong_generators::print_generators_tex_with_print_point_function(
+		action *A_given,
+		ostream &ost,
+		void (*point_label)(stringstream &sstr, int pt, void *data),
+		void *point_label_data)
+{
+	int i;
+	longinteger_object go;
+
+	group_order(go);
+	ost << "Strong generators for a group of order " << go << ":" << endl;
+	//ost << "$$" << endl;
+	for (i = 0; i < gens->len; i++) {
+		cout << "Generator " << i << " / " << gens->len << " is:" << endl;
+		ost << "$$" << endl;
+		A->element_print_latex(gens->ith(i), ost);
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		A_given->element_print_latex_with_print_point_function(
+				gens->ith(i), ost,
+				point_label, point_label_data);
+		ost << "$$" << endl;
+		}
+	//ost << "$$" << endl;
+	for (i = 0; i < gens->len; i++) {
+		//cout << "Generator " << i << " / " << gens->len
+		// << " is:" << endl;
+		A->element_print_for_make_element(gens->ith(i), ost);
+		ost << "\\\\" << endl;
+	}
+}
+
 void strong_generators::print_generators_for_make_element(ostream &ost)
 {
 	int i;
@@ -1405,6 +1437,52 @@ void strong_generators::print_elements_latex_ost(ostream &ost)
 		}
 	FREE_OBJECT(S);
 	FREE_int(Elt);
+}
+
+void strong_generators::print_elements_latex_ost_with_print_point_function(
+		action *A_given,
+		ostream &ost,
+		void (*point_label)(stringstream &sstr, int pt, void *data),
+		void *point_label_data)
+{
+	int i, order, m;
+	longinteger_object go;
+	sims *S;
+	int *Elt;
+	int *power_elt;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+	power_elt = NEW_int(go.as_int());
+	S = create_sims(0 /*verbose_level */);
+	ost << "Group elements for a group of order " << go << " tl=";
+	int_vec_print(ost, tl, A->base_len);
+	ost << "\\\\" << endl;
+	m = MINIMUM(go.as_int(), 500);
+	if (m < go.as_int()) {
+		ost << "We will only list the first " << m
+				<< " elements:\\\\" << endl;
+		}
+	for (i = 0; i < m; i++) {
+		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
+		order = A->element_order(Elt);
+		ost << "Element " << i << " / " << go << " is:" << endl;
+		ost << "$$" << endl;
+		A->element_print_latex(Elt, ost);
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		A_given->element_print_latex_with_print_point_function(Elt, ost,
+				point_label, point_label_data);
+		ost << "$$" << endl;
+		ost << "The element has order " << order << ".\\\\" << endl;
+		S->compute_all_powers(i, order, power_elt, 0 /*verbose_level*/);
+		ost << "The powers are: ";
+		int_vec_print(ost, power_elt, order);
+		ost << ".\\\\" << endl;
+		}
+	FREE_OBJECT(S);
+	FREE_int(Elt);
+	FREE_int(power_elt);
 }
 
 void strong_generators::create_group_table(

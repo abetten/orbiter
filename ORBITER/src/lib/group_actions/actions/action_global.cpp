@@ -108,11 +108,13 @@ void action_print_symmetry_group_type(ostream &ost,
 	else if (a == action_on_homogeneous_polynomials_t) {
 		ost << "action_on_homogeneous_polynomials_t";
 		}
+	else if (a == action_on_k_subsets_t) {
+		ost << "action_on_k_subsets_t";
+		}
 	else {
 		ost << "unknown symmetry_group_type" << endl;
 		}
 }
-
 
 
 void make_generators_stabilizer_of_two_components(

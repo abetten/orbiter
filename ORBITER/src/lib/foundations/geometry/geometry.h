@@ -2959,9 +2959,11 @@ public:
 	void print_set_of_lines_tex(std::ostream &ost, int *v, int len);
 	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
+	void sstr_line_label(std::stringstream &sstr, int pt);
 
 };
 
+void callback_surface_domain_sstr_line_label(std::stringstream &sstr, int pt, void *data);
 
 // #############################################################################
 // surface_object.C

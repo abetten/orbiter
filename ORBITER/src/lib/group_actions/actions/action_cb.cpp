@@ -392,6 +392,15 @@ void action::element_print_latex(
 			*this, elt, ost);
 }
 
+void action::element_print_latex_with_print_point_function(
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void *point_label_data)
+{
+	(*ptr->ptr_element_print_latex_with_print_point_function)(
+				*this, elt, ost, point_label, point_label_data);
+}
+
 void action::element_print_verbose(
 		void *elt, ostream &ost)
 {
@@ -503,7 +512,8 @@ void action::element_print_as_permutation_with_offset(
 	Combi.perm_print_offset(ost, v, degree, offset,
 			f_cycle_length,
 			f_max_cycle_length, max_cycle_length,
-			f_orbit_structure);
+			f_orbit_structure,
+			NULL, NULL);
 	//ost << endl;
 	//perm_print_cycles_sorted_by_length(ost, degree, v);
 
@@ -548,7 +558,8 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 		}
 	//perm_print(ost, v, degree);
 	Combi.perm_print_offset(ost, v, degree, offset, f_cycle_length,
-			f_max_cycle_length, max_cycle_length, f_orbit_structure);
+			f_max_cycle_length, max_cycle_length, f_orbit_structure,
+			NULL, NULL);
 	FREE_int(v);
 }
 

@@ -70,7 +70,7 @@ int main(int argc, const char **argv)
 	int verbose_level = 0;
 	int f_file = FALSE;
 	const char *fname;
-	int f_draw = FALSE;
+	//int f_draw = FALSE;
 	int f_spanning_tree = FALSE;
 	int xmax = 1000000;
 	int ymax = 1000000;
@@ -83,8 +83,8 @@ int main(int argc, const char **argv)
 	int f_label_edges = FALSE;
 	int f_y_stretch = FALSE;
 	double y_stretch = 1.;
-	int f_x_stretch = FALSE;
-	double x_stretch = 1.;
+	//int f_x_stretch = FALSE;
+	//double x_stretch = 1.;
 	int f_scale = FALSE;
 	double scale = .45;
 	int f_line_width = FALSE;
@@ -102,11 +102,13 @@ int main(int argc, const char **argv)
 			fname = argv[++i];
 			cout << "-file " << fname << endl;
 			}
+#if 0
 		else if (strcmp(argv[i], "-draw") == 0) {
 			f_draw = TRUE;
 			//draw_fname = argv[++i];
 			cout << "-draw " << endl;
 			}
+#endif
 		else if (strcmp(argv[i], "-spanning_tree") == 0) {
 			f_spanning_tree = TRUE;
 			cout << "-spanning_tree " << endl;
@@ -176,11 +178,13 @@ int main(int argc, const char **argv)
 			sscanf(argv[++i], "%lf", &y_stretch);
 			cout << "-y_stretch " << endl;
 			}
+#if 0
 		else if (strcmp(argv[i], "-x_stretch") == 0) {
 			f_x_stretch = TRUE;
 			sscanf(argv[++i], "%lf", &x_stretch);
 			cout << "-x_stretch " << endl;
 			}
+#endif
 		else if (strcmp(argv[i], "-boxed") == 0) {
 			f_boxed = TRUE;
 			boxed_group_size = atoi(argv[++i]);
@@ -618,9 +622,9 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 
 int get_depth(layered_graph *LG, int layer, int node)
 {
-	int d1, d2, d3;
+	int /* d1,*/ d2, d3;
 	
-	d1 = LG->L[layer].Nodes[node].data1;
+	//d1 = LG->L[layer].Nodes[node].data1;
 	d2 = LG->L[layer].Nodes[node].data2;
 	d3 = LG->L[layer].Nodes[node].data3;
 	if (d2 >= 0) {

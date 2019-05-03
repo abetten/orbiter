@@ -2348,6 +2348,14 @@ public:
 	void init_orbits_on_tritangent_planes(int verbose_level);
 	void init_orbits_on_trihedral_pairs(int verbose_level);
 	void init_orbits_on_points_not_on_lines(int verbose_level);
+	void print_generators_on_lines(
+			std::ostream &ost,
+			strong_generators *Aut_gens,
+			int verbose_level);
+	void print_elements_on_lines(
+			std::ostream &ost,
+			strong_generators *Aut_gens,
+			int verbose_level);
 	void print_automorphism_group(std::ostream &ost,
 		int f_print_orbits, const char *fname_mask);
 	void compute_quartic(int pt_orbit, 
