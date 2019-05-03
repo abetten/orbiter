@@ -289,7 +289,7 @@ int main(int argc, const char **argv)
 		Elt2 = NEW_int(A->elt_size_in_int);
 
 		A->make_element_from_string(Elt1,
-				multiply_a, verbose_level);
+				inverse_a, verbose_level);
 		cout << "A=" << endl;
 		A->element_print_quick(Elt1, cout);
 
