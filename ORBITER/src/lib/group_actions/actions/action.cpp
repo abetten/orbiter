@@ -873,10 +873,26 @@ int action::product_has_order_three(int *E1,
 
 int action::element_order(void *elt)
 {
-	return element_order_verbose(elt, 0);
+	int *cycle_type;
+	int order;
+
+	cycle_type = NEW_int(degree);
+	order = element_order_and_cycle_type_verbose(
+			elt, cycle_type, 0);
+	FREE_int(cycle_type);
+	return order;
 }
 
-int action::element_order_verbose(void *elt, int verbose_level)
+int action::element_order_and_cycle_type(int *cycle_type,
+		void *elt)
+{
+	return element_order_and_cycle_type_verbose(
+			elt, cycle_type, 0);
+}
+
+int action::element_order_and_cycle_type_verbose(
+		void *elt, int *cycle_type, int verbose_level)
+// cycle_type[i - 1] is the number of cycle of length i for 1 le i le n
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -894,6 +910,7 @@ int action::element_order_verbose(void *elt, int verbose_level)
 		element_print_as_permutation(elt, cout);
 		}
 	n = degree;
+	int_vec_zero(cycle_type, degree);
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
@@ -928,6 +945,7 @@ int action::element_order_verbose(void *elt, int verbose_level)
 			l1 = next;
 			len++;
 			}
+		cycle_type[len - 1]++;
 		if (len == 1) {
 			continue;
 			}
