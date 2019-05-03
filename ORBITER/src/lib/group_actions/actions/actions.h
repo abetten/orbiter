@@ -241,7 +241,10 @@ public:
 	int product_has_order_two(int *E1, int *E2, int verbose_level);
 	int product_has_order_three(int *E1, int *E2, int verbose_level);
 	int element_order(void *elt);
-	int element_order_verbose(void *elt, int verbose_level);
+	int element_order_and_cycle_type(int *cycle_type,
+			void *elt);
+	int element_order_and_cycle_type_verbose(
+			void *elt, int *cycle_type, int verbose_level);
 	int element_order_if_divisor_of(void *elt, int o);
 	void compute_all_point_orbits(schreier &S, 
 		vector_ge &gens, int verbose_level);

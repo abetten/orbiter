@@ -1450,10 +1450,14 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 	sims *S;
 	int *Elt;
 	int *power_elt;
+	int *nb_fix_points;
+	int *cycle_type;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	power_elt = NEW_int(go.as_int());
+	nb_fix_points = NEW_int(go.as_int());
+	cycle_type = NEW_int(A->degree);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
 	int_vec_print(ost, tl, A->base_len);
@@ -1465,7 +1469,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		}
 	for (i = 0; i < m; i++) {
 		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
-		order = A->element_order(Elt);
+		order = A->element_order_and_cycle_type(Elt, cycle_type);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
 		A->element_print_latex(Elt, ost);
@@ -1479,10 +1483,20 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		ost << "The powers are: ";
 		int_vec_print(ost, power_elt, order);
 		ost << ".\\\\" << endl;
+		nb_fix_points[i] = cycle_type[0];
+		ost << "The element has " << nb_fix_points[i] << " fix points.\\\\" << endl;
 		}
+	classify C;
+
+	C.init(nb_fix_points, m, FALSE, 0);
+	ost << "The distribution of the number of fix points is $";
+	C.print_file_tex_we_are_in_math_mode(ost, TRUE);
+	ost << "$\\\\" << endl;
 	FREE_OBJECT(S);
 	FREE_int(Elt);
 	FREE_int(power_elt);
+	FREE_int(nb_fix_points);
+	FREE_int(cycle_type);
 }
 
 void strong_generators::create_group_table(

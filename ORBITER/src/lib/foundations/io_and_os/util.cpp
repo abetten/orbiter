@@ -3234,7 +3234,7 @@ void print_cycle_tex_with_special_point_labels(
 		pt = pts[i];
 		stringstream sstr;
 		(*point_label)(sstr, pt, point_label_data);
-		ost << sstr;
+		ost << sstr.str();
 		if (i < nb_pts - 1) {
 			ost << ", ";
 		}
