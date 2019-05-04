@@ -1469,9 +1469,9 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		}
 	for (i = 0; i < m; i++) {
 		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
-		cout << "element " << i << " / " << m << " before A->element_order" << endl;
+		//cout << "element " << i << " / " << m << " before A->element_order" << endl;
 		order = A->element_order(Elt);
-		cout << "element " << i << " / " << m << " before A->element_order_and_cycle_type" << endl;
+		//cout << "element " << i << " / " << m << " before A->element_order_and_cycle_type" << endl;
 		A_given->element_order_and_cycle_type(Elt, cycle_type);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
@@ -2739,8 +2739,128 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 		}
 }
 
+void strong_generators::export_group_to_magma_and_copy_to_latex(
+		const char *label_txt,
+		ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 
+	if (f_v) {
+		cout << "strong_generators::export_group_to_magma_"
+				"and_copy_to_latex" << endl;
+	}
+	char export_fname[1000];
+
+	sprintf(export_fname, "%s_group.magma", label_txt);
+	export_permutation_group_to_magma(
+			export_fname, verbose_level - 2);
+	if (f_v) {
+		cout << "written file " << export_fname << " of size "
+				<< Fio.file_size(export_fname) << endl;
+		}
+
+	ost << "\\subsection*{Magma Export}" << endl;
+	ost << "To export the group to Magma, "
+			"use the following file\\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+
+	{
+	ifstream fp1(export_fname);
+	char line[100000];
+
+	while (TRUE) {
+		if (fp1.eof()) {
+			break;
+			}
+
+		//cout << "count_number_of_orbits_in_file reading
+		//line, nb_sol = " << nb_sol << endl;
+		fp1.getline(line, 100000, '\n');
+		ost << line << endl;
+		}
+
+	}
+	ost << "\\end{verbatim}" << endl;
+
+	if (f_v) {
+		cout << "strong_generators::export_group_to_magma_"
+				"and_copy_to_latex done" << endl;
+	}
+}
+
+void strong_generators::export_group_to_GAP_and_copy_to_latex(
+		const char *label_txt,
+		ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+
+	if (f_v) {
+		cout << "strong_generators::export_group_to_GAP_"
+				"and_copy_to_latex" << endl;
+	}
+	char export_fname[1000];
+
+	sprintf(export_fname, "%s_group.gap", label_txt);
+	export_permutation_group_to_GAP(
+			export_fname, verbose_level - 2);
+	if (f_v) {
+		cout << "written file " << export_fname << " of size "
+				<< Fio.file_size(export_fname) << endl;
+		}
+
+	ost << "\\subsection*{GAP Export}" << endl;
+	ost << "To export the group to GAP, "
+			"use the following file\\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+
+	{
+	ifstream fp1(export_fname);
+	char line[100000];
+
+	while (TRUE) {
+		if (fp1.eof()) {
+			break;
+			}
+
+		//cout << "count_number_of_orbits_in_file reading
+		//line, nb_sol = " << nb_sol << endl;
+		fp1.getline(line, 100000, '\n');
+		ost << line << endl;
+		}
+
+	}
+	ost << "\\end{verbatim}" << endl;
+
+	if (f_v) {
+		cout << "strong_generators::export_group_to_GAP_"
+				"and_copy_to_latex done" << endl;
+	}
+}
+
+void strong_generators::export_group_and_copy_to_latex(
+		const char *label_txt,
+		ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "strong_generators::export_group_and_copy_to_latex" << endl;
+	}
+	export_group_to_magma_and_copy_to_latex(label_txt, ost, verbose_level);
+	export_group_to_GAP_and_copy_to_latex(label_txt, ost, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::export_group_and_copy_to_latex done" << endl;
+	}
+
+}
 //##############################################################################
 // global functions:
 //##############################################################################

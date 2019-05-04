@@ -489,7 +489,7 @@ void action::element_print_as_permutation_with_offset(
 		cout << "action::element_print_as_permutation_with_offset "
 				"degree=" << degree << endl;
 		}
-	if (degree > 1000) {
+	if (degree > 5000) {
 		cout << "action::element_print_as_permutation_with_offset "
 				"the degree is too large, we won't print the permutation" << endl;
 		return;
@@ -510,6 +510,7 @@ void action::element_print_as_permutation_with_offset(
 		}
 	//perm_print(ost, v, degree);
 	Combi.perm_print_offset(ost, v, degree, offset,
+			f_print_cycles_of_length_one,
 			f_cycle_length,
 			f_max_cycle_length, max_cycle_length,
 			f_orbit_structure,
@@ -547,6 +548,7 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 	int f_orbit_structure)
 {
 	int *v, i, j;
+	int f_print_cycles_of_length_one = FALSE;
 	int f_cycle_length = FALSE;
 	int f_max_cycle_length = TRUE;
 	combinatorics_domain Combi;
@@ -557,7 +559,9 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 		v[i] = j;
 		}
 	//perm_print(ost, v, degree);
-	Combi.perm_print_offset(ost, v, degree, offset, f_cycle_length,
+	Combi.perm_print_offset(ost, v, degree, offset,
+			f_print_cycles_of_length_one,
+			f_cycle_length,
 			f_max_cycle_length, max_cycle_length, f_orbit_structure,
 			NULL, NULL);
 	FREE_int(v);

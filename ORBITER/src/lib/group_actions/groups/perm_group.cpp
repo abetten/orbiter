@@ -467,6 +467,7 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
 	Combi.perm_print_offset(ost, Elt, degree, 0 /* offset */,
+			FALSE /* f_print_cycles_of_length_one */,
 			FALSE /* f_cycle_length */, FALSE, 0,
 			FALSE /* f_orbit_structure */,
 			NULL, NULL);
