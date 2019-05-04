@@ -150,7 +150,6 @@ void action_on_cosets::reduce_mod_subspace(int *v, int verbose_level)
 
 int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 {
-	verbose_level += 2;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int idx;
@@ -205,6 +204,13 @@ int action_on_cosets::compute_image(int *Elt, int i, int verbose_level)
 		if (!Sorting.lint_vec_search(lint_Points, nb_points, R, idx, verbose_level)) {
 			cout << "action_on_cosets::compute_image image "
 					<< R << " not found in list of points (using lint)" << endl;
+
+			Sorting.lint_vec_search(lint_Points, nb_points, R, idx, 2 /*verbose_level*/);
+
+			cout << "action_on_cosets::compute_image image "
+					<< R << " not found in list of points (using lint)" << endl;
+
+
 			exit(1);
 			}
 	}
