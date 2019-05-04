@@ -1643,10 +1643,6 @@ void semifield_level_two::find_all_candidates_at_level_two(
 					<< " / " << nb_orbits << ":" << endl;
 			}
 
-		// ToDo debug !!!
-		if (orbit) {
-			continue;
-		}
 
 		if (test_if_file_exists_candidates_at_level_two_case(
 				orbit, verbose_level)) {
