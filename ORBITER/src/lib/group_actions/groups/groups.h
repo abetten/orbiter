@@ -1393,6 +1393,18 @@ public:
 	strong_generators *point_stabilizer(int pt, int verbose_level);
 	void make_element_which_moves_a_point_from_A_to_B(action *A_given, 
 		int pt_A, int pt_B, int *Elt, int verbose_level);
+	void export_group_to_magma_and_copy_to_latex(
+			const char *label_txt,
+			std::ostream &ost,
+			int verbose_level);
+	void export_group_to_GAP_and_copy_to_latex(
+			const char *label_txt,
+			std::ostream &ost,
+			int verbose_level);
+	void export_group_and_copy_to_latex(
+			const char *label_txt,
+			std::ostream &ost,
+			int verbose_level);
 
 	// strong_generators_groups.C:
 	void init_linear_group_from_scratch(action *&A, 

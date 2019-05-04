@@ -137,7 +137,9 @@ public:
 	void perm_print_counting_from_one(std::ostream &ost, int *a, int n);
 	void perm_print_offset(std::ostream &ost,
 		int *a, int n,
-		int offset, int f_cycle_length,
+		int offset,
+		int f_print_cycles_of_length_one,
+		int f_cycle_length,
 		int f_max_cycle_length,
 		int max_cycle_length,
 		int f_orbit_structure,

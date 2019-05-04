@@ -1206,18 +1206,18 @@ void combinatorics_domain::perm_print_product_action(
 {
 	//cout << "perm_print_product_action" << endl;
 	ost << "(";
-	perm_print_offset(ost, a, m, offset,
+	perm_print_offset(ost, a, m, offset, FALSE,
 			f_cycle_length, FALSE, 0, FALSE, NULL, NULL);
 	ost << "; ";
 	perm_print_offset(ost, a + m, m_plus_n - m,
-			offset + m, f_cycle_length, FALSE, 0, FALSE, NULL, NULL);
+			offset + m, FALSE, f_cycle_length, FALSE, 0, FALSE, NULL, NULL);
 	ost << ")";
 	//cout << "perm_print_product_action done" << endl;
 }
 
 void combinatorics_domain::perm_print(ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 0, FALSE, FALSE, 0, FALSE, NULL, NULL);
+	perm_print_offset(ost, a, n, 0, FALSE, FALSE, FALSE, 0, FALSE, NULL, NULL);
 }
 
 void combinatorics_domain::perm_print_with_print_point_function(
@@ -1226,25 +1226,27 @@ void combinatorics_domain::perm_print_with_print_point_function(
 		void (*point_label)(std::stringstream &sstr, int pt, void *data),
 		void *point_label_data)
 {
-	perm_print_offset(ost, a, n, 0, FALSE, FALSE, 0, FALSE,
+	perm_print_offset(ost, a, n, 0, FALSE, FALSE, FALSE, 0, FALSE,
 			point_label, point_label_data);
 }
 
 void combinatorics_domain::perm_print_with_cycle_length(
 		ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 0, TRUE, FALSE, 0, TRUE, NULL, NULL);
+	perm_print_offset(ost, a, n, 0, FALSE, TRUE, FALSE, 0, TRUE, NULL, NULL);
 }
 
 void combinatorics_domain::perm_print_counting_from_one(
 		ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 1, FALSE, FALSE, 0, FALSE, NULL, NULL);
+	perm_print_offset(ost, a, n, 1, FALSE, FALSE, FALSE, 0, FALSE, NULL, NULL);
 }
 
 void combinatorics_domain::perm_print_offset(ostream &ost,
 	int *a, int n,
-	int offset, int f_cycle_length,
+	int offset,
+	int f_print_cycles_of_length_one,
+	int f_cycle_length,
 	int f_max_cycle_length,
 	int max_cycle_length,
 	int f_orbit_structure,
@@ -1315,11 +1317,11 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 		if (f_orbit_structure) {
 			orbit_length[nb_orbits++] = len;
 			}
-#if 0
-		if (len == 1) {
-			continue;
-			}
-#endif
+		if (!f_print_cycles_of_length_one) {
+			if (len == 1) {
+				continue;
+				}
+		}
 		if (f_max_cycle_length && len > max_cycle_length) {
 			continue;
 			}

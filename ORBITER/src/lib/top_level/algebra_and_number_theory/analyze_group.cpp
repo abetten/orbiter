@@ -338,6 +338,7 @@ void compute_regular_representation(action *A, sims *S,
 	for (i = 0; i < SG->len; i++) {
 		Combi.perm_print_offset(cout,
 			perm + i * goi, goi, 1 /* offset */,
+			FALSE /* f_print_cycles_of_length_one */,
 			FALSE /* f_cycle_length */, FALSE, 0,
 			TRUE /* f_orbit_structure */,
 			NULL, NULL);
