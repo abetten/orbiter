@@ -848,7 +848,7 @@ void semifield_level_two::upstep(int verbose_level)
 		a = class_rep_rank[idx];
 		b = class_rep_plus_I_rank[idx];
 
-		up_orbit_rep[nb_orbits] = ext;
+		up_orbit_rep[nb_orbits] = ext; // !!!
 		if (f_vv) {
 			cout << "working on new up orbit " << nb_orbits
 					<< " copying stabilizer over idx=" << idx << endl;
@@ -1643,6 +1643,11 @@ void semifield_level_two::find_all_candidates_at_level_two(
 					<< " / " << nb_orbits << ":" << endl;
 			}
 
+		// ToDo debug !!!
+		if (orbit) {
+			continue;
+		}
+
 		if (test_if_file_exists_candidates_at_level_two_case(
 				orbit, verbose_level)) {
 			read_candidates_at_level_two_case(
@@ -1907,7 +1912,8 @@ void semifield_level_two::get_basis_and_pivots(int po,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	int ext, idx, a;
+	int ext, idx;
+	long int a;
 
 
 	if (f_v) {
