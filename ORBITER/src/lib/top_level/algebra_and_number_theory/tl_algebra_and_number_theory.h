@@ -219,6 +219,12 @@ public:
 
 	int nb_orbits;
 	int *up_orbit_rep;
+		// not the representative!
+		// only the index ext.
+		// To get the actual rep a, do
+		// idx = down_orbit_classes[ext * 2 + 0];
+		// a = class_rep_rank[idx];
+
 	strong_generators *Stabilizer_gens;
 		// reps at level two
 

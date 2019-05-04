@@ -185,10 +185,9 @@ void semifield_lifting::level_two_down(int verbose_level)
 
 
 
-	downstep(2,
-		verbose_level);
+	downstep(2, verbose_level);
 
-
+#if 0
 	int Level_two_nb_orbits;
 	long int **Level_two_Candidates;
 	int *Level_two_Nb_candidates;
@@ -202,7 +201,7 @@ void semifield_lifting::level_two_down(int verbose_level)
 		// [nb_orbits]
 	//int *Nb_candidates;
 		// [nb_orbits]
-
+#endif
 
 
 	if (f_v) {
@@ -215,7 +214,7 @@ void semifield_lifting::level_two_down(int verbose_level)
 				"we found the following candidate sets:" << endl;
 		cout << "Orbit : # candidates : # orbits" << endl;
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
-			cout << orbit << " : " << Level_two_Nb_candidates[orbit]
+			cout << orbit << " : " << L2->Nb_candidates[orbit]
 				<< " : " << Downstep_nodes[orbit].Sch->nb_orbits << endl;
 			}
 		}

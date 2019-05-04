@@ -294,8 +294,7 @@ void action::induced_action_on_cosets(
 
 	if (f_v) {
 		cout << "action::induced_action_on_cosets "
-				"finished, created action " << label << endl;
-		cout << "degree=" << A->degree << endl;
+				"finished, created action " << label << " of degree=" << degree << endl;
 		print_info();
 		}
 }

@@ -76,9 +76,9 @@ void semifield_downstep_node::init(
 
 	SL->get_basis_and_pivots(level, orbit_number,
 			subspace_basis, subspace_base_cols,
-			verbose_level - 2);
+			verbose_level);
 
-	if (f_vvv) {
+	if (f_v) {
 		cout << "subspace_basis:" << endl;
 		int_matrix_print(subspace_basis, level, k2);
 		cout << "base_cols:" << endl;
@@ -87,12 +87,12 @@ void semifield_downstep_node::init(
 		}
 
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_downstep_node::init "
 				"sorting the " << nb_candidates << " candidates" << endl;
 		}
 	Sorting.lint_vec_heapsort(Candidates, nb_candidates);
-	if (f_vv) {
+	if (f_v) {
 		cout << "downstep_node::init "
 				"sorting done" << endl;
 		}
@@ -100,7 +100,7 @@ void semifield_downstep_node::init(
 	on_cosets = NEW_OBJECT(action_on_cosets);
 
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_downstep_node::init "
 				"initializing on_cosets:" << endl;
 		}
@@ -115,8 +115,8 @@ void semifield_downstep_node::init(
 		coset_action_unrank_point,
 		coset_action_rank_point,
 		this /*rank_unrank_data*/,
-		verbose_level - 3);
-	if (f_vv) {
+		verbose_level);
+	if (f_v) {
 		cout << "semifield_downstep_node::init "
 				"initializing on_cosets done" << endl;
 		}
@@ -131,15 +131,15 @@ void semifield_downstep_node::init(
 	A_on_cosets->induced_action_on_cosets(
 		on_cosets,
 		FALSE /* f_induce_action */, NULL /* old_G */,
-		verbose_level - 3);
-	if (f_vv) {
+		verbose_level);
+	if (f_v) {
 		cout << "semifield_downstep_node::init "
 				"initializing A_on_cosets done, "
 				"the degree of the action is " << A_on_cosets->degree << endl;
 		}
 
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_downstep_node::init "
 				"before orbits_on_points_schreier" << endl;
 		}
@@ -153,11 +153,14 @@ void semifield_downstep_node::init(
 		level, orbit_number,
 		verbose_level);
 	sg->group_order(go);
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_downstep_node::init "
 				"initializing A_on_cosets done, "
 				"the group order is " << go << endl;
-		}
+		cout << "semifield_downstep_node::init the generators for "
+				"the stabilizer are:" << endl;
+		sg->print_generators_tex(cout);
+	}
 
 #if 0
 	if (SFS->f_orbits_light) {
@@ -182,12 +185,13 @@ void semifield_downstep_node::init(
 		if (File_io.file_size(fname) > 0) {
 			Sch = NEW_OBJECT(schreier);
 			Sch->A = A_on_cosets;
-			cout << "Reading schreier data structure from "
+			cout << "semifield_downstep_node::init "
+					"Reading schreier data structure from "
 					"file " << fname << endl;
 			Sch->read_file_binary(fname, verbose_level);
 			}
 		else {
-			if (f_vv) {
+			if (f_v) {
 				cout << "semifield_downstep_node::init "
 						"before sg->orbits_on_points_schreier" << endl;
 				}
