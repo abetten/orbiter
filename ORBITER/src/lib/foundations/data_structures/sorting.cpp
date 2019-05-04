@@ -871,18 +871,22 @@ int sorting::int_vec_search(int *v, int len, int a, int &idx)
 	return f_found;
 }
 
-int sorting::lint_vec_search(long int *v, int len, long int a, int &idx)
+int sorting::lint_vec_search(long int *v, int len,
+		long int a, int &idx, int verbose_level)
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx the position
 // where it should be inserted if
 // the vector is assumed to be in increasing order.
 
 {
+	int f_v = (verbose_level >= 1);
 	int l, r, m;
 	long int res;
 	int f_found = FALSE;
-	int f_v = FALSE;
 
+	if (f_v) {
+		cout << "sorting::lint_vec_search len=" << len << ", searching for " << a << endl;
+	}
 	if (len == 0) {
 		idx = 0;
 		return FALSE;
@@ -895,13 +899,15 @@ int sorting::lint_vec_search(long int *v, int len, long int a, int &idx)
 	// r - l is the length of the area to search in.
 	while (l < r) {
 		m = (l + r) >> 1;
+		if (f_v) {
+			cout << "sorting::lint_vec_search l=" << l << " m=" << m << " r=" << r << endl;
+		}
 		// if the length of the search area is even
 		// we examine the element above the middle
 		res = v[m] - a;
 		if (f_v) {
-			cout << "l=" << l << " r=" << r<< " m=" << m
-				<< " v[m]=" << v[m] << " res=" << res << endl;
-			}
+			cout << "sorting::lint_vec_search v[m]=" << v[m] << " a=" << a << endl;
+		}
 		//cout << "search l=" << l << " m=" << m << " r="
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
 		// so, res is
@@ -914,6 +920,9 @@ int sorting::lint_vec_search(long int *v, int len, long int a, int &idx)
 				cout << "moving to the right" << endl;
 				}
 			if (res == 0) {
+				if (f_v) {
+					cout << "f_found = TRUE" << endl;
+					}
 				f_found = TRUE;
 				}
 			}
@@ -932,6 +941,11 @@ int sorting::lint_vec_search(long int *v, int len, long int a, int &idx)
 		}
 #endif
 	idx = l;
+	if (f_v) {
+		cout << "sorting::lint_vec_search len=" << len << ", searching "
+				"for " << a << " done, f_found=" << f_found
+				<< " idx=" << idx << endl;
+	}
 	return f_found;
 }
 

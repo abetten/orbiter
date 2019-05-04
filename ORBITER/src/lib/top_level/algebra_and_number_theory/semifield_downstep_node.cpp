@@ -221,7 +221,8 @@ int semifield_downstep_node::find_point(int a)
 	int idx;
 	sorting Sorting;
 
-	if (!Sorting.lint_vec_search(Candidates, nb_candidates, a, idx)) {
+	if (!Sorting.lint_vec_search(Candidates, nb_candidates,
+			a, idx, 0 /* verbose_level */)) {
 		cout << "semifield_downstep_node::find_point point " << a
 				<< " cannot be found in the Candidates array" << endl;
 		//cout << "The " << nb_candidates << " Candidates:" << endl;
