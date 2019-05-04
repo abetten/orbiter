@@ -651,7 +651,8 @@ public:
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
 		// the vector is assumed to be in increasing order.
-	int lint_vec_search(long int *v, int len, long int a, int &idx);
+	int lint_vec_search(long int *v, int len, long int a,
+			int &idx, int verbose_level);
 		// This function finds the last occurence of the element a.
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
