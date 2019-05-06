@@ -4307,7 +4307,6 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	int *Elt;
 	//char *elt;
 	longinteger_object go;
-	FILE *fp;
 	int i;
 	file_io Fio;
 	
@@ -4315,12 +4314,24 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	//elt = NEW_char(A->coded_elt_size_in_char);
 	group_order(go);
 	
+#if 0
+	FILE *fp;
 	fp = fopen(fname, "wb");
 	for (i = 0; i < go.as_int(); i++) {
 		element_unrank_int(i, Elt);
 		A->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
 		}
 	fclose(fp);
+#else
+	{
+		ofstream fp(fname, ios::binary);
+
+		for (i = 0; i < go.as_int(); i++) {
+			element_unrank_int(i, Elt);
+			A->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
+			}
+	}
+#endif
 	if (f_v) {
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -4913,7 +4924,6 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
-	FILE *f2;
 	int goi, i;
 	longinteger_object go;
 	file_io Fio;
@@ -4925,6 +4935,9 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 				<< goi << " elements to file " << fname << endl;
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
+
+#if 0
+	FILE *f2;
 	f2 = fopen(fname, "wb");
 	for (i = 0; i < goi; i++) {
 		element_unrank_int(i, Elt1);
@@ -4936,6 +4949,21 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 		//cout << endl;
 		}
 	fclose(f2);
+#else
+	{
+		ofstream fp(fname, ios::binary);
+
+		for (i = 0; i < goi; i++) {
+			element_unrank_int(i, Elt1);
+			//cout << "element " << i << ":" << endl;
+			//A->element_print(Elt1, cout);
+			A->element_write_file_fp(Elt1, fp, 0/* verbose_level*/);
+			//A->element_print_as_permutation(Elt1, cout);
+			//AA.print_as_permutation(cout, Elt1);
+			//cout << endl;
+			}
+	}
+#endif
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "written file " << fname << " of size "
@@ -4948,7 +4976,6 @@ void sims::read_list_of_elements(action *A, char *fname,
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;
-	FILE *f2;
 	int goi, i;
 	file_io Fio;
 
@@ -4959,10 +4986,14 @@ void sims::read_list_of_elements(action *A, char *fname,
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
-	f2 = fopen(fname, "rb");
-	
+
 	init(A);
 	init_trivial_group(verbose_level - 1);
+
+#if 0
+	FILE *f2;
+	f2 = fopen(fname, "rb");
+	
 	for (i = 0; i < goi; i++) {
 		A->element_read_file_fp(Elt1, f2, 0/* verbose_level*/);
 		//cout << "element " << i << ":" << endl;
@@ -4970,6 +5001,18 @@ void sims::read_list_of_elements(action *A, char *fname,
 		strip_and_add(Elt1, Elt2, verbose_level - 1);
 		}
 	fclose(f2);
+#else
+	{
+		ifstream fp(fname, ios::binary);
+
+		for (i = 0; i < goi; i++) {
+			A->element_read_file_fp(Elt1, fp, 0/* verbose_level*/);
+			//cout << "element " << i << ":" << endl;
+			//A->element_print(Elt1, cout);
+			strip_and_add(Elt1, Elt2, verbose_level - 1);
+			}
+	}
+#endif
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	if (f_v) {

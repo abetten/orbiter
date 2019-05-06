@@ -405,7 +405,7 @@ public:
 
 
 
-	// poset_classification.C:
+	// poset_classification.cpp:
 	int nb_orbits_at_level(int level);
 	int nb_flag_orbits_up_at_level(int level);
 	poset_orbit_node *get_node_ij(int level, int node);
@@ -555,7 +555,7 @@ public:
 	void unrank_basis(int *Basis, int *S, int len);
 	void rank_basis(int *Basis, int *S, int len);
 
-	// poset_classification_init.C:
+	// poset_classification_init.cpp:
 	poset_classification();
 	~poset_classification();
 	void null();
@@ -602,7 +602,7 @@ public:
 		// Does not initialize the first starter nodes. 
 		// This is done in init_root_node 
 
-	// poset_classification_classify.C
+	// poset_classification_classify.cpp:
 	void compute_orbits_on_subsets(
 		int target_depth,
 		const char *prefix,
@@ -648,7 +648,7 @@ public:
 	void extend_node(int size,
 		int prev, int &cur,
 		int f_debug, 
-		int f_indicate_not_canonicals, FILE *fp,
+		int f_indicate_not_canonicals,
 		int verbose_level);
 		// called by poset_classification::upstep
 		// Uses an upstep_work structure to handle the work.
@@ -656,7 +656,7 @@ public:
 
 
 
-	// poset_classification_combinatorics.C:
+	// poset_classification_combinatorics.cpp
 	void Plesken_matrix_up(int depth, 
 		int *&P, int &N, int verbose_level);
 	void Plesken_matrix_down(int depth, 
@@ -675,45 +675,7 @@ public:
 		int depth, int verbose_level);
 
 
-	// poset_classification_trace.C:
-	int find_isomorphism(int *set1, int *set2, int sz, 
-		int *transporter, int &orbit_idx, int verbose_level);
-	set_and_stabilizer *identify_and_get_stabilizer(
-		int *set, int sz, int *transporter, 
-		int &orbit_at_level, 
-		int verbose_level);
-	void identify(int *data, int sz, int *transporter, 
-		int &orbit_at_level, int verbose_level);
-	void test_identify(int level, int nb_times, int verbose_level);
-	void poset_classification_apply_isomorphism_no_transporter(
-		int cur_level, int size, int cur_node, int cur_ex, 
-		int *set_in, int *set_out, 
-		int verbose_level);
-	int poset_classification_apply_isomorphism(int level, int size, 
-		int current_node, int current_extension, 
-		int *set_in, int *set_out, int *set_tmp, 
-		int *transporter_in, int *transporter_out, 
-		int f_tolerant, 
-		int verbose_level);
-	int trace_set_recursion(int cur_level, int cur_node, 
-		int size, int level, 
-		int *canonical_set, int *tmp_set1, int *tmp_set2, 
-		int *Elt_transporter, int *tmp_Elt1, 
-		int f_tolerant, 
-		int verbose_level);
-		// called by poset_classification::trace_set
-		// returns the node in the poset_classification that corresponds 
-		// to the canonical_set
-		// or -1 if f_tolerant and the node could not be found
-	int trace_set(int *set, int size, int level, 
-		int *canonical_set, int *Elt_transporter, 
-		int verbose_level);
-		// returns the case number of the canonical set
-	int find_node_for_subspace_by_rank(int *set, int len, 
-		int verbose_level);
-	
-	// poset_classification_draw.C:
-	void report_schreier_trees(std::ostream &ost, int verbose_level);
+	// poset_classification_draw.cpp:
 	void write_treefile_and_draw_tree(char *fname_base, 
 		int lvl, int xmax, int ymax, int rad, 
 		int f_embedded, int verbose_level);
@@ -776,7 +738,9 @@ public:
 	void print_data_structure_tex(int depth, int verbose_level);
 
 
-	// in poset_classification_io.C:
+	// in poset_classification_io.cpp:
+	void prepare_fname_data_file(char *fname,
+			const char *fname_base, int depth_completed);
 	void read_data_file(int &depth_completed,
 		const char *fname, int verbose_level);
 	void write_data_file(int depth_completed,
@@ -789,33 +753,34 @@ public:
 		memory_object *m, int &nb_group_elements, int verbose_level);
 	void write_memory_object(int depth_completed,
 		memory_object *m, int &nb_group_elements, int verbose_level);
-	int calc_size_on_file(int depth_completed, int verbose_level);
-	void report(std::ostream &ost);
+	long int calc_size_on_file(int depth_completed, int verbose_level);
 	void housekeeping(int i, int f_write_files, int t0, 
 		int verbose_level);
 	void housekeeping_no_data_file(int i, int t0, int verbose_level);
-	int test_sv_level_file_binary(int level, char *fname_base);
-	void read_sv_level_file_binary(int level, char *fname_base, 
+	void create_fname_sv_level_file_binary(char *fname,
+			const char *fname_base, int level);
+	int test_sv_level_file_binary(int level, const char *fname_base);
+	void read_sv_level_file_binary(int level, const char *fname_base,
 		int f_split, int split_mod, int split_case, 
 		int f_recreate_extensions, int f_dont_keep_sv, 
 		int verbose_level);
-	void write_sv_level_file_binary(int level, char *fname_base, 
+	void write_sv_level_file_binary(int level, const char *fname_base,
 		int f_split, int split_mod, int split_case, 
 		int verbose_level);
-	void read_sv_level_file_binary2(int level, FILE *fp, 
+	void read_sv_level_file_binary2(int level, std::ifstream &fp,
 		int f_split, int split_mod, int split_case, 
 		int f_recreate_extensions, int f_dont_keep_sv, 
 		int verbose_level);
-	void write_sv_level_file_binary2(int level, FILE *fp, 
+	void write_sv_level_file_binary2(int level, std::ofstream &fp,
 		int f_split, int split_mod, int split_case, 
 		int verbose_level);
 	void read_level_file_binary(int level, char *fname_base, 
 		int verbose_level);
 	void write_level_file_binary(int level, char *fname_base, 
 		int verbose_level);
-	void read_level_file_binary2(int level, FILE *fp, 
+	void read_level_file_binary2(int level, std::ifstream &fp,
 		int &nb_group_elements, int verbose_level);
-	void write_level_file_binary2(int level, FILE *fp, 
+	void write_level_file_binary2(int level, std::ofstream &fp,
 		int &nb_group_elements, int verbose_level);
 	void write_candidates_binary_using_sv(char *fname_base, 
 		int lvl, int t0, int verbose_level);
@@ -849,7 +814,7 @@ public:
 			int n, int q, int vector_space_dimension,
 			int level, int verbose_level);
 
-	// poset_classification_recognize.C:
+	// poset_classification_recognize.cpp:
 	void recognize_start_over(
 		int size, int f_implicit_fusion,
 		int lvl, int current_node,
@@ -868,6 +833,48 @@ public:
 	void recognize(
 		int *the_set, int size, int *transporter, int f_implicit_fusion,
 		int &final_node, int verbose_level);
+
+
+	// in poset_classification_report.cpp:
+	void report_schreier_trees(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost);
+
+	// poset_classification_trace.cpp:
+	int find_isomorphism(int *set1, int *set2, int sz,
+		int *transporter, int &orbit_idx, int verbose_level);
+	set_and_stabilizer *identify_and_get_stabilizer(
+		int *set, int sz, int *transporter,
+		int &orbit_at_level,
+		int verbose_level);
+	void identify(int *data, int sz, int *transporter,
+		int &orbit_at_level, int verbose_level);
+	void test_identify(int level, int nb_times, int verbose_level);
+	void poset_classification_apply_isomorphism_no_transporter(
+		int cur_level, int size, int cur_node, int cur_ex,
+		int *set_in, int *set_out,
+		int verbose_level);
+	int poset_classification_apply_isomorphism(int level, int size,
+		int current_node, int current_extension,
+		int *set_in, int *set_out, int *set_tmp,
+		int *transporter_in, int *transporter_out,
+		int f_tolerant,
+		int verbose_level);
+	int trace_set_recursion(int cur_level, int cur_node,
+		int size, int level,
+		int *canonical_set, int *tmp_set1, int *tmp_set2,
+		int *Elt_transporter, int *tmp_Elt1,
+		int f_tolerant,
+		int verbose_level);
+		// called by poset_classification::trace_set
+		// returns the node in the poset_classification that corresponds
+		// to the canonical_set
+		// or -1 if f_tolerant and the node could not be found
+	int trace_set(int *set, int size, int level,
+		int *canonical_set, int *Elt_transporter,
+		int verbose_level);
+		// returns the case number of the canonical set
+	int find_node_for_subspace_by_rank(int *set, int len,
+		int verbose_level);
 
 };
 
@@ -1017,19 +1024,19 @@ public:
 		poset_classification *PC,
 		action *A, memory_object *m,
 		int &nb_group_elements, int verbose_level);
-	int calc_size_on_file(
+	long int calc_size_on_file(
 		action *A, int verbose_level);
 	void sv_read_file(
 		poset_classification *PC,
-		FILE *fp, int verbose_level);
+		std::ifstream &fp, int verbose_level);
 	void sv_write_file(
 		poset_classification *PC,
-		FILE *fp, int verbose_level);
+		std::ofstream &fp, int verbose_level);
 	void read_file(
-		action *A, FILE *fp, int &nb_group_elements,
+		action *A, std::ifstream &fp, int &nb_group_elements,
 		int verbose_level);
 	void write_file(
-		action *A, FILE *fp, int &nb_group_elements,
+		action *A, std::ofstream &fp, int &nb_group_elements,
 		int verbose_level);
 	void save_schreier_forest(
 		poset_classification *PC,
@@ -1358,7 +1365,6 @@ public:
 	int nb_cosets_processed;
 	coset_table_entry *coset_table;
 
-	FILE *f;
 
 
 	upstep_work();
@@ -1371,7 +1377,6 @@ public:
 		int f_debug,
 		int f_implicit_fusion,
 		int f_indicate_not_canonicals, 
-		FILE *fp, 
 		int verbose_level);
 		// called from poset_classification::extend_node
 	void handle_extension(int &nb_fuse_cur, int &nb_ext_cur, 

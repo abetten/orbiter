@@ -1971,6 +1971,7 @@ void strong_generators::orbits_light(action *A_given,
 		}
 }
 
+#if 0
 void strong_generators::write_to_memory_object(
 		memory_object *m, int verbose_level)
 {
@@ -2025,6 +2026,7 @@ void strong_generators::read_from_memory_object(
 		cout << "strong_generators::read_from_memory_object done" << endl;
 		}
 }
+#endif
 
 void strong_generators::write_to_file_binary(
 		ofstream &fp, int verbose_level)
@@ -2103,16 +2105,27 @@ void strong_generators::read_from_file_binary(
 void strong_generators::write_file(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	memory_object M;
+	file_io Fio;
 	
 	if (f_v) {
 		cout << "strong_generators::write_file" << endl;
 		}
+#if 0
+	memory_object M;
 	M.alloc(1024 /* length */, verbose_level - 1);
 	M.used_length = 0;
 	M.cur_pointer = 0;
 	write_to_memory_object(&M, verbose_level - 1);
 	M.write_file(fname, verbose_level - 1);
+#else
+	{
+		ofstream fp(fname, ios::binary);
+
+		write_to_file_binary(fp, verbose_level - 1);
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+#endif
 	if (f_v) {
 		cout << "strong_generators::write_file done" << endl;
 		}
@@ -2122,7 +2135,6 @@ void strong_generators::read_file(action *A,
 		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	memory_object M;
 	file_io Fio;
 
 	if (f_v) {
@@ -2130,6 +2142,8 @@ void strong_generators::read_file(action *A,
 				"file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 		}
+#if 0
+	memory_object M;
 	init(A, 0);
 	M.read_file(fname, verbose_level - 1);
 	if (f_v) {
@@ -2138,10 +2152,31 @@ void strong_generators::read_file(action *A,
 		}
 	M.cur_pointer = 0;
 	read_from_memory_object(&M, verbose_level - 1);
+#else
+	if (Fio.file_size(fname) <= 0) {
+		cout << "strong_generators::read_file "
+				"file " << fname << " does not exist" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "strong_generators::read_file "
+				"reading file " << fname << endl;
+		}
+
+	{
+		ifstream fp(fname, ios::binary);
+
+		read_from_file_binary(A, fp, 0 /*verbose_level*/);
+	}
+	cout << "strong_generators::read_file "
+			"Read file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+#endif
 	if (f_v) {
 		cout << "strong_generators::read_file done" << endl;
 		}
 }
+
 
 #if 0
 void strong_generators::generators_for_shallow_schreier_tree(
@@ -2865,6 +2900,8 @@ void strong_generators::export_group_and_copy_to_latex(
 // global functions:
 //##############################################################################
 
+
+#if 0
 // unsed in SEMIFIELD/semifield_starter_io.C:
 
 void strong_generators_array_write_file(const char *fname,
@@ -2957,6 +2994,9 @@ void strong_generators_array_read_from_file(const char *fname,
 
 
 }
+#endif
+
+
 
 }}
 

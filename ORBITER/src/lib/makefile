@@ -239,6 +239,7 @@ MODULES= \
 		classification/poset_classification/poset_classification_init.o \
 		classification/poset_classification/poset_classification_io.o \
 		classification/poset_classification/poset_classification_recognize.o \
+		classification/poset_classification/poset_classification_report.o \
 		classification/poset_classification/poset_classification_trace.o \
 		classification/poset_classification/poset_orbit_node.o \
 		classification/poset_classification/poset_orbit_node_downstep.o \

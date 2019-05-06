@@ -851,9 +851,9 @@ public:
 		int size, int *set);
 	int element_signum_of_permutation(void *elt);
 	void element_write_file_fp(int *Elt, 
-		FILE *fp, int verbose_level);
+			std::ofstream &fp, int verbose_level);
 	void element_read_file_fp(int *Elt, 
-		FILE *fp, int verbose_level);
+			std::ifstream &fp, int verbose_level);
 	void element_write_file(int *Elt, 
 		const char *fname, int verbose_level);
 	void element_read_file(int *Elt, 

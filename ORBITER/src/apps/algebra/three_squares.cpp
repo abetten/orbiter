@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
 	int *squares;
 	int a, b;
-	int k = 3;
+	//int k = 3;
 
 	squares = NEW_int(n + 1);
 	squares[0] = 0;

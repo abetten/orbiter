@@ -8,6 +8,7 @@ LFLAGS = -lm
 
 all:  desarguesian_spread.out \
 	linear_set_main.out \
+	long_orbit.out \
 	subspace_orbits_main.out 
 
 
@@ -18,6 +19,10 @@ desarguesian_spread.out:  desarguesian_spread.o;
 
 linear_set_main.out:  linear_set_main.o linear_set.o linear_set2.o ;
 	$(DISCRETA_CPP) linear_set_main.o linear_set.o linear_set2.o \
+		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+long_orbit.out:  long_orbit.o;
+	$(DISCRETA_CPP)  long_orbit.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 subspace_orbits_main.out:  subspace_orbits_main.o;

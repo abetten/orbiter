@@ -194,9 +194,11 @@ void poset_orbit_node::write_memory_object(
 		}
 }
 
-int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
+long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 {
-	int i, s = 0;
+	int i;
+	long int s = 0;
+
 	s += 4 * sizeof(int); // node, prev, pt, nb_strong_generators
 	//m->write_int(node);
 	//m->write_int(prev);
@@ -239,7 +241,7 @@ int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 
 
 void poset_orbit_node::sv_read_file(poset_classification *PC,
-		FILE *fp, int verbose_level)
+		ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -263,7 +265,7 @@ void poset_orbit_node::sv_read_file(poset_classification *PC,
 }
 
 void poset_orbit_node::sv_write_file(poset_classification *PC,
-		FILE *fp, int verbose_level)
+		ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -281,7 +283,7 @@ void poset_orbit_node::sv_write_file(poset_classification *PC,
 }
 
 void poset_orbit_node::read_file(action *A,
-		FILE *fp, int &nb_group_elements,
+		ifstream &fp, int &nb_group_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -291,13 +293,17 @@ void poset_orbit_node::read_file(action *A,
 	file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
-	node = Fio.fread_int4(fp);
+	//node = Fio.fread_int4(fp);
+	fp.read((char *) &node, sizeof(int));
 	if (f_v) {
 		cout << "poset_orbit_node::read_file node " << node << endl;
 		}
-	prev = Fio.fread_int4(fp);
-	pt = Fio.fread_int4(fp);
-	nb_strong_generators = Fio.fread_int4(fp);
+	fp.read((char *) &prev, sizeof(int));
+	fp.read((char *) &pt, sizeof(int));
+	fp.read((char *) &nb_strong_generators, sizeof(int));
+	//prev = Fio.fread_int4(fp);
+	//pt = Fio.fread_int4(fp);
+	//nb_strong_generators = Fio.fread_int4(fp);
 	if (f_vv) {
 		cout << "prev=" << prev << endl;
 		cout << "pt=" << pt << endl;
@@ -316,7 +322,8 @@ void poset_orbit_node::read_file(action *A,
 			nb_group_elements++;
 			}
 		for (i = 0; i < A->base_len; i++) {
-			tl[i] = Fio.fread_int4(fp);
+			fp.read((char *) &tl[i], sizeof(int));
+			//tl[i] = Fio.fread_int4(fp);
 			if (f_vv) {
 				cout << "read tl[" << i << "]=" << tl[i] << endl;
 				}
@@ -326,7 +333,8 @@ void poset_orbit_node::read_file(action *A,
 		hdl_strong_generators = NULL;
 		tl = NULL;
 		}
-	nb_extensions = Fio.fread_int4(fp);
+	fp.read((char *) &nb_extensions, sizeof(int));
+	//nb_extensions = Fio.fread_int4(fp);
 	if (f_vv) {
 		cout << "nb_extensions " << nb_extensions << endl;
 		}
@@ -338,21 +346,25 @@ void poset_orbit_node::read_file(action *A,
 		if (f_vv) {
 			cout << "poset_orbit_node::read_file extension " << i << endl;
 			}
-		E[i].pt = Fio.fread_int4(fp);
+		fp.read((char *) &E[i].pt, sizeof(int));
+		//E[i].pt = Fio.fread_int4(fp);
 		if (f_vv) {
 			cout << "pt = " << E[i].pt << endl;
 			}
-		E[i].orbit_len = Fio.fread_int4(fp);
+		fp.read((char *) &E[i].orbit_len, sizeof(int));
+		//E[i].orbit_len = Fio.fread_int4(fp);
 		if (f_vv) {
 			cout << "orbit_len = " << E[i].orbit_len << endl;
 			}
-		E[i].type = Fio.fread_int4(fp);
+		fp.read((char *) &E[i].type, sizeof(int));
+		//E[i].type = Fio.fread_int4(fp);
 		if (f_vv) {
 			cout << "type = " << E[i].type << endl;
 			}
 		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			E[i].data = Fio.fread_int4(fp);
+			fp.read((char *) &E[i].data, sizeof(int));
+			//E[i].data = Fio.fread_int4(fp);
 			// next poset_orbit_node
 			}
 		else if (E[i].type == EXTENSION_TYPE_FUSION) {
@@ -364,6 +376,8 @@ void poset_orbit_node::read_file(action *A,
 				}
 			//element_read_file(A, Elt, elt, fp, verbose_level);
 			E[i].data = A->element_store(Elt, FALSE);
+			fp.read((char *) &E[i].data1, sizeof(int));
+			fp.read((char *) &E[i].data2, sizeof(int));
 			nb_group_elements++;
 			}
 		else if (E[i].type == EXTENSION_TYPE_PROCESSING) {
@@ -380,7 +394,7 @@ void poset_orbit_node::read_file(action *A,
 }
 
 void poset_orbit_node::write_file(action *A,
-		FILE *fp, int &nb_group_elements,
+		ofstream &fp, int &nb_group_elements,
 		int verbose_level)
 {
 	int i;
@@ -393,10 +407,14 @@ void poset_orbit_node::write_file(action *A,
 	if (f_v) {
 		cout << "poset_orbit_node::write_file node " << node << endl;
 		}
-	Fio.fwrite_int4(fp, node);
-	Fio.fwrite_int4(fp, prev);
-	Fio.fwrite_int4(fp, pt);
-	Fio.fwrite_int4(fp, nb_strong_generators);
+	fp.write((char *) &node, sizeof(int));
+	fp.write((char *) &prev, sizeof(int));
+	fp.write((char *) &pt, sizeof(int));
+	fp.write((char *) &nb_strong_generators, sizeof(int));
+	//Fio.fwrite_int4(fp, node);
+	//Fio.fwrite_int4(fp, prev);
+	//Fio.fwrite_int4(fp, pt);
+	//Fio.fwrite_int4(fp, nb_strong_generators);
 	if (f_v) {
 		cout << node << " " << prev << " " << pt << " "
 				<< nb_strong_generators << endl;
@@ -411,7 +429,8 @@ void poset_orbit_node::write_file(action *A,
 			cout << "writing tl" << endl;
 			}
 		for (i = 0; i < A->base_len; i++) {
-			Fio.fwrite_int4(fp, tl[i]);
+			fp.write((char *) &tl[i], sizeof(int));
+			//Fio.fwrite_int4(fp, tl[i]);
 			if (f_vv) {
 				cout << tl[i] << " ";
 				}
@@ -420,21 +439,26 @@ void poset_orbit_node::write_file(action *A,
 			cout << endl;
 			}
 		}
-	Fio.fwrite_int4(fp, nb_extensions);
+	fp.write((char *) &nb_extensions, sizeof(int));
+	//Fio.fwrite_int4(fp, nb_extensions);
 	if (f_vv) {
 		cout << "nb_extensions=" << nb_extensions << endl;
 		}
 	for (i = 0; i < nb_extensions; i++) {
-		Fio.fwrite_int4(fp, E[i].pt);
-		Fio.fwrite_int4(fp, E[i].orbit_len);
-		Fio.fwrite_int4(fp, E[i].type);
+		fp.write((char *) &E[i].pt, sizeof(int));
+		fp.write((char *) &E[i].orbit_len, sizeof(int));
+		fp.write((char *) &E[i].type, sizeof(int));
+		//Fio.fwrite_int4(fp, E[i].pt);
+		//Fio.fwrite_int4(fp, E[i].orbit_len);
+		//Fio.fwrite_int4(fp, E[i].type);
 		if (f_vv) {
 			cout << i << " : " << E[i].pt << " : "
 					<< E[i].orbit_len << " : " << E[i].type << endl;
 			}
 		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			Fio.fwrite_int4(fp, E[i].data);
+			fp.write((char *) &E[i].data, sizeof(int));
+			//Fio.fwrite_int4(fp, E[i].data);
 			if (f_vv) {
 				cout << "extension node, data=" << E[i].data << endl;
 				}
@@ -446,6 +470,8 @@ void poset_orbit_node::write_file(action *A,
 				}
 			A->element_retrieve(E[i].data, Elt, FALSE);
 			A->element_write_file_fp(Elt, fp, 0);
+			fp.write((char *) &E[i].data1, sizeof(int));
+			fp.write((char *) &E[i].data2, sizeof(int));
 			nb_group_elements++;
 			}
 		else if (E[i].type == EXTENSION_TYPE_PROCESSING) {

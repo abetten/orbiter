@@ -888,10 +888,11 @@ int isomorph::trace_next_point_database(
 	gens.init(gen->Poset->A);
 	gens.allocate(nb_strong_generators);
 
-	fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
+	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
+	fp_ge->seekg(ref * gen->Poset->A->coded_elt_size_in_char, ios::beg);
 	for (i = 0; i < nb_strong_generators; i++) {
 		gen->Poset->A->element_read_file_fp(gens.ith(i),
-				fp_ge, 0/* verbose_level*/);
+				*fp_ge, 0/* verbose_level*/);
 		}
 	
 	
@@ -1430,10 +1431,10 @@ void isomorph::apply_isomorphism_database(
 		cout << "ref = " << ref << endl;
 		}
 	
-	fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char,
-			SEEK_SET);
+	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
+	fp_ge->seekg(ref * gen->Poset->A->coded_elt_size_in_char, ios::beg);
 	gen->Poset->A->element_read_file_fp(
-			gen->Elt1, fp_ge, 0/* verbose_level*/);
+			gen->Elt1, *fp_ge, 0/* verbose_level*/);
 	
 	gen->Poset->A2->map_a_set(canonical_set,
 			apply_fusion_tmp_set1, size, gen->Elt1, 0);

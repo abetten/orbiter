@@ -49,7 +49,7 @@ void semifield_downstep_node::init(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 	sorting Sorting;
 
 	if (f_v) {
@@ -178,9 +178,17 @@ void semifield_downstep_node::init(
 		file_io File_io;
 		char fname[1000];
 
-		sprintf(fname,
-				"Level_%d_Orbit_%d_schreier.bin",
-				level, orbit_number);
+		if (SL->f_prefix) {
+			sprintf(fname,
+					"%sLevel_%d_Orbit_%d_schreier.bin",
+					SL->prefix, level, orbit_number);
+
+		}
+		else {
+			sprintf(fname,
+					"Level_%d_Orbit_%d_schreier.bin",
+					level, orbit_number);
+		}
 
 		if (File_io.file_size(fname) > 0) {
 			Sch = NEW_OBJECT(schreier);

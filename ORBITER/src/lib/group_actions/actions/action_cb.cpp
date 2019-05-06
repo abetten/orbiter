@@ -597,7 +597,7 @@ int action::element_signum_of_permutation(void *elt)
 
 
 void action::element_write_file_fp(int *Elt,
-		FILE *fp, int verbose_level)
+		ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
@@ -609,19 +609,19 @@ void action::element_write_file_fp(int *Elt,
 		cout << endl;
 		}
 	element_pack(Elt, elt, FALSE);
-	fwrite(elt, 1 /* size */,
-			coded_elt_size_in_char /* items */, fp);
+	fp.write(elt, coded_elt_size_in_char);
+	//fwrite(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 }
 
 void action::element_read_file_fp(int *Elt,
-		FILE *fp, int verbose_level)
+		ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
 	
 	elt = element_rw_memory_object;
-	fread(elt, 1 /* size */,
-			coded_elt_size_in_char /* items */, fp);
+	fp.read(elt, coded_elt_size_in_char);
+	//fread(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 	element_unpack(elt, Elt, FALSE);
 	if (f_v) {
 		element_print(Elt, cout);
@@ -636,10 +636,18 @@ void action::element_write_file(int *Elt,
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
+#if 0
 	FILE *f2;
 	f2 = fopen(fname, "wb");
 	element_write_file_fp(Elt, f2, 0/* verbose_level*/);
 	fclose(f2);
+#else
+	{
+		ofstream fp(fname, ios::binary);
+
+		element_write_file_fp(Elt, fp, 0/* verbose_level*/);
+	}
+#endif
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
@@ -658,11 +666,20 @@ void action::element_read_file(int *Elt,
 				"reading from file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 		}
+#if 0
 	FILE *f2;
 	f2 = fopen(fname, "rb");
 	element_read_file_fp(Elt, f2, 0/* verbose_level*/);
 	
 	fclose(f2);
+#else
+	{
+		ifstream fp(fname, ios::binary);
+
+		element_read_file_fp(Elt, fp, 0/* verbose_level*/);
+	}
+
+#endif
 }
 
 void action::element_write_to_memory_object(int *Elt,

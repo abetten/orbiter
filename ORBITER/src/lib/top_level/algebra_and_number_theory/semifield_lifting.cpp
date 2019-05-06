@@ -73,7 +73,9 @@ semifield_lifting::~semifield_lifting()
 }
 
 void semifield_lifting::init_level_three(
-		semifield_level_two *L2, int verbose_level)
+		semifield_level_two *L2,
+		int f_prefix, const char *prefix,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int level = 3;
@@ -89,6 +91,8 @@ void semifield_lifting::init_level_three(
 	cur_level = 3;
 	prev_level_nb_orbits = L2->nb_orbits;
 	Prev_stabilizer_gens = L2->Stabilizer_gens;
+	semifield_lifting::f_prefix = f_prefix;
+	semifield_lifting::prefix = prefix;
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(level, level - 1, SC->F, 0/*verbose_level - 10*/);
@@ -149,20 +153,27 @@ void semifield_lifting::compute_level_three(int verbose_level)
 				"after level_two_upstep" << endl;
 		}
 
-#if 0
 	if (f_v) {
 		cout << "semifield_lifting::compute_level_three "
-				"before save_middle_layer" << endl;
+				"before save_flag_orbits" << endl;
 		}
 
-	save_middle_layer(2, verbose_level - 1);
+	save_flag_orbits(verbose_level);
 
 	if (f_v) {
 		cout << "semifield_lifting::compute_level_three "
-				"after save_middle_layer" << endl;
+				"after save_flag_orbits" << endl;
 		}
-#endif
 
+	if (f_v) {
+		cout << "semifield_lifting::compute_level_three "
+				"before save_stabilizers" << endl;
+		}
+	save_stabilizers(verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::compute_level_three "
+				"after save_stabilizers" << endl;
+		}
 
 
 	if (f_v) {
@@ -530,15 +541,6 @@ void semifield_lifting::compute_flag_orbits(
 
 void semifield_lifting::upstep(
 	int level,
-#if 0
-	int old_nb_orbits,
-	strong_generators *old_stabilizer_gens,
-	downstep_node *Down,
-	middle_layer_node *M,
-	int nb_middle_nodes,
-	int *&Po, int *&So, int *&Mo, int *&Pt,
-	strong_generators *&stabilizer_gens, int &new_nb_orbits,
-#endif
 	int verbose_level)
 // level is the level that we want to classify
 {
@@ -679,9 +681,6 @@ void semifield_lifting::upstep(
 				}
 
 			trace_very_general(
-				//level - 1 /* cur_level */,
-				//po /* cur_po */,
-				//so /* cur_so */,
 				changed_space,
 				level,
 				changed_space_after_trace,
@@ -2683,6 +2682,196 @@ void semifield_lifting::read_info_file_for_level_three(
 			"level_three done" << endl;
 		}
 }
+
+void semifield_lifting::make_fname_flag_orbits(char *fname)
+{
+	if (f_prefix) {
+		sprintf(fname, "%sLevel_%d_flag_orbits.bin",
+				prefix, cur_level);
+	}
+	else {
+		sprintf(fname, "Level_%d_flag_orbits.bin", cur_level);
+	}
+}
+
+void semifield_lifting::save_flag_orbits(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "semifield_lifting::save_flag_orbits "
+				"cur_level = " << cur_level << endl;
+		}
+	char fname[1000];
+	int i;
+	file_io Fio;
+
+	make_fname_flag_orbits(fname);
+	{
+		ofstream fp(fname, ios::binary);
+
+		fp.write((char *) &nb_flag_orbits, sizeof(int));
+		for (i = 0; i < nb_flag_orbits; i++) {
+			Flag_orbits[i].write_to_file_binary(this, fp, verbose_level - 1);
+			}
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "semifield_lifting::save_flag_orbits "
+				"cur_level = " << cur_level << " done" << endl;
+		}
+}
+
+void semifield_lifting::read_flag_orbits(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "semifield_lifting::read_flag_orbits "
+				"cur_level = " << cur_level << endl;
+		}
+	char fname[1000];
+	int i;
+	file_io Fio;
+
+
+	make_fname_flag_orbits(fname);
+
+	if (Fio.file_size(fname) <= 0) {
+		cout << "semifield_lifting::read_flag_orbits "
+				"file " << fname << " does not exist" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "semifield_lifting::read_flag_orbits "
+				"reading file " << fname << endl;
+		}
+
+	{
+		ifstream fp(fname, ios::binary);
+
+		fp.read((char *) &nb_flag_orbits, sizeof(int));
+		Flag_orbits = NEW_OBJECTS(semifield_flag_orbit_node, nb_flag_orbits);
+
+		for (i = 0; i < nb_flag_orbits; i++) {
+			if ((i & ((1 << 15) - 1)) == 0) {
+				cout << "semifield_lifting::read_flag_orbits "
+						<< i << " / " << nb_flag_orbits << endl;
+				}
+			Flag_orbits[i].read_from_file_binary(this, fp,
+					0 /* verbose_level */);
+			}
+	}
+	cout << "semifield_lifting::read_flag_orbits "
+			"Read file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "semifield_lifting::read_flag_orbits "
+				"cur_level = " << cur_level << " done" << endl;
+		}
+}
+
+
+
+void semifield_lifting::make_fname_stabilizers(char *fname)
+{
+	if (f_prefix) {
+		sprintf(fname, "%sLevel_%d_stabilizers.bin",
+				prefix, cur_level);
+	}
+	else {
+		sprintf(fname, "Level_%d_stabilizers.bin", cur_level);
+	}
+}
+
+void semifield_lifting::save_stabilizers(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "semifield_lifting::save_stabilizers "
+				"cur_level = " << cur_level << endl;
+		}
+	char fname[1000];
+	int i;
+	file_io Fio;
+
+	make_fname_stabilizers(fname);
+	{
+		ofstream fp(fname, ios::binary);
+
+		fp.write((char *) &nb_orbits, sizeof(int));
+		for (i = 0; i < nb_orbits; i++) {
+			Stabilizer_gens[i].write_to_file_binary(fp, verbose_level - 1);
+			}
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "semifield_lifting::save_stabilizers "
+				"cur_level = " << cur_level << " done" << endl;
+		}
+}
+
+void semifield_lifting::read_stabilizers(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "semifield_lifting::read_stabilizers "
+				"cur_level = " << cur_level << endl;
+		}
+	char fname[1000];
+	int i;
+	file_io Fio;
+
+
+	make_fname_stabilizers(fname);
+
+	if (Fio.file_size(fname) <= 0) {
+		cout << "semifield_lifting::read_stabilizers "
+				"file " << fname << " does not exist" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "semifield_lifting::read_stabilizers "
+				"reading file " << fname << endl;
+		}
+
+	{
+		ifstream fp(fname, ios::binary);
+
+		fp.read((char *) &nb_orbits, sizeof(int));
+		Stabilizer_gens = NEW_OBJECTS(strong_generators, nb_orbits);
+
+		for (i = 0; i < nb_orbits; i++) {
+			if ((i & ((1 << 15) - 1)) == 0) {
+				cout << "semifield_starter::read_stabilizers "
+						<< i << " / " << nb_flag_orbits << endl;
+				}
+			Stabilizer_gens[i].read_from_file_binary(SC->A, fp,
+					0 /* verbose_level */);
+			}
+	}
+	cout << "semifield_lifting::read_stabilizers "
+			"Read file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "semifield_lifting::read_stabilizers "
+				"cur_level = " << cur_level << " done" << endl;
+		}
+}
+
+
 
 
 

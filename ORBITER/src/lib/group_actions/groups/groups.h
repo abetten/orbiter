@@ -761,10 +761,12 @@ public:
 		int i, int last);
 	int subtree_depth_first(std::ostream &ost, int *path, int i, int last);
 	void print_path(std::ostream &ost, int *path, int l);
+#if 0
 	void write_to_memory_object(memory_object *m, int verbose_level);
 	void read_from_memory_object(memory_object *m, int verbose_level);
 	void write_file(char *fname, int verbose_level);
 	void read_file(const char *fname, int verbose_level);
+#endif
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(std::ifstream &fp, int verbose_level);
 	void write_file_binary(char *fname, int verbose_level);
@@ -1368,15 +1370,15 @@ public:
 		int *&Orbit_reps, int *&Orbit_lengths, int &nb_orbits, 
 		int **&Pts_per_generator, int *&Nb_per_generator, 
 		int verbose_level);
+#if 0
 	void write_to_memory_object(memory_object *m, int verbose_level);
 	void read_from_memory_object(memory_object *m, int verbose_level);
+#endif
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(action *A, std::ifstream &fp,
 		int verbose_level);
 	void write_file(const char *fname, int verbose_level);
 	void read_file(action *A, const char *fname, int verbose_level);
-	//void generators_for_shallow_schreier_tree(char *label,
-	//	vector_ge *chosen_gens, int verbose_level);
 	void compute_ascii_coding(char *&ascii_coding, int verbose_level);
 	void decode_ascii_coding(char *ascii_coding, int verbose_level);
 	void export_permutation_group_to_magma(const char *fname, 
@@ -1499,10 +1501,12 @@ public:
 
 };
 
+#if 0
 void strong_generators_array_write_file(const char *fname, 
 	strong_generators *p, int nb, int verbose_level);
 void strong_generators_array_read_from_file(const char *fname, 
 	action *A, strong_generators *&p, int &nb, int verbose_level);
+#endif
 
 // #############################################################################
 // subgroup.cpp:

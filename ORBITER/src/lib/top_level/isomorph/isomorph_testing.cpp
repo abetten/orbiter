@@ -1271,21 +1271,31 @@ int isomorph::identify_database_is_open(int *set,
 		}
 	if (f != orbit_no0) {
 
+		// ToDo:
 		// A Betten 10/25/2014
 		// why do we load the fusion element from file?
 		// this seems to slow down the process.
 
-		FILE *f2;
 		int *Elt1, *Elt2;
 		
 		Elt1 = NEW_int(gen->Poset->A->elt_size_in_int);
 		Elt2 = NEW_int(gen->Poset->A->elt_size_in_int);
-		
+
+#if 0
+		FILE *f2;
 		f2 = fopen(Reps->fname_fusion_ge, "rb");
 		fseek(f2, orbit_no0 * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
 		gen->Poset->A->element_read_file_fp(Elt1, f2, 0/* verbose_level*/);
-		
 		fclose(f2);
+#else
+		{
+			ifstream fp(Reps->fname_fusion_ge, ios::binary);
+
+			fp.seekg(orbit_no0 * gen->Poset->A->coded_elt_size_in_char, ios::beg);
+			gen->Poset->A->element_read_file_fp(Elt1, fp, 0/* verbose_level*/);
+		}
+#endif
+		
 		gen->Poset->A->mult(transporter, Elt1, Elt2);
 		gen->Poset->A->move(Elt2, transporter);
 		FREE_int(Elt1);

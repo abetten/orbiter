@@ -513,7 +513,6 @@ void poset_classification::upstep(int size,
 	int f_v4 = (verbose_level >= 4);
 	int f, cur, l, prev, u;
 	int f_indicate_not_canonicals = FALSE;
-	FILE *fp = NULL;
 	int f_print = f_v;
 
 	if (f_v) {
@@ -570,7 +569,6 @@ void poset_classification::upstep(int size,
 		extend_node(size, prev, cur, 
 			f_debug, 
 			f_indicate_not_canonicals, 
-			fp, 
 			verbose_level - 2);
 
 #if 1
@@ -615,7 +613,6 @@ void poset_classification::extend_node(
 	int size, int prev, int &cur,
 	int f_debug, 
 	int f_indicate_not_canonicals, 
-	FILE *fp, 
 	int verbose_level)
 // called by poset_classification::upstep
 // Uses an upstep_work structure to handle the work.
@@ -732,7 +729,7 @@ void poset_classification::extend_node(
 		Work.init(this, size, prev, prev_ex, cur, 
 			f_debug, 
 			f_lex, 
-			f_indicate_not_canonicals, fp, 
+			f_indicate_not_canonicals, //fp,
 			verbose_level - 4);
 
 		if (f_vvv) {

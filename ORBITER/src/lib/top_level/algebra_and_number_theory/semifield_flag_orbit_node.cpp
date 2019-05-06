@@ -84,6 +84,72 @@ int semifield_flag_orbit_node::group_order_as_int()
 		}
 }
 
+void semifield_flag_orbit_node::write_to_file_binary(
+		semifield_lifting *SL, ofstream &fp,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "semifield_flag_orbit_node::write_to_file_binary" << endl;
+		}
+	fp.write((char *) &downstep_primary_orbit, sizeof(int));
+	fp.write((char *) &downstep_secondary_orbit, sizeof(int));
+	fp.write((char *) &pt_local, sizeof(int));
+	fp.write((char *) &pt, sizeof(long int));
+	fp.write((char *) &downstep_orbit_len, sizeof(int));
+	fp.write((char *) &f_long_orbit, sizeof(int));
+	fp.write((char *) &f_fusion_node, sizeof(int));
+	if (f_fusion_node) {
+		fp.write((char *) &fusion_with, sizeof(int));
+		SL->SC->A->element_write_to_file_binary(fusion_elt, fp, 0);
+		}
+	else {
+		fp.write((char *) &upstep_orbit, sizeof(int));
+		}
+	if (!f_long_orbit) {
+		gens->write_to_file_binary(fp, verbose_level - 1);
+		}
+	if (f_v) {
+		cout << "semifield_flag_orbit_node::write_to_file_binary done" << endl;
+		}
+}
+
+void semifield_flag_orbit_node::read_from_file_binary(
+		semifield_lifting *SL, ifstream &fp,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "semifield_flag_orbit_node::read_from_file_binary" << endl;
+		}
+	fp.read((char *) &downstep_primary_orbit, sizeof(int));
+	fp.read((char *) &downstep_secondary_orbit, sizeof(int));
+	fp.read((char *) &pt_local, sizeof(int));
+	fp.read((char *) &pt, sizeof(long int));
+	fp.read((char *) &downstep_orbit_len, sizeof(int));
+	fp.read((char *) &f_long_orbit, sizeof(int));
+	fp.read((char *) &f_fusion_node, sizeof(int));
+	if (f_fusion_node) {
+		fp.read((char *) &fusion_with, sizeof(int));
+		fusion_elt = NEW_int(SL->SC->A->elt_size_in_int);
+		SL->SC->A->element_read_from_file_binary(fusion_elt, fp, 0);
+		}
+	else {
+		fp.read((char *) &upstep_orbit, sizeof(int));
+		}
+	if (!f_long_orbit) {
+		gens = NEW_OBJECT(strong_generators);
+		gens->read_from_file_binary(SL->SC->A, fp, verbose_level - 1);
+		}
+	if (f_v) {
+		cout << "semifield_flag_orbit_node::read_from_file_binary done" << endl;
+		}
+}
+
+
+
 
 
 }}

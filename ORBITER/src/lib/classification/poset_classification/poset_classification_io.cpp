@@ -15,11 +15,18 @@ using namespace std;
 namespace orbiter {
 namespace classification {
 
+void poset_classification::prepare_fname_data_file(char *fname,
+		const char *fname_base, int depth_completed)
+{
+	sprintf(fname, "%s_%d.data", fname_base, depth_completed);
+}
+
+
 void poset_classification::read_data_file(int &depth_completed,
 		const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int size;
+	long int size;
 	int nb_group_elements;
 	memory_object *m;
 	file_io Fio;
@@ -57,6 +64,8 @@ void poset_classification::read_data_file(int &depth_completed,
 
 	m->used_length = 0;
 
+
+#if 0
 	FILE *fp;
 
 	fp = fopen(fname, "r");
@@ -73,6 +82,23 @@ void poset_classification::read_data_file(int &depth_completed,
 		cout << "poset_classification::read_data_file "
 				"after fread" << endl;
 		}
+#else
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"Before reading file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	{
+		ifstream fp(fname, ios::binary);
+
+		fp.read((char *) m->data, size);
+	}
+	if (f_v) {
+		cout << "poset_classification::read_data_file "
+				"Read file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+#endif
 
 	m->used_length = size;
 	m->cur_pointer = 0;
@@ -102,11 +128,12 @@ void poset_classification::write_data_file(int depth_completed,
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
 	int nb_group_elements;
-	int size0;
+	long int size0;
 	int verbose_level1;
 	file_io Fio;
 
-	sprintf(fname, "%s_%d.data", fname_base, depth_completed);
+	prepare_fname_data_file(fname, fname_base, depth_completed);
+	//sprintf(fname, "%s_%d.data", fname_base, depth_completed);
 
 	if (f_v) {
 		cout << "poset_classification::write_data_file "
@@ -123,17 +150,17 @@ void poset_classification::write_data_file(int depth_completed,
 		}
 
 	verbose_level1 = verbose_level;
-	if (size0 > 1 * ONE_MILLION) {
+	if (size0 > 1000 * ONE_MILLION) {
 		cout << "poset_classification::write_data_file "
 				"file=" << fname << endl;
 		cout << "size on file = " << size0 << endl;
-		cout << "the size is very big" << endl;
+		cout << "the size is very big (> 1 GB)" << endl;
 		verbose_level1 = 2;
 		}
 
 	m = NEW_OBJECT(memory_object);
-	m->alloc(10, 0);
-	//m->alloc(size0, 0);
+	//m->alloc(10, 0);
+	m->alloc(size0, 0);
 	m->used_length = 0;
 
 	if (f_v) {
@@ -151,7 +178,13 @@ void poset_classification::write_data_file(int depth_completed,
 		cout << "m->used_length=" << m->used_length << endl;
 		cout << "size0=" << size0 << endl;
 	}
+	if (m->used_length != size0) {
+		cout << "poset_classification::write_data_file "
+				"m->used_length != size0" << endl;
+		exit(1);
+	}
 
+#if 0
 	FILE *fp;
 	int size;
 
@@ -168,8 +201,25 @@ void poset_classification::write_data_file(int depth_completed,
 		cout << "poset_classification::write_data_file "
 				"after fwrite" << endl;
 	}
-
 	fclose(fp);
+#else
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+				"Writing data of size " << m->used_length
+				<< " to file " << fname << endl;
+	}
+	{
+		ofstream fp(fname, ios::binary);
+
+		fp.write(m->data, m->used_length);
+	}
+	if (f_v) {
+		cout << "poset_classification::write_data_file "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+#endif
+
 
 	FREE_OBJECT(m);
 
@@ -187,7 +237,7 @@ void poset_classification::write_file(
 {
 	memory_object *m;
 	int f_v = (verbose_level >= 1);
-	int size0;
+	long int size0;
 	int nb_group_elements = 0;
 
 
@@ -200,10 +250,10 @@ void poset_classification::write_file(
 		cout << "size on file = " << size0 << endl;
 		}
 
-	if (size0 > 100 * ONE_MILLION) {
+	if (size0 > 1000 * ONE_MILLION) {
 		cout << "poset_classification::write_file" << endl;
 		cout << "size on file = " << size0 << endl;
-		cout << "the size is very big" << endl;
+		cout << "the size is very big (> 1 GB)" << endl;
 		}
 
 	m = NEW_OBJECT(memory_object);
@@ -223,8 +273,13 @@ void poset_classification::write_file(
 		cout << "m->used_length=" << m->used_length << endl;
 		cout << "m->alloc_length=" << m->alloc_length << endl;
 		}
+	if (m->used_length != size0) {
+		cout << "poset_classification::write_file "
+				"m->used_length != size0" << endl;
+		exit(1);
+	}
 
-	int size;
+	long int size;
 	size = m->used_length;
 
 
@@ -233,7 +288,7 @@ void poset_classification::write_file(
 				"before fp.write" << endl;
 		}
 	fp.write((char *) &depth_completed, sizeof(int));
-	fp.write((char *) &size, sizeof(int));
+	fp.write((char *) &size, sizeof(long int));
 	fp.write(m->data, size);
 	if (f_v) {
 		cout << "poset_classification::write_file "
@@ -253,7 +308,7 @@ void poset_classification::read_file(
 {
 	memory_object *m;
 	int f_v = (verbose_level >= 1);
-	int size;
+	long int size;
 	int nb_group_elements;
 
 	if (f_v) {
@@ -262,7 +317,7 @@ void poset_classification::read_file(
 
 
 	fp.read((char *) &depth_completed, sizeof(int));
-	fp.read((char *) &size, sizeof(int));
+	fp.read((char *) &size, sizeof(long int));
 
 	if (f_v) {
 		cout << "poset_classification::read_file "
@@ -354,7 +409,7 @@ void poset_classification::read_memory_object(
 
 
 	int one_percent;
-	int verbose_level_down = 0;
+	//int verbose_level_down = 0;
 
 
 	one_percent = (int)((double) nb_nodes * 0.01);
@@ -382,7 +437,7 @@ void poset_classification::read_memory_object(
 
 		root[i].read_memory_object(this, Poset->A, m,
 				nb_group_elements,
-				verbose_level_down /*verbose_level - 1*/);
+				0 /*verbose_level_down*/ /*verbose_level - 1*/);
 		}
 	if (f_v) {
 		cout << "poset_classification::read_memory_object "
@@ -472,11 +527,12 @@ void poset_classification::write_memory_object(
 		}
 }
 
-int poset_classification::calc_size_on_file(int depth_completed,
+long int poset_classification::calc_size_on_file(int depth_completed,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, s = 0;
+	int i;
+	long int s = 0;
 	int nb_nodes;
 
 	if (f_v) {
@@ -501,623 +557,6 @@ int poset_classification::calc_size_on_file(int depth_completed,
 				<< " s=" << s << endl;
 		}
 	return s;
-}
-
-void poset_classification::report_schreier_trees(
-		ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, h, degree, a;
-	int N, Nb_gen;
-	int *data1;
-	int *data2;
-	int *data3;
-	int level, nb_orbits, cnt, cnt3, elt_size, hdl;
-	int *Elt1;
-	poset_orbit_node *O;
-	longinteger_object stab_order, orbit_length;
-
-	if (f_v) {
-		cout << "poset_classification::report_schreier_trees" << endl;
-	}
-	N = 0;
-	for (level = 0; level < depth; level++) {
-		N += nb_orbits_at_level(level);
-	}
-
-
-	degree = Poset->A2->degree;
-	elt_size= Poset->A->make_element_size;
-
-	Nb_gen = 0;
-	for (level = 0; level < depth; level++) {
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-			O = get_node_ij(level, i);
-
-			Nb_gen += O->nb_strong_generators;
-
-		}
-	}
-
-
-	ost << "# N = number of nodes in the poset classification" << endl;
-	ost << N << endl;
-	ost << "# degree of permutation action = size of the set "
-			"we act on" << endl;
-	ost << degree << endl;
-	ost << "# size of a group element in int" << endl;
-	ost << elt_size << endl;
-	ost << "# Nb_gen = total number of generators = number of rows "
-			"of data_matrix3" << endl;
-	ost << Nb_gen << endl;
-
-
-	ost << "# number of generators at each node, row in data_matrix3 "
-			"where these generators start:" << endl;
-
-	cnt3 = 0;
-	for (level = 0; level < depth; level++) {
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-			O = get_node_ij(level, i);
-			ost << O->nb_strong_generators << " " << cnt3 << endl;
-			cnt3 += O->nb_strong_generators;
-		}
-	}
-	ost << endl;
-
-	data1 = NEW_int(N * degree);
-	data2 = NEW_int(N * degree);
-	data3 = NEW_int(Nb_gen * elt_size);
-	Elt1 = NEW_int(Poset->A->elt_size_in_int);
-
-
-	//rep = NEW_int(depth + 1);
-
-	cnt = 0;
-	cnt3 = 0;
-	for (level = 0; level < depth; level++) {
-		//first = first_poset_orbit_node_at_level[level];
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-
-			//get_set_by_level(level, i, rep);
-			//int_vec_print_to_str_naked(str, rep, level);
-
-			get_orbit_length_and_stabilizer_order(i, level,
-				stab_order, orbit_length);
-			//stab_order.print_to_string(str);
-
-			//orbit_length.print_to_string(str);
-
-			O = get_node_ij(level, i);
-			schreier_vector *Schreier_vector;
-
-			Schreier_vector = O->Schreier_vector;
-
-			//nb_live_pts = O->get_nb_of_live_points();
-
-			int *sv = Schreier_vector->sv;
-			int nb_live_pts = sv[0];
-			int *points = sv + 1;
-			int *parent = points + nb_live_pts;
-			int *label = parent + nb_live_pts;
-			int f_group_is_trivial;
-			if (O->nb_strong_generators == 0) {
-				f_group_is_trivial = TRUE;
-			} else {
-				f_group_is_trivial = FALSE;
-			}
-
-			cout << "Node " << level << "/" << i << endl;
-			cout << "points : parent : label" << endl;
-			for (h = 0; h < nb_live_pts; h++) {
-				cout << "points[h]" << " : ";
-				if (!f_group_is_trivial) {
-					cout << parent[h] << " : " << label[h];
-				}
-				cout << endl;
-			}
-			for (j = 0; j < degree; j++) {
-				data1[cnt * degree + j] = -2;
-				data2[cnt * degree + j] = -2;
-			}
-			cout << "node " << level << "/" << i
-					<< " computing data1/data2" << endl;
-			for (h = 0; h < nb_live_pts; h++) {
-				a = points[h];
-				if (f_group_is_trivial) {
-					data1[cnt * degree + a] = -1;
-					data2[cnt * degree + a] = -1;
-				} else {
-					data1[cnt * degree + a] = parent[h];
-					data2[cnt * degree + a] = label[h];
-				}
-			}
-			cnt++;
-			cout << "node " << level << "/" << i
-					<< " computing data3 cnt3=" << cnt3 << endl;
-			if (!f_group_is_trivial) {
-				for (h = 0; h < O->nb_strong_generators; h++) {
-					cout << "h=" << h << " / "
-							<< O->nb_strong_generators << endl;
-					hdl = O->hdl_strong_generators[h];
-					cout << "before element_retrieve, hdl=" << hdl << endl;
-					Poset->A->element_retrieve(hdl, Elt1, 0);
-					cout << "after element_retrieve" << endl;
-					for (j = 0; j < elt_size; j++) {
-						data3[cnt3 * elt_size + j] = Elt1[j];
-					}
-					cnt3++;
-				}
-			}
-		}
-	}
-
-	ost << "# data_matrix1: parent information" << endl;
-	for (i = 0; i < N; i++) {
-		for (j = 0; j < degree; j++) {
-			ost << data1[i * degree + j] << " ";
-		}
-		ost << endl;
-	}
-	ost << endl;
-
-	ost << "# data_matrix2: label" << endl;
-	for (i = 0; i < N; i++) {
-		for (j = 0; j < degree; j++) {
-			ost << data2[i * degree + j] << " ";
-		}
-		ost << endl;
-	}
-	ost << endl;
-
-	ost << "# data_matrix3: schreier generators" << endl;
-	for (i = 0; i < Nb_gen; i++) {
-		for (j = 0; j < elt_size; j++) {
-			ost << data3[i * elt_size + j] << " ";
-		}
-		ost << endl;
-	}
-	ost << endl;
-
-}
-
-void poset_classification::report(ostream &ost)
-{
-	int i;
-	int *N;
-
-
-
-	ost << "Poset classification up to depth " << depth << "\\\\" << endl;
-
-	ost << endl;
-	ost << "\\section{The orbits}" << endl;
-	ost << endl;
-
-
-	ost << "\\subsection{Number of orbits at depth}" << endl;
-	N = NEW_int(depth + 1);
-	for (i = 0; i <= depth; i++) {
-		N[i] = nb_orbits_at_level(i);
-	}
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\mbox{Depth} & \\mbox{Nb of orbits}\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i <= depth; i++) {
-		ost << i << " & " << N[i] << "\\\\" << endl;
-		ost << "\\hline" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-
-	ost << endl;
-	ost << "\\subsection{Orbit representatives: overview}" << endl;
-	ost << endl;
-
-	ost << "N = node\\\\" << endl;
-	ost << "D = depth or level\\\\" << endl;
-	ost << "O = orbit with a level\\\\" << endl;
-	ost << "Rep = orbit representative\\\\" << endl;
-	ost << "SO = (order of stabilizer, orbit length)\\\\" << endl;
-	ost << "L = number of live points\\\\" << endl;
-	ost << "F = number of flags\\\\" << endl;
-	//ost << "FO = number of flag orbits\\\\" << endl;
-	ost << "Gen = number of generators for the stabilizer of the orbit rep.\\\\" << endl;
-	ost << "\\begin{center}" << endl;
-	ost << "\\begin{longtable}{|r|r|r|p{3cm}|r|r|r|r|}" << endl;
-	ost << "\\caption{Orbit Representatives}\\\\" << endl;
-	ost << endl;
-	ost << "\\hline N & D & O & Rep & SO "
-			"& L & F & Gen\\\\ \\hline " << endl;
-	ost << "\\endfirsthead" << endl;
-	ost << endl;
-	ost << "\\multicolumn{8}{c}%" << endl;
-	ost << "{{\\bfseries \\tablename\\ \\thetable{} -- continued "
-			"from previous page}} \\\\" << endl;
-	ost << "\\hline N & D & O & Rep & SO "
-			"& L & F & Gen\\\\ \\hline " << endl;
-	ost << "\\endhead" << endl;
-	ost << endl;
-	ost << "\\hline \\multicolumn{8}{|r|}{{Continued on next page}} "
-			"\\\\ \\hline" << endl;
-	ost << "\\endfoot" << endl;
-	ost << endl;
-	ost << "\\hline \\hline" << endl;
-	ost << "\\endlastfoot" << endl;
-
-	int level, nb_orbits, cnt, nb_live_pts, nb_extensions, nbo, nbg;
-	int *rep = NULL;
-	char str[1000];
-	poset_orbit_node *O;
-	longinteger_object stab_order, orbit_length;
-	schreier_vector *Schreier_vector;
-
-
-	rep = NEW_int(depth + 1);
-
-	cnt = 0;
-	for (level = 0; level <= depth; level++) {
-
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-
-			get_set_by_level(level, i, rep);
-			int_vec_print_to_str_naked(str, rep, level);
-
-#if 0
-			get_orbit_length_and_stabilizer_order_with_given_group_order(
-					i, level,
-					go,
-					stab_order, orbit_length);
-#endif
-			get_orbit_length_and_stabilizer_order(i, level,
-				stab_order, orbit_length);
-
-			//stab_order.print_to_string(str);
-
-			//orbit_length.print_to_string(str);
-
-			O = get_node_ij(level, i);
-			Schreier_vector = O->Schreier_vector;
-
-			if (level < depth) {
-				nb_live_pts = O->get_nb_of_live_points();
-				nb_extensions = O->nb_extensions;
-				//nbo = O->get_nb_of_orbits_under_stabilizer();
-				if (Schreier_vector->f_has_local_generators) {
-					nbg = Schreier_vector->local_gens->len;
-				}
-				else {
-					nbg = O->nb_strong_generators;
-				}
-			} else {
-				nb_live_pts = -1;
-				nb_extensions = -1;
-				//nbo = -1;
-				nbg = O->nb_strong_generators;
-			}
-
-			ost << cnt << " & " << level << " & " << i
-					<< " & $\\{$ " << str << " $\\}$ & ("
-					<< stab_order << ", "
-					<< orbit_length << ") & ";
-
-			if (nb_live_pts >= 0) {
-				ost << nb_live_pts << " & ";
-			}
-			else {
-				ost << " & ";
-			}
-			if (nb_extensions >= 0) {
-				ost << nb_extensions << " & ";
-			}
-			else {
-				ost << " & ";
-			}
-#if 0
-			if (nbo >= 0) {
-				ost << nbo << " & ";
-			}
-			else {
-				ost << " & ";
-			}
-#endif
-			if (nbg >= 0) {
-				ost << nbg << "\\\\" << endl;
-			}
-			else {
-				ost << "\\\\" << endl;
-			}
-
-
-			cnt++;
-		}
-		ost << "\\hline" << endl;
-	}
-
-	ost << "\\end{longtable}" << endl;
-	ost << "\\end{center}" << endl;
-	ost << endl;
-	ost << "\\section{The poset of orbits}" << endl;
-	ost << endl;
-
-
-	char fname_base[1000];
-	char cmd[10000];
-
-	draw_poset_fname_base_poset_lvl(fname_base, depth);
-
-	sprintf(cmd, "cp %s.layered_graph ./poset.layered_graph", fname_base);
-	cout << "executing: " << cmd << endl;
-	system(cmd);
-
-
-
-
-	sprintf(cmd, "%s/layered_graph_main.out -v 2 "
-		"-file poset.layered_graph "
-		"-xin 1000000 -yin 1000000 "
-		"-xout 1000000 -yout 1000000 "
-		"-y_stretch 0.75 "
-		"-rad 20000 "
-		//"-nodes_empty "
-		"-corners "
-		//"-embedded "
-		"-line_width 0.30 "
-		"-spanning_tree",
-		tools_path);
-	cout << "executing: " << cmd << endl;
-	system(cmd);
-
-	sprintf(cmd, "mpost poset_draw_tree.mp");
-	cout << "executing: " << cmd << endl;
-	system(cmd);
-
-
-	//ost << "\\input " << fname_tex << endl;
-	ost << "\\includegraphics[width=160mm]{poset_draw_tree.1}\\" << endl;
-
-
-
-
-
-	ost << endl;
-	ost << "\\section{Stabilizers and Schreier trees}" << endl;
-	ost << endl;
-
-	int orbit_at_level, j, nb_gens;
-
-	cnt = 0;
-	for (level = 0; level <= depth; level++) {
-
-
-		ost << endl;
-		ost << "\\subsection{Stabilizers and Schreier trees "
-				"at level " << level << "}" << endl;
-		ost << endl;
-
-
-		nb_orbits = nb_orbits_at_level(level);
-		for (orbit_at_level = 0;
-				orbit_at_level < nb_orbits;
-				orbit_at_level++) {
-
-			char fname_mask_base[1000];
-			O = get_node_ij(level, orbit_at_level);
-
-			create_shallow_schreier_tree_fname_mask_base(
-					fname_mask_base, O->node);
-			//create_schreier_tree_fname_mask_base(
-			//fname_mask_base, O->node);
-
-			strong_generators *gens;
-
-			get_stabilizer_generators(gens,
-					level, orbit_at_level, verbose_level);
-			get_orbit_length_and_stabilizer_order(orbit_at_level, level,
-				stab_order, orbit_length);
-
-			stab_order.print_to_string(str);
-
-			//orbit_length.print_to_string(str);
-
-			Schreier_vector = O->Schreier_vector;
-
-
-			ost << "\\subsection*{Node " << O->node << " at Level "
-					<< level << " Orbit " << orbit_at_level
-					<< " / " << nb_orbits << "}" << endl;
-
-			get_set_by_level(level, orbit_at_level, rep);
-
-			ost << "$$" << endl;
-			int_set_print_tex(ost, rep, level);
-			ost << "_{";
-			ost << str;
-			ost << "}";
-			ost << "$$" << endl;
-
-			ost << "{\\small\\arraycolsep=2pt" << endl;
-			gens->print_generators_tex(ost);
-			ost << "}" << endl;
-
-			nb_gens = gens->gens->len;
-
-			nb_extensions = O->nb_extensions;
-			//ost << "There are " << nbo << " orbits\\\\" << endl;
-			ost << "There are " << nb_extensions
-					<< " extensions\\\\" << endl;
-			ost << "Number of generators " << O->nb_strong_generators
-					<< "\\\\" << endl;
-
-			if (Schreier_vector) {
-				int nb_orbits_sv = Schreier_vector->number_of_orbits;
-
-				if (Schreier_vector->f_has_local_generators) {
-
-					ost << "Generators for the Schreier trees:\\\\" << endl;
-					ost << "{\\small\\arraycolsep=2pt" << endl;
-					Schreier_vector->local_gens->print_generators_tex(stab_order, ost);
-					ost << "}" << endl;
-
-					nb_gens = Schreier_vector->local_gens->len;
-				}
-
-				int nb_o, h;
-				int *orbit_reps;
-				int *orbit_length;
-				int *total_depth;
-				Schreier_vector->orbit_stats(
-						nb_o, orbit_reps, orbit_length, total_depth,
-						0 /*verbose_level*/);
-				if (nb_o != nb_orbits_sv) {
-					cout << "nb_o != nb_orbits_sv" << endl;
-					exit(1);
-				}
-				for (h = 0; h < nb_o; h++) {
-					ost << "\\noindent Orbit " << h << " / " << nb_o
-							<< ": Point " << orbit_reps[h]
-							<< " lies in an orbit of length "
-							<< orbit_length[h] << " with average word length "
-							<< (double) total_depth[h] / (double) orbit_length[h];
-					if (nb_gens > 1) {
-						ost << " $H_{" << nb_gens << "} = "
-							<< (double) log(total_depth[h]) / log(nb_gens) << "$";
-					}
-					ost << "\\\\" << endl;
-				}
-
-
-				for (j = 0; j < nb_orbits_sv; j++) {
-
-					//char fname_base[1000];
-					char fname_layered_graph[1000];
-					char fname_tex[1000];
-					char fname_mp[1000];
-					char fname_1[1000];
-
-					sprintf(fname_base, fname_mask_base, j);
-					sprintf(fname_layered_graph, "%s.layered_graph",
-							fname_base);
-					sprintf(fname_tex, "%s_draw_tree.tex", fname_base);
-					sprintf(fname_mp, "%s_draw_tree.mp", fname_base);
-					sprintf(fname_1, "%s_draw_tree.1", fname_base);
-
-					if (!f_has_tools_path) {
-						cout << "please set tools path using "
-								"-tools_path <tools_path>" << endl;
-						exit(1);
-					}
-					sprintf(cmd, "%s/layered_graph_main.out -v 2 "
-						"-file %s "
-						"-xin 1000000 -yin 1000000 "
-						"-xout 1000000 -yout 1000000 "
-						"-y_stretch 0.3 "
-						"-rad 2000 "
-						"-nodes_empty "
-						"-corners "
-						//"-embedded "
-						"-line_width 0.30 "
-						"-spanning_tree",
-						tools_path, fname_layered_graph);
-					cout << "executing: " << cmd << endl;
-					system(cmd);
-
-					sprintf(cmd, "mpost %s", fname_mp);
-					cout << "executing: " << cmd << endl;
-					system(cmd);
-
-					ost << "\\subsubsection*{Node " << O->node << " at Level "
-							<< level << " Orbit " << orbit_at_level
-							<< " / " << nb_orbits
-							<< " Tree " << j << " / " << nb_orbits_sv << "}" << endl;
-
-					nbo = Schreier_vector->number_of_orbits;
-					if (Schreier_vector->f_has_local_generators) {
-						nbg = Schreier_vector->local_gens->len;
-					}
-					else {
-						nbg = O->nb_strong_generators;
-					}
-					ost << "Number of generators " << nbg
-							<< "\\\\" << endl;
-
-
-					//ost << "\\input " << fname_tex << endl;
-					ost << "\\includegraphics[width=160mm]{"
-							<< fname_1 << "}\\" << endl;
-					int e;
-
-					e = O->find_extension_from_point(this, orbit_reps[j],
-							0 /* verbose_level */);
-
-					if (e >= 0) {
-						ost << endl;
-						ost << "\\noindent Extension number " << e << "\\\\" << endl;
-						ost << "Orbit representative " << orbit_reps[j] << "\\\\" << endl;
-						ost << "Flag orbit length " << O->E[e].orbit_len << "\\\\" << endl;
-
-						if (O->E[e].type == EXTENSION_TYPE_UNPROCESSED) {
-							ost << "Flag orbit is unprocessed.\\\\" << endl;
-						}
-						else if (O->E[e].type == EXTENSION_TYPE_EXTENSION) {
-							ost << "Flag orbit is defining new orbit " << O->E[e].data << " at level " << level + 1 << "\\\\" << endl;
-						}
-						else if (O->E[e].type == EXTENSION_TYPE_FUSION) {
-							ost << "Flag orbit is fused to node " << O->E[e].data1 << " extension " << O->E[e].data2 << "\\\\" << endl;
-							ost << "Fusion element:\\\\" << endl;
-							ost << "$$" << endl;
-
-							Poset->A->element_retrieve(O->E[e].data, Elt1, 0);
-
-							Poset->A->element_print_latex(Elt1, ost);
-							ost << "$$" << endl;
-							Poset->A->element_print_for_make_element(Elt1, ost);
-							ost << "\\\\" << endl;
-						}
-					}
-					else {
-						ost << endl;
-						ost << "Cannot find an extension for point " << orbit_reps[j] << "\\\\" << endl;
-					}
-#if 0
-					int pt;
-					int orbit_len;
-					int type;
-						// EXTENSION_TYPE_UNPROCESSED = unprocessed
-						// EXTENSION_TYPE_EXTENSION = extension node
-						// EXTENSION_TYPE_FUSION = fusion node
-						// EXTENSION_TYPE_PROCESSING = currently processing
-						// EXTENSION_TYPE_NOT_CANONICAL = no extension formed
-						// because it is not canonical
-					int data;
-						// if EXTENSION_TYPE_EXTENSION: a handle to the next
-						//  poset_orbit_node
-						// if EXTENSION_TYPE_FUSION: a handle to a fusion element
-					int data1;
-						// if EXTENSION_TYPE_FUSION: node to which we are fusing
-					int data2;
-						// if EXTENSION_TYPE_FUSION: extension within that
-						// node to which we are fusing
-#endif
-
-				}
-				FREE_int(orbit_reps);
-				FREE_int(orbit_length);
-				FREE_int(total_depth);
-			}
-			FREE_OBJECT(gens);
-		}
-	}
-	FREE_int(rep);
-
-
 }
 
 void poset_classification::housekeeping(int i,
@@ -1362,13 +801,22 @@ void poset_classification::housekeeping_no_data_file(int i,
 		}
 }
 
+void poset_classification::create_fname_sv_level_file_binary(char *fname,
+		const char *fname_base, int level)
+{
+	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
+
+}
+
 int poset_classification::test_sv_level_file_binary(
-		int level, char *fname_base)
+		int level, const char *fname_base)
 {
 	char fname[1000];
 	file_io Fio;
 	
-	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
+	create_fname_sv_level_file_binary(fname,
+			fname_base, level);
+	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	if (Fio.file_size(fname) >= 1)
 		return TRUE;
 	else
@@ -1376,7 +824,7 @@ int poset_classification::test_sv_level_file_binary(
 }
 
 void poset_classification::read_sv_level_file_binary(
-	int level, char *fname_base,
+	int level, const char *fname_base,
 	int f_split, int split_mod, int split_case, 
 	int f_recreate_extensions, int f_dont_keep_sv, 
 	int verbose_level)
@@ -1385,7 +833,9 @@ void poset_classification::read_sv_level_file_binary(
 	char fname[1000];
 	file_io Fio;
 	
-	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
+	create_fname_sv_level_file_binary(fname,
+			fname_base, level);
+	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::read_sv_level_file_binary "
@@ -1393,7 +843,7 @@ void poset_classification::read_sv_level_file_binary(
 				<< Fio.file_size(fname) << endl;
 		}
 
-
+#if 0
 	FILE *fp;
 
 	fp = fopen(fname, "rb");
@@ -1404,11 +854,21 @@ void poset_classification::read_sv_level_file_binary(
 		verbose_level - 1);
 	
 	fclose(fp);
+#else
+	{
+		ifstream fp(fname, ios::binary);
+
+		read_sv_level_file_binary2(level, fp,
+			f_split, split_mod, split_case,
+			f_recreate_extensions, f_dont_keep_sv,
+			verbose_level - 1);
+	}
+#endif
 
 }
 
 void poset_classification::write_sv_level_file_binary(
-	int level, char *fname_base,
+	int level, const char *fname_base,
 	int f_split, int split_mod, int split_case, 
 	int verbose_level)
 {
@@ -1416,7 +876,9 @@ void poset_classification::write_sv_level_file_binary(
 	char fname[1000];
 	file_io Fio;
 
-	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
+	create_fname_sv_level_file_binary(fname,
+			fname_base, level);
+	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::write_sv_level_file_binary "
@@ -1424,6 +886,7 @@ void poset_classification::write_sv_level_file_binary(
 		}
 
 
+#if 0
 	FILE *fp;
 
 	fp = fopen(fname, "wb");
@@ -1433,6 +896,15 @@ void poset_classification::write_sv_level_file_binary(
 		verbose_level);
 	
 	fclose(fp);
+#else
+	{
+		ofstream fp(fname, ios::binary);
+
+		write_sv_level_file_binary2(level, fp,
+			f_split, split_mod, split_case,
+			verbose_level);
+	}
+#endif
 
 	if (f_v) {
 		cout << "poset_classification::write_sv_level_file_binary "
@@ -1442,14 +914,14 @@ void poset_classification::write_sv_level_file_binary(
 }
 
 void poset_classification::read_sv_level_file_binary2(
-	int level, FILE *fp,
+	int level, ifstream &fp,
 	int f_split, int split_mod, int split_case, 
 	int f_recreate_extensions, int f_dont_keep_sv, 
 	int verbose_level)
 {
 	int f, i, nb_nodes;
 	int f_v = (verbose_level >= 1);
-	int_4 I;
+	int I;
 	file_io Fio;
 
 	f = first_poset_orbit_node_at_level[level];
@@ -1466,19 +938,22 @@ void poset_classification::read_sv_level_file_binary2(
 			}
 		}
 	// version number of this file format
-	I = Fio.fread_int4(fp);
+	fp.read((char *) &I, sizeof(int));
+	//I = Fio.fread_int4(fp);
 	if (I != 1) { 
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"unknown file version" << endl;
 		exit(1);
 		}
-	I = Fio.fread_int4(fp);
+	fp.read((char *) &I, sizeof(int));
+	//I = Fio.fread_int4(fp);
 	if (I != level) {
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"level does not match" << endl;
 		exit(1);
 		}
-	I = Fio.fread_int4(fp);
+	fp.read((char *) &I, sizeof(int));
+	//I = Fio.fread_int4(fp);
 	if (I != nb_nodes) {
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"nb_nodes does not match" << endl;
@@ -1499,7 +974,8 @@ void poset_classification::read_sv_level_file_binary2(
 			root[f + i].Schreier_vector = NULL;
 			}
 		}
-	I = Fio.fread_int4(fp);
+	fp.read((char *) &I, sizeof(int));
+	//I = Fio.fread_int4(fp);
 	if (I != MAGIC_SYNC) {
 		cout << "poset_classification::read_sv_level_file_binary2: "
 				"MAGIC_SYNC does not match" << endl;
@@ -1513,11 +989,11 @@ void poset_classification::read_sv_level_file_binary2(
 }
 
 void poset_classification::write_sv_level_file_binary2(
-	int level, FILE *fp,
+	int level, ofstream &fp,
 	int f_split, int split_mod, int split_case, 
 	int verbose_level)
 {
-	int f, i, nb_nodes;
+	int f, i, nb_nodes, tmp;
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 	
@@ -1528,9 +1004,13 @@ void poset_classification::write_sv_level_file_binary2(
 				<< nb_nodes << " nodes" << endl;
 		}
 	// version number of this file format
-	Fio.fwrite_int4(fp, 1);
-	Fio.fwrite_int4(fp, level);
-	Fio.fwrite_int4(fp, nb_nodes);
+	tmp = 1;
+	fp.write((char *) &tmp, sizeof(int));
+	//Fio.fwrite_int4(fp, 1);
+	fp.write((char *) &level, sizeof(int));
+	//Fio.fwrite_int4(fp, level);
+	fp.write((char *) &nb_nodes, sizeof(int));
+	//Fio.fwrite_int4(fp, nb_nodes);
 	for (i = 0; i < nb_nodes; i++) {
 		if (f_split) {
 			if ((i % split_mod) != split_case)
@@ -1538,7 +1018,9 @@ void poset_classification::write_sv_level_file_binary2(
 			}
 		root[f + i].sv_write_file(this, fp, verbose_level - 2);
 		}
-	Fio.fwrite_int4(fp, MAGIC_SYNC);
+	tmp = MAGIC_SYNC;
+	fp.write((char *) &tmp, sizeof(int));
+	//Fio.fwrite_int4(fp, MAGIC_SYNC);
 	// a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "poset_classification::write_sv_level_file_binary2 "
@@ -1568,7 +1050,7 @@ void poset_classification::read_level_file_binary(int level,
 		exit(1);
 		}
 
-
+#if 0
 	FILE *fp;
 
 	fp = fopen(fname, "rb");
@@ -1577,6 +1059,14 @@ void poset_classification::read_level_file_binary(int level,
 			verbose_level - 1);
 	
 	fclose(fp);
+#endif
+
+	{
+		ifstream fp(fname, ios::binary);
+
+		read_level_file_binary2(level, fp,
+				nb_group_elements, verbose_level);
+	}
 
 }
 
@@ -1596,14 +1086,18 @@ void poset_classification::write_level_file_binary(int level,
 		}
 
 
-	FILE *fp;
+	//FILE *fp;
 
-	fp = fopen(fname, "wb");
+	//fp = fopen(fname, "wb");
 
-	write_level_file_binary2(level, fp,
-			nb_group_elements, verbose_level);
+	{
+		ofstream fp(fname, ios::binary);
+
+		write_level_file_binary2(level, fp,
+				nb_group_elements, verbose_level);
+	}
 	
-	fclose(fp);
+	//fclose(fp);
 
 	if (f_v) {
 		cout << "poset_classification::write_level_file_binary "
@@ -1614,7 +1108,7 @@ void poset_classification::write_level_file_binary(int level,
 }
 
 void poset_classification::read_level_file_binary2(
-	int level, FILE *fp,
+	int level, ifstream &fp,
 	int &nb_group_elements, int verbose_level)
 {
 	int f, i, nb_nodes, magic_sync;
@@ -1628,21 +1122,24 @@ void poset_classification::read_level_file_binary2(
 		}
 	f = first_poset_orbit_node_at_level[level];
 	nb_group_elements = 0;
-	I = Fio.fread_int4(fp);
+	fp.read((char *) &I, sizeof(int));
+	//I = Fio.fread_int4(fp);
 	if (I != 1) {
 		cout << "poset_classification::read_level_file_binary2 "
 				"version = " << I << " unknown" << endl;
 		exit(1);
 		}
 
-	I = Fio.fread_int4(fp);
+	fp.read((char *) &I, sizeof(int));
+	//I = Fio.fread_int4(fp);
 	if (I != level) {
 		cout << "poset_classification::read_level_file_binary2 "
 				"level = " << I << " should be " << level << endl;
 		exit(1);
 		}
 
-	nb_nodes = Fio.fread_int4(fp);
+	fp.read((char *) &nb_nodes, sizeof(int));
+	//nb_nodes = Fio.fread_int4(fp);
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary, "
 				"nb_nodes = " << nb_nodes << endl;
@@ -1669,7 +1166,8 @@ void poset_classification::read_level_file_binary2(
 	if (f_v) {
 		cout << "reading nodes completed" << endl;
 		}
-	magic_sync = Fio.fread_int4(fp);
+	fp.read((char *) &magic_sync, sizeof(int));
+	//magic_sync = Fio.fread_int4(fp);
 	if (magic_sync != MAGIC_SYNC) {
 		cout << "poset_classification::read_level_file_binary2 "
 				"could not read MAGIC_SYNC, file is corrupt" << endl;
@@ -1688,10 +1186,10 @@ void poset_classification::read_level_file_binary2(
 }
 
 void poset_classification::write_level_file_binary2(
-	int level, FILE *fp,
+	int level, ofstream &fp,
 	int &nb_group_elements, int verbose_level)
 {
-	int f, i, nb_nodes;
+	int f, i, nb_nodes, tmp;
 	int f_v = FALSE;//(verbose_level >= 1);
 	file_io Fio;
 
@@ -1703,14 +1201,20 @@ void poset_classification::write_level_file_binary2(
 		}
 	nb_group_elements = 0;
 	// version number of this file format
-	Fio.fwrite_int4(fp, 1);
-	Fio.fwrite_int4(fp, level);
-	Fio.fwrite_int4(fp, nb_nodes);
+	tmp = 1;
+	fp.write((char *) &tmp, sizeof(int));
+	//Fio.fwrite_int4(fp, 1);
+	fp.write((char *) &level, sizeof(int));
+	//Fio.fwrite_int4(fp, level);
+	fp.write((char *) &nb_nodes, sizeof(int));
+	//Fio.fwrite_int4(fp, nb_nodes);
 	for (i = 0; i < nb_nodes; i++) {
 		root[f + i].write_file(Poset->A, fp,
 				nb_group_elements, verbose_level - 2);
 		}
-	Fio.fwrite_int4(fp, MAGIC_SYNC);
+	tmp = MAGIC_SYNC;
+	fp.write((char *) &tmp, sizeof(int));
+	//Fio.fwrite_int4(fp, MAGIC_SYNC);
 	// a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "poset_classification::write_level_file_binary2 "
@@ -1724,21 +1228,21 @@ void poset_classification::write_candidates_binary_using_sv(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;
-	char fname1[1000];
+	char fname[1000];
 	
 	if (f_v) {
 		cout << "poset_classification::write_candidates_binary_using_sv "
 				"lvl=" << lvl << " fname_base=" << fname_base << endl;
 		}
-	make_fname_candidates_file_default(fname1, lvl);
-	//sprintf(fname1, "%s_lvl_%d_candidates.bin", fname_base, lvl);
+	make_fname_candidates_file_default(fname, lvl);
+	//sprintf(fname, "%s_lvl_%d_candidates.bin", fname_base, lvl);
 	{
 	int fst, len;
 	int *nb_cand;
 	int *cand_first;
 	int total_nb_cand = 0;
 	int *subset;
-	int *Cand;
+	//int *Cand;
 	int i, j, node, nb, pos;
 	file_io Fio;
 
@@ -1773,24 +1277,27 @@ void poset_classification::write_candidates_binary_using_sv(
 		cout << "poset_classification::write_candidates_binary_using_sv "
 				"total_nb_cand=" << total_nb_cand << endl;
 		}
-	Cand = NEW_int(total_nb_cand);
+	//Cand = NEW_int(total_nb_cand);
 	pos = 0;
 	for (i = 0; i < len; i++) {
 		node = fst + i;
-		int nb = root[node].get_nb_of_live_points();
+		nb = root[node].get_nb_of_live_points();
 		subset = root[node].live_points();
 		cand_first[i] = pos;
+#if 0
 		for (j = 0; j < nb; j++) {
 			Cand[pos + j] = subset[j];
 			}
+#endif
 		pos += nb;
 		}
-	FILE *fp;
 
 	if (f_v) {
 		cout << "poset_classification::write_candidates_binary_using_sv "
-				"writing file" << fname1 << endl;
+				"writing file" << fname << endl;
 		}
+#if 0
+	FILE *fp;
 	fp = fopen(fname1, "wb");
 
 	Fio.fwrite_int4(fp, len);
@@ -1798,21 +1305,54 @@ void poset_classification::write_candidates_binary_using_sv(
 		Fio.fwrite_int4(fp, nb_cand[i]);
 		Fio.fwrite_int4(fp, cand_first[i]);
 		}
+	for (i = 0; i < len; i++) {
+		node = fst + i;
+		nb = root[node].get_nb_of_live_points();
+		subset = root[node].live_points();
+		for (j = 0; j < nb; j++) {
+			Fio.fwrite_int4(fp, subset[j]);
+		}
+	}
+#if 0
 	for (i = 0; i < total_nb_cand; i++) {
 		Fio.fwrite_int4(fp, Cand[i]);
 		}
-
+#endif
 
 	fclose(fp);
+#else
+	{
+		ofstream fp(fname, ios::binary);
+
+		fp.write((char *) &len, sizeof(int));
+		for (i = 0; i < len; i++) {
+			fp.write((char *) &nb_cand[i], sizeof(int));
+			fp.write((char *) &cand_first[i], sizeof(int));
+		}
+		for (i = 0; i < len; i++) {
+			node = fst + i;
+			nb = root[node].get_nb_of_live_points();
+			subset = root[node].live_points();
+			for (j = 0; j < nb; j++) {
+				fp.write((char *) &subset[j], sizeof(int));
+			}
+		}
+	}
+#endif
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
 	if (f_v) {
-		cout << "written file " << fname1 << " of size "
-				<< Fio.file_size(fname1) << endl;
+		cout << "poset_classification::write_candidates_binary_using_sv "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 		}
 
 
 	FREE_int(nb_cand);
 	FREE_int(cand_first);
-	FREE_int(Cand);
+	//FREE_int(Cand);
 	}
 	if (f_v) {
 		cout << "poset_classification::write_candidates_binary_using_sv "
@@ -1839,34 +1379,9 @@ void poset_classification::read_level_file(int level,
 				"fname=" << fname << endl;
 		}
 	
-#if 1
 	Fio.read_and_parse_data_file(fname, nb_cases,
 			data, sets, set_sizes, verbose_level - 1);
 	
-#else
-
-	if (try_to_read_file(fname, nb_cases, data)) {
-		if (f_v) {
-			cout << "poset_classification::read_level_file read "
-					"file " << fname << " nb_cases = " << nb_cases << endl;
-			}
-		}
-	else {
-		cout << "poset_classification::read_level_file "
-				"couldn't read file " << fname << endl;
-		exit(1);
-		}
-
-	if (f_vv) {
-		cout << "poset_classification::read_level_file parsing" << endl;
-		}
-	parse_sets(nb_cases, data, set_sizes, sets);
-	if (f_vv) {
-		cout << "poset_classification::read_level_file "
-				"parsing finished" << endl;
-		}
-		// in GALOIS/util.C
-#endif
 
 	first_at_level = first_poset_orbit_node_at_level[level];
 	nb_nodes = first_at_level + nb_cases;
@@ -1945,7 +1460,7 @@ void poset_classification::read_level_file(int level,
 		}
 
 		}
-	delete [] set_sizes;
+	FREE_int(set_sizes);
 	if (f_v) {
 		cout << "poset_classification::read_level_file "
 				"fname=" << fname << " done" << endl;
@@ -2540,7 +2055,7 @@ void poset_classification::generate_source_code(
 		cout << "poset_classification::generate_source_code" << endl;
 		}
 	sprintf(my_prefix, "%s_level_%d", prefix, level);
-	sprintf(fname, "%s.C", my_prefix);
+	sprintf(fname, "%s.cpp", my_prefix);
 
 	set = NEW_int(level);
 	nb_iso = nb_orbits_at_level(level);
@@ -2551,9 +2066,9 @@ void poset_classification::generate_source_code(
 	{
 	ofstream fp(fname);
 
-	fp << "int " << prefix << "_nb_reps = " << nb_iso << ";" << endl;
-	fp << "int " << prefix << "_size = " << level << ";" << endl;
-	fp << "int " << prefix << "_reps[] = {" << endl;
+	fp << "static int " << prefix << "_nb_reps = " << nb_iso << ";" << endl;
+	fp << "static int " << prefix << "_size = " << level << ";" << endl;
+	fp << "static int " << prefix << "_reps[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		get_set_by_level(level, iso_type, set);
 		rep = set;
@@ -2565,7 +2080,7 @@ void poset_classification::generate_source_code(
 		fp << endl;
 		}
 	fp << "};" << endl;
-	fp << "const char *" << prefix << "_stab_order[] = {" << endl;
+	fp << "static const char *" << prefix << "_stab_order[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		//rep = The_surface[iso_type]->coeff;
 
@@ -2583,7 +2098,7 @@ void poset_classification::generate_source_code(
 	fp << "};" << endl;
 
 
-	fp << "int " << prefix << "_make_element_size = "
+	fp << "static int " << prefix << "_make_element_size = "
 			<< Poset->A->make_element_size << ";" << endl;
 
 	{
@@ -2594,7 +2109,7 @@ void poset_classification::generate_source_code(
 	stab_gens_first = NEW_int(nb_iso);
 	stab_gens_len = NEW_int(nb_iso);
 	fst = 0;
-	fp << "int " << prefix << "_stab_gens[] = {" << endl;
+	fp << "static int " << prefix << "_stab_gens[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 
@@ -2628,7 +2143,7 @@ void poset_classification::generate_source_code(
 	fp << "};" << endl;
 
 
-	fp << "int " << prefix << "_stab_gens_fst[] = { ";
+	fp << "static int " << prefix << "_stab_gens_fst[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		fp << stab_gens_first[iso_type];
 		if (iso_type < nb_iso - 1) {
@@ -2640,7 +2155,7 @@ void poset_classification::generate_source_code(
 		}
 	fp << "};" << endl;
 
-	fp << "int " << prefix << "_stab_gens_len[] = { ";
+	fp << "static int " << prefix << "_stab_gens_len[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		fp << stab_gens_len[iso_type];
 		if (iso_type < nb_iso - 1) {
