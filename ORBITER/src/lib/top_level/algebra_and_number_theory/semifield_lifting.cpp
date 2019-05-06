@@ -611,7 +611,7 @@ void semifield_lifting::upstep(
 	int *base_change_matrix;
 	int *changed_space;
 	int *changed_space_after_trace;
-	int *set;
+	long int *set;
 	int i, N, h, po, so, pt_local;
 	long int pt;
 	int trace_po, trace_so;
@@ -624,7 +624,7 @@ void semifield_lifting::upstep(
 	base_change_matrix = NEW_int(level * level);
 	changed_space = NEW_int(level * k2);
 	changed_space_after_trace = NEW_int(level * k2);
-	set = NEW_int(level);
+	set = NEW_lint(level);
 
 	N = Combi.generalized_binomial(level, level - 1, SC->F->q);
 
@@ -720,7 +720,7 @@ void semifield_lifting::upstep(
 				cout << "Level " << level << ": flag orbit "
 						<< m << " / " << nb_flag_orbits
 						<< " coset " << h << " / " << N << " set: ";
-				int_vec_print(cout, set, level);
+				lint_vec_print(cout, set, level);
 				cout << " before trace_very_general" << endl;
 				}
 
@@ -735,7 +735,7 @@ void semifield_lifting::upstep(
 			if (f_vv) {
 				cout << "Level " << level << ": flag orbit "
 						<< m << " / " << nb_flag_orbits
-						<< " coset " << h << " / " << N << " after trace "
+						<< " coset " << h << " / " << N << " after trace_very_general "
 						<< " trace_po = " << trace_po
 						<< " trace_so = " << trace_so << endl;
 				}
@@ -877,7 +877,7 @@ void semifield_lifting::upstep(
 	FREE_int(base_change_matrix);
 	FREE_int(changed_space);
 	FREE_int(changed_space_after_trace);
-	FREE_int(set);
+	FREE_lint(set);
 
 	if (f_v) {
 		cout << "semifield_lifting::upstep "
@@ -1124,7 +1124,7 @@ void semifield_lifting::trace_very_general(
 		}
 	A->make_element(transporter, M1, 0);
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "transformation matrix transporter=" << endl;
 		int_matrix_print(transporter, n, n);
 		cout << "transformation matrix M1=" << endl;
@@ -1135,7 +1135,7 @@ void semifield_lifting::trace_very_general(
 	SC->apply_element_and_copy_back(transporter,
 		input_basis, basis_tmp,
 		0, basis_sz, verbose_level);
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"after transform (1):" << endl;
 		SC->basis_print(input_basis, basis_sz);
@@ -1188,11 +1188,12 @@ void semifield_lifting::trace_very_general(
 
 	A->element_move(ELT3, transporter, 0);
 
-	// apply ELT2 (i.e., Basis) to input_basis elements 1, .., basis_sz - 1
+	// apply ELT2 (i.e., Basis)
+	// to input_basis elements 1, .., basis_sz - 1
 	SC->apply_element_and_copy_back(ELT2,
 		input_basis, basis_tmp,
 		1, basis_sz, verbose_level);
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"after transform (2):" << endl;
 		SC->basis_print(input_basis, basis_sz);
@@ -1216,7 +1217,7 @@ void semifield_lifting::trace_very_general(
 		// if the conjugacy class is the second element in the orbit,
 		// we need to apply class_rep_plus_I_Basis_inv[c0]:
 
-		if (f_vv) {
+		if (f_v) {
 			cout << "Adjusting" << endl;
 			}
 		L2->multiply_to_the_right(transporter,
@@ -1229,7 +1230,7 @@ void semifield_lifting::trace_very_general(
 		SC->apply_element_and_copy_back(ELT2,
 			input_basis, basis_tmp,
 			1, basis_sz, verbose_level);
-		if (f_vv) {
+		if (f_v) {
 			cout << "semifield_lifting::trace_very_general "
 					"after transform because of adjustment:" << endl;
 			SC->basis_print(input_basis, basis_sz);
@@ -1241,7 +1242,7 @@ void semifield_lifting::trace_very_general(
 					input_basis[1 * k2 + i],
 					F->negate(input_basis[i]));
 			}
-		if (f_vv) {
+		if (f_v) {
 			cout << "semifield_lifting::trace_very_general "
 					"after subtracting the identity:" << endl;
 			SC->basis_print(input_basis, basis_sz);
@@ -1254,7 +1255,7 @@ void semifield_lifting::trace_very_general(
 		}
 
 	if (L2->f_Fusion[d]) {
-		if (f_vv) {
+		if (f_v) {
 			cout << "Applying fusion element" << endl;
 			}
 		if (L2->Fusion_elt[d] == NULL) {
@@ -1273,7 +1274,7 @@ void semifield_lifting::trace_very_general(
 				input_basis, basis_tmp,
 				0, basis_sz,
 				verbose_level);
-		if (f_vv) {
+		if (f_v) {
 			cout << "semifield_lifting::trace_very_general "
 					"after transform (3):" << endl;
 			SC->basis_print(input_basis, basis_sz);
@@ -1324,19 +1325,19 @@ void semifield_lifting::trace_very_general(
 			cout << "input_basis[k] (should be zero by now)" << endl;
 			exit(1);
 			}
-		if (f_vv) {
+		if (f_v) {
 			cout << "semifield_lifting::trace_very_general "
 					"after gauss elimination:" << endl;
 			SC->basis_print(input_basis, basis_sz);
 			}
 		}
 	else {
-		if (f_vv) {
+		if (f_v) {
 			cout << "No fusion" << endl;
 			}
 		d0 = d;
 		}
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"d0 = " << d0 << endl;
 		}
@@ -1352,7 +1353,7 @@ void semifield_lifting::trace_very_general(
 	// po = the level 2 orbit associated with the flag orbit d0
 
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"po = " << po << endl;
 		}
@@ -1362,7 +1363,7 @@ void semifield_lifting::trace_very_general(
 	// for the remaining elements
 	// w.r.t. the basis and the pivots in base_col
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"we will now compute the reduced coset reps:" << endl;
 		}
@@ -1377,7 +1378,7 @@ void semifield_lifting::trace_very_general(
 #endif
 	base_cols[0] = 0;
 	base_cols[1] = k;
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general base_cols=";
 		int_vec_print(cout, base_cols, 2);
 		cout << endl;
@@ -1389,7 +1390,7 @@ void semifield_lifting::trace_very_general(
 					0 /*verbose_level*/);
 			}
 		}
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"reduced basis=" << endl;
 		int_matrix_print(input_basis, basis_sz, k2);
@@ -1416,13 +1417,13 @@ void semifield_lifting::trace_very_general(
 	int a_local, pos, so;
 
 	a = SC->matrix_rank(input_basis + 2 * k2);
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"a = " << a << endl;
 		}
 
 	a_local = Downstep_nodes[po].find_point(a);
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"a_local = " << a_local << endl;
 		}
@@ -1431,7 +1432,7 @@ void semifield_lifting::trace_very_general(
 	so = Downstep_nodes[po].Sch->orbit_number(a_local);
 		// Level_two_down[po].Sch->orbit_no[pos];
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"so = " << so << endl;
 		}
@@ -1449,7 +1450,7 @@ void semifield_lifting::trace_very_general(
 			Downstep_nodes[po].Sch->cosetrep,
 		input_basis, basis_tmp,
 		2, basis_sz, verbose_level);
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"after transforming with cosetrep from "
 				"secondary orbit (4):" << endl;
@@ -1457,7 +1458,7 @@ void semifield_lifting::trace_very_general(
 		}
 	base_cols[0] = 0;
 	base_cols[1] = k;
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"base_cols=";
 		int_vec_print(cout, base_cols, 2);
@@ -1471,7 +1472,7 @@ void semifield_lifting::trace_very_general(
 					0 /*verbose_level*/);
 			}
 		}
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_very_general "
 				"reduced basis(2)=" << endl;
 		int_matrix_print(input_basis, basis_sz, k2);

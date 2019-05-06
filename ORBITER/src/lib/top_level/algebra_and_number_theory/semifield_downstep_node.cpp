@@ -228,7 +228,7 @@ void semifield_downstep_node::init(
 	}
 }
 
-int semifield_downstep_node::find_point(int a)
+int semifield_downstep_node::find_point(long int a)
 {
 	int idx;
 	sorting Sorting;
