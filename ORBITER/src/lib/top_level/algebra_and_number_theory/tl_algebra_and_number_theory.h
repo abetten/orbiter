@@ -467,14 +467,7 @@ public:
 	void init(semifield_lifting *SL, int level, int orbit_number,
 		long int *Candidates, int nb_candidates,
 		int verbose_level);
-	int find_point(int a);
-#if 0
-	void orbits_light(semifield_lifting *SL,
-		int level, int orbit_number,
-		int *Candidates, int nb_candidates,
-		strong_generators *sg,
-		int verbose_level);
-#endif
+	int find_point(long int a);
 
 };
 
