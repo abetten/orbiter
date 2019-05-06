@@ -270,7 +270,9 @@ public:
 	database *D1, *D2;
 	char fname_ge1[1000];
 	char fname_ge2[1000];
-	FILE *fp_ge1, *fp_ge2;
+	//FILE *fp_ge1, *fp_ge2; // read access
+	std::ifstream *fp_ge1;
+	std::ifstream *fp_ge2;
 	Vector *v;
 	database *DB_sol;
 	int *id_to_datref;
@@ -282,7 +284,8 @@ public:
 
 	// pointer only, do not free:
 	database *DB_level;
-	FILE *fp_ge;
+	//FILE *fp_ge;
+	std::ifstream *fp_ge; // either fg_ge1 or fp_ge2
 	
 	sims *stabilizer_recreated;
 	

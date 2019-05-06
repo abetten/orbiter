@@ -352,7 +352,9 @@ public:
 
 	semifield_lifting();
 	~semifield_lifting();
-	void init_level_three(semifield_level_two *L2, int verbose_level);
+	void init_level_three(semifield_level_two *L2,
+			int f_prefix, const char *prefix,
+			int verbose_level);
 	void compute_level_three(int verbose_level);
 	void level_two_down(int verbose_level);
 	void level_two_flag_orbits(int verbose_level);
@@ -413,6 +415,12 @@ public:
 		int verbose_level);
 	void write_level_file(int verbose_level);
 	void read_info_file_for_level_three(int verbose_level);
+	void make_fname_flag_orbits(char *fname);
+	void save_flag_orbits(int verbose_level);
+	void read_flag_orbits(int verbose_level);
+	void make_fname_stabilizers(char *fname);
+	void save_stabilizers(int verbose_level);
+	void read_stabilizers(int verbose_level);
 
 };
 
@@ -503,12 +511,12 @@ public:
 		int verbose_level);
 	void group_order(longinteger_object &go);
 	int group_order_as_int();
-#if 0
-	void write_to_file_binary(semifield_lifting *SL,
-		std::ofstream &fp, int verbose_level);
-	void read_from_file_binary(semifield_lifting *SL,
-		std::ifstream &fp, int verbose_level);
-#endif
+	void write_to_file_binary(
+			semifield_lifting *SL, std::ofstream &fp,
+			int verbose_level);
+	void read_from_file_binary(
+			semifield_lifting *SL, std::ifstream &fp,
+			int verbose_level);
 
 };
 

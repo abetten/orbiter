@@ -123,10 +123,11 @@ void representatives::write_fusion(int verbose_level)
 		}
 	{
 	ofstream f1(fname_fusion);
-	FILE *f2;
 	int i;
-	
-	f2 = fopen(fname_fusion_ge, "wb");
+
+	ofstream f2(fname_fusion_ge, ios::binary);
+	//FILE *f2;
+	//f2 = fopen(fname_fusion_ge, "wb");
 	
 	for (i = 0; i < nb_objects; i++) {
 		if (fusion[i] == -2) {
@@ -145,7 +146,7 @@ void representatives::write_fusion(int verbose_level)
 		A->element_write_file_fp(Elt1, f2, 0/* verbose_level*/);
 		}
 	f1 << -1 << endl;
-	fclose(f2);
+	//fclose(f2);
 	}
 	if (f_v) {
 		cout << "representatives::write_fusion finished" << endl;
@@ -197,9 +198,10 @@ void representatives::read_fusion(int verbose_level)
 				<< Fio.file_size(fname_fusion_ge) << endl;
 		}
 	{
-		FILE *f2;
+		ifstream f2(fname_fusion_ge, ios::binary);
+		//FILE *f2;
 	
-		f2 = fopen(fname_fusion_ge, "rb");
+		//f2 = fopen(fname_fusion_ge, "rb");
 	
 		for (i = 0; i < nb_objects; i++) {
 			A->element_read_file_fp(Elt1, f2, 0/* verbose_level*/);
@@ -223,10 +225,11 @@ void representatives::write_representatives_and_stabilizers(
 		}
 	{
 	ofstream f1(fname_rep);
-	FILE *f2;
 	int i, j, cnt = 0;
 
-	f2 = fopen(fname_stabgens, "wb");
+	ofstream f2(fname_stabgens, ios::binary);
+	//FILE *f2;
+	//f2 = fopen(fname_stabgens, "wb");
 	
 	
 	f1 << count << " " << setw(3) << A->base_len << " ";
@@ -265,7 +268,7 @@ void representatives::write_representatives_and_stabilizers(
 			}
 		}
 	f1 << -1 << endl;
-	fclose(f2);
+	//fclose(f2);
 	}
 	if (f_v) {
 		cout << "representatives::write_representatives_and_"
@@ -292,10 +295,11 @@ void representatives::read_representatives_and_stabilizers(
 		}
 	{
 	ifstream f1(fname_rep);
-	FILE *f2;
 	int i, j, /*first,*/ len, a, b, c, d, e;
 	
-	f2 = fopen(fname_stabgens, "rb");
+	ifstream f2(fname_stabgens, ios::binary);
+	//FILE *f2;
+	//f2 = fopen(fname_stabgens, "rb");
 	
 	f1 >> count >> a;
 	if (a != A->base_len) {
@@ -362,7 +366,7 @@ void representatives::read_representatives_and_stabilizers(
 				"problems reading end of file marker" << endl;
 		exit(1);
 		}
-	fclose(f2);
+	//fclose(f2);
 	}
 	if (f_v) {
 		cout << "representatives::read_representatives_and_stabilizers "

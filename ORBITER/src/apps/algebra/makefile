@@ -24,7 +24,6 @@ all: \
 	flag.out \
 	get_poly.out \
 	gl_classes.out \
-	long_orbit.out \
 	pascal_matrix.out \
 	polynomial_orbits.out \
 	projective_group.out  \
@@ -80,9 +79,6 @@ get_poly.out:  get_poly.o ;
 
 gl_classes.out:  gl_classes.o ;
 	$(DISCRETA_CPP)  gl_classes.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-long_orbit.out:  long_orbit.o ;
-	$(DISCRETA_CPP)  long_orbit.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 pascal_matrix.out:  pascal_matrix.o ;
 	$(DISCRETA_CPP)  pascal_matrix.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

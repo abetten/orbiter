@@ -160,7 +160,9 @@ int main(int argc, const char **argv)
 
 	L3 = NEW_OBJECT(semifield_lifting);
 	cout << "before L3->compute_level_three" << endl;
-	L3->init_level_three(L2, verbose_level);
+	L3->init_level_three(L2,
+			SC->f_level_three_prefix, SC->level_three_prefix,
+			verbose_level);
 	cout << "after L3->compute_level_three" << endl;
 
 	cout << "before L3->compute_level_three" << endl;

@@ -1,4 +1,4 @@
-// memory_object.C
+// memory_object.cpp
 //
 // Anton Betten
 // October 6, 2013
@@ -228,8 +228,8 @@ void memory_object::read_string(char *&p)
 {	
 	char *q;
 	char c;
-	int alloc_length;
-	int used_length;
+	long int alloc_length;
+	long int used_length;
 	int i;
 
 	alloc_length = 1024;
@@ -239,7 +239,7 @@ void memory_object::read_string(char *&p)
 	while (TRUE) {
 		read_char(&c);
 		if (used_length == alloc_length) {
-			int new_alloc_length = 2 * alloc_length;
+			long int new_alloc_length = 2 * alloc_length;
 			char *q1;
 
 			q1 = NEW_char(new_alloc_length);
@@ -381,8 +381,7 @@ void memory_object::read_int(int *i)
 void memory_object::read_file(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	FILE *fp;
-	int fsize;
+	long int fsize;
 	file_io Fio;
 
 	if (f_v) {
@@ -390,6 +389,9 @@ void memory_object::read_file(const char *fname, int verbose_level)
 		}
 	fsize = Fio.file_size(fname);
 	alloc(fsize, 0);
+
+#if 0
+	FILE *fp;
 	fp = fopen(fname, "r");
 	if ((int) fread(data,
 			1 /* size */, fsize /* nitems */, fp) != fsize) {
@@ -397,6 +399,12 @@ void memory_object::read_file(const char *fname, int verbose_level)
 				"error in fread" << endl;
 		}
 	fclose(fp);
+#else
+	{
+		ifstream fp(fname, ios::binary);
+		fp.read(data, fsize);
+	}
+#endif
 	used_length = fsize;
 	cur_pointer = 0;
 	if (f_v) {
@@ -408,28 +416,35 @@ void memory_object::read_file(const char *fname, int verbose_level)
 void memory_object::write_file(const char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	FILE *fp;
-	int size;
 	file_io Fio;
 
 	if (f_v) {
 		cout << "memory_object::write_file" << endl;
 		}
+
+#if 0
+	long int size;
 	size = used_length;
-	
+	FILE *fp;
 	fp = fopen(fname, "wb");
 
 	fwrite(data, 1 /* size */, size /* items */, fp);
 	
 	fclose(fp);
-	if (Fio.file_size(fname) != size) {
+#else
+	{
+		ofstream fp(fname, ios::binary);
+		fp.write(data, used_length);
+	}
+#endif
+	if (Fio.file_size(fname) != used_length) {
 		cout << "memory_object::write_file error "
-				"file_size(fname) != size" << endl;
+				"file_size(fname) != used_length" << endl;
 		exit(1);
 		}
 	if (f_v) {
 		cout << "memory_object::write_file written file " 
-			<< fname << " of size " << size << endl;
+			<< fname << " of size " << used_length << endl;
 		}
 }
 

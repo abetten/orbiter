@@ -106,7 +106,6 @@ void file_io::poset_classification_read_candidates_of_orbit(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	FILE *fp;
 	int nb, cand_first, i;
 
 
@@ -122,6 +121,8 @@ void file_io::poset_classification_read_candidates_of_orbit(
 		exit(1);
 		}
 
+#if 0
+	FILE *fp;
 	fp = fopen(fname, "rb");
 
 	nb = fread_int4(fp);
@@ -151,6 +152,39 @@ void file_io::poset_classification_read_candidates_of_orbit(
 		candidates[i] = fread_int4(fp);
 		}
 	fclose(fp);
+#else
+	{
+		ifstream fp(fname, ios::binary);
+		fp.read((char *) &nb, sizeof(int));
+		if (orbit_at_level >= nb) {
+			cout << "poset_classification_read_candidates_of_orbit "
+					"orbit_at_level >= nb" << endl;
+			cout << "orbit_at_level=" << orbit_at_level << endl;
+			cout << "nb=" << nb << endl;
+			exit(1);
+			}
+		if (f_vv) {
+			cout << "seeking position "
+					<< (1 + orbit_at_level * 2) * sizeof(int) << endl;
+			}
+		fp.seekg((1 + orbit_at_level * 2) * sizeof(int), ios::beg);
+		fp.read((char *) &nb_candidates, sizeof(int));
+		if (f_vv) {
+			cout << "nb_candidates=" << nb_candidates << endl;
+			}
+		fp.read((char *) &cand_first, sizeof(int));
+		if (f_v) {
+			cout << "cand_first=" << cand_first << endl;
+			}
+		candidates = NEW_int(nb_candidates);
+		fp.seekg((1 + nb * 2 + cand_first) * sizeof(int), ios::beg);
+		for (i = 0; i < nb_candidates; i++) {
+			fp.read((char *) &candidates[i], sizeof(int));
+
+		}
+
+	}
+#endif
 	if (f_v) {
 		cout << "poset_classification_read_candidates_of_orbit "
 				"done" << endl;
@@ -2271,20 +2305,22 @@ int file_io::inc_file_get_number_of_geometries(
 	return cnt;
 }
 
-int file_io::file_size(const char *name)
+long int file_io::file_size(const char *name)
 {
 	//cout << "file_size fname=" << name << endl;
 #ifdef SYSTEMUNIX
-	int handle, size;
+	int handle;
+	long int size;
 
 	//cout << "Unix mode" << endl;
 	handle = open(name, O_RDWR/*mode*/);
-	size = lseek((int) handle, 0L, SEEK_END);
-	close((int) handle);
-	return(size);
+	size = lseek(handle, 0L, SEEK_END);
+	close(handle);
+	return size;
 #endif
 #ifdef SYSTEMMAC
-	int handle, size;
+	int handle;
+	long int size;
 
 	//cout << "Macintosh mode" << endl;
 	handle = open(name, O_RDONLY);
@@ -2292,16 +2328,16 @@ int file_io::file_size(const char *name)
 	size = lseek(handle, 0L, SEEK_END);
 		/* THINK C Unix Lib */
 	close(handle);
-	return(size);
+	return size;
 #endif
 #ifdef SYSTEMWINDOWS
 
 	//cout << "Windows mode" << endl;
 
-	int handle = _open (name,_O_RDONLY);
-	int size   = _lseek (handle,0,SEEK_END);
+	int handle = _open(name, _O_RDONLY);
+	int size   = _lseek(handle, 0, SEEK_END);
 	close (handle);
-	return (size);
+	return size;
 #endif
 }
 

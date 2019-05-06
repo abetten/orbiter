@@ -391,7 +391,7 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int size, total, pad, i;
+	int size, total = 0, pad, i;
 	
 	if (f_v) {
 		cout << "database::get_object" << endl;

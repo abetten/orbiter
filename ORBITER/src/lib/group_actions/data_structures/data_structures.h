@@ -578,9 +578,9 @@ public:
 		int verbose_level);
 	schreier_vector *sv_read_file(
 			int gen_hdl_first, int nb_gen,
-			FILE *fp, int verbose_level);
+			std::ifstream &fp, int verbose_level);
 	void sv_write_file(schreier_vector *Sv,
-			FILE *fp, int verbose_level);
+			std::ofstream &fp, int verbose_level);
 	set_of_sets *get_orbits_as_set_of_sets(schreier_vector *Sv,
 			int verbose_level);
 

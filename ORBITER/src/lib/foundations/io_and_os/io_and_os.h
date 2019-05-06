@@ -141,7 +141,7 @@ public:
 		char *inc_file_name, int inc_file_idx, int verbose_level);
 	int inc_file_get_number_of_geometries(
 		char *inc_file_name, int verbose_level);
-	int file_size(const char *name);
+	long int file_size(const char *name);
 	void delete_file(const char *fname);
 	void fwrite_int4(FILE *fp, int a);
 	int_4 fread_int4(FILE *fp);
@@ -594,11 +594,9 @@ int s_scan_token(char **s, char *str);
 int s_scan_token_arbitrary(char **s, char *str);
 int s_scan_str(char **s, char *str);
 int s_scan_token_comma_separated(char **s, char *str);
-#if 1
 int hashing(int hash0, int a);
 int hashing_fixed_width(int hash0, int a, int bit_length);
 int int_vec_hash(int *v, int len, int bit_length);
-#endif
 void print_line_of_number_signs();
 void print_repeated_character(std::ostream &ost, char c, int n);
 void print_pointer_hex(std::ostream &ost, void *p);

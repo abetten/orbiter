@@ -1443,6 +1443,7 @@ void schreier::print_path(ostream &ost, int *path, int l)
 	ost << endl;
 }
 
+#if 0
 void schreier::write_to_memory_object(
 		memory_object *m, int verbose_level)
 {
@@ -1567,6 +1568,7 @@ void schreier::read_file(const char *fname, int verbose_level)
 		cout << "schreier::read_file done" << endl;
 		}
 }
+#endif
 
 void schreier::write_to_file_binary(ofstream &fp, int verbose_level)
 {

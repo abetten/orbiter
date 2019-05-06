@@ -280,10 +280,10 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 
 schreier_vector *schreier_vector_handler::sv_read_file(
 		int gen_hdl_first, int nb_gen,
-		FILE *fp, int verbose_level)
+		ifstream &fp, int verbose_level)
 {
 	int i, len;
-	int_4 I, n;
+	int I, n;
 	int f_v = (verbose_level >= 1);
 	int f_trivial_group;
 	file_io Fio;
@@ -291,14 +291,17 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_read_file" << endl;
 		}
-	I = Fio.fread_int4(fp);
+	fp.read((char *)&I, sizeof(int));
+	//I = Fio.fread_int4(fp);
 	if (I == 0) {
 		cout << "schreier_vector_handler::sv_read_file, "
 				"no schreier vector" << endl;
 		return NULL;
 		}
-	f_trivial_group = Fio.fread_int4(fp);
-	n = Fio.fread_int4(fp);
+	fp.read((char *)&f_trivial_group, sizeof(int));
+	//f_trivial_group = Fio.fread_int4(fp);
+	fp.read((char *)&n, sizeof(int));
+	//n = Fio.fread_int4(fp);
 
 	schreier_vector *Sv;
 
@@ -313,7 +316,8 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 		}
 	osv[0] = n;
 	for (i = 0; i < len; i++) {
-		osv[1 + i] = Fio.fread_int4(fp);
+		//osv[1 + i] = Fio.fread_int4(fp);
+		fp.read((char *)&osv[1 + i], sizeof(int));
 		}
 	//sv = osv;
 	Sv = NEW_OBJECT(schreier_vector);
@@ -329,9 +333,9 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 }
 
 void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
-		FILE *fp, int verbose_level)
+		ofstream &fp, int verbose_level)
 {
-	int i, len;
+	int i, len, tmp;
 	int f_v = (verbose_level >= 1);
 	int f_trivial_group;
 	file_io Fio;
@@ -340,17 +344,22 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 		cout << "schreier_vector_handler::sv_write_file" << endl;
 		}
 	if (Sv == NULL) {
-		Fio.fwrite_int4(fp, 0);
+		//Fio.fwrite_int4(fp, 0);
+		tmp = 0;
+		fp.write((char *)&tmp, sizeof(int));
 		}
 	else {
-		Fio.fwrite_int4(fp, 1);
+		//Fio.fwrite_int4(fp, 1);
+		tmp = 1;
+		fp.write((char *)&tmp, sizeof(int));
 		if (Sv->nb_gen == 0) {
 			f_trivial_group = TRUE;
 			}
 		else {
 			f_trivial_group = FALSE;
 			}
-		Fio.fwrite_int4(fp, f_trivial_group);
+		//Fio.fwrite_int4(fp, f_trivial_group);
+		fp.write((char *)&f_trivial_group, sizeof(int));
 		if (Sv->sv == NULL) {
 			cout << "schreier_vector_handler::sv_write_file "
 					"Sv->sv == NULL" << endl;
@@ -358,7 +367,8 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 		}
 		int *osv = Sv->sv;
 		int n = osv[0];
-		Fio.fwrite_int4(fp, n);
+		//Fio.fwrite_int4(fp, n);
+		fp.write((char *)&n, sizeof(int));
 		if (f_trivial_group) {
 			len = n;
 			}
@@ -366,7 +376,8 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 			len = 3 * n;
 			}
 		for (i = 0; i < len; i++) {
-			Fio.fwrite_int4(fp, osv[1 + i]);
+			//Fio.fwrite_int4(fp, osv[1 + i]);
+			fp.write((char *)&osv[1 + i], sizeof(int));
 			}
 		}
 

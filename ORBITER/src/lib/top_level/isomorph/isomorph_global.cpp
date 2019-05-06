@@ -959,12 +959,18 @@ void isomorph_identify(
 			}
 	
 		if (f_save) {
+
+#if 0
 			FILE *f2;
 			f2 = fopen(fname_transporter, "wb");
 			Iso.A_base->element_write_file_fp(Iso.transporter,
 					f2, 0/* verbose_level*/);
 	
 			fclose(f2);
+#else
+			Iso.A_base->element_write_file(Iso.transporter,
+					fname_transporter, 0 /* verbose_level*/);
+#endif
 			cout << "isomorph_identify written file " << fname_transporter
 					<< " of size " << Fio.file_size(fname_transporter) << endl;
 			}

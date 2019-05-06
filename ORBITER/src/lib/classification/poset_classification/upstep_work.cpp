@@ -37,7 +37,6 @@ upstep_work::upstep_work()
 	nb_cosets = 0;
 	nb_cosets_processed = 0;
 	coset_table = NULL;
-	f = NULL;
 
 
 }
@@ -95,7 +94,6 @@ void upstep_work::init(poset_classification *gen,
 	int f_debug,
 	int f_implicit_fusion,
 	int f_indicate_not_canonicals, 
-	FILE *fp, 
 	int verbose_level)
 // called from poset_classification::extend_node
 {
@@ -116,7 +114,6 @@ void upstep_work::init(poset_classification *gen,
 	upstep_work::f_debug = f_debug;
 	upstep_work::f_implicit_fusion = f_implicit_fusion;
 	upstep_work::f_indicate_not_canonicals = f_indicate_not_canonicals;
-	upstep_work::f = fp;
 	if (gen->root[prev].nb_extensions > 25) {
 		mod_for_printing = 25;
 		}
