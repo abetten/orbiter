@@ -330,6 +330,10 @@ public:
 
 	int nb_flag_orbits;
 
+	int *flag_orbit_first; // [prev_level_nb_orbits]
+	int *flag_orbit_len; // [prev_level_nb_orbits]
+
+
 	semifield_flag_orbit_node *Flag_orbits;
 
 	grassmann *Gr;

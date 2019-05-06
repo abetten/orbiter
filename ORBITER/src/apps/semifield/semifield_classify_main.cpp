@@ -40,9 +40,9 @@ int main(int argc, const char **argv)
 	int f_embedded = FALSE;
 	int f_sideways = FALSE;
 	int f_report = FALSE;
+	int f_memory_debug = FALSE;
 
 
-	start_memory_debug();
 
 	test_typedefs();
 
@@ -88,15 +88,24 @@ int main(int argc, const char **argv)
 			f_report = TRUE;
 			cout << "-report " << endl;
 		}
-
-
-
+		else if (strcmp(argv[i], "-memory_debug") == 0) {
+			f_memory_debug = TRUE;
+			cout << "-memory_debug " << endl;
+		}
 	}
+
+
+
 
 	if (!f_order) {
 		cout << "please use option -order <order>" << endl;
 		exit(1);
 		}
+
+	if (f_memory_debug) {
+		cout << "before start_memory_debug" << endl;
+		start_memory_debug();
+	}
 
 	int p, e, e1, n, k, q;
 	number_theory_domain NT;
@@ -194,9 +203,11 @@ int main(int argc, const char **argv)
 		cout << "after report" << endl;
 	}
 
-	cout << "before global_mem_object_registry.dump_to_csv_file" << endl;
-	global_mem_object_registry.dump_to_csv_file("memory.csv");
-	cout << "after global_mem_object_registry.dump_to_csv_file" << endl;
+	if (f_memory_debug) {
+		cout << "before global_mem_object_registry.dump_to_csv_file" << endl;
+		global_mem_object_registry.dump_to_csv_file("memory.csv");
+		cout << "after global_mem_object_registry.dump_to_csv_file" << endl;
+	}
 
 	cout << "before FREE_OBJECT(L2)" << endl;
 	FREE_OBJECT(L2);

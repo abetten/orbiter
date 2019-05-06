@@ -39,6 +39,8 @@ semifield_lifting::semifield_lifting()
 
 	Downstep_nodes = NULL;
 	nb_flag_orbits = 0;
+	flag_orbit_first = NULL;
+	flag_orbit_len = NULL;
 	Flag_orbits = NULL;
 	Gr = NULL;
 
@@ -55,6 +57,12 @@ semifield_lifting::semifield_lifting()
 
 semifield_lifting::~semifield_lifting()
 {
+	if (flag_orbit_first) {
+		FREE_int(flag_orbit_first);
+	}
+	if (flag_orbit_len) {
+		FREE_int(flag_orbit_len);
+	}
 	if (Gr) {
 		FREE_OBJECT(Gr);
 	}
@@ -242,8 +250,7 @@ void semifield_lifting::level_two_flag_orbits(int verbose_level)
 		cout << "semifield_lifting::level_two_flag_orbits" << endl;
 		}
 
-	compute_flag_orbits(2 /* level */,
-		verbose_level);
+	compute_flag_orbits(2 /* level */, verbose_level);
 
 	if (f_v) {
 		cout << "semifield_lifting::level_two_flag_orbits done" << endl;
@@ -298,6 +305,8 @@ void semifield_lifting::downstep(
 				"level = " << level << " before find_all_candidates" << endl;
 		}
 	find_all_candidates(level, verbose_level);
+
+
 	if (f_v) {
 		int i;
 
@@ -331,7 +340,6 @@ void semifield_lifting::downstep(
 					<< " orbit " << orbit << " / "
 					<< prev_level_nb_orbits << ":" << endl;
 			}
-
 		Downstep_nodes[orbit].init(this, level, orbit,
 			Candidates[orbit], Nb_candidates[orbit],
 			verbose_level);
@@ -379,9 +387,9 @@ void semifield_lifting::compute_flag_orbits(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	int f_v4 = (verbose_level >= 4);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	//int f_v4 = (verbose_level >= 4);
 	int po;
 	int so, f, pt_local, len;
 	long int pt;
@@ -390,7 +398,9 @@ void semifield_lifting::compute_flag_orbits(
 
 	if (f_v) {
 		cout << "semifield_lifting::compute_flag_orbits "
-				"level = " << level << endl;
+				"level = " << level
+				<< " verbose_level = " << level
+				<< endl;
 		}
 
 	//int nb_flag_orbits;
@@ -402,11 +412,18 @@ void semifield_lifting::compute_flag_orbits(
 	//Elt1 = NEW_int(A_PGLk->elt_size_in_int);
 	Mtx1 = NEW_int(k2);
 
+	flag_orbit_first = NEW_int(prev_level_nb_orbits);
+	flag_orbit_len = NEW_int(prev_level_nb_orbits);
+
 	nb_flag_orbits = 0;
 	for (po = 0; po < prev_level_nb_orbits; po++) {
+
+		flag_orbit_first[po] = nb_flag_orbits;
+		flag_orbit_len[po] = Downstep_nodes[po].Sch->nb_orbits;
+
 		Downstep_nodes[po].first_flag_orbit = nb_flag_orbits;
-		nb_flag_orbits += Downstep_nodes[po].Sch->nb_orbits;
-		}
+		nb_flag_orbits += flag_orbit_len[po];
+	}
 
 	if (f_v && prev_level_nb_orbits < 100) {
 		cout << "semifield_lifting::compute_flag_orbits "
@@ -414,15 +431,22 @@ void semifield_lifting::compute_flag_orbits(
 		cout << "orbit : number of orbits" << endl;
 		for (po = 0; po < prev_level_nb_orbits; po++) {
 			cout << po << " : " << Downstep_nodes[po].Sch->nb_orbits << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "nb_flag_orbits = " << nb_flag_orbits << endl;
-		}
+	}
 
+	if (f_v) {
+		cout << "allocating flag orbit nodes" << endl;
+	}
 	Flag_orbits = NEW_OBJECTS(semifield_flag_orbit_node, nb_flag_orbits);
 
 
+	if (f_v) {
+		cout << "looping over all " << prev_level_nb_orbits
+				<< " primary orbits" << endl;
+	}
 	for (po = 0, f = 0; po < prev_level_nb_orbits; po++) {
 		schreier *S;
 		longinteger_object go_prev;
@@ -432,14 +456,18 @@ void semifield_lifting::compute_flag_orbits(
 		L2->Stabilizer_gens[po].group_order(go_prev);
 		go_prev_int = go_prev.as_int();
 
-		if (f_vv) {
+		S = Downstep_nodes[po].Sch;
+
+		if (f_v) {
 			cout << "semifield_lifting::compute_flag_orbits "
 					"at level " << level << ": orbit = " << po
 					<< " / " << prev_level_nb_orbits
-					<< " stabilizer order " << go_prev << endl;
-			}
+					<< " stabilizer order " << go_prev
+					<< " nb_secondary_orbits = " << S->nb_orbits
+					<< " flag orbit f = " << f << " / " << nb_flag_orbits
+					<< endl;
+		}
 
-		S = Downstep_nodes[po].Sch;
 		for (so = 0; so < S->nb_orbits; so++, f++) {
 
 			sims *Stab;
@@ -451,32 +479,38 @@ void semifield_lifting::compute_flag_orbits(
 			len = S->orbit_len[so];
 			if (len == go_prev_int) {
 				f_long_orbit = TRUE;
-				}
+			}
 			else {
 				f_long_orbit = FALSE;
-				}
+			}
 			Flag_orbits[f].init(po, so,
 					pt_local, pt, len, f_long_orbit,
 					0 /*verbose_level*/);
 
 			D.integral_division_by_int(go_prev, len, Flag_orbits[f].go, r);
-			if (f_vvv) {
-				cout << "flag orbit = " << f << ": "
-						<< " orbit = " << po << " / "
-						<< prev_level_nb_orbits << " orbit = " << so
-						<< " / " << S->nb_orbits << " pt_local="
-						<< pt_local << " / " << Downstep_nodes[po].nb_candidates
-						<< " pt=" << pt << " len=" << len
+			if ((f % 100) == 0) {
+				cout << "flag orbit " << f << " / " << nb_flag_orbits
+						<< " po = " << po << " / "
+						<< prev_level_nb_orbits
+						<< " so = " << so
+						<< " / " << S->nb_orbits
+						<< " pt_local=" << pt_local
+						<< " / " << Downstep_nodes[po].nb_candidates
+						<< " pt=" << pt
+						<< " len=" << len
 						<< " computing stabilizer of order "
 						<< Flag_orbits[f].go << " f_long_orbit="
 						<< f_long_orbit << endl;
-				}
+				SC->matrix_unrank(pt, Mtx1);
+				cout << "element " << pt << " is" << endl;
+				int_matrix_print(Mtx1, k, k);
+			}
 
 			if (!f_long_orbit) {
 				if (FALSE/*M[j].go.is_one()*/) {
 					Flag_orbits[f].gens = NEW_OBJECT(strong_generators);
 					Flag_orbits[f].gens->init_trivial_group(SC->A, 0);
-					}
+				}
 				else {
 					S->point_stabilizer(SC->A, go_prev,
 						Stab, so /* orbit_no */, 0 /* verbose_level */);
@@ -488,19 +522,29 @@ void semifield_lifting::compute_flag_orbits(
 					Flag_orbits[f].gens = NEW_OBJECT(strong_generators);
 					Flag_orbits[f].gens->init_from_sims(Stab, 0 /* verbose_level */);
 
+
 					FREE_OBJECT(Stab);
+					if ((f % 100) == 0) {
+						longinteger_object go;
+
+						Flag_orbits[f].gens->group_order(go);
+						cout << "The flag orbit stabilizer has order " << go << endl;
 					}
-				if (f_v4) {
-					SC->matrix_unrank(pt, Mtx1);
-					cout << "element " << pt << " is" << endl;
-					int_matrix_print(Mtx1, k, k);
-					}
-				}
-			else {
-				Flag_orbits[f].gens = NULL;
 				}
 			}
+			else {
+				Flag_orbits[f].gens = NULL;
+			}
 		}
+		if (f_v) {
+			cout << "semifield_lifting::compute_flag_orbits "
+					"at level " << level << ": orbit = " << po
+					<< " / " << prev_level_nb_orbits
+					<< " stabilizer order " << go_prev
+					<< " nb_secondary_orbits = " << S->nb_orbits
+					<< " done" << endl;
+		}
+	}
 
 	if (f != nb_flag_orbits) {
 		cout << "semifield_lifting::compute_flag_orbits "
@@ -529,14 +573,14 @@ void semifield_lifting::compute_flag_orbits(
 						"stabilizer orders of flag orbits is: ";
 		C.print(TRUE /* f_backwards */);
 		FREE_int(Go);
-		}
+	}
 
 
 	FREE_int(Mtx1);
 	if (f_v) {
 		cout << "semifield_lifting::compute_flag_orbits "
 				"level " << level << " done" << endl;
-		}
+	}
 }
 
 void semifield_lifting::upstep(
