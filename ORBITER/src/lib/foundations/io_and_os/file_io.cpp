@@ -2007,8 +2007,7 @@ void file_io::write_set_to_file_as_int8(const char *fname,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	int_8 a;
-	int b;
+	int_8 a, b;
 
 	if (f_v) {
 		cout << "write_set_to_file_as_int8 opening file "
