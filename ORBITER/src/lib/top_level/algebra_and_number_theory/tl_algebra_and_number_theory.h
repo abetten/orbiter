@@ -154,8 +154,12 @@ public:
 		int verbose_level);
 	void make_fname_candidates_at_level_two_orbit(
 		char *fname, int orbit);
+	void make_fname_candidates_at_level_two_orbit_txt(
+		char *fname, int orbit);
 	void make_fname_candidates_at_level_three_orbit(
 		char *fname, int orbit);
+	void make_fname_candidates_at_level_two_orbit_by_type(
+		char *fname, int orbit, int h);
 };
 
 void semifield_classify_early_test_func(int *S, int len,
@@ -277,9 +281,14 @@ public:
 			int verbose_level);
 	int test_if_file_exists_candidates_at_level_two_case(
 		int orbit, int verbose_level);
+	int test_if_txt_file_exists_candidates_at_level_two_case(
+		int orbit, int verbose_level);
 	void find_all_candidates_at_level_two(
 			int verbose_level);
 	void read_candidates_at_level_two_case(
+		long int *&Candidates, int &Nb_candidates, int orbit,
+		int verbose_level);
+	void read_candidates_at_level_two_case_txt_file(
 		long int *&Candidates, int &Nb_candidates, int orbit,
 		int verbose_level);
 	void write_candidates_at_level_two_case(
@@ -425,8 +434,9 @@ public:
 	void level_three_get_a1_a2_a3(
 		int po3, long int &a1, long int &a2, long int &a3,
 		int verbose_level);
-	void write_level_file(int verbose_level);
-	void read_info_file_for_level_three(int verbose_level);
+	void create_fname_level_info_file(char *fname);
+	void write_level_info_file(int verbose_level);
+	void read_level_info_file(int verbose_level);
 	void make_fname_flag_orbits(char *fname);
 	void save_flag_orbits(int verbose_level);
 	void read_flag_orbits(int verbose_level);

@@ -685,101 +685,6 @@ void semifield_lifting::upstep(
 
 		Aut = NEW_pint(N);
 
-#if 0
-		for (h = 0; h < N; h++) {
-
-			if (f_v) {
-				cout << "Level " << level << ": flag orbit "
-						<< f << " / " << nb_flag_orbits
-						<< " coset " << h << " / " << N << endl;
-				}
-
-			Gr->unrank_int_here_and_extend_basis(
-					base_change_matrix, h,
-					0 /* verbose_level */);
-			if (f_v) {
-				cout << " base_change_matrix=" << endl;
-				int_matrix_print(base_change_matrix, level, level);
-				}
-			SC->F->mult_matrix_matrix(base_change_matrix,
-					Mtx, changed_space, level, level, k2,
-					0 /* verbose_level */);
-			if (f_vv) {
-				cout << "Mtx:" << endl;
-				int_matrix_print(Mtx, level, k2);
-				cout << "changed_space:" << endl;
-				int_matrix_print(changed_space, level, k2);
-				}
-			for (i = 0; i < level; i++) {
-				if (f_vv) {
-					cout << "i=" << i << " / " << level << endl;
-					int_matrix_print(changed_space + i * k2, k, k);
-					}
-				set[i] = SC->matrix_rank(changed_space + i * k2);
-				}
-			if (f_vv) {
-				cout << "Level " << level << ": flag orbit "
-						<< f << " / " << nb_flag_orbits
-						<< " coset " << h << " / " << N << " set: ";
-				lint_vec_print(cout, set, level);
-				cout << " before trace_very_general" << endl;
-				}
-
-			trace_very_general(
-				changed_space,
-				level,
-				changed_space_after_trace,
-				transporter,
-				trace_po, trace_so,
-				verbose_level - 2);
-
-			if (f_vv) {
-				cout << "Level " << level << ": flag orbit "
-						<< f << " / " << nb_flag_orbits
-						<< " coset " << h << " / " << N << " after trace_very_general "
-						<< " trace_po = " << trace_po
-						<< " trace_so = " << trace_so << endl;
-				}
-
-			if (trace_po == po && trace_so == so) {
-				if (f_vv) {
-					cout << "Level " << level
-							<< ", we found an automorphism" << endl;
-					}
-				Aut[h] = NEW_int(SC->A->elt_size_in_int);
-				SC->A->element_move(transporter, Aut[h], 0);
-				//test_automorphism(Aut[h], level,
-				//		changed_space, verbose_level - 3);
-				}
-			else {
-				Aut[h] = NULL;
-				int mo;
-
-				mo = Downstep_nodes[trace_po].first_flag_orbit + trace_so;
-
-				if (f_vv) {
-					cout << "Level " << level << ": flag orbit "
-							<< f << " / " << nb_flag_orbits
-							<< " coset " << h << " / " << N << " we will install a "
-							"fusion node from " << mo << "=" << trace_po
-							<< "/" << trace_so << " to " << f
-							<< "=" << po << "/" << so << endl;
-					}
-				// install a fusion node:
-
-				if (Flag_orbits[mo].fusion_elt) {
-					FREE_int(Flag_orbits[mo].fusion_elt);
-					}
-				Flag_orbits[mo].f_fusion_node = TRUE;
-				Flag_orbits[mo].fusion_with = f;
-				Flag_orbits[mo].fusion_elt = NEW_int(SC->A->elt_size_in_int);
-				SC->A->element_invert(
-						transporter,
-						Flag_orbits[mo].fusion_elt, 0);
-
-				}
-			}
-#else
 		upstep_loop_over_down_set(
 			level, f, po, so, N,
 			transporter, Mtx, pivots,
@@ -787,7 +692,7 @@ void semifield_lifting::upstep(
 			changed_space_after_trace, set,
 			Aut,
 			verbose_level - 1);
-#endif
+
 
 		int nb_aut_gens;
 
@@ -878,7 +783,7 @@ void semifield_lifting::upstep(
 						"saving information" << endl;
 		}
 
-	write_level_file(verbose_level);
+	write_level_info_file(verbose_level);
 
 
 	FREE_int(transporter);
@@ -2090,10 +1995,14 @@ void semifield_lifting::deep_search(
 
 	L2->allocate_candidates_at_level_two(verbose_level);
 
-	//read_info_file_for_level_three(verbose_level);
 	if (f_v) {
 		cout << "semifield_lifting::deep_search "
-				"after read_info_file_for_level_three" << endl;
+				"before read_level_info_file" << endl;
+		}
+	read_level_info_file(verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::deep_search "
+				"after read_level_info_file" << endl;
 		}
 
 	if (f_v) {
@@ -2738,14 +2647,26 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 		}
 }
 
-void semifield_lifting::write_level_file(
+void semifield_lifting::create_fname_level_info_file(char *fname)
+{
+	if (f_prefix) {
+		sprintf(fname, "%sLevel_%d_info.csv", prefix, cur_level);
+		}
+	else {
+		sprintf(fname, "Level_%d_info.csv", cur_level);
+		}
+}
+
+
+
+void semifield_lifting::write_level_info_file(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
 	if (f_v) {
-		cout << "semifield_lifting::write_level_file "
+		cout << "semifield_lifting::write_level_info_file "
 				"level=" << cur_level << endl;
 		}
 	int *Go;
@@ -2765,7 +2686,7 @@ void semifield_lifting::write_level_file(
 		};
 	char fname[1000];
 
-	sprintf(fname, "Level_%d_info.csv", cur_level);
+	create_fname_level_info_file(fname);
 
 #if 0
 	Vec[0] = Go;
@@ -2795,14 +2716,13 @@ void semifield_lifting::write_level_file(
 			<< Fio.file_size(fname) << endl;
 	FREE_int(Go);
 	if (f_v) {
-		cout << "semifield_lifting::write_level_file done" << endl;
+		cout << "semifield_lifting::write_level_info_file done" << endl;
 		}
 
 }
 
 
-void semifield_lifting::read_info_file_for_level_three(
-	int verbose_level)
+void semifield_lifting::read_level_info_file(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
@@ -2811,21 +2731,14 @@ void semifield_lifting::read_info_file_for_level_three(
 	file_io Fio;
 
 	if (f_v) {
-		cout << "semifield_lifting::read_info_file_for_level_"
-			"three" << endl;
+		cout << "semifield_lifting::read_level_info_file" << endl;
 		}
-	if (SC->f_level_three_prefix) {
-		sprintf(fname, "%sLevel_3_info.csv", SC->level_three_prefix);
-		}
-	else {
-		sprintf(fname, "Level_3_info.csv");
-		}
+	create_fname_level_info_file(fname);
 
-	cout << "semifield_lifting::read_info_file_for_level_three "
-		"trying to read file " << fname << endl;
+	cout << "semifield_lifting::read_level_info_file " << fname << endl;
 
 	if (Fio.file_size(fname) <= 0) {
-		cout << "semifield_lifting::read_info_file_for_level_three "
+		cout << "semifield_lifting::read_level_info_file "
 			"error trying to read the file " << fname << endl;
 		exit(1);
 		}
@@ -2858,8 +2771,7 @@ void semifield_lifting::read_info_file_for_level_three(
 	FREE_lint(M);
 
 	if (f_v) {
-		cout << "semifield_starter::read_info_file_for_"
-			"level_three done" << endl;
+		cout << "semifield_lifting::read_level_info_file done" << endl;
 		}
 }
 
