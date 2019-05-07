@@ -368,6 +368,7 @@ public:
 	void init_level_three(semifield_level_two *L2,
 			int f_prefix, const char *prefix,
 			int verbose_level);
+	void recover_level_three_from_file(int verbose_level);
 	void compute_level_three(int verbose_level);
 	void level_two_down(int verbose_level);
 	void level_two_flag_orbits(int verbose_level);
