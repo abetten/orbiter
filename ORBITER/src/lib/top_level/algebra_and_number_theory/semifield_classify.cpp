@@ -1112,6 +1112,18 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit(
 	char *fname, int orbit)
 {
 	if (f_level_two_prefix) {
+		sprintf(fname, "%sCandidates_lvl_2_orbit_%d_int8.bin",
+				level_two_prefix, orbit);
+		}
+	else {
+		sprintf(fname, "Candidates_lvl_2_orbit_%d_int8.bin", orbit);
+		}
+}
+
+void semifield_classify::make_fname_candidates_at_level_two_orbit_txt(
+	char *fname, int orbit)
+{
+	if (f_level_two_prefix) {
 		sprintf(fname, "%sCandidates_lvl_2_orbit_%d",
 				level_two_prefix, orbit);
 		}
@@ -1129,6 +1141,18 @@ void semifield_classify::make_fname_candidates_at_level_three_orbit(
 		}
 	else {
 		sprintf(fname, "Candidates_lvl_3_orbit_%d", orbit);
+		}
+}
+
+void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
+	char *fname, int orbit, int h)
+{
+	if (f_level_two_prefix) {
+		sprintf(fname, "%sC2_orbit%d_type%d_int8.bin",
+				level_two_prefix, orbit, h);
+		}
+	else {
+		sprintf(fname, "C2_orbit%d_type%d_int8.bin", orbit, h);
 		}
 }
 
