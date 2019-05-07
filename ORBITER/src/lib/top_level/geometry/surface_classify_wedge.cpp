@@ -1780,15 +1780,15 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 	if (f_v) {
 		cout << "surface_classify_wedge::generate_source_code" << endl;
 		}
-	sprintf(fname, "%s.C", fname_base);
+	sprintf(fname, "%s.cpp", fname_base);
 	prefix = fname_base;
 	
 	{
 	ofstream f(fname);
 
-	f << "int " << prefix << "_nb_reps = "
+	f << "static int " << prefix << "_nb_reps = "
 			<< Surfaces->nb_orbits << ";" << endl;
-	f << "int " << prefix << "_size = "
+	f << "static int " << prefix << "_size = "
 			<< Surf->nb_monomials << ";" << endl;
 
 
@@ -1798,7 +1798,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				"preparing reps" << endl;
 		}
 	f << "// the equations:" << endl;
-	f << "int " << prefix << "_reps[] = {" << endl;
+	f << "static int " << prefix << "_reps[] = {" << endl;
 	for (orbit_index = 0;
 			orbit_index < Surfaces->nb_orbits;
 			orbit_index++) {
@@ -1840,7 +1840,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				"code preparing stab_order" << endl;
 		}
 	f << "// the stabilizer orders:" << endl;
-	f << "const char *" << prefix << "_stab_order[] = {" << endl;
+	f << "static const char *" << prefix << "_stab_order[] = {" << endl;
 	for (orbit_index = 0;
 			orbit_index < Surfaces->nb_orbits;
 			orbit_index++) {
@@ -1863,7 +1863,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				"code preparing nb_E" << endl;
 		}
 	f << "// the number of Eckardt points:" << endl;
-	f << "int " << prefix << "_nb_E[] = { " << endl << "\t";
+	f << "static int " << prefix << "_nb_E[] = { " << endl << "\t";
 	for (orbit_index = 0;
 			orbit_index < Surfaces->nb_orbits;
 			orbit_index++) {
@@ -1918,7 +1918,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 
 #if 0
-	f << "int " << prefix << "_single_six[] = { " << endl;
+	f << "static int " << prefix << "_single_six[] = { " << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		f << "\t" << The_surface[iso_type]->S2[5];
 		for (j = 0; j < 5; j++) {
@@ -1937,7 +1937,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		}
 	f << "// the lines in the order double six "
 			"a_i, b_i and 15 more lines c_ij:" << endl;
-	f << "int " << prefix << "_Lines[] = { " << endl;
+	f << "static int " << prefix << "_Lines[] = { " << endl;
 
 
 	for (orbit_index = 0;
@@ -1968,7 +1968,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		}
 	f << "};" << endl;
 
-	f << "int " << prefix << "_make_element_size = "
+	f << "static int " << prefix << "_make_element_size = "
 			<< A->make_element_size << ";" << endl;
 	
 	{
@@ -1995,7 +1995,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		cout << "surface_classify_wedge::generate_source_"
 				"code preparing stab_gens_fst" << endl;
 		}
-	f << "int " << prefix << "_stab_gens_fst[] = { ";
+	f << "static int " << prefix << "_stab_gens_fst[] = { ";
 	for (orbit_index = 0;
 			orbit_index < Surfaces->nb_orbits;
 			orbit_index++) {
@@ -2013,7 +2013,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		cout << "surface_classify_wedge::generate_source_"
 				"code preparing stab_gens_len" << endl;
 		}
-	f << "int " << prefix << "_stab_gens_len[] = { ";
+	f << "static int " << prefix << "_stab_gens_len[] = { ";
 	for (orbit_index = 0;
 			orbit_index < Surfaces->nb_orbits;
 			orbit_index++) {
@@ -2032,7 +2032,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		cout << "surface_classify_wedge::generate_source_"
 				"code preparing stab_gens" << endl;
 		}
-	f << "int " << prefix << "_stab_gens[] = {" << endl;
+	f << "static int " << prefix << "_stab_gens[] = {" << endl;
 	for (orbit_index = 0;
 			orbit_index < Surfaces->nb_orbits;
 			orbit_index++) {

@@ -375,6 +375,14 @@ public:
 		int level,
 		int verbose_level);
 	// level is the level that we want to classify
+	void upstep_loop_over_down_set(
+		int level, int f, int po, int so, int N,
+		int *transporter, int *Mtx, int *pivots,
+		int *base_change_matrix, int *changed_space,
+		int *changed_space_after_trace, long int *set,
+		int **Aut,
+		int verbose_level);
+	// level is the level that we want to classify
 	void find_all_candidates(
 		int level,
 		int verbose_level);

@@ -604,7 +604,7 @@ void semifield_lifting::upstep(
 		cout << "semifield_lifting::upstep cur_level != 3" << endl;
 		exit(1);
 	}
-	int m;
+	int f;
 	int *transporter;
 	int *Mtx;
 	int *pivots;
@@ -614,7 +614,7 @@ void semifield_lifting::upstep(
 	long int *set;
 	int i, N, h, po, so, pt_local;
 	long int pt;
-	int trace_po, trace_so;
+	//int trace_po, trace_so;
 	combinatorics_domain Combi;
 
 	transporter = NEW_int(SC->A->elt_size_in_int);
@@ -636,34 +636,34 @@ void semifield_lifting::upstep(
 	Pt = NEW_lint(nb_flag_orbits);
 
 	nb_orbits = 0;
-	for (m = 0; m < nb_flag_orbits; m++) {
+	for (f = 0; f < nb_flag_orbits; f++) {
 
 		if (f_v) {
 			cout << "Level " << level << ": flag orbit "
-					<< m << " / " << nb_flag_orbits << endl;
+					<< f << " / " << nb_flag_orbits << endl;
 			}
 
-		if (Flag_orbits[m].f_fusion_node) {
+		if (Flag_orbits[f].f_fusion_node) {
 			if (f_v) {
 				cout << "Level " << level << ": skipping flag orbit "
-						<< m << " / " << nb_flag_orbits
+						<< f << " / " << nb_flag_orbits
 						<< " as it is a fusion node" << endl;
 				}
 			continue;
 			}
 
-		Flag_orbits[m].upstep_orbit = nb_orbits;
+		Flag_orbits[f].upstep_orbit = nb_orbits;
 
 		SC->F->identity_matrix(Mtx, k);
 
-		po = Flag_orbits[m].downstep_primary_orbit;
-		so = Flag_orbits[m].downstep_secondary_orbit;
-		pt_local = Flag_orbits[m].pt_local;
-		pt = Flag_orbits[m].pt;
+		po = Flag_orbits[f].downstep_primary_orbit;
+		so = Flag_orbits[f].downstep_secondary_orbit;
+		pt_local = Flag_orbits[f].pt_local;
+		pt = Flag_orbits[f].pt;
 
 		Po[nb_orbits] = po;
 		So[nb_orbits] = so;
-		Mo[nb_orbits] = m;
+		Mo[nb_orbits] = f;
 		Pt[nb_orbits] = pt;
 
 		get_basis_and_pivots(level - 1, po, Mtx, pivots, verbose_level - 3);
@@ -671,7 +671,7 @@ void semifield_lifting::upstep(
 
 		if (f_v) {
 			cout << "semifield_lifting::upstep Level "
-					<< level << " m = " << m << " / "
+					<< level << " flag orbit " << f << " / "
 					<< nb_flag_orbits << endl;
 			}
 		if (f_vv) {
@@ -685,11 +685,12 @@ void semifield_lifting::upstep(
 
 		Aut = NEW_pint(N);
 
+#if 0
 		for (h = 0; h < N; h++) {
 
 			if (f_v) {
 				cout << "Level " << level << ": flag orbit "
-						<< m << " / " << nb_flag_orbits
+						<< f << " / " << nb_flag_orbits
 						<< " coset " << h << " / " << N << endl;
 				}
 
@@ -718,7 +719,7 @@ void semifield_lifting::upstep(
 				}
 			if (f_vv) {
 				cout << "Level " << level << ": flag orbit "
-						<< m << " / " << nb_flag_orbits
+						<< f << " / " << nb_flag_orbits
 						<< " coset " << h << " / " << N << " set: ";
 				lint_vec_print(cout, set, level);
 				cout << " before trace_very_general" << endl;
@@ -734,7 +735,7 @@ void semifield_lifting::upstep(
 
 			if (f_vv) {
 				cout << "Level " << level << ": flag orbit "
-						<< m << " / " << nb_flag_orbits
+						<< f << " / " << nb_flag_orbits
 						<< " coset " << h << " / " << N << " after trace_very_general "
 						<< " trace_po = " << trace_po
 						<< " trace_so = " << trace_so << endl;
@@ -758,10 +759,10 @@ void semifield_lifting::upstep(
 
 				if (f_vv) {
 					cout << "Level " << level << ": flag orbit "
-							<< m << " / " << nb_flag_orbits
+							<< f << " / " << nb_flag_orbits
 							<< " coset " << h << " / " << N << " we will install a "
 							"fusion node from " << mo << "=" << trace_po
-							<< "/" << trace_so << " to " << m
+							<< "/" << trace_so << " to " << f
 							<< "=" << po << "/" << so << endl;
 					}
 				// install a fusion node:
@@ -770,7 +771,7 @@ void semifield_lifting::upstep(
 					FREE_int(Flag_orbits[mo].fusion_elt);
 					}
 				Flag_orbits[mo].f_fusion_node = TRUE;
-				Flag_orbits[mo].fusion_with = m;
+				Flag_orbits[mo].fusion_with = f;
 				Flag_orbits[mo].fusion_elt = NEW_int(SC->A->elt_size_in_int);
 				SC->A->element_invert(
 						transporter,
@@ -778,6 +779,15 @@ void semifield_lifting::upstep(
 
 				}
 			}
+#else
+		upstep_loop_over_down_set(
+			level, f, po, so, N,
+			transporter, Mtx, pivots,
+			base_change_matrix, changed_space,
+			changed_space_after_trace, set,
+			Aut,
+			verbose_level - 1);
+#endif
 
 		int nb_aut_gens;
 
@@ -788,12 +798,12 @@ void semifield_lifting::upstep(
 				}
 			}
 
-		if (Flag_orbits[m].f_long_orbit) {
+		if (Flag_orbits[f].f_long_orbit) {
 			Stabilizer_gens[nb_orbits].init_trivial_group(
 					SC->A, 0 /* verbose_level */);
 			}
 		else {
-			Stabilizer_gens[nb_orbits].init_copy(Flag_orbits[m].gens, 0);
+			Stabilizer_gens[nb_orbits].init_copy(Flag_orbits[f].gens, 0);
 			}
 
 		vector_ge *coset_reps;
@@ -819,7 +829,7 @@ void semifield_lifting::upstep(
 
 		if (f_v) {
 			cout << "Level " << level << " orbit " << nb_orbits
-					<< " = " << m << " = " << po << " / " << so
+					<< " flag orbit " << f << " = " << po << " / " << so
 					<< " We are now extending the group by a factor of "
 					<< nb_aut_gens << ":" << endl;
 			}
@@ -837,10 +847,10 @@ void semifield_lifting::upstep(
 			cout << "Level " << level << " orbit " << nb_orbits
 					<< " The new group order is " << go << endl;
 			}
-		if (f_v && ((m & ((1 << 10) - 1)) == 0)) {
-			cout << "Level " << level << ": flag orbit " << m << " / "
+		if (f_v && ((f & ((1 << 10) - 1)) == 0)) {
+			cout << "Level " << level << ": flag orbit " << f << " / "
 					<< nb_flag_orbits << " is linked to new orbit "
-					<< Flag_orbits[m].upstep_orbit << endl;
+					<< Flag_orbits[f].upstep_orbit << endl;
 			}
 
 
@@ -887,6 +897,126 @@ void semifield_lifting::upstep(
 
 
 
+void semifield_lifting::upstep_loop_over_down_set(
+	int level, int f, int po, int so, int N,
+	int *transporter, int *Mtx, int *pivots,
+	int *base_change_matrix, int *changed_space,
+	int *changed_space_after_trace, long int *set,
+	int **Aut,
+	int verbose_level)
+// level is the level that we want to classify
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i, h;
+	int trace_po, trace_so;
+
+	if (f_v) {
+		cout << "semifield_lifting::upstep_loop_over_down_set" << endl;
+		}
+
+
+	for (h = 0; h < N; h++) {
+
+		if (f_vv) {
+			cout << "Level " << level << ": flag orbit "
+					<< f << " / " << nb_flag_orbits
+					<< " coset " << h << " / " << N << endl;
+			}
+
+		Gr->unrank_int_here_and_extend_basis(
+				base_change_matrix, h,
+				0 /* verbose_level */);
+		if (f_vvv) {
+			cout << " base_change_matrix=" << endl;
+			int_matrix_print(base_change_matrix, level, level);
+			}
+		SC->F->mult_matrix_matrix(base_change_matrix,
+				Mtx, changed_space, level, level, k2,
+				0 /* verbose_level */);
+		if (f_vvv) {
+			cout << "Mtx:" << endl;
+			int_matrix_print(Mtx, level, k2);
+			cout << "changed_space:" << endl;
+			int_matrix_print(changed_space, level, k2);
+			}
+		for (i = 0; i < level; i++) {
+			if (f_vvv) {
+				cout << "i=" << i << " / " << level << endl;
+				int_matrix_print(changed_space + i * k2, k, k);
+				}
+			set[i] = SC->matrix_rank(changed_space + i * k2);
+			}
+		if (f_vvv) {
+			cout << "Level " << level << ": flag orbit "
+					<< f << " / " << nb_flag_orbits
+					<< " coset " << h << " / " << N << " set: ";
+			lint_vec_print(cout, set, level);
+			cout << " before trace_very_general" << endl;
+			}
+
+		trace_very_general(
+			changed_space,
+			level,
+			changed_space_after_trace,
+			transporter,
+			trace_po, trace_so,
+			verbose_level - 3);
+
+		if (f_vv) {
+			cout << "Level " << level << ": flag orbit "
+					<< f << " / " << nb_flag_orbits
+					<< " coset " << h << " / " << N << " after trace_very_general "
+					<< " trace_po = " << trace_po
+					<< " trace_so = " << trace_so << endl;
+			}
+
+		if (trace_po == po && trace_so == so) {
+			if (f_vv) {
+				cout << "Level " << level
+						<< ", we found an automorphism" << endl;
+				}
+			Aut[h] = NEW_int(SC->A->elt_size_in_int);
+			SC->A->element_move(transporter, Aut[h], 0);
+			//test_automorphism(Aut[h], level,
+			//		changed_space, verbose_level - 3);
+			}
+		else {
+			Aut[h] = NULL;
+			int mo;
+
+			mo = Downstep_nodes[trace_po].first_flag_orbit + trace_so;
+
+			if (f_vv) {
+				cout << "Level " << level << ": flag orbit "
+						<< f << " / " << nb_flag_orbits
+						<< " coset " << h << " / " << N << " we will install a "
+						"fusion node from " << mo << "=" << trace_po
+						<< "/" << trace_so << " to " << f
+						<< "=" << po << "/" << so << endl;
+				}
+			// install a fusion node:
+
+			if (Flag_orbits[mo].fusion_elt) {
+				FREE_int(Flag_orbits[mo].fusion_elt);
+				}
+			Flag_orbits[mo].f_fusion_node = TRUE;
+			Flag_orbits[mo].fusion_with = f;
+			Flag_orbits[mo].fusion_elt = NEW_int(SC->A->elt_size_in_int);
+			SC->A->element_invert(
+					transporter,
+					Flag_orbits[mo].fusion_elt, 0);
+
+			}
+		}
+
+
+	if (f_v) {
+		cout << "semifield_lifting::upstep_loop_over_down_set done" << endl;
+		}
+
+}
 
 void semifield_lifting::find_all_candidates(
 	int level,
