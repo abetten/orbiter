@@ -117,6 +117,64 @@ void semifield_lifting::init_level_three(
 }
 
 
+void semifield_lifting::recover_level_three_from_file(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file before downstep" << endl;
+		}
+	// it is easy to recompute the downstep nodes.
+	// this also reads the canidates at level 2.
+	downstep(2, verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file after downstep" << endl;
+		}
+
+	// no need for this:
+#if 0
+	L2->find_all_candidates_at_level_two(verbose_level);
+	prev_level_nb_orbits = L2->nb_orbits;
+	Candidates = L2->Candidates;
+	Nb_candidates = L2->Nb_candidates;
+#endif
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file before read_flag_orbits" << endl;
+		}
+	read_flag_orbits(verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file after read_flag_orbits" << endl;
+		}
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file before read_level_info_file" << endl;
+		}
+	read_level_info_file(verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file after read_level_info_file" << endl;
+		}
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file before read_stabilizers" << endl;
+		}
+	read_stabilizers(verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file after read_stabilizers" << endl;
+		}
+
+
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_from_file" << endl;
+		}
+}
+
 void semifield_lifting::compute_level_three(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

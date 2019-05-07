@@ -8,9 +8,13 @@ LFLAGS = -lm
 #LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
-all:  semifield_classify_main.out \
+all:  deep_search.out \
+	semifield_classify_main.out \
 	semifield_main.out 
 
+
+deep_search.out:  deep_search.o  ;
+	$(DISCRETA_CPP)  deep_search.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 semifield_classify_main.out:  semifield_classify_main.o  ;
 	$(DISCRETA_CPP)  semifield_classify_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

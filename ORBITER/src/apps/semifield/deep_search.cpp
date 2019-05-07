@@ -1,9 +1,10 @@
 /*
- * semifield_classify_main.cpp
+ * deep_search.cpp
  *
- *  Created on: Apr 18, 2019
+ *  Created on: May 7, 2019
  *      Author: betten
  */
+
 
 
 
@@ -41,6 +42,13 @@ int main(int argc, const char **argv)
 	int f_sideways = FALSE;
 	int f_report = FALSE;
 	int f_memory_debug = FALSE;
+
+	int f_split = FALSE;
+	int split_r = 0;
+	int split_m = 1;
+
+	int f_out_path = FALSE;
+	const char *out_path = NULL;
 
 
 
@@ -91,6 +99,17 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-memory_debug") == 0) {
 			f_memory_debug = TRUE;
 			cout << "-memory_debug " << endl;
+		}
+		else if (strcmp(argv[i], "-split") == 0) {
+			f_split = TRUE;
+			split_r = atoi(argv[++i]);
+			split_m = atoi(argv[++i]);
+			cout << "-split " << split_r << " " << split_m << endl;
+		}
+		else if (strcmp(argv[i], "-out_path") == 0) {
+			f_out_path = TRUE;
+			out_path = argv[++i];
+			cout << "-out_path " << out_path << endl;
 		}
 	}
 
@@ -174,34 +193,27 @@ int main(int argc, const char **argv)
 			verbose_level);
 	cout << "after L3->compute_level_three" << endl;
 
-	cout << "before L3->compute_level_three" << endl;
-	L3->compute_level_three(verbose_level);
-	cout << "after L3->compute_level_three" << endl;
+	cout << "before L3->recover_level_three_from_file" << endl;
+	//L3->compute_level_three(verbose_level);
+	L3->recover_level_three_from_file(verbose_level);
+	cout << "after L3->recover_level_three_from_file" << endl;
 
 
-	if (f_report) {
+	int nb_sol = 0;
+	int t1, t2;
 
-		cout << "before report" << endl;
-		char fname[1000];
-		sprintf(fname, "Semifields_%d.tex", order);
+	cout << "before L3->deep_search_at_level_three" << endl;
+	t1 = os_ticks();
+	L3->deep_search_at_level_three(
+			split_r, split_m,
+			f_out_path, out_path,
+			nb_sol,
+			verbose_level);
+	cout << "after L3->deep_search_at_level_three" << endl;
+	t2 = os_ticks();
+	cout << "time check:" << endl;
+	time_check_delta(cout, t2 - t1);
 
-		{
-			ofstream fp(fname);
-			latex_interface L;
-
-			L.head_easy(fp);
-
-
-			cout << "before L2->C->report" << endl;
-			L2->C->report(fp, verbose_level);
-			cout << "before L2->print_representatives" << endl;
-			L2->print_representatives(fp, verbose_level);
-			cout << "after L2->print_representatives" << endl;
-
-			L.foot(fp);
-		}
-		cout << "after report" << endl;
-	}
 
 	if (f_memory_debug) {
 		cout << "before global_mem_object_registry.dump_to_csv_file" << endl;
@@ -209,13 +221,9 @@ int main(int argc, const char **argv)
 		cout << "after global_mem_object_registry.dump_to_csv_file" << endl;
 	}
 
-	cout << "before FREE_OBJECT(L2)" << endl;
 	FREE_OBJECT(L2);
-	cout << "before FREE_OBJECT(SC)" << endl;
 	FREE_OBJECT(SC);
-	cout << "before FREE_OBJECT(F)" << endl;
 	FREE_OBJECT(F);
-	cout << "before leaving scope" << endl;
 	}
 	cout << "after leaving scope" << endl;
 #if 0
