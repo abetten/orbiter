@@ -974,7 +974,6 @@ void semifield_level_two::upstep(int verbose_level)
 
 	for (i = 0; i < nb_orbits; i++) {
 		longinteger_object go, go1;
-		int *Mtx;
 
 		Stabilizer_gens[i].group_order(go);
 
@@ -2061,7 +2060,7 @@ void semifield_level_two::get_basis_and_pivots(int po,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	int ext, idx;
+	//int ext, idx;
 	long int a;
 
 
@@ -2072,9 +2071,13 @@ void semifield_level_two::get_basis_and_pivots(int po,
 
 	F->identity_matrix(basis, k);
 
+#if 0
 	ext = up_orbit_rep[po];
 	idx = down_orbit_classes[ext * 2 + 0];
 	a = class_rep_rank[idx];
+#else
+	a = Pt[po];
+#endif
 
 
 	SC->matrix_unrank(a, basis + k2);
@@ -2192,11 +2195,15 @@ void semifield_level_two::print_representatives(
 			Stabilizer_gens[i].group_order(go);
 			//cout << i << " : " << up_orbit_rep[i] << " : " << go << endl;
 
+#if 0
 			ext = up_orbit_rep[i];
 
 			idx = down_orbit_classes[ext * 2 + 0];
 			a = class_rep_rank[idx];
 			b = class_rep_plus_I_rank[idx];
+#else
+			a = Pt[i];
+#endif
 
 			//Elt1 = NEW_int(A_PGLk->elt_size_in_int);
 			SC->matrix_unrank(a, Mtx);
@@ -2209,6 +2216,8 @@ void semifield_level_two::print_representatives(
 			int f_elements_exponential = FALSE;
 			const char *symbol_for_print = "\\alpha";
 
+			ext = up_orbit_rep[i];
+			idx = down_orbit_classes[ext * 2 + 0];
 			ost << "Representative " << i << " / " << nb_orbits
 				<< " classes " << idx << ","
 				<< down_orbit_classes[ext * 2 + 1] << endl;
