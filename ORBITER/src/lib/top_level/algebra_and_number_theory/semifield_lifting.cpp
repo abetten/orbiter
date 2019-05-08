@@ -129,12 +129,14 @@ void semifield_lifting::recover_level_three_from_file(int verbose_level)
 	if (f_v) {
 		cout << "semifield_lifting::recover_level_three_from_file before downstep" << endl;
 		}
-	// it is easy to recompute the downstep nodes.
-	// this also reads the canidates at level 2.
-	downstep(2, verbose_level);
+	find_all_candidates(2, verbose_level);
+
+	//downstep(2, verbose_level);
 	if (f_v) {
 		cout << "semifield_lifting::recover_level_three_from_file after downstep" << endl;
 		}
+
+	// We down have Downstep_nodes
 
 	// no need for this:
 #if 0
@@ -144,6 +146,8 @@ void semifield_lifting::recover_level_three_from_file(int verbose_level)
 	Nb_candidates = L2->Nb_candidates;
 #endif
 
+
+#if 0
 	if (f_v) {
 		cout << "semifield_lifting::recover_level_three_from_file before read_flag_orbits" << endl;
 		}
@@ -151,6 +155,7 @@ void semifield_lifting::recover_level_three_from_file(int verbose_level)
 	if (f_v) {
 		cout << "semifield_lifting::recover_level_three_from_file after read_flag_orbits" << endl;
 		}
+#endif
 
 	if (f_v) {
 		cout << "semifield_lifting::recover_level_three_from_file before read_level_info_file" << endl;
@@ -420,18 +425,18 @@ void semifield_lifting::downstep(
 			}
 		}
 	if (f_v) {
-		int *nb_orbits;
-		nb_orbits = NEW_int(prev_level_nb_orbits);
+		int *Nb_orbits;
+		Nb_orbits = NEW_int(prev_level_nb_orbits);
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
-			nb_orbits[orbit] = Downstep_nodes[orbit].Sch->nb_orbits;
+			Nb_orbits[orbit] = Downstep_nodes[orbit].Sch->nb_orbits;
 			}
 		classify C;
 
-		C.init(nb_orbits, prev_level_nb_orbits, FALSE, 0);
+		C.init(Nb_orbits, prev_level_nb_orbits, FALSE, 0);
 		cout << "semifield_lifting::downstep "
 				"level " << level << " distribution of orbit lengths: ";
 		C.print(TRUE /* f_backwards */);
-		FREE_int(nb_orbits);
+		FREE_int(Nb_orbits);
 		}
 	if (f_v) {
 		cout << "semifield_lifting::downstep "
