@@ -59,6 +59,10 @@ semifield_level_two::semifield_level_two()
 
 	nb_orbits = 0;
 	up_orbit_rep = NULL;
+	So = NULL;
+	Fo = NULL;
+	Pt = NULL;
+	Go = NULL;
 	Stabilizer_gens = NULL;
 
 	E1 = E2 = E3 = E4 = NULL;
@@ -173,6 +177,19 @@ semifield_level_two::~semifield_level_two()
 	if (up_orbit_rep) {
 		FREE_int(up_orbit_rep);
 		}
+	if (So) {
+		FREE_int(So);
+		}
+	if (Fo) {
+		FREE_int(Fo);
+		}
+	if (Pt) {
+		FREE_lint(Pt);
+		}
+	if (Go) {
+		FREE_int(Go);
+		}
+
 	if (Stabilizer_gens) {
 		FREE_OBJECTS(Stabilizer_gens);
 		}
@@ -363,7 +380,7 @@ void semifield_level_two::init_desired_pivots(int verbose_level)
 		}
 }
 
-void semifield_level_two::list_all_elements_is_conjugacy_class(
+void semifield_level_two::list_all_elements_in_conjugacy_class(
 		int c, int verbose_level)
 // This function lists all elements in a conjugacy class
 {
@@ -377,7 +394,7 @@ void semifield_level_two::list_all_elements_is_conjugacy_class(
 	int rk, cl, r;
 
 	if (f_v) {
-		cout << "semifield_starter::list_all_elements_is_conjugacy_class "
+		cout << "semifield_starter::list_all_elements_in_conjugacy_class "
 				"c=" << c << endl;
 		}
 
@@ -450,7 +467,7 @@ void semifield_level_two::list_all_elements_is_conjugacy_class(
 	FREE_OBJECT(U);
 	FREE_OBJECT(Centralizer_gens);
 	if (f_v) {
-		cout << "semifield_level_two::list_all_elements_is_conjugacy_class done" << endl;
+		cout << "semifield_level_two::list_all_elements_in_conjugacy_class done" << endl;
 		}
 }
 
@@ -500,6 +517,15 @@ void semifield_level_two::compute_level_two(int verbose_level)
 				"after upstep" << endl;
 		}
 
+	if (f_v) {
+		cout << "semifield_level_two::compute_level_two "
+				"before write_level_info_file" << endl;
+		}
+	write_level_info_file(verbose_level);
+	if (f_v) {
+		cout << "semifield_level_two::compute_level_two "
+				"after write_level_info_file" << endl;
+		}
 
 #if 0
 	if (f_make_graphs) {
@@ -707,6 +733,7 @@ void semifield_level_two::downstep(int verbose_level)
 			}
 		nb_down_orbits++;
 		}
+
 
 
 	if (f_v) {
@@ -937,6 +964,29 @@ void semifield_level_two::upstep(int verbose_level)
 
 		nb_orbits++;
 		}
+
+	//Po = NEW_int(nb_orbits);
+	So = NEW_int(nb_orbits);
+	Fo = NEW_int(nb_orbits);
+	Pt = NEW_lint(nb_orbits);
+	Go = NEW_int(nb_orbits);
+
+
+	for (i = 0; i < nb_orbits; i++) {
+		longinteger_object go, go1;
+		int *Mtx;
+
+		Stabilizer_gens[i].group_order(go);
+
+		ext = up_orbit_rep[i];
+		idx = down_orbit_classes[ext * 2 + 0];
+		a = class_rep_rank[idx];
+		b = class_rep_plus_I_rank[idx];
+		Fo[i] = ext;
+		So[i] = idx;
+		Pt[i] = a;
+		Go[i] = go.as_int();
+	}
 
 
 
@@ -2202,6 +2252,118 @@ void semifield_level_two::print_representatives(
 	if (f_v) {
 		cout << "semifield_level_two::print_representatives done" << endl;
 	}
+}
+
+void semifield_level_two::create_fname_level_info_file(char *fname)
+{
+	if (SC->f_level_two_prefix) {
+		sprintf(fname, "%sLevel_2_info.csv", SC->level_two_prefix);
+		}
+	else {
+		sprintf(fname, "Level_2_info.csv");
+		}
+}
+
+
+
+void semifield_level_two::write_level_info_file(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_level_two::write_level_info_file" << endl;
+		}
+	int i;
+	int nb_vecs = 5;
+	const char *column_label[] = {
+		"Go",
+		"Po",
+		"So",
+		"Mo",
+		"Pt"
+		};
+	char fname[1000];
+
+	create_fname_level_info_file(fname);
+
+	{
+	ofstream f(fname);
+	int j;
+
+	f << "Row";
+	for (j = 0; j < nb_vecs; j++) {
+		f << "," << column_label[j];
+		}
+	f << endl;
+	for (i = 0; i < nb_orbits; i++) {
+		f << i;
+		f << "," << Go[i] << "," << 0 /* Po[i]*/ << "," << So[i] << "," << Fo[i] << "," << Pt[i] << endl;
+		}
+	f << "END" << endl;
+	}
+
+	cout << "Written file " << fname << " of size"
+			<< Fio.file_size(fname) << endl;
+	FREE_int(Go);
+	if (f_v) {
+		cout << "semifield_level_two::write_level_info_file done" << endl;
+		}
+
+}
+
+
+void semifield_level_two::read_level_info_file(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char fname[1000];
+	long int *M;
+	int m, n, i;
+	int tmp;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_level_two::read_level_info_file" << endl;
+		}
+	create_fname_level_info_file(fname);
+
+	cout << "semifield_level_two::read_level_info_file " << fname << endl;
+
+	if (Fio.file_size(fname) <= 0) {
+		cout << "semifield_lifting::read_level_info_file "
+			"error trying to read the file " << fname << endl;
+		exit(1);
+		}
+
+	Fio.lint_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+		// Row,Go,Po,So,Mo,Pt
+
+	nb_orbits = m;
+
+	//Po = NEW_int(m);
+	So = NEW_int(m);
+	Fo = NEW_int(m);
+	Pt = NEW_lint(m);
+
+	//nb_flag_orbits = 0;
+
+	for (i = 0; i < m; i++) {
+		tmp = M[i * n + 1]; // Po[i]
+		So[i] = M[i * n + 2];
+		Fo[i] = M[i * n + 3];
+
+		//nb_flag_orbits = MAXIMUM(nb_flag_orbits, Mo[i]);
+
+		Pt[i] = M[i * n + 4];
+		}
+
+	//nb_flag_orbits++;
+
+	FREE_lint(M);
+
+	if (f_v) {
+		cout << "semifield_level_two::read_level_info_file done" << endl;
+		}
 }
 
 

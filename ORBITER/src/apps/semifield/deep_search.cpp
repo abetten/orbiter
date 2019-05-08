@@ -181,10 +181,13 @@ int main(int argc, const char **argv)
 	cout << "after L2->init" << endl;
 
 
+#if 0
 	cout << "before L2->compute_level_two" << endl;
 	L2->compute_level_two(verbose_level);
 	cout << "after L2->compute_level_two" << endl;
-
+#else
+	L2->read_level_info_file(verbose_level);
+#endif
 
 	L3 = NEW_OBJECT(semifield_lifting);
 	cout << "before L3->compute_level_three" << endl;
@@ -213,6 +216,8 @@ int main(int argc, const char **argv)
 	t2 = os_ticks();
 	cout << "time check:" << endl;
 	time_check_delta(cout, t2 - t1);
+	cout << endl;
+	cout << "after time check:" << endl;
 
 
 	if (f_memory_debug) {
@@ -221,11 +226,18 @@ int main(int argc, const char **argv)
 		cout << "after global_mem_object_registry.dump_to_csv_file" << endl;
 	}
 
+	cout << "before freeing L3" << endl;
+	FREE_OBJECT(L3);
+	cout << "before freeing L2" << endl;
 	FREE_OBJECT(L2);
+	cout << "before freeing SC" << endl;
 	FREE_OBJECT(SC);
+	cout << "before freeing F" << endl;
 	FREE_OBJECT(F);
+	cout << "before leaving scope" << endl;
 	}
 	cout << "after leaving scope" << endl;
+
 #if 0
 	else if (f_break_symmetry) {
 		S.init_semifield_starter(f_orbits_light, verbose_level);
