@@ -212,9 +212,11 @@ public:
 	int *down_orbit_of_class;
 
 
-	int nb_down_orbits;
+	int nb_down_orbits; // the number of flag orbits
 	strong_generators *Centralizer_gens; // [nb_down_orbits]
 	int *down_orbit_classes;  // [nb_down_orbits * 2]
+		// for each down orbit i,
+		// the conjugacy class associated to R_i and R_i + I, respectively
 	int *down_orbit_number_of_matrices; // [nb_down_orbits]
 	int *down_orbit_length; // [nb_down_orbits]
 	int *f_Fusion; // [nb_down_orbits]
@@ -229,6 +231,21 @@ public:
 		// idx = down_orbit_classes[ext * 2 + 0];
 		// a = class_rep_rank[idx];
 
+	//int *Po; // [nb_orbits]
+	// There is only one orbit at level one, so it does not make sense to store Po
+
+	int *So;
+		// [nb_orbits] So[i] is the index of the conjugacy class
+		// associated with the flag orbit (down orbit) Fo[i]
+		// So[i] = down_orbit_classes[Fo[i] * 2 + 0];
+
+	int *Fo;
+		// [nb_orbits]
+		// Fo[i] is the index of the down orbit (aka flag orbit)
+		// which let to the definition of orbit i
+
+	long int *Pt; // [nb_orbits]
+	int *Go; // [nb_orbits]
 	strong_generators *Stabilizer_gens;
 		// reps at level two
 
@@ -252,7 +269,7 @@ public:
 	~semifield_level_two();
 	void init(semifield_classify *SC, int verbose_level);
 	void init_desired_pivots(int verbose_level);
-	void list_all_elements_is_conjugacy_class(
+	void list_all_elements_in_conjugacy_class(
 			int c, int verbose_level);
 	void compute_level_two(int verbose_level);
 	void downstep(int verbose_level);
@@ -301,6 +318,9 @@ public:
 			int *basis, int *pivots, int verbose_level);
 	void print_representatives(std::ofstream &ost,
 		int verbose_level);
+	void create_fname_level_info_file(char *fname);
+	void write_level_info_file(int verbose_level);
+	void read_level_info_file(int verbose_level);
 };
 
 
