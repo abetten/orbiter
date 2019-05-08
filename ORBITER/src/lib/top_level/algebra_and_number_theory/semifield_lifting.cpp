@@ -2195,7 +2195,8 @@ void semifield_lifting::get_basis_and_pivots(
 	int po, so, mo;
 	long int pt;
 	long int a;
-	int ext, idx, i;
+	//int ext, idx, i;
+	int i;
 
 	if (f_v) {
 		cout << "semifield_lifting::get_basis_and_pivots "
@@ -2214,10 +2215,13 @@ void semifield_lifting::get_basis_and_pivots(
 				<< " pt=" << pt << endl;
 		}
 
-
+#if 0
 	ext = L2->up_orbit_rep[po];
 	idx = L2->down_orbit_classes[ext * 2 + 0];
 	a = L2->class_rep_rank[idx];
+#else
+	a = L2->Pt[po];
+#endif
 
 	SC->matrix_unrank(a, basis + 1 * k2);
 
@@ -2669,7 +2673,7 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 	int f_v = (verbose_level >= 1);
 	int po, so, mo;
 	long int pt, a;
-	int ext, idx;
+	//int ext, idx;
 	int *basis;
 
 	if (f_v) {
@@ -2682,9 +2686,13 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 	pt = Pt[po3];
 
 
+#if 0
 	ext = L2->up_orbit_rep[po];
 	idx = L2->down_orbit_classes[ext * 2 + 0];
 	a = L2->class_rep_rank[idx];
+#else
+	a = L2->Pt[po];
+#endif
 
 	basis = NEW_int(k2);
 
