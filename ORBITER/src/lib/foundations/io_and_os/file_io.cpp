@@ -977,6 +977,29 @@ void file_io::int_matrix_write_csv(const char *fname, int *M, int m, int n)
 	}
 }
 
+void file_io::lint_matrix_write_csv(const char *fname, long int *M, int m, int n)
+{
+	int i, j;
+
+	{
+	ofstream f(fname);
+
+	f << "Row";
+	for (j = 0; j < n; j++) {
+		f << ",C" << j;
+		}
+	f << endl;
+	for (i = 0; i < m; i++) {
+		f << i;
+		for (j = 0; j < n; j++) {
+			f << "," << M[i * n + j];
+			}
+		f << endl;
+		}
+	f << "END" << endl;
+	}
+}
+
 void file_io::double_matrix_write_csv(
 		const char *fname, double *M, int m, int n)
 {
