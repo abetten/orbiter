@@ -269,12 +269,6 @@ int main(int argc, const char **argv)
 
 
 
-#if 0
-	cout << "Reading stabilizers at level 3:" << endl;
-	S->SFS->read_stabilizers(3 /* level */, verbose_level);
-	cout << "Reading stabilizers at level 3 done" << endl;
-#endif
-
 
 
 	C.init(Len, nb_orbits, FALSE, 0);
@@ -440,7 +434,7 @@ int main(int argc, const char **argv)
 
 		All_Orbits[o] = new orbit_of_subspaces *[len];
 
-		if (f_vv) {
+		if (f_v) {
 			cout << "case " << o << " / "
 				<< nb_non_unique_cases_with_non_trivial_group
 				<< " with " << len
@@ -471,22 +465,26 @@ int main(int argc, const char **argv)
 
 			input_data = Data + (fst + f) * data_size + start_column;
 
-			if (FALSE) {
+			if (f_v) {
 				cout << "case " << o << " / "
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "
 					<< fst << " with " << len
 					<< " semifields. Orbit rep "
 					<< f << ":" << endl;
-				//int_vec_print(cout, input_data, 6);
-				//cout << endl;
+				lint_vec_print(cout, input_data, 6);
+				cout << endl;
 				}
+			if (f_v) {
+				cout << "The stabilizer is:" << endl;
+				L3->Stabilizer_gens[a].print_generators_ost(cout);
+			}
 
 			SC->compute_orbit_of_subspaces(input_data,
 				&L3->Stabilizer_gens[a],
 				Orb,
-				0 /*verbose_level*/);
-			if (FALSE) {
+				verbose_level);
+			if (f_v) {
 				cout << "Found an orbit of length "
 					<< Orb->used_length << endl;
 				}
@@ -520,7 +518,7 @@ int main(int argc, const char **argv)
 
 			}
 
-		if (f_vv) {
+		if (f_v) {
 			cout << "case " << o << " / "
 				<< nb_non_unique_cases_with_non_trivial_group
 				<< " with " << len << " semifields done, there are "
