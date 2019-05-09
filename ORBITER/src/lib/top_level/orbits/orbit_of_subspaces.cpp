@@ -143,6 +143,7 @@ void orbit_of_subspaces::init(
 	data_tmp = NEW_int(sz);
 	Mtx1 = NEW_int(kn);
 	Mtx2 = NEW_int(kn);
+	Mtx3 = NEW_int(kn);
 	
 	if (f_v) {
 		cout << "orbit_of_subspaces::init before compute" << endl;
@@ -206,6 +207,7 @@ void orbit_of_subspaces::init_lint(
 	data_tmp = NEW_int(sz);
 	Mtx1 = NEW_int(kn);
 	Mtx2 = NEW_int(kn);
+	Mtx3 = NEW_int(kn);
 
 	if (f_v) {
 		cout << "orbit_of_subspaces::init_lint before compute" << endl;

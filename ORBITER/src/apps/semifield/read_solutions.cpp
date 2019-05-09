@@ -118,13 +118,14 @@ int main(int argc, char **argv)
 	cout << "There are " << nb_missing << " missing files" << endl;
 	cout << "There are " << nb_existing << " existing files" << endl;
 
-	int h, e, l, o, k, a;
+	int h, e, l, o, k;
+	long int a;
 	int *f_solution_read = NULL;
 	int *solution_first = NULL;
 	int *nb_solutions = NULL;
 	int nb_data_sets_allocated = 0;
 	int nb_data_sets_used = 0;
-	int *Data_sets = NULL;
+	long int *Data_sets = NULL;
 	
 	f_solution_read = NEW_int(nb_cases);
 	nb_solutions = NEW_int(nb_cases);
@@ -138,7 +139,7 @@ int main(int argc, char **argv)
 
 	nb_data_sets_allocated = 1024;
 	nb_data_sets_used = 0;
-	Data_sets = NEW_int(nb_data_sets_allocated * data_set_size);
+	Data_sets = NEW_lint(nb_data_sets_allocated * data_set_size);
 
 
 	char *p_buf;
@@ -213,19 +214,19 @@ int main(int argc, char **argv)
 
 							if (nb_data_sets_used == nb_data_sets_allocated) {
 								int alloc_new;
-								int *Data_new;
+								long int *Data_new;
 
 								alloc_new = 2 * nb_data_sets_allocated;
-								Data_new = NEW_int(alloc_new * data_set_size);
-								int_vec_copy(Data_sets, Data_new,
+								Data_new = NEW_lint(alloc_new * data_set_size);
+								lint_vec_copy(Data_sets, Data_new,
 										nb_data_sets_used * data_set_size);
 
-								FREE_int(Data_sets);
+								FREE_lint(Data_sets);
 								Data_sets = Data_new;
 								nb_data_sets_allocated = alloc_new;
 								}
 							for (k = 0; k < data_set_size; k++) {
-								s_scan_int(&p_buf, &a);
+								s_scan_lint(&p_buf, &a);
 								Data_sets[nb_data_sets_used * data_set_size + k] = a;
 								}
 							nb_data_sets_used++;
@@ -246,17 +247,17 @@ int main(int argc, char **argv)
 	
 	cout << "done reading solutions, we found " << nb_data_sets_used
 			<< " solutions" << endl;
-	int *Data_sorted;
+	long int *Data_sorted;
 	int *FstLen;
 	int *ExistingFstLen;
 	int nb_existing_cases = 0;
 	int c;
 
-	Data_sorted = NEW_int(nb_data_sets_used * data_set_size);
+	Data_sorted = NEW_lint(nb_data_sets_used * data_set_size);
 	h = 0;
 	for (o = 0; o < nb_cases; o++) {
 		if (f_solution_read[o]) {
-			int_vec_copy(
+			lint_vec_copy(
 					Data_sets + solution_first[o] * data_set_size,
 					Data_sorted + h * data_set_size,
 					nb_solutions[o] * data_set_size);
@@ -324,7 +325,7 @@ int main(int argc, char **argv)
 		char fname_Data[1000];
 	
 		sprintf(fname_Data, "%s_Data.csv", save_prefix);
-		Fio.int_matrix_write_csv(fname_Data, Data_sorted,
+		Fio.lint_matrix_write_csv(fname_Data, Data_sorted,
 				nb_data_sets_used, data_set_size);
 
 		cout << "Written file " << fname_Data << " of size "

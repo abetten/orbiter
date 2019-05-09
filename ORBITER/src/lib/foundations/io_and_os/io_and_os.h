@@ -79,6 +79,7 @@ public:
 	void int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
 		const char *fname, const char **column_label);
 	void int_matrix_write_csv(const char *fname, int *M, int m, int n);
+	void lint_matrix_write_csv(const char *fname, long int *M, int m, int n);
 	void double_matrix_write_csv(const char *fname,
 		double *M, int m, int n);
 	void int_matrix_write_csv_with_labels(const char *fname,
@@ -594,6 +595,7 @@ void get_fname_base(const char *p, char *fname_base);
 void get_extension_if_present(const char *p, char *ext);
 void get_extension_if_present_and_chop_off(char *p, char *ext);
 int s_scan_int(char **s, int *i);
+int s_scan_lint(char **s, long int *i);
 int s_scan_token(char **s, char *str);
 int s_scan_token_arbitrary(char **s, char *str);
 int s_scan_str(char **s, char *str);

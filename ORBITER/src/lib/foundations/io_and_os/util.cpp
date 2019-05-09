@@ -2168,6 +2168,21 @@ int s_scan_int(char **s, int *i)
 	return TRUE;
 }
 
+int s_scan_lint(char **s, long int *i)
+{
+	char str1[512];
+
+	if (!s_scan_token(s, str1))
+		return FALSE;
+	if (strcmp(str1, ",") == 0) {
+		if (!s_scan_token(s, str1))
+			return FALSE;
+		}
+	//*i = atoi(str1);
+	sscanf(str1, "%ld", i);
+	return TRUE;
+}
+
 int s_scan_token(char **s, char *str)
 {
 	char c;

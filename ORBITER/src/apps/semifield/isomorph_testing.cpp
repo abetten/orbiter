@@ -496,9 +496,12 @@ int main(int argc, const char **argv)
 				if (f_reached[g]) {
 					continue;
 					}
+				if (f_v) {
+					cout << "testing subspace " << g << " / " << len << ":" << endl;
+				}
 				if (Orb->find_subspace_lint(
 						Data + (fst + g) * data_size + start_column,
-						idx, 0 /* verbose_level */)) {
+						idx, verbose_level)) {
 					f_reached[g] = TRUE;
 					position[g] = idx;
 					orbit_idx[g] = cnt;
