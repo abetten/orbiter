@@ -171,7 +171,7 @@ int main(int argc, const char **argv)
 	int **Orbit_idx;
 	int *Nb_orb;
 	int nb_orb_total;
-	int nb_middle_orbits;
+	int nb_flag_orbits;
 	int idx;
 	int *Po_first; // [nb_orbits]
 	flag_orbits *Flag_orbits;
@@ -470,7 +470,8 @@ int main(int argc, const char **argv)
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "
 					<< fst << " with " << len
-					<< " semifields. Orbit rep "
+					<< " semifields. " << endl;
+				cout << "Orbit rep "
 					<< f << ":" << endl;
 				lint_vec_print(cout, input_data, 6);
 				cout << endl;
@@ -496,12 +497,12 @@ int main(int argc, const char **argv)
 				if (f_reached[g]) {
 					continue;
 					}
-				if (f_v) {
+				if (FALSE) {
 					cout << "testing subspace " << g << " / " << len << ":" << endl;
 				}
 				if (Orb->find_subspace_lint(
 						Data + (fst + g) * data_size + start_column,
-						idx, verbose_level)) {
+						idx, 0 /*verbose_level*/)) {
 					f_reached[g] = TRUE;
 					position[g] = idx;
 					orbit_idx[g] = cnt;
@@ -552,9 +553,9 @@ int main(int argc, const char **argv)
 
 
 	if (f_v) {
-		cout << "Counting number of middle orbits:" << endl;
+		cout << "Counting number of flag orbits:" << endl;
 		}
-	nb_middle_orbits = 0;
+	nb_flag_orbits = 0;
 	for (o = 0; o < nb_orbits; o++) {
 
 		if (FALSE) {
@@ -565,10 +566,10 @@ int main(int argc, const char **argv)
 		if (Len[o] == 0) {
 			}
 		else if (Len[o] == 1) {
-			nb_middle_orbits += 1;
+			nb_flag_orbits += 1;
 			}
 		else if (L3->Stabilizer_gens[o].group_order_as_int() == 1) {
-			nb_middle_orbits += Len[o];
+			nb_flag_orbits += Len[o];
 			}
 		else {
 			if (!Sorting.int_vec_search(Non_unique_cases_with_non_trivial_group,
@@ -581,12 +582,12 @@ int main(int argc, const char **argv)
 				cout << "Found orbit " << o
 						<< " at position " << idx << endl;
 				}
-			nb_middle_orbits += Nb_orb[idx];
+			nb_flag_orbits += Nb_orb[idx];
 			}
 
 		} // next o
 	if (f_v) {
-		cout << "nb_middle_orbits = " << nb_middle_orbits << endl;
+		cout << "nb_flag_orbits = " << nb_flag_orbits << endl;
 		}
 
 
@@ -602,7 +603,7 @@ int main(int argc, const char **argv)
 		SC->A, SC->AS,
 		nb_orbits /* nb_primary_orbits_lower */,
 		6 /* pt_representation_sz */,
-		nb_middle_orbits /* nb_flag_orbits */,
+		nb_flag_orbits /* nb_flag_orbits */,
 		verbose_level);
 
 
@@ -684,13 +685,13 @@ int main(int argc, const char **argv)
 
 
 		}
-	if (h != nb_middle_orbits) {
-		cout << "h != nb_middle_orbits" << endl;
+	if (h != nb_flag_orbits) {
+		cout << "h != nb_flag_orbits" << endl;
 		exit(1);
 		}
 	if (f_v) {
 		cout << "Finished initializing flag orbits. "
-				"Number of flag orbits = " << nb_middle_orbits << endl;
+				"Number of flag orbits = " << nb_flag_orbits << endl;
 		}
 
 
@@ -743,7 +744,7 @@ int main(int argc, const char **argv)
 
 
 	classification_step *Semifields;
-	int *f_processed; // [nb_middle_orbits]
+	int *f_processed; // [nb_flag_orbits]
 	int nb_processed, po, so, f, f2;
 	long int data1[6];
 	long int data2[6];
@@ -758,8 +759,8 @@ int main(int argc, const char **argv)
 
 
 
-	f_processed = NEW_int(nb_middle_orbits);
-	int_vec_zero(f_processed, nb_middle_orbits);
+	f_processed = NEW_int(nb_flag_orbits);
+	int_vec_zero(f_processed, nb_flag_orbits);
 	nb_processed = 0;
 
 	Elt1 = NEW_int(SC->A->elt_size_in_int);
@@ -771,12 +772,12 @@ int main(int argc, const char **argv)
 	SC->A->group_order(go);
 
 	Semifields->init_lint(SC->A, SC->AS,
-			nb_middle_orbits, 6, go, verbose_level);
+			nb_flag_orbits, 6, go, verbose_level);
 
 
 	Flag_orbits->nb_primary_orbits_upper = 0;
 
-	for (f = 0; f < nb_middle_orbits; f++) {
+	for (f = 0; f < nb_flag_orbits; f++) {
 
 
 		double progress;
@@ -786,13 +787,13 @@ int main(int argc, const char **argv)
 			}
 
 		progress = ((double) nb_processed * 100. ) /
-				(double) nb_middle_orbits;
+				(double) nb_flag_orbits;
 
 		if (f_v) {
 			cout << "Defining new orbit "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
-				<< nb_middle_orbits << " progress="
+				<< nb_flag_orbits << " progress="
 				<< progress << "%" << endl;
 			}
 		Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit =
@@ -834,7 +835,7 @@ int main(int argc, const char **argv)
 			}
 		if (!is_unit_vector(v3, 6, 5)) {
 			cout << "flag orbit " << f << " / "
-					<< nb_middle_orbits
+					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
 			int_vec_print(cout, v3, 6);
 			cout << " which is not the 5th unit vector, "
@@ -845,7 +846,7 @@ int main(int argc, const char **argv)
 		if (f_skip) {
 			if (f_v) {
 				cout << "flag orbit " << f << " / "
-						<< nb_middle_orbits
+						<< nb_flag_orbits
 					<< ", first vector is not the unit vector, "
 					"so we skip" << endl;
 				}
@@ -854,7 +855,7 @@ int main(int argc, const char **argv)
 			continue;
 			}
 		if (f_v) {
-			cout << "flag orbit " << f << " / " << nb_middle_orbits
+			cout << "flag orbit " << f << " / " << nb_flag_orbits
 				<< ", looping over the " << N << " subspaces" << endl;
 			}
 
@@ -872,7 +873,7 @@ int main(int argc, const char **argv)
 
 			if (f_v) {
 				cout << "flag orbit " << f << " / "
-					<< nb_middle_orbits << ", subspace "
+					<< nb_flag_orbits << ", subspace "
 					<< rk << " / " << N << ":" << endl;
 				}
 
@@ -906,11 +907,14 @@ int main(int argc, const char **argv)
 				}
 
 
+			if (f_v) {
+				cout << "before trace_to_level_three" << endl;
+			}
 			trace_po = L3->trace_to_level_three(
 				Basis2,
 				k /* basis_sz */,
 				transporter1,
-				verbose_level - 4);
+				verbose_level);
 
 			T->trace_po = trace_po;
 
@@ -1002,8 +1006,7 @@ int main(int argc, const char **argv)
 					}
 
 				int go;
-				go = L3->Stabilizer_gens
-						[trace_po].group_order_as_int();
+				go = L3->Stabilizer_gens[trace_po].group_order_as_int();
 
 				T->go = go;
 				T->pos = -1;
@@ -1013,7 +1016,7 @@ int main(int argc, const char **argv)
 
 				if (f_v) {
 					cout << "flag orbit " << f << " / "
-						<< nb_middle_orbits << ", subspace "
+						<< nb_flag_orbits << ", subspace "
 						<< rk << " / " << N << " trace_po="
 						<< trace_po << " go=" << go
 						<< " solution_idx=" << solution_idx << endl;
@@ -1052,7 +1055,8 @@ int main(int argc, const char **argv)
 								= f;
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt
 								= NEW_int(SC->A->elt_size_in_int);
-							SC->A->element_invert(transporter1,
+							SC->A->element_invert(
+								transporter1,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
 							f_processed[f2] = TRUE;
@@ -1235,7 +1239,7 @@ int main(int argc, const char **argv)
 					<< ", Ago = starter * number of cosets = " << ago
 					<< " = " << go << " * " << Cl
 					<< " created from flag orbit " << f << " / "
-				<< nb_middle_orbits << " progress="
+				<< nb_flag_orbits << " progress="
 				<< progress << "%" << endl;
 			}
 

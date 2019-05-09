@@ -1235,21 +1235,30 @@ int semifield_lifting::trace_to_level_three(
 	Elt1 = NEW_int(SC->A->elt_size_in_int);
 	basis_tmp = NEW_int(basis_sz * k2);
 
+	if (f_v) {
+		cout << "semifield_lifting::trace_to_level_three before trace_very_general" << endl;
+		}
 	trace_very_general(
 		input_basis, basis_sz, basis_tmp, transporter,
 		trace_po, trace_so,
-		verbose_level - 4);
+		verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::trace_to_level_three after trace_very_general" << endl;
+		}
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "semifield_lifting::trace_to_level_three "
 				"before trace_step_up" << endl;
 		}
-
 	trace_step_up(
 		trace_po, trace_so,
 		input_basis, basis_sz, basis_tmp,
 		transporter, Elt1,
-		verbose_level - 4);
+		verbose_level);
+	if (f_v) {
+		cout << "semifield_lifting::trace_to_level_three "
+				"after trace_step_up" << endl;
+		}
 
 	FREE_int(Elt1);
 	FREE_int(basis_tmp);
