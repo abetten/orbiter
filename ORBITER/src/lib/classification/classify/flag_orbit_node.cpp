@@ -65,6 +65,10 @@ void flag_orbit_node::init(
 	if (f_v) {
 		cout << "flag_orbit_node::init" << endl;
 		}
+	if (Flag_orbits->f_lint) {
+		cout << "flag_orbit_node::init Flag_orbits->f_lint" << endl;
+		exit(1);
+	}
 	flag_orbit_node::Flag_orbits = Flag_orbits;
 	flag_orbit_node::flag_orbit_index = flag_orbit_index;
 	flag_orbit_node::downstep_primary_orbit = downstep_primary_orbit;
@@ -73,6 +77,38 @@ void flag_orbit_node::init(
 	flag_orbit_node::f_long_orbit = FALSE;
 	int_vec_copy(pt_representation,
 			Flag_orbits->Pt +
+			flag_orbit_index * Flag_orbits->pt_representation_sz,
+			Flag_orbits->pt_representation_sz);
+	gens = Strong_gens;
+	if (f_v) {
+		cout << "flag_orbit_node::init done" << endl;
+		}
+}
+
+void flag_orbit_node::init_lint(
+	flag_orbits *Flag_orbits, int flag_orbit_index,
+	int downstep_primary_orbit, int downstep_secondary_orbit,
+	int downstep_orbit_len, int f_long_orbit,
+	long int *pt_representation, strong_generators *Strong_gens,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "flag_orbit_node::init" << endl;
+		}
+	if (!Flag_orbits->f_lint) {
+		cout << "flag_orbit_node::init_lint !Flag_orbits->f_lint" << endl;
+		exit(1);
+	}
+	flag_orbit_node::Flag_orbits = Flag_orbits;
+	flag_orbit_node::flag_orbit_index = flag_orbit_index;
+	flag_orbit_node::downstep_primary_orbit = downstep_primary_orbit;
+	flag_orbit_node::downstep_secondary_orbit = downstep_secondary_orbit;
+	flag_orbit_node::downstep_orbit_len = downstep_orbit_len;
+	flag_orbit_node::f_long_orbit = FALSE;
+	lint_vec_copy(pt_representation,
+			Flag_orbits->Pt_lint +
 			flag_orbit_index * Flag_orbits->pt_representation_sz,
 			Flag_orbits->pt_representation_sz);
 	gens = Strong_gens;
@@ -154,9 +190,16 @@ void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
 		ost << " fuse to " << fusion_with;
 	}
 	ost << " is ";
-	int_vec_print(ost, Flag_orbits->Pt +
-			flag_orbit_index * Flag_orbits->pt_representation_sz,
-			Flag_orbits->pt_representation_sz);
+	if (Flag_orbits->f_lint) {
+		lint_vec_print(ost, Flag_orbits->Pt_lint +
+				flag_orbit_index * Flag_orbits->pt_representation_sz,
+				Flag_orbits->pt_representation_sz);
+	}
+	else {
+		int_vec_print(ost, Flag_orbits->Pt +
+				flag_orbit_index * Flag_orbits->pt_representation_sz,
+				Flag_orbits->pt_representation_sz);
+	}
 	ost << " with a stabilizer of order ";
 	gens->group_order(go);
 	ost << go << "\\\\" << endl;

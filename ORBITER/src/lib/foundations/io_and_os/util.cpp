@@ -321,6 +321,15 @@ uint32_t int_vec_hash(int *data, int len)
 	return h;
 }
 
+uint32_t lint_vec_hash(long int *data, int len)
+{
+	uint32_t h;
+
+	h = SuperFastHash ((const char *) data,
+		(uint32_t) len * sizeof(long int));
+	return h;
+}
+
 uint32_t char_vec_hash(char *data, int len)
 {
 	uint32_t h;
@@ -1055,6 +1064,20 @@ void int_set_print_tex_for_inline_text(ostream &ost,
 {
 	int i;
 	
+	ost << "\\{ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ",$ $";
+		}
+	ost << " \\}";
+}
+
+void lint_set_print_tex_for_inline_text(ostream &ost,
+	long int *v, int len)
+{
+	int i;
+
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];

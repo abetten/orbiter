@@ -25,18 +25,22 @@ public:
 	action *A; // do not free
 	action *A2; // do not free
 
+	int f_lint;
 	longinteger_object go;
 	int max_orbits;
 	int nb_orbits;
 	orbit_node *Orbit; // [max_orbits]
 	int representation_sz;
 	int *Rep; // [nb_orbits * representation_sz]
+	long int *Rep_lint; // [nb_orbits * representation_sz]
 
 	classification_step();
 	~classification_step();
 	void null();
 	void freeself();
 	void init(action *A, action *A2, int max_orbits, int representation_sz,
+			longinteger_object &go, int verbose_level);
+	void init_lint(action *A, action *A2, int max_orbits, int representation_sz,
 			longinteger_object &go, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
@@ -61,10 +65,12 @@ public:
 	int nb_primary_orbits_lower;
 	int nb_primary_orbits_upper;
 
+	int f_lint;
 	int nb_flag_orbits;
 	flag_orbit_node *Flag_orbit_node;
 	int pt_representation_sz;
 	int *Pt; // [nb_flag_orbits * pt_representation_sz]
+	long int *Pt_lint; // [nb_flag_orbits * pt_representation_sz]
 
 	flag_orbits();
 	~flag_orbits();
@@ -72,6 +78,10 @@ public:
 	void freeself();
 	void init(action *A, action *A2, int nb_primary_orbits_lower,
 			int pt_representation_sz, int nb_flag_orbits, int verbose_level);
+	void init_lint(action *A, action *A2,
+		int nb_primary_orbits_lower,
+		int pt_representation_sz, int nb_flag_orbits,
+		int verbose_level);
 	int find_node_by_po_so(int po, int so, int &idx,
 		int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
@@ -115,6 +125,12 @@ public:
 			int downstep_primary_orbit, int downstep_secondary_orbit,
 			int downstep_orbit_len, int f_long_orbit, int *pt_representation,
 			strong_generators *Strong_gens, int verbose_level);
+	void init_lint(
+		flag_orbits *Flag_orbits, int flag_orbit_index,
+		int downstep_primary_orbit, int downstep_secondary_orbit,
+		int downstep_orbit_len, int f_long_orbit,
+		long int *pt_representation, strong_generators *Strong_gens,
+		int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 	void print_latex(flag_orbits *Flag_orbits,
@@ -139,8 +155,11 @@ public:
 	~orbit_node();
 	void null();
 	void freeself();
-	void init(classification_step *C, int orbit_index, strong_generators *gens,
+	void init(classification_step *C,
+			int orbit_index, strong_generators *gens,
 			int *Rep, int verbose_level);
+	void init_lint(classification_step *C, int orbit_index,
+		strong_generators *gens, long int *Rep, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 };

@@ -9,12 +9,20 @@ LFLAGS = -lm
 
 
 all:  deep_search.out \
+	isomorph_testing.out \
+	read_solutions.out \
 	semifield_classify_main.out \
 	semifield_main.out 
 
 
 deep_search.out:  deep_search.o  ;
 	$(DISCRETA_CPP)  deep_search.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+isomorph_testing.out:  isomorph_testing.o  ;
+	$(DISCRETA_CPP)  isomorph_testing.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+read_solutions.out:  read_solutions.o  ;
+	$(DISCRETA_CPP)  read_solutions.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 semifield_classify_main.out:  semifield_classify_main.o  ;
 	$(DISCRETA_CPP)  semifield_classify_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

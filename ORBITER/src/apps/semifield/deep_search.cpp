@@ -190,15 +190,15 @@ int main(int argc, const char **argv)
 #endif
 
 	L3 = NEW_OBJECT(semifield_lifting);
-	cout << "before L3->compute_level_three" << endl;
+	cout << "before L3->init_level_three" << endl;
 	L3->init_level_three(L2,
 			SC->f_level_three_prefix, SC->level_three_prefix,
 			verbose_level);
-	cout << "after L3->compute_level_three" << endl;
+	cout << "after L3->init_level_three" << endl;
 
 	cout << "before L3->recover_level_three_from_file" << endl;
 	//L3->compute_level_three(verbose_level);
-	L3->recover_level_three_from_file(verbose_level);
+	L3->recover_level_three_from_file(FALSE /* f_read_flag_orbits */, verbose_level);
 	cout << "after L3->recover_level_three_from_file" << endl;
 
 

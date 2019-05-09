@@ -2038,6 +2038,19 @@ int int_vec_compare(int *p, int *q, int len)
 	return 0;
 }
 
+int lint_vec_compare(long int *p, long int *q, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (p[i] < q[i])
+			return -1;
+		if (p[i] > q[i])
+			return 1;
+		}
+	return 0;
+}
+
 int int_vec_compare_stride(int *p, int *q, int len, int stride)
 {
 	int i;
