@@ -86,7 +86,7 @@ void semifield_downstep_node::init(
 		cout << endl;
 		}
 
-
+#if 0
 	if (f_v) {
 		cout << "semifield_downstep_node::init "
 				"sorting the " << nb_candidates << " candidates" << endl;
@@ -96,6 +96,7 @@ void semifield_downstep_node::init(
 		cout << "downstep_node::init "
 				"sorting done" << endl;
 		}
+#endif
 
 	on_cosets = NEW_OBJECT(action_on_cosets);
 

@@ -247,8 +247,8 @@ int main(int argc, const char **argv)
 	// because semifields of order 64 need 6 x 6 matrices,
 	// which need to be encoded using 36 bits.
 
-	if (sizeof(int) < 8) {
-		cout << "sizeof(int) < 8" << endl;
+	if (sizeof(long int) < 8) {
+		cout << "sizeof(long int) < 8" << endl;
 		exit(1);
 		}
 	Fio.int_matrix_read_csv(fname_FstLen,
