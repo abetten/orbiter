@@ -105,6 +105,9 @@ public:
 	int *test_w; // [k2]
 	int *test_Basis; // [k * k2]
 
+	// for compute_orbit_of_subspaces:
+	int *desired_pivots;
+
 	semifield_classify();
 	~semifield_classify();
 	void null();
@@ -160,6 +163,13 @@ public:
 		char *fname, int orbit);
 	void make_fname_candidates_at_level_two_orbit_by_type(
 		char *fname, int orbit, int h);
+	void compute_orbit_of_subspaces(
+		long int *input_data,
+		strong_generators *stabilizer_gens,
+		orbit_of_subspaces *&Orb,
+		int verbose_level);
+	// allocates an orbit_of_subspaces data structure in Orb
+	void init_desired_pivots(int verbose_level);
 };
 
 void semifield_classify_early_test_func(int *S, int len,
@@ -168,6 +178,13 @@ void semifield_classify_early_test_func(int *S, int len,
 	void *data, int verbose_level);
 int semifield_classify_rank_point_func(int *v, void *data);
 void semifield_classify_unrank_point_func(int *v, int rk, void *data);
+long int canonial_form_rank_vector_callback(int *v,
+		int n, void *data, int verbose_level);
+void canonial_form_unrank_vector_callback(long int rk,
+		int *v, int n, void *data, int verbose_level);
+void canonial_form_compute_image_of_vector_callback(
+		int *v, int *w, int *Elt, void *data,
+		int verbose_level);
 
 
 // #############################################################################
@@ -388,7 +405,7 @@ public:
 	void init_level_three(semifield_level_two *L2,
 			int f_prefix, const char *prefix,
 			int verbose_level);
-	void recover_level_three_from_file(int verbose_level);
+	void recover_level_three_from_file(int f_read_flag_orbits, int verbose_level);
 	void compute_level_three(int verbose_level);
 	void level_two_down(int verbose_level);
 	void level_two_flag_orbits(int verbose_level);
@@ -416,11 +433,24 @@ public:
 	void find_all_candidates(
 		int level,
 		int verbose_level);
+	void get_pivots(int level, int po, int *pivots,
+			int verbose_level);
 	void get_basis_and_pivots(
 			int level, int po, int *Basis, int *pivots,
 			int verbose_level);
+	void get_basis_and_pivots(
+		int po3, int *basis, int *pivots,
+		int verbose_level);
 	strong_generators *get_stabilizer_generators(
 		int level, int orbit_idx,
+		int verbose_level);
+	int trace_to_level_three(
+		int *input_basis, int basis_sz, int *transporter,
+		int verbose_level);
+	void trace_step_up(
+		int &po, int &so,
+		int *changed_basis, int basis_sz, int *basis_tmp,
+		int *transporter, int *ELT3,
 		int verbose_level);
 	void trace_very_general(
 		int *input_basis, int basis_sz,
@@ -438,8 +468,6 @@ public:
 		int f_out_path, const char *out_path,
 		int &nb_sol,
 		int verbose_level);
-	void get_basis_and_pivots(
-		int po3, int *basis, int *pivots, int verbose_level);
 	void print_stabilizer_orders();
 	void deep_search_at_level_three_orbit(
 		int orbit, int *Basis, int *pivots,

@@ -19,7 +19,16 @@ namespace classification {
 
 classification_step::classification_step()
 {
-	null();
+	A = NULL;
+	A2 = NULL;
+	f_lint = FALSE;
+	max_orbits = 0;
+	nb_orbits = 0;
+	Orbit = NULL;
+	representation_sz = 0;
+	Rep = NULL;
+	Rep_lint = NULL;
+	//null();
 }
 
 classification_step::~classification_step()
@@ -29,13 +38,6 @@ classification_step::~classification_step()
 
 void classification_step::null()
 {
-	A = NULL;
-	A2 = NULL;
-	max_orbits = 0;
-	nb_orbits = 0;
-	Orbit = NULL;
-	representation_sz = 0;
-	Rep = NULL;
 }
 
 void classification_step::freeself()
@@ -45,6 +47,9 @@ void classification_step::freeself()
 		}
 	if (Rep) {
 		FREE_int(Rep);
+		}
+	if (Rep_lint) {
+		FREE_lint(Rep_lint);
 		}
 	null();
 }
@@ -63,6 +68,7 @@ void classification_step::init(action *A, action *A2,
 		}
 	classification_step::A = A;
 	classification_step::A2 = A2;
+	f_lint = FALSE;
 	go.assign_to(classification_step::go);
 	classification_step::max_orbits = max_orbits;
 	classification_step::representation_sz = representation_sz;
@@ -70,6 +76,31 @@ void classification_step::init(action *A, action *A2,
 	Rep = NEW_int(max_orbits * representation_sz);
 	if (f_v) {
 		cout << "classification_step::init done" << endl;
+		}
+}
+
+void classification_step::init_lint(action *A, action *A2,
+	int max_orbits, int representation_sz,
+	longinteger_object &go, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_step::init_lint "
+				"group order = " << go
+				<< " representation_sz = " << representation_sz
+				<< " max_orbits = " << max_orbits << endl;
+		}
+	classification_step::A = A;
+	classification_step::A2 = A2;
+	f_lint = TRUE;
+	go.assign_to(classification_step::go);
+	classification_step::max_orbits = max_orbits;
+	classification_step::representation_sz = representation_sz;
+	Orbit = NEW_OBJECTS(orbit_node, max_orbits);
+	Rep_lint = NEW_lint(max_orbits * representation_sz);
+	if (f_v) {
+		cout << "classification_step::init_lint done" << endl;
 		}
 }
 
@@ -83,6 +114,10 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 
 	if (f_v) {
 		cout << "classification_step::get_set_and_stabilizer" << endl;
+		}
+	if (f_lint) {
+		cout << "classification_step::get_set_and_stabilizer f_lint is TRUE" << endl;
+		exit(1);
 		}
 
 	SaS = NEW_OBJECT(set_and_stabilizer);
@@ -166,9 +201,16 @@ void classification_step::print_latex(ostream &ost,
 		
 		ost << "\\item" << endl;
 		ost << "$" << i << " / " << nb_orbits << "$ $" << endl;
-		int_set_print_tex_for_inline_text(ost,
-				Rep + i * representation_sz,
-				representation_sz);
+		if (f_lint) {
+			lint_set_print_tex_for_inline_text(ost,
+					Rep_lint + i * representation_sz,
+					representation_sz);
+		}
+		else {
+			int_set_print_tex_for_inline_text(ost,
+					Rep + i * representation_sz,
+					representation_sz);
+		}
 		ost << "_{";
 		go1.print_not_scientific(ost);
 		ost << "}$ orbit length $";
@@ -197,10 +239,18 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 		}
 	fp.write((char *) &nb_orbits, sizeof(int));
 	fp.write((char *) &representation_sz, sizeof(int));
+	fp.write((char *) &f_lint, sizeof(int));
 
-	for (i = 0; i < nb_orbits * representation_sz; i++) {
-		fp.write((char *) &Rep[i], sizeof(int));
-		}
+	if (f_lint) {
+		for (i = 0; i < nb_orbits * representation_sz; i++) {
+			fp.write((char *) &Rep_lint[i], sizeof(long int));
+			}
+	}
+	else {
+		for (i = 0; i < nb_orbits * representation_sz; i++) {
+			fp.write((char *) &Rep[i], sizeof(int));
+			}
+	}
 	for (i = 0; i < nb_orbits; i++) {
 		Orbit[i].write_file(fp, 0/*verbose_level*/);
 		}
@@ -220,11 +270,20 @@ void classification_step::read_file(ifstream &fp, int verbose_level)
 		}
 	fp.read((char *) &nb_orbits, sizeof(int));
 	fp.read((char *) &representation_sz, sizeof(int));
+	fp.read((char *) &f_lint, sizeof(int));
 
-	Rep = NEW_int(nb_orbits * representation_sz);
-	for (i = 0; i < nb_orbits * representation_sz; i++) {
-		fp.read((char *) &Rep[i], sizeof(int));
-		}
+	if (f_lint) {
+		Rep_lint = NEW_lint(nb_orbits * representation_sz);
+		for (i = 0; i < nb_orbits * representation_sz; i++) {
+			fp.read((char *) &Rep_lint[i], sizeof(long int));
+			}
+	}
+	else {
+		Rep = NEW_int(nb_orbits * representation_sz);
+		for (i = 0; i < nb_orbits * representation_sz; i++) {
+			fp.read((char *) &Rep[i], sizeof(int));
+			}
+	}
 	
 	max_orbits = nb_orbits;
 	Orbit = NEW_OBJECTS(orbit_node, nb_orbits);

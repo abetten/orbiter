@@ -467,6 +467,7 @@ void bitvector_set_bit(uchar *bitvec, int i);
 int bitvector_s_i(uchar *bitvec, int i);
 // returns 0 or 1
 uint32_t int_vec_hash(int *data, int len);
+uint32_t lint_vec_hash(long int *data, int len);
 uint32_t char_vec_hash(char *data, int len);
 int int_vec_hash_after_sorting(int *data, int len);
 const char *plus_minus_string(int epsilon);
@@ -493,7 +494,10 @@ void int_set_print(std::ostream &ost, int *v, int len);
 void int_set_print_tex(std::ostream &ost, int *v, int len);
 void int_set_print_masked_tex(std::ostream &ost,
 	int *v, int len, const char *mask_begin, const char *mask_end);
-void int_set_print_tex_for_inline_text(std::ostream &ost, int *v, int len);
+void int_set_print_tex_for_inline_text(std::ostream &ost,
+		int *v, int len);
+void lint_set_print_tex_for_inline_text(std::ostream &ost,
+		long int *v, int len);
 void int_vec_print(std::ostream &ost, int *v, int len);
 void lint_vec_print(std::ostream &ost, long int *v, int len);
 void int_vec_print_str(std::stringstream &ost, int *v, int len);

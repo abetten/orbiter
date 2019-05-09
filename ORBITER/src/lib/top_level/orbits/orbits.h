@@ -225,21 +225,30 @@ public:
 	action *A2;
 	finite_field *F;
 	vector_ge *gens;
+	int f_lint;
 	int k;
 	int n;
 	int kn;
 	int sz; // = 1 + k + kn
-	int sz_for_compare; // = 1 + k + kn
+	//int sz_for_compare; // = 1 + k + kn
 	int f_has_desired_pivots;
 	int *desired_pivots; // [k]
 	int *subspace_by_rank; // [k]
+	long int *subspace_by_rank_lint; // [k]
 	int *data_tmp; // [sz]
+	int *Mtx1;
+	int *Mtx2;
+	int *Mtx3;
 
 	int f_has_rank_functions;
 	void *rank_unrank_data;
 	int (*rank_vector_callback)(int *v, int n, 
 		void *data, int verbose_level);
+	long int (*rank_vector_lint_callback)(int *v, int n,
+		void *data, int verbose_level);
 	void (*unrank_vector_callback)(int rk, int *v, 
+		int n, void *data, int verbose_level);
+	void (*unrank_vector_lint_callback)(long int rk, int *v,
 		int n, void *data, int verbose_level);
 	void (*compute_image_of_vector_callback)(int *v, int *w, 
 		int *Elt, void *data, int verbose_level);
@@ -247,10 +256,21 @@ public:
 
 	int position_of_original_subspace;
 	int allocation_length;
+	int old_length;
 	int used_length;
 	int **Subspaces;
+	long int **Subspaces_lint;
 	int *prev;
 	int *label;
+
+	std::multimap<uint32_t, int> Hashing;
+		// we store the pair (hash, idx)
+		// where hash is the hash value of the set and idx is the
+		// index in the table Sets where the set is stored.
+		//
+		// we use a multimap because the hash values are not unique
+		// it happens that two sets have the same hash value.
+		// map cannot handle that.
 
 
 	orbit_of_subspaces();
@@ -269,30 +289,65 @@ public:
 			int *w, int *Elt, void *data, int verbose_level), 
 		void *compute_image_of_vector_callback_data, 
 		vector_ge *gens, int verbose_level);
+	void init_lint(
+		action *A, action *A2, finite_field *F,
+		long int *subspace_by_rank, int k, int n,
+		int f_has_desired_pivots, int *desired_pivots,
+		int f_has_rank_functions, void *rank_unrank_data,
+		long int (*rank_vector_lint_callback)(int *v, int n,
+				void *data, int verbose_level),
+		void (*unrank_vector_lint_callback)(long int rk, int *v, int n,
+				void *data, int verbose_level),
+		void (*compute_image_of_vector_callback)(int *v, int *w,
+				int *Elt, void *data, int verbose_level),
+		void *compute_image_of_vector_callback_data,
+		vector_ge *gens, int verbose_level);
 	int rank_vector(int *v, int verbose_level);
+	long int rank_vector_lint(int *v, int verbose_level);
 	void unrank_vector(int rk, int *v, int verbose_level);
+	void unrank_vector_lint(long int rk, int *v, int verbose_level);
+	void unrank_subspace(
+			int subspace_idx, int *subspace_basis, int verbose_level);
+	void rank_subspace(
+			int *subspace_basis, int verbose_level);
+	uint32_t hash_subspace();
+	void unrank(
+			int *rk, int *subspace_basis, int verbose_level);
+	void unrank_lint(
+			long int *rk, int *subspace_basis, int verbose_level);
+	void rank(
+			int *rk, int *subspace_basis, int verbose_level);
+	void rank_lint(
+			long int *rk, int *subspace_basis, int verbose_level);
 	void rref(int *subspace, int verbose_level);
-	void rref_and_rank_and_hash(int *subspace, int verbose_level);
-	void map_a_subspace(int *subspace, int *image_subspace, 
-		int *Elt, int verbose_level);
-	void map_a_basis(int *basis, int *image_basis, int *Elt, 
+	void rref_and_rank(
+			int *subspace, int *rk, int verbose_level);
+	void rref_and_rank_lint(
+			int *subspace, long int *rk, int verbose_level);
+	void map_a_subspace(int *basis, int *image_basis, int *Elt,
 		int verbose_level);
 	void print_orbit();
+	int rank_hash_and_find(int *subspace, int &idx, uint32_t &h, int verbose_level);
 	void compute(int verbose_level);
 	void get_transporter(int idx, int *transporter, int verbose_level);
 		// transporter is an element which maps the orbit 
 		// representative to the given subspace.
+	int find_subspace(
+			int *subspace_ranks, int &idx, int verbose_level);
+	int find_subspace_lint(
+			long int *subspace_ranks, int &idx, int verbose_level);
 	void get_random_schreier_generator(int *Elt, int verbose_level);
 	strong_generators *stabilizer_orbit_rep(
 		longinteger_object &full_group_order, int verbose_level);
 	void compute_stabilizer(action *default_action, longinteger_object &go, 
 		sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
-	int search_data(int *data, int &idx);
-	int search_data_raw(int *data_raw, int &idx, int verbose_level);
+	//int search_data(int *data, int &idx);
+	//int search_data_raw(int *data_raw, int &idx, int verbose_level);
 };
 
-int orbit_of_subspaces_compare_func(void *a, void *b, void *data);
+//int orbit_of_subspaces_compare_func(void *a, void *b, void *data);
+//int orbit_of_subspaces_compare_func_lint(void *a, void *b, void *data);
 
 // #############################################################################
 // subspace_orbits.C

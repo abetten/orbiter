@@ -55,6 +55,7 @@ semifield_classify::semifield_classify()
 	test_v = NULL;
 	test_w = NULL;
 	test_Basis = NULL;
+	desired_pivots = NULL;
 	//null();
 }
 
@@ -103,6 +104,9 @@ void semifield_classify::freeself()
 		}
 	if (test_Basis) {
 		FREE_int(test_Basis);
+		}
+	if (desired_pivots) {
+		FREE_int(desired_pivots);
 		}
 	null();
 }
@@ -350,7 +354,7 @@ void semifield_classify::init(int argc, const char **argv,
 
 
 
-
+	init_desired_pivots(verbose_level);
 
 
 	if (f_v) {
@@ -1158,6 +1162,74 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
 
 
 
+void semifield_classify::compute_orbit_of_subspaces(
+	long int *input_data,
+	strong_generators *stabilizer_gens,
+	orbit_of_subspaces *&Orb,
+	int verbose_level)
+// allocates an orbit_of_subspaces data structure in Orb
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "semifield_classify::compute_orbit_"
+				"of_subspaces" << endl;
+		}
+
+	Orb = NEW_OBJECT(orbit_of_subspaces);
+
+
+	Orb->init_lint(A, AS, F,
+		input_data, k, k2 /* n */,
+		TRUE /* f_has_desired_pivots */, desired_pivots,
+		TRUE /* f_has_rank_functions */, this /* rank_unrank_data */,
+		canonial_form_rank_vector_callback,
+		canonial_form_unrank_vector_callback,
+		canonial_form_compute_image_of_vector_callback,
+		this /* compute_image_of_vector_callback_data */,
+		stabilizer_gens->gens,
+		verbose_level);
+
+
+	if (f_v) {
+		cout << "semifield_classify::compute_orbit_"
+				"of_subspaces done" << endl;
+		}
+}
+
+
+
+void semifield_classify::init_desired_pivots(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+
+	if (f_v) {
+		cout << "semifield_classify::init_desired_pivots" << endl;
+		}
+	desired_pivots = NEW_int(k);
+
+	for (i = 0; i < k; i++) {
+		if (i < 2) {
+			desired_pivots[i] = i * k;
+			}
+		else {
+			desired_pivots[i] = (k - 1 - (i - 2)) * k;
+			}
+		}
+	if (f_vv) {
+		cout << "semifield_classify::init_desired_pivots "
+				"desired_pivots: ";
+		int_vec_print(cout, desired_pivots, k);
+		cout << endl;
+		}
+	if (f_v) {
+		cout << "semifield_classify::init_desired_pivots done" << endl;
+		}
+}
+
+
 
 //##############################################################################
 // global function:
@@ -1227,6 +1299,37 @@ void semifield_classify_unrank_point_func(int *v, int rk, void *data)
 		cout << "semifield_classify_unrank_point_func done" << endl;
 		}
 }
+
+
+long int canonial_form_rank_vector_callback(int *v,
+		int n, void *data, int verbose_level)
+{
+	semifield_classify *SC = (semifield_classify *) data;
+	long int r;
+
+	r = SC->matrix_rank(v);
+	return r;
+}
+
+void canonial_form_unrank_vector_callback(long int rk,
+		int *v, int n, void *data, int verbose_level)
+{
+	semifield_classify *SC = (semifield_classify *) data;
+
+	SC->matrix_unrank(rk, v);
+}
+
+void canonial_form_compute_image_of_vector_callback(
+		int *v, int *w, int *Elt, void *data,
+		int verbose_level)
+{
+	semifield_classify *SC = (semifield_classify *) data;
+
+
+	SC->A_on_S->compute_image_low_level(Elt, v, w,
+			0 /* verbose_level */);
+}
+
 
 
 
