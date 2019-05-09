@@ -1331,7 +1331,7 @@ void semifield_lifting::trace_step_up(
 	int *pivots;
 
 	pivots = NEW_int(cur_level);
-	get_pivots(2 /* level */,
+	get_pivots(3 /* level */,
 			Flag_orbits[f0].upstep_orbit,
 			pivots, verbose_level - 3);
 
