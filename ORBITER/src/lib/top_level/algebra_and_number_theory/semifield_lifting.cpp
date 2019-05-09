@@ -1091,11 +1091,26 @@ void semifield_lifting::get_basis_and_pivots(
 		L2->get_basis_and_pivots(po,
 				Basis, pivots, verbose_level - 1);
 		}
-#if 0
 	else if (level == 3) {
-		level_three_get_basis_and_pivots(po,
+		int i;
+
+		//pivots[0] = 0;
+		//pivots[1] = k;
+		for (i = k - 1; i >= 2; i--) { // for (i = 2; i < k; i++)
+			if (Basis[2 * k2 + i * k + 0]) {
+				pivots[2] = i * k;
+				break;
+				}
+			}
+		if (i < 2) {
+			cout << "semifield_lifting::get_basis_and_pivots "
+					"Could not find pivot element" << endl;
+			exit(1);
+			}
+		L2->get_basis_and_pivots(po,
 				Basis, pivots, verbose_level - 1);
 		}
+#if 0
 	else if (level == 4) {
 		level_four_get_basis_and_pivots(po,
 				Basis, pivots, verbose_level - 1);
