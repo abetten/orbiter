@@ -582,7 +582,9 @@ void decode_uchar(char *&p, uchar &a);
 void print_incidence_structure(std::ostream &ost,
 		int m, int n, int len, int *S);
 void int_vec_scan(const char *s, int *&v, int &len);
+void lint_vec_scan(const char *s, long int *&v, int &len);
 void int_vec_scan_from_stream(std::istream & is, int *&v, int &len);
+void lint_vec_scan_from_stream(std::istream & is, long int *&v, int &len);
 void scan_permutation_from_string(const char *s, 
 	int *&perm, int &degree, int verbose_level);
 void scan_permutation_from_stream(std::istream & is,
