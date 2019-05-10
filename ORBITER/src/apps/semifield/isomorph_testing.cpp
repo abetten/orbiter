@@ -628,7 +628,7 @@ int main(int argc, const char **argv)
 	Flag_orbits->init_lint(
 		SC->A, SC->AS,
 		nb_orbits /* nb_primary_orbits_lower */,
-		Flag_orbits->pt_representation_sz,
+		k /* pt_representation_sz */,
 		nb_flag_orbits /* nb_flag_orbits */,
 		verbose_level);
 
@@ -742,15 +742,15 @@ int main(int argc, const char **argv)
 	int desired_pivots[6];
 
 
-	for (i = 0; i < SC->k; i++) {
-		desired_pivots[i] = desired_pivot_rows[i] * SC->k;
+	for (i = 0; i < k; i++) {
+		desired_pivots[i] = desired_pivot_rows[i] * k;
 		}
 	if (f_v) {
 		cout << "desired_pivot_rows:";
-		int_vec_print(cout, desired_pivot_rows, SC->k);
+		int_vec_print(cout, desired_pivot_rows, k);
 		cout << endl;
 		cout << "desired_pivots:";
-		int_vec_print(cout, desired_pivots, SC->k);
+		int_vec_print(cout, desired_pivots, k);
 		cout << endl;
 		}
 
@@ -784,8 +784,8 @@ int main(int argc, const char **argv)
 	int f_skip = FALSE;
 
 
-	data1 = NEW_lint(SC->k);
-	data2 = NEW_lint(SC->k);
+	data1 = NEW_lint(k);
+	data2 = NEW_lint(k);
 
 	f_processed = NEW_int(nb_flag_orbits);
 	int_vec_zero(f_processed, nb_flag_orbits);
@@ -800,7 +800,7 @@ int main(int argc, const char **argv)
 	SC->A->group_order(go);
 
 	Semifields->init_lint(SC->A, SC->AS,
-			nb_flag_orbits, SC->k, go, verbose_level);
+			nb_flag_orbits, k, go, verbose_level);
 
 
 	Flag_orbits->nb_primary_orbits_upper = 0;
@@ -834,10 +834,11 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 			}
-		lint_vec_copy(Flag_orbits->Pt_lint + f * Flag_orbits->pt_representation_sz, data1, SC->k);
+		lint_vec_copy(Flag_orbits->Pt_lint + f * Flag_orbits->pt_representation_sz,
+				data1, k);
 		if (f_v) {
 			cout << "data1=";
-			lint_vec_print(cout, data1, SC->k);
+			lint_vec_print(cout, data1, k);
 			cout << endl;
 			}
 
@@ -863,7 +864,7 @@ int main(int argc, const char **argv)
 		for (i = 0; i < k; i++) {
 			v3[i] = Basis1[2 * k2 + i * k + 0];
 			}
-		if (!is_unit_vector(v3, SC->k, SC->k - 1)) {
+		if (!is_unit_vector(v3, k, k - 1)) {
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
@@ -1004,7 +1005,7 @@ int main(int argc, const char **argv)
 					}
 				if (f_v) {
 					cout << "data2=";
-					lint_vec_print(cout, data2, 6);
+					lint_vec_print(cout, data2, k);
 					cout << endl;
 					}
 
