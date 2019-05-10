@@ -778,14 +778,17 @@ int main(int argc, const char **argv)
 	int *Elt2;
 	int *Elt3;
 	longinteger_object go;
-	int v1[6];
-	int v2[6];
-	int v3[6];
+	int *v1;
+	int *v2;
+	int *v3;
 	int f_skip = FALSE;
 
 
 	data1 = NEW_lint(k);
 	data2 = NEW_lint(k);
+	v1 = NEW_int(k);
+	v2 = NEW_int(k);
+	v3 = NEW_int(k);
 
 	f_processed = NEW_int(nb_flag_orbits);
 	int_vec_zero(f_processed, nb_flag_orbits);
@@ -852,8 +855,7 @@ int main(int argc, const char **argv)
 
 
 		for (i = 0; i < k; i++) {
-			SC->matrix_unrank(data1[i],
-					Basis1 + i * k2);
+			SC->matrix_unrank(data1[i], Basis1 + i * k2);
 			}
 		if (f_v) {
 			cout << "Basis1=" << endl;
@@ -967,13 +969,13 @@ int main(int argc, const char **argv)
 			for (i = 0; i < k; i++) {
 				v3[i] = Basis2[2 * k2 + i * k + 0];
 				}
-			if (!is_unit_vector(v1, 6, 0)) {
+			if (!is_unit_vector(v1, k, 0)) {
 				f_skip = TRUE;
 				}
-			if (!is_unit_vector(v2, 6, 1)) {
+			if (!is_unit_vector(v2, k, 1)) {
 				f_skip = TRUE;
 				}
-			if (!is_unit_vector(v3, 6, 5)) {
+			if (!is_unit_vector(v3, k, k - 1)) {
 				f_skip = TRUE;
 				}
 			T->f_skip = f_skip;
