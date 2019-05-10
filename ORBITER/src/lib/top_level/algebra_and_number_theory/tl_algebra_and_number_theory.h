@@ -424,7 +424,7 @@ public:
 	// level is the level that we want to classify
 	void upstep_loop_over_down_set(
 		int level, int f, int po, int so, int N,
-		int *transporter, int *Mtx, int *pivots,
+		int *transporter, int *Mtx, //int *pivots,
 		int *base_change_matrix, int *changed_space,
 		int *changed_space_after_trace, long int *set,
 		int **Aut,
@@ -433,11 +433,9 @@ public:
 	void find_all_candidates(
 		int level,
 		int verbose_level);
-	//void get_pivots(int level, int po, int *pivots,
+	//void get_pivots(
+	//		int level, int po, int *Basis, int *pivots,
 	//		int verbose_level);
-	void get_pivots(
-			int level, int po, int *Basis, int *pivots,
-			int verbose_level);
 	void get_basis_and_pivots(
 		int po3, int *basis, int *pivots,
 		int verbose_level);
@@ -518,7 +516,7 @@ public:
 	int nb_candidates;
 
 	int *subspace_basis;
-	int *subspace_base_cols;
+	//int *subspace_base_cols;
 
 	action_on_cosets *on_cosets;
 	action *A_on_cosets;

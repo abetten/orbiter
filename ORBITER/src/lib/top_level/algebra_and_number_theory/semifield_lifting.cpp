@@ -676,7 +676,7 @@ void semifield_lifting::upstep(
 	int f;
 	int *transporter;
 	int *Mtx;
-	int *pivots;
+	//int *pivots;
 	int *base_change_matrix;
 	int *changed_space;
 	int *changed_space_after_trace;
@@ -689,7 +689,7 @@ void semifield_lifting::upstep(
 	transporter = NEW_int(SC->A->elt_size_in_int);
 
 	Mtx = NEW_int(level * k2);
-	pivots = NEW_int(level);
+	//pivots = NEW_int(level);
 	base_change_matrix = NEW_int(level * level);
 	changed_space = NEW_int(level * k2);
 	changed_space_after_trace = NEW_int(level * k2);
@@ -735,7 +735,8 @@ void semifield_lifting::upstep(
 		Mo[nb_orbits] = f;
 		Pt[nb_orbits] = pt;
 
-		get_pivots(level - 1, po, Mtx, pivots, verbose_level - 3);
+		//get_pivots(level - 1, po, Mtx, pivots, verbose_level - 3);
+		//int_vec_copy(SC->desired_pivots, pivots, level);
 		SC->matrix_unrank(pt, Mtx + (level - 1) * k2);
 
 		if (f_v) {
@@ -756,7 +757,7 @@ void semifield_lifting::upstep(
 
 		upstep_loop_over_down_set(
 			level, f, po, so, N,
-			transporter, Mtx, pivots,
+			transporter, Mtx, //pivots,
 			base_change_matrix, changed_space,
 			changed_space_after_trace, set,
 			Aut,
@@ -857,7 +858,7 @@ void semifield_lifting::upstep(
 
 	FREE_int(transporter);
 	FREE_int(Mtx);
-	FREE_int(pivots);
+	//FREE_int(pivots);
 	FREE_int(base_change_matrix);
 	FREE_int(changed_space);
 	FREE_int(changed_space_after_trace);
@@ -873,7 +874,7 @@ void semifield_lifting::upstep(
 
 void semifield_lifting::upstep_loop_over_down_set(
 	int level, int f, int po, int so, int N,
-	int *transporter, int *Mtx, int *pivots,
+	int *transporter, int *Mtx, //int *pivots,
 	int *base_change_matrix, int *changed_space,
 	int *changed_space_after_trace, long int *set,
 	int **Aut,
@@ -1080,6 +1081,8 @@ void semifield_lifting::get_pivots(
 }
 #endif
 
+
+#if 0
 void semifield_lifting::get_pivots(
 		int level, int po, int *Basis, int *pivots,
 		int verbose_level)
@@ -1134,6 +1137,7 @@ void semifield_lifting::get_pivots(
 				<< " po = " << po << " done" << endl;
 		}
 }
+#endif
 
 void semifield_lifting::get_basis_and_pivots(
 	int po3, int *basis, int *pivots, int verbose_level)
@@ -1358,6 +1362,7 @@ void semifield_lifting::trace_step_up(
 		exit(1);
 		}
 
+#if 0
 	int *pivots;
 
 	pivots = NEW_int(cur_level);
@@ -1371,11 +1376,14 @@ void semifield_lifting::trace_step_up(
 		int_vec_print(cout, pivots, 3);
 		cout << endl;
 		}
+#endif
+
+
 	SC->F->Gauss_int_with_given_pivots(
 		changed_basis,
 		FALSE /* f_special */,
 		TRUE /* f_complete */,
-		pivots,
+		SC->desired_pivots,
 		3 /* nb_pivots */,
 		basis_sz /* m */,
 		k2 /* n */,
@@ -1389,7 +1397,7 @@ void semifield_lifting::trace_step_up(
 		for (j = 3; j < basis_sz; j++) {
 			SC->F->Gauss_step(changed_basis + i * k2,
 					changed_basis + j * k2, k2,
-					pivots[i], 0 /*verbose_level*/);
+					SC->desired_pivots[i], 0 /*verbose_level*/);
 			}
 		}
 	if (f_vv) {
@@ -1399,7 +1407,7 @@ void semifield_lifting::trace_step_up(
 		SC->basis_print(changed_basis, basis_sz);
 		}
 
-	FREE_int(pivots);
+	//FREE_int(pivots);
 	if (f_v) {
 		cout << "semifield_lifting::trace_step_up done" << endl;
 		}
@@ -2160,7 +2168,7 @@ void semifield_lifting::deep_search_at_level_three(
 	int f_v = (verbose_level >= 1);
 	int orbit;
 	int *Basis;
-	int *pivots;
+	//int *pivots;
 	int i;
 	char fname[1000];
 	file_io Fio;
@@ -2183,7 +2191,7 @@ void semifield_lifting::deep_search_at_level_three(
 
 
 	Basis = NEW_int(k * k2);
-	pivots = NEW_int(k2);
+	//pivots = NEW_int(k2);
 
 
 	if (f_v) {
@@ -2200,21 +2208,24 @@ void semifield_lifting::deep_search_at_level_three(
 		cout << "semifield_lifting::deep_search_at_level_three orbit "
 			<< orbit << " / " << nb_orbits << ":" << endl;
 
+#if 0
 		get_pivots(2, orbit,
 				Basis, pivots,
 				verbose_level - 1);
+#endif
+
 		for (i = 0; i < 3; i++) {
 			cout << "matrix " << i << ":" << endl;
 			int_matrix_print(Basis + i * k2, k, k);
 			}
 		cout << "pivots: ";
-		int_vec_print(cout, pivots, 3);
+		int_vec_print(cout, SC->desired_pivots, 3);
 		cout << endl;
 
 
 		if (k == 6) {
 			deep_search_at_level_three_orbit(orbit,
-				Basis, pivots, fp, nb_sol, verbose_level);
+				Basis, SC->desired_pivots, fp, nb_sol, verbose_level);
 			}
 #if 0
 		else if (k == 5) {
@@ -2243,7 +2254,7 @@ void semifield_lifting::deep_search_at_level_three(
 
 
 	FREE_int(Basis);
-	FREE_int(pivots);
+	//FREE_int(pivots);
 	if (f_v) {
 		cout << "semifield_lifting::deep_search_at_level_three "
 				"done" << endl;

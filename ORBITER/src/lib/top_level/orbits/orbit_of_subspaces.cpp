@@ -148,7 +148,7 @@ void orbit_of_subspaces::init(
 	if (f_v) {
 		cout << "orbit_of_subspaces::init before compute" << endl;
 		}
-	compute(verbose_level);
+	compute(verbose_level - 1);
 	if (f_v) {
 		cout << "orbit_of_subspaces::init after compute" << endl;
 		}
@@ -212,7 +212,7 @@ void orbit_of_subspaces::init_lint(
 	if (f_v) {
 		cout << "orbit_of_subspaces::init_lint before compute" << endl;
 		}
-	compute(verbose_level);
+	compute(verbose_level - 1);
 	if (f_v) {
 		cout << "orbit_of_subspaces::init_lint after compute" << endl;
 		}
@@ -771,104 +771,6 @@ void orbit_of_subspaces::compute(int verbose_level)
 
 
 
-#if 0
-			if (search_data(new_basis, idx)) {
-			//if (vec_search((void **)Subspaces,
-				//orbit_of_subspaces_compare_func,
-				//(void *) (sz_for_compare),
-				//used_length, new_basis, idx, 0 /* verbose_level */)) {
-				if (f_vv) {
-					cout << "n e w subspace is already in the list, "
-							"at position " << idx << endl;
-					}
-				}
-			else {
-				if (f_vv) {
-					cout << "Found a n e w subspace : ";
-					int_vec_print(cout, new_basis, sz);
-					cout << endl;
-					}
-				
-				if (used_length == allocation_length) {
-					int al2 = allocation_length + 1000;
-					int **Subspaces2;
-					int *prev2;
-					int *label2;
-					int *Q2;
-					if (f_vv) {
-						cout << "reallocating to length " << al2 << endl;
-						}
-					Subspaces2 = NEW_pint(al2);
-					prev2 = NEW_int(al2);
-					label2 = NEW_int(al2);
-					for (i = 0; i < allocation_length; i++) {
-						Subspaces2[i] = Subspaces[i];
-						}
-					int_vec_copy(prev, prev2, allocation_length);
-					int_vec_copy(label, label2, allocation_length);
-					FREE_pint(Subspaces);
-					FREE_int(prev);
-					FREE_int(label);
-					Subspaces = Subspaces2;
-					prev = prev2;
-					label = label2;
-					Q2 = NEW_int(al2);
-					int_vec_copy(Q, Q2, Q_len);
-					FREE_int(Q);
-					Q = Q2;
-					allocation_length = al2;
-					}
-				for (i = used_length; i > idx; i--) {
-					Subspaces[i] = Subspaces[i - 1];
-					}
-				for (i = used_length; i > idx; i--) {
-					prev[i] = prev[i - 1];
-					}
-				for (i = used_length; i > idx; i--) {
-					label[i] = label[i - 1];
-					}
-				Subspaces[idx] = NEW_int(sz);
-				prev[idx] = cur;
-				label[idx] = j;
-
-				int_vec_copy(new_basis, Subspaces[idx], sz);
-
-				if (position_of_original_subspace >= idx) {
-					position_of_original_subspace++;
-					}
-				if (cur >= idx) {
-					cur++;
-					}
-				for (i = 0; i < used_length + 1; i++) {
-					if (prev[i] >= 0 && prev[i] >= idx) {
-						prev[i]++;
-						}
-					}
-				for (i = 0; i < Q_len; i++) {
-					if (Q[i] >= idx) {
-						Q[i]++;
-						}
-					}
-				used_length++;
-				if ((used_length % 10000) == 0) {
-					cout << "orbit_of_subspaces::compute "
-							<< used_length << endl;
-					}
-				Q[Q_len++] = idx;
-				if (f_vv) {
-					cout << "storing n e w subspace at position "
-							<< idx << endl;
-					}
-
-#if 0
-				for (i = 0; i < used_length; i++) {
-					cout << i << " : ";
-					int_vec_print(cout, Subspaces[i], nk + 1);
-					cout << endl;
-					}
-#endif
-				}
-#endif
 		} // next generator j
 
 	} // next element in the orbit
