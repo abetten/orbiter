@@ -686,35 +686,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 
 			rref(Mtx2, verbose_level - 1);
 
-			f_found = rank_hash_and_find(Mtx2, idx, h, verbose_level - 1);
-#if 0
-			rank_subspace(Mtx2, verbose_level - 2);
-
-
-			h = hash_subspace();
-
-		    map<uint32_t, int>::iterator itr, itr1, itr2;
-		    int pos, f_found;
-
-		    itr1 = Hashing.lower_bound(h);
-		    itr2 = Hashing.upper_bound(h);
-		    f_found = FALSE;
-		    for (itr = itr1; itr != itr2; ++itr) {
-		        pos = itr->second;
-		        if (f_lint) {
-					if (lint_vec_compare(subspace_by_rank_lint, Subspaces_lint[pos], sz) == 0) {
-						f_found = TRUE;
-						break;
-					}
-		        }
-		        else {
-					if (int_vec_compare(subspace_by_rank, Subspaces[pos], sz) == 0) {
-						f_found = TRUE;
-						break;
-					}
-		        }
-		    }
-#endif
+			f_found = rank_hash_and_find(Mtx2, idx, h, 0 /*verbose_level - 1*/);
 
 
 		    if (!f_found) {
@@ -994,11 +966,13 @@ int orbit_of_subspaces::find_subspace_lint(
 
 	rref(Mtx3, verbose_level - 1);
 
-	f_found = rank_hash_and_find(Mtx3, idx, h, verbose_level - 1);
+	f_found = rank_hash_and_find(Mtx3, idx, h, verbose_level - 2);
 
 	if (!f_found) {
-		cout << "orbit_of_subspaces::find_subspace_lint "
-				"not found" << endl;
+		if (f_v) {
+			cout << "orbit_of_subspaces::find_subspace_lint "
+					"not found" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "orbit_of_subspaces::find_subspace_lint done" << endl;

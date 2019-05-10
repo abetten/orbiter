@@ -433,9 +433,9 @@ public:
 	void find_all_candidates(
 		int level,
 		int verbose_level);
-	void get_pivots(int level, int po, int *pivots,
-			int verbose_level);
-	void get_basis_and_pivots(
+	//void get_pivots(int level, int po, int *pivots,
+	//		int verbose_level);
+	void get_pivots(
 			int level, int po, int *Basis, int *pivots,
 			int verbose_level);
 	void get_basis_and_pivots(

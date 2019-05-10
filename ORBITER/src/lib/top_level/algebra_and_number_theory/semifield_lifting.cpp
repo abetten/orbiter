@@ -735,7 +735,7 @@ void semifield_lifting::upstep(
 		Mo[nb_orbits] = f;
 		Pt[nb_orbits] = pt;
 
-		get_basis_and_pivots(level - 1, po, Mtx, pivots, verbose_level - 3);
+		get_pivots(level - 1, po, Mtx, pivots, verbose_level - 3);
 		SC->matrix_unrank(pt, Mtx + (level - 1) * k2);
 
 		if (f_v) {
@@ -1056,6 +1056,7 @@ void semifield_lifting::find_all_candidates(
 		}
 }
 
+#if 0
 void semifield_lifting::get_pivots(
 		int level, int po, int *pivots,
 		int verbose_level)
@@ -1077,14 +1078,16 @@ void semifield_lifting::get_pivots(
 				"level = " << level << " po = " << po << " done" << endl;
 		}
 }
-void semifield_lifting::get_basis_and_pivots(
+#endif
+
+void semifield_lifting::get_pivots(
 		int level, int po, int *Basis, int *pivots,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "semifield_lifting::get_basis_and_pivots "
+		cout << "semifield_lifting::get_pivots "
 				"level = " << level << " po = " << po << endl;
 		}
 	if (level == 2 && cur_level == 3) {
@@ -1094,8 +1097,8 @@ void semifield_lifting::get_basis_and_pivots(
 	else if (level == 3) {
 		int i;
 
-		//pivots[0] = 0;
-		//pivots[1] = k;
+		pivots[0] = 0;
+		pivots[1] = k;
 		for (i = k - 1; i >= 2; i--) { // for (i = 2; i < k; i++)
 			if (Basis[2 * k2 + i * k + 0]) {
 				pivots[2] = i * k;
@@ -1103,12 +1106,12 @@ void semifield_lifting::get_basis_and_pivots(
 				}
 			}
 		if (i < 2) {
-			cout << "semifield_lifting::get_basis_and_pivots "
+			cout << "semifield_lifting::get_pivots "
 					"Could not find pivot element" << endl;
 			exit(1);
 			}
-		L2->get_basis_and_pivots(po,
-				Basis, pivots, verbose_level - 1);
+		//L2->get_basis_and_pivots(po,
+		//		Basis, pivots, verbose_level - 1);
 		}
 #if 0
 	else if (level == 4) {
@@ -1121,12 +1124,12 @@ void semifield_lifting::get_basis_and_pivots(
 		}
 #endif
 	else {
-		cout << "semifield_lifting::get_basis_and_pivots "
+		cout << "semifield_lifting::get_pivots "
 				"level = " << level << " nyi" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "semifield_lifting::get_basis_and_pivots "
+		cout << "semifield_lifting::get_pivots "
 				"level = " << level
 				<< " po = " << po << " done" << endl;
 		}
@@ -1251,14 +1254,24 @@ int semifield_lifting::trace_to_level_three(
 	basis_tmp = NEW_int(basis_sz * k2);
 
 	if (f_v) {
-		cout << "semifield_lifting::trace_to_level_three before trace_very_general" << endl;
+		cout << "semifield_lifting::trace_to_level_three "
+				"before trace_very_general" << endl;
 		}
 	trace_very_general(
 		input_basis, basis_sz, basis_tmp, transporter,
 		trace_po, trace_so,
 		verbose_level);
 	if (f_v) {
-		cout << "semifield_lifting::trace_to_level_three after trace_very_general" << endl;
+		cout << "semifield_lifting::trace_to_level_three "
+				"after trace_very_general" << endl;
+		}
+
+	if (f_vv) {
+		cout << "semifield_lifting::trace_to_level_three "
+				"reduced basis=" << endl;
+		int_matrix_print(input_basis, basis_sz, k2);
+		cout << "Which is:" << endl;
+		SC->basis_print(input_basis, basis_sz);
 		}
 
 	if (f_v) {
@@ -1322,8 +1335,10 @@ void semifield_lifting::trace_step_up(
 			cout << "semifield_lifting::trace_step_up "
 					"after fusion:" << endl;
 			int_matrix_print(changed_basis, basis_sz, k2);
+			cout << "Which is:" << endl;
 			SC->basis_print(changed_basis, basis_sz);
 			}
+
 		}
 	else {
 		f0 = fo;
@@ -1348,7 +1363,7 @@ void semifield_lifting::trace_step_up(
 	pivots = NEW_int(cur_level);
 	get_pivots(3 /* level */,
 			Flag_orbits[f0].upstep_orbit,
-			pivots, verbose_level - 3);
+			pivots, changed_basis, verbose_level);
 
 	if (f_vv) {
 		cout << "semifield_lifting::trace_step_up "
@@ -1730,7 +1745,7 @@ void semifield_lifting::trace_very_general(
 					0 /*verbose_level*/);
 			}
 		}
-	if (f_vvv) {
+	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"reduced basis=" << endl;
 		int_matrix_print(input_basis, basis_sz, k2);
@@ -1759,7 +1774,7 @@ void semifield_lifting::trace_very_general(
 	a = SC->matrix_rank(input_basis + 2 * k2);
 	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
-				"a = " << a << endl;
+				"rank of row 2: a = " << a << endl;
 		}
 
 	a_local = Downstep_nodes[po].find_point(a);
@@ -1790,7 +1805,7 @@ void semifield_lifting::trace_very_general(
 			Downstep_nodes[po].Sch->cosetrep,
 		input_basis, basis_tmp,
 		2, basis_sz, verbose_level);
-	if (f_vvv) {
+	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"after transforming with cosetrep from "
 				"secondary orbit (4):" << endl;
@@ -1798,7 +1813,7 @@ void semifield_lifting::trace_very_general(
 		}
 	base_cols[0] = 0;
 	base_cols[1] = k;
-	if (f_vvv) {
+	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"base_cols=";
 		int_vec_print(cout, base_cols, 2);
@@ -1812,7 +1827,7 @@ void semifield_lifting::trace_very_general(
 					0 /*verbose_level*/);
 			}
 		}
-	if (f_vvv) {
+	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"reduced basis(2)=" << endl;
 		int_matrix_print(input_basis, basis_sz, k2);
@@ -2185,7 +2200,7 @@ void semifield_lifting::deep_search_at_level_three(
 		cout << "semifield_lifting::deep_search_at_level_three orbit "
 			<< orbit << " / " << nb_orbits << ":" << endl;
 
-		get_basis_and_pivots(2, orbit,
+		get_pivots(2, orbit,
 				Basis, pivots,
 				verbose_level - 1);
 		for (i = 0; i < 3; i++) {
