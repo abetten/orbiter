@@ -915,12 +915,18 @@ long int semifield_classify::matrix_rank_without_first_column(int *Mtx)
 void semifield_classify::basis_print(int *Mtx, int sz)
 {
 	int i;
+	long int *A;
 
 	cout << "Basis of size " << sz << ":" << endl;
+	A = NEW_lint(sz);
 	for (i = 0; i < sz; i++) {
 		cout << "Elt " << i << ":" << endl;
 		int_matrix_print(Mtx + i * k2, k, k);
+		A[i] = matrix_rank(Mtx);
 		}
+	lint_vec_print(cout, A, sz);
+	cout << endl;
+	FREE_lint(A);
 }
 
 void semifield_classify::basis_print_numeric(long int *Rk, int sz)
@@ -931,6 +937,7 @@ void semifield_classify::basis_print_numeric(long int *Rk, int sz)
 	for (i = 0; i < sz; i++) {
 		cout << "Elt " << i << ":" << endl;
 		matrix_print_numeric(Rk[i]);
+
 		}
 }
 

@@ -65,6 +65,8 @@ int main(int argc, const char **argv)
 	int f_prefix = FALSE;
 	const char *prefix = "";
 	int f_orbits_light = FALSE;
+	int f_test_semifield = FALSE;
+	const char *test_semifield_data = NULL;
 
 	t0 = os_ticks();
 	for (i = 1; i < argc; i++) {
@@ -95,6 +97,11 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-orbits_light") == 0) {
 			f_orbits_light = TRUE;
 			cout << "-orbits_light " << endl;
+			}
+		else if (strcmp(argv[i], "-test_semifield") == 0) {
+			f_test_semifield = TRUE;
+			test_semifield_data = argv[++i];
+			cout << "-test_semifield " << test_semifield_data << endl;
 			}
 		}
 
@@ -198,6 +205,25 @@ int main(int argc, const char **argv)
 	SC->init(argc, argv, order, n, k, F,
 			4 /* MINIMUM(verbose_level - 1, 2) */);
 	cout << "after SC->init" << endl;
+
+	if (f_test_semifield) {
+		long int *data = NULL;
+		int data_len = 0;
+		cout << "f_test_semifield" << endl;
+		lint_vec_scan(test_semifield_data, data, data_len);
+		cout << "input semifield:" << endl;
+		for (i = 0; i < data_len; i++) {
+			cout << i << " : " << data[i] << endl;
+		}
+		if (SC->test_partial_semifield_numerical_data(
+				data, data_len, verbose_level)) {
+			cout << "the set satisfies the partial semifield condition" << endl;
+		}
+		else {
+			cout << "the set does not satisfy the partial semifield condition" << endl;
+		}
+		exit(0);
+	}
 
 	L2 = NEW_OBJECT(semifield_level_two);
 	cout << "before L2->init" << endl;
