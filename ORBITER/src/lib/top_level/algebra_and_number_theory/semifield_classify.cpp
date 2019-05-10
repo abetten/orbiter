@@ -797,7 +797,7 @@ int semifield_classify::test_partial_semifield_numerical_data(
 
 
 int semifield_classify::test_partial_semifield(
-		int *Basis, int n, int verbose_level)
+		int *Basis, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
@@ -819,12 +819,12 @@ int semifield_classify::test_partial_semifield(
 	//v = NEW_int(n);
 	//w = NEW_int(k2);
 
-	N = NT.i_power_j(q, n);
+	N = NT.i_power_j(q, k);
 	for (h = 1; h < N; h++) {
-		Gg.AG_element_unrank(q, v, 1, n, h);
+		Gg.AG_element_unrank(q, v, 1, k, h);
 		for (i = 0; i < k2; i++) {
 			c = 0;
-			for (j = 0; j < n; j++) {
+			for (j = 0; j < k; j++) {
 				a = v[j];
 				b = F->mult(a, Basis[j * k2 + i]);
 				c = F->add(c, b);
@@ -834,6 +834,11 @@ int semifield_classify::test_partial_semifield(
 		r = F->Gauss_easy_memory_given(w, k, k, base_cols);
 		if (r != k) {
 			ret = FALSE;
+			if (TRUE) {
+				cout << "semifield_classify::test_partial_semifield fail for vector h=" << h << " / " << N << " : ";
+				int_vec_print(cout, v, k);
+				cout << endl;
+			}
 			break;
 			}
 		}
