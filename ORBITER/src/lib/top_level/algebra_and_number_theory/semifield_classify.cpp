@@ -1188,7 +1188,7 @@ void semifield_classify::compute_orbit_of_subspaces(
 		canonial_form_compute_image_of_vector_callback,
 		this /* compute_image_of_vector_callback_data */,
 		stabilizer_gens->gens,
-		verbose_level);
+		verbose_level - 1);
 
 
 	if (f_v) {

@@ -470,7 +470,7 @@ int main(int argc, const char **argv)
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "
 					<< fst << " with " << len
-					<< " semifields. " << endl;
+					<< " semifields. Computing orbit of semifield " << f << " / " << len << endl;
 				cout << "Orbit rep "
 					<< f << ":" << endl;
 				lint_vec_print(cout, input_data, 6);
@@ -484,7 +484,7 @@ int main(int argc, const char **argv)
 			SC->compute_orbit_of_subspaces(input_data,
 				&L3->Stabilizer_gens[a],
 				Orb,
-				verbose_level);
+				verbose_level - 1);
 			if (f_v) {
 				cout << "Found an orbit of length "
 					<< Orb->used_length << endl;

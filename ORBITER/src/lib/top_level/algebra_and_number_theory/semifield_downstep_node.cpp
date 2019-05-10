@@ -29,7 +29,7 @@ semifield_downstep_node::semifield_downstep_node()
 	Candidates = NULL;
 	nb_candidates = 0;
 	subspace_basis = NULL;
-	subspace_base_cols = NULL;
+	//subspace_base_cols = NULL;
 	on_cosets = NULL;
 	A_on_cosets = NULL;
 	Sch = NULL;
@@ -39,6 +39,12 @@ semifield_downstep_node::semifield_downstep_node()
 
 semifield_downstep_node::~semifield_downstep_node()
 {
+	if (subspace_basis) {
+		FREE_int(subspace_basis);
+	}
+	if (A_on_cosets) {
+		FREE_OBJECT(A_on_cosets);
+	}
 	//freeself();
 }
 
@@ -72,18 +78,20 @@ void semifield_downstep_node::init(
 
 
 	subspace_basis = NEW_int(level * k2);
-	subspace_base_cols = NEW_int(level);
+	//subspace_base_cols = NEW_int(level);
 
+#if 0
 	SL->get_pivots(level, orbit_number,
 			subspace_basis, subspace_base_cols,
 			verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "subspace_basis:" << endl;
 		int_matrix_print(subspace_basis, level, k2);
-		cout << "base_cols:" << endl;
-		int_vec_print(cout, subspace_base_cols, level);
-		cout << endl;
+		//cout << "base_cols:" << endl;
+		//int_vec_print(cout, subspace_base_cols, level);
+		//cout << endl;
 		}
 
 #if 0
@@ -112,7 +120,7 @@ void semifield_downstep_node::init(
 		level /* dimension_of_subspace */,
 		k * k /* n */,
 		subspace_basis,
-		subspace_base_cols,
+		SC->desired_pivots,
 		coset_action_unrank_point,
 		coset_action_rank_point,
 		this /*rank_unrank_data*/,
