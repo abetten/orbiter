@@ -1369,6 +1369,14 @@ int find_semifield_in_table(semifield_lifting *L3,
 		if (g == len) {
 			cout << "find_semifield_in_table cannot find the "
 					"semifield in the table" << endl;
+			for (g = 0; g < len; g++) {
+				cout << g << " : " << fst + g << " : ";
+				lint_vec_print(cout, Data + (fst + g) * data_size + start_column, 6);
+				cout << " : ";
+				cout << lint_vec_compare(Data + (fst + g) * data_size + start_column,
+						given_data, 6);
+				cout << endl;
+				}
 			exit(1);
 			}
 		}
