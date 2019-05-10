@@ -66,6 +66,12 @@ void orbit_of_subspaces::freeself()
 {
 	int i;
 	
+	if (subspace_by_rank) {
+		FREE_int(subspace_by_rank);
+	}
+	if (subspace_by_rank_lint) {
+		FREE_lint(subspace_by_rank_lint);
+	}
 	if (Subspaces) {
 		for (i = 0; i < used_length; i++) {
 			FREE_int(Subspaces[i]);
@@ -123,7 +129,8 @@ void orbit_of_subspaces::init(
 	orbit_of_subspaces::A2 = A2;
 	orbit_of_subspaces::F = F;
 	orbit_of_subspaces::gens = gens;
-	orbit_of_subspaces::subspace_by_rank = subspace_by_rank;
+	orbit_of_subspaces::subspace_by_rank = NEW_int(n);
+	int_vec_copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank, n);
 	orbit_of_subspaces::k = k;
 	orbit_of_subspaces::n = n;
 	orbit_of_subspaces::f_has_desired_pivots = f_has_desired_pivots;
@@ -187,7 +194,8 @@ void orbit_of_subspaces::init_lint(
 	orbit_of_subspaces::A2 = A2;
 	orbit_of_subspaces::F = F;
 	orbit_of_subspaces::gens = gens;
-	orbit_of_subspaces::subspace_by_rank_lint = subspace_by_rank;
+	orbit_of_subspaces::subspace_by_rank_lint = NEW_lint(n);
+	lint_vec_copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank_lint, n);
 	orbit_of_subspaces::k = k;
 	orbit_of_subspaces::n = n;
 	orbit_of_subspaces::f_has_desired_pivots = f_has_desired_pivots;
