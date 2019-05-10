@@ -74,7 +74,7 @@ void semifield_downstep_node::init(
 	subspace_basis = NEW_int(level * k2);
 	subspace_base_cols = NEW_int(level);
 
-	SL->get_basis_and_pivots(level, orbit_number,
+	SL->get_pivots(level, orbit_number,
 			subspace_basis, subspace_base_cols,
 			verbose_level);
 
