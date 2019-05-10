@@ -937,8 +937,9 @@ void semifield_classify::basis_print_numeric(long int *Rk, int sz)
 	for (i = 0; i < sz; i++) {
 		cout << "Elt " << i << ":" << endl;
 		matrix_print_numeric(Rk[i]);
-
 		}
+	lint_vec_print(cout, Rk, sz);
+	cout << endl;
 }
 
 void semifield_classify::matrix_print(int *Mtx)

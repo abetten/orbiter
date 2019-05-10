@@ -628,7 +628,7 @@ int main(int argc, const char **argv)
 	Flag_orbits->init_lint(
 		SC->A, SC->AS,
 		nb_orbits /* nb_primary_orbits_lower */,
-		6 /* pt_representation_sz */,
+		Flag_orbits->pt_representation_sz,
 		nb_flag_orbits /* nb_flag_orbits */,
 		verbose_level);
 
@@ -742,15 +742,15 @@ int main(int argc, const char **argv)
 	int desired_pivots[6];
 
 
-	for (i = 0; i < 6; i++) {
-		desired_pivots[i] = desired_pivot_rows[i] * 6;
+	for (i = 0; i < SC->k; i++) {
+		desired_pivots[i] = desired_pivot_rows[i] * SC->k;
 		}
 	if (f_v) {
 		cout << "desired_pivot_rows:";
-		int_vec_print(cout, desired_pivot_rows, 6);
+		int_vec_print(cout, desired_pivot_rows, SC->k);
 		cout << endl;
 		cout << "desired_pivots:";
-		int_vec_print(cout, desired_pivots, 6);
+		int_vec_print(cout, desired_pivots, SC->k);
 		cout << endl;
 		}
 
@@ -772,8 +772,8 @@ int main(int argc, const char **argv)
 	classification_step *Semifields;
 	int *f_processed; // [nb_flag_orbits]
 	int nb_processed, po, so, f, f2;
-	long int data1[6];
-	long int data2[6];
+	long int *data1;
+	long int *data2;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -784,6 +784,8 @@ int main(int argc, const char **argv)
 	int f_skip = FALSE;
 
 
+	data1 = NEW_lint(SC->k);
+	data2 = NEW_lint(SC->k);
 
 	f_processed = NEW_int(nb_flag_orbits);
 	int_vec_zero(f_processed, nb_flag_orbits);
@@ -798,7 +800,7 @@ int main(int argc, const char **argv)
 	SC->A->group_order(go);
 
 	Semifields->init_lint(SC->A, SC->AS,
-			nb_flag_orbits, 6, go, verbose_level);
+			nb_flag_orbits, SC->k, go, verbose_level);
 
 
 	Flag_orbits->nb_primary_orbits_upper = 0;
@@ -832,7 +834,12 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 			}
-		lint_vec_copy(Flag_orbits->Pt_lint + f * 6, data1, 6);
+		lint_vec_copy(Flag_orbits->Pt_lint + f * Flag_orbits->pt_representation_sz, data1, SC->k);
+		if (f_v) {
+			cout << "data1=";
+			lint_vec_print(cout, data1, SC->k);
+			cout << endl;
+			}
 
 		strong_generators *Aut_gens;
 		vector_ge *coset_reps;
@@ -847,24 +854,21 @@ int main(int argc, const char **argv)
 			SC->matrix_unrank(data1[i],
 					Basis1 + i * k2);
 			}
-		if (f_vvv) {
+		if (f_v) {
 			cout << "Basis1=" << endl;
 			int_matrix_print(Basis1, k, k2);
-			for (i = 0; i < k; i++) {
-				cout << "Matrix " << i << ":" << endl;
-				int_matrix_print(Basis1 + i * k2, k, k);
-				}
+			SC->basis_print(Basis1, k);
 			}
 		f_skip = FALSE;
 		for (i = 0; i < k; i++) {
 			v3[i] = Basis1[2 * k2 + i * k + 0];
 			}
-		if (!is_unit_vector(v3, 6, 5)) {
+		if (!is_unit_vector(v3, SC->k, SC->k - 1)) {
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
-			int_vec_print(cout, v3, 6);
-			cout << " which is not the 5th unit vector, "
+			int_vec_print(cout, v3, SC->k);
+			cout << " which is not the (k-1)-th unit vector, "
 					"so we skip" << endl;
 			f_skip = TRUE;
 			}
@@ -907,6 +911,9 @@ int main(int argc, const char **argv)
 			for (i = 0; i < k; i++) {
 				SC->matrix_unrank(data1[i], Basis1 + i * k2);
 				}
+			if (f_v) {
+				SC->basis_print(Basis1, k);
+				}
 
 
 			// unrank the subspace:
@@ -924,12 +931,10 @@ int main(int argc, const char **argv)
 			if (f_v) {
 				cout << "base change matrix B=" << endl;
 				int_matrix_print_bitwise(B, k, k);
-				cout << "Basis2 (before trace)=" << endl;
+
+				cout << "Basis2 = B * Basis1 (before trace)=" << endl;
 				int_matrix_print_bitwise(Basis2, k, k2);
-				for (i = 0; i < k; i++) {
-					cout << "Matrix " << i << ":" << endl;
-					int_matrix_print(Basis2 + i * k2, k, k);
-					}
+				SC->basis_print(Basis2, k);
 				}
 
 
@@ -949,10 +954,7 @@ int main(int argc, const char **argv)
 						<< trace_po << endl;
 				cout << "Basis2 (after trace)=" << endl;
 				int_matrix_print_bitwise(Basis2, k, k2);
-				for (i = 0; i < k; i++) {
-					cout << "Matrix " << i << ":" << endl;
-					int_matrix_print(Basis2 + i * k2, k, k);
-					}
+				SC->basis_print(Basis2, k);
 				}
 
 			for (i = 0; i < k; i++) {
@@ -994,10 +996,7 @@ int main(int argc, const char **argv)
 				if (f_v) {
 					cout << "Basis2 after RREF=" << endl;
 					int_matrix_print_bitwise(Basis2, k, k2);
-					for (i = 0; i < k; i++) {
-						cout << "Matrix " << i << ":" << endl;
-						int_matrix_print(Basis2 + i * k2, k, k);
-						}
+					SC->basis_print(Basis2, k);
 					}
 
 				for (i = 0; i < k; i++) {
@@ -1011,6 +1010,9 @@ int main(int argc, const char **argv)
 
 				int solution_idx;
 
+				if (f_v) {
+					cout << "before find_semifield_in_table" << endl;
+				}
 				solution_idx = find_semifield_in_table(
 					L3,
 					Data,
