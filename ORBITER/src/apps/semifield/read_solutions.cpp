@@ -17,7 +17,7 @@ using namespace orbiter::top_level;
 
 #define MY_BUFSIZE ONE_MILLION
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	int i, j;
 	int verbose_level = 0;
@@ -31,14 +31,37 @@ int main(int argc, char **argv)
 	int nb_cases = 0;
 	int f_data_set_size = FALSE;
 	int data_set_size = 0;
+	int f_data_offset = FALSE;
+	int data_offset = 0;
 	int f_save = FALSE;
 	const char *save_prefix = NULL;
+	int f_order = FALSE;
+	int order = 0;
+	int f_dim_over_kernel;
+	int dim_over_kernel = 0;
+	int f_poly = FALSE;
+	const char *poly = NULL;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
+			}
+		else if (strcmp(argv[i], "-poly") == 0) {
+			f_poly = TRUE;
+			poly = argv[++i];
+			cout << "-poly " << poly << endl;
+			}
+		else if (strcmp(argv[i], "-order") == 0) {
+			f_order = TRUE;
+			order = atoi(argv[++i]);
+			cout << "-order " << order << endl;
+			}
+		else if (strcmp(argv[i], "-dim_over_kernel") == 0) {
+			f_dim_over_kernel = TRUE;
+			dim_over_kernel = atoi(argv[++i]);
+			cout << "-dim_over_kernel " << dim_over_kernel << endl;
 			}
 		else if (strcmp(argv[i], "-file_mask_data") == 0) {
 			f_file_mask_data = TRUE;
@@ -64,6 +87,11 @@ int main(int argc, char **argv)
 			f_data_set_size = TRUE;
 			data_set_size = atoi(argv[++i]);
 			cout << "-data_set_size " << data_set_size << endl;
+			}
+		else if (strcmp(argv[i], "-data_offset") == 0) {
+			f_data_offset = TRUE;
+			data_offset = atoi(argv[++i]);
+			cout << "-data_offset " << data_offset << endl;
 			}
 		else if (strcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
@@ -92,11 +120,65 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	
+
+
+	if (!f_order) {
+		cout << "please use option -order <order>" << endl;
+		exit(1);
+		}
+
+	int p, e, e1, n, k, q, k2;
+	number_theory_domain NT;
+
+	NT.factor_prime_power(order, p, e);
+	cout << "order = " << order << " = " << p << "^" << e << endl;
+
+	if (f_dim_over_kernel) {
+		if (e % dim_over_kernel) {
+			cout << "dim_over_kernel does not divide e" << endl;
+			exit(1);
+			}
+		e1 = e / dim_over_kernel;
+		n = 2 * dim_over_kernel;
+		k = dim_over_kernel;
+		q = NT.i_power_j(p, e1);
+		cout << "order=" << order << " n=" << n
+			<< " k=" << k << " q=" << q << endl;
+		}
+	else {
+		n = 2 * e;
+		k = e;
+		q = p;
+		cout << "order=" << order << " n=" << n
+			<< " k=" << k << " q=" << q << endl;
+		}
+	k2 = k * k;
+
+
+	{
+	finite_field *F;
+	semifield_classify *SC;
+
+	F = NEW_OBJECT(finite_field);
+	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
+
+	SC = NEW_OBJECT(semifield_classify);
+	cout << "before SC->init" << endl;
+	SC->init(argc, argv, order, n, k, F,
+			4 /* MINIMUM(verbose_level - 1, 2) */);
+	cout << "after SC->init" << endl;
+
+
+
+
+
+
 	int nb_missing = 0;
 	int *Missing = NULL;
 	int nb_existing = 0;
 	int *Existing = NULL;
 	char fname[1000];
+	int nb_false = 0;
 	file_io Fio;
 	
 	
@@ -229,8 +311,18 @@ int main(int argc, char **argv)
 								s_scan_lint(&p_buf, &a);
 								Data_sets[nb_data_sets_used * data_set_size + k] = a;
 								}
-							nb_data_sets_used++;
-							nb_solutions[o]++;
+
+							if (!SC->test_partial_semifield_numerical_data(
+									Data_sets + nb_data_sets_used * data_set_size + data_offset,
+									data_set_size - data_offset, verbose_level)) {
+								cout << "the solution fails the semifield test" << endl;
+								nb_false++;
+								//exit(1);
+							}
+							else {
+								nb_data_sets_used++;
+								nb_solutions[o]++;
+							}
 							}
 						} // while
 
@@ -247,6 +339,7 @@ int main(int argc, char **argv)
 	
 	cout << "done reading solutions, we found " << nb_data_sets_used
 			<< " solutions" << endl;
+	cout << "nb_false=" << nb_false << endl;
 	long int *Data_sorted;
 	int *FstLen;
 	int *ExistingFstLen;
@@ -340,6 +433,16 @@ int main(int argc, char **argv)
 		cout << "Written file " << fname_existing << " of size "
 				<< Fio.file_size(fname_existing) << endl;
 		}
+
+
+	cout << "before freeing SC" << endl;
+	FREE_OBJECT(SC);
+	cout << "before freeing F" << endl;
+	FREE_OBJECT(F);
+	cout << "before leaving scope" << endl;
+	}
+	cout << "after leaving scope" << endl;
+
 }
 
 

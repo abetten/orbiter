@@ -825,7 +825,9 @@ int main(int argc, const char **argv)
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
 				<< nb_flag_orbits << " progress="
-				<< progress << "%" << endl;
+				<< progress << "% "
+				"nb semifields = " << Flag_orbits->nb_primary_orbits_upper << endl;
+
 			}
 		Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit =
 			Flag_orbits->nb_primary_orbits_upper;
@@ -904,7 +906,7 @@ int main(int argc, const char **argv)
 
 			T->coset = rk;
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits << ", subspace "
 					<< rk << " / " << N << ":" << endl;
@@ -914,7 +916,7 @@ int main(int argc, const char **argv)
 			for (i = 0; i < k; i++) {
 				SC->matrix_unrank(data1[i], Basis1 + i * k2);
 				}
-			if (f_v) {
+			if (f_vvv) {
 				SC->basis_print(Basis1, k);
 				}
 
@@ -931,7 +933,7 @@ int main(int argc, const char **argv)
 					0 /* verbose_level */);
 
 
-			if (f_v) {
+			if (f_vvv) {
 				cout << "base change matrix B=" << endl;
 				int_matrix_print_bitwise(B, k, k);
 
@@ -941,18 +943,18 @@ int main(int argc, const char **argv)
 				}
 
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "before trace_to_level_three" << endl;
 			}
 			trace_po = L3->trace_to_level_three(
 				Basis2,
 				k /* basis_sz */,
 				transporter1,
-				verbose_level);
+				verbose_level - 3);
 
 			T->trace_po = trace_po;
 
-			if (f_v) {
+			if (f_vvv) {
 				cout << "After trace, trace_po = "
 						<< trace_po << endl;
 				cout << "Basis2 (after trace)=" << endl;
@@ -981,7 +983,7 @@ int main(int argc, const char **argv)
 			T->f_skip = f_skip;
 
 			if (f_skip) {
-				if (f_v) {
+				if (f_vv) {
 					cout << "skipping this case " << trace_po
 						<< " because pivot is not "
 							"in the last row." << endl;
@@ -991,12 +993,12 @@ int main(int argc, const char **argv)
 				F->Gauss_int_with_given_pivots(
 					Basis2,
 					FALSE /* f_special */,
-					TRUE /* f_complete */,
+					FALSE /* f_complete */,
 					desired_pivots,
 					k /* nb_pivots */,
 					k, k2,
 					0 /*verbose_level - 2*/);
-				if (f_v) {
+				if (f_vvv) {
 					cout << "Basis2 after RREF=" << endl;
 					int_matrix_print_bitwise(Basis2, k, k2);
 					SC->basis_print(Basis2, k);
@@ -1005,7 +1007,7 @@ int main(int argc, const char **argv)
 				for (i = 0; i < k; i++) {
 					data2[i] = SC->matrix_rank(Basis2 + i * k2);
 					}
-				if (f_v) {
+				if (f_vvv) {
 					cout << "data2=";
 					lint_vec_print(cout, data2, k);
 					cout << endl;
@@ -1013,7 +1015,7 @@ int main(int argc, const char **argv)
 
 				int solution_idx;
 
-				if (f_v) {
+				if (f_vvv) {
 					cout << "before find_semifield_in_table" << endl;
 				}
 				solution_idx = find_semifield_in_table(
@@ -1032,7 +1034,7 @@ int main(int argc, const char **argv)
 				T->solution_idx = solution_idx;
 				T->nb_sol = Len[trace_po];
 
-				if (f_v) {
+				if (f_vvv) {
 					cout << "solution_idx=" << solution_idx << endl;
 					}
 
@@ -1045,7 +1047,7 @@ int main(int argc, const char **argv)
 				T->orbit_len = -1;
 				T->f2 = -1;
 
-				if (f_v) {
+				if (f_vv) {
 					cout << "flag orbit " << f << " / "
 						<< nb_flag_orbits << ", subspace "
 						<< rk << " / " << N << " trace_po="
@@ -1055,7 +1057,7 @@ int main(int argc, const char **argv)
 
 
 				if (go == 1) {
-					if (f_v) {
+					if (f_vv) {
 						cout << "This starter case has a trivial "
 								"group order" << endl;
 						}
@@ -1067,14 +1069,14 @@ int main(int argc, const char **argv)
 					T->f2 = f2;
 
 					if (f2 == f) {
-						if (f_v) {
+						if (f_vv) {
 							cout << "We found an automorphism" << endl;
 							}
 						coset_reps->append(transporter1);
 						}
 					else {
 						if (!f_processed[f2]) {
-							if (f_v) {
+							if (f_vv) {
 								cout << "We are identifying with "
 										"po=" << trace_po << " so="
 										<< solution_idx << ", which is "
@@ -1092,14 +1094,14 @@ int main(int argc, const char **argv)
 								0);
 							f_processed[f2] = TRUE;
 							nb_processed++;
-							if (f_v) {
+							if (f_vv) {
 								cout << "Flag orbit f2 = " << f2
 									<< " has been fused with flag orbit "
 									<< f << endl;
 								}
 							}
 						else {
-							if (f_v) {
+							if (f_vv) {
 								cout << "Flag orbit f2 = " << f2
 										<< " has already been processed, "
 												"nothing to do here" << endl;
@@ -1109,7 +1111,7 @@ int main(int argc, const char **argv)
 					}
 				else {
 					if (Len[trace_po] == 1) {
-						if (f_v) {
+						if (f_vv) {
 							cout << "This starter case has only "
 									"one solution" << endl;
 							}
@@ -1122,14 +1124,14 @@ int main(int argc, const char **argv)
 
 
 						if (f2 == f) {
-							if (f_v) {
+							if (f_vv) {
 								cout << "We found an automorphism" << endl;
 								}
 							coset_reps->append(transporter1);
 							}
 						else {
 							if (!f_processed[f2]) {
-								if (f_v) {
+								if (f_vv) {
 									cout << "We are identifying with po="
 											<< trace_po << " so=" << 0
 											<< ", which is flag orbit "
@@ -1146,14 +1148,14 @@ int main(int argc, const char **argv)
 									0);
 								f_processed[f2] = TRUE;
 								nb_processed++;
-								if (f_v) {
+								if (f_vv) {
 									cout << "Flag orbit f2 = " << f2
 										<< " has been fused with "
 											"flag orbit " << f << endl;
 									}
 								}
 							else {
-								if (f_v) {
+								if (f_vv) {
 									cout << "Flag orbit f2 = " << f2
 										<< " has already been processed, "
 											"nothing to do here" << endl;
@@ -1194,7 +1196,7 @@ int main(int argc, const char **argv)
 
 
 
-						if (f_v) {
+						if (f_vv) {
 							cout << "orbit_idx = " << orbit_idx
 									<< " position = " << position
 									<< " f2 = " << f2 << endl;
@@ -1206,14 +1208,14 @@ int main(int argc, const char **argv)
 								transporter3, 0);
 
 						if (f2 == f) {
-							if (f_v) {
+							if (f_vv) {
 								cout << "We found an automorphism" << endl;
 								}
 							coset_reps->append(transporter3);
 							}
 						else {
 							if (!f_processed[f2]) {
-								if (f_v) {
+								if (f_vv) {
 									cout << "We are identifying with po="
 										<< trace_po << " so=" << solution_idx
 										<< ", which is flag orbit "
@@ -1230,14 +1232,14 @@ int main(int argc, const char **argv)
 									0);
 								f_processed[f2] = TRUE;
 								nb_processed++;
-								if (f_v) {
+								if (f_vv) {
 									cout << "Flag orbit f2 = " << f2
 										<< " has been fused with flag "
 										"orbit " << f << endl;
 									}
 								}
 							else {
-								if (f_v) {
+								if (f_vv) {
 									cout << "Flag orbit f2 = " << f2
 										<< " has already been processed, "
 												"nothing to do here" << endl;
