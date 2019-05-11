@@ -50,7 +50,7 @@ semifield_downstep_node::~semifield_downstep_node()
 
 void semifield_downstep_node::init(
 		semifield_lifting *SL, int level, int orbit_number,
-		long int *Candidates, int nb_candidates,
+		long int *Candidates, int nb_candidates, int first_flag_orbit,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -74,7 +74,7 @@ void semifield_downstep_node::init(
 	semifield_downstep_node::orbit_number = orbit_number;
 	semifield_downstep_node::Candidates = Candidates;
 	semifield_downstep_node::nb_candidates = nb_candidates;
-
+	semifield_downstep_node::first_flag_orbit = first_flag_orbit;
 
 
 	subspace_basis = NEW_int(level * k2);

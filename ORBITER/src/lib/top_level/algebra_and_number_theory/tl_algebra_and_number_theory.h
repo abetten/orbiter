@@ -530,7 +530,7 @@ public:
 	void null();
 	void freeself();
 	void init(semifield_lifting *SL, int level, int orbit_number,
-		long int *Candidates, int nb_candidates,
+		long int *Candidates, int nb_candidates, int first_flag_orbit,
 		int verbose_level);
 	int find_point(long int a);
 
