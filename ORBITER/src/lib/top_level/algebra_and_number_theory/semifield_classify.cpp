@@ -169,7 +169,7 @@ void semifield_classify::init(int argc, const char **argv,
 	// for test_partial_semifield:
 	test_base_cols = NEW_int(n);
 	test_v = NEW_int(n);
-	test_w = NEW_int(n);
+	test_w = NEW_int(k2);
 	test_Basis = NEW_int(k * k2);
 
 
@@ -835,9 +835,23 @@ int semifield_classify::test_partial_semifield(
 		if (r != k) {
 			ret = FALSE;
 			if (TRUE) {
-				cout << "semifield_classify::test_partial_semifield fail for vector h=" << h << " / " << N << " : ";
+				cout << "semifield_classify::test_partial_semifield "
+						"fail for vector h=" << h << " / " << N << " : ";
+				cout << "r=" << r << endl;
 				int_vec_print(cout, v, k);
 				cout << endl;
+				basis_print(Basis, k);
+				cout << "linear combination:" << endl;
+				for (i = 0; i < k2; i++) {
+					c = 0;
+					for (j = 0; j < k; j++) {
+						a = v[j];
+						b = F->mult(a, Basis[j * k2 + i]);
+						c = F->add(c, b);
+						}
+					w[i] = c;
+					}
+				int_matrix_print(w, k, k);
 			}
 			break;
 			}
@@ -927,7 +941,7 @@ void semifield_classify::basis_print(int *Mtx, int sz)
 	for (i = 0; i < sz; i++) {
 		cout << "Elt " << i << ":" << endl;
 		int_matrix_print(Mtx + i * k2, k, k);
-		A[i] = matrix_rank(Mtx);
+		A[i] = matrix_rank(Mtx + i * k2);
 		}
 	lint_vec_print(cout, A, sz);
 	cout << endl;
