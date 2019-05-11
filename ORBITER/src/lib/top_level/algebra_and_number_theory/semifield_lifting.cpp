@@ -396,6 +396,8 @@ void semifield_lifting::downstep(
 		}
 	Downstep_nodes = NEW_OBJECTS(semifield_downstep_node, prev_level_nb_orbits);
 
+	int first_flag_orbit = 0;
+
 	for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
 		if (f_vv || (f_v && (orbit & (64 - 1)) == 0)) {
 			cout << "semifield_lifting::downstep "
@@ -410,8 +412,10 @@ void semifield_lifting::downstep(
 					<< prev_level_nb_orbits << ":" << endl;
 			}
 		Downstep_nodes[orbit].init(this, level, orbit,
-			Candidates[orbit], Nb_candidates[orbit],
+			Candidates[orbit], Nb_candidates[orbit], first_flag_orbit,
 			verbose_level);
+
+		first_flag_orbit += Downstep_nodes[orbit].Sch->nb_orbits;
 
 		//cout << "semifield_starter::downstep processing "
 		//"orbit " << orbit << " / " << nb_orbits_at_level << " done" << endl;
@@ -490,7 +494,12 @@ void semifield_lifting::compute_flag_orbits(
 		flag_orbit_first[po] = nb_flag_orbits;
 		flag_orbit_len[po] = Downstep_nodes[po].Sch->nb_orbits;
 
-		Downstep_nodes[po].first_flag_orbit = nb_flag_orbits;
+		if (flag_orbit_first[po] != Downstep_nodes[po].first_flag_orbit) {
+			cout << "semifield_lifting::compute_flag_orbits "
+					"flag_orbit_first[po] != Downstep_nodes[po].first_flag_orbit" << endl;
+			exit(1);
+		}
+		//Downstep_nodes[po].first_flag_orbit = nb_flag_orbits;
 		nb_flag_orbits += flag_orbit_len[po];
 	}
 
@@ -1267,7 +1276,9 @@ int semifield_lifting::trace_to_level_three(
 		verbose_level);
 	if (f_v) {
 		cout << "semifield_lifting::trace_to_level_three "
-				"after trace_very_general" << endl;
+				"after trace_very_general "
+				"trace_po=" << trace_po
+				<< " trace_so=" << trace_so << endl;
 		}
 
 	if (f_vv) {
@@ -1314,7 +1325,10 @@ void semifield_lifting::trace_step_up(
 	int i, j;
 
 	if (f_v) {
-		cout << "semifield_lifting::trace_step_up " << endl;
+		cout << "semifield_lifting::trace_step_up po=" << po << " so=" << so << endl;
+		cout << "semifield_lifting::trace_step_up "
+				"Downstep_nodes[po].first_flag_orbit="
+				<< Downstep_nodes[po].first_flag_orbit << endl;
 		}
 	fo = Downstep_nodes[po].first_flag_orbit + so;
 	if (f_vv) {
