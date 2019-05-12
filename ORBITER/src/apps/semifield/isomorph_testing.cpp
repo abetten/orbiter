@@ -999,7 +999,30 @@ int main(int argc, const char **argv)
 					k, k2,
 					0 /*verbose_level - 2*/);
 				if (f_vvv) {
-					cout << "Basis2 after RREF=" << endl;
+					cout << "Basis2 after RREF(1)=" << endl;
+					int_matrix_print_bitwise(Basis2, k, k2);
+					SC->basis_print(Basis2, k);
+					}
+
+				for (i = 0; i < k; i++) {
+					data2[i] = SC->matrix_rank(Basis2 + i * k2);
+					}
+				if (f_vvv) {
+					cout << "data2=";
+					lint_vec_print(cout, data2, k);
+					cout << endl;
+					}
+
+				F->Gauss_int_with_given_pivots(
+					Basis2 + 3 * k2,
+					FALSE /* f_special */,
+					TRUE /* f_complete */,
+					desired_pivots + 3,
+					k - 3 /* nb_pivots */,
+					k - 3, k2,
+					0 /*verbose_level - 2*/);
+				if (f_vvv) {
+					cout << "Basis2 after RREF(2)=" << endl;
 					int_matrix_print_bitwise(Basis2, k, k2);
 					SC->basis_print(Basis2, k);
 					}
