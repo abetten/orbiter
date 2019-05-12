@@ -1396,7 +1396,7 @@ void semifield_lifting::trace_step_up(
 	SC->F->Gauss_int_with_given_pivots(
 		changed_basis,
 		FALSE /* f_special */,
-		FALSE /* f_complete */,
+		TRUE /* f_complete */,
 		SC->desired_pivots,
 		3 /* nb_pivots */,
 		basis_sz /* m */,
