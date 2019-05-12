@@ -26,9 +26,45 @@ typedef class trace_record trace_record;
 
 int t0; // the system time when the program started
 
+void loop_over_all_subspaces(
+		semifield_classify *SC,
+		semifield_lifting *L3,
+		grassmann *Gr,
+		int *Non_unique_cases_with_non_trivial_group,
+		int nb_non_unique_cases_with_non_trivial_group,
+		trace_record *TR,
+		int N,
+		int f,
+		long int *Data,
+		int nb_solutions,
+		int data_size,
+		int start_column,
+		int *FstLen,
+		int *Len,
+		int nb_orbits_at_level_3,
+		int nb_orb_total,
+		orbit_of_subspaces ***All_Orbits, // [nb_non_unique_cases_with_non_trivial_group]
+		int *Nb_orb, // [nb_non_unique_cases_with_non_trivial_group]
+		int **Orbit_idx, // [nb_non_unique_cases_with_non_trivial_group]
+		int **Position, // [nb_non_unique_cases_with_non_trivial_group]
+		int *Fo_first,// [nb_orbits_at_level_3]
+		int nb_flag_orbits,
+		flag_orbits *Flag_orbits, // [nb_flag_orbits]
+		int *f_processed, // [nb_flag_orbits]
+		int &nb_processed,
+		long int *data1,
+		long int *data2,
+		int *Basis1, int *Basis2, int *B,
+		int *v1, int *v2, int *v3,
+		int *transporter1,
+		int *transporter2,
+		int *transporter3,
+		int *Elt1,
+		vector_ge *coset_reps,
+		int verbose_level);
 int find_semifield_in_table(semifield_lifting *L3,
 	long int *Data, int nb_semifields, int data_size,
-	int start_column, int *FstLen, int nb_orbits, int po,
+	int start_column, int *FstLen, int nb_orbits_at_level_3, int po,
 	long int *given_data, int verbose_level);
 int is_unit_vector(int *v, int len, int k);
 void save_trace_record(trace_record *T,
@@ -141,7 +177,7 @@ int main(int argc, const char **argv)
 
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 
 	{
 
@@ -150,37 +186,50 @@ int main(int argc, const char **argv)
 
 	const char *fname_FstLen = "semi64_liftings_FstLen.csv";
 	const char *fname_liftings = "semi64_liftings_Data.csv";
-	int *FstLen;
-	int *Len;
-	int nb_orbits;
+	int nb_orbits_at_level_3;
+	int *FstLen; // [2 * nb_orbits_at_level_3]
+	int *Len; // [nb_orbits_at_level_3]
 	long int *Data;
 	int nb_solutions, data_size;
 	int start_column;
+
+	int nb_existing_cases;
 	int *Existing_cases;
 	int *Existing_cases_fst;
 	int *Existing_cases_len;
-	int nb_existing_cases;
+
 	int a;
+
+	int nb_non_unique_cases;
 	int *Non_unique_cases;
 	int *Non_unique_cases_fst;
 	int *Non_unique_cases_len;
 	int *Non_unique_cases_go;
-	int nb_non_unique_cases;
-	int *Non_unique_cases_with_non_trivial_group;
+
 	int nb_non_unique_cases_with_non_trivial_group;
+	int *Non_unique_cases_with_non_trivial_group;
+
 	int *Need_orbits_fst;
 	int *Need_orbits_len;
+
 	int sum;
 	int o, fst, len;
 	long int *input_data;
-	orbit_of_subspaces ***All_Orbits;
-	int **Position;
-	int **Orbit_idx;
-	int *Nb_orb;
-	int nb_orb_total;
+
+	orbit_of_subspaces ***All_Orbits; // [nb_non_unique_cases_with_non_trivial_group]
+	int *Nb_orb; // [nb_non_unique_cases_with_non_trivial_group]
+		// Nb_orb[i] is the number of orbits in All_Orbits[i]
+	int **Orbit_idx; // [nb_non_unique_cases_with_non_trivial_group]
+		// Orbit_idx[i][j] = b
+		// means that the j-th solution of Nontrivial case i belongs to orbt All_Orbits[i][b]
+	int **Position; // [nb_non_unique_cases_with_non_trivial_group]
+		// Position[i][j] = a
+		// means that the j-th solution of Nontrivial case i is the a-th element in All_Orbits[i][b]
+		// where Orbit_idx[i][j] = b
+	int nb_orb_total; // = sum_i Nb_orb[i]
 	int nb_flag_orbits;
 	int idx;
-	int *Po_first; // [nb_orbits]
+	int *Fo_first; // [nb_orbits_at_level_3]
 	flag_orbits *Flag_orbits;
 	int h, g;
 	long int *data;
@@ -278,9 +327,9 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 	Fio.int_matrix_read_csv(fname_FstLen,
-		FstLen, nb_orbits, mtx_n, verbose_level);
-	Len = NEW_int(nb_orbits);
-	for (i = 0; i < nb_orbits; i++) {
+		FstLen, nb_orbits_at_level_3, mtx_n, verbose_level);
+	Len = NEW_int(nb_orbits_at_level_3);
+	for (i = 0; i < nb_orbits_at_level_3; i++) {
 		Len[i] = FstLen[i * 2 + 1];
 		}
 	Fio.lint_matrix_read_csv(fname_liftings, Data,
@@ -290,14 +339,14 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "Read " << nb_solutions
 			<< " solutions arising from "
-			<< nb_orbits << " orbits" << endl;
+			<< nb_orbits_at_level_3 << " orbits" << endl;
 		}
 
 
 
 
 
-	C.init(Len, nb_orbits, FALSE, 0);
+	C.init(Len, nb_orbits_at_level_3, FALSE, 0);
 	if (f_v) {
 		cout << "classification of Len:" << endl;
 		C.print_naked(TRUE);
@@ -311,10 +360,10 @@ int main(int argc, const char **argv)
 
 
 
-	Existing_cases = NEW_int(nb_orbits);
+	Existing_cases = NEW_int(nb_orbits_at_level_3);
 	nb_existing_cases = 0;
 
-	for (i = 0; i < nb_orbits; i++) {
+	for (i = 0; i < nb_orbits_at_level_3; i++) {
 		if (Len[i]) {
 			Existing_cases[nb_existing_cases++] = i;
 			}
@@ -582,7 +631,7 @@ int main(int argc, const char **argv)
 		cout << "Counting number of flag orbits:" << endl;
 		}
 	nb_flag_orbits = 0;
-	for (o = 0; o < nb_orbits; o++) {
+	for (o = 0; o < nb_orbits_at_level_3; o++) {
 
 		if (FALSE) {
 			cout << "orbit " << o << " number of semifields = "
@@ -622,21 +671,21 @@ int main(int argc, const char **argv)
 		}
 
 
-	Po_first = NEW_int(nb_orbits);
+	Fo_first = NEW_int(nb_orbits_at_level_3);
 
 	Flag_orbits = NEW_OBJECT(flag_orbits);
 	Flag_orbits->init_lint(
 		SC->A, SC->AS,
-		nb_orbits /* nb_primary_orbits_lower */,
+		nb_orbits_at_level_3 /* nb_primary_orbits_lower */,
 		k /* pt_representation_sz */,
 		nb_flag_orbits /* nb_flag_orbits */,
 		verbose_level);
 
 
 	h = 0;
-	for (o = 0; o < nb_orbits; o++) {
+	for (o = 0; o < nb_orbits_at_level_3; o++) {
 
-		Po_first[o] = h;
+		Fo_first[o] = h;
 		fst = FstLen[2 * o + 0];
 
 		if (Len[o] == 0) {
@@ -733,15 +782,15 @@ int main(int argc, const char **argv)
 	int *transporter1;
 	int *transporter2;
 	int *transporter3;
-	int rk, N;
-	int trace_po;
+	int N;
 	//int trace_po0;
 	//int cnt_aut;
 	int depth0 = 3;
-	int desired_pivot_rows[6] = {0, 1, 5, 4, 3, 2};
-	int desired_pivots[6];
+	//int desired_pivot_rows[6] = {0, 1, 5, 4, 3, 2};
+	//int desired_pivots[6];
 
 
+#if 0
 	for (i = 0; i < k; i++) {
 		desired_pivots[i] = desired_pivot_rows[i] * k;
 		}
@@ -753,6 +802,7 @@ int main(int argc, const char **argv)
 		int_vec_print(cout, desired_pivots, k);
 		cout << endl;
 		}
+#endif
 
 
 	Basis1 = NEW_int(k * k2);
@@ -771,7 +821,7 @@ int main(int argc, const char **argv)
 
 	classification_step *Semifields;
 	int *f_processed; // [nb_flag_orbits]
-	int nb_processed, po, so, f, f2;
+	int nb_processed, po, so, f;
 	long int *data1;
 	long int *data2;
 	int *Elt1;
@@ -898,382 +948,52 @@ int main(int argc, const char **argv)
 
 		TR = NEW_OBJECTS(trace_record, N);
 
-		for (rk = 0; rk < N; rk++) {
 
-			trace_record *T;
-
-			T = TR + rk;
-
-			T->coset = rk;
-
-			if (f_vv) {
-				cout << "flag orbit " << f << " / "
-					<< nb_flag_orbits << ", subspace "
-					<< rk << " / " << N << ":" << endl;
-				}
-
-			// we do it again:
-			for (i = 0; i < k; i++) {
-				SC->matrix_unrank(data1[i], Basis1 + i * k2);
-				}
-			if (f_vvv) {
-				SC->basis_print(Basis1, k);
-				}
-
-
-			// unrank the subspace:
-			Gr->unrank_int_here_and_extend_basis(B, rk,
-					0 /* verbose_level */);
-
-			// multiply the matrices to get the matrices
-			// adapted to the subspace:
-			// the first three matrices are the generators
-			// for the subspace.
-			F->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
-					0 /* verbose_level */);
-
-
-			if (f_vvv) {
-				cout << "base change matrix B=" << endl;
-				int_matrix_print_bitwise(B, k, k);
-
-				cout << "Basis2 = B * Basis1 (before trace)=" << endl;
-				int_matrix_print_bitwise(Basis2, k, k2);
-				SC->basis_print(Basis2, k);
-				}
-
-
-			if (f_vv) {
-				cout << "before trace_to_level_three" << endl;
+		if (f_v) {
+			cout << "flag orbit " << f << " / " << nb_flag_orbits
+				<< ", looping over the " << N << " subspaces, before loop_over_all_subspaces" << endl;
 			}
-			trace_po = L3->trace_to_level_three(
-				Basis2,
-				k /* basis_sz */,
+		loop_over_all_subspaces(
+				SC,
+				L3,
+				Gr,
+				Non_unique_cases_with_non_trivial_group,
+				nb_non_unique_cases_with_non_trivial_group,
+				TR,
+				N,
+				f,
+				Data,
+				nb_solutions,
+				data_size,
+				start_column,
+				FstLen,
+				Len,
+				nb_orbits_at_level_3,
+				nb_orb_total,
+				All_Orbits, // [nb_non_unique_cases_with_non_trivial_group]
+				Nb_orb, // [nb_non_unique_cases_with_non_trivial_group]
+				Orbit_idx, // [nb_non_unique_cases_with_non_trivial_group]
+				Position, // [nb_non_unique_cases_with_non_trivial_group]
+				Fo_first,// [nb_orbits_at_level_3]
+				nb_flag_orbits,
+				Flag_orbits, // [nb_flag_orbits]
+				f_processed, // [nb_flag_orbits]
+				nb_processed,
+				data1,
+				data2,
+				Basis1, Basis2, B,
+				v1, v2, v3,
 				transporter1,
+				transporter2,
+				transporter3,
+				Elt1,
+				coset_reps,
 				verbose_level - 3);
+		if (f_v) {
+			cout << "flag orbit " << f << " / " << nb_flag_orbits
+				<< ", looping over the " << N << " subspaces, after loop_over_all_subspaces" << endl;
+			}
 
-			T->trace_po = trace_po;
-
-			if (f_vvv) {
-				cout << "After trace, trace_po = "
-						<< trace_po << endl;
-				cout << "Basis2 (after trace)=" << endl;
-				int_matrix_print_bitwise(Basis2, k, k2);
-				SC->basis_print(Basis2, k);
-				}
-
-			for (i = 0; i < k; i++) {
-				v1[i] = Basis2[0 * k2 + i * k + 0];
-				}
-			for (i = 0; i < k; i++) {
-				v2[i] = Basis2[1 * k2 + i * k + 0];
-				}
-			for (i = 0; i < k; i++) {
-				v3[i] = Basis2[2 * k2 + i * k + 0];
-				}
-			if (!is_unit_vector(v1, k, 0)) {
-				f_skip = TRUE;
-				}
-			if (!is_unit_vector(v2, k, 1)) {
-				f_skip = TRUE;
-				}
-			if (!is_unit_vector(v3, k, k - 1)) {
-				f_skip = TRUE;
-				}
-			T->f_skip = f_skip;
-
-			if (f_skip) {
-				if (f_vv) {
-					cout << "skipping this case " << trace_po
-						<< " because pivot is not "
-							"in the last row." << endl;
-					}
-				}
-			else {
-				F->Gauss_int_with_given_pivots(
-					Basis2,
-					FALSE /* f_special */,
-					FALSE /* f_complete */,
-					desired_pivots,
-					k /* nb_pivots */,
-					k, k2,
-					0 /*verbose_level - 2*/);
-				if (f_vvv) {
-					cout << "Basis2 after RREF(1)=" << endl;
-					int_matrix_print_bitwise(Basis2, k, k2);
-					SC->basis_print(Basis2, k);
-					}
-
-				for (i = 0; i < k; i++) {
-					data2[i] = SC->matrix_rank(Basis2 + i * k2);
-					}
-				if (f_vvv) {
-					cout << "data2=";
-					lint_vec_print(cout, data2, k);
-					cout << endl;
-					}
-
-				F->Gauss_int_with_given_pivots(
-					Basis2 + 3 * k2,
-					FALSE /* f_special */,
-					TRUE /* f_complete */,
-					desired_pivots + 3,
-					k - 3 /* nb_pivots */,
-					k - 3, k2,
-					0 /*verbose_level - 2*/);
-				if (f_vvv) {
-					cout << "Basis2 after RREF(2)=" << endl;
-					int_matrix_print_bitwise(Basis2, k, k2);
-					SC->basis_print(Basis2, k);
-					}
-
-				for (i = 0; i < k; i++) {
-					data2[i] = SC->matrix_rank(Basis2 + i * k2);
-					}
-				if (f_vvv) {
-					cout << "data2=";
-					lint_vec_print(cout, data2, k);
-					cout << endl;
-					}
-
-				int solution_idx;
-
-				if (f_vvv) {
-					cout << "before find_semifield_in_table" << endl;
-				}
-				solution_idx = find_semifield_in_table(
-					L3,
-					Data,
-					nb_solutions /* nb_semifields */,
-					data_size,
-					start_column,
-					FstLen,
-					nb_orbits,
-					trace_po,
-					data2 /* given_data */,
-					verbose_level);
-
-
-				T->solution_idx = solution_idx;
-				T->nb_sol = Len[trace_po];
-
-				if (f_vvv) {
-					cout << "solution_idx=" << solution_idx << endl;
-					}
-
-				int go;
-				go = L3->Stabilizer_gens[trace_po].group_order_as_int();
-
-				T->go = go;
-				T->pos = -1;
-				T->so = -1;
-				T->orbit_len = -1;
-				T->f2 = -1;
-
-				if (f_vv) {
-					cout << "flag orbit " << f << " / "
-						<< nb_flag_orbits << ", subspace "
-						<< rk << " / " << N << " trace_po="
-						<< trace_po << " go=" << go
-						<< " solution_idx=" << solution_idx << endl;
-					}
-
-
-				if (go == 1) {
-					if (f_vv) {
-						cout << "This starter case has a trivial "
-								"group order" << endl;
-						}
-
-					f2 = Po_first[trace_po] + solution_idx;
-
-					T->so = solution_idx;
-					T->orbit_len = 1;
-					T->f2 = f2;
-
-					if (f2 == f) {
-						if (f_vv) {
-							cout << "We found an automorphism" << endl;
-							}
-						coset_reps->append(transporter1);
-						}
-					else {
-						if (!f_processed[f2]) {
-							if (f_vv) {
-								cout << "We are identifying with "
-										"po=" << trace_po << " so="
-										<< solution_idx << ", which is "
-											"flag orbit " << f2 << endl;
-								}
-							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-								= TRUE;
-							Flag_orbits->Flag_orbit_node[f2].fusion_with
-								= f;
-							Flag_orbits->Flag_orbit_node[f2].fusion_elt
-								= NEW_int(SC->A->elt_size_in_int);
-							SC->A->element_invert(
-								transporter1,
-								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
-								0);
-							f_processed[f2] = TRUE;
-							nb_processed++;
-							if (f_vv) {
-								cout << "Flag orbit f2 = " << f2
-									<< " has been fused with flag orbit "
-									<< f << endl;
-								}
-							}
-						else {
-							if (f_vv) {
-								cout << "Flag orbit f2 = " << f2
-										<< " has already been processed, "
-												"nothing to do here" << endl;
-								}
-							}
-						}
-					}
-				else {
-					if (Len[trace_po] == 1) {
-						if (f_vv) {
-							cout << "This starter case has only "
-									"one solution" << endl;
-							}
-						f2 = Po_first[trace_po] + 0;
-
-						T->pos = -1;
-						T->so = 0;
-						T->orbit_len = 1;
-						T->f2 = f2;
-
-
-						if (f2 == f) {
-							if (f_vv) {
-								cout << "We found an automorphism" << endl;
-								}
-							coset_reps->append(transporter1);
-							}
-						else {
-							if (!f_processed[f2]) {
-								if (f_vv) {
-									cout << "We are identifying with po="
-											<< trace_po << " so=" << 0
-											<< ", which is flag orbit "
-											<< f2 << endl;
-									}
-								Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-									= TRUE;
-								Flag_orbits->Flag_orbit_node[f2].fusion_with
-									= f;
-								Flag_orbits->Flag_orbit_node[f2].fusion_elt
-									= NEW_int(SC->A->elt_size_in_int);
-								SC->A->element_invert(transporter1,
-									Flag_orbits->Flag_orbit_node[f2].fusion_elt,
-									0);
-								f_processed[f2] = TRUE;
-								nb_processed++;
-								if (f_vv) {
-									cout << "Flag orbit f2 = " << f2
-										<< " has been fused with "
-											"flag orbit " << f << endl;
-									}
-								}
-							else {
-								if (f_vv) {
-									cout << "Flag orbit f2 = " << f2
-										<< " has already been processed, "
-											"nothing to do here" << endl;
-									}
-								}
-							}
-						}
-					else {
-						// now we have a starter_case with more
-						// than one solution and
-						// with a non-trivial group.
-						// Those cases are collected in
-						// Non_unique_cases_with_non_trivial_group
-						// [nb_non_unique_cases_with_non_trivial_group];
-
-						int non_unique_case_idx, orbit_idx, position;
-						orbit_of_subspaces *Orb;
-
-						if (!Sorting.int_vec_search(
-							Non_unique_cases_with_non_trivial_group,
-							nb_non_unique_cases_with_non_trivial_group,
-							trace_po, non_unique_case_idx)) {
-							cout << "cannot find in Non_unique_cases_with_"
-									"non_trivial_group array" << endl;
-							exit(1);
-							}
-						orbit_idx = Orbit_idx[non_unique_case_idx][solution_idx];
-						position = Position[non_unique_case_idx][solution_idx];
-						Orb = All_Orbits[non_unique_case_idx][orbit_idx];
-						f2 = Po_first[trace_po] + orbit_idx;
-
-
-
-						T->pos = position;
-						T->so = orbit_idx;
-						T->orbit_len = Orb->used_length;
-						T->f2 = f2;
-
-
-
-						if (f_vv) {
-							cout << "orbit_idx = " << orbit_idx
-									<< " position = " << position
-									<< " f2 = " << f2 << endl;
-							}
-						Orb->get_transporter(position, transporter2,
-								0 /*verbose_level */);
-						SC->A->element_invert(transporter2, Elt1, 0);
-						SC->A->element_mult(transporter1, Elt1,
-								transporter3, 0);
-
-						if (f2 == f) {
-							if (f_vv) {
-								cout << "We found an automorphism" << endl;
-								}
-							coset_reps->append(transporter3);
-							}
-						else {
-							if (!f_processed[f2]) {
-								if (f_vv) {
-									cout << "We are identifying with po="
-										<< trace_po << " so=" << solution_idx
-										<< ", which is flag orbit "
-										<< f2 << endl;
-									}
-								Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-									= TRUE;
-								Flag_orbits->Flag_orbit_node[f2].fusion_with
-									= f;
-								Flag_orbits->Flag_orbit_node[f2].fusion_elt =
-									NEW_int(SC->A->elt_size_in_int);
-								SC->A->element_invert(transporter3,
-									Flag_orbits->Flag_orbit_node[f2].fusion_elt,
-									0);
-								f_processed[f2] = TRUE;
-								nb_processed++;
-								if (f_vv) {
-									cout << "Flag orbit f2 = " << f2
-										<< " has been fused with flag "
-										"orbit " << f << endl;
-									}
-								}
-							else {
-								if (f_vv) {
-									cout << "Flag orbit f2 = " << f2
-										<< " has already been processed, "
-												"nothing to do here" << endl;
-									}
-								}
-							}
-
-						}
-					}
-				} // if !f_skip
-			} // next rk
 
 		save_trace_record(TR,
 			Flag_orbits->nb_primary_orbits_upper, f, po, so, N);
@@ -1365,9 +1085,447 @@ int main(int argc, const char **argv)
 	the_end(t0);
 }
 
+void loop_over_all_subspaces(
+		semifield_classify *SC,
+		semifield_lifting *L3,
+		grassmann *Gr,
+		int *Non_unique_cases_with_non_trivial_group,
+		int nb_non_unique_cases_with_non_trivial_group,
+		trace_record *TR,
+		int N,
+		int f,
+		long int *Data,
+		int nb_solutions,
+		int data_size,
+		int start_column,
+		int *FstLen,
+		int *Len,
+		int nb_orbits_at_level_3,
+		int nb_orb_total,
+		orbit_of_subspaces ***All_Orbits, // [nb_non_unique_cases_with_non_trivial_group]
+		int *Nb_orb, // [nb_non_unique_cases_with_non_trivial_group]
+		int **Orbit_idx, // [nb_non_unique_cases_with_non_trivial_group]
+		int **Position, // [nb_non_unique_cases_with_non_trivial_group]
+		int *Fo_first,// [nb_orbits_at_level_3]
+		int nb_flag_orbits,
+		flag_orbits *Flag_orbits, // [nb_flag_orbits]
+		int *f_processed, // [nb_flag_orbits]
+		int &nb_processed,
+		long int *data1,
+		long int *data2,
+		int *Basis1, int *Basis2, int *B,
+		int *v1, int *v2, int *v3,
+		int *transporter1,
+		int *transporter2,
+		int *transporter3,
+		int *Elt1,
+		vector_ge *coset_reps,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	finite_field *F;
+	int rk, i, f2;
+	int k, k2;
+	int f_skip;
+	int trace_po;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "loop_over_all_subspaces" << endl;
+	}
+	k = SC->k;
+	k2 = SC->k2;
+	F = SC->F;
+
+	for (rk = 0; rk < N; rk++) {
+
+		trace_record *T;
+
+		T = TR + rk;
+
+		T->coset = rk;
+
+		if (f_vv) {
+			cout << "flag orbit " << f << " / "
+				<< nb_flag_orbits << ", subspace "
+				<< rk << " / " << N << ":" << endl;
+			}
+
+		// we do it again:
+		for (i = 0; i < k; i++) {
+			SC->matrix_unrank(data1[i], Basis1 + i * k2);
+			}
+		if (f_vvv) {
+			SC->basis_print(Basis1, k);
+			}
+
+
+		// unrank the subspace:
+		Gr->unrank_int_here_and_extend_basis(B, rk,
+				0 /* verbose_level */);
+
+		// multiply the matrices to get the matrices
+		// adapted to the subspace:
+		// the first three matrices are the generators
+		// for the subspace.
+		F->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
+				0 /* verbose_level */);
+
+
+		if (f_vvv) {
+			cout << "base change matrix B=" << endl;
+			int_matrix_print_bitwise(B, k, k);
+
+			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
+			int_matrix_print_bitwise(Basis2, k, k2);
+			SC->basis_print(Basis2, k);
+		}
+
+
+		if (f_vv) {
+			cout << "before trace_to_level_three" << endl;
+		}
+		trace_po = L3->trace_to_level_three(
+			Basis2,
+			k /* basis_sz */,
+			transporter1,
+			verbose_level - 3);
+
+		T->trace_po = trace_po;
+
+		if (f_vvv) {
+			cout << "After trace, trace_po = "
+					<< trace_po << endl;
+			cout << "Basis2 (after trace)=" << endl;
+			int_matrix_print_bitwise(Basis2, k, k2);
+			SC->basis_print(Basis2, k);
+		}
+
+		for (i = 0; i < k; i++) {
+			v1[i] = Basis2[0 * k2 + i * k + 0];
+			}
+		for (i = 0; i < k; i++) {
+			v2[i] = Basis2[1 * k2 + i * k + 0];
+			}
+		for (i = 0; i < k; i++) {
+			v3[i] = Basis2[2 * k2 + i * k + 0];
+			}
+		if (!is_unit_vector(v1, k, 0)) {
+			f_skip = TRUE;
+			}
+		if (!is_unit_vector(v2, k, 1)) {
+			f_skip = TRUE;
+			}
+		if (!is_unit_vector(v3, k, k - 1)) {
+			f_skip = TRUE;
+			}
+		T->f_skip = f_skip;
+
+		if (f_skip) {
+			if (f_vv) {
+				cout << "skipping this case " << trace_po
+					<< " because pivot is not "
+						"in the last row." << endl;
+			}
+		}
+		else {
+#if 0
+			F->Gauss_int_with_given_pivots(
+				Basis2,
+				FALSE /* f_special */,
+				FALSE /* f_complete */,
+				desired_pivots,
+				k /* nb_pivots */,G fin
+				k, k2,
+				0 /*verbose_level - 2*/);
+			if (f_vvv) {
+				cout << "Basis2 after RREF(1)=" << endl;
+				int_matrix_print_bitwise(Basis2, k, k2);
+				SC->basis_print(Basis2, k);
+				}
+
+			for (i = 0; i < k; i++) {
+				data2[i] = SC->matrix_rank(Basis2 + i * k2);
+				}
+			if (f_vvv) {
+				cout << "data2=";
+				lint_vec_print(cout, data2, k);
+				cout << endl;
+				}
+#endif
+
+			F->Gauss_int_with_given_pivots(
+				Basis2 + 3 * k2,
+				FALSE /* f_special */,
+				TRUE /* f_complete */,
+				SC->desired_pivots + 3,
+				k - 3 /* nb_pivots */,
+				k - 3, k2,
+				0 /*verbose_level - 2*/);
+			if (f_vvv) {
+				cout << "Basis2 after RREF(2)=" << endl;
+				int_matrix_print_bitwise(Basis2, k, k2);
+				SC->basis_print(Basis2, k);
+			}
+
+			for (i = 0; i < k; i++) {
+				data2[i] = SC->matrix_rank(Basis2 + i * k2);
+			}
+			if (f_vvv) {
+				cout << "data2=";
+				lint_vec_print(cout, data2, k);
+				cout << endl;
+			}
+
+			int solution_idx;
+
+			if (f_vvv) {
+				cout << "before find_semifield_in_table" << endl;
+			}
+			solution_idx = find_semifield_in_table(
+				L3,
+				Data,
+				nb_solutions /* nb_semifields */,
+				data_size,
+				start_column,
+				FstLen,
+				nb_orbits_at_level_3,
+				trace_po,
+				data2 /* given_data */,
+				verbose_level);
+
+
+			T->solution_idx = solution_idx;
+			T->nb_sol = Len[trace_po];
+
+			if (f_vvv) {
+				cout << "solution_idx=" << solution_idx << endl;
+			}
+
+			int go;
+			go = L3->Stabilizer_gens[trace_po].group_order_as_int();
+
+			T->go = go;
+			T->pos = -1;
+			T->so = -1;
+			T->orbit_len = -1;
+			T->f2 = -1;
+
+			if (f_vv) {
+				cout << "flag orbit " << f << " / "
+					<< nb_flag_orbits << ", subspace "
+					<< rk << " / " << N << " trace_po="
+					<< trace_po << " go=" << go
+					<< " solution_idx=" << solution_idx << endl;
+			}
+
+
+			if (go == 1) {
+				if (f_vv) {
+					cout << "This starter case has a trivial "
+							"group order" << endl;
+				}
+
+				f2 = Fo_first[trace_po] + solution_idx;
+
+				T->so = solution_idx;
+				T->orbit_len = 1;
+				T->f2 = f2;
+
+				if (f2 == f) {
+					if (f_vv) {
+						cout << "We found an automorphism" << endl;
+					}
+					coset_reps->append(transporter1);
+				}
+				else {
+					if (!f_processed[f2]) {
+						if (f_vv) {
+							cout << "We are identifying with "
+									"flag orbit " << f2 << ", which is "
+									"po=" << trace_po << " so="
+									<< solution_idx << endl;
+						}
+						Flag_orbits->Flag_orbit_node[f2].f_fusion_node
+							= TRUE;
+						Flag_orbits->Flag_orbit_node[f2].fusion_with
+							= f;
+						Flag_orbits->Flag_orbit_node[f2].fusion_elt
+							= NEW_int(SC->A->elt_size_in_int);
+						SC->A->element_invert(
+							transporter1,
+							Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+							0);
+						f_processed[f2] = TRUE;
+						nb_processed++;
+						if (f_vv) {
+							cout << "Flag orbit f2 = " << f2
+								<< " has been fused with flag orbit "
+								<< f << endl;
+						}
+					}
+					else {
+						if (f_vv) {
+							cout << "Flag orbit f2 = " << f2
+									<< " has already been processed, "
+											"nothing to do here" << endl;
+						}
+					}
+				}
+			}
+			else {
+				if (Len[trace_po] == 1) {
+					if (f_vv) {
+						cout << "This starter case has only "
+								"one solution" << endl;
+					}
+					f2 = Fo_first[trace_po] + 0;
+
+					T->pos = -1;
+					T->so = 0;
+					T->orbit_len = 1;
+					T->f2 = f2;
+
+
+					if (f2 == f) {
+						if (f_vv) {
+							cout << "We found an automorphism" << endl;
+						}
+						coset_reps->append(transporter1);
+					}
+					else {
+						if (!f_processed[f2]) {
+							if (f_vv) {
+								cout << "We are identifying with po="
+										<< trace_po << " so=" << 0
+										<< ", which is flag orbit "
+										<< f2 << endl;
+							}
+							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
+								= TRUE;
+							Flag_orbits->Flag_orbit_node[f2].fusion_with
+								= f;
+							Flag_orbits->Flag_orbit_node[f2].fusion_elt
+								= NEW_int(SC->A->elt_size_in_int);
+							SC->A->element_invert(transporter1,
+								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+								0);
+							f_processed[f2] = TRUE;
+							nb_processed++;
+							if (f_vv) {
+								cout << "Flag orbit f2 = " << f2
+									<< " has been fused with "
+										"flag orbit " << f << endl;
+							}
+						}
+						else {
+							if (f_vv) {
+								cout << "Flag orbit f2 = " << f2
+									<< " has already been processed, "
+										"nothing to do here" << endl;
+							}
+						}
+					}
+				}
+				else {
+					// now we have a starter_case with more
+					// than one solution and
+					// with a non-trivial group.
+					// Those cases are collected in
+					// Non_unique_cases_with_non_trivial_group
+					// [nb_non_unique_cases_with_non_trivial_group];
+
+					int non_unique_case_idx, orbit_idx, position;
+					orbit_of_subspaces *Orb;
+
+					if (!Sorting.int_vec_search(
+						Non_unique_cases_with_non_trivial_group,
+						nb_non_unique_cases_with_non_trivial_group,
+						trace_po, non_unique_case_idx)) {
+						cout << "cannot find in Non_unique_cases_with_"
+								"non_trivial_group array" << endl;
+						exit(1);
+					}
+					orbit_idx = Orbit_idx[non_unique_case_idx][solution_idx];
+					position = Position[non_unique_case_idx][solution_idx];
+					Orb = All_Orbits[non_unique_case_idx][orbit_idx];
+					f2 = Fo_first[trace_po] + orbit_idx;
+
+
+
+					T->pos = position;
+					T->so = orbit_idx;
+					T->orbit_len = Orb->used_length;
+					T->f2 = f2;
+
+
+
+					if (f_vv) {
+						cout << "orbit_idx = " << orbit_idx
+								<< " position = " << position
+								<< " f2 = " << f2 << endl;
+					}
+					Orb->get_transporter(position, transporter2,
+							0 /*verbose_level */);
+					SC->A->element_invert(transporter2, Elt1, 0);
+					SC->A->element_mult(transporter1, Elt1,
+							transporter3, 0);
+
+					if (f2 == f) {
+						if (f_vv) {
+							cout << "We found an automorphism" << endl;
+							}
+						coset_reps->append(transporter3);
+					}
+					else {
+						if (!f_processed[f2]) {
+							if (f_vv) {
+								cout << "We are identifying with po="
+									<< trace_po << " so=" << solution_idx
+									<< ", which is flag orbit "
+									<< f2 << endl;
+							}
+							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
+								= TRUE;
+							Flag_orbits->Flag_orbit_node[f2].fusion_with
+								= f;
+							Flag_orbits->Flag_orbit_node[f2].fusion_elt =
+								NEW_int(SC->A->elt_size_in_int);
+							SC->A->element_invert(transporter3,
+								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+								0);
+							f_processed[f2] = TRUE;
+							nb_processed++;
+							if (f_vv) {
+								cout << "Flag orbit f2 = " << f2
+									<< " has been fused with flag "
+									"orbit " << f << endl;
+							}
+						}
+						else {
+							if (f_vv) {
+								cout << "Flag orbit f2 = " << f2
+									<< " has already been processed, "
+											"nothing to do here" << endl;
+							}
+						}
+					}
+
+				}
+			}
+		} // if !f_skip
+	} // next rk
+	if (f_v) {
+		cout << "loop_over_all_subspaces done" << endl;
+	}
+
+}
+
 int find_semifield_in_table(semifield_lifting *L3,
 	long int *Data, int nb_semifields, int data_size,
-	int start_column, int *FstLen, int nb_orbits, int po,
+	int start_column, int *FstLen, int nb_orbits_at_level_3, int po,
 	long int *given_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
