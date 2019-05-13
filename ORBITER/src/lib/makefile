@@ -29,6 +29,8 @@ clean:
 	- rm *.o *.a 
 
 
+cleana:
+	- rm *.o *.a 
 
 
 MODULES= \
