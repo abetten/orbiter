@@ -17,7 +17,7 @@ static const char *surface_16_stab_order[] = {
 	"216",
 	"103680",
 };
-// the number of Eckardt postatic ints:
+// the number of Eckardt points:
 static int surface_16_nb_E[] = {
 	13, 3, 5, 9, 45};
 // the lines in the order double six a_i, b_i and 15 more lines c_ij:
