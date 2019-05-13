@@ -445,8 +445,9 @@ public:
 		int verbose_level);
 	int trace_to_level_three(
 		int *input_basis, int basis_sz, int *transporter,
+		int &trace_po,
 		int verbose_level);
-	void trace_step_up(
+	int trace_step_up(
 		int &po, int &so,
 		int *changed_basis, int basis_sz, int *basis_tmp,
 		int *transporter, int *ELT3,

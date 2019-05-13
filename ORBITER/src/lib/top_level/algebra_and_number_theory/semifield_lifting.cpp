@@ -1250,14 +1250,16 @@ strong_generators *semifield_lifting::get_stabilizer_generators(
 
 int semifield_lifting::trace_to_level_three(
 	int *input_basis, int basis_sz, int *transporter,
+	int &trace_po,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int trace_po;
+	//int trace_po;
 	int trace_so;
 	int *Elt1;
 	int *basis_tmp;
+	int ret;
 
 
 	if (f_v) {
@@ -1293,7 +1295,7 @@ int semifield_lifting::trace_to_level_three(
 		cout << "semifield_lifting::trace_to_level_three "
 				"before trace_step_up" << endl;
 		}
-	trace_step_up(
+	ret = trace_step_up(
 		trace_po, trace_so,
 		input_basis, basis_sz, basis_tmp,
 		transporter, Elt1,
@@ -1302,6 +1304,11 @@ int semifield_lifting::trace_to_level_three(
 		cout << "semifield_lifting::trace_to_level_three "
 				"after trace_step_up" << endl;
 		}
+	if (ret == FALSE) {
+		cout << "semifield_lifting::trace_to_level_three "
+				"trace_step_up return FALSE" << endl;
+
+	}
 
 	FREE_int(Elt1);
 	FREE_int(basis_tmp);
@@ -1310,10 +1317,10 @@ int semifield_lifting::trace_to_level_three(
 		cout << "semifield_lifting::trace_to_level_three "
 				"done" << endl;
 		}
-	return trace_po;
+	return ret;
 }
 
-void semifield_lifting::trace_step_up(
+int semifield_lifting::trace_step_up(
 	int &po, int &so,
 	int *changed_basis, int basis_sz, int *basis_tmp,
 	int *transporter, int *ELT3,
@@ -1323,6 +1330,7 @@ void semifield_lifting::trace_step_up(
 	int f_vv = (verbose_level >= 1);
 	int fo, f0;
 	int i, j;
+	int ret = TRUE;
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_step_up po=" << po << " so=" << so << endl;
@@ -1399,7 +1407,7 @@ void semifield_lifting::trace_step_up(
 		TRUE /* f_complete */,
 		SC->desired_pivots,
 		3 /* nb_pivots */,
-		basis_sz /* m */,
+		3, //basis_sz  m
 		k2 /* n */,
 		0 /*verbose_level*/);
 	if (f_vv) {
@@ -1408,6 +1416,13 @@ void semifield_lifting::trace_step_up(
 		int_matrix_print(changed_basis, basis_sz, k2);
 		}
 	for (i = 0; i < 3; i++) {
+		if (changed_basis[i * k2 + SC->desired_pivots[i]] == 0) {
+			if (f_v) {
+				cout << "semifield_lifting::trace_step_up pivot is zero" << endl;
+			}
+			ret = FALSE;
+			break;
+		}
 		for (j = 3; j < basis_sz; j++) {
 			SC->F->Gauss_step(changed_basis + i * k2,
 					changed_basis + j * k2, k2,
@@ -1425,6 +1440,7 @@ void semifield_lifting::trace_step_up(
 	if (f_v) {
 		cout << "semifield_lifting::trace_step_up done" << endl;
 		}
+	return ret;
 }
 
 void semifield_lifting::trace_very_general(
