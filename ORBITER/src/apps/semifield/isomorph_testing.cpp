@@ -1159,9 +1159,17 @@ void loop_over_all_subspaces(
 	int ret;
 	sorting Sorting;
 
+	if (f == 1) {
+		verbose_level += 10;
+		f_v = f_vv = f_vvv = TRUE;
+		cout << "CASE 1, STARTS HERE" << endl;
+	}
+
 	if (f_v) {
 		cout << "loop_over_all_subspaces" << endl;
 	}
+
+
 	k = SC->k;
 	k2 = SC->k2;
 	F = SC->F;
@@ -1174,11 +1182,6 @@ void loop_over_all_subspaces(
 
 		T->coset = rk;
 
-		if (f == 42 && rk == 89) {
-			verbose_level += 10;
-			f_v = f_vv = f_vvv = TRUE;
-			cout << "CASE 42, RK 89 STARTS HERE" << endl;
-		}
 
 		if (f_vv) {
 			cout << "flag orbit " << f << " / "
