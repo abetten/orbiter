@@ -1732,7 +1732,7 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 	return rank;
 }
 
-void finite_field::Gauss_int_with_given_pivots(int *A, 
+int finite_field::Gauss_int_with_given_pivots(int *A,
 	int f_special, int f_complete, int *pivots, int nb_pivots, 
 	int m, int n, 
 	int verbose_level)
@@ -1752,11 +1752,11 @@ void finite_field::Gauss_int_with_given_pivots(int *A,
 		orbiter::foundations::int_vec_print(cout, pivots, nb_pivots);
 		cout << endl;
 		//print_tables();
-		}
+	}
 	for (i = 0; i < nb_pivots; i++) {
 		if (f_vv) {
 			cout << "i=" << i << endl;
-			}
+		}
 
 		j = pivots[i];
 
@@ -1764,21 +1764,21 @@ void finite_field::Gauss_int_with_given_pivots(int *A,
 		for (k = i; k < m; k++) {
 			if (A[k * n + j]) {
 				break;
-				} // if != 0 
-			} // next k
+			} // if != 0
+		} // next k
 		
 		if (k == m) { // no pivot found 
-			if (f_vv) {
+			if (f_v) {
 				cout << "finite_field::Gauss_int_with_given_pivots "
 						"no pivot found in column " << j << endl;
-				}
-			exit(1);
 			}
+			return FALSE;
+		}
 		
 		if (f_vv) {
 			cout << "row " << i << " pivot in row " << k
 					<< " colum " << j << endl;
-			}
+		}
 		
 
 
@@ -1788,8 +1788,8 @@ void finite_field::Gauss_int_with_given_pivots(int *A,
 		if (k != i) {
 			for (jj = 0; jj < n; jj++) {
 				int_swap(A[i * n + jj], A[k * n + jj]);
-				}
 			}
+		}
 
 
 		// now, pivot is in row i, column j :
@@ -1797,50 +1797,50 @@ void finite_field::Gauss_int_with_given_pivots(int *A,
 		pivot = A[i * n + j];
 		if (f_vv) {
 			cout << "pivot=" << pivot << endl;
-			}
+		}
 		pivot_inv = inverse(pivot);
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv << endl;
-			}
+		}
 		if (!f_special) {
 			// make pivot to 1: 
 			for (jj = 0; jj < n; jj++) {
 				A[i * n + jj] = mult(A[i * n + jj], pivot_inv);
-				}
+			}
 			if (f_vv) {
 				cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv 
 					<< " made to one: " << A[i * n + j] << endl;
-				}
+			}
 			if (f_vvv) {
 				print_integer_matrix_width(cout, A, m, n, n, 5);
-				}
 			}
+		}
 		
 		// do the gaussian elimination: 
 
 		if (f_vv) {
 			cout << "doing elimination in column " << j << " from row "
 					<< i + 1 << " down to row " << m - 1 << ":" << endl;
-			}
+		}
 		for (k = i + 1; k < m; k++) {
 			if (f_vv) {
 				cout << "k=" << k << endl;
-				}
+			}
 			z = A[k * n + j];
 			if (z == 0) {
 				continue;
-				}
+			}
 			if (f_special) {
 				f = mult(z, pivot_inv);
-				}
+			}
 			else {
 				f = z;
-				}
+			}
 			f = negate(f);
 			//A[k * n + j] = 0;
 			if (f_vv) {
 				cout << "eliminating row " << k << endl;
-				}
+			}
 			for (jj = 0; jj < n; jj++) {
 				a = A[i * n + jj];
 				b = A[k * n + jj];
@@ -1852,58 +1852,59 @@ void finite_field::Gauss_int_with_given_pivots(int *A,
 				A[k * n + jj] = c;
 				if (f_vv) {
 					cout << A[k * n + jj] << " ";
-					}
 				}
+			}
 			if (f_vv) {
 				cout << endl;
-				}
+			}
 			if (f_vvv) {
 				cout << "A=" << endl;
 				print_integer_matrix_width(cout, A, m, n, n, 5);
-				}
 			}
+		}
 		if (f_vv) {
 			cout << "A=" << endl;
 			print_integer_matrix_width(cout, A, m, n, n, 5);
 			//print_integer_matrix(cout, A, m, n);
-			}
-		} // next j 
+		}
+	} // next j
 	if (f_complete) {
 		for (i = nb_pivots - 1; i >= 0; i--) {
 			j = pivots[i];
 			if (!f_special) {
 				a = A[i * n + j];
-				}
+			}
 			else {
 				pivot = A[i * n + j];
 				pivot_inv = inverse(pivot);
-				}
+			}
 			// do the gaussian elimination in the upper part: 
 			for (k = i - 1; k >= 0; k--) {
 				z = A[k * n + j];
 				if (z == 0) {
 					continue;
-					}
+				}
 				//A[k * n + j] = 0;
 				for (jj = 0; jj < n; jj++) {
 					a = A[i * n + jj];
 					b = A[k * n + jj];
 					if (f_special) {
 						a = mult(a, pivot_inv);
-						}
+					}
 					c = mult(z, a);
 					c = negate(c);
 					c = add(c, b);
 					A[k * n + jj] = c;
-					}
-				} // next k
-			} // next i
-		}
+				}
+			} // next k
+		} // next i
+	}
 	if (f_v) { 
 		cout << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
-		}
+	}
+	return TRUE;
 }
 
 void finite_field::kernel_columns(int n, int nb_base_cols,
