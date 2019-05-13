@@ -85,7 +85,28 @@ public:
 	int so;
 	int orbit_len;
 	int f2;
+	trace_record();
+	~trace_record();
 };
+
+trace_record::trace_record()
+{
+	coset = 0;
+	trace_po = 0;
+	f_skip = FALSE;
+	solution_idx = -1;
+	nb_sol = -1;
+	go = -1;
+	pos = -1;
+	so = -1;
+	orbit_len = 0;
+	f2 = -1;
+}
+
+trace_record::~trace_record()
+{
+
+}
 
 
 int main(int argc, const char **argv)
@@ -1213,6 +1234,7 @@ void loop_over_all_subspaces(
 			SC->basis_print(Basis2, k);
 		}
 
+		f_skip = FALSE;
 		for (i = 0; i < k; i++) {
 			v1[i] = Basis2[0 * k2 + i * k + 0];
 			}
