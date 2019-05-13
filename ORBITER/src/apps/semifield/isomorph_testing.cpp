@@ -177,7 +177,7 @@ int main(int argc, const char **argv)
 
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
+	int f_vvv = (verbose_level >= 3);
 
 	{
 
@@ -551,7 +551,7 @@ int main(int argc, const char **argv)
 				lint_vec_print(cout, input_data, 6);
 				cout << endl;
 				}
-			if (f_v) {
+			if (f_vvv) {
 				cout << "The stabilizer is:" << endl;
 				L3->Stabilizer_gens[a].print_generators_ost(cout);
 			}
@@ -559,9 +559,13 @@ int main(int argc, const char **argv)
 			SC->compute_orbit_of_subspaces(input_data,
 				&L3->Stabilizer_gens[a],
 				Orb,
-				verbose_level - 1);
+				verbose_level - 4);
 			if (f_v) {
-				cout << "Found an orbit of length "
+				cout << "case " << o << " / "
+					<< nb_non_unique_cases_with_non_trivial_group
+					<< " is original case " << a << " at "
+					<< fst << " with " << len
+					<< " semifields. Orbit of semifield " << f << " / " << len << " has length "
 					<< Orb->used_length << endl;
 				}
 
@@ -1146,6 +1150,12 @@ void loop_over_all_subspaces(
 		T = TR + rk;
 
 		T->coset = rk;
+
+		if (f == 42 && rk == 89) {
+			verbose_level += 10;
+			f_v = f_vv = f_vvv = TRUE;
+			cout << "CASE 42, RK 89 STARTS HERE" << endl;
+		}
 
 		if (f_vv) {
 			cout << "flag orbit " << f << " / "

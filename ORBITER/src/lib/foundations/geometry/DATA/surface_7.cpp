@@ -8,9 +8,11 @@ static const char *surface_7_stab_order[] = {
 };
 static int surface_7_nb_E[] = {
 	18};
+#if 0
 static int surface_7_single_six[] = {
 	0, 49, 2800, 107, 338, 2655, 
 };
+#endif
 static int surface_7_Lines[] = {
 	0, 49, 344, 2800, 2849, 2443, 107, 2744, 338, 2706, 2655, 2429, 396, 64, 255, 293, 135, 213, 216, 2458, 1705, 2433, 2593, 2815, 795, 1533, 2529, 
 };
