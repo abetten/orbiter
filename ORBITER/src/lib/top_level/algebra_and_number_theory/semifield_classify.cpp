@@ -797,7 +797,7 @@ int semifield_classify::test_partial_semifield_numerical_data(
 
 
 int semifield_classify::test_partial_semifield(
-		int *Basis, int k, int verbose_level)
+		int *Basis, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
@@ -819,12 +819,12 @@ int semifield_classify::test_partial_semifield(
 	//v = NEW_int(n);
 	//w = NEW_int(k2);
 
-	N = NT.i_power_j(q, k);
+	N = NT.i_power_j(q, sz);
 	for (h = 1; h < N; h++) {
 		Gg.AG_element_unrank(q, v, 1, k, h);
 		for (i = 0; i < k2; i++) {
 			c = 0;
-			for (j = 0; j < k; j++) {
+			for (j = 0; j < sz; j++) {
 				a = v[j];
 				b = F->mult(a, Basis[j * k2 + i]);
 				c = F->add(c, b);
@@ -838,19 +838,20 @@ int semifield_classify::test_partial_semifield(
 				cout << "semifield_classify::test_partial_semifield "
 						"fail for vector h=" << h << " / " << N << " : ";
 				cout << "r=" << r << endl;
-				int_vec_print(cout, v, k);
+				cout << "v=";
+				int_vec_print(cout, v, sz);
 				cout << endl;
-				basis_print(Basis, k);
+				basis_print(Basis, sz);
 				cout << "linear combination:" << endl;
 				for (i = 0; i < k2; i++) {
 					c = 0;
-					for (j = 0; j < k; j++) {
+					for (j = 0; j < sz; j++) {
 						a = v[j];
 						b = F->mult(a, Basis[j * k2 + i]);
 						c = F->add(c, b);
-						}
-					w[i] = c;
 					}
+					w[i] = c;
+				}
 				int_matrix_print(w, k, k);
 			}
 			break;
