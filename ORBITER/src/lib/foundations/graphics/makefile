@@ -18,5 +18,7 @@ MODULES = \
 
 all : $(MODULES)
 
+%.o: %.cpp %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+
 clean:
 	- rm *.o *.a *~
