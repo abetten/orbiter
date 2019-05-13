@@ -30,7 +30,7 @@ clean:
 
 
 cleana:
-	- rm *.o *.a 
+	- rm *.a 
 
 
 MODULES= \
