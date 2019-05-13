@@ -1148,8 +1148,9 @@ void semifield_lifting::get_pivots(
 }
 #endif
 
-void semifield_lifting::get_basis_and_pivots(
-	int po3, int *basis, int *pivots, int verbose_level)
+void semifield_lifting::get_basis(
+	int po3, int *basis,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1158,10 +1159,10 @@ void semifield_lifting::get_basis_and_pivots(
 	long int pt;
 	long int a;
 	//int ext, idx, i;
-	int i;
+	//int i;
 
 	if (f_v) {
-		cout << "semifield_lifting::get_basis_and_pivots "
+		cout << "semifield_lifting::get_basis "
 				"po3 = " << po3 << endl;
 		}
 
@@ -1189,6 +1190,7 @@ void semifield_lifting::get_basis_and_pivots(
 
 	SC->matrix_unrank(pt, basis + 2 * k2);
 
+#if 0
 	pivots[0] = 0;
 	pivots[1] = k;
 	for (i = k - 1; i >= 2; i--) { // for (i = 2; i < k; i++)
@@ -1210,7 +1212,7 @@ void semifield_lifting::get_basis_and_pivots(
 		int_vec_print(cout, pivots, 3);
 		cout << endl;
 		}
-
+#endif
 
 	if (f_v) {
 		cout << "semifield_lifting::get_basis_and_pivots "
