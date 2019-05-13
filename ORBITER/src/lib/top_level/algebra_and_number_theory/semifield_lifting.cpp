@@ -1401,6 +1401,11 @@ int semifield_lifting::trace_step_up(
 #endif
 
 
+	if (f_vv) {
+		cout << "semifield_lifting::trace_step_up "
+				"before Gauss_int_with_given_pivots" << endl;
+		int_matrix_print(changed_basis, basis_sz, k2);
+		}
 	SC->F->Gauss_int_with_given_pivots(
 		changed_basis,
 		FALSE /* f_special */,
@@ -1409,7 +1414,7 @@ int semifield_lifting::trace_step_up(
 		3 /* nb_pivots */,
 		3, //basis_sz  m
 		k2 /* n */,
-		0 /*verbose_level*/);
+		verbose_level);
 	if (f_vv) {
 		cout << "semifield_lifting::trace_step_up "
 				"after Gauss_int_with_given_pivots:" << endl;
