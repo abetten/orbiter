@@ -80,11 +80,17 @@ void semifield_downstep_node::init(
 	subspace_basis = NEW_int(level * k2);
 	//subspace_base_cols = NEW_int(level);
 
+	int pivots[2]; // not used
 
-	SL->get_basis(orbit_number,
-			subspace_basis, //subspace_base_cols,
-			verbose_level);
-
+	if (level == 2) {
+		SL->L2->get_basis_and_pivots(orbit_number,
+				subspace_basis, pivots, verbose_level);
+	}
+	else {
+		SL->get_basis(orbit_number,
+				subspace_basis, //subspace_base_cols,
+				verbose_level);
+	}
 
 	if (f_v) {
 		cout << "subspace_basis:" << endl;
