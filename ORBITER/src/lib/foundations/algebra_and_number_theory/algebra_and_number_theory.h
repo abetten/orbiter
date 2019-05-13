@@ -363,11 +363,12 @@ public:
 		int verbose_level);
 		// returns the rank which is the number of entries in pivots
 		// A is a m x n matrix
-	void Gauss_int_with_given_pivots(int *A, 
+	int Gauss_int_with_given_pivots(int *A,
 		int f_special, int f_complete, int *pivots, int nb_pivots, 
 		int m, int n, 
 		int verbose_level);
 		// A is a m x n matrix
+		// returns FALSE if pivot cannot be found at one of the steps
 	void kernel_columns(int n, int nb_base_cols, 
 		int *base_cols, int *kernel_cols);
 	void matrix_get_kernel_as_int_matrix(int *M, int m, int n, 

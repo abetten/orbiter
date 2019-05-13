@@ -1406,7 +1406,7 @@ int semifield_lifting::trace_step_up(
 				"before Gauss_int_with_given_pivots" << endl;
 		int_matrix_print(changed_basis, basis_sz, k2);
 		}
-	SC->F->Gauss_int_with_given_pivots(
+	if (!SC->F->Gauss_int_with_given_pivots(
 		changed_basis,
 		FALSE /* f_special */,
 		TRUE /* f_complete */,
@@ -1414,32 +1414,35 @@ int semifield_lifting::trace_step_up(
 		3 /* nb_pivots */,
 		3, //basis_sz  m
 		k2 /* n */,
-		verbose_level);
-	if (f_vv) {
-		cout << "semifield_lifting::trace_step_up "
-				"after Gauss_int_with_given_pivots:" << endl;
-		int_matrix_print(changed_basis, basis_sz, k2);
-		}
-	for (i = 0; i < 3; i++) {
-		if (changed_basis[i * k2 + SC->desired_pivots[i]] == 0) {
-			if (f_v) {
-				cout << "semifield_lifting::trace_step_up pivot is zero" << endl;
+		verbose_level)) {
+		if (f_vv) {
+			cout << "semifield_lifting::trace_step_up "
+					"Gauss_int_with_given_pivots returns FALSE, "
+					"pivot cannot be found" << endl;
+			int_matrix_print(changed_basis, basis_sz, k2);
 			}
-			ret = FALSE;
-			break;
+		ret = FALSE;
+	}
+	else {
+		if (f_vv) {
+			cout << "semifield_lifting::trace_step_up "
+					"after Gauss_int_with_given_pivots:" << endl;
+			int_matrix_print(changed_basis, basis_sz, k2);
 		}
-		for (j = 3; j < basis_sz; j++) {
-			SC->F->Gauss_step(changed_basis + i * k2,
-					changed_basis + j * k2, k2,
-					SC->desired_pivots[i], 0 /*verbose_level*/);
+		for (i = 0; i < 3; i++) {
+			for (j = 3; j < basis_sz; j++) {
+				SC->F->Gauss_step(changed_basis + i * k2,
+						changed_basis + j * k2, k2,
+						SC->desired_pivots[i], 0 /*verbose_level*/);
 			}
 		}
-	if (f_vv) {
-		cout << "semifield_lifting::trace_step_up "
-				"after reducing:" << endl;
-		int_matrix_print(changed_basis, basis_sz, k2);
-		SC->basis_print(changed_basis, basis_sz);
+		if (f_vv) {
+			cout << "semifield_lifting::trace_step_up "
+					"after reducing:" << endl;
+			int_matrix_print(changed_basis, basis_sz, k2);
+			SC->basis_print(changed_basis, basis_sz);
 		}
+	}
 
 	//FREE_int(pivots);
 	if (f_v) {
