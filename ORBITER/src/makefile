@@ -6,3 +6,5 @@ clean:
 	cd lib; $(MAKE) clean
 	cd apps; $(MAKE) clean
 
+cleana: 
+	cd lib; $(MAKE) cleana
