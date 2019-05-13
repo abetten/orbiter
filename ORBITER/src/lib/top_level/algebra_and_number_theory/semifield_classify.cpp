@@ -1034,8 +1034,19 @@ void semifield_classify::apply_element_and_copy_back(int *Elt,
 }
 
 
+int semifield_classify::test_if_third_basis_vector_is_ok(int *Basis)
+{
+	int *v = test_v;
+	int i;
 
-
+	for (i = 0; i < k; i++) {
+		v[i] = Basis[2 * k2 + i * k + 0];
+		}
+	if (!F->is_unit_vector(v, k, k - 1)) {
+		return FALSE;
+		}
+	return TRUE;
+}
 
 void semifield_classify::candidates_classify_by_first_column(
 	long int *Input_set, int input_set_sz,

@@ -150,6 +150,7 @@ public:
 	void apply_element_and_copy_back(int *Elt,
 		int *basis_in, int *basis_out,
 		int first, int last_plus_one, int verbose_level);
+	int test_if_third_basis_vector_is_ok(int *Basis);
 	void candidates_classify_by_first_column(
 		long int *Input_set, int input_set_sz,
 		int window_bottom, int window_size,

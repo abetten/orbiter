@@ -65,8 +65,9 @@ void loop_over_all_subspaces(
 int find_semifield_in_table(semifield_lifting *L3,
 	long int *Data, int nb_semifields, int data_size,
 	int start_column, int *FstLen, int nb_orbits_at_level_3, int po,
-	long int *given_data, int verbose_level);
-int is_unit_vector(int *v, int len, int k);
+	long int *given_data,
+	int &idx,
+	int verbose_level);
 void save_trace_record(trace_record *T,
 		int iso, int f, int po, int so, int N);
 
@@ -943,7 +944,7 @@ int main(int argc, const char **argv)
 		for (i = 0; i < k; i++) {
 			v3[i] = Basis1[2 * k2 + i * k + 0];
 			}
-		if (!is_unit_vector(v3, k, k - 1)) {
+		if (!F->is_unit_vector(v3, k, k - 1)) {
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
@@ -1234,6 +1235,7 @@ void loop_over_all_subspaces(
 			SC->basis_print(Basis2, k);
 		}
 
+
 		f_skip = FALSE;
 		for (i = 0; i < k; i++) {
 			v1[i] = Basis2[0 * k2 + i * k + 0];
@@ -1244,13 +1246,9 @@ void loop_over_all_subspaces(
 		for (i = 0; i < k; i++) {
 			v3[i] = Basis2[2 * k2 + i * k + 0];
 			}
-		if (!is_unit_vector(v1, k, 0)) {
-			f_skip = TRUE;
-			}
-		if (!is_unit_vector(v2, k, 1)) {
-			f_skip = TRUE;
-			}
-		if (!is_unit_vector(v3, k, k - 1)) {
+		if (!F->is_unit_vector(v1, k, 0) ||
+				!F->is_unit_vector(v2, k, 1) ||
+				!F->is_unit_vector(v3, k, k - 1)) {
 			f_skip = TRUE;
 			}
 		T->f_skip = f_skip;
@@ -1316,7 +1314,7 @@ void loop_over_all_subspaces(
 			if (f_vvv) {
 				cout << "before find_semifield_in_table" << endl;
 			}
-			solution_idx = find_semifield_in_table(
+			if (!find_semifield_in_table(
 				L3,
 				Data,
 				nb_solutions /* nb_semifields */,
@@ -1326,7 +1324,25 @@ void loop_over_all_subspaces(
 				nb_orbits_at_level_3,
 				trace_po,
 				data2 /* given_data */,
-				verbose_level);
+				solution_idx,
+				verbose_level)) {
+
+				cout << "flag orbit " << f << " / "
+					<< nb_flag_orbits << ", subspace "
+					<< rk << " / " << N << ":" << endl;
+
+				cout << "find_semifield_in_table returns FALSE" << endl;
+
+				cout << "data2=";
+				lint_vec_print(cout, data2, k);
+				cout << endl;
+
+				cout << "Basis2 after RREF(2)=" << endl;
+				int_matrix_print_bitwise(Basis2, k, k2);
+				SC->basis_print(Basis2, k);
+
+				exit(1);
+			}
 
 
 			T->solution_idx = solution_idx;
@@ -1558,15 +1574,21 @@ void loop_over_all_subspaces(
 int find_semifield_in_table(semifield_lifting *L3,
 	long int *Data, int nb_semifields, int data_size,
 	int start_column, int *FstLen, int nb_orbits_at_level_3, int po,
-	long int *given_data, int verbose_level)
+	long int *given_data,
+	int &idx,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int fst, len, g;
-	int idx = -1;
+
+
 
 	if (f_v) {
 		cout << "find_semifield_in_table" << endl;
 		}
+
+	idx = -1;
+
 	if (f_v) {
 		cout << "searching for: ";
 		lint_vec_print(cout, given_data, 6);
@@ -1583,7 +1605,7 @@ int find_semifield_in_table(semifield_lifting *L3,
 	// in the table for orbit po:
 	if (len == 0) {
 		cout << "find_semifield_in_table len == 0" << endl;
-		exit(1);
+		return FALSE;
 		}
 
 	if (lint_vec_compare(Data + fst * data_size + start_column,
@@ -1623,34 +1645,16 @@ int find_semifield_in_table(semifield_lifting *L3,
 						given_data, 6);
 				cout << endl;
 				}
-			exit(1);
+			return FALSE;
 			}
 		}
 
 	if (f_v) {
 		cout << "find_semifield_in_table done, idx = " << idx << endl;
 		}
-	return idx;
-}
-
-int is_unit_vector(int *v, int len, int k)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		if (i == k) {
-			if (v[i] != 1) {
-				return FALSE;
-				}
-			}
-		else {
-			if (v[i] != 0) {
-				return FALSE;
-				}
-			}
-		}
 	return TRUE;
 }
+
 
 
 void save_trace_record(trace_record *T,

@@ -578,6 +578,7 @@ public:
 		int f_semilinear, 
 		int *&gens, int &nb_gens, int &data_size, 
 		int &group_order, int verbose_level);
+	int is_unit_vector(int *v, int len, int k);
 
 	// #########################################################################
 	// finite_field_linear_groups.cpp
