@@ -436,8 +436,8 @@ public:
 	//void get_pivots(
 	//		int level, int po, int *Basis, int *pivots,
 	//		int verbose_level);
-	void get_basis_and_pivots(
-		int po3, int *basis, int *pivots,
+	void get_basis(
+		int po3, int *basis,
 		int verbose_level);
 	strong_generators *get_stabilizer_generators(
 		int level, int orbit_idx,
