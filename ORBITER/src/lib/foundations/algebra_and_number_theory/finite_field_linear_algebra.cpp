@@ -5689,6 +5689,26 @@ void finite_field::cubic_surface_family_24_generators(
 		}
 }
 
+int finite_field::is_unit_vector(int *v, int len, int k)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (i == k) {
+			if (v[i] != 1) {
+				return FALSE;
+				}
+			}
+		else {
+			if (v[i] != 0) {
+				return FALSE;
+				}
+			}
+		}
+	return TRUE;
+}
+
+
 }}
 
 
