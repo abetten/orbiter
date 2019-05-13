@@ -1156,6 +1156,7 @@ void loop_over_all_subspaces(
 	int k, k2;
 	int f_skip;
 	int trace_po;
+	int ret;
 	sorting Sorting;
 
 	if (f_v) {
@@ -1219,11 +1220,22 @@ void loop_over_all_subspaces(
 		if (f_vv) {
 			cout << "before trace_to_level_three" << endl;
 		}
-		trace_po = L3->trace_to_level_three(
+		ret = L3->trace_to_level_three(
 			Basis2,
 			k /* basis_sz */,
 			transporter1,
+			trace_po,
 			verbose_level - 3);
+
+		f_skip = FALSE;
+
+		if (ret == FALSE) {
+			cout << "flag orbit " << f << " / "
+				<< nb_flag_orbits << ", subspace "
+				<< rk << " / " << N << " : trace_to_level_three return FALSE" << endl;
+
+			f_skip = TRUE;
+		}
 
 		T->trace_po = trace_po;
 
@@ -1236,7 +1248,6 @@ void loop_over_all_subspaces(
 		}
 
 
-		f_skip = FALSE;
 		for (i = 0; i < k; i++) {
 			v1[i] = Basis2[0 * k2 + i * k + 0];
 			}
@@ -1246,11 +1257,13 @@ void loop_over_all_subspaces(
 		for (i = 0; i < k; i++) {
 			v3[i] = Basis2[2 * k2 + i * k + 0];
 			}
-		if (!F->is_unit_vector(v1, k, 0) ||
-				!F->is_unit_vector(v2, k, 1) ||
-				!F->is_unit_vector(v3, k, k - 1)) {
-			f_skip = TRUE;
+		if (f_skip == FALSE) {
+			if (!F->is_unit_vector(v1, k, 0) ||
+					!F->is_unit_vector(v2, k, 1) ||
+					!F->is_unit_vector(v3, k, k - 1)) {
+				f_skip = TRUE;
 			}
+		}
 		T->f_skip = f_skip;
 
 		if (f_skip) {
