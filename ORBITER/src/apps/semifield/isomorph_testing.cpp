@@ -1333,6 +1333,7 @@ void loop_over_all_subspaces(
 
 				cout << "find_semifield_in_table returns FALSE" << endl;
 
+				cout << "trace_po=" << trace_po << endl;
 				cout << "data2=";
 				lint_vec_print(cout, data2, k);
 				cout << endl;
