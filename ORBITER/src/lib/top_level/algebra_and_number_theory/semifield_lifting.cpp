@@ -1158,8 +1158,6 @@ void semifield_lifting::get_basis(
 	int po, so, mo;
 	long int pt;
 	long int a;
-	//int ext, idx, i;
-	//int i;
 
 	if (f_v) {
 		cout << "semifield_lifting::get_basis "
