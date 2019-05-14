@@ -111,6 +111,10 @@ public:
 		long int *given_data,
 		int &idx,
 		int verbose_level);
+	int identify(long int *data,
+			int &rk, int &trace_po, int &fo, int &po,
+			int *transporter,
+			int verbose_level);
 };
 
 
@@ -131,6 +135,10 @@ int main(int argc, const char **argv)
 	int f_orbits_light = FALSE;
 	int f_test_semifield = FALSE;
 	const char *test_semifield_data = NULL;
+	int f_identify_semifield = FALSE;
+	const char *identify_semifield_data = NULL;
+	int f_identify_semifield_from_file = FALSE;
+	const char *identify_semifield_from_file_fname = NULL;
 	int f_trace_record_prefix = FALSE;
 	const char *trace_record_prefix = NULL;
 
@@ -168,6 +176,16 @@ int main(int argc, const char **argv)
 			f_test_semifield = TRUE;
 			test_semifield_data = argv[++i];
 			cout << "-test_semifield " << test_semifield_data << endl;
+			}
+		else if (strcmp(argv[i], "-identify_semifield") == 0) {
+			f_identify_semifield = TRUE;
+			identify_semifield_data = argv[++i];
+			cout << "-identify_semifield " << identify_semifield_data << endl;
+			}
+		else if (strcmp(argv[i], "-identify_semifield_from_file") == 0) {
+			f_identify_semifield_from_file = TRUE;
+			identify_semifield_from_file_fname = argv[++i];
+			cout << "-identify_semifield_from_file " << identify_semifield_from_file_fname << endl;
 			}
 		else if (strcmp(argv[i], "-trace_record_prefix") == 0) {
 			f_trace_record_prefix = TRUE;
@@ -945,8 +963,12 @@ int main(int argc, const char **argv)
 				<< ", looping over the " << Sub.N << " subspaces, "
 				"before loop_over_all_subspaces" << endl;
 		}
+
+
 		Sub.loop_over_all_subspaces(
 				verbose_level - 3);
+
+
 		if (f_v) {
 			cout << "flag orbit " << Sub.f << " / " << Sub.nb_flag_orbits
 				<< ", looping over the " << Sub.N << " subspaces, "
@@ -1027,6 +1049,92 @@ int main(int argc, const char **argv)
 		cout << endl;
 	}
 
+	if (f_identify_semifield) {
+		long int *data = NULL;
+		int data_len = 0;
+		cout << "f_identify_semifield" << endl;
+		lint_vec_scan(identify_semifield_data, data, data_len);
+		cout << "input semifield:" << endl;
+		for (i = 0; i < data_len; i++) {
+			cout << i << " : " << data[i] << endl;
+		}
+
+
+		int rk, trace_po, fo, po;
+		int *transporter;
+
+		transporter = NEW_int(Sub.SC->A->elt_size_in_int);
+
+		if (Sub.identify(
+				data,
+				rk, trace_po, fo, po,
+				transporter,
+				verbose_level)) {
+			cout << "The given semifield has been identified "
+					"as semifield orbit " << po << endl;
+			cout << "rk=" << rk << endl;
+			cout << "trace_po=" << trace_po << endl;
+			cout << "fo=" << fo << endl;
+			cout << "po=" << po << endl;
+			cout << "isotopy:" << endl;
+			Sub.SC->A->element_print_quick(transporter, cout);
+			cout << endl;
+		}
+		else {
+			cout << "The given semifield cannot be identified" << endl;
+		}
+	}
+
+	if (f_identify_semifield_from_file) {
+		cout << "f_identify_semifield_from_file" << endl;
+
+		long int *Data;
+		int m, n;
+
+		Fio.lint_matrix_read_csv(identify_semifield_from_file_fname, Data,
+				m, n, verbose_level);
+		if (n != Sub.SC->k) {
+			cout << "n != Sub.SC->k" << endl;
+			exit(1);
+		}
+		int rk, trace_po, fo, po;
+		int *transporter;
+
+		int *Po;
+
+		transporter = NEW_int(Sub.SC->A->elt_size_in_int);
+		Po = NEW_int(m);
+
+		for (i = 0; i < m; i++) {
+			if (Sub.identify(
+					Data + i * n,
+					rk, trace_po, fo, po,
+					transporter,
+					verbose_level)) {
+				cout << "Identify " << i << " / " << m << " : The given semifield has been identified "
+						"as semifield orbit " << po << endl;
+				cout << "rk=" << rk << endl;
+				cout << "trace_po=" << trace_po << endl;
+				cout << "fo=" << fo << endl;
+				cout << "po=" << po << endl;
+				cout << "isotopy:" << endl;
+				Sub.SC->A->element_print_quick(transporter, cout);
+				cout << endl;
+				Po[i] = po;
+			}
+			else {
+				cout << "The given semifield cannot be identified" << endl;
+				Po[i] = -1;
+			}
+
+		}
+		char fname[1000];
+
+		strcpy(fname, identify_semifield_from_file_fname);
+		chop_off_extension(fname);
+		sprintf(fname + strlen(fname), "_identification.csv");
+		Fio.int_vec_write_csv(Po, m, fname, "isotopy class");
+	}
 
 	char title[1000];
 	char author[1000];
@@ -1327,7 +1435,6 @@ void semifield_substructure::loop_over_all_subspaces(int verbose_level)
 				<< rk << " / " << N << ":" << endl;
 		}
 
-		// we do it again:
 		for (i = 0; i < k; i++) {
 			SC->matrix_unrank(data1[i], Basis1 + i * k2);
 		}
@@ -1695,6 +1802,295 @@ void semifield_substructure::loop_over_all_subspaces(int verbose_level)
 
 }
 
+int semifield_substructure::identify(long int *data,
+		int &rk, int &trace_po, int &fo, int &po,
+		int *transporter,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	finite_field *F;
+	int i, f2;
+	int k, k2;
+	int f_skip;
+	//int trace_po;
+	int ret;
+	sorting Sorting;
+	int solution_idx;
+
+
+
+	if (f_v) {
+		cout << "semifield_substructure::identify" << endl;
+	}
+
+
+	k = SC->k;
+	k2 = SC->k2;
+	F = SC->F;
+
+	for (rk = 0; rk < N; rk++) {
+
+		for (i = 0; i < k; i++) {
+			SC->matrix_unrank(data[i], Basis1 + i * k2);
+		}
+		if (f_vvv) {
+			SC->basis_print(Basis1, k);
+		}
+
+
+		// unrank the subspace:
+		Gr->unrank_int_here_and_extend_basis(B, rk,
+				0 /* verbose_level */);
+
+		// multiply the matrices to get the matrices
+		// adapted to the subspace:
+		// the first three matrices are the generators
+		// for the subspace.
+		F->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
+				0 /* verbose_level */);
+
+
+		if (f_vvv) {
+			cout << "semifield_substructure::identify "
+					"base change matrix B=" << endl;
+			int_matrix_print_bitwise(B, k, k);
+
+			cout << "semifield_substructure::identify "
+					"Basis2 = B * Basis1 (before trace)=" << endl;
+			int_matrix_print_bitwise(Basis2, k, k2);
+			SC->basis_print(Basis2, k);
+		}
+
+
+		if (f_vv) {
+			cout << "semifield_substructure::identify "
+					"before trace_to_level_three" << endl;
+		}
+		ret = L3->trace_to_level_three(
+			Basis2,
+			k /* basis_sz */,
+			transporter1,
+			trace_po,
+			verbose_level - 3);
+
+		f_skip = FALSE;
+
+		if (ret == FALSE) {
+			cout << "semifield_substructure::identify trace_to_level_three return FALSE" << endl;
+
+			f_skip = TRUE;
+		}
+
+
+		if (f_vvv) {
+			cout << "semifield_substructure::identify After trace, trace_po = "
+					<< trace_po << endl;
+			cout << "semifield_substructure::identify Basis2 (after trace)=" << endl;
+			int_matrix_print_bitwise(Basis2, k, k2);
+			SC->basis_print(Basis2, k);
+		}
+
+
+		for (i = 0; i < k; i++) {
+			v1[i] = Basis2[0 * k2 + i * k + 0];
+		}
+		for (i = 0; i < k; i++) {
+			v2[i] = Basis2[1 * k2 + i * k + 0];
+		}
+		for (i = 0; i < k; i++) {
+			v3[i] = Basis2[2 * k2 + i * k + 0];
+		}
+		if (f_skip == FALSE) {
+			if (!F->is_unit_vector(v1, k, 0) ||
+					!F->is_unit_vector(v2, k, 1) ||
+					!F->is_unit_vector(v3, k, k - 1)) {
+				f_skip = TRUE;
+			}
+		}
+
+		if (f_skip) {
+			if (f_vv) {
+				cout << "semifield_substructure::identify skipping this case " << trace_po
+					<< " because pivot is not "
+						"in the last row." << endl;
+			}
+		}
+		else {
+
+			F->Gauss_int_with_given_pivots(
+				Basis2 + 3 * k2,
+				FALSE /* f_special */,
+				TRUE /* f_complete */,
+				SC->desired_pivots + 3,
+				k - 3 /* nb_pivots */,
+				k - 3, k2,
+				0 /*verbose_level - 2*/);
+			if (f_vvv) {
+				cout << "semifield_substructure::identify "
+						"Basis2 after RREF(2)=" << endl;
+				int_matrix_print_bitwise(Basis2, k, k2);
+				SC->basis_print(Basis2, k);
+			}
+
+			for (i = 0; i < k; i++) {
+				data2[i] = SC->matrix_rank(Basis2 + i * k2);
+			}
+			if (f_vvv) {
+				cout << "semifield_substructure::identify data2=";
+				lint_vec_print(cout, data2, k);
+				cout << endl;
+			}
+
+			//int solution_idx;
+
+			if (f_vvv) {
+				cout << "semifield_substructure::identify "
+						"before find_semifield_in_table" << endl;
+			}
+			if (!find_semifield_in_table(
+				trace_po,
+				data2 /* given_data */,
+				solution_idx,
+				verbose_level)) {
+
+				cout << "semifield_substructure::identify "
+						"find_semifield_in_table returns FALSE" << endl;
+
+				cout << "semifield_substructure::identify "
+						"trace_po=" << trace_po << endl;
+				cout << "semifield_substructure::identify data2=";
+				lint_vec_print(cout, data2, k);
+				cout << endl;
+
+				cout << "semifield_substructure::identify "
+						"Basis2 after RREF(2)=" << endl;
+				int_matrix_print_bitwise(Basis2, k, k2);
+				SC->basis_print(Basis2, k);
+
+				return FALSE;
+			}
+
+			int go;
+			go = L3->Stabilizer_gens[trace_po].group_order_as_int();
+
+			//T->solution_idx = solution_idx;
+			//T->nb_sol = Len[trace_po];
+			if (go == 1) {
+				if (f_vv) {
+					cout << "This starter case has a trivial "
+							"group order" << endl;
+				}
+
+				f2 = Fo_first[trace_po] + solution_idx;
+
+				if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
+					fo = Flag_orbits->Flag_orbit_node[f2].fusion_with;
+					SC->A->element_mult(transporter1,
+						Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+						transporter,
+						0);
+				}
+				else {
+					fo = f2;
+					SC->A->element_move(transporter1,
+						transporter,
+						0);
+				}
+			}
+			else if (Len[trace_po] == 1) {
+				f2 = Fo_first[trace_po] + 0;
+				if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
+					fo = Flag_orbits->Flag_orbit_node[f2].fusion_with;
+					SC->A->element_mult(transporter1,
+						Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+						transporter,
+						0);
+				}
+				else {
+					fo = f2;
+					SC->A->element_move(transporter1,
+						transporter,
+						0);
+				}
+			}
+			else {
+				// now we have a starter_case with more
+				// than one solution and
+				// with a non-trivial group.
+				// Those cases are collected in
+				// Non_unique_cases_with_non_trivial_group
+				// [nb_non_unique_cases_with_non_trivial_group];
+
+				int non_unique_case_idx, orbit_idx, position;
+				orbit_of_subspaces *Orb;
+
+				if (!Sorting.int_vec_search(
+					Non_unique_cases_with_non_trivial_group,
+					nb_non_unique_cases_with_non_trivial_group,
+					trace_po, non_unique_case_idx)) {
+					cout << "semifield_substructure::identify "
+							"cannot find in Non_unique_cases_with_"
+							"non_trivial_group array" << endl;
+					exit(1);
+				}
+				orbit_idx = Orbit_idx[non_unique_case_idx][solution_idx];
+				position = Position[non_unique_case_idx][solution_idx];
+				Orb = All_Orbits[non_unique_case_idx][orbit_idx];
+				f2 = Fo_first[trace_po] + orbit_idx;
+
+				if (f_vv) {
+					cout << "orbit_idx = " << orbit_idx
+							<< " position = " << position
+							<< " f2 = " << f2 << endl;
+				}
+				Orb->get_transporter(position, transporter2,
+						0 /*verbose_level */);
+				SC->A->element_invert(transporter2, Elt1, 0);
+				SC->A->element_mult(transporter1, Elt1,
+						transporter3, 0);
+				SC->A->element_move(transporter3,
+						transporter1, 0);
+				if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
+					fo = Flag_orbits->Flag_orbit_node[f2].fusion_with;
+					SC->A->element_mult(transporter1,
+						Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+						transporter,
+						0);
+				}
+				else {
+					fo = f2;
+					SC->A->element_move(transporter1,
+						transporter,
+						0);
+				}
+
+			} // go != 1
+
+			po = Flag_orbits->Flag_orbit_node[fo].upstep_primary_orbit;
+
+
+			if (f_vvv) {
+				cout << "semifield_substructure::identify done "
+						"solution_idx=" << solution_idx
+						<< "trace_po=" << trace_po
+						<< "f2=" << f2
+						<< "fo=" << fo
+						<< "po=" << po
+						<< endl;
+			}
+			return TRUE;
+		} // end else
+
+
+	} // next rk
+
+	if (f_v) {
+		cout << "semifield_substructure::identify done" << endl;
+	}
+	return FALSE;
+}
 
 int semifield_substructure::find_semifield_in_table(
 	//semifield_lifting *L3,
