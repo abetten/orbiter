@@ -151,7 +151,11 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 }
 
 void classification_step::print_latex(ostream &ost,
-	const char *title, int f_print_stabilizer_gens)
+	const char *title, int f_print_stabilizer_gens,
+	int f_has_print_function,
+	void (*print_function)(ostream &ost, int i,
+			classification_step *Step, void *print_function_data),
+	void *print_function_data)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -222,6 +226,10 @@ void classification_step::print_latex(ostream &ost,
 			}
 		D.add_in_place(Ol, ol);
 
+
+		if (f_has_print_function) {
+			(*print_function)(ost, i, this, print_function_data);
+		}
 
 		}
 	ost << "\\end{enumerate}" << endl;
@@ -410,7 +418,7 @@ void classification_step::generate_source_code(const char *fname_base,
 		cout << "classification_step::generate_source_"
 				"code preparing stab_gens_fst" << endl;
 		}
-	f << "static int " << prefix << "_stab_gens_fst[] = { ";
+	f << "static int " << prefix << "_stab_gens_fst[] = { " << endl << "\t";
 	for (orbit_index = 0;
 			orbit_index < nb_orbits;
 			orbit_index++) {
@@ -428,7 +436,7 @@ void classification_step::generate_source_code(const char *fname_base,
 		cout << "classification_step::generate_source_"
 				"code preparing stab_gens_len" << endl;
 		}
-	f << "static int " << prefix << "_stab_gens_len[] = { ";
+	f << "static int " << prefix << "_stab_gens_len[] = { " << endl << "\t";
 	for (orbit_index = 0;
 			orbit_index < nb_orbits;
 			orbit_index++) {
