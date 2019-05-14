@@ -72,6 +72,8 @@ void save_trace_record(
 		trace_record *T,
 		int f_trace_record_prefix, const char *trace_record_prefix,
 		int iso, int f, int po, int so, int N);
+void semifield_print_function_callback(ostream &ost, int i,
+		classification_step *Step, void *print_function_data);
 
 
 #define MAX_FILES 1000
@@ -1158,7 +1160,10 @@ int main(int argc, const char **argv)
 
 		Semifields->print_latex(fp,
 			title,
-			TRUE /* f_print_stabilizer_gens */);
+			TRUE /* f_print_stabilizer_gens */,
+			TRUE,
+			semifield_print_function_callback,
+			SC);
 
 		L.foot(fp);
 	}
@@ -1804,3 +1809,29 @@ void save_trace_record(
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
+void semifield_print_function_callback(ostream &ost, int i,
+		classification_step *Step, void *print_function_data)
+{
+	semifield_classify *SC = (semifield_classify *) print_function_data;
+	long int *R;
+	long int a;
+	int j;
+
+
+	R = Step->Rep_lint_ith(i);
+	for (j = 0; j < Step->representation_sz; j++) {
+		a = R[j];
+		SC->matrix_unrank(a, SC->test_Basis);
+		ost << "$";
+		ost << "\\left[";
+		print_integer_matrix_tex(ost,
+			SC->test_Basis, SC->k, SC->k);
+		ost << "\\right]";
+		ost << "$";
+		if (j < Step->representation_sz - 1) {
+			ost << ", " << endl;
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << endl;
+}

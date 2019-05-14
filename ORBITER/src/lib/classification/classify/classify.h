@@ -44,7 +44,12 @@ public:
 			longinteger_object &go, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
-	void print_latex(std::ostream &ost, const char *title, int f_print_stabilizer_gens);
+	void print_latex(std::ostream &ost,
+		const char *title, int f_print_stabilizer_gens,
+		int f_has_print_function,
+		void (*print_function)(std::ostream &ost, int i,
+				classification_step *Step, void *print_function_data),
+		void *print_function_data);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 	void generate_source_code(const char *fname_base, int verbose_level);
