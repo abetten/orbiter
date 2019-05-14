@@ -204,7 +204,16 @@ void classification_step::print_latex(ostream &ost,
 			}
 		
 		ost << "\\item" << endl;
-		ost << "$" << i << " / " << nb_orbits << "$ $" << endl;
+		ost << "$" << i << " / " << nb_orbits << "$ " << endl;
+
+
+		if (f_has_print_function) {
+			(*print_function)(ost, i, this, print_function_data);
+		}
+
+
+		ost << "$" << endl;
+
 		if (f_lint) {
 			lint_set_print_tex_for_inline_text(ost,
 					Rep_lint_ith(i),
@@ -220,16 +229,17 @@ void classification_step::print_latex(ostream &ost,
 		ost << "}$ orbit length $";
 		ol.print_not_scientific(ost);
 		ost << "$\\\\" << endl;
+
 		if (f_print_stabilizer_gens) {
 			//ost << "Strong generators are:" << endl;
 			Orbit[i].gens->print_generators_tex(ost);
 			}
+
+
+
+
 		D.add_in_place(Ol, ol);
 
-
-		if (f_has_print_function) {
-			(*print_function)(ost, i, this, print_function_data);
-		}
 
 		}
 	ost << "\\end{enumerate}" << endl;
