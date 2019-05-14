@@ -124,7 +124,7 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 
 	data = NEW_int(representation_sz);
 	int_vec_copy(
-			Rep + orbit_index * representation_sz,
+			Rep_ith(orbit_index),
 			data, representation_sz);
 	
 	if (f_v) {
@@ -203,12 +203,12 @@ void classification_step::print_latex(ostream &ost,
 		ost << "$" << i << " / " << nb_orbits << "$ $" << endl;
 		if (f_lint) {
 			lint_set_print_tex_for_inline_text(ost,
-					Rep_lint + i * representation_sz,
+					Rep_lint_ith(i),
 					representation_sz);
 		}
 		else {
 			int_set_print_tex_for_inline_text(ost,
-					Rep + i * representation_sz,
+					Rep_ith(i),
 					representation_sz);
 		}
 		ost << "_{";
@@ -297,6 +297,205 @@ void classification_step::read_file(ifstream &fp, int verbose_level)
 		cout << "classification_step::read_file finished" << endl;
 		}
 }
+
+void classification_step::generate_source_code(const char *fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	char fname[1000];
+	const char *prefix;
+	int orbit_index;
+	int i;
+
+	if (f_v) {
+		cout << "classification_step::generate_source_code" << endl;
+		}
+	sprintf(fname, "%s.cpp", fname_base);
+	prefix = fname_base;
+
+	{
+	ofstream f(fname);
+
+	f << "static int " << prefix << "_nb_reps = "
+			<< nb_orbits << ";" << endl;
+	f << "static int " << prefix << "_size = "
+			<< representation_sz << ";" << endl;
+
+
+
+	if (f_v) {
+		cout << "classification_step::generate_source_code "
+				"preparing reps" << endl;
+		}
+
+
+	if (f_lint) {
+
+		f << "static long int " << prefix << "_reps[] = {" << endl;
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+
+
+			if (f_v) {
+				cout << "surface_classify_wedge::generate_source_"
+						"code orbit_index = " << orbit_index << endl;
+				}
+
+			f << "\t";
+			for (i = 0; i < representation_sz; i++) {
+				f << Rep_lint_ith(orbit_index)[i];
+				f << ", ";
+				}
+			f << endl;
+
+
+			}
+		f << "};" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "classification_step::generate_source_"
+				"code preparing stab_order" << endl;
+		}
+	f << "// the stabilizer orders:" << endl;
+	f << "static const char *" << prefix << "_stab_order[] = {" << endl;
+	for (orbit_index = 0;
+			orbit_index < nb_orbits;
+			orbit_index++) {
+
+		longinteger_object ago;
+
+		Orbit[orbit_index].gens->group_order(ago);
+
+		f << "\t\"";
+
+		ago.print_not_scientific(f);
+		f << "\"," << endl;
+
+		}
+	f << "};" << endl;
+
+
+
+
+	f << "static int " << prefix << "_make_element_size = "
+			<< A->make_element_size << ";" << endl;
+
+	{
+	int *stab_gens_first;
+	int *stab_gens_len;
+	int fst;
+
+	stab_gens_first = NEW_int(nb_orbits);
+	stab_gens_len = NEW_int(nb_orbits);
+	fst = 0;
+	for (orbit_index = 0;
+			orbit_index < nb_orbits;
+			orbit_index++) {
+		stab_gens_first[orbit_index] = fst;
+		stab_gens_len[orbit_index] =
+				Orbit[orbit_index].gens->gens->len;
+		//stab_gens_len[orbit_index] =
+		//The_surface[iso_type]->stab_gens->gens->len;
+		fst += stab_gens_len[orbit_index];
+		}
+
+
+	if (f_v) {
+		cout << "classification_step::generate_source_"
+				"code preparing stab_gens_fst" << endl;
+		}
+	f << "static int " << prefix << "_stab_gens_fst[] = { ";
+	for (orbit_index = 0;
+			orbit_index < nb_orbits;
+			orbit_index++) {
+		f << stab_gens_first[orbit_index];
+		if (orbit_index < nb_orbits - 1) {
+			f << ", ";
+			}
+		if (((orbit_index + 1) % 10) == 0) {
+			f << endl << "\t";
+			}
+		}
+	f << "};" << endl;
+
+	if (f_v) {
+		cout << "classification_step::generate_source_"
+				"code preparing stab_gens_len" << endl;
+		}
+	f << "static int " << prefix << "_stab_gens_len[] = { ";
+	for (orbit_index = 0;
+			orbit_index < nb_orbits;
+			orbit_index++) {
+		f << stab_gens_len[orbit_index];
+		if (orbit_index < nb_orbits - 1) {
+			f << ", ";
+			}
+		if (((orbit_index + 1) % 10) == 0) {
+			f << endl << "\t";
+			}
+		}
+	f << "};" << endl;
+
+
+	if (f_v) {
+		cout << "classification_step::generate_source_"
+				"code preparing stab_gens" << endl;
+		}
+	f << "static int " << prefix << "_stab_gens[] = {" << endl;
+	for (orbit_index = 0;
+			orbit_index < nb_orbits;
+			orbit_index++) {
+		int j;
+
+		for (j = 0; j < stab_gens_len[orbit_index]; j++) {
+			if (f_vv) {
+				cout << "classification_step::generate_source_"
+						"code before extract_strong_generators_in_"
+						"order generator " << j << " / "
+						<< stab_gens_len[orbit_index] << endl;
+				}
+			f << "\t";
+			A->element_print_for_make_element(
+					Orbit[orbit_index].gens->gens->ith(j), f);
+			//A->element_print_for_make_element(
+			//The_surface[iso_type]->stab_gens->gens->ith(j), f);
+			f << endl;
+			}
+		}
+	f << "};" << endl;
+
+
+	FREE_int(stab_gens_first);
+	FREE_int(stab_gens_len);
+	}
+	}
+
+	file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "classification_step::generate_source_"
+				"code done" << endl;
+		}
+}
+
+int *classification_step::Rep_ith(int i)
+{
+	return Rep + i * representation_sz;
+}
+
+long int *classification_step::Rep_lint_ith(int i)
+{
+	return Rep_lint + i * representation_sz;
+}
+
 
 }}
 

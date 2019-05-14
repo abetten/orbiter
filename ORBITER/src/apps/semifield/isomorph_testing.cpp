@@ -1102,7 +1102,7 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "Computing classification done, we found "
-				<< Flag_orbits->nb_primary_orbits_upper
+				<< Semifields->nb_orbits
 				<< " semifields" << endl;
 		time_check(cout, t0);
 		cout << endl;
@@ -1139,6 +1139,22 @@ int main(int argc, const char **argv)
 			NULL /* extra_praeamble */);
 
 
+		int *Go;
+
+
+		classify C;
+
+		Go = NEW_int(Semifields->nb_orbits);
+		for (i = 0; i < Semifields->nb_orbits; i++) {
+			Go[i] = Semifields->Orbit[i].gens->group_order_as_int();
+		}
+
+		C.init(Go, Semifields->nb_orbits, FALSE, 0);
+
+		fp << "Classification by stabilizer order:\\\\" << endl;
+		fp << "$$" << endl;
+		C.print_array_tex(fp, TRUE /*f_backwards */);
+		fp << "$$" << endl;
 
 		Semifields->print_latex(fp,
 			title,
@@ -1153,7 +1169,19 @@ int main(int argc, const char **argv)
 		cout << "writing latex file " << fname << " done" << endl;
 		}
 
+	char fname_base[1000];
+	sprintf(fname_base, "semifields_%d", order);
 
+	if (f_v) {
+		cout << "before Semifields->generate_source_code " << fname << endl;
+		}
+
+	Semifields->generate_source_code(fname_base,
+			verbose_level);
+
+	if (f_v) {
+		cout << "after Semifields->generate_source_code " << fname << endl;
+		}
 
 	cout << "before freeing Gr" << endl;
 	FREE_OBJECT(Gr);
