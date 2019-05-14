@@ -906,7 +906,8 @@ int main(int argc, const char **argv)
 				(double) nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining new orbit "
+			time_check(cout, t0);
+			cout << " : Defining new orbit "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
 				<< nb_flag_orbits << " progress="
@@ -986,7 +987,8 @@ int main(int argc, const char **argv)
 
 
 		if (f_v) {
-			cout << "flag orbit " << f << " / " << nb_flag_orbits
+			time_check(cout, t0);
+			cout << " : flag orbit " << f << " / " << nb_flag_orbits
 				<< ", looping over the " << N << " subspaces, "
 				"before loop_over_all_subspaces" << endl;
 			}
