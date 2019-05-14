@@ -68,7 +68,9 @@ int find_semifield_in_table(semifield_lifting *L3,
 	long int *given_data,
 	int &idx,
 	int verbose_level);
-void save_trace_record(trace_record *T,
+void save_trace_record(
+		trace_record *T,
+		int f_trace_record_prefix, const char *trace_record_prefix,
 		int iso, int f, int po, int so, int N);
 
 
@@ -125,6 +127,8 @@ int main(int argc, const char **argv)
 	int f_orbits_light = FALSE;
 	int f_test_semifield = FALSE;
 	const char *test_semifield_data = NULL;
+	int f_trace_record_prefix = FALSE;
+	const char *trace_record_prefix = NULL;
 
 	t0 = os_ticks();
 	for (i = 1; i < argc; i++) {
@@ -160,6 +164,11 @@ int main(int argc, const char **argv)
 			f_test_semifield = TRUE;
 			test_semifield_data = argv[++i];
 			cout << "-test_semifield " << test_semifield_data << endl;
+			}
+		else if (strcmp(argv[i], "-trace_record_prefix") == 0) {
+			f_trace_record_prefix = TRUE;
+			trace_record_prefix = argv[++i];
+			cout << "-trace_record_prefix " << trace_record_prefix << endl;
 			}
 		}
 
@@ -1024,7 +1033,9 @@ int main(int argc, const char **argv)
 			}
 
 
-		save_trace_record(TR,
+		save_trace_record(
+			TR,
+			f_trace_record_prefix, trace_record_prefix,
 			Flag_orbits->nb_primary_orbits_upper,
 			f, po, so, N);
 
@@ -1752,7 +1763,9 @@ int find_semifield_in_table(semifield_lifting *L3,
 
 
 
-void save_trace_record(trace_record *T,
+void save_trace_record(
+		trace_record *T,
+		int f_trace_record_prefix, const char *trace_record_prefix,
 		int iso, int f, int po, int so, int N)
 {
 	int *M;
@@ -1787,7 +1800,12 @@ void save_trace_record(trace_record *T,
 		M[i * w + 9] = T[i].f2;
 		}
 
-	sprintf(fname, "trace_record_%03d_f%05d_po%d_so%d.csv", iso, f, po, so);
+	if (f_trace_record_prefix) {
+		sprintf(fname, "%strace_record_%03d_f%05d_po%d_so%d.csv", trace_record_prefix, iso, f, po, so);
+	}
+	else {
+		sprintf(fname, "trace_record_%03d_f%05d_po%d_so%d.csv", iso, f, po, so);
+	}
 	Fio.int_matrix_write_csv_with_labels(fname, M, N, w, column_label);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
