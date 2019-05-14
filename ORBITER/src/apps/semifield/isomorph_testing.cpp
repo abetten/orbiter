@@ -915,7 +915,8 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 			}
-		lint_vec_copy(Flag_orbits->Pt_lint + f * Flag_orbits->pt_representation_sz,
+		lint_vec_copy(
+				Flag_orbits->Pt_lint + f * Flag_orbits->pt_representation_sz,
 				data1, k);
 		if (f_v) {
 			cout << "data1=";
@@ -977,7 +978,8 @@ int main(int argc, const char **argv)
 
 		if (f_v) {
 			cout << "flag orbit " << f << " / " << nb_flag_orbits
-				<< ", looping over the " << N << " subspaces, before loop_over_all_subspaces" << endl;
+				<< ", looping over the " << N << " subspaces, "
+				"before loop_over_all_subspaces" << endl;
 			}
 		loop_over_all_subspaces(
 				SC,
@@ -1017,18 +1019,20 @@ int main(int argc, const char **argv)
 				verbose_level - 3);
 		if (f_v) {
 			cout << "flag orbit " << f << " / " << nb_flag_orbits
-				<< ", looping over the " << N << " subspaces, after loop_over_all_subspaces" << endl;
+				<< ", looping over the " << N << " subspaces, "
+				"after loop_over_all_subspaces" << endl;
 			}
 
 
 		save_trace_record(TR,
-			Flag_orbits->nb_primary_orbits_upper, f, po, so, N);
+			Flag_orbits->nb_primary_orbits_upper,
+			f, po, so, N);
 
 
 		FREE_OBJECTS(TR);
 
 		int cl;
-		longinteger_object go1, Cl, ago;
+		longinteger_object go1, Cl, ago, ago1;
 		longinteger_domain D;
 
 		Aut_gens->group_order(go);
@@ -1043,6 +1047,24 @@ int main(int argc, const char **argv)
 					<< " created from flag orbit " << f << " / "
 				<< nb_flag_orbits << " progress="
 				<< progress << "%" << endl;
+			}
+
+		strong_generators *Stab;
+
+		Stab = NEW_OBJECT(strong_generators);
+		if (f_v) {
+			cout << "flag orbit " << f << " / " << nb_flag_orbits
+				<< ", semifield isotopy class " << Flag_orbits->nb_primary_orbits_upper <<
+				"computing stabilizer" << endl;
+			}
+		Stab->init_group_extension(Aut_gens,
+				coset_reps, cl /* index */,
+				verbose_level);
+		Stab->group_order(ago1);
+		if (f_v) {
+			cout << "flag orbit " << f << " / " << nb_flag_orbits
+				<< ", semifield isotopy class " << Flag_orbits->nb_primary_orbits_upper <<
+				" computing stabilizer done, order = " <<  ago1 << endl;
 			}
 
 #if 0
@@ -1062,7 +1084,7 @@ int main(int argc, const char **argv)
 		Semifields->Orbit[Flag_orbits->nb_primary_orbits_upper].init_lint(
 			Semifields,
 			Flag_orbits->nb_primary_orbits_upper,
-			Aut_gens, data1, verbose_level);
+			Stab, data1, verbose_level);
 
 		FREE_OBJECT(Aut_gens);
 
@@ -1081,15 +1103,68 @@ int main(int argc, const char **argv)
 		cout << "Computing classification done, we found "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " semifields" << endl;
+		time_check(cout, t0);
+		cout << endl;
+	}
+
+
+	char title[1000];
+	char author[1000];
+	char fname[1000];
+	sprintf(title, "Semifields of order %d", order);
+	sprintf(author, "");
+	sprintf(fname, "Semifields_%d.tex", order);
+
+	if (f_v) {
+		cout << "writing latex file " << fname << endl;
 		}
 
+	{
+		ofstream fp(fname);
+		latex_interface L;
+
+
+		//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title,
+			author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+
+
+		Semifields->print_latex(fp,
+			title,
+			TRUE /* f_print_stabilizer_gens */);
+
+		L.foot(fp);
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "writing latex file " << fname << " done" << endl;
+		}
+
+
+
+	cout << "before freeing Gr" << endl;
 	FREE_OBJECT(Gr);
+	cout << "before freeing transporter1" << endl;
 	FREE_int(transporter1);
 	FREE_int(transporter2);
 	FREE_int(transporter3);
+	cout << "before freeing Basis1" << endl;
 	FREE_int(Basis1);
 	FREE_int(Basis2);
 	FREE_int(B);
+	cout << "before freeing Flag_orbits" << endl;
 	FREE_OBJECT(Flag_orbits);
 
 	cout << "before freeing L3" << endl;
@@ -1159,11 +1234,14 @@ void loop_over_all_subspaces(
 	int ret;
 	sorting Sorting;
 
+
+#if 0
 	if (f == 1) {
 		verbose_level += 10;
 		f_v = f_vv = f_vvv = TRUE;
 		cout << "CASE 1, STARTS HERE" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "loop_over_all_subspaces" << endl;

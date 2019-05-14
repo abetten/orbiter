@@ -1370,10 +1370,6 @@ public:
 		int *&Orbit_reps, int *&Orbit_lengths, int &nb_orbits, 
 		int **&Pts_per_generator, int *&Nb_per_generator, 
 		int verbose_level);
-#if 0
-	void write_to_memory_object(memory_object *m, int verbose_level);
-	void read_from_memory_object(memory_object *m, int verbose_level);
-#endif
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(action *A, std::ifstream &fp,
 		int verbose_level);
