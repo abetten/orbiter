@@ -65,6 +65,7 @@ public:
 	void print_types_naked_tex(std::ostream &ost, int f_backwards,
 		int *the_vec_sorted, 
 		int nb_types, int *type_first, int *type_len);
+	void print_array_tex(std::ostream &ost, int f_backwards);
 	double average();
 	double average_of_non_zero_values();
 	void get_data_by_multiplicity(int *&Pts, int &nb_pts, 

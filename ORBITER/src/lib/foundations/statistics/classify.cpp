@@ -349,6 +349,30 @@ void classify::print_types_naked_tex(
 		}
 }
 
+void classify::print_array_tex(ostream &ost, int f_backwards)
+{
+	int i, j, f, l, a;
+
+	ost << "\\begin{array}{|r|r|l|}" << endl;
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = data_sorted[f];
+			ost << a << " & " << l << " & ";
+			for (j = 0; j < l; j++) {
+				ost << sorting_perm_inv[f + j];
+				if (j < l - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+			}
+	}
+	ost << "\\end{array}" << endl;
+}
+
 double classify::average()
 {
 	int i, f, l, L, a, s;

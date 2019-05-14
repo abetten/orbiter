@@ -47,6 +47,9 @@ public:
 	void print_latex(std::ostream &ost, const char *title, int f_print_stabilizer_gens);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
+	void generate_source_code(const char *fname_base, int verbose_level);
+	int *Rep_ith(int i);
+	long int *Rep_lint_ith(int i);
 
 };
 
