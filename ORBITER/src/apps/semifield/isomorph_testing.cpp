@@ -248,7 +248,7 @@ int main(int argc, const char **argv)
 
 	int idx;
 	int h, g;
-	long int *data;
+	//long int *data;
 	sorting Sorting;
 	file_io Fio;
 
@@ -429,13 +429,13 @@ int main(int argc, const char **argv)
 		}
 
 	{
-	classify C;
+		classify C;
 
-	C.init(Non_unique_cases_len, nb_non_unique_cases, FALSE, 0);
-	if (f_v) {
-		cout << "classification of Len amongst the non-unique cases:" << endl;
-		C.print_naked(TRUE);
-		cout << endl;
+		C.init(Non_unique_cases_len, nb_non_unique_cases, FALSE, 0);
+		if (f_v) {
+			cout << "classification of Len amongst the non-unique cases:" << endl;
+			C.print_naked(TRUE);
+			cout << endl;
 		}
 	}
 	{
@@ -707,6 +707,8 @@ int main(int argc, const char **argv)
 	h = 0;
 	for (o = 0; o < Sub.nb_orbits_at_level_3; o++) {
 
+		long int *data;
+
 		Sub.Fo_first[o] = h;
 		fst = Sub.FstLen[2 * o + 0];
 
@@ -886,12 +888,12 @@ int main(int argc, const char **argv)
 		}
 
 		strong_generators *Aut_gens;
-		vector_ge *coset_reps;
+		//vector_ge *coset_reps;
 		longinteger_object go;
 
 		Aut_gens = Sub.Flag_orbits->Flag_orbit_node[Sub.f].gens->create_copy();
-		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(Sub.SC->A);
+		Sub.coset_reps = NEW_OBJECT(vector_ge);
+		Sub.coset_reps->init(Sub.SC->A);
 
 
 		for (i = 0; i < k; i++) {
@@ -966,7 +968,7 @@ int main(int argc, const char **argv)
 		longinteger_domain D;
 
 		Aut_gens->group_order(go);
-		cl = coset_reps->len;
+		cl = Sub.coset_reps->len;
 		Cl.create(cl);
 		D.mult(go, Cl, ago);
 		if (f_v) {
@@ -988,7 +990,7 @@ int main(int argc, const char **argv)
 				"computing stabilizer" << endl;
 		}
 		Stab->init_group_extension(Aut_gens,
-				coset_reps, cl /* index */,
+				Sub.coset_reps, cl /* index */,
 				verbose_level);
 		Stab->group_order(ago1);
 		if (f_v) {
