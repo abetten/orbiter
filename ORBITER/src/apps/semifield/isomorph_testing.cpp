@@ -1080,19 +1080,6 @@ int main(int argc, const char **argv)
 				" computing stabilizer done, order = " <<  ago1 << endl;
 			}
 
-#if 0
-		Aut_gens->add_generators(coset_reps,
-				cl /* group_index */, 0 /*verbose_level*/);
-		Aut_gens->group_order(go1);
-		if (f_v) {
-			cout << "We have created a group of order " << go1 << endl;
-			}
-		if (D.compare(ago, go1) != 0) {
-			cout << "The group orders differ, something is wrong" << endl;
-			exit(1);
-			}
-#endif
-
 
 		Semifields->Orbit[Flag_orbits->nb_primary_orbits_upper].init_lint(
 			Semifields,
@@ -1110,6 +1097,7 @@ int main(int argc, const char **argv)
 		} // next f
 
 
+	Semifields->nb_orbits = Flag_orbits->nb_primary_orbits_upper;
 
 
 	if (f_v) {
@@ -1368,30 +1356,6 @@ void loop_over_all_subspaces(
 			}
 		}
 		else {
-#if 0
-			F->Gauss_int_with_given_pivots(
-				Basis2,
-				FALSE /* f_special */,
-				FALSE /* f_complete */,
-				desired_pivots,
-				k /* nb_pivots */,G fin
-				k, k2,
-				0 /*verbose_level - 2*/);
-			if (f_vvv) {
-				cout << "Basis2 after RREF(1)=" << endl;
-				int_matrix_print_bitwise(Basis2, k, k2);
-				SC->basis_print(Basis2, k);
-				}
-
-			for (i = 0; i < k; i++) {
-				data2[i] = SC->matrix_rank(Basis2 + i * k2);
-				}
-			if (f_vvv) {
-				cout << "data2=";
-				lint_vec_print(cout, data2, k);
-				cout << endl;
-				}
-#endif
 
 			F->Gauss_int_with_given_pivots(
 				Basis2 + 3 * k2,
