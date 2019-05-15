@@ -1085,46 +1085,60 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	int *Po = NULL;
+	int identify_m = 0;
+
 	if (f_identify_semifield_from_file) {
 		cout << "f_identify_semifield_from_file" << endl;
 
 		long int *Data;
-		int m, n;
+		int identify_m, n;
 
 		Fio.lint_matrix_read_csv(identify_semifield_from_file_fname, Data,
-				m, n, verbose_level);
+				identify_m, n, verbose_level);
 		if (n != Sub.SC->k) {
 			cout << "n != Sub.SC->k" << endl;
 			exit(1);
 		}
-		int rk, trace_po, fo, po;
+		int t, rk, trace_po, fo, po;
 		int *transporter;
 
-		int *Po;
 
 		transporter = NEW_int(Sub.SC->A->elt_size_in_int);
-		Po = NEW_int(m);
+		Po = NEW_int(identify_m * 6);
 
-		for (i = 0; i < m; i++) {
-			if (Sub.identify(
-					Data + i * n,
-					rk, trace_po, fo, po,
-					transporter,
-					verbose_level)) {
-				cout << "Identify " << i << " / " << m << " : The given semifield has been identified "
-						"as semifield orbit " << po << endl;
-				cout << "rk=" << rk << endl;
-				cout << "trace_po=" << trace_po << endl;
-				cout << "fo=" << fo << endl;
-				cout << "po=" << po << endl;
-				cout << "isotopy:" << endl;
-				Sub.SC->A->element_print_quick(transporter, cout);
-				cout << endl;
-				Po[i] = po;
-			}
-			else {
-				cout << "The given semifield cannot be identified" << endl;
-				Po[i] = -1;
+		for (i = 0; i < identify_m; i++) {
+
+			for (t = 0; t < 6; t++) {
+
+				long int data_out[6];
+
+				Sub.SC->knuth_operation(t,
+						Data + i * n, data_out,
+						verbose_level);
+
+
+				if (Sub.identify(
+						data_out,
+						rk, trace_po, fo, po,
+						transporter,
+						verbose_level)) {
+					cout << "Identify " << i << " / " << identify_m
+							<< " : The given semifield has been identified "
+							"as semifield orbit " << po << endl;
+					cout << "rk=" << rk << endl;
+					cout << "trace_po=" << trace_po << endl;
+					cout << "fo=" << fo << endl;
+					cout << "po=" << po << endl;
+					cout << "isotopy:" << endl;
+					Sub.SC->A->element_print_quick(transporter, cout);
+					cout << endl;
+					Po[i * 6 + t] = po;
+				}
+				else {
+					cout << "The given semifield cannot be identified" << endl;
+					Po[i * 6 + t] = -1;
+				}
 			}
 
 		}
@@ -1133,7 +1147,7 @@ int main(int argc, const char **argv)
 		strcpy(fname, identify_semifield_from_file_fname);
 		chop_off_extension(fname);
 		sprintf(fname + strlen(fname), "_identification.csv");
-		Fio.int_vec_write_csv(Po, m, fname, "isotopy class");
+		Fio.int_matrix_write_csv(fname, Po, identify_m, 6);
 	}
 
 	char title[1000];
@@ -1190,6 +1204,15 @@ int main(int argc, const char **argv)
 			semifield_print_function_callback,
 			Sub.SC);
 
+		if (f_identify_semifield_from_file) {
+			fp << "Identification:\\\\" << endl;
+			fp << "$$" << endl;
+			print_integer_matrix_with_standard_labels_and_offset_tex(
+				fp, Po, identify_m, 6,
+				1 /* m_offset */, 1 /* n_offset */);
+			fp << "$$" << endl;
+		}
+
 		L.foot(fp);
 	}
 	cout << "Written file " << fname << " of size "
@@ -1244,7 +1267,6 @@ int main(int argc, const char **argv)
 
 	the_end(t0);
 }
-
 
 
 void save_trace_record(

@@ -105,6 +105,10 @@ public:
 	int *test_w; // [k2]
 	int *test_Basis; // [k * k2]
 
+	// for knuth operations:
+	int *Basis1; // [k * k2]
+	int *Basis2; // [k * k2]
+
 	// for compute_orbit_of_subspaces:
 	int *desired_pivots;
 
@@ -171,6 +175,9 @@ public:
 		int verbose_level);
 	// allocates an orbit_of_subspaces data structure in Orb
 	void init_desired_pivots(int verbose_level);
+	void knuth_operation(int t,
+			long int *data_in, long int *data_out,
+			int verbose_level);
 };
 
 void semifield_classify_early_test_func(int *S, int len,
