@@ -1608,7 +1608,8 @@ void surface_classify_wedge::latex_surfaces(
 	Classify_double_sixes->Double_sixes->print_latex(ost, title_ds);
 #endif
 
-	Surfaces->print_latex(ost, title, f_with_stabilizers);
+	Surfaces->print_latex(ost, title, f_with_stabilizers,
+			FALSE, NULL, NULL);
 
 
 #if 1
