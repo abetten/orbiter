@@ -1066,7 +1066,8 @@ void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost,
 	int f_with_stabilizers)
 {
 	Trihedral_pairs->print_latex(ost, 
-		"Classification of Double Triplets", f_with_stabilizers);
+		"Classification of Double Triplets", f_with_stabilizers,
+		FALSE, NULL, NULL);
 }
 
 
