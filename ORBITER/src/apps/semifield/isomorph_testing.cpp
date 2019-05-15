@@ -836,7 +836,7 @@ void semifield_classify_with_substructure::latex_report(
 	char title[1000];
 	char author[1000];
 	char fname[1000];
-	sprintf(title, "Semifields of order %d", order);
+	sprintf(title, "Isotopy classes of semifields of order %d", order);
 	sprintf(author, "Anton Betten");
 	sprintf(fname, "Semifields_%d.tex", order);
 
@@ -875,6 +875,7 @@ void semifield_classify_with_substructure::latex_report(
 
 		C.init(Go, Semifields->nb_orbits, FALSE, 0);
 
+		fp << "\\section*{Summary}" << endl;
 		fp << "Classification by stabilizer order:\\\\" << endl;
 		fp << "$$" << endl;
 		C.print_array_tex(fp, TRUE /*f_backwards */);
@@ -889,7 +890,11 @@ void semifield_classify_with_substructure::latex_report(
 
 		if (f_identify_semifields_from_file) {
 			fp << "\\clearpage" << endl;
-			fp << "Identification:\\\\" << endl;
+			fp << "\\section{Identification of Rua types}" << endl;
+			fp << "The $i$-th row, $j$-th column of the table is the number $c$ "
+					"of the isotopy class in the list above which corresponds "
+					"to the $j$-th element in the Knuth orbit of the $i$-th "
+					"class in the R\\'ua labeling.\\\\" << endl;
 			//fp << "$$" << endl;
 			print_integer_matrix_tex_block_by_block(fp,
 					identify_semifields_from_file_Po,
@@ -2476,18 +2481,20 @@ void save_trace_record(
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
-void semifield_print_function_callback(ostream &ost, int i,
+void semifield_print_function_callback(ostream &ost, int orbit_idx,
 		classification_step *Step, void *print_function_data)
 {
 	semifield_substructure *Sub = (semifield_substructure *) print_function_data;
 	semifield_classify *SC;
+	semifield_classify_with_substructure *SCWS;
 	long int *R;
 	long int a;
-	int j;
+	int i, j;
 
 
 	SC = Sub->SC;
-	R = Step->Rep_lint_ith(i);
+	SCWS = Sub->SCWS;
+	R = Step->Rep_lint_ith(orbit_idx);
 	for (j = 0; j < Step->representation_sz; j++) {
 		a = R[j];
 		SC->matrix_unrank(a, SC->test_Basis);
@@ -2502,8 +2509,26 @@ void semifield_print_function_callback(ostream &ost, int i,
 		}
 	}
 	ost << "\\\\" << endl;
+	for (j = 0; j < Step->representation_sz; j++) {
+		a = R[j];
+		SC->matrix_unrank(a, SC->test_Basis);
+		ost << "$";
+		int_vec_print(ost, SC->test_Basis, SC->k2);
+		ost << "$";
+		ost << "\\\\" << endl;
+	}
+	if (SCWS->f_identify_semifields_from_file) {
+		ost << "R\\'ua type: ";
+		for (i = 0; i < SCWS->identify_semifields_from_file_m; i++) {
+			for (j = 0; j < 6; j++) {
+				if (SCWS->identify_semifields_from_file_Po[i * 6 + j] == orbit_idx) {
+					ost << "$" << i << "." << j << "$; ";
+				}
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+
 	ost << endl;
 }
-
-
 
