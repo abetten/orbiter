@@ -1060,28 +1060,45 @@ int main(int argc, const char **argv)
 		}
 
 
-		int rk, trace_po, fo, po;
+		int t, rk, trace_po, fo, po;
 		int *transporter;
 
 		transporter = NEW_int(Sub.SC->A->elt_size_in_int);
 
-		if (Sub.identify(
-				data,
-				rk, trace_po, fo, po,
-				transporter,
-				verbose_level)) {
-			cout << "The given semifield has been identified "
-					"as semifield orbit " << po << endl;
-			cout << "rk=" << rk << endl;
-			cout << "trace_po=" << trace_po << endl;
-			cout << "fo=" << fo << endl;
-			cout << "po=" << po << endl;
-			cout << "isotopy:" << endl;
-			Sub.SC->A->element_print_quick(transporter, cout);
+		for (t = 0; t < 6; t++) {
+
+			long int data_out[6];
+
+			cout << "Knuth operation " << t << " / " << 6 << ":" << endl;
+			Sub.SC->knuth_operation(t,
+					data, data_out,
+					verbose_level);
+
+			lint_vec_print(cout, data_out, k);
 			cout << endl;
-		}
-		else {
-			cout << "The given semifield cannot be identified" << endl;
+			for (i = 0; i < k; i++) {
+				Sub.SC->matrix_unrank(data_out[i], Sub.Basis1 + i * k2);
+			}
+			Sub.SC->basis_print(Sub.Basis1, k);
+
+			if (Sub.identify(
+					data_out,
+					rk, trace_po, fo, po,
+					transporter,
+					verbose_level)) {
+				cout << "The given semifield has been identified "
+						"as semifield orbit " << po << endl;
+				cout << "rk=" << rk << endl;
+				cout << "trace_po=" << trace_po << endl;
+				cout << "fo=" << fo << endl;
+				cout << "po=" << po << endl;
+				cout << "isotopy:" << endl;
+				Sub.SC->A->element_print_quick(transporter, cout);
+				cout << endl;
+			}
+			else {
+				cout << "The given semifield cannot be identified" << endl;
+			}
 		}
 	}
 
@@ -1202,7 +1219,7 @@ int main(int argc, const char **argv)
 			TRUE /* f_print_stabilizer_gens */,
 			TRUE,
 			semifield_print_function_callback,
-			Sub.SC);
+			&Sub);
 
 		if (f_identify_semifield_from_file) {
 			fp << "Identification:\\\\" << endl;
@@ -1266,81 +1283,6 @@ int main(int argc, const char **argv)
 
 
 	the_end(t0);
-}
-
-
-void save_trace_record(
-		trace_record *T,
-		int f_trace_record_prefix, const char *trace_record_prefix,
-		int iso, int f, int po, int so, int N)
-{
-	int *M;
-	int w = 10;
-	char fname[1000];
-	const char *column_label[] = {
-		"coset",
-		"trace_po",
-		"f_skip",
-		"solution_idx",
-		"nb_sol",
-		"go",
-		"pos",
-		"so",
-		"orbit_len",
-		"f2"
-		};
-	int i;
-	file_io Fio;
-
-	M = NEW_int(N * w);
-	for (i = 0; i < N; i++) {
-		M[i * w + 0] = T[i].coset;
-		M[i * w + 1] = T[i].trace_po;
-		M[i * w + 2] = T[i].f_skip;
-		M[i * w + 3] = T[i].solution_idx;
-		M[i * w + 4] = T[i].nb_sol;
-		M[i * w + 5] = T[i].go;
-		M[i * w + 6] = T[i].pos;
-		M[i * w + 7] = T[i].so;
-		M[i * w + 8] = T[i].orbit_len;
-		M[i * w + 9] = T[i].f2;
-		}
-
-	if (f_trace_record_prefix) {
-		sprintf(fname, "%strace_record_%03d_f%05d_po%d_so%d.csv", trace_record_prefix, iso, f, po, so);
-	}
-	else {
-		sprintf(fname, "trace_record_%03d_f%05d_po%d_so%d.csv", iso, f, po, so);
-	}
-	Fio.int_matrix_write_csv_with_labels(fname, M, N, w, column_label);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-}
-
-void semifield_print_function_callback(ostream &ost, int i,
-		classification_step *Step, void *print_function_data)
-{
-	semifield_classify *SC = (semifield_classify *) print_function_data;
-	long int *R;
-	long int a;
-	int j;
-
-
-	R = Step->Rep_lint_ith(i);
-	for (j = 0; j < Step->representation_sz; j++) {
-		a = R[j];
-		SC->matrix_unrank(a, SC->test_Basis);
-		ost << "$";
-		ost << "\\left[";
-		print_integer_matrix_tex(ost,
-			SC->test_Basis, SC->k, SC->k);
-		ost << "\\right]";
-		ost << "$";
-		if (j < Step->representation_sz - 1) {
-			ost << ", " << endl;
-		}
-	}
-	ost << "\\\\" << endl;
-	ost << endl;
 }
 
 
@@ -2199,5 +2141,82 @@ int semifield_substructure::find_semifield_in_table(
 	}
 	return TRUE;
 }
+
+void save_trace_record(
+		trace_record *T,
+		int f_trace_record_prefix, const char *trace_record_prefix,
+		int iso, int f, int po, int so, int N)
+{
+	int *M;
+	int w = 10;
+	char fname[1000];
+	const char *column_label[] = {
+		"coset",
+		"trace_po",
+		"f_skip",
+		"solution_idx",
+		"nb_sol",
+		"go",
+		"pos",
+		"so",
+		"orbit_len",
+		"f2"
+		};
+	int i;
+	file_io Fio;
+
+	M = NEW_int(N * w);
+	for (i = 0; i < N; i++) {
+		M[i * w + 0] = T[i].coset;
+		M[i * w + 1] = T[i].trace_po;
+		M[i * w + 2] = T[i].f_skip;
+		M[i * w + 3] = T[i].solution_idx;
+		M[i * w + 4] = T[i].nb_sol;
+		M[i * w + 5] = T[i].go;
+		M[i * w + 6] = T[i].pos;
+		M[i * w + 7] = T[i].so;
+		M[i * w + 8] = T[i].orbit_len;
+		M[i * w + 9] = T[i].f2;
+		}
+
+	if (f_trace_record_prefix) {
+		sprintf(fname, "%strace_record_%03d_f%05d_po%d_so%d.csv", trace_record_prefix, iso, f, po, so);
+	}
+	else {
+		sprintf(fname, "trace_record_%03d_f%05d_po%d_so%d.csv", iso, f, po, so);
+	}
+	Fio.int_matrix_write_csv_with_labels(fname, M, N, w, column_label);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+}
+
+void semifield_print_function_callback(ostream &ost, int i,
+		classification_step *Step, void *print_function_data)
+{
+	semifield_substructure *Sub = (semifield_substructure *) print_function_data;
+	semifield_classify *SC;
+	long int *R;
+	long int a;
+	int j;
+
+
+	SC = Sub->SC;
+	R = Step->Rep_lint_ith(i);
+	for (j = 0; j < Step->representation_sz; j++) {
+		a = R[j];
+		SC->matrix_unrank(a, SC->test_Basis);
+		ost << "$";
+		ost << "\\left[";
+		print_integer_matrix_tex(ost,
+			SC->test_Basis, SC->k, SC->k);
+		ost << "\\right]";
+		ost << "$";
+		if (j < Step->representation_sz - 1) {
+			ost << ", " << endl;
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << endl;
+}
+
 
 
