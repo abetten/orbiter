@@ -383,7 +383,7 @@ void semifield_classify_with_substructure::read_arguments(int argc, const char *
 		else if (strcmp(argv[i], "-identify_semifields_from_file") == 0) {
 			f_identify_semifields_from_file = TRUE;
 			identify_semifields_from_file_fname = argv[++i];
-			cout << "-identify_semifield_from_file " << identify_semifields_from_file_fname << endl;
+			cout << "-identify_semifields_from_file " << identify_semifields_from_file_fname << endl;
 			}
 		else if (strcmp(argv[i], "-trace_record_prefix") == 0) {
 			f_trace_record_prefix = TRUE;
@@ -885,7 +885,7 @@ void semifield_classify_with_substructure::latex_report(
 			TRUE /* f_print_stabilizer_gens */,
 			TRUE,
 			semifield_print_function_callback,
-			&Sub);
+			Sub);
 
 		if (f_identify_semifields_from_file) {
 			fp << "\\clearpage" << endl;
