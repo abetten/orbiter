@@ -55,6 +55,8 @@ semifield_classify::semifield_classify()
 	test_v = NULL;
 	test_w = NULL;
 	test_Basis = NULL;
+	Basis1 = NULL;
+	Basis2 = NULL;
 	desired_pivots = NULL;
 	//null();
 }
@@ -104,6 +106,12 @@ void semifield_classify::freeself()
 		}
 	if (test_Basis) {
 		FREE_int(test_Basis);
+		}
+	if (Basis1) {
+		FREE_int(Basis1);
+		}
+	if (Basis2) {
+		FREE_int(Basis2);
 		}
 	if (desired_pivots) {
 		FREE_int(desired_pivots);
@@ -171,6 +179,8 @@ void semifield_classify::init(int argc, const char **argv,
 	test_v = NEW_int(n);
 	test_w = NEW_int(k2);
 	test_Basis = NEW_int(k * k2);
+	Basis1 = NEW_int(k * k2);
+	Basis2 = NEW_int(k * k2);
 
 
 	T = NEW_OBJECT(spread);
@@ -1268,6 +1278,46 @@ void semifield_classify::init_desired_pivots(int verbose_level)
 		}
 }
 
+void semifield_classify::knuth_operation(int t,
+		long int *data_in, long int *data_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a;
+	static int perm[] = {
+			0,1,2,
+			0,2,1,
+			1,0,2,
+			1,2,0,
+			2,0,1,
+			2,1,0
+	};
+	int I[3], J[3];
+
+	if (f_v) {
+		cout << "semifield_classify::knuth_operation" << endl;
+	}
+	for (i = 0; i < k; i++) {
+		matrix_unrank(data_in[i], Basis1 + i * k2);
+	}
+	for (I[0] = 0; I[0] < k; I[0]++) {
+		for (I[1] = 0; I[1] < k; I[1]++) {
+			for (I[2] = 0; I[2] < k; I[2]++) {
+				J[0] = I[perm[t * 3 + 0]];
+				J[1] = I[perm[t * 3 + 1]];
+				J[2] = I[perm[t * 3 + 2]];
+				a = Basis1[J[0] * k2 + J[1] * k + J[2]];
+				Basis2[I[0] * k2 + I[1] * k + I[2]] = a;
+				}
+			}
+		}
+	for (i = 0; i < k; i++) {
+		data_out[i] = matrix_rank(Basis2 + i * k2);
+		}
+	if (f_v) {
+		cout << "semifield_classify::knuth_operation done" << endl;
+	}
+}
 
 
 //##############################################################################
