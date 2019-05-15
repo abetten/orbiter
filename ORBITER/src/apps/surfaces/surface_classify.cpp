@@ -384,7 +384,8 @@ int main(int argc, const char **argv)
 		SCW->Classify_double_sixes->print_five_plus_ones(fp);
 
 		SCW->Classify_double_sixes->Double_sixes->print_latex(fp, 
-			"Double Sixes", FALSE /* f_with_stabilizers*/);
+			"Double Sixes", FALSE /* f_with_stabilizers*/,
+			FALSE, NULL, NULL);
 
 		L.foot(fp);
 		}
@@ -504,10 +505,12 @@ int main(int argc, const char **argv)
 
 			SCW->Classify_double_sixes->print_five_plus_ones(fp);
 			SCW->Classify_double_sixes->Flag_orbits->print_latex(fp, "Flag orbits for double sixes", TRUE);
-			SCW->Classify_double_sixes->Double_sixes->print_latex(fp, "Double Sixes", TRUE);
+			SCW->Classify_double_sixes->Double_sixes->print_latex(fp, "Double Sixes", TRUE,
+					FALSE, NULL, NULL);
 
 			SCW->Flag_orbits->print_latex(fp, "Flag orbits for surfaces", TRUE);
-			SCW->Surfaces->print_latex(fp, "Surfaces", TRUE);
+			SCW->Surfaces->print_latex(fp, "Surfaces", TRUE,
+					FALSE, NULL, NULL);
 
 			SCW->latex_surfaces(fp, f_with_stabilizers);
 
