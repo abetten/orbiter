@@ -2648,7 +2648,7 @@ int semifield_lifting::candidate_testing(
 	int h, l;
 	int Nb_sets_new;
 	int /*window_bottom_new,*/ window_size_new;
-	int pivot_row;
+	//int pivot_row;
 	long int last_mtx_numeric;
 	number_theory_domain NT;
 	geometry_global Gg;
@@ -2661,7 +2661,7 @@ int semifield_lifting::candidate_testing(
 	last_mtx_numeric = SC->matrix_rank_without_first_column(last_mtx);
 
 
-	pivot_row = window_bottom;
+	//pivot_row = window_bottom;
 
 	//window_bottom_new = pivot_row - 1;
 	window_size_new = window_size - 1;
