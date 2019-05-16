@@ -117,7 +117,8 @@ void semifield_lifting::init_level_three(
 }
 
 
-void semifield_lifting::recover_level_three_from_file(int f_read_flag_orbits, int verbose_level)
+void semifield_lifting::recover_level_three_from_file(
+		int f_read_flag_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -127,56 +128,67 @@ void semifield_lifting::recover_level_three_from_file(int f_read_flag_orbits, in
 
 
 	if (f_v) {
-		cout << "semifield_lifting::recover_level_three_from_file before downstep" << endl;
+		cout << "semifield_lifting::recover_level_three_from_file "
+				"before downstep" << endl;
 		}
 
 	find_all_candidates(2, verbose_level);
 
 	if (f_v) {
-		cout << "semifield_lifting::recover_level_three_from_file after downstep" << endl;
+		cout << "semifield_lifting::recover_level_three_from_file "
+				"after downstep" << endl;
 		}
 
 
 	if (f_read_flag_orbits) {
 
 		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file before downstep" << endl;
+			cout << "semifield_lifting::recover_level_three_from_file "
+					"before downstep" << endl;
 			}
 
 		downstep(2, verbose_level);
 
 		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file after downstep" << endl;
+			cout << "semifield_lifting::recover_level_three_from_file "
+					"after downstep" << endl;
 			}
 
 
 		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file after downstep" << endl;
+			cout << "semifield_lifting::recover_level_three_from_file "
+					"after downstep" << endl;
 			}
 
 		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file before read_flag_orbits" << endl;
+			cout << "semifield_lifting::recover_level_three_from_file "
+					"before read_flag_orbits" << endl;
 			}
 		read_flag_orbits(verbose_level);
 		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file after read_flag_orbits" << endl;
+			cout << "semifield_lifting::recover_level_three_from_file "
+					"after read_flag_orbits" << endl;
 			}
 	}
 
 	if (f_v) {
-		cout << "semifield_lifting::recover_level_three_from_file before read_level_info_file" << endl;
+		cout << "semifield_lifting::recover_level_three_from_file "
+				"before read_level_info_file" << endl;
 		}
 	read_level_info_file(verbose_level);
 	if (f_v) {
-		cout << "semifield_lifting::recover_level_three_from_file after read_level_info_file" << endl;
+		cout << "semifield_lifting::recover_level_three_from_file "
+				"after read_level_info_file" << endl;
 		}
 
 	if (f_v) {
-		cout << "semifield_lifting::recover_level_three_from_file before read_stabilizers" << endl;
+		cout << "semifield_lifting::recover_level_three_from_file "
+				"before read_stabilizers" << endl;
 		}
 	read_stabilizers(verbose_level);
 	if (f_v) {
-		cout << "semifield_lifting::recover_level_three_from_file after read_stabilizers" << endl;
+		cout << "semifield_lifting::recover_level_three_from_file "
+				"after read_stabilizers" << endl;
 		}
 
 
@@ -394,7 +406,8 @@ void semifield_lifting::downstep(
 				"level = " << level
 				<< " before processing all primary orbits" << endl;
 		}
-	Downstep_nodes = NEW_OBJECTS(semifield_downstep_node, prev_level_nb_orbits);
+	Downstep_nodes = NEW_OBJECTS(semifield_downstep_node,
+			prev_level_nb_orbits);
 
 	int first_flag_orbit = 0;
 

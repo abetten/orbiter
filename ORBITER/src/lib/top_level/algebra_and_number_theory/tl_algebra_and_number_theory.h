@@ -50,6 +50,87 @@ void create_factor_group(action *A, sims *S, int goi,
 
 
 // #############################################################################
+// semifield_classify_with_substructure.cpp
+// #############################################################################
+
+
+//! classification of semifields using substructure
+
+class semifield_classify_with_substructure {
+public:
+
+	int argc;
+	const char **argv;
+
+	int f_poly;
+	const char *poly;
+	int f_order;
+	int order;
+	int f_dim_over_kernel;
+	int dim_over_kernel;
+	int f_prefix;
+	const char *prefix;
+	int f_orbits_light;
+	int f_test_semifield;
+	const char *test_semifield_data;
+	int f_identify_semifield;
+	const char *identify_semifield_data;
+	int f_identify_semifields_from_file;
+	const char *identify_semifields_from_file_fname;
+
+	int *identify_semifields_from_file_Po;
+	int identify_semifields_from_file_m;
+
+
+	int f_trace_record_prefix;
+	const char *trace_record_prefix;
+	int f_FstLen;
+	const char *fname_FstLen;
+	int f_Data;
+	const char *fname_Data;
+
+	int p, e, e1, n, k, q, k2;
+
+	finite_field *F;
+	semifield_substructure *Sub;
+	semifield_level_two *L2;
+
+
+	int nb_existing_cases;
+	int *Existing_cases;
+	int *Existing_cases_fst;
+	int *Existing_cases_len;
+
+
+	int nb_non_unique_cases;
+	int *Non_unique_cases;
+	int *Non_unique_cases_fst;
+	int *Non_unique_cases_len;
+	int *Non_unique_cases_go;
+
+
+	classification_step *Semifields;
+
+
+	semifield_classify_with_substructure();
+	~semifield_classify_with_substructure();
+	void read_arguments(int argc, const char **argv, int &verbose_level);
+	void init(int verbose_level);
+	void read_data(int verbose_level);
+	void classify_semifields(int verbose_level);
+	void identify_semifield(int verbose_level);
+	void identify_semifields_from_file(int verbose_level);
+	void latex_report(int verbose_level);
+	void generate_source_code(int verbose_level);
+};
+
+
+void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
+		classification_step *Step, void *print_function_data);
+
+
+
+// #############################################################################
 // semifield_classify.cpp
 // #############################################################################
 
@@ -504,6 +585,89 @@ public:
 
 
 // #############################################################################
+// semifield_substructure.cpp
+// #############################################################################
+
+//! auxiliary class for classifying semifields after lifting
+
+
+class semifield_substructure {
+public:
+	semifield_classify_with_substructure *SCWS;
+	semifield_classify *SC;
+	semifield_lifting *L3;
+	grassmann *Gr;
+	int *Non_unique_cases_with_non_trivial_group;
+	int nb_non_unique_cases_with_non_trivial_group;
+
+	int *Need_orbits_fst;
+	int *Need_orbits_len;
+
+	trace_record *TR;
+	int N;
+	int f;
+	long int *Data;
+	int nb_solutions;
+	int data_size;
+	int start_column;
+	int *FstLen;
+	int *Len;
+	int nb_orbits_at_level_3;
+	int nb_orb_total; // = sum_i Nb_orb[i]
+	orbit_of_subspaces ***All_Orbits; // [nb_non_unique_cases_with_non_trivial_group]
+	int *Nb_orb; // [nb_non_unique_cases_with_non_trivial_group]
+		// Nb_orb[i] is the number of orbits in All_Orbits[i]
+	int **Orbit_idx; // [nb_non_unique_cases_with_non_trivial_group]
+		// Orbit_idx[i][j] = b
+		// means that the j-th solution of Nontrivial case i belongs to orbt All_Orbits[i][b]
+	int **Position; // [nb_non_unique_cases_with_non_trivial_group]
+		// Position[i][j] = a
+		// means that the j-th solution of Nontrivial case i is the a-th element in All_Orbits[i][b]
+		// where Orbit_idx[i][j] = b
+	int *Fo_first; // [nb_orbits_at_level_3]
+	int nb_flag_orbits;
+	flag_orbits *Flag_orbits; // [nb_flag_orbits]
+	int *f_processed; // [nb_flag_orbits]
+	int nb_processed;
+	long int *data1;
+	long int *data2;
+	int *Basis1;
+	int *Basis2;
+	int *B;
+	int *v1;
+	int *v2;
+	int *v3;
+	int *transporter1;
+	int *transporter2;
+	int *transporter3;
+	int *Elt1;
+	vector_ge *coset_reps;
+
+	semifield_substructure();
+	~semifield_substructure();
+	void compute_cases(
+			int nb_non_unique_cases,
+			int *Non_unique_cases, int *Non_unique_cases_go,
+			int verbose_level);
+	void compute_orbits(int verbose_level);
+	void compute_flag_orbits(int verbose_level);
+	void do_classify(int verbose_level);
+	void loop_over_all_subspaces(int verbose_level);
+	int find_semifield_in_table(
+		int po,
+		long int *given_data,
+		int &idx,
+		int verbose_level);
+	int identify(long int *data,
+			int &rk, int &trace_po, int &fo, int &po,
+			int *transporter,
+			int verbose_level);
+};
+
+
+
+
+// #############################################################################
 // semifield_downstep_node.cpp
 // #############################################################################
 
@@ -628,6 +792,35 @@ public:
 		// there is a check if input_basis defines a semifield
 };
 
+
+// #############################################################################
+// trace_record.cpp
+// #############################################################################
+
+
+//! to record the result of isomorphism testing
+
+
+class trace_record {
+public:
+	int coset;
+	int trace_po;
+	int f_skip;
+	int solution_idx;
+	int nb_sol;
+	int go;
+	int pos;
+	int so;
+	int orbit_len;
+	int f2;
+	trace_record();
+	~trace_record();
+};
+
+void save_trace_record(
+		trace_record *T,
+		int f_trace_record_prefix, const char *trace_record_prefix,
+		int iso, int f, int po, int so, int N);
 
 
 

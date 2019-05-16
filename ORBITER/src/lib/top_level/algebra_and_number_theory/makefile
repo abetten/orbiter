@@ -8,12 +8,15 @@ LFLAGS = -lm
 MODULES = \
 	analyze_group.o \
 	factor_group.o \
+	semifield_classify_with_substructure.o \
 	semifield_classify.o \
 	semifield_downstep_node.o \
 	semifield_flag_orbit_node.o \
 	semifield_level_two.o \
 	semifield_lifting.o \
+	semifield_substructure.o \
 	semifield_trace.o \
+	trace_record.o \
 	young.o 
 
 
