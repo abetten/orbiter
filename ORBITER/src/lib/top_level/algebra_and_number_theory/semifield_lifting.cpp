@@ -703,7 +703,7 @@ void semifield_lifting::upstep(
 	int *changed_space;
 	int *changed_space_after_trace;
 	long int *set;
-	int i, N, h, po, so, pt_local;
+	int i, N, h, po, so; //, pt_local;
 	long int pt;
 	//int trace_po, trace_so;
 	combinatorics_domain Combi;
@@ -749,7 +749,7 @@ void semifield_lifting::upstep(
 
 		po = Flag_orbits[f].downstep_primary_orbit;
 		so = Flag_orbits[f].downstep_secondary_orbit;
-		pt_local = Flag_orbits[f].pt_local;
+		//pt_local = Flag_orbits[f].pt_local;
 		pt = Flag_orbits[f].pt;
 
 		Po[nb_orbits] = po;
@@ -2577,6 +2577,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 						<< a2 << ", " << a3 << ", " << A4 << ", "
 						<< A5 << ", " << A6 << endl;
 
+#if 0
 				long int A[6];
 
 				A[0] = a1;
@@ -2585,6 +2586,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 				A[3] = A4;
 				A[4] = A5;
 				A[5] = A6;
+#endif
 				//compute_automorphism_group(6, 3, orbit, A, verbose_level);
 				nb_sol++;
 
@@ -2645,7 +2647,7 @@ int semifield_lifting::candidate_testing(
 	int u, v, w;
 	int h, l;
 	int Nb_sets_new;
-	int window_bottom_new, window_size_new;
+	int /*window_bottom_new,*/ window_size_new;
 	int pivot_row;
 	long int last_mtx_numeric;
 	number_theory_domain NT;
@@ -2661,7 +2663,7 @@ int semifield_lifting::candidate_testing(
 
 	pivot_row = window_bottom;
 
-	window_bottom_new = pivot_row - 1;
+	//window_bottom_new = pivot_row - 1;
 	window_size_new = window_size - 1;
 
 	Nb_sets_new = NT.i_power_j(SC->q, window_size_new);
@@ -2727,7 +2729,7 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int po, so, mo;
+	int po, /*so,*/ mo;
 	long int pt, a;
 	//int ext, idx;
 	int *basis;
@@ -2737,7 +2739,7 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 				"po3 = " << po3 << endl;
 		}
 	po = Po[po3];
-	so = So[po3];
+	//so = So[po3];
 	mo = Mo[po3];
 	pt = Pt[po3];
 
