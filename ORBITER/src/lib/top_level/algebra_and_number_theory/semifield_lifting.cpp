@@ -2729,7 +2729,7 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int po, /*so,*/ mo;
+	int po; // so, mo;
 	long int pt, a;
 	//int ext, idx;
 	int *basis;
@@ -2740,7 +2740,7 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 		}
 	po = Po[po3];
 	//so = So[po3];
-	mo = Mo[po3];
+	//mo = Mo[po3];
 	pt = Pt[po3];
 
 
