@@ -339,8 +339,9 @@ public:
 		// idx = down_orbit_classes[ext * 2 + 0];
 		// a = class_rep_rank[idx];
 
-	//int *Po; // [nb_orbits]
-	// There is only one orbit at level one, so it does not make sense to store Po
+		//int *Po; // [nb_orbits]
+		// There is only one orbit at level one,
+		// so there is no need to store Po
 
 	int *So;
 		// [nb_orbits] So[i] is the index of the conjugacy class
@@ -502,7 +503,6 @@ public:
 
 	semifield_lifting();
 	~semifield_lifting();
-	void init(semifield_classify *SC, int verbose_level);
 	void init_level_three(semifield_level_two *L2,
 			int f_prefix, const char *prefix,
 			int verbose_level);
@@ -607,7 +607,7 @@ public:
 // semifield_substructure.cpp
 // #############################################################################
 
-//! auxiliary class for classifying semifields after lifting
+//! auxiliary class for classifying semifields using a three-dimensional substructure
 
 
 class semifield_substructure {
@@ -615,7 +615,8 @@ public:
 	semifield_classify_with_substructure *SCWS;
 	semifield_classify *SC;
 	semifield_lifting *L3;
-	grassmann *Gr;
+	grassmann *Gr3;
+	grassmann *Gr2;
 	int *Non_unique_cases_with_non_trivial_group;
 	int nb_non_unique_cases_with_non_trivial_group;
 
@@ -623,7 +624,8 @@ public:
 	int *Need_orbits_len;
 
 	trace_record *TR;
-	int N;
+	int N; // = number of 3-dimensional subspaces
+	int N2; // = number of 2-dimensional subspaces
 	int f;
 	long int *Data;
 	int nb_solutions;
@@ -652,6 +654,7 @@ public:
 	long int *data2;
 	int *Basis1;
 	int *Basis2;
+	int *Basis3;
 	int *B;
 	int *v1;
 	int *v2;
@@ -672,6 +675,9 @@ public:
 	void compute_flag_orbits(int verbose_level);
 	void do_classify(int verbose_level);
 	void loop_over_all_subspaces(int verbose_level);
+	void all_two_dimensional_subspaces(
+			int *Trace_po, int verbose_level);
+		// Trace_po[N2]
 	int find_semifield_in_table(
 		int po,
 		long int *given_data,
@@ -708,7 +714,6 @@ public:
 	int nb_candidates;
 
 	int *subspace_basis;
-	//int *subspace_base_cols;
 
 	action_on_cosets *on_cosets;
 	action *A_on_cosets;

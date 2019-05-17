@@ -24,7 +24,8 @@ semifield_substructure::semifield_substructure()
 	SCWS = NULL;
 	SC = NULL;
 	L3 = NULL;
-	Gr = NULL;
+	Gr3 = NULL;
+	Gr2 = NULL;
 	Non_unique_cases_with_non_trivial_group = NULL;
 	nb_non_unique_cases_with_non_trivial_group = 0;
 
@@ -33,6 +34,7 @@ semifield_substructure::semifield_substructure()
 
 	TR = NULL;
 	N = 0;
+	N2 = 0;
 	f = 0;
 	Data = NULL;
 	nb_solutions = 0;
@@ -55,6 +57,7 @@ semifield_substructure::semifield_substructure()
 	data2 = NULL;
 	Basis1 = NULL;
 	Basis2 = NULL;
+	Basis3 = NULL;
 	B = NULL;
 	v1 = NULL;
 	v2 = NULL;
@@ -466,7 +469,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		cout << "Computing classification:" << endl;
 	}
 
-	int depth0 = 3;
+	//int depth0 = 3;
 
 
 
@@ -480,15 +483,19 @@ void semifield_substructure::do_classify(int verbose_level)
 
 	Basis1 = NEW_int(SC->k * SC->k2);
 	Basis2 = NEW_int(SC->k * SC->k2);
+	Basis3 = NEW_int(SC->k * SC->k2);
 	B = NEW_int(SC->k2);
-	Gr = NEW_OBJECT(grassmann);
+	Gr3 = NEW_OBJECT(grassmann);
+	Gr2 = NEW_OBJECT(grassmann);
 	transporter1 = NEW_int(SC->A->elt_size_in_int);
 	transporter2 = NEW_int(SC->A->elt_size_in_int);
 	transporter3 = NEW_int(SC->A->elt_size_in_int);
 
 
-	Gr->init(SC->k, depth0, SC->F, 0 /* verbose_level */);
-	N = Gr->nb_of_subspaces(0 /* verbose_level */);
+	Gr3->init(SC->k, 3, SC->F, 0 /* verbose_level */);
+	N = Gr3->nb_of_subspaces(0 /* verbose_level */);
+	Gr2->init(SC->k, 2, SC->F, 0 /* verbose_level */);
+	N2 = Gr2->nb_of_subspaces(0 /* verbose_level */);
 	data1 = NEW_lint(SC->k);
 	data2 = NEW_lint(SC->k);
 	v1 = NEW_int(SC->k);
@@ -756,7 +763,7 @@ void semifield_substructure::loop_over_all_subspaces(int verbose_level)
 
 
 		// unrank the subspace:
-		Gr->unrank_int_here_and_extend_basis(B, rk,
+		Gr3->unrank_int_here_and_extend_basis(B, rk,
 				0 /* verbose_level */);
 
 		// multiply the matrices to get the matrices
@@ -792,7 +799,8 @@ void semifield_substructure::loop_over_all_subspaces(int verbose_level)
 		if (ret == FALSE) {
 			cout << "flag orbit " << f << " / "
 				<< nb_flag_orbits << ", subspace "
-				<< rk << " / " << N << " : trace_to_level_three return FALSE" << endl;
+				<< rk << " / " << N
+				<< " : trace_to_level_three return FALSE" << endl;
 
 			f_skip = TRUE;
 		}
@@ -1114,6 +1122,97 @@ void semifield_substructure::loop_over_all_subspaces(int verbose_level)
 
 }
 
+void semifield_substructure::all_two_dimensional_subspaces(
+		int *Trace_po, int verbose_level)
+// Trace_po[N2]
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	finite_field *F;
+	int rk, i;
+	int k, k2;
+	int trace_po;
+	sorting Sorting;
+
+
+
+	if (f_v) {
+		cout << "semifield_substructure::all_two_dimensional_subspaces" << endl;
+	}
+
+
+	k = SC->k;
+	k2 = SC->k2;
+	F = SC->F;
+
+	for (rk = 0; rk < N2; rk++) {
+
+
+		if (f_vv) {
+			cout << "semifield_substructure::all_two_dimensional_subspaces "
+				"subspace "
+				<< rk << " / " << N2 << ":" << endl;
+		}
+
+		for (i = 0; i < k; i++) {
+			SC->matrix_unrank(data1[i], Basis1 + i * k2);
+		}
+		if (f_vvv) {
+			SC->basis_print(Basis1, k);
+		}
+
+
+		// unrank the subspace:
+		Gr2->unrank_int_here_and_extend_basis(B, rk,
+				0 /* verbose_level */);
+
+		// multiply the matrices to get the matrices
+		// adapted to the subspace:
+		// the first three matrices are the generators
+		// for the subspace.
+		F->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
+				0 /* verbose_level */);
+
+
+		if (f_vvv) {
+			cout << "base change matrix B=" << endl;
+			int_matrix_print_bitwise(B, k, k);
+
+			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
+			int_matrix_print_bitwise(Basis2, k, k2);
+			SC->basis_print(Basis2, k);
+		}
+
+
+		if (f_vv) {
+			cout << "before trace_to_level_three" << endl;
+		}
+
+		L3->trace_to_level_two(
+				Basis2,
+				k /* basis_sz */,
+				Basis3, transporter1,
+				trace_po,
+				verbose_level);
+
+		Trace_po[rk] = trace_po;
+
+		if (f_vvv) {
+			cout << "After trace, trace_po = "
+					<< trace_po << endl;
+			cout << "Basis3 (after trace)=" << endl;
+			int_matrix_print_bitwise(Basis3, k, k2);
+			SC->basis_print(Basis3, k);
+		}
+	}
+	if (f_v) {
+		cout << "semifield_substructure::all_two_dimensional_subspaces "
+				"done" << endl;
+	}
+}
+
+
 int semifield_substructure::identify(long int *data,
 		int &rk, int &trace_po, int &fo, int &po,
 		int *transporter,
@@ -1153,7 +1252,7 @@ int semifield_substructure::identify(long int *data,
 
 
 		// unrank the subspace:
-		Gr->unrank_int_here_and_extend_basis(B, rk,
+		Gr3->unrank_int_here_and_extend_basis(B, rk,
 				0 /* verbose_level */);
 
 		// multiply the matrices to get the matrices

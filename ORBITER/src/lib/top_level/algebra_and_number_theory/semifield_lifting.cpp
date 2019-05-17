@@ -113,33 +113,6 @@ semifield_lifting::~semifield_lifting()
 	}
 }
 
-void semifield_lifting::init(semifield_classify *SC, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A;
-
-	if (f_v) {
-		cout << "semifield_lifting::init" << endl;
-	}
-	semifield_lifting::SC = SC;
-	A = SC->A;
-
-	ELT1 = NEW_int(A->elt_size_in_int);
-	ELT2 = NEW_int(A->elt_size_in_int);
-	ELT3 = NEW_int(A->elt_size_in_int);
-
-
-	M1 = NEW_int(n * n);
-	Basis = NEW_int(k * k);
-	basis_tmp = NEW_int(k * k2);
-	base_cols = NEW_int(k2);
-
-	R1 = NEW_OBJECT(gl_class_rep);
-	if (f_v) {
-		cout << "semifield_lifting::init done" << endl;
-	}
-}
-
 void semifield_lifting::init_level_three(
 		semifield_level_two *L2,
 		int f_prefix, const char *prefix,
@@ -170,6 +143,21 @@ void semifield_lifting::init_level_three(
 	Matrix2 = NEW_int(k2);
 	window_in = NEW_int(k2);
 
+	action *A;
+
+	A = SC->A;
+
+	ELT1 = NEW_int(A->elt_size_in_int);
+	ELT2 = NEW_int(A->elt_size_in_int);
+	ELT3 = NEW_int(A->elt_size_in_int);
+
+
+	M1 = NEW_int(n * n);
+	Basis = NEW_int(k * k);
+	basis_tmp = NEW_int(k * k2);
+	base_cols = NEW_int(k2);
+
+	R1 = NEW_OBJECT(gl_class_rep);
 
 	if (f_v) {
 		cout << "semifield_lifting::init_level_three done" << endl;
@@ -1537,7 +1525,7 @@ void semifield_lifting::trace_very_general(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int i, j; //, idx, d, d0, c0, c1;
+	int i, j;
 	action *A;
 	finite_field *F;
 
