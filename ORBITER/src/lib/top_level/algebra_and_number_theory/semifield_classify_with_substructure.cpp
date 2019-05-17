@@ -662,8 +662,12 @@ void semifield_classify_with_substructure::latex_report(
 		fp << "\\section{Substructures of dimension two}" << endl;
 		fp << "\\begin{enumerate}" << endl;
 		for (orbit_idx = 0; orbit_idx < Semifields->nb_orbits; orbit_idx++) {
+
+			lint_vec_copy(Semifields->Rep_lint_ith(orbit_idx), Sub->data1, Sub->SC->k);
+
 			Sub->all_two_dimensional_subspaces(
 					Po2, verbose_level);
+
 			fp << "\\item" << endl;
 			fp << orbit_idx << " / " << Semifields->nb_orbits << endl;
 			fp << " has  type ";
@@ -677,6 +681,7 @@ void semifield_classify_with_substructure::latex_report(
 		}
 		fp << "\\end{enumerate}" << endl;
 
+		FREE_int(Po2);
 
 		L.foot(fp);
 	}
