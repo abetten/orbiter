@@ -11,6 +11,7 @@ LFLAGS = -lm
 all:  deep_search.out \
 	isomorph_testing.out \
 	read_solutions.out \
+	read_types.out \
 	semifield_classify_main.out \
 	semifield_main.out 
 
@@ -23,6 +24,9 @@ isomorph_testing.out:  isomorph_testing.o  ;
 
 read_solutions.out:  read_solutions.o  ;
 	$(DISCRETA_CPP)  read_solutions.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+read_types.out:  read_types.o  ;
+	$(DISCRETA_CPP)  read_types.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 semifield_classify_main.out:  semifield_classify_main.o  ;
 	$(DISCRETA_CPP)  semifield_classify_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

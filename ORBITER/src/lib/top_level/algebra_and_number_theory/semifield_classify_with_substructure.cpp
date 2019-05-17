@@ -628,6 +628,10 @@ void semifield_classify_with_substructure::latex_report(
 		C.print_array_tex(fp, TRUE /*f_backwards */);
 		fp << "$$" << endl;
 
+
+		L2->print_representatives(fp, verbose_level);
+
+
 		Semifields->print_latex(fp,
 			title,
 			TRUE /* f_print_stabilizer_gens */,
@@ -637,7 +641,7 @@ void semifield_classify_with_substructure::latex_report(
 
 		if (f_identify_semifields_from_file) {
 			fp << "\\clearpage" << endl;
-			fp << "\\section{Identification of Rua types}" << endl;
+			fp << "\\section*{Identification of Rua types}" << endl;
 			fp << "The $i$-th row, $j$-th column of the table is the number $c$ "
 					"of the isotopy class in the list above which corresponds "
 					"to the $j$-th element in the Knuth orbit of the $i$-th "
@@ -661,7 +665,7 @@ void semifield_classify_with_substructure::latex_report(
 		PO2 = NEW_int(Semifields->nb_orbits * Sub->N2);
 
 		fp << "\\clearpage" << endl;
-		fp << "\\section{Substructures of dimension two}" << endl;
+		fp << "\\section*{Substructures of dimension two}" << endl;
 		fp << "\\begin{enumerate}" << endl;
 		for (orbit_idx = 0; orbit_idx < Semifields->nb_orbits; orbit_idx++) {
 
