@@ -526,8 +526,10 @@ public:
 	void upstep_loop_over_down_set(
 		int level, int f, int po, int so, int N,
 		int *transporter, int *Mtx, //int *pivots,
-		int *base_change_matrix, int *changed_space,
-		int *changed_space_after_trace, long int *set,
+		int *base_change_matrix,
+		int *changed_space,
+		//int *changed_space_after_trace,
+		long int *set,
 		int **Aut,
 		int verbose_level);
 	// level is the level that we want to classify
@@ -554,14 +556,14 @@ public:
 		int verbose_level);
 	void trace_very_general(
 		int *input_basis, int basis_sz,
-		int *basis_after_trace, int *transporter,
+		int *transporter,
 		int &trace_po, int &trace_so,
 		int verbose_level);
 		// input basis is input_basis of size basis_sz x k2
 		// there is a check if input_basis defines a semifield
 	void trace_to_level_two(
 		int *input_basis, int basis_sz,
-		int *basis_after_trace, int *transporter,
+		int *transporter,
 		int &trace_po,
 		int verbose_level);
 	// input basis is input_basis of size basis_sz x k2
@@ -654,7 +656,7 @@ public:
 	long int *data2;
 	int *Basis1;
 	int *Basis2;
-	int *Basis3;
+	//int *Basis3;
 	int *B;
 	int *v1;
 	int *v2;
