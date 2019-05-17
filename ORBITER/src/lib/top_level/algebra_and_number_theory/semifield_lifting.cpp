@@ -749,7 +749,7 @@ void semifield_lifting::upstep(
 	//int *pivots;
 	int *base_change_matrix;
 	int *changed_space;
-	int *changed_space_after_trace;
+	//int *changed_space_after_trace;
 	long int *set;
 	int i, N, h, po, so; //, pt_local;
 	long int pt;
@@ -762,7 +762,7 @@ void semifield_lifting::upstep(
 	//pivots = NEW_int(level);
 	base_change_matrix = NEW_int(level * level);
 	changed_space = NEW_int(level * k2);
-	changed_space_after_trace = NEW_int(level * k2);
+	//changed_space_after_trace = NEW_int(level * k2);
 	set = NEW_lint(level);
 
 	N = Combi.generalized_binomial(level, level - 1, SC->F->q);
@@ -829,7 +829,8 @@ void semifield_lifting::upstep(
 			level, f, po, so, N,
 			transporter, Mtx, //pivots,
 			base_change_matrix, changed_space,
-			changed_space_after_trace, set,
+			//changed_space_after_trace,
+			set,
 			Aut,
 			verbose_level - 1);
 
@@ -931,7 +932,7 @@ void semifield_lifting::upstep(
 	//FREE_int(pivots);
 	FREE_int(base_change_matrix);
 	FREE_int(changed_space);
-	FREE_int(changed_space_after_trace);
+	//FREE_int(changed_space_after_trace);
 	FREE_lint(set);
 
 	if (f_v) {
@@ -945,8 +946,10 @@ void semifield_lifting::upstep(
 void semifield_lifting::upstep_loop_over_down_set(
 	int level, int f, int po, int so, int N,
 	int *transporter, int *Mtx, //int *pivots,
-	int *base_change_matrix, int *changed_space,
-	int *changed_space_after_trace, long int *set,
+	int *base_change_matrix,
+	int *changed_space,
+	//int *changed_space_after_trace,
+	long int *set,
 	int **Aut,
 	int verbose_level)
 // level is the level that we want to classify
@@ -1004,7 +1007,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 		trace_very_general(
 			changed_space,
 			level,
-			changed_space_after_trace,
+			//changed_space_after_trace,
 			transporter,
 			trace_po, trace_so,
 			verbose_level - 3);
@@ -1319,7 +1322,7 @@ int semifield_lifting::trace_to_level_three(
 	//int trace_po;
 	int trace_so;
 	int *Elt1;
-	int *basis_tmp;
+	//int *basis_tmp;
 	int ret;
 
 
@@ -1327,14 +1330,14 @@ int semifield_lifting::trace_to_level_three(
 		cout << "semifield_lifting::trace_to_level_three" << endl;
 		}
 	Elt1 = NEW_int(SC->A->elt_size_in_int);
-	basis_tmp = NEW_int(basis_sz * k2);
+	//basis_tmp = NEW_int(basis_sz * k2);
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_to_level_three "
 				"before trace_very_general" << endl;
 		}
 	trace_very_general(
-		input_basis, basis_sz, basis_tmp, transporter,
+		input_basis, basis_sz, /*basis_tmp,*/ transporter,
 		trace_po, trace_so,
 		verbose_level);
 	if (f_v) {
@@ -1372,7 +1375,7 @@ int semifield_lifting::trace_to_level_three(
 	}
 
 	FREE_int(Elt1);
-	FREE_int(basis_tmp);
+	//FREE_int(basis_tmp);
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_to_level_three "
@@ -1516,7 +1519,7 @@ int semifield_lifting::trace_step_up(
 
 void semifield_lifting::trace_very_general(
 	int *input_basis, int basis_sz,
-	int *basis_after_trace, int *transporter,
+	int *transporter,
 	int &trace_po, int &trace_so,
 	int verbose_level)
 // input basis is input_basis of size basis_sz x k2
@@ -1555,7 +1558,7 @@ void semifield_lifting::trace_very_general(
 		}
 	trace_to_level_two(
 		input_basis, basis_sz,
-		basis_after_trace, transporter,
+		/*basis_after_trace,*/ transporter,
 		trace_po,
 		verbose_level);
 	if (f_v) {
@@ -1694,7 +1697,7 @@ void semifield_lifting::trace_very_general(
 
 void semifield_lifting::trace_to_level_two(
 	int *input_basis, int basis_sz,
-	int *basis_after_trace, int *transporter,
+	int *transporter,
 	int &trace_po,
 	int verbose_level)
 // input basis is input_basis of size basis_sz x k2

@@ -57,7 +57,7 @@ semifield_substructure::semifield_substructure()
 	data2 = NULL;
 	Basis1 = NULL;
 	Basis2 = NULL;
-	Basis3 = NULL;
+	//Basis3 = NULL;
 	B = NULL;
 	v1 = NULL;
 	v2 = NULL;
@@ -483,7 +483,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 	Basis1 = NEW_int(SC->k * SC->k2);
 	Basis2 = NEW_int(SC->k * SC->k2);
-	Basis3 = NEW_int(SC->k * SC->k2);
+	//Basis3 = NEW_int(SC->k * SC->k2);
 	B = NEW_int(SC->k2);
 	Gr3 = NEW_OBJECT(grassmann);
 	Gr2 = NEW_OBJECT(grassmann);
@@ -1124,6 +1124,7 @@ void semifield_substructure::loop_over_all_subspaces(int verbose_level)
 
 void semifield_substructure::all_two_dimensional_subspaces(
 		int *Trace_po, int verbose_level)
+// input is in data1[]
 // Trace_po[N2]
 {
 	int f_v = (verbose_level >= 1);
@@ -1186,24 +1187,25 @@ void semifield_substructure::all_two_dimensional_subspaces(
 
 
 		if (f_vv) {
-			cout << "before trace_to_level_three" << endl;
+			cout << "before trace_to_level_two" << endl;
 		}
 
 		L3->trace_to_level_two(
 				Basis2,
 				k /* basis_sz */,
-				Basis3, transporter1,
+				//Basis3,
+				transporter1,
 				trace_po,
-				verbose_level);
+				verbose_level - 3);
 
 		Trace_po[rk] = trace_po;
 
 		if (f_vvv) {
 			cout << "After trace, trace_po = "
 					<< trace_po << endl;
-			cout << "Basis3 (after trace)=" << endl;
-			int_matrix_print_bitwise(Basis3, k, k2);
-			SC->basis_print(Basis3, k);
+			//cout << "Basis3 (after trace)=" << endl;
+			//int_matrix_print_bitwise(Basis3, k, k2);
+			//SC->basis_print(Basis3, k);
 		}
 	}
 	if (f_v) {
