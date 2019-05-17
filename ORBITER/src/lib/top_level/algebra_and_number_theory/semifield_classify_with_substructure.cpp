@@ -237,9 +237,6 @@ void semifield_classify_with_substructure::init(int verbose_level)
 #endif
 
 	Sub->L3 = NEW_OBJECT(semifield_lifting);
-	cout << "before L3->init" << endl;
-	Sub->L3->init(Sub->SC, verbose_level);
-	cout << "after L3->init" << endl;
 
 	cout << "before L3->init_level_three" << endl;
 	Sub->L3->init_level_three(L2,
@@ -655,6 +652,31 @@ void semifield_classify_with_substructure::latex_report(
 			//	1 /* m_offset */, 1 /* n_offset */);
 			//fp << "$$" << endl;
 		}
+
+		int *Po2;
+		int orbit_idx;
+
+		Po2 = NEW_int(Sub->N2);
+
+		fp << "\\clearpage" << endl;
+		fp << "\\section{Substructures of dimension two}" << endl;
+		fp << "\\begin{enumerate}" << endl;
+		for (orbit_idx = 0; orbit_idx < Semifields->nb_orbits; orbit_idx++) {
+			Sub->all_two_dimensional_subspaces(
+					Po2, verbose_level);
+			fp << "\\item" << endl;
+			fp << orbit_idx << " / " << Semifields->nb_orbits << endl;
+			fp << " has  type ";
+			classify C;
+
+			C.init(Po2, Sub->N2, FALSE, 0);
+			fp << "$";
+			C.print_naked_tex(fp, FALSE /* f_backwards */);
+			fp << "$";
+			fp << "\\\\" << endl;
+		}
+		fp << "\\end{enumerate}" << endl;
+
 
 		L.foot(fp);
 	}
