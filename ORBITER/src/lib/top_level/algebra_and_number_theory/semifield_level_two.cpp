@@ -997,9 +997,7 @@ void semifield_level_two::upstep(int verbose_level)
 		cout << "i : up_orbit_rep[i] : go" << endl;
 		for (i = 0; i < nb_orbits; i++) {
 			longinteger_object go, go1;
-			//int *Elt1;
 			int *Mtx;
-			//sims *S;
 
 			Stabilizer_gens[i].group_order(go);
 			cout << i << " : " << up_orbit_rep[i] << " : " << go << endl;
@@ -1010,9 +1008,8 @@ void semifield_level_two::upstep(int verbose_level)
 			a = class_rep_rank[idx];
 			b = class_rep_plus_I_rank[idx];
 
-			//Elt1 = NEW_int(A_PGLk->elt_size_in_int);
 			Mtx = NEW_int(k2);
-			SC->matrix_unrank(a, Mtx); // A_PGLk->Sims->element_unrank_int(a, Elt1);
+			SC->matrix_unrank(a, Mtx);
 			cout << "The representative of class " << idx
 					<< " is the following matrix of rank " << a << endl;
 			int_matrix_print(Mtx, k, k);
@@ -1037,7 +1034,6 @@ void semifield_level_two::upstep(int verbose_level)
 			FREE_OBJECT(S);
 #endif
 
-			//FREE_int(Elt1);
 			FREE_int(Mtx);
 			}
 		}
@@ -1913,7 +1909,8 @@ void semifield_level_two::read_candidates_at_level_two_case_txt_file(
 	file_io Fio;
 
 	if (f_v) {
-		cout << "semifield_level_two::read_candidates_at_level_two_case_txt_file" << endl;
+		cout << "semifield_level_two::read_candidates_at_level_"
+				"two_case_txt_file" << endl;
 		}
 	SC->make_fname_candidates_at_level_two_orbit_txt(fname, orbit);
 
@@ -1934,12 +1931,14 @@ void semifield_level_two::read_candidates_at_level_two_case_txt_file(
 			}
 		}
 	else {
-		cout << "semifield_level_two::read_candidates_at_level_two_case_txt_file file " << fname
+		cout << "semifield_level_two::read_candidates_at_level_"
+				"two_case_txt_file file " << fname
 				<< " does not exist" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "semifield_level_two::read_candidates_at_level_two_case_txt_file done" << endl;
+		cout << "semifield_level_two::read_candidates_at_level_"
+				"two_case_txt_file done" << endl;
 		}
 
 }
