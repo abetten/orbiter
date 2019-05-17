@@ -654,20 +654,27 @@ void semifield_classify_with_substructure::latex_report(
 		}
 
 		int *Po2;
+		int *PO2;
 		int orbit_idx;
 
 		Po2 = NEW_int(Sub->N2);
+		PO2 = NEW_int(Semifields->nb_orbits * Sub->N2);
 
 		fp << "\\clearpage" << endl;
 		fp << "\\section{Substructures of dimension two}" << endl;
 		fp << "\\begin{enumerate}" << endl;
 		for (orbit_idx = 0; orbit_idx < Semifields->nb_orbits; orbit_idx++) {
 
+
+			if (f_v) {
+				cout << "orbit " << orbit_idx << " / " << Semifields->nb_orbits << ":" << endl;
+			}
 			lint_vec_copy(Semifields->Rep_lint_ith(orbit_idx), Sub->data1, Sub->SC->k);
 
 			Sub->all_two_dimensional_subspaces(
-					Po2, verbose_level);
+					Po2, verbose_level - 3);
 
+			int_vec_copy(Po2, PO2 + orbit_idx * Sub->N2, Sub->N2);
 			fp << "\\item" << endl;
 			fp << orbit_idx << " / " << Semifields->nb_orbits << endl;
 			fp << " has  type ";
@@ -681,7 +688,14 @@ void semifield_classify_with_substructure::latex_report(
 		}
 		fp << "\\end{enumerate}" << endl;
 
+		{
+		char fname[1000];
+
+		sprintf(fname, "Semifields_%d_2structure.tex", order);
+		Fio.int_matrix_write_csv(fname, PO2, Semifields->nb_orbits, Sub->N2);
+		}
 		FREE_int(Po2);
+		FREE_int(PO2);
 
 		L.foot(fp);
 	}
