@@ -19,6 +19,7 @@ namespace top_level {
 
 semifield_classify_with_substructure::semifield_classify_with_substructure()
 {
+	t0 = 0;
 	argc = 0;
 	argv = NULL;
 	f_poly = FALSE;
@@ -80,6 +81,7 @@ void semifield_classify_with_substructure::read_arguments(
 {
 	int i;
 
+	t0 = os_ticks();
 	semifield_classify_with_substructure::argc = argc;
 	semifield_classify_with_substructure::argv = argv;
 
@@ -235,6 +237,10 @@ void semifield_classify_with_substructure::init(int verbose_level)
 #endif
 
 	Sub->L3 = NEW_OBJECT(semifield_lifting);
+	cout << "before L3->init" << endl;
+	Sub->L3->init(Sub->SC, verbose_level);
+	cout << "after L3->init" << endl;
+
 	cout << "before L3->init_level_three" << endl;
 	Sub->L3->init_level_three(L2,
 			Sub->SC->f_level_three_prefix, Sub->SC->level_three_prefix,

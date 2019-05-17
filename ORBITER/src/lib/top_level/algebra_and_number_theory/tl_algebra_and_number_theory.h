@@ -59,6 +59,8 @@ void create_factor_group(action *A, sims *S, int goi,
 class semifield_classify_with_substructure {
 public:
 
+	int t0;
+
 	int argc;
 	const char **argv;
 
@@ -488,9 +490,19 @@ public:
 	int *Matrix0, *Matrix1, *Matrix2;
 	int *window_in;
 
+	// for trace_very_general:
+	int *ELT1, *ELT2, *ELT3;
+	int *basis_tmp;
+	int *base_cols;
+	int *M1;
+	int *Basis;
+	gl_class_rep *R1;
+
+
 
 	semifield_lifting();
 	~semifield_lifting();
+	void init(semifield_classify *SC, int verbose_level);
 	void init_level_three(semifield_level_two *L2,
 			int f_prefix, const char *prefix,
 			int verbose_level);
@@ -547,6 +559,13 @@ public:
 		int verbose_level);
 		// input basis is input_basis of size basis_sz x k2
 		// there is a check if input_basis defines a semifield
+	void trace_to_level_two(
+		int *input_basis, int basis_sz,
+		int *basis_after_trace, int *transporter,
+		int &trace_po,
+		int verbose_level);
+	// input basis is input_basis of size basis_sz x k2
+	// there is a check if input_basis defines a semifield
 	void deep_search(
 		int orbit_r, int orbit_m,
 		int f_out_path, const char *out_path,
