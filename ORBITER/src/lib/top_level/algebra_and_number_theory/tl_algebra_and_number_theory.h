@@ -320,16 +320,16 @@ public:
 	int *down_orbit_of_class;
 
 
-	int nb_down_orbits; // the number of flag orbits
-	strong_generators *Centralizer_gens; // [nb_down_orbits]
-	int *down_orbit_classes;  // [nb_down_orbits * 2]
-		// for each down orbit i,
+	int nb_flag_orbits; // the number of flag orbits
+	strong_generators *Flag_orbit_stabilizer; // [nb_flag_orbits]
+	int *flag_orbit_classes;  // [nb_flag_orbits * 2]
+		// for each flag orbit i,
 		// the conjugacy class associated to R_i and R_i + I, respectively
-	int *down_orbit_number_of_matrices; // [nb_down_orbits]
-	int *down_orbit_length; // [nb_down_orbits]
-	int *f_Fusion; // [nb_down_orbits]
-	int *Fusion_idx; // [nb_down_orbits]
-	int **Fusion_elt; // [nb_down_orbits]
+	int *flag_orbit_number_of_matrices; // [nb_flag_orbits]
+	int *flag_orbit_length; // [nb_flag_orbits]
+	int *f_Fusion; // [nb_flag_orbits]
+	int *Fusion_idx; // [nb_flag_orbits]
+	int **Fusion_elt; // [nb_flag_orbits]
 
 	int nb_orbits;
 	int *up_orbit_rep;
@@ -350,7 +350,7 @@ public:
 
 	int *Fo;
 		// [nb_orbits]
-		// Fo[i] is the index of the down orbit (aka flag orbit)
+		// Fo[i] is the index of the flag orbit
 		// which let to the definition of orbit i
 
 	long int *Pt; // [nb_orbits]
@@ -478,7 +478,7 @@ public:
 
 	// po = primary orbit
 	// so = secondary orbit
-	// mo = middle orbit
+	// mo = middle orbit = flag orbit
 	// pt = point
 	int nb_orbits;
 	int *Po; // [nb_orbits]
@@ -536,9 +536,6 @@ public:
 	void find_all_candidates(
 		int level,
 		int verbose_level);
-	//void get_pivots(
-	//		int level, int po, int *Basis, int *pivots,
-	//		int verbose_level);
 	void get_basis(
 		int po3, int *basis,
 		int verbose_level);

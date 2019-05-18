@@ -1832,8 +1832,8 @@ void semifield_lifting::trace_to_level_two(
 	//
 
 
-	c0 = L2->down_orbit_classes[d * 2 + 0];
-	c1 = L2->down_orbit_classes[d * 2 + 1];
+	c0 = L2->flag_orbit_classes[d * 2 + 0];
+	c1 = L2->flag_orbit_classes[d * 2 + 1];
 
 	// { c0, c1 } is the two conjugacy classes
 	// associated with flag orbit d (possibly c0 = c1).

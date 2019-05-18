@@ -108,4 +108,17 @@ int main(int argc, const char **argv)
 	cout << "$$" << endl;
 
 
+	classify_vector_data CV;
+
+	CV.init(T, m /* data_length */, len /* data_set_sz */,
+			FALSE /* f_second */, verbose_level);
+
+	CV.print();
+
+	classify CM;
+
+	CM.init(CV.Data_multiplicity, CV.data_unique_length, FALSE, 0);
+	cout << "Data_multiplicity: ";
+	CM.print_naked(TRUE /*f_backwards*/);
+	cout << endl;
 }

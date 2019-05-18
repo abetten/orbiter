@@ -17,7 +17,7 @@ namespace foundations {
 // #############################################################################
 
 
-//! a statistical analysis of vectors of ints
+//! a statistical analysis of data consisting of single integers
 
 
 
@@ -80,5 +80,65 @@ public:
 };
 
 
-}
-}
+// #############################################################################
+// classify_vector_data.cpp:
+// #############################################################################
+
+
+//! a statistical analysis of data consisting of vectors of ints
+
+
+
+class classify_vector_data {
+
+public:
+
+	int data_set_sz;
+	int data_length;
+
+	int *data;
+	int *data_2_unique_data; // [data_length]
+	int data_unique_length;
+	int *Data_unique; // [data_length * data_set_sz]
+	int *Data_multiplicity; // [data_length]
+	int *sorting_perm;
+		// computed using int_vec_sorting_permutation
+	int *sorting_perm_inv;
+		// perm_inv[i] is the index in data
+		// of the element in data_sorted[i]
+
+
+	std::multimap<uint32_t, int> Hashing;
+		// we store the pair (hash, idx)
+		// where hash is the hash value of the set and idx is the
+		// index in the table Sets where the set is stored.
+		//
+		// we use a multimap because the hash values are not unique
+		// it happens that two sets have the same hash value.
+		// map cannot handle that.
+
+	int nb_types;
+	int *type_first;
+	int *type_len;
+
+
+	int f_second;
+	int *second_data_sorted;
+	int *second_sorting_perm;
+	int *second_sorting_perm_inv;
+	int second_nb_types;
+	int *second_type_first;
+	int *second_type_len;
+
+	classify_vector_data();
+	~classify_vector_data();
+	void init(int *data, int data_length, int data_set_sz,
+		int f_second, int verbose_level);
+	int hash_and_find(int *data,
+			int &idx, uint32_t &h, int verbose_level);
+	void print();
+};
+
+
+}}
+

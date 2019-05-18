@@ -1,11 +1,12 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I..
+CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -std=c++11
 # -frename-registers
 LIB = 
 LFLAGS = -lm
 
 MODULES = \
+	classify_vector_data.o \
 	classify.o
 
 

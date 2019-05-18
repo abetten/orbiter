@@ -154,6 +154,7 @@ MODULES= \
 		foundations/solvers/diophant.o \
 		foundations/solvers/dlx.o \
 		foundations/solvers/mckay.o \
+		foundations/statistics/classify_vector_data.o \
 		foundations/statistics/classify.o \
 		group_actions/actions/action.o \
 		group_actions/actions/action_cb.o \
