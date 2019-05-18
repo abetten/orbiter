@@ -189,8 +189,8 @@ void semifield_trace::trace_very_general(
 		}
 
 
-	c0 = L2->down_orbit_classes[d * 2 + 0];
-	c1 = L2->down_orbit_classes[d * 2 + 1];
+	c0 = L2->flag_orbit_classes[d * 2 + 0];
+	c1 = L2->flag_orbit_classes[d * 2 + 1];
 	if (c0 != idx && c1 == idx) {
 		if (f_vv) {
 			cout << "Adjusting" << endl;

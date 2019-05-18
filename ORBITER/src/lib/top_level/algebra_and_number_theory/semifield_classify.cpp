@@ -45,8 +45,6 @@ semifield_classify::semifield_classify()
 	Gen = NULL;
 	Symmetry_group = NULL;
 
-	//SFS = NULL;
-
 	vector_space_dimension = 0;
 	schreier_depth = 0;
 
