@@ -408,6 +408,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 void semifield_classify_with_substructure::classify_semifields(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::classify_semifields" << endl;
@@ -416,6 +417,28 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 	Semifields = NEW_OBJECT(classification_step);
 
 	Sub->do_classify(verbose_level);
+
+	{
+	char fname[1000];
+	sprintf(fname, "semifields_%d_classification.bin", Sub->SC->order);
+	{
+		ofstream fp(fname, ios::binary);
+
+		Semifields->write_file(fp, verbose_level);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	{
+	char fname[1000];
+	sprintf(fname, "semifields_%d_flag_orbits.bin", Sub->SC->order);
+	{
+		ofstream fp(fname, ios::binary);
+
+		Sub->Flag_orbits->write_file(fp, verbose_level);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::classify_semifields done" << endl;

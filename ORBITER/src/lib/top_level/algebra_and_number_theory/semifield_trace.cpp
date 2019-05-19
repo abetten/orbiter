@@ -168,7 +168,7 @@ void semifield_trace::trace_very_general(
 	L2->C->identify_matrix(input_basis + 1 * k2, R1, Basis, 0 /* verbose_level */);
 
 	idx = L2->C->find_class_rep(L2->R, L2->nb_classes, R1, 0 /* verbose_level */);
-	d = L2->down_orbit_of_class[idx];
+	d = L2->class_to_flag_orbit[idx];
 	if (f_vv) {
 		cout << "semifield_starter::trace_very_general "
 				"the second matrix belongs to conjugacy class "

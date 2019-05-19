@@ -46,7 +46,7 @@ semifield_level_two::semifield_level_two()
 	class_rep_plus_I_Basis_inv = NULL;
 	R_i_plus_I_class_idx = NULL;
 	Flag_orbit_stabilizer = NULL;
-	down_orbit_of_class = NULL;
+	class_to_flag_orbit = NULL;
 
 	nb_flag_orbits = 0;
 	flag_orbit_classes = NULL;
@@ -58,7 +58,7 @@ semifield_level_two::semifield_level_two()
 	Fusion_elt = NULL;
 
 	nb_orbits = 0;
-	up_orbit_rep = NULL;
+	defining_flag_orbit = NULL;
 	So = NULL;
 	Fo = NULL;
 	Pt = NULL;
@@ -143,8 +143,8 @@ semifield_level_two::~semifield_level_two()
 	if (Flag_orbit_stabilizer) {
 		FREE_OBJECTS(Flag_orbit_stabilizer);
 		}
-	if (down_orbit_of_class) {
-		FREE_int(down_orbit_of_class);
+	if (class_to_flag_orbit) {
+		FREE_int(class_to_flag_orbit);
 		}
 
 
@@ -174,8 +174,8 @@ semifield_level_two::~semifield_level_two()
 		FREE_pint(Fusion_elt);
 		}
 
-	if (up_orbit_rep) {
-		FREE_int(up_orbit_rep);
+	if (defining_flag_orbit) {
+		FREE_int(defining_flag_orbit);
 		}
 	if (So) {
 		FREE_int(So);
@@ -697,7 +697,7 @@ void semifield_level_two::downstep(int verbose_level)
 
 
 
-	down_orbit_of_class = NEW_int(nb_classes);
+	class_to_flag_orbit = NEW_int(nb_classes);
 	flag_orbit_number_of_matrices = NEW_int(nb_classes);
 	flag_orbit_length = NEW_int(nb_classes);
 	flag_orbit_classes = NEW_int(nb_classes * 2);
@@ -708,8 +708,8 @@ void semifield_level_two::downstep(int verbose_level)
 			}
 		flag_orbit_classes[nb_flag_orbits * 2 + 0] = i;
 		flag_orbit_classes[nb_flag_orbits * 2 + 1] = R_i_plus_I_class_idx[i];
-		down_orbit_of_class[i] = nb_flag_orbits;
-		down_orbit_of_class[R_i_plus_I_class_idx[i]] = nb_flag_orbits;
+		class_to_flag_orbit[i] = nb_flag_orbits;
+		class_to_flag_orbit[R_i_plus_I_class_idx[i]] = nb_flag_orbits;
 		if (flag_orbit_classes[nb_flag_orbits * 2 + 0] ==
 			flag_orbit_classes[nb_flag_orbits * 2 + 1]) {
 			// R_i+I belongs to the conjugacy class of R_i:
@@ -809,9 +809,9 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 					<< " stab order = " << go;
 			cout << endl;
 			}
-		cout << "i : down_orbit_of_class" << endl;
+		cout << "i : class_to_flag_orbit" << endl;
 		for (i = 0; i < nb_classes; i++) {
-			cout << i << " : " << down_orbit_of_class[i] << endl;
+			cout << i << " : " << class_to_flag_orbit[i] << endl;
 			}
 		}
 	if (f_vv) {
@@ -855,7 +855,7 @@ void semifield_level_two::upstep(int verbose_level)
 		Fusion_elt[i] = NULL;
 		}
 
-	up_orbit_rep = NEW_int(nb_flag_orbits);
+	defining_flag_orbit = NEW_int(nb_flag_orbits);
 	nb_orbits = 0;
 
 	for (ext = 0; ext < nb_flag_orbits; ext++) {
@@ -876,7 +876,7 @@ void semifield_level_two::upstep(int verbose_level)
 		a = class_rep_rank[idx];
 		b = class_rep_plus_I_rank[idx];
 
-		up_orbit_rep[nb_orbits] = ext; // !!!
+		defining_flag_orbit[nb_orbits] = ext; // !!!
 		if (f_vv) {
 			cout << "working on new up orbit " << nb_orbits
 					<< " copying stabilizer over idx=" << idx << endl;
@@ -977,7 +977,7 @@ void semifield_level_two::upstep(int verbose_level)
 
 		Stabilizer_gens[i].group_order(go);
 
-		ext = up_orbit_rep[i];
+		ext = defining_flag_orbit[i];
 		idx = flag_orbit_classes[ext * 2 + 0];
 		a = class_rep_rank[idx];
 		b = class_rep_plus_I_rank[idx];
@@ -994,15 +994,15 @@ void semifield_level_two::upstep(int verbose_level)
 				<< nb_orbits << " orbits at level two" << endl;
 	}
 	if (f_vv) {
-		cout << "i : up_orbit_rep[i] : go" << endl;
+		cout << "i : defining_flag_orbit[i] : go" << endl;
 		for (i = 0; i < nb_orbits; i++) {
 			longinteger_object go, go1;
 			int *Mtx;
 
 			Stabilizer_gens[i].group_order(go);
-			cout << i << " : " << up_orbit_rep[i] << " : " << go << endl;
+			cout << i << " : " << defining_flag_orbit[i] << " : " << go << endl;
 
-			ext = up_orbit_rep[i];
+			ext = defining_flag_orbit[i];
 
 			idx = flag_orbit_classes[ext * 2 + 0];
 			a = class_rep_rank[idx];
@@ -1332,8 +1332,8 @@ void semifield_level_two::trace(int ext, int coset,
 				ELT2, ELT3, 0 /* verbose_level */);
 		A->element_move(ELT3, ELT1, 0);
 
-		d1 = down_orbit_of_class[idx1];
-		d2 = down_orbit_of_class[idx2];
+		d1 = class_to_flag_orbit[idx1];
+		d2 = class_to_flag_orbit[idx2];
 		if (d1 != d2) {
 			cout << "d1 != d2" << endl;
 			exit(1);
@@ -1445,7 +1445,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 
 	total_nb_candidates = 0;
 
-	ext = up_orbit_rep[orbit];
+	ext = defining_flag_orbit[orbit];
 
 	idx = flag_orbit_classes[ext * 2 + 0];
 	a = class_rep_rank[idx];
@@ -2160,7 +2160,7 @@ void semifield_level_two::print_representatives(
 #endif
 
 			ost << "$A+I$ belongs to class " << R_i_plus_I_class_idx[i] << "\\\\" << endl;
-			ost << "flag\\_orbit\\_of\\_class = " << down_orbit_of_class[i] << "\\\\" << endl;
+			ost << "flag\\_orbit\\_of\\_class = " << class_to_flag_orbit[i] << "\\\\" << endl;
 
 
 
@@ -2257,7 +2257,7 @@ void semifield_level_two::print_representatives(
 			int f_elements_exponential = FALSE;
 			const char *symbol_for_print = "\\alpha";
 
-			ext = up_orbit_rep[i];
+			ext = defining_flag_orbit[i];
 			idx = flag_orbit_classes[ext * 2 + 0];
 			ost << "Representative " << i << " / " << nb_orbits
 				<< " classes " << idx << ","
