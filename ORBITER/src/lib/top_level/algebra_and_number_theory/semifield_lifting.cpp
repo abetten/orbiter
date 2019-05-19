@@ -165,6 +165,37 @@ void semifield_lifting::init_level_three(
 }
 
 
+void semifield_lifting::recover_level_three_downstep(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_downstep" << endl;
+		}
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_downstep "
+				"before downstep" << endl;
+		}
+
+	downstep(2, verbose_level);
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_downstep "
+				"after downstep" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_downstep "
+				"after downstep" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "semifield_lifting::recover_level_three_downstep done" << endl;
+		}
+}
+
 void semifield_lifting::recover_level_three_from_file(
 		int f_read_flag_orbits, int verbose_level)
 {
@@ -174,39 +205,22 @@ void semifield_lifting::recover_level_three_from_file(
 		cout << "semifield_lifting::recover_level_three_from_file" << endl;
 		}
 
-
+#if 0
 	if (f_v) {
 		cout << "semifield_lifting::recover_level_three_from_file "
-				"before downstep" << endl;
+				"before find_all_candidates" << endl;
 		}
 
 	find_all_candidates(2, verbose_level);
 
 	if (f_v) {
 		cout << "semifield_lifting::recover_level_three_from_file "
-				"after downstep" << endl;
+				"after find_all_candidates" << endl;
 		}
+#endif
 
 
 	if (f_read_flag_orbits) {
-
-		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file "
-					"before downstep" << endl;
-			}
-
-		downstep(2, verbose_level);
-
-		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file "
-					"after downstep" << endl;
-			}
-
-
-		if (f_v) {
-			cout << "semifield_lifting::recover_level_three_from_file "
-					"after downstep" << endl;
-			}
 
 		if (f_v) {
 			cout << "semifield_lifting::recover_level_three_from_file "
@@ -2700,7 +2714,8 @@ void semifield_lifting::read_flag_orbits(int verbose_level)
 
 	if (f_v) {
 		cout << "semifield_lifting::read_flag_orbits "
-				"cur_level = " << cur_level << endl;
+				"cur_level = " << cur_level
+				<< endl;
 		}
 	char fname[1000];
 	int i;

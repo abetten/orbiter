@@ -46,27 +46,60 @@ int main(int argc, const char **argv)
 		// calls Sub->L3->recover_level_three_from_file
 
 
-	cout << "before L3->recover_level_three_from_file" << endl;
 	//L3->compute_level_three(verbose_level);
-	SCWS.Sub->L3->recover_level_three_from_file(
-			TRUE /* f_read_flag_orbits */, verbose_level);
-	cout << "after L3->recover_level_three_from_file" << endl;
+
+
+
 
 
 	if (SCWS.f_decomposition_matrix_level_3) {
 
 		cout << "decomposition matrix at level 3" << endl;
+
+
 		time_check(cout, t0);
-		cout << endl;
+		cout << "before L3->recover_level_three_from_file" << endl;
+
+		SCWS.Sub->L3->recover_level_three_from_file(
+				TRUE /* f_read_flag_orbits */, verbose_level);
+
+		time_check(cout, t0);
+		cout << "after L3->recover_level_three_from_file" << endl;
+
+
+
+
+		time_check(cout, t0);
 		cout << "before SCWS.Sub->init" << endl;
+
 		SCWS.Sub->init();
+
+		time_check(cout, t0);
 		cout << "after SCWS.Sub->init" << endl;
 
+		time_check(cout, t0);
 		cout << "before SCWS.Sub->load_flag_orbits" << endl;
+
 		SCWS.load_flag_orbits(verbose_level);
+
+		time_check(cout, t0);
 		cout << "after SCWS.Sub->load_flag_orbits" << endl;
 	}
 	else {
+
+		time_check(cout, t0);
+		cout << "before L3->recover_level_three_downstep" << endl;
+		SCWS.Sub->L3->recover_level_three_downstep(verbose_level);
+
+		time_check(cout, t0);
+		cout << "after L3->recover_level_three_downstep" << endl;
+
+		cout << "before L3->recover_level_three_from_file" << endl;
+		SCWS.Sub->L3->recover_level_three_from_file(
+				TRUE /* f_read_flag_orbits */, verbose_level);
+		cout << "after L3->recover_level_three_from_file" << endl;
+
+
 		SCWS.read_data(verbose_level);
 			// reads the files
 			// which contain the liftings of the substructures
