@@ -43,45 +43,69 @@ int main(int argc, const char **argv)
 
 	SCWS.init(verbose_level);
 		// recovers the classification of the substructures
+		// calls Sub->L3->recover_level_three_from_file
 
-	SCWS.read_data(verbose_level);
-		// reads the files
-		// which contain the liftings of the substructures
 
-	SCWS.Sub->compute_orbits(verbose_level);
-		// computes the orbits in all cases where needed
+	cout << "before L3->recover_level_three_from_file" << endl;
+	//L3->compute_level_three(verbose_level);
+	SCWS.Sub->L3->recover_level_three_from_file(
+			TRUE /* f_read_flag_orbits */, verbose_level);
+	cout << "after L3->recover_level_three_from_file" << endl;
 
-	SCWS.Sub->compute_flag_orbits(verbose_level);
 
-	SCWS.Sub->init();
+	if (SCWS.f_decomposition_matrix_level_3) {
 
-	if (SCWS.f_load_classification) {
-		SCWS.load_classification(verbose_level);
+		cout << "decomposition matrix at level 3" << endl;
+		time_check(cout, t0);
+		cout << endl;
+		cout << "before SCWS.Sub->init" << endl;
+		SCWS.Sub->init();
+		cout << "after SCWS.Sub->init" << endl;
+
+		cout << "before SCWS.Sub->load_flag_orbits" << endl;
 		SCWS.load_flag_orbits(verbose_level);
+		cout << "after SCWS.Sub->load_flag_orbits" << endl;
 	}
 	else {
-		// this is the most time consuming step:
-		SCWS.classify_semifields(verbose_level);
+		SCWS.read_data(verbose_level);
+			// reads the files
+			// which contain the liftings of the substructures
 
-		// saves the classification and the flag orbits
-		// to file afterwards
+		SCWS.Sub->compute_orbits(verbose_level);
+			// computes the orbits in all cases where needed
+
+		SCWS.Sub->compute_flag_orbits(verbose_level);
+			// initializes Fo_first and Flag_orbits
+
+		SCWS.Sub->init();
+			// allocated the arrays and matrices
+
+		if (SCWS.f_load_classification) {
+			SCWS.load_classification(verbose_level);
+			SCWS.load_flag_orbits(verbose_level);
+		}
+		else {
+			// this is the most time consuming step:
+			SCWS.classify_semifields(verbose_level);
+
+			// saves the classification and the flag orbits
+			// to file afterwards
+		}
+
+
+		SCWS.identify_semifield(verbose_level);
+
+
+		SCWS.identify_semifields_from_file(
+					verbose_level);
+
+
+		if (SCWS.f_report) {
+			SCWS.latex_report(verbose_level);
+		}
+
+		SCWS.generate_source_code(verbose_level);
 	}
-
-
-	SCWS.identify_semifield(verbose_level);
-
-
-	SCWS.identify_semifields_from_file(
-				verbose_level);
-
-
-	if (SCWS.f_report) {
-		SCWS.latex_report(verbose_level);
-	}
-
-	SCWS.generate_source_code(verbose_level);
-
-
 
 #if 0
 	cout << "before freeing Gr" << endl;

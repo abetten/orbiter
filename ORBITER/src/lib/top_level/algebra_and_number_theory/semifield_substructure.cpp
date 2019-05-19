@@ -74,6 +74,7 @@ semifield_substructure::~semifield_substructure()
 }
 
 void semifield_substructure::init()
+// allocated the arrays and matrices
 {
 	Basis1 = NEW_int(SC->k * SC->k2);
 	Basis2 = NEW_int(SC->k * SC->k2);
@@ -165,6 +166,7 @@ void semifield_substructure::compute_orbits(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	int a, o, fst, len;
 
 	if (f_v) {
@@ -226,7 +228,7 @@ void semifield_substructure::compute_orbits(
 
 			input_data = Data + (fst + f) * data_size + start_column;
 
-			if (f_vv) {
+			if (f_vvv) {
 				cout << "case " << o << " / "
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "

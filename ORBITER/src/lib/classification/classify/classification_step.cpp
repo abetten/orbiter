@@ -332,7 +332,7 @@ void classification_step::generate_source_code(const char *fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 3);
 	char fname[1000];
 	const char *prefix;
 	int orbit_index;
@@ -368,8 +368,8 @@ void classification_step::generate_source_code(const char *fname_base,
 				orbit_index++) {
 
 
-			if (f_v) {
-				cout << "surface_classify_wedge::generate_source_"
+			if (f_vv) {
+				cout << "classification_step::generate_source_"
 						"code orbit_index = " << orbit_index << endl;
 				}
 
@@ -484,7 +484,7 @@ void classification_step::generate_source_code(const char *fname_base,
 		int j;
 
 		for (j = 0; j < stab_gens_len[orbit_index]; j++) {
-			if (f_vv) {
+			if (FALSE) {
 				cout << "classification_step::generate_source_"
 						"code before extract_strong_generators_in_"
 						"order generator " << j << " / "
