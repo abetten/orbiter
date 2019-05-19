@@ -212,7 +212,9 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 		}
 }
 
-void flag_orbits::read_file(ifstream &fp, int verbose_level)
+void flag_orbits::read_file(ifstream &fp,
+		action *A, action *A2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -220,6 +222,8 @@ void flag_orbits::read_file(ifstream &fp, int verbose_level)
 	if (f_v) {
 		cout << "flag_orbits::read_file" << endl;
 		}
+	flag_orbits::A = A;
+	flag_orbits::A2 = A2;
 	fp.read((char *) &nb_primary_orbits_lower, sizeof(int));
 	fp.read((char *) &nb_primary_orbits_upper, sizeof(int));
 	fp.read((char *) &nb_flag_orbits, sizeof(int));

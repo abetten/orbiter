@@ -298,6 +298,7 @@ void semifield_substructure::compute_orbits(
 
 
 void semifield_substructure::compute_flag_orbits(int verbose_level)
+// initializes Fo_first and Flag_orbits
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

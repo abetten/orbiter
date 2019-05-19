@@ -79,6 +79,7 @@ public:
 	const char *identify_semifield_data;
 	int f_identify_semifields_from_file;
 	const char *identify_semifields_from_file_fname;
+	int f_load_classification;
 
 	int *identify_semifields_from_file_Po;
 	int identify_semifields_from_file_m;
@@ -119,7 +120,11 @@ public:
 	void read_arguments(int argc, const char **argv, int &verbose_level);
 	void init(int verbose_level);
 	void read_data(int verbose_level);
+	void create_fname_for_classification(char *fname);
+	void create_fname_for_flag_orbits(char *fname);
 	void classify_semifields(int verbose_level);
+	void load_classification(int verbose_level);
+	void load_flag_orbits(int verbose_level);
 	void identify_semifield(int verbose_level);
 	void identify_semifields_from_file(int verbose_level);
 	void latex_report(int verbose_level);

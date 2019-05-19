@@ -37,6 +37,7 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 	identify_semifield_data = NULL;
 	f_identify_semifields_from_file = FALSE;
 	identify_semifields_from_file_fname = NULL;
+	f_load_classification = FALSE;
 
 	identify_semifields_from_file_Po = NULL;
 	identify_semifields_from_file_m = 0;
@@ -127,7 +128,8 @@ void semifield_classify_with_substructure::read_arguments(
 		else if (strcmp(argv[i], "-identify_semifields_from_file") == 0) {
 			f_identify_semifields_from_file = TRUE;
 			identify_semifields_from_file_fname = argv[++i];
-			cout << "-identify_semifields_from_file " << identify_semifields_from_file_fname << endl;
+			cout << "-identify_semifields_from_file "
+					<< identify_semifields_from_file_fname << endl;
 			}
 		else if (strcmp(argv[i], "-trace_record_prefix") == 0) {
 			f_trace_record_prefix = TRUE;
@@ -143,6 +145,10 @@ void semifield_classify_with_substructure::read_arguments(
 			f_Data = TRUE;
 			fname_Data = argv[++i];
 			cout << "-Data " << fname_Data << endl;
+			}
+		else if (strcmp(argv[i], "-load_classification") == 0) {
+			f_load_classification = TRUE;
+			cout << "-load_classification " << endl;
 			}
 		}
 
@@ -405,6 +411,16 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	}
 }
 
+void semifield_classify_with_substructure::create_fname_for_classification(char *fname)
+{
+	sprintf(fname, "semifields_%d_classification.bin", Sub->SC->order);
+}
+
+void semifield_classify_with_substructure::create_fname_for_flag_orbits(char *fname)
+{
+	sprintf(fname, "semifields_%d_flag_orbits.bin", Sub->SC->order);
+}
+
 void semifield_classify_with_substructure::classify_semifields(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -420,7 +436,7 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 
 	{
 	char fname[1000];
-	sprintf(fname, "semifields_%d_classification.bin", Sub->SC->order);
+	create_fname_for_classification(fname);
 	{
 		ofstream fp(fname, ios::binary);
 
@@ -431,7 +447,7 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 
 	{
 	char fname[1000];
-	sprintf(fname, "semifields_%d_flag_orbits.bin", Sub->SC->order);
+	create_fname_for_flag_orbits(fname);
 	{
 		ofstream fp(fname, ios::binary);
 
@@ -442,6 +458,63 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::classify_semifields done" << endl;
+	}
+}
+
+void semifield_classify_with_substructure::load_classification(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_classification" << endl;
+	}
+
+	Semifields = NEW_OBJECT(classification_step);
+
+
+	{
+	char fname[1000];
+	create_fname_for_classification(fname);
+	{
+		ifstream fp(fname, ios::binary);
+
+		cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
+		Semifields->read_file(fp, Sub->SC->A, Sub->SC->AS, verbose_level);
+	}
+	}
+
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_classification done" << endl;
+	}
+}
+
+void semifield_classify_with_substructure::load_flag_orbits(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_flag_orbits" << endl;
+	}
+
+
+
+	{
+	char fname[1000];
+	create_fname_for_flag_orbits(fname);
+	{
+		ifstream fp(fname, ios::binary);
+
+		cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
+		Sub->Flag_orbits->read_file(fp, Sub->SC->A, Sub->SC->AS, verbose_level);
+	}
+	}
+
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_flag_orbits done" << endl;
 	}
 }
 

@@ -278,7 +278,9 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 		}
 }
 
-void classification_step::read_file(ifstream &fp, int verbose_level)
+void classification_step::read_file(ifstream &fp,
+		action *A, action *A2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -286,6 +288,8 @@ void classification_step::read_file(ifstream &fp, int verbose_level)
 	if (f_v) {
 		cout << "classification_step::read_file" << endl;
 		}
+	classification_step::A = A;
+	classification_step::A2 = A2;
 	fp.read((char *) &nb_orbits, sizeof(int));
 	fp.read((char *) &representation_sz, sizeof(int));
 	fp.read((char *) &f_lint, sizeof(int));
