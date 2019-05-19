@@ -53,6 +53,7 @@ int main(int argc, const char **argv)
 
 	SCWS.Sub->compute_flag_orbits(verbose_level);
 
+	SCWS.Sub->init();
 
 	if (SCWS.f_load_classification) {
 		SCWS.load_classification(verbose_level);

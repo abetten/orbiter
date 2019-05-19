@@ -728,9 +728,19 @@ void semifield_classify_with_substructure::latex_report(
 		C.print_array_tex(fp, TRUE /*f_backwards */);
 		fp << "$$" << endl;
 
+		if (f_v) {
+			cout << "semifield_classify_with_substructure::latex_report before L2->print_representatives" << endl;
+			}
 
 		L2->print_representatives(fp, verbose_level);
 
+		if (f_v) {
+			cout << "semifield_classify_with_substructure::latex_report after L2->print_representatives" << endl;
+			}
+
+		if (f_v) {
+			cout << "semifield_classify_with_substructure::latex_report before Semifields->print_latex" << endl;
+			}
 
 		Semifields->print_latex(fp,
 			title,
@@ -738,6 +748,11 @@ void semifield_classify_with_substructure::latex_report(
 			TRUE,
 			semifield_print_function_callback,
 			Sub);
+
+
+		if (f_v) {
+			cout << "semifield_classify_with_substructure::latex_report after Semifields->print_latex" << endl;
+			}
 
 		if (f_identify_semifields_from_file) {
 			fp << "\\clearpage" << endl;
@@ -757,6 +772,11 @@ void semifield_classify_with_substructure::latex_report(
 			//fp << "$$" << endl;
 		}
 
+
+		if (f_v) {
+			cout << "semifield_classify_with_substructure::latex_report substructures of dimension two" << endl;
+			}
+
 		int *Po2;
 		int *PO2;
 		int orbit_idx;
@@ -775,8 +795,14 @@ void semifield_classify_with_substructure::latex_report(
 			}
 			lint_vec_copy(Semifields->Rep_lint_ith(orbit_idx), Sub->data1, Sub->SC->k);
 
+			if (f_v) {
+				cout << "before Sub->all_two_dimensional_subspaces" << endl;
+			}
 			Sub->all_two_dimensional_subspaces(
 					Po2, verbose_level - 3);
+			if (f_v) {
+				cout << "after Sub->all_two_dimensional_subspaces" << endl;
+			}
 
 			int_vec_copy(Po2, PO2 + orbit_idx * Sub->N2, Sub->N2);
 			fp << "\\item" << endl;

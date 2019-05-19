@@ -51,8 +51,6 @@ semifield_substructure::semifield_substructure()
 	Fo_first = NULL;
 	nb_flag_orbits = 0;
 	Flag_orbits = NULL;
-	f_processed = NULL;
-	nb_processed = 0;
 	data1 = NULL;
 	data2 = NULL;
 	Basis1 = NULL;
@@ -73,6 +71,31 @@ semifield_substructure::semifield_substructure()
 semifield_substructure::~semifield_substructure()
 {
 
+}
+
+void semifield_substructure::init()
+{
+	Basis1 = NEW_int(SC->k * SC->k2);
+	Basis2 = NEW_int(SC->k * SC->k2);
+	//Basis3 = NEW_int(SC->k * SC->k2);
+	B = NEW_int(SC->k2);
+	Gr3 = NEW_OBJECT(grassmann);
+	Gr2 = NEW_OBJECT(grassmann);
+	transporter1 = NEW_int(SC->A->elt_size_in_int);
+	transporter2 = NEW_int(SC->A->elt_size_in_int);
+	transporter3 = NEW_int(SC->A->elt_size_in_int);
+
+
+	Gr3->init(SC->k, 3, SC->F, 0 /* verbose_level */);
+	N = Gr3->nb_of_subspaces(0 /* verbose_level */);
+	Gr2->init(SC->k, 2, SC->F, 0 /* verbose_level */);
+	N2 = Gr2->nb_of_subspaces(0 /* verbose_level */);
+	data1 = NEW_lint(SC->k);
+	data2 = NEW_lint(SC->k);
+	v1 = NEW_int(SC->k);
+	v2 = NEW_int(SC->k);
+	v3 = NEW_int(SC->k);
+	Elt1 = NEW_int(SC->A->elt_size_in_int);
 }
 
 void semifield_substructure::compute_cases(
@@ -482,34 +505,15 @@ void semifield_substructure::do_classify(int verbose_level)
 	int i;
 
 
-	Basis1 = NEW_int(SC->k * SC->k2);
-	Basis2 = NEW_int(SC->k * SC->k2);
-	//Basis3 = NEW_int(SC->k * SC->k2);
-	B = NEW_int(SC->k2);
-	Gr3 = NEW_OBJECT(grassmann);
-	Gr2 = NEW_OBJECT(grassmann);
-	transporter1 = NEW_int(SC->A->elt_size_in_int);
-	transporter2 = NEW_int(SC->A->elt_size_in_int);
-	transporter3 = NEW_int(SC->A->elt_size_in_int);
 
-
-	Gr3->init(SC->k, 3, SC->F, 0 /* verbose_level */);
-	N = Gr3->nb_of_subspaces(0 /* verbose_level */);
-	Gr2->init(SC->k, 2, SC->F, 0 /* verbose_level */);
-	N2 = Gr2->nb_of_subspaces(0 /* verbose_level */);
-	data1 = NEW_lint(SC->k);
-	data2 = NEW_lint(SC->k);
-	v1 = NEW_int(SC->k);
-	v2 = NEW_int(SC->k);
-	v3 = NEW_int(SC->k);
-
+	int *f_processed; // [nb_flag_orbits]
+	int nb_processed;
 
 
 	f_processed = NEW_int(nb_flag_orbits);
 	int_vec_zero(f_processed, nb_flag_orbits);
 	nb_processed = 0;
 
-	Elt1 = NEW_int(SC->A->elt_size_in_int);
 
 
 
@@ -619,7 +623,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		}
 
 
-		loop_over_all_subspaces(
+		loop_over_all_subspaces(f_processed, nb_processed,
 				verbose_level - 3);
 
 
@@ -693,6 +697,8 @@ void semifield_substructure::do_classify(int verbose_level)
 
 	} // next f
 
+	FREE_int(f_processed);
+
 
 	SCWS->Semifields->nb_orbits = Flag_orbits->nb_primary_orbits_upper;
 
@@ -709,7 +715,8 @@ void semifield_substructure::do_classify(int verbose_level)
 		}
 }
 
-void semifield_substructure::loop_over_all_subspaces(int verbose_level)
+void semifield_substructure::loop_over_all_subspaces(
+		int *f_processed, int &nb_processed, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
