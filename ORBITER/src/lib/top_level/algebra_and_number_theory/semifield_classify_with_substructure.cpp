@@ -86,7 +86,7 @@ void semifield_classify_with_substructure::read_arguments(
 	semifield_classify_with_substructure::argc = argc;
 	semifield_classify_with_substructure::argv = argv;
 
-	for (i = 1; i <= argc; i++) {
+	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
