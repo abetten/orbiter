@@ -315,9 +315,16 @@ public:
 	long int *class_rep_rank;
 	long int *class_rep_plus_I_rank;
 	int **class_rep_plus_I_Basis;
+		// computed via C->identify_matrix
+		// aplied to the matrix representing the conjugacy class
+		// plus the identity matrix
+		// if the two matrices A and A + I belong to the same conjugacy class,
+		// then the matrix class_rep_plus_I_Basis will be added to the
+		// centralizer to form the stabilizer of the flag.
 	int **class_rep_plus_I_Basis_inv;
 	int *R_i_plus_I_class_idx;
-	int *down_orbit_of_class;
+	int *class_to_flag_orbit;
+		// class_to_flag_orbit[i] is the flag orbit which contains class i
 
 
 	int nb_flag_orbits; // the number of flag orbits
@@ -332,12 +339,13 @@ public:
 	int **Fusion_elt; // [nb_flag_orbits]
 
 	int nb_orbits;
-	int *up_orbit_rep;
-		// not the representative!
-		// only the index ext.
+	int *defining_flag_orbit; // same as Fo
+		// The flag orbit which led to the definition
+		// of this orbit representative.
 		// To get the actual rep a, do
-		// idx = down_orbit_classes[ext * 2 + 0];
+		// idx = flag_orbit_classes[ext * 2 + 0];
 		// a = class_rep_rank[idx];
+		// where ext = up_orbit_rep[i]
 
 		//int *Po; // [nb_orbits]
 		// There is only one orbit at level one,
@@ -345,8 +353,8 @@ public:
 
 	int *So;
 		// [nb_orbits] So[i] is the index of the conjugacy class
-		// associated with the flag orbit (down orbit) Fo[i]
-		// So[i] = down_orbit_classes[Fo[i] * 2 + 0];
+		// associated with the flag orbit Fo[i]
+		// So[i] = flag_orbit_classes[Fo[i] * 2 + 0];
 
 	int *Fo;
 		// [nb_orbits]
@@ -356,7 +364,8 @@ public:
 	long int *Pt; // [nb_orbits]
 	int *Go; // [nb_orbits]
 	strong_generators *Stabilizer_gens;
-		// reps at level two
+		// stabilizer generators for the
+		// chosen orbit representatives at level two
 
 	int *E1, *E2, *E3, *E4;
 	int *Mnn;

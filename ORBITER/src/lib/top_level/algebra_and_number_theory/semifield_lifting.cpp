@@ -1794,7 +1794,7 @@ void semifield_lifting::trace_to_level_two(
 			0 /* verbose_level */);
 		// idx is the conjugacy class, which leads to the flag orbit
 
-	d = L2->down_orbit_of_class[idx];
+	d = L2->class_to_flag_orbit[idx];
 
 		// d is the flag orbit associated to the conjugacy class.
 
