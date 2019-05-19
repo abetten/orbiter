@@ -41,9 +41,16 @@ int main(int argc, const char **argv)
 		}
 
 
+	time_check(cout, t0);
+	cout << "before SCWS.init" << endl;
+
 	SCWS.init(verbose_level);
 		// recovers the classification of the substructures
-		// calls Sub->L3->recover_level_three_from_file
+		// calls Sub->L3->init_level_three
+
+	time_check(cout, t0);
+	cout << "before SCWS.init" << endl;
+
 
 
 	//L3->compute_level_three(verbose_level);
@@ -61,7 +68,8 @@ int main(int argc, const char **argv)
 		cout << "before L3->recover_level_three_from_file" << endl;
 
 		SCWS.Sub->L3->recover_level_three_from_file(
-				TRUE /* f_read_flag_orbits */, verbose_level);
+				TRUE /* f_read_flag_orbits */,
+				verbose_level);
 
 		time_check(cout, t0);
 		cout << "after L3->recover_level_three_from_file" << endl;
@@ -73,6 +81,7 @@ int main(int argc, const char **argv)
 		cout << "before SCWS.Sub->init" << endl;
 
 		SCWS.Sub->init();
+			// allocates the arrays and matrices
 
 		time_check(cout, t0);
 		cout << "after SCWS.Sub->init" << endl;

@@ -74,7 +74,7 @@ semifield_substructure::~semifield_substructure()
 }
 
 void semifield_substructure::init()
-// allocated the arrays and matrices
+// allocates the arrays and matrices
 {
 	Basis1 = NEW_int(SC->k * SC->k2);
 	Basis2 = NEW_int(SC->k * SC->k2);

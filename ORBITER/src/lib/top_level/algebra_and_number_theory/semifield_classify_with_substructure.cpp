@@ -260,10 +260,6 @@ void semifield_classify_with_substructure::init(int verbose_level)
 			verbose_level);
 	cout << "after L3->init_level_three" << endl;
 
-	cout << "before L3->recover_level_three_from_file" << endl;
-	//L3->compute_level_three(verbose_level);
-	Sub->L3->recover_level_three_from_file(TRUE /* f_read_flag_orbits */, verbose_level);
-	cout << "after L3->recover_level_three_from_file" << endl;
 
 
 	if (f_v) {
