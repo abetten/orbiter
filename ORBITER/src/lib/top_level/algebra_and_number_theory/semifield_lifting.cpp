@@ -2838,7 +2838,7 @@ void semifield_lifting::read_stabilizers(int verbose_level)
 		for (i = 0; i < nb_orbits; i++) {
 			if ((i & ((1 << 15) - 1)) == 0) {
 				cout << "semifield_starter::read_stabilizers "
-						<< i << " / " << nb_flag_orbits << endl;
+						<< i << " / " << nb_orbits << endl;
 				}
 			Stabilizer_gens[i].read_from_file_binary(SC->A, fp,
 					0 /* verbose_level */);

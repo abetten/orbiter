@@ -65,6 +65,7 @@ int main(int argc, const char **argv)
 
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "before L3->recover_level_three_from_file" << endl;
 
 		SCWS.Sub->L3->recover_level_three_from_file(
@@ -72,35 +73,43 @@ int main(int argc, const char **argv)
 				verbose_level);
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "after L3->recover_level_three_from_file" << endl;
 
 
 
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "before SCWS.Sub->init" << endl;
 
 		SCWS.Sub->init();
 			// allocates the arrays and matrices
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "after SCWS.Sub->init" << endl;
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "before SCWS.Sub->load_flag_orbits" << endl;
 
+		SCWS.Sub->Flag_orbits = NEW_OBJECT(flag_orbits);
 		SCWS.load_flag_orbits(verbose_level);
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "after SCWS.Sub->load_flag_orbits" << endl;
 	}
 	else {
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "before L3->recover_level_three_downstep" << endl;
 		SCWS.Sub->L3->recover_level_three_downstep(verbose_level);
 
 		time_check(cout, t0);
+		cout << " : ";
 		cout << "after L3->recover_level_three_downstep" << endl;
 
 		cout << "before L3->recover_level_three_from_file" << endl;
