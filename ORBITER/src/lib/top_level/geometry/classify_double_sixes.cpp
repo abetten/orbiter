@@ -1838,9 +1838,11 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	//Double_sixes->A = A;
 	//Double_sixes->A2 = A2;
 
-	A->group_order(Double_sixes->go);
+	longinteger_object go;
+	A->group_order(go);
+	//A->group_order(Double_sixes->go);
 
-	Double_sixes->read_file(fp, A, A2, verbose_level);
+	Double_sixes->read_file(fp, A, A2, go, verbose_level);
 
 	if (f_v) {
 		cout << "classify_double_sixes::read_file "

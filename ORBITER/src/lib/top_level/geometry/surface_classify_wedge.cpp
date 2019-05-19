@@ -617,9 +617,11 @@ void surface_classify_wedge::read_file(
 	//Surfaces->A = A;
 	//Surfaces->A2 = A2;
 
-	A->group_order(Surfaces->go);
+	longinteger_object go;
 
-	Surfaces->read_file(fp, A, A2, verbose_level);
+	A->group_order(go);
+
+	Surfaces->read_file(fp, A, A2, go, verbose_level);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::read_file finished" << endl;

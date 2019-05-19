@@ -42,9 +42,11 @@ int main(int argc, const char **argv)
 
 
 	SCWS.init(verbose_level);
+		// recovers the classification of the substructures
 
 	SCWS.read_data(verbose_level);
 		// reads the files
+		// which contain the liftings of the substructures
 
 	SCWS.Sub->compute_orbits(verbose_level);
 		// computes the orbits in all cases where needed

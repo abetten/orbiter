@@ -279,7 +279,7 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 }
 
 void classification_step::read_file(ifstream &fp,
-		action *A, action *A2,
+		action *A, action *A2, longinteger_object &go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -290,6 +290,7 @@ void classification_step::read_file(ifstream &fp,
 		}
 	classification_step::A = A;
 	classification_step::A2 = A2;
+	go.assign_to(classification_step::go);
 	fp.read((char *) &nb_orbits, sizeof(int));
 	fp.read((char *) &representation_sz, sizeof(int));
 	fp.read((char *) &f_lint, sizeof(int));
