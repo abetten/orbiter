@@ -39,6 +39,7 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 	identify_semifields_from_file_fname = NULL;
 	f_load_classification = FALSE;
 	f_report = FALSE;
+	f_decomposition_matrix_level_3 = FALSE;
 
 	identify_semifields_from_file_Po = NULL;
 	identify_semifields_from_file_m = 0;
@@ -154,6 +155,10 @@ void semifield_classify_with_substructure::read_arguments(
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
+			}
+		else if (strcmp(argv[i], "-decomposition_matrix_level_3") == 0) {
+			f_decomposition_matrix_level_3 = TRUE;
+			cout << "-decomposition_matrix_level_3 " << endl;
 			}
 		}
 
