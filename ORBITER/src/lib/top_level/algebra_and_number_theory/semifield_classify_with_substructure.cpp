@@ -38,6 +38,7 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 	f_identify_semifields_from_file = FALSE;
 	identify_semifields_from_file_fname = NULL;
 	f_load_classification = FALSE;
+	f_report = FALSE;
 
 	identify_semifields_from_file_Po = NULL;
 	identify_semifields_from_file_m = 0;
@@ -149,6 +150,10 @@ void semifield_classify_with_substructure::read_arguments(
 		else if (strcmp(argv[i], "-load_classification") == 0) {
 			f_load_classification = TRUE;
 			cout << "-load_classification " << endl;
+			}
+		else if (strcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			cout << "-report " << endl;
 			}
 		}
 
