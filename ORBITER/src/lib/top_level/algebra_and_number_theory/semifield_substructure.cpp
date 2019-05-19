@@ -141,7 +141,7 @@ void semifield_substructure::compute_orbits(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vvv = (verbose_level >= 3);
+	int f_vv = (verbose_level >= 2);
 	int a, o, fst, len;
 
 	if (f_v) {
@@ -203,7 +203,7 @@ void semifield_substructure::compute_orbits(
 
 			input_data = Data + (fst + f) * data_size + start_column;
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "case " << o << " / "
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "
@@ -215,7 +215,7 @@ void semifield_substructure::compute_orbits(
 				lint_vec_print(cout, input_data, SC->k);
 				cout << endl;
 				}
-			if (f_vvv) {
+			if (FALSE) {
 				cout << "The stabilizer is:" << endl;
 				L3->Stabilizer_gens[a].print_generators_ost(cout);
 			}
@@ -224,7 +224,7 @@ void semifield_substructure::compute_orbits(
 				&L3->Stabilizer_gens[a],
 				Orb,
 				verbose_level - 4);
-			if (f_v) {
+			if (f_vv) {
 				cout << "case " << o << " / "
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "
@@ -265,7 +265,7 @@ void semifield_substructure::compute_orbits(
 
 			}
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "case " << o << " / "
 				<< nb_non_unique_cases_with_non_trivial_group
 				<< " with " << len << " semifields done, there are "
