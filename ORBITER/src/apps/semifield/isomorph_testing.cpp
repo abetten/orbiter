@@ -44,12 +44,26 @@ int main(int argc, const char **argv)
 	SCWS.init(verbose_level);
 
 	SCWS.read_data(verbose_level);
+		// reads the files
 
 	SCWS.Sub->compute_orbits(verbose_level);
+		// computes the orbits in all cases where needed
 
 	SCWS.Sub->compute_flag_orbits(verbose_level);
 
-	SCWS.classify_semifields(verbose_level);
+
+	if (SCWS.f_load_classification) {
+		SCWS.load_classification(verbose_level);
+		SCWS.load_flag_orbits(verbose_level);
+	}
+	else {
+		// this is the most time consuming step:
+		SCWS.classify_semifields(verbose_level);
+
+		// saves the classification and the flag orbits
+		// to file afterwards
+	}
+
 
 	SCWS.identify_semifield(verbose_level);
 

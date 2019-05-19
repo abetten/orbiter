@@ -2331,7 +2331,7 @@ void semifield_level_two::write_level_info_file(int verbose_level)
 		"Go",
 		"Po",
 		"So",
-		"Mo",
+		"Fo",
 		"Pt"
 		};
 	char fname[1000];
