@@ -609,17 +609,17 @@ void surface_classify_wedge::read_file(
 		}
 
 	Flag_orbits = NEW_OBJECT(flag_orbits);
-	Flag_orbits->A = A;
-	Flag_orbits->A2 = A;
-	Flag_orbits->read_file(fp, verbose_level);
+	//Flag_orbits->A = A;
+	//Flag_orbits->A2 = A;
+	Flag_orbits->read_file(fp, A, A2, verbose_level);
 
 	Surfaces = NEW_OBJECT(classification_step);
-	Surfaces->A = A;
-	Surfaces->A2 = A2;
+	//Surfaces->A = A;
+	//Surfaces->A2 = A2;
 
 	A->group_order(Surfaces->go);
 
-	Surfaces->read_file(fp, verbose_level);
+	Surfaces->read_file(fp, A, A2, verbose_level);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::read_file finished" << endl;
