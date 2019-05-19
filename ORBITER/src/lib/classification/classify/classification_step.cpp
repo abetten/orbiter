@@ -160,7 +160,9 @@ void classification_step::print_latex(ostream &ost,
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	
-	cout << "classification_step::print_latex" << endl;
+	if (f_v) {
+		cout << "classification_step::print_latex" << endl;
+	}
 	
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{" << title << "}" << endl;
@@ -245,6 +247,11 @@ void classification_step::print_latex(ostream &ost,
 	ost << "\\end{enumerate}" << endl;
 
 	ost << "The overall number of objects is: " << Ol << "\\\\" << endl;
+
+	if (f_v) {
+		cout << "classification_step::print_latex done" << endl;
+	}
+
 }
 
 void classification_step::write_file(ofstream &fp, int verbose_level)

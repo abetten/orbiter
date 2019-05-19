@@ -661,8 +661,6 @@ public:
 	int *Fo_first; // [nb_orbits_at_level_3]
 	int nb_flag_orbits;
 	flag_orbits *Flag_orbits; // [nb_flag_orbits]
-	int *f_processed; // [nb_flag_orbits]
-	int nb_processed;
 	long int *data1;
 	long int *data2;
 	int *Basis1;
@@ -680,6 +678,7 @@ public:
 
 	semifield_substructure();
 	~semifield_substructure();
+	void init();
 	void compute_cases(
 			int nb_non_unique_cases,
 			int *Non_unique_cases, int *Non_unique_cases_go,
@@ -687,7 +686,8 @@ public:
 	void compute_orbits(int verbose_level);
 	void compute_flag_orbits(int verbose_level);
 	void do_classify(int verbose_level);
-	void loop_over_all_subspaces(int verbose_level);
+	void loop_over_all_subspaces(int *f_processed, int &nb_processed,
+			int verbose_level);
 	void all_two_dimensional_subspaces(
 			int *Trace_po, int verbose_level);
 		// Trace_po[N2]
