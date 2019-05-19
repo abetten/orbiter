@@ -80,6 +80,7 @@ public:
 	int f_identify_semifields_from_file;
 	const char *identify_semifields_from_file_fname;
 	int f_load_classification;
+	int f_report;
 
 	int *identify_semifields_from_file_Po;
 	int identify_semifields_from_file_m;

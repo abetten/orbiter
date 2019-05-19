@@ -75,9 +75,9 @@ int main(int argc, const char **argv)
 				verbose_level);
 
 
-	SCWS.latex_report(
-				verbose_level);
-
+	if (SCWS.f_report) {
+		SCWS.latex_report(verbose_level);
+	}
 
 	SCWS.generate_source_code(verbose_level);
 
