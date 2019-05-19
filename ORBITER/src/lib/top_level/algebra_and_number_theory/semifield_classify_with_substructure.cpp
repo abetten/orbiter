@@ -472,6 +472,10 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 
 	Semifields = NEW_OBJECT(classification_step);
 
+	longinteger_object go;
+
+	Sub->SC->A->group_order(go);
+
 
 	{
 	char fname[1000];
@@ -480,7 +484,7 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 		ifstream fp(fname, ios::binary);
 
 		cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
-		Semifields->read_file(fp, Sub->SC->A, Sub->SC->AS, verbose_level);
+		Semifields->read_file(fp, Sub->SC->A, Sub->SC->AS, go, verbose_level);
 	}
 	}
 
