@@ -474,23 +474,25 @@ void semifield_lifting::downstep(
 	int first_flag_orbit = 0;
 
 	for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
-		if (f_vv || (f_v && (orbit & (64 - 1)) == 0)) {
+		if (f_v) {
 			cout << "semifield_lifting::downstep "
 					"processing orbit " << orbit << " / "
 					<< prev_level_nb_orbits << endl;
 			}
 
-		if (f_v) {
-			cout << "semifield_lifting::downstep "
-					"level = " << level
-					<< " orbit " << orbit << " / "
-					<< prev_level_nb_orbits << ":" << endl;
-			}
 		Downstep_nodes[orbit].init(this, level, orbit,
 			Candidates[orbit], Nb_candidates[orbit], first_flag_orbit,
 			verbose_level);
 
 		first_flag_orbit += Downstep_nodes[orbit].Sch->nb_orbits;
+
+		if (f_v) {
+			cout << "semifield_lifting::downstep "
+					"level = " << level
+					<< " orbit " << orbit << " / "
+					<< prev_level_nb_orbits << " : we found "
+					<< Downstep_nodes[orbit].Sch->nb_orbits << " orbits" << endl;
+			}
 
 		//cout << "semifield_starter::downstep processing "
 		//"orbit " << orbit << " / " << nb_orbits_at_level << " done" << endl;
@@ -501,7 +503,7 @@ void semifield_lifting::downstep(
 				<< " after processing all primary orbits" << endl;
 		}
 
-	if (f_vv && prev_level_nb_orbits < 100) {
+	if (f_v) {
 		cout << "semifield_lifting::downstep level " << level << endl;
 		cout << "orbit : candidates : number of down orbits" << endl;
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {

@@ -100,6 +100,19 @@ int main(int argc, const char **argv)
 		time_check(cout, t0);
 		cout << " : ";
 		cout << "after SCWS.Sub->load_flag_orbits" << endl;
+
+		time_check(cout, t0);
+		cout << " : ";
+		cout << "before SCWS.Sub->load_classification" << endl;
+
+		SCWS.load_classification(verbose_level);
+
+		time_check(cout, t0);
+		cout << " : ";
+		cout << "after SCWS.Sub->load_classification" << endl;
+
+
+		SCWS.decomposition(verbose_level);
 	}
 	else {
 

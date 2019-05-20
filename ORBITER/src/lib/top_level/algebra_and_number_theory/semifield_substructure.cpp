@@ -957,6 +957,8 @@ void semifield_substructure::loop_over_all_subspaces(
 									"po=" << trace_po << " so="
 									<< solution_idx << endl;
 						}
+						Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
+								Flag_orbits->nb_primary_orbits_upper;
 						Flag_orbits->Flag_orbit_node[f2].f_fusion_node
 							= TRUE;
 						Flag_orbits->Flag_orbit_node[f2].fusion_with
@@ -1012,6 +1014,8 @@ void semifield_substructure::loop_over_all_subspaces(
 										<< ", which is flag orbit "
 										<< f2 << endl;
 							}
+							Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
+									Flag_orbits->nb_primary_orbits_upper;
 							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
 								= TRUE;
 							Flag_orbits->Flag_orbit_node[f2].fusion_with
@@ -1096,6 +1100,8 @@ void semifield_substructure::loop_over_all_subspaces(
 									<< ", which is flag orbit "
 									<< f2 << endl;
 							}
+							Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
+									Flag_orbits->nb_primary_orbits_upper;
 							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
 								= TRUE;
 							Flag_orbits->Flag_orbit_node[f2].fusion_with

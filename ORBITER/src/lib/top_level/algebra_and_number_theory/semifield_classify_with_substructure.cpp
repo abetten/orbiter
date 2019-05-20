@@ -493,6 +493,10 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 		Semifields->read_file(fp, Sub->SC->A, Sub->SC->AS, go, verbose_level);
 	}
 	}
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_classification "
+				"Semifields->nb_orbits = " << Semifields->nb_orbits << endl;
+	}
 
 
 	if (f_v) {
@@ -520,6 +524,11 @@ void semifield_classify_with_substructure::load_flag_orbits(int verbose_level)
 		cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
 		Sub->Flag_orbits->read_file(fp, Sub->SC->A, Sub->SC->AS, verbose_level);
 	}
+	}
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_flag_orbits "
+				"Sub->Flag_orbits->nb_flag_orbits = "
+				<< Sub->Flag_orbits->nb_flag_orbits << endl;
 	}
 
 
@@ -876,6 +885,107 @@ void semifield_classify_with_substructure::generate_source_code(
 
 
 
+void semifield_classify_with_substructure::decomposition(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::decomposition" << endl;
+	}
+	semifield_flag_orbit_node *F1;
+	flag_orbits *F2;
+	int N1, N2, N3;
+	int i1, i2, i3;
+	int h1, h2;
+	int po_up;
+
+	F1 = Sub->L3->Flag_orbits;
+	F2 = Sub->Flag_orbits;
+	N1 = L2->nb_orbits;
+	N2 = Sub->L3->nb_orbits;
+	N3 = Semifields->nb_orbits;
+	i1 = 8;
+	//i3 = 328;
+
+	cout << "F1:" << endl;
+	for (h1 = 0; h1 < Sub->L3->nb_flag_orbits; h1++) {
+		if (F1[h1].f_fusion_node) {
+			int f;
+
+			f = F1[h1].fusion_with;
+			po_up = F1[f].upstep_orbit;
+		}
+		else {
+			po_up = F1[h1].upstep_orbit;
+		}
+		if (F1[h1].downstep_primary_orbit == i1) {
+			cout << h1 << " : " << F1[h1].downstep_primary_orbit << " : " << po_up << endl;
+		}
+	}
+
+	cout << "F2:" << endl;
+	for (h2 = 0; h2 < F2->nb_flag_orbits; h2++) {
+		if (F2->Flag_orbit_node[h2].f_fusion_node) {
+			int f;
+
+			f = F2->Flag_orbit_node[h2].fusion_with;
+			po_up = F2->Flag_orbit_node[f].upstep_primary_orbit;
+
+		}
+		else {
+			po_up = F2->Flag_orbit_node[h2].upstep_primary_orbit;
+		}
+		cout << h2 << " : " << F2->Flag_orbit_node[h2].downstep_primary_orbit << " : " << po_up << endl;
+
+	}
+
+	cout << "searching i1=" << i1 << endl;
+
+	for (h1 = 0; h1 < Sub->L3->nb_flag_orbits; h1++) {
+		if (F1[h1].downstep_primary_orbit != i1) {
+			continue;
+		}
+		if (F1[h1].f_fusion_node) {
+			int f;
+
+			f = F1[h1].fusion_with;
+			po_up = F1[f].upstep_orbit;
+		}
+		else {
+			po_up = F1[h1].upstep_orbit;
+		}
+		i2 = po_up;
+		cout << "searching i1=" << i1 << " h1=" << h1 << " i2=" << i2 << endl;
+		for (h2 = 0; h2 < F2->nb_flag_orbits; h2++) {
+			if (F2->Flag_orbit_node[h2].downstep_primary_orbit != i2) {
+				continue;
+			}
+			if (F2->Flag_orbit_node[h2].f_fusion_node) {
+				int f;
+
+				f = F2->Flag_orbit_node[h2].fusion_with;
+				po_up = F2->Flag_orbit_node[f].upstep_primary_orbit;
+
+			}
+			else {
+				po_up = F2->Flag_orbit_node[h2].upstep_primary_orbit;
+			}
+			i3 = po_up;
+			//if (F2->Flag_orbit_node[h2].upstep_primary_orbit == i3) {
+				cout << i1 << " - " << h1 << " - " << i2 << " - " << h2 << " - " << i3 << endl;
+			//}
+		}
+	}
+
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::decomposition done" << endl;
+	}
+}
+
+//##############################################################################
+// global functions:
+//##############################################################################
 
 
 void semifield_print_function_callback(ostream &ost, int orbit_idx,
