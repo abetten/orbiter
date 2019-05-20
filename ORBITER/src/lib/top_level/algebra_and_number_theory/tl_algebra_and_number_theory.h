@@ -131,6 +131,7 @@ public:
 	void identify_semifields_from_file(int verbose_level);
 	void latex_report(int verbose_level);
 	void generate_source_code(int verbose_level);
+	void decomposition(int verbose_level);
 };
 
 
