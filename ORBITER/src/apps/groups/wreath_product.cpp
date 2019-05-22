@@ -1,7 +1,7 @@
 
 // wreath_product.C
 //
-// Anton Betten
+// Anton Betten, Sajeeb Roy Chowdhury
 //
 // August 4, 2018
 //
