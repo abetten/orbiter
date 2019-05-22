@@ -1746,10 +1746,11 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 //	int_matrix_print(result, SG->gens->len, W->degree_of_tensor_action);
 
 
+	combinatorics_domain Combi;
 
 	for (size_t i = 0; i < SG->gens->len; i++) {
 		cout << "testing result " << i << " / " << SG->gens->len << ": ";
-		if (is_permutation(result + i * W->degree_of_tensor_action, W->degree_of_tensor_action)) {
+		if (Combi.is_permutation(result + i * W->degree_of_tensor_action, W->degree_of_tensor_action)) {
 			cout << "OK" << endl;
 		}
 		else {

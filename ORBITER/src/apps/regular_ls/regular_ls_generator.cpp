@@ -427,59 +427,6 @@ void regular_ls_generator::early_test_func(int *S, int len,
 			}
 		}
 }
-#if 0
-int regular_ls_generator::check_function_incremental(
-		int len, int *S, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, a, b, p;
-	int f_OK;
-		
-	if (f_v) {
-		cout << "regular_ls_generator::check_function_incremental "
-				"checking set ";
-		print_set(cout, len, S);
-		cout << endl;
-		}
-
-	int_vec_zero(row_sum, m);
-	int_vec_copy(initial_pair_covering, pairs, m2);
-
-	for (i = 0; i < len - 1; i++) {
-
-		unrank_k_subset(S[i], v1, m, k);
-		for (a = 0; a < k; a++) {
-			row_sum[v1[a]]++;
-			for (b = a + 1; b < k; b++) {
-				p = ij2k(v1[a], v1[b], m);
-				pairs[p] = TRUE;
-				}
-			}
-		
-		}
-
-	f_OK = TRUE;
-	unrank_k_subset(S[len - 1], v1, m, k);
-	for (a = 0; a < k; a++) {
-		if (row_sum[v1[a]] == r) {
-			f_OK = FALSE;
-			break;
-			}
-		for (b = a + 1; b < k; b++) {
-			p = ij2k(v1[a], v1[b], m);
-			if (pairs[p]) {
-				f_OK = FALSE;
-				break;
-				}
-			}
-		if (!f_OK) {
-			break;
-			}
-		}
-
-	return f_OK;
-}
-#endif
 
 void regular_ls_generator::print(ostream &ost, int *S, int len)
 {
@@ -586,6 +533,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 
 	Dio = NEW_OBJECT(diophant);
 	Dio->open(nb_rows, nb_cols);
+	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_open_rows; i++) {

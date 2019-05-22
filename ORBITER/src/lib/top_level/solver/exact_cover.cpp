@@ -690,19 +690,37 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 			int t0 = 0, t1 = 0;
 			int i, j, a, b;
 
-			if (f_v) {
-				cout << "exact_cover::compute_liftings_single_case_new "
-						"before solve_all_DLX_with_RHS" << endl;
-				}
 			if (f_solve) { 
 				t0 = os_ticks();
+
+				long int nb_backtrack_nodes;
+
+				if (f_v) {
+					cout << "exact_cover::compute_liftings_single_case_new "
+							"before solve_all_mckay" << endl;
+					}
+				Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 3);
+				if (f_v) {
+					cout << "exact_cover::compute_liftings_single_case_new "
+							"after solve_all_mckay" << endl;
+					}
+#if 0
+				if (f_v) {
+					cout << "exact_cover::compute_liftings_single_case_new "
+							"before solve_all_DLX_with_RHS" << endl;
+					}
 				Dio->solve_all_DLX_with_RHS(f_write_tree,
 						fname_tree, verbose_level - 5);
+				if (f_v) {
+					cout << "exact_cover::compute_liftings_single_case_new "
+							"after solve_all_DLX_with_RHS" << endl;
+					}
+#endif
 				t1 = os_ticks();
 				if (f_v) {
 					cout << "exact_cover::compute_liftings_single_case_new "
-							"after solve_all_DLX_with_RHS nb_backtrack = "
-							<< Dio->nb_steps_betten << " nb_sol = "
+							"nb_backtrack = "
+							<< nb_backtrack_nodes << " nb_sol = "
 							<< Dio->_resultanz << endl;
 					}
 				}

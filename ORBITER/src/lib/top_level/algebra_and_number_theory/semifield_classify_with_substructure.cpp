@@ -898,6 +898,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 	int i1, i2, i3;
 	int h1, h2;
 	int po_up;
+	int f_success;
 
 	F1 = Sub->L3->Flag_orbits;
 	F2 = Sub->Flag_orbits;
@@ -905,9 +906,12 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 	N2 = Sub->L3->nb_orbits;
 	N3 = Semifields->nb_orbits;
 	i1 = 8;
-	//i3 = 328;
+	i3 = 322;
 
+
+#if 0
 	cout << "F1:" << endl;
+	cout << "Sub->L3->nb_flag_orbits=" << Sub->L3->nb_flag_orbits << endl;
 	for (h1 = 0; h1 < Sub->L3->nb_flag_orbits; h1++) {
 		if (F1[h1].f_fusion_node) {
 			int f;
@@ -918,7 +922,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 		else {
 			po_up = F1[h1].upstep_orbit;
 		}
-		if (F1[h1].downstep_primary_orbit == i1) {
+		if (h1 > 5576873 - 139) {
 			cout << h1 << " : " << F1[h1].downstep_primary_orbit << " : " << po_up << endl;
 		}
 	}
@@ -938,8 +942,9 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 		cout << h2 << " : " << F2->Flag_orbit_node[h2].downstep_primary_orbit << " : " << po_up << endl;
 
 	}
+#endif
 
-	cout << "searching i1=" << i1 << endl;
+	cout << "searching for chains from i1=" << i1 << " to i3=" << i3 << endl;
 
 	for (h1 = 0; h1 < Sub->L3->nb_flag_orbits; h1++) {
 		if (F1[h1].downstep_primary_orbit != i1) {
@@ -955,7 +960,8 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 			po_up = F1[h1].upstep_orbit;
 		}
 		i2 = po_up;
-		cout << "searching i1=" << i1 << " h1=" << h1 << " i2=" << i2 << endl;
+		f_success = FALSE;
+		//cout << "searching i1=" << i1 << " h1=" << h1 << " i2=" << i2 << endl;
 		for (h2 = 0; h2 < F2->nb_flag_orbits; h2++) {
 			if (F2->Flag_orbit_node[h2].downstep_primary_orbit != i2) {
 				continue;
@@ -970,10 +976,43 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 			else {
 				po_up = F2->Flag_orbit_node[h2].upstep_primary_orbit;
 			}
-			i3 = po_up;
-			//if (F2->Flag_orbit_node[h2].upstep_primary_orbit == i3) {
-				cout << i1 << " - " << h1 << " - " << i2 << " - " << h2 << " - " << i3 << endl;
-			//}
+			if (po_up == i3) {
+				f_success = TRUE;
+				//cout << i1 << " - " << h1 << " - " << i2 << " - " << h2 << " - " << i3 << endl;
+			}
+		}
+		if (f_success) {
+			long int pt;
+
+			pt = F1[h1].pt;
+			cout << "i1=" << i1 << " h1=" << h1 << " i2=" << i2 << " pt=" << pt << endl;
+			if (F1[h1].f_fusion_node) {
+				int f;
+
+				f = F1[h1].fusion_with;
+				cout << "f=" << f << endl;
+				cout << "fusion elt:" << endl;
+				Sub->SC->A->element_print_quick(F1[h1].fusion_elt, cout);
+			}
+			for (h2 = 0; h2 < F2->nb_flag_orbits; h2++) {
+				if (F2->Flag_orbit_node[h2].downstep_primary_orbit != i2) {
+					continue;
+				}
+				if (F2->Flag_orbit_node[h2].f_fusion_node) {
+					int f;
+
+					f = F2->Flag_orbit_node[h2].fusion_with;
+					po_up = F2->Flag_orbit_node[f].upstep_primary_orbit;
+
+				}
+				else {
+					po_up = F2->Flag_orbit_node[h2].upstep_primary_orbit;
+				}
+				if (po_up == i3) {
+					cout << i2 << " - " << h2 << " - " << i3 << endl;
+				}
+			}
+
 		}
 	}
 

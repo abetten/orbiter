@@ -2646,20 +2646,20 @@ void semifield_lifting::read_level_info_file(int verbose_level)
 	Mo = NEW_int(m);
 	Pt = NEW_lint(m);
 
-	nb_flag_orbits = 0;
+	//nb_flag_orbits = 0;
 
 	for (i = 0; i < m; i++) {
 		Po[i] = M[i * n + 1];
 		So[i] = M[i * n + 2];
 		Mo[i] = M[i * n + 3];
 
-		nb_flag_orbits = MAXIMUM(
-				nb_flag_orbits, Mo[i]);
+		//nb_flag_orbits = MAXIMUM(
+		//		nb_flag_orbits, Mo[i]);
 
 		Pt[i] = M[i * n + 4];
 		}
 
-	nb_flag_orbits++;
+	//nb_flag_orbits++;
 
 	FREE_lint(M);
 
@@ -2758,7 +2758,7 @@ void semifield_lifting::read_flag_orbits(int verbose_level)
 
 	if (f_v) {
 		cout << "semifield_lifting::read_flag_orbits "
-				"cur_level = " << cur_level << " done" << endl;
+				"cur_level = " << cur_level << " done, nb_flag_orbits=" << nb_flag_orbits << endl;
 		}
 }
 
