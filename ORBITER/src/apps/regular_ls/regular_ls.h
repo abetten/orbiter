@@ -98,9 +98,9 @@ public:
 };
 
 
-// ####################################################################################
+// #############################################################################
 // global functions:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -109,8 +109,10 @@ void rls_generator_early_test_function(int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level);
-int check_function_incremental_callback(int len, int *S, void *data, int verbose_level);
-void rls_generator_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
+int check_function_incremental_callback(int len, int *S,
+		void *data, int verbose_level);
+void rls_generator_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 
 	int &f_ruled_out, 

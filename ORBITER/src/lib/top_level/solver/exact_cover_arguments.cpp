@@ -221,7 +221,8 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 		}
 	
 	if (f_v) {
-		cout << "exact_cover_arguments::compute_lifts before compute_liftings_new" << endl;
+		cout << "exact_cover_arguments::compute_lifts "
+				"before compute_liftings_new" << endl;
 		}
 
 	E->compute_liftings_new(f_solve, f_save, f_read, 
