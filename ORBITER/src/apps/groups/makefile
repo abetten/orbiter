@@ -4,7 +4,7 @@ DISCRETA_CC = gcc
 CPPFLAGS = -Wall -I$(SRC)/lib -I../../lib/foundations
 INCLUDES=-I$(SRC)/lib -I../../lib/foundations
 LIB = $(SRC)/lib/liborbiter.a
-LFLAGS = -lm
+LFLAGS = -lm 
 
 
 
@@ -20,7 +20,7 @@ ALL_TARGETS=wreath_product.out
 # vars required by the CUDA compiler
 #-------------------------------------------------------------
 CSTD=-std=c++11
-CUDA_LIB=-lcudart -lcudadevrt
+CUDA_LIB=-lcudart -lcudadevrt -L/scratch/cuda10/lib64
 CUDA_FLAGS= -gencode arch=compute_50,code=sm_50 \
 			-gencode arch=compute_60,code=sm_60 \
 			-gencode arch=compute_61,code=sm_61 \
