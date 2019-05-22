@@ -998,8 +998,13 @@ void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C, int* perms, int* result,
 
 	for (size_t h=0; h<B.nrows/A.ncols; ++h) {
 
+		cout << "at " << __FILE__ << " : " << __LINE__ << " : h=" << h << endl;
+
 		cuda_matrix_matrix_dot_<<<gridDim, blockDim>>>(*d_A, *d_B, *d_C, q, axis, h);
 		// Do some error checking after kernel launch
+
+		cout << "at " << __FILE__ << " : " << __LINE__ << endl;
+
 		gpuErrchk( cudaGetLastError() );
 		gpuErrchk( cudaPeekAtLastError() );
 		gpuErrchk( cudaDeviceSynchronize() );
