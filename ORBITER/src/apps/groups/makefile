@@ -5,6 +5,7 @@ CPPFLAGS = -Wall -I$(SRC)/lib -I../../lib/foundations
 INCLUDES=-I$(SRC)/lib -I../../lib/foundations
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm 
+#LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 
