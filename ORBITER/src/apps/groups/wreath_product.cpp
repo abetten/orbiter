@@ -1543,6 +1543,9 @@ void tensor_product::init(int argc, const char **argv,
 
 	int* result = NULL;
 
+	time_check(cout, t0);
+	cout << endl;
+
 	cout << "tensor_product::init "
 			"before wreath_product_orbits_CUDA:" << endl;
 	cout << __FILE__ << ":" << __LINE__ << endl;
@@ -1550,6 +1553,10 @@ void tensor_product::init(int argc, const char **argv,
 	int nb_gens, degree;
 
 	wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree);
+
+	time_check(cout, t0);
+	cout << endl;
+
 
 	cout << "tensor_product::init "
 			"after wreath_product_orbits_CUDA:" << endl;
@@ -1566,6 +1573,11 @@ void tensor_product::init(int argc, const char **argv,
 			degree, result, verbose_level);
 	cout << "computing point orbits from image table:" << endl;
 	Sch->compute_all_point_orbits(verbose_level);
+
+	time_check(cout, t0);
+	cout << endl;
+
+
 	cout << "computing point orbits from image table done" << endl;
 	cout << "We found " << Sch->nb_orbits << " orbits" << endl;
 
