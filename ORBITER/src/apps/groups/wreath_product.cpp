@@ -1543,6 +1543,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	int* result = NULL;
 
+	cout << "time check: ";
 	time_check(cout, t0);
 	cout << endl;
 
@@ -1554,6 +1555,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree);
 
+	cout << "time check: ";
 	time_check(cout, t0);
 	cout << endl;
 
@@ -1574,6 +1576,7 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "computing point orbits from image table:" << endl;
 	Sch->compute_all_point_orbits(verbose_level);
 
+	cout << "time check: ";
 	time_check(cout, t0);
 	cout << endl;
 
@@ -1585,6 +1588,8 @@ void tensor_product::init(int argc, const char **argv,
 #if 0
 	A->perform_tests(SG, verbose_level);
 #endif
+
+	exit(0);
 
 
 	Gen = NEW_OBJECT(poset_classification);
@@ -1649,7 +1654,7 @@ void tensor_product::init(int argc, const char **argv,
 	f_use_invariant_subset_if_available = TRUE;
 	f_debug = FALSE;
 
-	int t0 = os_ticks();
+	//int t0 = os_ticks();
 
 	if (f_v) {
 		cout << "tensor_product::init before Gen->main" << endl;
