@@ -152,6 +152,7 @@ void schreier::init_images_only(int nb_images,
 		int_vec_copy(images + i * degree, schreier::images[i], degree);
 		Combi.perm_inverse(schreier::images[i], schreier::images[i] + degree, degree);
 		}
+	allocate_tables();
 	if (f_v) {
 		cout << "schreier::init_images_only done" << endl;
 		}
@@ -699,242 +700,6 @@ void schreier::coset_rep_inv(int j)
 		}
 }
 
-void schreier::compute_point_orbit(int pt, int verbose_level)
-{
-	int pt_loc, cur, cur_pt, total, i, next_pt;
-	int next_pt_loc, total1, cur1;
-	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
-	//int f_vvv = FALSE; //(verbose_level >= 3);
-
-	if (f_v) {
-		cout << "schreier::compute_point_orbit" << endl;
-		cout << "computing orbit of point " << pt;
-	}
-	if (f_images_only) {
-		cout << " in no action, using table of images only" << endl;
-	}
-	else {
-		cout << " in action " << A->label << endl;
-	}
-	//exit(1);
-	pt_loc = orbit_inv[pt];
-	cur = orbit_first[nb_orbits];
-	if (pt_loc < cur) {
-		cout << "schreier::compute_point_orbit "
-				"i < orbit_first[nb_orbits]" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "schreier::compute_point_orbit "
-				"computing orbit of pt " << pt << endl;
-		}
-	if (pt_loc > orbit_first[nb_orbits]) {
-		swap_points(orbit_first[nb_orbits], pt_loc);
-		}
-	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
-	total = cur + 1;
-	while (cur < total) {
-		cur_pt = orbit[cur];
-		if (f_vv) {
-			if (f_vv) {
-				cout << "schreier::compute_point_orbit "
-						"expanding point " << cur_pt << endl;
-				}
-		}
-		for (i = 0; i < gens.len; i++) {
-			if (f_vv) {
-				cout << "schreier::compute_point_orbit "
-						"expanding point " << cur_pt
-						<< " using generator " << i << endl;
-				}
-			next_pt = get_image(cur_pt, i,
-				0 /*verbose_level - 5*/); // !!
-				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
-			next_pt_loc = orbit_inv[next_pt];
-			if (f_vv) {
-				cout << "schreier::compute_point_orbit " << cur_pt
-						<< " -> " << next_pt << endl;
-				}
-			if (next_pt_loc < total)
-				continue;
-			if (f_vv) {
-				cout << "schreier::compute_point_orbit expanding: "
-						<< cur_pt << ", " << next_pt << ", " << i << endl;
-				}
-			swap_points(total, next_pt_loc);
-			prev[total] = cur_pt;
-			label[total] = i;
-			//orbit_no[total] = nb_orbits;
-			total++;
-			total1 = total - orbit_first[nb_orbits];
-			cur1 = cur - orbit_first[nb_orbits];
-			if ((total1 % 10000) == 0 ||
-					(cur1 > 0 && (cur1 % 10000) == 0)) {
-				cout << "schreier::compute_point_orbit degree = "
-						<< degree << " length = " << total1
-					<< " processed = " << cur1 << " nb_orbits="
-					<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
-					<< next_pt << " orbit_first[nb_orbits]="
-					<< orbit_first[nb_orbits] << endl;
-				}
-			if (FALSE) {
-				cout << "cur = " << cur << endl;
-				cout << "total = " << total << endl;
-				print_orbit(cur, total - 1);
-				}
-			}
-		if (f_vv) {
-			cout << "schreier::compute_point_orbit cur_pt " << cur_pt
-					<< " has been expanded" << endl;
-			cout << "cur=" << cur << " total = " << total << endl;
-			}
-		cur++;
-		}
-	orbit_first[nb_orbits + 1] = total;
-	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
-	//orbit_first[nb_orbits + 2] = A->degree;
-	//orbit_len[nb_orbits + 1] = A->degree - total;
-	if (f_v) {
-		cout << "found orbit of length " << orbit_len[nb_orbits]
-				<< " total length " << total
-				<< " degree=" << degree << endl;
-		}
-	if (FALSE) {
-		cout << "{ ";
-		for (i = orbit_first[nb_orbits];
-				i < orbit_first[nb_orbits + 1]; i++) {
-			cout << orbit[i];
-			if (i < orbit_first[nb_orbits + 1] - 1)
-				cout << ", ";
-			}
-		cout << " }" << endl;
-		}
-	if (FALSE) {
-		cout << "coset reps:" << endl;
-		for (i = orbit_first[nb_orbits];
-				i < orbit_first[nb_orbits + 1]; i++) {
-			cout << i << " : " << endl;
-			coset_rep(i);
-			A->element_print(cosetrep, cout);
-			cout << "image = " << orbit[i] << " = "
-					<< A->element_image_of(pt, cosetrep, 0) << endl;
-			cout << endl;
-
-			}
-		}
-	nb_orbits++;
-}
-
-void schreier::compute_point_orbit_with_limited_depth(
-		int pt, int max_depth, int verbose_level)
-{
-	int pt_loc, cur, cur_pt, total, i, next_pt;
-	int next_pt_loc, total1, cur1;
-	int *depth;
-	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 5);
-	//int f_vvv = FALSE; //(verbose_level >= 3);
-
-	if (f_v) {
-		cout << "schreier::compute_point_orbit_with_limited_depth" << endl;
-		cout << "computing orbit of point " << pt
-				<< " in action " << A->label << endl;
-		}
-	depth = NEW_int(A->degree);
-	int_vec_zero(depth, A->degree);
-	pt_loc = orbit_inv[pt];
-	cur = orbit_first[nb_orbits];
-	if (pt_loc < cur) {
-		cout << "schreier::compute_point_orbit_with_limited_depth "
-				"i < orbit_first[nb_orbits]" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "schreier::compute_point_orbit_with_limited_depth "
-				"computing orbit of pt " << pt << endl;
-		}
-	if (pt_loc > orbit_first[nb_orbits]) {
-		swap_points(orbit_first[nb_orbits], pt_loc);
-		}
-	depth[cur] = 0;
-	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
-	total = cur + 1;
-	while (cur < total) {
-		cur_pt = orbit[cur];
-		if (depth[cur] > max_depth) {
-			break;
-		}
-		if (f_vv) {
-			cout << "schreier::compute_point_orbit_with_limited_depth cur="
-					<< cur << " total=" << total
-					<< " applying generators to " << cur_pt << endl;
-			}
-		for (i = 0; i < gens.len; i++) {
-			if (f_vv) {
-				cout << "schreier::compute_point_orbit_with_limited_depth "
-						"applying generator "
-						<< i << " to point " << cur_pt << endl;
-				}
-			next_pt = get_image(cur_pt, i,
-				0 /*verbose_level - 5*/); // !!
-				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
-			next_pt_loc = orbit_inv[next_pt];
-			if (f_vv) {
-				cout << "schreier::compute_point_orbit_with_limited_depth "
-						"generator "
-						<< i << " maps " << cur_pt
-						<< " to " << next_pt << endl;
-				}
-			if (next_pt_loc < total)
-				continue;
-			if (f_vv) {
-				cout << "schreier::compute_point_orbit_with_limited_depth "
-						"n e w pt "
-						<< next_pt << " reached from "
-						<< cur_pt << " under generator " << i << endl;
-				}
-			swap_points(total, next_pt_loc);
-			depth[total] = depth[cur] + 1;
-			prev[total] = cur_pt;
-			label[total] = i;
-			//orbit_no[total] = nb_orbits;
-			total++;
-			total1 = total - orbit_first[nb_orbits];
-			cur1 = cur - orbit_first[nb_orbits];
-			if ((total1 % 10000) == 0 ||
-					(cur1 > 0 && (cur1 % 10000) == 0)) {
-				cout << "schreier::compute_point_orbit_with_limited_depth "
-						"degree = "
-						<< A->degree << " length = " << total1
-					<< " processed = " << cur1 << " nb_orbits="
-					<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
-					<< next_pt << " orbit_first[nb_orbits]="
-					<< orbit_first[nb_orbits] << endl;
-				}
-			if (FALSE) {
-				cout << "cur = " << cur << endl;
-				cout << "total = " << total << endl;
-				print_orbit(cur, total - 1);
-				}
-			}
-		cur++;
-		}
-	orbit_first[nb_orbits + 1] = total;
-	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
-	//orbit_first[nb_orbits + 2] = A->degree;
-	//orbit_len[nb_orbits + 1] = A->degree - total;
-	if (f_v) {
-		cout << "schreier::compute_point_orbit_with_limited_depth "
-				"found an incomplete orbit of length "
-				<< orbit_len[nb_orbits]
-				<< " total length " << total
-				<< " degree=" << A->degree << endl;
-		}
-	FREE_int(depth);
-	nb_orbits++;
-}
-
 
 
 
@@ -1218,6 +983,243 @@ void schreier::compute_all_orbits_on_invariant_subset(
 		print_orbit_length_distribution(cout);
 		}
 }
+
+void schreier::compute_point_orbit(int pt, int verbose_level)
+{
+	int pt_loc, cur, cur_pt, total, i, next_pt;
+	int next_pt_loc, total1, cur1;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;//(verbose_level >= 2);
+	//int f_vvv = FALSE; //(verbose_level >= 3);
+
+	if (f_v) {
+		cout << "schreier::compute_point_orbit" << endl;
+		cout << "computing orbit of point " << pt;
+	}
+	if (f_images_only) {
+		cout << " in no action, using table of images only" << endl;
+	}
+	else {
+		cout << " in action " << A->label << endl;
+	}
+	//exit(1);
+	pt_loc = orbit_inv[pt];
+	cur = orbit_first[nb_orbits];
+	if (pt_loc < cur) {
+		cout << "schreier::compute_point_orbit "
+				"i < orbit_first[nb_orbits]" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "schreier::compute_point_orbit "
+				"computing orbit of pt " << pt << endl;
+		}
+	if (pt_loc > orbit_first[nb_orbits]) {
+		swap_points(orbit_first[nb_orbits], pt_loc);
+		}
+	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
+	total = cur + 1;
+	while (cur < total) {
+		cur_pt = orbit[cur];
+		if (f_vv) {
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit "
+						"expanding point " << cur_pt << endl;
+				}
+		}
+		for (i = 0; i < gens.len; i++) {
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit "
+						"expanding point " << cur_pt
+						<< " using generator " << i << endl;
+				}
+			next_pt = get_image(cur_pt, i,
+				0 /*verbose_level - 5*/); // !!
+				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
+			next_pt_loc = orbit_inv[next_pt];
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit " << cur_pt
+						<< " -> " << next_pt << endl;
+				}
+			if (next_pt_loc < total)
+				continue;
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit expanding: "
+						<< cur_pt << ", " << next_pt << ", " << i << endl;
+				}
+			swap_points(total, next_pt_loc);
+			prev[total] = cur_pt;
+			label[total] = i;
+			//orbit_no[total] = nb_orbits;
+			total++;
+			total1 = total - orbit_first[nb_orbits];
+			cur1 = cur - orbit_first[nb_orbits];
+			if ((total1 % 10000) == 0 ||
+					(cur1 > 0 && (cur1 % 10000) == 0)) {
+				cout << "schreier::compute_point_orbit degree = "
+						<< degree << " length = " << total1
+					<< " processed = " << cur1 << " nb_orbits="
+					<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
+					<< next_pt << " orbit_first[nb_orbits]="
+					<< orbit_first[nb_orbits] << endl;
+				}
+			if (FALSE) {
+				cout << "cur = " << cur << endl;
+				cout << "total = " << total << endl;
+				print_orbit(cur, total - 1);
+				}
+			}
+		if (f_vv) {
+			cout << "schreier::compute_point_orbit cur_pt " << cur_pt
+					<< " has been expanded" << endl;
+			cout << "cur=" << cur << " total = " << total << endl;
+			}
+		cur++;
+		}
+	orbit_first[nb_orbits + 1] = total;
+	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
+	//orbit_first[nb_orbits + 2] = A->degree;
+	//orbit_len[nb_orbits + 1] = A->degree - total;
+	if (f_v) {
+		cout << "found orbit of length " << orbit_len[nb_orbits]
+				<< " total length " << total
+				<< " degree=" << degree << endl;
+		}
+	if (FALSE) {
+		cout << "{ ";
+		for (i = orbit_first[nb_orbits];
+				i < orbit_first[nb_orbits + 1]; i++) {
+			cout << orbit[i];
+			if (i < orbit_first[nb_orbits + 1] - 1)
+				cout << ", ";
+			}
+		cout << " }" << endl;
+		}
+	if (FALSE) {
+		cout << "coset reps:" << endl;
+		for (i = orbit_first[nb_orbits];
+				i < orbit_first[nb_orbits + 1]; i++) {
+			cout << i << " : " << endl;
+			coset_rep(i);
+			A->element_print(cosetrep, cout);
+			cout << "image = " << orbit[i] << " = "
+					<< A->element_image_of(pt, cosetrep, 0) << endl;
+			cout << endl;
+
+			}
+		}
+	nb_orbits++;
+}
+
+void schreier::compute_point_orbit_with_limited_depth(
+		int pt, int max_depth, int verbose_level)
+{
+	int pt_loc, cur, cur_pt, total, i, next_pt;
+	int next_pt_loc, total1, cur1;
+	int *depth;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 5);
+	//int f_vvv = FALSE; //(verbose_level >= 3);
+
+	if (f_v) {
+		cout << "schreier::compute_point_orbit_with_limited_depth" << endl;
+		cout << "computing orbit of point " << pt
+				<< " in action " << A->label << endl;
+		}
+	depth = NEW_int(A->degree);
+	int_vec_zero(depth, A->degree);
+	pt_loc = orbit_inv[pt];
+	cur = orbit_first[nb_orbits];
+	if (pt_loc < cur) {
+		cout << "schreier::compute_point_orbit_with_limited_depth "
+				"i < orbit_first[nb_orbits]" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "schreier::compute_point_orbit_with_limited_depth "
+				"computing orbit of pt " << pt << endl;
+		}
+	if (pt_loc > orbit_first[nb_orbits]) {
+		swap_points(orbit_first[nb_orbits], pt_loc);
+		}
+	depth[cur] = 0;
+	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
+	total = cur + 1;
+	while (cur < total) {
+		cur_pt = orbit[cur];
+		if (depth[cur] > max_depth) {
+			break;
+		}
+		if (f_vv) {
+			cout << "schreier::compute_point_orbit_with_limited_depth cur="
+					<< cur << " total=" << total
+					<< " applying generators to " << cur_pt << endl;
+			}
+		for (i = 0; i < gens.len; i++) {
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"applying generator "
+						<< i << " to point " << cur_pt << endl;
+				}
+			next_pt = get_image(cur_pt, i,
+				0 /*verbose_level - 5*/); // !!
+				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
+			next_pt_loc = orbit_inv[next_pt];
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"generator "
+						<< i << " maps " << cur_pt
+						<< " to " << next_pt << endl;
+				}
+			if (next_pt_loc < total)
+				continue;
+			if (f_vv) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"n e w pt "
+						<< next_pt << " reached from "
+						<< cur_pt << " under generator " << i << endl;
+				}
+			swap_points(total, next_pt_loc);
+			depth[total] = depth[cur] + 1;
+			prev[total] = cur_pt;
+			label[total] = i;
+			//orbit_no[total] = nb_orbits;
+			total++;
+			total1 = total - orbit_first[nb_orbits];
+			cur1 = cur - orbit_first[nb_orbits];
+			if ((total1 % 10000) == 0 ||
+					(cur1 > 0 && (cur1 % 10000) == 0)) {
+				cout << "schreier::compute_point_orbit_with_limited_depth "
+						"degree = "
+						<< A->degree << " length = " << total1
+					<< " processed = " << cur1 << " nb_orbits="
+					<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
+					<< next_pt << " orbit_first[nb_orbits]="
+					<< orbit_first[nb_orbits] << endl;
+				}
+			if (FALSE) {
+				cout << "cur = " << cur << endl;
+				cout << "total = " << total << endl;
+				print_orbit(cur, total - 1);
+				}
+			}
+		cur++;
+		}
+	orbit_first[nb_orbits + 1] = total;
+	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
+	//orbit_first[nb_orbits + 2] = A->degree;
+	//orbit_len[nb_orbits + 1] = A->degree - total;
+	if (f_v) {
+		cout << "schreier::compute_point_orbit_with_limited_depth "
+				"found an incomplete orbit of length "
+				<< orbit_len[nb_orbits]
+				<< " total length " << total
+				<< " degree=" << A->degree << endl;
+		}
+	FREE_int(depth);
+	nb_orbits++;
+}
+
 
 int schreier::sum_up_orbit_lengths()
 {
