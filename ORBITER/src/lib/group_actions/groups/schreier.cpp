@@ -2665,7 +2665,7 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 			break;
 		}
 
-		auto total_points_in_old_forest = S->get_num_points();
+		//auto total_points_in_old_forest = S->get_num_points();
 
 		//
 		int random_orbit_idx = random_integer(S->nb_orbits);
