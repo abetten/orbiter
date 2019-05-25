@@ -359,6 +359,10 @@ void poset_orbit_node::compute_schreier_vector(
 				"calling get_schreier_vector" << endl;
 		}	
 
+		// ToDo: schreier vector strategy
+		// if lvl < 5, do the ai method
+		// otherwise do the default method
+
 	create_schreier_vector_wrapper(
 			gen,
 			TRUE /* f_create_schreier_vector */,
