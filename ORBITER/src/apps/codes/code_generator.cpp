@@ -481,6 +481,7 @@ void code_generator::main(int verbose_level)
 			f_debug,
 			verbose_level);
 	}
+	cout << "code_generator::main depth = " << depth << endl;
 
 	if (f_table_of_nodes) {
 		int *Table;

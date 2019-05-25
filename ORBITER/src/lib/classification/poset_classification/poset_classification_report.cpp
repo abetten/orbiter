@@ -275,14 +275,23 @@ void poset_classification::report(ostream &ost)
 
 	rep = NEW_int(depth + 1);
 
+	cout << "printing orbit representative" << endl;
+
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
+
+		cout << "printing orbit representative at level " << level << endl;
 
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 
+			cout << "printing orbit representative at level " << level << " orbit " << i << endl;
+
 			get_set_by_level(level, i, rep);
+
 			int_vec_print_to_str_naked(str, rep, level);
+
+			cout << "set: '" << str << "'" << endl;
 
 #if 0
 			get_orbit_length_and_stabilizer_order_with_given_group_order(
@@ -293,14 +302,20 @@ void poset_classification::report(ostream &ost)
 			get_orbit_length_and_stabilizer_order(i, level,
 				stab_order, orbit_length);
 
+			cout << "after get_orbit_length_and_stabilizer_order" << endl;
+
 			//stab_order.print_to_string(str);
 
 			//orbit_length.print_to_string(str);
 
 			O = get_node_ij(level, i);
+
+			cout << "after get_node_ij" << endl;
+
 			Schreier_vector = O->Schreier_vector;
 
 			if (level < depth) {
+				cout << "level < depth" << endl;
 				nb_live_pts = O->get_nb_of_live_points();
 				nb_extensions = O->nb_extensions;
 				//nbo = O->get_nb_of_orbits_under_stabilizer();
@@ -311,11 +326,15 @@ void poset_classification::report(ostream &ost)
 					nbg = O->nb_strong_generators;
 				}
 			} else {
+				cout << "level < depth is false" << endl;
 				nb_live_pts = -1;
 				nb_extensions = -1;
 				//nbo = -1;
 				nbg = O->nb_strong_generators;
 			}
+			cout << "nb_live_pts=" << nb_live_pts
+					<< " nb_extensions=" << nb_extensions
+					<< " nbg=" << nbg << endl;
 
 			ost << cnt << " & " << level << " & " << i
 					<< " & $\\{$ " << str << " $\\}$ & ("

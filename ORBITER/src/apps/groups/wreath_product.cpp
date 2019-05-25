@@ -28,7 +28,6 @@ void wreath_unrank_point_func(int *v, int rk, void *data);
 void wreath_product_print_set(ostream &ost, int len, int *S, void *data);
 void wreath_product_orbits_CUDA(wreath_product* W,
 		strong_generators* SG, action* A, int*& result, int verbosity=0);
-void wreath_product_testing(action *A, strong_generators *SG, int verbose_level);
 
 
 typedef class tensor_product tensor_product;
@@ -952,7 +951,9 @@ void cuda_matrix_matrix_dot_(Mat& A, Mat& B, Mat& C, int p=0, int axis=0, size_t
 
 template <typename T>
 __host__
-void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C, int* perms, int* result, int q=0, int axis=0, bool ea=true, bool eb=true, bool ec=true) {
+void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C,
+		int* perms, int* result, int q=0, int axis=0,
+		bool ea=true, bool eb=true, bool ec=true) {
 	size_t m = A.nrows;
 	size_t n = A.ncols;
 
@@ -978,7 +979,7 @@ void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C, int* perms, int* result,
 
 	// Find out how many blocks are needed
 	int block_size = 16;
-	int num_blocks = (num_threads + block_size*block_size - 1)/ (block_size*block_size) ;
+	int num_blocks = (num_threads + block_size * block_size - 1) / (block_size*block_size) ;
 	int gridDim_y = (C.ncols + block_size - 1) / block_size;
 	int gridDim_x = (C.nrows + block_size - 1) / block_size;
 	if (num_blocks > gridDim_x*gridDim_y || num_threads > gridDim_x*gridDim_y*pow(block_size,2)) {
@@ -996,7 +997,7 @@ void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C, int* perms, int* result,
 	_Vector<T> V2 (B.ncols);
 	int a = 0;
 
-	for (size_t h=0; h<B.nrows/A.ncols; ++h) {
+	for (size_t h = 0; h < B.nrows / A.ncols; ++h) {
 
 		cout << "at " << __FILE__ << " : " << __LINE__ << " : h=" << h << " / " << B.nrows/A.ncols << endl;
 
@@ -1013,12 +1014,12 @@ void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C, int* perms, int* result,
 		// host memory.
 		C.copy_matrix_to_host(true);
 
-		for (size_t i=0; i<C.nrows; ++i) {
-			for (size_t j=0; j<C.ncols; ++j) {
+		for (size_t i = 0; i < C.nrows; ++i) {
+			for (size_t j = 0; j < C.ncols; ++j) {
 				//a = perms [h * C.nrows + j];
 				V(j) = C(i, j);
 			}
-			for (size_t k=0; k<B.ncols; ++k) {
+			for (size_t k = 0; k < B.ncols; ++k) {
 				a = perms [h * C.ncols + k];
 				V2(a) = V(k);
 			}
@@ -1550,7 +1551,7 @@ void tensor_product::init(int argc, const char **argv,
 
 
 #if 0
-	wreath_product_testing(A, SG, verbose_level);
+	A->perform_tests(SG, verbose_level);
 #endif
 
 
@@ -1565,7 +1566,8 @@ void tensor_product::init(int argc, const char **argv,
 	Gen->depth = depth;
 
 	VS = NEW_OBJECT(vector_space);
-	VS->init(F, vector_space_dimension /* dimension */,
+	VS->init(F,
+			vector_space_dimension /* dimension */,
 			verbose_level - 1);
 	VS->init_rank_functions(
 			wreath_rank_point_func,
@@ -1575,7 +1577,8 @@ void tensor_product::init(int argc, const char **argv,
 
 
 	Poset = NEW_OBJECT(poset);
-	Poset->init_subspace_lattice(A0, A,
+	Poset->init_subspace_lattice(
+			A0, A,
 			SG,
 			VS,
 			verbose_level);
@@ -1729,6 +1732,8 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	int_matrix_print(generator_stack, SG->gens->len * mtx_n, mtx_n);
 	cout << "perms:" << endl;
 	int_matrix_print(perms, SG->gens->len, mtx_n);
+	cout << "mtx_n=" << mtx_n << endl;
+	cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
 
 
 
@@ -1736,9 +1741,9 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	PGL_Vector_unrank_Matrix (M, mtx_n, W->q, W->degree_of_tensor_action);
 
 	Matrix<int> N (SG->gens->len * mtx_n, mtx_n);
-	for (size_t i=0; i<N.nrows; ++i) {
-		for (size_t j=0; j<N.ncols; ++j) {
-			N(i,j) = generator_stack [i * N.ncols + j];
+	for (size_t i = 0; i < N.nrows; ++i) {
+		for (size_t j = 0; j < N.ncols; ++j) {
+			N(i, j) = generator_stack [i * N.ncols + j];
 		}
 	}
 
@@ -1774,212 +1779,3 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 }
 
 
-void wreath_product_testing(action *A, strong_generators *SG, int verbose_level)
-{
-	cout << "wreath_product_testing testing..." << endl;
-	int r1, r2;
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-	int *Elt4;
-	int *perm1;
-	int *perm2;
-	int *perm3;
-	int *perm4;
-	int *perm5;
-	int cnt;
-	int i;
-	combinatorics_domain Combi;
-
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-	Elt4 = NEW_int(A->elt_size_in_int);
-	perm1 = NEW_int(A->degree);
-	perm2 = NEW_int(A->degree);
-	perm3 = NEW_int(A->degree);
-	perm4 = NEW_int(A->degree);
-	perm5 = NEW_int(A->degree);
-
-	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
-		cout << "r1=" << r1 << endl;
-		cout << "r2=" << r2 << endl;
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		A->element_move(SG->gens->ith(r2), Elt2, 0);
-		cout << "Elt1 = " << endl;
-		A->element_print_quick(Elt1, cout);
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm1, A->degree);
-		cout << endl;
-
-		cout << "Elt2 = " << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm2, A->degree);
-		cout << endl;
-
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		cout << "Elt3 = " << endl;
-		A->element_print_quick(Elt3, cout);
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm3, A->degree);
-		cout << endl;
-
-		Combi.perm_mult(perm1, perm2, perm4, A->degree);
-		cout << "perm1 * perm2= " << endl;
-		Combi.perm_print(cout, perm4, A->degree);
-		cout << endl;
-
-		for (i = 0; i < A->degree; i++) {
-			if (perm3[i] != perm4[i]) {
-				cout << "test " << cnt
-						<< " failed; something is wrong" << endl;
-				exit(1);
-			}
-		}
-	}
-	cout << "tensor_product::init test 1 passed" << endl;
-
-
-	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		cout << "r1=" << r1 << endl;
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		cout << "Elt1 = " << endl;
-		A->element_print_quick(Elt1, cout);
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm1, A->degree);
-		cout << endl;
-
-		A->element_invert(Elt1, Elt2, 0);
-		cout << "Elt2 = " << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm2, A->degree);
-		cout << endl;
-
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		cout << "Elt3 = " << endl;
-		A->element_print_quick(Elt3, cout);
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm3, A->degree);
-		cout << endl;
-
-		if (!Combi.perm_is_identity(perm3, A->degree)) {
-			cout << "fails the inverse test" << endl;
-			exit(1);
-		}
-	}
-
-	cout << "tensor_product::init test 2 passed" << endl;
-
-
-
-	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
-		cout << "r1=" << r1 << endl;
-		cout << "r2=" << r2 << endl;
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		A->element_move(SG->gens->ith(r2), Elt2, 0);
-		cout << "Elt1 = " << endl;
-		A->element_print_quick(Elt1, cout);
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm1, A->degree);
-		cout << endl;
-
-		cout << "Elt2 = " << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-		cout << "as permutation: " << endl;
-		Combi.perm_print(cout, perm2, A->degree);
-		cout << endl;
-
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		cout << "Elt3 = " << endl;
-		A->element_print_quick(Elt3, cout);
-
-		A->element_invert(Elt3, Elt4, 0);
-		cout << "Elt4 = Elt3^-1 = " << endl;
-		A->element_print_quick(Elt4, cout);
-
-
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
-		cout << "as Elt3 as permutation: " << endl;
-		Combi.perm_print(cout, perm3, A->degree);
-		cout << endl;
-
-		A->element_as_permutation(Elt4, perm4, 0 /* verbose_level */);
-		cout << "as Elt4 as permutation: " << endl;
-		Combi.perm_print(cout, perm4, A->degree);
-		cout << endl;
-
-		Combi.perm_mult(perm3, perm4, perm5, A->degree);
-		cout << "perm3 * perm4= " << endl;
-		Combi.perm_print(cout, perm5, A->degree);
-		cout << endl;
-
-		for (i = 0; i < A->degree; i++) {
-			if (perm5[i] != i) {
-				cout << "test " << cnt
-						<< " failed; something is wrong" << endl;
-				exit(1);
-			}
-		}
-	}
-	cout << "tensor_product::init test 3 passed" << endl;
-
-
-	cout << "performing test 4:" << endl;
-
-	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
-	A->make_element(Elt1, data, verbose_level);
-	A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
-	cout << "as Elt1 as permutation: " << endl;
-	Combi.perm_print(cout, perm1, A->degree);
-	cout << endl;
-
-	A->element_invert(Elt1, Elt2, 0);
-	A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
-	cout << "as Elt2 as permutation: " << endl;
-	Combi.perm_print(cout, perm2, A->degree);
-	cout << endl;
-
-
-	A->element_mult(Elt1, Elt2, Elt3, 0);
-	cout << "Elt3 = " << endl;
-	A->element_print_quick(Elt3, cout);
-
-	Combi.perm_mult(perm1, perm2, perm3, A->degree);
-	cout << "perm1 * perm2= " << endl;
-	Combi.perm_print(cout, perm3, A->degree);
-	cout << endl;
-
-	for (i = 0; i < A->degree; i++) {
-		if (perm3[i] != i) {
-			cout << "test 4 failed; something is wrong" << endl;
-			exit(1);
-		}
-	}
-
-	cout << "tensor_product::init test 4 passed" << endl;
-
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
-	FREE_int(Elt4);
-	FREE_int(perm1);
-	FREE_int(perm2);
-	FREE_int(perm3);
-	FREE_int(perm4);
-	FREE_int(perm5);
-}

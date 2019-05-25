@@ -327,17 +327,7 @@ public:
 		int f_group_order_target, const char *group_order_target, 
 		vector_ge *gens, strong_generators *&Strong_gens_out, 
 		int verbose_level);
-	void print_symmetry_group_type(std::ostream &ost);
-	void report(std::ostream &ost);
-	void print_info();
-	void report_basic_orbits(std::ostream &ost);
-	void print_base();
-	void print_points(std::ostream &ost);
 	void group_order(longinteger_object &go);
-	void print_group_order(std::ostream &ost);
-	void print_group_order_long(std::ostream &ost);
-	void print_vector(vector_ge &v);
-	void print_vector_as_permutation(vector_ge &v);
 	void element_print_base_images(int *Elt);
 	void element_print_base_images(int *Elt, std::ostream &ost);
 	void element_print_base_images_verbose(int *Elt, 
@@ -347,25 +337,6 @@ public:
 		int *base_images, int verbose_level);
 	void minimize_base_images(int level, sims *S, 
 		int *Elt, int verbose_level);
-	void element_conjugate_bvab(int *Elt_A, 
-		int *Elt_B, int *Elt_C, int verbose_level);
-	void element_conjugate_babv(int *Elt_A, 
-		int *Elt_B, int *Elt_C, int verbose_level);
-	void element_commutator_abavbv(int *Elt_A, 
-		int *Elt_B, int *Elt_C, int verbose_level);
-	void read_representatives(char *fname, 
-		int *&Reps, int &nb_reps, int &size, int verbose_level);
-	void read_representatives_and_strong_generators(char *fname, 
-		int *&Reps, 
-		char **&Aut_ascii, int &nb_reps, 
-		int &size, int verbose_level);
-	void read_file_and_print_representatives(char *fname, 
-		int f_print_stabilizer_generators);
-	void read_set_and_stabilizer(const char *fname, 
-		int no, int *&set, int &set_sz, sims *&stab, 
-		strong_generators *&Strong_gens, 
-		int &nb_cases, 
-		int verbose_level);
 	void get_generators_from_ascii_coding(char *ascii_coding, 
 		vector_ge *&gens, int *&tl, int verbose_level);
 	void lexorder_test(int *set, int set_sz, int &set_sz_after_test, 
@@ -391,14 +362,13 @@ public:
 		int verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
 		int line_rk, int *Elt, int verbose_level);
-	void list_elements_as_permutations_vertically(vector_ge *gens,
-			std::ostream &ost);
 	int is_matrix_group();
 	int is_semilinear_matrix_group();
 	int is_projective();
 	int is_affine();
 	int is_general_linear();
 	matrix_group *get_matrix_group();
+	void perform_tests(strong_generators *SG, int verbose_level);
 
 
 	// action_group_theory.cpp:
@@ -438,6 +408,12 @@ public:
 			char *fname, int verbose_level);
 	void report_fixed_objects(int *Elt,
 			char *fname_latex, int verbose_level);
+	void element_conjugate_bvab(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	void element_conjugate_babv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	void element_commutator_abavbv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
 
 
 	// action_indexing_cosets.C:
@@ -769,6 +745,31 @@ public:
 		int &nb_candidates,
 		int &nb_cases,
 		int verbose_level);
+	void read_representatives(char *fname,
+		int *&Reps, int &nb_reps, int &size, int verbose_level);
+	void read_representatives_and_strong_generators(char *fname,
+		int *&Reps,
+		char **&Aut_ascii, int &nb_reps,
+		int &size, int verbose_level);
+	void read_file_and_print_representatives(char *fname,
+		int f_print_stabilizer_generators);
+	void read_set_and_stabilizer(const char *fname,
+		int no, int *&set, int &set_sz, sims *&stab,
+		strong_generators *&Strong_gens,
+		int &nb_cases,
+		int verbose_level);
+	void list_elements_as_permutations_vertically(vector_ge *gens,
+			std::ostream &ost);
+	void print_symmetry_group_type(std::ostream &ost);
+	void report(std::ostream &ost);
+	void print_info();
+	void report_basic_orbits(std::ostream &ost);
+	void print_base();
+	void print_points(std::ostream &ost);
+	void print_group_order(std::ostream &ost);
+	void print_group_order_long(std::ostream &ost);
+	void print_vector(vector_ge &v);
+	void print_vector_as_permutation(vector_ge &v);
 
 	// action_cb.C:
 	int image_of(void *elt, int a);
