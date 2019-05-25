@@ -5,6 +5,7 @@
 
 #include "foundations/foundations.h"
 #include "group_actions.h"
+#include "chrono.h"
 
 using namespace std;
 
@@ -127,6 +128,81 @@ void schreier::init_images(int nb_images, int verbose_level)
 		}
 }
 
+void schreier::init_images_recycle(int nb_images, int **old_images, int idx_deleted_generator, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "schreier::init_images_recycle" << endl;
+		}
+	if (A == NULL) {
+		cout << "schreier::init_images_recycle action is NULL" << endl;
+		exit(1);
+		}
+	delete_images();
+	schreier::nb_images = nb_images;
+	images = NEW_pint(nb_images);
+	for (i = 0; i < nb_images; i++) {
+		images[i] = NEW_int(2 * A->degree);
+		if (i == idx_deleted_generator) {
+			for (j = 0; j < 2 * A->degree; j++) {
+				images[i][j] = -1;
+			}
+		}
+		else {
+			if (old_images[i]) {
+				int_vec_copy(old_images[i], images[i], 2 * A->degree);
+			}
+			else {
+				for (j = 0; j < 2 * A->degree; j++) {
+					images[i][j] = -1;
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "schreier::init_images_recycle done" << endl;
+	}
+}
+
+
+
+void schreier::init_images_recycle(int nb_images, int **old_images, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "schreier::init_images_recycle" << endl;
+		}
+	if (A == NULL) {
+		cout << "schreier::init_images_recycle action is NULL" << endl;
+		exit(1);
+		}
+	delete_images();
+	schreier::nb_images = nb_images;
+	images = NEW_pint(nb_images);
+	for (i = 0; i < nb_images; i++) {
+		images[i] = NEW_int(2 * A->degree);
+		if (old_images[i]) {
+			int_vec_copy(old_images[i], images[i], 2 * A->degree);
+		}
+		else {
+			for (j = 0; j < 2 * A->degree; j++) {
+				images[i][j] = -1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "schreier::init_images_recycle done" << endl;
+	}
+}
+
+
+
 void schreier::images_append()
 {
 	int **new_images = NEW_pint(nb_images + 1);
@@ -203,6 +279,29 @@ void schreier::init_generators(vector_ge &generators)
 		}
 }
 
+void schreier::init_generators_recycle_images(vector_ge &generators, int **old_images,
+												int idx_generator_to_delete)
+{
+	if (generators.len) {
+		init_generators_recycle_images(generators.len,
+				generators.ith(0), old_images, idx_generator_to_delete);
+		}
+	else {
+		init_generators_recycle_images(generators.len, NULL, old_images, idx_generator_to_delete);
+		}
+}
+
+void schreier::init_generators_recycle_images(vector_ge &generators, int **old_images)
+{
+	if (generators.len) {
+		init_generators_recycle_images(generators.len,
+				generators.ith(0), old_images);
+		}
+	else {
+		init_generators_recycle_images(generators.len, NULL, old_images);
+		}
+}
+
 void schreier::init_generators(int nb, int *elt)
 // elt must point to nb * A->elt_size_in_int
 // int's that are
@@ -220,6 +319,48 @@ void schreier::init_generators(int nb, int *elt)
 		}
 	init_images(nb, 0 /* verbose_level */);	
 }
+
+void schreier::init_generators_recycle_images(int nb, int *elt, int **old_images,
+												int idx_generator_to_delete)
+// elt must point to nb * A->elt_size_in_int
+// int's that are
+// group elements in int format
+{
+	int i;
+
+	gens.allocate(nb);
+	gens_inv.allocate(nb);
+	for (i = 0; i < nb; i++) {
+		//cout << "schreier::init_generators i = " << i << endl;
+		gens.copy_in(i, elt + i * A->elt_size_in_int);
+		A->element_invert(elt + i * A->elt_size_in_int,
+				gens_inv.ith(i), 0);
+		}
+	init_images_recycle(nb, old_images, idx_generator_to_delete, 0 /* verbose_level */);
+}
+
+
+
+void schreier::init_generators_recycle_images(int nb, int *elt, int **old_images)
+// elt must point to nb * A->elt_size_in_int
+// int's that are
+// group elements in int format
+{
+	int i;
+
+	gens.allocate(nb);
+	gens_inv.allocate(nb);
+	for (i = 0; i < nb; i++) {
+		//cout << "schreier::init_generators i = " << i << endl;
+		gens.copy_in(i, elt + i * A->elt_size_in_int);
+		A->element_invert(elt + i * A->elt_size_in_int,
+				gens_inv.ith(i), 0);
+		}
+	init_images_recycle(nb, old_images);
+}
+
+
+
 
 void schreier::init_generators_by_hdl(int nb_gen, 
 	int *gen_hdl, int verbose_level)
@@ -2276,28 +2417,15 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
 
 #elif 0
-	//cout << "Orbit partition before:" << endl;
-	//this->print_and_list_orbits(cout);
 
-	if (f_v) {
-		cout << "schreier::get_schreier_vector before "
-				"this->shallow_tree_generators_ai" << endl;
-	}
 	this->shallow_tree_generators_ai(verbose_level);
-	if (f_v) {
-		cout << "schreier::get_schreier_vector after "
-				"this->shallow_tree_generators_ai" << endl;
-	}
-
-	//cout << "Orbit partition after:" << endl;
-	//this->print_and_list_orbits(cout);
-
-	//cout << BRIGHT_BLUE << __FILE__ << ":" << __LINE__;
-	//cout << ":moving on to init_from_schreier" << RESET_COLOR_SCHEME << endl;
-
 	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
 
 #endif
+
+	cout << BRIGHT_RED;
+	cout << "nb_times_image_of_called=" << A->ptr->nb_times_image_of_called << endl;
+	cout << RESET_COLOR_SCHEME;
 
 	if (nb_gen) {
 		Schreier_vector->init_local_generators(&gens, 0 /*verbose_level */);
@@ -2316,25 +2444,20 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 
 void schreier::shallow_tree_generators_ai(int verbose_level)
 {
-
-//	cout << BRIGHT_GREEN << endl;
-//	this->print_and_list_orbits(cout);
-//	cout << RESET_COLOR_SCHEME << endl;
-
-//	if (this->nb_orbits == 0) {
-//	cout <<__FILE__<<":"<<__LINE__<<":nb_orbits is zero"<<endl;
-//	return;
-//	}
+	if (this->get_num_points() < 30000) {
+		return;
+	}
 
 	//verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int fst, len, root, cnt, l;
 	int i, a, f, o;
 	int *Elt1;
-	const char LINE[] = "################################################################################";
 
 	if (f_v) {
+		cout << BRIGHT_RED ;
 		cout << "schreier::shallow_tree_generators_ai" << endl;
+		cout << RESET_COLOR_SCHEME ;
 	}
 
 
@@ -2347,181 +2470,124 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 	Elt1 = NEW_int(A->elt_size_in_int);
 
 
-	/*------------------------------------------------------------------------*/
-// This structure is only for storing information related to the shallow
-// schreier forest AI code. The following structure stores information
-// such as the average and optimal word lengths of the original forest,
-// the number of nodes in the original forest etc.
-	/*------------------------------------------------------------------------*/
-	struct shallow_tree_generators_ai_info {
-		int total_points_in_old_forest;
-		double average_word_length_of_old_forest;
-		int num_generators_in_old_forest;
-		int old_nb_orbits;
-		int* original_num_nodes_in_old_tree;
-
-		int total_points_in_new_forest;
-		double average_word_length_of_new_forest;
-		int num_generators_in_new_forest;
-		int new_nb_orbits;
-		int* original_num_nodes_in_new_tree;
-		int steps_taken;
-	};
-
-	shallow_tree_generators_ai_info forest_info = {
-			.total_points_in_old_forest = get_num_points(),
-			.average_word_length_of_old_forest = get_average_word_length(),
-			.num_generators_in_old_forest = this->gens.len, .old_nb_orbits =
-					nb_orbits };
-
-	forest_info.original_num_nodes_in_old_tree = NEW_int(this->nb_orbits);
-	forest_info.original_num_nodes_in_new_tree = NEW_int(this->nb_orbits);
-
-// fill original number of nodes in old tree
-	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-		forest_info.original_num_nodes_in_old_tree[orbit_idx] =
-				orbit_len[orbit_idx];
-	}
-	/*------------------------------------------------------------------------*/
-
-// Make a copy of the current generators
+	chrono_ C0;
+	// Make a copy of the current generators
 	vector_ge* gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	for (int el = 0; el < this->gens.len; el++)
 		gens->append(this->gens.ith(el));
+	cout << BRIGHT_RED;
+	cout << "Creating new generating set took: " << C0.calculateDuration(chrono_()) << endl;
+	cout << RESET_COLOR_SCHEME;
 
-// Create a new schreier forest with the same generators
+
+
+	C0.reset();
+	// Create a new schreier forest with the same generators
 	schreier* S = NEW_OBJECT(schreier);
 	S->init(A);
-	S->init_generators(*gens);
+//	S->init_generators(*gens);
+	S->init_generators_recycle_images(*gens, images);
 	S->compute_all_point_orbits(verbose_level);
+	cout << BRIGHT_RED;
+	cout << "compute_all_point_orbits took: " << C0.calculateDuration(chrono_()) << endl;
+	cout << RESET_COLOR_SCHEME;
 
-	//if (this->nb_orbits) {
-		for (int step = 0, ns = 5; step < ns; ++step) {
 
-			schreier* previous_schreier = S;
+	cout << BRIGHT_RED ;
+	cout << "Nodes: " << S->get_num_points()  << endl;
+	cout << RESET_COLOR_SCHEME ;
 
-//
-			int random_orbit_idx = random_integer(S->nb_orbits);
-			int random_orbit_idx_cpy = random_orbit_idx;
-			int random_point_idx = random_integer(
-					S->orbit_len[random_orbit_idx]);
-			int random_point = S->orbit[S->orbit_first[random_orbit_idx]
-					+ random_point_idx];
-			int random_generator_idx = random_integer(gens->len);
 
-			transporter_from_orbit_rep_to_point(random_point,
-					random_orbit_idx_cpy, Elt1, 0 /*verbose_level*/);
+	for (int step = 0, ns = 1; step < ns; ++step) {
 
-// Create a new generating set with the new element
-			vector_ge* new_gens = NEW_OBJECT(vector_ge);
-			new_gens->init(A);
-			for (int el = 0; el < gens->len; el++) {
-				(el != random_generator_idx) ?
-						new_gens->append(gens->ith(el)) :
-						new_gens->append(Elt1);
-			}
-			FREE_OBJECT(gens);
-			gens = new_gens;
-
-//
-			S = NEW_OBJECT(schreier);
-			S->init(A);
-			S->init_generators(*gens);
-			S->compute_all_point_orbits(verbose_level);
-
-			if (S->get_num_points() != forest_info.total_points_in_old_forest
-					|| S->nb_orbits != this->nb_orbits) {
-// if the number of points in the new forest is not
-// equal to the number of nodes in the old forest,
-// then an invalid move has been made.
-				FREE_OBJECT(S);
-				S = previous_schreier;
-				break;
-			}
-
-			FREE_OBJECT(previous_schreier);
-
-			forest_info.steps_taken = step + 1;
-			forest_info.total_points_in_new_forest = S->get_num_points();
-			forest_info.average_word_length_of_new_forest =
-					S->get_average_word_length();
-			forest_info.num_generators_in_new_forest = S->gens.len;
-			forest_info.new_nb_orbits = S->nb_orbits;
-			for (int orbit_idx = 0; orbit_idx < S->nb_orbits; orbit_idx++) {
-				forest_info.original_num_nodes_in_new_tree[orbit_idx] =
-						S->orbit_len[orbit_idx];
-			}
-
+		schreier* previous_schreier = S;
+		if (S->nb_orbits == 0) {
+			cout<<BRIGHT_RED;
+			printf("S->nb_orbits=%d\n", S->nb_orbits);
+			cout<<RESET_COLOR_SCHEME;
+			break;
 		}
 
-		this->init(A);
-		this->init_generators(S->gens);
-		this->compute_all_point_orbits(verbose_level);
-	//}
+		auto total_points_in_old_forest = S->get_num_points();
 
-	//cout << endl;
-	//cout << BRIGHT_RED;
-//	cout << LINE << endl;
-//	cout << "Information of shallow forest" << endl;
-//	cout << LINE << endl;
-//
-//	cout << "Information of old forest:" << endl;
-//	cout << "  Total Points: ";
-//	cout << forest_info.total_points_in_old_forest << endl;
-//	cout << "  Average Word Length: ";
-//	cout << forest_info.average_word_length_of_old_forest << endl;
-//	cout << "  Num. Generators: ";
-//	cout << forest_info.num_generators_in_old_forest << endl;
-//	cout << "  nb_orbits: ";
-//	cout << forest_info.old_nb_orbits << endl;
-//	cout << "  Nodes in each orbit: [";
-//	for (int orbit_idx = 0; orbit_idx < forest_info.old_nb_orbits;
-//			orbit_idx++) {
-//		cout << forest_info.original_num_nodes_in_old_tree[orbit_idx];
-//		if (orbit_idx + 1 != nb_orbits) {
-//			cout << ", ";
-//		}
-//	}
-//	cout << "]" << endl;
-//
-//	cout << endl;
-//
-//	cout << "Information of new forest:" << endl;
-//	cout << "  Total Points: ";
-//	cout << forest_info.total_points_in_new_forest << endl;
-//	cout << "  Average Word Length: ";
-//	cout << forest_info.average_word_length_of_new_forest << endl;
-//	cout << "  Num. Generators: ";
-//	cout << forest_info.num_generators_in_new_forest << endl;
-//	cout << "  nb_orbits: ";
-//	cout << forest_info.new_nb_orbits << endl;
-//	cout << "  Nodes in each orbit: [";
-//	for (int orbit_idx = 0; orbit_idx < forest_info.new_nb_orbits;
-//			orbit_idx++) {
-//		cout << forest_info.original_num_nodes_in_new_tree[orbit_idx];
-//		if (orbit_idx + 1 != nb_orbits) {
-//			cout << ", ";
-//		}
-//	}
-//	cout << "]" << endl;
-//	cout << "  steps taken: ";
-//	cout << forest_info.steps_taken << endl;
-//
-//	cout << LINE << endl;
-//	cout << RESET_COLOR_SCHEME << endl;
+		//
+		int random_orbit_idx = random_integer(S->nb_orbits);
+		int random_orbit_idx_cpy = random_orbit_idx;
+		int random_point_idx = random_integer(S->orbit_len[random_orbit_idx]);
+		int random_point = S->orbit[S->orbit_first[random_orbit_idx]
+				+ random_point_idx];
+		int random_generator_idx = random_integer(gens->len);
+
+
+		C0.reset();
+		transporter_from_orbit_rep_to_point(random_point,
+				random_orbit_idx_cpy, Elt1, 0 /*verbose_level*/);
+		cout << BRIGHT_RED;
+		cout << "Finding new generator took: " << C0.calculateDuration(chrono_()) << endl;
+		cout << RESET_COLOR_SCHEME;
+
+
+		C0.reset();
+		// Create a new generating set with the new element
+		vector_ge* new_gens = NEW_OBJECT(vector_ge);
+		new_gens->init(A);
+		for (int el = 0; el < gens->len; el++) {
+			if (el != random_generator_idx) {
+				new_gens->append(gens->ith(el));
+			} else {
+				new_gens->append(Elt1);
+			}
+		}
+		FREE_OBJECT(gens);
+		gens = new_gens;
+		cout << BRIGHT_RED;
+		cout << "Creating new generating set took: " << C0.calculateDuration(chrono_()) << endl;
+		cout << RESET_COLOR_SCHEME;
+
+
+		C0.reset();
+		// Create a new schreier tree with the new generating set
+		S = NEW_OBJECT(schreier);
+		S->init(A);
+//		S->init_generators(*gens);
+		S->init_generators_recycle_images(S->nb_images, gens->ith(0), S->images, random_generator_idx);
+		S->compute_all_point_orbits(verbose_level);
+		cout << BRIGHT_RED;
+		cout << "compute_all_point_orbits_recycle took: " << C0.calculateDuration(chrono_()) << endl;
+		cout << RESET_COLOR_SCHEME;
+
+
+		// if the number of points in the new forest is not
+		// equal to the number of nodes in the old forest,
+		// then an invalid move has been made.
+		if (S->get_num_points() != total_points_in_old_forest
+				|| S->nb_orbits != this->nb_orbits) {
+			FREE_OBJECT(S);
+			S = previous_schreier;
+			break;
+		}
+
+
+		FREE_OBJECT(previous_schreier);
+
+	}
+
+	C0.reset();
+	this->init(A);
+//	this->init_generators(S->gens);
+	this->init_generators_recycle_images(S->gens, S->images);
+	this->compute_all_point_orbits(verbose_level);
+	cout << BRIGHT_RED;
+	cout << "compute_all_point_orbits took: " << C0.calculateDuration(chrono_()) << endl;
+	cout << RESET_COLOR_SCHEME;
+
 
 	FREE_OBJECT(S);
 	FREE_OBJECT(gens);
 	FREE_int(Elt1);
 
-// Free memory in shallow_tree_generators_ai_info struct
-	FREE_int(forest_info.original_num_nodes_in_new_tree);
-	FREE_int(forest_info.original_num_nodes_in_old_tree);
 
-//	cout << BRIGHT_GREEN << endl;
-//	this->print_and_list_orbits(cout);
-//	cout << RESET_COLOR_SCHEME << endl;
 	if (f_v) {
 		cout << "schreier::shallow_tree_generators_ai done" << endl;
 	}
