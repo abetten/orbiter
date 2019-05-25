@@ -1738,7 +1738,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	int mtx_n2;
 
 	nb_gens = SG->gens->len;
-	degree = W->dimension_of_tensor_action;
+	degree = W->degree_of_tensor_action;
 	mtx_n = W->dimension_of_tensor_action;
 	mtx_n2 = mtx_n * mtx_n;
 
