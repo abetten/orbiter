@@ -513,6 +513,8 @@ class schreier {
 
 public:
 	action *A;
+	int f_images_only;
+	int degree;
 	vector_ge gens;
 	vector_ge gens_inv;
 	int nb_images;
@@ -556,26 +558,37 @@ public:
 	void freeself();
 	void delete_images();
 	void init_images(int nb_images, int verbose_level);
+	void init_images_only(int nb_images,
+			int degree, int *images, int verbose_level);
 	void images_append();
 	void init(action *A);
+	void allocate_tables();
 	void init2();
 	void initialize_tables();
 	void init_single_generator(int *elt);
 	void init_generators(vector_ge &generators);
-	void init_images_recycle(int nb_images, int **old_images, int idx_deleted_generator, int verbose_level);
-	void init_images_recycle(int nb_images, int **old_images, int verbose_level=0);
+	void init_images_recycle(int nb_images,
+			int **old_images,
+			int idx_deleted_generator,
+			int verbose_level);
+	void init_images_recycle(int nb_images,
+			int **old_images, int verbose_level=0);
 	void init_generators(int nb, int *elt);
-	void init_generators_recycle_images(vector_ge &generators, int **old_images,
-													int idx_generator_to_delete);
-	void init_generators_recycle_images(vector_ge &generators, int **old_images);
+	void init_generators_recycle_images(
+			vector_ge &generators, int **old_images,
+			int idx_generator_to_delete);
+	void init_generators_recycle_images(
+			vector_ge &generators, int **old_images);
 
 
 		// elt must point to nb * A->elt_size_in_int 
 		// int's that are 
 		// group elements in int format
-	void init_generators_recycle_images(int nb, int *elt, int **old_images,
-											int idx_generator_to_delete);
-	void init_generators_recycle_images(int nb, int *elt, int **old_images);
+	void init_generators_recycle_images(int nb,
+			int *elt, int **old_images,
+			int idx_generator_to_delete);
+	void init_generators_recycle_images(int nb,
+			int *elt, int **old_images);
 	void init_generators_by_hdl(int nb_gen, int *gen_hdl, 
 		int verbose_level);
 	int get_image(int i, int gen_idx, int verbose_level);
