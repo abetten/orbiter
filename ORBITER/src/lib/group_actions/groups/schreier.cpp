@@ -2407,7 +2407,7 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 //get_schreier_vector_compact(sv, f_trivial_group);
 	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
 
-#if 1
+#if 0
 	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
 
 #elif 0
@@ -2416,7 +2416,7 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 			verbose_level);
 	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
 
-#elif 0
+#elif 1
 
 	this->shallow_tree_generators_ai(verbose_level);
 	Schreier_vector->init_from_schreier(this, f_trivial_group, verbose_level);
@@ -2444,9 +2444,11 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 
 void schreier::shallow_tree_generators_ai(int verbose_level)
 {
+#if 0
 	if (this->get_num_points() < 30000) {
 		return;
 	}
+#endif
 
 	//verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -2472,10 +2474,10 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 
 	chrono_ C0;
 	// Make a copy of the current generators
-	vector_ge* gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	vector_ge* gens2 = NEW_OBJECT(vector_ge);
+	gens2->init(A);
 	for (int el = 0; el < this->gens.len; el++)
-		gens->append(this->gens.ith(el));
+		gens2->append(this->gens.ith(el));
 
 	cout << "Creating new generating set took: " << C0.calculateDuration(chrono_()) << endl;
 
@@ -2487,7 +2489,7 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 	schreier* S = NEW_OBJECT(schreier);
 	S->init(A);
 //	S->init_generators(*gens);
-	S->init_generators_recycle_images(*gens, images);
+	S->init_generators_recycle_images(*gens2, images);
 	S->compute_all_point_orbits(verbose_level);
 
 	cout << "compute_all_point_orbits took: " << C0.calculateDuration(chrono_()) << endl;
@@ -2517,12 +2519,19 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 		int random_point_idx = random_integer(S->orbit_len[random_orbit_idx]);
 		int random_point = S->orbit[S->orbit_first[random_orbit_idx]
 				+ random_point_idx];
-		int random_generator_idx = random_integer(gens->len);
+		int random_generator_idx = random_integer(gens2->len);
 
 
 		C0.reset();
 		transporter_from_orbit_rep_to_point(random_point,
 				random_orbit_idx_cpy, Elt1, 0 /*verbose_level*/);
+
+		if (TRUE) {
+			cout << "picking new generator:" << endl;
+			A->element_print_quick(Elt1, cout);
+			cout << "random_generator_idx=" << random_generator_idx << endl;
+			cout << "gens->len=" << gens2->len << endl;
+		}
 
 		cout << "Finding new generator took: " << C0.calculateDuration(chrono_()) << endl;
 
@@ -2532,15 +2541,15 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 		// Create a new generating set with the new element
 		vector_ge* new_gens = NEW_OBJECT(vector_ge);
 		new_gens->init(A);
-		for (int el = 0; el < gens->len; el++) {
+		for (int el = 0; el < gens2->len; el++) {
 			if (el != random_generator_idx) {
-				new_gens->append(gens->ith(el));
+				new_gens->append(gens2->ith(el));
 			} else {
 				new_gens->append(Elt1);
 			}
 		}
-		FREE_OBJECT(gens);
-		gens = new_gens;
+		FREE_OBJECT(gens2);
+		gens2 = new_gens;
 
 		cout << "Creating new generating set took: " << C0.calculateDuration(chrono_()) << endl;
 
@@ -2551,8 +2560,20 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 		S = NEW_OBJECT(schreier);
 		S->init(A);
 //		S->init_generators(*gens);
-		S->init_generators_recycle_images(S->nb_images, gens->ith(0), S->images, random_generator_idx);
-		S->compute_all_point_orbits(verbose_level);
+
+		S->init_generators_recycle_images(
+				previous_schreier->nb_images,
+				gens2->ith(0),
+				previous_schreier->images,
+				random_generator_idx);
+
+		if (TRUE) {
+			cout << "before S->compute_all_point_orbits" << endl;
+		}
+		S->compute_all_point_orbits(1 /*verbose_level*/);
+		if (TRUE) {
+			cout << "after S->compute_all_point_orbits" << endl;
+		}
 
 		cout << "compute_all_point_orbits_recycle took: " << C0.calculateDuration(chrono_()) << endl;
 
@@ -2561,9 +2582,18 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 		// if the number of points in the new forest is not
 		// equal to the number of nodes in the old forest,
 		// then an invalid move has been made.
-		if (S->get_num_points() != total_points_in_old_forest
-				|| S->nb_orbits != this->nb_orbits) {
+
+		if (TRUE) {
+			cout << "nb_orbits=" << nb_orbits << endl;
+			cout << "S->nb_orbits=" << S->nb_orbits << endl;
+		}
+
+		if (/*S->get_num_points() != total_points_in_old_forest
+				|| */ S->nb_orbits != this->nb_orbits) {
 			FREE_OBJECT(S);
+			if (TRUE) {
+				cout << "schreier::shallow_tree_generators_ai reverting to previous schreier" << endl;
+			}
 			S = previous_schreier;
 			break;
 		}
@@ -2571,6 +2601,11 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 
 		FREE_OBJECT(previous_schreier);
 
+	}
+	if (TRUE) {
+		cout << "schreier::shallow_tree_generators_ai after loop" << endl;
+		cout << "S->gens=" << endl;
+		S->gens.print_quick(cout);
 	}
 
 	C0.reset();
@@ -2581,10 +2616,15 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 
 	cout << "compute_all_point_orbits took: " << C0.calculateDuration(chrono_()) << endl;
 
+	if (TRUE) {
+		cout << "schreier::shallow_tree_generators_ai finished" << endl;
+		cout << "gens=" << endl;
+		gens.print_quick(cout);
+	}
 
 
 	FREE_OBJECT(S);
-	FREE_OBJECT(gens);
+	FREE_OBJECT(gens2);
 	FREE_int(Elt1);
 
 
