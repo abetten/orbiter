@@ -2423,9 +2423,9 @@ schreier_vector *schreier::get_schreier_vector(int gen_hdl_first, int nb_gen,
 
 #endif
 
-	cout << BRIGHT_RED;
+
 	cout << "nb_times_image_of_called=" << A->ptr->nb_times_image_of_called << endl;
-	cout << RESET_COLOR_SCHEME;
+
 
 	if (nb_gen) {
 		Schreier_vector->init_local_generators(&gens, 0 /*verbose_level */);
@@ -2455,9 +2455,9 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 	int *Elt1;
 
 	if (f_v) {
-		cout << BRIGHT_RED ;
+
 		cout << "schreier::shallow_tree_generators_ai" << endl;
-		cout << RESET_COLOR_SCHEME ;
+
 	}
 
 
@@ -2476,9 +2476,9 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 	gens->init(A);
 	for (int el = 0; el < this->gens.len; el++)
 		gens->append(this->gens.ith(el));
-	cout << BRIGHT_RED;
+
 	cout << "Creating new generating set took: " << C0.calculateDuration(chrono_()) << endl;
-	cout << RESET_COLOR_SCHEME;
+
 
 
 
@@ -2489,23 +2489,23 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 //	S->init_generators(*gens);
 	S->init_generators_recycle_images(*gens, images);
 	S->compute_all_point_orbits(verbose_level);
-	cout << BRIGHT_RED;
+
 	cout << "compute_all_point_orbits took: " << C0.calculateDuration(chrono_()) << endl;
-	cout << RESET_COLOR_SCHEME;
 
 
-	cout << BRIGHT_RED ;
+
+
 	cout << "Nodes: " << S->get_num_points()  << endl;
-	cout << RESET_COLOR_SCHEME ;
+
 
 
 	for (int step = 0, ns = 1; step < ns; ++step) {
 
 		schreier* previous_schreier = S;
 		if (S->nb_orbits == 0) {
-			cout<<BRIGHT_RED;
+
 			printf("S->nb_orbits=%d\n", S->nb_orbits);
-			cout<<RESET_COLOR_SCHEME;
+
 			break;
 		}
 
@@ -2523,9 +2523,9 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 		C0.reset();
 		transporter_from_orbit_rep_to_point(random_point,
 				random_orbit_idx_cpy, Elt1, 0 /*verbose_level*/);
-		cout << BRIGHT_RED;
+
 		cout << "Finding new generator took: " << C0.calculateDuration(chrono_()) << endl;
-		cout << RESET_COLOR_SCHEME;
+
 
 
 		C0.reset();
@@ -2541,9 +2541,9 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 		}
 		FREE_OBJECT(gens);
 		gens = new_gens;
-		cout << BRIGHT_RED;
+
 		cout << "Creating new generating set took: " << C0.calculateDuration(chrono_()) << endl;
-		cout << RESET_COLOR_SCHEME;
+
 
 
 		C0.reset();
@@ -2553,9 +2553,9 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 //		S->init_generators(*gens);
 		S->init_generators_recycle_images(S->nb_images, gens->ith(0), S->images, random_generator_idx);
 		S->compute_all_point_orbits(verbose_level);
-		cout << BRIGHT_RED;
+
 		cout << "compute_all_point_orbits_recycle took: " << C0.calculateDuration(chrono_()) << endl;
-		cout << RESET_COLOR_SCHEME;
+
 
 
 		// if the number of points in the new forest is not
@@ -2578,9 +2578,9 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 //	this->init_generators(S->gens);
 	this->init_generators_recycle_images(S->gens, S->images);
 	this->compute_all_point_orbits(verbose_level);
-	cout << BRIGHT_RED;
+
 	cout << "compute_all_point_orbits took: " << C0.calculateDuration(chrono_()) << endl;
-	cout << RESET_COLOR_SCHEME;
+
 
 
 	FREE_OBJECT(S);
