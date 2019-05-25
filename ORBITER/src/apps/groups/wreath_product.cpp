@@ -27,7 +27,11 @@ int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
 void wreath_product_print_set(ostream &ost, int len, int *S, void *data);
 void wreath_product_orbits_CUDA(wreath_product* W,
-		strong_generators* SG, action* A, int*& result, int verbosity=0);
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int verbosity=0);
 
 
 typedef class tensor_product tensor_product;
@@ -953,7 +957,8 @@ template <typename T>
 __host__
 void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C,
 		int* perms, int* result, int q=0, int axis=0,
-		bool ea=true, bool eb=true, bool ec=true) {
+		bool ea = true, bool eb = true, bool ec = true)
+{
 	size_t m = A.nrows;
 	size_t n = A.ncols;
 
@@ -979,10 +984,10 @@ void cuda_dot(Matrix<T>& A, Matrix<T>& B, Matrix<T>& C,
 
 	// Find out how many blocks are needed
 	int block_size = 16;
-	int num_blocks = (num_threads + block_size * block_size - 1) / (block_size*block_size) ;
+	int num_blocks = (num_threads + block_size * block_size - 1) / (block_size * block_size) ;
 	int gridDim_y = (C.ncols + block_size - 1) / block_size;
 	int gridDim_x = (C.nrows + block_size - 1) / block_size;
-	if (num_blocks > gridDim_x*gridDim_y || num_threads > gridDim_x*gridDim_y*pow(block_size,2)) {
+	if (num_blocks > gridDim_x * gridDim_y || num_threads > gridDim_x * gridDim_y * pow(block_size,2)) {
 		cout << "Error:" << __FILE__ << ":" << __LINE__ <<
 		"number of required blocks is greater than number of blocks set."
 		<< endl;
@@ -1542,12 +1547,26 @@ void tensor_product::init(int argc, const char **argv,
 			"before wreath_product_orbits_CUDA:" << endl;
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
-	wreath_product_orbits_CUDA(W, SG, A, result);
+	int nb_gens, degree;
+
+	wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree);
 
 	cout << "tensor_product::init "
 			"after wreath_product_orbits_CUDA:" << endl;
 	cout << __FILE__ << ":" << __LINE__ << endl;
+	cout << "we found " << nb_gens << " generators of degree " << degree << endl;
 
+
+	schreier *Sch;
+
+	Sch = NEW_OBJECT(schreier);
+
+	Sch->init_images_only(nb_gens,
+			degree, result, verbose_level);
+	cout << "computing point orbits from image table:" << endl;
+	Sch->compute_all_point_orbits(verbose_level);
+	cout << "computing point orbits from image table done" << endl;
+	cout << "We found " << Sch->nb_orbits << " orbits" << endl;
 
 
 #if 0
@@ -1685,7 +1704,8 @@ void wreath_unrank_point_func(int *v, int rk, void *data)
 }
 
 
-void wreath_product_print_set(ostream &ost, int len, int *S, void *data)
+void wreath_product_print_set(ostream &ost,
+		int len, int *S, void *data)
 {
 	tensor_product *T;
 	int i;
@@ -1707,6 +1727,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 								strong_generators* SG,
 								action* A,
 								int*& result,
+								int &nb_gens, int &degree,
 								int verbosity) {
 #ifdef __CUDACC__
 
@@ -1736,9 +1757,16 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
 
 
+	// matrix M contains in its rows all vectors associated with points
+	// of the projective geometry:
+	// M has size W->degree_of_tensor_action x mtx_n
 
 	Matrix<int> M (W->degree_of_tensor_action, mtx_n);
 	PGL_Vector_unrank_Matrix (M, mtx_n, W->q, W->degree_of_tensor_action);
+
+	// matrix N contains the matrices of all projectivities
+	// which generate the group, stacked on top of each other.
+	// So, N has size (SG->gens->len * mtx_n) x mtx_n
 
 	Matrix<int> N (SG->gens->len * mtx_n, mtx_n);
 	for (size_t i = 0; i < N.nrows; ++i) {
@@ -1747,9 +1775,19 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 		}
 	}
 
-	result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
+	// MN = M * N:
 
 	Matrix<int> MN (M.nrows, N.ncols);
+
+
+	// result is the ranks of the images.
+	// Each row of result is a permutation of the points of projective space
+	// So, result is SG->gens->len x W->degree_of_tensor_action
+
+	result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
+
+	// perform the parallel matrix multiplication on the GPU:
+
 	cuda_dot(M, N, MN, perms, result, W->q);
 
 //	cout << "result:" << endl;
@@ -1760,19 +1798,23 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 	for (size_t i = 0; i < SG->gens->len; i++) {
 		cout << "testing result " << i << " / " << SG->gens->len << ": ";
-		if (Combi.is_permutation(result + i * W->degree_of_tensor_action, W->degree_of_tensor_action)) {
+		if (Combi.is_permutation(
+				result + i * W->degree_of_tensor_action,
+				W->degree_of_tensor_action)) {
 			cout << "OK" << endl;
 		}
 		else {
 			cout << "not OK" << endl;
 		}
 	}
+	cout << "We found " << SG->gens->len << " permutations of "
+			"degree " << W->degree_of_tensor_action << endl;
 
 
 	cout << __FILE__ << ":" << __LINE__ << endl;
 	exit(0);
 
-	FREE_int (generator_stack);
+	FREE_int(generator_stack);
 	FREE_int(perms);
 
 #endif
