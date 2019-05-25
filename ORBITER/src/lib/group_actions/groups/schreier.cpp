@@ -1027,7 +1027,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 						"expanding point " << cur_pt << endl;
 				}
 		}
-		for (i = 0; i < gens.len; i++) {
+		for (i = 0; i < nb_images /* gens.len*/; i++) {
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit "
 						"expanding point " << cur_pt
@@ -1155,7 +1155,7 @@ void schreier::compute_point_orbit_with_limited_depth(
 					<< cur << " total=" << total
 					<< " applying generators to " << cur_pt << endl;
 			}
-		for (i = 0; i < gens.len; i++) {
+		for (i = 0; i < nb_images /* gens.len */; i++) {
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit_with_limited_depth "
 						"applying generator "
