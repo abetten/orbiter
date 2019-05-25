@@ -1561,6 +1561,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	Sch = NEW_OBJECT(schreier);
 
+	cout << "before Sch->init_images_only" << endl;
 	Sch->init_images_only(nb_gens,
 			degree, result, verbose_level);
 	cout << "computing point orbits from image table:" << endl;
