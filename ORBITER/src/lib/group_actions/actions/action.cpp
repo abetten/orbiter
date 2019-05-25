@@ -2197,142 +2197,6 @@ void action::init_group_from_generators_by_base_images(
 	FREE_int(Elt);
 }
 
-void action::print_symmetry_group_type(ostream &ost)
-{
-	action_print_symmetry_group_type(ost, type_G);
-	if (f_has_subaction) {
-		ost << "->";
-		subaction->print_symmetry_group_type(ost);
-		}
-	//else {
-		//ost << "no subaction";
-		//}
-	
-}
-
-void action::report(ostream &ost)
-{
-	ost << "Group action $" << label_tex
-			<< "$ of degree " << degree << "\\\\" << endl;
-	if (f_has_sims) {
-		longinteger_object go;
-
-		Sims->group_order(go);
-		ost << "Group order " << go << "\\\\" << endl;
-		ost << "tl=$";
-		int_vec_print(ost, Sims->orbit_len, base_len);
-		ost << "$\\\\" << endl;
-		}
-	if (base_len) {
-		ost << "Base: $";
-		int_vec_print(ost, base, base_len);
-		ost << "$\\\\" << endl;
-		}
-	if (f_has_strong_generators) {
-		ost << "{\\small\\arraycolsep=2pt" << endl;
-		Strong_gens->print_generators_tex(ost);
-		ost << "}" << endl;
-	}
-	else {
-		ost << "Does not have strong generators.\\\\" << endl;
-	}
-}
-
-void action::print_info()
-{
-	cout << "ACTION " << label << " degree=" << degree << " of type ";
-	print_symmetry_group_type(cout);
-	cout << endl;
-	cout << "low_level_point_size=" << low_level_point_size;
-	cout << ", f_has_sims=" << f_has_sims;
-	cout << ", f_has_strong_generators=" << f_has_strong_generators;
-	cout << endl;
-
-	if (f_is_linear) {
-		cout << "linear of dimension " << dimension << endl;
-		}
-
-	if (base_len) {
-		cout << "base: ";
-		int_vec_print(cout, base, base_len);
-		cout << endl;
-		}
-	if (f_has_sims) {
-		cout << "has sims" << endl;
-		longinteger_object go;
-
-		Sims->group_order(go);
-		cout << "Order " << go << " = ";
-		int_vec_print(cout, Sims->orbit_len, base_len);
-		cout << endl;
-		}
-	cout << endl;
-
-}
-
-void action::report_basic_orbits(ostream &ost)
-{
-	int i;
-
-	ost << "The base has length " << base_len << "\\\\" << endl;
-	ost << "The basic orbits are: \\\\" << endl;
-	for (i = 0; i < base_len; i++) {
-		ost << "Basic orbit " << i << " is orbit of " << base[i]
-			<< " of length " << transversal_length[i] << "\\\\" << endl;
-	}
-}
-
-void action::print_base()
-{
-	cout << "action " << label << " has base ";
-	int_vec_print(cout, base, base_len);
-	cout << endl;
-}
-
-void action::print_points(ostream &ost)
-{
-	int i;
-	int *v;
-
-	cout << "action::print_points "
-			"low_level_point_size=" << low_level_point_size <<  endl;
-	v = NEW_int(low_level_point_size);
-	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|c|c|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "i & P_{i}\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < degree; i++) {
-		unrank_point(i, v);
-		ost << i << " & ";
-		int_vec_print(ost, v, low_level_point_size);
-		ost << "\\\\" << endl;
-		if (((i + 1) % 10) == 0) {
-			ost << "\\hline" << endl;
-			ost << "\\end{array}" << endl;
-			if (((i + 1) % 50) == 0) {
-				ost << "$$" << endl;
-				ost << "$$" << endl;
-			}
-			else {
-				ost << ", \\;" << endl;
-			}
-			ost << "\\begin{array}{|c|c|c|}" << endl;
-			ost << "\\hline" << endl;
-			ost << "i & P_{i}\\\\" << endl;
-			ost << "\\hline" << endl;
-			ost << "\\hline" << endl;
-		}
-	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$}%" << endl;
-	FREE_int(v);
-	cout << "action::print_points done" << endl;
-}
-
 void action::group_order(longinteger_object &go)
 {
 	longinteger_domain D;
@@ -2340,52 +2204,6 @@ void action::group_order(longinteger_object &go)
 	D.multiply_up(go, transversal_length, base_len);
 	
 }
-
-void action::print_group_order(ostream &ost)
-{
-	longinteger_object go;
-	group_order(go);
-	cout << go;
-}
-
-void action::print_group_order_long(ostream &ost)
-{
-	int i;
-	
-	longinteger_object go;
-	group_order(go);
-	cout << go << " =";
-	for (i = 0; i < base_len; i++) {
-		cout << " " << transversal_length[i];
-		}
-}
-
-void action::print_vector(vector_ge &v)
-{
-	int i, l;
-	
-	l = v.len;
-	cout << "vector of " << l << " group elements:" << endl;
-	for (i = 0; i < l; i++) {
-		cout << i << " : " << endl;
-		element_print_quick(v.ith(i), cout);
-		cout << endl;
-		}
-}
-
-void action::print_vector_as_permutation(vector_ge &v)
-{
-	int i, l;
-	
-	l = v.len;
-	cout << "vector of " << l << " group elements:" << endl;
-	for (i = 0; i < l; i++) {
-		cout << i << " : ";
-		element_print_as_permutation(v.ith(i), cout);
-		cout << endl;
-		}
-}
-
 
 
 
@@ -2532,324 +2350,6 @@ void action::minimize_base_images(int level,
 	FREE_int(Elt2);
 }
 
-
-void action::element_conjugate_bvab(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	int *Elt1, *Elt2;
-
-
-	if (f_v) {
-		cout << "action::element_conjugate_bvab" << endl;
-		}
-	Elt1 = NEW_int(elt_size_in_int);
-	Elt2 = NEW_int(elt_size_in_int);
-	if (f_v) {
-		cout << "action::element_conjugate_bvab A=" << endl;
-		element_print_quick(Elt_A, cout);
-		cout << "action::element_conjugate_bvab B=" << endl;
-		element_print_quick(Elt_B, cout);
-		}
-
-	element_invert(Elt_B, Elt1, 0);
-	element_mult(Elt1, Elt_A, Elt2, 0);
-	element_mult(Elt2, Elt_B, Elt_C, 0);
-	if (f_v) {
-		cout << "action::element_conjugate_bvab C=B^-1 * A * B" << endl;
-		element_print_quick(Elt_C, cout);
-		}
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	if (f_v) {
-		cout << "action::element_conjugate_bvab done" << endl;
-		}
-}
-
-void action::element_conjugate_babv(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	int *Elt1, *Elt2;
-
-
-	if (f_v) {
-		cout << "action::element_conjugate_babv" << endl;
-		}
-	Elt1 = NEW_int(elt_size_in_int);
-	Elt2 = NEW_int(elt_size_in_int);
-
-	element_invert(Elt_B, Elt1, 0);
-	element_mult(Elt_B, Elt_A, Elt2, 0);
-	element_mult(Elt2, Elt1, Elt_C, 0);
-	
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-}
-
-void action::element_commutator_abavbv(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	int *Elt1, *Elt2, *Elt3, *Elt4;
-
-
-	if (f_v) {
-		cout << "action::element_commutator_abavbv" << endl;
-		}
-	Elt1 = NEW_int(elt_size_in_int);
-	Elt2 = NEW_int(elt_size_in_int);
-	Elt3 = NEW_int(elt_size_in_int);
-	Elt4 = NEW_int(elt_size_in_int);
-
-	element_invert(Elt_A, Elt1, 0);
-	element_invert(Elt_B, Elt2, 0);
-	element_mult(Elt_A, Elt_B, Elt3, 0);
-	element_mult(Elt3, Elt1, Elt4, 0);
-	element_mult(Elt4, Elt2, Elt_C, 0);
-	
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
-	FREE_int(Elt4);
-}
-
-void action::read_representatives(char *fname,
-		int *&Reps, int &nb_reps, int &size, int verbose_level)
-{
-	int f_casenumbers = FALSE;
-	int nb_cases;
-	int *Set_sizes;
-	int **Sets;
-	char **Ago_ascii;
-	char **Aut_ascii; 
-	int *Casenumbers;
-	int i, j;
-	file_io Fio;
-
-	cout << "action::read_file_and_print_representatives "
-			"reading file " << fname << endl;
-	
-	Fio.read_and_parse_data_file_fancy(fname,
-		f_casenumbers, 
-		nb_cases, 
-		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
-		Casenumbers, 
-		0/*verbose_level*/);
-	nb_reps = nb_cases;
-	size = Set_sizes[0];
-	Reps = NEW_int(nb_cases * size);
-	for (i = 0; i < nb_cases; i++) {
-		for (j = 0; j < size; j++) {
-			Reps[i * size + j] = Sets[i][j];
-			}
-		}
-	Fio.free_data_fancy(nb_cases,
-		Set_sizes, Sets, 
-		Ago_ascii, Aut_ascii, 
-		Casenumbers);
-}
-
-void action::read_representatives_and_strong_generators(
-	char *fname, int *&Reps,
-	char **&Aut_ascii, int &nb_reps, int &size, int verbose_level)
-{
-	int f_casenumbers = FALSE;
-	int nb_cases;
-	int *Set_sizes;
-	int **Sets;
-	char **Ago_ascii;
-	//char **Aut_ascii; 
-	int *Casenumbers;
-	int i, j;
-	file_io Fio;
-	
-
-	cout << "action::read_file_and_print_representatives "
-			"reading file " << fname << endl;
-	
-	Fio.read_and_parse_data_file_fancy(fname,
-		f_casenumbers, 
-		nb_cases, 
-		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
-		Casenumbers, 
-		0/*verbose_level*/);
-	nb_reps = nb_cases;
-	size = Set_sizes[0];
-	Reps = NEW_int(nb_cases * size);
-	for (i = 0; i < nb_cases; i++) {
-		for (j = 0; j < size; j++) {
-			Reps[i * size + j] = Sets[i][j];
-			}
-		}
-	Fio.free_data_fancy(nb_cases,
-		Set_sizes, Sets, 
-		Ago_ascii, NULL /*Aut_ascii*/, 
-		Casenumbers);
-}
-
-void action::read_file_and_print_representatives(
-		char *fname, int f_print_stabilizer_generators)
-{
-	int f_casenumbers = FALSE;
-	int nb_cases;
-	int *Set_sizes;
-	int **Sets;
-	char **Ago_ascii;
-	char **Aut_ascii; 
-	int *Casenumbers;
-	int i;
-	file_io Fio;
-	
-
-	cout << "action::read_file_and_print_representatives "
-			"reading file "
-			<< fname << endl;
-	
-	Fio.read_and_parse_data_file_fancy(fname,
-		f_casenumbers, 
-		nb_cases, 
-		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
-		Casenumbers, 
-		0/*verbose_level*/);
-	for (i = 0; i < nb_cases; i++) {
-		cout << "Orbit " << i << " representative ";
-		int_vec_print(cout, Sets[i], Set_sizes[i]);
-		cout << endl;
-
-		group *G;
-		vector_ge *gens;
-		int *tl;
-
-		G = NEW_OBJECT(group);
-		G->init(this);
-		G->init_ascii_coding_to_sims(Aut_ascii[i]);
-		
-
-		longinteger_object go;
-
-		G->S->group_order(go);
-
-		gens = NEW_OBJECT(vector_ge);
-		tl = NEW_int(base_len);
-		G->S->extract_strong_generators_in_order(*gens, tl,
-				0 /* verbose_level */);
-		cout << "Stabilizer has order " << go << " tl=";
-		int_vec_print(cout, tl, base_len);
-		cout << endl;
-
-		if (f_print_stabilizer_generators) {
-			cout << "The stabilizer is generated by:" << endl;
-			gens->print(cout);
-			}
-
-		FREE_OBJECT(G);
-		FREE_OBJECT(gens);
-		FREE_int(tl);
-
-		}
-	Fio.free_data_fancy(nb_cases,
-		Set_sizes, Sets, 
-		Ago_ascii, Aut_ascii, 
-		Casenumbers);
-
-}
-
-void action::read_set_and_stabilizer(const char *fname, 
-	int no, int *&set, int &set_sz, sims *&stab, 
-	strong_generators *&Strong_gens, 
-	int &nb_cases, 
-	int verbose_level)
-{
-	int f_v = (verbose_level  >= 1);
-	int f_vv = (verbose_level  >= 2);
-	int f_casenumbers = FALSE;
-	//int nb_cases;
-	int *Set_sizes;
-	int **Sets;
-	char **Ago_ascii;
-	char **Aut_ascii; 
-	int *Casenumbers;
-	group *G;
-	int i;
-	file_io Fio;
-	
-
-	if (f_v) {
-		cout << "action::read_set_and_stabilizer "
-				"reading file " << fname
-				<< " no=" << no << endl;
-		}
-	
-	Fio.read_and_parse_data_file_fancy(fname,
-		f_casenumbers, 
-		nb_cases, 
-		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
-		Casenumbers, 
-		verbose_level - 1);
-		// GALOIS/util.C
-
-	if (f_vv) {
-		cout << "action::read_set_and_stabilizer "
-				"after read_and_parse_data_file_fancy" << endl;
-		cout << "Aut_ascii[no]=" << Aut_ascii[no] << endl;
-		cout << "Set_sizes[no]=" << Set_sizes[no] << endl;
-		}
-	
-	set_sz = Set_sizes[no];
-	set = NEW_int(set_sz);
-	for (i = 0; i < set_sz; i ++) {
-		set[i] = Sets[no][i];
-		}
-
-
-	G = NEW_OBJECT(group);
-	G->init(this);
-	if (f_vv) {
-		cout << "action::read_set_and_stabilizer "
-				"before G->init_ascii_coding_to_sims" << endl;
-		}
-	G->init_ascii_coding_to_sims(Aut_ascii[no]);
-	if (f_vv) {
-		cout << "action::read_set_and_stabilizer "
-				"after G->init_ascii_coding_to_sims" << endl;
-		}
-		
-	stab = G->S;
-	G->S = NULL;
-	G->f_has_sims = FALSE;
-
-	longinteger_object go;
-
-	stab->group_order(go);
-
-	
-	Strong_gens = NEW_OBJECT(strong_generators);
-	Strong_gens->init_from_sims(stab, 0);
-	f_has_strong_generators = TRUE;
-
-	if (f_vv) {
-		cout << "action::read_set_and_stabilizer "
-				"Group order=" << go << endl;
-		}
-
-	FREE_OBJECT(G);
-	if (f_vv) {
-		cout << "action::read_set_and_stabilizer "
-				"after FREE_OBJECT  G" << endl;
-		}
-	Fio.free_data_fancy(nb_cases,
-		Set_sizes, Sets, 
-		Ago_ascii, Aut_ascii, 
-		Casenumbers);
-	if (f_v) {
-		cout << "action::read_set_and_stabilizer done" << endl;
-		}
-
-}
 
 void action::get_generators_from_ascii_coding(
 		char *ascii_coding, vector_ge *&gens, int *&tl, int verbose_level)
@@ -3236,28 +2736,6 @@ void action::make_element_which_moves_a_line_in_PG3q(
 		}
 }
 
-void action::list_elements_as_permutations_vertically(
-		vector_ge *gens,
-		ostream &ost)
-{
-	int i, j, a, len;
-
-	len = gens->len;
-	for (j = 0; j < len; j++) {
-		ost << " & \\alpha_{" << j << "}";
-	}
-	ost << "\\\\" << endl;
-	for (i = 0; i < degree; i++) {
-		ost << setw(3) << i;
-		for (j = 0; j < len; j++) {
-			a = element_image_of(i,
-					gens->ith(j), 0 /* verbose_level */);
-			ost << " & " << setw(3) << a;
-		}
-		ost << "\\\\" << endl;
-	}
-}
-
 
 int action::is_matrix_group()
 {
@@ -3452,6 +2930,286 @@ matrix_group *action::get_matrix_group()
 		exit(1);
 	}
 }
+
+void action::perform_tests(strong_generators *SG, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::perform_tests" << endl;
+	}
+	int r1, r2;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+	int *perm1;
+	int *perm2;
+	int *perm3;
+	int *perm4;
+	int *perm5;
+	int cnt;
+	int i;
+	combinatorics_domain Combi;
+
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+	Elt4 = NEW_int(elt_size_in_int);
+	perm1 = NEW_int(degree);
+	perm2 = NEW_int(degree);
+	perm3 = NEW_int(degree);
+	perm4 = NEW_int(degree);
+	perm5 = NEW_int(degree);
+
+	for (cnt = 0; cnt < 10; cnt++) {
+		r1 = random_integer(SG->gens->len);
+		r2 = random_integer(SG->gens->len);
+		if (f_v) {
+			cout << "r1=" << r1 << endl;
+			cout << "r2=" << r2 << endl;
+		}
+		element_move(SG->gens->ith(r1), Elt1, 0);
+		element_move(SG->gens->ith(r2), Elt2, 0);
+		if (f_v) {
+			cout << "Elt1 = " << endl;
+			element_print_quick(Elt1, cout);
+		}
+		element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm1, degree);
+			cout << endl;
+		}
+
+		if (f_v) {
+			cout << "Elt2 = " << endl;
+			element_print_quick(Elt2, cout);
+		}
+		element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm2, degree);
+			cout << endl;
+		}
+
+		element_mult(Elt1, Elt2, Elt3, 0);
+		if (f_v) {
+			cout << "Elt3 = " << endl;
+			element_print_quick(Elt3, cout);
+		}
+		element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm3, degree);
+			cout << endl;
+		}
+
+		Combi.perm_mult(perm1, perm2, perm4, degree);
+		if (f_v) {
+			cout << "perm1 * perm2= " << endl;
+			Combi.perm_print(cout, perm4, degree);
+			cout << endl;
+		}
+
+		for (i = 0; i < degree; i++) {
+			if (perm3[i] != perm4[i]) {
+				cout << "test " << cnt
+						<< " failed; something is wrong" << endl;
+				exit(1);
+			}
+		}
+	}
+	if (f_v) {
+		cout << "action::perform_tests test 1 passed" << endl;
+	}
+
+	for (cnt = 0; cnt < 10; cnt++) {
+		r1 = random_integer(SG->gens->len);
+		if (f_v) {
+			cout << "r1=" << r1 << endl;
+		}
+		element_move(SG->gens->ith(r1), Elt1, 0);
+		if (f_v) {
+			cout << "Elt1 = " << endl;
+			element_print_quick(Elt1, cout);
+		}
+		element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm1, degree);
+			cout << endl;
+		}
+		element_invert(Elt1, Elt2, 0);
+		if (f_v) {
+			cout << "Elt2 = " << endl;
+			element_print_quick(Elt2, cout);
+		}
+		element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm2, degree);
+			cout << endl;
+		}
+
+		element_mult(Elt1, Elt2, Elt3, 0);
+		if (f_v) {
+			cout << "Elt3 = " << endl;
+			element_print_quick(Elt3, cout);
+		}
+		element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm3, degree);
+			cout << endl;
+		}
+
+		if (!Combi.perm_is_identity(perm3, degree)) {
+			cout << "fails the inverse test" << endl;
+			exit(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "action::perform_tests test 2 passed" << endl;
+	}
+
+
+	for (cnt = 0; cnt < 10; cnt++) {
+		r1 = random_integer(SG->gens->len);
+		r2 = random_integer(SG->gens->len);
+		if (f_v) {
+			cout << "r1=" << r1 << endl;
+			cout << "r2=" << r2 << endl;
+		}
+		element_move(SG->gens->ith(r1), Elt1, 0);
+		element_move(SG->gens->ith(r2), Elt2, 0);
+		if (f_v) {
+			cout << "Elt1 = " << endl;
+			element_print_quick(Elt1, cout);
+		}
+		element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm1, degree);
+			cout << endl;
+		}
+
+		if (f_v) {
+			cout << "Elt2 = " << endl;
+			element_print_quick(Elt2, cout);
+		}
+		element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as permutation: " << endl;
+			Combi.perm_print(cout, perm2, degree);
+			cout << endl;
+		}
+
+		element_mult(Elt1, Elt2, Elt3, 0);
+		if (f_v) {
+			cout << "Elt3 = " << endl;
+			element_print_quick(Elt3, cout);
+		}
+
+		element_invert(Elt3, Elt4, 0);
+		if (f_v) {
+			cout << "Elt4 = Elt3^-1 = " << endl;
+			element_print_quick(Elt4, cout);
+		}
+
+
+		element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as Elt3 as permutation: " << endl;
+			Combi.perm_print(cout, perm3, degree);
+			cout << endl;
+		}
+
+		element_as_permutation(Elt4, perm4, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "as Elt4 as permutation: " << endl;
+			Combi.perm_print(cout, perm4, degree);
+			cout << endl;
+		}
+
+		Combi.perm_mult(perm3, perm4, perm5, degree);
+		if (f_v) {
+			cout << "perm3 * perm4= " << endl;
+			Combi.perm_print(cout, perm5, degree);
+			cout << endl;
+		}
+
+		for (i = 0; i < degree; i++) {
+			if (perm5[i] != i) {
+				cout << "test " << cnt
+						<< " failed; something is wrong" << endl;
+				exit(1);
+			}
+		}
+	}
+	if (f_v) {
+		cout << "action::perform_tests test 3 passed" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "performing test 4:" << endl;
+	}
+
+	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
+	make_element(Elt1, data, verbose_level);
+	element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "as Elt1 as permutation: " << endl;
+		Combi.perm_print(cout, perm1, degree);
+		cout << endl;
+	}
+
+	element_invert(Elt1, Elt2, 0);
+	element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "as Elt2 as permutation: " << endl;
+		Combi.perm_print(cout, perm2, degree);
+		cout << endl;
+	}
+
+
+	element_mult(Elt1, Elt2, Elt3, 0);
+	if (f_v) {
+		cout << "Elt3 = " << endl;
+		element_print_quick(Elt3, cout);
+	}
+
+	Combi.perm_mult(perm1, perm2, perm3, degree);
+	if (f_v) {
+		cout << "perm1 * perm2= " << endl;
+		Combi.perm_print(cout, perm3, degree);
+		cout << endl;
+	}
+
+	for (i = 0; i < degree; i++) {
+		if (perm3[i] != i) {
+			cout << "test 4 failed; something is wrong" << endl;
+			exit(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "action::perform_tests test 4 passed" << endl;
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	FREE_int(perm1);
+	FREE_int(perm2);
+	FREE_int(perm3);
+	FREE_int(perm4);
+	FREE_int(perm5);
+}
+
 
 }}
 

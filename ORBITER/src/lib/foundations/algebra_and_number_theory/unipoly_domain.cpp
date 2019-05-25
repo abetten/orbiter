@@ -16,6 +16,7 @@ namespace orbiter {
 namespace foundations {
 
 
+
 unipoly_domain::unipoly_domain(finite_field *GFq)
 {
 	gfq = GFq;
