@@ -609,9 +609,6 @@ public:
 		// to the j-th point in the orbit.
 	void coset_rep_with_verbosity(int j, int verbose_level);
 	void coset_rep_inv(int j);
-	void compute_point_orbit(int pt, int verbose_level);
-	void compute_point_orbit_with_limited_depth(
-			int pt, int max_depth, int verbose_level);
 	void extend_orbit(int *elt, int verbose_level);
 	void compute_all_point_orbits(int verbose_level);
 	void compute_all_point_orbits_with_prefered_reps(
@@ -621,6 +618,9 @@ public:
 		int *preferred_labels, int verbose_level);
 	void compute_all_orbits_on_invariant_subset(int len, 
 		int *subset, int verbose_level);
+	void compute_point_orbit(int pt, int verbose_level);
+	void compute_point_orbit_with_limited_depth(
+			int pt, int max_depth, int verbose_level);
 	int sum_up_orbit_lengths();
 	void non_trivial_random_schreier_generator(action *A_original, 
 		int verbose_level);
