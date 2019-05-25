@@ -1813,11 +1813,11 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 
 	cout << __FILE__ << ":" << __LINE__ << endl;
-	exit(0);
+	//exit(0);
 
 	FREE_int(generator_stack);
 	FREE_int(perms);
-
+	cout << "wreath_product_orbits_CUDA done" << endl;
 #endif
 }
 
