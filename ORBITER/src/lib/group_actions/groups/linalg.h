@@ -11,8 +11,11 @@
 
 #include <iostream>
 #include <iomanip>
+
+#ifdef __CUDA_ARCH__
 #include <cuda.h>
 #include <cuda_runtime.h>
+#endif
 
 using std::cout;
 using std::endl;
