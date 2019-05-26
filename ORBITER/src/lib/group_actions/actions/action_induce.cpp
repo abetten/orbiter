@@ -26,11 +26,11 @@ action *action::induced_action_on_set_partitions(
 		}
 	A = NEW_OBJECT(action);
 
-	sprintf(A->group_prefix, "%s_on_set_partitions_%d_%d",
+	sprintf(A->group_prefix, "%s_on_set_partitions_%ld_%d",
 			label, A->degree, partition_class_size);
-	sprintf(A->label, "%s_on_set_partitions_%d_%d",
+	sprintf(A->label, "%s_on_set_partitions_%ld_%d",
 			label, A->degree, partition_class_size);
-	sprintf(A->label_tex, "%s on set partitions %d %d",
+	sprintf(A->label_tex, "%s on set partitions %ld %d",
 			label, A->degree, partition_class_size);
 	if (f_v) {
 		cout << "the old_action " << label
