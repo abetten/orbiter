@@ -22,7 +22,8 @@ MODULES = \
 	strong_generators_groups.o \
 	subgroup.o \
 	sylow_structure.o \
-	wreath_product.o 
+	wreath_product.o \
+	linalg.o
 
 
 all : $(MODULES)
