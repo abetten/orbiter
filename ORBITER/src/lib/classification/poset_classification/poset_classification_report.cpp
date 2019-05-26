@@ -408,7 +408,7 @@ void poset_classification::report(ostream &ost)
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
-	sprintf(cmd, "mpost poset_draw_tree.mp");
+	sprintf(cmd, "mpost -tex=latex poset_draw_tree.mp");
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
@@ -523,6 +523,9 @@ void poset_classification::report(ostream &ost)
 						ost << " $H_{" << nb_gens << "} = "
 							<< (double) log(total_depth[h]) / log(nb_gens) << "$";
 					}
+					double delta = (double) total_depth[h] / (double) orbit_length[h];
+					delta -= ((double) log(total_depth[h]) / log(nb_gens));
+					ost << ", $\\Delta = " << delta << "$";
 					ost << "\\\\" << endl;
 				}
 
