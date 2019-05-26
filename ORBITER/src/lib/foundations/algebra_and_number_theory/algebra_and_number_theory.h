@@ -1791,10 +1791,12 @@ public:
 	int gcd_int(int m, int n);
 	void extended_gcd_int(int m, int n, int &g, int &u, int &v);
 	int i_power_j_safe(int i, int j);
+	long int i_power_j_lint_safe(int i, int j, int verbose_level);
 	int i_power_j(int i, int j);
 	int order_mod_p(int a, int p);
 	int int_log2(int n);
 	int int_log10(int n);
+	int lint_log10(long int n);
 	int int_logq(int n, int q);
 	// returns the number of digits in base q representation
 	int is_strict_prime_power(int q);

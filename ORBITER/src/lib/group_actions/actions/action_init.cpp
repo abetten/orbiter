@@ -1365,7 +1365,6 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 
 
-	degree = W->degree_overall;
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"degree=" << degree << endl;

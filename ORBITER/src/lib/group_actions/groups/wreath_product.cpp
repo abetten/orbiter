@@ -143,13 +143,13 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << "wreath_product::init_tensor_wreath_product" << endl;
 	}
 	if (M->f_projective) {
-		cout << "void wreath_product::init_tensor_wreath_product "
+		cout << "wreath_product::init_tensor_wreath_product "
 				"the input group must be of type general linear "
 				"(not projective)" << endl;
 		exit(1);
 	}
 	if (M->f_affine) {
-		cout << "void wreath_product::init_tensor_wreath_product "
+		cout << "wreath_product::init_tensor_wreath_product "
 				"the input group must be of type general linear "
 				"(not affine)" << endl;
 		exit(1);
@@ -161,7 +161,13 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	q = F->q;
 
 	P = NEW_OBJECT(perm_group);
+	if (f_v) {
+		cout << "wreath_product::init_tensor_wreath_product before P->init" << endl;
+	}
 	P->init(nb_factors, 10 /* page_length_log */, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "wreath_product::init_tensor_wreath_product after P->init" << endl;
+	}
 
 	sprintf(label, "%s_wreath_Sym%d", M->label, nb_factors);
 	sprintf(label_tex, "%s \\wr {\\rm Sym}(%d)", M->label_tex, nb_factors);
@@ -173,11 +179,24 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	low_level_point_size = dimension_of_tensor_action;
 	make_element_size = nb_factors + nb_factors *
 			dimension_of_matrix_group * dimension_of_matrix_group;
+	if (f_v) {
+		cout << "wreath_product::init_tensor_wreath_product "
+				"computing degree_of_tensor_action" << endl;
+	}
 	degree_of_tensor_action =
-			(NT.i_power_j_safe(q, dimension_of_tensor_action) - 1) / (q - 1);
+			(NT.i_power_j_lint_safe(q, dimension_of_tensor_action, verbose_level) - 1) / (q - 1);
 		// warning: int overflow possible
+
+	if (f_v) {
+		cout << "wreath_product::init_tensor_wreath_product "
+				"degree_of_tensor_action = " << degree_of_tensor_action << endl;
+	}
 	degree_overall = nb_factors + nb_factors *
 			degree_of_matrix_group + degree_of_tensor_action;
+	if (f_v) {
+		cout << "wreath_product::init_tensor_wreath_product "
+				"degree_overall = " << degree_overall << endl;
+	}
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"degree_of_matrix_group = "

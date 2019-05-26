@@ -479,7 +479,7 @@ public:
 	char &sign() { return sgn; };
 	int &len() { return l; };
 	char *&rep() { return r; };
-	void create(int i);
+	void create(long int i);
 	void create_product(int nb_factors, int *factors);
 	void create_power(int a, int e);
 		// creates a^e
@@ -489,6 +489,7 @@ public:
 	void create_from_base_10_string(const char *str, int verbose_level);
 	void create_from_base_10_string(const char *str);
 	int as_int();
+	long int as_lint();
 	void as_longinteger(longinteger_object &a);
 	void assign_to(longinteger_object &b);
 	void swap_with(longinteger_object &b);
