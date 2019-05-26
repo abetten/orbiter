@@ -1605,9 +1605,9 @@ public:
 		// = M->n
 	int dimension_of_tensor_action;
 		// = i_power_j(dimension_of_matrix_group, nb_factors);
-	int degree_of_tensor_action;
+	long int degree_of_tensor_action;
 		// = (i_power_j_safe(q, dimension_of_tensor_action) - 1) / (q - 1);
-	int degree_overall;
+	long int degree_overall;
 		// = nb_factors + nb_factors *
 		// degree_of_matrix_group + degree_of_tensor_action;
 	int low_level_point_size;

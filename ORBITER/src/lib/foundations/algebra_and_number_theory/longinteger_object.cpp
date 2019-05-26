@@ -50,9 +50,9 @@ void longinteger_object::freeself()
 		}
 }
 
-void longinteger_object::create(int i)
+void longinteger_object::create(long int i)
 {
-	int ii, j, dj;
+	long int ii, j, dj;
 	int f_v = FALSE;
 	number_theory_domain NT;
 
@@ -71,7 +71,7 @@ void longinteger_object::create(int i)
 		l = 1;
 		return;
 		}
-	l = NT.int_log10(i);
+	l = NT.lint_log10(i);
 	if (f_v) {
 		cout << "longinteger_object::create "
 				"i=" << i << " log =  " << l << endl;
@@ -186,6 +186,21 @@ int longinteger_object::as_int()
 {
 	int i, x = 0;
 	
+	for (i = l - 1; i >= 0; i--) {
+		x *= 10;
+		x += r[i];
+		}
+	if (sgn) {
+		x = -x;
+		}
+	return x;
+}
+
+long int longinteger_object::as_lint()
+{
+	int i;
+	long int x = 0;
+
 	for (i = l - 1; i >= 0; i--) {
 		x *= 10;
 		x += r[i];

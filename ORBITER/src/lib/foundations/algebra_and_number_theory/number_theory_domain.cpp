@@ -176,6 +176,50 @@ int number_theory_domain::i_power_j_safe(int i, int j)
 	return res;
 }
 
+long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_domain D;
+
+	longinteger_object a, b, c;
+	long int res;
+
+	if (f_v) {
+		cout << "number_theory_domain::i_power_j_lint_safe "
+				"i=" << i << " j=" << j << endl;
+	}
+	a.create(i);
+	D.power_int(a, j);
+	if (f_v) {
+		cout << "number_theory_domain::i_power_j_lint_safe "
+				"a=" << a << endl;
+	}
+	res = a.as_lint();
+	if (f_v) {
+		cout << "number_theory_domain::i_power_j_lint_safe "
+				"as_lint=" << res << endl;
+	}
+	b.create(res);
+	if (f_v) {
+		cout << "number_theory_domain::i_power_j_lint_safe "
+				"b=" << b << endl;
+	}
+	b.negate();
+	D.add(a, b, c);
+	if (f_v) {
+		cout << "number_theory_domain::i_power_j_lint_safe "
+				"c=" << c << endl;
+	}
+	if (!c.is_zero()) {
+		cout << "i_power_j_safe int overflow when computing "
+				<< i << "^" << j << endl;
+		cout << "should be        " << a << endl;
+		cout << "but comes out as " << res << endl;
+		exit(1);
+	}
+	return res;
+}
+
 int number_theory_domain::i_power_j(int i, int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
@@ -236,6 +280,24 @@ int number_theory_domain::int_log10(int n)
 	
 	if (n <= 0) {
 		cout << "int_log10 n <= 0" << endl;
+		cout << "n = " << n << endl;
+		exit(1);
+		}
+	j = 0;
+	while (n) {
+		n /= 10;
+		j++;
+		}
+	return j;
+}
+
+int number_theory_domain::lint_log10(long int n)
+// returns $\log_{10}(n)$
+{
+	long int j;
+
+	if (n <= 0) {
+		cout << "lint_log10 n <= 0" << endl;
 		cout << "n = " << n << endl;
 		exit(1);
 		}
