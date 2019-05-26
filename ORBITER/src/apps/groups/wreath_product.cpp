@@ -1559,12 +1559,16 @@ void tensor_product::init(int argc, const char **argv,
 	time_check(cout, t0);
 	cout << endl;
 
-
 	cout << "tensor_product::init "
 			"after wreath_product_orbits_CUDA:" << endl;
 	cout << __FILE__ << ":" << __LINE__ << endl;
 	cout << "we found " << nb_gens << " generators of degree " << degree << endl;
 
+
+	if (nb_gens == 0) {
+		cout << "Cuda not available" << endl;
+		exit(1);
+	}
 
 	schreier *Sch;
 
@@ -1777,7 +1781,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
 
 
-	// matrix M contains in its rows all vectors associated with points
+	// matrix M contains in the rows the coordinates of all points
 	// of the projective geometry:
 	// M has size W->degree_of_tensor_action x mtx_n
 
@@ -1837,6 +1841,9 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	FREE_int(generator_stack);
 	FREE_int(perms);
 	cout << "wreath_product_orbits_CUDA done" << endl;
+#else
+	nb_gens = 0;
+	degree = 0;
 #endif
 }
 

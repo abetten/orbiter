@@ -121,7 +121,7 @@ public:
 	strong_generators *Strong_gens;
 
 	/** the size of the set we act on */
-	int degree;
+	long int degree;
 
 
 	/** whether the action is linear (including semilinear) */
