@@ -108,7 +108,6 @@ cuda_all: $(ALL_TARGETS)
 	@echo "Done with cuda_all"
 
 
-	
 wreath_product.o: wreath_product.cpp
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
 	@echo "----------------------------------------"
