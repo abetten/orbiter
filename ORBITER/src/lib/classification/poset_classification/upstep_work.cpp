@@ -906,7 +906,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		print_coset_table(coset_table, nb_cosets_processed);
 		}
 	vector_ge SG_extension;
-	int *tl_extension = NEW_int(gen->Poset->A->base_len);
+	int *tl_extension = NEW_int(gen->Poset->A->Stabilizer_chain->base_len);
 	int f_tolerant = TRUE;
 	
 	if (f_vvv) {

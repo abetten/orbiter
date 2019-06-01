@@ -417,7 +417,7 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 		cout << "action::setup_linear_group_from_strong_generators "
 				"before S->compute_base_orbits_known_length" << endl;
 		}
-	S->compute_base_orbits_known_length(transversal_length, verbose_level);
+	S->compute_base_orbits_known_length(Stabilizer_chain->transversal_length, verbose_level);
 	if (f_v) {
 		cout << "action::setup_linear_group_from_strong_generators "
 				"after S->compute_base_orbits_known_length" << endl;
@@ -560,7 +560,7 @@ void action::init_matrix_group_strong_generators_builtin(
 	f_has_strong_generators = TRUE;
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_data(this, data, nb_gens, size,
-			transversal_length,
+			Stabilizer_chain->transversal_length,
 			nice_gens,
 			verbose_level - 1);
 
@@ -676,12 +676,14 @@ void action::init_permutation_group_from_generators(int degree,
 		int_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 		}
-	allocate_base_data(given_base_length);
-	base_len = given_base_length;
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level);
+	//allocate_base_data(given_base_length);
+	//Stabilizer_chain->base_len = given_base_length;
 	
 	// init base:
-	for (i = 0; i < base_len; i++) {
-		base[i] = given_base[i];
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		Stabilizer_chain->base[i] = given_base[i];
 		}
 
 
@@ -1141,17 +1143,22 @@ void action::init_direct_product_group(
 		cout << "action::init_direct_product_group "
 				"degree=" << degree << endl;
 		}
-	base_len = P->base_length;
+	//base_len = P->base_length;
+
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, P->base_length, verbose_level);
+	//Stabilizer_chain->base_len = P->base_length;
+	//allocate_base_data(base_len);
+
 	if (f_v) {
 		cout << "action::init_direct_product_group "
-				"base_len=" << base_len << endl;
+				"base_len=" << Stabilizer_chain->base_len << endl;
 		}
 
-	allocate_base_data(base_len);
 
-	int_vec_copy(P->the_base, base, base_len);
+	int_vec_copy(P->the_base, Stabilizer_chain->base, Stabilizer_chain->base_len);
 	int_vec_copy(P->the_transversal_length,
-			transversal_length, base_len);
+			Stabilizer_chain->transversal_length, Stabilizer_chain->base_len);
 
 	int *gens_data;
 	int gens_size;
@@ -1177,7 +1184,7 @@ void action::init_direct_product_group(
 
 	Strong_gens->init_from_data(this,
 			gens_data, gens_nb, gens_size,
-			transversal_length,
+			Stabilizer_chain->transversal_length,
 			nice_gens,
 			verbose_level - 1);
 	if (f_v) {
@@ -1206,7 +1213,7 @@ void action::init_direct_product_group(
 		cout << "action::init_direct_product_group "
 				"before S->compute_base_orbits_known_length" << endl;
 		}
-	S->compute_base_orbits_known_length(transversal_length, verbose_level);
+	S->compute_base_orbits_known_length(Stabilizer_chain->transversal_length, verbose_level);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after S->compute_base_orbits_known_length" << endl;
@@ -1369,17 +1376,19 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		cout << "action::init_wreath_product_group "
 				"degree=" << degree << endl;
 		}
-	base_len = W->base_length;
+
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, W->base_length, verbose_level);
+	//allocate_base_data(base_len);
+	//Stabilizer_chain->base_len = W->base_length;
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
-				"base_len=" << base_len << endl;
+				"base_len=" << Stabilizer_chain->base_len << endl;
 		}
 
-	allocate_base_data(base_len);
-
-	int_vec_copy(W->the_base, base, base_len);
+	int_vec_copy(W->the_base, Stabilizer_chain->base, Stabilizer_chain->base_len);
 	int_vec_copy(W->the_transversal_length,
-			transversal_length, base_len);
+			Stabilizer_chain->transversal_length, Stabilizer_chain->base_len);
 
 	int *gens_data;
 	int gens_size;
@@ -1403,7 +1412,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 	vector_ge *nice_gens;
 	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
-			transversal_length,
+			Stabilizer_chain->transversal_length,
 			nice_gens,
 			verbose_level - 1);
 	if (f_v) {
@@ -1432,7 +1441,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		cout << "action::init_wreath_product_group "
 				"before S->compute_base_orbits_known_length" << endl;
 		}
-	S->compute_base_orbits_known_length(transversal_length, verbose_level);
+	S->compute_base_orbits_known_length(Stabilizer_chain->transversal_length, verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"after S->compute_base_orbits_known_length" << endl;
@@ -1651,7 +1660,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base done" << endl;
 		cout << "base: ";
-		int_vec_print(cout, base, base_len);
+		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 		cout << endl;
 		}
 
@@ -1727,11 +1736,13 @@ void action::init_group_from_strong_generators(
 		int_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 		}
-	allocate_base_data(given_base_length);
-	base_len = given_base_length;
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level);
+	//allocate_base_data(given_base_length);
+	//Stabilizer_chain->base_len = given_base_length;
 
-	for (i = 0; i < base_len; i++) {
-		base[i] = given_base[i];
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		Stabilizer_chain->base[i] = given_base[i];
 		}
 
 
@@ -1767,7 +1778,7 @@ void action::init_group_from_strong_generators(
 				"found a group of order " << G_order << endl;
 		if (f_vv) {
 			cout << "transversal lengths:" << endl;
-			int_vec_print(cout, G->orbit_len, base_len);
+			int_vec_print(cout, G->orbit_len, Stabilizer_chain->base_len);
 			cout << endl;
 			}
 		}
@@ -2059,7 +2070,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 
 	gens = NEW_OBJECT(vector_ge);
 	SG = NEW_OBJECT(vector_ge);
-	tl = NEW_int(base_len);
+	tl = NEW_int(Stabilizer_chain->base_len);
 	gens->init(this);
 	gens->allocate(nb_gens);
 	Elt1 = NEW_int(elt_size_in_int);

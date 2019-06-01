@@ -72,6 +72,7 @@ void schreier_vector::init(
 void schreier_vector::init_local_generators(
 		vector_ge *gens,
 		int verbose_level)
+// copies gens to local_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -828,7 +829,9 @@ void schreier_vector::init_from_schreier(schreier *S,
 }
 
 void schreier_vector::init_shallow_schreier_forest(schreier *S,
-	int f_trivial_group, int verbose_level)
+	int f_trivial_group, int f_randomized,
+	int verbose_level)
+// initializes local_gens
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -879,6 +882,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 						"creating shallow tree" << endl;
 			}
 			S->shallow_tree_generators(orbit_idx,
+					f_randomized,
 					Shallow_tree,
 					verbose_level - 2);
 			if (f_v) {
@@ -908,7 +912,8 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 				prev[j] = pr;
 				if (la >= 0) {
 					label[j] = la + fst_gen_idx;
-				} else {
+				}
+				else {
 					label[j] = la;
 				}
 			}

@@ -643,7 +643,9 @@ public:
 	void init_from_schreier(schreier *S,
 		int f_trivial_group, int verbose_level);
 	void init_shallow_schreier_forest(schreier *S,
-		int f_trivial_group, int verbose_level);
+		int f_trivial_group, int f_randomized,
+		int verbose_level);
+	// initializes local_gens
 	void export_tree_as_layered_graph(
 			int orbit_no, int orbit_rep,
 			const char *fname_mask,

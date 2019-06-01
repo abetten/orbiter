@@ -1254,7 +1254,7 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 	Schreier.nb_orbits = u;
 	if (f_v) {
 		cout << "test_orbits_for_implicit_fusion: "
-				"orbit testing '"
+				"orbit testing "
 				"finished: " << u << " orbits out of "
 				<< L << " accepted" << endl;
 		}

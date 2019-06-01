@@ -74,6 +74,7 @@ class exceptional_isomorphism_O4;
 class orbit_rep;
 class projective_space_with_action;
 class projective_space_job_description;
+class stabilizer_chain_base_data;
 
 //! enumeration to distinguish between the various types of group actions
 
@@ -118,6 +119,16 @@ enum representation_type {
 	representation_type_nothing, 
 	representation_type_PSL2_on_conic
 }; 
+
+//! the strategy which is employed to create shallow Schreier trees
+
+enum shallow_schreier_tree_strategy {
+	shallow_schreier_tree_standard,
+	shallow_schreier_tree_Seress_deterministic,
+	shallow_schreier_tree_Seress_randomized,
+	shallow_schreier_tree_Sajeeb
+};
+
 
 
 //! interface for the various types of group actions

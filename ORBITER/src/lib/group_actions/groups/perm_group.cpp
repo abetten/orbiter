@@ -202,7 +202,7 @@ void perm_group::init_with_base(int degree,
 	perm_group::degree = degree;
 	f_product_action = FALSE;
 	
-	A.base_len = base_length;
+	//A.base_len = base_length;
 	A.degree = degree;
 	elt_size_int = degree;
 	char_per_elt = elt_size_int;
@@ -219,7 +219,7 @@ void perm_group::init_with_base(int degree,
 	if (f_v) {
 		cout << "perm_group::init" << endl;
 		cout << "degree=" << A.degree << endl;
-		cout << "base_len=" << A.base_len << endl;
+		cout << "base_len=" << base_length << endl;
 		}
 	if (f_vv) {
 		cout << "perm_group::init "
@@ -255,16 +255,19 @@ void perm_group::init_with_base(int degree,
 	A.type_G = perm_group_t;
 	A.G.perm_grp = this;
 	
-	A.allocate_base_data(A.base_len);
+	A.Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A.Stabilizer_chain->allocate_base_data(&A, base_length, verbose_level);
+	A.Stabilizer_chain->base_len = base_length;
+	//A.allocate_base_data(A.base_len);
 
 	// init base:
-	for (i = 0; i < A.base_len; i++)
-		A.base[i] = base[i];
+	for (i = 0; i < A.Stabilizer_chain->base_len; i++)
+		A.Stabilizer_chain->base[i] = base[i];
 	
 
 	if (f_v) {
 		cout << "base: ";
-		print_set(cout, A.base_len, A.base);
+		print_set(cout, A.Stabilizer_chain->base_len, A.Stabilizer_chain->base);
 		cout << endl;
 		//cout << "transversal_length: ";
 		//print_set(cout, A.base_len, A.transversal_length);
@@ -432,9 +435,9 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 	int x1, y1, x2, y2; // if in product action
 	combinatorics_domain Combi;
 	
-	if (A->base_len < A->degree) {
-		for (i = 0; i < A->base_len; i++) {
-			bi = A->base[i];
+	if (A->Stabilizer_chain->base_len < A->degree) {
+		for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+			bi = A->Stabilizer_chain->base[i];
 			a = Elt[bi];
 			if (f_product_action) {
 				cout << "bi=" << bi << "a=" << a << endl;
@@ -460,7 +463,7 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 			else {
 				ost << bi << " -> " << a;
 				}
-			if (i < A->base_len - 1)
+			if (i < A->Stabilizer_chain->base_len - 1)
 				ost << ", ";
 			}
 		}

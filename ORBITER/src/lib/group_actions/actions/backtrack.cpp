@@ -55,8 +55,8 @@ void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D)
 	int i;
 	
 	nb_auts_allocated2 = D.nb_auts_allocated + AUTS_ALLOCATE_BLOCK_SIZE;
-	aut_data2 = NEW_int(nb_auts_allocated2 * D.A->base_len);
-	for (i = 0; i < D.nb_auts * D.A->base_len; i++) {
+	aut_data2 = NEW_int(nb_auts_allocated2 * D.A->Stabilizer_chain->base_len);
+	for (i = 0; i < D.nb_auts * D.A->Stabilizer_chain->base_len; i++) {
 		aut_data2[i] = D.aut_data[i];
 		}
 	FREE_int(D.aut_data);
@@ -94,18 +94,18 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		int_vec_print(cout, current_set, D->size);
 		cout << endl;
 		}
-	if (depth == A->base_len) {
+	if (depth == A->Stabilizer_chain->base_len) {
 		cmp = int_vec_compare(current_set, D->the_set, D->size);
 		if (cmp == 0) {
 			D->f_automorphism_seen = TRUE;
 			if (D->nb_auts == D->nb_auts_allocated) {
 				action_is_minimal_reallocate_aut_data(*D);
 				}
-			for (i = 0; i < A->base_len; i++) {
+			for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
 				a = D->current_choice[i];
 				image_point = D->choices[i * A->degree + a];
 				coset = A->Sims->orbit_inv[i][image_point];
-				D->aut_data[D->nb_auts * A->base_len + i] = coset;
+				D->aut_data[D->nb_auts * A->Stabilizer_chain->base_len + i] = coset;
 				}
 #if 0
 			for (i = 0; i < A->base_len; i++) {
@@ -120,14 +120,14 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				cout << "automorphism " << D->nb_auts
 					<< " first_moved = " << D->first_moved
 					<< " choice: ";
-				int_vec_print(cout, D->current_choice, A->base_len);
+				int_vec_print(cout, D->current_choice, A->Stabilizer_chain->base_len);
 				cout << " points: ";
 				int_vec_print(cout, D->aut_data +
-						D->nb_auts * A->base_len, A->base_len);
+						D->nb_auts * A->Stabilizer_chain->base_len, A->Stabilizer_chain->base_len);
 				cout << endl;
 				}
-			for (i = 0; i < A->base_len; i++) {
-				coset = D->aut_data[D->nb_auts * A->base_len + i];
+			for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+				coset = D->aut_data[D->nb_auts * A->Stabilizer_chain->base_len + i];
 				A->Sims->path[i] = coset;
 
 					//Sims->orbit_inv[i][aut_data[h * base_len + i]];
@@ -140,12 +140,12 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 						"error while checking automorphism" << endl;
 				exit(1);
 				}
-			if (f_v && D->first_moved < A->base_len) {
+			if (f_v && D->first_moved < A->Stabilizer_chain->base_len) {
 				int *Elt, a1, a2;
 				Elt = NEW_int(A->elt_size_in_int);
 				A->invert(D->transporter_witness, Elt);
 				i = D->first_moved;
-				a = A->base[i];
+				a = A->Stabilizer_chain->base[i];
 				a1 = A->image_of(D->transporter_witness, a);
 				a2 = A->image_of(Elt, a);
 				cout << setw(3) << i << " : " 
@@ -159,8 +159,8 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		return TRUE;
 		}
 	
-	transversal_length = A->transversal_length[depth];
-	base_point = A->base[depth];
+	transversal_length = A->Stabilizer_chain->transversal_length[depth];
+	base_point = A->Stabilizer_chain->base[depth];
 	if (f_vv) {
 		cout << "depth = " << depth << " : ";
 		cout << "transversal_length=" << transversal_length
@@ -175,8 +175,8 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		int f_accept = FALSE;
 		int base_point;
 		
-		base_point = A->orbit[depth][0];
-		image_point = A->orbit[depth][i];
+		base_point = A->Stabilizer_chain->orbit[depth][0];
+		image_point = A->Stabilizer_chain->orbit[depth][i];
 		if (D->is_minimal_base_point[depth] &&
 				Sorting.int_vec_search(current_set, D->size, base_point, idx)) {
 			if (Sorting.int_vec_search(current_set, D->size, image_point, idx)) {
@@ -293,7 +293,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				}
 			int_vec_copy(next_set, D->witness, D->size);
 			int k, choice;
-			int_vec_zero(A->Sims->path, A->base_len);
+			int_vec_zero(A->Sims->path, A->Stabilizer_chain->base_len);
 			for (k = 0; k <= depth; k++) {
 				choice = D->choices[k * A->degree + D->current_choice[k]];
 				A->Sims->path[k] = A->Sims->orbit_inv[k][choice];
@@ -535,8 +535,8 @@ int action::is_minimal_witness(int size, int *set,
 
 	D.nb_auts = 0;
 	D.nb_auts_allocated = AUTS_ALLOCATE_BLOCK_SIZE;
-	D.aut_data = NEW_int(D.nb_auts_allocated * A.base_len);
-	D.first_moved = A.base_len;
+	D.aut_data = NEW_int(D.nb_auts_allocated * A.Stabilizer_chain->base_len);
+	D.first_moved = A.Stabilizer_chain->base_len;
 	D.f_automorphism_seen = FALSE;
 	
 	if (f_vv) {
@@ -549,23 +549,23 @@ int action::is_minimal_witness(int size, int *set,
 		cout << "computing stabilizer orbits finished" << endl;
 		}
 
-	D.the_set = NEW_int((A.base_len + 1) * size);
+	D.the_set = NEW_int((A.Stabilizer_chain->base_len + 1) * size);
 	int_vec_copy(set, D.the_set, size);
 	Sorting.int_vec_quicksort_increasingly(D.the_set, size);
 	
 	D.backtrack_node = 0;
-	D.choices = NEW_int(A.base_len * A.degree);
-	D.nb_choices = NEW_int(A.base_len);
-	D.current_choice = NEW_int(A.base_len);
+	D.choices = NEW_int(A.Stabilizer_chain->base_len * A.degree);
+	D.nb_choices = NEW_int(A.Stabilizer_chain->base_len);
+	D.current_choice = NEW_int(A.Stabilizer_chain->base_len);
 	D.witness = witness;
 	D.transporter_witness = transporter_witness;
-	D.is_minimal_base_point = NEW_int(A.base_len);
+	D.is_minimal_base_point = NEW_int(A.Stabilizer_chain->base_len);
 
-	for (i = 0; i < A.base_len; i++) {
+	for (i = 0; i < A.Stabilizer_chain->base_len; i++) {
 		partitionstack *S;
 		int b, c, f, l, j, p;
 		
-		b = A.base[i];
+		b = A.Stabilizer_chain->base[i];
 		if (i == size)
 			break;
 #if 0
@@ -595,13 +595,13 @@ int action::is_minimal_witness(int size, int *set,
 					S->print_raw();
 					}
 				int k;
-				int_vec_zero(A.Sims->path, A.base_len);
+				int_vec_zero(A.Sims->path, A.Stabilizer_chain->base_len);
 #if 0
 				for (k = 0; k < A.base_len; k++) {
 					A.Sims->path[k] = 0;
 					}
 #endif
-				A.Sims->path[i] = A.orbit_inv[i][p];
+				A.Sims->path[i] = A.Stabilizer_chain->orbit_inv[i][p];
 				A.Sims->element_from_path(transporter_witness, 0);
 
 
@@ -624,11 +624,11 @@ int action::is_minimal_witness(int size, int *set,
 			}
 		}
 	// now we compute is_minimal_base_point array:
-	for (i = 0; i < A.base_len; i++) {
+	for (i = 0; i < A.Stabilizer_chain->base_len; i++) {
 		int j, b, c, l;
 		partitionstack *S;
 		S = &D.Staborbits[i];
-		b = A.base[i];
+		b = A.Stabilizer_chain->base[i];
 		for (j = 0; j < b; j++) {
 			c = S->cellNumber[S->invPointList[j]];
 			l = S->cellSize[c];
@@ -645,7 +645,7 @@ int action::is_minimal_witness(int size, int *set,
 		}
 	if (f_v) {
 		cout << "action::is_minimal_witness: D.is_minimal_base_point=";
-		int_vec_print(cout, D.is_minimal_base_point, A.base_len);
+		int_vec_print(cout, D.is_minimal_base_point, A.Stabilizer_chain->base_len);
 		cout << endl;
 		}
 	
@@ -680,12 +680,12 @@ finish:
 			cout << "automorphism generators:" << endl;
 			for (i = 0; i < D.nb_auts; i++) {
 				cout << setw(3) << i << " : (";
-				for (j = 0; j < base_len; j++) {
-					coset = D.aut_data[i * base_len + j];
+				for (j = 0; j < Stabilizer_chain->base_len; j++) {
+					coset = D.aut_data[i * Stabilizer_chain->base_len + j];
 					cout << coset;
 					//image_point = Sims->orbit[i][coset];
 					//cout << image_point;
-					if (j < base_len - 1) {
+					if (j < Stabilizer_chain->base_len - 1) {
 						cout << ", ";
 						}
 					}

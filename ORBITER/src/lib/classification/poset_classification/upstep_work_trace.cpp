@@ -227,8 +227,9 @@ trace_result upstep_work::recognize_recursion(
 	
 	if (f_v4) {
 		print_level_extension_coset_info();
-		cout << "upstep_work::recognize_recursion "
-				"calling trace_next_point_wrapper" << endl;
+		cout << "upstep_work::recognize_recursion lvl=" << lvl
+				<< " current_node=" << current_node
+				<< " calling O->trace_next_point_wrapper" << endl;
 		}
 	if (!O->trace_next_point_wrapper(
 		gen,

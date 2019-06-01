@@ -125,7 +125,7 @@ int main(int argc, char **argv)
 	D->f_le[4] = TRUE;
 	D->sum = 30;
 #endif
-#if 1
+#if 0
 	// the distribution of refined line types of the linear spaces on 30 points 
 	// with line type (7,5^{27},4^{24})
 	// in point type 4
@@ -168,7 +168,54 @@ int main(int argc, char **argv)
 		24, 
 		};
 	int m = 17, n = 18;
-	
+#endif
+#if 1
+#if 0
+	// lg16_e.txt
+	8x16
+	4	2	1	1	0	0	0	0	0	0	0	0	0	0	0 	0
+	0	2	2	0	4	3	2	1	0	0	0	3	1	0	0	0
+	0	0	1	3	0	0	2	2	4	2	0	0	2	2	0	0
+	0	0	0	0	0	1	0	1	0	2	4	0	0	1	3	0
+	0	0	0	0	0	0	0	0	0	0	0	1	1	1	1	4
+	0	1	1	2	0	2	1	1	0	1	2	2	1	1	2	2
+	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+
+	8x1
+	17820
+	71280
+	106920
+	23760
+	15840
+	55440
+	0
+	360
+
+	58905-58905
+#endif
+	int M[] = {
+			4,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,
+			0,2,2,0,4,3,2,1,0,0,0,3,1,0,0,0,
+			0,0,1,3,0,0,2,2,4,2,0,0,2,2,0,0,
+			0,0,0,0,0,1,0,1,0,2,4,0,0,1,3,0,
+			0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,4,
+			0,1,1,2,0,2,1,1,0,1,2,2,1,1,2,2,
+			1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		};
+	int RHS[] = {
+			17820,
+			71280,
+			106920,
+			23760,
+			15840,
+			55440,
+			0,
+			360,
+		};
+	int m = 8, n = 16;
+
 	
 	diophant D;
 	
@@ -184,15 +231,19 @@ int main(int argc, char **argv)
 	//D.f_le[3] = TRUE;
 	//D.f_le[4] = TRUE;
 	D.f_has_sum = TRUE;
-	D.sum = 51;
+	D.sum = 58905;
 #endif
 
 
 	D.print();
 	
+#if 1
+	D.solve_first_mckay(0, 0);
+
+#else
 	//for (sum = 1; sum <= 29; sum++) {
 	//D->sum = sum;
-	if (D.solve_first(0 /* verbose_level */)) {
+	if (D.solve_first(0)) {
 		
 		while (TRUE) {
 			cout << nb_sol << " : ";
@@ -208,6 +259,8 @@ int main(int argc, char **argv)
 	//}
 	cout << "found " << nb_sol << " solutions" << endl;
 	cout << endl << endl;
+#endif
+
 	cout<< "Time used: ";
 	time_check(cout, t0);
 	cout << endl << endl;

@@ -173,6 +173,7 @@ MODULES= \
 		group_actions/actions/interface_perm_group.o \
 		group_actions/actions/interface_wreath_product.o \
 		group_actions/actions/nauty_interface.o \
+		group_actions/actions/stabilizer_chain_base_data.o \
 		group_actions/data_structures/data_input_stream.o \
 		group_actions/data_structures/group.o \
 		group_actions/data_structures/object_in_projective_space_with_action.o \

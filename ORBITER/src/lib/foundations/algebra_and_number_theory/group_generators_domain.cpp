@@ -479,8 +479,7 @@ int group_generators_domain::matrix_group_base_len_projective_group(
 		base_len++;
 		}
 	if (f_v) {
-		cout << "group_generators_domain::matrix_group_"
-				"base_len_affine_group: "
+		cout << "group_generators_domain::matrix_group_base_len_projective_group: "
 				"n=" << n << " q=" << q
 				<< " f_semilinear=" << f_semilinear
 				<< " base_len = " << base_len << endl;

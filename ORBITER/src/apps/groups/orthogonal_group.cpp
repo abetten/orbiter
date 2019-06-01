@@ -238,10 +238,19 @@ void do_it(int epsilon, int n, int q,
 
 		cout << "computing shallow Schreier tree:" << endl;
 
+#if 0
+		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
+				//shallow_schreier_tree_standard;
+				//shallow_schreier_tree_Seress_deterministic;
+				shallow_schreier_tree_Seress_randomized;
+				//shallow_schreier_tree_Sajeeb;
+#endif
+		int f_randomized = TRUE;
+
 		Sch->shallow_tree_generators(orbit_idx,
+				f_randomized,
 				shallow_tree,
 				verbose_level);
-
 		cout << "computing shallow Schreier tree done." << endl;
 
 		sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d_shallow.layered_graph", epsilon, n, q);
