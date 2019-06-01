@@ -60,8 +60,7 @@ all: all2;
 
 
 
-all2:
-	date
+all2: ; date
 	
 
 
