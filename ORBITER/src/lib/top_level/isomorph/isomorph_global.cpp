@@ -1606,7 +1606,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 		int j;
 
 		gens = NEW_OBJECT(vector_ge);
-		tl = NEW_int(Iso.A_base->base_len);
+		tl = NEW_int(Iso.A_base->Stabilizer_chain->base_len);
 		
 		if (f_vv) {
 			cout << "isomorph_report_data_in_source_code_inside_"

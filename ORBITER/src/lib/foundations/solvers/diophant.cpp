@@ -671,7 +671,8 @@ int diophant::solve_first_mckay(int f_once, int verbose_level)
 {
 	int f_v = TRUE;//(verbose_level >= 1);
 	int j;
-	int maxresults = 10000000;
+	//int maxresults = 10000000;
+	int maxresults = INT_MAX;
 	vector<int> res;
 	long int nb_backtrack_nodes;
 	int nb_sol;

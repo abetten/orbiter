@@ -181,7 +181,7 @@ void blt_set::init_group(int f_semilinear, int verbose_level)
 		cout << "blt_set::init_group "
 				"computing lex least base done" << endl;
 		cout << "blt_set::init_group base: ";
-		int_vec_print(cout, A->base, A->base_len);
+		int_vec_print(cout, A->Stabilizer_chain->base, A->Stabilizer_chain->base_len);
 		cout << endl;
 		}
 	

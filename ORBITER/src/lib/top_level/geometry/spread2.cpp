@@ -2155,7 +2155,7 @@ void spread::report2(isomorph &Iso, int verbose_level)
 			set = NEW_int(len);
 			//A1 = NEW_OBJECT(action);
 			gens = NEW_OBJECT(vector_ge);
-			tl = NEW_int(Iso.A_base->base_len);
+			tl = NEW_int(Iso.A_base->Stabilizer_chain->base_len);
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 				}

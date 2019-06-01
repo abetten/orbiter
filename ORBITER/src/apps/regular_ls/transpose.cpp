@@ -294,8 +294,8 @@ int main(int argc, const char **argv)
 		int *tl;
 		int *tl2;
 
-		tl = NEW_int(Ar->base_len);
-		tl2 = NEW_int(Ab->base_len);
+		tl = NEW_int(Ar->Stabilizer_chain->base_len);
+		tl2 = NEW_int(Ab->Stabilizer_chain->base_len);
 		Ar->Sims->extract_strong_generators_in_order(SG, tl, verbose_level - 2);
 		
 		sims *Stab2;
@@ -304,7 +304,7 @@ int main(int argc, const char **argv)
 			&SG, ago1, verbose_level);
 		Stab2->extract_strong_generators_in_order(SG2, tl2, verbose_level - 2);
 		cout << "tl2=";
-		int_vec_print(cout, tl2, Ab->base_len);
+		int_vec_print(cout, tl2, Ab->Stabilizer_chain->base_len);
 		cout << endl;
 
 		group G;

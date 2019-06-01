@@ -268,7 +268,7 @@ int action::element_is_one(
 		cout << "action::element_is_one "
 				"in action " << label << endl;
 		}
-	if (f_has_kernel && Kernel->A->base_len) {
+	if (f_has_kernel && Kernel->A->Stabilizer_chain->base_len) {
 		int *Elt1;
 		int drop_out_level, image;
 		Elt1 = NEW_int(elt_size_in_int); // this should be avoided

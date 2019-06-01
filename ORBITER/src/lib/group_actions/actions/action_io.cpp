@@ -327,11 +327,11 @@ void action::read_file_and_print_representatives(
 		G->S->group_order(go);
 
 		gens = NEW_OBJECT(vector_ge);
-		tl = NEW_int(base_len);
+		tl = NEW_int(Stabilizer_chain->base_len);
 		G->S->extract_strong_generators_in_order(*gens, tl,
 				0 /* verbose_level */);
 		cout << "Stabilizer has order " << go << " tl=";
-		int_vec_print(cout, tl, base_len);
+		int_vec_print(cout, tl, Stabilizer_chain->base_len);
 		cout << endl;
 
 		if (f_print_stabilizer_generators) {
@@ -490,12 +490,12 @@ void action::report(ostream &ost)
 		Sims->group_order(go);
 		ost << "Group order " << go << "\\\\" << endl;
 		ost << "tl=$";
-		int_vec_print(ost, Sims->orbit_len, base_len);
+		int_vec_print(ost, Sims->orbit_len, Stabilizer_chain->base_len);
 		ost << "$\\\\" << endl;
 		}
-	if (base_len) {
+	if (Stabilizer_chain->base_len) {
 		ost << "Base: $";
-		int_vec_print(ost, base, base_len);
+		int_vec_print(ost, Stabilizer_chain->base, Stabilizer_chain->base_len);
 		ost << "$\\\\" << endl;
 		}
 	if (f_has_strong_generators) {
@@ -522,9 +522,9 @@ void action::print_info()
 		cout << "linear of dimension " << dimension << endl;
 		}
 
-	if (base_len) {
+	if (Stabilizer_chain->base_len) {
 		cout << "base: ";
-		int_vec_print(cout, base, base_len);
+		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 		cout << endl;
 		}
 	if (f_has_sims) {
@@ -533,7 +533,7 @@ void action::print_info()
 
 		Sims->group_order(go);
 		cout << "Order " << go << " = ";
-		int_vec_print(cout, Sims->orbit_len, base_len);
+		int_vec_print(cout, Sims->orbit_len, Stabilizer_chain->base_len);
 		cout << endl;
 		}
 	cout << endl;
@@ -544,18 +544,18 @@ void action::report_basic_orbits(ostream &ost)
 {
 	int i;
 
-	ost << "The base has length " << base_len << "\\\\" << endl;
+	ost << "The base has length " << Stabilizer_chain->base_len << "\\\\" << endl;
 	ost << "The basic orbits are: \\\\" << endl;
-	for (i = 0; i < base_len; i++) {
-		ost << "Basic orbit " << i << " is orbit of " << base[i]
-			<< " of length " << transversal_length[i] << "\\\\" << endl;
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		ost << "Basic orbit " << i << " is orbit of " << Stabilizer_chain->base[i]
+			<< " of length " << Stabilizer_chain->transversal_length[i] << "\\\\" << endl;
 	}
 }
 
 void action::print_base()
 {
 	cout << "action " << label << " has base ";
-	int_vec_print(cout, base, base_len);
+	int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 	cout << endl;
 }
 
@@ -617,8 +617,8 @@ void action::print_group_order_long(ostream &ost)
 	longinteger_object go;
 	group_order(go);
 	cout << go << " =";
-	for (i = 0; i < base_len; i++) {
-		cout << " " << transversal_length[i];
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		cout << " " << Stabilizer_chain->transversal_length[i];
 		}
 }
 

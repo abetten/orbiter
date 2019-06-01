@@ -134,28 +134,6 @@ public:
 	int dimension;
 
 
-	/** whether we have a base (b_0,\ldots,b_{l-1}) */
-	int f_has_base;
-
-	/** the length of the base */
-	int base_len;
-
-
-
-	/** the base (b_0,\ldots,b_{l-1}) */
-	int *base;
-
-
-
-	/** the length of the orbit of $G^{(i)}$ on $b_i$ */
-	int *transversal_length;
-
-	/** the orbit of  b_i */
-	int **orbit;
-
-	/** the inverse orbit of  b_i */
-	int **orbit_inv;
-
 	/** how many int we need to store one group element */
 	int elt_size_in_int;
 
@@ -184,8 +162,12 @@ public:
 	sims *Kernel;
 	
 	int f_group_order_is_small;
-	int *path;
 	
+
+	int f_has_stabilizer_chain;
+
+	stabilizer_chain_base_data *Stabilizer_chain;
+
 
 	action_pointer_table *ptr;
 
@@ -219,10 +201,6 @@ public:
 	void null_element_data();
 	void allocate_element_data();
 	void free_element_data();
-	void null_base_data();
-	void allocate_base_data(int base_len);
-	void reallocate_base(int new_base_point);
-	void free_base_data();
 	
 	int find_non_fixed_point(void *elt, int verbose_level);
 	int find_fixed_points(void *elt, 
@@ -1119,6 +1097,53 @@ public:
 		int verbose_level);
 
 };
+
+// #############################################################################
+// stabilizer_chain_base_data.cpp:
+// #############################################################################
+
+//! information about the transversals in the subgroup chain
+
+
+class stabilizer_chain_base_data {
+	public:
+
+	action *A;
+
+	/** whether we have a base (b_0,\ldots,b_{l-1}) */
+	int f_has_base;
+
+	/** the length of the base */
+	int base_len;
+
+
+
+	/** the base (b_0,\ldots,b_{l-1}) */
+	int *base;
+
+
+
+	/** the length of the orbit of $G^{(i)}$ on $b_i$ */
+	int *transversal_length;
+
+	/** the orbit of  b_i */
+	int **orbit;
+
+	/** the inverse orbit of  b_i */
+	int **orbit_inv;
+
+	int *path;
+
+	stabilizer_chain_base_data();
+	~stabilizer_chain_base_data();
+	void free_base_data();
+	void allocate_base_data(action *A, int base_len, int verbose_level);
+	void reallocate_base(int new_base_point);
+	void init_base_from_sims(sims *G, int verbose_level);
+
+};
+
+
 
 }}
 

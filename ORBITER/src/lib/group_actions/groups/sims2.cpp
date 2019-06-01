@@ -71,9 +71,9 @@ void sims::build_up_subgroup_random_process(sims *G,
 		cout << "sims::build_up_subgroup_random_process(): "
 				"old group order is " << G_order << endl;
 		cout << "the group is in action " << G->A->label
-				<< " with base_length = " << G->A->base_len
+				<< " with base_length = " << G->A->Stabilizer_chain->base_len
 			<< " and degree " << G->A->degree << endl;
-		cout << "the image action has base_length = " << GA->base_len 
+		cout << "the image action has base_length = " << GA->Stabilizer_chain->base_len
 			<< " and degree " << GA->degree << endl;
 		cout << "current action " << GA->label << endl;
 		cout << "current group order = " << go << endl;

@@ -96,7 +96,7 @@ void representatives::init(action *A,
 	fusion = NEW_int(nb_objects);
 	handle = NEW_int(nb_objects);
 	Elt1 = NEW_int(A->elt_size_in_int);
-	tl = NEW_int(A->base_len);
+	tl = NEW_int(A->Stabilizer_chain->base_len);
 
 	count = 0;
 	for (i = 0; i < nb_objects; i++) {
@@ -232,9 +232,9 @@ void representatives::write_representatives_and_stabilizers(
 	//f2 = fopen(fname_stabgens, "wb");
 	
 	
-	f1 << count << " " << setw(3) << A->base_len << " ";
-	for (i = 0; i < A->base_len; i++) {
-		f1 << setw(3) << A->base[i] << " ";
+	f1 << count << " " << setw(3) << A->Stabilizer_chain->base_len << " ";
+	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+		f1 << setw(3) << A->Stabilizer_chain->base[i] << " ";
 		}
 	f1 << endl;
 	
@@ -255,7 +255,7 @@ void representatives::write_representatives_and_stabilizers(
 			<< setw(5) << SG.len << " ";
 		go.print_width(f1, 10);
 		f1 << " ";
-		for (j = 0; j < A->base_len; j++) {
+		for (j = 0; j < A->Stabilizer_chain->base_len; j++) {
 			f1 << setw(3) << tl[j] << " ";
 			}
 		f1 << endl;
@@ -302,14 +302,14 @@ void representatives::read_representatives_and_stabilizers(
 	//f2 = fopen(fname_stabgens, "rb");
 	
 	f1 >> count >> a;
-	if (a != A->base_len) {
+	if (a != A->Stabilizer_chain->base_len) {
 		cout << "representatives::read_representatives_and_stabilizers "
 				"base_len does not match" << endl;
 		exit(1);
 		}
-	for (j = 0; j < A->base_len; j++) {
+	for (j = 0; j < A->Stabilizer_chain->base_len; j++) {
 		f1 >> a;
-		if (a != A->base[j]) {
+		if (a != A->Stabilizer_chain->base[j]) {
 			cout << "representatives::read_representatives_and_stabilizers "
 					"base point does not match" << endl;
 			exit(1);
@@ -333,7 +333,7 @@ void representatives::read_representatives_and_stabilizers(
 		len = d;
 		gens.init(A);
 		gens.allocate(len);
-		for (j = 0; j < A->base_len; j++) {
+		for (j = 0; j < A->Stabilizer_chain->base_len; j++) {
 			f1 >> tl[j];
 			}
 		for (j = 0; j < len; j++) {
@@ -348,7 +348,7 @@ void representatives::read_representatives_and_stabilizers(
 				cout << endl;
 				}
 			cout << "transversal lengths:" << endl;
-			int_vec_print(cout, tl, A->base_len);
+			int_vec_print(cout, tl, A->Stabilizer_chain->base_len);
 			cout << endl;
 			}
 		Stab->init(A);

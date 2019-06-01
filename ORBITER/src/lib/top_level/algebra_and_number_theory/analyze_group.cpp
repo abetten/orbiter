@@ -120,11 +120,11 @@ void analyze_group(action *A, sims *S,
 	vector_ge SGH1, SGH2, SGH3;
 	int *tl1, *tl2, *tl3, *tlF1, *tlF2;
 	
-	tl1 = NEW_int(A->base_len);
-	tl2 = NEW_int(A->base_len);
-	tl3 = NEW_int(A->base_len);
-	tlF1 = NEW_int(A->base_len);
-	tlF2 = NEW_int(A->base_len);
+	tl1 = NEW_int(A->Stabilizer_chain->base_len);
+	tl2 = NEW_int(A->Stabilizer_chain->base_len);
+	tl3 = NEW_int(A->Stabilizer_chain->base_len);
+	tlF1 = NEW_int(A->Stabilizer_chain->base_len);
+	tlF2 = NEW_int(A->Stabilizer_chain->base_len);
 	
 	
 	// now we compute H1, the derived group

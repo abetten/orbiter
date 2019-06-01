@@ -34,7 +34,7 @@ action *action::induced_action_on_set_partitions(
 			label, A->degree, partition_class_size);
 	if (f_v) {
 		cout << "the old_action " << label
-			<< " has base_length = " << base_len
+			<< " has base_length = " << Stabilizer_chain->base_len
 			<< " and degree " << degree << endl;
 		}
 	A->f_has_subaction = TRUE;
@@ -52,7 +52,7 @@ action *action::induced_action_on_set_partitions(
 	A->f_has_strong_generators = FALSE;
 
 	A->degree = OSP->nb_set_partitions;
-	A->base_len = 0;
+	//A->base_len = 0;
 	if (f_v) {
 		cout << "action::induced_action_on_set_partitions "
 				"before init_function_pointers_induced_action" << endl;
@@ -129,7 +129,7 @@ void action::init_action_on_lines(action *A,
 	S.init(A);
 	S.init_generators(*A->Strong_gens->gens, 0/*verbose_level*/);
 	S.compute_base_orbits_known_length(
-			A->transversal_length, 0/*verbose_level - 1*/);
+			A->Stabilizer_chain->transversal_length, 0/*verbose_level - 1*/);
 	S.group_order(go1);
 	if (f_v) {
 		cout << "action::init_action_on_lines "
@@ -177,7 +177,7 @@ void action::induced_action_by_representation_on_conic(
 	sprintf(label_tex, "%s RepOnConic", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -201,7 +201,7 @@ void action::induced_action_by_representation_on_conic(
 	f_has_strong_generators = FALSE;
 	
 	degree = Rep->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
@@ -249,7 +249,7 @@ void action::induced_action_on_cosets(
 			A->label_tex, A_on_cosets->dimension_of_subspace);
 	if (f_v) {
 		cout << "the old_action " << A->label
-				<< " has base_length = " << A->base_len
+				<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -277,7 +277,7 @@ void action::induced_action_on_cosets(
 	f_has_strong_generators = FALSE;
 	
 	degree = A_on_cosets->nb_points;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
@@ -326,7 +326,7 @@ void action::induced_action_on_factor_space(action *A_old,
 			AF->factor_space_len, AF->VS->F->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -354,7 +354,7 @@ void action::induced_action_on_factor_space(action *A_old,
 	f_has_strong_generators = FALSE;
 	
 	degree = AF->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
@@ -394,7 +394,7 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 	sprintf(A->label_tex, "%s on %d subspaces", label, k);
 	if (f_v) {
 		cout << "the old_action " << label
-			<< " has base_length = " << base_len
+			<< " has base_length = " << Stabilizer_chain->base_len
 			<< " and degree " << degree << endl;
 		}
 	A->f_has_subaction = TRUE;
@@ -421,7 +421,7 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 	A->f_has_strong_generators = FALSE;
 	
 	A->degree = AG->degree.as_int();
-	A->base_len = 0;
+	//A->base_len = 0;
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"before init_function_pointers_induced_action" << endl;
@@ -475,7 +475,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 			A->label_tex, AG->n, AG->k, AG->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -520,7 +520,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 	f_has_strong_generators = FALSE;
 	
 	degree = AG->degree.as_int();
-	base_len = 0;
+	//base_len = 0;
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"before init_function_pointers_induced_action" << endl;
@@ -579,7 +579,7 @@ void action::induced_action_on_spread_set(action *A_old,
 			A->label_tex, AS->k, AS->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -612,7 +612,7 @@ void action::induced_action_on_spread_set(action *A_old,
 	f_has_strong_generators = FALSE;
 	
 	degree = AS->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
@@ -678,7 +678,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 		}
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -706,7 +706,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 	f_has_strong_generators = FALSE;
 	
 	degree = AO->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
@@ -750,7 +750,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 	sprintf(label_tex, "%s Wedge", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -770,7 +770,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 	f_has_strong_generators = FALSE;
 	
 	degree = AW->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
@@ -819,7 +819,7 @@ void action::induced_action_by_subfield_structure(action *A_old,
 			A->label_tex, SubfieldStructure->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -839,7 +839,7 @@ void action::induced_action_by_subfield_structure(action *A_old,
 	f_has_strong_generators = FALSE;
 	
 	degree = SubfieldStructure->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
@@ -885,7 +885,7 @@ void action::induced_action_on_Galois_group(
 	sprintf(label_tex, "%s det", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -906,11 +906,13 @@ void action::induced_action_on_Galois_group(
 	f_has_strong_generators = FALSE;
 
 	degree = AG->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 
 
 	elt_size_in_int = A->elt_size_in_int;
@@ -943,7 +945,7 @@ void action::induced_action_on_determinant(
 	sprintf(label_tex, "%s det", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -964,11 +966,13 @@ void action::induced_action_on_determinant(
 	f_has_strong_generators = FALSE;
 	
 	degree = AD->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = A->elt_size_in_int;
@@ -1000,7 +1004,7 @@ void action::induced_action_on_sign(
 	sprintf(label_tex, "%s sign", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -1015,11 +1019,13 @@ void action::induced_action_on_sign(
 	f_has_strong_generators = FALSE;
 	
 	degree = OnSign->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = A->elt_size_in_int;
@@ -1049,7 +1055,7 @@ void action::induced_action_by_conjugation(sims *old_G,
 	if (f_v) {
 		cout << "action::induced_action_by_conjugation" << endl;
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	Base_group->group_order(go);
@@ -1072,11 +1078,13 @@ void action::induced_action_by_conjugation(sims *old_G,
 	f_has_strong_generators = FALSE;
 	
 	degree = goi;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = A->elt_size_in_int;
@@ -1112,7 +1120,7 @@ void action::induced_action_by_right_multiplication(
 	if (f_v) {
 		cout << "action::induced_action_by_right_multiplication" << endl;
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	Base_group->group_order(go);
@@ -1135,11 +1143,13 @@ void action::induced_action_by_right_multiplication(
 	f_has_strong_generators = FALSE;
 	
 	degree = goi;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = A->elt_size_in_int;
@@ -1201,7 +1211,7 @@ void action::induced_action_on_sets(
 				"f_induce_action=" << f_induce_action << endl;
 		cout << "action::induced_action_on_sets "
 				"the old_action " << old_action.label
-				<< " has base_length = " << old_action.base_len
+				<< " has base_length = " << old_action.Stabilizer_chain->base_len
 			<< " and degree " << old_action.degree << endl;
 		cout << "action::induced_action_on_sets "
 				"verbose_level = " << verbose_level << endl;
@@ -1235,14 +1245,16 @@ void action::induced_action_on_sets(
 	f_has_strong_generators = FALSE;
 	
 	degree = nb_sets;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	if (f_v) {
 		cout << "action::induced_action_on_sets "
 				"calling allocate_base_data" << endl;
 		}
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action.elt_size_in_int;
@@ -1305,7 +1317,7 @@ void action::induced_action_on_subgroups(
 		cout << "action::induced_action_on_subgroups" << endl;
 		cout << "action::induced_action_on_sets "
 				"the old_action " << old_action->label
-				<< " has base_length = " << old_action->base_len
+				<< " has base_length = " << old_action->Stabilizer_chain->base_len
 			<< " and degree " << old_action->degree << endl;
 		cout << "action::induced_action_on_subgroups "
 				"verbose_level = " << verbose_level << endl;
@@ -1338,14 +1350,16 @@ void action::induced_action_on_subgroups(
 	f_has_strong_generators = FALSE;
 	
 	degree = nb_subgroups;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	if (f_v) {
 		cout << "action::induced_action_on_subgroups "
 				"calling allocate_base_data" << endl;
 		}
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action->elt_size_in_int;
@@ -1411,7 +1425,7 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	f_has_strong_generators = FALSE;
 	
 	degree = ABR->nb_points;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	if (FALSE) {
@@ -1419,7 +1433,9 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 				"on_orbit_with_schreier_vector "
 				"calling allocate_base_data" << endl;
 		}
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action.elt_size_in_int;
@@ -1479,14 +1495,16 @@ action *action::restricted_action(
 	A->f_has_strong_generators = FALSE;
 	
 	A->degree = nb_points;
-	A->base_len = 0;
+	//A->base_len = 0;
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
 	if (FALSE) {
 		cout << "action::restricted_action "
 				"calling allocate_base_data" << endl;
 		}
-	A->allocate_base_data(0);
+	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A->Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//A->allocate_base_data(0);
 	
 	
 	A->elt_size_in_int = elt_size_in_int;
@@ -1557,14 +1575,16 @@ void action::induced_action_by_restriction_internal_function(
 	f_has_strong_generators = FALSE;
 	
 	degree = nb_points;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	if (FALSE) {
 		cout << "action::induced_action_by_restriction_internal_function "
 				"calling allocate_base_data" << endl;
 		}
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action.elt_size_in_int;
@@ -1599,7 +1619,7 @@ void action::induced_action_on_pairs(
 	if (f_v) {
 		cout << "action::induced_action_on_pairs" << endl;
 		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.base_len
+			<< " has base_length = " << old_action.Stabilizer_chain->base_len
 			<< " and degree " << old_action.degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_pairs",
@@ -1616,10 +1636,12 @@ void action::induced_action_on_pairs(
 	f_has_strong_generators = FALSE;
 	
 	degree = Combi.int_n_choose_k(old_action.degree, 2);
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action.elt_size_in_int;
@@ -1663,7 +1685,7 @@ void action::induced_action_on_ordered_pairs(
 	if (f_v) {
 		cout << "action::induced_action_on_ordered_pairs" << endl;
 		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.base_len
+			<< " has base_length = " << old_action.Stabilizer_chain->base_len
 			<< " and degree " << old_action.degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_ordered_pairs",
@@ -1680,10 +1702,12 @@ void action::induced_action_on_ordered_pairs(
 	f_has_strong_generators = FALSE;
 	
 	degree = old_action.degree * (old_action.degree - 1);
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action.elt_size_in_int;
@@ -1712,7 +1736,7 @@ void action::induced_action_on_k_subsets(
 	if (f_v) {
 		cout << "action::induced_action_on_k_subsets" << endl;
 		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.base_len
+			<< " has base_length = " << old_action.Stabilizer_chain->base_len
 			<< " and degree " << old_action.degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_%d_subsets",
@@ -1737,10 +1761,12 @@ void action::induced_action_on_k_subsets(
 	f_has_strong_generators = FALSE;
 	
 	degree = On_k_subsets->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action.elt_size_in_int;
@@ -1765,7 +1791,7 @@ void action::induced_action_on_orbits(action *old_action,
 	if (f_v) {
 		cout << "action::induced_action_on_orbits" << endl;
 		cout << "the old_action " << old_action->label
-			<< " has base_length = " << old_action->base_len
+			<< " has base_length = " << old_action->Stabilizer_chain->base_len
 			<< " and degree " << old_action->degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_orbits",
@@ -1791,10 +1817,12 @@ void action::induced_action_on_orbits(action *old_action,
 	f_has_strong_generators = FALSE;
 	
 	degree = On_orbits->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action->elt_size_in_int;
@@ -1819,7 +1847,7 @@ void action::induced_action_on_flags(action *old_action,
 	if (f_v) {
 		cout << "action::induced_action_on_flags" << endl;
 		cout << "the old_action " << old_action->label
-			<< " has base_length = " << old_action->base_len
+			<< " has base_length = " << old_action->Stabilizer_chain->base_len
 			<< " and degree " << old_action->degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_flags",
@@ -1845,10 +1873,12 @@ void action::induced_action_on_flags(action *old_action,
 	f_has_strong_generators = FALSE;
 	
 	degree = On_flags->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action->elt_size_in_int;
@@ -1873,7 +1903,7 @@ void action::induced_action_on_bricks(action &old_action,
 	if (f_v) {
 		cout << "action::induced_action_on_bricks" << endl;
 		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.base_len
+			<< " has base_length = " << old_action.Stabilizer_chain->base_len
 			<< " and degree " << old_action.degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_bricks", old_action.label);
@@ -1895,10 +1925,12 @@ void action::induced_action_on_bricks(action &old_action,
 	f_has_strong_generators = FALSE;
 	
 	degree = B->nb_bricks;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action.elt_size_in_int;
@@ -1947,10 +1979,12 @@ void action::induced_action_on_andre(action *An,
 	f_has_strong_generators = FALSE;
 	
 	degree = On_andre->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = An1->elt_size_in_int;
@@ -1991,12 +2025,14 @@ void action::setup_product_action(action *A1, action *A2,
 	
 	degree = PA->degree;
 	
-	base_len = 0;
+	//base_len = 0;
 	
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	
-	allocate_base_data(0);
+	//Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	//Stabilizer_chain->allocate_base_data(this, 0);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = PA->elt_size_in_int;
@@ -2006,28 +2042,29 @@ void action::setup_product_action(action *A1, action *A2,
 	
 	allocate_element_data();
 
-	base_len = A1->base_len + A2->base_len;
-	allocate_base_data(base_len);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	Stabilizer_chain->base_len = A1->Stabilizer_chain->base_len + A2->Stabilizer_chain->base_len;
 	if (f_use_projections) {
-		for (i = 0; i < A1->base_len; i++) {
-			base[i] = A1->base[i];
+		for (i = 0; i < A1->Stabilizer_chain->base_len; i++) {
+			Stabilizer_chain->base[i] = A1->Stabilizer_chain->base[i];
 			}
-		for (i = 0; i < A2->base_len; i++) {
-			base[A1->base_len + i] = A1->degree + A2->base[i];
+		for (i = 0; i < A2->Stabilizer_chain->base_len; i++) {
+			Stabilizer_chain->base[A1->Stabilizer_chain->base_len + i] = A1->degree + A2->Stabilizer_chain->base[i];
 			}
 		}
 	else {
-		for (i = 0; i < A1->base_len; i++) {
-			base[i] = A1->base[i] * A2->degree;
+		for (i = 0; i < A1->Stabilizer_chain->base_len; i++) {
+			Stabilizer_chain->base[i] = A1->Stabilizer_chain->base[i] * A2->degree;
 			}
-		for (i = 0; i < A2->base_len; i++) {
-			base[A1->base_len + i] = A2->base[i];
+		for (i = 0; i < A2->Stabilizer_chain->base_len; i++) {
+			Stabilizer_chain->base[A1->Stabilizer_chain->base_len + i] = A2->Stabilizer_chain->base[i];
 			}
 		}
 	
 	if (f_vv) {
 		cout << "make_element_size=" << make_element_size << endl;
-		cout << "base_len=" << base_len << endl;
+		cout << "base_len=" << Stabilizer_chain->base_len << endl;
 		}
 	if (f_v) {
 		cout << "action::setup_product_action finished" << endl;
@@ -2058,7 +2095,7 @@ void action::induced_action_on_homogeneous_polynomials(
 	sprintf(label_tex, "%s HP %d %d", A->label_tex, HPD->n, HPD->degree);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -2089,7 +2126,7 @@ void action::induced_action_on_homogeneous_polynomials(
 	f_has_strong_generators = FALSE;
 	
 	degree = OnHP->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
@@ -2143,7 +2180,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 			A->label_tex, HPD->n, HPD->degree, nb_equations);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->base_len
+			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -2190,7 +2227,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	f_has_strong_generators = FALSE;
 	
 	degree = OnHP->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	f_is_linear = TRUE;
@@ -2314,8 +2351,8 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "subaction order = " << go2 << endl;
 		cout << "degree = " << old_action->degree << endl;
 		cout << "subaction->degree = " << subaction->degree << endl;
-		cout << "base_length = " << old_action->base_len << endl;
-		cout << "subaction->base_len = " << subaction->base_len << endl;
+		cout << "base_length = " << old_action->Stabilizer_chain->base_len << endl;
+		cout << "subaction->base_len = " << subaction->Stabilizer_chain->base_len << endl;
 		if (base_of_choice_len) {
 			cout << "base of choice:" << endl;
 			int_vec_print(cout, base_of_choice, base_of_choice_len);
@@ -2343,8 +2380,8 @@ void action::induce(action *old_action, sims *old_G,
 			if (f_vv) {
 				cout << i << "-th base point is " << b << endl;
 				}
-			old_base_len = base_len;
-			reallocate_base(b);
+			old_base_len = Stabilizer_chain->base_len;
+			Stabilizer_chain->reallocate_base(b);
 			G->reallocate_base(old_base_len, verbose_level - 2);
 			}
 		if (f_vv) {
@@ -2357,7 +2394,7 @@ void action::induce(action *old_action, sims *old_G,
 	//fallback_action = old_action; // changed back A. Betten, May 27, 2012 !!!
 		// The BLT search needs old_action
 		// the translation plane search needs subaction
-	if (fallback_action->base_len == 0) {
+	if (fallback_action->Stabilizer_chain->base_len == 0) {
 		if (f_vv) {
 			cout << "WARNING: action::induce fallback_action->base_len == 0"
 					<< endl;
@@ -2403,13 +2440,13 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "found a group in action " << G->A->label
 				<< " of order " << G_order << " ";
 		cout << "transversal lengths:" << endl;
-		int_vec_print(cout, G->orbit_len, G->A->base_len);
+		int_vec_print(cout, G->orbit_len, G->A->Stabilizer_chain->base_len);
 		cout << endl;
 
 		cout << "kernel in action " << K->A->label
 				<< " of order " << K_order << " ";
 		cout << "transversal lengths:" << endl;
-		int_vec_print(cout, K->orbit_len, K->A->base_len);
+		int_vec_print(cout, K->orbit_len, K->A->Stabilizer_chain->base_len);
 		cout << endl;
 		}
 	D.mult(G_order, K_order, go3);
@@ -2455,7 +2492,7 @@ void action::lex_least_base_in_place(int verbose_level)
 	if (f_v) {
 		cout << "action::lex_least_base_in_place action "
 				<< label << " base=";
-		int_vec_print(cout, base, base_len);
+		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 		cout << endl;
 		print_info();
 		//cout << "the generators are:" << endl;
@@ -2463,16 +2500,16 @@ void action::lex_least_base_in_place(int verbose_level)
 		}
 
 	set = NEW_int(degree);
-	old_base = NEW_int(base_len);
-	old_base_len = base_len;
-	for (i = 0; i < base_len; i++) {
-		old_base[i] = base[i];
+	old_base = NEW_int(Stabilizer_chain->base_len);
+	old_base_len = Stabilizer_chain->base_len;
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		old_base[i] = Stabilizer_chain->base[i];
 		}
 	
 	
 	
-	for (i = 0; i < base_len; i++) {
-		set[i] = base[i];
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		set[i] = Stabilizer_chain->base[i];
 		if (f_v) {
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " computing the least moved point" << endl;
@@ -2482,11 +2519,11 @@ void action::lex_least_base_in_place(int verbose_level)
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " the least moved point is " << lmp << endl;
 			}
-		if (lmp >= 0 && lmp < base[i]) {
+		if (lmp >= 0 && lmp < Stabilizer_chain->base[i]) {
 			if (f_v) {
 				cout << "action::lex_least_base_in_place "
 						"i=" << i << " least moved point = " << lmp
-					<< " less than base point " << base[i] << endl;
+					<< " less than base point " << Stabilizer_chain->base[i] << endl;
 				cout << "doing a base change:" << endl;
 				}
 			set[i] = lmp;
@@ -2501,19 +2538,19 @@ void action::lex_least_base_in_place(int verbose_level)
 	if (f_v) {
 		cout << "action::lex_least_base_in_place "
 				"done, action " << label << " base=";
-		int_vec_print(cout, base, base_len);
+		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 		cout << endl;
 		print_info();
 		//cout << "the generators are:" << endl;
 		//Sims->print_generators();
 		int f_changed = FALSE;
 
-		if (old_base_len != base_len) {
+		if (old_base_len != Stabilizer_chain->base_len) {
 			f_changed = TRUE;
 			}
 		if (!f_changed) {
-			for (i = 0; i < base_len; i++) {
-				if (old_base[i] != base[i]) {
+			for (i = 0; i < Stabilizer_chain->base_len; i++) {
+				if (old_base[i] != Stabilizer_chain->base[i]) {
 					f_changed = TRUE;
 					break;
 					}
@@ -2525,7 +2562,7 @@ void action::lex_least_base_in_place(int verbose_level)
 			int_vec_print(cout, old_base, old_base_len);
 			cout << endl;
 			cout << "new base: ";
-			int_vec_print(cout, base, base_len);
+			int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 			cout << endl;
 			}
 		}
@@ -2543,7 +2580,7 @@ void action::lex_least_base(action *old_action, int verbose_level)
 	if (f_v) {
 		cout << "action::lex_least_base action "
 				<< old_action->label << " base=";
-		int_vec_print(cout, old_action->base, old_action->base_len);
+		int_vec_print(cout, old_action->Stabilizer_chain->base, old_action->Stabilizer_chain->base_len);
 		cout << endl;
 		}
 #if 0
@@ -2569,17 +2606,17 @@ void action::lex_least_base(action *old_action, int verbose_level)
 		exit(1);
 		}
 	
-	for (i = 0; i < old_A->base_len; i++) {
-		set[i] = old_A->base[i];
+	for (i = 0; i < old_A->Stabilizer_chain->base_len; i++) {
+		set[i] = old_A->Stabilizer_chain->base[i];
 		if (f_v) {
 			cout << "action::lex_least_base "
 					"calling least_moved_point_at_level " << i << endl;
 			}
 		lmp = old_A->least_moved_point_at_level(i, verbose_level - 2);
-		if (lmp < old_A->base[i]) {
+		if (lmp < old_A->Stabilizer_chain->base[i]) {
 			if (f_v) {
 				cout << "action::lex_least_base least moved point = " << lmp 
-					<< " less than base point " << old_A->base[i] << endl;
+					<< " less than base point " << old_A->Stabilizer_chain->base[i] << endl;
 				cout << "doing a base change:" << endl;
 				}
 			set[i] = lmp;
@@ -2588,12 +2625,12 @@ void action::lex_least_base(action *old_action, int verbose_level)
 			old_A = A;
 			}
 		}
-	base_change(old_A, old_A->base_len,
-			old_A->base, verbose_level - 1);
+	base_change(old_A, old_A->Stabilizer_chain->base_len,
+			old_A->Stabilizer_chain->base, verbose_level - 1);
 	FREE_int(set);
 	if (f_v) {
 		cout << "action::lex_least_base action " << label << " base=";
-		int_vec_print(cout, base, base_len);
+		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 		cout << endl;
 		}
 }
@@ -2612,13 +2649,13 @@ int action::test_if_lex_least_base(int verbose_level)
 	AA = NEW_OBJECT(action);
 
 	AA->lex_least_base(this, verbose_level);
-	for (i = 0; i < base_len; i++) {
-		if (AA->base_len >= i) {
-			if (base[i] > AA->base[i]) {
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		if (AA->Stabilizer_chain->base_len >= i) {
+			if (Stabilizer_chain->base[i] > AA->Stabilizer_chain->base[i]) {
 				cout << "action::test_if_lex_least_base "
 						"returns FALSE" << endl;
-				cout << "base[i]=" << base[i] << endl;
-				cout << "AA->base[i]=" << AA->base[i] << endl;
+				cout << "base[i]=" << Stabilizer_chain->base[i] << endl;
+				cout << "AA->base[i]=" << AA->Stabilizer_chain->base[i] << endl;
 				FREE_OBJECT(AA);
 				return FALSE;
 				}
@@ -2643,18 +2680,20 @@ void action::base_change_in_place(int size, int *set, int verbose_level)
 	if (f_v) {
 		cout << "action::base_change_in_place after base_change" << endl;
 		}
-	free_base_data();
+	Stabilizer_chain->free_base_data();
 	if (f_v5) {
 		cout << "action::base_change_in_place after free_base_data" << endl;
 		}
-	allocate_base_data(A->base_len);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, A->Stabilizer_chain->base_len, verbose_level);
+	//allocate_base_data(A->base_len);
 	if (f_v5) {
 		cout << "action::base_change_in_place after allocate_base_data"
 				<< endl;
 		}
-	base_len = A->base_len;
-	for (i = 0; i < A->base_len; i++) {
-		base[i] = A->base[i];
+	Stabilizer_chain->base_len = A->Stabilizer_chain->base_len;
+	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+		Stabilizer_chain->base[i] = A->Stabilizer_chain->base[i];
 		}
 	if (f_v5) {
 		cout << "action::base_change_in_place after copying base" << endl;
@@ -2752,11 +2791,13 @@ void action::base_change(action *old_action,
 	f_has_strong_generators = FALSE;
 	
 	degree = old_action->degree;
-	base_len = 0;
+	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 
-	allocate_base_data(0);
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
+	//allocate_base_data(0);
 	
 	
 	elt_size_in_int = old_action->elt_size_in_int;
@@ -2900,7 +2941,7 @@ int action::choose_next_base_point_default_method(
 		}
 	if (f_v) {
 		cout << "action::choose_next_base_point_default_method current base: ";
-		int_vec_print(cout, base, base_len);
+		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
 		cout << " choosing next base point to be " << b << endl;
 		}
 	return b;
