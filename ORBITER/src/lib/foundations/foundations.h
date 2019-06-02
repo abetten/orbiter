@@ -70,7 +70,6 @@
 
 #include <iostream>
 #include <fstream>
-//#include <sstream>
 #include <iomanip>
 
 #include <stdlib.h>
@@ -94,6 +93,8 @@
 #include <vector>
 #include <deque>
 
+#ifndef FOUNDATIONS_H_
+#define FOUNDATIONS_H_
 
 /*----------------------------------------------------------------------------*/
 /// Define some ANSI colour codes
@@ -531,4 +532,4 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./solvers/solvers.h"
 #include "./statistics/statistics.h"
 
-
+#endif

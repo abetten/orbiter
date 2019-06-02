@@ -42,10 +42,10 @@ draw_test:
 		-report
 	latex  codes_linear_n$(n)_k$(k)_q$(q)_d$(d).tex
 	dvips  codes_linear_n$(n)_k$(k)_q$(q)_d$(d).dvi -o
-	open codes_linear_n$(n)_k$(k)_q$(q)_d$(d).ps
+	evince codes_linear_n$(n)_k$(k)_q$(q)_d$(d).ps
 	
 clean_test:
 	rm -rf *.log *.mp *.commands *.layered_graph *.1 *.tex *.txt *.csv 
-	rm -rf *.aux *.ps *.dvi ./CODES*
+	rm -rf *.aux *.ps *.dvi ./CODES* *.mpx
 
 #------------------------------------------------------------------------------
