@@ -175,6 +175,7 @@ MODULES= \
 		group_actions/groups/subgroup.o \
 		group_actions/groups/sylow_structure.o \
 		group_actions/groups/wreath_product.o \
+		group_actions/groups/shallow_schreier_ai.o \
 		group_actions/induced_actions/action_by_conjugation.o \
 		group_actions/induced_actions/action_by_representation.o \
 		group_actions/induced_actions/action_by_restriction.o \

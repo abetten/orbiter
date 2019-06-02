@@ -718,8 +718,8 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
 				//shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
-				shallow_schreier_tree_Seress_randomized;
-				//shallow_schreier_tree_Sajeeb;
+				//shallow_schreier_tree_Seress_randomized;
+				shallow_schreier_tree_Sajeeb;
 
 		Schreier_vector = Schreier.get_schreier_vector(
 				gen_hdl_first,
