@@ -4,35 +4,6 @@ LIB =
 LFLAGS = -lm
 
 
-all: foundations group_actions classification discreta toplevel liborbiter.a
-
-
-foundations : foundations2 
-group_actions : group_actions2 
-classification : classification2 
-discreta : discreta2 
-toplevel : toplevel2 
-
-foundations2 : ; cd foundations; $(MAKE)
-group_actions2 : ; cd group_actions; $(MAKE)
-classification2 : ; cd classification; $(MAKE)
-discreta2 : ; cd DISCRETA; $(MAKE)
-toplevel2 : ; cd top_level; $(MAKE)
-
-
-clean:
-	cd foundations; $(MAKE) clean
-	cd group_actions; $(MAKE) clean
-	cd classification; $(MAKE) clean
-	cd DISCRETA; $(MAKE) clean
-	cd top_level; $(MAKE) clean
-	- rm *.o *.a 
-
-
-cleana:
-	- rm *.a 
-
-
 MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/finite_field_io.o \
@@ -349,6 +320,23 @@ MODULES= \
 		top_level/solver/exact_cover_arguments.o
 
 
-liborbiter.a:  $(MODULES) ;
+all:
+	cd foundations; $(MAKE)
+	cd group_actions; $(MAKE)
+	cd classification; $(MAKE)
+	cd DISCRETA; $(MAKE)
+	cd top_level; $(MAKE)
 	ar ruvs liborbiter.a $(MODULES)
 
+
+clean:
+	cd foundations; $(MAKE) clean
+	cd group_actions; $(MAKE) clean
+	cd classification; $(MAKE) clean
+	cd DISCRETA; $(MAKE) clean
+	cd top_level; $(MAKE) clean
+	- rm *.o *.a 
+
+
+cleana:
+	- rm *.a 
