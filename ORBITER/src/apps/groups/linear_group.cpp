@@ -694,8 +694,8 @@ int main(int argc, const char **argv)
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
 				//shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
-				shallow_schreier_tree_Seress_randomized;
-				//shallow_schreier_tree_Sajeeb;
+				//shallow_schreier_tree_Seress_randomized;
+				shallow_schreier_tree_Sajeeb;
 #endif
 		int orbit_idx = 0;
 		int f_randomized = TRUE;
