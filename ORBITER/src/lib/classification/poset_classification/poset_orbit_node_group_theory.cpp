@@ -679,7 +679,7 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 // calls Schreier.get_schreier_vector
 // called from poset_orbit_node_downstep.cpp and from
 // poset_orbit_node_downstep_subspace_action.cpp
-// ToDo add an enum for the schallow schreier tree strategy
+// ToDo add an enum for the shallow schreier tree strategy
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -712,8 +712,7 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 			gen_hdl_first = hdl_strong_generators[0];
 			}
 
-		// ToDo
-		// set the shallow schreier strategy
+		// ToDo: set the shallow schreier strategy
 
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
 				//shallow_schreier_tree_standard;
@@ -772,8 +771,8 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
 				//shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
-				shallow_schreier_tree_Seress_randomized;
-				//shallow_schreier_tree_Sajeeb;
+				//shallow_schreier_tree_Seress_randomized;
+				shallow_schreier_tree_Sajeeb;
 
 
 		Schreier_vector = Schreier.get_schreier_vector(

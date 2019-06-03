@@ -7,7 +7,7 @@
 
 #include "shallow_schreier_ai.h"
 
-shallow_schreier_ai::shallow_schreier_ai(schreier& sch, int vl) {
+void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int vl) {
 
 	int f_v = (vl >= 1);
 	int fst, len, root, cnt, l;
@@ -110,6 +110,7 @@ shallow_schreier_ai::shallow_schreier_ai(schreier& sch, int vl) {
 				cout << "schreier::shallow_tree_generators_ai reverting to previous schreier" << endl;
 			}
 			S = previous_schreier;
+			this->nb_revert_backs += 1;
 			break;
 		}
 
@@ -135,6 +136,41 @@ shallow_schreier_ai::shallow_schreier_ai(schreier& sch, int vl) {
 	}
 }
 
-shallow_schreier_ai::~shallow_schreier_ai() {
 
+void shallow_schreier_ai::get_degree_sequence (schreier& sch, int vl) {
+
+	nb_nodes = sch.degree;
+	if (deg_seq) delete [] deg_seq;
+	deg_seq = new int [nb_nodes] ();
+
+	for (int i=0; i<nb_nodes; ++i) {
+		int pt = sch.orbit[i];
+		int parent = sch.prev[pt];
+		bool root_node = (parent == -1);
+		if (!root_node) {
+			deg_seq[parent] += 1;
+		}
+	}
+
+	s = &sch;
+
+}
+
+
+void shallow_schreier_ai::print_degree_sequence () {
+	cout << __FILE__ << ":" << __LINE__
+			<< ":shallow_schreier_ai::print_degree_sequence" << endl;
+
+	for (int i=0; i<this->nb_nodes; ++i) {
+		cout << "Node " << s->orbit[i] << " -> " << this->deg_seq[i] << endl;
+	}
+
+	cout << __FILE__ << ":" << __LINE__
+			<< ":shallow_schreier_ai::print_degree_sequence Done." << endl;
+}
+
+shallow_schreier_ai::~shallow_schreier_ai() {
+	if (deg_seq) {
+		delete [] deg_seq;
+	}
 }

@@ -26,14 +26,18 @@ class shallow_schreier_ai {
 
 public:
 
-	shallow_schreier_ai(schreier& sch, int vl);
+	shallow_schreier_ai () {};
+
+	void generate_shallow_tree ( schreier& sch, int vl );
+	void get_degree_sequence (schreier& sch, int vl);
+	void print_degree_sequence();
 
 	~shallow_schreier_ai();
 
-private:
-
-//	int verbose_level = 0;
-//	schreier* sch = NULL;
+	schreier* s = NULL;
+	size_t nb_revert_backs = 0;
+	int* deg_seq = NULL;
+	int nb_nodes = 0;
 
 
 };

@@ -5,8 +5,8 @@ CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
-n=24
-k=12
+n=5
+k=2
 d=8
 q=2
 v=0
@@ -29,7 +29,7 @@ clean:
 #------------------------------------------------------------------------------
 
 test:
-	./codes.out -v $(v) -n $(n) -k $(k) -q $(q) -d $(d) -w -lex
+	./codes.out -v $(v) -n $(n) -k $(k) -q $(q) -d $(d)
 	echo $$?
 	
 

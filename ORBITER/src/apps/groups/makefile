@@ -12,7 +12,13 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 
-ALL_TARGETS=wreath_product.out
+ALL_TARGETS=\
+	action_on_set_partitions.out \
+	direct_product.out \
+	exceptional_isomorphism_O4_main.out \
+	linear_group.out \
+	orthogonal_group.out \
+	wreath_product.out
 
 
 
@@ -50,8 +56,8 @@ FALSE=0
 #-------------------------------------------------------------
 
 
-all: all2;
-	junk=$$(nvidia-smi);\
+all:
+	junk=$$(which nvidia-smi);\
 	if [ $$? -eq 0 ]; then \
 		$(MAKE) COMPILE_ON_GPU=$(TRUE) cuda_all; \
 	else \
@@ -60,18 +66,9 @@ all: all2;
 
 
 
-all2: ; date
 
 
-
-
-not_cuda_all:  \
-	action_on_set_partitions.out \
-	direct_product.out \
-	exceptional_isomorphism_O4_main.out \
-	linear_group.out \
-	orthogonal_group.out \
-	wreath_product.out
+not_cuda_all: $(ALL_TARGETS)
 
 
 action_on_set_partitions.out:  action_on_set_partitions.o;
