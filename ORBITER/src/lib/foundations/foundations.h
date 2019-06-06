@@ -99,24 +99,30 @@
 /*----------------------------------------------------------------------------*/
 /// Define some ANSI colour codes
 /*----------------------------------------------------------------------------*/
-#define RESET_COLOR_SCHEME	"\u001b[0m"
-#define BLACK "\u001b[30m"
-#define RED "\u001b[31m"
-#define GREEN "\u001b[32m"
-#define YELLOW "\u001b[33m"
-#define BLUE "\u001b[34m"
-#define MAGENTA "\u001b[35m"
-#define CYAN "\u001b[36m"
-#define WHITE "\u001b[37m"
+#if __cplusplus >= 201103L
+#define COLOR_UNICODE "\u001b"
+#else
+#define COLOR_UNICODE "\x1b"
+#endif
 
-#define BRIGHT_BLACK "\u001b[30;1m"
-#define BRIGHT_RED "\u001b[31;1m"
-#define BRIGHT_GREEN "\u001b[32;1m"
-#define BRIGHT_YELLOW "\u001b[33;1m"
-#define BRIGHT_BLUE "\u001b[34;1m"
-#define BRIGHT_MAGENTA "\u001b[35;1m"
-#define BRIGHT_CYAN "\u001b[36;1m"
-#define BRIGHT_WHITE "\u001b[37;1m"
+#define RESET_COLOR_SCHEME COLOR_UNICODE "[0m"
+#define BLACK COLOR_UNICODE "[30m"
+#define RED COLOR_UNICODE "[31m"
+#define GREEN COLOR_UNICODE "[32m"
+#define YELLOW COLOR_UNICODE "[33m"
+#define BLUE COLOR_UNICODE "[34m"
+#define MAGENTA COLOR_UNICODE "[35m"
+#define CYAN COLOR_UNICODE "[36m"
+#define WHITE COLOR_UNICODE "[37m"
+
+#define BRIGHT_BLACK COLOR_UNICODE "[30;1m"
+#define BRIGHT_RED COLOR_UNICODE "[31;1m"
+#define BRIGHT_GREEN COLOR_UNICODE "[32;1m"
+#define BRIGHT_YELLOW COLOR_UNICODE "[33;1m"
+#define BRIGHT_BLUE COLOR_UNICODE "[34;1m"
+#define BRIGHT_MAGENTA COLOR_UNICODE "[35;1m"
+#define BRIGHT_CYAN COLOR_UNICODE "[36;1m"
+#define BRIGHT_WHITE COLOR_UNICODE "[37;1m"
 /*----------------------------------------------------------------------------*/
 
 
