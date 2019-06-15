@@ -6149,7 +6149,7 @@ void projective_space::conic_type(
 				}
 
 
-			if (l >= 3) {
+			if (l >= 6) {
 
 				if (f_v) {
 					cout << "We found an " << l << "-conic, "
@@ -6232,7 +6232,10 @@ void projective_space::conic_type(
 				}
 			} // else
 		} // next rk
-	
+
+	if (f_v) {
+		cout << "projective_space::conic_type done" << endl;
+		}
 }
 
 void projective_space::find_nucleus(

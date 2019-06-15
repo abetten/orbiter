@@ -66,6 +66,12 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
+	if (f_v) {
+		cout << "grassmann::init n=" << n
+				<< " k=" << k << " q=" << F->q << endl;
+		}
+
+
 	grassmann::n = n;
 	grassmann::k = k;
 	grassmann::F = F;
@@ -74,12 +80,11 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 	longinteger_domain D;
 
 	D.q_binomial(nCkq, n, k, q, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "grassmann::init nCkq=" << nCkq << endl;
+		}
 	
 
-	if (f_v) {
-		cout << "grassmann::init n=" << n
-				<< " k=" << k << " q=" << q << endl;
-		}
 
 
 	base_cols = NEW_int(n);

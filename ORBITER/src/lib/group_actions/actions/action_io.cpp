@@ -521,12 +521,20 @@ void action::print_info()
 	if (f_is_linear) {
 		cout << "linear of dimension " << dimension << endl;
 		}
+	else {
+		cout << "the action is not linear" << endl;
+	}
 
-	if (Stabilizer_chain->base_len) {
-		cout << "base: ";
-		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
-		cout << endl;
+	if (Stabilizer_chain) {
+		if (Stabilizer_chain->base_len) {
+			cout << "base: ";
+			int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
+			cout << endl;
 		}
+	}
+	else {
+		cout << "The action does not have a stabilizer chain" << endl;
+	}
 	if (f_has_sims) {
 		cout << "has sims" << endl;
 		longinteger_object go;
@@ -535,7 +543,7 @@ void action::print_info()
 		cout << "Order " << go << " = ";
 		int_vec_print(cout, Sims->orbit_len, Stabilizer_chain->base_len);
 		cout << endl;
-		}
+	}
 	cout << endl;
 
 }

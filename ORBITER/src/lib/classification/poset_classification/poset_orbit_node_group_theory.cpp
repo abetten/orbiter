@@ -716,9 +716,9 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 		// set the shallow schreier strategy
 
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-				//shallow_schreier_tree_standard;
+				shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
-				shallow_schreier_tree_Seress_randomized;
+				//shallow_schreier_tree_Seress_randomized;
 				//shallow_schreier_tree_Sajeeb;
 
 		Schreier_vector = Schreier.get_schreier_vector(
@@ -770,9 +770,9 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 			}
 
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-				//shallow_schreier_tree_standard;
+				shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
-				shallow_schreier_tree_Seress_randomized;
+				//shallow_schreier_tree_Seress_randomized;
 				//shallow_schreier_tree_Sajeeb;
 
 

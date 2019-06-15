@@ -1810,13 +1810,13 @@ void projective_space_with_action::classify_objects_using_nauty(
 	file_io Fio;
 
 	if (f_v) {
-		cout << "classify_objects_using_nauty" << endl;
+		cout << "projective_space_with_action::classify_objects_using_nauty" << endl;
 		}
 
 	int nb_objects_to_test;
 
 	if (f_v) {
-		cout << "classify_objects_using_nauty "
+		cout << "projective_space_with_action::classify_objects_using_nauty "
 				"before count_number_of_objects_to_test" << endl;
 		}
 	nb_objects_to_test = Data->count_number_of_objects_to_test(
@@ -1825,11 +1825,11 @@ void projective_space_with_action::classify_objects_using_nauty(
 	t0 = os_ticks();
 
 	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
-		cout << "input " << input_idx << " / " << Data->nb_inputs
+		cout << "projective_space_with_action::classify_objects_using_nauty input " << input_idx << " / " << Data->nb_inputs
 			<< " is:" << endl;
 
 		if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
-			cout << "input set of points "
+			cout << "projective_space_with_action::classify_objects_using_nauty input set of points "
 				<< Data->input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
@@ -1840,7 +1840,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					Data->input_string[input_idx], verbose_level);
 
 			if (f_v) {
-				cout << "classify_objects_using_nauty "
+				cout << "projective_space_with_action::classify_objects_using_nauty "
 						"before process_object" << endl;
 				}
 			int nb_rows, nb_cols;
@@ -1861,18 +1861,22 @@ void projective_space_with_action::classify_objects_using_nauty(
 			FREE_int(canonical_labeling);
 
 			if (f_v) {
-				cout << "classify_objects_using_nauty "
-						"after process_object, ret=" << ret << endl;
+				cout << "projective_space_with_action::classify_objects_using_nauty "
+						"after process_object INPUT_TYPE_SET_OF_POINTS, ret=" << ret << endl;
 				}
 
 
 			if (!ret) {
+				cout << "before FREE_OBJECT(SG)" << endl;
 				FREE_OBJECT(SG);
+				cout << "before FREE_OBJECT(OiP)" << endl;
 				FREE_OBJECT(OiP);
-				FREE_int(canonical_labeling);
+				//cout << "before FREE_OBJECT(canonical_labeling)" << endl;
+				//FREE_int(canonical_labeling);
+				//cout << "after FREE_OBJECT(canonical_labeling)" << endl;
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of "
+				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
 					"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
@@ -1890,7 +1894,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				}
 			}
 		else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
-			cout << "input set of points from file "
+			cout << "projective_space_with_action::classify_objects_using_nauty input set of points from file "
 				<< Data->input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
@@ -1906,7 +1910,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					the_set, set_size, verbose_level);
 
 			if (f_v) {
-				cout << "classify_objects_using_nauty "
+				cout << "projective_space_with_action::classify_objects_using_nauty "
 						"before encoding_size" << endl;
 				}
 			int nb_rows, nb_cols;
@@ -1918,7 +1922,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 			canonical_labeling = NEW_int(nb_rows + nb_cols);
 
 			if (f_v) {
-				cout << "classify_objects_using_nauty "
+				cout << "projective_space_with_action::classify_objects_using_nauty "
 						"before process_object" << endl;
 				}
 			ret = process_object(CB, OiP,
@@ -1931,18 +1935,18 @@ void projective_space_with_action::classify_objects_using_nauty(
 			FREE_int(canonical_labeling);
 
 			if (f_v) {
-				cout << "classify_objects_using_nauty "
-						"after process_object, ret=" << ret << endl;
+				cout << "projective_space_with_action::classify_objects_using_nauty "
+						"after process_object INPUT_TYPE_FILE_OF_POINT_SET, ret=" << ret << endl;
 				}
 
 
 			if (!ret) {
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
-				FREE_int(canonical_labeling);
+				//FREE_int(canonical_labeling);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of "
+				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
 					"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
@@ -1960,7 +1964,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				}
 			}
 		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
-			cout << "input set of lines " << Data->input_string[input_idx]
+			cout << "projective_space_with_action::classify_objects_using_nauty input set of lines " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			object_in_projective_space *OiP;
@@ -1991,7 +1995,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				FREE_int(canonical_labeling);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of "
+				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
 						"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
@@ -2009,7 +2013,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				}
 			}
 		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
-			cout << "input set of packing "
+			cout << "projective_space_with_action::classify_objects_using_nauty input set of packing "
 				<< Data->input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
@@ -2039,7 +2043,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				FREE_int(canonical_labeling);
 				}
 			else {
-				cout << "New isomorphism type! The n e w number of "
+				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
 					"isomorphism types is " << CB->nb_types << endl;
 				int idx;
 
@@ -2061,14 +2065,14 @@ void projective_space_with_action::classify_objects_using_nauty(
 				Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
 				Data->input_type[input_idx] ==
 						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-			cout << "input from file " << Data->input_string[input_idx]
+			cout << "projective_space_with_action::classify_objects_using_nauty input from file " << Data->input_string[input_idx]
 				<< ":" << endl;
 
 			set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(set_of_sets);
 
-			cout << "Reading the file " << Data->input_string[input_idx] << endl;
+			cout << "projective_space_with_action::classify_objects_using_nauty Reading the file " << Data->input_string[input_idx] << endl;
 			SoS->init_from_file(
 					P->N_points /* underlying_set_size */,
 					Data->input_string[input_idx], verbose_level);
@@ -2084,7 +2088,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 			if (Data->input_type[input_idx] ==
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				cout << "Reading spread table from file "
+				cout << "projective_space_with_action::classify_objects_using_nauty Reading spread table from file "
 					<< Data->input_string2[input_idx] << endl;
 				Fio.int_matrix_read_csv(Data->input_string2[input_idx],
 						Spread_table, nb_spreads, spread_size,
@@ -2095,7 +2099,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 						<< " spreads" << endl;
 				}
 
-			cout << "processing " << SoS->nb_sets << " objects" << endl;
+			cout << "projective_space_with_action::classify_objects_using_nauty processing " << SoS->nb_sets << " objects" << endl;
 
 			for (h = 0; h < SoS->nb_sets; h++) {
 
@@ -2109,12 +2113,12 @@ void projective_space_with_action::classify_objects_using_nauty(
 				the_set_in = SoS->Sets[h];
 
 				if (f_vv || ((h % 1024) == 0)) {
-					cout << "The input set " << h << " / " << SoS->nb_sets
+					cout << "projective_space_with_action::classify_objects_using_nauty The input set " << h << " / " << SoS->nb_sets
 						<< " has size " << set_size_in << ":" << endl;
 					}
 
 				if (f_vvv) {
-					cout << "The input set is:" << endl;
+					cout << "projective_space_with_action::classify_objects_using_nauty The input set is:" << endl;
 					int_vec_print(cout, the_set_in, set_size_in);
 					cout << endl;
 					}
@@ -2143,7 +2147,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 						verbose_level);
 					}
 				else {
-					cout << "unknown type" << endl;
+					cout << "projective_space_with_action::classify_objects_using_nauty unknown type" << endl;
 					exit(1);
 					}
 
@@ -2221,7 +2225,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					}
 
 				if (f_vv) {
-					cout << "after input set " << h << " / "
+					cout << "projective_space_with_action::classify_objects_using_nauty after input set " << h << " / "
 							<< SoS->nb_sets
 							<< ", we have " << CB->nb_types
 							<< " isomorphism types of objects" << endl;
@@ -2235,14 +2239,25 @@ void projective_space_with_action::classify_objects_using_nauty(
 			FREE_OBJECT(SoS);
 			}
 		else {
-			cout << "unknown input type" << endl;
+			cout << "projective_space_with_action::classify_objects_using_nauty unknown input type" << endl;
 			exit(1);
 			}
 		}
 
+	if (f_v) {
+		cout << "projective_space_with_action::classify_objects_using_nauty before compute_and_print_ago_distribution" << endl;
+	}
+
 	compute_and_print_ago_distribution(cout,
 			CB, verbose_level);
 
+	if (f_v) {
+		cout << "projective_space_with_action::classify_objects_using_nauty after compute_and_print_ago_distribution" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::classify_objects_using_nauty before CB->finalize" << endl;
+	}
 
 	CB->finalize(verbose_level); // computes C_type_of and perm
 

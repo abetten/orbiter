@@ -1794,7 +1794,8 @@ void poset_classification::list_whole_orbit(
 
 
 	cout << "poset_classification::list_whole_orbit "
-			"orbit " << orbit_idx
+			"depth " << depth
+			<< "orbit " << orbit_idx
 			<< " / " << nb_orbits_at_level(depth) << " (=node "
 			<< first_poset_orbit_node_at_level[depth] + orbit_idx
 			<< ") at depth " << depth << " has length " << Len << " : ";

@@ -995,12 +995,12 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	if (f_v) {
 		cout << "schreier::compute_point_orbit" << endl;
 		cout << "computing orbit of point " << pt;
-	}
-	if (f_images_only) {
-		cout << " in no action, using table of images only" << endl;
-	}
-	else {
-		cout << " in action " << A->label << endl;
+		if (f_images_only) {
+			cout << " in no action, using table of images only" << endl;
+		}
+		else {
+			cout << " in action " << A->label << endl;
+		}
 	}
 	//exit(1);
 	pt_loc = orbit_inv[pt];
