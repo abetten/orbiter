@@ -2032,8 +2032,13 @@ void action::group_order(longinteger_object &go)
 {
 	longinteger_domain D;
 	
-	D.multiply_up(go, Stabilizer_chain->transversal_length, Stabilizer_chain->base_len);
-	
+	if (Stabilizer_chain == NULL) {
+		cout << "action::group_order Stabilizer_chain == NULL" << endl;
+		go.create(0);
+	}
+	else {
+		D.multiply_up(go, Stabilizer_chain->transversal_length, Stabilizer_chain->base_len);
+	}
 }
 
 

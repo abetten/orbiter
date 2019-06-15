@@ -2936,6 +2936,7 @@ public:
 		int *Wedge_rk, int *Line_rk, int *Klein_rk, int nb_lines,
 		int verbose_level);
 	void print_line(std::ostream &ost, int rk);
+	void latex_table_of_double_sixes(std::ostream &ost);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
 	void latex_trihedral_pair(std::ostream &ost, int *T, int *TE);

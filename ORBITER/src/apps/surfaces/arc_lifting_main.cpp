@@ -304,7 +304,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 		}
 	Six_arcs->init(F, Surf->P2, 
 		argc, argv, 
-		0 /*verbose_level*/);
+		verbose_level);
 	if (f_v) {
 		cout << "after Six_arcs->init" << endl;
 		}

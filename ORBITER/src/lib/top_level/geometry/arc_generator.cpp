@@ -342,16 +342,40 @@ void arc_generator::init(finite_field *F,
 		}
 	Grass = NEW_OBJECT(grassmann);
 
+	if (f_v) {
+		cout << "arc_generator::init "
+				"before Grass->init" << endl;
+		}
 	Grass->init(n + 1 /*n*/, 2 /*k*/, F, verbose_level - 2);
+	if (f_v) {
+		cout << "arc_generator::init "
+				"after Grass->init" << endl;
+		}
+	if (f_v) {
+		cout << "arc_generator::init "
+				"before AG->init" << endl;
+		}
 	AG->init(*A, Grass, verbose_level - 2);
-	
-	A_on_lines->induced_action_on_grassmannian(A, AG, 
-		FALSE /*f_induce_action*/, NULL /*sims *old_G */, 
-		MINIMUM(verbose_level - 2, 2));
+	if (f_v) {
+		cout << "arc_generator::init "
+				"after AG->init" << endl;
+		}
 	
 	if (f_v) {
 		cout << "arc_generator::init "
-				"action A_on_lines created: ";
+				"before A_on_lines->induced_action_on_grassmannian" << endl;
+		}
+	A_on_lines->induced_action_on_grassmannian(A, AG, 
+		FALSE /*f_induce_action*/, NULL /*sims *old_G */, 
+		verbose_level - 2);
+	if (f_v) {
+		cout << "arc_generator::init "
+				"after A_on_lines->induced_action_on_grassmannian" << endl;
+		}
+	
+	if (f_v) {
+		cout << "arc_generator::init "
+				"action A_on_lines created, printing information: ";
 		A_on_lines->print_info();
 		}
 
@@ -371,7 +395,11 @@ void arc_generator::init(finite_field *F,
 		}
 	P->init(n, F, 
 		TRUE /* f_init_incidence_structure */, 
-		0 /*verbose_level - 2*/);
+		verbose_level - 2);
+	if (f_v) {
+		cout << "arc_generator::init "
+				"after P->init" << endl;
+		}
 
 	if (P->Lines_on_point == NULL) {
 		cout << "arc_generator::init "
@@ -386,12 +414,20 @@ void arc_generator::init(finite_field *F,
 
 	line_type = NEW_int(P->N_lines);
 
-	cout << "arc_generator::init "
-			"before prepare_generator" << endl;
-	prepare_generator(verbose_level);
+	if (f_v) {
+		cout << "arc_generator::init "
+				"before prepare_generator" << endl;
+	}
+	prepare_generator(verbose_level - 2);
+	if (f_v) {
+		cout << "arc_generator::init "
+				"after prepare_generator" << endl;
+	}
 
-	cout << "arc_generator::init "
-			"before IA->init" << endl;
+	if (f_v) {
+		cout << "arc_generator::init "
+				"before IA->init" << endl;
+	}
 
 	IA->init(A, A, gen, 
 		target_size, prefix_with_directory, ECA,
@@ -399,6 +435,10 @@ void arc_generator::init(finite_field *F,
 		NULL /* callback_subset_orbits */,
 		this,
 		verbose_level);
+	if (f_v) {
+		cout << "arc_generator::init "
+				"after IA->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "arc_generator::init done" << endl;
@@ -532,13 +572,15 @@ void arc_generator::compute_starter(int verbose_level)
 			cout << "arc_generator::compute_starter "
 					"gen->compute_orbits=" << gen->fname_base << endl;
 			}
-		depth = gen->compute_orbits(depth_completed, target_depth,
-				verbose_level);
+		depth = gen->compute_orbits(
+				depth_completed, target_depth,
+				verbose_level - 2);
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"after gen->compute_orbits" << endl;
 			}
-	} else {
+	}
+	else {
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"before generator_main" << endl;
@@ -549,7 +591,7 @@ void arc_generator::compute_starter(int verbose_level)
 			schreier_depth,
 			f_use_invariant_subset_if_available,
 			f_debug,
-			verbose_level);
+			verbose_level - 2);
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"after gen->main" << endl;

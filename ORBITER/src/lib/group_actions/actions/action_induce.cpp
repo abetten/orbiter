@@ -465,7 +465,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"f_induce_action=" << f_induce_action << endl;
-		}
+	}
 	A = A_old;
 	sprintf(group_prefix, "%s_Grassmann_%d_%d_%d",
 			A->label, AG->n, AG->k, AG->q);
@@ -474,26 +474,27 @@ void action::induced_action_on_grassmannian(action *A_old,
 	sprintf(label_tex, "%s Grassmann_%d_%d_%d",
 			A->label_tex, AG->n, AG->k, AG->q);
 	if (f_v) {
-		cout << "the old_action " << A->label
+		cout << "action::induced_action_on_grassmannian "
+			"the old_action " << A->label
 			<< " has base_length = " << A->Stabilizer_chain->base_len
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	f_has_subaction = TRUE;
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"before subaction = A" << endl;
-		}
+	}
 	subaction = A;
 	if (!A->f_is_linear) {
 		cout << "action::induced_action_on_grassmannian "
 				"action not of linear type" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"action is of linear type" << endl;
-		}
+	}
 #if 0
 	if (A->type_G == matrix_group_t) {
 		if (f_v) {
@@ -524,9 +525,13 @@ void action::induced_action_on_grassmannian(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"before init_function_pointers_induced_action" << endl;
-		}
+	}
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
+	if (f_v) {
+		cout << "action::induced_action_on_grassmannian "
+				"after init_function_pointers_induced_action" << endl;
+	}
 	
 	
 	
@@ -536,25 +541,39 @@ void action::induced_action_on_grassmannian(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"before allocate_element_data" << endl;
-		}
+	}
 	allocate_element_data();
+	if (f_v) {
+		cout << "action::induced_action_on_grassmannian "
+				"after allocate_element_data" << endl;
+	}
 	
 	if (f_induce_action) {
 		if (f_v) {
 			cout << "action::induced_action_on_grassmannian "
 					"before induced_action_override_sims" << endl;
-			}
-		induced_action_override_sims(*A, old_G, verbose_level);
 		}
+		induced_action_override_sims(*A, old_G, verbose_level);
+		if (f_v) {
+			cout << "action::induced_action_on_grassmannian "
+					"after induced_action_override_sims" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian finished, "
 				"created action " << label << endl;
-		cout << "degree=" << degree << endl;
-		cout << "make_element_size=" << make_element_size << endl;
-		cout << "low_level_point_size=" << low_level_point_size << endl;
+		cout << "action::induced_action_on_grassmannian "
+				"degree=" << degree << endl;
+		cout << "action::induced_action_on_grassmannian "
+				"make_element_size=" << make_element_size << endl;
+		cout << "action::induced_action_on_grassmannian "
+				"low_level_point_size=" << low_level_point_size << endl;
 		print_info();
-		}
+	}
+	if (f_v) {
+		cout << "action::induced_action_on_grassmannian done" << endl;
+	}
 }
 
 void action::induced_action_on_spread_set(action *A_old, 

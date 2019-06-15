@@ -180,7 +180,7 @@ void action::init_projective_group(int n, finite_field *F,
 				"before M->init_projective_group" << endl;
 		}
 	M->init_projective_group(n,
-			F, f_semilinear, this, verbose_level - 1);
+			F, f_semilinear, this, verbose_level - 3);
 	if (f_v) {
 		cout << "action::init_projective_group "
 				"after M->init_projective_group" << endl;
@@ -218,7 +218,7 @@ void action::init_projective_group(int n, finite_field *F,
 			}
 		setup_linear_group_from_strong_generators(M,
 				nice_gens,
-				verbose_level);
+				verbose_level - 3);
 		if (f_v) {
 			cout << "action::init_projective_group "
 					"after setup_linear_group_from_strong_generators"
@@ -615,12 +615,15 @@ void action::init_permutation_group(int degree, int verbose_level)
 	make_element_size = degree;
 	
 	if (f_v) {
-		cout << "action::init_permutation_group, finished" << endl;
+		cout << "action::init_permutation_group finished" << endl;
 		cout << "a permutation group of degree " << action::degree << endl;
 		cout << "and of order ";
 		print_group_order(cout);
 		cout << endl;
 		print_info();
+		}
+	if (f_v) {
+		cout << "action::init_permutation_group done" << endl;
 		}
 	
 }

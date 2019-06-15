@@ -98,7 +98,7 @@ void surfaces_arc_lifting::init(
 		}
 	Six_arcs->init(F, Surf->P2,
 		argc, argv,
-		0 /*verbose_level*/);
+		verbose_level - 1);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"after Six_arcs->init" << endl;
@@ -129,7 +129,7 @@ void surfaces_arc_lifting::init(
 		Table_orbits_on_pairs[arc_idx].init(this, arc_idx,
 				A3,
 				argc, argv,
-				verbose_level);
+				verbose_level - 2);
 
 		nb_flag_orbits += Table_orbits_on_pairs[arc_idx].
 				total_nb_orbits_on_partitions;
@@ -145,13 +145,21 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"before downstep" << endl;
 		}
-	downstep(verbose_level);
+	downstep(verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"after downstep" << endl;
 		}
 
-	report(verbose_level);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::init "
+				"before report" << endl;
+		}
+	report(verbose_level - 2);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::init "
+				"after report" << endl;
+		}
 
 
 	char fname_base[1000];

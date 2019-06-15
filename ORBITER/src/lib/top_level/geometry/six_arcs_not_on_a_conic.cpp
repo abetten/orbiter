@@ -98,6 +98,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"Classifying 6-arcs for q=" << F->q << endl;
+		cout << "six_arcs_not_on_a_conic::init before Gen->compute_starter" << endl;
 		}
 	
 	Gen->compute_starter(verbose_level - 1);
@@ -150,7 +151,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 		P2->conic_type(
 			Arc6, 6, 
 			Pts_on_conic, nb_pts_on_conic, len1, 
-			0 /*verbose_level*/);
+			verbose_level - 2);
 		if (f_v) {
 			cout << "The arc intersects " << len1
 					<< " conics in 6 or more points. " << endl;
