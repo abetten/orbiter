@@ -1,4 +1,4 @@
-// create_element_of_order.C
+// create_element_of_order.cpp
 // 
 // Anton Betten
 // 12/23/2009
@@ -20,7 +20,7 @@ using namespace orbiter;
 // global data:
 
 int t0; // the system time when the program started
-const char *version = "create_element_of_order.C version 12/23/2009";
+const char *version = "create_element_of_order.cpp version 12/23/2009";
 
 void create_element(int q, int k, int verbose_level);
 

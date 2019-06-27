@@ -1,4 +1,4 @@
-// diophant.C
+// diophant.cpp
 //
 // Anton Betten
 // September 18, 2000
@@ -1005,7 +1005,6 @@ int diophant::solve_all_DLX(int f_write_tree,
 		FALSE, "", 
 		f_write_tree, fname_tree, 
 		verbose_level - 1);
-		// GALOIS/dlx.C
 	
 	nb_steps_betten = nb_backtrack;
 	FREE_int(Inc);
@@ -1074,7 +1073,6 @@ int diophant::solve_all_DLX_with_RHS(int f_write_tree,
 		FALSE, "", 
 		f_write_tree, fname_tree, 
 		verbose_level - 1);
-		// GALOIS/dlx.C
 	
 	nb_steps_betten = nb_backtrack;
 	FREE_int(Inc);
@@ -1152,7 +1150,6 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 		FALSE, "", 
 		f_write_tree, fname_tree, 
 		verbose_level - 1);
-		// GALOIS/dlx.C
 	
 	nb_steps_betten = nb_backtrack;
 	FREE_int(Inc);
@@ -3225,7 +3222,6 @@ void diophant::draw_it(const char *fname_base,
 		m, n, xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
 		FALSE, NULL);
-		// in draw.C
 }
 
 void diophant::draw_partitioned(const char *fname_base, 
@@ -3357,7 +3353,7 @@ void diophant::draw_partitioned(const char *fname_base,
 		m, n, xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
 		FALSE, NULL);
-		// in draw.C
+
 
 	FREE_int(T);
 	FREE_int(A2);

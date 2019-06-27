@@ -1,4 +1,4 @@
-// choose_points_or_lines.C
+// choose_points_or_lines.cpp
 //
 // Anton Betten
 //

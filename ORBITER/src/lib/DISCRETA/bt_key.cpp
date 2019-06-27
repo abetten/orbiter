@@ -1,4 +1,4 @@
-// bt_key.C
+// bt_key.cpp
 //
 // Anton Betten
 // 27.11.2000

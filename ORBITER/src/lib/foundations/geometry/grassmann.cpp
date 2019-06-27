@@ -1,4 +1,4 @@
-// grassmann.C
+// grassmann.cpp
 // 
 // Anton Betten
 //
@@ -223,6 +223,31 @@ int grassmann::rank_embedded_subspace_int(int verbose_level)
 	return rk;
 	
 }
+
+void grassmann::unrank_embedded_subspace_int_here(int *Basis, int rk, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "grassmann::unrank_embedded_subspace_int_here " << rk << endl;
+		}
+	unrank_int_here(Basis, rk, verbose_level);
+	int_vec_zero(Basis + k * n, (n - k) * n);
+	if (k == 0) {
+		F->identity_matrix(Basis, n);
+		}
+	else {
+		for (i = 0; i < n - k; i++) {
+			j = base_cols[k + i];
+			Basis[(k + i) * n + j] = 1;
+			}
+		}
+	if (f_v) {
+		cout << "unrank_embedded_subspace_int_here done" << endl;
+		}
+}
+
 
 void grassmann::unrank_int(int rk, int verbose_level)
 {

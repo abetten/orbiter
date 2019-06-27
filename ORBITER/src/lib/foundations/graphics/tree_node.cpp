@@ -1,8 +1,8 @@
-// tree_node.C
+// tree_node.cpp
 //
 // Anton Betten
 //
-// moved here from tree.C: October 12, 2013
+// moved here from tree.cpp: October 12, 2013
 //
 // February 7, 2003
 

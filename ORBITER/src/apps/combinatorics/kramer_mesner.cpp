@@ -33,7 +33,7 @@ int main(int argc, const char **argv)
 	{
 	kramer_mesner KM;
 	
-	cout << "km.C: before read_arguments" << endl;
+	cout << "km.cpp: before read_arguments" << endl;
 	KM.read_arguments(argc, argv, verbose_level);
 
 	//int f_v = (verbose_level >= 1);
@@ -41,11 +41,11 @@ int main(int argc, const char **argv)
 
 	sims *S;
 
-	cout << "km.C: before init_group" << endl;
+	cout << "km.cpp: before init_group" << endl;
 	KM.init_group(S, verbose_level);
 
 
-	cout << "km.C: before orbits" << endl;
+	cout << "km.cpp: before orbits" << endl;
 	KM.orbits(argc, argv, S, verbose_level);
 
 	delete S;

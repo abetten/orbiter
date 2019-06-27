@@ -1,4 +1,4 @@
-// example_fano_plane.C
+// example_fano_plane.cpp
 //
 //
 // Anton Betten

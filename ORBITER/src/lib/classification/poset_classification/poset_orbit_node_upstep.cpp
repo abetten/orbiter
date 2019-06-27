@@ -1,4 +1,4 @@
-// poset_orbit_node_upstep.C
+// poset_orbit_node_upstep.cpp
 //
 // Anton Betten
 // December 27, 2004
@@ -493,7 +493,7 @@ int poset_orbit_node::trace_next_point(
 			the_point, pt0, cosetrep,
 			verbose_level - 1);
 
-			// poset_orbit_node_upstep_subspace_action.C
+			// poset_orbit_node_upstep_subspace_action.cpp
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 					<< " the_point=" << the_point
@@ -702,7 +702,6 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 		//"coset_rep_inv calling schreier_vector_coset_rep_inv" << endl;
 
 
-		// in ACTION/schreier.C:
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 					"before gen->Schreier_vector_handler->coset_rep_inv "

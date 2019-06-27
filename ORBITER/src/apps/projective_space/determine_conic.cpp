@@ -1,9 +1,9 @@
-// determine_conic.C
+// determine_conic.cpp
 // 
 // Anton Betten
 // Nov 16, 2010
 //
-// based on COMBINATORICS/conic.C
+// based on COMBINATORICS/conic.cpp
 //
 // computes the equation of a conic through 5 given points
 // in PG(2, q)

@@ -1,4 +1,4 @@
-// projective_space_with_action.C
+// projective_space_with_action.cpp
 // 
 // Anton Betten
 //
@@ -152,9 +152,9 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	int &canonical_form_len,
 	int verbose_level)
 // December 22, 2017, based on earlier work:
-// added to action_global.C on 2/28/2011, called from analyze.C
-// November 17, 2014 moved here from TOP_LEVEL/extra.C
-// December 31, 2014, moved here from projective_space.C
+// added to action_global.cpp on 2/28/2011, called from analyze.cpp
+// November 17, 2014 moved here from TOP_LEVEL/extra.cpp
+// December 31, 2014, moved here from projective_space.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

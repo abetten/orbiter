@@ -1,4 +1,4 @@
-// mckay.C
+// mckay.cpp
 //
 // solver due to Brendan McKay
 // C++ translation by Volker Widor 2003

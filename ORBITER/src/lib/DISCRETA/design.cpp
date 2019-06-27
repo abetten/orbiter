@@ -1,4 +1,4 @@
-// design.C
+// design.cpp
 //
 // Anton Betten
 // 18.09.2000

@@ -1,4 +1,4 @@
-// eckardt_point.C
+// eckardt_point.cpp
 //
 // Anton Betten
 // January 12, 2017

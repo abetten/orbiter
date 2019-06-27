@@ -1,10 +1,10 @@
-// isomorph_database.C
+// isomorph_database.cpp
 // 
 // Anton Betten
 // Oct 21, 2008
 //
-// moved here from iso.C 3/22/09
-// renamed isomorph_database.C from iso2.C 7/14/11
+// moved here from iso.cpp 3/22/09
+// renamed isomorph_database.cpp from iso2.cpp 7/14/11
 //
 //
 
@@ -61,7 +61,7 @@ void isomorph::close_solution_database(int verbose_level)
 
 void isomorph::setup_and_open_level_database(int verbose_level)
 // Called from do_iso_test, identify and test_hash 
-// (Which are all in isomorph_testing.C)
+// (Which are all in isomorph_testing.cpp)
 // Calls init_DB_level for D1 and D2 and D1->open and D2->open.
 // Calls fopen for fp_ge1 and fp_ge2.
 {

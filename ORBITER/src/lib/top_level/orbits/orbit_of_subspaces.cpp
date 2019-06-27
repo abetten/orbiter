@@ -1,4 +1,4 @@
-// orbit_of_subspaces.C
+// orbit_of_subspaces.cpp
 // 
 // Anton Betten
 // April 9, 2014

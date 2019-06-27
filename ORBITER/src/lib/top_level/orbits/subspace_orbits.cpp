@@ -1,4 +1,4 @@
-// subspace_orbits.C
+// subspace_orbits.cpp
 // 
 // Anton Betten
 //
@@ -326,7 +326,6 @@ void subspace_orbits::Kramer_Mesner_matrix(
 	compute_Kramer_Mesner_matrix(Gen, 
 		t, k, Mtk, TRUE /* f_subspaces */,
 		q, verbose_level - 2);
-		// in DISCRETA/discreta_global.C
 
 	m = Mtk.s_m();
 	n = Mtk.s_n();

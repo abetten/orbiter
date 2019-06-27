@@ -1,4 +1,4 @@
-// surface_create_description.C
+// surface_create_description.cpp
 // 
 // Anton Betten
 //

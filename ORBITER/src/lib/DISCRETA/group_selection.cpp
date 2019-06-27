@@ -1,4 +1,4 @@
-// group_selection.C
+// group_selection.cpp
 //
 // Anton Betten
 // 28.07.2000

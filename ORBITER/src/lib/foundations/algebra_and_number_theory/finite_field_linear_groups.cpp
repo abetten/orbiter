@@ -169,7 +169,6 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 			}
 		PG_element_modified_not_in_subspace_perm(n - 1, i - 1,
 			orbit[i], orbit_inv[i], 0);
-			// global function in GALOIS/projective.C
 
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
@@ -195,7 +194,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 					"before diagonal_orbit_perm" << endl;
 			}
 		diagonal_orbit_perm(n, orbit[i], orbit_inv[i], 0);
-			// global function in GALOIS/projective.C
+
 		if (f_vv) {
 			cout << "projective_matrix_group_base_and_orbits "
 					"after diagonal_orbit_perm" << endl;
@@ -222,7 +221,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 			}
 		frobenius_orbit_perm(n,
 				orbit[i], orbit_inv[i], verbose_level - 2);
-			// global function in GALOIS/projective.C
+
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"after frobenius_orbit_perm" << endl;

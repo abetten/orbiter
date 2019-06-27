@@ -1,4 +1,4 @@
-// flag.C
+// flag.cpp
 // 
 // Anton Betten
 // May 19, 2016

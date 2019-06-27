@@ -1,4 +1,4 @@
-// longinteger.C
+// longinteger.cpp
 //
 // Anton Betten
 // 19.11.1999

@@ -1,4 +1,4 @@
-// norm_tables.C
+// norm_tables.cpp
 // 
 // Anton Betten
 // 11/28/2008

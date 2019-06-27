@@ -1,4 +1,4 @@
-// action_init.C
+// action_init.cpp
 //
 // Anton Betten
 // 1/1/2009
@@ -534,21 +534,18 @@ void action::init_matrix_group_strong_generators_builtin(
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-			// in GALOIS/projective.C
 		}
 	else if (M->f_affine) {
 		F->strong_generators_for_affine_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-			// in GALOIS/projective.C
 		}
 	else if (M->f_general_linear) {
 		F->strong_generators_for_general_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-			// in GALOIS/projective.C
 		}
 	else {
 		cout << "action::init_matrix_group_strong_generators_builtin "
@@ -991,7 +988,7 @@ void action::create_orthogonal_group(action *subaction,
 				"before ss.init_random_process" << endl;
 		}
 	ss.init_random_process(
-		callback_choose_random_generator,   // see action_global.C
+		callback_choose_random_generator,
 		&ss, 
 		verbose_level - 1);
 	if (f_v) {

@@ -1,4 +1,4 @@
-// spread_create_description.C
+// spread_create_description.cpp
 // 
 // Anton Betten
 //

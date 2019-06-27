@@ -1,4 +1,4 @@
-// arcs_orderly.C
+// arcs_orderly.cpp
 //
 // Anton Betten
 // October 23, 2017
@@ -325,7 +325,7 @@ void extend(int arc_size, int verbose_level)
 		Arc, arc_size, canonical_pt, canonical_set, 
 		FALSE, NULL, 
 		verbose_level - 2);
-		// in ACTION/action_global.C
+		// in ACTION/action_global.cpp
 	if (f_v) {
 		cout << "Node " << cnt << " level " << arc_size
 			<< " The stabilizer of the arc has been computed" << endl;

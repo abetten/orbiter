@@ -1,4 +1,4 @@
-// srg.C
+// srg.cpp
 // 
 // Anton Betten
 // Dec 4, 2015

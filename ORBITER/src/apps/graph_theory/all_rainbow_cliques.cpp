@@ -1,10 +1,10 @@
-// all_rainbow_cliques.C
+// all_rainbow_cliques.cpp
 // 
 // Anton Betten
 // October 28, 2012
 //
 // 
-// previously called all_cliques.C
+// previously called all_cliques.cpp
 //
 
 #include "orbiter.h"
@@ -337,7 +337,7 @@ int main(int argc, char **argv)
 					print_interval, 
 					search_steps, decision_steps, nb_sol, dt, 
 					verbose_level);
-					// in GALOIS/colored_graph.C
+					// in GALOIS/colored_graph.cpp
 
 				cout << "nb_sol = " << nb_sol << endl;
 

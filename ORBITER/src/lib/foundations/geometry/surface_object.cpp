@@ -1,4 +1,4 @@
-// surface_object.C
+// surface_object.cpp
 // 
 // Anton Betten
 // March 18, 2017
@@ -24,7 +24,68 @@ namespace foundations {
 
 surface_object::surface_object()
 {
-	null();
+	q = 0;
+	F = NULL;
+	Surf = NULL;
+
+	//int Lines[27];
+	//int eqn[20];
+
+	Pts = NULL;
+	nb_pts = 0;
+
+	nb_planes = 0;
+
+	pts_on_lines = NULL;
+	lines_on_point = NULL;
+
+	Eckardt_points = NULL;
+	Eckardt_points_index = NULL;
+	nb_Eckardt_points = 0;
+	Double_points = NULL;
+	Double_points_index = NULL;
+	nb_Double_points = 0;
+
+	Pts_not_on_lines = NULL;
+	nb_pts_not_on_lines = 0;
+
+	plane_type_by_points = NULL;
+	plane_type_by_lines = NULL;
+	C_plane_type_by_points = NULL;
+	Type_pts_on_lines = NULL;
+	Type_lines_on_point = NULL;
+	Tritangent_plane_rk = NULL;
+	Tritangent_planes = NULL;
+	nb_tritangent_planes = 0;
+	Lines_in_tritangent_plane = NULL;
+	Tritangent_plane_dual = NULL;
+
+	iso_type_of_tritangent_plane = NULL;
+	Type_iso_tritangent_planes = NULL;
+
+	Unitangent_planes = NULL;
+	nb_unitangent_planes = 0;
+	Line_in_unitangent_plane = NULL;
+
+	Tritangent_planes_on_lines = NULL;
+	Tritangent_plane_to_Eckardt = NULL;
+	Eckardt_to_Tritangent_plane = NULL;
+	Trihedral_pairs_as_tritangent_planes = NULL;
+	Unitangent_planes_on_lines = NULL;
+
+	All_Planes = NULL;
+	Dual_point_ranks = NULL;
+
+	Adj_line_intersection_graph = NULL;
+	Line_neighbors = NULL;
+	Line_intersection_pt = NULL;
+	Line_intersection_pt_idx = NULL;
+	//null();
+
+
+
+
+
 }
 
 surface_object::~surface_object()
@@ -82,6 +143,9 @@ void surface_object::freeself()
 	if (Type_lines_on_point) {
 		FREE_OBJECT(Type_lines_on_point);
 		}
+	if (Tritangent_plane_rk) {
+		FREE_int(Tritangent_plane_rk);
+	}
 	if (Tritangent_planes) {
 		FREE_int(Tritangent_planes);
 		}
@@ -161,55 +225,6 @@ void surface_object::freeself()
 
 void surface_object::null()
 {
-	q = 0;
-	F = NULL;
-	Surf = NULL;
-	Pts = NULL;
-	nb_pts = 0;
-
-	pts_on_lines = NULL;
-	lines_on_point = NULL;
-
-	Eckardt_points = NULL;
-	Eckardt_points_index = NULL;
-	nb_Eckardt_points = 0;
-	Double_points = NULL;
-	Double_points_index = NULL;
-	nb_Double_points = 0;
-
-	Pts_not_on_lines = NULL;
-	nb_pts_not_on_lines = 0;
-
-	plane_type_by_points = NULL;
-	plane_type_by_lines = NULL;
-	C_plane_type_by_points = NULL;
-	Type_pts_on_lines = NULL;
-	Type_lines_on_point = NULL;
-	Tritangent_planes = NULL;
-	nb_tritangent_planes = 0;
-	Lines_in_tritangent_plane = NULL;
-	Tritangent_plane_dual = NULL;
-
-	iso_type_of_tritangent_plane = NULL;
-	Type_iso_tritangent_planes = NULL;
-
-	Unitangent_planes = NULL;
-	nb_unitangent_planes = 0;
-	Line_in_unitangent_plane = NULL;
-
-	Tritangent_planes_on_lines = NULL;
-	Tritangent_plane_to_Eckardt = NULL;
-	Eckardt_to_Tritangent_plane = NULL;
-	Trihedral_pairs_as_tritangent_planes = NULL;
-	Unitangent_planes_on_lines = NULL;
-
-	All_Planes = NULL;
-	Dual_point_ranks = NULL;
-	
-	Adj_line_intersection_graph = NULL;
-	Line_neighbors = NULL;
-	Line_intersection_pt = NULL;
-	Line_intersection_pt_idx = NULL;
 }
 
 int surface_object::init_equation(surface_domain *Surf, int *eqn,
@@ -275,7 +290,7 @@ int surface_object::init_equation(surface_domain *Surf, int *eqn,
 
 	if (f_v) {
 		cout << "surface_object::init_equation Lines:";
-		int_vec_print(cout, surface_object::Lines, 27);
+		int_vec_print(cout, Lines, 27);
 		cout << endl;
 		}
 
@@ -283,14 +298,14 @@ int surface_object::init_equation(surface_domain *Surf, int *eqn,
 		cout << "surface_object::init_equation before "
 				"find_double_six_and_rearrange_lines" << endl;
 		}
-	find_double_six_and_rearrange_lines(surface_object::Lines,
+	find_double_six_and_rearrange_lines(Lines,
 			0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "surface_object::init_equation after "
 				"find_double_six_and_rearrange_lines" << endl;
 		cout << "surface_object::init_equation Lines:";
-		int_vec_print(cout, surface_object::Lines, 27);
+		int_vec_print(cout, Lines, 27);
 		cout << endl;
 		}
 
@@ -413,6 +428,17 @@ void surface_object::compute_properties(int verbose_level)
 		cout << "surface_object::compute_properties after "
 				"compute_adjacency_matrix_of_line_intersection_"
 				"graph" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "surface_object::compute_properties before "
+				"compute_tritangent_planes_by_rank" << endl;
+		}
+	compute_tritangent_planes_by_rank(verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object::compute_properties after "
+				"compute_tritangent_planes_by_rank" << endl;
 		}
 
 
@@ -814,6 +840,59 @@ void surface_object::compute_plane_type_by_points(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_object::compute_plane_type_by_points done" << endl;
+		}
+}
+
+void surface_object::compute_tritangent_planes_by_rank(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::compute_tritangent_planes_by_rank" << endl;
+		}
+
+	Tritangent_plane_rk = NEW_int(45);
+
+	int tritangent_plane_idx;
+	int three_lines_idx[3];
+	int three_lines[3];
+	int i, r;
+	int Basis[6 * 4];
+	int base_cols[4];
+
+	for (tritangent_plane_idx = 0;
+			tritangent_plane_idx < 45;
+			tritangent_plane_idx++) {
+		Surf->Eckardt_points[tritangent_plane_idx].three_lines(
+				Surf, three_lines_idx);
+
+		for (i = 0; i < 3; i++) {
+			three_lines[i] = Lines[three_lines_idx[i]];
+			Surf->Gr->unrank_int_here(Basis + i * 8,
+					three_lines[i], 0 /* verbose_level */);
+		}
+		r = F->Gauss_simple(Basis, 6, 4,
+			base_cols, 0 /* verbose_level */);
+		if (r != 3) {
+			cout << "surface_object::compute_tritangent_planes_by_rank r != 3" << endl;
+			exit(1);
+		}
+		Tritangent_plane_rk[tritangent_plane_idx] =
+				Surf->Gr3->rank_int_here(Basis, 0 /* verbose_level */);
+	}
+	if (TRUE) {
+		cout << "surface_object::compute_tritangent_planes_by_rank" << endl;
+		for (tritangent_plane_idx = 0;
+				tritangent_plane_idx < 45;
+				tritangent_plane_idx++) {
+			cout << tritangent_plane_idx << " : " << Tritangent_plane_rk[tritangent_plane_idx] << endl;
+		}
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_object::compute_tritangent_planes_by_rank done" << endl;
 		}
 }
 

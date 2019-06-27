@@ -1,4 +1,4 @@
-// burnside.C
+// burnside.cpp
 //
 // Anton Betten
 // February 26, 2015

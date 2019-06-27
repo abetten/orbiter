@@ -1,4 +1,4 @@
-// packing_invariants.C
+// packing_invariants.cpp
 // 
 // Anton Betten
 // Feb 14, 2013

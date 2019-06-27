@@ -1,4 +1,4 @@
-// determine_cubic.C
+// determine_cubic.cpp
 //
 // Anton Betten
 // December 28, 2018

@@ -1,4 +1,4 @@
-// group.C
+// group.cpp
 //
 // Anton Betten
 // December 24, 2003
@@ -304,7 +304,7 @@ void group::code_ascii(int verbose_level)
 
 	//cout << "group::code_ascii action A->base_len=" << A->base_len << endl;
 	code_int4(p, (int_4) A->Stabilizer_chain->base_len);
-		// in GALOIS/util.C
+
 	//cout << "group::code_ascii action SG->len=" << SG->len << endl;
 	code_int4(p, (int_4) SG->len);
 	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {

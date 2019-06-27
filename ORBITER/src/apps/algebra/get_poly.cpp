@@ -1,4 +1,4 @@
-// get_poly.C
+// get_poly.cpp
 //
 // Anton Betten
 // October 20, 2005
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 	if (f_primitive_range) {
 		search_for_primitive_polynomials(p_min, p_max,
 				n_min, n_max, verbose_level);
-			// in GALOIS/galois_global.C
+			// in GALOIS/galois_global.cpp
 		}
 	else if (f_primitive) {
 		char *poly;
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 
 		poly = search_for_primitive_polynomial_of_given_degree(
 				q, deg, verbose_level);
-			// in GALOIS/galois_global.C
+			// in GALOIS/galois_global.cpp
 		cout << "poly = " << poly << endl;
 		}
 	else if (f_irred) {

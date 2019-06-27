@@ -1,4 +1,4 @@
-// action_by_subfield_structure.C
+// action_by_subfield_structure.cpp
 //
 // Anton Betten
 // December 6, 2011

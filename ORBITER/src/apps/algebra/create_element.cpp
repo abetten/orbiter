@@ -1,4 +1,4 @@
-// create_element.C
+// create_element.cpp
 // 
 // Anton Betten
 // 12/25/2009
@@ -20,7 +20,7 @@ using namespace orbiter;
 // global data:
 
 int t0; // the system time when the program started
-const char *version = "create_element.C version 12/25/2009";
+const char *version = "create_element.cpp version 12/25/2009";
 
 void create_element(int q, int k1, int k2, int verbose_level);
 void create_element_O4_isomorphism(int q,

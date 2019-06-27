@@ -1,8 +1,8 @@
-// code_generator.C
+// code_generator.cpp
 //
 // Anton Betten
 //
-// moved here from codes.C: May 18, 2009
+// moved here from codes.cpp: May 18, 2009
 //
 // December 30, 2003
 

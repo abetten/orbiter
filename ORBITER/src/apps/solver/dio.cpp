@@ -1,4 +1,4 @@
-// dio.C
+// dio.cpp
 // Anton Betten
 //
 // started:  Dec 24 2006

@@ -1,4 +1,4 @@
-// action_on_homogeneous_polynomials.C
+// action_on_homogeneous_polynomials.cpp
 //
 // Anton Betten
 // September 10, 2016

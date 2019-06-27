@@ -1,4 +1,4 @@
-// btree.C
+// btree.cpp
 //
 // Anton Betten
 // 28.11.2000

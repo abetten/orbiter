@@ -1,4 +1,4 @@
-// discreta_global.C
+// discreta_global.cpp
 //
 // Anton Betten
 // Nov 19, 2007
@@ -322,7 +322,6 @@ void compute_Kramer_Mesner_matrix(poset_classification *gen,
 		V[i].change_to_matrix();
 		calc_Kramer_Mesner_matrix_neighboring(gen, i,
 			V[i].as_matrix(), verbose_level - 2);
-			// DISCRETA/discreta_global.C
 
 
 		cout << "matrix at level " << i << " has been computed" << endl;

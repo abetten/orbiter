@@ -34,8 +34,9 @@ int main(int argc, const char **argv)
 	int f_linear3 = FALSE;
 	linear_group_description *Descr3;
 	linear_group *LG3;
-	int f_draw_poset = FALSE;
-	int f_draw_poset_full = FALSE;
+	int f_draw_poset_of_six_arcs = FALSE;
+	//int f_draw_poset_full = FALSE;
+	int f_report = FALSE;
 
 	t0 = os_ticks();
 
@@ -70,13 +71,19 @@ int main(int argc, const char **argv)
 
 			cout << "-linear3" << endl;
 			}
-		else if (strcmp(argv[i], "-draw_poset") == 0) {
-			f_draw_poset = TRUE;
-			cout << "-draw_poset" << endl;
+		else if (strcmp(argv[i], "-draw_poset_of_six_arcs") == 0) {
+			f_draw_poset_of_six_arcs = TRUE;
+			cout << "-draw_poset_of_six_arcs" << endl;
 			}
+#if 0
 		else if (strcmp(argv[i], "-draw_poset_full") == 0) {
 			f_draw_poset_full = TRUE;
 			cout << "-draw_poset_full" << endl;
+			}
+#endif
+		else if (strcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			cout << "-report" << endl;
 			}
 		}
 
@@ -117,11 +124,11 @@ int main(int argc, const char **argv)
 				"creating the group" << endl;
 		}
 
-	LG4->init(Descr4, verbose_level - 1);
+	LG4->init(Descr4, verbose_level - 10);
 
 	if (f_v) {
 		cout << "surface_classify after LG4->init" << endl;
-		}
+	}
 
 	if (Descr3->input_q != q) {
 		cout << "the two groups need to have the same field" << endl;
@@ -132,56 +139,56 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "surface_classify before LG3->init, "
 				"creating the group" << endl;
-		}
+	}
 
-	LG3->init(Descr3, verbose_level - 1);
+	LG3->init(Descr3, verbose_level - 10);
 
 	if (f_v) {
 		cout << "surface_classify after LG3->init" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "surface_classify before Surf->init" << endl;
-		}
+	}
 	Surf = NEW_OBJECT(surface_domain);
 	Surf->init(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_classify after Surf->init" << endl;
-		}
+	}
 
 
 
 #if 0
 	if (f_v) {
 		cout << "before Surf->init_large_polynomial_domains" << endl;
-		}
+	}
 	Surf->init_large_polynomial_domains(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf->init_large_polynomial_domains" << endl;
-		}
+	}
 #endif
 
 
 	if (f_v) {
 		cout << "before Surf_A->init" << endl;
-		}
+	}
 	Surf_A->init(Surf, f_semilinear, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf_A->init" << endl;
-		}
+	}
 
 
 #if 0
 	if (f_v) {
 		cout << "before Surf_A->Classify_trihedral_"
 				"pairs->classify" << endl;
-		}
+	}
 	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf_A->Classify_trihedral_"
 				"pairs->classify" << endl;
-		}
+	}
 #endif
 
 
@@ -191,15 +198,21 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "before SAL->init" << endl;
-		}
+	}
 	SAL->init(F, LG4, LG3,
 			f_semilinear, Surf_A,
 			argc, argv,
 			verbose_level);
 	if (f_v) {
 		cout << "after SAL->init" << endl;
-		}
+	}
 
+	if (f_draw_poset_of_six_arcs) {
+		SAL->draw_poset_of_six_arcs(verbose_level);
+	}
+	if (f_report) {
+		SAL->report(verbose_level);
+	}
 
 	FREE_OBJECT(SAL);
 

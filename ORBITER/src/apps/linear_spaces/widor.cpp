@@ -1,4 +1,5 @@
-// widor.C
+// widor.cpp
+//
 // Anton Betten
 //
 // converts a "Widor" file to a tdo file

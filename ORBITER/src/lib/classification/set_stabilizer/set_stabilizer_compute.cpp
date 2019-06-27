@@ -1,7 +1,7 @@
-// set_stabilizer_compute.C
+// set_stabilizer_compute.cpp
 // 
 // Anton Betten
-// moved here from STABILIZER/stabilizer.C
+// moved here from STABILIZER/stabilizer.cpp
 // Dec 28, 2008
 //
 //

@@ -1,4 +1,4 @@
-// page_storage.C
+// page_storage.cpp
 //
 // Anton Betten
 // October 23, 2002

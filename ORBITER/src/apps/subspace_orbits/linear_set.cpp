@@ -1,4 +1,4 @@
-// linear_set.C
+// linear_set.cpp
 // 
 // Anton Betten
 // July 8, 2014
@@ -321,7 +321,7 @@ void linear_set::init(int argc, const char **argv,
 	lift_generators_to_subfield_structure(n, s, 
 		SubS, Aq, AQ, Strong_gens, 
 		verbose_level);
-		// in ACTION/action_global.C
+
 	if (f_v) {
 		cout << "linear_set::init after linear_set_lift_generators_"
 				"to_subfield_structure" << endl;

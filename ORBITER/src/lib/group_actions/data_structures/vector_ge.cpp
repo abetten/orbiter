@@ -1,4 +1,4 @@
-// vector_ge.C
+// vector_ge.cpp
 //
 // Anton Betten
 // December 9, 2003

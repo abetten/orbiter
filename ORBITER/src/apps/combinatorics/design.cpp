@@ -1,4 +1,4 @@
-// design.C
+// design.cpp
 //
 // Anton Betten
 // March 15, 2013

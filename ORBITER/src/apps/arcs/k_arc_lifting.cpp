@@ -1,4 +1,4 @@
-// k_arc_lifting.C
+// k_arc_lifting.cpp
 //
 // Anton Betten, Awss Al-ogaidi
 //
@@ -808,7 +808,7 @@ void do_arc_lifting(
 		arc, arc_sz, canonical_pt, canonical_set, 
 		FALSE, NULL, 
 		verbose_level - 3);
-		// in ACTION/action_global.C
+		// in ACTION/action_global.cpp
 	if (f_vv) {
 		cout << "The stabilizer of the arc has been computed" << endl;
 		}
@@ -1270,7 +1270,7 @@ void user_callback_solution_found(
 		big_arc, big_arc_size, canonical_pt, canonical_set2, 
 		FALSE, NULL, 
 		0 /*verbose_level*/);
-		// in ACTION/action_global.C
+		// in ACTION/action_global.cpp
 	cout << "The stabilizer of the arc has been computed" << endl;
 	Stab->group_order(go);
 	cout << "It is a group of order " << go << endl;
@@ -1354,7 +1354,7 @@ void search(ostream &ost, int level)
 			big_arc, big_arc_size, canonical_pt, canonical_set, 
 			FALSE, NULL, 
 			0 /*verbose_level - 3 */);
-			// in ACTION/action_global.C
+			// in ACTION/action_global.cpp
 		Stab->group_order(go);
 			cout << " : go=" << go;
 

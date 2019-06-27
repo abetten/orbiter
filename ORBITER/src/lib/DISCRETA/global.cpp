@@ -1,4 +1,4 @@
-// global.C
+// global.cpp
 //
 // Anton Betten
 // 10.11.1999
@@ -2967,7 +2967,7 @@ int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 	return TRUE;
 }
 
-//#include "mindist.C"
+//#include "mindist.cppC"
 
 #if 0
 int int_vec_search(int *v, int len, int a, int &idx)

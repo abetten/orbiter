@@ -1,4 +1,4 @@
-// factor_cyclotomic.C
+// factor_cyclotomic.cpp
 //
 // Anton Betten
 // June 2007

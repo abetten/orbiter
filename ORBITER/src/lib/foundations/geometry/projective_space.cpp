@@ -1,4 +1,4 @@
-// projective_space.C
+// projective_space.cpp
 //
 // Anton Betten
 // Jan 17, 2010
@@ -1116,8 +1116,8 @@ int projective_space::test_if_lines_are_disjoint_from_scratch(
 		}
 }
 
-int projective_space::intersection_of_two_lines_in_a_plane(int l1, int l2)
-// works only for projective planes, i.e., n = 2
+int projective_space::intersection_of_two_lines(int l1, int l2)
+// formerly intersection_of_two_lines_in_a_plane
 {
 	int *Mtx1;
 	int *Mtx3;
@@ -1171,12 +1171,12 @@ int projective_space::intersection_of_two_lines_in_a_plane(int l1, int l2)
 	int_vec_copy(Mtx1 + 2 * d, Mtx3 + (d - 2) * d, (d - 2) * d);
 	r = F->Gauss_easy(Mtx3, 2 * (d - 2), d);
 	if (r < d - 1) {
-		cout << "projective_space::intersection_of_two_lines_in_a_plane r < d - 1, "
+		cout << "projective_space::intersection_of_two_lines r < d - 1, "
 				"the lines do not intersect" << endl;
 		exit(1);
 		}
 	if (r > d - 1) {
-		cout << "projective_space::intersection_of_two_lines_in_a_plane r > d - 1, "
+		cout << "projective_space::intersection_of_two_lines r > d - 1, "
 				"something is wrong" << endl;
 		exit(1);
 		}
@@ -2266,7 +2266,7 @@ void projective_space::create_Maruta_Hamada_arc2(
 	size = 0;
 	for (i = 0; i < 9; i++) {
 		for (j = i + 1; j < 9; j++) {
-			a = intersection_of_two_lines_in_a_plane(L[i], L[j]);
+			a = intersection_of_two_lines(L[i], L[j]);
 			the_arc[size++] = a;
 			}
 		}
@@ -6331,7 +6331,7 @@ void projective_space::find_nucleus(
 		cout << "projective_space::find_nucleus t2 = " << t2 << endl;
 		}
 	
-	nucleus = intersection_of_two_lines_in_a_plane(t1, t2);
+	nucleus = intersection_of_two_lines(t1, t2);
 	if (f_v) {
 		cout << "projective_space::find_nucleus "
 				"nucleus = " << nucleus << endl;

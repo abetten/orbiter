@@ -1,4 +1,4 @@
-// plot_stats_on_graphs.C
+// plot_stats_on_graphs.cpp
 //
 // Anton Betten
 // February 7, 2018

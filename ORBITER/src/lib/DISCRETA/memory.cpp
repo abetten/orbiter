@@ -1,4 +1,4 @@
-// memory.C
+// memory.cpp
 //
 // Anton Betten
 // 04.04.2000

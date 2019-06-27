@@ -1,4 +1,4 @@
-// permutation.C
+// permutation.cpp
 //
 // Anton Betten
 // 10.11.1999

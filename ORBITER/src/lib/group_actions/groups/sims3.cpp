@@ -1,4 +1,4 @@
-// sims3.C
+// sims3.cpp
 //
 // Anton Betten
 // November 22, 2016

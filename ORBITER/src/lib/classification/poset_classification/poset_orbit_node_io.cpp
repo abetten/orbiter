@@ -1,9 +1,9 @@
-// poset_orbit_node_io.C
+// poset_orbit_node_io.cpp
 //
 // Anton Betten
-// moved here from DISCRETA/snakesandladders.C
+// moved here from DISCRETA/snakesandladders.cpp
 // December 27, 2008
-// renamed from io.C into oracle_io.C Aug 24, 2011
+// renamed from io.cpp into oracle_io.cpp Aug 24, 2011
 
 
 #include "foundations/foundations.h"

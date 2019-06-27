@@ -1,4 +1,4 @@
-// group_ring.C
+// group_ring.cpp
 //
 // Anton Betten
 // March 8, 2015

@@ -1,4 +1,4 @@
-// finite_field_projective.C
+// finite_field_projective.cpp
 //
 // Anton Betten
 //
@@ -2343,9 +2343,9 @@ void finite_field::do_blocking_set_family_3(int n,
 		line[3] = P->line_through_two_points(p_idx[1], p_idx[2]);
 		line[4] = P->line_through_two_points(p_idx[1], p_idx[3]);
 		line[5] = P->line_through_two_points(p_idx[2], p_idx[3]);
-		diag_pts[0] = P->intersection_of_two_lines_in_a_plane(line[0], line[5]);
-		diag_pts[1] = P->intersection_of_two_lines_in_a_plane(line[1], line[4]);
-		diag_pts[2] = P->intersection_of_two_lines_in_a_plane(line[2], line[3]);
+		diag_pts[0] = P->intersection_of_two_lines(line[0], line[5]);
+		diag_pts[1] = P->intersection_of_two_lines(line[1], line[4]);
+		diag_pts[2] = P->intersection_of_two_lines(line[2], line[3]);
 
 		diag_line = P->line_through_two_points(diag_pts[0], diag_pts[1]);
 		if (diag_line != P->line_through_two_points(diag_pts[0], diag_pts[2])) {
@@ -3202,7 +3202,6 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		f_construction_A, f_hyperoval,
 		f_construction_B,
 		verbose_level - 2);
-		// in GALOIS/tensor.C
 
 	if (f_v) {
 		cout << "H_subfield:" << endl;
@@ -4433,7 +4432,6 @@ void finite_field::do_test_diagonal_line(int n,
 		set_sizes, sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		verbose_level);
-		// GALOIS/util.C
 
 	if (f_v) {
 		cout << "read " << nb_cases << " orbits on qudrangles" << endl;
@@ -4490,9 +4488,9 @@ void finite_field::do_test_diagonal_line(int n,
 		cout << endl;
 
 
-		diag_pts[0] = P->intersection_of_two_lines_in_a_plane(line[0], line[5]);
-		diag_pts[1] = P->intersection_of_two_lines_in_a_plane(line[1], line[4]);
-		diag_pts[2] = P->intersection_of_two_lines_in_a_plane(line[2], line[3]);
+		diag_pts[0] = P->intersection_of_two_lines(line[0], line[5]);
+		diag_pts[1] = P->intersection_of_two_lines(line[1], line[4]);
+		diag_pts[2] = P->intersection_of_two_lines(line[2], line[3]);
 
 		cout << "diag_pts[3]: ";
 		int_vec_print(cout, diag_pts, 3);

@@ -1,4 +1,4 @@
-// scheduler.C
+// scheduler.cpp
 // 
 // Anton Betten
 // January 16, 2016

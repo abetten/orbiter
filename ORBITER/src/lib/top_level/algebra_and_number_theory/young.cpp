@@ -1,4 +1,4 @@
-// young.C
+// young.cpp
 // 
 // Anton Betten
 //
@@ -193,7 +193,6 @@ void young::init(int n, int verbose_level)
 	S->compute_conjugacy_classes(Aconj, ABC, Sch,
 		SG, nb_classes, class_size, class_rep, 
 		verbose_level);
-		// in ACTION/action_global.C
 
 	if (f_v) {
 		cout << "computing conjugacy classes done" << endl;
@@ -566,7 +565,6 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	if (f_v) {
 		cout << "We are using the following tableau:" << endl;
 		Combi.print_tableau(Tableau, l1, l2, row_parts, col_parts);
-			// in GALOIS/combinatorics.C
 		}
 
 
@@ -680,7 +678,6 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	// multiply the two group ring elements:
 
 	group_ring_element_mult(A, S, elt1, elt2, elt3);
-		// in ACTION/action_global.C
 
 	if (f_v) {
 		cout << "elt3=" << endl;

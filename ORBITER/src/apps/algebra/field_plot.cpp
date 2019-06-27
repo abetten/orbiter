@@ -1,4 +1,4 @@
-// field_plot.C
+// field_plot.cpp
 // 
 // Anton Betten
 // Nov 27, 2011

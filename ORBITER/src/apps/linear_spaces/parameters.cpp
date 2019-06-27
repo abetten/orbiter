@@ -1,4 +1,4 @@
-// parameters.C
+// parameters.cpp
 // 
 // Anton Betten
 // 12/6/2010

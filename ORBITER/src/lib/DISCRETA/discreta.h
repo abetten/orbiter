@@ -326,7 +326,7 @@ class printing_mode;
 
 
 
-// in global.C:
+// in global.cpp:
 
 extern const char *discreta_home;
 extern const char *discreta_arch;
@@ -442,7 +442,7 @@ void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n);
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M);
 void fine_tune(finite_field *F, int *mtxD, int verbose_level);
 
-// domain.C:
+// domain.cpp:
 
 int has_domain();
 domain *get_current_domain();
@@ -1535,7 +1535,7 @@ class unipoly: public Vector
 	
 };
 
-// vbp.C:
+// vbp.cpp:
 void place_lattice(Vector& nl, Vector& orbit_size, 
 	int size_x, int size_y, 
 	Vector& Px, Vector& Py, Vector& O_dx, 
@@ -1679,7 +1679,7 @@ class geometry: public Vector
 
 int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v);
 
-// geo_canon.C:
+// geo_canon.cpp:
 
 void perm_test(void);
 void geo_canon_with_initial_decomposition_and_ddp_ddb(
@@ -1785,7 +1785,7 @@ void compose_group(Vector & gsel, Vector & gens,
 	hollerith & group_label, hollerith & group_label_tex, hollerith & acting_on, int f_v);
 
 
-// perm_group_gens.C:
+// perm_group_gens.cpp:
 
 int vec_generators_is_trivial_group(Vector & gen);
 int is_abelian(Vector & gen);
@@ -1990,7 +1990,7 @@ int binary_to_number(int *v, int digits);
 
 
 
-// kramer_mesner.C
+// kramer_mesner.cpp
 
 extern char *discreta_copyright_text;
 
@@ -2560,7 +2560,7 @@ class design_parameter_source: public Vector
 	void text012_extended(design_parameter& p, hollerith& s0, hollerith& s1, hollerith& s2);
 };
 
-// design.C:
+// design.cpp:
 int design_parameters_admissible(int v, int t, int k, discreta_base &lambda);
 int calc_delta_lambda(int v, int t, int k, int f_v);
 void design_lambda_max(int t, int v, int k, discreta_base & lambda_max);
@@ -2655,7 +2655,7 @@ class design_parameter: public Vector
 };
 
 
-// counting.C:
+// counting.cpp:
 void cycle_index_perm_group(perm_group &G, Vector &C, int f_v, int f_vv);
 void cycle_type_add_monomial(Vector &C, Vector &m, discreta_base &coeff);
 void cycle_index_Zn(Vector &C, int n);
@@ -2669,7 +2669,7 @@ void cycle_index_number_of_orbits(Vector &CG, discreta_base &number_of_orbits);
 void cycle_index_number_of_orbits_on_mappings(Vector &CG, int k, discreta_base &number_of_orbits);
 void print_cycle_type(Vector &C);
 
-// orbit.C:
+// orbit.cpp:
 void all_orbits(int nb_elements, Vector &generators, 
 	Vector &orbit_no, 
 	int f_schreier_vectors, Vector &schreier_last, Vector &schreier_label, 
@@ -2700,7 +2700,7 @@ void prepare_2_orbits_in_product_action(char *group_label,
 	Vector &gen, int d, int c, int f_v, int f_vv);
 
 
-// discreta_global.C:
+// discreta_global.cpp:
 void free_global_data();
 void the_end(int t0);
 void the_end_quietly(int t0);

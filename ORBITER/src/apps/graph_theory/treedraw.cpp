@@ -1,4 +1,4 @@
-// treedraw.C
+// treedraw.cpp
 //
 // Anton Betten
 // January 12, 2004

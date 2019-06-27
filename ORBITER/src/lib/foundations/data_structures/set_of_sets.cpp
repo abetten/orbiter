@@ -1,4 +1,4 @@
-// set_of_sets.C
+// set_of_sets.cpp
 //
 // Anton Betten
 //

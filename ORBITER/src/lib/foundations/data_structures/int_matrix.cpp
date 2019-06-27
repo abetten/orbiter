@@ -1,4 +1,4 @@
-// int_matrix.C
+// int_matrix.cpp
 //
 // Anton Betten
 //

@@ -1,4 +1,4 @@
-// canonical_form.C
+// canonical_form.cpp
 // 
 // Anton Betten
 // December 22, 2017

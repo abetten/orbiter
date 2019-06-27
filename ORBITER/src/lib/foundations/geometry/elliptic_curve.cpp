@@ -1,10 +1,10 @@
-// elliptic_curve.C
+// elliptic_curve.cpp
 // 
 // Anton Betten
 // Oct 27, 2009
 //
 //
-// pulled out of crypto.C: November 19, 2014
+// pulled out of crypto.cpp: November 19, 2014
 //
 //
 
@@ -180,11 +180,10 @@ void elliptic_curve::compute_points(int verbose_level)
 #if 0
 			if (p != 2) {
 				l = Legendre(r, q, 0);
-					// GALOIS/number_theory.C
 
 				if (l == 1) {
 					y = sqrt_mod_involved(r, q);
-						// DISCRETA/global.C
+						// DISCRETA/global.cpp
 
 					if (F->mult(y, y) != r) {
 						cout << "There is a problem "

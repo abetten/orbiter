@@ -1,4 +1,4 @@
-// poset_orbit_node.C
+// poset_orbit_node.cpp
 //
 // Anton Betten
 // December 27, 2004

@@ -1,4 +1,4 @@
-// analyze_q_designs.C
+// analyze_q_designs.cpp
 // 
 // Anton Betten
 // Jul 23, 2016

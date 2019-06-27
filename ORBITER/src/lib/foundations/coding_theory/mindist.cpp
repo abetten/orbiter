@@ -1,4 +1,4 @@
-// mindist.C
+// mindist.cpp
 //
 // The algorithm for computing the minimum distance implemented here 
 // is due to Brouwer. It has been described in 

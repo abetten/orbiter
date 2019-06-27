@@ -1,4 +1,4 @@
-// decomposition.C
+// decomposition.cpp
 //
 // Anton Betten
 //

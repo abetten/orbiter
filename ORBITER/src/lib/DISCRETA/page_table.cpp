@@ -1,4 +1,4 @@
-// page_table.C
+// page_table.cpp
 //
 // Anton Betten
 // 7/31/09

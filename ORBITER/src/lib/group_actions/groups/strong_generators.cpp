@@ -1,4 +1,4 @@
-// strong_generators.C
+// strong_generators.cpp
 //
 // Anton Betten
 // December 4, 2013
@@ -2338,7 +2338,7 @@ void strong_generators::compute_ascii_coding(
 	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
 	code_int4(p, (int_4) A->Stabilizer_chain->base_len);
-		// in GALOIS/util.C
+
 	code_int4(p, (int_4) gens->len);
 	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
 		code_int4(p, (int_4) A->Stabilizer_chain->base[i]);
@@ -2902,7 +2902,7 @@ void strong_generators::export_group_and_copy_to_latex(
 
 
 #if 0
-// unsed in SEMIFIELD/semifield_starter_io.C:
+// unsed in SEMIFIELD/semifield_starter_io.cpp:
 
 void strong_generators_array_write_file(const char *fname,
 		strong_generators *p, int nb, int verbose_level)

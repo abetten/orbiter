@@ -1,4 +1,4 @@
-// prepare_frames.C
+// prepare_frames.cpp
 // 
 // Anton Betten
 // February 4, 2018

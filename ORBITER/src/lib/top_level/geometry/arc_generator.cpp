@@ -1,11 +1,11 @@
-// arc_generator.C
+// arc_generator.cpp
 // 
 // Anton Betten
 //
 // previous version Dec 6, 2004
 // revised June 19, 2006
 // revised Aug 17, 2008
-// moved here from hyperoval.C May 10, 2013
+// moved here from hyperoval.cpp May 10, 2013
 // moved to TOP_LEVEL from APPS/ARCS: February 23, 2017
 //
 // Searches for arcs and hyperovals in Desarguesian projective planes

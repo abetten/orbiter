@@ -1,4 +1,4 @@
-// unipoly.C
+// unipoly.cpp
 //
 // Anton Betten
 // 24.12.1999

@@ -12,7 +12,7 @@ namespace group_actions {
 
 
 // #############################################################################
-// action.C:
+// action.cpp
 // #############################################################################
 
 //! a permutation group in a fixed action.
@@ -192,7 +192,7 @@ public:
 
 
 
-	// action.C:
+	// action.cpp
 	action();
 	~action();
 	void null();
@@ -394,7 +394,7 @@ public:
 		int *Elt_B, int *Elt_C, int verbose_level);
 
 
-	// action_indexing_cosets.C:
+	// action_indexing_cosets.cpp
 	void coset_unrank(sims *G, sims *U, int rank, 
 		int *Elt, int verbose_level);
 	int coset_rank(sims *G, sims *U, 
@@ -404,7 +404,7 @@ public:
 		// generator::orbit_element_unrank and 
 		// generator::orbit_element_rank
 
-	// action_init.C:
+	// action_init.cpp
 
 	/** Create any linear group */
 	void init_linear_group(sims *&S,
@@ -542,7 +542,7 @@ public:
 		int verbose_level);
 
 	
-	// action_induce.C:
+	// action_induce.cpp
 
 	action *induced_action_on_set_partitions(
 			int partition_class_size,
@@ -749,7 +749,7 @@ public:
 	void print_vector(vector_ge &v);
 	void print_vector_as_permutation(vector_ge &v);
 
-	// action_cb.C:
+	// action_cb.cpp
 	int image_of(void *elt, int a);
 	void image_of_low_level(void *elt,
 			int *input, int *output, int verbose_level);
@@ -863,7 +863,7 @@ public:
 		int verbose_level);
 	// uses the function A->element_image_of
 
-	// in backtrack.C:
+	// in backtrack.cpp
 	int is_minimal(
 		int size, int *set, int &backtrack_level, 
 		int verbose_level);
@@ -884,7 +884,7 @@ public:
 
 
 // #############################################################################
-// action_global.C:
+// action_global.cpp
 // #############################################################################
 
 
@@ -907,7 +907,7 @@ void set_orthogonal_group_type(int f_siegel,
 int get_orthogonal_group_type_f_reflection();
 void callback_choose_random_generator_orthogonal(int iteration, 
 	int *Elt, void *data, int verbose_level);
-	// for use in action_init.C
+	// for use in action_init.cpp
 void test_matrix_group(int k, int q, int f_semilinear, 
 	int verbose_level);
 void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, 

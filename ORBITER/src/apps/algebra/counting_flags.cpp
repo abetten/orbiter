@@ -1,4 +1,4 @@
-// counting_flags.C
+// counting_flags.cpp
 //
 // Anton Betten
 // May 26, 2016

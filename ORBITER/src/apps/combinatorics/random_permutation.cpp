@@ -1,4 +1,4 @@
-// random_permutation.C
+// random_permutation.cpp
 // 
 // Anton Betten
 // April 22, 2016

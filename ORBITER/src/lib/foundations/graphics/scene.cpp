@@ -1,4 +1,4 @@
-// scene.C
+// scene.cpp
 //
 // Anton Betten
 //

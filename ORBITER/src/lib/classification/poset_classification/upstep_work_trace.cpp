@@ -1,8 +1,8 @@
-// upstep_work_trace.C
+// upstep_work_trace.cpp
 //
 // Anton Betten
 //
-// moved out of upstep_work.C: Dec 20, 2011
+// moved out of upstep_work.cpp: Dec 20, 2011
 
 #include "foundations/foundations.h"
 #include "group_actions/group_actions.h"

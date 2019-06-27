@@ -1,4 +1,4 @@
-// design_parameter_source.C
+// design_parameter_source.cpp
 //
 // Anton Betten
 // 18.09.2000

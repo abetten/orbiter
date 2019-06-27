@@ -1,4 +1,4 @@
-// poset_description.C
+// poset_description.cpp
 //
 // Anton Betten
 // November 19, 2018

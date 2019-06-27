@@ -1,4 +1,4 @@
-// upstep_work.C
+// upstep_work.cpp
 //
 // Anton Betten
 // March 10, 2010
@@ -458,7 +458,6 @@ int upstep_work::init_extension_node(int verbose_level)
 	O_cur->init_extension_node_prepare_G(gen, 
 		prev, prev_ex, size, *G, go_G, 
 		verbose_level - 4);
-		// poset_orbit_node.C
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		int_set_print(cout, gen->S, size);
@@ -504,7 +503,6 @@ int upstep_work::init_extension_node(int verbose_level)
 		*H, go_H, 
 		pt, pt_orbit_len, 
 		verbose_level - 4);
-		// in poset_orbit_node.C
 
 
 #if 0
@@ -802,7 +800,6 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				final_ex, 
 				TRUE /*f_tolerant*/, 
 				verbose_level - 4);
-				// in upstep_work_trace.C
 
 		if (f_v) {
 			cout << "upstep_work::upstep_for_sets coset "

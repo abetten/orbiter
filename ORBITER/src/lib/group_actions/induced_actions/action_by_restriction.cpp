@@ -1,4 +1,4 @@
-// action_by_restriction.C
+// action_by_restriction.cpp
 //
 // Anton Betten
 // February 20, 2010

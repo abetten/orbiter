@@ -1,4 +1,4 @@
-// representatives.C
+// representatives.cpp
 // 
 // Anton Betten
 // started July 3, 2012

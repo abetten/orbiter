@@ -1,4 +1,4 @@
-// schreier.C
+// schreier.cpp
 //
 // Anton Betten
 // December 9, 2003
@@ -2629,9 +2629,11 @@ schreier_vector *schreier::get_schreier_vector(
 
 	}
 
-	shallow_schreier_tree_Seress_randomized,
+	//shallow_schreier_tree_Seress_randomized,
 
-	cout << "nb_times_image_of_called=" << A->ptr->nb_times_image_of_called << endl;
+	if (f_v) {
+		cout << "nb_times_image_of_called=" << A->ptr->nb_times_image_of_called << endl;
+	}
 
 
 	//shallow_schreier_tree_standard,

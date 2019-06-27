@@ -1,4 +1,4 @@
-// orbit_transversal.C
+// orbit_transversal.cpp
 //
 // Anton Betten
 //
@@ -102,7 +102,6 @@ void orbit_transversal::read_from_file(
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
 		verbose_level - 1);
-		// GALOIS/util.C
 
 	nb_orbits = nb_cases;
 

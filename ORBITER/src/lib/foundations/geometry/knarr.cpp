@@ -1,4 +1,4 @@
-// knarr.C
+// knarr.cpp
 // 
 // Anton Betten
 //

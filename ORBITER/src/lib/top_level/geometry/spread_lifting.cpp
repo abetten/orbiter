@@ -1,4 +1,4 @@
-// spread_lifting.C
+// spread_lifting.cpp
 // 
 // Anton Betten
 // April 1, 2018
@@ -164,7 +164,6 @@ void spread_lifting::compute_points_covered_by_starter(
 		S->F->all_PG_elements_in_subspace(
 			S->Grass->M, S->k, S->n, point_list,
 			nb_points, 0 /*verbose_level - 2*/);
-			// in projective.C
 		
 		if (nb_points != S->block_size) {
 			cout << "spread_lifting::compute_points_"

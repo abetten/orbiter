@@ -1,9 +1,9 @@
-// recoordinatize.C
+// recoordinatize.cpp
 // 
 // Anton Betten
 // November 17, 2009
 //
-// moved out of translation_plane.C: 4/16/2013
+// moved out of translation_plane.cpp: 4/16/2013
 // moved to TOP_LEVEL: 11/2/2013
 // 
 //
@@ -370,7 +370,6 @@ void recoordinatize::stabilizer_of_first_three(
 		A /* A_PGL_n_q */,
 		A0 /* A_PGL_k_q */,
 		k, gens2, verbose_level - 1);
-		// in ACTION/action_global.C
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
@@ -381,7 +380,6 @@ void recoordinatize::stabilizer_of_first_three(
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go2, 
 		gens2, Strong_gens, verbose_level - 1);
-		// in ACTION/action_global.C
 
 
 	if (f_v) {

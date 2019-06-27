@@ -1,4 +1,4 @@
-// wreath_product.C
+// wreath_product.cpp
 //
 // Anton Betten
 //
@@ -893,7 +893,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 		FALSE /*M->f_semilinear*/,
 		GL_data, GL_size, GL_nb_gens,
 		verbose_level - 1);
-		// in GALOIS/projective.C
+
 	if (f_v) {
 		cout << "wreath_product::make_strong_generators_data "
 				"after strong_generators_for_general_linear_group" << endl;

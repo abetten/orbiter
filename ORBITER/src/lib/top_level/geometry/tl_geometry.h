@@ -12,7 +12,7 @@ namespace top_level {
 
 
 // #############################################################################
-// arc_generator.C
+// arc_generator.cpp
 // #############################################################################
 
 //! classification of arcs in desarguesian projective planes
@@ -149,7 +149,7 @@ void arc_generator_print_arc(std::ostream &ost, int len, int *S, void *data);
 
 
 // #############################################################################
-// arc_lifting_simeon.C
+// arc_lifting_simeon.cpp
 // #############################################################################
 
 
@@ -202,7 +202,7 @@ public:
 
 
 // #############################################################################
-// arc_lifting.C:
+// arc_lifting.cpp
 // #############################################################################
 
 //! creates a cubic surface from a 6-arc in a plane
@@ -293,6 +293,7 @@ public:
 		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
 	void init(surface_with_action *Surf_A, int *arc, int arc_size, 
 		int verbose_level);
+		// calls find_Eckardt_points and find_trihedral_pairs
 	void find_Eckardt_points(int verbose_level);
 	void find_trihedral_pairs(int verbose_level);
 	void create_the_six_plane_equations(int t_idx, 
@@ -357,9 +358,12 @@ public:
 
 	int nb_orbits_on_pairs;
 
-	arc_partition *Table_orbits_on_partition;
+	arc_partition *Table_orbits_on_partition; // [nb_orbits_on_pairs]
 
 	int total_nb_orbits_on_partitions;
+
+	int *partition_orbit_first; // [nb_orbits_on_pairs]
+	int *partition_orbit_len; // [nb_orbits_on_pairs]
 
 
 	arc_orbits_on_pairs();
@@ -371,6 +375,8 @@ public:
 		action *A,
 		int argc, const char **argv,
 		int verbose_level);
+	void recognize(int *pair, int *transporter,
+			int &orbit_idx, int verbose_level);
 
 };
 
@@ -412,6 +418,8 @@ public:
 		action *A, action *A_on_arc,
 		int argc, const char **argv,
 		int verbose_level);
+	void recognize(int *partition, int *transporter,
+			int &orbit_idx, int verbose_level);
 
 };
 
@@ -419,7 +427,7 @@ public:
 
 
 // #############################################################################
-// BLT_set_create.C:
+// BLT_set_create.cpp
 // #############################################################################
 
 //! to create a BLT-set from a description using class BLT_set_create_description
@@ -461,7 +469,7 @@ public:
 };
 
 // #############################################################################
-// BLT_set_create_description.C:
+// BLT_set_create_description.cpp
 // #############################################################################
 
 //! to create BLT set with a description from the command line
@@ -622,7 +630,7 @@ public:
 
 
 // #############################################################################
-// choose_points_or_lines.C:
+// choose_points_or_lines.cpp
 // #############################################################################
 
 //! classification of objects in projective planes
@@ -776,7 +784,7 @@ public:
 
 
 // #############################################################################
-// classify_double_sixes.C:
+// classify_double_sixes.cpp
 // #############################################################################
 
 //! classification of double sixes in PG(3,q)
@@ -929,7 +937,7 @@ void callback_partial_ovoid_test_early(int *S, int len,
 	void *data, int verbose_level);
 
 // #############################################################################
-// classify_trihedral_pairs.C:
+// classify_trihedral_pairs.cpp
 // #############################################################################
 
 
@@ -1050,7 +1058,7 @@ public:
 
 
 // #############################################################################
-// decomposition.C:
+// decomposition.cpp
 // #############################################################################
 
 
@@ -1059,7 +1067,7 @@ void decomposition_projective_space(int k, finite_field *F,
 	int verbose_level);
 
 // #############################################################################
-// incidence_structure.C:
+// incidence_structure.cpp
 // #############################################################################
 
 
@@ -1097,7 +1105,7 @@ int incidence_structure_find_blocking_set(incidence_structure *Inc,
 	int verbose_level);
 
 // #############################################################################
-// invariants_packing.C:
+// invariants_packing.cpp
 // #############################################################################
 
 //! collection of invariants of a set of packings in PG(3,q)
@@ -1141,7 +1149,7 @@ int packing_types_compare_function(void *a, void *b, void *data);
 
 
 // #############################################################################
-// k_arc_generator.C:
+// k_arc_generator.cpp
 // #############################################################################
 
 //! classification of k-arcs in the projective plane PG(2,q)
@@ -1179,7 +1187,7 @@ public:
 };
 
 // #############################################################################
-// packing_invariants.C:
+// packing_invariants.cpp
 // #############################################################################
 
 //! geometric invariants of a packing in PG(3,q)
@@ -1236,7 +1244,7 @@ public:
 
 
 // #############################################################################
-// packing.C:
+// packing.cpp
 // #############################################################################
 
 //! classification of packings in PG(3,q)
@@ -1390,7 +1398,7 @@ public:
 		int verbose_level);
 	int test_if_spreads_are_disjoint_based_on_table(int a, int b);
 
-	// packing2.C
+	// packing2.cpp
 	void compute_list_of_lines_from_packing(
 			int *list_of_lines, int *packing,
 			int verbose_level);
@@ -1452,7 +1460,7 @@ void packing_swap_func(void *data, int i, int j, void *extra_data);
 
 
 // #############################################################################
-// polar.C:
+// polar.cpp
 // #############################################################################
 
 	
@@ -1547,7 +1555,7 @@ void polar_callback_early_test_func(int *S, int len,
 
 
 // #############################################################################
-// projective_space.C:
+// projective_space.cpp
 // #############################################################################
 
 
@@ -1557,7 +1565,7 @@ void Hill_cap56(int argc, const char **argv,
 void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
 
 // #############################################################################
-// recoordinatize.C
+// recoordinatize.cpp
 // #############################################################################
 
 //! three skew lines in PG(3,q), used to classify spreads
@@ -1625,7 +1633,7 @@ public:
 };
 
 // #############################################################################
-// search_blocking_set.C:
+// search_blocking_set.cpp
 // #############################################################################
 
 //! classification of blocking sets in projective planes
@@ -1684,7 +1692,7 @@ int callback_check_partial_blocking_set(int len, int *S,
 #endif
 
 // #############################################################################
-// singer_cycle.C
+// singer_cycle.cpp
 // #############################################################################
 
 //! the Singer cycle in PG(n-1,q)
@@ -1724,7 +1732,7 @@ public:
 };
 
 // #############################################################################
-// six_arcs_not_on_a_conic.C:
+// six_arcs_not_on_a_conic.cpp
 // #############################################################################
 
 //! classification of six-arcs not on a conic in PG(2,q)
@@ -1752,11 +1760,13 @@ public:
 	void init(finite_field *F, projective_space *P2, 
 		int argc, const char **argv, 
 		int verbose_level);
+	void recognize(int *arc6, int *transporter,
+			int &orbit_not_on_conic_idx, int verbose_level);
 	void report_latex(std::ostream &ost);
 };
 
 // #############################################################################
-// spread.C
+// spread.cpp
 // #############################################################################
 
 #define SPREAD_OF_TYPE_FTWKB 1
@@ -1887,7 +1897,7 @@ public:
 		int verbose_level);
 
 
-	// spread2.C:
+	// spread2.cpp
 	void print_isomorphism_type(isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
 		int *data, int verbose_level);
@@ -1943,7 +1953,7 @@ int callback_incremental_check_function(
 	void *data, int verbose_level);
 
 
-// spread2.C:
+// spread2.cpp
 void spread_early_test_func_callback(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -1956,7 +1966,7 @@ void spread_callback_make_quotients(isomorph *Iso, void *data,
 void callback_spread_print(std::ostream &ost, int len, int *S, void *data);
 
 // #############################################################################
-// spread_create.C:
+// spread_create.cpp
 // #############################################################################
 
 //! to create a known spread using a description from class spread_create_description
@@ -2000,7 +2010,7 @@ public:
 };
 
 // #############################################################################
-// spread_create_description.C:
+// spread_create_description.cpp
 // #############################################################################
 
 //! to describe the construction of a known spread from the command line
@@ -2031,7 +2041,7 @@ public:
 };
 
 // #############################################################################
-// spread_lifting.C
+// spread_lifting.cpp
 // #############################################################################
 
 //! creates spreads from partial spreads using class exact_cover
@@ -2093,7 +2103,7 @@ public:
 
 
 // #############################################################################
-// surface_classify_wedge.C
+// surface_classify_wedge.cpp
 // #############################################################################
 
 //! classification of cubic surfaces using double sixes as substructures
@@ -2191,7 +2201,7 @@ public:
 };
 
 // #############################################################################
-// surface_create.C:
+// surface_create.cpp
 // #############################################################################
 
 
@@ -2245,7 +2255,7 @@ public:
 
 
 // #############################################################################
-// surface_create_description.C:
+// surface_create_description.cpp
 // #############################################################################
 
 
@@ -2279,7 +2289,7 @@ public:
 };
 
 // #############################################################################
-// surface_object_with_action.C:
+// surface_object_with_action.cpp
 // #############################################################################
 
 
@@ -2372,7 +2382,7 @@ public:
 };
 
 // #############################################################################
-// surface_with_action.C:
+// surface_with_action.cpp
 // #############################################################################
 
 //! cubic surfaces in projective space with automorphism group
@@ -2455,12 +2465,19 @@ public:
 
 	six_arcs_not_on_a_conic *Six_arcs;
 
-	arc_orbits_on_pairs *Table_orbits_on_pairs;
+	arc_orbits_on_pairs *Table_orbits_on_pairs; // [Six_arcs->nb_arcs_not_on_conic]
 
 	int nb_flag_orbits;
 
 	// classification of surfaces:
 	flag_orbits *Flag_orbits;
+
+	int *flag_orbit_fst; // [Six_arcs->nb_arcs_not_on_conic]
+	int *flag_orbit_len; // [Six_arcs->nb_arcs_not_on_conic]
+
+	int *flag_orbit_on_arcs_not_on_a_conic_idx; // [Flag_orbits->nb_flag_orbits]
+	int *flag_orbit_on_pairs_idx; // [Flag_orbits->nb_flag_orbits]
+	int *flag_orbit_on_partition_idx; // [Flag_orbits->nb_flag_orbits]
 
 	classification_step *Surfaces;
 
@@ -2473,12 +2490,64 @@ public:
 		int f_semilinear, surface_with_action *Surf_A,
 		int argc, const char **argv,
 		int verbose_level);
+	void draw_poset_of_six_arcs(int verbose_level);
 	void downstep(int verbose_level);
+	void upstep(int verbose_level);
+	void upstep2(
+			surface_object *SO,
+			vector_ge *coset_reps,
+			int &nb_coset_reps,
+			int *f_processed,
+			int &nb_processed,
+			int pt_representation_sz,
+			int f,
+			int *Flag_representation,
+			int tritangent_plane_idx,
+			int line_idx, int m1, int m2, int m3,
+			int l1, int l2,
+			int cnt,
+			strong_generators *S,
+			int *Lines,
+			int *eqn20,
+			int *Adj,
+			int &f2,
+			int *Elt_alpha1,
+			int *Elt_alpha2,
+			int *Elt_beta1,
+			int *Elt_beta2,
+			int *Elt_beta3,
+			int verbose_level);
+	void upstep3(
+			surface_object *SO,
+			vector_ge *coset_reps,
+			int &nb_coset_reps,
+			int *f_processed,
+			int &nb_processed,
+			int pt_representation_sz,
+			int f,
+			int *Flag_representation,
+			int tritangent_plane_idx,
+			int line_idx, int m1, int m2, int m3,
+			int l1, int l2,
+			int cnt,
+			strong_generators *S,
+			int *Lines,
+			int *eqn20,
+			int *Adj,
+			int *transversals4,
+			int *P6,
+			int &f2,
+			int *Elt_alpha1,
+			int *Elt_alpha2,
+			int *Elt_beta1,
+			int *Elt_beta2,
+			int *Elt_beta3,
+			int verbose_level);
 	void report(int verbose_level);
 };
 
 // #############################################################################
-// translation_plane_via_andre_model.C
+// translation_plane_via_andre_model.cpp
 // #############################################################################
 
 //! Andre / Bruck / Bose model of a translation plane

@@ -1,5 +1,5 @@
 
-// wreath_product.C
+// wreath_product.cpp
 //
 // Anton Betten, Sajeeb Roy Chowdhury
 //

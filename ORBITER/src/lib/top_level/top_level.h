@@ -113,7 +113,7 @@ class semifield_classify_with_substructure;
 
 
 // #############################################################################
-// representatives.C
+// representatives.cpp
 // #############################################################################
 
 //! auxiliary class for class isomorph

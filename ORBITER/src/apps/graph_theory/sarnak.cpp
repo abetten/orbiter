@@ -1,4 +1,4 @@
-// sarnak.C
+// sarnak.cpp
 //
 // Anton Betten
 // November 2, 2011

@@ -1,9 +1,9 @@
-// finitefield_tables.C
+// finitefield_tables.cpp
 //
 // Anton Betten
 //
 // started:  October 23, 2002
-// moved out of finitefield.C:  July 5, 2007
+// moved out of finitefield.cpp:  July 5, 2007
 
 
 

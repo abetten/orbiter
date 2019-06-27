@@ -1,4 +1,4 @@
-// rank_checker.C
+// rank_checker.cpp
 //
 // Anton Betten
 //

@@ -1,8 +1,8 @@
-// poset_classification_trace.C
+// poset_classification_trace.cpp
 //
 // Anton Betten
 //
-// moved out of poset_classification.C: Jan 21, 2010
+// moved out of poset_classification.cpp: Jan 21, 2010
 
 #include "foundations/foundations.h"
 #include "group_actions/group_actions.h"
@@ -625,7 +625,7 @@ int poset_classification::trace_set_recursion(
 int poset_classification::trace_set(int *set, int size, int level, 
 	int *canonical_set, int *Elt_transporter, 
 	int verbose_level)
-// called by map_set_to_set_BLT in orbits.C
+// called by map_set_to_set_BLT in orbits.cpp
 // returns the case number of the canonical set
 {
 	int n, case_nb;

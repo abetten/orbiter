@@ -1,4 +1,4 @@
-// poset_classification_recognize.C
+// poset_classification_recognize.cpp
 //
 // Anton Betten
 //

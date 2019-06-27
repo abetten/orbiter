@@ -1,4 +1,4 @@
-// classify.C
+// classify.cpp
 //
 // Anton Betten
 //

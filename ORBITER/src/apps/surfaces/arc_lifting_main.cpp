@@ -1,4 +1,4 @@
-// arc_lifting_main.C
+// arc_lifting_main.cpp
 // 
 // Anton Betten, Fatma Karaoglu
 //
@@ -79,7 +79,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "before Surf->init" << endl;
 		}
-	Surf->init(F, 0 /*verbose_level*/);
+	Surf->init(F, verbose_level - 5);
 	if (f_v) {
 		cout << "after Surf->init" << endl;
 		}

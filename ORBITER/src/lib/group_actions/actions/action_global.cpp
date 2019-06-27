@@ -1,4 +1,4 @@
-// action_global.C
+// action_global.cpp
 //
 // Anton Betten
 // October 10, 2013
@@ -120,7 +120,7 @@ void action_print_symmetry_group_type(ostream &ost,
 void make_generators_stabilizer_of_two_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
 	int k, vector_ge *gens, int verbose_level)
-// used in semifield.C
+// used in semifield.cpp
 // does not include the swap
 {
 	int f_v = (verbose_level >= 1);
@@ -774,7 +774,7 @@ void lift_generators_to_subfield_structure(
 				"before lift_generators" << endl;
 		}
 	lift_generators(gens, gens1, Aq, S, n, verbose_level);
-		// ACTION/action_global.C
+
 	if (f_v) {
 		cout << "lift_generators_to_subfield_structure "
 				"after lift_generators" << endl;

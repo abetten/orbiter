@@ -1,4 +1,4 @@
-// union_find_on_k_subsets.C
+// union_find_on_k_subsets.cpp
 //
 // Anton Betten
 // February 2, 2010

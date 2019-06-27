@@ -1,4 +1,4 @@
-// magma_interface.C
+// magma_interface.cpp
 //
 // Anton Betten
 //

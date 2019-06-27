@@ -12,7 +12,7 @@ namespace group_actions {
 
 
 // #############################################################################
-// direct_product.C:
+// direct_product.cpp
 // #############################################################################
 
 //! the direct product of two matrix groups in product action
@@ -138,7 +138,7 @@ public:
 
 
 // #############################################################################
-// linear_group.C:
+// linear_group.cpp
 // #############################################################################
 
 //! creates a linear group from command line arguments using linear_group_description
@@ -210,7 +210,7 @@ public:
 
 
 // #############################################################################
-// linear_group_description.C:
+// linear_group_description.cpp
 // #############################################################################
 
 //! description of a linear group from the command line
@@ -269,7 +269,7 @@ public:
 
 
 // #############################################################################
-// matrix_group.C:
+// matrix_group.cpp
 // #############################################################################
 
 //! a matrix group over a finite field in projective, linear or affine action
@@ -437,7 +437,7 @@ public:
 
 
 // #############################################################################
-// perm_group.C:
+// perm_group.cpp
 // #############################################################################
 
 //! a domain for permutation groups whose elements are given in list notation
@@ -504,7 +504,7 @@ public:
 
 
 // #############################################################################
-// schreier.C:
+// schreier.cpp
 // #############################################################################
 
 //! Schreier trees for orbits of groups on points
@@ -800,7 +800,7 @@ public:
 };
 
 // #############################################################################
-// schreier_sims.C:
+// schreier_sims.cpp
 // #############################################################################
 
 
@@ -886,7 +886,7 @@ public:
 };
 
 // #############################################################################
-// sims.C:
+// sims.cpp
 // #############################################################################
 
 //! a stabilizer chain for a permutation group is used to represent a permutation group
@@ -1233,13 +1233,13 @@ public:
 	void compute_all_powers(int elt_idx, int n, int *power_elt,
 			int verbose_level);
 
-	// sims2.C:
+	// sims2.cpp
 	void build_up_subgroup_random_process(sims *G, 
 		void (*choose_random_generator_for_subgroup)(
 			sims *G, int *Elt, int verbose_level), 
 		int verbose_level);
 
-	// sims3.C:
+	// sims3.cpp
 	void subgroup_make_characteristic_vector(sims *Sub, 
 		int *C, int verbose_level);
 	void normalizer_based_on_characteristic_vector(int *C_sub, 
@@ -1249,7 +1249,7 @@ public:
 		int *Order, int *Residue, int verbose_level);
 };
 
-// sims2.C:
+// sims2.cpp
 void choose_random_generator_derived_group(sims *G, int *Elt, 
 	int verbose_level);
 
@@ -1258,7 +1258,7 @@ void choose_random_generator_derived_group(sims *G, int *Elt,
 
 
 // #############################################################################
-// strong_generators.C:
+// strong_generators.cpp
 // #############################################################################
 
 //! a strong generating set for a permutation group with respect to a fixed action
@@ -1430,7 +1430,7 @@ public:
 			std::ostream &ost,
 			int verbose_level);
 
-	// strong_generators_groups.C:
+	// strong_generators_groups.cpp
 	void init_linear_group_from_scratch(action *&A, 
 		finite_field *F, int n, 
 		int f_projective, int f_general, int f_affine, 
@@ -1585,7 +1585,7 @@ public:
 
 
 // #############################################################################
-// wreath_product.C:
+// wreath_product.cpp
 // #############################################################################
 
 //! the wreath product group GL(d,q) wreath Sym(n)

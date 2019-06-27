@@ -13,7 +13,7 @@ namespace foundations {
 
 
 // #############################################################################
-// andre_construction.C:
+// andre_construction.cpp
 // #############################################################################
 
 //! Andre / Bruck / Bose construction of a translation plane from a spread
@@ -58,7 +58,7 @@ public:
 
 
 // #############################################################################
-// andre_construction_point_element.C:
+// andre_construction_point_element.cpp
 // #############################################################################
 
 
@@ -87,7 +87,7 @@ public:
 
 
 // #############################################################################
-// andre_construction_line_element.C:
+// andre_construction_line_element.cpp
 // #############################################################################
 
 
@@ -121,7 +121,7 @@ public:
 };
 
 // #############################################################################
-// arc_lifting_with_two_lines.C:
+// arc_lifting_with_two_lines.cpp
 // #############################################################################
 
 //! creates a cubic surface from a 6-arc in a plane
@@ -168,6 +168,7 @@ public:
 		surface_domain *Surf,
 		int *Arc6, int line1, int line2,
 		int verbose_level);
+	// The arc must be given as points in PG(3,q), not in PG(2,q).
 };
 
 
@@ -291,7 +292,7 @@ public:
 
 
 // #############################################################################
-// buekenhout_metz.C:
+// buekenhout_metz.cpp
 // #############################################################################
 
 //! Buekenhout Metz unitals
@@ -424,7 +425,7 @@ public:
 
 
 // #############################################################################
-// decomposition.C:
+// decomposition.cpp
 // #############################################################################
 
 
@@ -480,7 +481,7 @@ public:
 
 
 // #############################################################################
-// desarguesian_spread.C:
+// desarguesian_spread.cpp
 // #############################################################################
 
 
@@ -540,7 +541,7 @@ public:
 };
 
 // #############################################################################
-// eckardt_point_info.C:
+// eckardt_point_info.cpp
 // #############################################################################
 
 //! information about the Eckardt points of a surface derived from a six-arc
@@ -575,7 +576,7 @@ public:
 
 
 // #############################################################################
-// eckardt_point.C
+// eckardt_point.cpp
 // #############################################################################
 
 //! Eckardt point on a cubic surface using the Schlaefli labeling
@@ -610,11 +611,11 @@ public:
 };
 
 // #############################################################################
-// elliptic_curve.C:
+// elliptic_curve.cpp
 // #############################################################################
 
 
-// needs sqrt_mod_involved from DISCRETA/global.C
+// needs sqrt_mod_involved from DISCRETA/global.cpp
 
 
 //! a fixed elliptic curve in Weierstrass form
@@ -665,7 +666,7 @@ public:
 
 
 // #############################################################################
-// flag.C:
+// flag.cpp
 // #############################################################################
 
 //! a maximal chain of subspaces
@@ -708,7 +709,7 @@ public:
 };
 
 // #############################################################################
-// geo_parameter.C:
+// geo_parameter.cpp
 // #############################################################################
 
 
@@ -898,7 +899,7 @@ public:
 
 
 // #############################################################################
-// grassmann.C:
+// grassmann.cpp
 // #############################################################################
 
 //! to rank and unrank subspaces of a fixed dimension in F_q^n
@@ -931,6 +932,7 @@ public:
 	int rank_int_here(int *Mtx, int verbose_level);
 	void unrank_embedded_subspace_int(int rk, int verbose_level);
 	int rank_embedded_subspace_int(int verbose_level);
+	void unrank_embedded_subspace_int_here(int *Basis, int rk, int verbose_level);
 	void unrank_int(int rk, int verbose_level);
 	int rank_int(int verbose_level);
 	void unrank_longinteger_here(int *Mtx, longinteger_object &rk, 
@@ -960,7 +962,7 @@ public:
 
 
 // #############################################################################
-// grassmann_embedded.C:
+// grassmann_embedded.cpp
 // #############################################################################
 
 //! subspaces with a fixed embedding
@@ -1003,7 +1005,7 @@ public:
 };
 
 // #############################################################################
-// hermitian.C:
+// hermitian.cpp
 // #############################################################################
 
 //! hermitian space
@@ -1054,7 +1056,7 @@ public:
 };
 
 // #############################################################################
-// hjelmslev.C:
+// hjelmslev.cpp
 // #############################################################################
 
 //! Hjelmslev geometry
@@ -1081,7 +1083,7 @@ public:
 };
 
 // #############################################################################
-// incidence_structure.C
+// incidence_structure.cpp
 // #############################################################################
 
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_MATRIX 1
@@ -1327,7 +1329,7 @@ class incidence_structure {
 
 
 // #############################################################################
-// klein_correspondence.C:
+// klein_correspondence.cpp
 // #############################################################################
 
 
@@ -1372,7 +1374,7 @@ public:
 
 
 // #############################################################################
-// knarr.C:
+// knarr.cpp
 // #############################################################################
 
 //! the Knarr construction of a GQ from a BLT-set
@@ -1476,7 +1478,7 @@ public:
 
 
 // #############################################################################
-// object_in_projective_space.C:
+// object_in_projective_space.cpp
 // #############################################################################
 
 
@@ -1578,7 +1580,7 @@ public:
 
 
 // #############################################################################
-// orthogonal.C:
+// orthogonal.cpp
 // #############################################################################
 
 //! an orthogonal geometry O^epsilon(n,q)
@@ -2016,7 +2018,7 @@ public:
 
 
 // #############################################################################
-// point_line.C:
+// point_line.cpp
 // #############################################################################
 
 //! auxiliary class for the class point_line
@@ -2149,7 +2151,7 @@ void get_MOLm(int *MOLS, int order, int m, int *&M);
 
 
 // #############################################################################
-// projective_space.C:
+// projective_space.cpp
 // #############################################################################
 
 //! a projective space PG(n,q) of dimension n over Fq
@@ -2236,8 +2238,7 @@ public:
 	int line_through_two_points(int p1, int p2);
 	int test_if_lines_are_disjoint(int l1, int l2);
 	int test_if_lines_are_disjoint_from_scratch(int l1, int l2);
-	int intersection_of_two_lines_in_a_plane(int l1, int l2);
-		// works only for projective planes, i.e., n = 2
+	int intersection_of_two_lines(int l1, int l2);
 	
 	int arc_test(int *input_pts, int nb_pts, int verbose_level);
 	int determine_line_in_plane(int *two_input_pts, 
@@ -2548,7 +2549,7 @@ public:
 };
 
 // #############################################################################
-// surface_domain.C
+// surface_domain.cpp
 // #############################################################################
 
 //! cubic surfaces in PG(3,q) with 27 lines
@@ -2967,7 +2968,7 @@ public:
 void callback_surface_domain_sstr_line_label(std::stringstream &sstr, int pt, void *data);
 
 // #############################################################################
-// surface_object.C
+// surface_object.cpp
 // #############################################################################
 
 //! a particular cubic surface in PG(3,q), given by its equation
@@ -3010,6 +3011,8 @@ public:
 	classify *Type_pts_on_lines;
 	classify *Type_lines_on_point;
 	
+	int *Tritangent_plane_rk; // [45]
+
 	int *Tritangent_planes; // [nb_tritangent_planes]
 	int nb_tritangent_planes;
 	int *Lines_in_tritangent_plane; // [nb_tritangent_planes * 3]
@@ -3053,6 +3056,7 @@ public:
 		int verbose_level);
 	void print_neighbor_sets(std::ostream &ost);
 	void compute_plane_type_by_points(int verbose_level);
+	void compute_tritangent_planes_by_rank(int verbose_level);
 	void compute_tritangent_planes(int verbose_level);
 	void compute_planes_and_dual_point_ranks(int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);
@@ -3144,7 +3148,7 @@ public:
 
 
 // #############################################################################
-// tdo_data.C: TDO parameter refinement
+// tdo_data.cpp TDO parameter refinement
 // #############################################################################
 
 //! a class related to the class tdo_scheme
@@ -3193,7 +3197,7 @@ public:
 
 
 // #############################################################################
-// tdo_scheme.C:
+// tdo_scheme.cpp
 // #############################################################################
 
 
@@ -3476,7 +3480,7 @@ public:
 
 
 // #############################################################################
-// unusual.C:
+// unusual.cpp
 // #############################################################################
 
 //! Penttila's unusual model to create BLT-sets
@@ -3558,7 +3562,7 @@ public:
 };
 
 // #############################################################################
-// W3q.C:
+// W3q.cpp
 // #############################################################################
 
 //! isomorphism between the W(3,q) and the Q(4,q) generalized quadrangles

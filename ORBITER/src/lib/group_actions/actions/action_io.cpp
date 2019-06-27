@@ -383,7 +383,6 @@ void action::read_set_and_stabilizer(const char *fname,
 		Set_sizes, Sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		verbose_level - 1);
-		// GALOIS/util.C
 
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
@@ -492,19 +491,22 @@ void action::report(ostream &ost)
 		ost << "tl=$";
 		int_vec_print(ost, Sims->orbit_len, Stabilizer_chain->base_len);
 		ost << "$\\\\" << endl;
-		}
-	if (Stabilizer_chain->base_len) {
-		ost << "Base: $";
-		int_vec_print(ost, Stabilizer_chain->base, Stabilizer_chain->base_len);
-		ost << "$\\\\" << endl;
-		}
-	if (f_has_strong_generators) {
-		ost << "{\\small\\arraycolsep=2pt" << endl;
-		Strong_gens->print_generators_tex(ost);
-		ost << "}" << endl;
 	}
-	else {
-		ost << "Does not have strong generators.\\\\" << endl;
+
+	if (Stabilizer_chain) {
+		if (Stabilizer_chain->base_len) {
+			ost << "Base: $";
+			int_vec_print(ost, Stabilizer_chain->base, Stabilizer_chain->base_len);
+			ost << "$\\\\" << endl;
+		}
+		if (f_has_strong_generators) {
+			ost << "{\\small\\arraycolsep=2pt" << endl;
+			Strong_gens->print_generators_tex(ost);
+			ost << "}" << endl;
+		}
+		else {
+			ost << "Does not have strong generators.\\\\" << endl;
+		}
 	}
 }
 

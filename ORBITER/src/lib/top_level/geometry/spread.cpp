@@ -1,10 +1,10 @@
-// spread.C
+// spread.cpp
 // 
 // Anton Betten
 // November 17, 2009
 //
 // moved to TOP_LEVEL: November 2, 2013
-// renamed to spread.C from translation_plane.C: March 25, 2018
+// renamed to spread.cpp from translation_plane.cpp: March 25, 2018
 //
 //
 
