@@ -346,56 +346,52 @@ int main(int argc, const char **argv)
 		}
 		
 
-
-
-	}
-
-
-	if (f_v) {
-		cout << "surface_classify writing cheat sheet "
-				"on double sixes" << endl;
-		}
-	{
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-
-	sprintf(title, "Cheat Sheet on Double Sixes over GF(%d) ", q);
-	sprintf(author, "");
-	sprintf(fname, "Double_sixes_q%d.tex", q);
-
+		if (f_v) {
+			cout << "surface_classify writing cheat sheet "
+					"on double sixes" << endl;
+			}
 		{
-		ofstream fp(fname);
-		latex_interface L;
-		
-		//latex_head_easy(fp);
-		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
-			title, author, 
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+		char fname[1000];
+		char title[1000];
+		char author[1000];
+
+		sprintf(title, "Cheat Sheet on Double Sixes over GF(%d) ", q);
+		sprintf(author, "");
+		sprintf(fname, "Double_sixes_q%d.tex", q);
+
+			{
+			ofstream fp(fname);
+			latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(fp,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
+				NULL /* extra_praeamble */);
 
 
-		SCW->Classify_double_sixes->print_five_plus_ones(fp);
+			SCW->Classify_double_sixes->print_five_plus_ones(fp);
 
-		SCW->Classify_double_sixes->Double_sixes->print_latex(fp, 
-			"Double Sixes", FALSE /* f_with_stabilizers*/,
-			FALSE, NULL, NULL);
+			SCW->Classify_double_sixes->Double_sixes->print_latex(fp,
+				"Double Sixes", FALSE /* f_with_stabilizers*/,
+				FALSE, NULL, NULL);
 
-		L.foot(fp);
+			L.foot(fp);
+			}
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 		}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+		if (f_v) {
+			cout << "surface_classify writing cheat sheet on "
+					"double sixes done" << endl;
+			}
 	}
-	if (f_v) {
-		cout << "surface_classify writing cheat sheet on "
-				"double sixes done" << endl;
-		}
 
 
 	if (f_double_sixes_only) {

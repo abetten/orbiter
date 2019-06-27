@@ -1,4 +1,4 @@
-// matrix_group.C
+// matrix_group.cpp
 //
 // Anton Betten
 //
@@ -626,7 +626,6 @@ void matrix_group::init_base_projective(
 		A->Stabilizer_chain->base, A->Stabilizer_chain->transversal_length,
 		A->Stabilizer_chain->orbit, A->Stabilizer_chain->orbit_inv,
 		verbose_level - 1);
-		// in GALOIS/group_generators.C
 
 	if (f_v) {
 		cout << "matrix_group::init_base_projective: finished" << endl;
@@ -671,7 +670,6 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 		A->Stabilizer_chain->base_len, A->degree,
 		A->Stabilizer_chain->base, A->Stabilizer_chain->transversal_length,
 		verbose_level - 1);
-		// in GALOIS/group_generators.C
 
 	if (f_v) {
 		cout << "matrix_group::init_base_affine: finished" << endl;
@@ -698,7 +696,7 @@ void matrix_group::init_base_general_linear(
 		}
 	base_len = GG.matrix_group_base_len_general_linear_group(
 			n, q, f_semilinear, verbose_level - 1);
-	// in GALOIS/group_generators.C
+
 	if (f_vv) {
 		cout << "matrix_group::init_base_general_linear "
 				"base_len=" << base_len << endl;
@@ -718,7 +716,6 @@ void matrix_group::init_base_general_linear(
 		A->Stabilizer_chain->base_len, A->degree,
 		A->Stabilizer_chain->base, A->Stabilizer_chain->transversal_length,
 		verbose_level - 1);
-		// in GALOIS/group_generators.C
 
 	if (f_v) {
 		cout << "matrix_group::init_base_affine: finished" << endl;

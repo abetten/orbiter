@@ -1,4 +1,4 @@
-// sims2.C
+// sims2.cpp
 //
 // Anton Betten
 // January 11, 2009

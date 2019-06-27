@@ -1,4 +1,4 @@
-// test_hyperoval.C
+// test_hyperoval.cpp
 //
 // Anton Betten
 // October 10, 2010

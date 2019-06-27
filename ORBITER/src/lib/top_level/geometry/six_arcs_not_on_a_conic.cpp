@@ -1,4 +1,4 @@
-// six_arcs_not_on_a_conic.C
+// six_arcs_not_on_a_conic.cpp
 // 
 // Anton Betten
 //
@@ -181,6 +181,35 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 		cout << "six_arcs_not_on_a_conic::done" << endl;
 		}
 
+}
+
+
+void six_arcs_not_on_a_conic::recognize(int *arc6, int *transporter,
+		int &orbit_not_on_conic_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int orbit_at_level;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "six_arcs_not_on_a_conic::recognize" << endl;
+	}
+
+	Gen->gen->identify(arc6, 6,
+		transporter,
+		orbit_at_level,
+		0 /*verbose_level */);
+
+
+	if (!Sorting.int_vec_search(Not_on_conic_idx,
+		nb_arcs_not_on_conic, orbit_at_level,
+		orbit_not_on_conic_idx)) {
+		cout << "six_arcs_not_on_a_conic::recognize could not find orbit" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "six_arcs_not_on_a_conic::recognize done" << endl;
+	}
 }
 
 

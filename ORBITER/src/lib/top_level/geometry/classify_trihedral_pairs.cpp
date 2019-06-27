@@ -1,4 +1,4 @@
-// classify_trihedral_pairs.C
+// classify_trihedral_pairs.cpp
 // 
 // Anton Betten
 //

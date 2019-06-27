@@ -90,7 +90,7 @@ int kramer_mesner_test_surface(int len, int *S, void *data, int verbose_level);
 
 
 // #############################################################################
-// orbit_of_equations.C
+// orbit_of_equations.cpp
 // #############################################################################
 
 
@@ -145,7 +145,7 @@ public:
 int orbit_of_equations_compare_func(void *a, void *b, void *data);
 
 // #############################################################################
-// orbit_of_sets.C
+// orbit_of_sets.cpp
 // #############################################################################
 
 
@@ -210,7 +210,7 @@ public:
 int orbit_of_sets_compare_func(void *a, void *b, void *data);
 
 // #############################################################################
-// orbit_of_subspaces.C
+// orbit_of_subspaces.cpp
 // #############################################################################
 
 
@@ -350,7 +350,7 @@ public:
 //int orbit_of_subspaces_compare_func_lint(void *a, void *b, void *data);
 
 // #############################################################################
-// subspace_orbits.C
+// subspace_orbits.cpp
 // #############################################################################
 
 //! poset classification for the orbits of a group acting on the subspace lattice

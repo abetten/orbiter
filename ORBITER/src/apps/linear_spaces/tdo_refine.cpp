@@ -1,4 +1,5 @@
-// tdo_refine.C
+// tdo_refine.cpp
+//
 // Anton Betten
 //
 // started:  Dec 26 2006

@@ -1,4 +1,4 @@
-// a5_in_PSL.C
+// a5_in_PSL.cpp
 //
 // Anton Betten, Evi Haberberger
 // 10.06.2000

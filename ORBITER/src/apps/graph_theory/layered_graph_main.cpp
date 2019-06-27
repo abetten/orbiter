@@ -1,4 +1,4 @@
-// layered_graph_main.C
+// layered_graph_main.cpp
 // 
 // Anton Betten
 // January 8, 2014
@@ -519,11 +519,9 @@ void draw_vertex_callback_graph(layered_graph *LG,
 
 			G->draw_graph_with_distinguished_edge(x, y, dx, dy,
 					nb_V, D, len, distinguished_edge, 0 /*verbose_level*/);
-				// in GALOIS/draw.C
 			}
 		else {
 			G->draw_graph(x, y, dx, dy, nb_V, D, len);
-				// in GALOIS/draw.C
 			}
 		G->comment("graph_end");
 
@@ -551,7 +549,7 @@ void draw_vertex_callback_graph(layered_graph *LG,
 			}
 		G->comment(str);
 		G->draw_graph(x, y, dx, dy, nb_V, D, depth);
-			// in GALOIS/draw.C
+
 		G->comment("graph_end");
 		
 		FREE_int(D);

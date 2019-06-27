@@ -1,4 +1,4 @@
-// packing_main.C
+// packing_main.cpp
 // 
 // Anton Betten
 // Nov 8, 2013

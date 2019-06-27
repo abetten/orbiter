@@ -1,4 +1,4 @@
-// join_sets.C
+// join_sets.cpp
 // 
 // Anton Betten
 // March 11, 2018

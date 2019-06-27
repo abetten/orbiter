@@ -1,9 +1,9 @@
-// poset_classification_init.C
+// poset_classification_init.cpp
 //
 // Anton Betten
 // December 29, 2003
 //
-// moved here from poset_classification.C: July 29, 2014
+// moved here from poset_classification.cpp: July 29, 2014
 
 
 #include "foundations/foundations.h"

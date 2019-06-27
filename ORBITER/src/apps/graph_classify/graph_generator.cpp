@@ -1,4 +1,4 @@
-// graph_generator.C
+// graph_generator.cpp
 // 
 // Anton Betten
 // Nov 15 2007

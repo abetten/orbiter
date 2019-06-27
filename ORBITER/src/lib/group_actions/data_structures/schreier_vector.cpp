@@ -1,7 +1,7 @@
-// schreier_vector.C
+// schreier_vector.cpp
 //
 // Anton Betten
-// moved here from schreier.C: December 20, 2015
+// moved here from schreier.cpp: December 20, 2015
 
 #include "foundations/foundations.h"
 #include "group_actions.h"

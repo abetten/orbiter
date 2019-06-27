@@ -1,4 +1,4 @@
-// geo_parameter.C
+// geo_parameter.cpp
 // Anton Betten
 //
 // started:  May 6, 2008

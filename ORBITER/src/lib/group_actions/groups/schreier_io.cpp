@@ -1,4 +1,4 @@
-// schreier_io.C
+// schreier_io.cpp
 //
 // Anton Betten
 // moved here from schreier.cpp: November 3, 2018

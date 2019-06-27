@@ -1,4 +1,4 @@
-// interface_induced_action.C
+// interface_induced_action.cpp
 //
 // Anton Betten
 //
@@ -327,10 +327,10 @@ static int induced_action_element_image_of(action &A,
 			}
 		action_on_cosets *AC = A.G.OnCosets;
 
-		//cout << "interface.C: action_on_cosets "
+		//cout << "interface.cpp: action_on_cosets "
 		//"computing image of " << a << endl;
 		b = AC->compute_image(Elt, a, verbose_level - 1);
-		//cout << "interface.C: action_on_cosets image of "
+		//cout << "interface.cpp: action_on_cosets image of "
 		// << a << " is " << b << endl;
 		}
 	else if (A.type_G == action_on_factor_space_t) {

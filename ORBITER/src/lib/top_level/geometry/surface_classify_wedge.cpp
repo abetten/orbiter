@@ -1,4 +1,4 @@
-// surface_classify_wedge.C
+// surface_classify_wedge.cpp
 // 
 // Anton Betten
 // September 2, 2016

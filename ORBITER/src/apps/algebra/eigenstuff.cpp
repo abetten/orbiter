@@ -1,4 +1,4 @@
-// eigenstuff.C
+// eigenstuff.cpp
 // 
 // Anton Betten
 // 12/14/09

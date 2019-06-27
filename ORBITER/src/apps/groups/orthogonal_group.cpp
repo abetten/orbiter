@@ -1,4 +1,4 @@
-// orthogonal_group.C
+// orthogonal_group.cpp
 // 
 // Anton Betten
 // 10/17/2007

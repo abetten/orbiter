@@ -1,4 +1,4 @@
-// eckardt_point_info.C
+// eckardt_point_info.cpp
 //
 // Anton Betten
 // October 20, 2018
@@ -127,7 +127,7 @@ void eckardt_point_info::init(projective_space *P,
 				p = -1;
 			}
 			else {
-				p = P->intersection_of_two_lines_in_a_plane(bi, bj);
+				p = P->intersection_of_two_lines(bi, bj);
 			}
 			Intersections[i * 15 + j] = p;
 		}

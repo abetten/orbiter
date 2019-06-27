@@ -1,4 +1,4 @@
-// all_cliques.C
+// all_cliques.cpp
 // 
 // Anton Betten
 // January 28, 2015
@@ -191,7 +191,7 @@ void use_group(const char *fname, colored_graph *CG,
 	cout << "before create_automorphism_group_of_graph" << endl;
 	Aut = Nauty.create_automorphism_group_of_graph(
 			Adj, CG->nb_points, verbose_level);
-		// in ACTION/action_global.C
+		// in ACTION/action_global.cpp
 
 	cout << "after create_automorphism_group_of_graph" << endl;
 

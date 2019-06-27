@@ -1,4 +1,4 @@
-// layered_graph.C
+// layered_graph.cpp
 // 
 // Anton Betten
 // December 30, 2013

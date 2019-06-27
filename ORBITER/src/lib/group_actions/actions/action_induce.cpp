@@ -1,4 +1,4 @@
-// action_induce.C
+// action_induce.cpp
 //
 // Anton Betten
 // 1/1/2009
@@ -570,6 +570,8 @@ void action::induced_action_on_grassmannian(action *A_old,
 		cout << "action::induced_action_on_grassmannian "
 				"low_level_point_size=" << low_level_point_size << endl;
 		print_info();
+		cout << "action::induced_action_on_grassmannian finished, "
+				"after print_info()" << endl;
 	}
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian done" << endl;

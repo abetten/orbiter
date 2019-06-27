@@ -1,4 +1,4 @@
-// search_blocking_set.C
+// search_blocking_set.cpp
 // 
 // Anton Betten
 // started in INC_CAN:  July 14, 2010

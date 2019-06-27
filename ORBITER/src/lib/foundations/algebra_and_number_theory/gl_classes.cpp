@@ -1,4 +1,4 @@
-// gl_classes.C
+// gl_classes.cpp
 //
 // Anton Betten
 //
@@ -385,7 +385,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 					}
 				for (j = 1; j <= b; j++) {
 					mue_i = Combi.Kung_mue_i(part, i, m);
-						// in combinatorics.C
+
 					aa = NT.i_power_j(q, d * mue_i);
 					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;

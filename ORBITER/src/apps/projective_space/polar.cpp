@@ -1,4 +1,4 @@
-// polar.C
+// polar.cpp
 // 
 // Anton Betten
 // Feb 8, 2010

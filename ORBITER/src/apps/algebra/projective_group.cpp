@@ -1,4 +1,4 @@
-// projective_group.C
+// projective_group.cpp
 // 
 // Anton Betten
 // 

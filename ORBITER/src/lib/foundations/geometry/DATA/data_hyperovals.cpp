@@ -1,4 +1,4 @@
-// data_hyperovals.C
+// data_hyperovals.cpp
 //
 // Anton Betten
 //

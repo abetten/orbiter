@@ -1,4 +1,4 @@
-// action_on_grassmannian.C
+// action_on_grassmannian.cpp
 //
 // Anton Betten
 // July 20, 2009

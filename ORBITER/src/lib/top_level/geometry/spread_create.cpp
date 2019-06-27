@@ -1,4 +1,4 @@
-// spread_create.C
+// spread_create.cpp
 // 
 // Anton Betten
 //

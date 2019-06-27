@@ -1,9 +1,9 @@
-// linear_set_main.C
+// linear_set_main.cpp
 // 
 // Anton Betten
 // July 8, 2014
 //
-// based on subspace_orbits.C
+// based on subspace_orbits.cpp
 //
 //
 

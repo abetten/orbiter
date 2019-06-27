@@ -1,4 +1,4 @@
-// conic.C
+// conic.cpp
 // 
 // Anton Betten
 // March 4, 2010

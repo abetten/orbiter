@@ -1,9 +1,10 @@
-// poset_classification_io.C
+// poset_classification_io.cpp
 //
 // Anton Betten
-// moved here from DISCRETA/snakesandladders.C
+//
+// moved here from DISCRETA/snakesandladders.cpp
 // December 27, 2008
-// renamed from io.C to poset_classification_io.C Aug 24, 2011
+// renamed from io.cpp to poset_classification_io.cpp Aug 24, 2011
 
 
 #include "foundations/foundations.h"
@@ -723,7 +724,7 @@ void poset_classification::housekeeping(int i,
 
 		write_treefile_and_draw_tree(fname_base, i, 
 			xmax, ymax, radius, f_embedded, 0 /*verbose_level - 1*/);
-			// in poset_classification_draw.C
+			// in poset_classification_draw.cpp
 
 		if (f_v) {
 			cout << "poset_classification::housekeeping "

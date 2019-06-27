@@ -1,4 +1,4 @@
-// analyze_projective_code.C
+// analyze_projective_code.cpp
 // 
 // Anton Betten
 // 7/16/2011

@@ -1,4 +1,4 @@
-// mp_graphics.C
+// mp_graphics.cpp
 //
 // Anton Betten
 // March 6, 2003

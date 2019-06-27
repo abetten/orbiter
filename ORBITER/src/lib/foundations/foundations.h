@@ -39,7 +39,7 @@
 // added class rainbow_cliques: October 28, 2012
 // added class set_of_sets: November 30, 2012
 // added class decomposition: December 1, 2012
-// added file dlx.C: April 7, 2013
+// added file dlx.cpp: April 7, 2013
 // added class spreadsheet: March 15, 2013
 // added class andre_construction andre_construction: June 2, 2013
 // added class andre_construction_point_element: June 2, 2013
@@ -148,7 +148,7 @@
 
 #define HAS_NAUTY 1
 
-// need to be defined in nauty_interface.C also.
+// need to be defined in nauty_interface.cpp also.
 
 
 #ifdef SYSTEMWINDOWS
@@ -426,7 +426,7 @@ typedef enum diophant_equation_type diophant_equation_type;
 // for otherwise we would create incomplete type compile errors:
 
 // #############################################################################
-// int_matrix.C:
+// int_matrix.cpp:
 // #############################################################################
 
 
@@ -456,7 +456,7 @@ public:
 };
 
 // #############################################################################
-// longinteger_object.C:
+// longinteger_object.cpp:
 // #############################################################################
 
 extern int longinteger_f_print_scientific;

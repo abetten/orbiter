@@ -1,4 +1,4 @@
-// action_on_k_subsets.C
+// action_on_k_subsets.cpp
 //
 // Anton Betten
 // May 15, 2012

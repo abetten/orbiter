@@ -1,9 +1,9 @@
-// action_indexing_cosets.C
+// action_indexing_cosets.cpp
 //
 // Anton Betten
 // July 8, 2003
 //
-// moved here from action.C: June 6, 2016
+// moved here from action.cpp: June 6, 2016
 
 #include "foundations/foundations.h"
 #include "group_actions.h"

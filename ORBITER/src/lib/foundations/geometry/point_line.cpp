@@ -1,4 +1,4 @@
-// point_line.C
+// point_line.cpp
 // Anton Betten
 //
 // started: ?

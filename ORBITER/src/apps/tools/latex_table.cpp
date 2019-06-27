@@ -1,4 +1,4 @@
-// latex_table.C
+// latex_table.cpp
 // 
 // Anton Betten
 // October 27, 2016

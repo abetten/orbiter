@@ -1,4 +1,4 @@
-// translation_plane_via_andre_model.C
+// translation_plane_via_andre_model.cpp
 // 
 // Anton Betten
 // June 2, 2013
@@ -405,7 +405,6 @@ void translation_plane_via_andre_model::init(
 		f_pic, 
 		f_include_tda_scheme, 
 		verbose_level - 4);
-		// TOP_LEVEL/incidence_structure.C
 
 
 

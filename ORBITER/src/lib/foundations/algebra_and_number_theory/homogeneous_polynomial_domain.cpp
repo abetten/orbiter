@@ -1,4 +1,4 @@
-// homogeneous_polynomial_domain.C
+// homogeneous_polynomial_domain.cpp
 //
 // Anton Betten
 //

@@ -1,4 +1,4 @@
-// isomorph_global.C
+// isomorph_global.cpp
 // 
 // Anton Betten
 // started Aug 1, 2012
@@ -63,7 +63,6 @@ void isomorph_read_statistic_files(
 		}
 	Iso.read_data_files_for_starter(level,
 		prefix_classify, verbose_level);
-		// in isomorph.C
 	
 
 
@@ -206,7 +205,6 @@ void isomorph_read_statistic_files(
 
 	Iso.count_solutions(nb_files, fname,
 			f_get_statistics, verbose_level);
-			// in isomorph_files.C
 			//
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
@@ -214,7 +212,6 @@ void isomorph_read_statistic_files(
 	registry_dump_sorted_by_size();
 		
 	Iso.build_up_database(nb_files, fname, verbose_level);
-			// in isomorph_files.C
 #endif
 
 	}
@@ -259,7 +256,6 @@ void isomorph_build_db(
 	
 	Iso.read_data_files_for_starter(level, prefix_classify,
 			verbose_level);
-		// in isomorph.C, used gen->read_level_file_binary
 	
 	for (i = 0; i <= level; i++) {
 		if (f_v) {
@@ -328,7 +324,6 @@ void isomorph_read_solution_files(
 		}
 	Iso.read_data_files_for_starter(level,
 			prefix_classify, verbose_level);
-		// in isomorph.C
 	
 
 
@@ -341,7 +336,6 @@ void isomorph_read_solution_files(
 			f_has_final_test_function,
 			final_test_function, final_test_data,
 			verbose_level);
-			// in isomorph_files.C
 			//
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
@@ -352,7 +346,6 @@ void isomorph_read_solution_files(
 		f_has_final_test_function,
 		final_test_function, final_test_data,
 		verbose_level);
-			// in isomorph_files.C
 	
 
 	}
@@ -408,7 +401,7 @@ void isomorph_init_solutions_from_memory(
 		}
 	Iso.read_data_files_for_starter(level,
 			prefix_classify, 0/*verbose_level - 4*/);
-		// in isomorph.C
+
 	if (f_v) {
 		cout << "isomorph_init_solutions_from_memory "
 				"after Iso.read_data_files_for_starter" << endl;
@@ -422,7 +415,6 @@ void isomorph_init_solutions_from_memory(
 		}
 	//int f_get_statistics = FALSE;
 	Iso.init_solutions(Solutions, Nb_sol, verbose_level - 1);
-			// in isomorph_files.C
 			//
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
@@ -487,7 +479,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		}
 	Iso.read_data_files_for_starter(level, prefix_classify,
 			0/*verbose_level - 4*/);
-		// in isomorph.C
+
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_clique_"
 				"finder_case_by_case after Iso.read_data_files_"
@@ -505,7 +497,6 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 	Iso.count_solutions_from_clique_finder_case_by_case(nb_files,
 			list_of_cases, fname, /*f_get_statistics,*/
 			verbose_level - 1);
-			// in isomorph_files.C
 			//
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
@@ -519,7 +510,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		}
 	Iso.read_solutions_from_clique_finder_case_by_case(nb_files,
 			list_of_cases, fname, verbose_level - 1);
-			// in isomorph_files.C
+
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_clique_finder_"
 				"case_by_case after Iso.read_solutions_from_clique_"
@@ -582,7 +573,7 @@ void isomorph_read_solution_files_from_clique_finder(
 		}
 	Iso.read_data_files_for_starter(level, prefix_classify,
 			0/*verbose_level - 4*/);
-		// in isomorph.C
+
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_clique_finder "
 				"after Iso.read_data_files_for_starter" << endl;
@@ -597,7 +588,6 @@ void isomorph_read_solution_files_from_clique_finder(
 	//int f_get_statistics = FALSE;
 	Iso.count_solutions_from_clique_finder(nb_files, fname,
 			verbose_level - 1);
-			// in isomorph_files.C
 			//
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
@@ -610,7 +600,6 @@ void isomorph_read_solution_files_from_clique_finder(
 		}
 	Iso.read_solutions_from_clique_finder(nb_files,
 			fname, verbose_level - 1);
-			// in isomorph_files.C
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_clique_finder "
 				"after Iso.read_solutions_from_clique_finder" << endl;
@@ -1407,7 +1396,6 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 			Sorting.rearrange_subset(Iso->size, Iso->level, data,
 				orbit_reps + u * Iso->level, rearranged_set,
 				0/*verbose_level - 3*/);
-				// in GALOIS/sorting.C
 
 
 			//int_vec_print(cout, rearranged_set, Iso.size);

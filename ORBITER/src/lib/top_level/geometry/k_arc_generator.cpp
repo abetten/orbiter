@@ -1,4 +1,4 @@
-// k_arc_generator.C
+// k_arc_generator.cpp
 // 
 // Anton Betten
 //

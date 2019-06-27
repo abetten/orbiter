@@ -1,4 +1,4 @@
-// vector_hashing.C
+// vector_hashing.cpp
 //
 // Anton Betten
 //

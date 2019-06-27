@@ -1,4 +1,4 @@
-// orbit_of_equations.C
+// orbit_of_equations.cpp
 // 
 // Anton Betten
 // May 29, 2018

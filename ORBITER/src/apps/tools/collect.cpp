@@ -1,4 +1,4 @@
-// collect.C
+// collect.cpp
 //
 // Anton Betten
 // May 27, 2018

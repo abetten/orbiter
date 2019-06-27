@@ -1,4 +1,4 @@
-// ovoid.C
+// ovoid.cpp
 // 
 // Anton Betten
 // May 16, 2011

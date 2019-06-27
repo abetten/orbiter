@@ -1,4 +1,4 @@
-// subgroup.C
+// subgroup.cpp
 //
 // Anton Betten
 // April 29, 2017

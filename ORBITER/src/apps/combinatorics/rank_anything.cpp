@@ -1,4 +1,4 @@
-// rank_anything.C
+// rank_anything.cpp
 // 
 // Anton Betten
 // March 13, 2017

@@ -1,4 +1,4 @@
-// classification.C
+// classification.cpp
 // 
 // Anton Betten
 // September 23, 2017

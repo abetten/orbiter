@@ -1,4 +1,4 @@
-// action_on_sign.C
+// action_on_sign.cpp
 //
 // Anton Betten
 // August 12, 2016

@@ -508,7 +508,7 @@ void surface_domain::init(finite_field *F, int verbose_level)
 		cout << "surface::init after "
 				"create_half_double_sixes" << endl;
 		}
-	print_half_double_sixes_in_GAP();
+	//print_half_double_sixes_in_GAP();
 
 	if (f_v) {
 		cout << "surface::init before "

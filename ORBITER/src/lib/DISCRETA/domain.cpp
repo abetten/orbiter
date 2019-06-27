@@ -1,4 +1,4 @@
-// domain.C
+// domain.cpp
 //
 // Anton Betten
 // 11.06.2000

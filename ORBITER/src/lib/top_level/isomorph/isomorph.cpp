@@ -1,9 +1,9 @@
-// isomorph.C
+// isomorph.cpp
 // 
 // Anton Betten
 // started 2007
-// moved here from reader2.C: 3/22/09
-// renamed isomorph.C from global.C: 7/14/11
+// moved here from reader2.cpp: 3/22/09
+// renamed isomorph.cpp from global.cpp: 7/14/11
 //
 // 
 //

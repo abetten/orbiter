@@ -1,4 +1,4 @@
-// split_spreadsheet.C
+// split_spreadsheet.cpp
 //
 // Anton Betten
 // September 11, 2018

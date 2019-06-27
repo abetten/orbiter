@@ -1,4 +1,4 @@
-// action_on_flags.C
+// action_on_flags.cpp
 //
 // Anton Betten
 // May 21, 2016

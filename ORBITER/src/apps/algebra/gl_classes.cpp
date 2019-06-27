@@ -1,4 +1,4 @@
-// gl_classes.C
+// gl_classes.cpp
 //
 // Anton Betten
 // October 21, 2013

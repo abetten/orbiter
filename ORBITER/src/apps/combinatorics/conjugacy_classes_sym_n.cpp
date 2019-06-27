@@ -1,4 +1,4 @@
-// conjugacy_classes_sym_n.C
+// conjugacy_classes_sym_n.cpp
 //
 // Anton Betten
 // Dec 17, 2015

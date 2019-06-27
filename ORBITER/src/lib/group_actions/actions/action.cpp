@@ -1,4 +1,4 @@
-// action.C
+// action.cpp
 //
 // Anton Betten
 // July 8, 2003

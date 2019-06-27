@@ -1,8 +1,8 @@
-// poset_classification_classify.C
+// poset_classification_classify.cpp
 //
 // Anton Betten
 //
-// moved here from poset_classification.C
+// moved here from poset_classification.cpp
 // July 19, 2014
 
 

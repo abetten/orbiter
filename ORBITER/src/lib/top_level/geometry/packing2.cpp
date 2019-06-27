@@ -1,9 +1,9 @@
-// packing2.C
+// packing2.cpp
 // 
 // Anton Betten
 // Feb 6, 2013
 //
-// moved here from packing.C: Apr 25, 2016
+// moved here from packing.cpp: Apr 25, 2016
 // 
 //
 //
@@ -592,7 +592,7 @@ void packing::report_isomorphism_type(
 				"action on the set (in data)" << endl;
 		}
 	Iso->induced_action_on_set_basic(Stab, data, verbose_level - 2);
-		// at the bottom of isomorph_testing.C
+
 	if (f_v) {
 		longinteger_object go;
 			

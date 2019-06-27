@@ -1,4 +1,4 @@
-// polar.C
+// polar.cpp
 // 
 // Anton Betten
 // started: Feb 8, 2010

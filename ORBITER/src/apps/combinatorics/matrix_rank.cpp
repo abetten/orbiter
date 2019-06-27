@@ -1,4 +1,4 @@
-// matrix_rank.C
+// matrix_rank.cpp
 // 
 // Anton Betten
 //

@@ -1,4 +1,4 @@
-// action_on_factor_space.C
+// action_on_factor_space.cpp
 //
 // Anton Betten
 // Jan 18, 2010

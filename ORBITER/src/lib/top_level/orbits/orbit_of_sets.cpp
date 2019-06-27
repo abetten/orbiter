@@ -1,4 +1,4 @@
-// orbit_of_sets.C
+// orbit_of_sets.cpp
 // 
 // Anton Betten
 // Feb 6, 2013

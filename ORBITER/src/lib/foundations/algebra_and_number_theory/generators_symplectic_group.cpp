@@ -1,4 +1,4 @@
-// generators_symplectic_group.C
+// generators_symplectic_group.cpp
 //
 // Anton Betten
 // March 29, 2016

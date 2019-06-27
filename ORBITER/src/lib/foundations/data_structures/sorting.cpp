@@ -1,8 +1,8 @@
-// sorting.C
+// sorting.cpp
 //
 // Anton Betten
 //
-// moved out of util.C: 11/12/07
+// moved out of util.cpp: 11/12/07
 
 
 

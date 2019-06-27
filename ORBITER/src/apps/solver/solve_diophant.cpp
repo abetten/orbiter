@@ -1,4 +1,4 @@
-// solve_diophant.C
+// solve_diophant.cpp
 // 
 // Anton Betten
 // May 17, 2015

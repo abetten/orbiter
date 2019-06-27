@@ -1,4 +1,4 @@
-// perm_group.C
+// perm_group.cpp
 //
 // Anton Betten
 //

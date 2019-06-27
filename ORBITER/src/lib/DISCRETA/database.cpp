@@ -1,4 +1,4 @@
-// database.C
+// database.cpp
 //
 // Anton Betten
 // 27.11.2000

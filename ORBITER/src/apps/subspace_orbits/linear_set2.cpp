@@ -1,4 +1,4 @@
-// linear_set2.C
+// linear_set2.cpp
 // 
 // Anton Betten
 // July 15, 2014

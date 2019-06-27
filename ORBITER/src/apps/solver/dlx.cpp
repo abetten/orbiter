@@ -1,4 +1,4 @@
-// dlx.C
+// dlx.cpp
 //
 // Anton Betten
 // April 7, 2013

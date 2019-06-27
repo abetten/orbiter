@@ -1,4 +1,4 @@
-// compute_stabilizer.C
+// compute_stabilizer.cpp
 // 
 // Anton Betten
 // started Dec 28, 2014

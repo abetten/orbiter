@@ -1,4 +1,4 @@
-// number_partition.C
+// number_partition.cpp
 //
 // Anton Betten
 // 23.03.2000

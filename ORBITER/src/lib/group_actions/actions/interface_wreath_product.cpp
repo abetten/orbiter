@@ -1,4 +1,4 @@
-// interface_wreath_product_group.C
+// interface_wreath_product_group.cpp
 //
 // Anton Betten
 //

@@ -1,4 +1,4 @@
-// perm_group_gens.C
+// perm_group_gens.cpp
 //
 // Anton Betten
 // 27.07.2000

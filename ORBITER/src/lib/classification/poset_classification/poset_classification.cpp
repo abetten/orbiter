@@ -1,4 +1,4 @@
-// poset_classification.C
+// poset_classification.cpp
 //
 // Anton Betten
 // December 29, 2003

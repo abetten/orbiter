@@ -1,4 +1,4 @@
-// transpose.C
+// transpose.cpp
 // 
 // Anton Betten
 // 1/2/13

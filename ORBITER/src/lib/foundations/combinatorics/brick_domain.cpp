@@ -1,4 +1,4 @@
-// brick_domain.C
+// brick_domain.cpp
 //
 // Anton Betten
 //

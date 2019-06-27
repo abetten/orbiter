@@ -1,4 +1,4 @@
-// cc2widor.C
+// cc2widor.cpp
 // Anton Betten
 //
 // converts a "cc" file to a "widor" file

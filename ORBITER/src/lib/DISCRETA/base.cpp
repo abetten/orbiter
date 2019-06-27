@@ -1,4 +1,4 @@
-// base.C
+// base.cpp
 //
 // Anton Betten
 // 18.12.1998

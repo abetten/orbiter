@@ -1,4 +1,4 @@
-// mem_object_registry_entry.C
+// mem_object_registry_entry.cpp
 //
 // Anton Betten
 //

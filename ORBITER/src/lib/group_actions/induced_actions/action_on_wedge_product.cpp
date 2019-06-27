@@ -1,4 +1,4 @@
-// action_on_wedge_product.C
+// action_on_wedge_product.cpp
 //
 // Anton Betten
 // Jan 26, 2010

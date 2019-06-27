@@ -1,4 +1,4 @@
-// draw_colored_graph.C
+// draw_colored_graph.cpp
 // 
 // Anton Betten
 // November 25, 2014

@@ -1,4 +1,4 @@
-// action_by_conjugation.C
+// action_by_conjugation.cpp
 //
 // Anton Betten
 // January 11, 2009

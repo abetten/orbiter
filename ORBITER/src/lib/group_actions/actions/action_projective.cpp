@@ -23,9 +23,9 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 	int verbose_level)
 // assuming we are in a linear action.
-// added 2/28/2011, called from analyze.C
-// November 17, 2014 moved here from TOP_LEVEL/extra.C
-// December 31, 2014, moved here from projective_space.C
+// added 2/28/2011, called from analyze.cpp
+// November 17, 2014 moved here from TOP_LEVEL/extra.cpp
+// December 31, 2014, moved here from projective_space.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

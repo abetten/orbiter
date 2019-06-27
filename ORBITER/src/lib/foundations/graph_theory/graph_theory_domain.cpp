@@ -695,7 +695,6 @@ int graph_theory_domain::is_association_scheme(
 	int *&colors, int &nb_colors, int verbose_level)
 // color_graph[n * n]
 // added Dec 22, 2010.
-//Originally in BLT_ANALYZE/analyze_plane_invariant.C
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

@@ -1,10 +1,10 @@
-// isomorph_files.C
+// isomorph_files.cpp
 // 
 // Anton Betten
 // started 2007
 //
-// moved here from global.C: Nov 1, 2009
-// renamed isomorph_files.C from global_solution.C
+// moved here from global.cpp: Nov 1, 2009
+// renamed isomorph_files.cpp from global_solution.cpp
 //
 // 
 //
@@ -322,7 +322,6 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 			nb_solutions, 
 			Solutions, size /* solution_size */, 
 			verbose_level - 2);
-			// GALOIS/util.C
 
 		if (f_vv) {
 			cout << "isomorph::read_solutions_from_clique_finder_"
@@ -444,7 +443,6 @@ void isomorph::read_solutions_from_clique_finder(
 			nb_solutions, case_nb, nb_cases, 
 			Solutions, size /* solution_size */, 
 			verbose_level - 2);
-			// GALOIS/util.C
 
 		if (f_vv) {
 			cout << "isomorph::read_solutions_from_clique_finder "
@@ -542,7 +540,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 		add_solution_to_database(data, 
 			u, id, no, nb_solutions_total, hs, datref,
 			print_mod, verbose_level - 2);
-			// in isomorph_database.C
+			// in isomorph_database.cpp
 			
 		id_to_datref[id] = datref;
 		id_to_hash[id] = hs;
@@ -1675,7 +1673,7 @@ void isomorph::print_isomorphism_types(int f_select,
 					"induced action on the set (in data)" << endl;
 			}
 		induced_action_on_set(Stab, data, verbose_level);
-			// at the bottom of isomorph_testing.C
+
 		if (f_v) {
 			longinteger_object go;
 			

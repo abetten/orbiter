@@ -1,4 +1,4 @@
-// all_k_subsets.C
+// all_k_subsets.cpp
 // 
 // Anton Betten
 // January 28, 2015

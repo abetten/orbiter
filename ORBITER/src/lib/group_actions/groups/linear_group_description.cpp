@@ -1,4 +1,4 @@
-// linear_group_description.C
+// linear_group_description.cpp
 //
 // Anton Betten
 // December 25, 2015

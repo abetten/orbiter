@@ -1,4 +1,4 @@
-// cayley.C
+// cayley.cpp
 //
 // Anton Betten
 // February 19, 2015

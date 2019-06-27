@@ -1,4 +1,4 @@
-// nauty.C
+// nauty.cpp
 // 
 // Anton Betten
 // Jul 16, 2016

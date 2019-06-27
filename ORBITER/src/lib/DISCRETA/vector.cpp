@@ -1,4 +1,4 @@
-// vector.C
+// vector.cpp
 //
 // Anton Betten
 // 18.12.1998

@@ -1,4 +1,4 @@
-// classify_bitvectors.C
+// classify_bitvectors.cpp
 //
 // Anton Betten
 //

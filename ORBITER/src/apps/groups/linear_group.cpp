@@ -801,7 +801,7 @@ int main(int argc, const char **argv)
 					FALSE /* f_has_print_function */,
 					NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
 					NULL /* void *print_function_data*/,
-					TRUE /* f_show_orbit_decomposition */,
+					FALSE /* f_show_orbit_decomposition */,
 					TRUE /* f_show_stab */,
 					FALSE /* f_save_stab */,
 					FALSE /* f_show_whole_orbit*/);

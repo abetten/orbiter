@@ -1,4 +1,4 @@
-// surface_with_action.C
+// surface_with_action.cpp
 // 
 // Anton Betten
 //
@@ -604,7 +604,7 @@ void surface_with_action::arc_lifting_and_classify(
 {
 	int f_v = (verbose_level >= 1);
 	int q, j;
-	sorting Sorting;
+	//sorting Sorting;
 
 
 	if (f_v) {
@@ -905,7 +905,7 @@ void surface_with_action::arc_lifting_and_classify(
 		int *Clebsch_coeff;
 		int Arc[6];
 		int Blown_up_lines[6];
-		int orbit_at_level;
+		//int orbit_at_level;
 		
 		line_idx[0] = line1;
 		line_idx[1] = line2;
@@ -1107,20 +1107,27 @@ void surface_with_action::arc_lifting_and_classify(
 			SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
 			}
 
+		int idx;
 
+
+#if 0
 		Six_arcs->Gen->gen->identify(Arc, 6, transporter,
 				orbit_at_level, 0 /*verbose_level */);
 
 
 	
 
-		int idx;
 			
 		if (!Sorting.int_vec_search(Six_arcs->Not_on_conic_idx,
 			Six_arcs->nb_arcs_not_on_conic, orbit_at_level, idx)) {
 			cout << "could not find orbit" << endl;
 			exit(1);
 			}
+#else
+		Six_arcs->recognize(Arc, transporter,
+				idx /* orbit_not_on_conic_idx */, verbose_level - 2);
+
+#endif
 		f_deleted[idx] = TRUE;
 
 		Arc_identify[nb_surfaces *

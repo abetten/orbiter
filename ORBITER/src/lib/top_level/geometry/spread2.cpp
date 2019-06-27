@@ -1,13 +1,13 @@
-// spread2.C
+// spread2.cpp
 // 
 // Anton Betten
 // November 17, 2009
 //
 // 
 //
-// moved here from translation_plane.C: April 23, 2013
+// moved here from translation_plane.cpp: April 23, 2013
 // moved to TOP_LEVEL: November 2, 2013
-// renamed to spread2.C from translation_plane2.C: March 25, 2018
+// renamed to spread2.cpp from translation_plane2.cpp: March 25, 2018
 //
 //
 
@@ -2362,7 +2362,6 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 		F->PG_element_unrank_modified(vec1, 1, n, the_point);
 		F->PG_element_normalize_from_front(vec1, 1, n);
 		pivot = int_vec_find_first_nonzero_entry(vec1, n);
-			// GALOIS/util.C
 
 		for (i = 0; i < order + 1; i++) {
 			if (Sorting.int_vec_search(Pts[i], nb_points, the_point, idx)) {
@@ -2402,7 +2401,6 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 			// Afterwards, the matrix is k x (n - 1)
 
 			int_matrix_delete_column_in_place(Mtx, k, n, pivot);
-				// GALOIS/util.C
 #endif
 
 			if (f_vv) {

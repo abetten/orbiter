@@ -1,4 +1,4 @@
-// random.C
+// random.cpp
 // 
 // Anton Betten
 // January 22, 2016

@@ -1,4 +1,4 @@
-// colored_graph.C
+// colored_graph.cpp
 // 
 // Anton Betten
 // December 1, 2017

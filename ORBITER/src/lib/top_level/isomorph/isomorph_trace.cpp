@@ -1,9 +1,9 @@
-// isomorph_trace.C
+// isomorph_trace.cpp
 // 
 // Anton Betten
 // Oct 21, 2008
 //
-// moved here from isomorph_database.C 5/24/12
+// moved here from isomorph_database.cpp 5/24/12
 //
 //
 

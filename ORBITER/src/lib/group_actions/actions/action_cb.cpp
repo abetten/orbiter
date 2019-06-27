@@ -1,4 +1,4 @@
-// action_cb.C
+// action_cb.cpp
 //
 // Anton Betten
 // 1/1/2009
@@ -532,7 +532,6 @@ void action::element_print_as_permutation_with_offset(
 		perm_print_cycles_sorted_by_length_offset(ost, degree, v, offset,
 			f_do_it_anyway_even_for_big_degree, f_print_cycles_of_length_one,
 			verbose_level);
-			// in action_global.C
 		}
 #endif
 

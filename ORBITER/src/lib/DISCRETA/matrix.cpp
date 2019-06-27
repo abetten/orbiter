@@ -1,4 +1,4 @@
-// matrix.C
+// matrix.cpp
 //
 // Anton Betten
 // 10.11.1999

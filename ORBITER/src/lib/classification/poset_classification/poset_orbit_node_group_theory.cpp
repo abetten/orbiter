@@ -1,4 +1,4 @@
-// poset_orbit_node_group_theory.C
+// poset_orbit_node_group_theory.cpp
 //
 // Anton Betten
 //

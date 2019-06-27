@@ -1,4 +1,4 @@
-// direct_product.C
+// direct_product.cpp
 //
 // Anton Betten
 //

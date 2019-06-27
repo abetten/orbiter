@@ -1,4 +1,4 @@
-// subprimitive.C
+// subprimitive.cpp
 // 
 // Anton Betten
 //

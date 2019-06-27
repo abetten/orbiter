@@ -1,4 +1,4 @@
-// johnson.C
+// johnson.cpp
 // 
 // Anton Betten
 // January 20, 2015

@@ -1,4 +1,4 @@
-// plot.C
+// plot.cpp
 //
 // Anton Betten
 // July 18, 2012

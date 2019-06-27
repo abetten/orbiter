@@ -1,4 +1,4 @@
-// sims.C
+// sims.cpp
 //
 // Anton Betten
 // December 21, 2003
@@ -1270,7 +1270,7 @@ void sims::element_from_path(int *elt, int verbose_level)
 }
 
 void sims::element_from_path_inv(int *elt)
-// very specialized routine, used in backtrack.C
+// very specialized routine, used in backtrack.cpp
 // action_is_minimal_recursion
 // used coset_rep_inv instead of coset_rep,
 // multiplies left-to-right

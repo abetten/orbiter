@@ -1,4 +1,4 @@
-// packing.C
+// packing.cpp
 // 
 // Anton Betten
 // Feb 6, 2013
@@ -366,7 +366,6 @@ void packing::load_input_spreads(int &N,
 
 		T->A->stabilizer_of_spread_representative(q,
 				T->k, no, gens, stab_order, 0 /*verbose_level*/);
-			// ACTION/action.C
 
 
 		f_do_it = FALSE;	

@@ -1,4 +1,4 @@
-// exact_cover.C
+// exact_cover.cpp
 // 
 // Anton Betten
 //
