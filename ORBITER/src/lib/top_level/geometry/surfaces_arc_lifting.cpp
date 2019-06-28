@@ -531,7 +531,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				SG_induced->lifted_group_on_hyperplane_W0_fixing_two_lines(
 					SG,
 					Surf->P, line1, line2,
-					verbose_level - 10);
+					verbose_level - 2);
 				if (f_v) {
 					cout << "surfaces_arc_lifting::downstep "
 							"after SG_induced->lifted_group_on_"
@@ -1304,7 +1304,7 @@ void surfaces_arc_lifting::upstep3(
 	}
 
 	Surf_A->Surf->Gr3->unrank_embedded_subspace_int_here(Basis_pi,
-			tritangent_plane_rk, verbose_level - 5);
+			tritangent_plane_rk, 0 /*verbose_level - 5*/);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3" << endl;
@@ -1567,8 +1567,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 	nb_arcs = Six_arcs->Gen->gen->nb_orbits_at_level(6);
 
-	fp << "There are " << nb_arcs
-			<< " arcs.\\\\" << endl << endl;
+	fp << "There are " << nb_arcs << " arcs.\\\\" << endl << endl;
 
 	fp << "There are " << Six_arcs->nb_arcs_not_on_conic
 			<< " arcs not on a conic. "
