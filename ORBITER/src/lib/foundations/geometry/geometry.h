@@ -2474,7 +2474,8 @@ public:
 			int P1, int P2, int &line1, int &line2,
 			int verbose_level);
 	void lifted_action_on_hyperplane_W0_fixing_two_lines(
-			int *A3, int line1, int line2,
+			int *A3, int f_semilinear, int frobenius,
+			int line1, int line2,
 			int *A4,
 			int verbose_level);
 	void andre_preimage(projective_space *P4,

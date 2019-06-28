@@ -384,7 +384,7 @@ int main(int argc, char **argv)
 			verbose_level);
 		}
 		cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
+	} // if f_arc
 	else if (f_classification) {
 		cout << "processing classification" << endl;
 		if (f_loop) {
@@ -435,7 +435,7 @@ int main(int argc, char **argv)
 						<< " nb_sol_overall=" << nb_sol_overall << endl;
 				}
 			cout << "nb_sol_overall = " << nb_sol_overall << endl;
-			}
+		} // if f_loop
 		else {
 			int nb_sol_total = 0;
 			

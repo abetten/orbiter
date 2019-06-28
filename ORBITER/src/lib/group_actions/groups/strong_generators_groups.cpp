@@ -3091,7 +3091,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 {
 	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
-	int A4[16];
+	int A4[17]; // one more in case of semilinear maps
 
 	if (f_v) {
 		cout << "strong_generators::lifted_group_on_"
@@ -3104,6 +3104,14 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 	gens->init(A);
 
 	int i;
+	int f_semilinear = FALSE;
+	int frobenius = 0;
+
+	f_semilinear = A->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines f_semilinear = " << f_semilinear << endl;
+	}
 
 	gens->allocate(SG_hyperplane->gens->len);
 	for (i = 0; i < SG_hyperplane->gens->len; i++) {
@@ -3120,10 +3128,22 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 					<< " before P->lifted_action_on_hyperplane_"
 							"W0_fixing_two_lines" << endl;
 			}
+		frobenius = SG_hyperplane->gens->ith(i)[9];
+		if (f_v) {
+			if (f_semilinear) {
+				cout << "strong_generators::lifted_group_on_"
+					"hyperplane_W0_fixing_two_lines lifting frobenius = " << frobenius << endl;
+			}
+		}
 		P->lifted_action_on_hyperplane_W0_fixing_two_lines(
-				SG_hyperplane->gens->ith(i), line1, line2,
+				SG_hyperplane->gens->ith(i),
+				f_semilinear, frobenius,
+				line1, line2,
 				A4,
 				verbose_level);
+		// in case of semilinear maps,
+		// A4[16] is set in lifted_action_on_hyperplane_W0_fixing_two_lines
+
 		if (f_v) {
 			cout << "strong_generators::lifted_group_on_"
 					"hyperplane_W0_fixing_two_lines lifting generator "
