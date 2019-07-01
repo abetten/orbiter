@@ -42,7 +42,9 @@ void six_arcs_not_on_a_conic::freeself()
 	null();
 }
 
-void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2, 
+void six_arcs_not_on_a_conic::init(finite_field *F,
+	action *A,
+	projective_space *P2,
 	int argc, const char **argv, 
 	int verbose_level)
 {
@@ -80,6 +82,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 				"before Gen->init" << endl;
 		}
 	Gen->init(F, 
+		A,
 		"" /* Gen->ECA->input_prefix */, 
 		"" /* Gen->ECA->base_fname */,
 		6 /* Gen->ECA->starter_size */, 

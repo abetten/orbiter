@@ -263,6 +263,7 @@ void arc_generator::main(int verbose_level)
 
 
 void arc_generator::init(finite_field *F,
+	action *A,
 	const char *starter_directory_name,
 	const char *base_fname,
 	int starter_size,  
@@ -296,14 +297,16 @@ void arc_generator::init(finite_field *F,
 		}
 
 	arc_generator::starter_size = starter_size;
+	arc_generator::A = A;
+	f_semilinear = A->is_semilinear_matrix_group();
+
 	
-	A = NEW_OBJECT(action);
+	//A = NEW_OBJECT(action);
 	A_on_lines = NEW_OBJECT(action);
 	AG = NEW_OBJECT(action_on_grassmannian);
 
 	
 
-	f_semilinear = TRUE;
 	
 	if (f_v) {
 		cout << "arc_generator::init" << endl;
@@ -312,9 +315,12 @@ void arc_generator::init(finite_field *F,
 	nb_points_total = Gg.nb_PG_elements(n, q); // q * q + q + 1;
 
 
+#if 0
+	f_semilinear = TRUE;
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
+#endif
 
 
 	int f_basis = TRUE;
@@ -324,6 +330,7 @@ void arc_generator::init(finite_field *F,
 		}
 	vector_ge *nice_gens;
 
+#if 0
 	A->init_projective_group(n + 1, F,
 			f_semilinear, f_basis,
 			nice_gens,
@@ -333,6 +340,7 @@ void arc_generator::init(finite_field *F,
 		cout << "arc_generator::init "
 				"after init_projective_group" << endl;
 		}
+#endif
 
 
 	

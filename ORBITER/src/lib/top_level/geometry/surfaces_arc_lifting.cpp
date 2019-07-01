@@ -121,14 +121,17 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"before Six_arcs->init" << endl;
 		}
-	Six_arcs->init(F, Surf->P2,
+	Six_arcs->init(F,
+		A3,
+		Surf->P2,
 		argc, argv,
 		verbose_level - 10);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"after Six_arcs->init" << endl;
 		cout << "surfaces_arc_lifting::init "
-				"Six_arcs->nb_arcs_not_on_conic = " << Six_arcs->nb_arcs_not_on_conic << endl;
+				"Six_arcs->nb_arcs_not_on_conic = "
+				<< Six_arcs->nb_arcs_not_on_conic << endl;
 		}
 
 
@@ -179,7 +182,7 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"before downstep" << endl;
 		}
-	downstep(verbose_level);
+	downstep(verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"after downstep" << endl;
@@ -189,21 +192,11 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"before upstep" << endl;
 		}
-	upstep(verbose_level);
+	upstep(verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"after upstep" << endl;
 		}
-
-#if 0
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init before report" << endl;
-		}
-	report(verbose_level);
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init report done" << endl;
-		}
-#endif
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init done" << endl;
@@ -227,7 +220,7 @@ void surfaces_arc_lifting::draw_poset_of_six_arcs(int verbose_level)
 		6 /* depth */, 0 /* data */,
 		TRUE /* f_embedded */,
 		FALSE /* f_sideways */,
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::draw_poset_of_six_arcs done" << endl;
 		}
@@ -415,20 +408,23 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				strong_generators *SG;
 
 				if (f_v) {
-					cout << "surfaces_arc_lifting::downstep computing partition stabilizer:" << endl;
+					cout << "surfaces_arc_lifting::downstep "
+							"computing partition stabilizer:" << endl;
 				}
 
 				longinteger_object full_group_order;
 
 				pair_orbit->Strong_gens->group_order(full_group_order);
 				if (f_v) {
-					cout << "surfaces_arc_lifting::downstep expecting a group of order "
+					cout << "surfaces_arc_lifting::downstep "
+							"expecting a group of order "
 							<< full_group_order << endl;
 				}
 				SG = Sch->stabilizer_orbit_rep(
 						A3,
 						full_group_order,
-						orbit_on_partition_idx, verbose_level - 5);
+						orbit_on_partition_idx,
+						verbose_level - 5);
 
 				int Arc6[6];
 				int arc[6];
@@ -599,8 +595,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 		int orbit_on_pairs_idx, nb_orbits_on_pairs;
 		int downstep_secondary_orbit = 0;
 
-		nb_orbits_on_pairs = T->
-				Orbits_on_pairs->nb_orbits_at_level(2);
+		nb_orbits_on_pairs = T->Orbits_on_pairs->nb_orbits_at_level(2);
 
 		for (orbit_on_pairs_idx = 0;
 				orbit_on_pairs_idx < nb_orbits_on_pairs;
@@ -609,8 +604,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			int orbit_on_partition_idx;
 			int nb_partition_orbits;
 
-			nb_partition_orbits = T->
-					Table_orbits_on_partition[orbit_on_pairs_idx].nb_orbits_on_partition;
+			nb_partition_orbits = T->Table_orbits_on_partition[orbit_on_pairs_idx].nb_orbits_on_partition;
 
 
 			schreier *Sch;
@@ -641,17 +635,30 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 	if (f_v) {
 		int f;
 		cout << "surfaces_arc_lifting::downstep "
-				"arc_idx : flag_orbit_fst[] : flag_orbit_len[]" << endl;
-		for (arc_idx = 0; arc_idx < Six_arcs->nb_arcs_not_on_conic; arc_idx++) {
-			cout << arc_idx << " : " << flag_orbit_fst[arc_idx] << " : " << flag_orbit_len[arc_idx] << endl;
+				"arc_idx : flag_orbit_fst[] : "
+				"flag_orbit_len[]" << endl;
+		for (arc_idx = 0;
+				arc_idx < Six_arcs->nb_arcs_not_on_conic;
+				arc_idx++) {
+
+			cout << arc_idx << " : " << flag_orbit_fst[arc_idx]
+				<< " : " << flag_orbit_len[arc_idx] << endl;
 		}
+
 		cout << "surfaces_arc_lifting::downstep "
-				"i : flag_orbit_on_arcs_not_on_a_conic_idx[] : flag_orbit_on_pairs_idx[] : flag_orbit_on_partition_idx[]" << endl;
+				"i : flag_orbit_on_arcs_not_on_a_conic_idx[] : "
+				"flag_orbit_on_pairs_idx[] : "
+				"flag_orbit_on_partition_idx[]" << endl;
 		for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
-			cout << f << " : " << flag_orbit_on_arcs_not_on_a_conic_idx[f] << " : " << flag_orbit_on_pairs_idx[f] << " : " << flag_orbit_on_partition_idx[f] << endl;
+			cout << f << " : " << flag_orbit_on_arcs_not_on_a_conic_idx[f]
+				<< " : " << flag_orbit_on_pairs_idx[f] << " : "
+				<< flag_orbit_on_partition_idx[f] << endl;
 		}
-		cout << "number of arcs not on a conic = " << Six_arcs->nb_arcs_not_on_conic << endl;
-		cout << "number of flag orbits = " << Flag_orbits->nb_flag_orbits << endl;
+		cout << "number of arcs not on a conic = "
+				<< Six_arcs->nb_arcs_not_on_conic << endl;
+
+		cout << "number of flag orbits = "
+				<< Flag_orbits->nb_flag_orbits << endl;
 
 	}
 
@@ -666,6 +673,8 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 void surfaces_arc_lifting::upstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	int f, f2, po, so, i;
 	int *f_processed;
 	int nb_processed;
@@ -709,6 +718,10 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 	int *Elt_beta1;
 	int *Elt_beta2;
 	int *Elt_beta3;
+	int *Elt_T1;
+	int *Elt_T2;
+	int *Elt_T3;
+	int *Elt_T4;
 
 
 	Elt_alpha1 = NEW_int(Surf_A->A->elt_size_in_int);
@@ -716,6 +729,10 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 	Elt_beta1 = NEW_int(Surf_A->A->elt_size_in_int);
 	Elt_beta2 = NEW_int(Surf_A->A->elt_size_in_int);
 	Elt_beta3 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_T1 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_T2 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_T3 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_T4 = NEW_int(Surf_A->A->elt_size_in_int);
 
 
 	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
@@ -732,7 +749,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 					(double) Flag_orbits->nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining n e w orbit "
+			cout << "surfaces_arc_lifting::upstep Defining surface "
 					<< Flag_orbits->nb_primary_orbits_upper
 					<< " from flag orbit " << f << " / "
 					<< Flag_orbits->nb_flag_orbits
@@ -774,7 +791,8 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 			}
 
 		SO->init(Surf_A->Surf, Lines, eqn,
-				FALSE /* f_find_double_six_and_rearrange_lines */, verbose_level - 2);
+				FALSE /* f_find_double_six_and_rearrange_lines */,
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting::upstep after SO->init" << endl;
@@ -783,6 +801,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 		vector_ge *coset_reps;
 		int nb_coset_reps;
 		int tritangent_plane_idx;
+		int upstep_idx;
 
 		coset_reps = NEW_OBJECT(vector_ge);
 		coset_reps->init(Surf_A->A);
@@ -805,13 +824,15 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 			}
 
 		nb_coset_reps = 0;
-		for (tritangent_plane_idx = 0; tritangent_plane_idx < 45; tritangent_plane_idx++) {
+		for (tritangent_plane_idx = 0;
+				tritangent_plane_idx < 45;
+				tritangent_plane_idx++) {
 
 			if (f_v) {
 				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
-						<< ", upstep tritangent_plane_idx=" << tritangent_plane_idx << " / 45" << endl;
+					<< ", upstep "
+					"tritangent_plane_idx=" << tritangent_plane_idx << " / 45" << endl;
 				}
-			//int f2;
 
 			int three_lines_idx[3];
 			int three_lines[3];
@@ -823,9 +844,11 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 			for (i = 0; i < 3; i++) {
 				three_lines[i] = Lines[three_lines_idx[i]];
 			}
-			if (f_v) {
+			if (f_vv) {
 				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
-						<< ", upstep tritangent_plane_idx=" << tritangent_plane_idx << " / 45 three_lines_idx=";
+						<< ", upstep "
+						"tritangent_plane_idx=" << tritangent_plane_idx << " / 45 "
+						"three_lines_idx=";
 				int_vec_print(cout, three_lines_idx, 3);
 				cout << " three_lines=";
 				int_vec_print(cout, three_lines, 3);
@@ -885,7 +908,15 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 						if (Adj[l2 * 27 + l1]) {
 							continue;
 						}
-						cout << "line_idx=" << line_idx << " m1=" << m1 << " m2=" << m2 << " m3=" << m3 << " l1=" << l1 << " l2=" << l2 << " cnt=" << cnt << endl;
+						int P6[6];
+						int transversals4[4];
+
+						upstep_idx = tritangent_plane_idx * 72 + line_idx * 24 + cnt;
+
+						if (f_vv) {
+							cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
+									<< ", upstep " << upstep_idx << " / " << 3240 << " before upstep2" << endl;
+						}
 
 						upstep2(
 								SO,
@@ -904,27 +935,165 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 								Lines,
 								eqn,
 								Adj,
+								transversals4,
+								P6,
 								f2,
 								Elt_alpha1,
 								Elt_alpha2,
 								Elt_beta1,
 								Elt_beta2,
 								Elt_beta3,
-								verbose_level);
-						if (f_v) {
+								verbose_level - 2);
+						if (f_vv) {
 							cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
-									<< ", upstep tritangent_plane_idx=" << tritangent_plane_idx << " / 45 ";
-							cout << " line_idx=" << line_idx << " l1=" << l1 << " l2=" << l2 << " cnt=" << cnt;
+									<< ", upstep " << upstep_idx << " / " << 3240;
+							cout << " f2=" << f2 << " before upstep_group_elements";
+							cout << endl;
+						}
+						upstep_group_elements(
+								SO,
+								coset_reps,
+								nb_coset_reps,
+								f_processed,
+								nb_processed,
+								pt_representation_sz,
+								f,
+								Flag_representation,
+								tritangent_plane_idx,
+								line_idx, m1, m2, m3,
+								l1, l2,
+								cnt,
+								S,
+								Lines,
+								eqn,
+								Adj,
+								transversals4,
+								P6,
+								f2,
+								Elt_alpha1,
+								Elt_alpha2,
+								Elt_beta1,
+								Elt_beta2,
+								Elt_beta3,
+								verbose_level - 2);
+
+						if (f_vv) {
+							cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
+									<< ", upstep " << upstep_idx << " / " << 3240;
+							cout << " f2=" << f2 << " after upstep_group_elements";
+							cout << endl;
+						}
+						if (f_vvv) {
+							cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
+									<< ", upstep "
+									"tritangent_plane_idx=" << tritangent_plane_idx << " / 45 ";
+							cout << " line_idx=" << line_idx
+									<< " l1=" << l1 << " l2=" << l2
+									<< " cnt=" << cnt;
+							cout << " f2=" << f2 << " after upstep_group_elements";
+							cout << endl;
+							cout << "alpha1=" << endl;
+							A4->element_print_quick(Elt_alpha1, cout);
+							cout << "alpha2=" << endl;
+							A4->element_print_quick(Elt_alpha2, cout);
+							cout << "beta1=" << endl;
+							A4->element_print_quick(Elt_beta1, cout);
+							cout << "beta2=" << endl;
+							A4->element_print_quick(Elt_beta2, cout);
+							cout << "beta3=" << endl;
+							A4->element_print_quick(Elt_beta3, cout);
+						}
+
+						A4->element_mult(Elt_alpha1, Elt_alpha2, Elt_T1, 0);
+						A4->element_mult(Elt_T1, Elt_beta1, Elt_T2, 0);
+						A4->element_mult(Elt_T2, Elt_beta2, Elt_T3, 0);
+						A4->element_mult(Elt_T3, Elt_beta3, Elt_T4, 0);
+
+
+						if (f_vvv) {
+							cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
+									<< ", upstep "
+									"tritangent_plane_idx=" << tritangent_plane_idx << " / 45 ";
+							cout << " line_idx=" << line_idx
+									<< " l1=" << l1 << " l2=" << l2
+									<< " cnt=" << cnt;
 							cout << " f2=" << f2;
+							cout << endl;
+							cout << "T4=alpha1*alpha2*beta1*beta2*beta3=" << endl;
+							A4->element_print_quick(Elt_T4, cout);
 							cout << endl;
 						}
 
-						f_processed[f2] = TRUE;
+
+#if 1
+						if (f_v) {
+							cout << "f=" << f << " / "
+									<< Flag_orbits->nb_flag_orbits
+									<< ", upstep " << upstep_idx
+									<< " / 3240, is "
+									"isomorphic to orbit " << f2 << endl;
+							}
+
+
+						if (f2 == f) {
+							if (f_v) {
+								cout << "We found an automorphism "
+										"of the surface:" << endl;
+								A4->element_print_quick(Elt_T4, cout);
+								cout << endl;
+								}
+							A4->element_move(Elt_T4,
+									coset_reps->ith(nb_coset_reps),
+									0);
+							nb_coset_reps++;
+							}
+						else {
+							if (f_v) {
+								cout << "We are identifying flag orbit " << f2
+										<< " with flag orbit " << f << endl;
+								}
+							if (!f_processed[f2]) {
+								Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
+									= Flag_orbits->nb_primary_orbits_upper;
+								Flag_orbits->Flag_orbit_node[f2].f_fusion_node = TRUE;
+								Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
+								Flag_orbits->Flag_orbit_node[f2].fusion_elt
+									= NEW_int(A4->elt_size_in_int);
+								A4->element_invert(Elt_T4,
+										Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+										0);
+								f_processed[f2] = TRUE;
+								nb_processed++;
+								}
+							else {
+								cout << "Flag orbit " << f2 << " has already been "
+										"identified with flag orbit " << f << endl;
+								if (Flag_orbits->Flag_orbit_node[f2].fusion_with != f) {
+									cout << "Flag_orbits->Flag_orbit_node[f2]."
+											"fusion_with != f" << endl;
+									exit(1);
+									}
+								}
+							}
+#endif
+
+
+
+#if 0
+						if (!f_processed[f2]) {
+							f_processed[f2] = TRUE;
+							nb_processed++;
+						}
+#endif
 
 						cnt++;
 					} // next l2
-				} // next l1
-				cout << "found " << cnt << " pairs of lines l1,l2" << endl;
+				} // next l
+#if 0
+				if (f_v) {
+					cout << "found " << cnt << " pairs of lines l1,l2" << endl;
+				}
+#endif
 				if (cnt != 24) {
 					cout << "cnt != 24" << endl;
 					exit(1);
@@ -933,80 +1102,11 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 			} // next line_idx
 
 
-#if 0
-			int double_six[12];
+
+		} // next tritangent_plane_idx
 
 
-			for (j = 0; j < 12; j++) {
-				double_six[j] = Lines[Surf->Double_six[i * 12 + j]];
-				}
-			if (f_v) {
-				cout << "f=" << f << " / "
-						<< Flag_orbits->nb_flag_orbits
-						<< ", upstep tritangent_plane_idx=" << tritangent_plane_idx
-						<< " / tritangent_plane_idx double_six=";
-				int_vec_print(cout, double_six, 12);
-				cout << endl;
-				}
-#endif
-
-#if 0
-			Classify_double_sixes->identify_double_six(double_six,
-				Elt1 /* transporter */, f2, verbose_level - 4);
-
-			if (f_v) {
-				cout << "f=" << f << " / "
-						<< Flag_orbits->nb_flag_orbits
-						<< ", upstep " << i
-						<< " / 36, double six is "
-								"isomorphic to orbit " << f2 << endl;
-				}
-
-
-			if (f2 == f) {
-				if (f_v) {
-					cout << "We found an automorphism "
-							"of the surface:" << endl;
-					A->element_print_quick(Elt1, cout);
-					cout << endl;
-					}
-				A->element_move(Elt1,
-						coset_reps->ith(nb_coset_reps), 0);
-				nb_coset_reps++;
-				}
-			else {
-				if (f_v) {
-					cout << "We are identifying flag orbit " << f2
-							<< " with flag orbit " << f << endl;
-					}
-				if (!f_processed[f2]) {
-					Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
-						= Flag_orbits->nb_primary_orbits_upper;
-					Flag_orbits->Flag_orbit_node[f2].f_fusion_node = TRUE;
-					Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
-					Flag_orbits->Flag_orbit_node[f2].fusion_elt
-						= NEW_int(A->elt_size_in_int);
-					A->element_invert(Elt1,
-							Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
-					f_processed[f2] = TRUE;
-					nb_processed++;
-					}
-				else {
-					cout << "Flag orbit " << f2 << " has already been "
-							"identified with flag orbit " << f << endl;
-					if (Flag_orbits->Flag_orbit_node[f2].fusion_with != f) {
-						cout << "Flag_orbits->Flag_orbit_node[f2]."
-								"fusion_with != f" << endl;
-						exit(1);
-						}
-					}
-				}
-#endif
-
-			} // next tritangent_plane_idx
-
-
-#if 0
+#if 1
 		coset_reps->reallocate(nb_coset_reps);
 
 		strong_generators *Aut_gens;
@@ -1017,7 +1117,8 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 		if (f_v) {
 			cout << "surfaces_arc_lifting::upstep "
 					"Extending the "
-					"group by a factor of " << nb_coset_reps << endl;
+					"group by a factor of "
+					<< nb_coset_reps << endl;
 			}
 		Aut_gens = NEW_OBJECT(strong_generators);
 		Aut_gens->init_group_extension(S, coset_reps,
@@ -1027,17 +1128,17 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 
 
 		if (f_v) {
-			cout << "the double six has a stabilizer of order "
+			cout << "the surface has a stabilizer of order "
 					<< ago << endl;
-			cout << "The double six stabilizer is:" << endl;
+			cout << "The surface stabilizer is:" << endl;
 			Aut_gens->print_generators_tex(cout);
 			}
 		}
 #endif
 
 
-		strong_generators *Aut_gens;
-		Aut_gens = NEW_OBJECT(strong_generators);
+		//strong_generators *Aut_gens;
+		//Aut_gens = NEW_OBJECT(strong_generators);
 
 
 		Surfaces->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
@@ -1052,16 +1153,16 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 		f_processed[f] = TRUE;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
-		} // next f
+	} // next flag orbit f
 
 
-#if 0
+#if 1
 	if (nb_processed != Flag_orbits->nb_flag_orbits) {
-		cout << "nb_processed != Flag_orbits->nb_flag_orbits" << endl;
+		cout << "warning: nb_processed != Flag_orbits->nb_flag_orbits" << endl;
 		cout << "nb_processed = " << nb_processed << endl;
 		cout << "Flag_orbits->nb_flag_orbits = "
 				<< Flag_orbits->nb_flag_orbits << endl;
-		exit(1);
+		//exit(1);
 		}
 #endif
 
@@ -1069,10 +1170,13 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 
 	if (f_v) {
 		cout << "We found " << Surfaces->nb_orbits
-				<< " orbits of surfaces from "
+				<< " isomorphism types of surfaces from "
 				<< Flag_orbits->nb_flag_orbits
 				<< " flag orbits" << endl;
+		cout << "The group orders are: " << endl;
+		Surfaces->print_group_orders();
 		}
+
 
 	FREE_int(f_processed);
 	FREE_int(Flag_representation);
@@ -1081,6 +1185,10 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 	FREE_int(Elt_beta1);
 	FREE_int(Elt_beta2);
 	FREE_int(Elt_beta3);
+	FREE_int(Elt_T1);
+	FREE_int(Elt_T2);
+	FREE_int(Elt_T3);
+	FREE_int(Elt_T4);
 
 
 	if (f_v) {
@@ -1105,6 +1213,8 @@ void surfaces_arc_lifting::upstep2(
 		int *Lines,
 		int *eqn20,
 		int *Adj,
+		int *transversals4,
+		int *P6,
 		int &f2,
 		int *Elt_alpha1,
 		int *Elt_alpha2,
@@ -1112,6 +1222,9 @@ void surfaces_arc_lifting::upstep2(
 		int *Elt_beta2,
 		int *Elt_beta3,
 		int verbose_level)
+// This function computes P[6], the arc associated with the Clebsch map
+// defined by the lines l1 and l2.
+// The arc P[6] lies in the tritangent plane chosen by tritangent_plane_idx
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1128,9 +1241,9 @@ void surfaces_arc_lifting::upstep2(
 	}
 	int i, j;
 
-	// determine the transversals:
+	// determine the transversals of lines l1 and l2:
 	int transversals[5];
-	int P[6];
+	//int P[6];
 	int nb_t = 0;
 	int nb;
 	int f_taken[4];
@@ -1147,6 +1260,8 @@ void surfaces_arc_lifting::upstep2(
 		cout << "surfaces_arc_lifting::upstep2 nb_t != 5" << endl;
 		exit(1);
 	}
+
+	// one of the transversals must be m1, find it:
 	for (i = 0; i < 5; i++) {
 		if (transversals[i] == m1) {
 			break;
@@ -1156,16 +1271,21 @@ void surfaces_arc_lifting::upstep2(
 		cout << "surfaces_arc_lifting::upstep2 could not find m1 in transversals[]" << endl;
 		exit(1);
 	}
+
+	// remove m1 from the list of transversals to form transversals4[4]:
+	for (j = 0; j < i; j++) {
+		transversals4[j] = transversals[j];
+	}
 	for (j = i + 1; j < 5; j++) {
-		transversals[j - 1] = transversals[j];
+		transversals4[j - 1] = transversals[j];
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep2 the four transversals are: ";
-		int_vec_print(cout, transversals, 4);
+		int_vec_print(cout, transversals4, 4);
 		cout << endl;
 	}
-	P[0] = Surf_A->Surf->P->intersection_of_two_lines(Lines[l1], Lines[m1]);
-	P[1] = Surf_A->Surf->P->intersection_of_two_lines(Lines[l2], Lines[m1]);
+	P6[0] = Surf_A->Surf->P->intersection_of_two_lines(Lines[l1], Lines[m1]);
+	P6[1] = Surf_A->Surf->P->intersection_of_two_lines(Lines[l2], Lines[m1]);
 	nb_t = 4;
 	nb = 2;
 	for (i = 0; i < nb_t; i++) {
@@ -1175,8 +1295,9 @@ void surfaces_arc_lifting::upstep2(
 		if (f_taken[i]) {
 			continue;
 		}
-		if (Adj[transversals[i] * 27 + m2]) {
-			P[nb++] = Surf_A->Surf->P->intersection_of_two_lines(Lines[transversals[i]], Lines[m2]);
+		if (Adj[transversals4[i] * 27 + m2]) {
+			P6[nb++] = Surf_A->Surf->P->intersection_of_two_lines(
+					Lines[transversals4[i]], Lines[m2]);
 			f_taken[i] = TRUE;
 		}
 	}
@@ -1188,8 +1309,9 @@ void surfaces_arc_lifting::upstep2(
 		if (f_taken[i]) {
 			continue;
 		}
-		if (Adj[transversals[i] * 27 + m3]) {
-			P[nb++] = Surf_A->Surf->P->intersection_of_two_lines(Lines[transversals[i]], Lines[m3]);
+		if (Adj[transversals4[i] * 27 + m3]) {
+			P6[nb++] = Surf_A->Surf->P->intersection_of_two_lines(
+					Lines[transversals4[i]], Lines[m3]);
 			f_taken[i] = TRUE;
 		}
 	}
@@ -1198,8 +1320,8 @@ void surfaces_arc_lifting::upstep2(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "surfaces_arc_lifting::upstep2 P=";
-		int_vec_print(cout, P, 6);
+		cout << "surfaces_arc_lifting::upstep2 P6=";
+		int_vec_print(cout, P6, 6);
 		cout << endl;
 	}
 
@@ -1224,8 +1346,8 @@ void surfaces_arc_lifting::upstep2(
 			Lines,
 			eqn20,
 			Adj,
-			transversals,
-			P,
+			transversals4,
+			P6,
 			f2,
 			Elt_alpha1,
 			Elt_alpha2,
@@ -1271,6 +1393,20 @@ void surfaces_arc_lifting::upstep3(
 		int *Elt_beta2,
 		int *Elt_beta3,
 		int verbose_level)
+// This function defines a 4x4 projectivity Elt_alpha1
+// which maps the chosen plane tritangent_plane_idx
+// to the standard plane W=0.
+// P6a is the image of P6 under alpha1, preserving the order of elements.
+// After that, P6_local will be computed to contain the local coordinates of the arc.
+// After that, a 3x3 collineation alpha2 will be computed to map
+// P6_local to the canonical orbit representative from the classification
+// of non-conical six-arcs computed earlier.
+// After that, 3x3 collineations beta1 and beta2 will be computed.
+// beta1 takes the pair P0,P1 to the canonical orbit representative
+// under the stabilizer of the arc.
+// beta2 takes the set-partition imposed by ({P2,P3},{P4,P5})
+// to the canonical orbit representative under that stabilizer of the arc
+// and the pair of points {P0,P1}
 {
 	int f_v = (verbose_level >= 1);
 	int Basis_pi[16];
@@ -1318,7 +1454,9 @@ void surfaces_arc_lifting::upstep3(
 		cout << "Basis_inv=" << endl;
 		int_matrix_print(Basis_pi_inv, 4, 4);
 	}
-	Basis_pi_inv[16] = 0;
+
+	Basis_pi_inv[16] = 0; // in case the group is semilinear
+
 	Surf_A->A->make_element(Elt_alpha1, Basis_pi_inv, 0 /*verbose_level*/);
 	for (i = 0; i < 6; i++) {
 		P6a[i] = Surf_A->A->image_of(Elt_alpha1, P6[i]);
@@ -1390,7 +1528,8 @@ void surfaces_arc_lifting::upstep3(
 		cout << "The flag orbit f satisfies "
 				<< flag_orbit_fst[orbit_not_on_conic_idx]
 				<< " <= f < "
-				<< flag_orbit_fst[orbit_not_on_conic_idx] + flag_orbit_len[orbit_not_on_conic_idx] << endl;
+				<< flag_orbit_fst[orbit_not_on_conic_idx] +
+				flag_orbit_len[orbit_not_on_conic_idx] << endl;
 	}
 
 
@@ -1419,12 +1558,16 @@ void surfaces_arc_lifting::upstep3(
 		cout << endl;
 	}
 
+
+	// compute beta1:
+
+
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3 before "
 			"Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize" << endl;
 	}
 	Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize(pair, Elt_beta1,
-				pair_orbit_idx, verbose_level);
+				pair_orbit_idx, verbose_level - 4);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3 after "
 			"Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize" << endl;
@@ -1469,11 +1612,18 @@ void surfaces_arc_lifting::upstep3(
 			"Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize" << endl;
 	}
 
+
+	// compute beta2:
+
+
+
+
 	int partition_orbit_idx;
 
-	Table_orbits_on_pairs[orbit_not_on_conic_idx].Table_orbits_on_partition[pair_orbit_idx].recognize(
+	Table_orbits_on_pairs[orbit_not_on_conic_idx].
+	Table_orbits_on_partition[pair_orbit_idx].recognize(
 			the_partition, Elt_beta2,
-			partition_orbit_idx, verbose_level);
+			partition_orbit_idx, verbose_level - 4);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3 after "
 			"Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize" << endl;
@@ -1514,6 +1664,274 @@ void surfaces_arc_lifting::upstep3(
 	}
 }
 
+void surfaces_arc_lifting::upstep_group_elements(
+		surface_object *SO,
+		vector_ge *coset_reps,
+		int &nb_coset_reps,
+		int *f_processed,
+		int &nb_processed,
+		int pt_representation_sz,
+		int f,
+		int *Flag_representation,
+		int tritangent_plane_idx,
+		int line_idx, int m1, int m2, int m3,
+		int l1, int l2,
+		int cnt,
+		strong_generators *S,
+		int *Lines,
+		int *eqn20,
+		int *Adj,
+		int *transversals4,
+		int *P6,
+		int &f2,
+		int *Elt_alpha1,
+		int *Elt_alpha2,
+		int *Elt_beta1,
+		int *Elt_beta2,
+		int *Elt_beta3,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Elt_Alpha2;
+	int *Elt_Beta1;
+	int *Elt_Beta2;
+	int *Elt_T1;
+	int *Elt_T2;
+	int *Elt_T3;
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::upstep_group_elements" << endl;
+		cout << "verbose_level = " << verbose_level;
+		cout << " f=" << f << " / " << Flag_orbits->nb_flag_orbits
+				<< ", "
+				"tritangent_plane_idx=" << tritangent_plane_idx << " / 45, "
+				"line_idx=" << line_idx << " / 3, "
+				"l1=" << l1 << " l2=" << l2 << " cnt=" << cnt << " / 24 ";
+		cout << " f2 = " << f2 << endl;
+	}
+
+	Elt_Alpha2 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_Beta1 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_Beta2 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_T1 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_T2 = NEW_int(Surf_A->A->elt_size_in_int);
+	Elt_T3 = NEW_int(Surf_A->A->elt_size_in_int);
+
+	if (f_vv) {
+		cout << "surfaces_arc_lifting::upstep_group_elements before embedding" << endl;
+		cout << "Elt_alpha2=" << endl;
+		A3->element_print_quick(Elt_alpha2, cout);
+		cout << "Elt_beta1=" << endl;
+		A3->element_print_quick(Elt_beta1, cout);
+		cout << "Elt_beta2=" << endl;
+		A3->element_print_quick(Elt_beta2, cout);
+	}
+
+
+
+	embed(Elt_alpha2, Elt_Alpha2, verbose_level - 2);
+	embed(Elt_beta1, Elt_Beta1, verbose_level - 2);
+	embed(Elt_beta2, Elt_Beta2, verbose_level - 2);
+
+	if (f_vv) {
+		cout << "surfaces_arc_lifting::upstep_group_elements after embedding" << endl;
+		cout << "Elt_Alpha2=" << endl;
+		A4->element_print_quick(Elt_Alpha2, cout);
+		cout << "Elt_Beta1=" << endl;
+		A4->element_print_quick(Elt_Beta1, cout);
+		cout << "Elt_Beta2=" << endl;
+		A4->element_print_quick(Elt_Beta2, cout);
+	}
+
+
+	A4->element_mult(Elt_alpha1, Elt_Alpha2, Elt_T1, 0);
+	A4->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
+	A4->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
+
+
+	// map the two lines:
+
+	int L1, L2;
+	int beta3[17];
+
+	L1 = Surf_A->A2->element_image_of(Lines[l1], Elt_T3, 0 /* verbose_level */);
+	L2 = Surf_A->A2->element_image_of(Lines[l2], Elt_T3, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::upstep_group_elements "
+				"L1=" << L1 << " L2=" << L2 << endl;
+	}
+
+	// compute beta 3:
+
+	int orbit_not_on_conic_idx;
+	int pair_orbit_idx;
+	int partition_orbit_idx;
+	int line1_to, line2_to;
+
+
+	orbit_not_on_conic_idx = flag_orbit_on_arcs_not_on_a_conic_idx[f2];
+	pair_orbit_idx = flag_orbit_on_pairs_idx[f2];
+	partition_orbit_idx = flag_orbit_on_partition_idx[f2];
+
+#if 0
+	line1_to = Table_orbits_on_pairs[orbit_not_on_conic_idx].
+			Table_orbits_on_partition[pair_orbit_idx].
+#endif
+
+	int *Flag2_representation;
+	//int pt_representation_sz;
+
+	//pt_representation_sz = 6 + 1 + 2 + 1 + 1 + 2 + 20 + 27;
+
+		// Flag[0..5]   : 6 for the arc P1,...,P6
+		// Flag[6]      : 1 for orb, the selected orbit on pairs
+		// Flag[7..8]   : 2 for the selected pair, i.e., {0,1} for P1,P2.
+		// Flag[9]      : 1 for orbit, the selected orbit on set_partitions
+		// Flag[10]     : 1 for the partition of the remaining points; values=0,1,2
+		// Flag[11..12] : 2 for the chosen lines line1 and line2 through P1 and P2
+		// Flag[13..32] : 20 for the equation of the surface
+		// Flag[33..59] : 27 for the lines of the surface
+
+	Flag2_representation = NEW_int(pt_representation_sz);
+
+	int_vec_copy(Flag_orbits->Pt + f2 * pt_representation_sz,
+			Flag2_representation, pt_representation_sz);
+
+
+	line1_to = Flag2_representation[11];
+	line2_to = Flag2_representation[12];
+
+	if (f_vv) {
+		cout << "surfaces_arc_lifting::upstep_group_elements "
+				"line1_to=" << line1_to << " line2_to=" << line2_to << endl;
+		int A[8];
+		int B[8];
+		Surf_A->Surf->P->unrank_line(A, line1_to);
+		cout << "line1_to=" << line1_to << "=" << endl;
+		int_matrix_print(A, 2, 4);
+		Surf_A->Surf->P->unrank_line(B, line2_to);
+		cout << "line2_to=" << line2_to << "=" << endl;
+		int_matrix_print(B, 2, 4);
+	}
+
+	if (f_vv) {
+		cout << "surfaces_arc_lifting::upstep_group_elements "
+				"L1=" << L1 << " L2=" << L2 << endl;
+		int A[8];
+		int B[8];
+		Surf_A->Surf->P->unrank_line(A, L1);
+		cout << "L1=" << L1 << "=" << endl;
+		int_matrix_print(A, 2, 4);
+		Surf_A->Surf->P->unrank_line(B, L2);
+		cout << "L2=" << L2 << "=" << endl;
+		int_matrix_print(B, 2, 4);
+	}
+
+	// test if L1 and line1_to are skew then switch L1 and L2:
+
+	int tritangent_plane_rk;
+	int p1, p2;
+
+	tritangent_plane_rk = SO->Tritangent_plane_rk[tritangent_plane_idx];
+
+	p1 = Surf_A->Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+			L1 /* line */,
+			0 /* plane */, 0 /* verbose_level */);
+
+	p2 = Surf_A->Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+			line1_to /* line */,
+			0 /* plane */, 0 /* verbose_level */);
+
+	if (f_vv) {
+		cout << "surfaces_arc_lifting::upstep_group_elements "
+				"p1=" << p1 << " p2=" << p2 << endl;
+	}
+
+	if (p1 != p2) {
+
+		if (f_vv) {
+			cout << "L1 and line1_to do not intersect the plane in the same point, so we switch L1 and L2" << endl;
+		}
+		int t;
+
+		t = L1;
+		L1 = L2;
+		L2 = t;
+	}
+	else {
+		if (f_vv) {
+			cout << "no need to switch" << endl;
+		}
+	}
+
+
+	Surf_A->Surf->P->find_matrix_fixing_hyperplane_and_moving_two_skew_lines(
+			L1 /* line1_from */, line1_to,
+			L2 /* line2_from */, line2_to,
+			beta3,
+			verbose_level - 4);
+	beta3[16] = 0;
+
+	A4->make_element(Elt_beta3, beta3, 0);
+
+	if (f_vv) {
+		cout << "surfaces_arc_lifting::upstep_group_elements" << endl;
+		cout << "Elt_beta3=" << endl;
+		int_matrix_print(Elt_beta3, 4, 4);
+		cout << "Elt_beta3=" << endl;
+		A4->element_print_quick(Elt_beta3, cout);
+		cout << endl;
+	}
+
+
+	A4->element_move(Elt_Alpha2, Elt_alpha2, 0);
+	A4->element_move(Elt_Beta1, Elt_beta1, 0);
+	A4->element_move(Elt_Beta2, Elt_beta2, 0);
+
+
+
+	FREE_int(Flag2_representation);
+	FREE_int(Elt_Alpha2);
+	FREE_int(Elt_Beta1);
+	FREE_int(Elt_Beta2);
+	FREE_int(Elt_T1);
+	FREE_int(Elt_T2);
+	FREE_int(Elt_T3);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::upstep_group_elements done" << endl;
+	}
+}
+
+void surfaces_arc_lifting::embed(int *Elt_A3, int *Elt_A4, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int M4[17];
+	int i, j, a;
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::embed" << endl;
+	}
+	int_vec_zero(M4, 17);
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			a = Elt_A3[i * 3 + j];
+			M4[i * 4 + j] = a;
+		}
+	}
+	M4[3 * 4 + 3] = 1;
+	if (A3->is_semilinear_matrix_group()) {
+		M4[16] = Elt_A3[9];
+	}
+	A4->make_element(Elt_A4, M4, 0);
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::embed done" << endl;
+	}
+}
 
 void surfaces_arc_lifting::report(int verbose_level)
 {
