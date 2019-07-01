@@ -7562,9 +7562,7 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 				"hyperplane_W0_fixing_two_lines "
 				"A3:" << endl;
 		int_matrix_print(A3, 3, 3);
-		if (f_semilinear) {
-			cout << "frobenius=" << frobenius << endl;
-		}
+		cout << "f_semilinear = " << f_semilinear << " frobenius=" << frobenius << endl;
 	}
 	m1 = F->negate(1);
 	unrank_line(Line1, line1);
@@ -7727,7 +7725,9 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 
 
 	F->mult_vector_from_the_right(A3t, xmy, v, 3, 3);
-	F->vector_frobenius_power_in_place(v, 3, frobenius);
+	if (f_semilinear) {
+		F->vector_frobenius_power_in_place(v, 3, frobenius);
+	}
 	if (f_v) {
 		cout << "projective_space::lifted_action_on_"
 				"hyperplane_W0_fixing_two_lines "
@@ -7735,7 +7735,9 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 		int_matrix_print(v, 1, 3);
 	}
 	F->mult_vector_from_the_right(A3t, x, w, 3, 3);
-	F->vector_frobenius_power_in_place(w, 3, frobenius);
+	if (f_semilinear) {
+		F->vector_frobenius_power_in_place(w, 3, frobenius);
+	}
 	if (f_v) {
 		cout << "projective_space::lifted_action_on_"
 				"hyperplane_W0_fixing_two_lines "
@@ -7798,7 +7800,9 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 				lambda, x, mu, Line1, m1, w, abgd, 3);
 	}
 	abgd[3] = lambda;
-	F->vector_frobenius_power_in_place(abgd, 4, F->e - frobenius);
+	if (f_semilinear) {
+		F->vector_frobenius_power_in_place(abgd, 4, F->e - frobenius);
+	}
 	if (f_v) {
 		cout << "projective_space::lifted_action_on_"
 				"hyperplane_W0_fixing_two_lines "
@@ -7829,6 +7833,227 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 		}
 }
 
+void projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines(
+		int line1_from, int line1_to,
+		int line2_from, int line2_to,
+		int *A4,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Line1_from[8];
+	int Line2_from[8];
+	int Line1_to[8];
+	int Line2_to[8];
+	int P1[4];
+	int P2[4];
+	int x[4];
+	int y[4];
+	int u[4];
+	int v[4];
+	int umv[4];
+	int M[16];
+	int Mv[16];
+	int lmei[4];
+	int m1;
+	int M_tmp[16];
+	int tmp_basecols[4];
+	int lambda, mu; //, epsilon, iota;
+	int abgd[4];
+	int i, j;
+
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines" << endl;
+		}
+	m1 = F->negate(1);
+
+	unrank_line(Line1_from, line1_from);
+	unrank_line(Line2_from, line2_from);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"input Line1_from:" << endl;
+		int_matrix_print(Line1_from, 2, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"input Line2_from:" << endl;
+		int_matrix_print(Line2_from, 2, 4);
+	}
+	F->Gauss_step_make_pivot_one(Line1_from + 4, Line1_from,
+		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
+		// afterwards:  v1,v2 span the same space as before
+		// v2[idx] = 0, v1[idx] = 1,
+		// So, now Line1[3] = 0 and Line1[7] = 1
+	F->Gauss_step_make_pivot_one(Line2_from + 4, Line2_from,
+		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
+		// afterwards:  v1,v2 span the same space as before
+		// v2[idx] = 0, v1[idx] = 1,
+		// So, now Line2[3] = 0 and Line2[7] = 1
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"modified Line1_from:" << endl;
+		int_matrix_print(Line1_from, 2, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"modified Line2_from:" << endl;
+		int_matrix_print(Line2_from, 2, 4);
+	}
+
+	F->PG_element_normalize(Line1_from, 1, 4);
+	F->PG_element_normalize(Line2_from, 1, 4);
+	F->PG_element_normalize(Line1_from + 4, 1, 4);
+	F->PG_element_normalize(Line2_from + 4, 1, 4);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"P1 = first point on Line1_from:" << endl;
+		int_matrix_print(Line1_from, 1, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"P2 = first point on Line2_from:" << endl;
+		int_matrix_print(Line2_from, 1, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"u = second point on Line1_from:" << endl;
+		int_matrix_print(Line1_from + 4, 1, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"v = second point on Line2_from:" << endl;
+		int_matrix_print(Line2_from + 4, 1, 4);
+	}
+	int_vec_copy(Line1_from + 4, u, 4);
+	int_vec_copy(Line1_from, P1, 4);
+	int_vec_copy(Line2_from + 4, v, 4);
+	int_vec_copy(Line2_from, P2, 4);
+
+
+	unrank_line(Line1_to, line1_to);
+	unrank_line(Line2_to, line2_to);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"input Line1_to:" << endl;
+		int_matrix_print(Line1_to, 2, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"input Line2_to:" << endl;
+		int_matrix_print(Line2_to, 2, 4);
+	}
+	F->Gauss_step_make_pivot_one(Line1_to + 4, Line1_to,
+		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
+		// afterwards:  v1,v2 span the same space as before
+		// v2[idx] = 0, v1[idx] = 1,
+		// So, now Line1[3] = 0 and Line1[7] = 1
+	F->Gauss_step_make_pivot_one(Line2_to + 4, Line2_to,
+		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
+		// afterwards:  v1,v2 span the same space as before
+		// v2[idx] = 0, v1[idx] = 1,
+		// So, now Line2[3] = 0 and Line2[7] = 1
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"modified Line1_to:" << endl;
+		int_matrix_print(Line1_to, 2, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"modified Line2_to:" << endl;
+		int_matrix_print(Line2_to, 2, 4);
+	}
+
+	F->PG_element_normalize(Line1_to, 1, 4);
+	F->PG_element_normalize(Line2_to, 1, 4);
+	F->PG_element_normalize(Line1_to + 4, 1, 4);
+	F->PG_element_normalize(Line2_to + 4, 1, 4);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"P1 = first point on Line1_to:" << endl;
+		int_matrix_print(Line1_to, 1, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"P2 = first point on Line2_to:" << endl;
+		int_matrix_print(Line2_to, 1, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"x = second point on Line1_to:" << endl;
+		int_matrix_print(Line1_to + 4, 1, 4);
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"y = second point on Line2_to:" << endl;
+		int_matrix_print(Line2_to + 4, 1, 4);
+	}
+
+
+	int_vec_copy(Line1_to + 4, x, 4);
+	//int_vec_copy(Line1_to, P1, 4);
+	if (int_vec_compare(P1, Line1_to, 4)) {
+		cout << "Line1_from and Line1_to must intersect in W=0" << endl;
+		exit(1);
+	}
+	int_vec_copy(Line2_to + 4, y, 4);
+	//int_vec_copy(Line2_to, P2, 4);
+	if (int_vec_compare(P2, Line2_to, 4)) {
+		cout << "Line2_from and Line2_to must intersect in W=0" << endl;
+		exit(1);
+	}
+
+
+	F->linear_combination_of_vectors(1, u, m1, v, umv, 3);
+	umv[3] = 0;
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"umv:" << endl;
+		int_matrix_print(umv, 1, 4);
+	}
+
+	int_vec_copy(x, M + 0, 4);
+	int_vec_copy(P1, M + 4, 4);
+	int_vec_copy(y, M + 8, 4);
+	int_vec_copy(P2, M + 12, 4);
+
+	F->negate_vector_in_place(M + 8, 8);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"M:" << endl;
+		int_matrix_print(M, 4, 4);
+	}
+
+	F->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"Mv:" << endl;
+		int_matrix_print(Mv, 4, 4);
+	}
+
+	F->mult_vector_from_the_left(umv, Mv, lmei, 4, 4);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"lmei=" << endl;
+		int_matrix_print(lmei, 1, 4);
+	}
+	lambda = lmei[0];
+	mu = lmei[1];
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"lambda=" << lambda << " mu=" << mu << endl;
+	}
+
+	F->linear_combination_of_three_vectors(
+			lambda, x, mu, P1, m1, u, abgd, 3);
+
+	abgd[3] = lambda;
+
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"abgd:" << endl;
+		int_matrix_print(abgd, 1, 4);
+	}
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			if (i == j) {
+				A4[i * 4 + j] = 1;
+			}
+			else {
+				A4[i * 4 + j] = 0;
+			}
+		}
+	}
+	int_vec_copy(abgd, A4 + 3 * 4, 4);
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines "
+				"A4:" << endl;
+		int_matrix_print(A4, 4, 4);
+	}
+
+	if (f_v) {
+		cout << "projective_space::find_matrix_fixing_hyperplane_and_moving_two_skew_lines done" << endl;
+		}
+
+}
 
 void projective_space::andre_preimage(projective_space *P4,
 	int *set2, int sz2, int *set4, int &sz4, int verbose_level)

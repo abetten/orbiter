@@ -2478,6 +2478,11 @@ public:
 			int line1, int line2,
 			int *A4,
 			int verbose_level);
+	void find_matrix_fixing_hyperplane_and_moving_two_skew_lines(
+			int line1_from, int line1_to,
+			int line2_from, int line2_to,
+			int *A4,
+			int verbose_level);
 	void andre_preimage(projective_space *P4,
 		int *set2, int sz2, int *set4, int &sz4, int verbose_level);
 	// we must be a projective plane

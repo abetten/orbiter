@@ -26,6 +26,7 @@ k_arc_generator::~k_arc_generator()
 void k_arc_generator::null()
 {
 	F = NULL;
+	A = NULL;
 	P2 = NULL;
 	Gen = NULL;
 	d = 0;
@@ -36,6 +37,9 @@ void k_arc_generator::null()
 
 void k_arc_generator::freeself()
 {
+	if (A) {
+		FREE_OBJECT(A);
+	}
 	if (Gen) {
 		FREE_OBJECT(Gen);
 		}
@@ -87,11 +91,34 @@ void k_arc_generator::init(
 	Gen->ECA->f_has_base_fname = TRUE;
 	Gen->ECA->base_fname = base_fname;
 	
+	A = NEW_OBJECT(action);
+
+	vector_ge *nice_gens;
+	int f_semilinear = TRUE;
+	number_theory_domain NT;
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+		}
+
+
+	A->init_projective_group(3, F,
+			f_semilinear, TRUE /*f_basis*/,
+			nice_gens,
+			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
+	if (f_v) {
+		cout << "arc_generator::init "
+				"after init_projective_group" << endl;
+		}
+
+
 	if (f_v) {
 		cout << "k_arc_generator::init "
 				"before Gen->init" << endl;
 		}
 	Gen->init(F, 
+		A,
 		"ARCS/" /* Gen->ECA->input_prefix */,
 		base_fname /* Gen->ECA->base_fname */,
 		sz /* Gen->ECA->starter_size */, 

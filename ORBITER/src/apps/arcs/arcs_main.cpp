@@ -55,6 +55,7 @@ int main(int argc, const char **argv)
 	{
 	arc_generator *Gen;
 	finite_field *F;
+	action *A;
 
 	
 	Gen = NEW_OBJECT(arc_generator);
@@ -76,8 +77,28 @@ int main(int argc, const char **argv)
 		}
 
 
+	A = NEW_OBJECT(action);
+
+	vector_ge *nice_gens;
+
+	int f_semilinear = TRUE;
+	number_theory_domain NT;
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+		}
+
+
+	A->init_projective_group(3, F,
+			f_semilinear, TRUE /*f_basis*/,
+			nice_gens,
+			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
+
+
 	cout << "before Gen->init" << endl;
 	Gen->init(F, 
+		A,
 		Gen->ECA->input_prefix, 
 		Gen->ECA->base_fname,
 		Gen->ECA->starter_size, 

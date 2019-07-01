@@ -286,7 +286,28 @@ int main(int argc, const char **argv)
 
 		cout << "Classifying six-arcs not on a conic:" << endl;
 		
+		action *A;
+
+		A = NEW_OBJECT(action);
+
+		vector_ge *nice_gens;
+
+		int f_semilinear = TRUE;
+		number_theory_domain NT;
+
+		if (NT.is_prime(F->q)) {
+			f_semilinear = FALSE;
+			}
+
+
+		A->init_projective_group(3, F,
+				f_semilinear, TRUE /*f_basis*/,
+				nice_gens,
+				0 /*verbose_level*/);
+		FREE_OBJECT(nice_gens);
+
 		Six_arcs->init(SC->F,
+				A,
 			SC->Surf->P2,
 			argc, argv, 
 			verbose_level);

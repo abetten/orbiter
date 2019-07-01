@@ -97,7 +97,9 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 	Arc_gen->read_arguments(argc, argv);
 
 
+
 	Arc_gen->init(F,
+			A,
 			starter_directory_name,
 			base_fname,
 			9 /* starter_size */,

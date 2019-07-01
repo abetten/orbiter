@@ -108,6 +108,7 @@ int main(int argc, const char **argv)
 	Descr4->F = F;
 
 
+#if 0
 	int f_semilinear;
 	number_theory_domain NT;
 
@@ -117,6 +118,7 @@ int main(int argc, const char **argv)
 	else {
 		f_semilinear = TRUE;
 		}
+#endif
 
 	LG4 = NEW_OBJECT(linear_group);
 	if (f_v) {
@@ -128,6 +130,14 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "surface_classify after LG4->init" << endl;
+	}
+
+	int f_semilinear4;
+
+
+	f_semilinear4 = LG4->A_linear->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "surface_classify f_semilinear4 = " << f_semilinear4 << endl;
 	}
 
 	if (Descr3->input_q != q) {
@@ -147,6 +157,20 @@ int main(int argc, const char **argv)
 		cout << "surface_classify after LG3->init" << endl;
 	}
 
+	int f_semilinear3;
+
+
+	f_semilinear3 = LG3->A_linear->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "surface_classify f_semilinear3 = " << f_semilinear3 << endl;
+	}
+
+	if (f_semilinear3 != f_semilinear4) {
+		cout << "the grups must both be semilinear or both not be semilinear" << endl;
+		exit(1);
+	}
+
+	int f_semilinear = f_semilinear4;
 
 	if (f_v) {
 		cout << "surface_classify before Surf->init" << endl;

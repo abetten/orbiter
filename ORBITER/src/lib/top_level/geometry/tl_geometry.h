@@ -95,6 +95,7 @@ public:
 	void read_arguments(int argc, const char **argv);
 	void main(int verbose_level);
 	void init(finite_field *F,
+		action *A,
 		const char *starter_directory_name,
 		const char *base_fname,
 		int starter_size,  
@@ -1161,6 +1162,7 @@ class k_arc_generator {
 public:
 
 	finite_field *F; // do not free
+	action *A;
 	projective_space *P2; // do not free
 	
 	arc_generator *Gen;
@@ -1757,7 +1759,9 @@ public:
 	~six_arcs_not_on_a_conic();
 	void null();
 	void freeself();
-	void init(finite_field *F, projective_space *P2, 
+	void init(finite_field *F,
+		action *A,
+		projective_space *P2,
 		int argc, const char **argv, 
 		int verbose_level);
 	void recognize(int *arc6, int *transporter,
@@ -2510,6 +2514,8 @@ public:
 			int *Lines,
 			int *eqn20,
 			int *Adj,
+			int *transversals4,
+			int *P6,
 			int &f2,
 			int *Elt_alpha1,
 			int *Elt_alpha2,
@@ -2543,6 +2549,33 @@ public:
 			int *Elt_beta2,
 			int *Elt_beta3,
 			int verbose_level);
+	void upstep_group_elements(
+			surface_object *SO,
+			vector_ge *coset_reps,
+			int &nb_coset_reps,
+			int *f_processed,
+			int &nb_processed,
+			int pt_representation_sz,
+			int f,
+			int *Flag_representation,
+			int tritangent_plane_idx,
+			int line_idx, int m1, int m2, int m3,
+			int l1, int l2,
+			int cnt,
+			strong_generators *S,
+			int *Lines,
+			int *eqn20,
+			int *Adj,
+			int *transversals4,
+			int *P6,
+			int &f2,
+			int *Elt_alpha1,
+			int *Elt_alpha2,
+			int *Elt_beta1,
+			int *Elt_beta2,
+			int *Elt_beta3,
+			int verbose_level);
+	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
 	void report(int verbose_level);
 };
 
