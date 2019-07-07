@@ -86,6 +86,7 @@ MODULES= \
 		foundations/geometry/blt_set_domain.o \
 		foundations/geometry/blt_set_invariants.o \
 		foundations/geometry/buekenhout_metz.o \
+		foundations/geometry/clebsch_map.o \
 		foundations/geometry/cubic_curve.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \

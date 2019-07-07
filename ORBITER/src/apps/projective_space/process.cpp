@@ -41,7 +41,7 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-job") == 0) {
 			f_job = TRUE;
 
@@ -50,25 +50,26 @@ int main(int argc, const char **argv)
 			i += Job->read_arguments(argc - i,
 				argv + i + 1, verbose_level);
 			cout << "-job " << endl;
-			}
 		}
+	}
+	cout << "process.cpp finished reading arguments" << endl;
 
 	if (!f_job) {
 		cout << "please use option -job ... -end" << endl;
 		exit(1);
-		}
+	}
 	if (!Job->f_q) {
-		cout << "please use option -q <q>" << endl;
+		cout << "please use option -q <q> within the job description" << endl;
 		exit(1);
-		}
+	}
 	if (!Job->f_n) {
-		cout << "please use option -n <n> to specify the projective dimension" << endl;
+		cout << "please use option -n <n> to specify the projective dimension  within the job description" << endl;
 		exit(1);
-		}
+	}
 	if (!Job->f_fname_base_out) {
-		cout << "please use option -fname_base_out <fname_base_out>" << endl;
+		cout << "please use option -fname_base_out <fname_base_out> within the job description" << endl;
 		exit(1);
-		}
+	}
 
 
 	

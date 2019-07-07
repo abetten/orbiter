@@ -136,7 +136,6 @@ int main(int argc, const char **argv)
 			delete Sp;
 			}
 			cout << "preparing orbit spreadsheet done" << endl;
-
 	}
 
 	if (f_draw_poset) {
@@ -190,6 +189,20 @@ int main(int argc, const char **argv)
 					<< "}$ :\\\\" << endl;
 			Gen->F->cheat_sheet(fp, verbose_level);
 
+			fp << "\\section{The plane PG$(2, " << Gen->q << ")$}" << endl;
+
+			fp << "The points in the plane PG$(2, " << Gen->q << ")$:\\\\" << endl;
+
+			fp << "\\bigskip" << endl;
+
+
+			Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
+
+			fp << endl;
+			fp << "\\section{Poset Classification}" << endl;
+			fp << endl;
+
+
 			Gen->gen->report(fp);
 
 			L.foot(fp);
@@ -201,6 +214,7 @@ int main(int argc, const char **argv)
 
 
 	FREE_OBJECT(Gen);
+	//FREE_OBJECT(A);
 	FREE_OBJECT(F);
 	
 	}

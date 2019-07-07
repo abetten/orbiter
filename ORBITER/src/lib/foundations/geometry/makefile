@@ -13,6 +13,7 @@ MODULES = \
 	blt_set_domain.o \
 	blt_set_invariants.o \
 	buekenhout_metz.o \
+	clebsch_map.o \
 	cubic_curve.o \
 	decomposition.o \
 	desarguesian_spread.o \
