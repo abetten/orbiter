@@ -374,6 +374,49 @@ int buekenhout_metz_check_good_points(int len, int *S, void *data,
 
 
 // #############################################################################
+// clebsch_map.cpp
+// #############################################################################
+
+//! records the images of a specific Clebsch map
+
+
+class clebsch_map {
+
+public:
+	surface_domain *Surf;
+	surface_object *SO;
+	finite_field *F;
+
+	int hds, ds, ds_row;
+
+	int line1, line2;
+	int transversal;
+	int tritangent_plane_idx;
+
+	int line_idx[2];
+	int plane_rk_global;
+
+	int intersection_points[6];
+	int intersection_points_local[6];
+	int Plane[16];
+	int base_cols[4];
+
+
+	int *Clebsch_map; // [SO->nb_pts]
+	int *Clebsch_coeff; // [SO->nb_pts * 4]
+
+
+	clebsch_map();
+	~clebsch_map();
+	void freeself();
+	void init_half_double_six(surface_object *SO,
+			int hds, int verbose_level);
+	void init(surface_object *SO, int *line_idx, int plane_rk_global, int verbose_level);
+
+};
+
+
+// #############################################################################
 // cubic_curve.cpp
 // #############################################################################
 
@@ -2465,6 +2508,12 @@ public:
 	void arc_lifting_diophant(
 		int *arc, int arc_sz,
 		int target_sz, int target_d,
+		diophant *&D,
+		int verbose_level);
+	void arc_with_given_set_of_s_lines_diophant(
+		int *one_lines, int nb_one_lines,
+		int target_sz, int arc_d, int arc_s,
+		int f_dualize,
 		diophant *&D,
 		int verbose_level);
 	void rearrange_arc_for_lifting(int *Arc6,

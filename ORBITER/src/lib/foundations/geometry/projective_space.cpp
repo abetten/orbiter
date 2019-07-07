@@ -7352,6 +7352,127 @@ void projective_space::arc_lifting_diophant(
 
 }
 
+void projective_space::arc_with_given_set_of_s_lines_diophant(
+	int *one_lines, int nb_one_lines,
+	int target_sz, int arc_d, int arc_s,
+	int f_dualize,
+	diophant *&D,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, h, a, line;
+	int *other_lines;
+	int nb_other_lines;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "projective_space::arc_with_given_set_of_s_lines_diophant" << endl;
+		}
+
+	other_lines = NEW_int(N_points);
+
+	Combi.set_complement(one_lines, nb_one_lines,
+			other_lines, nb_other_lines, N_lines);
+
+
+	if (f_dualize) {
+		if (Polarity_point_to_hyperplane == NULL) {
+			cout << "projective_space::arc_with_given_set_of_s_lines_diophant Polarity_point_to_hyperplane == NULL" << endl;
+			exit(1);
+		}
+	}
+
+
+	D = NEW_OBJECT(diophant);
+	D->open(N_lines + 1, N_points);
+	D->f_x_max = TRUE;
+	for (j = 0; j < N_points; j++) {
+		D->x_max[j] = 1;
+		}
+	D->f_has_sum = TRUE;
+	D->sum = target_sz;
+	h = 0;
+	for (i = 0; i < nb_one_lines; i++) {
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[one_lines[i]];
+		}
+		else {
+			line = one_lines[i];
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_s;
+		h++;
+		}
+	for (i = 0; i < nb_other_lines; i++) {
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[other_lines[i]];
+		}
+		else {
+			line = other_lines[i];
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_LE;
+		D->RHSi(h) = arc_d;
+		h++;
+		}
+
+
+	// add one extra row:
+	for (j = 0; j < N_points; j++) {
+		D->Aij(h, j) = 1;
+		}
+	D->type[h] = t_EQ;
+	D->RHSi(h) = target_sz;
+	h++;
+
+	D->m = h;
+
+	//D->init_var_labels(N_points, verbose_level);
+
+	if (f_vv) {
+		cout << "projective_space::arc_with_given_set_of_s_lines_diophant "
+				"The system is:" << endl;
+		D->print_tight();
+		}
+
+#if 0
+	if (f_save_system) {
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << endl;
+		D->save_in_general_format(fname_system, 0 /* verbose_level */);
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << " done" << endl;
+		D->print();
+		D->print_tight();
+		}
+#endif
+
+	FREE_int(other_lines);
+
+	if (f_v) {
+		cout << "projective_space::arc_with_given_set_of_s_lines_diophant done" << endl;
+		}
+
+}
+
 
 void projective_space::rearrange_arc_for_lifting(int *Arc6,
 		int P1, int P2, int partition_rk, int *arc,
@@ -7562,7 +7683,8 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 				"hyperplane_W0_fixing_two_lines "
 				"A3:" << endl;
 		int_matrix_print(A3, 3, 3);
-		cout << "f_semilinear = " << f_semilinear << " frobenius=" << frobenius << endl;
+		cout << "f_semilinear = " << f_semilinear
+				<< " frobenius=" << frobenius << endl;
 	}
 	m1 = F->negate(1);
 	unrank_line(Line1, line1);
@@ -7636,7 +7758,8 @@ void projective_space::lifted_action_on_hyperplane_W0_fixing_two_lines(
 	if (f_semilinear) {
 		if (f_v) {
 			cout << "projective_space::lifted_action_on_"
-					"hyperplane_W0_fixing_two_lines applying frobenius" << endl;
+					"hyperplane_W0_fixing_two_lines "
+					"applying frobenius" << endl;
 		}
 		F->vector_frobenius_power_in_place(P1A, 3, frobenius);
 		F->vector_frobenius_power_in_place(P2A, 3, frobenius);

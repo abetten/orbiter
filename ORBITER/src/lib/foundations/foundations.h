@@ -351,6 +351,7 @@ class file_io;
 class table_of_irreducible_polynomials;
 class set_of_sets_lint;
 class classify_vector_data;
+class clebsch_map;
 
 
 #ifdef MEMORY_DEBUG

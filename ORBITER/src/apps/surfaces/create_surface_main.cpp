@@ -23,6 +23,10 @@ using namespace orbiter::top_level;
 int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
+void polynomial_orbits_callback_print_function(
+		stringstream &ost, void *data, void *callback_data);
+void polynomial_orbits_callback_print_function2(
+		stringstream &ost, void *data, void *callback_data);
 
 int main(int argc, const char **argv)
 {
@@ -35,6 +39,7 @@ int main(int argc, const char **argv)
 	int f_inverse_transform[1000];
 	int f_quartic = FALSE;
 	int f_clebsch = FALSE;
+	int f_codes = FALSE;
 
 	t0 = os_ticks();
 
@@ -72,6 +77,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-clebsch") == 0) {
 			f_clebsch = TRUE;
 			cout << "-clebsch " << endl;
+			}
+		else if (strcmp(argv[i], "-codes") == 0) {
+			f_codes = TRUE;
+			cout << "-codes " << endl;
 			}
 		}
 	if (!f_description) {
@@ -190,15 +199,15 @@ int main(int argc, const char **argv)
 				cout << "error, the transformation does not preserve "
 						"the equation of the surface" << endl;
 				exit(1);
-				}
+			}
 			cout << "Generator " << i << " / " << SC->Sg->gens->len
 					<< " is good" << endl;
-			}
 		}
+	}
 	else {
 		cout << "We do not have information about "
 				"the automorphism group" << endl;
-		}
+	}
 
 
 	cout << "We have created the surface " << SC->label_txt << ":" << endl;
@@ -391,6 +400,74 @@ int main(int argc, const char **argv)
 				Six_arcs->report_latex(fp);
 
 
+				if (f_codes) {
+
+					homogeneous_polynomial_domain *HPD;
+
+					HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+					HPD->init(F, 3, 2 /* degree */,
+							TRUE /* f_init_incidence_structure */,
+							verbose_level);
+
+					action *A_on_poly;
+
+					A_on_poly = NEW_OBJECT(action);
+					A_on_poly->induced_action_on_homogeneous_polynomials(A,
+						HPD,
+						FALSE /* f_induce_action */, NULL,
+						verbose_level);
+
+					cout << "created action A_on_poly" << endl;
+					A_on_poly->print_info();
+
+					schreier *Sch;
+					longinteger_object full_go;
+
+					//Sch = new schreier;
+					//A2->all_point_orbits(*Sch, verbose_level);
+
+					cout << "computing orbits:" << endl;
+
+					Sch = A->Strong_gens->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+					//SC->Sg->
+					//Sch = SC->Sg->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+					orbit_transversal *T;
+
+					A->group_order(full_go);
+					T = NEW_OBJECT(orbit_transversal);
+
+					cout << "before T->init_from_schreier" << endl;
+
+					T->init_from_schreier(
+							Sch,
+							A,
+							full_go,
+							verbose_level);
+
+					cout << "after T->init_from_schreier" << endl;
+
+					Sch->print_orbit_reps(cout);
+
+					cout << "orbit reps:" << endl;
+
+					fp << "\\section{Orbits on conics}" << endl;
+					fp << endl;
+
+					T->print_table_latex(
+							fp,
+							TRUE /* f_has_callback */,
+							polynomial_orbits_callback_print_function2,
+							HPD /* callback_data */,
+							TRUE /* f_has_callback */,
+							polynomial_orbits_callback_print_function,
+							HPD /* callback_data */,
+							verbose_level);
+
+
+				}
 
 
 #if 0
@@ -544,7 +621,7 @@ int main(int argc, const char **argv)
 #endif
 
 
-#if 1
+#if 0
 				fp << endl;
 				fp << "\\clearpage" << endl;
 				fp << endl;
@@ -773,4 +850,50 @@ int main(int argc, const char **argv)
 	the_end(t0);
 	//the_end_quietly(t0);
 }
+
+
+void polynomial_orbits_callback_print_function(
+		stringstream &ost, void *data, void *callback_data)
+{
+	homogeneous_polynomial_domain *HPD =
+			(homogeneous_polynomial_domain *) callback_data;
+
+	int *coeff;
+	int *i_data = (int *) data;
+
+	coeff = NEW_int(HPD->nb_monomials);
+	HPD->unrank_coeff_vector(coeff, i_data[0]);
+	//int_vec_print(cout, coeff, HPD->nb_monomials);
+	//cout << " = ";
+	HPD->print_equation_str(ost, coeff);
+	//ost << endl;
+	FREE_int(coeff);
+}
+
+void polynomial_orbits_callback_print_function2(
+		stringstream &ost, void *data, void *callback_data)
+{
+	homogeneous_polynomial_domain *HPD =
+			(homogeneous_polynomial_domain *) callback_data;
+
+	int *coeff;
+	int *i_data = (int *) data;
+	int *Pts;
+	int nb_pts;
+
+	Pts = NEW_int(HPD->P->N_points);
+	coeff = NEW_int(HPD->nb_monomials);
+	HPD->unrank_coeff_vector(coeff, i_data[0]);
+	HPD->enumerate_points(coeff, Pts, nb_pts,  0 /*verbose_level*/);
+	ost << nb_pts;
+	//int_vec_print(cout, coeff, HPD->nb_monomials);
+	//cout << " = ";
+	//HPD->print_equation_str(ost, coeff);
+	//ost << endl;
+	FREE_int(coeff);
+	FREE_int(Pts);
+}
+
+
+
 

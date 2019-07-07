@@ -364,6 +364,11 @@ public:
 	int *intersect_with_set_from_file_set;
 	int intersect_with_set_from_file_set_size;
 
+	int f_arc_with_given_set_as_s_lines_after_dualizing;
+	int arc_size;
+	int arc_d;
+	int arc_s;
+
 
 
 	projective_space_job_description();
