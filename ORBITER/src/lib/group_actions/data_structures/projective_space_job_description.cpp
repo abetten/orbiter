@@ -108,7 +108,23 @@ projective_space_job_description::projective_space_job_description()
 	f_arc_with_given_set_as_s_lines_after_dualizing = FALSE;
 	arc_size = 0;
 	arc_d = 0;
+	arc_d_low = 0;
 	arc_s = 0;
+
+	f_arc_with_two_given_sets_of_lines_after_dualizing = FALSE;
+	//int arc_size;
+	//int arc_d;
+	arc_t = 0;
+	t_lines_string = NULL;
+	t_lines = NULL;
+	nb_t_lines = 0;
+
+
+	f_arc_with_three_given_sets_of_lines_after_dualizing = FALSE;
+	arc_u = 0;
+	u_lines_string = NULL;
+	u_lines = NULL;
+	nb_u_lines = 0;
 
 
 }
@@ -331,6 +347,42 @@ int projective_space_job_description::read_arguments(
 			cout << "projective_space_job_description::read_arguments -arc_with_given_set_as_s_lines_after_dualizing "
 					<< arc_size << " " << arc_d << " " << arc_s << endl;
 		}
+		else if (strcmp(argv[i], "-arc_with_two_given_sets_of_lines_after_dualizing") == 0) {
+			f_arc_with_two_given_sets_of_lines_after_dualizing = TRUE;
+			arc_size = atoi(argv[++i]);
+			arc_d = atoi(argv[++i]);
+			arc_s = atoi(argv[++i]);
+			arc_t = atoi(argv[++i]);
+			t_lines_string = argv[++i];
+			int_vec_scan(t_lines_string, t_lines, nb_t_lines);
+			cout << "projective_space_job_description::read_arguments -arc_with_two_given_sets_of_lines_after_dualizing "
+					<< arc_size << " " << arc_d << " " << arc_s << " " << arc_t << " ";
+			int_vec_print(cout, t_lines, nb_t_lines);
+			cout << endl;
+		}
+		else if (strcmp(argv[i], "-arc_with_three_given_sets_of_lines_after_dualizing") == 0) {
+			f_arc_with_three_given_sets_of_lines_after_dualizing = TRUE;
+			arc_size = atoi(argv[++i]);
+			arc_d = atoi(argv[++i]);
+			arc_d_low = atoi(argv[++i]);
+			arc_s = atoi(argv[++i]);
+			arc_t = atoi(argv[++i]);
+			t_lines_string = argv[++i];
+			arc_u = atoi(argv[++i]);
+			u_lines_string = argv[++i];
+			int_vec_scan(t_lines_string, t_lines, nb_t_lines);
+			int_vec_scan(u_lines_string, u_lines, nb_u_lines);
+			cout << "projective_space_job_description::read_arguments -arc_with_three_given_sets_of_lines_after_dualizing "
+					<< arc_size << " " << arc_d << " " << arc_d_low << " " << arc_s << endl;
+			cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
+			cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
+			cout << "The t-lines, t=" << arc_t << " are ";
+			int_vec_print(cout, t_lines, nb_t_lines);
+			cout << endl;
+			cout << "The u-lines, u=" << arc_u << " are ";
+			int_vec_print(cout, u_lines, nb_u_lines);
+			cout << endl;
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "projective_space_job_description::read_arguments -end" << endl;
 			break;
@@ -338,6 +390,7 @@ int projective_space_job_description::read_arguments(
 		else {
 			cout << "projective_space_job_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	cout << "projective_space_job_description::read_arguments done" << endl;
@@ -1022,6 +1075,145 @@ void projective_space_job_description::perform_job_for_one_set(
 		PA->P->arc_with_given_set_of_s_lines_diophant(
 				the_set_in /*one_lines*/, set_size_in /* nb_one_lines */,
 				arc_size /*target_sz*/, arc_d /* target_d */, arc_s /* target_s */,
+				TRUE /* f_dualize */,
+				D,
+				verbose_level);
+
+		if (f_save_system) {
+			char fname_system[1000];
+
+			sprintf(fname_system, "system_%d.diophant", back_end_counter);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << endl;
+			D->save_in_general_format(fname_system, 0 /* verbose_level */);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << " done" << endl;
+			D->print();
+			D->print_tight();
+			}
+
+		long int nb_backtrack_nodes;
+		int *Sol;
+		int nb_sol;
+
+		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
+
+		if (f_v) {
+			cout << "before D->get_solutions" << endl;
+			}
+		D->get_solutions(Sol, nb_sol, verbose_level);
+		if (f_v) {
+			cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
+			}
+		char fname_solutions[1000];
+
+		sprintf(fname_solutions, "system_%d.solutions", back_end_counter);
+
+		{
+			ofstream fp(fname_solutions);
+			int i, j, a;
+
+			for (i = 0; i < nb_sol; i++) {
+				fp << D->sum;
+				for (j = 0; j < D->sum; j++) {
+					a = Sol[i * D->sum + j];
+					fp << " " << a;
+					}
+				fp << endl;
+				}
+			fp << -1 << " " << nb_sol << endl;
+		}
+		file_io Fio;
+
+		cout << "Written file " << fname_solutions << " of size "
+				<< Fio.file_size(fname_solutions) << endl;
+		FREE_int(Sol);
+
+
+	}
+	else if (f_arc_with_two_given_sets_of_lines_after_dualizing) {
+		if (f_v) {
+			cout << "perform_job_for_one_set f_arc_with_two_given_sets_of_lines_after_dualizing" << endl;
+		}
+		//int arc_size;
+		//int arc_d;
+		diophant *D = NULL;
+		int f_save_system = TRUE;
+
+		PA->P->arc_with_two_given_line_sets_diophant(
+				the_set_in /* s_lines */, set_size_in /* nb_s_lines */, arc_s,
+				t_lines, nb_t_lines, arc_t,
+				arc_size /*target_sz*/, arc_d /* target_d */,
+				TRUE /* f_dualize */,
+				D,
+				verbose_level);
+
+		if (f_save_system) {
+			char fname_system[1000];
+
+			sprintf(fname_system, "system_%d.diophant", back_end_counter);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << endl;
+			D->save_in_general_format(fname_system, 0 /* verbose_level */);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << " done" << endl;
+			D->print();
+			D->print_tight();
+			}
+
+		long int nb_backtrack_nodes;
+		int *Sol;
+		int nb_sol;
+
+		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
+
+		if (f_v) {
+			cout << "before D->get_solutions" << endl;
+			}
+		D->get_solutions(Sol, nb_sol, verbose_level);
+		if (f_v) {
+			cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
+			}
+		char fname_solutions[1000];
+
+		sprintf(fname_solutions, "system_%d.solutions", back_end_counter);
+
+		{
+			ofstream fp(fname_solutions);
+			int i, j, a;
+
+			for (i = 0; i < nb_sol; i++) {
+				fp << D->sum;
+				for (j = 0; j < D->sum; j++) {
+					a = Sol[i * D->sum + j];
+					fp << " " << a;
+					}
+				fp << endl;
+				}
+			fp << -1 << " " << nb_sol << endl;
+		}
+		file_io Fio;
+
+		cout << "Written file " << fname_solutions << " of size "
+				<< Fio.file_size(fname_solutions) << endl;
+		FREE_int(Sol);
+
+
+	}
+	else if (f_arc_with_three_given_sets_of_lines_after_dualizing) {
+		if (f_v) {
+			cout << "perform_job_for_one_set f_arc_with_three_given_sets_of_lines_after_dualizing" << endl;
+		}
+		//int arc_size;
+		//int arc_d;
+		diophant *D = NULL;
+		int f_save_system = TRUE;
+
+		PA->P->arc_with_three_given_line_sets_diophant(
+				the_set_in /* s_lines */, set_size_in /* nb_s_lines */, arc_s,
+				t_lines, nb_t_lines, arc_t,
+				u_lines, nb_u_lines, arc_u,
+				arc_size /*target_sz*/, arc_d, arc_d_low,
 				TRUE /* f_dualize */,
 				D,
 				verbose_level);

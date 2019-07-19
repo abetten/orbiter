@@ -476,7 +476,7 @@ public:
 	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 		double *v, double angle_zero_one, std::ostream &ost);
 	void union_start(std::ostream &ost);
-	void union_end(std::ostream &ost, double clipping_radius);
+	void union_end(std::ostream &ost, double scale_factor, double clipping_radius);
 	void bottom_plane(std::ostream &ost);
 	void rotate_111(int h, int nb_frames, std::ostream &fp);
 	void ini(std::ostream &ost, const char *fname_pov, int first_frame,
@@ -943,6 +943,7 @@ public:
 	const char *location;
 	const char *look_at;
 
+	double scale_factor;
 
 	video_draw_options();
 	~video_draw_options();

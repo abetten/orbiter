@@ -415,9 +415,10 @@ enum object_in_projective_space_type {
 };
 
 enum diophant_equation_type {
-	t_EQ, 
-	t_LE,
-	t_ZOR
+	t_EQ, // equal to the given value
+	t_LE, // less than or equal to the given value
+	t_INT, // must be within the given interval
+	t_ZOR // zero or equal to the given value
 }; 
 
 typedef enum diophant_equation_type diophant_equation_type;

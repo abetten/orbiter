@@ -2516,6 +2516,21 @@ public:
 		int f_dualize,
 		diophant *&D,
 		int verbose_level);
+	void arc_with_two_given_line_sets_diophant(
+			int *s_lines, int nb_s_lines, int arc_s,
+			int *t_lines, int nb_t_lines, int arc_t,
+			int target_sz, int arc_d,
+			int f_dualize,
+			diophant *&D,
+			int verbose_level);
+	void arc_with_three_given_line_sets_diophant(
+			int *s_lines, int nb_s_lines, int arc_s,
+			int *t_lines, int nb_t_lines, int arc_t,
+			int *u_lines, int nb_u_lines, int arc_u,
+			int target_sz, int arc_d, int arc_d_low,
+			int f_dualize,
+			diophant *&D,
+			int verbose_level);
 	void rearrange_arc_for_lifting(int *Arc6,
 			int P1, int P2, int partition_rk, int *arc,
 			int verbose_level);
