@@ -63,7 +63,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 	
 	Gen = NEW_OBJECT(arc_generator);
 
-	Gen->f_poly = FALSE;
+	//Gen->f_poly = FALSE;
 
 	Gen->d = 2; // we will classify two-arcs
 
@@ -82,7 +82,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 				"before Gen->init" << endl;
 		}
 	Gen->init(F, 
-		A,
+		A, A->Strong_gens,
 		"" /* Gen->ECA->input_prefix */, 
 		"" /* Gen->ECA->base_fname */,
 		6 /* Gen->ECA->starter_size */, 

@@ -23,8 +23,8 @@ class arc_generator {
 public:
 
 	int q;
-	int f_poly;
-	const char *poly;
+	//int f_poly;
+	//const char *poly;
 	finite_field *F;
 	int argc;
 	const char **argv;
@@ -65,7 +65,14 @@ public:
 
 	int f_semilinear;
 
+	int f_has_forbidden_point_set;
+	const char *forbidden_points_string;
+	int *forbidden_points;
+	int nb_forbidden_points;
+	int *f_is_forbidden;
+
 	action *A;
+	strong_generators *SG;
 	
 	grassmann *Grass;
 	action_on_grassmannian *AG;
@@ -77,8 +84,13 @@ public:
 	
 	int f_d;
 	int d;
+	// d is the degree of the arc.
+
 	int f_n;
 	int n;
+	// n is the size of the arc
+
+
 	int *line_type; // [P2->N_lines]
 
 		
@@ -95,7 +107,7 @@ public:
 	void read_arguments(int argc, const char **argv);
 	void main(int verbose_level);
 	void init(finite_field *F,
-		action *A,
+		action *A, strong_generators *SG,
 		const char *starter_directory_name,
 		const char *base_fname,
 		int starter_size,  

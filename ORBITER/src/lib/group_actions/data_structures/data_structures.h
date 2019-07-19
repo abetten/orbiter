@@ -367,7 +367,21 @@ public:
 	int f_arc_with_given_set_as_s_lines_after_dualizing;
 	int arc_size;
 	int arc_d;
+	int arc_d_low;
 	int arc_s;
+
+	int f_arc_with_two_given_sets_of_lines_after_dualizing;
+	int arc_t;
+	const char *t_lines_string;
+	int *t_lines;
+	int nb_t_lines;
+
+	int f_arc_with_three_given_sets_of_lines_after_dualizing;
+	int arc_u;
+	const char *u_lines_string;
+	int *u_lines;
+	int nb_u_lines;
+
 
 
 

@@ -23,6 +23,8 @@ namespace foundations {
 //! t_EQ: equality, the sum in row i on the left must equal RHS[i]
 //! t_LE: inequality, the sum in row i on the left must
 //!         be less than or equal to RHS[i]
+//! t_INT: interval, the sum in row i on the left must
+//!         be in the closed interval RHS_low[i] and RHS[i].
 //! t_ZOR: Zero or otherwise: the sum in row i on the left must
 //!         be zero or equal to RHS[i]
 //! Here, the sum on the left in row i means
@@ -46,6 +48,8 @@ public:
 	int *x_max; // [n] upper bounds for x
 	int *x; // [n]  current value of x
 	int *RHS; // [m] the right hand sides
+	int *RHS_low; // [m] the minimum for the right hand side
+		// this is used only in the McKay solver
 	int *RHS1;
 		// [m] he current values of the RHS 
 		// (=RHS - what is chosen on the left
@@ -95,6 +99,7 @@ public:
 	int &Aij(int i, int j);
 	int &Gij(int i, int j);
 	int &RHSi(int i);
+	int &RHS_low_i(int i);
 	void init_eqn_label(int i, char *label);
 	void print();
 	void print_tight();

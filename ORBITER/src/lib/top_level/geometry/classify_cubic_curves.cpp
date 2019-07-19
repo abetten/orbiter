@@ -99,7 +99,7 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 
 
 	Arc_gen->init(F,
-			A,
+			A, A->Strong_gens,
 			starter_directory_name,
 			base_fname,
 			9 /* starter_size */,

@@ -154,6 +154,7 @@ int data_input_stream::read_arguments(
 			}
 		else {
 			cout << "data_input_stream::read_arguments unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	cout << "data_input_stream::read_arguments done" << endl;

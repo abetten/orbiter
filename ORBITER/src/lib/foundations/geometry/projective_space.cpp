@@ -7378,7 +7378,8 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 
 	if (f_dualize) {
 		if (Polarity_point_to_hyperplane == NULL) {
-			cout << "projective_space::arc_with_given_set_of_s_lines_diophant Polarity_point_to_hyperplane == NULL" << endl;
+			cout << "projective_space::arc_with_given_set_of_s_lines_diophant "
+					"Polarity_point_to_hyperplane == NULL" << endl;
 			exit(1);
 		}
 	}
@@ -7431,6 +7432,8 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 			}
 		D->type[h] = t_LE;
 		D->RHSi(h) = arc_d;
+		//D->type[h] = t_LE;
+		//D->RHSi(h) = arc_d;
 		h++;
 		}
 
@@ -7469,6 +7472,332 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 
 	if (f_v) {
 		cout << "projective_space::arc_with_given_set_of_s_lines_diophant done" << endl;
+		}
+
+}
+
+
+void projective_space::arc_with_two_given_line_sets_diophant(
+		int *s_lines, int nb_s_lines, int arc_s,
+		int *t_lines, int nb_t_lines, int arc_t,
+		int target_sz, int arc_d,
+		int f_dualize,
+		diophant *&D,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, h, a, line;
+	int *other_lines;
+	int nb_other_lines;
+	combinatorics_domain Combi;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "projective_space::arc_with_two_given_line_sets_diophant" << endl;
+		}
+
+	other_lines = NEW_int(N_points);
+
+	int_vec_copy(s_lines, other_lines, nb_s_lines);
+	int_vec_copy(t_lines, other_lines + nb_s_lines, nb_t_lines);
+	Sorting.int_vec_heapsort(other_lines, nb_s_lines + nb_t_lines);
+
+	Combi.set_complement(other_lines, nb_s_lines + nb_t_lines,
+			other_lines + nb_s_lines + nb_t_lines, nb_other_lines, N_lines);
+
+
+	if (f_dualize) {
+		if (Polarity_point_to_hyperplane == NULL) {
+			cout << "projective_space::arc_with_two_given_line_sets_diophant "
+					"Polarity_point_to_hyperplane == NULL" << endl;
+			exit(1);
+		}
+	}
+
+
+	D = NEW_OBJECT(diophant);
+	D->open(N_lines + 1, N_points);
+	D->f_x_max = TRUE;
+	for (j = 0; j < N_points; j++) {
+		D->x_max[j] = 1;
+		}
+	D->f_has_sum = TRUE;
+	D->sum = target_sz;
+	h = 0;
+	for (i = 0; i < nb_s_lines; i++) {
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[s_lines[i]];
+		}
+		else {
+			line = s_lines[i];
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_s;
+		h++;
+		}
+	for (i = 0; i < nb_t_lines; i++) {
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[t_lines[i]];
+		}
+		else {
+			line = t_lines[i];
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_t;
+		h++;
+		}
+	for (i = 0; i < nb_other_lines; i++) {
+		int l;
+
+		l = other_lines[nb_s_lines + nb_t_lines + i];
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[l];
+		}
+		else {
+			line = l;
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_LE;
+		D->RHSi(h) = arc_d;
+		h++;
+		}
+
+
+	// add one extra row:
+	for (j = 0; j < N_points; j++) {
+		D->Aij(h, j) = 1;
+		}
+	D->type[h] = t_EQ;
+	D->RHSi(h) = target_sz;
+	h++;
+
+	D->m = h;
+
+	//D->init_var_labels(N_points, verbose_level);
+
+	if (f_vv) {
+		cout << "projective_space::arc_with_two_given_line_sets_diophant "
+				"The system is:" << endl;
+		D->print_tight();
+		}
+
+#if 0
+	if (f_save_system) {
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << endl;
+		D->save_in_general_format(fname_system, 0 /* verbose_level */);
+		cout << "do_arc_lifting saving the system "
+				"to file " << fname_system << " done" << endl;
+		D->print();
+		D->print_tight();
+		}
+#endif
+
+	FREE_int(other_lines);
+
+	if (f_v) {
+		cout << "projective_space::arc_with_two_given_line_sets_diophant done" << endl;
+		}
+
+}
+
+void projective_space::arc_with_three_given_line_sets_diophant(
+		int *s_lines, int nb_s_lines, int arc_s,
+		int *t_lines, int nb_t_lines, int arc_t,
+		int *u_lines, int nb_u_lines, int arc_u,
+		int target_sz, int arc_d, int arc_d_low,
+		int f_dualize,
+		diophant *&D,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, h, a, line;
+	int *other_lines;
+	int nb_other_lines;
+	combinatorics_domain Combi;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "projective_space::arc_with_three_given_line_sets_diophant" << endl;
+		}
+
+	other_lines = NEW_int(N_points);
+
+	int_vec_copy(s_lines, other_lines, nb_s_lines);
+	int_vec_copy(t_lines, other_lines + nb_s_lines, nb_t_lines);
+	int_vec_copy(u_lines, other_lines + nb_s_lines + nb_t_lines, nb_u_lines);
+	Sorting.int_vec_heapsort(other_lines, nb_s_lines + nb_t_lines + nb_u_lines);
+
+	Combi.set_complement(other_lines, nb_s_lines + nb_t_lines + nb_u_lines,
+			other_lines + nb_s_lines + nb_t_lines + nb_u_lines, nb_other_lines, N_lines);
+
+
+	if (f_dualize) {
+		if (Polarity_point_to_hyperplane == NULL) {
+			cout << "projective_space::arc_with_three_given_line_sets_diophant "
+					"Polarity_point_to_hyperplane == NULL" << endl;
+			exit(1);
+		}
+	}
+
+
+	D = NEW_OBJECT(diophant);
+	D->open(N_lines + 1, N_points);
+	D->f_x_max = TRUE;
+	for (j = 0; j < N_points; j++) {
+		D->x_max[j] = 1;
+		}
+	D->f_has_sum = TRUE;
+	D->sum = target_sz;
+	h = 0;
+	for (i = 0; i < nb_s_lines; i++) {
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[s_lines[i]];
+		}
+		else {
+			line = s_lines[i];
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_s;
+		h++;
+		}
+	for (i = 0; i < nb_t_lines; i++) {
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[t_lines[i]];
+		}
+		else {
+			line = t_lines[i];
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_t;
+		h++;
+		}
+	for (i = 0; i < nb_u_lines; i++) {
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[u_lines[i]];
+		}
+		else {
+			line = u_lines[i];
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_u;
+		h++;
+		}
+	for (i = 0; i < nb_other_lines; i++) {
+		int l;
+
+		l = other_lines[nb_s_lines + nb_t_lines + nb_u_lines + i];
+		if (f_dualize) {
+			line = Polarity_point_to_hyperplane[l];
+		}
+		else {
+			line = l;
+		}
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			D->Aij(h, j) = a;
+			}
+		D->type[h] = t_INT;
+		D->RHSi(h) = arc_d;
+		D->RHS_low_i(h) = arc_d_low;
+		h++;
+		}
+
+
+	// add one extra row:
+	for (j = 0; j < N_points; j++) {
+		D->Aij(h, j) = 1;
+		}
+	D->type[h] = t_EQ;
+	D->RHSi(h) = target_sz;
+	h++;
+
+	D->m = h;
+
+	//D->init_var_labels(N_points, verbose_level);
+
+	if (f_vv) {
+		cout << "projective_space::arc_with_three_given_line_sets_diophant "
+				"The system is:" << endl;
+		D->print_tight();
+		}
+
+#if 0
+	if (f_save_system) {
+		cout << "projective_space::arc_with_three_given_line_sets_diophant saving the system "
+				"to file " << fname_system << endl;
+		D->save_in_general_format(fname_system, 0 /* verbose_level */);
+		cout << "projective_space::arc_with_three_given_line_sets_diophant saving the system "
+				"to file " << fname_system << " done" << endl;
+		D->print();
+		D->print_tight();
+		}
+#endif
+
+	FREE_int(other_lines);
+
+	if (f_v) {
+		cout << "projective_space::arc_with_three_given_line_sets_diophant done" << endl;
 		}
 
 }

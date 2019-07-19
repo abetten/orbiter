@@ -77,7 +77,7 @@ void k_arc_generator::init(
 	
 	Gen = NEW_OBJECT(arc_generator);
 
-	Gen->f_poly = FALSE;
+	//Gen->f_poly = FALSE;
 
 	Gen->d = d; // we will classify d-arcs
 
@@ -118,7 +118,7 @@ void k_arc_generator::init(
 				"before Gen->init" << endl;
 		}
 	Gen->init(F, 
-		A,
+		A, A->Strong_gens,
 		"ARCS/" /* Gen->ECA->input_prefix */,
 		base_fname /* Gen->ECA->base_fname */,
 		sz /* Gen->ECA->starter_size */, 

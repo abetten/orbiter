@@ -343,9 +343,9 @@ int linear_group_description::read_arguments(
 				subgroup_generators_as_string[h] = argv[++i];
 			}
 			cout << "-subgroup_by_generators " << subgroup_label
-					<< " " << nb_subgroup_generators;
+					<< " " << nb_subgroup_generators << endl;
 			for (int h = 0; h < nb_subgroup_generators; h++) {
-				cout << " " << subgroup_generators_as_string[h];
+				cout << " " << subgroup_generators_as_string[h] << endl;
 			}
 			cout << endl;
 			}
