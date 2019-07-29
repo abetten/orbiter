@@ -343,20 +343,22 @@ int projective_space_job_description::read_arguments(
 			f_arc_with_given_set_as_s_lines_after_dualizing = TRUE;
 			arc_size = atoi(argv[++i]);
 			arc_d = atoi(argv[++i]);
+			arc_d_low = atoi(argv[++i]);
 			arc_s = atoi(argv[++i]);
 			cout << "projective_space_job_description::read_arguments -arc_with_given_set_as_s_lines_after_dualizing "
-					<< arc_size << " " << arc_d << " " << arc_s << endl;
+					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << endl;
 		}
 		else if (strcmp(argv[i], "-arc_with_two_given_sets_of_lines_after_dualizing") == 0) {
 			f_arc_with_two_given_sets_of_lines_after_dualizing = TRUE;
 			arc_size = atoi(argv[++i]);
 			arc_d = atoi(argv[++i]);
+			arc_d_low = atoi(argv[++i]);
 			arc_s = atoi(argv[++i]);
 			arc_t = atoi(argv[++i]);
 			t_lines_string = argv[++i];
 			int_vec_scan(t_lines_string, t_lines, nb_t_lines);
 			cout << "projective_space_job_description::read_arguments -arc_with_two_given_sets_of_lines_after_dualizing "
-					<< arc_size << " " << arc_d << " " << arc_s << " " << arc_t << " ";
+					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " ";
 			int_vec_print(cout, t_lines, nb_t_lines);
 			cout << endl;
 		}
@@ -373,7 +375,7 @@ int projective_space_job_description::read_arguments(
 			int_vec_scan(t_lines_string, t_lines, nb_t_lines);
 			int_vec_scan(u_lines_string, u_lines, nb_u_lines);
 			cout << "projective_space_job_description::read_arguments -arc_with_three_given_sets_of_lines_after_dualizing "
-					<< arc_size << " " << arc_d << " " << arc_d_low << " " << arc_s << endl;
+					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << endl;
 			cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
 			cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
 			cout << "The t-lines, t=" << arc_t << " are ";
@@ -1074,7 +1076,7 @@ void projective_space_job_description::perform_job_for_one_set(
 
 		PA->P->arc_with_given_set_of_s_lines_diophant(
 				the_set_in /*one_lines*/, set_size_in /* nb_one_lines */,
-				arc_size /*target_sz*/, arc_d /* target_d */, arc_s /* target_s */,
+				arc_size /*target_sz*/, arc_d /* target_d */, arc_d_low, arc_s /* target_s */,
 				TRUE /* f_dualize */,
 				D,
 				verbose_level);
@@ -1143,7 +1145,7 @@ void projective_space_job_description::perform_job_for_one_set(
 		PA->P->arc_with_two_given_line_sets_diophant(
 				the_set_in /* s_lines */, set_size_in /* nb_s_lines */, arc_s,
 				t_lines, nb_t_lines, arc_t,
-				arc_size /*target_sz*/, arc_d /* target_d */,
+				arc_size /*target_sz*/, arc_d, arc_d_low,
 				TRUE /* f_dualize */,
 				D,
 				verbose_level);

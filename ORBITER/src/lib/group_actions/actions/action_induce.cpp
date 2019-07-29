@@ -126,7 +126,7 @@ void action::init_action_on_lines(action *A,
 	sims S;
 	longinteger_object go1;
 
-	S.init(A);
+	S.init(A, verbose_level - 2);
 	S.init_generators(*A->Strong_gens->gens, 0/*verbose_level*/);
 	S.compute_base_orbits_known_length(
 			A->Stabilizer_chain->transversal_length, 0/*verbose_level - 1*/);
@@ -2430,7 +2430,7 @@ void action::induce(action *old_action, sims *old_G,
 					<< endl;
 			}
 		}
-	K->init(fallback_action);
+	K->init(fallback_action, verbose_level - 2);
 
 	if (f_v) {
 		cout << "action::induce before init_trivial_group" << endl;

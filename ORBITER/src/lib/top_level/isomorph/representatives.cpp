@@ -351,7 +351,7 @@ void representatives::read_representatives_and_stabilizers(
 			int_vec_print(cout, tl, A->Stabilizer_chain->base_len);
 			cout << endl;
 			}
-		Stab->init(A);
+		Stab->init(A, verbose_level - 2);
 		Stab->init_generators(gens, FALSE);
 		Stab->compute_base_orbits(0/*verbose_level - 5*/);
 		Stab->group_order(go);

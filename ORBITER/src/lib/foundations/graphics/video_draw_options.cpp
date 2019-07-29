@@ -124,6 +124,9 @@ video_draw_options::video_draw_options()
 
 	scale_factor = 1.;
 
+	f_line_radius = FALSE;
+	line_radius = 0.02;
+
 }
 
 video_draw_options::~video_draw_options()
@@ -371,6 +374,10 @@ int video_draw_options::read_arguments(
 			}
 		else if (strcmp(argv[i], "-scale_factor") == 0) {
 			scale_factor = atof(argv[++i]);
+		}
+		else if (strcmp(argv[i], "-line_radius") == 0) {
+			f_line_radius = TRUE;
+			line_radius = atof(argv[++i]);
 		}
 		else {
 			cout << "video_draw_options::read_arguments "

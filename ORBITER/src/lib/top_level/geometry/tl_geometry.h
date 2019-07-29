@@ -2293,6 +2293,8 @@ public:
 	int f_arc_lifting;
 	const char *arc_lifting_text;
 	int f_arc_lifting_with_two_lines;
+	int f_select_double_six;
+	const char *select_double_six_string;
 
 	
 	surface_create_description();
