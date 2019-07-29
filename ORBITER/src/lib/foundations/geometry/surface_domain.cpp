@@ -1902,25 +1902,11 @@ void surface_domain::make_trihedral_pairs(int *&T,
 	// the first type (20 of them):
 	for (h = 0; h < 20; h++, idx++) {
 		Combi.unrank_k_subset(h, subset, 6, 3);
-#if 0
-		if (h == 16) {
-			cout << "h=16: subset=";
-			int_vec_print(cout, subset, 3);
-			cout << endl;
-			}
-#endif
 		sprintf(label, "%d%d%d", subset[0] + 1, subset[1] + 1, subset[2] + 1);
 
 		make_Tijk(T + idx * 9, subset[0], subset[1], subset[2]);
 		T_label[idx] = NEW_char(strlen(label) + 1);
 		strcpy(T_label[idx], label);
-#if 0
-		if (h == 16) {
-			cout << "h=16:T=";
-			int_vec_print(cout, T + idx * 9, 9);
-			cout << endl;
-			}
-#endif
 		}
 
 	// the second type (90 of them):
@@ -2175,21 +2161,7 @@ void surface_domain::init_Trihedral_to_Eckardt(int verbose_level)
 				tritangent_plane[j] = 
 					Trihedral_pairs[t * 9 + i * 3 + j];
 				}
-#if 0
-			if (t == 111) {
-				cout << "surface_domain::init_Trihedral_to_Eckardt "
-						"t=" << t << " tritangent_plane row "
-						<< i << " = ";
-				int_vec_print(cout, tritangent_plane, 3);
-				cout << endl;
-				}
-#endif
 			rk = Eckardt_point_from_tritangent_plane(tritangent_plane);
-#if 0
-			if (t == 111) {
-				cout << "rk=" << rk << endl;
-				}
-#endif
 			Trihedral_to_Eckardt[t * 6 + i] = rk;
 			}
 		for (j = 0; j < 3; j++) {
@@ -2197,21 +2169,8 @@ void surface_domain::init_Trihedral_to_Eckardt(int verbose_level)
 				tritangent_plane[i] = 
 					Trihedral_pairs[t * 9 + i * 3 + j];
 				}
-#if 0
-			if (t == 5) {
-				cout << "surface_domain::init_Trihedral_to_Eckardt "
-						"tritangent_plane=";
-				int_vec_print(cout, tritangent_plane, 3);
-				cout << endl;
-				}
-#endif
 			rk = Eckardt_point_from_tritangent_plane(
 				tritangent_plane);
-#if 0
-			if (t == 5) {
-				cout << "rk=" << rk << endl;
-				}
-#endif
 			Trihedral_to_Eckardt[t * 6 + 3 + j] = rk;
 			}
 		}

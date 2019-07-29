@@ -945,6 +945,9 @@ public:
 
 	double scale_factor;
 
+	int f_line_radius;
+	double line_radius;
+
 	video_draw_options();
 	~video_draw_options();
 	int read_arguments(

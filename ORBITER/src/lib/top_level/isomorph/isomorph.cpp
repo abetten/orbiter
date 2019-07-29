@@ -777,7 +777,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 				"generators as permutations (skipped)" << endl;
 		//gens.print_as_permutation(cout);
 		}	
-	S->init(A_base);
+	S->init(A_base, verbose_level - 2);
 	S->init_generators(gens, FALSE);
 	S->compute_base_orbits(0 /*verbose_level - 2*/);
 	S->group_order(S_go);
@@ -1134,7 +1134,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 		}
 
 	
-	S->init(A_base);
+	S->init(A_base, verbose_level - 2);
 	S->init_generators(*gens, FALSE);
 	S->compute_base_orbits(0/*verbose_level - 4*/);
 	

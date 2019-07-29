@@ -7353,8 +7353,8 @@ void projective_space::arc_lifting_diophant(
 }
 
 void projective_space::arc_with_given_set_of_s_lines_diophant(
-	int *one_lines, int nb_one_lines,
-	int target_sz, int arc_d, int arc_s,
+	int *s_lines, int nb_s_lines,
+	int target_sz, int arc_d, int arc_d_low, int arc_s,
 	int f_dualize,
 	diophant *&D,
 	int verbose_level)
@@ -7372,7 +7372,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 
 	other_lines = NEW_int(N_points);
 
-	Combi.set_complement(one_lines, nb_one_lines,
+	Combi.set_complement(s_lines, nb_s_lines,
 			other_lines, nb_other_lines, N_lines);
 
 
@@ -7394,12 +7394,12 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 	D->f_has_sum = TRUE;
 	D->sum = target_sz;
 	h = 0;
-	for (i = 0; i < nb_one_lines; i++) {
+	for (i = 0; i < nb_s_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[one_lines[i]];
+			line = Polarity_point_to_hyperplane[s_lines[i]];
 		}
 		else {
-			line = one_lines[i];
+			line = s_lines[i];
 		}
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
@@ -7430,8 +7430,9 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 				}
 			D->Aij(h, j) = a;
 			}
-		D->type[h] = t_LE;
+		D->type[h] = t_INT;
 		D->RHSi(h) = arc_d;
+		D->RHS_low_i(h) = arc_d_low;
 		//D->type[h] = t_LE;
 		//D->RHSi(h) = arc_d;
 		h++;
@@ -7480,7 +7481,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 void projective_space::arc_with_two_given_line_sets_diophant(
 		int *s_lines, int nb_s_lines, int arc_s,
 		int *t_lines, int nb_t_lines, int arc_t,
-		int target_sz, int arc_d,
+		int target_sz, int arc_d, int arc_d_low,
 		int f_dualize,
 		diophant *&D,
 		int verbose_level)
@@ -7584,8 +7585,11 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 				}
 			D->Aij(h, j) = a;
 			}
-		D->type[h] = t_LE;
+		D->type[h] = t_INT;
 		D->RHSi(h) = arc_d;
+		D->RHS_low_i(h) = arc_d_low;
+		//D->type[h] = t_LE;
+		//D->RHSi(h) = arc_d;
 		h++;
 		}
 

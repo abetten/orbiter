@@ -708,9 +708,9 @@ finish:
 					"has order " << go2 << endl;
 			}
 		
-		Aut.init(this);
+		Aut.init(this, verbose_level - 2);
 		Aut.init_trivial_group(verbose_level - 1);
-		K.init(this);
+		K.init(this, verbose_level - 2);
 		K.init_trivial_group(verbose_level - 1);
 		
 		

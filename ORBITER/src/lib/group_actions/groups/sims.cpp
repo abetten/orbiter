@@ -50,9 +50,9 @@ void sims::null()
 	schreier_gen1 = NULL;
 }
 
-sims::sims(action *A)
+sims::sims(action *A, int verbose_level)
 {
-	init(A);
+	init(A, verbose_level);
 }
 
 sims::~sims()
@@ -226,14 +226,31 @@ void sims::images_append()
 #endif
 }
 
-void sims::init(action *A)
+void sims::init(action *A, int verbose_level)
 // initializes the trivial group with the base as given in A
 {
 	int i;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::init" << endl;
+	}
 	
+	if (f_v) {
+		cout << "sims::init before init_without_base" << endl;
+	}
 	init_without_base(A);
+	if (f_v) {
+		cout << "sims::init after init_without_base" << endl;
+	}
 	
-	my_base_len = A->Stabilizer_chain->base_len;
+	if (A->Stabilizer_chain) {
+		my_base_len = A->Stabilizer_chain->base_len;
+	}
+	else {
+		cout << "sims::init A->Stabilizer_chain == NULL, setting my_base_len to degree" << endl;
+		my_base_len = A->degree;
+	}
 	
 	orbit = NEW_pint(my_base_len);
 	orbit_inv = NEW_pint(my_base_len);
@@ -263,6 +280,9 @@ void sims::init(action *A)
 	for (i = 0; i < my_base_len; i++) {
 		initialize_table(i);
 		}
+	if (f_v) {
+		cout << "sims::init done" << endl;
+	}
 	
 }
 
@@ -402,6 +422,10 @@ void sims::init_trivial_group(int verbose_level)
 	if (f_v) {
 		cout << "sims::init_trivial_group" << endl;
 		}
+	if (A->Stabilizer_chain == NULL) {
+		cout << "sims::init_trivial_group A->Stabilizer_chain == NULL" << endl;
+		return;
+	}
 	if (my_base_len != A->Stabilizer_chain->base_len) {
 		cout << "sims::init_trivial_group: "
 				"my_base_len != A->base_len" << endl;
@@ -2570,7 +2594,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 			cout << "sims::point_stabilizer_stabchain_with_action "
 					"stabilizer is trivial, finished" << endl;
 			}
-		S.init(A);
+		S.init(A, verbose_level - 2);
 		S.init_trivial_group(verbose_level - 1);
 #if 0
 		for (i = 0; i < A->base_len; i++) {
@@ -2589,7 +2613,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 	//int drop_out_level, image;
 	int *p_schreier_gen;
 	
-	S.init(A);
+	S.init(A, verbose_level - 2);
 	S.init_generators(stab_gens, verbose_level - 2);
 	S.compute_base_orbits(verbose_level - 1);
 	if (FALSE) {
@@ -3269,7 +3293,7 @@ void sims::build_up_group_random_process_no_kernel(
 	if (f_v) {
 		cout << "target group order = " << go << endl;
 		}
-	K.init(A);
+	K.init(A, verbose_level - 2);
 	K.init_trivial_group(verbose_level - 1);
 	K.group_order(go1);
 	if (f_v) {
@@ -3310,7 +3334,7 @@ void sims::extend_group_random_process_no_kernel(
 		cout << "target group order = " << target_go << endl;
 		}
 	
-	K.init(A);
+	K.init(A, verbose_level - 2);
 	K.init_trivial_group(verbose_level - 1);
 	build_up_group_random_process(
 		&K,
@@ -3351,7 +3375,7 @@ void sims::conjugate(action *A,
 	Elt3 = NEW_int(A->elt_size_in_int);
 	Elt4 = NEW_int(A->elt_size_in_int);
 	Elt5 = NEW_int(A->elt_size_in_int);
-	init(A);
+	init(A, verbose_level - 2);
 	init_trivial_group(verbose_level - 1);
 	group_order(go);
 	old_G->group_order(target_go);
@@ -4987,7 +5011,7 @@ void sims::read_list_of_elements(action *A, char *fname,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	init(A);
+	init(A, verbose_level - 2);
 	init_trivial_group(verbose_level - 1);
 
 #if 0
@@ -5534,7 +5558,7 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 				"of order " << go_P << endl;
 		}
 	
-	P->init(A);
+	P->init(A, verbose_level - 2);
 	P->init_trivial_group(verbose_level - 1);
 
 	P->group_order(go_P1);

@@ -962,14 +962,14 @@ public:
 	
 	sims();
 	void null();
-	sims(action *A);
+	sims(action *A, int verbose_level);
 	~sims();
 	void freeself();
 
 	void delete_images();
 	void init_images(int nb_images);
 	void images_append();
-	void init(action *A);
+	void init(action *A, int verbose_level);
 		// initializes the trivial group 
 		// with the base as given in A
 	void init_without_base(action *A);

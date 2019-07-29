@@ -415,7 +415,7 @@ void group::schreier_sims(int verbose_level)
 	if (FALSE) {
 		cout << "group::schreier_sims calling S->init(A)" << endl;
 		}
-	S->init(A);
+	S->init(A, verbose_level - 2);
 	if (FALSE) {
 		cout << "group::schreier_sims calling S->init_generators" << endl;
 		}
@@ -578,11 +578,11 @@ void group::induced_action(action &induced_action,
 	
 	group_order(go);
 	
-	HH.init(&induced_action);
+	HH.init(&induced_action, verbose_level - 2);
 	HH.init_trivial_group(verbose_level - 1);
 	HH.group_order(H_order);
 	
-	KK.init(A);
+	KK.init(A, verbose_level - 2);
 	KK.init_trivial_group(verbose_level - 1);
 	KK.group_order(K_order);
 	
@@ -734,7 +734,7 @@ void group::extension(group &N, group &H, int verbose_level)
 	H.require_sims();
 	
 	init(N.A);
-	G.init(N.A);
+	G.init(N.A, verbose_level - 2);
 	G.init_generators(*N.SG, f_v);
 	G.compute_base_orbits(verbose_level - 1);
 	G.group_order(cur_go);

@@ -912,7 +912,7 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 		cout << endl;
 		}
 	for (i = 0; i <= len; i++) {
-		S[i].init(this);
+		S[i].init(this, verbose_level - 2);
 		}
 	S[0].init_generators(gen, 0);
 	S[0].compute_base_orbits(0 /*verbose_level - 1*/);
@@ -1776,7 +1776,7 @@ void action::build_up_automorphism_group_from_aut_data(
 		}
 	Elt1 = NEW_int(elt_size_in_int);
 	Elt2 = NEW_int(elt_size_in_int);
-	S.init(this);
+	S.init(this, verbose_level - 2);
 	S.init_trivial_group(verbose_level - 1);
 	for (h = 0; h < nb_auts; h++) {
 		if (f_v) {
@@ -1899,7 +1899,7 @@ void action::init_group_from_generators(
 	if (f_group_order_target) {
 		cout << "group_order_target=" << go << endl;
 		}
-	S.init(this);
+	S.init(this, verbose_level - 2);
 	Elt = NEW_int(elt_size_in_int);
 	nb_gens = group_generator_size / make_element_size;
 	if (nb_gens * make_element_size != group_generator_size) {
@@ -1974,7 +1974,7 @@ void action::init_group_from_generators_by_base_images(
 	if (f_group_order_target) {
 		cout << "group_order_target=" << go << endl;
 		}
-	S.init(this);
+	S.init(this, verbose_level - 2);
 	Elt = NEW_int(elt_size_in_int);
 	nb_gens = group_generator_size / Stabilizer_chain->base_len;
 	if (f_v) {

@@ -82,11 +82,27 @@ void schreier_sims::init(action *A, int verbose_level)
 	Elt1 = NEW_int(GA->elt_size_in_int);
 	Elt2 = NEW_int(GA->elt_size_in_int);
 	Elt3 = NEW_int(GA->elt_size_in_int);
+
 	G = NEW_OBJECT(sims);
+
 	//cout << "schreier_sims::init sims object " << G
 	// << " with action " << GA << "=" << GA->label << endl;
-	G->init(GA);
-	G->init_trivial_group(0);
+
+	if (f_v) {
+		cout << "schreier_sims::init before G->init" << endl;
+		A->print_info();
+		}
+	G->init(GA, verbose_level - 2);
+	if (f_v) {
+		cout << "schreier_sims::init after G->init" << endl;
+		}
+	if (f_v) {
+		cout << "schreier_sims::init before G->init_trivial_group" << endl;
+		}
+	G->init_trivial_group(verbose_level);
+	if (f_v) {
+		cout << "schreier_sims::init after G->init_trivial_group" << endl;
+		}
 }
 
 void schreier_sims::interested_in_kernel(action *KA,
@@ -101,7 +117,7 @@ void schreier_sims::interested_in_kernel(action *KA,
 		}
 	schreier_sims::KA = KA;
 	K = NEW_OBJECT(sims);
-	K->init(KA);
+	K->init(KA, verbose_level - 2);
 	K->init_trivial_group(0);
 	f_interested_in_kernel = TRUE;
 }

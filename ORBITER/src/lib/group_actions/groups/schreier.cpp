@@ -989,8 +989,8 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	int pt_loc, cur, cur_pt, total, i, next_pt;
 	int next_pt_loc, total1, cur1;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
-	//int f_vvv = FALSE; //(verbose_level >= 3);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "schreier::compute_point_orbit" << endl;
@@ -1063,7 +1063,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 					<< next_pt << " orbit_first[nb_orbits]="
 					<< orbit_first[nb_orbits] << endl;
 				}
-			if (FALSE) {
+			if (f_vv) {
 				cout << "cur = " << cur << endl;
 				cout << "total = " << total << endl;
 				print_orbit(cur, total - 1);
@@ -1085,7 +1085,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 				<< " total length " << total
 				<< " degree=" << degree << endl;
 		}
-	if (FALSE) {
+	if (f_vvv) {
 		cout << "{ ";
 		for (i = orbit_first[nb_orbits];
 				i < orbit_first[nb_orbits + 1]; i++) {
@@ -1998,7 +1998,7 @@ void schreier::point_stabilizer(action *default_action,
 		cout << "expecting group of order " << target_go << endl;
 		}
 	
-	Stab->init(default_action);
+	Stab->init(default_action, verbose_level - 2);
 	Stab->init_trivial_group(verbose_level - 1);
 	while (TRUE) {
 		Stab->group_order(cur_go);
@@ -2755,7 +2755,7 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 		if (TRUE) {
 			cout << "before S->compute_all_point_orbits" << endl;
 		}
-		S->compute_all_point_orbits(1 /*verbose_level*/);
+		S->compute_all_point_orbits(verbose_level - 2);
 		if (TRUE) {
 			cout << "after S->compute_all_point_orbits" << endl;
 		}
@@ -2795,7 +2795,7 @@ void schreier::shallow_tree_generators_ai(int verbose_level)
 
 	this->init(A);
 	this->init_generators_recycle_images(S->gens, S->images);
-	this->compute_all_point_orbits(verbose_level);
+	this->compute_all_point_orbits(verbose_level - 2);
 
 
 	if (TRUE) {

@@ -411,7 +411,7 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 
 	S = NEW_OBJECT(sims);
 
-	S->init(this);
+	S->init(this, verbose_level - 2);
 	S->init_generators(*Strong_gens->gens, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "action::setup_linear_group_from_strong_generators "
@@ -610,6 +610,29 @@ void action::init_permutation_group(int degree, int verbose_level)
 	allocate_element_data();
 	action::degree = degree;
 	make_element_size = degree;
+
+
+	// ToDo
+
+	if (f_vv) {
+		cout << "action::init_permutation_group "
+				"calling allocate_base_data" << endl;
+		}
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, degree, verbose_level);
+	//allocate_base_data(given_base_length);
+	//Stabilizer_chain->base_len = given_base_length;
+
+	// init trivial base:
+	int i;
+	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+		Stabilizer_chain->base[i] = i;
+		}
+
+	// ToDo
+
+
+
 	
 	if (f_v) {
 		cout << "action::init_permutation_group finished" << endl;
@@ -1199,7 +1222,7 @@ void action::init_direct_product_group(
 
 	S = NEW_OBJECT(sims);
 
-	S->init(this);
+	S->init(this, verbose_level - 2);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before S->init_generators" << endl;
@@ -1427,7 +1450,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 	S = NEW_OBJECT(sims);
 
-	S->init(this);
+	S->init(this, verbose_level - 2);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"before S->init_generators" << endl;
@@ -1755,7 +1778,7 @@ void action::init_group_from_strong_generators(
 
 	G = NEW_OBJECT(sims);
 
-	G->init(this);
+	G->init(this, verbose_level - 2);
 	G->init_trivial_group(verbose_level - 1);
 	G->group_order(G_order);
 
@@ -1884,7 +1907,13 @@ sims *action::create_sims_from_generators_randomized(
 
 	ss = NEW_OBJECT(schreier_sims);
 
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized before ss->init" << endl;
+	}
 	ss->init(this, verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized after ss->init" << endl;
+	}
 
 	//ss->interested_in_kernel(A_subaction, verbose_level - 1);
 
@@ -1892,9 +1921,21 @@ sims *action::create_sims_from_generators_randomized(
 		ss->init_target_group_order(target_go, verbose_level - 1);
 		}
 
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized before ss->init_generators" << endl;
+	}
 	ss->init_generators(gens, verbose_level);
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized after ss->init_generators" << endl;
+	}
 
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized before ss->create_group" << endl;
+	}
 	ss->create_group(verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized after ss->create_group" << endl;
+	}
 
 	S = ss->G;
 	ss->G = NULL;

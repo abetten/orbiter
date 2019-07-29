@@ -488,7 +488,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 				"group of order " << target_go << endl;
 		}
 	
-	Stab->init(default_action);
+	Stab->init(default_action, verbose_level - 2);
 	Stab->init_trivial_group(verbose_level - 1);
 	while (TRUE) {
 		Stab->group_order(cur_go);
