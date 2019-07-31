@@ -27,9 +27,6 @@ int main(int argc, char **argv)
 	int f_file = FALSE;
 	const char *fname = NULL;
 	int f_general_format = FALSE;
-	//int f_maxdepth = FALSE;
-	//int maxdepth = 0;
-	//int print_interval = 1000;
 	int f_list_of_cases = FALSE;
 	const char *fname_list_of_cases = NULL;
 	const char *fname_template = NULL;
@@ -56,8 +53,6 @@ int main(int argc, char **argv)
 	int f_make_clique_graph = FALSE;
 	int f_RHS = FALSE;
 	int RHS_value = 0;
-	//int f_sum = FALSE;
-	//int sum_value = 0;
 	int RHS_row_nb = 0;
 	int RHS_row[1000];
 	int RHS_row_value[1000];

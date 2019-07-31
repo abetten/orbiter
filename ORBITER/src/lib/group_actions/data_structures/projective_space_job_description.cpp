@@ -357,7 +357,7 @@ int projective_space_job_description::read_arguments(
 			arc_t = atoi(argv[++i]);
 			t_lines_string = argv[++i];
 			int_vec_scan(t_lines_string, t_lines, nb_t_lines);
-			cout << "projective_space_job_description::read_arguments -arc_with_two_given_sets_of_lines_after_dualizing "
+			cout << "projective_space_job_description::read_arguments -arc_with_two_given_sets_of_lines_after_dualizing src_size="
 					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " ";
 			int_vec_print(cout, t_lines, nb_t_lines);
 			cout << endl;
@@ -657,6 +657,7 @@ void projective_space_job_description::perform_job_for_one_set(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int *the_set_in;
 	int set_size_in;
 
@@ -1081,6 +1082,10 @@ void projective_space_job_description::perform_job_for_one_set(
 				D,
 				verbose_level);
 
+		if (f_vv) {
+			D->print_tight();
+		}
+
 		if (f_save_system) {
 			char fname_system[1000];
 
@@ -1090,8 +1095,8 @@ void projective_space_job_description::perform_job_for_one_set(
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << " done" << endl;
-			D->print();
-			D->print_tight();
+			//D->print();
+			//D->print_tight();
 			}
 
 		long int nb_backtrack_nodes;
@@ -1150,6 +1155,10 @@ void projective_space_job_description::perform_job_for_one_set(
 				D,
 				verbose_level);
 
+		if (f_vv) {
+			D->print_tight();
+		}
+
 		if (f_save_system) {
 			char fname_system[1000];
 
@@ -1159,8 +1168,7 @@ void projective_space_job_description::perform_job_for_one_set(
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << " done" << endl;
-			D->print();
-			D->print_tight();
+			//D->print();
 			}
 
 		long int nb_backtrack_nodes;
@@ -1220,6 +1228,9 @@ void projective_space_job_description::perform_job_for_one_set(
 				D,
 				verbose_level);
 
+		if (f_vv) {
+			D->print_tight();
+		}
 		if (f_save_system) {
 			char fname_system[1000];
 
@@ -1229,8 +1240,8 @@ void projective_space_job_description::perform_job_for_one_set(
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << " done" << endl;
-			D->print();
-			D->print_tight();
+			//D->print();
+			//D->print_tight();
 			}
 
 		long int nb_backtrack_nodes;
