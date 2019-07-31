@@ -3166,28 +3166,45 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 				l = (int) mapval.size();
 				for (i = 1; i < l; i++) {
 					label[i - 1] = mapval[i];
-					}
-				label[l - 2] = 0;
 				}
+				label[l - 2] = 0;
+			}
 			else if (mapkey == "num_eqns") {
 				M = str2int(mapval);
-				}
-			else if (mapkey == "num_vars") {
-				N = str2int(mapval);
-				}
-			else if (mapkey == "f_has_sum") {
-				F_has_sum = str2int(mapval);
-				}
-			else if (mapkey == "sum") {
-				Sum = str2int(mapval);
-				}
-			else if (mapkey == "f_x_max") {
-				F_x_max = str2int(mapval);
+				if (f_v) {
+					cout << "diophant::read_xml num_eqns = " << M << endl;
 				}
 			}
-		brk = brk || f.eof();
+			else if (mapkey == "num_vars") {
+				N = str2int(mapval);
+				if (f_v) {
+					cout << "diophant::read_xml num_vars = " << N << endl;
+				}
+			}
+			else if (mapkey == "f_has_sum") {
+				F_has_sum = str2int(mapval);
+				if (f_v) {
+					cout << "diophant::read_xml F_has_sum = " << F_has_sum << endl;
+				}
+			}
+			else if (mapkey == "sum") {
+				Sum = str2int(mapval);
+				if (f_v) {
+					cout << "diophant::read_xml Sum = " << Sum << endl;
+				}
+			}
+			else if (mapkey == "f_x_max") {
+				F_x_max = str2int(mapval);
+				if (f_v) {
+					cout << "diophant::read_xml F_x_max = " << F_x_max << endl;
+				}
+			}
 		}
-	cout << "M=" << M << " N=" << N << endl;
+		brk = brk || f.eof();
+	}
+	if (f_v) {
+		cout << "diophant::read_xml M=" << M << " N=" << N << endl;
+	}
 	open(M, N);
 	f_has_sum = F_has_sum;
 	sum = Sum;
@@ -3199,21 +3216,21 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 		for (j = 0; j < n; j++) {
 			f >> a;
 			Aij(i, j) = a;
-			}
+		}
 		int t;
 		f >> t;
 		if (t == 0) {
 			type[i] = t_EQ;
-			}
+		}
 		else if (t == 1) {
 			type[i] = t_LE;
-			}
+		}
 		else if (t == 2) {
 			type[i] = t_INT;
-			}
+		}
 		else if (t == 3) {
 			type[i] = t_ZOR;
-			}
+		}
 		f >> RHS[i];
 		if (type[i] == t_INT) {
 			RHS_low[i] = RHS[i];
@@ -3225,24 +3242,24 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 			f >> c;
 			if (c == '\"') {
 				break;
-				}
 			}
+		}
 		l = 0;
 		while (TRUE) {
 			f >> c;
 			if (c == '\"') {
 				break;
-				}
+			}
 			tmp[l] = c;
 			l++;
-			}
+		}
 		tmp[l] = 0;
 		eqn_label[i] = NEW_char(l + 1);
 		for (j = 0; j < l; j++) {
 			eqn_label[i][j] = tmp[j];
-			}
-		eqn_label[i][l] = 0;
 		}
+		eqn_label[i][l] = 0;
+	}
 	if (f_x_max) {
 		if (f_v) {
 			cout << "diophant::read_xml reading x_max[]" << endl;
@@ -3255,7 +3272,10 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 			}
 		}
 	}
-	write_xml(cout, label);
+	if (f_v) {
+		cout << "diophant::read_xml read the following file:" << endl;
+		write_xml(cout, label);
+	}
 #endif
 #ifdef SYSTEMWINDOWS
 	cout << "diophant::read_xml has a problem under windows"<< endl;

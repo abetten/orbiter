@@ -7234,7 +7234,7 @@ void projective_space::arc_lifting_diophant(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 5);
 	int *line_type;
 	int i, j, h, pt;
 	int *free_points;
@@ -7360,7 +7360,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 5);
 	int i, j, h, a, line;
 	int *other_lines;
 	int nb_other_lines;
@@ -7487,7 +7487,7 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 5);
 	int i, j, h, a, line;
 	int *other_lines;
 	int nb_other_lines;
@@ -7642,7 +7642,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 5);
 	int i, j, h, a, line;
 	int *other_lines;
 	int nb_other_lines;
