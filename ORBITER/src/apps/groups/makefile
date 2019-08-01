@@ -2,7 +2,11 @@ SRC=../..
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
 CPPFLAGS = -Wall -I$(SRC)/lib -I../../lib/foundations
-INCLUDES=-I$(SRC)/lib -I../../lib/foundations
+
+INCLUDES=\
+			-I$(SRC)/lib -I../../lib/foundations \
+			-I$(SRC)/lib -I../../lib/foundations/CUDA/
+			
 LIB = $(SRC)/lib/liborbiter.a
 #LFLAGS = -lm 
 LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
@@ -28,11 +32,7 @@ ALL_TARGETS=\
 #-------------------------------------------------------------
 CSTD=-std=c++11
 CUDA_LIB=-lcudart -lcudadevrt -L/scratch/cuda10/lib64
-CUDA_FLAGS= -gencode arch=compute_30,code=sm_30 \
-			-gencode arch=compute_32,code=sm_32 \
-			-gencode arch=compute_35,code=sm_35 \
-			-gencode arch=compute_37,code=sm_37 \
-			-gencode arch=compute_50,code=sm_50 \
+CUDA_FLAGS= -gencode arch=compute_50,code=sm_50 \
 			-gencode arch=compute_52,code=sm_52 \
 			-gencode arch=compute_53,code=sm_53 \
 			-gencode arch=compute_60,code=sm_60 \
