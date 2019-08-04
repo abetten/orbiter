@@ -516,8 +516,8 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 			fp.read((char *) &user_data[i], sizeof(int));
 			}
 
-		fp.read((char *) &vertex_labels, sizeof(int));
-		fp.read((char *) &vertex_colors, sizeof(int));
+		vertex_labels = NEW_int(nb_vertices);
+		vertex_colors = NEW_int(nb_vertices);
 
 		for (i = 0; i < nb_vertices; i++) {
 			fp.read((char *) &vertex_labels[i], sizeof(int));

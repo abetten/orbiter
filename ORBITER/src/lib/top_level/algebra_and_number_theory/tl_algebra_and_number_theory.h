@@ -164,7 +164,7 @@ public:
 	const char *level_three_prefix;
 
 
-	spread *T;
+	spread_classify *T;
 
 	action *A; // = T->A = PGL_n_q
 	int *Elt1;

@@ -247,10 +247,16 @@ void isomorph::isomorph_testing(int t0,
 				f_eof = FALSE;
 				}
 			
+			if (f_v) {
+				cout << "isomorph::isomorph_testing before do_iso_test" << endl;
+			}
 			do_iso_test(t0, Stab, 
 				f_play_back, play_back_file, 
 				f_eof, print_mod, 
 				f_implicit_fusion, verbose_level - 1);
+			if (f_v) {
+				cout << "isomorph::isomorph_testing after do_iso_test" << endl;
+			}
 			
 			if (f_play_back && f_eof) {
 				play_back_file->close();
@@ -605,12 +611,20 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 		}
 	
 
+	if (f_vv) {
+		cout << "isomorph::do_iso_test "
+				"before  stabilizer_action_init" << endl;
+		}
 	stabilizer_action_init(verbose_level - 2);
+	if (f_vv) {
+		cout << "isomorph::do_iso_test "
+				"after  stabilizer_action_init" << endl;
+		}
 	
 	if (f_v3) {
-		cout << "base for AA: ";
+		cout << "isomorph::do_iso_test base for AA: ";
 		AA->print_base();
-		cout << "base for A:" << endl;
+		cout << "isomorph::do_iso_test base for A:" << endl;
 		A->print_base();
 		}
 	

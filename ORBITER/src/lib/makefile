@@ -321,11 +321,11 @@ MODULES= \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
 		top_level/geometry/six_arcs_not_on_a_conic.o \
+		top_level/geometry/spread_classify.o \
+		top_level/geometry/spread_classify2.o \
 		top_level/geometry/spread_create_description.o \
 		top_level/geometry/spread_create.o \
 		top_level/geometry/spread_lifting.o \
-		top_level/geometry/spread.o \
-		top_level/geometry/spread2.o \
 		top_level/geometry/surface_classify_wedge.o \
 		top_level/geometry/surface_create_description.o \
 		top_level/geometry/surface_create.o \

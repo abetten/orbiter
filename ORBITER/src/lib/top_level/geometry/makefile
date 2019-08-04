@@ -33,11 +33,11 @@ MODULES = \
 	search_blocking_set.o \
 	singer_cycle.o \
 	six_arcs_not_on_a_conic.o \
+	spread_classify.o \
+	spread_classify2.o \
 	spread_create_description.o \
 	spread_create.o \
 	spread_lifting.o \
-	spread.o \
-	spread2.o \
 	surface_classify_wedge.o \
 	surface_create_description.o \
 	surface_create.o \

@@ -478,6 +478,9 @@ void sims::init_generators(vector_ge &generators,
 	else	{
 		init_generators(generators.len, NULL, verbose_level);
 		}
+	if (f_v) {
+		cout << "sims::init_generators done" << endl;
+		}
 }
 
 void sims::init_generators(int nb, int *elt,

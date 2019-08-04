@@ -121,6 +121,9 @@ void representatives::write_fusion(int verbose_level)
 	if (f_v) {
 		cout << "representatives::write_fusion" << endl;
 		}
+	if (f_v) {
+		cout << "representatives::write_fusion fname_fusion=" << fname_fusion << endl;
+		}
 	{
 	ofstream f1(fname_fusion);
 	int i;
@@ -174,6 +177,11 @@ void representatives::read_fusion(int verbose_level)
 				<< fname_fusion << " of size "
 				<< Fio.file_size(fname_fusion) << endl;
 		}
+
+	if (Fio.file_size(fname_fusion) < 0) {
+		cout << "representatives::read_fusion the file " << fname_fusion << " does not exist" << endl;
+		exit(1);
+	}
 	{
 		ifstream f1(fname_fusion);
 		for (i = 0; i < nb_objects; i++) {
@@ -395,8 +403,20 @@ void representatives::load(int verbose_level)
 	if (f_v) {
 		cout << "representatives::load" << endl;
 		}
+	if (f_v) {
+		cout << "representatives::load before read_fusion" << endl;
+		}
 	read_fusion(verbose_level - 1);
+	if (f_v) {
+		cout << "representatives::load after read_fusion" << endl;
+		}
+	if (f_v) {
+		cout << "representatives::load before read_representatives_and_stabilizers" << endl;
+		}
 	read_representatives_and_stabilizers(verbose_level - 1);
+	if (f_v) {
+		cout << "representatives::load after read_representatives_and_stabilizers" << endl;
+		}
 	if (f_v) {
 		cout << "representatives::load done found " << count
 				<< " orbit representatives" << endl;

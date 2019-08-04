@@ -98,7 +98,7 @@ void packing::freeself()
 	null();
 }
 
-void packing::init(spread *T, 
+void packing::init(spread_classify *T,
 	int f_packing_select_spread,
 	int *packing_select_spread, int packing_select_spread_nb,
 	const char *input_prefix, const char *base_fname, 
@@ -153,14 +153,15 @@ void packing::init(spread *T,
 
 	Spread_tables = NEW_OBJECT(spread_tables);
 
-	load_input_spreads(Spread_tables->nb_spreads,
+	Spread_tables->nb_spreads = predict_spread_table_length(
 			f_packing_select_spread,
 			packing_select_spread, packing_select_spread_nb,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "We have " << nb_input_spreads << " input spreads, "
-				"nb_spreads = " << Spread_tables->nb_spreads << endl;
+		cout << "We will use " << nb_input_spreads << " isomorphism types of spreads, "
+				"this will give a total number of " << Spread_tables->nb_spreads
+				<< " labeled spreads" << endl;
 		}
 
 
@@ -329,7 +330,7 @@ void packing::init_P3(int verbose_level)
 }
 
 
-void packing::load_input_spreads(int &N, 
+int packing::predict_spread_table_length(
 	int f_packing_select_spread,
 	int *packing_select_spread,
 	int packing_select_spread_nb,
@@ -341,9 +342,10 @@ void packing::load_input_spreads(int &N,
 	longinteger_domain D;
 	knowledge_base K;
 	sorting Sorting;
+	int N;
 
 	if (f_v) {
-		cout << "packing::load_input_spreads" << endl;
+		cout << "packing::predict_spread_table_length" << endl;
 		}
 
 
@@ -418,8 +420,9 @@ void packing::load_input_spreads(int &N,
 
 
 	if (f_v) {
-		cout << "packing::load_input_spreads done, N = " << N << endl;
+		cout << "packing::predict_spread_table_length done, N = " << N << endl;
 		}
+	return N;
 }
 
 

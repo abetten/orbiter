@@ -68,12 +68,52 @@ diophant::~diophant()
 
 void diophant::null()
 {
+	label[0] = 0;
+
+	m = 0;
+	n = 0;
+	f_has_sum = FALSE;
+	sum = sum1 = 0;
+
+	f_x_max = FALSE;
+
+	A = NULL;
+	G = NULL;
+	x_max = NULL;
+	x = NULL;
+	RHS = NULL;
+	RHS_low = NULL;
+	RHS1 = NULL;
+	type = NULL;
+	eqn_label = NULL;
+
+	f_has_var_labels = FALSE;
+	var_labels = NULL;
+
+	X = FALSE;
+	Y = FALSE;
+
+	// results
+	_maxresults = 0;
+	_resultanz = 0;
+	_cur_result = 0;
+	nb_steps_betten = 0;
+	f_max_time = FALSE;
+	f_broken_off_because_of_maxtime = FALSE;
+	max_time_in_sec = 0;
+	max_time_in_ticks = 0;
+	t0 = 0;
 }
 
 void diophant::freeself()
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	int i;
 
+	if (f_v) {
+		cout << "diophant::freeself" << endl;
+	}
 	if (A) {
 		FREE_int(A);
 	}
@@ -86,17 +126,29 @@ void diophant::freeself()
 	if (x_max) {
 		FREE_int(x_max);
 	}
+	if (f_v) {
+		cout << "diophant::freeself before RHS" << endl;
+	}
 	if (RHS) {
 		FREE_int(RHS);
 	}
+	if (f_v) {
+		cout << "diophant::freeself before RHS_low" << endl;
+	}
 	if (RHS_low) {
 		FREE_int(RHS_low);
+	}
+	if (f_v) {
+		cout << "diophant::freeself before RHS1" << endl;
 	}
 	if (RHS1) {
 		FREE_int(RHS1);
 	}
 	if (type) {
 		FREE_OBJECT(type);
+	}
+	if (f_v) {
+		cout << "diophant::freeself before eqn_label" << endl;
 	}
 	if (eqn_label) {
 		for (i = 0; i < m; i++) {
@@ -116,6 +168,9 @@ void diophant::freeself()
 		FREE_int(var_labels);
 	}
 	null();
+	if (f_v) {
+		cout << "diophant::freeself done" << endl;
+	}
 }
 
 void diophant::open(int m, int n)
