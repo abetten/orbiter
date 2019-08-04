@@ -69,6 +69,9 @@ int main(int argc, const char **argv)
 	int f_label = FALSE;
 	const char *label = NULL;
 
+	int f_spread_tables_prefix = FALSE;
+	const char *spread_tables_prefix = "";
+
 	exact_cover_arguments *ECA = NULL;
 	isomorph_arguments *IA = NULL;
 
@@ -80,31 +83,31 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
 			poly = argv[++i];
 			cout << "-poly " << poly << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-label") == 0) {
 			f_label = TRUE;
 			label = argv[++i];
 			cout << "-label " << label << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-order") == 0) {
 			f_order = TRUE;
 			order = atoi(argv[++i]);
 			cout << "-order " << order << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-dim_over_kernel") == 0) {
 			f_dim_over_kernel = TRUE;
 			dim_over_kernel = atoi(argv[++i]);
 			cout << "-dim_over_kernel " << dim_over_kernel << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-recoordinatize") == 0) {
 			f_recoordinatize = TRUE;
 			cout << "-recoordinatize " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-select_spread") == 0) {
 			int a;
 			
@@ -114,94 +117,100 @@ int main(int argc, const char **argv)
 				a = atoi(argv[++i]);
 				if (a == -1) {
 					break;
-					}
-				select_spread[select_spread_nb++] = a;
 				}
+				select_spread[select_spread_nb++] = a;
+			}
 			cout << "-select_spread ";
 			int_vec_print(cout, select_spread, select_spread_nb);
 			cout << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-starter") == 0) {
 			f_starter = TRUE;
 			cout << "-starter " << endl;
-			}
+		}
 
 		else if (strcmp(argv[i], "-compute_spread_table") == 0) {
 			f_compute_spread_table = TRUE;
 			cout << "-compute_spread_table " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-load_spread_table") == 0) {
 			f_load_spread_table = TRUE;
 			cout << "-load_spread_table " << endl;
-			}
+		}
 
 
 
 		else if (strcmp(argv[i], "-klein") == 0) {
 			f_klein = TRUE;
 			cout << "-klein " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-split_klein") == 0) {
 			f_split_klein = TRUE;
 			split_klein_r = atoi(argv[++i]);
 			split_klein_m = atoi(argv[++i]);
 			cout << "-split_klein " << split_klein_r
 				<< " " << split_klein_m << endl;
-			}
+		}
 
 
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_poset_full") == 0) {
 			f_draw_poset_full = TRUE;
 			cout << "-draw_poset_full " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
 			cout << "-embedded " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-sideways") == 0) {
 			f_sideways = TRUE;
 			cout << "-sideways " << endl;
-			}
+		}
 
 
 		else if (strcmp(argv[i], "-fname_spread_table") == 0) {
 			f_fname_spread_table = TRUE;
 			fname_spread_table = argv[++i];
 			cout << "-fname_spread_table " << fname_spread_table << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-fname_spread_table_iso") == 0) {
 			f_fname_spread_table_iso = TRUE;
 			fname_spread_table_iso = argv[++i];
 			cout << "-fname_spread_table_iso " << fname_spread_table_iso << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-conjugacy_classes") == 0) {
 			f_conjugacy_classes = TRUE;
 			cout << "-conjugacy_classes " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-conjugacy_classes_and_normalizers") == 0) {
 			f_conjugacy_classes_and_normalizers = TRUE;
 			cout << "-conjugacy_classes_and_normalizers " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-make_element") == 0) {
 			f_make_element = TRUE;
 			make_element_idx = atoi(argv[++i]);
 			cout << "-make_element " << make_element_idx << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-centralizer") == 0) {
 			f_centralizer = TRUE;
 			centralizer_idx = atoi(argv[++i]);
 			cout << "-centralizer " << centralizer_idx << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-centralizer_of_element") == 0) {
 			f_centralizer_of_element = TRUE;
 			element_description = argv[++i];
 			cout << "-centralizer_of_element " << element_description << endl;
-			}
 		}
+		else if (strcmp(argv[i], "-spread_tables_prefix") == 0) {
+			f_spread_tables_prefix = TRUE;
+			spread_tables_prefix = argv[++i];
+			cout << "-spread_tables_prefix "
+				<< spread_tables_prefix << endl;
+		}
+	}
 
 
 	ECA->read_arguments(argc, argv, verbose_level);
@@ -211,16 +220,16 @@ int main(int argc, const char **argv)
 	if (!ECA->f_starter_size) {
 		cout << "please use option -starter_size <starter_size>" << endl;
 		exit(1);
-		}
+	}
 	if (!ECA->f_has_input_prefix) {
 		cout << "please use option -input_prefix <input_prefix>" << endl;
 		exit(1);
-		}
+	}
 
 	if (!f_order) {
 		cout << "please use option -order <order>" << endl;
 		exit(1);
-		}
+	}
 
 	int p, e, e1, n, k, q;
 	number_theory_domain NT;
@@ -239,20 +248,20 @@ int main(int argc, const char **argv)
 		q = NT.i_power_j(p, e1);
 		cout << "order=" << order << " n=" << n
 				<< " k=" << k << " q=" << q << endl;
-		}
+	}
 	else {
 		n = 2 * e;
 		k = e;
 		q = p;
 		cout << "order=" << order << " n=" << n
 				<< " k=" << k << " q=" << q << endl;
-		}
+	}
 
 
 	
 	finite_field *F;
 	spread_classify *T;
-	packing *P;
+	packing_classify *P;
 
 
 	F = NEW_OBJECT(finite_field);
@@ -280,7 +289,7 @@ int main(int argc, const char **argv)
 	cout << "after T->init2" << endl;
 
 
-	P = NEW_OBJECT(packing);
+	P = NEW_OBJECT(packing_classify);
 
 
 	cout << "before P->init" << endl;
@@ -291,6 +300,7 @@ int main(int argc, const char **argv)
 		ECA->input_prefix, ECA->base_fname, 
 		ECA->starter_size, 
 		ECA->f_lex, 
+		spread_tables_prefix,
 		verbose_level);
 	cout << "after P->init" << endl;
 

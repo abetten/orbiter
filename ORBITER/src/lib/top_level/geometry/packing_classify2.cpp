@@ -16,14 +16,14 @@ namespace orbiter {
 namespace top_level {
 
 
-void packing::compute_list_of_lines_from_packing(
+void packing_classify::compute_list_of_lines_from_packing(
 		int *list_of_lines, int *packing, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a;
 	
 	if (f_v) {
-		cout << "packing::compute_list_of_lines_from_packing" << endl;
+		cout << "packing_classify::compute_list_of_lines_from_packing" << endl;
 		}
 	for (i = 0; i < size_of_packing; i++) {
 		a = packing[i];
@@ -37,11 +37,11 @@ void packing::compute_list_of_lines_from_packing(
 #endif
 		}
 	if (f_v) {
-		cout << "packing::compute_list_of_lines_from_packing done" << endl;
+		cout << "packing_classify::compute_list_of_lines_from_packing done" << endl;
 		}
 }
 
-void packing::compute_klein_invariants(
+void packing_classify::compute_klein_invariants(
 		isomorph *Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -54,7 +54,7 @@ void packing::compute_klein_invariants(
 	file_io Fio;
 
 	if (f_v) {
-		cout << "packing::compute_klein_invariants" << endl;
+		cout << "papacking_classifycking::compute_klein_invariants" << endl;
 		}
 	f_split = f_split_klein;
 	split_r = split_klein_r;
@@ -110,17 +110,17 @@ void packing::compute_klein_invariants(
 	FREE_int(list_of_lines);
 	
 	if (f_v) {
-		cout << "packing::compute_klein_invariants done" << endl;
+		cout << "packing_classify::compute_klein_invariants done" << endl;
 		}
 }
 
-void packing::klein_invariants_fname(
+void packing_classify::klein_invariants_fname(
 		char *fname, char *prefix, int iso_cnt)
 {
 	sprintf(fname, "%s%d_klein_invariant.bin", prefix, iso_cnt);
 }
 
-void packing::save_klein_invariants(char *prefix, 
+void packing_classify::save_klein_invariants(char *prefix,
 	int iso_cnt, 
 	int *data, int data_size, int verbose_level)
 {
@@ -132,7 +132,7 @@ void packing::save_klein_invariants(char *prefix,
 	int i, j;
 
 	if (f_v) {
-		cout << "packing::save_klein_invariants" << endl;
+		cout << "packing_classify::save_klein_invariants" << endl;
 		}
 	
 	compute_plane_intersections(data, data_size, 
@@ -175,12 +175,12 @@ void packing::save_klein_invariants(char *prefix,
 	FREE_int(nb_pts_on_plane);
 
 	if (f_v) {
-		cout << "packing::save_klein_invariants done" << endl;
+		cout << "packing_classify::save_klein_invariants done" << endl;
 		}
 }
 
 
-void packing::compute_plane_intersections(
+void packing_classify::compute_plane_intersections(
 	int *data, int data_size,
 	longinteger_object *&R,
 	int **&Pts_on_plane, 
@@ -197,7 +197,7 @@ void packing::compute_plane_intersections(
 	grassmann *Gr;
 
 	if (f_v) {
-		cout << "packing::compute_plane_intersections" << endl;
+		cout << "packing_classify::compute_plane_intersections" << endl;
 		}
 	set_size = data_size;
 
@@ -210,7 +210,7 @@ void packing::compute_plane_intersections(
 	the_set_out = NEW_int(set_size);
 	
 	if (f_v) {
-		cout << "packing::compute_plane_intersections "
+		cout << "packing_classify::compute_plane_intersections "
 				"before P3->klein_correspondence" << endl;
 		}
 	P3->klein_correspondence(P5, 
@@ -219,7 +219,7 @@ void packing::compute_plane_intersections(
 
 
 	if (f_v) {
-		cout << "packing::compute_plane_intersections "
+		cout << "packing_classify::compute_plane_intersections "
 				"after P3->klein_correspondence" << endl;
 		}
 
@@ -227,7 +227,7 @@ void packing::compute_plane_intersections(
 
 	N = P5->nb_rk_k_subspaces_as_int(3);
 	if (f_v) {
-		cout << "packing::compute_plane_intersections "
+		cout << "packing_classify::compute_plane_intersections "
 				"N = " << N << endl;
 		}
 
@@ -238,7 +238,7 @@ void packing::compute_plane_intersections(
 	Gr->init(6, 3, F, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "packing::compute_plane_intersections "
+		cout << "packing_classify::compute_plane_intersections "
 				"before plane_intersection_type_fast" << endl;
 		}
 	P5->plane_intersection_type_slow(Gr, the_set_out, set_size, 
@@ -246,7 +246,7 @@ void packing::compute_plane_intersections(
 		verbose_level /*- 3*/);
 
 	if (f_v) {
-		cout << "packing::compute_plane_intersections: "
+		cout << "packing_classify::compute_plane_intersections: "
 				"We found " << nb_planes << " planes." << endl;
 #if 1
 		for (i = 0; i < nb_planes; i++) {
@@ -263,11 +263,11 @@ void packing::compute_plane_intersections(
 	FREE_OBJECT(Gr);
 	FREE_OBJECT(P5);
 	if (f_v) {
-		cout << "packing::compute_plane_intersections done" << endl;
+		cout << "packing_classify::compute_plane_intersections done" << endl;
 		}
 }
 
-void packing::report(isomorph *Iso, int verbose_level)
+void packing_classify::report(isomorph *Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -275,7 +275,7 @@ void packing::report(isomorph *Iso, int verbose_level)
 	file_io Fio;
 
 	if (f_v) {
-		cout << "packing::report" << endl;
+		cout << "packing_classify::report" << endl;
 		}
 
 	sprintf(fname, "packing_report_q%d.tex", (int)q);
@@ -290,18 +290,18 @@ void packing::report(isomorph *Iso, int verbose_level)
 
 	} // close file f
 	if (f_v) {
-		cout << "packing::report written file " << fname
+		cout << "packing_classify::report written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 		}
 	
 
 
 	if (f_v) {
-		cout << "packing::report done" << endl;
+		cout << "packing_classify::report done" << endl;
 		}
 }
 
-void packing::report_whole(isomorph *Iso,
+void packing_classify::report_whole(isomorph *Iso,
 		ofstream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -375,13 +375,13 @@ void packing::report_whole(isomorph *Iso,
 		}
 }
 
-void packing::report_title_page(
+void packing_classify::report_title_page(
 		isomorph *Iso, ofstream &f, int verbose_level)
 {
 	int f_book = TRUE;
 	int f_title = TRUE;
 	char title[1000];
-	const char *author = "Anton Betten";
+	const char *author = "Orbiter";
 	int f_toc = TRUE;
 	int f_landscape = FALSE;
 	int f_12pt = FALSE;
@@ -411,7 +411,7 @@ void packing::report_title_page(
 
 }
 
-void packing::report_packings_by_ago(
+void packing_classify::report_packings_by_ago(
 	isomorph *Iso, ofstream &f,
 	invariants_packing *inv, classify &C_ago, int verbose_level)
 {
@@ -419,7 +419,7 @@ void packing::report_packings_by_ago(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "packing::report_packings_by_ago" << endl;
+		cout << "packing_classify::report_packings_by_ago" << endl;
 		}
 
 	f << "\\chapter{The Packings of PG$(3," << q << ")$}"
@@ -482,12 +482,12 @@ void packing::report_packings_by_ago(
 
 	
 	if (f_v) {
-		cout << "packing::report_packings_by_ago done" << endl;
+		cout << "packing_classify::report_packings_by_ago done" << endl;
 		}
 }
 
 
-void packing::report_isomorphism_type(
+void packing_classify::report_isomorphism_type(
 	isomorph *Iso, ofstream &f,
 	int orbit, invariants_packing *inv, int verbose_level)
 {
@@ -501,7 +501,7 @@ void packing::report_isomorphism_type(
 	int *list_of_lines;
 
 	if (f_v) {
-		cout << "packing::report_isomorphism_type" << endl;
+		cout << "packing_classify::report_isomorphism_type" << endl;
 		}
 
 	list_of_lines = NEW_int(size_of_packing * spread_size);
@@ -588,7 +588,7 @@ void packing::report_isomorphism_type(
 	report_stabilizer(*Iso, f, orbit, verbose_level);
 
 	if (f_v) {
-		cout << "packing::report computing induced "
+		cout << "packing_classify::report computing induced "
 				"action on the set (in data)" << endl;
 		}
 	Iso->induced_action_on_set_basic(Stab, data, verbose_level - 2);
@@ -644,11 +644,11 @@ void packing::report_isomorphism_type(
 
 
 	if (f_v) {
-		cout << "packing::report_isomorphism_type done" << endl;
+		cout << "packing_classify::report_isomorphism_type done" << endl;
 		}
 }
 
-void packing::report_packing_as_table(
+void packing_classify::report_packing_as_table(
 	isomorph *Iso, ofstream &f,
 	int orbit, invariants_packing *inv, int *list_of_lines,
 	int verbose_level)
@@ -741,7 +741,7 @@ void packing::report_packing_as_table(
 #endif
 }
 
-void packing::report_klein_invariants(
+void packing_classify::report_klein_invariants(
 	isomorph *Iso, ofstream &f,
 	int orbit, invariants_packing *inv,
 	int verbose_level)
@@ -795,7 +795,7 @@ void packing::report_klein_invariants(
 		}
 }
 
-void packing::report_stabilizer(isomorph &Iso,
+void packing_classify::report_stabilizer(isomorph &Iso,
 		ofstream &f, int orbit, int verbose_level)
 {
 	sims *Stab;
@@ -828,7 +828,7 @@ void packing::report_stabilizer(isomorph &Iso,
 	f << "$$" << endl;
 }
 
-void packing::report_stabilizer_in_action(
+void packing_classify::report_stabilizer_in_action(
 		isomorph &Iso, ofstream &f, int orbit,
 		int verbose_level)
 {
@@ -869,7 +869,7 @@ void packing::report_stabilizer_in_action(
 	//f << "$$" << endl;
 }
 
-void packing::report_stabilizer_in_action_gap(
+void packing_classify::report_stabilizer_in_action_gap(
 		isomorph &Iso, int orbit,
 		int verbose_level)
 {
@@ -926,7 +926,7 @@ void packing::report_stabilizer_in_action_gap(
 
 }
 
-void packing::report_extra_stuff(
+void packing_classify::report_extra_stuff(
 		isomorph *Iso, ofstream &f,
 		int verbose_level)
 {

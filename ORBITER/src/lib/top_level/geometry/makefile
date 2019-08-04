@@ -24,9 +24,9 @@ MODULES = \
 	incidence_structure.o \
 	invariants_packing.o \
 	k_arc_generator.o \
+	packing_classify.o \
+	packing_classify2.o \
 	packing_invariants.o \
-	packing.o \
-	packing2.o \
 	polar.o \
 	projective_space.o \
 	recoordinatize.o \

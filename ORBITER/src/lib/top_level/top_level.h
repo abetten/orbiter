@@ -95,7 +95,7 @@ class arc_orbits_on_pairs;
 	// started 1/9/2019
 class arc_partition;
 	// started 1/9/2019
-class packing;
+class packing_classify;
 class packing_invariants;
 class invariants_packing;
 class classify_cubic_curves;
