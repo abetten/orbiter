@@ -312,9 +312,9 @@ MODULES= \
 		top_level/geometry/incidence_structure.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
+		top_level/geometry/packing_classify.o \
+		top_level/geometry/packing_classify2.o \
 		top_level/geometry/packing_invariants.o \
-		top_level/geometry/packing.o \
-		top_level/geometry/packing2.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/projective_space.o \
 		top_level/geometry/recoordinatize.o \

@@ -1126,7 +1126,7 @@ int incidence_structure_find_blocking_set(incidence_structure *Inc,
 class invariants_packing {
 public:
 	spread_classify *T;
-	packing *P;
+	packing_classify *P;
 	isomorph *Iso; // the classification of packings
 
 
@@ -1149,7 +1149,7 @@ public:
 	~invariants_packing();
 	void null();
 	void freeself();
-	void init(isomorph *Iso, packing *P, int verbose_level);
+	void init(isomorph *Iso, packing_classify *P, int verbose_level);
 	void compute_dual_packings(
 		isomorph *Iso, int verbose_level);
 	void make_table(isomorph *Iso, std::ostream &ost,
@@ -1200,70 +1200,14 @@ public:
 	void compute_line_type(int *set, int len, int verbose_level);
 };
 
-// #############################################################################
-// packing_invariants.cpp
-// #############################################################################
-
-//! geometric invariants of a packing in PG(3,q)
-
-class packing_invariants {
-public:
-	packing *P;
-
-	char prefix[1000];
-	char prefix_tex[1000];
-	int iso_cnt;
-
-	int *the_packing;
-		// [P->size_of_packing]
-
-	int *list_of_lines;
-		// [P->size_of_packing * P->spread_size]
-
-	int f_has_klein;
-	longinteger_object *R;
-	int **Pts_on_plane;
-	int *nb_pts_on_plane;
-	int nb_planes;
-
-	classify *C;
-	int nb_blocks;
-	int *block_to_plane; // [nb_blocks]
-	int *plane_to_block; // [nb_planes]
-	int nb_fake_blocks;
-	int nb_fake_points;
-	int total_nb_blocks;
-		// nb_blocks + nb_fake_blocks
-	int total_nb_points;
-		// P->size_of_packing * P->spread_size + nb_fake_points
-	int *Inc;
-		// [total_nb_points * total_nb_blocks]
-
-	incidence_structure *I;
-	partitionstack *Stack;
-	char fname_incidence_pic[1000];
-	char fname_row_scheme[1000];
-	char fname_col_scheme[1000];
-
-	packing_invariants();
-	~packing_invariants();
-	void null();
-	void freeself();
-	void init(packing *P,
-		char *prefix, char *prefix_tex, int iso_cnt,
-		int *the_packing, int verbose_level);
-	void init_klein_invariants(Vector &v, int verbose_level);
-	void compute_decomposition(int verbose_level);
-};
-
 
 // #############################################################################
-// packing.cpp
+// packing_classify.cpp
 // #############################################################################
 
 //! classification of packings in PG(3,q)
 
-class packing {
+class packing_classify {
 public:
 	spread_classify *T;
 	finite_field *F;
@@ -1285,6 +1229,7 @@ public:
 	projective_space *P3;
 
 
+	const char *spread_tables_prefix;
 	int nb_spreads_up_to_isomorphism;
 		// the number of spreads
 		// from the classification
@@ -1312,8 +1257,8 @@ public:
 	int split_klein_r;
 	int split_klein_m;
 
-	packing();
-	~packing();
+	packing_classify();
+	~packing_classify();
 	void null();
 	void freeself();
 	void init(spread_classify *T,
@@ -1322,6 +1267,7 @@ public:
 		const char *input_prefix, const char *base_fname,
 		int search_depth,
 		int f_lexorder_test,
+		const char *spread_tables_prefix,
 		int verbose_level);
 	void init2(int verbose_level);
 	void compute_spread_table(int verbose_level);
@@ -1471,6 +1417,62 @@ int count_and_record(int *Inc, int n, int m,
 int packing_spread_compare_func(void *data, int i, int j, void *extra_data);
 void packing_swap_func(void *data, int i, int j, void *extra_data);
 
+
+// #############################################################################
+// packing_invariants.cpp
+// #############################################################################
+
+//! geometric invariants of a packing in PG(3,q)
+
+class packing_invariants {
+public:
+	packing_classify *P;
+
+	char prefix[1000];
+	char prefix_tex[1000];
+	int iso_cnt;
+
+	int *the_packing;
+		// [P->size_of_packing]
+
+	int *list_of_lines;
+		// [P->size_of_packing * P->spread_size]
+
+	int f_has_klein;
+	longinteger_object *R;
+	int **Pts_on_plane;
+	int *nb_pts_on_plane;
+	int nb_planes;
+
+	classify *C;
+	int nb_blocks;
+	int *block_to_plane; // [nb_blocks]
+	int *plane_to_block; // [nb_planes]
+	int nb_fake_blocks;
+	int nb_fake_points;
+	int total_nb_blocks;
+		// nb_blocks + nb_fake_blocks
+	int total_nb_points;
+		// P->size_of_packing * P->spread_size + nb_fake_points
+	int *Inc;
+		// [total_nb_points * total_nb_blocks]
+
+	incidence_structure *I;
+	partitionstack *Stack;
+	char fname_incidence_pic[1000];
+	char fname_row_scheme[1000];
+	char fname_col_scheme[1000];
+
+	packing_invariants();
+	~packing_invariants();
+	void null();
+	void freeself();
+	void init(packing_classify *P,
+		char *prefix, char *prefix_tex, int iso_cnt,
+		int *the_packing, int verbose_level);
+	void init_klein_invariants(Vector &v, int verbose_level);
+	void compute_decomposition(int verbose_level);
+};
 
 
 // #############################################################################

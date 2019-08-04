@@ -2556,7 +2556,7 @@ public:
 // spread_tables.cpp
 // #############################################################################
 
-//! tables with spreads in PG(3,q), used by class packing
+//! tables with spreads in PG(3,q), used by class packing_classify
 
 
 class spread_tables {
@@ -2580,15 +2580,15 @@ public:
 	char fname_dual_spread[1000];
 	char fname_self_dual_spreads[1000];
 
-	int *dual_line_idx;
-	int *self_dual_lines;
+	int *dual_line_idx; // [nb_lines]
+	int *self_dual_lines; // [nb_self_dual_lines]
 	int nb_self_dual_lines;
 
 	int nb_spreads;
-	int *spread_table;
-	int *spread_iso_type;
-	int *dual_spread_idx;
-	int *self_dual_spreads;
+	int *spread_table; // [nb_spreads * spread_size]
+	int *spread_iso_type; // [nb_spreads]
+	int *dual_spread_idx; // [nb_spreads]
+	int *self_dual_spreads; // [nb_self_dual_spreads]
 	int nb_self_dual_spreads;
 
 	spread_tables();
@@ -2596,6 +2596,7 @@ public:
 	void init(finite_field *F,
 			int f_load,
 			int nb_iso_types_of_spreads,
+			const char *prefix,
 			int verbose_level);
 	void init_spread_table(int nb_spreads,
 			int *spread_table, int *spread_iso_type,

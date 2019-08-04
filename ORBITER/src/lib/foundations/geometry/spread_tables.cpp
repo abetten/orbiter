@@ -81,6 +81,7 @@ spread_tables::~spread_tables()
 void spread_tables::init(finite_field *F,
 		int f_load,
 		int nb_iso_types_of_spreads,
+		const char *prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -113,14 +114,17 @@ void spread_tables::init(finite_field *F,
 	}
 
 
-	sprintf(prefix, "spread_%d", NT.i_power_j(q, 2));
+	sprintf(spread_tables::prefix, "%sspread_%d", prefix, NT.i_power_j(q, 2));
+	if (f_v) {
+		cout << "spread_tables::init prefix=" << spread_tables::prefix << endl;
+	}
 
-	sprintf(fname_dual_line_idx, "%s_dual_line_idx.csv", prefix);
-	sprintf(fname_self_dual_lines, "%s_self_dual_lines.csv", prefix);
-	sprintf(fname_spreads, "%s_spreads.csv", prefix);
-	sprintf(fname_isomorphism_type_of_spreads, "%s_spreads_iso.csv", prefix);
-	sprintf(fname_dual_spread, "%s_dual_spread_idx.csv", prefix);
-	sprintf(fname_self_dual_spreads, "%s_self_dual_spreads.csv", prefix);
+	sprintf(fname_dual_line_idx, "%s_dual_line_idx.csv", spread_tables::prefix);
+	sprintf(fname_self_dual_lines, "%s_self_dual_lines.csv", spread_tables::prefix);
+	sprintf(fname_spreads, "%s_spreads.csv", spread_tables::prefix);
+	sprintf(fname_isomorphism_type_of_spreads, "%s_spreads_iso.csv", spread_tables::prefix);
+	sprintf(fname_dual_spread, "%s_dual_spread_idx.csv", spread_tables::prefix);
+	sprintf(fname_self_dual_spreads, "%s_self_dual_spreads.csv", spread_tables::prefix);
 
 
 	Gr->compute_dual_line_idx(dual_line_idx,
