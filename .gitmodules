@@ -1,3 +1,3 @@
 [submodule "ORBITER/src/lib/foundations/CUDA/Linalg"]
 	path = ORBITER/src/lib/foundations/CUDA/Linalg
-	url = git@github.com:RoySRC/Linalg.git
+	url = https://github.com/RoySRC/Linalg.git
