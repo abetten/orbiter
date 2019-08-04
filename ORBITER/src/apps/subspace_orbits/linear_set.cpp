@@ -467,7 +467,7 @@ void linear_set::init(int argc, const char **argv,
 
 
 	if (f_identify) {
-		T = NEW_OBJECT(spread);
+		T = NEW_OBJECT(spread_classify);
 
 		int f_recoordinatize = TRUE;
 		

@@ -58,7 +58,7 @@ public:
 	int f_identify;
 	int k;
 	int order;
-	spread *T;
+	spread_classify *T;
 	
 
 

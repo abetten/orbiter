@@ -181,7 +181,7 @@ void semifield_classify::init(int argc, const char **argv,
 	Basis2 = NEW_int(k * k2);
 
 
-	T = NEW_OBJECT(spread);
+	T = NEW_OBJECT(spread_classify);
 
 	T->read_arguments(argc, argv);
 

@@ -40,7 +40,7 @@ class exact_cover;
 	// added April 30, 2013
 class recoordinatize;
 	// added November 2, 2013
-class spread;
+class spread_classify;
 	// added November 2, 2013
 class polar;
 class orbit_of_subspaces;

@@ -34,7 +34,8 @@ action *action::induced_action_on_set_partitions(
 			label, A->degree, partition_class_size);
 	if (f_v) {
 		cout << "the old_action " << label
-			<< " has base_length = " << Stabilizer_chain->base_len
+			//<< " has base_length = " << Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << degree << endl;
 		}
 	A->f_has_subaction = TRUE;
@@ -177,7 +178,8 @@ void action::induced_action_by_representation_on_conic(
 	sprintf(label_tex, "%s RepOnConic", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -249,7 +251,8 @@ void action::induced_action_on_cosets(
 			A->label_tex, A_on_cosets->dimension_of_subspace);
 	if (f_v) {
 		cout << "the old_action " << A->label
-				<< " has base_length = " << A->Stabilizer_chain->base_len
+				//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -326,7 +329,8 @@ void action::induced_action_on_factor_space(action *A_old,
 			AF->factor_space_len, AF->VS->F->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -394,7 +398,8 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 	sprintf(A->label_tex, "%s on %d subspaces", label, k);
 	if (f_v) {
 		cout << "the old_action " << label
-			<< " has base_length = " << Stabilizer_chain->base_len
+			//<< " has base_length = " << Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << degree << endl;
 		}
 	A->f_has_subaction = TRUE;
@@ -476,7 +481,8 @@ void action::induced_action_on_grassmannian(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 			"the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+			// ToDo
 			<< " and degree " << A->degree << endl;
 	}
 	f_has_subaction = TRUE;
@@ -600,7 +606,8 @@ void action::induced_action_on_spread_set(action *A_old,
 			A->label_tex, AS->k, AS->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -699,7 +706,8 @@ void action::induced_action_on_orthogonal(action *A_old,
 		}
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -771,7 +779,8 @@ void action::induced_action_on_wedge_product(action *A_old,
 	sprintf(label_tex, "%s Wedge", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -840,7 +849,8 @@ void action::induced_action_by_subfield_structure(action *A_old,
 			A->label_tex, SubfieldStructure->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -906,7 +916,8 @@ void action::induced_action_on_Galois_group(
 	sprintf(label_tex, "%s det", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -966,7 +977,8 @@ void action::induced_action_on_determinant(
 	sprintf(label_tex, "%s det", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -1025,7 +1037,8 @@ void action::induced_action_on_sign(
 	sprintf(label_tex, "%s sign", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -1076,7 +1089,8 @@ void action::induced_action_by_conjugation(sims *old_G,
 	if (f_v) {
 		cout << "action::induced_action_by_conjugation" << endl;
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	Base_group->group_order(go);
@@ -1141,7 +1155,8 @@ void action::induced_action_by_right_multiplication(
 	if (f_v) {
 		cout << "action::induced_action_by_right_multiplication" << endl;
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	Base_group->group_order(go);
@@ -1232,7 +1247,8 @@ void action::induced_action_on_sets(
 				"f_induce_action=" << f_induce_action << endl;
 		cout << "action::induced_action_on_sets "
 				"the old_action " << old_action.label
-				<< " has base_length = " << old_action.Stabilizer_chain->base_len
+				//<< " has base_length = " << old_action.Stabilizer_chain->base_len
+				// ToDo Stabilizer_chain may not be available!
 			<< " and degree " << old_action.degree << endl;
 		cout << "action::induced_action_on_sets "
 				"verbose_level = " << verbose_level << endl;
@@ -1338,7 +1354,8 @@ void action::induced_action_on_subgroups(
 		cout << "action::induced_action_on_subgroups" << endl;
 		cout << "action::induced_action_on_sets "
 				"the old_action " << old_action->label
-				<< " has base_length = " << old_action->Stabilizer_chain->base_len
+				//<< " has base_length = " << old_action->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << old_action->degree << endl;
 		cout << "action::induced_action_on_subgroups "
 				"verbose_level = " << verbose_level << endl;
@@ -1706,7 +1723,8 @@ void action::induced_action_on_ordered_pairs(
 	if (f_v) {
 		cout << "action::induced_action_on_ordered_pairs" << endl;
 		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.Stabilizer_chain->base_len
+			//<< " has base_length = " << old_action.Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << old_action.degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_ordered_pairs",
@@ -1757,7 +1775,8 @@ void action::induced_action_on_k_subsets(
 	if (f_v) {
 		cout << "action::induced_action_on_k_subsets" << endl;
 		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.Stabilizer_chain->base_len
+			//<< " has base_length = " << old_action.Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << old_action.degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_%d_subsets",
@@ -1812,7 +1831,8 @@ void action::induced_action_on_orbits(action *old_action,
 	if (f_v) {
 		cout << "action::induced_action_on_orbits" << endl;
 		cout << "the old_action " << old_action->label
-			<< " has base_length = " << old_action->Stabilizer_chain->base_len
+			//<< " has base_length = " << old_action->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << old_action->degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_orbits",
@@ -1868,7 +1888,8 @@ void action::induced_action_on_flags(action *old_action,
 	if (f_v) {
 		cout << "action::induced_action_on_flags" << endl;
 		cout << "the old_action " << old_action->label
-			<< " has base_length = " << old_action->Stabilizer_chain->base_len
+			//<< " has base_length = " << old_action->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << old_action->degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_flags",
@@ -1924,7 +1945,8 @@ void action::induced_action_on_bricks(action &old_action,
 	if (f_v) {
 		cout << "action::induced_action_on_bricks" << endl;
 		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.Stabilizer_chain->base_len
+			//<< " has base_length = " << old_action.Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << old_action.degree << endl;
 		}
 	sprintf(group_prefix, "%s_on_bricks", old_action.label);
@@ -2116,7 +2138,8 @@ void action::induced_action_on_homogeneous_polynomials(
 	sprintf(label_tex, "%s HP %d %d", A->label_tex, HPD->n, HPD->degree);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -2201,7 +2224,8 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 			A->label_tex, HPD->n, HPD->degree, nb_equations);
 	if (f_v) {
 		cout << "the old_action " << A->label
-			<< " has base_length = " << A->Stabilizer_chain->base_len
+			//<< " has base_length = " << A->Stabilizer_chain->base_len
+				// ToDo
 			<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
@@ -2372,8 +2396,9 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "subaction order = " << go2 << endl;
 		cout << "degree = " << old_action->degree << endl;
 		cout << "subaction->degree = " << subaction->degree << endl;
-		cout << "base_length = " << old_action->Stabilizer_chain->base_len << endl;
-		cout << "subaction->base_len = " << subaction->Stabilizer_chain->base_len << endl;
+		//cout << "base_length = " << old_action->Stabilizer_chain->base_len << endl;
+		//cout << "subaction->base_len = " << subaction->Stabilizer_chain->base_len << endl;
+		// ToDo
 		if (base_of_choice_len) {
 			cout << "base of choice:" << endl;
 			int_vec_print(cout, base_of_choice, base_of_choice_len);

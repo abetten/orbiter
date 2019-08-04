@@ -554,19 +554,29 @@ void action::report_basic_orbits(ostream &ost)
 {
 	int i;
 
-	ost << "The base has length " << Stabilizer_chain->base_len << "\\\\" << endl;
-	ost << "The basic orbits are: \\\\" << endl;
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
-		ost << "Basic orbit " << i << " is orbit of " << Stabilizer_chain->base[i]
-			<< " of length " << Stabilizer_chain->transversal_length[i] << "\\\\" << endl;
+	if (Stabilizer_chain) {
+		ost << "The base has length " << Stabilizer_chain->base_len << "\\\\" << endl;
+		ost << "The basic orbits are: \\\\" << endl;
+		for (i = 0; i < Stabilizer_chain->base_len; i++) {
+			ost << "Basic orbit " << i << " is orbit of " << Stabilizer_chain->base[i]
+				<< " of length " << Stabilizer_chain->transversal_length[i] << "\\\\" << endl;
+		}
+	}
+	else {
+		cout << "action " << label << " does not have a base" << endl;
 	}
 }
 
 void action::print_base()
 {
-	cout << "action " << label << " has base ";
-	int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
-	cout << endl;
+	if (Stabilizer_chain) {
+		cout << "action " << label << " has base ";
+		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
+		cout << endl;
+	}
+	else {
+		cout << "action " << label << " does not have a base" << endl;
+	}
 }
 
 void action::print_points(ostream &ost)
@@ -627,9 +637,15 @@ void action::print_group_order_long(ostream &ost)
 	longinteger_object go;
 	group_order(go);
 	cout << go << " =";
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
-		cout << " " << Stabilizer_chain->transversal_length[i];
-		}
+	if (Stabilizer_chain) {
+		for (i = 0; i < Stabilizer_chain->base_len; i++) {
+			cout << " " << Stabilizer_chain->transversal_length[i];
+			}
+	}
+	else {
+		cout << "action " << label << " does not have a base" << endl;
+	}
+
 }
 
 void action::print_vector(vector_ge &v)

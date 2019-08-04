@@ -54,7 +54,7 @@ void spread_lifting::freeself()
 }
 
 void spread_lifting::init(
-	spread *S, exact_cover *E,
+		spread_classify *S, exact_cover *E,
 	int *starter, int starter_size, 
 	int starter_case_number, int starter_number_of_cases, 
 	int *candidates, int nb_candidates,

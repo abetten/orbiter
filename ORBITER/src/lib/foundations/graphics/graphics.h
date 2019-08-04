@@ -31,6 +31,7 @@ public:
 					int nb_frames_this_round, int round,
 					std::ostream &fp,
 					int verbose_level);
+	void *extra_data;
 
 	animate();
 	~animate();
@@ -38,6 +39,7 @@ public:
 			const char *output_mask,
 			int nb_frames,
 			video_draw_options *Opt,
+			void *extra_data,
 			int verbose_level);
 	void animate_one_round(
 		int round,

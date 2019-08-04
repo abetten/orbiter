@@ -1125,7 +1125,7 @@ int incidence_structure_find_blocking_set(incidence_structure *Inc,
 
 class invariants_packing {
 public:
-	spread *T;
+	spread_classify *T;
 	packing *P;
 	isomorph *Iso; // the classification of packings
 
@@ -1265,7 +1265,7 @@ public:
 
 class packing {
 public:
-	spread *T;
+	spread_classify *T;
 	finite_field *F;
 	int spread_size;
 	int nb_lines;
@@ -1316,7 +1316,7 @@ public:
 	~packing();
 	void null();
 	void freeself();
-	void init(spread *T,
+	void init(spread_classify *T,
 		int f_packing_select_spread,
 		int *packing_select_spread, int packing_select_spread_nb,
 		const char *input_prefix, const char *base_fname,
@@ -1326,7 +1326,7 @@ public:
 	void init2(int verbose_level);
 	void compute_spread_table(int verbose_level);
 	void init_P3(int verbose_level);
-	void load_input_spreads(int &N,
+	int predict_spread_table_length(
 		int f_packing_select_spread,
 		int *packing_select_spread, int packing_select_spread_nb,
 		int verbose_level);
@@ -1782,7 +1782,7 @@ public:
 };
 
 // #############################################################################
-// spread.cpp
+// spread_classify.cpp
 // #############################################################################
 
 #define SPREAD_OF_TYPE_FTWKB 1
@@ -1797,7 +1797,7 @@ public:
 //! to classify spreads of PG(k-1,q) in PG(n-1,q) where n=2*k
 
 
-class spread {
+class spread_classify {
 public:
 
 	finite_field *F;
@@ -1874,8 +1874,8 @@ public:
 		// [n * n]
 
 
-	spread();
-	~spread();
+	spread_classify();
+	~spread_classify();
 	void null();
 	void freeself();
 	void init(int order, int n, int k, int max_depth, 
@@ -1913,7 +1913,7 @@ public:
 		int verbose_level);
 
 
-	// spread2.cpp
+	// spread_classify2.cpp
 	void print_isomorphism_type(isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
 		int *data, int verbose_level);
@@ -1969,7 +1969,7 @@ int callback_incremental_check_function(
 	void *data, int verbose_level);
 
 
-// spread2.cpp
+// spread_classify2.cpp
 void spread_early_test_func_callback(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -2066,7 +2066,7 @@ public:
 class spread_lifting {
 public:
 
-	spread *S;
+	spread_classify *S;
 	exact_cover *E;
 	
 	int *starter;
@@ -2100,7 +2100,7 @@ public:
 	~spread_lifting();
 	void null();
 	void freeself();
-	void init(spread *S, exact_cover *E, 
+	void init(spread_classify *S, exact_cover *E,
 		int *starter, int starter_size, 
 		int starter_case_number, int starter_number_of_cases, 
 		int *candidates, int nb_candidates, strong_generators *Strong_gens, 

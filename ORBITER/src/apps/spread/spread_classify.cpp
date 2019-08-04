@@ -257,12 +257,14 @@ int main(int argc, const char **argv)
 		}
 
 	finite_field *F;
-	spread T;
+	spread_classify T;
 
 	F = NEW_OBJECT(finite_field);
 
+	cout << "spread_classify.cpp before F->init_override_polynomial" << endl;
 	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 
+	cout << "spread_classify.cpp before T.read_arguments" << endl;
 	T.read_arguments(argc, argv);
 	
 	int max_depth = NT.i_power_j(F->q, k) + 1;
@@ -275,33 +277,42 @@ int main(int argc, const char **argv)
 		verbose_level - 1);
 	cout << "spread_classify.cpp after T.init" << endl;
 	
+	cout << "spread_classify.cpp before T.init2" << endl;
 	T.init2(verbose_level - 1);
+	cout << "spread_classify.cpp after T.init2" << endl;
 
-	cout << "spread_classify.cpp before IA.init" << endl;
 
 	char prefix_with_directory[1000];
 
 	sprintf(prefix_with_directory, "%s%s",
 			T.starter_directory_name, T.prefix);
 
+	cout << "spread_classify.cpp before IA.init" << endl;
 	IA->init(T.A, T.A2, T.gen, 
 		T.spread_size, prefix_with_directory, ECA,
 		spread_callback_report,
 		NULL /* callback_subset_orbits */,
 		&T,
 		verbose_level - 1);
+	cout << "spread_classify.cpp after IA.init" << endl;
 
 
 	if (f_make_spread) {
 		cout << "spread_classify.cpp f_make_spread" << endl;
+		cout << "spread_classify.cpp before T.write_spread_to_file" << endl;
 		T.write_spread_to_file(type_of_spread, verbose_level);
+		cout << "spread_classify.cpp after T.write_spread_to_file" << endl;
 		}
 	else if (f_starter) {
 
 
 		cout << "spread_classify.cpp f_starter" << endl;
 		
+		cout << "spread_classify.cpp before T.compute" << endl;
+
 		T.compute(verbose_level);
+
+		cout << "spread_classify.cpp after T.compute" << endl;
 
 		cout << "spread_classify.cpp "
 				"starter_size = " << ECA->starter_size << endl;
@@ -506,7 +517,7 @@ int main(int argc, const char **argv)
 
 void print_spread(ostream &ost, int len, int *S, void *data)
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	
 	Spread->print(ost, len, S);
 }

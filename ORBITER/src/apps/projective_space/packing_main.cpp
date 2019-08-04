@@ -251,7 +251,7 @@ int main(int argc, const char **argv)
 
 	
 	finite_field *F;
-	spread *T;
+	spread_classify *T;
 	packing *P;
 
 
@@ -261,7 +261,7 @@ int main(int argc, const char **argv)
 
 
 
-	T = NEW_OBJECT(spread);
+	T = NEW_OBJECT(spread_classify);
 
 	T->read_arguments(argc, argv);
 	
@@ -305,15 +305,6 @@ int main(int argc, const char **argv)
 
 
 
-	if (f_compute_spread_table) {
-		P->compute_spread_table(verbose_level);
-	}
-	if (f_load_spread_table) {
-		P->read_spread_table(verbose_level);
-	}
-	else {
-		P->compute_spread_table(verbose_level);
-	}
 	if (f_conjugacy_classes) {
 		cout << "before P->conjugacy_classes" << endl;
 		P->conjugacy_classes(verbose_level);
@@ -345,6 +336,25 @@ int main(int argc, const char **argv)
 		//exit(1);
 		}
 	else {
+
+
+		if (f_compute_spread_table) {
+			cout << "before P->compute_spread_table" << endl;
+			P->compute_spread_table(verbose_level);
+			cout << "after P->compute_spread_table" << endl;
+		}
+		if (f_load_spread_table) {
+			cout << "before P->read_spread_table" << endl;
+			P->read_spread_table(verbose_level);
+			cout << "after P->read_spread_table" << endl;
+		}
+		else {
+			cout << "before P->compute_spread_table" << endl;
+			P->compute_spread_table(verbose_level);
+			cout << "after P->compute_spread_table" << endl;
+		}
+
+
 		cout << "before P->init2" << endl;
 		P->init2(verbose_level);
 			// this computes the spread table from scratch

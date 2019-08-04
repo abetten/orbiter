@@ -271,25 +271,28 @@ void poset_classification::read_arguments(int argc,
 	int f_v = (verbose_level >= 1);
 	int i;
 	
+	if (f_v) {
+		cout << "poset_classification::read_arguments" << endl;
+		}
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			i++;
 			poset_classification::verbose_level = atoi(argv[i]);
 			if (f_v) {
-				cout << "-v " << poset_classification::verbose_level << endl;
+				cout << "poset_classification::read_arguments -v " << poset_classification::verbose_level << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-gv") == 0) {
 			i++;
 			verbose_level_group_theory = atoi(argv[i]);
 			if (f_v) {
-				cout << "-gv " << verbose_level_group_theory << endl;
+				cout << "poset_classification::read_arguments -gv " << verbose_level_group_theory << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-lex") == 0) {
 			f_lex = TRUE;
 			if (f_v) {
-				cout << "-lex" << endl;
+				cout << "poset_classification::read_arguments -lex" << endl;
 				}
 			}
 #if 0
@@ -298,78 +301,78 @@ void poset_classification::read_arguments(int argc,
 			f_prefix = TRUE;
 			strcpy(prefix, argv[i]);
 			if (f_v) {
-				cout << "-prefix " << prefix << endl;
+				cout << "poset_classification::read_arguments -prefix " << prefix << endl;
 				}
 			}
 #endif
 		else if (strcmp(argv[i], "-w") == 0) {
 			f_w = TRUE;
 			if (f_v) {
-				cout << "-w" << endl;
+				cout << "poset_classification::read_arguments -w" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-W") == 0) {
 			f_W = TRUE;
 			if (f_v) {
-				cout << "-W" << endl;
+				cout << "poset_classification::read_arguments -W" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-write_data_files") == 0) {
 			f_write_data_files = TRUE;
 			if (f_v) {
-				cout << "-write_data_files" << endl;
+				cout << "poset_classification::read_arguments -write_data_files" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-t") == 0) {
 			f_t = TRUE;
 			if (f_v) {
-				cout << "-t" << endl;
+				cout << "poset_classification::read_arguments -t" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-T") == 0) {
 			f_T = TRUE;
 			if (f_v) {
-				cout << "-T" << endl;
+				cout << "poset_classification::read_arguments -T" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-log") == 0) {
 			f_log = TRUE;
 			if (f_v) {
-				cout << "-log" << endl;
+				cout << "poset_classification::read_arguments -log" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-Log") == 0) {
 			f_Log = TRUE;
 			if (f_v) {
-				cout << "-Log" << endl;
+				cout << "poset_classification::read_arguments -Log" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-x") == 0) {
 			xmax = atoi(argv[i + 1]);
 			i++;
 			if (f_v) {
-				cout << "-x " << xmax << endl;
+				cout << "poset_classification::read_arguments -x " << xmax << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-y") == 0) {
 			ymax = atoi(argv[i + 1]);
 			i++;
 			if (f_v) {
-				cout << "-y " << ymax << endl;
+				cout << "poset_classification::read_arguments -y " << ymax << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-rad") == 0) {
 			radius = atoi(argv[i + 1]);
 			i++;
 			if (f_v) {
-				cout << "-rad " << radius << endl;
+				cout << "poset_classification::read_arguments -rad " << radius << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_max_depth = TRUE;
 			max_depth = atoi(argv[++i]);
 			if (f_v) {
-				cout << "-depth " << max_depth << endl;
+				cout << "poset_classification::read_arguments -depth " << max_depth << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-extend") == 0) {
@@ -380,7 +383,7 @@ void poset_classification::read_arguments(int argc,
 			extend_m = atoi(argv[++i]);
 			strcpy(extend_fname, argv[++i]);
 			if (f_v) {
-				cout << "-extend from level " << extend_from 
+				cout << "poset_classification::read_arguments -extend from level " << extend_from
 					<< " to level " << extend_to 
 					<< " cases congruent " << extend_r
 					<< " mod " << extend_m
@@ -391,25 +394,25 @@ void poset_classification::read_arguments(int argc,
 			f_recover = TRUE;
 			recover_fname = argv[++i];
 			if (f_v) {
-				cout << "-recover " << recover_fname << endl; 
+				cout << "poset_classification::read_arguments -recover " << recover_fname << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-printonly") == 0) {
 			f_print_only = TRUE;
 			if (f_v) {
-				cout << "-printonly" << endl; 
+				cout << "poset_classification::read_arguments -printonly" << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-findgroup") == 0) {
 			f_find_group_order = TRUE;
 			find_group_order = atoi(argv[++i]);
 			if (f_v) {
-				cout << "-findgroup " << find_group_order << endl;
+				cout << "poset_classification::read_arguments -findgroup " << find_group_order << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;
-			cout << "-export_schreier_trees" << endl;
+			cout << "poset_classification::read_arguments -export_schreier_trees" << endl;
 		}
 		else if (strcmp(argv[i], "-draw_schreier_trees") == 0) {
 			f_draw_schreier_trees = TRUE;
@@ -422,7 +425,7 @@ void poset_classification::read_arguments(int argc,
 			schreier_tree_f_sideways = atoi(argv[++i]);
 			schreier_tree_scale = atoi(argv[++i]) * 0.01;
 			schreier_tree_line_width = atoi(argv[++i]) * 0.01;
-			cout << "-draw_schreier_trees " << schreier_tree_prefix 
+			cout << "poset_classification::read_arguments -draw_schreier_trees " << schreier_tree_prefix
 				<< " " << schreier_tree_xmax 
 				<< " " << schreier_tree_ymax 
 				<< " " << schreier_tree_f_circletext 
@@ -436,11 +439,14 @@ void poset_classification::read_arguments(int argc,
 			f_has_tools_path = TRUE;
 			tools_path = argv[++i];
 			if (f_v) {
-				cout << "-tools_path " << tools_path << endl;
+				cout << "poset_classification::read_arguments -tools_path " << tools_path << endl;
 				}
 			}
 
 
+		}
+	if (f_v) {
+		cout << "poset_classification::read_arguments done" << endl;
 		}
 }
 
