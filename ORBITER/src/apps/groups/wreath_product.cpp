@@ -953,6 +953,7 @@ void tensor_product::init(int argc, const char **argv,
 	}
 
 
+#if 0
 	{
 	schreier *Sch0;
 
@@ -962,6 +963,7 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "we found " << Sch0->nb_orbits << " orbits on points" << endl;
 	FREE_OBJECT(Sch0);
 	}
+#endif
 
 
 
