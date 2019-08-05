@@ -828,6 +828,8 @@ void tensor_product::init(int argc, const char **argv,
 
 	F->init(q, 0);
 
+	cout << "tensor_product::init before "
+			"A->init_wreath_product_group_and_restrict" << endl;
 	A->init_wreath_product_group_and_restrict(nb_factors, n,
 			F,
 			verbose_level);

@@ -198,6 +198,16 @@ public:
 	void null();
 	void freeself();
 	
+	int f_has_base();
+	int base_len();
+	void set_base_len(int base_len);
+	int &base_i(int i);
+	int *&get_base();
+	int &transversal_length_i(int i);
+	int *&get_transversal_length();
+	int &orbit_ij(int i, int j);
+	int &orbit_inv_ij(int i, int j);
+
 	void null_element_data();
 	void allocate_element_data();
 	void free_element_data();
@@ -1106,8 +1116,7 @@ public:
 
 
 class stabilizer_chain_base_data {
-	public:
-
+private:
 	action *A;
 
 	/** whether we have a base (b_0,\ldots,b_{l-1}) */
@@ -1133,6 +1142,7 @@ class stabilizer_chain_base_data {
 	int **orbit_inv;
 
 	int *path;
+public:
 
 	stabilizer_chain_base_data();
 	~stabilizer_chain_base_data();
@@ -1140,7 +1150,25 @@ class stabilizer_chain_base_data {
 	void allocate_base_data(action *A, int base_len, int verbose_level);
 	void reallocate_base(int new_base_point);
 	void init_base_from_sims(sims *G, int verbose_level);
-
+	int &get_f_has_base();
+	int &get_base_len();
+	int &base_i(int i);
+	int *&get_base();
+	int &transversal_length_i(int i);
+	int *&get_transversal_length();
+	int &orbit_ij(int i, int j);
+	int &orbit_inv_ij(int i, int j);
+	int &path_i(int i);
+	void group_order(longinteger_object &go);
+	void init_projective_matrix_group(
+			finite_field *F, int n, int f_semilinear, int degree,
+			int verbose_level);
+	void init_affine_matrix_group(
+			finite_field *F, int n, int f_semilinear, int degree,
+			int verbose_level);
+	void init_linear_matrix_group(
+			finite_field *F, int n, int f_semilinear, int degree,
+			int verbose_level);
 };
 
 

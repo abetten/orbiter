@@ -525,7 +525,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 	if (gen->f_do_group_extension_in_upstep) {
 		vector_ge SG_extension;
-		int *tl_extension = NEW_int(gen->Poset->A->Stabilizer_chain->base_len);
+		int *tl_extension = NEW_int(gen->Poset->A->base_len());
 		int f_OK;
 		int f_tolerant = FALSE;
 	

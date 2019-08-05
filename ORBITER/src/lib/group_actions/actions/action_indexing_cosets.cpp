@@ -75,13 +75,13 @@ void action::coset_unrank(sims *G, sims *U,
 	U_orb.initialize_tables(); // not needed, already done in init
 	U_orb.init_generators(U->gens);
 	
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < base_len(); i++) {
 		if (G->orbit_len[i] > 1 /*U->orbit_len[i]*/) {
 			base_idx = i;
 			break;
 			}
 		}
-	if (i == Stabilizer_chain->base_len) {
+	if (i == base_len()) {
 		if (f_v) {
 			cout << "the groups are equal" << endl;
 			}
@@ -99,7 +99,7 @@ void action::coset_unrank(sims *G, sims *U,
 		element_one(Elt, 0);
 		goto done;
 		}
-	base_pt = Stabilizer_chain->base[base_idx];
+	base_pt = base_i(base_idx);
 	if (f_v) {
 		cout << "base_idx = " << base_idx << endl;
 		cout << "base_pt = " << base_pt << endl;
@@ -341,13 +341,13 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	U_orb.initialize_tables();
 	U_orb.init_generators(U->gens);
 	
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < base_len(); i++) {
 		if (G->orbit_len[i] > 1 /*U->orbit_len[i]*/) {
 			base_idx = i;
 			break;
 			}
 		}
-	if (i == Stabilizer_chain->base_len) {
+	if (i == base_len()) {
 		if (f_v) {
 			cout << "the groups are equal" << endl;
 			}
@@ -361,7 +361,7 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 		//element_one(Elt, 0);
 		goto done;
 		}
-	base_pt = Stabilizer_chain->base[base_idx];
+	base_pt = base_i(base_idx);
 	if (f_v) {
 		cout << "base_idx = " << base_idx << endl;
 		cout << "base_pt = " << base_pt << endl;

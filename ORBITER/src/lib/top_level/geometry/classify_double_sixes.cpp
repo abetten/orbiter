@@ -1559,7 +1559,7 @@ void classify_double_sixes::upstep(int verbose_level)
 			cout << "classify_double_sixes::upstep "
 					"Aut_gens tl = ";
 			int_vec_print(cout,
-					Aut_gens->tl, Aut_gens->A->Stabilizer_chain->base_len);
+					Aut_gens->tl, Aut_gens->A->base_len());
 			cout << endl;
 			}
 

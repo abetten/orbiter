@@ -40,13 +40,13 @@ void poset_orbit_node::read_memory_object(
 		}
 	if (nb_strong_generators) {
 		hdl_strong_generators = NEW_int(nb_strong_generators);
-		tl = NEW_int(A->Stabilizer_chain->base_len);
+		tl = NEW_int(A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
 			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
 			hdl_strong_generators[i] = A->element_store(Elt, FALSE);
 			nb_group_elements++;
 			}
-		for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < A->base_len(); i++) {
 			m->read_int(&tl[i]);
 			}
 		}
@@ -141,7 +141,7 @@ void poset_orbit_node::write_memory_object(
 		if (f_v) {
 			cout << "writing tl" << endl;
 			}
-		for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < A->base_len(); i++) {
 			m->write_int(tl[i]);
 			if (f_v) {
 				cout << tl[i] << " ";
@@ -207,7 +207,7 @@ long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 
 	s += nb_strong_generators * A->coded_elt_size_in_char;
 	if (nb_strong_generators) {
-		s += A->Stabilizer_chain->base_len * sizeof(int);
+		s += A->base_len() * sizeof(int);
 		// tl[]
 		}
 
@@ -311,7 +311,7 @@ void poset_orbit_node::read_file(action *A,
 		}
 	if (nb_strong_generators) {
 		hdl_strong_generators = NEW_int(nb_strong_generators);
-		tl = NEW_int(A->Stabilizer_chain->base_len);
+		tl = NEW_int(A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
 			A->element_read_file_fp(Elt, fp, verbose_level);
 			if (f_vv) {
@@ -321,7 +321,7 @@ void poset_orbit_node::read_file(action *A,
 			hdl_strong_generators[i] = A->element_store(Elt, FALSE);
 			nb_group_elements++;
 			}
-		for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < A->base_len(); i++) {
 			fp.read((char *) &tl[i], sizeof(int));
 			//tl[i] = Fio.fread_int4(fp);
 			if (f_vv) {
@@ -428,7 +428,7 @@ void poset_orbit_node::write_file(action *A,
 		if (f_vv) {
 			cout << "writing tl" << endl;
 			}
-		for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < A->base_len(); i++) {
 			fp.write((char *) &tl[i], sizeof(int));
 			//Fio.fwrite_int4(fp, tl[i]);
 			if (f_vv) {
