@@ -386,6 +386,106 @@ void action::freeself()
 		}
 }
 
+int action::f_has_base()
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->get_f_has_base();
+	}
+	else {
+		return FALSE;
+	}
+}
+
+
+int action::base_len()
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->get_base_len();
+	}
+	else {
+		return 0;
+	}
+}
+
+void action::set_base_len(int base_len)
+{
+	if (Stabilizer_chain) {
+		Stabilizer_chain->get_base_len() = base_len;
+	}
+	else {
+		cout << "action::set_base_len no stabilizer chain" << endl;
+	}
+
+}
+
+int &action::base_i(int i)
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->base_i(i);
+	}
+	else {
+		cout << "action::base_i no Stabilizer_chain" << endl;
+		exit(1);
+	}
+}
+
+int *&action::get_base()
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->get_base();
+	}
+	else {
+		cout << "action::get_base no Stabilizer_chain" << endl;
+		exit(1);
+	}
+}
+
+int &action::transversal_length_i(int i)
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->transversal_length_i(i);
+	}
+	else {
+		cout << "action::transversal_length_i no Stabilizer_chain" << endl;
+		exit(1);
+	}
+}
+
+int *&action::get_transversal_length()
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->get_transversal_length();
+	}
+	else {
+		cout << "action::transversal_length no Stabilizer_chain" << endl;
+		exit(1);
+	}
+}
+
+int &action::orbit_ij(int i, int j)
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->orbit_ij(i, j);
+	}
+	else {
+		cout << "action::orbit_ij no Stabilizer_chain" << endl;
+		exit(1);
+	}
+}
+
+int &action::orbit_inv_ij(int i, int j)
+{
+	if (Stabilizer_chain) {
+		return Stabilizer_chain->orbit_inv_ij(i, j);
+	}
+	else {
+		cout << "action::orbit_inv_ij no Stabilizer_chain" << endl;
+		exit(1);
+	}
+}
+
+
+
 void action::null_element_data()
 {
 	Elt1 = Elt2 = Elt3 = Elt4 = Elt5 = NULL;
@@ -597,7 +697,7 @@ void action::init_sims(sims *G, int verbose_level)
 
 	if (f_v) {
 		cout << "action::init_sims action " << label
-				<< " base_len = " << Stabilizer_chain->base_len << endl;
+				<< " base_len = " << base_len() << endl;
 		}
 	if (f_has_sims) {
 		FREE_OBJECT(Sims);
@@ -868,13 +968,13 @@ int action::depth_in_stab_chain(int *Elt)
 {
 	int i, j, b;
 	
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
-		b = Stabilizer_chain->base[i];
+	for (i = 0; i < base_len(); i++) {
+		b = base_i(i);
 		j = element_image_of(b, Elt, 0);
 		if (j != b)
 			return i;
 		}
-	return Stabilizer_chain->base_len;
+	return base_len();
 }
 
 void action::strong_generators_at_depth(int depth,
@@ -1118,18 +1218,18 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
 	
 	if (f_v) {
 		cout << "action::compute_stabilizer_orbits" << endl;
-		cout << "base_len = " << Stabilizer_chain->base_len << endl;
-		for (i = 0; i < Stabilizer_chain->base_len; i++) {
-			cout << i << " : " << Stabilizer_chain->base[i] << " : " << Stabilizer_chain->transversal_length[i];
-			int_vec_print(cout, Stabilizer_chain->orbit[i], Stabilizer_chain->transversal_length[i]);
+		cout << "base_len = " << base_len() << endl;
+		for (i = 0; i < base_len(); i++) {
+			cout << i << " : " << base_i(i) << " : " << transversal_length_i(i);
+			//int_vec_print(cout, Stabilizer_chain->orbit[i], Stabilizer_chain->transversal_length[i]);
 			cout << endl;
 			}
 		cout << "degree = " << degree << endl;
 		}
-	Staborbits = NEW_OBJECTS(partitionstack, Stabilizer_chain->base_len);
+	Staborbits = NEW_OBJECTS(partitionstack, base_len());
 		// where is this freed???
 
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < base_len(); i++) {
 		strong_generators_at_depth(i, gen);
 		if (FALSE) {
 			cout << "level " << i << " found "
@@ -1502,9 +1602,9 @@ void action::make_element_from_permutation_representation(
 	if (f_v) {
 		cout << "action::make_element_from_permutation_representation" << endl;
 		}
-	base_image = NEW_int(Stabilizer_chain->base_len);
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
-		a = Stabilizer_chain->base[i];
+	base_image = NEW_int(base_len());
+	for (i = 0; i < base_len(); i++) {
+		a = base_i(i);
 		base_image[i] = data[a];
 		if (base_image[i] >= degree) {
 			cout << "action::make_element_from_permutation_representation "
@@ -1545,7 +1645,7 @@ void action::make_element_from_base_image(int *Elt,
 	if (f_v) {
 		cout << "action::make_element_from_base_image" << endl;
 		cout << "base images: ";
-		int_vec_print(cout, data, Stabilizer_chain->base_len);
+		int_vec_print(cout, data, base_len());
 		cout << endl;
 		print_info();
 		}
@@ -1559,19 +1659,19 @@ void action::make_element_from_base_image(int *Elt,
 		cout << "action in Sims:" << endl;
 		S->A->print_info();
 		}
-	base_image = NEW_int(Stabilizer_chain->base_len);
+	base_image = NEW_int(base_len());
 	Elt1 = NEW_int(elt_size_in_int);
 	Elt2 = NEW_int(elt_size_in_int);
 	Elt3 = NEW_int(elt_size_in_int);
 	Elt4 = NEW_int(elt_size_in_int);
-	for (j = 0; j < Stabilizer_chain->base_len; j++) {
+	for (j = 0; j < base_len(); j++) {
 		base_image[j] = data[j];
 		}
 	element_one(Elt3, 0);
 	
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < base_len(); i++) {
 		element_invert(Elt3, Elt4, 0);
-		b_pt = Stabilizer_chain->base[i];
+		b_pt = base_i(i);
 		yi = base_image[i];
 		z = element_image_of(yi, Elt4, 0);
 		j = S->orbit_inv[i][z];
@@ -1620,15 +1720,15 @@ void action::make_element_from_base_image(int *Elt,
 			}
 		}
 	element_move(Elt3, Elt, 0);
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < base_len(); i++) {
 		yi = data[i];
-		b = element_image_of(Stabilizer_chain->base[i], Elt, 0);
+		b = element_image_of(base_i(i), Elt, 0);
 		if (yi != b) {
 			cout << "action::make_element_from_base_image "
 					"fatal: yi != b"
 					<< endl;
 			cout << "i=" << i << endl;
-			cout << "base[i]=" << Stabilizer_chain->base[i] << endl;
+			cout << "base[i]=" << base_i(i) << endl;
 			cout << "yi=" << yi << endl;
 			cout << "b=" << b << endl;
 			exit(1);
@@ -1781,18 +1881,18 @@ void action::build_up_automorphism_group_from_aut_data(
 	for (h = 0; h < nb_auts; h++) {
 		if (f_v) {
 			cout << "aut_data[" << h << "]=";
-			int_vec_print(cout, aut_data + h * Stabilizer_chain->base_len, Stabilizer_chain->base_len);
+			int_vec_print(cout, aut_data + h * base_len(), base_len());
 			cout << endl;
 			}
-		for (i = 0; i < Stabilizer_chain->base_len; i++) {
-			coset = aut_data[h * Stabilizer_chain->base_len + i];
+		for (i = 0; i < base_len(); i++) {
+			coset = aut_data[h * base_len() + i];
 			//image_point = Sims->orbit[i][coset];
 			Sims->path[i] = coset;
 				//Sims->orbit_inv[i][aut_data[h * base_len + i]];
 			}
 		if (f_v) {
 			cout << "path=";
-			int_vec_print(cout, Sims->path, Stabilizer_chain->base_len);
+			int_vec_print(cout, Sims->path, base_len());
 			cout << endl;
 			}
 		Sims->element_from_path_inv(Elt1);
@@ -1976,15 +2076,15 @@ void action::init_group_from_generators_by_base_images(
 		}
 	S.init(this, verbose_level - 2);
 	Elt = NEW_int(elt_size_in_int);
-	nb_gens = group_generator_size / Stabilizer_chain->base_len;
+	nb_gens = group_generator_size / base_len();
 	if (f_v) {
 		cout << "nb_gens=" << nb_gens << endl;
-		cout << "base_len=" << Stabilizer_chain->base_len << endl;
+		cout << "base_len=" << base_len() << endl;
 		}
-	if (nb_gens * Stabilizer_chain->base_len != group_generator_size) {
+	if (nb_gens * base_len() != group_generator_size) {
 		cout << "action::init_group_from_generators_by_base_images fatal: "
 				"group_generator_size is not divisible by base_len" << endl;
-		cout << "base_len=" << Stabilizer_chain->base_len << endl;
+		cout << "base_len=" << base_len() << endl;
 		cout << "group_generator_size=" << group_generator_size << endl;
 		exit(1);
 		}
@@ -1995,10 +2095,10 @@ void action::init_group_from_generators_by_base_images(
 			cout << "parsing generator " << i << ":" << endl;
 			}
 		int_vec_print(cout, group_generator_data + 
-			i * Stabilizer_chain->base_len, Stabilizer_chain->base_len);
+			i * base_len(), base_len());
 		cout << endl;
 		make_element_from_base_image(Elt, 
-			group_generator_data + i * Stabilizer_chain->base_len,
+			group_generator_data + i * base_len(),
 			verbose_level - 2);
 		element_move(Elt, gens->ith(i), 0);
 		}
@@ -2030,14 +2130,15 @@ void action::init_group_from_generators_by_base_images(
 
 void action::group_order(longinteger_object &go)
 {
-	longinteger_domain D;
+	//longinteger_domain D;
 	
 	if (Stabilizer_chain == NULL) {
 		cout << "action::group_order Stabilizer_chain == NULL" << endl;
 		go.create(0);
 	}
 	else {
-		D.multiply_up(go, Stabilizer_chain->transversal_length, Stabilizer_chain->base_len);
+		Stabilizer_chain->group_order(go);
+		//D.multiply_up(go, Stabilizer_chain->transversal_length, base_len());
 	}
 }
 
@@ -2062,10 +2163,10 @@ void action::element_print_base_images_verbose(
 	if (f_v) {
 		cout << "action::element_print_base_images_verbose" << endl;
 		}
-	base_images = NEW_int(Stabilizer_chain->base_len);
+	base_images = NEW_int(base_len());
 	element_base_images_verbose(Elt, base_images, verbose_level - 1);
 	ost << "base images: ";
-	int_vec_print(ost, base_images, Stabilizer_chain->base_len);
+	int_vec_print(ost, base_images, base_len());
 	FREE_int(base_images);
 }
 
@@ -2084,8 +2185,8 @@ void action::element_base_images_verbose(
 	if (f_v) {
 		cout << "action::element_base_images_verbose" << endl;
 		}
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
-		bi = Stabilizer_chain->base[i];
+	for (i = 0; i < base_len(); i++) {
+		bi = base_i(i);
 		if (f_vv) {
 			cout << "the " << i << "-th base point is "
 					<< bi << " is mapped to:" << endl;
@@ -2115,11 +2216,11 @@ void action::minimize_base_images(int level,
 		}
 	Elt1 = NEW_int(elt_size_in_int);
 	Elt2 = NEW_int(elt_size_in_int);
-	base_images1 = NEW_int(Stabilizer_chain->base_len);
-	base_images2 = NEW_int(Stabilizer_chain->base_len);
+	base_images1 = NEW_int(base_len());
+	base_images2 = NEW_int(base_len());
 	
 	element_move(Elt, Elt1, 0);
-	for (i = level; i < Stabilizer_chain->base_len; i++) {
+	for (i = level; i < base_len(); i++) {
 		element_base_images(Elt1, base_images1);
 		//bi = base[i];
 		if (f_vv) {
@@ -2170,10 +2271,10 @@ void action::minimize_base_images(int level,
 		if (f_vv) {
 			cout << "level " << i << " j0=" << j0 << endl;
 			cout << "before: ";
-			int_vec_print(cout, base_images1, Stabilizer_chain->base_len);
+			int_vec_print(cout, base_images1, base_len());
 			cout << endl;
 			cout << "after : ";
-			int_vec_print(cout, base_images2, Stabilizer_chain->base_len);
+			int_vec_print(cout, base_images2, base_len());
 			cout << endl;
 			}
 		}
@@ -2214,7 +2315,7 @@ void action::get_generators_from_ascii_coding(
 	G->S->group_order(go);
 
 	gens = NEW_OBJECT(vector_ge);
-	tl = NEW_int(Stabilizer_chain->base_len);
+	tl = NEW_int(base_len());
 	G->S->extract_strong_generators_in_order(*gens, tl,
 			0 /* verbose_level */);
 

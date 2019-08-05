@@ -88,7 +88,7 @@ void strong_generators::init_from_sims(sims *S, int verbose_level)
 		cout << "strong_generators::init_from_sims" << endl;
 		}
 	A = S->A;
-	tl = NEW_int(A->Stabilizer_chain->base_len);
+	tl = NEW_int(A->base_len());
 	gens = NEW_OBJECT(vector_ge);
 	S->extract_strong_generators_in_order(*gens, tl,
 			0 /*verbose_level*/);
@@ -158,9 +158,9 @@ void strong_generators::init_copy(strong_generators *S,
 		cout << "strong_generators::init_copy" << endl;
 		}
 	A = S->A;
-	tl = NEW_int(A->Stabilizer_chain->base_len);
+	tl = NEW_int(A->base_len());
 	//cout << "strong_generators::init_copy before int_vec_copy" << endl;
-	int_vec_copy(S->tl, tl, A->Stabilizer_chain->base_len);
+	int_vec_copy(S->tl, tl, A->base_len());
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(S->gens->len);
@@ -184,8 +184,8 @@ void strong_generators::init_by_hdl(action *A,
 		cout << "strong_generators::init_by_hdl" << endl;
 		}
 	init(A, 0);
-	tl = NEW_int(A->Stabilizer_chain->base_len);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	tl = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
 		tl[i] = 1;
 		}
 	gens = NEW_OBJECT(vector_ge);
@@ -256,8 +256,8 @@ void strong_generators::init_from_data(action *A, int *data,
 	nice_gens->init_from_data(A, data,
 		nb_elements, elt_size, verbose_level);
 
-	tl = NEW_int(A->Stabilizer_chain->base_len);
-	int_vec_copy(transversal_length, tl, A->Stabilizer_chain->base_len);
+	tl = NEW_int(A->base_len());
+	int_vec_copy(transversal_length, tl, A->base_len());
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data done" << endl;
@@ -975,7 +975,7 @@ sims *strong_generators::create_sims(int verbose_level)
 		exit(1);
 		}
 	S = A->create_sims_from_generators_with_target_group_order_factorized(
-		gens, tl, A->Stabilizer_chain->base_len, 0 /* verbose_level */);
+		gens, tl, A->base_len(), 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "strong_generators::create_sims done" << endl;
@@ -1000,7 +1000,7 @@ sims *strong_generators::create_sims_in_different_action(
 		exit(1);
 		}
 	S = A_given->create_sims_from_generators_with_target_group_order_factorized(
-		gens, tl, A->Stabilizer_chain->base_len,
+		gens, tl, A->base_len(),
 		0 /* verbose_level */);
 
 	if (f_v) {
@@ -1038,7 +1038,7 @@ void strong_generators::add_generators(
 		}
 
 	gens1 = NEW_OBJECT(vector_ge);
-	tl1 = NEW_int(A->Stabilizer_chain->base_len);
+	tl1 = NEW_int(A->base_len());
 	
 	S = create_sims(verbose_level - 1);
 
@@ -1079,7 +1079,7 @@ void strong_generators::add_single_generator(
 		}
 
 	gens1 = NEW_OBJECT(vector_ge);
-	tl1 = NEW_int(A->Stabilizer_chain->base_len);
+	tl1 = NEW_int(A->base_len());
 	
 	S = create_sims(verbose_level - 1);
 
@@ -1108,7 +1108,7 @@ void strong_generators::group_order(longinteger_object &go)
 {
 	longinteger_domain D;
 
-	D.multiply_up(go, tl, A->Stabilizer_chain->base_len);
+	D.multiply_up(go, tl, A->base_len());
 }
 
 int strong_generators::group_order_as_int()
@@ -1116,7 +1116,7 @@ int strong_generators::group_order_as_int()
 	longinteger_domain D;
 	longinteger_object go;
 
-	D.multiply_up(go, tl, A->Stabilizer_chain->base_len);
+	D.multiply_up(go, tl, A->base_len());
 	return go.as_int();
 }
 
@@ -1128,7 +1128,7 @@ void strong_generators::print_generators()
 	group_order(go);
 	cout << "Strong generators for a group of order "
 			<< go << " tl=";
-	int_vec_print(cout, tl, A->Stabilizer_chain->base_len);
+	int_vec_print(cout, tl, A->base_len());
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / "
@@ -1147,7 +1147,7 @@ void strong_generators::print_generators_ost(ostream &ost)
 
 	group_order(go);
 	ost << "Strong generators for a group of order " << go << " tl=";
-	int_vec_print(ost, tl, A->Stabilizer_chain->base_len);
+	int_vec_print(ost, tl, A->base_len());
 	ost << endl;
 	for (i = 0; i < gens->len; i++) {
 		ost << "Generator " << i << " / "
@@ -1165,7 +1165,7 @@ void strong_generators::print_generators_in_source_code()
 	group_order(go);
 	cout << "Strong generators for a group of "
 			"order " << go << " tl=";
-	int_vec_print(cout, tl, A->Stabilizer_chain->base_len);
+	int_vec_print(cout, tl, A->base_len());
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / "
@@ -1204,7 +1204,7 @@ void strong_generators::print_generators_even_odd()
 
 	group_order(go);
 	cout << "Strong generators for a group of order " << go << " tl=";
-	int_vec_print(cout, tl, A->Stabilizer_chain->base_len);
+	int_vec_print(cout, tl, A->base_len());
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / " << gens->len << " is:" << endl;
@@ -1395,7 +1395,7 @@ void strong_generators::print_elements_ost(ostream &ost)
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	int_vec_print(ost, tl, A->Stabilizer_chain->base_len);
+	int_vec_print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	for (i = 0; i < go.as_int(); i++) {
 		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
@@ -1419,7 +1419,7 @@ void strong_generators::print_elements_latex_ost(ostream &ost)
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	int_vec_print(ost, tl, A->Stabilizer_chain->base_len);
+	int_vec_print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	m = MINIMUM(go.as_int(), 100);
 	if (m < go.as_int()) {
@@ -1460,7 +1460,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 	cycle_type = NEW_int(A_given->degree);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	int_vec_print(ost, tl, A->Stabilizer_chain->base_len);
+	int_vec_print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	m = MINIMUM(go.as_int(), 500);
 	if (m < go.as_int()) {
@@ -2038,22 +2038,25 @@ void strong_generators::write_to_file_binary(
 		cout << "strong_generators::write_to_file_binary" << endl;
 		}
 
-	if (!A->Stabilizer_chain->f_has_base) {
+	if (!A->f_has_base()) {
 		cout << "strong_generators::write_to_file_binary "
 				"!A->f_has_base" << endl;
 		exit(1);
 	}
 	if (f_v) {
 		cout << "strong_generators::write_to_file_binary "
-				"A->base_len=" << A->Stabilizer_chain->base_len << endl;
+				"A->base_len=" << A->base_len() << endl;
 		}
-	fp.write((char *) &A->Stabilizer_chain->base_len, sizeof(int));
+	int bl;
+
+	bl = A->base_len();
+	fp.write((char *) &bl, sizeof(int));
 
 	if (tl == NULL) {
 		cout << "strong_generators::write_to_file_binary tl == NULL" << endl;
 		exit(1);
 	}
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		if (f_v) {
 			cout << "strong_generators::write_to_file_binary "
 					"before writing tl[" << i << "]" << endl;
@@ -2085,13 +2088,13 @@ void strong_generators::read_from_file_binary(
 		}
 	init(A, 0);
 	fp.read((char *) &l, sizeof(int));
-	if (l != A->Stabilizer_chain->base_len) {
+	if (l != A->base_len()) {
 		cout << "strong_generators::read_from_file_binary "
 				"l != A->base_len" << endl;
 		exit(1);
 		}
-	tl = NEW_int(A->Stabilizer_chain->base_len);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	tl = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
 		fp.read((char *) &tl[i], sizeof(int));
 		}
 	gens = NEW_OBJECT(vector_ge);
@@ -2333,17 +2336,17 @@ void strong_generators::compute_ascii_coding(
 	if (f_v) {
 		cout << "strong_generators::compute_ascii_coding" << endl;
 		}
-	sz = 2 * ((2 + A->Stabilizer_chain->base_len + A->Stabilizer_chain->base_len) * sizeof(int_4) +
+	sz = 2 * ((2 + A->base_len() + A->base_len()) * sizeof(int_4) +
 			A->coded_elt_size_in_char * gens->len) + 1;
 	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
-	code_int4(p, (int_4) A->Stabilizer_chain->base_len);
+	code_int4(p, (int_4) A->base_len());
 
 	code_int4(p, (int_4) gens->len);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		code_int4(p, (int_4) A->Stabilizer_chain->base[i]);
+	for (i = 0; i < A->base_len(); i++) {
+		code_int4(p, (int_4) A->base_i(i));
 		}
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		code_int4(p, (int_4) tl[i]);
 		}
 	for (i = 0; i < gens->len; i++) {
@@ -2389,31 +2392,31 @@ void strong_generators::decode_ascii_coding(
 	str_len = strlen(ascii_coding);
 	len = decode_int4(p);
 	nbsg = decode_int4(p);
-	if (len != A->Stabilizer_chain->base_len) {
+	if (len != A->base_len()) {
 		cout << "strong_generators::decode_ascii_coding "
 				"len != A->base_len" << endl;
 		cout << "len=" << len << " (from file)" << endl;
-		cout << "A->base_len=" << A->Stabilizer_chain->base_len << endl;
+		cout << "A->base_len=" << A->base_len() << endl;
 		cout << "action A is " << A->label << endl;
 		exit(1);
 		}
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(nbsg);
-	base1 = NEW_int(A->Stabilizer_chain->base_len);
-	tl = NEW_int(A->Stabilizer_chain->base_len);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	base1 = NEW_int(A->base_len());
+	tl = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
 		base1[i] = decode_int4(p);
 		}
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		if (base1[i] != A->Stabilizer_chain->base[i]) {
+	for (i = 0; i < A->base_len(); i++) {
+		if (base1[i] != A->base_i(i)) {
 			cout << "strong_generators::decode_ascii_coding "
 					"base element " << i << " does not match "
 					"current base" << endl;
 			exit(1);
 			}
 		}
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		tl[i] = decode_int4(p);
 		}
 	for (i = 0; i < nbsg; i++) {

@@ -245,7 +245,7 @@ void sims::init(action *A, int verbose_level)
 	}
 	
 	if (A->Stabilizer_chain) {
-		my_base_len = A->Stabilizer_chain->base_len;
+		my_base_len = A->base_len();
 	}
 	else {
 		cout << "sims::init A->Stabilizer_chain == NULL, setting my_base_len to degree" << endl;
@@ -331,10 +331,10 @@ void sims::reallocate_base(int old_base_len, int verbose_level)
 	
 	if (f_v) {
 		cout << "sims::reallocate_base from " 
-			<< old_base_len << " to " << A->Stabilizer_chain->base_len << endl;
+			<< old_base_len << " to " << A->base_len() << endl;
 		}
 
-	my_base_len = A->Stabilizer_chain->base_len;
+	my_base_len = A->base_len();
 	
 	nb_gen = NEW_int(my_base_len + 1);
 	path = NEW_int(my_base_len);
@@ -426,7 +426,7 @@ void sims::init_trivial_group(int verbose_level)
 		cout << "sims::init_trivial_group A->Stabilizer_chain == NULL" << endl;
 		return;
 	}
-	if (my_base_len != A->Stabilizer_chain->base_len) {
+	if (my_base_len != A->base_len()) {
 		cout << "sims::init_trivial_group: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
@@ -435,7 +435,7 @@ void sims::init_trivial_group(int verbose_level)
 		cout << "before init_generators" << endl;
 		}
 	init_generators(0, NULL, 0/*verbose_level - 3*/);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		if (f_vv) {
 			cout << "before init_trivial_orbit i=" << i << endl;
 			}
@@ -447,12 +447,12 @@ void sims::init_trivial_orbit(int i)
 {
 	int coset_of_base_point;
 	
-	if (my_base_len != A->Stabilizer_chain->base_len) {
+	if (my_base_len != A->base_len()) {
 		cout << "sims::init_trivial_orbit: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
 		}
-	coset_of_base_point = orbit_inv[i][A->Stabilizer_chain->base[i]];
+	coset_of_base_point = orbit_inv[i][A->base_i(i)];
 	if (coset_of_base_point) {
 		swap_points(i, coset_of_base_point, 0);
 		}
@@ -553,13 +553,13 @@ void sims::init_generator_depth_and_perm(int verbose_level)
 		cout << "gens.len=" << gens.len << endl;
 		cout << "action=" << A->label << endl;
 		}
-	if (my_base_len != A->Stabilizer_chain->base_len) {
+	if (my_base_len != A->base_len()) {
 		cout << "sims::init_generator_depth_and_perm "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
 		}
 
-	for (i = 0; i <= A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i <= A->base_len(); i++) {
 		nb_gen[i] = 0;
 		}
 	gen_depth = NEW_int(gens.len);
@@ -583,7 +583,7 @@ void sims::init_generator_depth_and_perm(int verbose_level)
 				}
 			}
 		}
-	nb_gen[A->Stabilizer_chain->base_len] = 0;
+	nb_gen[A->base_len()] = 0;
 	for (i = 0; i < gens.len; i++) {
 		d = gen_depth[i];
 		for (j = d; j >= 0; j--) {
@@ -612,7 +612,7 @@ void sims::add_generator(int *elt, int verbose_level)
 		A->element_print_quick(elt, cout);
 		cout << endl;
 		}
-	if (my_base_len != A->Stabilizer_chain->base_len) {
+	if (my_base_len != A->base_len()) {
 		cout << "sims::add_generator: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
@@ -749,7 +749,7 @@ void sims::print_transversals_short()
 {
 	int i, j, l;
 
-	if (my_base_len != A->Stabilizer_chain->base_len) {
+	if (my_base_len != A->base_len()) {
 		cout << "sims::print_transversals_short: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
@@ -771,7 +771,7 @@ void sims::print_transversals_short()
 
 void sims::print_transversal_lengths()
 {
-	int_vec_print(cout, orbit_len, A->Stabilizer_chain->base_len);
+	int_vec_print(cout, orbit_len, A->base_len());
 	cout << endl;
 #if 0
 	int i, l;
@@ -788,7 +788,7 @@ void sims::print_orbit_len()
 {
 	int i;
 	
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		cout << orbit_len[i] << " ";
 		}
 	cout << endl;
@@ -813,7 +813,7 @@ void sims::print(int verbose_level)
 		cout << "depth : base pt : transversal "
 				"length : # generators" << endl;
 		for (i = 0; i <= j; i++) {
-			cout << i << " : " << A->Stabilizer_chain->base[i] << " : "
+			cout << i << " : " << A->base_i(i) << " : "
 					<< orbit_len[i] << " : "
 					<< nb_gen[i] - nb_gen[i + 1] << endl;
 			}
@@ -835,7 +835,7 @@ void sims::print_generators()
 	cout << "generators are:" << endl;
 	//gens.print(cout);
 
-	for (i = A->Stabilizer_chain->base_len - 1; i >= 0; i--) {
+	for (i = A->base_len() - 1; i >= 0; i--) {
 		nbg = nb_gen[i];
 		nbg1 = nb_gen[i + 1];
 		cout << "level " << i << ":" << endl;
@@ -860,7 +860,7 @@ void sims::print_generators_tex(ostream &ost)
 	ost << "\\begin{align*}" << endl;
 	cnt = 0;
 	f_first = TRUE;
-	for (i = A->Stabilizer_chain->base_len - 1; i >= 0; i--) {
+	for (i = A->base_len() - 1; i >= 0; i--) {
 		nbg = nb_gen[i];
 		nbg1 = nb_gen[i + 1];
 		//cout << "i=" << i << " nbg1=" << nbg1
@@ -920,12 +920,12 @@ void sims::print_basic_orbits()
 {
 	int i;
 	
-	if (my_base_len != A->Stabilizer_chain->base_len) {
+	if (my_base_len != A->base_len()) {
 		cout << "sims::print_basic_orbits: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
 		}
-	for (i = 0 ; i < A->Stabilizer_chain->base_len /* <= j */; i++) {
+	for (i = 0 ; i < A->base_len() /* <= j */; i++) {
 		print_basic_orbit(i);
 		}
 }
@@ -969,9 +969,9 @@ void sims::print_generator_depth_and_perm()
 		}
 	cout << endl;
 	cout << "nb_gen:" << endl;
-	for (i = 0; i <= A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i <= A->base_len(); i++) {
 		cout << nb_gen[i];
-		if (i < A->Stabilizer_chain->base_len)
+		if (i < A->base_len())
 			cout << ", ";
 		}
 	cout << endl;
@@ -983,13 +983,13 @@ int sims::generator_depth(int gen_idx)
 {
 	int i, bi, j;
 	
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		bi = A->Stabilizer_chain->base[i];
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
 		j = get_image(bi, gen_idx);
 		if (j != bi)
 			return i;
 		}
-	return A->Stabilizer_chain->base_len;
+	return A->base_len();
 }
 
 int sims::generator_depth(int *elt)
@@ -998,13 +998,13 @@ int sims::generator_depth(int *elt)
 {
 	int i, bi, j;
 	
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		bi = A->Stabilizer_chain->base[i];
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
 		j = get_image(bi, elt);
 		if (j != bi)
 			return i;
 		}
-	return A->Stabilizer_chain->base_len;
+	return A->base_len();
 }
 
 void sims::group_order(longinteger_object &go)
@@ -1016,7 +1016,7 @@ void sims::group_order(longinteger_object &go)
 	//cout << "orbit_len=";
 	//int_vec_print(cout, orbit_len, A->base_len);
 	//cout << endl;
-	D.multiply_up(go, orbit_len, A->Stabilizer_chain->base_len);
+	D.multiply_up(go, orbit_len, A->base_len());
 	//cout << "sims::group_order after D.multiply_up" << endl;
 	
 }
@@ -1067,7 +1067,7 @@ int sims::last_moved_base_point()
 {
 	int j;
 	
-	for (j = A->Stabilizer_chain->base_len - 1; j >= 0; j--) {
+	for (j = A->base_len() - 1; j >= 0; j--) {
 		if (orbit_len[j] != 1)
 			break;
 		}
@@ -1130,18 +1130,18 @@ void sims::random_element(int *elt, int verbose_level)
 	if (f_v) {
 		cout << "sims::random_element" << endl;
 		cout << "sims::random_element orbit_len=";
-		int_vec_print(cout, orbit_len, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, orbit_len, A->base_len());
 		cout << endl;
 		//cout << "transversals:" << endl;
 		//print_transversals();
 		}
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		path[i] = random_integer(orbit_len[i]);
 		}
 	if (f_v) {
 		cout << "sims::random_element" << endl;
 		cout << "path=";
-		int_vec_print(cout, path, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, path, A->base_len());
 		cout << endl;
 		}
 	element_from_path(elt, verbose_level /*- 1 */);
@@ -1204,7 +1204,7 @@ void sims::path_unrank_int(int a)
 {
 	int h, l;
 	
-	for (h = A->Stabilizer_chain->base_len - 1; h >= 0; h--) {
+	for (h = A->base_len() - 1; h >= 0; h--) {
 		l = orbit_len[h];
 
 		path[h] = a % l;
@@ -1217,7 +1217,7 @@ int sims::path_rank_int()
 	int h, a;
 	
 	a = 0;
-	for (h = 0; h < A->Stabilizer_chain->base_len; h++) {
+	for (h = 0; h < A->base_len(); h++) {
 		if (h) {
 			a *= orbit_len[h];
 			}
@@ -1240,7 +1240,7 @@ void sims::element_from_path(int *elt, int verbose_level)
 		}
 	if (f_vv) {
 		cout << "path=";
-		int_vec_print(cout, path, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, path, A->base_len());
 		cout << endl;
 		cout << "A->degree=" << A->degree << endl;
 		}
@@ -1260,7 +1260,7 @@ void sims::element_from_path(int *elt, int verbose_level)
 #endif
 	
 	A->element_one(eltrk1, FALSE);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		j = path[i];
 		if (f_v) {
 			cout << "sims::element_from_path level "
@@ -1317,7 +1317,7 @@ void sims::element_from_path_inv(int *elt)
 	cout << endl;
 #endif
 	A->element_one(eltrk1, FALSE);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		j = path[i];
 		
 		coset_rep_inv(i, j, 0 /* verbose_level */);
@@ -1350,7 +1350,7 @@ void sims::element_unrank(longinteger_object &a,
 	if (f_v) {
 		cout << "sims::element_unrank rk=" << a << endl;
 		}
-	for (ii = A->Stabilizer_chain->base_len - 1; ii >= 0; ii--) {
+	for (ii = A->base_len() - 1; ii >= 0; ii--) {
 		l = orbit_len[ii];
 
 		D.integral_division_by_int(a, l, q, r);
@@ -1362,7 +1362,7 @@ void sims::element_unrank(longinteger_object &a,
 	//cout << endl;
 	if (f_v) {
 		cout << "sims::element_unrank path=";
-		int_vec_print(cout, path, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, path, A->base_len());
 		cout << endl;
 		}
 	element_from_path(elt, 0);
@@ -1383,7 +1383,7 @@ void sims::element_unrank(longinteger_object &a, int *elt)
 	longinteger_domain D;
 	longinteger_object q;
 	
-	for (ii = A->Stabilizer_chain->base_len - 1; ii >= 0; ii--) {
+	for (ii = A->base_len() - 1; ii >= 0; ii--) {
 		l = orbit_len[ii];
 
 		D.integral_division_by_int(a, l, q, r);
@@ -1406,8 +1406,8 @@ void sims::element_rank(longinteger_object &a, int *elt)
 	
 	A->element_move(elt, eltrk1, FALSE);
 	a.zero();
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		bi = A->Stabilizer_chain->base[i];
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
 		l = orbit_len[i];
 		
 		if (i > 0) {
@@ -1426,10 +1426,10 @@ void sims::element_rank(longinteger_object &a, int *elt)
 			cout << "jj=bi^elt=" << jj << endl;
 			cout << "j=orbit_inv[i][jj]=" << j << endl;
 			cout << "base=";
-			int_vec_print(cout, A->Stabilizer_chain->base, A->Stabilizer_chain->base_len);
+			int_vec_print(cout, A->get_base(), A->base_len());
 			cout << endl;
 			cout << "orbit_len=";
-			int_vec_print(cout, orbit_len, A->Stabilizer_chain->base_len);
+			int_vec_print(cout, orbit_len, A->base_len());
 			cout << endl;
 			cout << "elt=" << endl;
 			A->element_print(eltrk1, cout);
@@ -1459,7 +1459,7 @@ void sims::element_unrank_int(int rk, int *Elt, int verbose_level)
 	path_unrank_int(rk);
 	if (f_v) {
 		cout << "sims::element_unrank path=";
-		int_vec_print(cout, path, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, path, A->base_len());
 		cout << endl;
 		}
 	element_from_path(Elt, 0);
@@ -1487,8 +1487,8 @@ int sims::is_element_of(int *elt)
 	int i, j, bi, jj; //, l;
 	
 	A->element_move(elt, eltrk1, FALSE);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		bi = A->Stabilizer_chain->base[i];
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
 		//l = orbit_len[i];
 		
 		
@@ -1820,9 +1820,9 @@ void sims::compute_base_orbits(int verbose_level)
 		}
 	if (f_vv) {
 		cout << "sims::compute_base_orbits "
-				"base_len=" << A->Stabilizer_chain->base_len << endl;
+				"base_len=" << A->base_len() << endl;
 		}
-	for (i = A->Stabilizer_chain->base_len - 1; i >= 0; i--) {
+	for (i = A->base_len() - 1; i >= 0; i--) {
 		if (FALSE) {
 			cout << "sims::compute_base_orbits "
 					"level " << i << endl;
@@ -1830,13 +1830,13 @@ void sims::compute_base_orbits(int verbose_level)
 		compute_base_orbit(i, 0/*verbose_level - 1*/);
 		if (f_vv) {
 			cout << "sims::compute_base_orbits level " << i 
-				<< " base point " << A->Stabilizer_chain->base[i]
+				<< " base point " << A->base_i(i)
 				<< " orbit length " << orbit_len[i] << endl;
 			}
 		}
 	if (f_v) {
 		cout << "sims::compute_base_orbits done, orbit_len=";
-		int_vec_print(cout, orbit_len, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, orbit_len, A->base_len());
 		cout << endl;
 		}
 }
@@ -1850,11 +1850,11 @@ void sims::compute_base_orbits_known_length(int *tl,
 	
 	if (f_v) {
 		cout << "sims::compute_base_orbits_known_length: ";
-		int_vec_print(cout, tl, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, tl, A->base_len());
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	for (i = A->Stabilizer_chain->base_len - 1; i >= 0; i--) {
+	for (i = A->base_len() - 1; i >= 0; i--) {
 		if (f_v) {
 			cout << "sims::compute_base_orbits_known_length "
 					"computing level " << i << endl;
@@ -1863,7 +1863,7 @@ void sims::compute_base_orbits_known_length(int *tl,
 		if (f_v) {
 			cout << "sims::compute_base_orbits_known_length "
 					"level " << i
-				<< " base point " << A->Stabilizer_chain->base[i]
+				<< " base point " << A->base_i(i)
 				<< " orbit length " << orbit_len[i]
 				<< " has been computed" << endl;
 			}
@@ -1935,7 +1935,7 @@ void sims::extend_base_orbit(int new_gen_idx, int lvl,
 	if (f_v) {
 		cout << "sims::extend_base_orbit " << lvl
 				<< " finished" << endl;
-		cout << lvl << "-th base point " << A->Stabilizer_chain->base[lvl]
+		cout << lvl << "-th base point " << A->base_i(lvl)
 			<< " orbit extended to length " << orbit_len[lvl];
 		if (FALSE) {
 			cout << " { ";
@@ -1962,7 +1962,7 @@ void sims::compute_base_orbit(int lvl, int verbose_level)
 	//int f_vvv = (verbose_level >= 3);
 	int pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
 	
-	pt = A->Stabilizer_chain->base[lvl];
+	pt = A->base_i(lvl);
 	pt_loc = orbit_inv[lvl][pt];
 	if (f_v) {
 		cout << "sims::compute_base_orbit: "
@@ -2054,7 +2054,7 @@ void sims::compute_base_orbit_known_length(int lvl,
 	int pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
 	double progress;
 	
-	pt = A->Stabilizer_chain->base[lvl];
+	pt = A->base_i(lvl);
 	pt_loc = orbit_inv[lvl][pt];
 	if (f_v) {
 		cout << "sims::compute_base_orbit_known_length: "
@@ -2157,7 +2157,7 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 	
 	if (f_v) {
 		cout << "extract_strong_generators_in_order" << endl;
-		cout << "A->base_len=" << A->Stabilizer_chain->base_len << endl;
+		cout << "A->base_len=" << A->base_len() << endl;
 		//if (f_vv) {
 			//print(0);
 			//}
@@ -2165,7 +2165,7 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 	
 	SG.init(A);
 	SG.allocate(gens.len);
-	for (i = A->Stabilizer_chain->base_len - 1; i >= 0; i--) {
+	for (i = A->base_len() - 1; i >= 0; i--) {
 		nbg = nb_gen[i];
 		nbg1 = nb_gen[i + 1];
 		//cout << "i=" << i << " nbg1=" << nbg1
@@ -2208,9 +2208,9 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 		}
 	if (FALSE) {
 		cout << "transversal length:" << endl;
-		for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < A->base_len(); i++) {
 			cout << tl[i];
-			if (i < A->Stabilizer_chain->base_len - 1)
+			if (i < A->base_len() - 1)
 				cout << ", ";
 			}
 		cout << endl;
@@ -2288,7 +2288,7 @@ int sims::transitive_extension_tolerant(schreier &O,
 		if (f_vv) {
 			cout << "sims::transitive_extension_tolerant "
 					"choosing random coset " << j << ", random element ";
-			print_set(cout, A->Stabilizer_chain->base_len, path);
+			print_set(cout, A->base_len(), path);
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -2403,7 +2403,7 @@ void sims::transitive_extension_using_coset_representatives(
 			cout << "sims::transitive_extension_using_coset_"
 					"representatives choosing random coset "
 					<< j << ", random element ";
-			int_vec_print(cout, path, A->Stabilizer_chain->base_len);
+			int_vec_print(cout, path, A->base_len());
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -2485,7 +2485,7 @@ void sims::transitive_extension_using_generators(
 		if (f_vv) {
 			cout << "sims::transitive_extension_using_generators "
 					"choosing random coset " << j << ", random element ";
-			int_vec_print(cout, path, A->Stabilizer_chain->base_len);
+			int_vec_print(cout, path, A->base_len());
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -2901,20 +2901,20 @@ int sims::strip(int *elt, int *residue,
 	
 	if (f_v) {
 		cout << "sims::strip" << endl;
-		cout << "A->base_len=" << A->Stabilizer_chain->base_len << endl;
+		cout << "A->base_len=" << A->base_len() << endl;
 		}
 	if (f_vv) {
 		A->element_print_quick(elt, cout);
 		cout << endl;
 		}
 	A->element_move(elt, strip1, FALSE);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		if (f_v) {
 			cout << "sims::strip i=" << i << endl;
 			//A->element_print(strip1, cout);
 			//cout << endl;
 			}
-		bi = A->Stabilizer_chain->base[i];
+		bi = A->base_i(i);
 		if (f_vv) {
 			cout << "computing image of " << i
 					<< "-th base element " << bi << endl;
@@ -3067,7 +3067,7 @@ void sims::random_schreier_generator(int verbose_level)
 					"interation" << endl;
 			}
 		// get a random level:
-		i = random_integer(A->Stabilizer_chain->base_len);
+		i = random_integer(A->base_len());
 		if (f_vv) {
 			cout << "sims::random_schreier_generator "
 					"i=" << i << endl;
@@ -3415,7 +3415,7 @@ void sims::conjugate(action *A,
 			old_G->random_element(A->Elt1, verbose_level - 1);
 			if (FALSE) {
 				cout << "random element chosen, path = ";
-				int_vec_print(cout, old_G->path, old_G->A->Stabilizer_chain->base_len);
+				int_vec_print(cout, old_G->path, old_G->A->base_len());
 				cout << endl;
 				}
 			if (FALSE) {
@@ -3621,12 +3621,12 @@ void sims::build_up_group_random_process(sims *K,
 				"current group order is " << G_order
 				<< " target " << target_go << endl;
 		cout << "the old_G action " << old_G->A->label
-				<< " has base_length = " << old_G->A->Stabilizer_chain->base_len
+				<< " has base_length = " << old_G->A->base_len()
 			<< " and degree " << old_G->A->degree << endl;
 		cout << "the kernel action " << KA->label
-				<< " has base_length = " << KA->Stabilizer_chain->base_len
+				<< " has base_length = " << KA->base_len()
 			<< " and degree " << KA->degree << endl;
-		cout << "the image action has base_length = " << GA->Stabilizer_chain->base_len
+		cout << "the image action has base_length = " << GA->base_len()
 			<< " and degree " << GA->degree << endl;
 		cout << "current action " << GA->label << endl;
 		cout << "current group order = " << G_order << endl;
@@ -3675,7 +3675,7 @@ void sims::build_up_group_random_process(sims *K,
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process: "
 						"random element chosen, path = ";
-				int_vec_print(cout, old_G->path, old_G->A->Stabilizer_chain->base_len);
+				int_vec_print(cout, old_G->path, old_G->A->base_len());
 				cout << endl;
 				}
 			if (f_v4) {
@@ -3739,11 +3739,11 @@ void sims::build_up_group_random_process(sims *K,
 								cout << "sims::build_up_group_random_"
 										"process: residue" << endl;
 								KA->element_print_image_of_set(
-										GA->Elt3, KA->Stabilizer_chain->base_len, KA->Stabilizer_chain->base);
+										GA->Elt3, KA->base_len(), KA->get_base());
 								cout << "sims::build_up_group_random_"
 										"process: Elt2" << endl;
 								KA->element_print_image_of_set(
-										GA->Elt2, KA->Stabilizer_chain->base_len, KA->Stabilizer_chain->base);
+										GA->Elt2, KA->base_len(), KA->get_base());
 								}
 							}
 						if (!KA->element_is_one(GA->Elt3, FALSE)) {
@@ -3760,13 +3760,13 @@ void sims::build_up_group_random_process(sims *K,
 									<< " target " << target_go << endl;
 							cout << "the old_G action " << old_G->A->label
 									<< " has base_length = "
-									<< old_G->A->Stabilizer_chain->base_len
+									<< old_G->A->base_len()
 								<< " and degree " << old_G->A->degree << endl;
 							cout << "the kernel action " << KA->label
-									<< " has base_length = " << KA->Stabilizer_chain->base_len
+									<< " has base_length = " << KA->base_len()
 								<< " and degree " << KA->degree << endl;
 							cout << "the image action has base_length = "
-								<< GA->Stabilizer_chain->base_len
+								<< GA->base_len()
 								<< " and degree " << GA->degree << endl;
 							cout << "current action " << GA->label << endl;
 							cout << "current group order = "
@@ -3794,7 +3794,7 @@ void sims::build_up_group_random_process(sims *K,
 						cout << "sims::build_up_group_random_process: "
 								"choosing n e w base point " << b << endl;
 						}
-					old_base_len = GA->Stabilizer_chain->base_len;
+					old_base_len = GA->base_len();
 					GA->Stabilizer_chain->reallocate_base(b);
 					if (f_vvv) {
 						//cout << "after reallocate_base 1" << endl;
@@ -3807,16 +3807,16 @@ void sims::build_up_group_random_process(sims *K,
 						cout << "sims::build_up_group_random_process: "
 								"n e w base point " << b
 							<< " chosen, n e w base has length "
-							<< GA->Stabilizer_chain->base_len << endl;
+							<< GA->base_len() << endl;
 						cout << "sims::build_up_group_random_process: "
 								"calling add_generator_at_level" << endl;
 						}
 					add_generator_at_level(GA->Elt2,
-							GA->Stabilizer_chain->base_len - 1, 0/*verbose_level - 3*/);
+							GA->base_len() - 1, 0/*verbose_level - 3*/);
 					if (f_vv) {
 						cout << "sims::build_up_group_random_process: "
 								"the residue has been added at level "
-								<< GA->Stabilizer_chain->base_len - 1 << endl;
+								<< GA->base_len() - 1 << endl;
 						}
 					} // if b
 				} // if ! element is one
@@ -3917,7 +3917,7 @@ void sims::build_up_group_random_process(sims *K,
 			<< " = " << G_order << " * " << K_order << endl;
 		if (f_vvv) {
 			cout << "the n e w action has base_length = "
-				<< GA->Stabilizer_chain->base_len
+				<< GA->base_len()
 				<< " and degree " << GA->degree << endl;
 			print_transversal_lengths();
 			if (FALSE) {
@@ -3959,7 +3959,7 @@ void sims::build_up_group_from_generators(sims *K,
 	
 	if (f_v) {
 		cout << "sims::build_up_group_from_generators base: ";
-		int_vec_print(cout, GA->Stabilizer_chain->base, GA->Stabilizer_chain->base_len);
+		int_vec_print(cout, GA->get_base(), GA->base_len());
 		cout << endl;
 
 #if 0
@@ -3979,14 +3979,14 @@ void sims::build_up_group_from_generators(sims *K,
 	group_order(G_order);
 	K->group_order(K_order);
 	D.mult(G_order, K_order, KG_order);
-	for (level = GA->Stabilizer_chain->base_len - 1; level >= 0; level--) {
-		base_point = GA->Stabilizer_chain->base[level];
+	for (level = GA->base_len() - 1; level >= 0; level--) {
+		base_point = GA->base_i(level);
 		if (f_vv) {
 			cout << "level " << level << " base point "
 					<< base_point << endl;
 			}
 		GA->find_strong_generators_at_level(
-			GA->Stabilizer_chain->base_len, GA->Stabilizer_chain->base, level,
+			GA->base_len(), GA->get_base(), level,
 			*gens, subset_of_gens, verbose_level - 3);
 		
 		{
@@ -4081,10 +4081,10 @@ void sims::build_up_group_from_generators(sims *K,
 								K->print_basic_orbits();
 								cout << "residue" << endl;
 								KA->element_print_image_of_set(
-										GA->Elt3, KA->Stabilizer_chain->base_len, KA->Stabilizer_chain->base);
+										GA->Elt3, KA->base_len(), KA->get_base());
 								cout << "Elt2" << endl;
 								KA->element_print_image_of_set(
-										GA->Elt2, KA->Stabilizer_chain->base_len, KA->Stabilizer_chain->base);
+										GA->Elt2, KA->base_len(), KA->get_base());
 								}
 							if (!KA->element_is_one(GA->Elt3, FALSE)) {
 								cout << "but the element is not the identity, "
@@ -4109,7 +4109,7 @@ void sims::build_up_group_from_generators(sims *K,
 									"choosing n e w base point "
 									<< b << endl;
 							}
-						old_base_len = GA->Stabilizer_chain->base_len;
+						old_base_len = GA->base_len();
 						GA->Stabilizer_chain->reallocate_base(b);
 						if (f_vv) {
 							//cout << "after reallocate_base 1" << endl;
@@ -4121,14 +4121,14 @@ void sims::build_up_group_from_generators(sims *K,
 						if (f_v) {
 							cout << "n e w base point " << b
 								<< " chosen, n e w base has length "
-								<< GA->Stabilizer_chain->base_len << endl;
+								<< GA->base_len() << endl;
 							cout << "calling add_generator_at_level" << endl;
 							}
 						add_generator_at_level(GA->Elt2,
-								GA->Stabilizer_chain->base_len - 1, verbose_level - 3);
+								GA->base_len() - 1, verbose_level - 3);
 						if (f_vv) {
 							cout << "the residue has been added at level "
-									<< GA->Stabilizer_chain->base_len - 1 << endl;
+									<< GA->base_len() - 1 << endl;
 							}
 						} // if b
 					} // if ! element is one
@@ -4218,7 +4218,7 @@ void sims::build_up_group_from_generators(sims *K,
 		cout << "sims::build_up_group_from_generators finished: "
 				"found a group of order " << KG_order
 			<< " = " << G_order << " * " << K_order << endl;
-		cout << "the n e w action has base_length = " << GA->Stabilizer_chain->base_len
+		cout << "the n e w action has base_length = " << GA->base_len()
 			<< " and degree " << GA->degree << endl;
 		print_transversal_lengths();
 
@@ -4492,18 +4492,18 @@ void sims::print_all_transversal_elements()
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	
-	for (i = A->Stabilizer_chain->base_len - 1; i >= 0; i--) {
-		for (j = 0; j < A->Stabilizer_chain->transversal_length[i]; j++) {
-			if (j == 0 && i < A->Stabilizer_chain->base_len - 1) {
+	for (i = A->base_len() - 1; i >= 0; i--) {
+		for (j = 0; j < A->transversal_length_i(i); j++) {
+			if (j == 0 && i < A->base_len() - 1) {
 				// skip the identity in the upper transversals
 				continue;
 				}
-			for (ii = 0; ii < A->Stabilizer_chain->base_len; ii++) {
+			for (ii = 0; ii < A->base_len(); ii++) {
 				path[ii] = 0;
 				}
 			path[i] = j;
 			element_from_path(Elt, 0 /* verbose_level */);
-			for (ii = 0; ii < A->Stabilizer_chain->base_len; ii++) {
+			for (ii = 0; ii < A->base_len(); ii++) {
 				cout << setw(5) << path[ii] << " ";
 				}
 			cout << endl;
@@ -5088,7 +5088,7 @@ void sims::write_sgs(const char *fname, int verbose_level)
 	elt = NEW_char(A->coded_elt_size_in_char);
 	group_order(go);
 
-	tl = NEW_int(A->Stabilizer_chain->base_len);
+	tl = NEW_int(A->base_len());
 	extract_strong_generators_in_order(SG, tl, 0 /*verbose_level*/);
 
 
@@ -5098,14 +5098,14 @@ void sims::write_sgs(const char *fname, int verbose_level)
 	fp << "# action: " << A->label << endl;
 	fp << "# action: " << A->label_tex << endl;
 	fp << "# base length: " << endl;
-	fp << A->Stabilizer_chain->base_len << endl;
+	fp << A->base_len() << endl;
 	fp << "# base: " << endl;
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		fp << setw(5) << A->Stabilizer_chain->base[i] << ", ";
+	for (i = 0; i < A->base_len(); i++) {
+		fp << setw(5) << A->base_i(i) << ", ";
 		}
 	fp << endl;
 	fp << "# transversal lengths: " << endl;
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	for (i = 0; i < A->base_len(); i++) {
 		fp << setw(5) << tl[i] << ", ";
 		}
 	fp << endl;
@@ -5291,17 +5291,17 @@ void sims::read_sgs(const char *fname,
 			}
 		}
 
-	if (A->Stabilizer_chain->f_has_base) {
-		if (base_length != A->Stabilizer_chain->base_len) {
+	if (A->f_has_base()) {
+		if (base_length != A->base_len()) {
 			cout << "base_len does not match" << endl;
-			cout << "A->base_len=" << A->Stabilizer_chain->base_len << endl;
+			cout << "A->base_len=" << A->base_len() << endl;
 			cout << "read " << base_length << endl;
 			exit(1);
 			}
 		for (i = 0; i < base_length; i++) {
-			if (base1[i] != A->Stabilizer_chain->base[i]) {
+			if (base1[i] != A->base_i(i)) {
 				cout << "base does not match" << endl;
-				cout << "A->base[" << i << "]=" << A->Stabilizer_chain->base[i] << endl;
+				cout << "A->base[" << i << "]=" << A->base_i(i) << endl;
 				cout << "base1[" << i << "]=" << base1[i] << endl;
 				exit(1);
 				}
@@ -5315,13 +5315,13 @@ void sims::read_sgs(const char *fname,
 		A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 		A->Stabilizer_chain->allocate_base_data(A, base_length, verbose_level);
 		//A->allocate_base_data(base_length);
-		A->Stabilizer_chain->base_len = base_length;
+		//A->Stabilizer_chain->base_len = base_length;
 		for (i = 0; i < base_length; i++) {
-			A->Stabilizer_chain->base[i] = base1[i];
+			A->Stabilizer_chain->base_i(i) = base1[i];
 			}
 		if (f_vv) {
 			cout << "the base is: ";
-			int_vec_print(cout, A->Stabilizer_chain->base, A->Stabilizer_chain->base_len);
+			int_vec_print(cout, A->get_base(), A->base_len());
 			cout << endl;
 
 			cout << "rallocating base:" << endl;

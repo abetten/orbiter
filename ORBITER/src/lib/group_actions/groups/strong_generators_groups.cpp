@@ -266,8 +266,8 @@ void strong_generators::init_trivial_group(action *A,
 		cout << "strong_generators::init_trivial_group" << endl;
 		}
 	strong_generators::A = A;
-	tl = NEW_int(A->Stabilizer_chain->base_len);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	tl = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
 		tl[i] = 1;
 		}
 	gens = NEW_OBJECT(vector_ge);

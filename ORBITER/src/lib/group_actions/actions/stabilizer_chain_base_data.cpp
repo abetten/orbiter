@@ -107,8 +107,8 @@ void stabilizer_chain_base_data::allocate_base_data(action *A,
 		for (j = 0; j < A->degree; j++) {
 			orbit[i][j] = -1;
 			orbit_inv[i][j] = -1;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::allocate_base_data done" << endl;
 	}
@@ -214,6 +214,122 @@ void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::init_base_from_sims done" << endl;
 		}
+}
+
+int &stabilizer_chain_base_data::get_f_has_base()
+{
+	return f_has_base;
+}
+
+int &stabilizer_chain_base_data::get_base_len()
+{
+	return base_len;
+}
+
+int &stabilizer_chain_base_data::base_i(int i)
+{
+	return base[i];
+}
+
+int *&stabilizer_chain_base_data::get_base()
+{
+	return base;
+}
+
+int &stabilizer_chain_base_data::transversal_length_i(int i)
+{
+	return transversal_length[i];
+}
+
+int *&stabilizer_chain_base_data::get_transversal_length()
+{
+	return transversal_length;
+}
+
+int &stabilizer_chain_base_data::orbit_ij(int i, int j)
+{
+	return orbit[i][j];
+}
+
+int &stabilizer_chain_base_data::orbit_inv_ij(int i, int j)
+{
+	return orbit_inv[i][j];
+}
+
+int &stabilizer_chain_base_data::path_i(int i)
+{
+	return path[i];
+}
+
+void stabilizer_chain_base_data::group_order(longinteger_object &go)
+{
+	longinteger_domain D;
+
+	D.multiply_up(go, transversal_length, base_len);
+}
+
+void stabilizer_chain_base_data::init_projective_matrix_group(
+		finite_field *F, int n, int f_semilinear, int degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_projective_matrix_group" << endl;
+	}
+	F->projective_matrix_group_base_and_orbits(n,
+		f_semilinear,
+		base_len, degree,
+		base, transversal_length,
+		orbit, orbit_inv,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_projective_matrix_group done" << endl;
+	}
+}
+
+void stabilizer_chain_base_data::init_affine_matrix_group(
+		finite_field *F, int n, int f_semilinear, int degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_affine_matrix_group" << endl;
+	}
+	F->affine_matrix_group_base_and_transversal_length(n,
+		f_semilinear,
+		base_len, degree,
+		base, transversal_length,
+		verbose_level - 1);
+
+	//no orbit, orbit_inv
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_affine_matrix_group done" << endl;
+	}
+}
+
+void stabilizer_chain_base_data::init_linear_matrix_group(
+		finite_field *F, int n, int f_semilinear, int degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_linear_matrix_group" << endl;
+	}
+	F->general_linear_matrix_group_base_and_transversal_length(n,
+		f_semilinear,
+		base_len, degree,
+		base, transversal_length,
+		verbose_level - 1);
+
+	//no orbit, orbit_inv
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_linear_matrix_group done" << endl;
+	}
 }
 
 

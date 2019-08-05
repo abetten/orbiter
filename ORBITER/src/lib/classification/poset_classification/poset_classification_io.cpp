@@ -1667,7 +1667,7 @@ void poset_classification::Log_nodes(int cur, int depth,
 						<< " printing tl" << endl;
 				}
 			f << "tl: ";
-			int_vec_print(f, node->tl, Poset->A->Stabilizer_chain->base_len);
+			int_vec_print(f, node->tl, Poset->A->base_len());
 			f << endl;
 			}
 		
@@ -2321,8 +2321,8 @@ void poset_classification::wedge_product_export_magma(
 	f << "// base:" << endl;
 	f << "BV := VectorSpace (GF (q), n);" << endl;
 	f << "B := [ BV | " << endl;
-	for (i = 0; i < Poset->A->Stabilizer_chain->base_len; i++) {
-		a = Poset->A->Stabilizer_chain->base[i];
+	for (i = 0; i < Poset->A->base_len(); i++) {
+		a = Poset->A->base_i(i);
 		Poset->VS->F->PG_element_unrank_modified(v, 1, n, a);
 		//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
 		f << "[ ";
@@ -2331,7 +2331,7 @@ void poset_classification::wedge_product_export_magma(
 			if (h < n - 1)
 				f << ", ";
 			}
-        	if (i < Poset->A->Stabilizer_chain->base_len - 1)
+        	if (i < Poset->A->base_len() - 1)
 				f << "], " << endl;
 		else f << " ]" << endl;
 		}
@@ -2350,7 +2350,7 @@ void poset_classification::wedge_product_export_magma(
 				<< O->nb_strong_generators << " strong generators";
 		if (O->nb_strong_generators) {
 			f << ", transversal lengths: ";
-			int_vec_print(f, O->tl, Poset->A->Stabilizer_chain->base_len);
+			int_vec_print(f, O->tl, Poset->A->base_len());
 			}
 		f << endl;
 		f << "[" << endl;

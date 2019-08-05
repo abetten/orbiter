@@ -381,7 +381,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 				}
 			G.require_strong_generators();
 			f << "tl: ";
-			for (i = 0; i < G.A->Stabilizer_chain->base_len; i++)
+			for (i = 0; i < G.A->base_len(); i++)
 				f << G.tl[i] << " ";
 			f << endl;
 			f << G.SG->len << " strong generators by rank: " << endl;
@@ -474,7 +474,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 		if (!go.is_one()) {
 			G.require_strong_generators();
 			f << "# ";
-			for (i = 0; i < G.A->Stabilizer_chain->base_len; i++)
+			for (i = 0; i < G.A->base_len(); i++)
 				f << G.tl[i] << " ";
 			f << endl;
 			for (i = 0; i < G.SG->len; i++) {
@@ -670,11 +670,11 @@ void poset_orbit_node::print_set(poset_classification *gen)
 		cout << "_1";
 		}
 	else {
-		D.multiply_up(go, tl, gen->Poset->A->Stabilizer_chain->base_len);
+		D.multiply_up(go, tl, gen->Poset->A->base_len());
 		cout << "_{";
-		for (i = 0; i < gen->Poset->A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < gen->Poset->A->base_len(); i++) {
 			cout << tl[i];
-			if (i < gen->Poset->A->Stabilizer_chain->base_len - 1)
+			if (i < gen->Poset->A->base_len() - 1)
 				cout << " * ";
 			}
 		cout << " = " << go << "}";

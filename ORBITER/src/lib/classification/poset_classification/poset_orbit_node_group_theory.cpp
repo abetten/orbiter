@@ -27,13 +27,13 @@ void poset_orbit_node::store_strong_generators(
 		}
 	else {
 		hdl_strong_generators = NEW_int(nb_strong_generators);
-		tl = NEW_int(gen->Poset->A->Stabilizer_chain->base_len);
+		tl = NEW_int(gen->Poset->A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
 			hdl_strong_generators[i] =
 					gen->Poset->A->element_store(
 							Strong_gens->gens->ith(i), FALSE);
 			}
-		int_vec_copy(Strong_gens->tl, tl, gen->Poset->A->Stabilizer_chain->base_len);
+		int_vec_copy(Strong_gens->tl, tl, gen->Poset->A->base_len());
 		}
 }
 
@@ -89,12 +89,12 @@ void poset_orbit_node::get_stabilizer_generators(
 	Strong_gens->init_by_hdl(gen->Poset->A,
 			hdl_strong_generators, nb_strong_generators, 0);
 	if (nb_strong_generators == 0) {
-		for (i = 0; i < gen->Poset->A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < gen->Poset->A->base_len(); i++) {
 			Strong_gens->tl[i] = 1;
 			}
 		}
 	else {
-		for (i = 0; i < gen->Poset->A->Stabilizer_chain->base_len; i++) {
+		for (i = 0; i < gen->Poset->A->base_len(); i++) {
 			Strong_gens->tl[i] = poset_orbit_node::tl[i];
 			}
 		}
@@ -646,8 +646,8 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 
 			stab_gens.init(gen->Poset->A);
 			stab_gens.allocate(0);
-			tl = NEW_int(gen->Poset->A->Stabilizer_chain->base_len);
-			for (i = 0; i < gen->Poset->A->Stabilizer_chain->base_len; i++) {
+			tl = NEW_int(gen->Poset->A->base_len());
+			for (i = 0; i < gen->Poset->A->base_len(); i++) {
 				tl[i] = 1;
 				}
 
