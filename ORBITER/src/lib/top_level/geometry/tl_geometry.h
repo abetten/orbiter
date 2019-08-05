@@ -1233,7 +1233,8 @@ public:
 	int nb_spreads_up_to_isomorphism;
 		// the number of spreads
 		// from the classification
-	int *input_spreads;
+
+	int *input_spreads; // [nb_input_spreads]
 	int *input_spread_label;
 	int nb_input_spreads;
 
