@@ -88,7 +88,8 @@ void stabilizer_chain_base_data::allocate_base_data(action *A,
 	int i, j;
 
 	if (f_v) {
-		cout << "stabilizer_chain_base_data::allocate_base_data" << endl;
+		cout << "stabilizer_chain_base_data::allocate_base_data "
+				"base_len=" << base_len << " degree=" << A->degree << endl;
 	}
 	if (f_has_base) {
 		free_base_data();
