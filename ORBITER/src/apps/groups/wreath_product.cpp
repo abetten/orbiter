@@ -1257,7 +1257,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	// Each row of result is a permutation of the points of projective space
 	// So, result is SG->gens->len x W->degree_of_tensor_action
 
-	result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
+	//result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
 
 	// perform the parallel matrix multiplication on the GPU:
 
@@ -1265,14 +1265,24 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 //	int* v = NEW_int (MN.ncols);
 
 
+	cout << "allocating S, an int array of size " << W->degree_of_tensor_action << endl;
+
 	int* S = NEW_int (W->degree_of_tensor_action);
+
+	cout << "allocating T, an int array of size " << W->degree_of_tensor_action << endl;
+
 	int* T = NEW_int (W->degree_of_tensor_action);
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
+
+	cout << "block_size=" << block_size << endl;
+
 	int nb_blocks = (W->degree_of_tensor_action + block_size - 1) / block_size;
 
 	cout << "nb_blocks=" << nb_blocks << endl;
 //	memset(S, -1, sizeof(S)*W->degree_of_tensor_action);
+
+
 	for (size_t i=0; i<W->degree_of_tensor_action; ++i) S[i] = -1;
 
 
