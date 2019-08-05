@@ -1,3 +1,6 @@
 [submodule "ORBITER/src/lib/foundations/CUDA/Linalg"]
 	path = ORBITER/src/lib/foundations/CUDA/Linalg
 	url = git@github.com:RoySRC/Linalg.git
+[submodule "ORBITER/src/lib/foundations/BitSet"]
+	path = ORBITER/src/lib/foundations/BitSet
+	url = git@github.com:RoySRC/BitSet.git
