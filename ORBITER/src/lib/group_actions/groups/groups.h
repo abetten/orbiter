@@ -11,6 +11,7 @@ namespace orbiter {
 namespace group_actions {
 
 
+
 // #############################################################################
 // direct_product.cpp
 // #############################################################################
@@ -686,9 +687,8 @@ public:
 			int gen_hdl_first, int nb_gen,
 			enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy,
 			int verbose_level);
-	void shallow_tree_generators_ai(int verbose_level) ;
-	int get_num_points();
-		// This function returns the number of points in the schreier forest
+	int get_num_points(); // This function returns the number of points in the
+						  // schreier forest
 	double get_average_word_length();
 		// This function returns the average word length of the forest.
 	double get_average_word_length(int orbit_idx);

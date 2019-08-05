@@ -5,8 +5,12 @@
 // started:  August 13, 2005
 
 
-using namespace orbiter::foundations;
 
+#ifndef GROUP_ACTIONS_H_
+#define GROUP_ACTIONS_H_
+
+
+using namespace orbiter::foundations;
 
 
 namespace orbiter {
@@ -247,9 +251,11 @@ public:
 
 }}
 
+
+
 #include "./actions/actions.h"
 #include "./data_structures/data_structures.h"
 #include "./groups/groups.h"
 #include "./induced_actions/induced_actions.h"
 
-
+#endif

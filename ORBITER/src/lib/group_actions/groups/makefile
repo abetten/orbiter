@@ -23,12 +23,14 @@ MODULES = \
 	subgroup.o \
 	sylow_structure.o \
 	wreath_product.o \
-	linalg.o
+	linalg.o \
+	shallow_schreier_ai.o
 
 
 all : $(MODULES)
 
-%.o: %.cpp %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+%.o: %.cpp %.c
+	$(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 clean:
 	- rm *.o *.a *~
