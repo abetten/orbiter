@@ -1229,7 +1229,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	// So, N has size (SG->gens->len * mtx_n) x mtx_n
 
 
-	vector<linalg::Matrix<int>> N (SG->gens->len);
+	vector<linalg::Matrix<char>> N (SG->gens->len);
 	for (size_t h = 0; h < N.size(); ++h) {
 		N[h].INIT(mtx_n, mtx_n);
 
