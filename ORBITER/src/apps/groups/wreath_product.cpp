@@ -1297,8 +1297,8 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 										(unsigned long)W->degree_of_tensor_action) - b*block_size;
 			cout << "l=" << l << endl;
 
-			linalg::Matrix<int> M  (l, mtx_n);
-			linalg::Matrix<int> MN (l, mtx_n);
+			linalg::Matrix<char> M  (l, mtx_n);
+			linalg::Matrix<char> MN (l, mtx_n);
 
 			cout << "unranking the elements of the PG" << endl;
 
