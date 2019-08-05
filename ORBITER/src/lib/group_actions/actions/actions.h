@@ -1114,6 +1114,7 @@ public:
 
 //! information about the transversals in the subgroup chain
 
+#define STABILIZER_CHAIN_DATA_MAX_DEGREE 1L << 28
 
 class stabilizer_chain_base_data {
 private:
