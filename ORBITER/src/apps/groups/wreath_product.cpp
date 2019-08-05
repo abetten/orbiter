@@ -828,6 +828,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	F->init(q, 0);
 
+#if 0
 	cout << "tensor_product::init before "
 			"A->init_wreath_product_group_and_restrict" << endl;
 	A->init_wreath_product_group_and_restrict(nb_factors, n,
@@ -844,8 +845,20 @@ void tensor_product::init(int argc, const char **argv,
 	A0 = A->subaction;
 
 	W = A0->G.wreath_product_group;
+#endif
+	cout << "tensor_product::init before "
+			"A->init_wreath_product_group" << endl;
+	A->init_wreath_product_group(nb_factors, n,
+			F,
+			verbose_level);
+	cout << "tensor_product::init after "
+			"A->init_wreath_product_group" << endl;
+	A0 = A;
+	W = A0->G.wreath_product_group;
+#else
 
 	vector_space_dimension = W->dimension_of_tensor_action;
+
 
 	if (!A0->f_has_strong_generators) {
 		cout << "tensor_product::init action A0 does not "
