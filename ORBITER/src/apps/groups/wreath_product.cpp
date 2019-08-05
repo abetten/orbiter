@@ -845,7 +845,7 @@ void tensor_product::init(int argc, const char **argv,
 	A0 = A->subaction;
 
 	W = A0->G.wreath_product_group;
-#endif
+#else
 	cout << "tensor_product::init before "
 			"A->init_wreath_product_group" << endl;
 	A->init_wreath_product_group(nb_factors, n,
@@ -855,7 +855,7 @@ void tensor_product::init(int argc, const char **argv,
 			"A->init_wreath_product_group" << endl;
 	A0 = A;
 	W = A0->G.wreath_product_group;
-#else
+#endif
 
 	vector_space_dimension = W->dimension_of_tensor_action;
 
