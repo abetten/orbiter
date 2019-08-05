@@ -1541,6 +1541,18 @@ void tensor_product::init(int argc, const char **argv,
 	}
 
 
+	{
+	schreier *Sch0;
+
+	cout << "computing orbits on points using default method:" << endl;
+	A->compute_orbits_on_points(Sch0,
+			SG->gens, verbose_level);
+	cout << "we found " << Sch0->nb_orbits << " orbits on points" << endl;
+	FREE_OBJECT(Sch0);
+	}
+
+
+
 	int* result = NULL;
 
 	cout << "time check: ";
