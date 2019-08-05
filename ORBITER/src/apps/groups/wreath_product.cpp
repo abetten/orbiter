@@ -1300,24 +1300,41 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			linalg::Matrix<int> M  (l, mtx_n);
 			linalg::Matrix<int> MN (l, mtx_n);
 
+			cout << "unranking the elements of the PG" << endl;
+
+			int l1 = l / 100;
 			for (size_t i=0; i<l; ++i) {
+				if ((i % l1) == 0) {
+					cout << i/l1 << " % " << endl;
+				}
 				W->F->PG_element_unrank_modified (v.matrix_, 1, mtx_n, b * block_size + i) ;
 				for (size_t j=0; j<mtx_n; ++j)
 					M(i,j) = v(j, 0);
 			}
+			cout << "unranking the elements of the PG done" << endl;
 
 
 			// Matrix Multiply
 			MN.reset_entries();
 //			linalg::cpu_mod_mat_mul_AB (M, N[h], MN, W->q);
 
+
+			cout << "cuda multiplication" << endl;
+
 			linalg::cuda_mod_mat_mul (M, N[h], MN, W->q);
+
+			cout << "cuda multiplication done" << endl;
+
 			M.UninitializeOnGPU();
 			N[h].UninitializeOnGPU();
 			MN.UninitializeOnGPU();
 
 
+			cout << "ranking the elements of the PG" << endl;
 			for (size_t i=0; i<l; ++i) {
+				if ((i % l1) == 0) {
+					cout << i/l1 << " % " << endl;
+				}
 				for (size_t j=0; j<mtx_n; ++j) {
 					int a = perms[h * mtx_n + j];
 					v.matrix_[a*v.alloc_cols] = MN (i, j);
@@ -1327,6 +1344,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 				W->F->PG_element_rank_modified (v.matrix_, 1, mtx_n, res) ;
 				T [b * block_size + i] = res;
 			}
+			cout << "ranking the elements of the PG done" << endl;
 
 		}
 
