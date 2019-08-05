@@ -80,7 +80,6 @@ void stabilizer_chain_base_data::free_base_data()
 		}
 }
 
-#define STABILIZER_CHAIN_DATA_MAX_DEGREE 1L << 28
 
 void stabilizer_chain_base_data::allocate_base_data(action *A,
 		int base_len, int verbose_level)
@@ -99,13 +98,13 @@ void stabilizer_chain_base_data::allocate_base_data(action *A,
 
 	stabilizer_chain_base_data::A = A;
 	stabilizer_chain_base_data::base_len = base_len;
+	base = NEW_int(base_len);
+	transversal_length = NEW_int(base_len);
+	path = NEW_int(base_len);
 
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		base = NEW_int(base_len);
-		transversal_length = NEW_int(base_len);
 		orbit = NEW_pint(base_len);
 		orbit_inv = NEW_pint(base_len);
-		path = NEW_int(base_len);
 		for (i = 0; i < base_len; i++) {
 			orbit[i] = NEW_int(A->degree);
 			orbit_inv[i] = NEW_int(A->degree);
@@ -117,11 +116,8 @@ void stabilizer_chain_base_data::allocate_base_data(action *A,
 	}
 	else {
 		cout << "stabilizer_chain_base_data::allocate_base_data degree is too large" << endl;
-		base = NULL;
-		transversal_length = NULL;
 		orbit = NULL;
 		orbit_inv = NULL;
-		path = NULL;
 	}
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::allocate_base_data done" << endl;
@@ -253,46 +249,22 @@ int &stabilizer_chain_base_data::get_base_len()
 
 int &stabilizer_chain_base_data::base_i(int i)
 {
-	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		return base[i];
-	}
-	else {
-		cout << "stabilizer_chain_base_data::base_i degree is too large" << endl;
-		exit(1);
-	}
+	return base[i];
 }
 
 int *&stabilizer_chain_base_data::get_base()
 {
-	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		return base;
-	}
-	else {
-		cout << "stabilizer_chain_base_data::get_base degree is too large" << endl;
-		exit(1);
-	}
+	return base;
 }
 
 int &stabilizer_chain_base_data::transversal_length_i(int i)
 {
-	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		return transversal_length[i];
-	}
-	else {
-		cout << "stabilizer_chain_base_data::transversal_length_i degree is too large" << endl;
-		exit(1);
-	}
+	return transversal_length[i];
 }
 
 int *&stabilizer_chain_base_data::get_transversal_length()
 {
-	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		return transversal_length;
-	}
-	else {
-		cout << "stabilizer_chain_base_data::get_transversal_length degree is too large" << endl;
-		exit(1);
-	}
+	return transversal_length;
 }
 
 int &stabilizer_chain_base_data::orbit_ij(int i, int j)
@@ -319,26 +291,14 @@ int &stabilizer_chain_base_data::orbit_inv_ij(int i, int j)
 
 int &stabilizer_chain_base_data::path_i(int i)
 {
-	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		return path[i];
-	}
-	else {
-		cout << "stabilizer_chain_base_data::path_i degree is too large" << endl;
-		exit(1);
-	}
+	return path[i];
 }
 
 void stabilizer_chain_base_data::group_order(longinteger_object &go)
 {
 	longinteger_domain D;
 
-	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		D.multiply_up(go, transversal_length, base_len);
-	}
-	else {
-		cout << "stabilizer_chain_base_data::group_order degree is too large" << endl;
-		exit(1);
-	}
+	D.multiply_up(go, transversal_length, base_len);
 }
 
 void stabilizer_chain_base_data::init_projective_matrix_group(

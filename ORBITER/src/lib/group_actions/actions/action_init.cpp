@@ -1454,42 +1454,50 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	f_has_strong_generators = TRUE;
 	FREE_int(gens_data);
 
-	sims *S;
 
-	S = NEW_OBJECT(sims);
+	if (degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
+		sims *S;
 
-	S->init(this, verbose_level - 2);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before S->init_generators" << endl;
-		}
-	S->init_generators(*Strong_gens->gens, verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after S->init_generators" << endl;
-		}
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before S->compute_base_orbits_known_length" << endl;
-		}
-	S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after S->compute_base_orbits_known_length" << endl;
-		}
+		S = NEW_OBJECT(sims);
+
+		S->init(this, verbose_level - 2);
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"before S->init_generators" << endl;
+			}
+		S->init_generators(*Strong_gens->gens, verbose_level);
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"after S->init_generators" << endl;
+			}
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"before S->compute_base_orbits_known_length" << endl;
+			}
+		S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"after S->compute_base_orbits_known_length" << endl;
+			}
 
 
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before init_sims" << endl;
-		}
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"before init_sims" << endl;
+			}
 
-	init_sims(S, verbose_level);
+		init_sims(S, verbose_level);
 
-	if (f_v) {
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"after init_sims" << endl;
+			}
+	}
+	else {
 		cout << "action::init_wreath_product_group "
-				"after init_sims" << endl;
-		}
+				"because the degree is very large, "
+				"we are not creating a sims object" << endl;
+	}
 
 	if (f_v) {
 		cout << "action::init_wreath_product_group, finished setting up "
