@@ -33,6 +33,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 		action* A,
 		int*& result,
 		int &nb_gens, int &degree,
+		int nb_factors,
 		int verbosity=0);
 
 
@@ -982,7 +983,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	int nb_gens, degree;
 
-	wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree);
+	wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree, nb_factors);
 
 	cout << "time check: ";
 	time_check(cout, t0);
@@ -1192,6 +1193,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 								action* A,
 								int*& result,
 								int &nb_gens, int &degree,
+								int nb_factors,
 								int verbosity) {
 #ifdef __CUDACC__
 
@@ -1305,7 +1307,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 		for (size_t b=0; b<nb_blocks; ++b) {
 			cout << "b=" << b << endl;
 
-			const size_t l = std::min((b + 1) * block_size,
+			int l = std::min((b + 1) * block_size,
 										(unsigned long)W->degree_of_tensor_action) - b*block_size;
 			cout << "l=" << l << endl;
 
@@ -1359,7 +1361,26 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			}
 			cout << "ranking the elements of the PG done" << endl;
 
-		}
+
+			cout << "writing to file:" << endl;
+			char fname[1000];
+
+			sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b)
+			{
+				ofstream fp(fname, ios::binary);
+
+				fp.write((char *) &l, sizeof(int));
+				for (i = 0; i < l; i++) {
+					fp.write((char *) &T [b * block_size + i], sizeof(int));
+				}
+			}
+			file_io Fio;
+
+			cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
+		} // next b
 
 		for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
 			unsigned int t = T[i];
@@ -1367,11 +1388,16 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			unsigned int r2 = root(S, t);
 
 			if (r1 != r2) {
-				if (r1 < r2) S[r2] = r1; else S[r1] = r2;
+				if (r1 < r2) {
+					S[r2] = r1;
+				}
+				else {
+					S[r1] = r2;
+				}
 			}
-		}
+		} // next i
 
-	}
+	} // next h
 
 	int nb_orbits = 0;
 	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
