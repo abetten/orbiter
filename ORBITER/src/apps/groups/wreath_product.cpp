@@ -1380,6 +1380,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	cout << "nb_orbits: " << nb_orbits << endl;
 
 	long int *orbit_length;
+	long int *orbit_rep;
 
 	orbit_length = NEW_lint(nb_orbits);
 	orbit_rep = NEW_lint(nb_orbits);
