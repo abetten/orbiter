@@ -238,121 +238,6 @@ int finite_field::PG_element_embed(
 	return a;
 }
 
-void finite_field::PG_element_rank_modified(
-		int *v, int stride, int len, int &a)
-{
-	int i, j, q_power_j, b, sqj;
-	int f_v = FALSE;
-	
-	if (len <= 0) {
-		cout << "finite_field::PG_element_rank_modified "
-				"len <= 0" << endl;
-		exit(1);
-		}
-	nb_calls_to_PG_element_rank_modified++;
-	if (f_v) {
-		cout << "the vector before normalization is ";
-		for (i = 0; i < len; i++) {
-			cout << v[i * stride] << " ";
-			}
-		cout << endl;
-		}
-	PG_element_normalize(v, stride, len);
-	if (f_v) {
-		cout << "the vector after normalization is ";
-		for (i = 0; i < len; i++) {
-			cout << v[i * stride] << " ";
-			}
-		cout << endl;
-		}
-	for (i = 0; i < len; i++) {
-		if (v[i * stride])
-			break;
-		}
-	if (i == len) {
-		cout << "finite_field::PG_element_rank_modified "
-				"zero vector" << endl;
-		exit(1);
-		}
-	for (j = i + 1; j < len; j++) {
-		if (v[j * stride])
-			break;
-		}
-	if (j == len) {
-		// we have the unit vector vector e_i
-		a = i;
-		return;
-		}
-	
-	// test for the all one vector: 
-	if (i == 0 && v[i * stride] == 1) {
-		for (j = i + 1; j < len; j++) {
-			if (v[j * stride] != 1)
-				break;
-			}
-		if (j == len) {
-			a = len;
-			return;
-			}
-		}
-	
-	
-	for (i = len - 1; i >= 0; i--) {
-		if (v[i * stride])
-			break;
-		}
-	if (i < 0) {
-		cout << "finite_field::PG_element_rank_modified "
-				"zero vector" << endl;
-		exit(1);
-		}
-	if (v[i * stride] != 1) {
-		cout << "finite_field::PG_element_rank_modified "
-				"vector not normalized" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "i=" << i << endl;
-		}
-
-	b = 0;
-	q_power_j = 1;
-	sqj = 0;
-	for (j = 0; j < i; j++) {
-		b += q_power_j - 1;
-		sqj += q_power_j;
-		q_power_j *= q;
-		}
-	if (f_v) {
-		cout << "b=" << b << endl;
-		cout << "sqj=" << sqj << endl;
-		}
-
-
-	a = 0;
-	for (j = i - 1; j >= 0; j--) {
-		a += v[j * stride];
-		if (j > 0)
-			a *= q;
-		if (f_v) {
-			cout << "j=" << j << ", a=" << a << endl;
-			}
-		}
-
-	if (f_v) {
-		cout << "a=" << a << endl;
-		}
-	
-	// take care of 1111 vector being left out
-	if (i == len - 1) {
-		//cout << "sqj=" << sqj << endl;
-		if (a >= sqj)
-			a--;
-		}
-	
-	a += b;
-	a += len;
-}
 
 void finite_field::PG_element_unrank_fining(
 		int *v, int len, int a)
@@ -526,6 +411,122 @@ void finite_field::PG_element_unrank_gary_cook(
 		}
 }
 
+void finite_field::PG_element_rank_modified(
+		int *v, int stride, int len, int &a)
+{
+	int i, j, q_power_j, b, sqj;
+	int f_v = FALSE;
+
+	if (len <= 0) {
+		cout << "finite_field::PG_element_rank_modified "
+				"len <= 0" << endl;
+		exit(1);
+		}
+	nb_calls_to_PG_element_rank_modified++;
+	if (f_v) {
+		cout << "the vector before normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	PG_element_normalize(v, stride, len);
+	if (f_v) {
+		cout << "the vector after normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	for (i = 0; i < len; i++) {
+		if (v[i * stride])
+			break;
+		}
+	if (i == len) {
+		cout << "finite_field::PG_element_rank_modified "
+				"zero vector" << endl;
+		exit(1);
+		}
+	for (j = i + 1; j < len; j++) {
+		if (v[j * stride])
+			break;
+		}
+	if (j == len) {
+		// we have the unit vector vector e_i
+		a = i;
+		return;
+		}
+
+	// test for the all one vector:
+	if (i == 0 && v[i * stride] == 1) {
+		for (j = i + 1; j < len; j++) {
+			if (v[j * stride] != 1)
+				break;
+			}
+		if (j == len) {
+			a = len;
+			return;
+			}
+		}
+
+
+	for (i = len - 1; i >= 0; i--) {
+		if (v[i * stride])
+			break;
+		}
+	if (i < 0) {
+		cout << "finite_field::PG_element_rank_modified "
+				"zero vector" << endl;
+		exit(1);
+		}
+	if (v[i * stride] != 1) {
+		cout << "finite_field::PG_element_rank_modified "
+				"vector not normalized" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "i=" << i << endl;
+		}
+
+	b = 0;
+	q_power_j = 1;
+	sqj = 0;
+	for (j = 0; j < i; j++) {
+		b += q_power_j - 1;
+		sqj += q_power_j;
+		q_power_j *= q;
+		}
+	if (f_v) {
+		cout << "b=" << b << endl;
+		cout << "sqj=" << sqj << endl;
+		}
+
+
+	a = 0;
+	for (j = i - 1; j >= 0; j--) {
+		a += v[j * stride];
+		if (j > 0)
+			a *= q;
+		if (f_v) {
+			cout << "j=" << j << ", a=" << a << endl;
+			}
+		}
+
+	if (f_v) {
+		cout << "a=" << a << endl;
+		}
+
+	// take care of 1111 vector being left out
+	if (i == len - 1) {
+		//cout << "sqj=" << sqj << endl;
+		if (a >= sqj)
+			a--;
+		}
+
+	a += b;
+	a += len;
+}
+
 void finite_field::PG_element_unrank_modified(
 		int *v, int stride, int len, int a)
 {
@@ -596,6 +597,198 @@ void finite_field::PG_element_unrank_modified(
 		return;
 		}
 	cout << "finite_field::PG_element_unrank_modified "
+			"a too large" << endl;
+	cout << "len = " << len << endl;
+	cout << "a = " << a1 << endl;
+	exit(1);
+}
+
+void finite_field::PG_element_rank_modified_lint(
+		int *v, int stride, int len, long int &a)
+{
+	long int i, j, q_power_j, b, sqj;
+	int f_v = FALSE;
+
+	if (len <= 0) {
+		cout << "finite_field::PG_element_rank_modified_lint "
+				"len <= 0" << endl;
+		exit(1);
+		}
+	nb_calls_to_PG_element_rank_modified++;
+	if (f_v) {
+		cout << "the vector before normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	PG_element_normalize(v, stride, len);
+	if (f_v) {
+		cout << "the vector after normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	for (i = 0; i < len; i++) {
+		if (v[i * stride])
+			break;
+		}
+	if (i == len) {
+		cout << "finite_field::PG_element_rank_modified_lint "
+				"zero vector" << endl;
+		exit(1);
+		}
+	for (j = i + 1; j < len; j++) {
+		if (v[j * stride])
+			break;
+		}
+	if (j == len) {
+		// we have the unit vector vector e_i
+		a = i;
+		return;
+		}
+
+	// test for the all one vector:
+	if (i == 0 && v[i * stride] == 1) {
+		for (j = i + 1; j < len; j++) {
+			if (v[j * stride] != 1)
+				break;
+			}
+		if (j == len) {
+			a = len;
+			return;
+			}
+		}
+
+
+	for (i = len - 1; i >= 0; i--) {
+		if (v[i * stride])
+			break;
+		}
+	if (i < 0) {
+		cout << "finite_field::PG_element_rank_modified_lint "
+				"zero vector" << endl;
+		exit(1);
+		}
+	if (v[i * stride] != 1) {
+		cout << "finite_field::PG_element_rank_modified_lint "
+				"vector not normalized" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "i=" << i << endl;
+		}
+
+	b = 0;
+	q_power_j = 1;
+	sqj = 0;
+	for (j = 0; j < i; j++) {
+		b += q_power_j - 1;
+		sqj += q_power_j;
+		q_power_j *= q;
+		}
+	if (f_v) {
+		cout << "b=" << b << endl;
+		cout << "sqj=" << sqj << endl;
+		}
+
+
+	a = 0;
+	for (j = i - 1; j >= 0; j--) {
+		a += v[j * stride];
+		if (j > 0)
+			a *= q;
+		if (f_v) {
+			cout << "j=" << j << ", a=" << a << endl;
+			}
+		}
+
+	if (f_v) {
+		cout << "a=" << a << endl;
+		}
+
+	// take care of 1111 vector being left out
+	if (i == len - 1) {
+		//cout << "sqj=" << sqj << endl;
+		if (a >= sqj)
+			a--;
+		}
+
+	a += b;
+	a += len;
+}
+
+void finite_field::PG_element_unrank_modified_lint(
+		int *v, int stride, int len, long int a)
+{
+	long int n, l, ql, sql, k, j, r, a1 = a;
+
+	n = len;
+	if (n <= 0) {
+		cout << "finite_field::PG_element_unrank_modified_lint "
+				"len <= 0" << endl;
+		exit(1);
+		}
+	nb_calls_to_PG_element_unrank_modified++;
+	if (a < n) {
+		// unit vector:
+		for (k = 0; k < n; k++) {
+			if (k == a) {
+				v[k * stride] = 1;
+				}
+			else {
+				v[k * stride] = 0;
+				}
+			}
+		return;
+		}
+	a -= n;
+	if (a == 0) {
+		// all one vector
+		for (k = 0; k < n; k++) {
+			v[k * stride] = 1;
+			}
+		return;
+		}
+	a--;
+
+	l = 1;
+	ql = q;
+	sql = 1;
+	// sql = q^0 + q^1 + \cdots + q^{l-1}
+	while (l < n) {
+		if (a >= ql - 1) {
+			a -= (ql - 1);
+			sql += ql;
+			ql *= q;
+			l++;
+			continue;
+			}
+		v[l * stride] = 1;
+		for (k = l + 1; k < n; k++) {
+			v[k * stride] = 0;
+			}
+		a++; // take into account that we do not want 00001000
+		if (l == n - 1 && a >= sql) {
+			a++;
+				// take int account that the
+				// vector 11111 has already been listed
+			}
+		j = 0;
+		while (a != 0) {
+			r = a % q;
+			v[j * stride] = r;
+			j++;
+			a -= r;
+			a /= q;
+			}
+		for ( ; j < l; j++) {
+			v[j * stride] = 0;
+			}
+		return;
+		}
+	cout << "finite_field::PG_element_unrank_modified_lint "
 			"a too large" << endl;
 	cout << "len = " << len << endl;
 	cout << "a = " << a1 << endl;
