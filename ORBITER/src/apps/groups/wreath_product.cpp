@@ -1266,22 +1266,22 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 //	int* v = NEW_int (MN.ncols);
 
-	unsigned int w = (unsigned int) W->degree_of_tensor_action;
-	int a;
-	a = (int) w;
-	if (a != W->degree_of_tensor_action) {
-		cout << "W->degree_of_tensor_action does not fit into a unsigned int" << endl;
+	unsigned int w = (unsigned int) W->degree_of_tensor_action - 1;
+	long int a;
+	a = (long int) w;
+	if (a != W->degree_of_tensor_action - 1) {
+		cout << "W->degree_of_tensor_action - 1 does not fit into a unsigned int" << endl;
 		exit(1);
 	}
 	else {
-		cout << "W->degree_of_tensor_action fits into a unit32_t, this is good" << endl;
+		cout << "W->degree_of_tensor_action fits into a unsigned int, this is good" << endl;
 	}
 
-	cout << "allocating S, an uint32_t array of size " << W->degree_of_tensor_action << endl;
+	cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
 
 	unsigned int* S = new unsigned int [W->degree_of_tensor_action];
 
-	cout << "allocating T, an uint32_t array of size " << W->degree_of_tensor_action << endl;
+	cout << "allocating T, an unsigned int array of size " << W->degree_of_tensor_action << endl;
 
 	unsigned int* T = new unsigned int [W->degree_of_tensor_action];
 
