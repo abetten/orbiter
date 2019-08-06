@@ -1365,7 +1365,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			cout << "writing to file:" << endl;
 			char fname[1000];
 
-			sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b)
+			sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b);
 			{
 				ofstream fp(fname, ios::binary);
 
@@ -1374,9 +1374,9 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 					fp.write((char *) &T [b * block_size + i], sizeof(int));
 				}
 			}
-			file_io Fio;
+			//file_io Fio;
 
-			cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "written file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
 
 
 
