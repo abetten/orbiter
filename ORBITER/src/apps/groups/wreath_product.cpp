@@ -10,7 +10,7 @@
 
 #include "orbiter.h"
 
-#include <cstdint>
+//#include <cstdint>
 
 using namespace std;
 
@@ -18,6 +18,7 @@ using namespace std;
 using namespace orbiter;
 
 
+typedef unsigned int uint32_t;
 
 // global data:
 
@@ -1375,7 +1376,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 	int nb_orbits = 0;
 	for (size_t i=0; i < W->degree_of_tensor_action; ++i) {
-		if (S[i] == -1) ++nb_orbits;
+		if (S[i] == i) ++nb_orbits;
 	}
 	printf("nb_orbits: %d\n", nb_orbits);
 	return;
