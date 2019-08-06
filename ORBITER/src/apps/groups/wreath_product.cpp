@@ -18,7 +18,6 @@ using namespace std;
 using namespace orbiter;
 
 
-typedef unsigned int uint32_t;
 
 // global data:
 
@@ -1267,11 +1266,11 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 //	int* v = NEW_int (MN.ncols);
 
-	uint32_t w = (unit32_t) W->degree_of_tensor_action;
+	unsigned int w = (unsigned int) W->degree_of_tensor_action;
 	int a;
 	a = (int) w;
 	if (a != W->degree_of_tensor_action) {
-		cout << "W->degree_of_tensor_action does not fit into a uint32_t" << endl;
+		cout << "W->degree_of_tensor_action does not fit into a unsigned int" << endl;
 		exit(1);
 	}
 	else {
@@ -1280,11 +1279,11 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 	cout << "allocating S, an uint32_t array of size " << W->degree_of_tensor_action << endl;
 
-	uint32_t* S = new uint32_t [W->degree_of_tensor_action];
+	unsigned int* S = new unsigned int [W->degree_of_tensor_action];
 
 	cout << "allocating T, an uint32_t array of size " << W->degree_of_tensor_action << endl;
 
-	uint32_t* T = new uint32_t [W->degree_of_tensor_action];
+	unsigned int* T = new unsigned int [W->degree_of_tensor_action];
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
@@ -1296,7 +1295,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 //	memset(S, -1, sizeof(S)*W->degree_of_tensor_action);
 
 
-	for (unit32_t i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
+	for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
 
 
 
@@ -1356,16 +1355,16 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 				}
 				long int res;
 				W->F->PG_element_rank_modified_lint (v.matrix_, 1, mtx_n, res);
-				T [b * block_size + i] = (uint32_t) res;
+				T [b * block_size + i] = (unsigned int) res;
 			}
 			cout << "ranking the elements of the PG done" << endl;
 
 		}
 
-		for (uint32_t i=0; i < W->degree_of_tensor_action; ++i) {
-			uint32_t t = T[i];
-			uint32_t r1 = root(S, i);
-			uint32_t r2 = root(S, t);
+		for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+			unsigned int t = T[i];
+			unsigned int r1 = root(S, i);
+			unsigned int r2 = root(S, t);
 
 			if (r1 != r2) {
 				if (r1 < r2) S[r2] = r1; else S[r1] = r2;
@@ -1375,7 +1374,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	}
 
 	int nb_orbits = 0;
-	for (size_t i=0; i < W->degree_of_tensor_action; ++i) {
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
 		if (S[i] == i) ++nb_orbits;
 	}
 	printf("nb_orbits: %d\n", nb_orbits);
