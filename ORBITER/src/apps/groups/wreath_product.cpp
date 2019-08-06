@@ -1267,11 +1267,11 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 	cout << "allocating S, an int array of size " << W->degree_of_tensor_action << endl;
 
-	int* S = NEW_int (W->degree_of_tensor_action);
+	uint32_t* S = new uint32_t [W->degree_of_tensor_action];
 
 	cout << "allocating T, an int array of size " << W->degree_of_tensor_action << endl;
 
-	int* T = NEW_int (W->degree_of_tensor_action);
+	uint32_t* T = new uint32_t [W->degree_of_tensor_action];
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
@@ -1307,7 +1307,8 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 				if ((i % l1) == 0) {
 					cout << i/l1 << " % " << endl;
 				}
-				W->F->PG_element_unrank_modified (v.matrix_, 1, mtx_n, b * block_size + i) ;
+				W->F->PG_element_unrank_modified_lint (v.matrix_, 1, mtx_n,
+						(long int) b * (long int) block_size + (long int)i) ;
 				for (size_t j=0; j<mtx_n; ++j)
 					M(i,j) = v(j, 0);
 			}
@@ -1340,9 +1341,9 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 					v.matrix_[a*v.alloc_cols] = MN (i, j);
 
 				}
-				int res;
-				W->F->PG_element_rank_modified (v.matrix_, 1, mtx_n, res) ;
-				T [b * block_size + i] = res;
+				long int res;
+				W->F->PG_element_rank_modified (v.matrix_, 1, mtx_n, res);
+				T [b * block_size + i] = (uint32_t) res;
 			}
 			cout << "ranking the elements of the PG done" << endl;
 
