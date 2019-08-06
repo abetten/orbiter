@@ -10,6 +10,8 @@
 
 #include "orbiter.h"
 
+#include <cstdint>
+
 using namespace std;
 
 
