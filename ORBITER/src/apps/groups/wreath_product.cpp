@@ -1370,7 +1370,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 				ofstream fp(fname, ios::binary);
 
 				fp.write((char *) &l, sizeof(int));
-				for (i = 0; i < l; i++) {
+				for (int i = 0; i < l; i++) {
 					fp.write((char *) &T [b * block_size + i], sizeof(int));
 				}
 			}
