@@ -1342,7 +1342,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 				}
 				long int res;
-				W->F->PG_element_rank_modified (v.matrix_, 1, mtx_n, res);
+				W->F->PG_element_rank_modified_lint (v.matrix_, 1, mtx_n, res);
 				T [b * block_size + i] = (uint32_t) res;
 			}
 			cout << "ranking the elements of the PG done" << endl;
