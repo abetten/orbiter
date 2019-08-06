@@ -1179,8 +1179,8 @@ void wreath_product_print_set(ostream &ost,
 
 
 //template <typename T = int>
-int root (int* S, int i) {
-	while (S[i] != -1) i = S[i];
+uint32_t root (uint32_t* S, uint32_t i) {
+	while (S[i] != i) i = S[i];
 	return i;
 }
 
@@ -1264,12 +1264,22 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 //	int* v = NEW_int (MN.ncols);
 
+	uint32_t w = (unit32_t) W->degree_of_tensor_action;
+	int a;
+	a = (int) w;
+	if (a != W->degree_of_tensor_action) {
+		cout << "W->degree_of_tensor_action does not fit into a uint32_t" << endl;
+		exit(1);
+	}
+	else {
+		cout << "W->degree_of_tensor_action fits into a unit32_t, this is good" << endl;
+	}
 
-	cout << "allocating S, an int array of size " << W->degree_of_tensor_action << endl;
+	cout << "allocating S, an uint32_t array of size " << W->degree_of_tensor_action << endl;
 
 	uint32_t* S = new uint32_t [W->degree_of_tensor_action];
 
-	cout << "allocating T, an int array of size " << W->degree_of_tensor_action << endl;
+	cout << "allocating T, an uint32_t array of size " << W->degree_of_tensor_action << endl;
 
 	uint32_t* T = new uint32_t [W->degree_of_tensor_action];
 
@@ -1283,7 +1293,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 //	memset(S, -1, sizeof(S)*W->degree_of_tensor_action);
 
 
-	for (size_t i=0; i<W->degree_of_tensor_action; ++i) S[i] = -1;
+	for (unit32_t i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
 
 
 
@@ -1305,7 +1315,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			int l1 = l / 100;
 			for (size_t i=0; i<l; ++i) {
 				if ((i % l1) == 0) {
-					cout << i/l1 << " % " << endl;
+					cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done unranking" << endl;
 				}
 				W->F->PG_element_unrank_modified_lint (v.matrix_, 1, mtx_n,
 						(long int) b * (long int) block_size + (long int)i) ;
@@ -1334,7 +1344,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			cout << "ranking the elements of the PG" << endl;
 			for (size_t i=0; i<l; ++i) {
 				if ((i % l1) == 0) {
-					cout << i/l1 << " % " << endl;
+					cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done ranking" << endl;
 				}
 				for (size_t j=0; j<mtx_n; ++j) {
 					int a = perms[h * mtx_n + j];
@@ -1349,10 +1359,10 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 		}
 
-		for (size_t i=0; i < W->degree_of_tensor_action; ++i) {
-			int t = T[i];
-			int r1 = root(S, i);
-			int r2 = root(S, t);
+		for (uint32_t i=0; i < W->degree_of_tensor_action; ++i) {
+			uint32_t t = T[i];
+			uint32_t r1 = root(S, i);
+			uint32_t r2 = root(S, t);
 
 			if (r1 != r2) {
 				if (r1 < r2) S[r2] = r1; else S[r1] = r2;
