@@ -1377,7 +1377,29 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
 		if (S[i] == i) ++nb_orbits;
 	}
-	printf("nb_orbits: %d\n", nb_orbits);
+	cout << "nb_orbits: " << nb_orbits << endl;
+
+	long int *orbit_length;
+
+	orbit_length = NEW_lint(nb_orbits);
+	orbit_rep = NEW_lint(nb_orbits);
+
+	for (int i = 0; i < nb_orbits; i++) {
+		orbit_length[i] = 0;
+	}
+	int j;
+	j = 0;
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+		if (S[i] == i) {
+			orbit_rep[j++] = i;
+		}
+	}
+
+	cout << "the orbit representatives are: " << endl;
+	for (int i = 0; i < nb_orbits; i++) {
+		cout << i << " : " << orbit_rep[i] << endl;
+	}
+
 	return;
 
 
