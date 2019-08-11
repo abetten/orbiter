@@ -110,6 +110,7 @@ class semifield_trace;
 class trace_record;
 class semifield_substructure;
 class semifield_classify_with_substructure;
+class packing_was;
 
 
 // #############################################################################

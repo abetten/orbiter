@@ -2606,6 +2606,10 @@ public:
 			int *dual_spread_idx,
 			int *self_dual_spreads, int nb_self_dual_spreads,
 			int verbose_level);
+	void init_reduced(
+			int nb_select, int *select,
+			spread_tables *old_spread_table,
+			int verbose_level);
 	void classify_self_dual_spreads(int *&type,
 			set_of_sets *&SoS,
 			int verbose_level);

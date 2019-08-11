@@ -127,9 +127,15 @@ void spread_tables::init(finite_field *F,
 	sprintf(fname_self_dual_spreads, "%s_self_dual_spreads.csv", spread_tables::prefix);
 
 
+	if (f_v) {
+		cout << "spread_tables::init before Gr->compute_dual_line_idx" << endl;
+	}
 	Gr->compute_dual_line_idx(dual_line_idx,
 			self_dual_lines, nb_self_dual_lines,
-			verbose_level);
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "spread_tables::init after Gr->compute_dual_line_idx" << endl;
+	}
 
 	if (f_load) {
 		if (f_v) {
@@ -183,6 +189,59 @@ void spread_tables::init_tables(int nb_spreads,
 	spread_tables::nb_self_dual_spreads = nb_self_dual_spreads;
 	if (f_v) {
 		cout << "spread_tables::init_tables done" << endl;
+	}
+}
+
+void spread_tables::init_reduced(
+		int nb_select, int *select,
+		spread_tables *old_spread_table,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a;
+
+	if (f_v) {
+		cout << "spread_tables::init_reduced" << endl;
+	}
+
+	F = old_spread_table->F;
+	q = F->q;
+	d = 4; // = 4
+	P = NEW_OBJECT(projective_space);
+	P->init(3, F,
+		TRUE /* f_init_incidence_structure */,
+		0 /* verbose_level - 2 */);
+
+
+	Gr = NEW_OBJECT(grassmann);
+	Gr->init(d, 2, F, 0 /* verbose_level */);
+	nb_lines = Gr->nCkq.as_int();
+	spread_size = old_spread_table->spread_size;
+	nb_iso_types_of_spreads = old_spread_table->nb_iso_types_of_spreads;
+
+
+	nb_spreads = nb_select;
+	if (f_v) {
+		cout << "spread_tables::init_reduced allocating spread_table" << endl;
+	}
+	spread_table = NEW_int(nb_spreads * spread_size);
+	if (f_v) {
+		cout << "spread_tables::init_reduced allocating spread_iso_type" << endl;
+	}
+	spread_iso_type = NEW_int(nb_spreads);
+	for (i = 0; i < nb_spreads; i++) {
+		a = select[i];
+		int_vec_copy(old_spread_table->spread_table + a * spread_size,
+				spread_table + i * spread_size, spread_size);
+		spread_iso_type[i] = old_spread_table->spread_iso_type[a];
+	}
+#if 0
+	spread_tables::dual_spread_idx = dual_spread_idx;
+	spread_tables::self_dual_spreads = self_dual_spreads;
+	spread_tables::nb_self_dual_spreads = nb_self_dual_spreads;
+#endif
+	if (f_v) {
+		cout << "spread_tables::init_reduced done" << endl;
 	}
 }
 

@@ -150,6 +150,9 @@ public:
 	void fread_uchars(FILE *fp, uchar *p, int len);
 	void read_numbers_from_file(const char *fname,
 		int *&the_set, int &set_size, int verbose_level);
+	void read_ascii_set_of_sets_constant_size(
+			const char *fname_ascii,
+			int *&Sets, int &nb_sets, int &set_size, int verbose_level);
 };
 
 

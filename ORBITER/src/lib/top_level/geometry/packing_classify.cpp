@@ -1153,7 +1153,6 @@ void packing_classify::create_action_on_spreads(int verbose_level)
 				"creating action A_on_spreads" << endl;
 		}
 	A_on_spreads = T->A2->create_induced_action_on_sets(
-			//T->A->Sims,
 			Spread_tables->nb_spreads, spread_size,
 			Spread_tables->spread_table,
 			//f_induce,
@@ -1670,9 +1669,9 @@ void packing_classify::report_fixed_objects(int *Elt,
 		char *fname_latex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, cnt;
-	int v[4];
-	file_io Fio;
+	//int i, j, cnt;
+	//int v[4];
+	//file_io Fio;
 
 	if (f_v) {
 		cout << "packing_classify::report_fixed_objects" << endl;
@@ -1694,6 +1693,13 @@ void packing_classify::report_fixed_objects(int *Elt,
 		NULL /* extra_praeamble */);
 	//latex_head_easy(fp);
 	
+
+	T->A->report_fixed_objects_in_P3(fp,
+			P3,
+			Elt,
+			verbose_level);
+
+#if 0
 	fp << "\\section{Fixed Objects}" << endl;
 
 
@@ -1786,10 +1792,13 @@ void packing_classify::report_fixed_objects(int *Elt,
 
 	FREE_OBJECT(A2);
 	}
+#endif
 
 
 	L.foot(fp);
 	}
+	file_io Fio;
+
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
 

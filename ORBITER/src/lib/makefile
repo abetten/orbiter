@@ -151,6 +151,7 @@ MODULES= \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
+		group_actions/data_structures/orbit_type_repository.o \
 		group_actions/data_structures/projective_space_job_description.o \
 		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
@@ -164,6 +165,7 @@ MODULES= \
 		group_actions/groups/linear_group.o \
 		group_actions/groups/linear_group_description.o \
 		group_actions/groups/matrix_group.o \
+		group_actions/groups/orbits_on_something.o \
 		group_actions/groups/perm_group.o \
 		group_actions/groups/schreier.o \
 		group_actions/groups/schreier_io.o \
@@ -287,6 +289,7 @@ MODULES= \
 		top_level/geometry/packing_classify.o \
 		top_level/geometry/packing_classify2.o \
 		top_level/geometry/packing_invariants.o \
+		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/projective_space.o \
 		top_level/geometry/recoordinatize.o \

@@ -257,6 +257,55 @@ public:
 };
 
 
+
+// #############################################################################
+// orbit_type_repository.cpp
+// #############################################################################
+
+
+
+
+
+//! a collection of orbit types
+
+
+
+class orbit_type_repository {
+
+public:
+
+	orbits_on_something *Oos;
+
+	int nb_sets;
+	int set_size;
+	int *Sets; // [nb_sets * set_size]
+	int goi;
+
+	int orbit_type_size;
+	int *Type_repository; // [nb_sets * orbit_type_size]
+	int nb_types;
+	int *type_first; // [nb_types]
+	int *type_len; // [nb_types]
+	int *type; // [nb_sets]
+	int *Type_representatives; // [nb_types]
+
+	orbit_type_repository();
+	~orbit_type_repository();
+	void null();
+	void freeself();
+	void init(
+			orbits_on_something *Oos,
+			int nb_sets,
+			int set_size,
+			int *Sets,
+			int goi,
+			int verbose_level);
+	void report(std::ostream &ost);
+	void report_one_type(std::ostream &ost, int type_idx);
+
+};
+
+
 // #############################################################################
 // projective_space_job_description.cpp
 // #############################################################################
