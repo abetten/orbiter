@@ -1334,12 +1334,16 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 //			linalg::cpu_mod_mat_mul_AB (M, N[h], MN, W->q);
 
 
-			cout << "cuda multiplication" << endl;
 
+			//cout << "cuda multiplication" << endl;
 			//linalg::cuda_mod_mat_mul (M, N[h], MN, W->q);
-			linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
+			//cout << "cuda multiplication done" << endl;
 
-			cout << "cuda multiplication done" << endl;
+
+			cout << "CPU multiplication" << endl;
+			linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
+			cout << "CPU multiplication done" << endl;
+
 
 			M.UninitializeOnGPU();
 			N[h].UninitializeOnGPU();
