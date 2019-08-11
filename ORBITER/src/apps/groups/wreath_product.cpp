@@ -1279,13 +1279,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 		cout << "W->degree_of_tensor_action fits into a unsigned int, this is good" << endl;
 	}
 
-	cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
 
-	unsigned int* S = new unsigned int [W->degree_of_tensor_action];
-
-	cout << "allocating T, an unsigned int array of size " << W->degree_of_tensor_action << endl;
-
-	unsigned int* T = new unsigned int [W->degree_of_tensor_action];
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
@@ -1294,39 +1288,58 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	int nb_blocks = (W->degree_of_tensor_action + block_size - 1) / block_size;
 
 	cout << "nb_blocks=" << nb_blocks << endl;
-//	memset(S, -1, sizeof(S)*W->degree_of_tensor_action);
 
+
+	cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
+
+	unsigned int* S = new unsigned int [W->degree_of_tensor_action];
 
 	for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
 
 
+	cout << "allocating T, an unsigned int array of size " << W->degree_of_tensor_action << endl;
 
-	for (size_t h=0; h < N.size(); ++h) {
-		cout << "hh=" << h << endl;
+	unsigned int* T = new unsigned int [block_size];
 
-		for (size_t b=0; b<nb_blocks; ++b) {
-			cout << "b=" << b << endl;
+//	memset(S, -1, sizeof(S)*W->degree_of_tensor_action);
 
-			int l = std::min((b + 1) * block_size,
-										(unsigned long)W->degree_of_tensor_action) - b*block_size;
-			cout << "l=" << l << endl;
 
-			linalg::Matrix<char> M  (l, mtx_n);
-			linalg::Matrix<char> MN (l, mtx_n);
 
-			cout << "unranking the elements of the PG" << endl;
 
-			int l1 = l / 100;
-			for (size_t i=0; i<l; ++i) {
-				if ((i % l1) == 0) {
-					cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done unranking" << endl;
-				}
-				W->F->PG_element_unrank_modified_lint (v.matrix_, 1, mtx_n,
-						(long int) b * (long int) block_size + (long int)i) ;
-				for (size_t j=0; j<mtx_n; ++j)
-					M(i,j) = v(j, 0);
+
+	for (size_t b=0; b<nb_blocks; ++b) {
+		cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+		int l = std::min((b + 1) * block_size,
+				(unsigned long)W->degree_of_tensor_action) - b*block_size;
+		cout << "l=" << l << endl;
+
+		linalg::Matrix<char> M  (l, mtx_n);
+
+		cout << "unranking the elements of the PG" << endl;
+
+		int l1 = l / 100;
+		for (size_t i=0; i<l; ++i) {
+			if ((i % l1) == 0) {
+				cout << "block b=" << b << ", " << i / l1 << " % done unranking" << endl;
 			}
-			cout << "unranking the elements of the PG done" << endl;
+			W->F->PG_element_unrank_modified_lint (v.matrix_, 1, mtx_n,
+					(long int) b * (long int) block_size + (long int)i) ;
+			for (size_t j=0; j<mtx_n; ++j)
+				M(i,j) = v(j, 0);
+		}
+		cout << "unranking the elements of the PG done" << endl;
+
+		linalg::Matrix<char> MN (l, mtx_n);
+
+
+
+
+		for (size_t h=0; h < N.size(); ++h) {
+			cout << "generator h=" << h << " / " << N.size() << endl;
+
+
 
 
 			// Matrix Multiply
@@ -1338,6 +1351,9 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			//cout << "cuda multiplication" << endl;
 			//linalg::cuda_mod_mat_mul (M, N[h], MN, W->q);
 			//cout << "cuda multiplication done" << endl;
+			//M.UninitializeOnGPU();
+			//N[h].UninitializeOnGPU();
+			//MN.UninitializeOnGPU();
 
 
 			cout << "CPU multiplication" << endl;
@@ -1345,9 +1361,6 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			cout << "CPU multiplication done" << endl;
 
 
-			M.UninitializeOnGPU();
-			N[h].UninitializeOnGPU();
-			MN.UninitializeOnGPU();
 
 
 			cout << "ranking the elements of the PG" << endl;
@@ -1385,24 +1398,28 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 
 
-		} // next b
+			for (unsigned int i=0; i < l; ++i) {
+				int u = b * block_size + i;
+				unsigned int t = T[i];
+				unsigned int r1 = root(S, u);
+				unsigned int r2 = root(S, t);
 
-		for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
-			unsigned int t = T[i];
-			unsigned int r1 = root(S, i);
-			unsigned int r2 = root(S, t);
-
-			if (r1 != r2) {
-				if (r1 < r2) {
-					S[r2] = r1;
+				if (r1 != r2) {
+					if (r1 < r2) {
+						S[r2] = r1;
+					}
+					else {
+						S[r1] = r2;
+					}
 				}
-				else {
-					S[r1] = r2;
-				}
-			}
-		} // next i
+			} // next i
 
-	} // next h
+
+
+		} // next h
+
+
+	} // next b
 
 	int nb_orbits = 0;
 	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
