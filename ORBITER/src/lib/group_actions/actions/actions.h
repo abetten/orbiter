@@ -872,6 +872,10 @@ public:
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
 	// uses the function A->element_image_of
+	void report_fixed_objects_in_P3(std::ostream &ost,
+		projective_space *P3,
+		int *Elt,
+		int verbose_level);
 
 	// in backtrack.cpp
 	int is_minimal(

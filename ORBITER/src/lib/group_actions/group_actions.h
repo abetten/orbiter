@@ -79,6 +79,8 @@ class orbit_rep;
 class projective_space_with_action;
 class projective_space_job_description;
 class stabilizer_chain_base_data;
+class orbits_on_something;
+class orbit_type_repository;
 
 //! enumeration to distinguish between the various types of group actions
 

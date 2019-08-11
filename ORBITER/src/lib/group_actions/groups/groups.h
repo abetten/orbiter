@@ -436,6 +436,44 @@ public:
 			int &size, int &nb_gens, int verbose_level);
 };
 
+// #############################################################################
+// orbits_on_something.cpp
+// #############################################################################
+
+//! compute orbits of a group in a given action; allows file io
+
+class orbits_on_something {
+
+public:
+
+	action *A;
+	strong_generators *SG;
+	schreier *Sch;
+
+	int f_load_save;
+	const char *prefix;
+	char fname[1000];
+
+	orbits_on_something();
+	~orbits_on_something();
+	void null();
+	void freeself();
+	void init(
+			action *A,
+			strong_generators *SG,
+			int f_load_save,
+			const char *prefix,
+			int verbose_level);
+	void orbit_type_of_set(
+			int *set, int set_sz, int go,
+			int *orbit_type,
+			int verbose_level);
+	// orbit_type[(go + 1) * go] must be allocated beforehand
+	void report_type(std::ostream &ost, int *orbit_type, int goi);
+	void report_orbit_lengths(std::ostream &ost);
+
+};
+
 
 // #############################################################################
 // perm_group.cpp
@@ -1428,6 +1466,10 @@ public:
 	void export_group_and_copy_to_latex(
 			const char *label_txt,
 			std::ostream &ost,
+			int verbose_level);
+	void report_fixed_objects_in_P3(
+			std::ostream &ost,
+			projective_space *P3,
 			int verbose_level);
 
 	// strong_generators_groups.cpp

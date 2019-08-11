@@ -27,6 +27,7 @@ MODULES = \
 	packing_classify.o \
 	packing_classify2.o \
 	packing_invariants.o \
+	packing_was.o \
 	polar.o \
 	projective_space.o \
 	recoordinatize.o \

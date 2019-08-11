@@ -2445,6 +2445,94 @@ void file_io::read_numbers_from_file(const char *fname,
 		}
 }
 
+void file_io::read_ascii_set_of_sets_constant_size(
+		const char *fname_ascii,
+		int *&Sets, int &nb_sets, int &set_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "file_io::read_ascii_set_of_sets_constant_size "
+				"reading ascii file " << fname_ascii << endl;
+		}
+	sorting Sorting;
+	int N;
+	int i;
+
+	N = count_number_of_lines_in_file(fname_ascii,
+			0 /* verbose_level */);
+
+
+	{
+		if (f_v) {
+			cout << "file_io::read_ascii_set_of_sets_constant_size "
+					"Reading file " << fname_ascii << " of size "
+					<< file_size(fname_ascii) << ":" << endl;
+		}
+		ifstream fp(fname_ascii);
+
+		int nb;
+
+
+
+
+		nb_sets = 0;
+		while (TRUE) {
+			fp >> nb;
+			if (nb == -1) {
+				break;
+			}
+
+			if (f_v) {
+				cout << "file_io::read_ascii_set_of_sets_constant_size "
+						"set " << nb_sets << ":";
+			}
+
+			if (nb_sets == 0) {
+				set_size = nb;
+				Sets = NEW_int(N * set_size);
+			}
+			else {
+				if (nb != set_size) {
+					cout << "file_io::read_ascii_set_of_sets_constant_size "
+							"nb != set_size" << endl;
+					exit(1);
+				}
+			}
+			for (i = 0; i < set_size; i++) {
+				fp >> Sets[nb_sets * set_size + i];
+			}
+
+			Sorting.int_vec_heapsort(Sets + nb_sets * set_size, set_size);
+
+			if (f_v) {
+				cout << "file_io::read_ascii_set_of_sets_constant_size "
+						"set " << nb_sets << " / " << N << " is ";
+				int_vec_print(cout, Sets + nb_sets * set_size, set_size);
+				cout << endl;
+			}
+			nb_sets++;
+		}
+	}
+	if (f_v) {
+		cout << "file_io::read_ascii_set_of_sets_constant_size "
+				"We found " << nb_sets << " sets" << endl;
+	}
+
+#if 0
+	cout << "writing spreads to file " << fname_spreads << endl;
+	Fio.int_matrix_write_csv(fname_spreads, Spreads, nb_spreads,
+			P->spread_size);
+
+	cout << "Written file " << fname_spreads << " of size "
+			<< Fio.file_size(fname_spreads) << endl;
+	FREE_int(Spreads);
+#endif
+	if (f_v) {
+		cout << "file_io::read_ascii_set_of_sets_constant_size "
+				"reading ascii file " << fname_ascii << " done" << endl;
+		}
+}
+
 
 
 }}

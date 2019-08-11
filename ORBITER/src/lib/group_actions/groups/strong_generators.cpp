@@ -2899,6 +2899,36 @@ void strong_generators::export_group_and_copy_to_latex(
 	}
 
 }
+
+
+void strong_generators::report_fixed_objects_in_P3(
+		ostream &ost,
+		projective_space *P3,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::report_fixed_objects_in_P3" << endl;
+	}
+
+	ost << "\\begin{enumerate}[(1)]" << endl;
+	for (i = 0; i < gens->len; i++) {
+
+		ost << "\\item" << endl;
+		A->report_fixed_objects_in_P3(ost,
+				P3,
+				gens->ith(i),
+				verbose_level);
+		}
+	ost << "\\end{enumerate}" << endl;
+	if (f_v) {
+		cout << "strong_generators::report_fixed_objects_in_P3" << endl;
+	}
+}
+
+
 //##############################################################################
 // global functions:
 //##############################################################################

@@ -1475,6 +1475,109 @@ public:
 	void compute_decomposition(int verbose_level);
 };
 
+// #############################################################################
+// packing_was.cpp
+// #############################################################################
+
+//! construction of packings in PG(3,q) with assumed symmetry
+
+class packing_was {
+public:
+	int f_poly;
+	const char *poly;
+	int f_order;
+	int order;
+	int f_dim_over_kernel;
+	int dim_over_kernel;
+	int f_recoordinatize;
+	int f_select_spread;
+	int select_spread[1000];
+	int select_spread_nb;
+	int f_spreads_invariant_under_H;
+	int f_cliques_on_fixpoint_graph;
+	int clique_size;
+	int f_process_long_orbits;
+	int process_long_orbits_r;
+	int process_long_orbits_m;
+	int long_orbit_length;
+	int long_orbits_clique_size;
+	int f_expand_cliques_of_long_orbits;
+	int clique_no_r;
+	int clique_no_m;
+	int f_type_of_fixed_spreads;
+	int f_label;
+	const char *label;
+	int f_spread_tables_prefix;
+	const char *spread_tables_prefix;
+	int f_output_path;
+	const char *output_path;
+
+	exact_cover_arguments *ECA;
+	isomorph_arguments *IA;
+
+	int f_H;
+	linear_group_description *H_Descr;
+	linear_group *H_LG;
+
+	int f_N;
+	linear_group_description *N_Descr;
+	linear_group *N_LG;
+
+	int p, e, n, k, q;
+	finite_field *F;
+	spread_classify *T;
+	packing_classify *P;
+
+
+	strong_generators *H_gens;
+	longinteger_object H_go;
+	int H_goi;
+
+	action *A;
+	int f_semilinear;
+	matrix_group *M;
+	int dim;
+
+
+	char prefix_line_orbits[1000];
+	orbits_on_something *Line_orbits_under_H;
+
+	orbit_type_repository *Spread_type;
+
+	int f_report;
+
+	char prefix_spread_orbits[1000];
+	orbits_on_something *Spread_orbits_under_H;
+	action *A_on_spread_orbits;
+
+	char fname_good_orbits[1000];
+	int nb_good_orbits;
+	int *Good_orbit_idx;
+	int *Good_orbit_len;
+	int *orb;
+
+	spread_tables *Spread_tables_reduced;
+	orbit_type_repository *Spread_type_reduced;
+
+	packing_was();
+	~packing_was();
+	void null();
+	void freeself();
+	void init(int argc, const char **argv);
+	void init_spreads(int verbose_level);
+	void compute_H_orbits_on_lines(int verbose_level);
+	// computes the orbits of H on lines (NOT on spreads!)
+	// and writes to file prefix_line_orbits
+	void compute_spread_types_wrt_H(int verbose_level);
+	void compute_H_orbits_on_spreads(int verbose_level);
+	// computes the orbits of H on spreads (NOT on lines!)
+	// and writes to file fname_orbits
+	void test_orbits_on_spreads(int verbose_level);
+	void reduce_spreads(int verbose_level);
+	void compute_reduced_spread_types_wrt_H(int verbose_level);
+	// Spread_types[P->nb_spreads * (group_order + 1)]
+	void report(std::ostream &ost);
+};
 
 // #############################################################################
 // polar.cpp

@@ -11,6 +11,7 @@ MODULES = \
 	linear_group.o \
 	linear_group_description.o \
 	matrix_group.o \
+	orbits_on_something.o \
 	perm_group.o \
 	schreier.o \
 	schreier_io.o \
