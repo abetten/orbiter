@@ -35,6 +35,8 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 		int &nb_gens, int &degree,
 		int nb_factors,
 		int verbosity=0);
+void make_fname(char *fname, int nb_factors, int h, int b);
+int test_if_file_exists(int nb_factors, int h, int b);
 
 
 typedef class tensor_product tensor_product;
@@ -1297,7 +1299,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
 
 
-	cout << "allocating T, an unsigned int array of size " << W->degree_of_tensor_action << endl;
+	cout << "allocating T, an unsigned int array of size " << block_size << endl;
 
 	unsigned int* T = new unsigned int [block_size];
 
@@ -1340,87 +1342,97 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 			cout << "generator h=" << h << " / " << N.size() << endl;
 
 
+			if (!test_if_file_exists(nb_factors, h, b)) {
 
 
-			// Matrix Multiply
-			MN.reset_entries();
-//			linalg::cpu_mod_mat_mul_AB (M, N[h], MN, W->q);
-
-
-
-			//cout << "cuda multiplication" << endl;
-			//linalg::cuda_mod_mat_mul (M, N[h], MN, W->q);
-			//cout << "cuda multiplication done" << endl;
-			//M.UninitializeOnGPU();
-			//N[h].UninitializeOnGPU();
-			//MN.UninitializeOnGPU();
-
-
-			cout << "CPU multiplication" << endl;
-			linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
-			cout << "CPU multiplication done" << endl;
+				// Matrix Multiply
+				MN.reset_entries();
+	//			linalg::cpu_mod_mat_mul_AB (M, N[h], MN, W->q);
 
 
 
-
-			cout << "ranking the elements of the PG" << endl;
-			for (size_t i=0; i<l; ++i) {
-				if ((i % l1) == 0) {
-					cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done ranking" << endl;
-				}
-				for (size_t j=0; j<mtx_n; ++j) {
-					int a = perms[h * mtx_n + j];
-					v.matrix_[a*v.alloc_cols] = MN (i, j);
-
-				}
-				long int res;
-				W->F->PG_element_rank_modified_lint (v.matrix_, 1, mtx_n, res);
-				T [b * block_size + i] = (unsigned int) res;
-			}
-			cout << "ranking the elements of the PG done" << endl;
+				//cout << "cuda multiplication" << endl;
+				//linalg::cuda_mod_mat_mul (M, N[h], MN, W->q);
+				//cout << "cuda multiplication done" << endl;
+				//M.UninitializeOnGPU();
+				//N[h].UninitializeOnGPU();
+				//MN.UninitializeOnGPU();
 
 
-			cout << "writing to file:" << endl;
-			char fname[1000];
-
-			sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b);
-			{
-				ofstream fp(fname, ios::binary);
-
-				fp.write((char *) &l, sizeof(int));
-				for (int i = 0; i < l; i++) {
-					fp.write((char *) &T [b * block_size + i], sizeof(int));
-				}
-			}
-			//file_io Fio;
-
-			cout << "written file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+				cout << "CPU multiplication" << endl;
+				linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
+				cout << "CPU multiplication done" << endl;
 
 
 
-			for (unsigned int i=0; i < l; ++i) {
-				int u = b * block_size + i;
-				unsigned int t = T[i];
-				unsigned int r1 = root(S, u);
-				unsigned int r2 = root(S, t);
 
-				if (r1 != r2) {
-					if (r1 < r2) {
-						S[r2] = r1;
+				cout << "ranking the elements of the PG" << endl;
+				for (size_t i=0; i<l; ++i) {
+					if ((i % l1) == 0) {
+						cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done ranking" << endl;
 					}
-					else {
-						S[r1] = r2;
+					for (size_t j=0; j<mtx_n; ++j) {
+						int a = perms[h * mtx_n + j];
+						v.matrix_[a*v.alloc_cols] = MN (i, j);
+
+					}
+					long int res;
+					W->F->PG_element_rank_modified_lint (v.matrix_, 1, mtx_n, res);
+					T [b * block_size + i] = (unsigned int) res;
+				}
+				cout << "ranking the elements of the PG done" << endl;
+
+
+				cout << "writing to file:" << endl;
+				char fname[1000];
+
+				make_fname(fname, nb_factors, h, b);
+				//sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b);
+				{
+					ofstream fp(fname, ios::binary);
+
+					fp.write((char *) &l, sizeof(int));
+					for (int i = 0; i < l; i++) {
+						fp.write((char *) &T [b * block_size + i], sizeof(int));
 					}
 				}
-			} // next i
+				//file_io Fio;
+
+				cout << "written file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
 
 
+#if 0
+				cout << "performing the union-find:" << endl;
+				for (unsigned int i=0; i < l; ++i) {
+					if ((i % l1) == 0) {
+						cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done with union-find" << endl;
+					}
+					int u = b * block_size + i;
+					unsigned int t = T[i];
+					unsigned int r1 = root(S, u);
+					unsigned int r2 = root(S, t);
+
+					if (r1 != r2) {
+						if (r1 < r2) {
+							S[r2] = r1;
+						}
+						else {
+							S[r1] = r2;
+						}
+					}
+				} // next i
+#endif
+			}
+			else {
+				cout << "the case h=" << h << ", b=" << b << " has already been done" << endl;
+			}
 
 		} // next h
 
 
 	} // next b
 
+#if 0
 	int nb_orbits = 0;
 	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
 		if (S[i] == i) ++nb_orbits;
@@ -1448,6 +1460,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 	for (int i = 0; i < nb_orbits; i++) {
 		cout << i << " : " << orbit_rep[i] << endl;
 	}
+#endif
 
 	return;
 
@@ -1481,4 +1494,22 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 #endif
 }
 
+void make_fname(char *fname, int nb_factors, int h, int b)
+{
+	sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b);
+}
+
+int test_if_file_exists(int nb_factors, int h, int b)
+{
+	char fname[1000];
+	file_io Fio;
+
+	make_fname(fname, nb_factors, h, b);
+	if (Fio.file_size(fname) > 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
 
