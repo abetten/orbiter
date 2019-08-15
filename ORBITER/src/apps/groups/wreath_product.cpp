@@ -1576,8 +1576,8 @@ void orbits(wreath_product* W,
 
 
 
-		for (size_t h=0; h < l; ++h) {
-			cout << "generator h=" << h << " / " << l << endl;
+		for (size_t h=0; h < SG->gens->len; ++h) {
+			cout << "generator h=" << h << " / " << SG->gens->len << endl;
 
 
 			if (!test_if_file_exists(nb_factors, h, b)) {
