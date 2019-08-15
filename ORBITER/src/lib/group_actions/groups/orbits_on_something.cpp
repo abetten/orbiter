@@ -29,6 +29,12 @@ orbits_on_something::orbits_on_something()
 	f_load_save = FALSE;
 	prefix = "";
 	//char fname[1000];
+
+	Classify_orbits_by_length = NULL;
+	Orbits_classified = NULL;
+
+	Orbits_classified_length = NULL;
+	Orbits_classified_nb_types = 0;
 }
 
 orbits_on_something::~orbits_on_something()
@@ -55,6 +61,15 @@ void orbits_on_something::freeself()
 	if (f_v) {
 		cout << "orbits_on_something::freeself" << endl;
 		}
+	if (Classify_orbits_by_length) {
+		FREE_OBJECT(Classify_orbits_by_length);
+	}
+	if (Orbits_classified) {
+		FREE_OBJECT(Orbits_classified);
+	}
+	if (Orbits_classified_length) {
+		FREE_int(Orbits_classified_length);
+	}
 	null();
 	if (f_v) {
 		cout << "orbits_on_something::freeself "
@@ -153,6 +168,8 @@ void orbits_on_something::init(
 		Sch->print_orbit_length_distribution(cout);
 		}
 
+	classify_orbits_by_length(verbose_level);
+
 
 	if (f_v) {
 		cout << "orbits_on_something::init done" << endl;
@@ -230,5 +247,421 @@ void orbits_on_something::report_orbit_lengths(ostream &ost)
 {
 	Sch->print_orbit_lengths_tex(ost);
 }
+
+
+void orbits_on_something::classify_orbits_by_length(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::classify_orbits_by_length" << endl;
+	}
+	Classify_orbits_by_length = NEW_OBJECT(classify);
+	Classify_orbits_by_length->init(Sch->orbit_len, Sch->nb_orbits, FALSE, 0);
+
+	if (f_v) {
+		cout << "orbits_on_something::classify_orbits_by_length "
+				"The distribution of orbit lengths is: ";
+		Classify_orbits_by_length->print_naked(FALSE);
+		cout << endl;
+		}
+
+	if (f_v) {
+		cout << "orbits_on_something::classify_orbits_by_length "
+				"before C->get_set_partition_and_types" << endl;
+		}
+	Orbits_classified = Classify_orbits_by_length->get_set_partition_and_types(
+			Orbits_classified_length,
+			Orbits_classified_nb_types,
+			0 /* verbose_level */);
+	if (f_v) {
+		int i;
+		cout << "orbits_on_something::classify_orbits_by_length "
+				"after C->get_set_partition_and_types" << endl;
+		cout << "types: ";
+		int_vec_print(cout, Orbits_classified_length,
+				Orbits_classified_nb_types);
+		cout << endl;
+		cout << "Orbits_classified:" << endl;
+		Orbits_classified->print();
+		cout << "i : type[i] : number of orbits" << endl;
+		for (i = 0; i < Orbits_classified->nb_sets; i++) {
+			cout << i << " : " << Orbits_classified_length[i] << " : "
+					<< Orbits_classified->Set_size[i] << endl;
+			}
+		}
+	if (f_v) {
+		cout << "orbits_on_something::classify_orbits_by_length done" << endl;
+	}
+}
+
+void orbits_on_something::report_classified_orbit_lengths(ostream &ost)
+{
+	int i;
+
+	//Sch->print_orbit_lengths_tex(ost);
+	ost << "Type : orbit length : number of orbits of this length\\\\" << endl;
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		ost << i << " : " << Orbits_classified_length[i] << " : "
+				<< Orbits_classified->Set_size[i] << "\\\\" << endl;
+		}
+}
+
+int orbits_on_something::get_orbit_type_index(int orbit_length)
+{
+	int i;
+
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		if (orbit_length == Orbits_classified_length[i]) {
+			return i;
+		}
+	}
+	cout << "orbits_on_something::get_orbit_type_index orbit length " << orbit_length << " not found" << endl;
+	exit(1);
+}
+
+int orbits_on_something::get_orbit_type_index_if_present(int orbit_length)
+{
+	int i;
+
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		if (orbit_length == Orbits_classified_length[i]) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
+	colored_graph *&CG,
+	const char *fname,
+	int orbit_length,
+	int &type_idx,
+	int f_has_user_data, int *user_data, int user_data_size,
+	int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+	void *test_function_data,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+				"orbit_length=" << orbit_length << endl;
+	}
+	int nb_points;
+	uchar *bitvector_adjacency;
+	int bitvector_length_in_bits;
+	int bitvector_length;
+	int L, L100;
+	int i, j, a, b, k;
+	combinatorics_domain Combi;
+	int *orbit1;
+	int *orbit2;
+	int l1, l2;
+
+	type_idx = get_orbit_type_index(orbit_length);
+	nb_points = Orbits_classified->Set_size[type_idx];
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+				"nb_points=" << nb_points << endl;
+	}
+
+	orbit1 = NEW_int(orbit_length);
+	orbit2 = NEW_int(orbit_length);
+
+	L = (nb_points * (nb_points - 1)) >> 1;
+
+	L100 = L / 100;
+
+	bitvector_length_in_bits = L;
+	bitvector_length = (L + 7) >> 3;
+	if (f_v) {
+		cout << "allocating bitvector of length "
+				<< bitvector_length << " char" << endl;
+	}
+	bitvector_adjacency = NEW_uchar(bitvector_length);
+	for (i = 0; i < bitvector_length; i++) {
+		bitvector_adjacency[i] = 0;
+	}
+
+	for (i = 0; i < nb_points; i++) {
+		a = Orbits_classified->Sets[type_idx][i];
+		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+		if (l1 != orbit_length) {
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l1 != orbit_length" << endl;
+			exit(1);
+		}
+		for (j = i + 1; j < nb_points; j++) {
+			b = Orbits_classified->Sets[type_idx][j];
+			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
+			if (l2 != orbit_length) {
+				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l2 != orbit_length" << endl;
+				exit(1);
+			}
+			k = Combi.ij2k(i, j, nb_points);
+
+#if 0
+			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
+			if (L100) {
+				if ((k % L100) == 0) {
+					cout << "progress: "
+							<< 100. * (double) k / (double) L << "%" << endl;
+				}
+			}
+#endif
+
+			if ((*test_function)(orbit1, orbit_length, orbit2, orbit_length, test_function_data)) {
+				//cout << "is adjacent" << endl;
+				bitvector_m_ii(bitvector_adjacency, k, 1);
+			}
+			else {
+				//cout << "is NOT adjacent" << endl;
+				bitvector_m_ii(bitvector_adjacency, k, 0);
+				// not needed becaude we initialize with zero.
+			}
+		}
+	}
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length the graph has been created" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length creating colored_graph" << endl;
+	}
+
+
+	CG = NEW_OBJECT(colored_graph);
+
+	CG->init_with_point_labels(nb_points, 1,
+		NULL /*point_color*/,
+		bitvector_adjacency, FALSE,
+		Orbits_classified->Sets[type_idx],
+		verbose_level - 2);
+		// the adjacency becomes part of the colored_graph object
+
+	if (f_has_user_data) {
+		int *my_user_data;
+
+		my_user_data = NEW_int(user_data_size);
+
+		if (f_v) {
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data before: ";
+			int_vec_print(cout, user_data, user_data_size);
+			cout << endl;
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length" << endl;
+		}
+
+#if 0
+		int_vec_apply(user_data,
+			Orbits_classified->Sets[short_orbit_idx],
+			my_user_data,
+			user_data_size);
+#else
+		int_vec_copy(user_data, my_user_data, user_data_size);
+#endif
+
+		if (f_v) {
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data after: ";
+			int_vec_print(cout, my_user_data, user_data_size);
+			cout << endl;
+		}
+
+		CG->init_user_data(my_user_data,
+				user_data_size, 0 /* verbose_level */);
+		FREE_int(my_user_data);
+	}
+
+	int_vec_copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
+	sprintf(CG->fname_base, "%s", fname);
+
+
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length colored_graph created" << endl;
+	}
+
+
+	//CG->save(fname, verbose_level);
+
+	//FREE_OBJECT(CG);
+
+	FREE_int(orbit1);
+	FREE_int(orbit2);
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length done" << endl;
+	}
+}
+
+void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
+	colored_graph *&CG,
+	const char *fname,
+	int orbit_length,
+	int &type_idx,
+	int f_has_user_data, int *user_data, int user_data_size,
+	int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+	void *test_function_data,
+	set_of_sets *my_orbits_classified,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"orbit_length=" << orbit_length << endl;
+	}
+	int nb_points;
+	uchar *bitvector_adjacency;
+	int bitvector_length_in_bits;
+	int bitvector_length;
+	int L, L100;
+	int i, j, a, b, k;
+	combinatorics_domain Combi;
+	int *orbit1;
+	int *orbit2;
+	int l1, l2;
+	int t0, t1, dt;
+
+	type_idx = get_orbit_type_index(orbit_length);
+	nb_points = my_orbits_classified->Set_size[type_idx];
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"nb_points=" << nb_points << endl;
+	}
+
+	orbit1 = NEW_int(orbit_length);
+	orbit2 = NEW_int(orbit_length);
+
+	L = (nb_points * (nb_points - 1)) >> 1;
+
+	L100 = L / 100;
+
+	bitvector_length_in_bits = L;
+	bitvector_length = (L + 7) >> 3;
+	if (f_v) {
+		cout << "allocating bitvector of length "
+				<< bitvector_length << " char" << endl;
+	}
+	bitvector_adjacency = NEW_uchar(bitvector_length);
+	for (i = 0; i < bitvector_length; i++) {
+		bitvector_adjacency[i] = 0;
+	}
+
+	t0 = os_ticks();
+	for (i = 0; i < nb_points; i++) {
+		a = my_orbits_classified->Sets[type_idx][i];
+		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+		if (l1 != orbit_length) {
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified l1 != orbit_length" << endl;
+			exit(1);
+		}
+		for (j = i + 1; j < nb_points; j++) {
+			b = my_orbits_classified->Sets[type_idx][j];
+			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
+			if (l2 != orbit_length) {
+				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified l2 != orbit_length" << endl;
+				exit(1);
+			}
+			k = Combi.ij2k(i, j, nb_points);
+
+#if 1
+			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
+			if (L100) {
+				if ((k % L100) == 0) {
+					t1 = os_ticks();
+					dt = t1 - t0;
+					cout << "progress: "
+							<< 100. * (double) k / (double) L << " % dt=";
+					time_check_delta(cout, dt);
+					cout << endl;
+				}
+			}
+#endif
+
+			if ((*test_function)(orbit1, orbit_length, orbit2, orbit_length, test_function_data)) {
+				//cout << "is adjacent" << endl;
+				bitvector_m_ii(bitvector_adjacency, k, 1);
+			}
+			else {
+				//cout << "is NOT adjacent" << endl;
+				bitvector_m_ii(bitvector_adjacency, k, 0);
+				// not needed becaude we initialize with zero.
+			}
+		}
+	}
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified the graph has been created" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified creating colored_graph" << endl;
+	}
+
+
+	CG = NEW_OBJECT(colored_graph);
+
+	CG->init_with_point_labels(nb_points, 1,
+		NULL /*point_color*/,
+		bitvector_adjacency, FALSE,
+		my_orbits_classified->Sets[type_idx],
+		verbose_level - 2);
+		// the adjacency becomes part of the colored_graph object
+
+	if (f_has_user_data) {
+		int *my_user_data;
+
+		my_user_data = NEW_int(user_data_size);
+
+		if (f_v) {
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data before: ";
+			int_vec_print(cout, user_data, user_data_size);
+			cout << endl;
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified" << endl;
+		}
+
+#if 0
+		int_vec_apply(user_data,
+			Orbits_classified->Sets[short_orbit_idx],
+			my_user_data,
+			user_data_size);
+#else
+		int_vec_copy(user_data, my_user_data, user_data_size);
+#endif
+
+		if (f_v) {
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data after: ";
+			int_vec_print(cout, my_user_data, user_data_size);
+			cout << endl;
+		}
+
+		CG->init_user_data(my_user_data,
+				user_data_size, 0 /* verbose_level */);
+		FREE_int(my_user_data);
+	}
+
+	//int_vec_copy(my_orbits_classified->Sets[type_idx], CG->points, nb_points);
+	sprintf(CG->fname_base, "%s", fname);
+
+
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified colored_graph created" << endl;
+	}
+
+
+	//CG->save(fname, verbose_level);
+
+	//FREE_OBJECT(CG);
+
+	FREE_int(orbit1);
+	FREE_int(orbit2);
+
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified done" << endl;
+	}
+}
+
+
+
 
 }}

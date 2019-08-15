@@ -276,11 +276,11 @@ discreta_base & matrix::s_ij(int i, int j)
 	m = self.matrix_pointer[-2].s_i_i();
 	n = self.matrix_pointer[-1].s_i_i();
 	if ( i < 0 || i >= m ) {
-		cout << "matrix::s_ij() addressing error, i = " << i << ", m = " << m << "\n";
+		cout << "matrix::s_ij() addressing error, i = " << i << ", m = " << m << endl;
 		exit(1);		
 		}
 	if ( j < 0 || j >= n ) {
-		cout << "matrix::s_ij() addressing error, j = " << j << ", n = " << n << "\n";
+		cout << "matrix::s_ij() addressing error, j = " << j << ", n = " << n << endl;
 		exit(1);		
 		}
 	return self.matrix_pointer[i * n + j];
@@ -304,7 +304,7 @@ void matrix::mult_to(discreta_base &x, discreta_base &y)
 		vector_mult_to(px, y);
 		}
 	else {
-		cout << "matrix::mult_to() object x is of bad type\n";
+		cout << "matrix::mult_to() object x is of bad type" << endl;
 		exit(1);
 		}
 }
@@ -315,17 +315,17 @@ void matrix::matrix_mult_to(matrix &x, discreta_base &y)
 	int i, j, k, m, n, l;
 	
 	if (s_kind() != MATRIX) {
-		cout << "matrix::matrix_mult_to() this is not a matrix\n";
+		cout << "matrix::matrix_mult_to() this is not a matrix" << endl;
 		exit(1);
 		}
 	if (x.s_kind() != MATRIX) {
-		cout << "matrix::matrix_mult_to() x is not a matrix\n";
+		cout << "matrix::matrix_mult_to() x is not a matrix" << endl;
 		exit(1);
 		}
 	m = s_m();
 	l = s_n();
 	if (l != x.s_m()) {
-		cout << "matrix::matrix_mult_to() l != x.s_m(), cannot multiply\n";
+		cout << "matrix::matrix_mult_to() l != x.s_m(), cannot multiply" << endl;
 		exit(1);
 		}
 	n = x.s_n();
@@ -574,9 +574,10 @@ int matrix::is_one()
 
 
 int matrix::Gauss(int f_special, int f_complete, Vector& base_cols, 
-	int f_P, matrix& P, int f_v)
+	int f_P, matrix& P, int verbose_level)
 // returns the rank
 {
+	int f_v = (verbose_level >= 1);
 	int rank, i, j, k, jj, m, n, Pn = 0;
 	discreta_base pivot, pivot_inv, a, b, c, z, f;
 	
@@ -585,7 +586,7 @@ int matrix::Gauss(int f_special, int f_complete, Vector& base_cols,
 	n = s_n();
 	if (f_P) {
 		if (m != P.s_m()) {
-			cout << "matrix::Gauss() m != P.s_m()\n";
+			cout << "matrix::Gauss m != P.s_m()" << endl;
 			exit(1);
 			}
 		Pn = P.s_n();
@@ -1083,7 +1084,7 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 	
 	if (f_v) {
 		cout << "matrix::smith_normal_form" << endl;
-		//cout << *this;
+		cout << *this;
 		}
 	m = s_m();
 	n = s_n();
@@ -1115,7 +1116,7 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 			}
 		}
 	Qv = Q;
-	if (FALSE) {
+	if (f_v) {
 		cout << "this=" << endl << *this << endl;
 		cout << "P=" << endl << P << endl;
 		cout << "Q=" << endl << Q << endl;
@@ -1131,24 +1132,44 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 			stable = TRUE;
 			if (f_v) {
 				cout << "before smith_eliminate_column " << i << endl;
-				//cout << "this=" << endl << *this << endl;
-				//cout << "P=" << endl << P << endl;
-				//cout << "Q=" << endl << Q << endl;
+				cout << "this=" << endl << *this << endl;
+				cout << "P=" << endl << P << endl;
+				cout << "Q=" << endl << Q << endl;
 				}
-			if (smith_eliminate_column(P, Pv, i, 0 /*verbose_level*/)) {
+			if (smith_eliminate_column(P, Pv, i, verbose_level - 2)) {
 				stable = FALSE;
 				}
 			if (f_v) {
-				cout << "before smith_eliminate_row " << i << endl;
-				//cout << "this=" << endl << *this << endl;
-				//cout << "P=" << endl << P << endl;
-				//cout << "Q=" << endl << Q << endl;
+				cout << "after smith_eliminate_column " << i << endl;
+				cout << "this=" << endl << *this << endl;
+				cout << "P=" << endl << P << endl;
+				cout << "Q=" << endl << Q << endl;
 				}
-			if (smith_eliminate_row(Q, Qv, i, 0 /*verbose_level - 1*/)) {
+
+			if (f_v) {
+				cout << "before smith_eliminate_row " << i << endl;
+				cout << "this=" << endl << *this << endl;
+				cout << "P=" << endl << P << endl;
+				cout << "Q=" << endl << Q << endl;
+				}
+			if (smith_eliminate_row(Q, Qv, i, verbose_level - 2)) {
 				stable = FALSE;
 				}
+			if (f_v) {
+				cout << "after smith_eliminate_row " << i << endl;
+				cout << "this=" << endl << *this << endl;
+				cout << "P=" << endl << P << endl;
+				cout << "Q=" << endl << Q << endl;
+				}
+
 			for (jj = i + 1; jj < n; jj++) {
+				if (f_v) {
+					cout << "jj=" << jj << endl;
+				}
 				for (ii = i + 1; ii < m; ii++) {
+					if (f_v) {
+						cout << "ii=" << ii << endl;
+					}
 					if (!s_ij(i, i).is_divisor(s_ij(ii, jj))) {
 						break;
 						}
@@ -1163,7 +1184,7 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 					am1 = a1;
 					am1.negate();
 					Qv.multiply_2by2_from_left(i, jj, a1, a0, am1, a1, 0);
-					if (FALSE) {
+					if (f_v) {
 						cout << *this;
 						}
 					stable = FALSE;
@@ -1174,11 +1195,11 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 		}
 	if (f_v) {
 		cout << "smith normal form reached" << endl;
-		//cout << "this=" << endl << *this << endl;
-		//cout << "P=" << endl << P << endl;
-		//cout << "Pv=" << endl << Pv << endl;
-		//cout << "Q=" << endl << Q << endl;
-		//cout << "Qv=" << endl << Qv << endl;
+		cout << "this=" << endl << *this << endl;
+		cout << "P=" << endl << P << endl;
+		cout << "Pv=" << endl << Pv << endl;
+		cout << "Q=" << endl << Q << endl;
+		cout << "Qv=" << endl << Qv << endl;
 		}
 }
 
@@ -1192,7 +1213,7 @@ int matrix::smith_eliminate_column(matrix& P,
 	
 	if (f_v) {
 		cout << "matrix::smith_eliminate_column column " << i << endl;
-		//cout << "this=" << endl << *this << endl;
+		cout << "this=" << endl << *this << endl;
 		}
 	m = s_m();
 	for (j = i + 1; j < m; j++) {
@@ -1201,7 +1222,7 @@ int matrix::smith_eliminate_column(matrix& P,
 		if (f_v) {
 			cout << "smith_eliminate_column() j=" << j
 					<< " x=" << x << " y=" << y << endl;
-			//cout << "this=" << endl << *this << endl;
+			cout << "this=" << endl << *this << endl;
 			}
 		if (y.is_zero()) {
 			continue;
@@ -2073,8 +2094,9 @@ void matrix::lexleast_incidence_matrix(int f_on_rows,
 	permutation & p, permutation & q, 
 	int f_print_backtrack_points, 
 	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
-	int f_v, int f_vv)
+	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int nb_X, *theX;
 	int f_maxtest = FALSE;
 	int back_to;
@@ -2102,7 +2124,7 @@ void matrix::lexleast_incidence_matrix(int f_on_rows,
 		p, q, 
 		f_print_backtrack_points, 
 		f_get_aut_group, f_aut_group_on_lexleast, aut_gens, 
-		f_v, f_vv);
+		verbose_level);
 }
 #endif
 

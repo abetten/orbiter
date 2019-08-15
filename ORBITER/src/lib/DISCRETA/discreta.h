@@ -94,7 +94,8 @@ enum kind {
 
 enum domain_type { 
 	GFp = 1, 
-	GFq = 2 
+	GFq = 2,
+	Orbiter_finite_field = 3
 	//PC_GROUP = 3 
 };
 
@@ -356,38 +357,32 @@ std::ostream& operator<<(std::ostream& ost, class discreta_base& p);
 // discreta_base operator * (discreta_base& x, discreta_base &y);
 // discreta_base operator + (discreta_base& x, discreta_base &y);
 
-//int lcm_int(int m, int n);
-//void extended_gcd_int(int m, int n, int &u, int &v, int &g);
 int invert_mod_integer(int i, int p);
 int remainder_mod(int i, int n);
 void factor_integer(int n, Vector& primes, Vector& exponents);
 void discreta_print_factorization(Vector& primes, Vector& exponents, std::ostream &o);
 void print_factorization_hollerith(Vector& primes, Vector& exponents, hollerith &h);
 int nb_primes(int n);
-//int is_prime(int n);
 int factor_if_prime_power(int n, int *p, int *e);
 int Euler(int n);
 int Moebius(int i);
 int NormRemainder(int a, int m);
 int log2(int n);
-int sqrt_mod(int a, int p);
-int sqrt_mod_involved(int a, int p);
-//void latex_head(ostream& ost, int f_book, int f_title, char *title, char *author, int f_toc, int f_landscape);
-//void latex_foot(ostream& ost);
+int sqrt_mod(int a, int p, int verbose_level);
+int sqrt_mod_involved(int a, int p, int verbose_level);
 void html_head(std::ostream& ost, char *title_long, char *title_short);
 void html_foot(std::ostream& ost);
-void sieve(Vector &primes, int factorbase, int f_v);
-void sieve_primes(Vector &v, int from, int to, int limit, int f_v);
+void sieve(Vector &primes, int factorbase, int verbose_level);
+void sieve_primes(Vector &v, int from, int to, int limit, int verbose_level);
 void print_intvec_mod_10(Vector &v);
-void stirling_second(int n, int k, int f_ordered, discreta_base &res, int f_v);
-void stirling_first(int n, int k, int f_signless, discreta_base &res, int f_v);
-void Catalan(int n, Vector &v, int f_v);
-void Catalan_n(int n, Vector &v, discreta_base &res, int f_v);
-void Catalan_nk_matrix(int n, matrix &Cnk, int f_v);
-void Catalan_nk_star_matrix(int n, matrix &Cnk, int f_v);
-void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int f_v);
+void stirling_second(int n, int k, int f_ordered, discreta_base &res, int verbose_level);
+void stirling_first(int n, int k, int f_signless, discreta_base &res, int verbose_level);
+void Catalan(int n, Vector &v, int verbose_level);
+void Catalan_n(int n, Vector &v, discreta_base &res, int verbose_level);
+void Catalan_nk_matrix(int n, matrix &Cnk, int verbose_level);
+void Catalan_nk_star_matrix(int n, matrix &Cnk, int verbose_level);
+void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int verbose_level);
 
-//int atoi(const char *p);
 void N_choose_K(discreta_base & n, int k, discreta_base & res);
 void Binomial(int n, int k, discreta_base & n_choose_k);
 void Krawtchouk(int n, int q, int i, int j, discreta_base & a);
@@ -429,11 +424,10 @@ void queue_append(Vector &Q, int elt);
 void print_classification_tex(Vector &content, Vector &multiplicities);
 void print_classification_tex(Vector &content, Vector &multiplicities, std::ostream& ost);
 void perm2permutation(int *a, int n, permutation &p);
-//void print_integer_matrix(ostream &ost, int *p, int m, int n);
-//void print_longinteger_matrix(ostream &ost, LONGint *p, int m, int n); removed Anton Betten Nov 1, 2011
 int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 	int f_P, int *P, int m, int n, int Pn, 
-	int q, int *add_table, int *mult_table, int *negate_table, int *inv_table, int f_v);
+	int q, int *add_table, int *mult_table,
+	int *negate_table, int *inv_table, int verbose_level);
 // returns the rank which is the number of entries in base_cols
 void uchar_move(uchar *p, uchar *q, int len);
 void int_vector_realloc(int *&p, int old_length, int new_length);
@@ -442,22 +436,6 @@ void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n);
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M);
 void fine_tune(finite_field *F, int *mtxD, int verbose_level);
 
-// domain.cpp:
-
-int has_domain();
-domain *get_current_domain();
-//domain *get_domain_if_pc_group();
-int is_GFp_domain(domain *& d);
-int is_GFq_domain(domain *& d);
-int is_finite_field_domain(domain *& d);
-int finite_field_domain_order_int(domain * d);
-int finite_field_domain_characteristic(domain * d);
-int finite_field_domain_primitive_root();
-void finite_field_domain_base_over_subfield(Vector & b);
-void push_domain(domain *d);
-void pop_domain(domain *& d);
-domain *allocate_finite_field_domain(int q, int f_v);
-void free_finite_field_domain(domain *dom, int f_v);
 
 /************************************* base ********************************/
 
@@ -719,8 +697,8 @@ class discreta_base
 	void write_memory(memory &m, int debug_depth);
 	void read_memory(memory &m, int debug_depth);
 	int calc_size_on_file();
-	void pack(memory & M, int f_v, int debug_depth);
-	void unpack(memory & M, int f_v, int debug_depth);
+	void pack(memory & M, int verbose_level, int debug_depth);
+	void unpack(memory & M, int verbose_level, int debug_depth);
 	void save_ascii(std::ostream & f);
 	void load_ascii(std::istream & f);
 	void save_file(char *fname);
@@ -760,8 +738,8 @@ class memory: public discreta_base
 	void read_char(char *c);
 	void write_int(int i);
 	void read_int(int *i);
-	void read_file(char *fname, int f_v);
-	void write_file(char *fname, int f_v);
+	void read_file(char *fname, int verbose_level);
+	void write_file(char *fname, int verbose_level);
 	int multiplicity_of_character(char c);
 	void compress(int f_v);
 	void decompress(int f_v);
@@ -881,7 +859,6 @@ class longinteger: public discreta_base
 	public:
 	longinteger();
 	longinteger(int a);
-	//longinteger(LONGint a); removed Anton Betten Nov 1, 2011
 	longinteger(const char *s);
 	longinteger(const discreta_base& x);
 		// copy constructor
@@ -918,7 +895,6 @@ class longinteger: public discreta_base
 	void one();
 	void m_one();
 	void homo_z(int z);
-	// void homo_z(LONGint z); removed Anton Betten Nov 1, 2011
 	void inc();
 	void dec();
 	int is_zero();
@@ -939,7 +915,7 @@ class longinteger: public discreta_base
 	int ny_p(int p);
 	void divide_out_int(int d);
 
-	int Lucas_test_Mersenne(int m, int f_v);
+	int Lucas_test_Mersenne(int m, int verbose_level);
 };
 
 
@@ -1147,8 +1123,8 @@ class permutation: public Vector
 	std::ostream& print(std::ostream&);
 	std::ostream& print_list(std::ostream& ost);
 	std::ostream& print_cycle(std::ostream& ost);
-	void sscan(const char *s, int f_v);
-	void scan(std::istream & is, int f_v);
+	void sscan(const char *s, int verbose_level);
+	void scan(std::istream & is, int verbose_level);
 
 	void m_l(int l);
 	int& s_i(int i);
@@ -1191,20 +1167,19 @@ class permutation: public Vector
 	void set_print_type_PG_1_q_element(domain *dom);
 
 	void convert_digit(int i, hollerith &a);
-	void cycle_type(Vector& type, int f_v);
-	int nb_of_inversions(int f_v);
-	int signum(int f_v);
-	int is_even(int f_v);
+	void cycle_type(Vector& type, int verbose_level);
+	int nb_of_inversions(int verbose_level);
+	int signum(int verbose_level);
+	int is_even(int verbose_level);
 	void cycles(Vector &cycles);
 	void restrict_to_subset(permutation &q, int first, int len);
-	void induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int f_v, int f_vv);
-	void singer_cycle_on_points_of_projective_plane(int p, int f_modified, int f_v);
+	void induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int verbose_level);
+	void singer_cycle_on_points_of_projective_plane(int p, int f_modified, int verbose_level);
 	void Cn_in_Cnm(int n, int m);
 	int preimage(int i);
 };
 
 void signum_map(discreta_base & x, discreta_base &d);
-//char get_character(istream & is, int f_v);
 
 //! DISCRETA utility class for matrix access
 
@@ -1278,7 +1253,8 @@ class matrix: public discreta_base
 	int is_one();
 
 
-	int Gauss(int f_special, int f_complete, Vector& base_cols, int f_P, matrix& P, int f_v);
+	int Gauss(int f_special, int f_complete,
+			Vector& base_cols, int f_P, matrix& P, int verbose_level);
 	int rank();
 	int get_kernel(Vector& base_cols, matrix& kernel);
 	matrix& transpose();
@@ -1294,13 +1270,20 @@ class matrix: public discreta_base
 	void elements_to_unipoly();
 	void minus_X_times_id();
 	void X_times_id_minus_self();
-	void smith_normal_form(matrix& P, matrix& Pv, matrix& Q, matrix& Qv, int verbose_level);
-	int smith_eliminate_column(matrix& P, matrix& Pv, int i, int verbose_level);
-	int smith_eliminate_row(matrix& Q, matrix& Qv, int i, int verbose_level);
+	void smith_normal_form(matrix& P, matrix& Pv,
+			matrix& Q, matrix& Qv, int verbose_level);
+	int smith_eliminate_column(matrix& P, matrix& Pv, int i,
+			int verbose_level);
+	int smith_eliminate_row(matrix& Q, matrix& Qv, int i,
+			int verbose_level);
 	void multiply_2by2_from_left(int i, int j, 
-		discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, int verbose_level);
+		discreta_base& aii, discreta_base& aij,
+		discreta_base& aji, discreta_base& ajj,
+		int verbose_level);
 	void multiply_2by2_from_right(int i, int j, 
-		discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, int verbose_level);
+		discreta_base& aii, discreta_base& aij,
+		discreta_base& aji, discreta_base& ajj,
+		int verbose_level);
 
 	void to_vector_of_rows(Vector& v);
 	void from_vector_of_rows(Vector& v);
@@ -1335,7 +1318,7 @@ class matrix: public discreta_base
 		permutation & p, permutation & q, 
 		int f_print_backtrack_points, 
 		int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
-		int f_v, int f_vv);
+		int verbose_level);
 #endif
 	void apply_perms(int f_row_perm, permutation &row_perm, 
 		int f_col_perm, permutation &col_perm);
@@ -1510,27 +1493,33 @@ class unipoly: public Vector
 	int is_one();
 	int is_zero();
 	int compare_with_euclidean(discreta_base &a);
-	void integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level);
+	void integral_division(discreta_base &x,
+			discreta_base &q, discreta_base &r, int verbose_level);
 	void derive();
 	int is_squarefree(int verbose_level);
 	int is_irreducible_GFp(int p, int verbose_level);
-	int is_irreducible(int q, int f_v);
+	int is_irreducible(int q, int verbose_level);
 	int is_primitive(int m, int p, Vector& vp, int verbose_level);
 	void numeric_polynomial(int n, int q);
 	int polynomial_numeric(int q);
 	void singer_candidate(int p, int f, int b, int a);
-	void Singer(int p, int f, int f_v, int f_vv);
+	void Singer(int p, int f, int verbose_level);
 	void get_an_irreducible_polynomial(int f, int verbose_level);
 	void evaluate_at(discreta_base& x, discreta_base& y);
 	void largest_divisor_prime_to(unipoly& q, unipoly& r);
 	void monic();
 	void normal_base(int p, matrix& F, matrix& N, int verbose_level);
-	int first_irreducible_polynomial(int p, unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level);
-	int next_irreducible_polynomial(int p, unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level);
+	int first_irreducible_polynomial(int p,
+			unipoly& m, matrix& F, matrix& N, Vector &v,
+			int verbose_level);
+	int next_irreducible_polynomial(int p,
+			unipoly& m, matrix& F, matrix& N, Vector &v,
+			int verbose_level);
 	void normalize(discreta_base &p);
 	void Xnm1(int n);
 	void Phi(int n, int f_v);
-	void weight_enumerator_MDS_code(int n, int k, int q, int f_v, int f_vv, int f_vvv);
+	void weight_enumerator_MDS_code(int n, int k, int q,
+			int verbose_level);
 	void charpoly(int q, int size, int *mtx, int verbose_level);
 	
 };
@@ -1679,6 +1668,8 @@ class geometry: public Vector
 
 int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v);
 
+
+#if 0
 // geo_canon.cpp:
 
 void perm_test(void);
@@ -1694,8 +1685,8 @@ void geo_canon_with_initial_decomposition_and_ddp_ddb(
 	permutation & p, permutation & q, 
 	int f_print_backtrack_points, 
 	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
-	int f_v, int f_vv);
-
+	int verbose_level);
+#endif
 
 //! DISCRETA class for influencing arithmetic operations
 
@@ -1709,20 +1700,45 @@ class domain {
 		//pc_presentation *the_pres;
 		unipoly *the_factor_poly;
 		domain *the_sub_domain;
+		finite_field *F;
 	
 	public:
-	domain(int p);
+		domain(int p);
+		domain(finite_field *F);
 	domain(unipoly *factor_poly, domain *sub_domain);
 	//domain(pc_presentation *pres);
 	
 	domain_type type();
+	finite_field *get_F();
 	int order_int();
 	int order_subfield_int();
 	int characteristic();
+	int is_Orbiter_finite_field_domain();
 	//pc_presentation *pres();
 	unipoly *factor_poly();
 	domain *sub_domain();
 };
+
+
+// domain.cpp:
+
+int has_domain();
+domain *get_current_domain();
+//domain *get_domain_if_pc_group();
+int is_GFp_domain(domain *& d);
+int is_GFq_domain(domain *& d);
+int is_Orbiter_finite_field_domain(domain *& d);
+int is_finite_field_domain(domain *& d);
+int finite_field_domain_order_int(domain * d);
+int finite_field_domain_characteristic(domain * d);
+int finite_field_domain_primitive_root();
+void finite_field_domain_base_over_subfield(Vector & b);
+void push_domain(domain *d);
+void pop_domain(domain *& d);
+domain *allocate_finite_field_domain(int q, int verbose_level);
+void free_finite_field_domain(domain *dom);
+
+
 
 
 //! DISCRETA class related to class domain
@@ -1782,14 +1798,15 @@ class group_selection: public Vector
 const char *group_selection_type_as_text(group_selection_type t);
 void compose_gsel_from_strings(Vector &gsel, int num_args, char **args);
 void compose_group(Vector & gsel, Vector & gens, 
-	hollerith & group_label, hollerith & group_label_tex, hollerith & acting_on, int f_v);
+	hollerith & group_label, hollerith & group_label_tex,
+	hollerith & acting_on, int verbose_level);
 
 
 // perm_group_gens.cpp:
 
 int vec_generators_is_trivial_group(Vector & gen);
 int is_abelian(Vector & gen);
-void read_file_of_generators_xml(Vector & gen, char *fname, int &f_cyclic_notation, int f_v);
+void read_file_of_generators_xml(Vector & gen, char *fname, int &f_cyclic_notation, int verbose_level);
 void write_file_of_generators_xml_group_label(Vector & gen, char *group_label, int f_cyclic_notation);
 void write_file_of_generators_xml(Vector & gen, char *fname, int f_cyclic_notation);
 void read_file_of_generators(Vector & G, char *fname);
@@ -1811,11 +1828,9 @@ void vec_induce_on_2tuples(Vector & gen, int f_injective);
 void vec_add_fixpoint_in_front(Vector & gen);
 void vec_add_fixpoint_at_end(Vector & gen);
 int vec_generators_degree(Vector & a);
-//void vec_generators_stabilize_point(Vector & a, Vector & b);
-//void vec_generators_group_order(Vector & gen, discreta_base & o);
 void vec_generators_remove_fixpoint(Vector & gen, int i);
 void vec_generators_raise_to_nth_power(Vector & gen, int n);
-void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, int k, int q, int f_v, int f_vv);
+void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, int k, int q, int verbose_level);
 void vec_generators_trivial_group(Vector & gen, int deg);
 void vec_generators_cyclic_group(Vector & gen, int deg);
 void vec_generators_Cn_in_Cnm(Vector & gen, int n, int m);
@@ -1833,41 +1848,39 @@ void vec_generators_diagonal_sum(Vector & a, Vector & b, Vector & c);
 void vec_generators_comma(Vector & a, Vector & b, Vector & c);
 void vec_generators_direct_sum(Vector & a, Vector & b, Vector & c);
 void vec_generators_direct_product(Vector & a, Vector & b, Vector & c);
-void vec_generators_GL_n_q_as_matrices(Vector & gen, int n, domain *dom, int f_v);
-void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, int n, int subgroup_index, domain *dom, int f_v);
-void vec_generators_SL_n_q_as_matrices(Vector & gen, int n, domain *dom, int f_v);
-void vec_generators_frobenius_in_PG(Vector & gen, int n, domain *dom, int f_v);
-void vec_generators_frobenius_in_AG(Vector & gen, int n, domain *dom, int f_v);
-void vec_generators_affine_translations(Vector & gen, int n, domain *dom, int f_v);
-void vec_generators_affine_translations(Vector & gen, int n, int q, int f_v);
-void vec_generators_projective_representation(domain *dom, Vector & a, Vector & b, int f_action_from_right, int f_modified, int f_v);
-void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, int f_v);
-void vec_generators_GL_n_q_projective_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_modified, int f_v);
-void vec_generators_GL_n_q_affine_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_translations, int f_v);
+void vec_generators_GL_n_q_as_matrices(Vector & gen, int n, domain *dom, int verbose_level);
+void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, int n, int subgroup_index, domain *dom, int verbose_level);
+void vec_generators_SL_n_q_as_matrices(Vector & gen, int n, domain *dom, int verbose_level);
+void vec_generators_frobenius_in_PG(Vector & gen, int n, domain *dom, int verbose_level);
+void vec_generators_frobenius_in_AG(Vector & gen, int n, domain *dom, int verbose_level);
+void vec_generators_affine_translations(Vector & gen, int n, domain *dom, int verbose_level);
+void vec_generators_affine_translations(Vector & gen, int n, int q, int verbose_level);
+void vec_generators_projective_representation(domain *dom, Vector & a, Vector & b, int f_action_from_right, int f_modified, int verbose_level);
+void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, int verbose_level);
+void vec_generators_GL_n_q_projective_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_modified, int verbose_level);
+void vec_generators_GL_n_q_affine_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_translations, int verbose_level);
 void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen, int n, int q, int subgroup_index, 
-	int f_special, int f_frobenius, int f_translations, int f_v);
+	int f_special, int f_frobenius, int f_translations, int verbose_level);
 void kernel_of_homomorphism(Vector & gens, Vector & kernel_gens, 
-	void (*hom)(discreta_base & x, discreta_base & image), int f_v, int f_vv);
-void vec_generators_A5_in_PSL(Vector& G, int q, int f_v);
-void vec_generators_S4_in_PSL(Vector& G, int q, int f_v);
-void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, int f_v);
-//void vec_generators_on_conjugacy_class_of_subgroups_by_conjugation(perm_group &G, 
-	//Vector &LayerOrbit, int layer, int orbit, Vector &gens, Vector &induced_gens, int f_v, int f_vv);
+	void (*hom)(discreta_base & x, discreta_base & image), int verbose_level);
+void vec_generators_A5_in_PSL(Vector& G, int q, int verbose_level);
+void vec_generators_S4_in_PSL(Vector& G, int q, int verbose_level);
+void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, int verbose_level);
 void vec_generators_restrict_to_subset(Vector & gen, int first, int len);
 void wreath_embedding(permutation & g, int n, int m, permutation & q);
 void wreath_embedding_component(permutation & g, int n, int m, int j, permutation & q);
-void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, int f_v);
+void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, int verbose_level);
 void vec_generators_Sn_wreath_Sm(int n, int m, Vector & G);
 void vec_generators_q1_q2(int q1, int q2, Vector & gen, hollerith &label, 
-	int f_write_generators_to_file, int f_v, int f_vv);
+	int f_write_generators_to_file, int verbose_level);
 void vec_generators_q1_q2_aubv(int q1, int q2, int u, int v, Vector & G, hollerith &label, 
-	int f_write_generators_to_file, int f_v, int f_vv);
+	int f_write_generators_to_file, int verbose_level);
 void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, int v2, 
-	Vector & G, hollerith &label, int f_write_generators_to_file, int f_v, int f_vv);
+	Vector & G, hollerith &label, int f_write_generators_to_file, int verbose_level);
 void vec_generators_AGGL1q_subgroup(int q, int subgroup_index, 
-	int f_special, int f_frobenius, int f_translations, int f_v);
+	int f_special, int f_frobenius, int f_translations, int verbose_level);
 //void vec_generators_cycle_index(Vector &gen, Vector &C, int f_v);
-void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, int p, int f_modified, int f_v);
+void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, int p, int f_modified, int verbose_level);
 
 
 //! DISCRETA class for polyhedra

@@ -111,6 +111,7 @@ class trace_record;
 class semifield_substructure;
 class semifield_classify_with_substructure;
 class packing_was;
+class packing_long_orbits;
 
 
 // #############################################################################

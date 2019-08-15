@@ -1383,10 +1383,11 @@ int discreta_base::calc_size_on_file()
 	return size;
 }
 
-void discreta_base::pack(memory & M, int f_v, int debug_depth)
+void discreta_base::pack(memory & M, int verbose_level, int debug_depth)
 // used to pack (i.e. to serialize) objects
 // into (binary) strings in memory objects.
 {
+	int f_v = (verbose_level >= 1);
 	int size, size0;
 	
 	if (f_v) {
@@ -1413,9 +1414,10 @@ void discreta_base::pack(memory & M, int f_v, int debug_depth)
 		}
 }
 
-void discreta_base::unpack(memory & M, int f_v, int debug_depth)
+void discreta_base::unpack(memory & M, int verbose_level, int debug_depth)
 // unpacks an object from a binary representation in a memory object
 {
+	//int f_v = (verbose_level >= 1);
 	read_memory(M, debug_depth);
 }
 

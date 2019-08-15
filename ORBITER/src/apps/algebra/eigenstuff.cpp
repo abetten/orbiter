@@ -107,6 +107,7 @@ int main(int argc, char **argv)
 
 void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	matrix M;
 	int i, j, k, a, p, h;
 	finite_field Fq;
@@ -114,24 +115,37 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 	//unipoly_object char_poly;
 	number_theory_domain NT;
 
+	if (f_v) {
+		cout << "do_eigenstuff" << endl;
+	}
 	M.m_mn(size, size);
 	k = 0;
 	for (i = 0; i < size; i++) {
 		for (j = 0; j < size; j++) {
 			a = Data[k++];
 			M.m_iji(i, j, a);
-			}
 		}
-	//cout << "M=" << endl;
-	//cout << M << endl;
+	}
+
+	if (f_v) {
+		cout << "M=" << endl;
+		cout << M << endl;
+	}
 
 	if (!NT.is_prime_power(q, p, h)) {
-		cout << "q is not prime, we need a prime" << endl;
+		cout << "q is not prime power, we need a prime power" << endl;
 		exit(1);
-		}
+	}
+#if 0
+	if (h > 1) {
+		cout << "prime powers are not implemented yet" << endl;
+		exit(1);
+	}
+#endif
 	Fq.init(q, verbose_level);
 
-	domain d(q);
+	//domain d(q);
+	domain d(&Fq);
 	with w(&d);
 
 #if 0
@@ -155,6 +169,12 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 	M1 = M;
 	cout << "M - x * Id has been computed" << endl;
 	//cout << "M - x * Id =" << endl << M << endl;
+
+	if (f_v) {
+		cout << "M - x * Id = " << endl;
+		cout << M << endl;
+	}
+
 
 	cout << "before M.smith_normal_form" << endl;
 	M.smith_normal_form(P, Pv, Q, Qv, verbose_level);
@@ -192,7 +212,7 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 		b = charpoly.s_ii(i);
 		c = Fq.mult(b, lv);
 		charpoly.m_ii(i, c);
-		}
+	}
 	cout << "monic characteristic polynomial:" << charpoly << endl;
 	
 	integer x, y;
@@ -207,8 +227,8 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 		if (y.s_i() == 0) {
 			cout << "root " << a << endl;
 			roots[nb_roots++] = a;
-			}
 		}
+	}
 	cout << "we found the following eigenvalues: ";
 	int_vec_print(cout, roots, nb_roots);
 	cout << endl;
@@ -226,8 +246,8 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 		for (i = 0; i < size; i++) {
 			for (j = 0; j < size; j++) {
 				A[i * size + j] = Data[i * size + j];
-				}
 			}
+		}
 		cout << "A:" << endl;
 		print_integer_matrix_width(cout, A,
 				size, size, size, Fq.log10_of_q);
@@ -236,10 +256,10 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 				a = A[i * size + j];
 				if (j == i) {
 					a = Fq.add(a, eigenvalue_negative);
-					}
-				B[i * size + j] = a;
 				}
+				B[i * size + j] = a;
 			}
+		}
 		cout << "B = A - eigenvalue * I:" << endl;
 		print_integer_matrix_width(cout, B,
 				size, size, size, Fq.log10_of_q);
@@ -303,7 +323,7 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 		delete [] A;
 		delete [] B;
 		delete [] Bt;
-		}
+	}
 }
 
 

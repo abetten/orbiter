@@ -239,6 +239,7 @@ public:
 		const char *fname, int verbose_level);
 	classify *get_ago_distribution(int *&ago,
 			int verbose_level);
+	void report_ago_distribution(std::ostream &ost);
 	void print_table_latex(
 			std::ostream &f,
 			int f_has_callback,

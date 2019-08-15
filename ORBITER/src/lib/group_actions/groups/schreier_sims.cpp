@@ -89,8 +89,9 @@ void schreier_sims::init(action *A, int verbose_level)
 	// << " with action " << GA << "=" << GA->label << endl;
 
 	if (f_v) {
-		cout << "schreier_sims::init before G->init" << endl;
+		cout << "schreier_sims::init action A:" << endl;
 		A->print_info();
+		cout << "schreier_sims::init before G->init" << endl;
 		}
 	G->init(GA, verbose_level - 2);
 	if (f_v) {
@@ -102,6 +103,9 @@ void schreier_sims::init(action *A, int verbose_level)
 	G->init_trivial_group(verbose_level);
 	if (f_v) {
 		cout << "schreier_sims::init after G->init_trivial_group" << endl;
+		}
+	if (f_v) {
+		cout << "schreier_sims::init done" << endl;
 		}
 }
 
@@ -409,7 +413,10 @@ void schreier_sims::create_group(int verbose_level)
 	if (f_v) {
 		cout << "schreier_sims::create_group" << endl;
 		}
-	
+	if (f_has_target_group_order && tgo.is_zero()) {
+		cout << "schreier_sims::create_group  target group order is 0" << endl;
+		exit(1);
+	}
 	compute_group_orders();
 	if (f_v) {
 		print_group_orders();

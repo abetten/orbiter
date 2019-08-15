@@ -23,15 +23,15 @@ static double square_root(double x);
 static void add_gsel(Vector & gsel, group_selection_type type, int val1, int val2, char *s);
 static void my_get_generators(discreta_base& a, Vector& gens);
 static int compose_well_known_group(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v);
+	ostream & g_label, ostream & g_label_tex, int verbose_level);
 static int compose_linear_group(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v);
+	ostream & g_label, ostream & g_label_tex, int verbose_level);
 static int compose_group_unary_operator(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v);
+	ostream & g_label, ostream & g_label_tex, int verbose_level);
 static int compose_group_binary_operator(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v);
+	ostream & g_label, ostream & g_label_tex, int verbose_level);
 static int compose_group_of_solid(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v);
+	ostream & g_label, ostream & g_label_tex, int verbose_level);
 
 static double square_root(double x)
 {
@@ -671,7 +671,8 @@ const char *group_selection_type_as_text(group_selection_type t)
 #define MAX_STACK_SIZE 1000
 
 void compose_group(Vector & gsel, Vector & gens, 
-	hollerith & group_label, hollerith & group_label_tex, hollerith & acting_on, int f_v)
+	hollerith & group_label, hollerith & group_label_tex, hollerith & acting_on,
+	int verbose_level)
 {
 	Vector Stack;
 	int height = 0, i, l;
@@ -683,15 +684,15 @@ void compose_group(Vector & gsel, Vector & gens,
 	Stack.m_l(MAX_STACK_SIZE);
 	for (i = 0; i < gsel.s_l(); i++) {
 		group_selection & gs = gsel[i].as_group_selection();
-		if (compose_well_known_group(gs, Stack, height, gl, glt, f_v)) {
+		if (compose_well_known_group(gs, Stack, height, gl, glt, verbose_level)) {
 			}
-		else if (compose_linear_group(gs, Stack, height, gl, glt, f_v)) {
+		else if (compose_linear_group(gs, Stack, height, gl, glt, verbose_level)) {
 			}
-		else if (compose_group_unary_operator(gs, Stack, height, gl, glt, f_v)) {
+		else if (compose_group_unary_operator(gs, Stack, height, gl, glt, verbose_level)) {
 			}
-		else if (compose_group_binary_operator(gs, Stack, height, gl, glt, f_v)) {
+		else if (compose_group_binary_operator(gs, Stack, height, gl, glt, verbose_level)) {
 			}
-		else if (compose_group_of_solid(gs, Stack, height, gl, glt, f_v)) {
+		else if (compose_group_of_solid(gs, Stack, height, gl, glt, verbose_level)) {
 			}
 		else {
 			cout << "compose_group() group_selection type not yet implemented" << endl;
@@ -758,8 +759,9 @@ static void my_get_generators(discreta_base& a, Vector& gens)
 		}
 }
 static int compose_well_known_group(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v)
+	ostream & g_label, ostream & g_label_tex, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	group_selection_type t = (group_selection_type) gs.type();
 	Vector v;
 	Vector gen;
@@ -928,8 +930,9 @@ static int compose_well_known_group(group_selection & gs, Vector & S, int & heig
 }
 
 static int compose_linear_group(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v)
+	ostream & g_label, ostream & g_label_tex, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	group_selection_type t = (group_selection_type) gs.type();
 	Vector v;
 	
@@ -941,7 +944,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" SL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, TRUE /* f_special */, FALSE /* f_frobenius */, FALSE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				TRUE /* f_special */, FALSE /* f_frobenius */, FALSE /* f_translations */, verbose_level);
 		g_label << "SL_" << n << "_" << q;
 		g_label_tex << "{\\bf SL(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -954,7 +958,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" GL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, FALSE /* f_special */, FALSE /* f_frobenius */, FALSE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				FALSE /* f_special */, FALSE /* f_frobenius */, FALSE /* f_translations */, verbose_level);
 		g_label << "GL_" << n << "_" << q;
 		g_label_tex << "{\\bf GL(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -967,7 +972,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" SSL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, TRUE /* f_special */, TRUE /* f_frobenius */, FALSE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				TRUE /* f_special */, TRUE /* f_frobenius */, FALSE /* f_translations */, verbose_level);
 		g_label << "SSL_" << n << "_" << q;
 		g_label_tex << "{\\bf \\Sigma L(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -980,7 +986,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" GGL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, FALSE /* f_special */, TRUE /* f_frobenius */, FALSE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				FALSE /* f_special */, TRUE /* f_frobenius */, FALSE /* f_translations */, verbose_level);
 		g_label << "GGL_" << n << "_" << q;
 		g_label_tex << "{\\bf \\Gamma L(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -993,7 +1000,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" PSL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_projective_representation(gen, n, q, TRUE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_modified */, f_v);
+		vec_generators_GL_n_q_projective_representation(gen, n, q,
+				TRUE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_modified */, verbose_level);
 		g_label << "PSL_" << n << "_" << q;
 		g_label_tex << "{\\bf PSL(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1006,7 +1014,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" PGL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_projective_representation(gen, n, q, FALSE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_modified */, f_v);
+		vec_generators_GL_n_q_projective_representation(gen, n, q,
+				FALSE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_modified */, verbose_level);
 		g_label << "PGL_" << n << "_" << q;
 		g_label_tex << "{\\bf PGL(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1019,7 +1028,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" PSSL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_projective_representation(gen, n, q, TRUE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_modified */, f_v);
+		vec_generators_GL_n_q_projective_representation(gen, n, q,
+				TRUE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_modified */, verbose_level);
 		g_label << "PSSL_" << n << "_" << q;
 		g_label_tex << "{\\bf P\\Sigma L(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1032,7 +1042,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" PGGL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_projective_representation(gen, n, q, FALSE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_modified */, f_v);
+		vec_generators_GL_n_q_projective_representation(gen, n, q,
+				FALSE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_modified */, verbose_level);
 		g_label << "PGGL_" << n << "_" << q;
 		g_label_tex << "{\\bf P\\Gamma L(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1045,7 +1056,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" ASL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, TRUE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				TRUE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_translations */, verbose_level);
 		g_label << "ASL_" << n << "_" << q;
 		g_label_tex << "{\\bf ASL(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1058,7 +1070,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" AGL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, FALSE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				FALSE /* f_special */, FALSE /* f_frobenius */, TRUE /* f_translations */, verbose_level);
 		g_label << "AGL_" << n << "_" << q;
 		g_label_tex << "{\\bf AGL(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1071,7 +1084,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" ASSL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, TRUE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				TRUE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_translations */, verbose_level);
 		g_label << "ASSL_" << n << "_" << q;
 		g_label_tex << "{\\bf A\\Sigma L(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1084,7 +1098,8 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" AGGL(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_GL_n_q_affine_representation(gen, n, q, FALSE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_translations */, f_v);
+		vec_generators_GL_n_q_affine_representation(gen, n, q,
+				FALSE /* f_special */, TRUE /* f_frobenius */, TRUE /* f_translations */, verbose_level);
 		g_label << "AGGL_" << n << "_" << q;
 		g_label_tex << "{\\bf A\\Gamma L(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1097,7 +1112,7 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" T(" << n << "," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_affine_translations(gen, n, q, f_v);
+		vec_generators_affine_translations(gen, n, q, verbose_level);
 		g_label << "T_" << n << "_" << q;
 		g_label_tex << "{\\bf T(" << n << "," << q << ")}";
 		S[height++] = gen;
@@ -1113,7 +1128,7 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" A5_in_PSL(2," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_A5_in_PSL(gen, q, f_v);
+		vec_generators_A5_in_PSL(gen, q, verbose_level);
 		g_label << "A5_in_PSL_2_" << q;
 		g_label_tex << "{\\langle A_5 \\le \\PSL(2," << q << ") \\rangle}";
 		S[height++] = gen;
@@ -1125,7 +1140,7 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 				" S4_in_PSL(2," << q << ")" << endl;
 			}
 		Vector gen;
-		vec_generators_S4_in_PSL(gen, q, f_v);
+		vec_generators_S4_in_PSL(gen, q, verbose_level);
 		g_label << "S4_in_PSL_2_" << q;
 		g_label_tex << "{\\langle S_4 \\le \\PSL(2," << q << ") \\rangle}";
 		S[height++] = gen;
@@ -1139,7 +1154,7 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 			}
 		Vector & gen = S[height - 1].as_vector();
 		int k = n - 1;
-		vec_generators_induce_on_lines_of_PG_k_q(gen, k, q, TRUE /* f_v */, FALSE /* f_vv */);
+		vec_generators_induce_on_lines_of_PG_k_q(gen, k, q, verbose_level);
 		g_label << "On_projective_lines_" << k << "_" << q;
 		g_label_tex << "on projective lines (" << k << "," << q << ")";
 		}
@@ -1149,8 +1164,9 @@ static int compose_linear_group(group_selection & gs, Vector & S, int & height,
 }
 
 static int compose_group_unary_operator(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v)
+	ostream & g_label, ostream & g_label_tex, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	group_selection_type t = (group_selection_type) gs.type();
 	
 	if (t == On_2_sets) {
@@ -1228,7 +1244,7 @@ static int compose_group_unary_operator(group_selection & gs, Vector & S, int & 
 			}
 		Vector & gen = S[height - 1].as_vector();
 		Vector gen1;
-		vec_generators_even_subgroup(gen, gen1, f_v);
+		vec_generators_even_subgroup(gen, gen1, verbose_level);
 		S[height - 1] = gen1;
 		g_label << "even";
 		g_label_tex << "even";
@@ -1239,8 +1255,9 @@ static int compose_group_unary_operator(group_selection & gs, Vector & S, int & 
 }
 
 static int compose_group_binary_operator(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v)
+	ostream & g_label, ostream & g_label_tex, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	group_selection_type t = (group_selection_type) gs.type();
 	
 	if (t == Comma) {
@@ -1273,7 +1290,7 @@ static int compose_group_binary_operator(group_selection & gs, Vector & S, int &
 			solid & S1 = S[height - 2].as_solid();
 			solid & S2 = S[height - 1].as_solid();
 			solid S3;
-			S1.direct_sum(S2, S3, f_v);
+			S1.direct_sum(S2, S3, verbose_level);
 			S[height - 2] = S3;
 			}
 		else {
@@ -1300,7 +1317,7 @@ static int compose_group_binary_operator(group_selection & gs, Vector & S, int &
 			Vector & v1 = S[height - 2].as_vector();
 			solid & S1 = S[height - 1].as_solid();
 			solid S3;
-			S1.direct_product(v1, S3, f_v);
+			S1.direct_product(v1, S3, verbose_level);
 			S[height - 2] = S3;
 			}
 		else {
@@ -1321,7 +1338,7 @@ static int compose_group_binary_operator(group_selection & gs, Vector & S, int &
 			Vector & gen2 = S[height - 1].as_vector();
 			Vector gen3;
 			cout << "start vec_generators_wreath_product():" << endl;
-			vec_generators_wreath_product(gen1, gen2, gen3, f_v);
+			vec_generators_wreath_product(gen1, gen2, gen3, verbose_level);
 			S[height - 2] = gen3;
 			}
 		else {
@@ -1348,8 +1365,9 @@ static int compose_group_binary_operator(group_selection & gs, Vector & S, int &
 #define SOLID_RADIUS 10000 
 
 static int compose_group_of_solid(group_selection & gs, Vector & S, int & height, 
-	ostream & g_label, ostream & g_label_tex, int f_v)
+	ostream & g_label, ostream & g_label_tex, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	group_selection_type t = (group_selection_type) gs.type();
 	solid s;
 	
