@@ -1916,8 +1916,12 @@ sims *action::create_sims_from_generators_randomized(
 		cout << "verbose_level=" << verbose_level << endl;
 		if (f_target_go) {
 			cout << "creating a group of order " << target_go << endl;
+			if (target_go.is_zero()) {
+				cout << "action::create_sims_from_generators_randomized target_go is zero" << endl;
+				exit(1);
 			}
 		}
+	}
 
 	schreier_sims *ss;
 

@@ -201,7 +201,7 @@ void strong_generators::init_by_hdl(action *A,
 
 void strong_generators::init_from_permutation_representation(
 	action *A, int *data,
-	int nb_elements, int group_order, vector_ge *&nice_gens,
+	int nb_elements, long int group_order, vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -210,6 +210,11 @@ void strong_generators::init_from_permutation_representation(
 		cout << "strong_generators::init_from_permutation_"
 				"representation" << endl;
 		}
+	if (group_order == 0) {
+		cout << "strong_generators::init_from_permutation_"
+				"representation group_order == 0" << endl;
+		exit(1);
+	}
 	init(A, verbose_level - 2);
 
 	//vector_ge *nice_gens;
@@ -220,10 +225,26 @@ void strong_generators::init_from_permutation_representation(
 	
 	sims *S;
 
+	if (f_v) {
+		cout << "strong_generators::init_from_permutation_"
+				"representation before A->create_sims_from_generators_with_target_group_order_int" << endl;
+		}
 	S = A->create_sims_from_generators_with_target_group_order_int(
-			nice_gens, group_order, 0 /* verbose_level */);
+			nice_gens, group_order, verbose_level - 3);
+	if (f_v) {
+		cout << "strong_generators::init_from_permutation_"
+				"representation after A->create_sims_from_generators_with_target_group_order_int" << endl;
+		}
 	
-	init_from_sims(S, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "strong_generators::init_from_permutation_"
+				"representation before init_from_sims" << endl;
+		}
+	init_from_sims(S, verbose_level - 3);
+	if (f_v) {
+		cout << "strong_generators::init_from_permutation_"
+				"representation after init_from_sims" << endl;
+		}
 
 	//tl = NEW_int(A->base_len);
 	//int_vec_copy(transversal_length, tl, A->base_len);

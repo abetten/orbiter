@@ -371,6 +371,8 @@ public:
 			int *&class_size,
 			int *&class_order_of_element,
 			int verbose_level);
+	void conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
+			const char *prefix, char *fname_magma, char *fname_output);
 	void conjugacy_classes_and_normalizers_using_MAGMA(
 			const char *prefix,
 			sims *G, int verbose_level);
@@ -380,7 +382,7 @@ public:
 			int *&perms,
 			int *&class_size,
 			int *&class_order_of_element,
-			int *&class_normalizer_order,
+			long int *&class_normalizer_order,
 			int *&class_normalizer_number_of_generators,
 			int **&normalizer_generators_perms,
 			int verbose_level);

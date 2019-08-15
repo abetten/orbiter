@@ -180,6 +180,25 @@ classify *orbit_transversal::get_ago_distribution(int *&ago,
 	return C;
 }
 
+void orbit_transversal::report_ago_distribution(ostream &ost)
+{
+	classify *C;
+	int *Ago;
+	int i, f, l, a;
+
+	C = get_ago_distribution(Ago, 0 /*verbose_level*/);
+
+	for (i = C->nb_types - 1; i >= 0; i--) {
+		f = C->type_first[i];
+		l = C->type_len[i];
+		a = C->data_sorted[f];
+		//ost << "$" << a;
+		ost << "There are " << l << " orbits with a stabilizer of order " << a << "\\\\" << endl;
+		}
+
+	FREE_int(Ago);
+}
+
 void orbit_transversal::print_table_latex(
 		ostream &f,
 		int f_has_callback,

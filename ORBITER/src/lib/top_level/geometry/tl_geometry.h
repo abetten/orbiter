@@ -1418,7 +1418,6 @@ int count_and_record(int *Inc, int n, int m,
 int packing_spread_compare_func(void *data, int i, int j, void *extra_data);
 void packing_swap_func(void *data, int i, int j, void *extra_data);
 
-
 // #############################################################################
 // packing_invariants.cpp
 // #############################################################################
@@ -1476,6 +1475,59 @@ public:
 };
 
 // #############################################################################
+// packing_long_orbits.cpp
+// #############################################################################
+
+//! complete a packing by clique search among the set of long orbits
+
+class packing_long_orbits {
+public:
+	packing_was *P;
+
+	int fixpoints_idx;
+	int fixpoints_clique_case_number;
+	int fixpoint_clique_size;
+	int *fixpoint_clique;
+	int long_orbit_idx;
+
+	set_of_sets *Filtered_orbits;
+	char fname_graph[1000];
+
+	colored_graph *CG;
+
+
+	packing_long_orbits();
+	~packing_long_orbits();
+	void init(packing_was *P,
+			int fixpoints_idx,
+			int fixpoints_clique_case_number,
+			int fixpoint_clique_size,
+			int *fixpoint_clique,
+			int verbose_level);
+	void filter_orbits(int verbose_level);
+	void create_graph_on_remaining_long_orbits(int verbose_level);
+	void create_fname_graph_on_remaining_long_orbits();
+	void create_graph_and_save_to_file(
+			colored_graph *&CG,
+			const char *fname,
+			int orbit_length,
+			int f_has_user_data, int *user_data, int user_data_size,
+			int verbose_level);
+	void create_graph_on_long_orbits(
+			colored_graph *&CG,
+			int *user_data, int user_data_sz,
+			int verbose_level);
+	void report_filtered_orbits(std::ostream &ost);
+
+};
+
+// globals:
+int packing_long_orbit_test_function(int *orbit1, int len1,
+		int *orbit2, int len2, void *data);
+
+
+
+// #############################################################################
 // packing_was.cpp
 // #############################################################################
 
@@ -1495,7 +1547,7 @@ public:
 	int select_spread_nb;
 	int f_spreads_invariant_under_H;
 	int f_cliques_on_fixpoint_graph;
-	int clique_size;
+	int clique_size_on_fixpoint_graph;
 	int f_process_long_orbits;
 	int process_long_orbits_r;
 	int process_long_orbits_m;
@@ -1538,6 +1590,10 @@ public:
 	matrix_group *M;
 	int dim;
 
+	strong_generators *N_gens;
+	longinteger_object N_go;
+	int N_goi;
+
 
 	char prefix_line_orbits[1000];
 	orbits_on_something *Line_orbits_under_H;
@@ -1559,6 +1615,27 @@ public:
 	spread_tables *Spread_tables_reduced;
 	orbit_type_repository *Spread_type_reduced;
 
+	action *A_on_reduced_spreads;
+	char prefix_reduced_spread_orbits[1000];
+	orbits_on_something *reduced_spread_orbits_under_H;
+	action *A_on_reduced_spread_orbits;
+
+	char fname_fixp_graph[1000];
+	char fname_fixp_graph_cliques[1000];
+	int fixpoints_idx;
+	action *A_on_fixpoints;
+
+	int clique_size;
+	colored_graph *fixpoint_graph;
+	poset *Poset_fixpoint_cliques;
+	poset_classification *fixpoint_clique_gen;
+	int *Cliques;
+	int nb_cliques;
+	char fname_fixp_graph_cliques_orbiter[1000];
+	orbit_transversal *Fixp_cliques;
+
+	packing_long_orbits *L;
+
 	packing_was();
 	~packing_was();
 	void null();
@@ -1576,8 +1653,35 @@ public:
 	void reduce_spreads(int verbose_level);
 	void compute_reduced_spread_types_wrt_H(int verbose_level);
 	// Spread_types[P->nb_spreads * (group_order + 1)]
+	void compute_H_orbits_on_reduced_spreads(int verbose_level);
+	int test_if_pair_of_orbits_are_adjacent(
+		int *orbit1, int len1, int *orbit2, int len2,
+		int verbose_level);
+		// tests if every spread from orbit1
+		// is line-disjoint from every spread from orbit2
+	void create_graph_and_save_to_file(
+		const char *fname,
+		int orbit_length,
+		int f_has_user_data, int *user_data, int user_data_size,
+		int verbose_level);
+	void create_graph_on_fixpoints(int verbose_level);
+	int find_orbits_of_length(int orbit_length);
+	void action_on_fixpoints(int verbose_level);
+	void compute_cliques_on_fixpoint_graph(
+			int clique_size, int verbose_level);
+	void handle_long_orbits(int verbose_level);
 	void report(std::ostream &ost);
 };
+
+// gloabls:
+
+int packing_was_orbit_test_function(int *orbit1, int len1,
+		int *orbit2, int len2, void *data);
+void packing_was_early_test_function_fp_cliques(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 // #############################################################################
 // polar.cpp

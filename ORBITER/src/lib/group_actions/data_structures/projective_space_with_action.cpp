@@ -1415,7 +1415,7 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 	Sch = NEW_OBJECT(schreier);
 	A->all_point_orbits_from_single_generator(*Sch,
 			Elt,
-			verbose_level);
+			0 /*verbose_level*/);
 	Sch->print_orbit_lengths_tex(ost);
 
 
@@ -1432,7 +1432,7 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 	Sch = NEW_OBJECT(schreier);
 	A2->all_point_orbits_from_single_generator(*Sch,
 			Elt,
-			verbose_level);
+			0 /*verbose_level*/);
 	Sch->print_orbit_lengths_tex(ost);
 
 
@@ -1452,7 +1452,7 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 	Sch = NEW_OBJECT(schreier);
 	A2->all_point_orbits_from_single_generator(*Sch,
 			Elt,
-			verbose_level);
+			0 /*verbose_level*/);
 	Sch->print_orbit_lengths_tex(ost);
 
 
@@ -1516,7 +1516,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	Sch2 = NEW_OBJECT(schreier);
 	A->all_point_orbits_from_single_generator(*Sch1,
 			Elt,
-			verbose_level);
+			0 /*verbose_level*/);
 	Sch1->print_orbit_lengths_tex(ost);
 
 
@@ -1525,7 +1525,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	Sch2 = NEW_OBJECT(schreier);
 	A_on_lines->all_point_orbits_from_single_generator(*Sch2,
 			Elt,
-			verbose_level);
+			0 /*verbose_level*/);
 	//Sch->print_orbit_lengths_tex(ost);
 
 	if (f_v) {
@@ -1537,7 +1537,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 		1 /* row_type */, 2 /* col_type */,
 		Inc,
 		Stack,
-		verbose_level);
+		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_with_action::report_"
 				"decomposition_by_single_automorphism "
@@ -1557,15 +1557,13 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 				"decomposition_by_single_automorphism "
 				"before Sch1->get_orbit_partition" << endl;
 		}
-	Sch1->get_orbit_partition(S1,
-			verbose_level);
+	Sch1->get_orbit_partition(S1, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_with_action::report_"
 				"decomposition_by_single_automorphism "
 				"before Sch2->get_orbit_partition" << endl;
 		}
-	Sch2->get_orbit_partition(S2,
-			verbose_level);
+	Sch2->get_orbit_partition(S2, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_with_action::report_"
 				"decomposition_by_single_automorphism "
@@ -1596,7 +1594,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 					"decomposition_by_single_automorphism "
 					"before Stack->split_cell (S2) i=" << i << endl;
 			}
-		Stack->split_cell(set, sz, verbose_level);
+		Stack->split_cell(set, sz, 0 /*verbose_level*/);
 	}
 	FREE_int(set);
 

@@ -454,6 +454,12 @@ public:
 	const char *prefix;
 	char fname[1000];
 
+	classify *Classify_orbits_by_length;
+	set_of_sets *Orbits_classified;
+
+	int *Orbits_classified_length; // [Orbits_classified_nb_types]
+	int Orbits_classified_nb_types;
+
 	orbits_on_something();
 	~orbits_on_something();
 	void null();
@@ -471,6 +477,29 @@ public:
 	// orbit_type[(go + 1) * go] must be allocated beforehand
 	void report_type(std::ostream &ost, int *orbit_type, int goi);
 	void report_orbit_lengths(std::ostream &ost);
+	void classify_orbits_by_length(int verbose_level);
+	void report_classified_orbit_lengths(std::ostream &ost);
+	int get_orbit_type_index(int orbit_length);
+	int get_orbit_type_index_if_present(int orbit_length);
+	void create_graph_on_orbits_of_a_certain_length(
+		colored_graph *&CG,
+		const char *fname,
+		int orbit_length,
+		int &type_idx,
+		int f_has_user_data, int *user_data, int user_data_size,
+		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+		void *test_function_data,
+		int verbose_level);
+	void create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
+		colored_graph *&CG,
+		const char *fname,
+		int orbit_length,
+		int &type_idx,
+		int f_has_user_data, int *user_data, int user_data_size,
+		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+		void *test_function_data,
+		set_of_sets *my_orbits_classified,
+		int verbose_level);
 
 };
 
@@ -1325,7 +1354,7 @@ public:
 		int nb_gen, int verbose_level);
 	void init_from_permutation_representation(action *A, 
 		int *data, 
-		int nb_elements, int group_order, vector_ge *&nice_gens,
+		int nb_elements, long int group_order, vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data(action *A, int *data, 
 		int nb_elements, int elt_size, 

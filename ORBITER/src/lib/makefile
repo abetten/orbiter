@@ -289,6 +289,7 @@ MODULES= \
 		top_level/geometry/packing_classify.o \
 		top_level/geometry/packing_classify2.o \
 		top_level/geometry/packing_invariants.o \
+		top_level/geometry/packing_long_orbits.o \
 		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/projective_space.o \

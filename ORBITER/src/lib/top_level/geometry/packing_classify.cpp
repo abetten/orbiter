@@ -1410,8 +1410,8 @@ void packing_classify::conjugacy_classes_and_normalizers(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char prefix[1000];
-	char fname1[1000];
-	char fname2[1000];
+	char fname_magma[1000];
+	char fname_output[1000];
 	file_io Fio;
 
 
@@ -1420,12 +1420,17 @@ void packing_classify::conjugacy_classes_and_normalizers(int verbose_level)
 		}
 
 	sprintf(prefix, "PGGL_4_%d", q);
-	sprintf(fname1, "%sconjugacy_classes_and_normalizers.magma", prefix);
-	sprintf(fname2, "%sconjugacy_classes_and_normalizers.txt", prefix);
+	T->A->conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
+			prefix, fname_magma, fname_output);
+	//sprintf(fname1, "%sconjugacy_classes.magma", prefix);
+	//sprintf(fname2, "%sconjugacy_classes.txt", prefix);
 
 
-	if (Fio.file_size(fname2) > 0) {
-		read_conjugacy_classes_and_normalizers(fname2, verbose_level);
+	if (Fio.file_size(fname_output) > 0) {
+		if (f_v) {
+			cout << "packing_classify::conjugacy_classes_and_normalizers before read_conjugacy_classes_and_normalizers" << endl;
+			}
+		read_conjugacy_classes_and_normalizers(fname_output, verbose_level);
 		}
 	else {
 		T->A->conjugacy_classes_and_normalizers_using_MAGMA(prefix,
@@ -1447,7 +1452,7 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 	int *perms;
 	int *class_size;
 	int *class_order_of_element;
-	int *class_normalizer_order;
+	long int *class_normalizer_order;
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
 	projective_space_with_action *PA;
@@ -1458,6 +1463,9 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 		cout << "packing_classify::read_conjugacy_classes_and_normalizers" << endl;
 		}
 
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers before T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+		}
 	T->A->read_conjugacy_classes_and_normalizers_from_MAGMA(
 			fname,
 			nb_classes,
@@ -1468,6 +1476,9 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 			class_normalizer_number_of_generators,
 			normalizer_generators_perms,
 			verbose_level - 1);
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers after T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+		}
 
 
 	PA = NEW_OBJECT(projective_space_with_action);
@@ -1480,10 +1491,16 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 	else {
 		f_semilinear = TRUE;
 	}
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers before PA->init" << endl;
+		}
 	PA->init(
 		F, 3 /* n */, f_semilinear,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers after PA->init" << endl;
+		}
 
 
 
@@ -1498,6 +1515,9 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 
 	replace_extension_with(fname_latex, ".tex");
 
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers writing latex file " << fname_latex << endl;
+		}
 	{
 	ofstream fp(fname_latex);
 	char title[1000];
@@ -1527,6 +1547,11 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 
 	cout << "The conjugacy classes are:" << endl;
 	for (i = 0; i < nb_classes; i++) {
+
+		if (f_v) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << endl;
+			}
+
 		strong_generators *gens;
 		longinteger_object go1, Class_size, centralizer_order;
 		int goi;
@@ -1536,15 +1561,21 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 		goi = class_order_of_element[i];
 		gens = NEW_OBJECT(strong_generators);
 
+		if (goi == 0) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << " goi == 0" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers before gens->init_from_permutation_representation" << endl;
+			}
 		gens->init_from_permutation_representation(T->A,
 			perms + i * T->A->degree,
 			1, goi, nice_gens,
 			verbose_level);
 
 		if (f_v) {
-			cout << "action::normalizer_using_MAGMA "
-				"after gens->init_from_permutation_"
-				"representation" << endl;
+			cout << "action::read_conjugacy_classes_and_normalizers "
+				"after gens->init_from_permutation_representation" << endl;
 		}
 
 		Class_size.create(class_size[i]);
@@ -1553,7 +1584,7 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 
 
 
-		int ngo;
+		long int ngo;
 		int nb_perms;
 		strong_generators *N_gens;
 		vector_ge *nice_gens_N;
@@ -1565,6 +1596,10 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 		//int *class_normalizer_number_of_generators;
 		//int **normalizer_generators_perms;
 
+		if (ngo == 0) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << " ngo == 0" << endl;
+			exit(1);
+		}
 		N_gens = NEW_OBJECT(strong_generators);
 		N_gens->init_from_permutation_representation(T->A,
 				normalizer_generators_perms[i],
@@ -1577,12 +1612,12 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 			<< " centralizer order = " << centralizer_order
 			<< " normalizer order = " << ngo
 			<< " : " << endl;
-		cout << "packing::read_conjugacy_classes_and_normalizers created "
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers created "
 				"generators for a group" << endl;
 		gens->print_generators();
 		gens->print_generators_as_permutations();
 		gens->group_order(go1);
-		cout << "packing::read_conjugacy_classes_and_normalizers "
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers "
 				"The group has order " << go1 << endl;
 
 		fp << "\\bigskip" << endl;
@@ -1654,7 +1689,7 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 	FREE_int(perms);
 	FREE_int(class_size);
 	FREE_int(class_order_of_element);
-	FREE_int(class_normalizer_order);
+	FREE_lint(class_normalizer_order);
 	FREE_int(class_normalizer_number_of_generators);
 	FREE_pint(normalizer_generators_perms);
 	FREE_OBJECT(PA);

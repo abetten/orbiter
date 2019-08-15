@@ -1066,7 +1066,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 			if (f_vv) {
 				cout << "cur = " << cur << endl;
 				cout << "total = " << total << endl;
-				print_orbit(cur, total - 1);
+				//print_orbit(cur, total - 1);
 				}
 			}
 		if (f_vv) {
@@ -2664,8 +2664,9 @@ schreier_vector *schreier::get_schreier_vector(
 
 
 
-	cout << "nb_times_image_of_called=" << A->ptr->nb_times_image_of_called << endl;
-
+	if (f_v) {
+		cout << "nb_times_image_of_called=" << A->ptr->nb_times_image_of_called << endl;
+	}
 
 	if (f_v) {
 		cout << "schreier::get_schreier_vector done" << endl;
