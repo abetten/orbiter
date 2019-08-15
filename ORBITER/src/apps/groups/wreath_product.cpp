@@ -37,6 +37,13 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 		int verbosity=0);
 void make_fname(char *fname, int nb_factors, int h, int b);
 int test_if_file_exists(int nb_factors, int h, int b);
+void orbits(wreath_product* W,
+								strong_generators* SG,
+								action* A,
+								int*& result,
+								int &nb_gens, int &degree,
+								int nb_factors,
+								int verbosity);
 
 
 typedef class tensor_product tensor_product;
@@ -985,7 +992,9 @@ void tensor_product::init(int argc, const char **argv,
 
 	int nb_gens, degree;
 
-	wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree, nb_factors);
+	//wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
+
+	orbits(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
 
 	cout << "time check: ";
 	time_check(cout, t0);
@@ -1347,7 +1356,6 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 				// Matrix Multiply
 				MN.reset_entries();
-	//			linalg::cpu_mod_mat_mul_AB (M, N[h], MN, W->q);
 
 
 
@@ -1488,6 +1496,8 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 //	FREE_int(generator_stack);
 //	FREE_int(perms);
 //	cout << "wreath_product_orbits_CUDA done" << endl;
+
+
 #else
 	nb_gens = 0;
 	degree = 0;
@@ -1512,4 +1522,149 @@ int test_if_file_exists(int nb_factors, int h, int b)
 		return FALSE;
 	}
 }
+
+void orbits(wreath_product* W,
+								strong_generators* SG,
+								action* A,
+								int*& result,
+								int &nb_gens, int &degree,
+								int nb_factors,
+								int verbosity) {
+//#ifdef __CUDACC__
+
+	int mtx_n;
+	int mtx_n2;
+
+	nb_gens = SG->gens->len;
+	degree = W->degree_of_tensor_action;
+	mtx_n = W->dimension_of_tensor_action;
+	mtx_n2 = mtx_n * mtx_n;
+
+	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
+
+	cout << "block_size=" << block_size << endl;
+
+	int nb_blocks = (W->degree_of_tensor_action + block_size - 1) / block_size;
+
+	cout << "nb_blocks=" << nb_blocks << endl;
+
+
+	cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
+
+	unsigned int* S = new unsigned int [W->degree_of_tensor_action];
+
+	for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
+
+
+	cout << "allocating T, an unsigned int array of size " << W->degree_of_tensor_action << endl;
+
+	unsigned int* T = new unsigned int [W->degree_of_tensor_action];
+
+
+
+
+
+
+	for (size_t b=0; b<nb_blocks; ++b) {
+		cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+		int l = std::min((b + 1) * block_size,
+				(unsigned long)W->degree_of_tensor_action) - b*block_size;
+		cout << "l=" << l << endl;
+
+
+
+
+		for (size_t h=0; h < l; ++h) {
+			cout << "generator h=" << h << " / " << l << endl;
+
+
+			if (!test_if_file_exists(nb_factors, h, b)) {
+				cout << "file does not exist" << endl;
+				exit(1);
+			}
+			else {
+				char fname[1000];
+
+				make_fname(fname, nb_factors, h, b);
+				cout << "reading from file " << fname << endl;
+				{
+					ifstream fp(fname, ios::binary);
+
+					int l1;
+					fp.read((char *) &l1, sizeof(int));
+					if (l1 != l) {
+						cout << "l1 != l" << endl;
+					}
+					for (int i = 0; i < l; i++) {
+						fp.read((char *) &T [b * block_size + i], sizeof(int));
+					}
+				}
+				//file_io Fio;
+
+				cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+
+
+			}
+		}
+	} // next b
+
+	cout << "performing the union-find:" << endl;
+
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+		int l1;
+
+		l1 = W->degree_of_tensor_action / 100;
+
+		if ((i % l1) == 0) {
+			cout << i/l1 << " % done with union-find" << endl;
+		}
+		int u = i;
+		unsigned int t = T[i];
+		unsigned int r1 = root(S, u);
+		unsigned int r2 = root(S, t);
+
+		if (r1 != r2) {
+			if (r1 < r2) {
+				S[r2] = r1;
+			}
+			else {
+				S[r1] = r2;
+			}
+		}
+	} // next i
+
+	int nb_orbits = 0;
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+		if (S[i] == i) ++nb_orbits;
+	}
+	cout << "nb_orbits: " << nb_orbits << endl;
+
+	long int *orbit_length;
+	long int *orbit_rep;
+
+	orbit_length = NEW_lint(nb_orbits);
+	orbit_rep = NEW_lint(nb_orbits);
+
+	for (int i = 0; i < nb_orbits; i++) {
+		orbit_length[i] = 0;
+	}
+	int j;
+	j = 0;
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+		if (S[i] == i) {
+			orbit_rep[j++] = i;
+		}
+	}
+
+	cout << "the orbit representatives are: " << endl;
+	for (int i = 0; i < nb_orbits; i++) {
+		cout << i << " : " << orbit_rep[i] << endl;
+	}
+
+
+
+}
+
 

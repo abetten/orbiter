@@ -267,7 +267,7 @@ public:
 
 
 
-//! a collection of orbit types
+//! A collection invariants called orbit type assciated with a system of sets. The orbit types are based on the orbits of a given group.
 
 
 
@@ -280,15 +280,26 @@ public:
 	int nb_sets;
 	int set_size;
 	int *Sets; // [nb_sets * set_size]
+		// A system of sets that is gicen
 	int goi;
 
 	int orbit_type_size;
+		// the size of the invariant
 	int *Type_repository; // [nb_sets * orbit_type_size]
+		// for each set, the orbit invariant
+
+		// The next items are related to the classification of the
+		// orbit invariant:
+
 	int nb_types;
+		// the number of distinct types that appear in the Type_repository
 	int *type_first; // [nb_types]
 	int *type_len; // [nb_types]
 	int *type; // [nb_sets]
+		// type[i] is the index into the Type_representatives of the
+		// invariant associated with the i-th set in Sets[]
 	int *Type_representatives; // [nb_types]
+		// The distinct types that appear in the Type_repository
 
 	orbit_type_repository();
 	~orbit_type_repository();
