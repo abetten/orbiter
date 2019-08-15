@@ -1636,6 +1636,10 @@ public:
 
 	packing_long_orbits *L;
 
+	set_of_sets *Orbit_invariant;
+	int nb_sets;
+	classify *Classify_spread_invariant_by_orbit_length;
+
 	packing_was();
 	~packing_was();
 	void null();
@@ -1670,6 +1674,10 @@ public:
 	void compute_cliques_on_fixpoint_graph(
 			int clique_size, int verbose_level);
 	void handle_long_orbits(int verbose_level);
+	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
+	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
+	void classify_orbit_invariant(int verbose_level);
+	void report_orbit_invariant(std::ostream &ost);
 	void report(std::ostream &ost);
 };
 
@@ -1681,6 +1689,8 @@ void packing_was_early_test_function_fp_cliques(int *S, int len,
 	int *candidates, int nb_candidates,
 	int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
+int packing_was_evaluate_orbit_invariant_function(
+		int a, int i, int j, void *evaluate_data, int verbose_level);
 
 
 // #############################################################################

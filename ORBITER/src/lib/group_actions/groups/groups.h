@@ -476,6 +476,8 @@ public:
 			int verbose_level);
 	// orbit_type[(go + 1) * go] must be allocated beforehand
 	void report_type(std::ostream &ost, int *orbit_type, int goi);
+	void compute_compact_type(int *orbit_type, int goi,
+			int *&compact_type, int *&row_labels, int *&col_labels, int &m, int &n);
 	void report_orbit_lengths(std::ostream &ost);
 	void classify_orbits_by_length(int verbose_level);
 	void report_classified_orbit_lengths(std::ostream &ost);
@@ -500,7 +502,10 @@ public:
 		void *test_function_data,
 		set_of_sets *my_orbits_classified,
 		int verbose_level);
-
+	void compute_orbit_invariant_after_classification(
+			set_of_sets *&Orbit_invariant,
+			int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+			void *evaluate_data, int verbose_level);
 };
 
 

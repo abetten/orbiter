@@ -576,6 +576,10 @@ public:
 		int verbose_level);
 	int number_of_eckardt_points(int verbose_level);
 	void get_eckardt_points(int *&E, int &nb_E, int verbose_level);
+	void evaluate_function_and_store(set_of_sets *&Function_values,
+			int (*evaluate_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+			void *evaluate_data,
+			int verbose_level);
 };
 
 int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);

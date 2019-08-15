@@ -123,6 +123,9 @@ packing_was::packing_was()
 	Fixp_cliques = NULL;
 
 	L = NULL;
+	Orbit_invariant = NULL;
+	nb_sets = 0;
+	Classify_spread_invariant_by_orbit_length = NULL;
 }
 
 packing_was::~packing_was()
@@ -143,6 +146,9 @@ void packing_was::freeself()
 	}
 	if (F) {
 		FREE_OBJECT(F);
+	}
+	if (Orbit_invariant) {
+		FREE_OBJECT(Orbit_invariant);
 	}
 	null();
 }
@@ -725,6 +731,28 @@ void packing_was::init_spreads(int verbose_level)
 		cout << "packing_was::init_spreads "
 				"after compute_H_orbits_on_reduced_spreads" << endl;
 	}
+
+
+	if (f_v) {
+		cout << "packing_was::init_spreads "
+				"before compute_orbit_invariant_on_classified_orbits" << endl;
+	}
+	compute_orbit_invariant_on_classified_orbits(verbose_level);
+	if (f_v) {
+		cout << "packing_was::init_spreads "
+				"after compute_orbit_invariant_on_classified_orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::init_spreads "
+				"before classify_orbit_invariant" << endl;
+	}
+	classify_orbit_invariant(verbose_level);
+	if (f_v) {
+		cout << "packing_was::init_spreads "
+				"after classify_orbit_invariant" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "packing_was::init_spreads "
@@ -1430,6 +1458,124 @@ void packing_was::handle_long_orbits(int verbose_level)
 		}
 }
 
+void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::compute_orbit_invariant_on_classified_orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::compute_orbit_invariant_on_classified_orbits before reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification" << endl;
+	}
+	reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification(
+			Orbit_invariant,
+			packing_was_evaluate_orbit_invariant_function,
+			this /* evaluate_data */,
+			verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_orbit_invariant_on_classified_orbits after reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::compute_orbit_invariant_on_classified_orbits done" << endl;
+	}
+}
+
+int packing_was::evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << endl;
+	}
+	int val = 0;
+	int f, l, h, spread_idx, type_value;
+
+	// we are computing the orbit invariant of orbit a in
+	// orbits_on_something *reduced_spread_orbits_under_H;
+	// based on
+	// orbit_type_repository *Spread_type_reduced;
+
+	f = reduced_spread_orbits_under_H->Sch->orbit_first[a];
+	l = reduced_spread_orbits_under_H->Sch->orbit_len[a];
+	for (h = 0; h < l; h++) {
+		spread_idx = reduced_spread_orbits_under_H->Sch->orbit[f + h];
+		type_value = Spread_type_reduced->type[spread_idx];
+		if (h == 0) {
+			val = type_value;
+		}
+		else {
+			if (type_value != val) {
+				cout << "packing_was::evaluate_orbit_invariant_function the invariant is not invariant on the orbit" << endl;
+				exit(1);
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "packing_was::evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << " val=" << val << endl;
+	}
+	if (f_v) {
+		cout << "packing_was::evaluate_orbit_invariant_function done" << endl;
+	}
+	return val;
+}
+
+void packing_was::classify_orbit_invariant(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::classify_orbit_invariant" << endl;
+	}
+	int i;
+
+	if (f_v) {
+		cout << "packing_was::classify_orbit_invariant before Classify_spread_invariant_by_orbit_length[i].init" << endl;
+	}
+	nb_sets = Orbit_invariant->nb_sets;
+	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(classify, nb_sets);
+	for (i = 0; i < nb_sets; i++) {
+		Classify_spread_invariant_by_orbit_length[i].init(
+				Orbit_invariant->Sets[i], Orbit_invariant->Set_size[i], FALSE, 0);
+	}
+	if (f_v) {
+		cout << "packing_was::classify_orbit_invariant after Classify_spread_invariant_by_orbit_length[i].init" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::classify_orbit_invariant done" << endl;
+	}
+}
+
+void packing_was::report_orbit_invariant(ostream &ost)
+{
+	int i, h, f, l, a;
+
+	ost << "Spread types by orbits of given length:\\\\" << endl;
+	for (i = 0; i < Orbit_invariant->nb_sets; i++) {
+		ost << "Orbits of length " <<
+				reduced_spread_orbits_under_H->Orbits_classified_length[i]
+				<< " have the following spread type:\\\\" << endl;
+		//Classify_spread_invariant_by_orbit_length[i].print(FALSE);
+		for (h = 0; h < Classify_spread_invariant_by_orbit_length[i].nb_types; h++) {
+			f = Classify_spread_invariant_by_orbit_length[i].type_first[h];
+			l = Classify_spread_invariant_by_orbit_length[i].type_len[h];
+			a = Classify_spread_invariant_by_orbit_length[i].data_sorted[f];
+			ost << "Spread type " << a << " = \\\\";
+			ost << "$$" << endl;
+			Spread_type_reduced->Oos->report_type(ost,
+					Spread_type_reduced->Type_representatives +
+					a * Spread_type_reduced->orbit_type_size,
+					Spread_type_reduced->goi);
+			ost << "$$" << endl;
+			ost << "appears " << l << " times.\\\\" << endl;
+			}
+	}
+
+}
 
 void packing_was::report(ostream &ost)
 {
@@ -1461,6 +1607,10 @@ void packing_was::report(ostream &ost)
 
 	ost << "\\section{Reduced Spread Orbits}" << endl;
 	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
+	ost << endl;
+
+	ost << "\\section{Reduced Spread Orbits: Spread invariant}" << endl;
+	report_orbit_invariant(ost);
 	ost << endl;
 
 	if (f_N) {
@@ -1527,6 +1677,29 @@ void packing_was_early_test_function_fp_cliques(int *S, int len,
 	if (f_v) {
 		cout << "packing_was_early_test_function_fp_cliques done" << endl;
 	}
+}
+
+
+
+int packing_was_evaluate_orbit_invariant_function(int a, int i, int j, void *evaluate_data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	packing_was *P = (packing_was *) evaluate_data;
+
+	if (f_v) {
+		cout << "packing_was_evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << endl;
+	}
+	int val;
+
+	val = P->evaluate_orbit_invariant_function(a, i, j, verbose_level);
+
+	if (f_v) {
+		cout << "packing_was_evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << " val=" << val << endl;
+	}
+	if (f_v) {
+		cout << "packing_was_evaluate_orbit_invariant_function done" << endl;
+	}
+	return val;
 }
 
 

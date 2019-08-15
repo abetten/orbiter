@@ -235,13 +235,110 @@ void orbits_on_something::orbit_type_of_set(
 
 void orbits_on_something::report_type(ostream &ost, int *orbit_type, int goi)
 {
+#if 0
 	ost << "\\left[" << endl;
 	print_integer_matrix_tex(ost,
 			orbit_type,
 			goi + 1, goi);
 	ost << "\\right]" << endl;
+#else
+
+
+	ost << "\\left[" << endl;
+	print_integer_matrix_tex(ost,
+			orbit_type,
+			goi + 1, goi);
+	ost << "\\right]" << endl;
+
+	ost << " = ";
+
+	int *compact_type;
+	int *row_labels;
+	int *col_labels;
+	int m, n;
+
+	compute_compact_type(orbit_type, goi,
+			compact_type, row_labels, col_labels, m, n);
+
+	print_integer_matrix_with_labels(ost,
+			compact_type, m, n, row_labels, col_labels,
+		TRUE /* f_tex */);
+
+	FREE_int(compact_type);
+	FREE_int(row_labels);
+	FREE_int(col_labels);
+#endif
 }
 
+void orbits_on_something::compute_compact_type(int *orbit_type, int goi,
+		int *&compact_type, int *&row_labels, int *&col_labels, int &m, int &n)
+{
+	int *f_row_used;
+	int *f_col_used;
+	int *row_idx;
+	int *col_idx;
+	int i, j, m1, n1, a, u, v;
+
+	f_row_used = NEW_int(goi);
+	f_col_used = NEW_int(goi);
+	row_idx = NEW_int(goi);
+	col_idx = NEW_int(goi);
+	int_vec_zero(f_row_used, goi);
+	int_vec_zero(f_col_used, goi);
+	int_vec_zero(row_idx, goi);
+	int_vec_zero(col_idx, goi);
+	for (i = 1; i <= goi; i++) {
+		for (j = 1; j <= goi; j++) {
+			if (orbit_type[i * goi + j - 1]) {
+				f_row_used[i - 1] = TRUE;
+				f_col_used[j - 1] = TRUE;
+			}
+		}
+	}
+	m = 0;
+	for (i = 1; i <= goi; i++) {
+		if (f_row_used[i - 1]) {
+			m++;
+		}
+	}
+	n = 0;
+	for (j = 1; j <= goi; j++) {
+		if (f_col_used[j - 1]) {
+			n++;
+		}
+	}
+	compact_type = NEW_int(m * n);
+	int_vec_zero(compact_type, m * n);
+	row_labels = NEW_int(m);
+	col_labels = NEW_int(n);
+	m1 = 0;
+	for (i = 1; i <= goi; i++) {
+		if (f_row_used[i - 1]) {
+			row_labels[m1] = i;
+			row_idx[i - 1] = m1;
+			m1++;
+		}
+	}
+	n1 = 0;
+	for (j = 1; j <= goi; j++) {
+		if (f_col_used[j - 1]) {
+			col_labels[n1] = j;
+			col_idx[j - 1] = n1;
+			n1++;
+		}
+	}
+	for (i = 1; i <= goi; i++) {
+		for (j = 1; j <= goi; j++) {
+			a = orbit_type[i * goi + j - 1];
+			if (a) {
+				u = row_idx[i - 1];
+				v = col_idx[j - 1];
+				compact_type[u * n + v] = a;
+			}
+		}
+	}
+
+}
 
 void orbits_on_something::report_orbit_lengths(ostream &ost)
 {
@@ -659,6 +756,35 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified done" << endl;
 	}
+}
+
+void orbits_on_something::compute_orbit_invariant_after_classification(
+		set_of_sets *&Orbit_invariant,
+		int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+		void *evaluate_data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::compute_orbit_invariant_after_classification" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::compute_orbit_invariant_after_classification before evaluate_function_and_store" << endl;
+	}
+	Orbits_classified->evaluate_function_and_store(Orbit_invariant,
+			evaluate_orbit_invariant_function,
+			evaluate_data,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "orbits_on_something::compute_orbit_invariant_after_classification after evaluate_function_and_store" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_on_something::compute_orbit_invariant_after_classification done" << endl;
+	}
+
 }
 
 
