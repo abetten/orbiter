@@ -1321,7 +1321,7 @@ void compute_permutations(wreath_product* W,
 	cout << "nb_blocks=" << nb_blocks << endl;
 
 
-	cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
+	//cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
 
 	//unsigned int* S = new unsigned int [W->degree_of_tensor_action];
 
@@ -1563,23 +1563,23 @@ void orbits(wreath_product* W,
 
 
 
-	for (size_t b=0; b<nb_blocks; ++b) {
-		cout << "block b=" << b << " / " << nb_blocks << endl;
+	for (size_t h=0; h < SG->gens->len; ++h) {
+		cout << "generator h=" << h << " / " << SG->gens->len << endl;
+
+		for (size_t b=0; b<nb_blocks; ++b) {
+			cout << "block b=" << b << " / " << nb_blocks << endl;
 
 
-		int l = std::min((b + 1) * block_size,
-				(unsigned long)W->degree_of_tensor_action) - b*block_size;
-		cout << "l=" << l << endl;
+			int l = std::min((b + 1) * block_size,
+					(unsigned long)W->degree_of_tensor_action) - b*block_size;
+			cout << "l=" << l << endl;
 
 
 
-
-		for (size_t h=0; h < SG->gens->len; ++h) {
-			cout << "generator h=" << h << " / " << SG->gens->len << endl;
 
 
 			if (!test_if_file_exists(nb_factors, h, b)) {
-				cout << "file does not exist" << endl;
+				cout << "file does not exist h=" << h << " b=" << b << endl;
 				exit(1);
 			}
 			else {
@@ -1604,34 +1604,36 @@ void orbits(wreath_product* W,
 				cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
 
 
+			} // else
+		} // next b
+
+		cout << "performing the union-find for generator " << h << " / " << SG->gens->len << ":" << endl;
+
+		for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+			int l1;
+
+			l1 = W->degree_of_tensor_action / 100;
+
+			if ((i % l1) == 0) {
+				cout << i/l1 << " % done with union-find" << endl;
 			}
-		}
-	} // next b
+			int u = i;
+			unsigned int t = T[i];
+			unsigned int r1 = root(S, u);
+			unsigned int r2 = root(S, t);
 
-	cout << "performing the union-find:" << endl;
-
-	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
-		int l1;
-
-		l1 = W->degree_of_tensor_action / 100;
-
-		if ((i % l1) == 0) {
-			cout << i/l1 << " % done with union-find" << endl;
-		}
-		int u = i;
-		unsigned int t = T[i];
-		unsigned int r1 = root(S, u);
-		unsigned int r2 = root(S, t);
-
-		if (r1 != r2) {
-			if (r1 < r2) {
-				S[r2] = r1;
+			if (r1 != r2) {
+				if (r1 < r2) {
+					S[r2] = r1;
+				}
+				else {
+					S[r1] = r2;
+				}
 			}
-			else {
-				S[r1] = r2;
-			}
-		}
-	} // next i
+		} // next i
+
+	} // next h
+
 
 	int nb_orbits = 0;
 	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
