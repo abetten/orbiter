@@ -28,7 +28,7 @@ int main(int argc, const char **argv);
 int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
 void wreath_product_print_set(ostream &ost, int len, int *S, void *data);
-void wreath_product_orbits_CUDA(wreath_product* W,
+void compute_permutations(wreath_product* W,
 		strong_generators* SG,
 		action* A,
 		int*& result,
@@ -76,6 +76,7 @@ public:
 	~tensor_product();
 	void init(int argc, const char **argv,
 			int nb_factors, int n, int q, int depth,
+			int f_permutations, int f_orbits,
 			int verbose_level);
 };
 
@@ -715,6 +716,9 @@ int main(int argc, const char **argv)
 	int q = 0;
 	int f_depth = FALSE;
 	int depth = 0;
+	int f_permutations = FALSE;
+	int f_orbits = FALSE;
+
 
 	t0 = os_ticks();
 
@@ -754,6 +758,14 @@ int main(int argc, const char **argv)
 			depth = atoi(argv[++i]);
 			cout << "-depth " << depth << endl;
 			}
+		else if (strcmp(argv[i], "-permutations") == 0) {
+			f_permutations = TRUE;
+			cout << "-permutations " << endl;
+			}
+		else if (strcmp(argv[i], "-orbits") == 0) {
+			f_orbits = TRUE;
+			cout << "-orbits " << endl;
+			}
 		}
 	if (!f_nb_factors) {
 		cout << "please use -nb_factors <nb_factors>" << endl;
@@ -784,7 +796,9 @@ int main(int argc, const char **argv)
 
 	T = NEW_OBJECT(tensor_product);
 
-	T->init(argc, argv, nb_factors, d, q, depth, verbose_level);
+	T->init(argc, argv, nb_factors, d, q, depth,
+			f_permutations, f_orbits,
+			verbose_level);
 
 	the_end_quietly(t0);
 
@@ -816,6 +830,7 @@ tensor_product::~tensor_product()
 
 void tensor_product::init(int argc, const char **argv,
 		int nb_factors, int n, int q, int depth,
+		int f_permutations, int f_orbits,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -992,9 +1007,14 @@ void tensor_product::init(int argc, const char **argv,
 
 	int nb_gens, degree;
 
+	if (f_permutations) {
+		compute_permutations(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
+	}
 	//wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
 
-	orbits(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
+	if (f_orbits) {
+		orbits(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
+	}
 
 	cout << "time check: ";
 	time_check(cout, t0);
@@ -1199,7 +1219,7 @@ uint32_t root (uint32_t* S, uint32_t i) {
 }
 
 
-void wreath_product_orbits_CUDA(wreath_product* W,
+void compute_permutations(wreath_product* W,
 								strong_generators* SG,
 								action* A,
 								int*& result,
@@ -1303,9 +1323,9 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 
 	cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
 
-	unsigned int* S = new unsigned int [W->degree_of_tensor_action];
+	//unsigned int* S = new unsigned int [W->degree_of_tensor_action];
 
-	for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
+	//for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
 
 
 	cout << "allocating T, an unsigned int array of size " << block_size << endl;
@@ -1386,7 +1406,7 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 					}
 					long int res;
 					W->F->PG_element_rank_modified_lint (v.matrix_, 1, mtx_n, res);
-					T [b * block_size + i] = (unsigned int) res;
+					T [i] = (unsigned int) res;
 				}
 				cout << "ranking the elements of the PG done" << endl;
 
@@ -1395,13 +1415,12 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 				char fname[1000];
 
 				make_fname(fname, nb_factors, h, b);
-				//sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b);
 				{
 					ofstream fp(fname, ios::binary);
 
 					fp.write((char *) &l, sizeof(int));
 					for (int i = 0; i < l; i++) {
-						fp.write((char *) &T [b * block_size + i], sizeof(int));
+						fp.write((char *) &T [i], sizeof(int));
 					}
 				}
 				//file_io Fio;
@@ -1409,27 +1428,6 @@ void wreath_product_orbits_CUDA(wreath_product* W,
 				cout << "written file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
 
 
-#if 0
-				cout << "performing the union-find:" << endl;
-				for (unsigned int i=0; i < l; ++i) {
-					if ((i % l1) == 0) {
-						cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done with union-find" << endl;
-					}
-					int u = b * block_size + i;
-					unsigned int t = T[i];
-					unsigned int r1 = root(S, u);
-					unsigned int r2 = root(S, t);
-
-					if (r1 != r2) {
-						if (r1 < r2) {
-							S[r2] = r1;
-						}
-						else {
-							S[r1] = r2;
-						}
-					}
-				} // next i
-#endif
 			}
 			else {
 				cout << "the case h=" << h << ", b=" << b << " has already been done" << endl;
