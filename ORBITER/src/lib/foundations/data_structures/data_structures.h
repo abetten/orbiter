@@ -29,7 +29,7 @@ public:
 	void unrank_PG_elements_in_columns_consecutively(
 			finite_field *F, long int start_value, int verbose_level);
 	void rank_PG_elements_in_columns(
-			finite_field *F, int *perms, int *PG_ranks, int verbose_level);
+			finite_field *F, int *perms, unsigned int *PG_ranks, int verbose_level);
 	void zero_out();
 	int s_ij(int i, int j);
 	void m_iji(int i, int j, int a);

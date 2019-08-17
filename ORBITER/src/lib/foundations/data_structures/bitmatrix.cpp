@@ -90,7 +90,7 @@ void bitmatrix::unrank_PG_elements_in_columns_consecutively(
 }
 
 void bitmatrix::rank_PG_elements_in_columns(
-		finite_field *F, int *perms, int *PG_ranks, int verbose_level)
+		finite_field *F, int *perms, unsigned int *PG_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *v;
@@ -123,7 +123,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 				v[a] = 0;
 			}
 		F->PG_element_rank_modified_lint(v, 1, m, b);
-		PG_ranks[j] = (int) b;
+		PG_ranks[j] = (unsigned int) b;
 		}
 	}
 	if (f_v) {
