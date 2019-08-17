@@ -122,9 +122,9 @@ void bitmatrix::rank_PG_elements_in_columns(
 			else {
 				v[a] = 0;
 			}
+		}
 		F->PG_element_rank_modified_lint(v, 1, m, b);
 		PG_ranks[j] = (unsigned int) b;
-		}
 	}
 	if (f_v) {
 		cout << "bitmatrix::rank_PG_elements_in_columns done" << endl;
