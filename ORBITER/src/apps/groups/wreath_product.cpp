@@ -34,7 +34,7 @@ void compute_permutations(wreath_product* W,
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
-		int verbosity=0);
+		int verbose_level=0);
 void make_fname(char *fname, int nb_factors, int h, int b);
 int test_if_file_exists(int nb_factors, int h, int b);
 void orbits(wreath_product* W,
@@ -43,7 +43,7 @@ void orbits(wreath_product* W,
 								int*& result,
 								int &nb_gens, int &degree,
 								int nb_factors,
-								int verbosity);
+								int verbose_level);
 
 
 typedef class tensor_product tensor_product;
@@ -1225,7 +1225,7 @@ void compute_permutations(wreath_product* W,
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
-		int verbosity)
+		int verbose_level)
 {
 #ifdef __CUDACC__
 
