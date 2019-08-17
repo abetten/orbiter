@@ -1249,7 +1249,7 @@ void compute_permutations(wreath_product* W,
 		A->element_print_quick(SG->gens->ith(h), cout);
 		W->create_matrix(SG->gens->ith(h), generator_stack + h * mtx_n2,
 				0 /* verbose_level */);
-		generators_transposed[i] = NEW_int(mtx_n2);
+		generators_transposed[h] = NEW_int(mtx_n2);
 
 		W->F->transpose_matrix(
 				generator_stack + h * mtx_n2,
@@ -1436,7 +1436,7 @@ void compute_permutations(wreath_product* W,
 
 
 				cout << "ranking the elements of the PG" << endl;
-				NM->rank_PG_elements_in_columns_consecutively(
+				NM->rank_PG_elements_in_columns(
 						W->F, perms + h * mtx_n, T,
 						0 /* verbose_level */);
 
