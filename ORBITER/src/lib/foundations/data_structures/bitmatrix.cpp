@@ -119,6 +119,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 		}
 		for (i = 0; i < m; i++) {
 			int a = perms[i];
+			cout << "i=" << i << " s_ij(i, j)=" << s_ij(i, j) << endl;
 			if (s_ij(i, j)) {
 				v[a] = 1;
 			}
