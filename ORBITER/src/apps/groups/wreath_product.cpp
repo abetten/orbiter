@@ -1220,15 +1220,17 @@ uint32_t root (uint32_t* S, uint32_t i) {
 
 
 void compute_permutations(wreath_product* W,
-								strong_generators* SG,
-								action* A,
-								int*& result,
-								int &nb_gens, int &degree,
-								int nb_factors,
-								int verbosity) {
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		int verbosity)
+{
 #ifdef __CUDACC__
 
 	int *generator_stack;
+	int **generators_transposed;
 	int *perms;
 	int mtx_n;
 	int mtx_n2;
@@ -1239,23 +1241,35 @@ void compute_permutations(wreath_product* W,
 	mtx_n2 = mtx_n * mtx_n;
 
 	generator_stack = NEW_int(SG->gens->len * mtx_n2);
+	generators_transposed = NEW_pint(SG->gens->len);
 	perms = NEW_int(SG->gens->len * mtx_n);
-	for (size_t i = 0; i < SG->gens->len; i++) {
-		cout << "generator " << i << " / "
+	for (size_t h = 0; h < SG->gens->len; h++) {
+		cout << "generator " << h << " / "
 				<< SG->gens->len << " is: " << endl;
-		A->element_print_quick(SG->gens->ith(i), cout);
-		W->create_matrix(SG->gens->ith(i), generator_stack + i * mtx_n2,
-		0 /* verbose_level */);
-		W->compute_induced_permutation(SG->gens->ith(i), perms + i * mtx_n);
+		A->element_print_quick(SG->gens->ith(h), cout);
+		W->create_matrix(SG->gens->ith(h), generator_stack + h * mtx_n2,
+				0 /* verbose_level */);
+		generators_transposed[i] = NEW_int(mtx_n2);
+
+		W->F->transpose_matrix(
+				generator_stack + h * mtx_n2,
+				generators_transposed[h], mtx_n, mtx_n);
+
+		W->compute_induced_permutation(SG->gens->ith(h), perms + h * mtx_n);
 	}
 
 	cout << "generator_stack:" << endl;
 	int_matrix_print(generator_stack, SG->gens->len * mtx_n, mtx_n);
+	cout << "generators transposed:" << endl;
+	for (size_t h = 0; h < SG->gens->len; h++) {
+		int_matrix_print(generators_transposed[h], mtx_n, mtx_n);
+	}
 	cout << "perms:" << endl;
 	int_matrix_print(perms, SG->gens->len, mtx_n);
 	cout << "mtx_n=" << mtx_n << endl;
 	cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
 
+#if 0
 	linalg::Matrix<int> v (mtx_n, 1);
 
 
@@ -1285,7 +1299,7 @@ void compute_permutations(wreath_product* W,
 
 		printf("=========================================================\n");
 	}
-
+#endif
 
 
 	// result is the ranks of the images.
@@ -1346,8 +1360,20 @@ void compute_permutations(wreath_product* W,
 				(unsigned long)W->degree_of_tensor_action) - b*block_size;
 		cout << "l=" << l << endl;
 
-		linalg::Matrix<char> M  (l, mtx_n);
+		//linalg::Matrix<char> M  (l, mtx_n);
 
+		bitmatrix *M;
+
+		M = NEW_OBJECT(bitmatrix);
+		M->init(mtx_n, l, 0 /*verbose_level*/);
+
+		cout << "unranking the elements of the PG to the bitmnatrix" << endl;
+		M->unrank_PG_elements_in_columns_consecutively(
+				W->F, (long int) b * (long int) block_size,
+				0 /* verbose_level */);
+
+
+#if 0
 		cout << "unranking the elements of the PG" << endl;
 
 		int l1 = l / 100;
@@ -1360,22 +1386,28 @@ void compute_permutations(wreath_product* W,
 			for (size_t j=0; j<mtx_n; ++j)
 				M(i,j) = v(j, 0);
 		}
+#endif
+
 		cout << "unranking the elements of the PG done" << endl;
 
-		linalg::Matrix<char> MN (l, mtx_n);
+		//linalg::Matrix<char> MN (l, mtx_n);
+
+		bitmatrix *NM;
+
+		NM = NEW_OBJECT(bitmatrix);
+		NM->init(mtx_n, l, 0 /*verbose_level*/);
 
 
-
-
-		for (size_t h=0; h < N.size(); ++h) {
-			cout << "generator h=" << h << " / " << N.size() << endl;
+		for (size_t h=0; h < SG->gens->len; ++h) {
+			cout << "generator h=" << h << " / " << SG->gens->len << endl;
 
 
 			if (!test_if_file_exists(nb_factors, h, b)) {
 
 
 				// Matrix Multiply
-				MN.reset_entries();
+				//MN.reset_entries();
+				NM->zero_out();
 
 
 
@@ -1388,13 +1420,27 @@ void compute_permutations(wreath_product* W,
 
 
 				cout << "CPU multiplication" << endl;
-				linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
+				int t0, t1, dt;
+				t0 = os_ticks();
+				//linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
+				M->mult_int_matrix_from_the_left(
+						generators_transposed[h], mtx_n, mtx_n,
+						NM, verbose_level);
 				cout << "CPU multiplication done" << endl;
-
+				t1 = os_ticks();
+				dt = t1 - t0;
+				cout << "the multiplication took ";
+				time_check_delta(cout, dt);
+				cout << endl;
 
 
 
 				cout << "ranking the elements of the PG" << endl;
+				NM->rank_PG_elements_in_columns_consecutively(
+						W->F, perms + h * mtx_n, T,
+						0 /* verbose_level */);
+
+#if 0
 				for (size_t i=0; i<l; ++i) {
 					if ((i % l1) == 0) {
 						cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done ranking" << endl;
@@ -1408,6 +1454,7 @@ void compute_permutations(wreath_product* W,
 					W->F->PG_element_rank_modified_lint (v.matrix_, 1, mtx_n, res);
 					T [i] = (unsigned int) res;
 				}
+#endif
 				cout << "ranking the elements of the PG done" << endl;
 
 
@@ -1434,6 +1481,9 @@ void compute_permutations(wreath_product* W,
 			}
 
 		} // next h
+
+		FREE_OBJECT(M);
+		FREE_OBJECT(NM);
 
 
 	} // next b
@@ -1522,12 +1572,13 @@ int test_if_file_exists(int nb_factors, int h, int b)
 }
 
 void orbits(wreath_product* W,
-								strong_generators* SG,
-								action* A,
-								int*& result,
-								int &nb_gens, int &degree,
-								int nb_factors,
-								int verbosity) {
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		int verbosity)
+{
 //#ifdef __CUDACC__
 
 	int mtx_n;
@@ -1536,7 +1587,7 @@ void orbits(wreath_product* W,
 	nb_gens = SG->gens->len;
 	degree = W->degree_of_tensor_action;
 	mtx_n = W->dimension_of_tensor_action;
-	mtx_n2 = mtx_n * mtx_n;
+	//mtx_n2 = mtx_n * mtx_n;
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
