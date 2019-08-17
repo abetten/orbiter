@@ -1440,7 +1440,6 @@ void compute_permutations(wreath_product* W,
 
 
 				cout << "ranking the elements of the PG" << endl;
-				cout << "i=" << 0 << " j=" << 0 << " NM->s_ij(0, 0)=" << NM->s_ij(0, 0) << endl;
 				NM->rank_PG_elements_in_columns(
 						W->F, perms + h * mtx_n, T,
 						verbose_level);
