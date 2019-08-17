@@ -200,14 +200,20 @@ void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
 	}
 	if (An != n) {
 		cout << "bitmatrix::mult_int_matrix_from_the_left An != n" << endl;
+		cout << "An=" << An << endl;
+		cout << "n=" << n << endl;
 		exit(1);
 	}
 	if (Out->m != Am) {
 		cout << "bitmatrix::mult_int_matrix_from_the_left Out->m != Am" << endl;
+		cout << "Am=" << Am << endl;
+		cout << "Out->m=" << Out->m << endl;
 		exit(1);
 	}
 	if (Out->n != n) {
 		cout << "bitmatrix::mult_int_matrix_from_the_left Out->n != n" << endl;
+		cout << "n=" << n << endl;
+		cout << "Out->n=" << Out->n << endl;
 		exit(1);
 	}
 	Out->zero_out();
