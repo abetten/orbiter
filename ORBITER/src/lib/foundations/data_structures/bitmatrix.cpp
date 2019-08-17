@@ -93,6 +93,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 		finite_field *F, int *perms, unsigned int *PG_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;
 	int *v;
 	int i;
 	int j;
@@ -106,10 +107,11 @@ void bitmatrix::rank_PG_elements_in_columns(
 		cout << "bitmatrix::rank_PG_elements_in_columns F->q != 2" << endl;
 		exit(1);
 	}
-	cout << "perm=";
-	int_vec_print(cout, perms, m);
-	cout << endl;
-	zero_out();
+	if (f_vv) {
+		cout << "perm=";
+		int_vec_print(cout, perms, m);
+		cout << endl;
+	}
 	v = NEW_int(m);
 	n100 = n / 100 + 1;
 	for (j = 0; j < n; j++) {
@@ -119,7 +121,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 		}
 		for (i = 0; i < m; i++) {
 			int a = perms[i];
-			cout << "i=" << i << " j=" << j << " s_ij(i, j)=" << s_ij(i, j) << endl;
+			//cout << "i=" << i << " j=" << j << " s_ij(i, j)=" << s_ij(i, j) << endl;
 			if (s_ij(i, j)) {
 				v[a] = 1;
 			}
@@ -127,9 +129,9 @@ void bitmatrix::rank_PG_elements_in_columns(
 				v[a] = 0;
 			}
 		}
-		cout << "j=" << j << " v=";
-		int_vec_print(cout, v, m);
-		cout << endl;
+		//cout << "j=" << j << " v=";
+		//int_vec_print(cout, v, m);
+		//cout << endl;
 		F->PG_element_rank_modified_lint(v, 1, m, b);
 		PG_ranks[j] = (unsigned int) b;
 	}
