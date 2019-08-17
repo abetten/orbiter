@@ -1435,8 +1435,8 @@ void compute_permutations(wreath_product* W,
 				time_check_delta(cout, dt);
 				cout << endl;
 
-				cout << "NM:" << endl;
-				NM->print();
+				//cout << "NM:" << endl;
+				//NM->print();
 
 
 				cout << "ranking the elements of the PG" << endl;
