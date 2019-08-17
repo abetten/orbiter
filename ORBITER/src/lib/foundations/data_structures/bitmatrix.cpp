@@ -218,12 +218,21 @@ void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
 	}
 	Out->zero_out();
 	for (i = 0; i < Am; i++) {
+		if (f_v) {
+			cout << "bitmatrix::mult_int_matrix_from_the_left row " << i << " : ";
+		}
 		for (j = 0; j < An; j++) {
+			if (f_v) {
+				cout << j << ", ";
+			}
 			if (A[i * An + j]) {
 				for (h = 0; h < N; h++) {
 					Out->data[i * N + h] ^= data[j * N + h];
 				}
 			}
+		}
+		if (f_v) {
+			cout << endl;
 		}
 	}
 
