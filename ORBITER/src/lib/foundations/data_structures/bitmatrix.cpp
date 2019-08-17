@@ -106,6 +106,9 @@ void bitmatrix::rank_PG_elements_in_columns(
 		cout << "bitmatrix::rank_PG_elements_in_columns F->q != 2" << endl;
 		exit(1);
 	}
+	cout << "perm=";
+	int_vec_print(cout, perms, m);
+	cout << endl;
 	zero_out();
 	v = NEW_int(m);
 	n100 = n / 100 + 1;
@@ -123,9 +126,13 @@ void bitmatrix::rank_PG_elements_in_columns(
 				v[a] = 0;
 			}
 		}
+		cout << "j=" << j << " v=";
+		int_vec_print(cout, v, m);
+		cout << endl;
 		F->PG_element_rank_modified_lint(v, 1, m, b);
 		PG_ranks[j] = (unsigned int) b;
 	}
+	FREE_int(v);
 	if (f_v) {
 		cout << "bitmatrix::rank_PG_elements_in_columns done" << endl;
 	}
@@ -210,6 +217,7 @@ void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
 		bitmatrix *Out, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;
 	int i, j, h;
 
 	if (f_v) {
@@ -235,12 +243,12 @@ void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
 	}
 	Out->zero_out();
 	for (i = 0; i < Am; i++) {
-		if (f_v) {
+		if (f_vv) {
 			cout << "bitmatrix::mult_int_matrix_from_the_left row " << i << " : ";
 		}
 		for (j = 0; j < An; j++) {
 			if (A[i * An + j]) {
-				if (f_v) {
+				if (f_vv) {
 					cout << j << ", ";
 				}
 				for (h = 0; h < N; h++) {
@@ -248,7 +256,7 @@ void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
 				}
 			}
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << endl;
 		}
 	}
