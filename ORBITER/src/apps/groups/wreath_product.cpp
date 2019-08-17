@@ -1390,6 +1390,8 @@ void compute_permutations(wreath_product* W,
 
 		cout << "unranking the elements of the PG done" << endl;
 
+		M->print();
+
 		//linalg::Matrix<char> MN (l, mtx_n);
 
 		bitmatrix *NM;
@@ -1433,6 +1435,8 @@ void compute_permutations(wreath_product* W,
 				time_check_delta(cout, dt);
 				cout << endl;
 
+				cout << "NM:" << endl;
+				NM->print();
 
 
 				cout << "ranking the elements of the PG" << endl;
