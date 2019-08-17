@@ -131,6 +131,23 @@ void bitmatrix::rank_PG_elements_in_columns(
 	}
 }
 
+void bitmatrix::print()
+{
+	int i, j, x;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < MIN(n, 10); j++) {
+			x = s_ij(i, j);
+			if (x)
+				cout << "1";
+			else
+				cout << "0";
+			}
+		cout << endl;
+		}
+	cout << endl;
+}
+
 void bitmatrix::zero_out()
 {
 	int i;
@@ -222,10 +239,10 @@ void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
 			cout << "bitmatrix::mult_int_matrix_from_the_left row " << i << " : ";
 		}
 		for (j = 0; j < An; j++) {
-			if (f_v) {
-				cout << j << ", ";
-			}
 			if (A[i * An + j]) {
+				if (f_v) {
+					cout << j << ", ";
+				}
 				for (h = 0; h < N; h++) {
 					Out->data[i * N + h] ^= data[j * N + h];
 				}
