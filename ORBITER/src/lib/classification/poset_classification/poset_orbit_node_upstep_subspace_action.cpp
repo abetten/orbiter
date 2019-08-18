@@ -1,4 +1,4 @@
-// poset_orbit_node_upstep_subspace_action.C
+// poset_orbit_node_upstep_subspace_action.cpp
 //
 // Anton Betten
 // Jan 25, 2010
@@ -59,7 +59,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 					"after setup_factor_space_action_light" << endl;
 		}
 
-			// poset_orbit_node_downstep_subspace_action.C
+			// poset_orbit_node_downstep_subspace_action.cpp
 
 
 #if 1

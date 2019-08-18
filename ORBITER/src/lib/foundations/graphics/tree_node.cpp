@@ -1,8 +1,8 @@
-// tree_node.C
+// tree_node.cpp
 //
 // Anton Betten
 //
-// moved here from tree.C: October 12, 2013
+// moved here from tree.cpp: October 12, 2013
 //
 // February 7, 2003
 
@@ -219,7 +219,7 @@ void tree_node::add_node(int l, int depth, int *path, int i_data, char *c_data,
 		if (f_vv) {
 			cout << "add_node(): node of length 0" << endl;
 			}
-		init(0, NULL, FALSE, 0, TRUE, i_data, c_data, verbose_level);
+		init(0, NULL, TRUE, -1, TRUE, i_data, c_data, verbose_level);
 		return;
 		}
 	idx = find_child(path[depth]);

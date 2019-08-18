@@ -51,7 +51,7 @@ public:
 
 
 // #############################################################################
-// group.C:
+// group.cpp
 // #############################################################################
 
 
@@ -122,7 +122,7 @@ public:
 };
 
 // #############################################################################
-// object_in_projective_space_with_action.C:
+// object_in_projective_space_with_action.cpp
 // #############################################################################
 
 
@@ -161,7 +161,7 @@ public:
 
 
 // #############################################################################
-// orbit_rep.C
+// orbit_rep.cpp
 // #############################################################################
 
 
@@ -211,7 +211,7 @@ public:
 
 
 // #############################################################################
-// orbit_transversal.C:
+// orbit_transversal.cpp
 // #############################################################################
 
 //! a set of orbits using a vector of orbit representatives and stabilizers
@@ -239,6 +239,7 @@ public:
 		const char *fname, int verbose_level);
 	classify *get_ago_distribution(int *&ago,
 			int verbose_level);
+	void report_ago_distribution(std::ostream &ost);
 	void print_table_latex(
 			std::ostream &f,
 			int f_has_callback,
@@ -257,8 +258,68 @@ public:
 };
 
 
+
 // #############################################################################
-// projective_space_job_description.C:
+// orbit_type_repository.cpp
+// #############################################################################
+
+
+
+
+
+//! A collection invariants called orbit type assciated with a system of sets. The orbit types are based on the orbits of a given group.
+
+
+
+class orbit_type_repository {
+
+public:
+
+	orbits_on_something *Oos;
+
+	int nb_sets;
+	int set_size;
+	int *Sets; // [nb_sets * set_size]
+		// A system of sets that is gicen
+	int goi;
+
+	int orbit_type_size;
+		// the size of the invariant
+	int *Type_repository; // [nb_sets * orbit_type_size]
+		// for each set, the orbit invariant
+
+		// The next items are related to the classification of the
+		// orbit invariant:
+
+	int nb_types;
+		// the number of distinct types that appear in the Type_repository
+	int *type_first; // [nb_types]
+	int *type_len; // [nb_types]
+	int *type; // [nb_sets]
+		// type[i] is the index into the Type_representatives of the
+		// invariant associated with the i-th set in Sets[]
+	int *Type_representatives; // [nb_types]
+		// The distinct types that appear in the Type_repository
+
+	orbit_type_repository();
+	~orbit_type_repository();
+	void null();
+	void freeself();
+	void init(
+			orbits_on_something *Oos,
+			int nb_sets,
+			int set_size,
+			int *Sets,
+			int goi,
+			int verbose_level);
+	void report(std::ostream &ost);
+	void report_one_type(std::ostream &ost, int type_idx);
+
+};
+
+
+// #############################################################################
+// projective_space_job_description.cpp
 // #############################################################################
 
 
@@ -364,6 +425,25 @@ public:
 	int *intersect_with_set_from_file_set;
 	int intersect_with_set_from_file_set_size;
 
+	int f_arc_with_given_set_as_s_lines_after_dualizing;
+	int arc_size;
+	int arc_d;
+	int arc_d_low;
+	int arc_s;
+
+	int f_arc_with_two_given_sets_of_lines_after_dualizing;
+	int arc_t;
+	const char *t_lines_string;
+	int *t_lines;
+	int nb_t_lines;
+
+	int f_arc_with_three_given_sets_of_lines_after_dualizing;
+	int arc_u;
+	const char *u_lines_string;
+	int *u_lines;
+	int nb_u_lines;
+
+
 
 
 	projective_space_job_description();
@@ -393,7 +473,7 @@ public:
 
 
 // #############################################################################
-// projective_space_with_action.C:
+// projective_space_with_action.cpp
 // #############################################################################
 
 
@@ -661,7 +741,7 @@ int schreier_vector_determine_depth_recursion(
 
 
 // #############################################################################
-// set_and_stabilizer.C:
+// set_and_stabilizer.cpp
 // #############################################################################
 
 
@@ -718,7 +798,7 @@ public:
 };
 
 // #############################################################################
-// union_find.C:
+// union_find.cpp
 // #############################################################################
 
 
@@ -749,7 +829,7 @@ public:
 };
 
 // #############################################################################
-// union_find_on_k_subsets.C:
+// union_find_on_k_subsets.cpp
 // #############################################################################
 
 //! a union find data structure (used in the poset classification)

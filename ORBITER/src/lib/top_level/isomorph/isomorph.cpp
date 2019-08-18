@@ -1,9 +1,9 @@
-// isomorph.C
+// isomorph.cpp
 // 
 // Anton Betten
 // started 2007
-// moved here from reader2.C: 3/22/09
-// renamed isomorph.C from global.C: 7/14/11
+// moved here from reader2.cpp: 3/22/09
+// renamed isomorph.cpp from global.cpp: 7/14/11
 //
 // 
 //
@@ -523,11 +523,29 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 		cout << endl;
 		}
 
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer before setup_and_open_solution_database" << endl;
+	}
 	setup_and_open_solution_database(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer after setup_and_open_solution_database" << endl;
+	}
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer before setup_and_open_level_database" << endl;
+	}
 	setup_and_open_level_database(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer after setup_and_open_level_database" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer before prepare_database_access" << endl;
+	}
 	prepare_database_access(level, verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer after prepare_database_access" << endl;
+	}
 
 
 	nb_orbits = 0;
@@ -776,10 +794,31 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		cout << "isomorph::orbits_of_stabilizer_case "
 				"generators as permutations (skipped)" << endl;
 		//gens.print_as_permutation(cout);
-		}	
-	S->init(A_base);
-	S->init_generators(gens, FALSE);
-	S->compute_base_orbits(0 /*verbose_level - 2*/);
+	}
+	if (f_vv) {
+		cout << "isomorph::orbits_of_stabilizer_case before S->init" << endl;
+	}
+	S->init(A_base, verbose_level - 2);
+	if (f_vv) {
+		cout << "isomorph::orbits_of_stabilizer_case after S->init" << endl;
+	}
+	if (f_vv) {
+		cout << "isomorph::orbits_of_stabilizer_case before S->init_generators" << endl;
+	}
+	S->init_generators(gens, verbose_level - 2);
+	if (f_vv) {
+		cout << "isomorph::orbits_of_stabilizer_case after S->init_generators" << endl;
+	}
+	if (f_vv) {
+		cout << "isomorph::orbits_of_stabilizer_case before S->compute_base_orbits" << endl;
+	}
+	S->compute_base_orbits(verbose_level - 2);
+	if (f_vv) {
+		cout << "isomorph::orbits_of_stabilizer_case after S->compute_base_orbits" << endl;
+	}
+	if (f_vv) {
+		cout << "isomorph::orbits_of_stabilizer_case before S->group_order" << endl;
+	}
 	S->group_order(S_go);
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer_case "
@@ -805,7 +844,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	
 	if (f_vv) {
 		cout << "isomorph::orbits_of_stabilizer_case "
-				"computing induced action" << endl;
+				"computing induced action on " << l << " sets of size " << size << endl;
 		}
 			
 	AA->induced_action_on_sets(*A, S, //K, 
@@ -1134,7 +1173,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 		}
 
 	
-	S->init(A_base);
+	S->init(A_base, verbose_level - 2);
 	S->init_generators(*gens, FALSE);
 	S->compute_base_orbits(0/*verbose_level - 4*/);
 	
@@ -1613,6 +1652,9 @@ void isomorph::init_high_level(action *A, poset_classification *gen,
 		f_implicit_fusion, 
 		verbose_level);
 		// sets q, level and initializes file names
+	if (f_v) {
+		cout << "isomorph::init_high_level after init" << endl;
+		}
 
 
 	
@@ -1632,7 +1674,23 @@ void isomorph::init_high_level(action *A, poset_classification *gen,
 
 	init_solution(verbose_level);
 	
+	if (f_v) {
+		cout << "isomorph::init_high_level "
+				"after init_solution" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "isomorph::init_high_level "
+				"before read_orbit_data" << endl;
+		}
+
 	read_orbit_data(verbose_level);
+
+	if (f_v) {
+		cout << "isomorph::init_high_level "
+				"after read_orbit_data" << endl;
+		}
 
 
 	depth_completed = level /*- 2*/;
@@ -1642,14 +1700,31 @@ void isomorph::init_high_level(action *A, poset_classification *gen,
 				"before iso_test_init" << endl;
 		}
 	iso_test_init(verbose_level);
+	if (f_v) {
+		cout << "isomorph::init_high_level "
+				"after iso_test_init" << endl;
+		}
 
 	if (f_v) {
 		cout << "isomorph::init_high_level "
 				"before Reps->load" << endl;
 		}
 	Reps->load(verbose_level);
+	if (f_v) {
+		cout << "isomorph::init_high_level "
+				"after Reps->load" << endl;
+		}
 
+	if (f_v) {
+		cout << "isomorph::init_high_level "
+				"before setup_and_open_solution_database" << endl;
+		}
 	setup_and_open_solution_database(verbose_level - 1);
+
+	if (f_v) {
+		cout << "isomorph::init_high_level "
+				"before setup_and_open_level_database" << endl;
+		}
 	setup_and_open_level_database(verbose_level - 1);
 	if (f_v) {
 		cout << "isomorph::init_high_level done" << endl;

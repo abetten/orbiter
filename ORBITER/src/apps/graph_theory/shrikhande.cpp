@@ -1,4 +1,4 @@
-// shrikhande.C
+// shrikhande.cpp
 //
 // Anton Betten
 // February 16, 2015

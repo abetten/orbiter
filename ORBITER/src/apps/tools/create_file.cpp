@@ -1,4 +1,4 @@
-// create_file.C
+// create_file.cpp
 // 
 // Anton Betten
 // February 20, 2018

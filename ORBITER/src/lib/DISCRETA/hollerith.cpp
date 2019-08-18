@@ -1,4 +1,4 @@
-// hollerith.C
+// hollerith.cpp
 //
 // Anton Betten
 // 24.04.2000

@@ -12,7 +12,7 @@ namespace top_level {
 
 
 // #############################################################################
-// arc_generator.C
+// arc_generator.cpp
 // #############################################################################
 
 //! classification of arcs in desarguesian projective planes
@@ -23,8 +23,8 @@ class arc_generator {
 public:
 
 	int q;
-	int f_poly;
-	const char *poly;
+	//int f_poly;
+	//const char *poly;
 	finite_field *F;
 	int argc;
 	const char **argv;
@@ -65,7 +65,14 @@ public:
 
 	int f_semilinear;
 
+	int f_has_forbidden_point_set;
+	const char *forbidden_points_string;
+	int *forbidden_points;
+	int nb_forbidden_points;
+	int *f_is_forbidden;
+
 	action *A;
+	strong_generators *SG;
 	
 	grassmann *Grass;
 	action_on_grassmannian *AG;
@@ -77,8 +84,13 @@ public:
 	
 	int f_d;
 	int d;
+	// d is the degree of the arc.
+
 	int f_n;
 	int n;
+	// n is the size of the arc
+
+
 	int *line_type; // [P2->N_lines]
 
 		
@@ -95,6 +107,7 @@ public:
 	void read_arguments(int argc, const char **argv);
 	void main(int verbose_level);
 	void init(finite_field *F,
+		action *A, strong_generators *SG,
 		const char *starter_directory_name,
 		const char *base_fname,
 		int starter_size,  
@@ -149,7 +162,7 @@ void arc_generator_print_arc(std::ostream &ost, int len, int *S, void *data);
 
 
 // #############################################################################
-// arc_lifting_simeon.C
+// arc_lifting_simeon.cpp
 // #############################################################################
 
 
@@ -202,7 +215,7 @@ public:
 
 
 // #############################################################################
-// arc_lifting.C:
+// arc_lifting.cpp
 // #############################################################################
 
 //! creates a cubic surface from a 6-arc in a plane
@@ -293,6 +306,7 @@ public:
 		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
 	void init(surface_with_action *Surf_A, int *arc, int arc_size, 
 		int verbose_level);
+		// calls find_Eckardt_points and find_trihedral_pairs
 	void find_Eckardt_points(int verbose_level);
 	void find_trihedral_pairs(int verbose_level);
 	void create_the_six_plane_equations(int t_idx, 
@@ -357,9 +371,12 @@ public:
 
 	int nb_orbits_on_pairs;
 
-	arc_partition *Table_orbits_on_partition;
+	arc_partition *Table_orbits_on_partition; // [nb_orbits_on_pairs]
 
 	int total_nb_orbits_on_partitions;
+
+	int *partition_orbit_first; // [nb_orbits_on_pairs]
+	int *partition_orbit_len; // [nb_orbits_on_pairs]
 
 
 	arc_orbits_on_pairs();
@@ -371,6 +388,8 @@ public:
 		action *A,
 		int argc, const char **argv,
 		int verbose_level);
+	void recognize(int *pair, int *transporter,
+			int &orbit_idx, int verbose_level);
 
 };
 
@@ -412,6 +431,8 @@ public:
 		action *A, action *A_on_arc,
 		int argc, const char **argv,
 		int verbose_level);
+	void recognize(int *partition, int *transporter,
+			int &orbit_idx, int verbose_level);
 
 };
 
@@ -419,7 +440,7 @@ public:
 
 
 // #############################################################################
-// BLT_set_create.C:
+// BLT_set_create.cpp
 // #############################################################################
 
 //! to create a BLT-set from a description using class BLT_set_create_description
@@ -461,7 +482,7 @@ public:
 };
 
 // #############################################################################
-// BLT_set_create_description.C:
+// BLT_set_create_description.cpp
 // #############################################################################
 
 //! to create BLT set with a description from the command line
@@ -622,7 +643,7 @@ public:
 
 
 // #############################################################################
-// choose_points_or_lines.C:
+// choose_points_or_lines.cpp
 // #############################################################################
 
 //! classification of objects in projective planes
@@ -776,7 +797,7 @@ public:
 
 
 // #############################################################################
-// classify_double_sixes.C:
+// classify_double_sixes.cpp
 // #############################################################################
 
 //! classification of double sixes in PG(3,q)
@@ -929,7 +950,7 @@ void callback_partial_ovoid_test_early(int *S, int len,
 	void *data, int verbose_level);
 
 // #############################################################################
-// classify_trihedral_pairs.C:
+// classify_trihedral_pairs.cpp
 // #############################################################################
 
 
@@ -1050,7 +1071,7 @@ public:
 
 
 // #############################################################################
-// decomposition.C:
+// decomposition.cpp
 // #############################################################################
 
 
@@ -1059,7 +1080,7 @@ void decomposition_projective_space(int k, finite_field *F,
 	int verbose_level);
 
 // #############################################################################
-// incidence_structure.C:
+// incidence_structure.cpp
 // #############################################################################
 
 
@@ -1097,15 +1118,15 @@ int incidence_structure_find_blocking_set(incidence_structure *Inc,
 	int verbose_level);
 
 // #############################################################################
-// invariants_packing.C:
+// invariants_packing.cpp
 // #############################################################################
 
 //! collection of invariants of a set of packings in PG(3,q)
 
 class invariants_packing {
 public:
-	spread *T;
-	packing *P;
+	spread_classify *T;
+	packing_classify *P;
 	isomorph *Iso; // the classification of packings
 
 
@@ -1128,7 +1149,7 @@ public:
 	~invariants_packing();
 	void null();
 	void freeself();
-	void init(isomorph *Iso, packing *P, int verbose_level);
+	void init(isomorph *Iso, packing_classify *P, int verbose_level);
 	void compute_dual_packings(
 		isomorph *Iso, int verbose_level);
 	void make_table(isomorph *Iso, std::ostream &ost,
@@ -1141,7 +1162,7 @@ int packing_types_compare_function(void *a, void *b, void *data);
 
 
 // #############################################################################
-// k_arc_generator.C:
+// k_arc_generator.cpp
 // #############################################################################
 
 //! classification of k-arcs in the projective plane PG(2,q)
@@ -1153,6 +1174,7 @@ class k_arc_generator {
 public:
 
 	finite_field *F; // do not free
+	action *A;
 	projective_space *P2; // do not free
 	
 	arc_generator *Gen;
@@ -1178,72 +1200,16 @@ public:
 	void compute_line_type(int *set, int len, int verbose_level);
 };
 
-// #############################################################################
-// packing_invariants.C:
-// #############################################################################
-
-//! geometric invariants of a packing in PG(3,q)
-
-class packing_invariants {
-public:
-	packing *P;
-
-	char prefix[1000];
-	char prefix_tex[1000];
-	int iso_cnt;
-
-	int *the_packing;
-		// [P->size_of_packing]
-
-	int *list_of_lines;
-		// [P->size_of_packing * P->spread_size]
-
-	int f_has_klein;
-	longinteger_object *R;
-	int **Pts_on_plane;
-	int *nb_pts_on_plane;
-	int nb_planes;
-
-	classify *C;
-	int nb_blocks;
-	int *block_to_plane; // [nb_blocks]
-	int *plane_to_block; // [nb_planes]
-	int nb_fake_blocks;
-	int nb_fake_points;
-	int total_nb_blocks;
-		// nb_blocks + nb_fake_blocks
-	int total_nb_points;
-		// P->size_of_packing * P->spread_size + nb_fake_points
-	int *Inc;
-		// [total_nb_points * total_nb_blocks]
-
-	incidence_structure *I;
-	partitionstack *Stack;
-	char fname_incidence_pic[1000];
-	char fname_row_scheme[1000];
-	char fname_col_scheme[1000];
-
-	packing_invariants();
-	~packing_invariants();
-	void null();
-	void freeself();
-	void init(packing *P,
-		char *prefix, char *prefix_tex, int iso_cnt,
-		int *the_packing, int verbose_level);
-	void init_klein_invariants(Vector &v, int verbose_level);
-	void compute_decomposition(int verbose_level);
-};
-
 
 // #############################################################################
-// packing.C:
+// packing_classify.cpp
 // #############################################################################
 
 //! classification of packings in PG(3,q)
 
-class packing {
+class packing_classify {
 public:
-	spread *T;
+	spread_classify *T;
 	finite_field *F;
 	int spread_size;
 	int nb_lines;
@@ -1263,10 +1229,12 @@ public:
 	projective_space *P3;
 
 
+	const char *spread_tables_prefix;
 	int nb_spreads_up_to_isomorphism;
 		// the number of spreads
 		// from the classification
-	int *input_spreads;
+
+	int *input_spreads; // [nb_input_spreads]
 	int *input_spread_label;
 	int nb_input_spreads;
 
@@ -1290,21 +1258,22 @@ public:
 	int split_klein_r;
 	int split_klein_m;
 
-	packing();
-	~packing();
+	packing_classify();
+	~packing_classify();
 	void null();
 	void freeself();
-	void init(spread *T,
+	void init(spread_classify *T,
 		int f_packing_select_spread,
 		int *packing_select_spread, int packing_select_spread_nb,
 		const char *input_prefix, const char *base_fname,
 		int search_depth,
 		int f_lexorder_test,
+		const char *spread_tables_prefix,
 		int verbose_level);
 	void init2(int verbose_level);
 	void compute_spread_table(int verbose_level);
 	void init_P3(int verbose_level);
-	void load_input_spreads(int &N,
+	int predict_spread_table_length(
 		int f_packing_select_spread,
 		int *packing_select_spread, int packing_select_spread_nb,
 		int verbose_level);
@@ -1390,7 +1359,7 @@ public:
 		int verbose_level);
 	int test_if_spreads_are_disjoint_based_on_table(int a, int b);
 
-	// packing2.C
+	// packing2.cpp
 	void compute_list_of_lines_from_packing(
 			int *list_of_lines, int *packing,
 			int verbose_level);
@@ -1449,10 +1418,283 @@ int count_and_record(int *Inc, int n, int m,
 int packing_spread_compare_func(void *data, int i, int j, void *extra_data);
 void packing_swap_func(void *data, int i, int j, void *extra_data);
 
+// #############################################################################
+// packing_invariants.cpp
+// #############################################################################
+
+//! geometric invariants of a packing in PG(3,q)
+
+class packing_invariants {
+public:
+	packing_classify *P;
+
+	char prefix[1000];
+	char prefix_tex[1000];
+	int iso_cnt;
+
+	int *the_packing;
+		// [P->size_of_packing]
+
+	int *list_of_lines;
+		// [P->size_of_packing * P->spread_size]
+
+	int f_has_klein;
+	longinteger_object *R;
+	int **Pts_on_plane;
+	int *nb_pts_on_plane;
+	int nb_planes;
+
+	classify *C;
+	int nb_blocks;
+	int *block_to_plane; // [nb_blocks]
+	int *plane_to_block; // [nb_planes]
+	int nb_fake_blocks;
+	int nb_fake_points;
+	int total_nb_blocks;
+		// nb_blocks + nb_fake_blocks
+	int total_nb_points;
+		// P->size_of_packing * P->spread_size + nb_fake_points
+	int *Inc;
+		// [total_nb_points * total_nb_blocks]
+
+	incidence_structure *I;
+	partitionstack *Stack;
+	char fname_incidence_pic[1000];
+	char fname_row_scheme[1000];
+	char fname_col_scheme[1000];
+
+	packing_invariants();
+	~packing_invariants();
+	void null();
+	void freeself();
+	void init(packing_classify *P,
+		char *prefix, char *prefix_tex, int iso_cnt,
+		int *the_packing, int verbose_level);
+	void init_klein_invariants(Vector &v, int verbose_level);
+	void compute_decomposition(int verbose_level);
+};
+
+// #############################################################################
+// packing_long_orbits.cpp
+// #############################################################################
+
+//! complete a packing by clique search among the set of long orbits
+
+class packing_long_orbits {
+public:
+	packing_was *P;
+
+	int fixpoints_idx;
+	int fixpoints_clique_case_number;
+	int fixpoint_clique_size;
+	int *fixpoint_clique;
+	int long_orbit_idx;
+
+	set_of_sets *Filtered_orbits;
+	char fname_graph[1000];
+
+	colored_graph *CG;
+
+
+	packing_long_orbits();
+	~packing_long_orbits();
+	void init(packing_was *P,
+			int fixpoints_idx,
+			int fixpoints_clique_case_number,
+			int fixpoint_clique_size,
+			int *fixpoint_clique,
+			int verbose_level);
+	void filter_orbits(int verbose_level);
+	void create_graph_on_remaining_long_orbits(int verbose_level);
+	void create_fname_graph_on_remaining_long_orbits();
+	void create_graph_and_save_to_file(
+			colored_graph *&CG,
+			const char *fname,
+			int orbit_length,
+			int f_has_user_data, int *user_data, int user_data_size,
+			int verbose_level);
+	void create_graph_on_long_orbits(
+			colored_graph *&CG,
+			int *user_data, int user_data_sz,
+			int verbose_level);
+	void report_filtered_orbits(std::ostream &ost);
+
+};
+
+// globals:
+int packing_long_orbit_test_function(int *orbit1, int len1,
+		int *orbit2, int len2, void *data);
+
 
 
 // #############################################################################
-// polar.C:
+// packing_was.cpp
+// #############################################################################
+
+//! construction of packings in PG(3,q) with assumed symmetry
+
+class packing_was {
+public:
+	int f_poly;
+	const char *poly;
+	int f_order;
+	int order;
+	int f_dim_over_kernel;
+	int dim_over_kernel;
+	int f_recoordinatize;
+	int f_select_spread;
+	int select_spread[1000];
+	int select_spread_nb;
+	int f_spreads_invariant_under_H;
+	int f_cliques_on_fixpoint_graph;
+	int clique_size_on_fixpoint_graph;
+	int f_process_long_orbits;
+	int process_long_orbits_r;
+	int process_long_orbits_m;
+	int long_orbit_length;
+	int long_orbits_clique_size;
+	int f_expand_cliques_of_long_orbits;
+	int clique_no_r;
+	int clique_no_m;
+	int f_type_of_fixed_spreads;
+	int f_label;
+	const char *label;
+	int f_spread_tables_prefix;
+	const char *spread_tables_prefix;
+	int f_output_path;
+	const char *output_path;
+
+	exact_cover_arguments *ECA;
+	isomorph_arguments *IA;
+
+	int f_H;
+	linear_group_description *H_Descr;
+	linear_group *H_LG;
+
+	int f_N;
+	linear_group_description *N_Descr;
+	linear_group *N_LG;
+
+	int p, e, n, k, q;
+	finite_field *F;
+	spread_classify *T;
+	packing_classify *P;
+
+
+	strong_generators *H_gens;
+	longinteger_object H_go;
+	int H_goi;
+
+	action *A;
+	int f_semilinear;
+	matrix_group *M;
+	int dim;
+
+	strong_generators *N_gens;
+	longinteger_object N_go;
+	int N_goi;
+
+
+	char prefix_line_orbits[1000];
+	orbits_on_something *Line_orbits_under_H;
+
+	orbit_type_repository *Spread_type;
+
+	int f_report;
+
+	char prefix_spread_orbits[1000];
+	orbits_on_something *Spread_orbits_under_H;
+	action *A_on_spread_orbits;
+
+	char fname_good_orbits[1000];
+	int nb_good_orbits;
+	int *Good_orbit_idx;
+	int *Good_orbit_len;
+	int *orb;
+
+	spread_tables *Spread_tables_reduced;
+	orbit_type_repository *Spread_type_reduced;
+
+	action *A_on_reduced_spreads;
+	char prefix_reduced_spread_orbits[1000];
+	orbits_on_something *reduced_spread_orbits_under_H;
+	action *A_on_reduced_spread_orbits;
+
+	char fname_fixp_graph[1000];
+	char fname_fixp_graph_cliques[1000];
+	int fixpoints_idx;
+	action *A_on_fixpoints;
+
+	int clique_size;
+	colored_graph *fixpoint_graph;
+	poset *Poset_fixpoint_cliques;
+	poset_classification *fixpoint_clique_gen;
+	int *Cliques;
+	int nb_cliques;
+	char fname_fixp_graph_cliques_orbiter[1000];
+	orbit_transversal *Fixp_cliques;
+
+	packing_long_orbits *L;
+
+	set_of_sets *Orbit_invariant;
+	int nb_sets;
+	classify *Classify_spread_invariant_by_orbit_length;
+
+	packing_was();
+	~packing_was();
+	void null();
+	void freeself();
+	void init(int argc, const char **argv);
+	void init_spreads(int verbose_level);
+	void compute_H_orbits_on_lines(int verbose_level);
+	// computes the orbits of H on lines (NOT on spreads!)
+	// and writes to file prefix_line_orbits
+	void compute_spread_types_wrt_H(int verbose_level);
+	void compute_H_orbits_on_spreads(int verbose_level);
+	// computes the orbits of H on spreads (NOT on lines!)
+	// and writes to file fname_orbits
+	void test_orbits_on_spreads(int verbose_level);
+	void reduce_spreads(int verbose_level);
+	void compute_reduced_spread_types_wrt_H(int verbose_level);
+	// Spread_types[P->nb_spreads * (group_order + 1)]
+	void compute_H_orbits_on_reduced_spreads(int verbose_level);
+	int test_if_pair_of_orbits_are_adjacent(
+		int *orbit1, int len1, int *orbit2, int len2,
+		int verbose_level);
+		// tests if every spread from orbit1
+		// is line-disjoint from every spread from orbit2
+	void create_graph_and_save_to_file(
+		const char *fname,
+		int orbit_length,
+		int f_has_user_data, int *user_data, int user_data_size,
+		int verbose_level);
+	void create_graph_on_fixpoints(int verbose_level);
+	int find_orbits_of_length(int orbit_length);
+	void action_on_fixpoints(int verbose_level);
+	void compute_cliques_on_fixpoint_graph(
+			int clique_size, int verbose_level);
+	void handle_long_orbits(int verbose_level);
+	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
+	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
+	void classify_orbit_invariant(int verbose_level);
+	void report_orbit_invariant(std::ostream &ost);
+	void report(std::ostream &ost);
+};
+
+// gloabls:
+
+int packing_was_orbit_test_function(int *orbit1, int len1,
+		int *orbit2, int len2, void *data);
+void packing_was_early_test_function_fp_cliques(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+int packing_was_evaluate_orbit_invariant_function(
+		int a, int i, int j, void *evaluate_data, int verbose_level);
+
+
+// #############################################################################
+// polar.cpp
 // #############################################################################
 
 	
@@ -1547,7 +1789,7 @@ void polar_callback_early_test_func(int *S, int len,
 
 
 // #############################################################################
-// projective_space.C:
+// projective_space.cpp
 // #############################################################################
 
 
@@ -1557,7 +1799,7 @@ void Hill_cap56(int argc, const char **argv,
 void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
 
 // #############################################################################
-// recoordinatize.C
+// recoordinatize.cpp
 // #############################################################################
 
 //! three skew lines in PG(3,q), used to classify spreads
@@ -1625,7 +1867,7 @@ public:
 };
 
 // #############################################################################
-// search_blocking_set.C:
+// search_blocking_set.cpp
 // #############################################################################
 
 //! classification of blocking sets in projective planes
@@ -1684,7 +1926,7 @@ int callback_check_partial_blocking_set(int len, int *S,
 #endif
 
 // #############################################################################
-// singer_cycle.C
+// singer_cycle.cpp
 // #############################################################################
 
 //! the Singer cycle in PG(n-1,q)
@@ -1724,7 +1966,7 @@ public:
 };
 
 // #############################################################################
-// six_arcs_not_on_a_conic.C:
+// six_arcs_not_on_a_conic.cpp
 // #############################################################################
 
 //! classification of six-arcs not on a conic in PG(2,q)
@@ -1749,14 +1991,18 @@ public:
 	~six_arcs_not_on_a_conic();
 	void null();
 	void freeself();
-	void init(finite_field *F, projective_space *P2, 
+	void init(finite_field *F,
+		action *A,
+		projective_space *P2,
 		int argc, const char **argv, 
 		int verbose_level);
+	void recognize(int *arc6, int *transporter,
+			int &orbit_not_on_conic_idx, int verbose_level);
 	void report_latex(std::ostream &ost);
 };
 
 // #############################################################################
-// spread.C
+// spread_classify.cpp
 // #############################################################################
 
 #define SPREAD_OF_TYPE_FTWKB 1
@@ -1771,7 +2017,7 @@ public:
 //! to classify spreads of PG(k-1,q) in PG(n-1,q) where n=2*k
 
 
-class spread {
+class spread_classify {
 public:
 
 	finite_field *F;
@@ -1848,8 +2094,8 @@ public:
 		// [n * n]
 
 
-	spread();
-	~spread();
+	spread_classify();
+	~spread_classify();
 	void null();
 	void freeself();
 	void init(int order, int n, int k, int max_depth, 
@@ -1887,7 +2133,7 @@ public:
 		int verbose_level);
 
 
-	// spread2.C:
+	// spread_classify2.cpp
 	void print_isomorphism_type(isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
 		int *data, int verbose_level);
@@ -1943,7 +2189,7 @@ int callback_incremental_check_function(
 	void *data, int verbose_level);
 
 
-// spread2.C:
+// spread_classify2.cpp
 void spread_early_test_func_callback(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -1956,7 +2202,7 @@ void spread_callback_make_quotients(isomorph *Iso, void *data,
 void callback_spread_print(std::ostream &ost, int len, int *S, void *data);
 
 // #############################################################################
-// spread_create.C:
+// spread_create.cpp
 // #############################################################################
 
 //! to create a known spread using a description from class spread_create_description
@@ -2000,7 +2246,7 @@ public:
 };
 
 // #############################################################################
-// spread_create_description.C:
+// spread_create_description.cpp
 // #############################################################################
 
 //! to describe the construction of a known spread from the command line
@@ -2031,7 +2277,7 @@ public:
 };
 
 // #############################################################################
-// spread_lifting.C
+// spread_lifting.cpp
 // #############################################################################
 
 //! creates spreads from partial spreads using class exact_cover
@@ -2040,7 +2286,7 @@ public:
 class spread_lifting {
 public:
 
-	spread *S;
+	spread_classify *S;
 	exact_cover *E;
 	
 	int *starter;
@@ -2074,7 +2320,7 @@ public:
 	~spread_lifting();
 	void null();
 	void freeself();
-	void init(spread *S, exact_cover *E, 
+	void init(spread_classify *S, exact_cover *E,
 		int *starter, int starter_size, 
 		int starter_case_number, int starter_number_of_cases, 
 		int *candidates, int nb_candidates, strong_generators *Strong_gens, 
@@ -2093,7 +2339,7 @@ public:
 
 
 // #############################################################################
-// surface_classify_wedge.C
+// surface_classify_wedge.cpp
 // #############################################################################
 
 //! classification of cubic surfaces using double sixes as substructures
@@ -2191,7 +2437,7 @@ public:
 };
 
 // #############################################################################
-// surface_create.C:
+// surface_create.cpp
 // #############################################################################
 
 
@@ -2245,7 +2491,7 @@ public:
 
 
 // #############################################################################
-// surface_create_description.C:
+// surface_create_description.cpp
 // #############################################################################
 
 
@@ -2267,6 +2513,8 @@ public:
 	int f_arc_lifting;
 	const char *arc_lifting_text;
 	int f_arc_lifting_with_two_lines;
+	int f_select_double_six;
+	const char *select_double_six_string;
 
 	
 	surface_create_description();
@@ -2279,7 +2527,7 @@ public:
 };
 
 // #############################################################################
-// surface_object_with_action.C:
+// surface_object_with_action.cpp
 // #############################################################################
 
 
@@ -2372,7 +2620,7 @@ public:
 };
 
 // #############################################################################
-// surface_with_action.C:
+// surface_with_action.cpp
 // #############################################################################
 
 //! cubic surfaces in projective space with automorphism group
@@ -2455,12 +2703,19 @@ public:
 
 	six_arcs_not_on_a_conic *Six_arcs;
 
-	arc_orbits_on_pairs *Table_orbits_on_pairs;
+	arc_orbits_on_pairs *Table_orbits_on_pairs; // [Six_arcs->nb_arcs_not_on_conic]
 
 	int nb_flag_orbits;
 
 	// classification of surfaces:
 	flag_orbits *Flag_orbits;
+
+	int *flag_orbit_fst; // [Six_arcs->nb_arcs_not_on_conic]
+	int *flag_orbit_len; // [Six_arcs->nb_arcs_not_on_conic]
+
+	int *flag_orbit_on_arcs_not_on_a_conic_idx; // [Flag_orbits->nb_flag_orbits]
+	int *flag_orbit_on_pairs_idx; // [Flag_orbits->nb_flag_orbits]
+	int *flag_orbit_on_partition_idx; // [Flag_orbits->nb_flag_orbits]
 
 	classification_step *Surfaces;
 
@@ -2473,12 +2728,93 @@ public:
 		int f_semilinear, surface_with_action *Surf_A,
 		int argc, const char **argv,
 		int verbose_level);
+	void draw_poset_of_six_arcs(int verbose_level);
 	void downstep(int verbose_level);
+	void upstep(int verbose_level);
+	void upstep2(
+			surface_object *SO,
+			vector_ge *coset_reps,
+			int &nb_coset_reps,
+			int *f_processed,
+			int &nb_processed,
+			int pt_representation_sz,
+			int f,
+			int *Flag_representation,
+			int tritangent_plane_idx,
+			int line_idx, int m1, int m2, int m3,
+			int l1, int l2,
+			int cnt,
+			strong_generators *S,
+			int *Lines,
+			int *eqn20,
+			int *Adj,
+			int *transversals4,
+			int *P6,
+			int &f2,
+			int *Elt_alpha1,
+			int *Elt_alpha2,
+			int *Elt_beta1,
+			int *Elt_beta2,
+			int *Elt_beta3,
+			int verbose_level);
+	void upstep3(
+			surface_object *SO,
+			vector_ge *coset_reps,
+			int &nb_coset_reps,
+			int *f_processed,
+			int &nb_processed,
+			int pt_representation_sz,
+			int f,
+			int *Flag_representation,
+			int tritangent_plane_idx,
+			int line_idx, int m1, int m2, int m3,
+			int l1, int l2,
+			int cnt,
+			strong_generators *S,
+			int *Lines,
+			int *eqn20,
+			int *Adj,
+			int *transversals4,
+			int *P6,
+			int &f2,
+			int *Elt_alpha1,
+			int *Elt_alpha2,
+			int *Elt_beta1,
+			int *Elt_beta2,
+			int *Elt_beta3,
+			int verbose_level);
+	void upstep_group_elements(
+			surface_object *SO,
+			vector_ge *coset_reps,
+			int &nb_coset_reps,
+			int *f_processed,
+			int &nb_processed,
+			int pt_representation_sz,
+			int f,
+			int *Flag_representation,
+			int tritangent_plane_idx,
+			int line_idx, int m1, int m2, int m3,
+			int l1, int l2,
+			int cnt,
+			strong_generators *S,
+			int *Lines,
+			int *eqn20,
+			int *Adj,
+			int *transversals4,
+			int *P6,
+			int &f2,
+			int *Elt_alpha1,
+			int *Elt_alpha2,
+			int *Elt_beta1,
+			int *Elt_beta2,
+			int *Elt_beta3,
+			int verbose_level);
+	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
 	void report(int verbose_level);
 };
 
 // #############################################################################
-// translation_plane_via_andre_model.C
+// translation_plane_via_andre_model.cpp
 // #############################################################################
 
 //! Andre / Bruck / Bose model of a translation plane

@@ -1,10 +1,10 @@
-// isomorph_testing.C
+// isomorph_testing.cpp
 // 
 // Anton Betten
 // Oct 21, 2008
 //
-// moved here from reader2.C 3/22/09
-// renamend isomorph_testing.C from iso.C 7/14/11
+// moved here from reader2.cpp 3/22/09
+// renamend isomorph_testing.cpp from iso.cpp 7/14/11
 //
 //
 
@@ -148,7 +148,6 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 		}
 	Sorting.rearrange_subset(size, level, data,
 			subset, rearranged_set, verbose_level - 3);
-		// in GALOIS/sorting.C
 		
 	
 	for (i = 0; i < size; i++) {
@@ -248,10 +247,16 @@ void isomorph::isomorph_testing(int t0,
 				f_eof = FALSE;
 				}
 			
+			if (f_v) {
+				cout << "isomorph::isomorph_testing before do_iso_test" << endl;
+			}
 			do_iso_test(t0, Stab, 
 				f_play_back, play_back_file, 
 				f_eof, print_mod, 
 				f_implicit_fusion, verbose_level - 1);
+			if (f_v) {
+				cout << "isomorph::isomorph_testing after do_iso_test" << endl;
+			}
 			
 			if (f_play_back && f_eof) {
 				play_back_file->close();
@@ -606,12 +611,20 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 		}
 	
 
+	if (f_vv) {
+		cout << "isomorph::do_iso_test "
+				"before  stabilizer_action_init" << endl;
+		}
 	stabilizer_action_init(verbose_level - 2);
+	if (f_vv) {
+		cout << "isomorph::do_iso_test "
+				"after  stabilizer_action_init" << endl;
+		}
 	
 	if (f_v3) {
-		cout << "base for AA: ";
+		cout << "isomorph::do_iso_test base for AA: ";
 		AA->print_base();
-		cout << "base for A:" << endl;
+		cout << "isomorph::do_iso_test base for A:" << endl;
 		A->print_base();
 		}
 	
@@ -742,7 +755,6 @@ int isomorph::next_subset(int t0,
 		//cout << "next subset at backtrack_level="
 		//<< backtrack_level << endl;
 		if (!Combi.next_k_subset(subset, size, level)) {
-			// in GALOIS/combinatorics.C
 
 			return FALSE;
 			}
@@ -778,7 +790,6 @@ int isomorph::next_subset(int t0,
 	
 	Sorting.rearrange_subset(size, level, data,
 		subset, rearranged_set, verbose_level - 3);
-		// in GALOIS/sorting.C
 		
 	
 	for (i = 0; i < size; i++) {

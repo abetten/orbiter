@@ -12,11 +12,11 @@ namespace top_level {
 
 
 // #############################################################################
-// isomorph.C
-// isomorph_testing.C
-// isomorph_database.C
-// isomorph_trace.C
-// isomorph_files.C
+// isomorph.cpp
+// isomorph_testing.cpp
+// isomorph_database.cpp
+// isomorph_trace.cpp
+// isomorph_files.cpp
 // #############################################################################
 
 //! classification of combinatorial objects using subobjects
@@ -74,7 +74,7 @@ public:
 
 
 		// solution_first and solution_len are initialized in 
-		// isomorph_files.C:
+		// isomorph_files.cpp
 		// isomorph::init_solutions
 		// isomorph::count_solutions_from_clique_finder
 		// isomorph::count_solutions
@@ -93,7 +93,7 @@ public:
 
 
 
-	// from the summary file (and only used in isomorph_files.C)
+	// from the summary file (and only used in isomorph_files.cpp)
 	int *stats_nb_backtrack;
 		// [nb_starter]
 	int *stats_nb_backtrack_decision;
@@ -180,9 +180,9 @@ public:
 
 	
 	// added Dec 25, 2012:
-	// computed in isomorph.C isomorph::orbits_of_stabilizer
+	// computed in isomorph.cpp isomorph::orbits_of_stabilizer
 	// these variables are not used ?? (Oct 30, 2014)
-	// They are used, for instance in isomorph_testing.C 
+	// They are used, for instance in isomorph_testing.cpp
 	// isomorph::write_classification_graph (May 3, 2015)
 	int *flag_orbit_fst;
 		// [nb_starter + 1]
@@ -299,7 +299,7 @@ public:
 	// some statistics:
 	int nb_times_make_set_smaller_called;
 
-	// isomorph.C:
+	// isomorph.cpp
 	isomorph();
 	void null();
 	~isomorph();
@@ -354,7 +354,7 @@ public:
 
 
 
-	// isomorph_testing.C:
+	// isomorph_testing.cpp
 	void iso_test_init(int verbose_level);
 	void iso_test_init2(int verbose_level);
 	void probe(int flag_orbit, int subset_rk, 
@@ -403,13 +403,13 @@ public:
 	int handle_automorphism(int *set, 
 		sims *Stab, int *Elt, int verbose_level);
 
-	// isomorph_database.C:
+	// isomorph_database.cpp
 	void setup_and_open_solution_database(int verbose_level);
 	void setup_and_create_solution_database(int verbose_level);
 	void close_solution_database(int verbose_level);
 	void setup_and_open_level_database(int verbose_level);
 	// Called from do_iso_test, identify and test_hash 
-	// (Which are all in isomorph_testing.C)
+	// (Which are all in isomorph_testing.cpp)
 	// Calls init_DB for D and D.open.
 	// Calls init_DB_level for D1 and D2 and D1->open and D2->open.
 	// Calls fopen for fp_ge1 and fp_ge2.
@@ -469,7 +469,7 @@ public:
 		// from database D through btree 0
 		// Reads generators from file fp_ge
 
-	// isomorph_trace.C:
+	// isomorph_trace.cpp
 	int identify_solution_relaxed(int *set, int *transporter, 
 		int f_implicit_fusion, int &orbit_no, 
 		int &f_failure_to_find_point, 
@@ -557,7 +557,7 @@ public:
 		int verbose_level);
 
 
-	// isomorph_files.C:
+	// isomorph_files.cpp
 	void init_solutions(int **Solutions, 
 		int *Nb_sol, int verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
@@ -675,7 +675,7 @@ public:
 
 
 // #############################################################################
-// isomorph_arguments.C
+// isomorph_arguments.cpp
 // #############################################################################
 
 //! a helper class for isomorph
@@ -760,7 +760,7 @@ struct isomorph_worker_data {
 
 
 // #############################################################################
-// isomorph_global.C:
+// isomorph_global.cpp
 // #############################################################################
 
 

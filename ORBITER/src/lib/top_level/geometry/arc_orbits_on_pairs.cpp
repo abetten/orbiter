@@ -17,10 +17,36 @@ namespace top_level {
 
 arc_orbits_on_pairs::arc_orbits_on_pairs()
 {
-	null();
+	SAL = NULL;
+
+	A = NULL;
+
+	The_arc = NULL;
+	A_on_arc = NULL;
+
+	arc_idx = -1;
+	Poset = NULL;
+	Orbits_on_pairs = NULL;
+
+	nb_orbits_on_pairs = -1;
+	Table_orbits_on_partition = NULL;
+	total_nb_orbits_on_partitions = -1;
+
+	partition_orbit_first = NULL;
+	partition_orbit_len = NULL;
+	//null();
 }
 
 arc_orbits_on_pairs::~arc_orbits_on_pairs()
+{
+	freeself();
+}
+
+void arc_orbits_on_pairs::null()
+{
+}
+
+void arc_orbits_on_pairs::freeself()
 {
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -37,29 +63,12 @@ arc_orbits_on_pairs::~arc_orbits_on_pairs()
 	if (Table_orbits_on_partition) {
 		FREE_OBJECTS(Table_orbits_on_partition);
 	}
-	freeself();
-}
-
-void arc_orbits_on_pairs::null()
-{
-	SAL = NULL;
-
-	A = NULL;
-
-	The_arc = NULL;
-	A_on_arc = NULL;
-
-	arc_idx = -1;
-	Poset = NULL;
-	Orbits_on_pairs = NULL;
-
-	nb_orbits_on_pairs = -1;
-	Table_orbits_on_partition = NULL;
-	total_nb_orbits_on_partitions = -1;
-}
-
-void arc_orbits_on_pairs::freeself()
-{
+	if (partition_orbit_first) {
+		FREE_int(partition_orbit_first);
+	}
+	if (partition_orbit_len) {
+		FREE_int(partition_orbit_len);
+	}
 	null();
 }
 
@@ -166,6 +175,8 @@ void arc_orbits_on_pairs::init(
 				"nb_orbits_on_pairs=" << nb_orbits_on_pairs << endl;
 		}
 
+	partition_orbit_first = NEW_int(nb_orbits_on_pairs);
+	partition_orbit_len = NEW_int(nb_orbits_on_pairs);
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init "
@@ -179,7 +190,12 @@ void arc_orbits_on_pairs::init(
 
 	total_nb_orbits_on_partitions = 0;
 
-	for (pair_orbit_idx = 0; pair_orbit_idx < nb_orbits_on_pairs; pair_orbit_idx++) {
+	for (pair_orbit_idx = 0;
+			pair_orbit_idx < nb_orbits_on_pairs;
+			pair_orbit_idx++) {
+
+
+		int nb;
 
 		if (f_v) {
 			cout << "arc_orbits_on_pairs::init "
@@ -189,9 +205,13 @@ void arc_orbits_on_pairs::init(
 				A, A_on_arc,
 				argc, argv,
 				verbose_level);
-		total_nb_orbits_on_partitions +=
-				Table_orbits_on_partition[pair_orbit_idx].
-					nb_orbits_on_partition;
+
+		nb = Table_orbits_on_partition[pair_orbit_idx].nb_orbits_on_partition;
+
+		partition_orbit_first[pair_orbit_idx] = total_nb_orbits_on_partitions;
+		partition_orbit_len[pair_orbit_idx] = nb;
+
+		total_nb_orbits_on_partitions += nb;
 	}
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init "
@@ -203,6 +223,28 @@ void arc_orbits_on_pairs::init(
 		cout << "arc_orbits_on_pairs::init done" << endl;
 		}
 }
+
+void arc_orbits_on_pairs::recognize(int *pair, int *transporter,
+		int &orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "arc_orbits_on_pairs::recognize" << endl;
+	}
+
+	Orbits_on_pairs->identify(pair, 2,
+		transporter,
+		orbit_idx,
+		0 /*verbose_level */);
+
+
+	if (f_v) {
+		cout << "arc_orbits_on_pairs::recognize done" << endl;
+	}
+}
+
+
 
 }}
 

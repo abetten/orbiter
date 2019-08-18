@@ -1,9 +1,9 @@
-// determine_quadric.C
+// determine_quadric.cpp
 // 
 // Anton Betten
 // Nov 16, 2010
 //
-// based on determine_conic.C
+// based on determine_conic.cpp
 //
 // computes the equation of a quadric through (at least) 9 given points
 // in PG(3, q)

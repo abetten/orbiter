@@ -14,7 +14,7 @@ namespace classification {
 
 
 // #############################################################################
-// extension.C:
+// extension.cpp
 // #############################################################################
 
 #define NB_EXTENSION_TYPES 5
@@ -124,7 +124,7 @@ public:
 
 
 // #############################################################################
-// poset.C:
+// poset.cpp
 // #############################################################################
 
 //! a poset on which a group acts
@@ -201,7 +201,7 @@ int callback_test_independence_condition(orbit_based_testing *Obt,
 
 
 // #############################################################################
-// poset_description.C:
+// poset_description.cpp
 // #############################################################################
 
 //! description of a poset from the command line
@@ -237,7 +237,7 @@ public:
 
 
 // #############################################################################
-// poset_classification.C
+// poset_classification.cpp
 // #############################################################################
 
 //! the poset classification algorithm (aka Snakes and Ladders)
@@ -272,15 +272,15 @@ public:
 	int *Elt6; // for poset_orbit_node::read_memory_object / write_memory_object
 	
 	int *tmp_set_apply_fusion;
-		// used in poset_orbit_upstep.C poset_orbit_node::apply_isomorphism
+		// used in poset_orbit_upstep.cpp poset_orbit_node::apply_isomorphism
 
 
 	// for vector space actions, allocated in init:
 	int *tmp_find_node_for_subspace_by_rank1;
-		// [vector_space_dimension] used in poset_classification_trace.C: 
+		// [vector_space_dimension] used in poset_classification_trace.cpp:
 		// find_node_for_subspace_by_rank
 	int *tmp_find_node_for_subspace_by_rank2;
-		// [sz * vector_space_dimension] used in poset_classification_trace.C: 
+		// [sz * vector_space_dimension] used in poset_classification_trace.cpp:
 		// find_node_for_subspace_by_rank
 
 
@@ -885,9 +885,9 @@ int trace_result_is_no_result(trace_result r);
 
 
 // #############################################################################
-// poset_orbit_node.C, poset_orbit_node_io.C, poset_orbit_node_upstep.C,
-// poset_orbit_node_upstep_subspace_action.C,
-// poset_orbit_node_downstep.C, poset_orbit_node_downstep_subspace_action.C:
+// poset_orbit_node.cpp, poset_orbit_node_io.cpp, poset_orbit_node_upstep.cpp,
+// poset_orbit_node_upstep_subspace_action.cpp,
+// poset_orbit_node_downstep.cpp, poset_orbit_node_downstep_subspace_action.cpp:
 // #############################################################################
 
 
@@ -911,7 +911,7 @@ public:
 	
 	action *A_on_upset;
 
-	// poset_orbit_node.C:
+	// poset_orbit_node.cpp:
 	poset_orbit_node();
 	~poset_orbit_node();
 	void null();
@@ -960,7 +960,7 @@ public:
 	int nb_extension_points();
 		// sums up the lengths of orbits in all extensions
 
-	// in poset_orbit_node_group_theory.C:
+	// in poset_orbit_node_group_theory.cpp:
 	void store_strong_generators(poset_classification *gen,
 		strong_generators *Strong_gens);
 	void get_stabilizer_order(poset_classification *gen,
@@ -1015,7 +1015,7 @@ public:
 		int verbose_level);
 
 
-	// in poset_orbit_node_io.C:
+	// in poset_orbit_node_io.cpp:
 	void read_memory_object(
 		poset_classification *PC,
 		action *A, memory_object *m,
@@ -1052,7 +1052,7 @@ public:
 		int verbose_level);
 
 
-	// poset_orbit_node_upstep.C:
+	// poset_orbit_node_upstep.cpp:
 	int apply_isomorphism(poset_classification *gen, 
 		int lvl, int current_node, 
 		int current_extension, int len, int f_tolerant, 
@@ -1105,7 +1105,7 @@ public:
 		// FALSE means the point to trace was not found. 
 		// This can happen if nodes were eliminated due to clique_test
 
-	// poset_orbit_node_upstep_subspace_action.C:
+	// poset_orbit_node_upstep_subspace_action.cpp:
 	void orbit_representative_and_coset_rep_inv_subspace_action(
 		poset_classification *gen, 
 		int lvl, int pt_to_trace, int &pt0, int *&cosetrep, 
@@ -1113,7 +1113,7 @@ public:
 		// called by poset_orbit_node::trace_next_point
 		
 
-	// poset_orbit_node_downstep.C
+	// poset_orbit_node_downstep.cpp
 	// top level functions:
 	void compute_flag_orbits(
 		poset_classification *gen,
@@ -1254,7 +1254,7 @@ public:
 		int max_orbits, int max_points_per_orbit);
 
 
-	// poset_orbit_node_downstep_subspace_action.C
+	// poset_orbit_node_downstep_subspace_action.cpp
 	void compute_flag_orbits_subspace_action(
 		poset_classification *gen,
 		int lvl,
@@ -1301,7 +1301,7 @@ public:
 
 
 // #############################################################################
-// upstep_work.C:
+// upstep_work.cpp
 // #############################################################################
 
 
@@ -1423,7 +1423,7 @@ public:
 	void print_level_extension_info();
 	void print_level_extension_coset_info();
 
-	// upstep_work_subspace_action.C:
+	// upstep_work_subspace_action.cpp:
 	int upstep_subspace_action(int verbose_level);
 		// This routine is called from upstep_work::init_extension_node
 		// It computes coset_table.
@@ -1436,7 +1436,7 @@ public:
 		// (provided f_indicate_not_canonicals is TRUE)
 
 
-	// upstep_work_trace.C:
+	// upstep_work_trace.cpp:
 
 	trace_result recognize(
 		int &final_node, int &final_ex, int f_tolerant, 
@@ -1454,7 +1454,7 @@ public:
 		int f_tolerant, int verbose_level);
 };
 
-// in upstep_work.C:
+// in upstep_work.cpp:
 void print_coset_table(coset_table_entry *coset_table, int len);
 
 }}

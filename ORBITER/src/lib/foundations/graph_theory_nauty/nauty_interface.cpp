@@ -445,7 +445,6 @@ void nauty_interface_matrix(int *M, int v, int b,
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
 	int *Transversal_length, int &Ago)
-// called from INC_GEN/inc_gen_iso.C
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);

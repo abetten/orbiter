@@ -1,4 +1,4 @@
-// exact_cover_arguments.C
+// exact_cover_arguments.cpp
 //
 // Anton Betten
 // January 12, 2016

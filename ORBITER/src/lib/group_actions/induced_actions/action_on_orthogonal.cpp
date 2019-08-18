@@ -1,4 +1,4 @@
-// action_on_orthogonal.C
+// action_on_orthogonal.cpp
 //
 // Anton Betten
 // September 27, 2012

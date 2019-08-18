@@ -1,4 +1,4 @@
-// partitions.C
+// partitions.cpp
 //
 // Anton Betten
 // Dec 16, 2009

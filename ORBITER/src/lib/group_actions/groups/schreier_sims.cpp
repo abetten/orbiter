@@ -1,4 +1,4 @@
-// schreier_sims.C
+// schreier_sims.cpp
 //
 // Anton Betten
 // July 27, 2010
@@ -82,11 +82,31 @@ void schreier_sims::init(action *A, int verbose_level)
 	Elt1 = NEW_int(GA->elt_size_in_int);
 	Elt2 = NEW_int(GA->elt_size_in_int);
 	Elt3 = NEW_int(GA->elt_size_in_int);
+
 	G = NEW_OBJECT(sims);
+
 	//cout << "schreier_sims::init sims object " << G
 	// << " with action " << GA << "=" << GA->label << endl;
-	G->init(GA);
-	G->init_trivial_group(0);
+
+	if (f_v) {
+		cout << "schreier_sims::init action A:" << endl;
+		A->print_info();
+		cout << "schreier_sims::init before G->init" << endl;
+		}
+	G->init(GA, verbose_level - 2);
+	if (f_v) {
+		cout << "schreier_sims::init after G->init" << endl;
+		}
+	if (f_v) {
+		cout << "schreier_sims::init before G->init_trivial_group" << endl;
+		}
+	G->init_trivial_group(verbose_level);
+	if (f_v) {
+		cout << "schreier_sims::init after G->init_trivial_group" << endl;
+		}
+	if (f_v) {
+		cout << "schreier_sims::init done" << endl;
+		}
 }
 
 void schreier_sims::interested_in_kernel(action *KA,
@@ -101,7 +121,7 @@ void schreier_sims::interested_in_kernel(action *KA,
 		}
 	schreier_sims::KA = KA;
 	K = NEW_OBJECT(sims);
-	K->init(KA);
+	K->init(KA, verbose_level - 2);
 	K->init_trivial_group(0);
 	f_interested_in_kernel = TRUE;
 }
@@ -311,7 +331,7 @@ void schreier_sims::get_generator_external_old_G(
 	if (f_v) {
 		cout << "schreier_sims::get_generator_external_old_G "
 				"random element chosen, path = ";
-		int_vec_print(cout, old_G->path, old_G->A->Stabilizer_chain->base_len);
+		int_vec_print(cout, old_G->path, old_G->A->base_len());
 		cout << endl;
 		}
 }
@@ -393,7 +413,10 @@ void schreier_sims::create_group(int verbose_level)
 	if (f_v) {
 		cout << "schreier_sims::create_group" << endl;
 		}
-	
+	if (f_has_target_group_order && tgo.is_zero()) {
+		cout << "schreier_sims::create_group  target group order is 0" << endl;
+		exit(1);
+	}
 	compute_group_orders();
 	if (f_v) {
 		print_group_orders();
@@ -487,11 +510,11 @@ void schreier_sims::create_group(int verbose_level)
 								cout << "schreier_sims::create_group: "
 										"residue" << endl;
 								KA->element_print_image_of_set(
-										Elt3, KA->Stabilizer_chain->base_len, KA->Stabilizer_chain->base);
+										Elt3, KA->base_len(), KA->get_base());
 								cout << "schreier_sims::create_group: "
 										"Elt2" << endl;
 								KA->element_print_image_of_set(
-										Elt2, KA->Stabilizer_chain->base_len, KA->Stabilizer_chain->base);
+										Elt2, KA->base_len(), KA->get_base());
 								}
 							}
 						if (!KA->element_is_one(Elt3, 0)) {
@@ -523,7 +546,7 @@ void schreier_sims::create_group(int verbose_level)
 						cout << "schreier_sims::create_group: "
 								"choosing n e w base point " << b << endl;
 						}
-					old_base_len = GA->Stabilizer_chain->base_len;
+					old_base_len = GA->base_len();
 					GA->Stabilizer_chain->reallocate_base(b);
 					if (f_vvv) {
 						//cout << "after reallocate_base 1" << endl;
@@ -536,16 +559,16 @@ void schreier_sims::create_group(int verbose_level)
 						cout << "schreier_sims::create_group: "
 								"n e w base point " << b
 							<< " chosen, n e w base has length "
-							<< GA->Stabilizer_chain->base_len << endl;
+							<< GA->base_len() << endl;
 						cout << "schreier_sims::create_group: "
 								"calling add_generator_at_level" << endl;
 						}
 					G->add_generator_at_level(Elt2,
-							GA->Stabilizer_chain->base_len - 1, 0/*verbose_level - 3*/);
+							GA->base_len() - 1, 0/*verbose_level - 3*/);
 					if (f_vv) {
 						cout << "schreier_sims::create_group: "
 								"the residue has been added "
-								"at level " << GA->Stabilizer_chain->base_len - 1 << endl;
+								"at level " << GA->base_len() - 1 << endl;
 						}
 					} // if b
 				} // if ! element is one
@@ -621,8 +644,8 @@ void schreier_sims::create_group(int verbose_level)
 		print_group_orders();
 
 		cout << "the n e w action has base ";
-		int_vec_print(cout, GA->Stabilizer_chain->base, GA->Stabilizer_chain->base_len);
-		cout << " of length " << GA->Stabilizer_chain->base_len  << endl;
+		int_vec_print(cout, GA->get_base(), GA->base_len());
+		cout << " of length " << GA->base_len()  << endl;
 		}
 }
 

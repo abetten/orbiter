@@ -1,4 +1,4 @@
-// surface_object_with_action.C
+// surface_object_with_action.cpp
 // 
 // Anton Betten
 //

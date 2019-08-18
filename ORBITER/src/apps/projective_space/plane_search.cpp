@@ -1,4 +1,4 @@
-// plane_search.C
+// plane_search.cpp
 // 
 // Anton Betten
 // Oct 6, 2010

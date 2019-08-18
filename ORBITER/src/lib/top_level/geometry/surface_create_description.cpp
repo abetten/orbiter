@@ -1,4 +1,4 @@
-// surface_create_description.C
+// surface_create_description.cpp
 // 
 // Anton Betten
 //
@@ -40,6 +40,8 @@ void surface_create_description::null()
 	f_arc_lifting = FALSE;
 	arc_lifting_text = NULL;
 	f_arc_lifting_with_two_lines = FALSE;
+	f_select_double_six = FALSE;
+	select_double_six_string = NULL;
 }
 
 void surface_create_description::freeself()
@@ -87,6 +89,11 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			f_arc_lifting_with_two_lines = TRUE;
 			arc_lifting_text = argv[++i];
 			cout << "-arc_lifting_with_two_lines " << arc_lifting_text << endl;
+			}
+		else if (strcmp(argv[i], "-select_double_six") == 0) {
+			f_select_double_six = TRUE;
+			select_double_six_string = argv[++i];
+			cout << "-select_double_six " << select_double_six_string << endl;
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			return i;

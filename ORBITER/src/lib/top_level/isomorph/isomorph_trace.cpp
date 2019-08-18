@@ -1,9 +1,9 @@
-// isomorph_trace.C
+// isomorph_trace.cpp
 // 
 // Anton Betten
 // Oct 21, 2008
 //
-// moved here from isomorph_database.C 5/24/12
+// moved here from isomorph_database.cpp 5/24/12
 //
 //
 
@@ -1077,7 +1077,7 @@ int isomorph::handle_extension_database(int cur_level,
 		cout << "nb_strong_generators = " << nb_strong_generators << endl;
 		}
 	if (nb_strong_generators) {
-		pos += gen->Poset->A->Stabilizer_chain->base_len;
+		pos += gen->Poset->A->base_len();
 		}
 	nb_extensions = v->s_ii(pos++);
 	if (f_vv) {

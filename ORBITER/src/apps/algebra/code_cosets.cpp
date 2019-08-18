@@ -1,11 +1,11 @@
-// code_cosets.C
+// code_cosets.cpp
 // 
 // Anton Betten
 // 
 //
 // June 9, 2016
 //
-// based on ALGEBRA/projective_group.C 
+// based on ALGEBRA/projective_group.cpp
 //
 //
 

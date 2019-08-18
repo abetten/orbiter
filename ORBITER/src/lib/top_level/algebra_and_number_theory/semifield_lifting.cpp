@@ -434,7 +434,7 @@ void semifield_lifting::downstep(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "semifield_lifting::downstep "
@@ -2104,7 +2104,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 // deep search for levels three to six
 // this function is called from
 // semifield_starter::deep_search_at_level_three
-// in semifield_starter_level_three.C
+// in semifield_starter_level_three.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2165,7 +2165,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 				<< " reading candidates by type, po = " << po << endl;
 		}
 	L2->read_candidates_at_level_two_by_type(C3, po, verbose_level - 2);
-		// semifield_starter_level_two.C
+		// semifield_starter_level_two.cpp
 		// reads the files "C2_orbit%d_type%d_int4.bin"
 		// this function allocates C3
 
@@ -2219,7 +2219,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 		C3, C4,
 		Tmp1, Tmp2,
 		verbose_level - 1);
-		// in deep_search.C
+		// in deep_search.cpp
 
 	if (f_vv) {
 		cout << "semifield_lifting::deep_search_at_level_three_orbit "

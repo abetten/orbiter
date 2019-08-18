@@ -1,4 +1,4 @@
-// a_domain.C
+// a_domain.cpp
 // 
 // Anton Betten
 // March 14, 2015

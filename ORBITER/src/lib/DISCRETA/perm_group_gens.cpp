@@ -1,4 +1,4 @@
-// perm_group_gens.C
+// perm_group_gens.cpp
 //
 // Anton Betten
 // 27.07.2000
@@ -50,7 +50,7 @@ int is_abelian(Vector & gen)
 #include <parser.h>
 #endif
 
-void read_file_of_generators_xml(Vector & gen, char *fname, int &f_cyclic_notation, int f_v)
+void read_file_of_generators_xml(Vector & gen, char *fname, int &f_cyclic_notation, int verbose_level)
 //opens the file fname for reading and reads generators.
 //A typical input file is:
 //<GENERATORS NOTATION="CYCLE" DEGREE="6">
@@ -645,8 +645,9 @@ void vec_generators_raise_to_nth_power(Vector & gen, int n)
 		}
 }
 
-void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, int k, int q, int f_v, int f_vv)
+void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, int k, int q, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, l;
 	permutation pp;
 	
@@ -655,7 +656,7 @@ void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, int k, int q, int f_
 		if (f_v) {
 			cout << "i=" << i << " l=" << l << " : " << gen[i] << endl;
 			}
-		gen[i].as_permutation().induce_on_lines_of_PG_k_q(k, q, pp, f_v, f_vv);
+		gen[i].as_permutation().induce_on_lines_of_PG_k_q(k, q, pp, verbose_level - 2);
 		pp.swap(gen[i]);
 		}
 }
@@ -1101,13 +1102,17 @@ void vec_generators_direct_product(Vector & a, Vector & b, Vector & c)
 }
 
 
-void vec_generators_GL_n_q_as_matrices(Vector & gen, int n, domain *dom, int f_v)
+void vec_generators_GL_n_q_as_matrices(Vector & gen,
+		int n, domain *dom, int verbose_level)
 {
-	vec_generators_GL_n_q_subgroup_as_matrices(gen, n, 1, dom, f_v);
+	vec_generators_GL_n_q_subgroup_as_matrices(gen, n, 1, dom, verbose_level);
 }
 
-void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, int n, int subgroup_index, domain *dom, int f_v)
+void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen,
+		int n, int subgroup_index, domain *dom,
+		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	with w(dom);
 	matrix A;
 	int i, j, alpha;
@@ -1158,19 +1163,21 @@ void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, int n, int subgrou
 		}
 }
 
-void vec_generators_SL_n_q_as_matrices(Vector & gen, int n, domain *dom, int f_v)
+void vec_generators_SL_n_q_as_matrices(Vector & gen, int n, domain *dom, int verbose_level)
 {
+	//int f_v = (verbose_level >= 1);
 	Vector GL_gen;
 	
-	vec_generators_GL_n_q_as_matrices(GL_gen, n, dom, f_v);
+	vec_generators_GL_n_q_as_matrices(GL_gen, n, dom, verbose_level);
 
 	with w(dom);
 	
-	kernel_of_homomorphism(GL_gen, gen, determinant_map, f_v, FALSE);
+	kernel_of_homomorphism(GL_gen, gen, determinant_map, verbose_level);
 }
 
-void vec_generators_frobenius_in_PG(Vector & gen, int n, domain *dom, int f_v)
+void vec_generators_frobenius_in_PG(Vector & gen, int n, domain *dom, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	permutation p;
 	
 	frobenius_in_PG(dom, n, p);
@@ -1181,8 +1188,9 @@ void vec_generators_frobenius_in_PG(Vector & gen, int n, domain *dom, int f_v)
 	gen.append(p);
 }
 
-void vec_generators_frobenius_in_AG(Vector & gen, int n, domain *dom, int f_v)
+void vec_generators_frobenius_in_AG(Vector & gen, int n, domain *dom, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	permutation p;
 	
 	frobenius_in_AG(dom, n, p);
@@ -1193,8 +1201,9 @@ void vec_generators_frobenius_in_AG(Vector & gen, int n, domain *dom, int f_v)
 	gen.append(p);
 }
 
-void vec_generators_affine_translations(Vector & gen, int n, domain *dom, int f_v)
+void vec_generators_affine_translations(Vector & gen, int n, domain *dom, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	Vector b;
 	with ww(dom);
 	permutation p;
@@ -1217,17 +1226,20 @@ void vec_generators_affine_translations(Vector & gen, int n, domain *dom, int f_
 		}
 }
 
-void vec_generators_affine_translations(Vector & gen, int n, int q, int f_v)
+void vec_generators_affine_translations(Vector & gen, int n, int q, int verbose_level)
 {
 	domain *dom;
 	
-	dom = allocate_finite_field_domain(q, f_v);
-	vec_generators_affine_translations(gen, n, dom, f_v);
-	free_finite_field_domain(dom, f_v);
+	dom = allocate_finite_field_domain(q, verbose_level);
+	vec_generators_affine_translations(gen, n, dom, verbose_level);
+	free_finite_field_domain(dom);
 }
 
-void vec_generators_projective_representation(domain *dom, Vector & a, Vector & b, int f_action_from_right, int f_modified, int f_v)
+void vec_generators_projective_representation(domain *dom,
+		Vector & a, Vector & b, int f_action_from_right, int f_modified,
+		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, l;
 	permutation q;
 	
@@ -1249,8 +1261,9 @@ void vec_generators_projective_representation(domain *dom, Vector & a, Vector & 
 		}
 }
 
-void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, int f_v)
+void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, l;
 	permutation q;
 	
@@ -1274,13 +1287,19 @@ void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, i
 
 #define MY_DEBUG 0
 
-void vec_generators_GL_n_q_projective_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_modified, int f_v)
+void vec_generators_GL_n_q_projective_representation(Vector & gen,
+		int n, int q, int f_special, int f_frobenius, int f_modified,
+		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	domain *dom;
 	Vector GL_gen, gen1, gen2;
 	
-	dom = allocate_finite_field_domain(q, f_v);
-	vec_generators_GL_n_q_as_matrices(GL_gen, n, dom, f_v);
+	if (f_v) {
+		cout << "vec_generators_GL_n_q_projective_representation" << endl;
+	}
+	dom = allocate_finite_field_domain(q, verbose_level);
+	vec_generators_GL_n_q_as_matrices(GL_gen, n, dom, verbose_level);
 #if MY_DEBUG
 	{
 	Vector gens;
@@ -1294,12 +1313,12 @@ void vec_generators_GL_n_q_projective_representation(Vector & gen, int n, int q,
 	if (f_special) {
 		with w(dom);
 	
-		kernel_of_homomorphism(GL_gen, gen1, determinant_map, f_v, FALSE);
+		kernel_of_homomorphism(GL_gen, gen1, determinant_map, verbose_level);
 		}
 	else {
 		gen1 = GL_gen;
 		}
-	vec_generators_projective_representation(dom, gen1, gen2, TRUE /* f_action_from_right */, f_modified, f_v);
+	vec_generators_projective_representation(dom, gen1, gen2, TRUE /* f_action_from_right */, f_modified, verbose_level);
 #if MY_DEBUG
 	{
 	discreta_base o;
@@ -1310,41 +1329,48 @@ void vec_generators_GL_n_q_projective_representation(Vector & gen, int n, int q,
 	if (f_frobenius) {
 		Vector gen3;
 		
-		vec_generators_frobenius_in_PG(gen3, n - 1, dom, f_v);
+		vec_generators_frobenius_in_PG(gen3, n - 1, dom, verbose_level);
 		vec_generators_comma(gen2, gen3, gen);
 		}
 	else {
 		gen2.swap(gen);
 		}
-	free_finite_field_domain(dom, f_v);
+	free_finite_field_domain(dom);
 }
 
-void vec_generators_GL_n_q_affine_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_translations, int f_v)
+void vec_generators_GL_n_q_affine_representation(Vector & gen,
+		int n, int q, int f_special, int f_frobenius, int f_translations,
+		int verbose_level)
 {
-	vec_generators_GL_n_q_subgroup_affine_representation(gen, n, q, 1, f_special, f_frobenius, f_translations, f_v);
+	vec_generators_GL_n_q_subgroup_affine_representation(gen,
+			n, q, 1, f_special, f_frobenius, f_translations,
+			verbose_level);
 }
 
-void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen, int n, int q, int subgroup_index, 
-	int f_special, int f_frobenius, int f_translations, int f_v)
+void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen,
+		int n, int q, int subgroup_index,
+		int f_special, int f_frobenius, int f_translations,
+		int verbose_level)
 {
+	//int f_v = (verbose_level >= 1);
 	domain *dom;
 	Vector GL_gen, gen1, gen2, gen4;
 	
-	dom = allocate_finite_field_domain(q, f_v);
-	vec_generators_GL_n_q_subgroup_as_matrices(GL_gen, n, subgroup_index, dom, f_v);
+	dom = allocate_finite_field_domain(q, verbose_level - 2);
+	vec_generators_GL_n_q_subgroup_as_matrices(GL_gen, n, subgroup_index, dom, verbose_level);
 	if (f_special) {
 		with w(dom);
 	
-		kernel_of_homomorphism(GL_gen, gen1, determinant_map, f_v, FALSE);
+		kernel_of_homomorphism(GL_gen, gen1, determinant_map, verbose_level);
 		}
 	else {
 		gen1 = GL_gen;
 		}
-	vec_generators_affine_representation(dom, gen1, gen2, f_v);
+	vec_generators_affine_representation(dom, gen1, gen2, verbose_level);
 	if (f_translations) {
 		Vector gen3;
 		
-		vec_generators_affine_translations(gen3, n, dom, f_v);
+		vec_generators_affine_translations(gen3, n, dom, verbose_level);
 		vec_generators_comma(gen2, gen3, gen4);
 		}
 	else {
@@ -1353,20 +1379,23 @@ void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen, int n, i
 	if (f_frobenius) {
 		Vector gen3;
 		
-		vec_generators_frobenius_in_AG(gen3, n, dom, f_v);
+		vec_generators_frobenius_in_AG(gen3, n, dom, verbose_level);
 		vec_generators_comma(gen4, gen3, gen);
 		}
 	else {
 		gen4.swap(gen);
 		}
-	free_finite_field_domain(dom, f_v);
+	free_finite_field_domain(dom);
 }
 
 void kernel_of_homomorphism(Vector & gens, Vector & kernel_gens, 
-	void (*hom)(discreta_base & x, discreta_base & image), int f_v, int f_vv)
+	void (*hom)(discreta_base & x, discreta_base & image),
+	int verbose_level)
 //Computes generators for the kernel of a given homomorphism hom 
 //given generators for a group.
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	Vector rep, im_sorted, im_index;
 	Vector schreier_back, schreier_gen;
 	discreta_base g, h, ghv, a;
@@ -1508,8 +1537,9 @@ static void schreier_trace(Vector & schreier, Vector & schreier_generator,
 		}
 }
 
-void vec_generators_A5_in_PSL(Vector& G, int q, int f_v)
+void vec_generators_A5_in_PSL(Vector& G, int q, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	hollerith a;
 	int f_cyclic_notation;
 	
@@ -1534,8 +1564,9 @@ void vec_generators_A5_in_PSL(Vector& G, int q, int f_v)
 }
 
 
-void vec_generators_S4_in_PSL(Vector& G, int q, int f_v)
+void vec_generators_S4_in_PSL(Vector& G, int q, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	hollerith a;
 	int f_cyclic_notation;
 	
@@ -1559,13 +1590,14 @@ void vec_generators_S4_in_PSL(Vector& G, int q, int f_v)
 		}
 }
 
-void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, int f_v)
+void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	if (f_v) {
 		cout << "computing generators for the subgroup of even elements:" << endl;
 		cout << "(nb_gens=" << gen.s_l() << ")" << endl;
 		}
-	kernel_of_homomorphism(gen, gen_even_subgroup, signum_map, f_v, FALSE);
+	kernel_of_homomorphism(gen, gen_even_subgroup, signum_map, verbose_level);
 	if (f_v) {
 		cout << "generators for the subgroup of even elements are:" << endl;
 		cout << gen_even_subgroup << endl;
@@ -1665,9 +1697,10 @@ void wreath_embedding_component(permutation & g, int n, int m, int j, permutatio
 	cout << "leave wreath_embedding_component()" << endl;
 }
 
-void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, int f_v)
+void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, int verbose_level)
 //Computes generators for the wreath product $\la G \ra \wr \la H \ra$ into $W$.
 {
+	int f_v = (verbose_level >= 1);
 	permutation per;
 	int n, m, i, j, lG, lH, nb_gen;
 	
@@ -1752,8 +1785,10 @@ void vec_generators_Sn_wreath_Sm(int n, int m, Vector & G)
 }
 
 void vec_generators_q1_q2(int q1, int q2, Vector & gen, hollerith &label, 
-	int f_write_generators_to_file, int f_v, int f_vv)
+	int f_write_generators_to_file, int verbose_level)
 {
+	//int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	Vector gen1, gen2;
 	
 	label.init("");
@@ -1764,14 +1799,14 @@ void vec_generators_q1_q2(int q1, int q2, Vector & gen, hollerith &label,
 	domain *field_q1;
 	domain *field_q2;
 	
-	field_q1 = allocate_finite_field_domain(q1, f_v);
-	field_q2 = allocate_finite_field_domain(q2, f_v);
+	field_q1 = allocate_finite_field_domain(q1, verbose_level - 2);
+	field_q2 = allocate_finite_field_domain(q2, verbose_level - 2);
 	
-	vec_generators_affine_translations(gen1, 1 /* n */, field_q1, f_v);
-	vec_generators_affine_translations(gen2, 1 /* n */, field_q2, f_v);
+	vec_generators_affine_translations(gen1, 1 /* n */, field_q1, verbose_level);
+	vec_generators_affine_translations(gen2, 1 /* n */, field_q2, verbose_level);
 
-	free_finite_field_domain(field_q1, f_v);
-	free_finite_field_domain(field_q2, f_v);
+	free_finite_field_domain(field_q1);
+	free_finite_field_domain(field_q2);
 
 	if (f_vv) {
 		cout << "generators for translations in GF(" << q1 << "):\n";
@@ -1796,7 +1831,7 @@ void vec_generators_q1_q2(int q1, int q2, Vector & gen, hollerith &label,
 }
 
 void vec_generators_q1_q2_aubv(int q1, int q2, int u, int v, Vector & G, hollerith &label, 
-	int f_write_generators_to_file, int f_v, int f_vv)
+	int f_write_generators_to_file, int verbose_level)
 {
 	hollerith h;
 	
@@ -1809,7 +1844,7 @@ void vec_generators_q1_q2_aubv(int q1, int q2, int u, int v, Vector & G, holleri
 	label.append("_b");
 	label.append_i(v);
 	
-	vec_generators_q1_q2_au1bv1_au2bv2(q1, q2, u, v, 0, 0, G, h, FALSE, f_v, f_vv);
+	vec_generators_q1_q2_au1bv1_au2bv2(q1, q2, u, v, 0, 0, G, h, FALSE, verbose_level);
 	if (f_write_generators_to_file) {
 		int f_cyclic_notation = TRUE;
 		write_file_of_generators_xml_group_label(G, label.s(), f_cyclic_notation);
@@ -1819,8 +1854,10 @@ void vec_generators_q1_q2_aubv(int q1, int q2, int u, int v, Vector & G, holleri
 }
 
 void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, int v2, 
-	Vector & G, hollerith &label, int f_write_generators_to_file, int f_v, int f_vv)
+	Vector & G, hollerith &label, int f_write_generators_to_file, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	Vector gen1, gen2, gen3, matrix_gen1;
 	
 	domain *field_q1;
@@ -1840,11 +1877,11 @@ void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, 
 	label.append_i(v2);
 
 
-	field_q1 = allocate_finite_field_domain(q1, f_v);
-	field_q2 = allocate_finite_field_domain(q2, f_v);
+	field_q1 = allocate_finite_field_domain(q1, verbose_level);
+	field_q2 = allocate_finite_field_domain(q2, verbose_level);
 	
-	vec_generators_affine_translations(gen1, 1 /* n */, field_q1, f_v);
-	vec_generators_affine_translations(gen2, 1 /* n */, field_q2, f_v);
+	vec_generators_affine_translations(gen1, 1 /* n */, field_q1, verbose_level);
+	vec_generators_affine_translations(gen2, 1 /* n */, field_q2, verbose_level);
 
 	int a, a1, a2, b, b1, b2;
 	permutation perm_a1, perm_b1, perm_ab1;
@@ -1924,8 +1961,8 @@ void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, 
 	}
 	
 	
-	free_finite_field_domain(field_q1, f_v);
-	free_finite_field_domain(field_q2, f_v);
+	free_finite_field_domain(field_q1);
+	free_finite_field_domain(field_q2);
 
 	if (f_vv) {
 		cout << "generators for translations in GF(" << q1 << "):\n";
@@ -1967,7 +2004,7 @@ void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, 
 }
 
 void vec_generators_AGGL1q_subgroup(int q, int subgroup_index, 
-	int f_special, int f_frobenius, int f_translations, int f_v)
+	int f_special, int f_frobenius, int f_translations, int verbose_level)
 {
 	Vector gen;
 	hollerith group_label;
@@ -2001,14 +2038,14 @@ void vec_generators_AGGL1q_subgroup(int q, int subgroup_index,
 	int f_cyclic_notation = TRUE;
 	
 	vec_generators_GL_n_q_subgroup_affine_representation(gen, 1, q, subgroup_index, 
-		f_special, f_frobenius, f_translations, f_v);
+		f_special, f_frobenius, f_translations, verbose_level);
 	
 	write_file_of_generators_xml(gen, fname.s(), f_cyclic_notation);
 	
 }
 
 #if 0
-void vec_generators_cycle_index(Vector &gen, Vector &C, int f_v)
+void vec_generators_cycle_index(Vector &gen, Vector &C, int verbose_level)
 {
 	perm_group G(gen);
 	
@@ -2016,11 +2053,11 @@ void vec_generators_cycle_index(Vector &gen, Vector &C, int f_v)
 }
 #endif
 
-void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, int p, int f_modified, int f_v)
+void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, int p, int f_modified, int verbose_level)
 {
 	gen.m_l(1);
 	gen[0].change_to_permutation();
-	gen[0].as_permutation().singer_cycle_on_points_of_projective_plane(p, f_modified, f_v);
+	gen[0].as_permutation().singer_cycle_on_points_of_projective_plane(p, f_modified, verbose_level);
 }
 
 }}

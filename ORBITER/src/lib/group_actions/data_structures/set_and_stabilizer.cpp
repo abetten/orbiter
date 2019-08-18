@@ -1,4 +1,4 @@
-// set_and_stabilizer.C
+// set_and_stabilizer.cpp
 //
 // Anton Betten
 // September 18, 2016

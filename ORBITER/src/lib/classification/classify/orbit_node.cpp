@@ -1,4 +1,4 @@
-// orbit_node.C
+// orbit_node.cpp
 // 
 // Anton Betten
 // September 23, 2017

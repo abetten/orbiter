@@ -1,4 +1,4 @@
-// six_arcs_not_on_a_conic.C
+// six_arcs_not_on_a_conic.cpp
 // 
 // Anton Betten
 //
@@ -42,7 +42,9 @@ void six_arcs_not_on_a_conic::freeself()
 	null();
 }
 
-void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2, 
+void six_arcs_not_on_a_conic::init(finite_field *F,
+	action *A,
+	projective_space *P2,
 	int argc, const char **argv, 
 	int verbose_level)
 {
@@ -61,7 +63,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 	
 	Gen = NEW_OBJECT(arc_generator);
 
-	Gen->f_poly = FALSE;
+	//Gen->f_poly = FALSE;
 
 	Gen->d = 2; // we will classify two-arcs
 
@@ -80,6 +82,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 				"before Gen->init" << endl;
 		}
 	Gen->init(F, 
+		A, A->Strong_gens,
 		"" /* Gen->ECA->input_prefix */, 
 		"" /* Gen->ECA->base_fname */,
 		6 /* Gen->ECA->starter_size */, 
@@ -98,6 +101,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"Classifying 6-arcs for q=" << F->q << endl;
+		cout << "six_arcs_not_on_a_conic::init before Gen->compute_starter" << endl;
 		}
 	
 	Gen->compute_starter(verbose_level - 1);
@@ -150,7 +154,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 		P2->conic_type(
 			Arc6, 6, 
 			Pts_on_conic, nb_pts_on_conic, len1, 
-			0 /*verbose_level*/);
+			verbose_level - 2);
 		if (f_v) {
 			cout << "The arc intersects " << len1
 					<< " conics in 6 or more points. " << endl;
@@ -180,6 +184,35 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 		cout << "six_arcs_not_on_a_conic::done" << endl;
 		}
 
+}
+
+
+void six_arcs_not_on_a_conic::recognize(int *arc6, int *transporter,
+		int &orbit_not_on_conic_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int orbit_at_level;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "six_arcs_not_on_a_conic::recognize" << endl;
+	}
+
+	Gen->gen->identify(arc6, 6,
+		transporter,
+		orbit_at_level,
+		0 /*verbose_level */);
+
+
+	if (!Sorting.int_vec_search(Not_on_conic_idx,
+		nb_arcs_not_on_conic, orbit_at_level,
+		orbit_not_on_conic_idx)) {
+		cout << "six_arcs_not_on_a_conic::recognize could not find orbit" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "six_arcs_not_on_a_conic::recognize done" << endl;
+	}
 }
 
 

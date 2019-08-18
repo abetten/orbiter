@@ -1,4 +1,4 @@
-// compute_stabilizer.C
+// compute_stabilizer.cpp
 // 
 // Anton Betten
 // started Dec 28, 2014
@@ -142,7 +142,7 @@ void compute_stabilizer::init(int *the_set,
 	compute_stabilizer::interesting_subsets = interesting_subsets;
 
 	Stab = NEW_OBJECT(sims);
-	Stab->init(gen->Poset->A);
+	Stab->init(gen->Poset->A, verbose_level - 2);
 	Stab->init_trivial_group(verbose_level - 1);
 
 	init_U(verbose_level);
@@ -453,7 +453,7 @@ void compute_stabilizer::restricted_action(int verbose_level)
 	K = NEW_OBJECT(sims);
 	Kernel_original = NEW_OBJECT(sims);
 
-	K->init(A);
+	K->init(A, verbose_level - 2);
 	K->init_trivial_group(verbose_level - 1);
 	
 	A_induced->Kernel->group_order(K_go);

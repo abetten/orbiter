@@ -1,4 +1,4 @@
-// BLT_set_create_description.C
+// BLT_set_create_description.cpp
 // 
 // Anton Betten
 //

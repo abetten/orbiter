@@ -139,5 +139,38 @@ void arc_partition::init(
 		}
 }
 
+void arc_partition::recognize(int *partition, int *transporter,
+		int &orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int partition_idx;
+	combinatorics_domain Combi;
+
+
+	if (f_v) {
+		cout << "arc_partition::recognize" << endl;
+	}
+
+
+	partition_idx = Combi.set_partition_4_into_2_rank(partition);
+
+	if (f_v) {
+		cout << "arc_partition::recognize partition_idx=" << partition_idx << endl;
+	}
+
+	Orbits_on_partition->transporter_from_point_to_orbit_rep(partition_idx,
+			orbit_idx, transporter, verbose_level - 2);
+
+	if (f_v) {
+		cout << "arc_partition::recognize orbit_idx=" << orbit_idx << endl;
+	}
+
+
+	if (f_v) {
+		cout << "arc_partition::recognize done" << endl;
+	}
+}
+
+
 
 }}

@@ -1,4 +1,4 @@
-// colored_graph.C
+// colored_graph.cpp
 //
 // Anton Betten
 //
@@ -816,7 +816,6 @@ void colored_graph::save(const char *fname, int verbose_level)
 		user_data, user_data_size, 
 		bitvector_adjacency, bitvector_length,
 		verbose_level - 1);
-		// GALOIS/galois_global.C
 	
 	if (f_v) {
 		cout << "colored_graph::save done" << endl;
@@ -836,7 +835,7 @@ void colored_graph::load(const char *fname, int verbose_level)
 		user_data, user_data_size, 
 		bitvector_adjacency, bitvector_length,
 		verbose_level);
-		// GALOIS/galois_global.C
+
 	f_ownership_of_bitvec = TRUE;
 
 	strcpy(fname_base, fname);
@@ -1375,7 +1374,7 @@ void colored_graph::draw_with_a_given_partition(
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
 		FALSE /*f_has_labels*/, NULL /*labels*/);
-		// GALOIS/draw.C
+
 
 	FREE_uchar(D);
 	FREE_int(P);
@@ -1458,7 +1457,7 @@ void colored_graph::draw_partitioned(const char *fname,
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
 		f_labels /*f_has_labels*/, C.sorting_perm_inv /*labels*/);
-		// GALOIS/draw.C
+
 
 	FREE_uchar(D);
 	FREE_int(part);
@@ -2213,7 +2212,6 @@ void colored_graph::draw_it(const char *fname_base,
 		xmax_in, ymax_in, xmax_out, ymax_out,
 		scale, line_width, 
 		FALSE, NULL);
-		// in draw.C
 
 	FREE_uchar(bitvec);
 	

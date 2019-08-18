@@ -1,4 +1,4 @@
-// concatenate_files.C
+// concatenate_files.cpp
 // 
 // Anton Betten
 // March 14, 2018

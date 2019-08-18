@@ -1,4 +1,4 @@
-// representatives.C
+// representatives.cpp
 // 
 // Anton Betten
 // started July 3, 2012
@@ -96,7 +96,7 @@ void representatives::init(action *A,
 	fusion = NEW_int(nb_objects);
 	handle = NEW_int(nb_objects);
 	Elt1 = NEW_int(A->elt_size_in_int);
-	tl = NEW_int(A->Stabilizer_chain->base_len);
+	tl = NEW_int(A->base_len());
 
 	count = 0;
 	for (i = 0; i < nb_objects; i++) {
@@ -120,6 +120,9 @@ void representatives::write_fusion(int verbose_level)
 
 	if (f_v) {
 		cout << "representatives::write_fusion" << endl;
+		}
+	if (f_v) {
+		cout << "representatives::write_fusion fname_fusion=" << fname_fusion << endl;
 		}
 	{
 	ofstream f1(fname_fusion);
@@ -174,6 +177,11 @@ void representatives::read_fusion(int verbose_level)
 				<< fname_fusion << " of size "
 				<< Fio.file_size(fname_fusion) << endl;
 		}
+
+	if (Fio.file_size(fname_fusion) < 0) {
+		cout << "representatives::read_fusion the file " << fname_fusion << " does not exist" << endl;
+		exit(1);
+	}
 	{
 		ifstream f1(fname_fusion);
 		for (i = 0; i < nb_objects; i++) {
@@ -232,9 +240,9 @@ void representatives::write_representatives_and_stabilizers(
 	//f2 = fopen(fname_stabgens, "wb");
 	
 	
-	f1 << count << " " << setw(3) << A->Stabilizer_chain->base_len << " ";
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-		f1 << setw(3) << A->Stabilizer_chain->base[i] << " ";
+	f1 << count << " " << setw(3) << A->base_len() << " ";
+	for (i = 0; i < A->base_len(); i++) {
+		f1 << setw(3) << A->base_i(i) << " ";
 		}
 	f1 << endl;
 	
@@ -255,7 +263,7 @@ void representatives::write_representatives_and_stabilizers(
 			<< setw(5) << SG.len << " ";
 		go.print_width(f1, 10);
 		f1 << " ";
-		for (j = 0; j < A->Stabilizer_chain->base_len; j++) {
+		for (j = 0; j < A->base_len(); j++) {
 			f1 << setw(3) << tl[j] << " ";
 			}
 		f1 << endl;
@@ -302,14 +310,14 @@ void representatives::read_representatives_and_stabilizers(
 	//f2 = fopen(fname_stabgens, "rb");
 	
 	f1 >> count >> a;
-	if (a != A->Stabilizer_chain->base_len) {
+	if (a != A->base_len()) {
 		cout << "representatives::read_representatives_and_stabilizers "
 				"base_len does not match" << endl;
 		exit(1);
 		}
-	for (j = 0; j < A->Stabilizer_chain->base_len; j++) {
+	for (j = 0; j < A->base_len(); j++) {
 		f1 >> a;
-		if (a != A->Stabilizer_chain->base[j]) {
+		if (a != A->base_i(j)) {
 			cout << "representatives::read_representatives_and_stabilizers "
 					"base point does not match" << endl;
 			exit(1);
@@ -333,7 +341,7 @@ void representatives::read_representatives_and_stabilizers(
 		len = d;
 		gens.init(A);
 		gens.allocate(len);
-		for (j = 0; j < A->Stabilizer_chain->base_len; j++) {
+		for (j = 0; j < A->base_len(); j++) {
 			f1 >> tl[j];
 			}
 		for (j = 0; j < len; j++) {
@@ -348,10 +356,10 @@ void representatives::read_representatives_and_stabilizers(
 				cout << endl;
 				}
 			cout << "transversal lengths:" << endl;
-			int_vec_print(cout, tl, A->Stabilizer_chain->base_len);
+			int_vec_print(cout, tl, A->base_len());
 			cout << endl;
 			}
-		Stab->init(A);
+		Stab->init(A, verbose_level - 2);
 		Stab->init_generators(gens, FALSE);
 		Stab->compute_base_orbits(0/*verbose_level - 5*/);
 		Stab->group_order(go);
@@ -395,8 +403,20 @@ void representatives::load(int verbose_level)
 	if (f_v) {
 		cout << "representatives::load" << endl;
 		}
+	if (f_v) {
+		cout << "representatives::load before read_fusion" << endl;
+		}
 	read_fusion(verbose_level - 1);
+	if (f_v) {
+		cout << "representatives::load after read_fusion" << endl;
+		}
+	if (f_v) {
+		cout << "representatives::load before read_representatives_and_stabilizers" << endl;
+		}
 	read_representatives_and_stabilizers(verbose_level - 1);
+	if (f_v) {
+		cout << "representatives::load after read_representatives_and_stabilizers" << endl;
+		}
 	if (f_v) {
 		cout << "representatives::load done found " << count
 				<< " orbit representatives" << endl;

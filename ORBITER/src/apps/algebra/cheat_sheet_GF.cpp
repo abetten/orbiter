@@ -1,4 +1,4 @@
-// cheat_sheet_GF.C
+// cheat_sheet_GF.cpp
 // 
 // Anton Betten
 // 3/14/2010

@@ -1,4 +1,4 @@
-// plot_decomposition_matrix.C
+// plot_decomposition_matrix.cpp
 // 
 // Anton Betten
 // 3/18/2013

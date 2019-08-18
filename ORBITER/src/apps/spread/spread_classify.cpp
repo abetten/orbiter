@@ -1,4 +1,4 @@
-// spread_classify.C
+// spread_classify.cpp
 // 
 // Anton Betten
 // July 9, 2013
@@ -214,17 +214,17 @@ int main(int argc, const char **argv)
 
 
 	if (!f_order) {
-		cout << "spread_classify.C please use option "
+		cout << "spread_classify.cpp please use option "
 				"-order <order>" << endl;
 		exit(1);
 		}
 	if (!ECA->f_starter_size) {
-		cout << "spread_classify.C please use option "
+		cout << "spread_classify.cpp please use option "
 				"-starter_size <starter_size>" << endl;
 		exit(1);
 		}
 	if (!ECA->f_has_input_prefix) {
-		cout << "spread_classify.C please use option "
+		cout << "spread_classify.cpp please use option "
 				"-input_prefix <input_prefix>" << endl;
 		exit(1);
 		}
@@ -237,7 +237,7 @@ int main(int argc, const char **argv)
 
 	if (f_dim_over_kernel) {
 		if (e % dim_over_kernel) {
-			cout << "spread_classify.C dim_over_kernel "
+			cout << "spread_classify.cpp dim_over_kernel "
 					"does not divide e" << endl;
 			exit(1);
 			}
@@ -245,67 +245,78 @@ int main(int argc, const char **argv)
 		n = 2 * dim_over_kernel;
 		k = dim_over_kernel;
 		q = NT.i_power_j(p, e1);
-		cout << "spread_classify.C order=" << order
+		cout << "spread_classify.cpp order=" << order
 				<< " n=" << n << " k=" << k << " q=" << q << endl;
 		}
 	else {
 		n = 2 * e;
 		k = e;
 		q = p;
-		cout << "spread_classify.C order=" << order
+		cout << "spread_classify.cpp order=" << order
 				<< " n=" << n << " k=" << k << " q=" << q << endl;
 		}
 
 	finite_field *F;
-	spread T;
+	spread_classify T;
 
 	F = NEW_OBJECT(finite_field);
 
+	cout << "spread_classify.cpp before F->init_override_polynomial" << endl;
 	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 
+	cout << "spread_classify.cpp before T.read_arguments" << endl;
 	T.read_arguments(argc, argv);
 	
 	int max_depth = NT.i_power_j(F->q, k) + 1;
 
-	cout << "spread_classify.C before T.init" << endl;
+	cout << "spread_classify.cpp before T.init" << endl;
 	T.init(order, n, k, max_depth, 
 		F, f_recoordinatize, 
 		ECA->input_prefix, ECA->base_fname, ECA->starter_size, 
 		argc, argv, 
 		verbose_level - 1);
-	cout << "spread_classify.C after T.init" << endl;
+	cout << "spread_classify.cpp after T.init" << endl;
 	
+	cout << "spread_classify.cpp before T.init2" << endl;
 	T.init2(verbose_level - 1);
+	cout << "spread_classify.cpp after T.init2" << endl;
 
-	cout << "spread_classify.C before IA.init" << endl;
 
 	char prefix_with_directory[1000];
 
 	sprintf(prefix_with_directory, "%s%s",
 			T.starter_directory_name, T.prefix);
 
+	cout << "spread_classify.cpp before IA.init" << endl;
 	IA->init(T.A, T.A2, T.gen, 
 		T.spread_size, prefix_with_directory, ECA,
 		spread_callback_report,
 		NULL /* callback_subset_orbits */,
 		&T,
 		verbose_level - 1);
+	cout << "spread_classify.cpp after IA.init" << endl;
 
 
 	if (f_make_spread) {
-		cout << "spread_classify.C f_make_spread" << endl;
+		cout << "spread_classify.cpp f_make_spread" << endl;
+		cout << "spread_classify.cpp before T.write_spread_to_file" << endl;
 		T.write_spread_to_file(type_of_spread, verbose_level);
+		cout << "spread_classify.cpp after T.write_spread_to_file" << endl;
 		}
 	else if (f_starter) {
 
 
-		cout << "spread_classify.C f_starter" << endl;
+		cout << "spread_classify.cpp f_starter" << endl;
 		
+		cout << "spread_classify.cpp before T.compute" << endl;
+
 		T.compute(verbose_level);
 
-		cout << "spread_classify.C "
+		cout << "spread_classify.cpp after T.compute" << endl;
+
+		cout << "spread_classify.cpp "
 				"starter_size = " << ECA->starter_size << endl;
-		cout << "spread_classify.C "
+		cout << "spread_classify.cpp "
 				"spread_size = " << T.spread_size << endl;
 	
 
@@ -332,7 +343,7 @@ int main(int argc, const char **argv)
 		
 		if (f_draw_poset) {
 			if (f_v) {
-				cout << "spread_classify.C "
+				cout << "spread_classify.cpp "
 						"before gen->draw_poset" << endl;
 				}
 			T.gen->draw_poset(T.gen->fname_base,
@@ -343,7 +354,7 @@ int main(int argc, const char **argv)
 
 		if (f_print_data_structure) {
 			if (f_v) {
-				cout << "spread_classify.C "
+				cout << "spread_classify.cpp "
 						"before gen->print_data_structure_tex" << endl;
 				}
 			T.gen->print_data_structure_tex(
@@ -354,13 +365,13 @@ int main(int argc, const char **argv)
 		}
 	else if (nb_identify) {
 
-		cout << "spread_classify.C f_identify" << endl;
+		cout << "spread_classify.cpp f_identify" << endl;
 
 		
-		cout << "spread_classify.C "
+		cout << "spread_classify.cpp "
 				"classifying spreads" << endl;
 		T.compute(0 /* verbose_level */);
-		cout << "spread_classify.C "
+		cout << "spread_classify.cpp "
 				"classifying spreads done" << endl;
 
 		//T.gen->print_node(5);
@@ -375,7 +386,7 @@ int main(int argc, const char **argv)
 			int sz;
 
 			int_vec_scan(identify_data[i], data, sz);
-			cout << "spread_classify.C identifying set "
+			cout << "spread_classify.cpp identifying set "
 					<< i << " / " << nb_identify << " : ";
 			int_vec_print(cout, data, sz);
 			cout << endl;
@@ -394,12 +405,12 @@ int main(int argc, const char **argv)
 		FREE_int(transporter);
 	}
 	else if (f_test_identify) {
-		cout << "spread_classify.C f_test_identify" << endl;
+		cout << "spread_classify.cpp f_test_identify" << endl;
 		
-		cout << "spread_classify.C "
+		cout << "spread_classify.cpp "
 				"classifying spreads" << endl;
 		T.compute(0 /* verbose_level */);
-		cout << "spread_classify.C "
+		cout << "spread_classify.cpp "
 				"classifying spreads done" << endl;
 
 		T.gen->test_identify(identify_level,
@@ -409,7 +420,7 @@ int main(int argc, const char **argv)
 
 	if (ECA->f_lift) {
 	
-		cout << "spread_classify.C f_lift" << endl;
+		cout << "spread_classify.cpp f_lift" << endl;
 		
 		ECA->target_size = T.spread_size;
 		ECA->user_data = (void *) &T;
@@ -420,10 +431,9 @@ int main(int argc, const char **argv)
 		ECA->early_test_function_data = (void *) &T;
 		
 		//compute_lifts(ECA, verbose_level);
-			// in TOP_LEVEL/extra.C
 
 		if (f_v) {
-			cout << "spread_classify.C before ECA->compute_lifts" << endl;
+			cout << "spread_classify.cpp before ECA->compute_lifts" << endl;
 		}
 
 
@@ -431,16 +441,16 @@ int main(int argc, const char **argv)
 
 	
 		if (f_v) {
-			cout << "spread_classify.C after ECA->compute_lifts" << endl;
+			cout << "spread_classify.cpp after ECA->compute_lifts" << endl;
 		}
 
 
 
 	}
 
-	cout << "spread_classify.C before IA->execute" << endl;
+	cout << "spread_classify.cpp before IA->execute" << endl;
 	IA->execute(verbose_level);
-	cout << "spread_classify.C after IA->execute" << endl;
+	cout << "spread_classify.cpp after IA->execute" << endl;
 
 
 	if (f_print_spread) {
@@ -458,7 +468,7 @@ int main(int argc, const char **argv)
 		int no, nb;
 		char fname[1000];
 		
-		cout << "spread_classify.C printing orbit "
+		cout << "spread_classify.cpp printing orbit "
 				"representatives at level "
 				<< representatives_size << endl;
 		R = NEW_OBJECT(orbit_rep);
@@ -507,7 +517,7 @@ int main(int argc, const char **argv)
 
 void print_spread(ostream &ost, int len, int *S, void *data)
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	
 	Spread->print(ost, len, S);
 }

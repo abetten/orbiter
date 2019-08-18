@@ -1,4 +1,4 @@
-// action_init.C
+// action_init.cpp
 //
 // Anton Betten
 // 1/1/2009
@@ -180,7 +180,7 @@ void action::init_projective_group(int n, finite_field *F,
 				"before M->init_projective_group" << endl;
 		}
 	M->init_projective_group(n,
-			F, f_semilinear, this, verbose_level - 1);
+			F, f_semilinear, this, verbose_level - 3);
 	if (f_v) {
 		cout << "action::init_projective_group "
 				"after M->init_projective_group" << endl;
@@ -218,7 +218,7 @@ void action::init_projective_group(int n, finite_field *F,
 			}
 		setup_linear_group_from_strong_generators(M,
 				nice_gens,
-				verbose_level);
+				verbose_level - 3);
 		if (f_v) {
 			cout << "action::init_projective_group "
 					"after setup_linear_group_from_strong_generators"
@@ -411,13 +411,13 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 
 	S = NEW_OBJECT(sims);
 
-	S->init(this);
+	S->init(this, verbose_level - 2);
 	S->init_generators(*Strong_gens->gens, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "action::setup_linear_group_from_strong_generators "
 				"before S->compute_base_orbits_known_length" << endl;
 		}
-	S->compute_base_orbits_known_length(Stabilizer_chain->transversal_length, verbose_level);
+	S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
 	if (f_v) {
 		cout << "action::setup_linear_group_from_strong_generators "
 				"after S->compute_base_orbits_known_length" << endl;
@@ -534,21 +534,18 @@ void action::init_matrix_group_strong_generators_builtin(
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-			// in GALOIS/projective.C
 		}
 	else if (M->f_affine) {
 		F->strong_generators_for_affine_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-			// in GALOIS/projective.C
 		}
 	else if (M->f_general_linear) {
 		F->strong_generators_for_general_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-			// in GALOIS/projective.C
 		}
 	else {
 		cout << "action::init_matrix_group_strong_generators_builtin "
@@ -560,7 +557,7 @@ void action::init_matrix_group_strong_generators_builtin(
 	f_has_strong_generators = TRUE;
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_data(this, data, nb_gens, size,
-			Stabilizer_chain->transversal_length,
+			get_transversal_length(),
 			nice_gens,
 			verbose_level - 1);
 
@@ -613,14 +610,40 @@ void action::init_permutation_group(int degree, int verbose_level)
 	allocate_element_data();
 	action::degree = degree;
 	make_element_size = degree;
+
+
+	// ToDo
+
+	if (f_vv) {
+		cout << "action::init_permutation_group "
+				"calling allocate_base_data" << endl;
+		}
+	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	Stabilizer_chain->allocate_base_data(this, degree, verbose_level);
+	//allocate_base_data(given_base_length);
+	//Stabilizer_chain->base_len = given_base_length;
+
+	// init trivial base:
+	int i;
+	for (i = 0; i < base_len(); i++) {
+		base_i(i) = i;
+		}
+
+	// ToDo
+
+
+
 	
 	if (f_v) {
-		cout << "action::init_permutation_group, finished" << endl;
+		cout << "action::init_permutation_group finished" << endl;
 		cout << "a permutation group of degree " << action::degree << endl;
 		cout << "and of order ";
 		print_group_order(cout);
 		cout << endl;
 		print_info();
+		}
+	if (f_v) {
+		cout << "action::init_permutation_group done" << endl;
 		}
 	
 }
@@ -682,8 +705,8 @@ void action::init_permutation_group_from_generators(int degree,
 	//Stabilizer_chain->base_len = given_base_length;
 	
 	// init base:
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
-		Stabilizer_chain->base[i] = given_base[i];
+	for (i = 0; i < base_len(); i++) {
+		base_i(i) = given_base[i];
 		}
 
 
@@ -988,7 +1011,7 @@ void action::create_orthogonal_group(action *subaction,
 				"before ss.init_random_process" << endl;
 		}
 	ss.init_random_process(
-		callback_choose_random_generator,   // see action_global.C
+		callback_choose_random_generator,
 		&ss, 
 		verbose_level - 1);
 	if (f_v) {
@@ -1152,13 +1175,13 @@ void action::init_direct_product_group(
 
 	if (f_v) {
 		cout << "action::init_direct_product_group "
-				"base_len=" << Stabilizer_chain->base_len << endl;
+				"base_len=" << base_len() << endl;
 		}
 
 
-	int_vec_copy(P->the_base, Stabilizer_chain->base, Stabilizer_chain->base_len);
+	int_vec_copy(P->the_base, get_base(), base_len());
 	int_vec_copy(P->the_transversal_length,
-			Stabilizer_chain->transversal_length, Stabilizer_chain->base_len);
+			get_transversal_length(), base_len());
 
 	int *gens_data;
 	int gens_size;
@@ -1184,7 +1207,7 @@ void action::init_direct_product_group(
 
 	Strong_gens->init_from_data(this,
 			gens_data, gens_nb, gens_size,
-			Stabilizer_chain->transversal_length,
+			get_transversal_length(),
 			nice_gens,
 			verbose_level - 1);
 	if (f_v) {
@@ -1199,7 +1222,7 @@ void action::init_direct_product_group(
 
 	S = NEW_OBJECT(sims);
 
-	S->init(this);
+	S->init(this, verbose_level - 2);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before S->init_generators" << endl;
@@ -1213,7 +1236,7 @@ void action::init_direct_product_group(
 		cout << "action::init_direct_product_group "
 				"before S->compute_base_orbits_known_length" << endl;
 		}
-	S->compute_base_orbits_known_length(Stabilizer_chain->transversal_length, verbose_level);
+	S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after S->compute_base_orbits_known_length" << endl;
@@ -1263,6 +1286,10 @@ void action::init_wreath_product_group_and_restrict(
 				<< " n=" << n << " q=" << F->q << endl;
 		}
 	A_wreath = NEW_OBJECT(action);
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"before A_wreath->init_wreath_product_group" << endl;
+	}
 	A_wreath->init_wreath_product_group(nb_factors, n, F, verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group_and_restrict "
@@ -1378,17 +1405,21 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		}
 
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before Stabilizer_chain->allocate_base_data" << endl;
+		}
 	Stabilizer_chain->allocate_base_data(this, W->base_length, verbose_level);
 	//allocate_base_data(base_len);
 	//Stabilizer_chain->base_len = W->base_length;
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
-				"base_len=" << Stabilizer_chain->base_len << endl;
+				"base_len=" << base_len() << endl;
 		}
 
-	int_vec_copy(W->the_base, Stabilizer_chain->base, Stabilizer_chain->base_len);
+	int_vec_copy(W->the_base, get_base(), base_len());
 	int_vec_copy(W->the_transversal_length,
-			Stabilizer_chain->transversal_length, Stabilizer_chain->base_len);
+			get_transversal_length(), base_len());
 
 	int *gens_data;
 	int gens_size;
@@ -1412,7 +1443,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 	vector_ge *nice_gens;
 	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
-			Stabilizer_chain->transversal_length,
+			get_transversal_length(),
 			nice_gens,
 			verbose_level - 1);
 	if (f_v) {
@@ -1423,42 +1454,50 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	f_has_strong_generators = TRUE;
 	FREE_int(gens_data);
 
-	sims *S;
 
-	S = NEW_OBJECT(sims);
+	if (degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
+		sims *S;
 
-	S->init(this);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before S->init_generators" << endl;
-		}
-	S->init_generators(*Strong_gens->gens, verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after S->init_generators" << endl;
-		}
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before S->compute_base_orbits_known_length" << endl;
-		}
-	S->compute_base_orbits_known_length(Stabilizer_chain->transversal_length, verbose_level);
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"after S->compute_base_orbits_known_length" << endl;
-		}
+		S = NEW_OBJECT(sims);
+
+		S->init(this, verbose_level - 2);
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"before S->init_generators" << endl;
+			}
+		S->init_generators(*Strong_gens->gens, verbose_level);
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"after S->init_generators" << endl;
+			}
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"before S->compute_base_orbits_known_length" << endl;
+			}
+		S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"after S->compute_base_orbits_known_length" << endl;
+			}
 
 
-	if (f_v) {
-		cout << "action::init_wreath_product_group "
-				"before init_sims" << endl;
-		}
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"before init_sims" << endl;
+			}
 
-	init_sims(S, verbose_level);
+		init_sims(S, verbose_level);
 
-	if (f_v) {
+		if (f_v) {
+			cout << "action::init_wreath_product_group "
+					"after init_sims" << endl;
+			}
+	}
+	else {
 		cout << "action::init_wreath_product_group "
-				"after init_sims" << endl;
-		}
+				"because the degree is very large, "
+				"we are not creating a sims object" << endl;
+	}
 
 	if (f_v) {
 		cout << "action::init_wreath_product_group, finished setting up "
@@ -1660,7 +1699,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base done" << endl;
 		cout << "base: ";
-		int_vec_print(cout, Stabilizer_chain->base, Stabilizer_chain->base_len);
+		int_vec_print(cout, get_base(), base_len());
 		cout << endl;
 		}
 
@@ -1741,8 +1780,8 @@ void action::init_group_from_strong_generators(
 	//allocate_base_data(given_base_length);
 	//Stabilizer_chain->base_len = given_base_length;
 
-	for (i = 0; i < Stabilizer_chain->base_len; i++) {
-		Stabilizer_chain->base[i] = given_base[i];
+	for (i = 0; i < base_len(); i++) {
+		base_i(i) = given_base[i];
 		}
 
 
@@ -1755,7 +1794,7 @@ void action::init_group_from_strong_generators(
 
 	G = NEW_OBJECT(sims);
 
-	G->init(this);
+	G->init(this, verbose_level - 2);
 	G->init_trivial_group(verbose_level - 1);
 	G->group_order(G_order);
 
@@ -1778,7 +1817,7 @@ void action::init_group_from_strong_generators(
 				"found a group of order " << G_order << endl;
 		if (f_vv) {
 			cout << "transversal lengths:" << endl;
-			int_vec_print(cout, G->orbit_len, Stabilizer_chain->base_len);
+			int_vec_print(cout, G->orbit_len, base_len());
 			cout << endl;
 			}
 		}
@@ -1877,14 +1916,24 @@ sims *action::create_sims_from_generators_randomized(
 		cout << "verbose_level=" << verbose_level << endl;
 		if (f_target_go) {
 			cout << "creating a group of order " << target_go << endl;
+			if (target_go.is_zero()) {
+				cout << "action::create_sims_from_generators_randomized target_go is zero" << endl;
+				exit(1);
 			}
 		}
+	}
 
 	schreier_sims *ss;
 
 	ss = NEW_OBJECT(schreier_sims);
 
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized before ss->init" << endl;
+	}
 	ss->init(this, verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized after ss->init" << endl;
+	}
 
 	//ss->interested_in_kernel(A_subaction, verbose_level - 1);
 
@@ -1892,9 +1941,21 @@ sims *action::create_sims_from_generators_randomized(
 		ss->init_target_group_order(target_go, verbose_level - 1);
 		}
 
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized before ss->init_generators" << endl;
+	}
 	ss->init_generators(gens, verbose_level);
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized after ss->init_generators" << endl;
+	}
 
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized before ss->create_group" << endl;
+	}
 	ss->create_group(verbose_level - 1);
+	if (f_v) {
+		cout << "action::create_sims_from_generators_randomized after ss->create_group" << endl;
+	}
 
 	S = ss->G;
 	ss->G = NULL;
@@ -2070,7 +2131,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 
 	gens = NEW_OBJECT(vector_ge);
 	SG = NEW_OBJECT(vector_ge);
-	tl = NEW_int(Stabilizer_chain->base_len);
+	tl = NEW_int(base_len());
 	gens->init(this);
 	gens->allocate(nb_gens);
 	Elt1 = NEW_int(elt_size_in_int);

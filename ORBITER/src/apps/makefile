@@ -10,6 +10,7 @@ all:
 	cd linear_spaces; $(MAKE) all
 	#cd main; $(MAKE) all
 	cd ovoid; $(MAKE) all
+	cd packing; $(MAKE) all
 	cd projective_space; $(MAKE) all
 	cd regular_ls; $(MAKE) all
 	cd semifield; $(MAKE) all
@@ -32,6 +33,7 @@ clean:
 	cd linear_spaces; $(MAKE) clean
 	cd main; $(MAKE) clean
 	cd ovoid; $(MAKE) clean
+	cd packing; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
 	cd regular_ls; $(MAKE) clean
 	cd semifield; $(MAKE) clean

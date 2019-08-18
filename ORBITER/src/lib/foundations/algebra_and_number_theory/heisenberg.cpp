@@ -1,4 +1,4 @@
-// heisenberg.C
+// heisenberg.cpp
 //
 // Anton Betten
 // 

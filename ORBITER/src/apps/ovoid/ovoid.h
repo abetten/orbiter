@@ -28,7 +28,7 @@ void callback_print_set(std::ostream &ost, int len, int *S, void *data);
 //int callback_check_conditions(int len, int *S, void *data, int verbose_level);
 
 // #############################################################################
-// ovoid_generator.C:
+// ovoid_generator.cpp
 // #############################################################################
 
 

@@ -1,4 +1,4 @@
-// rainbow_cliques.C
+// rainbow_cliques.cpp
 //
 // Anton Betten
 // October 11, 2018

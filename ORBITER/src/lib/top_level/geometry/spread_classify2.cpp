@@ -1,13 +1,13 @@
-// spread2.C
+// spread2.cpp
 // 
 // Anton Betten
 // November 17, 2009
 //
 // 
 //
-// moved here from translation_plane.C: April 23, 2013
+// moved here from translation_plane.cpp: April 23, 2013
 // moved to TOP_LEVEL: November 2, 2013
-// renamed to spread2.C from translation_plane2.C: March 25, 2018
+// renamed to spread2.cpp from translation_plane2.cpp: March 25, 2018
 //
 //
 
@@ -18,7 +18,7 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
-void spread::print_isomorphism_type(isomorph *Iso, 
+void spread_classify::print_isomorphism_type(isomorph *Iso,
 	int iso_cnt, sims *Stab, schreier &Orb, 
 	int *data, int verbose_level)
 // called from callback_print_isomorphism_type()
@@ -46,7 +46,7 @@ void spread::print_isomorphism_type(isomorph *Iso,
 		}
 
 	if (f_v) {
-		cout << "spread::print_isomorphism_type" << endl;
+		cout << "spread_classify::print_isomorphism_type" << endl;
 		}
 
 	sprintf(fname, "%s_%d.tex", Iso->prefix, iso_cnt);
@@ -137,14 +137,14 @@ void spread::print_isomorphism_type(isomorph *Iso,
 
 
 	if (f_v) {
-		cout << "spread::print_isomorphism_type "
+		cout << "spread_classify::print_isomorphism_type "
 				"calling induced_action_on_set_and_kernel" << endl;
 		}
 	Iso->induced_action_on_set_and_kernel(file,
 			A, Stab, Iso->size, data, verbose_level - 1);
 
 	if (f_v) {
-		cout << "spread::print_isomorphism_type "
+		cout << "spread_classify::print_isomorphism_type "
 				"induced_action_on_set_and_kernel finished" << endl;
 		}
 
@@ -207,9 +207,9 @@ void spread::print_isomorphism_type(isomorph *Iso,
 	file_io Fio;
 
 	if (f_v) {
-		cout << "spread::print_isomorphism_type written file "
+		cout << "spread_classify::print_isomorphism_type written file "
 				<< fname << " of size " << Fio.file_size(fname) << endl;
-		cout << "spread::print_isomorphism_type written file "
+		cout << "spread_classify::print_isomorphism_type written file "
 				<< fname_klein << " of size "
 				<< Fio.file_size(fname_klein) << endl;
 		}
@@ -219,7 +219,7 @@ void spread::print_isomorphism_type(isomorph *Iso,
 }
 
 
-void spread::save_klein_invariants(char *prefix, 
+void spread_classify::save_klein_invariants(char *prefix,
 	int iso_cnt, 
 	int *data, int data_size, int verbose_level)
 {
@@ -231,11 +231,11 @@ void spread::save_klein_invariants(char *prefix,
 	int i, j;
 
 	if (f_v) {
-		cout << "spread::klein_invariants" << endl;
+		cout << "spread_classify::klein_invariants" << endl;
 		}
 	
 	if (Klein == NULL) {
-		cout << "spread::klein_invariants Klein == NULL" << endl;
+		cout << "spread_classify::klein_invariants Klein == NULL" << endl;
 		exit(1);
 		}
 	
@@ -288,11 +288,11 @@ void spread::save_klein_invariants(char *prefix,
 	FREE_int(nb_pts_on_plane);
 
 	if (f_v) {
-		cout << "spread::klein_invariants done" << endl;
+		cout << "spread_classify::klein_invariants done" << endl;
 		}
 }
 
-void spread::klein(ofstream &ost, 
+void spread_classify::klein(ofstream &ost,
 	isomorph *Iso, 
 	int iso_cnt, sims *Stab, schreier &Orb, 
 	int *data, int data_size, int verbose_level)
@@ -494,11 +494,11 @@ void spread::klein(ofstream &ost,
 	FREE_int(nb_pts_on_plane);
 
 	if (f_v) {
-		cout << "spread::klein done" << endl;
+		cout << "spread_classify::klein done" << endl;
 		}
 }
 
-void spread::plane_intersection_type_of_klein_image(
+void spread_classify::plane_intersection_type_of_klein_image(
 	projective_space *P3, 
 	projective_space *P5, 
 	grassmann *Gr, 
@@ -513,7 +513,7 @@ void spread::plane_intersection_type_of_klein_image(
 	int *the_set_out;
 
 	if (f_v) {
-		cout << "spread::plane_intersection_type_of_klein_image" << endl;
+		cout << "spread_classify::plane_intersection_type_of_klein_image" << endl;
 		}
 	the_set_out = NEW_int(size);
 	
@@ -535,14 +535,14 @@ void spread::plane_intersection_type_of_klein_image(
 	//F = P3->F;
 
 	if (f_v) {
-		cout << "spread::plane_intersection_type_of_klein_image "
+		cout << "spread_classify::plane_intersection_type_of_klein_image "
 				"after P3->klein_correspondence" << endl;
 		}
 
 	
 	N = P5->nb_rk_k_subspaces_as_int(3);
 	if (f_v) {
-		cout << "spread::klein N = " << N << endl;
+		cout << "spread_classify::klein N = " << N << endl;
 		}
 
 
@@ -554,7 +554,7 @@ void spread::plane_intersection_type_of_klein_image(
 	FREE_int(the_set_out);
 }
 
-void spread::czerwinski_oakden(int level, int verbose_level)
+void spread_classify::czerwinski_oakden(int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1135,7 +1135,7 @@ void spread::czerwinski_oakden(int level, int verbose_level)
 		};
 
 	if (f_v) {
-		cout << "spread::czerwinski_oakden" << endl;
+		cout << "spread_classify::czerwinski_oakden" << endl;
 		}
 
 	const char *label[] = {
@@ -1222,7 +1222,7 @@ void spread::czerwinski_oakden(int level, int verbose_level)
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
-void spread::write_spread_to_file(int type_of_spread, int verbose_level)
+void spread_classify::write_spread_to_file(int type_of_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *data;
@@ -1230,7 +1230,7 @@ void spread::write_spread_to_file(int type_of_spread, int verbose_level)
 	char fname[1000];
 
 	if (f_v) {
-		cout << "spread::write_spread_to_file" << endl;
+		cout << "spread_classify::write_spread_to_file" << endl;
 		}
 	if (type_of_spread == SPREAD_OF_TYPE_FTWKB) {
 		sprintf(fname, "spread_q%d_FTW.txt", q);
@@ -1270,7 +1270,7 @@ void spread::write_spread_to_file(int type_of_spread, int verbose_level)
 	FREE_int(data);
 }
 
-void spread::make_spread(int *data,
+void spread_classify::make_spread(int *data,
 		int type_of_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1282,24 +1282,24 @@ void spread::make_spread(int *data,
 	int q1 = NT.i_power_j(F->p, (F->e >> 1));
 
 	if (f_v) {
-		cout << "spread::make_spread q=" << q << " q1=" << q1 << endl;
+		cout << "spread_classify::make_spread q=" << q << " q1=" << q1 << endl;
 		}
 	if (n != 4) {
-		cout << "spread::make_spread n != 4" << endl;
+		cout << "spread_classify::make_spread n != 4" << endl;
 		exit(1);
 		}
 	if (EVEN(q)) {
-		cout << "spread::make_spread need q odd" << endl;
+		cout << "spread_classify::make_spread need q odd" << endl;
 		exit(1);
 		}
 	if (k != 2) {
-		cout << "spread::make_spread k != 2" << endl;
+		cout << "spread_classify::make_spread k != 2" << endl;
 		exit(1);
 		}
 	for (eta = q1; eta < q; eta++) {
 		if (F->negate(F->power(eta, q1)) == eta) {
 			if (f_v) {
-				cout << "spread::make_spread eta=" << eta << endl;
+				cout << "spread_classify::make_spread eta=" << eta << endl;
 				}
 			break;
 			}
@@ -1346,21 +1346,21 @@ void spread::make_spread(int *data,
 		} // next h
 	if (check_function(sz, data, verbose_level - 2)) {
 		if (f_v) {
-			cout << "spread::make_spread The set is a spread" << endl;
+			cout << "spread_classify::make_spread The set is a spread" << endl;
 			}
 		}
 	else {
-		cout << "spread::make_spreadThe set is NOT a spread" << endl;
+		cout << "spread_classify::make_spread The set is NOT a spread" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "spread::make_spread done" << endl;
+		cout << "spread_classify::make_spread done" << endl;
 		}
 }
 
 
-void spread::make_spread_from_q_clan(int *data,
+void spread_classify::make_spread_from_q_clan(int *data,
 		int type_of_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1373,14 +1373,14 @@ void spread::make_spread_from_q_clan(int *data,
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "spread::make_spread_from_q_clan" << endl;
+		cout << "spread_classify::make_spread_from_q_clan" << endl;
 		}
 	if (n != 4) {
-		cout << "spread::make_spread_from_q_clan n != 4" << endl;
+		cout << "spread_classify::make_spread_from_q_clan n != 4" << endl;
 		exit(1);
 		}
 	if (k != 2) {
-		cout << "spread::make_spread_from_q_clan k != 2" << endl;
+		cout << "spread_classify::make_spread_from_q_clan k != 2" << endl;
 		exit(1);
 		}
 	three = F->add3(1, 1, 1);
@@ -1532,7 +1532,7 @@ void spread::make_spread_from_q_clan(int *data,
 		}
 }
 
-void spread::read_and_print_spread(const char *fname, int verbose_level)
+void spread_classify::read_and_print_spread(const char *fname, int verbose_level)
 {
 	int *data;
 	int sz;
@@ -1543,7 +1543,7 @@ void spread::read_and_print_spread(const char *fname, int verbose_level)
 	FREE_int(data);
 }
 
-void spread::HMO(const char *fname, int verbose_level)
+void spread_classify::HMO(const char *fname, int verbose_level)
 {
 	int *data;
 	int sz, i, h, h1;
@@ -1555,7 +1555,7 @@ void spread::HMO(const char *fname, int verbose_level)
 	file_io Fio;
 
 	if (order != q * q) {
-		cout << "spread::print_spread order != q * q" << endl;
+		cout << "spread_classify::print_spread order != q * q" << endl;
 		exit(1);
 		}
 	Fio.read_set_from_file(fname, data, sz, verbose_level);
@@ -1671,7 +1671,7 @@ void spread::HMO(const char *fname, int verbose_level)
 	FREE_int(HH);
 }
 
-void spread::get_spread_matrices(int *G, int *H,
+void spread_classify::get_spread_matrices(int *G, int *H,
 		int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1680,7 +1680,7 @@ void spread::get_spread_matrices(int *G, int *H,
 	int M[8];
 
 	if (f_v) {
-		cout << "spread::get_spread_matrices" << endl;
+		cout << "spread_classify::get_spread_matrices" << endl;
 		}
 	for (i = 0; i < order; i++) {
 		G[i] = -1;
@@ -1731,7 +1731,7 @@ void spread::get_spread_matrices(int *G, int *H,
 		}
 }
 
-void spread::print_spread(ostream &ost, int *data, int sz)
+void spread_classify::print_spread(ostream &ost, int *data, int sz)
 {
 	//int sz = order + 1;
 	int h;
@@ -1743,14 +1743,14 @@ void spread::print_spread(ostream &ost, int *data, int sz)
 		}
 }
 
-void spread::report2(isomorph &Iso, int verbose_level)
+void spread_classify::report2(isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
 	int target_size = order + 1;
 
 	if (f_v) {
-		cout << "spread::report2" << endl;
+		cout << "spread_classify::report2" << endl;
 		}
 	sprintf(fname, "report_Spreads_q%d_k%d.tex", q, k);
 
@@ -2155,7 +2155,7 @@ void spread::report2(isomorph &Iso, int verbose_level)
 			set = NEW_int(len);
 			//A1 = NEW_OBJECT(action);
 			gens = NEW_OBJECT(vector_ge);
-			tl = NEW_int(Iso.A_base->Stabilizer_chain->base_len);
+			tl = NEW_int(Iso.A_base->base_len());
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 				}
@@ -2218,7 +2218,7 @@ void spread::report2(isomorph &Iso, int verbose_level)
 
 }
 
-void spread::all_cooperstein_thas_quotients(
+void spread_classify::all_cooperstein_thas_quotients(
 		isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2227,7 +2227,7 @@ void spread::all_cooperstein_thas_quotients(
 	int cnt = 0;
 
 	if (f_v) {
-		cout << "spread::all_cooperstein_thas_quotients" << endl;
+		cout << "spread_classify::all_cooperstein_thas_quotients" << endl;
 		}
 
 
@@ -2263,7 +2263,7 @@ void spread::all_cooperstein_thas_quotients(
 
 
 
-void spread::cooperstein_thas_quotients(isomorph &Iso,
+void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 		ofstream &f, int h, int &cnt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2288,8 +2288,8 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 
 
 	if (f_v ) {
-		cout << "spread::cooperstein_thas_quotients" << endl;
-		cout << "spread::cooperstein_thas_quotients h=" << h << endl;
+		cout << "spread_classify::cooperstein_thas_quotients" << endl;
+		cout << "spread_classify::cooperstein_thas_quotients h=" << h << endl;
 		}
 
 	rep = Iso.Reps->rep[h];
@@ -2308,13 +2308,13 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 	Stab->group_order(go);
 
 	if (f_v) {
-		cout << "spread::cooperstein_thas_quotients "
+		cout << "spread_classify::cooperstein_thas_quotients "
 				"Isomorphism type " << h << " with automorphism group "
 						"of order " << go << ":" << endl;
 		}
 
 	if (f_vv) {
-		cout << "spread::cooperstein_thas_quotients "
+		cout << "spread_classify::cooperstein_thas_quotients "
 				"before compute_all_point_orbits" << endl;
 		}
 
@@ -2322,7 +2322,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 			Stab->gens, 0 /*verbose_level - 2*/);
 
 	if (f_vv) {
-		cout << "spread::cooperstein_thas_quotients There are "
+		cout << "spread_classify::cooperstein_thas_quotients There are "
 				<< Orb.nb_orbits << " orbits on points" << endl;
 		}
 
@@ -2351,7 +2351,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 		Dom.integral_division_by_int(go, orbit_length, stab_order, rem);
 
 		if (f_vv) {
-			cout << "spread::cooperstein_thas_quotients Orbit " << u
+			cout << "spread_classify::cooperstein_thas_quotients Orbit " << u
 					<< " is represented by point " << the_point
 					<< " orbit lnegth = " << orbit_length
 					<< " stabilizer order before " << go
@@ -2362,7 +2362,6 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 		F->PG_element_unrank_modified(vec1, 1, n, the_point);
 		F->PG_element_normalize_from_front(vec1, 1, n);
 		pivot = int_vec_find_first_nonzero_entry(vec1, n);
-			// GALOIS/util.C
 
 		for (i = 0; i < order + 1; i++) {
 			if (Sorting.int_vec_search(Pts[i], nb_points, the_point, idx)) {
@@ -2370,7 +2369,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 				}
 			}
 		if (i == order + 1) {
-			cout << "spread::cooperstein_thas_quotients "
+			cout << "spread_classify::cooperstein_thas_quotients "
 					"Did not find the point" << endl;
 			exit(1);
 			}
@@ -2382,7 +2381,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 				}
 			}
 		if (j != order) {
-			cout << "spread::cooperstein_thas_quotients j != order" << endl;
+			cout << "spread_classify::cooperstein_thas_quotients j != order" << endl;
 			exit(1);
 			}
 		for (i = 0; i < order; i++) {
@@ -2402,11 +2401,10 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 			// Afterwards, the matrix is k x (n - 1)
 
 			int_matrix_delete_column_in_place(Mtx, k, n, pivot);
-				// GALOIS/util.C
 #endif
 
 			if (f_vv) {
-				cout << "spread::cooperstein_thas_quotients the reduction "
+				cout << "spread_classify::cooperstein_thas_quotients the reduction "
 						"of the " << i << "-th matrix is:" << endl;
 				int_matrix_print(Mtx, k, n - 1);
 				}
@@ -2416,7 +2414,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 			}
 
 		if (f_vv) {
-			cout << "spread::cooperstein_thas_quotients The quotient "
+			cout << "spread_classify::cooperstein_thas_quotients The quotient "
 					"system with respect to orbit " << u << " / "
 					<< Orb.nb_orbits << " is:" << endl;
 			int_vec_print(cout, data2, order);
@@ -2455,11 +2453,11 @@ void spread::cooperstein_thas_quotients(isomorph &Iso,
 	FREE_int(List);
 	FREE_OBJECT(Gr);
 	if (f_v ) {
-		cout << "spread::cooperstein_thas_quotients done" << endl;
+		cout << "spread_classify::cooperstein_thas_quotients done" << endl;
 		}
 }
 
-void spread::orbit_info_short(ofstream &f, isomorph &Iso, int h)
+void spread_classify::orbit_info_short(ofstream &f, isomorph &Iso, int h)
 {
 	int rep, first, /*c,*/ id;
 
@@ -2516,7 +2514,7 @@ void spread::orbit_info_short(ofstream &f, isomorph &Iso, int h)
 
 
 
-void spread::report_stabilizer(isomorph &Iso,
+void spread_classify::report_stabilizer(isomorph &Iso,
 		ofstream &f, int orbit, int verbose_level)
 {
 	sims *Stab;
@@ -2558,7 +2556,7 @@ void spread_early_test_func_callback(int *S, int len,
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level)
 {
-	spread *T = (spread *) data;
+	spread_classify *T = (spread_classify *) data;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -2578,7 +2576,7 @@ void spread_early_test_func_callback(int *S, int len,
 int spread_check_function_callback(int len,
 		int *S, void *data, int verbose_level)
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	int f_OK;
 	
 	f_OK = Spread->check_function(len, S, verbose_level);
@@ -2608,7 +2606,7 @@ int spread_check_conditions(int len,
 
 void spread_callback_report(isomorph *Iso, void *data, int verbose_level)
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	
 	Spread->report2(*Iso, verbose_level);
 }
@@ -2616,14 +2614,14 @@ void spread_callback_report(isomorph *Iso, void *data, int verbose_level)
 void spread_callback_make_quotients(isomorph *Iso,
 		void *data, int verbose_level)
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	
 	Spread->all_cooperstein_thas_quotients(*Iso, verbose_level);
 }
 
 void callback_spread_print(ostream &ost, int len, int *S, void *data)
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 
 	Spread->print_spread(ost, S, len);
 }

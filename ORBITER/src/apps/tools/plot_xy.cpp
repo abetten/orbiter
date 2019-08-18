@@ -1,4 +1,4 @@
-// plot_xy.C
+// plot_xy.cpp
 //
 // Anton Betten
 // February 6, 2018

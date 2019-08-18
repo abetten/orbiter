@@ -1,4 +1,4 @@
-// poset_of_subsets.C
+// poset_of_subsets.cpp
 // 
 // Anton Betten
 // July 2, 2016

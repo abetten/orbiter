@@ -1,10 +1,10 @@
-// classify_double_sixes.C
+// classify_double_sixes.cpp
 // 
 // Anton Betten
 //
 // October 10, 2017
 //
-// based on surface_classify_wedge.C started September 2, 2016
+// based on surface_classify_wedge.cpp started September 2, 2016
 // 
 //
 //
@@ -481,7 +481,7 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 
 	if (f_v) {
 		cout << "classify_double_sixes::report" << endl;
-		}
+	}
 
 #if 0
 	char fname_base[1000];
@@ -515,17 +515,26 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 		NULL /* extra_praeamble */);
 #endif
 
+	if (f_v) {
+		cout << "classify_double_sixes::report reporting groups" << endl;
+	}
 	ost << "\\section{The groups}" << endl;
 	ost << "\\subsection{The semilinear group}" << endl;
 	A->report(ost);
 	A->print_points(ost);
 
+	if (f_v) {
+		cout << "classify_double_sixes::report reporting orthogonal group" << endl;
+	}
 	ost << "\\subsection{The orthogonal group}" << endl;
 	A2->report(ost);
 	if (A2->degree < 100) {
 		A2->print_points(ost);
 	}
 
+	if (f_v) {
+		cout << "classify_double_sixes::report reporting line stabilizer" << endl;
+	}
 	ost << "\\subsection{The group stabilizing the fixed line}" << endl;
 	A_on_neighbors->report(ost);
 	A_on_neighbors->print_points(ost);
@@ -534,6 +543,9 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 	SG_line_stab->print_generators_tex(ost);
 	ost << "}" << endl;
 
+	if (f_v) {
+		cout << "classify_double_sixes::report before Five_plus_one->report" << endl;
+	}
 	Five_plus_one->report(ost);
 
 #if 0
@@ -544,7 +556,7 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 
 	if (f_v) {
 		cout << "classify_double_sixes::report done" << endl;
-		}
+	}
 }
 
 void classify_double_sixes::partial_ovoid_test_early(int *S, int len,
@@ -1547,7 +1559,7 @@ void classify_double_sixes::upstep(int verbose_level)
 			cout << "classify_double_sixes::upstep "
 					"Aut_gens tl = ";
 			int_vec_print(cout,
-					Aut_gens->tl, Aut_gens->A->Stabilizer_chain->base_len);
+					Aut_gens->tl, Aut_gens->A->base_len());
 			cout << endl;
 			}
 

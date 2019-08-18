@@ -1,9 +1,9 @@
-// determine_conic.C
+// determine_conic.cpp
 // 
 // Anton Betten
 // Nov 16, 2010
 //
-// based on COMBINATORICS/conic.C
+// based on COMBINATORICS/conic.cpp
 //
 // computes the equation of a conic through 5 given points
 // in PG(2, q)
@@ -44,27 +44,27 @@ int main(int argc, char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-q") == 0) {
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
 			override_poly = argv[++i];
 			cout << "-poly " << override_poly << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-pts") == 0) {
 			f_has_pts = TRUE;
 			pts_string = argv[++i];
 			cout << "-pts " << pts_string << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-pt_coords") == 0) {
 			f_has_pt_coords = TRUE;
 			pt_coords_string = argv[++i];
 			cout << "-pt_coords " << pt_coords_string << endl;
-			}
 		}
+	}
 
 	int f_v = (verbose_level >= 1);
 	int six_coeffs[6];
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 	if (q == -1) {
 		cout << "please use option -q <q>" << endl;
 		exit(1);
-		}
+	}
 
 	F = NEW_OBJECT(finite_field);
 
@@ -87,7 +87,8 @@ int main(int argc, char **argv)
 
 	if (f_has_pts) {
 		int_vec_scan(pts_string, input_pts, nb_pts);
-	} else if (f_has_pt_coords) {
+	}
+	else if (f_has_pt_coords) {
 		int a;
 		int_vec_scan(pt_coords_string, pt_coords, nb_pt_coords);
 		nb_pts = nb_pt_coords / 3;
@@ -99,8 +100,9 @@ int main(int argc, char **argv)
 			a = F->rank_point_in_PG(pt_coords + i * 3, 3);
 			input_pts[i] = a;
 			cout << "and rank " << a << endl;
-			}
-	} else {
+		}
+	}
+	else {
 		cout << "please use -pts or -pt_coords to specify the points" << endl;
 		exit(1);
 	}
@@ -110,8 +112,8 @@ int main(int argc, char **argv)
 			cout << "please give exactly 5 points "
 					"using -pts \"<p1>, ... ,<p5>\"" << endl;
 			exit(1);
-			}
 		}
+	}
 
 
 	cout << "input_pts: ";

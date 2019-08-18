@@ -1,4 +1,4 @@
-// subspace_orbits_main.C
+// subspace_orbits_main.cpp
 // 
 // Anton Betten
 // Jan 25, 2010

@@ -1,4 +1,4 @@
-// hamming.C
+// hamming.cpp
 // 
 // Anton Betten
 // Dec 9, 2010

@@ -1,4 +1,4 @@
-// clique_finder.C
+// clique_finder.cpp
 //
 // Anton Betten
 // 11/6/07

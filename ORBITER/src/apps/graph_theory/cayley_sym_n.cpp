@@ -1,4 +1,4 @@
-// cayley_sym_n.C
+// cayley_sym_n.cpp
 //
 // Anton Betten
 // February 16, 2015

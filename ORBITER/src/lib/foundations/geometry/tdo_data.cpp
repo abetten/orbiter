@@ -1,4 +1,4 @@
-// tdo_data.C
+// tdo_data.cpp
 // Anton Betten
 //
 // started: January 30, 2007
@@ -33,6 +33,12 @@ tdo_data::~tdo_data()
 
 void tdo_data::free()
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "tdo_data::free" << endl;
+	}
 	if (types_first) {
 		FREE_int(types_first);
 		types_first = NULL;
@@ -53,14 +59,23 @@ void tdo_data::free()
 		FREE_int(types_first2);
 		types_first2 = NULL;
 		}
+	if (f_v) {
+		cout << "tdo_data::free before D1" << endl;
+	}
 	if (D1) {
 		FREE_OBJECT(D1);
 		D1 = NULL;
 		}
+	if (f_v) {
+		cout << "tdo_data::free before D2" << endl;
+	}
 	if (D2) {
 		FREE_OBJECT(D2);
 		D2 = NULL;
 		}
+	if (f_v) {
+		cout << "tdo_data::free done" << endl;
+	}
 }
 
 void tdo_data::allocate(int R)
@@ -83,8 +98,8 @@ int tdo_data::solve_first_system(int verbose_level,
 	int i, nb_sol, nb_vars;
 	
 	if (f_v) {
-		cout << "solve_first_system" << endl;
-		}
+		cout << "tdo_data::solve_first_system D1->n=" << D1->n << endl;
+	}
 	nb_vars = D1->n;
 	nb_sol = 0;
 	if (D1->solve_first(0/*verbose_level - 4*/)) {
@@ -92,38 +107,39 @@ int tdo_data::solve_first_system(int verbose_level,
 		while (TRUE) {
 			if (nb_line_types >= line_types_allocated) {
 				int new_nb_line_types = line_types_allocated + 100;
-				if (f_vvv) {
-					cout << "reallocating to " << new_nb_line_types << endl;
-					}
+				if (f_v) {
+					cout << "tdo_data::solve_first_system reallocating to " << new_nb_line_types << endl;
+				}
 				int *new_line_types = NEW_int(new_nb_line_types * nb_vars);
 				for (i = 0; i < nb_line_types * nb_vars; i++) {
 					new_line_types[i] = line_types[i];
-					}
+				}
 				FREE_int(line_types);
 				line_types = new_line_types;
 				line_types_allocated = new_nb_line_types;
-				}
+			}
 
 			if (f_vvv) {
 				cout << nb_sol << " : ";
 				for (i = 0; i < nb_vars; i++) {
 					cout << " " << D1->x[i];
-					}
-				cout << endl;
 				}
+				cout << endl;
+			}
 			for (i = 0; i < nb_vars; i++) {
 				line_types[nb_line_types * nb_vars + i] = D1->x[i];
-				}
+			}
 			nb_line_types++;
 			nb_sol++;
-			if (!D1->solve_next())
+			if (!D1->solve_next()) {
 				break;
 			}
 		}
+	}
 	if (f_vv) {
-		cout << "solve_first_system: found " << nb_sol
+		cout << "tdo_data::solve_first_system: found " << nb_sol
 			<< " refined types" << endl;
-		}
+	}
 	return nb_sol;
 }
 
@@ -139,7 +155,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 	
 	if (f_v) {
 		cout << "tdo_data::solve_second_system_omit omit=" << omit << endl;
-		}
+	}
 	int s, i, r = 0, f, l, h, j, u, first, len, N, a, ii, f_bad;
 	
 	f = types_first2[0];
@@ -149,7 +165,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		r = multiple_types[i];
 		l += types_len[r];
 		s += classes_len[r];
-		}
+	}
 	diophant D;
 	int nb_eqns_replaced;
 	int *eqns_replaced;
@@ -161,7 +177,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		cout << "nb_multiple_types=" << nb_multiple_types << endl;
 		cout << "omit=" << omit << endl;
 		cout << "calling D2->project f=" << f << " l=" << l << endl;
-		}
+	}
 	D2->project(&D, f, l, eqn_number, nb_eqns_replaced,
 			eqns_replaced, verbose_level - 1);
 	D.f_has_sum = TRUE;
@@ -170,7 +186,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		cout << "after projection:" << endl;
 		D.print();
 		D.write_xml(cout, "projected");
-		}
+	}
 	D.nb_steps_betten = 0;
 	//nb_sol = D.solve_once_mckay(verbose_level);
 	//nb_sol = D.solve_all_mckay(verbose_level);
@@ -178,7 +194,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 	if (f_v) {
 		cout << "number of solutions = " << nb_sol << " in "
 			<< D.nb_steps_betten << " steps" << endl;
-		}
+	}
 	nb_distributions = 0;
 	distributions = NEW_int(nb_sol * nb_line_types);
 
@@ -188,31 +204,31 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		if (f_v) {
 			cout << "tdo_data::solve_second_system_omit "
 					"N=" << N << " / " << nb_sol << endl;
-			}
+		}
 		f_bad = FALSE;
 		for (j = 0; j < nb_line_types; j++) {
 			distributions[nb_distributions * nb_line_types + j] = 0;
-			}
+		}
 		for (j = 0; j < D.n; j++) {
 			D.x[j] = D._results.front()[j];
-			}
+		}
 		if (f_v) {
 			cout << "solution " << N << ":" << endl;
 			for (j = 0; j < D.n; j++) {
 				cout << setw(3) << D.x[j] << " ";
-				}
-			cout << endl;
 			}
+			cout << endl;
+		}
 		D._results.pop_front();
 		D.multiply_A_x_to_RHS1();
 		for (i = 0; i < D2->m; i++) {
 			D2->RHS1[i] = 0;
-			}
+		}
 		for (i = 0; i < D.m; i++) {
 			a = D.RHS1[i];
 			ii = eqn_number[i];
 			D2->RHS1[ii] = a;
-			}
+		}
 		if (f_vv) {
 			cout << "RHS1" << endl;
 			for (i = 0; i < D.m; i++) {
@@ -220,8 +236,8 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 				if (D.eqn_label[i])
 					cout << D.eqn_label[i];
 				cout << " : " << D.RHS1[i] << endl;
-				}
 			}
+		}
 
 		diophant DD;
 		int nb_eqns_replaced2;
@@ -236,12 +252,12 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			r = multiple_types[i];
 			L += types_len[r];
 			s += classes_len[r];
-			}
+		}
 		if (f_v) {
 			cout << "tdo_data::solve_second_system_omit "
 					"N=" << N << " / " << nb_sol << endl;
 			cout << "calling D2->project F=" << F << " L=" << L << endl;
-			}
+		}
 		D2->project(&DD, F, L, eqn_number2,
 				nb_eqns_replaced2, eqns_replaced2,
 				verbose_level - 1);
@@ -254,8 +270,8 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			if (DD.RHS[i] < 0) {
 				f_bad = TRUE;
 				break;
-				}
 			}
+		}
 		if (f_vv) {
 			cout << "after projection:" << endl;
 			DD.print();
@@ -264,7 +280,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			cout << "solutions does not extend (bad RHS in eqn "
 					<< i << "), skipping" << endl;
 			continue;
-			}
+		}
 		
 		if (FALSE) {
 			// here we test if a givemn solution of the projected system 
@@ -278,13 +294,13 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			if (f_v) {
 				cout << "N=" << N << " / " << nb_sol
 						<< " number of solutions = " << nb_sol2 << endl;
-				}
+			}
 			if (nb_sol2 == 0) {
 				cout << "solutions does not extend "
 						"(no solution), skipping" << endl;
 				continue;
-				}
 			}
+		}
 		FREE_int(eqns_replaced2);
 		FREE_int(eqn_number2);
 
@@ -295,7 +311,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			//cout << "only one type, r=" << r << " u=" << u << endl;
 			distributions[nb_distributions * nb_line_types + u] =
 					classes_len[r];
-			}
+		}
 		for (i = 0; i < nb_multiple_types - omit; i++) {
 			r = multiple_types[i];
 			F = types_first2[i];
@@ -307,21 +323,21 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 				a = D.x[F + j];
 				distributions[nb_distributions *
 							  nb_line_types + first + j] = a;
-				}
 			}
-		nb_distributions++;
 		}
+		nb_distributions++;
+	}
 	if (f_v) {
 		if (nb_distributions == 0) {
 			cout << "tdo_data::solve_second_system_omit "
 					"system has no solution" << endl;
-			}
+		}
 		else {
 			cout << "tdo_data::solve_second_system_omit "
 					"system has " << nb_distributions
 					<< " solutions" << endl;
-			}
 		}
+	}
 
 	FREE_int(eqns_replaced);
 	FREE_int(eqn_number);

@@ -1,4 +1,4 @@
-// analyze_group.C
+// analyze_group.cpp
 // 
 // Anton Betten
 // started:     03/10/2009
@@ -120,17 +120,17 @@ void analyze_group(action *A, sims *S,
 	vector_ge SGH1, SGH2, SGH3;
 	int *tl1, *tl2, *tl3, *tlF1, *tlF2;
 	
-	tl1 = NEW_int(A->Stabilizer_chain->base_len);
-	tl2 = NEW_int(A->Stabilizer_chain->base_len);
-	tl3 = NEW_int(A->Stabilizer_chain->base_len);
-	tlF1 = NEW_int(A->Stabilizer_chain->base_len);
-	tlF2 = NEW_int(A->Stabilizer_chain->base_len);
+	tl1 = NEW_int(A->base_len());
+	tl2 = NEW_int(A->base_len());
+	tl3 = NEW_int(A->base_len());
+	tlF1 = NEW_int(A->base_len());
+	tlF2 = NEW_int(A->base_len());
 	
 	
 	// now we compute H1, the derived group
 	
 	
-	H1.init(FactorGroup->FactorGroup);
+	H1.init(FactorGroup->FactorGroup, verbose_level - 2);
 	H1.init_trivial_group(verbose_level - 1);
 	H1.build_up_subgroup_random_process(FactorGroup->FactorGroup->Sims, 
 		choose_random_generator_derived_group, verbose_level - 1);
@@ -198,7 +198,7 @@ void analyze_group(action *A, sims *S,
 	// now we compute H2, the second derived group
 	
 	
-	H2.init(FactorGroup->FactorGroup);
+	H2.init(FactorGroup->FactorGroup, verbose_level - 2);
 	H2.init_trivial_group(verbose_level - 1);
 	H2.build_up_subgroup_random_process(&H1, 
 		choose_random_generator_derived_group, verbose_level - 1);

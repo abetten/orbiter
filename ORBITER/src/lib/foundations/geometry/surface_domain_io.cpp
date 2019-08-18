@@ -165,6 +165,10 @@ void surface_domain::print_Steiner_and_Eckardt(ostream &ost)
 	latex_table_of_Eckardt_points(ost);
 
 	ost << "\\clearpage" << endl << endl;
+	ost << "\\section*{Half Double Sixes}" << endl;
+	latex_table_of_double_sixes(ost);
+
+	ost << "\\clearpage" << endl << endl;
 	ost << "\\section*{Tritangent Planes}" << endl;
 	latex_table_of_tritangent_planes(ost);
 
@@ -267,6 +271,32 @@ void surface_domain::print_trihedral_pairs(ostream &ost)
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
+}
+
+void surface_domain::latex_table_of_double_sixes(ostream &ost)
+{
+	int i, j;
+	int H[6];
+
+	cout << "surface::latex_table_of_double_sixes" << endl;
+	ost << "\\begin{multicols}{2}" << endl;
+	for (i = 0; i < 72; i++) {
+
+		int_vec_copy(Half_double_sixes + i * 6, H, 6);
+
+		ost << "$H_{" << i << "} = " << Half_double_six_label_tex[i] << endl;
+
+		ost << " = \\{";
+		for (j = 0; j < 6; j++) {
+			ost << Line_label_tex[H[j]];
+			if (j < 6 - 1) {
+				ost << ", ";
+				}
+			}
+		ost << "\\}$\\\\" << endl;
+		}
+	ost << "\\end{multicols}" << endl;
+	cout << "surface::latex_table_of_double_sixes done" << endl;
 }
 
 

@@ -1,4 +1,4 @@
-// schreier_io.C
+// schreier_io.cpp
 //
 // Anton Betten
 // moved here from schreier.cpp: November 3, 2018
@@ -870,6 +870,8 @@ void schreier::print_orbit(int cur, int last)
 {
 	int i;
 
+	cout << "schreier::print_orbit degree=" << A->degree << endl;
+	cout << "i : orbit[i] : orbit_inv[i]" << endl;
 	for (i = 0; i < A->degree; i++) {
 		if (i == cur)
 			cout << ">";

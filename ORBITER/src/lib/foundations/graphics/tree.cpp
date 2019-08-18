@@ -1,4 +1,4 @@
-// tree.C
+// tree.cpp
 //
 // Anton Betten
 // February 7, 2003

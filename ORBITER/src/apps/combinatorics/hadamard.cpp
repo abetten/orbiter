@@ -1,4 +1,4 @@
-// hadamard.C
+// hadamard.cpp
 // 
 // Anton Betten
 // December 9, 2014

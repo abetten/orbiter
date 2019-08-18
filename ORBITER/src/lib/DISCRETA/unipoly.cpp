@@ -1,4 +1,4 @@
-// unipoly.C
+// unipoly.cpp
 //
 // Anton Betten
 // 24.12.1999
@@ -26,7 +26,8 @@ unipoly::unipoly() : Vector()
 unipoly::unipoly(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "unipoly::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	cout << "unipoly::copy constructor for object: "
+			<< const_cast<discreta_base &>(x) << "\n";
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
 
@@ -67,7 +68,7 @@ kind unipoly::s_virtual_kind()
 void unipoly::copyobject_to(discreta_base &x)
 {
 #ifdef COPY_VERBOSE
-	cout << "unipoly::copyobject_to()\n";
+	cout << "unipoly::copyobject_to()" << endl;
 	print_as_vector(cout);
 #endif
 	Vector::copyobject_to(x);
@@ -199,11 +200,11 @@ void unipoly::mult_to(discreta_base &x, discreta_base &y)
 	int d1, d2, d3, i, j, k;
 	
 	if (s_kind() != UNIPOLY) {
-		cout << "unipoly::mult_to() this not a unipoly\n";
+		cout << "unipoly::mult_to() this not a unipoly" << endl;
 		exit(1);
 		}
 	if (x.s_kind() != UNIPOLY) {
-		cout << "unipoly::mult_to() x is not a unipoly\n";
+		cout << "unipoly::mult_to() x is not a unipoly" << endl;
 		exit(1);
 		}
 	d1 = degree();
@@ -234,11 +235,11 @@ void unipoly::add_to(discreta_base &x, discreta_base &y)
 	int d1, d2, d3, i;
 	
 	if (s_kind() != UNIPOLY) {
-		cout << "unipoly::add_to() this not a unipoly\n";
+		cout << "unipoly::add_to() this not a unipoly" << endl;
 		exit(1);
 		}
 	if (x.s_kind() != UNIPOLY) {
-		cout << "unipoly::add_to() x is not a unipoly\n";
+		cout << "unipoly::add_to() x is not a unipoly" << endl;
 		exit(1);
 		}
 	d1 = degree();
@@ -266,7 +267,7 @@ void unipoly::negate_to(discreta_base &x)
 	int i, l;
 	
 	if (s_kind() != UNIPOLY) {
-		cout << "unipoly::negate_to() this is not a unipoly\n";
+		cout << "unipoly::negate_to() this is not a unipoly" << endl;
 		exit(1);
 		}
 	l = s_l();
@@ -382,6 +383,9 @@ void unipoly::integral_division(discreta_base &x,
 		cout << "unipoly::integral_division a=" << a << endl;
 		}
 	av = a;
+	if (f_v) {
+		cout << "unipoly::integral_division before av.invert" << endl;
+		}
 	av.invert();
 	if (f_v) {
 		cout << "unipoly::integral_division av=" << av << endl;
@@ -410,7 +414,7 @@ void unipoly::integral_division(discreta_base &x,
 			c.negate();
 			rr[ii] += c; // rr[ii] -= bav * this[jj]
 			if (ii == i && !rr[ii].is_zero()) {
-				cout << "unipoly::integral_division(): ii == i && !rr[ii].is_zero()\n";
+				cout << "unipoly::integral_division(): ii == i && !rr[ii].is_zero()" << endl;
 				exit(1);
 				}
 			// cout << "c=" << c << endl;
@@ -556,19 +560,21 @@ void unipoly::singer_candidate(int p, int f, int b, int a)
 	s_i(0).m_i_i(a);
 }
 
-void unipoly::Singer(int p, int f, int f_v, int f_vv)
+void unipoly::Singer(int p, int f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int m, i, a, b, low, high;
 	Vector vp, ve;
 	unipoly x;
 	number_theory_domain NT;
 	
 	if (p <= 1) {
-		cout << "unipoly::Singer(): p <= 1\n";
+		cout << "unipoly::Singer: p <= 1" << endl;
 		exit(1);
 		}
 	if (!NT.is_prime(p)) {
-		cout << "unipoly::Singer(): p not prime\n";
+		cout << "unipoly::Singer: p not prime" << endl;
 		exit(1);
 		}
 	m = NT.i_power_j(p, f) - 1;
@@ -579,7 +585,8 @@ void unipoly::Singer(int p, int f, int f_v, int f_vv)
 		if (f_v) {
 			cout << "singer candidate " << x << endl;
 			}
-		if (x.is_irreducible_GFp(p, f_vv) && x.is_primitive(m, p, vp, f_vv)) {
+		if (x.is_irreducible_GFp(p, verbose_level) &&
+				x.is_primitive(m, p, vp, verbose_level)) {
 			if (f_v) {
 				cout << "OK" << endl;
 				}
@@ -594,7 +601,8 @@ void unipoly::Singer(int p, int f, int f_v, int f_vv)
 		if (f_v) {
 			cout << "candidate " << i - low + 1 << " : " << x << endl;
 			}
-		if (x.is_irreducible_GFp(p, f_vv) && x.is_primitive(m, p, vp, f_vv)) {
+		if (x.is_irreducible_GFp(p, f_vv) &&
+				x.is_primitive(m, p, vp, verbose_level)) {
 			if (f_v) {
 				cout << "OK" << endl;
 				}
@@ -602,7 +610,7 @@ void unipoly::Singer(int p, int f, int f_v, int f_vv)
 			return;
 			}
 		}
-	cout << "ERROR: did not find an irrducible primitive polynomial, help!\n";
+	cout << "unipoly::Singer did not find an irrducible primitive polynomial" << endl;
 	exit(1);
 }
 
@@ -785,7 +793,8 @@ void unipoly::normal_base(int p, matrix& F, matrix& N, int verbose_level)
 
 }
 
-int unipoly::first_irreducible_polynomial(int p, unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
+int unipoly::first_irreducible_polynomial(int p,
+		unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	domain d(p);
@@ -811,7 +820,8 @@ int unipoly::first_irreducible_polynomial(int p, unipoly& m, matrix& F, matrix& 
 	return TRUE;
 }
 
-int unipoly::next_irreducible_polynomial(int p, unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
+int unipoly::next_irreducible_polynomial(int p,
+		unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	domain d(p);
@@ -924,8 +934,11 @@ static int multiply(Vector & vp, Vector & ve)
 }
 
 
-void unipoly::weight_enumerator_MDS_code(int n, int k, int q, int f_v, int f_vv, int f_vvv)
+void unipoly::weight_enumerator_MDS_code(int n, int k, int q, int verbose_level)
 {
+	int f_v = (verbose_level = 1);
+	int f_vv = (verbose_level = 2);
+	int f_vvv = (verbose_level = 3);
 	int j, h, l;
 	discreta_base a, b, c, d, e;
 	
@@ -982,7 +995,8 @@ void unipoly::weight_enumerator_MDS_code(int n, int k, int q, int f_v, int f_vv,
 		s_i(j) = b;
 		}
 	if (f_v) {
-		cout << "unipoly::weight_enumerator_MDS_code() n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "unipoly::weight_enumerator_MDS_code "
+				"n=" << n << " k=" << k << " q=" << q << endl;
 		cout << *this << endl;
 		}
 }

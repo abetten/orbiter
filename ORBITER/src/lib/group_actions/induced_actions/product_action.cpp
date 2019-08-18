@@ -1,4 +1,4 @@
-// product_action.C
+// product_action.cpp
 //
 // Anton Betten
 // December 19, 2007

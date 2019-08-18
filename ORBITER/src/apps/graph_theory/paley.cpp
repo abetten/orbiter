@@ -1,5 +1,5 @@
-// paley.C
-// 
+// paley.cpp
+//
 // Anton Betten
 // January 19, 2015
 

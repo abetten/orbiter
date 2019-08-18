@@ -1,8 +1,8 @@
-// poset_classification_combinatorics.C
+// poset_classification_combinatorics.cpp
 //
 // Anton Betten
 //
-// moved here from poset_classification.C
+// moved here from poset_classification.cpp
 // July 18, 2014
 
 

@@ -1,4 +1,4 @@
-// pascal_matrix.C
+// pascal_matrix.cpp
 // 
 // Anton Betten
 // January 12, 2018

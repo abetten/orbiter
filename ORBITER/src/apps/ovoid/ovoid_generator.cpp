@@ -1,4 +1,4 @@
-// ovoid_generator.C
+// ovoid_generator.cpp
 // 
 // Anton Betten
 // May 16, 2011

@@ -1,4 +1,4 @@
-// puzzle.C
+// puzzle.cpp
 //
 // Anton Betten
 // September 9, 2014

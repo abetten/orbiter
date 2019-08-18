@@ -1,4 +1,4 @@
-// rank_subsets_lex.C
+// rank_subsets_lex.cpp
 // 
 // Anton Betten
 // Jul 15, 2016

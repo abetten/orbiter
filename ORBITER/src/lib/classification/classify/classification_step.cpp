@@ -1,4 +1,4 @@
-// classification.C
+// classification.cpp
 // 
 // Anton Betten
 // September 23, 2017
@@ -148,6 +148,24 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 		}
 
 	return SaS;
+}
+
+void classification_step::print_group_orders()
+{
+	int i;
+	longinteger_domain D;
+	longinteger_object go1, ol;
+
+	cout << "i : stab order : orbit length" << endl;
+	for (i = 0; i < nb_orbits; i++) {
+		Orbit[i].gens->group_order(go1);
+
+		D.integral_division_exact(go, go1, ol);
+
+
+		cout << i << " : " << go1 << " : " << ol << endl;
+
+	}
 }
 
 void classification_step::print_latex(ostream &ost,

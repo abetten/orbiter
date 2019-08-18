@@ -1,4 +1,4 @@
-// action_cb.C
+// action_cb.cpp
 //
 // Anton Betten
 // 1/1/2009
@@ -268,7 +268,7 @@ int action::element_is_one(
 		cout << "action::element_is_one "
 				"in action " << label << endl;
 		}
-	if (f_has_kernel && Kernel->A->Stabilizer_chain->base_len) {
+	if (f_has_kernel && Kernel->A->base_len()) {
 		int *Elt1;
 		int drop_out_level, image;
 		Elt1 = NEW_int(elt_size_in_int); // this should be avoided
@@ -532,7 +532,6 @@ void action::element_print_as_permutation_with_offset(
 		perm_print_cycles_sorted_by_length_offset(ost, degree, v, offset,
 			f_do_it_anyway_even_for_big_degree, f_print_cycles_of_length_one,
 			verbose_level);
-			// in action_global.C
 		}
 #endif
 

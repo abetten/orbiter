@@ -781,16 +781,20 @@ public:
 			int old_length, int new_length, int *v);
 	int PG_element_embed(
 			int rk, int old_length, int new_length, int *v);
-	void PG_element_rank_modified(
-			int *v, int stride, int len, int &a);
 	void PG_element_unrank_fining(
 			int *v, int len, int a);
 	int PG_element_rank_fining(
 			int *v, int len);
 	void PG_element_unrank_gary_cook(
 			int *v, int len, int a);
+	void PG_element_rank_modified(
+			int *v, int stride, int len, int &a);
 	void PG_element_unrank_modified(
 			int *v, int stride, int len, int a);
+	void PG_element_rank_modified_lint(
+			int *v, int stride, int len, long int &a);
+	void PG_element_unrank_modified_lint(
+			int *v, int stride, int len, long int a);
 	void PG_element_rank_modified_not_in_subspace(
 			int *v, int stride, int len, int m, int &a);
 	void PG_element_unrank_modified_not_in_subspace(

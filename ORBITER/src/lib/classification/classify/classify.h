@@ -14,7 +14,7 @@ namespace classification {
 
 
 // #############################################################################
-// classification_step.C:
+// classification_step.cpp
 // #############################################################################
 
 //! a single step classification of combinatorial objects
@@ -44,6 +44,7 @@ public:
 			longinteger_object &go, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
+	void print_group_orders();
 	void print_latex(std::ostream &ost,
 		const char *title, int f_print_stabilizer_gens,
 		int f_has_print_function,
@@ -61,7 +62,7 @@ public:
 };
 
 // #############################################################################
-// flag_orbits.C:
+// flag_orbits.cpp
 // #############################################################################
 
 //! stores the set of flag orbits; related to the class classification_step
@@ -104,7 +105,7 @@ public:
 };
 
 // #############################################################################
-// flag_orbit_node.C:
+// flag_orbit_node.cpp
 // #############################################################################
 
 //! to represent a flag orbit; related to the class flag_orbits
@@ -152,7 +153,7 @@ public:
 };
 
 // #############################################################################
-// orbit_node.C:
+// orbit_node.cpp
 // #############################################################################
 
 //! to encode one group orbit, associated to the class classification_step

@@ -1,4 +1,4 @@
-// create_layered_graph_file.C
+// create_layered_graph_file.cpp
 // 
 // Anton Betten
 // July 2, 2016
@@ -6,7 +6,7 @@
 //
 // 
 // creates a layered graph file from a text file
-// which was created by DISCRETA/sgls2.C
+// which was created by DISCRETA/sgls2.cpp
 // for an example, see the bottom of this file.
 //
 //
@@ -140,7 +140,7 @@ void create_graph_from_file(layered_graph *&LG,
 	
 }
 
-// example file created in DISCRETA/sgls2.C for the subgroup lattice of Sym(4):
+// example file created in DISCRETA/sgls2.cpp for the subgroup lattice of Sym(4):
 #if 0
 5
 1 13 11 4 1 

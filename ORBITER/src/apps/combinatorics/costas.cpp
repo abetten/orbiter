@@ -1,4 +1,4 @@
-// costas.C
+// costas.cpp
 // 
 // Anton Betten
 // Aug 12, 2017

@@ -1,4 +1,4 @@
-// andre.C
+// andre.cpp
 // 
 // Anton Betten
 // July 11, 2013
@@ -163,7 +163,6 @@ void do_it(int q, int k, int no,
 #else
 	An->stabilizer_of_spread_representative(q, k, no,
 			gens, stab_order, verbose_level);
-		// in ACTION/action.C
 
 	stab_go.create_from_base_10_string(stab_order, 0 /* verbose_level */);
 #endif

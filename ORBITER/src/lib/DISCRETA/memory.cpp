@@ -1,4 +1,4 @@
-// memory.C
+// memory.cpp
 //
 // Anton Betten
 // 04.04.2000
@@ -286,7 +286,7 @@ void memory::read_int(int *i)
 	l = used_length();
 	l1 = l - cur_p;
 	if (l1 < 4) {
-		cout << "memory::read_int() error: l1 < 4\n";
+		cout << "memory::read_int() error: l1 < 4" << endl;
 		exit(1);
 		}
 	cp = self.char_pointer + cur_p;
@@ -307,8 +307,9 @@ void memory::read_int(int *i)
 
 #include <cstdio>
 
-void memory::read_file(char *fname, int f_v)
+void memory::read_file(char *fname, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	FILE *fp;
 	int fsize;
 	char *pc;
@@ -330,8 +331,9 @@ void memory::read_file(char *fname, int f_v)
 		}
 }
 
-void memory::write_file(char *fname, int f_v)
+void memory::write_file(char *fname, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	FILE *fp;
 	int size;
 	char *pc;
@@ -346,7 +348,7 @@ void memory::write_file(char *fname, int f_v)
 	
 	fclose(fp);
 	if (Fio.file_size(fname) != size) {
-		cout << "memory::write_file() error: file_size(fname) != size\n";
+		cout << "memory::write_file() error: file_size(fname) != size" << endl;
 		exit(1);
 		}
 	if (f_v) {

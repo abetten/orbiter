@@ -1,4 +1,4 @@
-// reflection.C
+// reflection.cpp
 // 
 // Anton Betten
 // started:     03/10/2009
@@ -187,7 +187,7 @@ void do_it(int q, int type,
 	longinteger_object go;
 	sims S;
 
-	S.init(A);
+	S.init(A, verbose_level - 2);
 	S.init_trivial_group(verbose_level - 2);
 	S.build_up_subgroup_random_process(&S,  
 		choose_random_generator, 

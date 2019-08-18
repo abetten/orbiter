@@ -1,4 +1,4 @@
-// test_arc.C
+// test_arc.cpp
 //
 // Anton Betten
 // July 24, 2017

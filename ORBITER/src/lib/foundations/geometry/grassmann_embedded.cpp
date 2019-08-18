@@ -1,4 +1,4 @@
-// grassmann_embedded.C
+// grassmann_embedded.cpp
 // 
 // Anton Betten
 // Jan 24, 2010

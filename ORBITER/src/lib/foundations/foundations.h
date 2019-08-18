@@ -39,7 +39,7 @@
 // added class rainbow_cliques: October 28, 2012
 // added class set_of_sets: November 30, 2012
 // added class decomposition: December 1, 2012
-// added file dlx.C: April 7, 2013
+// added file dlx.cpp: April 7, 2013
 // added class spreadsheet: March 15, 2013
 // added class andre_construction andre_construction: June 2, 2013
 // added class andre_construction_point_element: June 2, 2013
@@ -155,7 +155,7 @@
 
 #define HAS_NAUTY 1
 
-// need to be defined in nauty_interface.C also.
+// need to be defined in nauty_interface.cpp also.
 
 
 #ifdef SYSTEMWINDOWS
@@ -358,7 +358,8 @@ class file_io;
 class table_of_irreducible_polynomials;
 class set_of_sets_lint;
 class classify_vector_data;
-
+class clebsch_map;
+class bitmatrix;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
@@ -371,8 +372,8 @@ class classify_vector_data;
 #define NEW_pchar(n) global_mem_object_registry.allocate_pchar(n, __FILE__, __LINE__)
 #define NEW_puchar(n) global_mem_object_registry.allocate_puchar(n, __FILE__, __LINE__)
 #define NEW_pvoid(n) global_mem_object_registry.allocate_pvoid(n, __FILE__, __LINE__)
-#define NEW_OBJECT(type) (type *)global_mem_object_registry.allocate_OBJECT(new type, sizeof(type), #type, __FILE__, __LINE__)
-#define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, sizeof(type), #type, __FILE__, __LINE__)
+#define NEW_OBJECT(type) (type *)global_mem_object_registry.allocate_OBJECT(new type, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
+#define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
 #define FREE_int(p) global_mem_object_registry.free_int(p, __FILE__, __LINE__)
 #define FREE_pint(p) global_mem_object_registry.free_pint(p, __FILE__, __LINE__)
 #define FREE_lint(p) global_mem_object_registry.free_lint(p, __FILE__, __LINE__)
@@ -421,9 +422,10 @@ enum object_in_projective_space_type {
 };
 
 enum diophant_equation_type {
-	t_EQ, 
-	t_LE,
-	t_ZOR
+	t_EQ, // equal to the given value
+	t_LE, // less than or equal to the given value
+	t_INT, // must be within the given interval
+	t_ZOR // zero or equal to the given value
 }; 
 
 typedef enum diophant_equation_type diophant_equation_type;
@@ -433,7 +435,7 @@ typedef enum diophant_equation_type diophant_equation_type;
 // for otherwise we would create incomplete type compile errors:
 
 // #############################################################################
-// int_matrix.C:
+// int_matrix.cpp:
 // #############################################################################
 
 
@@ -463,7 +465,7 @@ public:
 };
 
 // #############################################################################
-// longinteger_object.C:
+// longinteger_object.cpp:
 // #############################################################################
 
 extern int longinteger_f_print_scientific;

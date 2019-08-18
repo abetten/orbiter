@@ -1,4 +1,4 @@
-// action_on_determinant.C
+// action_on_determinant.cpp
 //
 // Anton Betten
 // January 16, 2009

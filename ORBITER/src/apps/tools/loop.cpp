@@ -1,4 +1,4 @@
-// loop.C
+// loop.cpp
 // 
 // Anton Betten
 // January 7, 2017

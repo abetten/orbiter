@@ -1,4 +1,4 @@
-// packing_invariants.C
+// packing_invariants.cpp
 // 
 // Anton Betten
 // Feb 14, 2013
@@ -57,7 +57,7 @@ void packing_invariants::freeself()
 	null();
 }
 
-void packing_invariants::init(packing *P, 
+void packing_invariants::init(packing_classify *P,
 	char *prefix, char *prefix_tex, int iso_cnt, 
 	int *the_packing, int verbose_level)
 {

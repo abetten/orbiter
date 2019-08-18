@@ -31,6 +31,7 @@ public:
 					int nb_frames_this_round, int round,
 					std::ostream &fp,
 					int verbose_level);
+	void *extra_data;
 
 	animate();
 	~animate();
@@ -38,6 +39,7 @@ public:
 			const char *output_mask,
 			int nb_frames,
 			video_draw_options *Opt,
+			void *extra_data,
 			int verbose_level);
 	void animate_one_round(
 		int round,
@@ -46,7 +48,7 @@ public:
 
 
 // #############################################################################
-// mp_graphics.C:
+// mp_graphics.cpp
 // #############################################################################
 
 //! a class to help with drawing elements in a 2D grid fashion
@@ -418,7 +420,7 @@ public:
 
 
 // #############################################################################
-// plot.C:
+// plot.cpp
 // #############################################################################
 
 void draw_density(char *prefix, int *the_set, int set_size,
@@ -476,7 +478,7 @@ public:
 	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 		double *v, double angle_zero_one, std::ostream &ost);
 	void union_start(std::ostream &ost);
-	void union_end(std::ostream &ost, double clipping_radius);
+	void union_end(std::ostream &ost, double scale_factor, double clipping_radius);
 	void bottom_plane(std::ostream &ost);
 	void rotate_111(int h, int nb_frames, std::ostream &fp);
 	void ini(std::ostream &ost, const char *fname_pov, int first_frame,
@@ -488,7 +490,7 @@ public:
 
 
 // #############################################################################
-// scene.C:
+// scene.cpp
 // #############################################################################
 
 #define SCENE_MAX_LINES 100000
@@ -721,7 +723,7 @@ public:
 
 
 // #############################################################################
-// tree.C:
+// tree.cpp
 // #############################################################################
 
 
@@ -761,7 +763,7 @@ public:
 };
 
 // #############################################################################
-// tree_node.C:
+// tree_node.cpp
 // #############################################################################
 
 
@@ -943,6 +945,10 @@ public:
 	const char *location;
 	const char *look_at;
 
+	double scale_factor;
+
+	int f_line_radius;
+	double line_radius;
 
 	video_draw_options();
 	~video_draw_options();

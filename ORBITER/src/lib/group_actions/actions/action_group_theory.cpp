@@ -130,9 +130,14 @@ void action::normalizer_using_MAGMA(
 			cout << "action::normalizer_using_MAGMA "
 				"after gens->init_from_permutation_"
 				"representation" << endl;
-
-		FREE_OBJECT(nice_gens);
 		}
+		FREE_OBJECT(nice_gens);
+
+		cout << "action::normalizer_using_MAGMA "
+			"after gens->init_from_permutation_"
+			"representation gens_N=" << endl;
+		gens_N->print_generators_for_make_element(cout);
+
 
 
 	} // if (file_size(fname_output))
@@ -277,6 +282,13 @@ void action::read_conjugacy_classes_from_MAGMA(
 		}
 }
 
+void action::conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
+		const char *prefix, char *fname_magma, char *fname_output)
+{
+	sprintf(fname_magma, "%s_classes.magma", prefix);
+	sprintf(fname_output, "%s_classes_out.txt", prefix);
+}
+
 void action::conjugacy_classes_and_normalizers_using_MAGMA(
 		const char *prefix,
 		sims *G, int verbose_level)
@@ -289,8 +301,9 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 	if (f_v) {
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA" << endl;
 		}
-	sprintf(fname_magma, "%s_classes.magma", prefix);
-	sprintf(fname_output, "%s_classes_out.txt", prefix);
+	conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(prefix, fname_magma, fname_output);
+	//sprintf(fname_magma, "%s_classes.magma", prefix);
+	//sprintf(fname_output, "%s_classes_out.txt", prefix);
 
 	int n;
 
@@ -302,6 +315,8 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 	n = degree;
 	if (f_v) {
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA n = " << n << endl;
+		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA fname_magma = " << fname_magma << endl;
+		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA fname_output = " << fname_output << endl;
 		}
 	{
 	ofstream fp(fname_magma);
@@ -341,10 +356,14 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 	fp << "UnsetOutputFile();" << endl;
 	}
 	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
-	cout << "executing ConjugacyClasses command in MAGMA" << endl;
+	if (f_v) {
+		cout << "executing " << fname_magma << " command in MAGMA" << endl;
+	}
 	system(cmd);
 
-	cout << "command ConjugacyClasses in MAGMA has finished" << endl;
+	if (f_v) {
+		cout << "command ConjugacyClasses in MAGMA has finished" << endl;
+	}
 
 	FREE_OBJECT(G_gen);
 
@@ -371,7 +390,7 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 		int *&perms,
 		int *&class_size,
 		int *&class_order_of_element,
-		int *&class_normalizer_order,
+		long int *&class_normalizer_order,
 		int *&class_normalizer_number_of_generators,
 		int **&normalizer_generators_perms,
 		int verbose_level)
@@ -381,6 +400,8 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 
 	if (f_v) {
 		cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+		cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA fname=" << fname << endl;
+		cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA degree=" << degree << endl;
 		}
 	{
 		ifstream fp(fname);
@@ -398,6 +419,10 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 
 		for (i = 0; i < nb_classes; i++) {
 			fp >> class_order_of_element[i];
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA "
+						"class " << i << " / " << nb_classes << " order=" << class_order_of_element[i] << endl;
+			}
 			fp >> class_size[i];
 			for (j = 0; j < degree; j++) {
 				fp >> perms[i * degree + j];
@@ -411,12 +436,29 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 			perms[i]--;
 		}
 
-		class_normalizer_order = NEW_int(nb_classes);
+		class_normalizer_order = NEW_lint(nb_classes);
 		class_normalizer_number_of_generators = NEW_int(nb_classes);
 		normalizer_generators_perms = NEW_pint(nb_classes);
 
+		if (f_v) {
+			cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA "
+					"reading normalizer generators:" << endl;
+		}
 		for (i = 0; i < nb_classes; i++) {
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA "
+						"class " << i << " / " << nb_classes << endl;
+			}
 			fp >> class_normalizer_order[i];
+			if (class_normalizer_order[i] <= 0) {
+				cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA class_normalizer_order[i] <= 0" << endl;
+				cout << "class_normalizer_order[i]=" << class_normalizer_order[i] << endl;
+				exit(1);
+			}
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers_from_MAGMA "
+						"class " << i << " / " << nb_classes << " class_normalizer_order[i]=" << class_normalizer_order[i] << endl;
+			}
 			fp >> class_normalizer_number_of_generators[i];
 			normalizer_generators_perms[i] =
 					NEW_int(class_normalizer_number_of_generators[i] * degree);
@@ -587,7 +629,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	int *perms;
 	int *class_size;
 	int *class_order_of_element;
-	int *class_normalizer_order;
+	long int *class_normalizer_order;
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
 	//projective_space_with_action *PA;
@@ -796,7 +838,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	FREE_int(perms);
 	FREE_int(class_size);
 	FREE_int(class_order_of_element);
-	FREE_int(class_normalizer_order);
+	FREE_lint(class_normalizer_order);
 	FREE_int(class_normalizer_number_of_generators);
 	FREE_pint(normalizer_generators_perms);
 	//FREE_OBJECT(PA);
@@ -815,7 +857,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 	int *perms;
 	int *class_size;
 	int *class_order_of_element;
-	int *class_normalizer_order;
+	long int *class_normalizer_order;
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
 	//projective_space_with_action *PA;
@@ -905,7 +947,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 
 
 
-		int ngo;
+		long int ngo;
 		int nb_perms;
 		strong_generators *N_gens;
 		vector_ge *nice_gens_N;
@@ -1004,7 +1046,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 	FREE_int(perms);
 	FREE_int(class_size);
 	FREE_int(class_order_of_element);
-	FREE_int(class_normalizer_order);
+	FREE_lint(class_normalizer_order);
 	FREE_int(class_normalizer_number_of_generators);
 	FREE_pint(normalizer_generators_perms);
 	//FREE_OBJECT(PA);

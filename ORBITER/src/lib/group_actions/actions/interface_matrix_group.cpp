@@ -1,10 +1,10 @@
-// interface_matrix_group.C
+// interface_matrix_group.cpp
 //
 // Anton Betten
 //
 // started:  November 13, 2007
 // last change:  November 9, 2010
-// moved here from interface.C:  January 25, 2014
+// moved here from interface.cpp:  January 25, 2014
 
 
 

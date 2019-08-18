@@ -1,4 +1,4 @@
-// arc_lifting_main.C
+// arc_lifting_main.cpp
 // 
 // Anton Betten, Fatma Karaoglu
 //
@@ -79,7 +79,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "before Surf->init" << endl;
 		}
-	Surf->init(F, 0 /*verbose_level*/);
+	Surf->init(F, verbose_level - 5);
 	if (f_v) {
 		cout << "after Surf->init" << endl;
 		}
@@ -283,6 +283,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 	int q;
 	surface_domain *Surf;
 	finite_field *F;
+	action *A;
 	int i, j, arc_idx;
 	
 	char fname_arc_lifting[10000];
@@ -290,6 +291,24 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 	F = Surf_A->F;
 	q = F->q;
 	Surf = Surf_A->Surf;
+
+	A = NEW_OBJECT(action);
+
+	vector_ge *nice_gens;
+
+	int f_semilinear = TRUE;
+	number_theory_domain NT;
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+		}
+
+
+	A->init_projective_group(3, F,
+			f_semilinear, TRUE /*f_basis*/,
+			nice_gens,
+			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
 
 
 	six_arcs_not_on_a_conic *Six_arcs;
@@ -302,9 +321,11 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 	if (f_v) {
 		cout << "before Six_arcs->init" << endl;
 		}
-	Six_arcs->init(F, Surf->P2, 
+	Six_arcs->init(F,
+			A,
+			Surf->P2,
 		argc, argv, 
-		0 /*verbose_level*/);
+		verbose_level);
 	if (f_v) {
 		cout << "after Six_arcs->init" << endl;
 		}

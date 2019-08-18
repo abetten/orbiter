@@ -1,4 +1,4 @@
-// action_by_right_multiplication.C
+// action_by_right_multiplication.cpp
 //
 // Anton Betten
 // January 10, 2009

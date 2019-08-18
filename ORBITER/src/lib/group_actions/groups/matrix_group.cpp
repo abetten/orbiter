@@ -1,4 +1,4 @@
-// matrix_group.C
+// matrix_group.cpp
 //
 // Anton Betten
 //
@@ -608,25 +608,34 @@ void matrix_group::init_base_projective(
 
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
-	A->Stabilizer_chain->base_len = base_len;
+	//A->Stabilizer_chain->base_len = base_len;
 	//A->allocate_base_data(A->base_len);
 	if (f_vv) {
 		cout << "matrix_group::init_base_projective "
-				"A->Stabilizer_chain->base_len=" << A->Stabilizer_chain->base_len << endl;
+				"A->base_len()=" << A->base_len() << endl;
 		}
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "matrix_group::init_base_projective "
-				"before projective_matrix_group_base_and_orbits" << endl;
+				"before init_projective_matrix_group" << endl;
 		}
 
+#if 1
+	A->Stabilizer_chain->init_projective_matrix_group(
+			GFq, n, f_semilinear, A->degree,
+			verbose_level);
+#else
 	GFq->projective_matrix_group_base_and_orbits(n,
 		f_semilinear,
 		A->Stabilizer_chain->base_len, A->degree,
 		A->Stabilizer_chain->base, A->Stabilizer_chain->transversal_length,
 		A->Stabilizer_chain->orbit, A->Stabilizer_chain->orbit_inv,
 		verbose_level - 1);
-		// in GALOIS/group_generators.C
+#endif
+	if (f_v) {
+		cout << "matrix_group::init_base_projective "
+				"after init_projective_matrix_group" << endl;
+		}
 
 	if (f_v) {
 		cout << "matrix_group::init_base_projective: finished" << endl;
@@ -659,19 +668,28 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
-	A->Stabilizer_chain->base_len = base_len;
+	//A->Stabilizer_chain->base_len = base_len;
 	//A->allocate_base_data(A->base_len);
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "matrix_group::init_base_affine before "
-				"affine_matrix_group_base_and_orbits" << endl;
+				"init_affine_matrix_group" << endl;
 		}
+#if 1
+	A->Stabilizer_chain->init_affine_matrix_group(
+			GFq, n, f_semilinear, A->degree,
+			verbose_level);
+#else
 	GFq->affine_matrix_group_base_and_transversal_length(n,
 		f_semilinear,
 		A->Stabilizer_chain->base_len, A->degree,
 		A->Stabilizer_chain->base, A->Stabilizer_chain->transversal_length,
 		verbose_level - 1);
-		// in GALOIS/group_generators.C
+#endif
+	if (f_v) {
+		cout << "matrix_group::init_base_affine after "
+				"init_affine_matrix_group" << endl;
+		}
 
 	if (f_v) {
 		cout << "matrix_group::init_base_affine: finished" << endl;
@@ -698,7 +716,7 @@ void matrix_group::init_base_general_linear(
 		}
 	base_len = GG.matrix_group_base_len_general_linear_group(
 			n, q, f_semilinear, verbose_level - 1);
-	// in GALOIS/group_generators.C
+
 	if (f_vv) {
 		cout << "matrix_group::init_base_general_linear "
 				"base_len=" << base_len << endl;
@@ -706,19 +724,28 @@ void matrix_group::init_base_general_linear(
 
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
-	A->Stabilizer_chain->base_len = base_len;
+	//A->Stabilizer_chain->base_len = base_len;
 	//A->allocate_base_data(A->base_len);
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "matrix_group::init_base_general_linear before "
-				"affine_matrix_group_base_and_orbits" << endl;
+				"init_linear_matrix_group" << endl;
 		}
+#if 1
+	A->Stabilizer_chain->init_linear_matrix_group(
+			GFq, n, f_semilinear, A->degree,
+			verbose_level);
+#else
 	GFq->general_linear_matrix_group_base_and_transversal_length(n,
 		f_semilinear,
 		A->Stabilizer_chain->base_len, A->degree,
 		A->Stabilizer_chain->base, A->Stabilizer_chain->transversal_length,
 		verbose_level - 1);
-		// in GALOIS/group_generators.C
+#endif
+	if (f_v) {
+		cout << "matrix_group::init_base_general_linear after "
+				"init_linear_matrix_group" << endl;
+		}
 
 	if (f_v) {
 		cout << "matrix_group::init_base_affine: finished" << endl;
@@ -2046,7 +2073,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 
 	if (f_path_select) {
 		S->path[0] = select_value;
-		for (h = 1; h < S->A->Stabilizer_chain->base_len; h++) {
+		for (h = 1; h < S->A->base_len(); h++) {
 			S->path[h] = 0;
 			}
 		rk = S->path_rank_int();
@@ -2064,7 +2091,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 			int_matrix_print(Elt1, n, n);
 			S->path_unrank_int(rk);
 			cout << "path ";
-			int_vec_print(cout, S->path, S->A->Stabilizer_chain->base_len);
+			int_vec_print(cout, S->path, S->A->base_len());
 			cout << endl;
 			}
 		for (i = 0; i < n; i++) {
@@ -2091,12 +2118,12 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 					}
 				i--;
 				}
-			for (h = i + 1; h < S->A->Stabilizer_chain->base_len; h++) {
+			for (h = i + 1; h < S->A->base_len(); h++) {
 				S->path[h] = 0;
 				}
 			if (FALSE) {
 				cout << "moving on to path ";
-				int_vec_print(cout, S->path, S->A->Stabilizer_chain->base_len);
+				int_vec_print(cout, S->path, S->A->base_len());
 				cout << endl;
 				}
 			rk = S->path_rank_int();
@@ -2118,9 +2145,9 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 								"cnt=" << cnt << endl;
 				S->path_unrank_int(rk);
 				cout << "path ";
-				int_vec_print(cout, S->path, S->A->Stabilizer_chain->base_len);
+				int_vec_print(cout, S->path, S->A->base_len());
 				cout << " : ";
-				int_vec_print(cout, S->orbit_len, S->A->Stabilizer_chain->base_len);
+				int_vec_print(cout, S->orbit_len, S->A->base_len());
 				if (f_path_select) {
 					cout << " select_value = " << select_value;
 					}

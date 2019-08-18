@@ -1,4 +1,4 @@
-// a5_in_PSL.C
+// a5_in_PSL.cpp
 //
 // Anton Betten, Evi Haberberger
 // 10.06.2000
@@ -129,7 +129,7 @@ void A5_in_PSL_(int q, int verbose_level)
 	
 
 	}	
-	free_finite_field_domain(dom, f_v);
+	free_finite_field_domain(dom);
 }
 
 void A5_in_PSL_2_q(int q,
@@ -220,9 +220,9 @@ void A5_in_PSL_2_q_hard(int q,
 	int norm_alpha, l;
 	
 #if 0
-	m.get_an_irreducible_polynomial(2, TRUE, TRUE, TRUE);
+	m.get_an_irreducible_polynomial(2, verbose_level);
 #else
-	m.Singer(q, 2, TRUE, TRUE);
+	m.Singer(q, 2, verbose_level);
 #endif
 	cout << "m=" << m << endl;
 	norm_alpha = m.s_ii(0);

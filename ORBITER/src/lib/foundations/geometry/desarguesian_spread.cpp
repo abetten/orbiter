@@ -1,4 +1,4 @@
-// desarguesian_spread.C
+// desarguesian_spread.cpp
 //
 // Anton Betten
 // July 5, 2014

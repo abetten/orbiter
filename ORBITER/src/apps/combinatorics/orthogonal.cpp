@@ -1,4 +1,4 @@
-// orthogonal.C
+// orthogonal.cpp
 // 
 // Anton Betten
 // November 22, 2015
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 		}
 	else if (epsilon == -1) {
 		F->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
-		//cout << "incma.C: epsilon == -1, need irreducible polynomial" << endl;
+		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
 		}
 	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram);

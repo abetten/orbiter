@@ -1,4 +1,4 @@
-// schreier_vector_handler.C
+// schreier_vector_handler.cpp
 //
 // Anton Betten
 // started: Nov 5, 2018

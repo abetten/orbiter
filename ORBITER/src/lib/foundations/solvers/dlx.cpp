@@ -1,4 +1,4 @@
-// dlx.C
+// dlx.cpp
 //
 // Xi Chen
 // Student, Computer Science and Engineering
@@ -444,12 +444,12 @@ void Create_RHS(int nb_cols, int *RHS, int f_has_type,
 	int i, sum_rhs;
 
 	if (f_v) {
-		cout << "dlx.C: Create_RHS" << endl;
+		cout << "dlx.cpp: Create_RHS" << endl;
 		}
 
 	f_has_RHS = TRUE;
 	if (nb_cols != nCol) {
-		cout << "dlx.C: Create_RHS nb_cols != nCol" << endl;
+		cout << "dlx.cpp: Create_RHS nb_cols != nCol" << endl;
 		exit(1);
 		}
 
@@ -494,7 +494,7 @@ void Create_RHS(int nb_cols, int *RHS, int f_has_type,
 	nb_changed_type_columns_total = 0;
 
 	if (f_v) {
-		cout << "dlx.C: Create_RHS done" << endl;
+		cout << "dlx.cpp: Create_RHS done" << endl;
 		}
 }
 
@@ -533,7 +533,7 @@ void CreateMatrix(int *Data,
 	dlx_nb_sol = 0;
 
 	if (f_v) {
-		cout << "dlx.C: CreateMatrix" << endl;
+		cout << "dlx.cpp: CreateMatrix" << endl;
 		cout << "The " << nb_rows << " x " << nb_cols
 				<< " matrix is:" << endl;
 		for (i = 0; i < nb_rows; i++) {

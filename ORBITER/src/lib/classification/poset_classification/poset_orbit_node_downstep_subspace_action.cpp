@@ -1,4 +1,4 @@
-// poset_orbit_node_downstep_subspace_action.C
+// poset_orbit_node_downstep_subspace_action.cpp
 //
 // Anton Betten
 // Jan 21, 2010

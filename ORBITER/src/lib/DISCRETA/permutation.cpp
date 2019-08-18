@@ -1,4 +1,4 @@
-// permutation.C
+// permutation.cpp
 //
 // Anton Betten
 // 10.11.1999
@@ -315,15 +315,16 @@ ostream& permutation::print_cycle(ostream& ost)
 }
 
 
-void permutation::sscan(const char *s, int f_v)
+void permutation::sscan(const char *s, int verbose_level)
 {
 	istringstream ins(s);
-	scan(ins, f_v);
+	scan(ins, verbose_level);
 }
 
-void permutation::scan(istream & is, int f_v)
+void permutation::scan(istream & is, int verbose_level)
 //Scans a permutation from a stream.
 {
+	int f_v = (verbose_level >+ 1);
 	int l = 20;
 	Vector cycle;
 	permutation perm;
@@ -336,7 +337,7 @@ void permutation::scan(istream & is, int f_v)
 	cycle.m_l_n(l);
 	perm.one();
 	while (TRUE) {
-		c = get_character(is, f_v);
+		c = get_character(is, verbose_level);
 		while (c == ' ' || c == '\t') {
 			c = get_character(is, f_v);
 			}
@@ -347,10 +348,10 @@ void permutation::scan(istream & is, int f_v)
 		if (f_v) {
 			cout << "opening parenthesis" << endl;
 			}
-		c = get_character(is, f_v);
+		c = get_character(is, verbose_level);
 		while (TRUE) {
 			while (c == ' ' || c == '\t')
-				c = get_character(is, f_v);
+				c = get_character(is, verbose_level);
 			
 			si = 0;
 			// read digits:
@@ -985,8 +986,9 @@ void permutation::AddNCycle(int first, int len)
 	}
 }
 
-void permutation::cycle_type(Vector& type, int f_v)
+void permutation::cycle_type(Vector& type, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	Vector have_seen;
 	int l, l1, first, next, len, n;
 	
@@ -1033,13 +1035,13 @@ void permutation::cycle_type(Vector& type, int f_v)
 		}
 }
 
-int permutation::nb_of_inversions(int f_v)
+int permutation::nb_of_inversions(int verbose_level)
 {
 	Vector type;
 	int i, l, inv = 0, ai;
 	
 	l = s_l();
-	cycle_type(type, f_v);
+	cycle_type(type, verbose_level);
 	for (i = 1; i <= l; i++) {
 		ai = type.s_ii(i - 1);
 		inv += ai * (i - 1);
@@ -1047,18 +1049,18 @@ int permutation::nb_of_inversions(int f_v)
 	return inv;
 }
 
-int permutation::signum(int f_v)
+int permutation::signum(int verbose_level)
 {
-	int inv = nb_of_inversions(f_v);
+	int inv = nb_of_inversions(verbose_level);
 	if (EVEN(inv))
 		return 1;
 	else
 		return -1;
 }
 
-int permutation::is_even(int f_v)
+int permutation::is_even(int verbose_level)
 {
-	int inv = nb_of_inversions(f_v);
+	int inv = nb_of_inversions(verbose_level);
 	if (EVEN(inv))
 		return TRUE;
 	else
@@ -1135,14 +1137,20 @@ void permutation::restrict_to_subset(permutation &q, int first, int len)
 		}
 }
 
-void permutation::induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int f_v, int f_vv)
+void permutation::induce_on_lines_of_PG_k_q(int k, int q,
+		permutation &per, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	domain *dom;
 	int nb_pts, nb_lines;
 	int i, j, p1, p2, q1, q2;
 	geometry_global Gg;
 	
-	dom = allocate_finite_field_domain(q, f_v);
+	if (f_v) {
+		cout << "permutation::induce_on_lines_of_PG_k_q" << endl;
+	}
+	dom = allocate_finite_field_domain(q, verbose_level - 2);
 	matrix L;
 	nb_pts = Gg.nb_PG_elements(k, q);
 	nb_lines = nb_PG_lines(k, q);
@@ -1177,7 +1185,7 @@ void permutation::induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int 
 		if (f_vv) {
 			cout << "L'=\n" << L << endl;
 			}
-		L.PG_line_rank(j, f_vv);
+		L.PG_line_rank(j, verbose_level - 2);
 		if (f_vv) {
 			cout << "j=" << j << endl;
 			}
@@ -1193,18 +1201,20 @@ void permutation::induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int 
 	}
 }
 
-void permutation::singer_cycle_on_points_of_projective_plane(int p, int f_modified, int f_v)
+void permutation::singer_cycle_on_points_of_projective_plane(int p,
+		int f_modified, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	unipoly a;
 	matrix M;
 	int l;
 	int f_action_from_right = TRUE;
 	geometry_global Gg;
 	
-	a.Singer(p, 3, FALSE, FALSE);
+	a.Singer(p, 3, verbose_level - 2);
 	cout << "permutation::singer_cycle_on_points_of_projective_plane(): primitive polynomial: " << a << endl;
 	
-	domain *dom = allocate_finite_field_domain(p, f_v);
+	domain *dom = allocate_finite_field_domain(p, verbose_level - 2);
 	l = Gg.nb_PG_elements(2, p);
 	m_l(l);
 	{

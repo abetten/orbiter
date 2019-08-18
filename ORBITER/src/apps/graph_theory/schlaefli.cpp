@@ -1,4 +1,4 @@
-// schlaefli.C
+// schlaefli.cpp
 // 
 // Anton Betten
 // January 21, 2015

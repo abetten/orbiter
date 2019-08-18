@@ -1,4 +1,4 @@
-// read_orbiter_file.C
+// read_orbiter_file.cpp
 // 
 // Anton Betten
 // June 7, 2018

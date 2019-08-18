@@ -1,4 +1,4 @@
-// gl_classes.C
+// gl_classes.cpp
 //
 // Anton Betten
 // October 21, 2013
@@ -430,7 +430,7 @@ int main(int argc, char **argv)
 		
 		gens = new vector_ge;
 		SG = new vector_ge;
-		tl = NEW_int(A->Stabilizer_chain->base_len);
+		tl = NEW_int(A->base_len());
 		gens->init(A);
 		gens->allocate(sz);
 		

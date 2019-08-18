@@ -1,4 +1,4 @@
-// longinteger.C
+// longinteger.cpp
 //
 // Anton Betten
 // 19.11.1999
@@ -40,24 +40,6 @@ longinteger::longinteger(int a)
 	swap(x);
 	delete [] p;
 }
-
-#if 0
-longinteger::longinteger(LONGint a)
-{
-	int l;
-	char *p;
-	ostringstream s;
-	
-	s << a << ends;
-	l = s.str().length();
-	p = new char [l + 1];
-	s.str().copy(p, l, 0);
-	p[l] = 0;
-	longinteger x(p);
-	swap(x);
-	delete [] p;
-}
-#endif
 
 longinteger::longinteger(const char *s)
 {
@@ -530,24 +512,6 @@ void longinteger::homo_z(int z)
 	swap(x);
 }
 
-#if 0
-void longinteger::homo_z(LONGint z)
-{
-	char *p;
-	ostringstream s;
-	int l;
-	
-	s << z << ends;
-	l = s.str().length();
-	p = new char [l + 1];
-	s.str().copy(p, l, 0);
-	p[l] = 0;
-	longinteger x(p);
-	swap(x);
-	delete [] p;
-}
-#endif
-
 void longinteger::inc()
 {
 	longinteger x = ("1");
@@ -721,7 +685,7 @@ void longinteger::integral_division(discreta_base &x,
 		
 		Q.s_p(l1) = (char) idx;
 #ifdef DEBUG_LONGINTEGER_DIVISION
-		cout << "calling r2.add()\n";
+		cout << "calling r2.add()" << endl;
 #endif
 		r2.add(r1, dm[idx]);
 #ifdef DEBUG_LONGINTEGER_DIVISION
@@ -901,8 +865,9 @@ void longinteger::divide_out_int(int d)
 	swap(Q);
 }
 
-int longinteger::Lucas_test_Mersenne(int m, int f_v)
+int longinteger::Lucas_test_Mersenne(int m, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 	longinteger s("4"), m2("-2"), t;
 	

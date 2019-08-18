@@ -1,4 +1,4 @@
-// solid.C
+// solid.cpp
 //
 // Anton Betten, Evi Haberberger
 // August 2000

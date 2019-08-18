@@ -1,4 +1,4 @@
-// finite_ring.C
+// finite_ring.cpp
 //
 // Anton Betten
 //
