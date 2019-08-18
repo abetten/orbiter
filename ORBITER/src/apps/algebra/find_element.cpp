@@ -1,4 +1,4 @@
-// find_element.C
+// find_element.cpp
 // 
 // Anton Betten
 // 12/25/2009
@@ -20,7 +20,7 @@ using namespace orbiter;
 // global data:
 
 int t0; // the system time when the program started
-const char *version = "find_element.C version 12/25/2009";
+const char *version = "find_element.cpp version 12/25/2009";
 
 void find_element(int q, int *mtx, int verbose_level);
 

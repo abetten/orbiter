@@ -1,4 +1,4 @@
-// create_object.C
+// create_object.cpp
 // 
 // Anton Betten
 // June 25, 2011
@@ -367,7 +367,6 @@ int main(int argc, const char **argv)
 			f_Segre, f_Payne, f_Cherowitzo, f_OKeefe_Penttila, 
 			fname, nb_pts, Pts, 
 			verbose_level);
-			// ACTION/geometric_object.C
 
 		F->export_magma(3, Pts, nb_pts, fname);
 		F->export_gap(3, Pts, nb_pts, fname);
@@ -378,7 +377,6 @@ int main(int argc, const char **argv)
 			f_short, 
 			fname, nb_pts, Pts, 
 			verbose_level);
-			// ACTION/geometric_object.C
 
 
 		F->export_magma(3, Pts, nb_pts, fname);
@@ -390,7 +388,6 @@ int main(int argc, const char **argv)
 		F->create_subiaco_hyperoval(
 			fname, nb_pts, Pts, 
 			verbose_level);
-			// ACTION/geometric_object.C
 
 
 		F->export_magma(3, Pts, nb_pts, fname);
@@ -411,7 +408,6 @@ int main(int argc, const char **argv)
 		S->create_adelaide_hyperoval(
 			fname, nb_pts, Pts, 
 			verbose_level);
-			// ACTION/geometric_object.C
 
 
 		F->export_magma(3, Pts, nb_pts, fname);

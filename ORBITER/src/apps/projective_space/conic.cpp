@@ -1,4 +1,4 @@
-// conic.C
+// conic.cpp
 // 
 // Anton Betten
 // March 4, 2010
@@ -1082,10 +1082,10 @@ void projective_space_init_line_action(projective_space *P,
 	sims S;
 	longinteger_object go1;
 
-	S.init(A_points);
+	S.init(A_points, verbose_level - 2);
 	S.init_generators(*A_points->Strong_gens->gens,
 			0/*verbose_level*/);
-	S.compute_base_orbits_known_length(A_points->Stabilizer_chain->transversal_length,
+	S.compute_base_orbits_known_length(A_points->get_transversal_length(),
 			0/*verbose_level - 1*/);
 	S.group_order(go1);
 	if (f_v) {

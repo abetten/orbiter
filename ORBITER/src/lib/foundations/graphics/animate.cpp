@@ -27,6 +27,7 @@ animate::animate()
 	Opt = NULL;
 	fpm = NULL;
 	draw_frame_callback = NULL;
+	extra_data = NULL;
 }
 
 animate::~animate()
@@ -39,6 +40,7 @@ void animate::init(scene *S,
 		const char *output_mask,
 		int nb_frames,
 		video_draw_options *Opt,
+		void *extra_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -50,6 +52,7 @@ void animate::init(scene *S,
 	animate::output_mask = output_mask;
 	animate::nb_frames = nb_frames;
 	animate::Opt = Opt;
+	animate::extra_data = extra_data;
 	sprintf(fname_makefile, "makefile_animation");
 
 

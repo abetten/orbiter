@@ -1,4 +1,4 @@
-// graph_node.C
+// graph_node.cpp
 // 
 // Anton Betten
 // December 30, 2013

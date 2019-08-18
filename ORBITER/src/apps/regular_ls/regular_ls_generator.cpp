@@ -1,4 +1,4 @@
-// regular_ls_generator.C
+// regular_ls_generator.cpp
 // 
 // Anton Betten
 // Jan 1, 2013

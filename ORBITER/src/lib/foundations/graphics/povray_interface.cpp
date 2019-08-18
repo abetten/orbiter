@@ -336,10 +336,11 @@ void povray_interface::union_start(ostream &ost)
 	ost << "} */" << endl;
 }
 
-void povray_interface::union_end(ostream &ost, double clipping_radius)
+void povray_interface::union_end(ostream &ost, double scale_factor, double clipping_radius)
 {
 	ost << endl;
-	ost << " 	scale  1.0" << endl;
+	ost << " 	scale  " << scale_factor << endl;
+	//ost << " 	scale  1.0" << endl;
 	ost << endl;
 	ost << "	clipped_by { sphere{ < 0.,0.,0. > , "
 		<< clipping_radius << "  } }" << endl;

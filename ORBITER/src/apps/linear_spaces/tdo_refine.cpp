@@ -1,4 +1,5 @@
-// tdo_refine.C
+// tdo_refine.cpp
+//
 // Anton Betten
 //
 // started:  Dec 26 2006
@@ -77,15 +78,13 @@ typedef class tdo_parameter_calculation tdo_parameter_calculation;
 class tdo_parameter_calculation {
 	public:
 	
-int t0;
+	int t0;
 	int cnt;
 	char *p_buf;
 	char str[1000];
 	char ext[1000];
 	char *fname_in;
-	//char fname_base[1000];
 	char fname_out[1000];
-	int verbose_level;
 	int f_lambda3;
 	int lambda3, block_size;
 	int f_scale;
@@ -113,8 +112,6 @@ int t0;
 	
 	geo_parameter GP2;
 
-	//int new_part[10000];
-	//int new_entries[1000000];
 
 
 	int f_doit;
@@ -122,8 +119,11 @@ int t0;
 	int cnt_second_system;
 	solution_file_data *Sol;
 
+	tdo_parameter_calculation();
+	~tdo_parameter_calculation();
+	void init(int verbose_level);
 	void read_arguments(int argc, char **argv);
-	void main_loop();
+	void main_loop(int verbose_level);
 	void do_it(ofstream &g, int verbose_level);
 	void do_row_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
 	void do_col_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
@@ -148,49 +148,106 @@ int t0;
 int main(int argc, char **argv)
 {
 	tdo_parameter_calculation *G;
+	int verbose_level = 0;
+	int i;
 	
 	cout << version << endl;
-	
-	G = new tdo_parameter_calculation;
-	
-	G->t0 = os_ticks();
-	
-	G->verbose_level = 0;
-	G->f_lambda3 = FALSE;
-	G->f_scale = FALSE;
-	G->f_range = FALSE;
-	G->f_select = FALSE;
-	G->f_omit1 = FALSE;
-	G->f_omit2 = FALSE;
-	G->f_D1_upper_bound_x0 = FALSE;
 
-	G->nb_written = 0;
-	G->nb_written_tactical = 0;
-	G->cnt_second_system = 0;
+	for (i = 1; i < argc - 1; i++) {
+		if (strcmp(argv[i], "-v") == 0) {
+			verbose_level = atoi(argv[++i]);
+			cout << "-v " << verbose_level << endl;
+			}
+	}
+
+	G = NEW_OBJECT(tdo_parameter_calculation);
 	
-	G->Sol = new solution_file_data;
-	G->Sol->nb_solution_files = 0;
 
-	G->GP2.part_nb_alloc = 10000;
-	G->GP2.entries_nb_alloc = 1000000;
-	G->GP2.part = new int[G->GP2.part_nb_alloc];
-	G->GP2.entries = new int[G->GP2.entries_nb_alloc];
-
-	
-	G->f_reverse = FALSE;
-	G->f_reverse_inverse = FALSE;
-	G->f_use_packing_numbers = TRUE;
-	G->f_dual_is_linear_space = FALSE;
-	G->f_do_the_geometric_test = FALSE;
-	G->f_once = FALSE;
-	G->f_use_mckay_solver = FALSE;
-
+	G->init(verbose_level);
 	G->read_arguments(argc, argv);
-	G->main_loop();
+	G->main_loop(verbose_level);
 	
 	cout << "time: ";
 	time_check(cout, G->t0);
 	cout << endl;
+	FREE_OBJECT(G);
+}
+
+tdo_parameter_calculation::tdo_parameter_calculation()
+{
+	t0 = 0;
+	cnt = 0;
+	p_buf = NULL;
+	fname_in = NULL;
+	f_lambda3 = FALSE;
+	lambda3 = 0;
+	block_size = 0;
+	f_scale = FALSE;
+	scaling = 0;
+	f_range = FALSE;
+	range_first = 0;
+	range_len = 1;
+	f_select = FALSE;
+	select_label = NULL;
+	f_omit1 = FALSE;
+	omit1 = 0;
+	f_omit2 = FALSE;
+	omit2 = 0;
+	f_D1_upper_bound_x0 = FALSE;
+	D1_upper_bound_x0 = 0;
+	f_reverse = FALSE;
+	f_reverse_inverse = FALSE;
+	f_use_packing_numbers = FALSE;
+	f_dual_is_linear_space = FALSE;
+	f_do_the_geometric_test = FALSE;
+	f_once = FALSE;
+	f_use_mckay_solver = FALSE;
+
+
+	//geo_parameter GP;
+
+	//geo_parameter GP2;
+
+
+	f_doit = FALSE;
+	nb_written = 0;
+	nb_written_tactical = 0;
+	nb_tactical = 0;
+	cnt_second_system = 0;
+	Sol = NULL;
+
+}
+
+tdo_parameter_calculation::~tdo_parameter_calculation()
+{
+
+	if (Sol) {
+		FREE_OBJECT(Sol);
+	}
+}
+
+void tdo_parameter_calculation::init(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "tdo_parameter_calculation::init" << endl;
+	}
+
+	t0 = os_ticks();
+
+
+	Sol = NEW_OBJECT(solution_file_data);
+	Sol->nb_solution_files = 0;
+
+	GP2.part_nb_alloc = 10000;
+	GP2.entries_nb_alloc = 1000000;
+	GP2.part = new int[GP2.part_nb_alloc];
+	GP2.entries = new int[GP2.entries_nb_alloc];
+
+	if (f_v) {
+		cout << "tdo_parameter_calculation::init done" << endl;
+	}
 }
 
 void tdo_parameter_calculation::read_arguments(int argc, char **argv)
@@ -202,10 +259,6 @@ void tdo_parameter_calculation::read_arguments(int argc, char **argv)
 		exit(1);
 		}
 	for (i = 1; i < argc - 1; i++) {
-		if (strcmp(argv[i], "-v") == 0) {
-			verbose_level = atoi(argv[++i]);
-			cout << "-v " << verbose_level << endl;
-			}
 		if (strcmp(argv[i], "-lambda3") == 0) {
 			f_lambda3 = TRUE;
 			lambda3 = atoi(argv[++i]);
@@ -279,25 +332,20 @@ void tdo_parameter_calculation::read_arguments(int argc, char **argv)
 			f_use_mckay_solver = TRUE;
 			cout << "-mckay" << endl;
 			}
-#if 0
-		if (strcmp(argv[i], "-max") == 0) {
-			f_upper_bound_distribution = TRUE;
-			upper_bound_distribution = atoi(argv[++i]);
-			cout << "-max " << upper_bound_distribution << endl;
-			}
-#endif
 		}
 	fname_in = argv[argc - 1];
 }
 
-void tdo_parameter_calculation::main_loop()
+void tdo_parameter_calculation::main_loop(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	
-	cout << "tdo_parameter_calculation::main_loop "
+	if (f_v) {
+		cout << "tdo_parameter_calculation::main_loop "
 			"opening file " << fname_in << " for reading" << endl;
+	}
 	ifstream f(fname_in);
 	
 	strcpy(str, fname_in);
@@ -314,66 +362,76 @@ void tdo_parameter_calculation::main_loop()
 		}
 	sprintf(fname_out + strlen(fname_out), "r.tdo");
 	{
-	cout << "tdo_parameter_calculation::main_loop "
-			"opening file " << fname_out << " for writing" << endl;
-	ofstream g(fname_out);
-	
-	for (cnt = 0; ; cnt++) {
 
-		cout << "tdo_parameter_calculation::main_loop "
-				"cnt=" << cnt << endl;
+		if (f_v) {
+			cout << "tdo_parameter_calculation::main_loop "
+					"opening file " << fname_out << " for writing" << endl;
+		}
+		ofstream g(fname_out);
 
-		if (f.eof()) {
-			cout << "eof reached" << endl;
-			break;
-			}
+		for (cnt = 0; ; cnt++) {
 
-#if 0
-		if (cnt && (cnt % 1000) == 0) {
-			cout << cnt << endl;
-			registry_dump();
-			}
-#endif
-
-		if (!GP.input_mode_stack(f, 0 /*verbose_level - 1*/)) {
-			//cout << "GP.input_mode_stack returns FALSE" << endl;
-			break;
-			}
-	
-		cout << "tdo_parameter_calculation::main_loop "
-				"cnt=" << cnt << " read input TDO" << endl;
-
-		f_doit = TRUE;
-		if (f_range) {
-			if (cnt + 1 < range_first || cnt + 1 >= range_first + range_len)
-				f_doit = FALSE;
-			}
-		if (f_select) {
-			if (strcmp(GP.label, select_label))
-				continue;
-			}
-		if (f_doit) {
 			if (f_v) {
 				cout << "tdo_parameter_calculation::main_loop "
-						"read decomposition " << cnt << endl;
-				}
-			if (f_vv) {
-				GP.print_schemes();
-				}
-			if (FALSE) {
-				cout << "after print_schemes" << endl;
-				}
-			do_it(g, verbose_level - 1);
+						"cnt=" << cnt << endl;
 			}
 
-
-		} // next cnt
-
-
+			if (f.eof()) {
+				cout << "eof reached" << endl;
+				break;
+				}
 	
-	g << -1 << " " << nb_written << " TDOs, with " << nb_written_tactical << " being tactical" << endl;
-	cout << "tdo_parameter_calculation::main_loop " << nb_written
-			<< " TDOs, with " << nb_written_tactical << " being tactical" << endl;
+	#if 0
+			if (cnt && (cnt % 1000) == 0) {
+				cout << cnt << endl;
+				registry_dump();
+				}
+	#endif
+	
+			if (!GP.input_mode_stack(f, 0 /*verbose_level - 1*/)) {
+				//cout << "GP.input_mode_stack returns FALSE" << endl;
+				break;
+				}
+
+			if (f) {
+				cout << "tdo_parameter_calculation::main_loop "
+						"cnt=" << cnt << " read input TDO" << endl;
+			}
+
+			f_doit = TRUE;
+			if (f_range) {
+				if (cnt + 1 < range_first || cnt + 1 >= range_first + range_len)
+					f_doit = FALSE;
+				}
+			if (f_select) {
+				if (strcmp(GP.label, select_label))
+					continue;
+				}
+			if (f_doit) {
+				if (f_v) {
+					cout << "tdo_parameter_calculation::main_loop "
+							"read decomposition " << cnt << endl;
+					}
+				if (f_vv) {
+					GP.print_schemes();
+					}
+				if (FALSE) {
+					cout << "after print_schemes" << endl;
+					}
+				do_it(g, verbose_level - 1);
+				}
+	
+
+			} // next cnt
+
+
+
+		g << -1 << " " << nb_written << " TDOs, with " << nb_written_tactical << " being tactical" << endl;
+		cout << "tdo_parameter_calculation::main_loop " << nb_written
+				<< " TDOs, with " << nb_written_tactical << " being tactical" << endl;
+	}
+	if (f_v) {
+		cout << "tdo_parameter_calculation::main_loop done" << endl;
 	}
 }
 
@@ -448,6 +506,9 @@ void tdo_parameter_calculation::do_it(ofstream &g, int verbose_level)
 		nb_written_tactical++;
 		}
 
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_it done" << endl;
+		}
 
 
 }
@@ -540,6 +601,9 @@ void tdo_parameter_calculation::do_row_refinement(
 				<< " row refinements, out of which " 
 				<< 0 << " are tactical" << endl;
 			}
+		}
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_row_refinement done" << endl;
 		}
 }
 
@@ -636,6 +700,9 @@ void tdo_parameter_calculation::do_col_refinement(
 				<< 0 << " are tactical" << endl;
 			}
 		}
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_col_refinement done" << endl;
+		}
 }
 
 void tdo_parameter_calculation::do_all_row_refinements(
@@ -647,6 +714,9 @@ void tdo_parameter_calculation::do_all_row_refinements(
 	int f_v = (verbose_level >= 1);
 	int i, t;
 			
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_all_row_refinements" << endl;
+	}
 	nb_tactical = 0;
 	for (i = 0; i < GP.nb_parts; i++) 
 		GP2.part[i] = GP.part[i];
@@ -666,6 +736,9 @@ void tdo_parameter_calculation::do_all_row_refinements(
 			<< " row refinements, out of which " 
 			<< nb_tactical << " are tactical" << endl;
 		}
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_all_row_refinements done" << endl;
+	}
 			
 }
 
@@ -679,6 +752,9 @@ void tdo_parameter_calculation::do_all_column_refinements(
 	int i, t;
 			
 
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_all_column_refinements" << endl;
+	}
 	nb_tactical = 0;
 	for (i = 0; i < GP.nb_parts; i++) 
 		GP2.part[i] = GP.part[i];
@@ -699,6 +775,9 @@ void tdo_parameter_calculation::do_all_column_refinements(
 			<< " column refinements, out of which " 
 			<< nb_tactical << " are tactical" << endl;
 		}
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_all_column_refinements done" << endl;
+	}
 }
 
 
@@ -718,7 +797,7 @@ int tdo_parameter_calculation::do_row_refinement(
 	int f_tactical;
 
 	if (f_v) {
-		cout << "do_row_refinement t=" << t << endl;
+		cout << "tdo_parameter_calculation::do_row_refinement t=" << t << endl;
 		}
 	
 	type_index = NEW_int(nb_point_types);
@@ -767,14 +846,14 @@ int tdo_parameter_calculation::do_row_refinement(
 			if (s == l)
 				break;
 			if (s > l) {
-				cout << "do_row_refinement: s > l" << endl;
+				cout << "tdo_parameter_calculation::do_row_refinement: s > l" << endl;
 				exit(1);
 				}
 			}
 		S += l;
 		}
 	if (S != G.m) {
-		cout << "do_row_refinement: S != G.m" << endl;
+		cout << "tdo_parameter_calculation::do_row_refinement: S != G.m" << endl;
 		exit(1);
 		}
 	
@@ -872,6 +951,9 @@ int tdo_parameter_calculation::do_row_refinement(
 	}
 
 	FREE_int(type_index);
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_row_refinement t=" << t << " done" << endl;
+		}
 	return f_tactical;
 }
 
@@ -891,7 +973,7 @@ int tdo_parameter_calculation::do_column_refinement(
 	int f_tactical;
 
 	if (f_v) {
-		cout << "do_column_refinement t=" << t << endl;
+		cout << "tdo_parameter_calculation::do_column_refinement t=" << t << endl;
 		}
 	
 	type_index = NEW_int(nb_line_types);
@@ -929,7 +1011,7 @@ int tdo_parameter_calculation::do_column_refinement(
 			if (s == l)
 				break;
 			if (s > l) {
-				cout << "do_column_refinement: s > l" << endl;
+				cout << "tdo_parameter_calculation::do_column_refinement: s > l" << endl;
 				cout << "r=" << r << endl;
 				cout << "s=" << s << endl;
 				cout << "l=" << l << endl;
@@ -942,7 +1024,7 @@ int tdo_parameter_calculation::do_column_refinement(
 		S += l;
 		}
 	if (S != G.m + G.n) {
-		cout << "do_column_refinement: S != G.m + G.n" << endl;
+		cout << "tdo_parameter_calculation::do_column_refinement: S != G.m + G.n" << endl;
 		exit(1);
 		}
 	
@@ -1041,8 +1123,14 @@ int tdo_parameter_calculation::do_column_refinement(
 		}
 
 	FREE_int(type_index);
+	if (f_v) {
+		cout << "tdo_parameter_calculation::do_column_refinement t=" << t << " done" << endl;
+		}
 	return f_tactical;
 }
+
+// global stuff:
+
 
 void print_distribution(ostream &ost, 
 	int *types, int nb_types, int type_len,  
@@ -1112,6 +1200,7 @@ void print_distribution(ostream &ost,
 		}
 	ost << endl;
 }
+
 
 int compare_func_int_vec(void *a, void *b, void *data)
 {

@@ -1,4 +1,4 @@
-// factor_group.C
+// factor_group.cpp
 // 
 // Anton Betten
 // started:     03/10/2009

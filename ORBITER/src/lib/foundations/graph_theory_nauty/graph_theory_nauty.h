@@ -12,7 +12,7 @@ namespace foundations {
 
 
 // #############################################################################
-// nauty_interface.C:
+// nauty_interface.cpp
 // #############################################################################
 
 void nauty_interface_graph_bitvec(int v, uchar *bitvector_adjacency, 

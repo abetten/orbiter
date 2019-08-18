@@ -1,4 +1,4 @@
-// clique_finder_control.C
+// clique_finder_control.cpp
 //
 // Anton Betten
 //

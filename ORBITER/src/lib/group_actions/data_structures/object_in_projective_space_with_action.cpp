@@ -1,4 +1,4 @@
-// object_in_projective_space_with_action.C
+// object_in_projective_space_with_action.cpp
 // 
 // Anton Betten
 //

@@ -1,4 +1,4 @@
-// singer_cycle.C
+// singer_cycle.cpp
 // 
 // Anton Betten
 // March 19, 2013

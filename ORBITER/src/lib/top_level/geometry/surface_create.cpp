@@ -1,4 +1,4 @@
-// surface_create.C
+// surface_create.cpp
 // 
 // Anton Betten
 //
@@ -315,6 +315,8 @@ void surface_create::init2(int verbose_level)
 			cout << endl;
 			}
 
+#if 0
+		// classifying the trihedral pairs is expensive:
 		if (f_v) {
 			cout << "surface_create::init2 before Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
@@ -324,6 +326,7 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 after Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
 			}
+#endif
 
 
 		arc_lifting *AL;
@@ -340,6 +343,8 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 after "
 					"AL->create_surface" << endl;
 			}
+
+		AL->print_Eckardt_point_data(cout);
 
 		int_vec_copy(AL->The_surface_equations
 				+ AL->lambda_rk * 20, coeffs, 20);
@@ -394,6 +399,7 @@ void surface_create::init2(int verbose_level)
 			cout << endl;
 			}
 
+#if 0
 		if (f_v) {
 			cout << "surface_create::init2 before Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
@@ -403,6 +409,7 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 after Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
 			}
+#endif
 
 
 		arc_lifting_with_two_lines *AL;

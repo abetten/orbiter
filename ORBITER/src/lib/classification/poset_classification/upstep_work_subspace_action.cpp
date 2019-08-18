@@ -1,4 +1,4 @@
-// upstep_work_subspace_action.C
+// upstep_work_subspace_action.cpp
 //
 // Anton Betten
 // March 10, 2010
@@ -393,7 +393,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 				final_node, final_ex,
 				TRUE /* f_tolerant */,
 				verbose_level - 1);
-			// upstep_work_trace.C
+			// upstep_work_trace.cpp
 			// gen->set[0] is the set we want to trace
 			// gen->transporter->ith(0) is the identity
 
@@ -525,7 +525,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 	if (gen->f_do_group_extension_in_upstep) {
 		vector_ge SG_extension;
-		int *tl_extension = NEW_int(gen->Poset->A->Stabilizer_chain->base_len);
+		int *tl_extension = NEW_int(gen->Poset->A->base_len());
 		int f_OK;
 		int f_tolerant = FALSE;
 	

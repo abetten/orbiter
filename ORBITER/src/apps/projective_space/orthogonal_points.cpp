@@ -1,4 +1,4 @@
-// orthogonal_points.C
+// orthogonal_points.cpp
 //
 // Anton Betten
 //

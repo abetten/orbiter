@@ -1,4 +1,4 @@
-// treedraw.C
+// treedraw.cpp
 //
 // Anton Betten
 // January 12, 2004
@@ -228,7 +228,7 @@ int main(int argc, const char **argv)
 	else {
 		T.draw(fname_out,
 			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
-			f_i, f_e, FALSE, NULL,
+			f_i, f_e, TRUE, draw_vertex_callback_standard,
 			f_embedded, f_sideways, f_on_circle,
 			scale, line_width);
 		}
@@ -305,7 +305,19 @@ void draw_vertex_callback_standard(tree *T,
 	//nb_V = LG->data1;
 	
 	//sprintf(str, "%d", N->value);
-	sprintf(str, "%d", N->int_data);
+	if (N->f_value) {
+		cout << "N->f_value=" << N->f_value << endl;
+		if (N->value == -1) {
+			str[0] = 0;
+		}
+		else {
+			sprintf(str, "%d", N->value);
+		}
+	}
+	else {
+		sprintf(str, "%d", N->int_data);
+	}
+	cout << "str='" << str << "'" << endl;
 
 	G->aligned_text(x, y, "", str);
 }

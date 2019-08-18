@@ -1,4 +1,4 @@
-// create_group.C
+// create_group.cpp
 // 
 // Anton Betten
 // October 2, 2016

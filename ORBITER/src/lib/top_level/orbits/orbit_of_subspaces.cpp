@@ -1,4 +1,4 @@
-// orbit_of_subspaces.C
+// orbit_of_subspaces.cpp
 // 
 // Anton Betten
 // April 9, 2014
@@ -1075,7 +1075,7 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action,
 				"of order " << target_go << endl;
 		}
 	
-	Stab->init(default_action);
+	Stab->init(default_action, verbose_level - 2);
 	Stab->init_trivial_group(verbose_level - 1);
 	while (TRUE) {
 		Stab->group_order(cur_go);

@@ -1,4 +1,4 @@
-// choose_points_or_lines.C
+// choose_points_or_lines.cpp
 //
 // Anton Betten
 //
@@ -382,7 +382,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 			cout << "computing NewStab (because we changed)" << endl;
 			}
 		NewStab = NEW_OBJECT(sims);
-		NewStab->init(A);
+		NewStab->init(A, verbose_level - 2);
 		NewStab->init_trivial_group(0/*verbose_level - 1*/);
 		//NewStab->group_order(stab_order);
 

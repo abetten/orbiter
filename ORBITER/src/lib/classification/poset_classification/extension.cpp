@@ -1,4 +1,4 @@
-// extension.C
+// extension.cpp
 //
 // Anton Betten
 // Dec 19, 2011

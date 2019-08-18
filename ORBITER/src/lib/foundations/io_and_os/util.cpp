@@ -1,4 +1,4 @@
-// util.C
+// util.cpp
 //
 // Anton Betten
 //

@@ -1,4 +1,4 @@
-// unusual.C
+// unusual.cpp
 // 
 // Anton Betten
 // started 2007

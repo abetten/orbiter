@@ -1,4 +1,4 @@
-// draw_graph.C
+// draw_graph.cpp
 //
 // Anton Betten
 // May 9 2013
@@ -368,7 +368,7 @@ int main(int argc, char **argv)
 			f_partition, partition_text2, 
 			f_vertex_selection, vertex_selection_text, 
 			rad, verbose_level);
-			// not in GALOIS/draw.C
+			// not in GALOIS/draw.cpp
 
 		FREE_int(E2);
 		}

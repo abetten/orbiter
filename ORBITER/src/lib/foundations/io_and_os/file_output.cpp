@@ -1,4 +1,4 @@
-// file_output.C
+// file_output.cpp
 //
 // Anton Betten
 // January 8, 2016

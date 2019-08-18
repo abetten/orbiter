@@ -1,8 +1,8 @@
-// longinteger_domain.C
+// longinteger_domain.cpp
 //
 // Anton Betten
 //
-// started as longinteger.C:  October 26, 2002
+// started as longinteger.cpp:  October 26, 2002
 // moved here: January 23, 2015
 
 
@@ -923,7 +923,7 @@ static void binomial_with_table(
 		D.mult(b, c, d);
 		D.integral_division_by_int(d, k, a, r);
 		if (r != 0) {
-			cout << "longinteger.C: binomial_with_table k != 0" << endl;
+			cout << "longinteger_domain.cpp: binomial_with_table k != 0" << endl;
 			exit(1);
 			}
 		a.assign_to(tab_binomials[n * tab_binomials_size + k]);

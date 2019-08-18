@@ -11,7 +11,36 @@ namespace orbiter {
 namespace foundations {
 
 // #############################################################################
-// classify_bitvectors.C:
+// bitmatrix.cpp
+// #############################################################################
+
+//! matrices over GF(2) stored as bitvectors
+
+class bitmatrix {
+public:
+	int m;
+	int n;
+	int N;
+	uint32_t *data;
+
+	bitmatrix();
+	~bitmatrix();
+	void init(int m, int n, int verbose_level);
+	void unrank_PG_elements_in_columns_consecutively(
+			finite_field *F, long int start_value, int verbose_level);
+	void rank_PG_elements_in_columns(
+			finite_field *F, int *perms, unsigned int *PG_ranks, int verbose_level);
+	void print();
+	void zero_out();
+	int s_ij(int i, int j);
+	void m_iji(int i, int j, int a);
+	void mult_int_matrix_from_the_left(int *A, int Am, int An,
+			bitmatrix *Out, int verbose_level);
+
+};
+
+// #############################################################################
+// classify_bitvectors.cpp
 // #############################################################################
 
 //! classification of 0/1 matrices using canonical forms
@@ -87,7 +116,7 @@ int compare_func_for_bitvectors(void *a, void *b, void *data);
 
 
 // #############################################################################
-// data_file.C:
+// data_file.cpp
 // #############################################################################
 
 //! to read data files from the poset classification algorithm
@@ -118,7 +147,7 @@ class data_file {
 };
 
 // #############################################################################
-// fancy_set.C:
+// fancy_set.cpp
 // #############################################################################
 
 //! subset of size k of a set of size n
@@ -160,7 +189,7 @@ class fancy_set {
 };
 
 // #############################################################################
-// int_vector.C:
+// int_vector.cpp
 // #############################################################################
 
 //! vector on ints
@@ -204,7 +233,7 @@ public:
 };
 
 // #############################################################################
-// page_storage.C:
+// page_storage.cpp
 // #############################################################################
 
 //! bulk storage of group elements in compressed form
@@ -260,7 +289,7 @@ void test_page_storage(int f_v);
 
 
 // #############################################################################
-// partitionstack.C
+// partitionstack.cpp
 // #############################################################################
 
 
@@ -451,7 +480,7 @@ class partitionstack {
 };
 
 // #############################################################################
-// set_of_sets_lint.C:
+// set_of_sets_lint.cpp
 // #############################################################################
 
 //! set of sets with entries over long int
@@ -485,7 +514,7 @@ public:
 
 
 // #############################################################################
-// set_of_sets.C:
+// set_of_sets.cpp
 // #############################################################################
 
 //! set of sets
@@ -576,6 +605,10 @@ public:
 		int verbose_level);
 	int number_of_eckardt_points(int verbose_level);
 	void get_eckardt_points(int *&E, int &nb_E, int verbose_level);
+	void evaluate_function_and_store(set_of_sets *&Function_values,
+			int (*evaluate_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+			void *evaluate_data,
+			int verbose_level);
 };
 
 int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);
@@ -583,7 +616,7 @@ void set_of_sets_swap_func(void *data, int i, int j, void *extra_data);
 
 
 // #############################################################################
-// sorting.C:
+// sorting.cpp
 // #############################################################################
 
 //! a collection of functions related to sorted vectors
@@ -747,7 +780,7 @@ int int_vec_compare_stride(int *p, int *q, int len, int stride);
 
 
 // #############################################################################
-// spreadsheet.C:
+// spreadsheet.cpp
 // #############################################################################
 
 //! for reading and writing of csv files
@@ -825,14 +858,14 @@ public:
 
 
 // #############################################################################
-// super_fast_hash.C:
+// super_fast_hash.cpp
 // #############################################################################
 
 uint32_t SuperFastHash (const char * data, int len);
 
 
 // #############################################################################
-// vector_hashing.C:
+// vector_hashing.cpp
 // #############################################################################
 
 //! hash tables

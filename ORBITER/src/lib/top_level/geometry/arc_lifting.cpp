@@ -1,9 +1,9 @@
-// arc_lifting.C
+// arc_lifting.cpp
 // 
 // Anton Betten, Fatma Karaoglu
 //
 // January 24, 2017
-// moved here from clebsch.C: March 22, 2017
+// moved here from clebsch.cpp: March 22, 2017
 //
 // 
 //
@@ -190,7 +190,12 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		cout << "arc_lifting::create_surface "
 				"before init" << endl;
 		}
-	init(Surf_A, Arc6, 6, verbose_level - 2);
+	init(Surf_A, Arc6, 6, verbose_level);
+		// calls find_Eckardt_points and find_trihedral_pairs
+	if (f_v) {
+		cout << "arc_lifting::create_surface "
+				"after init" << endl;
+		}
 
 
 
@@ -204,6 +209,20 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 				"before lift_prepare" << endl;
 		}
 	lift_prepare(verbose_level - 2);
+	if (f_v) {
+		cout << "arc_lifting::create_surface "
+				"after lift_prepare" << endl;
+		}
+
+	if (f_v) {
+		cout << "arc_lifting::create_surface "
+				"before print_Eckardt_point_data" << endl;
+		}
+	print_Eckardt_point_data(cout);
+	if (f_v) {
+		cout << "arc_lifting::create_surface "
+				"after print_Eckardt_point_data" << endl;
+		}
 
 
 
@@ -220,6 +239,11 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		The_surface_equations,
 		lambda, lambda_rk,
 		verbose_level);
+	if (f_v) {
+		cout << "arc_lifting::create_surface after "
+				"create_surface_from_trihedral_pair_and_arc"
+				<< endl;
+		}
 
 	if (f_v) {
 		print_equations();
@@ -234,6 +258,10 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		The_six_plane_equations, 
 		lambda, 
 		0 /* verbose_level */);
+	if (f_v) {
+		cout << "arc_lifting::create_surface "
+				"after create_clebsch_system" << endl;
+		}
 
 
 
@@ -244,7 +272,11 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 	stab_gens = create_stabilizer_of_trihedral_pair(
 		planes6, 
 		trihedral_pair_orbit_index, 
-		0 /*verbose_level*/);
+		verbose_level - 2);
+	if (f_v) {
+		cout << "arc_lifting::create_surface after "
+				"create_stabilizer_of_trihedral_pair" << endl;
+		}
 
 	stab_gens->group_order(stabilizer_of_trihedral_pair_go);
 	if (f_v) {
@@ -264,7 +296,11 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		stab_gens
 		/* strong_generators *gens_for_stabilizer_of_trihedral_pair */,
 		A_on_equations, Orb, 
-		0 /* verbose_level */);
+		verbose_level - 2);
+	if (f_v) {
+		cout << "arc_lifting::create_surface after "
+				"create_action_on_equations_and_compute_orbits" << endl;
+		}
 
 	
 	if (f_v) {
@@ -288,7 +324,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 			stabilizer_of_trihedral_pair_go, 
 			lambda_rk /* pt */, 
 			cosets, 
-			0 /* verbose_level */);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface after "
@@ -886,6 +922,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 
 void arc_lifting::init(surface_with_action *Surf_A, 
 	int *arc, int arc_size, int verbose_level)
+// calls find_Eckardt_points and find_trihedral_pairs
 {
 	int f_v = (verbose_level >= 1);
 
@@ -908,8 +945,20 @@ void arc_lifting::init(surface_with_action *Surf_A,
 	
 
 
+	if (f_v) {
+		cout << "arc_lifting::init before find_Eckardt_points" << endl;
+	}
 	find_Eckardt_points(verbose_level);
+	if (f_v) {
+		cout << "arc_lifting::init after find_Eckardt_points" << endl;
+	}
+	if (f_v) {
+		cout << "arc_lifting::init before find_trihedral_pairs" << endl;
+	}
 	find_trihedral_pairs(verbose_level);
+	if (f_v) {
+		cout << "arc_lifting::init after find_trihedral_pairs" << endl;
+	}
 
 
 	if (f_v) {
@@ -1183,7 +1232,6 @@ void arc_lifting::create_action_on_equations_and_compute_orbits(
 		A_on_equations, 
 		Orb, 
 		verbose_level);
-		// in ACTION/action_global.C
 
 	if (f_v) {
 		cout << "arc_lifting::create_action_on_equations_and_"

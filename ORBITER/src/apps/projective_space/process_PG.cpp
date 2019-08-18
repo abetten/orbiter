@@ -1,4 +1,4 @@
-// process_PG.C
+// process_PG.cpp
 // 
 // Anton Betten
 // December 13, 2011

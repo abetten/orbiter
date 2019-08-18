@@ -1,4 +1,4 @@
-// numerics.C
+// numerics.cpp
 //
 // Anton Betten
 //

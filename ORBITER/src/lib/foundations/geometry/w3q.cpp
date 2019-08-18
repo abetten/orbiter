@@ -1,4 +1,4 @@
-// w3q.C
+// w3q.cpp
 // 
 // Anton Betten
 //

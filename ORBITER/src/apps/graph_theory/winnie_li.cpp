@@ -1,4 +1,4 @@
-// winnie_li.C
+// winnie_li.cpp
 //
 // Anton Betten
 // November 11, 2011

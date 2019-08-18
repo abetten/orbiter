@@ -1,4 +1,4 @@
-// global.C
+// global.cpp
 //
 // Anton Betten
 // 10.11.1999
@@ -29,10 +29,10 @@ namespace discreta {
 // printing_mode gl_printing_mode = printing_mode_ascii;
 // int printing_mode = PRintING_MODE_ASCII;
 
-#define MAX_PRintING_MODE_STACK 100
+#define MAX_PRINTING_MODE_STACK 100
 
 int printing_mode_stack_size = 0;
-static enum printing_mode_enum printing_mode_stack[MAX_PRintING_MODE_STACK];
+static enum printing_mode_enum printing_mode_stack[MAX_PRINTING_MODE_STACK];
 
 
 const char *discreta_home = NULL;
@@ -264,17 +264,6 @@ const char *action_kind_ascii(action_kind k)
 		}
 }
 
-#if 0
-void int_swap(int& x, int& y)
-{
-	int z;
-	
-	z = x;
-	x = y;
-	y = z;
-}
-#endif
-
 void uint4_swap(uint_4& x, uint_4& y)
 {
 	uint_4 z;
@@ -293,63 +282,7 @@ ostream& operator<<(ostream& ost, discreta_base& p)
 	return ost;
 };
 
-#if 0
-discreta_base operator * (discreta_base& x, discreta_base &y)
-{
-	discreta_base z;
-	cout << "operator *: calling z.mult(x, y)\n";
-	z.mult(x, y);
-	cout << "operator *: z=" << z << endl;
-	z.printobjectkind(cout) << endl;
-	return z;
-}
 
-discreta_base operator + (discreta_base& x, discreta_base &y)
-{
-	discreta_base z;
-	z.add(x, y);
-	cout << "operator +: z=" << z << endl;
-	z.printobjectkind(cout) << endl;
-	return z;
-}
-#endif
-
-#if 0
-int lcm_int(int m, int n)
-{
-	int g = gcd_int(m, n);
-	int r = m / g;
-	
-	r *= n;
-	return r;
-}
-#endif
-
-#if 0
-int gcd_int(int m, int n)
-{
-	integer M, N, U, V, G;
-	
-	M.m_i(m);
-	N.m_i(n);
-	M.extended_gcd(N, U, V, G);
-	return G.s_i();
-}
-#endif
-
-#if 0
-void extended_gcd_int(int m, int n, int &u, int &v, int &g)
-{
-	integer M, N, U, V, G;
-	
-	M.m_i(m);
-	N.m_i(n);
-	M.extended_gcd(N, U, V, G, 0);
-	u = U.s_i();
-	v = V.s_i();
-	g = G.s_i();
-}
-#endif
 
 int invert_mod_integer(int i, int p)
 {
@@ -382,20 +315,6 @@ int invert_mod_integer(int i, int p)
 #endif
 }
 
-#if 0
-int i_power_j(int i, int j)
-//Computes $i^j$ as integer.
-//There is no checking for overflow.
-{
-	int k, r = 1;
-
-	//cout << "i_power_j() i=" << i << ", j=" << j << endl;
-	for (k = 0; k < j; k++)
-		r *= i;
-	//cout << "i_power_j() yields" << r << endl;
-	return r;
-}
-#endif
 
 int remainder_mod(int i, int n)
 {
@@ -409,93 +328,6 @@ int remainder_mod(int i, int n)
 		}
 	return i % n;
 }
-
-#if 0
-int smallest_primedivisor(int n)
-//Computes the smallest prime dividing $n$. 
-//The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
-{
-	int flag, i, q;
-	
-	if (EVEN(n))
-		return(2);
-	if ((n % 3) == 0)
-		return(3);
-	i = 5;
-	flag = 0;
-	while (TRUE) {
-		q = n / i;
-		if (n == q * i)
-			return(i);
-		if (q < i)
-			return(n);
-		if (flag)
-			i += 4;
-		else
-			i += 2;
-		flag = !flag;
-		}
-}
-
-int sp_ge(int n, int p_min)
-//Computes the smalles prime dividing $n$ 
-//which is greater than or equal to p\_min. AB 230594.
-{
-	int i, q;
-	
-	if (p_min == 0)
-		p_min = 2;
-	if (p_min < 0)
-		p_min = - p_min;
-	if (p_min <= 2) {
-		if (EVEN(n))
-			return 2;
-		p_min = 3;
-		}
-	if (p_min <= 3) {
-		if ((n % 3) == 0)
-			return 3;
-		p_min = 5;
-		}
-	if (EVEN(p_min))
-		p_min--;
-	i = p_min;
-	while (TRUE) {
-		q = n / i;
-		// cout << "n=" << n << " i=" << i << " q=" << q << endl;
-		if (n == q * i)
-			return(i);
-		if (q < i)
-			return(n);
-		i += 2;
-		}
-#if 0
-	int flag;
-	
-	if (EVEN((p_min - 1) >> 1))
-		/* p_min cong 1 mod 4 ? */
-		flag = FALSE;
-	else
-		flag = TRUE;
-	while (TRUE) {
-		q = n / i;
-		cout << "n=" << n << " i=" << i << " q=" << q << endl;
-		if (n == q * i)
-			return(i);
-		if (q < i)
-			return(n);
-		if (flag) {
-			i += 4;
-			flag = FALSE;
-			}
-		else {
-			i += 2;
-			flag = TRUE;
-			}
-		}
-#endif
-}
-#endif
 
 void factor_integer(int n, Vector& primes, Vector& exponents)
 //Factors the integer $n = \prod_{i=1}^r p_i^{e_i}$. 
@@ -649,42 +481,6 @@ int nb_primes(int n)
 	return i;
 }
 
-#if 0
-int is_prime(int n)
-//TRUE if and only if $n$ is prime.
-{
-	if (smallest_primedivisor(n) == n)
-		return TRUE;
-	else
-		return FALSE;
-}
-#endif
-
-#if 0
-int is_power_of_prime(int n, int p)
-//TRUE if and only if $n$ is a power of $p$.
-{
-	Vector vp, ve;
-	
-	factor_integer(n, vp, ve);
-	return (vp.s_l() == 1);
-}
-
-int is_prime_power(int n, int &p, int &e)
-//TRUE if and only if $n$ is a prime power. 
-//If true, p and e are set to the prime and the exponent e such that n = p^e
-{
-	Vector vp, ve;
-	
-	factor_integer(n, vp, ve);
-	if (vp.s_l() != 1)
-		return FALSE;
-	p = vp.s_ii(0);
-	e = ve.s_ii(0);
-	return TRUE;
-}
-#endif
-
 int factor_if_prime_power(int n, int *p, int *e)
 //Computes $p$ and $e$ with $n=p^e$. 
 //If $n$ is not a prime power, FALSE is returned.
@@ -699,23 +495,6 @@ int factor_if_prime_power(int n, int *p, int *e)
 	*e = ve.s_ii(0);
 	return TRUE;
 }
-
-#if 0
-void factor_prime_power(int n, int *p, int *e)
-//Computes $p$ and $e$ with $n=p^e$. 
-//If $n$ is not a prime power, an error is raised.
-{
-	Vector vp, ve;
-
-	factor_integer(n, vp, ve);
-	if (vp.s_l() != 1) {
-		cout << "factor_prime_power() the number is not a prime power\n";
-		exit(1);
-		}
-	*p = vp.s_ii(0);
-	*e = ve.s_ii(0);
-}
-#endif
 
 int Euler(int n)
 //Computes Eulers $\varphi$-function for $n$.
@@ -757,60 +536,6 @@ int Moebius(int i)
 		return -1;
 }
 
-#if 0
-int order_mod_p(int a, int p)
-//Computes the order of $a$ mod $p$, i.~e. the smallest $k$ 
-//s.~th. $a^k \equiv 1$ mod $p$.
-{
-	int o, b;
-	
-	if (a < 0) {
-		cout << "order_mod_p() a < 0\n";
-		exit(1);
-		}
-	a %= p;
-	if (a == 0)
-		return 0;
-	if (a == 1)
-		return 1;
-	o = 1;
-	b = a;
-	while (b != 1) {
-		b *= a;
-		b %= p;
-		o++;
-		}
-	return o;
-}
-#endif
-
-#if 0
-int primitive_root(int p, int f_v)
-//Computes a primitive element for $\EZ_p$, i.~e. an integer $k$ 
-//with $2 \le k \le p - 1$ s.~th. the order of $k$ mod $p$ is $p-1$.
-{
-	int i, o;
-
-	if (p < 2) {
-		cout << "primitive_root(): p < 2\n";
-		exit(1);
-		}
-	if (p == 2)
-		return 1;
-	for (i = 2; i < p; i++) {
-		o = order_mod_p(i, p);
-		if (o == p - 1) {
-			if (f_v) {
-				cout << i << " is primitive root mod " << p << endl;
-				}
-			return i;
-			}
-		}
-	cout << "no primitive root found\n";
-	exit(1);
-}
-#endif
-
 
 int NormRemainder(int a, int m)
 //absolute smallest remainder: Computes $r$ such that 
@@ -819,7 +544,7 @@ int NormRemainder(int a, int m)
 	int q, m0, m1, m_halbe;
 	
 	if (m == 0) {
-		cout << "NormRemainder() m == 0\n";
+		cout << "NormRemainder() m == 0" << endl;
 		exit(1);
 		}
 	m0 = m;
@@ -854,11 +579,15 @@ int log2(int n)
 	return i;
 }
 
-int sqrt_mod(int a, int p)
+int sqrt_mod(int a, int p, int verbose_level)
 // solves x^2 = a mod p. Returns x
 {
+	int f_v = (verbose_level >= 1);
 	int a1, x;
 	
+	if (f_v) {
+		cout << "sqrt_mod a=" << a << " p=" << p << endl;
+	}
 	a1 = a % p;
 	if (p < 300) {
 		if (a1 < 0) {
@@ -870,14 +599,17 @@ int sqrt_mod(int a, int p)
 			}
 		for (x = 0; x < p; x++) {
 			if ((x * x) % p == a1)
+				if (f_v) {
+					cout << "sqrt_mod a=" << a << " p=" << p << " done" << endl;
+				}
 				return x;
 			}
-		cout << "sqrt_mod() a not a quadratic residue\n";
-		cout << "a = " << a << " p=" << p <<"\n";
+		cout << "sqrt_mod() a not a quadratic residue" << endl;
+		cout << "a = " << a << " p=" << p << endl;
 		exit(1);
 		}
 	else {
-		x = sqrt_mod_involved(a1, p);
+		x = sqrt_mod_involved(a1, p, verbose_level);
 		longinteger X, Y, P;
 		
 		X.homo_z(x);
@@ -887,19 +619,25 @@ int sqrt_mod(int a, int p)
 			cout << "sqrt_mod() error in sqrt_mod_invoved\n";
 			exit(1);
 			}
+		if (f_v) {
+			cout << "sqrt_mod a=" << a << " p=" << p << " done" << endl;
+		}
 		return x;
 		}
 }
 
-int sqrt_mod_involved(int a, int p)
+int sqrt_mod_involved(int a, int p, int verbose_level)
 // solves x^2 = a mod p. Returns x
 {
-	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	longinteger P, m1;
 	longinteger A, X, a2, a4, b, X2;
 	int round;
 	number_theory_domain NT;
 	
+	if (f_v) {
+		cout << "sqrt_mod_involved" << endl;
+	}
 	A.homo_z(a);
 	P.homo_z(p);
 	if (p % 4 == 3) {
@@ -915,6 +653,9 @@ int sqrt_mod_involved(int a, int p)
 		if (b.is_one()) {
 			X = A;
 			X.power_int_mod((p + 3) >> 3, P);
+			if (f_v) {
+				cout << "sqrt_mod_involved done" << endl;
+			}
 			return X.s_i();
 			}
 		m1 = P;
@@ -924,6 +665,9 @@ int sqrt_mod_involved(int a, int p)
 			a4.add_mod(a2, a2, P);
 			a4.power_int_mod((p - 5) >> 3, P);
 			X.mult_mod(a2, a4, P);
+			if (f_v) {
+				cout << "sqrt_mod_involved done" << endl;
+			}
 			return X.s_i();
 			}
 		else {
@@ -1006,14 +750,14 @@ int sqrt_mod_involved(int a, int p)
 		mP.negate();
 		d += mP;
 		if (!d.is_m_one()) {
-			cout << "loop invariant violated: Y^{2^{r-1}} != -1\n";
+			cout << "loop invariant violated: Y^{2^{r-1}} != -1" << endl;
 			exit(1);
 			}
 		
 		d.mult_mod(A, B, P);
 		//X2.mult_mod(X, X, P);
 		if (d.compare_with(X2) != 0) {
-			cout << "loop invariant violated: ab != x^2\n";
+			cout << "loop invariant violated: ab != x^2" << endl;
 			cout << "ab=" << d << endl;
 			cout << "x^2=" << X2 << endl;
 			exit(1);
@@ -1022,7 +766,7 @@ int sqrt_mod_involved(int a, int p)
 		d = B;
 		d.power_int_mod(1 << (r - 1), P);
 		if (!d.is_one()) {
-			cout << "loop invariant violated: B^{2^{r-1}} != 1\n";
+			cout << "loop invariant violated: B^{2^{r-1}} != 1" << endl;
 			exit(1);
 			}
 
@@ -1037,8 +781,8 @@ int sqrt_mod_involved(int a, int p)
 				if (d.is_one())
 					break;
 				if (m >= r) {
-					cout << "sqrt_mod(), Tonelli / Shanks:\n";
-					cout << "error: a is not a quadratic residue mod p\n";
+					cout << "sqrt_mod(), Tonelli / Shanks:" << endl;
+					cout << "error: a is not a quadratic residue mod p" << endl;
 					exit(1);
 					}
 				}
@@ -1059,6 +803,9 @@ int sqrt_mod_involved(int a, int p)
 		//cout << "m=" << m << endl;
 
 		if (m == -1) {
+			if (f_v) {
+				cout << "sqrt_mod_involved done" << endl;
+			}
 			return X.s_i();
 			}
 
@@ -1076,7 +823,9 @@ int sqrt_mod_involved(int a, int p)
 		cout << "\\\\" << endl;
 		round++;
 		}
-	//exit(1);
+	if (f_v) {
+		cout << "sqrt_mod_involved done" << endl;
+	}
 }
 
 void html_head(ostream& ost, char *title_long, char *title_short)
@@ -1106,8 +855,9 @@ void html_foot(ostream& ost)
 	ost << "</html>\n";
 }
 
-void sieve(Vector &primes, int factorbase, int f_v)
+void sieve(Vector &primes, int factorbase, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, from, to, l, unit_size = 1000;
 	
 	primes.m_l(0);
@@ -1128,8 +878,9 @@ void sieve(Vector &primes, int factorbase, int f_v)
 		}
 }
 
-void sieve_primes(Vector &v, int from, int to, int limit, int f_v)
+void sieve_primes(Vector &v, int from, int to, int limit, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int x, y, l, k, p, f_prime;
 	
 	l = v.s_l();
@@ -1184,162 +935,12 @@ void print_intvec_mod_10(Vector &v)
 	cout << endl;
 }
 
-#if 0
-#include <unistd.h>
-	/* for sysconf */
-#include <limits.h>
-	/* for CLK_TCK */
-#include <sys/types.h>
-#include <sys/times.h>
-	/* for times() */
-#include <time.h>
-	/* for time() */
 
-#define SYSTEMUNIX
-
-
-int os_ticks()
-{
-#ifdef SYSTEMMAC
-	clock_t t;
-	
-	t = clock();
-	return((int)t);
-#endif
-#ifdef SYSTEMUNIX
-	struct tms tms_buffer;
-
-	if (-1 == (int) times(&tms_buffer))
-		return(-1);
-	return(tms_buffer.tms_utime);
-#endif
-	return(0);
-}
-
-static int system_time0 = 0;
-
-int os_ticks_system()
-{
-#ifdef SYSTEMMAC
-	clock_t t;
-	
-	t = clock();
-	return((int)t);
-#endif
-#ifdef SYSTEMUNIX
-#if 0
-	struct tms tms_buffer;
-
-	if (-1 == times(&tms_buffer))
-		return(-1);
-	return(tms_buffer.tms_stime);
-#endif
-	int t;
-
-	t = time(NULL);
-	if (system_time0 == 0) {
-		system_time0 = t;
-		}
-	t -= system_time0;
-	t *= os_ticks_per_second();
-	return t;
-#endif
-	return(0);
-}
-
-int os_ticks_per_second()
-{
-	int clk_tck = 1;
-	
-#ifdef SYSTEMUNIX
-	clk_tck = sysconf(_SC_CLK_TCK);
-	/* printf("clk_tck = %d\n", clk_tck); */
-#endif
-#ifdef SYSTEMMAC
-	clk_tck = CLOCKS_PER_SEC;
-#endif
-	return(clk_tck);
-}
-
-void os_ticks_to_dhms(int ticks, int tps, int &d, int &h, int &m, int &s)
-{
-	int l1;
-
-	l1 = ticks / tps;
-	s = l1 % 60;
-	l1 /= 60;
-	m = l1 % 60;
-	l1 /= 60;
-	h = l1;
-	if (h >= 24) {
-		d = h / 24;
-		h = h % 24;
-		}
-	else
-		d = 0;
-}
-
-#undef DEBUG_TRANSFORM_LLUR
-
-void transform_llur(int *in, int *out, int &x, int &y)
-{
-	int dx, dy;
-	double a, b;
-
-#ifdef DEBUG_TRANSFORM_LLUR
-	cout << "transform_llur: " << x << "," << y << " -> ";
-#endif
-	dx = x - in[0];
-	dy = y - in[1];
-	a = (double) dx / (double)(in[2] - in[0]);
-	b = (double) dy / (double)(in[3] - in[1]);
-	dx = (int)(a * (double)(out[2] - out[0]));
-	dy = (int)(b * (double)(out[3] - out[1]));
-	x = dx + out[0];
-	y = dy + out[1];
-#ifdef DEBUG_TRANSFORM_LLUR
-	cout << x << "," << y << endl;
-#endif
-}
-
-void transform_dist(int *in, int *out, int &x, int &y)
-{
-	int dx, dy;
-	double a, b;
-
-	a = (double) x / (double)(in[2] - in[0]);
-	b = (double) y / (double)(in[3] - in[1]);
-	dx = (int)(a * (double) (out[2] - out[0]));
-	dy = (int)(b * (double) (out[3] - out[1]));
-	x = dx;
-	y = dy;
-}
-
-void transform_dist_x(int *in, int *out, int &x)
-{
-	int dx;
-	double a;
-
-	a = (double) x / (double)(in[2] - in[0]);
-	dx = (int)(a * (double) (out[2] - out[0]));
-	x = dx;
-}
-
-void transform_dist_y(int *in, int *out, int &y)
-{
-	int dy;
-	double b;
-
-	b = (double) y / (double)(in[3] - in[1]);
-	dy = (int)(b * (double) (out[3] - out[1]));
-	y = dy;
-}
-#endif
-
-void stirling_second(int n, int k, int f_ordered, discreta_base &res, int f_v)
+void stirling_second(int n, int k, int f_ordered,
+		discreta_base &res, int verbose_level)
 // number of set partitions of an n-set with exactly k classes
 {
-
+	int f_v = (verbose_level >= 1);
 	// cout << "stirling_second() partition is currently disabled" << endl;
 	discreta_base a, b, c;
 	number_partition p;
@@ -1394,9 +995,11 @@ void stirling_second(int n, int k, int f_ordered, discreta_base &res, int f_v)
 		}
 }
 
-void stirling_first(int n, int k, int f_signless, discreta_base &res, int f_v)
+void stirling_first(int n, int k, int f_signless,
+		discreta_base &res, int verbose_level)
 // $(-1)^{n+k} \cdot$ number of elements in $\Sym_n$ with exactly k cycles
 {
+	int f_v = (verbose_level >= 1);
 	// cout << "stirling_first() partition is currently disabled" << endl;
 	discreta_base a, b, c;
 	number_partition p;
@@ -1469,8 +1072,9 @@ void stirling_first(int n, int k, int f_signless, discreta_base &res, int f_v)
 		}
 }
 
-void Catalan(int n, Vector &v, int f_v)
+void Catalan(int n, Vector &v, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 	
 	v.m_l_n(n + 1);
@@ -1481,8 +1085,9 @@ void Catalan(int n, Vector &v, int f_v)
 		}
 }
 
-void Catalan_n(int n, Vector &v, discreta_base &res, int f_v)
+void Catalan_n(int n, Vector &v, discreta_base &res, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 	discreta_base a, b;
 	
@@ -1498,12 +1103,13 @@ void Catalan_n(int n, Vector &v, discreta_base &res, int f_v)
 	a.swap(res);
 }
 
-void Catalan_nk_matrix(int n, matrix &Cnk, int f_v)
+void Catalan_nk_matrix(int n, matrix &Cnk, int verbose_level)
 {
+	//int f_v = (verbose_level >= 1);
 	int i, k;
 	discreta_base a;
 	
-	Catalan_nk_star_matrix(n, Cnk, f_v);
+	Catalan_nk_star_matrix(n, Cnk, verbose_level);
 	for (k = n; k > 0; k--) {
 		for (i = 0; i <= n; i++) {
 			a = Cnk[i][k - 1];
@@ -1513,8 +1119,9 @@ void Catalan_nk_matrix(int n, matrix &Cnk, int f_v)
 		}
 }
 
-void Catalan_nk_star_matrix(int n, matrix &Cnk, int f_v)
+void Catalan_nk_star_matrix(int n, matrix &Cnk, int verbose_level)
 {
+	//int f_v = (verbose_level >= 1);
 	int i, k;
 	
 	Cnk.m_mn_n(n + 1, n + 1);
@@ -1532,13 +1139,14 @@ void Catalan_nk_star_matrix(int n, matrix &Cnk, int f_v)
 	for (i = 2; i <= n; i++) {
 		Cnk[i][1].m_i_i(1);
 		for (k = 2; k <= n; k++) {
-			Catalan_nk_star(i, k, Cnk, Cnk[i][k], f_v);
+			Catalan_nk_star(i, k, Cnk, Cnk[i][k], verbose_level - 1);
 			}
 		}
 }
 
-void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int f_v)
+void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 	discreta_base a, b;
 	
@@ -1554,266 +1162,6 @@ void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int f_v)
 	a.swap(res);
 }
 
-#if 0
-int atoi(const char *p)
-{
-	int x;
-	sscanf(p, "%d", &x);
-	return x;
-#if 0
-	char str[1024];
-	int x;
-	
-	strcpy(str, p);
-	istrstream ins(str, sizeof(str));
-	ins >> x;
-	return x;
-#endif
-}
-#endif
-
-#if 0
-void itoa(char *p, int len_of_p, int i)
-{
-	sprintf(p, "%d", i);
-#if 0
-	ostrstream os(p, len_of_p);
-	os << i << ends;
-#endif
-}
-
-static int f_has_swap_initialized = FALSE;
-static int f_has_swap = 0;
-	// indicates if char swap is present 
-	// i.e., little endian / big endian 
-
-static void test_swap()
-{
-    unsigned long test_long = 0x11223344L;
-    SCHAR *ptr;
-    
-    ptr = (char *) &test_long;
-    f_has_swap = (ptr[0] == 0x44);
-    f_has_swap_initialized = TRUE;
-}
-#endif
-
-#if 0
-// block_swap_chars:
-// turns round the chars within 
-// "no" intervalls of "size" in the 
-// buffer pointed to by "ptr" 
-// this routine goes back to Roland Grund
-
-void block_swap_chars(SCHAR *ptr, int size, int no)
-{
-	SCHAR *ptr_end, *ptr_start;
-	SCHAR chr;
-	int i;
-	
-	if (!f_has_swap_initialized)
-		test_swap();
-	if ((f_has_swap) && (size > 1)) {
-
-		for(; no--; ) {
-	
-			ptr_start = ptr;
-			ptr_end = ptr_start + (size - 1);
-			for(i = size / 2; i--; ) {
-				chr = *ptr_start;
-				*ptr_start++ = *ptr_end;
-				*ptr_end-- = chr;
-				}
-			ptr += size;
-			}
-		}
-}
-#endif
-
-#if 0
-#include <cstdio>
-#include <sys/types.h>
-#include <unistd.h>
-#include <fcntl.h>
-
-int file_size(char *name)
-{
-#ifdef SYSTEMUNIX
-	int handle, size;
-	
-	handle = open(name, O_RDWR/*mode*/);
-	size = lseek(handle, 0L, SEEK_END);
-	close(handle);
-	return(size);
-#endif
-#ifdef SYSTEMMAC
-	int handle, size;
-	
-	handle = open(name, O_RDONLY);
-		/* THINK C Unix Lib */
-	size = lseek(handle, 0L, SEEK_END);
-		/* THINK C Unix Lib */
-	close(handle);
-	return(size);
-#endif
-#ifdef SYSTEMWINDOWS
-	int handle = _open (name,_O_RDONLY);
-	int size   = _lseek (handle,0,SEEK_END);
-	close (handle);
-	return (size);
-#endif
-
-}
-
-#include <ctype.h>
-
-int s_scan_int(char **s, int *i)
-{
-	char str1[512];
-	
-	if (!s_scan_token(s, str1))
-		return FALSE;
-	if (strcmp(str1, ",") == 0) {
-		if (!s_scan_token(s, str1))
-			return FALSE;
-		}
-	*i = atoi(str1);
-	return TRUE;
-}
-
-int s_scan_token(char **s, char *str)
-{
-	char c;
-	int len;
-	
-	while (TRUE) {
-		c = **s;
-		if (c == 0) {
-			return(FALSE);
-			}
-		if (c == ' ' || c == '\t' || 
-			c == '\r' || c == 10 || c == 13) {
-			(*s)++;
-			continue;
-			}
-		break;
-		}
-	len = 0;
-	c = **s;
-	if (isalpha(c)) {
-		while (isalnum(c) || c == '_') {
-			str[len] = c;
-			len++;
-			(*s)++;
-			c = **s;
-			}
-		str[len] = 0;
-		}
-	else if (isdigit(c) || c == '-') {
-		str[len++] = c;
-		(*s)++;
-		c = **s;
-		while (isdigit(c)) {
-			str[len] = c;
-			len++;
-			(*s)++;
-			c = **s;
-			}
-		str[len] = 0;
-		}
-	else {
-		str[0] = c;
-		str[1] = 0;
-		(*s)++;		
-		}
-	// printf("token = \"%s\"\n", str);
-	return TRUE;
-}
-
-int s_scan_token_arbitrary(char **s, char *str)
-{
-	char c;
-	int len;
-	
-	//cout << "s_scan_token_arbitrary:" << *s << endl;
-	str[0] = 0;
-	while (TRUE) {
-		c = **s;
-		if (c == 0) {
-			return(FALSE);
-			}
-		if (c == ' ' || c == '\t' || 
-			c == '\r' || c == 10 || c == 13) {
-			(*s)++;
-			continue;
-			}
-		break;
-		}
-	//cout << "s_scan_token_arbitrary:" << *s << endl;
-	len = 0;
-	c = **s;
-	while (c != ' ' && c != '\t' && 
-		c != '\r' && c != 10 && c != 13 && c != 0) {
-		str[len] = c;
-		len++;
-		(*s)++;
-		c = **s;
-		}
-	str[len] = 0;
-	// printf("token = \"%s\"\n", str);
-	return TRUE;
-}
-
-int s_scan_str(char **s, char *str)
-{
-	char c;
-	int len, f_break;
-	
-	while (TRUE) {
-		c = **s;
-		if (c == 0) {
-			return(FALSE);
-			}
-		if (c == ' ' || c == '\t' || 
-			c == '\r' || c == 10 || c == 13) {
-			(*s)++;
-			continue;
-			}
-		break;
-		}
-	if (c != '\"') {
-		cout << "s_scan_str() error: c != '\"'" << endl;
-		return(FALSE);
-		}
-	(*s)++;
-	len = 0;
-	f_break = FALSE;
-	while (TRUE) {
-		c = **s;
-		if (c == 0) {
-			break;
-			}
-		if (c == '\\') {
-			(*s)++;
-			c = **s;
-			str[len] = c;
-			len++;
-			}
-		else if (c == '\"') {
-			f_break = TRUE;
-			}
-		else {
-			str[len] = c;
-			len++;
-			}
-		(*s)++;
-		if (f_break)
-			break;
-		}
-	str[len] = 0;
-	return TRUE;
-}
-#endif
 
 void N_choose_K(discreta_base & n, int k, discreta_base & res)
 // Computes ${n \choose k}$ into res as an {\em object}.
@@ -1977,35 +1325,6 @@ void Krawtchouk(int n, int q, int i, int j, discreta_base & a)
 		}
 }
 
-#if 0
-int ij2k(int i, int j, int n)
-{
-	if (i == j) {
-		cout << "ij2k() i == j" << endl;
-		exit(1);
-		}
-	if (i > j)
-		return ij2k(j, i, n);
-	return ((n - i) * i + ((i * (i - 1)) >> 1) + j - i - 1);
-}
-
-void k2ij(int k, int & i, int & j, int n)
-{
-	int ii;
-	
-	for (ii = 0; ii < n; ii++) {
-		if (k < n - ii - 1) {
-			i = ii;
-			j = k + ii + 1;
-			return;
-			}
-		k -= (n - ii - 1);
-		}
-	cout << "k too large" << endl;
-	exit(1);
-}
-#endif
-
 void tuple2_rank(int rank, int &i, int &j, int n, int f_injective)
 //enumeration of 2-tuples $(i,j)$ (f_injective TRUE iff $i=j$ forbidden).
 //this routine produces the tuple with number ``rank'' into $i$ and $j$. 
@@ -2051,29 +1370,6 @@ int tuple2_unrank(int i, int j, int n, int f_injective)
 	return rank;
 }
 
-#if 0
-void chop_off_extension_if_present(char *p, char *ext)
-{
-	int l1 = strlen(p);
-	int l2 = strlen(ext);
-	
-	if (l1 > l2 && strcmp(p + l1 - l2, ext) == 0) {
-		p[l1 - l2] = 0;
-		}
-}
-
-void get_extension_if_present(char *p, char *ext)
-{
-	int i, l = strlen(p);
-	
-	ext[0] = 0;
-	for (i = l - 1; i >= 0; i--) {
-		if (p[i] == '.') {
-			strcpy(ext, p + i);
-			}
-		}
-}
-#endif
 
 #include <string.h>
 
@@ -2140,48 +1436,6 @@ void the_first_n_primes(Vector &P, int n)
 
 #include <math.h>
 
-#if 0
-double cos_grad(double phi)
-{
-	double x;
-
-	x = (phi * M_PI) / 180.;
-	return cos(x);
-}
-
-double sin_grad(double phi)
-{
-	double x;
-
-	x = (phi * M_PI) / 180.;
-	return sin(x);
-}
-
-double tan_grad(double phi)
-{
-	double x;
-
-	x = (phi * M_PI) / 180.;
-	return tan(x);
-}
-
-double atan_grad(double x)
-{
-	double y, phi;
-
-	y = atan(x);
-	phi = (y * 180.) / M_PI;
-	return phi;
-}
-
-void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad)
-{
-	
-	Px[idx] = (int)(cos_grad(angle_in_degree) * (double) rad);
-	Py[idx] = (int)(sin_grad(angle_in_degree) * (double) rad);
-}
-#endif
-
 void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx)
 {
 	double x, y;
@@ -2212,40 +1466,6 @@ void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, doubl
 	Py[idx_result] = Py[idx_from] + dy;
 }
 
-#if 0
-void time_check_delta(int dt)
-{
-	int tps, d, h, min, s;
-
-	tps = os_ticks_per_second();
-	os_ticks_to_dhms(dt, tps, d, h, min, s);
-
-	if ((dt / tps) >= 1) {
-		if (d > 0) {
-			cout << d << "-" << h << ":" << min << ":" << s;
-			}
-		else if (h > 0) {
-			cout << h << ":" << min << ":" << s;
-			}
-		else  {
-			cout << min << ":" << s;
-			}
-		}
-	else {
-		cout << "0:00";
-		}
-	cout << endl;
-}
-
-void time_check(int t0)
-{
-	int t1, dt;
-	
-	t1 = os_ticks();
-	dt = t1 - t0;
-	time_check_delta(dt);
-}
-#endif
 
 #if 0
 int nb_of_bits()
@@ -2329,7 +1549,8 @@ void frobenius_in_AG(domain *dom, int n, permutation &p)
 		}
 }
 
-void translation_in_AG(domain *dom, int n, int i, discreta_base & a, permutation &p)
+void translation_in_AG(domain *dom, int n, int i,
+		discreta_base & a, permutation &p)
 {
 	with ww(dom);
 	int ii, j, l;
@@ -2360,7 +1581,7 @@ enum printing_mode_enum current_printing_mode()
 
 printing_mode::printing_mode(enum printing_mode_enum printing_mode)
 {
-	if (printing_mode_stack_size == MAX_PRintING_MODE_STACK) {
+	if (printing_mode_stack_size == MAX_PRINTING_MODE_STACK) {
 		cout << "printing_mode() overflow in printing_mode stack" << endl;
 		exit(1);
 		}
@@ -2483,71 +1704,6 @@ void print_classification_tex(Vector &content, Vector &multiplicities, ostream& 
 	// ost << ")";	
 }
 
-#if 0
-void perm_move(int *from, int *to, int n)
-{
-	int i;
-	
-	for (i = 0; i < n; i++)
-		to[i] = from[i];
-}
-
-void perm_mult(int *a, int *b, int *c, int n)
-{
-	int i;
-	
-	for (i = 0; i < n; i++) {
-		c[i] = b[a[i]];
-		}
-}
-
-void perm_conjugate(int *a, int *b, int *c, int n)
-// c := a^b = b^-1 * a * b
-{
-	int i, j, k;
-	
-	for (i = 0; i < n; i++) {
-		j = b[i];
-		// now b^-1(j) = i
-		k = a[i];
-		k = b[k];
-		c[j] = k;
-		}
-}
-
-void perm_inverse(int *a, int *b, int n)
-// b := a^-1
-{
-	int i, j;
-	
-	for (i = 0; i < n; i++) {
-		j = a[i];
-		b[j] = i;
-		}
-}
-
-void perm_raise(int *a, int *b, int e, int n)
-// b := a^e (e >= 0)
-{
-	int i, j, k;
-	
-	for (i = 0; i < n; i++) {
-		k = i;
-		for (j = 0; j < e; j++) {
-			k = a[k];
-			}
-		b[i] = k;
-		}
-}
-
-void perm_print(int *a, int n)
-{
-	permutation p;
-	perm2permutation(a, n, p);
-	cout << p;
-}
-#endif
-
 void perm2permutation(int *a, int n, permutation &p)
 {
 	int i;
@@ -2558,52 +1714,20 @@ void perm2permutation(int *a, int n, permutation &p)
 		}
 }
 
-#if 0
-void print_integer_matrix(ostream &ost, int *p, int m, int n)
-{
-	matrix M;
-	int i, j;
-	
-	M.m_mn_n(m, n);
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			M.m_iji(i, j, p[i * n + j]);
-			}
-		}
-	ost << M;
-}
-#endif
-
-#if 0
-void print_longinteger_matrix(ostream &ost, LONGint *p, int m, int n)
-{
-	matrix M;
-	int i, j;
-	longinteger a;
-	
-	M.m_mn_n(m, n);
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			a.homo_z(p[i * n + j]);
-			M.s_ij(i, j) = a;
-			}
-		}
-	ost << M;
-}
-#endif
-
 int Gauss_int(int *A, int f_special, int f_complete, int *base_cols, 
 	int f_P, int *P, int m, int n, int Pn, 
-	int q, int *add_table, int *mult_table, int *negate_table, int *inv_table, int f_v)
+	int q, int *add_table, int *mult_table,
+	int *negate_table, int *inv_table, int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
 // P is a m x Pn matrix (if f_P is TRUE)
 {
+	int f_v = (verbose_level >= 1);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
 	
 	if (f_v) {
-		cout << "Gauss algorithm for matrix:" << endl;
+		cout << "Gauss_int Gauss algorithm for matrix:" << endl;
 		print_integer_matrix(cout, A, m, n);
 		}
 	i = 0;
@@ -2631,7 +1755,7 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 			continue; // increase j, leave i constant
 		
 		if (f_v) {
-			cout << "row " << i << " pivot in row " << k << " colum " << j << endl;
+			cout << "Gauss_int row " << i << " pivot in row " << k << " colum " << j << endl;
 			}
 		
 		base_cols[i] = j;
@@ -2649,7 +1773,7 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 					}
 				}
 			if (f_v) {
-				cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv 
+				cout << "Gauss_int pivot=" << pivot << " pivot_inv=" << pivot_inv
 					<< " made to one: " << A[i * n + j] << endl;
 				}
 			}
@@ -2668,7 +1792,7 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 			f = negate_table[f];
 			A[k * n + j] = 0;
 			if (f_v) {
-				cout << "eliminating row " << k << endl;
+				cout << "Gauss_int eliminating row " << k << endl;
 				}
 			for (jj = j + 1; jj < n; jj++) {
 				a = A[i * n + jj];
@@ -2699,10 +1823,10 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 			}
 		i++;
 		if (f_v) {
-			cout << "A=" << endl;
+			cout << "Gauss_int A=" << endl;
 			print_integer_matrix(cout, A, m, n);
 			if (f_P) {
-				cout << "P=" << endl;
+				cout << "Gauss_int P=" << endl;
 				print_integer_matrix(cout, P, m, Pn);
 				}
 			}
@@ -2752,7 +1876,7 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 			} // next i
 		}
 	if (f_v) {
-		cout << "the rank is " << rank << endl;
+		cout << "Gauss_int the rank is " << rank << endl;
 		}
 	return rank;
 }
@@ -2764,40 +1888,6 @@ void char_move(char *p, char *q, int len)
 	for (i = 0; i < len; i++) 
 		*q++ = *p++;
 }
-
-#if 0
-void char_swap(char *p, char *q, int len)
-{
-	int i;
-	char c;
-	
-	for (i = 0; i < len; i++) {
-		c = *q;
-		*q++ = *p;
-		*p++ = c;
-		}
-}
-
-void uchar_move(uchar *p, uchar *q, int len)
-{
-	int i;
-	
-	for (i = 0; i < len; i++) 
-		*q++ = *p++;
-}
-
-void int_matrix_transpose(int n, int *A)
-{
-	int i, j;
-	
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < i; j++) {
-			if (i != j)
-				int_swap(A[i * n + j], A[j * n + i]);
-			}
-		}
-}
-#endif
 
 void int_vector_realloc(int *&p, int old_length, int new_length)
 {
@@ -2839,36 +1929,6 @@ void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n)
 	delete [] p;
 	p = q;
 }
-
-#if 0
-void int_matrix_shorten_rows(int *&p, int m, int n)
-{
-	int *q = new int[m * n];
-	int i, j;
-	
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			q[i * n + j] = p[i * n + j];
-			}
-		}
-	delete [] p;
-	p = q;
-}
-
-void pint_matrix_shorten_rows(pint *&p, int m, int n)
-{
-	pint *q = new pint[m * n];
-	int i, j;
-	
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			q[i * n + j] = p[i * n + j];
-			}
-		}
-	delete [] p;
-	p = q;
-}
-#endif
 
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 {
@@ -2967,66 +2027,12 @@ int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 	return TRUE;
 }
 
-//#include "mindist.C"
-
-#if 0
-int int_vec_search(int *v, int len, int a, int &idx)
-{
-	int l, r, m, res;
-	int f_found = FALSE;
-	
-	if (len == 0) {
-		idx = 0;
-		return FALSE;
-		}
-	l = 0;
-	r = len;
-	// invariant:
-	// v[i] <= a for i < l;
-	// v[i] >  a for i >= r;
-	// r - l is the length of the area to search in.
-	while (l < r) {
-		m = (l + r) >> 1;
-		// if the length of the search area is even
-		// we examine the element above the middle
-		res = v[m] - a;
-		//cout << "search l=" << l << " m=" << m << " r=" 
-		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
-		if (res <= 0) {
-			l = m + 1;
-			if (res == 0)
-				f_found = TRUE;
-			}
-		else
-			r = m;
-		}
-	// now: l == r; 
-	// and f_found is set accordingly */
-	if (f_found)
-		l--;
-	idx = l;
-	return f_found;
-}
-
-void uchar_print_bitwise(ostream &ost, uchar u)
-{
-	uchar mask;
-	int i;
-	
-	for (i = 0; i < 8; i++) {
-		mask = ((uchar) 1) << i;
-		if (u & mask)
-			ost << "1";
-		else
-			ost << "0";
-		}
-}
-#endif
 
 
 void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 // added Dec 28 2009
 // This is here because it uses sqrt_mod_involved
+// used in algebra/create_element.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3100,7 +2106,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 		cout << "q is not a prime" << endl;
 		exit(1);
 		}
-	s = sqrt_mod_involved(cv, q);
+	s = sqrt_mod_involved(cv, q, verbose_level - 2);
 	if (f_vv) {
 		cout << "sqrt(cv) = " << s << endl;
 		}
@@ -3144,6 +2150,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 	//cout << "calling O4_isomorphism_4to2" << endl;
 	//O4_isomorphism_4to2(F, At2, As2, f_switch2, mtxG, verbose_level);
 }
+
 
 }}
 

@@ -1,4 +1,4 @@
-// had.C
+// had.cpp
 // 
 // Anton Betten
 // November 18, 2015

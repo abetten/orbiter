@@ -403,7 +403,6 @@ void geometry_global::create_Buekenhout_Metz(
 	int i, rk, d = 3;
 	int v[3];
 	buekenhout_metz *BM;
-		// in TOP_LEVEL/buekenhout_metz.C
 
 	if (f_v) {
 		cout << "create_Buekenhout_Metz" << endl;

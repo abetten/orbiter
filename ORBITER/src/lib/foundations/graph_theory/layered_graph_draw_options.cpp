@@ -1,4 +1,4 @@
-// layered_graph_draw_options.C
+// layered_graph_draw_options.cpp
 // 
 // Anton Betten
 // December 15, 2015

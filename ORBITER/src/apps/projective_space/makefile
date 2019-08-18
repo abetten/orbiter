@@ -24,7 +24,6 @@ all: analyze_projective_code.out  \
 	determine_quadric.out \
 	example_fano_plane.out \
 	orthogonal_points.out \
-	packing_main.out \
 	plane_search.out \
 	points.out \
 	polar.out \
@@ -81,9 +80,6 @@ hill.out:  hill.o;
 
 orthogonal_points.out:  orthogonal_points.o ;
 	$(DISCRETA_CPP)  orthogonal_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-packing_main.out:  packing_main.o;
-	$(DISCRETA_CPP)  packing_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 plane_search.out:  plane_search.o ;
 	$(DISCRETA_CPP)  plane_search.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

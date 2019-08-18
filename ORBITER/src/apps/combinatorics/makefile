@@ -10,7 +10,6 @@ LFLAGS = -lm
 
 all: all_k_subsets.out \
 		burnside.out \
-		change_1_dollar.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \
 		design.out \
@@ -39,9 +38,6 @@ all_k_subsets.out:  all_k_subsets.o;
 
 burnside.out:  burnside.o;
 	$(DISCRETA_CPP)  burnside.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-change_1_dollar.out:  change_1_dollar.o;
-	$(DISCRETA_CPP)  change_1_dollar.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 conjugacy_classes_sym_n.out:  conjugacy_classes_sym_n.o;
 	$(DISCRETA_CPP)  conjugacy_classes_sym_n.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

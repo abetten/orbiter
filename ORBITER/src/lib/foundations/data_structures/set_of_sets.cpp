@@ -1,4 +1,4 @@
-// set_of_sets.C
+// set_of_sets.cpp
 //
 // Anton Betten
 //
@@ -1489,6 +1489,33 @@ void set_of_sets::get_eckardt_points(
 		}
 }
 
+void set_of_sets::evaluate_function_and_store(set_of_sets *&Function_values,
+		int (*evaluate_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+		void *evaluate_data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, c;
+
+	if (f_v) {
+		cout << "set_of_sets::evaluate_function_and_store nb_sets=" << nb_sets
+				<< " underlying_set_size=" << underlying_set_size << endl;
+	}
+	Function_values = NEW_OBJECT(set_of_sets);
+
+	Function_values->init_basic(underlying_set_size,
+			nb_sets, Set_size, verbose_level);
+	for (i = 0; i < nb_sets; i++) {
+		for (j = 0; j < Set_size[i]; j++) {
+			a = Sets[i][j];
+			c = (*evaluate_function)(a, i, j, evaluate_data, verbose_level - 2);
+			Function_values->Sets[i][j] = c;
+		}
+	}
+	if (f_v) {
+		cout << "set_of_sets::evaluate_function_and_store done" << endl;
+	}
+}
 
 // #############################################################################
 // global functions:

@@ -4,7 +4,7 @@
 //
 // started 8/13/2006
 //
-// moved to apps/blt  from blt.C 5/24/09
+// moved to apps/blt  from blt.cpp 5/24/09
 // moved to src/top_level/geometry  from apps/blt.cpp Jan 8, 2019
 //
 //
@@ -181,7 +181,7 @@ void blt_set::init_group(int f_semilinear, int verbose_level)
 		cout << "blt_set::init_group "
 				"computing lex least base done" << endl;
 		cout << "blt_set::init_group base: ";
-		int_vec_print(cout, A->Stabilizer_chain->base, A->Stabilizer_chain->base_len);
+		int_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;
 		}
 	
@@ -1415,7 +1415,6 @@ void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 			rearrange_subset(Iso.size, Iso.level, data,
 				orbit_reps + u * Iso.level, rearranged_set,
 				0/*verbose_level - 3*/);
-				// in GALOIS/sorting.C
 
 
 			//int_vec_print(cout, rearranged_set, Iso.size);

@@ -1,4 +1,4 @@
-// incidence_structure.C
+// incidence_structure.cpp
 //
 // Anton Betten
 //

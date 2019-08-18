@@ -1,4 +1,4 @@
-// action_on_bricks.C
+// action_on_bricks.cpp
 //
 // Anton Betten
 // Jan 10, 2013

@@ -1,4 +1,4 @@
-// perm_group.C
+// perm_group.cpp
 //
 // Anton Betten
 //
@@ -257,17 +257,17 @@ void perm_group::init_with_base(int degree,
 	
 	A.Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	A.Stabilizer_chain->allocate_base_data(&A, base_length, verbose_level);
-	A.Stabilizer_chain->base_len = base_length;
+	//A.Stabilizer_chain->base_len = base_length;
 	//A.allocate_base_data(A.base_len);
 
 	// init base:
-	for (i = 0; i < A.Stabilizer_chain->base_len; i++)
-		A.Stabilizer_chain->base[i] = base[i];
+	for (i = 0; i < A.base_len(); i++)
+		A.base_i(i) = base[i];
 	
 
 	if (f_v) {
 		cout << "base: ";
-		print_set(cout, A.Stabilizer_chain->base_len, A.Stabilizer_chain->base);
+		int_vec_print(cout, A.get_base(), A.base_len());
 		cout << endl;
 		//cout << "transversal_length: ";
 		//print_set(cout, A.base_len, A.transversal_length);
@@ -435,9 +435,9 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 	int x1, y1, x2, y2; // if in product action
 	combinatorics_domain Combi;
 	
-	if (A->Stabilizer_chain->base_len < A->degree) {
-		for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
-			bi = A->Stabilizer_chain->base[i];
+	if (A->base_len() < A->degree) {
+		for (i = 0; i < A->base_len(); i++) {
+			bi = A->base_i(i);
 			a = Elt[bi];
 			if (f_product_action) {
 				cout << "bi=" << bi << "a=" << a << endl;
@@ -463,7 +463,7 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 			else {
 				ost << bi << " -> " << a;
 				}
-			if (i < A->Stabilizer_chain->base_len - 1)
+			if (i < A->base_len() - 1)
 				ost << ", ";
 			}
 		}
@@ -502,160 +502,6 @@ void perm_group::make_element(int *Elt, int *data, int verbose_level)
 		}
 }
 
-#if 0
-
-//#############################################################################
-// global functions:
-//#############################################################################
-
-
-void perm_group_find_strong_generators_at_level(
-	int level, int degree,
-	int given_base_length, int *given_base,
-	int nb_gens, int *gens, 
-	int &nb_generators_found, int *idx_generators_found)
-{
-	int i, j, bj, bj_image;
-	
-	nb_generators_found = 0;
-	for (i = 0; i < nb_gens; i++) {
-		for (j = 0; j < level; j++) {
-			bj = given_base[j];
-			bj_image = gens[i * degree + bj];
-			if (bj_image != bj)
-				break;
-			}
-		if (j == level) {
-			idx_generators_found[nb_generators_found++] = i;
-			}
-		}
-}
-
-void perm_group_generators_direct_product(
-	int degree1, int degree2, int &degree3,
-	int nb_gens1, int nb_gens2, int &nb_gens3, 
-	int *gens1, int *gens2, int *&gens3, 
-	int base_len1, int base_len2, int &base_len3, 
-	int *base1, int *base2, int *&base3)
-{
-	int u, i, j, ii, jj, k, offset;
-	
-	offset = degree1 + degree2;
-	degree3 = offset + degree1 * degree2;
-	nb_gens3 = nb_gens1 + nb_gens2;
-	base_len3 = base_len1 + base_len2;
-	gens3 = NEW_int(nb_gens3 * degree3);
-	base3 = NEW_int(base_len3);
-	for (u = 0; u < base_len1; u++) {
-		base3[u] = base1[u];
-		}
-	for (u = 0; u < base_len2; u++) {
-		base3[base_len1 + u] = degree1 + base2[u];
-		}
-	k = 0;
-	for (u = 0; u < nb_gens1; u++, k++) {
-		for (i = 0; i < degree1; i++) {
-			ii = gens1[u * degree1 + i];
-			gens3[k * degree3 + i] = ii;
-			for (j = 0; j < degree2; j++) {
-				gens3[k * degree3 + offset + i * degree2 + j] = 
-					offset + ii * degree2 + j;
-				}
-			}
-		for (j = 0; j < degree2; j++) {
-			gens3[k * degree3 + degree1 + j] = degree1 + j;
-			}
-		}
-	for (u = 0; u < nb_gens2; u++, k++) {
-		for (i = 0; i < degree1; i++) {
-			gens3[k * degree3 + i] = i;
-			}
-		for (j = 0; j < degree2; j++) {
-			jj = gens2[u * degree2 + j];
-			gens3[k * degree3 + degree1 + j] = degree1 + jj;
-			for (i = 0; i < degree1; i++) {
-				gens3[k * degree3 + offset + i * degree2 + j] = 
-					offset + i * degree2 + jj;
-				}
-			}
-		}
-}
-
-void perm_group_generators_direct_product(
-	int nb_diagonal_elements,
-	int degree1, int degree2, int &degree3, 
-	int nb_gens1, int nb_gens2, int &nb_gens3, 
-	int *gens1, int *gens2, int *&gens3, 
-	int base_len1, int base_len2, int &base_len3, 
-	int *base1, int *base2, int *&base3)
-{
-	int u, i, j, ii, jj, k, offset;
-	
-	offset = degree1 + degree2;
-	degree3 = offset + degree1 * degree2;
-	nb_gens3 = (nb_gens1 - nb_diagonal_elements) +
-			(nb_gens2 - nb_diagonal_elements)
-		+ nb_diagonal_elements;
-	base_len3 = base_len1 + base_len2;
-	gens3 = NEW_int(nb_gens3 * degree3);
-	base3 = NEW_int(base_len3);
-	for (u = 0; u < base_len1; u++) {
-		base3[u] = base1[u];
-		}
-	for (u = 0; u < base_len2; u++) {
-		base3[base_len1 + u] = degree1 + base2[u];
-		}
-	k = 0;
-	for (u = 0; u < nb_gens1 - nb_diagonal_elements; u++, k++) {
-		for (i = 0; i < degree1; i++) {
-			ii = gens1[u * degree1 + i];
-			gens3[k * degree3 + i] = ii;
-			for (j = 0; j < degree2; j++) {
-				gens3[k * degree3 + offset + i * degree2 + j] = 
-					offset + ii * degree2 + j;
-				}
-			}
-		for (j = 0; j < degree2; j++) {
-			gens3[k * degree3 + degree1 + j] = degree1 + j;
-			}
-		}
-	for (u = 0; u < nb_gens2 - nb_diagonal_elements; u++, k++) {
-		for (i = 0; i < degree1; i++) {
-			gens3[k * degree3 + i] = i;
-			}
-		for (j = 0; j < degree2; j++) {
-			jj = gens2[u * degree2 + j];
-			gens3[k * degree3 + degree1 + j] = degree1 + jj;
-			for (i = 0; i < degree1; i++) {
-				gens3[k * degree3 + offset + i * degree2 + j] = 
-					offset + i * degree2 + jj;
-				}
-			}
-		}
-	for (u = 0; u < nb_diagonal_elements; u++, k++) {
-		for (i = 0; i < degree1; i++) {
-			ii = gens1[(nb_gens1 - nb_diagonal_elements + u)
-					   * degree1 + i];
-			gens3[k * degree3 + i] = ii;
-			}
-		for (j = 0; j < degree2; j++) {
-			jj = gens2[(nb_gens2 - nb_diagonal_elements + u)
-					   * degree2 + j];
-			gens3[k * degree3 + degree1 + j] = degree1 + jj;
-			}
-		for (i = 0; i < degree1; i++) {
-			ii = gens1[(nb_gens1 - nb_diagonal_elements + u)
-					   * degree1 + i];
-			for (j = 0; j < degree2; j++) {
-				jj = gens2[(nb_gens2 - nb_diagonal_elements + u)
-						   * degree2 + j];
-				gens3[k * degree3 + offset + i * degree2 + j] = 
-					offset + ii * degree2 + jj;
-				}
-			}
-		}
-}
-#endif
 
 }}
 

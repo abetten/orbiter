@@ -1,11 +1,11 @@
-// spread.C
+// spread_classify.cpp
 // 
 // Anton Betten
 // November 17, 2009
 //
 // moved to TOP_LEVEL: November 2, 2013
-// renamed to spread.C from translation_plane.C: March 25, 2018
-//
+// renamed to spread.cpp from translation_plane.cpp: March 25, 2018
+// renamed spread_classify.cpp from spread.cpp: Aug 4, 2019
 //
 
 #include "orbiter.h"
@@ -16,17 +16,17 @@ namespace orbiter {
 namespace top_level {
 
 
-spread::spread()
+spread_classify::spread_classify()
 {
 	null();
 }
 
-spread::~spread()
+spread_classify::~spread_classify()
 {
 	freeself();
 }
 
-void spread::null()
+void spread_classify::null()
 {
 	f_override_schreier_depth = FALSE;
 	f_print_generators = FALSE;
@@ -57,7 +57,7 @@ void spread::null()
 	//Data3 = NULL;
 }
 
-void spread::freeself()
+void spread_classify::freeself()
 {
 	if (A) {
 		FREE_OBJECT(A);
@@ -120,7 +120,7 @@ void spread::freeself()
 	null();
 }
 
-void spread::init(int order, int n, int k, int max_depth, 
+void spread_classify::init(int order, int n, int k, int max_depth,
 	finite_field *F, int f_recoordinatize, 
 	const char *input_prefix, 
 	const char *base_fname,
@@ -141,24 +141,24 @@ void spread::init(int order, int n, int k, int max_depth,
 		cout << "k=" << k << endl;
 		cout << "q=" << F->q << endl;
 		}
-	spread::argc = argc;
-	spread::argv = argv;
+	spread_classify::argc = argc;
+	spread_classify::argv = argv;
 	
-	spread::order = order;
+	spread_classify::order = order;
 	spread_size = order + 1;
-	spread::n = n;
-	spread::k = k;
-	spread::max_depth = max_depth;
+	spread_classify::n = n;
+	spread_classify::k = k;
+	spread_classify::max_depth = max_depth;
 	kn = k * n;
-	spread::F = F;
-	spread::f_recoordinatize = f_recoordinatize;
+	spread_classify::F = F;
+	spread_classify::f_recoordinatize = f_recoordinatize;
 	q = F->q;
 	
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
 	//sprintf(prefix_with_directory, "%s%s",
 	//starter_directory_name, base_fname);
-	spread::starter_size = starter_size;
+	spread_classify::starter_size = starter_size;
 
 
 	tmp_M1 = NEW_int(n * n);
@@ -421,12 +421,12 @@ void spread::init(int order, int n, int k, int max_depth,
 		}
 }
 
-void spread::unrank_point(int *v, int a)
+void spread_classify::unrank_point(int *v, int a)
 {
 	F->PG_element_unrank_modified(v, 1, n, a);
 }
 
-int spread::rank_point(int *v)
+int spread_classify::rank_point(int *v)
 {
 	int a;
 	
@@ -434,12 +434,12 @@ int spread::rank_point(int *v)
 	return a;
 }
 
-void spread::unrank_subspace(int *M, int a)
+void spread_classify::unrank_subspace(int *M, int a)
 {
 	Grass->unrank_int_here(M, a, 0/*verbose_level - 4*/);
 }
 
-int spread::rank_subspace(int *M)
+int spread_classify::rank_subspace(int *M)
 {
 	int a;
 	
@@ -447,12 +447,12 @@ int spread::rank_subspace(int *M)
 	return a;
 }
 
-void spread::print_points()
+void spread_classify::print_points()
 {
 	int *v;
 	int i;
 
-	cout << "spread::print_points" << endl;
+	cout << "spread_classify::print_points" << endl;
 	v = NEW_int(n);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
@@ -463,12 +463,12 @@ void spread::print_points()
 	FREE_int(v);
 }
 
-void spread::print_points(int *pts, int len)
+void spread_classify::print_points(int *pts, int len)
 {
 	int *v;
 	int h, i;
 
-	cout << "spread::print_points" << endl;
+	cout << "spread_classify::print_points" << endl;
 	v = NEW_int(n);
 	for (h = 0; h < len; h++) {
 		i = pts[h];
@@ -480,7 +480,7 @@ void spread::print_points(int *pts, int len)
 	FREE_int(v);
 }
 
-void spread::print_elements()
+void spread_classify::print_elements()
 {
 	int i, j;
 	int *M;
@@ -504,13 +504,13 @@ void spread::print_elements()
 	FREE_int(M);
 }
 
-void spread::print_elements_and_points()
+void spread_classify::print_elements_and_points()
 {
 	int i, a, b;
 	int *M, *v, *w;
 	int *Line;
 
-	cout << "spread::print_elements_and_points" << endl;
+	cout << "spread_classify::print_elements_and_points" << endl;
 	M = NEW_int(kn);
 	v = NEW_int(k);
 	w = NEW_int(n);
@@ -540,7 +540,7 @@ void spread::print_elements_and_points()
 	FREE_int(Line);
 }
 
-void spread::read_arguments(int argc, const char **argv)
+void spread_classify::read_arguments(int argc, const char **argv)
 {
 	int i;
 	
@@ -557,14 +557,14 @@ void spread::read_arguments(int argc, const char **argv)
 		}
 }
 
-void spread::init2(int verbose_level)
+void spread_classify::init2(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int depth;
 	
 	if (f_v) {
-		cout << "spread::init2" << endl;
+		cout << "spread_classify::init2" << endl;
 		}
 	//depth = order + 1;
 
@@ -580,7 +580,7 @@ void spread::init2(int verbose_level)
 	
 	if (f_recoordinatize) {
 		if (f_v) {
-			cout << "spread::init2 "
+			cout << "spread_classify::init2 "
 					"before gen->initialize_with_starter" << endl;
 			}
 		gen->initialize_with_starter(Poset,
@@ -596,13 +596,13 @@ void spread::init2(int verbose_level)
 			starter_canonize_callback, 
 			verbose_level - 2);
 		if (f_v) {
-			cout << "spread::init2 "
+			cout << "spread_classify::init2 "
 					"after gen->initialize_with_starter" << endl;
 			}
 		}
 	else {
 		if (f_v) {
-			cout << "spread::init2 "
+			cout << "spread_classify::init2 "
 					"before gen->initialize" << endl;
 			}
 		gen->initialize(Poset,
@@ -610,7 +610,7 @@ void spread::init2(int verbose_level)
 			starter_directory_name, prefix, 
 			verbose_level - 2);
 		if (f_v) {
-			cout << "spread::init2 "
+			cout << "spread_classify::init2 "
 					"after gen->initialize" << endl;
 			}
 		}
@@ -618,7 +618,7 @@ void spread::init2(int verbose_level)
 	gen->f_allowed_to_show_group_elements = TRUE;
 
 
-#if 1
+#if 0
 	gen->f_print_function = TRUE;
 	gen->print_function = callback_spread_print;
 	gen->print_function_data = this;
@@ -626,11 +626,11 @@ void spread::init2(int verbose_level)
 
 
 	if (f_v) {
-		cout << "spread::init2 done" << endl;
+		cout << "spread_classify::init2 done" << endl;
 		}
 }
 
-void spread::compute(int verbose_level)
+void spread_classify::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = gen->depth;
@@ -640,7 +640,7 @@ void spread::compute(int verbose_level)
 
 
 	if (f_v) {
-		cout << "spread::compute" << endl;
+		cout << "spread_classify::compute starter_size=" << starter_size << endl;
 		}
 
 	
@@ -648,7 +648,7 @@ void spread::compute(int verbose_level)
 		schreier_depth = override_schreier_depth;
 		}
 	if (f_v) {
-		cout << "spread::compute calling generator_main" << endl;
+		cout << "spread_classify::compute calling generator_main" << endl;
 		}
 
 	gen->f_max_depth = TRUE;
@@ -664,11 +664,11 @@ void spread::compute(int verbose_level)
 	int length;
 	
 	if (f_v) {
-		cout << "spread::compute done with generator_main" << endl;
+		cout << "spread_classify::compute done with generator_main" << endl;
 		}
 	length = gen->nb_orbits_at_level(gen->max_depth);
 	if (f_v) {
-		cout << "spread::compute We found " << length << " orbits on " 
+		cout << "spread_classify::compute We found " << length << " orbits on "
 			<< gen->max_depth << "-sets of " << k 
 			<< "-subspaces in PG(" << n - 1 << "," << q << ")" 
 			<< " satisfying the partial spread condition" << endl;
@@ -677,12 +677,12 @@ void spread::compute(int verbose_level)
 
 
 	if (f_v) {
-		cout << "spread::compute done" << endl;
+		cout << "spread_classify::compute done" << endl;
 		}
 }
 
 
-void spread::early_test_func(int *S, int len, 
+void spread_classify::early_test_func(int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	int verbose_level)
@@ -696,7 +696,7 @@ void spread::early_test_func(int *S, int len,
 	int *B, *base_cols;
 		
 	if (f_v) {
-		cout << "spread::early_test_func checking set ";
+		cout << "spread_classify::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
@@ -720,7 +720,7 @@ void spread::early_test_func(int *S, int len,
 		}
 
 	if (len + 1 > max_depth) {
-		cout << "spread::early_test_func len + 1 > max_depth" << endl;
+		cout << "spread_classify::early_test_func len + 1 > max_depth" << endl;
 		exit(1);
 		}
 	M = Data2; // [n * n]
@@ -777,15 +777,15 @@ void spread::early_test_func(int *S, int len,
 		} // next j
 	
 	if (f_v) {
-		cout << "spread::early_test_func we found " << nb_good_candidates
+		cout << "spread_classify::early_test_func we found " << nb_good_candidates
 				<< " good candidates" << endl;
 		}
 	if (f_v) {
-		cout << "spread::early_test_func done" << endl;
+		cout << "spread_classify::early_test_func done" << endl;
 		}
 }
 
-int spread::check_function(int len, int *S, int verbose_level)
+int spread_classify::check_function(int len, int *S, int verbose_level)
 // checks all {len \choose 2} pairs. This is very inefficient.
 // This function should not be used for poset classification!
 {
@@ -797,7 +797,7 @@ int spread::check_function(int len, int *S, int verbose_level)
 	int *B, *base_cols;
 		
 	if (f_v) {
-		cout << "spread::check_function checking set ";
+		cout << "spread_classify::check_function checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -860,7 +860,7 @@ int spread::check_function(int len, int *S, int verbose_level)
 
 }
 
-int spread::incremental_check_function(int len, int *S, int verbose_level)
+int spread_classify::incremental_check_function(int len, int *S, int verbose_level)
 // checks the pairs (0,len-1),(1,len-1),\ldots,(len-2,len-1) 
 // for recoordinatize
 {
@@ -872,7 +872,7 @@ int spread::incremental_check_function(int len, int *S, int verbose_level)
 	int *B, *base_cols;
 		
 	if (f_v) {
-		cout << "spread::incremental_check_function checking set ";
+		cout << "spread_classify::incremental_check_function checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -939,7 +939,7 @@ finish:
 }
 
 #if 0
-int spread::check_function_pair(int rk1, int rk2, int verbose_level)
+int spread_classify::check_function_pair(int rk1, int rk2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -948,7 +948,7 @@ int spread::check_function_pair(int rk1, int rk2, int verbose_level)
 	int *B, *base_cols;
 		
 	if (f_v) {
-		cout << "spread::check_function_pair "
+		cout << "spread_classify::check_function_pair "
 				"checking (" << rk1 << "," << rk2 << ")" << endl;
 		}
 	M = tmp_M1; // [n * n]
@@ -980,7 +980,7 @@ int spread::check_function_pair(int rk1, int rk2, int verbose_level)
 }
 #endif
 
-void spread::lifting_prepare_function_new(
+void spread_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
 	int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
@@ -992,7 +992,7 @@ void spread::lifting_prepare_function_new(
 	int f_v3 = (verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
 		}
 
@@ -1002,7 +1002,7 @@ void spread::lifting_prepare_function_new(
 	SL = NEW_OBJECT(spread_lifting);
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"before SL->init" << endl;
 		}
 	SL->init(this, E, 
@@ -1012,19 +1012,19 @@ void spread::lifting_prepare_function_new(
 		E->f_lex, 
 		verbose_level);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"after SL->init" << endl;
 		}
 
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"before SL->create_system" << endl;
 		}
 
 	Dio = SL->create_system(verbose_level - 2);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"after SL->create_system" << endl;
 		}
 
@@ -1032,14 +1032,14 @@ void spread::lifting_prepare_function_new(
 	int nb_colors;
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"before SL->find_coloring" << endl;
 		}
 	SL->find_coloring(Dio, 
 		col_color, nb_colors, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"after SL->find_coloring" << endl;
 		}
 
@@ -1052,12 +1052,12 @@ void spread::lifting_prepare_function_new(
 	uchar *Adj;
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"before Dio->make_clique_graph_adjacency_matrix" << endl;
 		}
 	Dio->make_clique_graph_adjacency_matrix(Adj, verbose_level - 2);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"after Dio->make_clique_graph_adjacency_matrix" << endl;
 		}
 
@@ -1066,7 +1066,7 @@ void spread::lifting_prepare_function_new(
 	CG = NEW_OBJECT(colored_graph);
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"before CG->init_with_point_labels" << endl;
 		}
 	CG->init_with_point_labels(SL->nb_cols, nb_colors, 
@@ -1074,7 +1074,7 @@ void spread::lifting_prepare_function_new(
 		SL->col_labels /* point_labels */, 
 		verbose_level);
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"after CG->init_with_point_labels" << endl;
 		}
 	
@@ -1099,36 +1099,36 @@ void spread::lifting_prepare_function_new(
 	FREE_int(col_color);
 	
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"after SL->create_system" << endl;
 		}
 
 	if (f_v) {
-		cout << "spread::lifting_prepare_function_new "
+		cout << "spread_classify::lifting_prepare_function_new "
 				"done" << endl;
 		}
 }
 
 
 
-void spread::compute_dual_spread(int *spread,
+void spread_classify::compute_dual_spread(int *spread,
 		int *dual_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "spread::compute_dual_spread" << endl;
+		cout << "spread_classify::compute_dual_spread" << endl;
 		}
 
 	Grass->compute_dual_spread(spread, dual_spread,
 			spread_size, verbose_level - 1);
 
 	if (f_v) {
-		cout << "spread::compute_dual_spread done" << endl;
+		cout << "spread_classify::compute_dual_spread done" << endl;
 		}
 }
 
-void spread::print(ostream &ost, int len, int *S)
+void spread_classify::print(ostream &ost, int len, int *S)
 {
 	int i;
 	int f_elements_exponential = FALSE;
@@ -1162,7 +1162,7 @@ void spread_lifting_early_test_function(int *S, int len,
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level)
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -1188,7 +1188,7 @@ void spread_lifting_prepare_function_new(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	spread *Spread = (spread *) EC->user_data;
+	spread_classify *Spread = (spread_classify *) EC->user_data;
 
 	if (f_v) {
 		cout << "spread_lifting_prepare_function_new "
@@ -1226,7 +1226,7 @@ int starter_canonize_callback(int *Set, int len,
 // for starter, interface to recoordinatize,
 // which uses callback_incremental_check_function
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	
@@ -1249,7 +1249,7 @@ int callback_incremental_check_function(
 		int len, int *S, void *data, int verbose_level)
 // for recoordinatize
 {
-	spread *Spread = (spread *) data;
+	spread_classify *Spread = (spread_classify *) data;
 	int ret;
 
 	ret = Spread->incremental_check_function(len, S, verbose_level);

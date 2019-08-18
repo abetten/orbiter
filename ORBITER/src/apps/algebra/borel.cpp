@@ -1,4 +1,4 @@
-// test_borel.C
+// test_borel.cpp
 // 
 // Anton Betten
 // Apr 22, 2016

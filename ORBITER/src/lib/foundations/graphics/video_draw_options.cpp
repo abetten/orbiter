@@ -122,6 +122,10 @@ video_draw_options::video_draw_options()
 	location = "<-3,1,3>";
 	look_at = "<0,0,0>";
 
+	scale_factor = 1.;
+
+	f_line_radius = FALSE;
+	line_radius = 0.02;
 
 }
 
@@ -272,7 +276,7 @@ int video_draw_options::read_arguments(
 			   	   //right <1,1,0>
 			   //location  <-3,1,3>
 			   //look_at  <0,0,0>
-}
+		}
 		else if (strcmp(argv[i], "-clipping") == 0) {
 			clipping_round[nb_clipping] = atoi(argv[++i]);
 			double d;
@@ -282,7 +286,7 @@ int video_draw_options::read_arguments(
 				<< clipping_round[nb_clipping] << " "
 				<< clipping_value[nb_clipping] << endl;
 			nb_clipping++;
-			}
+		}
 		else if (strcmp(argv[i], "-text") == 0) {
 			round_text_round[nb_round_text] = atoi(argv[++i]);
 			round_text_sustain[nb_round_text] = atoi(argv[++i]);
@@ -368,6 +372,13 @@ int video_draw_options::read_arguments(
 			cout << "-end" << endl;
 			return i;
 			}
+		else if (strcmp(argv[i], "-scale_factor") == 0) {
+			scale_factor = atof(argv[++i]);
+		}
+		else if (strcmp(argv[i], "-line_radius") == 0) {
+			f_line_radius = TRUE;
+			line_radius = atof(argv[++i]);
+		}
 		else {
 			cout << "video_draw_options::read_arguments "
 					"unrecognized option " << argv[i] << endl;

@@ -1,4 +1,4 @@
-// poset_classification.C
+// poset_classification.cpp
 //
 // Anton Betten
 // December 29, 2003
@@ -745,7 +745,7 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 void poset_classification::stabilizer_order(int node, longinteger_object &go)
 {
 	if (root[node].nb_strong_generators) {
-		go.create_product(Poset->A->Stabilizer_chain->base_len, root[node].tl);
+		go.create_product(Poset->A->base_len(), root[node].tl);
 		}
 	else {
 		go.create(1);
@@ -1202,7 +1202,7 @@ void poset_classification::find_automorphism_group_of_order(
 			ago.create(1);
 			}
 		else {
-			ago.create_product(Poset->A->Stabilizer_chain->base_len, root[node].tl);
+			ago.create_product(Poset->A->base_len(), root[node].tl);
 			}
 		if (ago.as_int() == order) {
 			cout << "found a node whose automorphism group is order "
@@ -1252,7 +1252,7 @@ void poset_classification::get_stabilizer_order(int level,
 	else {
 		longinteger_domain D;
 
-		D.multiply_up(go, O->tl, Poset->A->Stabilizer_chain->base_len);
+		D.multiply_up(go, O->tl, Poset->A->base_len());
 		}
 }
 
@@ -1794,7 +1794,8 @@ void poset_classification::list_whole_orbit(
 
 
 	cout << "poset_classification::list_whole_orbit "
-			"orbit " << orbit_idx
+			"depth " << depth
+			<< "orbit " << orbit_idx
 			<< " / " << nb_orbits_at_level(depth) << " (=node "
 			<< first_poset_orbit_node_at_level[depth] + orbit_idx
 			<< ") at depth " << depth << " has length " << Len << " : ";

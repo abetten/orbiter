@@ -1,4 +1,4 @@
-// cheat_sheet_PG.C
+// cheat_sheet_PG.cpp
 // 
 // Anton Betten
 // 3/14/2010

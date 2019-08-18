@@ -1,7 +1,7 @@
-// poset_classification_draw.C
+// poset_classification_draw.cpp
 //
 // Anton Betten
-// moved out of poset_classification.C  November 14, 2007
+// moved out of poset_classification.cpp  November 14, 2007
 
 #include "foundations/foundations.h"
 #include "group_actions/group_actions.h"

@@ -1,10 +1,10 @@
-// isomorph_files.C
+// isomorph_files.cpp
 // 
 // Anton Betten
 // started 2007
 //
-// moved here from global.C: Nov 1, 2009
-// renamed isomorph_files.C from global_solution.C
+// moved here from global.cpp: Nov 1, 2009
+// renamed isomorph_files.cpp from global_solution.cpp
 //
 // 
 //
@@ -322,7 +322,6 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 			nb_solutions, 
 			Solutions, size /* solution_size */, 
 			verbose_level - 2);
-			// GALOIS/util.C
 
 		if (f_vv) {
 			cout << "isomorph::read_solutions_from_clique_finder_"
@@ -444,7 +443,6 @@ void isomorph::read_solutions_from_clique_finder(
 			nb_solutions, case_nb, nb_cases, 
 			Solutions, size /* solution_size */, 
 			verbose_level - 2);
-			// GALOIS/util.C
 
 		if (f_vv) {
 			cout << "isomorph::read_solutions_from_clique_finder "
@@ -542,7 +540,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 		add_solution_to_database(data, 
 			u, id, no, nb_solutions_total, hs, datref,
 			print_mod, verbose_level - 2);
-			// in isomorph_database.C
+			// in isomorph_database.cpp
 			
 		id_to_datref[id] = datref;
 		id_to_hash[id] = hs;
@@ -1449,6 +1447,7 @@ void isomorph::read_hash_and_datref_file(int verbose_level)
 // Called from init_solution
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 5);
 	sorting Sorting;
 	
 	if (f_v) {
@@ -1490,7 +1489,10 @@ void isomorph::read_hash_and_datref_file(int verbose_level)
 		}
 	Sorting.int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 
-	print_hash_vs_id();
+	if (f_vv) {
+		cout << "isomorph::read_hash_and_datref_file" << endl;
+		print_hash_vs_id();
+	}
 
 	if (f_v) {
 		cout << "isomorph::read_hash_and_datref_file done" << endl;
@@ -1675,7 +1677,7 @@ void isomorph::print_isomorphism_types(int f_select,
 					"induced action on the set (in data)" << endl;
 			}
 		induced_action_on_set(Stab, data, verbose_level);
-			// at the bottom of isomorph_testing.C
+
 		if (f_v) {
 			longinteger_object go;
 			
@@ -2306,19 +2308,50 @@ void isomorph::read_everything_including_classification(
 		cout << "isomorph::read_everything_including_classification" << endl;
 		}
 	
+
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before read_data_files_for_starter" << endl;
+	}
 	read_data_files_for_starter(level,
 			prefix_classify, verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after read_data_files_for_starter" << endl;
+	}
 
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before init_solution" << endl;
+	}
 	init_solution(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after init_solution" << endl;
+	}
 
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before load_table_of_solutions" << endl;
+	}
 	load_table_of_solutions(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after load_table_of_solutions" << endl;
+	}
 	
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before read_orbit_data" << endl;
+	}
 	read_orbit_data(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after read_orbit_data" << endl;
+	}
 
 	depth_completed = level /*- 2*/;
 
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before gen->recreate_schreier_vectors_up_to_level" << endl;
+	}
 	gen->recreate_schreier_vectors_up_to_level(level - 1,
 			verbose_level);
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after gen->recreate_schreier_vectors_up_to_level" << endl;
+	}
 
 	
 	if (f_v) {
@@ -2330,15 +2363,33 @@ void isomorph::read_everything_including_classification(
 		}
 
 
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before iso_test_init" << endl;
+	}
 	iso_test_init(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after iso_test_init" << endl;
+	}
 
 	//int f_implicit_fusion = FALSE;
 	
 	gen->f_allowed_to_show_group_elements = FALSE;
 	
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before read_starter_nb_orbits" << endl;
+	}
 	read_starter_nb_orbits(verbose_level); // added Oct 30, 2014 
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after read_starter_nb_orbits" << endl;
+	}
 	
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification before Reps->load" << endl;
+	}
 	Reps->load(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::read_everything_including_classification after Reps->load" << endl;
+	}
 
 	if (f_v) {
 		cout << "isomorph::read_everything_including_"

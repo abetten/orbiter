@@ -1,4 +1,4 @@
-// action_on_cosets.C
+// action_on_cosets.cpp
 //
 // Anton Betten
 // Dec 24, 2013

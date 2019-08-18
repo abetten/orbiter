@@ -1,4 +1,4 @@
-// packing.C
+// packing_classify.cpp
 // 
 // Anton Betten
 // Feb 6, 2013
@@ -18,7 +18,7 @@ namespace top_level {
 
 
 
-packing::packing()
+packing_classify::packing_classify()
 {
 	T = NULL;
 	F = NULL;
@@ -40,6 +40,7 @@ packing::packing()
 	P3 = NULL;
 
 
+	spread_tables_prefix = NULL;
 	nb_spreads_up_to_isomorphism = 0;
 		// the number of spreads
 		// from the classification
@@ -69,16 +70,16 @@ packing::packing()
 	//null();
 }
 
-packing::~packing()
+packing_classify::~packing_classify()
 {
 	freeself();
 }
 
-void packing::null()
+void packing_classify::null()
 {
 }
 
-void packing::freeself()
+void packing_classify::freeself()
 {
 	if (bitvector_adjacency) {
 		FREE_uchar(bitvector_adjacency);
@@ -98,38 +99,39 @@ void packing::freeself()
 	null();
 }
 
-void packing::init(spread *T, 
+void packing_classify::init(spread_classify *T,
 	int f_packing_select_spread,
 	int *packing_select_spread, int packing_select_spread_nb,
 	const char *input_prefix, const char *base_fname, 
 	int search_depth, 
 	int f_lexorder_test,
+	const char *spread_tables_prefix,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing::init" << endl;
+		cout << "packing_classify::init" << endl;
 		}
 
-	packing::T = T;
+	packing_classify::T = T;
 	F = T->F;
-	packing::f_lexorder_test = f_lexorder_test;
+	packing_classify::f_lexorder_test = f_lexorder_test;
 	q = T->q;
 	spread_size = T->spread_size;
 	size_of_packing = q * q + q + 1;
 	nb_lines = T->A2->degree;
 
-	packing::search_depth = search_depth;
+	packing_classify::search_depth = search_depth;
 	
 	if (f_v) {
-		cout << "packing::init q=" << q << endl;
-		cout << "packing::init nb_lines=" << nb_lines << endl;
-		cout << "packing::init spread_size=" << spread_size << endl;
-		cout << "packing::init size_of_packing=" << size_of_packing << endl;
-		cout << "packing::init input_prefix=" << input_prefix << endl;
-		cout << "packing::init base_fname=" << base_fname << endl;
-		cout << "packing::init search_depth=" << search_depth << endl;
+		cout << "packing_classify::init q=" << q << endl;
+		cout << "packing_classify::init nb_lines=" << nb_lines << endl;
+		cout << "packing_classify::init spread_size=" << spread_size << endl;
+		cout << "packing_classify::init size_of_packing=" << size_of_packing << endl;
+		cout << "packing_classify::init input_prefix=" << input_prefix << endl;
+		cout << "packing_classify::init base_fname=" << base_fname << endl;
+		cout << "packing_classify::init search_depth=" << search_depth << endl;
 		}
 
 	init_P3(verbose_level - 1);
@@ -139,10 +141,10 @@ void packing::init(spread *T,
 	sprintf(prefix_with_directory, "%s%s",
 			starter_directory_name, base_fname);
 
-
+	packing_classify::spread_tables_prefix = spread_tables_prefix;
 
 	if (f_packing_select_spread) {
-		cout << "packing::init selected spreads are "
+		cout << "packing_classify::init selected spreads are "
 				"from the following orbits: ";
 		int_vec_print(cout,
 				packing_select_spread,
@@ -153,70 +155,71 @@ void packing::init(spread *T,
 
 	Spread_tables = NEW_OBJECT(spread_tables);
 
-	load_input_spreads(Spread_tables->nb_spreads,
+	Spread_tables->nb_spreads = predict_spread_table_length(
 			f_packing_select_spread,
 			packing_select_spread, packing_select_spread_nb,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "We have " << nb_input_spreads << " input spreads, "
-				"nb_spreads = " << Spread_tables->nb_spreads << endl;
+		cout << "We will use " << nb_input_spreads << " isomorphism types of spreads, "
+				"this will give a total number of " << Spread_tables->nb_spreads
+				<< " labeled spreads" << endl;
 		}
 
 
 	if (f_v) {
-		cout << "packing::init done" << endl;
+		cout << "packing_classify::init done" << endl;
 		}
 }
 
-void packing::init2(int verbose_level)
+void packing_classify::init2(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing::init2" << endl;
+		cout << "packing_classify::init2" << endl;
 		}
 
 #if 0
 	if (f_v) {
-		cout << "packing::init2 "
+		cout << "packing_classify::init2 "
 				"before compute_spread_table" << endl;
 		}
 	compute_spread_table(verbose_level - 1);
 	if (f_v) {
-		cout << "packing::init2 "
+		cout << "packing_classify::init2 "
 				"after compute_spread_table" << endl;
 		}
 #endif
 
 	if (f_v) {
-		cout << "packing::init2 "
+		cout << "packing_classify::init2 "
 				"before create_action_on_spreads" << endl;
 		}
 	create_action_on_spreads(verbose_level - 1);
 	if (f_v) {
-		cout << "packing::init2 "
+		cout << "packing_classify::init2 "
 				"after create_action_on_spreads" << endl;
 		}
 
 
 	
 	if (f_v) {
-		cout << "packing::init "
+		cout << "packing_classify::init "
 				"before prepare_generator" << endl;
 		}
 	prepare_generator(search_depth, verbose_level - 1);
 	if (f_v) {
-		cout << "packing::init "
+		cout << "packing_classify::init "
 				"after prepare_generator" << endl;
 		}
 
 	if (f_v) {
-		cout << "packing::init done" << endl;
+		cout << "packing_classify::init done" << endl;
 		}
 }
 
-void packing::compute_spread_table(int verbose_level)
+void packing_classify::compute_spread_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -226,7 +229,7 @@ void packing::compute_spread_table(int verbose_level)
 	int *Spread_table;
 
 	if (f_v) {
-		cout << "packing::compute_spread_table" << endl;
+		cout << "packing_classify::compute_spread_table" << endl;
 		}
 
 	nb_spreads = Spread_tables->nb_spreads;
@@ -237,7 +240,7 @@ void packing::compute_spread_table(int verbose_level)
 
 
 	if (f_v) {
-		cout << "packing::compute_spread_table "
+		cout << "packing_classify::compute_spread_table "
 				"before make_spread_table" << endl;
 		}
 	make_spread_table(nb_spreads,
@@ -245,7 +248,7 @@ void packing::compute_spread_table(int verbose_level)
 		Sets, isomorphism_type_of_spread,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "packing::compute_spread_table "
+		cout << "packing_classify::compute_spread_table "
 				"after make_spread_table" << endl;
 		}
 
@@ -257,6 +260,7 @@ void packing::compute_spread_table(int verbose_level)
 
 
 	Spread_tables->init(F, FALSE, nb_spreads_up_to_isomorphism,
+			spread_tables_prefix,
 			verbose_level);
 
 
@@ -286,14 +290,14 @@ void packing::compute_spread_table(int verbose_level)
 
 
 	if (nb_spreads < 10000) {
-		cout << "packing::compute_spread_table "
+		cout << "packing_classify::compute_spread_table "
 				"We are computing the adjacency matrix" << endl;
 		compute_adjacency_matrix(verbose_level - 1);
-		cout << "packing::compute_spread_table "
+		cout << "packing_classify::compute_spread_table "
 				"The adjacency matrix has been computed" << endl;
 		}
 	else {
-		cout << "packing::compute_spread_table "
+		cout << "packing_classify::compute_spread_table "
 				"We are NOT computing the adjacency matrix" << endl;
 		}
 
@@ -305,16 +309,16 @@ void packing::compute_spread_table(int verbose_level)
 
 
 	if (f_v) {
-		cout << "packing::compute_spread_table done" << endl;
+		cout << "packing_classify::compute_spread_table done" << endl;
 		}
 }
 
-void packing::init_P3(int verbose_level)
+void packing_classify::init_P3(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing::init_P3" << endl;
+		cout << "packing_classify::init_P3" << endl;
 		}
 	P3 = NEW_OBJECT(projective_space);
 	
@@ -322,14 +326,14 @@ void packing::init_P3(int verbose_level)
 		TRUE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 	if (f_v) {
-		cout << "packing::init_P3 done" << endl;
+		cout << "packing_classify::init_P3 done" << endl;
 		cout << "N_points=" << P3->N_points << endl;
 		cout << "N_lines=" << P3->N_lines << endl;
 		}
 }
 
 
-void packing::load_input_spreads(int &N, 
+int packing_classify::predict_spread_table_length(
 	int f_packing_select_spread,
 	int *packing_select_spread,
 	int packing_select_spread_nb,
@@ -341,9 +345,10 @@ void packing::load_input_spreads(int &N,
 	longinteger_domain D;
 	knowledge_base K;
 	sorting Sorting;
+	int N;
 
 	if (f_v) {
-		cout << "packing::load_input_spreads" << endl;
+		cout << "packing_classify::predict_spread_table_length" << endl;
 		}
 
 
@@ -366,7 +371,6 @@ void packing::load_input_spreads(int &N,
 
 		T->A->stabilizer_of_spread_representative(q,
 				T->k, no, gens, stab_order, 0 /*verbose_level*/);
-			// ACTION/action.C
 
 
 		f_do_it = FALSE;	
@@ -419,12 +423,13 @@ void packing::load_input_spreads(int &N,
 
 
 	if (f_v) {
-		cout << "packing::load_input_spreads done, N = " << N << endl;
+		cout << "packing_classify::predict_spread_table_length done, N = " << N << endl;
 		}
+	return N;
 }
 
 
-void packing::make_spread_table(
+void packing_classify::make_spread_table(
 	int nb_spreads, int *input_spreads,
 	int nb_input_spreads, int *input_spread_label,
 	int **&Sets, int *&isomorphism_type_of_spread,
@@ -436,7 +441,7 @@ void packing::make_spread_table(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "packing::make_spread_table" << endl;
+		cout << "packing_classify::make_spread_table" << endl;
 		}
 	Sets = NEW_pint(nb_spreads);
 	isomorphism_type_of_spread = NEW_int(nb_spreads);
@@ -448,7 +453,7 @@ void packing::make_spread_table(
 	for (i = 0; i < nb_input_spreads; i++) {
 
 		if (f_v) {
-			cout << "packing::make_spread_table "
+			cout << "packing_classify::make_spread_table "
 				"Spread " << i << " / "
 				<< nb_input_spreads << " computing orbits" << endl;
 			}
@@ -461,7 +466,7 @@ void packing::make_spread_table(
 
 
 		if (f_v) {
-			cout << "packing::make_spread_table Spread "
+			cout << "packing_classify::make_spread_table Spread "
 				<< input_spread_label[i] << " = " << i << " / "
 				<< nb_input_spreads << " has orbit length "
 				<< SetOrb[i].used_length << endl;
@@ -489,12 +494,12 @@ void packing::make_spread_table(
 	} // next i
 
 	if (f_v) {
-		cout << "packing::make_spread_table We found "
+		cout << "packing_classify::make_spread_table We found "
 				<< nb_spreads1 << " labeled spreads" << endl;
 		}
 
 	if (nb_spreads1 != nb_spreads) {
-		cout << "packing::make_spread_table "
+		cout << "packing_classify::make_spread_table "
 				"nb_spreads1 != nb_spreads" << endl;
 		exit(1);
 	}
@@ -502,7 +507,7 @@ void packing::make_spread_table(
 	FREE_OBJECTS(SetOrb);
 
 	if (f_v) {
-		cout << "packing::make_spread_table before "
+		cout << "packing_classify::make_spread_table before "
 				"sorting spread table of size " << nb_spreads << endl;
 	}
 	tmp_isomorphism_type_of_spread = isomorphism_type_of_spread;
@@ -512,13 +517,13 @@ void packing::make_spread_table(
 			packing_swap_func,
 			this);
 	if (f_v) {
-		cout << "packing::make_spread_table after "
+		cout << "packing_classify::make_spread_table after "
 				"sorting spread table of size " << nb_spreads << endl;
 	}
 
 
 	if (FALSE) {
-		cout << "packing::make_spread_table "
+		cout << "packing_classify::make_spread_table "
 				"The labeled spreads are:" << endl;
 		for (i = 0; i < nb_spreads; i++) {
 			cout << i << " : ";
@@ -528,12 +533,12 @@ void packing::make_spread_table(
 		}
 
 	if (f_v) {
-		cout << "packing::make_spread_table done" << endl;
+		cout << "packing_classify::make_spread_table done" << endl;
 		}
 }
 
 
-void packing::compute_dual_spreads(int **Sets,
+void packing_classify::compute_dual_spreads(int **Sets,
 		int *&Dual_spread_idx,
 		int *&self_dual_spread_idx,
 		int &nb_self_dual_spreads,
@@ -547,7 +552,7 @@ void packing::compute_dual_spreads(int **Sets,
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "packing::compute_dual_spreads" << endl;
+		cout << "packing_classify::compute_dual_spreads" << endl;
 		}
 
 	nb_spreads = Spread_tables->nb_spreads;
@@ -572,7 +577,7 @@ void packing::compute_dual_spreads(int **Sets,
 		}
 #endif
 		if (f_v) {
-			cout << "packing::compute_dual_spreads spread "
+			cout << "packing_classify::compute_dual_spreads spread "
 					<< i << " / " << nb_spreads << endl;
 			int_vec_print(cout,
 					Spread_tables->spread_table +
@@ -597,7 +602,7 @@ void packing::compute_dual_spreads(int **Sets,
 			nb_spreads, dual_spread, idx,
 			0 /* verbose_level */)) {
 			if (f_vv) {
-				cout << "packing::compute_dual_spreads Dual "
+				cout << "packing_classify::compute_dual_spreads Dual "
 						"spread of spread " << i
 						<< " is spread no " << idx << endl;
 				}
@@ -617,7 +622,7 @@ void packing::compute_dual_spreads(int **Sets,
 
 	FREE_int(dual_spread);
 	if (f_v) {
-		cout << "packing::compute_dual_spreads we found "
+		cout << "packing_classify::compute_dual_spreads we found "
 				<< nb_self_dual_spreads << " self dual spreads" << endl;
 		cout << "They are: ";
 		int_vec_print(cout, self_dual_spread_idx, nb_self_dual_spreads);
@@ -626,12 +631,12 @@ void packing::compute_dual_spreads(int **Sets,
 
 
 	if (f_v) {
-		cout << "packing::compute_dual_spreads done" << endl;
+		cout << "packing_classify::compute_dual_spreads done" << endl;
 		}
 
 }
 
-int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
+int packing_classify::test_if_packing_is_self_dual(int *packing, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
@@ -641,7 +646,7 @@ int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "packing::test_if_packing_is_self_dual" << endl;
+		cout << "packing_classify::test_if_packing_is_self_dual" << endl;
 	}
 	sorted_packing = NEW_int(size_of_packing);
 	dual_packing = NEW_int(size_of_packing);
@@ -662,18 +667,18 @@ int packing::test_if_packing_is_self_dual(int *packing, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "packing::test_if_packing_is_self_dual done" << endl;
+		cout << "packing_classify::test_if_packing_is_self_dual done" << endl;
 	}
 	return ret;
 }
 
 
-void packing::compute_adjacency_matrix(int verbose_level)
+void packing_classify::compute_adjacency_matrix(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing::compute_adjacency_matrix" << endl;
+		cout << "packing_classify::compute_adjacency_matrix" << endl;
 		}
 
 	Spread_tables->compute_adjacency_matrix(
@@ -683,20 +688,20 @@ void packing::compute_adjacency_matrix(int verbose_level)
 
 	
 	if (f_v) {
-		cout << "packing::compute_adjacency_matrix done" << endl;
+		cout << "packing_classify::compute_adjacency_matrix done" << endl;
 		}
 }
 
 
 
-void packing::prepare_generator(
+void packing_classify::prepare_generator(
 		int search_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "packing::prepare_generator" << endl;
+		cout << "packing_classify::prepare_generator" << endl;
 		cout << "search_depth=" << search_depth << endl;
 		}
 	Poset = NEW_OBJECT(poset);
@@ -705,7 +710,7 @@ void packing::prepare_generator(
 			verbose_level);
 
 	if (f_v) {
-		cout << "packing::prepare_generator before "
+		cout << "packing_classify::prepare_generator before "
 				"Poset->add_testing_without_group" << endl;
 		}
 	Poset->add_testing_without_group(
@@ -720,7 +725,7 @@ void packing::prepare_generator(
 	gen->f_W = TRUE;
 
 	if (f_v) {
-		cout << "packing::prepare_generator "
+		cout << "packing_classify::prepare_generator "
 				"calling gen->initialize" << endl;
 		}
 
@@ -742,7 +747,7 @@ void packing::prepare_generator(
 }
 
 
-void packing::compute(int verbose_level)
+void packing_classify::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = gen->depth;
@@ -761,17 +766,17 @@ void packing::compute(int verbose_level)
 	int length;
 	
 	if (f_v) {
-		cout << "packing::compute done with generator_main" << endl;
+		cout << "packing_classify::compute done with generator_main" << endl;
 		}
 	length = gen->nb_orbits_at_level(gen->depth);
 	if (f_v) {
-		cout << "packing::compute We found "
+		cout << "packing_classify::compute We found "
 			<< length << " orbits on "
 			<< gen->depth << "-sets" << endl;
 		}
 }
 
-int packing::spreads_are_disjoint(int i, int j)
+int packing_classify::spreads_are_disjoint(int i, int j)
 {
 	int *p1, *p2;
 
@@ -787,7 +792,7 @@ int packing::spreads_are_disjoint(int i, int j)
 }
 
 
-void packing::lifting_prepare_function_new(
+void packing_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
 	int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
@@ -811,7 +816,7 @@ void packing::lifting_prepare_function_new(
 
 
 	if (f_v) {
-		cout << "packing::lifting_prepare_function "
+		cout << "packing_classify::lifting_prepare_function "
 				"nb_candidates=" << nb_candidates << endl;
 		}
 
@@ -819,7 +824,7 @@ void packing::lifting_prepare_function_new(
 
 
 	if (f_v) {
-		cout << "packing::lifting_prepare_function "
+		cout << "packing_classify::lifting_prepare_function "
 				"before compute_covered_points" << endl;
 		}
 
@@ -830,7 +835,7 @@ void packing::lifting_prepare_function_new(
 
 
 	if (f_v) {
-		cout << "packing::lifting_prepare_function "
+		cout << "packing_classify::lifting_prepare_function "
 				"before compute_free_points2" << endl;
 		}
 
@@ -841,7 +846,7 @@ void packing::lifting_prepare_function_new(
 		verbose_level - 1);
 
 	if (f_v) {
-		cout << "packing::lifting_prepare_function "
+		cout << "packing_classify::lifting_prepare_function "
 				"before compute_live_blocks2" << endl;
 		}
 
@@ -853,7 +858,7 @@ void packing::lifting_prepare_function_new(
 
 
 	if (f_v) {
-		cout << "packing::lifting_prepare_function "
+		cout << "packing_classify::lifting_prepare_function "
 				"after compute_live_blocks2" << endl;
 		}
 
@@ -866,7 +871,7 @@ void packing::lifting_prepare_function_new(
 
 
 	if (f_vv) {
-		cout << "packing::lifting_prepare_function_new candidates: ";
+		cout << "packing_classify::lifting_prepare_function_new candidates: ";
 		int_vec_print(cout, col_labels, nb_cols);
 		cout << " (nb_candidates=" << nb_cols << ")" << endl;
 		}
@@ -880,7 +885,7 @@ void packing::lifting_prepare_function_new(
 		E->lexorder_test(col_labels, nb_cols, Strong_gens->gens, 
 			verbose_level - 2);
 		if (f_v) {
-			cout << "packing::lifting_prepare_function_new after "
+			cout << "packing_classify::lifting_prepare_function_new after "
 					"lexorder test nb_candidates before: " << nb_cols_before
 					<< " reduced to  " << nb_cols << " (deleted "
 					<< nb_cols_before - nb_cols << ")" << endl;
@@ -888,7 +893,7 @@ void packing::lifting_prepare_function_new(
 		}
 
 	if (f_vv) {
-		cout << "packing::lifting_prepare_function_new "
+		cout << "packing_classify::lifting_prepare_function_new "
 				"after lexorder test" << endl;
 		cout << "packing::lifting_prepare_function_new "
 				"nb_cols=" << nb_cols << endl;
@@ -932,7 +937,7 @@ void packing::lifting_prepare_function_new(
 }
 
 
-void packing::compute_covered_points(
+void packing_classify::compute_covered_points(
 	int *&points_covered_by_starter,
 	int &nb_points_covered_by_starter,
 	int *starter, int starter_size,
@@ -944,7 +949,7 @@ void packing::compute_covered_points(
 	int i, j, a, s;
 	
 	if (f_v) {
-		cout << "packing::compute_covered_points" << endl;
+		cout << "packing_classify::compute_covered_points" << endl;
 		}
 	points_covered_by_starter = NEW_int(starter_size * spread_size);
 	for (i = 0; i < starter_size; i++) {
@@ -960,11 +965,11 @@ void packing::compute_covered_points(
 	cout << endl;
 #endif
 	if (f_v) {
-		cout << "packing::compute_covered_points done" << endl;
+		cout << "packing_classify::compute_covered_points done" << endl;
 		}
 }
 
-void packing::compute_free_points2(
+void packing_classify::compute_free_points2(
 	int *&free_points2, int &nb_free_points2, int *&free_point_idx,
 	int *points_covered_by_starter,
 	int nb_points_covered_by_starter,
@@ -978,7 +983,7 @@ void packing::compute_free_points2(
 	int i, a;
 	
 	if (f_v) {
-		cout << "packing::compute_free_points2" << endl;
+		cout << "packing_classify::compute_free_points2" << endl;
 		}
 	free_point_idx = NEW_int(nb_lines);
 	free_points2 = NEW_int(nb_lines);
@@ -1003,11 +1008,11 @@ void packing::compute_free_points2(
 	cout << endl;
 #endif
 	if (f_v) {
-		cout << "packing::compute_free_points2 done" << endl;
+		cout << "packing_classify::compute_free_points2 done" << endl;
 		}
 }
 
-void packing::compute_live_blocks2(
+void packing_classify::compute_live_blocks2(
 	exact_cover *EC, int starter_case,
 	int *&live_blocks2, int &nb_live_blocks2, 
 	int *points_covered_by_starter, int nb_points_covered_by_starter, 
@@ -1018,7 +1023,7 @@ void packing::compute_live_blocks2(
 	int i, j;
 	
 	if (f_v) {
-		cout << "packing::compute_live_blocks2" << endl;
+		cout << "packing_classify::compute_live_blocks2" << endl;
 		}
 	live_blocks2 = NEW_int(Spread_tables->nb_spreads);
 	nb_live_blocks2 = 0;
@@ -1033,17 +1038,17 @@ void packing::compute_live_blocks2(
 			}
 		}
 	if (f_v) {
-		cout << "packing::compute_live_blocks2 done" << endl;
+		cout << "packing_classify::compute_live_blocks2 done" << endl;
 		}
 
 	if (f_v) {
-		cout << "packing::compute_live_blocks2 STARTER_CASE "
+		cout << "packing_classify::compute_live_blocks2 STARTER_CASE "
 			<< starter_case << " / " << EC->starter_nb_cases
 			<< " : Found " << nb_live_blocks2 << " live spreads" << endl;
 		}
 }
 
-int packing::is_adjacent(int i, int j)
+int packing_classify::is_adjacent(int i, int j)
 {
 	int k;
 	combinatorics_domain Combi;
@@ -1070,24 +1075,25 @@ int packing::is_adjacent(int i, int j)
 		}
 }
 
-void packing::read_spread_table(int verbose_level)
+void packing_classify::read_spread_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 
 	if (f_v) {
-		cout << "packing::read_spread_table" << endl;
+		cout << "packing_classify::read_spread_table" << endl;
 		}
 
 	Spread_tables = NEW_OBJECT(spread_tables);
 
 	if (f_v) {
-		cout << "packing::read_spread_table "
+		cout << "packing_classify::read_spread_table "
 				"before Spread_tables->init" << endl;
 		}
 
 	Spread_tables->init(F,
 			TRUE /* f_load */, nb_spreads_up_to_isomorphism,
+			spread_tables_prefix,
 			verbose_level);
 
 	{
@@ -1122,32 +1128,31 @@ void packing::read_spread_table(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "packing::read_spread_table "
+		cout << "packing_classify::read_spread_table "
 				"after Spread_tables->init" << endl;
 		}
 
 
 
 	if (f_v) {
-		cout << "packing::read_spread_table done" << endl;
+		cout << "packing_classify::read_spread_table done" << endl;
 		}
 }
 
-void packing::create_action_on_spreads(int verbose_level)
+void packing_classify::create_action_on_spreads(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing::create_action_on_spreads" << endl;
+		cout << "packing_classify::create_action_on_spreads" << endl;
 		}
 	//int f_induce = FALSE;
 
 	if (f_v) {
-		cout << "packing::create_action_on_spreads "
+		cout << "packing_classify::create_action_on_spreads "
 				"creating action A_on_spreads" << endl;
 		}
 	A_on_spreads = T->A2->create_induced_action_on_sets(
-			//T->A->Sims,
 			Spread_tables->nb_spreads, spread_size,
 			Spread_tables->spread_table,
 			//f_induce,
@@ -1156,14 +1161,14 @@ void packing::create_action_on_spreads(int verbose_level)
 	cout << "created action on spreads" << endl;
 
 	if (f_v) {
-		cout << "packing::create_action_on_spreads "
+		cout << "packing_classify::create_action_on_spreads "
 				"creating action A_on_spreads done" << endl;
 		}
 }
 
 
 #if 0
-void packing::type_of_packing(
+void packing_classify::type_of_packing(
 		const char *fname_spread_table,
 		const char *fname_spread_table_iso,
 		const char *fname_packings,
@@ -1177,7 +1182,7 @@ void packing::type_of_packing(
 	int i, j, a, b, n;
 	
 	if (f_v) {
-		cout << "packing::type_of_packing" << endl;
+		cout << "packing_classify::type_of_packing" << endl;
 		}
 	
 
@@ -1212,12 +1217,12 @@ void packing::type_of_packing(
 			<< file_size(fname) << endl;
 	
 	if (f_v) {
-		cout << "packing::type_of_packing done" << endl;
+		cout << "packing_classify::type_of_packing done" << endl;
 		}
 }
 #endif
 
-void packing::conjugacy_classes(int verbose_level)
+void packing_classify::conjugacy_classes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char prefix[1000];
@@ -1227,7 +1232,7 @@ void packing::conjugacy_classes(int verbose_level)
 
 
 	if (f_v) {
-		cout << "packing::conjugacy_classes" << endl;
+		cout << "packing_classify::conjugacy_classes" << endl;
 		}
 
 	sprintf(prefix, "PGGL_4_%d", q);
@@ -1244,11 +1249,11 @@ void packing::conjugacy_classes(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "packing::conjugacy_classes done" << endl;
+		cout << "packing_classify::conjugacy_classes done" << endl;
 		}
 }
 
-void packing::read_conjugacy_classes(
+void packing_classify::read_conjugacy_classes(
 		char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1260,7 +1265,7 @@ void packing::read_conjugacy_classes(
 	file_io Fio;
 
 	if (f_v) {
-		cout << "packing::read_conjugacy_classes" << endl;
+		cout << "packing_classify::read_conjugacy_classes" << endl;
 		}
 
 	T->A->read_conjugacy_classes_from_MAGMA(
@@ -1401,26 +1406,31 @@ void packing::read_conjugacy_classes(
 }
 
 
-void packing::conjugacy_classes_and_normalizers(int verbose_level)
+void packing_classify::conjugacy_classes_and_normalizers(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char prefix[1000];
-	char fname1[1000];
-	char fname2[1000];
+	char fname_magma[1000];
+	char fname_output[1000];
 	file_io Fio;
 
 
 	if (f_v) {
-		cout << "packing::conjugacy_classes_and_normalizers" << endl;
+		cout << "packing_classify::conjugacy_classes_and_normalizers" << endl;
 		}
 
 	sprintf(prefix, "PGGL_4_%d", q);
-	sprintf(fname1, "%sconjugacy_classes_and_normalizers.magma", prefix);
-	sprintf(fname2, "%sconjugacy_classes_and_normalizers.txt", prefix);
+	T->A->conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
+			prefix, fname_magma, fname_output);
+	//sprintf(fname1, "%sconjugacy_classes.magma", prefix);
+	//sprintf(fname2, "%sconjugacy_classes.txt", prefix);
 
 
-	if (Fio.file_size(fname2) > 0) {
-		read_conjugacy_classes_and_normalizers(fname2, verbose_level);
+	if (Fio.file_size(fname_output) > 0) {
+		if (f_v) {
+			cout << "packing_classify::conjugacy_classes_and_normalizers before read_conjugacy_classes_and_normalizers" << endl;
+			}
+		read_conjugacy_classes_and_normalizers(fname_output, verbose_level);
 		}
 	else {
 		T->A->conjugacy_classes_and_normalizers_using_MAGMA(prefix,
@@ -1428,12 +1438,12 @@ void packing::conjugacy_classes_and_normalizers(int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "packing::conjugacy_classes_and_normalizers done" << endl;
+		cout << "packing_classify::conjugacy_classes_and_normalizers done" << endl;
 		}
 }
 
 
-void packing::read_conjugacy_classes_and_normalizers(
+void packing_classify::read_conjugacy_classes_and_normalizers(
 		char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1442,7 +1452,7 @@ void packing::read_conjugacy_classes_and_normalizers(
 	int *perms;
 	int *class_size;
 	int *class_order_of_element;
-	int *class_normalizer_order;
+	long int *class_normalizer_order;
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
 	projective_space_with_action *PA;
@@ -1450,9 +1460,12 @@ void packing::read_conjugacy_classes_and_normalizers(
 	file_io Fio;
 
 	if (f_v) {
-		cout << "packing::read_conjugacy_classes_and_normalizers" << endl;
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers" << endl;
 		}
 
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers before T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+		}
 	T->A->read_conjugacy_classes_and_normalizers_from_MAGMA(
 			fname,
 			nb_classes,
@@ -1463,6 +1476,9 @@ void packing::read_conjugacy_classes_and_normalizers(
 			class_normalizer_number_of_generators,
 			normalizer_generators_perms,
 			verbose_level - 1);
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers after T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+		}
 
 
 	PA = NEW_OBJECT(projective_space_with_action);
@@ -1475,10 +1491,16 @@ void packing::read_conjugacy_classes_and_normalizers(
 	else {
 		f_semilinear = TRUE;
 	}
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers before PA->init" << endl;
+		}
 	PA->init(
 		F, 3 /* n */, f_semilinear,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers after PA->init" << endl;
+		}
 
 
 
@@ -1493,6 +1515,9 @@ void packing::read_conjugacy_classes_and_normalizers(
 
 	replace_extension_with(fname_latex, ".tex");
 
+	if (f_v) {
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers writing latex file " << fname_latex << endl;
+		}
 	{
 	ofstream fp(fname_latex);
 	char title[1000];
@@ -1522,6 +1547,11 @@ void packing::read_conjugacy_classes_and_normalizers(
 
 	cout << "The conjugacy classes are:" << endl;
 	for (i = 0; i < nb_classes; i++) {
+
+		if (f_v) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << endl;
+			}
+
 		strong_generators *gens;
 		longinteger_object go1, Class_size, centralizer_order;
 		int goi;
@@ -1531,15 +1561,21 @@ void packing::read_conjugacy_classes_and_normalizers(
 		goi = class_order_of_element[i];
 		gens = NEW_OBJECT(strong_generators);
 
+		if (goi == 0) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << " goi == 0" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers before gens->init_from_permutation_representation" << endl;
+			}
 		gens->init_from_permutation_representation(T->A,
 			perms + i * T->A->degree,
 			1, goi, nice_gens,
 			verbose_level);
 
 		if (f_v) {
-			cout << "action::normalizer_using_MAGMA "
-				"after gens->init_from_permutation_"
-				"representation" << endl;
+			cout << "action::read_conjugacy_classes_and_normalizers "
+				"after gens->init_from_permutation_representation" << endl;
 		}
 
 		Class_size.create(class_size[i]);
@@ -1548,7 +1584,7 @@ void packing::read_conjugacy_classes_and_normalizers(
 
 
 
-		int ngo;
+		long int ngo;
 		int nb_perms;
 		strong_generators *N_gens;
 		vector_ge *nice_gens_N;
@@ -1560,6 +1596,10 @@ void packing::read_conjugacy_classes_and_normalizers(
 		//int *class_normalizer_number_of_generators;
 		//int **normalizer_generators_perms;
 
+		if (ngo == 0) {
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << " ngo == 0" << endl;
+			exit(1);
+		}
 		N_gens = NEW_OBJECT(strong_generators);
 		N_gens->init_from_permutation_representation(T->A,
 				normalizer_generators_perms[i],
@@ -1572,12 +1612,12 @@ void packing::read_conjugacy_classes_and_normalizers(
 			<< " centralizer order = " << centralizer_order
 			<< " normalizer order = " << ngo
 			<< " : " << endl;
-		cout << "packing::read_conjugacy_classes_and_normalizers created "
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers created "
 				"generators for a group" << endl;
 		gens->print_generators();
 		gens->print_generators_as_permutations();
 		gens->group_order(go1);
-		cout << "packing::read_conjugacy_classes_and_normalizers "
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers "
 				"The group has order " << go1 << endl;
 
 		fp << "\\bigskip" << endl;
@@ -1649,27 +1689,27 @@ void packing::read_conjugacy_classes_and_normalizers(
 	FREE_int(perms);
 	FREE_int(class_size);
 	FREE_int(class_order_of_element);
-	FREE_int(class_normalizer_order);
+	FREE_lint(class_normalizer_order);
 	FREE_int(class_normalizer_number_of_generators);
 	FREE_pint(normalizer_generators_perms);
 	FREE_OBJECT(PA);
 
 	if (f_v) {
-		cout << "packing::read_conjugacy_classes_and_normalizers done" << endl;
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers done" << endl;
 		}
 }
 
 
-void packing::report_fixed_objects(int *Elt,
+void packing_classify::report_fixed_objects(int *Elt,
 		char *fname_latex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, cnt;
-	int v[4];
-	file_io Fio;
+	//int i, j, cnt;
+	//int v[4];
+	//file_io Fio;
 
 	if (f_v) {
-		cout << "packing::report_fixed_objects" << endl;
+		cout << "packing_classify::report_fixed_objects" << endl;
 		}
 
 
@@ -1688,6 +1728,13 @@ void packing::report_fixed_objects(int *Elt,
 		NULL /* extra_praeamble */);
 	//latex_head_easy(fp);
 	
+
+	T->A->report_fixed_objects_in_P3(fp,
+			P3,
+			Elt,
+			verbose_level);
+
+#if 0
 	fp << "\\section{Fixed Objects}" << endl;
 
 
@@ -1780,10 +1827,13 @@ void packing::report_fixed_objects(int *Elt,
 
 	FREE_OBJECT(A2);
 	}
+#endif
 
 
 	L.foot(fp);
 	}
+	file_io Fio;
+
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
 
@@ -1793,13 +1843,13 @@ void packing::report_fixed_objects(int *Elt,
 		}
 }
 
-void packing::make_element(int idx, int verbose_level)
+void packing_classify::make_element(int idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
-		cout << "packing::make_element" << endl;
+		cout << "packing_classify::make_element" << endl;
 		}
 	int goi = 2; // was 5 before
 	int nb_perms = 3;
@@ -1834,24 +1884,24 @@ void packing::make_element(int idx, int verbose_level)
 		verbose_level);
 
 	if (f_v) {
-		cout << "packing::make_element "
+		cout << "packing_classify::make_element "
 				"created generators for a group" << endl;
 		gens->print_generators();
 		}
 	gens->group_order(go);
 	if (f_v) {
-		cout << "prime_at_a_time::make_element "
+		cout << "packing_classify::make_element "
 				"The group has order " << go << endl;
 		}
 
 	FREE_OBJECT(nice_gens);
 
 	if (f_v) {
-		cout << "packing::make_element done" << endl;
+		cout << "packing_classify::make_element done" << endl;
 		}
 }
 
-void packing::centralizer(int idx, int verbose_level)
+void packing_classify::centralizer(int idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1863,7 +1913,7 @@ void packing::centralizer(int idx, int verbose_level)
 	char prefix[1000];
 	
 	if (f_v) {
-		cout << "packing::centralizer idx=" << idx << endl;
+		cout << "packing_classify::centralizer idx=" << idx << endl;
 		}
 	sprintf(prefix, "element_%d", idx);
 	
@@ -1881,7 +1931,7 @@ void packing::centralizer(int idx, int verbose_level)
 		Poly2[i] = D.s_i(m, i);
 		}
 	if (f_v) {
-		cout << "packing::centralizer The coefficients "
+		cout << "packing_classify::centralizer The coefficients "
 				"of the polynomial are:" << endl;
 		int_vec_print(cout, Poly2, 3);
 		cout << endl;
@@ -1893,7 +1943,7 @@ void packing::centralizer(int idx, int verbose_level)
 		Poly4[i] = D.s_i(m, i);
 		}
 	if (f_v) {
-		cout << "packing::centralizer The coefficients "
+		cout << "packing_classify::centralizer The coefficients "
 				"of the polynomial are:" << endl;
 		int_vec_print(cout, Poly4, 5);
 		cout << endl;
@@ -1936,7 +1986,7 @@ void packing::centralizer(int idx, int verbose_level)
 	
 
 	if (f_v) {
-		cout << "packing::centralizer Matrix:" << endl;
+		cout << "packing_classify::centralizer Matrix:" << endl;
 		int_matrix_print(Data, 4, 4);
 		}
 
@@ -1946,32 +1996,32 @@ void packing::centralizer(int idx, int verbose_level)
 
 	o = T->A->element_order(Elt);
 	if (f_v) {
-		cout << "packing::centralizer Elt:" << endl;
+		cout << "packing_classify::centralizer Elt:" << endl;
 		T->A->element_print_quick(Elt, cout);
-		cout << "packing::centralizer on points:" << endl;
+		cout << "packing_classify::centralizer on points:" << endl;
 		T->A->element_print_as_permutation(Elt, cout);
-		cout << "packing::centralizer on lines:" << endl;
+		cout << "packing_classify::centralizer on lines:" << endl;
 		T->A2->element_print_as_permutation(Elt, cout);
 		}
 
-	cout << "packing::centralizer the element has order " << o << endl;
+	cout << "packing_classify::centralizer the element has order " << o << endl;
 	
 
 	if (idx == 3) {
 		T->A->element_power_int_in_place(Elt, 17, 0 /* verbose_level */);
 		if (f_v) {
-			cout << "packing::centralizer "
+			cout << "packing_classify::centralizer "
 					"after power(17), Elt:" << endl;
 			T->A->element_print_quick(Elt, cout);
-			cout << "packing::centralizer on points:" << endl;
+			cout << "packing_classify::centralizer on points:" << endl;
 			T->A->element_print_as_permutation(Elt, cout);
-			cout << "packing::centralizer on lines:" << endl;
+			cout << "packing_classify::centralizer on lines:" << endl;
 			T->A2->element_print_as_permutation(Elt, cout);
 			}
 		}
 	
 	if (f_v) {
-		cout << "packing::centralizer "
+		cout << "packing_classify::centralizer "
 				"before centralizer_using_MAGMA" << endl;
 		}
 
@@ -1979,17 +2029,17 @@ void packing::centralizer(int idx, int verbose_level)
 			T->A->Sims, Elt, verbose_level);
 	
 	if (f_v) {
-		cout << "packing::centralizer "
+		cout << "packing_classify::centralizer "
 				"after centralizer_using_MAGMA" << endl;
 		}
 	
 
 	if (f_v) {
-		cout << "packing::centralizer done" << endl;
+		cout << "packing_classify::centralizer done" << endl;
 		}
 }
 
-void packing::centralizer_of_element(
+void packing_classify::centralizer_of_element(
 	const char *element_description,
 	const char *label, int verbose_level)
 {
@@ -1998,7 +2048,7 @@ void packing::centralizer_of_element(
 	char prefix[1000];
 	
 	if (f_v) {
-		cout << "packing::centralizer_of_element label=" << label
+		cout << "packing_classify::centralizer_of_element label=" << label
 				<< " element_description="
 				<< element_description << endl;
 		}
@@ -2017,7 +2067,7 @@ void packing::centralizer_of_element(
 		exit(1);
 		}
 	if (f_v) {
-		cout << "packing::centralizer_of_element Matrix:" << endl;
+		cout << "packing_classify::centralizer_of_element Matrix:" << endl;
 		int_matrix_print(data, 4, 4);
 		}
 
@@ -2027,21 +2077,21 @@ void packing::centralizer_of_element(
 
 	o = T->A->element_order(Elt);
 	if (f_v) {
-		cout << "packing::centralizer_of_element Elt:" << endl;
+		cout << "packing_classify::centralizer_of_element Elt:" << endl;
 		T->A->element_print_quick(Elt, cout);
-		cout << "packing::centralizer_of_element on points:" << endl;
+		cout << "packing_classify::centralizer_of_element on points:" << endl;
 		T->A->element_print_as_permutation(Elt, cout);
-		cout << "packing::centralizer_of_element on lines:" << endl;
+		cout << "packing_classify::centralizer_of_element on lines:" << endl;
 		T->A2->element_print_as_permutation(Elt, cout);
 		}
 
-	cout << "packing::centralizer_of_element "
+	cout << "packing_classify::centralizer_of_element "
 			"the element has order " << o << endl;
 	
 
 	
 	if (f_v) {
-		cout << "packing::centralizer_of_element "
+		cout << "packing_classify::centralizer_of_element "
 				"before centralizer_using_MAGMA" << endl;
 		}
 
@@ -2049,7 +2099,7 @@ void packing::centralizer_of_element(
 			T->A->Sims, Elt, verbose_level);
 	
 	if (f_v) {
-		cout << "packing::centralizer_of_element "
+		cout << "packing_classify::centralizer_of_element "
 				"after centralizer_using_MAGMA" << endl;
 		}
 	
@@ -2057,11 +2107,11 @@ void packing::centralizer_of_element(
 	FREE_int(data);
 	
 	if (f_v) {
-		cout << "packing::centralizer_of_element done" << endl;
+		cout << "packing_classify::centralizer_of_element done" << endl;
 		}
 }
 
-int packing::test_if_orbit_is_partial_packing(
+int packing_classify::test_if_orbit_is_partial_packing(
 	schreier *Orbits, int orbit_idx,
 	int *orbit1, int verbose_level)
 {
@@ -2071,7 +2121,7 @@ int packing::test_if_orbit_is_partial_packing(
 	int i, j, ret;
 
 	if (f_v) {
-		cout << "packing::test_if_orbit_is_partial_packing "
+		cout << "packing_classify::test_if_orbit_is_partial_packing "
 				"orbit_idx = " << orbit_idx << endl;
 		}
 	Orbits->get_orbit(orbit_idx,
@@ -2100,7 +2150,7 @@ int packing::test_if_orbit_is_partial_packing(
 	return ret;
 }
 
-int packing::test_if_pair_of_orbits_are_adjacent(
+int packing_classify::test_if_pair_of_orbits_are_adjacent(
 	schreier *Orbits, int a, int b,
 	int *orbit1, int *orbit2,
 	int verbose_level)
@@ -2113,7 +2163,7 @@ int packing::test_if_pair_of_orbits_are_adjacent(
 	int i, j;
 
 	if (f_v) {
-		cout << "packing::test_if_pair_of_orbits_"
+		cout << "packing_classify::test_if_pair_of_orbits_"
 				"are_adjacent a=" << a << " b=" << b << endl;
 		}
 	if (a == b) {
@@ -2142,7 +2192,7 @@ int packing::test_if_pair_of_orbits_are_adjacent(
 		}
 }
 
-int packing::test_if_pair_of_sets_are_adjacent(
+int packing_classify::test_if_pair_of_sets_are_adjacent(
 		int *set1, int sz1,
 		int *set2, int sz2,
 		int verbose_level)
@@ -2152,7 +2202,7 @@ int packing::test_if_pair_of_sets_are_adjacent(
 	int i, j;
 
 	if (f_v) {
-		cout << "packing::test_if_"
+		cout << "packing_classify::test_if_"
 				"pair_of_sets_are_adjacent" << endl;
 		}
 	for (i = 0; i < sz1; i++) {
@@ -2176,7 +2226,7 @@ int packing::test_if_pair_of_sets_are_adjacent(
 		}
 }
 
-int packing::test_if_spreads_are_disjoint_based_on_table(int a, int b)
+int packing_classify::test_if_spreads_are_disjoint_based_on_table(int a, int b)
 {
 		return Spread_tables->test_if_spreads_are_disjoint(a, b);
 }
@@ -2189,7 +2239,7 @@ int packing::test_if_spreads_are_disjoint_based_on_table(int a, int b)
 void callback_packing_compute_klein_invariants(
 		isomorph *Iso, void *data, int verbose_level)
 {
-	packing *P = (packing *) data;
+	packing_classify *P = (packing_classify *) data;
 	
 	P->compute_klein_invariants(Iso, verbose_level);
 }
@@ -2198,7 +2248,7 @@ void callback_packing_compute_klein_invariants(
 void callback_packing_report(isomorph *Iso,
 		void *data, int verbose_level)
 {
-	packing *P = (packing *) data;
+	packing_classify *P = (packing_classify *) data;
 	
 	P->report(Iso, verbose_level);
 }
@@ -2213,7 +2263,7 @@ void packing_lifting_prepare_function_new(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	packing *P = (packing *) EC->user_data;
+	packing_classify *P = (packing_classify *) EC->user_data;
 
 	if (f_v) {
 		cout << "packing_lifting_prepare_function_new "
@@ -2250,7 +2300,7 @@ void packing_early_test_function(int *S, int len,
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level)
 {
-	packing *P = (packing *) data;
+	packing_classify *P = (packing_classify *) data;
 	int f_v = (verbose_level >= 1);
 	int i, k, a, b;
 	combinatorics_domain Combi;
@@ -2331,7 +2381,7 @@ int count_and_record(int *Inc,
 
 int packing_spread_compare_func(void *data, int i, int j, void *extra_data)
 {
-	packing *P = (packing *) extra_data;
+	packing_classify *P = (packing_classify *) extra_data;
 	int **Sets = (int **) data;
 	int ret;
 
@@ -2341,7 +2391,7 @@ int packing_spread_compare_func(void *data, int i, int j, void *extra_data)
 
 void packing_swap_func(void *data, int i, int j, void *extra_data)
 {
-	packing *P = (packing *) extra_data;
+	packing_classify *P = (packing_classify *) extra_data;
 	int *d = P->tmp_isomorphism_type_of_spread;
 	int **Sets = (int **) data;
 	int *p;

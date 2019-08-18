@@ -1,4 +1,4 @@
-// finite_field.C
+// finite_field.cpp
 // 
 
 #include "orbiter.h"

@@ -1,4 +1,4 @@
-// subsets.C
+// subsets.cpp
 // 
 // Anton Betten
 // Oct 9, 2015

@@ -1,4 +1,4 @@
-// scene.C
+// scene.cpp
 //
 // Anton Betten
 //
@@ -990,7 +990,7 @@ void scene::draw_lines_cij_with_selection(int *selection, int nb_select,
 	ost << endl;
 	ost << "	union{ // cij lines" << endl;
 	ost << endl;
-	ost << "	        #declare r=0.04 ; " << endl;
+	ost << "	        #declare r=" << line_radius << "; " << endl;
 	//ost << "                #declare b=4;" << endl;
 	ost << endl;
 	for (i = 0; i < nb_select; i++) {
@@ -1033,7 +1033,7 @@ void scene::draw_lines_ai_with_selection(int *selection, int nb_select,
 	ost << endl;
 	ost << "	union{ // ai lines" << endl;
 	ost << endl;
-	ost << "	        #declare r=0.04 ; " << endl;
+	ost << "	        #declare r=" << line_radius << "; " << endl;
 	//ost << "                #declare b=4;" << endl;
 	ost << endl;
 	for (i = 0; i < nb_select; i++) {
@@ -1076,7 +1076,7 @@ void scene::draw_lines_bj_with_selection(int *selection, int nb_select,
 	ost << endl;
 	ost << "	union{ // bj lines" << endl;
 	ost << endl;
-	ost << "	        #declare r=0.04 ; " << endl;
+	ost << "	        #declare r=" << line_radius << "; " << endl;
 	//ost << "                #declare b=4;" << endl;
 	ost << endl;
 	for (i = 0; i < nb_select; i++) {
@@ -1096,7 +1096,7 @@ void scene::draw_lines_bj_with_selection(int *selection, int nb_select,
 				ost << ", ";
 				}
 			}	
-		ost << ">, sr } // line " << j << endl;
+		ost << ">, r } // line " << j << endl;
 		}
 	ost << endl;
 	ost << "		pigment{Blue}" << endl;
@@ -1858,11 +1858,11 @@ int scene::line_extended(
 	v[1] = y2 - x2;
 	v[2] = y3 - x3;
 	// solve 
-	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = 10^2
+	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = r^2
 	// which gives
 	// (v[0]^2+v[1]^2+v[2]^2) * \lambda^2 +
 	// (2*x1*v[0] + 2*x2*v[1] + 2*x3*v[2]) * \lambda +
-	// x1^2 + x2^2 + x3^2 - 10^2 = 0
+	// x1^2 + x2^2 + x3^2 - r^2 = 0
 	a = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
 	b = 2 * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
 	c = x1 * x1 + x2 * x2 + x3 * x3 - r * r;
@@ -2829,16 +2829,16 @@ void scene::create_Hilbert_model(int verbose_level)
 		1,0,0,0,-2,-1, // 11 b6
 		4./5., 3./5., 0, 0., 1., 1., // 12, 0, c12
 		3./5., 0., 4./5., 1, 1., 0., // 13, 1, c13
-		0.,0.,1., 1.,0.,0., // 14, 2 c14
+		0.,0.,1., 1.,0.,0., // 14, 2 c14 at infinity
 		-4./5., 3./5., 0., 0., -1., 1., // 15, 3 c15
 		-3./5., 0., -4./5., -1., 1., 0., // 16, 4 c16
 		-3./5., 4./5., 0., 1., 0., 1., // 17, 5 c23
 		-4./5., -3./5., 0., 0., -1., 1., // 18, 6 c24
-		0., 1., 0., 1., 0., 0., // 19, 7 c25
+		0., 1., 0., 1., 0., 0., // 19, 7 c25 at infinity
 		3./5., -4./5., 0., -1., 0., 1., // 20, 8 c26
 		3./5., 0., -4./5., -1., 1., 0., // 21, 9 c34
 		-3./5., -4./5., 0., -1., 0., 1., // 22, 10 c35
-		0., 0., 1., 0., 1., 0., // 23, 11 c36
+		0., 0., 1., 0., 1., 0., // 23, 11 c36 at infinity
 		4./5., -3./5., 0., 0., 1., 1., // 24, 12 c45
 		-3./5., 0., 4./5., 1., 1., 0., // 25, 13 c46
 		3./5., 4./5., 0., 1., 0., 1.,  // 26, 14 c56

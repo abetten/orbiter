@@ -15,7 +15,7 @@ namespace foundations {
 
 
 // #############################################################################
-// file_io.C:
+// file_io.cpp
 // #############################################################################
 
 //! a collection of functions related to file io
@@ -150,11 +150,14 @@ public:
 	void fread_uchars(FILE *fp, uchar *p, int len);
 	void read_numbers_from_file(const char *fname,
 		int *&the_set, int &set_size, int verbose_level);
+	void read_ascii_set_of_sets_constant_size(
+			const char *fname_ascii,
+			int *&Sets, int &nb_sets, int &set_size, int verbose_level);
 };
 
 
 // #############################################################################
-// file_output.C:
+// file_output.cpp
 // #############################################################################
 
 
@@ -372,7 +375,7 @@ public:
 
 
 // #############################################################################
-// memory_object.C:
+// memory_object.cpp
 // #############################################################################
 
 //! for serialization of complex data types
@@ -415,7 +418,7 @@ public:
 };
 
 // #############################################################################
-// orbiter_data_file.C:
+// orbiter_data_file.cpp
 // #############################################################################
 
 
@@ -443,7 +446,7 @@ public:
 
 
 // #############################################################################
-// util.C:
+// util.cpp
 // #############################################################################
 
 

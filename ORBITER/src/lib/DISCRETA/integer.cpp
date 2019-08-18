@@ -1,4 +1,4 @@
-// integer.C
+// integer.cpp
 //
 // Anton Betten
 // 18.12.1998
@@ -189,6 +189,9 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 			y.m_i_i(res);
 			}
 
+		else if (is_Orbiter_finite_field_domain(dom)) {
+			y.m_i_i(dom->get_F()->mult(s_i(), x.s_i_i()));
+		}
 		else {
 
 
@@ -236,9 +239,14 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 
 int integer::invert_to(discreta_base &x)
 {
+	int verbose_level = 1;
+	int f_v = (verbose_level >= 1);
 	int i;
 	domain *dom;
 	
+	if (f_v) {
+		cout << "integer::invert_to" << endl;
+	}
 	if (s_kind() != INTEGER) {
 		cout << "integer::invert_to() this not an integer" << endl;
 		exit(1);
@@ -247,10 +255,30 @@ int integer::invert_to(discreta_base &x)
 		return FALSE;
 	i = s_i();
 	if (is_GFp_domain(dom)) {
-		x.m_i_i( invert_mod_integer(s_i(), dom->order_int()) );
+		if (f_v) {
+			cout << "integer::invert_to is_GFp_domain" << endl;
+		}
+		int a, p, av;
+
+		a = s_i();
+		if (f_v) {
+			cout << "integer::invert_to a=" << a << endl;
+		}
+		p = dom->order_int();
+		if (f_v) {
+			cout << "integer::invert_to p=" << p << endl;
+		}
+		av = invert_mod_integer(a, p);
+		if (f_v) {
+			cout << "integer::invert_to av=" << av << endl;
+		}
+		x.m_i_i( av );
 		return TRUE;
 		}
 	else if (is_GFq_domain(dom)) {
+		if (f_v) {
+			cout << "integer::invert_to is_GFq_domain" << endl;
+		}
 		unipoly a;
 		domain *sub_domain;
 		int p, res;
@@ -274,6 +302,16 @@ int integer::invert_to(discreta_base &x)
 #endif
 		res = a.polynomial_numeric(p);
 		x.m_i_i(res);
+		return TRUE;
+		}
+	else if (is_Orbiter_finite_field_domain(dom)) {
+		if (f_v) {
+			cout << "integer::invert_to Orbiter_finite_field domain" << endl;
+		}
+		int a, av;
+		a = s_i();
+		av = dom->get_F()->inverse(a);
+		x.m_i_i(av);
 		return TRUE;
 		}
 	if (i == 1 || i == -1) {
@@ -309,6 +347,9 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 			res = c.polynomial_numeric(p);
 			y.m_i_i(res);
 			}
+		else if (is_Orbiter_finite_field_domain(dom)) {
+			y.m_i_i(dom->get_F()->add(s_i(), x.s_i_i()));
+		}
 		else {
 			int l1, l2, l3;
 	
@@ -376,6 +417,10 @@ void integer::negate_to(discreta_base &x)
 		x.m_i_i(res);
 		return;
 		}
+	else if (is_Orbiter_finite_field_domain(dom)) {
+		x.m_i_i(dom->get_F()->negate(s_i()));
+		return;
+	}
 	i = s_i();
 	if (is_GFp_domain(dom)) {
 		x.m_i_i( remainder_mod(-i, dom->order_int()));
@@ -416,6 +461,9 @@ void integer::zero()
 	else if (is_GFq_domain(dom)) {
 		m_i( 0 );
 		}
+	else if (is_Orbiter_finite_field_domain(dom)) {
+		m_i( 0 );
+	}
 	else {
 		m_i(0);
 		}
@@ -431,6 +479,9 @@ void integer::one()
 	else if (is_GFq_domain(dom)) {
 		m_i( 1 );
 		}
+	else if (is_Orbiter_finite_field_domain(dom)) {
+		m_i( 1 );
+	}
 	else {
 		m_i(1);
 		}
@@ -456,6 +507,10 @@ void integer::homo_z(int z)
 		// cout << "integer::homo_z() not allowed for GF(q) domain" << endl;
 		// exit(1);
 		}
+	else if (is_Orbiter_finite_field_domain(dom)) {
+		int p = finite_field_domain_characteristic(dom);
+		m_i( remainder_mod(z, p));
+	}
 	else {
 		m_i(z);
 		}
@@ -472,6 +527,10 @@ void integer::inc()
 		cout << "integer::inc() not allowed for GF(q) domain" << endl;
 		exit(1);
 		}
+	else if (is_Orbiter_finite_field_domain(dom)) {
+		cout << "integer::inc() not allowed for finite_field domain" << endl;
+		exit(1);
+		}
 	else {
 		m_i( s_i() + 1);
 		}
@@ -486,6 +545,10 @@ void integer::dec()
 		}
 	else if (is_GFq_domain(dom)) {
 		cout << "integer::dec() not allowed for GF(q) domain" << endl;
+		exit(1);
+		}
+	else if (is_Orbiter_finite_field_domain(dom)) {
+		cout << "integer::dec() not allowed for finite_field domain" << endl;
 		exit(1);
 		}
 	else {

@@ -1,4 +1,4 @@
-// graph_layer.C
+// graph_layer.cpp
 // 
 // Anton Betten
 // December 30, 2013

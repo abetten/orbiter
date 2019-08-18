@@ -1,4 +1,4 @@
-// maxfit.C
+// maxfit.cpp
 // Anton Betten
 //
 // started:  Jan 24 2008

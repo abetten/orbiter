@@ -53,6 +53,8 @@ void arc_lifting_with_two_lines::create_surface(
 // line2 = b2
 // and Arc6 is the six-arc arising as image of
 // the half double-six a1, a2, a3, a4, a5, a6
+// The arc must be given as points in PG(3,q), not in PG(2,q).
+// The partition is missing.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -268,8 +270,10 @@ void arc_lifting_with_two_lines::create_surface(
 		pt1 = Surf->P->create_point_on_line(
 				line1, i1 /*pt_rk*/, 0 /* verbose_level*/);
 		if (!Surf->P->is_incident(pt1, transversal_01)) {
-			cout << "found point pt1 which is not on "
-					"transversal_01, i1=" << i1 << endl;
+			if (f_vv) {
+				cout << "found point pt1 which is not on "
+						"transversal_01, i1=" << i1 << endl;
+			}
 			break;
 		}
 	}
@@ -305,16 +309,20 @@ void arc_lifting_with_two_lines::create_surface(
 
 	for (j1 = 0; j1 <= q; j1++) {
 		pt3 = Surf->P->create_point_on_line(
-				line3, j1 /*pt_rk*/, verbose_level);
+				line3, j1 /*pt_rk*/, 0 /* verbose_level */);
 		val = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt3);
 		//cout << "j1=" << j1 << " pt3=" << pt3 << " val=" << val << endl;
 		if (pt3 == P[1]) {
-			cout << "pt3 == P[1], skipping" << endl;
+			if (f_vv) {
+				cout << "pt3 == P[1], skipping" << endl;
+			}
 			continue;
 		}
 #if 1
 		if (pt3 == pt1) {
-			cout << "pt3 == pt1, skipping" << endl;
+			if (f_vv) {
+				cout << "pt3 == pt1, skipping" << endl;
+			}
 			continue;
 		}
 #endif
@@ -323,8 +331,10 @@ void arc_lifting_with_two_lines::create_surface(
 		}
 	}
 	if (j1 == q + 1) {
-		cout << "arc_lifting_with_two_lines::create_surface "
-				"j1 == q + 1, picking pt1" << endl;
+		if (f_vv) {
+			cout << "arc_lifting_with_two_lines::create_surface "
+					"j1 == q + 1, picking pt1" << endl;
+		}
 		pt3 = pt1;
 	}
 
@@ -346,8 +356,10 @@ void arc_lifting_with_two_lines::create_surface(
 		}
 	}
 	if (j2 == q + 1) {
-		cout << "arc_lifting_with_two_lines::create_surface "
-				"j2 == q + 1, picking pt2" << endl;
+		if (f_vv) {
+			cout << "arc_lifting_with_two_lines::create_surface "
+					"j2 == q + 1, picking pt2" << endl;
+		}
 		pt4 = pt2;
 	}
 
@@ -412,7 +424,7 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 	Surf->create_double_six_from_five_lines_with_a_common_transversal(
 			five_pts, double_six_special,
-			verbose_level);
+			verbose_level - 10);
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"after Surf->create_double_six_from_five_"
@@ -451,7 +463,7 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 	int_vec_copy(double_six, lines27, 12);
 	Surf->create_the_fifteen_other_lines(double_six,
-			lines27 + 12, verbose_level);
+			lines27 + 12, verbose_level - 10);
 
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "
@@ -459,5 +471,5 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 }
 
-}
-}
+}}
+

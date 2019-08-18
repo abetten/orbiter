@@ -1,4 +1,4 @@
-// k_arc_lifting.C
+// k_arc_lifting.cpp
 //
 // Anton Betten, Awss Al-ogaidi
 //
@@ -77,6 +77,8 @@ int main(int argc, char **argv)
 	const char *poly = NULL;
 	int f_arc = FALSE;
 	const char *arc_text = NULL;
+	int f_label = FALSE;
+	const char *label_text = NULL;
 	int f_fining_input = FALSE;
 	int f_cook_labels = FALSE;
 	int f_dualize = FALSE;
@@ -129,6 +131,11 @@ int main(int argc, char **argv)
 			f_arc = TRUE;
 			arc_text = argv[++i];
 			cout << "-arc " << arc_text << endl;
+			}
+		else if (strcmp(argv[i], "-label") == 0) {
+			f_label = TRUE;
+			label_text = argv[++i];
+			cout << "-label " << label_text << endl;
 			}
 		else if (strcmp(argv[i], "-classification") == 0) {
 			f_classification = TRUE;
@@ -372,9 +379,18 @@ int main(int argc, char **argv)
 		arc = the_arc;
 		arc_sz = the_arc_sz;
 		
-		const char *fname = "solutions.txt";
+		char fname_solutions[1000];
+
+		if (f_label) {
+			sprintf(fname_solutions, "%s_solutions.txt", label_text);
+		}
+		else {
+			sprintf(fname_solutions, "solutions.txt");
+
+		}
+		//const char *fname = "solutions.txt";
 		{
-		ofstream fp(fname);
+		ofstream fp(fname_solutions);
 		do_arc_lifting(
 			fp,
 			P, k, the_arc, the_arc_sz, sz,
@@ -383,8 +399,8 @@ int main(int argc, char **argv)
 			nb_backtrack_nodes,
 			verbose_level);
 		}
-		cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
+		cout << "written file " << fname_solutions << " of size " << Fio.file_size(fname_solutions) << endl;
+	} // if f_arc
 	else if (f_classification) {
 		cout << "processing classification" << endl;
 		if (f_loop) {
@@ -435,7 +451,7 @@ int main(int argc, char **argv)
 						<< " nb_sol_overall=" << nb_sol_overall << endl;
 				}
 			cout << "nb_sol_overall = " << nb_sol_overall << endl;
-			}
+		} // if f_loop
 		else {
 			int nb_sol_total = 0;
 			
@@ -808,7 +824,7 @@ void do_arc_lifting(
 		arc, arc_sz, canonical_pt, canonical_set, 
 		FALSE, NULL, 
 		verbose_level - 3);
-		// in ACTION/action_global.C
+		// in ACTION/action_global.cpp
 	if (f_vv) {
 		cout << "The stabilizer of the arc has been computed" << endl;
 		}
@@ -1270,7 +1286,7 @@ void user_callback_solution_found(
 		big_arc, big_arc_size, canonical_pt, canonical_set2, 
 		FALSE, NULL, 
 		0 /*verbose_level*/);
-		// in ACTION/action_global.C
+		// in ACTION/action_global.cpp
 	cout << "The stabilizer of the arc has been computed" << endl;
 	Stab->group_order(go);
 	cout << "It is a group of order " << go << endl;
@@ -1354,7 +1370,7 @@ void search(ostream &ost, int level)
 			big_arc, big_arc_size, canonical_pt, canonical_set, 
 			FALSE, NULL, 
 			0 /*verbose_level - 3 */);
-			// in ACTION/action_global.C
+			// in ACTION/action_global.cpp
 		Stab->group_order(go);
 			cout << " : go=" << go;
 

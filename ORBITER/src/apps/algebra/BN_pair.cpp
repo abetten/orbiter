@@ -1,4 +1,4 @@
-// BN_pair.C
+// BN_pair.cpp
 // 
 // Anton Betten
 // July 20, 2010

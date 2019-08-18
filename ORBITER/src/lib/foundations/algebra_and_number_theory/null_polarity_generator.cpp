@@ -1,4 +1,4 @@
-// null_polarity_generator.C
+// null_polarity_generator.cpp
 //
 // Anton Betten
 // December 11, 2015

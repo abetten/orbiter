@@ -1,4 +1,4 @@
-// codes.C
+// codes.cpp
 //
 // Anton Betten
 // December 30, 2003

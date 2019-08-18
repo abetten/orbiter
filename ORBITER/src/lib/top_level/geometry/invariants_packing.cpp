@@ -1,4 +1,4 @@
-// invariants_packing.C
+// invariants_packing.cpp
 // 
 // Anton Betten
 // Feb 21, 2013
@@ -57,7 +57,7 @@ void invariants_packing::freeself()
 }
 
 void invariants_packing::init(isomorph *Iso,
-		packing *P, int verbose_level)
+		packing_classify *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

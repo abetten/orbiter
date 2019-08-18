@@ -97,7 +97,9 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 	Arc_gen->read_arguments(argc, argv);
 
 
+
 	Arc_gen->init(F,
+			A, A->Strong_gens,
 			starter_directory_name,
 			base_fname,
 			9 /* starter_size */,
@@ -653,7 +655,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 			cout << "classify_double_sixes::upstep "
 					"Aut_gens tl = ";
 			int_vec_print(cout,
-					Aut_gens->tl, Aut_gens->A->Stabilizer_chain->base_len);
+					Aut_gens->tl, Aut_gens->A->base_len());
 			cout << endl;
 			}
 

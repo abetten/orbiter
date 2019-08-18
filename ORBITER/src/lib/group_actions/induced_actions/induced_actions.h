@@ -12,7 +12,7 @@ namespace group_actions {
 
 
 // #############################################################################
-// action_by_conjugation.C:
+// action_by_conjugation.cpp
 // #############################################################################
 
 
@@ -41,7 +41,7 @@ public:
 };
 
 // #############################################################################
-// action_by_representation.C:
+// action_by_representation.cpp
 // #############################################################################
 
 
@@ -76,7 +76,7 @@ public:
 };
 
 // #############################################################################
-// action_by_restriction.C:
+// action_by_restriction.cpp
 // #############################################################################
 
 
@@ -107,7 +107,7 @@ public:
 };
 
 // #############################################################################
-// action_by_right_multiplication.C:
+// action_by_right_multiplication.cpp
 // #############################################################################
 
 //! induced action on a the set of elements of a group by right multiplication
@@ -133,7 +133,7 @@ public:
 };
 
 // #############################################################################
-// action_by_subfield_structure.C:
+// action_by_subfield_structure.cpp
 // #############################################################################
 
 //! induced action on the vector space arising from a field over a subfield
@@ -180,7 +180,7 @@ public:
 };
 
 // #############################################################################
-// action_on_andre.C:
+// action_on_andre.cpp
 // #############################################################################
 
 //! induced action on the elements of a projective plane constructed via Andre / Bruck / Bose
@@ -215,7 +215,7 @@ public:
 };
 
 // #############################################################################
-// action_on_bricks.C:
+// action_on_bricks.cpp
 // #############################################################################
 
 //! related to a problem of Neil Sloane
@@ -244,7 +244,7 @@ public:
 };
 
 // #############################################################################
-// action_on_cosets.C:
+// action_on_cosets.cpp
 // #############################################################################
 
 //! induced action on the cosets of a subspace by right multiplication
@@ -308,7 +308,7 @@ public:
 };
 
 // #############################################################################
-// action_on_determinant.C:
+// action_on_determinant.cpp
 // #############################################################################
 
 //! induced action on the determinant of a group of matrices (used to compute the subgroup PSL)
@@ -334,7 +334,7 @@ public:
 };
 
 // #############################################################################
-// action_on_factor_space.C:
+// action_on_factor_space.cpp
 // #############################################################################
 
 //! induced action on the factor space of a vector space modulo a subspace
@@ -468,7 +468,7 @@ public:
 };
 
 // #############################################################################
-// action_on_flags.C:
+// action_on_flags.cpp
 // #############################################################################
 
 
@@ -523,7 +523,7 @@ public:
 
 
 // #############################################################################
-// action_on_grassmannian.C:
+// action_on_grassmannian.cpp
 // #############################################################################
 
 //! induced action on the grassmannian (subspaces of a fixed dimension of a vectors space)
@@ -572,7 +572,7 @@ public:
 };
 
 // #############################################################################
-// action_on_homogeneous_polynomials.C:
+// action_on_homogeneous_polynomials.cpp
 // #############################################################################
 
 
@@ -617,7 +617,7 @@ public:
 };
 
 // #############################################################################
-// action_on_k_subsets.C:
+// action_on_k_subsets.cpp
 // #############################################################################
 
 //! induced action on k-subsets of a set of size n
@@ -640,7 +640,7 @@ public:
 };
 
 // #############################################################################
-// action_on_orbits.C:
+// action_on_orbits.cpp
 // #############################################################################
 
 //! induced action on the set of orbits (usually by the normalizer)
@@ -664,7 +664,7 @@ public:
 };
 
 // #############################################################################
-// action_on_orthogonal.C:
+// action_on_orthogonal.cpp
 // #############################################################################
 
 
@@ -731,7 +731,7 @@ public:
 };
 
 // #############################################################################
-// action_on_sets.C:
+// action_on_sets.cpp
 // #############################################################################
 
 
@@ -765,7 +765,7 @@ int action_on_sets_compare(void *a, void *b, void *data);
 int action_on_sets_compare_inverted(void *a, void *b, void *data);
 
 // #############################################################################
-// action_on_sign.C:
+// action_on_sign.cpp
 // #############################################################################
 
 //! induced action on the sign function of a permutation group (to compute the even subgroup)
@@ -787,7 +787,7 @@ public:
 };
 
 // #############################################################################
-// action_on_spread_set.C:
+// action_on_spread_set.cpp
 // #############################################################################
 
 
@@ -833,7 +833,7 @@ public:
 };
 
 // #############################################################################
-// action_on_subgroups.C:
+// action_on_subgroups.cpp
 // #############################################################################
 
 //! induced action on subgroups of a group
@@ -868,7 +868,7 @@ int action_on_subgroups_compare(void *a, void *b, void *data);
 int action_on_subgroups_compare_inverted(void *a, void *b, void *data);
 
 // #############################################################################
-// action_on_wedge_product.C:
+// action_on_wedge_product.cpp
 // #############################################################################
 
 
@@ -913,7 +913,7 @@ public:
 
 
 // #############################################################################
-// product_action.C:
+// product_action.cpp
 // #############################################################################
 
 //! induced product action of two group actions

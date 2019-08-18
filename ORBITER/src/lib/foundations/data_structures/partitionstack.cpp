@@ -1,8 +1,8 @@
-// partitionstack.C
+// partitionstack.cpp
 //
 // Anton Betten
 //
-// started in D2/partition_stack.C: November 22, 2000
+// started in D2/partition_stack.cpp: November 22, 2000
 // included into GALOIS: July 3, 2007
 // added TDO for orthogonal: July 10, 2007
 

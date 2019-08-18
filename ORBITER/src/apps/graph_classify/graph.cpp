@@ -1,4 +1,4 @@
-// graph.C
+// graph.cpp
 // 
 // Anton Betten
 // Nov 15 2007

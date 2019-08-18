@@ -1,4 +1,4 @@
-// action_by_representation.C
+// action_by_representation.cpp
 //
 // Anton Betten
 // Mar18, 2010

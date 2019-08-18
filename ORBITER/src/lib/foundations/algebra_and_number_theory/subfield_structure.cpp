@@ -1,4 +1,4 @@
-// subfield_structure.C
+// subfield_structure.cpp
 //
 // Anton Betten
 //

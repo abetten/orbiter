@@ -37,6 +37,7 @@ MODULES= \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/brick_domain.o \
 		foundations/combinatorics/combinatorics_domain.o \
+		foundations/data_structures/bitmatrix.o \
 		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/fancy_set.o \
@@ -57,6 +58,7 @@ MODULES= \
 		foundations/geometry/blt_set_domain.o \
 		foundations/geometry/blt_set_invariants.o \
 		foundations/geometry/buekenhout_metz.o \
+		foundations/geometry/clebsch_map.o \
 		foundations/geometry/cubic_curve.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \
@@ -150,6 +152,7 @@ MODULES= \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
+		group_actions/data_structures/orbit_type_repository.o \
 		group_actions/data_structures/projective_space_job_description.o \
 		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
@@ -163,6 +166,7 @@ MODULES= \
 		group_actions/groups/linear_group.o \
 		group_actions/groups/linear_group_description.o \
 		group_actions/groups/matrix_group.o \
+		group_actions/groups/orbits_on_something.o \
 		group_actions/groups/perm_group.o \
 		group_actions/groups/schreier.o \
 		group_actions/groups/schreier_io.o \
@@ -283,20 +287,22 @@ MODULES= \
 		top_level/geometry/incidence_structure.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
+		top_level/geometry/packing_classify.o \
+		top_level/geometry/packing_classify2.o \
 		top_level/geometry/packing_invariants.o \
-		top_level/geometry/packing.o \
-		top_level/geometry/packing2.o \
+		top_level/geometry/packing_long_orbits.o \
+		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/projective_space.o \
 		top_level/geometry/recoordinatize.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
 		top_level/geometry/six_arcs_not_on_a_conic.o \
+		top_level/geometry/spread_classify.o \
+		top_level/geometry/spread_classify2.o \
 		top_level/geometry/spread_create_description.o \
 		top_level/geometry/spread_create.o \
 		top_level/geometry/spread_lifting.o \
-		top_level/geometry/spread.o \
-		top_level/geometry/spread2.o \
 		top_level/geometry/surface_classify_wedge.o \
 		top_level/geometry/surface_create_description.o \
 		top_level/geometry/surface_create.o \

@@ -1,4 +1,4 @@
-// int_vector.C
+// int_vector.cpp
 //
 // Anton Betten
 //

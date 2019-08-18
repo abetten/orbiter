@@ -1,4 +1,4 @@
-// points.C
+// points.cpp
 // 
 // Anton Betten
 // 2/18/2011
@@ -153,7 +153,7 @@ void orthogonal_points(int epsilon, int n, int q,
 		c123[0] = 1;
 	else if (epsilon == -1) {
 		F->choose_anisotropic_form(c123[0], c123[1], c123[2], verbose_level - 2);
-		//cout << "incma.C: epsilon == -1, need irreducible polynomial" << endl;
+		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
 		}
 	F->Gram_matrix(epsilon, n, c123[0], c123[1], c123[2], G);

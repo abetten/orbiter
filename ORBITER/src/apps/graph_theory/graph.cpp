@@ -1,4 +1,4 @@
-// graph.C
+// graph.cpp
 // 
 // Anton Betten
 // April 16, 2018

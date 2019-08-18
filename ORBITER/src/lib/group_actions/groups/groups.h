@@ -13,7 +13,7 @@ namespace group_actions {
 
 
 // #############################################################################
-// direct_product.C:
+// direct_product.cpp
 // #############################################################################
 
 //! the direct product of two matrix groups in product action
@@ -139,7 +139,7 @@ public:
 
 
 // #############################################################################
-// linear_group.C:
+// linear_group.cpp
 // #############################################################################
 
 //! creates a linear group from command line arguments using linear_group_description
@@ -211,7 +211,7 @@ public:
 
 
 // #############################################################################
-// linear_group_description.C:
+// linear_group_description.cpp
 // #############################################################################
 
 //! description of a linear group from the command line
@@ -270,7 +270,7 @@ public:
 
 
 // #############################################################################
-// matrix_group.C:
+// matrix_group.cpp
 // #############################################################################
 
 //! a matrix group over a finite field in projective, linear or affine action
@@ -436,9 +436,81 @@ public:
 			int &size, int &nb_gens, int verbose_level);
 };
 
+// #############################################################################
+// orbits_on_something.cpp
+// #############################################################################
+
+//! compute orbits of a group in a given action; allows file io
+
+class orbits_on_something {
+
+public:
+
+	action *A;
+	strong_generators *SG;
+	schreier *Sch;
+
+	int f_load_save;
+	const char *prefix;
+	char fname[1000];
+
+	classify *Classify_orbits_by_length;
+	set_of_sets *Orbits_classified;
+
+	int *Orbits_classified_length; // [Orbits_classified_nb_types]
+	int Orbits_classified_nb_types;
+
+	orbits_on_something();
+	~orbits_on_something();
+	void null();
+	void freeself();
+	void init(
+			action *A,
+			strong_generators *SG,
+			int f_load_save,
+			const char *prefix,
+			int verbose_level);
+	void orbit_type_of_set(
+			int *set, int set_sz, int go,
+			int *orbit_type,
+			int verbose_level);
+	// orbit_type[(go + 1) * go] must be allocated beforehand
+	void report_type(std::ostream &ost, int *orbit_type, int goi);
+	void compute_compact_type(int *orbit_type, int goi,
+			int *&compact_type, int *&row_labels, int *&col_labels, int &m, int &n);
+	void report_orbit_lengths(std::ostream &ost);
+	void classify_orbits_by_length(int verbose_level);
+	void report_classified_orbit_lengths(std::ostream &ost);
+	int get_orbit_type_index(int orbit_length);
+	int get_orbit_type_index_if_present(int orbit_length);
+	void create_graph_on_orbits_of_a_certain_length(
+		colored_graph *&CG,
+		const char *fname,
+		int orbit_length,
+		int &type_idx,
+		int f_has_user_data, int *user_data, int user_data_size,
+		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+		void *test_function_data,
+		int verbose_level);
+	void create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
+		colored_graph *&CG,
+		const char *fname,
+		int orbit_length,
+		int &type_idx,
+		int f_has_user_data, int *user_data, int user_data_size,
+		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+		void *test_function_data,
+		set_of_sets *my_orbits_classified,
+		int verbose_level);
+	void compute_orbit_invariant_after_classification(
+			set_of_sets *&Orbit_invariant,
+			int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+			void *evaluate_data, int verbose_level);
+};
+
 
 // #############################################################################
-// perm_group.C:
+// perm_group.cpp
 // #############################################################################
 
 //! a domain for permutation groups whose elements are given in list notation
@@ -505,7 +577,7 @@ public:
 
 
 // #############################################################################
-// schreier.C:
+// schreier.cpp
 // #############################################################################
 
 //! Schreier trees for orbits of groups on points
@@ -800,7 +872,7 @@ public:
 };
 
 // #############################################################################
-// schreier_sims.C:
+// schreier_sims.cpp
 // #############################################################################
 
 
@@ -886,7 +958,7 @@ public:
 };
 
 // #############################################################################
-// sims.C:
+// sims.cpp
 // #############################################################################
 
 //! a stabilizer chain for a permutation group is used to represent a permutation group
@@ -962,14 +1034,14 @@ public:
 	
 	sims();
 	void null();
-	sims(action *A);
+	sims(action *A, int verbose_level);
 	~sims();
 	void freeself();
 
 	void delete_images();
 	void init_images(int nb_images);
 	void images_append();
-	void init(action *A);
+	void init(action *A, int verbose_level);
 		// initializes the trivial group 
 		// with the base as given in A
 	void init_without_base(action *A);
@@ -1233,13 +1305,13 @@ public:
 	void compute_all_powers(int elt_idx, int n, int *power_elt,
 			int verbose_level);
 
-	// sims2.C:
+	// sims2.cpp
 	void build_up_subgroup_random_process(sims *G, 
 		void (*choose_random_generator_for_subgroup)(
 			sims *G, int *Elt, int verbose_level), 
 		int verbose_level);
 
-	// sims3.C:
+	// sims3.cpp
 	void subgroup_make_characteristic_vector(sims *Sub, 
 		int *C, int verbose_level);
 	void normalizer_based_on_characteristic_vector(int *C_sub, 
@@ -1249,7 +1321,7 @@ public:
 		int *Order, int *Residue, int verbose_level);
 };
 
-// sims2.C:
+// sims2.cpp
 void choose_random_generator_derived_group(sims *G, int *Elt, 
 	int verbose_level);
 
@@ -1258,7 +1330,7 @@ void choose_random_generator_derived_group(sims *G, int *Elt,
 
 
 // #############################################################################
-// strong_generators.C:
+// strong_generators.cpp
 // #############################################################################
 
 //! a strong generating set for a permutation group with respect to a fixed action
@@ -1287,7 +1359,7 @@ public:
 		int nb_gen, int verbose_level);
 	void init_from_permutation_representation(action *A, 
 		int *data, 
-		int nb_elements, int group_order, vector_ge *&nice_gens,
+		int nb_elements, long int group_order, vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data(action *A, int *data, 
 		int nb_elements, int elt_size, 
@@ -1429,8 +1501,12 @@ public:
 			const char *label_txt,
 			std::ostream &ost,
 			int verbose_level);
+	void report_fixed_objects_in_P3(
+			std::ostream &ost,
+			projective_space *P3,
+			int verbose_level);
 
-	// strong_generators_groups.C:
+	// strong_generators_groups.cpp
 	void init_linear_group_from_scratch(action *&A, 
 		finite_field *F, int n, 
 		int f_projective, int f_general, int f_affine, 
@@ -1585,7 +1661,7 @@ public:
 
 
 // #############################################################################
-// wreath_product.C:
+// wreath_product.cpp
 // #############################################################################
 
 //! the wreath product group GL(d,q) wreath Sym(n)

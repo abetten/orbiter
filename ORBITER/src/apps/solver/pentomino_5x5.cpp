@@ -1,4 +1,4 @@
-// pentomino_5x5.C
+// pentomino_5x5.cpp
 //
 // Anton Betten
 // June 17, 2015

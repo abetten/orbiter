@@ -1,4 +1,4 @@
-// finitefield_representations.C
+// finitefield_representations.cpp
 //
 // Anton Betten
 //

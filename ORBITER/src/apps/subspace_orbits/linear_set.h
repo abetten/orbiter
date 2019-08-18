@@ -58,7 +58,7 @@ public:
 	int f_identify;
 	int k;
 	int order;
-	spread *T;
+	spread_classify *T;
 	
 
 
@@ -115,7 +115,7 @@ public:
 		strong_generators *&strong_gens, 
 		int verbose_level);
 
-	//linear_set2.C:
+	//linear_set2.cpp:
 	void construct_semifield(int orbit_for_W, int verbose_level);
 
 };

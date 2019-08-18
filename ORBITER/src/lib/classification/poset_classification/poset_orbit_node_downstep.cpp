@@ -1,4 +1,4 @@
-// poset_orbit_node_downstep.C
+// poset_orbit_node_downstep.cpp
 //
 // Anton Betten
 // July 23, 2007

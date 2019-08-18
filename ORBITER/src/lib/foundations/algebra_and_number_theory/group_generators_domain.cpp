@@ -1,8 +1,8 @@
-// group_generators_domain.C
+// group_generators_domain.cpp
 //
 // Anton Betten
 //
-// moved here from projective.C: September 4, 2016
+// moved here from projective.cpp: September 4, 2016
 
 
 

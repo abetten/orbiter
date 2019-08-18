@@ -1,10 +1,10 @@
-// interface_perm_group.C
+// interface_perm_group.cpp
 //
 // Anton Betten
 //
 // started:  November 13, 2007
 // last change:  November 9, 2010
-// moved here from interface.C:  January 30, 2014
+// moved here from interface.cpp:  January 30, 2014
 
 
 

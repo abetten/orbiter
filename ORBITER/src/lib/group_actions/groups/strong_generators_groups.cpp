@@ -1,4 +1,4 @@
-// strong_generators_groups.C
+// strong_generators_groups.cpp
 //
 // Anton Betten
 
@@ -266,8 +266,8 @@ void strong_generators::init_trivial_group(action *A,
 		cout << "strong_generators::init_trivial_group" << endl;
 		}
 	strong_generators::A = A;
-	tl = NEW_int(A->Stabilizer_chain->base_len);
-	for (i = 0; i < A->Stabilizer_chain->base_len; i++) {
+	tl = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
 		tl[i] = 1;
 		}
 	gens = NEW_OBJECT(vector_ge);
@@ -1602,7 +1602,6 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 		}
 	make_generators_stabilizer_of_two_components(A_PGL_n_q, A_PGL_k_q, 
 		k, my_gens, 0 /*verbose_level */);
-		// ACTION/action_global.C
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_stabilizer_"
@@ -2318,7 +2317,6 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		Mtx->f_semilinear, 
 		data, size, nb_gens, 
 		verbose_level);
-		// GALOIS/group_generators.C
 
 	my_gens = NEW_OBJECT(vector_ge);
 	my_gens->init(A_PGL_4_q);
@@ -2589,7 +2587,6 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 		}
 	K.cubic_surface_stab_gens(F->q, iso,
 			data, nb_gens, data_size, ascii_target_go);
-		// in GALOIS/data.C
 
 	vector_ge *gens;
 
@@ -2669,7 +2666,6 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 		data, nb_gens, data_size, group_order, verbose_level);
 	//cubic_surface_stab_gens(F->q, iso,
 	// data, nb_gens, data_size, ascii_target_go);
-		// in GALOIS/data.C
 
 	vector_ge *gens;
 
@@ -2742,7 +2738,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 				"catalogue_stabilizer before BLT_stab_gens" << endl;
 		}
 	K.BLT_stab_gens(F->q, iso, data, nb_gens, data_size, ascii_target_go);
-		// in GALOIS/data.C
+
 	if (f_v) {
 		cout << "strong_generators::BLT_set_from_"
 				"catalogue_stabilizer data_size=" << data_size << endl;
@@ -2827,7 +2823,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 				"spread_from_catalogue before BLT_stab_gens" << endl;
 		}
 	K.Spread_stab_gens(q, k, iso, data, nb_gens, data_size, ascii_target_go);
-		// in GALOIS/data.C
+
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_"
 				"spread_from_catalogue data_size=" << data_size << endl;
@@ -3093,9 +3089,9 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 	projective_space *P, int line1, int line2,
 	int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	int f_v = TRUE;//(verbose_level >= 1);
 	vector_ge *gens;
-	int A4[16];
+	int A4[17]; // one more in case of semilinear maps
 
 	if (f_v) {
 		cout << "strong_generators::lifted_group_on_"
@@ -3108,6 +3104,16 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 	gens->init(A);
 
 	int i;
+	int f_semilinear = FALSE;
+	int frobenius = 0;
+
+	f_semilinear = A->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "strong_generators::lifted_group_on_"
+				"hyperplane_W0_fixing_two_lines f_semilinear = " << f_semilinear << endl;
+		cout << "generators SG_hyperplane:" << endl;
+		SG_hyperplane->print_generators_ost(cout);
+	}
 
 	gens->allocate(SG_hyperplane->gens->len);
 	for (i = 0; i < SG_hyperplane->gens->len; i++) {
@@ -3124,10 +3130,22 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 					<< " before P->lifted_action_on_hyperplane_"
 							"W0_fixing_two_lines" << endl;
 			}
+		frobenius = SG_hyperplane->gens->ith(i)[9];
+		if (f_v) {
+			if (f_semilinear) {
+				cout << "strong_generators::lifted_group_on_"
+					"hyperplane_W0_fixing_two_lines lifting frobenius = " << frobenius << endl;
+			}
+		}
 		P->lifted_action_on_hyperplane_W0_fixing_two_lines(
-				SG_hyperplane->gens->ith(i), line1, line2,
+				SG_hyperplane->gens->ith(i),
+				f_semilinear, frobenius,
+				line1, line2,
 				A4,
 				verbose_level);
+		// in case of semilinear maps,
+		// A4[16] is set in lifted_action_on_hyperplane_W0_fixing_two_lines
+
 		if (f_v) {
 			cout << "strong_generators::lifted_group_on_"
 					"hyperplane_W0_fixing_two_lines lifting generator "

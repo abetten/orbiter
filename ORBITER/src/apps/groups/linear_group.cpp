@@ -692,10 +692,10 @@ int main(int argc, const char **argv)
 
 #if 0
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-				//shallow_schreier_tree_standard;
+				shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
 				//shallow_schreier_tree_Seress_randomized;
-				shallow_schreier_tree_Sajeeb;
+				//shallow_schreier_tree_Sajeeb;
 #endif
 		int orbit_idx = 0;
 		int f_randomized = TRUE;
@@ -756,9 +756,9 @@ int main(int argc, const char **argv)
 
 #if 0
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-				//shallow_schreier_tree_standard;
+				shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
-				shallow_schreier_tree_Seress_randomized;
+				//shallow_schreier_tree_Seress_randomized;
 				//shallow_schreier_tree_Sajeeb;
 #endif
 		int f_randomized = TRUE;
@@ -793,14 +793,30 @@ int main(int argc, const char **argv)
 		for (int depth = 0; depth <= orbits_on_subsets_size; depth++) {
 			cout << "There are " << PC->nb_orbits_at_level(depth)
 					<< " orbits on subsets of size " << depth << ":" << endl;
+
+			if (depth < orbits_on_subsets_size) {
+				continue;
+			}
 			PC->list_all_orbits_at_level(depth,
 					FALSE /* f_has_print_function */,
 					NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
 					NULL /* void *print_function_data*/,
-					TRUE /* f_show_orbit_decomposition */,
+					FALSE /* f_show_orbit_decomposition */,
 					TRUE /* f_show_stab */,
 					FALSE /* f_save_stab */,
 					FALSE /* f_show_whole_orbit*/);
+		}
+
+		if (f_draw_poset) {
+			{
+			char fname_poset[1000];
+			sprintf(fname_poset, "%s_poset_%d", LG->prefix, orbits_on_subsets_size);
+			PC->draw_poset(fname_poset,
+					orbits_on_subsets_size /*depth*/, 0 /* data1 */,
+					TRUE /* f_embedded */,
+					FALSE /* f_sideways */,
+					0 /* verbose_level */);
+			}
 		}
 
 

@@ -1,4 +1,4 @@
-// domain.C
+// domain.cpp
 //
 // Anton Betten
 // 11.06.2000
@@ -26,6 +26,20 @@ domain::domain(int p)
 	//the_pres = NULL;
 	the_factor_poly = NULL;
 	the_sub_domain = NULL;
+	F = NULL;
+}
+
+
+
+domain::domain(finite_field *F)
+{
+	cout << "domain::domain orbiter finite_field of order " << F->q << endl;
+	domain::F = F;
+	the_type = Orbiter_finite_field;
+	the_prime.m_i_i(F->p);
+	//the_pres = NULL;
+	the_factor_poly = NULL;
+	the_sub_domain = NULL;
 }
 
 domain::domain(unipoly *factor_poly, domain *sub_domain)
@@ -36,6 +50,7 @@ domain::domain(unipoly *factor_poly, domain *sub_domain)
 
 	the_prime.m_i_i(0);
 	//the_pres = NULL;
+	F = NULL;
 }
 
 #if 0
@@ -55,6 +70,11 @@ domain_type domain::type()
 	return the_type;
 }
 
+finite_field *domain::get_F()
+{
+	return F;
+}
+
 int domain::order_int()
 {
 	number_theory_domain NT;
@@ -67,6 +87,9 @@ int domain::order_int()
 		int Q = NT.i_power_j(q, f);
 		return Q;
 		}
+	if (the_type == Orbiter_finite_field) {
+		return F->q;
+	}
 	cout << "domain::order_int no finite field domain" << endl;
 	exit(1);
 }
@@ -79,6 +102,9 @@ int domain::order_subfield_int()
 		int q = the_sub_domain->order_int();
 		return q;
 		}
+	if (the_type == Orbiter_finite_field) {
+		return F->p;
+	}
 	cout << "domain::order_subfield_int no finite field domain" << endl;
 	exit(1);
 }
@@ -90,8 +116,19 @@ int domain::characteristic()
 	if (the_type == GFq) {
 		return the_sub_domain->characteristic();
 		}
+	if (the_type == Orbiter_finite_field) {
+		return F->p;
+	}
 	cout << "domain::characteristic() no finite field domain" << endl;
 	exit(1);
+}
+
+int domain::is_Orbiter_finite_field_domain()
+{
+	if (type() == Orbiter_finite_field) {
+		return TRUE;
+	}
+	return FALSE;
 }
 
 #if 0
@@ -186,6 +223,19 @@ int is_GFq_domain(domain *& d)
 	if (d->type() == GFq) {
 		return TRUE;
 		}
+	d = NULL;
+	return FALSE;
+}
+
+int is_Orbiter_finite_field_domain(domain *& d)
+{
+	if (!has_domain())
+		return FALSE;
+
+	d = get_current_domain();
+	if (d->type() == Orbiter_finite_field) {
+		return TRUE;
+	}
 	d = NULL;
 	return FALSE;
 }
@@ -305,6 +355,9 @@ with::~with()
 	pop_domain(d);
 }
 
+#if 1
+// used in a5_in_PSL
+
 typedef struct ff_memory FF_MEMORY;
 
 //! DISCRETA auxilliary class for class domain
@@ -323,8 +376,9 @@ struct ff_memory {
 static int nb_ffm = 0;
 static FF_MEMORY *Ffm[MAX_FF_DOMAIN];
 
-domain *allocate_finite_field_domain(int q, int f_v)
+domain *allocate_finite_field_domain(int q, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	FF_MEMORY *ffm = new FF_MEMORY;
 	int p, f;
 	number_theory_domain NT;
@@ -345,7 +399,7 @@ domain *allocate_finite_field_domain(int q, int f_v)
 	if (ffm->f > 1) {
 		with w(ffm->d1);
 		ffm->m = &callocobject(UNIPOLY)->change_to_unipoly();
-		ffm->m->Singer(ffm->p, ffm->f, FALSE, FALSE);
+		ffm->m->Singer(ffm->p, ffm->f, verbose_level - 2);
 		if (f_v ) {
 			cout << "q=" << q << "=" << ffm->p << "^" << ffm->f << ", m=" << *ffm->m << endl;
 			}
@@ -359,13 +413,13 @@ domain *allocate_finite_field_domain(int q, int f_v)
 	return ffm->dom;
 }
 
-void free_finite_field_domain(domain *dom, int f_v)
+void free_finite_field_domain(domain *dom)
 {
 	int i;
 	
 	for (i = 0; i < nb_ffm; i++) {
 		if (Ffm[i]->dom == dom) {
-			if (f_v) {
+			if (FALSE) {
 				cout << "deleting ff domain no " << i << endl;
 				}
 			if (Ffm[i]->f > 1) {
@@ -387,5 +441,8 @@ void free_finite_field_domain(domain *dom, int f_v)
 	cout << "free_finite_field_domain() error: domain not found" << endl;
 	exit(1);
 }
+#endif
+
+
 
 }}

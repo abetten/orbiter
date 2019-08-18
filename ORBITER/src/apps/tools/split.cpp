@@ -1,4 +1,4 @@
-// split.C
+// split.cpp
 //
 // Anton Betten
 // January 2, 2018
@@ -75,7 +75,6 @@ int main(int argc, char **argv)
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
 		verbose_level - 1);
-		// GALOIS/util.C
 
 	cout << "found " << nb_cases << " cases" << endl;
 	

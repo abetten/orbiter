@@ -1,4 +1,4 @@
-// polynomial_orbits.C
+// polynomial_orbits.cpp
 // 
 // Anton Betten
 // September 10, 2016

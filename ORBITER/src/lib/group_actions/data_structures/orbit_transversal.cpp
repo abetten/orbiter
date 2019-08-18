@@ -1,4 +1,4 @@
-// orbit_transversal.C
+// orbit_transversal.cpp
 //
 // Anton Betten
 //
@@ -102,7 +102,6 @@ void orbit_transversal::read_from_file(
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
 		verbose_level - 1);
-		// GALOIS/util.C
 
 	nb_orbits = nb_cases;
 
@@ -179,6 +178,25 @@ classify *orbit_transversal::get_ago_distribution(int *&ago,
 		cout << "orbit_transversal::get_ago_distribution done" << endl;
 	}
 	return C;
+}
+
+void orbit_transversal::report_ago_distribution(ostream &ost)
+{
+	classify *C;
+	int *Ago;
+	int i, f, l, a;
+
+	C = get_ago_distribution(Ago, 0 /*verbose_level*/);
+
+	for (i = C->nb_types - 1; i >= 0; i--) {
+		f = C->type_first[i];
+		l = C->type_len[i];
+		a = C->data_sorted[f];
+		//ost << "$" << a;
+		ost << "There are " << l << " orbits with a stabilizer of order " << a << "\\\\" << endl;
+		}
+
+	FREE_int(Ago);
 }
 
 void orbit_transversal::print_table_latex(

@@ -1,9 +1,9 @@
-// incidence_structure.C
+// incidence_structure.cpp
 // 
 // Anton Betten
 //
 // started 3/14/2012
-// based on extra.C
+// based on extra.cpp
 // 
 // 
 //
@@ -59,7 +59,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 
 	if (f_v) {
 		cout << "TDA:" << endl;
-		cout << "extra.C: incidence_structure_compute_TDA_general" << endl;
+		cout << "extra.cpp: incidence_structure_compute_TDA_general" << endl;
 		}
 	
 	if (f_combined_action) {
@@ -76,7 +76,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 	//N = Inc->nb_points() + Inc->nb_lines();
 	
 	if (f_v) {
-		cout << "extra.C: incidence_structure_compute_TDA_general "
+		cout << "extra.cpp: incidence_structure_compute_TDA_general "
 				"initial partition:" << endl;
 		S.print_classes_points_and_lines(cout);
 		}
@@ -85,7 +85,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 
 	if (f_combined_action) {
 		if (f_vv) {
-			cout << "extra.C: incidence_structure_compute_TDA_general "
+			cout << "extra.cpp: incidence_structure_compute_TDA_general "
 					"setting up schreier" << endl;
 			}
 		schreier *Sch;
@@ -94,7 +94,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		Sch->initialize_tables();
 		Sch->init_generators(*generators);
 		if (f_vv) {
-			cout << "extra.C: incidence_structure_compute_TDA_general "
+			cout << "extra.cpp: incidence_structure_compute_TDA_general "
 					"before compute_all_point_orbits" << endl;
 			}
 		Sch->compute_all_point_orbits(verbose_level + 3);
@@ -149,7 +149,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 
 
 	if (f_v) {
-		cout << "extra.C: incidence_structure_compute_TDA_general "
+		cout << "extra.cpp: incidence_structure_compute_TDA_general "
 				"the decomposition schemes:" << endl;
 		//cout << S << endl;
 		Inc->get_and_print_decomposition_schemes(S);
@@ -298,7 +298,7 @@ void incidence_structure_compute_TDO_TDA(incidence_structure *Inc,
 	int f_pic, 
 	int &TDO_ht, int &TDA_ht, 
 	int verbose_level)
-// called from INC_CAN/inc_select.C
+// called from INC_CAN/inc_select.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

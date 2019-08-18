@@ -1,4 +1,4 @@
-// ferdinand.C
+// ferdinand.cpp
 // 
 // Anton Betten
 // May 2, 2017
@@ -325,7 +325,7 @@ int ferdinand_incremental_check_func(int len, int *S,
 
 
 // #############################################################################
-// cayley_graph_search.C:
+// cayley_graph_search.cpp
 // #############################################################################
 
 
@@ -561,7 +561,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 		Table, go, generators, nb_generators, 
 		Aut_gens, 
 		verbose_level);
-		// ACTION/action_global.C
+		// ACTION/action_global.cpp
 
 	Aut_gens->group_order(Aut_order);
 #endif

@@ -1,4 +1,4 @@
-// canonical_form.C
+// canonical_form.cpp
 // 
 // Anton Betten
 // December 22, 2017
@@ -82,8 +82,8 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data_input_stream = NEW_OBJECT(data_input_stream);
-			i += Data_input_stream->read_arguments(argc - (i - 1),
-				argv + i, verbose_level);
+			i += Data_input_stream->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
 
 			cout << "-input" << endl;
 			}
@@ -177,22 +177,23 @@ int main(int argc, const char **argv)
 		CB = NEW_OBJECT(classify_bitvectors);
 	
 
-		cout << "before classify_objects_using_nauty" << endl;
+		cout << "canonical_form.cpp before PA->classify_objects_using_nauty" << endl;
 		PA->classify_objects_using_nauty(Data_input_stream,
 			CB,
 			f_save_incma_in_and_out, prefix, 
 			verbose_level - 1);
+		cout << "canonical_form.cpp after PA->classify_objects_using_nauty" << endl;
 
 
 
-		cout << "We found " << CB->nb_types << " types" << endl;
+		cout << "canonical_form.cpp We found " << CB->nb_types << " types" << endl;
 
 
 		compute_and_print_ago_distribution_with_classes(cout,
 				CB, verbose_level);
 
 
-		cout << "In the ordering of canonical forms, they are" << endl;
+		cout << "canonical_form.cpp In the ordering of canonical forms, they are" << endl;
 		CB->print_reps();
 		cout << "We found " << CB->nb_types << " types:" << endl;
 		for (i = 0; i < CB->nb_types; i++) {

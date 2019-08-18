@@ -40,7 +40,7 @@ class exact_cover;
 	// added April 30, 2013
 class recoordinatize;
 	// added November 2, 2013
-class spread;
+class spread_classify;
 	// added November 2, 2013
 class polar;
 class orbit_of_subspaces;
@@ -95,7 +95,7 @@ class arc_orbits_on_pairs;
 	// started 1/9/2019
 class arc_partition;
 	// started 1/9/2019
-class packing;
+class packing_classify;
 class packing_invariants;
 class invariants_packing;
 class classify_cubic_curves;
@@ -110,10 +110,12 @@ class semifield_trace;
 class trace_record;
 class semifield_substructure;
 class semifield_classify_with_substructure;
+class packing_was;
+class packing_long_orbits;
 
 
 // #############################################################################
-// representatives.C
+// representatives.cpp
 // #############################################################################
 
 //! auxiliary class for class isomorph

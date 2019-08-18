@@ -1,4 +1,4 @@
-// action_by_restriction.C
+// action_by_restriction.cpp
 //
 // Anton Betten
 // February 20, 2010
@@ -76,12 +76,18 @@ void action_by_restriction::init(int nb_points, int *points,
 {
 	int i;
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_by_restriction::init nb_points="
 				<< nb_points << endl;
 		}
+	if (f_vv) {
+		cout << "action_by_restriction::init points=";
+		int_vec_print(cout, points, nb_points);
+		cout << endl;
+	}
 	action_by_restriction::nb_points = nb_points;
 	action_by_restriction::points = NEW_int(nb_points);
 	action_by_restriction::points_sorted = NEW_int(nb_points);
@@ -92,6 +98,11 @@ void action_by_restriction::init(int nb_points, int *points,
 		perm_inv[i] = i;
 		}
 	Sorting.int_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
+	if (f_vv) {
+		cout << "action_by_restriction::init points after sorting=";
+		int_vec_print(cout, points_sorted, nb_points);
+		cout << endl;
+	}
 	if (f_v) {
 		cout << "action_by_restriction::init finished" << endl;
 		}

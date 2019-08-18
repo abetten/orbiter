@@ -1,4 +1,4 @@
-// distribution.C
+// distribution.cpp
 // 
 // Anton Betten
 // June 7, 2018

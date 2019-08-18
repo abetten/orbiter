@@ -1,4 +1,4 @@
-// union_find.C
+// union_find.cpp
 //
 // Anton Betten
 // February 2, 2010

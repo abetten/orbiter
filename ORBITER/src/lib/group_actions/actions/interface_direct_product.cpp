@@ -1,4 +1,4 @@
-// interface_direct_product_group.C
+// interface_direct_product_group.cpp
 //
 // Anton Betten
 //

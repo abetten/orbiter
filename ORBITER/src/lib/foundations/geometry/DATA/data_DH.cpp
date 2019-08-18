@@ -1,4 +1,4 @@
-// data_DH.C
+// data_DH.cpp
 //
 // Anton Betten
 //

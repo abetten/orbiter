@@ -1,10 +1,10 @@
-// isomorph_database.C
+// isomorph_database.cpp
 // 
 // Anton Betten
 // Oct 21, 2008
 //
-// moved here from iso.C 3/22/09
-// renamed isomorph_database.C from iso2.C 7/14/11
+// moved here from iso.cpp 3/22/09
+// renamed isomorph_database.cpp from iso2.cpp 7/14/11
 //
 //
 
@@ -61,7 +61,7 @@ void isomorph::close_solution_database(int verbose_level)
 
 void isomorph::setup_and_open_level_database(int verbose_level)
 // Called from do_iso_test, identify and test_hash 
-// (Which are all in isomorph_testing.C)
+// (Which are all in isomorph_testing.cpp)
 // Calls init_DB_level for D1 and D2 and D1->open and D2->open.
 // Calls fopen for fp_ge1 and fp_ge2.
 {
@@ -679,7 +679,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 			
 			len = 1 + 1 + level + 1;
 			if (O->nb_strong_generators) {
-				len += gen->Poset->A->Stabilizer_chain->base_len;
+				len += gen->Poset->A->base_len();
 				}
 			len += 1;
 			len += 4 * O->nb_extensions;
@@ -696,7 +696,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				}
 			v.m_ii(idx++, O->nb_strong_generators);
 			if (O->nb_strong_generators) {
-				for (j = 0; j < gen->Poset->A->Stabilizer_chain->base_len; j++) {
+				for (j = 0; j < gen->Poset->A->base_len(); j++) {
 					v.m_ii(idx++, O->tl[j]);
 					}
 				}
@@ -886,11 +886,11 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 		go.create(1);
 		goto finish;
 		}
-	tl = NEW_int(gen->Poset->A->Stabilizer_chain->base_len);
-	for (i = 0; i < gen->Poset->A->Stabilizer_chain->base_len; i++) {
+	tl = NEW_int(gen->Poset->A->base_len());
+	for (i = 0; i < gen->Poset->A->base_len(); i++) {
 		tl[i] = O->tl[i];
 		}
-	Dom.multiply_up(go, tl, gen->Poset->A->Stabilizer_chain->base_len);
+	Dom.multiply_up(go, tl, gen->Poset->A->base_len());
 	FREE_int(tl);
 	gens.init(gen->Poset->A);
 	gens.allocate(O->nb_strong_generators);
@@ -969,11 +969,11 @@ void isomorph::load_strong_generators_database(int cur_level,
 		go.create(1);
 		goto finish;
 		}
-	tl = NEW_int(gen->Poset->A->Stabilizer_chain->base_len);
-	for (i = 0; i < gen->Poset->A->Stabilizer_chain->base_len; i++) {
+	tl = NEW_int(gen->Poset->A->base_len());
+	for (i = 0; i < gen->Poset->A->base_len(); i++) {
 		tl[i] = v.s_ii(pos++);
 		}
-	Dom.multiply_up(go, tl, gen->Poset->A->Stabilizer_chain->base_len);
+	Dom.multiply_up(go, tl, gen->Poset->A->base_len());
 	FREE_int(tl);
 	pos = v.s_l() - 1;
 	ref = v.s_ii(pos++);
