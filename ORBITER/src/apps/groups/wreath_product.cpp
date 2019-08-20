@@ -1715,7 +1715,7 @@ void orbits(wreath_product* W,
 
 	cout << "the orbit representatives are: " << endl;
 	for (int i = 0; i < nb_orbits; i++) {
-		cout << i << " : " << orbit_rep[i] << endl;
+		cout << i << ", " << orbit_rep[i] << ", " << endl;
 	}
 
 
