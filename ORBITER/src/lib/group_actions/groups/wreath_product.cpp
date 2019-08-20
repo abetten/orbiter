@@ -8098,18 +8098,20 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 			}
 			if (TR[c] == -1) {
 				if (f_vv) {
-					cout << "wreath_product::compute_tensor_ranks expanding genereator setting tensor rank of " << c << " to " << r + 1 << endl;
+					cout << "wreath_product::compute_tensor_ranks expanding generator setting tensor rank of " << c << " to " << r + 1 << endl;
 				}
 				TR[c] = r + 1;
 				sz++;
 				D.push_back(c);
 				if (sz % one_percent == 0) {
-					cout << "wreath_product::compute_tensor_ranks " << sz / one_percent << " % completed" << endl;
+					cout << "wreath_product::compute_tensor_ranks "
+							<< sz / one_percent << " % completed, size of "
+							"queue is " << D.size() / (double)(degree_of_tensor_action + 1) << " %" << endl;
 				}
 			}
 			else {
 				if (f_vv) {
-					cout << "wreath_product::compute_tensor_ranks expanding genereator setting tensor rank of " << c << " is " << (int) TR[c] << " skipping" << endl;
+					cout << "wreath_product::compute_tensor_ranks expanding generator setting tensor rank of " << c << " is " << (int) TR[c] << " skipping" << endl;
 				}
 
 			}
@@ -8130,9 +8132,12 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 	if (f_vv) {
 		cout << "wreath_product::compute_tensor_ranks max tensor rank = " << m << endl;
 	}
-	int *Nb_by_rank;
+	long int *Nb_by_rank;
 
-	Nb_by_rank = NEW_int(m + 1);
+	Nb_by_rank = NEW_lint(m + 1);
+	for (i = 0; i <= m; i++) {
+		Nb_by_rank[i] = 0;
+	}
 	for (i = 0; i < degree_of_tensor_action + 1; i++) {
 		r = (int) TR[i];
 		Nb_by_rank[r]++;
@@ -8153,7 +8158,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 			R[i] = (int) TR[a];
 		}
 
-		cout << "tensor ranks:" << endl;
+		cout << "tensor ranks of orbit representatives:" << endl;
 		for (i = 0; i < N; i++) {
 			a = w5_reps[2 * i + 1];
 			cout << i << " : " << a << " : " << R[i] << endl;
