@@ -283,8 +283,6 @@ MODULES= \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
 		top_level/geometry/cubic_curve_with_action.o \
-		top_level/geometry/decomposition.o \
-		top_level/geometry/incidence_structure.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/packing_classify.o \
@@ -309,6 +307,7 @@ MODULES= \
 		top_level/geometry/surface_object_with_action.o \
 		top_level/geometry/surface_with_action.o \
 		top_level/geometry/surfaces_arc_lifting.o \
+		top_level/geometry/tactical_decomposition.o \
 		top_level/geometry/translation_plane_via_andre_model.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \

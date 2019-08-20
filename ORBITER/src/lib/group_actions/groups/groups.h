@@ -859,12 +859,6 @@ public:
 		int i, int last);
 	int subtree_depth_first(std::ostream &ost, int *path, int i, int last);
 	void print_path(std::ostream &ost, int *path, int l);
-#if 0
-	void write_to_memory_object(memory_object *m, int verbose_level);
-	void read_from_memory_object(memory_object *m, int verbose_level);
-	void write_file(char *fname, int verbose_level);
-	void read_file(const char *fname, int verbose_level);
-#endif
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(std::ifstream &fp, int verbose_level);
 	void write_file_binary(char *fname, int verbose_level);
@@ -1599,13 +1593,6 @@ public:
 
 };
 
-#if 0
-void strong_generators_array_write_file(const char *fname, 
-	strong_generators *p, int nb, int verbose_level);
-void strong_generators_array_read_from_file(const char *fname, 
-	action *A, strong_generators *&p, int &nb, int verbose_level);
-#endif
-
 // #############################################################################
 // subgroup.cpp:
 // #############################################################################
@@ -1728,6 +1715,9 @@ public:
 
 	page_storage *Elts;
 
+	uint32_t *rank_one_tensors;
+	int nb_rank_one_tensors;
+
 	wreath_product();
 	~wreath_product();
 	void null();
@@ -1761,6 +1751,11 @@ public:
 	void compute_base_and_transversals(int verbose_level);
 	void make_strong_generators_data(int *&data,
 			int &size, int &nb_gens, int verbose_level);
+	void create_all_rank_one_tensors(
+			uint32_t *&rank_one_tensors,
+			int &nb_rank_one_tensors, int verbose_level);
+	void save_rank_one_tensors(int verbose_level);
+	void compute_tensor_ranks(char *&TR, int verbose_level);
 };
 
 }}

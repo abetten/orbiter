@@ -1367,7 +1367,7 @@ void compute_permutations(wreath_product* W,
 		M = NEW_OBJECT(bitmatrix);
 		M->init(mtx_n, l, 0 /*verbose_level*/);
 
-		cout << "unranking the elements of the PG to the bitmnatrix" << endl;
+		cout << "unranking the elements of the PG to the bitmatrix" << endl;
 		M->unrank_PG_elements_in_columns_consecutively(
 				W->F, (long int) b * (long int) block_size,
 				0 /* verbose_level */);
@@ -1390,7 +1390,7 @@ void compute_permutations(wreath_product* W,
 
 		cout << "unranking the elements of the PG done" << endl;
 
-		M->print();
+		//M->print();
 
 		//linalg::Matrix<char> MN (l, mtx_n);
 
