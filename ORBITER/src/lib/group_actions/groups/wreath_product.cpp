@@ -16,6 +16,40 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
+static long int nb_w4_reps = 29;
+static long int w4_reps[] = {
+0, 0,
+1, 19,
+2, 33,
+3, 35,
+4, 116,
+5, 285,
+6, 287,
+7, 307,
+8, 367,
+9, 369,
+10, 391,
+11, 393,
+12, 397,
+13, 413,
+14, 1637,
+15, 1638,
+16, 1639,
+17, 1648,
+18, 1655,
+19, 1661,
+20, 1717,
+21, 1718,
+22, 5739,
+23, 5740,
+24, 5764,
+25, 5766,
+26, 5774,
+27, 6386,
+28, 27582
+};
+
+static long int nb_w5_reps = 6935;
 static long int w5_reps[] = {
 		0, 0,
 		1, 35,
@@ -8149,7 +8183,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 
 	if (q == 2 && nb_factors == 5) {
 
-		int N = 6935;
+		int N = nb_w5_reps;
 		int *R;
 
 		R = NEW_int(N);
@@ -8161,6 +8195,32 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 		cout << "tensor ranks of orbit representatives:" << endl;
 		for (i = 0; i < N; i++) {
 			a = w5_reps[2 * i + 1];
+			cout << i << " : " << a << " : " << R[i] << endl;
+		}
+
+		classify C;
+
+		C.init(R, N, FALSE, 0);
+
+		cout << "classification of orbit reps by tensor rank:" << endl;
+		C.print_naked(TRUE);
+
+	}
+
+	else if (q == 2 && nb_factors == 4) {
+
+		int N = nb_w4_reps;
+		int *R;
+
+		R = NEW_int(N);
+		for (i = 0; i < N; i++) {
+			a = w4_reps[2 * i + 1];
+			R[i] = (int) TR[a];
+		}
+
+		cout << "tensor ranks of orbit representatives:" << endl;
+		for (i = 0; i < N; i++) {
+			a = w4_reps[2 * i + 1];
 			cout << i << " : " << a << " : " << R[i] << endl;
 		}
 
