@@ -90,6 +90,8 @@ public:
 	int n;
 	// n is the size of the arc
 
+	int f_conic_test;
+
 
 	int *line_type; // [P2->N_lines]
 
@@ -116,6 +118,7 @@ public:
 	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
 
+	int conic_test(int *S, int len, int pt, int verbose_level);
 	void early_test_func(int *S, int len, 
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
@@ -1069,54 +1072,6 @@ public:
 };
 
 
-
-// #############################################################################
-// decomposition.cpp
-// #############################################################################
-
-
-void decomposition_projective_space(int k, finite_field *F, 
-	int nb_subsets, int *sz, int **subsets, 
-	int verbose_level);
-
-// #############################################################################
-// incidence_structure.cpp
-// #############################################################################
-
-
-void incidence_structure_compute_tda(partitionstack &S, 
-	incidence_structure *Inc, 
-	action *A, 
-	int f_write_tda_files, 
-	int f_include_group_order, 
-	int f_pic, 
-	int f_include_tda_scheme, 
-	int verbose_level);
-void incidence_structure_compute_TDA_general(partitionstack &S, 
-	incidence_structure *Inc, 
-	int f_combined_action, 
-	action *A, action *A_on_points, action *A_on_lines, 
-	vector_ge *generators, 
-	int f_write_tda_files, 
-	int f_include_group_order, 
-	int f_pic, 
-	int f_include_tda_scheme, 
-	int verbose_level);
-void incidence_structure_compute_TDO_TDA(incidence_structure *Inc, 
-	int f_tda_files, 
-	int f_tda_with_group_order, 
-	int f_tda_with_scheme, 
-	int f_pic, 
-	int &TDO_ht, int &TDA_ht, 
-	int verbose_level);
-int incidence_structure_find_blocking_set(incidence_structure *Inc, 
-	int input_no, 
-	int *blocking_set, int &blocking_set_size, 
-	int blocking_set_starter_size, 
-	int f_all_blocking_sets, 
-	int f_blocking_set_size_desired, int blocking_set_size_desired, 
-	int verbose_level);
-
 // #############################################################################
 // invariants_packing.cpp
 // #############################################################################
@@ -1941,8 +1896,11 @@ public:
 	int q;
 	int *poly_coeffs; // of degree n
 	int *Singer_matrix;
-	int *Elt;
-	vector_ge *gens;
+	//int *Elt;
+	vector_ge *nice_gens;
+	strong_generators *SG;
+	longinteger_object target_go;
+	//vector_ge *gens;
 	projective_space *P;
 	int *singer_point_list;
 	int *singer_point_list_inv;
@@ -1955,6 +1913,8 @@ public:
 	char **line_orbit_label_tex;
 	int *line_orbit;
 	int *line_orbit_inv;
+	incidence_structure *Inc;
+	tactical_decomposition *T;
 
 	singer_cycle();
 	~singer_cycle();
@@ -2814,6 +2774,44 @@ public:
 };
 
 // #############################################################################
+// tactical_decomposition.cpp
+// #############################################################################
+
+//! tactical decomposition of an incidence structure with respect to a given group
+
+
+
+class tactical_decomposition {
+public:
+
+	int set_size;
+	int nb_blocks;
+	incidence_structure *Inc;
+	int f_combined_action;
+	action *A;
+	action *A_on_points;
+	action *A_on_lines;
+	strong_generators * gens;
+	partitionstack *Stack;
+	schreier *Sch;
+	schreier *Sch_points;
+	schreier *Sch_lines;
+
+	tactical_decomposition();
+	~tactical_decomposition();
+	void init(int nb_rows, int nb_cols,
+			incidence_structure *Inc,
+			int f_combined_action,
+			action *Aut,
+			action *A_on_points,
+			action *A_on_lines,
+			strong_generators * gens,
+			int verbose_level);
+	void report(int f_enter_math, std::ostream &ost);
+
+};
+
+// #############################################################################
 // translation_plane_via_andre_model.cpp
 // #############################################################################
 
@@ -2853,6 +2851,8 @@ public:
 
 	poset *Poset;
 	poset_classification *arcs;
+
+	tactical_decomposition *T;
 
 	translation_plane_via_andre_model();
 	~translation_plane_via_andre_model();

@@ -18,7 +18,32 @@ namespace top_level {
 
 singer_cycle::singer_cycle()
 {
-	null();
+	F = NULL;
+	A = NULL;
+	A2 = NULL;
+	n = q = 0;
+	poly_coeffs = NULL;
+	Singer_matrix = NULL;
+	//Elt = NULL;
+	//gens = NULL;
+	nice_gens = NULL;
+	SG = NULL;
+	// target_go;
+	P = NULL;
+	singer_point_list = NULL;
+	singer_point_list_inv = NULL;
+	Sch = NULL;
+	nb_line_orbits = 0;
+	line_orbit_reps = NULL;
+	line_orbit_len = NULL;
+	line_orbit_first = NULL;
+	line_orbit_label = NULL;
+	line_orbit_label_tex = NULL;
+	line_orbit = NULL;
+	line_orbit_inv = NULL;
+	Inc = NULL;
+	T = NULL;
+	//null();
 }
 
 singer_cycle::~singer_cycle()
@@ -28,25 +53,6 @@ singer_cycle::~singer_cycle()
 
 void singer_cycle::null()
 {
-	n = 0;
-	F = NULL;
-	A = NULL;
-	A2 = NULL;
-	poly_coeffs = NULL;
-	Singer_matrix = NULL;
-	Elt = NULL;
-	gens = NULL;
-	P = NULL;
-	singer_point_list = NULL;
-	singer_point_list_inv = NULL;
-	Sch = NULL;
-	line_orbit_reps = NULL;
-	line_orbit_len = NULL;
-	line_orbit_first = NULL;
-	line_orbit_label = NULL;
-	line_orbit_label_tex = NULL;
-	line_orbit = NULL;
-	line_orbit_inv = NULL;
 }
 
 void singer_cycle::freeself()
@@ -57,11 +63,11 @@ void singer_cycle::freeself()
 	if (Singer_matrix) {
 		FREE_int(Singer_matrix);
 		}
-	if (Elt) {
-		FREE_int(Elt);
+	if (nice_gens) {
+		FREE_OBJECT(nice_gens);
 		}
-	if (gens) {
-		delete gens;
+	if (SG) {
+		FREE_OBJECT(SG);
 		}
 	if (singer_point_list) {
 		FREE_int(singer_point_list);
@@ -101,9 +107,15 @@ void singer_cycle::freeself()
 	if (line_orbit_inv) {
 		FREE_int(line_orbit_inv);
 		}
+	if (Inc) {
+		FREE_OBJECT(Inc);
+		}
+	if (T) {
+		FREE_OBJECT(T);
+		}
 			// P must be deleted last:
 	if (P) {
-		delete P;
+		FREE_OBJECT(P);
 		}
 	null();
 }
@@ -152,7 +164,7 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 		cout << endl;
 		}
 
-	Singer_matrix = NEW_int(n* n);
+	Singer_matrix = NEW_int(n * n);
 	for (i = 0; i < n - 1; i++) {
 		for (j = 0; j < n; j++) {
 			if (j == i + 1) {
@@ -171,18 +183,31 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 		cout << "singer_cycle::init Singer_matrix: " << endl;
 		int_matrix_print(Singer_matrix, n, n);
 		}
-	Elt = NEW_int(A->elt_size_in_int);
-	A->make_element(Elt, Singer_matrix, verbose_level);
-	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
-	gens->allocate(1);
-	A->element_move(Elt, gens->ith(0), 0);
+	//Elt = NEW_int(A->elt_size_in_int);
+	//A->make_element(Elt, Singer_matrix, verbose_level);
+
+	number_theory_domain NT;
+
+	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1));
+
+	SG = NEW_OBJECT(strong_generators);
+	SG->init_from_data_with_target_go(A,
+			Singer_matrix,
+			n * n, 1 /* nb_gens*/,
+			target_go,
+			nice_gens,
+			verbose_level);
+
+	//gens = NEW_OBJECT(vector_ge);
+	//gens->init(A);
+	//gens->allocate(1);
+	//A->element_move(Elt, gens->ith(0), 0);
 	if (f_v) {
 		cout << "singer_cycle::init created Singer cycle:" << endl;
-		A->element_print_as_permutation(Elt, cout);
+		A->element_print_as_permutation(nice_gens->ith(0), cout);
 		cout << endl;
 		cout << "singer_cycle::init Singer cycle on lines:" << endl;
-		A2->element_print_as_permutation(Elt, cout);
+		A2->element_print_as_permutation(nice_gens->ith(0), cout);
 		cout << endl;
 		}
 	if (f_v) {
@@ -216,7 +241,7 @@ void singer_cycle::init_lines(int verbose_level)
 	singer_point_list[0] = 0;
 	singer_point_list_inv[0] = 0;
 	for (i = 0; i < P->N_points - 1; i++) {
-		b = A->element_image_of(a, Elt, 0);
+		b = A->element_image_of(a, nice_gens->ith(0), 0);
 		singer_point_list[1 + i] = b;
 		singer_point_list_inv[b] = i + 1;
 		a = b;
@@ -260,7 +285,7 @@ void singer_cycle::init_lines(int verbose_level)
 	Sch = NEW_OBJECT(schreier);
 	Sch->init(A2);
 	Sch->initialize_tables();
-	Sch->init_single_generator(Elt);
+	Sch->init_single_generator(nice_gens->ith(0));
 	Sch->compute_all_point_orbits(0);
 	if (f_v) {
 		cout << "Found " << Sch->nb_orbits << " orbits on lines" << endl;
@@ -297,7 +322,8 @@ void singer_cycle::init_lines(int verbose_level)
 	for (i = 0; i < nb_line_orbits; i++) {
 		a = line_orbit_reps[i];
 		if (f_v) {
-			cout << "computing orbit of line " << a << " of length " << line_orbit_len[i] << ":" << endl;
+			cout << "computing orbit of line " << a << " of length "
+					<< line_orbit_len[i] << ":" << endl;
 			}
 		for (j = 0; j < line_orbit_len[i]; j++) {
 			line_orbit[h] = a;
@@ -316,7 +342,7 @@ void singer_cycle::init_lines(int verbose_level)
 				}
 			line_orbit_label_tex[h] = NEW_char(strlen(str) + 1);
 			strcpy(line_orbit_label_tex[h], str);
-			b = A2->element_image_of(a, Elt, 0);
+			b = A2->element_image_of(a, nice_gens->ith(0), 0);
 			a = b;
 			h++;
 			}
@@ -327,7 +353,25 @@ void singer_cycle::init_lines(int verbose_level)
 			cout << i << " : " << line_orbit_label[i] << " : " << line_orbit[i] << endl;
 			}
 		}
+
+	int f_combined_action = FALSE;
+
+	Inc = NEW_OBJECT(incidence_structure);
+
+	Inc->init_by_matrix_as_bitvector(P->N_points, P->N_lines, P->incidence_bitvec, 0);
+
+	T = NEW_OBJECT(tactical_decomposition);
+	T->init(P->N_points, P->N_lines,
+			Inc,
+			f_combined_action,
+			NULL /* Aut */,
+			A /* A_on_points */,
+			A2 /*A_on_lines*/,
+			SG /* Aut->strong_generators*/,
+			verbose_level - 1);
+
 	
+#if 0
 	partitionstack *Stack;
 	incidence_structure *Inc;
 	int f_combined_action = FALSE;
@@ -336,9 +380,6 @@ void singer_cycle::init_lines(int verbose_level)
 	int f_pic = FALSE;
 	int f_include_tda_scheme = FALSE;
 	
-	Inc = NEW_OBJECT(incidence_structure);
-	
-	Inc->init_by_matrix_as_bitvector(P->N_points, P->N_lines, P->incidence_bitvec, 0);
 
 	int set_size = P->N_points;
 	int nb_blocks = P->N_lines;
@@ -362,6 +403,7 @@ void singer_cycle::init_lines(int verbose_level)
 		f_pic, 
 		f_include_tda_scheme, 
 		verbose_level);
+#endif
 	if (f_v) {
 		cout << "after incidence_structure_compute_TDA_general" << endl;
 		}
@@ -382,8 +424,9 @@ void singer_cycle::init_lines(int verbose_level)
 	Inc->get_and_print_column_tactical_decomposition_scheme_tex(cout, FALSE /* f_enter_math */, *Stack);
 #endif
 
-	FREE_OBJECT(Inc);
-	FREE_OBJECT(Stack);
+	//FREE_OBJECT(Inc);
+	//FREE_OBJECT(Stack);
+	//FREE_OBJECT(T);
 	
 	FREE_int(line);
 	FREE_int(v);

@@ -18,17 +18,12 @@ namespace top_level {
 
 translation_plane_via_andre_model::translation_plane_via_andre_model()
 {
-	null();
-}
-
-translation_plane_via_andre_model::~translation_plane_via_andre_model()
-{
-	freeself();
-}
-
-void translation_plane_via_andre_model::null()
-{
+	F = NULL;
+	q = k = n = k1 = n1 = 0;
 	Andre = NULL;
+	N = 0;
+	twoN = 0;
+	f_semilinear = FALSE;
 	Line = NULL;
 	Incma = NULL;
 	pts_on_line = NULL;
@@ -42,6 +37,17 @@ void translation_plane_via_andre_model::null()
 	Stack = NULL;
 	Poset = NULL;
 	arcs = NULL;
+	T = NULL;
+	//null();
+}
+
+translation_plane_via_andre_model::~translation_plane_via_andre_model()
+{
+	freeself();
+}
+
+void translation_plane_via_andre_model::null()
+{
 }
 
 void translation_plane_via_andre_model::freeself()
@@ -381,6 +387,19 @@ void translation_plane_via_andre_model::init(
 				"induced by the spread stabilizer" << endl;
 		}
 
+
+
+	T = NEW_OBJECT(tactical_decomposition);
+	T->init(nb_rows, nb_cols,
+			Inc,
+			f_combined_action,
+			OnAndre /* Aut */,
+			NULL /* A_on_points */,
+			NULL /*A_on_lines*/,
+			strong_gens /* Aut->strong_generators*/,
+			verbose_level - 1);
+
+#if 0
 	int set_size = nb_rows;
 	int nb_blocks = nb_cols;
 		
@@ -389,7 +408,6 @@ void translation_plane_via_andre_model::init(
 	Stack->subset_continguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
-
 
 
 
@@ -421,7 +439,8 @@ void translation_plane_via_andre_model::init(
 			cout, FALSE /* f_enter_math */,
 			TRUE /* f_print_subscripts */, *Stack);
 		}
-
+#endif
+	//FREE_OBJECT(T);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init done" << endl;
