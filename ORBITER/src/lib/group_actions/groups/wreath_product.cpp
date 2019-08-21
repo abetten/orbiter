@@ -8197,6 +8197,24 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		cout << i << " : " << Nb_by_rank[i] << endl;
 	}
 
+
+	cout << "writing TR to file:" << endl;
+	char fname[1000];
+
+	sprintf(fname, "tensor_q%d_w%d_ranks.bin", q, nb_factors);
+	{
+		ofstream fp(fname, ios::binary);
+
+		long int d;
+
+		d = degree_of_tensor_action + 1;
+		fp.write((char *) &d, sizeof(long int));
+		for (int i = 0; i < d; i++) {
+			fp.write((char *) &TR [i], sizeof(char));
+		}
+	}
+
+
 	if (q == 2 && nb_factors == 5) {
 
 		int N = nb_w5_reps;

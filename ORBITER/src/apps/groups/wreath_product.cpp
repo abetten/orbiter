@@ -1716,7 +1716,9 @@ void orbits(wreath_product* W,
 
 	int nb_orbits = 0;
 	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
-		if (S[i] == i) ++nb_orbits;
+		if (S[i] == i) {
+			nb_orbits++;
+		}
 	}
 	cout << "nb_orbits: " << nb_orbits << endl;
 
