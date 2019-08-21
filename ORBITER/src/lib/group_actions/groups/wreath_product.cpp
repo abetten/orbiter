@@ -7331,8 +7331,11 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 
 
 	char *TR;
-	compute_tensor_ranks(TR, verbose_level);
+	uint32_t *Prev;
+
+	compute_tensor_ranks(TR, Prev, verbose_level);
 	FREE_char(TR);
+	FREE_int((int *) Prev);
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product done" << endl;
@@ -8084,13 +8087,14 @@ void wreath_product::save_rank_one_tensors(int verbose_level)
 	}
 }
 
-void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
+void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;
 	long int i;
 	int r;
 	long int sz;
+	long int nb_processed;
 	std::deque<uint32_t> D;
 	uint32_t a, b, c;
 	long int one_percent;
@@ -8101,13 +8105,16 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 	if (f_v) {
 		cout << "wreath_product::compute_tensor_ranks nb_rank_one_tensors = " << nb_rank_one_tensors << endl;
 	}
+	Prev = (uint32_t *) NEW_int(degree_of_tensor_action + 1);
 	TR = NEW_char(degree_of_tensor_action + 1);
 	for (i = 0; i < degree_of_tensor_action + 1; i++) {
 		TR[i] = -1;
 	}
 	D.push_back((uint32_t) 0);
 	TR[0] = 0;
+	Prev[0] = 0;
 	sz = 1;
+	nb_processed = 0;
 
 	one_percent = (int)((double)(degree_of_tensor_action + 1) / (double)100) + 1;
 
@@ -8135,12 +8142,13 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 					cout << "wreath_product::compute_tensor_ranks expanding generator setting tensor rank of " << c << " to " << r + 1 << endl;
 				}
 				TR[c] = r + 1;
+				Prev[c] = a;
 				sz++;
 				D.push_back(c);
 				if (sz % one_percent == 0) {
 					cout << "wreath_product::compute_tensor_ranks "
-							<< sz / one_percent << " % completed, size of "
-							"queue is " << D.size() / (double)(degree_of_tensor_action + 1) << " %" << endl;
+							<< sz / one_percent << " % of tree completed, size of "
+							"queue is " << D.size() << " = " << (D.size() / (double)(degree_of_tensor_action + 1)) * 100. << " %" << endl;
 				}
 			}
 			else {
@@ -8149,6 +8157,14 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 				}
 
 			}
+		} // next i
+		nb_processed++;
+		if (nb_processed % one_percent == 0) {
+			cout << "wreath_product::compute_tensor_ranks "
+					<< nb_processed / one_percent << " % processed, size of "
+					"queue is " << D.size() << " = "
+					<< (D.size() / (double)(degree_of_tensor_action + 1)) * 100.
+					<< " % tree at " << sz / one_percent << " %" << endl;
 		}
 	}
 	if (f_vv) {
@@ -8185,17 +8201,44 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 
 		int N = nb_w5_reps;
 		int *R;
+		uint32_t *S;
+		uint32_t s;
+		int j;
+		int v[16];
 
 		R = NEW_int(N);
+		S = (uint32_t *) NEW_int(N);
 		for (i = 0; i < N; i++) {
 			a = w5_reps[2 * i + 1];
-			R[i] = (int) TR[a];
+			F->PG_element_unrank_modified_lint(v, 1, dimension_of_tensor_action, a);
+			s = v[dimension_of_tensor_action - 1];
+			for (j = 1; j < dimension_of_tensor_action; j++) {
+				s <<= 1;
+				if (v[dimension_of_tensor_action - 1 - j]) {
+					s++;
+				}
+			}
+			S[i] = s;
+			R[i] = (int) TR[s];
 		}
 
 		cout << "tensor ranks of orbit representatives:" << endl;
 		for (i = 0; i < N; i++) {
 			a = w5_reps[2 * i + 1];
-			cout << i << " : " << a << " : " << R[i] << endl;
+			cout << i << " : " << a << " : " << R[i] << " : " << S[i] << " : ";
+			s = S[i];
+			while (true) {
+				cout << (Prev[s] ^ s);
+				s = Prev[s];
+				cout << ",";
+				if (s == 0) {
+					break;
+				}
+				else {
+				}
+			}
+
+			cout << endl;
 		}
 
 		classify C;
@@ -8204,6 +8247,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 
 		cout << "classification of orbit reps by tensor rank:" << endl;
 		C.print_naked(TRUE);
+		cout << endl;
 
 	}
 
@@ -8211,17 +8255,51 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 
 		int N = nb_w4_reps;
 		int *R;
+		uint32_t *S;
+		uint32_t s;
+		int j;
+		int v[16];
 
 		R = NEW_int(N);
+		S = (uint32_t *) NEW_int(N);
 		for (i = 0; i < N; i++) {
 			a = w4_reps[2 * i + 1];
-			R[i] = (int) TR[a];
+			cout << "i=" << i << " / " << N << " a=" << a << endl;
+			F->PG_element_unrank_modified_lint(v, 1, dimension_of_tensor_action, a);
+			cout << "v=";
+			int_vec_print(cout, v, dimension_of_tensor_action);
+			cout << endl;
+
+			s = v[dimension_of_tensor_action - 1];
+			for (j = 1; j < dimension_of_tensor_action; j++) {
+				s <<= 1;
+				if (v[dimension_of_tensor_action - 1 - j]) {
+					s++;
+				}
+			}
+			cout << "s=" << s << endl;
+			S[i] = s;
+			R[i] = (int) TR[s];
+			cout << "R[i]=" << R[i] << endl;
 		}
 
 		cout << "tensor ranks of orbit representatives:" << endl;
 		for (i = 0; i < N; i++) {
-			a = w4_reps[2 * i + 1];
-			cout << i << " : " << a << " : " << R[i] << endl;
+			a = w5_reps[2 * i + 1];
+			cout << i << " : " << a << " : " << R[i] << " : " << S[i] << " : ";
+			s = S[i];
+			while (true) {
+				cout << (Prev[s] ^ s);
+				s = Prev[s];
+				cout << ",";
+				if (s == 0) {
+					break;
+				}
+				else {
+				}
+			}
+
+			cout << endl;
 		}
 
 		classify C;
@@ -8230,8 +8308,11 @@ void wreath_product::compute_tensor_ranks(char *&TR, int verbose_level)
 
 		cout << "classification of orbit reps by tensor rank:" << endl;
 		C.print_naked(TRUE);
+		cout << endl;
 
 	}
+
+	exit(1);
 
 
 
