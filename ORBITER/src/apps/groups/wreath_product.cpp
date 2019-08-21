@@ -882,6 +882,27 @@ void tensor_product::init(int argc, const char **argv,
 			"A->init_wreath_product_group" << endl;
 	A0 = A;
 	W = A0->G.wreath_product_group;
+
+	int nb_points;
+	int *points;
+	action *Awr;
+
+	cout << "W->degree_of_tensor_action=" << W->degree_of_tensor_action << endl;
+	nb_points = W->degree_of_tensor_action;
+	points = NEW_int(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = W->perm_offset_i[nb_factors] + i;
+	}
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"before A_wreath->restricted_action" << endl;
+	}
+	Awr = A->restricted_action(points, nb_points,
+			verbose_level);
+	Awr->f_is_linear = TRUE;
+
+
 #endif
 
 	vector_space_dimension = W->dimension_of_tensor_action;
@@ -931,8 +952,8 @@ void tensor_product::init(int argc, const char **argv,
 				<< SG->gens->len << " is: " << endl;
 		A->element_print_quick(SG->gens->ith(i), cout);
 		cout << "as permutation: " << endl;
-		if (A->degree < 200) {
-			A->element_print_as_permutation_with_offset(
+		if (A->degree < 400) {
+			Awr->element_print_as_permutation_with_offset(
 					SG->gens->ith(i), cout,
 					0 /* offset*/,
 					TRUE /* f_do_it_anyway_even_for_big_degree*/,
@@ -948,9 +969,9 @@ void tensor_product::init(int argc, const char **argv,
 
 
 
-	if (A->degree < 200) {
+	if (A->degree < 400) {
 		for (i = 0; i < SG->gens->len; i++) {
-			A->element_print_as_permutation(SG->gens->ith(i), cout);
+			Awr->element_print_as_permutation(SG->gens->ith(i), cout);
 			cout << endl;
 		}
 	}
@@ -1227,7 +1248,7 @@ void compute_permutations(wreath_product* W,
 		int nb_factors,
 		int verbose_level)
 {
-#ifdef __CUDACC__
+//#ifdef __CUDACC__
 
 	int *generator_stack;
 	int **generators_transposed;
@@ -1247,8 +1268,11 @@ void compute_permutations(wreath_product* W,
 		cout << "generator " << h << " / "
 				<< SG->gens->len << " is: " << endl;
 		A->element_print_quick(SG->gens->ith(h), cout);
+		A->element_print_as_permutation(SG->gens->ith(h), cout);
 		W->create_matrix(SG->gens->ith(h), generator_stack + h * mtx_n2,
 				0 /* verbose_level */);
+		cout << "matrix:" << endl;
+		int_matrix_print(generator_stack + h * mtx_n2, mtx_n, mtx_n);
 		generators_transposed[h] = NEW_int(mtx_n2);
 
 		W->F->transpose_matrix(
@@ -1550,10 +1574,10 @@ void compute_permutations(wreath_product* W,
 //	cout << "wreath_product_orbits_CUDA done" << endl;
 
 
-#else
-	nb_gens = 0;
-	degree = 0;
-#endif
+//#else
+//	nb_gens = 0;
+//	degree = 0;
+//#endif
 }
 
 void make_fname(char *fname, int nb_factors, int h, int b)

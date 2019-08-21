@@ -1755,7 +1755,7 @@ public:
 			uint32_t *&rank_one_tensors,
 			int &nb_rank_one_tensors, int verbose_level);
 	void save_rank_one_tensors(int verbose_level);
-	void compute_tensor_ranks(char *&TR, int verbose_level);
+	void compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level);
 };
 
 }}

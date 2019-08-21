@@ -1430,7 +1430,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 				"before W->make_strong_generators_data" << endl;
 		}
 	W->make_strong_generators_data(gens_data,
-			gens_size, gens_nb, verbose_level - 1);
+			gens_size, gens_nb, verbose_level - 10);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"after W->make_strong_generators_data" << endl;
@@ -1445,7 +1445,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
 			get_transversal_length(),
 			nice_gens,
-			verbose_level - 1);
+			verbose_level - 10);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"after Strong_gens->init_from_data" << endl;
