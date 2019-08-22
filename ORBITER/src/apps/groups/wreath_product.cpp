@@ -1857,6 +1857,7 @@ void orbits_restricted(wreath_product* W,
 	}
 
 	for (size_t b = nb_blocks - 1; b >= 0; b--) {
+		cout << "b=" << b << endl;
 		if (b == nb_blocks - 1) {
 			restr_length[b] = set_m - restr_first[b];
 		}
