@@ -1852,11 +1852,11 @@ void orbits_restricted(wreath_product* W,
 		restr_first[b] = idx;
 	}
 
-	for (size_t b = 0; b < nb_blocks; b++) {
+	for (int b = 0; b < nb_blocks; b++) {
 		cout << b << " : " << restr_first[b] << endl;
 	}
 
-	for (size_t b = nb_blocks - 1; b >= 0; b--) {
+	for (int b = nb_blocks - 1; b >= 0; b--) {
 		cout << "b=" << b << endl;
 		if (b == nb_blocks - 1) {
 			restr_length[b] = set_m - restr_first[b];
@@ -1866,7 +1866,7 @@ void orbits_restricted(wreath_product* W,
 		}
 	}
 
-	for (size_t b = 0; b < nb_blocks; b++) {
+	for (int b = 0; b < nb_blocks; b++) {
 		cout << b << " : " << restr_first[b] << " : " << restr_length[b] << endl;
 	}
 
@@ -1884,10 +1884,10 @@ void orbits_restricted(wreath_product* W,
 
 
 
-	for (size_t h=0; h < SG->gens->len; ++h) {
+	for (int h = 0; h < SG->gens->len; ++h) {
 		cout << "generator h=" << h << " / " << SG->gens->len << endl;
 
-		for (size_t b=0; b<nb_blocks; ++b) {
+		for (int b = 0; b < nb_blocks; ++b) {
 			cout << "block b=" << b << " / " << nb_blocks << endl;
 
 
