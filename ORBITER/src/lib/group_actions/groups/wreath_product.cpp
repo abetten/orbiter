@@ -7147,7 +7147,8 @@ void wreath_product::freeself()
 }
 
 void wreath_product::init_tensor_wreath_product(matrix_group *M,
-		action *A_mtx, int nb_factors, int verbose_level)
+		action *A_mtx, int nb_factors, int f_tensor_ranks,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -7340,9 +7341,12 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 
 	save_rank_one_tensors(verbose_level);
 
+	if (f_tensor_ranks) {
 
+		compute_tensor_ranks(TR, Prev, verbose_level);
 
-	compute_tensor_ranks(TR, Prev, verbose_level);
+	}
+
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product done" << endl;
