@@ -38,12 +38,20 @@ void compute_permutations(wreath_product* W,
 void make_fname(char *fname, int nb_factors, int h, int b);
 int test_if_file_exists(int nb_factors, int h, int b);
 void orbits(wreath_product* W,
-								strong_generators* SG,
-								action* A,
-								int*& result,
-								int &nb_gens, int &degree,
-								int nb_factors,
-								int verbose_level);
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		int verbose_level);
+void orbits_restricted(wreath_product* W,
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		const char *orbits_restricted_fname,
+		int verbosity);
 
 
 typedef class tensor_product tensor_product;
@@ -77,6 +85,7 @@ public:
 	void init(int argc, const char **argv,
 			int nb_factors, int n, int q, int depth,
 			int f_permutations, int f_orbits, int f_tensor_ranks,
+			int f_orbits_restricted, const char *orbits_restricted_fname,
 			int verbose_level);
 };
 
@@ -718,6 +727,8 @@ int main(int argc, const char **argv)
 	int depth = 0;
 	int f_permutations = FALSE;
 	int f_orbits = FALSE;
+	int f_orbits_restricted = FALSE;
+	const char *orbits_restricted_fname = NULL;
 	int f_tensor_ranks = FALSE;
 
 
@@ -767,6 +778,11 @@ int main(int argc, const char **argv)
 			f_orbits = TRUE;
 			cout << "-orbits " << endl;
 			}
+		else if (strcmp(argv[i], "-orbits_restricted") == 0) {
+			f_orbits_restricted = TRUE;
+			orbits_restricted_fname = argv[++i];
+			cout << "-orbits_restricted " << endl;
+			}
 		else if (strcmp(argv[i], "-tensor_ranks") == 0) {
 			f_tensor_ranks = TRUE;
 			cout << "-tensor_ranks " << endl;
@@ -803,6 +819,7 @@ int main(int argc, const char **argv)
 
 	T->init(argc, argv, nb_factors, d, q, depth,
 			f_permutations, f_orbits, f_tensor_ranks,
+			f_orbits_restricted, orbits_restricted_fname,
 			verbose_level);
 
 	the_end_quietly(t0);
@@ -836,6 +853,7 @@ tensor_product::~tensor_product()
 void tensor_product::init(int argc, const char **argv,
 		int nb_factors, int n, int q, int depth,
 		int f_permutations, int f_orbits, int f_tensor_ranks,
+		int f_orbits_restricted, const char *orbits_restricted_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -885,9 +903,11 @@ void tensor_product::init(int argc, const char **argv,
 			verbose_level);
 	cout << "tensor_product::init after "
 			"A->init_wreath_product_group" << endl;
+
 	A0 = A;
 	W = A0->G.wreath_product_group;
 
+#if 0
 	int nb_points;
 	int *points;
 	action *Awr;
@@ -906,7 +926,7 @@ void tensor_product::init(int argc, const char **argv,
 	Awr = A->restricted_action(points, nb_points,
 			verbose_level);
 	Awr->f_is_linear = TRUE;
-
+#endif
 
 #endif
 
@@ -958,7 +978,7 @@ void tensor_product::init(int argc, const char **argv,
 		A->element_print_quick(SG->gens->ith(i), cout);
 		cout << "as permutation: " << endl;
 		if (A->degree < 400) {
-			Awr->element_print_as_permutation_with_offset(
+			A->element_print_as_permutation_with_offset(
 					SG->gens->ith(i), cout,
 					0 /* offset*/,
 					TRUE /* f_do_it_anyway_even_for_big_degree*/,
@@ -976,13 +996,15 @@ void tensor_product::init(int argc, const char **argv,
 
 	if (A->degree < 400) {
 		for (i = 0; i < SG->gens->len; i++) {
-			Awr->element_print_as_permutation(SG->gens->ith(i), cout);
+			A->element_print_as_permutation(SG->gens->ith(i), cout);
 			cout << endl;
 		}
 	}
 	else {
 		cout << "too big to print" << endl;
 	}
+
+#if 0
 	cout << "tensor_product::init Generators in ASCII format are:" << endl;
 		cout << SG->gens->len << endl;
 		for (i = 0; i < SG->gens->len; i++) {
@@ -991,6 +1013,8 @@ void tensor_product::init(int argc, const char **argv,
 				cout << endl;
 		}
 		cout << -1 << endl;
+#endif
+
 	cout << "tensor_product::init Generators in GAP format are:" << endl;
 	if (A->degree < 200) {
 		cout << "G := Group([";
@@ -1048,6 +1072,10 @@ void tensor_product::init(int argc, const char **argv,
 
 	if (f_orbits) {
 		orbits(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
+	}
+	if (f_orbits_restricted) {
+		orbits_restricted(W, SG, A, result, nb_gens, degree, nb_factors, orbits_restricted_fname, verbose_level);
+
 	}
 
 	cout << "time check: ";
@@ -1296,11 +1324,14 @@ void compute_permutations(wreath_product* W,
 	}
 
 	cout << "generator_stack:" << endl;
-	int_matrix_print(generator_stack, SG->gens->len * mtx_n, mtx_n);
+	int_matrix_print(generator_stack, SG->gens->len, mtx_n * mtx_n);
+
+#if 0
 	cout << "generators transposed:" << endl;
 	for (size_t h = 0; h < SG->gens->len; h++) {
 		int_matrix_print(generators_transposed[h], mtx_n, mtx_n);
 	}
+#endif
 	cout << "perms:" << endl;
 	int_matrix_print(perms, SG->gens->len, mtx_n);
 	cout << "mtx_n=" << mtx_n << endl;
@@ -1620,15 +1651,12 @@ void orbits(wreath_product* W,
 		int nb_factors,
 		int verbosity)
 {
-//#ifdef __CUDACC__
 
 	int mtx_n;
-	int mtx_n2;
 
 	nb_gens = SG->gens->len;
 	degree = W->degree_of_tensor_action;
 	mtx_n = W->dimension_of_tensor_action;
-	//mtx_n2 = mtx_n * mtx_n;
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
@@ -1762,3 +1790,159 @@ void orbits(wreath_product* W,
 }
 
 
+void orbits_restricted(wreath_product* W,
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		const char *orbits_restricted_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	int mtx_n;
+
+	if (f_v) {
+		cout << "orbits_restricted orbits_restricted_fname=" << orbits_restricted_fname << endl;
+	}
+
+	file_io Fio;
+	sorting Sorting;
+
+	long int *Set;
+	int set_m, set_n;
+	int nb_blocks;
+	int *restr_first; // [nb_blocks]
+	int *restr_length; // [nb_blocks]
+
+	Fio.lint_matrix_read_csv(orbits_restricted_fname,
+			Set, set_m, set_n, verbose_level);
+
+	if (set_n != 1) {
+		cout << "orbits_restricted set_n != 1" << endl;
+		exit(1);
+	}
+	cout << "Restricting to a set of size " << set_m << endl;
+
+
+
+	nb_gens = SG->gens->len;
+	degree = W->degree_of_tensor_action;
+	mtx_n = W->dimension_of_tensor_action;
+
+	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
+
+	cout << "block_size=" << block_size << endl;
+
+	nb_blocks = (W->degree_of_tensor_action + block_size - 1) / block_size;
+
+	cout << "nb_blocks=" << nb_blocks << endl;
+
+	restr_first = NEW_int(nb_blocks);
+	restr_length = NEW_int(nb_blocks);
+
+	for (size_t b = 0; b < nb_blocks; b++) {
+
+		cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+		int idx;
+		Sorting.lint_vec_search(Set, set_m, (long int) b * block_size,
+					idx, 0 /*verbose_level*/);
+
+		restr_first[b] = idx;
+	}
+	for (size_t b = nb_blocks - 1; b >= 0; b--) {
+		if (b == nb_blocks - 1) {
+			restr_length[b] = set_m - restr_first[b];
+		}
+		else {
+			restr_length[b] = restr_first[b + 1] - restr_first[b];
+		}
+	}
+
+	for (size_t b = 0; b < nb_blocks; b++) {
+		cout << b << " : " << restr_first[b] << " : " << restr_length[b] << endl;
+	}
+
+	long int *Perms;
+
+	Perms = NEW_lint(set_m * SG->gens->len);
+
+
+
+	cout << "allocating T, an unsigned int array of size " << block_size << endl;
+
+	unsigned int* T = new unsigned int [block_size];
+
+
+
+
+
+	for (size_t h=0; h < SG->gens->len; ++h) {
+		cout << "generator h=" << h << " / " << SG->gens->len << endl;
+
+		for (size_t b=0; b<nb_blocks; ++b) {
+			cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+			int l = std::min((b + 1) * block_size,
+					(unsigned long)W->degree_of_tensor_action) - b*block_size;
+			cout << "l=" << l << endl;
+
+
+
+
+
+			if (!test_if_file_exists(nb_factors, h, b)) {
+				cout << "file does not exist h=" << h << " b=" << b << endl;
+				exit(1);
+			}
+			char fname[1000];
+
+			make_fname(fname, nb_factors, h, b);
+			cout << "reading from file " << fname << endl;
+			{
+				ifstream fp(fname, ios::binary);
+
+				int l1;
+				fp.read((char *) &l1, sizeof(int));
+				if (l1 != l) {
+					cout << "l1 != l" << endl;
+				}
+				for (int i = 0; i < l; i++) {
+					fp.read((char *) &T [i], sizeof(int));
+				}
+			}
+			cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+
+			long int i, j, x, y;
+			for (long int h = 0; h < restr_length[b]; h++) {
+				i = restr_first[b] + h;
+				x = Set[i];
+				y = T[x - b * block_size];
+
+				int idx;
+				if (!Sorting.lint_vec_search(Set, set_m, y, idx, 0 /*verbose_level*/)) {
+					cout << "did not find element y=" << y << " in Set something is wrong" << endl;
+					exit(1);
+				}
+				j = idx;
+				Perms[i * SG->gens->len + h] = j;
+			}
+
+		} // next b
+
+	} // next h
+
+	char fname[1000];
+
+	strcpy(fname, orbits_restricted_fname);
+	chop_off_extension(fname);
+
+	sprintf(fname + strlen(fname), "_restricted_action.txt");
+	Fio.lint_matrix_write_csv(fname,
+			Perms, set_m, SG->gens->len);
+
+}
