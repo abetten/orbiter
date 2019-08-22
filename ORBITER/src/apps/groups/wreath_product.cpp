@@ -1289,8 +1289,6 @@ void compute_permutations(wreath_product* W,
 		int nb_factors,
 		int verbose_level)
 {
-//#ifdef __CUDACC__
-
 	int *generator_stack;
 	int **generators_transposed;
 	int *perms;
@@ -1853,6 +1851,11 @@ void orbits_restricted(wreath_product* W,
 
 		restr_first[b] = idx;
 	}
+
+	for (size_t b = 0; b < nb_blocks; b++) {
+		cout << b << " : " << restr_first[b] << endl;
+	}
+
 	for (size_t b = nb_blocks - 1; b >= 0; b--) {
 		if (b == nb_blocks - 1) {
 			restr_length[b] = set_m - restr_first[b];
