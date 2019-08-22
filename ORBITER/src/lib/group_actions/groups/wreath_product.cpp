@@ -7042,6 +7042,11 @@ wreath_product::wreath_product()
 
 	rank_one_tensors = NULL;
 	nb_rank_one_tensors = 0;
+
+	TR = NULL;
+	Prev = NULL;
+
+
 	//null();
 }
 
@@ -7128,6 +7133,12 @@ void wreath_product::freeself()
 	}
 	if (rank_one_tensors) {
 		FREE_int((int *) rank_one_tensors);
+	}
+	if (TR) {
+		FREE_char(TR);
+	}
+	if (Prev) {
+		FREE_int((int *) Prev);
 	}
 	null();
 	if (f_v) {
@@ -7330,12 +7341,8 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	save_rank_one_tensors(verbose_level);
 
 
-	char *TR;
-	uint32_t *Prev;
 
 	compute_tensor_ranks(TR, Prev, verbose_level);
-	FREE_char(TR);
-	FREE_int((int *) Prev);
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product done" << endl;
@@ -8042,7 +8049,6 @@ void wreath_product::create_all_rank_one_tensors(
 			}
 			cout << endl;
 		}
-		b = 0;
 		b = tensor[dimension_of_tensor_action - 1];
 		for (j = 1; j < dimension_of_tensor_action; j++) {
 			b <<= 1;
@@ -8209,8 +8215,24 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 
 		d = degree_of_tensor_action + 1;
 		fp.write((char *) &d, sizeof(long int));
-		for (int i = 0; i < d; i++) {
+		for (i = 0; i < d; i++) {
 			fp.write((char *) &TR [i], sizeof(char));
+		}
+	}
+
+	cout << "writing Prev to file:" << endl;
+	//char fname[1000];
+
+	sprintf(fname, "tensor_q%d_w%d_ranks_prev.bin", q, nb_factors);
+	{
+		ofstream fp(fname, ios::binary);
+
+		long int d;
+
+		d = degree_of_tensor_action + 1;
+		fp.write((char *) &d, sizeof(long int));
+		for (i = 0; i < d; i++) {
+			fp.write((char *) &Prev [i], sizeof(uint32_t));
 		}
 	}
 
