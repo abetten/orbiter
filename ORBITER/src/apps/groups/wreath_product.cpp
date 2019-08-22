@@ -1809,10 +1809,12 @@ void orbits_restricted(wreath_product* W,
 	sorting Sorting;
 
 	long int *Set;
+	long int *Set_in_PG;
 	int set_m, set_n;
 	int nb_blocks;
 	int *restr_first; // [nb_blocks]
 	int *restr_length; // [nb_blocks]
+	int i, j;
 
 	Fio.lint_matrix_read_csv(orbits_restricted_fname,
 			Set, set_m, set_n, verbose_level);
@@ -1822,7 +1824,25 @@ void orbits_restricted(wreath_product* W,
 		exit(1);
 	}
 	cout << "Restricting to a set of size " << set_m << endl;
+	cout << "converting points to PG point labels" << endl;
 
+	int *v;
+	long int s;
+	v = NEW_int(W->dimension_of_tensor_action);
+	Set_in_PG = NEW_lint(set_m);
+	for (i = 0; i < set_m; i++) {
+		W->F->PG_element_unrank_modified_lint(v, 1, W->dimension_of_tensor_action, Set[i]);
+		s = v[W->dimension_of_tensor_action - 1];
+		for (j = 1; j < W->dimension_of_tensor_action; j++) {
+			s <<= 1;
+			if (v[W->dimension_of_tensor_action - 1 - j]) {
+				s++;
+			}
+		}
+		Set_in_PG[i] = s;
+	}
+	FREE_int(v);
+	Sorting.lint_vec_heapsort(Set_in_PG, set_m);
 
 
 	nb_gens = SG->gens->len;
@@ -1846,7 +1866,7 @@ void orbits_restricted(wreath_product* W,
 
 
 		int idx;
-		Sorting.lint_vec_search(Set, set_m, (long int) b * block_size,
+		Sorting.lint_vec_search(Set_in_PG, set_m, (long int) b * block_size,
 					idx, 0 /*verbose_level*/);
 
 		restr_first[b] = idx;
@@ -1924,11 +1944,11 @@ void orbits_restricted(wreath_product* W,
 			long int i, j, x, y;
 			for (long int h = 0; h < restr_length[b]; h++) {
 				i = restr_first[b] + h;
-				x = Set[i];
+				x = Set_in_PG[i];
 				y = T[x - b * block_size];
 
 				int idx;
-				if (!Sorting.lint_vec_search(Set, set_m, y, idx, 0 /*verbose_level*/)) {
+				if (!Sorting.lint_vec_search(Set_in_PG, set_m, y, idx, 0 /*verbose_level*/)) {
 					cout << "did not find element y=" << y << " in Set something is wrong" << endl;
 					exit(1);
 				}
