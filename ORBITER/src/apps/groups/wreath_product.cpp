@@ -1841,8 +1841,13 @@ void orbits_restricted(wreath_product* W,
 		}
 		Set_in_PG[i] = s;
 	}
-	FREE_int(v);
+	//FREE_int(v);
 	Sorting.lint_vec_heapsort(Set_in_PG, set_m);
+	cout << "after sorting, Set_in_PG:" << endl;
+	for (i = 0; i < set_m; i++) {
+		cout << i << " : " << Set_in_PG[i] << endl;
+	}
+
 
 
 	nb_gens = SG->gens->len;
@@ -1945,11 +1950,36 @@ void orbits_restricted(wreath_product* W,
 			for (long int h = 0; h < restr_length[b]; h++) {
 				i = restr_first[b] + h;
 				x = Set_in_PG[i];
+				if (x < b * block_size) {
+					cout << "x < b * block_size" << endl;
+					cout << "x=" << x << " b=" << b << endl;
+					exit(1);
+				}
+				if (x >= (b + 1) * block_size) {
+					cout << "x >= (b + 1) * block_size" << endl;
+					cout << "x=" << x << " b=" << b << endl;
+					exit(1);
+				}
 				y = T[x - b * block_size];
 
 				int idx;
 				if (!Sorting.lint_vec_search(Set_in_PG, set_m, y, idx, 0 /*verbose_level*/)) {
-					cout << "did not find element y=" << y << " in Set something is wrong" << endl;
+					cout << "did not find element y=" << y << " in Set_in_PG "
+							"under generator h=" << h << ", something is wrong" << endl;
+					cout << "x=" << x << endl;
+					W->F->PG_element_unrank_modified_lint(v, 1,
+							W->dimension_of_tensor_action, x);
+					s = v[W->dimension_of_tensor_action - 1];
+					for (j = 1; j < W->dimension_of_tensor_action; j++) {
+						s <<= 1;
+						if (v[W->dimension_of_tensor_action - 1 - j]) {
+							s++;
+						}
+					}
+					cout << "tensor=";
+					int_vec_print(cout, v, W->dimension_of_tensor_action);
+					cout << endl;
+					cout << "s=" << s << endl;
 					exit(1);
 				}
 				j = idx;
