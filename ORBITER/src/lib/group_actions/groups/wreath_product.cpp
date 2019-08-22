@@ -8244,8 +8244,9 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		uint32_t *S;
 		uint32_t s;
 		int j;
-		int v[16];
+		int *v;
 
+		v = NEW_int(dimension_of_tensor_action);
 		R = NEW_int(N);
 		S = (uint32_t *) NEW_int(N);
 		for (i = 0; i < N; i++) {
@@ -8289,6 +8290,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		C.print_naked(TRUE);
 		cout << endl;
 
+		FREE_int(v);
 	}
 
 	else if (q == 2 && nb_factors == 4) {
@@ -8298,8 +8300,9 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		uint32_t *S;
 		uint32_t s;
 		int j;
-		int v[16];
+		int *v;
 
+		v = NEW_int(dimension_of_tensor_action);
 		R = NEW_int(N);
 		S = (uint32_t *) NEW_int(N);
 		for (i = 0; i < N; i++) {
@@ -8350,6 +8353,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		C.print_naked(TRUE);
 		cout << endl;
 
+		FREE_int(v);
 	}
 
 	exit(1);
