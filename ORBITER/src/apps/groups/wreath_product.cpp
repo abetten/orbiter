@@ -76,7 +76,7 @@ public:
 	~tensor_product();
 	void init(int argc, const char **argv,
 			int nb_factors, int n, int q, int depth,
-			int f_permutations, int f_orbits,
+			int f_permutations, int f_orbits, int f_tensor_ranks,
 			int verbose_level);
 };
 
@@ -718,6 +718,7 @@ int main(int argc, const char **argv)
 	int depth = 0;
 	int f_permutations = FALSE;
 	int f_orbits = FALSE;
+	int f_tensor_ranks = FALSE;
 
 
 	t0 = os_ticks();
@@ -766,6 +767,10 @@ int main(int argc, const char **argv)
 			f_orbits = TRUE;
 			cout << "-orbits " << endl;
 			}
+		else if (strcmp(argv[i], "-tensor_ranks") == 0) {
+			f_tensor_ranks = TRUE;
+			cout << "-tensor_ranks " << endl;
+			}
 		}
 	if (!f_nb_factors) {
 		cout << "please use -nb_factors <nb_factors>" << endl;
@@ -797,7 +802,7 @@ int main(int argc, const char **argv)
 	T = NEW_OBJECT(tensor_product);
 
 	T->init(argc, argv, nb_factors, d, q, depth,
-			f_permutations, f_orbits,
+			f_permutations, f_orbits, f_tensor_ranks,
 			verbose_level);
 
 	the_end_quietly(t0);
@@ -830,7 +835,7 @@ tensor_product::~tensor_product()
 
 void tensor_product::init(int argc, const char **argv,
 		int nb_factors, int n, int q, int depth,
-		int f_permutations, int f_orbits,
+		int f_permutations, int f_orbits, int f_tensor_ranks,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -859,7 +864,7 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "tensor_product::init before "
 			"A->init_wreath_product_group_and_restrict" << endl;
 	A->init_wreath_product_group_and_restrict(nb_factors, n,
-			F,
+			F, f_tensor_ranks,
 			verbose_level);
 	cout << "tensor_product::init after "
 			"A->init_wreath_product_group_and_restrict" << endl;
@@ -876,7 +881,7 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "tensor_product::init before "
 			"A->init_wreath_product_group" << endl;
 	A->init_wreath_product_group(nb_factors, n,
-			F,
+			F, f_tensor_ranks,
 			verbose_level);
 	cout << "tensor_product::init after "
 			"A->init_wreath_product_group" << endl;
@@ -978,6 +983,14 @@ void tensor_product::init(int argc, const char **argv,
 	else {
 		cout << "too big to print" << endl;
 	}
+	cout << "tensor_product::init Generators in ASCII format are:" << endl;
+		cout << SG->gens->len << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			A->element_print_for_make_element(
+					SG->gens->ith(i), cout);
+				cout << endl;
+		}
+		cout << -1 << endl;
 	cout << "tensor_product::init Generators in GAP format are:" << endl;
 	if (A->degree < 200) {
 		cout << "G := Group([";
