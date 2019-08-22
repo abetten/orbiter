@@ -1891,7 +1891,7 @@ void orbits_restricted(wreath_product* W,
 			cout << "block b=" << b << " / " << nb_blocks << endl;
 
 
-			int l = std::min((b + 1) * block_size,
+			int l = MINIMUM((b + 1) * block_size,
 					(unsigned long)W->degree_of_tensor_action) - b*block_size;
 			cout << "l=" << l << endl;
 
