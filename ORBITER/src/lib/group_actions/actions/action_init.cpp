@@ -1291,7 +1291,8 @@ void action::init_wreath_product_group_and_restrict(
 		cout << "action::init_wreath_product_group_and_restrict "
 				"before A_wreath->init_wreath_product_group" << endl;
 	}
-	A_wreath->init_wreath_product_group(nb_factors, n, F, f_tensor_ranks, verbose_level);
+	A_wreath->init_wreath_product_group(nb_factors, n, F, f_tensor_ranks,
+			verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group_and_restrict "
 				"after A_wreath->init_wreath_product_group" << endl;
