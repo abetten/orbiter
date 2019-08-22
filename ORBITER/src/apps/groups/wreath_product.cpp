@@ -1980,6 +1980,22 @@ void orbits_restricted(wreath_product* W,
 					int_vec_print(cout, v, W->dimension_of_tensor_action);
 					cout << endl;
 					cout << "s=" << s << endl;
+
+					cout << "y=" << y << endl;
+					W->F->PG_element_unrank_modified_lint(v, 1,
+							W->dimension_of_tensor_action, y);
+					s = v[W->dimension_of_tensor_action - 1];
+					for (j = 1; j < W->dimension_of_tensor_action; j++) {
+						s <<= 1;
+						if (v[W->dimension_of_tensor_action - 1 - j]) {
+							s++;
+						}
+					}
+					cout << "tensor=";
+					int_vec_print(cout, v, W->dimension_of_tensor_action);
+					cout << endl;
+					cout << "s=" << s << endl;
+
 					exit(1);
 				}
 				j = idx;
