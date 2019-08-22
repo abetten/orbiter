@@ -1718,6 +1718,9 @@ public:
 	uint32_t *rank_one_tensors;
 	int nb_rank_one_tensors;
 
+	char *TR; // [degree_of_tensor_action + 1]
+	uint32_t *Prev; // [degree_of_tensor_action + 1]
+
 	wreath_product();
 	~wreath_product();
 	void null();
