@@ -1950,9 +1950,9 @@ void orbits_restricted(wreath_product* W,
 			}
 			cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
 
-			long int i, j, x, y;
-			for (long int h = 0; h < restr_length[b]; h++) {
-				i = restr_first[b] + h;
+			long int x, y;
+			for (long int u = 0; u < restr_length[b]; u++) {
+				i = restr_first[b] + u;
 				x = Set_in_PG[i];
 				if (x < b * block_size) {
 					cout << "x < b * block_size" << endl;
@@ -2014,7 +2014,7 @@ void orbits_restricted(wreath_product* W,
 				}
 				j = idx;
 				Perms[i * SG->gens->len + h] = j;
-			}
+			} // next u
 
 		} // next b
 
