@@ -1831,6 +1831,7 @@ void orbits_restricted(wreath_product* W,
 	v = NEW_int(W->dimension_of_tensor_action);
 	Set_in_PG = NEW_lint(set_m);
 	for (i = 0; i < set_m; i++) {
+#if 0
 		W->F->PG_element_unrank_modified_lint(v, 1, W->dimension_of_tensor_action, Set[i]);
 		s = v[W->dimension_of_tensor_action - 1];
 		for (j = 1; j < W->dimension_of_tensor_action; j++) {
@@ -1839,6 +1840,9 @@ void orbits_restricted(wreath_product* W,
 				s++;
 			}
 		}
+#else
+		s = W->affine_rank_to_PG_rank(Set[i]);
+#endif
 		Set_in_PG[i] = s;
 	}
 	//FREE_int(v);
@@ -1917,7 +1921,7 @@ void orbits_restricted(wreath_product* W,
 
 
 			int l = MINIMUM((b + 1) * block_size,
-					(unsigned long)W->degree_of_tensor_action) - b*block_size;
+					(unsigned long)W->degree_of_tensor_action) - b * block_size;
 			cout << "l=" << l << endl;
 
 
@@ -1967,6 +1971,7 @@ void orbits_restricted(wreath_product* W,
 					cout << "did not find element y=" << y << " in Set_in_PG "
 							"under generator h=" << h << ", something is wrong" << endl;
 					cout << "x=" << x << endl;
+#if 0
 					W->F->PG_element_unrank_modified_lint(v, 1,
 							W->dimension_of_tensor_action, x);
 					s = v[W->dimension_of_tensor_action - 1];
@@ -1976,12 +1981,17 @@ void orbits_restricted(wreath_product* W,
 							s++;
 						}
 					}
+#else
+					W->tensor_PG_unrank(v, x);
+					s = W->tensor_affine_rank(v);
+#endif
 					cout << "tensor=";
 					int_vec_print(cout, v, W->dimension_of_tensor_action);
 					cout << endl;
-					cout << "s=" << s << endl;
+					cout << "affine rank s=" << s << endl;
 
 					cout << "y=" << y << endl;
+#if 0
 					W->F->PG_element_unrank_modified_lint(v, 1,
 							W->dimension_of_tensor_action, y);
 					s = v[W->dimension_of_tensor_action - 1];
@@ -1991,10 +2001,14 @@ void orbits_restricted(wreath_product* W,
 							s++;
 						}
 					}
+#else
+					W->tensor_PG_unrank(v, y);
+					s = W->tensor_affine_rank(v);
+#endif
 					cout << "tensor=";
 					int_vec_print(cout, v, W->dimension_of_tensor_action);
 					cout << endl;
-					cout << "s=" << s << endl;
+					cout << "affine rank s=" << s << endl;
 
 					exit(1);
 				}

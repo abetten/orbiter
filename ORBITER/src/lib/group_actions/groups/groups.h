@@ -1688,9 +1688,9 @@ public:
 	int *mtx_size;
 	int *index_set1;
 	int *index_set2;
-	int *u;
-	int *v;
-	int *w;
+	int *u; // [dimension_of_tensor_action]
+	int *v; // [dimension_of_tensor_action]
+	int *w; // [dimension_of_tensor_action]
 	int *A1;
 	int *A2;
 	int *A3;
@@ -1758,6 +1758,12 @@ public:
 	void create_all_rank_one_tensors(
 			uint32_t *&rank_one_tensors,
 			int &nb_rank_one_tensors, int verbose_level);
+	uint32_t tensor_affine_rank(int *tensor);
+	void tensor_affine_unrank(int *tensor, uint32_t rk);
+	uint32_t tensor_PG_rank(int *tensor);
+	void tensor_PG_unrank(int *tensor, uint32_t PG_rk);
+	uint32_t affine_rank_to_PG_rank(uint32_t affine_rk);
+	uint32_t PG_rank_to_affine_rank(uint32_t PG_rk);
 	void save_rank_one_tensors(int verbose_level);
 	void compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level);
 };
