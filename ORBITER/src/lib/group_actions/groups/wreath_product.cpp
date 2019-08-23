@@ -7990,6 +7990,7 @@ void wreath_product::create_all_rank_one_tensors(
 		int &nb_rank_one_tensors, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 5);
 	combinatorics_domain Combi;
 	number_theory_domain NT;
 	geometry_global Gg;
@@ -8026,7 +8027,7 @@ void wreath_product::create_all_rank_one_tensors(
 			Gg.AG_element_unrank(q, projections + j * dimension_of_matrix_group,
 					1, dimension_of_matrix_group, Proj[j] + 1);
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "wreath_product::create_all_rank_one_tensors " << i
 					<< " / " << nb_rank_one_tensors << ":" << endl;
 			cout << "projections: ";
@@ -8044,7 +8045,7 @@ void wreath_product::create_all_rank_one_tensors(
 			}
 			tensor[j] = a;
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "wreath_product::create_all_rank_one_tensors " << i
 					<< " / " << nb_rank_one_tensors << ":" << endl;
 			cout << "tensor: ";
@@ -8069,6 +8070,68 @@ void wreath_product::create_all_rank_one_tensors(
 	if (f_v) {
 		cout << "wreath_product::create_all_rank_one_tensors done" << endl;
 	}
+}
+
+uint32_t wreath_product::tensor_affine_rank(int *tensor)
+{
+	uint32_t b;
+	int i;
+
+	b = tensor[dimension_of_tensor_action - 1];
+	for (i = 1; i < dimension_of_tensor_action; i++) {
+		b <<= 1;
+		if (tensor[dimension_of_tensor_action - 1 - i]) {
+			b++;
+		}
+	}
+	return b;
+}
+
+void wreath_product::tensor_affine_unrank(int *tensor, uint32_t rk)
+{
+	uint32_t b;
+	int i;
+
+	int_vec_zero(tensor, dimension_of_tensor_action);
+
+	b = rk;
+	for (i = 0; i < dimension_of_tensor_action; i++) {
+		if (b % 2) {
+			tensor[i] = 1;
+		}
+		b >>= 1;
+	}
+}
+
+uint32_t wreath_product::tensor_PG_rank(int *tensor)
+{
+	long int b;
+
+	F->PG_element_rank_modified_lint(tensor, 1, dimension_of_tensor_action, b);
+	return (uint32_t) b;
+}
+
+void wreath_product::tensor_PG_unrank(int *tensor, uint32_t PG_rk)
+{
+	F->PG_element_unrank_modified_lint(tensor, 1, dimension_of_tensor_action, PG_rk);
+}
+
+uint32_t wreath_product::affine_rank_to_PG_rank(uint32_t affine_rk)
+{
+	long int b;
+
+	tensor_affine_unrank(u, affine_rk);
+	F->PG_element_rank_modified_lint(u, 1, dimension_of_tensor_action, b);
+	return (uint32_t) b;
+}
+
+uint32_t wreath_product::PG_rank_to_affine_rank(uint32_t PG_rk)
+{
+	uint32_t b;
+
+	F->PG_element_unrank_modified_lint(u, 1, dimension_of_tensor_action, PG_rk);
+	b = tensor_affine_rank(u);
+	return b;
 }
 
 void wreath_product::save_rank_one_tensors(int verbose_level)
@@ -8247,14 +8310,15 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		int *R;
 		uint32_t *S;
 		uint32_t s;
-		int j;
-		int *v;
+		//int j;
+		//int *v;
 
-		v = NEW_int(dimension_of_tensor_action);
+		//v = NEW_int(dimension_of_tensor_action);
 		R = NEW_int(N);
 		S = (uint32_t *) NEW_int(N);
 		for (i = 0; i < N; i++) {
 			a = w5_reps[2 * i + 1];
+#if 0
 			F->PG_element_unrank_modified_lint(v, 1, dimension_of_tensor_action, a);
 			s = v[dimension_of_tensor_action - 1];
 			for (j = 1; j < dimension_of_tensor_action; j++) {
@@ -8263,6 +8327,9 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 					s++;
 				}
 			}
+#else
+			s = PG_rank_to_affine_rank(a);
+#endif
 			S[i] = s;
 			R[i] = (int) TR[s];
 		}
@@ -8303,14 +8370,15 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		int *R;
 		uint32_t *S;
 		uint32_t s;
-		int j;
-		int *v;
+		//int j;
+		//int *v;
 
-		v = NEW_int(dimension_of_tensor_action);
+		//v = NEW_int(dimension_of_tensor_action);
 		R = NEW_int(N);
 		S = (uint32_t *) NEW_int(N);
 		for (i = 0; i < N; i++) {
 			a = w4_reps[2 * i + 1];
+#if 0
 			cout << "i=" << i << " / " << N << " a=" << a << endl;
 			F->PG_element_unrank_modified_lint(v, 1, dimension_of_tensor_action, a);
 			cout << "v=";
@@ -8325,6 +8393,9 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 				}
 			}
 			cout << "s=" << s << endl;
+#else
+			s = PG_rank_to_affine_rank(a);
+#endif
 			S[i] = s;
 			R[i] = (int) TR[s];
 			cout << "R[i]=" << R[i] << endl;
