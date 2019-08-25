@@ -871,8 +871,8 @@ void semifield_lifting::upstep(
 		vector_ge *coset_reps;
 
 		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(SC->A);
-		coset_reps->allocate(nb_aut_gens);
+		coset_reps->init(SC->A, verbose_level - 2);
+		coset_reps->allocate(nb_aut_gens, verbose_level - 2);
 		i = 0;
 		for (h = 0; h < N; h++) {
 			if (Aut[h]) {

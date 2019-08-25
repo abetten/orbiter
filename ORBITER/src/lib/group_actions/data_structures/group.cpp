@@ -43,36 +43,36 @@ void group::freeself()
 	delete_sims();
 }
 
-group::group(action *A)
+group::group(action *A, int verbose_level)
 {
 	null();
-	init(A);
+	init(A, verbose_level);
 };
 
-group::group(action *A, const char *ascii_coding)
+group::group(action *A, const char *ascii_coding, int verbose_level)
 {
 	null();
-	init(A);
-	init_ascii_coding(ascii_coding);
+	init(A, verbose_level);
+	init_ascii_coding(ascii_coding, verbose_level);
 };
 
-group::group(action *A, vector_ge &SG, int *tl)
+group::group(action *A, vector_ge &SG, int *tl, int verbose_level)
 {
 	null();
-	init(A);
-	init_strong_generators(SG, tl);
+	init(A, verbose_level);
+	init_strong_generators(SG, tl, verbose_level - 1);
 };
 
-void group::init(action *A)
+void group::init(action *A, int verbose_level)
 {
 	null();
 	group::A = A;
 }
 
-void group::init_ascii_coding_to_sims(const char *ascii_coding)
+void group::init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level)
 {
 	if (strlen(ascii_coding)) {
-		init_ascii_coding(ascii_coding);
+		init_ascii_coding(ascii_coding, verbose_level);
 		
 		decode_ascii(0);
 		
@@ -81,13 +81,13 @@ void group::init_ascii_coding_to_sims(const char *ascii_coding)
 		}
 	else {
 		//cout << "trivial group" << endl;
-		init_strong_generators_empty_set();	
+		init_strong_generators_empty_set(verbose_level);
 		}
 	
 	schreier_sims(0);
 }
 
-void group::init_ascii_coding(const char *ascii_coding)
+void group::init_ascii_coding(const char *ascii_coding, int verbose_level)
 {
 	delete_ascii_coding();
 	
@@ -105,15 +105,15 @@ void group::delete_ascii_coding()
 		}
 }
 
-void group::init_strong_generators_empty_set()
+void group::init_strong_generators_empty_set(int verbose_level)
 {
 	int i;
 	
 	delete_strong_generators();
 	
 	group::SG = NEW_OBJECT(vector_ge);
-	group::SG->init(A);
-	group::SG->allocate(0);
+	group::SG->init(A, verbose_level - 2);
+	group::SG->allocate(0, verbose_level - 2);
 	group::tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
 		group::tl[i] = 1;
@@ -121,15 +121,15 @@ void group::init_strong_generators_empty_set()
 	f_has_strong_generators = TRUE;
 }
 
-void group::init_strong_generators(vector_ge &SG, int *tl)
+void group::init_strong_generators(vector_ge &SG, int *tl, int verbose_level)
 {
 	int i;
 	
 	delete_strong_generators();
 	
 	group::SG = NEW_OBJECT(vector_ge);
-	group::SG->init(A);
-	group::SG->allocate(SG.len);
+	group::SG->init(A, verbose_level - 2);
+	group::SG->allocate(SG.len, verbose_level - 2);
 	for (i = 0; i < SG.len; i++) {
 		group::SG->copy_in(i, SG.ith(i));
 		}
@@ -170,8 +170,8 @@ void group::init_strong_generators_by_hdl(int nb_gen,
 	}
 	
 	SG = NEW_OBJECT(vector_ge);
-	SG->init(A);
-	SG->allocate(nb_gen);
+	SG->init(A, verbose_level - 2);
+	SG->allocate(nb_gen, verbose_level - 2);
 	if (f_v) {
 		cout << "group::init_strong_generators_by_hdl "
 				"before A->element_retrieve" << endl;
@@ -257,10 +257,11 @@ void group::group_order(longinteger_object &go)
 	longinteger_domain D;
 	
 	if (f_has_sims) {
-		D.multiply_up(go, S->orbit_len, A->base_len());
+		S->group_order(go);
+		//D.multiply_up(go, S->orbit_len, A->base_len());
 		}
 	else if (f_has_strong_generators) {
-		D.multiply_up(go, tl, A->base_len());
+		D.multiply_up(go, tl, A->base_len(), 0 /* verbose_level */);
 		}
 	else {
 		cout << "group::group_order need sims or strong_generators" << endl;
@@ -354,8 +355,8 @@ void group::decode_ascii(int verbose_level)
 		}
 	delete_strong_generators();
 	SG = NEW_OBJECT(vector_ge);
-	SG->init(A);
-	SG->allocate(nbsg);
+	SG->init(A, verbose_level - 2);
+	SG->allocate(nbsg, verbose_level - 2);
 	base1 = NEW_int(A->base_len());
 	tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
@@ -453,7 +454,7 @@ void group::get_strong_generators(int verbose_level)
 	require_sims();
 	delete_strong_generators();
 	SG = NEW_OBJECT(vector_ge);
-	SG->init(A);
+	SG->init(A, verbose_level - 2);
 	tl = NEW_int(A->base_len());
 	S->extract_strong_generators_in_order(*SG, tl, verbose_level - 1);
 }
@@ -485,8 +486,8 @@ void group::point_stabilizer(group &stab, int pt, int verbose_level)
 		}
 #endif
 	stab.freeself();
-	stab.init(A);
-	stab.init_strong_generators(stab_gens, tl);
+	stab.init(A, verbose_level - 2);
+	stab.init_strong_generators(stab_gens, tl, verbose_level - 2);
 	FREE_int(tl);
 	if (f_v) {
 		cout << "stabilizer of point " << pt << " has order ";
@@ -540,8 +541,8 @@ void group::point_stabilizer_with_action(action *A2,
 		}
 #endif
 	stab.freeself();
-	stab.init(A);
-	stab.init_strong_generators(stab_gens, tl);
+	stab.init(A, verbose_level - 2);
+	stab.init_strong_generators(stab_gens, tl, verbose_level - 2);
 	FREE_int(tl);
 	if (f_v) {
 		cout << "stabilizer of point " << pt << " has order ";
@@ -664,10 +665,10 @@ void group::induced_action(action &induced_action,
 	//cout << "group::induced_action deleting HH,KK" << endl;
 	}
 	
-	H.init(&induced_action);
-	K.init(A);
-	H.init_strong_generators(H_SG, H_tl);
-	K.init_strong_generators(K_SG, K_tl);
+	H.init(&induced_action, verbose_level - 2);
+	K.init(A, verbose_level - 2);
+	H.init_strong_generators(H_SG, H_tl, verbose_level - 2);
+	K.init_strong_generators(K_SG, K_tl, verbose_level - 2);
 	if (f_v) {
 		cout << "group::induced_action finished after "
 				<< n << " iterations" << endl;
@@ -718,6 +719,7 @@ void group::extension(group &N, group &H, int verbose_level)
 	longinteger_domain D;
 	int n = 0, drop_out_level, image;
 	int *p_gen;
+	int *Elt;
 	
 	if (f_v) {
 		cout << "group::extension" << endl;
@@ -727,13 +729,15 @@ void group::extension(group &N, group &H, int verbose_level)
 	H.group_order(go_H);
 	D.mult(go_N, go_H, go_G);
 	
+	Elt = NEW_int(A->elt_size_in_int);
+
 	if (f_v) {
 		cout << "group::extension |N| = " << go_N << " |H| = "
 			<< go_H << " |G| = |N|*|H| = " << go_G << endl;
 		}
 	H.require_sims();
 	
-	init(N.A);
+	init(N.A, verbose_level - 2);
 	G.init(N.A, verbose_level - 2);
 	G.init_generators(*N.SG, f_v);
 	G.compute_base_orbits(verbose_level - 1);
@@ -753,16 +757,16 @@ void group::extension(group &N, group &H, int verbose_level)
 				}
 			}
 		else {
-			G.random_schreier_generator(verbose_level - 1);
-			p_gen = G.schreier_gen;
+			G.random_schreier_generator(Elt, verbose_level - 1);
+			//p_gen = G.schreier_gen;
 			if (f_v) {
 				cout << "random schreier generator:" << endl;
-				A->element_print(p_gen, cout);
+				A->element_print(Elt, cout);
 				}
 			}
 		
 		
-		if (G.strip(p_gen, A->Elt2 /* residue */,
+		if (G.strip(Elt, A->Elt2 /* residue */,
 				drop_out_level, image, verbose_level - 1)) {
 			if (f_vv) {
 				cout << "element strips through" << endl;
@@ -792,8 +796,8 @@ void group::extension(group &N, group &H, int verbose_level)
 	
 	G.extract_strong_generators_in_order(SG, tl, verbose_level - 2);
 	
-	init(A);
-	init_strong_generators(SG, tl);
+	init(A, verbose_level - 2);
+	init_strong_generators(SG, tl, verbose_level - 2);
 	
 	if (f_v) {
 		cout << "group::extension finished after "
@@ -802,6 +806,7 @@ void group::extension(group &N, group &H, int verbose_level)
 		print_group_order(cout);
 		cout << endl;
 		}
+	FREE_int(Elt);
 	FREE_int(tl);
 }
 

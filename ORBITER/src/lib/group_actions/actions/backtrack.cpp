@@ -32,6 +32,7 @@ struct action_is_minimal_data {
 	int *current_choice;
 	int *witness;
 	int *transporter_witness;
+	int *coset_rep;
 	partitionstack *Staborbits;
 	int nb_auts;
 	int nb_auts_allocated;
@@ -104,7 +105,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			for (i = 0; i < A->base_len(); i++) {
 				a = D->current_choice[i];
 				image_point = D->choices[i * A->degree + a];
-				coset = A->Sims->orbit_inv[i][image_point];
+				coset = A->Sims->get_orbit_inv(i, image_point);
 				D->aut_data[D->nb_auts * A->base_len() + i] = coset;
 				}
 #if 0
@@ -235,7 +236,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			}
 		image_point = D->choices[depth * A->degree +
 								 D->current_choice[depth]];
-		coset = A->Sims->orbit_inv[depth][image_point];
+		coset = A->Sims->get_orbit_inv(depth, image_point);
 		if (f_vv) {
 			cout << "depth = " << depth;
 			cout << " choice " << D->current_choice[depth]
@@ -246,16 +247,16 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			int_vec_print(cout, current_set, D->size);
 			cout << endl;
 			}
-		A->Sims->coset_rep_inv(depth, coset, 0 /*verbose_level*/);
+		A->Sims->coset_rep_inv(D->coset_rep, depth, coset, 0 /*verbose_level*/);
 		// result is in A->Sims->cosetrep
 		if (FALSE /*f_vvv*/) {
 			cout << "cosetrep:" << endl;
-			A->element_print(A->Sims->cosetrep, cout);
+			A->element_print(D->coset_rep, cout);
 			cout << endl;
-			A->element_print_as_permutation(A->Sims->cosetrep, cout);
+			A->element_print_as_permutation(D->coset_rep, cout);
 			cout << endl;
 			}
-		A->map_a_set(current_set, next_set, D->size, A->Sims->cosetrep, 0);
+		A->map_a_set(current_set, next_set, D->size, D->coset_rep, 0);
 		if (FALSE /*f_vv*/) {
 			cout << "image set: ";
 			int_vec_print(cout, next_set, D->size);
@@ -296,7 +297,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			int_vec_zero(A->Sims->path, A->base_len());
 			for (k = 0; k <= depth; k++) {
 				choice = D->choices[k * A->degree + D->current_choice[k]];
-				A->Sims->path[k] = A->Sims->orbit_inv[k][choice];
+				A->Sims->path[k] = A->Sims->get_orbit_inv(k, choice);
 				}
 			A->Sims->element_from_path_inv(D->transporter_witness);
 			
@@ -558,6 +559,7 @@ int action::is_minimal_witness(int size, int *set,
 	D.nb_choices = NEW_int(A.base_len());
 	D.current_choice = NEW_int(A.base_len());
 	D.witness = witness;
+	D.coset_rep = NEW_int(A.elt_size_in_int);
 	D.transporter_witness = transporter_witness;
 	D.is_minimal_base_point = NEW_int(A.base_len());
 
@@ -736,6 +738,7 @@ finish:
 	FREE_int(D.nb_choices);
 	FREE_int(D.current_choice);
 	FREE_int(D.is_minimal_base_point);
+	FREE_int(D.coset_rep);
 
 	return ret;
 }

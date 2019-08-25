@@ -105,7 +105,7 @@ void translation_plane_via_andre_model::init(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	//int f_v4 = (verbose_level >= 6);
 	int f_v10 = (verbose_level >= 10);
 	int i, j, h, u, v, i1, i2, j1, j2;
@@ -295,10 +295,10 @@ void translation_plane_via_andre_model::init(
 #endif
 
 	int f_combined_action = TRUE;
-	int f_write_tda_files = TRUE;
-	int f_include_group_order = TRUE;
-	int f_pic = FALSE;
-	int f_include_tda_scheme = TRUE;
+	//int f_write_tda_files = TRUE;
+	//int f_include_group_order = TRUE;
+	//int f_pic = FALSE;
+	//int f_include_tda_scheme = TRUE;
 	int nb_rows = N;
 	int nb_cols = N;
 	

@@ -79,16 +79,16 @@ public:
 	~group();
 	void null();
 	void freeself();
-	group(action *A);
-	group(action *A, const char *ascii_coding);
-	group(action *A, vector_ge &SG, int *tl);
-	void init(action *A);
-	void init_ascii_coding_to_sims(const char *ascii_coding);
-	void init_ascii_coding(const char *ascii_coding);
+	group(action *A, int verbose_level);
+	group(action *A, const char *ascii_coding, int verbose_level);
+	group(action *A, vector_ge &SG, int *tl, int verbose_level);
+	void init(action *A, int verbose_level);
+	void init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level);
+	void init_ascii_coding(const char *ascii_coding, int verbose_level);
 	void delete_ascii_coding();
 	void delete_sims();
-	void init_strong_generators_empty_set();
-	void init_strong_generators(vector_ge &SG, int *tl);
+	void init_strong_generators_empty_set(int verbose_level);
+	void init_strong_generators(vector_ge &SG, int *tl, int verbose_level);
 	void init_strong_generators_by_hdl(int nb_gen, int *gen_hdl, 
 		int *tl, int verbose_level);
 	void delete_strong_generators();

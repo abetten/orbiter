@@ -243,8 +243,8 @@ void do_it(int p, int q, int verbose_level)
 	Elt3 = NEW_int(A->elt_size_in_int);
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
-	gens->allocate(nb_A4);
+	gens->init(A, verbose_level - 2);
+	gens->allocate(nb_A4, verbose_level - 2);
 	
 	cout << "making connection set:" << endl;
 	for (i = 0; i < nb_A4; i++) {

@@ -242,7 +242,7 @@ public:
 
 		/** all strong generators that
 		 * leave base points 0,..., depth - 1 fix */
-	void strong_generators_at_depth(int depth, vector_ge &gen);
+	void strong_generators_at_depth(int depth, vector_ge &gen, int verbose_level);
 	void compute_point_stabilizer_chain(vector_ge &gen, 
 		sims *S, int *sequence, int len, 
 		int verbose_level);
@@ -514,6 +514,15 @@ public:
 			int f_tensor_ranks,
 			int verbose_level);
 
+
+	/** Create the permutation representation with a given set of generators
+	 */
+	void init_permutation_representation(action *A_original,
+			int f_stay_in_the_old_action,
+			vector_ge *gens,
+			int *Perms, int degree,
+			int verbose_level);
+
 	/** Create the orthogonal group O(5,q) */
 	void init_BLT(finite_field *F, int f_basis,
 		int f_init_hash_table, int verbose_level);
@@ -744,7 +753,7 @@ public:
 		char **&Aut_ascii, int &nb_reps,
 		int &size, int verbose_level);
 	void read_file_and_print_representatives(char *fname,
-		int f_print_stabilizer_generators);
+		int f_print_stabilizer_generators, int verbose_level);
 	void read_set_and_stabilizer(const char *fname,
 		int no, int *&set, int &set_sz, sims *&stab,
 		strong_generators *&Strong_gens,
@@ -1036,6 +1045,7 @@ public:
 	void init_function_pointers_wreath_product_group();
 	void init_function_pointers_direct_product_group();
 	void init_function_pointers_permutation_group();
+	void init_function_pointers_permutation_representation_group();
 	void init_function_pointers_induced_action();
 };
 

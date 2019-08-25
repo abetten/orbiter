@@ -283,9 +283,9 @@ void singer_cycle::init_lines(int verbose_level)
 
 
 	Sch = NEW_OBJECT(schreier);
-	Sch->init(A2);
+	Sch->init(A2, verbose_level - 2);
 	Sch->initialize_tables();
-	Sch->init_single_generator(nice_gens->ith(0));
+	Sch->init_single_generator(nice_gens->ith(0), verbose_level - 2);
 	Sch->compute_all_point_orbits(0);
 	if (f_v) {
 		cout << "Found " << Sch->nb_orbits << " orbits on lines" << endl;

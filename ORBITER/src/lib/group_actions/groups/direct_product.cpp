@@ -682,8 +682,8 @@ void direct_product::lift_generators(
 	len3 = len1 + len2;
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
-	gens->allocate(len3);
+	gens->init(A, verbose_level - 2);
+	gens->allocate(len3, verbose_level - 2);
 	Elt1 = NEW_int(A1->elt_size_in_int);
 	Elt2 = NEW_int(A2->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);

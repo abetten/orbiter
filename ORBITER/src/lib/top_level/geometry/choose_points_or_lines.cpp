@@ -360,7 +360,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 			}
 		}
 	
-	G->init(A);
+	G->init(A, verbose_level - 2);
 	G->init_strong_generators_by_hdl(O->nb_strong_generators,
 			O->hdl_strong_generators, O->tl, FALSE);
 	G->schreier_sims(0);

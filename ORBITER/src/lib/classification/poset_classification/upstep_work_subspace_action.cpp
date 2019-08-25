@@ -170,8 +170,8 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		exit(1);
 		}
 
-	up_orbit.init(&A_on_hyperplanes);
-	up_orbit.init_generators(*H->SG);
+	up_orbit.init(&A_on_hyperplanes, verbose_level - 2);
+	up_orbit.init_generators(*H->SG, verbose_level - 2);
 	if (f_vvv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"generators for H:" << endl;
@@ -555,7 +555,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					"overshooting the group order" << endl;
 			}
 		H->delete_strong_generators();
-		H->init_strong_generators(SG_extension, tl_extension);
+		H->init_strong_generators(SG_extension, tl_extension, verbose_level - 2);
 
 
 		FREE_int(tl_extension);

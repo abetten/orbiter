@@ -1625,9 +1625,9 @@ void arc_generator::report_decompositions(
 		schreier *Sch_points;
 		schreier *Sch_lines;
 		Sch_points = NEW_OBJECT(schreier);
-		Sch_points->init(A /*A_on_points*/);
+		Sch_points->init(A /*A_on_points*/, verbose_level - 2);
 		Sch_points->initialize_tables();
-		Sch_points->init_generators(*gens->gens /* *generators */);
+		Sch_points->init_generators(*gens->gens /* *generators */, verbose_level - 2);
 		Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
 		
 		if (f_v) {
@@ -1635,9 +1635,9 @@ void arc_generator::report_decompositions(
 					<< " orbits on points" << endl;
 			}
 		Sch_lines = NEW_OBJECT(schreier);
-		Sch_lines->init(A_on_lines);
+		Sch_lines->init(A_on_lines, verbose_level - 2);
 		Sch_lines->initialize_tables();
-		Sch_lines->init_generators(*gens->gens /* *generators */);
+		Sch_lines->init_generators(*gens->gens /* *generators */, verbose_level - 2);
 		Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
 		
 		if (f_v) {

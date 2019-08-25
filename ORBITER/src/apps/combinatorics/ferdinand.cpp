@@ -605,7 +605,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 
 	if (group == 1) {
 		int data[] = {
@@ -614,7 +614,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 			0,1,2,3,5,4, // (4,5)
 			};
 
-		gens->allocate(3);
+		gens->allocate(3, verbose_level - 2);
 
 		for (i = 0; i < 3; i++) {
 			A->make_element(Elt1,
@@ -701,8 +701,8 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 	Elt2 = NEW_int(A->elt_size_in_int);
 	gens = NEW_OBJECT(vector_ge);
 	gens_subgroup = NEW_OBJECT(vector_ge);
-	gens->init(A);
-	gens_subgroup->init(A);
+	gens->init(A, verbose_level - 2);
+	gens_subgroup->init(A, verbose_level - 2);
 
 	if (group == 2) {
 		int data[] = { // C_4 x C_2 x C_2 x C_2
@@ -718,7 +718,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			0,1,2,3,4,5,6,7,9,8, // (8,9)
 			};
 
-		gens->allocate(4);
+		gens->allocate(4, verbose_level - 2);
 
 		for (i = 0; i < 4; i++) {
 			A->make_element(Elt1,
@@ -726,7 +726,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 					0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
-		gens_subgroup->allocate(4);
+		gens_subgroup->allocate(4, verbose_level - 2);
 
 		for (i = 0; i < 4; i++) {
 			A->make_element(Elt1,
@@ -755,7 +755,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			0,1,2,3,4,5,7,6, // (6,7)
 			};
 
-		gens->allocate(4);
+		gens->allocate(4, verbose_level - 2);
 
 		for (i = 0; i < 4; i++) {
 			A->make_element(Elt1,
@@ -763,7 +763,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 					0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
-		gens_subgroup->allocate(4);
+		gens_subgroup->allocate(4, verbose_level - 2);
 
 
 		if (subgroup == 1) {
@@ -803,13 +803,13 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1, 0,0,0,1,
 			};
 
-		gens->allocate(5);
+		gens->allocate(5, verbose_level - 2);
 		for (i = 0; i < 5; i++) {
 			A->make_element(Elt1, data + i * data_size, 0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
 
-		gens_subgroup->allocate(4);
+		gens_subgroup->allocate(4, verbose_level - 2);
 		for (i = 0; i < 4; i++) {
 			A->make_element(Elt1, data_subgroup + i * data_size, 0 /*verbose_level*/);
 			A->element_move(Elt1, gens_subgroup->ith(i), 0);
@@ -826,7 +826,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			"(5,6)(7,8)(9,10)(11,12)"
 			};
 
-		gens->allocate(5);
+		gens->allocate(5, verbose_level - 2);
 
 		for (i = 0; i < 5; i++) {
 			int *perm;
@@ -859,7 +859,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			"(5,6)(7,8)(9,10)(11,12)"
 			};
 
-		gens_subgroup->allocate(4);
+		gens_subgroup->allocate(4, verbose_level - 2);
 
 		for (i = 0; i < 4; i++) {
 			int *perm;
@@ -962,8 +962,8 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 	Elt2 = NEW_int(A->elt_size_in_int);
 	gens = NEW_OBJECT(vector_ge);
 	gens_subgroup = NEW_OBJECT(vector_ge);
-	gens->init(A);
-	gens_subgroup->init(A);
+	gens->init(A, verbose_level - 2);
+	gens_subgroup->init(A, verbose_level - 2);
 
 
 	if (group == 1) {
@@ -984,13 +984,13 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 			1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1, 0,0,0,0,1,
 			};
 
-		gens->allocate(6);
+		gens->allocate(6, verbose_level - 2);
 		for (i = 0; i < 6; i++) {
 			A->make_element(Elt1, data + i * data_size, 0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
 
-		gens_subgroup->allocate(5);
+		gens_subgroup->allocate(5, verbose_level - 2);
 		for (i = 0; i < 5; i++) {
 			A->make_element(Elt1, data_subgroup + i * data_size, 0 /*verbose_level*/);
 			A->element_move(Elt1, gens_subgroup->ith(i), 0);

@@ -187,9 +187,9 @@ int main(int argc, char **argv)
 		PElt1 = NEW_int(A_perm->elt_size_in_int);
 		PElt2 = NEW_int(A_perm->elt_size_in_int);
 		vector_ge *gens;
-		gens = new vector_ge;
-		gens->init(A_perm);
-		gens->allocate(SG->gens->len);
+		gens = NEW_OBJECT(vector_ge);
+		gens->init(A_perm, verbose_level - 2);
+		gens->allocate(SG->gens->len, verbose_level - 2);
 		for (i = 0; i < SG->gens->len; i++) {
 			cout << "creating element " << i << " / "
 					<< SG->gens->len << ":" << endl;
