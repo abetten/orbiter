@@ -132,8 +132,8 @@ void do_D1(int n, int d, int verbose_level)
 
 
 	gens_G = NEW_OBJECT(vector_ge);
-	gens_G->init(A);
-	gens_G->allocate(nb_G);
+	gens_G->init(A, verbose_level - 2);
+	gens_G->allocate(nb_G, verbose_level - 2);
 
 	for (i = 0; i < nb_G; i++) {
 		A->make_element(gens_G->ith(i),
@@ -175,8 +175,8 @@ void do_D1(int n, int d, int verbose_level)
 
 
 	gens_S = NEW_OBJECT(vector_ge);
-	gens_S->init(A);
-	gens_S->allocate(nb_S);
+	gens_S->init(A, verbose_level - 2);
+	gens_S->allocate(nb_S, verbose_level - 2);
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);

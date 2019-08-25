@@ -687,13 +687,13 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		cout << "initializing up_orbit with restricted action ";
 		A_by_restriction->print_info();
 		}	
-	up_orbit.init(A_by_restriction);
+	up_orbit.init(A_by_restriction, verbose_level - 2);
 	//up_orbit.init(gen->A2);
 	if (f_v) {
 		print_level_extension_info();
 		cout << "initializing up_orbit with generators" << endl;
 		}	
-	up_orbit.init_generators(*H->SG);
+	up_orbit.init_generators(*H->SG, verbose_level - 2);
 
 
 
@@ -916,7 +916,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 			SG_extension, tl_extension, f_tolerant,
 			0 /*verbose_level - 3*/);
 	H->delete_strong_generators();
-	H->init_strong_generators(SG_extension, tl_extension);
+	H->init_strong_generators(SG_extension, tl_extension, verbose_level - 2);
 	
 	FREE_int(tl_extension);
 	

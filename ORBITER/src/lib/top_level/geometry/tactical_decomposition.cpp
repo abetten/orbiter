@@ -82,9 +82,9 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 					"setting up schreier" << endl;
 			}
 		Sch = NEW_OBJECT(schreier);
-		Sch->init(A);
+		Sch->init(A, verbose_level - 2);
 		Sch->initialize_tables();
-		Sch->init_generators(*gens->gens);
+		Sch->init_generators(*gens->gens, verbose_level - 2);
 		if (f_v) {
 			cout << "tactical_decomposition::init "
 					"before compute_all_point_orbits" << endl;
@@ -103,9 +103,9 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 		}
 	else {
 		Sch_points = NEW_OBJECT(schreier);
-		Sch_points->init(A_on_points);
+		Sch_points->init(A_on_points, verbose_level - 2);
 		Sch_points->initialize_tables();
-		Sch_points->init_generators(*gens->gens);
+		Sch_points->init_generators(*gens->gens, verbose_level - 2);
 		Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
 
 		if (f_v) {
@@ -114,9 +114,9 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 					<< " orbits on points" << endl;
 			}
 		Sch_lines = NEW_OBJECT(schreier);
-		Sch_lines->init(A_on_lines);
+		Sch_lines->init(A_on_lines, verbose_level - 2);
 		Sch_lines->initialize_tables();
-		Sch_lines->init_generators(*gens->gens);
+		Sch_lines->init_generators(*gens->gens, verbose_level - 2);
 		Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
 
 		if (f_v) {

@@ -309,8 +309,8 @@ int main(int argc, const char **argv)
 
 		group G;
 
-		G.init(Ab);
-		G.init_strong_generators(SG2, tl2);
+		G.init(Ab, verbose_level - 2);
+		G.init_strong_generators(SG2, tl2, verbose_level - 2);
 		G.schreier_sims(0);
 		G.group_order(ago4);
 		if (D.compare(ago1, ago4)) {

@@ -358,7 +358,7 @@ void set_stabilizer_compute::compute_set_stabilizer(int t0,
 		}
 	
 	
-	G.init(gen->Poset->A);
+	G.init(gen->Poset->A, verbose_level - 2);
 	G.init_strong_generators_by_hdl(O->nb_strong_generators,
 			O->hdl_strong_generators, O->tl, FALSE);
 	G.schreier_sims(0);
@@ -431,6 +431,7 @@ void set_stabilizer_compute::print_frequencies(
 		int lvl, int *frequency, int nb_orbits)
 {
 	int i, f;
+	int verbose_level = 0;
 
 	cout << "orbit i : frequency[i] : stab order" << endl;
 
@@ -444,7 +445,7 @@ void set_stabilizer_compute::print_frequencies(
 
 			O = &gen->root[f + i];
 
-			G.init(gen->Poset->A);
+			G.init(gen->Poset->A, verbose_level - 2);
 			G.init_strong_generators_by_hdl(
 					O->nb_strong_generators,
 					O->hdl_strong_generators,

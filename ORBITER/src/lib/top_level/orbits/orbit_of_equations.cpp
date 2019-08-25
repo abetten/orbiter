@@ -504,8 +504,8 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 				}
 			}
 		else {
-			Stab->random_schreier_generator(0 /* verbose_level */);
-			A->element_move(Stab->schreier_gen, E1, 0);
+			Stab->random_schreier_generator(E1, 0 /* verbose_level */);
+			//A->element_move(Stab->schreier_gen, E1, 0);
 			if (f_v4) {
 				cout << "orbit_of_equations::compute_stabilizer "
 						"created random schreier generator from sims"

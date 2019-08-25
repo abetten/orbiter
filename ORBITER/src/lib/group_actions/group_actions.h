@@ -81,6 +81,7 @@ class projective_space_job_description;
 class stabilizer_chain_base_data;
 class orbits_on_something;
 class orbit_type_repository;
+class permutation_representation;
 
 //! enumeration to distinguish between the various types of group actions
 
@@ -90,6 +91,7 @@ enum symmetry_group_type {
 	perm_group_t, 
 	wreath_product_t,
 	direct_product_t,
+	permutation_representation_t,
 	action_on_sets_t,
 	action_on_subgroups_t,
 	action_on_k_subsets_t,
@@ -145,6 +147,7 @@ union symmetry_group {
 	perm_group *perm_grp;
 	wreath_product *wreath_product_group;
 	direct_product *direct_product_group;
+	permutation_representation *Permutation_representation;
 	action_on_sets *on_sets;
 	action_on_subgroups *on_subgroups;
 	action_on_k_subsets *on_k_subsets;
@@ -191,11 +194,11 @@ public:
 	~vector_ge();
 	void null();
 	void freeself();
-	void init(action *A);
-	void copy(vector_ge *&vector_copy);
-	void init_by_hdl(action *A, int *gen_hdl, int nb_gen);
-	void init_single(action *A, int *Elt);
-	void init_double(action *A, int *Elt1, int *Elt2);
+	void init(action *A, int verbose_level);
+	void copy(vector_ge *&vector_copy, int verbose_level);
+	void init_by_hdl(action *A, int *gen_hdl, int nb_gen, int verbose_level);
+	void init_single(action *A, int *Elt, int verbose_level);
+	void init_double(action *A, int *Elt1, int *Elt2, int verbose_level);
 	void init_from_permutation_representation(action *A, int *data, 
 		int nb_elements, int verbose_level);
 		// data[nb_elements * degree]
@@ -215,13 +218,13 @@ public:
 			foundations::longinteger_object &go,
 			std::ostream &ost);
 	void print_as_permutation(std::ostream& ost);
-	void allocate(int length);
-	void reallocate(int new_length);
-	void reallocate_and_insert_at(int position, int *elt);
-	void insert_at(int length_before, int position, int *elt);
+	void allocate(int length, int verbose_level);
+	void reallocate(int new_length, int verbose_level);
+	void reallocate_and_insert_at(int position, int *elt, int verbose_level);
+	void insert_at(int length_before, int position, int *elt, int verbose_level);
 		// does not reallocate, but shifts elements up to make space.
 		// the last element might be lost if there is no space.
-	void append(int *elt);
+	void append(int *elt, int verbose_level);
 	void copy_in(int i, int *elt);
 	void copy_out(int i, int *elt);
 	void conjugate_svas(int *Elt);

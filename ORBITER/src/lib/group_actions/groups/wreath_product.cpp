@@ -7842,6 +7842,18 @@ void wreath_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 }
 
+void wreath_product::element_print_for_make_element(int *Elt, ostream &ost)
+{
+	int f;
+
+	for (f = 0; f < nb_factors; f++) {
+		ost << Elt[f] << ",";
+	}
+	for (f = 0; f < nb_factors; f++) {
+		M->GL_print_for_make_element(Elt + offset_i(f), ost);
+	}
+}
+
 void wreath_product::element_print_easy(int *Elt, ostream &ost)
 {
 	int f;
@@ -7860,6 +7872,30 @@ void wreath_product::element_print_easy(int *Elt, ostream &ost)
 		M->GL_print_easy(Elt + offset_i(f), ost);
 	}
 	ost << "end element of wreath product" << endl;
+}
+
+void wreath_product::element_print_latex(int *Elt, ostream &ost)
+{
+	int f;
+	combinatorics_domain Combi;
+
+	ost << "\\left(";
+	for (f = 0; f < nb_factors; f++) {
+		M->GL_print_latex(Elt + offset_i(f), ost);
+	}
+	ost << "; \\;" << endl;
+	Combi.perm_print(ost, Elt, nb_factors);
+#if 0
+	ost << "[";
+	for (f = 0; f < nb_factors; f++) {
+		ost << Elt[f];
+		if (f < nb_factors - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "]";
+#endif
+	ost << "\\right)" << endl;
 }
 
 void wreath_product::compute_base_and_transversals(int verbose_level)

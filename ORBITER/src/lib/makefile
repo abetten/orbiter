@@ -144,6 +144,7 @@ MODULES= \
 		group_actions/actions/interface_induced_action.o \
 		group_actions/actions/interface_matrix_group.o \
 		group_actions/actions/interface_perm_group.o \
+		group_actions/actions/interface_permutation_representation.o \
 		group_actions/actions/interface_wreath_product.o \
 		group_actions/actions/nauty_interface.o \
 		group_actions/actions/stabilizer_chain_base_data.o \
@@ -168,9 +169,12 @@ MODULES= \
 		group_actions/groups/matrix_group.o \
 		group_actions/groups/orbits_on_something.o \
 		group_actions/groups/perm_group.o \
+		group_actions/groups/permutation_representation.o \
 		group_actions/groups/schreier.o \
 		group_actions/groups/schreier_io.o \
 		group_actions/groups/schreier_sims.o \
+		group_actions/groups/sims_group_theory.o \
+		group_actions/groups/sims_io.o \
 		group_actions/groups/sims.o \
 		group_actions/groups/sims2.o \
 		group_actions/groups/sims3.o \

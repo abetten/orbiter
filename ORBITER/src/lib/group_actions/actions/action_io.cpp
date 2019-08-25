@@ -285,8 +285,9 @@ void action::read_representatives_and_strong_generators(
 }
 
 void action::read_file_and_print_representatives(
-		char *fname, int f_print_stabilizer_generators)
+		char *fname, int f_print_stabilizer_generators, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int f_casenumbers = FALSE;
 	int nb_cases;
 	int *Set_sizes;
@@ -297,10 +298,11 @@ void action::read_file_and_print_representatives(
 	int i;
 	file_io Fio;
 
-
-	cout << "action::read_file_and_print_representatives "
-			"reading file "
-			<< fname << endl;
+	if (f_v) {
+		cout << "action::read_file_and_print_representatives "
+				"reading file "
+				<< fname << endl;
+	}
 
 	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers,
@@ -318,8 +320,8 @@ void action::read_file_and_print_representatives(
 		int *tl;
 
 		G = NEW_OBJECT(group);
-		G->init(this);
-		G->init_ascii_coding_to_sims(Aut_ascii[i]);
+		G->init(this, verbose_level - 2);
+		G->init_ascii_coding_to_sims(Aut_ascii[i], verbose_level - 2);
 
 
 		longinteger_object go;
@@ -399,12 +401,12 @@ void action::read_set_and_stabilizer(const char *fname,
 
 
 	G = NEW_OBJECT(group);
-	G->init(this);
+	G->init(this, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
 				"before G->init_ascii_coding_to_sims" << endl;
 		}
-	G->init_ascii_coding_to_sims(Aut_ascii[no]);
+	G->init_ascii_coding_to_sims(Aut_ascii[no], verbose_level - 2);
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
 				"after G->init_ascii_coding_to_sims" << endl;
@@ -489,7 +491,13 @@ void action::report(ostream &ost)
 		Sims->group_order(go);
 		ost << "Group order " << go << "\\\\" << endl;
 		ost << "tl=$";
-		int_vec_print(ost, Sims->orbit_len, base_len());
+		//int_vec_print(ost, Sims->orbit_len, base_len());
+		for (int t = 0; t < base_len(); t++) {
+			ost << Sims->get_orbit_length(t);
+			if (t < base_len()) {
+				ost << ", ";
+			}
+		}
 		ost << "$\\\\" << endl;
 	}
 
@@ -543,7 +551,13 @@ void action::print_info()
 
 		Sims->group_order(go);
 		cout << "Order " << go << " = ";
-		int_vec_print(cout, Sims->orbit_len, base_len());
+		//int_vec_print(cout, Sims->orbit_len, base_len());
+		for (int t = 0; t < base_len(); t++) {
+			cout << Sims->get_orbit_length(t);
+			if (t < base_len()) {
+				cout << " * ";
+			}
+		}
 		cout << endl;
 	}
 	cout << endl;

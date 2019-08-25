@@ -358,8 +358,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	//gens = A->strong_generators;
 
 	gens1 = NEW_OBJECT(vector_ge);
-	gens1->init(this);
-	gens1->allocate(gens->len);
+	gens1->init(this, verbose_level - 2);
+	gens1->allocate(gens->len, verbose_level - 2);
 
 	Mtx = NEW_int(d * d + 1); // leave space for frobenius
 
@@ -396,7 +396,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				}
 			}
 		}
-	gens1->reallocate(pos);
+	gens1->reallocate(pos, verbose_level - 2);
 	if (f_vv) {
 		cout << "we found " << gens1->len << " generators" << endl;
 		}

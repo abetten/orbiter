@@ -515,8 +515,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	gens = A_perm->Strong_gens->gens;
 
 	gens1 = NEW_OBJECT(vector_ge);
-	gens1->init(A_linear);
-	gens1->allocate(gens->len);
+	gens1->init(A_linear, verbose_level - 2);
+	gens1->allocate(gens->len, verbose_level - 2);
 	
 	Mtx = NEW_int(d * d + 1); // leave space for frobenius
 	
@@ -553,7 +553,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 				}
 			}
 		}
-	gens1->reallocate(pos);
+	gens1->reallocate(pos, verbose_level - 2);
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer "
 				"we found " << gens1->len << " generators" << endl;
@@ -1068,8 +1068,8 @@ strong_generators
 	gens = A_perm->Strong_gens->gens;
 
 	gens1 = NEW_OBJECT(vector_ge);
-	gens1->init(A_linear);
-	gens1->allocate(gens->len);
+	gens1->init(A_linear, verbose_level - 2);
+	gens1->allocate(gens->len, verbose_level - 2);
 	
 	Mtx = NEW_int(d * d + 1); // leave space for frobenius
 	
@@ -1106,7 +1106,7 @@ strong_generators
 				}
 			}
 		}
-	gens1->reallocate(pos);
+	gens1->reallocate(pos, verbose_level - 2);
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"we found " << gens1->len << " generators" << endl;

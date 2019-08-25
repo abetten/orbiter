@@ -181,8 +181,8 @@ void Hill_cap56(int argc, const char **argv,
 		cout << "Hill_cap computing orbits on points" << endl;
 		}
 	Orb = NEW_OBJECT(schreier);
-	Orb->init(P->A);
-	Orb->init_single_generator(Elt);
+	Orb->init(P->A, verbose_level - 2);
+	Orb->init_single_generator(Elt, verbose_level - 2);
 	Orb->compute_all_point_orbits(verbose_level - 2);
 	if (f_vv) {
 		cout << "Hill_cap the orbits on points are:" << endl;

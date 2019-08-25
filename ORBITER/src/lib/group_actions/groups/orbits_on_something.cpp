@@ -109,9 +109,9 @@ void orbits_on_something::init(
 
 		Sch = NEW_OBJECT(schreier);
 
-		Sch->init(A);
+		Sch->init(A, verbose_level - 2);
 		Sch->initialize_tables();
-		Sch->init_generators(*SG->gens);
+		Sch->init_generators(*SG->gens, verbose_level - 2);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
 		{
 		ifstream fp(fname);
