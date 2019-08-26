@@ -1817,13 +1817,14 @@ void orbits(wreath_product* W,
 
 	uint32_t *Orbit;
 	int goi;
-
 	longinteger_object go;
+
+
+	SG->group_order(go);
 	goi = go.as_int();
 
 	cout << "goi=" << goi << endl;
 
-	SG->group_order(go);
 
 	Orbit = (uint32_t *) NEW_int(goi);
 
@@ -1855,6 +1856,10 @@ void orbits(wreath_product* W,
 
 	}
 	FREE_int((int *) Orbit);
+	cout << "the orbits are: " << endl;
+	for (int i = 0; i < nb_orbits; i++) {
+		cout << i << ", " << orbit_rep[i] << ", " << orbit_length[i] << ", " << endl;
+	}
 }
 
 
