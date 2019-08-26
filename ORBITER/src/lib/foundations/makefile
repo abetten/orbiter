@@ -35,6 +35,7 @@ graphics : graphics2
 io_and_os : io_and_os2  
 solvers : solvers2 
 statistics : statistics2
+BitSet	:	BitSet2
 
 algebra_and_number_theory2 : ; cd algebra_and_number_theory; $(MAKE)
 coding_theory2 : ; cd coding_theory; $(MAKE)
@@ -48,7 +49,7 @@ graphics2 : ; cd graphics; $(MAKE)
 io_and_os2 : ; cd io_and_os; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
 statistics2 : ; cd statistics; $(MAKE)
-BitSet: ; cd BitSet; $(MAKE)
+BitSet2: ; cd BitSet; $(MAKE)
 
 clean:
 	cd algebra_and_number_theory; $(MAKE) clean
