@@ -7,3 +7,5 @@ ORBITER/nbproject/
 orbiter.tar.gz
 .DS_Store
 .settings/*
+.cproject
+.settings/language.settings.xml
