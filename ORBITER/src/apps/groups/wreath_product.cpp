@@ -1774,6 +1774,11 @@ void orbits(wreath_product* W,
 	} // next h
 
 
+	cout << "Done with the loop" << endl;
+	cout << "Computing the orbit representatives" << endl;
+
+
+
 	int nb_orbits = 0;
 	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
 		if (S[i] == i) {
@@ -1803,9 +1808,53 @@ void orbits(wreath_product* W,
 	for (int i = 0; i < nb_orbits; i++) {
 		cout << i << ", " << orbit_rep[i] << ", " << endl;
 	}
+	cout << "Path compression:" << endl;
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+		unsigned int r = root(S, i);
+		S[i] = r;
+	}
+	cout << "Path compression done" << endl;
 
+	uint32_t *Orbit;
+	int goi;
 
+	longinteger_object go;
+	goi = go.as_int();
 
+	cout << "goi=" << goi << endl;
+
+	SG->group_order(go);
+
+	Orbit = (uint32_t *) NEW_int(goi);
+
+	cout << "determining the orbits: " << endl;
+	for (int i = 0; i < nb_orbits; i++) {
+
+		unsigned int rep = orbit_rep[i];
+		uint32_t len = 0;
+
+		cout << "determining orbit " << i << " / " << nb_orbits << " with rep " << rep << endl;
+		for (unsigned int j=0; j < W->degree_of_tensor_action; ++j) {
+			if (S[j] == rep) {
+				Orbit[len++] = j;
+			}
+		}
+		orbit_length[i] = len;
+		char fname_orbit[1000];
+
+		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bib", W->q, W->nb_factors, i);
+		{
+			ofstream fp(fname_orbit, ios::binary);
+
+			fp.write((char *) &len, sizeof(uint32_t));
+			for (i = 0; i < len; i++) {
+				fp.write((char *) &Orbit[i], sizeof(uint32_t));
+			}
+		}
+		cout << "We are done writing the file " << fname_orbit << endl;
+
+	}
+	FREE_int((int *) Orbit);
 }
 
 
@@ -1852,18 +1901,7 @@ void orbits_restricted(wreath_product* W,
 	v = NEW_int(W->dimension_of_tensor_action);
 	Set_in_PG = NEW_lint(set_m);
 	for (i = 0; i < set_m; i++) {
-#if 0
-		W->F->PG_element_unrank_modified_lint(v, 1, W->dimension_of_tensor_action, Set[i]);
-		s = v[W->dimension_of_tensor_action - 1];
-		for (j = 1; j < W->dimension_of_tensor_action; j++) {
-			s <<= 1;
-			if (v[W->dimension_of_tensor_action - 1 - j]) {
-				s++;
-			}
-		}
-#else
 		s = W->affine_rank_to_PG_rank(Set[i]);
-#endif
 		Set_in_PG[i] = s;
 	}
 	//FREE_int(v);
@@ -1992,40 +2030,16 @@ void orbits_restricted(wreath_product* W,
 					cout << "did not find element y=" << y << " in Set_in_PG "
 							"under generator h=" << h << ", something is wrong" << endl;
 					cout << "x=" << x << endl;
-#if 0
-					W->F->PG_element_unrank_modified_lint(v, 1,
-							W->dimension_of_tensor_action, x);
-					s = v[W->dimension_of_tensor_action - 1];
-					for (j = 1; j < W->dimension_of_tensor_action; j++) {
-						s <<= 1;
-						if (v[W->dimension_of_tensor_action - 1 - j]) {
-							s++;
-						}
-					}
-#else
 					W->tensor_PG_unrank(v, x);
 					s = W->tensor_affine_rank(v);
-#endif
 					cout << "tensor=";
 					int_vec_print(cout, v, W->dimension_of_tensor_action);
 					cout << endl;
 					cout << "affine rank s=" << s << endl;
 
 					cout << "y=" << y << endl;
-#if 0
-					W->F->PG_element_unrank_modified_lint(v, 1,
-							W->dimension_of_tensor_action, y);
-					s = v[W->dimension_of_tensor_action - 1];
-					for (j = 1; j < W->dimension_of_tensor_action; j++) {
-						s <<= 1;
-						if (v[W->dimension_of_tensor_action - 1 - j]) {
-							s++;
-						}
-					}
-#else
 					W->tensor_PG_unrank(v, y);
 					s = W->tensor_affine_rank(v);
-#endif
 					cout << "tensor=";
 					int_vec_print(cout, v, W->dimension_of_tensor_action);
 					cout << endl;
