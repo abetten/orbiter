@@ -118,8 +118,11 @@ int main(int argc, char **argv)
 						cnt++;
 					}
 				}
+				cout << "We found " << cnt << " entries of value " << extract_value << endl;
+
+
 				uint32_t *Set;
-				uint32_t sz, i;
+				uint32_t sz;
 
 				Set = (uint32_t *) NEW_int(cnt);
 				sz = 0;
@@ -129,20 +132,23 @@ int main(int argc, char **argv)
 					}
 				}
 
-				cout << "We found " << sz << " entries of value " << extract_value << endl;
+				cout << "We extracted all " << sz << " entries of value " << extract_value << endl;
+
 
 				char fname[1000];
 
 				sprintf(fname, extract_fname_mask, extract_value);
+				cout << "We will write the file " << fname << endl;
 
 				{
 					ofstream fp(fname, ios::binary);
 
 					fp.write((char *) &sz, sizeof(uint32_t));
-					for (uint32_t i = 0; i < sz; i++) {
+					for (i = 0; i < sz; i++) {
 						fp.write((char *) &Set[i], sizeof(uint32_t));
 					}
 				}
+				cout << "We are done writing the file " << fname << endl;
 				FREE_int((int *) Set);
 			}
 
