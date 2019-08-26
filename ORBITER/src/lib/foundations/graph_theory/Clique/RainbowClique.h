@@ -69,7 +69,6 @@ public:
 		}
 	}
 
-	__forceinline__
 	static void find_cliques_parallel (size_t depth, size_t start, size_t end,
 																	PARAMS& param, Graph& G) {
 
