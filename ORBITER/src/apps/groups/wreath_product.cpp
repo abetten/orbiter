@@ -1829,26 +1829,28 @@ void orbits(wreath_product* W,
 	Orbit = (uint32_t *) NEW_int(goi);
 
 	cout << "determining the orbits: " << endl;
-	for (int i = 0; i < nb_orbits; i++) {
+	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 
-		unsigned int rep = orbit_rep[i];
+		unsigned int rep = orbit_rep[orbit_idx];
 		uint32_t len = 0;
 
-		cout << "determining orbit " << i << " / " << nb_orbits << " with rep " << rep << endl;
+		cout << "determining orbit " << orbit_idx << " / " << nb_orbits << " with rep " << rep << endl;
 		for (unsigned int j=0; j < W->degree_of_tensor_action; ++j) {
 			if (S[j] == rep) {
 				Orbit[len++] = j;
 			}
 		}
-		orbit_length[i] = len;
+		orbit_length[orbit_idx] = len;
+		cout << "orbit " << orbit_idx << " / " << nb_orbits << " has length " << len << endl;
 		char fname_orbit[1000];
 
-		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bib", W->q, W->nb_factors, i);
+		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bib", W->q, W->nb_factors, orbit_idx);
+		cout << "Writing the file " << fname_orbit << endl;
 		{
 			ofstream fp(fname_orbit, ios::binary);
 
 			fp.write((char *) &len, sizeof(uint32_t));
-			for (i = 0; i < len; i++) {
+			for (int i = 0; i < len; i++) {
 				fp.write((char *) &Orbit[i], sizeof(uint32_t));
 			}
 		}
@@ -1857,8 +1859,8 @@ void orbits(wreath_product* W,
 	}
 	FREE_int((int *) Orbit);
 	cout << "the orbits are: " << endl;
-	for (int i = 0; i < nb_orbits; i++) {
-		cout << i << ", " << orbit_rep[i] << ", " << orbit_length[i] << ", " << endl;
+	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		cout << orbit_idx << ", " << orbit_rep[orbit_idx] << ", " << orbit_length[orbit_idx] << ", " << endl;
 	}
 }
 
