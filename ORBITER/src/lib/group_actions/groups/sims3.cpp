@@ -56,8 +56,8 @@ void sims::normalizer_based_on_characteristic_vector(int *C_sub,
 		}
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
-	gens->allocate(nb_gens);
+	gens->init(A, verbose_level - 2);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (j = 0; j < nb_gens; j++) {
 		a = Gen_idx[j];
 		element_unrank_int(a, gens->ith(j));

@@ -357,10 +357,10 @@ int main(int argc, char **argv)
 		finite_field *F;
 		vector_ge *nice_gens;
 
-		F = new finite_field;
+		F = NEW_OBJECT(finite_field);
 		F->init(q, 0);
 		
-		A = new action;
+		A = NEW_OBJECT(action);
 		A->init_projective_group(d /* n */, F,
 				FALSE /* f_semilinear */,
 				TRUE /* f_basis */,
@@ -428,11 +428,11 @@ int main(int argc, char **argv)
 		vector_ge *SG;
 		int *tl;
 		
-		gens = new vector_ge;
-		SG = new vector_ge;
+		gens = NEW_OBJECT(vector_ge);
+		SG = NEW_OBJECT(vector_ge);
 		tl = NEW_int(A->base_len());
-		gens->init(A);
-		gens->allocate(sz);
+		gens->init(A, verbose_level - 2);
+		gens->allocate(sz, verbose_level - 2);
 		
 		for (i = 0; i < sz; i++) {
 			a = List[i];
@@ -472,8 +472,8 @@ int main(int argc, char **argv)
 		FREE_int(Elt1);
 		FREE_int(Elt2);
 		FREE_int(Elt3);
-		delete A;
-		delete F;
+		FREE_OBJECT(A);
+		FREE_OBJECT(F);
 		}
 	else if (f_centralizer) {
 

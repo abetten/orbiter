@@ -267,7 +267,7 @@ void poset_orbit_node::compute_schreier_vector(
 		//	}
 		//Schreier.orbits_on_invariant_subset_fast(
 		// n, subset, verbose_level);
-		Schreier.init(AR);
+		Schreier.init(AR, verbose_level - 2);
 #if 0
 		if (f_vv) {
 			cout << "poset_orbit_node::compute_schreier_vector "
@@ -303,7 +303,7 @@ void poset_orbit_node::compute_schreier_vector(
 		//	cout << "calling orbits_on_invariant_subset_fast" << endl;
 		//	}
 		//Schreier.orbits_on_invariant_subset_fast(n, subset, verbose_level);
-		Schreier.init(AR);
+		Schreier.init(AR, verbose_level - 2);
 		FREE_int(subset);
 #if 0
 		if (f_vv) {
@@ -315,7 +315,7 @@ void poset_orbit_node::compute_schreier_vector(
 		}
 	else {
 		f_using_invariant_subset = FALSE;
-		Schreier.init(gen->Poset->A2);
+		Schreier.init(gen->Poset->A2, verbose_level - 2);
 			// here was a mistake, it was gen->A
 			// A. Betten, Dec 17, 2011 !!!
 		}
@@ -519,12 +519,12 @@ void poset_orbit_node::schreier_forest(
 			cout << "created restricted action ";
 			AR->print_info();
 			}
-		Schreier.init(AR /*gen->A2*/);
+		Schreier.init(AR /*gen->A2*/, verbose_level - 2);
 		}
 	else {
 		gen->print_level_info(lvl, node);
 		cout << " : we are NOT using an invariant subset" << endl;
-		Schreier.init(gen->Poset->A2);
+		Schreier.init(gen->Poset->A2, verbose_level - 2);
 		}
 
 
@@ -996,7 +996,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 				pt = O->E[i].pt;
 				schreier S;
 
-				S.init(gen->Poset->A2);
+				S.init(gen->Poset->A2, verbose_level - 2);
 				S.init_generators_by_hdl(O->nb_strong_generators, 
 					O->hdl_strong_generators, verbose_level - 1);
 				S.compute_point_orbit(pt, 0/*verbose_level*/);

@@ -443,11 +443,11 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 }
 
 void longinteger_domain::multiply_up(
-		longinteger_object &a, int *x, int len)
+		longinteger_object &a, int *x, int len, int verbose_level)
 {
 	longinteger_object b, c;
 	int i;
-	int f_v = FALSE;
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "longinteger_domain::multiply_up" << endl;
@@ -458,8 +458,9 @@ void longinteger_domain::multiply_up(
 				"a=" << a << endl;
 		}
 	for (i = 0; i < len; i++) {
-		if (x[i] == 1)
+		if (x[i] == 1) {
 			continue;
+		}
 		b.create(x[i]);
 		if (f_v) {
 			cout << "longinteger_domain::multiply_up "
@@ -479,6 +480,9 @@ void longinteger_domain::multiply_up(
 					<< " a=" << a << endl;
 			}
 		//cout << "*" << x[i] << "=" << a << endl;
+		}
+	if (f_v) {
+		cout << "longinteger_domain::multiply_up done" << endl;
 		}
 }
 
@@ -2195,7 +2199,7 @@ void longinteger_domain::factorial(
 	for (i = 0; i < n; i++) {
 		x[i] = i + 1;
 		}
-	multiply_up(result, x, n);
+	multiply_up(result, x, n, 0 /* verbose_level */);
 	FREE_int(x);
 }
 
@@ -2232,7 +2236,7 @@ void longinteger_domain::group_order_PGL(
 	cout << endl;
 #endif
 
-	multiply_up(result, x, l);
+	multiply_up(result, x, l, 0 /* verbose_level */);
 	FREE_int(x);
 }
 

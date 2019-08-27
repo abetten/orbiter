@@ -804,8 +804,8 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 		int upstep_idx;
 
 		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(Surf_A->A);
-		coset_reps->allocate(3240); // 3240 = 45 * 3 * (8 * 6) / 2
+		coset_reps->init(Surf_A->A, verbose_level - 2);
+		coset_reps->allocate(3240, verbose_level - 2); // 3240 = 45 * 3 * (8 * 6) / 2
 
 
 		strong_generators *S;
@@ -1107,7 +1107,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 
 
 #if 1
-		coset_reps->reallocate(nb_coset_reps);
+		coset_reps->reallocate(nb_coset_reps, verbose_level - 2);
 
 		strong_generators *Aut_gens;
 

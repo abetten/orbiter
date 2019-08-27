@@ -7,9 +7,9 @@
 
 #include "shallow_schreier_ai.h"
 
-void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int vl) {
+void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int verbose_level) {
 
-	int f_v = (vl >= 1);
+	int f_v = (verbose_level >= 1);
 	int fst, len, root, cnt, l;
 	int i, a, f, o;
 	int *Elt1;
@@ -32,16 +32,16 @@ void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int vl) {
 
 	// Make a copy of the current generators
 	vector_ge* gens2 = NEW_OBJECT(vector_ge);
-	gens2->init(sch.A);
+	gens2->init(sch.A, verbose_level - 2);
 	for (int el = 0; el < sch.gens.len; el++)
-		gens2->append(sch.gens.ith(el));
+		gens2->append(sch.gens.ith(el), verbose_level - 2);
 
 
 
 	// Create a new schreier forest with the same generators
 	schreier* S = NEW_OBJECT(schreier);
-	S->init(sch.A);
-	S->init_generators_recycle_images(*gens2, sch.images);
+	S->init(sch.A, verbose_level - 2);
+	S->init_generators_recycle_images(*gens2, sch.images, verbose_level - 2);
 	S->compute_all_point_orbits(0);
 
 
@@ -74,10 +74,10 @@ void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int vl) {
 
 		// Create a new generating set with the new element
 		vector_ge* new_gens = NEW_OBJECT(vector_ge);
-		new_gens->init(sch.A);
+		new_gens->init(sch.A, verbose_level - 2);
 		for (int el = 0; el < gens2->len; el++) {
-			(el != random_generator_idx) ?  new_gens->append(gens2->ith(el)) :
-											new_gens->append(Elt1);
+			(el != random_generator_idx) ?  new_gens->append(gens2->ith(el), verbose_level - 2) :
+											new_gens->append(Elt1, verbose_level - 2);
 		}
 		FREE_OBJECT(gens2);
 		gens2 = new_gens;
@@ -86,7 +86,7 @@ void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int vl) {
 
 		// Create a new schreier tree with the new generating set
 		S = NEW_OBJECT(schreier);
-		S->init(sch.A);
+		S->init(sch.A, verbose_level - 2);
 
 		S->init_generators_recycle_images(
 				previous_schreier->nb_images,
@@ -120,9 +120,9 @@ void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int vl) {
 	}
 
 
-	sch.init(sch.A);
-	sch.init_generators_recycle_images(S->gens, S->images);
-	sch.compute_all_point_orbits(vl);
+	sch.init(sch.A, verbose_level - 2);
+	sch.init_generators_recycle_images(S->gens, S->images, verbose_level - 2);
+	sch.compute_all_point_orbits(verbose_level);
 
 
 

@@ -409,8 +409,8 @@ void surface_classify_wedge::upstep(int verbose_level)
 		int nb_coset_reps;
 		
 		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(Surf_A->A);
-		coset_reps->allocate(36);
+		coset_reps->init(Surf_A->A, verbose_level - 2);
+		coset_reps->allocate(36, verbose_level - 2);
 
 
 		strong_generators *S;
@@ -506,7 +506,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 			} // next i
 
 
-		coset_reps->reallocate(nb_coset_reps);
+		coset_reps->reallocate(nb_coset_reps, verbose_level - 2);
 
 		strong_generators *Aut_gens;
 

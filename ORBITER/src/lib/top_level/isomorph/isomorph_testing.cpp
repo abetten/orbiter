@@ -1122,7 +1122,7 @@ void isomorph::stabilizer_action_add_generator(int *Elt, int verbose_level)
 
 	len = gens_perm->len;
 
-	gens_perm->reallocate(len + 1);
+	gens_perm->reallocate(len + 1, verbose_level - 2);
 
 	Elt1 = NEW_int(AA_perm->elt_size_in_int);
 
@@ -1525,8 +1525,8 @@ void isomorph::induced_action_on_set(
 	len = gens->len;
 	gens_perm = NEW_OBJECT(vector_ge);
 
-	gens_perm->init(AA_perm);
-	gens_perm->allocate(len);
+	gens_perm->init(AA_perm, verbose_level - 2);
+	gens_perm->allocate(len, verbose_level - 2);
 
 	data1 = NEW_int(size);
 	data2 = NEW_int(size);

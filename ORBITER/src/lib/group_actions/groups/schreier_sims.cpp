@@ -243,8 +243,8 @@ void schreier_sims::get_generator_internal(
 				"choosing random schreier generator" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	G->random_schreier_generator(verbose_level - 3);
-	GA->element_move(G->schreier_gen, Elt, 0);
+	G->random_schreier_generator(Elt, verbose_level - 3);
+	//GA->element_move(G->schreier_gen, Elt, 0);
 	if (f_vvv) {
 		cout << "schreier_sims::get_generator_internal "
 				"random element chosen:" << endl;

@@ -650,12 +650,12 @@ int main(int argc, const char **argv)
 
 		//A->all_point_orbits(*Sch, verbose_level);
 
-		Sch->init(A);
+		Sch->init(A, verbose_level - 2);
 		if (!A->f_has_strong_generators) {
 			cout << "action::all_point_orbits !f_has_strong_generators" << endl;
 			exit(1);
 			}
-		Sch->init_generators(*LG->Strong_gens->gens /* *strong_generators */);
+		Sch->init_generators(*LG->Strong_gens->gens /* *strong_generators */, verbose_level - 2);
 		Sch->initialize_tables();
 		Sch->compute_point_orbit(orbit_of_idx, verbose_level);
 

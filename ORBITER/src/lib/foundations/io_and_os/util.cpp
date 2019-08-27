@@ -3291,7 +3291,7 @@ void print_longinteger_after_multiplying(
 	longinteger_domain D;
 	longinteger_object a;
 
-	D.multiply_up(a, factors, len);
+	D.multiply_up(a, factors, len, 0 /* verbose_level */);
 	ost << a;
 }
 

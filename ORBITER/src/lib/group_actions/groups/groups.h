@@ -574,6 +574,63 @@ public:
 };
 
 
+// #############################################################################
+// permutation_representation.cpp
+// #############################################################################
+
+//! homomorphism to a permutation group
+
+class permutation_representation {
+
+public:
+	action *A_original;
+	int f_stay_in_the_old_action;
+	int nb_gens;
+	vector_ge *gens; // the original generators in action A_original
+	int *Perms; // [nb_gens * degree]
+	int degree;
+	//longinteger_object target_go;
+
+	perm_group *P;
+	int perm_offset;
+	int elt_size_int;
+		// A_original->elt_size_int + P->elt_size_int
+	int make_element_size;
+
+	int char_per_elt;
+	uchar *elt1; // [char_per_elt]
+
+
+	char label[1000];
+	char label_tex[1000];
+
+	page_storage *PS;
+
+	int *Elts;
+		// [nb_gens * elt_size_int], the generators in the induced action
+
+
+	permutation_representation();
+	~permutation_representation();
+	void init(action *A_original,
+			int f_stay_in_the_old_action,
+			vector_ge *gens,
+			int *Perms, int degree,
+			int verbose_level);
+		// Perms is degree x nb_gens
+	int element_image_of(int *Elt, int a, int verbose_level);
+	void element_one(int *Elt);
+	int element_is_one(int *Elt);
+	void element_mult(int *A, int *B, int *AB, int verbose_level);
+	void element_move(int *A, int *B, int verbose_level);
+	void element_invert(int *A, int *Av, int verbose_level);
+	void element_pack(int *Elt, uchar *elt);
+	void element_unpack(uchar *elt, int *Elt);
+	void element_print_for_make_element(int *Elt, std::ostream &ost);
+	void element_print_easy(int *Elt, std::ostream &ost);
+	void element_print_latex(int *Elt, std::ostream &ost);
+};
+
 
 
 // #############################################################################
@@ -626,7 +683,7 @@ public:
 	void *print_function_data;
 
 	schreier();
-	schreier(action *A);
+	schreier(action *A, int verbose_level);
 	~schreier();
 	void freeself();
 	void delete_images();
@@ -634,24 +691,24 @@ public:
 	void init_images_only(int nb_images,
 			int degree, int *images, int verbose_level);
 	void images_append();
-	void init(action *A);
+	void init(action *A, int verbose_level);
 	void allocate_tables();
 	void init2();
 	void initialize_tables();
-	void init_single_generator(int *elt);
-	void init_generators(vector_ge &generators);
+	void init_single_generator(int *elt, int verbose_level);
+	void init_generators(vector_ge &generators, int verbose_level);
 	void init_images_recycle(int nb_images,
 			int **old_images,
 			int idx_deleted_generator,
 			int verbose_level);
 	void init_images_recycle(int nb_images,
-			int **old_images, int verbose_level=0);
-	void init_generators(int nb, int *elt);
+			int **old_images, int verbose_level);
+	void init_generators(int nb, int *elt, int verbose_level);
 	void init_generators_recycle_images(
 			vector_ge &generators, int **old_images,
-			int idx_generator_to_delete);
+			int idx_generator_to_delete, int verbose_level);
 	void init_generators_recycle_images(
-			vector_ge &generators, int **old_images);
+			vector_ge &generators, int **old_images, int verbose_level);
 
 
 		// elt must point to nb * A->elt_size_in_int 
@@ -659,9 +716,9 @@ public:
 		// group elements in int format
 	void init_generators_recycle_images(int nb,
 			int *elt, int **old_images,
-			int idx_generator_to_delete);
+			int idx_generator_to_delete, int verbose_level);
 	void init_generators_recycle_images(int nb,
-			int *elt, int **old_images);
+			int *elt, int **old_images, int verbose_level);
 	void init_generators_by_hdl(int nb_gen, int *gen_hdl, 
 		int verbose_level);
 	int get_image(int i, int gen_idx, int verbose_level);
@@ -696,13 +753,14 @@ public:
 			int pt, int max_depth, int verbose_level);
 	int sum_up_orbit_lengths();
 	void non_trivial_random_schreier_generator(action *A_original, 
-		int verbose_level);
+			int *Elt, int verbose_level);
 		// computes non trivial random Schreier 
 		// generator into schreier_gen
 		// non-trivial is with respect to A_original
-	void random_schreier_generator_ith_orbit(int orbit_no, 
-		int verbose_level);
-	void random_schreier_generator(int verbose_level);
+	void random_schreier_generator_ith_orbit(
+			int *Elt, int orbit_no,
+			int verbose_level);
+	void random_schreier_generator(int *Elt, int verbose_level);
 		// computes random Schreier generator into schreier_gen
 	void trace_back(int *path, int i, int &j);
 	void intersection_vector(int *set, int len, 
@@ -748,7 +806,6 @@ public:
 	int orbit_number(int pt);
 	void get_orbit_decomposition_scheme_of_graph(
 		int *Adj, int n, int *&Decomp_scheme, int verbose_level);
-	void list_elements_as_permutations_vertically(std::ostream &ost);
 	void create_point_list_sorted(
 			int *&point_list, int &point_list_length);
 	void shallow_tree_generators(int orbit_idx,
@@ -859,16 +916,11 @@ public:
 		int i, int last);
 	int subtree_depth_first(std::ostream &ost, int *path, int i, int last);
 	void print_path(std::ostream &ost, int *path, int l);
-#if 0
-	void write_to_memory_object(memory_object *m, int verbose_level);
-	void read_from_memory_object(memory_object *m, int verbose_level);
-	void write_file(char *fname, int verbose_level);
-	void read_file(const char *fname, int verbose_level);
-#endif
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(std::ifstream &fp, int verbose_level);
 	void write_file_binary(char *fname, int verbose_level);
 	void read_file_binary(const char *fname, int verbose_level);
+	void list_elements_as_permutations_vertically(std::ostream &ost);
 };
 
 // #############################################################################
@@ -976,7 +1028,7 @@ public:
 	int *gen_depth; // [nb_gen]
 	int *gen_perm; // [nb_gen]
 	
-	int *nb_gen; // [base_len + 1]
+	int *nb_gen; // [my_base_len + 1]
 		// nb_gen[i] is the number of generators 
 		// which stabilize the base points 0,...,i-1, 
 		// i.e. which belong to G^{(i)}.
@@ -991,47 +1043,60 @@ public:
 		// stabilizer chain are listed first. 
 		// (And nb_gen[0] is the total number of generators).
 	
-	int *path; // [base_len]
+
+	int transversal_length;
+
+	int *path; // [my_base_len]
 	
 	int nb_images;
 	int **images;
 	
-	int *orbit_len;
-		// [base_len]
+
+private:
+	// stabilizer chain:
+
+	int *orbit_len; // [my_base_len]
 		// orbit_len[i] is the length of the i-th basic orbit.
 	
 	int **orbit;
-		// [base_len][A->deg]
+		// [my_base_len][transversal_length]
 		// orbit[i][j] is the j-th point in the orbit 
 		// of the i-th base point.
 		// for 0 \le j < orbit_len[i].
 		// for orbit_len[i] \le j < A->deg, 
 		// the points not in the orbit are listed.
 	int **orbit_inv;
-		// [base_len][A->deg]
+		// [my_base_len][transversal_length]
 		// orbit[i] is the inverse of the permutation orbit[i],
 		// i.e. given a point j,
 		// orbit_inv[i][j] is the coset (or position in the orbit)
 		// which contains j.
 	
-	int **prev; // [base_len][A->deg]
-	int **label; // [base_len][A->deg]
+	int **prev; // [my_base_len][transversal_length]
+	int **label; // [my_base_len][transversal_length]
 	
-	int *Path; // [A->deg + 1]
-	int *Label; // [A->deg]
+
+	int *Path; // [my_base_len + 1]
+	int *Label; // [my_base_len]
+
 	
 	// storage for temporary data and 
 	// group elements computed by various routines.
 	int *Elt1, *Elt2, *Elt3, *Elt4;
 	int *strip1, *strip2;
 		// used in strip
-	int *eltrk1, *eltrk2;
+	int *eltrk1, *eltrk2, *eltrk3;
 		// used in element rank unrank
-	int *cosetrep, *cosetrep_tmp;
+	int *cosetrep_tmp;
 		// used in coset_rep / coset_rep_inv
 	int *schreier_gen, *schreier_gen1;
 		// used in random_schreier_generator
-	
+
+	int *cosetrep;
+public:
+
+
+	// sims.cpp:
 	sims();
 	void null();
 	sims(action *A, int verbose_level);
@@ -1044,42 +1109,25 @@ public:
 	void init(action *A, int verbose_level);
 		// initializes the trivial group 
 		// with the base as given in A
-	void init_without_base(action *A);
+	void init_without_base(action *A, int verbose_level);
 	void reallocate_base(int old_base_len, int verbose_level);
-	void initialize_table(int i);
+	void initialize_table(int i, int verbose_level);
 	void init_trivial_group(int verbose_level);
 		// clears the generators array, 
 		// and sets the i-th transversal to contain
 		// only the i-th base point (for all i).
-	void init_trivial_orbit(int i);
+	void init_trivial_orbit(int i, int verbose_level);
 	void init_generators(vector_ge &generators, int verbose_level);
 	void init_generators(int nb, int *elt, int verbose_level);
 		// copies the given elements into the generator array, 
 		// then computes depth and perm
-	void init_generators_by_hdl(int nb_gen, int *gen_hdl);
+	void init_generators_by_hdl(int nb_gen, int *gen_hdl, int verbose_level);
 	void init_generator_depth_and_perm(int verbose_level);
 	void add_generator(int *elt, int verbose_level);
 		// adds elt to list of generators, 
 		// computes the depth of the element, 
 		// updates the arrays gen_depth and gen_perm accordingly
 		// does not change the transversals
-	void create_group_tree(const char *fname, int f_full, 
-		int verbose_level);
-	void print_transversals();
-	void print_transversals_short();
-	void print_transversal_lengths();
-	void print_orbit_len();
-	void print(int verbose_level);
-	void print_generators();
-	void print_generators_tex(std::ostream &ost);
-	void print_generators_as_permutations();
-	void print_generators_as_permutations_override_action(
-		action *A);
-	void print_basic_orbits();
-	void print_basic_orbit(int i);
-	//void sort();
-	//void sort_basic_orbit(int i);
-	void print_generator_depth_and_perm();
 	int generator_depth(int gen_idx);
 		// returns the index of the first base point 
 		// which is moved by a given generator. 
@@ -1087,9 +1135,8 @@ public:
 		// returns the index of the first base point 
 		// which is moved by the given element
 	void group_order(longinteger_object &go);
+	void group_order_verbose(longinteger_object &go, int verbose_level);
 	int group_order_int();
-	void print_group_order(std::ostream &ost);
-	void print_group_order_factored(std::ostream &ost);
 	int is_trivial_group();
 	int last_moved_base_point();
 		// j == -1 means the group is trivial
@@ -1103,14 +1150,6 @@ public:
 		// does not go through a table.
 	void swap_points(int lvl, int i, int j);
 		// swaps two points given by their cosets
-	void random_element(int *elt, int verbose_level);
-		// compute a random element among the group elements 
-		// represented by the chain
-		// (chooses random cosets along the stabilizer chain)
-	void random_element_of_order(int *elt, int order, 
-		int verbose_level);
-	void random_elements_of_order(vector_ge *elts, 
-		int *orders, int nb, int verbose_level);
 	void path_unrank_int(int a);
 	int path_rank_int();
 	
@@ -1137,7 +1176,7 @@ public:
 	int element_rank_int(int *Elt);
 	int is_element_of(int *elt);
 	void test_element_rank_unrank();
-	void coset_rep(int i, int j, int verbose_level);
+	void coset_rep(int *Elt, int i, int j, int verbose_level);
 		// computes a coset representative in transversal i 
 		// which maps
 		// the i-th base point to the point which is in 
@@ -1147,7 +1186,7 @@ public:
 	int compute_coset_rep_depth(int i, int j, int verbose_level);
 	void compute_coset_rep_path(int i, int j, int &depth,
 		int verbose_level);
-	void coset_rep_inv(int i, int j, int verbose_level_le);
+	void coset_rep_inv(int *Elt, int i, int j, int verbose_level_le);
 		// computes the inverse element of what coset_rep computes,
 		// i.e. an element which maps the 
 		// j-th point in the orbit to the 
@@ -1155,7 +1194,6 @@ public:
 		// j is a coset, not a point
 		// result is in cosetrep
 	void compute_base_orbits(int verbose_level);
-	void print_generators_at_level_or_below(int lvl);
 	void compute_base_orbits_known_length(int *tl, 
 		int verbose_level);
 	void extend_base_orbit(int new_gen_idx, int lvl, 
@@ -1169,37 +1207,6 @@ public:
 		int target_length, int verbose_level);
 	void extract_strong_generators_in_order(vector_ge &SG, 
 		int *tl, int verbose_level);
-	void transitive_extension(schreier &O, vector_ge &SG, 
-		int *tl, int verbose_level);
-	int transitive_extension_tolerant(schreier &O, 
-		vector_ge &SG, int *tl, int f_tolerant, 
-		int verbose_level);
-	void transitive_extension_using_coset_representatives_extract_generators(
-		int *coset_reps, int nb_cosets, 
-		vector_ge &SG, int *tl, 
-		int verbose_level);
-	void transitive_extension_using_coset_representatives(
-		int *coset_reps, int nb_cosets, 
-		int verbose_level);
-	void transitive_extension_using_generators(
-		int *Elt_gens, int nb_gens, int subgroup_index, 
-		vector_ge &SG, int *tl, 
-		int verbose_level);
-	void point_stabilizer_stabchain_with_action(action *A2, 
-		sims &S, int pt, int verbose_level);
-		// first computes the orbit of the point pt 
-		// in action A2 under the generators 
-		// that are stored at present 
-		// (using a temporary schreier object),
-		// then sifts random schreier generators into S
-	void point_stabilizer(vector_ge &SG, int *tl, 
-		int pt, int verbose_level);
-		// computes strong generating set 
-		// for the stabilizer of point pt
-	void point_stabilizer_with_action(action *A2, 
-		vector_ge &SG, int *tl, int pt, int verbose_level);
-		// computes strong generating set for 
-		// the stabilizer of point pt in action A2
 	int strip_and_add(int *elt, int *residue, int verbose_level);
 		// returns TRUE if something was added, 
 		// FALSE if element stripped through
@@ -1216,19 +1223,13 @@ public:
 		// add the generator to the array of generators 
 		// and then extends the 
 		// basic orbit lvl using extend_base_orbit
-	void random_schreier_generator(int verbose_level);
+	void random_schreier_generator(int *Elt, int verbose_level);
 		// computes random Schreier generator into schreier_gen
 	void build_up_group_random_process_no_kernel(sims *old_G, 
 		int verbose_level);
 	void extend_group_random_process_no_kernel(sims *extending_by_G, 
 		longinteger_object &target_go, 
 		int verbose_level);
-	void conjugate(action *A, sims *old_G, int *Elt, 
-		int f_overshooting_OK, int verbose_level);
-		// Elt * g * Elt^{-1} where g is in old_G
-	int test_if_in_set_stabilizer(action *A, 
-		int *set, int size, int verbose_level);
-	int test_if_subgroup(sims *old_G, int verbose_level);
 	void build_up_group_random_process(sims *K, sims *old_G, 
 		longinteger_object &target_go, 
 		int f_override_choose_next_base_point,
@@ -1242,46 +1243,8 @@ public:
 			int *Elt, int verbose_level), 
 		int verbose_level);
 	int closure_group(int nb_times, int verbose_level);
-	void write_all_group_elements(char *fname, int verbose_level);
-	void print_all_group_elements_to_file(char *fname, 
-		int verbose_level);
-	void print_all_group_elements();
-	void print_all_group_elements_tex(std::ostream &ost);
-	void print_all_group_elements_as_permutations();
-	void print_all_group_elements_as_permutations_in_special_action(
-		action *A_special);
-	void print_all_transversal_elements();
 	void element_as_permutation(action *A_special, 
 		int elt_rk, int *perm, int verbose_level);
-	void table_of_group_elements_in_data_form(int *&Table, 
-		int &len, int &sz, int verbose_level);
-	void regular_representation(int *Elt, int *perm, 
-		int verbose_level);
-	void center(vector_ge &gens, int *center_element_ranks, 
-		int &nb_elements, int verbose_level);
-	void all_cosets(int *subset, int size, 
-		int *all_cosets, int verbose_level);
-	void element_ranks_subgroup(sims *subgroup, 
-		int *element_ranks, int verbose_level);
-	void find_standard_generators_int(int ord_a, int ord_b, 
-		int ord_ab, int &a, int &b, int &nb_trials, 
-		int verbose_level);
-	int find_element_of_given_order_int(int ord, 
-		int &nb_trials, int verbose_level);
-	int find_element_of_given_order_int(int *Elt, 
-		int ord, int &nb_trials, int max_trials, 
-		int verbose_level);
-	void find_element_of_prime_power_order(int p, 
-		int *Elt, int &e, int &nb_trials, int verbose_level);
-	void save_list_of_elements(char *fname, 
-		int verbose_level);
-	void read_list_of_elements(action *A, 
-		char *fname, int verbose_level);
-	void evaluate_word_int(int word_len, 
-		int *word, int *Elt, int verbose_level);
-	void write_sgs(const char *fname, int verbose_level);
-	void read_sgs(const char *fname, vector_ge *SG, 
-		int verbose_level);
 	int least_moved_point_at_level(int lvl, int verbose_level);
 	int mult_by_rank(int rk_a, int rk_b, int verbose_level);
 	int mult_by_rank(int rk_a, int rk_b);
@@ -1290,20 +1253,11 @@ public:
 		// comutes b^{-1} * a * b
 	int conjugate_by_rank_b_bv_given(int rk_a, 
 		int *Elt_b, int *Elt_bv, int verbose_level);
-	void sylow_subgroup(int p, sims *P, int verbose_level);
-	int is_normalizing(int *Elt, int verbose_level);
-	void create_Cayley_graph(vector_ge *gens, int *&Adj, int &n, 
-		int verbose_level);
-	void create_group_table(int *&Table, int &n, int verbose_level);
-	void write_as_magma_permutation_group(const char *fname_base, 
-		vector_ge *gens, int verbose_level);
-	void compute_conjugacy_classes(
-		action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
-		strong_generators *&SG, int &nb_classes,
-		int *&class_size, int *&class_rep,
-		int verbose_level);
-	void compute_all_powers(int elt_idx, int n, int *power_elt,
-			int verbose_level);
+	int get_orbit(int i, int j);
+	int get_orbit_inv(int i, int j);
+	int get_orbit_length(int i);
+
+
 
 	// sims2.cpp
 	void build_up_subgroup_random_process(sims *G, 
@@ -1319,6 +1273,130 @@ public:
 		int verbose_level);
 	void order_structure_relative_to_subgroup(int *C_sub, 
 		int *Order, int *Residue, int verbose_level);
+
+
+
+	// sims_group_theory.cpp:
+	void random_element(int *elt, int verbose_level);
+		// compute a random element among the group elements
+		// represented by the chain
+		// (chooses random cosets along the stabilizer chain)
+	void random_element_of_order(int *elt, int order,
+		int verbose_level);
+	void random_elements_of_order(vector_ge *elts,
+		int *orders, int nb, int verbose_level);
+	void transitive_extension(schreier &O, vector_ge &SG,
+		int *tl, int verbose_level);
+	int transitive_extension_tolerant(schreier &O,
+		vector_ge &SG, int *tl, int f_tolerant,
+		int verbose_level);
+	void transitive_extension_using_coset_representatives_extract_generators(
+		int *coset_reps, int nb_cosets,
+		vector_ge &SG, int *tl,
+		int verbose_level);
+	void transitive_extension_using_coset_representatives(
+		int *coset_reps, int nb_cosets,
+		int verbose_level);
+	void transitive_extension_using_generators(
+		int *Elt_gens, int nb_gens, int subgroup_index,
+		vector_ge &SG, int *tl,
+		int verbose_level);
+	void point_stabilizer_stabchain_with_action(action *A2,
+		sims &S, int pt, int verbose_level);
+		// first computes the orbit of the point pt
+		// in action A2 under the generators
+		// that are stored at present
+		// (using a temporary schreier object),
+		// then sifts random schreier generators into S
+	void point_stabilizer(vector_ge &SG, int *tl,
+		int pt, int verbose_level);
+		// computes strong generating set
+		// for the stabilizer of point pt
+	void point_stabilizer_with_action(action *A2,
+		vector_ge &SG, int *tl, int pt, int verbose_level);
+		// computes strong generating set for
+		// the stabilizer of point pt in action A2
+	void conjugate(action *A, sims *old_G, int *Elt,
+		int f_overshooting_OK, int verbose_level);
+		// Elt * g * Elt^{-1} where g is in old_G
+	int test_if_in_set_stabilizer(action *A,
+		int *set, int size, int verbose_level);
+	int test_if_subgroup(sims *old_G, int verbose_level);
+	void table_of_group_elements_in_data_form(int *&Table,
+		int &len, int &sz, int verbose_level);
+	void regular_representation(int *Elt, int *perm,
+		int verbose_level);
+	void center(vector_ge &gens, int *center_element_ranks,
+		int &nb_elements, int verbose_level);
+	void all_cosets(int *subset, int size,
+		int *all_cosets, int verbose_level);
+	void element_ranks_subgroup(sims *subgroup,
+		int *element_ranks, int verbose_level);
+	void find_standard_generators_int(int ord_a, int ord_b,
+		int ord_ab, int &a, int &b, int &nb_trials,
+		int verbose_level);
+	int find_element_of_given_order_int(int ord,
+		int &nb_trials, int verbose_level);
+	int find_element_of_given_order_int(int *Elt,
+		int ord, int &nb_trials, int max_trials,
+		int verbose_level);
+	void find_element_of_prime_power_order(int p,
+		int *Elt, int &e, int &nb_trials, int verbose_level);
+	void evaluate_word_int(int word_len,
+		int *word, int *Elt, int verbose_level);
+	void sylow_subgroup(int p, sims *P, int verbose_level);
+	int is_normalizing(int *Elt, int verbose_level);
+	void create_Cayley_graph(vector_ge *gens, int *&Adj, int &n,
+		int verbose_level);
+	void create_group_table(int *&Table, int &n, int verbose_level);
+	void compute_conjugacy_classes(
+		action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
+		strong_generators *&SG, int &nb_classes,
+		int *&class_size, int *&class_rep,
+		int verbose_level);
+	void compute_all_powers(int elt_idx, int n, int *power_elt,
+			int verbose_level);
+
+
+	// sims_io.cpp:
+	void create_group_tree(const char *fname, int f_full,
+		int verbose_level);
+	void print_transversals();
+	void print_transversals_short();
+	void print_transversal_lengths();
+	void print_orbit_len();
+	void print(int verbose_level);
+	void print_generators();
+	void print_generators_tex(std::ostream &ost);
+	void print_generators_as_permutations();
+	void print_generators_as_permutations_override_action(
+		action *A);
+	void print_basic_orbits();
+	void print_basic_orbit(int i);
+	void print_generator_depth_and_perm();
+	void print_group_order(std::ostream &ost);
+	void print_group_order_factored(std::ostream &ost);
+	void print_generators_at_level_or_below(int lvl);
+	void write_all_group_elements(char *fname, int verbose_level);
+	void print_all_group_elements_to_file(char *fname,
+		int verbose_level);
+	void print_all_group_elements();
+	void print_all_group_elements_tex(std::ostream &ost);
+	void print_all_group_elements_as_permutations();
+	void print_all_group_elements_as_permutations_in_special_action(
+		action *A_special);
+	void print_all_transversal_elements();
+	void save_list_of_elements(char *fname,
+		int verbose_level);
+	void read_list_of_elements(action *A,
+		char *fname, int verbose_level);
+	void write_sgs(const char *fname, int verbose_level);
+	void read_sgs(const char *fname, vector_ge *SG,
+		int verbose_level);
+	void write_as_magma_permutation_group(const char *fname_base,
+		vector_ge *gens, int verbose_level);
+
+
 };
 
 // sims2.cpp
@@ -1599,13 +1677,6 @@ public:
 
 };
 
-#if 0
-void strong_generators_array_write_file(const char *fname, 
-	strong_generators *p, int nb, int verbose_level);
-void strong_generators_array_read_from_file(const char *fname, 
-	action *A, strong_generators *&p, int &nb, int verbose_level);
-#endif
-
 // #############################################################################
 // subgroup.cpp:
 // #############################################################################
@@ -1701,9 +1772,9 @@ public:
 	int *mtx_size;
 	int *index_set1;
 	int *index_set2;
-	int *u;
-	int *v;
-	int *w;
+	int *u; // [dimension_of_tensor_action]
+	int *v; // [dimension_of_tensor_action]
+	int *w; // [dimension_of_tensor_action]
 	int *A1;
 	int *A2;
 	int *A3;
@@ -1728,12 +1799,19 @@ public:
 
 	page_storage *Elts;
 
+	uint32_t *rank_one_tensors;
+	int nb_rank_one_tensors;
+
+	char *TR; // [degree_of_tensor_action + 1]
+	uint32_t *Prev; // [degree_of_tensor_action + 1]
+
 	wreath_product();
 	~wreath_product();
 	void null();
 	void freeself();
 	void init_tensor_wreath_product(matrix_group *M,
-			action *A_mtx, int nb_factors, int verbose_level);
+			action *A_mtx, int nb_factors, int f_tensor_ranks,
+			int verbose_level);
 	int element_image_of(int *Elt, int a, int verbose_level);
 	void element_image_of_low_level(int *Elt,
 			int *input, int *output, int verbose_level);
@@ -1757,10 +1835,23 @@ public:
 			int f, int *Elt_component);
 	void make_element_from_permutation(int *Elt, int *perm);
 	void make_element(int *Elt, int *data, int verbose_level);
+	void element_print_for_make_element(int *Elt, std::ostream &ost);
 	void element_print_easy(int *Elt, std::ostream &ost);
+	void element_print_latex(int *Elt, std::ostream &ost);
 	void compute_base_and_transversals(int verbose_level);
 	void make_strong_generators_data(int *&data,
 			int &size, int &nb_gens, int verbose_level);
+	void create_all_rank_one_tensors(
+			uint32_t *&rank_one_tensors,
+			int &nb_rank_one_tensors, int verbose_level);
+	uint32_t tensor_affine_rank(int *tensor);
+	void tensor_affine_unrank(int *tensor, uint32_t rk);
+	uint32_t tensor_PG_rank(int *tensor);
+	void tensor_PG_unrank(int *tensor, uint32_t PG_rk);
+	uint32_t affine_rank_to_PG_rank(uint32_t affine_rk);
+	uint32_t PG_rank_to_affine_rank(uint32_t PG_rk);
+	void save_rank_one_tensors(int verbose_level);
+	void compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level);
 };
 
 }}

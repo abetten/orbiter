@@ -80,6 +80,8 @@ arc_generator::arc_generator()
 	f_n = FALSE;
 	n = 2;
 
+	f_conic_test = FALSE;
+
 	line_type = NULL;
 
 	gen = NULL;
@@ -184,6 +186,10 @@ void arc_generator::read_arguments(int argc, const char **argv)
 			f_no_arc_testing = FALSE;
 			d = atoi(argv[++i]);
 			cout << "-d " << d << endl;
+			}
+		else if (strcmp(argv[i], "-conic_test") == 0) {
+			f_conic_test = TRUE;
+			cout << "-f_conic_test " << endl;
 			}
 		else if (strcmp(argv[i], "-list") == 0) {
 			f_list = TRUE;
@@ -773,6 +779,45 @@ void arc_generator::compute_starter(int verbose_level)
 
 }
 
+int arc_generator::conic_test(int *S, int len, int pt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret = TRUE;
+	int subset[5];
+	int the_set[6];
+	int six_coeffs[6];
+	int i;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "arc_generator::conic_test" << endl;
+	}
+	if (len < 5) {
+		return TRUE;
+	}
+	Combi.first_k_subset(subset, len, 5);
+	while (TRUE) {
+		for (i = 0; i < 5; i++) {
+			the_set[i] = S[subset[i]];
+		}
+		the_set[5] = pt;
+		if (P->determine_conic_in_plane(
+				the_set, 6, six_coeffs, 0 /*verbose_level*/)) {
+			ret = FALSE;
+			break;
+		}
+
+		if (!Combi.next_k_subset(subset, len, 5)) {
+			ret = TRUE;
+			break;
+		}
+	}
+	if (f_v) {
+		cout << "arc_generator::conic_test done" << endl;
+	}
+	return ret;
+}
+
 void arc_generator::early_test_func(int *S, int len, 
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
@@ -788,7 +833,7 @@ void arc_generator::early_test_func(int *S, int len,
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
-		}
+	}
 
 
 	compute_line_type(S, len, 0 /* verbose_level */);
@@ -804,21 +849,24 @@ void arc_generator::early_test_func(int *S, int len,
 		}
 
 		// test that there are no more than d points per line:
-
 		for (j = 0; j < P->r; j++) {
 			b = P->Lines_on_point[a * P->r + j];
 			if (line_type[b] == d) {
 				break;
-				}
-			
+			}
+		} // next j
+
+		if (f_conic_test) {
+			if (conic_test(S, len, a, verbose_level) == FALSE) {
+				continue;
+			}
+		}
 
 
-
-			} // next j
 		if (j == P->r) {
 			good_candidates[nb_good_candidates++] = candidates[i];
-			}
-		} // next i
+		}
+	} // next i
 	
 }
 
@@ -1577,9 +1625,9 @@ void arc_generator::report_decompositions(
 		schreier *Sch_points;
 		schreier *Sch_lines;
 		Sch_points = NEW_OBJECT(schreier);
-		Sch_points->init(A /*A_on_points*/);
+		Sch_points->init(A /*A_on_points*/, verbose_level - 2);
 		Sch_points->initialize_tables();
-		Sch_points->init_generators(*gens->gens /* *generators */);
+		Sch_points->init_generators(*gens->gens /* *generators */, verbose_level - 2);
 		Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
 		
 		if (f_v) {
@@ -1587,9 +1635,9 @@ void arc_generator::report_decompositions(
 					<< " orbits on points" << endl;
 			}
 		Sch_lines = NEW_OBJECT(schreier);
-		Sch_lines->init(A_on_lines);
+		Sch_lines->init(A_on_lines, verbose_level - 2);
 		Sch_lines->initialize_tables();
-		Sch_lines->init_generators(*gens->gens /* *generators */);
+		Sch_lines->init_generators(*gens->gens /* *generators */, verbose_level - 2);
 		Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
 		
 		if (f_v) {

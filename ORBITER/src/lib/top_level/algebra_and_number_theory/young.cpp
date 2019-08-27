@@ -731,8 +731,8 @@ void young::compute_generators(int &go1, int &go2, int verbose_level)
 
 	int u, s, t;
 
-	gens1->init(A);
-	gens1->allocate(nb_gens1);
+	gens1->init(A, verbose_level - 2);
+	gens1->allocate(nb_gens1, verbose_level - 2);
 	h = 0;
 	go1 = 1;
 	for (i = 0; i < l1; i++) {
@@ -758,8 +758,8 @@ void young::compute_generators(int &go1, int &go2, int verbose_level)
 		gens1->print(cout);
 		}
 
-	gens2->init(A);
-	gens2->allocate(nb_gens2);
+	gens2->init(A, verbose_level - 2);
+	gens2->allocate(nb_gens2, verbose_level - 2);
 	h = 0;
 	go2 = 1;
 	for (i = 0; i < l2; i++) {

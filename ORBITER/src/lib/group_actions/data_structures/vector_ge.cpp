@@ -17,7 +17,10 @@ namespace group_actions {
 
 vector_ge::vector_ge()
 {
-	null();
+	A = NULL;
+	data = NULL;
+	len = 0;
+	//null();
 }
 
 vector_ge::vector_ge(action *A)
@@ -47,51 +50,90 @@ void vector_ge::freeself()
 		}
 }
 
-void vector_ge::init(action *A)
+void vector_ge::init(action *A, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::init" << endl;
+	}
 	//cout << "vector_ge::init()" << endl;
 	freeself();
 	vector_ge::A = A;
 	data = NULL;
 	len = 0;
-}
-
-void vector_ge::copy(vector_ge *&vector_copy)
-{
-	int i;
-
-	vector_copy = NEW_OBJECT(vector_ge);
-	vector_copy->init(A);
-	vector_copy->allocate(len);
-	for (i = 0; i < len; i++) {
-		A->element_move(ith(i), vector_copy->ith(i), 0);
+	if (f_v) {
+		cout << "vector_ge::init done" << endl;
 	}
 }
 
-void vector_ge::init_by_hdl(action *A, int *gen_hdl, int nb_gen)
+void vector_ge::copy(vector_ge *&vector_copy, int verbose_level)
 {
 	int i;
-	
-	init(A);
-	allocate(nb_gen);
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::copy" << endl;
+	}
+
+	vector_copy = NEW_OBJECT(vector_ge);
+	vector_copy->init(A, verbose_level);
+	vector_copy->allocate(len, verbose_level);
+	for (i = 0; i < len; i++) {
+		A->element_move(ith(i), vector_copy->ith(i), 0);
+	}
+	if (f_v) {
+		cout << "vector_ge::copy done" << endl;
+	}
+}
+
+void vector_ge::init_by_hdl(action *A, int *gen_hdl, int nb_gen, int verbose_level)
+{
+	int i;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::init_by_hdl" << endl;
+	}
+	init(A, verbose_level);
+	allocate(nb_gen, verbose_level);
 	for (i = 0; i < nb_gen; i++) {
 		A->element_retrieve(gen_hdl[i], ith(i), 0);
 		}
+	if (f_v) {
+		cout << "vector_ge::init_by_hdl done" << endl;
+	}
 }
 
-void vector_ge::init_single(action *A, int *Elt)
+void vector_ge::init_single(action *A, int *Elt, int verbose_level)
 {
-	init(A);
-	allocate(1);
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::init_single" << endl;
+	}
+	init(A, verbose_level);
+	allocate(1, verbose_level);
 	A->element_move(Elt, ith(0), 0);
+	if (f_v) {
+		cout << "vector_ge::init_single done" << endl;
+	}
 }
 
-void vector_ge::init_double(action *A, int *Elt1, int *Elt2)
+void vector_ge::init_double(action *A, int *Elt1, int *Elt2, int verbose_level)
 {
-	init(A);
-	allocate(2);
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::init_double" << endl;
+	}
+	init(A, verbose_level);
+	allocate(2, verbose_level);
 	A->element_move(Elt1, ith(0), 0);
 	A->element_move(Elt2, ith(1), 0);
+	if (f_v) {
+		cout << "vector_ge::init_double done" << endl;
+	}
 }
 
 void vector_ge::init_from_permutation_representation(
@@ -109,8 +151,8 @@ void vector_ge::init_from_permutation_representation(
 				"representation" << endl;
 		}
 	Elt = NEW_int(A->elt_size_in_int);
-	init(A);
-	allocate(nb_elements);
+	init(A, verbose_level);
+	allocate(nb_elements, verbose_level);
 	for (i = 0; i < nb_elements; i++) {
 		A->make_element_from_permutation_representation(
 				Elt, data + i * A->degree, 0/*verbose_level*/);
@@ -142,8 +184,8 @@ void vector_ge::init_from_data(action *A, int *data,
 		cout << "vector_ge::init_from_data" << endl;
 		}
 	Elt = NEW_int(A->elt_size_in_int);
-	init(A);
-	allocate(nb_elements);
+	init(A, verbose_level);
+	allocate(nb_elements, verbose_level);
 	for (i = 0; i < nb_elements; i++) {
 		A->make_element(Elt, data + i * elt_size, verbose_level);
 		if (f_vv) {
@@ -171,8 +213,8 @@ void vector_ge::init_conjugate_svas_of(vector_ge *v,
 		cout << "vector_ge::init_conjugate_svas_of" << endl;
 		}
 
-	init(v->A);
-	allocate(v->len);
+	init(v->A, verbose_level);
+	allocate(v->len, verbose_level);
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -203,8 +245,8 @@ void vector_ge::init_conjugate_sasv_of(vector_ge *v,
 		cout << "vector_ge::init_conjugate_svas_of" << endl;
 		}
 
-	init(v->A);
-	allocate(v->len);
+	init(v->A, verbose_level);
+	allocate(v->len, verbose_level);
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -380,8 +422,13 @@ void vector_ge::print_as_permutation(ostream& ost)
 	ost << ")" << endl;
 }
 
-void vector_ge::allocate(int length)
+void vector_ge::allocate(int length, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::allocate" << endl;
+	}
 	if (data) {
 		FREE_int(data);
 		//cout << "vector_ge::allocate warning, data != NULL, "
@@ -389,13 +436,23 @@ void vector_ge::allocate(int length)
 		}
 	len = length;
 	data = NEW_int(length * A->elt_size_in_int);
+	if (f_v) {
+		cout << "vector_ge::allocate done" << endl;
+	}
 }
 
-void vector_ge::reallocate(int new_length)
+void vector_ge::reallocate(int new_length, int verbose_level)
 {
-	int *data2 = NEW_int(new_length * A->elt_size_in_int);
+	int *data2;
 	int *elt, *elt2, i, l;
 	
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::reallocate" << endl;
+	}
+	data2 = NEW_int(new_length * A->elt_size_in_int);
+
 	l = MINIMUM(len, new_length);
 	for (i = 0; i < l; i++) {
 		elt = ith(i);
@@ -408,13 +465,22 @@ void vector_ge::reallocate(int new_length)
 		}
 	data = data2;
 	len = new_length;
-};
+	if (f_v) {
+		cout << "vector_ge::reallocate done" << endl;
+	}
+}
 
-void vector_ge::reallocate_and_insert_at(int position, int *elt)
+void vector_ge::reallocate_and_insert_at(int position, int *elt, int verbose_level)
 {
-	int *data2 = NEW_int((len + 1) * A->elt_size_in_int);
+	int *data2;
 	int *elt1, *elt2, i;
 	
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::reallocate_and_insert_at len=" << len << endl;
+	}
+	data2 = NEW_int((len + 1) * A->elt_size_in_int);
 	for (i = 0; i < len; i++) {
 		elt1 = ith(i);
 		if (i >= position) {
@@ -429,18 +495,34 @@ void vector_ge::reallocate_and_insert_at(int position, int *elt)
 		FREE_int(data);
 		data = NULL;
 		}
+	else {
+		if (f_v) {
+			cout << "vector_ge::reallocate_and_insert_at data == NULL" << endl;
+		}
+	}
 	data = data2;
 	len = len + 1;
-
+	if (position < 0 || position >= len) {
+		cout << "vector_ge::reallocate_and_insert_at position out of bounds, position=" << position << endl;
+		exit(1);
+	}
 	copy_in(position, elt);
+	if (f_v) {
+		cout << "vector_ge::reallocate_and_insert_at done" << endl;
+	}
 }
 
-void vector_ge::insert_at(int length_before, int position, int *elt)
+void vector_ge::insert_at(int length_before, int position, int *elt, int verbose_level)
 // does not reallocate, but shifts elements up to make space.
 // the last element might be lost if there is no space.
 {
 	int *elt1, *elt2, i;
 	
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::insert_at" << endl;
+	}
 	for (i = length_before; i >= position; i--) {
 		if (i + 1 >= len)
 			continue;
@@ -450,11 +532,22 @@ void vector_ge::insert_at(int length_before, int position, int *elt)
 		A->element_move(elt1, elt2, FALSE);
 		}
 	copy_in(position, elt);
+	if (f_v) {
+		cout << "vector_ge::insert_at done" << endl;
+	}
 }
 
-void vector_ge::append(int *elt)
+void vector_ge::append(int *elt, int verbose_level)
 {
-	reallocate_and_insert_at(len, elt);
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::append" << endl;
+	}
+	reallocate_and_insert_at(len, elt, verbose_level);
+	if (f_v) {
+		cout << "vector_ge::append done" << endl;
+	}
 }
 
 void vector_ge::copy_in(int i, int *elt)
@@ -568,7 +661,7 @@ void vector_ge::read_from_memory_object(memory_object *m, int verbose_level)
 		cout << "vector_ge::read_from_memory_object" << endl;
 		}
 	m->read_int(&l);
-	allocate(l);
+	allocate(l, verbose_level);
 	for (i = 0; i < len; i++) {
 		A->element_read_from_memory_object(ith(i), m, 0);
 		}
@@ -597,7 +690,7 @@ void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
 		cout << "vector_ge::read_from_file_binary" << endl;
 		}
 	fp.read((char *) &l, sizeof(int));
-	allocate(l);
+	allocate(l, verbose_level);
 	for (i = 0; i < len; i++) {
 		A->element_read_from_file_binary(ith(i), fp, 0);
 		}
@@ -641,7 +734,7 @@ void vector_ge::extract_subset_of_elements_by_rank(
 		cout << "vector_ge::extract_subset_of_elements_by_rank" << endl;
 		}
 	Elt = NEW_int(A->elt_size_in_int);
-	allocate(len);
+	allocate(len, verbose_level);
 	for (i = 0; i < len; i++) {
 		r = rank_vector[i];
 		S->element_unrank_int(r, Elt);

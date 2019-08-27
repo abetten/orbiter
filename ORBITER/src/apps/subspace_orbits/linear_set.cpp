@@ -1609,8 +1609,8 @@ void linear_set::do_compute_stabilizer(
 	Intersection_dimensions = NEW_int(D->N);
 	aut_gens = NEW_OBJECT(vector_ge);
 
-	aut_gens->init(Aq);
-	aut_gens->allocate(Strong_gens_previous->gens->len);
+	aut_gens->init(Aq, verbose_level - 2);
+	aut_gens->allocate(Strong_gens_previous->gens->len, verbose_level - 2);
 	for (i = 0; i < Strong_gens_previous->gens->len; i++) {
 		Aq->element_move(Strong_gens_previous->gens->ith(i),
 				aut_gens->ith(i), 0);
@@ -1663,14 +1663,14 @@ void linear_set::do_compute_stabilizer(
 					cout << "The automorphism is OK" << endl;
 					}
 				}
-			aut_gens->append(Elt1);
+			aut_gens->append(Elt1, verbose_level - 2);
 			strong_generators *Strong_gens_next;
 
 			Gen_stab->get_stabilizer_generators(Strong_gens_next,  
 				level, h, verbose_level);
 
 			for (i = 0; i < Strong_gens_next->gens->len; i++) {
-				aut_gens->append(Strong_gens_next->gens->ith(i));
+				aut_gens->append(Strong_gens_next->gens->ith(i), verbose_level - 2);
 				}
 			delete Strong_gens_next;
 			group_index += orbit_len;

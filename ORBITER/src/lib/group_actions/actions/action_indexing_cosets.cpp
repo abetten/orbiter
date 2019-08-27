@@ -65,18 +65,18 @@ void action::coset_unrank(sims *G, sims *U,
 		U->print_transversal_lengths();
 		}
 
-	G_orb.init(this);
+	G_orb.init(this, verbose_level - 2);
 	G_orb.initialize_tables(); // not needed, already done in init
-	G_orb.init_generators(G->gens);
+	G_orb.init_generators(G->gens, verbose_level - 2);
 
 		// G_orb is used to determine representatives of the double cosets
 	
-	U_orb.init(this);
+	U_orb.init(this, verbose_level - 2);
 	U_orb.initialize_tables(); // not needed, already done in init
-	U_orb.init_generators(U->gens);
+	U_orb.init_generators(U->gens, verbose_level - 2);
 	
 	for (i = 0; i < base_len(); i++) {
-		if (G->orbit_len[i] > 1 /*U->orbit_len[i]*/) {
+		if (G->get_orbit_length(i) > 1 /*U->orbit_len[i]*/) {
 			base_idx = i;
 			break;
 			}
@@ -103,11 +103,11 @@ void action::coset_unrank(sims *G, sims *U,
 	if (f_v) {
 		cout << "base_idx = " << base_idx << endl;
 		cout << "base_pt = " << base_pt << endl;
-		cout << "G->orbit_len[base_idx]=" << G->orbit_len[base_idx] << endl;
-		cout << "U->orbit_len[base_idx]=" << U->orbit_len[base_idx] << endl;
+		cout << "G->orbit_len[base_idx]=" << G->get_orbit_length(base_idx) << endl;
+		cout << "U->orbit_len[base_idx]=" << U->get_orbit_length(base_idx) << endl;
 		}
 
-	D.integral_division_by_int(G_order, G->orbit_len[base_idx], G0_order, rem_int);
+	D.integral_division_by_int(G_order, G->get_orbit_length(base_idx), G0_order, rem_int);
 
 	if (f_v) {
 		cout << "G0_order=" << G0_order << endl;
@@ -116,13 +116,16 @@ void action::coset_unrank(sims *G, sims *U,
 	int *orbit;
 	int orbit_len;
 	
-	orbit_len = G->orbit_len[base_idx];
+	orbit_len = G->get_orbit_length(base_idx);
 	
 
 	// orbit is the G-orbit of base_pt
 
 	orbit = NEW_int(orbit_len);
-	int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
+	for (int t = 0; t < orbit_len; t++) {
+		orbit[t] = G->get_orbit(base_idx, t);
+	}
+	//int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
 	Sorting.int_vec_heapsort(orbit, orbit_len);
 
 	if (f_v) {
@@ -213,7 +216,7 @@ void action::coset_unrank(sims *G, sims *U,
 			sims *Uk = NULL;
 
 			G_orb.initialize_tables();
-			G_orb.init_generators(G->gens);
+			G_orb.init_generators(G->gens, verbose_level - 2);
 				// this is redundant as the generators for G are already in G_orb
 				// in fact, it might be a memory leak
 	
@@ -333,16 +336,16 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 		U->print_transversal_lengths();
 		}
 
-	G_orb.init(this);
+	G_orb.init(this, verbose_level - 2);
 	G_orb.initialize_tables();
-	G_orb.init_generators(G->gens);
+	G_orb.init_generators(G->gens, verbose_level - 2);
 	
-	U_orb.init(this);
+	U_orb.init(this, verbose_level - 2);
 	U_orb.initialize_tables();
-	U_orb.init_generators(U->gens);
+	U_orb.init_generators(U->gens, verbose_level - 2);
 	
 	for (i = 0; i < base_len(); i++) {
-		if (G->orbit_len[i] > 1 /*U->orbit_len[i]*/) {
+		if (G->get_orbit_length(i) > 1) {
 			base_idx = i;
 			break;
 			}
@@ -365,11 +368,11 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	if (f_v) {
 		cout << "base_idx = " << base_idx << endl;
 		cout << "base_pt = " << base_pt << endl;
-		cout << "G->orbit_len[base_idx]=" << G->orbit_len[base_idx] << endl;
-		cout << "U->orbit_len[base_idx]=" << U->orbit_len[base_idx] << endl;
+		cout << "G->orbit_len[base_idx]=" << G->get_orbit_length(base_idx) << endl;
+		cout << "U->orbit_len[base_idx]=" << U->get_orbit_length(base_idx) << endl;
 		}
 
-	D.integral_division_by_int(G_order, G->orbit_len[base_idx], G0_order, rem_int);
+	D.integral_division_by_int(G_order, G->get_orbit_length(base_idx), G0_order, rem_int);
 
 	if (f_v) {
 		cout << "G0_order=" << G0_order << endl;
@@ -378,11 +381,14 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	int *orbit;
 	int orbit_len;
 	
-	orbit_len = G->orbit_len[base_idx];
+	orbit_len = G->get_orbit_length(base_idx);
 	
 
 	orbit = NEW_int(orbit_len);
-	int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
+	for (int t = 0; t < orbit_len; t++) {
+		orbit[t] = G->get_orbit(base_idx, t);
+	}
+	//int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
 	Sorting.int_vec_heapsort(orbit, orbit_len);
 
 	if (f_v) {
@@ -498,7 +504,7 @@ int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	sims *Uk = NULL;
 
 	G_orb.initialize_tables();
-	G_orb.init_generators(G->gens);
+	G_orb.init_generators(G->gens, verbose_level - 2);
 	G_orb.compute_point_orbit(elt_k, 0 /* verbose_level - 2*/);
 
 	if (f_v) {

@@ -20,8 +20,6 @@ MODULES = \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
 	cubic_curve_with_action.o \
-	decomposition.o \
-	incidence_structure.o \
 	invariants_packing.o \
 	k_arc_generator.o \
 	packing_classify.o \
@@ -46,6 +44,7 @@ MODULES = \
 	surface_object_with_action.o \
 	surface_with_action.o \
 	surfaces_arc_lifting.o \
+	tactical_decomposition.o \
 	translation_plane_via_andre_model.o
 
 
