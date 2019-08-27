@@ -96,7 +96,7 @@ void longinteger_object::create_product(int nb_factors, int *factors)
 {
 	longinteger_domain D;
 	
-	D.multiply_up(*this, factors, nb_factors);
+	D.multiply_up(*this, factors, nb_factors, 0 /* verbose_level */);
 }
 
 void longinteger_object::create_power(int a, int e)
@@ -111,7 +111,7 @@ void longinteger_object::create_power(int a, int e)
 		factors[i] = a;
 		}
 	
-	D.multiply_up(*this, factors, e);
+	D.multiply_up(*this, factors, e, 0 /* verbose_level */);
 
 	FREE_int(factors);
 }
@@ -130,7 +130,7 @@ void longinteger_object::create_power_minus_one(int a, int e)
 		factors[i] = a;
 		}
 	
-	D.multiply_up(*this, factors, e);
+	D.multiply_up(*this, factors, e, 0 /* verbose_level */);
 	D.add_in_place(*this, A);
 
 	FREE_int(factors);

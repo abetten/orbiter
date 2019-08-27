@@ -82,7 +82,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 	while (cnt < 200) {
 	
 		if (f_vv) {
-			cout << "iteration " << cnt << endl;
+			cout << "sims::build_up_subgroup_random_process iteration " << cnt << endl;
 			}
 #if 0
 		if (cnt > 1000) {
@@ -98,25 +98,25 @@ void sims::build_up_subgroup_random_process(sims *G,
 			}
 		if ((cnt % 2) == 0) {
 			if (f_vvv) {
-				cout << "choosing random schreier generator" << endl;
+				cout << "sims::build_up_subgroup_random_process choosing random schreier generator" << endl;
 				}
-			random_schreier_generator(0/*verbose_level - 3*/);
-			A->element_move(schreier_gen, GA->Elt1, 0);
+			random_schreier_generator(GA->Elt1, 0/*verbose_level - 3*/);
+			//A->element_move(schreier_gen, GA->Elt1, 0);
 			if (FALSE) {
-				cout << "random element chosen:" << endl;
+				cout << "sims::build_up_subgroup_random_process random element chosen:" << endl;
 				A->element_print(GA->Elt1, cout);
 				cout << endl;
 				}
 			}
 		else if ((cnt % 2) == 1){
 			if (f_vvv) {
-				cout << "choosing random element in the "
+				cout << "sims::build_up_subgroup_random_process choosing random element in the "
 						"group by which we extend" << endl;
 				}
 			(*choose_random_generator_for_subgroup)(G,
 					GA->Elt1, verbose_level - 1);
 			if (FALSE) {
-				cout << "random element chosen" << endl;
+				cout << "sims::build_up_subgroup_random_process random element chosen" << endl;
 				}
 			if (FALSE) {
 				GA->element_print(GA->Elt1, cout);
@@ -126,9 +126,9 @@ void sims::build_up_subgroup_random_process(sims *G,
 		if (strip(GA->Elt1, GA->Elt2, drop_out_level,
 				image, 0/*verbose_level*/)) {
 			if (f_vvv) {
-				cout << "element strips through" << endl;
+				cout << "sims::build_up_subgroup_random_process element strips through" << endl;
 				if (FALSE) {
-					cout << "residue = " << endl;
+					cout << "sims::build_up_subgroup_random_process residue = " << endl;
 					GA->element_print(GA->Elt2, cout);
 					cout << endl;
 					}
@@ -139,7 +139,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 		else {
 			f_added = TRUE;
 			if (f_v) {
-				cout << "element needs to be inserted at level = " 
+				cout << "sims::build_up_subgroup_random_process element needs to be inserted at level = "
 					<< drop_out_level << " with image "
 					<< image << endl;
 				if (TRUE) {
@@ -153,7 +153,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 		
 		group_order(go);
 		if ((f_v && f_added) || f_vv) {
-			cout << "new group order is " << go << " : ";
+			cout << "sims::build_up_subgroup_random_process new group order is " << go << " : ";
 			print_transversal_lengths();
 			}
 		cnt++;

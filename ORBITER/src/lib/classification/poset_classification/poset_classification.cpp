@@ -1252,7 +1252,7 @@ void poset_classification::get_stabilizer_order(int level,
 	else {
 		longinteger_domain D;
 
-		D.multiply_up(go, O->tl, Poset->A->base_len());
+		D.multiply_up(go, O->tl, Poset->A->base_len(), 0 /* verbose_level */);
 		}
 }
 
@@ -1275,7 +1275,7 @@ void poset_classification::get_stabilizer_group(
 	node = first_poset_orbit_node_at_level[level] + orbit_at_level;
 	O = root + node;
 
-	G->init(Poset->A);
+	G->init(Poset->A, verbose_level - 2);
 	if (f_vv) {
 		cout << "poset_classification::"
 				"get_stabilizer_group before "

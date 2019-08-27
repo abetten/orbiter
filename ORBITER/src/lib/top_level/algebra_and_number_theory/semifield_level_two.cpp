@@ -929,8 +929,8 @@ void semifield_level_two::upstep(int verbose_level)
 		vector_ge *coset_reps;
 
 		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(A);
-		coset_reps->allocate(nb_aut_gens + 1);
+		coset_reps->init(A, verbose_level - 2);
+		coset_reps->allocate(nb_aut_gens + 1, verbose_level - 2);
 		A->element_one(coset_reps->ith(0), 0);
 		for (i = 0; i < nb_aut_gens; i++) {
 			A->element_move(Aut_gens[i], coset_reps->ith(i + 1), 0);
@@ -1091,9 +1091,9 @@ void semifield_level_two::setup_stabilizer(
 	Mtx = Mtx1;
 	gens = NEW_OBJECT(vector_ge);
 
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 	l = Sk->gens->len;
-	gens->allocate(l);
+	gens->allocate(l, verbose_level - 2);
 	for (h = 0; h < l; h++) {
 		Elt = Sk->gens->ith(h);
 		int_vec_zero(Mtx, n * n);

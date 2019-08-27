@@ -69,8 +69,8 @@ void do_it(int verbose_level)
 	nb_G = 2;
 	nb_S = 6;
 	gens_G = NEW_OBJECT(vector_ge);
-	gens_G->init(A);
-	gens_G->allocate(nb_G);
+	gens_G->init(A, verbose_level - 2);
+	gens_G->allocate(nb_G, verbose_level - 2);
 
 
 	Elt_S = NEW_pint(nb_S);

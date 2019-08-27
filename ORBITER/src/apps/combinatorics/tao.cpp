@@ -330,7 +330,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 
 	U_gens = NEW_OBJECT(vector_ge);
-	U_gens->init_single(A, E1);
+	U_gens->init_single(A, E1, verbose_level - 2);
 	
 	Aut = Aut_gens->create_sims(verbose_level);
 	U = NEW_OBJECT(sims);
@@ -344,8 +344,8 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	
 	
 	Sch = NEW_OBJECT(schreier);
-	Sch->init(A);
-	Sch->init_generators(*U_gens);
+	Sch->init(A, verbose_level - 2);
+	Sch->init_generators(*U_gens, verbose_level - 2);
 	Sch->compute_all_point_orbits(0 /*verbose_level*/);
 	cout << "The orbits of U are:" << endl;
 	Sch->print_and_list_orbits_tex(cout);
@@ -619,7 +619,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 
 		O_gens = NEW_OBJECT(vector_ge);
-		O_gens->init_double(A, Elt1, Elt2);
+		O_gens->init_double(A, Elt1, Elt2, verbose_level - 2);
 	
 		O = NEW_OBJECT(sims);
 
@@ -636,8 +636,8 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 	
 	
 		Sch1 = NEW_OBJECT(schreier);
-		Sch1->init(N_on_orbits);
-		Sch1->init_generators(*O_gens);
+		Sch1->init(N_on_orbits, verbose_level - 2);
+		Sch1->init_generators(*O_gens, verbose_level - 2);
 		Sch1->compute_all_point_orbits(0 /*verbose_level*/);
 		cout << "The orbits of O are:" << endl;
 		Sch1->print_and_list_orbits_tex(cout);
