@@ -80,7 +80,7 @@ void schreier_vector::init_local_generators(
 		cout << "schreier_vector::init_local_generators" << endl;
 	}
 
-	gens->copy(local_gens);
+	gens->copy(local_gens, verbose_level - 2);
 	f_has_local_generators = TRUE;
 
 	if (f_v) {
@@ -867,7 +867,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 
 		f_has_local_generators = TRUE;
 		local_gens = NEW_OBJECT(vector_ge);
-		local_gens->init(S->A);
+		local_gens->init(S->A, verbose_level - 2);
 		fst_gen_idx = 0;
 		for (orbit_idx = 0; orbit_idx < S->nb_orbits; orbit_idx++) {
 			if (f_v) {
@@ -898,7 +898,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 					<< nb_gens << " generators" << endl;
 			}
 			for (i = 0; i < nb_gens; i++) {
-				local_gens->append(Shallow_tree->gens.ith(i));
+				local_gens->append(Shallow_tree->gens.ith(i), verbose_level - 2);
 			}
 			for (i = 0; i < len; i++) {
 				pt = Shallow_tree->orbit[fst + i];

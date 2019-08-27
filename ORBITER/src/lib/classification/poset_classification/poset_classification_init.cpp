@@ -560,8 +560,8 @@ void poset_classification::init(poset *Poset,
 	Elt6 = Elt_memory + 5 * Poset->A->elt_size_in_int;
 	
 	transporter = NEW_OBJECT(vector_ge);
-	transporter->init(Poset->A);
-	transporter->allocate(sz + 1);
+	transporter->init(Poset->A, verbose_level - 2);
+	transporter->allocate(sz + 1, verbose_level - 2);
 	Poset->A->element_one(transporter->ith(0), FALSE);
 	
 	set = NEW_pint(sz + 1);

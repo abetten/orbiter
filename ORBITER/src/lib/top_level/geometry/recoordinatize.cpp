@@ -357,7 +357,7 @@ void recoordinatize::stabilizer_of_first_three(
 	
 
 
-	gens2->init(A);
+	gens2->init(A, verbose_level - 2);
 
 
 	if (f_v) {

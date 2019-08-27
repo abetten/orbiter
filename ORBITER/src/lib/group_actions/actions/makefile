@@ -21,6 +21,7 @@ MODULES = \
 	interface_induced_action.o \
 	interface_matrix_group.o \
 	interface_perm_group.o \
+	interface_permutation_representation.o \
 	interface_wreath_product.o \
 	nauty_interface.o \
 	stabilizer_chain_base_data.o 

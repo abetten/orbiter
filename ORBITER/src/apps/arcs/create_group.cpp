@@ -246,8 +246,8 @@ void create_group_arcs8(int q, int verbose_level)
 	AQ->element_print(Elt2, cout);
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(AQ);
-	gens->allocate(2);
+	gens->init(AQ, verbose_level - 2);
+	gens->allocate(2, verbose_level - 2);
 	AQ->element_move(Elt1, gens->ith(0), 0);
 	AQ->element_move(Elt2, gens->ith(1), 0);
 	

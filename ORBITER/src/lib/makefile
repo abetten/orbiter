@@ -147,6 +147,7 @@ MODULES= \
 		group_actions/actions/interface_induced_action.o \
 		group_actions/actions/interface_matrix_group.o \
 		group_actions/actions/interface_perm_group.o \
+		group_actions/actions/interface_permutation_representation.o \
 		group_actions/actions/interface_wreath_product.o \
 		group_actions/actions/nauty_interface.o \
 		group_actions/actions/stabilizer_chain_base_data.o \
@@ -171,9 +172,12 @@ MODULES= \
 		group_actions/groups/matrix_group.o \
 		group_actions/groups/orbits_on_something.o \
 		group_actions/groups/perm_group.o \
+		group_actions/groups/permutation_representation.o \
 		group_actions/groups/schreier.o \
 		group_actions/groups/schreier_io.o \
 		group_actions/groups/schreier_sims.o \
+		group_actions/groups/sims_group_theory.o \
+		group_actions/groups/sims_io.o \
 		group_actions/groups/sims.o \
 		group_actions/groups/sims2.o \
 		group_actions/groups/sims3.o \
@@ -286,8 +290,6 @@ MODULES= \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
 		top_level/geometry/cubic_curve_with_action.o \
-		top_level/geometry/decomposition.o \
-		top_level/geometry/incidence_structure.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/packing_classify.o \
@@ -312,6 +314,7 @@ MODULES= \
 		top_level/geometry/surface_object_with_action.o \
 		top_level/geometry/surface_with_action.o \
 		top_level/geometry/surfaces_arc_lifting.o \
+		top_level/geometry/tactical_decomposition.o \
 		top_level/geometry/translation_plane_via_andre_model.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \

@@ -57,11 +57,12 @@ void schreier::print_orbit_lengths(ostream &ost)
 		m = orbit_len_sorted[f];
 		if (l > 1) {
 			cout << l << " \\times ";
-			}
+		}
 		cout << m;
-		if (i < nb_types - 1)
+		if (i < nb_types - 1) {
 			cout << ", ";
 		}
+	}
 	ost << endl;
 	FREE_int(orbit_len_sorted);
 	FREE_int(sorting_perm);
@@ -94,10 +95,11 @@ void schreier::print_orbit_lengths_tex(ostream &ost)
 		ost << m;
 		if (l > 1) {
 			ost << "^{" << l << "}";
-			}
-		if (i < nb_types - 1)
+		}
+		if (i < nb_types - 1) {
 			ost << ", ";
 		}
+	}
 	ost << "$ \\\\" << endl;
 	FREE_int(orbit_len_sorted);
 	FREE_int(sorting_perm);
@@ -136,7 +138,7 @@ void schreier::print_orbit_reps(ostream &ost)
 		//<< " : ";
 		//print_orbit(ost, i);
 		//ost << endl;
-		}
+	}
 	ost << endl;
 }
 
@@ -154,7 +156,7 @@ void schreier::print(ostream &ost)
 		//<< " : ";
 		//print_orbit(ost, i);
 		//ost << endl;
-		}
+	}
 	ost << endl;
 }
 
@@ -191,7 +193,7 @@ void schreier::print_and_list_orbits_and_stabilizer(ostream &ost,
 		SG->print_generators_ost(ost);
 		FREE_OBJECT(SG);
 		FREE_OBJECT(Stab);
-		}
+	}
 	ost << endl;
 }
 
@@ -208,7 +210,7 @@ void schreier::print_and_list_orbits(ostream &ost)
 		ost << " : ";
 		print_orbit(ost, i);
 		ost << endl;
-		}
+	}
 	ost << endl;
 }
 
@@ -223,7 +225,7 @@ void schreier::print_and_list_orbits_tex(ostream &ost)
 	//ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (i = 0; i < nb_orbits; i++) {
 		print_and_list_orbit_tex(i, ost);
-		}
+	}
 	ost << endl;
 }
 
@@ -296,7 +298,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 
 		FREE_int(Subgroup_elements_by_index);
 
-		}
+	}
 
 	FREE_OBJECT(gens_stab);
 }
@@ -334,34 +336,34 @@ void schreier::print_and_list_orbits_sorted_by_length(
 			<< gens.len << " generators:";
 	if (f_tex) {
 		ost << "\\\\" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	ost << "Orbit lengths: ";
 	int_vec_print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	if (!f_tex) {
 		ost << "i : orbit_len[i]" << endl;
-		}
+	}
 	for (h = 0; h < nb_orbits; h++) {
 		i = Perm_inv[h];
 		if (f_tex) {
 			print_and_list_orbit_tex(i, ost);
-			}
+		}
 		else {
 			ost << " Orbit " << h << " / " << nb_orbits
 					<< " is " << i << " : " << orbit_len[i];
 			ost << " : ";
 			print_orbit(ost, i);
 			ost << endl;
-			}
 		}
+	}
 	ost << endl;
 
 	FREE_int(Len);
@@ -391,35 +393,35 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 			<< gens.len << " generators:";
 	if (f_tex) {
 		ost << "\\\\" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	ost << "Orbit lengths: ";
 	int_vec_print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	if (!f_tex) {
 		ost << "i : orbit_len[i]" << endl;
-		}
+	}
 	for (h = 0; h < nb_orbits; h++) {
 		i = Perm_inv[h];
 		if (f_tex) {
 			print_and_list_orbit_and_stabilizer_tex(i,
 					default_action, full_group_order, ost);
-			}
+		}
 		else {
 			ost << " Orbit " << h << " / " << nb_orbits
 					<< " is " << i << " : " << orbit_len[i];
 			ost << " : ";
 			print_orbit(ost, i);
 			ost << endl;
-			}
 		}
+	}
 	ost << endl;
 
 	FREE_int(Len);
@@ -451,21 +453,21 @@ void schreier::print_fancy(
 			<< gens.len << " generators:";
 	if (f_tex) {
 		ost << "\\\\" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	ost << "Orbit lengths: ";
 	int_vec_print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	if (!f_tex) {
 		ost << "i : orbit_len[i]" << endl;
-		}
+	}
 	for (h = 0; h < nb_orbits; h++) {
 		i = Perm_inv[h];
 		if (f_tex) {
@@ -474,15 +476,15 @@ void schreier::print_fancy(
 			print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 				i, default_action,
 				gens_full_group, ost);
-			}
+		}
 		else {
 			ost << " Orbit " << h << " / " << nb_orbits
 					<< " is " << i << " : " << orbit_len[i];
 			ost << " : ";
 			print_orbit(ost, i);
 			ost << endl;
-			}
 		}
+	}
 	ost << endl;
 
 	FREE_int(Len);
@@ -501,13 +503,13 @@ void schreier::print_and_list_orbits_of_given_length(
 	for (i = 0; i < nb_orbits; i++) {
 		if (orbit_len[i] != len) {
 			continue;
-			}
+		}
 		ost << " Orbit " << i << " / "
 				<< nb_orbits << " : " << orbit_len[i];
 		ost << " : ";
 		print_orbit(ost, i);
 		ost << endl;
-		}
+	}
 	ost << endl;
 }
 
@@ -525,7 +527,7 @@ void schreier::print_and_list_orbits_using_labels(
 		ost << " : ";
 		print_orbit_using_labels(ost, i, labels);
 		ost << endl;
-		}
+	}
 	ost << endl;
 }
 
@@ -567,9 +569,9 @@ void schreier::print_tables(ostream &ost,
 			A->element_print_as_permutation(cosetrep, ost);
 			ost << endl;
 			A->element_print_quick(cosetrep, ost);
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	ost << endl;
 }
 
@@ -597,13 +599,13 @@ void schreier::print_tables_latex(ostream &ost,
 	ost << "\\begin{array}{|c|c|c|c|c|" << endl;
 	if (f_with_cosetrep) {
 		ost << "c|";
-		}
+	}
 	ost << "}" << endl;
 	ost << "\\hline" << endl;
 	ost << "i & orbit & orbitinv & prev & label";
 	if (f_with_cosetrep) {
 		ost << "& cosetrep";
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
@@ -621,7 +623,7 @@ void schreier::print_tables_latex(ostream &ost,
 			//A->element_print_as_permutation(cosetrep, ost);
 			//ost << endl;
 			A->element_print_latex(cosetrep, ost);
-			}
+		}
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
 
@@ -632,18 +634,18 @@ void schreier::print_tables_latex(ostream &ost,
 			ost << "\\begin{array}{|c|c|c|c|c|" << endl;
 			if (f_with_cosetrep) {
 				ost << "c|";
-				}
+			}
 			ost << "}" << endl;
 			ost << "\\hline" << endl;
 			ost << "i & orbit & orbitinv & prev & label";
 			if (f_with_cosetrep) {
 				ost << "& cosetrep";
-				}
+			}
 			ost << "\\\\" << endl;
 			ost << "\\hline" << endl;
 			ost << "\\hline" << endl;
-			}
 		}
+	}
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 	ost << endl;
@@ -662,8 +664,8 @@ void schreier::print_generators()
 		//A->element_print_as_permutation(gens.ith(j), cout);
 		if (j < gens.len - 1) {
 			cout << ", " << endl;
-			}
 		}
+	}
 }
 
 void schreier::print_generators_latex(ostream &ost)
@@ -681,9 +683,9 @@ void schreier::print_generators_latex(ostream &ost)
 		//A->element_print_as_permutation(gens.ith(j), cout);
 		if (j < gens.len - 1) {
 			ost << ", " << endl;
-			}
-		ost << "$$" << endl;
 		}
+		ost << "$$" << endl;
+	}
 }
 
 void schreier::print_generators_with_permutations()
@@ -701,8 +703,8 @@ void schreier::print_generators_with_permutations()
 		cout << endl;
 		if (j < gens.len - 1) {
 			cout << ", " << endl;
-			}
 		}
+	}
 }
 
 void schreier::print_orbit(int orbit_no)
@@ -726,7 +728,7 @@ void schreier::print_orbit(ostream &ost, int orbit_no)
 	v = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		v[i] = orbit[first + i];
-		}
+	}
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
 	int_vec_print_fully(ost, v, len);
@@ -744,7 +746,7 @@ void schreier::print_orbit_tex(ostream &ost, int orbit_no)
 	v = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		v[i] = orbit[first + i];
-		}
+	}
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
 	//int_vec_print_fully(ost, v, len);
@@ -766,7 +768,7 @@ void schreier::print_orbit_using_labels(ostream &ost,
 	v = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		v[i] = labels[orbit[first + i]];
-		}
+	}
 	//int_vec_print(ost, v, len);
 	Sorting.int_vec_heapsort(v, len);
 	int_vec_print_fully(ost, v, len);
@@ -786,7 +788,7 @@ void schreier::print_orbit_using_callback(ostream &ost,
 	for (i = 0; i < len; i++) {
 		ost << orbit[first + i] << " which is " << endl;
 		(*print_point)(ost, orbit[first + i], data);
-		}
+	}
 }
 
 void schreier::print_orbit_type(int f_backwards)
@@ -810,12 +812,12 @@ void schreier::list_all_orbits_tex(ostream &ost)
 			ost << a;
 			if (j < l - 1) {
 				ost << ", ";
-				}
-			}
-		if (i < nb_orbits - 1) {
-			ost << " \\mid ";
 			}
 		}
+		if (i < nb_orbits - 1) {
+			ost << " \\mid ";
+		}
+	}
 	ost << "$";
 }
 
@@ -831,7 +833,7 @@ void schreier::print_orbit_through_labels(ostream &ost,
 	v = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		v[i] = point_labels[orbit[first + i]];
-		}
+	}
 	Sorting.int_vec_heapsort(v, len);
 	int_vec_print_fully(ost, v, len);
 	FREE_int(v);
@@ -847,7 +849,7 @@ void schreier::print_orbit_sorted(ostream &ost, int orbit_no)
 	v = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		v[i] = orbit[orbit_first[orbit_no] + i];
-		}
+	}
 	Sorting.int_vec_sort(len, v);
 
 	ost << "{ ";
@@ -855,13 +857,14 @@ void schreier::print_orbit_sorted(ostream &ost, int orbit_no)
 		if (f_print_function) {
 			ost << v[i] << "=";
 			(*print_function)(ost, v[i], print_function_data);
-			}
+		}
 		else {
 			ost << v[i];
-			}
-		if (i < len - 1)
+		}
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << " }";
 	FREE_int(v);
 }
@@ -873,13 +876,15 @@ void schreier::print_orbit(int cur, int last)
 	cout << "schreier::print_orbit degree=" << A->degree << endl;
 	cout << "i : orbit[i] : orbit_inv[i]" << endl;
 	for (i = 0; i < A->degree; i++) {
-		if (i == cur)
+		if (i == cur) {
 			cout << ">";
-		if (i == last)
+		}
+		if (i == last) {
 			cout << ">";
+		}
 		cout << i << " : " << orbit[i]
 			<< " : " << orbit_inv[i] << endl;
-		}
+	}
 	cout << endl;
 }
 
@@ -896,14 +901,14 @@ void schreier::print_tree(int orbit_no)
 		cout << l;
 		for (j = 0; j < l; j++) {
 			cout << " " << path[j];
-			}
+		}
 		cout << " 0 ";
 		if (label[i] != -1) {
 			cout << " $s_{" << label[i] << "}$";
-			}
+		}
 		cout << endl;
 		i++;
-		}
+	}
 	FREE_int(path);
 }
 
@@ -921,14 +926,14 @@ void schreier::draw_forest(const char *fname_mask,
 
 	if (f_v) {
 		cout << "schreier::draw_forest" << endl;
-		}
+	}
 	for (i = 0; i < nb_orbits; i++) {
 		sprintf(fname, fname_mask, i);
 
 		if (f_v) {
 			cout << "schreier::draw_forest drawing orbit "
 					<< i << " / " << nb_orbits << endl;
-			}
+		}
 		draw_tree(fname,
 			i /* orbit_no */, xmax, ymax,
 			f_circletext, rad,
@@ -936,10 +941,10 @@ void schreier::draw_forest(const char *fname_mask,
 			scale, line_width,
 			f_has_point_labels, point_labels,
 			verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "schreier::draw_forest done" << endl;
-		}
+	}
 }
 
 void schreier::export_tree_as_layered_graph(int orbit_no,
@@ -958,7 +963,7 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 		cout << "schreier::export_tree_as_layered_graph" << endl;
 		cout << "schreier::export_tree_as_layered_graph "
 				"nb_gen = " << gens.len << endl;
-		}
+	}
 
 	fst = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -970,7 +975,7 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 		l--;
 		depth[j] = l;
 		max_depth = MAX(max_depth, l);
-		}
+	}
 	int nb_layers;
 	nb_layers = max_depth + 1;
 	int *Nb;
@@ -1015,18 +1020,18 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"before LG->init" << endl;
-		}
+	}
 	//LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"after LG->init" << endl;
-		}
+	}
 	LG->place(verbose_level);
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"after LG->place" << endl;
-		}
+	}
 	for (i = 0; i <= max_depth; i++) {
 		if (f_vv) {
 			cout << "schreier::export_tree_as_layered_graph "
@@ -1083,7 +1088,7 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph done" << endl;
-		}
+	}
 }
 
 void schreier::draw_tree(const char *fname,
@@ -1104,7 +1109,7 @@ void schreier::draw_tree(const char *fname,
 
 	if (f_v) {
 		cout << "schreier::draw_tree" << endl;
-		}
+	}
 	path = NEW_int(A->degree);
 	weight = NEW_int(A->degree);
 	placement_x = NEW_int(A->degree);
@@ -1115,26 +1120,26 @@ void schreier::draw_tree(const char *fname,
 	for (j = 0; j < A->degree; j++) {
 		weight[j] = 0;
 		placement_x[j] = 0;
-		}
+	}
 	subtree_calc_weight(weight, max_depth, i, last);
 	if (f_vv) {
 		cout << "the weights: " << endl;
 		for (j = i; j < last; j++) {
 			cout << j << " : " << weight[j] << " : " << endl;
-			}
+		}
 		cout << endl;
 		cout << "max_depth = " << max_depth << endl;
-		}
+	}
 	subtree_place(weight, placement_x, 0, 1000000, i, last);
 	if (f_vv) {
 		for (j = i; j < last; j++) {
 			cout << j << " : " << placement_x[j] << endl;
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	if (orbit_len[orbit_no] > 100) {
 		f_circletext = FALSE;
-		}
+	}
 	draw_tree2(fname, xmax, ymax, f_circletext,
 		weight, placement_x, max_depth, i, last, rad,
 		f_embedded, f_sideways,
@@ -1147,7 +1152,7 @@ void schreier::draw_tree(const char *fname,
 	FREE_int(placement_x);
 	if (f_v) {
 		cout << "schreier::draw_tree done" << endl;
-		}
+	}
 }
 
 static void calc_y_coordinate(int &y, int l, int max_depth)
@@ -1209,7 +1214,7 @@ void schreier::draw_tree2(const char *fname,
 	for (j = i; j < last; j++) {
 		trace_back(NULL, orbit[j], l);
 		L += l;
-		}
+	}
 	avg = (double) L / (double)N;
 	x = 500000;
 	calc_y_coordinate(y, max_depth + 1, max_depth);
@@ -1220,10 +1225,10 @@ void schreier::draw_tree2(const char *fname,
 	nb_gens = gens.len;
 	if (nb_gens) {
 		H = log(N) / log(nb_gens);
-		}
+	}
 	else {
 		H = 0.;
-		}
+	}
 	sprintf(str, "N=%d, avg=%lf,  gens=%d, H=%lf", N, avg, nb_gens, H);
 	G.aligned_text(x, y, "", str);
 
@@ -1231,11 +1236,11 @@ void schreier::draw_tree2(const char *fname,
 #if 0
 	if (f_circletext) {
 		G.circle_text(x, y, rad, "$\\emptyset$");
-		}
+	}
 	else {
 		G.circle_text(x, y, rad, "");
 		//G.circle(x, y, rad);
-		}
+	}
 #endif
 
 	G.end_figure();
@@ -1243,7 +1248,7 @@ void schreier::draw_tree2(const char *fname,
 	G.footer();
 	if (f_v) {
 		cout << "schreier::draw_tree2 done" << endl;
-		}
+	}
 }
 
 void schreier::subtree_draw_lines(mp_graphics &G,
@@ -1258,7 +1263,7 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 
 	if (f_v) {
 		cout << "schreier::subtree_draw_lines" << endl;
-		}
+	}
 	trace_back(NULL, pt, l);
 	// l is 1 if pt is the root.
 	x = placement_x[pt];
@@ -1291,19 +1296,19 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 		G.polygon2(Px, Py, 0, 1);
 		sprintf(str, "$\\alpha_{%d}$", label[i]);
 		G.aligned_text(Px[2], Py[2], "", str);
-		}
+	}
 
 	for (ii = i + 1; ii < last; ii++) {
 		if (prev[ii] == pt) {
 			subtree_draw_lines(G, f_circletext,
 					x, y, weight, placement_x,
 					max_depth, ii, last, verbose_level);
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "schreier::subtree_draw_lines done" << endl;
-		}
+	}
 }
 
 void schreier::subtree_draw_vertices(mp_graphics &G,
@@ -1320,7 +1325,7 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 
 	if (f_v) {
 		cout << "schreier::subtree_draw_vertices" << endl;
-		}
+	}
 	trace_back(NULL, pt, l);
 	x = placement_x[pt];
 	calc_y_coordinate(y, l, max_depth);
@@ -1342,8 +1347,8 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 				max_depth, ii, last, rad,
 				f_has_point_labels, point_labels,
 				verbose_level);
-			}
 		}
+	}
 #if 0
 	if (pt == 169303 || pt == 91479) {
 		G.circle(x, y, 4 * rad);
@@ -1351,21 +1356,21 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 #endif
 	if (f_has_point_labels) {
 		sprintf(str, "%d", point_labels[pt]);
-		}
+	}
 	else {
 		sprintf(str, "%d", pt);
-		}
+	}
 	if (f_circletext) {
 		G.circle_text(x, y, rad, str);
-		}
+	}
 	else {
 		G.circle_text(x, y, rad, "");
 		//G.circle(x, y, rad);
 		//G.aligned_text(Px, Py, 1, "tl", str);
-		}
+	}
 	if (f_v) {
 		cout << "schreier::subtree_draw_vertices done" << endl;
-		}
+	}
 }
 
 void schreier::subtree_place(int *weight, int *placement_x,
@@ -1390,8 +1395,8 @@ void schreier::subtree_place(int *weight, int *placement_x,
 			rgt = left + (int)((double)(w0 + w1) * dx);
 			subtree_place(weight, placement_x, lft, rgt, ii, last);
 			w0 += w1;
-			}
 		}
+	}
 }
 
 int schreier::subtree_calc_weight(int *weight,
@@ -1407,8 +1412,8 @@ int schreier::subtree_calc_weight(int *weight,
 		if (prev[ii] == pt) {
 			w1 = subtree_calc_weight(weight, max_depth, ii, last);
 			w += w1;
-			}
 		}
+	}
 	weight[pt] = w;
 	return w;
 }
@@ -1429,8 +1434,8 @@ int schreier::subtree_depth_first(ostream &ost,
 
 			w1 = subtree_depth_first(ost, path, ii, last);
 			w += w1;
-			}
 		}
+	}
 	return w;
 }
 
@@ -1441,136 +1446,9 @@ void schreier::print_path(ostream &ost, int *path, int l)
 	ost << l;
 	for (j = 0; j < l; j++) {
 		ost << " " << path[j];
-		}
+	}
 	ost << endl;
 }
-
-#if 0
-void schreier::write_to_memory_object(
-		memory_object *m, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-
-	if (f_v) {
-		cout << "schreier::write_to_memory_object" << endl;
-		}
-	m->write_int(0); // indicator
-	m->write_int(1); // version
-	m->write_int(A->degree);
-	m->write_int(nb_orbits);
-	for (i = 0; i < nb_orbits; i++) {
-		m->write_int(orbit_first[i]);
-		m->write_int(orbit_len[i]);
-		}
-	for (i = 0; i < A->degree; i++) {
-		m->write_int(orbit[i]);
-		m->write_int(prev[i]);
-		m->write_int(label[i]);
-		//m->write_int(orbit_no[i]);
-		}
-	gens.write_to_memory_object(m, verbose_level - 1);
-	gens_inv.write_to_memory_object(m, verbose_level - 1);
-	if (f_v) {
-		cout << "schreier::write_to_memory_object done" << endl;
-		}
-}
-
-void schreier::read_from_memory_object(
-		memory_object *m, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, deg, dummy, a, version;
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "schreier::read_from_memory_object" << endl;
-		}
-	init2();
-	m->read_int(&a);
-	if (a == 0) {
-		m->read_int(&version);
-		m->read_int(&deg);
-		}
-	else {
-		version = 0;
-		deg = a;
-		}
-	m->read_int(&nb_orbits);
-	if (deg != A->degree) {
-		cout << "schreier::read_from_memory_object "
-				"deg != A->degree" << endl;
-		}
-	orbit_first = NEW_int(nb_orbits);
-	orbit_len = NEW_int(nb_orbits);
-	for (i = 0; i < nb_orbits; i++) {
-		m->read_int(&orbit_first[i]);
-		m->read_int(&orbit_len[i]);
-		}
-	orbit = NEW_int(A->degree);
-	orbit_inv = NEW_int(A->degree);
-	prev = NEW_int(A->degree);
-	label = NEW_int(A->degree);
-	//orbit_no = NEW_int(A->degree);
-	for (i = 0; i < A->degree; i++) {
-		m->read_int(&orbit[i]);
-		m->read_int(&prev[i]);
-		m->read_int(&label[i]);
-		m->read_int(&dummy);
-		if (version == 0) {
-			m->read_int(&dummy);
-			}
-		//m->read_int(&orbit_no[i]);
-		}
-	Combi.perm_inverse(orbit, orbit_inv, A->degree);
-	gens.init(A);
-	gens.read_from_memory_object(m, verbose_level - 1);
-	gens_inv.init(A);
-	gens_inv.read_from_memory_object(m, verbose_level - 1);
-	if (f_v) {
-		cout << "schreier::read_from_memory_object done" << endl;
-		}
-}
-
-void schreier::write_file(char *fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	memory_object M;
-
-	if (f_v) {
-		cout << "schreier::write_file" << endl;
-		}
-	M.alloc(1024 /* length */, verbose_level - 1);
-	M.used_length = 0;
-	M.cur_pointer = 0;
-	write_to_memory_object(&M, verbose_level - 1);
-	M.write_file(fname, verbose_level - 1);
-	if (f_v) {
-		cout << "schreier::write_file done" << endl;
-		}
-}
-
-void schreier::read_file(const char *fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	memory_object M;
-	file_io Fio;
-
-	if (f_v) {
-		cout << "schreier::read_file reading file "
-				<< fname << " of size " << Fio.file_size(fname) << endl;
-		}
-	M.read_file(fname, verbose_level - 1);
-	if (f_v) {
-		cout << "schreier::read_file read file " << fname << endl;
-		}
-	M.cur_pointer = 0;
-	read_from_memory_object(&M, verbose_level - 1);
-	if (f_v) {
-		cout << "schreier::read_file done" << endl;
-		}
-}
-#endif
 
 void schreier::write_to_file_binary(ofstream &fp, int verbose_level)
 {
@@ -1579,7 +1457,7 @@ void schreier::write_to_file_binary(ofstream &fp, int verbose_level)
 
 	if (f_v) {
 		cout << "schreier::write_to_file_binary" << endl;
-		}
+	}
 	fp.write((char *) &a, sizeof(int));
 	fp.write((char *) &version, sizeof(int));
 	fp.write((char *) &A->degree, sizeof(int));
@@ -1587,18 +1465,18 @@ void schreier::write_to_file_binary(ofstream &fp, int verbose_level)
 	for (i = 0; i < nb_orbits; i++) {
 		fp.write((char *) &orbit_first[i], sizeof(int));
 		fp.write((char *) &orbit_len[i], sizeof(int));
-		}
+	}
 	for (i = 0; i < A->degree; i++) {
 		fp.write((char *) &orbit[i], sizeof(int));
 		fp.write((char *) &prev[i], sizeof(int));
 		fp.write((char *) &label[i], sizeof(int));
 		//fp.write((char *) &orbit_no[i], sizeof(int));
-		}
+	}
 	gens.write_to_file_binary(fp, verbose_level - 1);
 	gens_inv.write_to_file_binary(fp, verbose_level - 1);
 	if (f_v) {
 		cout << "schreier::write_to_file_binary done" << endl;
-		}
+	}
 }
 
 void schreier::read_from_file_binary(ifstream &fp, int verbose_level)
@@ -1609,29 +1487,29 @@ void schreier::read_from_file_binary(ifstream &fp, int verbose_level)
 
 	if (f_v) {
 		cout << "schreier::read_from_file_binary" << endl;
-		}
+	}
 	init2();
 	fp.read((char *) &a, sizeof(int));
 	if (a == 0) {
 		fp.read((char *) &version, sizeof(int));
 		fp.read((char *) &deg, sizeof(int));
-		}
+	}
 	else {
 		version = 0;
 		deg = a;
-		}
+	}
 	//fp.read((char *) &deg, sizeof(int));
 	fp.read((char *) &nb_orbits, sizeof(int));
 	if (deg != A->degree) {
 		cout << "schreier::read_from_file_binary "
 				"deg != A->degree" << endl;
-		}
+	}
 	orbit_first = NEW_int(nb_orbits);
 	orbit_len = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		fp.read((char *) &orbit_first[i], sizeof(int));
 		fp.read((char *) &orbit_len[i], sizeof(int));
-		}
+	}
 	orbit = NEW_int(A->degree);
 	orbit_inv = NEW_int(A->degree);
 	prev = NEW_int(A->degree);
@@ -1644,17 +1522,17 @@ void schreier::read_from_file_binary(ifstream &fp, int verbose_level)
 		if (version == 0) {
 			fp.read((char *) &dummy, sizeof(int));
 			//fp.read((char *) &orbit_no[i], sizeof(int));
-			}
 		}
+	}
 	Combi.perm_inverse(orbit, orbit_inv, A->degree);
 
-	gens.init(A);
+	gens.init(A, verbose_level - 2);
 	gens.read_from_file_binary(fp, verbose_level - 1);
-	gens_inv.init(A);
+	gens_inv.init(A, verbose_level - 2);
 	gens_inv.read_from_file_binary(fp, verbose_level - 1);
 	if (f_v) {
 		cout << "schreier::read_from_file_binary done" << endl;
-		}
+	}
 }
 
 
@@ -1665,7 +1543,7 @@ void schreier::write_file_binary(char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "schreier::write_file_binary" << endl;
-		}
+	}
 	{
 		ofstream fp(fname, ios::binary);
 
@@ -1675,7 +1553,7 @@ void schreier::write_file_binary(char *fname, int verbose_level)
 			<< fname << " of size " << Fio.file_size(fname) << endl;
 	if (f_v) {
 		cout << "schreier::write_file_binary done" << endl;
-		}
+	}
 }
 
 void schreier::read_file_binary(const char *fname, int verbose_level)
@@ -1686,7 +1564,7 @@ void schreier::read_file_binary(const char *fname, int verbose_level)
 	if (f_v) {
 		cout << "schreier::read_file_binary reading file "
 				<< fname << " of size " << Fio.file_size(fname) << endl;
-		}
+	}
 	cout << "schreier::read_file_binary Reading file "
 			<< fname << " of size " << Fio.file_size(fname) << endl;
 	{
@@ -1696,7 +1574,18 @@ void schreier::read_file_binary(const char *fname, int verbose_level)
 	}
 	if (f_v) {
 		cout << "schreier::read_file_binary done" << endl;
-		}
+	}
 }
+
+void schreier::list_elements_as_permutations_vertically(ostream &ost)
+{
+	if (f_images_only) {
+		cout << "schreier::list_elements_as_permutations_vertically is not "
+				"allowed if f_images_only is TRUE" << endl;
+		exit(1);
+	}
+	A->list_elements_as_permutations_vertically(&gens, ost);
+}
+
 
 }}

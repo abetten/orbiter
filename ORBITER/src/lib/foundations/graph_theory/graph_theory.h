@@ -15,7 +15,7 @@ namespace foundations {
 // clique_finder.cpp
 // #############################################################################
 
-//! A class that can be used to find cliques in graphs
+//! finds all cliques of a certain size in a graph
 
 
 

@@ -30,6 +30,9 @@ void action_print_symmetry_group_type(ostream &ost,
 	else if (a == direct_product_t) {
 		ost << "direct_product_t";
 		}
+	else if (a == permutation_representation_t) {
+		ost << "permutation_representation_t";
+		}
 	else if (a == action_on_sets_t) {
 		ost << "action_on_sets_t";
 		}
@@ -245,8 +248,8 @@ void make_generators_stabilizer_of_two_components(
 
 
 
-	gens->init(A_PGL_n_q);
-	gens->allocate(new_len);
+	gens->init(A_PGL_n_q, verbose_level - 2);
+	gens->allocate(new_len, verbose_level - 2);
 	for (h = 0; h < new_len; h++) {
 		A_PGL_n_q->make_element(Elt1, Data + h * sz, 0);
 		if (f_vv) {
@@ -374,8 +377,8 @@ void make_generators_stabilizer_of_three_components(
 
 
 
-	gens->init(A_PGL_n_q);
-	gens->allocate(new_len);
+	gens->init(A_PGL_n_q, verbose_level - 2);
+	gens->allocate(new_len, verbose_level - 2);
 	for (h = 0; h < new_len; h++) {
 		A_PGL_n_q->make_element(Elt1, Data + h * sz, 0);
 		if (f_vv) {
@@ -609,8 +612,8 @@ void lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 	if (f_v) {
 		cout << "lift_generators lifting generators" << endl;
 		}
-	gens_out->init(Aq);
-	gens_out->allocate(nb_gens);
+	gens_out->init(Aq, verbose_level - 2);
+	gens_out->allocate(nb_gens, verbose_level - 2);
 	for (t = 0; t < nb_gens; t++) {
 		if (f_vv) {
 			cout << "lift_generators " << t << " / " << nb_gens << endl;
@@ -669,8 +672,8 @@ void retract_generators(vector_ge *gens_in,
 	if (f_v) {
 		cout << "retract_generators retracting generators" << endl;
 		}
-	gens_out->init(AQ);
-	gens_out->allocate(nb_gens);
+	gens_out->init(AQ, verbose_level - 2);
+	gens_out->allocate(nb_gens, verbose_level - 2);
 	for (t = 0; t < nb_gens; t++) {
 		if (f_vv) {
 			cout << "retract_generators " << t
@@ -929,8 +932,8 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	A = NEW_OBJECT(action);
 	
 	A->init_permutation_group(degree, 0/*verbose_level*/);
-	Gens.init(A);
-	Gens.allocate(nb_gens);
+	Gens.init(A, verbose_level - 2);
+	Gens.allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		Gens.copy_in(i, perm + i * degree);
 		}
@@ -940,8 +943,8 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	
 	schreier S;
 	
-	S.init(A);
-	S.init_generators(Gens);
+	S.init(A, verbose_level - 2);
+	S.init_generators(Gens, verbose_level - 2);
 	S.compute_all_point_orbits(verbose_level);
 	if (f_v) {
 		cout << "after S.compute_all_point_orbits, "

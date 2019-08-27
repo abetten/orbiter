@@ -68,10 +68,6 @@ static void wreath_product_group_element_print_latex_with_print_point_function(
 	void *elt, std::ostream &ost,
 	void (*point_label)(std::stringstream &sstr, int pt, void *data),
 	void *point_label_data);
-#if 0
-static void wreath_product_group_element_print_as_permutation(
-	action &A, void *elt, std::ostream &ost);
-#endif
 static void wreath_product_group_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
 static void wreath_product_group_print_point(action &A,
@@ -171,14 +167,6 @@ static int wreath_product_group_element_linear_entry_ij(action &A,
 	cout << "wreath_product_group_element_linear_entry_ij "
 			"not yet implemented" << endl;
 	exit(1);
-#if 0
-	if (f_v) {
-		cout << "wreath_product_group_element_linear_entry_ij "
-				"i=" << i << " j=" << j << endl;
-		}
-	w = W.element_entry_ij(Elt, i, j);
-	return w;
-#endif
 }
 
 static int wreath_product_group_element_linear_entry_frobenius(action &A,
@@ -192,13 +180,6 @@ static int wreath_product_group_element_linear_entry_frobenius(action &A,
 	cout << "wreath_product_group_element_linear_entry_frobenius "
 			"not yet implemented" << endl;
 	exit(1);
-#if 0
-	if (f_v) {
-		cout << "wreath_product_group_element_linear_entry_frobenius" << endl;
-		}
-	w = W.element_entry_frobenius(Elt);
-	return w;
-#endif
 }
 
 static void wreath_product_group_element_one(action &A,
@@ -416,33 +397,6 @@ static void wreath_product_group_element_print(action &A,
 
 	W.element_print_easy(Elt, ost);
 	ost << endl;
-#if 0
-	if (G.GFq->q > 2) {
-		ost << "=" << endl;
-		W.element_print_easy_normalized(Elt, ost);
-		ost << endl;
-		}
-#endif
-
-#if 0
-	int *fp, n;
-
-	fp = NEW_int(A.degree);
-	n = A.find_fixed_points(elt, fp, 0);
-	cout << "with " << n << " fixed points ";
-	A.element_print_base_images(Elt, ost);
-	cout << endl;
-	FREE_int(fp);
-#endif
-
-#if 0
-	if (A.degree < 0 /*1000*/) {
-		//cout << "matrix_group_element_print: "
-		//"printing element as permutation" << endl;
-		matrix_group_element_print_as_permutation(A, elt, ost);
-		ost << endl;
-		}
-#endif
 }
 
 static void wreath_product_group_element_code_for_make_element(action &A,
@@ -466,37 +420,19 @@ static void wreath_product_group_element_code_for_make_element(action &A,
 static void wreath_product_group_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
-	//wreath_product &W = *A.G.wreath_product_group;
-	//int *Elt = (int *) elt;
+	wreath_product &W = *A.G.wreath_product_group;
+	int *Elt = (int *) elt;
 
-	cout << "wreath_product_group_element_print_for_make_element "
-			"not yet implemented" << endl;
-	exit(1);
-#if 0
-	//cout << "wreath_product_group_element_print_for_make_element "
-	//"calling GL_print_for_make_element" << endl;
 	W.element_print_for_make_element(Elt, ost);
-	//cout << "wreath_product_group_element_print_for_make_element "
-	//"after GL_print_for_make_element" << endl;
-#endif
 }
 
 static void wreath_product_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
-	//wreath_product &W = *A.G.wreath_product_group;
-	//int *Elt = (int *) elt;
+	wreath_product &W = *A.G.wreath_product_group;
+	int *Elt = (int *) elt;
 
-	cout << "wreath_product_group_element_print_for_make_element_no_commas "
-			"not yet implemented" << endl;
-	exit(1);
-#if 0
-	//cout << "wreath_product_group_element_print_for_make_element_no_commas "
-	//"calling GL_print_for_make_element_no_commas" << endl;
-	W.element_print_for_make_element_no_commas(Elt, ost);
-	//cout << "wreath_product_group_element_print_for_make_element_no_commas "
-	//"after GL_print_for_make_element_no_commas" << endl;
-#endif
+	W.element_print_for_make_element(Elt, ost);
 }
 
 static void wreath_product_group_element_print_quick(
@@ -504,51 +440,18 @@ static void wreath_product_group_element_print_quick(
 {
 	wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
-	//int *fp; //, n;
 
 
 	W.element_print_easy(Elt, ost);
-
-
-#if 0
-	ost << endl;
-	ost << "=" << endl;
-	G.GL_print_easy_normalized(Elt, ost);
-	ost << endl;
-#endif
-
-#if 0
-	A.element_print_base_images_verbose(Elt, ost, 0);
-	ost << endl;
-#endif
-
-#if 0
-	//fp = NEW_int(A.degree);
-	//n = A.find_fixed_points(elt, fp, 0);
-	//cout << "with " << n << " fixed points" << endl;
-	//FREE_int(fp);
-	if (FALSE /*A.degree < 0*/ /*1000*/) {
-		//cout << "matrix_group_element_print: "
-		//"printing element as permutation" << endl;
-		matrix_group_element_print_as_permutation(A, elt, ost);
-		ost << endl;
-		}
-#endif
 }
 
 static void wreath_product_group_element_print_latex(
 		action &A, void *elt, ostream &ost)
 {
-	//wreath_product &W = *A.G.wreath_product_group;
-	//int *Elt = (int *) elt;
+	wreath_product &W = *A.G.wreath_product_group;
+	int *Elt = (int *) elt;
 
-	cout << "wreath_product_group_element_print_latex "
-			"not yet implemented" << endl;
-	exit(1);
-#if 0
 	W.element_print_latex(Elt, ost);
-	//W.element_print_easy_latex(Elt, ost);
-#endif
 }
 
 static void wreath_product_group_element_print_latex_with_print_point_function(
@@ -562,36 +465,6 @@ static void wreath_product_group_element_print_latex_with_print_point_function(
 	exit(1);
 }
 
-#if 0
-static void wreath_product_group_element_print_as_permutation(
-		action &A, void *elt, ostream &ost)
-{
-	//wreath_product &W = *A.G.wreath_product_group;
-	int f_v = FALSE;
-	int *Elt = (int *) elt;
-	int i, j;
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "wreath_product_group_element_print_as_permutation "
-				"degree = " << A.degree << endl;
-		}
-	int *p = NEW_int(A.degree);
-	for (i = 0; i < A.degree; i++) {
-		//cout << "matrix_group_element_print_as_permutation "
-		//"computing image of i=" << i << endl;
-		//if (i == 3)
-			//f_v = TRUE;
-		//else
-			//f_v = FALSE;
-		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
-		p[i] = j;
-		}
-	Combi.perm_print(ost, p, A.degree);
-	FREE_int(p);
-}
-#endif
-
 static void wreath_product_group_element_print_verbose(
 		action &A, void *elt, ostream &ost)
 {
@@ -599,29 +472,6 @@ static void wreath_product_group_element_print_verbose(
 	int *Elt = (int *) elt;
 
 	W.element_print_easy(Elt, ost);
-#if 0
-	ost << "\n";
-	int i, j;
-
-	if (A.degree < 1000) {
-		int *p = NEW_int(A.degree);
-		for (i = 0; i < A.degree; i++) {
-			j = A.element_image_of(i, Elt, FALSE);
-			p[i] = j;
-			}
-		perm_print(ost, p, A.degree);
-		FREE_int(p);
-		}
-	else {
-#if 0
-		cout << "i : image" << endl;
-		for (i = 0; i < MINIMUM(40, G.degree); i++) {
-			j = A.element_image_of(i, Elt, FALSE);
-			cout << i << " : " << j << endl;
-			}
-#endif
-		}
-#endif
 
 }
 

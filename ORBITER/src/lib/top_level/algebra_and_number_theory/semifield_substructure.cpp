@@ -573,7 +573,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 		Aut_gens = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
 		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(SC->A);
+		coset_reps->init(SC->A, verbose_level - 2);
 
 
 		for (i = 0; i < SC->k; i++) {
@@ -947,7 +947,7 @@ void semifield_substructure::loop_over_all_subspaces(
 					if (f_vv) {
 						cout << "We found an automorphism" << endl;
 					}
-					coset_reps->append(transporter1);
+					coset_reps->append(transporter1, verbose_level - 2);
 				}
 				else {
 					if (!f_processed[f2]) {
@@ -1004,7 +1004,7 @@ void semifield_substructure::loop_over_all_subspaces(
 						if (f_vv) {
 							cout << "We found an automorphism" << endl;
 						}
-						coset_reps->append(transporter1);
+						coset_reps->append(transporter1, verbose_level - 2);
 					}
 					else {
 						if (!f_processed[f2]) {
@@ -1090,7 +1090,7 @@ void semifield_substructure::loop_over_all_subspaces(
 						if (f_vv) {
 							cout << "We found an automorphism" << endl;
 							}
-						coset_reps->append(transporter3);
+						coset_reps->append(transporter3, verbose_level - 2);
 					}
 					else {
 						if (!f_processed[f2]) {

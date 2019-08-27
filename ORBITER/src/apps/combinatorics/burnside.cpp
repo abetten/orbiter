@@ -150,7 +150,7 @@ void do_it(int n, int verbose_level)
 
 	Sch = NEW_OBJECT(schreier);
 
-	Sch->init(Aconj);
+	Sch->init(Aconj, verbose_level - 2);
 
 
 	SG = NEW_OBJECT(strong_generators);
@@ -164,7 +164,7 @@ void do_it(int n, int verbose_level)
 		}
 #endif
 
-	Sch->init_generators(*SG->gens);
+	Sch->init_generators(*SG->gens, verbose_level - 2);
 
 	cout << "Computing conjugacy classes:" << endl;
 	Sch->compute_all_point_orbits(verbose_level);

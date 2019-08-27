@@ -319,7 +319,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 
 	group G;
 
-	G.init(gen->Poset->A);
+	G.init(gen->Poset->A, verbose_level - 2);
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators, hdl_strong_generators, tl, FALSE);
 
@@ -445,7 +445,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 		}
 	group G;
 
-	G.init(gen->Poset->A);
+	G.init(gen->Poset->A, verbose_level - 2);
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators,
 			hdl_strong_generators, tl,
@@ -670,7 +670,7 @@ void poset_orbit_node::print_set(poset_classification *gen)
 		cout << "_1";
 		}
 	else {
-		D.multiply_up(go, tl, gen->Poset->A->base_len());
+		D.multiply_up(go, tl, gen->Poset->A->base_len(), 0 /* verbose_level */);
 		cout << "_{";
 		for (i = 0; i < gen->Poset->A->base_len(); i++) {
 			cout << tl[i];

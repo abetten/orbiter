@@ -48,8 +48,8 @@ void analyze_group(action *A, sims *S,
 		nb_primes += exponents[i];
 		}
 	cout << "nb_primes=" << nb_primes << endl;
-	gens2->init(A);
-	gens2->allocate(nb_primes);
+	gens2->init(A, verbose_level - 2);
+	gens2->allocate(nb_primes, verbose_level - 2);
 
 	compute_regular_representation(A, S, SG, perm, verbose_level);
 
