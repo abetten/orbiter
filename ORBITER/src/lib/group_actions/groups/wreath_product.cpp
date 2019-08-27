@@ -8471,12 +8471,12 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 
 			C1.init(L, SoS->Set_size[t], FALSE, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
-			C1.print_naked(TRUE);
+			C1.print_naked_tex(cout, TRUE);
 			cout << endl;
 
 			C2.init(Ago, SoS->Set_size[t], FALSE, 0);
 			cout << "classification of ago for tensor rank " << types[t] << ":" << endl;
-			C2.print_naked(TRUE);
+			C2.print_naked_tex(cout, TRUE);
 			cout << endl;
 
 			FREE_int(L);
