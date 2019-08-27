@@ -21,17 +21,22 @@ public:
 		nb_colors = _nb_colors_;
 
 		adjacency.init(nb_vertices);
+
+		vertex_label = new T [nb_vertices];
+		if (_nb_colors_!=0) vertex_color = new U [nb_vertices];
 	}
 
 	~Graph () {
+		if (vertex_label) delete [] vertex_label;
+		if (vertex_color) delete [] vertex_color;
 	}
 
 
-	__forceinline__ U get_color(size_t vertex) {
+	__forceinline__ U get_color(size_t vertex) const {
 		return vertex_color[vertex];
 	}
 
-	__forceinline__ T get_label(size_t vertex) {
+	__forceinline__ T get_label(size_t vertex) const {
 		return vertex_label[vertex];
 	}
 
@@ -43,11 +48,11 @@ public:
 		adjacency.unset(i*nb_vertices+j);
 	}
 
-	__forceinline__ bool is_adjacent (size_t i, size_t j) {
+	__forceinline__ bool is_adjacent (size_t i, size_t j) const {
 		return adjacency[i*nb_vertices+j];
 	}
 
-	void print_adj_matrix () {
+	void print_adj_matrix () const {
 		for (size_t i=0; i<nb_vertices; ++i) {
 			for (size_t j=0; j<nb_vertices; ++j) {
 				if (is_adjacent(i,j)) std::cout << "1 " ;

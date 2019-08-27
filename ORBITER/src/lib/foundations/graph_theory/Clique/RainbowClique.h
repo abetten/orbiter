@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <limits>
 
 #ifndef _RAINBOW_CLIQUE_
 #define _RAINBOW_CLIQUE_
@@ -62,7 +63,6 @@ public:
 		for (size_t i=0; i<nThreads; ++i) nb_sols += params[i].t_solutions.size();
 		soln.reserve(nb_sols);
 
-
 		#pragma unroll
 		for (size_t i=0; i<nThreads; ++i) {
 			// use std::move to avoid performing intermediate copy ops when
@@ -92,7 +92,7 @@ public:
 		T end_color_class = 0;
 
 		if (depth > 0) {
-			T pt = param.current_cliques[depth-1];
+			auto pt = param.current_cliques[depth-1];
 			end_adj = clump_by_adjacency(G, param.live_pts, start, end, pt);
 		} else {
 			#pragma unroll
@@ -107,8 +107,8 @@ public:
 
 		end_color_class = clump_color_class(G, param.live_pts, start, end_adj, lowest_color);
 
-
 		param.color_satisfied.set(lowest_color);
+
 
 		// find how many points are there with the lowest value at current depth
 		if (depth == 0) {
@@ -116,7 +116,7 @@ public:
 			for (size_t i=start; i<end_color_class; ++i) {
 				if ((i % param.n_threads) == param.tid) {
 					param.current_cliques[depth] = param.live_pts[i];
-					find_cliques_parallel<T,U>(depth+1, end_color_class, end_adj, param, G);
+					find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
 					std::cout<<"Progress: "<<((double)i+1)/(end_color_class-start)<<"% \r";
 					std::cout << std::flush;
 				}
@@ -125,7 +125,7 @@ public:
 			#pragma unroll
 			for (size_t i=start; i<end_color_class; ++i) {
 				param.current_cliques[depth] = param.live_pts[i];
-				find_cliques_parallel<T,U>(depth+1, end_color_class, end_adj, param, G);
+				find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
 			}
 		}
 
@@ -159,7 +159,7 @@ public:
 
 		#pragma unroll
 		for (size_t i = start; i < end; ++i) {
-			const size_t point_color = G.vertex_color [live_pts[i]];
+			const U point_color = G.vertex_color [live_pts[i]];
 			color_frequency[point_color] += 1;
 		}
 	}
@@ -172,11 +172,11 @@ public:
 		create_color_freq_of_live_points(G, live_pts, color_frequency, start, end);
 
 		// returns index of the lowest value in t he array
-		T min_element = color_frequency[0];
+		T min_element = std::numeric_limits<T>::max();
 		U return_value = 0;
 		#pragma unroll
-		for (U i=1; i < G.nb_colors; ++i) {
-			if (color_frequency[i] < min_element && !color_satisfied[i]) {
+		for (U i=0; i < G.nb_colors; ++i) {
+			if (color_frequency[i] < min_element && !color_satisfied.at((size_t)i)) {
 				min_element = color_frequency[i];
 				return_value = i;
 			}
