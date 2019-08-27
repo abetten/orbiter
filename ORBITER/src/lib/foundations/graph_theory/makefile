@@ -18,8 +18,10 @@ MODULES = \
 
 
 all : $(MODULES)
+	cd ./Clique; $(MAKE)
 
 %.o: %.cpp %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 clean:
 	- rm *.o *.a *~
+	cd ./Clique; $(MAKE) clean
