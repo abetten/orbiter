@@ -11,6 +11,7 @@
 #ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
 #define ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
 
+template <typename T=uint32_t, typename U=uint32_t>
 class Graph {
 public:
 
@@ -26,11 +27,11 @@ public:
 	}
 
 
-	__forceinline__ size_t get_color(size_t vertex) {
+	__forceinline__ U get_color(size_t vertex) {
 		return vertex_color[vertex];
 	}
 
-	__forceinline__ size_t get_label(size_t vertex) {
+	__forceinline__ T get_label(size_t vertex) {
 		return vertex_label[vertex];
 	}
 
@@ -60,8 +61,9 @@ public:
 	size_t nb_colors = 0;
 	size_t nb_vertices = 0;
 	bitset adjacency;
-	size_t* vertex_color = NULL;
-	size_t* vertex_label = NULL;
+	T* vertex_label = NULL;
+	U* vertex_color = NULL;
+
 
 };
 
