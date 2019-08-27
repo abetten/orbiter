@@ -2113,7 +2113,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 			S->path_unrank_int(rk);
 			while (i >= 0) {
 				S->path[i]++;
-				if (S->path[i] < S->orbit_len[i]) {
+				if (S->path[i] < S->get_orbit_length(i)) {
 					break;
 					}
 				i--;
@@ -2147,7 +2147,10 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 				cout << "path ";
 				int_vec_print(cout, S->path, S->A->base_len());
 				cout << " : ";
-				int_vec_print(cout, S->orbit_len, S->A->base_len());
+				for (int t = 0; t < S->A->base_len(); t++) {
+					cout << S->get_orbit_length(t) << ", ";
+				}
+				//int_vec_print(cout, S->orbit_len, S->A->base_len());
 				if (f_path_select) {
 					cout << " select_value = " << select_value;
 					}

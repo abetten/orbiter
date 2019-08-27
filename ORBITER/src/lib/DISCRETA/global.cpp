@@ -53,14 +53,14 @@ void discreta_init()
 	discreta_home = getenv("DISCRETA_HOME");
 	if (discreta_home == NULL) {
 		if (f_v) {
-			cout << "discreta_init(): WARNING: $DISCRETA_HOME not set !" << endl;
+			cout << "discreta_init WARNING: $DISCRETA_HOME not set !" << endl;
 			}
 		discreta_home = ".";
 		}
 	discreta_arch = getenv("DISCRETA_ARCH");
 	if (discreta_arch == NULL) {
 		if (f_v) {
-			cout << "discreta_init(): WARNING: $DISCRETA_ARCH not set !" << endl;
+			cout << "discreta_init WARNING: $DISCRETA_ARCH not set !" << endl;
 			}
 		discreta_arch = ".";
 		}
@@ -72,7 +72,7 @@ void discreta_init()
 #if 1
 		if (Fio.file_size(str) <= 0) {
 			if (f_v) {
-				cout << "discreta_init(): WARNING: can't find my library (DISCRETA_HOME/lib) !" << endl;
+				cout << "discreta_init WARNING: can't find my library (DISCRETA_HOME/lib) !" << endl;
 				}
 			}
 #endif
@@ -100,7 +100,7 @@ discreta_base *calloc_nobjects(int n, kind k)
 	
 	p = (discreta_base *) operator new(n * sizeof(discreta_base));
 	if (p == NULL) {
-		cout << "calloc_nobjects() no memory" << endl;
+		cout << "calloc_nobjects no memory" << endl;
 		exit(1);
 		}
 	for (i = 0; i < n; i++) {
@@ -126,11 +126,11 @@ discreta_base *calloc_nobjects_plus_length(int n, kind k)
 	discreta_base *p;
 	
 #ifdef DEBUG_CALLOC_NOBJECTS_PLUS_LENGTH
-	cout << "calloc_nobjects_plus_length() n=" << n << endl;
+	cout << "calloc_nobjects_plus_length n=" << n << endl;
 #endif
 	p = (discreta_base *) operator new((n + 1) * sizeof(discreta_base));
 	if (p == NULL) {
-		cout << "calloc_nobjects_plus_length() no memory" << endl;
+		cout << "calloc_nobjects_plus_length no memory" << endl;
 		exit(1);
 		}
 	p++;
@@ -149,10 +149,10 @@ void free_nobjects_plus_length(discreta_base *p)
 
 	n = p[-1].s_i_i();
 	if (n < 0) {
-		cout << "free_nobjects_plus_length() length = " << n << " < 0\n";
+		cout << "free_nobjects_plus_length length = " << n << " < 0" << endl;
 		}
 #ifdef DEBUG_CALLOC_NOBJECTS_PLUS_LENGTH
-	cout << "free_nobjects_plus_length() n=" << n << endl;
+	cout << "free_nobjects_plus_length n=" << n << endl;
 #endif
 	for (i = 0; i < n; i++) {
 		p[i].freeself();
@@ -169,7 +169,7 @@ discreta_base *calloc_m_times_n_objects(int m, int n, kind k)
 	
 	p = (discreta_base *) operator new((m * n + 2) * sizeof(discreta_base));
 	if (p == NULL) {
-		cout << "calloc_m_times_n_objects() no memory" << endl;
+		cout << "calloc_m_times_n_objects no memory" << endl;
 		exit(1);
 		}
 	p++;
@@ -192,10 +192,10 @@ void free_m_times_n_objects(discreta_base *p)
 	m = p[-2].s_i_i();
 	n = p[-1].s_i_i();
 	if (m < 0) {
-		cout << "free_m_times_n_objects() m = " << m << " < 0\n";
+		cout << "free_m_times_n_objects m = " << m << " < 0" << endl;
 		}
 	if (n < 0) {
-		cout << "free_m_times_n_objects() n = " << n << " < 0\n";
+		cout << "free_m_times_n_objects n = " << n << " < 0" << endl;
 		}
 	for (i = 0; i < m * n; i++) {
 		p[i].freeself();
@@ -338,7 +338,7 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 	number_theory_domain NT;
 	
 	if (n == 0) {
-		cout << "factor_integer(): n == 0\n";
+		cout << "factor_integer n == 0" << endl;
 		exit(1);
 		}
 	if (n == 1) {
@@ -379,7 +379,7 @@ void discreta_print_factorization(Vector& primes, Vector& exponents, ostream &o)
 	
 	l = primes.s_l();
 	if (l != exponents.s_l()) {
-		cout << "print_factorization() l != exponents.s_l()\n";
+		cout << "print_factorization l != exponents.s_l()" << endl;
 		exit(1);
 		}
 	if (current_printing_mode() == printing_mode_latex) {
@@ -420,7 +420,7 @@ void print_factorization_hollerith(Vector& primes, Vector& exponents, hollerith 
 	
 	l = primes.s_l();
 	if (l != exponents.s_l()) {
-		cout << "print_factorization() l != exponents.s_l()\n";
+		cout << "print_factorization l != exponents.s_l()" << endl;
 		exit(1);
 		}
 	h.init("");
@@ -544,7 +544,7 @@ int NormRemainder(int a, int m)
 	int q, m0, m1, m_halbe;
 	
 	if (m == 0) {
-		cout << "NormRemainder() m == 0" << endl;
+		cout << "NormRemainder m == 0" << endl;
 		exit(1);
 		}
 	m0 = m;
@@ -570,7 +570,7 @@ int log2(int n)
 	int i;
 	
 	if (n <= 0) {
-		cout << "log2(): n <= 0\n";
+		cout << "log2 n <= 0" << endl;
 		exit(1);
 		}
 	for (i = -1; n > 0; i++) {
@@ -595,15 +595,16 @@ int sqrt_mod(int a, int p, int verbose_level)
 			a1 = a1 % p;
 			if (a1) {
 				a1 = p - a1;
-				}
 			}
+		}
 		for (x = 0; x < p; x++) {
-			if ((x * x) % p == a1)
+			if ((x * x) % p == a1) {
 				if (f_v) {
 					cout << "sqrt_mod a=" << a << " p=" << p << " done" << endl;
 				}
 				return x;
 			}
+		}
 		cout << "sqrt_mod() a not a quadratic residue" << endl;
 		cout << "a = " << a << " p=" << p << endl;
 		exit(1);
@@ -616,7 +617,7 @@ int sqrt_mod(int a, int p, int verbose_level)
 		P.homo_z(p);
 		Y.mult_mod(X, X, P);
 		if (Y.modp(p) != a1) {
-			cout << "sqrt_mod() error in sqrt_mod_invoved\n";
+			cout << "sqrt_mod error in sqrt_mod_invoved" << endl;
 			exit(1);
 			}
 		if (f_v) {
@@ -671,7 +672,7 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 			return X.s_i();
 			}
 		else {
-			cout << "sqrt_mod() p % 8 = 5 and power neq +-1\n";
+			cout << "sqrt_mod() p % 8 = 5 and power neq +-1" << endl;
 			cout << "power = " << b << endl;
 			cout << "-1 = " << m1 << endl;
 			exit(1);

@@ -161,13 +161,13 @@ void do_it(int n, int f_star, int f_coxeter,
 		
 		GG.order_Bn_group_factorized(n, factors, nb_factors);
 
-		D.multiply_up(target_go, factors, nb_factors);
+		D.multiply_up(target_go, factors, nb_factors, 0 /* verbose_level */);
 		cout << "target group order = " << target_go << endl;
 
 		GG.generators_Bn_group(n, deg1, nb_perms, perms, verbose_level);
 		
-		G_gens->init(A);
-		G_gens->allocate(nb_perms);
+		G_gens->init(A, verbose_level - 2);
+		G_gens->allocate(nb_perms, verbose_level - 2);
 
 		for (i = 0; i < nb_perms; i++) {
 			A->make_element(G_gens->ith(i),
@@ -199,8 +199,8 @@ void do_it(int n, int f_star, int f_coxeter,
 
 	gens = NEW_OBJECT(vector_ge);
 
-	gens->init(A);
-	gens->allocate(nb_gens);
+	gens->init(A, verbose_level - 2);
+	gens->allocate(nb_gens, verbose_level - 2);
 
 	v = NEW_int(deg);
 

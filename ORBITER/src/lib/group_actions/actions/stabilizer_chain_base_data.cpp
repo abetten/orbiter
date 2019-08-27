@@ -190,7 +190,7 @@ void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
 		int i, j, k, l;
 
 		for (i = 0; i < base_len; i++) {
-			k = G->orbit_len[i];
+			k = G->get_orbit_length(i);
 			transversal_length[i] = k;
 			}
 		for (i = 0; i < base_len; i++) {
@@ -208,7 +208,7 @@ void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
 			for (j = 0; j < k; j++) {
 				//cout << "j" << j << endl;
 				//cout << G->orbit[i][j] << " " << endl;
-				orbit[i][j] = l = G->orbit[i][j];
+				orbit[i][j] = l = G->get_orbit(i, j);
 				orbit_inv[i][l] = j;
 				}
 			//cout << endl;
@@ -298,7 +298,7 @@ void stabilizer_chain_base_data::group_order(longinteger_object &go)
 {
 	longinteger_domain D;
 
-	D.multiply_up(go, transversal_length, base_len);
+	D.multiply_up(go, transversal_length, base_len, 0 /* verbose_level */);
 }
 
 void stabilizer_chain_base_data::init_projective_matrix_group(

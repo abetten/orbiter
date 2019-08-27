@@ -2386,7 +2386,7 @@ void action::induce(action *old_action, sims *old_G,
 	
 	G = NEW_OBJECT(sims);
 	K = NEW_OBJECT(sims);
-	G->init_without_base(this);
+	G->init_without_base(this, verbose_level - 2);
 	if (f_v) {
 		cout << "action::induce: after G->init_without_base(this);" << endl;
 		}
@@ -2461,13 +2461,19 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "found a group in action " << G->A->label
 				<< " of order " << G_order << " ";
 		cout << "transversal lengths:" << endl;
-		int_vec_print(cout, G->orbit_len, G->A->base_len());
+		for (int t = 0; t < G->A->base_len(); t++) {
+			cout << G->get_orbit_length(t) << ", ";
+		}
+		//int_vec_print(cout, G->get_orbit_length(i), G->A->base_len());
 		cout << endl;
 
 		cout << "kernel in action " << K->A->label
 				<< " of order " << K_order << " ";
 		cout << "transversal lengths:" << endl;
-		int_vec_print(cout, K->orbit_len, K->A->base_len());
+		for (int t = 0; t < G->A->base_len(); t++) {
+			cout << K->get_orbit_length(t) << ", ";
+		}
+		//int_vec_print(cout, K->get_orbit_length(), K->A->base_len());
 		cout << endl;
 		}
 	D.mult(G_order, K_order, go3);

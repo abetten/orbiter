@@ -13,9 +13,12 @@ MODULES = \
 	matrix_group.o \
 	orbits_on_something.o \
 	perm_group.o \
+	permutation_representation.o \
 	schreier.o \
 	schreier_io.o \
 	schreier_sims.o \
+	sims_group_theory.o \
+	sims_io.o \
 	sims.o \
 	sims2.o \
 	sims3.o \

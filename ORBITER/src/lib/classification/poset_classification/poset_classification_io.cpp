@@ -1421,10 +1421,10 @@ void poset_classification::read_level_file(int level,
 		{
 		group Aut;
 		
-		Aut.init(Poset->A);
+		Aut.init(Poset->A, verbose_level - 2);
 		
 		if (strlen(data[i])) {
-			Aut.init_ascii_coding(data[i]);
+			Aut.init_ascii_coding(data[i], verbose_level - 2);
 		
 			Aut.decode_ascii(FALSE);
 		

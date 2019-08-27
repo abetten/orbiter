@@ -885,8 +885,8 @@ int isomorph::trace_next_point_database(
 	{
 	vector_ge gens;
 
-	gens.init(gen->Poset->A);
-	gens.allocate(nb_strong_generators);
+	gens.init(gen->Poset->A, verbose_level - 2);
+	gens.allocate(nb_strong_generators, verbose_level - 2);
 
 	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
 	fp_ge->seekg(ref * gen->Poset->A->coded_elt_size_in_char, ios::beg);

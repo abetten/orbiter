@@ -339,8 +339,8 @@ void representatives::read_representatives_and_stabilizers(
 		rep[i] = b;
 		//first = c;
 		len = d;
-		gens.init(A);
-		gens.allocate(len);
+		gens.init(A, verbose_level - 2);
+		gens.allocate(len, verbose_level - 2);
 		for (j = 0; j < A->base_len(); j++) {
 			f1 >> tl[j];
 			}

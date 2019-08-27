@@ -169,11 +169,11 @@ void set_and_stabilizer::init_stab_from_data(int *data_gens,
 	vector_ge *gens;
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 	target_go.create_from_base_10_string(ascii_target_go);
 
 
-	gens->allocate(nb_gens);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A->make_element(gens->ith(i), data_gens + i * data_gens_size, 0);
 		}
@@ -234,10 +234,10 @@ void set_and_stabilizer::init_stab_from_file(
 
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 
 
-	gens->allocate(nb_gens);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		for (j = 0; j < A->make_element_size; j++) {
 			f >> data[j];

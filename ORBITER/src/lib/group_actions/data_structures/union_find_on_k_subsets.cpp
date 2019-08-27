@@ -197,8 +197,8 @@ void union_find_on_k_subsets::init(
 	len = gens->len;
 	gens_perm = NEW_OBJECT(vector_ge);
 
-	gens_perm->init(Ar_perm);
-	gens_perm->allocate(len);
+	gens_perm->init(Ar_perm, verbose_level - 2);
+	gens_perm->allocate(len, verbose_level - 2);
 
 	data1 = NEW_int(set_sz);
 	data2 = NEW_int(set_sz);

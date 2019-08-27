@@ -271,8 +271,8 @@ void strong_generators::init_trivial_group(action *A,
 		tl[i] = 1;
 		}
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
-	gens->allocate(0);
+	gens->init(A, verbose_level - 2);
+	gens->allocate(0, verbose_level - 2);
 	//S->extract_strong_generators_in_order(*gens,
 	// tl, 0 /*verbose_level*/);
 	if (f_v) {
@@ -366,7 +366,7 @@ void strong_generators::generators_for_the_monomial_group(
 	else {
 		go_factored[3 * n] = 1;
 		}
-	D.multiply_up(target_go, go_factored, 3 * n + 1);
+	D.multiply_up(target_go, go_factored, 3 * n + 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
 		int_vec_print(cout, go_factored, 3 * n + 1);
@@ -374,12 +374,12 @@ void strong_generators::generators_for_the_monomial_group(
 		cout << "target_go=" << target_go << endl;
 		}
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A);
+	my_gens->init(A, verbose_level - 2);
 	nb_gens = n - 1 + 1 + 1;
 	if (Mtx->f_affine) {
 		nb_gens += n * F->e;
 		}
-	my_gens->allocate(nb_gens);
+	my_gens->allocate(nb_gens, verbose_level - 2);
 	for (h = 0; h < nb_gens; h++) {
 
 		if (f_v) {
@@ -548,7 +548,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 	else {
 		go_factored[n] = 1;
 		}
-	D.multiply_up(target_go, go_factored, n + 1);
+	D.multiply_up(target_go, go_factored, n + 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
 		int_vec_print(cout, go_factored, n + 1);
@@ -556,8 +556,8 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 		cout << "target_go=" << target_go << endl;
 		}
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A);
-	my_gens->allocate(n + 1);
+	my_gens->init(A, verbose_level - 2);
+	my_gens->allocate(n + 1, verbose_level - 2);
 	for (h = 0; h < n + 1; h++) {
 
 		F->identity_matrix(data, n);
@@ -667,7 +667,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	g = NT.gcd_int(go_factored[0], power_of_singer);
 	go_factored[0] = go_factored[0] / g;
 
-	D.multiply_up(target_go, go_factored, 1);
+	D.multiply_up(target_go, go_factored, 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
 		int_vec_print(cout, go_factored, 1);
@@ -675,8 +675,8 @@ void strong_generators::generators_for_the_singer_cycle(
 		cout << "target_go=" << target_go << endl;
 		}
 	nice_gens = NEW_OBJECT(vector_ge);
-	nice_gens->init(A);
-	nice_gens->allocate(1);
+	nice_gens->init(A, verbose_level - 2);
+	nice_gens->allocate(1, verbose_level - 2);
 
 	
 
@@ -845,7 +845,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	go_factored[0] = go_factored[0] / g;
 	go_factored[1] = n;
 
-	D.multiply_up(target_go, go_factored, 2);
+	D.multiply_up(target_go, go_factored, 2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
 		int_vec_print(cout, go_factored, 2);
@@ -853,8 +853,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		cout << "target_go=" << target_go << endl;
 		}
 	nice_gens = NEW_OBJECT(vector_ge);
-	nice_gens->init(A);
-	nice_gens->allocate(2);
+	nice_gens->init(A, verbose_level - 2);
+	nice_gens->allocate(2, verbose_level - 2);
 
 
 
@@ -1146,8 +1146,8 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 		}
 	
 	new_gens = NEW_OBJECT(vector_ge);
-	new_gens->init(A_general_linear);
-	new_gens->allocate(SG1->gens->len + 1);
+	new_gens->init(A_general_linear, verbose_level - 2);
+	new_gens->allocate(SG1->gens->len + 1, verbose_level - 2);
 	data = NEW_int(n * n + n + 1);
 	for (i = 0; i < SG1->gens->len; i++) {
 		int_vec_copy(SG1->gens->ith(i), data, n * n);
@@ -1288,8 +1288,8 @@ void strong_generators::field_reduction(
 
 	cout << "strong_generators::field_reduction "
 			"lifting generators" << endl;
-	gens1->init(Aq);
-	gens1->allocate(nb_gens);
+	gens1->init(Aq, verbose_level - 2);
+	gens1->allocate(nb_gens, verbose_level - 2);
 	for (t = 0; t < nb_gens; t++) {
 		cout << "strong_generators::field_reduction " << t
 				<< " / " << nb_gens << endl;
@@ -1402,8 +1402,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	sz = n1 * n1 + 1;
 	M = NEW_int(sz * nb_gens);
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_PGL_n1_q);
-	my_gens->allocate(nb_gens);
+	my_gens->init(A_PGL_n1_q, verbose_level - 2);
+	my_gens->allocate(nb_gens, verbose_level - 2);
 
 
 	if (f_v) {
@@ -1717,7 +1717,7 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 
 	Elt1 = NEW_int(A_PGL_n_q->elt_size_in_int);
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_PGL_n_q);
+	my_gens->init(A_PGL_n_q, verbose_level - 2);
 
 	gens1 = A_PGL_k_q->Strong_gens->gens;
 	len1 = gens1->len;
@@ -1729,7 +1729,7 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 		len++;
 		}
 	Q = NEW_int(n * n + 1);
-	my_gens->allocate(len);
+	my_gens->allocate(len, verbose_level - 2);
 	
 
 	if (f_vv) {
@@ -1844,14 +1844,14 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 	n = Mtx->n;
 	Elt1 = NEW_int(A_linear->elt_size_in_int);
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_linear);
+	my_gens->init(A_linear, verbose_level - 2);
 
 	len = n + ((n * (n - 1)) >> 1);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
 				"borel_subgroup_upper len=" << len << endl;
 		}
-	my_gens->allocate(len);
+	my_gens->allocate(len, verbose_level - 2);
 	Q = NEW_int(n * n + 1);
 	
 
@@ -1977,14 +1977,14 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 	n = Mtx->n;
 	Elt1 = NEW_int(A_linear->elt_size_in_int);
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_linear);
+	my_gens->init(A_linear, verbose_level - 2);
 
 	len = n + ((n * (n - 1)) >> 1);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
 				"borel_subgroup_lower len=" << len << endl;
 		}
-	my_gens->allocate(len);
+	my_gens->allocate(len, verbose_level - 2);
 	Q = NEW_int(n * n + 1);
 	
 
@@ -2111,14 +2111,14 @@ void strong_generators::generators_for_the_identity_subgroup(
 	n = Mtx->n;
 	Elt1 = NEW_int(A_linear->elt_size_in_int);
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_linear);
+	my_gens->init(A_linear, verbose_level - 2);
 
 	len = 1;
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
 				"identity_subgroup len=" << len << endl;
 		}
-	my_gens->allocate(len);
+	my_gens->allocate(len, verbose_level - 2);
 	Q = NEW_int(n * n + 1);
 	
 
@@ -2217,8 +2217,8 @@ void strong_generators::generators_for_parabolic_subgroup(
 		verbose_level);
 
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_PGL_n_q);
-	my_gens->allocate(nb_gens);
+	my_gens->init(A_PGL_n_q, verbose_level - 2);
+	my_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A_PGL_n_q->make_element(my_gens->ith(i), data + i * size, 0);
 		}
@@ -2319,8 +2319,8 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		verbose_level);
 
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_PGL_4_q);
-	my_gens->allocate(nb_gens);
+	my_gens->init(A_PGL_4_q, verbose_level - 2);
+	my_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A_PGL_4_q->make_element(my_gens->ith(i),
 				data + i * size, 0);
@@ -2425,8 +2425,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 		verbose_level);
 
 	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A_PGL_4_q);
-	my_gens->allocate(nb_gens);
+	my_gens->init(A_PGL_4_q, verbose_level - 2);
+	my_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A_PGL_4_q->make_element(my_gens->ith(i), data + i * size, 0);
 		}
@@ -2591,11 +2591,11 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 	vector_ge *gens;
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 	target_go.create_from_base_10_string(ascii_target_go);
 
 
-	gens->allocate(nb_gens);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A->make_element(gens->ith(i), data + i * data_size, 0);
 		}
@@ -2670,11 +2670,11 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 	vector_ge *gens;
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 	target_go.create(group_order);
 
 
-	gens->allocate(nb_gens);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A->make_element(gens->ith(i), data + i * data_size, 0);
 		}
@@ -2749,11 +2749,11 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	vector_ge *gens;
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 	target_go.create_from_base_10_string(ascii_target_go);
 
 
-	gens->allocate(nb_gens);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A->make_element(gens->ith(i), data + i * data_size, 0);
 		}
@@ -2834,11 +2834,11 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	vector_ge *gens;
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 	target_go.create_from_base_10_string(ascii_target_go);
 
 
-	gens->allocate(nb_gens);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A->make_element(gens->ith(i), data + i * data_size, 0);
 		}
@@ -2913,11 +2913,11 @@ void strong_generators::Hall_reflection(
 
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 
 	int i;
 
-	gens->allocate(nb_perms);
+	gens->allocate(nb_perms, verbose_level - 2);
 	for (i = 0; i < nb_perms; i++) {
 		A->make_element(gens->ith(i), perms + i * degree, 0);
 		}
@@ -3012,11 +3012,11 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 
 	int i;
 
-	gens->allocate(nb_perms);
+	gens->allocate(nb_perms, verbose_level - 2);
 	for (i = 0; i < nb_perms; i++) {
 		A->make_element(gens->ith(i), perms + i * degree, 0);
 		}
@@ -3101,7 +3101,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(A);
+	gens->init(A, verbose_level - 2);
 
 	int i;
 	int f_semilinear = FALSE;
@@ -3115,7 +3115,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 		SG_hyperplane->print_generators_ost(cout);
 	}
 
-	gens->allocate(SG_hyperplane->gens->len);
+	gens->allocate(SG_hyperplane->gens->len, verbose_level - 2);
 	for (i = 0; i < SG_hyperplane->gens->len; i++) {
 		if (f_v) {
 			cout << "strong_generators::lifted_group_on_"

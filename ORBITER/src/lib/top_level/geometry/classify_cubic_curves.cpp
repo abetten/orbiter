@@ -524,8 +524,8 @@ void classify_cubic_curves::upstep(int verbose_level)
 		N = Combi.int_n_choose_k(nb_pts, 9);
 
 		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(CCA->A);
-		coset_reps->allocate(N);
+		coset_reps->init(CCA->A, verbose_level - 2);
+		coset_reps->allocate(N, verbose_level - 2);
 
 
 		for (i = 0; i < N; i++) {
@@ -635,7 +635,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 		}
 
-		coset_reps->reallocate(nb_coset_reps);
+		coset_reps->reallocate(nb_coset_reps, verbose_level - 2);
 
 		strong_generators *Aut_gens;
 

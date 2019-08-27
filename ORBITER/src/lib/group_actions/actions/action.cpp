@@ -955,8 +955,8 @@ void action::compute_all_point_orbits(schreier &S,
 	if (f_v) {
 		cout << "action::compute_all_point_orbits" << endl;
 		}
-	S.init(this);
-	S.init_generators(gens);
+	S.init(this, verbose_level - 2);
+	S.init_generators(gens, verbose_level - 2);
 	S.compute_all_point_orbits(verbose_level - 1);
 	if (f_v) {
 		cout << "action::compute_all_point_orbits done" << endl;
@@ -978,14 +978,14 @@ int action::depth_in_stab_chain(int *Elt)
 }
 
 void action::strong_generators_at_depth(int depth,
-		vector_ge &gen)
+		vector_ge &gen, int verbose_level)
 // all strong generators that leave base points 0,..., depth - 1 fix
 {
 	int i, j, l, n;
 	
 	l = Strong_gens->gens->len;
-	gen.init(this);
-	gen.allocate(l);
+	gen.init(this, verbose_level - 2);
+	gen.allocate(l, verbose_level - 2);
 	n = 0;
 	for (i = 0; i < l; i++) {
 		j = depth_in_stab_chain(Strong_gens->gens->ith(i));
@@ -1075,8 +1075,8 @@ int action::compute_orbit_of_point(vector_ge &strong_generators,
 		cout << "action::compute_orbit_of_point: "
 				"computing orbit of point " << pt << endl;
 		}
-	Schreier.init(this);
-	Schreier.init_generators(strong_generators);
+	Schreier.init(this, verbose_level - 2);
+	Schreier.init_generators(strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, 0);
 	f = Schreier.orbit_first[0];
 	len = Schreier.orbit_len[0];
@@ -1093,8 +1093,8 @@ int action::compute_orbit_of_point_generators_by_handle(int nb_gen,
 	vector_ge gens;
 	int i;
 	
-	gens.init(this);
-	gens.allocate(nb_gen);
+	gens.init(this, verbose_level - 2);
+	gens.allocate(nb_gen, verbose_level - 2);
 	for (i = 0; i < nb_gen; i++) {
 		element_retrieve(gen_handle[i], gens.ith(i), 0);
 		}
@@ -1113,8 +1113,8 @@ int action::least_image_of_point(vector_ge &strong_generators,
 		cout << "action::least_image_of_point: "
 				"computing least image of " << pt << endl;
 		}
-	Schreier.init(this);
-	Schreier.init_generators(strong_generators);
+	Schreier.init(this, verbose_level - 2);
+	Schreier.init_generators(strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, 0);
 	len = Schreier.orbit_len[0];
 	image = int_vec_minimum(Schreier.orbit, len);
@@ -1146,8 +1146,8 @@ int action::least_image_of_point_generators_by_handle(
 		element_one(transporter, 0);
 		return pt;
 		}
-	gens.init(this);
-	gens.allocate(nb_gen);
+	gens.init(this, verbose_level - 2);
+	gens.allocate(nb_gen, verbose_level - 2);
 	for (i = 0; i < nb_gen; i++) {
 		element_retrieve(gen_handle[i], gens.ith(i), 0);
 		}
@@ -1161,12 +1161,12 @@ void action::all_point_orbits(schreier &Schreier, int verbose_level)
 	if (f_v) {
 		cout << "action::all_point_orbits" << endl;
 		}
-	Schreier.init(this);
+	Schreier.init(this, verbose_level - 2);
 	if (!f_has_strong_generators) {
 		cout << "action::all_point_orbits !f_has_strong_generators" << endl;
 		exit(1);
 		}
-	Schreier.init_generators(*Strong_gens->gens /* *strong_generators */);
+	Schreier.init_generators(*Strong_gens->gens /* *strong_generators */, verbose_level - 2);
 	Schreier.compute_all_point_orbits(verbose_level);
 }
 
@@ -1179,8 +1179,8 @@ void action::all_point_orbits_from_generators(schreier &Schreier,
 	if (f_v) {
 		cout << "action::all_point_orbits_from_generators" << endl;
 		}
-	Schreier.init(this);
-	Schreier.init_generators(*SG->gens /* *strong_generators */);
+	Schreier.init(this, verbose_level - 2);
+	Schreier.init_generators(*SG->gens /* *strong_generators */, verbose_level - 2);
 	Schreier.compute_all_point_orbits(verbose_level);
 }
 
@@ -1195,12 +1195,12 @@ void action::all_point_orbits_from_single_generator(schreier &Schreier,
 		}
 	vector_ge gens;
 
-	gens.init(this);
-	gens.allocate(1);
+	gens.init(this, verbose_level - 2);
+	gens.allocate(1, verbose_level - 2);
 	element_move(Elt, gens.ith(0), 0);
 
-	Schreier.init(this);
-	Schreier.init_generators(gens);
+	Schreier.init(this, verbose_level - 2);
+	Schreier.init_generators(gens, verbose_level - 2);
 	Schreier.compute_all_point_orbits(verbose_level);
 	if (f_v) {
 		cout << "action::all_point_orbits_from_single_generator done" << endl;
@@ -1230,7 +1230,7 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
 		// where is this freed???
 
 	for (i = 0; i < base_len(); i++) {
-		strong_generators_at_depth(i, gen);
+		strong_generators_at_depth(i, gen, verbose_level - 2);
 		if (FALSE) {
 			cout << "level " << i << " found "
 					<< gen.len << " strong generators" << endl;
@@ -1551,8 +1551,8 @@ void action::find_strong_generators_at_level(
 			gen_idx[nb_generators_found++] = i;
 			}
 		}
-	subset_of_gens.init(this);
-	subset_of_gens.allocate(nb_generators_found);
+	subset_of_gens.init(this, verbose_level - 2);
+	subset_of_gens.allocate(nb_generators_found, verbose_level - 2);
 	for (i = 0; i < nb_generators_found; i++) {
 		j = gen_idx[i];
 		element_move(gens.ith(j), subset_of_gens.ith(i), 0);
@@ -1633,6 +1633,7 @@ void action::make_element_from_base_image(int *Elt,
 	int *Elt2;
 	int *Elt3;
 	int *Elt4;
+	int *Elt5;
 	sims *S;
 #if 1
 	int offset = 0;
@@ -1664,6 +1665,7 @@ void action::make_element_from_base_image(int *Elt,
 	Elt2 = NEW_int(elt_size_in_int);
 	Elt3 = NEW_int(elt_size_in_int);
 	Elt4 = NEW_int(elt_size_in_int);
+	Elt5 = NEW_int(elt_size_in_int);
 	for (j = 0; j < base_len(); j++) {
 		base_image[j] = data[j];
 		}
@@ -1674,7 +1676,8 @@ void action::make_element_from_base_image(int *Elt,
 		b_pt = base_i(i);
 		yi = base_image[i];
 		z = element_image_of(yi, Elt4, 0);
-		j = S->orbit_inv[i][z];
+		j = S->get_orbit_inv(i, z);
+		//j = S->orbit_inv[i][z];
 		if (f_vv) {
 			cout << "i=" << i << endl;
 			cout << "Elt3=" << endl;
@@ -1686,16 +1689,16 @@ void action::make_element_from_base_image(int *Elt,
 					<< " yi=" << yi << " z="
 					<< z << " j=" << j << endl;
 			}
-		S->coset_rep(i, j, 0);
+		S->coset_rep(Elt5, i, j, 0);
 		if (f_vv) {
 			cout << "cosetrep=" << endl;
-			element_print_quick(S->cosetrep, cout);
-			element_print_base_images(S->cosetrep);
-			element_print_as_permutation_with_offset(S->cosetrep, cout, 
+			element_print_quick(Elt5, cout);
+			element_print_base_images(Elt5);
+			element_print_as_permutation_with_offset(Elt5, cout,
 				offset, f_do_it_anyway_even_for_big_degree, 
 				f_print_cycles_of_length_one, 0/*verbose_level*/);
 			}
-		element_mult(S->cosetrep, Elt3, Elt4, 0);
+		element_mult(Elt5, Elt3, Elt4, 0);
 		element_move(Elt4, Elt3, 0);
 
 		if (f_vv) {
@@ -1744,6 +1747,7 @@ void action::make_element_from_base_image(int *Elt,
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 	FREE_int(Elt4);
+	FREE_int(Elt5);
 }
 
 void action::make_element_2x2(int *Elt, int a0, int a1, int a2, int a3)
@@ -2011,8 +2015,8 @@ void action::init_group_from_generators(
 		cout << "group_generator_size=" << group_generator_size << endl;
 		exit(1);
 		}
-	gens->init(this);
-	gens->allocate(nb_gens);
+	gens->init(this, verbose_level - 2);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		if (f_v) {
 			cout << "parsing generator " << i << ":" << endl;
@@ -2088,8 +2092,8 @@ void action::init_group_from_generators_by_base_images(
 		cout << "group_generator_size=" << group_generator_size << endl;
 		exit(1);
 		}
-	gens->init(this);
-	gens->allocate(nb_gens);
+	gens->init(this, verbose_level - 2);
+	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		if (f_v) {
 			cout << "parsing generator " << i << ":" << endl;
@@ -2206,7 +2210,7 @@ void action::minimize_base_images(int level,
 	int f_vv = (verbose_level >= 2);
 	int *base_images1;
 	int *base_images2;
-	int *Elt1, *Elt2;
+	int *Elt1, *Elt2, *Elt3;
 	int i, j, /*bi,*/ oj, j0 = 0, image0 = 0, image;
 
 
@@ -2216,6 +2220,7 @@ void action::minimize_base_images(int level,
 		}
 	Elt1 = NEW_int(elt_size_in_int);
 	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
 	base_images1 = NEW_int(base_len());
 	base_images2 = NEW_int(base_len());
 	
@@ -2225,10 +2230,10 @@ void action::minimize_base_images(int level,
 		//bi = base[i];
 		if (f_vv) {
 			cout << "level " << i << " S->orbit_len[i]="
-					<< S->orbit_len[i] << endl;
+					<< S->get_orbit_length(i) << endl;
 			}
-		for (j = 0; j < S->orbit_len[i]; j++) {
-			oj = S->orbit[i][j];
+		for (j = 0; j < S->get_orbit_length(i); j++) {
+			oj = S->get_orbit(i, j);
 			image = element_image_of(oj, Elt1, 0);
 			if (f_vv) {
 				cout << "level " << i << " j=" << j
@@ -2254,18 +2259,18 @@ void action::minimize_base_images(int level,
 			}
 		if (f_vv) {
 			cout << "level " << i << " S->orbit_len[i]="
-					<< S->orbit_len[i] << " j0=" << j0 << endl;
+					<< S->get_orbit_length(i) << " j0=" << j0 << endl;
 			}
-		S->coset_rep(i, j0, 0 /*verbose_level*/);
+		S->coset_rep(Elt3, i, j0, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "cosetrep=" << endl;
-			element_print_quick(S->cosetrep, cout);
+			element_print_quick(Elt3, cout);
 			if (degree < 500) {
-				element_print_as_permutation(S->cosetrep, cout);
+				element_print_as_permutation(Elt3, cout);
 				cout << endl;
 				}
 			}
-		element_mult(S->cosetrep, Elt1, Elt2, 0);
+		element_mult(Elt3, Elt1, Elt2, 0);
 		element_move(Elt2, Elt1, 0);
 		element_base_images(Elt1, base_images2);
 		if (f_vv) {
@@ -2285,6 +2290,7 @@ void action::minimize_base_images(int level,
 	FREE_int(base_images2);
 	FREE_int(Elt1);
 	FREE_int(Elt2);
+	FREE_int(Elt3);
 }
 
 
@@ -2300,12 +2306,12 @@ void action::get_generators_from_ascii_coding(
 		cout << "action::get_generators_from_ascii_coding" << endl;
 		}
 	G = NEW_OBJECT(group);
-	G->init(this);
+	G->init(this, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::get_generators_from_ascii_coding "
 				"before G->init_ascii_coding_to_sims" << endl;
 		}
-	G->init_ascii_coding_to_sims(ascii_coding);
+	G->init_ascii_coding_to_sims(ascii_coding, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::get_generators_from_ascii_coding "
 				"after G->init_ascii_coding_to_sims" << endl;
@@ -2352,8 +2358,8 @@ void action::lexorder_test(int *set, int set_sz,
 				"of degree " << degree << ", max_starter="
 				<< max_starter << endl;
 		}
-	Sch->init(this);
-	Sch->init_generators(*gens);
+	Sch->init(this, verbose_level - 2);
+	Sch->init_generators(*gens, verbose_level - 2);
 
 	//Sch->compute_all_point_orbits(0);
 	Sch->compute_all_orbits_on_invariant_subset(set_sz, 
@@ -2416,8 +2422,8 @@ void action::compute_orbits_on_points(schreier *&Sch,
 		cout << "action::compute_orbits_on_points" << endl;
 		}
 	Sch = NEW_OBJECT(schreier);
-	Sch->init(this);
-	Sch->init_generators(*gens);
+	Sch->init(this, verbose_level - 2);
+	Sch->init_generators(*gens, verbose_level - 2);
 	Sch->compute_all_point_orbits(verbose_level);
 	//Sch.print_and_list_orbits(cout);
 	if (f_v) {
@@ -2443,8 +2449,8 @@ void action::stabilizer_of_dual_hyperoval_representative(
 	K.DH_stab_gens(k, n, no, data, nb_gens, data_size, stab_order);
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(this);
-	gens->allocate(nb_gens);
+	gens->init(this, verbose_level - 2);
+	gens->allocate(nb_gens, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::stabilizer_of_dual_hyperoval_representative "
 				"creating stabilizer generators:" << endl;
@@ -2477,8 +2483,8 @@ void action::stabilizer_of_spread_representative(
 	K.Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
 
 	gens = NEW_OBJECT(vector_ge);
-	gens->init(this);
-	gens->allocate(nb_gens);
+	gens->init(this, verbose_level - 2);
+	gens->allocate(nb_gens, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::stabilizer_of_spread_representative "
 				"creating stabilizer generators:" << endl;

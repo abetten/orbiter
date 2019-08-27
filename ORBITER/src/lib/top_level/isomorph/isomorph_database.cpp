@@ -881,8 +881,8 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 	node = gen->first_poset_orbit_node_at_level[cur_level] + cur_node_local;
 	O = &gen->root[node];
 	if (O->nb_strong_generators == 0) {
-		gens.init(gen->Poset->A);
-		gens.allocate(0);
+		gens.init(gen->Poset->A, verbose_level - 2);
+		gens.allocate(0, verbose_level - 2);
 		go.create(1);
 		goto finish;
 		}
@@ -890,10 +890,10 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 	for (i = 0; i < gen->Poset->A->base_len(); i++) {
 		tl[i] = O->tl[i];
 		}
-	Dom.multiply_up(go, tl, gen->Poset->A->base_len());
+	Dom.multiply_up(go, tl, gen->Poset->A->base_len(), 0 /* verbose_level */);
 	FREE_int(tl);
-	gens.init(gen->Poset->A);
-	gens.allocate(O->nb_strong_generators);
+	gens.init(gen->Poset->A, verbose_level - 2);
+	gens.allocate(O->nb_strong_generators, verbose_level - 2);
 	for (i = 0; i < O->nb_strong_generators; i++) {
 		gen->Poset->A->element_retrieve(
 				O->hdl_strong_generators[i],
@@ -964,8 +964,8 @@ void isomorph::load_strong_generators_database(int cur_level,
 				<< nb_strong_generators << endl;
 		}
 	if (nb_strong_generators == 0) {
-		gens.init(gen->Poset->A);
-		gens.allocate(0);
+		gens.init(gen->Poset->A, verbose_level - 2);
+		gens.allocate(0, verbose_level - 2);
 		go.create(1);
 		goto finish;
 		}
@@ -973,7 +973,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 	for (i = 0; i < gen->Poset->A->base_len(); i++) {
 		tl[i] = v.s_ii(pos++);
 		}
-	Dom.multiply_up(go, tl, gen->Poset->A->base_len());
+	Dom.multiply_up(go, tl, gen->Poset->A->base_len(), 0 /* verbose_level */);
 	FREE_int(tl);
 	pos = v.s_l() - 1;
 	ref = v.s_ii(pos++);
@@ -982,8 +982,8 @@ void isomorph::load_strong_generators_database(int cur_level,
 				"ref = " << ref << endl;
 		}
 
-	gens.init(gen->Poset->A);
-	gens.allocate(nb_strong_generators);
+	gens.init(gen->Poset->A, verbose_level - 2);
+	gens.allocate(nb_strong_generators, verbose_level - 2);
 
 	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
 	fp_ge->seekg(ref * gen->Poset->A->coded_elt_size_in_char, ios::beg);

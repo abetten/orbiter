@@ -1564,7 +1564,7 @@ public:
 	void mult_mod(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &c, 
 		longinteger_object &m, int verbose_level);
-	void multiply_up(longinteger_object &a, int *x, int len);
+	void multiply_up(longinteger_object &a, int *x, int len, int verbose_level);
 	int quotient_as_int(longinteger_object &a, longinteger_object &b);
 	void integral_division_exact(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &a_over_b);

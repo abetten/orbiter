@@ -686,8 +686,8 @@ void arc_lifting::loop_over_trihedral_pairs(
 		}
 
 	coset_reps = NEW_OBJECT(vector_ge);
-	coset_reps->init(Surf_A->A);
-	coset_reps->allocate(nb_T * cosets->len);
+	coset_reps->init(Surf_A->A, verbose_level - 2);
+	coset_reps->allocate(nb_T * cosets->len, verbose_level - 2);
 
 	aut_T_index = NEW_int(nb_T * cosets->len);
 	aut_coset_index = NEW_int(nb_T * cosets->len);
@@ -903,7 +903,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 
 		} // next i
 
-	coset_reps->reallocate(orbit_length);
+	coset_reps->reallocate(orbit_length, verbose_level - 2);
 
 	if (f_v) {
 		cout << "arc_lifting::loop_over_trihedral_pairs we found an "
