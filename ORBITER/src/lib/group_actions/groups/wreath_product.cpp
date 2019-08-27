@@ -8464,7 +8464,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 			for (s = 0; s < SoS->Set_size[t]; s++) {
 				a = SoS->Sets[t][s];
 				L[s] = w5_reps[3 * a + 2];
-				Ago[i] = 933120 / L[s];
+				Ago[s] = 933120 / L[s];
 			}
 			classify C1;
 			classify C2;
@@ -8478,6 +8478,9 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 			cout << "classification of ago for tensor rank " << types[t] << ":" << endl;
 			C2.print_naked(TRUE);
 			cout << endl;
+
+			FREE_int(L);
+			FREE_int(Ago);
 
 		}
 
