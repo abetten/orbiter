@@ -178,6 +178,7 @@ MODULES= \
 		group_actions/groups/schreier_sims.o \
 		group_actions/groups/sims_group_theory.o \
 		group_actions/groups/sims_io.o \
+		group_actions/groups/sims_main.o \
 		group_actions/groups/sims.o \
 		group_actions/groups/sims2.o \
 		group_actions/groups/sims3.o \

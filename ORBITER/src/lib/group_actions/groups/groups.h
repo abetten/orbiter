@@ -659,7 +659,7 @@ public:
 	int *orbit; // [A->degree]
 	int *orbit_inv; // [A->degree]
 
-		// prev, label and orbit_no are indexed 
+		// prev and label are indexed
 		// by the points in the order as listed in orbit.
 	int *prev; // [A->degree]
 	int *label; // [A->degree]
@@ -760,8 +760,9 @@ public:
 	void random_schreier_generator_ith_orbit(
 			int *Elt, int orbit_no,
 			int verbose_level);
+		// computes random Schreier generator for the orbit orbit_no into Elt
 	void random_schreier_generator(int *Elt, int verbose_level);
-		// computes random Schreier generator into schreier_gen
+		// computes random Schreier generator for the first orbit into Elt
 	void trace_back(int *path, int i, int &j);
 	void intersection_vector(int *set, int len, 
 		int *intersection_cnt);
@@ -816,8 +817,9 @@ public:
 			int gen_hdl_first, int nb_gen,
 			enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy,
 			int verbose_level);
-	int get_num_points(); // This function returns the number of points in the
-						  // schreier forest
+	int get_num_points();
+		// This function returns the number of points in the
+		// schreier forest
 	double get_average_word_length();
 		// This function returns the average word length of the forest.
 	double get_average_word_length(int orbit_idx);
@@ -952,7 +954,6 @@ public:
 	
 	int f_from_generators;
 	vector_ge *external_gens;
-	//vector_ge *gens;
 
 	int f_from_random_process;
 	void (*callback_choose_random_generator)(int iteration, 
@@ -1046,6 +1047,7 @@ public:
 	
 
 	int transversal_length;
+		// an upper bound for the length of every basic orbit
 
 	int *path; // [my_base_len]
 	
@@ -1198,69 +1200,66 @@ public:
 		// i-th base point.
 		// j is a coset, not a point
 		// result is in cosetrep
+	void extract_strong_generators_in_order(vector_ge &SG, 
+		int *tl, int verbose_level);
+	void random_schreier_generator(int *Elt, int verbose_level);
+		// computes random Schreier generator
+	void element_as_permutation(action *A_special, 
+		int elt_rk, int *perm, int verbose_level);
+	int least_moved_point_at_level(int lvl, int verbose_level);
+	int get_orbit(int i, int j);
+	int get_orbit_inv(int i, int j);
+	int get_orbit_length(int i);
+
+
+	// sims_main.cpp:
 	void compute_base_orbits(int verbose_level);
-	void compute_base_orbits_known_length(int *tl, 
+	void compute_base_orbits_known_length(int *tl,
 		int verbose_level);
-	void extend_base_orbit(int new_gen_idx, int lvl, 
+	void extend_base_orbit(int new_gen_idx, int lvl,
 		int verbose_level);
 	void compute_base_orbit(int lvl, int verbose_level);
 		// applies all generators at the given level to compute
 		// the corresponding basic orbit.
-		// the generators are the first nb_gen[lvl] 
+		// the generators are the first nb_gen[lvl]
 		// in the generator array
-	void compute_base_orbit_known_length(int lvl, 
+	void compute_base_orbit_known_length(int lvl,
 		int target_length, int verbose_level);
-	void extract_strong_generators_in_order(vector_ge &SG, 
-		int *tl, int verbose_level);
 	int strip_and_add(int *elt, int *residue, int verbose_level);
-		// returns TRUE if something was added, 
+		// returns TRUE if something was added,
 		// FALSE if element stripped through
-	int strip(int *elt, int *residue, int &drop_out_level, 
+	int strip(int *elt, int *residue, int &drop_out_level,
 		int &image, int verbose_level);
 		// returns TRUE if the element sifts through
-	void add_generator_at_level(int *elt, int lvl, 
+	void add_generator_at_level(int *elt, int lvl,
 		int verbose_level);
-		// add the generator to the array of generators 
-		// and then extends the 
+		// add the generator to the array of generators
+		// and then extends the
 		// basic orbits 0,..,lvl using extend_base_orbit
-	void add_generator_at_level_only(int *elt, 
+	void add_generator_at_level_only(int *elt,
 		int lvl, int verbose_level);
-		// add the generator to the array of generators 
-		// and then extends the 
+		// add the generator to the array of generators
+		// and then extends the
 		// basic orbit lvl using extend_base_orbit
-	void random_schreier_generator(int *Elt, int verbose_level);
-		// computes random Schreier generator into schreier_gen
-	void build_up_group_random_process_no_kernel(sims *old_G, 
+	void build_up_group_random_process_no_kernel(sims *old_G,
 		int verbose_level);
-	void extend_group_random_process_no_kernel(sims *extending_by_G, 
-		longinteger_object &target_go, 
+	void extend_group_random_process_no_kernel(sims *extending_by_G,
+		longinteger_object &target_go,
 		int verbose_level);
-	void build_up_group_random_process(sims *K, sims *old_G, 
-		longinteger_object &target_go, 
+	void build_up_group_random_process(sims *K, sims *old_G,
+		longinteger_object &target_go,
 		int f_override_choose_next_base_point,
-		int (*choose_next_base_point_method)(action *A, 
-			int *Elt, int verbose_level), 
+		int (*choose_next_base_point_method)(action *A,
+			int *Elt, int verbose_level),
 		int verbose_level);
-	void build_up_group_from_generators(sims *K, vector_ge *gens, 
-		int f_target_go, longinteger_object *target_go, 
+	void build_up_group_from_generators(sims *K, vector_ge *gens,
+		int f_target_go, longinteger_object *target_go,
 		int f_override_choose_next_base_point,
-		int (*choose_next_base_point_method)(action *A, 
-			int *Elt, int verbose_level), 
+		int (*choose_next_base_point_method)(action *A,
+			int *Elt, int verbose_level),
 		int verbose_level);
 	int closure_group(int nb_times, int verbose_level);
-	void element_as_permutation(action *A_special, 
-		int elt_rk, int *perm, int verbose_level);
-	int least_moved_point_at_level(int lvl, int verbose_level);
-	int mult_by_rank(int rk_a, int rk_b, int verbose_level);
-	int mult_by_rank(int rk_a, int rk_b);
-	int invert_by_rank(int rk_a, int verbose_level);
-	int conjugate_by_rank(int rk_a, int rk_b, int verbose_level);
-		// comutes b^{-1} * a * b
-	int conjugate_by_rank_b_bv_given(int rk_a, 
-		int *Elt_b, int *Elt_bv, int verbose_level);
-	int get_orbit(int i, int j);
-	int get_orbit_inv(int i, int j);
-	int get_orbit_length(int i);
+
 
 
 
@@ -1361,6 +1360,13 @@ public:
 		int verbose_level);
 	void compute_all_powers(int elt_idx, int n, int *power_elt,
 			int verbose_level);
+	int mult_by_rank(int rk_a, int rk_b, int verbose_level);
+	int mult_by_rank(int rk_a, int rk_b);
+	int invert_by_rank(int rk_a, int verbose_level);
+	int conjugate_by_rank(int rk_a, int rk_b, int verbose_level);
+		// comutes b^{-1} * a * b
+	int conjugate_by_rank_b_bv_given(int rk_a,
+		int *Elt_b, int *Elt_bv, int verbose_level);
 
 
 	// sims_io.cpp:

@@ -1347,6 +1347,7 @@ void schreier::non_trivial_random_schreier_generator(
 void schreier::random_schreier_generator_ith_orbit(
 		int *Elt,
 		int orbit_no, int verbose_level)
+// computes random Schreier generator for the orbit orbit_no into Elt
 {
 	int first, len, r1, r2, pt, pt2, pt2_coset;
 	int *gen;
