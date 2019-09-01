@@ -634,6 +634,7 @@ void vector_ge::print(ostream &ost, int f_print_as_permutation,
 			A->element_print_as_permutation_with_offset(ith(i), ost, 
 				offset, f_do_it_anyway_even_for_big_degree, 
 				f_print_cycles_of_length_one, 0/*verbose_level*/);
+			ost << endl;
 			}
 		}
 }

@@ -60,7 +60,7 @@ int main () {
 	RainbowClique::find_cliques(G, solutions);
 
 	// Print the solutions
-	printf("\nFound %ld solution(s).\n", solutions.size());
+	printf("Found %ld solution(s).\n", solutions.size());
 	for (size_t i=0; i<solutions.size(); ++i) {
 		for (size_t j=0; j<solutions[i].size(); ++j) {
 			cout << solutions[i][j] << " ";

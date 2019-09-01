@@ -701,12 +701,12 @@ void clique_finder::m_iji(int i, int j, int a)
 	n = bitmatrix_n;
 	//N = bitmatrix_N;
 	if (i < 0 || i >= m) {
-		cout << "clique_finder::m_iji() addressing error, i = "
+		cout << "clique_finder::m_iji addressing error, i = "
 				<< i << ", m = " << m << endl;
 		exit(1);		
 		}
 	if (j < 0 || j >= n) {
-		cout << "clique_finder::m_iji() addressing error, j = "
+		cout << "clique_finder::m_iji addressing error, j = "
 				<< j << ", n = " << n << endl;
 		exit(1);		
 		}
@@ -734,12 +734,12 @@ int clique_finder::s_ij(int i, int j)
 	combinatorics_domain Combi;
 	
 	if ( i < 0 || i >= n ) {
-		cout << "clique_finder::s_ij() addressing error, i = "
+		cout << "clique_finder::s_ij addressing error, i = "
 				<< i << ", n = " << n << endl;
 		exit(1);	
 		}
 	if ( j < 0 || j >= n ) {
-		cout << "clique_finder::s_ij() addressing error, j = "
+		cout << "clique_finder::s_ij addressing error, j = "
 				<< j << ", n = " << n << endl;
 		exit(1);	
 		}

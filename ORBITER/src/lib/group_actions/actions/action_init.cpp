@@ -663,7 +663,13 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators "
 				"degree=" << degree << " nb_gens=" << nb_gens
 				<< " given_base_length=" << given_base_length << endl;
+		if (f_target_go) {
+			cout << "action::init_permutation_group_from_generators target group order is " << target_go << endl;
 		}
+		else {
+			cout << "action::init_permutation_group_from_generators no target group order is given" << endl;
+		}
+	}
 	sprintf(group_prefix, "Perm%d", degree);
 	sprintf(label, "Perm%d", degree);
 	sprintf(label_tex, "Perm%d", degree);
@@ -686,7 +692,7 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators "
 				"calling init_permutation_group" << endl;
 		}
-	init_permutation_group(degree, verbose_level /* - 2 */);
+	init_permutation_group(degree, verbose_level - 10);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after init_permutation_group" << endl;
@@ -695,12 +701,12 @@ void action::init_permutation_group_from_generators(int degree,
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"calling allocate_base_data" << endl;
-		cout << "initial base:";
+		cout << "given_base:";
 		int_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 		}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level);
+	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level - 10);
 	//allocate_base_data(given_base_length);
 	//Stabilizer_chain->base_len = given_base_length;
 	
@@ -737,7 +743,7 @@ void action::init_permutation_group_from_generators(int degree,
 	generators_to_strong_generators(
 		f_target_go, target_go, 
 		generators, Strong_gens, 
-		verbose_level);
+		verbose_level - 5);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after generators_to_strong_generators" << endl;
@@ -745,14 +751,22 @@ void action::init_permutation_group_from_generators(int degree,
 
 	sims *G;
 
-	G = Strong_gens->create_sims(verbose_level);
+	if (f_vv) {
+		cout << "action::init_permutation_group_from_generators "
+				"before Strong_gens->create_sims" << endl;
+		}
+	G = Strong_gens->create_sims(verbose_level - 10);
+	if (f_vv) {
+		cout << "action::init_permutation_group_from_generators "
+				"after Strong_gens->create_sims" << endl;
+		}
 
 	
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
-				"init_sims" << endl;
+				"before init_sims" << endl;
 		}
-	init_sims(G, 0/*verbose_level - 1*/);
+	init_sims(G, verbose_level - 10);
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
@@ -765,7 +779,7 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators "
 				"compute_strong_generators_from_sims" << endl;
 		}
-	compute_strong_generators_from_sims(0 /*verbose_level - 2*/);
+	compute_strong_generators_from_sims(verbose_level - 10);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after_strong_generators_from_sims" << endl;
@@ -2142,6 +2156,9 @@ sims *action::create_sims_from_generators_randomized(
 				cout << "action::create_sims_from_generators_randomized target_go is zero" << endl;
 				exit(1);
 			}
+		}
+		else {
+			cout << "action::create_sims_from_generators_randomized no target group order given" << endl;
 		}
 	}
 

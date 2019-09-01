@@ -90,8 +90,17 @@ void strong_generators::init_from_sims(sims *S, int verbose_level)
 	A = S->A;
 	tl = NEW_int(A->base_len());
 	gens = NEW_OBJECT(vector_ge);
+	if (f_v) {
+		cout << "strong_generators::init_from_sims before S->extract_strong_generators_in_order" << endl;
+		}
 	S->extract_strong_generators_in_order(*gens, tl,
-			0 /*verbose_level*/);
+			verbose_level - 5);
+	if (f_v) {
+		cout << "strong_generators::init_from_sims after S->extract_strong_generators_in_order" << endl;
+		cout << "strong_generators::init_from_sims tl=";
+		int_vec_print(cout, tl, A->base_len());
+		cout << endl;
+		}
 	if (f_v) {
 		cout << "strong_generators::init_from_sims done" << endl;
 		}
@@ -996,7 +1005,7 @@ sims *strong_generators::create_sims(int verbose_level)
 		exit(1);
 		}
 	S = A->create_sims_from_generators_with_target_group_order_factorized(
-		gens, tl, A->base_len(), 0 /* verbose_level */);
+		gens, tl, A->base_len(), verbose_level - 2);
 
 	if (f_v) {
 		cout << "strong_generators::create_sims done" << endl;

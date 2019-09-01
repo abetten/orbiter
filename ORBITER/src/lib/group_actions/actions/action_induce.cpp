@@ -3006,7 +3006,11 @@ void action::generators_to_strong_generators(
 		}
 
 	Strong_gens = NEW_OBJECT(strong_generators);
-	Strong_gens->init_from_sims(S, 0);
+	if (f_v) {
+		cout << "action::generators_to_strong_generators "
+				"before Strong_gens->init_from_sims" << endl;
+		}
+	Strong_gens->init_from_sims(S, verbose_level - 5);
 
 	FREE_OBJECT(S);
 

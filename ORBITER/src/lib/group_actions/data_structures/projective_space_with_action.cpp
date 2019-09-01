@@ -187,7 +187,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 #endif
 
 	if (f_vv) {
-		cout << "computing the type of the set" << endl;
+		cout << "projective_space_with_action::set_stabilizer computing the type of the set" << endl;
 		}
 
 	classify C;
@@ -200,12 +200,12 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		}
 
 	if (f_vv) {
-		cout << "The type of the set is:" << endl;
+		cout << "projective_space_with_action::set_stabilizer The type of the set is:" << endl;
 		C.print(FALSE /*f_backwards*/);
 		cout << "C.second_nb_types = " << C.second_nb_types << endl;
 		}
 	if (f_vv) {
-		cout << "allocating data" << endl;
+		cout << "projective_space_with_action::set_stabilizer allocating data" << endl;
 		}
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + C.second_nb_types;
@@ -243,7 +243,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		l2 = C.second_type_len[j];
 		m = C.second_data_sorted[f2 + 0];
 		if (f_vvv) {
-			cout << "j=" << j << " f2=" << f2
+			cout << "projective_space_with_action::set_stabilizer j=" << j << " f2=" << f2
 					<< " l2=" << l2 << " multiplicity=" << m << endl;
 			}
 		for (h = 0; h < l2; h++) {
@@ -252,7 +252,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 			l = C.type_len[idx];
 			i = C.data_sorted[f + 0];
 			if (f_vvv) {
-				cout << "h=" << h << " idx=" << idx
+				cout << "projective_space_with_action::set_stabilizer h=" << h << " idx=" << idx
 					<< " f=" << f << " l=" << l << " i=" << i << endl;
 				}
 			Incma[i * nb_cols + P->N_lines + j] = 1;
@@ -277,7 +277,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 					Incma, nb_rows, nb_cols, nb_cols, 1);
 			}
 		else {
-			cout << "too large to print" << endl;
+			cout << "projective_space_with_action::set_stabilizer too large to print" << endl;
 			}
 
 		char fname_csv[1000];
@@ -417,6 +417,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 		canonical_form = bitvector_allocate_and_coded_length(
 				L, canonical_form_len);
+
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
 				if (Incma_out[i * nb_cols + j]) {
@@ -487,7 +488,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		TRUE, ago, 
 		Aut_counter, Aut, 
 		Base_length, Base,
-		0 /*verbose_level - 2 */);
+		verbose_level - 2);
 
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer "
@@ -601,11 +602,11 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer "
-				"we are now creating the group" << endl;
+				"we are now creating the group; before A_linear->create_sims_from_generators_with_target_group_order" << endl;
 		}
 
 	S = A_linear->create_sims_from_generators_with_target_group_order(
-		gens1, ago, 0 /*verbose_level*/);
+		gens1, ago, verbose_level - 5);
 #if 0
 	S = A_linear->create_sims_from_generators_without_target_group_order(
 		gens1, 0 /*verbose_level - 4*/);
@@ -1037,7 +1038,7 @@ strong_generators
 		}
 	ago.create(Ago);
 	A_perm->init_permutation_group_from_generators(N, 
-		FALSE, ago,
+		TRUE, ago,
 		Aut_counter, Aut, 
 		Base_length, Base,
 		verbose_level);
