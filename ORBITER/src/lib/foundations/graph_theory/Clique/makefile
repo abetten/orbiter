@@ -22,4 +22,4 @@ Graph.o: Graph.h Graph.cpp
 	
 
 clean:
-	- rm -rf *.o
+	- rm -rf *.o main
