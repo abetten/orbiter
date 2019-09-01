@@ -19,6 +19,7 @@ MODULES = \
 	schreier_sims.o \
 	sims_group_theory.o \
 	sims_io.o \
+	sims_main.o \
 	sims.o \
 	sims2.o \
 	sims3.o \

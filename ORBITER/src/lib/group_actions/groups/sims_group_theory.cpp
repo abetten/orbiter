@@ -136,7 +136,7 @@ int sims::transitive_extension_tolerant(schreier &O,
 	if (f_v) {
 		cout << "sims::transitive_extension_tolerant "
 				"group order " << go << ", orbit length "
-				<< orbit_len << ", n e w group order " << ego << endl;
+				<< orbit_len << ", current group order " << ego << endl;
 		}
 	group_order(cur_ego);
 
@@ -253,7 +253,7 @@ void sims::transitive_extension_using_coset_representatives(
 		cout << "sims::transitive_extension_using_coset_"
 				"representatives group order " << go
 				<< ", orbit length " << orbit_len
-				<< ", n e w group order " << ego << endl;
+				<< ", current group order " << ego << endl;
 		}
 	group_order(cur_ego);
 
@@ -343,7 +343,7 @@ void sims::transitive_extension_using_generators(
 	if (f_v) {
 		cout << "sims::transitive_extension_using_generators "
 				"group order " << go << ", subgroup_index "
-				<< subgroup_index << ", n e w group order " << ego << endl;
+				<< subgroup_index << ", current group order " << ego << endl;
 		}
 	group_order(cur_ego);
 
@@ -850,7 +850,7 @@ void sims::conjugate(action *A,
 
 		group_order(go);
 		if ((f_v && f_added) || f_vv) {
-			cout << "sims::conjugate n e w group order is " << go << endl;
+			cout << "sims::conjugate current group order is " << go << endl;
 		}
 		if (f_vv) {
 			print_transversal_lengths();
@@ -868,7 +868,7 @@ void sims::conjugate(action *A,
 			if (TRUE) {
 				cout << "sims::conjugate overshooting the expected "
 						"group after " << cnt << " iterations" << endl;
-				cout << "n e w group order is " << go
+				cout << "current group order is " << go
 						<< " target_go=" << target_go << endl;
 			}
 			if (f_overshooting_OK) {
@@ -1777,6 +1777,138 @@ void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
 		cout << "sims::create_group_table done" << endl;
 	}
 }
+
+int sims::mult_by_rank(int rk_a, int rk_b, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk_c;
+
+	if (f_v) {
+		cout << "sims::mult_by_rank" << endl;
+		}
+	element_unrank_int(rk_a, Elt1);
+	element_unrank_int(rk_b, Elt2);
+	A->element_mult(Elt1, Elt2, Elt3, 0);
+	rk_c = element_rank_int(Elt3);
+	return rk_c;
+}
+
+int sims::mult_by_rank(int rk_a, int rk_b)
+{
+	int rk_c;
+
+	rk_c = mult_by_rank(rk_a, rk_b, 0);
+	return rk_c;
+}
+
+int sims::invert_by_rank(int rk_a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk_b;
+
+	if (f_v) {
+		cout << "sims::invert_by_rank" << endl;
+		}
+	element_unrank_int(rk_a, Elt1);
+	A->element_invert(Elt1, Elt2, 0);
+	rk_b = element_rank_int(Elt2);
+	return rk_b;
+}
+
+int sims::conjugate_by_rank(int rk_a, int rk_b,
+		int verbose_level)
+// comutes b^{-1} * a * b
+{
+	int f_v = (verbose_level >= 1);
+	int rk_c;
+
+	if (f_v) {
+		cout << "sims::conjugate_by_rank" << endl;
+		}
+	element_unrank_int(rk_a, Elt1); // Elt1 = a
+	element_unrank_int(rk_b, Elt2); // Elt2 = b
+	A->element_invert(Elt2, Elt3, 0); // Elt3 = b^{-1}
+	A->element_mult(Elt3, Elt1, Elt4, 0);
+	A->element_mult(Elt4, Elt2, Elt3, 0);
+	rk_c = element_rank_int(Elt3);
+	return rk_c;
+}
+
+int sims::conjugate_by_rank_b_bv_given(int rk_a,
+		int *Elt_b, int *Elt_bv, int verbose_level)
+// comutes b^{-1} * a * b
+{
+	int f_v = (verbose_level >= 1);
+	int rk_c;
+
+	if (f_v) {
+		cout << "sims::conjugate_by_rank_b_bv_given" << endl;
+		}
+	element_unrank_int(rk_a, Elt1); // Elt1 = a
+	A->element_mult(Elt_bv, Elt1, Elt4, 0);
+	A->element_mult(Elt4, Elt_b, Elt3, 0);
+	rk_c = element_rank_int(Elt3);
+	return rk_c;
+}
+
+#if 0
+int sims::identify_group(char *path_t144,
+		char *discreta_home, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int group_idx;
+	int h, i, j, *Elt;
+	longinteger_object go;
+	const char *fname = "group_generators.txt";
+
+	if (f_v) {
+		cout << "sims::identify_group" << endl;
+		}
+	group_order(go);
+	{
+	ofstream f(fname);
+
+		// generators start from one
+
+	f << gens.len << " " << A->degree << endl;
+	for (h = 0; h < gens.len; h++) {
+		Elt = gens.ith(h);
+		for (i = 0; i < A->degree; i++) {
+			j = A->element_image_of(i, Elt, 0);
+			f << j + 1 << " ";
+			}
+		f << endl;
+		}
+	}
+	if (f_v) {
+		cout << "sims::identify_group written file "
+				<< fname << " of size " << file_size(fname) << endl;
+		}
+	char cmd[2000];
+
+	sprintf(cmd, "%s/t144.out -discreta_home %s "
+			"group_generators.txt >log.tmp",
+			path_t144, discreta_home);
+
+	if (f_v) {
+		cout << "sims::identify_group calling '"
+				<< cmd << "'" << endl;
+		}
+
+	system(cmd);
+
+	{
+	ifstream f("result.txt");
+	f >> group_idx;
+	}
+	if (f_v) {
+		cout << "sims::identify_group: the group is "
+				"isomorphic to group " << go << "#"
+				<< group_idx << endl;
+		}
+	return group_idx;
+}
+#endif
 
 
 
