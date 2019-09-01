@@ -951,7 +951,8 @@ public:
 
 	
 	int f_from_generators;
-	vector_ge *gens;
+	vector_ge *external_gens;
+	//vector_ge *gens;
 
 	int f_from_random_process;
 	void (*callback_choose_random_generator)(int iteration, 
@@ -1076,8 +1077,11 @@ private:
 	int **label; // [my_base_len][transversal_length]
 	
 
-	int *Path; // [my_base_len + 1]
-	int *Label; // [my_base_len]
+	// this is wrong, Path and Label describe a path in a schreier tree
+	// and hence should be allocated according
+	// to the largest degree, not the base length
+	//int *Path; // [my_base_len + 1]
+	//int *Label; // [my_base_len]
 
 	
 	// storage for temporary data and 
@@ -1185,6 +1189,7 @@ public:
 		// result is in cosetrep
 	int compute_coset_rep_depth(int i, int j, int verbose_level);
 	void compute_coset_rep_path(int i, int j, int &depth,
+			int *&Path, int *&Label,
 		int verbose_level);
 	void coset_rep_inv(int *Elt, int i, int j, int verbose_level_le);
 		// computes the inverse element of what coset_rep computes,

@@ -92,7 +92,7 @@ public:
 		T end_color_class = 0;
 
 		if (depth > 0) {
-			auto pt = param.current_cliques[depth-1];
+			T pt = param.current_cliques[depth-1];
 			end_adj = clump_by_adjacency(G, param.live_pts, start, end, pt);
 		} else {
 			#pragma unroll

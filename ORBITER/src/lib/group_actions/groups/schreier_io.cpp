@@ -142,7 +142,6 @@ void schreier::print_orbit_reps(ostream &ost)
 	ost << endl;
 }
 
-
 void schreier::print(ostream &ost)
 {
 	int i;

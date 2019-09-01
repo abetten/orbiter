@@ -328,27 +328,22 @@ void sims::print_generator_depth_and_perm()
 {
 	int i;
 
-	cout << "depth:" << endl;
+	cout << "i : gen_depth[i] : gen_perm[i]" << endl;
 	for (i = 0; i < gens.len; i++) {
-		cout << gen_depth[i];
-		if (i < gens.len - 1)
-			cout << ", ";
+		cout << i << " : " << gen_depth[i] << " : " << gen_perm[i] << endl;
 		}
-	cout << endl;
-	cout << "perm:" << endl;
-	for (i = 0; i < gens.len; i++) {
-		cout << gen_perm[i];
-		if (i < gens.len - 1)
-			cout << ", ";
-		}
-	cout << endl;
-	cout << "nb_gen:" << endl;
+	cout << "i : base[i] : nb_gen[i]" << endl;
 	for (i = 0; i <= A->base_len(); i++) {
-		cout << nb_gen[i];
-		if (i < A->base_len())
-			cout << ", ";
+		int pt;
+
+		if (i < A->base_len()) {
+			pt = get_orbit(i, 0);
 		}
-	cout << endl;
+		else {
+			pt = -1;
+		}
+		cout << i << " : " << pt << " : " << nb_gen[i] << endl;
+		}
 }
 
 void sims::print_group_order(ostream &ost)
