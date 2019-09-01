@@ -176,7 +176,7 @@ public:
 		U return_value = 0;
 		#pragma unroll
 		for (U i=0; i < G.nb_colors; ++i) {
-			if (color_frequency[i] < min_element && !color_satisfied.at((size_t)i)) {
+			if (color_frequency[i] < min_element && !color_satisfied.at(i)) {
 				min_element = color_frequency[i];
 				return_value = i;
 			}
