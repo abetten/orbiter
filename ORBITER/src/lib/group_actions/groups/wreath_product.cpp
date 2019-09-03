@@ -18,35 +18,35 @@ namespace group_actions {
 
 static long int nb_w4_reps = 29;
 static long int w4_reps[] = {
-0, 0,
-1, 19,
-2, 33,
-3, 35,
-4, 116,
-5, 285,
-6, 287,
-7, 307,
-8, 367,
-9, 369,
-10, 391,
-11, 393,
-12, 397,
-13, 413,
-14, 1637,
-15, 1638,
-16, 1639,
-17, 1648,
-18, 1655,
-19, 1661,
-20, 1717,
-21, 1718,
-22, 5739,
-23, 5740,
-24, 5764,
-25, 5766,
-26, 5774,
-27, 6386,
-28, 27582
+		0, 0, 81,
+		1, 19, 324,
+		2, 33, 648,
+		3, 35, 1296,
+		4, 116, 144,
+		5, 285, 162,
+		6, 287, 3888,
+		7, 307, 2592,
+		8, 367, 2592,
+		9, 369, 2592,
+		10, 391, 648,
+		11, 393, 3888,
+		12, 397, 7776,
+		13, 413, 5184,
+		14, 1637, 108,
+		15, 1638, 972,
+		16, 1639, 1944,
+		17, 1648, 648,
+		18, 1655, 1944,
+		19, 1661, 7776,
+		20, 1717, 1296,
+		21, 1718, 7776,
+		22, 5739, 648,
+		23, 5740, 1296,
+		24, 5764, 1296,
+		25, 5766, 3888,
+		26, 5774, 3888,
+		27, 6386, 216,
+		28, 27582, 24,
 };
 
 static long int nb_w5_reps = 6935;
@@ -8491,22 +8491,30 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 
 		int N = nb_w4_reps;
 		int *R;
+		int *L;
 		uint32_t *S;
 		uint32_t s;
+		int len, ago;
+
 		R = NEW_int(N);
+		L = NEW_int(N);
 		S = (uint32_t *) NEW_int(N);
 		for (i = 0; i < N; i++) {
-			a = w4_reps[2 * i + 1];
+			a = w4_reps[3 * i + 1];
+			len = w4_reps[3 * i + 2];
 			s = PG_rank_to_affine_rank(a);
 			S[i] = s;
+			L[i] = len;
 			R[i] = (int) TR[s];
 			cout << "R[i]=" << R[i] << endl;
 		}
 
 		cout << "tensor ranks of orbit representatives:" << endl;
+		cout << "i : orbit length[i] : ago : PG rank of rep[i] : tensor rank [i] : affine rank of rep(i) : rank one decomposition" << endl;
 		for (i = 0; i < N; i++) {
-			a = w5_reps[2 * i + 1];
-			cout << i << " : " << a << " : " << R[i] << " : " << S[i] << " : ";
+			a = w4_reps[3 * i + 1];
+			ago = 31104 / L[i];
+			cout << i << " : " << L[i] << " : " << ago << " : " << a << " : " << R[i] << " : " << S[i] << " : ";
 			s = S[i];
 			while (true) {
 				cout << (Prev[s] ^ s);
@@ -8523,12 +8531,48 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		}
 
 		classify C;
+		set_of_sets *SoS;
+		int *types;
+		int nb_types;
 
 		C.init(R, N, FALSE, 0);
+
+		SoS = C.get_set_partition_and_types(types,
+				nb_types, verbose_level);
 
 		cout << "classification of orbit reps by tensor rank:" << endl;
 		C.print_naked(TRUE);
 		cout << endl;
+		for (int t = 0; t < nb_types; t++) {
+			cout << "working on type " << t << " of value " << types[t] << ":" << endl;
+			cout << "There are " << SoS->Set_size[t] << " orbits" << endl;
+			int *L;
+			int *Ago;
+
+			L = NEW_int(SoS->Set_size[t]);
+			Ago = NEW_int(SoS->Set_size[t]);
+			for (s = 0; s < SoS->Set_size[t]; s++) {
+				a = SoS->Sets[t][s];
+				L[s] = w4_reps[3 * a + 2];
+				Ago[s] = 31104 / L[s];
+			}
+			classify C1;
+			classify C2;
+
+			C1.init(L, SoS->Set_size[t], FALSE, 0);
+			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
+			C1.print_naked_tex(cout, TRUE);
+			cout << endl;
+
+			C2.init(Ago, SoS->Set_size[t], FALSE, 0);
+			cout << "classification of ago for tensor rank " << types[t] << ":" << endl;
+			C2.print_naked_tex(cout, TRUE);
+			cout << endl;
+
+			FREE_int(L);
+			FREE_int(Ago);
+
+		}
 
 		FREE_int(v);
 	}
@@ -8539,6 +8583,56 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 
 	if (f_v) {
 		cout << "wreath_product::compute_tensor_ranks done" << endl;
+	}
+}
+
+void wreath_product::report(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "wreath_product::report" << endl;
+	}
+	ost << "\\section*{Wreath product group}" << endl << endl;
+
+
+	ost << "Group name: $" << label_tex << "$\\\\" << endl;
+	ost << "Number of factors: " << nb_factors << "\\\\" << endl;
+	ost << "Degree of matrix group: " << degree_of_matrix_group << "\\\\" << endl;
+	ost << "Dimension of matrix group: " << dimension_of_matrix_group << "\\\\" << endl;
+	ost << "Dimension of tensor action: " << dimension_of_tensor_action << "\\\\" << endl;
+	ost << "Degree of tensor action: " << degree_of_tensor_action << "\\\\" << endl;
+	ost << "Degree overall: " << degree_overall << "\\\\" << endl;
+	ost << "Low level point size: " << low_level_point_size << "\\\\" << endl;
+	ost << "Make element size: " << make_element_size << "\\\\" << endl;
+	ost << "Number of rank one tensors: " << nb_rank_one_tensors << "\\\\" << endl;
+
+	ost << "Rank one tensors: \\\\" << endl;
+
+	int i;
+	uint32_t a, b;
+	int *tensor;
+
+	tensor = NEW_int(dimension_of_tensor_action);
+
+	for (i = 0; i < nb_rank_one_tensors; i++) {
+		a = rank_one_tensors[i];
+		b = affine_rank_to_PG_rank(a);
+		tensor_PG_unrank(tensor, b);
+		ost << i << " : ";
+		int_vec_print(ost, tensor, dimension_of_tensor_action);
+		ost << " : " << a << " : " << b << "\\\\" << endl;
+	}
+
+	FREE_int(tensor);
+
+
+	//ost << "\\subsection*{The underlying matrix group}" << endl << endl;
+	//A_mtx->report(ost, verbose_level);
+
+
+	if (f_v) {
+		cout << "wreath_product::report done" << endl;
 	}
 }
 

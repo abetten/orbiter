@@ -838,10 +838,10 @@ void poset_classification::draw_poset(
 	LG4->draw_with_options(fname_base4, &O,
 			0 /* verbose_level */);
 
-	delete LG1;
-	delete LG2;
-	delete LG3;
-	delete LG4;
+	FREE_OBJECT(LG1);
+	FREE_OBJECT(LG2);
+	FREE_OBJECT(LG3);
+	FREE_OBJECT(LG4);
 	
 	if (f_v) {
 		cout << "poset_classification::draw_poset done" << endl;
@@ -900,7 +900,7 @@ void poset_classification::draw_level_graph(
 	
 	LG->draw_with_options(fname_base1, &O, 0 /* verbose_level */);
 
-	delete LG;
+	FREE_OBJECT(LG);
 
 	if (f_v) {
 		cout << "poset_classification::draw_level_graph done" << endl;
@@ -1545,33 +1545,33 @@ void poset_classification::make_graph(int depth,
 					}
 
 				if (!f_tree) {
-				if (E->type == EXTENSION_TYPE_FUSION) {
-					//cout << "fusion node" << endl;
-					// po = data1
-					// so = data2
-					int n0, so0;
-					n0 = E->data1;
-					so0 = E->data2;
-					//cout << "fusion (" << n << "/" << so << ") -> ("
-					//<< n0 << "/" << so0 << ")" << endl;
-					extension *E0;
-					E0 = root[n0].E + so0;
-					if (E0->type != EXTENSION_TYPE_EXTENSION) {
-						cout << "warning: fusion node does not point to "
-								"extension node" << endl;
-						cout << "type = ";
-						print_extension_type(cout, E0->type);
-						cout << endl;
-						exit(1);
+					if (E->type == EXTENSION_TYPE_FUSION) {
+						//cout << "fusion node" << endl;
+						// po = data1
+						// so = data2
+						int n0, so0;
+						n0 = E->data1;
+						so0 = E->data2;
+						//cout << "fusion (" << n << "/" << so << ") -> ("
+						//<< n0 << "/" << so0 << ")" << endl;
+						extension *E0;
+						E0 = root[n0].E + so0;
+						if (E0->type != EXTENSION_TYPE_EXTENSION) {
+							cout << "warning: fusion node does not point to "
+									"extension node" << endl;
+							cout << "type = ";
+							print_extension_type(cout, E0->type);
+							cout << endl;
+							exit(1);
+							}
+						n1 = E0->data;
+						//cout << "n1=" << n1
+						//<< " first_poset_orbit_node_at_level[lvl + 1] = "
+						//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
+						LG->add_edge(lvl, po, lvl + 1,
+								n1 - first_poset_orbit_node_at_level[lvl + 1],
+								0 /*verbose_level*/);
 						}
-					n1 = E0->data;
-					//cout << "n1=" << n1
-					//<< " first_poset_orbit_node_at_level[lvl + 1] = "
-					//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
-					LG->add_edge(lvl, po, lvl + 1,
-							n1 - first_poset_orbit_node_at_level[lvl + 1],
-							0 /*verbose_level*/);
-					}
 					}
 				}
 			

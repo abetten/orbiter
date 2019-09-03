@@ -58,7 +58,7 @@ int main(int argc, const char **argv)
 			f_embedded = TRUE;
 			cout << "-embedded " << endl;
 			}
-		else if (strcmp(argv[i], "-Report") == 0) {
+		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
 			}
@@ -225,8 +225,12 @@ int main(int argc, const char **argv)
 		cout << "f_draw_poset verbose_level=" << verbose_level << endl;
 		{
 		char fname_poset[1000];
+
+		Gen->gen->draw_poset_fname_base_poset_lvl(fname_poset, Gen->ECA->starter_size);
+#if 0
 		sprintf(fname_poset, "arcs_%d_poset_%d",
 				Gen->q, Gen->ECA->starter_size);
+#endif
 		Gen->gen->draw_poset(fname_poset,
 				Gen->ECA->starter_size /*depth*/,
 				0 /* data1 */,
@@ -280,6 +284,9 @@ int main(int argc, const char **argv)
 
 
 			Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
+
+
+			LG->report(fp, verbose_level);
 
 			fp << endl;
 			fp << "\\section{Poset Classification}" << endl;

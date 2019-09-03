@@ -44,7 +44,7 @@ void isomorph_arguments::null()
 	f_event_file = FALSE; // -e <event file> option
 	event_file_name = NULL;
 	print_mod = 500;
-	f_report = FALSE;
+	f_isomorph_report = FALSE;
 	f_subset_orbits = FALSE;
 	f_subset_orbits_file = FALSE;
 	f_down_orbits = FALSE;
@@ -120,8 +120,8 @@ void isomorph_arguments::read_arguments(int argc, const char **argv,
 			print_mod = atoi(argv[++i]);
 			cout << "-print_interval " << print_mod << endl;
 			}
-		else if (strcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+		else if (strcmp(argv[i], "-isomorph_report") == 0) {
+			f_isomorph_report = TRUE;
 			cout << "-report " << endl;
 			}
 		else if (strcmp(argv[i], "-subset_orbits") == 0) {
@@ -391,7 +391,7 @@ void isomorph_arguments::execute(int verbose_level)
 			verbose_level);
 		cout << "isomorph_arguments::execute after isomorph_classification_graph" << endl;
 		}
-	else if (f_report) {
+	else if (f_isomorph_report) {
 
 		if (callback_report == NULL) {
 			cout << "isomorph_arguments::execute "

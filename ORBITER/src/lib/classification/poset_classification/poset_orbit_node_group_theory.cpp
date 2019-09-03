@@ -260,7 +260,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			G, go_G,
 			H,
 			pt, pt_orbit_len,
-			0 /*verbose_level - 3*/);
+			verbose_level - 3);
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			int_vec_print(cout, gen->S, size);

@@ -16,7 +16,7 @@ namespace orbiter {
 namespace classification {
 
 
-
+#if 0
 void poset_classification::report_schreier_trees(
 		ostream &ost, int verbose_level)
 {
@@ -197,6 +197,7 @@ void poset_classification::report_schreier_trees(
 	ost << endl;
 
 }
+#endif
 
 void poset_classification::report(ostream &ost)
 {
@@ -293,12 +294,6 @@ void poset_classification::report(ostream &ost)
 
 			cout << "set: '" << str << "'" << endl;
 
-#if 0
-			get_orbit_length_and_stabilizer_order_with_given_group_order(
-					i, level,
-					go,
-					stab_order, orbit_length);
-#endif
 			get_orbit_length_and_stabilizer_order(i, level,
 				stab_order, orbit_length);
 
@@ -325,7 +320,8 @@ void poset_classification::report(ostream &ost)
 				else {
 					nbg = O->nb_strong_generators;
 				}
-			} else {
+			}
+			else {
 				cout << "level < depth is false" << endl;
 				nb_live_pts = -1;
 				nb_extensions = -1;

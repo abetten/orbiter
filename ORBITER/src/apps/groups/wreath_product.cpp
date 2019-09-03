@@ -60,6 +60,10 @@ void orbits_restricted_compute(wreath_product* W,
 		int nb_factors,
 		const char *orbits_restricted_fname,
 		int verbose_level);
+void wreath_product_rank_one_early_test_func_callback(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 typedef class tensor_product tensor_product;
@@ -79,6 +83,11 @@ public:
 	action *A;
 	action *A0;
 
+	action *Ar;
+	int nb_points;
+	int *points;
+
+
 	strong_generators *SG;
 	longinteger_object go;
 	wreath_product *W;
@@ -95,7 +104,17 @@ public:
 			int f_permutations, int f_orbits, int f_tensor_ranks,
 			int f_orbits_restricted, const char *orbits_restricted_fname,
 			int f_orbits_restricted_compute,
+			int f_report,
+			int f_poset_classify, int poset_classify_depth,
 			int verbose_level);
+	void classify_poset(int depth,
+			int verbose_level);
+	void create_restricted_action_on_rank_one_tensors(
+			int verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
 };
 
 
@@ -740,6 +759,9 @@ int main(int argc, const char **argv)
 	const char *orbits_restricted_fname = NULL;
 	int f_tensor_ranks = FALSE;
 	int f_orbits_restricted_compute = FALSE;
+	int f_report = FALSE;
+	int f_poset_classify = FALSE;
+	int poset_classify_depth = 0;
 
 
 	t0 = os_ticks();
@@ -802,6 +824,15 @@ int main(int argc, const char **argv)
 			orbits_restricted_fname = argv[++i];
 			cout << "-orbits_restricted_compute " << endl;
 			}
+		else if (strcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			cout << "-report " << endl;
+			}
+		else if (strcmp(argv[i], "-poset_classify") == 0) {
+			f_poset_classify = TRUE;
+			poset_classify_depth = atoi(argv[++i]);
+			cout << "-poset_classify " << poset_classify_depth << endl;
+			}
 		}
 	if (!f_nb_factors) {
 		cout << "please use -nb_factors <nb_factors>" << endl;
@@ -836,6 +867,8 @@ int main(int argc, const char **argv)
 			f_permutations, f_orbits, f_tensor_ranks,
 			f_orbits_restricted, orbits_restricted_fname,
 			f_orbits_restricted_compute,
+			f_report,
+			f_poset_classify, poset_classify_depth,
 			verbose_level);
 
 	the_end_quietly(t0);
@@ -855,6 +888,9 @@ tensor_product::tensor_product()
 	F = NULL;
 	A = NULL;
 	A0 = NULL;
+	Ar = NULL;
+	nb_points = 0;
+	points = NULL;
 	W = NULL;
 	VS = NULL;
 	Poset = NULL;
@@ -871,10 +907,11 @@ void tensor_product::init(int argc, const char **argv,
 		int f_permutations, int f_orbits, int f_tensor_ranks,
 		int f_orbits_restricted, const char *orbits_restricted_fname,
 		int f_orbits_restricted_compute,
+		int f_report,
+		int f_poset_classify, int poset_classify_depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int *v;
 	int i, j, a;
 
 	if (f_v) {
@@ -888,7 +925,6 @@ void tensor_product::init(int argc, const char **argv,
 
 	A = NEW_OBJECT(action);
 
-	//v = NEW_int(n);
 
 
 	F = NEW_OBJECT(finite_field);
@@ -964,6 +1000,8 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "tensor_product::init The group " << A->label
 			<< " has order " << go
 			<< " and permutation degree " << A->degree << endl;
+
+
 
 
 #if 0
@@ -1069,8 +1107,172 @@ void tensor_product::init(int argc, const char **argv,
 		cout << "too big to print" << endl;
 	}
 
+	if (f_poset_classify) {
+		classify_poset(poset_classify_depth, verbose_level + 10);
+	}
 
-	int* result = NULL;
+	if (f_report) {
+		cout << "report:" << endl;
+
+
+		file_io Fio;
+
+		{
+		char fname[1000];
+		char title[1000];
+		char author[1000];
+		//int f_with_stabilizers = TRUE;
+
+		sprintf(title, "Wreath product $%s$", W->label_tex);
+		sprintf(author, "Orbiter");
+		sprintf(fname, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
+
+			{
+			ofstream fp(fname);
+			latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(fp,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
+				NULL /* extra_praeamble */);
+
+			fp << "\\section{The field of order " << q << "}" << endl;
+			fp << "\\noindent The field ${\\mathbb F}_{"
+					<< W->q
+					<< "}$ :\\\\" << endl;
+			W->F->cheat_sheet(fp, verbose_level);
+
+
+			W->report(fp, verbose_level);
+
+			fp << "\\section{Generators}" << endl;
+			for (i = 0; i < SG->gens->len; i++) {
+				fp << "$$" << endl;
+				A->element_print_latex(SG->gens->ith(i), fp);
+				if (i < SG->gens->len - 1) {
+					fp << ", " << endl;
+				}
+				fp << "$$" << endl;
+			}
+
+
+			fp << "\\section{The Group}" << endl;
+			A->report(fp, verbose_level);
+
+
+			if (f_poset_classify) {
+
+
+				{
+				char fname_poset[1000];
+
+				Gen->draw_poset_fname_base_poset_lvl(fname_poset, poset_classify_depth);
+				Gen->draw_poset(fname_poset,
+						poset_classify_depth /*depth*/,
+						0 /* data1 */,
+						FALSE /* f_embedded */,
+						FALSE /* f_sideways */,
+						verbose_level);
+				}
+
+
+				fp << endl;
+				fp << "\\section{Poset Classification}" << endl;
+				fp << endl;
+
+
+				Gen->report(fp);
+				fp << "\\subsection*{Orbits at level " << poset_classify_depth << "}" << endl;
+				int nb_orbits, orbit_idx;
+
+				nb_orbits = Gen->nb_orbits_at_level(poset_classify_depth);
+				for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+					fp << "\\subsubsection*{Orbit " << orbit_idx << " / " << nb_orbits << "}" << endl;
+
+					int *Orbit; // orbit_length * depth
+					int orbit_length;
+
+					cout << "before get_whole_orbit orbit_idx=" << orbit_idx << endl;
+
+					Gen->get_whole_orbit(
+							poset_classify_depth, orbit_idx,
+							Orbit, orbit_length, verbose_level);
+
+					int *data;
+
+					data = NEW_int(orbit_length);
+
+					for (i = 0; i < orbit_length; i++) {
+
+						fp << "set " << i << " / " << orbit_length << " is: ";
+
+
+						uint32_t a, b;
+
+						a = 0;
+						for (j = 0; j < poset_classify_depth; j++) {
+							b = W->rank_one_tensors[Orbit[i * poset_classify_depth + j]];
+							a ^= b;
+						}
+
+						for (j = 0; j < poset_classify_depth; j++) {
+							fp << Orbit[i * poset_classify_depth + j];
+							if (j < poset_classify_depth - 1) {
+								fp << ", ";
+							}
+						}
+						fp << "= ";
+						for (j = 0; j < poset_classify_depth; j++) {
+							b = W->rank_one_tensors[Orbit[i * poset_classify_depth + j]];
+							fp << b;
+							if (j < poset_classify_depth - 1) {
+								fp << ", ";
+							}
+						}
+						fp << " = " << a;
+						data[i] = a;
+						fp << "\\\\" << endl;
+					}
+					sorting Sorting;
+
+					Sorting.int_vec_heapsort(data, orbit_length);
+
+					fp << "$$" << endl;
+					print_integer_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
+					fp << "$$" << endl;
+
+					classify C;
+
+					C.init(data, orbit_length, TRUE, 0);
+					fp << "$$";
+					C.print_naked_tex(fp, TRUE /* f_backwards */);
+					fp << "$$";
+					FREE_int(data);
+				}
+			}
+
+			L.foot(fp);
+			}
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+		}
+
+
+		cout << "report done" << endl;
+	}
+
+
+
+
+
+	int *result = NULL;
 
 	cout << "time check: ";
 	time_check(cout, t0);
@@ -1109,10 +1311,6 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "we found " << nb_gens << " generators of degree " << degree << endl;
 
 
-	if (nb_gens == 0) {
-		cout << "Cuda not available" << endl;
-		exit(1);
-	}
 
 //	schreier *Sch;
 //
@@ -1145,112 +1343,234 @@ void tensor_product::init(int argc, const char **argv,
 //	exit(0);
 //
 //
-//	Gen = NEW_OBJECT(poset_classification);
-//
-//	Gen->read_arguments(argc, argv, 0);
-//
-//	//Gen->prefix[0] = 0;
-//	sprintf(Gen->fname_base, "wreath_%d_%d_%d", nb_factors, n, q);
-//
-//
-//	Gen->depth = depth;
-//
-//	VS = NEW_OBJECT(vector_space);
-//	VS->init(F,
-//			vector_space_dimension /* dimension */,
-//			verbose_level - 1);
-//	VS->init_rank_functions(
-//			wreath_rank_point_func,
-//			wreath_unrank_point_func,
-//			this,
-//			verbose_level - 1);
-//
-//
-//	Poset = NEW_OBJECT(poset);
-//	Poset->init_subspace_lattice(
-//			A0, A,
-//			SG,
-//			VS,
-//			verbose_level);
-//
-//	if (f_v) {
-//		cout << "tensor_product::init before Gen->init" << endl;
-//		}
-//	Gen->init(Poset, Gen->depth /* sz */, verbose_level);
-//	if (f_v) {
-//		cout << "tensor_product::init after Gen->init" << endl;
-//		}
-//
-//
-//	Gen->f_print_function = TRUE;
-//	Gen->print_function = wreath_product_print_set;
-//	Gen->print_function_data = this;
-//
-//	int nb_nodes = 1000;
-//
-//	if (f_v) {
-//		cout << "tensor_product::init "
-//				"before Gen->init_poset_orbit_node" << endl;
-//		}
-//	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-//	if (f_v) {
-//		cout << "tensor_product::init "
-//				"calling Gen->init_root_node" << endl;
-//		}
-//	Gen->root[0].init_root_node(Gen, verbose_level - 1);
-//
-//	//int schreier_depth;
-//	int f_use_invariant_subset_if_available;
-//	int f_debug;
-//
-//	//schreier_depth = Gen->depth;
-//	f_use_invariant_subset_if_available = TRUE;
-//	f_debug = FALSE;
-//
-//	//int t0 = os_ticks();
-//
-//	if (f_v) {
-//		cout << "tensor_product::init before Gen->main" << endl;
-//		cout << "A=";
-//		A->print_info();
-//		cout << "A0=";
-//		A0->print_info();
-//		}
-//
-//
-//	//Gen->f_allowed_to_show_group_elements = TRUE;
-//
-//	Gen->main(t0,
-//		Gen->depth,
-//		f_use_invariant_subset_if_available,
-//		f_debug,
-//		verbose_level);
-//
-//	set_of_sets *SoS;
-//
-//	SoS = Gen->Schreier_vector_handler->get_orbits_as_set_of_sets(
-//			Gen->root[0].Schreier_vector, verbose_level);
-//
-//	SoS->sort_all(verbose_level);
-//	cout << "orbits at level 1:" << endl;
-//	SoS->print_table();
-//
-//	for (i = 0; i < SoS->nb_sets; i++) {
-//		cout << "Orbit " << i << " has size " << SoS->Set_size[i] << " : ";
-//		int_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
-//		cout << endl;
-//		for (j = 0; j < SoS->Set_size[i]; j++) {
-//			a = SoS->Sets[i][j];
-//			cout << j << " : " << a << " : ";
-//			F->PG_element_unrank_modified(v, 1, vector_space_dimension, a);
-//			int_vec_print(cout, v, vector_space_dimension);
-//			cout << endl;
-//		}
-//	}
-//
-//	if (f_v) {
-//		cout << "tensor_product::init after Gen->main" << endl;
-//	}
+}
+
+
+void tensor_product::classify_poset(int depth,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "tensor_product::classify_poset" << endl;
+	}
+	Gen = NEW_OBJECT(poset_classification);
+
+	Gen->read_arguments(argc, argv, 0);
+
+	//Gen->prefix[0] = 0;
+	sprintf(Gen->fname_base, "wreath_%d_%d_%d", nb_factors, n, q);
+
+	Gen->f_max_depth = TRUE;
+	Gen->max_depth = depth;
+	Gen->depth = depth;
+
+	if (f_v) {
+		cout << "tensor_product::classify_poset before create_restricted_action_on_rank_one_tensors" << endl;
+	}
+	create_restricted_action_on_rank_one_tensors(verbose_level);
+	if (f_v) {
+		cout << "tensor_product::classify_poset after create_restricted_action_on_rank_one_tensors" << endl;
+	}
+
+#if 0
+	VS = NEW_OBJECT(vector_space);
+	VS->init(F,
+			vector_space_dimension /* dimension */,
+			verbose_level - 1);
+	VS->init_rank_functions(
+			wreath_rank_point_func,
+			wreath_unrank_point_func,
+			this,
+			verbose_level - 1);
+
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subspace_lattice(
+			A0, A,
+			SG,
+			VS,
+			verbose_level);
+#else
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, Ar,
+			SG,
+			verbose_level);
+
+	if (f_v) {
+		cout << "blt_set::init2 before "
+				"Poset->add_testing_without_group" << endl;
+		}
+	Poset->add_testing_without_group(
+			wreath_product_rank_one_early_test_func_callback,
+			this /* void *data */,
+			verbose_level);
+#endif
+
+	if (f_v) {
+		cout << "tensor_product::classify_poset before Gen->init" << endl;
+		}
+	Gen->init(Poset, depth /* sz */, verbose_level);
+	if (f_v) {
+		cout << "tensor_product::classify_poset after Gen->init" << endl;
+		}
+
+
+	Gen->f_print_function = TRUE;
+	Gen->print_function = wreath_product_print_set;
+	Gen->print_function_data = this;
+
+	int nb_nodes = 1000;
+
+	if (f_v) {
+		cout << "tensor_product::classify_poset "
+				"before Gen->init_poset_orbit_node" << endl;
+		}
+	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
+	if (f_v) {
+		cout << "tensor_product::classify_poset "
+				"calling Gen->init_root_node" << endl;
+		}
+	Gen->root[0].init_root_node(Gen, verbose_level - 1);
+
+	//int schreier_depth;
+	int f_use_invariant_subset_if_available;
+	int f_debug;
+
+	//schreier_depth = Gen->depth;
+	f_use_invariant_subset_if_available = TRUE;
+	f_debug = FALSE;
+
+	//int t0 = os_ticks();
+
+	if (f_v) {
+		cout << "tensor_product::classify_poset before Gen->main" << endl;
+		cout << "A=";
+		A->print_info();
+		cout << "A0=";
+		A0->print_info();
+		}
+
+
+	//Gen->f_allowed_to_show_group_elements = TRUE;
+
+	if (f_v) {
+		cout << "tensor_product::classify_poset "
+				"before Gen->main, verbose_level=" << verbose_level << endl;
+		}
+	Gen->main(t0,
+		depth,
+		f_use_invariant_subset_if_available,
+		f_debug,
+		verbose_level);
+	if (f_v) {
+		cout << "tensor_product::classify_poset "
+				"after Gen->main" << endl;
+		}
+	if (f_v) {
+		cout << "tensor_product::classify_poset done" << endl;
+	}
+}
+
+void tensor_product::create_restricted_action_on_rank_one_tensors(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "tensor_product::create_restricted_action_on_rank_one_tensors" << endl;
+	}
+
+	nb_points = W->nb_rank_one_tensors;
+	points = NEW_int(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		uint32_t a, b;
+
+		a = W->rank_one_tensors[i];
+		b = W->affine_rank_to_PG_rank(a);
+
+		points[i] = W->perm_offset_i[nb_factors] + b;
+	}
+
+	if (f_v) {
+		cout << "tensor_product::create_restricted_action_on_rank_one_tensors "
+				"before A->restricted_action" << endl;
+	}
+	Ar = A->restricted_action(points, nb_points,
+			verbose_level);
+	Ar->f_is_linear = TRUE;
+	if (f_v) {
+		cout << "tensor_product::create_restricted_action_on_rank_one_tensors "
+				"after A->restricted_action" << endl;
+	}
+	if (f_v) {
+		cout << "tensor_product::create_restricted_action_on_rank_one_tensors done" << endl;
+	}
+}
+
+
+void tensor_product::early_test_func(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_OK;
+	int i, j, c;
+
+	if (f_v) {
+		cout << "tensor_product::early_test_func checking set ";
+		print_set(cout, len, S);
+		cout << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
+		int_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+		}
+
+
+	if (len == 0) {
+		int_vec_copy(candidates, good_candidates, nb_candidates);
+		nb_good_candidates = nb_candidates;
+		}
+	else {
+		nb_good_candidates = 0;
+
+		if (f_vv) {
+			cout << "tensor_product::early_test_func before testing" << endl;
+			}
+		for (j = 0; j < nb_candidates; j++) {
+
+
+			if (f_vv) {
+				cout << "tensor_product::early_test_func "
+						"testing " << j << " / "
+						<< nb_candidates << endl;
+				}
+
+			f_OK = TRUE;
+			c = candidates[j];
+
+			for (i = 0; i < len; i++) {
+				if (S[i] == c) {
+					f_OK = FALSE;
+					break;
+				}
+			}
+
+
+
+			if (f_OK) {
+				good_candidates[nb_good_candidates++] =
+						candidates[j];
+				}
+			} // next j
+		} // else
+	if (f_v) {
+		cout << "tensor_product::early_test_func done" << endl;
+	}
 }
 
 
@@ -1844,7 +2164,7 @@ void orbits(wreath_product* W,
 		cout << "orbit " << orbit_idx << " / " << nb_orbits << " has length " << len << endl;
 		char fname_orbit[1000];
 
-		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bib", W->q, W->nb_factors, orbit_idx);
+		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bin", W->q, W->nb_factors, orbit_idx);
 		cout << "Writing the file " << fname_orbit << endl;
 		{
 			ofstream fp(fname_orbit, ios::binary);
@@ -2310,4 +2630,30 @@ void orbits_restricted_compute(wreath_product* W,
 		FREE_OBJECT(Stab);
 	}
 }
+
+void wreath_product_rank_one_early_test_func_callback(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	tensor_product *T = (tensor_product *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "wreath_product_rank_one_early_test_func_callback for set ";
+		print_set(cout, len, S);
+		cout << endl;
+		}
+	T->early_test_func(S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "wreath_product_rank_one_early_test_func_callback done" << endl;
+		}
+}
+
+
+
+
 

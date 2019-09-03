@@ -568,7 +568,7 @@ void code_generator::main(int verbose_level)
 		}
 	if (f_report_schreier_trees) {
 		char fname_base[1000];
-		char fname_report[1000];
+		//char fname_report[1000];
 		if (f_linear) {
 			if (f_nmk) {
 				sprintf(fname_base, "codes_linear_nmk%d_q%d_d%d", nmk, q, d);
@@ -580,12 +580,14 @@ void code_generator::main(int verbose_level)
 		else if (f_nonlinear) {
 			sprintf(fname_base, "codes_nonlinear_n%d_k%d_d%d", n, k, d);
 			}
+#if 0
 		sprintf(fname_report, "%s.txt", fname_base);
 		{
 		ofstream fp(fname_report);
 
 		gen->report_schreier_trees(fp, verbose_level);
 		}
+#endif
 	}
 	if (f_report) {
 		char fname_base[1000];
@@ -639,7 +641,7 @@ void code_generator::main(int verbose_level)
 		F->cheat_sheet(fp, verbose_level);
 
 		fp << "\\section{The group $" << A->label_tex << "$}" << endl;
-		A->report(fp);
+		A->report(fp, verbose_level);
 		A->print_points(fp);
 
 		gen->report(fp);

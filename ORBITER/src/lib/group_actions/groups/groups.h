@@ -206,6 +206,7 @@ public:
 		int nb_subgroup_generators,
 		const char **subgroup_generators_as_string,
 		int verbose_level);
+	void report(std::ostream &fp, int verbose_level);
 };
 
 
@@ -1015,7 +1016,7 @@ public:
 // sims.cpp
 // #############################################################################
 
-//! a stabilizer chain for a permutation group is used to represent a permutation group
+//! a permutation group represented via a stabilizer chain
 
 class sims {
 
@@ -1142,6 +1143,7 @@ public:
 		// which is moved by the given element
 	void group_order(longinteger_object &go);
 	void group_order_verbose(longinteger_object &go, int verbose_level);
+	void subgroup_order_verbose(longinteger_object &go, int level, int verbose_level);
 	int group_order_int();
 	int is_trivial_group();
 	int last_moved_base_point();
@@ -1401,11 +1403,14 @@ public:
 		int verbose_level);
 	void read_list_of_elements(action *A,
 		char *fname, int verbose_level);
+#if 0
 	void write_sgs(const char *fname, int verbose_level);
 	void read_sgs(const char *fname, vector_ge *SG,
 		int verbose_level);
+#endif
 	void write_as_magma_permutation_group(const char *fname_base,
 		vector_ge *gens, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 
 
 };
@@ -1863,6 +1868,7 @@ public:
 	uint32_t PG_rank_to_affine_rank(uint32_t PG_rk);
 	void save_rank_one_tensors(int verbose_level);
 	void compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 };
 
 }}

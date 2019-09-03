@@ -222,7 +222,7 @@ void sims::init_images(int nb_images)
 			}
 		}
 #else
-	cout << "sims::init_images doing nothing" << endl;
+	//cout << "sims::init_images doing nothing" << endl;
 #endif
 }
 
@@ -250,7 +250,7 @@ void sims::images_append()
 	images = new_images;
 	nb_images++;
 #else
-	cout << "sims::images_append doing nothing" << endl;
+	//cout << "sims::images_append doing nothing" << endl;
 
 #endif
 }
@@ -902,6 +902,26 @@ void sims::group_order_verbose(longinteger_object &go, int verbose_level)
 	//cout << "sims::group_order after D.multiply_up" << endl;
 	if (f_v) {
 		cout << "sims::group_order_verbose done" << endl;
+	}
+}
+
+void sims::subgroup_order_verbose(longinteger_object &go, int level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_domain D;
+
+	if (f_v) {
+		cout << "sims::subgroup_order_verbose" << endl;
+	}
+	//cout << "sims::group_order before D.multiply_up" << endl;
+	//cout << "A->base_len=" << A->base_len << endl;
+	//cout << "orbit_len=";
+	//int_vec_print(cout, orbit_len, A->base_len);
+	//cout << endl;
+	D.multiply_up(go, orbit_len + level, my_base_len - level, verbose_level);
+	//cout << "sims::group_order after D.multiply_up" << endl;
+	if (f_v) {
+		cout << "sims::subgroup_order_verbose done" << endl;
 	}
 }
 

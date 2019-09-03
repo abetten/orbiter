@@ -21,7 +21,7 @@ using namespace orbiter::top_level;
 int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
-void report(linear_group *LG, int verbose_level);
+//void report(linear_group *LG, int verbose_level);
 
 int main(int argc, const char **argv)
 {
@@ -368,7 +368,28 @@ int main(int argc, const char **argv)
 	}
 
 	if (f_report) {
-		report(LG, verbose_level);
+		char fname[1000];
+		char title[1000];
+		const char *author = "Orbiter";
+		const char *extras_for_preamble = "";
+
+		sprintf(fname, "%s_report.tex", LG->prefix);
+		sprintf(title, "The group $%s$", LG->label_latex);
+
+		{
+			ofstream fp(fname);
+			latex_interface L;
+			//latex_head_easy(fp);
+			L.head(fp,
+				FALSE /* f_book */, TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
+				TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+				extras_for_preamble);
+
+			LG->report(fp, verbose_level);
+			L.foot(fp);
+		}
 	}
 
 	if (f_print_elements) {
@@ -936,6 +957,7 @@ int main(int argc, const char **argv)
 	}
 }
 
+#if 0
 void report(linear_group *LG, int verbose_level)
 {
 	sims *H;
@@ -1013,6 +1035,8 @@ void report(linear_group *LG, int verbose_level)
 			LG->Strong_gens->print_generators_tex(fp);
 		}
 
+		A->report(fp, verbose_level);
+
 		A->report_basic_orbits(fp);
 
 		sylow_structure *Syl;
@@ -1030,3 +1054,5 @@ void report(linear_group *LG, int verbose_level)
 	FREE_int(Elt);
 
 }
+#endif
+

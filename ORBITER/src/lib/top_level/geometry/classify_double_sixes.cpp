@@ -520,14 +520,14 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 	}
 	ost << "\\section{The groups}" << endl;
 	ost << "\\subsection{The semilinear group}" << endl;
-	A->report(ost);
+	A->report(ost, verbose_level);
 	A->print_points(ost);
 
 	if (f_v) {
 		cout << "classify_double_sixes::report reporting orthogonal group" << endl;
 	}
 	ost << "\\subsection{The orthogonal group}" << endl;
-	A2->report(ost);
+	A2->report(ost, verbose_level);
 	if (A2->degree < 100) {
 		A2->print_points(ost);
 	}
@@ -536,7 +536,7 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 		cout << "classify_double_sixes::report reporting line stabilizer" << endl;
 	}
 	ost << "\\subsection{The group stabilizing the fixed line}" << endl;
-	A_on_neighbors->report(ost);
+	A_on_neighbors->report(ost, verbose_level);
 	A_on_neighbors->print_points(ost);
 
 	ost << "{\\small\\arraycolsep=2pt" << endl;

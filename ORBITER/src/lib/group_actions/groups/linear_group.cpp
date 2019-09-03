@@ -819,6 +819,115 @@ void linear_group::init_subgroup_by_generators(char *prefix, char *label_latex,
 
 }
 
+void linear_group::report(ostream &fp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sims *H;
+	action *A;
+
+	A = A2;
+	if (f_v) {
+		cout << "linear_group::report creating report for group " << prefix << endl;
+	}
+
+	//G = initial_strong_gens->create_sims(verbose_level);
+	H = Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_int() << endl;
+
+	int *Elt;
+	longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	H->group_order(go);
+
+#if 0
+	char fname[1000];
+	char title[1000];
+	const char *author = "Orbiter";
+	const char *extras_for_preamble = "";
+
+	sprintf(fname, "%s_report.tex", prefix);
+	sprintf(title, "The group $%s$", label_latex);
+#endif
+
+	{
+#if 0
+		ofstream fp(fname);
+		latex_interface L;
+		//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
+			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+			extras_for_preamble);
+#endif
+
+		//H->print_all_group_elements_tex(fp);
+
+		longinteger_object go;
+		sims *G;
+		sims *H;
+
+		G = initial_strong_gens->create_sims(verbose_level);
+		H = Strong_gens->create_sims(verbose_level);
+
+
+
+		fp << "\\section{The Group $" << label_latex << "$}" << endl;
+
+
+		G->group_order(go);
+
+		fp << "\\noindent The order of the group $"
+				<< label_latex
+				<< "$ is " << go << "\\\\" << endl;
+
+		fp << "\\noindent The field ${\\mathbb F}_{"
+				<< F->q
+				<< "}$ :\\\\" << endl;
+		F->cheat_sheet(fp, verbose_level);
+
+
+		fp << "\\noindent The group acts on a set of size "
+				<< A->degree << "\\\\" << endl;
+
+		A->print_points(fp);
+
+		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
+
+		if (f_has_nice_gens) {
+			cout << "Nice generators:\\\\" << endl;
+			nice_gens->print_tex(fp);
+		}
+		else {
+			cout << "Strong generators:\\\\" << endl;
+			Strong_gens->print_generators_tex(fp);
+		}
+
+		A->report(fp, verbose_level);
+
+		A->report_basic_orbits(fp);
+
+		sylow_structure *Syl;
+
+		Syl = NEW_OBJECT(sylow_structure);
+		Syl->init(G, verbose_level);
+		Syl->report(fp);
+
+		A->report_conjugacy_classes_and_normalizers(fp,
+				verbose_level);
+
+		//L.foot(fp);
+	}
+
+	FREE_int(Elt);
+
+}
+
+
 
 }}
 

@@ -411,16 +411,6 @@ public:
 	poset_orbit_node *get_node_ij(int level, int node);
 	int poset_structure_is_contained(int *set1, int sz1, 
 		int *set2, int sz2, int verbose_level);
-	void print_progress_by_extension(int size, int cur, 
-		int prev, int cur_ex, int nb_ext_cur, int nb_fuse_cur);
-	void print_progress(int size, int cur, int prev, 
-		int nb_ext_cur, int nb_fuse_cur);
-	void print_progress(double progress);
-	void print_progress_by_level(int lvl);
-	void print_orbit_numbers(int depth);
-	void print();
-	void print_statistic_on_callbacks_naked();
-	void print_statistic_on_callbacks();
 	orbit_transversal *get_orbit_transversal(
 			int level, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int level, 
@@ -428,10 +418,6 @@ public:
 	void get_set_by_level(int level, int node, int *set);
 	void get_set(int node, int *set, int &size);
 	void get_set(int level, int orbit, int *set, int &size);
-	void print_set_verbose(int node);
-	void print_set_verbose(int level, int orbit);
-	void print_set(int node);
-	void print_set(int level, int orbit);
 	
 	int find_poset_orbit_node_for_set(int len, int *set, 
 		int f_tolerant, int verbose_level);
@@ -454,20 +440,10 @@ public:
 	void get_orbit_length_and_stabilizer_order(int node, int level, 
 		longinteger_object &stab_order, longinteger_object &len);
 	int orbit_length_as_int(int orbit_at_level, int level);
-	void print_representatives_at_level(int lvl);
-	void print_lex_rank(int *set, int sz);
-	void print_problem_label();
-	void print_level_info(int prev_level, int prev);
-	void print_level_extension_info(int prev_level,
-		int prev, int cur_extension);
-	void print_level_extension_coset_info(int prev_level,
-		int prev, int cur_extension, int coset, int nb_cosets);
 	void recreate_schreier_vectors_up_to_level(int lvl, 
 		int verbose_level);
 	void recreate_schreier_vectors_at_level(int i,
 		int verbose_level);
-	void print_node(int node);
-	void print_tree();
 	void get_table_of_nodes(int *&Table, int &nb_rows, int &nb_cols, 
 		int verbose_level);
 	int count_live_points(int level, int node_local,
@@ -526,7 +502,6 @@ public:
 	void get_whole_orbit(
 		int depth, int orbit_idx,
 		int *&Orbit, int &orbit_length, int verbose_level);
-	void print_extensions_at_level(std::ostream &ost, int lvl);
 	void map_to_canonical_k_subset(int *the_set, int set_size, 
 		int subset_size, int subset_rk, 
 		int *reduced_set, int *transporter, int &local_idx, 
@@ -540,7 +515,6 @@ public:
 		int local_orbit_no, 
 		strong_generators *&Strong_gens, 
 		int verbose_level);
-	void print_fusion_nodes(int depth);
 	void find_interesting_k_subsets(int *the_set, int n, int k, 
 		int *&interesting_sets, int &nb_interesting_sets, 
 		int &orbit_idx, int verbose_level);
@@ -739,8 +713,34 @@ public:
 
 
 	// in poset_classification_io.cpp:
+	void print_set_verbose(int node);
+	void print_set_verbose(int level, int orbit);
+	void print_set(int node);
+	void print_set(int level, int orbit);
+	void print_progress_by_extension(int size, int cur,
+		int prev, int cur_ex, int nb_ext_cur, int nb_fuse_cur);
+	void print_progress(int size, int cur, int prev,
+		int nb_ext_cur, int nb_fuse_cur);
+	void print_progress(double progress);
+	void print_progress_by_level(int lvl);
+	void print_orbit_numbers(int depth);
+	void print();
+	void print_statistic_on_callbacks_naked();
+	void print_statistic_on_callbacks();
 	void prepare_fname_data_file(char *fname,
 			const char *fname_base, int depth_completed);
+	void print_representatives_at_level(int lvl);
+	void print_lex_rank(int *set, int sz);
+	void print_problem_label();
+	void print_level_info(int prev_level, int prev);
+	void print_level_extension_info(int prev_level,
+		int prev, int cur_extension);
+	void print_level_extension_coset_info(int prev_level,
+		int prev, int cur_extension, int coset, int nb_cosets);
+	void print_node(int node);
+	void print_tree();
+	void print_extensions_at_level(std::ostream &ost, int lvl);
+	void print_fusion_nodes(int depth);
 	void read_data_file(int &depth_completed,
 		const char *fname, int verbose_level);
 	void write_data_file(int depth_completed,
@@ -836,7 +836,7 @@ public:
 
 
 	// in poset_classification_report.cpp:
-	void report_schreier_trees(std::ostream &ost, int verbose_level);
+	//void report_schreier_trees(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost);
 
 	// poset_classification_trace.cpp:

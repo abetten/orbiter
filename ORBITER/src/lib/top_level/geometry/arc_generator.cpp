@@ -270,6 +270,10 @@ void arc_generator::main(int verbose_level)
 					"before compute_starter" << endl;
 			}
 		compute_starter(verbose_level);
+		if (f_v) {
+			cout << "arc_generator::main "
+					"after compute_starter" << endl;
+			}
 		
 		}
 	else {
@@ -280,7 +284,10 @@ void arc_generator::main(int verbose_level)
 
 	if (ECA->f_lift) {
 	
-		cout << "lift" << endl;
+		if (f_v) {
+			cout << "arc_generator::main "
+					"before lift" << endl;
+			}
 		
 		ECA->target_size = target_size;
 		ECA->user_data = (void *) this;
@@ -294,11 +301,25 @@ void arc_generator::main(int verbose_level)
 		
 		ECA->compute_lifts(verbose_level);
 
+		if (f_v) {
+			cout << "arc_generator::main "
+					"after lift" << endl;
+			}
+
 		}
 
 
+	if (f_v) {
+		cout << "arc_generator::main "
+				"before IA->execute" << endl;
+		}
+
 	IA->execute(verbose_level);
 
+	if (f_v) {
+		cout << "arc_generator::main "
+				"after IA->execute" << endl;
+		}
 
 
 

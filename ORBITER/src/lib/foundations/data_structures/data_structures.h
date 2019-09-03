@@ -767,6 +767,18 @@ public:
 		int *&pts, int &nb_pts);
 	void int_vec_bubblesort_increasing(int len, int *p);
 	int integer_vec_compare(int *p, int *q, int len);
+	void schreier_vector_compute_depth_and_ancestor(
+		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+		int *&depth, int *&ancestor, int verbose_level);
+	int schreier_vector_determine_depth_recursion(
+		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+		int *depth, int *ancestor, int pos);
+	void schreier_vector_tree(
+		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+		const char *fname_base,
+		layered_graph *&LG,
+		int f_embedded, int f_sideways,
+		int verbose_level);
 };
 
 int int_compare_increasingly(void *a, void *b, void *data);

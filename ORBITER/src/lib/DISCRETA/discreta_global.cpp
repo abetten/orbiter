@@ -68,7 +68,6 @@ void calc_Kramer_Mesner_matrix_neighboring(
 
 	f1 = gen->first_poset_orbit_node_at_level[level];
 	f2 = gen->first_poset_orbit_node_at_level[level + 1];
-	//f3 = gen->first_poset_orbit_node_at_level[level + 2];
 	l1 = gen->nb_orbits_at_level(level); //f2 - f1;
 	l2 = gen->nb_orbits_at_level(level + 1); //f3 - f2;
 

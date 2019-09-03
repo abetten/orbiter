@@ -183,7 +183,7 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 
 	exact_cover *E;
 
-	E = new exact_cover;
+	E = NEW_OBJECT(exact_cover);
 
  
 	E->init_basic(user_data, 
@@ -230,7 +230,7 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 		f_write_tree, fname_tree,
 		verbose_level);
 
-	delete E;
+	FREE_OBJECT(E);
 	
 	if (f_v) {
 		cout << "exact_cover_arguments::compute_lifts done" << endl;
