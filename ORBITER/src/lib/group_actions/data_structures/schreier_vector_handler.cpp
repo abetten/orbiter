@@ -395,6 +395,7 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 	int nb_orbits;
 	set_of_sets *SoS;
 	int i, t;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::get_orbits_as_set_of_sets" << endl;
@@ -425,6 +426,8 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 	}
 #endif
 
+
+#if 0
 	depth = NEW_int(n);
 	ancestor = NEW_int(n);
 
@@ -433,9 +436,14 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 		ancestor[i] = -1;
 		}
 	for (i = 0; i < n; i++) {
-		schreier_vector_determine_depth_recursion(n,
-				pts, prev, depth, ancestor, i);
+		Sorting.schreier_vector_determine_depth_recursion(n,
+				pts, prev, FALSE, depth, ancestor, i);
 		}
+#else
+	Sorting.schreier_vector_compute_depth_and_ancestor(
+			n, pts, prev, FALSE /* f_prev_is_point_index */, NULL,
+			depth, ancestor, verbose_level - 2);
+#endif
 #if 0
 	cout << "i : pts : depth : ancestor" << endl;
 	for (i = 0; i < n; i++) {

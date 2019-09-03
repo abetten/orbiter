@@ -673,7 +673,9 @@ void sims::read_list_of_elements(action *A, char *fname,
 		}
 }
 
+#if 0
 void sims::write_sgs(const char *fname, int verbose_level)
+// used by compute_stabilizer::update_stabilizer
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -957,7 +959,7 @@ void sims::read_sgs(const char *fname,
 	FREE_char(elt);
 	FREE_char(buf);
 }
-
+#endif
 
 void sims::write_as_magma_permutation_group(const char *fname_base,
 		vector_ge *gens, int verbose_level)
@@ -1039,6 +1041,71 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group done" << endl;
 		}
+}
+
+void sims::report(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::report" << endl;
+	}
+	int i;
+	sorting Sorting;
+
+	ost << endl << "\\subsection*{Stabilizer chain}" << endl << endl;
+	ost << endl;
+
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Level} & \\mbox{Base pt} & \\mbox{Orbit length} & \\mbox{Subgroup order}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < my_base_len; i++) {
+
+
+
+		longinteger_object go;
+
+		subgroup_order_verbose(go, i, FALSE /*verbose_level*/);
+		ost << i << " & " << get_orbit(i, 0) << " & " << get_orbit_length(i) << " & ";
+		go.print_not_scientific(ost);
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+	char fname_base[1000];
+
+
+	for (i = 0; i < my_base_len; i++) {
+
+		ost << endl << "\\subsection*{Basic Orbit " << i << "}" << endl << endl;
+
+		sprintf(fname_base, "sims_%d", i);
+
+		layered_graph *LG;
+		Sorting.schreier_vector_tree(
+			orbit_len[i], orbit[i], prev[i], TRUE /* f_use_pts_inv */, orbit_inv[i],
+			fname_base,
+			LG,
+			FALSE/* f_embedded */, FALSE /* f_sideways */,
+			verbose_level);
+
+		FREE_OBJECT(LG);
+
+		ost << "\\input " << fname_base << ".tex" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+
+	}
+
+	if (f_v) {
+		cout << "sims::report done" << endl;
+	}
 }
 
 

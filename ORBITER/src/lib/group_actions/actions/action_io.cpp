@@ -481,8 +481,13 @@ void action::print_symmetry_group_type(ostream &ost)
 
 }
 
-void action::report(ostream &ost)
+void action::report(ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::report" << endl;
+	}
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
 	if (f_has_sims) {
@@ -515,6 +520,12 @@ void action::report(ostream &ost)
 		else {
 			ost << "Does not have strong generators.\\\\" << endl;
 		}
+	}
+	if (f_has_sims) {
+		Sims->report(ost, verbose_level);
+	}
+	if (f_v) {
+		cout << "action::report done" << endl;
 	}
 }
 

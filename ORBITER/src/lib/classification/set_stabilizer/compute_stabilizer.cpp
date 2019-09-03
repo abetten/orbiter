@@ -824,7 +824,7 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 	Stab->group_order(n_e_w_stab_order);
 	cmp = D.compare_unsigned(n_e_w_stab_order, stab_order);
 	if (cmp) {
-		char fname[1000];
+		//char fname[1000];
 		cout << "compute_stabilizer::update_stabilizer "
 				"n_e_w stabilizer order is " << n_e_w_stab_order << endl;
 		n_e_w_stab_order.assign_to(stab_order);
@@ -838,11 +838,12 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 		FREE_OBJECT(Strong_gens);
 
 
+#if 0
 		sprintf(fname, "stab_order_%d.txt", n_e_w_stab_order.as_int());
 		Stab->write_sgs(fname, 0 /*verbose_level */);
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
-
+#endif
 
 		FREE_OBJECT(U);
 

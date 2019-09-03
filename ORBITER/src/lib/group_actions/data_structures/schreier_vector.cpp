@@ -595,8 +595,8 @@ void schreier_vector::orbit_stats(
 				"depth_recursion" << endl;
 		}
 	for (i = 0; i < n; i++) {
-		schreier_vector_determine_depth_recursion(n,
-				pts, prev, depth, ancestor, i);
+		Sorting.schreier_vector_determine_depth_recursion(n,
+				pts, prev, FALSE, NULL, depth, ancestor, i);
 		}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_stats "
@@ -716,8 +716,8 @@ void schreier_vector::orbit_of_point(
 				"depth_recursion" << endl;
 		}
 	for (i = 0; i < n; i++) {
-		schreier_vector_determine_depth_recursion(n,
-				pts, prev, depth, ancestor, i);
+		Sorting.schreier_vector_determine_depth_recursion(n,
+				pts, prev, FALSE, NULL, depth, ancestor, i);
 		}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
@@ -1195,54 +1195,6 @@ void schreier_vector::trace_back(int pt, int &depth)
 // global functions:
 // #############################################################################
 
-
-int schreier_vector_determine_depth_recursion(
-	int n, int *pts, int *prev,
-	int *depth, int *ancestor, int pos)
-{
-	int pt, pt_loc, d;
-	sorting Sorting;
-
-	pt = prev[pos];
-	if (pt == -1) {
-		depth[pos] = 0;
-		ancestor[pos] = pts[pos];
-		return 0;
-		}
-	if (!Sorting.int_vec_search(pts, n, pt, pt_loc)) {
-		int i;
-
-		cout << "schreier_vector_determine_depth_recursion, "
-				"fatal: did not find pt" << endl;
-		cout << "pt = " << pt << endl;
-		cout << "vector of length " << n << endl;
-		int_vec_print(cout, pts, n);
-		cout << endl;
-		cout << "i : pts[i] : prev[i] : depth[i] : ancestor[i]" << endl;
-		for (i = 0; i < n; i++) {
-			cout
-				<< setw(5) << i << " : "
-				<< setw(5) << pts[i] << " : "
-				<< setw(5) << prev[i] << " : "
-				//<< setw(5) << label[i] << " : "
-				<< setw(5) << depth[i] << " : "
-				<< setw(5) << ancestor[i]
-				<< endl;
-			}
-		exit(1);
-		}
-	d = depth[pt_loc];
-	if (d >= 0) {
-		d++;
-		}
-	else {
-		d = schreier_vector_determine_depth_recursion(n,
-				pts, prev, depth, ancestor, pt_loc) + 1;
-		}
-	depth[pos] = d;
-	ancestor[pos] = ancestor[pt_loc];
-	return d;
-}
 
 
 void schreier_vector::print()

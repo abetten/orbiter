@@ -734,10 +734,6 @@ public:
 	void print();
 };
 
-int schreier_vector_determine_depth_recursion(
-	int n, int *pts, int *prev,
-	int *depth, int *ancestor, int pos);
-
 
 
 // #############################################################################

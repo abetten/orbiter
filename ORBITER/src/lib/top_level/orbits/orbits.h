@@ -342,12 +342,8 @@ public:
 	void compute_stabilizer(action *default_action, longinteger_object &go, 
 		sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
-	//int search_data(int *data, int &idx);
-	//int search_data_raw(int *data_raw, int &idx, int verbose_level);
 };
 
-//int orbit_of_subspaces_compare_func(void *a, void *b, void *data);
-//int orbit_of_subspaces_compare_func_lint(void *a, void *b, void *data);
 
 // #############################################################################
 // subspace_orbits.cpp

@@ -593,7 +593,7 @@ public:
 // #############################################################################
 
 
-//! a data structure to store partially ordered sets
+//! a data structure to store layered graphs or Hasse diagrams
 
 
 class layered_graph {
@@ -813,6 +813,5 @@ int call_back_colored_graph_find_candidates(clique_finder *CF,
 	int *candidates, int verbose_level);
 
 
-}
-}
+}}
 

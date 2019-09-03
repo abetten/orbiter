@@ -702,7 +702,7 @@ public:
 	int f_event_file; // -e <event file> option
 	const char *event_file_name;
 	int print_mod;
-	int f_report;
+	int f_isomorph_report;
 	int f_subset_orbits;
 	int f_subset_orbits_file;
 	const char *subset_orbits_fname;

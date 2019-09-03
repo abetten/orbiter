@@ -435,7 +435,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	if (f_v) {
-		cout << "group order = " << go << endl;
+		cout << "sims::point_stabilizer_stabchain_with_action group order = " << go << endl;
 	}
 
 	O.init(A2, verbose_level - 2);
@@ -460,6 +460,10 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 				"computing point orbit" << endl;
 	}
 	O.compute_point_orbit(pt, 0/*verbose_level - 1*/);
+	if (f_vv) {
+		cout << "sims::point_stabilizer_stabchain_with_action "
+				"computing point orbit done" << endl;
+	}
 
 
 	orbit_len = O.orbit_len[0];
@@ -541,7 +545,10 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 						"creating random generator no " << cnt + 1
 						<< " using the Schreier vector" << endl;
 			}
-			O.non_trivial_random_schreier_generator(A2, Elt, verbose_level - 1);
+			//O.non_trivial_random_schreier_generator(A2, Elt, verbose_level - 1);
+			// A Betten 9/1/2019
+			// this may get stuck in a forever loop, therefore we do this:
+			O.random_schreier_generator(Elt, 0 /*verbose_level - 1*/);
 			//p_schreier_gen = O.schreier_gen;
 		}
 		else {
