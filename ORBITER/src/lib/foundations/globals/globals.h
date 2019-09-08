@@ -183,6 +183,8 @@ public:
 	void transform_dist_y(int *in, int *out, int &y);
 	void transform_llur_double(double *in, double *out, double &x, double &y);
 	void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad);
+	double power_of(double x, int n);
+	double bernoulli(double p, int n, int k);
 };
 
 

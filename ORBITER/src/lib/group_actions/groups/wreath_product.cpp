@@ -7041,6 +7041,9 @@ wreath_product::wreath_product()
 	Elts = NULL;
 
 	rank_one_tensors = NULL;
+	rank_one_tensors_in_PG = NULL;
+	rank_one_tensors_in_PG_sorted = NULL;
+
 	nb_rank_one_tensors = 0;
 
 	TR = NULL;
@@ -7133,6 +7136,12 @@ void wreath_product::freeself()
 	}
 	if (rank_one_tensors) {
 		FREE_int((int *) rank_one_tensors);
+	}
+	if (rank_one_tensors_in_PG) {
+		FREE_int(rank_one_tensors_in_PG);
+	}
+	if (rank_one_tensors_in_PG_sorted) {
+		FREE_int(rank_one_tensors_in_PG_sorted);
 	}
 	if (TR) {
 		FREE_char(TR);
@@ -8099,6 +8108,17 @@ void wreath_product::create_all_rank_one_tensors(
 		}
 		rank_one_tensors[i] = b;
 	}
+	rank_one_tensors_in_PG = NEW_int(nb_rank_one_tensors);
+	rank_one_tensors_in_PG_sorted = NEW_int(nb_rank_one_tensors);
+	for (i = 0; i < nb_rank_one_tensors; i++) {
+		rank_one_tensors_in_PG[i] = affine_rank_to_PG_rank(rank_one_tensors[i]);
+	}
+	int_vec_copy(rank_one_tensors_in_PG, rank_one_tensors_in_PG_sorted, nb_rank_one_tensors);
+
+	sorting Sorting;
+
+	Sorting.int_vec_heapsort(rank_one_tensors_in_PG_sorted, nb_rank_one_tensors);
+
 	FREE_int(coords);
 	FREE_int(Proj);
 	FREE_int(projections);
