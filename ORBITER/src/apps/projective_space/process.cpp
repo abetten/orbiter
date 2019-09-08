@@ -48,7 +48,7 @@ int main(int argc, const char **argv)
 			Job = NEW_OBJECT(projective_space_job_description);
 
 			i += Job->read_arguments(argc - i,
-				argv + i + 1, verbose_level);
+				argv + i + 1, verbose_level) + 1;
 			cout << "-job " << endl;
 		}
 	}
