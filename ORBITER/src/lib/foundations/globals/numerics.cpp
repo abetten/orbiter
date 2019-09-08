@@ -2332,13 +2332,46 @@ void numerics::transform_llur_double(double *in, double *out, double &x, double 
 void numerics::on_circle_int(int *Px, int *Py,
 		int idx, int angle_in_degree, int rad)
 {
-	numerics Num;
-
-	Px[idx] = (int)(Num.cos_grad(angle_in_degree) * (double) rad);
-	Py[idx] = (int)(Num.sin_grad(angle_in_degree) * (double) rad);
+	Px[idx] = (int)(cos_grad(angle_in_degree) * (double) rad);
+	Py[idx] = (int)(sin_grad(angle_in_degree) * (double) rad);
 }
 
 
+double numerics::power_of(double x, int n)
+{
+	double b, c;
+
+	b = x;
+	c = 1.;
+	while (n) {
+		if (n % 2) {
+			//cout << "numerics::power_of mult(" << b << "," << c << ")=";
+			c = b * c;
+			//cout << c << endl;
+			}
+		b = b * b;
+		n >>= 1;
+		//cout << "numerics::power_of " << b << "^"
+		//<< n << " * " << c << endl;
+		}
+	return c;
+
+}
+
+double numerics::bernoulli(double p, int n, int k)
+{
+	double q, P, Q, PQ, c;
+	int nCk;
+	combinatorics_domain Combi;
+
+	q = 1. - p;
+	P = power_of(p, k);
+	Q = power_of(q, n - k);
+	PQ = P * Q;
+	nCk = Combi.int_n_choose_k(n, k);
+	c = (double) nCk * PQ;
+	return c;
+}
 
 }}
 

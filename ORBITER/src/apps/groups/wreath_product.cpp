@@ -1398,7 +1398,7 @@ void tensor_product::classify_poset(int depth,
 			verbose_level);
 
 	if (f_v) {
-		cout << "blt_set::init2 before "
+		cout << "tensor_product::classify_poset before "
 				"Poset->add_testing_without_group" << endl;
 		}
 	Poset->add_testing_without_group(
@@ -1581,7 +1581,11 @@ int wreath_rank_point_func(int *v, void *data)
 
 	T = (tensor_product *) data;
 	//AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
-	T->F->PG_element_rank_modified(v, 1, T->vector_space_dimension, rk);
+	//T->F->PG_element_rank_modified(v, 1, T->vector_space_dimension, rk);
+	rk = T->W->tensor_PG_rank(v);
+
+	//uint32_t tensor_PG_rank(int *tensor);
+
 	return rk;
 }
 
@@ -1591,7 +1595,12 @@ void wreath_unrank_point_func(int *v, int rk, void *data)
 
 	T = (tensor_product *) data;
 	//AG_element_unrank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
-	T->F->PG_element_unrank_modified(v, 1, T->vector_space_dimension, rk);
+	//T->F->PG_element_unrank_modified(v, 1, T->vector_space_dimension, rk);
+	T->W->tensor_PG_unrank(v, rk);
+
+	//void tensor_PG_unrank(int *tensor, uint32_t PG_rk);
+
+
 }
 
 

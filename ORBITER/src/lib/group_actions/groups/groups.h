@@ -1816,6 +1816,8 @@ public:
 	page_storage *Elts;
 
 	uint32_t *rank_one_tensors;
+	int *rank_one_tensors_in_PG;
+	int *rank_one_tensors_in_PG_sorted;
 	int nb_rank_one_tensors;
 
 	char *TR; // [degree_of_tensor_action + 1]
