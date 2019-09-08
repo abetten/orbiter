@@ -214,7 +214,7 @@ int projective_space_job_description::read_arguments(
 			Data = NEW_OBJECT(data_input_stream);
 			cout << "projective_space_job_description::read_arguments -input" << endl;
 			i += Data->read_arguments(argc - i,
-				argv + i + 1, verbose_level);
+				argv + i + 1, verbose_level) + 1;
 			cout << "projective_space_job_description::read_arguments finished reading -input" << endl;
 			}
 		else if (strcmp(argv[i], "-fname_base_out") == 0) {
