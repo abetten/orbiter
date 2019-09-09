@@ -56,6 +56,10 @@ int main(int argc, const char **argv)
 
 	int f_latex = FALSE;
 
+	int f_max_TDO_depth = FALSE;
+	int max_TDO_depth = INT_MAX;
+
+
 	t0 = os_ticks();
 
 
@@ -121,6 +125,11 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-latex") == 0) {
 			f_latex = TRUE;
 			cout << "-latex " << endl;
+			}
+		else if (strcmp(argv[i], "-max_TDO_depth") == 0) {
+			f_max_TDO_depth = TRUE;
+			max_TDO_depth = atoi(argv[++i]);
+			cout << "-max_TDO_depth " << max_TDO_depth << endl;
 			}
 		}
 
@@ -256,6 +265,7 @@ int main(int argc, const char **argv)
 					f_save_incma_in_and_out,
 					fixed_structure_order_list_sz,
 					fixed_structure_order_list,
+					max_TDO_depth,
 					verbose_level);
 
 			}// f_latex

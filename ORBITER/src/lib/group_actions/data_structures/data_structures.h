@@ -597,6 +597,7 @@ public:
 			int f_save_incma_in_and_out,
 			int fixed_structure_order_list_sz,
 			int *fixed_structure_order_list,
+			int max_TDO_depth,
 			int verbose_level);
 };
 
