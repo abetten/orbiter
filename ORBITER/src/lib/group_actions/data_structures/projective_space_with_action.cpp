@@ -3790,6 +3790,7 @@ void projective_space_with_action::latex_report(const char *fname,
 		int f_save_incma_in_and_out,
 		int fixed_structure_order_list_sz,
 		int *fixed_structure_order_list,
+		int max_TDO_depth,
 		int verbose_level)
 {
 	int i, j;
@@ -4056,7 +4057,7 @@ void projective_space_with_action::latex_report(const char *fname,
 		int f_print_subscripts = TRUE;
 
 		f_refine_prev = TRUE;
-		for (h = 0; ; h++) {
+		for (h = 0; h < max_TDO_depth; h++) {
 			if (EVEN(h)) {
 				f_refine = Inc->refine_column_partition_safe(
 						*Stack, verbose_level - 3);

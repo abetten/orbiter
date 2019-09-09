@@ -74,10 +74,21 @@ void finite_field::create_projective_variety(
 		}
 		coeff[b] = a;
 	}
+	if (f_v) {
+		cout << "finite_field::create_projective_variety coeff:";
+		int_vec_print(cout, coeff, HPD->nb_monomials);
+		cout << endl;
+	}
 
 	Pts = NEW_int(HPD->P->N_points);
 
+	if (f_v) {
+		cout << "finite_field::create_projective_variety before HPD->enumerate_points" << endl;
+	}
 	HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
+	if (f_v) {
+		cout << "finite_field::create_projective_variety after HPD->enumerate_points, nb_pts = " << nb_pts << endl;
+	}
 
 	display_table_of_projective_points(
 			cout, Pts, nb_pts, variety_nb_vars);
