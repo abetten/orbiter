@@ -2880,6 +2880,93 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 		}
 }
 
+void strong_generators::stabilizer_of_pencil_of_conics(
+	action *A,
+	finite_field *F,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_pencil_of_conics" << endl;
+		cout << "q=" << F->q << endl;
+		}
+
+	longinteger_object target_go;
+	number_theory_domain NT;
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_pencil_of_conics before BLT_stab_gens" << endl;
+		}
+
+
+	vector_ge *gens;
+
+	gens = NEW_OBJECT(vector_ge);
+	gens->init(A, verbose_level - 2);
+	target_go.create(NT.i_power_j(F->q - 1, 2));
+
+	int *data;
+	int nb_gens = 2;
+	int data_size = 10; // 9 + 1
+	int alpha;
+
+	alpha = F->primitive_root();
+	data = NEW_int(data_size);
+
+
+	gens->allocate(nb_gens, verbose_level - 2);
+	for (i = 0; i < nb_gens; i++) {
+		int_vec_zero(data, data_size);
+		if (i == 0) {
+			// diag(t, 1/t, 1)
+			data[0] = alpha;
+			data[4] = F->inverse(alpha);
+			data[8] = 1;
+		}
+		else {
+			// diag(t, 1, 1)
+			data[0] = alpha;
+			data[4] = 1;
+			data[8] = 1;
+		}
+		A->make_element(gens->ith(i), data, 0);
+		}
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_pencil_of_conics generators are:" << endl;
+		gens->print_quick(cout);
+		}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_pencil_of_conics before "
+				"generators_to_strong_generators" << endl;
+		}
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		gens, Strong_gens2,
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_pencil_of_conics after "
+				"generators_to_strong_generators" << endl;
+		}
+
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_OBJECT(Strong_gens2);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_pencil_of_conics done" << endl;
+		}
+}
+
 void strong_generators::Hall_reflection(
 	int nb_pairs, int &degree, int verbose_level)
 {

@@ -1681,6 +1681,10 @@ public:
 	void stabilizer_of_spread_from_catalogue(action *A, 
 		int q, int k, int iso, 
 		int verbose_level);
+	void stabilizer_of_pencil_of_conics(
+		action *A,
+		finite_field *F,
+		int verbose_level);
 	void Hall_reflection(
 		int nb_pairs, int &degree, int verbose_level);
 	void normalizer_of_a_Hall_reflection(
