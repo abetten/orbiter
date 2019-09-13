@@ -2094,11 +2094,11 @@ void sorting::schreier_vector_tree(
 		cout << "sorting::schreier_vector_tree after LG->create_spanning_tree" << endl;
 	}
 
-	int xmax = 1000000;
-	int ymax = 1000000;
+	int xmax = 300000;
+	int ymax = 300000;
 	int x_max = 10000;
 	int y_max = 10000;
-	int rad = 210;
+	int rad = 300;
 	int f_circle = TRUE;
 	int f_corners = FALSE;
 	int f_nodes_empty = FALSE;
