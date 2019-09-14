@@ -1085,20 +1085,22 @@ void sims::report(ostream &ost, int verbose_level)
 
 		ost << endl << "\\subsection*{Basic Orbit " << i << "}" << endl << endl;
 
-		sprintf(fname_base, "sims_%d", i);
+		if (orbit_len[i] < 1000) {
+			sprintf(fname_base, "sims_%d", i);
 
-		layered_graph *LG;
-		Sorting.schreier_vector_tree(
-			orbit_len[i], orbit[i], prev[i], TRUE /* f_use_pts_inv */, orbit_inv[i],
-			fname_base,
-			LG,
-			FALSE/* f_embedded */, FALSE /* f_sideways */,
-			verbose_level);
+			layered_graph *LG;
+			Sorting.schreier_vector_tree(
+				orbit_len[i], orbit[i], prev[i], TRUE /* f_use_pts_inv */, orbit_inv[i],
+				fname_base,
+				LG,
+				FALSE/* f_embedded */, FALSE /* f_sideways */,
+				verbose_level);
 
-		FREE_OBJECT(LG);
+			FREE_OBJECT(LG);
 
-		ost << "\\input " << fname_base << ".tex" << endl;
-		ost << endl;
+			ost << "\\input " << fname_base << ".tex" << endl;
+			ost << endl;
+		}
 		ost << "\\bigskip" << endl;
 
 	}

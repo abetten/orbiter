@@ -2811,6 +2811,73 @@ public:
 
 };
 
+
+
+// #############################################################################
+// tensor_classify.cpp
+// #############################################################################
+
+//! classification of tensors under the wreath product group
+
+
+class tensor_classify {
+public:
+	int t0;
+	int argc;
+	const char **argv;
+	int nb_factors;
+	int n;
+	int q;
+
+	finite_field *F;
+	action *A;
+	action *A0;
+
+	action *Ar;
+	int nb_points;
+	int *points;
+
+
+	strong_generators *SG;
+	longinteger_object go;
+	wreath_product *W;
+	vector_space *VS;
+	poset *Poset;
+	poset_classification *Gen;
+	int vector_space_dimension;
+	int *v; // [vector_space_dimension]
+
+	tensor_classify();
+	~tensor_classify();
+	void init(int argc, const char **argv,
+			int nb_factors, int n, int q, int depth,
+			int f_permutations, int f_orbits, int f_tensor_ranks,
+			int f_orbits_restricted, const char *orbits_restricted_fname,
+			int f_orbits_restricted_compute,
+			int f_report,
+			int f_poset_classify, int poset_classify_depth,
+			int verbose_level);
+	void classify_poset(int depth,
+			int verbose_level);
+	void create_restricted_action_on_rank_one_tensors(
+			int verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+};
+
+int wreath_rank_point_func(int *v, void *data);
+void wreath_unrank_point_func(int *v, int rk, void *data);
+void wreath_product_print_set(std::ostream &ost, int len, int *S, void *data);
+void wreath_product_rank_one_early_test_func_callback(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
+
+
+
 // #############################################################################
 // translation_plane_via_andre_model.cpp
 // #############################################################################

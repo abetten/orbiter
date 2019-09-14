@@ -44,6 +44,7 @@ int main(int argc, const char **argv)
 	int f_classes = FALSE;
 	int f_normalizer = FALSE;
 	int f_report = FALSE;
+	int f_sylow = FALSE;
 	int f_test_if_geometric = FALSE;
 	int test_if_geometric_depth = 0;
 	int f_draw_tree = FALSE;
@@ -109,6 +110,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
+			}
+		else if (strcmp(argv[i], "-sylow") == 0) {
+			f_sylow = TRUE;
+			cout << "-sylow" << endl;
 			}
 		else if (strcmp(argv[i], "-f_draw_tree") == 0) {
 			f_draw_tree = TRUE;
@@ -387,7 +392,7 @@ int main(int argc, const char **argv)
 				TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
 				extras_for_preamble);
 
-			LG->report(fp, verbose_level);
+			LG->report(fp, f_sylow, verbose_level);
 			L.foot(fp);
 		}
 	}

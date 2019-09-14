@@ -174,6 +174,11 @@ void linear_group::init(
 			verbose_level);
 		f_OK = TRUE;
 	}
+	if (description->f_Janko1) {
+		init_subgroup_Janko1(prefix, label_latex,
+			verbose_level);
+		f_OK = TRUE;
+	}
 
 	if (!f_OK) {
 		A2 = A_linear;
@@ -819,7 +824,55 @@ void linear_group::init_subgroup_by_generators(char *prefix, char *label_latex,
 
 }
 
-void linear_group::report(ostream &fp, int verbose_level)
+void linear_group::init_subgroup_Janko1(char *prefix, char *label_latex,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "linear_group::init_subgroup_Janko1" << endl;
+		}
+
+	Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "linear_group::init_subgroup_Janko1 before "
+				"Strong_gens->init_subgroup_by_generators" << endl;
+		}
+
+	matrix_group *M;
+
+	M = A_linear->get_matrix_group();
+
+	Strong_gens->Janko1(
+			A_linear,
+			M->GFq,
+			verbose_level);
+
+	if (f_v) {
+		cout << "linear_group::init_subgroup_Janko1 after "
+				"Strong_gens->init_subgroup_by_generators" << endl;
+		}
+
+	f_has_strong_generators = TRUE;
+
+	A2 = A_linear;
+
+	sprintf(prefix + strlen(prefix), "_Subgroup_Janko1");
+	sprintf(label_latex + strlen(label_latex),
+			"{\\rm Subgroup Janko1}");
+	if (f_v) {
+		cout << "linear_group::init_subgroup_Janko1 "
+				"created group " << prefix << endl;
+		}
+
+	if (f_v) {
+		cout << "linear_group::init_subgroup_Janko1 done" << endl;
+		}
+
+}
+
+void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sims *H;
@@ -831,6 +884,9 @@ void linear_group::report(ostream &fp, int verbose_level)
 	}
 
 	//G = initial_strong_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "linear_group::report before Strong_gens->create_sims" << endl;
+	}
 	H = Strong_gens->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
@@ -868,18 +924,18 @@ void linear_group::report(ostream &fp, int verbose_level)
 		//H->print_all_group_elements_tex(fp);
 
 		longinteger_object go;
-		sims *G;
-		sims *H;
+		//sims *G;
+		//sims *H;
 
-		G = initial_strong_gens->create_sims(verbose_level);
-		H = Strong_gens->create_sims(verbose_level);
+		//G = initial_strong_gens->create_sims(verbose_level);
+		//H = Strong_gens->create_sims(verbose_level);
 
 
 
 		fp << "\\section{The Group $" << label_latex << "$}" << endl;
 
 
-		G->group_order(go);
+		H->group_order(go);
 
 		fp << "\\noindent The order of the group $"
 				<< label_latex
@@ -894,7 +950,10 @@ void linear_group::report(ostream &fp, int verbose_level)
 		fp << "\\noindent The group acts on a set of size "
 				<< A->degree << "\\\\" << endl;
 
-		A->print_points(fp);
+		if (A->degree < 1000) {
+
+			A->print_points(fp);
+		}
 
 		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
 
@@ -907,18 +966,21 @@ void linear_group::report(ostream &fp, int verbose_level)
 			Strong_gens->print_generators_tex(fp);
 		}
 
-		A->report(fp, verbose_level);
+		A2->report(fp, TRUE /*f_sims*/, H,
+				TRUE /* f_strong_gens */, Strong_gens, verbose_level);
 
-		A->report_basic_orbits(fp);
+		A2->report_basic_orbits(fp);
 
-		sylow_structure *Syl;
+		if (f_sylow) {
+			sylow_structure *Syl;
 
-		Syl = NEW_OBJECT(sylow_structure);
-		Syl->init(G, verbose_level);
-		Syl->report(fp);
+			Syl = NEW_OBJECT(sylow_structure);
+			Syl->init(H, verbose_level);
+			Syl->report(fp);
 
-		A->report_conjugacy_classes_and_normalizers(fp,
-				verbose_level);
+			A2->report_conjugacy_classes_and_normalizers(fp,
+					verbose_level);
+		}
 
 		//L.foot(fp);
 	}

@@ -8656,6 +8656,1018 @@ void wreath_product::report(ostream &ost, int verbose_level)
 	}
 }
 
+void wreath_product::compute_permutations(
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		int verbose_level)
+{
+	int *generator_stack;
+	int **generators_transposed;
+	int *perms;
+	int mtx_n;
+	int mtx_n2;
+
+	nb_gens = SG->gens->len;
+	degree = degree_of_tensor_action;
+	mtx_n = dimension_of_tensor_action;
+	mtx_n2 = mtx_n * mtx_n;
+
+	generator_stack = NEW_int(SG->gens->len * mtx_n2);
+	generators_transposed = NEW_pint(SG->gens->len);
+	perms = NEW_int(SG->gens->len * mtx_n);
+	for (size_t h = 0; h < SG->gens->len; h++) {
+		cout << "generator " << h << " / "
+				<< SG->gens->len << " is: " << endl;
+		A->element_print_quick(SG->gens->ith(h), cout);
+		A->element_print_as_permutation(SG->gens->ith(h), cout);
+		create_matrix(SG->gens->ith(h), generator_stack + h * mtx_n2,
+				0 /* verbose_level */);
+		cout << "matrix:" << endl;
+		int_matrix_print(generator_stack + h * mtx_n2, mtx_n, mtx_n);
+		generators_transposed[h] = NEW_int(mtx_n2);
+
+		F->transpose_matrix(
+				generator_stack + h * mtx_n2,
+				generators_transposed[h], mtx_n, mtx_n);
+
+		compute_induced_permutation(SG->gens->ith(h), perms + h * mtx_n);
+	}
+
+	cout << "generator_stack:" << endl;
+	int_matrix_print(generator_stack, SG->gens->len, mtx_n * mtx_n);
+
+#if 0
+	cout << "generators transposed:" << endl;
+	for (size_t h = 0; h < SG->gens->len; h++) {
+		int_matrix_print(generators_transposed[h], mtx_n, mtx_n);
+	}
+#endif
+	cout << "perms:" << endl;
+	int_matrix_print(perms, SG->gens->len, mtx_n);
+	cout << "mtx_n=" << mtx_n << endl;
+	cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
+
+#if 0
+	linalg::Matrix<int> v (mtx_n, 1);
+
+
+	// matrix N contains the matrices of all projectivities
+	// which generate the group, stacked on top of each other.
+	// So, N has size (SG->gens->len * mtx_n) x mtx_n
+
+
+	vector<linalg::Matrix<char>> N (SG->gens->len);
+	for (size_t h = 0; h < N.size(); ++h) {
+		N[h].INIT(mtx_n, mtx_n);
+
+		for (size_t i=0; i < mtx_n; ++i)
+			for (size_t j = 0; j < mtx_n; ++j) {
+				N[h].matrix_[i*mtx_n+j] = generator_stack [h * mtx_n2 + i * mtx_n + j];
+			}
+
+	}
+
+	// Print the matrices N
+	for (size_t h=0; h<N.size(); ++h) {
+		printf("=========================================================\n");
+		printf("h = %ld\n", h);
+		printf("=========================================================\n");
+
+		linalg::print(N[h]);
+
+		printf("=========================================================\n");
+	}
+#endif
+
+
+	// result is the ranks of the images.
+	// Each row of result is a permutation of the points of projective space
+	// So, result is SG->gens->len x W->degree_of_tensor_action
+
+	//result = NEW_int(SG->gens->len * W->degree_of_tensor_action);
+
+	// perform the parallel matrix multiplication on the GPU:
+
+
+//	int* v = NEW_int (MN.ncols);
+
+	unsigned int w = (unsigned int) degree_of_tensor_action - 1;
+	long int a;
+	a = (long int) w;
+	if (a != degree_of_tensor_action - 1) {
+		cout << "W->degree_of_tensor_action - 1 does not fit into a unsigned int" << endl;
+		exit(1);
+	}
+	else {
+		cout << "W->degree_of_tensor_action fits into a unsigned int, this is good" << endl;
+	}
+
+
+
+	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
+
+	cout << "block_size=" << block_size << endl;
+
+	int nb_blocks = (degree_of_tensor_action + block_size - 1) / block_size;
+
+	cout << "nb_blocks=" << nb_blocks << endl;
+
+
+	//cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
+
+	//unsigned int* S = new unsigned int [W->degree_of_tensor_action];
+
+	//for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
+
+
+	cout << "allocating T, an unsigned int array of size " << block_size << endl;
+
+	unsigned int* T = new unsigned int [block_size];
+
+//	memset(S, -1, sizeof(S)*W->degree_of_tensor_action);
+
+
+
+
+
+	for (size_t b=0; b<nb_blocks; ++b) {
+		cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+		int l = std::min((b + 1) * block_size,
+				(unsigned long)degree_of_tensor_action) - b*block_size;
+		cout << "l=" << l << endl;
+
+		//linalg::Matrix<char> M  (l, mtx_n);
+
+		bitmatrix *M;
+
+		M = NEW_OBJECT(bitmatrix);
+		M->init(mtx_n, l, 0 /*verbose_level*/);
+
+		cout << "unranking the elements of the PG to the bitmatrix" << endl;
+		M->unrank_PG_elements_in_columns_consecutively(
+				F, (long int) b * (long int) block_size,
+				0 /* verbose_level */);
+
+
+#if 0
+		cout << "unranking the elements of the PG" << endl;
+
+		int l1 = l / 100;
+		for (size_t i=0; i<l; ++i) {
+			if ((i % l1) == 0) {
+				cout << "block b=" << b << ", " << i / l1 << " % done unranking" << endl;
+			}
+			W->F->PG_element_unrank_modified_lint (v.matrix_, 1, mtx_n,
+					(long int) b * (long int) block_size + (long int)i) ;
+			for (size_t j=0; j<mtx_n; ++j)
+				M(i,j) = v(j, 0);
+		}
+#endif
+
+		cout << "unranking the elements of the PG done" << endl;
+
+		//M->print();
+
+		//linalg::Matrix<char> MN (l, mtx_n);
+
+		bitmatrix *NM;
+
+		NM = NEW_OBJECT(bitmatrix);
+		NM->init(mtx_n, l, 0 /*verbose_level*/);
+
+
+		for (size_t h=0; h < SG->gens->len; ++h) {
+			cout << "generator h=" << h << " / " << SG->gens->len << endl;
+
+
+			if (!test_if_file_exists(nb_factors, h, b)) {
+
+
+				// Matrix Multiply
+				//MN.reset_entries();
+				NM->zero_out();
+
+
+
+				//cout << "cuda multiplication" << endl;
+				//linalg::cuda_mod_mat_mul (M, N[h], MN, W->q);
+				//cout << "cuda multiplication done" << endl;
+				//M.UninitializeOnGPU();
+				//N[h].UninitializeOnGPU();
+				//MN.UninitializeOnGPU();
+
+
+				cout << "CPU multiplication" << endl;
+				int t0, t1, dt;
+				t0 = os_ticks();
+				//linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
+				M->mult_int_matrix_from_the_left(
+						generators_transposed[h], mtx_n, mtx_n,
+						NM, verbose_level);
+				cout << "CPU multiplication done" << endl;
+				t1 = os_ticks();
+				dt = t1 - t0;
+				cout << "the multiplication took ";
+				time_check_delta(cout, dt);
+				cout << endl;
+
+				//cout << "NM:" << endl;
+				//NM->print();
+
+
+				cout << "ranking the elements of the PG" << endl;
+				NM->rank_PG_elements_in_columns(
+						F, perms + h * mtx_n, T,
+						verbose_level);
+
+#if 0
+				for (size_t i=0; i<l; ++i) {
+					if ((i % l1) == 0) {
+						cout << "h=" << h << ", b=" << b << ", " << i/l1 << " % done ranking" << endl;
+					}
+					for (size_t j=0; j<mtx_n; ++j) {
+						int a = perms[h * mtx_n + j];
+						v.matrix_[a*v.alloc_cols] = MN (i, j);
+
+					}
+					long int res;
+					W->F->PG_element_rank_modified_lint (v.matrix_, 1, mtx_n, res);
+					T [i] = (unsigned int) res;
+				}
+#endif
+				cout << "ranking the elements of the PG done" << endl;
+
+
+				cout << "writing to file:" << endl;
+				char fname[1000];
+
+				make_fname(fname, nb_factors, h, b);
+				{
+					ofstream fp(fname, ios::binary);
+
+					fp.write((char *) &l, sizeof(int));
+					for (int i = 0; i < l; i++) {
+						fp.write((char *) &T [i], sizeof(int));
+					}
+				}
+				//file_io Fio;
+
+				cout << "written file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+
+
+			}
+			else {
+				cout << "the case h=" << h << ", b=" << b << " has already been done" << endl;
+			}
+
+		} // next h
+
+		FREE_OBJECT(M);
+		FREE_OBJECT(NM);
+
+
+	} // next b
+
+#if 0
+	int nb_orbits = 0;
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+		if (S[i] == i) ++nb_orbits;
+	}
+	cout << "nb_orbits: " << nb_orbits << endl;
+
+	long int *orbit_length;
+	long int *orbit_rep;
+
+	orbit_length = NEW_lint(nb_orbits);
+	orbit_rep = NEW_lint(nb_orbits);
+
+	for (int i = 0; i < nb_orbits; i++) {
+		orbit_length[i] = 0;
+	}
+	int j;
+	j = 0;
+	for (unsigned int i=0; i < W->degree_of_tensor_action; ++i) {
+		if (S[i] == i) {
+			orbit_rep[j++] = i;
+		}
+	}
+
+	cout << "the orbit representatives are: " << endl;
+	for (int i = 0; i < nb_orbits; i++) {
+		cout << i << " : " << orbit_rep[i] << endl;
+	}
+#endif
+
+	return;
+
+
+//	combinatorics_domain Combi;
+//
+//	for (size_t i = 0; i < SG->gens->len; i++) {
+//		cout << "testing result " << i << " / " << SG->gens->len << ": ";
+//		if (Combi.is_permutation(
+//				result + i * W->degree_of_tensor_action,
+//				W->degree_of_tensor_action)) {
+//			cout << "OK" << endl;
+//		}
+//		else {
+//			cout << "not OK" << endl;
+//		}
+//	}
+//	cout << "We found " << SG->gens->len << " permutations of "
+//			"degree " << W->degree_of_tensor_action << endl;
+//
+//
+//	cout << __FILE__ << ":" << __LINE__ << endl;
+//	//exit(0);
+//
+//	FREE_int(generator_stack);
+//	FREE_int(perms);
+//	cout << "wreath_product_orbits_CUDA done" << endl;
+
+
+//#else
+//	nb_gens = 0;
+//	degree = 0;
+//#endif
+}
+
+void wreath_product::make_fname(char *fname, int nb_factors, int h, int b)
+{
+	sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b);
+}
+
+int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
+{
+	char fname[1000];
+	file_io Fio;
+
+	make_fname(fname, nb_factors, h, b);
+	if (Fio.file_size(fname) > 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+void wreath_product::orbits(
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		int verbosity)
+{
+
+	int mtx_n;
+
+	nb_gens = SG->gens->len;
+	degree = degree_of_tensor_action;
+	mtx_n = dimension_of_tensor_action;
+
+	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
+
+	cout << "block_size=" << block_size << endl;
+
+	int nb_blocks = (degree_of_tensor_action + block_size - 1) / block_size;
+
+	cout << "nb_blocks=" << nb_blocks << endl;
+
+
+	cout << "allocating S, an unsigned int array of size " << degree_of_tensor_action << endl;
+
+	unsigned int* S = new unsigned int [degree_of_tensor_action];
+
+	for (unsigned int i=0; i < degree_of_tensor_action; ++i) S[i] = i;
+
+
+	cout << "allocating T, an unsigned int array of size " << degree_of_tensor_action << endl;
+
+	unsigned int* T = new unsigned int [degree_of_tensor_action];
+
+
+
+
+
+
+	for (size_t h=0; h < SG->gens->len; ++h) {
+		cout << "generator h=" << h << " / " << SG->gens->len << endl;
+
+		for (size_t b=0; b<nb_blocks; ++b) {
+			cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+			int l = std::min((b + 1) * block_size,
+					(unsigned long)degree_of_tensor_action) - b*block_size;
+			cout << "l=" << l << endl;
+
+
+
+
+
+			if (!test_if_file_exists(nb_factors, h, b)) {
+				cout << "file does not exist h=" << h << " b=" << b << endl;
+				exit(1);
+			}
+			else {
+				char fname[1000];
+
+				make_fname(fname, nb_factors, h, b);
+				cout << "reading from file " << fname << endl;
+				{
+					ifstream fp(fname, ios::binary);
+
+					int l1;
+					fp.read((char *) &l1, sizeof(int));
+					if (l1 != l) {
+						cout << "l1 != l" << endl;
+					}
+					for (int i = 0; i < l; i++) {
+						fp.read((char *) &T [b * block_size + i], sizeof(int));
+					}
+				}
+				//file_io Fio;
+
+				cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+
+
+			} // else
+		} // next b
+
+		cout << "performing the union-find for generator " << h << " / " << SG->gens->len << ":" << endl;
+
+		for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+			int l1;
+
+			l1 = degree_of_tensor_action / 100;
+
+			if ((i % l1) == 0) {
+				cout << i/l1 << " % done with union-find" << endl;
+			}
+			int u = i;
+			unsigned int t = T[i];
+			unsigned int r1 = root_of_tree_uint32_t(S, u);
+			unsigned int r2 = root_of_tree_uint32_t(S, t);
+
+			if (r1 != r2) {
+				if (r1 < r2) {
+					S[r2] = r1;
+				}
+				else {
+					S[r1] = r2;
+				}
+			}
+		} // next i
+
+	} // next h
+
+
+	cout << "Done with the loop" << endl;
+	cout << "Computing the orbit representatives" << endl;
+
+
+
+	int nb_orbits = 0;
+	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+		if (S[i] == i) {
+			nb_orbits++;
+		}
+	}
+	cout << "nb_orbits: " << nb_orbits << endl;
+
+	long int *orbit_length;
+	long int *orbit_rep;
+
+	orbit_length = NEW_lint(nb_orbits);
+	orbit_rep = NEW_lint(nb_orbits);
+
+	for (int i = 0; i < nb_orbits; i++) {
+		orbit_length[i] = 0;
+	}
+	int j;
+	j = 0;
+	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+		if (S[i] == i) {
+			orbit_rep[j++] = i;
+		}
+	}
+
+	cout << "the orbit representatives are: " << endl;
+	for (int i = 0; i < nb_orbits; i++) {
+		cout << i << ", " << orbit_rep[i] << ", " << endl;
+	}
+	cout << "Path compression:" << endl;
+	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+		unsigned int r = root_of_tree_uint32_t(S, i);
+		S[i] = r;
+	}
+	cout << "Path compression done" << endl;
+
+	uint32_t *Orbit;
+	int goi;
+	longinteger_object go;
+
+
+	SG->group_order(go);
+	goi = go.as_int();
+
+	cout << "goi=" << goi << endl;
+
+
+	Orbit = (uint32_t *) NEW_int(goi);
+
+	cout << "determining the orbits: " << endl;
+	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+
+		unsigned int rep = orbit_rep[orbit_idx];
+		uint32_t len = 0;
+
+		cout << "determining orbit " << orbit_idx << " / " << nb_orbits << " with rep " << rep << endl;
+		for (unsigned int j=0; j < degree_of_tensor_action; ++j) {
+			if (S[j] == rep) {
+				Orbit[len++] = j;
+			}
+		}
+		orbit_length[orbit_idx] = len;
+		cout << "orbit " << orbit_idx << " / " << nb_orbits << " has length " << len << endl;
+		char fname_orbit[1000];
+
+		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bin", q, nb_factors, orbit_idx);
+		cout << "Writing the file " << fname_orbit << endl;
+		{
+			ofstream fp(fname_orbit, ios::binary);
+
+			fp.write((char *) &len, sizeof(uint32_t));
+			for (int i = 0; i < len; i++) {
+				fp.write((char *) &Orbit[i], sizeof(uint32_t));
+			}
+		}
+		cout << "We are done writing the file " << fname_orbit << endl;
+
+	}
+	FREE_int((int *) Orbit);
+	cout << "the orbits are: " << endl;
+	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		cout << orbit_idx << ", " << orbit_rep[orbit_idx] << ", " << orbit_length[orbit_idx] << ", " << endl;
+	}
+}
+
+
+void wreath_product::orbits_restricted(
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		const char *orbits_restricted_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	int mtx_n;
+
+	if (f_v) {
+		cout << "wreath_product::orbits_restricted "
+				"orbits_restricted_fname=" << orbits_restricted_fname << endl;
+	}
+
+	file_io Fio;
+	sorting Sorting;
+
+	long int *Set;
+	long int *Set_in_PG;
+	int set_m, set_n;
+	int nb_blocks;
+	int *restr_first; // [nb_blocks]
+	int *restr_length; // [nb_blocks]
+	int i, j;
+
+	Fio.lint_matrix_read_csv(orbits_restricted_fname,
+			Set, set_m, set_n, verbose_level);
+
+	if (set_n != 1) {
+		cout << "orbits_restricted set_n != 1" << endl;
+		exit(1);
+	}
+	cout << "Restricting to a set of size " << set_m << endl;
+	cout << "converting points to PG point labels" << endl;
+
+	int *v;
+	long int s;
+	v = NEW_int(dimension_of_tensor_action);
+	Set_in_PG = NEW_lint(set_m);
+	for (i = 0; i < set_m; i++) {
+		s = affine_rank_to_PG_rank(Set[i]);
+		Set_in_PG[i] = s;
+	}
+	//FREE_int(v);
+	Sorting.lint_vec_heapsort(Set_in_PG, set_m);
+	cout << "after sorting, Set_in_PG:" << endl;
+	for (i = 0; i < set_m; i++) {
+		cout << i << " : " << Set_in_PG[i] << endl;
+	}
+
+
+
+	nb_gens = SG->gens->len;
+	degree = degree_of_tensor_action;
+	mtx_n = dimension_of_tensor_action;
+
+	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
+
+	cout << "block_size=" << block_size << endl;
+
+	nb_blocks = (degree_of_tensor_action + block_size - 1) / block_size;
+
+	cout << "nb_blocks=" << nb_blocks << endl;
+
+	restr_first = NEW_int(nb_blocks);
+	restr_length = NEW_int(nb_blocks);
+
+	for (size_t b = 0; b < nb_blocks; b++) {
+
+		cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+		int idx;
+		Sorting.lint_vec_search(Set_in_PG, set_m, (long int) b * block_size,
+					idx, 0 /*verbose_level*/);
+
+		restr_first[b] = idx;
+	}
+
+	for (int b = 0; b < nb_blocks; b++) {
+		cout << b << " : " << restr_first[b] << endl;
+	}
+
+	for (int b = nb_blocks - 1; b >= 0; b--) {
+		cout << "b=" << b << endl;
+		if (b == nb_blocks - 1) {
+			restr_length[b] = set_m - restr_first[b];
+		}
+		else {
+			restr_length[b] = restr_first[b + 1] - restr_first[b];
+		}
+	}
+
+	for (int b = 0; b < nb_blocks; b++) {
+		cout << b << " : " << restr_first[b] << " : " << restr_length[b] << endl;
+	}
+
+	long int *Perms;
+
+	Perms = NEW_lint(set_m * SG->gens->len);
+
+
+
+	cout << "allocating T, an unsigned int array of size " << block_size << endl;
+
+	unsigned int* T = new unsigned int [block_size];
+
+
+
+
+
+	for (int h = 0; h < SG->gens->len; ++h) {
+		cout << "generator h=" << h << " / " << SG->gens->len << endl;
+
+		for (int b = 0; b < nb_blocks; ++b) {
+			cout << "block b=" << b << " / " << nb_blocks << endl;
+
+
+			int l = MINIMUM((b + 1) * block_size,
+					(unsigned long)degree_of_tensor_action) - b * block_size;
+			cout << "l=" << l << endl;
+
+
+
+
+
+			if (!test_if_file_exists(nb_factors, h, b)) {
+				cout << "file does not exist h=" << h << " b=" << b << endl;
+				exit(1);
+			}
+			char fname[1000];
+
+			make_fname(fname, nb_factors, h, b);
+			cout << "reading from file " << fname << endl;
+			{
+				ifstream fp(fname, ios::binary);
+
+				int l1;
+				fp.read((char *) &l1, sizeof(int));
+				if (l1 != l) {
+					cout << "l1 != l" << endl;
+				}
+				for (int i = 0; i < l; i++) {
+					fp.read((char *) &T [i], sizeof(int));
+				}
+			}
+			cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+
+			long int x, y;
+			for (long int u = 0; u < restr_length[b]; u++) {
+				i = restr_first[b] + u;
+				x = Set_in_PG[i];
+				if (x < b * block_size) {
+					cout << "x < b * block_size" << endl;
+					cout << "x=" << x << " b=" << b << endl;
+					exit(1);
+				}
+				if (x >= (b + 1) * block_size) {
+					cout << "x >= (b + 1) * block_size" << endl;
+					cout << "x=" << x << " b=" << b << endl;
+					exit(1);
+				}
+				y = T[x - b * block_size];
+
+				int idx;
+				if (!Sorting.lint_vec_search(Set_in_PG, set_m, y, idx, 0 /*verbose_level*/)) {
+					cout << "did not find element y=" << y << " in Set_in_PG "
+							"under generator h=" << h << ", something is wrong" << endl;
+					cout << "x=" << x << endl;
+					tensor_PG_unrank(v, x);
+					s = tensor_affine_rank(v);
+					cout << "tensor=";
+					int_vec_print(cout, v, dimension_of_tensor_action);
+					cout << endl;
+					cout << "affine rank s=" << s << endl;
+
+					cout << "y=" << y << endl;
+					tensor_PG_unrank(v, y);
+					s = tensor_affine_rank(v);
+					cout << "tensor=";
+					int_vec_print(cout, v, dimension_of_tensor_action);
+					cout << endl;
+					cout << "affine rank s=" << s << endl;
+
+					exit(1);
+				}
+				j = idx;
+				Perms[i * SG->gens->len + h] = j;
+			} // next u
+
+		} // next b
+
+	} // next h
+
+	char fname[1000];
+
+	strcpy(fname, orbits_restricted_fname);
+	chop_off_extension(fname);
+
+	sprintf(fname + strlen(fname), "_restricted_action.txt");
+	Fio.lint_matrix_write_csv(fname,
+			Perms, set_m, SG->gens->len);
+
+}
+
+void wreath_product::orbits_restricted_compute(
+		strong_generators* SG,
+		action* A,
+		int*& result,
+		int &nb_gens, int &degree,
+		int nb_factors,
+		const char *orbits_restricted_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "wreath_product::orbits_restricted_compute orbits_restricted_fname=" << orbits_restricted_fname << endl;
+	}
+
+	file_io Fio;
+	sorting Sorting;
+
+	long int *Set;
+	long int *Set_in_PG;
+	int set_m, set_n;
+	int i;
+
+	Fio.lint_matrix_read_csv(orbits_restricted_fname,
+			Set, set_m, set_n, verbose_level);
+
+	if (set_n != 1) {
+		cout << "orbits_restricted set_n != 1" << endl;
+		exit(1);
+	}
+	cout << "Restricting to a set of size " << set_m << endl;
+	cout << "converting points to PG point labels" << endl;
+
+	int *v;
+	long int s;
+	v = NEW_int(dimension_of_tensor_action);
+	Set_in_PG = NEW_lint(set_m);
+	for (i = 0; i < set_m; i++) {
+		s = affine_rank_to_PG_rank(Set[i]);
+		Set_in_PG[i] = s;
+	}
+	//FREE_int(v);
+	Sorting.lint_vec_heapsort(Set_in_PG, set_m);
+	cout << "after sorting, Set_in_PG:" << endl;
+#if 0
+	for (i = 0; i < set_m; i++) {
+		cout << i << " : " << Set_in_PG[i] << endl;
+	}
+#endif
+
+
+
+	nb_gens = SG->gens->len;
+
+
+	char fname[1000];
+	int *Perms;
+	int perms_m, perms_n;
+
+	strcpy(fname, orbits_restricted_fname);
+	chop_off_extension(fname);
+
+	sprintf(fname + strlen(fname), "_restricted_action.txt");
+	Fio.int_matrix_read_csv(fname,
+			Perms, perms_m, perms_n, verbose_level - 2);
+	if (perms_n != SG->gens->len) {
+		cout << "perms_n != SG->gens->len" << endl;
+		exit(1);
+	}
+	if (perms_m != set_m) {
+		cout << "perms_m != set_m" << endl;
+		exit(1);
+	}
+
+	degree = perms_m;
+
+
+
+
+	action *A_perm;
+	action *A_perm_matrix;
+
+	A_perm = NEW_OBJECT(action);
+	A_perm->init_permutation_representation(A,
+			FALSE /* f_stay_in_the_old_action */,
+			SG->gens,
+			Perms, degree,
+			verbose_level);
+	cout << "created A_perm = " << A_perm->label << endl;
+
+	A_perm_matrix = NEW_OBJECT(action);
+	A_perm_matrix->init_permutation_representation(A,
+			TRUE /* f_stay_in_the_old_action */,
+			SG->gens,
+			Perms, degree,
+			verbose_level);
+	cout << "created A_perm_matrix = " << A_perm_matrix->label << endl;
+
+	permutation_representation *Permutation_representation;
+
+	Permutation_representation = A_perm->G.Permutation_representation;
+
+	vector_ge *Gens;
+
+	Gens = NEW_OBJECT(vector_ge);
+
+	Gens->init(A_perm, verbose_level - 2);
+	Gens->allocate(SG->gens->len, verbose_level - 2);
+	for (i = 0; i < SG->gens->len; i++) {
+		A_perm->element_move(
+				Permutation_representation->Elts
+					+ i * A_perm->elt_size_in_int,
+				Gens->ith(i),
+				verbose_level);
+	}
+
+	schreier *Sch;
+	longinteger_object go;
+	int orbit_idx;
+
+	Sch = NEW_OBJECT(schreier);
+
+	Sch->init(A_perm, verbose_level - 2);
+	Sch->initialize_tables();
+	Sch->init_generators(*Gens, verbose_level - 2);
+
+	cout << "before Sch->compute_all_point_orbits" << endl;
+	Sch->compute_all_point_orbits(0 /*verbose_level - 5*/);
+	cout << "after Sch->compute_all_point_orbits" << endl;
+
+	Sch->print_orbit_lengths_tex(cout);
+	Sch->print_and_list_orbits_tex(cout);
+
+	set_of_sets *Orbits;
+	Sch->orbits_as_set_of_sets(Orbits, verbose_level);
+
+	A->group_order(go);
+	cout << "Action " << A->label << endl;
+	cout << "group order " << go << endl;
+	cout << "computing stabilizers:" << endl;
+
+
+
+	for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
+		cout << "computing point stabilizer for orbit " << orbit_idx << ":" << endl;
+
+		int orb_rep;
+		long int orbit_rep_in_PG;
+		uint32_t orbit_rep_in_PG_uint;
+
+		orb_rep = Sch->orbit[Sch->orbit_first[orbit_idx]];
+
+		orbit_rep_in_PG = Set_in_PG[orb_rep];
+
+		orbit_rep_in_PG_uint = PG_rank_to_affine_rank(orbit_rep_in_PG);
+
+		int *tensor;
+
+		tensor = NEW_int(dimension_of_tensor_action);
+
+		tensor_PG_unrank(tensor, orbit_rep_in_PG);
+
+		cout << "orbit representative is " << orb_rep << " = " << orbit_rep_in_PG << " = " << orbit_rep_in_PG_uint << endl;
+		cout << "tensor: ";
+		int_vec_print(cout, tensor, dimension_of_tensor_action);
+		cout << endl;
+		sims *Stab;
+
+		cout << "before Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+		Sch->point_stabilizer(A_perm_matrix, go,
+				Stab, orbit_idx, verbose_level - 5);
+		cout << "after Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+
+		strong_generators *gens;
+
+		gens = NEW_OBJECT(strong_generators);
+		gens->init(A_perm_matrix);
+		gens->init_from_sims(Stab, verbose_level);
+
+
+		gens->print_generators_tex(cout);
+
+#if 1
+		action *A_on_orbit;
+
+		cout << "computing restricted action on the orbit:" << endl;
+		A_on_orbit = A_perm->restricted_action(Orbits->Sets[orbit_idx] + 1, Orbits->Set_size[orbit_idx] - 1,
+				verbose_level);
+
+		cout << "generators restricted to the orbit of degree " << Orbits->Set_size[orbit_idx] - 1 << ":" << endl;
+		gens->print_generators_MAGMA(A_on_orbit, cout);
+
+
+		sims *derived_group;
+		longinteger_object d_go;
+
+		derived_group = NEW_OBJECT(sims);
+
+		cout << "computing the derived subgroup:" << endl;
+
+		derived_group->init(A_perm_matrix, verbose_level - 2);
+		derived_group->init_trivial_group(verbose_level - 1);
+		derived_group->build_up_subgroup_random_process(Stab,
+				choose_random_generator_derived_group,
+				0 /*verbose_level*/);
+
+		derived_group->group_order(d_go);
+		cout << "the derived subgroup has order: " << d_go << endl;
+
+		strong_generators *d_gens;
+
+		d_gens = NEW_OBJECT(strong_generators);
+		d_gens->init(A_perm_matrix);
+		d_gens->init_from_sims(derived_group, 0 /*verbose_level*/);
+
+
+		d_gens->print_generators_tex(cout);
+
+		schreier *Sch_orbit;
+
+		Sch_orbit = NEW_OBJECT(schreier);
+		cout << "computing orbits of stabilizer on the rest of the orbit:" << endl;
+
+		A_on_orbit->all_point_orbits_from_generators(
+				*Sch_orbit,
+				gens,
+				0 /* verbose_level */);
+
+		cout << "Found " << Sch_orbit->nb_orbits << " orbits" << endl;
+		Sch_orbit->print_orbit_lengths_tex(cout);
+		Sch_orbit->print_and_list_orbits_tex(cout);
+#endif
+
+		FREE_OBJECT(gens);
+		FREE_OBJECT(Stab);
+	}
+}
+
+
+
 
 
 }}

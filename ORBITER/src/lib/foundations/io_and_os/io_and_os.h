@@ -657,6 +657,7 @@ void print_cycle_tex_with_special_point_labels(
 		std::ostream &ost, int orbit_no,
 		void (*point_label)(std::stringstream &sstr, int pt, void *data),
 		void *point_label_data);
+uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
 
 
 

@@ -2967,6 +2967,113 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 		}
 }
 
+void strong_generators::Janko1(
+	action *A,
+	finite_field *F,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::Janko1" << endl;
+		cout << "q=" << F->q << endl;
+	}
+
+	if (F->q != 11) {
+		cout << "strong_generators::Janko1 q != 11" << endl;
+		exit(1);
+	}
+	matrix_group *M;
+
+	M = A->get_matrix_group();
+	if (M->n != 7) {
+		cout << "strong_generators::Janko1 dimension != 7" << endl;
+		exit(1);
+	}
+	longinteger_object target_go;
+	number_theory_domain NT;
+	int i;
+
+
+
+	vector_ge *gens;
+
+	gens = NEW_OBJECT(vector_ge);
+	gens->init(A, verbose_level - 2);
+	target_go.create(11 * (11 * 11 * 11 - 1) * (11 + 1));
+
+	int *data;
+	int nb_gens = 2;
+	int data_size = 50; // 7 * 7 + 1
+	int alpha, j;
+
+	alpha = F->primitive_root();
+	data = NEW_int(data_size);
+
+
+	gens->allocate(nb_gens, verbose_level - 2);
+	for (i = 0; i < nb_gens; i++) {
+		int_vec_zero(data, data_size);
+		if (i == 0) {
+			for (j = 0; j < 7; j++) {
+				if (j < 7 - 1) {
+					data[j * 7 + j + 1] = 1;
+				}
+				else {
+					data[j * 7 + 0] = 1;
+				}
+			}
+		}
+		else {
+			int data2[] = {
+					-3, 2, -1, -1, -3, -1, -3,
+					-2, 1, 1, 3, 1, 3, 3,
+					-1, -1, -3, -1, -3, -3, 2,
+					-1, -3, -1, -3, -3, 2, -1,
+					-3, -1, -3, -3, 2, -1, -1,
+					1, 3, 3, -2, 1, 1, 3,
+					3, 3, -2, 1, 1, 3, 1
+			};
+			for (j = 0; j < 49; j++) {
+				data[j] = (data2[j] + 11) % 11;
+			}
+		}
+		A->make_element(gens->ith(i), data, 0);
+		}
+
+	if (f_v) {
+		cout << "strong_generators::Janko1 generators are:" << endl;
+		gens->print_quick(cout);
+		}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::Janko1 before "
+				"generators_to_strong_generators" << endl;
+		}
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		gens, Strong_gens2,
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::Janko1 after "
+				"generators_to_strong_generators" << endl;
+		}
+
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_OBJECT(Strong_gens2);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::Janko1 done" << endl;
+		}
+}
+
 void strong_generators::Hall_reflection(
 	int nb_pairs, int &degree, int verbose_level)
 {

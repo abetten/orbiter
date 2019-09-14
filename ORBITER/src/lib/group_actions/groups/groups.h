@@ -206,7 +206,9 @@ public:
 		int nb_subgroup_generators,
 		const char **subgroup_generators_as_string,
 		int verbose_level);
-	void report(std::ostream &fp, int verbose_level);
+	void init_subgroup_Janko1(char *prefix, char *label_latex,
+		int verbose_level);
+	void report(std::ostream &fp, int f_sylow, int verbose_level);
 };
 
 
@@ -257,6 +259,8 @@ public:
 	const char *subgroup_order_text;
 	int nb_subgroup_generators;
 	const char **subgroup_generators_as_string;
+
+	int f_Janko1;
 
 
 	linear_group_description();
@@ -1685,6 +1689,10 @@ public:
 		action *A,
 		finite_field *F,
 		int verbose_level);
+	void Janko1(
+		action *A,
+		finite_field *F,
+		int verbose_level);
 	void Hall_reflection(
 		int nb_pairs, int &degree, int verbose_level);
 	void normalizer_of_a_Hall_reflection(
@@ -1875,6 +1883,38 @@ public:
 	void save_rank_one_tensors(int verbose_level);
 	void compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+	void compute_permutations(
+			strong_generators* SG,
+			action* A,
+			int*& result,
+			int &nb_gens, int &degree,
+			int nb_factors,
+			int verbose_level);
+	void make_fname(char *fname, int nb_factors, int h, int b);
+	int test_if_file_exists(int nb_factors, int h, int b);
+	void orbits(
+			strong_generators* SG,
+			action* A,
+			int*& result,
+			int &nb_gens, int &degree,
+			int nb_factors,
+			int verbosity);
+	void orbits_restricted(
+			strong_generators* SG,
+			action* A,
+			int*& result,
+			int &nb_gens, int &degree,
+			int nb_factors,
+			const char *orbits_restricted_fname,
+			int verbose_level);
+	void orbits_restricted_compute(
+			strong_generators* SG,
+			action* A,
+			int*& result,
+			int &nb_gens, int &degree,
+			int nb_factors,
+			const char *orbits_restricted_fname,
+			int verbose_level);
 };
 
 }}
