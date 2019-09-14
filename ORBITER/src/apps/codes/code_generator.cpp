@@ -641,7 +641,7 @@ void code_generator::main(int verbose_level)
 		F->cheat_sheet(fp, verbose_level);
 
 		fp << "\\section{The group $" << A->label_tex << "$}" << endl;
-		A->report(fp, verbose_level);
+		A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
 		A->print_points(fp);
 
 		gen->report(fp);

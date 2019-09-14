@@ -113,6 +113,7 @@ class semifield_classify_with_substructure;
 class packing_was;
 class packing_long_orbits;
 class tactical_decomposition;
+class tensor_classify;
 
 // #############################################################################
 // representatives.cpp

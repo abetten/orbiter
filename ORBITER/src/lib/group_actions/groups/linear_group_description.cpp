@@ -57,6 +57,8 @@ void linear_group_description::null()
 	subgroup_order_text = NULL;
 	nb_subgroup_generators = 0;
 	subgroup_generators_as_string = NULL;
+
+	f_Janko1 = FALSE;
 }
 
 void linear_group_description::freeself()
@@ -348,6 +350,10 @@ int linear_group_description::read_arguments(
 				cout << " " << subgroup_generators_as_string[h] << endl;
 			}
 			cout << endl;
+			}
+		else if (strcmp(argv[i], "-Janko1") == 0) {
+			f_Janko1 = TRUE;
+			cout << "-Janko1" << endl;
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

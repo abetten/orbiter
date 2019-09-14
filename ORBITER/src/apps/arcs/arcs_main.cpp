@@ -35,6 +35,7 @@ int main(int argc, const char **argv)
 	int f_linear = FALSE;
 	linear_group_description *Descr = NULL;
 	linear_group *LG = NULL;
+	int f_sylow = FALSE;
 
 	
 	for (i = 1; i < argc; i++) {
@@ -61,6 +62,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
+			}
+		else if (strcmp(argv[i], "-sylow") == 0) {
+			f_sylow = TRUE;
+			cout << "-sylow " << endl;
 			}
 	}
 
@@ -286,7 +291,7 @@ int main(int argc, const char **argv)
 			Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
 
 
-			LG->report(fp, verbose_level);
+			LG->report(fp, f_sylow, verbose_level);
 
 			fp << endl;
 			fp << "\\section{Poset Classification}" << endl;

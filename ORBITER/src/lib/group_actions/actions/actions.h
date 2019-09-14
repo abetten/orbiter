@@ -762,7 +762,8 @@ public:
 	void list_elements_as_permutations_vertically(vector_ge *gens,
 			std::ostream &ost);
 	void print_symmetry_group_type(std::ostream &ost);
-	void report(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost, int f_sims, sims *S,
+			int f_strong_gens, strong_generators *SG, int verbose_level);
 	void print_info();
 	void report_basic_orbits(std::ostream &ost);
 	void print_base();

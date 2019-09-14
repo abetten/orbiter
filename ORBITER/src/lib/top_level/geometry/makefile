@@ -45,6 +45,7 @@ MODULES = \
 	surface_with_action.o \
 	surfaces_arc_lifting.o \
 	tactical_decomposition.o \
+	tensor_classify.o \
 	translation_plane_via_andre_model.o
 
 

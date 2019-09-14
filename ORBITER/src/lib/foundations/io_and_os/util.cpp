@@ -3374,6 +3374,15 @@ void print_cycle_tex_with_special_point_labels(
 	ost << ")";
 }
 
+uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i)
+{
+	while (S[i] != i) {
+		i = S[i];
+	}
+	return i;
+}
+
+
 
 
 }}

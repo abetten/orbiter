@@ -481,7 +481,8 @@ void action::print_symmetry_group_type(ostream &ost)
 
 }
 
-void action::report(ostream &ost, int verbose_level)
+void action::report(ostream &ost, int f_sims, sims *S,
+		int f_strong_gens, strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -490,15 +491,15 @@ void action::report(ostream &ost, int verbose_level)
 	}
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
-	if (f_has_sims) {
+	if (f_sims) {
 		longinteger_object go;
 
-		Sims->group_order(go);
+		S->group_order(go);
 		ost << "Group order " << go << "\\\\" << endl;
 		ost << "tl=$";
-		//int_vec_print(ost, Sims->orbit_len, base_len());
+		//int_vec_print(ost, S->orbit_len, base_len());
 		for (int t = 0; t < base_len(); t++) {
-			ost << Sims->get_orbit_length(t);
+			ost << S->get_orbit_length(t);
 			if (t < base_len()) {
 				ost << ", ";
 			}
@@ -512,17 +513,17 @@ void action::report(ostream &ost, int verbose_level)
 			int_vec_print(ost, get_base(), base_len());
 			ost << "$\\\\" << endl;
 		}
-		if (f_has_strong_generators) {
+		if (f_strong_gens) {
 			ost << "{\\small\\arraycolsep=2pt" << endl;
-			Strong_gens->print_generators_tex(ost);
+			SG->print_generators_tex(ost);
 			ost << "}" << endl;
 		}
 		else {
 			ost << "Does not have strong generators.\\\\" << endl;
 		}
 	}
-	if (f_has_sims) {
-		Sims->report(ost, verbose_level);
+	if (f_sims) {
+		S->report(ost, verbose_level);
 	}
 	if (f_v) {
 		cout << "action::report done" << endl;
