@@ -17,6 +17,27 @@ namespace foundations {
 
 povray_interface::povray_interface()
 {
+	color_white = "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }";
+	color_white_very_transparent = "texture{ pigment{ White*0.5 transmit 0.75 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }";
+	color_black = "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}";
+	color_pink = "texture{ pigment{ color Pink } finish { diffuse 0.9 phong 1}}";
+	color_pink_transparent = "texture{ pigment{ color Pink transmit 0.5 } finish {diffuse 0.9 phong 0.6} }";
+	color_green = "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}";
+	color_gold = "texture{ pigment{ color Gold } finish { diffuse 0.9 phong 1}}";
+	color_red = "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}";
+	color_blue = "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}";
+	color_yellow = "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}";
+	color_yellow_transparent = "texture{ pigment{ color Yellow transmit 0.7 } finish {diffuse 0.9 phong 0.6} }";
+	color_scarlet = "texture{ pigment{ color Scarlet } finish { diffuse 0.9 phong 1}}";
+	color_brown = "texture{ pigment{ color Brown } finish { diffuse 0.9 phong 1}}";
+	color_orange = "texture{ pigment{ color Orange transmit 0.5 } finish { diffuse 0.9 phong 1}}";
+	color_orange_transparent = "texture{ pigment{ color Orange transmit 0.7 } finish { diffuse 0.9 phong 1}}";
+	color_orange_no_phong = "texture{ pigment{ color Orange transmit 0.6 } finish { diffuse 0.6 brilliance 5 phong 0.3 metallic }}";
+	color_chrome = "texture{ Polished_Chrome pigment{quick_color White} }";
+	color_gold_dode = "texture{  pigment{color Gold transmit 0.7 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }";
+	color_gold_transparent = "texture{  pigment{color Gold transmit 0.7 } finish { diffuse 0.6 brilliance 5 phong 0.3 metallic } }";
+	color_red_wine_transparent = "texture{ pigment{ color rgb<1, 0,0.25> transmit 0.5 } finish {diffuse 0.9 phong 0.6} }";
+	color_yellow_lemon_transparent = "texture{ pigment{ color rgb< 0.35, 0.6, 0.0> transmit 0.5 } finish {diffuse 0.9 phong 0.6} }";
 
 }
 

@@ -32,6 +32,7 @@ public:
 					std::ostream &fp,
 					int verbose_level);
 	void *extra_data;
+	povray_interface *Pov;
 
 	animate();
 	~animate();
@@ -44,6 +45,8 @@ public:
 	void animate_one_round(
 		int round,
 		int verbose_level);
+	void draw_single_line(int line_idx, const char *color, std::ostream &fp);
+	void draw_single_quadric(int idx, const char *color, std::ostream &fp);
 };
 
 
@@ -464,6 +467,31 @@ void projective_plane_draw_grid(const char *fname, int xmax, int ymax,
 
 class povray_interface {
 public:
+
+
+	const char *color_white;
+	const char *color_white_very_transparent;
+	const char *color_black;
+	const char *color_pink;
+	const char *color_pink_transparent;
+	const char *color_green;
+	const char *color_gold;
+	const char *color_red;
+	const char *color_blue;
+	const char *color_yellow;
+	const char *color_yellow_transparent;
+	const char *color_scarlet;
+	const char *color_brown;
+	const char *color_orange;
+	const char *color_orange_transparent;
+	const char *color_orange_no_phong;
+	const char *color_chrome;
+	const char *color_gold_dode;
+	const char *color_gold_transparent;
+	const char *color_red_wine_transparent;
+	const char *color_yellow_lemon_transparent;
+
+
 	povray_interface();
 	~povray_interface();
 	void beginning(std::ostream &ost,

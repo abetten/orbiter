@@ -28,6 +28,7 @@ animate::animate()
 	fpm = NULL;
 	draw_frame_callback = NULL;
 	extra_data = NULL;
+	Pov = NULL;
 }
 
 animate::~animate()
@@ -53,6 +54,7 @@ void animate::init(scene *S,
 	animate::nb_frames = nb_frames;
 	animate::Opt = Opt;
 	animate::extra_data = extra_data;
+	Pov = NEW_OBJECT(povray_interface);
 	sprintf(fname_makefile, "makefile_animation");
 
 
@@ -101,7 +103,6 @@ void animate::animate_one_round(
 	//double ww, sww;
 	double zz, szz;
 	double pan_alpha, pan_delta;
-	povray_interface Pov;
 
 	nb_frames_this_round = nb_frames;
 	for (i = 0; i < Opt->nb_camera; i++) {
@@ -397,7 +398,7 @@ void animate::animate_one_round(
 			cout << "look_at_string=" << look_at_string << endl;
 
 
-			Pov.beginning(fp,
+			Pov->beginning(fp,
 					angle,
 					sky_string,
 					location_string,
@@ -406,14 +407,14 @@ void animate::animate_one_round(
 
 		} else {
 			if (f_has_camera) {
-				Pov.beginning(fp,
+				Pov->beginning(fp,
 						angle,
 						camera_sky,
 						camera_location,
 						camera_look_at,
 						f_with_background);
 			} else {
-				Pov.beginning(fp,
+				Pov->beginning(fp,
 						angle,
 						Opt->sky,
 						Opt->location,
@@ -445,7 +446,7 @@ void animate::animate_one_round(
 				}
 
 			if (f_has_bottom_plane) {
-				Pov.bottom_plane(fp);
+				Pov->bottom_plane(fp);
 			}
 			}
 		}
@@ -664,6 +665,21 @@ void animate::animate_one_round(
 }
 
 
+void animate::draw_single_line(int line_idx, const char *color, ostream &fp)
+{
+	int s[1];
+
+	s[0] = line_idx;
+	S->draw_lines_with_selection(s, 1, color, fp);
+}
+
+void animate::draw_single_quadric(int idx, const char *color, ostream &fp)
+{
+	int s[1];
+
+	s[0] = idx;
+	S->draw_quadric_with_selection(s, 1, color, fp);
+}
 
 
 }}
