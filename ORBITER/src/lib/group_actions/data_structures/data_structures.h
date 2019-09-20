@@ -267,7 +267,7 @@ public:
 
 
 
-//! A collection invariants called orbit type assciated with a system of sets. The orbit types are based on the orbits of a given group.
+//! A collection of invariants called orbit type associated with a system of sets. The orbit types are based on the orbits of a given group.
 
 
 

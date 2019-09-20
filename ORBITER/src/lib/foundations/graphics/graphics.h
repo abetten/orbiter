@@ -47,6 +47,55 @@ public:
 		int verbose_level);
 	void draw_single_line(int line_idx, const char *color, std::ostream &fp);
 	void draw_single_quadric(int idx, const char *color, std::ostream &fp);
+	void draw_single_surface(int surface_idx, std::ostream &fp);
+	void draw_single_surface_with_color(int surface_idx, const char *color, std::ostream &fp);
+	void draw_Hilbert_point(int point_idx, double rad,
+			const char *options, std::ostream &fp);
+	void draw_Hilbert_line(int line_idx, const char *color, std::ostream &fp);
+	void draw_Hilbert_plane(int plane_idx, const char *color, std::ostream &fp);
+	void draw_Hilbert_red_line(int idx_one_based, std::ostream &fp);
+	void draw_Hilbert_blue_line(int idx_one_based, std::ostream &fp);
+	void draw_Hilbert_red_lines(std::ostream &fp);
+	void draw_Hilbert_blue_lines(std::ostream &fp);
+	void draw_Hilbert_cube_extended_edges(std::ostream &fp);
+	void draw_Hilbert_cube_faces(std::ostream &fp);
+	void draw_Hilbert_cube_boxed(std::ostream &fp);
+	void draw_Hilbert_tetrahedron_boxed(std::ostream &fp);
+	void draw_Hilbert_tetrahedron_faces(std::ostream &fp);
+	void draw_frame_Hilbert(
+		int h, int nb_frames, int round,
+		std::ostream &fp,
+		int verbose_level);
+	void draw_surface_13_1(std::ostream &fp);
+	void draw_frame_Hilbert_round_76(video_draw_options *Opt,
+			int h, int nb_frames, int round,
+			std::ostream &fp,
+			int verbose_level);
+	void draw_frame_HCV_surface(
+		int h, int nb_frames, int round,
+		std::ostream &fp,
+		int verbose_level);
+	void draw_frame_E4_surface(
+		int h, int nb_frames, int round,
+		std::ostream &fp,
+		int verbose_level);
+	void draw_frame_triangulation_of_cube(
+		int h, int nb_frames, int round,
+		std::ostream &fp,
+		int verbose_level);
+	void draw_frame_twisted_cubic(
+		int h, int nb_frames, int round,
+		std::ostream &fp,
+		int verbose_level);
+	void draw_frame_five_plus_one(
+		int h, int nb_frames, int round,
+		std::ostream &fp,
+		int verbose_level);
+	void draw_frame_windy(
+		int h, int nb_frames, int round,
+		std::ostream &fp,
+		int verbose_level);
+
 };
 
 
@@ -281,10 +330,6 @@ public:
 	void text(int x, int y, const char *p);
 	void circle(int x, int y, int rad);
 	void circle_text(int x, int y, int rad, const char *text);
-#if 0
-	void polygon_or_bezier_idx(int *Px, int *Py, int *Idx, int n, 
-		const char *symbol, int f_cycle);
-#endif
 	void polygon_idx2(int *Px, int *Py, int *Idx, int n,
 			int f_cycle);
 	void bezier_idx2(int *Px, int *Py, int *Idx, int n,
@@ -326,10 +371,6 @@ public:
 	void end_figure_mp();
 	void circle_mp(int x, int y, int rad);
 	void output_circle_text_mp(int x, int y, int idx, const char *text);
-#if 0
-	void polygon_or_bezier_idx_mp(int *Px, int *Py, int *Idx, 
-		int n, const char *symbol, int f_cycle);
-#endif
 	void polygon_idx_mp(int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
 	void bezier_idx_mp(int *Px, int *Py,
@@ -352,10 +393,6 @@ public:
 	void circle_tikz(int x, int y, int rad);
 	void output_circle_text_tikz(int x, int y, int idx, int rad, 
 		const char *text);
-#if 0
-	void polygon_or_bezier_idx_tikz(int *Px, int *Py, int *Idx, int n, 
-		const char *symbol, int f_cycle);
-#endif
 	void polygon_idx_tikz(int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
 	void bezier_idx_tikz(int *Px, int *Py,
@@ -709,11 +746,6 @@ public:
 	int intersect_line_and_line(int line1_idx, int line2_idx, 
 		double &lambda, 
 		int verbose_level);
-#if 0
-	int line_centered(double *pt1_in, double *pt2_in, 
-		double *pt1_out, double *pt2_out, 
-		double r);
-#endif
 	int line_extended(double x1, double x2, double x3, 
 		double y1, double y2, double y3, 
 		double r);
@@ -746,6 +778,10 @@ public:
 	void create_Hilbert_model(int verbose_level);
 	void create_affine_space(int q, int verbose_level);
 	//void create_surface_13_1(int verbose_level);
+	void create_HCV_surface(int N, int verbose_level);
+	void create_E4_surface(int N, int verbose_level);
+	void create_twisted_cubic(int N, int verbose_level);
+	void create_triangulation_of_cube(int N, int verbose_level);
 
 };
 

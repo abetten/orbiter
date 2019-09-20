@@ -20,6 +20,8 @@ MODULES = \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
 	cubic_curve_with_action.o \
+	design_create.o \
+	design_create_description.o \
 	invariants_packing.o \
 	k_arc_generator.o \
 	packing_classify.o \

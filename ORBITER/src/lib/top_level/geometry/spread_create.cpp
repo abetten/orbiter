@@ -89,48 +89,6 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 
 	A = NEW_OBJECT(action);
 
-#if 0
-	if (f_v) {
-		cout << "spread_create::init "
-				"before A->init_orthogonal_group" << endl;
-		}
-	A->init_orthogonal_group(0 /* epsilon */, 5 /* n */, F, 
-		TRUE /* f_on_points */, 
-		FALSE /* f_on_lines */, 
-		FALSE /* f_on_points_and_lines */, 
-		f_semilinear, TRUE /* f_basis */, verbose_level - 1);
-	degree = A->degree;
-
-	cout << "A->make_element_size = "
-			<< A->make_element_size << endl;
-	if (f_v) {
-		cout << "BLT_set_create::init "
-				"after A->init_orthogonal_group" << endl;
-		cout << "BLT_set_create::init "
-				"degree = " << degree << endl;
-		}
-	
-	if (f_v) {
-		cout << "BLT_set_create::init "
-				"computing lex least base" << endl;
-		}
-	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "BLT_set_create::init "
-				"computing lex least base done" << endl;
-		cout << "BLT_set_create::init "
-				"base: ";
-		int_vec_print(cout, A->base, A->base_len);
-		cout << endl;
-		}
-	
-	action_on_orthogonal *AO;
-
-	AO = A->G.AO;
-	O = AO->O;
-
-
-#endif
 
 	
 	if (Descr->f_family) {
@@ -144,48 +102,6 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 		}
 
 
-#if 0
-	else if (Descr->f_by_coefficients) {
-
-		if (f_v) {
-			cout << "surface_create::init "
-					"surface is given by the coefficients" << endl;
-			}
-
-		int *surface_coeffs;
-		int nb_coeffs, nb_terms;	
-		int i, a, b;
-	
-		int_vec_scan(Descr->coefficients_text, surface_coeffs, nb_coeffs);
-		if (ODD(nb_coeffs)) {
-			cout << "surface_create::init "
-					"number of surface coefficients must be even" << endl;
-			exit(1);
-			}
-		int_vec_zero(coeffs, 20);
-		nb_terms = nb_coeffs >> 1;
-		for (i = 0; i < nb_terms; i++) {
-			a = surface_coeffs[2 * i + 0];
-			b = surface_coeffs[2 * i + 1];
-			if (a < 0 || a >= q) {
-				cout << "surface_create::init "
-						"coefficient out of range" << endl;
-				exit(1);
-				}
-			if (b < 0 || b >= 20) {
-				cout << "surface_create::init "
-						"variable index out of range" << endl;
-				exit(1);
-				}
-			coeffs[b] = a;
-			}
-		FREE_int(surface_coeffs);
-
-		sprintf(prefix, "by_coefficients_q%d", F->q);
-		sprintf(label_txt, "by_coefficients_q%d", F->q);
-		sprintf(label_tex, "by\\_coefficients\\_q%d", F->q);
-		}
-#endif
 
 	else if (Descr->f_catalogue) {
 
@@ -228,8 +144,8 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 		sprintf(label_tex, "catalogue\\_q%d\\_k%d\\_%d",
 				q, k, Descr->iso);
 		if (f_v) {
-			cout << "BLT_set_create::init "
-					"after Sg->BLT_set_from_catalogue_stabilizer" << endl;
+			cout << "spread_create::init "
+					"after Sg->stabilizer_of_spread_from_catalogue" << endl;
 			}
 		}
 	else {

@@ -385,7 +385,7 @@ void scene::transform_cubics(scene *S, double *A4, double *A4_inv,
 	for (i = 0; i < nb_cubics; i++) {
 		N.vec_copy(Cubic_coords + i * 20, coeff_in, 20);
 
-		N.substitute_cubic_linear(coeff_in, coeff_out,
+		N.substitute_cubic_linear_using_povray_ordering(coeff_in, coeff_out,
 			A4_inv, verbose_level);
 
 		S->cubic(coeff_out);
@@ -2880,7 +2880,8 @@ void scene::create_Hilbert_model(int verbose_level)
 
 	N.matrix_double_inverse(A4, A4_inv, 4, 0 /* verbose_level*/);
 
-	N.substitute_cubic_linear(coeff_in, coeff_out,
+	N.substitute_cubic_linear_using_povray_ordering(
+			coeff_in, coeff_out,
 			A4_inv, 0 /*verbose_level*/);
 
 	if (f_v) {
@@ -3417,6 +3418,414 @@ void scene::create_surface_13_1(int verbose_level)
 }
 #endif
 
+
+void scene::create_HCV_surface(int N, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "scene::create_HCV_surface" << endl;
+	}
+
+	//double coeff_in[20] = {0,3,3,5,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1};
+	// by accident, this is the wrong ordering of coefficients!
+	// it is the ordering of coefficients in orbiter.
+	// But it should be the ordering of coefficients required by povray.
+
+
+	double coeff_orig[20] = {0,0,0,-1,0,2.5,0,0,0,0,0,0,-1,0,0,0,0,-1,0,1};
+	// HCV original
+	// 4: -1*x^2
+	// 6: 2.5*xyz
+	// 13: -1*y^2
+	// 18: -1*z^2
+	// 20: 1*1
+
+
+	// povray ordering of monomials:
+	// http://www.povray.org/documentation/view/3.6.1/298/
+	// 1: x^3
+	// 2: x^2y
+	// 3: x^2z
+	// 4: x^2
+	// 5: xy^2
+	// 6: xyz
+	// 7: xy
+	// 8: xz^2
+	// 9: xz
+	// 10: x
+	// 11: y^3
+	// 12: y^2z
+	// 13: y^2
+	// 14: yz^2
+	// 15: yz
+	// 16: y
+	// 17: z^3
+	// 18: z^2
+	// 19: z
+	// 20: 1
+
+	double coeff_trans[20] = {1,0,0,0,-1,0,0,-1,0,-1,0,0,0,0,2.5,0,0,0,0,0};
+	// HCV original
+
+	double coeff_out[20];
+
+
+
+	cubic(coeff_orig); // cubic 0
+	cubic(coeff_trans); // cubic 1
+
+	numerics Num;
+
+	double A4[] = {
+		1.,1.,1.,1.,
+		-1.,-1.,1,1,
+		1.,-1.,-1.,1,
+		-1.,1.,-1.,1
+		};
+	double A4_inv[16];
+
+	Num.matrix_double_inverse(A4, A4_inv, 4, 0 /* verbose_level*/);
+
+	Num.substitute_cubic_linear_using_povray_ordering(
+			coeff_orig, coeff_out,
+			A4_inv, 0 /*verbose_level*/);
+
+
+
+	if (f_v) {
+		cout << "i : coeff_orig[i] : coeff_out[i]" << endl;
+		for (i = 0; i < 20; i++) {
+			cout << i << " : " << coeff_orig[i] << " : " << coeff_out[i] << endl;
+		}
+	}
+
+#if 0
+0 : 0 : 0
+1 : 0 : 0
+2 : 0 : 0
+3 : 0 : -0.0625 : x^2
+4 : 0 : 0
+5 : 1 : 0.125 : xyz
+6 : 1 : 0
+7 : 0 : 0
+8 : 1 : 0
+9 : 0 : 0
+10 : 0 : 0
+11 : 0 : 0
+12 : 0 : -0.0625 : y^2
+13 : 0 : 0
+14 : 1 : 0
+15 : 0 : 0
+16 : 0 : 0
+17 : 0 : -0.0625 : z^2
+18 : 0 : 0
+19 : 0 : 0.0625 : 1
+#endif
+	cubic(coeff_out); // cubic 2
+
+	double sqrt3 = sqrt(3.);
+	double one_over_sqrt3 = 1. / sqrt3;
+
+	plane(-1 * one_over_sqrt3, one_over_sqrt3, -1 * one_over_sqrt3, -1 * one_over_sqrt3); // plane 0
+
+
+#if 0
+	double lines[] = {
+			1,1,1,0,1,1,
+			1,1,1,1,1,0,
+			-1,-1,1,-1,0,1,
+		};
+	int k;
+
+	k = 0;
+	for (i = 0; i < 3; i++) {
+		k = 6 * i;
+		S->line_extended(
+				lines[k + 0], lines[k + 1], lines[k + 2],
+				lines[k + 0] + lines[k + 3], lines[k + 1] + lines[k + 4], lines[k + 2] + lines[k + 5], 10); // line i
+	}
+#endif
+
+#if 0
+	// the lines on the original HCV surface:
+	double Lines[] = {
+		0,1,0,-2,0,-1, // 0 a1
+		0,0,1,-1,-2,0, // 1 a2
+		1,0,0,0,-1,-2, // 2 a3
+		0,-1,0,2,0,-1, // 3 a4
+		0,0,-1,-1,2,0, // 4 a5
+		-1,0,0,0,1,-2, // 5 a6
+		0,-1,0,1,0,-2, // 6 b1
+		0,0,-1,-2,1,0, // 7 b2
+		-1,0,0,0,2,-1, // 8 b3
+		0,1,0,-1,0,-2, // 9 b4
+		0,0,1,-2,-1,0, // 10 b5
+		1,0,0,0,-2,-1, // 11 b6
+		4./5., 3./5., 0, 0., 1., 1., // 12, 0, c12
+		3./5., 0., 4./5., 1, 1., 0., // 13, 1, c13
+		0.,0.,1., 1.,0.,0., // 14, 2 c14 at infinity
+		-4./5., 3./5., 0., 0., -1., 1., // 15, 3 c15
+		-3./5., 0., -4./5., -1., 1., 0., // 16, 4 c16
+		-3./5., 4./5., 0., 1., 0., 1., // 17, 5 c23
+		-4./5., -3./5., 0., 0., -1., 1., // 18, 6 c24
+		0., 1., 0., 1., 0., 0., // 19, 7 c25 at infinity
+		3./5., -4./5., 0., -1., 0., 1., // 20, 8 c26
+		3./5., 0., -4./5., -1., 1., 0., // 21, 9 c34
+		-3./5., -4./5., 0., -1., 0., 1., // 22, 10 c35
+		0., 0., 1., 0., 1., 0., // 23, 11 c36 at infinity
+		4./5., -3./5., 0., 0., 1., 1., // 24, 12 c45
+		-3./5., 0., 4./5., 1., 1., 0., // 25, 13 c46
+		3./5., 4./5., 0., 1., 0., 1.,  // 26, 14 c56
+		};
+
+	double *Lines4_in;
+	double *Lines4_out;
+
+	double T[] = {
+			1,1,1,1,
+			-1,-1,1,1,
+			1,-1,-1,1,
+			-1,1,-1,1
+	};
+
+
+	Lines4_in = new double[27 * 2 * 4];
+	Lines4_out = new double[27 * 2 * 4];
+	for (i = 0; i < 27; i++) {
+		for (j = 0; j < 3; j++) {
+			Lines4_in[i * 8 + j] = Lines[6 * i + j];
+			Lines4_in[i * 8 + 4 + j] = Lines[6 * i + 3 + j];
+		}
+		if (i == 14 || i == 19 || i == 23) {
+			Lines4_in[i * 8 + 3] = 0;
+			Lines4_in[i * 8 + 4 + 3] = 0;
+		}
+		else {
+			Lines4_in[i * 8 + 3] = 1;
+			Lines4_in[i * 8 + 4 + 3] = 0;
+		}
+	}
+	Num.mult_matrix_matrix(
+				Lines4_in, T, Lines4_out, 2 * 27, 4, 4);
+		// A is m x n, B is n x o, C is m x o
+#endif
+
+	double Lines[] = {
+			// 0-5:
+			// ai:
+			-1,0,0,6,1,1,
+			-1./6.,-1./6.,0,-1./6.,-1./6.,1,
+			0,1,0,-1,6,1,
+			1,6,0,0,-1,1,
+			-6,0,1,-1,1,0,
+			6,-1,0,1,0,1,
+			// 6-11:
+			// bj:
+			1,-6,0,0,-1,1,
+			6,0,1,-1,1,0,
+			-6,-1,0,1,0,1,
+			-1,0,0,-6,1,1,
+			1./6.,1./6.,0,1./6.,1./6.,1,
+			0,1,0,-1,-6,1,
+			//12-26
+			// cij:
+			0,-1,0,-2,9,1,
+			1./9.,2./9.,0,-1./9.,-2./9.,1,
+			1,0,0,0,1,1,
+			-9./2.,-1./2.,0,-1,0,1,
+			9,0,2,1,1,0,
+			1,0,0,9./2.,1./2.,1,
+			9,-2,0,-1,0,1,
+			0,0,1,1,1,0,
+			1./2.,9./2.,0,0,1,1,
+			-9./2.,0,1./2.,1,1,0,
+			2.,-9.,0,0,1,1,
+			0,-1,0,-1,0,1,
+			0,-1,0,-1./2.,-9./2.,1,
+			-2./9.,-1./9.,0,2./9.,1./9.,1,
+			1,0,0,-9,2,1
+	};
+	double r = 10;
+	for (i = 0; i < 27; i++) {
+		line_pt_and_dir(Lines + i * 6, r);
+		}
+
+	//S->line6(lines); // line 0
+	//S->line6(lines + 6); // line 0
+	//S->line6(lines + 12); // line 0
+
+	point(0,-1,0); // 0 = Eckardt point
+	point(1,0,0); // 1 = Eckardt point
+	point(0,0,1); // 2 = Eckardt point
+
+
+	if (f_v) {
+		cout << "scene::create_HCV_surface done" << endl;
+	}
 }
+
+void scene::create_E4_surface(int N, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "scene::create_E4_surface" << endl;
+	}
+
+	//double coeff_in[20] = {0,3,3,5,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1};
+	// by accident, this is the wrong ordering of coefficients!
+	// it is the ordering of coefficients in orbiter.
+	// But it should be the ordering of coefficients required by povray.
+
+	//double coeff_in[20] = {5,3,3,0,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0,0};
+	// transformed, but still wrong ordering
+
+	double coeff_orig[20] = {0,0,0,2,0,0,0,0,0,0,3,0,0,0,1,0,3,0,0,5};
+	// original, correct ordering.
+
+	double coeff_trans[20] = {5,0,0,0,0,1,0,0,0,2,3,0,0,0,0,0,3,0,0,0};
+	// transformed, correct ordering.
+
+
+	cubic(coeff_orig);
+	cubic(coeff_trans);
+
+	double x6[6];
+	int line_idx;
+
+	x6[0] = 0;
+	x6[1] = 4;
+	x6[2] = -4;
+	x6[3] = 0;
+	x6[4] = -4;
+	x6[5] = 4;
+
+	line_idx = line6(x6);
+	cout << "line_idx=" << line_idx << endl;
+
+
+	if (f_v) {
+		cout << "scene::create_E4_surface done" << endl;
+	}
 }
+
+void scene::create_twisted_cubic(int N, int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+	numerics Num;
+	int i;
+	double t, x, y, z;
+
+	if (TRUE) {
+		cout << "scene::create_twisted_cubic" << endl;
+	}
+
+
+	double p = 1.;
+	double m = 0.;
+
+	point(p,p,p); // 0
+	point(p,p,m); // 1
+	point(p,m,p); // 2
+	point(p,m,m); // 3
+	point(m,p,p); // 4
+	point(m,p,m); // 5
+	point(m,m,p); // 6
+	point(m,m,m); // 7
+
+
+	// the edges of the cube:
+	edge(0, 1); // 0
+	edge(0, 2); // 1
+	edge(0, 4); // 2
+	edge(1, 3); // 3
+	edge(1, 5); // 4
+	edge(2, 3); // 5
+	edge(2, 6); // 6
+	edge(3, 7); // 7
+	edge(4, 5); // 8
+	edge(4, 6); // 9
+	edge(5, 7); // 10
+	edge(6, 7); // 11
+
+
+
+	for (i = 0; i < N; i++) {
+		t = i * 1. / (double) (N - 1);
+		x = t;
+		y = t * t;
+		z = y * t;
+		point(x, y, z); // P_8+i
+		if (i) {
+			edge(8 + i, 8 + i - 1); // E_i-1
+
+		}
+	}
+
+}
+
+void scene::create_triangulation_of_cube(int N, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	numerics Num;
+
+	if (f_v) {
+		cout << "scene::create_triangulation_of_cube" << endl;
+	}
+
+
+	double p = 1.;
+	double m = -1.;
+
+	point(p,p,p); // 0
+	point(p,p,m); // 1
+	point(p,m,p); // 2
+	point(p,m,m); // 3
+	point(m,p,p); // 4
+	point(m,p,m); // 5
+	point(m,m,p); // 6
+	point(m,m,m); // 7
+
+
+	// the edges of the cube:
+	edge(0, 1); // 0
+	edge(0, 2); // 1
+	edge(0, 4); // 2
+	edge(1, 3); // 3
+	edge(1, 5); // 4
+	edge(2, 3); // 5
+	edge(2, 6); // 6
+	edge(3, 7); // 7
+	edge(4, 5); // 8
+	edge(4, 6); // 9
+	edge(5, 7); // 10
+	edge(6, 7); // 11
+
+
+	face4(0, 1, 5, 4); // F0, front right
+	face4(0, 2, 3, 1); // F1, front left
+	face4(0, 4, 6, 2); // F2, top
+	face4(1, 5, 7, 3); // F3, bottom
+	face4(4, 6, 7, 5); // F4, back right
+	face4(2, 3, 7, 6); // F5, back left
+
+
+	face3(0, 3, 5); // F6
+	face3(0, 3, 6); // F7
+	face3(0, 5, 6); // F8
+	face3(3, 5, 6); // F9
+
+	edge(0, 3); // E12
+	edge(0, 5); // E13
+	edge(0, 6); // E14
+	edge(3, 5); // E15
+	edge(3, 6); // E16
+	edge(5, 6); // E17
+
+}
+
+
+}}
 

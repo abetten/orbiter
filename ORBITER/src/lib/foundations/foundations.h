@@ -360,6 +360,7 @@ class set_of_sets_lint;
 class classify_vector_data;
 class clebsch_map;
 class bitmatrix;
+class override_double;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

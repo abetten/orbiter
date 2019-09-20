@@ -114,6 +114,8 @@ class packing_was;
 class packing_long_orbits;
 class tactical_decomposition;
 class tensor_classify;
+class design_create;
+class design_create_description;
 
 // #############################################################################
 // representatives.cpp

@@ -13,6 +13,7 @@ MODULES = \
 	mem_object_registry.o \
 	memory_object.o \
 	orbiter_data_file.o \
+	override_double.o \
 	util.o
 
 

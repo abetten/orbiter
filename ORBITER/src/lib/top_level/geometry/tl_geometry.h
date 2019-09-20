@@ -1071,6 +1071,84 @@ public:
 
 };
 
+// #############################################################################
+// design_create.cpp
+// #############################################################################
+
+//! to create a known design using a description from class design_create_description
+
+
+
+class design_create {
+
+public:
+	design_create_description *Descr;
+
+	char prefix[1000];
+	char label_txt[1000];
+	char label_tex[1000];
+
+	int q;
+	finite_field *F;
+	int k;
+
+	//int f_semilinear;
+
+	action *A;
+
+	int degree;
+
+	int *set;
+	int sz;
+
+	int f_has_group;
+	strong_generators *Sg;
+
+
+
+
+	design_create();
+	~design_create();
+	void null();
+	void freeself();
+	void init(design_create_description *Descr, int verbose_level);
+};
+
+
+
+// #############################################################################
+// design_create_description.cpp
+// #############################################################################
+
+//! to describe the construction of a known design from the command line
+
+
+
+class design_create_description {
+
+public:
+
+	int f_q;
+	int q;
+	//int f_k;
+	//int k;
+	int f_catalogue;
+	int iso;
+	int f_family;
+	const char *family_name;
+
+
+
+	design_create_description();
+	~design_create_description();
+	void null();
+	void freeself();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+	int get_q();
+};
+
+
 
 // #############################################################################
 // invariants_packing.cpp
