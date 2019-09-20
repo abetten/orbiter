@@ -444,6 +444,20 @@ public:
 };
 
 
+// #############################################################################
+// override_double.cpp
+// #############################################################################
+
+class override_double {
+public:
+	double *p;
+	double original_value;
+	double new_value;
+
+	override_double(double *p, double value);
+	~override_double();
+};
+
 
 // #############################################################################
 // util.cpp

@@ -123,8 +123,9 @@ public:
 	void transpose_matrix_nxn(double *A, double *At, int n);
 	void substitute_quadric_linear(double *coeff_in, double *coeff_out,
 		double *A4_inv, int verbose_level);
-	void substitute_cubic_linear(double *coeff_in, double *coeff_out,
-		double *A4_inv, int verbose_level);
+	void substitute_cubic_linear_using_povray_ordering(
+			double *coeff_in, double *coeff_out,
+			double *A4_inv, int verbose_level);
 	void make_transform_t_varphi_u_double(int n, double *varphi, double *u,
 		double *A, double *Av, int verbose_level);
 	// varphi are the dual coordinates of a plane.

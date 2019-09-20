@@ -1337,7 +1337,7 @@ void numerics::substitute_quadric_linear(
 		}
 }
 
-void numerics::substitute_cubic_linear(
+void numerics::substitute_cubic_linear_using_povray_ordering(
 	double *coeff_in, double *coeff_out,
 	double *A4_inv, int verbose_level)
 // uses povray ordering of monomials
@@ -1402,7 +1402,7 @@ void numerics::substitute_cubic_linear(
 	geometry_global Gg;
 
 	if (f_v) {
-		cout << "substitute_cubic_linear" << endl;
+		cout << "numerics::substitute_cubic_linear_using_povray_ordering" << endl;
 		}
 
 	nb_affine = NT.i_power_j(n, degree);
@@ -1504,7 +1504,7 @@ void numerics::substitute_cubic_linear(
 	FREE_int(Monomials);
 	
 	if (f_v) {
-		cout << "substitute_cubic_linear done" << endl;
+		cout << "numerics::substitute_cubic_linear_using_povray_ordering done" << endl;
 		}
 }
 

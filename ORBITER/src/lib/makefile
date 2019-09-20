@@ -125,6 +125,7 @@ MODULES= \
 		foundations/io_and_os/mem_object_registry.o \
 		foundations/io_and_os/memory_object.o \
 		foundations/io_and_os/orbiter_data_file.o \
+		foundations/io_and_os/override_double.o \
 		foundations/io_and_os/util.o \
 		foundations/solvers/diophant.o \
 		foundations/solvers/dlx.o \
@@ -291,6 +292,8 @@ MODULES= \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
 		top_level/geometry/cubic_curve_with_action.o \
+		top_level/geometry/design_create.o \
+		top_level/geometry/design_create_description.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/packing_classify.o \
