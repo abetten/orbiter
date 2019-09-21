@@ -12,6 +12,7 @@ all: all_k_subsets.out \
 		burnside.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \
+		design_create_main.out \
 		design.out \
 		ferdinand.out \
 		group_ring.out \
@@ -44,6 +45,9 @@ conjugacy_classes_sym_n.out:  conjugacy_classes_sym_n.o;
 
 costas.out:  costas.o;
 	$(DISCRETA_CPP)  costas.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+design_create_main.out:  design_create_main.o;
+	$(DISCRETA_CPP)  design_create_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 design.out:  design.o;
 	$(DISCRETA_CPP)  design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

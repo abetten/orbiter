@@ -28,6 +28,7 @@ design_create::design_create()
 	k = 0;
 
 	A = NULL;
+	A2 = NULL;
 
 	degree = 0;
 
@@ -93,22 +94,23 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 
 
 
-	A = NEW_OBJECT(action);
 
 
 
 	if (Descr->f_family) {
 		if (f_v) {
 			cout << "design_create::init "
-					"before Surf->create_surface_family "
 					"family_name=" << Descr->family_name << endl;
 		}
 		if (strcmp(Descr->family_name, "PG_2_q") == 0) {
 			if (f_v) {
-				cout << "design_create::init "
-						"PG(2," << q << ")" << endl;
+				cout << "design_create::init PG(2," << q << ")" << endl;
 			}
+			create_design_PG_2_q(F, set, sz, k, verbose_level);
 
+			sprintf(prefix, "PG_2_q%d", q);
+			sprintf(label_txt, "PG_2_%d", q);
+			sprintf(label_tex, "PG\\_2\\_%d", q);
 		}
 
 	}
@@ -186,7 +188,70 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 	}
 }
 
+void design_create::create_design_PG_2_q(finite_field *F,
+		int *&set, int &sz, int &k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "design_create::create_design_PG_2_q" << endl;
+	}
+
+	projective_space *P;
+	combinatorics_domain Combi;
+	sorting Sorting;
+	int j;
+	int *block;
+
+	k = q + 1;
+	P = NEW_OBJECT(projective_space);
+	P->init(2, F,
+			TRUE /* f_init_incidence_structure */,
+			verbose_level);
+	degree = P->N_points;
+
+	block = NEW_int(k);
+	sz = P->N_lines;
+	set = NEW_int(sz);
+	for (j = 0; j < sz; j++) {
+		int_vec_copy(P->Lines + j * k, block, k);
+		Sorting.int_vec_heapsort(block, k);
+		set[j] = Combi.rank_k_subset(block, P->N_points, k);
+		if (f_v) {
+			cout << "block " << j << " / " << sz << " : ";
+			int_vec_print(cout, block, k);
+			cout << " : " << set[j] << endl;
+		}
+	}
+	Sorting.int_vec_heapsort(set, sz);
+	if (f_v) {
+		cout << "design : ";
+		int_vec_print(cout, set, sz);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "design_create::create_design_PG_2_q creating actions" << endl;
+	}
+	A = NEW_OBJECT(action);
+	A->init_symmetric_group(degree, verbose_level);
+
+	A2 = NEW_OBJECT(action);
+	A2->induced_action_on_k_subsets(*A, k, verbose_level);
+
+	//Aonk = A2->G.on_k_subsets;
+
+	if (f_v) {
+		cout << "design_create::create_design_PG_2_q creating actions done" << endl;
+	}
+
+	FREE_int(block);
+	FREE_OBJECT(P);
+
+	if (f_v) {
+		cout << "design_create::create_design_PG_2_q done" << endl;
+	}
+}
 
 }}
 

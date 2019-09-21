@@ -1095,6 +1095,7 @@ public:
 	//int f_semilinear;
 
 	action *A;
+	action *A2;
 
 	int degree;
 
@@ -1112,6 +1113,8 @@ public:
 	void null();
 	void freeself();
 	void init(design_create_description *Descr, int verbose_level);
+	void create_design_PG_2_q(finite_field *F,
+			int *&set, int &sz, int &k, int verbose_level);
 };
 
 
@@ -1232,6 +1235,72 @@ public:
 		int verbose_level);
 	void compute_line_type(int *set, int len, int verbose_level);
 };
+
+
+// #############################################################################
+// large_set_classify.cpp
+// #############################################################################
+
+//! classification of large sets of designs
+
+class large_set_classify {
+public:
+	design_create *DC;
+	int design_size;
+	int nb_points;
+	int nb_lines;
+	int search_depth;
+
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char path[1000];
+	char prefix_with_directory[1000];
+
+
+	int f_lexorder_test;
+	int size_of_large_set;
+
+
+	int *Design_table;
+	const char *design_table_prefix;
+	int nb_designs;
+
+	action *A_on_designs;
+
+
+	uchar *bitvector_adjacency;
+	int bitvector_length;
+	int *degree;
+
+	poset *Poset;
+	poset_classification *gen;
+
+	int nb_needed;
+
+	large_set_classify();
+	~large_set_classify();
+	void null();
+	void freeself();
+	void init(design_create *DC,
+			const char *input_prefix, const char *base_fname,
+			int search_depth,
+			int f_lexorder_test,
+			const char *design_table_prefix,
+			int verbose_level);
+	void compute(int verbose_level);
+	void init_designs(orbit_of_sets *SetOrb,
+			int verbose_level);
+	int designs_are_disjoint(int i, int j);
+
+};
+
+int large_set_design_compare_func(void *data, int i, int j, void *extra_data);
+void large_set_swap_func(void *data, int i, int j, void *extra_data);
+void large_set_early_test_function(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 
 // #############################################################################

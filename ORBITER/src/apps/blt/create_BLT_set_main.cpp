@@ -65,7 +65,7 @@ int main(int argc, const char **argv)
 		}
 	if (!f_description) {
 		cout << "please use option -description ... "
-				"to enter a description of the surface" << endl;
+				"to enter a description of the BLT-set" << endl;
 		exit(1);
 		}
 

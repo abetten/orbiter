@@ -557,7 +557,7 @@ void poset_orbit_node::schreier_forest(
 		Schreier.compute_all_point_orbits(verbose_level);
 		}
 	else {
-		Schreier.compute_all_point_orbits(verbose_level - 4);
+		Schreier.compute_all_point_orbits(verbose_level);
 		}
 
 	if (f_v) {

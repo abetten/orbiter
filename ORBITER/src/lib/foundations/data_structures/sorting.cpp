@@ -1997,7 +1997,7 @@ void sorting::schreier_vector_tree(
 	}
 	set_of_sets *SoS;
 	classify C;
-	int f, a, t;
+	//int f, a, t;
 
 	SoS = NEW_OBJECT(set_of_sets);
 	C.init(depth, n, FALSE, 0);
