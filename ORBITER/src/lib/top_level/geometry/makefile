@@ -24,6 +24,7 @@ MODULES = \
 	design_create_description.o \
 	invariants_packing.o \
 	k_arc_generator.o \
+	large_set_classify.o \
 	packing_classify.o \
 	packing_classify2.o \
 	packing_invariants.o \

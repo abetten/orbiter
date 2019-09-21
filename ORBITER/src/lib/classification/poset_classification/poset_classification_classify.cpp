@@ -688,10 +688,25 @@ void poset_classification::extend_node(
 
 
 
+	int f_show_progress = FALSE;
+	if (root[prev].nb_extensions > 1000) {
+		f_show_progress = TRUE;
+	}
+	int nb_flags_100;
 
+	nb_flags_100 = root[prev].nb_extensions / 100 + 1;
 
 	for (prev_ex = 0; prev_ex < root[prev].nb_extensions; prev_ex++) {
 		
+		if (f_show_progress && (prev_ex % nb_flags_100) == 0) {
+			print_level_info(size, prev);
+			cout << "poset_classification::extend_node "
+					"working on extension "
+					<< prev_ex << " / " << root[prev].nb_extensions
+					<< " : progress " << prev_ex / nb_flags_100 << " %" << endl;
+
+
+		}
 
 		if (f_vvv) {
 			print_level_info(size, prev);
@@ -729,7 +744,7 @@ void poset_classification::extend_node(
 		Work.init(this, size, prev, prev_ex, cur, 
 			f_debug, 
 			f_lex, 
-			f_indicate_not_canonicals, //fp,
+			f_indicate_not_canonicals,
 			verbose_level - 4);
 
 		if (f_vvv) {

@@ -116,6 +116,7 @@ class tactical_decomposition;
 class tensor_classify;
 class design_create;
 class design_create_description;
+class large_set_classify;
 
 // #############################################################################
 // representatives.cpp

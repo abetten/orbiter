@@ -2038,6 +2038,127 @@ int combinatorics_domain::minus_one_if_positive(int i)
 	return 0;
 }
 
+void combinatorics_domain::compute_adjacency_matrix(
+		int *Table, int nb_sets, int set_size,
+		const char *prefix_for_graph,
+		uchar *&bitvector_adjacency,
+		int &bitvector_length,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j, k, cnt, N2, N2_100;
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_adjacency_matrix" << endl;
+	}
+
+	N2 = (nb_sets * nb_sets) >> 1;
+	if (f_v) {
+		cout << "combinatorics_domain::compute_adjacency_matrix N2=" << N2 << endl;
+	}
+	N2_100 = (N2 / 100) + 1;
+
+	bitvector_length = (N2 + 7) >> 3;
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_adjacency_matrix allocating bitvector of length " << bitvector_length << endl;
+	}
+
+	bitvector_adjacency = NEW_uchar(bitvector_length);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_adjacency_matrix after allocating adjacency bitvector" << endl;
+		cout << "computing adjacency matrix:" << endl;
+	}
+	k = 0;
+	cnt = 0;
+	for (i = 0; i < nb_sets; i++) {
+		for (j = i + 1; j < nb_sets; j++) {
+
+			int *p, *q;
+			int u, v;
+
+			p = Table + i * set_size;
+			q = Table + j * set_size;
+			u = v = 0;
+			while (u + v < 2 * set_size) {
+				if (p[u] == q[v]) {
+					break;
+				}
+				if (u == set_size) {
+					v++;
+				}
+				else if (v == set_size) {
+					u++;
+				}
+				else if (p[u] < q[v]) {
+					u++;
+				}
+				else {
+					v++;
+				}
+			}
+			if (u + v < 2 * set_size) {
+				bitvector_m_ii(bitvector_adjacency, k, 0);
+
+			}
+			else {
+				bitvector_m_ii(bitvector_adjacency, k, 1);
+				cnt++;
+			}
+
+			k++;
+			if ((k % N2_100) == 0) {
+				cout << "i=" << i << " j=" << j << " " << k / N2_100 << "% done, k=" << k << endl;
+			}
+#if 0
+			if ((k & ((1 << 21) - 1)) == 0) {
+				cout << "i=" << i << " j=" << j << " k=" << k
+						<< " / " << N2 << endl;
+				}
+#endif
+		}
+	}
+
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_adjacency_matrix making a graph" << endl;
+	}
+
+	{
+	colored_graph *CG;
+	char fname[1000];
+	file_io Fio;
+
+	CG = NEW_OBJECT(colored_graph);
+	int *color;
+
+	color = NEW_int(nb_sets);
+	int_vec_zero(color, nb_sets);
+
+	CG->init(nb_sets,
+			1, color, bitvector_adjacency,
+			FALSE, verbose_level);
+
+	sprintf(fname, "%s_disjointness.colored_graph", prefix_for_graph);
+
+	CG->save(fname, verbose_level);
+
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	FREE_int(color);
+	FREE_OBJECT(CG);
+	}
+
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_adjacency_matrix done" << endl;
+		}
+}
+
+
+
 //##############################################################################
 // global functions, for instance for nauty_interface.cpp:
 //##############################################################################
