@@ -99,7 +99,7 @@ void orbit_of_sets::init(action *A, action *A2,
 void orbit_of_sets::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int i, cur, j;
 	int *cur_set;
 	int *new_set;
@@ -150,6 +150,8 @@ void orbit_of_sets::compute(int verbose_level)
 
 		for (j = 0; j < gens->len; j++) {
 			if (f_vv) {
+				cout << "Q_len = " << Q_len << " : used_length="
+						<< used_length << " : ";
 				cout << "applying generator " << j << endl;
 			}
 			A2->map_a_set(cur_set, new_set, sz, gens->ith(j),
@@ -203,6 +205,9 @@ void orbit_of_sets::compute(int verbose_level)
 
 					old_length = allocation_length;
 					allocation_length = al2;
+					if (f_vv) {
+						cout << "reallocating to length " << al2 << " done" << endl;
+					}
 				}
 
 				Sets[used_length] = NEW_int(sz);
