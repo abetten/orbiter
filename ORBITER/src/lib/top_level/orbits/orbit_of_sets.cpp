@@ -192,12 +192,18 @@ void orbit_of_sets::compute(int verbose_level)
 					Sets = Sets2;
 
 					// reallocate Extra:
+					if (f_vv) {
+						cout << "reallocate Extra" << endl;
+					}
 					Extra2 = NEW_int(al2 * 2);
-					int_vec_copy(Extra, Extra2, al2 * 2);
+					int_vec_copy(Extra, Extra2, allocation_length * 2);
 					FREE_int(Extra);
 					Extra = Extra2;
 
 					// reallocate Q2:
+					if (f_vv) {
+						cout << "reallocate Q2" << endl;
+					}
 					Q2 = NEW_int(al2);
 					int_vec_copy(Q, Q2, Q_len);
 					FREE_int(Q);
