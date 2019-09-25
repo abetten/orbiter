@@ -30,6 +30,10 @@ int main(int argc, const char **argv)
 	int depth = 0;
 	int f_output_prefix = FALSE;
 	const char *output_prefix = "";
+	int f_read_classification = FALSE;
+	int read_classification_level = 0;
+	int f_lift = FALSE;
+	const char *lift_set = NULL;
 
 	t0 = os_ticks();
 
@@ -56,6 +60,16 @@ int main(int argc, const char **argv)
 			f_output_prefix = TRUE;
 			output_prefix = argv[++i];
 			cout << "-output_prefix " << output_prefix << endl;
+		}
+		else if (strcmp(argv[i], "-read_classification") == 0) {
+			f_read_classification = TRUE;
+			read_classification_level = atoi(argv[++i]);
+			cout << "-read_classification " << read_classification_level << endl;
+		}
+		else if (strcmp(argv[i], "-lift") == 0) {
+			f_lift = TRUE;
+			lift_set = argv[++i];
+			cout << "-lift " << lift_set << endl;
 		}
 	}
 	if (!f_design) {
@@ -146,11 +160,41 @@ int main(int argc, const char **argv)
 
 	LS->init_designs(SetOrb, verbose_level);
 
-	if (f_depth) {
-		cout << "depth = " << depth << endl;
-		LS->gen->depth = depth;
+	if (f_read_classification) {
+		cout << "reading classification at level " << read_classification_level << endl;
 
-		LS->compute(verbose_level);
+		orbit_transversal *T;
+
+		LS->read_classification(T,
+				read_classification_level, verbose_level);
+
+		cout << "computing and reporting ago distribution:" << endl;
+
+		T->report_ago_distribution(cout);
+
+		FREE_OBJECT(T);
+	}
+	else if (f_lift) {
+		cout << "lifting" << endl;
+		int *lift_starter;
+		int lift_starter_sz;
+
+
+		int_vec_scan(lift_set, lift_starter, lift_starter_sz);
+		cout << "lift_starter = ";
+		int_vec_print(cout, lift_starter, lift_starter_sz);
+		cout << endl;
+
+
+	}
+	else {
+		if (f_depth) {
+			cout << "classification of starter" << endl;
+			cout << "depth = " << depth << endl;
+			LS->gen->depth = depth;
+
+			LS->compute(verbose_level);
+		}
 	}
 
 	FREE_int(Elt2);

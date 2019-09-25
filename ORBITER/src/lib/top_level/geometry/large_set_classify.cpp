@@ -288,13 +288,45 @@ void large_set_classify::compute(int verbose_level)
 }
 
 
+void large_set_classify::read_classification(orbit_transversal *&T,
+		int level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char fname_classification_at_level[1000];
+
+	if (f_v) {
+		cout << "large_set_classify::read_classification" << endl;
+	}
+
+	gen->make_fname_lvl_file(fname_classification_at_level,
+			gen->fname_base, level);
+
+	if (f_v) {
+		cout << "reading all orbit representatives from "
+				"file " << fname_classification_at_level << endl;
+		}
+
+	T = NEW_OBJECT(orbit_transversal);
+
+	T->read_from_file(gen->Poset->A, gen->Poset->A2,
+			fname_classification_at_level, verbose_level - 1);
+
+	if (f_v) {
+		cout << "large_set_classify::read_classification "
+				"We read all orbit representatives. "
+				"There are " << T->nb_orbits << " orbits" << endl;
+		}
+}
+
+
 int large_set_classify::designs_are_disjoint(int i, int j)
 {
 	int *p1, *p2;
 
 	p1 = Design_table + i * design_size;
 	p2 = Design_table + j * design_size;
-	if (test_if_sets_are_disjoint_assuming_sorted(p1, p2, design_size, design_size)) {
+	if (test_if_sets_are_disjoint_assuming_sorted(
+			p1, p2, design_size, design_size)) {
 		return TRUE;
 	}
 	else {

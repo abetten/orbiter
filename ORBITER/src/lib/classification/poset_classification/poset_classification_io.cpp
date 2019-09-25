@@ -1698,6 +1698,18 @@ void poset_classification::recover(
 		}
 }
 
+void poset_classification::make_fname_lvl_file_candidates(char *fname,
+		char *fname_base, int lvl)
+{
+	sprintf(fname, "%s_lvl_%d_candidates.txt", fname_base, lvl);
+}
+
+void poset_classification::make_fname_lvl_file(char *fname,
+		char *fname_base, int lvl)
+{
+	sprintf(fname, "%s_lvl_%d", fname_base, lvl);
+}
+
 void poset_classification::write_lvl_file_with_candidates(
 		char *fname_base, int lvl, int t0,
 		int verbose_level)
@@ -1739,10 +1751,11 @@ void poset_classification::write_lvl_file(
 {
 	int f_v = (verbose_level >= 1);
 	char fname1[1000];
-	sprintf(fname1, "%s_lvl_%d", fname_base, lvl);
 	file_io Fio;
 
+	//sprintf(fname1, "%s_lvl_%d", fname_base, lvl);
 
+	make_fname_lvl_file(fname1, fname_base, lvl);
 	{
 	ofstream f(fname1);
 	int i, fst, len;
