@@ -787,6 +787,10 @@ public:
 	void read_level_file(int level, char *fname, int verbose_level);
 	void recover(const char *recover_fname, 
 		int &depth_completed, int verbose_level);
+	void make_fname_lvl_file_candidates(char *fname,
+			char *fname_base, int lvl);
+	void make_fname_lvl_file(char *fname,
+			char *fname_base, int lvl);
 	void write_lvl_file_with_candidates(char *fname_base, 
 		int lvl, int t0, int verbose_level);
 	void write_lvl_file(char *fname_base, int lvl, 

@@ -1288,6 +1288,8 @@ public:
 			const char *design_table_prefix,
 			int verbose_level);
 	void compute(int verbose_level);
+	void read_classification(orbit_transversal *&T,
+			int level, int verbose_level);
 	void init_designs(orbit_of_sets *SetOrb,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
