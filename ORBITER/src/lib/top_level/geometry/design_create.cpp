@@ -39,6 +39,7 @@ design_create::design_create()
 	Sg = NULL;
 
 	P = NULL;
+	block = NULL;
 
 	//null();
 }
@@ -65,6 +66,9 @@ void design_create::freeself()
 		}
 	if (P) {
 		FREE_OBJECT(P);
+	}
+	if (block) {
+		FREE_int(block);
 	}
 	null();
 }
@@ -95,12 +99,6 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 	}
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
-
-
-
-
-
-
 
 	if (Descr->f_family) {
 		if (f_v) {
@@ -205,7 +203,7 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	combinatorics_domain Combi;
 	sorting Sorting;
 	int j;
-	int *block;
+	//int *block;
 
 	design_create::k = q + 1;
 	k = q + 1;
@@ -249,8 +247,6 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	if (f_v) {
 		cout << "design_create::create_design_PG_2_q creating actions done" << endl;
 	}
-
-	FREE_int(block);
 
 	if (f_v) {
 		cout << "design_create::create_design_PG_2_q done" << endl;
@@ -297,6 +293,36 @@ int design_create::rank_block_in_PG_2_q(int *block,
 		cout << "design_create::rank_block_in_PG_2_q done" << endl;
 	}
 	return rk;
+}
+
+int design_create::get_color_as_two_design_assume_sorted(int *design,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int c, i;
+
+	if (f_v) {
+		cout << "design_create::get_color_as_two_design_assume_sorted" << endl;
+	}
+	combinatorics_domain Combi;
+
+	Combi.unrank_k_subset(design[0], block, P->N_points, k);
+	if (block[0] != 0) {
+		cout << "block[0] != 0" << endl;
+		exit(1);
+	}
+	if (block[1] != 1) {
+		cout << "block[1] != 1" << endl;
+		exit(1);
+	}
+	for (i = 2; i < k; i++) {
+		block[i] -= 2;
+	}
+	c = Combi.rank_k_subset(block + 2, P->N_points - 2, k - 2);
+	if (f_v) {
+		cout << "design_create::get_color_as_two_design_assume_sorted done" << endl;
+	}
+	return c;
 }
 
 }}

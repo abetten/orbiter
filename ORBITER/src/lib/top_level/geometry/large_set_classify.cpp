@@ -50,6 +50,16 @@ large_set_classify::large_set_classify()
 	gen = NULL;
 
 	nb_needed = 0;
+
+	Design_table_reduced = NULL;
+	Design_table_reduced_idx = NULL;
+	nb_reduced = 0;
+
+	A_reduced = NULL;
+	Orbits_on_reduced = NULL;
+	color_of_reduced_orbits = NULL;
+
+
 	//null();
 }
 
@@ -67,6 +77,12 @@ void large_set_classify::freeself()
 	if (bitvector_adjacency) {
 		FREE_uchar(bitvector_adjacency);
 		}
+	if (Design_table_reduced) {
+		FREE_int(Design_table_reduced);
+	}
+	if (Design_table_reduced_idx) {
+		FREE_int(Design_table_reduced_idx);
+	}
 	null();
 }
 
@@ -419,6 +435,133 @@ int large_set_classify::designs_are_disjoint(int i, int j)
 	}
 }
 
+
+
+void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case" << endl;
+	}
+	make_reduced_design_table(
+			Rep->data, Rep->sz,
+			Design_table_reduced, Design_table_reduced_idx, nb_reduced,
+			verbose_level);
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"The reduced design table has length " << nb_reduced << endl;
+	}
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"creating A_reduced:" << endl;
+	}
+	A_reduced = A_on_designs->restricted_action(
+			Design_table_reduced_idx, nb_reduced,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"computing orbits on reduced set of designs:" << endl;
+	}
+
+
+	A_reduced->compute_orbits_on_points(Orbits_on_reduced,
+			Rep->Strong_gens->gens, verbose_level);
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"The orbits on the reduced set of designs are:" << endl;
+		Orbits_on_reduced->print_and_list_orbits_sorted_by_length(
+			cout, TRUE /* f_tex */);
+	}
+
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"Distribution of orbit lengths:" << endl;
+		Orbits_on_reduced->print_orbit_length_distribution(cout);
+	}
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"computing coloring of reduced orbits:" << endl;
+	}
+	Orbits_on_reduced->compute_orbit_invariant(color_of_reduced_orbits,
+				large_set_compute_color_of_reduced_orbits_callback,
+				this /* compute_orbit_invariant_data */,
+				verbose_level);
+
+	int **Invariant;
+	int i;
+	sorting Sorting;
+
+	Invariant = NEW_pint(Orbits_on_reduced->nb_orbits);
+	for (i = 0; i < Orbits_on_reduced->nb_orbits; i++) {
+		Invariant[i] = NEW_int(3);
+		Invariant[i][0] = color_of_reduced_orbits[i];
+		Invariant[i][1] = Orbits_on_reduced->orbit_len[i];
+		Invariant[i][2] = i;
+	}
+	Sorting.Heapsort_general(Invariant, Orbits_on_reduced->nb_orbits,
+			large_set_design_compare_func_for_invariants,
+			large_set_swap_func_for_invariants,
+			Invariant /* extra_data */);
+
+	int f;
+	int f_continue;
+
+	f = 0;
+	for (i = 0; i < Orbits_on_reduced->nb_orbits; i++) {
+		f_continue = TRUE;
+		if (i < Orbits_on_reduced->nb_orbits - 1) {
+			if (int_vec_compare(Invariant[i], Invariant[i + 1], 2)) {
+				f_continue = FALSE;
+			}
+		}
+		if (f_continue) {
+			continue;
+		}
+		cout << "block of " << i + 1 - f << " orbits of color "
+				<< Invariant[i][0] << " and of length " << Invariant[i][1] << endl;
+		f = i + 1;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case done" << endl;
+	}
+}
+
+int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data)
+{
+	//large_set_classify *LS = (large_set_classify *) extra_data;
+	int **Invariant = (int **) data;
+	int ret;
+
+	ret = int_vec_compare(Invariant[i], Invariant[j], 3);
+	return ret;
+}
+
+void large_set_swap_func_for_invariants(void *data, int i, int j, void *extra_data)
+{
+	//large_set_classify *LS = (large_set_classify *) extra_data;
+	int **Invariant = (int **) data;
+	int *p;
+
+	p = Invariant[i];
+	Invariant[i] = Invariant[j];
+	Invariant[j] = p;
+}
+
+
+
+
 int large_set_design_compare_func(void *data, int i, int j, void *extra_data)
 {
 	large_set_classify *LS = (large_set_classify *) extra_data;
@@ -487,6 +630,29 @@ void large_set_early_test_function(int *S, int len,
 		cout << "large_set_early_test_function done" << endl;
 		}
 }
+
+int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
+		int orbit_idx, void *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	large_set_classify *LS = (large_set_classify *) data;
+
+	int a, c;
+
+	if (f_v) {
+		cout << "large_set_compute_color_of_reduced_orbits_callback" << endl;
+	}
+	a = Sch->orbit[Sch->orbit_first[orbit_idx]];
+	c = LS->DC->get_color_as_two_design_assume_sorted(
+			LS->Design_table_reduced + a * LS->design_size, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "large_set_compute_color_of_reduced_orbits_callback done" << endl;
+	}
+	return c;
+}
+
+
+
 
 
 

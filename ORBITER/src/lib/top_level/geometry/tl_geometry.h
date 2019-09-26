@@ -1108,6 +1108,8 @@ public:
 
 	projective_space *P;
 
+	int *block; // [k]
+
 
 	design_create();
 	~design_create();
@@ -1119,6 +1121,8 @@ public:
 	void unrank_block_in_PG_2_q(int *block,
 			int rk, int verbose_level);
 	int rank_block_in_PG_2_q(int *block,
+			int verbose_level);
+	int get_color_as_two_design_assume_sorted(int *design,
 			int verbose_level);
 };
 
@@ -1282,6 +1286,16 @@ public:
 
 	int nb_needed;
 
+	int *Design_table_reduced;
+	int *Design_table_reduced_idx;
+	int nb_reduced;
+
+	action *A_reduced;
+	schreier *Orbits_on_reduced;
+	int *color_of_reduced_orbits;
+
+
+
 	large_set_classify();
 	~large_set_classify();
 	void null();
@@ -1304,15 +1318,21 @@ public:
 			int *&Design_table_out, int *&Design_table_out_idx, int &nb_out,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
+	void process_starter_case(set_and_stabilizer *Rep,
+			int verbose_level);
 
 };
 
+int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data);
+void large_set_swap_func_for_invariants(void *data, int i, int j, void *extra_data);
 int large_set_design_compare_func(void *data, int i, int j, void *extra_data);
 void large_set_swap_func(void *data, int i, int j, void *extra_data);
 void large_set_early_test_function(int *S, int len,
 	int *candidates, int nb_candidates,
 	int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
+int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
+		int orbit_idx, void *data, int verbose_level);
 
 
 
