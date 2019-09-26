@@ -164,10 +164,15 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	}
 
 	cout << "Designs:" << endl;
-	for (i = 0; i < nb_designs; i++) {
-		cout << i << " : ";
-		int_vec_print(cout, Design_table + i * design_size, design_size);
-		cout << endl;
+	if (nb_designs < 100) {
+		for (i = 0; i < nb_designs; i++) {
+			cout << i << " : ";
+			int_vec_print(cout, Design_table + i * design_size, design_size);
+			cout << endl;
+		}
+	}
+	else {
+		cout << "too many to print" << endl;
 	}
 
 	for (i = 0; i < nb_designs; i++) {
