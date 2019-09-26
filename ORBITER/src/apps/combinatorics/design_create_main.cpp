@@ -238,6 +238,8 @@ int main(int argc, const char **argv)
 			}
 		}
 
+		FREE_int(block);
+
 
 		cout << "strong generators are:" << endl;
 		Rep->Strong_gens->print_generators_tex();
