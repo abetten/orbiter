@@ -273,6 +273,10 @@ int main(int argc, const char **argv)
 		Orbits_on_reduced->print_and_list_orbits_sorted_by_length(
 			cout, TRUE /* f_tex */);
 
+		cout << "Distribution of orbit lengths:" << endl;
+
+		Orbits_on_reduced->print_orbit_length_distribution(cout);
+
 		FREE_OBJECT(Orbits_on_reduced);
 		FREE_OBJECT(A_reduced);
 		FREE_OBJECT(Rep);
