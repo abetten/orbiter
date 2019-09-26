@@ -349,14 +349,22 @@ void large_set_classify::read_classification_single_case(orbit_rep *&Rep,
 	T->read_from_file_one_case_only(gen->Poset->A, gen->Poset->A2,
 			fname_classification_at_level, case_nr, verbose_level - 1);
 
-	//cout << "large_set_classify::read_classification_single_case before memcpy" << endl;
+	if (f_v) {
+		cout << "large_set_classify::read_classification_single_case before memcpy" << endl;
+	}
 	memcpy(Rep, &T->Reps[case_nr], sizeof(orbit_rep));
-	//cout << "large_set_classify::read_classification_single_case before null()" << endl;
+	if (f_v) {
+		cout << "large_set_classify::read_classification_single_case before null()" << endl;
+	}
 	T->Reps[case_nr].null();
 
-	//cout << "large_set_classify::read_classification_single_case before FREE_OBJECT(T)" << endl;
+	if (f_v) {
+		cout << "large_set_classify::read_classification_single_case before FREE_OBJECT(T)" << endl;
+	}
 	FREE_OBJECT(T);
-	//cout << "large_set_classify::read_classification_single_case after FREE_OBJECT(T)" << endl;
+	if (f_v) {
+		cout << "large_set_classify::read_classification_single_case after FREE_OBJECT(T)" << endl;
+	}
 
 	if (f_v) {
 		cout << "large_set_classify::read_classification_single_case done" << endl;
