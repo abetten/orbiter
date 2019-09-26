@@ -38,6 +38,8 @@ design_create::design_create()
 	f_has_group = FALSE;
 	Sg = NULL;
 
+	P = NULL;
+
 	//null();
 }
 
@@ -61,6 +63,9 @@ void design_create::freeself()
 	if (Sg) {
 		FREE_OBJECT(Sg);
 		}
+	if (P) {
+		FREE_OBJECT(P);
+	}
 	null();
 }
 
@@ -197,7 +202,6 @@ void design_create::create_design_PG_2_q(finite_field *F,
 		cout << "design_create::create_design_PG_2_q" << endl;
 	}
 
-	projective_space *P;
 	combinatorics_domain Combi;
 	sorting Sorting;
 	int j;
@@ -251,6 +255,42 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	if (f_v) {
 		cout << "design_create::create_design_PG_2_q done" << endl;
 	}
+}
+
+void design_create::unrank_block_in_PG_2_q(int *block,
+		int rk, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_create::unrank_block_in_PG_2_q" << endl;
+	}
+	combinatorics_domain Combi;
+
+	Combi.unrank_k_subset(rk, block, P->N_points, k);
+	if (f_v) {
+		cout << "design_create::unrank_block_in_PG_2_q done" << endl;
+	}
+}
+
+int design_create::rank_block_in_PG_2_q(int *block,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk;
+
+	if (f_v) {
+		cout << "design_create::rank_block_in_PG_2_q" << endl;
+	}
+	combinatorics_domain Combi;
+	sorting Sorting;
+
+	Sorting.int_vec_heapsort(block, k);
+	rk = Combi.rank_k_subset(block, P->N_points, k);
+	if (f_v) {
+		cout << "design_create::rank_block_in_PG_2_q done" << endl;
+	}
+	return rk;
 }
 
 }}
