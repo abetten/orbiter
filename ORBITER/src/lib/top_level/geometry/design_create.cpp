@@ -251,7 +251,6 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	}
 
 	FREE_int(block);
-	FREE_OBJECT(P);
 
 	if (f_v) {
 		cout << "design_create::create_design_PG_2_q done" << endl;
