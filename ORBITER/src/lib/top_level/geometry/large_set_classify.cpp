@@ -371,6 +371,37 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 		}
 }
 
+void large_set_classify::make_reduced_design_table(
+		int *set, int set_sz,
+		int *&Design_table_out, int *&Design_table_out_idx, int &nb_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
+
+	if (f_v) {
+		cout << "large_set_classify::make_reduced_design_table" << endl;
+	}
+	Design_table_out = NEW_int(nb_designs * design_size);
+	Design_table_out_idx = NEW_int(nb_designs);
+	nb_out = 0;
+	for (i = 0; i < nb_designs; i++) {
+		for (j = 0; j < set_sz; j++) {
+			a = set[j];
+			if (!designs_are_disjoint(i, a)) {
+				break;
+			}
+		}
+		if (j == set_sz) {
+			int_vec_copy(Design_table + i * design_size, Design_table_out + nb_out * design_size, design_size);
+			Design_table_out_idx[nb_out] = i;
+			nb_out++;
+		}
+	}
+	if (f_v) {
+		cout << "large_set_classify::make_reduced_design_table done" << endl;
+	}
+}
 
 
 int large_set_classify::designs_are_disjoint(int i, int j)

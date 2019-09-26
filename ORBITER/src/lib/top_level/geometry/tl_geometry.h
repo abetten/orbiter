@@ -1287,12 +1287,16 @@ public:
 			int f_lexorder_test,
 			const char *design_table_prefix,
 			int verbose_level);
+	void init_designs(orbit_of_sets *SetOrb,
+			int verbose_level);
 	void compute(int verbose_level);
 	void read_classification(orbit_transversal *&T,
 			int level, int verbose_level);
 	void read_classification_single_case(set_and_stabilizer *&Rep,
 			int level, int case_nr, int verbose_level);
-	void init_designs(orbit_of_sets *SetOrb,
+	void make_reduced_design_table(
+			int *set, int set_sz,
+			int *&Design_table_out, int *&Design_table_out_idx, int &nb_out,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 
