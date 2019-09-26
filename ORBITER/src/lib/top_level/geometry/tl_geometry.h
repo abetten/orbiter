@@ -1290,7 +1290,7 @@ public:
 	void compute(int verbose_level);
 	void read_classification(orbit_transversal *&T,
 			int level, int verbose_level);
-	void read_classification_single_case(orbit_rep *&Rep,
+	void read_classification_single_case(set_and_stabilizer *&Rep,
 			int level, int case_nr, int verbose_level);
 	void init_designs(orbit_of_sets *SetOrb,
 			int verbose_level);

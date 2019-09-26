@@ -323,7 +323,7 @@ void large_set_classify::read_classification(orbit_transversal *&T,
 		}
 }
 
-void large_set_classify::read_classification_single_case(orbit_rep *&Rep,
+void large_set_classify::read_classification_single_case(set_and_stabilizer *&Rep,
 		int level, int case_nr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -341,7 +341,7 @@ void large_set_classify::read_classification_single_case(orbit_rep *&Rep,
 				"file " << fname_classification_at_level << endl;
 		}
 
-	Rep = NEW_OBJECT(orbit_rep);
+	Rep = NEW_OBJECT(set_and_stabilizer);
 
 	orbit_transversal *T;
 	T = NEW_OBJECT(orbit_transversal);
@@ -350,9 +350,9 @@ void large_set_classify::read_classification_single_case(orbit_rep *&Rep,
 			fname_classification_at_level, case_nr, verbose_level - 1);
 
 	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case before memcpy" << endl;
+		cout << "large_set_classify::read_classification_single_case before copy" << endl;
 	}
-	memcpy(Rep, &T->Reps[case_nr], sizeof(orbit_rep));
+	*Rep = T->Reps[case_nr];
 	if (f_v) {
 		cout << "large_set_classify::read_classification_single_case before null()" << endl;
 	}
