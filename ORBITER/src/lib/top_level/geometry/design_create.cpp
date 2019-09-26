@@ -264,7 +264,8 @@ void design_create::unrank_block_in_PG_2_q(int *block,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "design_create::unrank_block_in_PG_2_q rk=" << rk << " k=" << k << endl;
+		cout << "design_create::unrank_block_in_PG_2_q rk=" << rk
+				<< " P->N_points=" << P->N_points << " k=" << k << endl;
 	}
 	combinatorics_domain Combi;
 
