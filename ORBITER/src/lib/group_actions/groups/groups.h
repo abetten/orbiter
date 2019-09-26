@@ -828,6 +828,11 @@ public:
 	double get_average_word_length();
 		// This function returns the average word length of the forest.
 	double get_average_word_length(int orbit_idx);
+	void compute_orbit_invariant(int *&orbit_invariant,
+			int (*compute_orbit_invariant_callback)(schreier *Sch,
+					int orbit_idx, void *data, int verbose_level),
+			void *compute_orbit_invariant_data,
+			int verbose_level);
 
 	// schreier_io.cpp:
 	void latex(const char *fname);

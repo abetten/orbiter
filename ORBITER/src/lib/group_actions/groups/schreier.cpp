@@ -2872,4 +2872,27 @@ double schreier::get_average_word_length(int orbit_idx)
 	return L / double(N);
 }
 
+void schreier::compute_orbit_invariant(int *&orbit_invariant,
+		int (*compute_orbit_invariant_callback)(schreier *Sch,
+				int orbit_idx, void *data, int verbose_level),
+		void *compute_orbit_invariant_data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int orbit_idx;
+
+	if (f_v) {
+		cout << "schreier::compute_orbit_invariant" << endl;
+	}
+	orbit_invariant = NEW_int(nb_orbits);
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		orbit_invariant[orbit_idx] = (*compute_orbit_invariant_callback)
+				(this, orbit_idx, compute_orbit_invariant_data, verbose_level - 2);
+	}
+	if (f_v) {
+		cout << "schreier::compute_orbit_invariant done" << endl;
+	}
+}
+
+
 }}

@@ -244,42 +244,9 @@ int main(int argc, const char **argv)
 		cout << "strong generators are:" << endl;
 		Rep->Strong_gens->print_generators_tex();
 
-		int *Design_table_out;
-		int *Design_table_out_idx;
-		int nb_out;
-
-		LS->make_reduced_design_table(
-				Rep->data, Rep->sz,
-				Design_table_out, Design_table_out_idx, nb_out,
-				verbose_level);
-		cout << "The reduced design table has length " << nb_out << endl;
-		action *A_reduced;
-
-		cout << "creating A_reduced:" << endl;
-		A_reduced = LS->A_on_designs->restricted_action(
-				Design_table_out_idx, nb_out,
-				verbose_level);
-
-
-		cout << "computing orbits on reduced set of designs:" << endl;
-
-		schreier *Orbits_on_reduced;
-
-		A_reduced->compute_orbits_on_points(Orbits_on_reduced,
-				Rep->Strong_gens->gens, verbose_level);
-
-		cout << "The orbits on the reduced set of designs are:" << endl;
-
-		Orbits_on_reduced->print_and_list_orbits_sorted_by_length(
-			cout, TRUE /* f_tex */);
-
-		cout << "Distribution of orbit lengths:" << endl;
-
-		Orbits_on_reduced->print_orbit_length_distribution(cout);
-
-		FREE_OBJECT(Orbits_on_reduced);
-		FREE_OBJECT(A_reduced);
-		FREE_OBJECT(Rep);
+		cout << "processing starter case:" << endl;
+		LS->process_starter_case(Rep, verbose_level);
+		cout << "processing starter case done" << endl;
 
 	}
 	else {
@@ -299,7 +266,4 @@ int main(int argc, const char **argv)
 	the_end(t0);
 	//the_end_quietly(t0);
 }
-
-
-
 
