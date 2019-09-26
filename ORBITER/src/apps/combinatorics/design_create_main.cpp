@@ -206,7 +206,9 @@ int main(int argc, const char **argv)
 
 		cout << "the set in case " << lift_case << " is:" << endl;
 		Rep->print_set_tex(cout);
+		cout << endl;
 
+		cout << "The designs are:" << endl;
 		for (i = 0; i < Rep->sz; i++) {
 			int a;
 
@@ -215,6 +217,27 @@ int main(int argc, const char **argv)
 			int_vec_print(cout, LS->Design_table + a * LS->design_size, LS->design_size);
 			cout << endl;
 		}
+
+		cout << "The blocks of the designs are:" << endl;
+		int *block;
+
+		block = NEW_int(LS->DC->k);
+
+		for (i = 0; i < Rep->sz; i++) {
+			int a, b, j;
+
+			a = Rep->data[i];
+			cout << "design " << i << " is " << a << " has the following blocks:" << endl;
+			for (j = 0; j < LS->design_size; j++) {
+				b = LS->Design_table[a * LS->design_size + b];
+				LS->DC->unrank_block_in_PG_2_q(block,
+						b, verbose_level);
+				cout << "block " << j << " is " << b << " : ";
+				int_vec_print(cout, block, LS->DC->k);
+				cout << endl;
+			}
+		}
+
 
 		cout << "strong generators are:" << endl;
 		Rep->Strong_gens->print_generators_tex();

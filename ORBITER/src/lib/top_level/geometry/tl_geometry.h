@@ -1106,6 +1106,7 @@ public:
 	strong_generators *Sg;
 
 
+	projective_space *P;
 
 
 	design_create();
@@ -1115,6 +1116,10 @@ public:
 	void init(design_create_description *Descr, int verbose_level);
 	void create_design_PG_2_q(finite_field *F,
 			int *&set, int &sz, int &k, int verbose_level);
+	void unrank_block_in_PG_2_q(int *block,
+			int rk, int verbose_level);
+	int rank_block_in_PG_2_q(int *block,
+			int verbose_level);
 };
 
 
