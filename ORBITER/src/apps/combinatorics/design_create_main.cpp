@@ -199,7 +199,7 @@ int main(int argc, const char **argv)
 	else if (f_lift_case) {
 		cout << "lifting a single case" << endl;
 
-		orbit_rep *Rep;
+		set_and_stabilizer *Rep;
 
 		LS->read_classification_single_case(Rep,
 				lift_case_level, lift_case, verbose_level);
