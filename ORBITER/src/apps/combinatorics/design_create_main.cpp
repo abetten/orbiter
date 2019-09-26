@@ -207,6 +207,15 @@ int main(int argc, const char **argv)
 		cout << "the set in case " << lift_case << " is:" << endl;
 		Rep->print_set_tex(cout);
 
+		for (i = 0; i < Rep->sz; i++) {
+			int a;
+
+			a = Rep->data[i];
+			cout << i << " & " << a << " & ";
+			int_vec_print(cout, LS->Design_table + a * LS->design_size, LS->design_size);
+			cout << endl;
+		}
+
 		cout << "strong generators are:" << endl;
 		Rep->Strong_gens->print_generators_tex();
 
