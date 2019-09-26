@@ -210,6 +210,15 @@ int main(int argc, const char **argv)
 		cout << "strong generators are:" << endl;
 		Rep->Strong_gens->print_generators_tex();
 
+		int *Design_table_out;
+		int *Design_table_out_idx;
+		int nb_out;
+
+		LS->make_reduced_design_table(
+				Rep->data, Rep->sz,
+				Design_table_out, Design_table_out_idx, nb_out,
+				verbose_level);
+		cout << "The reduced design table has length " << nb_out << endl;
 
 		FREE_OBJECT(Rep);
 
