@@ -318,6 +318,43 @@ void large_set_classify::read_classification(orbit_transversal *&T,
 		}
 }
 
+void large_set_classify::read_classification_single_case(orbit_rep *&Rep,
+		int level, int case_nr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char fname_classification_at_level[1000];
+
+	if (f_v) {
+		cout << "large_set_classify::read_classification_single_case" << endl;
+	}
+
+	gen->make_fname_lvl_file(fname_classification_at_level,
+			gen->fname_base, level);
+
+	if (f_v) {
+		cout << "reading all orbit representatives from "
+				"file " << fname_classification_at_level << endl;
+		}
+
+	Rep = NEW_OBJECT(orbit_rep);
+
+	orbit_transversal *T;
+	T = NEW_OBJECT(orbit_transversal);
+
+	T->read_from_file_one_case_only(gen->Poset->A, gen->Poset->A2,
+			fname_classification_at_level, case_nr, verbose_level - 1);
+
+	memcpy(&T->Reps[case_nr], Rep, sizeof(orbit_rep));
+	T->Reps[case_nr].null();
+
+	FREE_OBJECT(T);
+
+	if (f_v) {
+		cout << "large_set_classify::read_classification_single_case done" << endl;
+		}
+}
+
+
 
 int large_set_classify::designs_are_disjoint(int i, int j)
 {

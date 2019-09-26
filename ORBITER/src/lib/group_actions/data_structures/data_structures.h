@@ -237,6 +237,8 @@ public:
 			int verbose_level);
 	void read_from_file(action *A, action *A2, 
 		const char *fname, int verbose_level);
+	void read_from_file_one_case_only(
+			action *A, action *A2, const char *fname, int case_nr, int verbose_level);
 	classify *get_ago_distribution(int *&ago,
 			int verbose_level);
 	void report_ago_distribution(std::ostream &ost);

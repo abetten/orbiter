@@ -32,8 +32,11 @@ int main(int argc, const char **argv)
 	const char *output_prefix = "";
 	int f_read_classification = FALSE;
 	int read_classification_level = 0;
-	int f_lift = FALSE;
-	const char *lift_set = NULL;
+	int f_lift_this = FALSE;
+	const char *lift_this_set = NULL;
+	int f_lift_case = FALSE;
+	int lift_case_level = 0;
+	int lift_case = 0;
 
 	t0 = os_ticks();
 
@@ -66,10 +69,16 @@ int main(int argc, const char **argv)
 			read_classification_level = atoi(argv[++i]);
 			cout << "-read_classification " << read_classification_level << endl;
 		}
-		else if (strcmp(argv[i], "-lift") == 0) {
-			f_lift = TRUE;
-			lift_set = argv[++i];
-			cout << "-lift " << lift_set << endl;
+		else if (strcmp(argv[i], "-lift_this") == 0) {
+			f_lift_this = TRUE;
+			lift_this_set = argv[++i];
+			cout << "-lift_this " << lift_this_set << endl;
+		}
+		else if (strcmp(argv[i], "-lift_case") == 0) {
+			f_lift_case = TRUE;
+			lift_case_level = atoi(argv[++i]);
+			lift_case = atoi(argv[++i]);
+			cout << "-lift_case " << lift_case_level << " " << lift_case << endl;
 		}
 	}
 	if (!f_design) {
@@ -174,17 +183,32 @@ int main(int argc, const char **argv)
 
 		FREE_OBJECT(T);
 	}
-	else if (f_lift) {
-		cout << "lifting" << endl;
+	else if (f_lift_this) {
+		cout << "lifting a given set" << endl;
 		int *lift_starter;
 		int lift_starter_sz;
 
 
-		int_vec_scan(lift_set, lift_starter, lift_starter_sz);
+		int_vec_scan(lift_this_set, lift_starter, lift_starter_sz);
 		cout << "lift_starter = ";
 		int_vec_print(cout, lift_starter, lift_starter_sz);
 		cout << endl;
 
+
+	}
+	else if (f_lift_case) {
+		cout << "lifting a single case" << endl;
+
+		orbit_rep *Rep;
+
+		LS->read_classification_single_case(Rep,
+				lift_case_level, lift_case, verbose_level);
+
+		cout << "strong generators are:" << endl;
+		Rep->Strong_gens->print_generators_tex();
+
+
+		FREE_OBJECT(Rep);
 
 	}
 	else {
