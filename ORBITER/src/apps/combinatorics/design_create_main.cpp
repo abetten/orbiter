@@ -231,7 +231,7 @@ int main(int argc, const char **argv)
 			for (j = 0; j < LS->design_size; j++) {
 				b = LS->Design_table[a * LS->design_size + b];
 				LS->DC->unrank_block_in_PG_2_q(block,
-						b, verbose_level);
+						b, 0 /*verbose_level*/);
 				cout << "block " << j << " is " << b << " : ";
 				int_vec_print(cout, block, LS->DC->k);
 				cout << endl;
