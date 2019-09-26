@@ -204,6 +204,9 @@ int main(int argc, const char **argv)
 		LS->read_classification_single_case(Rep,
 				lift_case_level, lift_case, verbose_level);
 
+		cout << "the set in case " << lift_case << " is:" << endl;
+		Rep->print_set_tex(cout);
+
 		cout << "strong generators are:" << endl;
 		Rep->Strong_gens->print_generators_tex();
 
