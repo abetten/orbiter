@@ -229,7 +229,7 @@ int main(int argc, const char **argv)
 			a = Rep->data[i];
 			cout << "design " << i << " is " << a << " has the following blocks:" << endl;
 			for (j = 0; j < LS->design_size; j++) {
-				b = LS->Design_table[a * LS->design_size + b];
+				b = LS->Design_table[a * LS->design_size + j];
 				LS->DC->unrank_block_in_PG_2_q(block,
 						b, 0 /*verbose_level*/);
 				cout << "block " << j << " is " << b << " : ";
