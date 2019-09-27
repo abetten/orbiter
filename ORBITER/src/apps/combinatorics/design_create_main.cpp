@@ -255,14 +255,24 @@ int main(int argc, const char **argv)
 		Syl = NEW_OBJECT(sylow_structure);
 
 		cout << "creating Sylow structure:" << endl;
-		Syl->init(S, verbose_level);
+		Syl->init(S, 0 /*verbose_level*/);
 		Syl->report(cout);
 
-
-		cout << "processing starter case:" << endl;
-		LS->process_starter_case(Rep, verbose_level);
+#if 0
+		cout << "processing starter case with full stabilizer:" << endl;
+		LS->process_starter_case(Rep, Rep->Strong_gens->gens, verbose_level);
 		cout << "processing starter case done" << endl;
+#else
+		int sylow_select;
 
+		for (sylow_select = 0; sylow_select < Syl->nb_primes; sylow_select++) {
+			cout << "processing starter case with Sylow subgroup "
+					<< sylow_select << " / " << Syl->nb_primes << " of stabilizer, "
+					"for p=" << Syl->primes[sylow_select] << endl;
+			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG->gens, verbose_level);
+			cout << "processing starter case done" << endl;
+		}
+#endif
 	}
 	else {
 		if (f_depth) {

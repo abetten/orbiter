@@ -438,6 +438,7 @@ int large_set_classify::designs_are_disjoint(int i, int j)
 
 
 void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
+		vector_ge *gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -470,7 +471,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 
 
 	A_reduced->compute_orbits_on_points(Orbits_on_reduced,
-			Rep->Strong_gens->gens, verbose_level);
+			gens, 0 /*verbose_level*/);
 
 #if 0
 	if (f_v) {
@@ -502,6 +503,8 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	cout << "color distribution of reduced designs:" << endl;
 	C.print_naked_tex(cout, FALSE /* f_backwards */);
 	cout << endl;
+
+	FREE_int(reduced_design_color);
 
 
 #if 0
