@@ -486,6 +486,20 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		Orbits_on_reduced->print_orbit_length_distribution(cout);
 	}
 
+	int i;
+	int *reduced_design_color;
+
+	reduced_design_color = NEW_int(nb_reduced);
+	for (i = 0; i < nb_reduced; i++) {
+		reduced_design_color[i] = DC->get_color_as_two_design_assume_sorted(
+			Design_table_reduced + i * design_size, 0 /* verbose_level */);
+	}
+	classify C;
+
+	C.init(reduced_design_color, nb_reduced, FALSE, 0);
+	cout << "color distribution of reduced designs:" << endl;
+	C.print_naked_tex(cout, FALSE /* f_backwards */);
+
 #if 0
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
