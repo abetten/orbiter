@@ -493,10 +493,11 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	}
 	int nb_points;
 	uchar *bitvector_adjacency;
-	int bitvector_length_in_bits;
-	int bitvector_length;
+	long int bitvector_length_in_bits;
+	long int bitvector_length;
 	long int L, L100;
-	int i, j, a, b, k;
+	int i, j, a, b;
+	long int k;
 	combinatorics_domain Combi;
 	int *orbit1;
 	int *orbit2;
