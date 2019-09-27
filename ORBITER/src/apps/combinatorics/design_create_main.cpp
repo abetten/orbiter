@@ -265,7 +265,7 @@ int main(int argc, const char **argv)
 #else
 		int sylow_select;
 
-		for (sylow_select = 0; sylow_select < Syl->nb_primes; sylow_select++) {
+		for (sylow_select = 1; sylow_select < Syl->nb_primes; sylow_select++) {
 			cout << "processing starter case with Sylow subgroup "
 					<< sylow_select << " / " << Syl->nb_primes << " of stabilizer, "
 					"for p=" << Syl->primes[sylow_select] << endl;
