@@ -274,8 +274,8 @@ int main(int argc, const char **argv)
 			int orbit_length;
 
 			orbit_length = Syl->primes[sylow_select];
-			sprintf(prefix, "Case_%d", lift_case);
-			sprintf(group_label, "%s_Syl_%d", prefix, Syl->primes[sylow_select]);
+			sprintf(prefix, "Case_%d_", lift_case);
+			sprintf(group_label, "Syl_%d", Syl->primes[sylow_select]);
 
 			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG,
 					prefix, group_label, orbit_length, verbose_level);
