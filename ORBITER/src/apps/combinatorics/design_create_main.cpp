@@ -269,14 +269,16 @@ int main(int argc, const char **argv)
 			cout << "processing starter case with Sylow subgroup "
 					<< sylow_select << " / " << Syl->nb_primes << " of stabilizer, "
 					"for p=" << Syl->primes[sylow_select] << endl;
+			char prefix[1000];
 			char group_label[1000];
 			int orbit_length;
 
 			orbit_length = Syl->primes[sylow_select];
-			sprintf(group_label, "Syl_%d", Syl->primes[sylow_select]);
+			sprintf(prefix, "Case_%d", lift_case);
+			sprintf(group_label, "%s_Syl_%d", prefix, Syl->primes[sylow_select]);
 
 			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG,
-					group_label, orbit_length, verbose_level);
+					prefix, group_label, orbit_length, verbose_level);
 			cout << "processing starter case done" << endl;
 		}
 #endif
