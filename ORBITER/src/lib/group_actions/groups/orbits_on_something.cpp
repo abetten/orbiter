@@ -548,7 +548,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 			if (L100) {
 				if ((k % L100) == 0) {
 					cout << "progress: "
-							<< 100. * (double) k / (double) L << "%" << endl;
+							<< (double) k / (double) L100 << "%" << endl;
 				}
 			}
 #endif
