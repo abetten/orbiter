@@ -472,12 +472,14 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	A_reduced->compute_orbits_on_points(Orbits_on_reduced,
 			Rep->Strong_gens->gens, verbose_level);
 
+#if 0
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
 				"The orbits on the reduced set of designs are:" << endl;
-		Orbits_on_reduced->print_and_list_orbits_sorted_by_length(
-			cout, TRUE /* f_tex */);
+		//Orbits_on_reduced->print_and_list_orbits_sorted_by_length(
+		//	cout, TRUE /* f_tex */);
 	}
+#endif
 
 
 	if (f_v) {
@@ -499,6 +501,8 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	C.init(reduced_design_color, nb_reduced, FALSE, 0);
 	cout << "color distribution of reduced designs:" << endl;
 	C.print_naked_tex(cout, FALSE /* f_backwards */);
+	cout << endl;
+
 
 #if 0
 	if (f_v) {
