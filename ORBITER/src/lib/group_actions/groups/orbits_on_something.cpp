@@ -495,7 +495,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	uchar *bitvector_adjacency;
 	int bitvector_length_in_bits;
 	int bitvector_length;
-	int L, L100;
+	long int L, L100;
 	int i, j, a, b, k;
 	combinatorics_domain Combi;
 	int *orbit1;
@@ -548,7 +548,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 			if (L100) {
 				if ((k % L100) == 0) {
 					cout << "progress: "
-							<< (double) k / (double) L100 << "%" << endl;
+							<< (double) k / (double) L100 << "%" << "i=" << i << " j=" << j << " k=" << k << endl;
 				}
 			}
 #endif
