@@ -488,6 +488,13 @@ public:
 	void report_classified_orbit_lengths(std::ostream &ost);
 	int get_orbit_type_index(int orbit_length);
 	int get_orbit_type_index_if_present(int orbit_length);
+	void test_orbits_of_a_certain_length(
+		int orbit_length,
+		int &type_idx,
+		int &prev_nb,
+		int (*test_function)(int *orbit, int orbit_length, void *data),
+		void *test_function_data,
+		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length(
 		colored_graph *&CG,
 		const char *fname,

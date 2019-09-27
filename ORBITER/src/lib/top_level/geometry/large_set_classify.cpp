@@ -59,6 +59,9 @@ large_set_classify::large_set_classify()
 	Orbits_on_reduced = NULL;
 	color_of_reduced_orbits = NULL;
 
+	OoS = NULL;
+	selected_type_idx = 0;
+
 
 	//null();
 }
@@ -82,6 +85,9 @@ void large_set_classify::freeself()
 	}
 	if (Design_table_reduced_idx) {
 		FREE_int(Design_table_reduced_idx);
+	}
+	if (OoS) {
+		FREE_OBJECT(OoS);
 	}
 	null();
 }
@@ -438,7 +444,7 @@ int large_set_classify::designs_are_disjoint(int i, int j)
 
 
 void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
-		vector_ge *gens,
+		strong_generators *SG, char *group_label, int orbit_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -469,9 +475,59 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 				"computing orbits on reduced set of designs:" << endl;
 	}
 
+	const char *prefix = "";
 
-	A_reduced->compute_orbits_on_points(Orbits_on_reduced,
-			gens, 0 /*verbose_level*/);
+	OoS = NEW_OBJECT(orbits_on_something);
+
+	OoS->init(A_reduced,
+				SG,
+				FALSE /* f_load_save */,
+				prefix,
+				verbose_level);
+
+	colored_graph *CG;
+	char fname[1000];
+	int f_has_user_data = FALSE;
+	sprintf(fname, "graph_%s.bin", group_label);
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"before OoS->test_orbits_of_a_certain_length" << endl;
+	}
+	int prev_nb;
+
+	OoS->test_orbits_of_a_certain_length(
+			orbit_length,
+			selected_type_idx,
+			prev_nb,
+			large_set_design_test_orbit,
+			this /* *test_function_data*/,
+			verbose_level);
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"after OoS->test_orbits_of_a_certain_length "
+				"prev_nb=" << prev_nb << " cur_nb="
+				<< OoS->Orbits_classified->Set_size[selected_type_idx] << endl;
+	}
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"before OoS->create_graph_on_orbits_of_a_certain_length" << endl;
+	}
+
+	OoS->create_graph_on_orbits_of_a_certain_length(
+		CG,
+		fname,
+		orbit_length,
+		selected_type_idx,
+		f_has_user_data, NULL /* int *user_data */, 0 /* user_data_size */,
+		large_set_design_test_pair_of_orbits,
+		this /* *test_function_data */,
+		verbose_level);
+
+
+	//A_reduced->compute_orbits_on_points(Orbits_on_reduced,
+	//		SG->gens, 0 /*verbose_level*/);
 
 #if 0
 	if (f_v) {
@@ -480,7 +536,6 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		//Orbits_on_reduced->print_and_list_orbits_sorted_by_length(
 		//	cout, TRUE /* f_tex */);
 	}
-#endif
 
 
 	if (f_v) {
@@ -488,6 +543,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 				"Distribution of orbit lengths:" << endl;
 		Orbits_on_reduced->print_orbit_length_distribution(cout);
 	}
+#endif
 
 	int i;
 	int *reduced_design_color;
@@ -559,6 +615,73 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case done" << endl;
 	}
+}
+
+int large_set_classify::test_orbit(int *orbit, int orbit_length)
+{
+	int i, j, a, b;
+	int *p1;
+	int *p2;
+
+	for (i = 0; i < orbit_length; i++) {
+		a = orbit[i];
+		p1 = Design_table_reduced + a * design_size;
+		for (j = i + 1; j < orbit_length; j++) {
+			b = orbit[j];
+			p2 = Design_table_reduced + b * design_size;
+			if (!test_if_sets_are_disjoint_assuming_sorted(
+					p1, p2, design_size, design_size)) {
+				return FALSE;
+			}
+		}
+	}
+	return TRUE;
+}
+
+int large_set_classify::test_pair_of_orbits(
+		int *orbit1, int orbit_length1,
+		int *orbit2, int orbit_length2)
+{
+	int i, j, a, b;
+	int *p1;
+	int *p2;
+
+	for (i = 0; i < orbit_length1; i++) {
+		a = orbit1[i];
+		p1 = Design_table_reduced + a * design_size;
+		for (j = 0; j < orbit_length2; j++) {
+			b = orbit2[j];
+			p2 = Design_table_reduced + b * design_size;
+			if (!test_if_sets_are_disjoint_assuming_sorted(
+					p1, p2, design_size, design_size)) {
+				return FALSE;
+			}
+		}
+	}
+	return TRUE;
+}
+
+int large_set_design_test_orbit(int *orbit, int orbit_length,
+		void *extra_data)
+{
+	large_set_classify *LS = (large_set_classify *) extra_data;
+	int ret = FALSE;
+
+	ret = LS->test_orbit(orbit, orbit_length);
+
+	return ret;
+}
+
+int large_set_design_test_pair_of_orbits(int *orbit1, int orbit_length1,
+		int *orbit2, int orbit_length2, void *extra_data)
+{
+	large_set_classify *LS = (large_set_classify *) extra_data;
+	int ret = FALSE;
+
+	ret = LS->test_pair_of_orbits(orbit1, orbit_length1,
+			orbit2, orbit_length2);
+
+	return ret;
 }
 
 int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data)

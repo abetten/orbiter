@@ -1294,6 +1294,8 @@ public:
 	schreier *Orbits_on_reduced;
 	int *color_of_reduced_orbits;
 
+	orbits_on_something *OoS;
+	int selected_type_idx;
 
 
 	large_set_classify();
@@ -1319,11 +1321,19 @@ public:
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(set_and_stabilizer *Rep,
-			vector_ge *gens,
+			strong_generators *SG, char *group_label, int orbit_length,
 			int verbose_level);
+	int test_orbit(int *orbit, int orbit_length);
+	int test_pair_of_orbits(
+			int *orbit1, int orbit_length1,
+			int *orbit2, int orbit_length2);
 
 };
 
+int large_set_design_test_orbit(int *orbit, int orbit_length,
+		void *extra_data);
+int large_set_design_test_pair_of_orbits(int *orbit1, int orbit_length1,
+		int *orbit2, int orbit_length2, void *extra_data);
 int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data);
 void large_set_swap_func_for_invariants(void *data, int i, int j, void *extra_data);
 int large_set_design_compare_func(void *data, int i, int j, void *extra_data);
