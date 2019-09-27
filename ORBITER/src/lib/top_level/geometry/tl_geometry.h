@@ -1319,6 +1319,7 @@ public:
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(set_and_stabilizer *Rep,
+			vector_ge *gens,
 			int verbose_level);
 
 };
