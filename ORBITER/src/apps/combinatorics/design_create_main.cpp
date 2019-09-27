@@ -247,6 +247,18 @@ int main(int argc, const char **argv)
 		cout << "The generators are:" << endl;
 		Rep->Strong_gens->print_elements_ost(cout);
 
+		sylow_structure *Syl;
+		sims *S;
+
+		cout << "creating Sims:" << endl;
+		S = Rep->Strong_gens->create_sims(0 /* verbose_level */);
+		Syl = NEW_OBJECT(sylow_structure);
+
+		cout << "creating Sylow structure:" << endl;
+		Syl->init(S, verbose_level);
+		Syl->report(cout);
+
+
 		cout << "processing starter case:" << endl;
 		LS->process_starter_case(Rep, verbose_level);
 		cout << "processing starter case done" << endl;
