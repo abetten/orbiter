@@ -444,7 +444,8 @@ int large_set_classify::designs_are_disjoint(int i, int j)
 
 
 void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
-		strong_generators *SG, char *group_label, int orbit_length,
+		strong_generators *SG, const char *prefix,
+		char *group_label, int orbit_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -475,7 +476,6 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 				"computing orbits on reduced set of designs:" << endl;
 	}
 
-	const char *prefix = "";
 
 	OoS = NEW_OBJECT(orbits_on_something);
 

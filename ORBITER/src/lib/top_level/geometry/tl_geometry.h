@@ -1321,7 +1321,8 @@ public:
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(set_and_stabilizer *Rep,
-			strong_generators *SG, char *group_label, int orbit_length,
+			strong_generators *SG, const char *prefix,
+			char *group_label, int orbit_length,
 			int verbose_level);
 	int test_orbit(int *orbit, int orbit_length);
 	int test_pair_of_orbits(
