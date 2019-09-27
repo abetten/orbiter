@@ -514,7 +514,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	L = (nb_points * (nb_points - 1)) >> 1;
 
-	L100 = L / 100;
+	L100 = L / 100 + 1;
 
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
@@ -543,7 +543,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 			}
 			k = Combi.ij2k(i, j, nb_points);
 
-#if 0
+#if 1
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
 			if (L100) {
 				if ((k % L100) == 0) {
