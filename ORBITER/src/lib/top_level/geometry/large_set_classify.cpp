@@ -488,7 +488,8 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	colored_graph *CG;
 	char fname[1000];
 	int f_has_user_data = FALSE;
-	sprintf(fname, "graph_%s.bin", group_label);
+
+	sprintf(fname, "%s_graph_%s.bin", prefix, group_label);
 
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
@@ -524,6 +525,11 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		large_set_design_test_pair_of_orbits,
 		this /* *test_function_data */,
 		verbose_level);
+
+
+	CG->save(fname, verbose_level);
+
+	FREE_OBJECT(CG);
 
 
 	//A_reduced->compute_orbits_on_points(Orbits_on_reduced,
