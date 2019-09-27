@@ -486,6 +486,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		Orbits_on_reduced->print_orbit_length_distribution(cout);
 	}
 
+#if 0
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
 				"computing coloring of reduced orbits:" << endl;
@@ -494,6 +495,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 				large_set_compute_color_of_reduced_orbits_callback,
 				this /* compute_orbit_invariant_data */,
 				verbose_level);
+
 
 	int **Invariant;
 	int i;
@@ -529,7 +531,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 				<< Invariant[i][0] << " and of length " << Invariant[i][1] << endl;
 		f = i + 1;
 	}
-
+#endif
 
 
 
