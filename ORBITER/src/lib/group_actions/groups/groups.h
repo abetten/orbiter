@@ -1753,7 +1753,7 @@ public:
 	int nb_primes;
 
 	sims *S; // the group
-	subgroup *Sub;
+	subgroup *Sub; // [nb_primes]
 
 	sylow_structure();
 	~sylow_structure();
