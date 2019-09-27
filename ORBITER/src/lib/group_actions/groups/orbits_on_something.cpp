@@ -429,6 +429,52 @@ int orbits_on_something::get_orbit_type_index_if_present(int orbit_length)
 	return -1;
 }
 
+void orbits_on_something::test_orbits_of_a_certain_length(
+	int orbit_length,
+	int &type_idx,
+	int &prev_nb,
+	int (*test_function)(int *orbit, int orbit_length, void *data),
+	void *test_function_data,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::test_orbits_of_a_certain_length "
+				"orbit_length=" << orbit_length << endl;
+	}
+	int *orbit;
+	int i, j, a, l;
+	int nb_points;
+
+	type_idx = get_orbit_type_index(orbit_length);
+	nb_points = Orbits_classified->Set_size[type_idx];
+	prev_nb = nb_points;
+	if (f_v) {
+		cout << "orbits_on_something::test_orbits_of_a_certain_length "
+				"nb_points=" << nb_points << endl;
+	}
+
+	orbit = NEW_int(orbit_length);
+	j = 0;
+	for (i = 0; i < nb_points; i++) {
+		a = Orbits_classified->Sets[type_idx][i];
+		Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
+		if (l != orbit_length) {
+			cout << "orbits_on_something::test_orbits_of_a_certain_length l != orbit_length" << endl;
+			exit(1);
+		}
+		if ((*test_function)(orbit, orbit_length, test_function_data)) {
+			Orbits_classified->Sets[type_idx][j++] = a;
+		}
+	}
+	Orbits_classified->Set_size[type_idx] = j;
+
+	if (f_v) {
+		cout << "orbits_on_something::test_orbits_of_a_certain_length done" << endl;
+	}
+}
+
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	colored_graph *&CG,
 	const char *fname,

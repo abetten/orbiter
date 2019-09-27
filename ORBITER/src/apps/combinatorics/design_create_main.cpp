@@ -260,7 +260,7 @@ int main(int argc, const char **argv)
 
 #if 0
 		cout << "processing starter case with full stabilizer:" << endl;
-		LS->process_starter_case(Rep, Rep->Strong_gens->gens, verbose_level);
+		LS->process_starter_case(Rep, Rep->Strong_gens, verbose_level);
 		cout << "processing starter case done" << endl;
 #else
 		int sylow_select;
@@ -269,7 +269,14 @@ int main(int argc, const char **argv)
 			cout << "processing starter case with Sylow subgroup "
 					<< sylow_select << " / " << Syl->nb_primes << " of stabilizer, "
 					"for p=" << Syl->primes[sylow_select] << endl;
-			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG->gens, verbose_level);
+			char group_label[1000];
+			int orbit_length;
+
+			orbit_length = Syl->primes[sylow_select];
+			sprintf(group_label, "Syl_%d", Syl->primes[sylow_select]);
+
+			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG,
+					group_label, orbit_length, verbose_level);
 			cout << "processing starter case done" << endl;
 		}
 #endif
