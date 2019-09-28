@@ -188,6 +188,7 @@ void poset_classification::test_identify(int level, int nb_times,
 	int *set2;
 	sims *S;
 	longinteger_object go;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "poset_classification::test_identify, "
@@ -210,7 +211,7 @@ void poset_classification::test_identify(int level, int nb_times,
 
 
 	for (cnt = 0; cnt < nb_times; cnt++) {
-		r = random_integer(nb_orbits);
+		r = Os.random_integer(nb_orbits);
 		if (f_v) {
 			cout << "random orbit " << r << " / " << nb_orbits << endl;
 			}

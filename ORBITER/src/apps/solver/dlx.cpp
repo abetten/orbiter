@@ -27,9 +27,10 @@ int main(int argc, const char **argv)
 	const char *solution_fname = NULL;
 	int f_tree_file = FALSE;
 	const char *tree_fname = NULL;
+	os_interface Os;
 
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

@@ -59,8 +59,9 @@ int main(int argc, const char **argv)
 	int f_max_TDO_depth = FALSE;
 	int max_TDO_depth = INT_MAX;
 
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	for (i = 1; i < argc; i++) {

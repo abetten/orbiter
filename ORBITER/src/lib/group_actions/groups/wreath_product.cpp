@@ -8864,16 +8864,17 @@ void wreath_product::compute_permutations(
 
 				cout << "CPU multiplication" << endl;
 				int t0, t1, dt;
-				t0 = os_ticks();
+				os_interface Os;
+				t0 = Os.os_ticks();
 				//linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
 				M->mult_int_matrix_from_the_left(
 						generators_transposed[h], mtx_n, mtx_n,
 						NM, verbose_level);
 				cout << "CPU multiplication done" << endl;
-				t1 = os_ticks();
+				t1 = Os.os_ticks();
 				dt = t1 - t0;
 				cout << "the multiplication took ";
-				time_check_delta(cout, dt);
+				Os.time_check_delta(cout, dt);
 				cout << endl;
 
 				//cout << "NM:" << endl;

@@ -1051,7 +1051,8 @@ void combinatorics_domain::random_permutation(int *random_permutation, int n)
 {
 	int i, l, a;
 	int *available_digits;
-	
+	os_interface Os;
+
 	if (n == 0)
 		return;
 	if (n == 1) {
@@ -1068,7 +1069,7 @@ void combinatorics_domain::random_permutation(int *random_permutation, int n)
 		if ((i % 1000) == 0) {
 			cout << "random_permutation " << i << " / " << n << endl;
 			}
-		a = random_integer(l);
+		a = Os.random_integer(l);
 		random_permutation[i] = available_digits[a];
 		available_digits[a] = available_digits[l - 1];
 #if 0

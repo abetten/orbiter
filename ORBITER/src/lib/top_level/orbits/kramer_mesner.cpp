@@ -277,8 +277,9 @@ void kramer_mesner::orbits(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int t0;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "kramer_mesner::orbits" << endl;

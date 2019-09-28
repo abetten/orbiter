@@ -637,6 +637,7 @@ void spread_classify::compute(int verbose_level)
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
+	os_interface Os;
 
 
 	if (f_v) {
@@ -654,7 +655,7 @@ void spread_classify::compute(int verbose_level)
 	gen->f_max_depth = TRUE;
 	gen->max_depth = starter_size;
 	
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	gen->main(t0, 
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 

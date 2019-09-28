@@ -48,8 +48,9 @@ int main(int argc, char **argv)
 	int f_draw_tree = FALSE;
 	int f_orbit_of = FALSE;
 	int orbit_of_idx = 0;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

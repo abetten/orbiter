@@ -302,7 +302,8 @@ void group_of_design(int n, int k, int t, int q,
 	int *design, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	poset *Poset;
 	set_stabilizer_compute *S;
 	sims *Stab;

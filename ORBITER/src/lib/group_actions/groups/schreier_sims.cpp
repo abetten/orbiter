@@ -327,13 +327,14 @@ void schreier_sims::get_generator_external_from_generators(
 {
 	int f_v = (verbose_level >= 1);
 	int r;
+	os_interface Os;
 	
 	if (f_v) {
 		cout << "schreier_sims::get_generator_external_"
 				"from_generators" << endl;
 		}
 	if (external_gens->len) {
-		r = random_integer(external_gens->len);
+		r = Os.random_integer(external_gens->len);
 		if (f_v) {
 			cout << "schreier_sims::get_generator_external_"
 					"from_generators choosing generator "

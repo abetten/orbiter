@@ -49,12 +49,13 @@ int main(int argc, const char **argv)
 
 	int f_out_path = FALSE;
 	const char *out_path = NULL;
+	os_interface Os;
 
 
 
 	test_typedefs();
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
@@ -206,16 +207,16 @@ int main(int argc, const char **argv)
 	int t1, t2;
 
 	cout << "before L3->deep_search_at_level_three" << endl;
-	t1 = os_ticks();
+	t1 = Os.os_ticks();
 	L3->deep_search_at_level_three(
 			split_r, split_m,
 			f_out_path, out_path,
 			nb_sol,
 			verbose_level);
 	cout << "after L3->deep_search_at_level_three" << endl;
-	t2 = os_ticks();
+	t2 = Os.os_ticks();
 	cout << "time check:" << endl;
-	time_check_delta(cout, t2 - t1);
+	Os.time_check_delta(cout, t2 - t1);
 	cout << endl;
 	cout << "after time check:" << endl;
 

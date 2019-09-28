@@ -1158,13 +1158,14 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 	int nb, N;
 	double f1; //, f2;
 	combinatorics_domain Combi;
-	
-	t1 = os_ticks();
+	os_interface Os;
+
+	t1 = Os.os_ticks();
 	dt = t1 - t0;
 	//cout << "time_check t0=" << t0 << endl;
 	//cout << "time_check t1=" << t1 << endl;
 	//cout << "time_check dt=" << dt << endl;
-	time_check_delta(cout, dt);
+	Os.time_check_delta(cout, dt);
 	subset_rank = Combi.rank_k_subset(subset, size, level);
 	Stab->group_order(go);
 	AA->group_order(AA_go);

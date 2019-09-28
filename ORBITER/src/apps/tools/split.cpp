@@ -26,8 +26,9 @@ int main(int argc, char **argv)
 	int f_split = FALSE;
 	int split_m;
 	int i;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

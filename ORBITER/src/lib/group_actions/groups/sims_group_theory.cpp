@@ -26,6 +26,7 @@ void sims::random_element(int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "sims::random_element" << endl;
@@ -36,7 +37,7 @@ void sims::random_element(int *elt, int verbose_level)
 		//print_transversals();
 		}
 	for (i = 0; i < A->base_len(); i++) {
-		path[i] = random_integer(orbit_len[i]);
+		path[i] = Os.random_integer(orbit_len[i]);
 		}
 	if (f_v) {
 		cout << "sims::random_element" << endl;
@@ -123,6 +124,7 @@ int sims::transitive_extension_tolerant(schreier &O,
 	longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int orbit_len, j;
 	longinteger_domain D;
+	os_interface Os;
 
 	orbit_len = O.orbit_len[0];
 	if (f_v) {
@@ -162,7 +164,7 @@ int sims::transitive_extension_tolerant(schreier &O,
 			}
 
 		while (TRUE) {
-			j = random_integer(orbit_len);
+			j = Os.random_integer(orbit_len);
 			if (j)
 				break;
 			}
@@ -240,6 +242,7 @@ void sims::transitive_extension_using_coset_representatives(
 	longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int orbit_len, j;
 	longinteger_domain D;
+	os_interface Os;
 
 	orbit_len = nb_cosets;
 	if (f_v) {
@@ -276,7 +279,7 @@ void sims::transitive_extension_using_coset_representatives(
 			}
 
 		while (TRUE) {
-			j = random_integer(orbit_len);
+			j = Os.random_integer(orbit_len);
 			if (j) {
 				break;
 				}
@@ -332,6 +335,7 @@ void sims::transitive_extension_using_generators(
 	longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int j;
 	longinteger_domain D;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "sims::transitive_extension_using_generators "
@@ -364,7 +368,7 @@ void sims::transitive_extension_using_generators(
 			exit(1);
 			}
 
-		j = random_integer(nb_gens);
+		j = Os.random_integer(nb_gens);
 
 		random_element(Elt2, verbose_level - 1);
 

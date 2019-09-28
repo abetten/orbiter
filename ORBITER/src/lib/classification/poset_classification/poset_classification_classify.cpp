@@ -28,7 +28,8 @@ void poset_classification::compute_orbits_on_subsets(
 	int schreier_depth = target_depth;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 
 
 	if (f_v) {
@@ -97,6 +98,7 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int f_write_files;
+	os_interface Os;
 
 
 	if (f_v) {
@@ -141,11 +143,11 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 
 		if (f_write_data_files) {
 			housekeeping(level + 1, f_write_files,
-					os_ticks(), verbose_level - 1);
+					Os.os_ticks(), verbose_level - 1);
 		}
 		else {
 			housekeeping_no_data_file(level + 1,
-					os_ticks(), verbose_level - 1);
+					Os.os_ticks(), verbose_level - 1);
 		}
 
 		int nb_nodes;
@@ -190,7 +192,8 @@ int poset_classification::main(int t0,
 	int target_depth;
 	int f_write_files;
 	int f_embedded = TRUE;
-	
+	os_interface Os;
+
 	if (f_v) {
 		cout << "poset_classification::main" << endl;
 		cout << "poset_classification::main ";
@@ -208,11 +211,11 @@ int poset_classification::main(int t0,
 
 
 		int t1, dt;
-		t1 = os_ticks();
+		t1 = Os.os_ticks();
 		dt = t1 - t0;
 	
 		cout << "Time ";
-		time_check_delta(cout, dt);
+		Os.time_check_delta(cout, dt);
 		cout << endl;
 
 
@@ -315,11 +318,11 @@ int poset_classification::main(int t0,
 		
 		if (f_write_data_files) {
 			housekeeping(size + 1, f_write_files,
-					os_ticks(), verbose_level - 1);
+					Os.os_ticks(), verbose_level - 1);
 		}
 		else {
 			housekeeping_no_data_file(size + 1,
-					os_ticks(), verbose_level - 1);
+					Os.os_ticks(), verbose_level - 1);
 		}
 
 

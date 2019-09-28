@@ -83,8 +83,9 @@ void semifield_classify_with_substructure::read_arguments(
 		int argc, const char **argv, int &verbose_level)
 {
 	int i;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	semifield_classify_with_substructure::argc = argc;
 	semifield_classify_with_substructure::argv = argv;
 

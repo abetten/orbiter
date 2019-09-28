@@ -625,7 +625,8 @@ void arc_generator::prepare_generator(int verbose_level)
 void arc_generator::compute_starter(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	
 
 	if (f_v) {

@@ -357,7 +357,8 @@ void orbit_of_equations::get_random_schreier_generator(
 	int *E1, *E2, *E3, *E4, *E5;
 	int *cur_object;
 	int *new_object;
-	
+	os_interface Os;
+
 	if (f_v) {
 		cout << "orbit_of_equations::get_random_schreier_generator" << endl;
 		}
@@ -372,11 +373,11 @@ void orbit_of_equations::get_random_schreier_generator(
 	pt1 = position_of_original_object;
 	
 	// get a random coset:
-	r1 = random_integer(len);
+	r1 = Os.random_integer(len);
 	get_transporter(r1, E1, 0);
 		
 	// get a random generator:
-	r2 = random_integer(SG->gens->len);
+	r2 = Os.random_integer(SG->gens->len);
 	if (f_vv) {
 		cout << "r2=" << r2 << endl;
 		}

@@ -75,7 +75,9 @@ int main(int argc, char **argv)
 {
 	int verbose_level;
 	int i;
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 	
 	n = 4;
 	

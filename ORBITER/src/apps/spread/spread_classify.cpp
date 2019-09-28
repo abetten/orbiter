@@ -63,6 +63,7 @@ int main(int argc, const char **argv)
 	int f_embedded = FALSE;
 	int f_sideways = FALSE;
 	int f_print_data_structure = FALSE;
+	os_interface Os;
 
 
 	exact_cover_arguments *ECA = NULL;
@@ -73,7 +74,7 @@ int main(int argc, const char **argv)
 
 
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

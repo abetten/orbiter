@@ -31,8 +31,9 @@ int main(int argc, char **argv)
 	int n = 0;
 	int f_k = FALSE;
 	int k = 0;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	for (i = 1; i < argc; i++) {

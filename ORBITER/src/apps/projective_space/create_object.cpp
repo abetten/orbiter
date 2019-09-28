@@ -120,8 +120,10 @@ int main(int argc, const char **argv)
 	int curve_degree = 0;
 	const char *curve_coeffs = NULL;
 
+	os_interface Os;
 
-	t0 = os_ticks();
+
+	t0 = Os.os_ticks();
 
 
 

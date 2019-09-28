@@ -247,7 +247,8 @@ void subspace_orbits::init_group(int verbose_level)
 void subspace_orbits::compute_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "subspace_orbits::compute_orbits "

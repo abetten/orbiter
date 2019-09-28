@@ -70,8 +70,9 @@ void assign_task(job_table *JT, int t, int j,
 
 int main(int argc, char **argv)
 {
+	os_interface Os;
 	int i;
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	int verbose_level = 0;
 	int f_input_file_mask = FALSE;	
 	const char *input_file_mask = NULL;

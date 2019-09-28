@@ -29,9 +29,10 @@ int main(int argc, const char **argv)
 {
 	int verbose_level = 0;
 	semifield_classify_with_substructure SCWS;
+	os_interface Os;
 
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	SCWS.read_arguments(argc, argv, verbose_level);
 
@@ -41,14 +42,14 @@ int main(int argc, const char **argv)
 		}
 
 
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << "before SCWS.init" << endl;
 
 	SCWS.init(verbose_level);
 		// recovers the classification of the substructures
 		// calls Sub->L3->init_level_three
 
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << "before SCWS.init" << endl;
 
 
@@ -64,7 +65,7 @@ int main(int argc, const char **argv)
 		cout << "decomposition matrix at level 3" << endl;
 
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "before L3->recover_level_three_from_file" << endl;
 
@@ -72,42 +73,42 @@ int main(int argc, const char **argv)
 				TRUE /* f_read_flag_orbits */,
 				verbose_level);
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "after L3->recover_level_three_from_file" << endl;
 
 
 
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "before SCWS.Sub->init" << endl;
 
 		SCWS.Sub->init();
 			// allocates the arrays and matrices
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "after SCWS.Sub->init" << endl;
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "before SCWS.Sub->load_flag_orbits" << endl;
 
 		SCWS.Sub->Flag_orbits = NEW_OBJECT(flag_orbits);
 		SCWS.load_flag_orbits(verbose_level);
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "after SCWS.Sub->load_flag_orbits" << endl;
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "before SCWS.Sub->load_classification" << endl;
 
 		SCWS.load_classification(verbose_level);
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "after SCWS.Sub->load_classification" << endl;
 
@@ -116,12 +117,12 @@ int main(int argc, const char **argv)
 	}
 	else {
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "before L3->recover_level_three_downstep" << endl;
 		SCWS.Sub->L3->recover_level_three_downstep(verbose_level);
 
-		time_check(cout, t0);
+		Os.time_check(cout, t0);
 		cout << " : ";
 		cout << "after L3->recover_level_three_downstep" << endl;
 

@@ -30,6 +30,7 @@ void Hill_cap56(int argc, const char **argv,
 	finite_field *F;
 	number_theory_domain NT;
 	geometry_global Gg;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "Hill_cap" << endl;
@@ -110,7 +111,7 @@ void Hill_cap56(int argc, const char **argv,
 	if (f_v) {
 		cout << "Hill_cap before P.compute_orbits" << endl;
 		}
-	int t0 = os_ticks();
+	int t0 = Os.os_ticks();
 	P->compute_orbits(t0, verbose_level - 2);
 	
 	if (f_v) {

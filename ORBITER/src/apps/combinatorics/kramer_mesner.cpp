@@ -26,7 +26,9 @@ int main(int argc, const char **argv);
 
 int main(int argc, const char **argv)
 {
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 	
 	int verbose_level;
 	

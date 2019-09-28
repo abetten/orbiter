@@ -32,8 +32,9 @@ int main(int argc, const char **argv)
 	int nb_transform = 0;
 	const char *transform_coeffs[1000];
 	int f_inverse_transform[1000];
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	for (i = 1; i < argc; i++) {

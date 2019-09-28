@@ -32,7 +32,8 @@ void print_usage()
 
 int main(int argc, char **argv)
 {
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	int verbose_level = 0;
 	int i;
 	int d, n, q, epsilon;
@@ -148,7 +149,7 @@ int main(int argc, char **argv)
 
 	FREE_int(v);
 	FREE_int(L);
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 }
 

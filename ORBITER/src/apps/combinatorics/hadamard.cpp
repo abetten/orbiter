@@ -64,8 +64,9 @@ int main(int argc, char **argv)
 	int f_n = FALSE;
 	int n = 0;
 	int f_draw = FALSE;
-	
- 	t0 = os_ticks();
+	os_interface Os;
+
+ 	t0 = Os.os_ticks();
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

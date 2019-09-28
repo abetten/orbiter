@@ -33,8 +33,9 @@ int main(int argc, char **argv)
 	int f_q = FALSE;
 	int q = 0;
 	int f_surface = FALSE;
-	
- 	t0 = os_ticks();
+	os_interface Os;
+
+ 	t0 = Os.os_ticks();
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

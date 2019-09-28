@@ -69,7 +69,9 @@ int data2a[] = {
 
 int main(int argc, char **argv)
 {
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 	
 	do_it();
 

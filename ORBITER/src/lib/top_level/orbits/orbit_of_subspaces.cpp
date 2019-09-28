@@ -901,6 +901,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 	uint32_t h;
 	//int *cur_basis;
 	//int *new_basis;
+	os_interface Os;
 	
 	if (f_v) {
 		cout << "orbit_of_subspaces::get_random_schreier_generator" << endl;
@@ -916,11 +917,11 @@ void orbit_of_subspaces::get_random_schreier_generator(
 	pt1 = position_of_original_subspace;
 	
 	// get a random coset:
-	r1 = random_integer(len);
+	r1 = Os.random_integer(len);
 	get_transporter(r1, E1, 0);
 		
 	// get a random generator:
-	r2 = random_integer(gens->len);
+	r2 = Os.random_integer(gens->len);
 	if (f_vv) {
 		cout << "r2=" << r2 << endl;
 		}

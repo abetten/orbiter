@@ -34,8 +34,9 @@ int main(int argc, const char **argv)
 	int f_PG = FALSE;
 	int PG_n = 0;
 	int PG_q = 0;
-	
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 
 	
 	for (i = 1; i < argc; i++) {

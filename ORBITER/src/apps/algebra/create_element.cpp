@@ -29,7 +29,8 @@ void create_element_O4_isomorphism(int q,
 
 int main(int argc, char **argv)
 {
-	t0 = os_ticks();
+	os_interface Os;
+	t0 = Os.os_ticks();
 	discreta_init();
 	int verbose_level = 0;
 	int i, j, q;

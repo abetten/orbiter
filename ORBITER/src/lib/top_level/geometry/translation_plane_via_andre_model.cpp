@@ -451,7 +451,8 @@ void translation_plane_via_andre_model::classify_arcs(
 		const char *prefix, int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	//char fname_base[1000];
 
 	if (f_v) {
@@ -559,7 +560,8 @@ void translation_plane_via_andre_model::classify_subplanes(
 		const char *prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	int depth = 7;
 	//char fname_base[1000];
 

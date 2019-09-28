@@ -1723,7 +1723,8 @@ void sims::random_schreier_generator(int *Elt, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	
+	os_interface Os;
+
 	if (f_v) {
 		cout << "sims:random_schreier_generator" << endl;
 		cout << "sims:random_schreier_generator my_base_len=" << my_base_len << endl;
@@ -1752,7 +1753,7 @@ void sims::random_schreier_generator(int *Elt, int verbose_level)
 			cout << endl;
 		}
 		// get a random level:
-		i = random_integer(my_base_len);
+		i = Os.random_integer(my_base_len);
 		pt = get_orbit(i, 0);
 		if (f_vv) {
 			cout << "sims::random_schreier_generator "
@@ -1760,7 +1761,7 @@ void sims::random_schreier_generator(int *Elt, int verbose_level)
 		}
 	
 		// get a random coset:
-		r1 = random_integer(orbit_len[i]);
+		r1 = Os.random_integer(orbit_len[i]);
 		pt1 = get_orbit(i, r1);
 		if (f_vv) {
 			cout << "sims::random_schreier_generator "
@@ -1813,7 +1814,7 @@ void sims::random_schreier_generator(int *Elt, int verbose_level)
 		if (nbg == 0) {
 			continue;
 		}
-		r2 = random_integer(nbg);
+		r2 = Os.random_integer(nbg);
 		if (f_vv) {
 			cout << "sims::random_schreier_generator picking generator " << r2 << " / " << nbg << endl;
 		}

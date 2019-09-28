@@ -39,8 +39,9 @@ int main(int argc, const char **argv)
 	int lift_case = 0;
 	int f_read_solution_file = FALSE;
 	const char *solution_file_name = NULL;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	for (i = 1; i < argc; i++) {

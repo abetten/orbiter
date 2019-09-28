@@ -28,8 +28,9 @@ int t0; // the system time when the program started
 int main(int argc, const char **argv)
 {
 	packing_was P;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	P.init(argc, argv);
 

@@ -37,8 +37,9 @@ int main(int argc, const char **argv)
 	int f_draw_poset_of_six_arcs = FALSE;
 	//int f_draw_poset_full = FALSE;
 	int f_report = FALSE;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	surface_domain *Surf;

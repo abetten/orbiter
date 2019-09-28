@@ -34,8 +34,9 @@ int main(int argc, const char **argv)
 	int f_inverse_transform[1000];
 	int f_linear = FALSE;
 	linear_group_description *Descr_group;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	for (i = 1; i < argc; i++) {

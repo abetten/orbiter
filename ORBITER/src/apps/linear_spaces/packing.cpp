@@ -18,7 +18,8 @@ int t0;
 
 int main(int argc, char **argv)
 {
-	t0 = os_ticks();
+	os_interface Os;
+	t0 = Os.os_ticks();
 	int *P;
 	int i, j, a, b, f_one_seen;
 	geometry_global Gg;

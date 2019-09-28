@@ -219,15 +219,16 @@ void poset_classification::print_problem_label()
 void poset_classification::print_level_info(int prev_level, int prev)
 {
 	int t1, dt;
+	os_interface Os;
 
-	t1 = os_ticks();
+	t1 = Os.os_ticks();
 	//cout << "poset_classification::print_level_info t0=" << t0 << endl;
 	//cout << "poset_classification::print_level_info t1=" << t1 << endl;
 	dt = t1 - t0;
 	//cout << "poset_classification::print_level_info dt=" << dt << endl;
 
 	cout << "Time ";
-	time_check_delta(cout, dt);
+	Os.time_check_delta(cout, dt);
 	print_problem_label();
 	cout << " : Level " << prev_level << " Node " << prev << " = "
 		<< prev - first_poset_orbit_node_at_level[prev_level]
@@ -709,12 +710,13 @@ void poset_classification::read_memory_object(
 		if (nb_nodes > 1000) {
 			if ((i % one_percent) == 0) {
 				int t1, dt;
+				os_interface Os;
 
-				t1 = os_ticks();
+				t1 = Os.os_ticks();
 				dt = t1 - t0;
 
 				cout << "Time ";
-				time_check_delta(cout, dt);
+				Os.time_check_delta(cout, dt);
 				print_problem_label();
 				cout << " : " << i / one_percent << " percent done, "
 						" node=" << i << " / " << nb_nodes << " "
@@ -785,12 +787,13 @@ void poset_classification::write_memory_object(
 		if (nb_nodes > 1000) {
 			if ((i % one_percent) == 0) {
 				int t1, dt;
+				os_interface Os;
 
-				t1 = os_ticks();
+				t1 = Os.os_ticks();
 				dt = t1 - t0;
 
 				cout << "Time ";
-				time_check_delta(cout, dt);
+				Os.time_check_delta(cout, dt);
 				print_problem_label();
 				cout << " : " << i / one_percent << " percent done, "
 						" node=" << i << " / " << nb_nodes << " "
@@ -1717,6 +1720,7 @@ void poset_classification::write_lvl_file_with_candidates(
 	int f_v = (verbose_level >= 1);
 	char fname1[1000];
 	file_io Fio;
+	os_interface Os;
 	
 	sprintf(fname1, "%s_lvl_%d_candidates.txt", fname_base, lvl);
 	{
@@ -1732,7 +1736,7 @@ void poset_classification::write_lvl_file_with_candidates(
 	f << "-1 " << first_poset_orbit_node_at_level[lvl + 1]
 				- first_poset_orbit_node_at_level[lvl]
 		<< " " << first_poset_orbit_node_at_level[lvl] << " in ";
-	time_check(f, t0);
+	Os.time_check(f, t0);
 	f << endl;
 	f << "# in action " << Poset->A->label << endl;
 	}
@@ -1752,6 +1756,7 @@ void poset_classification::write_lvl_file(
 	int f_v = (verbose_level >= 1);
 	char fname1[1000];
 	file_io Fio;
+	os_interface Os;
 
 	//sprintf(fname1, "%s_lvl_%d", fname_base, lvl);
 
@@ -1772,7 +1777,7 @@ void poset_classification::write_lvl_file(
 		}
 	f << "-1 " << len << " "
 			<< first_poset_orbit_node_at_level[lvl] << " in ";
-	time_check(f, t0);
+	Os.time_check(f, t0);
 	compute_and_print_automorphism_group_orders(lvl, f);
 	f << endl;
 	f << "# in action " << Poset->A->label << endl;
@@ -1791,6 +1796,7 @@ void poset_classification::write_lvl(
 	//int f_v = (verbose_level >= 1);
 	int i;
 	int fst, len;
+	os_interface Os;
 
 
 	fst = first_poset_orbit_node_at_level[lvl];
@@ -1803,7 +1809,7 @@ void poset_classification::write_lvl(
 		}
 	f << "-1 " << len << " " << first_poset_orbit_node_at_level[lvl]
 		<< " in ";
-	time_check(f, t0);
+	Os.time_check(f, t0);
 	f << endl;
 	compute_and_print_automorphism_group_orders(lvl, f);
 	f << endl;

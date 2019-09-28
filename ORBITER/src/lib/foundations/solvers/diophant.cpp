@@ -1370,6 +1370,9 @@ int diophant::solve_all_betten_with_conditions(int verbose_level,
 	int f_v = (verbose_level >= 1);
 	int j;
 	vector<int> lo;
+	os_interface Os;
+
+
 	//int maxresults = 10000000;
 	_resultanz = 0;
 	_cur_result = 0;
@@ -1378,14 +1381,14 @@ int diophant::solve_all_betten_with_conditions(int verbose_level,
 		diophant::f_max_time = TRUE;
 		diophant::max_time_in_sec = max_time_in_seconds;
 		f_broken_off_because_of_maxtime = FALSE;
-		t0 = os_ticks();
-		max_time_in_ticks = max_time_in_seconds * os_ticks_per_second();
+		t0 = Os.os_ticks();
+		max_time_in_ticks = max_time_in_seconds * Os.os_ticks_per_second();
 		if (TRUE || f_v) {
 			cout << "solve_all_betten_with_conditions maxtime "
 					"max_time_in_sec=" << max_time_in_sec << endl;
 		}
 	}
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	if (solve_first_betten(verbose_level - 2)) {
 		lo.resize(n);
 		for (j = 0; j < n; j++) {
@@ -1426,6 +1429,7 @@ int diophant::solve_first_betten(int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int k, total_max;
 	number_theory_domain NT;
+	os_interface Os;
 
 	if (!f_has_sum) {
 		cout << "diophant::solve_first_betten !f_has_sum" << endl;
@@ -1522,15 +1526,15 @@ int diophant::solve_first_betten(int verbose_level)
 				cout << "diophant::solve_first_betten nb_steps_betten="
 					<< nb_steps_betten << " sol=" << _resultanz << " ";
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
-					int t = dt / os_ticks_per_second();
+					int t = dt / Os.os_ticks_per_second();
 					cout << "time in seconds: " << t;
 				}
 				cout << endl;
 				print_x(nb_steps_betten);
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
 						f_broken_off_because_of_maxtime = TRUE;
@@ -1570,15 +1574,15 @@ int diophant::solve_first_betten(int verbose_level)
 				cout << "diophant::solve_first_betten nb_steps_betten="
 						<< nb_steps_betten << " sol=" << _resultanz << " ";
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
-					int t = dt / os_ticks_per_second();
+					int t = dt / Os.os_ticks_per_second();
 					cout << "time in seconds: " << t;
 				}
 				cout << endl;
 				print_x(nb_steps_betten);
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
 						f_broken_off_because_of_maxtime = TRUE;
@@ -1626,6 +1630,7 @@ int diophant::solve_next_mckay(int verbose_level)
 int diophant::solve_next_betten(int verbose_level)
 {
 	int j;
+	os_interface Os;
 	
 	if (!f_has_sum) {
 		cout << "diophant::solve_next_betten !f_has_sum" << endl;
@@ -1645,15 +1650,15 @@ int diophant::solve_next_betten(int verbose_level)
 				cout << "diophant::solve_next_betten nb_steps_betten="
 						<< nb_steps_betten << " sol=" << _resultanz << " ";
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
-					int t = dt / os_ticks_per_second();
+					int t = dt / Os.os_ticks_per_second();
 					cout << "time in seconds: " << t;
 				}
 				cout << endl;
 				print_x(nb_steps_betten);
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
 						f_broken_off_because_of_maxtime = TRUE;
@@ -1679,14 +1684,14 @@ int diophant::solve_next_betten(int verbose_level)
 				cout << "diophant::solve_next_betten nb_steps_betten="
 						<< nb_steps_betten << " sol=" << _resultanz << " ";
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
-					int t = dt / os_ticks_per_second();
+					int t = dt / Os.os_ticks_per_second();
 					cout << "time in seconds: " << t;
 				}
 				cout << endl;
 				if (f_max_time) {
-					int t1 = os_ticks();
+					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
 						f_broken_off_because_of_maxtime = TRUE;
@@ -4242,7 +4247,8 @@ void solve_diophant(int *Inc,
 	//int f_v4 = FALSE; //(verbose_level >= 2);
 	//int i, j;
 	diophant *Dio;
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 
 	if (f_v) {
 		cout << "solve_diophant nb_rows=" << nb_rows << " nb_cols="
@@ -4305,7 +4311,7 @@ void solve_diophant(int *Inc,
 		Solutions = NULL;
 	}
 	FREE_OBJECT(Dio);
-	int t1 = os_ticks();
+	int t1 = Os.os_ticks();
 	dt = t1 - t0;
 	if (f_v) {
 		cout << "solve_diophant done nb_sol=" << nb_sol

@@ -27,7 +27,8 @@ void create_element(int q, int k, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	t0 = os_ticks();
+	os_interface Os;
+	t0 = Os.os_ticks();
 	discreta_init();
 	int verbose_level = 0;
 	int i, q, k;

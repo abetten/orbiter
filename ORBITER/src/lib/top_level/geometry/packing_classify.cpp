@@ -754,8 +754,9 @@ void packing_classify::compute(int verbose_level)
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	gen->main(t0, 
 		schreier_depth, 

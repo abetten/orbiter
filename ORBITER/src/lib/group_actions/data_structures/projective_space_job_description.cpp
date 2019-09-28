@@ -403,6 +403,7 @@ void projective_space_job_description::perform_job(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "projective_space_job_description::perform_job" << endl;
@@ -437,7 +438,7 @@ void projective_space_job_description::perform_job(int verbose_level)
 
 	cout << "nb_objects_to_test = " << nb_objects_to_test << endl;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	file_io Fio;
 	char fname_out_txt[1000];

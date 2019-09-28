@@ -488,6 +488,33 @@ public:
 	void load(const char *fname, int verbose_level);
 };
 
+// #############################################################################
+// os_interface.cpp
+// #############################################################################
+
+
+//! system functions
+
+class os_interface {
+public:
+
+	void runtime(long *l);
+	int os_memory_usage();
+	int os_ticks();
+	int os_ticks_system();
+	int os_ticks_per_second();
+	void os_ticks_to_dhms(int ticks, int tps,
+			int &d, int &h, int &m, int &s);
+	void time_check_delta(std::ostream &ost, int dt);
+	void print_elapsed_time(std::ostream &ost, int d, int h, int m, int s);
+	void time_check(std::ostream &ost, int t0);
+	int delta_time(int t0);
+	void seed_random_generator_with_system_time();
+	void seed_random_generator(int seed);
+	int random_integer(int p);
+
+};
+
 
 // #############################################################################
 // override_double.cpp
@@ -557,8 +584,6 @@ void int_distribution_print(std::ostream &ost, int *val, int *mult, int len);
 void int_swap(int& x, int& y);
 void int_set_print(int *v, int len);
 void int_set_print(std::ostream &ost, int *v, int len);
-
-
 void int_vec_print(std::ostream &ost, int *v, int len);
 void lint_vec_print(std::ostream &ost, long int *v, int len);
 void int_vec_print_str(std::stringstream &ost, int *v, int len);
@@ -601,20 +626,9 @@ void int_matrix_transpose(int *M, int m, int n, int *Mt);
 // Mt must point to the right amount of memory (n * m int's)
 void int_matrix_shorten_rows(int *&p, int m, int n);
 void pint_matrix_shorten_rows(pint *&p, int m, int n);
-void runtime(long *l);
-int os_memory_usage();
-int os_ticks();
-int os_ticks_system();
-int os_ticks_per_second();
-void os_ticks_to_dhms(int ticks, int tps,
-		int &d, int &h, int &m, int &s);
-void time_check_delta(std::ostream &ost, int dt);
-void print_elapsed_time(std::ostream &ost, int d, int h, int m, int s);
-void time_check(std::ostream &ost, int t0);
-int delta_time(int t0);
-void seed_random_generator_with_system_time();
-void seed_random_generator(int seed);
-int random_integer(int p);
+
+
+
 void print_set(std::ostream &ost, int size, int *set);
 void block_swap_chars(char *ptr, int size, int no);
 void code_int4(char *&p, int_4 i);
@@ -662,8 +676,10 @@ void int_vec_print_to_str(char *str, int *data, int len);
 void int_vec_print_to_str_naked(char *str, int *data, int len);
 int is_csv_file(const char *fname);
 int is_xml_file(const char *fname);
+
 void os_date_string(char *str, int sz);
 int os_seconds_past_1970();
+
 void test_typedefs();
 void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);

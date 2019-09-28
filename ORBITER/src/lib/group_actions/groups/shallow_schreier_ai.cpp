@@ -58,9 +58,10 @@ void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int verbose_level
 		//auto total_points_in_old_forest = S->get_num_points();
 
 		//
-		int random_orbit_idx = random_integer(S->nb_orbits);
+		os_interface Os;
+		int random_orbit_idx = Os.random_integer(S->nb_orbits);
 		int random_orbit_idx_cpy = random_orbit_idx;
-		int random_point_idx = random_integer(S->orbit_len[random_orbit_idx]);
+		int random_point_idx = Os.random_integer(S->orbit_len[random_orbit_idx]);
 		int random_point = S->orbit[S->orbit_first[random_orbit_idx]
 				+ random_point_idx];
 		int random_generator_idx = gen_idx; //random_integer(gens2->len);

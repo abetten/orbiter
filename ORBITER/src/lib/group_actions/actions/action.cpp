@@ -2894,6 +2894,7 @@ void action::perform_tests(strong_generators *SG, int verbose_level)
 	int cnt;
 	int i;
 	combinatorics_domain Combi;
+	os_interface Os;
 
 	Elt1 = NEW_int(elt_size_in_int);
 	Elt2 = NEW_int(elt_size_in_int);
@@ -2906,8 +2907,8 @@ void action::perform_tests(strong_generators *SG, int verbose_level)
 	perm5 = NEW_int(degree);
 
 	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
+		r1 = Os.random_integer(SG->gens->len);
+		r2 = Os.random_integer(SG->gens->len);
 		if (f_v) {
 			cout << "r1=" << r1 << endl;
 			cout << "r2=" << r2 << endl;
@@ -2968,7 +2969,7 @@ void action::perform_tests(strong_generators *SG, int verbose_level)
 	}
 
 	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
+		r1 = Os.random_integer(SG->gens->len);
 		if (f_v) {
 			cout << "r1=" << r1 << endl;
 		}
@@ -3019,8 +3020,8 @@ void action::perform_tests(strong_generators *SG, int verbose_level)
 
 
 	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
+		r1 = Os.random_integer(SG->gens->len);
+		r2 = Os.random_integer(SG->gens->len);
 		if (f_v) {
 			cout << "r1=" << r1 << endl;
 			cout << "r2=" << r2 << endl;

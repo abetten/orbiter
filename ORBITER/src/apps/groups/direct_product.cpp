@@ -208,8 +208,9 @@ int main(int argc, const char **argv)
 	const char *subgroup_gens_text = NULL;
 	const char *subgroup_order_text = NULL;
 	const char *group_label = NULL;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	//f_memory_debug = TRUE;
 	//f_memory_debug_verbose = TRUE;
@@ -488,6 +489,7 @@ void direct_product_action::init(int argc, const char **argv,
 	int i, j, a;
 	int f_K = FALSE;
 	int f_singletons = FALSE;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "direct_product_action::init" << endl;
@@ -935,7 +937,7 @@ void direct_product_action::init(int argc, const char **argv,
 		f_use_invariant_subset_if_available = TRUE;
 		f_debug = FALSE;
 
-		int t0 = os_ticks();
+		int t0 = Os.os_ticks();
 
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -1359,6 +1361,7 @@ void direct_product_action::testing(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "direct_product_action::testing" << endl;
@@ -1390,8 +1393,8 @@ void direct_product_action::testing(
 	perm5 = NEW_int(A->degree);
 
 	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
+		r1 = Os.random_integer(SG->gens->len);
+		r2 = Os.random_integer(SG->gens->len);
 		cout << "r1=" << r1 << endl;
 		cout << "r2=" << r2 << endl;
 		A->element_move(SG->gens->ith(r1), Elt1, 0);
@@ -1435,7 +1438,7 @@ void direct_product_action::testing(
 
 
 	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
+		r1 = Os.random_integer(SG->gens->len);
 		cout << "r1=" << r1 << endl;
 		A->element_move(SG->gens->ith(r1), Elt1, 0);
 		cout << "Elt1 = " << endl;
@@ -1472,8 +1475,8 @@ void direct_product_action::testing(
 
 
 	for (cnt = 0; cnt < 10; cnt++) {
-		r1 = random_integer(SG->gens->len);
-		r2 = random_integer(SG->gens->len);
+		r1 = Os.random_integer(SG->gens->len);
+		r2 = Os.random_integer(SG->gens->len);
 		cout << "r1=" << r1 << endl;
 		cout << "r2=" << r2 << endl;
 		A->element_move(SG->gens->ith(r1), Elt1, 0);

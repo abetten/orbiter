@@ -36,7 +36,8 @@ void draw_vertex_callback_graph(tree *T,
 
 int main(int argc, const char **argv)
 {
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	int verbose_level = 0;
 	int xmax = 1000000;
 	int ymax = 1000000;
@@ -233,7 +234,7 @@ int main(int argc, const char **argv)
 			scale, line_width);
 		}
 	
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 }
 

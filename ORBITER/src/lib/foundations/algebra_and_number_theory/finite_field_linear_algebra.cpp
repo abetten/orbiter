@@ -3845,8 +3845,9 @@ void finite_field::code_projective_weight_enumerator(
 	int *word;
 	int t0, t1, dt;
 	geometry_global Gg;
+	os_interface Os;
 	
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_projective_weight_enumerator" << endl;
@@ -3862,10 +3863,10 @@ void finite_field::code_projective_weight_enumerator(
 	
 	for (h = 0; h < N; h++) {
 		if (f_v && (h % ONE_MILLION) == 0) {
-			t1 = os_ticks();
+			t1 = Os.os_ticks();
 			dt = t1 - t0;
 			cout << setw(10) << h << " / " << setw(10) << N << " : ";
-			time_check_delta(cout, dt);
+			Os.time_check_delta(cout, dt);
 			cout << endl;
 			if (f_vv) {
 				cout << "so far, the weight enumerator is:" << endl;
@@ -3916,8 +3917,9 @@ void finite_field::code_weight_enumerator(
 	int *word;
 	int t0, t1, dt;
 	geometry_global Gg;
+	os_interface Os;
 	
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_weight_enumerator" << endl;
@@ -3933,10 +3935,10 @@ void finite_field::code_weight_enumerator(
 	
 	for (h = 0; h < N; h++) {
 		if ((h % ONE_MILLION) == 0) {
-			t1 = os_ticks();
+			t1 = Os.os_ticks();
 			dt = t1 - t0;
 			cout << setw(10) << h << " / " << setw(10) << N << " : ";
-			time_check_delta(cout, dt);
+			Os.time_check_delta(cout, dt);
 			cout << endl;
 			if (f_vv) {
 				cout << "so far, the weight enumerator is:" << endl;
@@ -3987,8 +3989,9 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 	int *word;
 	int t0, t1, dt;
 	geometry_global Gg;
+	os_interface Os;
 	
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_weight_enumerator" << endl;
@@ -4005,10 +4008,10 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 	
 	for (h = 0; h < N; h++) {
 		if (((h % ONE_MILLION) == 0) && h) {
-			t1 = os_ticks();
+			t1 = Os.os_ticks();
 			dt = t1 - t0;
 			cout << setw(10) << h << " / " << setw(10) << N << " : ";
-			time_check_delta(cout, dt);
+			Os.time_check_delta(cout, dt);
 			cout << endl;
 			if (f_vv) {
 				cout << "so far, the weight enumerator is:" << endl;
@@ -4071,8 +4074,9 @@ void finite_field::code_projective_weights(
 	int *word;
 	int t0, t1, dt;
 	geometry_global Gg;
+	os_interface Os;
 	
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "finite_field::code_projective_weights" << endl;
@@ -4087,10 +4091,10 @@ void finite_field::code_projective_weights(
 	
 	for (h = 0; h < N; h++) {
 		if ((h % ONE_MILLION) == 0) {
-			t1 = os_ticks();
+			t1 = Os.os_ticks();
 			dt = t1 - t0;
 			cout << setw(10) << h << " / " << setw(10) << N << " : ";
-			time_check_delta(cout, dt);
+			Os.time_check_delta(cout, dt);
 			cout << endl;
 			}
 		PG_element_unrank_modified(msg, 1, k, h);
@@ -4462,6 +4466,7 @@ void finite_field::random_invertible_matrix(int *M,
 	int i, qk, r, rk;
 	number_theory_domain NT;
 	geometry_global Gg;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "finite_field::random_invertible_matrix" << endl;
@@ -4473,7 +4478,7 @@ void finite_field::random_invertible_matrix(int *M,
 			cout << "i=" << i << endl;
 			}
 		while (TRUE) {
-			r = random_integer(qk);
+			r = Os.random_integer(qk);
 			if (f_vv) {
 				cout << "r=" << r << endl;
 				}
