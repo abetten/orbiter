@@ -55,11 +55,12 @@ void tensor_classify::init(int argc, const char **argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "tensor_classify::init" << endl;
 	}
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	tensor_classify::argc = argc;
 	tensor_classify::argv = argv;
@@ -420,7 +421,7 @@ void tensor_classify::init(int argc, const char **argv,
 	int *result = NULL;
 
 	cout << "time check: ";
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 
 	cout << "tensor_classify::init "
@@ -447,7 +448,7 @@ void tensor_classify::init(int argc, const char **argv,
 	}
 
 	cout << "time check: ";
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 
 	cout << "tensor_classify::init "

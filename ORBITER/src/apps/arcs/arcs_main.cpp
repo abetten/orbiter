@@ -26,7 +26,8 @@ int t0; // the system time when the program started
 
 int main(int argc, const char **argv)
 {
-	t0 = os_ticks();
+	os_interface Os;
+	t0 = Os.os_ticks();
 	int i;
 	int verbose_level = 0;
 	int f_draw_poset = FALSE;
@@ -315,9 +316,9 @@ int main(int argc, const char **argv)
 
 	FREE_OBJECT(F);
 
-	cout << "Memory usage = " << os_memory_usage()
-			<<  " Time = " << delta_time(t0)
-			<< " tps = " << os_ticks_per_second() << endl;
+	cout << "Memory usage = " << Os.os_memory_usage()
+			<<  " Time = " << Os.delta_time(t0)
+			<< " tps = " << Os.os_ticks_per_second() << endl;
 	the_end(t0);
 	//the_end_quietly(t0);
 }

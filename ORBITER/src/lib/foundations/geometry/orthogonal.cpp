@@ -7889,6 +7889,7 @@ void orthogonal::random_generator_for_orthogonal_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int r;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "orthogonal::random_generator_for_orthogonal_group" << endl;
@@ -7901,7 +7902,7 @@ void orthogonal::random_generator_for_orthogonal_group(
 
 
 	while (TRUE) {
-		r = random_integer(4);
+		r = Os.random_integer(4);
 		if (r == 0 && f_siegel) {
 			break;
 			}
@@ -7975,6 +7976,7 @@ void orthogonal::create_random_Siegel_transformation(
 	int k = m; // the Witt index, previously orthogonal_k;
 	int d = n;
 	int *u, *v;
+	os_interface Os;
 	
 	if (f_v) {
 		cout << "orthogonal::create_random_Siegel_transformation" << endl;
@@ -7999,7 +8001,7 @@ void orthogonal::create_random_Siegel_transformation(
 		//		"nb_pts_affine=" << nb_pts_affine << endl;
 		}
 
-	rk_u = random_integer(nb_pts);
+	rk_u = Os.random_integer(nb_pts);
 	if (f_v) {
 		cout << "orthogonal::create_random_Siegel_transformation "
 				"rk_u=" << rk_u << endl;
@@ -8019,7 +8021,7 @@ void orthogonal::create_random_Siegel_transformation(
 		AG_element_unrank(q, v, 1 /* stride */, d, rk_v);
 #else
 		for (i = 0; i < d; i++) {
-			v[i] = random_integer(q);
+			v[i] = Os.random_integer(q);
 		}
 
 #endif
@@ -8079,7 +8081,8 @@ void orthogonal::create_random_semisimilarity(int *Mtx, int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	int d = n;
 	int i, a, b, c, k;
-	
+	os_interface Os;
+
 	if (f_v) {
 		cout << "orthogonal::create_random_semisimilarity" << endl;
 		}
@@ -8097,10 +8100,10 @@ void orthogonal::create_random_semisimilarity(int *Mtx, int verbose_level)
 #endif
 
 	if (epsilon == 1) {
-		Mtx[d * d] = random_integer(F->e);
+		Mtx[d * d] = Os.random_integer(F->e);
 		}
 	else if (epsilon == 0) {
-		Mtx[d * d] = random_integer(F->e);
+		Mtx[d * d] = Os.random_integer(F->e);
 		}
 	else if (epsilon == -1) {
 		if (q == 4) {
@@ -8155,6 +8158,7 @@ void orthogonal::create_random_similarity(int *Mtx, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int d = n;
 	int i, r, r2;
+	os_interface Os;
 	
 	if (f_v) {
 		cout << "orthogonal::create_random_similarity" << endl;
@@ -8170,7 +8174,7 @@ void orthogonal::create_random_similarity(int *Mtx, int verbose_level)
 	for (i = 0; i < d; i++) {
 		Mtx[i * d + i] = 1;
 		}
-	r = random_integer(q - 1) + 1;
+	r = Os.random_integer(q - 1) + 1;
 	if (f_vv) {
 		cout << "orthogonal::create_random_similarity "
 				"r=" << r << endl;
@@ -8223,6 +8227,7 @@ void orthogonal::create_random_orthogonal_reflection(
 	int d = n;
 	int cnt;
 	int *z;
+	os_interface Os;
 	
 	if (f_v) {
 		cout << "orthogonal::create_random_orthogonal_reflection" << endl;
@@ -8257,7 +8262,7 @@ void orthogonal::create_random_orthogonal_reflection(
 		AG_element_unrank(q, z, 1 /* stride */, d, rk_z);
 #else
 		for (i = 0; i < d; i++) {
-			z[i] = random_integer(q);
+			z[i] = Os.random_integer(q);
 		}
 #endif
 

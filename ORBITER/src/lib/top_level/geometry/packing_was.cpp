@@ -161,10 +161,11 @@ void packing_was::init(int argc, const char **argv)
 	long int t0 = 0;
 	int i;
 	int verbose_level = 0;
+	os_interface Os;
 
 
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);

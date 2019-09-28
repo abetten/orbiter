@@ -405,7 +405,8 @@ void classify_double_sixes::classify_partial_ovoids(
 	int schreier_depth = 10000;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 
 
 	if (f_v) {

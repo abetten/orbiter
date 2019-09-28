@@ -77,8 +77,9 @@ int main(int argc, const char **argv)
 
 	ECA = NEW_OBJECT(exact_cover_arguments);
 	IA = NEW_OBJECT(isomorph_arguments);
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
@@ -376,8 +377,9 @@ int main(int argc, const char **argv)
 
 		cout << "f_starter" << endl;
 		int t1, t2, dt;
+		os_interface Os;
 
-		t1 = os_ticks();
+		t1 = Os.os_ticks();
 
 		cout << "before P->compute" << endl;
 
@@ -385,7 +387,7 @@ int main(int argc, const char **argv)
 
 		cout << "after P->compute" << endl;
 
-		t2 = os_ticks();
+		t2 = Os.os_ticks();
 		if (f_draw_poset) {
 			P->gen->draw_poset(P->prefix_with_directory,
 					ECA->starter_size, ECA->starter_size,

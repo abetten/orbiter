@@ -28,7 +28,8 @@ void polynomial_orbits_callback_print_function2(
 
 int main(int argc, const char **argv)
 {
-	t0 = os_ticks();
+	os_interface Os;
+	t0 = Os.os_ticks();
 	
 	
 	{

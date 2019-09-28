@@ -96,6 +96,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
+	os_interface Os;
 	
 	if (f_v) {
 		cout << "rainbow_cliques::search_with_additional_"
@@ -168,7 +169,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	
 	int t0, t1;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	if (f_vv) {
 		cout << "rainbow_cliques::search now we start the "
@@ -212,7 +213,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	decision_steps = CF->decision_step_counter;
 	nb_sol = CF->nb_sol;
 	
-	t1 = os_ticks();
+	t1 = Os.os_ticks();
 
 	
 	dt = t1 - t0;

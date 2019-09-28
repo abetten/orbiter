@@ -37,24 +37,27 @@ mckay::tMCKAY::tMCKAY() {
 };
 
 void mckay::tMCKAY::Init(diophant *lgs,
-		const char *label, int aEqnAnz, int aVarAnz) {
-  _varanz=aVarAnz;
-  _eqnanz=aEqnAnz;
+		const char *label, int aEqnAnz, int aVarAnz)
+{
+	os_interface Os;
+
+	_varanz=aVarAnz;
+	_eqnanz=aEqnAnz;
 	nb_calls_to_solve = 0;
-  D = lgs;
-  //_lgs = aLgs;
-  rekurs=0;
-  unitcoeffs.resize(_eqnanz);
-  active.resize(_eqnanz);
+	D = lgs;
+	//_lgs = aLgs;
+	rekurs=0;
+	unitcoeffs.resize(_eqnanz);
+	active.resize(_eqnanz);
 	problem_label = label;
 #ifdef MCKAY_DEBUG
 	int m;
 
 	m = MAXIMUM(_eqnanz, _varanz) + 1;
-  range.resize(m);
-  split.resize(m);
-  branch.resize(m);
-  ticks0 = os_ticks();
+	range.resize(m);
+	split.resize(m);
+	branch.resize(m);
+	ticks0 = Os.os_ticks();
 #endif
 }
 
@@ -450,7 +453,7 @@ void mckay::tMCKAY::solve(int level,
 
 	if (FALSE) {
         	int nacc = 0;
-		cout << " SOLVE level "<<level<< endl;
+        	cout << " SOLVE level "<<level<< endl;
 	            cout<<"Number of active equations: ";
 	            for (i = numeqn; --i >= 0;) if (aactive[i]) ++nacc;
         	    cout<<":"<<nacc<<endl;
@@ -464,9 +467,10 @@ void mckay::tMCKAY::solve(int level,
 		    	cout << j << " : " << alo[j] << " : " << ahi[j] << endl;
 		    	}
 #ifdef MCKAY_DEBUG
-	        if (((os_ticks() - ticks0) / os_ticks_per_second())
+			os_interface Os;
+	        if (((Os.os_ticks() - ticks0) / Os.os_ticks_per_second())
 	        		> INTERVAL_IN_SECONDS) {
-			ticks0 = os_ticks();
+			ticks0 = Os.os_ticks();
 			//f_debug = TRUE;
 		       	puteqns(alo,ahi,numvar,lorhs,hirhs,eqn,neqn,numeqn);
 			cout << "level=" << level << endl;

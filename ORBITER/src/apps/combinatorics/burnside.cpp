@@ -63,8 +63,9 @@ int main(int argc, char **argv)
 	int verbose_level = 0;
 	int f_n = FALSE;
 	int n = 0;
-	
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 
 	
 	for (i = 1; i < argc; i++) {

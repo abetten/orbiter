@@ -40,8 +40,9 @@ int main(int argc, const char **argv)
 	int f_quartic = FALSE;
 	int f_clebsch = FALSE;
 	int f_codes = FALSE;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	for (i = 1; i < argc; i++) {

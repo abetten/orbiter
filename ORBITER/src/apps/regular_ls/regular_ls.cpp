@@ -39,11 +39,13 @@ int main(int argc, const char **argv)
 	exact_cover_arguments *ECA = NULL;
 	isomorph_arguments *IA = NULL;
 
+	os_interface Os;
+
 	ECA = NEW_OBJECT(exact_cover_arguments);
 	IA = NEW_OBJECT(isomorph_arguments);
 	
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

@@ -129,8 +129,9 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 {
 	int f_v = (verbose_level >= 1);
 	int t0;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	if (f_v) {

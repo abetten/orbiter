@@ -99,8 +99,9 @@ int main(int argc, char **argv)
 	int loop_increment = 0;
 	int i;
 	sorting Sorting;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -493,6 +494,7 @@ void arc_lifting_from_classification_file(
 	int q;
 	vector_ge *nice_gens;
 	number_theory_domain NT;
+	os_interface Os;
 
 
 	if (f_v) {
@@ -644,7 +646,7 @@ void arc_lifting_from_classification_file(
 
 			Fp << "# start arc " << orbit_idx << endl;
 
-			int t0 = os_ticks();
+			int t0 = Os.os_ticks();
 
 			do_arc_lifting(Fp,
 				P, k, arc, arc_sz, sz,
@@ -655,7 +657,7 @@ void arc_lifting_from_classification_file(
 
 			int t1, dt;
 
-			t1 = os_ticks();
+			t1 = Os.os_ticks();
 			dt = t1 - t0;
 
 
@@ -676,7 +678,7 @@ void arc_lifting_from_classification_file(
 			}
 
 			Fp << " : time ";
-			time_check_delta(Fp, dt);
+			Os.time_check_delta(Fp, dt);
 
 			Fp << endl;
 

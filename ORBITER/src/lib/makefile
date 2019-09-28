@@ -125,6 +125,7 @@ MODULES= \
 		foundations/io_and_os/mem_object_registry.o \
 		foundations/io_and_os/memory_object.o \
 		foundations/io_and_os/orbiter_data_file.o \
+		foundations/io_and_os/os_interface.o \
 		foundations/io_and_os/override_double.o \
 		foundations/io_and_os/util.o \
 		foundations/solvers/diophant.o \

@@ -1615,6 +1615,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	double a, av;
 	double v[3];
 	numerics N;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "scene::intersect_line_and_plane" << endl;
@@ -1678,9 +1679,9 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	// find Q_0:
 
 	while (TRUE) {
-		B[0] = (double) random_integer(5);
-		B[1] = (double) random_integer(5);
-		B[2] = (double) random_integer(5);
+		B[0] = (double) Os.random_integer(5);
+		B[1] = (double) Os.random_integer(5);
+		B[2] = (double) Os.random_integer(5);
 		a = B[0] * Plane_coords[plane_idx * 4 + 0];
 		a += B[1] * Plane_coords[plane_idx * 4 + 1];
 		a += B[2] * Plane_coords[plane_idx * 4 + 2];

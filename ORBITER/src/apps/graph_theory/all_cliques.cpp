@@ -40,7 +40,8 @@ void early_test_function_cocliques(int *S, int len,
 int main(int argc, char **argv)
 {
 	int i;
-	t0 = os_ticks();
+	os_interface Os;
+	t0 = Os.os_ticks();
 	int verbose_level = 0;
 	int f_file = FALSE;	
 	const char *fname = NULL;

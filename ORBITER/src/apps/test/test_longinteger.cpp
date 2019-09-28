@@ -14,7 +14,9 @@ using namespace orbiter;
 
 int main(int argc, char **argv)
 {
-	int t0 = os_ticks();
+	os_interface Os;
+
+	int t0 = Os.os_ticks();
 	int i;
 	int verbose_level = 0;
 
@@ -46,7 +48,7 @@ int main(int argc, char **argv)
 	global_mem_object_registry.manual_dump_with_file_name("memory_dump_at_end.csv");
 
 
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 }
 

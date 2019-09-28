@@ -32,9 +32,10 @@ int main(int argc, const char **argv)
 
 	int f_job = FALSE;
 	projective_space_job_description *Job;
-	
+	os_interface Os;
 
-	t0 = os_ticks();
+
+	t0 = Os.os_ticks();
 
 
 	for (i = 1; i < argc; i++) {

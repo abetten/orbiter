@@ -12,7 +12,8 @@ using namespace orbiter;
 
 int main(int argc, char **argv)
 {
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	int verbose_level = 0;
 	int i;
 	int f_primitive_range = FALSE;
@@ -82,7 +83,7 @@ int main(int argc, char **argv)
 		FREE_int(Table);
 		}
 	
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 }
 

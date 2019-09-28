@@ -277,6 +277,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 	int starter_case;
 	int the_starter_case;
 	file_io Fio;
+	os_interface Os;
 
 
 
@@ -370,15 +371,15 @@ void exact_cover::compute_liftings_new(int f_solve,
 		if (f_v) {
 			int tps, ts, tm, th, td;
 
-			tps = os_ticks_per_second();
-			os_ticks_to_dhms(dt, tps, td, th, tm, ts);
+			tps = Os.os_ticks_per_second();
+			Os.os_ticks_to_dhms(dt, tps, td, th, tm, ts);
 			cout << "exact_cover::compute_liftings_new "
 					"starter_case " << starter_case << " / "
 					<< starter_nb_cases << " which is case "
 					<< the_starter_case << " found " << nb_sol
 					<< " solutions with " << nb_backtrack
 					<< " backtrack nodes in ";
-			print_elapsed_time(cout, td, th, tm, ts);
+			Os.print_elapsed_time(cout, td, th, tm, ts);
 			cout << endl;
 			}
 
@@ -470,7 +471,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 					<< starter_case << " / " << starter_nb_cases
 					<< " which is case " << the_starter_case
 					<< " with " << nb_sol << " solutions in "
-					<< dt / os_ticks_per_second() << " sec "
+					<< dt / Os.os_ticks_per_second() << " sec "
 					"(nb_sol_deleted=" << nb_sol_deleted << ")" << endl;
 			}
 		total_solutions += nb_sol;
@@ -479,7 +480,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 		Nb_sol[nb_cases] = nb_sol;
 		Nb_backtrack[nb_cases] = nb_backtrack;
 		Dt[nb_cases] = dt;
-		Dt_in_sec[nb_cases] = dt / os_ticks_per_second();
+		Dt_in_sec[nb_cases] = dt / Os.os_ticks_per_second();
 		nb_cases++;
 		Nb_sol_total += nb_sol;
 		}
@@ -534,6 +535,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	int f_v4 = (verbose_level >= 4);
 	char str[1000];
 	file_io Fio;
+	os_interface Os;
 
 
 	if (f_v) {
@@ -691,7 +693,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 			int i, j, a, b;
 
 			if (f_solve) { 
-				t0 = os_ticks();
+				t0 = Os.os_ticks();
 
 				long int nb_backtrack_nodes;
 
@@ -716,7 +718,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 							"after solve_all_DLX_with_RHS" << endl;
 					}
 #endif
-				t1 = os_ticks();
+				t1 = Os.os_ticks();
 				if (f_v) {
 					cout << "exact_cover::compute_liftings_single_case_new "
 							"nb_backtrack = "

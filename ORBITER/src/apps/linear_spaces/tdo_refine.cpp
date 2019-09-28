@@ -150,7 +150,8 @@ int main(int argc, char **argv)
 	tdo_parameter_calculation *G;
 	int verbose_level = 0;
 	int i;
-	
+	os_interface Os;
+
 	cout << version << endl;
 
 	for (i = 1; i < argc - 1; i++) {
@@ -168,7 +169,7 @@ int main(int argc, char **argv)
 	G->main_loop(verbose_level);
 	
 	cout << "time: ";
-	time_check(cout, G->t0);
+	Os.time_check(cout, G->t0);
 	cout << endl;
 	FREE_OBJECT(G);
 }
@@ -229,12 +230,13 @@ tdo_parameter_calculation::~tdo_parameter_calculation()
 void tdo_parameter_calculation::init(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	os_interface Os;
 
 	if (f_v) {
 		cout << "tdo_parameter_calculation::init" << endl;
 	}
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	Sol = NEW_OBJECT(solution_file_data);

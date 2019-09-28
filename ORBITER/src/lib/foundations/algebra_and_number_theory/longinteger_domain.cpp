@@ -1707,6 +1707,7 @@ void longinteger_domain::random_number_less_than_n(
 	int i, l, rr;
 	//char *n_rep;
 	char *r_rep;
+	os_interface Os;
 	
 	l = n.len();
 	n.assign_to(r);
@@ -1714,7 +1715,7 @@ void longinteger_domain::random_number_less_than_n(
 	r_rep = r.rep();
 	while (TRUE) {
 		for (i = l - 1; i >= 0; i--) {
-			rr = random_integer(10);
+			rr = Os.random_integer(10);
 			r_rep[i] = (char) rr;
 			}
 		r.normalize();

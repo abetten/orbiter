@@ -1,0 +1,290 @@
+/*
+ * os_interface.cpp
+ *
+ *  Created on: Sep 28, 2019
+ *      Author: betten
+ */
+
+
+
+
+
+#include "foundations.h"
+
+using namespace std;
+
+#include <cstdio>
+#include <sys/types.h>
+#ifdef SYSTEMUNIX
+#include <unistd.h>
+#endif
+#include <fcntl.h>
+
+#ifdef SYSTEMUNIX
+#include <sys/times.h>
+	/* for times() */
+#endif
+#include <time.h>
+	/* for time() */
+#ifdef SYSTEMWINDOWS
+#include <io.h>
+#include <process.h>
+#endif
+#ifdef SYSTEMMAC
+#include <console.h>
+#include <time.h> // for clock()
+#include <unix.h>
+#endif
+#ifdef MSDOS
+#include <time.h> // for clock()
+#endif
+
+
+namespace orbiter {
+namespace foundations {
+
+
+
+
+void os_interface::runtime(long *l)
+{
+#ifdef SYSTEMUNIX
+	struct tms *buffer = (struct tms *) malloc(sizeof(struct tms));
+	times(buffer);
+	*l = (long) buffer->tms_utime;
+	free(buffer);
+#endif
+#ifdef SYSTEMMAC
+	*l = 0;
+#endif
+#ifdef MSDOS
+	*l = (long) clock();
+#endif /* MSDOS */
+}
+
+
+int os_interface::os_memory_usage()
+{
+#ifdef SYSTEM_IS_MACINTOSH
+	struct task_basic_info t_info;
+	mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
+
+	if (KERN_SUCCESS != task_info(mach_task_self(),
+		                      TASK_BASIC_INFO, (task_info_t)&t_info,
+		                      &t_info_count))
+	{
+		cout << "os_memory_usage() error in task_info" << endl;
+		exit(1);
+	}
+	// resident size is in t_info.resident_size;
+	// virtual size is in t_info.virtual_size;
+
+
+	//cout << "resident_size=" << t_info.resident_size << endl;
+	//cout << "virtual_size=" << t_info.virtual_size << endl;
+	return t_info.resident_size;
+#endif
+#ifdef SYSTEM_LINUX
+	int chars = 128;
+		// number of characters to read from the
+		//  /proc/self/status file in a given line
+	FILE* file = fopen("/proc/self/status", "r");
+	char line[chars];
+	while (fgets(line, chars, file) != NULL) {
+		// read one line at a time
+		if (strncmp(line, "VmPeak:", 7) == 0) {
+			// compare the first 7 characters of every line
+			char* p = line + 7;
+			// start reading from the 7th index of the line
+			p[strlen(p)-3] = '\0';
+			// set the null terminator at the beginning of size units
+			fclose(file);
+			// close the file stream
+			return atoi(p);
+			// return the size in KiB
+			}
+		}
+#endif
+	return 0;
+}
+
+int os_interface::os_ticks()
+{
+#ifdef SYSTEMUNIX
+	struct tms tms_buffer;
+	int t;
+
+	if (-1 == (int) times(&tms_buffer))
+		return(-1);
+	t = tms_buffer.tms_utime;
+	//cout << "os_ticks " << t << endl;
+	return t;
+#endif
+#ifdef SYSTEMMAC
+	clock_t t;
+
+	t = clock();
+	return((int)t);
+#endif
+#ifdef SYSTEMWINDOWS
+	return 0;
+#endif
+}
+
+static int f_system_time_set = FALSE;
+static int system_time0 = 0;
+
+int os_interface::os_ticks_system()
+{
+	int t;
+
+	t = time(NULL);
+	if (!f_system_time_set) {
+		f_system_time_set = TRUE;
+		system_time0 = t;
+		}
+	//t -= system_time0;
+	//t *= os_ticks_per_second();
+	return t;
+}
+
+int os_interface::os_ticks_per_second()
+{
+	static int f_tps_computed = FALSE;
+	static int tps = 0;
+#ifdef SYSTEMUNIX
+	int clk_tck = 1;
+
+	if (f_tps_computed)
+		return tps;
+	else {
+		clk_tck = sysconf(_SC_CLK_TCK);
+		tps = clk_tck;
+		f_tps_computed = TRUE;
+		//cout << endl << "clock ticks per second = " << tps << endl;
+		return(clk_tck);
+		}
+#endif
+#ifdef SYSTEMWINDOWS
+	return 1;
+#endif
+}
+
+void os_interface::os_ticks_to_dhms(int ticks,
+		int tps, int &d, int &h, int &m, int &s)
+{
+	int l1;
+	int f_v = FALSE;
+
+	if (f_v) {
+		cout << "os_ticks_to_dhms ticks = " << ticks << endl;
+		}
+	l1 = ticks / tps;
+	if (f_v) {
+		cout << "os_ticks_to_dhms l1 = " << l1 << endl;
+		}
+	s = l1 % 60;
+	if (f_v) {
+		cout << "os_ticks_to_dhms s = " << s << endl;
+		}
+	l1 /= 60;
+	m = l1 % 60;
+	if (f_v) {
+		cout << "os_ticks_to_dhms m = " << m << endl;
+		}
+	l1 /= 60;
+	h = l1;
+	if (f_v) {
+		cout << "os_ticks_to_dhms h = " << h << endl;
+		}
+	if (h >= 24) {
+		d = h / 24;
+		h = h % 24;
+		}
+	else
+		d = 0;
+	if (f_v) {
+		cout << "os_ticks_to_dhms d = " << d << endl;
+		}
+}
+
+void os_interface::time_check_delta(ostream &ost, int dt)
+{
+	int tps, d, h, min, s;
+
+	tps = os_ticks_per_second();
+	//cout << "time_check_delta tps=" << tps << endl;
+	os_ticks_to_dhms(dt, tps, d, h, min, s);
+
+	if ((dt / tps) >= 1) {
+		print_elapsed_time(ost, d, h, min, s);
+		}
+	else {
+		ost << "0:00";
+		}
+	//cout << endl;
+}
+
+void os_interface::print_elapsed_time(ostream &ost, int d, int h, int m, int s)
+{
+	if (d > 0) {
+		ost << d << "-" << h << ":" << m << ":" << s;
+		}
+	else if (h > 0) {
+		ost << h << ":" << m << ":" << s;
+		}
+	else  {
+		ost << m << ":" << s;
+		}
+}
+
+void os_interface::time_check(ostream &ost, int t0)
+{
+	int t1, dt;
+
+	t1 = os_ticks();
+	dt = t1 - t0;
+	//cout << "time_check t0=" << t0 << endl;
+	//cout << "time_check t1=" << t1 << endl;
+	//cout << "time_check dt=" << dt << endl;
+	time_check_delta(ost, dt);
+}
+
+int os_interface::delta_time(int t0)
+{
+	int t1, dt;
+
+	t1 = os_ticks();
+	dt = t1 - t0;
+	return dt;
+}
+
+
+void os_interface::seed_random_generator_with_system_time()
+{
+	srand((unsigned int) time(0));
+}
+
+void os_interface::seed_random_generator(int seed)
+{
+	srand((unsigned int) seed);
+}
+
+int os_interface::random_integer(int p)
+// computes a random integer r with $0 \le r < p.$
+{
+	int n;
+
+	if (p == 0) {
+		cout << "random_integer p = 0" << endl;
+		exit(1);
+		}
+	n = (int)(((double)rand() * (double)p / RAND_MAX)) % p;
+	return n;
+}
+
+
+
+
+
+}}

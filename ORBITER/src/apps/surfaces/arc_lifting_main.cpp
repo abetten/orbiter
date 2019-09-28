@@ -37,8 +37,9 @@ int main(int argc, const char **argv)
 	const char *the_arc_text = NULL;
 	int f_classify = FALSE;
 	int i;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	surface_domain *Surf;

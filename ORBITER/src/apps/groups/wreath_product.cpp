@@ -670,9 +670,10 @@ int main(int argc, const char **argv)
 	int f_report = FALSE;
 	int f_poset_classify = FALSE;
 	int poset_classify_depth = 0;
+	os_interface Os;
 
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	//f_memory_debug = TRUE;
 	//f_memory_debug_verbose = TRUE;

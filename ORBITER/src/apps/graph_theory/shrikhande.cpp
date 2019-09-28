@@ -22,8 +22,9 @@ int main(int argc, char **argv)
 {
 	int i;
 	int verbose_level = 0;
-	
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 
 	
 	for (i = 1; i < argc; i++) {

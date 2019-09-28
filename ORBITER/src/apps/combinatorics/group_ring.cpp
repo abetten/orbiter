@@ -27,8 +27,9 @@ int main(int argc, char **argv)
 	//int parts[1000];
 	//int nb_parts = 0;
 	//int s;
-	
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 
 	
 	for (i = 1; i < argc; i++) {

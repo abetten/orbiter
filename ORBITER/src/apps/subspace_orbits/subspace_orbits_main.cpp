@@ -74,8 +74,9 @@ int main(int argc, const char **argv)
 	int f_group = FALSE;
 	linear_group_description *Descr;
 	int h;
-	
- 	t0 = os_ticks();
+	os_interface Os;
+
+ 	t0 = Os.os_ticks();
 
 
 	
@@ -407,19 +408,18 @@ int main(int argc, const char **argv)
 		}
 
 
-
-	cout << "Memory usage = " << os_memory_usage()
-			<<  " Time = " << delta_time(t0)
-			<< " tps = " << os_ticks_per_second() << endl;
+	cout << "Memory usage = " << Os.os_memory_usage()
+			<<  " Time = " << Os.delta_time(t0)
+			<< " tps = " << Os.os_ticks_per_second() << endl;
 	char exec_log_fname[1000];
 	int M[3];
 	const char *column_labels[] = {
 		"memory", "time", "tps"
 		};
 
-	M[0] = os_memory_usage();
-	M[1] = delta_time(t0);
-	M[2] = os_ticks_per_second();
+	M[0] = Os.os_memory_usage();
+	M[1] = Os.delta_time(t0);
+	M[2] = Os.os_ticks_per_second();
 
 	if (f_run_log_fname) {
 		strcpy(exec_log_fname, run_log_fname);

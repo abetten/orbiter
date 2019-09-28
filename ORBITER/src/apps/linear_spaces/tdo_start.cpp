@@ -56,8 +56,9 @@ void print_usage()
 
 int main(int argc, char **argv)
 {
+	os_interface Os;
 	char fname_out[1000];
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	int verbose_level = 0;
 	int f_conf = FALSE;
 	int f_all = FALSE;
@@ -263,7 +264,7 @@ int main(int argc, char **argv)
 	
 	}
 	cout << "time: ";
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 }
 

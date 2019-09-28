@@ -81,8 +81,9 @@ int main(int argc, char **argv)
 	int type = 0;
 	int f_analyze = FALSE;
 	int f_words = FALSE;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	
 	if (argc <= 1) {
 		usage(argc, argv);
@@ -121,9 +122,10 @@ int main(int argc, char **argv)
 
 void choose_random_generator(sims *G, int *Elt, int verbose_level)
 {
+	os_interface Os;
 	int r;
 	
-	r = random_integer(nb_M);
+	r = Os.random_integer(nb_M);
 	cout << "choosing random generator " << r << ":" << endl;
 	G->A->element_move(Elts + r * G->A->elt_size_in_int, Elt, 0);
 	G->A->element_print_quick(Elt, cout);
@@ -848,12 +850,13 @@ int try_new_reflection(action *A, finite_field *F)
 	int r1, r2, j;
 	int *M1, *M2;
 	int *Elt;
+	os_interface Os;
 	
 	Elt = new int[A->elt_size_in_int];
 	
-	r1 = random_integer(nb_M);
+	r1 = Os.random_integer(nb_M);
 	while (TRUE) {
-		r2 = random_integer(nb_M);
+		r2 = Os.random_integer(nb_M);
 		if (r2 != r1)
 			break;
 		}

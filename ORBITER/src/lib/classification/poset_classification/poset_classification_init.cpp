@@ -146,7 +146,9 @@ void poset_classification::null()
 	schreier_tree_scale = 0.3;
 	schreier_tree_line_width = 1.;
 
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 }
 
 void poset_classification::freeself()
@@ -495,7 +497,9 @@ void poset_classification::init(poset *Poset,
 		Poset->Orbit_based_testing->PC = this;
 	}
 
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 
 	progress_epsilon = 0.005;
 

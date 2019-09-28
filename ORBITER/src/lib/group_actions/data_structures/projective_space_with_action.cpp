@@ -344,9 +344,10 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	int t0, t1, dt, tps;
 	double delta_t_in_sec;
+	os_interface Os;
 
-	tps = os_ticks_per_second();
-	t0 = os_ticks();
+	tps = Os.os_ticks_per_second();
+	t0 = Os.os_ticks();
 
 	nauty_interface_matrix_int(Incma, nb_rows, nb_cols, 
 		labeling, partition, 
@@ -354,7 +355,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
 
-	t1 = os_ticks();
+	t1 = Os.os_ticks();
 	dt = t1 - t0;
 	delta_t_in_sec = (double) t1 / (double) dt;
 
@@ -747,9 +748,10 @@ void projective_space_with_action::canonical_labeling(
 
 	int t0, t1, dt, tps;
 	double delta_t_in_sec;
+	os_interface Os;
 
-	tps = os_ticks_per_second();
-	t0 = os_ticks();
+	tps = Os.os_ticks_per_second();
+	t0 = Os.os_ticks();
 
 	nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
@@ -758,7 +760,7 @@ void projective_space_with_action::canonical_labeling(
 		Base, Base_length,
 		Transversal_length, Ago, verbose_level - 3);
 
-	t1 = os_ticks();
+	t1 = Os.os_ticks();
 	dt = t1 - t0;
 	delta_t_in_sec = (double) t1 / (double) dt;
 
@@ -907,9 +909,10 @@ strong_generators
 		}
 	int t0, t1, dt, tps;
 	double delta_t_in_sec;
+	os_interface Os;
 
-	tps = os_ticks_per_second();
-	t0 = os_ticks();
+	tps = Os.os_ticks_per_second();
+	t0 = Os.os_ticks();
 
 	nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
@@ -918,7 +921,7 @@ strong_generators
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
 
-	t1 = os_ticks();
+	t1 = Os.os_ticks();
 	dt = t1 - t0;
 	delta_t_in_sec = (double) dt / (double) tps;
 
@@ -1808,6 +1811,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 	int input_idx, ret;
 	int t0, t1, dt;
 	file_io Fio;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "projective_space_with_action::classify_objects_using_nauty" << endl;
@@ -1822,7 +1826,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 	nb_objects_to_test = Data->count_number_of_objects_to_test(
 		verbose_level - 1);
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
 		cout << "projective_space_with_action::classify_objects_using_nauty input " << input_idx << " / " << Data->nb_inputs
@@ -2198,14 +2202,14 @@ void projective_space_with_action::classify_objects_using_nauty(
 					FREE_int(canonical_labeling);
 					}
 				else {
-					t1 = os_ticks();
+					t1 = Os.os_ticks();
 					//cout << "poset_classification::print_level_info t0=" << t0 << endl;
 					//cout << "poset_classification::print_level_info t1=" << t1 << endl;
 					dt = t1 - t0;
 					//cout << "poset_classification::print_level_info dt=" << dt << endl;
 
 					cout << "Time ";
-					time_check_delta(cout, dt);
+					Os.time_check_delta(cout, dt);
 					cout << " --- New isomorphism type! input set " << h
 							<< " / " << SoS->nb_sets << " The n e w number of "
 							"isomorphism types is " << CB->nb_types << endl;

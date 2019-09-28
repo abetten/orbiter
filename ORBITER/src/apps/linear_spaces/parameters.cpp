@@ -33,8 +33,9 @@ int main(int argc, char **argv)
 	int f_maximal_arc = FALSE;
 	int q;
 	int r;
-	
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 
 
 

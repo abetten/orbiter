@@ -487,6 +487,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 void semifield_substructure::do_classify(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	os_interface Os;
 
 	if (f_v) {
 		cout << "semifield_substructure::do_classify" << endl;
@@ -540,7 +541,7 @@ void semifield_substructure::do_classify(int verbose_level)
 				(double) nb_flag_orbits;
 
 		if (f_v) {
-			time_check(cout, SCWS->t0);
+			Os.time_check(cout, SCWS->t0);
 			cout << " : Defining new orbit "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
@@ -618,7 +619,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 
 		if (f_v) {
-			time_check(cout, SCWS->t0);
+			Os.time_check(cout, SCWS->t0);
 			cout << " : flag orbit " << f << " / " << nb_flag_orbits
 				<< ", looping over the " << N << " subspaces, "
 				"before loop_over_all_subspaces" << endl;
@@ -709,7 +710,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		cout << "Computing classification done, we found "
 				<< SCWS->Semifields->nb_orbits
 				<< " semifields" << endl;
-		time_check(cout, SCWS->t0);
+		Os.time_check(cout, SCWS->t0);
 		cout << endl;
 	}
 	if (f_v) {

@@ -701,9 +701,10 @@ void isomorph_testing(
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
 	int t0;
+	os_interface Os;
 
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 
 	if (f_v) {

@@ -58,8 +58,9 @@ int main(int argc, const char **argv)
 	int f_show_stabilizer = FALSE;
 	int show_stabilizer_depth, show_stabilizer_orbit_idx;
 	int f_action_on_maximals = FALSE;
-	
- 	t0 = os_ticks();
+	os_interface Os;
+
+ 	t0 = Os.os_ticks();
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

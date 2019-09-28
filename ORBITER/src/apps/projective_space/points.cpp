@@ -43,8 +43,9 @@ int main(int argc, char **argv)
 	int f_epsilon = FALSE;
 	int epsilon = 0;
 	int f_lines = FALSE;
-	
- 	t0 = os_ticks();
+	os_interface Os;
+
+ 	t0 = Os.os_ticks();
 	
 	for (i = 1; i < argc - 1; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -112,10 +113,10 @@ int main(int argc, char **argv)
 		}
 	
 	int dt;
-	dt = delta_time(t0);
+	dt = Os.delta_time(t0);
 
 	cout << "time in ticks " << dt << " tps="
-			<< os_ticks_per_second() << endl;
+			<< Os.os_ticks_per_second() << endl;
 
 	the_end(t0);
 }

@@ -60,8 +60,9 @@ int main(int argc, const char **argv)
 	int f_draw_poset_full = FALSE;
 	int draw_poset_full_level = 0;
 	int f_plesken = FALSE;
-	
-	t0 = os_ticks();
+	os_interface Os;
+
+	t0 = Os.os_ticks();
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

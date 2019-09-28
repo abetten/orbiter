@@ -22,6 +22,7 @@ void free_global_data()
 void the_end(int t0)
 {
 	file_io Fio;
+	os_interface Os;
 
 	cout << "***************** The End **********************" << endl;
 	cout << "nb_calls_to_finite_field_init="
@@ -31,23 +32,25 @@ void the_end(int t0)
 		//registry_dump();
 		//registry_dump_sorted();
 		}
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 
 
 	int mem_usage;
 	char fname[1000];
 
-	mem_usage = os_memory_usage();
+	mem_usage = Os.os_memory_usage();
 	sprintf(fname, "memory_usage.csv");
 	Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
 }
 
 void the_end_quietly(int t0)
 {
+	os_interface Os;
+
 	//cout << "discreta_global the_end_quietly: freeing global data" << endl;
 	free_global_data();
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 }
 

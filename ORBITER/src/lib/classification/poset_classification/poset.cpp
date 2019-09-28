@@ -456,10 +456,11 @@ poset_classification *poset::orbits_on_k_sets_compute(
 		}
 	Gen->root[0].init_root_node(Gen, verbose_level - 1);
 
+	os_interface Os;
 	int schreier_depth = Gen->depth;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
-	int t0 = os_ticks();
+	int t0 = Os.os_ticks();
 
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets_compute "

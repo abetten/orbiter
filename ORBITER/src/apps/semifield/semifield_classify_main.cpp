@@ -41,12 +41,13 @@ int main(int argc, const char **argv)
 	int f_sideways = FALSE;
 	int f_report = FALSE;
 	int f_memory_debug = FALSE;
+	os_interface Os;
 
 
 
 	test_typedefs();
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);

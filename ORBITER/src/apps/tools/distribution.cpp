@@ -29,8 +29,9 @@ int main(int argc, char **argv)
 	const char *column;
 	int f_secondary = FALSE;
 	const char *secondary_column;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

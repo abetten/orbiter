@@ -1064,14 +1064,15 @@ void isomorph::test_identify_solution(int verbose_level)
 	int i, k;
 	int *transporter;
 	combinatorics_domain Combi;
-	
+	os_interface Os;
+
 	transporter = NEW_int(A->elt_size_in_int);
 
 
 	setup_and_open_solution_database(verbose_level - 1);
 	
 	for (k = 0; k < 10; k++) {
-		r = random_integer(nb_orbits);
+		r = Os.random_integer(nb_orbits);
 		id = orbit_perm[orbit_fst[r]];
 		if (schreier_prev[orbit_fst[r]] != -1) {
 			cout << "schreier_prev[orbit_fst[r]] != -1" << endl;
@@ -1285,14 +1286,15 @@ void isomorph::test_compute_stabilizer(int verbose_level)
 	int orbit_no;
 	sims *Stab;
 	int k;
-	
+	os_interface Os;
+
 	if (f_v) {
 		cout << "isomorph::test_compute_stabilizer" << endl;
 		}
 	setup_and_open_solution_database(verbose_level - 1);
 	
 	for (k = 0; k < 100; k++) {
-		orbit_no = random_integer(nb_orbits);
+		orbit_no = Os.random_integer(nb_orbits);
 		
 		cout << "k=" << k << " orbit_no=" << orbit_no << endl;
 		

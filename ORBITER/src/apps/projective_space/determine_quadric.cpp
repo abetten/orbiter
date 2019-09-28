@@ -35,8 +35,9 @@ int main(int argc, char **argv)
 	int pt_coords[1000];
 	int f_poly = FALSE;
 	const char *override_poly = NULL;
-	
- 	t0 = os_ticks();
+	os_interface Os;
+
+ 	t0 = Os.os_ticks();
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

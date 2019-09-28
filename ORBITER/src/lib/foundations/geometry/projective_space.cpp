@@ -5664,6 +5664,7 @@ void projective_space::conic_type_randomized(int nb_times,
 	geometry_global Gg;
 	combinatorics_domain Combi;
 	sorting Sorting;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "projective_space::conic_type_randomized" << endl;
@@ -5699,7 +5700,7 @@ void projective_space::conic_type_randomized(int nb_times,
 	len = 0;
 	for (cnt = 0; cnt < nb_times; cnt++) {
 
-		rk = random_integer(N);
+		rk = Os.random_integer(N);
 		Combi.unrank_k_subset(rk, subset, set_size, 5);
 		if (cnt && ((cnt % 1000) == 0)) {
 			cout << cnt << " / " << nb_times << " : ";

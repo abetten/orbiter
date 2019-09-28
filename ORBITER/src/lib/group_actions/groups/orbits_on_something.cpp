@@ -668,6 +668,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
+	os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points = my_orbits_classified->Set_size[type_idx];
@@ -694,7 +695,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		bitvector_adjacency[i] = 0;
 	}
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	for (i = 0; i < nb_points; i++) {
 		a = my_orbits_classified->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
@@ -715,11 +716,11 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
 			if (L100) {
 				if ((k % L100) == 0) {
-					t1 = os_ticks();
+					t1 = Os.os_ticks();
 					dt = t1 - t0;
 					cout << "progress: "
 							<< 100. * (double) k / (double) L << " % dt=";
-					time_check_delta(cout, dt);
+					Os.time_check_delta(cout, dt);
 					cout << endl;
 				}
 			}
@@ -732,7 +733,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			else {
 				//cout << "is NOT adjacent" << endl;
 				bitvector_m_ii(bitvector_adjacency, k, 0);
-				// not needed becaude we initialize with zero.
+				// not needed because we initialize with zero.
 			}
 		}
 	}

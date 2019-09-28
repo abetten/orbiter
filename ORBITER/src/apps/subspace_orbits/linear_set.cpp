@@ -1076,12 +1076,13 @@ void linear_set::init_secondary(int argc, const char **argv,
 void linear_set::do_classify_secondary(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	os_interface Os;
 
 	if (f_v) {
 		cout << "linear_set::do_classify_secondary" << endl;
 		}
 
-	int t0 = os_ticks();
+	int t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "linear_set::do_classify_secondary "
@@ -1495,12 +1496,13 @@ void linear_set::do_compute_stabilizer(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	os_interface Os;
 
 	if (f_v) {
 		cout << "linear_set::do_compute_stabilizer" << endl;
 		}
 
-	int t0 = os_ticks();
+	int t0 = Os.os_ticks();
 	
 	if (f_v) {
 		cout << "linear_set::do_compute_stabilizer "

@@ -31,8 +31,9 @@ int main(int argc, char **argv)
 	int f_sol = FALSE;
 	int verbose_level = 0;
 	//char fname_inc[1000];
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 
 	for (i = 1; i < argc - 0; i++) {
 		if (strcmp(argv[i], "-sol") == 0) {
@@ -262,7 +263,7 @@ int main(int argc, char **argv)
 #endif
 
 	cout<< "Time used: ";
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl << endl;
 
 	return 0;

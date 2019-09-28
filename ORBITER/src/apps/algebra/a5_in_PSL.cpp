@@ -66,13 +66,15 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	
-	int t0 = os_ticks();
+	os_interface Os;
+
+	int t0 = Os.os_ticks();
 	
 		
 	A5_in_PSL_(q, verbose_level);
 	
 	
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 }
 
 

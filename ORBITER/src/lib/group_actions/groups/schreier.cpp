@@ -1352,7 +1352,8 @@ void schreier::random_schreier_generator_ith_orbit(
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int f_vvv = FALSE; //(verbose_level >= 3);
-	
+	os_interface Os;
+
 	if (f_v) {
 		cout << "schreier::random_schreier_generator_ith_orbit, "
 				"orbit " << orbit_no << " action=" << A->label << endl;
@@ -1377,7 +1378,7 @@ void schreier::random_schreier_generator_ith_orbit(
 	}
 	
 	// get a random coset:
-	r1 = random_integer(orbit_len[orbit_no]);
+	r1 = Os.random_integer(orbit_len[orbit_no]);
 	if (f_vv) {
 		cout << "schreier::random_schreier_generator_ith_orbit r1=" << r1 << endl;
 	}
@@ -1394,7 +1395,7 @@ void schreier::random_schreier_generator_ith_orbit(
 	}
 		
 	// get a random generator:
-	r2 = random_integer(gens.len);
+	r2 = Os.random_integer(gens.len);
 	if (f_vv) {
 		cout << "schreier::random_schreier_generator_ith_orbit r2=" << r2 << endl;
 	}
@@ -1484,7 +1485,8 @@ void schreier::random_schreier_generator(int *Elt, int verbose_level)
 	int r1, r2, pt, pt2, pt2b, pt2_coset;
 	int *gen;
 	int pt1, pt1b;
-	
+	os_interface Os;
+
 	if (f_v) {
 		cout << "schreier::random_schreier_generator orbit_len = " 
 			<< orbit_len[0] << " nb generators = "
@@ -1501,7 +1503,7 @@ void schreier::random_schreier_generator(int *Elt, int verbose_level)
 	}
 	
 	// get a random coset:
-	r1 = random_integer(orbit_len[0]);
+	r1 = Os.random_integer(orbit_len[0]);
 	pt1 = orbit[r1];
 	
 	coset_rep(r1);
@@ -1528,7 +1530,7 @@ void schreier::random_schreier_generator(int *Elt, int verbose_level)
 	}
 	
 	// get a random generator:
-	r2 = random_integer(gens.len);
+	r2 = Os.random_integer(gens.len);
 	gen = gens.ith(r2);
 	if (f_vv) {
 		cout << "schreier::random_schreier_generator random coset " << r1 << ", "
@@ -2526,6 +2528,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 	int *Elt1, *Elt2;
 	int *candidates;
 	int nb_candidates;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "schreier::shallow_tree_generators " << endl;
@@ -2602,7 +2605,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 					<< " candidates of points outside the orbit" << endl;
 		}
 		if (f_randomized) {
-			j = random_integer(nb_candidates);
+			j = Os.random_integer(nb_candidates);
 		}
 		else {
 			j = 0;

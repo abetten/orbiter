@@ -77,8 +77,9 @@ int main(int argc, char **argv)
 	int i, f_doit;
 	int f_w = FALSE;
 	int nb_written = 0;
+	os_interface Os;
 
-	t0 = os_ticks();
+	t0 = Os.os_ticks();
 	if (argc <= 1) {
 		print_usage();
 		exit(1);
@@ -419,7 +420,7 @@ int main(int argc, char **argv)
 			}
 		}
 	cout << "time: ";
-	time_check(cout, t0);
+	Os.time_check(cout, t0);
 	cout << endl;
 }
 

@@ -24,7 +24,8 @@ int t0; // the system time when the program started
 int main(int argc, char **argv)
 {
 	int i;
-	t0 = os_ticks();
+	os_interface Os;
+	t0 = Os.os_ticks();
 	int verbose_level = 0;
 	int f_save = FALSE;	
 	const char *save_fname = NULL;

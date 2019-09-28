@@ -462,7 +462,8 @@ void semifield_classify::init_poset_classification(
 void semifield_classify::compute_orbits(int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t0 = os_ticks();
+	os_interface Os;
+	int t0 = Os.os_ticks();
 	file_io Fio;
 
 	if (f_v) {

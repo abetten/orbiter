@@ -333,6 +333,7 @@ void blt_set::create_graphs(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
+	os_interface Os;
 
 
 	if (f_v) {
@@ -402,7 +403,7 @@ void blt_set::create_graphs(
 		colored_graph *CG = NULL;
 		int nb_vertices = -1;
 
-		int t0 = os_ticks();
+		int t0 = Os.os_ticks();
 		
 		if (create_graph(orbit, level_of_candidates_file, 
 			output_prefix, 
@@ -424,7 +425,7 @@ void blt_set::create_graphs(
 			delete CG;
 			}
 
-		int t1 = os_ticks();
+		int t1 = Os.os_ticks();
 
 		Time[time_idx * 2 + 0] = orbit;
 		Time[time_idx * 2 + 1] = t1 - t0;
