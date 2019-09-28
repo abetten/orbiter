@@ -962,18 +962,49 @@ void combinatorics_domain::unordered_triple_pair_unrank(int rk,
 
 
 
+long int combinatorics_domain::ij2k_lint(long int i, long int j, long int n)
+{
+	if (i == j) {
+		cout << "combinatorics_domain::ij2k_lint i == j" << endl;
+		exit(1);
+	}
+	if (i > j) {
+		return ij2k_lint(j, i, n);
+	}
+	else {
+		return ((n - i) * i + ((i * (i - 1)) >> 1) + j - i - 1);
+	}
+}
+
+void combinatorics_domain::k2ij_lint(long int k, long int & i, long int & j, long int n)
+{
+	long int ii, k_save = k;
+
+	for (ii = 0; ii < n; ii++) {
+		if (k < n - ii - 1) {
+			i = ii;
+			j = k + ii + 1;
+			return;
+			}
+		k -= (n - ii - 1);
+		}
+	cout << "combinatorics_domain::k2ij_lint k too large: k = " << k_save
+			<< " n = " << n << endl;
+	exit(1);
+}
+
 int combinatorics_domain::ij2k(int i, int j, int n)
 {
 	if (i == j) {
 		cout << "ij2k() i == j" << endl;
 		exit(1);
-		}
+	}
 	if (i > j) {
 		return ij2k(j, i, n);
-		}
+	}
 	else {
 		return ((n - i) * i + ((i * (i - 1)) >> 1) + j - i - 1);
-		}
+	}
 }
 
 void combinatorics_domain::k2ij(int k, int & i, int & j, int n)

@@ -408,16 +408,16 @@ void file_io::read_solution_file(char *fname,
 	int *x, *y;
 
 	if (f_v) {
-		cout << "read_solution_file" << endl;
+		cout << "file_io::read_solution_file" << endl;
 		}
 	x = NEW_int(nb_cols);
 	y = NEW_int(nb_rows);
 	if (f_v) {
-		cout << "read_solution_file reading file " << fname
+		cout << "file_io::read_solution_file reading file " << fname
 			<< " of size " << file_size(fname) << endl;
 		}
 	if (file_size(fname) <= 0) {
-		cout << "read_solution_file "
+		cout << "file_io::read_solution_file "
 				"There is something wrong with the file "
 			<< fname << endl;
 		exit(1);
@@ -443,7 +443,7 @@ void file_io::read_solution_file(char *fname,
 					}
 				else {
 					if (nb != nb_max) {
-						cout << "read_solution_file "
+						cout << "file_io::read_solution_file "
 								"solutions have different length" << endl;
 						exit(1);
 						}
@@ -460,7 +460,8 @@ void file_io::read_solution_file(char *fname,
 					}
 				for (i = 0; i < nb_rows; i++) {
 					if (y[i] != 1) {
-						cout << "read_solution_file Not a solution!" << endl;
+						cout << "file_io::read_solution_file "
+								"Not a solution!" << endl;
 						int_vec_print_fully(cout, y, nb_rows);
 						cout << endl;
 						exit(1);
@@ -471,7 +472,7 @@ void file_io::read_solution_file(char *fname,
 			}
 	}
 	if (f_v) {
-		cout << "read_solution_file: Counted " << nb_sol
+		cout << "file_io::read_solution_file: Counted " << nb_sol
 			<< " solutions in " << fname
 			<< " starting to read now." << endl;
 		}
@@ -500,14 +501,87 @@ void file_io::read_solution_file(char *fname,
 			}
 	}
 	if (f_v) {
-		cout << "read_solution_file: Read " << nb_sol
+		cout << "file_io::read_solution_file: Read " << nb_sol
 			<< " solutions from file " << fname << endl;
 		}
 	FREE_int(x);
 	FREE_int(y);
 	FREE_char(buf);
 	if (f_v) {
-		cout << "read_solution_file done" << endl;
+		cout << "file_io::read_solution_file done" << endl;
+		}
+}
+
+void file_io::count_number_of_solutions_in_file_and_get_solution_size(
+	const char *fname,
+	int &nb_solutions, int &solution_size,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *buf;
+	int s;
+
+	if (f_v) {
+		cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size " << fname << endl;
+		cout << "trying to read file " << fname << " of size "
+			<< file_size(fname) << endl;
+		}
+
+	nb_solutions = 0;
+	if (file_size(fname) < 0) {
+		cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size file "
+			<< fname <<  " does not exist" << endl;
+		exit(1);
+		//return;
+		}
+
+	buf = NEW_char(MY_OWN_BUFSIZE);
+
+
+
+	solution_size = -1;
+	{
+	ifstream fp(fname);
+	char *p_buf;
+
+
+	while (TRUE) {
+		if (fp.eof()) {
+			cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
+					"eof, break" << endl;
+			break;
+			}
+		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+		//cout << "read line '" << buf << "'" << endl;
+		if (strlen(buf) == 0) {
+			cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
+					"empty line" << endl;
+			exit(1);
+			}
+
+		p_buf = buf;
+		s_scan_int(&p_buf, &s);
+		if (solution_size == -1) {
+			solution_size = s;
+		}
+		else {
+			if (solution_size != s) {
+				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
+						"solution_size is not constant" << endl;
+				exit(1);
+			}
+		}
+
+		if (strncmp(buf, "-1", 2) == 0) {
+			break;
+			}
+		nb_solutions++;
+		}
+	}
+	FREE_char(buf);
+	if (f_v) {
+		cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size " << fname << endl;
+		cout << "nb_solutions = " << nb_solutions << endl;
 		}
 }
 
@@ -666,6 +740,79 @@ void file_io::count_number_of_solutions_in_file_by_case(const char *fname,
 		}
 }
 
+
+void file_io::read_solutions_from_file_and_get_solution_size(const char *fname,
+	int &nb_solutions, int *&Solutions, int &solution_size,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "read_solutions_from_file_and_get_solution_size" << endl;
+		cout << "read_solutions_from_file_and_get_solution_size trying to read file "
+			<< fname << " of size " << file_size(fname) << endl;
+	}
+
+	if (file_size(fname) < 0) {
+		cout << "file_io::read_solutions_from_file_and_get_solution_size "
+				"the file " << fname << " does not exist" << endl;
+		return;
+		}
+
+	count_number_of_solutions_in_file_and_get_solution_size(fname,
+		nb_solutions, solution_size,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "file_io::read_solutions_from_file_and_get_solution_size, reading "
+			<< nb_solutions << " solutions of size " << solution_size << endl;
+	}
+
+	Solutions = NEW_int(nb_solutions * solution_size);
+
+	char *buf;
+	char *p_buf;
+	int i, a, nb_sol;
+
+	buf = NEW_char(MY_OWN_BUFSIZE);
+	nb_sol = 0;
+	{
+		ifstream f(fname);
+
+		while (!f.eof()) {
+			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+			p_buf = buf;
+			//cout << "buf='" << buf << "' nb=" << nb << endl;
+			s_scan_int(&p_buf, &a);
+
+			if (a == -1) {
+				break;
+				}
+			if (a != solution_size) {
+				cout << "file_io::read_solutions_from_file_and_get_solution_size "
+						"a != solution_size" << endl;
+				exit(1);
+				}
+			for (i = 0; i < solution_size; i++) {
+				s_scan_int(&p_buf, &a);
+				Solutions[nb_sol * solution_size + i] = a;
+				}
+			nb_sol++;
+			}
+	}
+	if (nb_sol != nb_solutions) {
+		cout << "file_io::read_solutions_from_file_and_get_solution_size "
+				"nb_sol != nb_solutions" << endl;
+		exit(1);
+		}
+	FREE_char(buf);
+
+	if (f_v) {
+		cout << "file_io::read_solutions_from_file_and_get_solution_size" << endl;
+	}
+}
+
+
 void file_io::read_solutions_from_file(const char *fname,
 	int &nb_solutions, int *&Solutions, int solution_size,
 	int verbose_level)
@@ -684,6 +831,7 @@ void file_io::read_solutions_from_file(const char *fname,
 		}
 
 	if (file_size(fname) < 0) {
+		cout << "file_io::read_solutions_from_file the file " << fname << " does not exist" << endl;
 		return;
 		}
 

@@ -54,11 +54,18 @@ public:
 		int *Inc, int nb_rows, int nb_cols,
 		int *&Solutions, int &sol_length, int &nb_sol,
 		int verbose_level);
+	void count_number_of_solutions_in_file_and_get_solution_size(
+		const char *fname,
+		int &nb_solutions, int &solution_size,
+		int verbose_level);
 	void count_number_of_solutions_in_file(const char *fname,
 		int &nb_solutions,
 		int verbose_level);
 	void count_number_of_solutions_in_file_by_case(const char *fname,
 		int *&nb_solutions, int *&case_nb, int &nb_cases,
+		int verbose_level);
+	void read_solutions_from_file_and_get_solution_size(const char *fname,
+		int &nb_solutions, int *&Solutions, int &solution_size,
 		int verbose_level);
 	void read_solutions_from_file(const char *fname,
 		int &nb_solutions, int *&Solutions, int solution_size,

@@ -496,7 +496,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	long int bitvector_length_in_bits;
 	long int bitvector_length;
 	long int L, L100;
-	int i, j, a, b;
+	long int i, j;
+	int a, b;
 	long int k;
 	combinatorics_domain Combi;
 	int *orbit1;
@@ -542,14 +543,14 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l2 != orbit_length" << endl;
 				exit(1);
 			}
-			k = Combi.ij2k(i, j, nb_points);
+			k = Combi.ij2k_lint(i, j, nb_points);
 
 #if 1
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
 			if (L100) {
 				if ((k % L100) == 0) {
 					cout << "progress: "
-							<< (double) k / (double) L100 << "%" << "i=" << i << " j=" << j << " k=" << k << endl;
+							<< (double) k / (double) L100 << "%, " << "i=" << i << " j=" << j << " k=" << k << endl;
 				}
 			}
 #endif
