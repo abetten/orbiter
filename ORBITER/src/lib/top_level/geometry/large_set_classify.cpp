@@ -546,7 +546,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 			int_vec_copy(Rep->data, Large_sets + i * sz, Rep->sz);
 			for (j = 0; j < solution_size; j++) {
 				a = Solutions[i * solution_size + j];
-				b = OoS->Orbits_classified->Sets[selected_type_idx][b];
+				b = OoS->Orbits_classified->Sets[selected_type_idx][a];
 				OoS->Sch->get_orbit(b, Large_sets + i * sz + Rep->sz + j * orbit_length, l, 0 /* verbose_level*/);
 				if (l != orbit_length) {
 					cout << "large_set_classify::process_starter_case l != orbit_length" << endl;
