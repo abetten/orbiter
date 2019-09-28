@@ -447,6 +447,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		strong_generators *SG, const char *prefix,
 		char *group_label, int orbit_length,
 		int f_read_solution_file, const char *solution_file_name,
+		int *&Large_sets, int &nb_large_sets,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -531,6 +532,28 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		int_matrix_print(Solutions, nb_solutions, solution_size);
 		cout << "Number of solutions = " << nb_solutions << endl;
 		cout << "solution_size = " << solution_size << endl;
+
+		int sz = Rep->sz + solution_size * orbit_length;
+
+		if (sz != size_of_large_set) {
+			cout << "large_set_classify::process_starter_case sz != size_of_large_set" << endl;
+			exit(1);
+		}
+		nb_large_sets = nb_solutions;
+		Large_sets = NEW_int(nb_solutions * sz);
+		int i, j, a, b, l;
+		for (i = 0; i < nb_solutions; i++) {
+			int_vec_copy(Rep->data, Large_sets + i * sz, Rep->sz);
+			for (j = 0; j < solution_size; j++) {
+				a = Solutions[i * solution_size + j];
+				b = OoS->Orbits_classified->Sets[selected_type_idx][b];
+				OoS->Sch->get_orbit(b, Large_sets + i * sz + Rep->sz + j * orbit_length, l, 0 /* verbose_level*/);
+				if (l != orbit_length) {
+					cout << "large_set_classify::process_starter_case l != orbit_length" << endl;
+					exit(1);
+				}
+			}
+		}
 
 	}
 	else {
