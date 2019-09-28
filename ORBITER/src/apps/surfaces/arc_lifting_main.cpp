@@ -544,10 +544,10 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 			Decomp[a * nb_surfaces + i]++;
 			}
 		}
-	
+
 	cout << "decomposition matrix:" << endl;
 	cout << "$$" << endl;
-	print_integer_matrix_with_standard_labels(cout, Decomp,
+	L.print_integer_matrix_with_standard_labels(cout, Decomp,
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
 			TRUE /* f_tex */);
 	cout << "$$" << endl;
@@ -556,7 +556,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 	//fp << "$$" << endl;
 	//print_integer_matrix_with_standard_labels(fp, Decomp,
 	//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
-	print_integer_matrix_tex_block_by_block(fp, Decomp,
+	L.print_integer_matrix_tex_block_by_block(fp, Decomp,
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
 	//fp << "$$" << endl;
 

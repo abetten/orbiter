@@ -43,6 +43,7 @@ int main(int argc, const char **argv)
 		exit(1);
 	}
 
+	latex_interface L;
 	file_io Fio;
 	int *M;
 	int m, n;
@@ -86,7 +87,7 @@ int main(int argc, const char **argv)
 	cout << "Writtem file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
 
 
-	print_integer_matrix_tex_block_by_block(cout,
+	L.print_integer_matrix_tex_block_by_block(cout,
 			T,
 			m, len, 40 /* block_width */);
 

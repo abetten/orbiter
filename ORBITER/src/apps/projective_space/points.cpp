@@ -191,6 +191,7 @@ void orthogonal_lines(finite_field *F,
 	int d, q;
 	int *L;
 	sorting Sorting;
+	latex_interface Li;
 	
 	d = n + 1;
 	q = F->q;
@@ -231,7 +232,7 @@ void orthogonal_lines(finite_field *F,
 		int_vec_copy(O.v2, L + d, d);
 
 		cout << "\\left[" << endl;
-		print_integer_matrix_tex(cout, L, 2, d);
+		Li.print_integer_matrix_tex(cout, L, 2, d);
 		cout << "\\right]" << endl;
 
 		a = O.evaluate_bilinear_form(O.v1, O.v2, 1);

@@ -243,9 +243,11 @@ void orbits_on_something::report_type(ostream &ost, int *orbit_type, int goi)
 	ost << "\\right]" << endl;
 #else
 
+	latex_interface L;
+
 
 	ost << "\\left[" << endl;
-	print_integer_matrix_tex(ost,
+	L.print_integer_matrix_tex(ost,
 			orbit_type,
 			goi + 1, goi);
 	ost << "\\right]" << endl;
@@ -260,7 +262,7 @@ void orbits_on_something::report_type(ostream &ost, int *orbit_type, int goi)
 	compute_compact_type(orbit_type, goi,
 			compact_type, row_labels, col_labels, m, n);
 
-	print_integer_matrix_with_labels(ost,
+	L.print_integer_matrix_with_labels(ost,
 			compact_type, m, n, row_labels, col_labels,
 		TRUE /* f_tex */);
 

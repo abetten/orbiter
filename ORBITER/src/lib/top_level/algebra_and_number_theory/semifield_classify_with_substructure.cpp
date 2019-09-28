@@ -690,6 +690,7 @@ void semifield_classify_with_substructure::latex_report(
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
+	latex_interface L;
 	int i;
 
 	if (f_v) {
@@ -777,7 +778,7 @@ void semifield_classify_with_substructure::latex_report(
 					"to the $j$-th element in the Knuth orbit of the $i$-th "
 					"class in the R\\'ua labeling.\\\\" << endl;
 			//fp << "$$" << endl;
-			print_integer_matrix_tex_block_by_block(fp,
+			L.print_integer_matrix_tex_block_by_block(fp,
 					identify_semifields_from_file_Po,
 					identify_semifields_from_file_m, 6, 40 /* block_width */);
 
@@ -1033,6 +1034,7 @@ void semifield_print_function_callback(ostream &ost, int orbit_idx,
 	semifield_substructure *Sub = (semifield_substructure *) print_function_data;
 	semifield_classify *SC;
 	semifield_classify_with_substructure *SCWS;
+	latex_interface L;
 	long int *R;
 	long int a;
 	int i, j;
@@ -1046,7 +1048,7 @@ void semifield_print_function_callback(ostream &ost, int orbit_idx,
 		SC->matrix_unrank(a, SC->test_Basis);
 		ost << "$";
 		ost << "\\left[";
-		print_integer_matrix_tex(ost,
+		L.print_integer_matrix_tex(ost,
 			SC->test_Basis, SC->k, SC->k);
 		ost << "\\right]";
 		ost << "$";

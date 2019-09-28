@@ -258,6 +258,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	strong_generators *gens, ostream &ost)
 {
 	sorting Sorting;
+	latex_interface L;
 	longinteger_object full_group_order;
 
 	gens->group_order(full_group_order);
@@ -290,7 +291,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		ost << "The subgroup consists of the following "
 				<< sz_subgroup << " elements:" << endl;
 		ost << "$$" << endl;
-		int_vec_print_as_matrix(ost,
+		L.int_vec_print_as_matrix(ost,
 				Subgroup_elements_by_index, sz_subgroup,
 				10 /* width */, TRUE /* f_tex */);
 		ost << "$$" << endl;

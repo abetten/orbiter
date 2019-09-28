@@ -757,6 +757,7 @@ void surface_object_with_action::print_automorphism_group(
 	int f_print_orbits, const char *fname_mask)
 {
 	longinteger_object go;
+	latex_interface L;
 
 	Aut_gens->group_order(go);
 	
@@ -793,7 +794,7 @@ void surface_object_with_action::print_automorphism_group(
 			0 /*verbose_level*/);
 	ost << "\\subsection*{Decomposition scheme of line intersection graph}" << endl;
 	ost << "Decomposition scheme of line intersection graph:" << endl;
-	print_integer_matrix_tex_block_by_block(ost,
+	L.print_integer_matrix_tex_block_by_block(ost,
 			Decomp_scheme, nb, nb, block_width);
 	
 
@@ -1494,9 +1495,10 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 
 	go = Aut_gens->group_order_as_int();
 	if (go < 50) {
+		latex_interface L;
 		int *Table;
 		Aut_gens->create_group_table(Table, go, verbose_level - 1);
-		print_integer_matrix_tex_block_by_block(ost,
+		L.print_integer_matrix_tex_block_by_block(ost,
 				Table, go, go, block_width);
 		FREE_int(Table);
 		}

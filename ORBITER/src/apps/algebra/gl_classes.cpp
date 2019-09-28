@@ -331,7 +331,7 @@ int main(int argc, char **argv)
 			NULL /* extra_praeamble */);
 		
 
-		print_integer_matrix_tex_block_by_block(fp, Table, L_sz, L_sz, 15);
+		L.print_integer_matrix_tex_block_by_block(fp, Table, L_sz, L_sz, 15);
 
 
 		

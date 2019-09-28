@@ -161,7 +161,7 @@ void test_borel(int n, int q, int verbose_level)
 
 		fp << rk << " & " << endl;
 		fp << "\\left[" << endl;
-		int_matrix_print_tex(fp, Elt1, n, n);
+		L.int_matrix_print_tex(fp, Elt1, n, n);
 		fp << "\\right]" << endl;
 		fp << " & " << endl;
 
@@ -194,15 +194,15 @@ void test_borel(int n, int q, int verbose_level)
 
 
 		fp << "\\left[" << endl;
-		int_matrix_print_tex(fp, B1, n, n);
+		L.int_matrix_print_tex(fp, B1, n, n);
 		fp << "\\right]" << endl;
 		fp << " & " << endl;
 		fp << "\\left[" << endl;
-		int_matrix_print_tex(fp, M, n, n);
+		L.int_matrix_print_tex(fp, M, n, n);
 		fp << "\\right]" << endl;
 		fp << " & " << endl;
 		fp << "\\left[" << endl;
-		int_matrix_print_tex(fp, B2, n, n);
+		L.int_matrix_print_tex(fp, B2, n, n);
 		fp << "\\right]" << endl;
 		fp << " & \\ " << endl;
 		AP->element_print_as_permutation_with_offset(Perm1, fp, 

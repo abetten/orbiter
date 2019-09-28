@@ -76,16 +76,17 @@ int main(int argc, const char **argv)
 	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
 
 	if (Gen.f_plesken) {
+		latex_interface L;
 		int *P;
 		int N;
 		Gen.gen->Plesken_matrix_up(depth, P, N, Gen.gen->verbose_level);
 		cout << "Plesken matrix up:" << endl;
-		int_matrix_print_tex(cout, P, N, N);
+		L.int_matrix_print_tex(cout, P, N, N);
 
 		FREE_int(P);
 		Gen.gen->Plesken_matrix_down(depth, P, N, Gen.gen->verbose_level);
 		cout << "Plesken matrix down:" << endl;
-		int_matrix_print_tex(cout, P, N, N);
+		L.int_matrix_print_tex(cout, P, N, N);
 
 		FREE_int(P);
 		}

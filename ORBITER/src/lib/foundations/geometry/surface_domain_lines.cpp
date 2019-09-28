@@ -21,6 +21,7 @@ namespace foundations {
 void surface_domain::init_line_data(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	latex_interface L;
 
 	int i, j, h, h2;
 
@@ -54,7 +55,7 @@ void surface_domain::init_line_data(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_domain::init_line_data Sets:" << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 			Sets, 30, 2, FALSE /* f_tex */);
 		//int_matrix_print(Sets, 30, 2);
 		}
@@ -76,7 +77,7 @@ void surface_domain::init_line_data(int verbose_level)
 
 	if (f_v) {
 		cout << "Sets2:" << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 			Sets2, 15, 2, FALSE /* f_tex */);
 		//int_matrix_print(Sets2, 15, 2);
 		}

@@ -745,6 +745,7 @@ int subspace_orbits::compute_minimum_distance(int len, int *S)
 
 void subspace_orbits::print_set(ostream &ost, int len, int *S)
 {
+	latex_interface L;
 	int i;
 	
 	ost << "subspace_orbits::print_set" << endl;
@@ -767,7 +768,7 @@ void subspace_orbits::print_set(ostream &ost, int len, int *S)
 
 	
 	ost << "\\left[" << endl;
-	int_matrix_print_tex(ost, tmp_M, len, n);
+	L.int_matrix_print_tex(ost, tmp_M, len, n);
 	ost << "\\right]" << endl;
 
 
@@ -800,7 +801,7 @@ void subspace_orbits::print_set(ostream &ost, int len, int *S)
 			tmp_M + k * n, n - k, n, n, F->log10_of_q);
 
 	ost << "\\left[" << endl;
-	int_matrix_print_tex(ost, tmp_M + k * n, n - k, n);
+	L.int_matrix_print_tex(ost, tmp_M + k * n, n - k, n);
 	ost << "\\right]" << endl;
 
 	int *S1;
@@ -843,7 +844,7 @@ void subspace_orbits::print_set(ostream &ost, int len, int *S)
 				M2, n - k, n, n, F->log10_of_q);
 
 		ost << "\\left[" << endl;
-		int_matrix_print_tex(ost, M2, n - k, n);
+		L.int_matrix_print_tex(ost, M2, n - k, n);
 		ost << "\\right]" << endl;
 
 		ost << "transporter:" << endl;

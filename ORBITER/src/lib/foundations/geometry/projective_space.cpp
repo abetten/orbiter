@@ -5411,6 +5411,7 @@ void projective_space::cheat_sheet_point_table(
 void projective_space::cheat_sheet_points_on_lines(
 	ostream &f, int verbose_level)
 {
+	latex_interface L;
 
 	
 	f << "PG$(" << n << ", " << q << ")$ has " << N_lines
@@ -5436,7 +5437,7 @@ void projective_space::cheat_sheet_points_on_lines(
 			nb = MINIMUM(N_lines - i, 40);
 			//f << "i=" << i << " nb=" << nb << "\\\\" << endl;
 			f << "$$" << endl;
-			print_integer_matrix_with_labels(f,
+			L.print_integer_matrix_with_labels(f,
 					Lines + i * k, nb, k, row_labels + i,
 					col_labels, TRUE /* f_tex */);
 			f << "$$" << endl;
@@ -5449,6 +5450,8 @@ void projective_space::cheat_sheet_points_on_lines(
 void projective_space::cheat_sheet_lines_on_points(
 	ostream &f, int verbose_level)
 {
+	latex_interface L;
+
 	f << "PG$(" << n << ", " << q << ")$ has " << N_points
 			<< " points, each with " << r << " lines:\\\\" << endl;
 	if (Lines_on_point == NULL) {
@@ -5471,7 +5474,7 @@ void projective_space::cheat_sheet_lines_on_points(
 			nb = MINIMUM(N_points - i, 40);
 			//f << "i=" << i << " nb=" << nb << "\\\\" << endl;
 			f << "$$" << endl;
-			print_integer_matrix_with_labels(f,
+			L.print_integer_matrix_with_labels(f,
 				Lines_on_point + i * r, nb, r,
 				row_labels + i, col_labels, TRUE /* f_tex */);
 			f << "$$" << endl;
