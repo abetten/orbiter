@@ -106,6 +106,8 @@ public:
 	int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n);
 	void unordered_triple_pair_unrank(int rk, int &i, int &j, int &k,
 		int &l, int &m, int &n);
+	long int ij2k_lint(long int i, long int j, long int n);
+	void k2ij_lint(long int k, long int & i, long int & j, long int n);
 	int ij2k(int i, int j, int n);
 	void k2ij(int k, int & i, int & j, int n);
 	int ijk2h(int i, int j, int k, int n);

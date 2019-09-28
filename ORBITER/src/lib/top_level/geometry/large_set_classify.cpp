@@ -446,6 +446,7 @@ int large_set_classify::designs_are_disjoint(int i, int j)
 void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		strong_generators *SG, const char *prefix,
 		char *group_label, int orbit_length,
+		int f_read_solution_file, const char *solution_file_name,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -511,26 +512,49 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 				<< OoS->Orbits_classified->Set_size[selected_type_idx] << endl;
 	}
 
-	if (f_v) {
-		cout << "large_set_classify::process_starter_case "
-				"before OoS->create_graph_on_orbits_of_a_certain_length" << endl;
+
+	if (f_read_solution_file) {
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case "
+					"trying to read solution file " << solution_file_name << endl;
+		}
+
+		file_io Fio;
+		int nb_solutions;
+		int *Solutions;
+		int solution_size;
+
+		Fio.read_solutions_from_file_and_get_solution_size(solution_file_name,
+				nb_solutions, Solutions, solution_size,
+				verbose_level);
+		cout << "Read the following solutions from file:" << endl;
+		int_matrix_print(Solutions, nb_solutions, solution_size);
+		cout << "Number of solutions = " << nb_solutions << endl;
+		cout << "solution_size = " << solution_size << endl;
+
 	}
-
-	OoS->create_graph_on_orbits_of_a_certain_length(
-		CG,
-		fname,
-		orbit_length,
-		selected_type_idx,
-		f_has_user_data, NULL /* int *user_data */, 0 /* user_data_size */,
-		large_set_design_test_pair_of_orbits,
-		this /* *test_function_data */,
-		verbose_level);
+	else {
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case "
+					"before OoS->create_graph_on_orbits_of_a_certain_length" << endl;
+		}
 
 
-	CG->save(fname, verbose_level);
+		OoS->create_graph_on_orbits_of_a_certain_length(
+			CG,
+			fname,
+			orbit_length,
+			selected_type_idx,
+			f_has_user_data, NULL /* int *user_data */, 0 /* user_data_size */,
+			large_set_design_test_pair_of_orbits,
+			this /* *test_function_data */,
+			verbose_level);
 
-	FREE_OBJECT(CG);
 
+		CG->save(fname, verbose_level);
+
+		FREE_OBJECT(CG);
+	}
 
 	//A_reduced->compute_orbits_on_points(Orbits_on_reduced,
 	//		SG->gens, 0 /*verbose_level*/);

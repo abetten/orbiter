@@ -37,6 +37,8 @@ int main(int argc, const char **argv)
 	int f_lift_case = FALSE;
 	int lift_case_level = 0;
 	int lift_case = 0;
+	int f_read_solution_file = FALSE;
+	const char *solution_file_name = NULL;
 
 	t0 = os_ticks();
 
@@ -79,6 +81,11 @@ int main(int argc, const char **argv)
 			lift_case_level = atoi(argv[++i]);
 			lift_case = atoi(argv[++i]);
 			cout << "-lift_case " << lift_case_level << " " << lift_case << endl;
+		}
+		else if (strcmp(argv[i], "-read_solution_file") == 0) {
+			f_read_solution_file = TRUE;
+			solution_file_name = argv[++i];
+			cout << "-read_solution_file " << solution_file_name << endl;
 		}
 	}
 	if (!f_design) {
@@ -278,7 +285,9 @@ int main(int argc, const char **argv)
 			sprintf(group_label, "Syl_%d", Syl->primes[sylow_select]);
 
 			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG,
-					prefix, group_label, orbit_length, verbose_level);
+					prefix, group_label, orbit_length,
+					f_read_solution_file, solution_file_name,
+					verbose_level);
 			cout << "processing starter case done" << endl;
 		}
 #endif
