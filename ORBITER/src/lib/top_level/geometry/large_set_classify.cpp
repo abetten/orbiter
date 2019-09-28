@@ -553,6 +553,11 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 					exit(1);
 				}
 			}
+			for (j = 0; j < solution_size * orbit_length; j++) {
+				a = Large_sets[i * sz + Rep->sz + j];
+				b = Design_table_reduced_idx[a];
+				Large_sets[i * sz + Rep->sz + j] = b;
+			}
 		}
 
 	}
