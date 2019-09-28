@@ -1324,6 +1324,7 @@ public:
 			strong_generators *SG, const char *prefix,
 			char *group_label, int orbit_length,
 			int f_read_solution_file, const char *solution_file_name,
+			int *&Large_sets, int &nb_large_sets,
 			int verbose_level);
 	int test_orbit(int *orbit, int orbit_length);
 	int test_pair_of_orbits(

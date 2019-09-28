@@ -284,11 +284,19 @@ int main(int argc, const char **argv)
 			sprintf(prefix, "Case_%d_", lift_case);
 			sprintf(group_label, "Syl_%d", Syl->primes[sylow_select]);
 
+			int *Large_sets;
+			int nb_large_sets;
+
 			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG,
 					prefix, group_label, orbit_length,
 					f_read_solution_file, solution_file_name,
+					Large_sets, nb_large_sets,
 					verbose_level);
 			cout << "processing starter case done" << endl;
+			if (f_read_solution_file) {
+				cout << "We found " << nb_large_sets << " large sets" << endl;
+				int_matrix_print(Large_sets, nb_large_sets, LS->size_of_large_set);
+			}
 		}
 #endif
 	}
