@@ -565,10 +565,14 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 			solution_size = s;
 		}
 		else {
-			if (solution_size != s) {
-				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
-						"solution_size is not constant" << endl;
-				exit(1);
+			if (s != -1) {
+				if (solution_size != s) {
+					cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
+							"solution_size is not constant" << endl;
+					cout << "solution_size=" << solution_size << endl;
+					cout << "s=" << s << endl;
+					exit(1);
+				}
 			}
 		}
 
