@@ -205,17 +205,18 @@ int main(int argc, const char **argv)
 				draw_poset_full_level, 0 /* data */, f_embedded, f_sideways, x_stretch, 0 /*verbose_level*/);
 			}
 		if (f_plesken) {
+			latex_interface L;
 			int *P;
 			int N;
 			cout << "computing Plesken matrices:" << endl;
 			LS->Gen->Plesken_matrix_up(depth, P, N, 0 /*verbose_level - 2*/);
 			cout << "Plesken matrix up:" << endl;
-			int_matrix_print_tex(cout, P, N, N);
+			L.int_matrix_print_tex(cout, P, N, N);
 
 			FREE_int(P);
 			LS->Gen->Plesken_matrix_down(depth, P, N, 0/*verbose_level - 2*/);
 			cout << "Plesken matrix down:" << endl;
-			int_matrix_print_tex(cout, P, N, N);
+			L.int_matrix_print_tex(cout, P, N, N);
 
 			FREE_int(P);
 			}

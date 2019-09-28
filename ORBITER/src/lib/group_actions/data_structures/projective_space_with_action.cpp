@@ -995,6 +995,7 @@ strong_generators
 		char fname_labeling[1000];
 		char fname_csv[1000];
 		char fname_bin[1000];
+		latex_interface L;
 
 		sprintf(fname_labeling, "%slabeling_%d_%d.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
@@ -1004,7 +1005,7 @@ strong_generators
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
 		cout << "labeling:" << endl;
-		int_vec_print_as_matrix(cout,
+		L.int_vec_print_as_matrix(cout,
 				canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
 
 		Fio.int_vec_write_csv(canonical_labeling, N,
@@ -3797,6 +3798,7 @@ void projective_space_with_action::latex_report(const char *fname,
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
 	file_io Fio;
+	latex_interface L;
 
 	if (f_v) {
 		cout << "projective_space_with_action::latex_report" << endl;
@@ -3849,7 +3851,7 @@ void projective_space_with_action::latex_report(const char *fname,
 
 	fp << "\\section{Summary of Orbits}" << endl;
 	fp << "$$" << endl;
-	int_matrix_print_with_labels_and_partition(fp,
+	L.int_matrix_print_with_labels_and_partition(fp,
 			Table, CB->nb_types, 4,
 		row_labels, col_labels,
 		row_part_first, row_part_len, nb_row_parts,
@@ -3886,7 +3888,7 @@ void projective_space_with_action::latex_report(const char *fname,
 		cout << "This isomorphism type appears " << nb_input_objects
 				<< " times, namely for the following "
 						"input objects:" << endl;
-		int_vec_print_as_matrix(cout, Input_objects,
+		L.int_vec_print_as_matrix(cout, Input_objects,
 				nb_input_objects, 10 /* width */,
 				FALSE /* f_tex */);
 
@@ -3972,7 +3974,7 @@ void projective_space_with_action::latex_report(const char *fname,
 			}
 		else {
 			fp << "$$" << endl;
-			int_vec_print_as_matrix(fp, Input_objects,
+			L.int_vec_print_as_matrix(fp, Input_objects,
 				nb_input_objects, 10 /* width */, TRUE /* f_tex */);
 			fp << "$$" << endl;
 			}

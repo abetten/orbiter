@@ -239,6 +239,7 @@ void surface_domain::latex_table_of_trihedral_pairs(ostream &ost)
 
 void surface_domain::print_trihedral_pairs(ostream &ost)
 {
+	latex_interface L;
 	int i, j;
 
 	ost << "List of trihedral pairs:\\\\" << endl;
@@ -260,15 +261,15 @@ void surface_domain::print_trihedral_pairs(ostream &ost)
 		}
 	ost << "List of trihedral pairs numerically:\\\\" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt, 40, 6, 0, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }
@@ -353,9 +354,11 @@ void surface_domain::print_web_of_cubic_curves(ostream &ost,
 	int *Web_of_cubic_curves)
 // curves[45 * 10]
 {
+	latex_interface L;
+
 	ost << "Web of cubic curves:\\\\" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 		Web_of_cubic_curves, 45, 10, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }

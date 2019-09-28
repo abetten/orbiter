@@ -427,6 +427,7 @@ void arc_lifting::lift_prepare(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, c;
+	latex_interface L;
 	
 	if (f_v) {
 		cout << "arc_lifting::lift_prepare nb_T=" << nb_T << endl;
@@ -579,7 +580,7 @@ void arc_lifting::lift_prepare(int verbose_level)
 	if (f_vv) {
 		cout << "arc_lifting::lift_prepare "
 				"The_plane_ranks:" << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 				The_plane_rank, 45, 1, TRUE /* f_tex */);
 		}
 
@@ -1456,6 +1457,7 @@ void arc_lifting::print_bisecants(ostream &ost)
 
 void arc_lifting::print_intersections(ostream &ost)
 {
+	latex_interface L;
 	int labels[15];
 	int fst[1];
 	int len[1];
@@ -1468,7 +1470,7 @@ void arc_lifting::print_intersections(ostream &ost)
 		}
 	ost << "{\\small \\arraycolsep=1pt" << endl;
 	ost << "$$" << endl;
-	int_matrix_print_with_labels_and_partition(ost,
+	L.int_matrix_print_with_labels_and_partition(ost,
 		E->Intersections, 15, 15,
 		labels, labels, 
 		fst, len, 1,  
@@ -1518,6 +1520,7 @@ void arc_lifting::print_Eckardt_points(ostream &ost)
 void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 {
 	combinatorics_domain Combi;
+	latex_interface L;
 
 	ost << "The web of cubic curves is:\\\\" << endl;
 
@@ -1607,7 +1610,7 @@ void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 		labels[i] = i;
 		}
 	ost << "$$" << endl;
-	int_matrix_print_with_labels_and_partition(ost,
+	L.int_matrix_print_with_labels_and_partition(ost,
 			Web_of_cubic_curves, 15, 10,
 		labels, labels, 
 		row_fst, row_len, 1,  
@@ -1620,7 +1623,7 @@ void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 		labels[i] = 15 + i;
 		}
 	ost << "$$" << endl;
-	int_matrix_print_with_labels_and_partition(ost,
+	L.int_matrix_print_with_labels_and_partition(ost,
 			Web_of_cubic_curves, 15, 10,
 		labels, labels, 
 		row_fst, row_len, 1,  
@@ -1633,7 +1636,7 @@ void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 		labels[i] = 30 + i;
 		}
 	ost << "$$" << endl;
-	int_matrix_print_with_labels_and_partition(ost,
+	L.int_matrix_print_with_labels_and_partition(ost,
 			Web_of_cubic_curves, 15, 10,
 		labels, labels, 
 		row_fst, row_len, 1,  
@@ -1650,6 +1653,7 @@ void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 void arc_lifting::print_trihedral_plane_equations(
 		ostream &ost)
 {
+	latex_interface L;
 	int i;
 	
 	ost << "The chosen abstract trihedral pair is no "
@@ -1680,7 +1684,7 @@ void arc_lifting::print_trihedral_plane_equations(
 
 	ost << "The coefficients of the four base curves are:\\\\";
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 			base_curves, 4, 10, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 
@@ -1695,24 +1699,24 @@ void arc_lifting::print_trihedral_plane_equations(
 
 	ost << "The dual coordinates of the plane equations are:\\\\";
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, 
+	L.print_integer_matrix_with_standard_labels(ost,
 		The_plane_equations, 15, 4, TRUE /* f_tex*/);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		The_plane_equations + 15 * 4, 15, 4, 15, 0, TRUE /* f_tex*/);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		The_plane_equations + 30 * 4, 15, 4, 30, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "The dual ranks are:\\\\";
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, 
+	L.print_integer_matrix_with_standard_labels(ost,
 		The_plane_duals, 15, 1, TRUE /* f_tex*/);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		The_plane_duals + 15 * 1, 15, 1, 15, 0, TRUE /* f_tex*/);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		The_plane_duals + 30 * 1, 15, 1, 30, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 
@@ -1741,23 +1745,27 @@ void arc_lifting::print_lines(ostream &ost)
 
 void arc_lifting::print_dual_point_ranks(ostream &ost)
 {
+	latex_interface L;
+
 	ost << "Dual point ranks:\\\\";
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 			Dual_point_ranks, nb_T, 6, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }
 
 void arc_lifting::print_FG(ostream &ost)
 {
+	latex_interface L;
+
 	ost << "$F$-planes:\\\\";
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 			F_plane, 3, 4, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$G$-planes:\\\\";
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 			G_plane, 3, 4, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }
@@ -1766,11 +1774,12 @@ void arc_lifting::print_the_six_plane_equations(
 	int *The_six_plane_equations,
 	int *plane6, ostream &ost)
 {
+	latex_interface L;
 	int i, h;
 	
 	ost << "The six plane equations are:" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 			The_six_plane_equations, 6, 4, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 
@@ -1788,12 +1797,13 @@ void arc_lifting::print_surface_equations_on_line(
 	int *The_surface_equations,
 	int lambda, int lambda_rk, ostream &ost)
 {
+	latex_interface L;
 	int i;
 	int v[2];
 	
 	ost << "The $q+1$ equations on the line are:" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 			The_surface_equations, q + 1, 20, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
@@ -1882,6 +1892,7 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 	int list_sz = 0;
 	int Tt[17];
 	int Iso[120];
+	latex_interface L;
 
 	cout << "arc_lifting::print_isomorphism_types_of_"
 			"trihedral_pairs" << endl;
@@ -1967,13 +1978,13 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 	ost << "The isomorphism types of the trihedral pairs "
 			"in the list of double triplets are:" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 			Iso + 0 * 1, 40, 1, 0, 0, TRUE /* f_tex */);
 	ost << "\\quad" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 			Iso + 40 * 1, 40, 1, 40, 0, TRUE /* f_tex */);
 	ost << "\\quad" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 			Iso + 80 * 1, 40, 1, 80, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 

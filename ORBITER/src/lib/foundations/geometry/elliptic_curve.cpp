@@ -677,8 +677,10 @@ void elliptic_curve::compute_addition_table(int verbose_level)
 
 void elliptic_curve::print_addition_table()
 {
+	latex_interface L;
+
 	int_matrix_print(A, nb, nb);
-	int_matrix_print_tex(cout, A, nb, nb);
+	L.int_matrix_print_tex(cout, A, nb, nb);
 }
 
 #if 0

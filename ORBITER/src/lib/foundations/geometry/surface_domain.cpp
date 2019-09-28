@@ -1889,6 +1889,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 	int size_complement;
 	char label[1000];
 	combinatorics_domain Combi;
+	latex_interface L;
 
 	if (f_v) {
 		cout << "surface_domain::make_trihedral_pairs" << endl;
@@ -1961,9 +1962,9 @@ void surface_domain::make_trihedral_pairs(int *&T,
 
 	if (f_v) {
 		cout << "The trihedral pairs are:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			T, 120, 9, FALSE /* f_tex */);
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			T, 120, 9, TRUE /* f_tex */);
 		}
 
@@ -1979,6 +1980,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 	int i, j, h, rk, a;
 	combinatorics_domain Combi;
 	sorting Sorting;
+	latex_interface L;
 
 	if (f_v) {
 		cout << "surface_domain::process_trihedral_pairs" << endl;
@@ -2013,13 +2015,13 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 	if (f_v) {
 		cout << "surface_domain::process_trihedral_pairs "
 				"The trihedral pairs row sets:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Trihedral_pairs_row_sets, 120, 3, 
 			FALSE /* f_tex */);
 		//print_integer_matrix_with_standard_labels(cout,
 		//Trihedral_pairs_row_sets, 120, 3, TRUE /* f_tex */);
 		cout << "The trihedral pairs col sets:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Trihedral_pairs_col_sets, 120, 3, 
 			FALSE /* f_tex */);
 		//print_integer_matrix_with_standard_labels(cout,
@@ -2033,7 +2035,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 	if (f_v) {
 		cout << "surface_domain::process_trihedral_pairs "
 				"sorted row values:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Classify_trihedral_pairs_row_values->data_sorted, 
 			120 * 3 / 10, 10, FALSE /* f_tex */);
 		//int_matrix_print(
@@ -2049,7 +2051,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 	if (f_v) {
 		cout << "surface_domain::process_trihedral_pairs "
 				"sorted col values:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Classify_trihedral_pairs_col_values->data_sorted, 
 			120 * 3 / 10, 10, FALSE /* f_tex */);
 		}
@@ -2149,6 +2151,7 @@ void surface_domain::init_Trihedral_to_Eckardt(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk;
 	int tritangent_plane[3];
+	latex_interface L;
 
 	if (f_v) {
 		cout << "surface_domain::init_Trihedral_to_Eckardt" << endl;
@@ -2176,7 +2179,7 @@ void surface_domain::init_Trihedral_to_Eckardt(int verbose_level)
 		}
 	if (f_v) {
 		cout << "Trihedral_to_Eckardt:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Trihedral_to_Eckardt, nb_trihedral_pairs, 6, 
 			FALSE /* f_tex */);
 		}
@@ -2222,6 +2225,7 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 	int subset[3];
 	combinatorics_domain Combi;
 	sorting Sorting;
+	latex_interface L;
 
 	if (f_v) {
 		cout << "surface_domain::init_collinear_Eckardt_triples" << endl;
@@ -2239,7 +2243,7 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 		}
 	if (f_v) {
 		cout << "collinear_Eckardt_triples_rank:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			collinear_Eckardt_triples_rank, nb_trihedral_pairs, 2, 
 			FALSE /* f_tex */);
 		}
@@ -3137,6 +3141,7 @@ void surface_domain::Trihedral_pairs_to_planes(int *Lines, int *Planes,
 	int t, i, j, rk;
 	int tritangent_plane[3];
 	int three_lines[3];
+	latex_interface L;
 
 	if (f_v) {
 		cout << "surface_domain::Trihedral_pairs_to_planes" << endl;
@@ -3171,7 +3176,7 @@ void surface_domain::Trihedral_pairs_to_planes(int *Lines, int *Planes,
 		}
 	if (f_v) {
 		cout << "Trihedral_pairs_to_planes:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Planes, nb_trihedral_pairs, 6, FALSE /* f_tex */);
 		}
 	if (f_v) {
@@ -3324,6 +3329,7 @@ void surface_domain::compute_external_lines_on_three_tritangent_planes(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	latex_interface L;
 	
 	if (f_v) {
 		cout << "surface_domain::compute_external_lines_on_"
@@ -3354,7 +3360,7 @@ void surface_domain::compute_external_lines_on_three_tritangent_planes(
 		cout << "surface_domain::compute_external_lines_on_"
 				"three_tritangent_planes Lines_in_"
 				"tritangent_plane: " << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Lines_in_tritangent_plane, nb_tritangent_planes, 
 			3, FALSE);
 		}
@@ -3404,7 +3410,7 @@ void surface_domain::compute_external_lines_on_three_tritangent_planes(
 		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes The tritangent planes intersecting "
 				"in surface lines:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Plane_intersections, nb_tritangent_planes, 
 			nb_tritangent_planes, FALSE);
 		}
@@ -3427,7 +3433,7 @@ void surface_domain::compute_external_lines_on_three_tritangent_planes(
 		cout << "surface_domain::compute_external_lines_on_three_"
 				"tritangent_planes The tritangent planes "
 				"intersecting in general lines:" << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 				Plane_intersections_general, nb_tritangent_planes,
 				nb_tritangent_planes, FALSE);
 		}

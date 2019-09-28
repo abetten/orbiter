@@ -113,6 +113,7 @@ int main(int argc, char **argv)
 		int *Coord;
 		int a, j, nb_c, rk;
 		int *Roth_Lempel;
+		latex_interface L;
 		
 		int_vec_scan(arc_text, the_arc, the_arc_sz);
 		cout << "input arc = ";
@@ -144,7 +145,7 @@ int main(int argc, char **argv)
 				}
 			}
 		cout << "Roth_Lempel:" << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 				Roth_Lempel, k, nb_c, TRUE /* f_tex*/);
 		rk = F->Gauss_easy(Roth_Lempel, k, nb_c);
 		cout << "The matrix has rank " << rk << endl;

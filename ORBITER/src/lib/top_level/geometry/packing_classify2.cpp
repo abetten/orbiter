@@ -653,7 +653,9 @@ void packing_classify::report_packing_as_table(
 	int orbit, invariants_packing *inv, int *list_of_lines,
 	int verbose_level)
 {
-#if 1
+	latex_interface L;
+
+	#if 1
 	{
 	int nb_points;
 	int *the_spread;
@@ -667,7 +669,7 @@ void packing_classify::report_packing_as_table(
 			"(each row corresponds to a spread):" << endl;
 	f << "$$" << endl;
 	f << "\\left[" << endl;
-	int_matrix_print_tex(f, list_of_lines, size_of_packing, spread_size);
+	L.int_matrix_print_tex(f, list_of_lines, size_of_packing, spread_size);
 	f << "\\right]" << endl;
 	f << "$$" << endl;
 

@@ -592,6 +592,7 @@ void surface_object::enumerate_points(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
 	sorting Sorting;
+	latex_interface L;
 	
 	if (f_v) {
 		cout << "surface_object::enumerate_points" << endl;
@@ -614,7 +615,7 @@ void surface_object::enumerate_points(int verbose_level)
 	if (f_vvv) {
 		cout << "surface_object::enumerate_points The points "
 				"on the surface are:" << endl;
-		print_integer_matrix_with_standard_labels(cout, 
+		L.print_integer_matrix_with_standard_labels(cout,
 			Pts, nb_pts, 1, FALSE /* f_tex */);
 		}
 
@@ -899,7 +900,8 @@ void surface_object::compute_tritangent_planes_by_rank(int verbose_level)
 void surface_object::compute_tritangent_planes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	
+	latex_interface L;
+
 	if (f_v) {
 		cout << "surface_object::compute_tritangent_planes" << endl;
 		}
@@ -920,7 +922,7 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 	if (f_v) {
 		cout << "surface_object::compute_tritangent_planes "
 				"Lines_in_tritangent_plane: " << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 				Lines_in_tritangent_plane, nb_tritangent_planes, 3,
 				FALSE);
 		}
@@ -1196,39 +1198,41 @@ void surface_object::print_neighbor_sets(ostream &ost)
 
 void surface_object::print_planes_in_trihedral_pairs(ostream &ost)
 {
+	latex_interface L;
+
 	ost << "\\clearpage\n\\subsection*{All planes "
 			"in trihedral pairs}" << endl;
 
 	ost << "All planes by plane rank:" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, 
+	L.print_integer_matrix_with_standard_labels(ost,
 		All_Planes, 30, 6, TRUE /* f_tex */);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		All_Planes + 30 * 6, 30, 6, 30, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		All_Planes + 60 * 6, 30, 6, 60, 0, TRUE /* f_tex */);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		All_Planes + 90 * 6, 30, 6, 90, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 
 
 	ost << "All planes by dual point rank:" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, 
+	L.print_integer_matrix_with_standard_labels(ost,
 		Dual_point_ranks, 30, 6, TRUE /* f_tex */);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Dual_point_ranks + 30 * 6, 30, 6, 30, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Dual_point_ranks + 60 * 6, 30, 6, 60, 0, TRUE /* f_tex */);
 	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Dual_point_ranks + 90 * 6, 30, 6, 90, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 }
@@ -1492,6 +1496,8 @@ void surface_object::print_lines(ostream &ost)
 
 void surface_object::print_lines_with_points_on_them(ostream &ost)
 {
+	latex_interface L;
+
 	ost << "\\subsection*{The 27 lines with points on them}" << endl;
 	int i;
 	
@@ -1503,7 +1509,7 @@ void surface_object::print_lines_with_points_on_them(ostream &ost)
 			<< " = \\left[" << endl;
 		//print_integer_matrix_width(cout, Gr->M,
 		// k, n, n, F->log10_of_q + 1);
-		print_integer_matrix_tex(ost, Surf->Gr->M, 2, 4);
+		L.print_integer_matrix_tex(ost, Surf->Gr->M, 2, 4);
 		ost << "\\right]_{" << Lines[i] << "}" << endl;
 		ost << "$$" << endl;
 		ost << "which contains the point set " << endl;
@@ -1585,6 +1591,7 @@ void surface_object::print_affine_points_in_source_code(ostream &ost)
 
 void surface_object::print_points(ostream &ost)
 {
+	latex_interface L;
 	int i, j, p, a, b, c;
 	int v[4];
 
@@ -1595,7 +1602,7 @@ void surface_object::print_points(ostream &ost)
 
 	if (nb_pts < 1000) {
 		ost << "$$" << endl;
-		int_vec_print_as_matrix(ost, Pts, nb_pts, 10, TRUE /* f_tex */);
+		L.int_vec_print_as_matrix(ost, Pts, nb_pts, 10, TRUE /* f_tex */);
 		ost << "$$" << endl;
 		//ost << "\\clearpage" << endl;
 		ost << "The points on the surface are:\\\\" << endl;
@@ -1618,12 +1625,12 @@ void surface_object::print_points(ostream &ost)
 	ost << "The surface has " << nb_Eckardt_points
 			<< " Eckardt points:\\\\" << endl;
 	ost << "$$" << endl;
-	int_vec_print_as_matrix(ost,
+	L.int_vec_print_as_matrix(ost,
 			Eckardt_points, nb_Eckardt_points, 10,
 			TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	int_vec_print_as_matrix(ost,
+	L.int_vec_print_as_matrix(ost,
 			Eckardt_points_index, nb_Eckardt_points, 10,
 			TRUE /* f_tex */);
 	ost << "$$" << endl;
@@ -1709,12 +1716,12 @@ void surface_object::print_points(ostream &ost)
 			<< " Double points:\\\\" << endl;
 	if (nb_Double_points < 1000) {
 		ost << "$$" << endl;
-		int_vec_print_as_matrix(ost,
+		L.int_vec_print_as_matrix(ost,
 				Double_points, nb_Double_points, 10,
 				TRUE /* f_tex */);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
-		int_vec_print_as_matrix(ost,
+		L.int_vec_print_as_matrix(ost,
 				Double_points_index, nb_Double_points, 10,
 				TRUE /* f_tex */);
 		ost << "$$" << endl;
@@ -1799,7 +1806,7 @@ void surface_object::print_points(ostream &ost)
 			<< " points not on any line:\\\\" << endl;
 	if (nb_pts_not_on_lines < 1000) {
 		ost << "$$" << endl;
-		int_vec_print_as_matrix(ost,
+		L.int_vec_print_as_matrix(ost,
 				Pts_not_on_lines, nb_pts_not_on_lines, 10,
 				TRUE /* f_tex */);
 		//print_integer_matrix_with_standard_labels(ost, Pts3,
@@ -1832,12 +1839,13 @@ void surface_object::print_points(ostream &ost)
 void surface_object::print_double_sixes(ostream &ost)
 {
 	int i, j, a;
+	latex_interface L;
 	
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Double sixes}" << endl;
 	ost << "The double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, 
+	L.print_integer_matrix_with_standard_labels(ost,
 		Surf->Double_six, 36, 12, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
@@ -1862,11 +1870,11 @@ void surface_object::print_double_sixes(ostream &ost)
 	//ost << "\\clearpage" << endl;
 	ost << "The half double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, 
+	L.print_integer_matrix_with_standard_labels(ost,
 		Surf->Half_double_sixes, 36, 6, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, 
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Surf->Half_double_sixes + 36 * 6, 
 		36, 6, 36, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
@@ -1874,21 +1882,23 @@ void surface_object::print_double_sixes(ostream &ost)
 
 void surface_object::print_trihedral_pairs(ostream &ost)
 {
+	latex_interface L;
+
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Trihedral pairs}" << endl;
 	ost << "The planes in the trihedral pairs in Eckardt "
 			"point labeling are:\\\\" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 		Surf->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
 		TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
 		TRUE /* f_tex */);
 	ost << "$$" << endl;
@@ -3062,10 +3072,11 @@ void surface_object::identify_lines(int *lines, int nb_lines,
 void surface_object::print_nine_lines_latex(ostream &ost, 
 	int *nine_lines, int *nine_lines_idx)
 {
+	latex_interface L;
 	int i, j, idx;
 
 	ost << "$$";
-	print_integer_matrix_with_standard_labels(ost,
+	L.print_integer_matrix_with_standard_labels(ost,
 			nine_lines, 3, 3, TRUE /* f_tex*/);
 
 

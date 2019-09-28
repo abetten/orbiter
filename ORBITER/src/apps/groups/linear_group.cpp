@@ -360,7 +360,7 @@ int main(int argc, const char **argv)
 
 				fp << "\\begin{sidewaystable}" << endl;
 				fp << "$$" << endl;
-				int_matrix_print_tex(fp, Table, n, n);
+				L.int_matrix_print_tex(fp, Table, n, n);
 				fp << "$$" << endl;
 				fp << "\\end{sidewaystable}" << endl;
 

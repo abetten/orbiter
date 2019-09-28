@@ -160,6 +160,7 @@ void difference_set_in_heisenberg_group::init(int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i; //, j, a, b, ord;
+	latex_interface L;
 	
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::init" << endl;
@@ -177,7 +178,7 @@ void difference_set_in_heisenberg_group::init(int n, int q, int verbose_level)
 	H->group_table(Table, verbose_level);
 	cout << "group_table:" << endl;
 	if (H->group_order < 50) {
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 				Table, H->group_order, H->group_order, FALSE /* f_tex */);
 		}
 	else {
@@ -292,6 +293,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	int i, j, a, b, t;
 	int h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
 	magma_interface Magma;
+	latex_interface L;
 	
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::do_n2q3" << endl;
@@ -510,10 +512,10 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 			}
 		}
 	cout << "Sets1:" << endl;
-	print_integer_matrix_with_standard_labels(cout,
+	L.print_integer_matrix_with_standard_labels(cout,
 			Sets1, nb_pairs_of_type1, 2, FALSE /* f_tex */);
 	cout << "Sets2:" << endl;
-	print_integer_matrix_with_standard_labels(cout,
+	L.print_integer_matrix_with_standard_labels(cout,
 			Sets2, nb_pairs_of_type2, 6, FALSE /* f_tex */);
 
 
@@ -545,10 +547,10 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 		}
 	
 	cout << "Short_pairs:" << endl;
-	print_integer_matrix_with_standard_labels(cout,
+	L.print_integer_matrix_with_standard_labels(cout,
 			Short_pairs, nb_pairs_of_type1, 2, FALSE /* f_tex */);
 	cout << "Long_pairs:" << endl;
-	print_integer_matrix_with_standard_labels(cout,
+	L.print_integer_matrix_with_standard_labels(cout,
 			Long_pairs, nb_pairs_of_type2, 2, FALSE /* f_tex */);
 
 
@@ -568,6 +570,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
+	latex_interface L;
 
 
 
@@ -673,7 +676,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 			Pairing[a] = b;
 			}
 		cout << "Pairing:" << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 				Pairing, Sch1->nb_orbits, 1, FALSE /* f_tex */);
 	
 	
@@ -707,7 +710,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 			nb_pairs_of_long_orbits++;
 			}
 		cout << "Pairs_of_long_orbits:" << endl;
-		print_integer_matrix_with_standard_labels(cout,
+		L.print_integer_matrix_with_standard_labels(cout,
 				Pairs_of_long_orbits, nb_pairs_of_long_orbits,
 				2, FALSE /* f_tex */);
 

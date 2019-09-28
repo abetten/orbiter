@@ -661,6 +661,7 @@ void code_generator::print(ostream &ost, int len, int *S)
 	int N, j;
 	int *codewords;
 	number_theory_domain NT;
+	latex_interface L;
 
 	if (len == 0) {
 		return;
@@ -675,7 +676,7 @@ void code_generator::print(ostream &ost, int len, int *S)
 			}
 		print_integer_matrix(ost, rc.M1, nmk, len);
 
-		int_matrix_print_tex(ost, rc.M1, nmk, len);
+		L.int_matrix_print_tex(ost, rc.M1, nmk, len);
 
 		N = NT.i_power_j(F->q, nmk);
 		codewords = NEW_int(N);
@@ -705,7 +706,7 @@ void code_generator::print(ostream &ost, int len, int *S)
 			B = A + nmk * len;
 			print_integer_matrix(ost, B, len - nmk, len);
 
-			int_matrix_print_tex(ost, B, len - nmk, len);
+			L.int_matrix_print_tex(ost, B, len - nmk, len);
 
 
 			k1 = len - nmk;

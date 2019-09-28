@@ -1131,9 +1131,13 @@ public:
 // stabilizer_chain_base_data.cpp:
 // #############################################################################
 
-//! information about the transversals in the subgroup chain
+
 
 #define STABILIZER_CHAIN_DATA_MAX_DEGREE 1L << 28
+
+
+//! the transversals in the stabilizer subgroup chain (Sims chain)
+
 
 class stabilizer_chain_base_data {
 private:

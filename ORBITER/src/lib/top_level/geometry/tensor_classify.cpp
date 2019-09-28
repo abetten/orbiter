@@ -260,6 +260,7 @@ void tensor_classify::init(int argc, const char **argv,
 
 
 		file_io Fio;
+		latex_interface L;
 
 		{
 		char fname[1000];
@@ -389,7 +390,7 @@ void tensor_classify::init(int argc, const char **argv,
 					Sorting.int_vec_heapsort(data, orbit_length);
 
 					fp << "$$" << endl;
-					print_integer_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
+					L.print_integer_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
 					fp << "$$" << endl;
 
 					classify C;

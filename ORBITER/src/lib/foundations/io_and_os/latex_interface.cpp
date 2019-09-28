@@ -13,6 +13,7 @@
 using namespace std;
 
 
+
 namespace orbiter {
 namespace foundations {
 
@@ -741,6 +742,374 @@ void latex_interface::incma_latex_override_unit_length(
 void latex_interface::incma_latex_override_unit_length_drop()
 {
 	incma_latex_unit_length_nb--;
+}
+
+void latex_interface::print_01_matrix_tex(ostream &ost,
+	int *p, int m, int n)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		cout << "\t\"";
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
+			}
+		ost << "\"" << endl;
+		}
+}
+
+void latex_interface::print_integer_matrix_tex(ostream &ost,
+	int *p, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{*{" << n << "}c}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
+			if (j < n - 1) {
+				ost << "  & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
+void latex_interface::print_integer_matrix_with_labels(ostream &ost,
+	int *p, int m, int n, int *row_labels, int *col_labels,
+	int f_tex)
+{
+	int i, j;
+
+	if (f_tex) {
+		ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
+		}
+
+	for (j = 0; j < n; j++) {
+		if (f_tex) {
+			ost << " & ";
+			}
+		else {
+			ost << " ";
+			}
+		ost << col_labels[j];
+		}
+	if (f_tex) {
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		}
+	else {
+		ost << endl;
+		}
+	for (i = 0; i < m; i++) {
+		ost << row_labels[i];
+		for (j = 0; j < n; j++) {
+			if (f_tex) {
+				ost << " & ";
+				}
+			else {
+				ost << " ";
+				}
+			ost << p[i * n + j];
+			}
+		if (f_tex) {
+			ost << "\\\\";
+			}
+		ost << endl;
+		}
+	if (f_tex) {
+		ost << "\\end{array}" << endl;
+		}
+}
+
+void latex_interface::print_integer_matrix_with_standard_labels(ostream &ost,
+	int *p, int m, int n, int f_tex)
+{
+	print_integer_matrix_with_standard_labels_and_offset(ost,
+		p, m, n, 0, 0, f_tex);
+
+}
+
+void latex_interface::print_integer_matrix_with_standard_labels_and_offset(ostream &ost,
+	int *p, int m, int n, int m_offset, int n_offset, int f_tex)
+{
+	if (f_tex) {
+		print_integer_matrix_with_standard_labels_and_offset_tex(
+			ost, p, m, n, m_offset, n_offset);
+		}
+	else {
+		print_integer_matrix_with_standard_labels_and_offset_text(
+			ost, p, m, n, m_offset, n_offset);
+		}
+}
+
+void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
+	ostream &ost, int *p, int m, int n, int m_offset, int n_offset)
+{
+	int i, j, w;
+
+	w = int_matrix_max_log_of_entries(p, m, n);
+
+	for (j = 0; j < w; j++) {
+		ost << " ";
+		}
+	for (j = 0; j < n; j++) {
+		ost << " " << setw(w) << n_offset + j;
+		}
+	ost << endl;
+	for (i = 0; i < m; i++) {
+		ost << setw(w) << m_offset + i;
+		for (j = 0; j < n; j++) {
+			ost << " " << setw(w) << p[i * n + j];
+			}
+		ost << endl;
+		}
+}
+
+void latex_interface::print_integer_matrix_with_standard_labels_and_offset_tex(
+	ostream &ost, int *p, int m, int n,
+	int m_offset, int n_offset)
+{
+	int i, j;
+
+	ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
+
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i;
+		for (j = 0; j < n; j++) {
+			ost << " & " << p[i * n + j];
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
+void latex_interface::print_integer_matrix_tex_block_by_block(ostream &ost,
+	int *p, int m, int n, int block_width)
+{
+	int i, j, I, J, nb_row_blocks, nb_col_blocks, v, w;
+	int *M;
+
+	nb_row_blocks = (m + block_width - 1) / block_width;
+	nb_col_blocks = (n + block_width - 1) / block_width;
+	M = NEW_int(block_width * block_width);
+	for (I = 0; I < nb_row_blocks; I++) {
+		for (J = 0; J < nb_col_blocks; J++) {
+			ost << "$$" << endl;
+			w = block_width;
+			if ((J + 1) * block_width > n) {
+				w = n - J * block_width;
+				}
+			v = block_width;
+			if ((I + 1) * block_width > m) {
+				v = m - I * block_width;
+				}
+			for (i = 0; i < v; i++) {
+				for (j = 0; j < w; j++) {
+					M[i * w + j] =
+							p[(I * block_width + i) * n +
+							  J * block_width + j];
+					}
+				}
+			cout << "print_integer_matrix_tex_block_by_block I="
+				<< I << " J=" << J << " v=" << v
+				<< " w=" << w << " M=" << endl;
+			int_matrix_print(M, v, w);
+			print_integer_matrix_with_standard_labels_and_offset(
+				ost, M, v, w,
+				I * block_width,
+				J * block_width,
+				TRUE /* f_tex*/);
+#if 0
+			ost << "\\begin{array}{*{" << w << "}{r}}" << endl;
+			for (i = 0; i < block_width; i++) {
+				if (I * block_width + i > m) {
+					continue;
+					}
+				for (j = 0; j < w; j++) {
+					ost << p[i * n + J * block_width + j];
+					if (j < w - 1) {
+						ost << "  & ";
+						}
+					}
+				ost << "\\\\" << endl;
+				}
+			ost << "\\end{array}" << endl;
+#endif
+			ost << "$$" << endl;
+			} // next J
+		} // next I
+	FREE_int(M);
+}
+
+void latex_interface::print_big_integer_matrix_tex(ostream &ost,
+	int *p, int m, int n)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
+			}
+		ost << "\\\\" << endl;
+		}
+}
+
+void latex_interface::int_vec_print_as_matrix(ostream &ost,
+	int *v, int len, int width, int f_tex)
+{
+	int *w;
+	int i;
+
+	w = NEW_int(len + width - 1);
+	int_vec_copy(v, w, len);
+	for (i = 0; i < width - 1; i++) {
+		w[len + i] = 0;
+		}
+
+	print_integer_matrix_with_standard_labels(ost,
+		w, (len + width - 1) / width, width, f_tex);
+
+	FREE_int(w);
+}
+
+
+void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
+	int *p, int m, int n,
+	int *row_labels, int *col_labels,
+	int *row_part_first, int *row_part_len, int nb_row_parts,
+	int *col_part_first, int *col_part_len, int nb_col_parts,
+	void (*process_function_or_NULL)(int *p, int m, int n,
+		int i, int j, int val, char *output, void *data),
+	void *data,
+	int f_tex)
+{
+	int i, j, I, J, u, v;
+	char output[1000];
+
+	if (f_tex) {
+		ost << "\\begin{array}{r|";
+		for (J = 0; J < nb_col_parts; J++) {
+			ost << "*{" << col_part_len[J] << "}{r}|";
+			}
+		ost << "}" << endl;
+		}
+
+	for (j = 0; j < n; j++) {
+		if (f_tex) {
+			ost << " & ";
+			}
+		else {
+			ost << " ";
+			}
+		if (process_function_or_NULL) {
+			(*process_function_or_NULL)(
+				p, m, n, -1, j,
+				col_labels[j], output, data);
+			ost << output;
+			}
+		else {
+			ost << col_labels[j];
+			}
+		}
+	if (f_tex) {
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		}
+	else {
+		ost << endl;
+		}
+	for (I = 0; I < nb_row_parts; I++) {
+		for (u = 0; u < row_part_len[I]; u++) {
+			i = row_part_first[I] + u;
+
+			if (process_function_or_NULL) {
+				(*process_function_or_NULL)(
+					p, m, n, i, -1,
+					row_labels[i], output, data);
+				ost << output;
+				}
+			else {
+				ost << row_labels[i];
+				}
+
+			for (J = 0; J < nb_col_parts; J++) {
+				for (v = 0; v < col_part_len[J]; v++) {
+					j = col_part_first[J] + v;
+					if (f_tex) {
+						ost << " & ";
+						}
+					else {
+						ost << " ";
+						}
+					if (process_function_or_NULL) {
+						(*process_function_or_NULL)(
+						p, m, n, i, j, p[i * n + j],
+						output, data);
+						ost << output;
+						}
+					else {
+						ost << p[i * n + j];
+						}
+					}
+				}
+			if (f_tex) {
+				ost << "\\\\";
+				}
+			ost << endl;
+			}
+		if (f_tex) {
+			ost << "\\hline";
+			}
+		ost << endl;
+		}
+	if (f_tex) {
+		ost << "\\end{array}" << endl;
+		}
+}
+
+void latex_interface::int_matrix_print_tex(ostream &ost, int *p, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
+			if (j < n - 1) {
+				ost << " & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
+void latex_interface::print_cycle_tex_with_special_point_labels(
+		std::ostream &ost, int *pts, int nb_pts,
+		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void *point_label_data)
+{
+	int i, pt;
+
+	ost << "(";
+	for (i = 0; i < nb_pts; i++) {
+		pt = pts[i];
+		stringstream sstr;
+		(*point_label)(sstr, pt, point_label_data);
+		ost << sstr.str();
+		if (i < nb_pts - 1) {
+			ost << ", ";
+		}
+	}
+	ost << ")";
 }
 
 

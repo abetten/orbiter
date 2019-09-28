@@ -234,6 +234,37 @@ public:
 		int *R, int *X, int dim_X);
 	void incma_latex_override_unit_length(const char *override_unit_length);
 	void incma_latex_override_unit_length_drop();
+	void print_01_matrix_tex(std::ostream &ost, int *p, int m, int n);
+	void print_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
+	void print_integer_matrix_with_labels(std::ostream &ost, int *p,
+		int m, int n, int *row_labels, int *col_labels, int f_tex);
+	void print_integer_matrix_with_standard_labels(std::ostream &ost,
+		int *p, int m, int n, int f_tex);
+	void print_integer_matrix_with_standard_labels_and_offset(std::ostream &ost,
+		int *p, int m, int n, int m_offset, int n_offset, int f_tex);
+	void print_integer_matrix_tex_block_by_block(std::ostream &ost,
+		int *p, int m, int n, int block_width);
+	void print_integer_matrix_with_standard_labels_and_offset_text(std::ostream &ost,
+		int *p, int m, int n, int m_offset, int n_offset);
+	void print_integer_matrix_with_standard_labels_and_offset_tex(std::ostream &ost,
+		int *p, int m, int n, int m_offset, int n_offset);
+	void print_big_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
+	void int_vec_print_as_matrix(std::ostream &ost,
+		int *v, int len, int width, int f_tex);
+	void int_matrix_print_with_labels_and_partition(std::ostream &ost, int *p,
+		int m, int n,
+		int *row_labels, int *col_labels,
+		int *row_part_first, int *row_part_len, int nb_row_parts,
+		int *col_part_first, int *col_part_len, int nb_col_parts,
+		void (*process_function_or_NULL)(int *p, int m, int n, int i, int j,
+			int val, char *output, void *data),
+		void *data,
+		int f_tex);
+	void int_matrix_print_tex(std::ostream &ost, int *p, int m, int n);
+	void print_cycle_tex_with_special_point_labels(
+			std::ostream &ost, int *pts, int nb_pts,
+			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void *point_label_data);
 
 };
 
@@ -455,6 +486,9 @@ public:
 // override_double.cpp
 // #############################################################################
 
+
+//! to temporarily override a double variable with a new value
+
 class override_double {
 public:
 	double *p;
@@ -526,8 +560,6 @@ void lint_set_print_tex_for_inline_text(std::ostream &ost,
 void int_vec_print(std::ostream &ost, int *v, int len);
 void lint_vec_print(std::ostream &ost, long int *v, int len);
 void int_vec_print_str(std::stringstream &ost, int *v, int len);
-void int_vec_print_as_matrix(std::ostream &ost,
-	int *v, int len, int width, int f_tex);
 void int_vec_print_as_table(std::ostream &ost, int *v, int len, int width);
 void int_vec_print_fully(std::ostream &ost, int *v, int len);
 void lint_vec_print_fully(std::ostream &ost, long int *v, int len);
@@ -540,21 +572,6 @@ void integer_vec_print(std::ostream &ost, int *v, int len);
 void print_integer_matrix(std::ostream &ost, int *p, int m, int n);
 void print_integer_matrix_width(std::ostream &ost, int *p,
 	int m, int n, int dim_n, int w);
-void print_01_matrix_tex(std::ostream &ost, int *p, int m, int n);
-void print_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
-void print_integer_matrix_with_labels(std::ostream &ost, int *p,
-	int m, int n, int *row_labels, int *col_labels, int f_tex);
-void print_integer_matrix_with_standard_labels(std::ostream &ost,
-	int *p, int m, int n, int f_tex);
-void print_integer_matrix_with_standard_labels_and_offset(std::ostream &ost,
-	int *p, int m, int n, int m_offset, int n_offset, int f_tex);
-void print_integer_matrix_tex_block_by_block(std::ostream &ost,
-	int *p, int m, int n, int block_width);
-void print_integer_matrix_with_standard_labels_and_offset_text(std::ostream &ost,
-	int *p, int m, int n, int m_offset, int n_offset);
-void print_integer_matrix_with_standard_labels_and_offset_tex(std::ostream &ost,
-	int *p, int m, int n, int m_offset, int n_offset);
-void print_big_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
 void int_matrix_make_block_matrix_2x2(int *Mtx, int k, 
 	int *A, int *B, int *C, int *D);
 // makes the 2k x 2k block matrix 
@@ -568,7 +585,6 @@ void int_matrix_print(int *p, int m, int n);
 void int_matrix_print_tight(int *p, int m, int n);
 void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
 void int_matrix_print(int *p, int m, int n, int w);
-void int_matrix_print_tex(std::ostream &ost, int *p, int m, int n);
 void int_matrix_print_bitwise(int *p, int m, int n);
 void uchar_print_bitwise(std::ostream &ost, uchar u);
 void uchar_move(uchar *p, uchar *q, int len);
@@ -642,15 +658,6 @@ void make_graph_of_disjoint_sets_from_rows_of_matrix(
 // sol_length must be constant
 void int_vec_print_to_str(char *str, int *data, int len);
 void int_vec_print_to_str_naked(char *str, int *data, int len);
-void int_matrix_print_with_labels_and_partition(std::ostream &ost, int *p,
-	int m, int n, 
-	int *row_labels, int *col_labels, 
-	int *row_part_first, int *row_part_len, int nb_row_parts,  
-	int *col_part_first, int *col_part_len, int nb_col_parts,  
-	void (*process_function_or_NULL)(int *p, int m, int n, int i, int j, 
-		int val, char *output, void *data), 
-	void *data, 
-	int f_tex);
 int is_csv_file(const char *fname);
 int is_xml_file(const char *fname);
 void os_date_string(char *str, int sz);
@@ -675,10 +682,6 @@ int my_atoi(char *str);
 long int my_atol(char *str);
 int compare_strings(void *a, void *b, void *data);
 int strcmp_with_or_without(char *p, char *q);
-void print_cycle_tex_with_special_point_labels(
-		std::ostream &ost, int orbit_no,
-		void (*point_label)(std::stringstream &sstr, int pt, void *data),
-		void *point_label_data);
 uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
 
 
