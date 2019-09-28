@@ -610,12 +610,13 @@ void set_of_sets::print_table()
 
 void set_of_sets::print_table_tex(ostream &ost)
 {
+	latex_interface L;
 	int i;
 	
 	//cout << "set of sets with " << nb_sets << " sets :" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		ost << "Set " << i << " has size " << Set_size[i] << " : $";
-		int_set_print_tex(ost, Sets[i], Set_size[i]);
+		L.int_set_print_tex(ost, Sets[i], Set_size[i]);
 		ost << "$\\\\" << endl;
 		}
 	//cout << "end set of sets" << endl;

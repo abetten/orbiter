@@ -3969,7 +3969,7 @@ void projective_space_with_action::latex_report(const char *fname,
 				<< nb_input_objects << " input objects: " << endl;
 		if (nb_input_objects < 10) {
 			fp << "$" << endl;
-			int_set_print_tex(fp, Input_objects, nb_input_objects);
+			L.int_set_print_tex(fp, Input_objects, nb_input_objects);
 			fp << "$\\\\" << endl;
 			}
 		else {
@@ -4338,6 +4338,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	latex_interface L;
 
 	if (f_v) {
 		cout << "compute_and_print_ago_distribution_with_classes" << endl;
@@ -4362,7 +4363,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 		ost << "Group order $" << types[i]
 			<< "$ appears for the following $" << SoS->Set_size[i]
 			<< "$ classes: $" << endl;
-		int_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
+		L.int_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
 		ost << "$\\\\" << endl;
 		//int_vec_print_as_matrix(ost, SoS->Sets[i],
 		//SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);

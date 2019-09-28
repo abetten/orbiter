@@ -127,6 +127,7 @@ int main(int argc, char **argv)
 		char fname1[1000];
 		char fname2[1000];
 		const char *fname = "table_of_graphs.tex";
+		latex_interface L;
 
 		{
 		ofstream fp(fname);
@@ -141,7 +142,7 @@ int main(int argc, char **argv)
 			int_vec_zero(Adj, n * n);
 			int_vec_zero(Adj2, n * n);
 			Combi.unrank_subset(set, sz, n2, E);
-			int_set_print_tex(fp, set, sz);
+			L.int_set_print_tex(fp, set, sz);
 
 			make_graph_fname(fname1, fname1_tex, n, set, sz);
 			draw_graph_to_file(fname1, n, set, sz,
@@ -175,7 +176,7 @@ int main(int argc, char **argv)
 				}
 			fp << "]";
 			fp << " & ";
-			int_set_print_tex(fp, edges2, sz);
+			L.int_set_print_tex(fp, edges2, sz);
 			make_graph_fname(fname2, fname2_tex, n, edges2, sz);
 			draw_graph_to_file(fname2, n,
 					edges2, sz, scale, f_embedded, f_sideways);

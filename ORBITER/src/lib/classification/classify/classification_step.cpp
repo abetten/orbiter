@@ -177,6 +177,7 @@ void classification_step::print_latex(ostream &ost,
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
+	latex_interface L;
 	
 	if (f_v) {
 		cout << "classification_step::print_latex" << endl;
@@ -235,12 +236,12 @@ void classification_step::print_latex(ostream &ost,
 		ost << "$" << endl;
 
 		if (f_lint) {
-			lint_set_print_tex_for_inline_text(ost,
+			L.lint_set_print_tex_for_inline_text(ost,
 					Rep_lint_ith(i),
 					representation_sz);
 		}
 		else {
-			int_set_print_tex_for_inline_text(ost,
+			L.int_set_print_tex_for_inline_text(ost,
 					Rep_ith(i),
 					representation_sz);
 		}

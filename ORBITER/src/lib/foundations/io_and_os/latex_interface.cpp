@@ -1112,6 +1112,65 @@ void latex_interface::print_cycle_tex_with_special_point_labels(
 	ost << ")";
 }
 
+void latex_interface::int_set_print_tex(ostream &ost, int *v, int len)
+{
+	int i;
+
+	ost << "\\{ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " \\}";
+}
+
+void latex_interface::int_set_print_masked_tex(ostream &ost,
+	int *v, int len,
+	const char *mask_begin,
+	const char *mask_end)
+{
+	int i;
+
+	ost << "\\{ ";
+	for (i = 0; i < len; i++) {
+		ost << mask_begin << v[i] << mask_end;
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " \\}";
+}
+
+
+void latex_interface::int_set_print_tex_for_inline_text(ostream &ost,
+	int *v, int len)
+{
+	int i;
+
+	ost << "\\{ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ",$ $";
+		}
+	ost << " \\}";
+}
+
+void latex_interface::lint_set_print_tex_for_inline_text(ostream &ost,
+	long int *v, int len)
+{
+	int i;
+
+	ost << "\\{ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ",$ $";
+		}
+	ost << " \\}";
+}
+
+
 
 
 }}

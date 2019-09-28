@@ -1515,7 +1515,7 @@ void surface_object::print_lines_with_points_on_them(ostream &ost)
 		ost << "which contains the point set " << endl;
 		ost << "$$" << endl;
 		ost << "\\{ P_{i} \\mid i \\in ";
-		int_set_print_tex(ost, pts_on_lines->Sets[i],
+		L.int_set_print_tex(ost, pts_on_lines->Sets[i],
 				pts_on_lines->Set_size[i]);
 		ost << "\\}." << endl;
 		ost << "$$" << endl; 
@@ -1795,7 +1795,7 @@ void surface_object::print_points(ostream &ost)
 		ost << "Line " << i << " = $" << Surf->Line_label_tex[i]
 			<< "$ has " << pts_on_lines->Set_size[i]
 			<< " points: $\\{ P_{i} \\mid i \\in ";
-		int_set_print_tex(ost, pts_on_lines->Sets[i],
+		L.int_set_print_tex(ost, pts_on_lines->Sets[i],
 				pts_on_lines->Set_size[i]);
 		ost << "\\}$\\\\" << endl;
 		}

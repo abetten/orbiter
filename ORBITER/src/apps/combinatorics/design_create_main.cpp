@@ -95,6 +95,7 @@ int main(int argc, const char **argv)
 	}
 
 	design_create *DC;
+	latex_interface L;
 	//int j;
 
 	DC = NEW_OBJECT(design_create);
@@ -137,7 +138,7 @@ int main(int argc, const char **argv)
 
 	cout << "We have created the following design:" << endl;
 	cout << "$$" << endl;
-	int_set_print_tex(cout, DC->set, DC->sz);
+	L.int_set_print_tex(cout, DC->set, DC->sz);
 	cout << endl;
 	cout << "$$" << endl;
 

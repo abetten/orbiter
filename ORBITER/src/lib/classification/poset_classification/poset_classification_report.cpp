@@ -272,6 +272,7 @@ void poset_classification::report(ostream &ost)
 	poset_orbit_node *O;
 	longinteger_object stab_order, orbit_length;
 	schreier_vector *Schreier_vector;
+	latex_interface L;
 
 
 	rep = NEW_int(depth + 1);
@@ -466,7 +467,7 @@ void poset_classification::report(ostream &ost)
 			get_set_by_level(level, orbit_at_level, rep);
 
 			ost << "$$" << endl;
-			int_set_print_tex(ost, rep, level);
+			L.int_set_print_tex(ost, rep, level);
 			ost << "_{";
 			ost << str;
 			ost << "}";

@@ -1628,8 +1628,10 @@ void packing_was::report(ostream &ost)
 
 			if (f_process_long_orbits) {
 				if (L) {
+					latex_interface Li;
+
 					ost << "After selecting fixpoint clique $" << L->fixpoints_clique_case_number << " = ";
-					int_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
+					Li.int_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
 					ost << "$, we find the following filtered orbits:\\\\" << endl;
 					L->report_filtered_orbits(ost);
 					ost << "A graph with " << L->CG->nb_points << " vertices has been created and saved in the file \\verb'" << L->fname_graph << "'\\\\" << endl;
