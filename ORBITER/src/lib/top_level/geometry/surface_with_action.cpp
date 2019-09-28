@@ -605,6 +605,7 @@ void surface_with_action::arc_lifting_and_classify(
 	int f_v = (verbose_level >= 1);
 	int q, j;
 	//sorting Sorting;
+	latex_interface L;
 
 
 	if (f_v) {
@@ -1099,7 +1100,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< " = " << Surf->Line_label_tex[line1] << ", " 
 				<< line2 << " = " << Surf->Line_label_tex[line2] 
 				<< "$ yields arc = $";
-			int_set_print_tex(fp, Arc, 6);
+			L.int_set_print_tex(fp, Arc, 6);
 			fp << "$ : blown up lines = ";
 			int_vec_print(fp, Blown_up_lines, 6);
 			fp << "\\\\" << endl;

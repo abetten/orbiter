@@ -2060,7 +2060,7 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 
 	ost << "There are " << list_sz << " trihedral pairs which "
 			"are isomorphic to the double triplet of $T_0$:\\\\" << endl;
-	int_set_print_tex(ost, list, list_sz);
+	L.int_set_print_tex(ost, list, list_sz);
 	ost << "$$" << endl;
 	ost << "\\{ ";
 	for (i = 0; i < list_sz; i++) {

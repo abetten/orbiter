@@ -265,6 +265,13 @@ public:
 			std::ostream &ost, int *pts, int nb_pts,
 			void (*point_label)(std::stringstream &sstr, int pt, void *data),
 			void *point_label_data);
+	void int_set_print_tex(std::ostream &ost, int *v, int len);
+	void int_set_print_masked_tex(std::ostream &ost,
+		int *v, int len, const char *mask_begin, const char *mask_end);
+	void int_set_print_tex_for_inline_text(std::ostream &ost,
+			int *v, int len);
+	void lint_set_print_tex_for_inline_text(std::ostream &ost,
+			long int *v, int len);
 
 };
 
@@ -550,13 +557,8 @@ void int_distribution_print(std::ostream &ost, int *val, int *mult, int len);
 void int_swap(int& x, int& y);
 void int_set_print(int *v, int len);
 void int_set_print(std::ostream &ost, int *v, int len);
-void int_set_print_tex(std::ostream &ost, int *v, int len);
-void int_set_print_masked_tex(std::ostream &ost,
-	int *v, int len, const char *mask_begin, const char *mask_end);
-void int_set_print_tex_for_inline_text(std::ostream &ost,
-		int *v, int len);
-void lint_set_print_tex_for_inline_text(std::ostream &ost,
-		long int *v, int len);
+
+
 void int_vec_print(std::ostream &ost, int *v, int len);
 void lint_vec_print(std::ostream &ost, long int *v, int len);
 void int_vec_print_str(std::stringstream &ost, int *v, int len);

@@ -251,8 +251,9 @@ void orthogonal_lines(finite_field *F,
 #if 1
 		O.points_on_line(p1, p2, O.line1, 0 /*verbose_level - 1*/);
 		Sorting.int_vec_sort(q + 1, O.line1);
-		
-		int_set_print_masked_tex(cout, O.line1, q + 1, "P_{", "}");
+		latex_interface Li;
+
+		Li.int_set_print_masked_tex(cout, O.line1, q + 1, "P_{", "}");
 		cout << "\\\\" << endl;
 #if 0
 		for (r1 = 0; r1 <= q; r1++) {

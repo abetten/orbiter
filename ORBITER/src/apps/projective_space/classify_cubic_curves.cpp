@@ -201,6 +201,7 @@ int main(int argc, const char **argv)
 			int nb_pts_on_curve;
 			int nb_singular_pts;
 			int nb_inflection_pts;
+			latex_interface L;
 
 			data = CCC->Curves->Rep + i * CCC->Curves->representation_sz;
 			eqn = data + 9;
@@ -210,7 +211,7 @@ int main(int argc, const char **argv)
 			//fp << "$" << i << " / " << CCC->Curves->nb_orbits << "$ $" << endl;
 
 			fp << "$";
-			int_set_print_tex_for_inline_text(fp,
+			L.int_set_print_tex_for_inline_text(fp,
 					data,
 					9 /*CCC->Curves->representation_sz*/);
 			fp << "_{";

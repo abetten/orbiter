@@ -269,7 +269,9 @@ void set_and_stabilizer::init_stab_from_file(
 
 void set_and_stabilizer::print_set_tex(ostream &ost)
 {
-	int_set_print_tex(ost, data, sz);
+	latex_interface L;
+
+	L.int_set_print_tex(ost, data, sz);
 	ost << "_{";
 	target_go.print_not_scientific(ost);
 	ost << "}";
@@ -277,7 +279,9 @@ void set_and_stabilizer::print_set_tex(ostream &ost)
 
 void set_and_stabilizer::print_set_tex_for_inline_text(ostream &ost)
 {
-	int_set_print_tex_for_inline_text(ost, data, sz);
+	latex_interface L;
+
+	L.int_set_print_tex_for_inline_text(ost, data, sz);
 	ost << "_{";
 	target_go.print_not_scientific(ost);
 	ost << "}";

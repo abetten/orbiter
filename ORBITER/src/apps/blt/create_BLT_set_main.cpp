@@ -115,10 +115,12 @@ int main(int argc, const char **argv)
 		}
 #endif
 
+	latex_interface L;
+
 
 	cout << "We have created the following BLT-set:" << endl;
 	cout << "$$" << endl;
-	int_set_print_tex(cout, BC->set, BC->q + 1);
+	L.int_set_print_tex(cout, BC->set, BC->q + 1);
 	cout << endl;
 	cout << "$$" << endl;
 

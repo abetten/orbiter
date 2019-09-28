@@ -835,7 +835,7 @@ void surface_object_with_action::print_automorphism_group(
 					<< Orbits_on_single_sixes->orbit_len[i]
 					<< " half double sixes:" << endl;
 			ost << "$$" << endl;
-			int_set_print_tex(ost, 
+			L.int_set_print_tex(ost,
 				Orbits_on_single_sixes->orbit + 
 					Orbits_on_single_sixes->orbit_first[i], 
 				Orbits_on_single_sixes->orbit_len[i]);

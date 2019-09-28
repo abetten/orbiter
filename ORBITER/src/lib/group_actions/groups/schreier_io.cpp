@@ -738,6 +738,7 @@ void schreier::print_orbit(ostream &ost, int orbit_no)
 
 void schreier::print_orbit_tex(ostream &ost, int orbit_no)
 {
+	latex_interface L;
 	int i, first, len;
 	int *v;
 
@@ -750,7 +751,7 @@ void schreier::print_orbit_tex(ostream &ost, int orbit_no)
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
 	//int_vec_print_fully(ost, v, len);
-	int_set_print_tex(ost, v, len);
+	L.int_set_print_tex(ost, v, len);
 
 	FREE_int(v);
 }
