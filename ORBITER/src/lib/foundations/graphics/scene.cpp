@@ -670,6 +670,7 @@ int scene::plane_from_dual_coordinates(double *x4)
 	return plane(y[0], y[1], y[2], y[3]);
 }
 
+
 int scene::plane(double x1, double x2, double x3, double a)
 // A plane is called a polynomial shape because 
 // it is defined by a first order polynomial equation. 
@@ -1620,6 +1621,12 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	if (f_v) {
 		cout << "scene::intersect_line_and_plane" << endl;
 		}
+	if (f_v) {
+		cout << "scene::intersect_line_and_plane line_idx=" << line_idx << endl;
+		cout << "scene::intersect_line_and_plane plane_idx=" << plane_idx << endl;
+		print_a_line(line_idx);
+		print_a_plane(plane_idx);
+		}
 
 
 	// equation of the form:
@@ -1634,6 +1641,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	// v, -u, -w, -P_0 + Q_0
 
 	// point on the line, brought over on the other side, hence the minus:
+	// -P_0
 	M[0 * 4 + 3] = -1. * Line_coords[line_idx * 6 + 0];
 	M[1 * 4 + 3] = -1. * Line_coords[line_idx * 6 + 1];
 	M[2 * 4 + 3] = -1. * Line_coords[line_idx * 6 + 2];
@@ -1646,35 +1654,85 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 		M[i * 4 + 0] = v[i];
 		}
 	
+	if (f_v) {
+		cout << "scene::intersect_line_and_plane M=" << endl;
+		numerics Num;
+
+		Num.print_system(M, 3, 4);
+		}
+
 	// compute the vectors u and w:
 	B[0 * 3 + 0] = Plane_coords[plane_idx * 4 + 0];
 	B[0 * 3 + 1] = Plane_coords[plane_idx * 4 + 1];
 	B[0 * 3 + 2] = Plane_coords[plane_idx * 4 + 2];
+
+	int b1, b2;
 	if (ABS(B[0 * 3 + 0]) > EPSILON) {
 		a = 1. / B[0 * 3 + 0];
 		for (i = 0; i < 3; i++) {
 			B[i] *= a;
-			}
+		}
 		B[1 * 3 + 0] = 0.;
 		B[1 * 3 + 1] = -1.;
 		B[1 * 3 + 2] = 0.;
 		B[2 * 3 + 0] = 0.;
 		B[2 * 3 + 1] = 0.;
 		B[2 * 3 + 2] = -1.;
-		}
+		b1 = 1;
+		b2 = 2;
+	}
 	else {
-		cout << "scene::intersect_line_and_plane "
-				"ABS(B[0 * 3 + 0]) is too small" << endl;
-		exit(1);
+		if (f_v) {
+			cout << "scene::intersect_line_and_plane "
+					"ABS(B[0 * 3 + 0]) is too small" << endl;
 		}
+		if (ABS(B[0 * 3 + 1]) > EPSILON) {
+			a = 1. / B[0 * 3 + 1];
+			for (i = 0; i < 3; i++) {
+				B[3 + i] = B[i] * a;
+			}
+			B[0 * 3 + 0] = -1.;
+			B[0 * 3 + 1] = 0;
+			B[0 * 3 + 2] = 0.;
+			B[2 * 3 + 0] = 0.;
+			B[2 * 3 + 1] = 0.;
+			B[2 * 3 + 2] = -1.;
+			b1 = 0;
+			b2 = 2;
+		}
+		else {
+			if (f_v) {
+				cout << "scene::intersect_line_and_plane "
+						"ABS(B[0 * 3 + 0]) and ABS(B[0 * 3 + 1]) are too small" << endl;
+			}
+			if (ABS(B[0 * 3 + 2]) > EPSILON) {
+				a = 1. / B[0 * 3 + 2];
+				for (i = 0; i < 3; i++) {
+					B[6 + i] = B[i] * a;
+				}
+				B[0 * 3 + 0] = -1.;
+				B[0 * 3 + 1] = 0;
+				B[0 * 3 + 2] = 0.;
+				B[1 * 3 + 0] = 0.;
+				B[1 * 3 + 1] = -1.;
+				B[1 * 3 + 2] = 0;
+				b1 = 0;
+				b2 = 1;
+			}
+			else {
+				cout << "scene::intersect_line_and_plane the first three entries of B are zero" << endl;
+				exit(1);
+			}
+		}
+	}
 	// copy u:
-	M[0 * 4 + 1] = -1. * B[0 * 3 + 1];
-	M[1 * 4 + 1] = -1. * B[1 * 3 + 1];
-	M[2 * 4 + 1] = -1. * B[2 * 3 + 1];
+	M[0 * 4 + 1] = -1. * B[0 * 3 + b1];
+	M[1 * 4 + 1] = -1. * B[1 * 3 + b1];
+	M[2 * 4 + 1] = -1. * B[2 * 3 + b1];
 	// copy w:
-	M[0 * 4 + 2] = -1. * B[0 * 3 + 2];
-	M[1 * 4 + 2] = -1. * B[1 * 3 + 2];
-	M[2 * 4 + 2] = -1. * B[2 * 3 + 2];
+	M[0 * 4 + 2] = -1. * B[0 * 3 + b2];
+	M[1 * 4 + 2] = -1. * B[1 * 3 + b2];
+	M[2 * 4 + 2] = -1. * B[2 * 3 + b2];
 
 	// find Q_0:
 
@@ -3826,6 +3884,37 @@ void scene::create_triangulation_of_cube(int N, int verbose_level)
 	edge(5, 6); // E17
 
 }
+
+void scene::print_a_line(int line_idx)
+{
+	numerics Num;
+
+	cout << "Line " << line_idx << " is ";
+	Num.vec_print(Line_coords + line_idx * 6 + 0, 3);
+	cout << " - ";
+	Num.vec_print(Line_coords + line_idx * 6 + 3, 3);
+	cout << endl;
+}
+
+
+void scene::print_a_plane(int plane_idx)
+{
+	numerics Num;
+
+	cout << "Plane " << plane_idx << " : ";
+	Num.vec_print(Plane_coords + plane_idx * 4, 4);
+	cout << endl;
+}
+
+void scene::print_a_face(int face_idx)
+{
+	cout << "face " << face_idx << " has " << Nb_face_points[face_idx] << " points: ";
+	int_vec_print(cout, Face_points[face_idx], Nb_face_points[face_idx]);
+	cout << endl;
+
+}
+
+
 
 
 }}

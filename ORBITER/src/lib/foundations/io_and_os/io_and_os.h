@@ -666,7 +666,7 @@ void print_repeated_character(std::ostream &ost, char c, int n);
 void print_pointer_hex(std::ostream &ost, void *p);
 void print_hex_digit(std::ostream &ost, int digit);
 int compare_sets(int *set1, int *set2, int sz1, int sz2);
-int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2);
+//int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
 void make_graph_of_disjoint_sets_from_rows_of_matrix(
 	int *M, int m, int n, 

@@ -3242,6 +3242,7 @@ void mp_graphics::draw_density2(int no,
 	double average;
 	double sigma; // standard deviation
 	double sum1, f;
+	plot_tools Pt;
 
 	if (outline_value[0] == 0) {
 		i0 = 1;
@@ -3287,9 +3288,9 @@ void mp_graphics::draw_density2(int no,
 	sigma = sqrt(sum1 / max_x);
 
 
-	get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
+	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
 	for (i = 0; i < outline_sz; i++) {
-		get_coord(Px, Py, 2, outline_number[i], outline_value[i],
+		Pt.get_coord(Px, Py, 2, outline_number[i], outline_value[i],
 			min_x, min_y, max_x, max_y, FALSE);
 		Px[1] = Px[0];
 		Py[1] = Py[2];
@@ -3297,13 +3298,13 @@ void mp_graphics::draw_density2(int no,
 		Px[0] = Px[2];
 		Py[0] = Py[2];
 		}
-	get_coord(Px, Py, 2, max_x, max_value,
+	Pt.get_coord(Px, Py, 2, max_x, max_value,
 		min_x, min_y, max_x, max_y, FALSE);
 	polygon2(Px, Py, 0, 2);
-	get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-	get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-	get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, FALSE);
-	get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, FALSE);
+	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
+	Pt.get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, FALSE);
+	Pt.get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, FALSE);
+	Pt.get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, FALSE);
 	polygon5(Px, Py, 0, 1, 2, 3, 0);
 
 
@@ -3351,11 +3352,11 @@ void mp_graphics::draw_density2(int no,
 
 	if (f_mu) {
 		y_in = (int) average;
-		y_to_pt_on_curve(y_in, x, y,
+		Pt.y_to_pt_on_curve(y_in, x, y,
 			outline_value, outline_number, outline_sz);
-		get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		aligned_text(Px[2], Py[2], "r", "$\\overline{x}$");
@@ -3363,20 +3364,20 @@ void mp_graphics::draw_density2(int no,
 
 
 	if (f_circle) {
-		y_to_pt_on_curve(circle_at, x, y,
+		Pt.y_to_pt_on_curve(circle_at, x, y,
 			outline_value, outline_number, outline_sz);
-		get_coord(Px, Py, 0, x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, y, min_x, min_y, max_x, max_y, FALSE);
 		circle(Px[0], Py[0], circle_rad);
 		}
 
 
 	for (k = 1; k < nb_standard_deviations; k++) {
 		y_in = (int) (average + k * sigma);
-		y_to_pt_on_curve(y_in, x, y,
+		Pt.y_to_pt_on_curve(y_in, x, y,
 			outline_value, outline_number, outline_sz);
-		get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
@@ -3388,11 +3389,11 @@ void mp_graphics::draw_density2(int no,
 		aligned_text(Px[2], Py[2], "r", str);
 
 		y_in = (int) (average - k * sigma);
-		y_to_pt_on_curve(y_in, x, y,
+		Pt.y_to_pt_on_curve(y_in, x, y,
 			outline_value, outline_number, outline_sz);
-		get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
@@ -3482,6 +3483,7 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 	//int rad1 = 400;
 	char str[1000];
 	int curve;
+	plot_tools Pt;
 
 #if 0
 	int min_x, max_x, min_y, max_y;
@@ -3505,22 +3507,22 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 
 	for (curve = 0; curve < nb_curves; curve++) {
 		if (f_v_logarithmic) {
-			get_coord_log(Px, Py, 0,
+			Pt.get_coord_log(Px, Py, 0,
 					min_x, min_y, min_x, min_y, max_x, max_y,
 					log_base, f_switch_x);
 			}
 		else {
-			get_coord(Px, Py, 0,
+			Pt.get_coord(Px, Py, 0,
 					min_x, min_y, min_x, min_y, max_x, max_y, f_switch_x);
 			}
 		for (i = 0; i < outline_sz[curve]; i++) {
 			if (f_v_logarithmic) {
-				get_coord_log(Px, Py, 2,
+				Pt.get_coord_log(Px, Py, 2,
 					outline_number[curve][i], outline_value[curve][i],
 					min_x, min_y, max_x, max_y, log_base, f_switch_x);
 				}
 			else {
-				get_coord(Px, Py, 2,
+				Pt.get_coord(Px, Py, 2,
 					outline_number[curve][i], outline_value[curve][i],
 					min_x, min_y, max_x, max_y, f_switch_x);
 				}
@@ -3531,11 +3533,11 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 			Py[0] = Py[2];
 			}
 		if (f_v_logarithmic) {
-			get_coord_log(Px, Py, 2, max_x, max_y,
+			Pt.get_coord_log(Px, Py, 2, max_x, max_y,
 				min_x, min_y, max_x, max_y, log_base, f_switch_x);
 			}
 		else {
-			get_coord(Px, Py, 2, max_x, max_y,
+			Pt.get_coord(Px, Py, 2, max_x, max_y,
 				min_x, min_y, max_x, max_y, f_switch_x);
 			}
 		polygon2(Px, Py, 0, 2);
@@ -3543,20 +3545,20 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 
 
 	if (f_v_logarithmic) {
-		get_coord_log(Px, Py, 0,
+		Pt.get_coord_log(Px, Py, 0,
 				min_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
-		get_coord_log(Px, Py, 1,
+		Pt.get_coord_log(Px, Py, 1,
 				max_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
-		get_coord_log(Px, Py, 2,
+		Pt.get_coord_log(Px, Py, 2,
 				max_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
-		get_coord_log(Px, Py, 3,
+		Pt.get_coord_log(Px, Py, 3,
 				min_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
 		}
 	else {
-		get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, FALSE);
-		get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, FALSE);
 		}
 	polygon5(Px, Py, 0, 1, 2, 3, 0);
 
@@ -3629,7 +3631,7 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 			delta = (log(max_y - min_y + 1) / log(log_base))/ h_grid;
 			for (i = 1; i <= h_grid - 1; i++) {
 				a = min_y + pow(log_base, i * delta);
-				get_coord_log(Px, Py, 2, min_x, (int)a,
+				Pt.get_coord_log(Px, Py, 2, min_x, (int)a,
 						min_x, min_y, max_x, max_y, log_base,
 						FALSE /* f_switch_x */);
 				Px[0] = Px[2];
