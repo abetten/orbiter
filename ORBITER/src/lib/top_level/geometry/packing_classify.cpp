@@ -783,7 +783,7 @@ int packing_classify::spreads_are_disjoint(int i, int j)
 
 	p1 = Spread_tables->spread_table + i * spread_size;
 	p2 = Spread_tables->spread_table + j * spread_size;
-	if (test_if_sets_are_disjoint(p1, p2,
+	if (test_if_sets_are_disjoint_assuming_sorted(p1, p2,
 			spread_size, spread_size)) {
 		return TRUE;
 		}

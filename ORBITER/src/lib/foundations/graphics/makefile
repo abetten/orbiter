@@ -8,7 +8,7 @@ LFLAGS = -lm
 MODULES = \
 	animate.o \
 	mp_graphics.o \
-	plot.o \
+	plot_tools.o \
 	povray_interface.o \
 	scene.o \
 	tree.o \

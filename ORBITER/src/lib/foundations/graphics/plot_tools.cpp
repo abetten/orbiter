@@ -1,4 +1,4 @@
-// plot.cpp
+// plot_tools.cpp
 //
 // Anton Betten
 // July 18, 2012
@@ -13,8 +13,19 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+plot_tools::plot_tools()
+{
+}
 
-void draw_density(char *prefix, int *the_set, int set_size,
+plot_tools::~plot_tools()
+{
+
+
+}
+
+
+
+void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 	int f_title, const char *title, int out_of, 
 	const char *label_x, 
 	int f_circle, int circle_at, int circle_rad, 
@@ -42,7 +53,7 @@ void draw_density(char *prefix, int *the_set, int set_size,
 	
 
 	if (f_v) {
-		cout << "draw_density" << endl;
+		cout << "plot_tools::draw_density" << endl;
 		}
 
 	set = NEW_int(set_size);
@@ -51,7 +62,7 @@ void draw_density(char *prefix, int *the_set, int set_size,
 		}
 	
 	if (f_vv) {
-		cout << "draw_density read the "
+		cout << "plot_tools::draw_density read the "
 				"following " << set_size << " numbers:" << endl;
 		for (i = 0; i < set_size; i++) {
 			cout << the_set[i] << endl;
@@ -60,7 +71,7 @@ void draw_density(char *prefix, int *the_set, int set_size,
 
 	Sorting.int_vec_heapsort(set, set_size);
 	if (f_vv) {
-		cout << "draw_density after sorting:" << endl;
+		cout << "plot_tools::draw_density after sorting:" << endl;
 		for (i = 0; i < set_size; i++) {
 			cout << set[i] << endl;
 			}
@@ -81,7 +92,7 @@ void draw_density(char *prefix, int *the_set, int set_size,
 			}
 		}
 	if (f_vv) {
-		cout << "draw_density outline of size " << outline_sz << ":" << endl;
+		cout << "plot_tools::draw_density outline of size " << outline_sz << ":" << endl;
 		for (i = 0; i < outline_sz; i++) {
 			cout << outline_value[i] << " " << outline_number[i] << endl;
 			}
@@ -119,14 +130,14 @@ void draw_density(char *prefix, int *the_set, int set_size,
 	file_io Fio;
 
 	if (f_v) {
-		cout << "draw_density written file " << fname_full
+		cout << "plot_tools::draw_density written file " << fname_full
 				<< " of size " << Fio.file_size(fname_full) << endl;
 		}
 	FREE_int(set);
 	
 }
 
-void draw_density_multiple_curves(char *prefix,
+void plot_tools::draw_density_multiple_curves(char *prefix,
 	int **Data, int *Data_size, int nb_data_sets, 
 	int f_title, const char *title, int out_of, 
 	const char *label_x, 
@@ -155,7 +166,7 @@ void draw_density_multiple_curves(char *prefix,
 	
 
 	if (f_v) {
-		cout << "draw_density_multiple_curves" << endl;
+		cout << "plot_tools::draw_density_multiple_curves" << endl;
 		}
 
 	Data2 = NEW_pint(nb_data_sets);
@@ -195,7 +206,7 @@ void draw_density_multiple_curves(char *prefix,
 				}
 			}
 		if (f_v5) {
-			cout << "draw_density_multiple_curves outline "
+			cout << "plot_tools::draw_density_multiple_curves outline "
 					"of size " << outline_sz[curve] << ":" << endl;
 			for (i = 0; i < outline_sz[curve]; i++) {
 				cout << outline_value[curve][i] << " "
@@ -240,7 +251,7 @@ void draw_density_multiple_curves(char *prefix,
 	file_io Fio;
 
 	if (f_v) {
-		cout << "draw_density written file " << fname_full
+		cout << "plot_tools::draw_density written file " << fname_full
 				<< " of size " << Fio.file_size(fname_full) << endl;
 		}
 	for (curve = 0; curve < nb_data_sets; curve++) {
@@ -256,7 +267,7 @@ void draw_density_multiple_curves(char *prefix,
 }
 
 
-void get_coord(int *Px, int *Py, int idx, int x, int y,
+void plot_tools::get_coord(int *Px, int *Py, int idx, int x, int y,
 		int min_x, int min_y, int max_x, int max_y, int f_switch_x)
 {
 	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
@@ -266,7 +277,7 @@ void get_coord(int *Px, int *Py, int idx, int x, int y,
 	Py[idx] = (int)(1000 * (double)(y - min_y) / (double)(max_y - min_y));
 }
 
-void get_coord_log(int *Px, int *Py, int idx, int x, int y,
+void plot_tools::get_coord_log(int *Px, int *Py, int idx, int x, int y,
 		int min_x, int min_y, int max_x, int max_y,
 		double log_base, int f_switch_x)
 {
@@ -280,7 +291,7 @@ void get_coord_log(int *Px, int *Py, int idx, int x, int y,
 
 
 
-void y_to_pt_on_curve(int y_in, int &x, int &y,  
+void plot_tools::y_to_pt_on_curve(int y_in, int &x, int &y,
 	int *outline_value, int *outline_number, int outline_sz)
 {
 	int f_v = FALSE;
@@ -321,7 +332,7 @@ void y_to_pt_on_curve(int y_in, int &x, int &y,
 
 }
 
-void projective_plane_draw_grid(const char *fname,
+void plot_tools::projective_plane_draw_grid(const char *fname,
 	int xmax, int ymax, int f_with_points, int rad,
 	int q, int *Table, int nb, 
 	int f_point_labels, char **Point_labels, 
@@ -337,7 +348,7 @@ void projective_plane_draw_grid(const char *fname,
 	//int f_sideways = FALSE;
 	
 	if (f_v) {
-		cout << "projective_plane_draw_grid" << endl;
+		cout << "plot_tools::projective_plane_draw_grid" << endl;
 		}
 	sprintf(fname_full, "%s.mp", fname);
 	{
@@ -348,7 +359,7 @@ void projective_plane_draw_grid(const char *fname,
 	G.out_xmax() = xmax;
 	G.out_ymax() = ymax;
 	if (f_v) {
-		cout << "projective_plane_draw_grid" << endl;
+		cout << "plot_tools::projective_plane_draw_grid" << endl;
 		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 		}
 	
@@ -356,14 +367,14 @@ void projective_plane_draw_grid(const char *fname,
 	G.begin_figure(factor_1000);
 	
 	if (f_v) {
-		cout << "projective_plane_draw_grid "
+		cout << "plot_tools::projective_plane_draw_grid "
 				"before projective_plane_draw_grid2" << endl;
 		}
 	G.projective_plane_draw_grid2(q, Table, nb,
 			f_with_points, rad, f_point_labels, Point_labels,
 			verbose_level);
 	if (f_v) {
-		cout << "projective_plane_draw_grid "
+		cout << "plot_tools::projective_plane_draw_grid "
 				"after projective_plane_draw_grid2" << endl;
 		}
 
@@ -376,15 +387,14 @@ void projective_plane_draw_grid(const char *fname,
 	cout << "written file " << fname_full << " of size "
 			<< Fio.file_size(fname_full) << endl;
 	if (f_v) {
-		cout << "projective_plane_draw_grid done" << endl;
+		cout << "plot_tools::projective_plane_draw_grid done" << endl;
 		}
 	
 }
 
 
 
-}
-}
+}}
 
 
 

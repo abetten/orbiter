@@ -460,39 +460,49 @@ public:
 
 
 // #############################################################################
-// plot.cpp
+// plot_tools.cpp
 // #############################################################################
 
-void draw_density(char *prefix, int *the_set, int set_size,
-	int f_title, const char *title, int out_of, 
-	const char *label_x, 
-	int f_circle, int circle_at, int circle_rad, 
-	int f_mu, int f_sigma, int nb_standard_deviations, 
-	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	int xmax, int ymax, int offset_x, 
-	int f_switch_x, int no, int f_embedded, 
-	int verbose_level);
-void draw_density_multiple_curves(char *prefix,
-	int **Data, int *Data_size, int nb_data_sets, 
-	int f_title, const char *title, int out_of, 
-	const char *label_x, 
-	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	int xmax, int ymax, int offset_x, int f_switch_x, 
-	int f_v_logarithmic, double log_base, int no, int f_embedded, 
-	int verbose_level);
-void get_coord(int *Px, int *Py, int idx, int x, int y, 
-	int min_x, int min_y, int max_x, int max_y, int f_switch_x);
-void get_coord_log(int *Px, int *Py, int idx, int x, int y, 
-	int min_x, int min_y, int max_x, int max_y, 
-	double log_base, int f_switch_x);
-void y_to_pt_on_curve(int y_in, int &x, int &y,  
-	int *outline_value, int *outline_number, int outline_sz);
-void projective_plane_draw_grid(const char *fname, int xmax, int ymax, 
-	int f_with_points, int rad, 
-	int q, int *Table, int nb, 
-	int f_point_labels, char **Point_labels, 
-	int f_embedded, int f_sideways, 
-	int verbose_level);
+//! fnctions for plotting (graphing)
+
+
+class plot_tools {
+
+public:
+	plot_tools();
+	~plot_tools();
+
+	void draw_density(char *prefix, int *the_set, int set_size,
+		int f_title, const char *title, int out_of,
+		const char *label_x,
+		int f_circle, int circle_at, int circle_rad,
+		int f_mu, int f_sigma, int nb_standard_deviations,
+		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
+		int xmax, int ymax, int offset_x,
+		int f_switch_x, int no, int f_embedded,
+		int verbose_level);
+	void draw_density_multiple_curves(char *prefix,
+		int **Data, int *Data_size, int nb_data_sets,
+		int f_title, const char *title, int out_of,
+		const char *label_x,
+		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
+		int xmax, int ymax, int offset_x, int f_switch_x,
+		int f_v_logarithmic, double log_base, int no, int f_embedded,
+		int verbose_level);
+	void get_coord(int *Px, int *Py, int idx, int x, int y,
+		int min_x, int min_y, int max_x, int max_y, int f_switch_x);
+	void get_coord_log(int *Px, int *Py, int idx, int x, int y,
+		int min_x, int min_y, int max_x, int max_y,
+		double log_base, int f_switch_x);
+	void y_to_pt_on_curve(int y_in, int &x, int &y,
+		int *outline_value, int *outline_number, int outline_sz);
+	void projective_plane_draw_grid(const char *fname, int xmax, int ymax,
+		int f_with_points, int rad,
+		int q, int *Table, int nb,
+		int f_point_labels, char **Point_labels,
+		int f_embedded, int f_sideways,
+		int verbose_level);
+};
 
 // #############################################################################
 // povray_interface.cpp
@@ -591,6 +601,8 @@ public:
 	int nb_planes;
 	double *Plane_coords;
 		// [nb_planes * 4]
+		// the four parameters A,B,C,D as needed for the povray command
+		// plane{<A,B,C>, D}
 
 	int nb_quadrics;
 	double *Quadric_coords;
@@ -782,6 +794,9 @@ public:
 	void create_E4_surface(int N, int verbose_level);
 	void create_twisted_cubic(int N, int verbose_level);
 	void create_triangulation_of_cube(int N, int verbose_level);
+	void print_a_line(int line_idx);
+	void print_a_plane(int plane_idx);
+	void print_a_face(int face_idx);
 
 };
 

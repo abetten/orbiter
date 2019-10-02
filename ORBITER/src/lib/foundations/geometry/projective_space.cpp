@@ -1088,7 +1088,7 @@ int projective_space::test_if_lines_are_disjoint(
 		int l1, int l2)
 {
 	if (Lines) {
-		return test_if_sets_are_disjoint(
+		return test_if_sets_are_disjoint_assuming_sorted(
 				Lines + l1 * k, Lines + l2 * k, k, k);
 		}
 	else {
@@ -6665,6 +6665,7 @@ void projective_space::draw_point_set_in_plane(
 	int ymax = 1000000;
 	int q, i;
 	int *Table;
+	plot_tools Pt;
 
 	if (f_v) {
 		cout << "projective_space::draw_point_set_in_plane" << endl;
@@ -6692,7 +6693,7 @@ void projective_space::draw_point_set_in_plane(
 			cout << "projective_space::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
 			}
-		projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad, 
+		Pt.projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad,
 			q, Table, nb_pts, TRUE, Labels, 
 			f_embedded, f_sideways, 
 			verbose_level - 1);
@@ -6710,7 +6711,7 @@ void projective_space::draw_point_set_in_plane(
 			cout << "projective_space::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
 			}
-		projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad, 
+		Pt.projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad,
 			q, Table, nb_pts, FALSE, NULL,
 			f_embedded, f_sideways, verbose_level - 1);
 		if (f_v) {

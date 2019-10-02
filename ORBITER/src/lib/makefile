@@ -112,7 +112,7 @@ MODULES= \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
 		foundations/graphics/mp_graphics.o \
-		foundations/graphics/plot.o \
+		foundations/graphics/plot_tools.o \
 		foundations/graphics/povray_interface.o \
 		foundations/graphics/scene.o \
 		foundations/graphics/tree.o \

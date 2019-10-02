@@ -68,8 +68,6 @@ namespace foundations {
 
 
 
-//#define MY_BUFSIZE 1000000
-
 void int_vec_add(int *v1, int *v2, int *w, int len)
 {
 	int i;
@@ -2089,6 +2087,7 @@ finish:
 	return ret;
 }
 
+#if 0
 int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2)
 {
 	int *S1, *S2;
@@ -2134,6 +2133,8 @@ finish:
 	FREE_int(S2);
 	return ret;
 }
+#endif
+
 
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2)
 {
@@ -2168,6 +2169,7 @@ int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int
 void make_graph_of_disjoint_sets_from_rows_of_matrix(
 	int *M, int m, int n, 
 	int *&Adj, int verbose_level)
+// assumes that the rows are sorted
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
@@ -2182,7 +2184,7 @@ void make_graph_of_disjoint_sets_from_rows_of_matrix(
 
 	for (i = 0; i < m; i++) {
 		for (j = i + 1; j < m; j++) {
-			if (test_if_sets_are_disjoint(
+			if (test_if_sets_are_disjoint_assuming_sorted(
 				M + i * n, M + j * n, n, n)) {
 				a = 1;
 				}
