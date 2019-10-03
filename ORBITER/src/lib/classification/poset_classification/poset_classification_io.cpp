@@ -871,10 +871,17 @@ void poset_classification::housekeeping(int i,
 				"###############################################" << endl;
 		print_problem_label();
 		cout << "Found " << nb_nodes << " orbits at depth " << i << endl;
+
+		cout << "orbits at level " << i << ":" << endl;
+		print_representatives_at_level(i);
+
 		for (j = 0; j <= i; j++) {
 			cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
 			}
 		cout << "total: " << first_poset_orbit_node_at_level[i + 1] << endl;
+
+
+
 		//print_statistic_on_callbacks();
 		compute_and_print_automorphism_group_orders(i, cout);
 		//registry_dump_sorted();
@@ -1050,6 +1057,13 @@ void poset_classification::housekeeping_no_data_file(int i,
 				"############################################" << endl;
 		cout << "depth " << i << " completed, found " 
 			<< nb_orbits_at_level(i) << " orbits" << endl;
+
+
+		cout << "orbits at level " << i << ":" << endl;
+		print_representatives_at_level(i);
+
+
+
 		for (j = 0; j <= i; j++) {
 			cout << j << " : " << nb_orbits_at_level(j)
 					<< " orbits" << endl;
