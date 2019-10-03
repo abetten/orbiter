@@ -54,7 +54,7 @@ int main () {
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
 	// in the graph
-	std::vector<std::vector<uint>> solutions;
+	std::vector<std::vector<unsigned int>> solutions;
 
 	// Call the Rainbow Clique finding algorithm
 	RainbowClique::find_cliques(G, solutions);
