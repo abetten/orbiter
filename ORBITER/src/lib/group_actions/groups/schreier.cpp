@@ -532,7 +532,7 @@ int schreier::get_image(int i, int gen_idx, int verbose_level)
 		a = A->element_image_of(
 				i,
 				gens.ith(gen_idx),
-				verbose_level - 2);
+				0 /*verbose_level - 2*/);
 		if (f_v) {
 			cout << "schreier::get_image after A->element_image_of" << endl;
 		}
@@ -555,7 +555,7 @@ int schreier::get_image(int i, int gen_idx, int verbose_level)
 				cout << "schreier::get_image before A->element_image_of" << endl;
 			}
 			a = A->element_image_of(i,
-					gens.ith(gen_idx), verbose_level - 2);
+					gens.ith(gen_idx), 0 /*verbose_level - 2*/);
 			if (f_v) {
 				cout << "schreier::get_image image of "
 						"i=" << i << " is " << a << endl;
@@ -1093,7 +1093,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 				"pt_loc=" << pt_loc << endl;
 	}
 	if (pt_loc > orbit_first[nb_orbits]) {
-		swap_points(orbit_first[nb_orbits], pt_loc, verbose_level);
+		swap_points(orbit_first[nb_orbits], pt_loc, 0 /* verbose_level */);
 	}
 	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
 	total = cur + 1;
