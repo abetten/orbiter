@@ -186,6 +186,10 @@ public:
 	void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad);
 	double power_of(double x, int n);
 	double bernoulli(double p, int n, int k);
+	void local_coordinates_wrt_triangle(double *pt,
+			double *triangle_points, double &x, double &y,
+			int verbose_level);
+
 };
 
 
