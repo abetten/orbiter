@@ -776,11 +776,22 @@ void poset_orbit_node::print_extensions(poset_classification *gen)
 	print_extensions(cout);
 	orbit = NEW_int(gen->Poset->A2->degree);
 
+#if 0
 	if (nb_extensions >= 10) {
 		cout << "too many to print "
 				"(nb_extensions=" << nb_extensions << ")" << endl;
 		goto the_end;
-		}
+	}
+#endif
+
+	int i;
+
+	cout << "flag orbits:" << endl;
+	cout << "i : point : orbit length" << endl;
+	for (i = 0; i < nb_extensions; i++) {
+		cout << setw(3) << i << " : " << setw(7) << E[i].pt
+				<< " : " << setw(5) << E[i].orbit_len << endl;
+	}
 
 #if 0
 	for (i = 0; i < nb_extensions; i++) {

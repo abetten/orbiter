@@ -21,7 +21,7 @@ void poset_orbit_node::compute_flag_orbits(
 	int f_use_invariant_subset_if_available, 
 	int f_implicit_fusion, 
 	int verbose_level)
-// Called from generator::compute_flag_orbits if we are acting on sets
+// Called from poset_classification::compute_flag_orbits if we are acting on sets
 // (i.e., not on subspaces).
 // Calls downstep_orbits, 
 // downstep_orbit_test_and_schreier_vector and 
@@ -493,19 +493,24 @@ void poset_orbit_node::schreier_forest(
 			gen->print_level_info(lvl, node);
 			cout << " : live points after downstep_apply_early_test: "
 					"number=" << nb_candidates;
+			int_vec_print(cout, candidates, nb_candidates);
+			cout << " reduced from a set of size " << nb_candidates << endl;
+#if 0
 			if (f_v4) {
 				cout << " : ";
 				if (nb_candidates < 100) {
 					int_vec_print(cout, candidates, nb_candidates);
-				} else {
+				}
+				else {
 					cout << "too large to print";
 				}
 				cout << endl; 
-				}
+			}
 			else {
 				cout << endl;
-				}	
 			}
+#endif
+		}
 
 
 
@@ -532,6 +537,9 @@ void poset_orbit_node::schreier_forest(
 		gen->print_level_info(lvl, node);
 		cout << " : initializing generators. There are "
 				<< nb_strong_generators  << " strong generators" << endl;
+		cout << "hdl_strong_generators=";
+		int_vec_print(cout, hdl_strong_generators, nb_strong_generators);
+		cout << endl;
 		}
 
 
@@ -544,7 +552,7 @@ void poset_orbit_node::schreier_forest(
 		}
 
 
-	if (FALSE /*f_v4*/) {
+	if (f_v) {
 		gen->print_level_info(lvl, node);
 		cout << " : generators:" << endl;
 		Schreier.print_generators();

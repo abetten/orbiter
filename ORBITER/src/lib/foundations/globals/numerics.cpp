@@ -2373,6 +2373,89 @@ double numerics::bernoulli(double p, int n, int k)
 	return c;
 }
 
+void numerics::local_coordinates_wrt_triangle(double *pt,
+		double *triangle_points, double &x, double &y,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double b1[3];
+	double b2[3];
+
+	if (f_v) {
+		cout << "numerics::local_coordinates_wrt_triangle" << endl;
+	}
+	vec_linear_combination(1., triangle_points + 1 * 3,
+			-1, triangle_points + 0 * 3, b1, 3);
+
+	vec_linear_combination(1., triangle_points + 2 * 3,
+			-1, triangle_points + 0 * 3, b2, 3);
+
+	if (f_v) {
+		cout << "numerics::local_coordinates_wrt_triangle b1:" << endl;
+		print_system(b1, 1, 3);
+		cout << endl;
+		cout << "numerics::local_coordinates_wrt_triangle b2:" << endl;
+		print_system(b2, 1, 3);
+		cout << endl;
+	}
+
+	double system[9];
+	double system_transposed[9];
+	double K[3];
+	int rk;
+
+	vec_copy(b1, system, 3);
+	vec_copy(b2, system + 3, 3);
+	vec_linear_combination(1., pt,
+			-1, triangle_points + 0 * 3, system + 6, 3);
+	transpose_matrix_nxn(system, system_transposed, 3);
+	if (f_v) {
+		cout << "system (transposed):" << endl;
+		print_system(system_transposed, 3, 3);
+		cout << endl;
+	}
+	rk = Null_space(system_transposed, 3, 3, K, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "system transposed in RREF" << endl;
+		print_system(system_transposed, 3, 3);
+		cout << endl;
+		cout << "K=" << endl;
+		print_system(K, 1, 3);
+		cout << endl;
+	}
+	// K will be rk x n
+	if (rk != 1) {
+		cout << "numerics::local_coordinates_wrt_triangle rk != 1" << endl;
+		exit(1);
+	}
+
+	if (ABS(K[2]) < EPSILON) {
+		cout << "numerics::local_coordinates_wrt_triangle ABS(K[2]) < EPSILON" << endl;
+		//exit(1);
+		x = 0;
+		y = 0;
+	}
+	else {
+		double c, cv;
+
+		c = K[2];
+		cv = -1. / c;
+			// make the last coefficient -1
+			// so we get the equation
+			// x * b1 + y * b2 = v
+			// where v is the point that we consider
+		K[0] *= cv;
+		K[1] *= cv;
+		x = K[0];
+		y = K[1];
+	}
+
+	if (f_v) {
+		cout << "numerics::local_coordinates_wrt_triangle done" << endl;
+	}
+
+}
+
 }}
 
 

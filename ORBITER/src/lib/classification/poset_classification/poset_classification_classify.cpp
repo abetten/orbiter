@@ -427,7 +427,7 @@ void poset_classification::compute_flag_orbits(int size,
 // or root[prev].downstep
 {
 	int f_v = (verbose_level >= 1);
-	int f_v3 = (verbose_level >= 3);
+	int f_vv = (verbose_level >= 2);
 	int f, cur, l, prev, u;
 	int f_print = f_v;
 	double progress;
@@ -484,8 +484,15 @@ void poset_classification::compute_flag_orbits(int size,
 				int nb = root[prev].get_nb_of_live_points();
 				cout << " found " << nb << " live points in "
 					<< root[prev].nb_extensions << " orbits : ";
+				int *live_points = root[prev].live_points();
+				cout << "The live points are : ";
+				int_vec_print(cout, live_points, nb);
+				cout << endl;
 				}
-			if (f_v3) {
+			if (f_vv) {
+				print_level_info(size, prev);
+				cout << " compute_flag_orbits node " << u << " / " << l
+						<< " the extensions are : ";
 				root[prev].print_extensions(this);
 				}
 			print_progress(progress);
