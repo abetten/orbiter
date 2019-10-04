@@ -557,16 +557,23 @@ int schreier::get_image(int i, int gen_idx, int verbose_level)
 	return a;
 }
 
-void schreier::swap_points(int i, int j)
+void schreier::swap_points(int i, int j, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int pi, pj;
 	
+	if (f_v) {
+		cout << "schreier::swap_points" << endl;
+	}
 	pi = orbit[i];
 	pj = orbit[j];
 	orbit[i] = pj;
 	orbit[j] = pi;
 	orbit_inv[pi] = j;
 	orbit_inv[pj] = i;
+	if (f_v) {
+		cout << "schreier::swap_points done" << endl;
+	}
 }
 
 void schreier::move_point_here(int here, int pt)
@@ -803,7 +810,7 @@ void schreier::extend_orbit(int *elt, int verbose_level)
 						<< next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 			}
-			swap_points(total, next_pt_loc);
+			swap_points(total, next_pt_loc, 0 /*verbose_level*/);
 			prev[total] = cur_pt;
 			label[total] = i;
 			total++;
@@ -970,7 +977,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 		// is moved to position cur:
 		// actually this is not needed as the
 		// function compute_point_orbit does this, too.
-		swap_points(cur, pt_loc);
+		swap_points(cur, pt_loc, 0 /*verbose_level*/);
 		
 		if (f_v) {
 			cout << "schreier::compute_all_point_orbits_with_"
@@ -1067,7 +1074,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 				"computing orbit of pt " << pt << endl;
 	}
 	if (pt_loc > orbit_first[nb_orbits]) {
-		swap_points(orbit_first[nb_orbits], pt_loc);
+		swap_points(orbit_first[nb_orbits], pt_loc, verbose_level);
 	}
 	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
 	total = cur + 1;
@@ -1098,7 +1105,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 				cout << "schreier::compute_point_orbit expanding: "
 						<< cur_pt << ", " << next_pt << ", " << i << endl;
 			}
-			swap_points(total, next_pt_loc);
+			swap_points(total, next_pt_loc, 0 /*verbose_level*/);
 			prev[total] = cur_pt;
 			label[total] = i;
 			//orbit_no[total] = nb_orbits;
@@ -1192,7 +1199,7 @@ void schreier::compute_point_orbit_with_limited_depth(
 				"computing orbit of pt " << pt << endl;
 	}
 	if (pt_loc > orbit_first[nb_orbits]) {
-		swap_points(orbit_first[nb_orbits], pt_loc);
+		swap_points(orbit_first[nb_orbits], pt_loc, 0 /*verbose_level*/);
 	}
 	depth[cur] = 0;
 	total = cur + 1;
@@ -1231,7 +1238,7 @@ void schreier::compute_point_orbit_with_limited_depth(
 						<< next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 			}
-			swap_points(total, next_pt_loc);
+			swap_points(total, next_pt_loc, 0 /*verbose_level*/);
 			depth[total] = depth[cur] + 1;
 			prev[total] = cur_pt;
 			label[total] = i;
