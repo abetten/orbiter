@@ -518,26 +518,41 @@ int schreier::get_image(int i, int gen_idx, int verbose_level)
 				<< i << " under generator " << gen_idx << endl;
 	}
 	if (images == NULL) {
+		if (f_v) {
+			cout << "schreier::get_image not using image table" << endl;
+		}
 		if (f_images_only) {
 			cout << "schreier::get_image images == NULL "
 					"and f_images_only" << endl;
 			exit(1);
 		}
+		if (f_v) {
+			cout << "schreier::get_image before A->element_image_of" << endl;
+		}
 		a = A->element_image_of(
 				i,
 				gens.ith(gen_idx),
 				verbose_level - 2);
+		if (f_v) {
+			cout << "schreier::get_image after A->element_image_of" << endl;
+		}
 		//cout << "schreier::get_image"
 		// "images == NULL" << endl;
 		//exit(1);
 	}
 	else {
+		if (f_v) {
+			cout << "schreier::get_image using image table" << endl;
+		}
 		a = images[gen_idx][i];
 		if (a == -1) {
 			if (f_images_only) {
 				cout << "schreier::get_image a == -1 "
 						"is not allowed if f_images_only is TRUE" << endl;
 				exit(1);
+			}
+			if (f_v) {
+				cout << "schreier::get_image before A->element_image_of" << endl;
 			}
 			a = A->element_image_of(i,
 					gens.ith(gen_idx), verbose_level - 2);
