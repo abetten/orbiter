@@ -453,7 +453,8 @@ void poset_orbit_node::schreier_forest(
 			verbose_level /*- 2 */);
 
 		if (lvl == 0 && !f_using_invariant_subset) {
-			cout << "We did not find an invariant subset" << endl;
+			cout << "poset_orbit_node::schreier_forest we are trying "
+						"to find an invariant subset. We did not find an invariant subset" << endl;
 			}
 		}
 	else {
@@ -467,7 +468,7 @@ void poset_orbit_node::schreier_forest(
 
 		if (f_v) {
 			gen->print_level_info(lvl, node);
-			cout << " : we are using an invariant subset : "
+			cout << " : poset_orbit_node::schreier_forest we are using an invariant subset : "
 					"live points at the predecessor node: number=" << n;
 			if (f_v4) {
 				cout << " : ";
@@ -484,14 +485,22 @@ void poset_orbit_node::schreier_forest(
 			}
 		candidates = NEW_int(n);
 		
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest before downstep_apply_early_test" << endl;
+		}
 		downstep_apply_early_test(gen, lvl, 
 			n, subset, 
 			candidates, nb_candidates, 
 			verbose_level - 2);
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest after downstep_apply_early_test" << endl;
+		}
 
 		if (f_v) {
 			gen->print_level_info(lvl, node);
-			cout << " : live points after downstep_apply_early_test: "
+			cout << " : poset_orbit_node::schreier_forest live points after downstep_apply_early_test: "
 					"number=" << nb_candidates;
 			int_vec_print(cout, candidates, nb_candidates);
 			cout << " reduced from a set of size " << nb_candidates << endl;
@@ -514,28 +523,36 @@ void poset_orbit_node::schreier_forest(
 
 
 
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest before create_induced_action_by_restriction" << endl;
+		}
 		AR = gen->Poset->A2->create_induced_action_by_restriction(
 			NULL /*sims *old_G*/,
 			nb_candidates, candidates,
 			FALSE /*f_induce_action*/,
 			verbose_level - 2);
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest after create_induced_action_by_restriction" << endl;
+		}
 		
 		if (f_vv) {
-			cout << "created restricted action ";
+			cout << "poset_orbit_node::schreier_forest created restricted action ";
 			AR->print_info();
 			}
 		Schreier.init(AR /*gen->A2*/, verbose_level - 2);
 		}
 	else {
 		gen->print_level_info(lvl, node);
-		cout << " : we are NOT using an invariant subset" << endl;
+		cout << " : poset_orbit_node::schreier_forest we are NOT using an invariant subset" << endl;
 		Schreier.init(gen->Poset->A2, verbose_level - 2);
 		}
 
 
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << " : initializing generators. There are "
+		cout << " : poset_orbit_node::schreier_forest initializing generators. There are "
 				<< nb_strong_generators  << " strong generators" << endl;
 		cout << "hdl_strong_generators=";
 		int_vec_print(cout, hdl_strong_generators, nb_strong_generators);
@@ -547,7 +564,7 @@ void poset_orbit_node::schreier_forest(
 			hdl_strong_generators, verbose_level - 1);
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << " : calling Schreier.compute_all_point_orbits "
+		cout << " : poset_orbit_node::schreier_forest calling Schreier.compute_all_point_orbits "
 				"for a set of size " << Schreier.A->degree << endl;
 		}
 
@@ -562,11 +579,27 @@ void poset_orbit_node::schreier_forest(
 	//Schreier.compute_all_point_orbits_with_preferred_labels(
 	// n, subset, verbose_level - 4);
 	if (lvl == 0) {
-		Schreier.compute_all_point_orbits(verbose_level);
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest before Schreier.compute_all_point_orbits" << endl;
 		}
+		Schreier.compute_all_point_orbits(verbose_level);
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest after Schreier.compute_all_point_orbits" << endl;
+		}
+	}
 	else {
-		Schreier.compute_all_point_orbits(verbose_level);
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest before Schreier.compute_all_point_orbits" << endl;
 		}
+		Schreier.compute_all_point_orbits(verbose_level);
+		if (f_v) {
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest after Schreier.compute_all_point_orbits" << endl;
+		}
+	}
 
 	if (f_v) {
 		int f_print_orbits = FALSE;
@@ -588,13 +621,13 @@ void poset_orbit_node::schreier_forest(
 		gen->print_level_info(lvl, node);
 		cout << "poset_orbit_node::schreier_forest: we found "
 				<< Schreier.nb_orbits << " orbits" << endl;
-		}
+	}
 	if (f_using_invariant_subset && f_subset_is_allocated) {
 		FREE_int(subset);
-		}
+	}
 	if (candidates) {
 		FREE_int(candidates);
-		}
+	}
 }
 
 void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
