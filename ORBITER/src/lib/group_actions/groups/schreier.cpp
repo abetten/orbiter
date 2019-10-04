@@ -563,7 +563,7 @@ void schreier::swap_points(int i, int j, int verbose_level)
 	int pi, pj;
 	
 	if (f_v) {
-		cout << "schreier::swap_points" << endl;
+		cout << "schreier::swap_points i=" << i << " j=" << j << endl;
 	}
 	pi = orbit[i];
 	pj = orbit[j];
@@ -1071,7 +1071,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	}
 	if (f_v) {
 		cout << "schreier::compute_point_orbit "
-				"computing orbit of pt " << pt << endl;
+				"computing orbit of pt " << pt << " cur=" << cur << endl;
 	}
 	if (pt_loc > orbit_first[nb_orbits]) {
 		swap_points(orbit_first[nb_orbits], pt_loc, verbose_level);
@@ -1079,6 +1079,10 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
 	total = cur + 1;
 	while (cur < total) {
+		if (f_v) {
+			cout << "schreier::compute_point_orbit cur=" << cur << " total=" << total << endl;
+		}
+
 		cur_pt = orbit[cur];
 		if (f_vv) {
 			cout << "schreier::compute_point_orbit "
