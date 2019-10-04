@@ -1063,8 +1063,8 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	int pt_loc, cur, cur_pt, total, i, next_pt;
 	int next_pt_loc, total1, cur1;
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vvv = FALSE; //(verbose_level >= 3);
 
 	if (f_v) {
 		cout << "schreier::compute_point_orbit" << endl;
@@ -1098,7 +1098,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
 	total = cur + 1;
 	while (cur < total) {
-		if (f_v) {
+		if (FALSE) {
 			cout << "schreier::compute_point_orbit cur=" << cur << " total=" << total << endl;
 		}
 
@@ -1114,7 +1114,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 						<< " using generator " << i << endl;
 			}
 			next_pt = get_image(cur_pt, i,
-					verbose_level); // !!
+					0 /*verbose_level */); // !!
 				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
 			next_pt_loc = orbit_inv[next_pt];
 			if (f_vv) {
