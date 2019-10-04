@@ -535,6 +535,8 @@ void poset_orbit_node::schreier_forest(
 		if (f_v) {
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest after create_induced_action_by_restriction" << endl;
+			gen->print_level_info(lvl, node);
+			cout << " : poset_orbit_node::schreier_forest created action " << AR->label << endl;
 		}
 		
 		if (f_vv) {
