@@ -2678,6 +2678,11 @@ void scene::create_Hilbert_model(int verbose_level)
 		cout << "scene::create_Hilbert_model" << endl;
 	}
 	numerics N;
+	int i;
+
+	create_cube(verbose_level);
+
+#if 0
 	double p = 1.;
 	double m = -1.;
 	double px = p + 1;
@@ -2734,6 +2739,7 @@ void scene::create_Hilbert_model(int verbose_level)
 	edge(4, 6); // 9
 	edge(5, 7); // 10
 	edge(6, 7); // 11
+#endif
 	
 	// the double six:
 	// there is a symmetry (a1,a2,a3)(a4,a5,a6)(b1,b2,b3)(b4,b5,b6)
@@ -3108,26 +3114,6 @@ void scene::create_Hilbert_model(int verbose_level)
 	cubic(coeff_surf_lifted); // cubic 8, arc_lifting
 	}
 
-	combinatorics_domain Combi;
-
-	int set[3];
-	int nCk = Combi.int_n_choose_k(8, 3);
-	int rk;
-	int first_three_face;
-
-	first_three_face = nb_faces;
-	if (f_v) {
-		cout << "first_three_face = " << first_three_face << endl;
-	}
-	for (rk = 0; rk < nCk; rk++) {
-		Combi.unrank_k_subset(rk, set, 8 /*n*/, 3 /*k*/);
-		face3(set[0], set[1], set[2]);
-		if (f_v) {
-			cout << "rk=" << rk << " set=";
-			int_vec_print(cout, set, 3);
-			cout << endl;
-		}
-	}
 
 
 	// the lines in long:
@@ -3150,6 +3136,110 @@ void scene::create_Hilbert_model(int verbose_level)
 	}
 }
 
+void scene::create_cube(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_cube" << endl;
+	}
+	numerics N;
+	double p = 1.;
+	double m = -1.;
+	double px = p + 1;
+	double mx = m - 1;
+
+	point(p,p,p); // 0
+	point(p,p,m); // 1
+	point(p,m,p); // 2
+	point(p,m,m); // 3
+	point(m,p,p); // 4
+	point(m,p,m); // 5
+	point(m,m,p); // 6
+	point(m,m,m); // 7
+
+	face4(0, 1, 5, 4); // 0, front right
+	face4(0, 2, 3, 1); // 1, front left
+	face4(0, 4, 6, 2); // 2, top
+	face4(1, 5, 7, 3); // 3, bottom
+	face4(4, 6, 7, 5); // 4, back right
+	face4(2, 3, 7, 6); // 5, back left
+
+
+	// top front:
+	point(px,p,p); // 8
+	point(p,px,p); // 9
+	point(p,p,px); // 10
+
+	// top back:
+	point(mx,m,p); // 11
+	point(m,mx,p); // 12
+	point(m,m,px); // 13
+
+	// bottom left:
+	point(px,m,m); // 14
+	point(p,mx,m); // 15
+	point(p,m,mx); // 16
+
+	// bottom right:
+	point(mx,p,m); // 17
+	point(m,px,m); // 18
+	point(m,p,mx); // 19
+
+	// the edges of the cube:
+	edge(0, 1); // 0
+	edge(0, 2); // 1
+	edge(0, 4); // 2
+	edge(1, 3); // 3
+	edge(1, 5); // 4
+	edge(2, 3); // 5
+	edge(2, 6); // 6
+	edge(3, 7); // 7
+	edge(4, 5); // 8
+	edge(4, 6); // 9
+	edge(5, 7); // 10
+	edge(6, 7); // 11
+}
+
+void scene::create_cube_and_tetrahedra(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_cube_and_tetrahedra" << endl;
+	}
+
+	create_cube(verbose_level);
+
+	// create faces:
+
+	combinatorics_domain Combi;
+
+	int set[3];
+	int nCk = Combi.int_n_choose_k(8, 3);
+	int rk;
+	int first_three_face;
+
+	first_three_face = nb_faces; // = 6, because create_cube creates six faces for the cube
+	if (f_v) {
+		cout << "first_three_face = " << first_three_face << endl;
+	}
+	for (rk = 0; rk < nCk; rk++) {
+		Combi.unrank_k_subset(rk, set, 8 /*n*/, 3 /*k*/);
+		face3(set[0], set[1], set[2]);
+		if (f_v) {
+			cout << "rk=" << rk << " set=";
+			int_vec_print(cout, set, 3);
+			cout << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "scene::create_cube_and_tetrahedra done" << endl;
+	}
+}
 
 void scene::create_affine_space(int q, int verbose_level)
 {
