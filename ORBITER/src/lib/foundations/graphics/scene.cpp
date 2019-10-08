@@ -2680,7 +2680,7 @@ void scene::create_Hilbert_model(int verbose_level)
 	numerics N;
 	int i;
 
-	create_cube(verbose_level);
+	create_Hilbert_cube(verbose_level);
 
 #if 0
 	double p = 1.;
@@ -3136,13 +3136,13 @@ void scene::create_Hilbert_model(int verbose_level)
 	}
 }
 
-void scene::create_cube(int verbose_level)
+void scene::create_Hilbert_cube(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "scene::create_cube" << endl;
+		cout << "scene::create_Hilbert_cube" << endl;
 	}
 	numerics N;
 	double p = 1.;
@@ -3150,6 +3150,10 @@ void scene::create_cube(int verbose_level)
 	double px = p + 1;
 	double mx = m - 1;
 
+
+	create_cube(verbose_level);
+
+#if 0
 	point(p,p,p); // 0
 	point(p,p,m); // 1
 	point(p,m,p); // 2
@@ -3165,7 +3169,7 @@ void scene::create_cube(int verbose_level)
 	face4(1, 5, 7, 3); // 3, bottom
 	face4(4, 6, 7, 5); // 4, back right
 	face4(2, 3, 7, 6); // 5, back left
-
+#endif
 
 	// top front:
 	point(px,p,p); // 8
@@ -3202,6 +3206,37 @@ void scene::create_cube(int verbose_level)
 	edge(6, 7); // 11
 }
 
+void scene::create_cube(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_cube" << endl;
+	}
+	numerics N;
+	double p = 1.;
+	double m = -1.;
+
+	point(p,p,p); // 0
+	point(p,p,m); // 1
+	point(p,m,p); // 2
+	point(p,m,m); // 3
+	point(m,p,p); // 4
+	point(m,p,m); // 5
+	point(m,m,p); // 6
+	point(m,m,m); // 7
+
+	face4(0, 1, 5, 4); // 0, front right
+	face4(0, 2, 3, 1); // 1, front left
+	face4(0, 4, 6, 2); // 2, top
+	face4(1, 5, 7, 3); // 3, bottom
+	face4(4, 6, 7, 5); // 4, back right
+	face4(2, 3, 7, 6); // 5, back left
+
+
+}
+
 void scene::create_cube_and_tetrahedra(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3212,6 +3247,16 @@ void scene::create_cube_and_tetrahedra(int verbose_level)
 	}
 
 	create_cube(verbose_level);
+
+	int i, j;
+
+	for (i = 0; i < 8; i++) {
+		for (j = i + 1; j < 8; j++) {
+			edge(i, j); // 0
+		}
+	}
+
+
 
 	// create faces:
 
