@@ -67,8 +67,8 @@ void do_it(int verbose_level, int N, int nb_frames, const char *file_mask,
 	char fname[1000];
 	int i, j, h, orbit;
 
-	nb_rows = sqrt(N) + 1;
 	nb_cols = sqrt(N) + 1;
+	nb_rows = (N + nb_cols - 1) / nb_cols;
 
 	cout << "nb_rows=" << nb_rows << endl;
 	cout << "nb_cols=" << nb_cols << endl;
