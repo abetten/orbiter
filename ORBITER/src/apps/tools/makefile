@@ -14,6 +14,7 @@ all: collect.out \
 	join_sets.out \
 	latex_table.out \
 	loop.out \
+	make_poster.out \
 	memory_usage.out \
 	missing_files.out \
 	plot_decomposition_matrix.out  \
@@ -58,6 +59,9 @@ latex_table.out:  latex_table.o
 
 loop.out:  loop.o 
 	$(DISCRETA_CPP)  loop.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+make_poster.out:  make_poster.o 
+	$(DISCRETA_CPP)  make_poster.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 memory_usage.out:  memory_usage.o 
 	$(DISCRETA_CPP)  memory_usage.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
