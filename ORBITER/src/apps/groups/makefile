@@ -57,7 +57,7 @@ FALSE=0
 
 
 all:
-	junk=$$(which nvidia-smi);\
+	junk=$$(which nvidia-smii);\
 	if [ $$? -eq 0 ]; then \
 		$(MAKE) COMPILE_ON_GPU=$(TRUE) cuda_all; \
 	else \
