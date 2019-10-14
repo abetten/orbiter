@@ -153,38 +153,6 @@ int main(int argc, const char **argv)
 	Gen->read_arguments(argc, argv);
 	
 
-#if 0
-	cout << "before creating the finite field" << endl;
-	F = NEW_OBJECT(finite_field);
-
-	if (Gen->f_poly) {
-		F->init_override_polynomial(Gen->q,
-				Gen->poly, 0 /*verbose_level*/);
-		}
-	else {
-		F->init(Gen->q, 0);
-		}
-
-
-	A = NEW_OBJECT(action);
-
-	vector_ge *nice_gens;
-
-	int f_semilinear = TRUE;
-	number_theory_domain NT;
-
-	if (NT.is_prime(F->q)) {
-		f_semilinear = FALSE;
-		}
-
-
-	A->init_projective_group(3, F,
-			f_semilinear, TRUE /*f_basis*/,
-			nice_gens,
-			0 /*verbose_level*/);
-	FREE_OBJECT(nice_gens);
-#endif
-
 	cout << "before Gen->init" << endl;
 	Gen->init(F, 
 		A, LG->Strong_gens,
