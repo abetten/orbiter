@@ -316,7 +316,7 @@ int main(int argc, const char **argv)
 			matrix_group *M;
 
 			M = A_big->G.matrix_grp;
-			M->substitute_surface_eqation(Elt2,
+			M->substitute_surface_equation(Elt2,
 					SC->coeffs, coeffs_out, SC->Surf,
 					verbose_level - 1);
 

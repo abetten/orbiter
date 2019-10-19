@@ -763,19 +763,48 @@ void finite_field::generators_for_parabolic_subgroup(
 		cout << "finite_field::generators_for_parabolic_subgroup" << endl;
 		}
 	size = n * n;
+
 	if (f_semilinear) {
 		size++;
 		}
+
 	nb_gens = 0;
+
+	// count the Frobenius generator
 	if (f_semilinear) {
 		nb_gens++;
 		}
+
+	// count the generators with primitive elements on the diagonal:
 	if (q > 2) {
 		nb_gens += n - 1;
 		}
+
+
+	// count the generators with entries in row k and in row n:
 	nb_gens += (n - 1) * e;
+
+
+	// count the generators with entries in the lower left block:
 	nb_gens += k * (n - k) * e;
-	nb_gens += n - 2; // swaps
+
+	// count the swaps:
+	for (h = n - 2; h > n - k; h--) {
+		nb_gens++;
+	}
+	for (h = k - 2; h >= 0; h--) {
+		nb_gens++;
+	}
+#if 0
+	if (k > 1 && k < n - 1) {
+		nb_gens += n - 2; // swaps
+	}
+	else {
+		nb_gens += n - 1; // swaps
+	}
+#endif
+
+
 	data = NEW_int(size * nb_gens);
 	M = NEW_int(size);
 
@@ -807,7 +836,7 @@ void finite_field::generators_for_parabolic_subgroup(
 			}
 		}
 
-	// the entries in the last row:
+	// the entries in the row k:
 	if (f_vv) {
 		cout << "generators for the entries in the last row "
 				"of a diagonal block, cur=" << cur << endl;
@@ -823,6 +852,8 @@ void finite_field::generators_for_parabolic_subgroup(
 			cur++;
 			}
 		}
+
+	// the entries in the row n:
 	for (h = k - 1; h < n - 1; h++) {
 		for (u = 0; u < e; u++) {
 			identity_matrix(M, n);
@@ -859,7 +890,7 @@ void finite_field::generators_for_parabolic_subgroup(
 		cout << "generators for swaps along the diagonal, "
 				"cur=" << cur << endl;
 		}
-	for (h = n - 2; h >= n - k; h--) {
+	for (h = n - 2; h > n - k; h--) {
 		identity_matrix(M, n);
 		M[h * n + h] = 0;
 		M[h * n + h + 1] = 1;

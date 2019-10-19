@@ -18,6 +18,20 @@ namespace top_level {
 
 orbit_of_equations::orbit_of_equations()
 {
+	A = NULL;
+	F = NULL;
+	SG = NULL;
+	AonHPD = NULL;
+	Equations = NULL;
+	prev = NULL;
+	label = NULL;
+	data_tmp = NULL;
+	f_has_print_function = FALSE;
+	print_function = NULL;
+	print_function_data = NULL;
+	f_has_reduction = FALSE;
+	reduction_function = NULL;
+	reduction_function_data = NULL;
 	null();
 }
 
@@ -28,14 +42,6 @@ orbit_of_equations::~orbit_of_equations()
 
 void orbit_of_equations::null()
 {
-	A = NULL;
-	F = NULL;
-	SG = NULL;
-	AonHPD = NULL;
-	Equations = NULL;
-	prev = NULL;
-	label = NULL;
-	data_tmp = NULL;
 }
 
 void orbit_of_equations::freeself()
@@ -109,6 +115,10 @@ void orbit_of_equations::map_an_equation(int *object_in, int *object_out,
 		}
 	AonHPD->compute_image_int_low_level(
 		Elt, object_in + 1, object_out + 1, verbose_level - 2);
+	object_out[0] = 0;
+	if (f_has_reduction) {
+		(*reduction_function)(object_out + 1, reduction_function_data);
+	}
 	F->PG_element_normalize_from_front(
 		object_out + 1, 1, nb_monomials);
 	if (f_v) {
@@ -127,6 +137,10 @@ void orbit_of_equations::print_orbit()
 		int_vec_print(cout, Equations[i] + 1, nb_monomials);
 		cout << " : ";
 		AonHPD->HPD->print_equation(cout, Equations[i] + 1);
+		if (f_has_print_function) {
+			cout << endl;
+			(*print_function)(Equations[i], sz, print_function_data);
+		}
 		cout << endl;
 		}
 }
@@ -200,7 +214,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 			if (search_data(new_object, idx)) {
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
-							"n e w object is already in the list, "
+							"image object is already in the list, "
 							"at position " << idx << endl;
 					}
 				}
@@ -209,6 +223,9 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 					cout << "orbit_of_equations::compute_orbit "
 							"Found a n e w object : ";
 					int_vec_print(cout, new_object, sz);
+					if (f_has_print_function) {
+						(*print_function)(new_object, sz, print_function_data);
+					}
 					cout << endl;
 					}
 				

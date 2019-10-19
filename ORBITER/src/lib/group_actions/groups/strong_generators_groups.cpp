@@ -2168,9 +2168,8 @@ void strong_generators::generators_for_the_identity_subgroup(
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_"
-				"identity_subgroup after generators_to_"
-				"strong_generators" << endl;
+		cout << "strong_generators::generators_for_the_identity_subgroup "
+				"after generators_to_strong_generators" << endl;
 		}
 
 	init_copy(SG, 0);
@@ -2195,8 +2194,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 	int nb_gens;
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"parabolic_subgroup" << endl;
+		cout << "strong_generators::generators_for_parabolic_subgroup" << endl;
 		}
 	F = Mtx->GFq;
 	q = F->q;
@@ -2206,9 +2204,8 @@ void strong_generators::generators_for_parabolic_subgroup(
 		}
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"parabolic_subgroup before generators_for_"
-				"parabolic_subgroup" << endl;
+		cout << "strong_generators::generators_for_parabolic_subgroup "
+				"before generators_for_parabolic_subgroup" << endl;
 		}
 
 	F->generators_for_parabolic_subgroup(n,
@@ -2225,9 +2222,8 @@ void strong_generators::generators_for_parabolic_subgroup(
 	
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"parabolic_subgroup after generators_for_"
-				"parabolic_subgroup" << endl;
+		cout << "strong_generators::generators_for_parabolic_subgroup "
+				"after generators_for_parabolic_subgroup" << endl;
 		}
 
 	longinteger_object go1, nCk, target_go;
@@ -2236,20 +2232,20 @@ void strong_generators::generators_for_parabolic_subgroup(
 
 	D.group_order_PGL(go1, n, q, Mtx->f_semilinear);
 
-	cout << "strong_generators::generators_for_"
-			"parabolic_subgroup go1=" << go1 << endl;
+	cout << "strong_generators::generators_for_parabolic_subgroup "
+			"go1=" << go1 << endl;
 
 	D.q_binomial_no_table(nCk, n, k, q, 0 /* verbose_level */);
 
-	cout << "strong_generators::generators_for_"
-			"parabolic_subgroup nCk=" << nCk << endl;
+	cout << "strong_generators::generators_for_parabolic_subgroup "
+			"nCk=" << nCk << endl;
 
 	D.integral_division_exact(go1, nCk, target_go);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"parabolic_subgroup before generators_to_"
-				"strong_generators target_go=" << target_go << endl;
+		cout << "strong_generators::generators_for_parabolic_subgroup "
+				"before generators_to_strong_generators "
+				"target_go=" << target_go << endl;
 		}
 	
 	strong_generators *SG;
@@ -2259,9 +2255,8 @@ void strong_generators::generators_for_parabolic_subgroup(
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"parabolic_subgroup after generators_"
-				"to_strong_generators" << endl;
+		cout << "strong_generators::generators_for_parabolic_subgroup "
+				"after generators_to_strong_generators" << endl;
 		}
 
 	init_copy(SG, 0);
@@ -2272,8 +2267,8 @@ void strong_generators::generators_for_parabolic_subgroup(
 	FREE_int(data);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"parabolic_subgroup done" << endl;
+		cout << "strong_generators::generators_for_parabolic_subgroup "
+				"done" << endl;
 		}
 }
 

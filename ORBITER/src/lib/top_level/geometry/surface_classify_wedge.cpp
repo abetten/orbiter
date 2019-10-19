@@ -1167,7 +1167,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 		A->element_invert(Elt_isomorphism_1to2, Elt1, 0);
 		int coeff3[20];
 		int coeff4[20];
-		mtx->substitute_surface_eqation(Elt1,
+		mtx->substitute_surface_equation(Elt1,
 				coeff1, coeff3, Surf,
 				verbose_level - 1);
 
@@ -1532,7 +1532,7 @@ void surface_classify_wedge::identify_surface(
 
 	mtx = A->G.matrix_grp;
 	
-	mtx->substitute_surface_eqation(Elt_isomorphism_inv,
+	mtx->substitute_surface_equation(Elt_isomorphism_inv,
 			coeff_of_given_surface, coeffs_transformed, Surf,
 			verbose_level - 1);
 
