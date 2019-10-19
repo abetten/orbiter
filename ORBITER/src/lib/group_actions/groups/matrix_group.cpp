@@ -967,14 +967,16 @@ void matrix_group::general_linear_action_from_the_right(
 		}	
 }
 
-void matrix_group::substitute_surface_eqation(int *Elt,
+void matrix_group::substitute_surface_equation(int *Elt,
 		int *coeff_in, int *coeff_out, surface_domain *Surf,
 		int verbose_level)
+// used in arc_lifting.cpp, surface_classify_wedge.cpp,
+// surface_create.cpp, create_surface_main.cpp, intersection.cpp
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "matrix_group::substitute_surface_eqation" << endl;
+		cout << "matrix_group::substitute_surface_equation" << endl;
 	}
 	if (f_semilinear) {
 		Surf->substitute_semilinear(coeff_in,
@@ -997,7 +999,7 @@ void matrix_group::substitute_surface_eqation(int *Elt,
 
 	}
 	if (f_v) {
-		cout << "matrix_group::substitute_surface_eqation done" << endl;
+		cout << "matrix_group::substitute_surface_equation done" << endl;
 	}
 }
 

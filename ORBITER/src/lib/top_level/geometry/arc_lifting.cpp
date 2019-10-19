@@ -822,7 +822,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 			matrix_group *M;
 
 			M = Surf_A->A->G.matrix_grp;
-			M->substitute_surface_eqation(Elt4,
+			M->substitute_surface_equation(Elt4,
 					the_equation, coeff_out, Surf,
 					verbose_level - 1);
 #else
@@ -2161,7 +2161,7 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 			//matrix_group *M;
 
 			//M = A->G.matrix_grp;
-			mtx->substitute_surface_eqation(Elt4,
+			mtx->substitute_surface_equation(Elt4,
 					the_equation, coeff_out, Surf,
 					0 /*verbose_level - 1*/);
 #else

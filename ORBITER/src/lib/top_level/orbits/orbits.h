@@ -115,6 +115,14 @@ public:
 	int *prev;
 	int *label;
 
+	int f_has_print_function;
+	void (*print_function)(int *object, int sz, void *print_function_data);
+	void *print_function_data;
+
+	int f_has_reduction;
+	void (*reduction_function)(int *object, void *reduction_function_data);
+	void *reduction_function_data;
+
 
 	orbit_of_equations();
 	~orbit_of_equations();

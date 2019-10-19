@@ -1832,6 +1832,16 @@ public:
 		int &ct, int &cb, int verbose_level);
 	void int_mult_fractions(int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
+	int choose_a_prime_greater_than(int lower_bound);
+	int choose_a_prime_in_interval(int lower_bound, int upper_bound);
+	int random_integer_greater_than(int n, int lower_bound);
+	int random_integer_in_interval(int lower_bound, int upper_bound);
+	int nb_primes_available();
+	int get_prime_from_table(int idx);
+	int int_negate(int a, int p);
+	int ChineseRemainder2(int a1, int a2, int p1, int p2, int verbose_level);
+	void do_babystep_giantstep(int p, int g, int h,
+			int f_latex, std::ostream &ost, int verbose_level);
 };
 
 // #############################################################################

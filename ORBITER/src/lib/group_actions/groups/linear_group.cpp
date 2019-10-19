@@ -898,28 +898,8 @@ void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
 	Elt = NEW_int(A->elt_size_in_int);
 	H->group_order(go);
 
-#if 0
-	char fname[1000];
-	char title[1000];
-	const char *author = "Orbiter";
-	const char *extras_for_preamble = "";
-
-	sprintf(fname, "%s_report.tex", prefix);
-	sprintf(title, "The group $%s$", label_latex);
-#endif
 
 	{
-#if 0
-		ofstream fp(fname);
-		latex_interface L;
-		//latex_head_easy(fp);
-		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
-			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
-			extras_for_preamble);
-#endif
 
 		//H->print_all_group_elements_tex(fp);
 

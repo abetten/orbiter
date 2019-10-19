@@ -574,7 +574,7 @@ void surface_create::apply_transformations(
 			matrix_group *M;
 
 			M = A->G.matrix_grp;
-			M->substitute_surface_eqation(Elt3,
+			M->substitute_surface_equation(Elt3,
 					coeffs, coeffs_out, Surf,
 					verbose_level - 1);
 #else
