@@ -404,6 +404,86 @@ int homogeneous_polynomial_domain::index_of_monomial(int *v)
 	return idx;
 }
 
+void homogeneous_polynomial_domain::affine_evaluation_kernel(
+		int *&Kernel, int &dim_kernel, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, h, a, b, c, idx, f_kernel;
+	int *mon;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::affine_evaluation_kernel" << endl;
+	}
+	dim_kernel = 0;
+	mon = NEW_int(n);
+	for (i = 0; i < nb_monomials; i++) {
+		int_vec_copy(Monomials + i * n, mon, n);
+		f_kernel = FALSE;
+		for (j = 0; j < n - 1; j++) {
+			a = mon[j];
+			if (a >= q) {
+				b = a % (q - 1);
+				if (b == 0) {
+					b += (q - 1);
+				}
+				c = a - b;
+				mon[j] = b;
+				mon[n - 1] += c;
+				f_kernel = TRUE;
+			}
+		}
+		if (f_kernel) {
+			if (f_v) {
+				cout << "homogeneous_polynomial_domain::affine_evaluation_kernel monomial ";
+				int_vec_print(cout, Monomials + i * n, n);
+				cout << " = ";
+				int_vec_print(cout, mon, n);
+				cout << endl;
+			}
+			dim_kernel++;
+		}
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::affine_evaluation_kernel dim_kernel = " << dim_kernel << endl;
+	}
+	Kernel = NEW_int(dim_kernel * 2);
+	h = 0;
+	for (i = 0; i < nb_monomials; i++) {
+		int_vec_copy(Monomials + i * n, mon, n);
+		f_kernel = FALSE;
+		for (j = 0; j < n - 1; j++) {
+			a = mon[j];
+			if (a >= q) {
+				b = a % (q - 1);
+				if (b == 0) {
+					b += (q - 1);
+				}
+				c = a - b;
+				mon[j] = b;
+				mon[n - 1] += c;
+				f_kernel = TRUE;
+			}
+		}
+		if (f_kernel) {
+			if (f_v) {
+				cout << "homogeneous_polynomial_domain::affine_evaluation_kernel monomial ";
+				int_vec_print(cout, Monomials + i * n, n);
+				cout << " = ";
+				int_vec_print(cout, mon, n);
+				cout << endl;
+			}
+			idx = index_of_monomial(mon);
+			Kernel[h * 2 + 0] = i;
+			Kernel[h * 2 + 1] = idx;
+			h++;
+		}
+	}
+	FREE_int(mon);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::affine_evaluation_kernel done" << endl;
+	}
+}
+
 void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 {
 	int j, a;

@@ -388,12 +388,14 @@ public:
 			int verbose_level);
 	void centralizer_using_MAGMA(const char *prefix, 
 		sims *G, int *Elt, int verbose_level);
-	void conjugacy_classes_and_normalizers(
+	void conjugacy_classes_and_normalizers(sims *override_Sims,
+			const char *override_group_prefix,
+			const char *label_latex,
 			int verbose_level);
 	void report_conjugacy_classes_and_normalizers(std::ostream &ost,
 			int verbose_level);
 	void read_conjugacy_classes_and_normalizers(
-			char *fname, int verbose_level);
+			char *fname, sims *override_sims, const char *label_latex, int verbose_level);
 	void read_and_report_conjugacy_classes_and_normalizers(std::ostream &ost,
 			char *fname, int verbose_level);
 	void report_fixed_objects(int *Elt,

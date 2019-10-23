@@ -781,15 +781,24 @@ void finite_field::generators_for_parabolic_subgroup(
 		}
 
 
-	// count the generators with entries in row k and in row n:
-	nb_gens += (n - 1) * e;
-
+	// count the generators with entries in row k:
+	for (h = 0; h < k - 1; h++) {
+		for (u = 0; u < e; u++) {
+			nb_gens++;
+		}
+	}
+	// count the generators with entries in row n:
+	for (h = k; h < n - 1; h++) {
+		for (u = 0; u < e; u++) {
+			nb_gens++;
+		}
+	}
 
 	// count the generators with entries in the lower left block:
 	nb_gens += k * (n - k) * e;
 
 	// count the swaps:
-	for (h = n - 2; h > n - k; h--) {
+	for (h = n - 2; h > k; h--) {
 		nb_gens++;
 	}
 	for (h = k - 2; h >= 0; h--) {
@@ -854,7 +863,7 @@ void finite_field::generators_for_parabolic_subgroup(
 		}
 
 	// the entries in the row n:
-	for (h = k - 1; h < n - 1; h++) {
+	for (h = k; h < n - 1; h++) {
 		for (u = 0; u < e; u++) {
 			identity_matrix(M, n);
 			M[(n - 1) * n + h] = NT.i_power_j(p, u);
@@ -890,7 +899,7 @@ void finite_field::generators_for_parabolic_subgroup(
 		cout << "generators for swaps along the diagonal, "
 				"cur=" << cur << endl;
 		}
-	for (h = n - 2; h > n - k; h--) {
+	for (h = n - 2; h > k; h--) {
 		identity_matrix(M, n);
 		M[h * n + h] = 0;
 		M[h * n + h + 1] = 1;

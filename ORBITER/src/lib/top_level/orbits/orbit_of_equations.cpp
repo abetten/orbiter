@@ -138,7 +138,6 @@ void orbit_of_equations::print_orbit()
 		cout << " : ";
 		AonHPD->HPD->print_equation(cout, Equations[i] + 1);
 		if (f_has_print_function) {
-			cout << endl;
 			(*print_function)(Equations[i], sz, print_function_data);
 		}
 		cout << endl;
@@ -611,6 +610,63 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 		}
 	return gens;
 }
+
+strong_generators *orbit_of_equations::stabilizer_any_point(
+	longinteger_object &full_group_order, int idx,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	strong_generators *gens0;
+	strong_generators *gens;
+	int *transporter;
+	int *transporter_inv;
+
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point" << endl;
+	}
+
+	transporter = NEW_int(A->elt_size_in_int);
+	transporter_inv = NEW_int(A->elt_size_in_int);
+
+	gens0 = stabilizer_orbit_rep(
+			full_group_order, 0 /* verbose_level */);
+
+	get_transporter(idx,
+			transporter_inv, 0 /* verbose_level */);
+	// transporter_inv is an element which maps
+	// the orbit representative to the given object.
+
+	A->element_invert(transporter_inv, transporter, 0);
+
+
+
+
+	gens = NEW_OBJECT(strong_generators);
+
+
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before gens->init_generators_"
+				"for_the_conjugate_group_aGav" << endl;
+	}
+	gens->init_generators_for_the_conjugate_group_aGav(gens0,
+		transporter, verbose_level);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after gens->init_generators_"
+				"for_the_conjugate_group_aGav" << endl;
+	}
+
+	FREE_int(transporter);
+	FREE_int(transporter_inv);
+
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point done" << endl;
+	}
+	FREE_OBJECT(gens0);
+	return gens;
+}
+
 
 
 

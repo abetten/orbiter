@@ -921,6 +921,7 @@ void strong_generators::init_subgroup(action *A,
 void strong_generators::init_subgroup_by_generators(action *A,
 	int nb_subgroup_gens, const char **subgroup_gens,
 	const char *subgroup_order_text,
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -933,13 +934,13 @@ void strong_generators::init_subgroup_by_generators(action *A,
 
 	strong_generators::A = A;
 
-	vector_ge *my_gens;
+	//vector_ge *my_gens;
 
-	my_gens = NEW_OBJECT(vector_ge);
-	my_gens->init(A, verbose_level - 2);
-	my_gens->allocate(nb_subgroup_gens, verbose_level - 2);
+	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens->init(A, verbose_level - 2);
+	nice_gens->allocate(nb_subgroup_gens, verbose_level - 2);
 	for (int h = 0; h < nb_subgroup_gens; h++) {
-		A->make_element_from_string(my_gens->ith(h),
+		A->make_element_from_string(nice_gens->ith(h),
 				subgroup_gens[h], verbose_level);
 	}
 
@@ -947,7 +948,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 	if (f_v) {
 		cout << "strong_generators::init_subgroup_by_generators "
 				"chosen generators:" << endl;
-		my_gens->print_quick(cout);
+		nice_gens->print_quick(cout);
 		}
 
 	target_go.create_from_base_10_string(subgroup_order_text);
@@ -959,7 +960,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go,
-		my_gens, SG,
+		nice_gens, SG,
 		0 /*verbose_level*/);
 
 	if (FALSE) {
@@ -968,7 +969,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 		SG->print_generators();
 		}
 
-	FREE_OBJECT(my_gens);
+	//FREE_OBJECT(my_gens);
 
 	if (gens) {
 		FREE_OBJECT(gens);

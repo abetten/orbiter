@@ -146,6 +146,9 @@ public:
 		// this function allocates a sims structure into Stab.
 	strong_generators *stabilizer_orbit_rep(
 		longinteger_object &full_group_order, int verbose_level);
+	strong_generators *stabilizer_any_point(
+		longinteger_object &full_group_order, int idx,
+		int verbose_level);
 	int search_data(int *data, int &idx);
 	void save_csv(const char *fname, int verbose_level);
 };

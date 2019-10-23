@@ -1485,6 +1485,8 @@ public:
 	void make_monomials(int verbose_level);
 	void rearrange_monomials_by_partition_type(int verbose_level);
 	int index_of_monomial(int *v);
+	void affine_evaluation_kernel(
+			int *&Kernel, int &dim_kernel, int verbose_level);
 	void print_monomial(std::ostream &ost, int i);
 	void print_monomial(std::ostream &ost, int *mon);
 	void print_monomial(char *str, int i);
@@ -1547,6 +1549,7 @@ public:
 	int compare_unsigned(longinteger_object &a, longinteger_object &b);
 		// returns -1 if a < b, 0 if a = b, 
 		// and 1 if a > b, treating a and b as unsigned.
+	int is_less_than(longinteger_object &a, longinteger_object &b);
 	void subtract_signless(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &c);
 		// c = a - b, assuming a > b
