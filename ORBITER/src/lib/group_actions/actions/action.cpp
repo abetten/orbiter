@@ -403,7 +403,9 @@ int action::base_len()
 		return Stabilizer_chain->get_base_len();
 	}
 	else {
-		return 0;
+		cout << "action::base_len Stabilizer_chain == NULL" << endl;
+		exit(1);
+		//return 0;
 	}
 }
 

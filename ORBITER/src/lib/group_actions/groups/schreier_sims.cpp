@@ -476,10 +476,10 @@ void schreier_sims::create_group(int verbose_level)
 	if (f_v) {
 		cout << "schreier_sims::create_group" << endl;
 		if (f_has_target_group_order) {
-			cout << "schreier_sims::create_group  target group order is given as " << tgo << endl;
+			cout << "schreier_sims::create_group target group order is " << tgo << endl;
 		}
 		else {
-			cout << "schreier_sims::create_group  no target group order given" << endl;
+			cout << "schreier_sims::create_group no target group order given" << endl;
 		}
 	}
 	if (f_has_target_group_order && tgo.is_zero()) {
@@ -530,7 +530,7 @@ void schreier_sims::create_group(int verbose_level)
 		if (f_vv) {
 			cout << "schreier_sims::create_group "
 					"iteration " << iteration
-					<< " generator: ";
+					<< " generator: " << endl;
 			GA->element_print_quick(Elt1, cout);
 			}
 

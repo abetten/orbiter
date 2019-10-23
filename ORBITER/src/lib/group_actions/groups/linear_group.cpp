@@ -798,7 +798,10 @@ void linear_group::init_subgroup_by_generators(char *prefix, char *label_latex,
 	Strong_gens->init_subgroup_by_generators(A_linear,
 			nb_subgroup_generators, subgroup_generators_as_string,
 			subgroup_order_text,
+			nice_gens,
 			verbose_level);
+
+	f_has_nice_gens = TRUE;
 
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators after "
@@ -938,7 +941,7 @@ void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
 		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
 
 		if (f_has_nice_gens) {
-			cout << "Nice generators:\\\\" << endl;
+			fp << "Nice generators:\\\\" << endl;
 			nice_gens->print_tex(fp);
 		}
 		else {

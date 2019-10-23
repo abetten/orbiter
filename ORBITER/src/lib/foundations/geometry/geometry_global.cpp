@@ -127,18 +127,19 @@ void geometry_global::AG_element_unrank_longinteger(int q,
 {
 	int i, r;
 	longinteger_domain D;
-	longinteger_object Q, a1;
+	longinteger_object a0, Q, a1;
 
+	a.assign_to(a0);
 	if (len <= 0) {
 		cout << "geometry_global::AG_element_unrank_longinteger len <= 0" << endl;
 		exit(1);
 		}
 	for (i = 0; i < len; i++) {
-		D.integral_division_by_int(a, q, a1, r);
+		D.integral_division_by_int(a0, q, a1, r);
 		//r = a % q;
 		v[i * stride] = r;
 		//a /= q;
-		a.swap_with(a1);
+		a0.swap_with(a1);
 		}
 }
 

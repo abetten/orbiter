@@ -64,6 +64,8 @@ int main(int argc, const char **argv)
 	const char *multiply_b = NULL;
 	int f_inverse = FALSE;
 	const char *inverse_a = NULL;
+	int f_order_of_products = FALSE;
+	const char *order_of_products_elements = NULL;
 
 
 	int i;
@@ -151,6 +153,11 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-print_elements_tex") == 0) {
 			f_print_elements_tex = TRUE;
 			cout << "-print_elements_tex " << endl;
+			}
+		else if (strcmp(argv[i], "-order_of_products") == 0) {
+			f_order_of_products = TRUE;
+			order_of_products_elements = argv[++i];
+			cout << "-order_of_products " << order_of_products_elements << endl;
 			}
 		else if (strcmp(argv[i], "-multiply") == 0) {
 			f_multiply = TRUE;
@@ -249,7 +256,14 @@ int main(int argc, const char **argv)
 	}
 
 	if (f_classes) {
-		A->conjugacy_classes_and_normalizers(verbose_level);
+
+		sims *G;
+
+		G = LG->Strong_gens->create_sims(verbose_level);
+
+		A->conjugacy_classes_and_normalizers(G, LG->prefix, LG->label_latex, verbose_level);
+
+		FREE_OBJECT(G);
 	}
 
 	if (f_multiply) {
@@ -413,6 +427,7 @@ int main(int argc, const char **argv)
 		Elt = NEW_int(A->elt_size_in_int);
 		H->group_order(go);
 
+
 		cnt = 0;
 		for (i = 0; i < go.as_int(); i++) {
 			H->element_unrank_int(i, Elt);
@@ -423,6 +438,9 @@ int main(int argc, const char **argv)
 			cout << endl;
 			A->element_print_as_permutation(Elt, cout);
 			cout << endl;
+
+
+
 		}
 		FREE_int(Elt);
 	}
@@ -442,6 +460,21 @@ int main(int argc, const char **argv)
 		Elt = NEW_int(A->elt_size_in_int);
 		H->group_order(go);
 
+		action *A_conj;
+
+		A_conj = NEW_OBJECT(action);
+
+		cout << "before A_conj->induced_action_by_conjugation" << endl;
+		A_conj->induced_action_by_conjugation(H /* old_G */,
+				H /* Base_group */, FALSE /* f_ownership */,
+				FALSE /* f_basis */, verbose_level);
+		cout << "before A_conj->induced_action_by_conjugation" << endl;
+
+		schreier Schreier;
+		cout << "before A_conj->all_point_orbits" << endl;
+		A_conj->all_point_orbits_from_generators(Schreier, LG->Strong_gens, verbose_level);
+		cout << "after A_conj->all_point_orbits" << endl;
+
 		char fname[1000];
 
 		sprintf(fname, "%s_elements.tex", LG->prefix);
@@ -453,6 +486,50 @@ int main(int argc, const char **argv)
 					L.head_easy(fp);
 
 					H->print_all_group_elements_tex(fp);
+
+					Schreier.print_and_list_orbits_tex(fp);
+
+					if (f_order_of_products) {
+						int *elements;
+						int nb_elements;
+						int *order_table;
+
+						int_vec_scan(order_of_products_elements, elements, nb_elements);
+
+						int j;
+						int *Elt1, *Elt2, *Elt3;
+
+						Elt1 = NEW_int(A->elt_size_in_int);
+						Elt2 = NEW_int(A->elt_size_in_int);
+						Elt3 = NEW_int(A->elt_size_in_int);
+
+						order_table = NEW_int(nb_elements * nb_elements);
+						for (i = 0; i < nb_elements; i++) {
+
+							H->element_unrank_int(elements[i], Elt1);
+
+
+							for (j = 0; j < nb_elements; j++) {
+
+								H->element_unrank_int(elements[j], Elt2);
+
+								A->element_mult(Elt1, Elt2, Elt3, 0);
+
+								order_table[i * nb_elements + j] = A->element_order(Elt3);
+
+							}
+						}
+						FREE_int(Elt1);
+						FREE_int(Elt2);
+						FREE_int(Elt3);
+
+						latex_interface L;
+
+						fp << "$$" << endl;
+						L.print_integer_matrix_with_labels(fp, order_table,
+								nb_elements, nb_elements, elements, elements, TRUE /* f_tex */);
+						fp << "$$" << endl;
+					}
 
 					L.foot(fp);
 				}
@@ -960,5 +1037,8 @@ int main(int argc, const char **argv)
 		}
 	}
 	}
+
+	the_end(t0);
+	//the_end_quietly(t0);
 }
 

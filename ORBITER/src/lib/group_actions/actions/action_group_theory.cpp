@@ -552,7 +552,9 @@ void action::centralizer_using_MAGMA(const char *prefix,
 
 
 
-void action::conjugacy_classes_and_normalizers(
+void action::conjugacy_classes_and_normalizers(sims *override_Sims,
+		const char *override_group_prefix,
+		const char *label_latex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -566,17 +568,17 @@ void action::conjugacy_classes_and_normalizers(
 		cout << "action::conjugacy_classes_and_normalizers" << endl;
 		}
 
-	sprintf(prefix, "%s", group_prefix);
+	sprintf(prefix, "%s", override_group_prefix);
 	sprintf(fname1, "%s_classes.magma", prefix);
 	sprintf(fname2, "%s_classes_out.txt", prefix);
 
 
 	if (Fio.file_size(fname2) > 0) {
-		read_conjugacy_classes_and_normalizers(fname2, verbose_level);
+		read_conjugacy_classes_and_normalizers(fname2, override_Sims, label_latex, verbose_level);
 		}
 	else {
 		conjugacy_classes_and_normalizers_using_MAGMA(prefix,
-				Sims, verbose_level);
+				override_Sims, verbose_level);
 		}
 
 	if (f_v) {
@@ -621,7 +623,7 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 
 
 void action::read_conjugacy_classes_and_normalizers(
-		char *fname, int verbose_level)
+		char *fname, sims *override_sims, const char *label_latex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -672,7 +674,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	longinteger_object go;
 	longinteger_domain D;
 
-	group_order(go);
+	override_sims->group_order(go);
 	cout << "The group has order " << go << endl;
 
 	char fname_latex[1000];
@@ -686,7 +688,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	latex_interface L;
 
 	sprintf(title, "Conjugacy classes of $%s$",
-			label_tex);
+			label_latex);
 
 	L.head(fp,
 		FALSE /* f_book */, TRUE /* f_title */,
@@ -697,7 +699,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	//latex_head_easy(fp);
 
 	fp << "\\section{Conjugacy classes in $"
-			<< label_tex << "$}" << endl;
+			<< label_latex << "$}" << endl;
 
 
 	fp << "The group order is " << endl;

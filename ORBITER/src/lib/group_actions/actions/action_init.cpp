@@ -833,93 +833,6 @@ void action::init_affine_group(int n, int q,
 	FREE_int(given_base);
 }
 
-#if 0
-void action::init_affine_grid_group(int q1, int q2, 
-	int f_translations1, int f_translations2, 
-	int f_semilinear1, int frobenius_power1, 
-	int f_semilinear2, int frobenius_power2, 
-	int f_multiplication1, int multiplication_order1, 
-	int f_multiplication2, int multiplication_order2, 
-	int f_diagonal, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int n = 1;
-	int nb_gens1, degree1;
-	int nb_gens2, degree2;
-	int nb_gens3, degree3;
-	int *gens1;
-	int *gens2;
-	int *gens3;
-	int given_base_length1;
-	int given_base_length2;
-	int given_base_length3;
-	int *given_base1;
-	int *given_base2;
-	int *given_base3;
-	finite_field F1, F2;
-	longinteger_object go;
-	
-	sprintf(label, "AGL_1_%d_x_AGL_1_%d", q1, q2);
-	sprintf(label_tex, "AGL(1,%d) x AGL(1,%d)", q1, q2);
-
-	F1.init(q1, verbose_level - 1);
-	F2.init(q2, verbose_level - 1);
-	
-	if (f_v) {
-		cout << "computing generators first group" << endl;
-		}
-	F1.affine_generators(n, f_translations1, 
-		f_semilinear1, frobenius_power1, 
-		f_multiplication1, multiplication_order1, 
-		nb_gens1, degree1, gens1, 
-		given_base_length1, given_base1);
-	if (f_v) {
-		cout << "computing generators second group" << endl;
-		}
-	F2.affine_generators(n, f_translations2, 
-		f_semilinear2, frobenius_power2, 
-		f_multiplication2, multiplication_order2, 
-		nb_gens2, degree2, gens2, 
-		given_base_length2, given_base2);
-
-	if (f_v) {
-		cout << "computing generators for the direct product" << endl;
-		}
-	if (f_diagonal) {
-		perm_group_generators_direct_product(1, 
-			degree1, degree2, degree3, 
-			nb_gens1, nb_gens2, nb_gens3, 
-			gens1, gens2, gens3, 
-			given_base_length1, given_base_length2, given_base_length3, 
-			given_base1, given_base2, given_base3);
-		}
-	else {
-		perm_group_generators_direct_product(0, 
-			degree1, degree2, degree3, 
-			nb_gens1, nb_gens2, nb_gens3, 
-			gens1, gens2, gens3, 
-			given_base_length1, given_base_length2, given_base_length3, 
-			given_base1, given_base2, given_base3);
-		}
-	
-	init_permutation_group_from_generators(degree3, 
-		FALSE, go, 
-		nb_gens3, gens3, 
-		given_base_length3, given_base3,
-		verbose_level);
-	if (f_v) {
-		cout << "elt_size_in_int=" << elt_size_in_int << endl;
-		}
-
-	FREE_int(gens1);
-	FREE_int(gens2);
-	FREE_int(gens3);
-	FREE_int(given_base1);
-	FREE_int(given_base2);
-	FREE_int(given_base3);
-}
-#endif
 
 void action::init_symmetric_group(int degree, int verbose_level)
 {
@@ -996,11 +909,33 @@ void action::create_orthogonal_group(action *subaction,
 	if (f_v) {
 		cout << "action::create_orthogonal_group" << endl;
 		}
+
+	matrix_group *Mtx;
+	int degree_save;
+
+	Mtx = subaction->get_matrix_group();
+
+	degree_save = degree;
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"before Mtx->init_base_projective" << endl;
+		}
+	Mtx->init_base_projective(
+			this, verbose_level);
+	// initializes base, base_len, degree,
+	// transversal_length, orbit, orbit_inv
+	if (f_v) {
+		cout << "action::create_orthogonal_group "
+				"after Mtx->init_base_projective" << endl;
+		}
+	degree = degree_save;
+
+
 	if (f_v) {
 		cout << "action::create_orthogonal_group "
 				"before allocating a schreier_sims object" << endl;
 		}
-	
+
 	{
 	schreier_sims ss;
 
@@ -1805,6 +1740,10 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 			TRUE /* f_basis */,
 			nice_gens,
 			verbose_level - 2);
+	if (f_vv) {
+		cout << "action::init_orthogonal_group_with_O "
+				"after A->init_projective_group" << endl;
+		}
 	FREE_OBJECT(nice_gens);
 
 	AO = NEW_OBJECT(action_on_orthogonal);
@@ -1813,6 +1752,9 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 		}
 	AO->init(A, O, f_on_points, f_on_lines,
 			f_on_points_and_lines, verbose_level - 2);
+	if (f_vv) {
+		cout << "action::init_orthogonal_group_with_O after AO->init" << endl;
+		}
 
 	type_G = action_on_orthogonal_t;
 	G.AO = AO;
@@ -1829,9 +1771,19 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	ptr->init_function_pointers_induced_action();
 	make_element_size = A->make_element_size;
 
-	sprintf(group_prefix, "O%d_%d_%d", O->epsilon, O->n, q);
-	sprintf(label, "O^%s(%d,%d)", plus_minus_string(O->epsilon), O->n, q);
-	sprintf(label_tex, "O^{%s}(%d,%d)", plus_minus_string(O->epsilon), O->n, q);
+	if (O->epsilon == 1) {
+		sprintf(group_prefix, "PGOp_%d_%d", O->n, q);
+		sprintf(label, "PGOp_%d_%d", O->n, q);
+	}
+	else if (O->epsilon == -1) {
+		sprintf(group_prefix, "PGOm_%d_%d", O->n, q);
+		sprintf(label, "PGOm_%d_%d", O->n, q);
+	}
+	else {
+		sprintf(group_prefix, "PGO_%d_%d", O->n, q);
+		sprintf(label, "PGO_%d_%d", O->n, q);
+	}
+	sprintf(label_tex, "{\\rm PGO}^{%s}(%d,%d)", plus_minus_string(O->epsilon), O->n, q);
 
 
 
@@ -1839,13 +1791,13 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 		longinteger_object target_go;
 
 		if (f_vv) {
-			cout << "action::init_orthogonal_group "
+			cout << "action::init_orthogonal_group_with_O "
 					"we will create the orthogonal group now" << endl;
 			}
 
 		if (get_orthogonal_group_type_f_reflection()) {
 			if (f_vv) {
-				cout << "action::init_orthogonal_group "
+				cout << "action::init_orthogonal_group_with_O "
 						"with reflections, before order_PO_epsilon" << endl;
 				}
 			GG.order_PO_epsilon(f_semilinear, O->epsilon, O->n - 1, O->F->q,
@@ -1853,7 +1805,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 			}
 		else {
 			if (f_vv) {
-				cout << "action::init_orthogonal_group "
+				cout << "action::init_orthogonal_group_with_O "
 						"without reflections, before order_POmega_epsilon"
 						<< endl;
 				}
@@ -1862,12 +1814,12 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 			}
 
 		if (f_vv) {
-			cout << "action::init_orthogonal_group "
+			cout << "action::init_orthogonal_group_with_O "
 					"the target group order is " << target_go << endl;
 			}
 
 		if (f_vv) {
-			cout << "action::init_orthogonal_group "
+			cout << "action::init_orthogonal_group_with_O "
 					"before create_orthogonal_group" << endl;
 			}
 		create_orthogonal_group(A /*subaction*/,
@@ -1875,13 +1827,13 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 			callback_choose_random_generator_orthogonal,
 			verbose_level - 2);
 		if (f_vv) {
-			cout << "action::init_orthogonal_group "
+			cout << "action::init_orthogonal_group_with_O "
 					"after create_orthogonal_group" << endl;
 			}
 		}
 
 	if (f_v) {
-		cout << "action::init_orthogonal_group done" << endl;
+		cout << "action::init_orthogonal_group_with_O done" << endl;
 		}
 }
 

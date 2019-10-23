@@ -63,6 +63,14 @@ int longinteger_domain::compare_unsigned(
 	return 0;
 }
 
+int longinteger_domain::is_less_than(longinteger_object &a, longinteger_object &b)
+{
+	if (compare_unsigned(a, b) == -1)
+		return TRUE;
+	else
+		return FALSE;
+}
+
 void longinteger_domain::subtract_signless(
 		longinteger_object &a, longinteger_object &b,
 		longinteger_object &c)
@@ -1344,6 +1352,8 @@ int longinteger_domain::is_odd(longinteger_object &a)
 	else
 		return TRUE;
 }
+
+
 
 int longinteger_domain::remainder_mod_int(longinteger_object &a, int p)
 {

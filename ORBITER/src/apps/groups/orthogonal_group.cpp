@@ -21,6 +21,7 @@ int main(int argc, char **argv);
 void do_it(int epsilon, int n, int q,
 		int f_draw_tree,
 		int f_orbit_of, int orbit_of_idx,
+		int f_report, int f_sylow,
 		int verbose_level);
 
 void usage(int argc, char **argv)
@@ -48,6 +49,8 @@ int main(int argc, char **argv)
 	int f_draw_tree = FALSE;
 	int f_orbit_of = FALSE;
 	int orbit_of_idx = 0;
+	int f_report = FALSE;
+	int f_sylow = FALSE;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -80,6 +83,14 @@ int main(int argc, char **argv)
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
 			}
+		else if (strcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			cout << "-report" << endl;
+			}
+		else if (strcmp(argv[i], "-sylow") == 0) {
+			f_sylow = TRUE;
+			cout << "-sylow" << endl;
+			}
 		else if (strcmp(argv[i], "-f_draw_tree") == 0) {
 			f_draw_tree = TRUE;
 			cout << "-f_draw_tree " << endl;
@@ -108,6 +119,7 @@ int main(int argc, char **argv)
 	do_it(epsilon, d, q,
 			f_draw_tree,
 			f_orbit_of, orbit_of_idx,
+			f_report, f_sylow,
 			verbose_level);
 
 	the_end_quietly(t0);
@@ -116,6 +128,7 @@ int main(int argc, char **argv)
 void do_it(int epsilon, int n, int q,
 		int f_draw_tree,
 		int f_orbit_of, int orbit_of_idx,
+		int f_report, int f_sylow,
 		int verbose_level)
 {
 	finite_field *F;
@@ -276,7 +289,7 @@ void do_it(int epsilon, int n, int q,
 			double line_width = 1.0;
 
 			sprintf(fname_tree, "O_%d_%d_%d_tree", epsilon, n, q);
-			sprintf(fname_report, "O_%d_%d_%d_report.tex", epsilon, n, q);
+			sprintf(fname_report, "O_%d_%d_%d_orbit_report.tex", epsilon, n, q);
 
 
 			Sch->draw_tree(fname_tree, 0 /* orbit_no*/,
@@ -377,6 +390,89 @@ void do_it(int epsilon, int n, int q,
 			} // end fname_report
 		} // if (f_tree)
 	} // if (f_orbit_of)
+
+
+	if (f_report) {
+		char fname[1000];
+		char title[1000];
+		const char *author = "Orbiter";
+		const char *extras_for_preamble = "";
+
+		sprintf(fname, "%s_report.tex", A->label);
+		sprintf(title, "The group $%s$", A->label_tex);
+
+		{
+			ofstream fp(fname);
+			latex_interface L;
+			//latex_head_easy(fp);
+			L.head(fp,
+				FALSE /* f_book */, TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
+				TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+				extras_for_preamble);
+
+			sims *H;
+			int *Elt;
+			longinteger_object go;
+
+			H = A->Strong_gens->create_sims(verbose_level);
+
+			Elt = NEW_int(A->elt_size_in_int);
+			H->group_order(go);
+
+			fp << "\\section{The Group $" << A->label_tex << "$}" << endl;
+
+
+			H->group_order(go);
+
+			fp << "\\noindent The order of the group $"
+					<< A->label_tex
+					<< "$ is " << go << "\\\\" << endl;
+
+			fp << "\\noindent The field ${\\mathbb F}_{"
+					<< F->q
+					<< "}$ :\\\\" << endl;
+			F->cheat_sheet(fp, verbose_level);
+
+
+			fp << "\\noindent The group acts on a set of size "
+					<< A->degree << "\\\\" << endl;
+
+			if (A->degree < 1000) {
+
+				A->print_points(fp);
+			}
+
+			//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
+
+
+			SG->print_generators_tex(fp);
+			//LG->report(fp, f_sylow, verbose_level);
+
+			A->report(fp, TRUE /*f_sims*/, H,
+					TRUE /* f_strong_gens */, A->Strong_gens, verbose_level);
+
+			A->report_basic_orbits(fp);
+
+			if (f_sylow) {
+				sylow_structure *Syl;
+
+				Syl = NEW_OBJECT(sylow_structure);
+				Syl->init(H, verbose_level);
+				Syl->report(fp);
+
+				A->report_conjugacy_classes_and_normalizers(fp,
+						verbose_level);
+			}
+
+
+			FREE_int(Elt);
+			FREE_OBJECT(H);
+			L.foot(fp);
+		}
+	}
+
 
 
 

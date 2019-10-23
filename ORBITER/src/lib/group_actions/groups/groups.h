@@ -1520,6 +1520,7 @@ public:
 	void init_subgroup_by_generators(action *A,
 		int nb_subgroup_gens, const char **subgroup_gens,
 		const char *subgroup_order_text,
+		vector_ge *&nice_gens,
 		int verbose_level);
 	sims *create_sims(int verbose_level);
 	sims *create_sims_in_different_action(action *A_given, 
