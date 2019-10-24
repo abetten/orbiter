@@ -241,7 +241,7 @@ void do_it(int epsilon, int n, int q,
 
 		char fname_tree_mask[1000];
 
-		sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d.layered_graph", epsilon, n, q);
+		sprintf(fname_tree_mask, "%s_orbit_%%d.layered_graph", A->label);
 
 		Sch->export_tree_as_layered_graph(0 /* orbit_no */,
 				fname_tree_mask,
@@ -267,7 +267,7 @@ void do_it(int epsilon, int n, int q,
 				verbose_level);
 		cout << "computing shallow Schreier tree done." << endl;
 
-		sprintf(fname_tree_mask, "O_%d_%d_%d_orbit_%%d_shallow.layered_graph", epsilon, n, q);
+		sprintf(fname_tree_mask, "%s_orbit_%%d_shallow.layered_graph", A->label);
 
 		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 				fname_tree_mask,
@@ -288,8 +288,8 @@ void do_it(int epsilon, int n, int q,
 			double scale = 0.35;
 			double line_width = 1.0;
 
-			sprintf(fname_tree, "O_%d_%d_%d_tree", epsilon, n, q);
-			sprintf(fname_report, "O_%d_%d_%d_orbit_report.tex", epsilon, n, q);
+			sprintf(fname_tree, "%s_tree", A->label);
+			sprintf(fname_report, "%s_orbit_report.tex", A->label);
 
 
 			Sch->draw_tree(fname_tree, 0 /* orbit_no*/,
@@ -363,7 +363,7 @@ void do_it(int epsilon, int n, int q,
 
 				char fname_tree2[1000];
 
-				sprintf(fname_tree2, "O_%d_%d_%d_tree2", epsilon, n, q);
+				sprintf(fname_tree2, "%s_tree2", A->label);
 				Sch2->draw_tree(fname_tree2, 0 /* orbit_no*/,
 						xmax, ymax, f_circletext, rad,
 						f_embedded, f_sideways,
