@@ -553,11 +553,11 @@ void int_vec_copy(int *from, int *to, int len);
 void lint_vec_copy(long int *from, long int *to, int len);
 void int_vec_swap(int *v1, int *v2, int len);
 void int_vec_delete_element_assume_sorted(int *v, int &len, int a);
-uchar *bitvector_allocate(int length);
-uchar *bitvector_allocate_and_coded_length(int length, int &coded_length);
-void bitvector_m_ii(uchar *bitvec, int i, int a);
-void bitvector_set_bit(uchar *bitvec, int i);
-int bitvector_s_i(uchar *bitvec, int i);
+uchar *bitvector_allocate(long int length);
+uchar *bitvector_allocate_and_coded_length(long int length, int &coded_length);
+void bitvector_m_ii(uchar *bitvec, long int i, int a);
+void bitvector_set_bit(uchar *bitvec, long int i);
+int bitvector_s_i(uchar *bitvec, long int i);
 // returns 0 or 1
 uint32_t int_vec_hash(int *data, int len);
 uint32_t lint_vec_hash(long int *data, int len);

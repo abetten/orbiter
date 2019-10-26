@@ -688,6 +688,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	if (f_v) {
+		cout << "L = " << L << endl;
+		cout << "L100 = " << L100 << endl;
 		cout << "allocating bitvector of length "
 				<< bitvector_length << " char" << endl;
 	}
@@ -720,7 +722,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 					t1 = Os.os_ticks();
 					dt = t1 - t0;
 					cout << "progress: "
-							<< 100. * (double) k / (double) L << " % dt=";
+							<< (double) k / (double) L100 << " % dt=";
 					Os.time_check_delta(cout, dt);
 					cout << endl;
 				}

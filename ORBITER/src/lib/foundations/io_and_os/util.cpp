@@ -233,9 +233,9 @@ void int_vec_delete_element_assume_sorted(int *v,
 	len--;
 }
 
-uchar *bitvector_allocate(int length)
+uchar *bitvector_allocate(long int length)
 {
-	int l, i;
+	long int l, i;
 	uchar *p;
 
 	l = (length + 7) >> 3;
@@ -247,9 +247,9 @@ uchar *bitvector_allocate(int length)
 }
 
 uchar *bitvector_allocate_and_coded_length(
-	int length, int &coded_length)
+	long int length, int &coded_length)
 {
-	int l, i;
+	long int l, i;
 	uchar *p;
 
 	l = (length + 7) >> 3;
@@ -261,9 +261,9 @@ uchar *bitvector_allocate_and_coded_length(
 	return p;
 }
 
-void bitvector_m_ii(uchar *bitvec, int i, int a)
+void bitvector_m_ii(uchar *bitvec, long int i, int a)
 {
-	int ii, bit;
+	long int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -279,9 +279,9 @@ void bitvector_m_ii(uchar *bitvec, int i, int a)
 		}
 }
 
-void bitvector_set_bit(uchar *bitvec, int i)
+void bitvector_set_bit(uchar *bitvec, long int i)
 {
-	int ii, bit;
+	long int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -291,10 +291,10 @@ void bitvector_set_bit(uchar *bitvec, int i)
 	x |= mask;
 }
 
-int bitvector_s_i(uchar *bitvec, int i)
+int bitvector_s_i(uchar *bitvec, long int i)
 // returns 0 or 1
 {
-	int ii, bit;
+	long int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
