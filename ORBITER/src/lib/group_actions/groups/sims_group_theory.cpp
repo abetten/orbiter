@@ -989,6 +989,46 @@ int sims::test_if_subgroup(sims *old_G, int verbose_level)
 	return ret;
 }
 
+int sims::find_element_with_exactly_n_fixpoints_in_given_action(
+		int *Elt, int nb_fixpoints, action *A_given, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_object go;
+	int i, order;
+	int goi;
+	int *cycle_type;
+
+	if (f_v) {
+		cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action" << endl;
+	}
+	cycle_type = NEW_int(A_given->degree);
+	group_order(go);
+	goi = go.as_int();
+	for (i = 0; i < goi; i++) {
+		element_unrank_int(i, Elt);
+		order = A_given->element_order_and_cycle_type(Elt, cycle_type);
+		if (cycle_type[0] == nb_fixpoints) {
+			if (f_v) {
+				cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action "
+						"found an element of order " << order
+						<< " and with exactly " << nb_fixpoints << " fixpoints" << endl;
+			}
+			break;
+		}
+	}
+	if (i == goi) {
+		cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action "
+				"could not find a suitable element" << endl;
+		exit(1);
+	}
+	FREE_int(Elt);
+	FREE_int(cycle_type);
+	if (f_v) {
+		cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action done" << endl;
+	}
+	return order;
+}
+
 void sims::table_of_group_elements_in_data_form(
 		int *&Table, int &len, int &sz, int verbose_level)
 {
