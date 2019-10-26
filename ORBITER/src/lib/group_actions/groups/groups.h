@@ -1633,6 +1633,8 @@ public:
 	void even_subgroup(int verbose_level);
 	void Sylow_subgroup(sims *S, int p, int verbose_level);
 	void init_single(action *A, int *Elt, int verbose_level);
+	void init_single_with_target_go(action *A,
+			int *Elt, int target_go, int verbose_level);
 	void init_trivial_group(action *A, int verbose_level);
 	void generators_for_the_monomial_group(action *A, 
 		matrix_group *Mtx, int verbose_level);

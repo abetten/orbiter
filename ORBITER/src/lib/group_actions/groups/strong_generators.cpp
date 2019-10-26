@@ -2694,7 +2694,7 @@ strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoi
 
 	if (f_v) {
 		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints" << endl;
-		}
+	}
 
 	sims *H;
 	int *Elt;
@@ -2703,7 +2703,7 @@ strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoi
 
 	if (f_v) {
 		cout << "finding element with n fixpoints, where n = " << nb_fixpoints << ":" << endl;
-		}
+	}
 
 	H = create_sims(verbose_level - 2);
 
@@ -2713,15 +2713,17 @@ strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoi
 			Elt, nb_fixpoints, A_given, verbose_level);
 
 	Sub_gens = NEW_OBJECT(strong_generators);
-	Sub_gens->init_single(A, Elt, verbose_level);
 	if (f_v) {
-		cout << "generators for the stabilizer "
-				"have been computed" << endl;
-		}
+		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints before init_single_with_target_go" << endl;
+	}
+	Sub_gens->init_single_with_target_go(A, Elt, order, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints after init_single_with_target_go" << endl;
+	}
 
 	if (f_v) {
 		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints done" << endl;
-		}
+	}
 	FREE_int(Elt);
 	FREE_OBJECT(H);
 	return Sub_gens;

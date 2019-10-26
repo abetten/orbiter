@@ -255,6 +255,26 @@ void strong_generators::init_single(action *A,
 		}
 }
 
+void strong_generators::init_single_with_target_go(action *A,
+		int *Elt, int target_go, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sims *S;
+
+	if (f_v) {
+		cout << "strong_generators::init_single_with_target_go" << endl;
+		}
+	S = A->create_sims_from_single_generator_without_target_group_order(
+		Elt, verbose_level);
+	init_from_sims(S, verbose_level);
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "strong_generators::init_single_with_target_go "
+				"done" << endl;
+		}
+}
+
 void strong_generators::init_trivial_group(action *A,
 		int verbose_level)
 {
