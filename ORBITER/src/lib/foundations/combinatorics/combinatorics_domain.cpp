@@ -972,7 +972,8 @@ long int combinatorics_domain::ij2k_lint(long int i, long int j, long int n)
 		return ij2k_lint(j, i, n);
 	}
 	else {
-		return ((n - i) * i + ((i * (i - 1)) >> 1) + j - i - 1);
+		return ((long int) (n - i) * (long int) i + (((long int) i * (long int) (i - 1)) >> 1)
+				+ (long int) j - (long int) i - (long int) 1);
 	}
 }
 
