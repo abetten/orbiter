@@ -536,6 +536,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		bitvector_adjacency[i] = 0;
 	}
 
+	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		a = Orbits_classified->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
@@ -550,7 +551,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l2 != orbit_length" << endl;
 				exit(1);
 			}
-			k = Combi.ij2k_lint(i, j, nb_points);
+			//k = Combi.ij2k_lint(i, j, nb_points);
 
 #if 1
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
@@ -575,6 +576,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				bitvector_m_ii(bitvector_adjacency, k, 0);
 				// not needed becaude we initialize with zero.
 			}
+		k++;
 		}
 	}
 	if (f_v) {
@@ -708,6 +710,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 
 	t0 = Os.os_ticks();
+	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		a = my_orbits_classified->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
@@ -722,7 +725,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified l2 != orbit_length" << endl;
 				exit(1);
 			}
-			k = Combi.ij2k_lint(i, j, nb_points);
+			//k = Combi.ij2k_lint(i, j, nb_points);
 
 #if 1
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
@@ -747,6 +750,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 				bitvector_m_ii(bitvector_adjacency, k, 0);
 				// not needed because we initialize with zero.
 			}
+		k++;
 		}
 	}
 	if (f_v) {
