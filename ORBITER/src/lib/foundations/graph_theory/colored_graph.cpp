@@ -828,13 +828,21 @@ void colored_graph::load(const char *fname, int verbose_level)
 	graph_theory_domain Graph;
 	file_io Fio;
 
-
+	if (f_v) {
+		cout << "colored_graph::load" << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph::load before Graph.load_colored_graph" << endl;
+	}
 	Graph.load_colored_graph(fname,
 		nb_points /*nb_vertices*/, nb_colors /* nb_colors */, 
 		points /*vertex_labels*/, point_color /*vertex_colors*/, 
 		user_data, user_data_size, 
 		bitvector_adjacency, bitvector_length,
 		verbose_level);
+	if (f_v) {
+		cout << "colored_graph::load after Graph.load_colored_graph" << endl;
+	}
 
 	f_ownership_of_bitvec = TRUE;
 

@@ -433,7 +433,7 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, L;
+	long int i, L;
 	//file_io Fio;
 
 	if (f_v) {
@@ -501,7 +501,7 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 			}
 
 
-		L = (nb_vertices * (nb_vertices - 1)) >> 1;
+		L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
 
 		bitvector_length = (L + 7) >> 3;
 
@@ -555,7 +555,8 @@ void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
 	int f_colors, int nb_colors, int *point_color,
 	int f_point_labels, int *point_label)
 {
-	int i, j, d, aij = 0;
+	long int i, j, h, d;
+	int aij = 0;
     int w;
 	number_theory_domain NT;
 	combinatorics_domain Combi;
@@ -583,22 +584,20 @@ void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
 				aij = Adj[i * nb_points + j];
 				}
 			else if (f_has_adjacency_list) {
-				int h;
 				if (i < j) {
-					h = Combi.ij2k(i, j, nb_points);
+					h = Combi.ij2k_lint(i, j, nb_points);
 					}
 				else {
-					h = Combi.ij2k(j, i, nb_points);
+					h = Combi.ij2k_lint(j, i, nb_points);
 					}
 				aij = adj_list[h];
 				}
 			else if (f_has_bitvector) {
-				int h;
 				if (i < j) {
-					h = Combi.ij2k(i, j, nb_points);
+					h = Combi.ij2k_lint(i, j, nb_points);
 					}
 				else {
-					h = Combi.ij2k(j, i, nb_points);
+					h = Combi.ij2k_lint(j, i, nb_points);
 					}
 				aij = bitvector_s_i(bitvector_adjacency, h);
 				}
@@ -624,22 +623,20 @@ void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
 				aij = Adj[i * nb_points + j];
 				}
 			else if (f_has_adjacency_list) {
-				int h;
 				if (i < j) {
-					h = Combi.ij2k(i, j, nb_points);
+					h = Combi.ij2k_lint(i, j, nb_points);
 					}
 				else {
-					h = Combi.ij2k(j, i, nb_points);
+					h = Combi.ij2k_lint(j, i, nb_points);
 					}
 				aij = adj_list[h];
 				}
 			else if (f_has_bitvector) {
-				int h;
 				if (i < j) {
-					h = Combi.ij2k(i, j, nb_points);
+					h = Combi.ij2k_lint(i, j, nb_points);
 					}
 				else {
-					h = Combi.ij2k(j, i, nb_points);
+					h = Combi.ij2k_lint(j, i, nb_points);
 					}
 				aij = bitvector_s_i(bitvector_adjacency, h);
 				}

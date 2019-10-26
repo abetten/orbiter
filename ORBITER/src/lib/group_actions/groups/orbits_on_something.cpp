@@ -495,7 +495,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	}
 	int nb_points;
 	uchar *bitvector_adjacency;
-	long int bitvector_length_in_bits;
+	//long int bitvector_length_in_bits;
 	long int bitvector_length;
 	long int L, L100;
 	long int i, j, k;
@@ -504,6 +504,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	int *orbit1;
 	int *orbit2;
 	int l1, l2;
+	int t0, t1, dt;
+	os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points = Orbits_classified->Set_size[type_idx];
@@ -512,6 +514,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				"nb_points=" << nb_points << endl;
 	}
 
+	t0 = Os.os_ticks();
+
 	orbit1 = NEW_int(orbit_length);
 	orbit2 = NEW_int(orbit_length);
 
@@ -519,7 +523,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	L100 = L / 100 + 1;
 
-	bitvector_length_in_bits = L;
+	//bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	if (f_v) {
 		cout << "L = " << L << endl;
@@ -552,8 +556,12 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
 			if (L100) {
 				if ((k % L100) == 0) {
+					t1 = Os.os_ticks();
+					dt = t1 - t0;
 					cout << "progress: "
-							<< (double) k / (double) L100 << "%, " << "i=" << i << " j=" << j << " k=" << k << endl;
+							<< (double) k / (double) L100 << "%, " << "i=" << i << " j=" << j << " k=" << k << ", dt=";
+					Os.time_check_delta(cout, dt);
+					cout << endl;
 				}
 			}
 #endif
@@ -660,7 +668,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 	int nb_points;
 	uchar *bitvector_adjacency;
-	long int bitvector_length_in_bits;
+	//long int bitvector_length_in_bits;
 	long int bitvector_length;
 	long int L, L100;
 	long int i, j, k;
@@ -686,7 +694,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 	L100 = L / 100;
 
-	bitvector_length_in_bits = L;
+	//bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	if (f_v) {
 		cout << "L = " << L << endl;
