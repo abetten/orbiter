@@ -659,10 +659,11 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 	int nb_points;
 	uchar *bitvector_adjacency;
-	int bitvector_length_in_bits;
-	int bitvector_length;
-	int L, L100;
-	int i, j, a, b, k;
+	long int bitvector_length_in_bits;
+	long int bitvector_length;
+	long int L, L100;
+	long int i, j, k;
+	int a, b;
 	combinatorics_domain Combi;
 	int *orbit1;
 	int *orbit2;
@@ -710,7 +711,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified l2 != orbit_length" << endl;
 				exit(1);
 			}
-			k = Combi.ij2k(i, j, nb_points);
+			k = Combi.ij2k_lint(i, j, nb_points);
 
 #if 1
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
