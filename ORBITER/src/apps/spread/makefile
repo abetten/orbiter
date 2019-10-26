@@ -1,9 +1,15 @@
-SRC=../../../../ORBITER/src
+SRC=../..
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -I$(SRC)/lib 
+CPPFLAGS = -Wall -I$(SRC)/lib -I../../lib/foundations
+
+INCLUDES=\
+			-I$(SRC)/lib -I../../lib/foundations \
+			-I$(SRC)/lib -I../../lib/foundations/CUDA/
+			
 LIB = $(SRC)/lib/liborbiter.a
-LFLAGS = -lm
+#LFLAGS = -lm 
+LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 
