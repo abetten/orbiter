@@ -355,7 +355,7 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 	int nb_vertices, int nb_colors,
 	int *points, int *point_color,
 	int *data, int data_sz,
-	uchar *bitvector_adjacency, int bitvector_length,
+	uchar *bitvector_adjacency, long int bitvector_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -367,6 +367,7 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 		cout << "save_colored_graph fname=" << fname << endl;
 		cout << "save_colored_graph nb_vertices=" << nb_vertices << endl;
 		cout << "save_colored_graph nb_colors=" << nb_colors << endl;
+		cout << "save_colored_graph bitvector_length=" << bitvector_length << endl;
 		//cout << "points:";
 		//int_vec_print(cout, points, nb_vertices);
 		//cout << endl;
@@ -429,7 +430,7 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 	int &nb_vertices, int &nb_colors,
 	int *&vertex_labels, int *&vertex_colors,
 	int *&user_data, int &user_data_size,
-	uchar *&bitvector_adjacency, int &bitvector_length,
+	uchar *&bitvector_adjacency, long int &bitvector_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
