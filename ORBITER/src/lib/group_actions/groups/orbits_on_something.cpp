@@ -498,9 +498,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	long int bitvector_length_in_bits;
 	long int bitvector_length;
 	long int L, L100;
-	long int i, j;
+	long int i, j, k;
 	int a, b;
-	long int k;
 	combinatorics_domain Combi;
 	int *orbit1;
 	int *orbit2;
@@ -516,13 +515,15 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	orbit1 = NEW_int(orbit_length);
 	orbit2 = NEW_int(orbit_length);
 
-	L = (nb_points * (nb_points - 1)) >> 1;
+	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
 	L100 = L / 100 + 1;
 
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	if (f_v) {
+		cout << "L = " << L << endl;
+		cout << "L100 = " << L100 << endl;
 		cout << "allocating bitvector of length "
 				<< bitvector_length << " char" << endl;
 	}
@@ -681,7 +682,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	orbit1 = NEW_int(orbit_length);
 	orbit2 = NEW_int(orbit_length);
 
-	L = (nb_points * (nb_points - 1)) >> 1;
+	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
 	L100 = L / 100;
 
