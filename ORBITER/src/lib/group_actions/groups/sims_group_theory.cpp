@@ -1012,6 +1012,8 @@ int sims::find_element_with_exactly_n_fixpoints_in_given_action(
 				cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action "
 						"found an element of order " << order
 						<< " and with exactly " << nb_fixpoints << " fixpoints" << endl;
+				cout << "Elt=" << endl;
+				A->element_print(Elt, cout);
 			}
 			break;
 		}
@@ -1021,7 +1023,6 @@ int sims::find_element_with_exactly_n_fixpoints_in_given_action(
 				"could not find a suitable element" << endl;
 		exit(1);
 	}
-	FREE_int(Elt);
 	FREE_int(cycle_type);
 	if (f_v) {
 		cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action done" << endl;

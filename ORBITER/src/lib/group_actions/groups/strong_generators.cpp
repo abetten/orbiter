@@ -2715,6 +2715,8 @@ strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoi
 	Sub_gens = NEW_OBJECT(strong_generators);
 	if (f_v) {
 		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints before init_single_with_target_go" << endl;
+		cout << "Elt=" << endl;
+		A->element_print(Elt, cout);
 	}
 	Sub_gens->init_single_with_target_go(A, Elt, order, verbose_level);
 	if (f_v) {
