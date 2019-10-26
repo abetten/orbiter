@@ -231,8 +231,8 @@ public:
 	int nb_points;
 	int nb_colors;
 	
-	int bitvector_length;
-	int L;
+	long int bitvector_length;
+	long int L;
 	
 	int *points; // [nb_points]
 	int *point_color; // [nb_points]
@@ -549,13 +549,13 @@ public:
 		int nb_vertices, int nb_colors,
 		int *vertex_labels, int *vertex_colors,
 		int *data, int data_sz,
-		uchar *bitvector_adjacency, int bitvector_length,
+		uchar *bitvector_adjacency, long int bitvector_length,
 		int verbose_level);
 	void load_colored_graph(const char *fname,
 		int &nb_vertices, int &nb_colors,
 		int *&vertex_labels, int *&vertex_colors,
 		int *&user_data, int &user_data_size,
-		uchar *&bitvector_adjacency, int &bitvector_length,
+		uchar *&bitvector_adjacency, long int &bitvector_length,
 		int verbose_level);
 	void write_colored_graph(std::ofstream &ost,
 		char *label,
