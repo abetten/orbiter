@@ -37,6 +37,10 @@ int main(int argc, const char **argv)
 	int f_lift_case = FALSE;
 	int lift_case_level = 0;
 	int lift_case = 0;
+	int f_sylow_select = FALSE;
+	int sylow_select_prime = 0;
+	int f_cyclic_subgroup_with_n_fixpoints = FALSE;
+	int cyclic_subgroup_with_n_fixpoints = 0;
 	int f_read_solution_file = FALSE;
 	const char *solution_file_name = NULL;
 	os_interface Os;
@@ -87,6 +91,16 @@ int main(int argc, const char **argv)
 			f_read_solution_file = TRUE;
 			solution_file_name = argv[++i];
 			cout << "-read_solution_file " << solution_file_name << endl;
+		}
+		else if (strcmp(argv[i], "-sylow_select") == 0) {
+			f_sylow_select = TRUE;
+			sylow_select_prime = atoi(argv[++i]);
+			cout << "-sylow_select " << sylow_select_prime << endl;
+		}
+		else if (strcmp(argv[i], "-cyclic_subgroup_with_n_fixpoints") == 0) {
+			f_cyclic_subgroup_with_n_fixpoints = TRUE;
+			cyclic_subgroup_with_n_fixpoints = atoi(argv[++i]);
+			cout << "-cyclic_subgroup_with_n_fixpoints " << cyclic_subgroup_with_n_fixpoints << endl;
 		}
 	}
 	if (!f_design) {
@@ -274,7 +288,14 @@ int main(int argc, const char **argv)
 #else
 		int sylow_select;
 
-		for (sylow_select = 1; sylow_select < Syl->nb_primes; sylow_select++) {
+		for (sylow_select = 0; sylow_select < Syl->nb_primes; sylow_select++) {
+
+			if (f_sylow_select) {
+				if (Syl->primes[sylow_select] != sylow_select_prime) {
+					cout << "skipping this prime because of -sylow_select" << endl;
+					continue;
+				}
+			}
 			cout << "processing starter case with Sylow subgroup "
 					<< sylow_select << " / " << Syl->nb_primes << " of stabilizer, "
 					"for p=" << Syl->primes[sylow_select] << endl;
@@ -289,7 +310,18 @@ int main(int argc, const char **argv)
 			int *Large_sets;
 			int nb_large_sets;
 
-			LS->process_starter_case(Rep, Syl->Sub[sylow_select].SG,
+			strong_generators *SG1;
+
+			if (f_cyclic_subgroup_with_n_fixpoints) {
+				cout << "finding cyclic subgroup with n fixpoints, for n = "
+						<< cyclic_subgroup_with_n_fixpoints << endl;
+				SG1 = Syl->Sub[sylow_select].SG->find_cyclic_subgroup_with_exactly_n_fixpoints(
+						cyclic_subgroup_with_n_fixpoints, A, verbose_level);
+			}
+			else {
+				SG1 = Syl->Sub[sylow_select].SG;
+			}
+			LS->process_starter_case(Rep, SG1,
 					prefix, group_label, orbit_length,
 					f_read_solution_file, solution_file_name,
 					Large_sets, nb_large_sets,

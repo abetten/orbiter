@@ -1344,6 +1344,8 @@ public:
 	int test_if_in_set_stabilizer(action *A,
 		int *set, int size, int verbose_level);
 	int test_if_subgroup(sims *old_G, int verbose_level);
+	int find_element_with_exactly_n_fixpoints_in_given_action(
+			int *Elt, int nb_fixpoints, action *A_given, int verbose_level);
 	void table_of_group_elements_in_data_form(int *&Table,
 		int &len, int &sz, int verbose_level);
 	void regular_representation(int *Elt, int *perm,
@@ -1598,6 +1600,8 @@ public:
 	void test_if_set_is_invariant_under_given_action(action *A_given, 
 		int *set, int set_sz, int verbose_level);
 	strong_generators *point_stabilizer(int pt, int verbose_level);
+	strong_generators *find_cyclic_subgroup_with_exactly_n_fixpoints(
+			int nb_fixpoints, action *A_given, int verbose_level);
 	void make_element_which_moves_a_point_from_A_to_B(action *A_given, 
 		int pt_A, int pt_B, int *Elt, int verbose_level);
 	void export_group_to_magma_and_copy_to_latex(

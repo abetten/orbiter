@@ -2687,6 +2687,45 @@ strong_generators *strong_generators::point_stabilizer(
 	return Stab_gens;
 }
 
+strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints(
+		int nb_fixpoints, action *A_given, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints" << endl;
+		}
+
+	sims *H;
+	int *Elt;
+	int order;
+	strong_generators *Sub_gens;
+
+	if (f_v) {
+		cout << "finding element with n fixpoints, where n = " << nb_fixpoints << ":" << endl;
+		}
+
+	H = create_sims(verbose_level - 2);
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	order = H->find_element_with_exactly_n_fixpoints_in_given_action(
+			Elt, nb_fixpoints, A_given, verbose_level);
+
+	Sub_gens = NEW_OBJECT(strong_generators);
+	Sub_gens->init_single(A, Elt, verbose_level);
+	if (f_v) {
+		cout << "generators for the stabilizer "
+				"have been computed" << endl;
+		}
+
+	if (f_v) {
+		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints done" << endl;
+		}
+	FREE_int(Elt);
+	FREE_OBJECT(H);
+	return Sub_gens;
+}
 
 
 void strong_generators::make_element_which_moves_a_point_from_A_to_B(
