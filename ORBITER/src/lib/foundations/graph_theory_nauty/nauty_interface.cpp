@@ -51,8 +51,8 @@ using namespace std;
 
 typedef unsigned char uchar;
 
-int bitvector_s_i(uchar *bitvec, int i);
-int callback_ij2k(int i, int j, int n);
+int bitvector_s_i(uchar *bitvec, long int i);
+long int callback_ij2k(long int i, long int j, int n);
 
 static void nauty_interface_allocate_data(int n);
 static void nauty_interface_free_data();

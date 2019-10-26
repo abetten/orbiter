@@ -184,7 +184,6 @@ public:
 };
 
 // combinatorics.cpp:
-int callback_ij2k(int i, int j, int n);
-
+long int callback_ij2k(long int i, long int j, int n);
 
 }}
