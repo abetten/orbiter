@@ -2196,11 +2196,11 @@ void combinatorics_domain::compute_adjacency_matrix(
 //##############################################################################
 
 
-int callback_ij2k(int i, int j, int n)
+long int callback_ij2k(long int i, long int j, int n)
 {
 	combinatorics_domain Combi;
 
-	return Combi.ij2k(i, j, n);
+	return Combi.ij2k_lint(i, j, n);
 }
 
 }}
