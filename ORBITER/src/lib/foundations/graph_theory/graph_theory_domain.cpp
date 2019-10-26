@@ -504,6 +504,10 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 		L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
 
 		bitvector_length = (L + 7) >> 3;
+		if (f_v) {
+			cout << "load_colored_graph bitvector_length="
+					<< bitvector_length << endl;
+			}
 
 		fp.read((char *) &user_data_size, sizeof(int));
 		if (f_v) {
@@ -532,6 +536,9 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 				}
 			}
 
+		if (f_v) {
+			cout << "load_colored_graph before allocating bitvector_adjacency" << endl;
+			}
 		bitvector_adjacency = NEW_uchar(bitvector_length);
 		fp.read((char *) bitvector_adjacency, bitvector_length);
 	}
