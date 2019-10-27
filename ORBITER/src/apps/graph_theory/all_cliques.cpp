@@ -135,7 +135,7 @@ int main(int argc, char **argv)
 	else {
 		if (f_all_cliques_of_size) {
 			int nb_sol;
-			int decision_step_counter;
+			unsigned long int decision_step_counter;
 			
 			cout << "computing all cliques of size " << clique_size << endl;
 			cout << "before CG->all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file" << endl;

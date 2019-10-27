@@ -275,7 +275,7 @@ void clique_finder_control::all_cliques_weighted(colored_graph *CG,
 	int target_depth1;
 	int target_depth2;
 	int nb_cliques_in_subgraph;
-	int decision_step_counter;
+	unsigned long int decision_step_counter;
 	int nb_solutions_total;
 	int *Sol;
 

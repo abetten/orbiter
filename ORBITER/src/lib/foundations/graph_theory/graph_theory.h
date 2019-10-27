@@ -197,8 +197,8 @@ public:
 	int f_decision_nodes_only;
 	const char *fname_tree;
 	int print_interval;
-	int nb_search_steps;
-	int nb_decision_steps;
+	unsigned long int nb_search_steps;
+	unsigned long int nb_decision_steps;
 	int nb_sol;
 	int dt;
 
@@ -291,20 +291,21 @@ public:
 	void all_cliques_of_size_k_ignore_colors(
 		int target_depth,
 		int *&Sol, int &nb_solutions,
-		int &decision_step_counter,
+		unsigned long int &decision_step_counter,
 		int verbose_level);
 	void all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 		int target_depth, 
 		const char *fname, 
 		int f_restrictions, int *restrictions, 
-		int &nb_sol, int &decision_step_counter, 
+		int &nb_sol, unsigned long int &decision_step_counter,
 		int verbose_level);
 	void all_rainbow_cliques(std::ofstream *fp, int f_output_solution_raw,
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
 		int f_tree, int f_decision_nodes_only, const char *fname_tree,  
 		int print_interval, 
-		int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+		unsigned long int &search_steps, unsigned long int &decision_steps,
+		int &nb_sol, int &dt,
 		int verbose_level);
 	void all_rainbow_cliques_with_additional_test_function(std::ofstream *fp,
 		int f_output_solution_raw, 
@@ -323,7 +324,8 @@ public:
 		void (*call_back_print_current_choice)(clique_finder *CF, 
 			int depth, void *user_data, int verbose_level), 
 		void *user_data, 
-		int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+		unsigned long int &search_steps, unsigned long int &decision_steps,
+		int &nb_sol, int &dt,
 		int verbose_level);
 	void draw_on_circle(char *fname, 
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
@@ -519,7 +521,8 @@ public:
 		int f_restrictions, int *restrictions,
 		int f_tree, int f_decision_nodes_only, const char *fname_tree,
 		int print_interval,
-		int &search_steps, int &decision_steps, int &nb_sol, int &dt,
+		unsigned long int &search_steps, unsigned long int &decision_steps,
+		int &nb_sol, int &dt,
 		int verbose_level);
 	void colored_graph_all_cliques_list_of_cases(
 		int *list_of_cases, int nb_cases,

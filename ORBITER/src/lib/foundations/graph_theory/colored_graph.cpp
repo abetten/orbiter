@@ -737,15 +737,15 @@ void colored_graph::init_adjacency_upper_triangle(
 	bitvec = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvec[i] = 0;
-		}
+	}
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
 			k = Combi.ij2k_lint(i, j, nb_points);
 			if (Adj[k]) {
 				bitvector_m_ii(bitvec, k, 1);
-				}
 			}
 		}
+	}
 	init(nb_points, nb_colors, 
 		colors, bitvec, TRUE /* f_ownership_of_bitvec */, 
 		verbose_level);
@@ -754,7 +754,7 @@ void colored_graph::init_adjacency_upper_triangle(
 
 	if (f_v) {
 		cout << "colored_graph::init_adjacency_upper_triangle done" << endl;
-		}
+	}
 
 }
 
@@ -767,7 +767,7 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 	if (f_v) {
 		cout << "colored_graph::init_adjacency_no_colors" << endl;
 		cout << "nb_points=" << nb_points << endl;
-		}
+	}
 	vertex_colors = NEW_int(nb_points);
 	int_vec_zero(vertex_colors, nb_points);
 
@@ -777,7 +777,7 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 	FREE_int(vertex_colors);
 	if (f_v) {
 		cout << "colored_graph::init_adjacency_no_colors done" << endl;
-		}
+	}
 }
 
 void colored_graph::init_user_data(int *data,
@@ -788,18 +788,13 @@ void colored_graph::init_user_data(int *data,
 	
 	if (f_v) {
 		cout << "colored_graph::init_user_data" << endl;
-		}
+	}
 	user_data_size = data_size;
 	user_data = NEW_int(data_size);
 	int_vec_copy(data, user_data, data_size);
-#if 0
-	for (i = 0; i < data_size; i++) {
-		user_data[i] = data[i];
-		}
-#endif
 	if (f_v) {
 		cout << "colored_graph::init_user_data done" << endl;
-		}
+	}
 }
 
 void colored_graph::save(const char *fname, int verbose_level)
@@ -809,7 +804,7 @@ void colored_graph::save(const char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "colored_graph::save" << endl;
-		}
+	}
 
 	Graph.save_colored_graph(fname, nb_points, nb_colors,
 		points, point_color, 
@@ -819,7 +814,7 @@ void colored_graph::save(const char *fname, int verbose_level)
 	
 	if (f_v) {
 		cout << "colored_graph::save done" << endl;
-		}
+	}
 }
 
 void colored_graph::load(const char *fname, int verbose_level)
@@ -853,13 +848,13 @@ void colored_graph::load(const char *fname, int verbose_level)
 	if (f_v) {
 		cout << "colored_graph::load Read file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
-		}
+	}
 }
 
 void colored_graph::all_cliques_of_size_k_ignore_colors(
 	int target_depth,
 	int *&Sol, int &nb_solutions,
-	int &decision_step_counter,
+	unsigned long int &decision_step_counter,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -869,7 +864,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_"
 				"ignore_colors" << endl;
-		}
+	}
 	CF = NEW_OBJECT(clique_finder);
 
 	CF->init("", nb_points, 
@@ -895,7 +890,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_"
 				"ignore_colors done" << endl;
-		}
+	}
 }
 
 void
@@ -903,7 +898,7 @@ colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 	int target_depth,
 	const char *fname, 
 	int f_restrictions, int *restrictions, 
-	int &nb_sol, int &decision_step_counter, 
+	int &nb_sol, unsigned long int &decision_step_counter,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -972,7 +967,8 @@ void colored_graph::all_rainbow_cliques(ofstream *fp,
 	int f_restrictions, int *restrictions, 
 	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
 	int print_interval, 
-	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	unsigned long int &search_steps, unsigned long int &decision_steps,
+	int &nb_sol, int &dt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1021,7 +1017,8 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(
 	void (*call_back_print_current_choice)(clique_finder *CF, 
 		int depth, void *user_data, int verbose_level), 
 	void *user_data, 
-	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	unsigned long int &search_steps, unsigned long int &decision_steps,
+	int &nb_sol, int &dt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

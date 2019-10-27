@@ -216,7 +216,7 @@ int main(int argc, char **argv)
 			//char fname_sol[1000];
 			//char fname_draw[1000];
 			int nb_sol;
-			int decision_step_counter;
+			unsigned long int decision_step_counter;
 
 
 
@@ -327,7 +327,8 @@ int main(int argc, char **argv)
 				cout << "finding rainbow cliques, "
 					"calling colored_graph_all_cliques" << endl;
 
-				int search_steps, decision_steps, nb_sol, dt;
+				unsigned long int search_steps, decision_steps;
+				int nb_sol, dt;
 
 
 				Graph.colored_graph_all_cliques(fname, f_output_solution_raw,
