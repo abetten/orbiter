@@ -70,8 +70,8 @@ public:
 
 	int *current_clique; // [max_depth]
 
-	unsigned int counter; // number of backtrack nodes
-	unsigned int decision_step_counter;
+	unsigned long int counter; // number of backtrack nodes
+	unsigned long int decision_step_counter;
 		// number of backtrack nodes that are decision nodes
 
 	// solution storage:
@@ -113,9 +113,10 @@ public:
 	void *call_back_clique_found_data2;
 	
 	
-	void open_tree_file(const char *fname_base, 
-		int f_decision_nodes_only);
-	void close_tree_file();
+	clique_finder();
+	~clique_finder();
+	void null();
+	void free();
 	void init(const char *label, int n, 
 		int target_depth, 
 		int f_has_adj_list, int *adj_list_coded, 
@@ -124,21 +125,25 @@ public:
 		int f_maxdepth, int maxdepth, 
 		int f_store_solutions, 
 		int verbose_level);
-	void delinearize_adjacency_list(int verbose_level);
-	void allocate_bitmatrix(int verbose_level);
 	void init_restrictions(int *restrictions, int verbose_level);
-	clique_finder();
-	~clique_finder();
-	void null();
-	void free();
 	void init_point_labels(int *pt_labels);
 	void init_suspicous_points(int nb, int *point_list);
+	void backtrack_search(int depth, int verbose_level);
+	int solve_decision_problem(int depth, int verbose_level);
+		// returns TRUE if we found a solution
+	void backtrack_search_not_recursive(int verbose_level);
+	void open_tree_file(const char *fname_base,
+		int f_decision_nodes_only);
+	void close_tree_file();
+	void get_solutions(int *&Sol, int &nb_solutions, int &clique_sz,
+		int verbose_level);
 	void print_suspicous_points();
 	void print_set(int size, int *set);
 	void print_suspicous_point_subset(int size, int *set);
-	void log_position_and_choice(int depth, int counter_save, 
-		int counter);
-	void log_position(int depth, int counter_save, int counter);
+	void log_position_and_choice(int depth,
+			unsigned long int  counter_save, unsigned long int counter);
+	void log_position(int depth,
+			unsigned long int  counter_save, unsigned long int counter);
 	void log_choice(int depth);
 	void swap_point(int idx1, int idx2);
 	void degree_of_point_statistic(int depth, int nb_points, 
@@ -152,12 +157,8 @@ public:
 	void write_entry_to_tree_file(int depth, int verbose_level);
 	void m_iji(int i, int j, int a);
 	int s_ij(int i, int j);
-	void backtrack_search(int depth, int verbose_level);
-	int solve_decision_problem(int depth, int verbose_level);
-		// returns TRUE if we found a solution
-	void get_solutions(int *&Sol, int &nb_solutions, int &clique_sz, 
-		int verbose_level);
-	void backtrack_search_not_recursive(int verbose_level);
+	void delinearize_adjacency_list(int verbose_level);
+	void allocate_bitmatrix(int verbose_level);
 };
 
 void all_cliques_of_given_size(int *Adj, int nb_pts, int clique_sz, 
@@ -762,8 +763,8 @@ public:
 		int f_tree, int f_decision_nodes_only, 
 		const char *fname_tree,  
 		int print_interval, 
-		int &search_steps, 
-		int &decision_steps, int &nb_sol, int &dt, 
+		unsigned long int &search_steps,
+		unsigned long int &decision_steps, int &nb_sol, int &dt,
 		int verbose_level);
 	void search_with_additional_test_function(colored_graph *graph, 
 			std::ofstream *fp_sol, int f_output_solution_raw,
@@ -784,7 +785,7 @@ public:
 		void (*call_back_print_current_choice)(clique_finder *CF, 
 			int depth, void *user_data, int verbose_level), 
 		void *user_data, 
-		int &search_steps, int &decision_steps, 
+		unsigned long int &search_steps, unsigned long int &decision_steps,
 		int &nb_sol, int &dt, 
 		int verbose_level);
 	int find_candidates(
