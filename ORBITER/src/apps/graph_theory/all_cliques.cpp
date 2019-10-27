@@ -116,7 +116,9 @@ int main(int argc, char **argv)
 
 	CG = NEW_OBJECT(colored_graph);
 
+	cout << "all_cliques before CG->load" << endl;
 	CG->load(fname, verbose_level);
+	cout << "all_cliques after CG->load" << endl;
 
 
 
@@ -135,12 +137,15 @@ int main(int argc, char **argv)
 			int nb_sol;
 			int decision_step_counter;
 			
+			cout << "computing all cliques of size " << clique_size << endl;
+			cout << "before CG->all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file" << endl;
 			CG->all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 				clique_size /* target_depth */, 
 				solution_fname, 
 				FALSE /* f_restrictions */, NULL /* int *restrictions */, 
 				nb_sol, decision_step_counter, 
-				verbose_level - 2);
+				verbose_level - 1);
+			cout << "after CG->all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file" << endl;
 
 			cout << "Written file " << solution_fname << " of size "
 					<< Fio.file_size(solution_fname) << endl;
