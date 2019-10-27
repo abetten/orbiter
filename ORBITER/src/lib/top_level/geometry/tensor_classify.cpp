@@ -18,7 +18,7 @@ namespace top_level {
 
 tensor_classify::tensor_classify()
 {
-	argc= 0;
+	argc = 0;
 	argv = NULL;
 	nb_factors = 0;
 	vector_space_dimension = 0;

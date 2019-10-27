@@ -211,7 +211,7 @@ public:
 	void compute_adjacency_list_fast(int first_point_of_starter,
 		int *points, int nb_points, int *point_color,
 		uchar *&bitvector_adjacency,
-		int &bitvector_length_in_bits, int &bitvector_length,
+		long int &bitvector_length_in_bits, long int &bitvector_length,
 		int verbose_level);
 	void compute_colors(int orbit_at_level,
 		int *starter, int starter_sz,

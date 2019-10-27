@@ -28,8 +28,7 @@ all: analyze_projective_code.out  \
 	points.out \
 	polar.out \
 	process.out\
-	process_PG.out\
-	simeon.out 
+	process_PG.out
 
 
 

@@ -20,18 +20,9 @@ namespace top_level {
 
 surface_with_action::surface_with_action()
 {
-	null();
-}
-
-surface_with_action::~surface_with_action()
-{
-	freeself();
-}
-
-void surface_with_action::null()
-{
 	q = 0;
 	F = NULL;
+	f_semilinear = FALSE;
 	Surf = NULL;
 	A = NULL;
 	A2 = NULL;
@@ -43,34 +34,45 @@ void surface_with_action::null()
 
 	Recoordinatize = NULL;
 	regulus = NULL;
+	regulus_size = 0;
+	//null();
+}
+
+surface_with_action::~surface_with_action()
+{
+	freeself();
+}
+
+void surface_with_action::null()
+{
 }
 
 void surface_with_action::freeself()
 {
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 	if (A2) {
 		FREE_OBJECT(A2);
-		}
+	}
 	if (S) {
 		FREE_OBJECT(S);
-		}
+	}
 	if (Elt1) {
 		FREE_int(Elt1);
-		}
+	}
 	if (AonHPD_3_4) {
 		FREE_OBJECT(AonHPD_3_4);
-		}
+	}
 	if (Classify_trihedral_pairs) {
 		FREE_OBJECT(Classify_trihedral_pairs);
-		}
+	}
 	if (Recoordinatize) {
 		FREE_OBJECT(Recoordinatize);
-		}
+	}
 	if (regulus) {
 		FREE_int(regulus);
-		}
+	}
 	null();
 }
 
@@ -81,7 +83,7 @@ void surface_with_action::init(surface_domain *Surf,
 
 	if (f_v) {
 		cout << "surface_with_action::init" << endl;
-		}
+	}
 	surface_with_action::Surf = Surf;
 	surface_with_action::f_semilinear = f_semilinear;
 	F = Surf->F;
@@ -95,14 +97,14 @@ void surface_with_action::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"before AonHPD_3_4->init" << endl;
-		}
+	}
 	AonHPD_3_4->init(A, Surf->Poly3_4, verbose_level);
 	
 	Classify_trihedral_pairs = NEW_OBJECT(classify_trihedral_pairs);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"before Classify_trihedral_pairs->init" << endl;
-		}
+	}
 	Classify_trihedral_pairs->init(this, verbose_level);
 
 	Recoordinatize = NEW_OBJECT(recoordinatize);
@@ -110,7 +112,7 @@ void surface_with_action::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"before Recoordinatize->init" << endl;
-		}
+	}
 	Recoordinatize->init(4 /*n*/, 2 /*k*/,
 		F, Surf->Gr, A, A2,
 		TRUE /* f_projective */, f_semilinear, 
@@ -121,22 +123,22 @@ void surface_with_action::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "surface_with_action::init after "
 				"Recoordinatize->init" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface_with_action::init before "
 				"Surf->Gr->line_regulus_in_PG_3_q" << endl;
-		}
+	}
 	Surf->Gr->line_regulus_in_PG_3_q(regulus,
 			regulus_size, verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init after "
 				"Surf->Gr->line_regulus_in_PG_3_q" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface_with_action::init done" << endl;
-		}
+	}
 }
 
 void surface_with_action::init_group(int f_semilinear,
@@ -146,11 +148,11 @@ void surface_with_action::init_group(int f_semilinear,
 	
 	if (f_v) {
 		cout << "surface_with_action::init_group" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "surface_with_action::init_group "
 				"creating linear group" << endl;
-		}
+	}
 
 	vector_ge *nice_gens;
 
@@ -170,23 +172,23 @@ void surface_with_action::init_group(int f_semilinear,
 	if (f_v) {
 		cout << "surface_with_action::init_group "
 				"creating linear group done" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "surface_with_action::init_group "
 				"creating action on lines" << endl;
-		}
+	}
 	A2 = A->induced_action_on_grassmannian(2, verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init_group "
 				"creating action on lines done" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "surface_with_action::init_group done" << endl;
-		}
+	}
 }
 
 int surface_with_action::create_double_six_safely(
@@ -203,7 +205,7 @@ int surface_with_action::create_double_six_safely(
 		cout << "five_lines=";
 		int_vec_print(cout, five_lines, 5);
 		cout << " transversal_line=" << transversal_line << endl;
-		}
+	}
 
 	r1 = create_double_six_from_five_lines_with_a_common_transversal(
 		five_lines, transversal_line, double_six1,
@@ -216,16 +218,16 @@ int surface_with_action::create_double_six_safely(
 		cout << "surface_with_action::create_double_six_safely "
 				"r1 && !r2" << endl;
 		exit(1);
-		}
+	}
 	if (!r1 && r2) {
 		cout << "surface_with_action::create_double_six_safely "
 				"!r1 && r2" << endl;
 		exit(1);
-		}
+	}
 	c = int_vec_compare(double_six1, double_six2, 12);
 	if (!r1) {
 		return FALSE;
-		}
+	}
 	if (c) {
 		cout << "surface_with_action::create_double_six_safely "
 				"the double sixes differ" << endl;
@@ -236,11 +238,11 @@ int surface_with_action::create_double_six_safely(
 		int_vec_print(cout, double_six2, 12);
 		cout << endl;
 		exit(1);
-		}
+	}
 	int_vec_copy(double_six1, double_six, 12);
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_safely done" << endl;
-		}
+	}
 	return TRUE;
 }
 
@@ -285,7 +287,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		cout << "The five lines are ";
 		int_vec_print(cout, five_lines, 5);
 		cout << endl;
-		}
+	}
 
 	ell0 = Surf->rank_line(L0);
 
@@ -296,15 +298,15 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		if (f_vv) {
 			cout << "intersecting line " << i << " = " << five_lines[i]
 				<< " with line " << transversal_line << endl;
-			}
+		}
 		P[i] = Surf->P->point_of_intersection_of_a_line_and_a_line_in_three_space(
 				five_lines[i], transversal_line, 0 /* verbose_level */);
-		}
+	}
 	if (f_vv) {
 		cout << "The five intersection points are:";
 		int_vec_print(cout, P, 5);
 		cout << endl;
-		}
+	}
 
 
 	// Determine b_1,\ldots,b_5:
@@ -321,7 +323,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		Combi.set_complement(subset, 4, subset + 4, size_complement, 5);
 		for (i = 0; i < 5; i++) {
 			four_lines[i] = five_lines[subset[i]];
-			}
+		}
 		
 		// P4 is the intersection of a_{i4} with the transversal:
 		P4 = P[subset[3]];
@@ -329,7 +331,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			cout << "subset " << rk << " / " << nb_subsets << " : ";
 			int_vec_print(cout, four_lines, 5);
 			cout << " P4=" << P4 << endl;
-			}
+		}
 
 		// We map a_{i1},a_{12},a_{i3} to
 		// \ell_0,\ell_1,\ell_2, the first three lines in a regulus:
@@ -353,7 +355,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				Recoordinatize->Elt, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ai4image = " << ai4image << " Q=" << Q << endl;
-			}
+		}
 		Surf->unrank_point(Q4, Q);
 
 		b = F->evaluate_quadratic_form_x0x3mx1x2(Q4);
@@ -361,7 +363,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			cout << "error: The point Q does not "
 					"lie on the quadric" << endl;
 			exit(1);
-			}
+		}
 
 
 		Surf->Gr->unrank_int_here(L, ai4image, 0 /* verbose_level */);
@@ -371,7 +373,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			int_matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
 			int_matrix_print(Q4, 1, 4);
-			}
+		}
 
 		// Adjust the basis L of the line ai4image so that Q4 is first:
 		F->adjust_basis(L, Q4, 4, 2, 1, verbose_level - 1);
@@ -381,7 +383,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			int_matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
 			int_matrix_print(Q4, 1, 4);
-			}
+		}
 
 		// Determine the point w which is the second point where 
 		// the line which is the image of a_{i4} intersects the hyperboloid:
@@ -403,20 +405,20 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				cout << " w=";
 				int_vec_print(cout, w, 4);
 				cout << " b=" << b << endl;
-				}
+			}
 			if (b == 0) {
 				break;
-				}
 			}
+		}
 		if (a == q) {
 			if (f_v) {
 				cout << "surface_with_action::create_double_six_"
 						"from_five_lines_with_a_common_transversal "
 						"we could not find a second intersection point"
 						<< endl;
-				}
-			return FALSE;
 			}
+			return FALSE;
+		}
 		
 		// test that the line is not a line of the quadric:
 		F->add_vector(L, w, pt_coord, 4);
@@ -425,9 +427,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			if (f_v) {
 				cout << "The line lies in the quadric, "
 						"this five plus one is not good." << endl;
-				}
-			return FALSE;
 			}
+			return FALSE;
+		}
 
 		// Pick two lines out of the three lines ell_0,ell_1,ell_2 
 		// which do not contain the point w:
@@ -437,22 +439,22 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			// now w lies on ell_0 so we take ell_1 and ell_2:
 			line1 = L1;
 			line1 = L2;
-			}
+		}
 		else if (w[2] == 0 && w[3] == 0) {
 			// now w lies on ell_1 so we take ell_0 and ell_2:
 			line1 = L0;
 			line1 = L2;
-			}
+		}
 		else if (w[0] == w[2] && w[1] == w[3]) {
 			// now w lies on ell_2 so we take ell_0 and ell_1:
 			line1 = L0;
 			line2 = L1;
-			}
+		}
 		else {
 			// Now, w does not lie on ell_0,ell_1,ell_2:
 			line1 = L0;
 			line2 = L1;
-			}
+		}
 
 		// Let pi1 be the plane spanned by line1 and w:
 		int_vec_copy(line1, pi1, 8);
@@ -470,16 +472,16 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				cout << "projective_space::create_double_six_"
 						"from_five_lines_with_a_common_transversal "
 						"intersection is not a line" << endl;
-				}
-			return FALSE;
 			}
+			return FALSE;
+		}
 		line3 = Surf->rank_line(M);
 
 		// Map line3 back to get line4 = b_i:
 		line4 = A2->element_image_of(line3, Elt1, 0 /* verbose_level */);
 		
 		double_six[10 - rk] = line4; // fill in b_i
-		} // next rk
+	} // next rk
 
 	// Now, b_1,\ldots,b_5 have been determined.
 	b1 = double_six[6];
@@ -524,21 +526,21 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 							"from_five_lines_with_a_common_transversal "
 							"nb_pts == 5" << endl;
 					exit(1);
-					}
 				}
 			}
+		}
 		if (nb_pts != (h + 1) * 2) {
 			cout << "surface_with_action::create_double_six_from_"
 					"five_lines_with_a_common_transversal nb_pts != "
 					"(h + 1) * 2" << endl;
 			exit(1);
-			}
-		} // next h
+		}
+	} // next h
 
 	if (f_vv) {
 		cout << "four points computed:" << endl;
 		int_matrix_print(pt_coord, 4, 4);
-		}
+	}
 	line3 = -1;
 	for (h = 0; h < 2; h++) {
 		for (k = 0; k < 2; k++) {
@@ -548,7 +550,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				if (f_vv) {
 					cout << "h=" << h << " k=" << k
 							<< " define a singular line" << endl;
-					}
+				}
 				int_vec_copy(pt_coord + h * 4, L, 4);
 				int_vec_copy(pt_coord + (2 + k) * 4, L + 4, 4);
 				line3 = Surf->rank_line(L);
@@ -558,28 +560,28 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 					if (f_vv) {
 						cout << "The line intersects ell_0, "
 								"so we are good" << endl;
-						}
-					break;
 					}
-				// continue on to find another line
+					break;
 				}
-			}
-		if (k < 2) {
-			break;
+				// continue on to find another line
 			}
 		}
+		if (k < 2) {
+			break;
+		}
+	}
 	if (h == 2) {
 		cout << "surface_with_action::create_double_six_from_five_"
 				"lines_with_a_common_transversal "
 				"could not determine a_6" << endl;
 		exit(1);
-		}
+	}
 	if (line3 == -1) {
 		cout << "surface_with_action::create_double_six_from_five_"
 				"lines_with_a_common_transversal "
 				"line3 == -1" << endl;
 		exit(1);
-		}
+	}
 	// Map line3 back to get line4 = a_6:
 	line4 = A2->element_image_of(line3, Elt1, 0 /* verbose_level */);
 	double_six[5] = line4; // fill in a_6
@@ -587,7 +589,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_"
 				"lines_with_a_common_transversal done" << endl;
-		}
+	}
 	return TRUE;
 }
 
@@ -613,7 +615,7 @@ void surface_with_action::arc_lifting_and_classify(
 				"arc = " << arc_label
 				<< " nb_surfaces = " << nb_surfaces
 				<< endl;
-		}
+	}
 
 
 	q = F->q;
@@ -632,7 +634,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 	if (f_log_fp) {
 		AL->print(fp);
-		}
+	}
 
 	
 	char magma_fname[1000];
@@ -646,7 +648,7 @@ void surface_with_action::arc_lifting_and_classify(
 	if (f_v) {
 		cout << "written file " << magma_fname << " of size "
 				<< Fio.file_size(magma_fname) << endl;
-		}
+	}
 
 	longinteger_object go;
 	
@@ -662,7 +664,7 @@ void surface_with_action::arc_lifting_and_classify(
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"before SOA->init" << endl;
-		}
+	}
 
 	SOA->init(this, 
 		AL->Lines27, AL->the_equation, 
@@ -672,18 +674,18 @@ void surface_with_action::arc_lifting_and_classify(
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"after SOA->init" << endl;
-		}
+	}
 
 
 	if (f_log_fp) {
 		fp << "The equation of the surface is" << endl;
-		}
+	}
 
 	if (f_log_fp) {
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before Surf->print_equation_in_trihedral_form" << endl;
-			}
+		}
 		Surf->print_equation_in_trihedral_form(fp,
 				AL->The_six_plane_equations,
 				AL->lambda,
@@ -693,8 +695,8 @@ void surface_with_action::arc_lifting_and_classify(
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"after Surf->print_equation_in_trihedral_form" << endl;
-			}
 		}
+	}
 
 
 	longinteger_object ago;
@@ -706,40 +708,40 @@ void surface_with_action::arc_lifting_and_classify(
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before Aut_gens->print_generators_tex" << endl;
-			}
+		}
 		AL->Aut_gens->print_generators_tex(fp);
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before SOA->SO->print_general" << endl;
-			}
+		}
 		SOA->SO->print_general(fp);
 
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before SOA->SO->print_lines" << endl;
-			}
+		}
 		SOA->SO->print_lines(fp);
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before SOA->SO->print_points" << endl;
-			}
+		}
 		SOA->SO->print_points(fp);
 
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before SOA->SO->print_tritangent_planes" << endl;
-			}
+		}
 		SOA->SO->print_tritangent_planes(fp);
 
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before SOA->SO->print_Steiner_and_Eckardt" << endl;
-			}
+		}
 		SOA->SO->print_Steiner_and_Eckardt(fp);
 
 		//SOA->SO->print_planes_in_trihedral_pairs(fp);
@@ -747,9 +749,9 @@ void surface_with_action::arc_lifting_and_classify(
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before SOA->SO->print_generalized_quadrangle" << endl;
-			}
-		SOA->SO->print_generalized_quadrangle(fp);
 		}
+		SOA->SO->print_generalized_quadrangle(fp);
+	}
 
 
 
@@ -776,7 +778,7 @@ void surface_with_action::arc_lifting_and_classify(
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 				"before SOA->print_automorphism_group" << endl;
-			}
+		}
 
 		char fname_mask[1000];
 
@@ -785,7 +787,7 @@ void surface_with_action::arc_lifting_and_classify(
 		SOA->print_automorphism_group(fp,
 			TRUE /* f_print_orbits */,
 			fname_mask);
-		}
+	}
 
 	
 	if (f_v) {
@@ -795,14 +797,14 @@ void surface_with_action::arc_lifting_and_classify(
 				"of order " << go << " with "
 			<< SOA->Orbits_on_single_sixes->nb_orbits
 			<< " orbits on single sixes" << endl;
-		}
+	}
 	if (f_log_fp) {
 		fp << "arc " << arc_label << " yields a surface with " 
 			<< AL->E->nb_E << " Eckardt points and a "
 					"stabilizer of order " << go << " with "
 			<< SOA->Orbits_on_single_sixes->nb_orbits
 			<< " orbits on single sixes\\\\" << endl;
-		}
+	}
 	
 
 	Arc_identify_nb[nb_surfaces] = SOA->Orbits_on_single_sixes->nb_orbits;
@@ -813,7 +815,7 @@ void surface_with_action::arc_lifting_and_classify(
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"performing isomorph rejection" << endl;
-		}
+	}
 	
 	for (j = 0; j < SOA->Orbits_on_single_sixes->nb_orbits; j++) {
 
@@ -823,25 +825,25 @@ void surface_with_action::arc_lifting_and_classify(
 			cout << "surface_with_action::arc_lifting_and_classify orbit "
 				"on single sixes " << j << " / "
 				<< SOA->Orbits_on_single_sixes->nb_orbits << ":" << endl;
-			}
+		}
 
 		if (f_log_fp) {
 			fp << "\\subsection*{Orbit on single sixes " << j << " / "
 				<< SOA->Orbits_on_single_sixes->nb_orbits << "}" << endl;
-			}
+		}
 
 		f = SOA->Orbits_on_single_sixes->orbit_first[j];
 		l = SOA->Orbits_on_single_sixes->orbit_len[j];
 		if (f_v) {
 			cout << "orbit f=" << f <<  " l=" << l << endl;
-			}
+		}
 		k = SOA->Orbits_on_single_sixes->orbit[f];
 
 		if (f_v) {
 			cout << "The half double six is no " << k << " : ";
 			int_vec_print(cout, SOA->Surf->Half_double_sixes + k * 6, 6);
 			cout << endl;
-			}
+		}
 
 		int h;
 		
@@ -855,10 +857,10 @@ void surface_with_action::arc_lifting_and_classify(
 						Surf->Half_double_sixes[k * 6 + h]];
 				if (h < 6 - 1) {
 					fp << ", ";
-					}
 				}
-			fp << "\\}$\\\\" << endl;
 			}
+			fp << "\\}$\\\\" << endl;
+		}
 
 
 		int ds, ds_row;
@@ -867,18 +869,18 @@ void surface_with_action::arc_lifting_and_classify(
 		ds_row = k % 2;
 		if (f_v) {
 			cout << "double six = " << ds << " row = " << ds_row << endl;
-			}
+		}
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"before Surf->prepare_clebsch_map" << endl;
-			}
+		}
 		Surf->prepare_clebsch_map(ds, ds_row, line1, line2,
 				transversal, verbose_level);
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"after Surf->prepare_clebsch_map" << endl;
-			}
+		}
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
@@ -889,7 +891,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< " transversal=" << transversal 
 				<< " = " << Surf->Line_label_tex[transversal] 
 				<< endl;
-			}
+		}
 	
 
 		if (f_log_fp) {
@@ -897,7 +899,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< "$ line2$=" << line2 << " = " << Surf->Line_label_tex[line2]
 				<< "$ transversal$=" << transversal << " = "
 				<< Surf->Line_label_tex[transversal] << "$\\\\" << endl;
-			}
+		}
 
 
 		int plane_rk, plane_rk_global;
@@ -926,7 +928,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< endl;
 			cout << "plane_rk = " << plane_rk << " = "
 					<< plane_rk_global << endl;
-			}
+		}
 		if (f_log_fp) {
 			fp << "transversal = " << transversal << " = $"
 					<< Surf->Line_label_tex[transversal] << "$\\\\" << endl;
@@ -937,13 +939,13 @@ void surface_with_action::arc_lifting_and_classify(
 
 			fp << "The plane is:" << endl;
 			Surf->P->Grass_planes->print_set_tex(fp, &plane_rk_global, 1);
-			}
+		}
 
 		
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 				"intersecting blow up lines with plane:" << endl;
-			}
+		}
 		int intersection_points[6];
 		//int intersection_points_local[6];
 		int u, a;
@@ -964,7 +966,7 @@ void surface_with_action::arc_lifting_and_classify(
 					"base_cols: ";
 			int_vec_print(cout, base_cols, 3);
 			cout << endl;
-			}
+		}
 
 
 		if (f_v) {
@@ -981,23 +983,23 @@ void surface_with_action::arc_lifting_and_classify(
 						Surf->Half_double_sixes[k * 6 + h]];
 				if (h < 6 - 1) {
 					cout << ", ";
-					}
 				}
-			cout << "\\}$\\\\" << endl;
 			}
+			cout << "\\}$\\\\" << endl;
+		}
 
 		for (u = 0; u < 6; u++) {
 
 			if (f_v) {
 				cout << "surface_with_action::arc_lifting_and_classify u="
 						<< u << " / 6" << endl;
-				}
+			}
 			a = SOA->SO->Lines[Surf->Half_double_sixes[k * 6 + u]];
 			if (f_v) {
 				cout << "surface_with_action::arc_lifting_and_classify "
 						"intersecting line " << a << " and plane "
 						<< plane_rk_global << endl;
-				}
+			}
 			intersection_points[u] =
 					Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 							a, plane_rk_global,
@@ -1005,14 +1007,14 @@ void surface_with_action::arc_lifting_and_classify(
 			if (f_v) {
 				cout << "surface_with_action::arc_lifting_and_classify "
 						"intersection point " << intersection_points[u] << endl;
-				}
+			}
 			Surf->P->unrank_point(v, intersection_points[u]);
 			if (f_v) {
 				cout << "surface_with_action::arc_lifting_and_classify "
 						"which is ";
 				int_vec_print(cout, v, 4);
 				cout << endl;
-				}
+			}
 			F->reduce_mod_subspace_and_get_coefficient_vector(
 				3, 4, Plane, base_cols, 
 				v, coefficients,
@@ -1022,10 +1024,10 @@ void surface_with_action::arc_lifting_and_classify(
 						"local coefficients ";
 				int_vec_print(cout, coefficients, 3);
 				cout << endl;
-				}
+			}
 			//intersection_points_local[u] =
 			//Surf->P2->rank_point(coefficients);
-			}
+		}
 
 
 		Clebsch_map = NEW_int(SOA->SO->nb_pts);
@@ -1043,7 +1045,7 @@ void surface_with_action::arc_lifting_and_classify(
 			cout << "The plane contains one of the lines, "
 					"this should not happen" << endl;
 			exit(1);
-			}
+		}
 		if (f_log_fp) {
 			fp << "Clebsch map for lines $" << line1 
 				<< " = " << Surf->Line_label_tex[line1] << ", " 
@@ -1052,7 +1054,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< "$\\\\" << endl;
 
 			//SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
-			}
+		}
 
 		
 
@@ -1061,7 +1063,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< " = " << Surf->Line_label_tex[line1] << ", " 
 				<< line2 << " = " << Surf->Line_label_tex[line2] 
 				<< " before clebsch_map_print_fibers:" << endl;
-			}
+		}
 		SOA->SO->clebsch_map_print_fibers(Clebsch_map);
 
 		if (f_v) {
@@ -1069,7 +1071,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< " = " << Surf->Line_label_tex[line1] << ", " 
 				<< line2 << " = " << Surf->Line_label_tex[line2] 
 				<< "  before clebsch_map_find_arc_and_lines:" << endl;
-			}
+		}
 
 		SOA->SO->clebsch_map_find_arc_and_lines(Clebsch_map,
 				Arc, Blown_up_lines, 0 /* verbose_level */);
@@ -1079,7 +1081,7 @@ void surface_with_action::arc_lifting_and_classify(
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"after clebsch_map_find_arc_and_lines" << endl;
-			}
+		}
 		//clebsch_map_find_arc(Clebsch_map, Pts, nb_pts, Arc,
 		//0 /* verbose_level */);
 
@@ -1091,7 +1093,7 @@ void surface_with_action::arc_lifting_and_classify(
 			cout << " : blown up lines = ";
 			int_vec_print(cout, Blown_up_lines, 6);
 			cout << endl;
-			}
+		}
 
 
 
@@ -1106,7 +1108,7 @@ void surface_with_action::arc_lifting_and_classify(
 			fp << "\\\\" << endl;
 
 			SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
-			}
+		}
 
 		int idx;
 
@@ -1123,7 +1125,7 @@ void surface_with_action::arc_lifting_and_classify(
 			Six_arcs->nb_arcs_not_on_conic, orbit_at_level, idx)) {
 			cout << "could not find orbit" << endl;
 			exit(1);
-			}
+		}
 #else
 		Six_arcs->recognize(Arc, transporter,
 				idx /* orbit_not_on_conic_idx */, verbose_level - 2);
@@ -1144,7 +1146,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< " orbits on single sixes";
 			cout << " orbit " << j << " yields an arc which "
 					"is isomorphic to arc " << idx << endl;
-			}
+		}
 
 
 		if (f_log_fp) {
@@ -1156,7 +1158,7 @@ void surface_with_action::arc_lifting_and_classify(
 				<< " orbits on single sixes \\\\" << endl;
 			fp << " orbit " << j << " yields an arc which is "
 					"isomorphic to arc " << idx << "\\\\" << endl;
-			}
+		}
 
 
 
@@ -1164,7 +1166,7 @@ void surface_with_action::arc_lifting_and_classify(
 		FREE_int(Clebsch_coeff);
 		
 
-		}
+	}
 	if (f_log_fp) {
 		fp << "The following " << Arc_identify_nb[nb_surfaces]
 			<< " arcs are involved with surface " <<   nb_surfaces << ": $";
@@ -1172,7 +1174,7 @@ void surface_with_action::arc_lifting_and_classify(
 			Arc_identify + nb_surfaces * Six_arcs->nb_arcs_not_on_conic, 
 			Arc_identify_nb[nb_surfaces]);
 		fp << "$\\\\" << endl;
-		}
+	}
 
 
 	FREE_OBJECT(SOA);
@@ -1182,7 +1184,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify done" << endl;
-		}
+	}
 
 }
 

@@ -1,4 +1,4 @@
-// ovoid_generator.cpp
+// ovoid_classify.cpp
 // 
 // Anton Betten
 // May 16, 2011
@@ -10,16 +10,16 @@
 
 #include "orbiter.h"
 
-#include "ovoid.h"
-
 using namespace std;
 
+namespace orbiter {
+namespace top_level {
 
-using namespace orbiter;
 
 
 
-ovoid_generator::ovoid_generator()
+
+ovoid_classify::ovoid_classify()
 {
 	Poset = NULL;
 	gen = NULL;
@@ -62,12 +62,12 @@ ovoid_generator::ovoid_generator()
 	n = 0;
 }
 
-ovoid_generator::~ovoid_generator()
+ovoid_classify::~ovoid_classify()
 {
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "ovoid_generator::~ovoid_generator" << endl;
+		cout << "ovoid_classify::~ovoid_generator" << endl;
 		}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -104,13 +104,13 @@ ovoid_generator::~ovoid_generator()
 	}
 	
 	if (f_v) {
-		cout << "ovoid_generator::~ovoid_generator "
+		cout << "ovoid_classify::~ovoid_generator "
 				"finished" << endl;
-		}
+	}
 	
 }
 
-void ovoid_generator::init(int argc, const char **argv,
+void ovoid_classify::init(int argc, const char **argv,
 		int &verbose_level)
 {
 	int f_semilinear;
@@ -144,10 +144,10 @@ void ovoid_generator::init(int argc, const char **argv,
 
 	if (h > 1) {
 		f_semilinear = TRUE;
-		}
+	}
 	else {
 		f_semilinear = FALSE;
-		}
+	}
 
 
 	//f_semilinear = TRUE;
@@ -166,15 +166,15 @@ void ovoid_generator::init(int argc, const char **argv,
 			f_similarity, f_semisimilarity);
 
 
-	cout << "ovoid_generator::init "
+	cout << "ovoid_classify::init "
 			"d=" << d << endl;
-	cout << "ovoid_generator::init "
+	cout << "ovoid_classify::init "
 			"f_siegel=" << f_siegel << endl;
-	cout << "ovoid_generator::init "
+	cout << "ovoid_classify::init "
 			"f_reflection=" << f_reflection << endl;
-	cout << "ovoid_generator::init "
+	cout << "ovoid_classify::init "
 			"f_similarity=" << f_similarity << endl;
-	cout << "ovoid_generator::init "
+	cout << "ovoid_classify::init "
 			"f_semisimilarity=" << f_semisimilarity << endl;
 	
 	A->init_orthogonal_group(epsilon, d, F, 
@@ -241,7 +241,7 @@ void ovoid_generator::init(int argc, const char **argv,
 			verbose_level);
 
 	Poset->add_testing_without_group(
-			ovoid_generator_early_test_func_callback,
+			ovoid_classify_early_test_func_callback,
 				this /* void *data */,
 				verbose_level);
 
@@ -252,7 +252,7 @@ void ovoid_generator::init(int argc, const char **argv,
 
 
 	gen->f_print_function = FALSE;
-	gen->print_function = callback_print_set;
+	gen->print_function = callback_ovoid_print_set;
 	gen->print_function_data = (void *) this;
 
 
@@ -351,7 +351,7 @@ void ovoid_generator::init(int argc, const char **argv,
 		}
 }
 
-void ovoid_generator::read_arguments(
+void ovoid_classify::read_arguments(
 		int argc, const char **argv, int &verbose_level)
 {
 	int i;
@@ -360,10 +360,12 @@ void ovoid_generator::read_arguments(
 	int f_q = FALSE;
 	geometry_global Gg;
 	
+#if 0
 	if (argc < 1) {
 		usage(argc, argv);
 		exit(1);
 		}
+#endif
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
@@ -438,42 +440,7 @@ void ovoid_generator::read_arguments(
 	cout << "Witt index " << m << endl;
 }
 
-#if 0
-int ovoid_generator::check_conditions(int len, int *S,
-		int verbose_level)
-{
-	int f_OK = TRUE;
-	int f_collinearity_test = FALSE;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "ovoid_generator::check_conditions checking set ";
-		print_set(cout, len, S);
-		}
-	if (!collinearity_test(S, len, verbose_level - 1)) {
-		f_OK = FALSE;
-		f_collinearity_test = TRUE;
-		}
-	if (f_OK) {
-		if (f_v) {
-			cout << "OK" << endl;
-			}
-		return TRUE;
-		}
-	else {
-		if (f_v) {
-			cout << "not OK because of ";
-			if (f_collinearity_test) {
-				cout << "collinearity test";
-				}
-			cout << endl;
-			}
-		return FALSE;
-		}
-}
-#endif
-
-void ovoid_generator::early_test_func(int *S, int len,
+void ovoid_classify::early_test_func(int *S, int len,
 	int *candidates, int nb_candidates,
 	int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -485,7 +452,7 @@ void ovoid_generator::early_test_func(int *S, int len,
 	int fxy;
 
 	if (f_v) {
-		cout << "ovoid_generator::early_test_func checking set ";
+		cout << "ovoid_classify::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size "
@@ -519,7 +486,7 @@ void ovoid_generator::early_test_func(int *S, int len,
 		nb_good_candidates = 0;
 
 		if (f_vv) {
-			cout << "ovoid_generator::early_test_func "
+			cout << "ovoid_classify::early_test_func "
 					"before testing" << endl;
 			}
 		for (j = 0; j < nb_candidates; j++) {
@@ -545,61 +512,7 @@ void ovoid_generator::early_test_func(int *S, int len,
 		} // else
 }
 
-#if 0
-int ovoid_generator::collinearity_test(int *S, int len,
-		int verbose_level)
-{
-	int i, x, y;
-	int f_OK = TRUE;
-	int fxy;
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	
-	if (f_v) {
-		cout << "collinearity test" << endl;
-		}
-	if (f_vv) {
-		for (i = 0; i < len; i++) {
-			O->unrank_point(O->v1, 1, S[i], 0);
-			int_vec_print(cout, u, n);
-			cout << endl;
-			}
-		}
-	y = S[len - 1];
-	O->unrank_point(v, 1, y, 0);
-	
-	for (i = 0; i < len - 1; i++) {
-		x = S[i];
-		O->unrank_point(u, 1, x, 0);
-
-		fxy = O->evaluate_bilinear_form(u, v, 1);
-		
-		if (fxy == 0) {
-			f_OK = FALSE;
-			if (f_vv) {
-				cout << "not OK; ";
-				cout << "{x,y}={" << x << "," << y
-						<< "} are collinear" << endl;
-				int_vec_print(cout, u, n);
-				cout << endl;
-				int_vec_print(cout, v, n);
-				cout << endl;
-				cout << "fxy=" << fxy << endl;
-				}
-			break;
-			}
-		}
-	
-	if (f_v) {
-		if (!f_OK) {
-			cout << "collinearity test fails" << endl;
-			}
-		}
-	return f_OK;
-}
-#endif
-
-void ovoid_generator::print(ostream &ost, int *S, int len)
+void ovoid_classify::print(ostream &ost, int *S, int len)
 {
 	int i;
 	
@@ -612,7 +525,7 @@ void ovoid_generator::print(ostream &ost, int *S, int len)
 		}
 }
 
-void ovoid_generator::make_graphs(orbiter_data_file *ODF,
+void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 	int f_split, int split_r, int split_m,
 	int f_lexorder_test,
 	const char *fname_mask,
@@ -626,7 +539,7 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 	file_io Fio;
 
 	if (f_v) {
-		cout << "ovoid_generator::make_graphs" << endl;
+		cout << "ovoid_classify::make_graphs" << endl;
 		}
 
 	level = ODF->set_sizes[0];
@@ -655,14 +568,14 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 				candidates, nb_candidates, 0 /* verbose_level */);
 #endif
 
-		cout << "ovoid_generator::make_graphs before read_candidates_"
+		cout << "ovoid_classify::make_graphs before read_candidates_"
 				"for_one_orbit_from_file prefix=" << prefix << endl;
 		Fio.read_candidates_for_one_orbit_from_file(prefix,
 				level,
 				orbit_idx,
 				level - 1 /* level_of_candidates_file */,
 				ODF->sets[orbit_idx],
-				ovoid_generator_early_test_func_callback,
+				ovoid_classify_early_test_func_callback,
 				this,
 				candidates,
 				nb_candidates,
@@ -704,7 +617,7 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 				int nb_candidates2;
 
 				if (f_v) {
-					cout << "ovoid_generator::make_graphs "
+					cout << "ovoid_classify::make_graphs "
 							"Case " << orbit_idx << " / "
 							<< ODF->nb_cases
 							<< " Before lexorder_test" << endl;
@@ -713,7 +626,7 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 					nb_candidates2,
 					SG->gens, max_starter, 0 /*verbose_level - 3*/);
 				if (f_v) {
-					cout << "ovoid_generator::make_graphs "
+					cout << "ovoid_classify::make_graphs "
 							"After lexorder_test nb_candidates="
 							<< nb_candidates2 << " eliminated "
 							<< nb_candidates - nb_candidates2
@@ -749,11 +662,11 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 
 	}
 	if (f_v) {
-		cout << "ovoid_generator::make_graphs done" << endl;
+		cout << "ovoid_classify::make_graphs done" << endl;
 		}
 }
 
-void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
+void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 	int orbit_idx,
 	int f_lexorder_test,
 	colored_graph *&CG,
@@ -764,7 +677,7 @@ void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
 	file_io Fio;
 
 	if (f_v) {
-		cout << "ovoid_generator::make_one_graph" << endl;
+		cout << "ovoid_classify::make_one_graph" << endl;
 		}
 
 	level = ODF->set_sizes[0];
@@ -774,12 +687,12 @@ void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
 	int nb_candidates;
 
 
-	cout << "ovoid_generator::make_one_graph before read_candidates_"
+	cout << "ovoid_classify::make_one_graph before read_candidates_"
 			"for_one_orbit_from_file prefix=" << prefix << endl;
 	Fio.read_candidates_for_one_orbit_from_file(prefix,
 			level, orbit_idx, level - 1 /* level_of_candidates_file */,
 			ODF->sets[orbit_idx],
-			ovoid_generator_early_test_func_callback,
+			ovoid_classify_early_test_func_callback,
 			this,
 			candidates,
 			nb_candidates,
@@ -823,14 +736,14 @@ void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
 			int nb_candidates2;
 
 			if (f_v) {
-				cout << "ovoid_generator::make_graphs Case " << orbit_idx
+				cout << "ovoid_classify::make_graphs Case " << orbit_idx
 						<< " / " << ODF->nb_cases
 						<< " Before lexorder_test" << endl;
 			}
 			A->lexorder_test(candidates, nb_candidates, nb_candidates2,
 				SG->gens, max_starter, 0 /*verbose_level - 3*/);
 			if (f_v) {
-				cout << "ovoid_generator::make_graphs After "
+				cout << "ovoid_classify::make_graphs After "
 						"lexorder_test nb_candidates=" << nb_candidates2
 						<< " eliminated " << nb_candidates - nb_candidates2
 						<< " candidates" << endl;
@@ -864,41 +777,43 @@ void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
 
 
 	if (f_v) {
-		cout << "ovoid_generator::make_one_graph done" << endl;
+		cout << "ovoid_classify::make_one_graph done" << endl;
 		}
 }
 
-void ovoid_generator::create_graph(orbiter_data_file *ODF,
+void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	int orbit_idx,
 	int *candidates, int nb_candidates,
 	colored_graph *&CG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, k, fxy;
+	long int i, j, k;
+	int fxy;
 	int nb_points = nb_candidates;
 	int nb_colors = 1;
 	int starter_size;
 	int *point_color = NULL;
 	int *Pts;
-	int L, nb_colors_used;
+	long int L;
+	int nb_colors_used;
 
 	if (f_v) {
-		cout << "ovoid_generator::create_graph for orbit_idx = "
+		cout << "ovoid_classify::create_graph for orbit_idx = "
 				<< orbit_idx << " nb_points = " << nb_points << endl;
 	}
 
 	starter_size = ODF->set_sizes[orbit_idx];
 
 	uchar *bitvector_adjacency = NULL;
-	int bitvector_length_in_bits;
-	int bitvector_length;
+	long int bitvector_length_in_bits;
+	long int bitvector_length;
 	Pts = NEW_int(nb_points * d);
 	for (i = 0; i < nb_points; i++) {
 		O->unrank_point(Pts + i * d, 1, candidates[i], 0);
 	}
 
-	L = (nb_points * (nb_points - 1)) >> 1;
+	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
@@ -963,11 +878,11 @@ void ovoid_generator::create_graph(orbiter_data_file *ODF,
 	// don't free bitvector_adjacency,
 	// it has become part of the graph object
 	if (f_v) {
-		cout << "ovoid_generator::create_graph done" << endl;
+		cout << "ovoid_classify::create_graph done" << endl;
 	}
 }
 
-void ovoid_generator::compute_coloring(
+void ovoid_classify::compute_coloring(
 		int *starter, int starter_size,
 		int *candidates, int nb_points,
 		int *point_color, int &nb_colors_used,
@@ -978,7 +893,7 @@ void ovoid_generator::compute_coloring(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "ovoid_generator::compute_coloring" << endl;
+		cout << "ovoid_classify::compute_coloring" << endl;
 	}
 	if (starter_size < 1) {
 		cout << "starter_size < 1" << endl;
@@ -1031,21 +946,21 @@ void ovoid_generator::compute_coloring(
 	FREE_int(colors);
 	FREE_int(color_pos);
 	if (f_v) {
-		cout << "ovoid_generator::compute_coloring done" << endl;
+		cout << "ovoid_classify::compute_coloring done" << endl;
 	}
 }
 
 
-void ovoid_generator_early_test_func_callback(int *S, int len,
+void ovoid_classify_early_test_func_callback(int *S, int len,
 	int *candidates, int nb_candidates,
 	int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
-	ovoid_generator *Gen = (ovoid_generator *) data;
+	ovoid_classify *Gen = (ovoid_classify *) data;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "ovoid_generator_early_test_func_callback for set ";
+		cout << "ovoid_classify_early_test_func_callback for set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -1054,7 +969,19 @@ void ovoid_generator_early_test_func_callback(int *S, int len,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "ovoid_generator_early_test_func_callback done" << endl;
+		cout << "ovoid_classify_early_test_func_callback done" << endl;
 		}
 }
 
+void callback_ovoid_print_set(ostream &ost, int len, int *S, void *data)
+{
+	ovoid_classify *Gen = (ovoid_classify *) data;
+
+	//print_vector(ost, S, len);
+	Gen->print(ost, S, len);
+}
+
+
+
+
+}}

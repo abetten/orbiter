@@ -3,12 +3,12 @@
 // Anton Betten
 // December 30, 2003
 
-#include "codes.h"
+#include "orbiter.h"
+
 
 using namespace std;
-
-
 using namespace orbiter;
+using namespace orbiter::top_level;
 
 // global data:
 
@@ -23,7 +23,7 @@ int main(int argc, const char **argv)
 	
 	
 	{
-	code_generator cg;
+	code_classify cg;
 	
 	cout << argv[0] << endl;
 	cg.init(argc, argv);

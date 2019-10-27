@@ -130,144 +130,144 @@ int main(int argc, const char **argv)
 		}
 
 	{
-	blt_set *Blt_set;
-	int schreier_depth = ECA->starter_size;
-	int f_debug = FALSE;
-	int f_semilinear = FALSE;
-	number_theory_domain NT;
+		blt_set_classify *Blt_set;
+		int schreier_depth = ECA->starter_size;
+		int f_debug = FALSE;
+		int f_semilinear = FALSE;
+		number_theory_domain NT;
+
+		finite_field *F;
+		orthogonal *O;
+
+		F = NEW_OBJECT(finite_field);
+		O = NEW_OBJECT(orthogonal);
+		Blt_set = NEW_OBJECT(blt_set_classify);
 	
-	finite_field *F;
-	orthogonal *O;
-
-	F = NEW_OBJECT(finite_field);
-	O = NEW_OBJECT(orthogonal);
-	Blt_set = NEW_OBJECT(blt_set);
-
-	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-	if (f_poly) {
-		F->init_override_polynomial(q, poly, 0 /* verbose_level */);
+		if (NT.is_prime(q)) {
+			f_semilinear = FALSE;
 		}
-	else {
-		F->init(q, 0 /* verbose_level */);
+		else {
+			f_semilinear = TRUE;
 		}
-	O->init(0 /*epsilon*/, 5 /* n */, F, 0 /*verbose_level*/);
-
-	Blt_set->init_basic(O,
-		f_semilinear,
-		ECA->input_prefix, ECA->base_fname, ECA->starter_size, 
-		argc, argv, verbose_level);
-	
-	
-	Blt_set->init_group(f_semilinear, verbose_level);
-	
-	Blt_set->init2(verbose_level);
-	
-	int f_use_invariant_subset_if_available = TRUE;
-	
-	if (f_v) {
-		cout << "init finished, calling main, "
-				"schreier_depth = " << schreier_depth << endl;
-		}
-
-
-	IA->init(Blt_set->A, Blt_set->A, Blt_set->gen,
-			Blt_set->target_size, Blt_set->prefix_with_directory, ECA,
-			blt_set_callback_report,
-			NULL /*blt_set_callback_subset_orbits*/,
-			Blt_set,
-			verbose_level);
-
-	if (f_starter) {
-
-		int depth;
-		int f_embedded = TRUE;
-		int f_sideways = FALSE;
-
-		depth = Blt_set->gen->main(t0, schreier_depth,
-			f_use_invariant_subset_if_available, 
-			f_debug, 
-			Blt_set->gen->verbose_level);
-		cout << "Blt_set->gen->main returns depth=" << depth << endl;
-		//Gen.gen->print_data_structure_tex(depth,
-		//Gen.gen->verbose_level);
-		if (f_draw_poset) {
-			Blt_set->gen->draw_poset(Blt_set->prefix_with_directory,
-					ECA->starter_size, 0 /* data1 */,
-					f_embedded, f_sideways, Blt_set->gen->verbose_level);
+		if (f_poly) {
+			F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 			}
-		if (f_list) {
-				{
-				spreadsheet *Sp;
-				Blt_set->gen->make_spreadsheet_of_orbit_reps(Sp, depth);
-				char fname_csv[1000];
-				sprintf(fname_csv, "partial_BLT_sets_%d_%d.csv",
-						q, depth);
-				Sp->save(fname_csv, verbose_level);
-				delete Sp;
+		else {
+			F->init(q, 0 /* verbose_level */);
+			}
+		O->init(0 /*epsilon*/, 5 /* n */, F, 0 /*verbose_level*/);
+
+		Blt_set->init_basic(O,
+			f_semilinear,
+			ECA->input_prefix, ECA->base_fname, ECA->starter_size,
+			argc, argv, verbose_level);
+
+
+		Blt_set->init_group(f_semilinear, verbose_level);
+
+		Blt_set->init2(verbose_level);
+
+		int f_use_invariant_subset_if_available = TRUE;
+
+		if (f_v) {
+			cout << "init finished, calling main, "
+					"schreier_depth = " << schreier_depth << endl;
+			}
+
+
+		IA->init(Blt_set->A, Blt_set->A, Blt_set->gen,
+				Blt_set->target_size, Blt_set->prefix_with_directory, ECA,
+				blt_set_classify_callback_report,
+				NULL /*blt_set_callback_subset_orbits*/,
+				Blt_set,
+				verbose_level);
+	
+		if (f_starter) {
+	
+			int depth;
+			int f_embedded = TRUE;
+			int f_sideways = FALSE;
+	
+			depth = Blt_set->gen->main(t0, schreier_depth,
+				f_use_invariant_subset_if_available,
+				f_debug,
+				Blt_set->gen->verbose_level);
+			cout << "Blt_set->gen->main returns depth=" << depth << endl;
+			//Gen.gen->print_data_structure_tex(depth,
+			//Gen.gen->verbose_level);
+			if (f_draw_poset) {
+				Blt_set->gen->draw_poset(Blt_set->prefix_with_directory,
+						ECA->starter_size, 0 /* data1 */,
+						f_embedded, f_sideways, Blt_set->gen->verbose_level);
+				}
+			if (f_list) {
+					{
+					spreadsheet *Sp;
+					Blt_set->gen->make_spreadsheet_of_orbit_reps(Sp, depth);
+					char fname_csv[1000];
+					sprintf(fname_csv, "partial_BLT_sets_%d_%d.csv",
+							q, depth);
+					Sp->save(fname_csv, verbose_level);
+					delete Sp;
+					}
 				}
 			}
-		}
-
-	if (ECA->f_lift) {
 	
-		cout << "lift" << endl;
-		
-		ECA->target_size = Blt_set->target_size;
-		ECA->user_data = (void *) Blt_set;
-		ECA->A = Blt_set->A;
-		ECA->A2 = Blt_set->A;
-		ECA->prepare_function_new = blt_set_lifting_prepare_function_new;
-		ECA->early_test_function = blt_set_early_test_func_callback;
-		ECA->early_test_function_data = (void *) Blt_set;
-		
-		ECA->compute_lifts(verbose_level);
+		if (ECA->f_lift) {
 
-		}
+			cout << "lift" << endl;
 
-	if (f_create_graphs) {
+			ECA->target_size = Blt_set->target_size;
+			ECA->user_data = (void *) Blt_set;
+			ECA->A = Blt_set->A;
+			ECA->A2 = Blt_set->A;
+			ECA->prepare_function_new = blt_set_classify_lifting_prepare_function_new;
+			ECA->early_test_function = blt_set_classify_early_test_func_callback;
+			ECA->early_test_function_data = (void *) Blt_set;
 
-		if (!ECA->f_has_output_prefix) {
-			cout << "please use -output_prefix <output_prefix>" << endl;
-			exit(1);
+			ECA->compute_lifts(verbose_level);
+	
 			}
-		Blt_set->create_graphs(
-			create_graphs_r, create_graphs_m, 
-			create_graphs_level, 
-			ECA->output_prefix, 
-			ECA->f_lex, f_eliminate_graphs_if_possible, 
-			verbose_level);
-		}
-	else if (f_create_graphs_list_of_cases) {
 
-		if (!ECA->f_has_output_prefix) {
-			cout << "please use -output_prefix <output_prefix>" << endl;
-			exit(1);
+		if (f_create_graphs) {
+
+			if (!ECA->f_has_output_prefix) {
+				cout << "please use -output_prefix <output_prefix>" << endl;
+				exit(1);
+				}
+			Blt_set->create_graphs(
+				create_graphs_r, create_graphs_m,
+				create_graphs_level,
+				ECA->output_prefix,
+				ECA->f_lex, f_eliminate_graphs_if_possible,
+				verbose_level);
 			}
-		Blt_set->create_graphs_list_of_cases(
-			create_graphs_list_of_cases_prefix,
-			create_graphs_list_of_cases,
-			create_graphs_level, 
-			ECA->output_prefix, 
-			ECA->f_lex, f_eliminate_graphs_if_possible, 
-			verbose_level);
-		}
+		else if (f_create_graphs_list_of_cases) {
+	
+			if (!ECA->f_has_output_prefix) {
+				cout << "please use -output_prefix <output_prefix>" << endl;
+				exit(1);
+				}
+			Blt_set->create_graphs_list_of_cases(
+				create_graphs_list_of_cases_prefix,
+				create_graphs_list_of_cases,
+				create_graphs_level,
+				ECA->output_prefix,
+				ECA->f_lex, f_eliminate_graphs_if_possible,
+				verbose_level);
+			}
 
 #if 0
-	else if (f_Law71) {
-		Blt_set->Law_71(verbose_level);
-		}
+		else if (f_Law71) {
+			Blt_set->Law_71(verbose_level);
+			}
 #endif
 
-	IA->execute(verbose_level);
+		IA->execute(verbose_level);
 
 
 
-	cout << "cleaning up Gen" << endl;
+		cout << "cleaning up Gen" << endl;
 	}
 
 

@@ -102,7 +102,7 @@ int main(int argc, const char **argv)
 
 
 	if (f_v) {
-		cout << "surface_classify writing cheat sheet "
+		cout << "classify_cubic_curves writing cheat sheet "
 				"on cubic curves" << endl;
 		}
 	{
@@ -586,8 +586,8 @@ int main(int argc, const char **argv)
 			<< Fio.file_size(fname) << endl;
 	}
 	if (f_v) {
-		cout << "surface_classify writing cheat sheet on "
-				"double sixes done" << endl;
+		cout << "classify_cubic_curves writing cheat sheet on "
+				"cubic curves done" << endl;
 		}
 
 
