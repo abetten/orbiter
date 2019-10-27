@@ -64,7 +64,8 @@ void graph_theory_domain::colored_graph_all_cliques(
 	int f_restrictions, int *restrictions,
 	int f_tree, int f_decision_nodes_only, const char *fname_tree,
 	int print_interval,
-	int &search_steps, int &decision_steps, int &nb_sol, int &dt,
+	unsigned long int &search_steps, unsigned long int &decision_steps,
+	int &nb_sol, int &dt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -130,7 +131,8 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 	int f_v = (verbose_level >= 1);
 	int i, c;
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
-	int search_steps, decision_steps, nb_sol, dt;
+	unsigned long int search_steps, decision_steps;
+	int nb_sol, dt;
 	char fname[1000];
 	char fname_tmp[1000];
 
@@ -216,7 +218,8 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_files(
 	int f_v = (verbose_level >= 1);
 	int i, c;
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
-	int search_steps, decision_steps, nb_sol, dt;
+	unsigned long int search_steps, decision_steps;
+	int nb_sol, dt;
 	file_io Fio;
 
 	if (f_v) {
