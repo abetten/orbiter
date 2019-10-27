@@ -42,7 +42,8 @@ void rainbow_cliques::search(colored_graph *graph,
 	int f_restrictions, int *restrictions, 
 	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
 	int print_interval, 
-	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	unsigned long int &search_steps, unsigned long int &decision_steps,
+	int &nb_sol, int &dt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -90,7 +91,8 @@ void rainbow_cliques::search_with_additional_test_function(
 	void (*call_back_print_current_choice)(clique_finder *CF, 
 		int depth, void *user_data, int verbose_level), 
 	void *user_data, 
-	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	unsigned long int &search_steps, unsigned long int &decision_steps,
+	int &nb_sol, int &dt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
