@@ -10,18 +10,16 @@
 
 #include "orbiter.h"
 
-#include "ovoid.h"
 
 using namespace std;
-
-
 using namespace orbiter;
-
+using namespace orbiter::top_level;
 
 // global data:
 
 int t0; // the system time when the program started
 
+void usage(int argc, const char **argv);
 
 int main(int argc, const char **argv)
 {
@@ -35,7 +33,7 @@ int main(int argc, const char **argv)
 		}
 
 	{
-	ovoid_generator Gen;
+	ovoid_classify Gen;
 	int schreier_depth = 10000;
 	int f_use_invariant_subset_if_available = TRUE;
 	//int f_implicit_fusion = FALSE;
@@ -234,24 +232,5 @@ void usage(int argc, const char **argv)
 	gen.usage();
 
 }
-
-
-void callback_print_set(ostream &ost, int len, int *S, void *data)
-{
-	ovoid_generator *Gen = (ovoid_generator *) data;
-	
-	//print_vector(ost, S, len);
-	Gen->print(ost, S, len);
-}
-
-#if 0
-int callback_check_conditions(int len, int *S,
-		void *data, int verbose_level)
-{
-	ovoid_generator *Gen = (ovoid_generator *) data;
-	return Gen->check_conditions(len, S, verbose_level);
-}
-#endif
-
 
 

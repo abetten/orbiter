@@ -8,8 +8,8 @@ LFLAGS = -lm
 
 all: ovoid.out make_design.out
 
-ovoid.out:  ovoid.o ovoid_generator.o ;
-	$(DISCRETA_CPP)  ovoid.o ovoid_generator.o \
+ovoid.out:  ovoid.o ;
+	$(DISCRETA_CPP)  ovoid.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 make_design.out:  make_design.o;

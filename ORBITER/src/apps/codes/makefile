@@ -5,16 +5,11 @@ CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
-n=5
-k=2
-d=8
-q=2
-v=0
 
 all: codes.out 
 
-codes.out:  codes.o code_generator.o ;
-	$(DISCRETA_CPP)  codes.o code_generator.o \
+codes.out:  codes.o  ;
+	$(DISCRETA_CPP)  codes.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
@@ -27,6 +22,12 @@ clean:
 #------------------------------------------------------------------------------
 # Testing code
 #------------------------------------------------------------------------------
+
+n=5
+k=2
+d=8
+q=2
+v=0
 
 test:
 	./codes.out -v $(v) -n $(n) -k $(k) -q $(q) -d $(d)

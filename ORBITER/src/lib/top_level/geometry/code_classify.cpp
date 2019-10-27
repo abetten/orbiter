@@ -6,19 +6,92 @@
 //
 // December 30, 2003
 
-#include "codes.h"
+#include "orbiter.h"
 
 using namespace std;
 
+namespace orbiter {
+namespace top_level {
 
-using namespace orbiter;
+
 
 // #############################################################################
-// start of class code_generator
+// start of class code_classify
 // #############################################################################
 
 
-void code_generator::read_arguments(int argc, const char **argv)
+
+code_classify::code_classify()
+{
+	verbose_level = 0;
+	f_report = FALSE;
+
+	f_read_data_file = FALSE;
+	fname_data_file = NULL;
+	depth_completed = 0;
+
+	f_report_schreier_trees = FALSE;
+	f_nmk = FALSE;
+	f_linear = FALSE;
+	f_nonlinear = FALSE;
+	Poset = NULL;
+	gen = NULL;
+	F = NULL;
+	v1 = NULL;
+	v2 = NULL;
+	A = NULL;
+	description = NULL;
+	L = NULL;
+	schreier_depth = 1000;
+	f_list = FALSE;
+	f_table_of_nodes = FALSE;
+	f_use_invariant_subset_if_available = TRUE;
+	f_debug = FALSE;
+	f_draw_poset = FALSE;
+	f_print_data_structure = FALSE;
+	f_draw_schreier_trees = FALSE;
+	null();
+}
+
+code_classify::~code_classify()
+{
+	freeself();
+}
+
+void code_classify::null()
+{
+}
+
+void code_classify::freeself()
+{
+	if (A) {
+		FREE_OBJECT(A);
+		}
+	if (Poset) {
+		FREE_OBJECT(Poset);
+		}
+	if (F) {
+		FREE_OBJECT(F);
+		}
+	if (v1) {
+		FREE_int(v1);
+		}
+	if (v2) {
+		FREE_int(v2);
+		}
+	if (gen) {
+		FREE_OBJECT(gen);
+		}
+	if (description) {
+		FREE_OBJECT(description);
+		}
+	if (L) {
+		FREE_OBJECT(L);
+		}
+	null();
+}
+
+void code_classify::read_arguments(int argc, const char **argv)
 {
 	int i;
 	int f_n = FALSE;
@@ -187,77 +260,7 @@ void code_generator::read_arguments(int argc, const char **argv)
 
 }
 
-code_generator::code_generator()
-{
-	null();
-}
-
-code_generator::~code_generator()
-{
-	freeself();
-}
-
-void code_generator::null()
-{
-	verbose_level = 0;
-	f_report = FALSE;
-
-	f_read_data_file = FALSE;
-	fname_data_file = NULL;
-	depth_completed = 0;
-
-	f_report_schreier_trees = FALSE;
-	f_nmk = FALSE;
-	f_linear = FALSE;
-	f_nonlinear = FALSE;
-	Poset = NULL;
-	gen = NULL;
-	F = NULL;
-	v1 = NULL;
-	v2 = NULL;
-	A = NULL;
-	description = NULL;
-	L = NULL;
-	schreier_depth = 1000;
-	f_list = FALSE;
-	f_table_of_nodes = FALSE;
-	f_use_invariant_subset_if_available = TRUE;
-	f_debug = FALSE;
-	f_draw_poset = FALSE;
-	f_print_data_structure = FALSE;
-	f_draw_schreier_trees = FALSE;
-}
-
-void code_generator::freeself()
-{
-	if (A) {
-		FREE_OBJECT(A);
-		}
-	if (Poset) {
-		FREE_OBJECT(Poset);
-		}
-	if (F) {
-		FREE_OBJECT(F);
-		}
-	if (v1) {
-		FREE_int(v1);
-		}
-	if (v2) {
-		FREE_int(v2);
-		}
-	if (gen) {
-		FREE_OBJECT(gen);
-		}
-	if (description) {
-		FREE_OBJECT(description);
-		}
-	if (L) {
-		FREE_OBJECT(L);
-		}
-	null();
-}
-
-void code_generator::init(int argc, const char **argv)
+void code_classify::init(int argc, const char **argv)
 {
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
@@ -273,17 +276,17 @@ void code_generator::init(int argc, const char **argv)
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "code_generator::init" << endl;
+		cout << "code_classify::init" << endl;
 		}
 
 
 	if (f_v) {
-		cout << "code_generator::init initializing "
+		cout << "code_classify::init initializing "
 				"finite field of order " << q << endl;
 		}
 	F->init(q, 0);
 	if (f_v) {
-		cout << "code_generator::init initializing "
+		cout << "code_classify::init initializing "
 				"finite field of order " << q << " done" << endl;
 		}
 
@@ -316,7 +319,7 @@ void code_generator::init(int argc, const char **argv)
 		nmk = n - k;
 
 		if (f_v) {
-			cout << "code_generator::init calling "
+			cout << "code_classify::init calling "
 					"init_projective_group, dimension = " << nmk << endl;
 			}
 
@@ -332,7 +335,7 @@ void code_generator::init(int argc, const char **argv)
 		FREE_OBJECT(nice_gens);
 	
 		if (f_v) {
-			cout << "code_generator::init finished with "
+			cout << "code_classify::init finished with "
 					"init_projective_group" << endl;
 			}
 
@@ -369,15 +372,15 @@ void code_generator::init(int argc, const char **argv)
 		}
 
 	if (f_v) {
-		cout << "code_generator::init degree = " << A->degree << endl;
-		cout << "code_generator::init depth = " << gen->depth << endl;
+		cout << "code_classify::init degree = " << A->degree << endl;
+		cout << "code_classify::init depth = " << gen->depth << endl;
 		}
 	
 
 	
 	
 	if (f_v) {
-		cout << "code_generator::init group set up, "
+		cout << "code_classify::init group set up, "
 				"calling gen->init" << endl;
 		cout << "A->f_has_strong_generators="
 				<< A->f_has_strong_generators << endl;
@@ -413,39 +416,39 @@ void code_generator::init(int argc, const char **argv)
 	int nb_nodes = ONE_MILLION;
 
 	if (f_v) {
-		cout << "code_generator::init group set up, "
+		cout << "code_classify::init group set up, "
 				"calling gen->init_poset_orbit_node" << endl;
 		}
 
 	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_v) {
-		cout << "code_generator::init group set up, "
+		cout << "code_classify::init group set up, "
 				"calling gen->root[0].init_root_node" << endl;
 		}
 
 	gen->root[0].init_root_node(gen, gen->verbose_level - 2);
 	if (f_read_data_file) {
 		if (f_v) {
-			cout << "code_generator::init reading data file "
+			cout << "code_classify::init reading data file "
 					<< fname_data_file << endl;
 			}
 
 		gen->read_data_file(depth_completed,
 				fname_data_file, verbose_level - 1);
 		if (f_v) {
-			cout << "code_generator::init after reading data file "
+			cout << "code_classify::init after reading data file "
 					<< fname_data_file << " depth_completed = "
 					<< depth_completed << endl;
 			}
 		if (f_v) {
-			cout << "code_generator::init before "
+			cout << "code_classify::init before "
 					"gen->recreate_schreier_vectors_up_to_level" << endl;
 			}
 		gen->recreate_schreier_vectors_up_to_level(depth_completed - 1,
 			verbose_level - 1);
 		if (f_v) {
-			cout << "code_generator::init after "
+			cout << "code_classify::init after "
 					"gen->recreate_schreier_vectors_up_to_level" << endl;
 			}
 
@@ -454,15 +457,19 @@ void code_generator::init(int argc, const char **argv)
 }
 
 
-void code_generator::main(int verbose_level)
+void code_classify::main(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int depth;
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
+	os_interface Os;
+	int t0;
+
+	t0 = Os.os_ticks();
 
 	if (f_v) {
-		cout << "code_generator::main" << endl;
+		cout << "code_classify::main" << endl;
 		}
 	if (f_read_data_file) {
 		int target_depth;
@@ -481,7 +488,7 @@ void code_generator::main(int verbose_level)
 			f_debug,
 			verbose_level);
 	}
-	cout << "code_generator::main depth = " << depth << endl;
+	cout << "code_classify::main depth = " << depth << endl;
 
 	if (f_table_of_nodes) {
 		int *Table;
@@ -652,11 +659,11 @@ void code_generator::main(int verbose_level)
 
 	}
 	if (f_v) {
-		cout << "code_generator::main done" << endl;
+		cout << "code_classify::main done" << endl;
 		}
 }
 
-void code_generator::print(ostream &ost, int len, int *S)
+void code_classify::print(ostream &ost, int len, int *S)
 {
 	int N, j;
 	int *codewords;
@@ -736,7 +743,7 @@ void code_generator::print(ostream &ost, int len, int *S)
 }
 
 
-int code_generator::Hamming_distance(int a, int b)
+int code_classify::Hamming_distance(int a, int b)
 {
 	int f_v = TRUE;
 	int d = 0;
@@ -744,7 +751,7 @@ int code_generator::Hamming_distance(int a, int b)
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "code_generator::Hamming_distance "
+		cout << "code_classify::Hamming_distance "
 				"a=" << a << " b=" << b << endl;
 		}
 	if (f_nonlinear) {
@@ -771,7 +778,7 @@ int code_generator::Hamming_distance(int a, int b)
 			}
 		}
 	if (f_v) {
-		cout << "code_generator::Hamming_distance "
+		cout << "code_classify::Hamming_distance "
 				"a=" << a << " b=" << b << " d=" << d << endl;
 		}
 	return d;
@@ -784,10 +791,11 @@ int code_generator::Hamming_distance(int a, int b)
 
 void print_code(ostream &ost, int len, int *S, void *data)
 {
-	code_generator *cg = (code_generator *) data;
+	code_classify *cg = (code_classify *) data;
 	
 	cg->print(ost, len, S);
 }
 
+}}
 
 

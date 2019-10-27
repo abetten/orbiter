@@ -11,20 +11,22 @@ MODULES = \
 	arc_lifting.o \
 	arc_orbits_on_pairs.o \
 	arc_partition.o \
+	blt_set_classify.o \
 	BLT_set_create_description.o \
 	BLT_set_create.o \
 	blt_set_with_action.o \
-	blt_set.o \
 	choose_points_or_lines.o \
 	classify_cubic_curves.o \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
+	code_classify.o \
 	cubic_curve_with_action.o \
 	design_create.o \
 	design_create_description.o \
 	invariants_packing.o \
 	k_arc_generator.o \
 	large_set_classify.o \
+	ovoid_classify.o \
 	packing_classify.o \
 	packing_classify2.o \
 	packing_invariants.o \

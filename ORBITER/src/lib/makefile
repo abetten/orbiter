@@ -284,20 +284,22 @@ MODULES= \
 		top_level/geometry/arc_lifting.o \
 		top_level/geometry/arc_orbits_on_pairs.o \
 		top_level/geometry/arc_partition.o \
+		top_level/geometry/blt_set_classify.o \
 		top_level/geometry/BLT_set_create_description.o \
 		top_level/geometry/BLT_set_create.o \
 		top_level/geometry/blt_set_with_action.o \
-		top_level/geometry/blt_set.o \
 		top_level/geometry/choose_points_or_lines.o \
 		top_level/geometry/classify_cubic_curves.o \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
+		top_level/geometry/code_classify.o \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/design_create.o \
 		top_level/geometry/design_create_description.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/large_set_classify.o \
+		top_level/geometry/ovoid_classify.o \
 		top_level/geometry/packing_classify.o \
 		top_level/geometry/packing_classify2.o \
 		top_level/geometry/packing_invariants.o \

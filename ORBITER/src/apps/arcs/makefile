@@ -10,11 +10,12 @@ LFLAGS = -lm
 all: arcs_main.out \
 	arcs_orderly.out \
 	awss.out \
-	test_hyperoval.out \
 	create_group.out \
 	k_arc_generator_main.out \
 	k_arc_lifting.out \
-	test_arc.out
+	simeon.out \
+	test_arc.out \
+	test_hyperoval.out 
 
 
 arcs_main.out:  arcs_main.o ;
@@ -26,9 +27,6 @@ arcs_orderly.out:  arcs_orderly.o;
 awss.out:  awss.o;
 	$(DISCRETA_CPP)  awss.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-test_hyperoval.out:  test_hyperoval.o;
-	$(DISCRETA_CPP)  test_hyperoval.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 create_group.out:  create_group.o;
 	$(DISCRETA_CPP)  create_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -38,8 +36,15 @@ k_arc_generator_main.out:  k_arc_generator_main.o;
 k_arc_lifting.out:  k_arc_lifting.o;
 	$(DISCRETA_CPP)  k_arc_lifting.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+simeon.out:  simeon.o;
+	$(DISCRETA_CPP)  simeon.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 test_arc.out:  test_arc.o;
 	$(DISCRETA_CPP)  test_arc.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+test_hyperoval.out:  test_hyperoval.o;
+	$(DISCRETA_CPP)  test_hyperoval.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 
 
 

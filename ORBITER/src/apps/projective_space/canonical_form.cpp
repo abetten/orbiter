@@ -220,14 +220,14 @@ int main(int argc, const char **argv)
 				OiP->print(cout);
 				}
 
-	#if 0
+#if 0
 			for (j = 0; j < rep_len; j++) {
 				cout << (int) Type_data[i][j];
 				if (j < rep_len - 1) {
 					cout << ", ";
 					}
 				}
-	#endif
+#endif
 			cout << endl;
 			}
 

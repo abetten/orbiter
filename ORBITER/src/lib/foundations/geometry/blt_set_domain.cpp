@@ -53,23 +53,23 @@ void blt_set_domain::freeself()
 
 	if (f_v) {
 		cout << "blt_set_domain::freeself" << endl;
-		}
+	}
 	if (f_orthogonal_allocated) {
 		if (f_v) {
 			cout << "blt_set_domain::freeself before O" << endl;
-			}
+		}
 		if (O) {
 			delete O;
-			}
+		}
 		f_orthogonal_allocated = FALSE;
 		O = NULL;
-		}
+	}
 	if (Pts) {
 		FREE_int(Pts);
-		}
+	}
 	if (Candidates) {
 		FREE_int(Candidates);
-		}
+	}
 	if (P) {
 		FREE_OBJECT(P);
 	}
@@ -79,8 +79,7 @@ void blt_set_domain::freeself()
 	null();
 	if (f_v) {
 		cout << "blt_set_domain::freeself done" << endl;
-		}
-
+	}
 }
 
 
@@ -95,7 +94,7 @@ void blt_set_domain::init(orthogonal *O,
 		cout << "blt_set_domain::init" << endl;
 		cout << "blt_set_domain::init "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
 
 
 	blt_set_domain::O = O;
@@ -113,23 +112,23 @@ void blt_set_domain::init(orthogonal *O,
 	if (f_v) {
 		cout << "blt_set_domain::init q=" << q
 				<< " target_size = " << target_size << endl;
-		}
+	}
 
 
 	f_semilinear = TRUE;
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 	if (f_v) {
 		cout << "blt_set_domain::init "
 				"f_semilinear=" << f_semilinear << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "blt_set_domain::init "
 				"allocating Pts and Candidates" << endl;
-		}
+	}
 
 
 	Pts = NEW_int(target_size * n);
@@ -141,7 +140,7 @@ void blt_set_domain::init(orthogonal *O,
 
 	if (f_v) {
 		cout << "blt_set_domain::init before P->init" << endl;
-		}
+	}
 
 
 	P->init(4, F,
@@ -150,7 +149,7 @@ void blt_set_domain::init(orthogonal *O,
 
 	if (f_v) {
 		cout << "blt_set_domain::init after P->init" << endl;
-		}
+	}
 
 
 	G53 = NEW_OBJECT(grassmann);
@@ -159,20 +158,21 @@ void blt_set_domain::init(orthogonal *O,
 
 	if (f_v) {
 		cout << "blt_set_domain::init finished" << endl;
-		}
+	}
 }
 
 void blt_set_domain::compute_adjacency_list_fast(
 	int first_point_of_starter,
 	int *points, int nb_points, int *point_color,
 	uchar *&bitvector_adjacency,
-	int &bitvector_length_in_bits,
-	int &bitvector_length,
+	long int &bitvector_length_in_bits,
+	long int &bitvector_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int L;
-	int i, j, k, c1, c2;
+	long int L;
+	long int i, j, k;
+	int c1, c2;
 	int *Pts;
 	int *form_value;
 	int v1[5];
@@ -186,14 +186,14 @@ void blt_set_domain::compute_adjacency_list_fast(
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast" << endl;
 		}
-	L = (nb_points * (nb_points - 1)) >> 1;
+	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
-		}
+	}
 
 	Pts = NEW_int(nb_points * 5);
 	form_value = NEW_int(nb_points);
@@ -201,17 +201,17 @@ void blt_set_domain::compute_adjacency_list_fast(
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast "
 				"unranking points" << endl;
-		}
+	}
 	for (i = 0; i < nb_points; i++) {
 		O->unrank_point(Pts + i * 5, 1, points[i], 0);
 		form_value[i] = O->evaluate_bilinear_form(
 				v1, Pts + i * 5, 1);
-		}
+	}
 
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast "
 				"computing adjacencies" << endl;
-		}
+	}
 
 	cnt = 0;
 	two = F->add(1, 1);
@@ -227,19 +227,19 @@ void blt_set_domain::compute_adjacency_list_fast(
 		m[4] = Pi[3];
 
 		for (j = i + 1; j < nb_points; j++, cnt++) {
-			k = Combi.ij2k(i, j, nb_points);
+			k = Combi.ij2k_lint(i, j, nb_points);
 
 			if ((cnt & ((1 << 25) - 1)) == 0 && cnt) {
 				cout << "blt_set_domain::compute_adjacency_list_fast "
 						"nb_points=" << nb_points << " adjacency "
 						<< cnt << " / " << L << " i=" << i
 						<< " j=" << j << endl;
-				}
+			}
 			c2 = point_color[j];
 			if (c1 == c2) {
 				bitvector_m_ii(bitvector_adjacency, k, 0);
 				continue;
-				}
+			}
 			f13 = form_value[j];
 			Pj = Pts + j * 5;
 			f23 = F->add5(
@@ -252,18 +252,18 @@ void blt_set_domain::compute_adjacency_list_fast(
 			d = F->product3(f12, f13, f23);
 			if (d == 0) {
 				bitvector_m_ii(bitvector_adjacency, k, 0);
-				}
+			}
 			else {
 				if (O->f_is_minus_square[d]) {
 					bitvector_m_ii(bitvector_adjacency, k, 0);
-					}
+				}
 				else {
 					bitvector_m_ii(bitvector_adjacency, k, 1);
-					}
 				}
+			}
 
-			} // next j
-		} // next i
+		} // next j
+	} // next i
 
 
 
@@ -271,7 +271,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 	FREE_int(form_value);
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast done" << endl;
-		}
+	}
 }
 
 
@@ -296,12 +296,12 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 
 	if (f_v) {
 		cout << "blt_set_domain::compute_colors" << endl;
-		}
+	}
 	O->unrank_line(p1, p2, special_line, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "after unrank_line " << special_line << ":" << endl;
 		cout << "p1=" << p1 << " p2=" << p2 << endl;
-		}
+	}
 	O->unrank_point(v1, 1, p1, 0);
 	O->unrank_point(v2, 1, p2, 0);
 	if (f_vv) {
@@ -311,11 +311,11 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		cout << "p2=" << p2 << " ";
 		int_vec_print(cout, v2, 5);
 		cout << endl;
-		}
+	}
 	if (p1 != starter[0]) {
 		cout << "p1 != starter[0]" << endl;
 		exit(1);
-		}
+	}
 
 	pts_on_special_line = NEW_int(q + 1);
 	O->points_on_line(p1, p2, pts_on_special_line,
@@ -325,21 +325,21 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		cout << "pts_on_special_line:" << endl;
 		int_vec_print(cout, pts_on_special_line, q + 1);
 		cout << endl;
-		}
+	}
 
 	if (!Sorting.int_vec_search(pts_on_special_line, q + 1, starter[0], idx)) {
 		cout << "cannot find the first point on the line" << endl;
 		exit(1);
-		}
+	}
 	for (i = idx; i < q + 1; i++) {
 		pts_on_special_line[i] = pts_on_special_line[i + 1];
-		}
+	}
 	if (f_vv) {
 		cout << "pts_on_special_line without the first "
 				"starter point:" << endl;
 		int_vec_print(cout, pts_on_special_line, q);
 		cout << endl;
-		}
+	}
 
 	int a, b, t, c, j, h;
 	int *starter_t;
@@ -353,18 +353,18 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		if (a == 0) {
 			cout << "a == 0, this should not be" << endl;
 			exit(1);
-			}
+		}
 		// <v3,t*v1+v2> = t*<v3,v1>+<v3,v2> = t*a+b = 0
 		// Thus, t = -b/a
 		t = O->F->mult(O->F->negate(b), O->F->inverse(a));
 		starter_t[i] = t;
-		}
+	}
 
 	if (f_vv) {
 		cout << "starter_t:" << endl;
 		int_vec_print(cout, starter_t, starter_sz);
 		cout << endl;
-		}
+	}
 
 	int *free_pts;
 	int *open_colors;
@@ -380,19 +380,20 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	j = 0;
 	for (i = 0; i < q; i++) {
 		for (h = 1; h < starter_sz; h++) {
-			if (starter_t[h] == i)
+			if (starter_t[h] == i) {
 				break;
 			}
+		}
 		if (h == starter_sz) {
 			free_pts[j] = pts_on_special_line[i];
 			open_colors[j] = i;
 			j++;
-			}
 		}
+	}
 	if (j != nb_colors) {
 		cout << "blt_set_domain::compute_colors error: j != nb_colors" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		cout << "The " << nb_colors << " free points are :" << endl;
 		int_vec_print(cout, free_pts, nb_colors);
@@ -400,24 +401,24 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		cout << "The " << nb_colors << " open colors are :" << endl;
 		int_vec_print(cout, open_colors, nb_colors);
 		cout << endl;
-		}
+	}
 	for ( ; j < q; j++) {
 		open_colors[j] = starter_t[j - nb_colors + 1];
-		}
+	}
 	if (f_vv) {
 		cout << "open_colors :" << endl;
 		int_vec_print(cout, open_colors, q);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < q; i++) {
 		j = open_colors[i];
 		open_colors_inv[j] = i;
-		}
+	}
 	if (f_vv) {
 		cout << "open_colors_inv :" << endl;
 		int_vec_print(cout, open_colors_inv, q);
 		cout << endl;
-		}
+	}
 
 
 	for (i = 0; i < nb_candidates; i++) {
@@ -427,13 +428,13 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 					<< " is " << candidates[i] << " = ";
 			int_vec_print(cout, v3, 5);
 			cout << endl;
-			}
+		}
 		a = O->evaluate_bilinear_form(v1, v3, 1);
 		b = O->evaluate_bilinear_form(v2, v3, 1);
 		if (a == 0) {
 			cout << "a == 0, this should not be" << endl;
 			exit(1);
-			}
+		}
 		// <v3,t*v1+v2> = t*<v3,v1>+<v3,v2> = t*a+b = 0
 		// Thus, t = -b/a
 		t = O->F->mult(O->F->negate(b), O->F->inverse(a));
@@ -452,15 +453,15 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 			cout << "nb_colors=" << nb_colors << endl;
 
 			exit(1);
-			}
-		point_color[i] = c;
 		}
+		point_color[i] = c;
+	}
 
 	if (f_vv) {
 		cout << "point colors:" << endl;
 		int_vec_print(cout, point_color, nb_candidates);
 		cout << endl;
-		}
+	}
 
 	FREE_int(pts_on_special_line);
 	FREE_int(starter_t);
@@ -469,7 +470,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	FREE_int(open_colors_inv);
 	if (f_v) {
 		cout << "blt_set_domain::compute_colors done" << endl;
-		}
+	}
 }
 
 
@@ -506,17 +507,17 @@ void blt_set_domain::early_test_func(int *S, int len,
 						<< candidates[i] << ": ";
 				int_vec_print(cout, v, 5);
 				cout << endl;
-				}
 			}
 		}
+	}
 	for (i = 0; i < len; i++) {
 		O->unrank_point(Pts + i * 5, 1,
 				S[i], 0/*verbose_level - 4*/);
-		}
+	}
 	for (i = 0; i < nb_candidates; i++) {
 		O->unrank_point(Candidates + i * 5, 1, candidates[i],
 				0/*verbose_level - 4*/);
-		}
+	}
 
 	two = O->F->add(1, 1);
 
@@ -524,13 +525,13 @@ void blt_set_domain::early_test_func(int *S, int len,
 	if (len == 0) {
 		int_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
-		}
+	}
 	else {
 		nb_good_candidates = 0;
 
 		if (f_vv) {
 			cout << "blt_set_domain::early_test_func before testing" << endl;
-			}
+		}
 		for (j = 0; j < nb_candidates; j++) {
 
 
@@ -538,7 +539,7 @@ void blt_set_domain::early_test_func(int *S, int len,
 				cout << "blt_set::early_test_func "
 						"testing " << j << " / "
 						<< nb_candidates << endl;
-				}
+			}
 
 			v1 = Pts;
 			v3 = Candidates + j * 5;
@@ -562,7 +563,7 @@ void blt_set_domain::early_test_func(int *S, int len,
 
 			if (fxz == 0) {
 				f_OK = FALSE;
-				}
+			}
 			else {
 				m3[0] = O->F->mult(two, v3[0]);
 				m3[1] = v3[2];
@@ -598,20 +599,20 @@ void blt_set_domain::early_test_func(int *S, int len,
 					if (a == 0) {
 						f_OK = FALSE;
 						break;
-						}
+					}
 					if (O->f_is_minus_square[a]) {
 						f_OK = FALSE;
 						break;
-						}
-
 					}
+
 				}
+			}
 			if (f_OK) {
 				good_candidates[nb_good_candidates++] =
 						candidates[j];
-				}
-			} // next j
-		} // else
+			}
+		} // next j
+	} // else
 }
 
 int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
@@ -636,13 +637,13 @@ int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
 	d = O->F->product3(f12, f13, f23);
 	if (d == 0) {
 		return FALSE;
-		}
+	}
 	if (O->f_is_minus_square[d]) {
 		return FALSE;
-		}
+	}
 	else {
 		return TRUE;
-		}
+	}
 
 }
 
@@ -660,36 +661,36 @@ int blt_set_domain::check_conditions(int len, int *S, int verbose_level)
 	if (f_vv) {
 		cout << "checking set ";
 		print_set(cout, len, S);
-		}
+	}
 	if (!collinearity_test(S, len, verbose_level)) {
 		f_OK = FALSE;
 		f_collinearity_test = TRUE;
-		}
+	}
 	if (!O->BLT_test(len, S, verbose_level)) {
 		f_OK = FALSE;
 		f_BLT_test = TRUE;
-		}
+	}
 
 
 	if (f_OK) {
 		if (f_vv) {
 			cout << "OK" << endl;
-			}
-		return TRUE;
 		}
+		return TRUE;
+	}
 	else {
 		if (f_vv) {
 			cout << "not OK because of ";
 			if (f_BLT_test) {
 				cout << "BLT test";
-				}
+			}
 			if (f_collinearity_test) {
 				cout << "collinearity test";
-				}
-			cout << endl;
 			}
-		return FALSE;
+			cout << endl;
 		}
+		return FALSE;
+	}
 }
 
 int blt_set_domain::collinearity_test(int *S, int len, int verbose_level)
@@ -705,8 +706,8 @@ int blt_set_domain::collinearity_test(int *S, int len, int verbose_level)
 			O->unrank_point(O->v1, 1, S[i], 0);
 			int_vec_print(cout, O->v1, n);
 			cout << endl;
-			}
 		}
+	}
 	y = S[len - 1];
 	O->unrank_point(O->v1, 1, y, 0);
 
@@ -726,16 +727,16 @@ int blt_set_domain::collinearity_test(int *S, int len, int verbose_level)
 				int_vec_print(cout, O->v2, n);
 				cout << endl;
 				cout << "fxy=" << fxy << endl;
-				}
-			break;
 			}
+			break;
 		}
+	}
 
 	if (f_v) {
 		if (!f_OK) {
 			cout << "collinearity test fails" << endl;
-			}
 		}
+	}
 	return f_OK;
 }
 
@@ -747,7 +748,7 @@ void blt_set_domain::print(ostream &ost, int *S, int len)
 		O->unrank_point(O->v1, 1, S[i], 0);
 		int_vec_print(ost, O->v1, n);
 		ost << endl;
-		}
+	}
 }
 
 
@@ -764,19 +765,19 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 
 	if (f_v) {
 		cout << "blt_set_domain::find_free_points" << endl;
-		}
+	}
 	lines_on_pt = NEW_int(S_sz * (q + 1));
 	for (i = 0; i < S_sz; i++) {
 		O->lines_on_point_by_line_rank(S[i],
 				lines_on_pt + i * (q + 1),
 				0 /* verbose_level */);
-		}
+	}
 
 	if (f_vv) {
 		cout << "blt_set_domain::find_free_points "
 				"Lines on partial BLT set:" << endl;
 		int_matrix_print(lines_on_pt, S_sz, q + 1);
-		}
+	}
 
 	Perp = NEW_int(S_sz * (q + 1) * (q + 1));
 	for (i = 0; i < S_sz; i++) {
@@ -785,12 +786,12 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 			O->points_on_line_by_line_rank(a,
 					Perp + i * (q + 1) * (q + 1) + j * (q + 1),
 					0 /* verbose_level */);
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "blt_set_domain::find_free_points Perp:" << endl;
 		int_matrix_print(Perp, S_sz * (q + 1), q + 1);
-		}
+	}
 
 
 	C.init(Perp, S_sz * (q + 1) * (q + 1), TRUE, 0);
@@ -804,12 +805,12 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 	if (f_v) {
 		cout << "blt_set_domain::find_free_points nb_free_pts="
 				<< nb_free_pts << endl;
-		}
+	}
 	free_pts = NEW_int(nb_free_pts);
 	free_pt_idx = NEW_int(O->nb_points);
 	for (h = 0; h < O->nb_points; h++) {
 		free_pt_idx[h] = -1;
-		}
+	}
 
 	for (h = 0; h < nb_free_pts; h++) {
 		b = C.second_sorting_perm_inv[f + h];
@@ -818,13 +819,13 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 		if (len != 1) {
 			cout << "blt_set_domain::find_free_points len != 1" << endl;
 			exit(1);
-			}
+		}
 		pt = C.data_sorted[fst];
 		//cout << "h=" << h << " b=" << b << " len="
 		//<< len << " pt=" << pt << endl;
 		free_pts[h] = pt;
 		free_pt_idx[pt] = h;
-		}
+	}
 
 	FREE_int(lines_on_pt);
 	FREE_int(Perp);
@@ -832,10 +833,10 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 	if (f_v) {
 		cout << "blt_set_domain::find_free_points "
 				"There are " << nb_free_pts << " free points" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "blt_set_domain::find_free_points done" << endl;
-		}
+	}
 }
 
 int blt_set_domain::create_graph(
@@ -853,7 +854,7 @@ int blt_set_domain::create_graph(
 
 	if (f_v) {
 		cout << "blt_set_domain::create_graph" << endl;
-		}
+	}
 	int *point_color;
 	int nb_colors;
 
@@ -868,7 +869,7 @@ int blt_set_domain::create_graph(
 		cout << "Case " << case_number /*orbit_at_level*/
 				<< " Lines on partial BLT set:" << endl;
 		int_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
-		}
+	}
 
 
 	special_line = lines_on_pt[0];
@@ -890,7 +891,7 @@ int blt_set_domain::create_graph(
 				<< " point colors (1st classification): ";
 		C.print(FALSE /* f_reverse */);
 		cout << endl;
-		}
+	}
 
 
 	classify C2;
@@ -902,7 +903,7 @@ int blt_set_domain::create_graph(
 				<< " point colors (2nd classification): ";
 		C2.print(FALSE /* f_reverse */);
 		cout << endl;
-		}
+	}
 
 
 
@@ -911,7 +912,7 @@ int blt_set_domain::create_graph(
 	f = C2.second_type_first[0];
 	//l = C2.second_type_len[0];
 	idx = C2.second_sorting_perm_inv[f + 0];
-	#if 0
+#if 0
 	if (C.type_len[idx] != minimal_type_multiplicity) {
 		cout << "idx != minimal_type" << endl;
 		cout << "idx=" << idx << endl;
@@ -920,8 +921,8 @@ int blt_set_domain::create_graph(
 		cout << "minimal_type_multiplicity="
 				<< minimal_type_multiplicity << endl;
 		exit(1);
-		}
-	#endif
+	}
+#endif
 	int minimal_type, minimal_type_multiplicity;
 
 	minimal_type = idx;
@@ -934,7 +935,7 @@ int blt_set_domain::create_graph(
 		cout << "blt_set_domain::create_graph Case " << case_number
 				<< " / " << nb_cases_total << " minimal_type_multiplicity "
 				<< minimal_type_multiplicity << endl;
-		}
+	}
 
 	if (f_eliminate_graphs_if_possible) {
 		if (minimal_type_multiplicity == 0) {
@@ -944,8 +945,8 @@ int blt_set_domain::create_graph(
 							"eliminated" << endl;
 			ret = FALSE;
 			goto finish;
-			}
 		}
+	}
 
 
 
@@ -953,11 +954,11 @@ int blt_set_domain::create_graph(
 		cout << "blt_set_domain::create_graph Case " << case_number
 				<< " / " << nb_cases_total << " Computing adjacency list, "
 						"nb_points=" << nb_candidates << endl;
-		}
+	}
 
 	uchar *bitvector_adjacency;
-	int bitvector_length_in_bits;
-	int bitvector_length;
+	long int bitvector_length_in_bits;
+	long int bitvector_length;
 
 	compute_adjacency_list_fast(Starter_set[0],
 			candidates, nb_candidates, point_color,
@@ -971,7 +972,7 @@ int blt_set_domain::create_graph(
 		cout << "blt_set_domain::create_graph Case " << case_number
 				<< " / " << nb_cases_total << " bitvector_length="
 				<< bitvector_length << endl;
-		}
+	}
 
 
 	if (f_v) {
@@ -987,7 +988,7 @@ int blt_set_domain::create_graph(
 	int i;
 	for (i = 0; i < nb_candidates; i++) {
 		CG->points[i] = candidates[i];
-		}
+	}
 	CG->init_user_data(Starter_set, starter_size, verbose_level - 2);
 	sprintf(CG->fname_base, "graph_BLT_%d_%d_%d",
 			q, starter_size, case_number);
@@ -995,7 +996,7 @@ int blt_set_domain::create_graph(
 
 	if (f_v) {
 		cout << "blt_set_domain::create_graph colored_graph created" << endl;
-		}
+	}
 
 finish:
 
@@ -1003,7 +1004,7 @@ finish:
 	FREE_int(point_color);
 	if (f_v) {
 		cout << "blt_set_domain::create_graph done" << endl;
-		}
+	}
 	return ret;
 }
 

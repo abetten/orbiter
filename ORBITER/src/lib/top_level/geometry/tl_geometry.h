@@ -440,6 +440,102 @@ public:
 };
 
 
+// #############################################################################
+// blt_set_classify.cpp
+// #############################################################################
+
+//! classification of BLT-sets
+
+
+
+class blt_set_classify {
+
+public:
+
+	blt_set_domain *Blt_set_domain;
+
+	int f_semilinear;
+
+	int q; // field order
+
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char prefix_with_directory[1000];
+	int starter_size;
+
+	poset *Poset;
+	poset_classification *gen;
+	action *A; // orthogonal group
+	int degree;
+
+
+	int target_size;
+
+
+	void read_arguments(int argc, const char **argv);
+	blt_set_classify();
+	~blt_set_classify();
+	void null();
+	void freeself();
+	void init_basic(orthogonal *O,
+		int f_semilinear,
+		const char *input_prefix,
+		const char *base_fname,
+		int starter_size,
+		int argc, const char **argv,
+		int verbose_level);
+	void init_group(int f_semilinear, int verbose_level);
+	//void init_orthogonal(int verbose_level);
+	void init_orthogonal_hash(int verbose_level);
+	void init2(int verbose_level);
+	void create_graphs(
+		int orbit_at_level_r, int orbit_at_level_m,
+		int level_of_candidates_file,
+		const char *output_prefix,
+		int f_lexorder_test, int f_eliminate_graphs_if_possible,
+		int verbose_level);
+	void create_graphs_list_of_cases(
+		const char *case_label,
+		const char *list_of_cases_text,
+		int level_of_candidates_file,
+		const char *output_prefix,
+		int f_lexorder_test, int f_eliminate_graphs_if_possible,
+		int verbose_level);
+	int create_graph(
+		int orbit_at_level, int level_of_candidates_file,
+		const char *output_prefix,
+		int f_lexorder_test, int f_eliminate_graphs_if_possible,
+		int &nb_vertices, char *graph_fname_base,
+		colored_graph *&CG,
+		int verbose_level);
+
+	void lifting_prepare_function_new(exact_cover *E, int starter_case,
+		int *candidates, int nb_candidates,
+		strong_generators *Strong_gens,
+		diophant *&Dio, int *&col_labels,
+		int &f_ruled_out,
+		int verbose_level);
+	//void Law_71(int verbose_level);
+	void report_from_iso(isomorph &Iso, int verbose_level);
+	void report(orbit_transversal *T, int verbose_level);
+	//void subset_orbits(isomorph &Iso, int verbose_level);
+};
+
+// global functions:
+void blt_set_classify_print(std::ostream &ost, int len, int *S, void *data);
+void blt_set_classify_lifting_prepare_function_new(exact_cover *EC, int starter_case,
+	int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+void blt_set_classify_early_test_func_callback(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level);
+//void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
+
+
 
 
 // #############################################################################
@@ -513,102 +609,6 @@ public:
 		int verbose_level);
 };
 
-// #############################################################################
-// blt_set.cpp
-// #############################################################################
-
-//! classification of BLT-sets
-
-
-
-class blt_set {
-
-public:
-
-	blt_set_domain *Blt_set_domain;
-
-	int f_semilinear;
-
-	int q; // field order
-
-	char starter_directory_name[1000];
-	char prefix[1000];
-	char prefix_with_directory[1000];
-	int starter_size;
-
-	poset *Poset;
-	poset_classification *gen;
-	action *A; // orthogonal group
-	int degree;
-
-
-	int target_size;
-
-
-	void read_arguments(int argc, const char **argv);
-	blt_set();
-	~blt_set();
-	void null();
-	void freeself();
-	void init_basic(orthogonal *O,
-		int f_semilinear,
-		const char *input_prefix,
-		const char *base_fname,
-		int starter_size,
-		int argc, const char **argv,
-		int verbose_level);
-	void init_group(int f_semilinear, int verbose_level);
-	//void init_orthogonal(int verbose_level);
-	void init_orthogonal_hash(int verbose_level);
-	void init2(int verbose_level);
-	void create_graphs(
-		int orbit_at_level_r, int orbit_at_level_m,
-		int level_of_candidates_file,
-		const char *output_prefix,
-		int f_lexorder_test, int f_eliminate_graphs_if_possible,
-		int verbose_level);
-	void create_graphs_list_of_cases(
-		const char *case_label,
-		const char *list_of_cases_text,
-		int level_of_candidates_file,
-		const char *output_prefix,
-		int f_lexorder_test, int f_eliminate_graphs_if_possible,
-		int verbose_level);
-	int create_graph(
-		int orbit_at_level, int level_of_candidates_file,
-		const char *output_prefix,
-		int f_lexorder_test, int f_eliminate_graphs_if_possible,
-		int &nb_vertices, char *graph_fname_base,
-		colored_graph *&CG,
-		int verbose_level);
-
-	void lifting_prepare_function_new(exact_cover *E, int starter_case,
-		int *candidates, int nb_candidates,
-		strong_generators *Strong_gens,
-		diophant *&Dio, int *&col_labels,
-		int &f_ruled_out,
-		int verbose_level);
-	//void Law_71(int verbose_level);
-	void report_from_iso(isomorph &Iso, int verbose_level);
-	void report(orbit_transversal *T, int verbose_level);
-	//void subset_orbits(isomorph &Iso, int verbose_level);
-};
-
-// global functions:
-void blt_set_print(std::ostream &ost, int len, int *S, void *data);
-void blt_set_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
-void blt_set_early_test_func_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void blt_set_callback_report(isomorph *Iso, void *data, int verbose_level);
-//void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
-
-
 
 // #############################################################################
 // blt_set_with_action.cpp
@@ -622,7 +622,7 @@ class blt_set_with_action {
 
 public:
 
-	blt_set *Blt_set;
+	blt_set_classify *Blt_set;
 	blt_set_domain *Blt_set_domain;
 	strong_generators *Aut_gens;
 	blt_set_invariants *Inv;
@@ -635,8 +635,8 @@ public:
 	void null();
 	void freeself();
 	void init_set(
-		blt_set *Blt_set, int *set,
-		strong_generators *Aut_gens, int verbose_level);
+			blt_set_classify *Blt_set, int *set,
+			strong_generators *Aut_gens, int verbose_level);
 	void init_orbits_on_points(
 			int verbose_level);
 	void print_automorphism_group(
@@ -1033,6 +1033,90 @@ void classify_trihedral_pairs_early_test_function_type2(int *S, int len,
 	void *data, int verbose_level);
 
 
+// #############################################################################
+// code_classify.cpp
+// #############################################################################
+
+//! classification of linear and nonlinear codes
+
+
+class code_classify {
+
+public:
+
+	int verbose_level;
+
+	int f_nmk;
+	int n;
+	int q;
+	int d;
+
+	int f_report_schreier_trees;
+	int f_report;
+
+	int f_read_data_file;
+	const char *fname_data_file;
+	int depth_completed;
+
+
+	char directory_path[1000];
+	char prefix[1000];
+
+
+	finite_field *F; // F_q
+
+
+	int f_linear;
+	int k; // for linear codes
+	int nmk; // n - k
+	rank_checker rc;
+	int *v1; // [nmk], used by Hamming distance
+	int *v2; // [nmk], used by Hamming distance
+
+
+
+
+	int f_nonlinear;
+	int N; // number of codewords for nonlinear codes
+	linear_group_description *description;
+	linear_group *L;
+
+
+	strong_generators *Strong_gens;
+	action *A; // PGL(n - k, q) if f_linear
+
+	poset *Poset;
+	poset_classification *gen;
+
+
+	int f_irreducibility_test;
+	int f_semilinear;
+	int f_list;
+	int f_table_of_nodes;
+
+
+	int schreier_depth; // = 1000;
+	int f_use_invariant_subset_if_available; // = TRUE;
+	int f_debug; // = FALSE;
+	//int f_lex; // = FALSE;
+
+	int f_draw_poset;
+	int f_print_data_structure;
+	int f_draw_schreier_trees;
+
+	code_classify();
+	~code_classify();
+	void null();
+	void freeself();
+	void read_arguments(int argc, const char **argv);
+	void init(int argc, const char **argv);
+	void main(int verbose_level);
+	void print(std::ostream &ost, int len, int *S);
+	int Hamming_distance(int a, int b);
+};
+
+void print_code(std::ostream &ost, int len, int *S, void *data);
+
 
 // #############################################################################
 // cubic_curve_action.cpp:
@@ -1348,6 +1432,107 @@ void large_set_early_test_function(int *S, int len,
 int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
 		int orbit_idx, void *data, int verbose_level);
 
+
+// #############################################################################
+// ovoid_classify.cpp
+// #############################################################################
+
+
+//! classification of ovoids in orthogonal spaces
+
+
+class ovoid_classify {
+
+public:
+
+	poset *Poset;
+	poset_classification *gen;
+
+	finite_field *F;
+
+	action *A;
+
+
+	orthogonal *O;
+
+	int epsilon; // the type of the quadric (0, 1 or -1)
+	int n; // projective dimension
+	int d; // algebraic dimension
+	int q; // field order
+	int m; // Witt index
+	int depth; // search depth
+
+	int N; // = O->nb_points
+
+	int *u, *v, *w, *tmp1; // vectors of length d
+
+	int nb_sol; // number of solutions so far
+
+
+
+	int f_prefix;
+	char prefix[1000]; // prefix for output files
+
+	int f_list;
+
+	int f_max_depth;
+	int max_depth;
+
+	int f_poly;
+	const char *override_poly;
+
+	int f_draw_poset;
+	int f_embedded;
+	int f_sideways;
+
+	int f_read;
+	int read_level;
+
+	char prefix_with_directory[1000];
+
+	klein_correspondence *K;
+	int *color_table;
+	int nb_colors;
+
+	int *Pts; // [N * d]
+	int *Candidates; // [N * d]
+
+
+	ovoid_classify();
+	~ovoid_classify();
+	void init(int argc, const char **argv, int &verbose_level);
+	void read_arguments(int argc, const char **argv, int &verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void print(std::ostream &ost, int *S, int len);
+	void make_graphs(orbiter_data_file *ODF,
+		int f_split, int split_r, int split_m,
+		int f_lexorder_test,
+		const char *fname_mask,
+		int verbose_level);
+	void make_one_graph(orbiter_data_file *ODF,
+		int orbit_idx,
+		int f_lexorder_test,
+		colored_graph *&CG,
+		int verbose_level);
+	void create_graph(orbiter_data_file *ODF,
+		int orbit_idx,
+		int *candidates, int nb_candidates,
+		colored_graph *&CG,
+		int verbose_level);
+	void compute_coloring(int *starter, int starter_size,
+			int *candidates, int nb_points,
+			int *point_color, int &nb_colors_used, int verbose_level);
+
+};
+
+void ovoid_classify_early_test_func_callback(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+void callback_ovoid_print_set(std::ostream &ost, int len, int *S, void *data);
 
 
 // #############################################################################
@@ -2522,11 +2707,6 @@ public:
 
 	classify_double_sixes *Classify_double_sixes;
 
-
-
-
-
-
 	// classification of surfaces:
 	flag_orbits *Flag_orbits;
 
@@ -2539,11 +2719,6 @@ public:
 	int **Identify_coeff;
 	int **Identify_monomial;
 	int *Identify_length;
-
-
-
-
-	
 
 
 	surface_classify_wedge();

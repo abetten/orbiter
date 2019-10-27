@@ -87,7 +87,7 @@ class spread_lifting;
 class k_arc_generator;
 class arc_lifting_simeon;
 	// added Jan 6, 2019
-class blt_set;
+class blt_set_classify;
 	// started 8/13/2006, added Jan 6, 2019
 class surfaces_arc_lifting;
 	// started 1/9/2019
@@ -117,6 +117,8 @@ class tensor_classify;
 class design_create;
 class design_create_description;
 class large_set_classify;
+class code_classify;
+class ovoid_classify;
 
 // #############################################################################
 // representatives.cpp
