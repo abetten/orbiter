@@ -21,11 +21,8 @@ MODULES = \
 	classify_trihedral_pairs.o \
 	code_classify.o \
 	cubic_curve_with_action.o \
-	design_create.o \
-	design_create_description.o \
 	invariants_packing.o \
 	k_arc_generator.o \
-	large_set_classify.o \
 	ovoid_classify.o \
 	packing_classify.o \
 	packing_classify2.o \
@@ -49,7 +46,6 @@ MODULES = \
 	surface_object_with_action.o \
 	surface_with_action.o \
 	surfaces_arc_lifting.o \
-	tactical_decomposition.o \
 	tensor_classify.o \
 	translation_plane_via_andre_model.o
 

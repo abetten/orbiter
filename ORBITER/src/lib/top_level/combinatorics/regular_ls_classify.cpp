@@ -1,4 +1,4 @@
-// regular_ls_generator.cpp
+// regular_ls_classify.cpp
 // 
 // Anton Betten
 // Jan 1, 2013
@@ -7,13 +7,11 @@
 
 using namespace std;
 
+namespace orbiter {
+namespace top_level {
 
-using namespace orbiter;
-using namespace orbiter::top_level;
 
-#include "regular_ls.h"
-
-void regular_ls_generator::init_basic(
+void regular_ls_classify::init_basic(
 	int argc, const char **argv,
 	const char *input_prefix, const char *base_fname, 
 	int starter_size, 
@@ -23,10 +21,10 @@ void regular_ls_generator::init_basic(
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_basic" << endl;
+		cout << "regular_ls_classify::init_basic" << endl;
 		}
 
-	regular_ls_generator::starter_size = starter_size;
+	regular_ls_classify::starter_size = starter_size;
 
 	gen = NEW_OBJECT(poset_classification);
 	
@@ -56,7 +54,7 @@ void regular_ls_generator::init_basic(
 
 }
 
-void regular_ls_generator::read_arguments(int argc, const char **argv)
+void regular_ls_classify::read_arguments(int argc, const char **argv)
 {
 	int i;
 	int f_m = FALSE;
@@ -89,38 +87,38 @@ void regular_ls_generator::read_arguments(int argc, const char **argv)
 			}
 		}
 	if (!f_m) {
-		cout << "regular_ls_generator::read_arguments "
+		cout << "regular_ls_classify::read_arguments "
 				"Please use option -m <m>" << endl;
 		exit(1);
 		}
 	if (!f_n) {
-		cout << "regular_ls_generator::read_arguments "
+		cout << "regular_ls_classify::read_arguments "
 				"Please use option -n <n>" << endl;
 		exit(1);
 		}
 	if (!f_k) {
-		cout << "regular_ls_generator::read_arguments "
+		cout << "regular_ls_classify::read_arguments "
 				"Please use option -k <k>" << endl;
 		exit(1);
 		}
 	if (!f_r) {
-		cout << "regular_ls_generator::read_arguments "
+		cout << "regular_ls_classify::read_arguments "
 				"Please use option -r <r>" << endl;
 		exit(1);
 		}
 }
 
-regular_ls_generator::regular_ls_generator()
+regular_ls_classify::regular_ls_classify()
 {
 	null();
 }
 
-regular_ls_generator::~regular_ls_generator()
+regular_ls_classify::~regular_ls_classify()
 {
 	freeself();
 }
 
-void regular_ls_generator::null()
+void regular_ls_classify::null()
 {
 	Poset = NULL;
 	gen = NULL;
@@ -136,7 +134,7 @@ void regular_ls_generator::null()
 }
 
 
-void regular_ls_generator::freeself()
+void regular_ls_classify::freeself()
 {
 	if (initial_pair_covering) {
 		FREE_int(initial_pair_covering);
@@ -162,16 +160,16 @@ void regular_ls_generator::freeself()
 	null();
 }
 
-void regular_ls_generator::init_group(int verbose_level)
+void regular_ls_classify::init_group(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_group" << endl;
+		cout << "regular_ls_classify::init_group" << endl;
 		}
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_group "
+		cout << "regular_ls_classify::init_group "
 				"creating symmetric group of degree " << m << endl;
 		}
 	A = NEW_OBJECT(action);
@@ -183,19 +181,19 @@ void regular_ls_generator::init_group(int verbose_level)
 		}
 }
 
-void regular_ls_generator::init_action_on_k_subsets(
+void regular_ls_classify::init_action_on_k_subsets(
 		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_action_on_k_subsets" << endl;
+		cout << "regular_ls_classify::init_action_on_k_subsets" << endl;
 		}
 
 	//regular_ls_generator::onk = onk;
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_action_on_k_subsets "
+		cout << "regular_ls_classify::init_action_on_k_subsets "
 				"creating action on k-subsets for k=" << k << endl;
 		}
 	A2 = NEW_OBJECT(action);
@@ -204,17 +202,17 @@ void regular_ls_generator::init_action_on_k_subsets(
 	Aonk = A2->G.on_k_subsets;
 	
 	if (f_v) {
-		cout << "regular_ls_generator::init_action_on_k_subsets "
+		cout << "regular_ls_classify::init_action_on_k_subsets "
 				"before A2->induced_action_override_sims" << endl;
 		}
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_action_on_k_subsets "
+		cout << "regular_ls_classify::init_action_on_k_subsets "
 				"done" << endl;
 		}
 }
 
-void regular_ls_generator::init_generator(
+void regular_ls_classify::init_generator(
 	int f_has_initial_pair_covering, int *initial_pair_covering,
 	strong_generators *Strong_gens, 
 	int verbose_level)
@@ -225,10 +223,10 @@ void regular_ls_generator::init_generator(
 	int i;
 
 	if (f_v) {
-		cout << "regular_ls_generator::init_generator" << endl;
+		cout << "regular_ls_classify::init_generator" << endl;
 		}
-	if (regular_ls_generator::initial_pair_covering) {
-		FREE_int(regular_ls_generator::initial_pair_covering);
+	if (regular_ls_classify::initial_pair_covering) {
+		FREE_int(regular_ls_classify::initial_pair_covering);
 		}
 	if (gen->f_max_depth) {
 		gen->depth = gen->max_depth;
@@ -236,21 +234,21 @@ void regular_ls_generator::init_generator(
 	else {
 		gen->depth = target_size;
 		}
-	regular_ls_generator::initial_pair_covering = NEW_int(m2);
+	regular_ls_classify::initial_pair_covering = NEW_int(m2);
 	if (f_has_initial_pair_covering) {
 		for (i = 0; i < m2; i++) {
-			regular_ls_generator::initial_pair_covering[i] =
+			regular_ls_classify::initial_pair_covering[i] =
 					initial_pair_covering[i];
 			}
 		}
 	else {
 		for (i = 0; i < m2; i++) {
-			regular_ls_generator::initial_pair_covering[i] = FALSE;
+			regular_ls_classify::initial_pair_covering[i] = FALSE;
 			}
 		}
 	
 	if (f_v) {
-		cout << "regular_ls_generator::init_generator "
+		cout << "regular_ls_classify::init_generator "
 				"depth = " << gen->depth << endl;
 		}
 
@@ -262,7 +260,7 @@ void regular_ls_generator::init_generator(
 			Strong_gens,
 			verbose_level);
 	Poset->add_testing_without_group(
-			rls_generator_early_test_function,
+			regular_ls_classify_early_test_function,
 				this /* void *data */,
 				verbose_level);
 
@@ -270,14 +268,14 @@ void regular_ls_generator::init_generator(
 	gen->init(Poset, gen->depth, 0/*verbose_level - 3*/);
 	
 	gen->f_print_function = FALSE;
-	gen->print_function = rls_generator_print_set;
+	gen->print_function = regular_ls_classify_print_set;
 	gen->print_function_data = (void *) this;
 	
 	
 	int nb_nodes = ONE_MILLION;
 	
 	if (f_vv) {
-		cout << "regular_ls_generator::init_generator calling "
+		cout << "regular_ls_classify::init_generator calling "
 				"init_poset_orbit_node with " << nb_nodes
 				<< " nodes" << endl;
 		}
@@ -285,7 +283,7 @@ void regular_ls_generator::init_generator(
 	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_vv) {
-		cout << "regular_ls_generator::init_generator after "
+		cout << "regular_ls_classify::init_generator after "
 				"init_root_node" << endl;
 		}
 	
@@ -295,11 +293,11 @@ void regular_ls_generator::init_generator(
 	
 	gen->root[0].init_root_node(gen, 0/*verbose_level - 2*/);
 	if (f_v) {
-		cout << "regular_ls_generator::init_generator done" << endl;
+		cout << "regular_ls_classify::init_generator done" << endl;
 		}
 }
 
-void regular_ls_generator::compute_starter(
+void regular_ls_classify::compute_starter(
 	int f_draw_poset, int f_embedded, int f_sideways,
 	int verbose_level)
 {
@@ -307,7 +305,7 @@ void regular_ls_generator::compute_starter(
 	//char cmd[1000];
 
 	if (f_v) {
-		cout << "regular_ls_generator::compute_starter" << endl;
+		cout << "regular_ls_classify::compute_starter" << endl;
 		}
 
 	
@@ -320,7 +318,7 @@ void regular_ls_generator::compute_starter(
 
 	if (f_draw_poset) {
 		if (f_v) {
-			cout << "regular_ls_generator::compute_starter "
+			cout << "regular_ls_classify::compute_starter "
 					"before gen->draw_poset" << endl;
 			}
 
@@ -330,12 +328,12 @@ void regular_ls_generator::compute_starter(
 		
 		}
 	if (f_v) {
-		cout << "regular_ls_generator::compute_starter done" << endl;
+		cout << "regular_ls_classify::compute_starter done" << endl;
 		}
 
 }
 
-void regular_ls_generator::early_test_func(int *S, int len, 
+void regular_ls_classify::early_test_func(int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	int verbose_level)
@@ -348,7 +346,7 @@ void regular_ls_generator::early_test_func(int *S, int len,
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "regular_ls_generator::early_test_func checking set ";
+		cout << "regular_ls_classify::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
@@ -428,7 +426,7 @@ void regular_ls_generator::early_test_func(int *S, int len,
 		}
 }
 
-void regular_ls_generator::print(ostream &ost, int *S, int len)
+void regular_ls_classify::print(ostream &ost, int *S, int len)
 {
 	int i;
 	
@@ -438,7 +436,7 @@ void regular_ls_generator::print(ostream &ost, int *S, int len)
 	ost << endl;
 }
 
-void regular_ls_generator::lifting_prepare_function_new(
+void regular_ls_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 
@@ -453,7 +451,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "regular_ls_generator::lifting_prepare_function_new "
+		cout << "regular_ls_classify::lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
 		}
 
@@ -515,9 +513,9 @@ void regular_ls_generator::lifting_prepare_function_new(
 		}
 
 	if (f_vv) {
-		cout << "regular_ls_generator::lifting_prepare_function_new "
+		cout << "regular_ls_classify::lifting_prepare_function_new "
 				"after lexorder test" << endl;
-		cout << "regular_ls_generator::lifting_prepare_function_new "
+		cout << "regular_ls_classify::lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
 		}
 
@@ -558,7 +556,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 		for (h1 = 0; h1 < k; h1++) {
 
 			if (row_sum[v1[h1]] == r) {
-				cout << "regular_ls_generator::lifting_prepare_"
+				cout << "regular_ls_classify::lifting_prepare_"
 						"function_new row_sum[v1[h1]] == r" << endl;
 				exit(1);
 				}
@@ -568,7 +566,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 			for (h2 = h1 + 1; h2 < k; h2++) {
 				p = Combi.ij2k(v1[h1], v1[h2], m);
 				if (pairs[p]) {
-					cout << "regular_ls_generator::lifting_prepare_"
+					cout << "regular_ls_classify::lifting_prepare_"
 							"function_new pairs[p]" << endl;
 					exit(1);
 					}
@@ -582,7 +580,7 @@ void regular_ls_generator::lifting_prepare_function_new(
 
 	
 	if (f_v) {
-		cout << "regular_ls_generator::lifting_prepare_function_new "
+		cout << "regular_ls_classify::lifting_prepare_function_new "
 				"done" << endl;
 		}
 }
@@ -597,24 +595,24 @@ void regular_ls_generator::lifting_prepare_function_new(
 
 
 
-void rls_generator_print_set(ostream &ost, int len, int *S, void *data)
+void regular_ls_classify_print_set(ostream &ost, int len, int *S, void *data)
 {
-	regular_ls_generator *Gen = (regular_ls_generator *) data;
+	regular_ls_classify *Gen = (regular_ls_classify *) data;
 	
 	//print_vector(ost, S, len);
 	Gen->print(ost, S, len);
 }
 
-void rls_generator_early_test_function(int *S, int len, 
+void regular_ls_classify_early_test_function(int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	void *data, int verbose_level)
 {
-	regular_ls_generator *Gen = (regular_ls_generator *) data;
+	regular_ls_classify *Gen = (regular_ls_classify *) data;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "rls_generator_early_test_function for set ";
+		cout << "regular_ls_classify_early_test_function for set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -623,11 +621,11 @@ void rls_generator_early_test_function(int *S, int len,
 		good_candidates, nb_good_candidates, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "rls_generator_early_test_function done" << endl;
+		cout << "regular_ls_classify_early_test_function done" << endl;
 		}
 }
 
-void rls_generator_lifting_prepare_function_new(
+void regular_ls_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, int *&col_labels, 
@@ -635,10 +633,10 @@ void rls_generator_lifting_prepare_function_new(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	regular_ls_generator *Gen = (regular_ls_generator *) EC->user_data;
+	regular_ls_classify *Gen = (regular_ls_classify *) EC->user_data;
 
 	if (f_v) {
-		cout << "rls_generator_lifting_prepare_function_new "
+		cout << "regular_ls_classify_lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
 		}
 
@@ -649,15 +647,16 @@ void rls_generator_lifting_prepare_function_new(
 
 
 	if (f_v) {
-		cout << "rls_generator_lifting_prepare_function_new "
+		cout << "regular_ls_classify_lifting_prepare_function_new "
 				"nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
 		}
 
 	if (f_v) {
-		cout << "rls_generator_lifting_prepare_function_new "
+		cout << "regular_ls_classify_lifting_prepare_function_new "
 				"done" << endl;
 		}
 }
 
+}}
 
 

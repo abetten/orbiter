@@ -16,7 +16,6 @@ using namespace orbiter;
 using namespace orbiter::top_level;
 
 
-#include "regular_ls.h"
 
 
 // global data:

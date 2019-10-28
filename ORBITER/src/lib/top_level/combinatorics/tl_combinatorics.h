@@ -1,0 +1,467 @@
+/*
+ * tl_combinatorics.h
+ *
+ *  Created on: Oct 27, 2019
+ *      Author: betten
+ */
+
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_COMBINATORICS_TL_COMBINATORICS_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_COMBINATORICS_TL_COMBINATORICS_H_
+
+
+namespace orbiter {
+namespace top_level {
+
+// #############################################################################
+// design_create_description.cpp
+// #############################################################################
+
+//! to describe the construction of a known design from the command line
+
+
+
+class design_create_description {
+
+public:
+
+	int f_q;
+	int q;
+	//int f_k;
+	//int k;
+	int f_catalogue;
+	int iso;
+	int f_family;
+	const char *family_name;
+
+
+
+	design_create_description();
+	~design_create_description();
+	void null();
+	void freeself();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+	int get_q();
+};
+
+
+
+// #############################################################################
+// design_create.cpp
+// #############################################################################
+
+//! to create a known design using a description from class design_create_description
+
+
+
+class design_create {
+
+public:
+	design_create_description *Descr;
+
+	char prefix[1000];
+	char label_txt[1000];
+	char label_tex[1000];
+
+	int q;
+	finite_field *F;
+	int k;
+
+	//int f_semilinear;
+
+	action *A;
+	action *A2;
+
+	int degree;
+
+	int *set;
+	int sz;
+
+	int f_has_group;
+	strong_generators *Sg;
+
+
+	projective_space *P;
+
+	int *block; // [k]
+
+
+	design_create();
+	~design_create();
+	void null();
+	void freeself();
+	void init(design_create_description *Descr, int verbose_level);
+	void create_design_PG_2_q(finite_field *F,
+			int *&set, int &sz, int &k, int verbose_level);
+	void unrank_block_in_PG_2_q(int *block,
+			int rk, int verbose_level);
+	int rank_block_in_PG_2_q(int *block,
+			int verbose_level);
+	int get_color_as_two_design_assume_sorted(int *design,
+			int verbose_level);
+};
+
+// #############################################################################
+// graph_classify.cpp
+// #############################################################################
+
+//! classification of graphs and tournaments
+
+
+class graph_classify {
+
+public:
+
+	poset *Poset;
+	poset_classification *gen;
+
+	action *A_base; // symmetric group on n vertices
+	action *A_on_edges; // action on pairs
+
+	int f_n;
+	int n; // number of vertices
+	int n2; // n choose 2
+
+	int *adjacency; // [n * n]
+
+	//int f_lex;
+
+	int f_regular;
+	int regularity;
+	int *degree_sequence; // [n]
+
+	int f_girth;
+	int girth;
+	int *neighbor; // [n]
+	int *neighbor_idx; // [n]
+	int *distance; // [n]
+
+	int f_list; // list whole orbits in the end
+	int f_list_all; // list whole orbits in the end
+	int f_draw_graphs;
+	int f_embedded;
+	int f_sideways;
+	int f_draw_graphs_at_level;
+	int level;
+	double scale;
+	int f_x_stretch;
+	double x_stretch;
+
+	int f_depth;
+	int depth;
+
+	int *S1; // [n2]
+
+
+	int f_tournament;
+	int f_no_superking;
+
+	int f_draw_level_graph;
+	int level_graph_level;
+	int f_test_multi_edge;
+
+	int f_draw_poset;
+	int f_draw_full_poset;
+	int f_plesken;
+
+	int f_identify;
+	int identify_data[1000];
+	int identify_data_sz;
+
+
+
+
+	graph_classify();
+	~graph_classify();
+	void read_arguments(int argc, const char **argv);
+	void init(int argc, const char **argv);
+	int check_conditions(int len, int *S, int verbose_level);
+	int check_conditions_tournament(int len, int *S,
+			int verbose_level);
+	int check_regularity(int *S, int len,
+			int verbose_level);
+	int compute_degree_sequence(int *S, int len);
+	int girth_check(int *S, int len, int verbose_level);
+	int girth_test_vertex(int *S, int len,
+			int vertex, int girth, int verbose_level);
+	void get_adjacency(int *S, int len, int verbose_level);
+	void print(std::ostream &ost, int *S, int len);
+	void print_score_sequences(int level, int verbose_level);
+	void score_sequence(int n, int *set, int sz, int *score, int verbose_level);
+	void draw_graphs(int level, double scale,
+			int xmax_in, int ymax_in, int xmax, int ymax,
+			int f_embedded, int f_sideways, int verbose_level);
+
+};
+
+void graph_classify_test_function(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		void *data, int verbose_level);
+void graph_classify_print_set(std::ostream &ost,
+		int len, int *S, void *data);
+
+
+// #############################################################################
+// large_set_classify.cpp
+// #############################################################################
+
+//! classification of large sets of designs
+
+class large_set_classify {
+public:
+	design_create *DC;
+	int design_size;
+	int nb_points;
+	int nb_lines;
+	int search_depth;
+
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char path[1000];
+	char prefix_with_directory[1000];
+
+
+	int f_lexorder_test;
+	int size_of_large_set;
+
+
+	int *Design_table;
+	const char *design_table_prefix;
+	int nb_designs;
+
+	action *A_on_designs;
+
+
+	uchar *bitvector_adjacency;
+	int bitvector_length;
+	int *degree;
+
+	poset *Poset;
+	poset_classification *gen;
+
+	int nb_needed;
+
+	int *Design_table_reduced;
+	int *Design_table_reduced_idx;
+	int nb_reduced;
+
+	action *A_reduced;
+	schreier *Orbits_on_reduced;
+	int *color_of_reduced_orbits;
+
+	orbits_on_something *OoS;
+	int selected_type_idx;
+
+
+	large_set_classify();
+	~large_set_classify();
+	void null();
+	void freeself();
+	void init(design_create *DC,
+			const char *input_prefix, const char *base_fname,
+			int search_depth,
+			int f_lexorder_test,
+			const char *design_table_prefix,
+			int verbose_level);
+	void init_designs(orbit_of_sets *SetOrb,
+			int verbose_level);
+	void compute(int verbose_level);
+	void read_classification(orbit_transversal *&T,
+			int level, int verbose_level);
+	void read_classification_single_case(set_and_stabilizer *&Rep,
+			int level, int case_nr, int verbose_level);
+	void make_reduced_design_table(
+			int *set, int set_sz,
+			int *&Design_table_out, int *&Design_table_out_idx, int &nb_out,
+			int verbose_level);
+	int designs_are_disjoint(int i, int j);
+	void process_starter_case(set_and_stabilizer *Rep,
+			strong_generators *SG, const char *prefix,
+			char *group_label, int orbit_length,
+			int f_read_solution_file, const char *solution_file_name,
+			int *&Large_sets, int &nb_large_sets,
+			int verbose_level);
+	int test_orbit(int *orbit, int orbit_length);
+	int test_pair_of_orbits(
+			int *orbit1, int orbit_length1,
+			int *orbit2, int orbit_length2);
+
+};
+
+int large_set_design_test_orbit(int *orbit, int orbit_length,
+		void *extra_data);
+int large_set_design_test_pair_of_orbits(int *orbit1, int orbit_length1,
+		int *orbit2, int orbit_length2, void *extra_data);
+int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data);
+void large_set_swap_func_for_invariants(void *data, int i, int j, void *extra_data);
+int large_set_design_compare_func(void *data, int i, int j, void *extra_data);
+void large_set_swap_func(void *data, int i, int j, void *extra_data);
+void large_set_early_test_function(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
+		int orbit_idx, void *data, int verbose_level);
+
+
+
+// #############################################################################
+// regular_ls_classify.cpp
+// #############################################################################
+
+
+//! classification of regular linear spaces
+
+
+
+
+class regular_ls_classify {
+
+public:
+	int m;
+	int n;
+	int k;
+	int r;
+
+	//int onk;
+	//int onr;
+	int starter_size;
+	int target_size;
+	int *initial_pair_covering;
+
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char prefix_with_directory[1000];
+
+	int m2;
+	int *v1; // [k]
+
+	poset *Poset;
+	poset_classification *gen;
+	action *A;
+	action *A2;
+	action_on_k_subsets *Aonk; // only a pointer, do not free
+
+	int *row_sum; // [m]
+	int *pairs; // [m2]
+	int *open_rows; // [m]
+	int *open_row_idx; // [m]
+	int *open_pairs; // [m2]
+	int *open_pair_idx; // [m2]
+
+	void init_basic(int argc, const char **argv,
+		const char *input_prefix, const char *base_fname,
+		int starter_size,
+		int verbose_level);
+	void read_arguments(int argc, const char **argv);
+	regular_ls_classify();
+	~regular_ls_classify();
+	void null();
+	void freeself();
+	void init_group(int verbose_level);
+	void init_action_on_k_subsets(int onk, int verbose_level);
+	void init_generator(
+		int f_has_initial_pair_covering, int *initial_pair_covering,
+		strong_generators *Strong_gens,
+		int verbose_level);
+	void compute_starter(
+		int f_draw_poset, int f_embedded, int f_sideways, int verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	int check_function_incremental(int len, int *S, int verbose_level);
+	void print(std::ostream &ost, int *S, int len);
+	void lifting_prepare_function_new(exact_cover *E, int starter_case,
+		int *candidates, int nb_candidates, strong_generators *Strong_gens,
+		diophant *&Dio, int *&col_labels,
+		int &f_ruled_out,
+		int verbose_level);
+#if 0
+	void extend(const char *fname,
+		int f_single_case, int single_case,
+		int N, int K, int R, int f_lambda_reached, int depth,
+		int f_lexorder_test,
+		int verbose_level);
+	void extend_a_single_case(const char *fname,
+		int N, int K, int R, int f_lambda_reached,
+		int f_lexorder_test,
+		int orbit_at_level, int nb_orbits, int depth,
+		int verbose_level);
+	void handle_starter(const char *fname,
+		int N, int K, int R, int f_lambda_reached,
+		int f_lexorder_test,
+		int orbit_at_level, int nb_orbits,
+		int orbit_at_depth, int nb_starters, int depth,
+		int *pairs,
+		int *&Solutions, int &nb_sol,
+		int verbose_level);
+#endif
+};
+
+
+
+
+void regular_ls_classify_print_set(std::ostream &ost, int len, int *S, void *data);
+void regular_ls_classify_early_test_function(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+int regular_ls_classify_check_function_incremental_callback(int len, int *S,
+		void *data, int verbose_level);
+void regular_ls_classify_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
+	int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+
+
+
+// #############################################################################
+// tactical_decomposition.cpp
+// #############################################################################
+
+//! tactical decomposition of an incidence structure with respect to a given group
+
+
+
+class tactical_decomposition {
+public:
+
+	int set_size;
+	int nb_blocks;
+	incidence_structure *Inc;
+	int f_combined_action;
+	action *A;
+	action *A_on_points;
+	action *A_on_lines;
+	strong_generators * gens;
+	partitionstack *Stack;
+	schreier *Sch;
+	schreier *Sch_points;
+	schreier *Sch_lines;
+
+	tactical_decomposition();
+	~tactical_decomposition();
+	void init(int nb_rows, int nb_cols,
+			incidence_structure *Inc,
+			int f_combined_action,
+			action *Aut,
+			action *A_on_points,
+			action *A_on_lines,
+			strong_generators * gens,
+			int verbose_level);
+	void report(int f_enter_math, std::ostream &ost);
+
+};
+
+
+
+
+
+}}
+
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_COMBINATORICS_TL_COMBINATORICS_H_ */

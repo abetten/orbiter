@@ -119,6 +119,8 @@ class design_create_description;
 class large_set_classify;
 class code_classify;
 class ovoid_classify;
+class graph_generator;
+class regular_ls_classify;
 
 // #############################################################################
 // representatives.cpp
@@ -194,6 +196,7 @@ public:
 
 
 #include "./algebra_and_number_theory/tl_algebra_and_number_theory.h"
+#include "./combinatorics/tl_combinatorics.h"
 #include "./geometry/tl_geometry.h"
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"

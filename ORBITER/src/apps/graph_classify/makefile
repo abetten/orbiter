@@ -10,8 +10,8 @@ LFLAGS = -lm
 
 all: graph.out
 
-graph.out:  graph.o graph_generator.o ;
-	$(DISCRETA_CPP)  graph.o graph_generator.o \
+graph.out:  graph.o ;
+	$(DISCRETA_CPP)  graph.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 clean:
