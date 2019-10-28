@@ -11,15 +11,16 @@
 #include "orbiter.h"
 
 using namespace std;
-
-
 using namespace orbiter;
+using namespace orbiter::top_level;
 
-#include "graph.h"
 
 // global data:
 
 int t0; // the system time when the program started
+
+
+void usage(int argc, const char **argv);
 
 
 int main(int argc, const char **argv)
@@ -34,7 +35,7 @@ int main(int argc, const char **argv)
 		}
 
 	{
-	graph_generator Gen;
+	graph_classify Gen;
 	int schreier_depth = 10000;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;

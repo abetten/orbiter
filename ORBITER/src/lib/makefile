@@ -279,6 +279,12 @@ MODULES= \
 		top_level/algebra_and_number_theory/semifield_trace.o \
 		top_level/algebra_and_number_theory/trace_record.o \
 		top_level/algebra_and_number_theory/young.o \
+		top_level/combinatorics/design_create_description.o \
+		top_level/combinatorics/design_create.o \
+		top_level/combinatorics/graph_classify.o \
+		top_level/combinatorics/large_set_classify.o \
+		top_level/combinatorics/regular_ls_classify.o \
+		top_level/combinatorics/tactical_decomposition.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
 		top_level/geometry/arc_lifting.o \
@@ -294,11 +300,8 @@ MODULES= \
 		top_level/geometry/classify_trihedral_pairs.o \
 		top_level/geometry/code_classify.o \
 		top_level/geometry/cubic_curve_with_action.o \
-		top_level/geometry/design_create.o \
-		top_level/geometry/design_create_description.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
-		top_level/geometry/large_set_classify.o \
 		top_level/geometry/ovoid_classify.o \
 		top_level/geometry/packing_classify.o \
 		top_level/geometry/packing_classify2.o \
@@ -322,7 +325,6 @@ MODULES= \
 		top_level/geometry/surface_object_with_action.o \
 		top_level/geometry/surface_with_action.o \
 		top_level/geometry/surfaces_arc_lifting.o \
-		top_level/geometry/tactical_decomposition.o \
 		top_level/geometry/tensor_classify.o \
 		top_level/geometry/translation_plane_via_andre_model.o \
 		top_level/isomorph/isomorph.o \

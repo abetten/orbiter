@@ -1,4 +1,4 @@
-// graph_generator.cpp
+// graph_classify.cpp
 // 
 // Anton Betten
 // Nov 15 2007
@@ -12,21 +12,12 @@
 
 using namespace std;
 
-
-using namespace orbiter;
-
-
-#include "graph.h"
+namespace orbiter {
+namespace top_level {
 
 
-void graph_generator_test_function(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
-		void *data, int verbose_level);
-void graph_generator_print_set(ostream &ost,
-		int len, int *S, void *data);
 
-graph_generator::graph_generator()
+graph_classify::graph_classify()
 {
 	Poset = NULL;
 	gen = NULL;
@@ -76,7 +67,7 @@ graph_generator::graph_generator()
 	identify_data_sz = 0;
 }
 
-graph_generator::~graph_generator()
+graph_classify::~graph_classify()
 {
 	if (A_base) {
 		FREE_OBJECT(A_base);
@@ -108,14 +99,16 @@ graph_generator::~graph_generator()
 	
 }
 
-void graph_generator::read_arguments(int argc, const char **argv)
+void graph_classify::read_arguments(int argc, const char **argv)
 {
 	int i;
 	
+#if 0
 	if (argc < 1) {
 		usage(argc, argv);
 		exit(1);
 		}
+#endif
 	//for (i = 1; i < argc; i++) {
 		//printf("%s\n", argv[i]);
 		//}
@@ -231,7 +224,7 @@ void graph_generator::read_arguments(int argc, const char **argv)
 		}
 }
 
-void graph_generator::init(int argc, const char **argv)
+void graph_classify::init(int argc, const char **argv)
 {
 	int N;
 	int target_depth;
@@ -375,7 +368,7 @@ void graph_generator::init(int argc, const char **argv)
 	
 	
 	if (f_v) {
-		cout << "graph_generator::init target_depth = "
+		cout << "graph_classify::init target_depth = "
 				<< target_depth << endl;
 		}
 
@@ -390,23 +383,23 @@ void graph_generator::init(int argc, const char **argv)
 		"", prefix, verbose_level - 1);
 	
 	Poset->add_testing_without_group(
-			graph_generator_test_function,
+			graph_classify_test_function,
 			this,
 			verbose_level);
 
 	
 	gen->f_print_function = TRUE;
-	gen->print_function = graph_generator_print_set;
+	gen->print_function = graph_classify_print_set;
 	gen->print_function_data = (void *) this;
 
 	if (f_v) {
-		cout << "graph_generator::init done" << endl;
+		cout << "graph_classify::init done" << endl;
 		}
 
 
 }
 
-int graph_generator::check_conditions(int len,
+int graph_classify::check_conditions(int len,
 		int *S, int verbose_level)
 {
 	//verbose_level = 2;
@@ -417,7 +410,7 @@ int graph_generator::check_conditions(int len,
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "graph_generator::check_conditions checking set ";
+		cout << "graph_classify::check_conditions checking set ";
 		print_set(cout, len, S);
 		}
 	if (f_regular && !check_regularity(S, len, verbose_level - 1)) {
@@ -451,7 +444,7 @@ int graph_generator::check_conditions(int len,
 		}
 }
 
-int graph_generator::check_conditions_tournament(
+int graph_classify::check_conditions_tournament(
 		int len, int *S,
 		int verbose_level)
 {
@@ -467,7 +460,7 @@ int graph_generator::check_conditions_tournament(
 	sorting Sorting;
 	
 	if (f_v) {
-		cout << "graph_generator::check_conditions_tournament "
+		cout << "graph_classify::check_conditions_tournament "
 				"checking set ";
 		print_set(cout, len, S);
 		}
@@ -485,7 +478,7 @@ int graph_generator::check_conditions_tournament(
 		b = 2 * b2 + swap2;
 		if (Sorting.int_vec_search(S_sorted, len, b, idx)) {
 			if (f_vv) {
-				cout << "graph_generator::check_conditions_tournament "
+				cout << "graph_classify::check_conditions_tournament "
 						"elements " << a << " and " << b
 						<< " cannot both exist" << endl;
 				}
@@ -539,7 +532,7 @@ int graph_generator::check_conditions_tournament(
 }
 
 
-int graph_generator::check_regularity(
+int graph_classify::check_regularity(
 		int *S, int len,
 		int verbose_level)
 {
@@ -564,13 +557,13 @@ int graph_generator::check_regularity(
 }
 
 
-int graph_generator::compute_degree_sequence(int *S, int len)
+int graph_classify::compute_degree_sequence(int *S, int len)
 {
 	int h, a, i, j;
 	combinatorics_domain Combi;
 	
 	if (f_tournament) {
-		cout << "graph_generator::compute_degree_sequence "
+		cout << "graph_classify::compute_degree_sequence "
 				"tournament is TRUE" << endl;
 		exit(1);
 		}
@@ -590,7 +583,7 @@ int graph_generator::compute_degree_sequence(int *S, int len)
 	return TRUE;
 }
 
-int graph_generator::girth_check(int *line, int len,
+int graph_classify::girth_check(int *line, int len,
 		int verbose_level)
 {
 	int f_OK = TRUE, i;
@@ -623,7 +616,7 @@ int graph_generator::girth_check(int *line, int len,
 	return f_OK;
 }
 
-int graph_generator::girth_test_vertex(int *S, int len,
+int graph_classify::girth_test_vertex(int *S, int len,
 		int vertex, int girth,
 		int verbose_level)
 {
@@ -685,7 +678,7 @@ int graph_generator::girth_test_vertex(int *S, int len,
 	return TRUE;
 }
 
-void graph_generator::get_adjacency(int *S, int len, int verbose_level)
+void graph_classify::get_adjacency(int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, j, a;
@@ -729,11 +722,11 @@ void graph_generator::get_adjacency(int *S, int len, int verbose_level)
 		}
 }
 
-void graph_generator::print(ostream &ost, int *S, int len)
+void graph_classify::print(ostream &ost, int *S, int len)
 {
 	int i, j;
 	
-	ost << "graph_generator::print" << endl;
+	ost << "graph_classify::print" << endl;
 	
 	for (i = 0; i < len; i++) {
 		ost << S[i] << " ";
@@ -749,7 +742,7 @@ void graph_generator::print(ostream &ost, int *S, int len)
 	
 }
 
-void graph_generator::print_score_sequences(
+void graph_classify::print_score_sequences(
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -758,7 +751,7 @@ void graph_generator::print_score_sequences(
 	int *score;
 
 	if (f_v) {
-		cout << "graph_generator::print_score_sequences "
+		cout << "graph_classify::print_score_sequences "
 				"level = " << level << endl;
 		}
 
@@ -793,7 +786,7 @@ void graph_generator::print_score_sequences(
 
 }
 
-void graph_generator::score_sequence(int n,
+void graph_classify::score_sequence(int n,
 		int *set, int sz, int *score, int verbose_level)
 {
 	int i, a, swap, a2, u, v;
@@ -822,7 +815,7 @@ void graph_generator::score_sequence(int n,
 }
 
 
-void graph_generator::draw_graphs(int level,
+void graph_classify::draw_graphs(int level,
 	double scale, int xmax_in, int ymax_in,
 	int xmax, int ymax, int f_embedded, int f_sideways,
 	int verbose_level)
@@ -833,7 +826,7 @@ void graph_generator::draw_graphs(int level,
 	int *v;
 
 	if (f_v) {
-		cout << "graph_generator::draw_graphs "
+		cout << "graph_classify::draw_graphs "
 				"level = " << level << endl;
 		}
 
@@ -920,12 +913,12 @@ void graph_generator::draw_graphs(int level,
 // #############################################################################
 
 
-void graph_generator_test_function(int *S, int len,
+void graph_classify_test_function(int *S, int len,
 		int *candidates, int nb_candidates,
 		int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level)
 {
-	graph_generator *Gen = (graph_generator *) data;
+	graph_classify *Gen = (graph_classify *) data;
 	int i, f_OK;
 
 	int_vec_copy(S, Gen->S1, len);
@@ -945,14 +938,15 @@ void graph_generator_test_function(int *S, int len,
 	}
 }
 
-void graph_generator_print_set(ostream &ost,
+void graph_classify_print_set(ostream &ost,
 		int len, int *S, void *data)
 {
-	graph_generator *Gen = (graph_generator *) data;
+	graph_classify *Gen = (graph_classify *) data;
 	
 	//print_vector(ost, S, len);
 	Gen->print(ost, S, len);
 }
 
 
+}}
 

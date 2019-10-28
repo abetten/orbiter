@@ -4,6 +4,7 @@ LIB =
 LFLAGS = -lm
 
 all: algebra_and_number_theory \
+	combinatorics \
 	geometry \
 	isomorph \
 	orbits \
@@ -13,12 +14,14 @@ all: algebra_and_number_theory \
 
 
 algebra_and_number_theory : algebra_and_number_theory2 ; 
+combinatorics : combinatorics2 ; 
 geometry : geometry2 ; 
 isomorph : isomorph2 ; 
 orbits : orbits2 ; 
 solver : solver2 ; 
 
 algebra_and_number_theory2 :  ; cd algebra_and_number_theory; $(MAKE)
+combinatorics2 :  ; cd combinatorics; $(MAKE)
 geometry2 :  ; cd geometry; $(MAKE)
 isomorph2 :  ; cd isomorph; $(MAKE)
 orbits2 :  ; cd orbits; $(MAKE)
@@ -37,6 +40,7 @@ solver2 :  ; cd solver; $(MAKE)
 
 clean:
 	cd algebra_and_number_theory; $(MAKE) clean
+	cd combinatorics; $(MAKE) clean
 	cd geometry; $(MAKE) clean
 	cd isomorph; $(MAKE) clean
 	cd orbits; $(MAKE) clean

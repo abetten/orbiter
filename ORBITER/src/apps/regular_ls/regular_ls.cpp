@@ -17,9 +17,6 @@ using namespace orbiter;
 using namespace orbiter::top_level;
 
 
-#include "regular_ls.h"
-
-
 // global data:
 
 int t0; // the system time when the program started
@@ -89,7 +86,7 @@ int main(int argc, const char **argv)
 		start_memory_debug();
 		}
 	{
-	regular_ls_generator Gen;
+	regular_ls_classify Gen;
 
 	Gen.init_basic(argc, argv, 
 		ECA->input_prefix, ECA->base_fname, ECA->starter_size, 
@@ -132,8 +129,8 @@ int main(int argc, const char **argv)
 		ECA->user_data = (void *) &Gen;
 		ECA->A = Gen.A;
 		ECA->A2 = Gen.A2;
-		ECA->prepare_function_new = rls_generator_lifting_prepare_function_new;
-		ECA->early_test_function = rls_generator_early_test_function;
+		ECA->prepare_function_new = regular_ls_classify_lifting_prepare_function_new;
+		ECA->early_test_function = regular_ls_classify_early_test_function;
 		ECA->early_test_function_data = (void *) &Gen;
 		
 		ECA->compute_lifts(verbose_level);
