@@ -316,30 +316,36 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 
-	if (N_points * N_points < ONE_MILLION) {
+	if ((long int) N_points * (long int) N_points < ONE_MILLION) {
 
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
 					"allocating Line_through_two_points" << endl;
 			}
-		Line_through_two_points = NEW_int(N_points * N_points);
+		Line_through_two_points = NEW_int((long int) N_points * (long int) N_points);
 		}
 	else {
+		cout << "projective_space::init_incidence_structure: "
+				"we do not initialize "
+				"Line_through_two_points" << endl;
 		Line_through_two_points = NULL;
 		}
 
-	if (N_lines * N_lines < ONE_MILLION) {
+	if ((long int) N_lines * (long int) N_lines < ONE_MILLION) {
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
 					"allocating Line_intersection" << endl;
 			}
-		Line_intersection = NEW_int(N_lines * N_lines);
-		int_vec_zero(Line_through_two_points, N_points * N_points);
-		for (i = 0; i < N_lines * N_lines; i++) {
+		Line_intersection = NEW_int((long int) N_lines * (long int) N_lines);
+		int_vec_zero(Line_through_two_points, (long int) N_points * (long int) N_points);
+		for (i = 0; i < (long int) N_lines * (long int) N_lines; i++) {
 			Line_intersection[i] = -1;
 			}
 		}
 	else {
+		cout << "projective_space::init_incidence_structure: "
+				"we do not initialize "
+				"Line_intersection" << endl;
 		Line_intersection = NULL;
 		}	
 
