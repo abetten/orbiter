@@ -1697,7 +1697,7 @@ void classify_double_sixes::identify_double_six(int *double_six,
 	int *transporter, int &orbit_index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 4);
 	int f, f2;
 	int *Elt1;
 	int *Elt2;

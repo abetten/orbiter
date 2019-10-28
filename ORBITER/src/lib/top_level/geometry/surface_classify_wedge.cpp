@@ -452,7 +452,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 			}
 			
 			Classify_double_sixes->identify_double_six(double_six, 
-				Elt1 /* transporter */, f2, verbose_level - 4);
+				Elt1 /* transporter */, f2, verbose_level - 10);
 
 			if (f_v) {
 				cout << "f=" << f << " / "
