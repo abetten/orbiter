@@ -798,7 +798,7 @@ void finite_field::generators_for_parabolic_subgroup(
 	nb_gens += k * (n - k) * e;
 
 	// count the swaps:
-	for (h = n - 2; h > k; h--) {
+	for (h = n - 2; h >= k; h--) {
 		nb_gens++;
 	}
 	for (h = k - 2; h >= 0; h--) {
@@ -899,7 +899,7 @@ void finite_field::generators_for_parabolic_subgroup(
 		cout << "generators for swaps along the diagonal, "
 				"cur=" << cur << endl;
 		}
-	for (h = n - 2; h > k; h--) {
+	for (h = n - 2; h >= k; h--) {
 		identity_matrix(M, n);
 		M[h * n + h] = 0;
 		M[h * n + h + 1] = 1;
