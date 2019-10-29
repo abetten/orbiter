@@ -240,7 +240,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "surface_classify before Surf_A->init" << endl;
 		}
-	Surf_A->init(Surf, f_semilinear,  - 3);
+	Surf_A->init(Surf, f_semilinear, verbose_level - 3);
 	if (f_v) {
 		cout << "surface_classify after Surf_A->init" << endl;
 		}
