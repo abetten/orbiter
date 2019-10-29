@@ -28,10 +28,10 @@ geometry_global::~geometry_global()
 }
 
 
-int geometry_global::nb_PG_elements(int n, int q)
+long int geometry_global::nb_PG_elements(int n, int q)
 // $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 {
-	int qhl, l, deg;
+	long int qhl, l, deg;
 
 	l = 0;
 	qhl = 1;
@@ -44,7 +44,7 @@ int geometry_global::nb_PG_elements(int n, int q)
 	return deg;
 }
 
-int geometry_global::nb_PG_elements_not_in_subspace(int n, int m, int q)
+long int geometry_global::nb_PG_elements_not_in_subspace(int n, int m, int q)
 // |PG_n(q)| - |PG_m(q)|
 {
 	int a, b;
@@ -54,12 +54,12 @@ int geometry_global::nb_PG_elements_not_in_subspace(int n, int m, int q)
 	return a - b;
 }
 
-int geometry_global::nb_AG_elements(int n, int q)
+long int geometry_global::nb_AG_elements(int n, int q)
 // $q^n$
 {
 	number_theory_domain NT;
 
-	return NT.i_power_j(q, n);
+	return NT.i_power_j_lint(q, n);
 }
 
 void geometry_global::AG_element_rank(int q, int *v, int stride, int len, int &a)

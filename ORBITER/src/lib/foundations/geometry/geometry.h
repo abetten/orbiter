@@ -765,10 +765,10 @@ public:
 
 	geometry_global();
 	~geometry_global();
-	int nb_PG_elements(int n, int q);
+	long int nb_PG_elements(int n, int q);
 		// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
-	int nb_PG_elements_not_in_subspace(int n, int m, int q);
-	int nb_AG_elements(int n, int q);
+	long int nb_PG_elements_not_in_subspace(int n, int m, int q);
+	long int nb_AG_elements(int n, int q);
 	void AG_element_rank(int q, int *v, int stride, int len, int &a);
 	void AG_element_unrank(int q, int *v, int stride, int len, int a);
 	void AG_element_rank_longinteger(int q, int *v, int stride, int len,
@@ -1293,8 +1293,8 @@ public:
 	orthogonal *O;
 	finite_field *F;
 	int q;
-	int nb_Pts; // number of points on the klein quadric
-	int nb_pts_PG; // number of points in PG(5,q)
+	long int nb_Pts; // number of points on the klein quadric
+	long int nb_pts_PG; // number of points in PG(5,q)
 
 	grassmann *Gr63;
 	grassmann *Gr62;
