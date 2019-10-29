@@ -801,26 +801,26 @@ public:
 		int f_classical, int f_Uab, int parameter_a, int parameter_b,
 		char *fname, int &nb_pts, int *&Pts,
 		int verbose_level);
-	int count_Sbar(int n, int q);
-	int count_S(int n, int q);
-	int count_N1(int n, int q);
-	int count_T1(int epsilon, int n, int q);
-	int count_T2(int n, int q);
-	int nb_pts_Qepsilon(int epsilon, int k, int q);
+	long int count_Sbar(int n, int q);
+	long int count_S(int n, int q);
+	long int count_N1(int n, int q);
+	long int count_T1(int epsilon, int n, int q);
+	long int count_T2(int n, int q);
+	long int nb_pts_Qepsilon(int epsilon, int k, int q);
 	// number of singular points on Q^epsilon(k,q)
 	int dimension_given_Witt_index(int epsilon, int n);
 	int Witt_index(int epsilon, int k);
-	int nb_pts_Q(int k, int q);
+	long int nb_pts_Q(int k, int q);
 	// number of singular points on Q(k,q)
-	int nb_pts_Qplus(int k, int q);
+	long int nb_pts_Qplus(int k, int q);
 	// number of singular points on Q^+(k,q)
-	int nb_pts_Qminus(int k, int q);
+	long int nb_pts_Qminus(int k, int q);
 	// number of singular points on Q^-(k,q)
-	int nb_pts_S(int n, int q);
-	int nb_pts_N(int n, int q);
-	int nb_pts_N1(int n, int q);
-	int nb_pts_Sbar(int n, int q);
-	int nb_pts_Nbar(int n, int q);
+	long int nb_pts_S(int n, int q);
+	long int nb_pts_N(int n, int q);
+	long int nb_pts_N1(int n, int q);
+	long int nb_pts_Sbar(int n, int q);
+	long int nb_pts_Nbar(int n, int q);
 	void test_Orthogonal(int epsilon, int k, int q);
 	void test_orthogonal(int n, int q);
 	void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq,
@@ -1546,29 +1546,29 @@ public:
 	int form_c1, form_c2, form_c3;
 	int *Gram_matrix;
 	int *T1, *T2, *T3; // [n * n]
-	int pt_P, pt_Q;
-	int nb_points;
-	int nb_lines;
+	long int pt_P, pt_Q;
+	long int nb_points;
+	long int nb_lines;
 	
-	int T1_m;
-	int T1_mm1;
-	int T1_mm2;
-	int T2_m;
-	int T2_mm1;
-	int T2_mm2;
-	int N1_m;
-	int N1_mm1;
-	int N1_mm2;
-	int S_m;
-	int S_mm1;
-	int S_mm2;
-	int Sbar_m;
-	int Sbar_mm1;
-	int Sbar_mm2;
+	long int T1_m;
+	long int T1_mm1;
+	long int T1_mm2;
+	long int T2_m;
+	long int T2_mm1;
+	long int T2_mm2;
+	long int N1_m;
+	long int N1_mm1;
+	long int N1_mm2;
+	long int S_m;
+	long int S_mm1;
+	long int S_mm2;
+	long int Sbar_m;
+	long int Sbar_mm1;
+	long int Sbar_mm2;
 	
-	int alpha; // number of points in the subspace
-	int beta; // number of points in the subspace of the subspace
-	int gamma; // = alpha * beta / (q + 1);
+	long int alpha; // number of points in the subspace
+	long int beta; // number of points in the subspace of the subspace
+	long int gamma; // = alpha * beta / (q + 1);
 	int subspace_point_type;
 	int subspace_line_type;
 	
@@ -1884,16 +1884,16 @@ public:
 		int rk_from, int rk_to, int root, int verbose_level);
 	void Siegel_map_between_singular_points_hyperbolic(int *T, 
 		int rk_from, int rk_to, int root, int m, int verbose_level);
-	void Siegel_Transformation(int *T, 
-		int rk_from, int rk_to, int root, 
+	void Siegel_Transformation(int *T,
+		int rk_from, int rk_to, int root,
 		int verbose_level);
 		// root is not perp to from and to.
-	void Siegel_Transformation2(int *T, 
-		int rk_from, int rk_to, int root, 
+	void Siegel_Transformation2(int *T,
+		int rk_from, int rk_to, int root,
 		int *B, int *Bv, int *w, int *z, int *x,
 		int verbose_level);
-	void Siegel_Transformation3(int *T, 
-		int *from, int *to, int *root, 
+	void Siegel_Transformation3(int *T,
+		int *from, int *to, int *root,
 		int *B, int *Bv, int *w, int *z, int *x,
 		int verbose_level);
 	void random_generator_for_orthogonal_group(

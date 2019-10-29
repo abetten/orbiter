@@ -460,17 +460,17 @@ void geometry_global::create_Buekenhout_Metz(
 }
 
 
-int geometry_global::count_Sbar(int n, int q)
+long int geometry_global::count_Sbar(int n, int q)
 {
 	return count_T1(1, n, q);
 }
 
-int geometry_global::count_S(int n, int q)
+long int geometry_global::count_S(int n, int q)
 {
 	return (q - 1) * count_Sbar(n, q) + 1;
 }
 
-int geometry_global::count_N1(int n, int q)
+long int geometry_global::count_N1(int n, int q)
 {
 	if (n <= 0) {
 		return 0;
@@ -478,7 +478,7 @@ int geometry_global::count_N1(int n, int q)
 	return nb_pts_N1(n, q);
 }
 
-int geometry_global::count_T1(int epsilon, int n, int q)
+long int geometry_global::count_T1(int epsilon, int n, int q)
 // n = Witt index
 {
 	number_theory_domain NT;
@@ -488,8 +488,8 @@ int geometry_global::count_T1(int epsilon, int n, int q)
 		return 0;
 		}
 	if (epsilon == 1) {
-		return ((NT.i_power_j(q, n) - 1) *
-				(NT.i_power_j(q, n - 1) + 1)) / (q - 1);
+		return ((NT.i_power_j_lint(q, n) - 1) *
+				(NT.i_power_j_lint(q, n - 1) + 1)) / (q - 1);
 		}
 	else if (epsilon == 0) {
 		return count_T1(1, n, q) + count_N1(n, q);
@@ -502,19 +502,19 @@ int geometry_global::count_T1(int epsilon, int n, int q)
 	//exit(1);
 }
 
-int geometry_global::count_T2(int n, int q)
+long int geometry_global::count_T2(int n, int q)
 {
 	number_theory_domain NT;
 
 	if (n <= 0) {
 		return 0;
 		}
-	return (NT.i_power_j(q, 2 * n - 2) - 1) *
-			(NT.i_power_j(q, n) - 1) *
-			(NT.i_power_j(q, n - 2) + 1) / ((q - 1) * (NT.i_power_j(q, 2) - 1));
+	return (NT.i_power_j_lint(q, 2 * n - 2) - 1) *
+			(NT.i_power_j_lint(q, n) - 1) *
+			(NT.i_power_j_lint(q, n - 2) + 1) / ((q - 1) * (NT.i_power_j_lint(q, 2) - 1));
 }
 
-int geometry_global::nb_pts_Qepsilon(int epsilon, int k, int q)
+long int geometry_global::nb_pts_Qepsilon(int epsilon, int k, int q)
 // number of singular points on Q^epsilon(k,q)
 {
 	if (epsilon == 0) {
@@ -589,7 +589,7 @@ int geometry_global::Witt_index(int epsilon, int k)
 	return n;
 }
 
-int geometry_global::nb_pts_Q(int k, int q)
+long int geometry_global::nb_pts_Q(int k, int q)
 // number of singular points on Q(k,q), parabolic quadric, so k is even
 {
 	int n;
@@ -598,7 +598,7 @@ int geometry_global::nb_pts_Q(int k, int q)
 	return nb_pts_Sbar(n, q) + nb_pts_N1(n, q);
 }
 
-int geometry_global::nb_pts_Qplus(int k, int q)
+long int geometry_global::nb_pts_Qplus(int k, int q)
 // number of singular points on Q^+(k,q)
 {
 	int n;
@@ -607,7 +607,7 @@ int geometry_global::nb_pts_Qplus(int k, int q)
 	return nb_pts_Sbar(n, q);
 }
 
-int geometry_global::nb_pts_Qminus(int k, int q)
+long int geometry_global::nb_pts_Qminus(int k, int q)
 // number of singular points on Q^-(k,q)
 {
 	int n;
@@ -621,7 +621,7 @@ int geometry_global::nb_pts_Qminus(int k, int q)
 // the following functions are for the hyperbolic quadric with Witt index n:
 // #############################################################################
 
-int geometry_global::nb_pts_S(int n, int q)
+long int geometry_global::nb_pts_S(int n, int q)
 // Number of singular vectors (including the zero vector)
 {
 	int a;
@@ -642,7 +642,7 @@ int geometry_global::nb_pts_S(int n, int q)
 	return a;
 }
 
-int geometry_global::nb_pts_N(int n, int q)
+long int geometry_global::nb_pts_N(int n, int q)
 // Number of non-singular vectors.
 // Of course, |N(n,q)| + |S(n,q)| = q^{2n}
 // |N(n,q)| = (q - 1) * |N1(n,q)|
@@ -654,7 +654,7 @@ int geometry_global::nb_pts_N(int n, int q)
 		exit(1);
 		}
 	if (n == 1) {
-		return (q - 1) * (q - 1);
+		return (long int) (q - 1) * (long int) (q - 1);
 		}
 	a = nb_pts_S(1, q) * nb_pts_N(n - 1, q);
 	a += nb_pts_N(1, q) * nb_pts_S(n - 1, q);
@@ -662,7 +662,7 @@ int geometry_global::nb_pts_N(int n, int q)
 	return a;
 }
 
-int geometry_global::nb_pts_N1(int n, int q)
+long int geometry_global::nb_pts_N1(int n, int q)
 // Number of non-singular vectors
 // for one fixed value of the quadratic form
 // i.e. number of solutions of
@@ -687,7 +687,7 @@ int geometry_global::nb_pts_N1(int n, int q)
 	return a;
 }
 
-int geometry_global::nb_pts_Sbar(int n, int q)
+long int geometry_global::nb_pts_Sbar(int n, int q)
 // number of singular projective points
 // |S(n,q)| = (q-1) * |Sbar(n,q)| + 1
 {
@@ -707,7 +707,7 @@ int geometry_global::nb_pts_Sbar(int n, int q)
 	return a;
 }
 
-int geometry_global::nb_pts_Nbar(int n, int q)
+long int geometry_global::nb_pts_Nbar(int n, int q)
 // |Nbar(1,q)| = q - 1
 {
 	//int a;
