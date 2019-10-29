@@ -1054,6 +1054,126 @@ void layered_graph::set_radius_factor_for_all_nodes_at_level(
 }
 
 
+void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
+	int f_depth_first, int f_breadth_first, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_layers = n + 1;
+	int *Nb;
+	int i, k, r, a, b, r0;
+	int *set1;
+	int *set2;
+	number_theory_domain NT;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "layered_graph::make_subset_lattice n=" << n << endl;
+		}
+
+	Nb = NEW_int(nb_layers);
+	for (i = 0; i <= n; i++) {
+		Nb[i] = Combi.int_n_choose_k(n, i);
+		}
+
+	set1 = NEW_int(n);
+	set2 = NEW_int(n);
+
+	add_data1(0, 0/*verbose_level*/);
+	init(depth + 1 /*nb_layers*/, Nb, "", verbose_level);
+	if (f_vv) {
+		cout << "layered_graph::make_subset_lattice after init" << endl;
+		}
+	place(verbose_level);
+	if (f_vv) {
+		cout << "layered_graph::make_subset_lattice after place" << endl;
+		}
+
+	// create vertex labels:
+	for (k = 0; k <= depth; k++) {
+		for (r = 0; r < Nb[k]; r++) {
+			Combi.unrank_k_subset(r, set1, n, k);
+			add_node_data1(k, r, set1[k - 1], 0/*verbose_level*/);
+
+			char text[1000];
+			int a, j, j0;
+			if (f_depth_first) {
+				cout << "k=" << k << " r=" << r << " set=";
+				int_vec_print(cout, set1, k);
+				cout << endl;
+				a = 0;
+				for (i = k - 1; i >= 0; i--) {
+					if (i) {
+						j0 = set1[i - 1];
+						}
+					else {
+						j0 = -1;
+						}
+					cout << "i=" << i << " set1[i]=" << set1[i] << endl;
+					for (j = j0 + 1; j < set1[i]; j++) {
+						cout << "i = " << i << " j=" << j << " adding "
+								 << NT.i_power_j(2, n - j - 1) << endl;
+						a += NT.i_power_j(2, n - j - 1);
+						}
+					}
+				a += k;
+				sprintf(text, "%d", a);
+				}
+			else if (f_breadth_first) {
+				a = 0;
+				for (i = 0; i < k; i++) {
+					a += Nb[i];
+					}
+				a += r;
+				sprintf(text, "%d", a);
+				}
+			else {
+				if (k) {
+					sprintf(text, "%d", set1[k - 1]);
+					}
+				else {
+					text[0] = 0;
+					}
+				}
+			add_text(k, r, text, 0/*verbose_level*/);
+			}
+		}
+
+	// create edges:
+	for (k = 1; k <= depth; k++) {
+		for (r = 0; r < Nb[k]; r++) {
+			Combi.unrank_k_subset(r, set1, n, k);
+
+			if (f_tree) {
+				for (a = k - 1; a >= k - 1; a--) {
+					int_vec_copy(set1, set2, k);
+					for (b = a; b < k - 1; b++) {
+						set2[b] = set2[b + 1];
+						}
+					r0 = Combi.rank_k_subset(set2, n, k - 1);
+					add_edge(k - 1, r0, k, r, 0 /*verbose_level*/);
+					}
+				}
+			else {
+				for (a = k - 1; a >= 0; a--) {
+					int_vec_copy(set1, set2, k);
+					for (b = a; b < k - 1; b++) {
+						set2[b] = set2[b + 1];
+						}
+					r0 = Combi.rank_k_subset(set2, n, k - 1);
+					add_edge(k - 1, r0, k, r, 0 /*verbose_level*/);
+					}
+				}
+			}
+		}
+
+
+	FREE_int(set1);
+	FREE_int(set2);
+	if (f_v) {
+		cout << "layered_graph::make_subset_lattice done" << endl;
+		}
+}
 
 
 

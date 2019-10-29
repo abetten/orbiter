@@ -279,10 +279,12 @@ MODULES= \
 		top_level/algebra_and_number_theory/semifield_trace.o \
 		top_level/algebra_and_number_theory/trace_record.o \
 		top_level/algebra_and_number_theory/young.o \
+		top_level/combinatorics/cayley_graph_search.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
 		top_level/combinatorics/graph_classify.o \
+		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/large_set_classify.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
@@ -303,6 +305,7 @@ MODULES= \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
+		top_level/geometry/linear_set_classify.o \
 		top_level/geometry/ovoid_classify.o \
 		top_level/geometry/packing_classify.o \
 		top_level/geometry/packing_classify2.o \

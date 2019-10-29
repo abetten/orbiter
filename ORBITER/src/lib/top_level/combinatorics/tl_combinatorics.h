@@ -12,6 +12,91 @@
 namespace orbiter {
 namespace top_level {
 
+
+
+// #############################################################################
+// design_create_description.cpp
+// #############################################################################
+
+//! for a problem of Ferdinand Ihringer
+
+
+class cayley_graph_search {
+
+public:
+
+	int level;
+	int group;
+	int subgroup;
+
+	int ord;
+	int degree;
+	int data_size;
+
+	int go;
+	int go_subgroup;
+	int nb_involutions;
+	int *f_has_order2;
+	int *f_subgroup; // [go]
+	int *list_of_elements; // [go]
+	int *list_of_elements_inverse; // [go]
+
+	action *A;
+	finite_field *F;
+	int target_depth;
+
+	int *Elt1;
+	int *Elt2;
+	vector_ge *gens;
+	vector_ge *gens_subgroup;
+	longinteger_object target_go, target_go_subgroup;
+	strong_generators *Strong_gens;
+	strong_generators *Strong_gens_subgroup;
+
+	sims *S;
+	sims *S_subgroup;
+
+	int *Table;
+	int *generators;
+	int nb_generators;
+
+	char fname_base[1000];
+	char prefix[000];
+	char fname[1000];
+	char fname_graphs[1000];
+
+	strong_generators *Aut_gens;
+	longinteger_object Aut_order;
+	action *Aut;
+	action *A2;
+	poset *Poset;
+	poset_classification *gen;
+
+
+	void init(int level, int group, int subgroup, int verbose_level);
+	void init_group(int verbose_level);
+	void init_group2(int verbose_level);
+	void init_group_level_3(int verbose_level);
+	void init_group_level_4(int verbose_level);
+	void init_group_level_5(int verbose_level);
+	int incremental_check_func(int len, int *S, int verbose_level);
+	void classify_subsets(int verbose_level);
+	void write_file(int verbose_level);
+	void create_Adjacency_list(int *Adj,
+		int *connection_set, int connection_set_sz,
+		int verbose_level);
+	// Adj[go * connection_set_sz]
+	void create_additional_edges(int *Additional_neighbor,
+		int *Additional_neighbor_sz,
+		int connection_element,
+		int verbose_level);
+	// Additional_neighbor[go], Additional_neighbor_sz[go]
+
+};
+
+
+
+
 // #############################################################################
 // design_create_description.cpp
 // #############################################################################
@@ -304,6 +389,49 @@ void graph_classify_test_function(int *S, int len,
 		void *data, int verbose_level);
 void graph_classify_print_set(std::ostream &ost,
 		int len, int *S, void *data);
+
+
+
+// #############################################################################
+// hadamard_classify.cpp
+// #############################################################################
+
+//! Classification of Hadamard matrices
+
+
+
+
+class hadamard_classify {
+
+public:
+	int n;
+	int N, N2;
+	int bitvector_length;
+	uchar *bitvector_adjacency;
+	colored_graph *CG;
+
+	action *A;
+
+	int *v;
+
+	poset_classification *gen;
+	int nb_orbits;
+
+	void init(int n, int f_draw, int verbose_level, int verbose_level_clique);
+	int clique_test(int *set, int sz);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	int dot_product(int a, int b, int n);
+};
+
+
+void hadamard_classify_early_test_function(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 
 // #############################################################################
