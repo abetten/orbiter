@@ -61,7 +61,7 @@ public:
 	int nb_generators;
 
 	char fname_base[1000];
-	char prefix[000];
+	char prefix[1000];
 	char fname[1000];
 	char fname_graphs[1000];
 
