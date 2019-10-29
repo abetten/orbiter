@@ -23,6 +23,7 @@ MODULES = \
 	cubic_curve_with_action.o \
 	invariants_packing.o \
 	k_arc_generator.o \
+	linear_set_classify.o \
 	ovoid_classify.o \
 	packing_classify.o \
 	packing_classify2.o \

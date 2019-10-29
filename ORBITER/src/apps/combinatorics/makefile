@@ -23,13 +23,11 @@ all: all_k_subsets.out \
 		kramer_mesner.out \
 		matrix_rank.out \
 		orthogonal.out \
-		partitions.out \
 		poset_of_subsets.out \
 		random_permutation.out \
 		random.out \
 		rank_anything.out \
 		rank_subsets_lex.out \
-		subsets.out \
 		tao.out \
 		unrank.out 
 
@@ -79,9 +77,6 @@ matrix_rank.out:  matrix_rank.o;
 orthogonal.out:  orthogonal.o;
 	$(DISCRETA_CPP)  orthogonal.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-partitions.out: partitions.o
-	$(DISCRETA_CPP) partitions.o -o partitions.out
-
 poset_of_subsets.out:  poset_of_subsets.o;
 	$(DISCRETA_CPP)  poset_of_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -96,9 +91,6 @@ rank_anything.out:  rank_anything.o;
 
 rank_subsets_lex.out:  rank_subsets_lex.o;
 	$(DISCRETA_CPP)  rank_subsets_lex.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-subsets.out:  subsets.o;
-	$(DISCRETA_CPP)  subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 tao.out:  tao.o;
 	$(DISCRETA_CPP)  tao.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

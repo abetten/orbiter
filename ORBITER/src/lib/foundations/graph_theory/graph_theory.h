@@ -646,6 +646,8 @@ public:
 	void compute_depth_first_ranks(int verbose_level);
 	void set_radius_factor_for_all_nodes_at_level(int lvl, 
 		double radius_factor, int verbose_level);
+	void make_subset_lattice(int n, int depth, int f_tree,
+		int f_depth_first, int f_breadth_first, int verbose_level);
 };
 
 // #############################################################################

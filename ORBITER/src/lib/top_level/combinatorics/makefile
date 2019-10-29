@@ -6,10 +6,12 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	cayley_graph_search.o \
 	design_create_description.o \
 	design_create.o \
 	difference_set_in_heisenberg_group.o \
 	graph_classify.o \
+	hadamard_classify.o \
 	large_set_classify.o \
 	regular_ls_classify.o \
 	tactical_decomposition.o

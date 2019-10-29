@@ -17,8 +17,8 @@ desarguesian_spread.out:  desarguesian_spread.o;
 	$(DISCRETA_CPP)  desarguesian_spread.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-linear_set_main.out:  linear_set_main.o linear_set.o linear_set2.o ;
-	$(DISCRETA_CPP) linear_set_main.o linear_set.o linear_set2.o \
+linear_set_main.out:  linear_set_main.o ;
+	$(DISCRETA_CPP) linear_set_main.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 long_orbit.out:  long_orbit.o;

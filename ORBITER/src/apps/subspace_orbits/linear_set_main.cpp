@@ -16,7 +16,6 @@ using namespace std;
 using namespace orbiter;
 using namespace orbiter::top_level;
 
-#include "linear_set.h"
 
 // global data:
 
@@ -189,9 +188,9 @@ int main(int argc, const char **argv)
 	//f_memory_debug_verbose = TRUE;
 
 
-	linear_set *LS;
+	linear_set_classify *LS;
 
-	LS = NEW_OBJECT(linear_set);
+	LS = NEW_OBJECT(linear_set_classify);
 
 	LS->init(argc, argv, s, n, q, poly_q, poly_Q, depth, f_identify, verbose_level);
 

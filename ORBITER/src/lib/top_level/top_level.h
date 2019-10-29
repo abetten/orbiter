@@ -122,7 +122,9 @@ class ovoid_classify;
 class graph_generator;
 class regular_ls_classify;
 class difference_set_in_heisenberg_group;
-
+class cayley_graph_search;
+class hadamard_classify;
+class linear_set_classify;
 
 // #############################################################################
 // representatives.cpp
