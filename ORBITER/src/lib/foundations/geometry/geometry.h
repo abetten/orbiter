@@ -2617,7 +2617,7 @@ public:
 	void load(int verbose_level);
 	void compute_adjacency_matrix(
 			uchar *&bitvector_adjacency,
-			int &bitvector_length,
+			long int &bitvector_length,
 			int verbose_level);
 	int test_if_spreads_are_disjoint(int a, int b);
 
@@ -3269,6 +3269,95 @@ public:
 		int *&line_types, int &nb_line_types, 
 		int *&distributions, int &nb_distributions);
 };
+
+
+// #############################################################################
+// tdo_refinement.cpp
+// #############################################################################
+
+
+
+//! refinement of the parameters of a linear space
+
+class tdo_refinement {
+	public:
+
+	int t0;
+	int cnt;
+	char *p_buf;
+	char str[1000];
+	char ext[1000];
+	char *fname_in;
+	char fname_out[1000];
+	int f_lambda3;
+	int lambda3, block_size;
+	int f_scale;
+	int scaling;
+	int f_range;
+	int range_first, range_len;
+	int f_select;
+	char *select_label;
+	int f_omit1;
+	int omit1;
+	int f_omit2;
+	int omit2;
+	int f_D1_upper_bound_x0;
+	int D1_upper_bound_x0;
+	int f_reverse;
+	int f_reverse_inverse;
+	int f_use_packing_numbers;
+	int f_dual_is_linear_space;
+	int f_do_the_geometric_test;
+	int f_once;
+	int f_use_mckay_solver;
+
+
+	geo_parameter GP;
+
+	geo_parameter GP2;
+
+
+
+	int f_doit;
+	int nb_written, nb_written_tactical, nb_tactical;
+	int cnt_second_system;
+	solution_file_data *Sol;
+
+	tdo_refinement();
+	~tdo_refinement();
+	void init(int verbose_level);
+	void read_arguments(int argc, char **argv);
+	void main_loop(int verbose_level);
+	void do_it(std::ofstream &g, int verbose_level);
+	void do_row_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
+	void do_col_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
+	void do_all_row_refinements(char *label_in, std::ofstream &g, tdo_scheme &G,
+		int *point_types, int nb_point_types, int point_type_len,
+		int *distributions, int nb_distributions, int &nb_tactical, int verbose_level);
+	void do_all_column_refinements(char *label_in, std::ofstream &g, tdo_scheme &G,
+		int *line_types, int nb_line_types, int line_type_len,
+		int *distributions, int nb_distributions, int &nb_tactical, int verbose_level);
+	int do_row_refinement(int t, char *label_in, std::ofstream &g, tdo_scheme &G,
+		int *point_types, int nb_point_types, int point_type_len,
+		int *distributions, int nb_distributions, int verbose_level);
+		// returns TRUE or FALSE depending on whether the
+		// refinement gave a tactical decomposition
+	int do_column_refinement(int t, char *label_in, std::ofstream &g, tdo_scheme &G,
+		int *line_types, int nb_line_types, int line_type_len,
+		int *distributions, int nb_distributions, int verbose_level);
+		// returns TRUE or FALSE depending on whether the
+		// refinement gave a tactical decomposition
+};
+
+void print_distribution(std::ostream &ost,
+	int *types, int nb_types, int type_len,
+	int *distributions, int nb_distributions);
+int compare_func_int_vec(void *a, void *b, void *data);
+int compare_func_int_vec_inverse(void *a, void *b, void *data);
+void distribution_reverse_sorting(int f_increasing,
+	int *types, int nb_types, int type_len,
+	int *distributions, int nb_distributions);
+
 
 
 // #############################################################################

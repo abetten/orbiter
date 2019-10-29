@@ -86,6 +86,7 @@ MODULES= \
 		foundations/geometry/surface_domain.o \
 		foundations/geometry/surface_object.o \
 		foundations/geometry/tdo_data.o \
+		foundations/geometry/tdo_refinement.o \
 		foundations/geometry/tdo_scheme.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \

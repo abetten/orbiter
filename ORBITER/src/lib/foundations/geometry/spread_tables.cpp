@@ -439,17 +439,17 @@ void spread_tables::load(int verbose_level)
 
 void spread_tables::compute_adjacency_matrix(
 		uchar *&bitvector_adjacency,
-		int &bitvector_length,
+		long int &bitvector_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, k, cnt, N2;
+	long int i, j, k, N2, cnt;
 
 	if (f_v) {
 		cout << "spread_tables::compute_adjacency_matrix" << endl;
 		}
 
-	N2 = (nb_spreads * nb_spreads) >> 1;
+	N2 = ((long int) nb_spreads * (long int) nb_spreads) >> 1;
 
 	bitvector_length = (N2 + 7) >> 3;
 

@@ -11,7 +11,7 @@
 // Here, v = 1/2(q^3 + q + 2), k = q^1+1, lambda = 2q
 
 #include "orbiter.h"
-#include "ovoid.h"
+//#include "ovoid.h"
 
 using namespace std;
 
