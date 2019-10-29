@@ -1963,6 +1963,140 @@ int sims::identify_group(char *path_t144,
 #endif
 
 
+void sims::zuppo_list(
+		int *Zuppos, int &nb_zuppos, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int goi;
+	longinteger_object go;
+	int rk, o, i, j;
+	int *Elt1;
+	int *Elt2;
+	int *f_done;
+	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "sims::zuppo_list" << endl;
+		}
+	group_order(go);
+	cout << "go=" << go << endl;
+	goi = go.as_int();
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	f_done = NEW_int(goi);
+	int_vec_zero(f_done, goi);
+	if (f_v) {
+		cout << "sims::zuppo_list group of order " << goi << endl;
+		}
+	nb_zuppos = 0;
+	for (rk = 0; rk < goi; rk++) {
+		//cout << "element " << rk << " / " << goi << endl;
+		if (f_done[rk]) {
+			continue;
+			}
+		element_unrank_int(rk, Elt1, 0 /*verbose_level*/);
+		//cout << "element created" << endl;
+		o = A->element_order(Elt1);
+		//cout << "element order = " << o << endl;
+		if (o == 1) {
+			continue;
+			}
+		if (!NT.is_prime_power(o)) {
+			continue;
+			}
+		if (f_v) {
+			cout << "sims::zuppo_list element " << rk << " / " << goi << " has order "
+					<< o << " which is a prime power; "
+					"nb_zuppos = " << nb_zuppos << endl;
+		}
+		Zuppos[nb_zuppos++] = rk;
+		f_done[rk] = TRUE;
+		for (i = 1; i < o; i++) {
+			if (NT.gcd_int(i, o) == 1) {
+				A->element_move(Elt1, Elt2, 0);
+				A->element_power_int_in_place(Elt2,
+						i, 0 /* verbose_level*/);
+				j = element_rank_int(Elt2);
+				f_done[j] = TRUE;
+				}
+			}
+		}
+	if (f_v) {
+		cout << "sims::zuppo_list We found " << nb_zuppos << " zuppo elements" << endl;
+	}
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(f_done);
+	if (f_v) {
+		cout << "sims::zuppo_list done" << endl;
+		}
+}
+
+void sims::dimino(
+	int *subgroup, int subgroup_sz, int *gens, int &nb_gens,
+	int *cosets,
+	int new_gen,
+	int *group, int &group_sz,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, k, c, idx, new_coset_rep, nb_cosets;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "sims::dimino new_gen = " << new_gen << endl;
+		}
+	int_vec_copy(subgroup, group, subgroup_sz);
+	Sorting.int_vec_heapsort(group, subgroup_sz);
+	group_sz = subgroup_sz;
+
+	cosets[0] = 0;
+	nb_cosets = 1;
+	gens[nb_gens++] = new_gen;
+	for (i = 0; i < nb_cosets; i++) {
+		for (j = 0; j < nb_gens; j++) {
+			if (f_vv) {
+				cout << "sims::dimino coset rep " << i << " = " << cosets[i] << endl;
+				cout << "sims::dimino generator " << j << " = " << gens[j] << endl;
+				}
+
+			c = mult_by_rank(cosets[i], gens[j]);
+			if (f_vv) {
+				cout << "sims::dimino coset rep " << i << " times generator "
+						<< j << " is " << c << endl;
+				}
+			if (Sorting.int_vec_search(group, group_sz, c, idx)) {
+				if (f_vv) {
+					cout << "sims::dimino already there" << endl;
+					}
+				continue;
+				}
+			if (f_vv) {
+				cout << "sims::dimino n e w coset rep" << endl;
+				}
+			new_coset_rep = c;
+
+			for (k = 0; k < subgroup_sz; k++) {
+				c = mult_by_rank(subgroup[k], new_coset_rep);
+				group[group_sz++] = c;
+				}
+			Sorting.int_vec_heapsort(group, group_sz);
+			if (f_vv) {
+				cout << "sims::dimino new group size = " << group_sz << endl;
+				}
+			cosets[nb_cosets++] = new_coset_rep;
+			}
+		}
+	if (f_vv) {
+		cout << "sims::dimino, the n e w group has order " << group_sz << endl;
+		}
+
+	if (f_v) {
+		cout << "sims::dimino done" << endl;
+		}
+}
+
 
 }}
 

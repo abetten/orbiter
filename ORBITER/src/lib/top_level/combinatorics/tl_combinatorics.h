@@ -101,6 +101,110 @@ public:
 			int verbose_level);
 };
 
+
+
+
+// #############################################################################
+// difference_set_in_heisenberg_group.cpp
+// #############################################################################
+
+
+//! to find difference sets in Heisenberg groups following Tao
+
+
+class difference_set_in_heisenberg_group {
+
+public:
+	char fname_base[1000];
+
+	int n;
+	int q;
+	finite_field *F;
+	heisenberg *H;
+	int *Table;
+	int *Table_abv;
+	int *gens;
+	int nb_gens;
+
+#if 0
+	int *N_gens;
+	int N_nb_gens;
+	int N_go;
+#endif
+	action *A;
+	strong_generators *Aut_gens;
+	longinteger_object Aut_order;
+
+	int given_base_length; // = nb_gens
+	int *given_base; // = gens
+	int *base_image;
+	int *base_image_elts;
+	int *E1;
+	int rk_E1;
+
+	char prefix[1000];
+	char fname_magma_out[1000];
+	sims *Aut;
+	sims *U;
+	longinteger_object U_go;
+	vector_ge *U_gens;
+	schreier *Sch;
+
+
+	// N = normalizer of U in Aut
+	int *N_gens;
+	int N_nb_gens, N_go;
+	action *N;
+	longinteger_object N_order;
+
+	action *N_on_orbits;
+	int *Paired_with;
+	int nb_paired_orbits;
+	int *Pairs;
+	int *Pair_orbit_length;
+
+
+	int *Pairs_of_type1;
+	int nb_pairs_of_type1;
+	int *Pairs_of_type2;
+	int nb_pairs_of_type2;
+	int *Sets1;
+	int *Sets2;
+
+
+	int *Short_pairs;
+	int *Long_pairs;
+
+	int *f_orbit_select;
+	int *Short_orbit_inverse;
+
+	action *A_on_short_orbits;
+	int nb_short_orbits;
+	int nb_long_orbits;
+
+	poset_classification *gen;
+
+
+
+
+	void init(int n, finite_field *F, int verbose_level);
+	void do_n2q3(int verbose_level);
+	void check_overgroups_of_order_nine(int verbose_level);
+	void create_minimal_overgroups(int verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+
+};
+
+void difference_set_in_heisenberg_group_early_test_func(
+		int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		void *data, int verbose_level);
+
+
 // #############################################################################
 // graph_classify.cpp
 // #############################################################################

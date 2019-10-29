@@ -281,6 +281,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
+		top_level/combinatorics/difference_set_in_heisenberg_group.o \
 		top_level/combinatorics/graph_classify.o \
 		top_level/combinatorics/large_set_classify.o \
 		top_level/combinatorics/regular_ls_classify.o \

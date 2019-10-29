@@ -121,6 +121,8 @@ class code_classify;
 class ovoid_classify;
 class graph_generator;
 class regular_ls_classify;
+class difference_set_in_heisenberg_group;
+
 
 // #############################################################################
 // representatives.cpp
