@@ -1387,6 +1387,14 @@ public:
 		// comutes b^{-1} * a * b
 	int conjugate_by_rank_b_bv_given(int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level);
+	void zuppo_list(
+			int *Zuppos, int &nb_zuppos, int verbose_level);
+	void dimino(
+		int *subgroup, int subgroup_sz, int *gens, int &nb_gens,
+		int *cosets,
+		int new_gen,
+		int *group, int &group_sz,
+		int verbose_level);
 
 
 	// sims_io.cpp:
