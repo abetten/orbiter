@@ -221,6 +221,11 @@ void klein_correspondence::init(finite_field *F,
 		}
 	Pt_rk = NEW_int(P3->N_lines);
 
+	if (f_v) {
+		cout << "klein_correspondence::init after allocate "
+				"Pt_rk P3->N_lines=" << P3->N_lines << endl;
+		cout << "klein_correspondence::init computing Pt_rk[]" << endl;
+		}
 	for (i = 0; i < P3->N_lines; i++) {
 		O->unrank_point(
 			coordinates_of_quadric_points + i * d, 1, i, 0);
@@ -228,6 +233,9 @@ void klein_correspondence::init(finite_field *F,
 			coordinates_of_quadric_points + i * d, v6, 6);
 		F->PG_element_rank_modified(v6, 1, d, a);
 		Pt_rk[i] = a;
+		}
+	if (f_v) {
+		cout << "klein_correspondence::init computing Pt_rk[] done" << endl;
 		}
 
 	if (f_vv) {

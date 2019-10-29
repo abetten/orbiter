@@ -1412,9 +1412,9 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	long int a;
 	sims *G;
 	//int *Elt1;
-	int total_nb_candidates;
+	//int total_nb_candidates;
 	longinteger_object Go;
-	int go, alloc_length;
+	int /*go,*/ alloc_length;
 
 
 	if (f_v) {
@@ -1434,7 +1434,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 
 	G = A_PGLk->Sims;
 	G->group_order(Go);
-	go = Go.as_int();
+	//go = Go.as_int();
 
 	F->identity_matrix(Mtx_stack[0], k);
 
@@ -1443,7 +1443,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 				<< nb_orbits << ":" << endl;
 		}
 
-	total_nb_candidates = 0;
+	//total_nb_candidates = 0;
 
 	ext = defining_flag_orbit[orbit];
 
@@ -1992,12 +1992,12 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 	long int **Set;
 	int *Set_sz;
 	int Nb_sets;
-	int window_bottom, window_size;
+	int /*window_bottom,*/ window_size;
 	int h;
 	number_theory_domain NT;
 	file_io Fio;
 
-	window_bottom = k - 1;
+	//window_bottom = k - 1;
 	window_size = k - 2;
 	Nb_sets = NT.i_power_j(q, window_size);
 
@@ -2096,7 +2096,7 @@ void semifield_level_two::print_representatives(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, ext, idx;
-	long int a, b;
+	long int a; //, b;
 
 
 	if (f_v) {
@@ -2134,7 +2134,7 @@ void semifield_level_two::print_representatives(
 
 
 			a = class_rep_rank[i];
-			b = class_rep_plus_I_rank[i];
+			//b = class_rep_plus_I_rank[i];
 			if (f_v) {
 				cout << "Representative of class " << i << " / " << nb_classes
 						<< " is matrix " << a << ":\\\\" << endl;
@@ -2370,7 +2370,7 @@ void semifield_level_two::read_level_info_file(int verbose_level)
 	char fname[1000];
 	long int *M;
 	int m, n, i;
-	int tmp;
+	//int tmp;
 	file_io Fio;
 
 	if (f_v) {
@@ -2399,7 +2399,7 @@ void semifield_level_two::read_level_info_file(int verbose_level)
 	//nb_flag_orbits = 0;
 
 	for (i = 0; i < m; i++) {
-		tmp = M[i * n + 1]; // Po[i]
+		//tmp = M[i * n + 1]; // Po[i]
 		So[i] = M[i * n + 2];
 		Fo[i] = M[i * n + 3];
 
