@@ -328,6 +328,20 @@ long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_lev
 	return res;
 }
 
+long int number_theory_domain::i_power_j_lint(int i, int j)
+//Computes $i^j$ as integer.
+//There is no checking for overflow.
+{
+	long int k, r = 1;
+
+	//cout << "i_power_j i=" << i << ", j=" << j << endl;
+	for (k = 0; k < j; k++) {
+		r *= i;
+		}
+	//cout << "i_power_j yields" << r << endl;
+	return r;
+}
+
 int number_theory_domain::i_power_j(int i, int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.

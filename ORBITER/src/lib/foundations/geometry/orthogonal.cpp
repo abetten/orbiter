@@ -7710,8 +7710,8 @@ void orthogonal::Siegel_map_between_singular_points_hyperbolic(int *T,
 	delete [] Gram;
 }
 
-void orthogonal::Siegel_Transformation(int *T, 
-	int rk_from, int rk_to, int root, 
+void orthogonal::Siegel_Transformation(int *T,
+	int rk_from, int rk_to, int root,
 	int verbose_level)
 // root is not perp to from and to.
 {
@@ -7770,8 +7770,8 @@ void orthogonal::Siegel_Transformation2(int *T,
 		}
 }
 
-void orthogonal::Siegel_Transformation3(int *T, 
-	int *from, int *to, int *root, 
+void orthogonal::Siegel_Transformation3(int *T,
+	int *from, int *to, int *root,
 	int *B, int *Bv, int *w, int *z, int *x,
 	int verbose_level)
 {
