@@ -227,7 +227,7 @@ int main(int argc, const char **argv)
 		cout << "surface_classify before Surf->init" << endl;
 		}
 	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
+	Surf->init(F, verbose_level - 3);
 	if (f_v) {
 		cout << "surface_classify after Surf->init" << endl;
 		}
