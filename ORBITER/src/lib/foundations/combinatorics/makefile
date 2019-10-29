@@ -7,7 +7,11 @@ LFLAGS = -lm
 
 MODULES = \
 		brick_domain.o \
-		combinatorics_domain.o
+		combinatorics_domain.o \
+		geo_parameter.o \
+		tdo_data.o \
+		tdo_refinement.o \
+		tdo_scheme.o 
 
 
 all : $(MODULES)

@@ -37,6 +37,10 @@ MODULES= \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/brick_domain.o \
 		foundations/combinatorics/combinatorics_domain.o \
+		foundations/combinatorics/geo_parameter.o \
+		foundations/combinatorics/tdo_data.o \
+		foundations/combinatorics/tdo_refinement.o \
+		foundations/combinatorics/tdo_scheme.o \
 		foundations/data_structures/bitmatrix.o \
 		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/data_file.o \
@@ -66,7 +70,6 @@ MODULES= \
 		foundations/geometry/eckardt_point.o \
 		foundations/geometry/elliptic_curve.o \
 		foundations/geometry/flag.o \
-		foundations/geometry/geo_parameter.o \
 		foundations/geometry/geometry_global.o \
 		foundations/geometry/grassmann.o \
 		foundations/geometry/grassmann_embedded.o \
@@ -85,9 +88,6 @@ MODULES= \
 		foundations/geometry/surface_domain_io.o \
 		foundations/geometry/surface_domain.o \
 		foundations/geometry/surface_object.o \
-		foundations/geometry/tdo_data.o \
-		foundations/geometry/tdo_refinement.o \
-		foundations/geometry/tdo_scheme.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \
 		foundations/globals/magma_interface.o \
