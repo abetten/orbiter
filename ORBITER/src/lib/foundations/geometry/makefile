@@ -21,7 +21,6 @@ MODULES = \
 	eckardt_point.o \
 	elliptic_curve.o \
 	flag.o \
-	geo_parameter.o \
 	geometry_global.o \
 	grassmann.o \
 	grassmann_embedded.o \
@@ -40,9 +39,6 @@ MODULES = \
 	surface_domain_io.o \
 	surface_domain.o \
 	surface_object.o \
-	tdo_scheme.o \
-	tdo_data.o \
-	tdo_refinement.o \
 	unusual.o \
 	w3q.o 
 

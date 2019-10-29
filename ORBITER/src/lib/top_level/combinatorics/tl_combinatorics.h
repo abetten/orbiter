@@ -15,7 +15,7 @@ namespace top_level {
 
 
 // #############################################################################
-// design_create_description.cpp
+// cayley_graph_search.cpp
 // #############################################################################
 
 //! for a problem of Ferdinand Ihringer
@@ -396,7 +396,7 @@ void graph_classify_print_set(std::ostream &ost,
 // hadamard_classify.cpp
 // #############################################################################
 
-//! Classification of Hadamard matrices
+//! classification of Hadamard matrices
 
 
 
@@ -610,26 +610,6 @@ public:
 		diophant *&Dio, int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
-#if 0
-	void extend(const char *fname,
-		int f_single_case, int single_case,
-		int N, int K, int R, int f_lambda_reached, int depth,
-		int f_lexorder_test,
-		int verbose_level);
-	void extend_a_single_case(const char *fname,
-		int N, int K, int R, int f_lambda_reached,
-		int f_lexorder_test,
-		int orbit_at_level, int nb_orbits, int depth,
-		int verbose_level);
-	void handle_starter(const char *fname,
-		int N, int K, int R, int f_lambda_reached,
-		int f_lexorder_test,
-		int orbit_at_level, int nb_orbits,
-		int orbit_at_depth, int nb_starters, int depth,
-		int *pairs,
-		int *&Solutions, int &nb_sol,
-		int verbose_level);
-#endif
 };
 
 
