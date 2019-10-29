@@ -42,6 +42,7 @@ MODULES = \
 	surface_object.o \
 	tdo_scheme.o \
 	tdo_data.o \
+	tdo_refinement.o \
 	unusual.o \
 	w3q.o 
 

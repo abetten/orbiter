@@ -1514,7 +1514,7 @@ public:
 
 
 	uchar *bitvector_adjacency;
-	int bitvector_length;
+	long int bitvector_length;
 	int *degree;
 
 	poset *Poset;

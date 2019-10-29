@@ -33,7 +33,7 @@ void write_td_scheme(ofstream &g, char *label_base, int nb_V, int nb_B,
 
 void print_usage()
 {
-	cout << "usage: tdo_start.out [options] <tdo_file>\n";
+	cout << "usage: tdo_start.out [options] <tdo_file>" << endl;
 	cout << "where options can be:\n";
 	cout << "-v <n>" << endl;
 	cout << "  verbose level <n>" << endl;
