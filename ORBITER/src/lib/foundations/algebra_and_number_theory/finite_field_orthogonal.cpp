@@ -1138,6 +1138,12 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_leve
 		x = Gg.nb_pts_Sbar(1, q); // = 2
 		y = Gg.nb_pts_S(n - 1, q);
 
+		if (f_v) {
+			cout << "finite_field::Sbar_rank alpha = " << alpha << endl;
+			cout << "finite_field::Sbar_rank x = " << x << endl;
+			cout << "finite_field::Sbar_rank y = " << y << endl;
+		}
+
 		// test for 0 + 0
 		// (i.e. 0 = alpha = value of the form on
 		// the top two coefficients
@@ -1152,6 +1158,11 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_leve
 
 		l = x * y;
 		a += l;
+		if (f_v) {
+			cout << "finite_field::Sbar_rank l = " << l << endl;
+			cout << "finite_field::Sbar_rank a = " << a << endl;
+		}
+
 		// now it must be n + (-n) for some n \neq 0
 		// (i.e. n = alpha = value of the form on
 		// the top two coefficients and
@@ -1159,6 +1170,11 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_leve
 		x = Gg.nb_pts_Nbar(1, q);
 		y = Gg.nb_pts_N1(n - 1, q);
 		Nbar_rank(v + (n - 1) * 2 * stride, stride, 1, i);
+		if (f_v) {
+			cout << "finite_field::Sbar_rank x = " << x << endl;
+			cout << "finite_field::Sbar_rank y = " << y << endl;
+			cout << "finite_field::Sbar_rank i = " << i << endl;
+		}
 
 		beta = negate(alpha);
 		// beta = - alpha
@@ -1181,7 +1197,13 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_leve
 			}
 		// rank the N1 part:
 		N1_rank(v, stride, n - 1, j);
+		if (f_v) {
+			cout << "finite_field::Sbar_rank j = " << j << endl;
+		}
 		a += i * y + j;
+		if (f_v) {
+			cout << "finite_field::Sbar_rank a = " << a << endl;
+		}
 		}
 }
 
