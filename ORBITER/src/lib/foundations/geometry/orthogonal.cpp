@@ -61,23 +61,33 @@ void orthogonal::unrank_line(int &p1, int &p2,
 		return;
 		}
 	else {
-		cout << "unrank_line epsilon = " << epsilon << endl;
+		cout << "orthogonal::unrank_line epsilon = " << epsilon << endl;
 		exit(1);
 		}
 }
 
 int orthogonal::rank_line(int p1, int p2, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "orthogonal::rank_line" << endl;
+	}
 	if (epsilon == 1) {
-		return hyperbolic_rank_line(p1, p2, verbose_level);
+		ret = hyperbolic_rank_line(p1, p2, verbose_level);
 		}
 	else if (epsilon == 0) {
-		return parabolic_rank_line(p1, p2, verbose_level);
+		ret = parabolic_rank_line(p1, p2, verbose_level);
 		}
 	else {
-		cout << "rank_line epsilon = " << epsilon << endl;
+		cout << "orthogonal::rank_line epsilon = " << epsilon << endl;
 		exit(1);
 		}
+	if (f_v) {
+		cout << "orthogonal::rank_line done" << endl;
+	}
+	return ret;
 }
 
 int orthogonal::line_type_given_point_types(
@@ -2184,7 +2194,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 	rk = 0;
 	if (type == 4) {
 		if (index >= p4) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+			cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 					"index >= p4" << endl;
 			exit(1);
 			}
@@ -2194,7 +2204,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 	rk += p4;
 	if (type == 6) {
 		if (index >= p6) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+			cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 					"index >= p6" << endl;
 			exit(1);
 			}
@@ -2204,7 +2214,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 	rk += p6;
 	if (type == 3) {
 		if (index >= p3) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+			cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 					"index >= p3" << endl;
 			exit(1);
 			}
@@ -2214,7 +2224,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 	rk += p3;
 	if (type == 5) {
 		if (index >= p5) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+			cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 					"index >= p5" << endl;
 			exit(1);
 			}
@@ -2224,7 +2234,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 	rk += p5;
 	if (type == 2) {
 		if (index >= p2) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+			cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 					"index >= p2" << endl;
 			exit(1);
 			}
@@ -2234,14 +2244,14 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 	rk += p2;
 	if (type == 1) {
 		if (index >= p1) {
-			cout << "error in hyperbolic_type_and_index_to_point_rk, "
+			cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 					"index >= p1" << endl;
 			exit(1);
 			}
 		rk += index;
 		return rk;
 		}
-	cout << "error in hyperbolic_type_and_index_to_point_rk, "
+	cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 			"unknown type" << endl;
 	exit(1);
 }
@@ -2284,7 +2294,7 @@ void orthogonal::hyperbolic_point_rk_to_type_and_index(
 		index = rk;
 		return;
 		}
-	cout << "error in hyperbolic_point_rk_to_type_and_index" << endl;
+	cout << "error in orthogonal::hyperbolic_point_rk_to_type_and_index" << endl;
 	exit(1);
 	
 }
@@ -2355,29 +2365,32 @@ int orthogonal::hyperbolic_rank_line(
 	int line_type, rk = 0;
 	int cp1, cp2;
 	
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line" << endl;
+	}
 	if (m == 0) {
-		cout << "orthogonal::rank_line Witt index zero, "
+		cout << "orthogonal::hyperbolic_rank_line Witt index zero, "
 				"there is no line to rank" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "rank_line p1=" << p1 << " p2=" << p2 << endl;
+		cout << "orthogonal::hyperbolic_rank_line p1=" << p1 << " p2=" << p2 << endl;
 		}
 	point_rk_to_type_and_index(p1, pt1_type, pt1_index, verbose_level);
 	point_rk_to_type_and_index(p2, pt2_type, pt2_index, verbose_level);
 	if (f_v) {
-		cout << "rank_line pt1_type=" << pt1_type
+		cout << "orthogonal::hyperbolic_rank_line pt1_type=" << pt1_type
 				<< " pt2_type=" << pt2_type << endl;
 		}
 	line_type = line_type_given_point_types(p1, p2,
 			pt1_type, pt2_type);
 	if (f_v) {
-		cout << "rank_line line_type=" << line_type << endl;
+		cout << "orthogonal::hyperbolic_rank_line line_type=" << line_type << endl;
 		}
 	canonical_points_of_line(line_type, p1, p2,
 			cp1, cp2, verbose_level);
 	if (f_v) {
-		cout << "canonical points "
+		cout << "orthogonal::hyperbolic_rank_line canonical points "
 				"cp1=" << cp1 << " cp2=" << cp2 << endl;
 		}
 	if (line_type == 1) {
@@ -2408,7 +2421,7 @@ int orthogonal::hyperbolic_rank_line(
 		return rk + rank_line_L7(cp1, cp2, verbose_level);
 		}
 	rk += l7;
-	cout << "error in orthogonal::rank_line, illegal line_type" << endl;
+	cout << "error in orthogonal::hyperbolic_rank_line, illegal line_type" << endl;
 	exit(1);
 }
 
@@ -2421,8 +2434,11 @@ void orthogonal::unrank_line_L1(
 	int P4_index, P4_sub_index, P4_line_index;
 	int P4_field_element, root, i;
 	
+	if (f_v) {
+		cout << "orthogonal::unrank_line_L1" << endl;
+	}
 	if (index >= l1) {
-		cout << "error in unrank_line_L1 "
+		cout << "error in orthogonal::unrank_line_L1 "
 				"index too large" << endl;
 		}
 	P4_index = index / a41;
@@ -2431,14 +2447,14 @@ void orthogonal::unrank_line_L1(
 	P4_field_element = P4_sub_index % (q - 1);
 	P4_field_element++;
 	if (f_v) {
-		cout << "unrank_line_L1 index=" << index << endl;
+		cout << "orthogonal::unrank_line_L1 index=" << index << endl;
 		}
 	if (index >= l1) {
-		cout << "error in unrank_line_L1 index too large" << endl;
+		cout << "error in orthogonal::unrank_line_L1 index too large" << endl;
 		exit(1);
 		}
 	if (f_vv) {
-		cout << "unrank_line_L1 P4_index=" << P4_index
+		cout << "orthogonal::unrank_line_L1 P4_index=" << P4_index
 				<< " P4_sub_index=" << P4_sub_index << endl;
 		cout << "P4_line_index=" << P4_line_index
 				<< " P4_field_element=" << P4_field_element << endl;
@@ -2451,7 +2467,7 @@ void orthogonal::unrank_line_L1(
 	v1[1] = 0;
 	unrank_N1(v1 + 2, 1, m - 2, P4_line_index);
 	if (f_vvv) {
-		cout << "after unrank_N1" << endl;
+		cout << "orthogonal::unrank_line_L1 after unrank_N1" << endl;
 		int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
@@ -2459,7 +2475,7 @@ void orthogonal::unrank_line_L1(
 		v1[2 * i] = F->mult(P4_field_element, v1[2 * i]);
 		} 
 	if (f_vvv) {
-		cout << "after scaling" << endl;
+		cout << "orthogonal::unrank_line_L1 after scaling" << endl;
 		int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
@@ -2488,7 +2504,7 @@ void orthogonal::unrank_line_L1(
 	v2[n - 2] = F->negate(P4_field_element);
 	v2[n - 1] = 1;
 	if (f_vv) {
-		cout << "before rank_Sbar" << endl;
+		cout << "orthogonal::unrank_line_L1 before rank_Sbar" << endl;
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
@@ -2497,9 +2513,12 @@ void orthogonal::unrank_line_L1(
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "unrank_line_L1 index=" << index
+		cout << "orthogonal::unrank_line_L1 index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
+	if (f_v) {
+		cout << "orthogonal::unrank_line_L1 done" << index
+	}
 }
 
 int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
@@ -2513,7 +2532,10 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 	int index, a, b;
 	
 	if (f_v) {
-		cout << "rank_line_L1 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "orthogonal::rank_line_L1" << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal::rank_line_L1 p1=" << p1 << " p2=" << p2 << endl;
 		}
 	P4_index = p1;
 	unrank_Sbar(v2, 1, m, p2);
@@ -2547,7 +2569,7 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 			v1[i] = v2[i];
 		}
 	if (f_vvv) {
-		cout << "mapped back to v1=" << endl;
+		cout << "orthogonal::rank_line_L1 mapped back to v1=" << endl;
 		int_vec_print(cout, v1, n);
 		cout << endl;
 		}
@@ -2560,7 +2582,7 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 			} 
 		}
 	if (f_vvv) {
-		cout << "after Gauss reduction v1=" << endl;
+		cout << "orthogonal::rank_line_L1 after Gauss reduction v1=" << endl;
 		int_vec_print(cout, v1, n);
 		cout << endl;
 		}
@@ -2575,7 +2597,7 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 		v1[2 * i] = F->mult(P4_field_element_inverse, v1[2 * i]);
 		} 
 	if (f_vvv) {
-		cout << "after scaling" << endl;
+		cout << "orthogonal::rank_line_L1 after scaling" << endl;
 		int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
@@ -2586,13 +2608,13 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 		}
 	P4_line_index = rank_N1(v1 + 2, 1, m - 2);
 	if (f_vvv) {
-		cout << "after rank_N1, P4_line_index=" << P4_line_index << endl;
+		cout << "orthogonal::rank_line_L1 after rank_N1, P4_line_index=" << P4_line_index << endl;
 		}
 	P4_field_element--;
 	P4_sub_index = P4_line_index * (q - 1) + P4_field_element;
 	index = P4_index * a41 + P4_sub_index;
 	if (f_v) {
-		cout << "rank_line_L1 p1=" << p1
+		cout << "orthogonal::rank_line_L1 p1=" << p1
 				<< " p2=" << p2 << " index=" << index << endl;
 		}
 	if (index >= l1) {
@@ -2614,15 +2636,15 @@ void orthogonal::unrank_line_L2(
 	P3_index = index / a32;
 	P3_sub_index = index % a32;
 	if (f_v) {
-		cout << "unrank_line_L2 index=" << index << endl;
+		cout << "orthogonal::unrank_line_L2 index=" << index << endl;
 		}
 	if (index >= l2) {
-		cout << "error in unrank_line_L2 index too large" << endl;
+		cout << "error in orthogonal::unrank_line_L2 index too large" << endl;
 		}
 	P3_point = P3_index / (q - 1);
 	P3_field_element = P3_index % (q - 1);
 	if (f_vv) {
-		cout << "unrank_line_L2 P3_index=" << P3_index
+		cout << "orthogonal::unrank_line_L2 P3_index=" << P3_index
 				<< " P3_sub_index=" << P3_sub_index << endl;
 		cout << "unrank_line_L2 P3_point=" << P3_point
 				<< " P3_field_element=" << P3_field_element << endl;
@@ -2631,17 +2653,17 @@ void orthogonal::unrank_line_L2(
 	v3[n - 2] = 1 + P3_field_element;
 	v3[n - 1] = 0;
 	if (f_vv) {
-		cout << "before rank_Sbar  v3=" << endl;
+		cout << "orthogonal::unrank_line_L2 before rank_Sbar  v3=" << endl;
 		int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	p1 = rank_Sbar(v3, 1, m);
 	if (f_vv) {
-		cout << "p1=" << p1 << endl;
+		cout << "orthogonal::unrank_line_L2 p1=" << p1 << endl;
 		}
 	if (P3_sub_index == 0) {
 		if (f_vv) {
-			cout << "case 1" << endl;
+			cout << "orthogonal::unrank_line_L2 case 1" << endl;
 			}
 		v1[0] = 0;
 		v1[1] = F->negate(1);
@@ -2657,7 +2679,7 @@ void orthogonal::unrank_line_L2(
 			a = P3_sub_index / (q - 1);
 			b = P3_sub_index % (q - 1);
 			if (f_vv) {
-				cout << "case 2, a=" << a << " b=" << b << endl;
+				cout << "orthogonal::unrank_line_L2 case 2, a=" << a << " b=" << b << endl;
 				}
 			unrank_Sbar(v1 + 2, 1, m - 2, a);
 			for (i = 2; i < n - 2; i++)
@@ -2672,7 +2694,7 @@ void orthogonal::unrank_line_L2(
 			c = F->mult(v1[0], v1[1]);
 			d = F->negate(c);
 			if (f_vv) {
-				cout << "case 3, a=" << a << " b=" << b << endl;
+				cout << "orthogonal::unrank_line_L2 case 3, a=" << a << " b=" << b << endl;
 				}
 			unrank_N1(v1 + 2, 1, m - 2, a);
 			for (i = 1; i < m - 1; i++) {
@@ -2681,7 +2703,7 @@ void orthogonal::unrank_line_L2(
 			}
 		}
 	if (f_vvv) {
-		cout << "partner of 10...10 created:" << endl;
+		cout << "orthogonal::unrank_line_L2 partner of 10...10 created:" << endl;
 		int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
@@ -2699,7 +2721,7 @@ void orthogonal::unrank_line_L2(
 			T1[1] = T1[2] = 1;
 			}
 		if (f_vvv) {
-			cout << "the Siegel map is" << endl;
+			cout << "orthogonal::unrank_line_L2 the Siegel map is" << endl;
 			print_integer_matrix(cout, T1, n - 2, n - 2);
 			}
 		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
@@ -2711,7 +2733,7 @@ void orthogonal::unrank_line_L2(
 			}
 		}
 	if (f_vvv) {
-		cout << "maps to v2=" << endl;
+		cout << "orthogonal::unrank_line_L2 maps to v2=" << endl;
 		int_vec_print(cout, v2, n - 2);
 		cout << endl;
 		}
@@ -2722,13 +2744,13 @@ void orthogonal::unrank_line_L2(
 	v2[n - 2] = 0;
 	v2[n - 1] = F->mult(F->negate(c),F->inverse(v3[n - 2]));
 	if (f_vv) {
-		cout << "before rank_Sbar v2=" << endl;
+		cout << "orthogonal::unrank_line_L2 before rank_Sbar v2=" << endl;
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
 	if (e) {
-		cout << "error, not orthogonal" << endl;
+		cout << "orthogonal::unrank_line_L2 error, not orthogonal" << endl;
 		exit(1);
 		}
 	p2 = rank_Sbar(v2, 1, m);
@@ -2736,7 +2758,7 @@ void orthogonal::unrank_line_L2(
 		cout << "p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "unrank_line_L2 index=" << index
+		cout << "orthogonal::unrank_line_L2 index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
@@ -2751,7 +2773,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 	int index;
 	
 	if (f_v) {
-		cout << "rank_line_L2 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "orthogonal::rank_line_L2 p1=" << p1 << " p2=" << p2 << endl;
 		}
 	unrank_Sbar(v2, 1, m, p2);
 	unrank_Sbar(v3, 1, m, p1);
@@ -2781,7 +2803,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 			}
 		}
 	if (f_vvv) {
-		cout << "after scaling, v3=:" << endl;
+		cout << "orthogonal::rank_line_L2 after scaling, v3=:" << endl;
 		int_vec_print(cout, v3, n);
 		cout << endl;
 		}
@@ -2789,12 +2811,12 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 	P3_point = rank_Sbar(v3, 1, m - 1);
 	P3_index = P3_point * (q - 1) + P3_field_element;
 	if (f_vvv) {
-		cout << "P3_point=" << P3_point
+		cout << "orthogonal::rank_line_L2 P3_point=" << P3_point
 				<< " P3_field_element=" << P3_field_element << endl;
-		cout << "P3_index=" << P3_index << endl;
+		cout << "orthogonal::rank_line_L2 P3_index=" << P3_index << endl;
 		}
 	if (f_vvv) {
-		cout << "p2 = " << p2 << " : v2=:" << endl;
+		cout << "orthogonal::rank_line_L2 p2 = " << p2 << " : v2=:" << endl;
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
@@ -2823,7 +2845,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 			v1[i] = v2[i];
 		}
 	if (f_vvv) {
-		cout << "maps back to v1=:" << endl;
+		cout << "orthogonal::rank_line_L2 maps back to v1=:" << endl;
 		int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
@@ -2833,7 +2855,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 	if (i == n - 2) {
 		// case 1
 		if (f_vvv) {
-			cout << "case 1" << endl;
+			cout << "orthogonal::rank_line_L2 case 1" << endl;
 			}
 		if (v1[0]) {
 			cout << "orthogonal::rank_line_L2, case 1 v1[0]" << endl;
@@ -2851,7 +2873,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 				}
 			}
 		if (f_vvv) {
-			cout << "after scaling v1=:" << endl;
+			cout << "orthogonal::rank_line_L2 after scaling v1=:" << endl;
 			int_vec_print(cout, v1, n);
 			cout << endl;
 			}
@@ -2862,7 +2884,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 		if (alpha == 0) {
 			// case 2
 			if (f_vvv) {
-				cout << "case 2" << endl;
+				cout << "orthogonal::rank_line_L2 case 2" << endl;
 				}
 			if (v1[0]) {
 				cout << "orthogonal::rank_line_L2, case 1 "
@@ -2882,7 +2904,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 					}
 				}
 			if (f_vvv) {
-				cout << "after scaling v1=:" << endl;
+				cout << "orthogonal::rank_line_L2 after scaling v1=:" << endl;
 				int_vec_print(cout, v1, n);
 				cout << endl;
 				}
@@ -2902,7 +2924,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 				v1[i] = F->mult(v1[i], c);
 			b--;
 			if (f_vvv) {
-				cout << "before rank_Sbar:" << endl;
+				cout << "orthogonal::rank_line_L2 before rank_Sbar:" << endl;
 				int_vec_print(cout, v1, n);
 				cout << endl;
 				}
@@ -2915,7 +2937,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 			}
 		else {
 			if (f_vvv) {
-				cout << "case 3" << endl;
+				cout << "orthogonal::rank_line_L2 case 3" << endl;
 				}
 			P3_sub_index = 1 + (q - 1) * T1_mm2;
 			c = v1[1];
@@ -2931,7 +2953,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 					}
 				}
 			if (f_vvv) {
-				cout << "after scaling v1=:" << endl;
+				cout << "orthogonal::rank_line_L2 after scaling v1=:" << endl;
 				int_vec_print(cout, v1, n);
 				cout << endl;
 				}
@@ -2953,18 +2975,18 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "rank_line_L2 p1=" << p1 << " p2=" << p2
+		cout << "orthogonal::rank_line_L2 p1=" << p1 << " p2=" << p2
 				<< " P3_sub_index=" << P3_sub_index << endl;
 		}
 	
 	index = P3_index * a32 + P3_sub_index;
 	
 	if (f_v) {
-		cout << "rank_line_L2 p1=" << p1 << " p2=" << p2
+		cout << "orthogonal::rank_line_L2 p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 		}
 	if (index >= l2) {
-		cout << "error in rank_line_L2 index too large" << endl;
+		cout << "error in orthogonal::rank_line_L2 index too large" << endl;
 		}
 	return index;
 }
@@ -2984,13 +3006,13 @@ void orthogonal::unrank_line_L3(
 	P4_field_element = P4_sub_index % (q - 1);
 	P4_field_element++;
 	if (f_v) {
-		cout << "unrank_line_L3 index=" << index << endl;
+		cout << "orthogonal::unrank_line_L3 index=" << index << endl;
 		}
 	if (index >= l3) {
-		cout << "error in unrank_line_L3 index too large" << endl;
+		cout << "error in orthogonal::unrank_line_L3 index too large" << endl;
 		}
 	if (f_vv) {
-		cout << "unrank_line_L3 P4_index=" << P4_index
+		cout << "orthogonal::unrank_line_L3 P4_index=" << P4_index
 				<< " P4_sub_index=" << P4_sub_index << endl;
 		cout << "P4_line_index=" << P4_line_index
 				<< " P4_field_element=" << P4_field_element << endl;
@@ -3006,7 +3028,7 @@ void orthogonal::unrank_line_L3(
 	v1[1] = 0;
 	unrank_Sbar(v1 + 2, 1, m - 2, P4_line_index);
 	if (f_vvv) {
-		cout << "after unrank_Sbar" << endl;
+		cout << "orthogonal::unrank_line_L3 after unrank_Sbar" << endl;
 		int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
@@ -3034,21 +3056,21 @@ void orthogonal::unrank_line_L3(
 	v2[n - 2] = 0;
 	v2[n - 1] = P4_field_element;
 	if (f_vv) {
-		cout << "before rank_Sbar" << endl;
+		cout << "orthogonal::unrank_line_L3 before rank_Sbar" << endl;
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
 	if (e) {
-		cout << "error, not orthogonal" << endl;
+		cout << "orthogonal::unrank_line_L3 error, not orthogonal" << endl;
 		exit(1);
 		}
 	p2 = rank_Sbar(v2, 1, m);
 	if (f_vv) {
-		cout << "p2=" << p2 << endl;
+		cout << "orthogonal::unrank_line_L3 p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "unrank_line_L3 index=" << index
+		cout << "orthogonal::unrank_line_L3 index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 }
@@ -3063,23 +3085,23 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 	int a, b;
 	
 	if (f_v) {
-		cout << "rank_line_L3 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "orthogonal::rank_line_L3 p1=" << p1 << " p2=" << p2 << endl;
 		}
 	unrank_Sbar(v3, 1, m, p1);
 	unrank_Sbar(v2, 1, m, p2);
 	if (f_vvv) {
-		cout << "p1=" << p1 << " v3=" << endl;
+		cout << "orthogonal::rank_line_L3 p1=" << p1 << " v3=" << endl;
 		int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	if (f_vvv) {
-		cout << "p2=" << p2 << " v2=" << endl;
+		cout << "orthogonal::rank_line_L3 p2=" << p2 << " v2=" << endl;
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	P4_index = p1;
 	if (f_vvv) {
-		cout << "P4_index=" << P4_index << endl;
+		cout << "orthogonal::rank_line_L3 P4_index=" << P4_index << endl;
 		}
 	if (P4_index) {
 		if (m > 2) {
@@ -3105,23 +3127,23 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 			v1[i] = v2[i];
 		}
 	if (f_vvv) {
-		cout << "maps back to" << endl;
+		cout << "orthogonal::rank_line_L3 maps back to" << endl;
 		int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	v1[0] = 0;
 	if (f_vvv) {
-		cout << "after setting v1[0] = 0, v1=" << endl;
+		cout << "orthogonal::rank_line_L3 after setting v1[0] = 0, v1=" << endl;
 		int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	if (v1[0] || v1[1]) {
-		cout << "rank_line_L3 v1[0] || v1[1]" << endl;
+		cout << "orthogonal::rank_line_L3 rank_line_L3 v1[0] || v1[1]" << endl;
 		exit(1);
 		}
 	P4_line_index = rank_Sbar(v1 + 2, 1, m - 2);
 	if (f_vvv) {
-		cout << "P4_line_index=" << P4_line_index << endl;
+		cout << "orthogonal::rank_line_L3 P4_line_index=" << P4_line_index << endl;
 		}
 	for (i = n - 3; i >= 0; i--) {
 		if (v1[i]) {
@@ -3140,7 +3162,7 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 			}
 		}
 	if (f_vvv) {
-		cout << "after scaling, v1=:" << endl;
+		cout << "orthogonal::rank_line_L3 after scaling, v1=:" << endl;
 		int_vec_print(cout, v1, n);
 		cout << endl;
 		}
@@ -3154,20 +3176,20 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 		}
 	P4_field_element = v1[n - 1] - 1;
 	if (f_vvv) {
-		cout << "P4_field_element=" << P4_field_element << endl;
+		cout << "orthogonal::rank_line_L3 P4_field_element=" << P4_field_element << endl;
 		}
 	P4_sub_index = P4_line_index * (q - 1) + P4_field_element;
 	if (f_vvv) {
-		cout << "P4_sub_index=" << P4_sub_index << endl;
+		cout << "orthogonal::rank_line_L3 P4_sub_index=" << P4_sub_index << endl;
 		}
 	index = P4_index * a43 + P4_sub_index;
 	
 	if (f_v) {
-		cout << "rank_line_L3 p1=" << p1 << " p2=" << p2
+		cout << "orthogonal::rank_line_L3 p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 		}
 	if (index >= l3) {
-		cout << "error in rank_line_L3 index too large" << endl;
+		cout << "error in orthogonal::rank_line_L3 index too large" << endl;
 		}
 	return index;
 }
