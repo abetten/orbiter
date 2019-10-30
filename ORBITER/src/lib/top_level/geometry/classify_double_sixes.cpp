@@ -327,6 +327,8 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 	if (sz != nb_neighbors) {
 		cout << "classify_double_sixes::compute_neighbors "
 				"sz != nb_neighbors" << endl;
+		cout << "sz = " << sz << endl;
+		cout << "nb_neighbors = " << nb_neighbors << endl;
 		exit(1);
 		}
 	if (f_v) {
