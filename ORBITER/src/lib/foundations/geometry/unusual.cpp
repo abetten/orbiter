@@ -471,7 +471,7 @@ void unusual_model::convert_to_ranks(int n,
 
 
 	for (i = 0; i < n; i++) {
-		ranks[i] = f.Q_rank(usual + 5 * i, 1, 4);
+		ranks[i] = f.Q_rank(usual + 5 * i, 1, 4, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ranks[" << i << "]=" << ranks[i] << endl;
 			}
@@ -504,7 +504,7 @@ void unusual_model::convert_from_ranks(int n,
 	
 	usual = NEW_int(n * 5);
 	for (i = 0; i < n; i++) {
-		f.Q_unrank(usual + 5 * i, 1, 4, ranks[i]);
+		f.Q_unrank(usual + 5 * i, 1, 4, ranks[i], 0 /* verbose_level */);
 		}
 	
 
@@ -528,7 +528,7 @@ int unusual_model::convert_to_rank(
 	int rank;
 
 	convert_to_usual(1, unusual_coordinates, usual, verbose_level - 1);
-	rank = f.Q_rank(usual, 1, 4);
+	rank = f.Q_rank(usual, 1, 4, 0 /* verbose_level */);
 	return rank;
 }
 
@@ -537,7 +537,7 @@ void unusual_model::convert_from_rank(int rank,
 {
 	int usual[5];
 	
-	f.Q_unrank(usual, 1, 4, rank);
+	f.Q_unrank(usual, 1, 4, rank, 0 /* verbose_level */);
 	convert_from_usual(1, usual,
 			unusual_coordinates, verbose_level - 1);
 }
@@ -954,7 +954,7 @@ void unusual_model::print_coordinates_detailed(int pt, int cnt)
 	int unusual[3];
 	int unusual_point_rank;
 		
-	f.Q_unrank(usual, 1, 4, pt);
+	f.Q_unrank(usual, 1, 4, pt, 0 /* verbose_level */);
 	convert_from_usual(1, usual, unusual, 0);
 		
 	a = unusual[0];

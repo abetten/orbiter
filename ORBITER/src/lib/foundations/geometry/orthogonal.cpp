@@ -8579,7 +8579,7 @@ int orthogonal::rank_Sbar(int *v, int stride, int m)
 	for (i = 0; i < 2 * m; i++) {
 		v_tmp[i] = v[i * stride];
 		}
-	F->Sbar_rank(v_tmp, 1, m, rk);
+	F->Sbar_rank(v_tmp, 1, m, rk, 0 /* verbose_level */);
 	return rk;
 }
 
@@ -9449,7 +9449,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		cnt++;
 
 		for (i = 0; i < level; i++) {
-			F->Q_unrank(Mtx + i * n, 1, n - 1, set[subset[i]]);
+			F->Q_unrank(Mtx + i * n, 1, n - 1, set[subset[i]], 0 /* verbose_level */);
 			}
 		if (f_vvv) {
 			cout << "subset " << setw(5) << cnt << " : ";
@@ -9580,7 +9580,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				cout << " : " << endl;
 				}
 			for (ii = 0; ii < level; ii++) {
-				F->Q_unrank(Mtx + ii * n, 1, n - 1, set[subset[ii]]);
+				F->Q_unrank(Mtx + ii * n, 1, n - 1, set[subset[ii]], 0 /* verbose_level */);
 				}
 			for (ii = 0; ii < level; ii++) {
 				if (!Sorting.int_vec_search(Block, Block_size, subset[ii], idx)) {

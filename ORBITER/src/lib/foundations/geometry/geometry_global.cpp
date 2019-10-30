@@ -624,7 +624,7 @@ long int geometry_global::nb_pts_Qminus(int k, int q)
 long int geometry_global::nb_pts_S(int n, int q)
 // Number of singular vectors (including the zero vector)
 {
-	int a;
+	long int a;
 
 	if (n <= 0) {
 		cout << "nb_pts_S n <= 0" << endl;
@@ -647,7 +647,7 @@ long int geometry_global::nb_pts_N(int n, int q)
 // Of course, |N(n,q)| + |S(n,q)| = q^{2n}
 // |N(n,q)| = (q - 1) * |N1(n,q)|
 {
-	int a;
+	long int a;
 
 	if (n <= 0) {
 		cout << "nb_pts_N n <= 0" << endl;
@@ -669,7 +669,7 @@ long int geometry_global::nb_pts_N1(int n, int q)
 // \sum_{i=0}^{n-1} x_{2i}x_{2i+1} = s
 // for some fixed s \neq 0.
 {
-	int a;
+	long int a;
 
 	//cout << "nb_pts_N1 n=" << n << " q=" << q << endl;
 	if (n <= 0) {
@@ -691,7 +691,7 @@ long int geometry_global::nb_pts_Sbar(int n, int q)
 // number of singular projective points
 // |S(n,q)| = (q-1) * |Sbar(n,q)| + 1
 {
-	int a;
+	long int a;
 
 	if (n <= 0) {
 		cout << "nb_pts_Sbar n <= 0" << endl;
@@ -704,6 +704,10 @@ long int geometry_global::nb_pts_Sbar(int n, int q)
 	a = nb_pts_Sbar(n - 1, q);
 	a += nb_pts_Sbar(1, q) * nb_pts_S(n - 1, q);
 	a += nb_pts_Nbar(1, q) * nb_pts_N1(n - 1, q);
+	if (a < 0) {
+		cout << "geometry_global::nb_pts_Sbar a < 0, overflow" << endl;
+		exit(1);
+	}
 	return a;
 }
 
@@ -815,7 +819,7 @@ void geometry_global::test_orthogonal(int n, int q)
 		cout << " : ";
 		a = GFq.evaluate_hyperbolic_quadratic_form(v, stride, n);
 		cout << a;
-		GFq.Sbar_rank(v, stride, n, j);
+		GFq.Sbar_rank(v, stride, n, j, 0 /* verbose_level */);
 		cout << " : " << j << endl;
 		if (j != i) {
 			cout << "error" << endl;
