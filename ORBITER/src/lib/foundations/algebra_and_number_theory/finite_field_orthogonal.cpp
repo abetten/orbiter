@@ -255,7 +255,7 @@ void finite_field::Q_unrank_directly(int *v, int stride, int k, int a, int verbo
 	x = Gg.nb_pts_Sbar(n, q);
 	if (a < x) {
 		v[0] = 0;
-		Sbar_unrank(v + stride, stride, n, a);
+		Sbar_unrank(v + stride, stride, n, a, verbose_level);
 		PG_element_normalize_from_front(v + stride, stride, k);
 		return;
 		}
@@ -307,7 +307,7 @@ void finite_field::Qplus_unrank(int *v, int stride, int k, int a, int verbose_le
 	geometry_global Gg;
 
 	n = Gg.Witt_index(1, k);
-	Sbar_unrank(v, stride, n, a);
+	Sbar_unrank(v, stride, n, a, verbose_level);
 }
 
 int finite_field::Qplus_rank(int *v, int stride, int k, int verbose_level)
@@ -343,7 +343,7 @@ void finite_field::Qminus_unrank(int *v,
 	if (a < x) {
 		v[2 * n * stride] = 0;
 		v[(2 * n + 1) * stride] = 0;
-		Sbar_unrank(v, stride, n, a);
+		Sbar_unrank(v, stride, n, a, verbose_level);
 		return;
 		}
 	a -= x;
@@ -544,6 +544,68 @@ void finite_field::S_unrank(int *v, int stride, int n, int a)
 		}
 }
 
+void finite_field::S_rank(int *v, int stride, int n, int &a)
+{
+	int l, i, j, x, y, u;
+	int alpha, beta, gamma, delta, epsilon;
+	geometry_global Gg;
+
+	if (n == 1) {
+		if (v[1 * stride] == 0) {
+			a = v[0 * stride];
+			return;
+			}
+		if (v[0 * stride]) {
+			cout << "finite_field::S_rank "
+					"error in S_rank v[0] not null" << endl;
+			exit(1);
+			}
+		a = q - 1;
+		a += v[1 * stride];
+		}
+	else {
+		x = Gg.nb_pts_S(1, q);
+		y = Gg.nb_pts_S(n - 1, q);
+		l = x * y;
+		alpha = mult(v[2 * (n - 1) * stride],
+				v[(2 * (n - 1) + 1) * stride]);
+		if (alpha == 0) {
+			S_rank(v + (n - 1) * 2 * stride, stride, 1, i);
+			S_rank(v, stride, n - 1, j);
+			a = i * y + j;
+			return;
+			}
+		a = l;
+		x = Gg.nb_pts_N(1, q);
+		y = Gg.nb_pts_N1(n - 1, q);
+
+		N_rank(v + (n - 1) * 2 * stride, stride, 1, i);
+
+
+		beta = negate(alpha);
+		gamma = evaluate_hyperbolic_quadratic_form(
+				v, stride, n - 1);
+		if (gamma != beta) {
+			cout << "finite_field::S_rank "
+					"error in S_rank gamma != beta" << endl;
+			exit(1);
+			}
+		delta = inverse(beta);
+		for (u = 0; u < n - 1; u++) {
+			v[2 * u * stride] = mult(v[2 * u * stride], delta);
+			}
+		epsilon = evaluate_hyperbolic_quadratic_form(
+				v, stride, n - 1);
+		if (epsilon != 1) {
+			cout << "finite_field::S_rank "
+					"error in S_rank epsilon != 1" << endl;
+			exit(1);
+			}
+		N1_rank(v, stride, n - 1, j);
+		a += i * y + j;
+		}
+}
+
 void finite_field::N_unrank(int *v, int stride, int n, int a)
 {
 	int l, i, j, k, j1, x, y, z, yz, u;
@@ -619,6 +681,80 @@ void finite_field::N_unrank(int *v, int stride, int n, int a)
 					"error in N_unrank n = " << n << ", a = " << a << endl;
 			exit(1);
 			}
+		}
+}
+
+void finite_field::N_rank(int *v, int stride, int n, int &a)
+{
+	int l, i, j, k, x, y, z, yz, u;
+	int alpha, beta, gamma, delta;
+	int epsilon, gamma2, epsilon_inv;
+	geometry_global Gg;
+
+	if (n == 1) {
+		x = q - 1;
+		y = q - 1;
+		if (v[0 * stride] == 0 || v[1 * stride] == 0) {
+			cout << "finite_field::N_rank "
+					"v[0 * stride] == 0 || "
+					"v[1 * stride] == 0" << endl;
+			exit(1);
+			}
+		j = v[0 * stride] - 1;
+		i = v[1 * stride] - 1;
+		a = i * y + j;
+		}
+	else {
+		gamma = mult(v[(n - 1) * 2 * stride],
+				v[((n - 1) * 2 + 1) * stride]);
+		x = Gg.nb_pts_S(1, q);
+		y = Gg.nb_pts_N(n - 1, q);
+		l = x * y;
+		if (gamma == 0) {
+			S_rank(v + (n - 1) * 2 * stride, stride, 1, i);
+			N_rank(v, stride, n - 1, j);
+			a = i * y + j;
+			return;
+			}
+		a = l;
+		x = Gg.nb_pts_N(1, q);
+		y = Gg.nb_pts_S(n - 1, q);
+		l = x * y;
+		gamma2 = evaluate_hyperbolic_quadratic_form(
+				v, stride, n - 1);
+		if (gamma2 == 0) {
+			N_rank(v + (n - 1) * 2, stride, 1, i);
+			S_rank(v, stride, n - 1, j);
+			a += i * y + j;
+			}
+		a += l;
+
+		x = Gg.nb_pts_N(1, q);
+		y = (q - 2);
+		z = Gg.nb_pts_N1(n - 1, q);
+		yz = y * z;
+		l = x * yz;
+
+		N_rank(v + (n - 1) * 2 * stride, stride, 1, i);
+		alpha = primitive_element();
+		delta = negate(gamma);
+		for (j = 0; j < q - 2; j++) {
+			beta = power(alpha, j + 1);
+			epsilon = mult(delta, beta);
+			if (epsilon == gamma2) {
+				epsilon_inv = inverse(epsilon);
+				for (u = 0; u < n - 1; u++) {
+					v[2 * u * stride] = mult(
+							v[2 * u * stride], epsilon_inv);
+					}
+				N1_rank(v, stride, n - 1, k);
+				a += i * yz + j * z + k;
+				return;
+				}
+			}
+		cout << "finite_field::N_rank "
+				"error, gamma2 not found" << endl;
+		exit(1);
 		}
 }
 
@@ -729,254 +865,6 @@ void finite_field::N1_unrank(int *v, int stride, int n, int a)
 		}
 }
 
-void finite_field::Sbar_unrank(int *v, int stride, int n, int a)
-{
-	int l, i, j, x, y, u;
-	int alpha, beta;
-	geometry_global Gg;
-
-	if (n == 1) {
-		if (a == 0) {
-			v[0 * stride] = 1;
-			v[1 * stride] = 0;
-			return;
-			}
-		if (a == 1) {
-			v[0 * stride] = 0;
-			v[1 * stride] = 1;
-			return;
-			}
-		else {
-			cout << "finite_field::Sbar_unrank "
-					"error in Sbar_unrank n = 1 a = " << a << endl;
-			exit(1);
-			}
-		}
-	else {
-		y = Gg.nb_pts_Sbar(n - 1, q);
-		l = y;
-		if (a < l) {
-			u = n - 1;
-			v[2 * u * stride] = 0;
-			v[(2 * u + 1) * stride] = 0;
-			Sbar_unrank(v, stride, n - 1, a);
-			return;
-			}
-		a -= l;
-		//cout << "subtracting " << l << " to bring a to " << a << endl;
-		x = Gg.nb_pts_Sbar(1, q);
-		y = Gg.nb_pts_S(n - 1, q);
-		//cout << "nb_pts_S(" << n - 1 << ") = " << y << endl;
-		l = x * y;
-		if (a < l) {
-			i = a / y;
-			j = a % y;
-			Sbar_unrank(v + (n - 1) * 2 * stride, stride, 1, i);
-			S_unrank(v, stride, n - 1, j);
-			return;
-			}
-		a -= l;
-		//cout << "subtracting " << l << " to bring a to " << a << endl;
-		x = Gg.nb_pts_Nbar(1, q);
-		y = Gg.nb_pts_N1(n - 1, q);
-		//cout << "nb_pts_N1(" << n - 1 << ") = " << y << endl;
-		l = x * y;
-		if (a < l) {
-			i = a / y;
-			j = a % y;
-			//cout << "i=" << i << " j=" << j << endl;
-			Nbar_unrank(v + (n - 1) * 2 * stride, stride, 1, i);
-			//cout << "(" << v[2 * (n - 1) * stride] << ","
-			//<< v[(2 * (n - 1) + 1) * stride] << ")" << endl;
-			N1_unrank(v, stride, n - 1, j);
-
-			alpha = mult(v[2 * (n - 1) * stride],
-					v[(2 * (n - 1) + 1) * stride]);
-			beta = negate(alpha);
-			for (u = 0; u < n - 1; u++) {
-				v[2 * u * stride] = mult(v[2 * u * stride], beta);
-			}
-			//int_set_print(v, 2 * n);
-			//cout << endl;
-			return;
-			}
-		else {
-			cout << "finite_field::Sbar_unrank "
-					"error in Sbar_unrank n = " << n
-					<< ", a = " << a << endl;
-			exit(1);
-			}
-		}
-}
-
-void finite_field::Nbar_unrank(int *v, int stride, int n, int a)
-{
-	int y, l;
-
-	if (n == 1) {
-		y = q - 1;
-		l = y;
-		if (a < l) {
-			v[0 * stride] = 1 + a;
-			v[1 * stride] = 1;
-			return;
-			}
-		else {
-			cout << "finite_field::Nbar_unrank "
-					"error in Nbar_unrank n = 1 a = " << a << endl;
-			exit(1);
-			}
-		}
-	else {
-		cout << "finite_field::Nbar_unrank "
-				"only defined for n = 1" << endl;
-		exit(1);
-		}
-}
-
-
-// #############################################################################
-// rank functions for the hyperbolic quadric:
-// #############################################################################
-
-
-
-void finite_field::S_rank(int *v, int stride, int n, int &a)
-{
-	int l, i, j, x, y, u;
-	int alpha, beta, gamma, delta, epsilon;
-	geometry_global Gg;
-
-	if (n == 1) {
-		if (v[1 * stride] == 0) {
-			a = v[0 * stride];
-			return;
-			}
-		if (v[0 * stride]) {
-			cout << "finite_field::S_rank "
-					"error in S_rank v[0] not null" << endl;
-			exit(1);
-			}
-		a = q - 1;
-		a += v[1 * stride];
-		}
-	else {
-		x = Gg.nb_pts_S(1, q);
-		y = Gg.nb_pts_S(n - 1, q);
-		l = x * y;
-		alpha = mult(v[2 * (n - 1) * stride],
-				v[(2 * (n - 1) + 1) * stride]);
-		if (alpha == 0) {
-			S_rank(v + (n - 1) * 2 * stride, stride, 1, i);
-			S_rank(v, stride, n - 1, j);
-			a = i * y + j;
-			return;
-			}
-		a = l;
-		x = Gg.nb_pts_N(1, q);
-		y = Gg.nb_pts_N1(n - 1, q);
-
-		N_rank(v + (n - 1) * 2 * stride, stride, 1, i);
-
-
-		beta = negate(alpha);
-		gamma = evaluate_hyperbolic_quadratic_form(
-				v, stride, n - 1);
-		if (gamma != beta) {
-			cout << "finite_field::S_rank "
-					"error in S_rank gamma != beta" << endl;
-			exit(1);
-			}
-		delta = inverse(beta);
-		for (u = 0; u < n - 1; u++) {
-			v[2 * u * stride] = mult(v[2 * u * stride], delta);
-			}
-		epsilon = evaluate_hyperbolic_quadratic_form(
-				v, stride, n - 1);
-		if (epsilon != 1) {
-			cout << "finite_field::S_rank "
-					"error in S_rank epsilon != 1" << endl;
-			exit(1);
-			}
-		N1_rank(v, stride, n - 1, j);
-		a += i * y + j;
-		}
-}
-
-void finite_field::N_rank(int *v, int stride, int n, int &a)
-{
-	int l, i, j, k, x, y, z, yz, u;
-	int alpha, beta, gamma, delta;
-	int epsilon, gamma2, epsilon_inv;
-	geometry_global Gg;
-
-	if (n == 1) {
-		x = q - 1;
-		y = q - 1;
-		if (v[0 * stride] == 0 || v[1 * stride] == 0) {
-			cout << "finite_field::N_rank "
-					"v[0 * stride] == 0 || "
-					"v[1 * stride] == 0" << endl;
-			exit(1);
-			}
-		j = v[0 * stride] - 1;
-		i = v[1 * stride] - 1;
-		a = i * y + j;
-		}
-	else {
-		gamma = mult(v[(n - 1) * 2 * stride],
-				v[((n - 1) * 2 + 1) * stride]);
-		x = Gg.nb_pts_S(1, q);
-		y = Gg.nb_pts_N(n - 1, q);
-		l = x * y;
-		if (gamma == 0) {
-			S_rank(v + (n - 1) * 2 * stride, stride, 1, i);
-			N_rank(v, stride, n - 1, j);
-			a = i * y + j;
-			return;
-			}
-		a = l;
-		x = Gg.nb_pts_N(1, q);
-		y = Gg.nb_pts_S(n - 1, q);
-		l = x * y;
-		gamma2 = evaluate_hyperbolic_quadratic_form(
-				v, stride, n - 1);
-		if (gamma2 == 0) {
-			N_rank(v + (n - 1) * 2, stride, 1, i);
-			S_rank(v, stride, n - 1, j);
-			a += i * y + j;
-			}
-		a += l;
-
-		x = Gg.nb_pts_N(1, q);
-		y = (q - 2);
-		z = Gg.nb_pts_N1(n - 1, q);
-		yz = y * z;
-		l = x * yz;
-
-		N_rank(v + (n - 1) * 2 * stride, stride, 1, i);
-		alpha = primitive_element();
-		delta = negate(gamma);
-		for (j = 0; j < q - 2; j++) {
-			beta = power(alpha, j + 1);
-			epsilon = mult(delta, beta);
-			if (epsilon == gamma2) {
-				epsilon_inv = inverse(epsilon);
-				for (u = 0; u < n - 1; u++) {
-					v[2 * u * stride] = mult(
-							v[2 * u * stride], epsilon_inv);
-					}
-				N1_rank(v, stride, n - 1, k);
-				a += i * yz + j * z + k;
-				return;
-				}
-			}
-		cout << "finite_field::N_rank "
-				"error, gamma2 not found" << endl;
-		exit(1);
-		}
-}
-
 void finite_field::N1_rank(int *v, int stride, int n, int &a)
 {
 	int l, i, j, k, x, y, z, yz, u;
@@ -1077,6 +965,109 @@ void finite_field::N1_rank(int *v, int stride, int n, int &a)
 
 		a += i * yz + j * z + k;
 
+		}
+}
+
+void finite_field::Sbar_unrank(int *v, int stride, int n, int a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int l, i, j, x, y, u;
+	int alpha, beta;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "finite_field::Sbar_unrank" << endl;
+	}
+	if (n == 1) {
+		if (a == 0) {
+			v[0 * stride] = 1;
+			v[1 * stride] = 0;
+			return;
+			}
+		if (a == 1) {
+			v[0 * stride] = 0;
+			v[1 * stride] = 1;
+			return;
+			}
+		else {
+			cout << "finite_field::Sbar_unrank "
+					"error in Sbar_unrank n = 1 a = " << a << endl;
+			exit(1);
+			}
+		}
+	else {
+		y = Gg.nb_pts_Sbar(n - 1, q);
+		l = y;
+		if (a < l) {
+			u = n - 1;
+			v[2 * u * stride] = 0;
+			v[(2 * u + 1) * stride] = 0;
+			Sbar_unrank(v, stride, n - 1, a, verbose_level);
+			return;
+			}
+		if (f_v) {
+			cout << "finite_field::Sbar_unrank a = " << a << endl;
+			cout << "finite_field::Sbar_unrank l = " << l << endl;
+		}
+		a -= l;
+		if (f_v) {
+			cout << "finite_field::Sbar_unrank a = " << a << endl;
+			}
+		//cout << "subtracting " << l << " to bring a to " << a << endl;
+		x = Gg.nb_pts_Sbar(1, q);
+		y = Gg.nb_pts_S(n - 1, q);
+		//cout << "nb_pts_S(" << n - 1 << ") = " << y << endl;
+		l = x * y;
+		if (a < l) {
+			i = a / y;
+			j = a % y;
+			Sbar_unrank(v + (n - 1) * 2 * stride, stride, 1, i, verbose_level);
+			S_unrank(v, stride, n - 1, j);
+			return;
+			}
+		if (f_v) {
+			cout << "finite_field::Sbar_unrank a = " << a << endl;
+			cout << "finite_field::Sbar_unrank l = " << l << endl;
+		}
+		a -= l;
+		if (f_v) {
+			cout << "finite_field::Sbar_unrank a = " << a << endl;
+			}
+		//cout << "subtracting " << l << " to bring a to " << a << endl;
+		x = Gg.nb_pts_Nbar(1, q);
+		y = Gg.nb_pts_N1(n - 1, q);
+		//cout << "nb_pts_N1(" << n - 1 << ") = " << y << endl;
+		l = x * y;
+		if (f_v) {
+			cout << "finite_field::Sbar_unrank x = " << x << endl;
+			cout << "finite_field::Sbar_unrank y = " << y << endl;
+			cout << "finite_field::Sbar_unrank l = " << l << endl;
+		}
+		if (a < l) {
+			i = a / y;
+			j = a % y;
+			//cout << "i=" << i << " j=" << j << endl;
+			Nbar_unrank(v + (n - 1) * 2 * stride, stride, 1, i);
+			//cout << "(" << v[2 * (n - 1) * stride] << ","
+			//<< v[(2 * (n - 1) + 1) * stride] << ")" << endl;
+			N1_unrank(v, stride, n - 1, j);
+
+			alpha = mult(v[2 * (n - 1) * stride],
+					v[(2 * (n - 1) + 1) * stride]);
+			beta = negate(alpha);
+			for (u = 0; u < n - 1; u++) {
+				v[2 * u * stride] = mult(v[2 * u * stride], beta);
+			}
+			//int_set_print(v, 2 * n);
+			//cout << endl;
+			return;
+			}
+		else {
+			cout << "finite_field::Sbar_unrank "
+					"error in Sbar_unrank n = " << n
+					<< ", a = " << a << endl;
+			exit(1);
+			}
 		}
 }
 
@@ -1204,6 +1195,31 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_leve
 		if (f_v) {
 			cout << "finite_field::Sbar_rank a = " << a << endl;
 		}
+		}
+}
+
+void finite_field::Nbar_unrank(int *v, int stride, int n, int a)
+{
+	int y, l;
+
+	if (n == 1) {
+		y = q - 1;
+		l = y;
+		if (a < l) {
+			v[0 * stride] = 1 + a;
+			v[1 * stride] = 1;
+			return;
+			}
+		else {
+			cout << "finite_field::Nbar_unrank "
+					"error in Nbar_unrank n = 1 a = " << a << endl;
+			exit(1);
+			}
+		}
+	else {
+		cout << "finite_field::Nbar_unrank "
+				"only defined for n = 1" << endl;
+		exit(1);
 		}
 }
 

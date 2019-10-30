@@ -2658,6 +2658,13 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 		}
 	if (index >= l1) {
 		cout << "error in rank_line_L1 index too large" << endl;
+		cout << "index=" << index << endl;
+		cout << "l1=" << l1 << endl;
+		cout << "P4_index=" << P4_index << endl;
+		cout << "a41=" << a41 << endl;
+		cout << "P4_sub_index=" << P4_sub_index << endl;
+		cout << "P4_line_index=" << P4_line_index << endl;
+		cout << "P4_field_element=" << P4_field_element << endl;
 		exit(1);
 		}
 	return index;
@@ -8568,7 +8575,7 @@ int orthogonal::rank_N1(int *v, int stride, int m)
 void orthogonal::unrank_Sbar(int *v, int stride, int m, int rk)
 // m = Witt index
 {
-	F->Sbar_unrank(v, stride, m, rk);
+	F->Sbar_unrank(v, stride, m, rk, 0 /* verbose_level */);
 }
 
 int orthogonal::rank_Sbar(int *v, int stride, int m)

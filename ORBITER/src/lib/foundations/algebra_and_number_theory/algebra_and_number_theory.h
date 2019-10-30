@@ -669,14 +669,14 @@ public:
 		// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
 	int Qminus_rank(int *v, int stride, int k, int c1, int c2, int c3, int verbose_level);
 	void S_unrank(int *v, int stride, int n, int a);
-	void N_unrank(int *v, int stride, int n, int a);
-	void N1_unrank(int *v, int stride, int n, int a);
-	void Sbar_unrank(int *v, int stride, int n, int a);
-	void Nbar_unrank(int *v, int stride, int n, int a);
 	void S_rank(int *v, int stride, int n, int &a);
+	void N_unrank(int *v, int stride, int n, int a);
 	void N_rank(int *v, int stride, int n, int &a);
+	void N1_unrank(int *v, int stride, int n, int a);
 	void N1_rank(int *v, int stride, int n, int &a);
+	void Sbar_unrank(int *v, int stride, int n, int a, int verbose_level);
 	void Sbar_rank(int *v, int stride, int n, int &a, int verbose_level);
+	void Nbar_unrank(int *v, int stride, int n, int a);
 	void Nbar_rank(int *v, int stride, int n, int &a);
 	void Gram_matrix(int epsilon, int k,
 		int form_c1, int form_c2, int form_c3,

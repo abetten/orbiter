@@ -24,7 +24,9 @@ using namespace orbiter::top_level;
 int t0; // the system time when the program started
 
 void orthogonal_points(int epsilon, int n, int q,
-		int f_lines, int verbose_level);
+		int f_lines,
+		int f_rank_single, const char *rank_single_string,
+		int verbose_level);
 void orthogonal_lines(finite_field *F,
 		int epsilon, int n, int *c123, int verbose_level);
 void points(int n, int q, int verbose_level);
@@ -43,6 +45,8 @@ int main(int argc, char **argv)
 	int f_epsilon = FALSE;
 	int epsilon = 0;
 	int f_lines = FALSE;
+	int f_rank_single = FALSE;
+	const char *rank_single_string = NULL;
 	os_interface Os;
 
  	t0 = Os.os_ticks();
@@ -51,51 +55,56 @@ int main(int argc, char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-d") == 0) {
 			f_d = TRUE;
 			d = atoi(argv[++i]);
 			cout << "-d " << d << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
 			n = atoi(argv[++i]);
 			cout << "-n " << n << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-orthogonal") == 0) {
 			f_orthogonal = TRUE;
 			cout << "-orthogonal " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-epsilon") == 0) {
 			f_epsilon = TRUE;
 			epsilon = atoi(argv[++i]);
 			cout << "-epsilon " << epsilon << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-lines") == 0) {
 			f_lines = TRUE;
 			cout << "-lines " << endl;
-			}
 		}
+		else if (strcmp(argv[i], "-rank_single") == 0) {
+			f_rank_single = TRUE;
+			rank_single_string = argv[++i];
+			cout << "-lines " << endl;
+		}
+	}
 	if (!f_d && !f_n) {
 		cout << "please use either the -d <d> "
 				"or the -n <n> option" << endl;
 		exit(1);
-		}
+	}
 	if (!f_q) {
 		cout << "please use -q option" << endl;
 		exit(1);
-		}
+	}
 	if (f_n) {
 		d = n + 1;
-		}
+	}
 	else {
 		n = d - 1;
-		}
+	}
 	if (f_orthogonal) {
 		cout << "orthogonal" << endl;
 		if (ODD(n)) {
@@ -103,14 +112,16 @@ int main(int argc, char **argv)
 				cout << "please use -epsilon <epsilon> "
 						"option if n is odd." << endl;
 				exit(1);
-				}
 			}
-		orthogonal_points(epsilon, n, q, f_lines, verbose_level);
 		}
+		orthogonal_points(epsilon, n, q, f_lines,
+				f_rank_single, rank_single_string,
+				verbose_level);
+	}
 	else {
 		cout << "projective" << endl;
 		points(d, q, verbose_level);
-		}
+	}
 	
 	int dt;
 	dt = Os.delta_time(t0);
@@ -122,7 +133,9 @@ int main(int argc, char **argv)
 }
 
 void orthogonal_points(int epsilon, int n, int q,
-		int f_lines, int verbose_level)
+		int f_lines,
+		int f_rank_single, const char *rank_single_string,
+		int verbose_level)
 {
 	int i, j;
 	int d;
@@ -150,29 +163,51 @@ void orthogonal_points(int epsilon, int n, int q,
 	F->init(q, verbose_level - 1);
 	F->print();
 	
-	if (epsilon == 0)
+	if (epsilon == 0) {
 		c123[0] = 1;
+	}
 	else if (epsilon == -1) {
 		F->choose_anisotropic_form(c123[0], c123[1], c123[2], verbose_level - 2);
 		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
-		}
+	}
 	F->Gram_matrix(epsilon, n, c123[0], c123[1], c123[2], G);
 	cout << "Gram matrix" << endl;
 	print_integer_matrix_width(cout, G, d, d, d, 2);
 	
-	for (i = 0; i < N; i++) {
-		F->Q_epsilon_unrank(v, 1, epsilon, n, c123[0], c123[1], c123[2], i, 0 /* verbose_level */);
-		cout << "P_{" << i << "} & ";
-		int_vec_print(cout, v, n + 1);
-		j = F->Q_epsilon_rank(v, 1, epsilon, n, c123[0], c123[1], c123[2], 0 /* verbose_level */);
-		cout << "\\\\" << endl;
-		if (j != i) {
-			cout << "orthogonal_points j != i" << endl;
+
+	if (f_rank_single) {
+		int *pt_coord;
+		int sz;
+
+		int_vec_scan(rank_single_string, pt_coord, sz);
+		cout << "rank_single: ";
+		int_vec_print(cout, pt_coord, sz);
+		cout << endl;
+		if (d != sz) {
+			cout << "rank_single: d != sz" << endl;
 			exit(1);
+		}
+		j = F->Q_epsilon_rank(pt_coord, 1, epsilon, n, c123[0], c123[1], c123[2], 5 /* verbose_level */);
+		cout << "has rank j=" << j << endl;
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c123[0], c123[1], c123[2], j, 5 /* verbose_level */);
+		cout << "unranks to ";
+		int_vec_print(cout, v, n + 1);
+		cout << endl;
+	}
+	else {
+		for (i = 0; i < N; i++) {
+			F->Q_epsilon_unrank(v, 1, epsilon, n, c123[0], c123[1], c123[2], i, 0 /* verbose_level */);
+			cout << "P_{" << i << "} & ";
+			int_vec_print(cout, v, n + 1);
+			j = F->Q_epsilon_rank(v, 1, epsilon, n, c123[0], c123[1], c123[2], 0 /* verbose_level */);
+			cout << "\\\\" << endl;
+			if (j != i) {
+				cout << "orthogonal_points j != i" << endl;
+				exit(1);
 			}
 		}
-
+	}
 
 	if (f_lines) {
 		orthogonal_lines(F, epsilon, n, c123, verbose_level);
@@ -240,14 +275,14 @@ void orthogonal_lines(finite_field *F,
 		if (a) {
 			cout << "not orthogonal" << endl;
 			exit(1);
-			}
+		}
 
 		cout << " & ";
 		j = O.rank_line(p1, p2, 0 /*verbose_level - 1*/);
 		if (i != j) {
 			cout << "error: i != j" << endl;
 			exit(1);
-			}
+		}
 
 #if 1
 		O.points_on_line(p1, p2, O.line1, 0 /*verbose_level - 1*/);
@@ -271,13 +306,13 @@ void orthogonal_lines(finite_field *F,
 				if (i != j) {
 					cout << "error: i != j" << endl;
 					exit(1);
-					}
 				}
 			}
+		}
 		cout << endl;
 #endif
 #endif
-		}
+	}
 
 }
 

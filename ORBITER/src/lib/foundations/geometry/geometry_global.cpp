@@ -813,7 +813,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb
 			<< " singular points" << endl;
 	for (i = 0; i < nb; i++) {
-		GFq.Sbar_unrank(v, stride, n, i);
+		GFq.Sbar_unrank(v, stride, n, i, 0 /* verbose_level */);
 		cout << i << " : ";
 		int_set_print(v, 2 * n);
 		cout << " : ";
