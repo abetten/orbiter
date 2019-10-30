@@ -314,7 +314,15 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 	// as points on the Klein quadric:
 	// Later, we will change them to wedge ranks:
 
-	Surf->O->perp(0, Neighbors, sz, 0 /* verbose_level*/);
+	if (f_v) {
+		cout << "classify_double_sixes::compute_neighbors "
+				"before Surf->O->perp" << endl;
+		}
+	Surf->O->perp(0, Neighbors, sz, verbose_level - 3);
+	if (f_v) {
+		cout << "classify_double_sixes::compute_neighbors "
+				"after Surf->O->perp" << endl;
+		}
 	
 	if (sz != nb_neighbors) {
 		cout << "classify_double_sixes::compute_neighbors "
