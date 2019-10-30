@@ -8631,7 +8631,7 @@ void orthogonal::perp(int pt,
 		int *Perp_without_pt, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	int i, j;
 	sorting Sorting;
 	
@@ -8639,9 +8639,12 @@ void orthogonal::perp(int pt,
 		cout << "orthogonal::perp pt=" << pt << endl;
 		}
 	
+	if (f_v) {
+		cout << "orthogonal::perp before lines_on_point_by_line_rank" << endl;
+		}
 	lines_on_point_by_line_rank(pt, line_pencil,
-			0 /* verbose_level */);
-	if (f_vv) {
+			verbose_level - 2);
+	if (f_v) {
 		cout << "orthogonal::perp line_pencil=";
 		int_vec_print(cout, line_pencil, alpha);
 		cout << endl;
@@ -8652,7 +8655,7 @@ void orthogonal::perp(int pt,
 				Perp1 + i * (q + 1), 0 /* verbose_level */);
 		}
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "orthogonal::perp points collinear "
 				"with pt " << pt << ":" << endl;
 		int_matrix_print(Perp1, alpha, q + 1);
