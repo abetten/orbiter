@@ -1491,6 +1491,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		int *line_pencil_line_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 5);
 	int t, i, j, rk, rk1, root1, root2, pt2;
 	sorting Sorting;
 	
@@ -1501,16 +1502,16 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		}
 	t = subspace_point_type;
 	for (i = 0; i < alpha; i++) {
-		if (f_v) {
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
 		rk = type_and_index_to_point_rk(t, i, 0);
-		if (f_v) {
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
 		unrank_point(lines_on_point_coords1 + i * n,
-				1, rk, verbose_level - 1);
-		if (f_v) {
+				1, rk, verbose_level - 5);
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank after unrank_point:" << endl;
 			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
 			cout << endl;
@@ -1522,14 +1523,14 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		}
 		rk1 = type_and_index_to_point_rk(t, 0, verbose_level);
 		if (pt == rk1) {
-			root1 = find_root(pt_P, verbose_level);
-			Siegel_Transformation(T3, pt_P, rk1, root1, verbose_level);
+			root1 = find_root(pt_P, verbose_level - 2);
+			Siegel_Transformation(T3, pt_P, rk1, root1, verbose_level - 2);
 			}
 		else {
-			root1 = find_root(pt_P, verbose_level);
-			root2 = find_root(pt, verbose_level);
-			Siegel_Transformation(T1, pt_P, rk1, root1, verbose_level);
-			Siegel_Transformation(T2, rk1, pt, root2, verbose_level);
+			root1 = find_root(pt_P, verbose_level - 2);
+			root2 = find_root(pt, verbose_level - 2);
+			Siegel_Transformation(T1, pt_P, rk1, root1, verbose_level - 2);
+			Siegel_Transformation(T2, rk1, pt, root2, verbose_level - 2);
 			F->mult_matrix_matrix(T1, T2, T3, n, n, n,
 					0 /* verbose_level */);
 			}
@@ -1553,27 +1554,27 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		cout << "orthogonal::lines_on_point_by_line_rank computing line_pencil_line_ranks[]" << endl;
 	}
 	for (i = 0; i < alpha; i++) {
-		if (f_v) {
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank before rank_point" << endl;
 			int_vec_print(cout, lines_on_point_coords2 + i * n, n);
 			cout << endl;
 		}
 		pt2 = rank_point(lines_on_point_coords2 + i * n, 1,
-				verbose_level - 1);
-		if (f_v) {
+				verbose_level - 5);
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank before pt2=" << pt2 << endl;
 		}
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank before rank_line" << endl;
 		}
 		line_pencil_line_ranks[i] =
-				rank_line(pt, pt2, verbose_level);
+				rank_line(pt, pt2, verbose_level - 5);
 		}
 	Sorting.int_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
-	if (f_v) {
+	if (f_vv) {
 		cout << "line pencil on point " << pt << " by line rank : ";
 		int_vec_print(cout, line_pencil_line_ranks, alpha);
 		cout << endl;
