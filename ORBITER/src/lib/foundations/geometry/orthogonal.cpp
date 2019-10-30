@@ -72,7 +72,7 @@ int orthogonal::rank_line(int p1, int p2, int verbose_level)
 	int ret;
 
 	if (f_v) {
-		cout << "orthogonal::rank_line" << endl;
+		cout << "orthogonal::rank_line p1=" << p1 << " p2=" << p2 << endl;
 	}
 	if (epsilon == 1) {
 		ret = hyperbolic_rank_line(p1, p2, verbose_level);
@@ -439,9 +439,26 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 				}
 			}
 		}
+	if (f_v) {
+		cout << "orthogonal::lines_on_point_by_line_rank computing line_pencil_line_ranks[]" << endl;
+	}
 	for (i = 0; i < alpha; i++) {
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
+		}
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank before rank_point" << endl;
+			int_vec_print(cout, lines_on_point_coords2 + i * n, n);
+			cout << endl;
+		}
 		pt2 = rank_point(lines_on_point_coords2 + i * n, 1,
 				verbose_level - 1);
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank before pt2=" << pt2 << endl;
+		}
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank before rank_line" << endl;
+		}
 		line_pencil_line_ranks[i] =
 				rank_line(pt, pt2, verbose_level);
 		}
