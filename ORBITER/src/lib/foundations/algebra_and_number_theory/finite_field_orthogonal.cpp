@@ -32,7 +32,7 @@ void finite_field::Q_epsilon_unrank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank before Q_unrank" << endl;
 		}
-		Q_unrank(v, stride, k, a);
+		Q_unrank(v, stride, k, a, verbose_level);
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank after Q_unrank" << endl;
 		}
@@ -41,7 +41,7 @@ void finite_field::Q_epsilon_unrank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank before Qplus_unrank" << endl;
 		}
-		Qplus_unrank(v, stride, k, a);
+		Qplus_unrank(v, stride, k, a, verbose_level);
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank after Qplus_unrank" << endl;
 		}
@@ -50,7 +50,7 @@ void finite_field::Q_epsilon_unrank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank before Qminus_unrank" << endl;
 		}
-		Qminus_unrank(v, stride, k, a, c1, c2, c3);
+		Qminus_unrank(v, stride, k, a, c1, c2, c3, verbose_level);
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank after Qminus_unrank" << endl;
 		}
@@ -78,7 +78,7 @@ int finite_field::Q_epsilon_rank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank before Q_rank" << endl;
 		}
-		a = Q_rank(v, stride, k);
+		a = Q_rank(v, stride, k, verbose_level);
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank after Q_rank" << endl;
 		}
@@ -87,7 +87,7 @@ int finite_field::Q_epsilon_rank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank before Qplus_rank" << endl;
 		}
-		a = Qplus_rank(v, stride, k);
+		a = Qplus_rank(v, stride, k, verbose_level);
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank after Qplus_rank" << endl;
 		}
@@ -96,7 +96,7 @@ int finite_field::Q_epsilon_rank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank before Qminus_rank" << endl;
 		}
-		a = Qminus_rank(v, stride, k, c1, c2, c3);
+		a = Qminus_rank(v, stride, k, c1, c2, c3, verbose_level);
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank after Qminus_rank" << endl;
 		}
@@ -192,7 +192,7 @@ void finite_field::init_hash_table_parabolic(int k, int verbose_level)
 	Hash_table_parabolic->allocate(n, N, ln2q);
 	for (i = 0; i < N; i++) {
 		v = Hash_table_parabolic->vector_data + i * n;
-		Q_unrank_directly(v, 1 /* stride */, k, i);
+		Q_unrank_directly(v, 1 /* stride */, k, i, verbose_level);
 		for (j = 0; j < k + 1; j++) {
 			if (v[j])
 				break;
@@ -210,7 +210,7 @@ void finite_field::init_hash_table_parabolic(int k, int verbose_level)
 
 }
 
-void finite_field::Q_unrank(int *v, int stride, int k, int a)
+void finite_field::Q_unrank(int *v, int stride, int k, int a, int verbose_level)
 {
 	if (Hash_table_parabolic) {
 		if (Hash_table_parabolic_q == q &&
@@ -224,10 +224,10 @@ void finite_field::Q_unrank(int *v, int stride, int k, int a)
 			return;
 			}
 		}
-	Q_unrank_directly(v, stride, k, a);
+	Q_unrank_directly(v, stride, k, a, verbose_level);
 }
 
-int finite_field::Q_rank(int *v, int stride, int k)
+int finite_field::Q_rank(int *v, int stride, int k, int verbose_level)
 {
 	if (Hash_table_parabolic) {
 		PG_element_normalize_from_front(v, stride, k + 1);
@@ -241,10 +241,10 @@ int finite_field::Q_rank(int *v, int stride, int k)
 			return Hash_table_parabolic->rank(v);
 			}
 		}
-	return Q_rank_directly(v, stride, k);
+	return Q_rank_directly(v, stride, k, verbose_level);
 }
 
-void finite_field::Q_unrank_directly(int *v, int stride, int k, int a)
+void finite_field::Q_unrank_directly(int *v, int stride, int k, int a, int verbose_level)
 // parabolic quadric
 // k = projective dimension, must be even
 {
@@ -271,7 +271,7 @@ void finite_field::Q_unrank_directly(int *v, int stride, int k, int a)
 		}
 }
 
-int finite_field::Q_rank_directly(int *v, int stride, int k)
+int finite_field::Q_rank_directly(int *v, int stride, int k, int verbose_level)
 // parabolic quadric
 // k = projective dimension, must be even
 {
@@ -281,7 +281,7 @@ int finite_field::Q_rank_directly(int *v, int stride, int k)
 	n = Gg.Witt_index(0, k);
 	x = Gg.nb_pts_Sbar(n, q);
 	if (v[0] == 0) {
-		Sbar_rank(v + stride, stride, n, a);
+		Sbar_rank(v + stride, stride, n, a, verbose_level);
 		return a;
 		}
 	a = x;
@@ -299,7 +299,7 @@ int finite_field::Q_rank_directly(int *v, int stride, int k)
 	return a + b;
 }
 
-void finite_field::Qplus_unrank(int *v, int stride, int k, int a)
+void finite_field::Qplus_unrank(int *v, int stride, int k, int a, int verbose_level)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
@@ -310,21 +310,25 @@ void finite_field::Qplus_unrank(int *v, int stride, int k, int a)
 	Sbar_unrank(v, stride, n, a);
 }
 
-int finite_field::Qplus_rank(int *v, int stride, int k)
+int finite_field::Qplus_rank(int *v, int stride, int k, int verbose_level)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
+	int f_v = (verbose_level >= 1);
 	int n, a;
 	geometry_global Gg;
 
+	if (f_v) {
+		cout << "finite_field::Qplus_rank" << endl;
+	}
 	n = Gg.Witt_index(1, k);
-	Sbar_rank(v, stride, n, a);
+	Sbar_rank(v, stride, n, a, verbose_level);
 	return a;
 }
 
 void finite_field::Qminus_unrank(int *v,
 		int stride, int k, int a,
-		int c1, int c2, int c3)
+		int c1, int c2, int c3, int verbose_level)
 // elliptic quadric
 // k = projective dimension, must be odd
 // the form is
@@ -390,7 +394,7 @@ void finite_field::Qminus_unrank(int *v,
 }
 
 int finite_field::Qminus_rank(int *v,
-		int stride, int k, int c1, int c2, int c3)
+		int stride, int k, int c1, int c2, int c3, int verbose_level)
 // elliptic quadric
 // k = projective dimension, must be odd
 // the form is
@@ -425,7 +429,7 @@ int finite_field::Qminus_rank(int *v,
 	x1 = v[2 * n * stride];
 	x2 = v[(2 * n + 1) * stride];
 	if (x1 == 0 && x2 == 0) {
-		Sbar_rank(v, stride, n, a);
+		Sbar_rank(v, stride, n, a, verbose_level);
 		return a;
 		}
 	a = Gg.nb_pts_Sbar(n, q);
@@ -1076,13 +1080,24 @@ void finite_field::N1_rank(int *v, int stride, int n, int &a)
 		}
 }
 
-void finite_field::Sbar_rank(int *v, int stride, int n, int &a)
+void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int l, i, j, x, y, u;
 	int alpha, beta, beta2, beta_inv;
 	geometry_global Gg;
 
+	if (f_v) {
+		cout << "finite_field::Sbar_rank" << endl;
+	}
 	PG_element_normalize(v, stride, 2 * n);
+	if (f_v) {
+		cout << "finite_field::Sbar_rank: ";
+		if (stride == 1) {
+			int_vec_print(cout, v, 2 * n);
+			cout << endl;
+		}
+	}
 	if (n == 1) {
 		// test for (1,0) or (0,1):
 		if (v[0 * stride] == 1 && v[1 * stride] == 0) {
@@ -1108,10 +1123,13 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a)
 		if (v[2 * (n - 1) * stride] == 0 &&
 				v[(2 * (n - 1) + 1) * stride] == 0) {
 			// rank Sbar for the rest:
-			Sbar_rank(v, stride, n - 1, a);
+			Sbar_rank(v, stride, n - 1, a, verbose_level);
 			return;
 			}
 		l = Gg.nb_pts_Sbar(n - 1, q);
+		if (f_v) {
+			cout << "finite_field::Sbar_rank not a leading zero, l = " << l << endl;
+		}
 		a += l;
 
 		// alpha = form value for the top two coefficients:
@@ -1125,7 +1143,7 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a)
 		// the top two coefficients
 		// and 0 for value of the form on the rest):
 		if (alpha == 0) {
-			Sbar_rank(v + (n - 1) * 2 * stride, stride, 1, i);
+			Sbar_rank(v + (n - 1) * 2 * stride, stride, 1, i, verbose_level);
 			S_rank(v, stride, n - 1, j);
 			a += i * y + j;
 			//cout << "i*y+j=" << i << "*" << y << "+" << j << endl;
