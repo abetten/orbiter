@@ -386,8 +386,9 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 	sorting Sorting;
 	
 	if (f_v) {
-		cout << "lines_on_point" << endl;
+		cout << "orthogonal::lines_on_point_by_line_rank" << endl;
 		cout << "pt=" << pt << endl;
+		cout << "pt_P=" << pt_P << endl;
 		}
 	t = subspace_point_type;
 	for (i = 0; i < alpha; i++) {
@@ -396,6 +397,9 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 				1, rk, verbose_level - 1);
 		}
 	if (pt != pt_P) {
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank applying transformation" << endl;
+		}
 		rk1 = type_and_index_to_point_rk(t, 0, verbose_level);
 		if (pt == rk1) {
 			root1 = find_root(pt_P, verbose_level);
@@ -414,6 +418,10 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 				0 /* verbose_level */);
 		}
 	else {
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank pt == pt_P, "
+					"no need to apply transformation" << endl;
+		}
 		for (i = 0; i < alpha; i++) {
 			for (j = 0; j < n; j++) {
 				lines_on_point_coords2[i * n + j] =
@@ -432,6 +440,9 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		cout << "line pencil on point " << pt << " by line rank : ";
 		int_vec_print(cout, line_pencil_line_ranks, alpha);
 		cout << endl;
+		}
+	if (f_v) {
+		cout << "orthogonal::lines_on_point_by_line_rank done" << endl;
 		}
 }
 
@@ -8650,6 +8661,9 @@ void orthogonal::perp(int pt,
 		cout << endl;
 		}
 
+	if (f_v) {
+		cout << "orthogonal::perp before points_on_line_by_line_rank" << endl;
+		}
 	for (i = 0; i < alpha; i++) {
 		points_on_line_by_line_rank(line_pencil[i],
 				Perp1 + i * (q + 1), 0 /* verbose_level */);
