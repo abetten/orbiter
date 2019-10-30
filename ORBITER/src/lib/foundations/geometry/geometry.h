@@ -1582,6 +1582,9 @@ public:
 	int a41, a43, a44, a45, a46, a47, a56, a67;
 	int b11, b12, b22, b23, b26, b32, b34, b37;
 	int b41, b43, b44, b45, b46, b47, b56, b67;
+
+
+
 	// additionally, for parabolic:
 	int p7, l8;
 	int a21, a36, a57, a22a, a33, a22b;
