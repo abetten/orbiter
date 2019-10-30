@@ -257,7 +257,7 @@ int main(int argc, const char **argv)
 		cout << "orthogonal rank : point : projective rank" << endl;
 		}
 	for (i = 0; i < nb_pts; i++) {
-		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		F->PG_element_rank_modified(v, 1, d, j);
 		Pts[i] = j;
 		if (f_v) {

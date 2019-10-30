@@ -99,10 +99,10 @@ int main(int argc, char **argv)
 	
 	if (f_list_points) {
 		for (i = 0; i < N; i++) {
-			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
+			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 			cout << i << " : ";
 			int_vec_print(cout, v, n + 1);
-			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3);
+			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3, 0 /* verbose_level */);
 			cout << " : " << j << endl;
 		
 			}
@@ -116,9 +116,9 @@ int main(int argc, char **argv)
 	nb_inc = 0;
 	for (i = 0; i < N; i++) {
 		//cout << i << " : ";
-		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		for (j = i + 1; j < N; j++) {
-			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j);
+			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
 			a = F->evaluate_bilinear_form(v, v2, n + 1, Gram);
 			if (a == 0) {
 				//cout << j << " ";

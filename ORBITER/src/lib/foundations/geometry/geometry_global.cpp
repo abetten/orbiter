@@ -759,7 +759,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 		GFq.choose_anisotropic_form(c1, c2, c3, TRUE);
 		}
 	for (i = 0; i < nb; i++) {
-		GFq.Q_epsilon_unrank(v, stride, epsilon, k, c1, c2, c3, i);
+		GFq.Q_epsilon_unrank(v, stride, epsilon, k, c1, c2, c3, i, 0 /* verbose_level */);
 
 #if 0
 		wt = 0;
@@ -774,7 +774,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 		a = GFq.evaluate_quadratic_form(v, stride, epsilon, k,
 				c1, c2, c3);
 		cout << a;
-		j = GFq.Q_epsilon_rank(v, stride, epsilon, k, c1, c2, c3);
+		j = GFq.Q_epsilon_rank(v, stride, epsilon, k, c1, c2, c3, 0 /* verbose_level */);
 		cout << " : " << j;
 #if 0
 		if (wt == 1) {
