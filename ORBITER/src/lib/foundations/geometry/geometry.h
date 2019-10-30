@@ -1573,27 +1573,27 @@ public:
 	int subspace_line_type;
 	
 	int nb_point_classes, nb_line_classes;
-	int *A, *B, *P, *L;
+	long int *A, *B, *P, *L;
 
 	// for hyperbolic:
-	int p1, p2, p3, p4, p5, p6;
-	int l1, l2, l3, l4, l5, l6, l7;
-	int a11, a12, a22, a23, a26, a32, a34, a37;
-	int a41, a43, a44, a45, a46, a47, a56, a67;
-	int b11, b12, b22, b23, b26, b32, b34, b37;
-	int b41, b43, b44, b45, b46, b47, b56, b67;
+	long int p1, p2, p3, p4, p5, p6;
+	long int l1, l2, l3, l4, l5, l6, l7;
+	long int a11, a12, a22, a23, a26, a32, a34, a37;
+	long int a41, a43, a44, a45, a46, a47, a56, a67;
+	long int b11, b12, b22, b23, b26, b32, b34, b37;
+	long int b41, b43, b44, b45, b46, b47, b56, b67;
 
 
 
 	// additionally, for parabolic:
-	int p7, l8;
-	int a21, a36, a57, a22a, a33, a22b;
-	int a32b, a42b, a51, a53, a54, a55, a66, a77;
-	int b21, b36, b57, b22a, b33, b22b;
-	int b32b, b42b, b51, b53, b54, b55, b66, b77;
-	int a12b, a52a;
-	int b12b, b52a;
-	int delta, omega, lambda, mu, nu, zeta;
+	long int p7, l8;
+	long int a21, a36, a57, a22a, a33, a22b;
+	long int a32b, a42b, a51, a53, a54, a55, a66, a77;
+	long int b21, b36, b57, b22a, b33, b22b;
+	long int b32b, b42b, b51, b53, b54, b55, b66, b77;
+	long int a12b, a52a;
+	long int b12b, b52a;
+	long int delta, omega, lambda, mu, nu, zeta;
 	// parabolic q odd requires square / nonsquare tables
 	int *minus_squares; // [(q-1)/2]
 	int *minus_squares_without; // [(q-1)/2 - 1]
@@ -1632,6 +1632,19 @@ public:
 	// for perp:
 	int *line_pencil; // [nb_lines]
 	int *Perp1; // [alpha * (q + 1)]
+
+
+	orthogonal();
+	~orthogonal();
+	void init(int epsilon, int n, finite_field *F,
+		int verbose_level);
+	void init_parabolic(int verbose_level);
+	void init_parabolic_even(int verbose_level);
+	void init_parabolic_odd(int verbose_level);
+	void init_hyperbolic(int verbose_level);
+	void fill(long int *M, int i, int j, long int a);
+
+
 
 	void unrank_point(int *v, 
 		int stride, int rk, int verbose_level);
@@ -1686,17 +1699,8 @@ public:
 	int BLT_test(int size, int *set, int verbose_level);
 	int collinearity_test(int size, int *set, int verbose_level);
 	
-	orthogonal();
-	~orthogonal();
-	void init(int epsilon, int n, finite_field *F, 
-		int verbose_level);
-	void init_parabolic(int verbose_level);
-	void init_parabolic_even(int verbose_level);
-	void init_parabolic_odd(int verbose_level);
 	void print_minus_square_tables();
-	void init_hyperbolic(int verbose_level);
 	void print_schemes();
-	void fill(int *M, int i, int j, int a);
 	
 	
 	int hyperbolic_type_and_index_to_point_rk(int type, int index);
