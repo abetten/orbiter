@@ -2517,7 +2517,7 @@ void orthogonal::unrank_line_L1(
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 		}
 	if (f_v) {
-		cout << "orthogonal::unrank_line_L1 done" << index
+		cout << "orthogonal::unrank_line_L1 done" << endl;
 	}
 }
 
