@@ -2083,6 +2083,7 @@ void orthogonal::init_hyperbolic(int verbose_level)
 	l1 = a11 * p1 / q;
 	if (l1 < 0) {
 		cout << "orthogonal::init_hyperbolic l1 < 0, overflow" << endl;
+		exit(1);
 	}
 
 	//a41 = l1 / T1_mm1;
