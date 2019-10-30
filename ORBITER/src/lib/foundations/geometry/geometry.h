@@ -2117,8 +2117,8 @@ public:
 
 	int n; // projective dimension
 	int q;
-	int N_points, N_lines;
-	int *Nb_subspaces;  // [n + 1]
+	long int N_points, N_lines;
+	long int *Nb_subspaces;  // [n + 1]
 	 // Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
 		// N_points = Nb_subspaces[0]
 		// N_lines = Nb_subspaces[1];

@@ -62,7 +62,7 @@ void projective_space::freeself()
 		FREE_OBJECT(Go);
 		}
 	if (Nb_subspaces) {
-		FREE_int(Nb_subspaces);
+		FREE_lint(Nb_subspaces);
 		}
 	if (v) {
 		if (f_v) {
@@ -162,7 +162,7 @@ void projective_space::init(int n, finite_field *F,
 		cout << "projective_space::init computing number of "
 				"subspaces of each dimension:" << endl;
 		}
-	Nb_subspaces = NEW_int(n + 1);
+	Nb_subspaces = NEW_lint(n + 1);
 	if (n < 10) {
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
@@ -172,7 +172,7 @@ void projective_space::init(int n, finite_field *F,
 			D.q_binomial_no_table(
 				a,
 				n + 1, i + 1, q, verbose_level - 2);
-			Nb_subspaces[i] = a.as_int();
+			Nb_subspaces[i] = a.as_lint();
 			//Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
 			}
 
