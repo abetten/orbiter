@@ -321,16 +321,27 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 				"sz != nb_neighbors" << endl;
 		exit(1);
 		}
-	cout << "classify_double_sixes::compute_neighbors "
-			"nb_neighbors = " << nb_neighbors << endl;
+	if (f_v) {
+		cout << "classify_double_sixes::compute_neighbors "
+				"nb_neighbors = " << nb_neighbors << endl;
+	}
 	
+	if (f_v) {
+		cout << "classify_double_sixes::compute_neighbors "
+				"allocating Line_to_neighbor" << endl;
+	}
 	Line_to_neighbor = NEW_int(Surf->nb_lines_PG_3);
 	for (i = 0; i < Surf->nb_lines_PG_3; i++) {
 		Line_to_neighbor[i] = -1;
 		}
 
+
 	// Convert Neighbors from points
 	// on the Klein quadric to wedge points:
+	if (f_v) {
+		cout << "classify_double_sixes::compute_neighbors "
+				"before Surf->klein_to_wedge_vec" << endl;
+	}
 	Surf->klein_to_wedge_vec(Neighbors,
 			Neighbors, nb_neighbors);
 
@@ -343,6 +354,10 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 	// Establish the bijection between Neighbors and Lines in PG(3,q) 
 	// by going through the Klein correspondence.
 	// It is important that this be done after we sort Neighbors.
+	if (f_v) {
+		cout << "classify_double_sixes::compute_neighbors "
+				"Establish the bijection between Neighbors and Lines in PG(3,q)" << endl;
+	}
 	for (i = 0; i < nb_neighbors; i++) {
 		a = Neighbors[i];
 		AW->unrank_point(w, a);
@@ -353,6 +368,10 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		Line_to_neighbor[c] = i;
 		}
 
+	if (f_v) {
+		cout << "classify_double_sixes::compute_neighbors "
+				"before int_vec_apply" << endl;
+	}
 	int_vec_apply(Neighbor_to_line,
 			Surf->Klein->Line_to_point_on_quadric,
 			Neighbor_to_klein, nb_neighbors);
