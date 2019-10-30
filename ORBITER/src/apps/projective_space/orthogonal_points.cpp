@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 		c3 = 0;
 		}
 	for (i = 0; i < N; i++) {
-		GFq.Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i);
+		GFq.Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		GFq.PG_element_rank_modified(v, 1, d, j);
 		L[i] = j;
 		if (f_v) {

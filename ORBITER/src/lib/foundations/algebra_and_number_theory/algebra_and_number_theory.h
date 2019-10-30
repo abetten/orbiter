@@ -644,10 +644,10 @@ public:
 	// #########################################################################
 	void Q_epsilon_unrank(
 		int *v, int stride, int epsilon, int k,
-		int c1, int c2, int c3, int a);
+		int c1, int c2, int c3, int a, int verbose_level);
 	int Q_epsilon_rank(
 		int *v, int stride, int epsilon, int k,
-		int c1, int c2, int c3);
+		int c1, int c2, int c3, int verbose_level);
 	void init_hash_table_parabolic(int k, int verbose_level);
 	void Q_unrank(int *v, int stride, int k, int a);
 	int Q_rank(int *v, int stride, int k);

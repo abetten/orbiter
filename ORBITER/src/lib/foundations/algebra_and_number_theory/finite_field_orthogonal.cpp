@@ -21,42 +21,93 @@ namespace foundations {
 
 void finite_field::Q_epsilon_unrank(
 	int *v, int stride, int epsilon, int k,
-	int c1, int c2, int c3, int a)
+	int c1, int c2, int c3, int a, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::Q_epsilon_unrank" << endl;
+	}
 	if (epsilon == 0) {
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_unrank before Q_unrank" << endl;
+		}
 		Q_unrank(v, stride, k, a);
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_unrank after Q_unrank" << endl;
+		}
 		}
 	else if (epsilon == 1) {
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_unrank before Qplus_unrank" << endl;
+		}
 		Qplus_unrank(v, stride, k, a);
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_unrank after Qplus_unrank" << endl;
+		}
 		}
 	else if (epsilon == -1) {
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_unrank before Qminus_unrank" << endl;
+		}
 		Qminus_unrank(v, stride, k, a, c1, c2, c3);
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_unrank after Qminus_unrank" << endl;
+		}
 		}
 	else {
 		cout << "Q_epsilon_unrank epsilon is wrong" << endl;
 		exit(1);
 		}
+	if (f_v) {
+		cout << "finite_field::Q_epsilon_unrank done" << endl;
+	}
 }
 
 int finite_field::Q_epsilon_rank(
 	int *v, int stride, int epsilon, int k,
-	int c1, int c2, int c3)
+	int c1, int c2, int c3, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int a;
 
+	if (f_v) {
+		cout << "finite_field::Q_epsilon_rank" << endl;
+	}
 	if (epsilon == 0) {
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_rank before Q_rank" << endl;
+		}
 		a = Q_rank(v, stride, k);
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_rank after Q_rank" << endl;
+		}
 		}
 	else if (epsilon == 1) {
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_rank before Qplus_rank" << endl;
+		}
 		a = Qplus_rank(v, stride, k);
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_rank after Qplus_rank" << endl;
+		}
 		}
 	else if (epsilon == -1) {
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_rank before Qminus_rank" << endl;
+		}
 		a = Qminus_rank(v, stride, k, c1, c2, c3);
+		if (f_v) {
+			cout << "finite_field::Q_epsilon_rank after Qminus_rank" << endl;
+		}
 		}
 	else {
 		cout << "Q_epsilon_unrank epsilon is wrong" << endl;
 		exit(1);
 		}
+	if (f_v) {
+		cout << "finite_field::Q_epsilon_rank done" << endl;
+	}
 	return a;
 }
 
@@ -1287,11 +1338,11 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 	z = NEW_int(d);
 	x = NEW_int(d);
 	Q_epsilon_unrank(B, 1, epsilon, k,
-			form_c1, form_c2, form_c3, root);
+			form_c1, form_c2, form_c3, root, 0 /* verbose_level */);
 	Q_epsilon_unrank(B + d, 1, epsilon, k,
-			form_c1, form_c2, form_c3, rk_from);
+			form_c1, form_c2, form_c3, rk_from, 0 /* verbose_level */);
 	Q_epsilon_unrank(w, 1, epsilon, k,
-			form_c1, form_c2, form_c3, rk_to);
+			form_c1, form_c2, form_c3, rk_to, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "    root=";
 		int_vec_print(cout, B, d);
@@ -1539,7 +1590,7 @@ int finite_field::orthogonal_find_root(int rk2,
 	x[0] = 1;
 
 	Q_epsilon_unrank(y, 1, epsilon, k,
-			form_c1, form_c2, form_c3, rk2);
+			form_c1, form_c2, form_c3, rk2, 0 /* verbose_level */);
 	if (y[0]) {
 		z[1] = 1;
 		goto finish;
@@ -1615,7 +1666,7 @@ finish:
 		exit(1);
 		}
 	root = Q_epsilon_rank(z, 1, epsilon, k,
-			form_c1, form_c2, form_c3);
+			form_c1, form_c2, form_c3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "finite_field::orthogonal_find_root "
 				"root=" << root << endl;

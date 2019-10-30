@@ -162,10 +162,10 @@ void orthogonal_points(int epsilon, int n, int q,
 	print_integer_matrix_width(cout, G, d, d, d, 2);
 	
 	for (i = 0; i < N; i++) {
-		F->Q_epsilon_unrank(v, 1, epsilon, n, c123[0], c123[1], c123[2], i);
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c123[0], c123[1], c123[2], i, 0 /* verbose_level */);
 		cout << "P_{" << i << "} & ";
 		int_vec_print(cout, v, n + 1);
-		j = F->Q_epsilon_rank(v, 1, epsilon, n, c123[0], c123[1], c123[2]);
+		j = F->Q_epsilon_rank(v, 1, epsilon, n, c123[0], c123[1], c123[2], 0 /* verbose_level */);
 		cout << "\\\\" << endl;
 		if (j != i) {
 			cout << "orthogonal_points j != i" << endl;

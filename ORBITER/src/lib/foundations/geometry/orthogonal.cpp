@@ -27,13 +27,14 @@ void orthogonal::unrank_point(
 				<< " epsilon=" << epsilon << " n=" << n << endl;
 		}
 	F->Q_epsilon_unrank(v, stride, epsilon, n - 1,
-			form_c1, form_c2, form_c3, rk);
+			form_c1, form_c2, form_c3, rk, verbose_level);
 }
 
 int orthogonal::rank_point(int *v, int stride, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
+	int ret;
 
 	if (f_v) {
 		cout << "orthogonal::rank_point" << endl;
@@ -44,8 +45,18 @@ int orthogonal::rank_point(int *v, int stride, int verbose_level)
 	for (i = 0; i < n; i++)
 		rk_pt_v[i] = v[i * stride];
 	
-	return F->Q_epsilon_rank(rk_pt_v, 1, epsilon, n - 1,
-			form_c1, form_c2, form_c3);
+	if (f_v) {
+		cout << "orthogonal::rank_point before F->Q_epsilon_rank" << endl;
+		}
+	ret = F->Q_epsilon_rank(rk_pt_v, 1, epsilon, n - 1,
+			form_c1, form_c2, form_c3, verbose_level);
+	if (f_v) {
+		cout << "orthogonal::rank_point after F->Q_epsilon_rank" << endl;
+		}
+	if (f_v) {
+		cout << "orthogonal::rank_point done" << endl;
+		}
+	return ret;
 }
 
 
@@ -1554,11 +1565,11 @@ void orthogonal::init(int epsilon, int n,
 	if (FALSE) {
 		for (i = 0; i < T1_m; i++) {
 			F->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
-					form_c1, form_c2, form_c3, i);
+					form_c1, form_c2, form_c3, i, verbose_level);
 			cout << i << " : ";
 			int_vec_print(cout, v1, n);
 			j = F->Q_epsilon_rank(v1, 1, epsilon, n - 1,
-					form_c1, form_c2, form_c3);
+					form_c1, form_c2, form_c3, verbose_level);
 			cout << " : " << j << endl;
 			}
 		}
