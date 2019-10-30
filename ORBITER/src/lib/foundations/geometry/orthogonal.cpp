@@ -402,10 +402,21 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		}
 	t = subspace_point_type;
 	for (i = 0; i < alpha; i++) {
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
+		}
 		rk = type_and_index_to_point_rk(t, i, 0);
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
+		}
 		unrank_point(lines_on_point_coords1 + i * n,
 				1, rk, verbose_level - 1);
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank after unrank_point:" << endl;
+			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
+			cout << endl;
 		}
+	}
 	if (pt != pt_P) {
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank applying transformation" << endl;
