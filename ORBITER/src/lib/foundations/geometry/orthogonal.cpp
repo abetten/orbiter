@@ -1553,7 +1553,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (pt == rk1) {
 			root1 = find_root(pt_P, verbose_level - 2);
 			Siegel_Transformation(T3, pt_P, rk1, root1, verbose_level - 2);
-			}
+		}
 		else {
 			root1 = find_root(pt_P, verbose_level - 2);
 			root2 = find_root(pt, verbose_level - 2);
@@ -1561,7 +1561,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			Siegel_Transformation(T2, rk1, pt, root2, verbose_level - 2);
 			F->mult_matrix_matrix(T1, T2, T3, n, n, n,
 					0 /* verbose_level */);
-			}
+		}
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank applying:" << endl;
 			int_matrix_print(T3, n, n);
@@ -2501,26 +2501,44 @@ int orthogonal::hyperbolic_rank_line(
 		return rk + rank_line_L1(cp1, cp2, verbose_level);
 		}
 	rk += l1;
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l1, rk=" << rk << endl;
+	}
 	if (line_type == 2) {
 		return rk + rank_line_L2(cp1, cp2, verbose_level);
 		}
 	rk += l2;
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l2, rk=" << rk << endl;
+	}
 	if (line_type == 3) {
 		return rk + rank_line_L3(cp1, cp2, verbose_level);
 		}
 	rk += l3;
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l3, rk=" << rk << endl;
+	}
 	if (line_type == 4) {
 		return rk + rank_line_L4(cp1, cp2, verbose_level);
 		}
 	rk += l4;
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l4, rk=" << rk << endl;
+	}
 	if (line_type == 5) {
 		return rk + rank_line_L5(cp1, cp2, verbose_level);
 		}
 	rk += l5;
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l5, rk=" << rk << endl;
+	}
 	if (line_type == 6) {
 		return rk + rank_line_L6(cp1, cp2, verbose_level);
 		}
 	rk += l6;
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l6, rk=" << rk << endl;
+	}
 	if (line_type == 7) {
 		return rk + rank_line_L7(cp1, cp2, verbose_level);
 		}
