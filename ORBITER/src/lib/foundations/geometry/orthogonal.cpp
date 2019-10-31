@@ -1210,19 +1210,41 @@ int orthogonal::line_type_given_point_types(
 int orthogonal::type_and_index_to_point_rk(
 		int type, int index, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "orthogonal::type_and_index_to_point_rk" << endl;
+	}
 	if (epsilon == 1) {
-		return hyperbolic_type_and_index_to_point_rk(
-				type, index);
+		if (f_v) {
+			cout << "orthogonal::type_and_index_to_point_rk before hyperbolic_type_and_index_to_point_rk" << endl;
 		}
-	else if (epsilon == 0) {
-		return parabolic_type_and_index_to_point_rk(
+		ret = hyperbolic_type_and_index_to_point_rk(
 				type, index, verbose_level);
+		if (f_v) {
+			cout << "orthogonal::type_and_index_to_point_rk after hyperbolic_type_and_index_to_point_rk" << endl;
 		}
+	}
+	else if (epsilon == 0) {
+		if (f_v) {
+			cout << "orthogonal::type_and_index_to_point_rk before parabolic_type_and_index_to_point_rk" << endl;
+		}
+		ret = parabolic_type_and_index_to_point_rk(
+				type, index, verbose_level);
+		if (f_v) {
+			cout << "orthogonal::type_and_index_to_point_rk after parabolic_type_and_index_to_point_rk" << endl;
+		}
+	}
 	else {
 		cout << "type_and_index_to_point_rk "
 				"epsilon = " << epsilon << endl;
 		exit(1);
-		}
+	}
+	if (f_v) {
+		cout << "orthogonal::type_and_index_to_point_rk done" << endl;
+	}
+	return ret;
 }
 
 void orthogonal::point_rk_to_type_and_index(
@@ -1505,12 +1527,18 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
-		rk = type_and_index_to_point_rk(t, i, 0);
+		if (i == 9216) {
+			cout << "hello9216a:" << endl;
+			rk = type_and_index_to_point_rk(t, i, 0);
+		}
+		else {
+			rk = type_and_index_to_point_rk(t, i, 0);
+		}
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
 		if (i == 9216) {
-			cout << "hello9612:" << endl;
+			cout << "hello9216b:" << endl;
 			unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level + 3);
 		}
 		else {
@@ -2244,10 +2272,14 @@ void orthogonal::print_schemes()
 //##############################################################################
 
 int orthogonal::hyperbolic_type_and_index_to_point_rk(
-		int type, int index)
+		int type, int index, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int rk;
 	
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_type_and_index_to_point_rk type" << type << "index=" << index << endl;
+	}
 	rk = 0;
 	if (type == 4) {
 		if (index >= p4) {
@@ -2256,7 +2288,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 			exit(1);
 			}
 		rk += index;
-		return rk;
+		goto done;
 		}
 	rk += p4;
 	if (type == 6) {
@@ -2266,7 +2298,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 			exit(1);
 			}
 		rk += index;
-		return rk;
+		goto done;
 		}
 	rk += p6;
 	if (type == 3) {
@@ -2276,7 +2308,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 			exit(1);
 			}
 		rk += index;
-		return rk;
+		goto done;
 		}
 	rk += p3;
 	if (type == 5) {
@@ -2286,7 +2318,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 			exit(1);
 			}
 		rk += index;
-		return rk;
+		goto done;
 		}
 	rk += p5;
 	if (type == 2) {
@@ -2296,7 +2328,7 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 			exit(1);
 			}
 		rk += index;
-		return rk;
+		goto done;
 		}
 	rk += p2;
 	if (type == 1) {
@@ -2306,11 +2338,16 @@ int orthogonal::hyperbolic_type_and_index_to_point_rk(
 			exit(1);
 			}
 		rk += index;
-		return rk;
+		goto done;
 		}
 	cout << "error in orthogonal::hyperbolic_type_and_index_to_point_rk, "
 			"unknown type" << endl;
 	exit(1);
+done:
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_type_and_index_to_point_rk type" << type << "index=" << index << " rk=" << rk << endl;
+	}
+	return rk;
 }
 
 void orthogonal::hyperbolic_point_rk_to_type_and_index(

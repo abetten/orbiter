@@ -1703,7 +1703,7 @@ public:
 	void print_schemes();
 	
 	
-	int hyperbolic_type_and_index_to_point_rk(int type, int index);
+	int hyperbolic_type_and_index_to_point_rk(int type, int index, int verbose_level);
 	void hyperbolic_point_rk_to_type_and_index(int rk, 
 		int &type, int &index);
 	void hyperbolic_unrank_line(int &p1, int &p2, 
