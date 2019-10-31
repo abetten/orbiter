@@ -1149,7 +1149,7 @@ int orthogonal::rank_point(int *v, int stride, int verbose_level)
 
 
 void orthogonal::unrank_line(int &p1, int &p2,
-		int rk, int verbose_level)
+		long int rk, int verbose_level)
 {
 	if (epsilon == 1) {
 		hyperbolic_unrank_line(p1, p2, rk, verbose_level);
@@ -1165,10 +1165,10 @@ void orthogonal::unrank_line(int &p1, int &p2,
 		}
 }
 
-int orthogonal::rank_line(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret;
+	long int ret;
 
 	if (f_v) {
 		cout << "orthogonal::rank_line p1=" << p1 << " p2=" << p2 << endl;
@@ -1361,7 +1361,7 @@ int orthogonal::find_root(int rk2, int verbose_level)
 }
 
 void orthogonal::points_on_line_by_line_rank(
-		int line_rk, int *line, int verbose_level)
+		long int line_rk, int *line, int verbose_level)
 {
 	int p1, p2;
 	

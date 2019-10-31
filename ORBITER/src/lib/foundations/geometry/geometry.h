@@ -1650,8 +1650,8 @@ public:
 		int stride, int rk, int verbose_level);
 	int rank_point(int *v, int stride, int verbose_level);
 	void unrank_line(int &p1, int &p2, 
-		int index, int verbose_level);
-	int rank_line(int p1, int p2, int verbose_level);
+		long int index, int verbose_level);
+	long int rank_line(int p1, int p2, int verbose_level);
 	int line_type_given_point_types(int pt1, int pt2, 
 		int pt1_type, int pt2_type);
 	int type_and_index_to_point_rk(int type, 
@@ -1664,7 +1664,7 @@ public:
 	int evaluate_bilinear_form(int *u, int *v, int stride);
 	int evaluate_bilinear_form_by_rank(int i, int j);
 	int find_root(int rk2, int verbose_level);
-	void points_on_line_by_line_rank(int line_rk, 
+	void points_on_line_by_line_rank(long int line_rk,
 		int *line, int verbose_level);
 	void points_on_line(int pi, int pj, 
 		int *line, int verbose_level);
