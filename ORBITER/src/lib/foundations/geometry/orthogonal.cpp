@@ -2502,42 +2502,42 @@ int orthogonal::hyperbolic_rank_line(
 		}
 	rk += l1;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l1, rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l1=" << l1 << ", rk=" << rk << endl;
 	}
 	if (line_type == 2) {
 		return rk + rank_line_L2(cp1, cp2, verbose_level);
 		}
 	rk += l2;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l2, rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l2=" << l2 << ", rk=" << rk << endl;
 	}
 	if (line_type == 3) {
 		return rk + rank_line_L3(cp1, cp2, verbose_level);
 		}
 	rk += l3;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l3, rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l3=" << l3 << ", rk=" << rk << endl;
 	}
 	if (line_type == 4) {
 		return rk + rank_line_L4(cp1, cp2, verbose_level);
 		}
 	rk += l4;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l4, rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l4=" << l4 << ", rk=" << rk << endl;
 	}
 	if (line_type == 5) {
 		return rk + rank_line_L5(cp1, cp2, verbose_level);
 		}
 	rk += l5;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l5, rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l5=" << l5 << ", rk=" << rk << endl;
 	}
 	if (line_type == 6) {
 		return rk + rank_line_L6(cp1, cp2, verbose_level);
 		}
 	rk += l6;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l6, rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l6=" << l6 << ", rk=" << rk << endl;
 	}
 	if (line_type == 7) {
 		return rk + rank_line_L7(cp1, cp2, verbose_level);
