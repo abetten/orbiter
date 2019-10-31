@@ -1524,7 +1524,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		}
 	t = subspace_point_type;
 	for (i = 0; i < alpha; i++) {
-		if (f_vv) {
+		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
 		if (i == 194) {
@@ -1533,7 +1533,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		else {
 			rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
 		}
-		if (f_vv) {
+		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
 		unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 5);
@@ -1541,6 +1541,8 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			cout << "hello9216:  orthogonal::lines_on_point_by_line_rank after unrank_point: t=" << t << " i=" << i << " rk=" << rk << endl;
 			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
 			cout << endl;
+			cout << "pt=" << pt << endl;
+			cout << "pt_P=" << pt_P << endl;
 		}
 	}
 	if (pt != pt_P) {
@@ -1583,19 +1585,19 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		cout << "orthogonal::lines_on_point_by_line_rank computing line_pencil_line_ranks[]" << endl;
 	}
 	for (i = 0; i < alpha; i++) {
-		if (f_vv) {
+		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
-		if (f_vv) {
+		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank before rank_point" << endl;
 			int_vec_print(cout, lines_on_point_coords2 + i * n, n);
 			cout << endl;
 		}
 		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, verbose_level - 5);
-		if (f_vv) {
+		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank before pt2=" << pt2 << endl;
 		}
-		if (f_vv) {
+		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank before rank_line" << endl;
 		}
 		if (i == 194) {
