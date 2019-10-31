@@ -1524,19 +1524,19 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		}
 	t = subspace_point_type;
 	for (i = 0; i < alpha; i++) {
-		if (i == 194) {
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
 		if (i == 194) {
 			rk = type_and_index_to_point_rk(t, i, verbose_level + 3);
 		}
 		else {
-			rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
+			rk = type_and_index_to_point_rk(t, i, 0/*verbose_level - 3*/);
 		}
 		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
-		unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 5);
+		unrank_point(lines_on_point_coords1 + i * n, 1, rk, 0 /*verbose_level - 5*/);
 		if (i == 194) {
 			cout << "hello9216:  orthogonal::lines_on_point_by_line_rank after unrank_point: t=" << t << " i=" << i << " rk=" << rk << endl;
 			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
@@ -1562,6 +1562,10 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			F->mult_matrix_matrix(T1, T2, T3, n, n, n,
 					0 /* verbose_level */);
 			}
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank applying:" << endl;
+			int_matrix_print(T3, n, n);
+		}
 		F->mult_matrix_matrix(lines_on_point_coords1,
 				T3, lines_on_point_coords2, alpha, n, n,
 				0 /* verbose_level */);
@@ -1593,7 +1597,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			int_vec_print(cout, lines_on_point_coords2 + i * n, n);
 			cout << endl;
 		}
-		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, verbose_level - 5);
+		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, 0/*verbose_level - 5*/);
 		if (i == 194) {
 			cout << "orthogonal::lines_on_point_by_line_rank before pt2=" << pt2 << endl;
 		}
@@ -1604,7 +1608,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level + 5);
 		}
 		else {
-			line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level - 5);
+			line_pencil_line_ranks[i] = rank_line(pt, pt2, 0 /*verbose_level - 5*/);
 		}
 		if (line_pencil_line_ranks[i] == 173523328) {
 			cout << "hello9216: line_pencil_line_ranks[i] == 173523328, i=" << i << endl;
