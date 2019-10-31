@@ -1538,7 +1538,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		}
 		unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 5);
 		if (i == 194) {
-			cout << "orthogonal::lines_on_point_by_line_rank after unrank_point: t=" << t << " i=" << i << " rk=" << rk << endl;
+			cout << "hello9216:  orthogonal::lines_on_point_by_line_rank after unrank_point: t=" << t << " i=" << i << " rk=" << rk << endl;
 			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
 			cout << endl;
 		}
