@@ -1528,23 +1528,10 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
 		rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
-		if (rk == 173523328) {
-			cout << "hello9216a: i=" << i << endl;
-			rk = type_and_index_to_point_rk(t, i, verbose_level + 3);
-		}
-		else {
-			rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
-		}
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
-		if (rk == 173523328) {
-			cout << "hello9216b:" << endl;
-			unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level + 3);
-		}
-		else {
-			unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 5);
-		}
+		unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 5);
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank after unrank_point:" << endl;
 			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
@@ -1607,6 +1594,9 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			cout << "orthogonal::lines_on_point_by_line_rank before rank_line" << endl;
 		}
 		line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level - 5);
+		if (line_pencil_line_ranks[i] == 173523328) {
+			cout << "hello9216: line_pencil_line_ranks[i] == 173523328, i=" << i << endl;
+		}
 		}
 	Sorting.int_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_vv) {
