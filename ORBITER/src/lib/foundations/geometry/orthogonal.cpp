@@ -1491,7 +1491,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		int *line_pencil_line_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 5);
+	int f_vv = (verbose_level >= 2);
 	int t, i, j, rk, rk1, root1, root2, pt2;
 	sorting Sorting;
 	
@@ -1509,8 +1509,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
-		unrank_point(lines_on_point_coords1 + i * n,
-				1, rk, verbose_level - 5);
+		unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level - 5);
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank after unrank_point:" << endl;
 			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
@@ -1543,12 +1542,15 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			cout << "orthogonal::lines_on_point_by_line_rank pt == pt_P, "
 					"no need to apply transformation" << endl;
 		}
+		int_vec_copy(lines_on_point_coords1, lines_on_point_coords2, alpha * n);
+#if 0
 		for (i = 0; i < alpha; i++) {
 			for (j = 0; j < n; j++) {
 				lines_on_point_coords2[i * n + j] =
 						lines_on_point_coords1[i * n + j];
 				}
 			}
+#endif
 		}
 	if (f_v) {
 		cout << "orthogonal::lines_on_point_by_line_rank computing line_pencil_line_ranks[]" << endl;
@@ -1562,16 +1564,14 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			int_vec_print(cout, lines_on_point_coords2 + i * n, n);
 			cout << endl;
 		}
-		pt2 = rank_point(lines_on_point_coords2 + i * n, 1,
-				verbose_level - 5);
+		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, verbose_level - 5);
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank before pt2=" << pt2 << endl;
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank before rank_line" << endl;
 		}
-		line_pencil_line_ranks[i] =
-				rank_line(pt, pt2, verbose_level - 5);
+		line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level - 5);
 		}
 	Sorting.int_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_vv) {
@@ -2437,6 +2437,9 @@ int orthogonal::hyperbolic_rank_line(
 			pt1_type, pt2_type);
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line line_type=" << line_type << endl;
+		}
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line before canonical_points_of_line" << endl;
 		}
 	canonical_points_of_line(line_type, p1, p2,
 			cp1, cp2, verbose_level);
@@ -8728,46 +8731,54 @@ void orthogonal::perp(int pt,
 	
 	if (f_v) {
 		cout << "orthogonal::perp pt=" << pt << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "orthogonal::perp before lines_on_point_by_line_rank" << endl;
-		}
+	}
 	lines_on_point_by_line_rank(pt, line_pencil,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "orthogonal::perp line_pencil=";
-		int_vec_print(cout, line_pencil, alpha);
-		cout << endl;
+		for (i = 0; i < alpha; i++) {
+			cout << i << " : " << line_pencil[i] << endl;
 		}
+		//int_vec_print(cout, line_pencil, alpha);
+		//cout << endl;
+	}
 
 	if (f_v) {
 		cout << "orthogonal::perp before points_on_line_by_line_rank" << endl;
-		}
+	}
 	for (i = 0; i < alpha; i++) {
 		points_on_line_by_line_rank(line_pencil[i],
 				Perp1 + i * (q + 1), 0 /* verbose_level */);
-		}
+	}
 
 	if (f_v) {
 		cout << "orthogonal::perp points collinear "
 				"with pt " << pt << ":" << endl;
-		int_matrix_print(Perp1, alpha, q + 1);
+		for (i = 0; i < alpha; i++) {
+			for (j = 0; j < q + 1; j++) {
+				cout << i << " : " << line_pencil[i] << " : " << j << " : " << Perp1[i * (q + 1) + j] << endl;
+			}
 		}
+		//int_matrix_print(Perp1, alpha, q + 1);
+	}
 
 	Sorting.int_vec_heapsort(Perp1, alpha * (q + 1));
 	if (f_v) {
 		cout << "orthogonal::perp after sorting:" << endl;
 		int_vec_print(cout, Perp1, alpha * (q + 1));
 		cout << endl;
-		}
+	}
 
 	j = 0;
 	for (i = 0; i < alpha * (q + 1); i++) {
 		if (Perp1[i] != pt) {
 			Perp1[j++] = Perp1[i];
-			}
 		}
+	}
 	sz = j;
 	Sorting.int_vec_heapsort(Perp1, sz);
 	if (f_v) {
@@ -8776,12 +8787,12 @@ void orthogonal::perp(int pt,
 		int_vec_print(cout, Perp1, sz);
 		cout << endl;
 		cout << "sz=" << sz << endl;
-		}
+	}
 	int_vec_copy(Perp1, Perp_without_pt, sz);
 
 	if (f_v) {
 		cout << "orthogonal::perp done" << endl;
-		} 
+	}
 }
 
 void orthogonal::perp_of_two_points(int pt1, int pt2,
