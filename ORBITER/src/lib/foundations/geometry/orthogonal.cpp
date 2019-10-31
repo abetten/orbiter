@@ -8744,7 +8744,7 @@ void orthogonal::perp(int pt,
 	}
 	lines_on_point_by_line_rank(pt, line_pencil,
 			verbose_level);
-	if (f_v) {
+	if (FALSE) {
 		cout << "orthogonal::perp line_pencil=";
 		for (i = 0; i < alpha; i++) {
 			cout << i << " : " << line_pencil[i] << endl;
@@ -8761,7 +8761,7 @@ void orthogonal::perp(int pt,
 				Perp1 + i * (q + 1), 0 /* verbose_level */);
 	}
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "orthogonal::perp points collinear "
 				"with pt " << pt << ":" << endl;
 		for (i = 0; i < alpha; i++) {
