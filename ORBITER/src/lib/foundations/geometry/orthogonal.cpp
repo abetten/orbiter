@@ -2502,7 +2502,7 @@ long int orthogonal::hyperbolic_rank_line(
 		}
 	rk += l1;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l1=" << l1 << ", rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line after adding l1=" << l1 << ", rk=" << rk << endl;
 	}
 	if (line_type == 2) {
 		rk += rank_line_L2(cp1, cp2, verbose_level);
@@ -2510,7 +2510,7 @@ long int orthogonal::hyperbolic_rank_line(
 		}
 	rk += l2;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l2=" << l2 << ", rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line after adding l2=" << l2 << ", rk=" << rk << endl;
 	}
 	if (line_type == 3) {
 		rk += rank_line_L3(cp1, cp2, verbose_level);
@@ -2518,7 +2518,7 @@ long int orthogonal::hyperbolic_rank_line(
 		}
 	rk += l3;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l3=" << l3 << ", rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line after adding l3=" << l3 << ", rk=" << rk << endl;
 	}
 	if (line_type == 4) {
 		rk += rank_line_L4(cp1, cp2, verbose_level);
@@ -2526,7 +2526,7 @@ long int orthogonal::hyperbolic_rank_line(
 		}
 	rk += l4;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l4=" << l4 << ", rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line after adding l4=" << l4 << ", rk=" << rk << endl;
 	}
 	if (line_type == 5) {
 		rk += rank_line_L5(cp1, cp2, verbose_level);
@@ -2534,7 +2534,7 @@ long int orthogonal::hyperbolic_rank_line(
 		}
 	rk += l5;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l5=" << l5 << ", rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line after adding l5=" << l5 << ", rk=" << rk << endl;
 	}
 	if (line_type == 6) {
 		rk += rank_line_L6(cp1, cp2, verbose_level);
@@ -2542,7 +2542,7 @@ long int orthogonal::hyperbolic_rank_line(
 		}
 	rk += l6;
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l6=" << l6 << ", rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line after adding l6=" << l6 << ", rk=" << rk << endl;
 	}
 	if (line_type == 7) {
 		rk += rank_line_L7(cp1, cp2, verbose_level);
@@ -2553,7 +2553,7 @@ long int orthogonal::hyperbolic_rank_line(
 	exit(1);
 done:
 	if (f_v) {
-		cout << "orthogonal::hyperbolic_rank_line canonical points rk=" << rk << endl;
+		cout << "orthogonal::hyperbolic_rank_line done rk=" << rk << endl;
 	}
 	return rk;
 }
@@ -2564,7 +2564,7 @@ void orthogonal::unrank_line_L1(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index;
+	long int P4_index, P4_sub_index, P4_line_index;
 	int P4_field_element, root, i;
 	
 	if (f_v) {
@@ -2659,7 +2659,7 @@ long int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index;
+	long int P4_index, P4_sub_index, P4_line_index;
 	int P4_field_element, root, i;
 	int P4_field_element_inverse;
 	long int index, a, b;
@@ -2770,8 +2770,9 @@ void orthogonal::unrank_line_L2(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P3_index, P3_sub_index, root, a, b, c, d, e, i;
-	int P3_point, P3_field_element;
+	long int P3_index, P3_sub_index, P3_point;
+	int root, a, b, c, d, e, i;
+	int P3_field_element;
 	
 	P3_index = index / a32;
 	P3_sub_index = index % a32;
@@ -2908,8 +2909,9 @@ long int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P3_index, P3_sub_index, root, a, b, c, d, i, alpha;
-	int P3_point, P3_field_element;
+	long int P3_index, P3_sub_index, P3_point;
+	int root, a, b, c, d, i, alpha;
+	int P3_field_element;
 	long int index;
 	
 	if (f_v) {
@@ -3137,7 +3139,7 @@ void orthogonal::unrank_line_L3(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index;
+	long int P4_index, P4_sub_index, P4_line_index;
 	int P4_field_element, root, i, e;
 	
 	P4_index = index / a43;
@@ -3220,7 +3222,7 @@ long int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index;
+	long int P4_index, P4_sub_index, P4_line_index;
 	int P4_field_element, root, i;
 	long int index;
 	int a, b;
@@ -3341,7 +3343,7 @@ void orthogonal::unrank_line_L4(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P4_index, P4_sub_index, P4_line_index;
+	long int P4_index, P4_sub_index, P4_line_index;
 	int P4_field_element, root, i, e;
 	
 	P4_index = index / a44;
@@ -3422,7 +3424,7 @@ long int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int P3_index, P3_sub_index, P3_line_index;
+	long int P3_index, P3_sub_index, P3_line_index;
 	int P3_field_element, root, i;
 	long int index;
 	int a, b;
@@ -8819,13 +8821,13 @@ void orthogonal::perp(int pt,
 	if (f_v) {
 		cout << "orthogonal::perp before lines_on_point_by_line_rank" << endl;
 	}
-	lines_on_point_by_line_rank(pt, line_pencil,
-			verbose_level);
-	if (FALSE) {
+	lines_on_point_by_line_rank(pt, line_pencil, verbose_level);
+	if (f_v) {
 		cout << "orthogonal::perp line_pencil=";
 		for (i = 0; i < alpha; i++) {
 			cout << i << " : " << line_pencil[i] << endl;
 		}
+		lint_matrix_print(line_pencil, (alpha + 9)/ 10, 10);
 		//int_vec_print(cout, line_pencil, alpha);
 		//cout << endl;
 	}
@@ -8838,7 +8840,7 @@ void orthogonal::perp(int pt,
 				Perp1 + i * (q + 1), 0 /* verbose_level */);
 	}
 
-	if (FALSE) {
+	if (f_v) {
 		cout << "orthogonal::perp points collinear "
 				"with pt " << pt << ":" << endl;
 		for (i = 0; i < alpha; i++) {
@@ -8846,7 +8848,7 @@ void orthogonal::perp(int pt,
 				cout << i << " : " << line_pencil[i] << " : " << j << " : " << Perp1[i * (q + 1) + j] << endl;
 			}
 		}
-		//int_matrix_print(Perp1, alpha, q + 1);
+		int_matrix_print(Perp1, alpha, q + 1);
 	}
 
 	Sorting.int_vec_heapsort(Perp1, alpha * (q + 1));
