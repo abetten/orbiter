@@ -1521,6 +1521,10 @@ void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(int pt,
 			line_pencil_line_ranks_lint, verbose_level);
 	for (i = 0; i < alpha; i++) {
 		line_pencil_line_ranks[i] = line_pencil_line_ranks_lint[i];
+		if (line_pencil_line_ranks[i] != line_pencil_line_ranks_lint[i]) {
+			cout << "orthogonal::lines_on_point_by_line_rank_must_fit_into_int line rank does not fit into int" << endl;
+			exit(1);
+		}
 	}
 	FREE_lint(line_pencil_line_ranks_lint);
 }
@@ -1591,8 +1595,17 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 	}
 	for (i = 0; i < alpha; i++) {
 		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, 0/*verbose_level - 5*/);
-		line_pencil_line_ranks[i] = rank_line(pt, pt2, 0 /*verbose_level - 5*/);
+		if (i == 194) {
+			if (f_v) {
+				cout << "orthogonal::lines_on_point_by_line_rank computing i=" << i << endl;
+			}
+			line_pencil_line_ranks[i] = rank_line(pt, pt2, 5 /*verbose_level - 5*/);
 		}
+		else {
+			line_pencil_line_ranks[i] = rank_line(pt, pt2, 0 /*verbose_level - 5*/);
+
+		}
+	}
 	Sorting.lint_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_vv) {
 		cout << "line pencil on point " << pt << " by line rank : ";
@@ -2484,53 +2497,65 @@ long int orthogonal::hyperbolic_rank_line(
 				"cp1=" << cp1 << " cp2=" << cp2 << endl;
 		}
 	if (line_type == 1) {
-		return rk + rank_line_L1(cp1, cp2, verbose_level);
+		rk += rank_line_L1(cp1, cp2, verbose_level);
+		goto done;
 		}
 	rk += l1;
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l1=" << l1 << ", rk=" << rk << endl;
 	}
 	if (line_type == 2) {
-		return rk + rank_line_L2(cp1, cp2, verbose_level);
+		rk += rank_line_L2(cp1, cp2, verbose_level);
+		goto done;
 		}
 	rk += l2;
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l2=" << l2 << ", rk=" << rk << endl;
 	}
 	if (line_type == 3) {
-		return rk + rank_line_L3(cp1, cp2, verbose_level);
+		rk += rank_line_L3(cp1, cp2, verbose_level);
+		goto done;
 		}
 	rk += l3;
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l3=" << l3 << ", rk=" << rk << endl;
 	}
 	if (line_type == 4) {
-		return rk + rank_line_L4(cp1, cp2, verbose_level);
+		rk += rank_line_L4(cp1, cp2, verbose_level);
+		goto done;
 		}
 	rk += l4;
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l4=" << l4 << ", rk=" << rk << endl;
 	}
 	if (line_type == 5) {
-		return rk + rank_line_L5(cp1, cp2, verbose_level);
+		rk += rank_line_L5(cp1, cp2, verbose_level);
+		goto done;
 		}
 	rk += l5;
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l5=" << l5 << ", rk=" << rk << endl;
 	}
 	if (line_type == 6) {
-		return rk + rank_line_L6(cp1, cp2, verbose_level);
+		rk += rank_line_L6(cp1, cp2, verbose_level);
+		goto done;
 		}
 	rk += l6;
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line canonical points after adding l6=" << l6 << ", rk=" << rk << endl;
 	}
 	if (line_type == 7) {
-		return rk + rank_line_L7(cp1, cp2, verbose_level);
+		rk += rank_line_L7(cp1, cp2, verbose_level);
+		goto done;
 		}
 	rk += l7;
 	cout << "error in orthogonal::hyperbolic_rank_line, illegal line_type" << endl;
 	exit(1);
+done:
+	if (f_v) {
+		cout << "orthogonal::hyperbolic_rank_line canonical points rk=" << rk << endl;
+	}
+	return rk;
 }
 
 void orthogonal::unrank_line_L1(
