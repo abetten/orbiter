@@ -663,8 +663,12 @@ public:
 	// perm and perm_inv must be allocated to len elements
 	void int_vec_quicksort(int *v, int (*compare_func)(int a, int b),
 		int left, int right);
+	void lint_vec_quicksort(long int *v,
+		int (*compare_func)(long int a, long int b), int left, int right);
 	void int_vec_quicksort_increasingly(int *v, int len);
 	void int_vec_quicksort_decreasingly(int *v, int len);
+	void lint_vec_quicksort_increasingly(long int *v, int len);
+	void lint_vec_quicksort_decreasingly(long int *v, int len);
 	void quicksort_array(int len, void **v,
 		int (*compare_func)(void *a, void *b, void *data), void *data);
 	void quicksort_array_with_perm(int len, void **v, int *perm,
@@ -785,6 +789,8 @@ int int_compare_increasingly(void *a, void *b, void *data);
 int int_compare_decreasingly(void *a, void *b, void *data);
 int compare_increasingly_int(int a, int b);
 int compare_decreasingly_int(int a, int b);
+int compare_increasingly_lint(long int a, long int b);
+int compare_decreasingly_lint(long int a, long int b);
 int int_vec_compare(int *p, int *q, int len);
 //int int_vec_compare(int *p, int *q, int len);
 int lint_vec_compare(long int *p, long int *q, int len);

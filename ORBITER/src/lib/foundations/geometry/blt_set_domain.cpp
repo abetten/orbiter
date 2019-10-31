@@ -758,7 +758,7 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *lines_on_pt;
+	long int *lines_on_pt;
 	int *Perp;
 	int i, j, a, b, h, f, fst, len, pt;
 	classify C;
@@ -766,7 +766,7 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 	if (f_v) {
 		cout << "blt_set_domain::find_free_points" << endl;
 	}
-	lines_on_pt = NEW_int(S_sz * (q + 1));
+	lines_on_pt = NEW_lint(S_sz * (q + 1));
 	for (i = 0; i < S_sz; i++) {
 		O->lines_on_point_by_line_rank(S[i],
 				lines_on_pt + i * (q + 1),
@@ -776,7 +776,7 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 	if (f_vv) {
 		cout << "blt_set_domain::find_free_points "
 				"Lines on partial BLT set:" << endl;
-		int_matrix_print(lines_on_pt, S_sz, q + 1);
+		lint_matrix_print(lines_on_pt, S_sz, q + 1);
 	}
 
 	Perp = NEW_int(S_sz * (q + 1) * (q + 1));
@@ -827,7 +827,7 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 		free_pt_idx[pt] = h;
 	}
 
-	FREE_int(lines_on_pt);
+	FREE_lint(lines_on_pt);
 	FREE_int(Perp);
 
 	if (f_v) {
@@ -858,9 +858,9 @@ int blt_set_domain::create_graph(
 	int *point_color;
 	int nb_colors;
 
-	int *lines_on_pt;
+	long int *lines_on_pt;
 
-	lines_on_pt = NEW_int(1 /*starter_size*/ * (q + 1));
+	lines_on_pt = NEW_lint(1 /*starter_size*/ * (q + 1));
 	O->lines_on_point_by_line_rank(
 			Starter_set[0] /*R->rep[0]*/,
 			lines_on_pt, 0 /* verbose_level */);
@@ -868,7 +868,7 @@ int blt_set_domain::create_graph(
 	if (f_vv) {
 		cout << "Case " << case_number /*orbit_at_level*/
 				<< " Lines on partial BLT set:" << endl;
-		int_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
+		lint_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
 	}
 
 
@@ -1000,7 +1000,7 @@ int blt_set_domain::create_graph(
 
 finish:
 
-	FREE_int(lines_on_pt);
+	FREE_lint(lines_on_pt);
 	FREE_int(point_color);
 	if (f_v) {
 		cout << "blt_set_domain::create_graph done" << endl;

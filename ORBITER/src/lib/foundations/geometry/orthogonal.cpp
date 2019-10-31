@@ -233,7 +233,7 @@ orthogonal::~orthogonal()
 		FREE_int(lines_on_point_coords2);
 
 	if (line_pencil) {
-		FREE_int(line_pencil);
+		FREE_lint(line_pencil);
 		}
 	if (Perp1) {
 		FREE_int(Perp1);
@@ -500,7 +500,7 @@ void orthogonal::init(int epsilon, int n,
 	if (f_v) {
 		cout << "before allocating line_pencil of size " << alpha << endl;
 		}
-	line_pencil = NEW_int(alpha);
+	line_pencil = NEW_lint(alpha);
 	if (f_v) {
 		cout << "before allocating Perp1 of size "
 				<< alpha * (q + 1) << endl;
@@ -1509,12 +1509,28 @@ void orthogonal::lines_on_point(int pt,
 		}
 }
 
-void orthogonal::lines_on_point_by_line_rank(int pt,
+void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(int pt,
 		int *line_pencil_line_ranks, int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+	long int *line_pencil_line_ranks_lint;
+	int i;
+
+	line_pencil_line_ranks_lint = NEW_lint(alpha);
+	lines_on_point_by_line_rank(pt,
+			line_pencil_line_ranks_lint, verbose_level);
+	for (i = 0; i < alpha; i++) {
+		line_pencil_line_ranks[i] = line_pencil_line_ranks_lint[i];
+	}
+	FREE_lint(line_pencil_line_ranks_lint);
+}
+
+void orthogonal::lines_on_point_by_line_rank(int pt,
+		long int *line_pencil_line_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int t, i, j, rk, rk1, root1, root2, pt2;
+	int t, i, rk, rk1, root1, root2, pt2;
 	sorting Sorting;
 	
 	if (f_v) {
@@ -1527,23 +1543,8 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
-		if (i == 194) {
-			rk = type_and_index_to_point_rk(t, i, verbose_level + 3);
-		}
-		else {
-			rk = type_and_index_to_point_rk(t, i, 0/*verbose_level - 3*/);
-		}
-		if (i == 194) {
-			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
-		}
+		rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
 		unrank_point(lines_on_point_coords1 + i * n, 1, rk, 0 /*verbose_level - 5*/);
-		if (i == 194) {
-			cout << "hello9216:  orthogonal::lines_on_point_by_line_rank after unrank_point: t=" << t << " i=" << i << " rk=" << rk << endl;
-			int_vec_print(cout, lines_on_point_coords1 + i * n, n);
-			cout << endl;
-			cout << "pt=" << pt << endl;
-			cout << "pt_P=" << pt_P << endl;
-		}
 	}
 	if (pt != pt_P) {
 		if (f_v) {
@@ -1589,35 +1590,13 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		cout << "orthogonal::lines_on_point_by_line_rank computing line_pencil_line_ranks[]" << endl;
 	}
 	for (i = 0; i < alpha; i++) {
-		if (i == 194) {
-			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
-		}
-		if (i == 194) {
-			cout << "orthogonal::lines_on_point_by_line_rank before rank_point" << endl;
-			int_vec_print(cout, lines_on_point_coords2 + i * n, n);
-			cout << endl;
-		}
 		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, 0/*verbose_level - 5*/);
-		if (i == 194) {
-			cout << "orthogonal::lines_on_point_by_line_rank before pt2=" << pt2 << endl;
+		line_pencil_line_ranks[i] = rank_line(pt, pt2, 0 /*verbose_level - 5*/);
 		}
-		if (i == 194) {
-			cout << "orthogonal::lines_on_point_by_line_rank before rank_line" << endl;
-		}
-		if (i == 194) {
-			line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level + 5);
-		}
-		else {
-			line_pencil_line_ranks[i] = rank_line(pt, pt2, 0 /*verbose_level - 5*/);
-		}
-		if (line_pencil_line_ranks[i] == 173523328) {
-			cout << "hello9216: line_pencil_line_ranks[i] == 173523328, i=" << i << endl;
-		}
-		}
-	Sorting.int_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
+	Sorting.lint_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_vv) {
 		cout << "line pencil on point " << pt << " by line rank : ";
-		int_vec_print(cout, line_pencil_line_ranks, alpha);
+		lint_vec_print(cout, line_pencil_line_ranks, alpha);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1850,25 +1829,30 @@ void orthogonal::make_initial_partition(
 
 void orthogonal::point_to_line_map(int size,
 		int *point_ranks, int *&line_vector, int verbose_level)
+// this function is assuming that there are very few lines!
 {
 	int i, j, h;
-	int *neighbors;
+	long int *line_pencil_line_ranks;
 	
-	neighbors = NEW_int(alpha);
+	line_pencil_line_ranks = NEW_lint(alpha);
 	
 	line_vector = NEW_int(nb_lines);
+	int_vec_zero(line_vector, nb_lines);
+#if 0
 	for (j = 0; j < nb_lines; j++)
 		line_vector[j] = 0;
+#endif
 	
 	for (i = 0; i < size; i++) {
 		lines_on_point_by_line_rank(
-				point_ranks[i], neighbors, verbose_level - 2);
+				point_ranks[i], line_pencil_line_ranks, verbose_level - 2);
+
 		for (h = 0; h < alpha; h++) {
-			j = neighbors[h];
+			j = line_pencil_line_ranks[h];
 			line_vector[j]++;
-			}
 		}
-	FREE_int(neighbors);
+	}
+	FREE_lint(line_pencil_line_ranks);
 }
 
 void orthogonal::move_points_by_ranks_in_place(
@@ -2209,6 +2193,7 @@ void orthogonal::print_schemes()
 {
 	int i, j;
 	
+
 	cout << "       ";
 	for (j = 0; j < nb_line_classes; j++) {
 		cout << setw(7) << L[j];
@@ -2410,7 +2395,7 @@ void orthogonal::hyperbolic_point_rk_to_type_and_index(
 //##############################################################################
 
 void orthogonal::hyperbolic_unrank_line(
-		int &p1, int &p2, int rk, int verbose_level)
+		int &p1, int &p2, long int rk, int verbose_level)
 {
 	if (m == 0) {
 		cout << "orthogonal::hyperbolic_unrank_line "
@@ -2457,13 +2442,14 @@ void orthogonal::hyperbolic_unrank_line(
 	exit(1);
 }
 
-int orthogonal::hyperbolic_rank_line(
+long int orthogonal::hyperbolic_rank_line(
 		int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int pt1_type, pt2_type;
 	int pt1_index, pt2_index;
-	int line_type, rk = 0;
+	int line_type;
+	long int rk = 0;
 	int cp1, cp2;
 	
 	if (f_v) {
@@ -2548,7 +2534,7 @@ int orthogonal::hyperbolic_rank_line(
 }
 
 void orthogonal::unrank_line_L1(
-		int &p1, int &p2, int index, int verbose_level)
+		int &p1, int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2643,7 +2629,7 @@ void orthogonal::unrank_line_L1(
 	}
 }
 
-int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -2651,7 +2637,7 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 	int P4_index, P4_sub_index, P4_line_index;
 	int P4_field_element, root, i;
 	int P4_field_element_inverse;
-	int index, a, b;
+	long int index, a, b;
 	
 	if (f_v) {
 		cout << "orthogonal::rank_line_L1" << endl;
@@ -2754,7 +2740,7 @@ int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L2(
-		int &p1, int &p2, int index, int verbose_level)
+		int &p1, int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2892,14 +2878,14 @@ void orthogonal::unrank_line_L2(
 		}
 }
 
-int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int P3_index, P3_sub_index, root, a, b, c, d, i, alpha;
 	int P3_point, P3_field_element;
-	int index;
+	long int index;
 	
 	if (f_v) {
 		cout << "orthogonal::rank_line_L2 p1=" << p1 << " p2=" << p2 << endl;
@@ -3121,7 +3107,7 @@ int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L3(
-		int &p1, int &p2, int index, int verbose_level)
+		int &p1, int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3204,13 +3190,14 @@ void orthogonal::unrank_line_L3(
 		}
 }
 
-int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int P4_index, P4_sub_index, P4_line_index;
-	int P4_field_element, root, i, index;
+	int P4_field_element, root, i;
+	long int index;
 	int a, b;
 	
 	if (f_v) {
@@ -3311,7 +3298,7 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L3 P4_sub_index=" << P4_sub_index << endl;
 		}
-	index = P4_index * a43 + P4_sub_index;
+	index = (long int) P4_index * a43 + P4_sub_index;
 	
 	if (f_v) {
 		cout << "orthogonal::rank_line_L3 p1=" << p1 << " p2=" << p2
@@ -3324,7 +3311,7 @@ int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L4(
-		int &p1, int &p2, int index, int verbose_level)
+		int &p1, int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3405,13 +3392,14 @@ void orthogonal::unrank_line_L4(
 		}
 }
 
-int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int P3_index, P3_sub_index, P3_line_index;
-	int P3_field_element, root, i, index;
+	int P3_field_element, root, i;
+	long int index;
 	int a, b;
 	
 	if (f_v) {
@@ -3522,7 +3510,7 @@ int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L5(
-		int &p1, int &p2, int index, int verbose_level)
+		int &p1, int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3542,10 +3530,10 @@ void orthogonal::unrank_line_L5(
 		}
 }
 
-int orthogonal::rank_line_L5(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L5(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int index;
+	long int index;
 	
 	if (f_v) {
 		cout << "rank_line_L5 p1=" << p1 << " p2=" << p2 << endl;
@@ -3562,7 +3550,7 @@ int orthogonal::rank_line_L5(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L6(
-		int &p1, int &p2, int index, int verbose_level)
+		int &p1, int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3582,10 +3570,10 @@ void orthogonal::unrank_line_L6(
 		}
 }
 
-int orthogonal::rank_line_L6(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L6(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int index;
+	long int index;
 	
 	if (f_v) {
 		cout << "rank_line_L6 p1=" << p1 << " p2=" << p2 << endl;
@@ -3602,7 +3590,7 @@ int orthogonal::rank_line_L6(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L7(
-		int &p1, int &p2, int index, int verbose_level)
+		int &p1, int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3622,10 +3610,10 @@ void orthogonal::unrank_line_L7(
 		}
 }
 
-int orthogonal::rank_line_L7(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L7(int p1, int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int index;
+	long int index;
 	
 	if (f_v) {
 		cout << "rank_line_L7 p1=" << p1 << " p2=" << p2 << endl;
@@ -3640,6 +3628,8 @@ int orthogonal::rank_line_L7(int p1, int p2, int verbose_level)
 		}
 	return index;
 }
+
+
 
 void orthogonal::hyperbolic_canonical_points_of_line(
 	int line_type, int pt1, int pt2,
