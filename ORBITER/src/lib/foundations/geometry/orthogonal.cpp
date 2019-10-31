@@ -1529,10 +1529,10 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		}
 		if (i == 9216) {
 			cout << "hello9216a:" << endl;
-			rk = type_and_index_to_point_rk(t, i, 0);
+			rk = type_and_index_to_point_rk(t, i, verbose_level + 3);
 		}
 		else {
-			rk = type_and_index_to_point_rk(t, i, 0);
+			rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
 		}
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
