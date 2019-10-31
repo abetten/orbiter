@@ -537,7 +537,7 @@ int incidence_structure::get_lines_on_point(int *data, int i)
 		}
 	else if (realization_type ==
 			INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL) {
-		O->lines_on_point_by_line_rank(i, data, 0/*verbose_level - 2*/);
+		O->lines_on_point_by_line_rank_must_fit_into_int(i, data, 0/*verbose_level - 2*/);
 		return O->alpha;
 		}
 	cout << "incidence_structure::get_lines_on_point "

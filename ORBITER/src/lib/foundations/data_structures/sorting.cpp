@@ -19,6 +19,8 @@ namespace foundations {
 static void int_vec_partition(int *v,
 	int (*compare_func)(int a, int b),
 	int left, int right, int *middle);
+static void lint_vec_partition(long int *v,
+	int (*compare_func)(long int a, long int b), int left, int right, int *middle);
 static void partition(void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right, int *middle);
@@ -623,6 +625,18 @@ void sorting::int_vec_quicksort(int *v,
 		}
 }
 
+void sorting::lint_vec_quicksort(long int *v,
+	int (*compare_func)(long int a, long int b), int left, int right)
+{
+	int middle;
+
+	if (left < right) {
+		lint_vec_partition(v, compare_func, left, right, &middle);
+		lint_vec_quicksort(v, compare_func, left, middle - 1);
+		lint_vec_quicksort(v, compare_func, middle + 1, right);
+		}
+}
+
 void sorting::int_vec_quicksort_increasingly(int *v, int len)
 {
 	int_vec_quicksort(v, compare_increasingly_int, 0, len - 1);
@@ -631,6 +645,16 @@ void sorting::int_vec_quicksort_increasingly(int *v, int len)
 void sorting::int_vec_quicksort_decreasingly(int *v, int len)
 {
 	int_vec_quicksort(v, compare_decreasingly_int, 0, len - 1);
+}
+
+void sorting::lint_vec_quicksort_increasingly(long int *v, int len)
+{
+	lint_vec_quicksort(v, compare_increasingly_lint, 0, len - 1);
+}
+
+void sorting::lint_vec_quicksort_decreasingly(long int *v, int len)
+{
+	lint_vec_quicksort(v, compare_decreasingly_lint, 0, len - 1);
 }
 
 
@@ -2193,6 +2217,58 @@ static void int_vec_partition(int *v,
 	*middle = m;
 }
 
+static void lint_vec_partition(long int *v,
+	int (*compare_func)(long int a, long int b), int left, int right, int *middle)
+{
+	int l, r, m;
+	int len, m1, res, pivot;
+	int vv;
+
+	//cout << "partition: from " << left << " to " << right << endl;
+	// pivot strategy: take the element in the middle:
+	len = right + 1 - left;
+	m1 = len >> 1;
+	pivot = left;
+	if (m1) {
+		vv = v[pivot];
+		v[pivot] = v[left + m1];
+		v[left + m1] = vv;
+		}
+	l = left;
+	r = right;
+	while (l < r) {
+		while (TRUE) {
+			if (l > right)
+				break;
+			res = (*compare_func)(v[l], v[pivot]);
+			if (res > 0)
+				break;
+			l++;
+			}
+		while (TRUE) {
+			if (r < left)
+				break;
+			res = (*compare_func)(v[r], v[pivot]);
+			if (res <= 0)
+				break;
+			r--;
+			}
+		// now v[l] > v[pivot] and v[r] <= v[pivot]
+		if (l < r) {
+			vv = v[l];
+			v[l] = v[r];
+			v[r] = vv;
+			}
+		}
+	m = r;
+	if (left != m) {
+		vv = v[left];
+		v[left] = v[m];
+		v[m] = vv;
+		}
+	*middle = m;
+}
+
 static void partition(void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right, int *middle)
@@ -2309,6 +2385,24 @@ int compare_increasingly_int(int a, int b)
 }
 
 int compare_decreasingly_int(int a, int b)
+{
+	if (a > b)
+		return -1;
+	if (a < b)
+		return 1;
+	return 0;
+}
+
+int compare_increasingly_lint(long int a, long int b)
+{
+	if (a < b)
+		return -1;
+	if (a > b)
+		return 1;
+	return 0;
+}
+
+int compare_decreasingly_lint(long int a, long int b)
 {
 	if (a > b)
 		return -1;

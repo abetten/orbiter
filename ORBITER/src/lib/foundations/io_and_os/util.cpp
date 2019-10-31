@@ -642,6 +642,30 @@ int int_matrix_max_log_of_entries(int *p, int m, int n)
 	return w;
 }
 
+int lint_matrix_max_log_of_entries(long int *p, int m, int n)
+{
+	int i, j;
+	long a, w = 1, w1;
+	number_theory_domain NT;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			if (a > 0) {
+				w1 = NT.lint_log10(a);
+				}
+			else if (a < 0) {
+				w1 = NT.lint_log10(-a) + 1;
+				}
+			else {
+				w1 = 1;
+				}
+			w = MAXIMUM(w, w1);
+			}
+		}
+	return w;
+}
+
 void int_matrix_print_ost(ostream &ost, int *p, int m, int n)
 {
 	int w;
@@ -656,6 +680,14 @@ void int_matrix_print(int *p, int m, int n)
 	
 	w = int_matrix_max_log_of_entries(p, m, n);
 	int_matrix_print(p, m, n, w);
+}
+
+void lint_matrix_print(long int *p, int m, int n)
+{
+	int w;
+
+	w = lint_matrix_max_log_of_entries(p, m, n);
+	lint_matrix_print(p, m, n, w);
 }
 
 void int_matrix_print_tight(int *p, int m, int n)
@@ -682,6 +714,21 @@ void int_matrix_print(int *p, int m, int n, int w)
 {
 	int i, j;
 	
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			cout << setw((int) w) << p[i * n + j];
+			if (w) {
+				cout << " ";
+				}
+			}
+		cout << endl;
+		}
+}
+
+void lint_matrix_print(long int *p, int m, int n, int w)
+{
+	int i, j;
+
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			cout << setw((int) w) << p[i * n + j];

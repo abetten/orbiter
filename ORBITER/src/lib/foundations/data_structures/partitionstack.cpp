@@ -1811,14 +1811,14 @@ void partitionstack::get_row_decomposition_scheme(orthogonal &O,
 {
 	int f_v = (verbose_level >= 1);
 	int I, J, i, j, c1, f1, l1, x, y, u, c;
-	int *neighbors;
+	long int *neighbors;
 	int *data0;
 	int *data1;
 	
 	if (f_v) {
 		cout << "get_row_decomposition_scheme" << endl;
 		}
-	neighbors = NEW_int(O.alpha);
+	neighbors = NEW_lint(O.alpha);
 	data0 = NEW_int(nb_col_classes);
 	data1 = NEW_int(nb_col_classes);
 	for (i = 0; i < nb_row_classes * nb_col_classes; i++) {
@@ -1862,7 +1862,7 @@ void partitionstack::get_row_decomposition_scheme(orthogonal &O,
 			row_scheme[I * nb_col_classes + J] = data0[J];
 			}
 		}
-	FREE_int(neighbors);
+	FREE_lint(neighbors);
 	FREE_int(data0);
 	FREE_int(data1);
 }
@@ -1939,7 +1939,8 @@ int partitionstack::refine_column_partition(
 	int row_cell, f, l, i, j, x, y, u, c, cell;
 	int N, first, next, ht1, depth, idx;
 	int *data;
-	int *neighbors, h;
+	long int *neighbors;
+	int h;
 	
 	N = O.nb_points + O.nb_lines;
 	ht1 = ht;
@@ -1952,7 +1953,7 @@ int partitionstack::refine_column_partition(
 	for (i = 0; i < N * depth; i++) 
 		data[i] = 0;
 	
-	neighbors = NEW_int(O.alpha);
+	neighbors = NEW_lint(O.alpha);
 	for (y = 0; y < O.nb_lines; y++) {
 		j = O.nb_points + y;
 		c = cellNumber[invPointList[j]];
@@ -2029,7 +2030,7 @@ int partitionstack::refine_column_partition(
 	h = hash_column_refinement_info(ht0, data, depth, 0);
 	
 	FREE_int(data);
-	FREE_int(neighbors);
+	FREE_lint(neighbors);
 	return h;
 }
 

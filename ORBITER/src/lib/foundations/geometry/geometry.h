@@ -1630,7 +1630,7 @@ public:
 	orthogonal *subspace;
 
 	// for perp:
-	int *line_pencil; // [nb_lines]
+	long int *line_pencil; // [nb_lines]
 	int *Perp1; // [alpha * (q + 1)]
 
 
@@ -1672,8 +1672,10 @@ public:
 		int *pt_coords, int verbose_level);
 	void lines_on_point(int pt, 
 		int *line_pencil_point_ranks, int verbose_level);
+	void lines_on_point_by_line_rank_must_fit_into_int(int pt,
+			int *line_pencil_line_ranks, int verbose_level);
 	void lines_on_point_by_line_rank(int pt, 
-		int *line_pencil_line_ranks, int verbose_level);
+		long int *line_pencil_line_ranks, int verbose_level);
 	void list_points_by_type(int verbose_level);
 	void list_points_of_given_type(int t, 
 		int verbose_level);
@@ -1706,26 +1708,30 @@ public:
 	int hyperbolic_type_and_index_to_point_rk(int type, int index, int verbose_level);
 	void hyperbolic_point_rk_to_type_and_index(int rk, 
 		int &type, int &index);
+
 	void hyperbolic_unrank_line(int &p1, int &p2, 
-		int rk, int verbose_level);
-	int hyperbolic_rank_line(int p1, int p2, int verbose_level);
-	void unrank_line_L1(int &p1, int &p2, int index, int verbose_level);
-	int rank_line_L1(int p1, int p2, int verbose_level);
-	void unrank_line_L2(int &p1, int &p2, int index, int verbose_level);
-	int rank_line_L2(int p1, int p2, int verbose_level);
-	void unrank_line_L3(int &p1, int &p2, int index, int verbose_level);
-	int rank_line_L3(int p1, int p2, int verbose_level);
-	void unrank_line_L4(int &p1, int &p2, int index, int verbose_level);
-	int rank_line_L4(int p1, int p2, int verbose_level);
-	void unrank_line_L5(int &p1, int &p2, int index, int verbose_level);
-	int rank_line_L5(int p1, int p2, int verbose_level);
-	void unrank_line_L6(int &p1, int &p2, int index, int verbose_level);
-	int rank_line_L6(int p1, int p2, int verbose_level);
-	void unrank_line_L7(int &p1, int &p2, int index, int verbose_level);
-	int rank_line_L7(int p1, int p2, int verbose_level);
+		long int rk, int verbose_level);
+	long int hyperbolic_rank_line(int p1, int p2, int verbose_level);
+
+	void unrank_line_L1(int &p1, int &p2, long int index, int verbose_level);
+	long int rank_line_L1(int p1, int p2, int verbose_level);
+	void unrank_line_L2(int &p1, int &p2, long int index, int verbose_level);
+	long int rank_line_L2(int p1, int p2, int verbose_level);
+	void unrank_line_L3(int &p1, int &p2, long int index, int verbose_level);
+	long int rank_line_L3(int p1, int p2, int verbose_level);
+	void unrank_line_L4(int &p1, int &p2, long int index, int verbose_level);
+	long int rank_line_L4(int p1, int p2, int verbose_level);
+	void unrank_line_L5(int &p1, int &p2, long int index, int verbose_level);
+	long int rank_line_L5(int p1, int p2, int verbose_level);
+	void unrank_line_L6(int &p1, int &p2, long int index, int verbose_level);
+	long int rank_line_L6(int p1, int p2, int verbose_level);
+	void unrank_line_L7(int &p1, int &p2, long int index, int verbose_level);
+	long int rank_line_L7(int p1, int p2, int verbose_level);
+
 	void hyperbolic_canonical_points_of_line(int line_type, 
 		int pt1, int pt2, int &cpt1, int &cpt2, 
 		int verbose_level);
+
 	void canonical_points_L1(int pt1, int pt2, int &cpt1, int &cpt2);
 	void canonical_points_L2(int pt1, int pt2, int &cpt1, int &cpt2);
 	void canonical_points_L3(int pt1, int pt2, int &cpt1, int &cpt2);
