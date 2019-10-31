@@ -1527,8 +1527,9 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
-		if (i == 9216) {
-			cout << "hello9216a:" << endl;
+		rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
+		if (rk == 173523328) {
+			cout << "hello9216a: i=" << i << endl;
 			rk = type_and_index_to_point_rk(t, i, verbose_level + 3);
 		}
 		else {
@@ -1537,7 +1538,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
-		if (i == 9216) {
+		if (rk == 173523328) {
 			cout << "hello9216b:" << endl;
 			unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level + 3);
 		}
