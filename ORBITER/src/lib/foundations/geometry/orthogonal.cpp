@@ -1510,6 +1510,7 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
 		if (i == 9216) {
+			cout << "hello9612:" << endl;
 			unrank_point(lines_on_point_coords1 + i * n, 1, rk, verbose_level + 3);
 		}
 		else {
