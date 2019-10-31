@@ -2222,7 +2222,7 @@ static void lint_vec_partition(long int *v,
 {
 	int l, r, m;
 	int len, m1, res, pivot;
-	int vv;
+	long int vv;
 
 	//cout << "partition: from " << left << " to " << right << endl;
 	// pivot strategy: take the element in the middle:

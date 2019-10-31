@@ -1600,6 +1600,9 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 				cout << "orthogonal::lines_on_point_by_line_rank computing i=" << i << endl;
 			}
 			line_pencil_line_ranks[i] = rank_line(pt, pt2, 5 /*verbose_level - 5*/);
+			if (f_v) {
+				cout << "orthogonal::lines_on_point_by_line_rank line_pencil_line_ranks[i]=" << line_pencil_line_ranks[i] << endl;
+			}
 		}
 		else {
 			line_pencil_line_ranks[i] = rank_line(pt, pt2, 0 /*verbose_level - 5*/);
