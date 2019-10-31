@@ -1527,7 +1527,12 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank i=" << i << " / " << alpha << endl;
 		}
-		rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
+		if (i == 194) {
+			rk = type_and_index_to_point_rk(t, i, verbose_level + 3);
+		}
+		else {
+			rk = type_and_index_to_point_rk(t, i, verbose_level - 3);
+		}
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank rk=" << rk << endl;
 		}
@@ -1593,7 +1598,12 @@ void orthogonal::lines_on_point_by_line_rank(int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank before rank_line" << endl;
 		}
-		line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level - 5);
+		if (i == 194) {
+			line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level + 5);
+		}
+		else {
+			line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level - 5);
+		}
 		if (line_pencil_line_ranks[i] == 173523328) {
 			cout << "hello9216: line_pencil_line_ranks[i] == 173523328, i=" << i << endl;
 		}
