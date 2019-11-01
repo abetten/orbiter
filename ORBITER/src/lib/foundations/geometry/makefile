@@ -31,6 +31,10 @@ MODULES = \
 	knarr.o \
 	knowledge_base.o \
 	object_in_projective_space.o \
+	orthogonal_blt.o \
+	orthogonal_group.o \
+	orthogonal_hyperbolic.o \
+	orthogonal_parabolic.o \
 	orthogonal.o \
 	point_line.o \
 	projective_space.o \

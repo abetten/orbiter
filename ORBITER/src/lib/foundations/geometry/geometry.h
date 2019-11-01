@@ -1643,27 +1643,9 @@ public:
 	void init_parabolic_odd(int verbose_level);
 	void init_hyperbolic(int verbose_level);
 	void fill(long int *M, int i, int j, long int a);
-
-
-
-	void unrank_point(int *v, 
-		int stride, int rk, int verbose_level);
-	int rank_point(int *v, int stride, int verbose_level);
-	void unrank_line(int &p1, int &p2, 
-		long int index, int verbose_level);
-	long int rank_line(int p1, int p2, int verbose_level);
-	int line_type_given_point_types(int pt1, int pt2, 
-		int pt1_type, int pt2_type);
-	int type_and_index_to_point_rk(int type, 
-		int index, int verbose_level);
-	void point_rk_to_type_and_index(int rk, 
-		int &type, int &index, int verbose_level);
-	void canonical_points_of_line(int line_type, int pt1, int pt2, 
-		int &cpt1, int &cpt2, int verbose_level);
 	int evaluate_quadratic_form(int *v, int stride);
 	int evaluate_bilinear_form(int *u, int *v, int stride);
 	int evaluate_bilinear_form_by_rank(int i, int j);
-	int find_root(int rk2, int verbose_level);
 	void points_on_line_by_line_rank(long int line_rk,
 		int *line, int verbose_level);
 	void points_on_line(int pi, int pj, 
@@ -1676,40 +1658,127 @@ public:
 			int *line_pencil_line_ranks, int verbose_level);
 	void lines_on_point_by_line_rank(int pt, 
 		long int *line_pencil_line_ranks, int verbose_level);
-	void list_points_by_type(int verbose_level);
-	void list_points_of_given_type(int t, 
-		int verbose_level);
-	void list_all_points_vs_points(int verbose_level);
-	void list_points_vs_points(int t1, int t2, 
-		int verbose_level);
-	void test_Siegel(int index, int verbose_level);
 	void make_initial_partition(partitionstack &S, 
 		int verbose_level);
 	void point_to_line_map(int size, 
 		int *point_ranks, int *&line_vector, 
 		int verbose_level);
-	void move_points_by_ranks_in_place(
-		int pt_from, int pt_to, 
-		int nb, int *ranks, int verbose_level);
-	void move_points_by_ranks(int pt_from, int pt_to, 
-		int nb, int *input_ranks, int *output_ranks, 
+	int test_if_minimal_on_line(int *v1, int *v2, int *v3);
+	void find_minimal_point_on_line(int *v1, int *v2, int *v3);
+	void zero_vector(int *u, int stride, int len);
+	int is_zero_vector(int *u, int stride, int len);
+	void change_form_value(int *u, int stride, int m, int multiplier);
+	void scalar_multiply_vector(int *u, int stride, int len, int multiplier);
+	int last_non_zero_entry(int *u, int stride, int len);
+	void normalize_point(int *v, int stride);
+	int is_ending_dependent(int *vec1, int *vec2);
+	void Gauss_step(int *v1, int *v2, int len, int idx);
+		// afterwards: v2[idx] = 0 and v2,v1
+		// span the same space as before
+	void perp(int pt, int *Perp_without_pt, int &sz,
 		int verbose_level);
-	void move_points(int pt_from, int pt_to, 
-		int nb, int *input_coords, int *output_coords, 
-		int verbose_level);
+	void perp_of_two_points(int pt1, int pt2, int *Perp,
+		int &sz, int verbose_level);
+	void perp_of_k_points(int *pts, int nb_pts, int *&Perp,
+		int &sz, int verbose_level);
+
+
+	// orthogonal_blt.cpp:
+	void create_FTWKB_BLT_set(int *set, int verbose_level);
+	void create_K1_BLT_set(int *set, int verbose_level);
+	void create_K2_BLT_set(int *set, int verbose_level);
+	void create_LP_37_72_BLT_set(int *set, int verbose_level);
+	void create_LP_37_4a_BLT_set(int *set, int verbose_level);
+	void create_LP_37_4b_BLT_set(int *set, int verbose_level);
+	void create_Law_71_BLT_set(int *set, int verbose_level);
 	int BLT_test_full(int size, int *set, int verbose_level);
 	int BLT_test(int size, int *set, int verbose_level);
+	int triple_is_collinear(int pt1, int pt2, int pt3);
 	int collinearity_test(int size, int *set, int verbose_level);
-	
+	void plane_invariant(unusual_model *U,
+		int size, int *set,
+		int &nb_planes, int *&intersection_matrix,
+		int &Block_size, int *&Blocks,
+		int verbose_level);
+	int is_minus_square(int i);
 	void print_minus_square_tables();
-	void print_schemes();
-	
-	
+
+
+
+	// orthogonal_group.cpp:
+	int find_root(int rk2, int verbose_level);
+	void Siegel_map_between_singular_points(int *T,
+		int rk_from, int rk_to, int root, int verbose_level);
+	void Siegel_map_between_singular_points_hyperbolic(int *T,
+		int rk_from, int rk_to, int root, int m, int verbose_level);
+	void Siegel_Transformation(int *T,
+		int rk_from, int rk_to, int root,
+		int verbose_level);
+		// root is not perp to from and to.
+	void Siegel_Transformation2(int *T,
+		int rk_from, int rk_to, int root,
+		int *B, int *Bv, int *w, int *z, int *x,
+		int verbose_level);
+	void Siegel_Transformation3(int *T,
+		int *from, int *to, int *root,
+		int *B, int *Bv, int *w, int *z, int *x,
+		int verbose_level);
+	void random_generator_for_orthogonal_group(
+		int f_action_is_semilinear,
+		int f_siegel,
+		int f_reflection,
+		int f_similarity,
+		int f_semisimilarity,
+		int *Mtx, int verbose_level);
+	void create_random_Siegel_transformation(int *Mtx,
+		int verbose_level);
+		// Only makes a n x n matrix.
+		// Does not put a semilinear component.
+	void create_random_semisimilarity(int *Mtx, int verbose_level);
+	void create_random_similarity(int *Mtx, int verbose_level);
+		// Only makes a d x d matrix.
+		// Does not put a semilinear component.
+	void create_random_orthogonal_reflection(int *Mtx,
+		int verbose_level);
+		// Only makes a d x d matrix.
+		// Does not put a semilinear component.
+	void make_orthogonal_reflection(int *M, int *z,
+		int verbose_level);
+	void make_Siegel_Transformation(int *M, int *v, int *u,
+		int n, int *Gram, int verbose_level);
+		// if u is singular and v \in \la u \ra^\perp, then
+		// \pho_{u,v}(x) :=
+		// x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
+		// is called the Siegel transform (see Taylor p. 148)
+		// Here Q is the quadratic form and
+		// \beta is the corresponding bilinear form
+	void Siegel_move_forward_by_index(int rk1, int rk2,
+		int *v, int *w, int verbose_level);
+	void Siegel_move_backward_by_index(int rk1, int rk2,
+		int *w, int *v, int verbose_level);
+	void Siegel_move_forward(int *v1, int *v2, int *v3, int *v4,
+		int verbose_level);
+	void Siegel_move_backward(int *v1, int *v2, int *v3, int *v4,
+		int verbose_level);
+	void move_points_by_ranks_in_place(
+		int pt_from, int pt_to,
+		int nb, int *ranks, int verbose_level);
+	void move_points_by_ranks(int pt_from, int pt_to,
+		int nb, int *input_ranks, int *output_ranks,
+		int verbose_level);
+	void move_points(int pt_from, int pt_to,
+		int nb, int *input_coords, int *output_coords,
+		int verbose_level);
+	void test_Siegel(int index, int verbose_level);
+
+
+
+	// orthogonal_hyperbolic.cpp:
 	int hyperbolic_type_and_index_to_point_rk(int type, int index, int verbose_level);
-	void hyperbolic_point_rk_to_type_and_index(int rk, 
+	void hyperbolic_point_rk_to_type_and_index(int rk,
 		int &type, int &index);
 
-	void hyperbolic_unrank_line(int &p1, int &p2, 
+	void hyperbolic_unrank_line(int &p1, int &p2,
 		long int rk, int verbose_level);
 	long int hyperbolic_rank_line(int p1, int p2, int verbose_level);
 
@@ -1728,8 +1797,8 @@ public:
 	void unrank_line_L7(int &p1, int &p2, long int index, int verbose_level);
 	long int rank_line_L7(int p1, int p2, int verbose_level);
 
-	void hyperbolic_canonical_points_of_line(int line_type, 
-		int pt1, int pt2, int &cpt1, int &cpt2, 
+	void hyperbolic_canonical_points_of_line(int line_type,
+		int pt1, int pt2, int &cpt1, int &cpt2,
 		int verbose_level);
 
 	void canonical_points_L1(int pt1, int pt2, int &cpt1, int &cpt2);
@@ -1739,20 +1808,32 @@ public:
 	void canonical_points_L5(int pt1, int pt2, int &cpt1, int &cpt2);
 	void canonical_points_L6(int pt1, int pt2, int &cpt1, int &cpt2);
 	void canonical_points_L7(int pt1, int pt2, int &cpt1, int &cpt2);
-	int hyperbolic_line_type_given_point_types(int pt1, int pt2, 
+	int hyperbolic_line_type_given_point_types(int pt1, int pt2,
 		int pt1_type, int pt2_type);
 	int hyperbolic_decide_P1(int pt1, int pt2);
 	int hyperbolic_decide_P2(int pt1, int pt2);
 	int hyperbolic_decide_P3(int pt1, int pt2);
 	int find_root_hyperbolic(int rk2, int m, int verbose_level);
 	// m = Witt index
-	void find_root_hyperbolic_xyz(int rk2, int m, 
+	void find_root_hyperbolic_xyz(int rk2, int m,
 		int *x, int *y, int *z, int verbose_level);
-	int evaluate_hyperbolic_quadratic_form(int *v, 
+	int evaluate_hyperbolic_quadratic_form(int *v,
 		int stride, int m);
-	int evaluate_hyperbolic_bilinear_form(int *u, int *v, 
+	int evaluate_hyperbolic_bilinear_form(int *u, int *v,
 		int stride, int m);
 
+
+	// orthogonal_io.cpp:
+	void list_points_by_type(int verbose_level);
+	void list_points_of_given_type(int t,
+		int verbose_level);
+	void list_all_points_vs_points(int verbose_level);
+	void list_points_vs_points(int t1, int t2,
+		int verbose_level);
+	void print_schemes();
+
+
+	// orthogonal_parabolic.cpp:
 	int parabolic_type_and_index_to_point_rk(int type, 
 		int index, int verbose_level);
 	int parabolic_even_type_and_index_to_point_rk(int type, 
@@ -1854,14 +1935,6 @@ public:
 	void find_root_parabolic_xyz(int rk2, 
 		int *x, int *y, int *z, int verbose_level);
 	int find_root_parabolic(int rk2, int verbose_level);
-	void Siegel_move_forward_by_index(int rk1, int rk2, 
-		int *v, int *w, int verbose_level);
-	void Siegel_move_backward_by_index(int rk1, int rk2, 
-		int *w, int *v, int verbose_level);
-	void Siegel_move_forward(int *v1, int *v2, int *v3, int *v4, 
-		int verbose_level);
-	void Siegel_move_backward(int *v1, int *v2, int *v3, int *v4, 
-		int verbose_level);
 	void parabolic_canonical_points_of_line(
 		int line_type, int pt1, int pt2, 
 		int &cpt1, int &cpt2, int verbose_level);
@@ -1886,58 +1959,21 @@ public:
 
 	
 
-	int test_if_minimal_on_line(int *v1, int *v2, int *v3);
-	void find_minimal_point_on_line(int *v1, int *v2, int *v3);
-	void zero_vector(int *u, int stride, int len);
-	int is_zero_vector(int *u, int stride, int len);
-	void change_form_value(int *u, int stride, int m, int multiplyer);
-	void scalar_multiply_vector(int *u, int stride, int len, int multiplyer);
-	int last_non_zero_entry(int *u, int stride, int len);
-	void Siegel_map_between_singular_points(int *T, 
-		int rk_from, int rk_to, int root, int verbose_level);
-	void Siegel_map_between_singular_points_hyperbolic(int *T, 
-		int rk_from, int rk_to, int root, int m, int verbose_level);
-	void Siegel_Transformation(int *T,
-		int rk_from, int rk_to, int root,
-		int verbose_level);
-		// root is not perp to from and to.
-	void Siegel_Transformation2(int *T,
-		int rk_from, int rk_to, int root,
-		int *B, int *Bv, int *w, int *z, int *x,
-		int verbose_level);
-	void Siegel_Transformation3(int *T,
-		int *from, int *to, int *root,
-		int *B, int *Bv, int *w, int *z, int *x,
-		int verbose_level);
-	void random_generator_for_orthogonal_group(
-		int f_action_is_semilinear, 
-		int f_siegel, 
-		int f_reflection, 
-		int f_similarity,
-		int f_semisimilarity, 
-		int *Mtx, int verbose_level);
-	void create_random_Siegel_transformation(int *Mtx, 
-		int verbose_level);
-		// Only makes a n x n matrix. 
-		// Does not put a semilinear component.
-	void create_random_semisimilarity(int *Mtx, int verbose_level);
-	void create_random_similarity(int *Mtx, int verbose_level);
-		// Only makes a d x d matrix. 
-		// Does not put a semilinear component.
-	void create_random_orthogonal_reflection(int *Mtx, 
-		int verbose_level);
-		// Only makes a d x d matrix. 
-		// Does not put a semilinear component.
-	void make_orthogonal_reflection(int *M, int *z, 
-		int verbose_level);
-	void make_Siegel_Transformation(int *M, int *v, int *u, 
-		int n, int *Gram, int verbose_level);
-		// if u is singular and v \in \la u \ra^\perp, then
-		// \pho_{u,v}(x) := 
-		// x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
-		// is called the Siegel transform (see Taylor p. 148)
-		// Here Q is the quadratic form and 
-		// \beta is the corresponding bilinear form
+	// orthogonal_rank_unrank.cpp
+	void unrank_point(int *v,
+		int stride, int rk, int verbose_level);
+	int rank_point(int *v, int stride, int verbose_level);
+	void unrank_line(int &p1, int &p2,
+		long int index, int verbose_level);
+	long int rank_line(int p1, int p2, int verbose_level);
+	int line_type_given_point_types(int pt1, int pt2,
+		int pt1_type, int pt2_type);
+	int type_and_index_to_point_rk(int type,
+		int index, int verbose_level);
+	void point_rk_to_type_and_index(int rk,
+		int &type, int &index, int verbose_level);
+	void canonical_points_of_line(int line_type, int pt1, int pt2,
+		int &cpt1, int &cpt2, int verbose_level);
 	void unrank_S(int *v, int stride, int m, int rk);
 	int rank_S(int *v, int stride, int m);
 	void unrank_N(int *v, int stride, int m, int rk);
@@ -1948,31 +1984,9 @@ public:
 	int rank_Sbar(int *v, int stride, int m);
 	void unrank_Nbar(int *v, int stride, int m, int rk);
 	int rank_Nbar(int *v, int stride, int m);
-	void normalize_point(int *v, int stride);
-	int triple_is_collinear(int pt1, int pt2, int pt3);
-	int is_minus_square(int i);
-	int is_ending_dependent(int *vec1, int *vec2);
-	void Gauss_step(int *v1, int *v2, int len, int idx);
-		// afterwards: v2[idx] = 0 and v2,v1 
-		// span the same space as before
-	void perp(int pt, int *Perp_without_pt, int &sz, 
-		int verbose_level);
-	void perp_of_two_points(int pt1, int pt2, int *Perp, 
-		int &sz, int verbose_level);
-	void perp_of_k_points(int *pts, int nb_pts, int *&Perp, 
-		int &sz, int verbose_level);
-	void create_FTWKB_BLT_set(int *set, int verbose_level);
-	void create_K1_BLT_set(int *set, int verbose_level);
-	void create_K2_BLT_set(int *set, int verbose_level);
-	void create_LP_37_72_BLT_set(int *set, int verbose_level);
-	void create_LP_37_4a_BLT_set(int *set, int verbose_level);
-	void create_LP_37_4b_BLT_set(int *set, int verbose_level);
-	void create_Law_71_BLT_set(int *set, int verbose_level);
-	void plane_invariant(unusual_model *U,
-		int size, int *set,
-		int &nb_planes, int *&intersection_matrix,
-		int &Block_size, int *&Blocks,
-		int verbose_level);
+
+
+
 };
 
 
