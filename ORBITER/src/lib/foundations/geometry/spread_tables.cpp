@@ -519,8 +519,8 @@ void spread_tables::compute_adjacency_matrix(
 	color = NEW_int(nb_spreads);
 	int_vec_zero(color, nb_spreads);
 
-	CG->init(nb_spreads,
-			1, color, bitvector_adjacency,
+	CG->init(nb_spreads, 1, 1,
+			color, bitvector_adjacency,
 			FALSE, verbose_level);
 
 	sprintf(fname, "%s_disjoint_spreads.colored_graph", prefix);

@@ -590,7 +590,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init_with_point_labels(nb_points, 1,
+	CG->init_with_point_labels(nb_points, 1, 1,
 		NULL /*point_color*/,
 		bitvector_adjacency, FALSE,
 		Orbits_classified->Sets[type_idx],
@@ -764,7 +764,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init_with_point_labels(nb_points, 1,
+	CG->init_with_point_labels(nb_points, 1, 1,
 		NULL /*point_color*/,
 		bitvector_adjacency, FALSE,
 		my_orbits_classified->Sets[type_idx],

@@ -140,7 +140,7 @@ void hadamard_classify::init(int n, int f_draw,
 	color = NEW_int(N);
 	int_vec_zero(color, N);
 
-	CG->init(N, 1, color, bitvector_adjacency, FALSE, verbose_level);
+	CG->init(N, 1, 1, color, bitvector_adjacency, FALSE, verbose_level);
 
 	sprintf(fname, "Hadamard_graph_%d.colored_graph", n);
 
@@ -165,7 +165,7 @@ void hadamard_classify::init(int n, int f_draw,
 	color = NEW_int(N);
 	int_vec_zero(color, N);
 
-	CG->init(N, 1, color, bitvector_adjacency, FALSE, verbose_level);
+	CG->init(N, 1, 1, color, bitvector_adjacency, FALSE, verbose_level);
 
 	if (f_v) {
 		cout << "initializing colored graph done" << endl;

@@ -2169,8 +2169,8 @@ void combinatorics_domain::compute_adjacency_matrix(
 	color = NEW_int(nb_sets);
 	int_vec_zero(color, nb_sets);
 
-	CG->init(nb_sets,
-			1, color, bitvector_adjacency,
+	CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
+			color, bitvector_adjacency,
 			FALSE, verbose_level);
 
 	sprintf(fname, "%s_disjointness.colored_graph", prefix_for_graph);

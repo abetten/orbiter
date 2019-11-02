@@ -863,7 +863,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init(nb_points, nb_colors_used,
+	CG->init(nb_points, nb_colors_used, 1,
 		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 

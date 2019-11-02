@@ -216,7 +216,7 @@ void ferdinand(int level, int group, int subgroup,
 
 		CG = NEW_OBJECT(colored_graph);
 
-		CG->init_adjacency(go /* nb_points*/, 2 /* nb_colors */, 
+		CG->init_adjacency(go /* nb_points*/, 2 /* nb_colors */, 1,
 			Cayley->f_subgroup /*colors*/, Adj, 0 /* verbose_level*/);
 
 		char fname[1000];

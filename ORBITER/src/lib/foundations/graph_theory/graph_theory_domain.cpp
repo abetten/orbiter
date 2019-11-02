@@ -355,15 +355,14 @@ void graph_theory_domain::save_as_colored_graph_easy(
 }
 
 void graph_theory_domain::save_colored_graph(const char *fname,
-	int nb_vertices, int nb_colors,
+	int nb_vertices, int nb_colors, int nb_colors_per_vertex,
 	int *points, int *point_color,
 	int *data, int data_sz,
 	uchar *bitvector_adjacency, long int bitvector_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, a;
-	//file_io Fio;
+	int i, j, a;
 
 	if (f_v) {
 		cout << "save_colored_graph" << endl;
@@ -371,39 +370,15 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 		cout << "save_colored_graph nb_vertices=" << nb_vertices << endl;
 		cout << "save_colored_graph nb_colors=" << nb_colors << endl;
 		cout << "save_colored_graph bitvector_length=" << bitvector_length << endl;
-		//cout << "points:";
-		//int_vec_print(cout, points, nb_vertices);
-		//cout << endl;
 		}
 
 
-#if 0
-	FILE *fp;
-	fp = fopen(fname, "wb");
-
-	Fio.fwrite_int4(fp, nb_vertices);
-	Fio.fwrite_int4(fp, nb_colors);
-	Fio.fwrite_int4(fp, data_sz);
-	for (i = 0; i < data_sz; i++) {
-		Fio.fwrite_int4(fp, data[i]);
-		}
-	for (i = 0; i < nb_vertices; i++) {
-		if (points) {
-			Fio.fwrite_int4(fp, points[i]);
-			}
-		else {
-			Fio.fwrite_int4(fp, 0);
-			}
-		Fio.fwrite_int4(fp, point_color[i]);
-		}
-	Fio.fwrite_uchars(fp, bitvector_adjacency, bitvector_length);
-	fclose(fp);
-#else
 	{
 		ofstream fp(fname, ios::binary);
 
 		fp.write((char *) &nb_vertices, sizeof(int));
 		fp.write((char *) &nb_colors, sizeof(int));
+		fp.write((char *) &nb_colors_per_vertex, sizeof(int));
 		fp.write((char *) &data_sz, sizeof(int));
 		for (i = 0; i < data_sz; i++) {
 			fp.write((char *) &data[i], sizeof(int));
@@ -416,11 +391,12 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 				a = 0;
 				fp.write((char *) &a, sizeof(int));
 				}
-			fp.write((char *) &point_color[i], sizeof(int));
+			for (j = 0; j < nb_colors_per_vertex; j++) {
+				fp.write((char *) &point_color[i * nb_colors_per_vertex + j], sizeof(int));
+			}
 			}
 		fp.write((char *) bitvector_adjacency, bitvector_length);
 	}
-#endif
 
 
 	if (f_v) {
@@ -430,78 +406,31 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 
 
 void graph_theory_domain::load_colored_graph(const char *fname,
-	int &nb_vertices, int &nb_colors,
+	int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
 	int *&vertex_labels, int *&vertex_colors,
 	int *&user_data, int &user_data_size,
 	uchar *&bitvector_adjacency, long int &bitvector_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	long int i, L;
-	//file_io Fio;
+	long int L;
+	int i, j;
 
 	if (f_v) {
 		cout << "graph_theory_domain::load_colored_graph" << endl;
 		}
 
-#if 0
-	FILE *fp;
-	fp = fopen(fname, "rb");
-
-	nb_vertices = Fio.fread_int4(fp);
-	nb_colors = Fio.fread_int4(fp);
-	if (f_v) {
-		cout << "load_colored_graph nb_vertices=" << nb_vertices
-			<< " nb_colors=" << nb_colors << endl;
-		}
-
-
-	L = (nb_vertices * (nb_vertices - 1)) >> 1;
-
-	bitvector_length = (L + 7) >> 3;
-
-	user_data_size = Fio.fread_int4(fp);
-
-	if (f_v) {
-		cout << "load_colored_graph user_data_size="
-				<< user_data_size << endl;
-		}
-	user_data = NEW_int(user_data_size);
-
-	for (i = 0; i < user_data_size; i++) {
-		user_data[i] = Fio.fread_int4(fp);
-		}
-
-	vertex_labels = NEW_int(nb_vertices);
-	vertex_colors = NEW_int(nb_vertices);
-
-	for (i = 0; i < nb_vertices; i++) {
-		vertex_labels[i] = Fio.fread_int4(fp);
-		vertex_colors[i] = Fio.fread_int4(fp);
-		if (vertex_colors[i] >= nb_colors) {
-			cout << "colored_graph::load" << endl;
-			cout << "vertex_colors[i] >= nb_colors" << endl;
-			cout << "vertex_colors[i]=" << vertex_colors[i] << endl;
-			cout << "i=" << i << endl;
-			cout << "nb_colors=" << nb_colors << endl;
-			exit(1);
-			}
-		}
-
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-	Fio.fread_uchars(fp, bitvector_adjacency, bitvector_length);
-
-
-	fclose(fp);
-#else
 	{
 		ifstream fp(fname, ios::binary);
 
 		fp.read((char *) &nb_vertices, sizeof(int));
 		fp.read((char *) &nb_colors, sizeof(int));
+		fp.read((char *) &nb_colors_per_vertex, sizeof(int));
 		if (f_v) {
 			cout << "load_colored_graph nb_vertices=" << nb_vertices
-				<< " nb_colors=" << nb_colors << endl;
+					<< " nb_colors=" << nb_colors
+					<< " nb_colors_per_vertex=" << nb_colors_per_vertex
+				<< endl;
 			}
 
 
@@ -529,16 +458,19 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 
 		for (i = 0; i < nb_vertices; i++) {
 			fp.read((char *) &vertex_labels[i], sizeof(int));
-			fp.read((char *) &vertex_colors[i], sizeof(int));
-			if (vertex_colors[i] >= nb_colors) {
-				cout << "load_colored_graph" << endl;
-				cout << "vertex_colors[i] >= nb_colors" << endl;
-				cout << "vertex_colors[i]=" << vertex_colors[i] << endl;
-				cout << "i=" << i << endl;
-				cout << "nb_colors=" << nb_colors << endl;
-				exit(1);
-				}
+			for (j = 0; j < nb_colors_per_vertex; j++) {
+				fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
+				if (vertex_colors[i] >= nb_colors) {
+					cout << "load_colored_graph" << endl;
+					cout << "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors" << endl;
+					cout << "vertex_colors[i * nb_colors_per_vertex + j]=" << vertex_colors[i * nb_colors_per_vertex + j] << endl;
+					cout << "i=" << i << endl;
+					cout << "j=" << j << endl;
+					cout << "nb_colors=" << nb_colors << endl;
+					exit(1);
+					}
 			}
+		}
 
 		if (f_v) {
 			cout << "load_colored_graph before allocating bitvector_adjacency" << endl;
@@ -546,7 +478,6 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 		bitvector_adjacency = NEW_uchar(bitvector_length);
 		fp.read((char *) bitvector_adjacency, bitvector_length);
 	}
-#endif
 
 	if (f_v) {
 		cout << "graph_theory_domain::load_colored_graph done" << endl;

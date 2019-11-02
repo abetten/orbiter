@@ -1070,7 +1070,7 @@ void spread_classify::lifting_prepare_function_new(
 		cout << "spread_classify::lifting_prepare_function_new "
 				"before CG->init_with_point_labels" << endl;
 		}
-	CG->init_with_point_labels(SL->nb_cols, nb_colors, 
+	CG->init_with_point_labels(SL->nb_cols, nb_colors, 1,
 		col_color, Adj, TRUE /* f_ownership_of_bitvec */, 
 		SL->col_labels /* point_labels */, 
 		verbose_level);

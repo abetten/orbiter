@@ -981,7 +981,7 @@ int blt_set_domain::create_graph(
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init(nb_candidates /* nb_points */, nb_colors,
+	CG->init(nb_candidates /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
 		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 
