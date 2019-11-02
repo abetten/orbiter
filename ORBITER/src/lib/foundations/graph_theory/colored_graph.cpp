@@ -656,13 +656,13 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	for (i = 0; i < nb_points; i++) {
 		points[i] = i;
 		}
-	point_color = NEW_int(nb_points);
+	point_color = NEW_int(nb_points * nb_colors_per_vertex);
 
 	if (colors) {
-		int_vec_copy(colors, point_color, nb_points);
+		int_vec_copy(colors, point_color, nb_points * nb_colors_per_vertex);
 		}
 	else {
-		int_vec_zero(point_color, nb_points);
+		int_vec_zero(point_color, nb_points * nb_colors_per_vertex);
 		}
 	
 	colored_graph::f_ownership_of_bitvec = f_ownership_of_bitvec;
@@ -2256,7 +2256,7 @@ void colored_graph::draw_it(const char *fname_base,
 
 
 
-
+#if 0
 int colored_graph::rainbow_cliques_nonrecursive(
 	int &nb_backtrack_nodes,
 	int verbose_level)
@@ -2617,6 +2617,7 @@ int colored_graph::rainbow_cliques_nonrecursive(
 		}
 	return nb_sol;
 }
+#endif
 
 void colored_graph::create_Levi_graph_from_incidence_matrix(
 	int *M, int nb_rows, int nb_cols,

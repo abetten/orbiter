@@ -237,7 +237,7 @@ public:
 	long int L;
 	
 	int *points; // [nb_points]
-	int *point_color; // [nb_points]
+	int *point_color; // [nb_points * nb_colors_per_vertex]
 	
 
 	int user_data_size;
@@ -391,7 +391,7 @@ public:
 	void draw_it(const char *fname_base, 
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width);
-	int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
+	//int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
 	void create_Levi_graph_from_incidence_matrix(
 		int *M, int nb_rows, int nb_cols,
 		int f_point_labels, int *point_labels,
@@ -544,10 +544,12 @@ public:
 		int f_prefix, const char *prefix,
 		int print_interval,
 		int verbose_level);
+#if 0
 	int colored_graph_all_rainbow_cliques_nonrecursive(
 		const char *fname,
 		int &nb_backtrack_nodes,
 		int verbose_level);
+#endif
 	void save_as_colored_graph_easy(
 		const char *fname_base, int n, int *Adj,
 		int verbose_level);

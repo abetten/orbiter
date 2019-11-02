@@ -501,6 +501,7 @@ public:
 		int orbit_length,
 		int &type_idx,
 		int f_has_user_data, int *user_data, int user_data_size,
+		int f_has_colors, int number_colors, int *color_table,
 		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
 		int verbose_level);
