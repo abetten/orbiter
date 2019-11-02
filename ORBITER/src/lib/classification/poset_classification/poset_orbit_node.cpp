@@ -862,7 +862,7 @@ void poset_orbit_node::print_extensions(poset_classification *gen)
 		}
 #endif
 
-the_end:
+//the_end:
 	FREE_int(orbit);	
 }
 

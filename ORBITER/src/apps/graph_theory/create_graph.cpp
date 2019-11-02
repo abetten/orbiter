@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 	vertex_color = NEW_int(nb_vertices);
 	int_vec_zero(vertex_color, nb_vertices);
 
-	CG.init_adjacency_upper_triangle(nb_vertices, nb_colors,
+	CG.init_adjacency_upper_triangle(nb_vertices, nb_colors, 1,
 		vertex_color, Adjacency, verbose_level);
 
 	if (f_save) {

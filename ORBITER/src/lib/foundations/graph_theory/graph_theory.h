@@ -231,6 +231,7 @@ public:
 	
 	int nb_points;
 	int nb_colors;
+	int nb_colors_per_vertex; // = 1 by default
 	
 	long int bitvector_length;
 	long int L;
@@ -248,6 +249,7 @@ public:
 	int f_has_list_of_edges;
 	int nb_edges;
 	int *list_of_edges;
+		// used in early_test_func_for_path_and_cycle_search
 
 	colored_graph();
 	~colored_graph();
@@ -269,19 +271,19 @@ public:
 	void print();
 	void print_points_and_colors();
 	void print_adjacency_list();
-	void init(int nb_points, int nb_colors, 
+	void init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
 		int verbose_level);
-	void init_with_point_labels(int nb_points, int nb_colors, 
+	void init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
 		int *point_labels, 
 		int verbose_level);
 	void init_no_colors(int nb_points, uchar *bitvec, 
 		int f_ownership_of_bitvec, 
 		int verbose_level);
-	void init_adjacency(int nb_points, int nb_colors, 
+	void init_adjacency(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, int *Adj, int verbose_level);
-	void init_adjacency_upper_triangle(int nb_points, int nb_colors, 
+	void init_adjacency_upper_triangle(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, int *Adj, int verbose_level);
 	void init_adjacency_no_colors(int nb_points, int *Adj, 
 		int verbose_level);
@@ -550,13 +552,13 @@ public:
 		const char *fname_base, int n, int *Adj,
 		int verbose_level);
 	void save_colored_graph(const char *fname,
-		int nb_vertices, int nb_colors,
+		int nb_vertices, int nb_colors, int nb_colors_per_vertex,
 		int *vertex_labels, int *vertex_colors,
 		int *data, int data_sz,
 		uchar *bitvector_adjacency, long int bitvector_length,
 		int verbose_level);
 	void load_colored_graph(const char *fname,
-		int &nb_vertices, int &nb_colors,
+		int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
 		int *&vertex_labels, int *&vertex_colors,
 		int *&user_data, int &user_data_size,
 		uchar *&bitvector_adjacency, long int &bitvector_length,
