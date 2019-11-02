@@ -83,7 +83,9 @@ MODULES= \
 		foundations/geometry/orthogonal_blt.o \
 		foundations/geometry/orthogonal_group.o \
 		foundations/geometry/orthogonal_hyperbolic.o \
+		foundations/geometry/orthogonal_io.o \
 		foundations/geometry/orthogonal_parabolic.o \
+		foundations/geometry/orthogonal_rank_unrank.o \
 		foundations/geometry/orthogonal.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/projective_space.o \
