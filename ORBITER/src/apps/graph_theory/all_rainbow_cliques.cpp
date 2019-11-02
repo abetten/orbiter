@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	const char *input_list_of_files_fname[100000];
 	int f_success_file = FALSE;
 	const char *success_fname = NULL;
-	int f_nonrecursive = FALSE;
+	//int f_nonrecursive = FALSE;
 
 
 	cout << argv[0] << endl;
@@ -72,10 +72,12 @@ int main(int argc, char **argv)
 			fname = argv[++i];
 			cout << "-file " << fname << endl;
 			}
+#if 0
 		else if (strcmp(argv[i], "-nonrecursive") == 0) {
 			f_nonrecursive = TRUE;
 			cout << "-nonrecursive " << endl;
 			}
+#endif
 		else if (strcmp(argv[i], "-success_file") == 0) {
 			f_success_file = TRUE;
 			success_fname = argv[++i];
@@ -304,7 +306,7 @@ int main(int argc, char **argv)
 #endif
 
 
-
+#if 0
 			if (f_nonrecursive) {
 				int nb_sol, nb_backtrack_nodes;
 
@@ -324,29 +326,30 @@ int main(int argc, char **argv)
 						<< endl;
 				}
 			else {
-				cout << "finding rainbow cliques, "
-					"calling colored_graph_all_cliques" << endl;
+#endif
+			cout << "finding rainbow cliques, "
+				"calling colored_graph_all_cliques" << endl;
 
-				unsigned long int search_steps, decision_steps;
-				int nb_sol, dt;
+			unsigned long int search_steps, decision_steps;
+			int nb_sol, dt;
 
 
-				Graph.colored_graph_all_cliques(fname, f_output_solution_raw,
-					f_output_file, output_file, 
-					f_maxdepth, maxdepth, 
-					f_restrictions, restrictions, 
-					f_tree, f_decision_nodes_only, fname_tree,  
-					print_interval, 
-					search_steps, decision_steps, nb_sol, dt, 
-					verbose_level);
-					// in GALOIS/colored_graph.cpp
+			Graph.colored_graph_all_cliques(fname, f_output_solution_raw,
+				f_output_file, output_file,
+				f_maxdepth, maxdepth,
+				f_restrictions, restrictions,
+				f_tree, f_decision_nodes_only, fname_tree,
+				print_interval,
+				search_steps, decision_steps, nb_sol, dt,
+				verbose_level);
+				// in GALOIS/colored_graph.cpp
 
-				cout << "nb_sol = " << nb_sol << endl;
+			cout << "nb_sol = " << nb_sol << endl;
 
-				cout << "after colored_graph_all_cliques" << endl;
-				}
-
+			cout << "after colored_graph_all_cliques" << endl;
 			}
+
+			//}
 		}
 	else if (f_list_of_cases) {
 		int *list_of_cases;

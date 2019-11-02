@@ -295,8 +295,23 @@ int design_create::rank_block_in_PG_2_q(int *block,
 	return rk;
 }
 
-int design_create::get_color_as_two_design_assume_sorted(int *design,
-		int verbose_level)
+int design_create::get_nb_colors_as_two_design(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	combinatorics_domain Combi;
+	int nb_c;
+
+	if (f_v) {
+		cout << "design_create::get_nb_colors_as_two_design" << endl;
+	}
+	nb_c = Combi.binomial2(P->N_points - 2);
+	if (f_v) {
+		cout << "design_create::get_nb_colors_as_two_design done" << endl;
+	}
+	return nb_c;
+}
+
+int design_create::get_color_as_two_design_assume_sorted(int *design, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c, i;

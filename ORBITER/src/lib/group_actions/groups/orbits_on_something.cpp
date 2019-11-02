@@ -483,6 +483,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	int orbit_length,
 	int &type_idx,
 	int f_has_user_data, int *user_data, int user_data_size,
+	int f_has_colors, int number_colors, int *color_table,
 	int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	int verbose_level)
@@ -499,12 +500,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	long int bitvector_length;
 	long int L, L100;
 	long int i, j, k;
-	int a, b;
+	int a, b, c;
 	combinatorics_domain Combi;
 	int *orbit1;
 	int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
+	int *point_color;
 	os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
@@ -514,10 +516,30 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				"nb_points=" << nb_points << endl;
 	}
 
+
 	t0 = Os.os_ticks();
 
 	orbit1 = NEW_int(orbit_length);
 	orbit2 = NEW_int(orbit_length);
+
+	if (f_has_colors) {
+		point_color = NEW_int(nb_points * orbit_length);
+		for (i = 0; i < nb_points; i++) {
+			a = Orbits_classified->Sets[type_idx][i];
+			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			if (l1 != orbit_length) {
+				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l1 != orbit_length" << endl;
+				exit(1);
+			}
+			for (j = 0; j < orbit_length; j++) {
+				c = color_table[orbit1[j]];
+				point_color[i * orbit_length + j] = c;
+			}
+		} // next i
+	}
+	else {
+		point_color = NULL;
+	}
 
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
@@ -590,8 +612,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init_with_point_labels(nb_points, 1, 1,
-		NULL /*point_color*/,
+	CG->init_with_point_labels(nb_points, number_colors, orbit_length,
+		point_color,
 		bitvector_adjacency, FALSE,
 		Orbits_classified->Sets[type_idx],
 		verbose_level - 2);
@@ -629,6 +651,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		FREE_int(my_user_data);
 	}
 
+
+
 	int_vec_copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
 	sprintf(CG->fname_base, "%s", fname);
 
@@ -645,6 +669,9 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	FREE_int(orbit1);
 	FREE_int(orbit2);
+	if (f_has_colors) {
+		FREE_int(point_color);
+	}
 
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length done" << endl;

@@ -182,8 +182,8 @@ public:
 			int rk, int verbose_level);
 	int rank_block_in_PG_2_q(int *block,
 			int verbose_level);
-	int get_color_as_two_design_assume_sorted(int *design,
-			int verbose_level);
+	int get_nb_colors_as_two_design(int verbose_level);
+	int get_color_as_two_design_assume_sorted(int *design, int verbose_level);
 };
 
 
@@ -461,6 +461,8 @@ public:
 	int *Design_table;
 	const char *design_table_prefix;
 	int nb_designs;
+	int nb_colors;
+	int *design_color_table;
 
 	action *A_on_designs;
 
@@ -477,6 +479,8 @@ public:
 	int *Design_table_reduced;
 	int *Design_table_reduced_idx;
 	int nb_reduced;
+	int nb_remaining_colors;
+	int *reduced_design_color_table;
 
 	action *A_reduced;
 	schreier *Orbits_on_reduced;
@@ -506,6 +510,12 @@ public:
 	void make_reduced_design_table(
 			int *set, int set_sz,
 			int *&Design_table_out, int *&Design_table_out_idx, int &nb_out,
+			int verbose_level);
+	void compute_colors(
+			int *Design_table, int nb_designs, int *&design_color_table,
+			int verbose_level);
+	void compute_reduced_colors(
+			int *set, int set_sz,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(set_and_stabilizer *Rep,

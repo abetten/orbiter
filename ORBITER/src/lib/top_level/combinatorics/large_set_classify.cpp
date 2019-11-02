@@ -38,6 +38,8 @@ large_set_classify::large_set_classify()
 	Design_table = NULL;
 	design_table_prefix = NULL;
 	nb_designs = 0;
+	nb_colors = 0;
+	design_color_table = NULL;
 
 	A_on_designs = NULL;
 
@@ -54,6 +56,8 @@ large_set_classify::large_set_classify()
 	Design_table_reduced = NULL;
 	Design_table_reduced_idx = NULL;
 	nb_reduced = 0;
+	nb_remaining_colors = 0;
+	reduced_design_color_table = NULL;
 
 	A_reduced = NULL;
 	Orbits_on_reduced = NULL;
@@ -80,6 +84,9 @@ void large_set_classify::freeself()
 	if (bitvector_adjacency) {
 		FREE_uchar(bitvector_adjacency);
 		}
+	if (design_color_table) {
+		FREE_int(design_color_table);
+	}
 	if (Design_table_reduced) {
 		FREE_int(Design_table_reduced);
 	}
@@ -202,6 +209,14 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	}
 	FREE_pint(Sets);
 
+	if (f_v) {
+		cout << "large_set_classify::init_designs before compute_colors" << endl;
+	}
+	compute_colors(Design_table, nb_designs, design_color_table,
+				verbose_level);
+	if (f_v) {
+		cout << "large_set_classify::init_designs after compute_colors" << endl;
+	}
 
 	if (f_v) {
 		cout << "large_set_classify::init_designs "
@@ -427,6 +442,68 @@ void large_set_classify::make_reduced_design_table(
 }
 
 
+void large_set_classify::compute_colors(
+		int *Design_table, int nb_designs, int *&design_color_table,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
+
+	if (f_v) {
+		cout << "large_set_classify::compute_colors" << endl;
+	}
+	nb_colors = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
+	design_color_table = NEW_int(nb_designs);
+	for (i = 0; i < nb_designs; i++) {
+		design_color_table[i] =
+				DC->get_color_as_two_design_assume_sorted(
+						Design_table + i * design_size, 0 /* verbose_level */);
+	}
+
+	if (f_v) {
+		cout << "large_set_classify::compute_colors done" << endl;
+	}
+}
+
+void large_set_classify::compute_reduced_colors(
+		int *set, int set_sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, idx, c;
+	int *set_color;
+
+	if (f_v) {
+		cout << "large_set_classify::compute_reduced_colors" << endl;
+	}
+	set_color = NEW_int(set_sz);
+	for (i = 0; i < set_sz; i++) {
+		set_color[i] = design_color_table[set[i]];
+	}
+
+	if (DC->k != 4) {
+		cout << "large_set_classify::compute_reduced_colors DC->k != 4" << endl;
+		exit(1);
+	}
+	nb_remaining_colors = nb_colors - set_sz; // we assume that k = 4
+	reduced_design_color_table = NEW_int(nb_reduced);
+	for (i = 0; i < nb_reduced; i++) {
+		idx = Design_table_reduced_idx[i];
+		c = design_color_table[idx];
+		for (j = 0; j < set_sz; j++) {
+			if (c > set_color[j]) {
+				c--;
+			}
+		}
+		reduced_design_color_table[i] = c;
+	}
+	FREE_int(set_color);
+	if (f_v) {
+		cout << "large_set_classify::compute_reduced_colors done" << endl;
+	}
+}
+
+
 int large_set_classify::designs_are_disjoint(int i, int j)
 {
 	int *p1, *p2;
@@ -456,14 +533,31 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case" << endl;
 	}
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case before make_reduced_design_table" << endl;
+	}
 	make_reduced_design_table(
 			Rep->data, Rep->sz,
 			Design_table_reduced, Design_table_reduced_idx, nb_reduced,
 			verbose_level);
 	if (f_v) {
+		cout << "large_set_classify::process_starter_case after make_reduced_design_table" << endl;
+	}
+	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
 				"The reduced design table has length " << nb_reduced << endl;
 	}
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case before compute_reduced_colors" << endl;
+	}
+	compute_reduced_colors(
+			Rep->data, Rep->sz,
+			verbose_level);
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case after compute_reduced_colors" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
@@ -575,6 +669,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 			orbit_length,
 			selected_type_idx,
 			f_has_user_data, NULL /* int *user_data */, 0 /* user_data_size */,
+			TRUE /* f_has_colors */, nb_remaining_colors, reduced_design_color_table,
 			large_set_design_test_pair_of_orbits,
 			this /* *test_function_data */,
 			verbose_level);
