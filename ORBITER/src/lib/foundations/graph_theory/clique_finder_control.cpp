@@ -163,7 +163,8 @@ void clique_finder_control::all_cliques(
 
 
 
-		} else {
+		}
+		else {
 			if (f_v) {
 				cout << "clique_finder_control::all_cliques "
 						"before CG.all_rainbow_cliques" << endl;
@@ -181,7 +182,8 @@ void clique_finder_control::all_cliques(
 						"after CG.all_rainbow_cliques" << endl;
 			}
 		}
-	} else {
+	}
+	else {
 		cout << "clique_finder_control::all_cliques !f_rainbow" << endl;
 		exit(1);
 	}

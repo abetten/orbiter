@@ -467,7 +467,7 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 				}
 
 			vertex_labels = NEW_int(nb_vertices);
-			vertex_colors = NEW_int(nb_vertices);
+			vertex_colors = NEW_int(nb_vertices * nb_colors_per_vertex);
 
 			for (i = 0; i < nb_vertices; i++) {
 				fp.read((char *) &vertex_labels[i], sizeof(int));
