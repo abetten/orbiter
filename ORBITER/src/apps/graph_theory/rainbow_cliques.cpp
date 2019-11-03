@@ -20,7 +20,6 @@ using namespace orbiter;
 
 int t0; // the system time when the program started
 
-
 int main(int argc, const char **argv)
 {
 	int i;
