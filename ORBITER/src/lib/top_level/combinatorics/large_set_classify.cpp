@@ -470,7 +470,7 @@ void large_set_classify::compute_reduced_colors(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a, idx, c;
+	int i, j, a, idx, c, s;
 	int *set_color;
 
 	if (f_v) {
@@ -486,16 +486,20 @@ void large_set_classify::compute_reduced_colors(
 		exit(1);
 	}
 	nb_remaining_colors = nb_colors - set_sz; // we assume that k = 4
+	if (f_v) {
+		cout << "large_set_classify::compute_reduced_colors nb_remaining_colors=" << nb_remaining_colors << endl;
+	}
 	reduced_design_color_table = NEW_int(nb_reduced);
 	for (i = 0; i < nb_reduced; i++) {
 		idx = Design_table_reduced_idx[i];
 		c = design_color_table[idx];
+		s = 0;
 		for (j = 0; j < set_sz; j++) {
 			if (c > set_color[j]) {
-				c--;
+				s++;
 			}
 		}
-		reduced_design_color_table[i] = c;
+		reduced_design_color_table[i] = c - s;
 	}
 	FREE_int(set_color);
 	if (f_v) {
@@ -551,9 +555,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case before compute_reduced_colors" << endl;
 	}
-	compute_reduced_colors(
-			Rep->data, Rep->sz,
-			verbose_level);
+	compute_reduced_colors(Rep->data, Rep->sz, verbose_level);
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case after compute_reduced_colors" << endl;
 	}

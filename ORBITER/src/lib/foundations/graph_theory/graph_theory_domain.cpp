@@ -473,7 +473,7 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 				fp.read((char *) &vertex_labels[i], sizeof(int));
 				for (j = 0; j < nb_colors_per_vertex; j++) {
 					fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
-					if (vertex_colors[i] >= nb_colors) {
+					if (vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors) {
 						cout << "load_colored_graph" << endl;
 						cout << "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors" << endl;
 						cout << "vertex_colors[i * nb_colors_per_vertex + j]=" << vertex_colors[i * nb_colors_per_vertex + j] << endl;
