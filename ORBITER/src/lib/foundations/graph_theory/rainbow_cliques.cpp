@@ -19,6 +19,20 @@ namespace foundations {
 
 rainbow_cliques::rainbow_cliques()
 {
+	fp_sol = NULL;
+	f_output_solution_raw = FALSE;
+
+	graph = NULL;
+	CF = NULL;
+	f_color_satisfied = NULL;
+	color_chosen_at_depth = NULL;
+	color_frequency = NULL;
+	target_depth = 0;
+
+	// added November 5, 2014:
+	f_has_additional_test_function = FALSE;
+	call_back_additional_test_function = NULL;
+	user_data = NULL;
 	null();
 }
 
@@ -28,7 +42,6 @@ rainbow_cliques::~rainbow_cliques()
 
 void rainbow_cliques::null()
 {
-	f_has_additional_test_function = FALSE;
 }
 
 void rainbow_cliques::freeself()
@@ -244,7 +257,7 @@ int rainbow_cliques::find_candidates(
 	int *candidates, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int c, i, j, c0, c0_freq, pt;
+	int c, i, j, h, c0, c0_freq, pt;
 	
 	if (f_v) {
 		cout << "rainbow_cliques::find_candidates "
@@ -264,19 +277,21 @@ int rainbow_cliques::find_candidates(
 					"pt >= nb_points" << endl;
 			exit(1);
 			}
-		c = graph->point_color[pt];
-		if (c >= graph->nb_colors) {
-			cout << "rainbow_cliques::find_candidates "
-					"c >= nb_colors" << endl;
-			exit(1);
-			}
-		color_frequency[c]++;
+		for (j = 0; j < graph->nb_colors_per_vertex; j++) {
+			c = graph->point_color[pt * graph->nb_colors_per_vertex + j];
+			if (c >= graph->nb_colors) {
+				cout << "rainbow_cliques::find_candidates "
+						"c >= nb_colors" << endl;
+				exit(1);
+				}
+			color_frequency[c]++;
 		}
+	}
 	if (f_v) {
 		cout << "rainbow_cliques::find_candidates color_frequency: ";
 		int_vec_print(cout, color_frequency, graph->nb_colors);
 		cout << endl;
-		}
+	}
 
 	// Determine the color c0 with the minimal frequency:
 	c0 = -1;
@@ -291,43 +306,49 @@ int rainbow_cliques::find_candidates(
 				int_vec_print(cout, current_clique, current_clique_size);
 				cout << endl;
 				exit(1);
-				}
 			}
+		}
 		else {
-			if (color_frequency[c] == 0)
+			if (color_frequency[c] == 0) {
 				return 0;
+			}
 			if (c0 == -1) {
 				c0 = c;
 				c0_freq = color_frequency[c];
-				}
+			}
 			else {
 				if (color_frequency[c] < c0_freq) {
 					c0 = c;
 					c0_freq = color_frequency[c];
-					}
 				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "rainbow_cliques::find_candidates "
 				"minimal color is " << c0 << " with frequency "
 				<< c0_freq << endl;
-		}
+	}
 
 	// And now we collect the points with color c0
 	// in the array candidates:
-	j = 0;
+	h = 0;
 	for (i = 0; i < nb_pts; i++) {
-		c = graph->point_color[pt_list[i]];
-		if (c == c0) {
-			candidates[j++] = pt_list[i];
+		for (j = 0; j < graph->nb_colors_per_vertex; j++) {
+			c = graph->point_color[pt_list[i] * graph->nb_colors_per_vertex + j];
+			if (c == c0) {
+				break;
 			}
 		}
-	if (j != c0_freq) {
-		cout << "rainbow_cliques::find_candidates "
-				"j != c0_freq" << endl;
-		exit(1);
+		if (j < graph->nb_colors_per_vertex) {
+			candidates[h++] = pt_list[i];
 		}
+	}
+	if (h != c0_freq) {
+		cout << "rainbow_cliques::find_candidates "
+				"h != c0_freq" << endl;
+		exit(1);
+	}
 
 	// Mark color c0 as chosen:
 	color_chosen_at_depth[current_clique_size] = c0;
@@ -374,18 +395,24 @@ void call_back_colored_graph_clique_found(
 			CF->call_back_clique_found_data1;
 
 	if (f_v) {
-		int i, pt, c;
+		int i, j, pt, c;
 		
 		cout << "call_back_colored_graph_clique_found clique";
 		int_set_print(cout, CF->current_clique, CF->target_depth);
 		cout << endl;
 		for (i = 0; i < CF->target_depth; i++) {
 			pt = CF->current_clique[i];
-			c = R->graph->point_color[pt];
-			cout << i << " : " << pt << " : " << c << " : "
-					<< R->f_color_satisfied[c] << endl;
+			cout << i << " : " << pt << " : ";
+			for (j = 0; j < R->graph->nb_colors_per_vertex; j++) {
+				c = R->graph->point_color[pt * R->graph->nb_colors_per_vertex + j];
+				cout << c;
+				if (j < R->graph->nb_colors_per_vertex) {
+					cout << ", ";
+				}
 			}
+		cout << endl;
 		}
+	}
 	if (R->f_output_solution_raw) {
 		R->clique_found(CF->current_clique, verbose_level);
 		}

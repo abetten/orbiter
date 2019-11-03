@@ -739,10 +739,6 @@ public:
 class rainbow_cliques {
 public:
 
-	rainbow_cliques();
-	~rainbow_cliques();
-	void null();
-	void freeself();
 
 	std::ofstream *fp_sol;
 	int f_output_solution_raw;
@@ -764,6 +760,11 @@ public:
 		int verbose_level);
 	void *user_data;
 
+
+	rainbow_cliques();
+	~rainbow_cliques();
+	void null();
+	void freeself();
 
 	void search(colored_graph *graph, std::ofstream *fp_sol,
 		int f_output_solution_raw, 
