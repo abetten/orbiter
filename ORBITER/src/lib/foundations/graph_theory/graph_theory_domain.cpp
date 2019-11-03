@@ -370,6 +370,7 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 		cout << "save_colored_graph fname=" << fname << endl;
 		cout << "save_colored_graph nb_vertices=" << nb_vertices << endl;
 		cout << "save_colored_graph nb_colors=" << nb_colors << endl;
+		cout << "save_colored_graph nb_colors_per_vertex=" << nb_colors_per_vertex << endl;
 		cout << "save_colored_graph bitvector_length=" << bitvector_length << endl;
 		}
 
