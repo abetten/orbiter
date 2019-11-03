@@ -621,6 +621,7 @@ void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_
 		cout << "colored_graph::init_with_point_labels" << endl;
 		cout << "nb_points=" << nb_points << endl;
 		cout << "nb_colors=" << nb_colors << endl;
+		cout << "nb_colors_per_vertex=" << nb_colors_per_vertex << endl;
 	}
 	init(nb_points, nb_colors, nb_colors_per_vertex,
 		colors, bitvec, f_ownership_of_bitvec, 
@@ -642,9 +643,11 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		cout << "colored_graph::init" << endl;
 		cout << "nb_points=" << nb_points << endl;
 		cout << "nb_colors=" << nb_colors << endl;
+		cout << "nb_colors_per_vertex=" << nb_colors_per_vertex << endl;
 		}
 	colored_graph::nb_points = nb_points;
 	colored_graph::nb_colors = nb_colors;
+	colored_graph::nb_colors_per_vertex = nb_colors_per_vertex;
 	
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
