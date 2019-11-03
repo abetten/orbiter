@@ -1540,9 +1540,9 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 			for (j = 0; j < nb_colors_per_vertex; j++) {
 				c = point_color[i * nb_colors_per_vertex + j];
 				color_in_graph[vertex_subset->k * nb_colors_per_vertex + j] = c;
+				color_subset->add_element(c);
 			}
 			vertex_subset->add_element(i);
-			color_subset->add_element(c);
 			}
 		}
 
