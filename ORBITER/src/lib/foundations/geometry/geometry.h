@@ -658,8 +658,6 @@ public:
 // #############################################################################
 
 
-// needs sqrt_mod_involved from DISCRETA/global.cpp
-
 
 //! a fixed elliptic curve in Weierstrass form
 
@@ -1304,8 +1302,12 @@ public:
 	int *Line_to_point_on_quadric; // [P3->N_lines]
 	int *Point_on_quadric_to_line; // [P3->N_lines]
 	int *Point_on_quadric_embedded_in_P5; // [P3->N_lines]
-	int *coordinates_of_quadric_points; // [P3->N_lines * d]
-	int *Pt_rk; // [P3->N_lines]
+
+
+	// too much storage:
+	//int *coordinates_of_quadric_points; // [P3->N_lines * d]
+	//int *Pt_rk; // [P3->N_lines]
+
 	//int *Pt_idx; // [nb_pts_PG] too memory intense
 
 	klein_correspondence();

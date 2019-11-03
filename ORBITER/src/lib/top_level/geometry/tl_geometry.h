@@ -895,7 +895,7 @@ public:
 		// = number of orbits on 5-sets of lines
 	int *Idx;
 		// Idx[nb], list of orbits 
-		// for which the system has rank 19
+		// for which the rank of the system is equal to 19
 	int nb; // number of good orbits
 	int *Po;
 		// Po[Flag_orbits->nb_flag_orbits], 
@@ -928,7 +928,6 @@ public:
 		int *candidates, int nb_candidates,
 		int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	//int partial_ovoid_test(int *S, int len, int verbose_level);
 	void test_orbits(int verbose_level);
 	void make_spreadsheet_of_fiveplusone_configurations(
 		spreadsheet *&Sp, 
