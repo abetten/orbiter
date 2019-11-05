@@ -102,7 +102,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 
 void file_io::poset_classification_read_candidates_of_orbit(
 	const char *fname, int orbit_at_level,
-	int *&candidates, int &nb_candidates, int verbose_level)
+	long int *&candidates, int &nb_candidates, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -121,38 +121,6 @@ void file_io::poset_classification_read_candidates_of_orbit(
 		exit(1);
 		}
 
-#if 0
-	FILE *fp;
-	fp = fopen(fname, "rb");
-
-	nb = fread_int4(fp);
-	if (orbit_at_level >= nb) {
-		cout << "poset_classification_read_candidates_of_orbit "
-				"orbit_at_level >= nb" << endl;
-		cout << "orbit_at_level=" << orbit_at_level << endl;
-		cout << "nb=" << nb << endl;
-		exit(1);
-		}
-	if (f_vv) {
-		cout << "seeking position "
-				<< (1 + orbit_at_level * 2) * sizeof(int_4) << endl;
-		}
-	fseek(fp, (1 + orbit_at_level * 2) * sizeof(int_4), SEEK_SET);
-	nb_candidates = fread_int4(fp);
-	if (f_vv) {
-		cout << "nb_candidates=" << nb_candidates << endl;
-		}
-	cand_first = fread_int4(fp);
-	if (f_v) {
-		cout << "cand_first=" << cand_first << endl;
-		}
-	candidates = NEW_int(nb_candidates);
-	fseek(fp, (1 + nb * 2 + cand_first) * sizeof(int_4), SEEK_SET);
-	for (i = 0; i < nb_candidates; i++) {
-		candidates[i] = fread_int4(fp);
-		}
-	fclose(fp);
-#else
 	{
 		ifstream fp(fname, ios::binary);
 		fp.read((char *) &nb, sizeof(int));
@@ -176,15 +144,15 @@ void file_io::poset_classification_read_candidates_of_orbit(
 		if (f_v) {
 			cout << "cand_first=" << cand_first << endl;
 			}
-		candidates = NEW_int(nb_candidates);
+		candidates = NEW_lint(nb_candidates);
 		fp.seekg((1 + nb * 2 + cand_first) * sizeof(int), ios::beg);
 		for (i = 0; i < nb_candidates; i++) {
-			fp.read((char *) &candidates[i], sizeof(int));
+			fp.read((char *) &candidates[i], sizeof(long int));
 
 		}
 
 	}
-#endif
+
 	if (f_v) {
 		cout << "poset_classification_read_candidates_of_orbit "
 				"done" << endl;
@@ -194,19 +162,19 @@ void file_io::poset_classification_read_candidates_of_orbit(
 
 void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
-		int *S,
-		void (*early_test_func_callback)(int *S, int len,
-			int *candidates, int nb_candidates,
-			int *good_candidates, int &nb_good_candidates,
+		long int *S,
+		void (*early_test_func_callback)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 			void *data, int verbose_level),
 		void *early_test_func_callback_data,
-		int *&candidates,
+		long int *&candidates,
 		int &nb_candidates,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, orbit_idx;
-	int *candidates1 = NULL;
+	long int *candidates1 = NULL;
 	int nb_candidates1;
 
 	if (f_v) {
@@ -240,7 +208,7 @@ void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 
 	for (h = level_of_candidates_file; h < level; h++) {
 
-		int *candidates2;
+		long int *candidates2;
 		int nb_candidates2;
 
 		if (f_v) {
@@ -248,7 +216,7 @@ void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 					"and_process testing candidates at level " << h
 					<< " number of candidates = " << nb_candidates1 << endl;
 			}
-		candidates2 = NEW_int(nb_candidates1);
+		candidates2 = NEW_lint(nb_candidates1);
 
 		(*early_test_func_callback)(S, h + 1,
 			candidates1, nb_candidates1,
@@ -263,10 +231,10 @@ void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 
-		int_vec_copy(candidates2, candidates1, nb_candidates2);
+		lint_vec_copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
-		FREE_int(candidates2);
+		FREE_lint(candidates2);
 		}
 
 	candidates = candidates1;
@@ -280,7 +248,7 @@ void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 
 
 int file_io::find_orbit_index_in_data_file(const char *prefix,
-		int level_of_candidates_file, int *starter,
+		int level_of_candidates_file, long int *starter,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -300,12 +268,12 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 		}
 	ifstream f(fname);
 	int a, i, cnt;
-	int *S;
+	long int *S;
 	char buf[MY_OWN_BUFSIZE];
 	int len, str_len;
 	char *p_buf;
 
-	S = NEW_int(level_of_candidates_file);
+	S = NEW_lint(level_of_candidates_file);
 
 	cnt = 0;
 	f.getline(buf, MY_OWN_BUFSIZE, '\n'); // skip the first line
@@ -343,7 +311,7 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 			exit(1);
 			}
 		for (i = 0; i < len; i++) {
-			s_scan_int(&p_buf, &S[i]);
+			s_scan_lint(&p_buf, &S[i]);
 			}
 		for (i = 0; i < level_of_candidates_file; i++) {
 			if (S[i] != starter[i]) {
@@ -359,7 +327,7 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 			cnt++;
 			}
 		}
-	FREE_int(S);
+	FREE_lint(S);
 	if (f_v) {
 		cout << "find_orbit_index_in_data_file done" << endl;
 	}
@@ -1122,6 +1090,36 @@ void file_io::int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
 	}
 }
 
+void file_io::lint_vec_array_write_csv(int nb_vecs, long int **Vec, int len,
+	const char *fname, const char **column_label)
+{
+	int i, j;
+
+	cout << "lint_vec_array_write_csv nb_vecs=" << nb_vecs << endl;
+	cout << "column labels:" << endl;
+	for (j = 0; j < nb_vecs; j++) {
+		cout << j << " : " << column_label[j] << endl;
+		}
+
+	{
+	ofstream f(fname);
+
+	f << "Row";
+	for (j = 0; j < nb_vecs; j++) {
+		f << "," << column_label[j];
+		}
+	f << endl;
+	for (i = 0; i < len; i++) {
+		f << i;
+		for (j = 0; j < nb_vecs; j++) {
+			f << "," << Vec[j][i];
+			}
+		f << endl;
+		}
+	f << "END" << endl;
+	}
+}
+
 void file_io::int_matrix_write_csv(const char *fname, int *M, int m, int n)
 {
 	int i, j;
@@ -1194,6 +1192,30 @@ void file_io::double_matrix_write_csv(
 
 void file_io::int_matrix_write_csv_with_labels(const char *fname,
 	int *M, int m, int n, const char **column_label)
+{
+	int i, j;
+
+	{
+	ofstream f(fname);
+
+	f << "Row";
+	for (j = 0; j < n; j++) {
+		f << "," << column_label[j];
+		}
+	f << endl;
+	for (i = 0; i < m; i++) {
+		f << i;
+		for (j = 0; j < n; j++) {
+			f << "," << M[i * n + j];
+			}
+		f << endl;
+		}
+	f << "END" << endl;
+	}
+}
+
+void file_io::lint_matrix_write_csv_with_labels(const char *fname,
+	long int *M, int m, int n, const char **column_label)
 {
 	int i, j;
 
@@ -1367,7 +1389,7 @@ void file_io::int_matrix_read_text(const char *fname, int *&M, int &m, int &n)
 }
 
 void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
-	int *&Set_sizes, int **&Sets,
+	int *&Set_sizes, long int **&Sets,
 	char **&Ago_ascii, char **&Aut_ascii,
 	int *&Casenumbers,
 	int verbose_level)
@@ -1387,7 +1409,7 @@ void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
 	aut_ascii = NEW_char(MY_OWN_BUFSIZE);
 
 	Set_sizes = NEW_int(nb_cases);
-	Sets = NEW_pint(nb_cases);
+	Sets = NEW_plint(nb_cases);
 	Ago_ascii = NEW_pchar(nb_cases);
 	Aut_ascii = NEW_pchar(nb_cases);
 	Casenumbers = NEW_int(nb_cases);
@@ -1434,7 +1456,7 @@ void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
 }
 
 void file_io::parse_line(char *line, int &len,
-	int *&set, char *ago_ascii, char *aut_ascii)
+	long int *&set, char *ago_ascii, char *aut_ascii)
 {
 	int i;
 	char *p_buf;
@@ -1443,9 +1465,9 @@ void file_io::parse_line(char *line, int &len,
 	p_buf = line;
 	s_scan_int(&p_buf, &len);
 	//cout << "parsing data of length " << len << endl;
-	set = NEW_int(len);
+	set = NEW_lint(len);
 	for (i = 0; i < len; i++) {
-		s_scan_int(&p_buf, &set[i]);
+		s_scan_lint(&p_buf, &set[i]);
 		}
 	s_scan_token(&p_buf, ago_ascii);
 	if (strcmp(ago_ascii, "1") == 0) {
@@ -1702,7 +1724,7 @@ return_false:
 
 void file_io::read_and_parse_data_file(
 	const char *fname, int &nb_cases,
-	char **&data, int **&sets, int *&set_sizes,
+	char **&data, long int **&sets, int *&set_sizes,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1765,7 +1787,7 @@ void file_io::read_and_parse_data_file(
 }
 
 void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
-	char **data, int **&sets)
+	char **data, long int **&sets)
 {
 	char **Ago_ascii;
 	char **Aut_ascii;
@@ -1805,7 +1827,7 @@ void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
 }
 
 void file_io::free_data_fancy(int nb_cases,
-	int *Set_sizes, int **Sets,
+	int *Set_sizes, long int **Sets,
 	char **Ago_ascii, char **Aut_ascii,
 	int *Casenumbers)
 // Frees only those pointers that are not NULL
@@ -1826,9 +1848,9 @@ void file_io::free_data_fancy(int nb_cases,
 		}
 	if (Sets) {
 		for (i = 0; i < nb_cases; i++) {
-			FREE_int(Sets[i]);
+			FREE_lint(Sets[i]);
 			}
-		FREE_pint(Sets);
+		FREE_plint(Sets);
 		}
 	if (Set_sizes) {
 		FREE_int(Set_sizes);
@@ -1842,7 +1864,7 @@ void file_io::read_and_parse_data_file_fancy(
 	const char *fname,
 	int f_casenumbers,
 	int &nb_cases,
-	int *&Set_sizes, int **&Sets,
+	int *&Set_sizes, long int **&Sets,
 	char **&Ago_ascii,
 	char **&Aut_ascii,
 	int *&Casenumbers,

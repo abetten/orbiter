@@ -117,7 +117,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 
 
 	
-	int Arc6[6];
+	long int Arc6[6];
 	int h, j;
 	
 
@@ -141,7 +141,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 		Gen->gen->get_set_by_level(level, h, Arc6);
 		
 		
-		int **Pts_on_conic;
+		long int **Pts_on_conic;
 		int *nb_pts_on_conic;
 		int len1;
 
@@ -165,9 +165,9 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 			}
 
 		for (j = 0; j < len1; j++) {
-			FREE_int(Pts_on_conic[j]);
+			FREE_lint(Pts_on_conic[j]);
 			}
-		FREE_pint(Pts_on_conic);
+		FREE_plint(Pts_on_conic);
 		FREE_int(nb_pts_on_conic);
 		}
 
@@ -187,7 +187,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 }
 
 
-void six_arcs_not_on_a_conic::recognize(int *arc6, int *transporter,
+void six_arcs_not_on_a_conic::recognize(long int *arc6, int *transporter,
 		int &orbit_not_on_conic_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

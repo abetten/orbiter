@@ -255,7 +255,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 	int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *the_set;
+	long int *the_set;
 
 	if (f_v) {
 		cout << "poset_orbit_node::setup_factor_space_action_light "
@@ -264,7 +264,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
 		}
-	the_set = NEW_int(lvl);
+	the_set = NEW_lint(lvl);
 	store_set_to(gen, lvl - 1, the_set);
 
 	AF.init_light(
@@ -273,7 +273,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 		*gen->Poset->A2,
 		the_set, lvl,
 		verbose_level - 1);
-	FREE_int(the_set);
+	FREE_lint(the_set);
 }
 
 void poset_orbit_node::setup_factor_space_action_with_early_test(
@@ -283,8 +283,8 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *subset;
-	int *the_set;
+	long int *subset;
+	long int *the_set;
 	int n, i;
 
 	if (f_v) {
@@ -299,7 +299,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"with_early_test "
 				"A2->degree=" << gen->Poset->A2->degree << endl;
 		}
-	the_set = NEW_int(lvl + 1);
+	the_set = NEW_lint(lvl + 1);
 		// the +1 is for safety !!!
 		// Namely, so that the test function has one more entry
 		// to store the candidate point in.
@@ -314,28 +314,33 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 					"with_early_test "
 					"retrieving candidate set from Schreier vector "
 					"of node " << prev << endl;
-			}
+		}
+		int *old_subset;
 		n = gen->root[prev].get_nb_of_live_points();
-		subset = gen->root[prev].live_points();
+		old_subset = gen->root[prev].live_points();
+		subset = NEW_lint(n);
+		for (i = 0; i < n; i++) {
+			subset[i] = old_subset[i];
+		}
 		//int *osv = gen->root[prev].sv;
 		//n = osv[0];
 		//subset = osv + 1;
-		}
+	}
 	else {
 		n = gen->Poset->A2->degree;
-		subset = NEW_int(n);
+		subset = NEW_lint(n);
 		for (i = 0; i < n; i++) {
 			subset[i] = i;
-			}
 		}
-	int *candidates;
+	}
+	long int *candidates;
 	int nb_candidates;
 
 	if (f_vv) {
 		gen->print_level_info(lvl, node);
 		cout << " : number of live points = " << n << endl;
 		}
-	candidates = NEW_int(gen->Poset->A2->degree);
+	candidates = NEW_lint(gen->Poset->A2->degree);
 
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action_"
@@ -382,10 +387,10 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"after AF.init_by_rank_table_mode" << endl;
 		}
 
-	FREE_int(candidates);
-	FREE_int(the_set);
-	if (lvl == 0) {
-		FREE_int(subset);
+	FREE_lint(candidates);
+	FREE_lint(the_set);
+	if (TRUE /* lvl == 0*/) {
+		FREE_lint(subset);
 		}
 
 	if (f_vv) {
@@ -429,7 +434,7 @@ void poset_orbit_node::setup_factor_space_action(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v20 = (verbose_level >= 20);
-	int *the_set;
+	long int *the_set;
 	int *coordinates;
 	//int i;
 
@@ -441,13 +446,13 @@ void poset_orbit_node::setup_factor_space_action(
 				<< " pt=" << pt << endl;
 		cout << "f_compute_tables=" << f_compute_tables << endl;
 		}
-	the_set = NEW_int(lvl);
+	the_set = NEW_lint(lvl);
 	coordinates = NEW_int(lvl * gen->Poset->VS->dimension);
 	store_set_to(gen, lvl - 1, the_set);
 
 	if (f_v) {
 		cout << "the set: ";
-		int_vec_print(cout, the_set, lvl);
+		lint_vec_print(cout, the_set, lvl);
 		cout << endl;
 		cout << "poset_orbit_node::setup_factor_space_action "
 				"initializing action_on_factor_space "
@@ -480,7 +485,7 @@ void poset_orbit_node::setup_factor_space_action(
 				<< endl;
 		}
 
-	FREE_int(the_set);
+	FREE_lint(the_set);
 	FREE_int(coordinates);
 }
 
@@ -557,21 +562,22 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		gen->print_level_info(lvl, node);
 		cout << "poset_orbit_node::downstep_orbits_subspace_action "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
 		
 	if (FALSE) {
 		gen->print_level_info(lvl, node);
 		cout << " : generators:" << endl;
 		Schreier.print_generators();
-		}
+	}
 
 	if (f_vv) {
 		gen->print_level_info(lvl, node);
 		cout << " : calling Schreier.compute_all_point_orbits_with_"
 				"preferred_labels" << endl;
-		}
+	}
 	//Schreier.compute_all_point_orbits(verbose_level - 4);
 	AF = Schreier.A->G.AF;
+
 	Schreier.compute_all_point_orbits_with_preferred_labels(
 			AF->preimage_table, verbose_level);
 
@@ -606,7 +612,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 					h, AF->preimage_table);
 			//	}
 			cout << endl;
-			}
+		}
 		cout << "the orbit elements are:" << endl;
 		for (h = 0; h < Schreier.nb_orbits; h++) {
 			cout << "orbit " << setw(4) << h << " / "
@@ -654,7 +660,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		double scale = 0.35;
 		double line_width = 0.6;
 		int f_has_point_labels = FALSE;
-		int *point_labels = NULL;
+		long int *point_labels = NULL;
 
 		for (h = 0; h < Schreier.nb_orbits; h++) {
 			sprintf(fname, "node_%d_tree_%d", node, h);
@@ -707,7 +713,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 		cout << "poset_orbit_node::find_extensions_subspace_action "
 				"computing all possible extensions (out of "
 				<< O.nb_orbits << " orbits)" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "the stabilizer orbits are:" << endl;
 		cout << "i : representative : orbit length" << endl;
@@ -715,8 +721,8 @@ void poset_orbit_node::find_extensions_subspace_action(
 			fst = O.orbit_first[k];
 			pt = O.orbit[fst];
 			cout << k << " : " << pt << " : " << O.orbit_len[k] << endl;
-			}
 		}
+	}
 	nb_extensions = 0;
 	E = NEW_OBJECTS(extension, O.nb_orbits);
 
@@ -724,7 +730,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 
 	if (f_vv) {
 		cout << "k : orbit_rep[k] : preimage[k]" << endl;
-		}
+	}
 	for (k = 0; k < O.nb_orbits; k++) {
 		fst = O.orbit_first[k];
 		//len = O.orbit_len[k];
@@ -733,7 +739,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 		if (f_vv) {
 			cout << setw(5) << k << " : " << setw(7)
 					<< pt1 << " : " << setw(7) << pt << endl;
-			}
+		}
 
 
 		if (f_implicit_fusion) {
@@ -746,35 +752,36 @@ void poset_orbit_node::find_extensions_subspace_action(
 							<< "we use implicit fusion nodes and " 
 							<< pt << " is less than " 
 							<< poset_orbit_node::pt << endl;
-						}
-					continue;
 					}
+					continue;
+				}
 				if (f_vv) {
 					cout << "poset_orbit_node::find_extensions_subspace_action "
 							"orbit " << k << " is accepted" << endl;
-					}
 				}
 			}
+		}
 		else {
 			// we need to check whether the point is already in the set:
 			int ii;
 			
 			for (ii = 0; ii < lvl; ii++) {
-				if (gen->S[ii] == pt)
+				if (gen->S[ii] == pt) {
 					break;
 				}
+			}
 			if (ii < lvl) {
 				if (f_vv) {
 					cout << "poset_orbit_node::find_extensions_subspace_action "
 						"orbit " << k << " is in the set so we skip" << endl;
-					}
-				continue;
 				}
+				continue;
+			}
 			if (f_vv) {
 				cout << "poset_orbit_node::find_extensions_subspace_action "
 					"orbit " << k << " is accepted" << endl;
-				}
 			}
+		}
 
 			
 
@@ -782,7 +789,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 		E[nb_extensions].orbit_len = O.orbit_len[k];
 		E[nb_extensions].type = EXTENSION_TYPE_UNPROCESSED;
 		nb_extensions++;
-		}
+	}
 	
 #if 1
 	// reallocate:
@@ -802,14 +809,14 @@ void poset_orbit_node::find_extensions_subspace_action(
 				"found " << nb_extensions << " extensions with "
 				<< nb_extension_points << " points (out of "
 				<< O.nb_orbits << " orbits)" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "i : representing point : orbit_length" << endl;
 		for (h = 0; h < nb_extensions; h++) {
 			cout << h << " : " << E[h].pt << " : "
 				<< E[h].orbit_len << endl;
-			}
 		}
+	}
 }
 
 

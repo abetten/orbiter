@@ -472,7 +472,7 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 }
 
 void surface_domain::create_lambda_from_trihedral_pair_and_arc(
-	int *arc6,
+	long int *arc6,
 	int *Web_of_cubic_curves,
 	int *The_plane_equations, int t_idx,
 	int &lambda, int &lambda_rk,
@@ -603,7 +603,7 @@ void surface_domain::create_lambda_from_trihedral_pair_and_arc(
 }
 
 
-void surface_domain::create_surface_equation_from_trihedral_pair(int *arc6,
+void surface_domain::create_surface_equation_from_trihedral_pair(long int *arc6,
 	int *Web_of_cubic_curves,
 	int *The_plane_equations, int t_idx, int *surface_equation,
 	int &lambda,
@@ -684,7 +684,7 @@ void surface_domain::extract_six_curves_from_web(
 		}
 }
 
-void surface_domain::find_point_not_on_six_curves(int *arc6,
+void surface_domain::find_point_not_on_six_curves(long int *arc6,
 	int *six_curves,
 	int &pt, int &f_point_was_found,
 	int verbose_level)
@@ -703,7 +703,7 @@ void surface_domain::find_point_not_on_six_curves(int *arc6,
 		}
 	pt = -1;
 	for (pt = 0; pt < P2->N_points; pt++) {
-		if (Sorting.int_vec_search_linear(arc6, 6, pt, idx)) {
+		if (Sorting.lint_vec_search_linear(arc6, 6, pt, idx)) {
 			continue;
 			}
 		Poly3->unrank_point(v, pt);
@@ -2445,8 +2445,8 @@ void surface_domain::compute_nine_lines(int *F_planes, int *G_planes,
 }
 
 void surface_domain::compute_nine_lines_by_dual_point_ranks(
-	int *F_planes_rank,
-	int *G_planes_rank, long int *nine_lines, int verbose_level)
+	long int *F_planes_rank,
+	long int *G_planes_rank, long int *nine_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;

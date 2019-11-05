@@ -203,6 +203,7 @@ typedef unsigned int uint_8;
 typedef int *pint;
 typedef long int *plint;
 typedef int **ppint;
+typedef long int **pplint;
 typedef short SHORT;
 typedef SHORT *PSHORT;
 typedef char *pchar;
@@ -371,6 +372,7 @@ class tdo_refinement;
 #define NEW_lint(n) global_mem_object_registry.allocate_lint(n, __FILE__, __LINE__)
 #define NEW_plint(n) global_mem_object_registry.allocate_plint(n, __FILE__, __LINE__)
 #define NEW_ppint(n) global_mem_object_registry.allocate_ppint(n, __FILE__, __LINE__)
+#define NEW_pplint(n) global_mem_object_registry.allocate_pplint(n, __FILE__, __LINE__)
 #define NEW_char(n) global_mem_object_registry.allocate_char(n, __FILE__, __LINE__)
 #define NEW_uchar(n) global_mem_object_registry.allocate_uchar(n, __FILE__, __LINE__)
 #define NEW_pchar(n) global_mem_object_registry.allocate_pchar(n, __FILE__, __LINE__)
@@ -383,6 +385,7 @@ class tdo_refinement;
 #define FREE_lint(p) global_mem_object_registry.free_lint(p, __FILE__, __LINE__)
 #define FREE_plint(p) global_mem_object_registry.free_plint(p, __FILE__, __LINE__)
 #define FREE_ppint(p) global_mem_object_registry.free_ppint(p, __FILE__, __LINE__)
+#define FREE_pplint(p) global_mem_object_registry.free_pplint(p, __FILE__, __LINE__)
 #define FREE_char(p) global_mem_object_registry.free_char(p, __FILE__, __LINE__)
 #define FREE_uchar(p) global_mem_object_registry.free_uchar(p, __FILE__, __LINE__)
 #define FREE_pchar(p) global_mem_object_registry.free_pchar(p, __FILE__, __LINE__)
@@ -396,6 +399,7 @@ class tdo_refinement;
 #define NEW_lint(n) new long int[n]
 #define NEW_lint(n) new (long int *)[n]
 #define NEW_ppint(n) new ppint[n]
+#define NEW_pplint(n) new pplint[n]
 #define NEW_char(n) new char[n]
 #define NEW_uchar(n) new uchar[n]
 #define NEW_pchar(n) new pchar[n]
@@ -408,6 +412,7 @@ class tdo_refinement;
 #define FREE_lint(p) delete [] p
 #define FREE_plint(p) delete [] p
 #define FREE_ppint(p) delete [] p
+#define FREE_pplint(p) delete [] p
 #define FREE_char(p) delete [] p
 #define FREE_uchar(p) delete [] p
 #define FREE_pchar(p) delete [] p

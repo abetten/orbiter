@@ -275,7 +275,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 		}
 		set_and_stabilizer *R;
 		longinteger_object go;
-		int Lines[27];
+		long int Lines[27];
 
 		R = Classify_double_sixes->Double_sixes->
 				get_set_and_stabilizer(
@@ -285,7 +285,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 
 		R->Strong_gens->group_order(go);
 
-		int_vec_copy(R->data, Lines, 12);
+		lint_vec_copy(R->data, Lines, 12);
 
 		if (f_vv) {
 			cout << "surface_classify_wedge::downstep "
@@ -370,7 +370,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
 
 		double progress;
-		int Lines[27];
+		long int Lines[27];
 		
 		if (f_processed[f]) {
 			continue;
@@ -399,7 +399,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 		}
-		int_vec_copy(Flag_orbits->Pt + f * 27, Lines, 27);
+		lint_vec_copy(Flag_orbits->Pt + f * 27, Lines, 27);
 
 
 
@@ -418,7 +418,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 		if (f_v) {
 			cout << "Lines:";
-			int_vec_print(cout, Lines, 27);
+			lint_vec_print(cout, Lines, 27);
 			cout << endl;
 		}
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -436,7 +436,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 			}
 			int f2;
 
-			int double_six[12];
+			long int double_six[12];
 
 
 			for (j = 0; j < 12; j++) {
@@ -447,7 +447,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 						<< Flag_orbits->nb_flag_orbits
 						<< ", upstep i=" << i
 						<< " / 36 double_six=";
-				int_vec_print(cout, double_six, 12);
+				lint_vec_print(cout, double_six, 12);
 				cout << endl;
 			}
 			
@@ -1061,7 +1061,7 @@ void surface_classify_wedge::identify_Sa(
 		Iso_type[a] = -1;
 		Nb_E[a] = -1;
 
-		int Lines27[27];
+		long int Lines27[27];
 		
 		if (Surf->create_surface_ab(a, b, coeff, Lines27,
 			alpha, beta, nb_E, 
@@ -1212,9 +1212,9 @@ void surface_classify_wedge::identify_surface(
 
 	isomorphic_to = -1;
 
-	int *Points;
+	long int *Points;
 	int nb_points;
-	int *Lines;
+	long int *Lines;
 	int nb_lines;
 
 	if (f_v) {
@@ -1227,8 +1227,8 @@ void surface_classify_wedge::identify_surface(
 	}
 
 
-	Points = NEW_int(Surf->P->N_points);
-	Lines = NEW_int(27);
+	Points = NEW_lint(Surf->P->N_points);
+	Lines = NEW_lint(27);
 
 	// find all the points on the surface based on the equation:
 
@@ -1256,8 +1256,8 @@ void surface_classify_wedge::identify_surface(
 	if (nb_lines != 27 /*&& nb_lines != 21*/) {
 		cout << "the input surface has " << nb_lines << " lines" << endl;
 		cout << "something is wrong with the input surface, skipping" << endl;
-		FREE_int(Points);
-		FREE_int(Lines);
+		FREE_lint(Points);
+		FREE_lint(Lines);
 		return;
 	}
 
@@ -1281,9 +1281,9 @@ void surface_classify_wedge::identify_surface(
 		line_intersections, Starter_Table, nb_starter,
 		verbose_level);
 
-	int S3[6];
-	int K1[6];
-	int W4[6];
+	long int S3[6];
+	long int K1[6];
+	long int W4[6];
 	int h, l;
 	int f;
 
@@ -1302,12 +1302,12 @@ void surface_classify_wedge::identify_surface(
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_surface "
 				"The starter configuration is S3=";
-		int_vec_print(cout, S3, 6);
+		lint_vec_print(cout, S3, 6);
 		cout << endl;
 	}
 
 
-	int_vec_apply(S3, Surf->Klein->Line_to_point_on_quadric, K1, 6);
+	lint_vec_apply(S3, Surf->Klein->Line_to_point_on_quadric, K1, 6);
 		// transform the five lines plus transversal 
 		// into points on the Klein quadric
 
@@ -1458,9 +1458,9 @@ void surface_classify_wedge::identify_surface(
 	Elt_isomorphism_inv = NEW_int(A->elt_size_in_int);
 	A->element_invert(Elt_isomorphism, Elt_isomorphism_inv, 0);
 
-	int *image;
+	long int *image;
 
-	image = NEW_int(nb_points);
+	image = NEW_lint(nb_points);
 	A->map_a_set_and_reorder(Points, image,
 			nb_points, Elt_isomorphism,
 			0 /* verbose_level */);
@@ -1470,7 +1470,7 @@ void surface_classify_wedge::identify_surface(
 		A->element_print_quick(Elt_isomorphism_inv, cout);
 
 		cout << "The image of the set of points is: ";
-		int_vec_print(cout, image, nb_points);
+		lint_vec_print(cout, image, nb_points);
 		cout << endl;
 	}
 
@@ -1486,7 +1486,7 @@ void surface_classify_wedge::identify_surface(
 			"set of the chosen representative" << endl;
 #endif
 
-	FREE_int(image);
+	FREE_lint(image);
 
 	int *coeffs_transformed;
 
@@ -1496,12 +1496,12 @@ void surface_classify_wedge::identify_surface(
 
 
 	int idx;
-	int Lines0[27];
+	long int Lines0[27];
 	int eqn0[20];
 
 	cout << "the surface in the list is = " << endl;
 	idx = Surfaces->Orbit[isomorphic_to].orbit_index;
-	int_vec_copy(Surfaces->Rep +
+	lint_vec_copy(Surfaces->Rep +
 			idx * Surfaces->representation_sz,
 			Lines0, 27);
 	
@@ -1558,8 +1558,8 @@ void surface_classify_wedge::identify_surface(
 	FREE_OBJECT(line_intersections);
 	FREE_int(Starter_Table);
 	FREE_int(Adj);
-	FREE_int(Points);
-	FREE_int(Lines);
+	FREE_lint(Points);
+	FREE_lint(Lines);
 	FREE_int(Elt_isomorphism_inv);
 	FREE_int(coeffs_transformed);
 	if (f_v) {
@@ -1620,7 +1620,7 @@ void surface_classify_wedge::report_surface(
 {
 	int f_v = (verbose_level >= 1);
 	set_and_stabilizer *SaS;
-	int Lines[27];
+	long int Lines[27];
 	int equation[20];
 
 	if (f_v) {
@@ -1635,7 +1635,7 @@ void surface_classify_wedge::report_surface(
 
 	SaS = Surfaces->get_set_and_stabilizer(orbit_index,
 			0 /* verbose_level */);
-	int_vec_copy(SaS->data, Lines, 27);
+	lint_vec_copy(SaS->data, Lines, 27);
 	
 	Surf->build_cubic_surface_from_lines(27,
 			Lines, equation, 0 /* verbose_level */);
@@ -1796,7 +1796,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 
 			set_and_stabilizer *SaS;
-			int Lines[27];
+			long int Lines[27];
 			int equation[20];
 
 			if (f_v) {
@@ -1806,7 +1806,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 			SaS = Surfaces->get_set_and_stabilizer(
 					orbit_index, 0 /* verbose_level */);
-			int_vec_copy(SaS->data, Lines, 27);
+			lint_vec_copy(SaS->data, Lines, 27);
 
 			Surf->build_cubic_surface_from_lines(27,
 					Lines, equation, 0 /* verbose_level */);
@@ -1859,9 +1859,9 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				orbit_index < Surfaces->nb_orbits;
 				orbit_index++) {
 			set_and_stabilizer *SaS;
-			int Lines[27];
+			long int Lines[27];
 			int equation[27];
-			int *Pts;
+			long int *Pts;
 			int nb_pts;
 			set_of_sets *pts_on_lines;
 			int nb_E;
@@ -1873,7 +1873,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 			SaS = Surfaces->get_set_and_stabilizer(
 					orbit_index, 0 /* verbose_level */);
-			int_vec_copy(SaS->data, Lines, 27);
+			lint_vec_copy(SaS->data, Lines, 27);
 			Surf->build_cubic_surface_from_lines(27,
 					Lines, equation, 0 /* verbose_level */);
 			F->PG_element_normalize_from_front(equation, 1, 20);
@@ -1902,7 +1902,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 
 			FREE_OBJECT(pts_on_lines);
-			FREE_int(Pts);
+			FREE_lint(Pts);
 			FREE_OBJECT(SaS);
 		}
 		f << "};" << endl;
@@ -1937,7 +1937,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 
 			set_and_stabilizer *SaS;
-			int Lines[27];
+			long int Lines[27];
 
 			if (f_v) {
 				cout << "surface_classify_wedge::generate_source_code "
@@ -1946,7 +1946,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 			SaS = Surfaces->get_set_and_stabilizer(
 					orbit_index, 0 /* verbose_level */);
-			int_vec_copy(SaS->data, Lines, 27);
+			lint_vec_copy(SaS->data, Lines, 27);
 
 			f << "\t";
 			for (j = 0; j < 27; j++) {

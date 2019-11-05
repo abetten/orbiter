@@ -181,7 +181,7 @@ void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 		cout << "blt_set_classify::init_group "
 				"computing lex least base done" << endl;
 		cout << "blt_set::init_group base: ";
-		int_vec_print(cout, A->get_base(), A->base_len());
+		lint_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;
 		}
 	
@@ -354,10 +354,10 @@ void blt_set_classify::create_graphs(
 	char graph_fname_base[1000];
 	int orbit;
 	int nb_orbits;
-	int *list_of_cases;
+	long int *list_of_cases;
 	int nb_of_cases;
 
-	int *Time;
+	long int *Time;
 	int time_idx;
 	file_io Fio;
 
@@ -383,12 +383,12 @@ void blt_set_classify::create_graphs(
 		}
 
 
-	Time = NEW_int(nb_orbits * 2);
-	int_vec_zero(Time, nb_orbits * 2);
+	Time = NEW_lint(nb_orbits * 2);
+	lint_vec_zero(Time, nb_orbits * 2);
 	time_idx = 0;
 
 	nb_of_cases = 0;
-	list_of_cases = NEW_int(nb_orbits);
+	list_of_cases = NEW_lint(nb_orbits);
 	for (orbit = 0; orbit < nb_orbits; orbit++) {
 		if ((orbit % orbit_at_level_m) != orbit_at_level_r) {
 			continue;
@@ -450,7 +450,7 @@ void blt_set_classify::create_graphs(
 		cout << "blt_set_classify::create_graphs writing file "
 				<< fname_time << endl;
 		}
-	Fio.int_matrix_write_csv(fname_time, Time, time_idx, 2);
+	Fio.lint_matrix_write_csv(fname_time, Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs Written file "
 				<< fname_time << " of size "
@@ -466,8 +466,8 @@ void blt_set_classify::create_graphs(
 				<< Fio.file_size(fname_list_of_cases) << endl;
 		}
 
-	FREE_int(Time);
-	FREE_int(list_of_cases);
+	FREE_lint(Time);
+	FREE_lint(list_of_cases);
 
 	//registry_dump_sorted();
 }
@@ -513,7 +513,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	char graph_fname_base[1000];
 	int orbit;
 	int nb_orbits;
-	int *list_of_cases_created;
+	long int *list_of_cases_created;
 	int nb_of_cases_created;
 	int c;
 	file_io Fio;
@@ -538,7 +538,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 
 
 	nb_of_cases_created = 0;
-	list_of_cases_created = NEW_int(nb_orbits);
+	list_of_cases_created = NEW_lint(nb_orbits);
 	for (c = 0; c < nb_of_cases; c++) {
 		orbit = list_of_cases[c];
 		if (f_v3) {
@@ -605,7 +605,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 				<< " / " << nb_of_cases << " cases" << endl;
 		}
 
-	FREE_int(list_of_cases_created);
+	FREE_lint(list_of_cases_created);
 
 	//registry_dump_sorted();
 }
@@ -672,7 +672,7 @@ int blt_set_classify::create_graph(
 		cout << "blt_set_classify::create_graph Case "
 				<< orbit_at_level << " / " << R->nb_cases
 				<< " Read starter : ";
-		int_vec_print(cout, R->rep, starter_size);
+		lint_vec_print(cout, R->rep, starter_size);
 		cout << endl;
 		}
 
@@ -759,9 +759,9 @@ int blt_set_classify::create_graph(
 
 void blt_set_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
-	int *candidates, int nb_candidates,
+	long int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level)
 {
@@ -779,7 +779,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 
 	int nb_free_points, nb_needed;
-	int *free_point_list; // [nb_free_points]
+	long int *free_point_list; // [nb_free_points]
 	int *point_idx; // [nb_points_total]
 		// point_idx[i] = index of a point in free_point_list
 		// or -1 if the point is in points_covered_by_starter
@@ -811,10 +811,10 @@ void blt_set_classify::lifting_prepare_function_new(
 
 
 
-	col_labels = NEW_int(nb_candidates);
+	col_labels = NEW_lint(nb_candidates);
 
 
-	int_vec_copy(candidates, col_labels, nb_candidates);
+	lint_vec_copy(candidates, col_labels, nb_candidates);
 
 
 	int nb_rows = nb_free_points;
@@ -823,7 +823,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 	if (f_vv) {
 		cout << "blt_set_classify::lifting_prepare_function_new candidates: ";
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << " (nb_candidates=" << nb_candidates << ")" << endl;
 		}
 
@@ -897,7 +897,7 @@ void blt_set_classify::lifting_prepare_function_new(
 		}
 
 
-	FREE_int(free_point_list);
+	FREE_lint(free_point_list);
 	FREE_int(point_idx);
 	FREE_int(Pts1);
 	FREE_int(Pts2);
@@ -1487,7 +1487,7 @@ void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
 
 
 
-void blt_set_classify_print(ostream &ost, int len, int *S, void *data)
+void blt_set_classify_print(ostream &ost, int len, long int *S, void *data)
 {
 	blt_set_classify *Gen = (blt_set_classify *) data;
 
@@ -1497,9 +1497,9 @@ void blt_set_classify_print(ostream &ost, int len, int *S, void *data)
 
 void blt_set_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates,
+	long int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level)
 {
@@ -1535,9 +1535,9 @@ void blt_set_classify_lifting_prepare_function_new(
 
 
 
-void blt_set_classify_early_test_func_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void blt_set_classify_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	blt_set_classify *BLT = (blt_set_classify *) data;

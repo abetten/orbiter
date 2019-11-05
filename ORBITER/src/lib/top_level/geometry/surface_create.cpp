@@ -252,7 +252,7 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 "
 					"surface from catalogue" << endl;
 		}
-		int *p_lines;
+		long int *p_lines;
 		int nb_iso;
 		//int nb_E = 0;
 		knowledge_base K;
@@ -264,7 +264,7 @@ void surface_create::init2(int verbose_level)
 			exit(1);
 		}
 		p_lines = K.cubic_surface_Lines(q, Descr->iso);
-		int_vec_copy(p_lines, Lines, 27);
+		lint_vec_copy(p_lines, Lines, 27);
 		//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
 
 		Surf->rearrange_lines_according_to_double_six(
@@ -299,10 +299,10 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 by arc lifting" << endl;
 		}
 
-		int *arc;
+		long int *arc;
 		int arc_size;
 
-		int_vec_scan(Descr->arc_lifting_text, arc, arc_size);
+		lint_vec_scan(Descr->arc_lifting_text, arc, arc_size);
 
 		if (arc_size != 6) {
 			cout << "surface_create::init arc_size != 6" << endl;
@@ -311,7 +311,7 @@ void surface_create::init2(int verbose_level)
 		
 		if (f_v) {
 			cout << "surface_create::init2 arc: ";
-			int_vec_print(cout, arc, 6);
+			lint_vec_print(cout, arc, 6);
 			cout << endl;
 		}
 
@@ -370,7 +370,7 @@ void surface_create::init2(int verbose_level)
 		FREE_OBJECT(AL);
 		
 
-		FREE_int(arc);
+		FREE_lint(arc);
 	}
 	else if (Descr->f_arc_lifting_with_two_lines) {
 
@@ -379,11 +379,11 @@ void surface_create::init2(int verbose_level)
 					"arc lifting with two lines" << endl;
 		}
 
-		int *arc;
+		long int *arc;
 		int arc_size;
-		int line1, line2;
+		long int line1, line2;
 
-		int_vec_scan(Descr->arc_lifting_text, arc, arc_size);
+		lint_vec_scan(Descr->arc_lifting_text, arc, arc_size);
 
 		if (arc_size != 8) {
 			cout << "surface_create::init arc_size != 8" << endl;
@@ -395,7 +395,7 @@ void surface_create::init2(int verbose_level)
 
 		if (f_v) {
 			cout << "surface_create::init2 arc: ";
-			int_vec_print(cout, arc, 6);
+			lint_vec_print(cout, arc, 6);
 			cout << endl;
 		}
 
@@ -450,7 +450,7 @@ void surface_create::init2(int verbose_level)
 		FREE_OBJECT(AL);
 
 
-		FREE_int(arc);
+		FREE_lint(arc);
 	}
 	else {
 		cout << "surface_create::init2 we do not "
@@ -467,7 +467,7 @@ void surface_create::init2(int verbose_level)
 
 	if (f_has_lines) {
 		cout << "surface_create::init2 Lines = ";
-		int_vec_print(cout, Lines, 27);
+		lint_vec_print(cout, Lines, 27);
 		cout << endl;
 	}
 	else {
@@ -604,7 +604,7 @@ void surface_create::apply_transformations(
 
 		if (f_has_lines) {
 			cout << "surface_create::apply_transformations Lines = ";
-			int_vec_print(cout, Lines, 27);
+			lint_vec_print(cout, Lines, 27);
 			cout << endl;
 			int i;
 			for (i = 0; i < 27; i++) {

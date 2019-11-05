@@ -153,13 +153,13 @@ void k_arc_generator::init(
 
 
 	
-	int *Arc;
+	long int *Arc;
 	int h, j;
 	
 
 	nb_k_arcs = 0;
 
-	Arc = NEW_int(sz);
+	Arc = NEW_lint(sz);
 	k_arc_idx = NEW_int(nb_orbits);	
 	
 	if (f_v) {
@@ -207,7 +207,7 @@ void k_arc_generator::init(
 
 
 		}
-	FREE_int(Arc);
+	FREE_lint(Arc);
 
 	if (f_v) {
 		cout << "We found " << nb_k_arcs << " isomorphism types of ("
@@ -224,11 +224,12 @@ void k_arc_generator::init(
 
 }
 
-void k_arc_generator::compute_line_type(int *set, int len,
+void k_arc_generator::compute_line_type(long int *set, int len,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a, b;
+	int i, j;
+	long int a, b;
 
 	if (f_v) {
 		cout << "k_arc_generator::compute_line_type" << endl;

@@ -321,19 +321,19 @@ void hadamard_classify::init(int n, int f_draw,
 	nb_orbits = gen->nb_orbits_at_level(n);
 
 	int h, a, c;
-	int *set;
+	long int *set;
 	int *H;
 	int *Ht;
 	int *M;
 
-	set = NEW_int(n);
+	set = NEW_lint(n);
 	H = NEW_int(n * n);
 	Ht = NEW_int(n * n);
 	M = NEW_int(n * n);
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_set_by_level(n, h, set);
 		cout << "Orbit " << h << " is the set ";
-		int_vec_print(cout, set, n);
+		lint_vec_print(cout, set, n);
 		cout << endl;
 
 
@@ -380,16 +380,16 @@ void hadamard_classify::init(int n, int f_draw,
 		}
 }
 
-int hadamard_classify::clique_test(int *set, int sz)
+int hadamard_classify::clique_test(long int *set, int sz)
 {
-	int i, j, a, b, idx;
+	long int i, j, a, b, idx;
 	combinatorics_domain Combi;
 
 	for (i = 0; i < n; i++) {
 		a = set[i];
 		for (j = i + 1; j < n; j++) {
 			b = set[j];
-			idx = Combi.ij2k(a, b, N);
+			idx = Combi.ij2k_lint(a, b, N);
 			if (bitvector_s_i(bitvector_adjacency, idx)) {
 				//cout << "pair (" << i << "," << j << ") vertices " << a << " and " << b << " are adjacent" << endl;
 				}
@@ -402,26 +402,26 @@ int hadamard_classify::clique_test(int *set, int sz)
 	return TRUE;
 }
 
-void hadamard_classify::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void hadamard_classify::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int j, a, pt;
+	long int j, a, pt;
 
 	if (f_v) {
 		cout << "hadamard_classify::early_test_func checking set ";
-		print_set(cout, len, S);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -459,9 +459,9 @@ int hadamard_classify::dot_product(int a, int b, int n)
 	return c;
 }
 
-void hadamard_classify_early_test_function(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void hadamard_classify_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	hadamard_classify *H = (hadamard_classify *) data;

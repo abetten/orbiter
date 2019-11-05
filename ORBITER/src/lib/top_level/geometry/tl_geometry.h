@@ -118,21 +118,21 @@ public:
 	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
 
-	int conic_test(int *S, int len, int pt, int verbose_level);
-	void early_test_func(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	int conic_test(long int *S, int len, int pt, int verbose_level);
+	void early_test_func(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void print(int len, int *S);
-	void print_set_in_affine_plane(int len, int *S);
+	void print(int len, long int *S);
+	void print_set_in_affine_plane(int len, long int *S);
 	void point_unrank(int *v, int rk);
 	int point_rank(int *v);
-	void compute_line_type(int *set, int len, int verbose_level);
+	void compute_line_type(long int *set, int len, int verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, 
 		int starter_case, 
-		int *candidates, int nb_candidates, 
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens, 
-		diophant *&Dio, int *&col_labels, 
+		diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out, 
 		int verbose_level);
 		// compute the incidence matrix of tangent lines 
@@ -143,25 +143,24 @@ public:
 		int *data, int verbose_level);
 	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
 		int verbose_level);
-	void simeon(int len, int *S, int s, int verbose_level);
+	void simeon(int len, long int *S, int s, int verbose_level);
 };
 
 
 
-void arc_generator_early_test_function(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void arc_generator_early_test_function(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case, 
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, int *&col_labels, 
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level);
-void arc_generator_print_arc(int len, int *S, void *data);
-void arc_generator_print_point(int pt, void *data);
+void arc_generator_print_arc(std::ostream &ost, int len, long int *S, void *data);
+void arc_generator_print_point(long int pt, void *data);
 void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
-void arc_generator_print_arc(std::ostream &ost, int len, int *S, void *data);
 
 
 // #############################################################################
@@ -205,9 +204,9 @@ public:
 	~arc_lifting_simeon();
 	void init(int q, int d, int n, int k,
 			int verbose_level);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void do_covering_problem(set_and_stabilizer *SaS);
 
@@ -235,7 +234,7 @@ public:
 
 	surface_with_action *Surf_A;
 
-	int *arc;
+	long int *arc;
 	int arc_size;
 	
 
@@ -252,18 +251,18 @@ public:
 	int *the_equation; // [20]
 	int *Web_of_cubic_curves; // [45 * 10]
 	int *The_plane_equations; // [45 * 4]
-	int *The_plane_rank; // [45]
-	int *The_plane_duals; // [45]
+	long int *The_plane_rank; // [45]
+	long int *The_plane_duals; // [45]
 	int base_curves4[4];
 	int row_col_Eckardt_points[6];
-	int *Dual_point_ranks; // [nb_T * 6]
+	long int *Dual_point_ranks; // [nb_T * 6]
 	int *base_curves; // [4 * 10]
 	long int Lines27[27];
 
 
 	int The_six_plane_equations[6 * 4]; // [6 * 4]
 	int *The_surface_equations; // [(q + 1) * 20]
-	int planes6[6];
+	long int planes6[6];
 	int lambda, lambda_rk;
 	int t_idx;
 
@@ -301,28 +300,28 @@ public:
 	~arc_lifting();
 	void null();
 	void freeself();
-	void create_surface(surface_with_action *Surf_A, int *Arc6, 
+	void create_surface(surface_with_action *Surf_A, long int *Arc6,
 		int verbose_level);
 	void lift_prepare(int verbose_level);
 	void loop_over_trihedral_pairs(vector_ge *cosets, 
 		vector_ge *&coset_reps, 
 		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
-	void init(surface_with_action *Surf_A, int *arc, int arc_size, 
+	void init(surface_with_action *Surf_A, long int *arc, int arc_size,
 		int verbose_level);
 		// calls find_Eckardt_points and find_trihedral_pairs
 	void find_Eckardt_points(int verbose_level);
 	void find_trihedral_pairs(int verbose_level);
 	void create_the_six_plane_equations(int t_idx, 
-		int *The_six_plane_equations, int *planes6, 
+		int *The_six_plane_equations, long int *planes6,
 		int verbose_level);
 	void create_surface_from_trihedral_pair_and_arc(
-		int t_idx, int *planes6, 
+		int t_idx, long int *planes6,
 		int *The_six_plane_equations, int *The_surface_equations, 
 		int &lambda, int &lambda_rk, int verbose_level);
 		// plane6[6]
 		// The_six_plane_equations[6 * 4]
 		// The_surface_equations[(q + 1) * 20]
-	strong_generators *create_stabilizer_of_trihedral_pair(int *planes6, 
+	strong_generators *create_stabilizer_of_trihedral_pair(long int *planes6,
 		int &trihedral_pair_orbit_index, int verbose_level);
 	void create_action_on_equations_and_compute_orbits(
 		int *The_surface_equations, 
@@ -343,7 +342,7 @@ public:
 	void print_dual_point_ranks(std::ostream &ost);
 	void print_FG(std::ostream &ost);
 	void print_the_six_plane_equations(int *The_six_plane_equations, 
-		int *plane6, std::ostream &ost);
+		long int *plane6, std::ostream &ost);
 	void print_surface_equations_on_line(int *The_surface_equations, 
 		int lambda, int lambda_rk, std::ostream &ost);
 	void print_equations();
@@ -391,7 +390,7 @@ public:
 		action *A,
 		int argc, const char **argv,
 		int verbose_level);
-	void recognize(int *pair, int *transporter,
+	void recognize(long int *pair, int *transporter,
 			int &orbit_idx, int verbose_level);
 
 };
@@ -415,7 +414,7 @@ public:
 	int pair_orbit_idx;
 	set_and_stabilizer *The_pair;
 
-	int arc_remainder[4];
+	long int arc_remainder[4];
 
 	action *A_on_rest;
 	action *A_on_partition;
@@ -510,9 +509,9 @@ public:
 		int verbose_level);
 
 	void lifting_prepare_function_new(exact_cover *E, int starter_case,
-		int *candidates, int nb_candidates,
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens,
-		diophant *&Dio, int *&col_labels,
+		diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	//void Law_71(int verbose_level);
@@ -522,15 +521,15 @@ public:
 };
 
 // global functions:
-void blt_set_classify_print(std::ostream &ost, int len, int *S, void *data);
+void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data);
 void blt_set_classify_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels,
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
-void blt_set_classify_early_test_func_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void blt_set_classify_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level);
 //void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
@@ -635,7 +634,7 @@ public:
 	void null();
 	void freeself();
 	void init_set(
-			blt_set_classify *Blt_set, int *set,
+			blt_set_classify *Blt_set, long int *set,
 			strong_generators *Aut_gens, int verbose_level);
 	void init_orbits_on_points(
 			int verbose_level);
@@ -691,7 +690,7 @@ public:
 
 	int f_has_favorite;
 	int f_iso_test_only; // do not change to favorite
-	int *favorite;
+	long int *favorite;
 	int favorite_size;
 
 	int f_has_orbit_select;
@@ -700,7 +699,7 @@ public:
 
 
 	
-	int *representative; // [nb_points_or_lines]
+	long int *representative; // [nb_points_or_lines]
 
 	longinteger_object *stab_order;
 	sims *stab;
@@ -726,7 +725,7 @@ public:
 	void choose_orbit(int orbit_no, int &f_hit_favorite, int verbose_level);
 	int favorite_orbit_representative(int *transporter, 
 		int *transporter_inv, 
-		int *the_favorite_representative, 
+		long int *the_favorite_representative,
 		int verbose_level);
 	void print_rep();
 	void print_stab();
@@ -901,7 +900,7 @@ public:
 		// Po[Flag_orbits->nb_flag_orbits], 
 		//list of orbits for which a double six exists
 
-	long int *Pts_for_partial_ovoid_test; // [5*6]
+	int *Pts_for_partial_ovoid_test; // [5*6]
 
 	
 	flag_orbits *Flag_orbits;
@@ -924,31 +923,31 @@ public:
 		int f_draw_poset_full, 
 		int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
-	void partial_ovoid_test_early(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void partial_ovoid_test_early(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void test_orbits(int verbose_level);
 	void make_spreadsheet_of_fiveplusone_configurations(
 		spreadsheet *&Sp, 
 		int verbose_level);
-	void identify_five_plus_one(int *five_lines, int transversal_line, 
-		int *five_lines_out_as_neighbors, int &orbit_index, 
+	void identify_five_plus_one(long int *five_lines, long int transversal_line,
+		long int *five_lines_out_as_neighbors, int &orbit_index,
 		int *transporter, int verbose_level);
 	void classify(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void print_five_plus_ones(std::ostream &ost);
-	void identify_double_six(int *double_six, 
+	void identify_double_six(long int *double_six,
 		int *transporter, int &orbit_index, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 
 };
 
-void callback_partial_ovoid_test_early(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void callback_partial_ovoid_test_early(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 // #############################################################################
@@ -999,13 +998,13 @@ public:
 	void classify_orbits_on_trihedra(int verbose_level);
 	void list_orbits_on_trihedra_type1(std::ostream &ost);
 	void list_orbits_on_trihedra_type2(std::ostream &ost);
-	void early_test_func_type1(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void early_test_func_type1(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void early_test_func_type2(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void early_test_func_type2(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void identify_three_planes(int p1, int p2, int p3, 
 		int &type, int *transporter, int verbose_level);
@@ -1015,20 +1014,20 @@ public:
 	void print_trihedral_pairs(std::ostream &ost,
 		int f_with_stabilizers);
 	strong_generators *identify_trihedral_pair_and_get_stabilizer(
-		int *planes6, int *transporter, int &orbit_index, 
+		long int *planes6, int *transporter, int &orbit_index,
 		int verbose_level);
-	void identify_trihedral_pair(int *planes6, 
+	void identify_trihedral_pair(long int *planes6,
 		int *transporter, int &orbit_index, int verbose_level);
 
 };
 
-void classify_trihedral_pairs_early_test_function_type1(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-void classify_trihedral_pairs_early_test_function_type2(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 
@@ -1110,11 +1109,11 @@ public:
 	void read_arguments(int argc, const char **argv);
 	void init(int argc, const char **argv);
 	void main(int verbose_level);
-	void print(std::ostream &ost, int len, int *S);
+	void print(std::ostream &ost, int len, long int *S);
 	int Hamming_distance(int a, int b);
 };
 
-void print_code(std::ostream &ost, int len, int *S, void *data);
+void print_code(std::ostream &ost, int len, long int *S, void *data);
 
 
 // #############################################################################
@@ -1235,7 +1234,7 @@ public:
 		int d, int sz, 
 		int argc, const char **argv, 
 		int verbose_level);
-	void compute_line_type(int *set, int len, int verbose_level);
+	void compute_line_type(long int *set, int len, int verbose_level);
 };
 
 
@@ -1265,7 +1264,7 @@ public:
 	//int f_lex;
 	int f_debug;
 	int f_has_extra_test_func;
-	int (*extra_test_func)(void *, int len, int *S,
+	int (*extra_test_func)(void *, int len, long int *S,
 		void *extra_test_func_data, int verbose_level);
 	void *extra_test_func_data;
 	int *Basis; // [depth * vector_space_dimension]
@@ -1299,7 +1298,7 @@ public:
 	int secondary_level;
 	int secondary_orbit_at_level;
 	int secondary_depth;
-	int *secondary_candidates;
+	long int *secondary_candidates;
 	int secondary_nb_candidates;
 	int secondary_schreier_depth;
 	poset *Poset_stab;
@@ -1317,7 +1316,7 @@ public:
 		const char *poly_q, const char *poly_Q,
 		int depth, int f_identify, int verbose_level);
 	void do_classify(int verbose_level);
-	int test_set(int len, int *S, int verbose_level);
+	int test_set(int len, long int *S, int verbose_level);
 	void compute_intersection_types_at_level(int level,
 		int &nb_nodes, int *&Intersection_dimensions,
 		int verbose_level);
@@ -1329,23 +1328,23 @@ public:
 		strong_generators *strong_gens,
 		int verbose_level);
 	void init_secondary(int argc, const char **argv,
-		int *candidates, int nb_candidates,
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens_previous,
 		int verbose_level);
 	void do_classify_secondary(int verbose_level);
-	int test_set_secondary(int len, int *S, int verbose_level);
+	int test_set_secondary(int len, long int *S, int verbose_level);
 	void compute_stabilizer_of_linear_set(int argc, const char **argv,
 		int level, int orbit_at_level,
 		strong_generators *&strong_gens,
 		int verbose_level);
 	void init_compute_stabilizer(int argc, const char **argv,
 		int level, int orbit_at_level,
-		int *candidates, int nb_candidates,
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens_previous,
 		strong_generators *&strong_gens,
 		int verbose_level);
 	void do_compute_stabilizer(int level, int orbit_at_level,
-		int *candidates, int nb_candidates,
+		long int *candidates, int nb_candidates,
 		strong_generators *&strong_gens,
 		int verbose_level);
 	void construct_semifield(int orbit_for_W, int verbose_level);
@@ -1353,15 +1352,15 @@ public:
 };
 
 
-int linear_set_classify_rank_point_func(int *v, void *data);
-void linear_set_classify_unrank_point_func(int *v, int rk, void *data);
-void linear_set_classify_early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+long int linear_set_classify_rank_point_func(int *v, void *data);
+void linear_set_classify_unrank_point_func(int *v, long int rk, void *data);
+void linear_set_classify_early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-void linear_set_classify_secondary_early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void linear_set_classify_secondary_early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 
@@ -1436,11 +1435,11 @@ public:
 	~ovoid_classify();
 	void init(int argc, const char **argv, int &verbose_level);
 	void read_arguments(int argc, const char **argv, int &verbose_level);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void print(std::ostream &ost, int *S, int len);
+	void print(std::ostream &ost, long int *S, int len);
 	void make_graphs(orbiter_data_file *ODF,
 		int f_split, int split_r, int split_m,
 		int f_lexorder_test,
@@ -1453,20 +1452,20 @@ public:
 		int verbose_level);
 	void create_graph(orbiter_data_file *ODF,
 		int orbit_idx,
-		int *candidates, int nb_candidates,
+		long int *candidates, int nb_candidates,
 		colored_graph *&CG,
 		int verbose_level);
-	void compute_coloring(int *starter, int starter_size,
-			int *candidates, int nb_points,
+	void compute_coloring(long int *starter, int starter_size,
+			long int *candidates, int nb_points,
 			int *point_color, int &nb_colors_used, int verbose_level);
 
 };
 
-void ovoid_classify_early_test_func_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void ovoid_classify_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-void callback_ovoid_print_set(std::ostream &ost, int len, int *S, void *data);
+void callback_ovoid_print_set(std::ostream &ost, int len, long int *S, void *data);
 
 
 // #############################################################################
@@ -1502,7 +1501,7 @@ public:
 		// the number of spreads
 		// from the classification
 
-	int *input_spreads; // [nb_input_spreads]
+	long int *input_spreads; // [nb_input_spreads]
 	int *input_spread_label;
 	int nb_input_spreads;
 
@@ -1546,13 +1545,13 @@ public:
 		int *packing_select_spread, int packing_select_spread_nb,
 		int verbose_level);
 	void make_spread_table(
-		int nb_spreads, int *input_spreads,
+		int nb_spreads, long int *input_spreads,
 		int nb_input_spreads, int *input_spread_label,
-		int **&Sets, int *&isomorphism_type_of_spread,
+		long int **&Sets, int *&isomorphism_type_of_spread,
 		int verbose_level);
-	void compute_dual_spreads(int **Sets,
-			int *&Dual_spread_idx,
-			int *&self_dual_spread_idx,
+	void compute_dual_spreads(long int **Sets,
+			long int *&Dual_spread_idx,
+			long int *&self_dual_spread_idx,
 			int &nb_self_dual_spreads,
 			int verbose_level);
 	int test_if_packing_is_self_dual(int *packing, int verbose_level);
@@ -1563,33 +1562,33 @@ public:
 	int spreads_are_disjoint(int i, int j);
 	void lifting_prepare_function_new(
 		exact_cover *E, int starter_case,
-		int *candidates, int nb_candidates,
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens,
-		diophant *&Dio, int *&col_labels,
+		diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	void compute_covered_points(
-		int *&points_covered_by_starter,
+		long int *&points_covered_by_starter,
 		int &nb_points_covered_by_starter,
-		int *starter, int starter_size,
+		long int *starter, int starter_size,
 		int verbose_level);
 		// points_covered_by_starter are the lines
 		// that are contained in the spreads chosen for the starter
 	void compute_free_points2(
-		int *&free_points2, int &nb_free_points2, int *&free_point_idx,
-		int *points_covered_by_starter,
+		long int *&free_points2, int &nb_free_points2, long int *&free_point_idx,
+		long int *points_covered_by_starter,
 		int nb_points_covered_by_starter,
-		int *starter, int starter_size,
+		long int *starter, int starter_size,
 		int verbose_level);
 		// free_points2 are actually the free lines, i.e.,
 		// the lines that are not
 		// yet part of the partial packing
 	void compute_live_blocks2(
 		exact_cover *EC, int starter_case,
-		int *&live_blocks2, int &nb_live_blocks2,
-		int *points_covered_by_starter,
+		long int *&live_blocks2, int &nb_live_blocks2,
+		long int *points_covered_by_starter,
 		int nb_points_covered_by_starter,
-		int *starter, int starter_size,
+		long int *starter, int starter_size,
 		int verbose_level);
 	int is_adjacent(int i, int j);
 	void read_spread_table(
@@ -1616,10 +1615,10 @@ public:
 		int verbose_level);
 	int test_if_orbit_is_partial_packing(
 		schreier *Orbits, int orbit_idx,
-		int *orbit1, int verbose_level);
+		long int *orbit1, int verbose_level);
 	int test_if_pair_of_orbits_are_adjacent(
 		schreier *Orbits, int a, int b,
-		int *orbit1, int *orbit2, int verbose_level);
+		long int *orbit1, long int *orbit2, int verbose_level);
 	// tests if every spread from orbit a
 	// is line-disjoint from every spread from orbit b
 	int test_if_pair_of_sets_are_adjacent(
@@ -1629,39 +1628,40 @@ public:
 
 	// packing2.cpp
 	void compute_list_of_lines_from_packing(
-			int *list_of_lines, int *packing,
+			long int *list_of_lines, long int *packing,
 			int verbose_level);
 	void compute_klein_invariants(isomorph *Iso, int verbose_level);
 	void compute_dual_spreads(isomorph *Iso, int verbose_level);
 	void klein_invariants_fname(char *fname, char *prefix, int iso_cnt);
 	void save_klein_invariants(char *prefix,
 		int iso_cnt,
-		int *data, int data_size, int verbose_level);
-	void compute_plane_intersections(int *data, int data_size,
+		long int *data, int data_size, int verbose_level);
+	void compute_plane_intersections(
+		long int *data, int data_size,
 		longinteger_object *&R,
-		int **&Pts_on_plane,
+		long int **&Pts_on_plane,
 		int *&nb_pts_on_plane,
 		int &nb_planes,
 		int verbose_level);
 	void report(isomorph *Iso, int verbose_level);
-	void report_whole(isomorph *Iso, std::ofstream &f, int verbose_level);
-	void report_title_page(isomorph *Iso, std::ofstream &f, int verbose_level);
-	void report_packings_by_ago(isomorph *Iso, std::ofstream &f,
+	void report_whole(isomorph *Iso, std::ostream &ost, int verbose_level);
+	void report_title_page(isomorph *Iso, std::ostream &ost, int verbose_level);
+	void report_packings_by_ago(isomorph *Iso, std::ostream &ost,
 		invariants_packing *inv, classify &C_ago, int verbose_level);
-	void report_isomorphism_type(isomorph *Iso, std::ofstream &f,
+	void report_isomorphism_type(isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_packing_as_table(isomorph *Iso, std::ofstream &f,
-		int orbit, invariants_packing *inv, int *list_of_lines,
+	void report_packing_as_table(isomorph *Iso, std::ostream &ost,
+		int orbit, invariants_packing *inv, long int *list_of_lines,
 		int verbose_level);
-	void report_klein_invariants(isomorph *Iso, std::ofstream &f,
+	void report_klein_invariants(isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
+	void report_stabilizer(isomorph &Iso, std::ostream &ost, int orbit,
 			int verbose_level);
 	void report_stabilizer_in_action(isomorph &Iso,
-			std::ofstream &f, int orbit, int verbose_level);
+			std::ostream &ost, int orbit, int verbose_level);
 	void report_stabilizer_in_action_gap(isomorph &Iso,
 			int orbit, int verbose_level);
-	void report_extra_stuff(isomorph *Iso, std::ofstream &f,
+	void report_extra_stuff(isomorph *Iso, std::ostream &ost,
 			int verbose_level);
 };
 
@@ -1671,14 +1671,14 @@ void callback_packing_report(isomorph *Iso,
 		void *data, int verbose_level);
 void packing_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates,
+	long int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
-void packing_early_test_function(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void packing_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 int count(int *Inc, int n, int m, int *set, int t);
 int count_and_record(int *Inc, int n, int m,
@@ -1700,10 +1700,10 @@ public:
 	char prefix_tex[1000];
 	int iso_cnt;
 
-	int *the_packing;
+	long int *the_packing;
 		// [P->size_of_packing]
 
-	int *list_of_lines;
+	long int *list_of_lines;
 		// [P->size_of_packing * P->spread_size]
 
 	int f_has_klein;
@@ -1755,7 +1755,7 @@ public:
 	int fixpoints_idx;
 	int fixpoints_clique_case_number;
 	int fixpoint_clique_size;
-	int *fixpoint_clique;
+	long int *fixpoint_clique;
 	int long_orbit_idx;
 
 	set_of_sets *Filtered_orbits;
@@ -1770,7 +1770,7 @@ public:
 			int fixpoints_idx,
 			int fixpoints_clique_case_number,
 			int fixpoint_clique_size,
-			int *fixpoint_clique,
+			long int *fixpoint_clique,
 			int verbose_level);
 	void filter_orbits(int verbose_level);
 	void create_graph_on_remaining_long_orbits(int verbose_level);
@@ -1779,19 +1779,19 @@ public:
 			colored_graph *&CG,
 			const char *fname,
 			int orbit_length,
-			int f_has_user_data, int *user_data, int user_data_size,
+			int f_has_user_data, long int *user_data, int user_data_size,
 			int verbose_level);
 	void create_graph_on_long_orbits(
 			colored_graph *&CG,
-			int *user_data, int user_data_sz,
+			long int *user_data, int user_data_sz,
 			int verbose_level);
 	void report_filtered_orbits(std::ostream &ost);
 
 };
 
 // globals:
-int packing_long_orbit_test_function(int *orbit1, int len1,
-		int *orbit2, int len2, void *data);
+int packing_long_orbit_test_function(long int *orbit1, int len1,
+		long int *orbit2, int len2, void *data);
 
 
 
@@ -1851,7 +1851,7 @@ public:
 
 	strong_generators *H_gens;
 	longinteger_object H_go;
-	int H_goi;
+	long int H_goi;
 
 	action *A;
 	int f_semilinear;
@@ -1860,7 +1860,7 @@ public:
 
 	strong_generators *N_gens;
 	longinteger_object N_go;
-	int N_goi;
+	long int N_goi;
 
 
 	char prefix_line_orbits[1000];
@@ -1876,9 +1876,9 @@ public:
 
 	char fname_good_orbits[1000];
 	int nb_good_orbits;
-	int *Good_orbit_idx;
-	int *Good_orbit_len;
-	int *orb;
+	long int *Good_orbit_idx;
+	long int *Good_orbit_len;
+	long int *orb;
 
 	spread_tables *Spread_tables_reduced;
 	orbit_type_repository *Spread_type_reduced;
@@ -1897,7 +1897,7 @@ public:
 	colored_graph *fixpoint_graph;
 	poset *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
-	int *Cliques;
+	long int *Cliques;
 	int nb_cliques;
 	char fname_fixp_graph_cliques_orbiter[1000];
 	orbit_transversal *Fixp_cliques;
@@ -1927,14 +1927,14 @@ public:
 	// Spread_types[P->nb_spreads * (group_order + 1)]
 	void compute_H_orbits_on_reduced_spreads(int verbose_level);
 	int test_if_pair_of_orbits_are_adjacent(
-		int *orbit1, int len1, int *orbit2, int len2,
+		long int *orbit1, int len1, long int *orbit2, int len2,
 		int verbose_level);
 		// tests if every spread from orbit1
 		// is line-disjoint from every spread from orbit2
 	void create_graph_and_save_to_file(
 		const char *fname,
 		int orbit_length,
-		int f_has_user_data, int *user_data, int user_data_size,
+		int f_has_user_data, long int *user_data, int user_data_size,
 		int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	int find_orbits_of_length(int orbit_length);
@@ -1951,11 +1951,11 @@ public:
 
 // gloabls:
 
-int packing_was_orbit_test_function(int *orbit1, int len1,
-		int *orbit2, int len2, void *data);
-void packing_was_early_test_function_fp_cliques(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+int packing_was_orbit_test_function(long int *orbit1, int len1,
+		long int *orbit2, int len2, void *data);
+void packing_was_early_test_function_fp_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 int packing_was_evaluate_orbit_invariant_function(
 		int a, int i, int j, void *evaluate_data, int verbose_level);
@@ -2026,9 +2026,9 @@ public:
 	void compute_Kramer_Mesner_matrix(int t, int k, int verbose_level);
 	//int test(int *S, int len, int verbose_level);
 		// test if totally isotropic, i.e. contained in its own perp
-	void test_if_in_perp(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void test_if_in_perp(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void test_if_closed_under_cosets(int *S, int len, 
 		int *candidates, int nb_candidates, 
@@ -2037,22 +2037,22 @@ public:
 	void get_stabilizer(int orbit_idx, group &G, longinteger_object &go_G);
 	void get_orbit_length(int orbit_idx, longinteger_object &length);
 	int get_orbit_length_as_int(int orbit_idx);
-	void orbit_element_unrank(int orbit_idx, int rank, 
-		int *set, int verbose_level);
-	void orbit_element_rank(int &orbit_idx, int &rank, 
-		int *set, int verbose_level);
+	void orbit_element_unrank(int orbit_idx, long int rank,
+		long int *set, int verbose_level);
+	void orbit_element_rank(int &orbit_idx, long int &rank,
+		long int *set, int verbose_level);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
 	void list_whole_orbit(int depth, int orbit_idx, int f_limit, int limit);
 };
 
 
-int polar_callback_rank_point_func(int *v, void *data);
-void polar_callback_unrank_point_func(int *v, int rk, void *data);
+long int polar_callback_rank_point_func(int *v, void *data);
+void polar_callback_unrank_point_func(int *v, long int rk, void *data);
 //int polar_callback_test_func(int len, int *S, void *data, int verbose_level);
-void polar_callback_early_test_func(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void polar_callback_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 
@@ -2085,7 +2085,7 @@ public:
 	int f_projective;
 	int f_semilinear;
 	int nCkq; // n choose k in q
-	int (*check_function_incremental)(int len, int *S, 
+	int (*check_function_incremental)(int len, long int *S,
 		void *check_function_incremental_data, int verbose_level);
 	void *check_function_incremental_data;
 
@@ -2103,12 +2103,12 @@ public:
 	int *Elt;
 
 	// initialized in compute_starter():
-	int starter_j1, starter_j2, starter_j3;
+	long int starter_j1, starter_j2, starter_j3;
 	action *A0;	// P Gamma L(k,q)
 	action *A0_linear; // PGL(k,q), needed for compute_live_points
 	vector_ge *gens2;
 
-	int *live_points;
+	long int *live_points;
 	int nb_live_points;
 
 
@@ -2119,19 +2119,19 @@ public:
 	void init(int n, int k, finite_field *F, grassmann *Grass, 
 		action *A, action *A2, 
 		int f_projective, int f_semilinear, 
-		int (*check_function_incremental)(int len, int *S, 
+		int (*check_function_incremental)(int len, long int *S,
 			void *data, int verbose_level), 
 		void *check_function_incremental_data, 
 		int verbose_level);
-	void do_recoordinatize(int i1, int i2, int i3, int verbose_level);
+	void do_recoordinatize(long int i1, long int i2, long int i3, int verbose_level);
 	void compute_starter(int *&S, int &size, 
 		strong_generators *&Strong_gens, int verbose_level);
 	void stabilizer_of_first_three(strong_generators *&Strong_gens, 
 		int verbose_level);
 	void compute_live_points(int verbose_level);
-	void compute_live_points_low_level(int *&live_points, 
+	void compute_live_points_low_level(long int *&live_points,
 		int &nb_live_points, int verbose_level);
-	void make_first_three(int &j1, int &j2, int &j3, int verbose_level);
+	void make_first_three(long int &j1, long int &j2, long int &j3, int verbose_level);
 };
 
 // #############################################################################
@@ -2150,7 +2150,7 @@ public:
 	poset_classification *gen;
 
 	fancy_set *Line_intersections; // [Inc->nb_cols]
-	int *blocking_set;
+	long int *blocking_set;
 	int blocking_set_len;
 	int *sz; // [Inc->nb_cols]
 	
@@ -2177,8 +2177,8 @@ public:
 	void init(incidence_structure *Inc, action *A, int verbose_level);
 	void find_partial_blocking_sets(int depth, int verbose_level);
 	int test_level(int depth, int verbose_level);
-	int test_blocking_set(int len, int *S, int verbose_level);
-	int test_blocking_set_upper_bound_only(int len, int *S, 
+	int test_blocking_set(int len, long int *S, int verbose_level);
+	int test_blocking_set_upper_bound_only(int len, long int *S,
 		int verbose_level);
 	void search_for_blocking_set(int input_no, 
 		int level, int f_all, int verbose_level);
@@ -2269,7 +2269,7 @@ public:
 		projective_space *P2,
 		int argc, const char **argv, 
 		int verbose_level);
-	void recognize(int *arc6, int *transporter,
+	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
 	void report_latex(std::ostream &ost);
 };
@@ -2730,7 +2730,7 @@ public:
 
 	int coeffs[20];
 	int f_has_lines;
-	int Lines[27];
+	long int Lines[27];
 	int f_has_group;
 	strong_generators *Sg;
 	
@@ -2923,11 +2923,11 @@ public:
 	void init(surface_domain *Surf, int f_semilinear, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	int create_double_six_safely(
-		int *five_lines, int transversal_line, 
-		int *double_six, int verbose_level);
+		long int *five_lines, long int transversal_line,
+		long int *double_six, int verbose_level);
 	int create_double_six_from_five_lines_with_a_common_transversal(
-		int *five_lines, int transversal_line, 
-		int *double_six, int verbose_level);
+		long int *five_lines, long int transversal_line,
+		long int *double_six, int verbose_level);
 	void arc_lifting_and_classify(int f_log_fp, std::ofstream &fp,
 		int *Arc6, 
 		const char *arc_label, const char *arc_label_short, 
@@ -3100,7 +3100,7 @@ public:
 
 	action *Ar;
 	int nb_points;
-	int *points;
+	long int *points;
 
 
 	strong_generators *SG;
@@ -3126,18 +3126,18 @@ public:
 			int verbose_level);
 	void create_restricted_action_on_rank_one_tensors(
 			int verbose_level);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 };
 
 int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
 void wreath_product_print_set(std::ostream &ost, int len, int *S, void *data);
-void wreath_product_rank_one_early_test_func_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 
@@ -3199,17 +3199,17 @@ public:
 		int depth, int verbose_level);
 	void classify_subplanes(const char *prefix, 
 		int verbose_level);
-	int check_arc(int *S, int len, int verbose_level);
-	int check_subplane(int *S, int len, int verbose_level);
+	int check_arc(long int *S, int len, int verbose_level);
+	int check_subplane(long int *S, int len, int verbose_level);
 	int check_if_quadrangle_defines_a_subplane(
-		int *S, int *subplane7, 
+		long int *S, int *subplane7,
 		int verbose_level);
 };
 
 
-int translation_plane_via_andre_model_check_arc(int len, int *S, 
+int translation_plane_via_andre_model_check_arc(int len, long int *S,
 	void *data, int verbose_level);
-int translation_plane_via_andre_model_check_subplane(int len, int *S, 
+int translation_plane_via_andre_model_check_subplane(int len, long int *S,
 	void *data, int verbose_level);
 
 }}

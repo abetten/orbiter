@@ -491,17 +491,17 @@ void code_classify::main(int verbose_level)
 	cout << "code_classify::main depth = " << depth << endl;
 
 	if (f_table_of_nodes) {
-		int *Table;
+		long int *Table;
 		int nb_rows, nb_cols;
 		file_io Fio;
 
 		gen->get_table_of_nodes(Table, 
 			nb_rows, nb_cols, 0 /*verbose_level*/);
 	
-		Fio.int_matrix_write_csv("data.csv", Table, nb_rows, nb_cols);
+		Fio.lint_matrix_write_csv("data.csv", Table, nb_rows, nb_cols);
 
 
-		FREE_int(Table);
+		FREE_lint(Table);
 		}
 
 	if (f_list) {
@@ -663,7 +663,7 @@ void code_classify::main(int verbose_level)
 		}
 }
 
-void code_classify::print(ostream &ost, int len, int *S)
+void code_classify::print(ostream &ost, int len, long int *S)
 {
 	int N, j;
 	int *codewords;
@@ -789,7 +789,7 @@ int code_classify::Hamming_distance(int a, int b)
 // callback functions
 // #############################################################################
 
-void print_code(ostream &ost, int len, int *S, void *data)
+void print_code(ostream &ost, int len, long int *S, void *data)
 {
 	code_classify *cg = (code_classify *) data;
 	

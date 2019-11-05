@@ -79,16 +79,17 @@ public:
 	void init_group_level_3(int verbose_level);
 	void init_group_level_4(int verbose_level);
 	void init_group_level_5(int verbose_level);
-	int incremental_check_func(int len, int *S, int verbose_level);
+	int incremental_check_func(int len, long int *S, int verbose_level);
 	void classify_subsets(int verbose_level);
 	void write_file(int verbose_level);
-	void create_Adjacency_list(int *Adj,
-		int *connection_set, int connection_set_sz,
+	void create_Adjacency_list(long int *Adj,
+		long int *connection_set, int connection_set_sz,
 		int verbose_level);
 	// Adj[go * connection_set_sz]
-	void create_additional_edges(int *Additional_neighbor,
+	void create_additional_edges(
+		long int *Additional_neighbor,
 		int *Additional_neighbor_sz,
-		int connection_element,
+		long int connection_element,
 		int verbose_level);
 	// Additional_neighbor[go], Additional_neighbor_sz[go]
 
@@ -183,7 +184,7 @@ public:
 	int rank_block_in_PG_2_q(int *block,
 			int verbose_level);
 	int get_nb_colors_as_two_design(int verbose_level);
-	int get_color_as_two_design_assume_sorted(int *design, int verbose_level);
+	int get_color_as_two_design_assume_sorted(long int *design, int verbose_level);
 };
 
 
@@ -245,7 +246,7 @@ public:
 	action *N_on_orbits;
 	int *Paired_with;
 	int nb_paired_orbits;
-	int *Pairs;
+	long int *Pairs;
 	int *Pair_orbit_length;
 
 
@@ -257,8 +258,8 @@ public:
 	int *Sets2;
 
 
-	int *Short_pairs;
-	int *Long_pairs;
+	long int *Short_pairs;
+	long int *Long_pairs;
 
 	int *f_orbit_select;
 	int *Short_orbit_inverse;
@@ -276,17 +277,17 @@ public:
 	void do_n2q3(int verbose_level);
 	void check_overgroups_of_order_nine(int verbose_level);
 	void create_minimal_overgroups(int verbose_level);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 
 };
 
 void difference_set_in_heisenberg_group_early_test_func(
-		int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
 
 
@@ -339,7 +340,7 @@ public:
 	int f_depth;
 	int depth;
 
-	int *S1; // [n2]
+	long int *S1; // [n2]
 
 
 	int f_tournament;
@@ -364,31 +365,31 @@ public:
 	~graph_classify();
 	void read_arguments(int argc, const char **argv);
 	void init(int argc, const char **argv);
-	int check_conditions(int len, int *S, int verbose_level);
-	int check_conditions_tournament(int len, int *S,
+	int check_conditions(int len, long int *S, int verbose_level);
+	int check_conditions_tournament(int len, long int *S,
 			int verbose_level);
-	int check_regularity(int *S, int len,
+	int check_regularity(long int *S, int len,
 			int verbose_level);
-	int compute_degree_sequence(int *S, int len);
-	int girth_check(int *S, int len, int verbose_level);
-	int girth_test_vertex(int *S, int len,
+	int compute_degree_sequence(long int *S, int len);
+	int girth_check(long int *S, int len, int verbose_level);
+	int girth_test_vertex(long int *S, int len,
 			int vertex, int girth, int verbose_level);
-	void get_adjacency(int *S, int len, int verbose_level);
-	void print(std::ostream &ost, int *S, int len);
+	void get_adjacency(long int *S, int len, int verbose_level);
+	void print(std::ostream &ost, long int *S, int len);
 	void print_score_sequences(int level, int verbose_level);
-	void score_sequence(int n, int *set, int sz, int *score, int verbose_level);
+	void score_sequence(int n, long int *set, int sz, long int *score, int verbose_level);
 	void draw_graphs(int level, double scale,
 			int xmax_in, int ymax_in, int xmax, int ymax,
 			int f_embedded, int f_sideways, int verbose_level);
 
 };
 
-void graph_classify_test_function(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+void graph_classify_test_function(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
 void graph_classify_print_set(std::ostream &ost,
-		int len, int *S, void *data);
+		int len, long int *S, void *data);
 
 
 
@@ -418,18 +419,18 @@ public:
 	int nb_orbits;
 
 	void init(int n, int f_draw, int verbose_level, int verbose_level_clique);
-	int clique_test(int *set, int sz);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	int clique_test(long int *set, int sz);
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int dot_product(int a, int b, int n);
 };
 
 
-void hadamard_classify_early_test_function(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void hadamard_classify_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 
@@ -458,7 +459,7 @@ public:
 	int size_of_large_set;
 
 
-	int *Design_table;
+	long int *Design_table;
 	const char *design_table_prefix;
 	int nb_designs;
 	int nb_colors;
@@ -476,8 +477,8 @@ public:
 
 	int nb_needed;
 
-	int *Design_table_reduced;
-	int *Design_table_reduced_idx;
+	long int *Design_table_reduced;
+	long int *Design_table_reduced_idx;
 	int nb_reduced;
 	int nb_remaining_colors;
 	int *reduced_design_color_table;
@@ -508,40 +509,40 @@ public:
 	void read_classification_single_case(set_and_stabilizer *&Rep,
 			int level, int case_nr, int verbose_level);
 	void make_reduced_design_table(
-			int *set, int set_sz,
-			int *&Design_table_out, int *&Design_table_out_idx, int &nb_out,
+			long int *set, int set_sz,
+			long int *&Design_table_out, long int *&Design_table_out_idx, int &nb_out,
 			int verbose_level);
 	void compute_colors(
-			int *Design_table, int nb_designs, int *&design_color_table,
+			long int *Design_table, int nb_designs, int *&design_color_table,
 			int verbose_level);
 	void compute_reduced_colors(
-			int *set, int set_sz,
+			long int *set, int set_sz,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(set_and_stabilizer *Rep,
 			strong_generators *SG, const char *prefix,
 			char *group_label, int orbit_length,
 			int f_read_solution_file, const char *solution_file_name,
-			int *&Large_sets, int &nb_large_sets,
+			long int *&Large_sets, int &nb_large_sets,
 			int verbose_level);
-	int test_orbit(int *orbit, int orbit_length);
+	int test_orbit(long int *orbit, int orbit_length);
 	int test_pair_of_orbits(
-			int *orbit1, int orbit_length1,
-			int *orbit2, int orbit_length2);
+			long int *orbit1, int orbit_length1,
+			long int *orbit2, int orbit_length2);
 
 };
 
-int large_set_design_test_orbit(int *orbit, int orbit_length,
+int large_set_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data);
-int large_set_design_test_pair_of_orbits(int *orbit1, int orbit_length1,
-		int *orbit2, int orbit_length2, void *extra_data);
+int large_set_design_test_pair_of_orbits(long int *orbit1, int orbit_length1,
+		long int *orbit2, int orbit_length2, void *extra_data);
 int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data);
 void large_set_swap_func_for_invariants(void *data, int i, int j, void *extra_data);
 int large_set_design_compare_func(void *data, int i, int j, void *extra_data);
 void large_set_swap_func(void *data, int i, int j, void *extra_data);
-void large_set_early_test_function(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void large_set_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
 		int orbit_idx, void *data, int verbose_level);
@@ -609,15 +610,14 @@ public:
 		int verbose_level);
 	void compute_starter(
 		int f_draw_poset, int f_embedded, int f_sideways, int verbose_level);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int check_function_incremental(int len, int *S, int verbose_level);
-	void print(std::ostream &ost, int *S, int len);
+	void print(std::ostream &ost, long int *S, int len);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case,
-		int *candidates, int nb_candidates, strong_generators *Strong_gens,
-		diophant *&Dio, int *&col_labels,
+		long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+		diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 };
@@ -625,17 +625,17 @@ public:
 
 
 
-void regular_ls_classify_print_set(std::ostream &ost, int len, int *S, void *data);
-void regular_ls_classify_early_test_function(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void regular_ls_classify_print_set(std::ostream &ost, int len, long int *S, void *data);
+void regular_ls_classify_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 int regular_ls_classify_check_function_incremental_callback(int len, int *S,
 		void *data, int verbose_level);
 void regular_ls_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels,
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
 

@@ -4615,7 +4615,7 @@ void finite_field::do_test_diagonal_line(int n,
 	int *Casenumbers;
 	int nb_cases;
 	//char **data;
-	int **sets;
+	long int **sets;
 	int *set_sizes;
 	char **Ago_ascii;
 	char **Aut_ascii;
@@ -4652,12 +4652,13 @@ void finite_field::do_test_diagonal_line(int n,
 		int diag_pts[3];
 		int diag_line;
 		int nb;
-		int i, j, a;
+		int i, j;
+		long int a;
 		int basis[6];
 
 
 		cout << "orbit " << h << " : ";
-		int_vec_print(cout, sets[h], set_sizes[h]);
+		lint_vec_print(cout, sets[h], set_sizes[h]);
 		cout << endl;
 
 		if (set_sizes[h] != 4) {

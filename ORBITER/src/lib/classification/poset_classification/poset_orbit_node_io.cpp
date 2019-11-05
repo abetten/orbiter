@@ -32,7 +32,7 @@ void poset_orbit_node::read_memory_object(
 		cout << "cur_pointer=" << m->cur_pointer << endl;
 		}
 	m->read_int(&prev);
-	m->read_int(&pt);
+	m->read_lint(&pt);
 	m->read_int(&nb_strong_generators);
 	if (f_v) {
 		cout << "poset_orbit_node::read_memory_object "
@@ -69,7 +69,7 @@ void poset_orbit_node::read_memory_object(
 			cout << "poset_orbit_node::read_memory_object "
 					"extension " << i << endl;
 			}
-		m->read_int(&E[i].pt);
+		m->read_lint(&E[i].pt);
 		if (f_v) {
 			cout << "poset_orbit_node::read_memory_object "
 					"pt = " << E[i].pt << endl;
@@ -126,7 +126,7 @@ void poset_orbit_node::write_memory_object(
 		}
 	m->write_int(node);
 	m->write_int(prev);
-	m->write_int(pt);
+	m->write_lint(pt);
 	m->write_int(nb_strong_generators);
 	if (f_v) {
 		cout << node << " " << prev << " " << pt << " "
@@ -157,7 +157,7 @@ void poset_orbit_node::write_memory_object(
 		cout << "used_length=" << m->used_length << endl;
 		}
 	for (i = 0; i < nb_extensions; i++) {
-		m->write_int(E[i].pt);
+		m->write_lint(E[i].pt);
 		m->write_int(E[i].orbit_len);
 		m->write_int(E[i].type);
 		if (f_v) {
@@ -299,7 +299,7 @@ void poset_orbit_node::read_file(action *A,
 		cout << "poset_orbit_node::read_file node " << node << endl;
 		}
 	fp.read((char *) &prev, sizeof(int));
-	fp.read((char *) &pt, sizeof(int));
+	fp.read((char *) &pt, sizeof(long int));
 	fp.read((char *) &nb_strong_generators, sizeof(int));
 	//prev = Fio.fread_int4(fp);
 	//pt = Fio.fread_int4(fp);
@@ -346,7 +346,7 @@ void poset_orbit_node::read_file(action *A,
 		if (f_vv) {
 			cout << "poset_orbit_node::read_file extension " << i << endl;
 			}
-		fp.read((char *) &E[i].pt, sizeof(int));
+		fp.read((char *) &E[i].pt, sizeof(long int));
 		//E[i].pt = Fio.fread_int4(fp);
 		if (f_vv) {
 			cout << "pt = " << E[i].pt << endl;
@@ -409,7 +409,7 @@ void poset_orbit_node::write_file(action *A,
 		}
 	fp.write((char *) &node, sizeof(int));
 	fp.write((char *) &prev, sizeof(int));
-	fp.write((char *) &pt, sizeof(int));
+	fp.write((char *) &pt, sizeof(long int));
 	fp.write((char *) &nb_strong_generators, sizeof(int));
 	//Fio.fwrite_int4(fp, node);
 	//Fio.fwrite_int4(fp, prev);
@@ -445,7 +445,7 @@ void poset_orbit_node::write_file(action *A,
 		cout << "nb_extensions=" << nb_extensions << endl;
 		}
 	for (i = 0; i < nb_extensions; i++) {
-		fp.write((char *) &E[i].pt, sizeof(int));
+		fp.write((char *) &E[i].pt, sizeof(long int));
 		fp.write((char *) &E[i].orbit_len, sizeof(int));
 		fp.write((char *) &E[i].type, sizeof(int));
 		//Fio.fwrite_int4(fp, E[i].pt);
@@ -591,7 +591,7 @@ void poset_orbit_node::draw_schreier_forest(
 			double scale = PC->schreier_tree_scale;
 			double line_width = PC->schreier_tree_line_width;
 			int f_has_point_labels = FALSE;
-			int *point_labels = NULL;
+			long int *point_labels = NULL;
 
 			sprintf(label, "%sschreier_tree_node_%d_%d",
 					PC->schreier_tree_prefix, node, orbit_no);

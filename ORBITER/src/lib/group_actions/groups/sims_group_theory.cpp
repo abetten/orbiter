@@ -1171,7 +1171,7 @@ void sims::center(vector_ge &gens,
 }
 
 void sims::all_cosets(int *subset, int size,
-		int *all_cosets, int verbose_level)
+		long int *all_cosets, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object go;
@@ -1224,7 +1224,7 @@ void sims::all_cosets(int *subset, int size,
 		}
 	if (f_v) {
 		cout << "sims::all_cosets finished" << endl;
-		print_integer_matrix_width(cout,
+		lint_matrix_print_width(cout,
 				all_cosets, nb_cosets, size, size, 2);
 		cout << endl;
 		}

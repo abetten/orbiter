@@ -718,20 +718,20 @@ void arc_generator::compute_starter(int verbose_level)
 		int h;
 
 		for (h = 0; h < nb_recognize; h++) {
-			int *recognize_set;
+			long int *recognize_set;
 			int recognize_set_sz;
 			int orb;
-			int *canonical_set;
+			long int *canonical_set;
 			int *Elt_transporter;
 			int *Elt_transporter_inv;
 
 			cout << "recognize " << h << " / " << nb_recognize << endl;
-			int_vec_scan(recognize[h], recognize_set, recognize_set_sz);
+			lint_vec_scan(recognize[h], recognize_set, recognize_set_sz);
 			cout << "input set = " << h << " / " << nb_recognize << " : ";
-			int_vec_print(cout, recognize_set, recognize_set_sz);
+			lint_vec_print(cout, recognize_set, recognize_set_sz);
 			cout << endl;
 		
-			canonical_set = NEW_int(recognize_set_sz);
+			canonical_set = NEW_lint(recognize_set_sz);
 			Elt_transporter = NEW_int(gen->Poset->A->elt_size_in_int);
 			Elt_transporter_inv = NEW_int(gen->Poset->A->elt_size_in_int);
 			
@@ -741,7 +741,7 @@ void arc_generator::compute_starter(int verbose_level)
 				0 /*verbose_level */);
 
 			cout << "canonical set = ";
-			int_vec_print(cout, canonical_set, recognize_set_sz);
+			lint_vec_print(cout, canonical_set, recognize_set_sz);
 			cout << endl;
 			cout << "is orbit " << orb << endl;
 			cout << "transporter:" << endl;
@@ -752,10 +752,10 @@ void arc_generator::compute_starter(int verbose_level)
 			A->element_print_quick(Elt_transporter_inv, cout);
 
 		
-			FREE_int(canonical_set);
+			FREE_lint(canonical_set);
 			FREE_int(Elt_transporter);
 			FREE_int(Elt_transporter_inv);
-			FREE_int(recognize_set);
+			FREE_lint(recognize_set);
 			}
 		}
 	if (f_list) {
@@ -801,12 +801,12 @@ void arc_generator::compute_starter(int verbose_level)
 
 }
 
-int arc_generator::conic_test(int *S, int len, int pt, int verbose_level)
+int arc_generator::conic_test(long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
 	int subset[5];
-	int the_set[6];
+	long int the_set[6];
 	int six_coeffs[6];
 	int i;
 	combinatorics_domain Combi;
@@ -840,9 +840,9 @@ int arc_generator::conic_test(int *S, int len, int pt, int verbose_level)
 	return ret;
 }
 
-void arc_generator::early_test_func(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void arc_generator::early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -853,7 +853,7 @@ void arc_generator::early_test_func(int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
@@ -892,7 +892,7 @@ void arc_generator::early_test_func(int *S, int len,
 	
 }
 
-void arc_generator::print(int len, int *S)
+void arc_generator::print(int len, long int *S)
 {
 	int i, a;
 	
@@ -903,7 +903,7 @@ void arc_generator::print(int len, int *S)
 	compute_line_type(S, len, 0 /* verbose_level */);
 
 	cout << "set ";
-	int_vec_print(cout, S, len);
+	lint_vec_print(cout, S, len);
 	cout << " has line type ";
 
 	classify C;
@@ -931,7 +931,7 @@ void arc_generator::print(int len, int *S)
 	if (f_d && d >= 3) {
 		}
 	else {
-		int **Pts_on_conic;
+		long int **Pts_on_conic;
 		int *nb_pts_on_conic;
 		int len1;
 
@@ -965,10 +965,10 @@ void arc_generator::print(int len, int *S)
 
 
 		for (i = 0; i < len1; i++) {
-			FREE_int(Pts_on_conic[i]);
+			FREE_lint(Pts_on_conic[i]);
 			}
 		FREE_int(nb_pts_on_conic);
-		FREE_pint(Pts_on_conic);
+		FREE_plint(Pts_on_conic);
 		}
 	
 	if (f_simeon) {
@@ -978,7 +978,7 @@ void arc_generator::print(int len, int *S)
 	FREE_int(Coord);
 }
 
-void arc_generator::print_set_in_affine_plane(int len, int *S)
+void arc_generator::print_set_in_affine_plane(int len, long int *S)
 {
 	F->print_set_in_affine_plane(len, S);
 }
@@ -1001,10 +1001,11 @@ int arc_generator::point_rank(int *v)
 	return rk;
 }
 
-void arc_generator::compute_line_type(int *set, int len, int verbose_level)
+void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a, b;
+	int i, j;
+	long int a, b;
 
 	if (f_v) {
 		cout << "arc_generator::compute_line_type" << endl;
@@ -1028,8 +1029,8 @@ void arc_generator::compute_line_type(int *set, int len, int verbose_level)
 
 void arc_generator::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, int *&col_labels, 
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 // compute the incidence matrix of tangent lines versus candidate points
@@ -1146,10 +1147,10 @@ void arc_generator::lifting_prepare_function_new(
 
 
 	
-	col_labels = NEW_int(nb_candidates);
+	col_labels = NEW_lint(nb_candidates);
 
 
-	int_vec_copy(candidates, col_labels, nb_candidates);
+	lint_vec_copy(candidates, col_labels, nb_candidates);
 
 	if (E->f_lex) {
 		E->lexorder_test(col_labels, nb_candidates, Strong_gens->gens, 
@@ -1725,7 +1726,7 @@ void arc_generator::report_stabilizer(isomorph &Iso,
 	f << endl << "\\bigskip" << endl;
 }
 
-void arc_generator::simeon(int len, int *S, int s, int verbose_level)
+void arc_generator::simeon(int len, long int *S, int s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 1);
@@ -1888,9 +1889,9 @@ void arc_generator::simeon(int len, int *S, int s, int verbose_level)
 // #############################################################################
 
 
-void arc_generator_early_test_function(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void arc_generator_early_test_function(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	arc_generator *Gen = (arc_generator *) data;
@@ -1913,8 +1914,8 @@ void arc_generator_early_test_function(int *S, int len,
 
 void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, int *&col_labels, 
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -1945,14 +1946,15 @@ void arc_generator_lifting_prepare_function_new(
 
 
 
-void arc_generator_print_arc(int len, int *S, void *data)
+void arc_generator_print_arc(ostream &ost, int len, long int *S, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	
+	Gen->print(len, S);
 	Gen->print_set_in_affine_plane(len, S);
 }
 
-void arc_generator_print_point(int pt, void *data)
+void arc_generator_print_point(long int pt, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	int v[3];
@@ -1970,13 +1972,6 @@ void arc_generator_report(
 	Gen->report(*Iso, verbose_level);
 }
 
-void arc_generator_print_arc(
-		ostream &ost, int len, int *S, void *data)
-{
-	arc_generator *Gen = (arc_generator *) data;
-	
-	Gen->print(len, S);
-}
 
 }}
 

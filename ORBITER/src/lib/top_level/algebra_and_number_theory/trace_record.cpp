@@ -42,7 +42,7 @@ void save_trace_record(
 		int f_trace_record_prefix, const char *trace_record_prefix,
 		int iso, int f, int po, int so, int N)
 {
-	int *M;
+	long int *M;
 	int w = 10;
 	char fname[1000];
 	const char *column_label[] = {
@@ -60,7 +60,7 @@ void save_trace_record(
 	int i;
 	file_io Fio;
 
-	M = NEW_int(N * w);
+	M = NEW_lint(N * w);
 	for (i = 0; i < N; i++) {
 		M[i * w + 0] = T[i].coset;
 		M[i * w + 1] = T[i].trace_po;
@@ -81,7 +81,7 @@ void save_trace_record(
 	else {
 		sprintf(fname, "trace_record_%03d_f%05d_po%d_so%d.csv", iso, f, po, so);
 	}
-	Fio.int_matrix_write_csv_with_labels(fname, M, N, w, column_label);
+	Fio.lint_matrix_write_csv_with_labels(fname, M, N, w, column_label);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 

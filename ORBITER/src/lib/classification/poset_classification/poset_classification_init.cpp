@@ -170,13 +170,13 @@ void poset_classification::freeself()
 		cout << "poset_classification::freeself deleting S" << endl;
 		}
 	if (S) {
-		FREE_int(S);
+		FREE_lint(S);
 		}
 	if (Schreier_vector_handler) {
 		FREE_OBJECT(Schreier_vector_handler);
 	}
 	if (tmp_set_apply_fusion) {
-		FREE_int(tmp_set_apply_fusion);
+		FREE_lint(tmp_set_apply_fusion);
 		}
 	if (tmp_find_node_for_subspace_by_rank1) {
 		FREE_int(tmp_find_node_for_subspace_by_rank1);
@@ -195,9 +195,9 @@ void poset_classification::freeself()
 	if (transporter) {
 		FREE_OBJECT(transporter);
 		for (i = 0; i <= sz; i++) {
-			FREE_int(set[i]);			
+			FREE_lint(set[i]);
 			}
-		FREE_pint(set);
+		FREE_plint(set);
 		}
 	if (f_v) {
 		cout << "poset_classification::freeself "
@@ -542,12 +542,12 @@ void poset_classification::init(poset *Poset,
 		cout << "poset_classification::init "
 				"allocating S of size " << sz << endl;
 		}
-	S = NEW_int(sz);
+	S = NEW_lint(sz);
 	for (i = 0; i < sz; i++) {
 		S[i] = i;
 		}
 
-	tmp_set_apply_fusion = NEW_int(sz + 1);
+	tmp_set_apply_fusion = NEW_lint(sz + 1);
 
 	if (f_vv) {
 		cout << "poset_classification::init "
@@ -568,9 +568,9 @@ void poset_classification::init(poset *Poset,
 	transporter->allocate(sz + 1, verbose_level - 2);
 	Poset->A->element_one(transporter->ith(0), FALSE);
 	
-	set = NEW_pint(sz + 1);
+	set = NEW_plint(sz + 1);
 	for (i = 0; i <= sz; i++) {
-		set[i] = NEW_int(sz);
+		set[i] = NEW_lint(sz);
 		}
 
 		
@@ -658,12 +658,12 @@ void poset_classification::initialize_with_starter(
 	char *path, 
 	char *prefix, 
 	int starter_size, 
-	int *starter, 
+	long int *starter,
 	strong_generators *Starter_Strong_gens, 
-	int *starter_live_points, 
+	long int *starter_live_points,
 	int starter_nb_live_points, 
 	void *starter_canonize_data, 
-	int (*starter_canonize)(int *Set, int len,
+	int (*starter_canonize)(long int *Set, int len,
 			int *Elt, void *data, int verbose_level),
 	int verbose_level)
 {
@@ -834,9 +834,9 @@ void poset_classification::init_poset_orbit_node(
 	first_poset_orbit_node_at_level = NEW_int(sz + 2);
 	first_poset_orbit_node_at_level[0] = 0;
 	first_poset_orbit_node_at_level[1] = 1;
-	set0 = NEW_int(sz + 1);
-	set1 = NEW_int(sz + 1);
-	set3 = NEW_int(sz + 1);
+	set0 = NEW_lint(sz + 1);
+	set1 = NEW_lint(sz + 1);
+	set3 = NEW_lint(sz + 1);
 	nb_extension_nodes_at_level_total = NEW_int(sz + 1);
 	nb_extension_nodes_at_level = NEW_int(sz + 1);
 	nb_fusion_nodes_at_level = NEW_int(sz + 1);
@@ -860,15 +860,15 @@ void poset_classification::exit_poset_orbit_node()
 		root = NULL;
 		}
 	if (set0) {
-		FREE_int(set0);
+		FREE_lint(set0);
 		set0 = NULL;
 		}
 	if (set1) {
-		FREE_int(set1);
+		FREE_lint(set1);
 		set1 = NULL;
 		}
 	if (set3) {
-		FREE_int(set3);
+		FREE_lint(set3);
 		set3 = NULL;
 		}
 	if (first_poset_orbit_node_at_level) {
@@ -967,12 +967,12 @@ void poset_classification::init_incremental_check_func(
 #endif
 
 void poset_classification::init_starter(int starter_size, 
-	int *starter, 
+	long int *starter,
 	strong_generators *starter_strong_gens, 
-	int *starter_live_points, 
+	long int *starter_live_points,
 	int starter_nb_live_points, 
 	void *starter_canonize_data, 
-	int (*starter_canonize)(int *Set, int len,
+	int (*starter_canonize)(long int *Set, int len,
 			int *Elt, void *data, int verbose_level),
 	int verbose_level)
 // Does not initialize the first starter nodes.
@@ -982,7 +982,7 @@ void poset_classification::init_starter(int starter_size,
 
 	if (f_v) {
 		cout << "poset_classification::init_starter starter: ";
-		int_vec_print(cout, starter, starter_size);
+		lint_vec_print(cout, starter, starter_size);
 		cout << " with " << starter_strong_gens->gens->len
 			<< " strong poset_classifications and "
 			<< starter_nb_live_points << " live points" << endl;

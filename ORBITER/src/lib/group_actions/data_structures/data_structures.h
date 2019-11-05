@@ -153,7 +153,7 @@ public:
 		int verbose_level);
 	void init_known_ago(
 		object_in_projective_space *OiP,
-		int known_ago,
+		long int known_ago,
 		int nb_rows, int nb_cols,
 		long int *canonical_labeling,
 		int verbose_level);
@@ -172,9 +172,9 @@ class orbit_rep {
 public:
 	char prefix[1000];
 	action *A;
-	void (*early_test_func_callback)(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void (*early_test_func_callback)(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
 	void *early_test_func_callback_data;
 
@@ -182,13 +182,13 @@ public:
 	int orbit_at_level;
 	int nb_cases;
 
-	int *rep;
+	long int *rep;
 
 	sims *Stab;
 	strong_generators *Strong_gens;
 
 	longinteger_object *stab_go;
-	int *candidates;
+	long int *candidates;
 	int nb_candidates;
 
 
@@ -198,9 +198,9 @@ public:
 	void freeself();
 	void init_from_file(action *A, char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
-		void (*early_test_func_callback)(int *S, int len,
-			int *candidates, int nb_candidates,
-			int *good_candidates, int &nb_good_candidates,
+		void (*early_test_func_callback)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 			void *data, int verbose_level),
 		void *early_test_func_callback_data,
 		int verbose_level);
@@ -281,13 +281,13 @@ public:
 
 	int nb_sets;
 	int set_size;
-	int *Sets; // [nb_sets * set_size]
+	long int *Sets; // [nb_sets * set_size]
 		// A system of sets that is gicen
-	int goi;
+	long int goi;
 
 	int orbit_type_size;
 		// the size of the invariant
-	int *Type_repository; // [nb_sets * orbit_type_size]
+	long int *Type_repository; // [nb_sets * orbit_type_size]
 		// for each set, the orbit invariant
 
 		// The next items are related to the classification of the
@@ -300,7 +300,7 @@ public:
 	int *type; // [nb_sets]
 		// type[i] is the index into the Type_representatives of the
 		// invariant associated with the i-th set in Sets[]
-	int *Type_representatives; // [nb_types]
+	long int *Type_representatives; // [nb_types]
 		// The distinct types that appear in the Type_repository
 
 	orbit_type_repository();
@@ -311,8 +311,8 @@ public:
 			orbits_on_something *Oos,
 			int nb_sets,
 			int set_size,
-			int *Sets,
-			int goi,
+			long int *Sets,
+			long int goi,
 			int verbose_level);
 	void report(std::ostream &ost);
 	void report_one_type(std::ostream &ost, int type_idx);
@@ -650,6 +650,12 @@ public:
 	void freeself();
 	void init(action *A, action *A2,
 			int f_allow_failure,
+			int verbose_level);
+	void print_info_and_generators(
+			schreier_vector *S);
+	int coset_rep_inv_lint(
+			schreier_vector *S,
+			long int pt, long int &pt0,
 			int verbose_level);
 	int coset_rep_inv(
 			schreier_vector *S,

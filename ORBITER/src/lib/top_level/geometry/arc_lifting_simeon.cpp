@@ -13,9 +13,9 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
-void early_test_func_for_arc_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void early_test_func_for_arc_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 
@@ -162,9 +162,9 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 
 }
 
-void arc_lifting_simeon::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void arc_lifting_simeon::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -178,7 +178,7 @@ void arc_lifting_simeon::early_test_func(int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 
@@ -187,7 +187,7 @@ void arc_lifting_simeon::early_test_func(int *S, int len,
 	type_collected = NEW_int(len + 2);
 
 	if (len == 0) {
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 		}
 	else {
@@ -238,11 +238,11 @@ void arc_lifting_simeon::early_test_func(int *S, int len,
 void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 {
 	int *type;
-	int *original_arc;
+	long int *original_arc;
 	int original_arc_sz;
 	int *bisecants;
 	int *c2_points;
-	int *external_lines;
+	long int *external_lines;
 	int nb_external_lines;
 	int h, i, j, pi, pj;
 	int nb_bisecants, nb_c2points, bi, bj, a, idx, u, pt;
@@ -255,7 +255,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 	nb_bisecants = Combi.int_n_choose_k(original_arc_sz, 2);
 	nb_c2points = nb_bisecants * nb_bisecants;
 	type = NEW_int(P->N_lines);
-	external_lines = NEW_int(P->N_lines);
+	external_lines = NEW_lint(P->N_lines);
 	nb_external_lines = 0;
 	P->line_intersection_type(original_arc,
 			original_arc_sz, type, 0 /*verbose_level*/);
@@ -267,7 +267,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 		}
 	cout << "We found " << nb_external_lines
 			<< " external lines, they are: ";
-	int_vec_print(cout, external_lines, nb_external_lines);
+	lint_vec_print(cout, external_lines, nb_external_lines);
 	cout << endl;
 
 	cout << "compute bisecants and c2 points:" << endl;
@@ -304,7 +304,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 				bj = bisecants[j];
 				a = P->intersection_of_two_lines(bi, bj);
 
-				if (Sorting.int_vec_search_linear(original_arc,
+				if (Sorting.lint_vec_search_linear(original_arc,
 						original_arc_sz, a, idx)) {
 					}
 				else {
@@ -325,11 +325,11 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 
 	cout << "filtering the external lines:" << endl;
 	int nb_filtered_lines;
-	int *filtered_lines;
+	long int *filtered_lines;
 	int cnt;
 
 	nb_filtered_lines = 0;
-	filtered_lines = NEW_int(nb_external_lines);
+	filtered_lines = NEW_lint(nb_external_lines);
 	for (i = 0; i < nb_external_lines; i++) {
 		a = external_lines[i];
 		cnt = 0;
@@ -396,10 +396,10 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 	{
 	ofstream fp(fname);
 
-	int *S; // the arc
+	long int *S; // the arc
 	int sz, idx, t;
 
-	S = NEW_int(nb_external_lines);
+	S = NEW_lint(nb_external_lines);
 
 	for (i = 0; i < nb_orbits; i++) {
 
@@ -442,14 +442,14 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 			// of external lines to get the arc:
 
 			sz = nb_external_lines;
-			int_vec_copy(external_lines, S, nb_external_lines);
-			Sorting.int_vec_heapsort(S, nb_external_lines);
+			lint_vec_copy(external_lines, S, nb_external_lines);
+			Sorting.lint_vec_heapsort(S, nb_external_lines);
 
 
 			for (u = 0; u < target_depth; u++) {
 				a = SaS->data[u];
 				a = filtered_lines[a];
-				if (!Sorting.int_vec_search(S, sz, a, idx)) {
+				if (!Sorting.lint_vec_search(S, sz, a, idx, 0)) {
 					cout << "the element a=" << a << " cannot be "
 							"found in the set of external lines" << endl;
 					exit(1);
@@ -477,7 +477,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 		} // next i
 	fp << -1 << endl;
 
-	FREE_int(S);
+	FREE_lint(S);
 
 	}
 	file_io Fio;
@@ -496,9 +496,9 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 // #############################################################################
 
 
-void early_test_func_for_arc_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void early_test_func_for_arc_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 

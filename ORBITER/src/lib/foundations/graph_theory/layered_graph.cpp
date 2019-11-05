@@ -222,7 +222,7 @@ void layered_graph::add_data1(int data, int verbose_level)
 }
 
 void layered_graph::add_node_vec_data(int l, int n,
-		int *v, int len, int verbose_level)
+		long int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

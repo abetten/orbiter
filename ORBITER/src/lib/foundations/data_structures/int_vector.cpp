@@ -218,7 +218,7 @@ void int_vector::write_to_csv_file(const char *fname, const char *label)
 {
 	file_io Fio;
 
-	Fio.int_vec_write_csv(M, m, fname, label);
+	Fio.lint_vec_write_csv(M, m, fname, label);
 }
 
 int int_vector::hash()

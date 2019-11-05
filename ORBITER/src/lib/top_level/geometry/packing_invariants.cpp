@@ -41,10 +41,10 @@ void packing_invariants::freeself()
 	int i;
 	
 	if (the_packing) {
-		FREE_int(the_packing);
+		FREE_lint(the_packing);
 		}
 	if (list_of_lines) {
-		FREE_int(list_of_lines);
+		FREE_lint(list_of_lines);
 		}
 	if (f_has_klein) {
 		delete [] R;
@@ -71,19 +71,19 @@ void packing_invariants::init(packing_classify *P,
 	strcpy(packing_invariants::prefix, prefix);
 	strcpy(packing_invariants::prefix_tex, prefix_tex);
 	packing_invariants::P = P;
-	packing_invariants::the_packing = NEW_int(P->size_of_packing);
+	packing_invariants::the_packing = NEW_lint(P->size_of_packing);
 	packing_invariants::iso_cnt = iso_cnt;
 	for (i = 0; i < P->size_of_packing; i++) {
 		packing_invariants::the_packing[i] = the_packing[i];
 		}
-	list_of_lines = NEW_int(P->size_of_packing * P->spread_size);
+	list_of_lines = NEW_lint(P->size_of_packing * P->spread_size);
 	P->compute_list_of_lines_from_packing(
 			list_of_lines,
-			the_packing,
+			packing_invariants::the_packing,
 			verbose_level - 2);
 	if (f_vv) {
 		cout << "list_of_lines:" << endl;
-		int_matrix_print(list_of_lines,
+		lint_matrix_print(list_of_lines,
 				P->size_of_packing, P->spread_size);
 		}
 	f_has_klein = FALSE;

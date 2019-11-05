@@ -2082,18 +2082,18 @@ void semifield_lifting::deep_search_at_level_three(
 
 void semifield_lifting::print_stabilizer_orders()
 {
-	int *Go;
+	long int *Go;
 	int i;
-	Go = NEW_int(nb_orbits);
+	Go = NEW_lint(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
-		Go[i] = Stabilizer_gens[i].group_order_as_int();
+		Go[i] = Stabilizer_gens[i].group_order_as_lint();
 		}
 	classify C;
 
-	C.init(Go, nb_orbits, FALSE, 0);
+	C.init_lint(Go, nb_orbits, FALSE, 0);
 	cout << "distribution of stabilizer orders at level " << cur_level << " : ";
 	C.print(TRUE /* f_backwards */);
-	FREE_int(Go);
+	FREE_lint(Go);
 }
 
 void semifield_lifting::deep_search_at_level_three_orbit(
@@ -2561,11 +2561,11 @@ void semifield_lifting::write_level_info_file(
 		cout << "semifield_lifting::write_level_info_file "
 				"level=" << cur_level << endl;
 		}
-	int *Go;
+	long int *Go;
 	int i;
-	Go = NEW_int(nb_orbits);
+	Go = NEW_lint(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
-		Go[i] = Stabilizer_gens[i].group_order_as_int();
+		Go[i] = Stabilizer_gens[i].group_order_as_lint();
 		}
 	//int *Vec[5];
 	int nb_vecs = 5;
@@ -2607,7 +2607,7 @@ void semifield_lifting::write_level_info_file(
 
 	cout << "Written file " << fname << " of size"
 			<< Fio.file_size(fname) << endl;
-	FREE_int(Go);
+	FREE_lint(Go);
 	if (f_v) {
 		cout << "semifield_lifting::write_level_info_file done" << endl;
 		}

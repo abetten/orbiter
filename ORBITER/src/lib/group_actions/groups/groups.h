@@ -476,13 +476,13 @@ public:
 			const char *prefix,
 			int verbose_level);
 	void orbit_type_of_set(
-			int *set, int set_sz, int go,
-			int *orbit_type,
+			long int *set, int set_sz, int go,
+			long int *orbit_type,
 			int verbose_level);
 	// orbit_type[(go + 1) * go] must be allocated beforehand
-	void report_type(std::ostream &ost, int *orbit_type, int goi);
-	void compute_compact_type(int *orbit_type, int goi,
-			int *&compact_type, int *&row_labels, int *&col_labels, int &m, int &n);
+	void report_type(std::ostream &ost, long int *orbit_type, long int goi);
+	void compute_compact_type(long int *orbit_type, long int goi,
+			long int *&compact_type, long int *&row_labels, long int *&col_labels, int &m, int &n);
 	void report_orbit_lengths(std::ostream &ost);
 	void classify_orbits_by_length(int verbose_level);
 	void report_classified_orbit_lengths(std::ostream &ost);
@@ -492,7 +492,7 @@ public:
 		int orbit_length,
 		int &type_idx,
 		int &prev_nb,
-		int (*test_function)(int *orbit, int orbit_length, void *data),
+		int (*test_function)(long int *orbit, int orbit_length, void *data),
 		void *test_function_data,
 		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length(
@@ -502,7 +502,7 @@ public:
 		int &type_idx,
 		int f_has_user_data, long int *user_data, int user_data_size,
 		int f_has_colors, int number_colors, int *color_table,
-		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
 		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
@@ -511,7 +511,7 @@ public:
 		int orbit_length,
 		int &type_idx,
 		int f_has_user_data, long int *user_data, int user_data_size,
-		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
 		set_of_sets *my_orbits_classified,
 		int verbose_level);
@@ -758,9 +758,11 @@ public:
 		int *prefered_reps, int nb_prefered_reps, 
 		int verbose_level);
 	void compute_all_point_orbits_with_preferred_labels(
-		int *preferred_labels, int verbose_level);
+		long int *preferred_labels, int verbose_level);
 	void compute_all_orbits_on_invariant_subset(int len, 
-		int *subset, int verbose_level);
+		long int *subset, int verbose_level);
+	void compute_all_orbits_on_invariant_subset_lint(
+		int len, long int *subset, int verbose_level);
 	void compute_point_orbit(int pt, int verbose_level);
 	void compute_point_orbit_with_limited_depth(
 			int pt, int max_depth, int verbose_level);
@@ -781,6 +783,8 @@ public:
 		int *intersection_cnt);
 	void orbits_on_invariant_subset_fast(int len, 
 		int *subset, int verbose_level);
+	void orbits_on_invariant_subset_fast_lint(
+		int len, long int *subset, int verbose_level);
 	void orbits_on_invariant_subset(int len, int *subset, 
 		int &nb_orbits_on_subset, int *&orbit_perm, int *&orbit_perm_inv);
 	void get_orbit_partition_of_points_and_lines(
@@ -806,7 +810,7 @@ public:
 		longinteger_object &go, 
 		sims *&Stab, int orbit_no, int verbose_level);
 		// this function allocates a sims structure into Stab.
-	void get_orbit(int orbit_idx, int *set, int &len, 
+	void get_orbit(int orbit_idx, long int *set, int &len,
 		int verbose_level);
 	void compute_orbit_statistic(int *set, int set_size, 
 		int *orbit_count, int verbose_level);
@@ -893,7 +897,7 @@ public:
 	void print_orbit_type(int f_backwards);
 	void list_all_orbits_tex(std::ostream &ost);
 	void print_orbit_through_labels(std::ostream &ost,
-		int orbit_no, int *point_labels);
+		int orbit_no, long int *point_labels);
 	void print_orbit_sorted(std::ostream &ost, int orbit_no);
 	void print_orbit(int cur, int last);
 	void print_tree(int orbit_no);
@@ -905,13 +909,13 @@ public:
 		int f_circletext, int rad,
 		int f_embedded, int f_sideways,
 		double scale, double line_width,
-		int f_has_point_labels, int *point_labels,
+		int f_has_point_labels, long int *point_labels,
 		int verbose_level);
 	void draw_tree(const char *fname, int orbit_no,
 		int xmax, int ymax, int f_circletext, int rad,
 		int f_embedded, int f_sideways,
 		double scale, double line_width,
-		int f_has_point_labels, int *point_labels,
+		int f_has_point_labels, long int *point_labels,
 		int verbose_level);
 	void draw_tree2(const char *fname, int xmax, int ymax,
 		int f_circletext,
@@ -919,7 +923,7 @@ public:
 		int i, int last, int rad,
 		int f_embedded, int f_sideways,
 		double scale, double line_width,
-		int f_has_point_labels, int *point_labels,
+		int f_has_point_labels, long int *point_labels,
 		int verbose_level);
 	void subtree_draw_lines(mp_graphics &G, int f_circletext,
 		int parent_x, int parent_y, int *weight,
@@ -928,7 +932,7 @@ public:
 	void subtree_draw_vertices(mp_graphics &G,
 		int f_circletext, int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last, int rad,
-		int f_has_point_labels, int *point_labels,
+		int f_has_point_labels, long int *point_labels,
 		int verbose_level);
 	void subtree_place(int *weight, int *placement_x,
 		int left, int right, int i, int last);
@@ -1354,7 +1358,7 @@ public:
 	void center(vector_ge &gens, int *center_element_ranks,
 		int &nb_elements, int verbose_level);
 	void all_cosets(int *subset, int size,
-		int *all_cosets, int verbose_level);
+		long int *all_cosets, int verbose_level);
 	void element_ranks_subgroup(sims *subgroup,
 		int *element_ranks, int verbose_level);
 	void find_standard_generators_int(int ord_a, int ord_b,
@@ -1430,11 +1434,6 @@ public:
 		int verbose_level);
 	void read_list_of_elements(action *A,
 		char *fname, int verbose_level);
-#if 0
-	void write_sgs(const char *fname, int verbose_level);
-	void read_sgs(const char *fname, vector_ge *SG,
-		int verbose_level);
-#endif
 	void write_as_magma_permutation_group(const char *fname_base,
 		vector_ge *gens, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
@@ -1577,7 +1576,7 @@ public:
 		schreier *&Sch, int verbose_level);
 	void compute_schreier_with_given_action_on_a_given_set(
 		action *A_given, 
-		schreier *&Sch, int *set, int len, int verbose_level);
+		schreier *&Sch, long int *set, int len, int verbose_level);
 	void orbits_on_points(int &nb_orbits, int *&orbit_reps, 
 		int verbose_level);
 	void orbits_on_points_with_given_action(action *A_given, 
@@ -1602,7 +1601,7 @@ public:
 	void export_permutation_group_to_GAP(const char *fname,
 		int verbose_level);
 	void compute_and_print_orbits_on_a_given_set(action *A_given,
-		int *set, int len, int verbose_level);
+		long int *set, int len, int verbose_level);
 	void compute_and_print_orbits(action *A_given, 
 		int verbose_level);
 	int test_if_normalizing(sims *S, int verbose_level);

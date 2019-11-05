@@ -51,7 +51,7 @@ void blt_set_with_action::freeself()
 }
 
 void blt_set_with_action::init_set(
-		blt_set_classify *Blt_set, int *set,
+		blt_set_classify *Blt_set, long int *set,
 		strong_generators *Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

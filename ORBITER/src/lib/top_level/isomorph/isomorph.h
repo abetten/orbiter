@@ -389,7 +389,7 @@ public:
 	int identify_database_is_open(int *set, 
 		int f_implicit_fusion, int verbose_level);
 	void induced_action_on_set_basic(sims *S, 
-		int *set, int verbose_level);
+		long int *set, int verbose_level);
 	void induced_action_on_set(sims *S, 
 		int *set, int verbose_level);
 	// Called by do_iso_test and print_isomorphism_types
@@ -427,7 +427,7 @@ public:
 		int nb, int id, int no, 
 		int nb_solutions, int h, uint_4 &datref,
 		int print_mod, int verbose_level);
-	void load_solution(int id, int *data);
+	void load_solution(int id, long int *data);
 	void load_solution_by_btree(int btree_idx, 
 		int idx, int &id, int *data);
 	int find_extension_easy(int *set, 

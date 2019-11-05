@@ -44,7 +44,7 @@ void exact_cover::null()
 void exact_cover::freeself()
 {
 	if (starter) {
-		FREE_int(starter);
+		FREE_lint(starter);
 		}
 	if (random_permutation) {
 		FREE_int(random_permutation);
@@ -128,9 +128,9 @@ void exact_cover::init_basic(void *user_data,
 }
 
 void exact_cover::init_early_test_func(
-	void (*early_test_func)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void (*early_test_func)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level), 
 	void *early_test_func_data,
 	int verbose_level)
@@ -146,8 +146,8 @@ void exact_cover::init_early_test_func(
 
 void exact_cover::init_prepare_function_new(
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
-		int *candidates, int nb_candidates, strong_generators *Strong_gens, 
-		diophant *&Dio, int *&col_label, 
+			long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+		diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level),
 	int verbose_level)
@@ -231,7 +231,7 @@ void exact_cover::randomize(const char *random_permutation_fname,
 
 void exact_cover::add_solution_test_function(
 	int (*solution_test_func)(exact_cover *EC,
-			int *S, int len, void *data, int verbose_level),
+			long int *S, int len, void *data, int verbose_level),
 	void *solution_test_func_data,
 	int verbose_level)
 {
@@ -405,9 +405,9 @@ void exact_cover::compute_liftings_new(int f_solve,
 						"final processing of solutions" << endl;
 				}
 			
-			int *the_solution;
+			long int *the_solution;
 
-			the_solution = NEW_int(starter_size + sol_length);
+			the_solution = NEW_lint(starter_size + sol_length);
 			int i, j, f_do_it;
 
 			for (i = 0; i < nb_sol; i++) {
@@ -416,7 +416,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 							"solution " << i << " / " << nb_sol << endl;
 					}
 
-				int_vec_copy(starter, the_solution, starter_size);
+				lint_vec_copy(starter, the_solution, starter_size);
 				for (j = 0; j < sol_length; j++) {
 					the_solution[starter_size + j] =
 							Solutions[i * sol_length + j];
@@ -456,7 +456,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 					nb_deleted_solutions++;
 					}
 				}
-			FREE_int(the_solution);
+			FREE_lint(the_solution);
 			FREE_int(Solutions);
 			}
 
@@ -566,7 +566,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	sprintf(str, "%s%s", input_prefix, base_fname);
 
 	orbit_rep *R;
-	R = new orbit_rep;
+	R = NEW_OBJECT(orbit_rep);
 
 
 	if (f_vv) {
@@ -581,6 +581,19 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 		early_test_func_data, 
 		verbose_level - 3
 		);
+
+#if 0
+	void orbit_rep::init_from_file(
+		action *A, char *prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		void (*early_test_func_callback)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
+		void *early_test_func_callback_data,
+		int verbose_level)
+#endif
+
 	if (f_vv) {
 		cout << "exact_cover::compute_liftings_single_case_new "
 				"case " << starter_case << " / " << starter_nb_cases
@@ -589,13 +602,13 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 		// R has: int *candidates; int nb_candidates;
 	
-	int_vec_copy(R->rep, starter, starter_size);
+	lint_vec_copy(R->rep, starter, starter_size);
 
 	if (f_v) {
 		cout << "exact_cover::compute_liftings_single_case "
 				"case " << starter_case << " / " << starter_nb_cases
 				<< " stab_go = " << *R->stab_go << " starter = ";
-		int_vec_print(cout, starter, starter_size);
+		lint_vec_print(cout, starter, starter_size);
 		cout << endl;
 		}
 
@@ -819,7 +832,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 }
 
-void exact_cover::lexorder_test(int *live_blocks2,
+void exact_cover::lexorder_test(long int *live_blocks2,
 		int &nb_live_blocks2, vector_ge *stab_gens,
 	int verbose_level)
 {

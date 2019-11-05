@@ -39,12 +39,12 @@ void poset_classification::recognize_start_over(
 		}
 
 
-	Sorting.int_vec_heapsort(set[lvl + 1], size /* - 1 */);
+	Sorting.lint_vec_heapsort(set[lvl + 1], size /* - 1 */);
 		// we don't keep the last point (i.e., the (len + 1)-th) extra
-	int_vec_copy(set[lvl + 1], set[0], size);
+	lint_vec_copy(set[lvl + 1], set[0], size);
 	//int_vec_copy(size, set[lvl + 1], gen->set[0]);
 	if (f_vv) {
-		int_set_print(cout, set[0], size);
+		lint_set_print(cout, set[0], size);
 		cout << endl;
 		}
 	Poset->A->element_move(
@@ -117,7 +117,7 @@ void poset_classification::recognize_recursion(
 			<< endl;
 		cout << "node=" << O->node << " prev=" << O->prev
 				<< " pt=" << O->pt << endl;
-		int_set_print(cout, set[lvl], size);
+		lint_set_print(cout, set[lvl], size);
 		cout << endl;
 		}
 	if (f_v4) {
@@ -144,8 +144,8 @@ void poset_classification::recognize_recursion(
 #endif
 
 	if (lvl == 0 && f_starter) {
-		int *cur_set = set[0];
-		int *next_set = set[0 + starter_size];
+		long int *cur_set = set[0];
+		long int *next_set = set[0 + starter_size];
 		int *cur_transporter = transporter->ith(0);
 		int *next_transporter = transporter->ith(
 				0 + starter_size);
@@ -245,7 +245,7 @@ void poset_classification::recognize_recursion(
 		
 		cout << "poset_classification::recognize_recursion "
 				"the original set is" << endl;
-		int_set_print(cout, set[0], size);
+		lint_set_print(cout, set[0], size);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, size, gen->set[0],
@@ -253,7 +253,7 @@ void poset_classification::recognize_recursion(
 			//}
 		cout << "poset_classification::recognize_recursion "
 				"the current set is" << endl;
-		int_set_print(cout, set[lvl + 1], size);
+		lint_set_print(cout, set[lvl + 1], size);
 		cout << endl;
 		//if (f_print_function) {
 			//(*print_function)(cout, size, set[lvl + 1],
@@ -262,7 +262,7 @@ void poset_classification::recognize_recursion(
 		cout << "poset_classification::recognize_recursion "
 				"the node corresponds to" << endl;
 		O->store_set_to(this, lvl - 1, set3);
-		int_set_print(cout, set3, lvl);
+		lint_set_print(cout, set3, lvl);
 		cout << endl;
 
 		cout << "poset_classification::recognize_recursion "
@@ -389,7 +389,7 @@ void poset_classification::recognize_recursion(
 }
 
 void poset_classification::recognize(
-	int *the_set, int size, int *transporter,
+	long int *the_set, int size, int *transporter,
 	int f_implicit_fusion,
 	int &final_node, int verbose_level)
 // This routine is called from upstep
@@ -422,12 +422,12 @@ void poset_classification::recognize(
 	// tolerant search and do not have a final result
 	final_node = -1;
 	
-	int_vec_copy(the_set, set[0], size);
+	lint_vec_copy(the_set, set[0], size);
 
 	Poset->A->element_one(poset_classification::transporter->ith(0), 0);
 
 	if (f_vv) {
-		int_vec_print(cout, set[0], size);
+		lint_vec_print(cout, set[0], size);
 		cout << endl;
 		if (f_print_function) {
 			(*print_function)(cout, size, set[0],
@@ -444,7 +444,7 @@ void poset_classification::recognize(
 	nb_times_trace++;
 
 	
-	int_vec_copy(set[0], set0, size);
+	lint_vec_copy(set[0], set0, size);
 
 	recognize_recursion(
 		size, f_implicit_fusion, 

@@ -939,13 +939,11 @@ void schreier::compute_all_point_orbits_with_prefered_reps(
 	}
 }
 
-
 void schreier::compute_all_point_orbits_with_preferred_labels(
-	int *preferred_labels, int verbose_level)
+	long int *preferred_labels, int verbose_level)
 {
 	int pt, pt_loc, cur, a, i;
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	int *labels, *perm, *perm_inv;
 	sorting Sorting;
 	
@@ -1024,11 +1022,46 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 }
 
 void schreier::compute_all_orbits_on_invariant_subset(
-	int len, int *subset, int verbose_level)
+	int len, long int *subset, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, f;
 	
+	if (f_v) {
+		cout << "schreier::compute_all_orbits_on_invariant_subset" << endl;
+		cout << "computing orbits on a set of size " << len << endl;
+	}
+	initialize_tables();
+	for (i = 0; i < len; i++) {
+		move_point_here(i, subset[i]);
+	}
+	while (TRUE) {
+		f = orbit_first[nb_orbits];
+		if (f >= len) {
+			break;
+		}
+		compute_point_orbit(orbit[f], 0 /* verbose_level */);
+	}
+	if (f > len) {
+		cout << "schreier::compute_all_orbits_on_invariant_subset "
+				"the set is not G-invariant" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "found " << nb_orbits << " orbits" << endl;
+		print_orbit_length_distribution(cout);
+	}
+	if (f_v) {
+		cout << "schreier::compute_all_orbits_on_invariant_subset done" << endl;
+	}
+}
+
+void schreier::compute_all_orbits_on_invariant_subset_lint(
+	int len, long int *subset, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, f;
+
 	if (f_v) {
 		cout << "schreier::compute_all_orbits_on_invariant_subset" << endl;
 		cout << "computing orbits on a set of size " << len << endl;
@@ -1740,6 +1773,58 @@ void schreier::orbits_on_invariant_subset_fast(
 		}
 }
 
+void schreier::orbits_on_invariant_subset_fast_lint(
+	int len, long int *subset, int verbose_level)
+{
+	int i, p, j;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+
+	if (f_v) {
+		cout << "schreier::orbits_on_invariant_subset_fast_lint "
+			"computing orbits on invariant subset "
+			"of size " << len;
+		if (f_images_only) {
+			cout << " using images only" << endl;
+		}
+		else {
+			cout << " in action " << A->label << endl;
+			//A->print_info();
+		}
+	}
+
+	for (i = 0; i < len; i++) {
+		p = subset[i];
+		j = orbit_inv[p];
+		if (j >= orbit_first[nb_orbits]) {
+			if (f_vvv) {
+				cout << "schreier::orbits_on_invariant_subset_fast_lint computing orbit no " << nb_orbits << endl;
+				}
+			compute_point_orbit(p, 0);
+			}
+		}
+#if 0
+	if (orbit_first[nb_orbits] != len) {
+		cout << "schreier::orbits_on_invariant_subset_"
+				"fast orbit_first[nb_orbits] != len" << endl;
+		cout << "orbit_first[nb_orbits] = "
+				<< orbit_first[nb_orbits] << endl;
+		cout << "len = " << len << endl;
+		cout << "subset:" << endl;
+		int_vec_print(cout, subset, len);
+		cout << endl;
+		print_tables(cout, FALSE);
+		exit(1);
+		}
+#endif
+	if (f_v) {
+		cout << "schreier::orbits_on_invariant_subset_fast_lint "
+			"found " << nb_orbits
+			<< " orbits on the invariant subset of size " << len << endl;
+		}
+}
+
 void schreier::orbits_on_invariant_subset(int len, int *subset, 
 	int &nb_orbits_on_subset, 
 	int *&orbit_perm, int *&orbit_perm_inv)
@@ -2262,7 +2347,7 @@ void schreier::point_stabilizer(action *default_action,
 	}
 }
 
-void schreier::get_orbit(int orbit_idx, int *set, int &len, 
+void schreier::get_orbit(int orbit_idx, long int *set, int &len,
 	int verbose_level)
 {
 	int f, i;

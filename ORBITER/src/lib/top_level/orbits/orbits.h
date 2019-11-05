@@ -171,14 +171,14 @@ public:
 	action *A;
 	action *A2;
 	vector_ge *gens;
-	int *set; // the set whose orbit we want to compute; it has size 'sz'
+	long int *set; // the set whose orbit we want to compute; it has size 'sz'
 	int sz;
 
 	int position_of_original_set; // = 0; never changes
 	int allocation_length; // number of entries allocated in Sets
 	int old_length;
 	int used_length; // number of sets currently stored in Sets
-	int **Sets;
+	long int **Sets;
 		// the sets are stored in the order in which they
 		// are discovered and added to the tree
 	int *Extra; // [allocation_length * 2]
@@ -203,13 +203,14 @@ public:
 	~orbit_of_sets();
 	void null();
 	void freeself();
-	void init(action *A, action *A2, int *set, int sz, 
-		vector_ge *gens, int verbose_level);
+	void init(action *A, action *A2,
+			long int *set, int sz,
+			vector_ge *gens, int verbose_level);
 	void compute(int verbose_level);
 	void dump_tables_of_hash_values();
-	void get_table_of_orbits(int *&Table, int &orbit_length, 
+	void get_table_of_orbits(long int *&Table, int &orbit_length,
 		int &set_size, int verbose_level);
-	void get_table_of_orbits_and_hash_values(int *&Table,
+	void get_table_of_orbits_and_hash_values(long int *&Table,
 			int &orbit_length, int &set_size, int verbose_level);
 	void coset_rep(int j);
 		// result is in cosetrep

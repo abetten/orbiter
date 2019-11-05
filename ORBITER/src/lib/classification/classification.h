@@ -48,5 +48,5 @@ enum find_isomorphism_result {
 
 #include "./classify/classify.h"
 #include "./poset_classification/poset_classification.h"
-#include "./set_stabilizer/set_stabilizer.h"
+//#include "./set_stabilizer/set_stabilizer.h"
 

@@ -192,18 +192,18 @@ void surface_with_action::init_group(int f_semilinear,
 }
 
 int surface_with_action::create_double_six_safely(
-	int *five_lines, int transversal_line, int *double_six,
+	long int *five_lines, long int transversal_line, long int *double_six,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int double_six1[12];
-	int double_six2[12];
+	long int double_six1[12];
+	long int double_six2[12];
 	int r1, r2, c;
 
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_safely" << endl;
 		cout << "five_lines=";
-		int_vec_print(cout, five_lines, 5);
+		lint_vec_print(cout, five_lines, 5);
 		cout << " transversal_line=" << transversal_line << endl;
 	}
 
@@ -224,7 +224,7 @@ int surface_with_action::create_double_six_safely(
 				"!r1 && r2" << endl;
 		exit(1);
 	}
-	c = int_vec_compare(double_six1, double_six2, 12);
+	c = lint_vec_compare(double_six1, double_six2, 12);
 	if (!r1) {
 		return FALSE;
 	}
@@ -232,14 +232,14 @@ int surface_with_action::create_double_six_safely(
 		cout << "surface_with_action::create_double_six_safely "
 				"the double sixes differ" << endl;
 		cout << "double six 1: ";
-		int_vec_print(cout, double_six1, 12);
+		lint_vec_print(cout, double_six1, 12);
 		cout << endl;
 		cout << "double six 2: ";
-		int_vec_print(cout, double_six2, 12);
+		lint_vec_print(cout, double_six2, 12);
 		cout << endl;
 		exit(1);
 	}
-	int_vec_copy(double_six1, double_six, 12);
+	lint_vec_copy(double_six1, double_six, 12);
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_safely done" << endl;
 	}
@@ -247,17 +247,17 @@ int surface_with_action::create_double_six_safely(
 }
 
 int surface_with_action::create_double_six_from_five_lines_with_a_common_transversal(
-	int *five_lines, int transversal_line, int *double_six,
+	long int *five_lines, long int transversal_line, long int *double_six,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int nb_subsets;
 	int subset[5];
-	int four_lines[5];
-	int P[5];
-	int rk, i, ai4image, P4, Q, a, b, d, h, k, line3, line4;
-	int b1, b2, b3, b4, b5;
+	long int four_lines[5];
+	long int P[5];
+	long int rk, i, ai4image, P4, Q, a, b, d, h, k, line3, line4;
+	long int b1, b2, b3, b4, b5;
 	int size_complement;
 	int Q4[4];
 	int L[8];
@@ -285,13 +285,13 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		cout << "surface_with_action::create_double_six_from_five_"
 				"lines_with_a_common_transversal" << endl;
 		cout << "The five lines are ";
-		int_vec_print(cout, five_lines, 5);
+		lint_vec_print(cout, five_lines, 5);
 		cout << endl;
 	}
 
 	ell0 = Surf->rank_line(L0);
 
-	int_vec_copy(five_lines, double_six, 5); // fill in a_1,\ldots,a_5
+	lint_vec_copy(five_lines, double_six, 5); // fill in a_1,\ldots,a_5
 	double_six[11] = transversal_line; // fill in b_6
 	
 	for (i = 0; i < 5; i++) {
@@ -304,7 +304,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	}
 	if (f_vv) {
 		cout << "The five intersection points are:";
-		int_vec_print(cout, P, 5);
+		lint_vec_print(cout, P, 5);
 		cout << endl;
 	}
 
@@ -329,7 +329,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		P4 = P[subset[3]];
 		if (f_vv) {
 			cout << "subset " << rk << " / " << nb_subsets << " : ";
-			int_vec_print(cout, four_lines, 5);
+			lint_vec_print(cout, four_lines, 5);
 			cout << " P4=" << P4 << endl;
 		}
 
@@ -366,7 +366,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 
 
-		Surf->Gr->unrank_int_here(L, ai4image, 0 /* verbose_level */);
+		Surf->Gr->unrank_lint_here(L, ai4image, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "before F->adjust_basis" << endl;
 			cout << "L=" << endl;

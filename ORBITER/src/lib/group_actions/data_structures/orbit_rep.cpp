@@ -40,7 +40,7 @@ void orbit_rep::null()
 void orbit_rep::freeself()
 {
 	if (rep) {
-		FREE_int(rep);
+		FREE_lint(rep);
 		}
 	if (Stab) {
 		FREE_OBJECT(Stab);
@@ -49,7 +49,7 @@ void orbit_rep::freeself()
 		FREE_OBJECT(Strong_gens);
 		}
 	if (candidates) {
-		FREE_int(candidates);
+		FREE_lint(candidates);
 		}
 	if (stab_go) {
 		FREE_OBJECT(stab_go);
@@ -60,9 +60,9 @@ void orbit_rep::freeself()
 void orbit_rep::init_from_file(
 	action *A, char *prefix,
 	int level, int orbit_at_level, int level_of_candidates_file, 
-	void (*early_test_func_callback)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void (*early_test_func_callback)(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level), 
 	void *early_test_func_callback_data, 
 	int verbose_level)
@@ -95,6 +95,25 @@ void orbit_rep::init_from_file(
 		nb_cases, 
 		verbose_level - 1);
 	
+#if 0
+	void action::read_orbit_rep_and_candidates_from_files_and_process(
+		char *prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		void (*early_test_func_callback)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
+		void *early_test_func_callback_data,
+		long int *&starter,
+		int &starter_sz,
+		sims *&Stab,
+		strong_generators *&Strong_gens,
+		long int *&candidates,
+		int &nb_candidates,
+		int &nb_cases,
+		int verbose_level)
+#endif
+
 	stab_go = NEW_OBJECT(longinteger_object);
 	Stab->group_order(*stab_go);
 

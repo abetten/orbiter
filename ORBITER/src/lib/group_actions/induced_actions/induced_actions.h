@@ -353,12 +353,12 @@ public:
 		// the pivot column for the subspace basis
 		// to be used if a vector v[len] is reduced modulo a subspace
 
-	int degree; 
+	long int degree;
 		// the number of projective points in the small space 
 		// (i.e., the factor space)
 		// (q^factor_space_len - 1) / (q - 1), 
 		// as computed by compute_degree();
-	int large_degree;
+	long int large_degree;
 		// the number of projective points in the large space
 		// (q^len - 1) / (q - 1), 
 		// as computed by compute_large_degree();
@@ -371,13 +371,13 @@ public:
 		// the list of columns that are not pivot columns, 
 		// i.e. not in base_cols[] 
 		// this is the set-theoretic complement of base_cols
-	int *projection_table; 
+	long int *projection_table;
 		// [nb_points]
 		// projection_table[i] = j 
 		// means that the Gauss reduced vector in 
 		// the coset of point_list[i] 
 		// is in coset_reps_Gauss[j]
-	int *preimage_table; // [degree]
+	long int *preimage_table; // [degree]
 	int *tmp; // [factor_space_len] 
 	int *Tmp1; // [VS->dimension]
 	int *Tmp2; // [VS->dimension]
@@ -386,7 +386,7 @@ public:
 	int f_table_mode;
 
 	int nb_cosets;
-	int *coset_reps_Gauss; 
+	long int *coset_reps_Gauss;
 		// [nb_cosets]
 		// ordered list of Gauss reduced coset representatives
 		// the entries are ranks of vectors in the large space
@@ -409,24 +409,24 @@ public:
 	void init_light(
 		vector_space *VS,
 		action &A_base, action &A,
-		int *subspace_basis_ranks, int subspace_basis_size, 
+		long int *subspace_basis_ranks, int subspace_basis_size,
 		int verbose_level);
 	void init_by_rank_table_mode(
 		vector_space *VS,
 		action &A_base, action &A,
-		int *subspace_basis_ranks, int subspace_basis_size, 
-		int *point_list, int nb_points, 
+		long int *subspace_basis_ranks, int subspace_basis_size,
+		long int *point_list, int nb_points,
 		int verbose_level);
 	void print_coset_table();
 	void print_projection_table(
-			int *point_list, int nb_points);
+			long int *point_list, int nb_points);
 	void init_coset_table(
-			int *point_list, int nb_points,
+			long int *point_list, int nb_points,
 			int verbose_level);
 	void init_by_rank(
 		vector_space *VS,
 		action &A_base, action &A,
-		int *subspace_basis_ranks, int subspace_basis_size, 
+		long int *subspace_basis_ranks, int subspace_basis_size,
 		int f_compute_tables, int verbose_level);
 	void init_from_coordinate_vectors(
 		vector_space *VS,
@@ -436,18 +436,18 @@ public:
 	void init2(action &A_base, action &A, 
 		int f_compute_tables, int verbose_level);
 	void compute_projection_table(int verbose_level);
-	int compute_degree();
-	int compute_large_degree();
+	long int compute_degree();
+	long int compute_large_degree();
 	void list_all_elements();
 	void reduce_mod_subspace(int *v, int verbose_level);
-	int lexleast_element_in_coset(int rk, int verbose_level);
+	long int lexleast_element_in_coset(long int rk, int verbose_level);
 		// This function computes the lexleast 
 		// element in the coset modulo the subspace.
 		// It does so by looping over all q^subspace_basis_size 
 		// elements in the subspace and ranking the corresponding 
 		// vector in the large space using rank_in_large_space(v2).
-	int project_onto_Gauss_reduced_vector(int rk, int verbose_level);
-	int project(int rk, int verbose_level);
+	long int project_onto_Gauss_reduced_vector(long int rk, int verbose_level);
+	long int project(long int rk, int verbose_level);
 		// unranks the vector rk, and reduces it 
 		// modulo the subspace basis.
 		// The non-pivot components are considered 
@@ -456,14 +456,14 @@ public:
 		// This rank is returned.
 		// If the vector turns out to lie in the 
 		// subspace, -1 is returned.
-	int preimage(int rk, int verbose_level);
+	long int preimage(long int rk, int verbose_level);
 	void embed(int *from, int *to);
-	void unrank(int *v, int rk, int verbose_level);
-	int rank(int *v, int verbose_level);
-	void unrank_in_large_space(int *v, int rk);
-	int rank_in_large_space(int *v);
-	void unrank_in_small_space(int *v, int rk);
-	int rank_in_small_space(int *v);
+	void unrank(int *v, long int rk, int verbose_level);
+	long int rank(int *v, int verbose_level);
+	void unrank_in_large_space(int *v, long int rk);
+	long int rank_in_large_space(int *v);
+	void unrank_in_small_space(int *v, long int rk);
+	long int rank_in_small_space(int *v);
 	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
 };
 

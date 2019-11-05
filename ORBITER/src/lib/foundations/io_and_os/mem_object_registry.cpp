@@ -450,6 +450,47 @@ void mem_object_registry::free_ppint(int ***p, const char *file, int line)
 	delete [] p;
 }
 
+long int ***mem_object_registry::allocate_pplint(long int n,
+		const char *file, int line)
+{
+	int f_v = (memory_debug_verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::allocate_ppint ppint[n], "
+				"n=" << n << " file=" << file << " line=" << line << endl;
+	}
+	long int ***p;
+	p = new pplint[n];
+	if (f_memory_debug) {
+		add_to_registry(p /* pointer */,
+				POINTER_TYPE_pplint, n, sizeof(int **),
+				"", file, line,
+				memory_debug_verbose_level - 1);
+		}
+	return p;
+}
+
+void mem_object_registry::free_pplint(long int ***p, const char *file, int line)
+{
+	int f_v = (memory_debug_verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::free_pplint ppint[n], "
+				" file=" << file << " line=" << line << endl;
+	}
+	if (p == NULL) {
+		cout << "mem_object_registry::free_pplint "
+				"NULL pointer, ignoring" << endl;
+		cout << "p=" << p << " file=" << file
+				<< " line=" << line << endl;
+		return;
+		}
+	if (f_memory_debug) {
+		delete_from_registry(p, memory_debug_verbose_level - 1);
+	}
+	delete [] p;
+}
+
 char *mem_object_registry::allocate_char(long int n,
 		const char *file, int line)
 {

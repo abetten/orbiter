@@ -15,7 +15,7 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
-void create_factor_group(action *A, sims *S, int goi, 
+void create_factor_group(action *A, sims *S, long int goi,
 	int size_subgroup, int *subgroup, factor_group *F,
 	int verbose_level)
 {
@@ -34,7 +34,7 @@ void create_factor_group(action *A, sims *S, int goi,
 	F->size_subgroup = size_subgroup;
 	F->subgroup = subgroup;
 	
-	F->all_cosets = NEW_int(goi);
+	F->all_cosets = NEW_lint(goi);
 	
 	
 	if (f_v) {
@@ -87,6 +87,14 @@ void create_factor_group(action *A, sims *S, int goi,
 		}
 	F->FactorGroup->induced_action_on_sets(*F->ByRightMultiplication, 
 		S, F->nb_cosets, size_subgroup, F->all_cosets, TRUE, verbose_level);
+
+
+#if 0
+	void action::induced_action_on_sets(
+		action &old_action, sims *old_G,
+		int nb_sets, int set_size, long int *sets,
+		int f_induce_action, int verbose_level)
+#endif
 
 	if (f_v) {
 		cout << "create_factor_group after induced_action_on_sets" << endl;

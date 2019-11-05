@@ -59,7 +59,7 @@ void recoordinatize::freeself()
 		}
 	
 	if (live_points) {
-		FREE_int(live_points);
+		FREE_lint(live_points);
 		}
 	null();
 }
@@ -68,7 +68,7 @@ void recoordinatize::init(int n, int k,
 	finite_field *F, grassmann *Grass, action *A, action *A2,
 	int f_projective, int f_semilinear, 
 	int (*check_function_incremental)(int len,
-			int *S, void *data, int verbose_level),
+			long int *S, void *data, int verbose_level),
 	void *check_function_incremental_data, 
 	int verbose_level)
 {
@@ -112,20 +112,20 @@ void recoordinatize::init(int n, int k,
 }
 
 void recoordinatize::do_recoordinatize(
-		int i1, int i2, int i3, int verbose_level)
+		long int i1, long int i2, long int i3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;//(verbose_level >= 3);
 	int i, j;
-	int j1, j2, j3;
+	long int j1, j2, j3;
 
 	if (f_v) {
 		cout << "translation_plane::recoordinatize "
 				<< i1 << "," << i2 << "," << i3 << endl;
 		}
-	Grass->unrank_int_here(M, i1, 0 /*verbose_level - 4*/);
-	Grass->unrank_int_here(M + k * n, i2, 0 /*verbose_level - 4*/);
-	Grass->unrank_int_here(M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
+	Grass->unrank_lint_here(M, i1, 0 /*verbose_level - 4*/);
+	Grass->unrank_lint_here(M + k * n, i2, 0 /*verbose_level - 4*/);
+	Grass->unrank_lint_here(M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
 	if (f_vv) {
 		cout << "M:" << endl;
 		print_integer_matrix_width(cout,
@@ -212,9 +212,9 @@ void recoordinatize::do_recoordinatize(
 		print_integer_matrix_width(cout,
 				M1, 3 * k, n, n, F->log10_of_q + 1);
 		}
-	j1 = Grass->rank_int_here(M1, 0 /*verbose_level - 4*/);
-	j2 = Grass->rank_int_here(M1 + k * n, 0 /*verbose_level - 4*/);
-	j3 = Grass->rank_int_here(M1 + 2 * k * n, 0 /*verbose_level - 4*/);
+	j1 = Grass->rank_lint_here(M1, 0 /*verbose_level - 4*/);
+	j2 = Grass->rank_lint_here(M1 + k * n, 0 /*verbose_level - 4*/);
+	j3 = Grass->rank_lint_here(M1 + 2 * k * n, 0 /*verbose_level - 4*/);
 	if (f_v) {
 		cout << "j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
 		}
@@ -543,21 +543,21 @@ void recoordinatize::compute_live_points(int verbose_level)
 }
 
 void recoordinatize::compute_live_points_low_level(
-		int *&live_points, int &nb_live_points, int verbose_level)
+		long int *&live_points, int &nb_live_points, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
 	matrix_group *Mtx;
 	finite_field *Fq;
-	int SS[4];
+	long int SS[4];
 	int *Elt1;
 
 	int cnt, z;
 	int cnt_mod = 1000;
 	longinteger_object go_linear;
-	int gos;
-	int i, j, h, a;
+	long int gos;
+	long int i, j, h, a;
 	sorting Sorting;
 
 
@@ -580,11 +580,11 @@ void recoordinatize::compute_live_points_low_level(
 		cout << "recoordinatize::compute_live_points_low_level "
 				"nCkq = " << nCkq << endl;
 		}
-	live_points = NEW_int(nCkq);
+	live_points = NEW_lint(nCkq);
 	nb_live_points = 0;
 
 	A0_linear->group_order(go_linear);
-	gos = go_linear.as_int();
+	gos = go_linear.as_lint();
 
 	cnt = 0;
 	for (h = 0; h < gos; h++) {
@@ -596,7 +596,7 @@ void recoordinatize::compute_live_points_low_level(
 							<< nb_live_points << " points so far" << endl;
 					}
 				}
-			A0_linear->Sims->element_unrank_int(h, Elt1);
+			A0_linear->Sims->element_unrank_lint(h, Elt1);
 			Fq->PG_element_normalize(Elt1, 1, k * k);
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "recoordinatize::compute_live_points_low_level "
@@ -635,7 +635,7 @@ void recoordinatize::compute_live_points_low_level(
 						<< " nb_live_points=" << nb_live_points << endl;
 				print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
 				}
-			a = Grass->rank_int(0);
+			a = Grass->rank_lint(0);
 			SS[3] = a;
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "has rank " << a << endl;
@@ -673,14 +673,14 @@ void recoordinatize::compute_live_points_low_level(
 				"sorting" << endl;
 		}
 
-	Sorting.int_vec_heapsort(live_points, nb_live_points);
+	Sorting.lint_vec_heapsort(live_points, nb_live_points);
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level done" << endl;
 		}
 }
 
 void recoordinatize::make_first_three(
-		int &j1, int &j2, int &j3, int verbose_level)
+		long int &j1, long int &j2, long int &j3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -702,7 +702,7 @@ void recoordinatize::make_first_three(
 		cout << "recoordinatize::compute_starter M1:" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		}
-	j1 = Grass->rank_int_here(M, 0/*verbose_level - 4*/);
+	j1 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter j1=" << j1 << endl;
 		}
@@ -716,7 +716,7 @@ void recoordinatize::make_first_three(
 		cout << "recoordinatize::compute_starter M2:" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		}
-	j2 = Grass->rank_int_here(M, 0/*verbose_level - 4*/);
+	j2 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter j2=" << j2 << endl;
 		}
@@ -731,7 +731,7 @@ void recoordinatize::make_first_three(
 		cout << "recoordinatize::compute_starter M3:" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		}
-	j3 = Grass->rank_int_here(M, 0/*verbose_level - 4*/);
+	j3 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter j3=" << j3 << endl;
 		}

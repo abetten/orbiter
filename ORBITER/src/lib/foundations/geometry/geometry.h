@@ -451,18 +451,18 @@ public:
 	void freeself();
 	void init(finite_field *F, int verbose_level);
 	int compute_system_in_RREF(
-			int nb_pts, int *pt_list, int verbose_level);
+			int nb_pts, long int *pt_list, int verbose_level);
 	void compute_gradient(
 			int *eqn_in, int verbose_level);
 	void compute_singular_points(
 			int *eqn_in,
-			int *Pts_on_curve, int nb_pts_on_curve,
-			int *Pts, int &nb_pts,
+			long int *Pts_on_curve, int nb_pts_on_curve,
+			long int *Pts, int &nb_pts,
 			int verbose_level);
 	void compute_inflexion_points(
 			int *eqn_in,
-			int *Pts_on_curve, int nb_pts_on_curve,
-			int *Pts, int &nb_pts,
+			long int *Pts_on_curve, int nb_pts_on_curve,
+			long int *Pts, int &nb_pts,
 			int verbose_level);
 
 };
@@ -577,11 +577,11 @@ public:
 	void compute_shadow(int *Basis, int basis_sz, 
 		int *is_in_shadow, int verbose_level);
 	void compute_linear_set(int *Basis, int basis_sz, 
-		int *&the_linear_set, int &the_linear_set_sz, 
+		long int *&the_linear_set, int &the_linear_set_sz,
 		int verbose_level);
 	void print_spread_element_table_tex();
-	void print_linear_set_tex(int *set, int sz);
-	void print_linear_set_element_tex(int a, int sz);
+	void print_linear_set_tex(long int *set, int sz);
+	void print_linear_set_element_tex(long int a, int sz);
 
 };
 
@@ -777,11 +777,11 @@ public:
 		longinteger_object &a);
 	int PG_element_modified_is_in_subspace(int n, int m, int *v);
 	void test_PG(int n, int q);
-	void create_Fisher_BLT_set(int *Fisher_BLT, int q,
+	void create_Fisher_BLT_set(long int *Fisher_BLT, int q,
 		const char *poly_q, const char *poly_Q, int verbose_level);
-	void create_Linear_BLT_set(int *BLT, int q,
+	void create_Linear_BLT_set(long int *BLT, int q,
 		const char *poly_q, const char *poly_Q, int verbose_level);
-	void create_Mondello_BLT_set(int *BLT, int q,
+	void create_Mondello_BLT_set(long int *BLT, int q,
 		const char *poly_q, const char *poly_Q, int verbose_level);
 	void print_quadratic_form_list_coded(int form_nb_terms,
 		int *form_i, int *form_j, int *form_coeff);
@@ -1450,7 +1450,7 @@ public:
 	const char *input_fname;
 	int input_idx;
 	int f_has_known_ago;
-	int known_ago;
+	long int known_ago;
 
 	char *set_as_string;
 
@@ -2234,7 +2234,7 @@ public:
 			// TRUE otherwise.
 	int determine_cubic_in_plane(
 			homogeneous_polynomial_domain *Poly_3_3,
-			int nb_pts, int *Pts, int *coeff10,
+			int nb_pts, long int *Pts, int *coeff10,
 			int verbose_level);
 
 	void determine_quadric_in_solid(long int *nine_pts_or_more, int nb_pts,
@@ -2533,8 +2533,8 @@ public:
 	int nb_spreads;
 	long int *spread_table; // [nb_spreads * spread_size]
 	int *spread_iso_type; // [nb_spreads]
-	int *dual_spread_idx; // [nb_spreads]
-	int *self_dual_spreads; // [nb_self_dual_spreads]
+	long int *dual_spread_idx; // [nb_spreads]
+	long int *self_dual_spreads; // [nb_self_dual_spreads]
 	int nb_self_dual_spreads;
 
 	spread_tables();
@@ -2549,8 +2549,8 @@ public:
 			int verbose_level);
 	void init_tables(int nb_spreads,
 			long int *spread_table, int *spread_iso_type,
-			int *dual_spread_idx,
-			int *self_dual_spreads, int nb_self_dual_spreads,
+			long int *dual_spread_idx,
+			long int *self_dual_spreads, int nb_self_dual_spreads,
 			int verbose_level);
 	void init_reduced(
 			int nb_select, int *select,
@@ -2801,18 +2801,18 @@ public:
 		int *The_six_plane_equations, int *The_surface_equations, 
 		int verbose_level);
 		// The_surface_equations[(q + 1) * 20]
-	void create_lambda_from_trihedral_pair_and_arc(int *arc6, 
+	void create_lambda_from_trihedral_pair_and_arc(long int *arc6,
 		int *Web_of_cubic_curves, 
 		int *The_plane_equations, int t_idx, int &lambda, 
 		int &lambda_rk, int verbose_level);
-	void create_surface_equation_from_trihedral_pair(int *arc6, 
+	void create_surface_equation_from_trihedral_pair(long int *arc6,
 		int *Web_of_cubic_curves, 
 		int *The_plane_equations, int t_idx, int *surface_equation, 
 		int &lambda, int verbose_level);
 	void extract_six_curves_from_web(int *Web_of_cubic_curves, 
 		int *row_col_Eckardt_points, int *six_curves, 
 		int verbose_level);
-	void find_point_not_on_six_curves(int *arc6, int *six_curves, 
+	void find_point_not_on_six_curves(long int *arc6, int *six_curves,
 		int &pt, int &f_point_was_found, int verbose_level);
 	int plane_from_three_lines(long int *three_lines, int verbose_level);
 	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes,
@@ -2859,8 +2859,8 @@ public:
 		int lambda, int *&system, int verbose_level);
 	void compute_nine_lines(int *F_planes, int *G_planes, 
 		long int *nine_lines, int verbose_level);
-	void compute_nine_lines_by_dual_point_ranks(int *F_planes_rank, 
-		int *G_planes_rank, long int *nine_lines, int verbose_level);
+	void compute_nine_lines_by_dual_point_ranks(long int *F_planes_rank,
+		long int *G_planes_rank, long int *nine_lines, int verbose_level);
 	void split_nice_equation(int *nice_equation, int *&f1, 
 		int *&f2, int *&f3, int verbose_level);
 	void assemble_tangent_quadric(int *f1, int *f2, int *f3, 
@@ -2984,7 +2984,7 @@ public:
 	void print_clebsch_cubics(std::ostream &ost);
 	void print_system(std::ostream &ost, int *system);
 	void print_trihedral_pair_in_dual_coordinates_in_GAP(
-		int *F_planes_rank, int *G_planes_rank);
+		long int *F_planes_rank, long int *G_planes_rank);
 	void print_polynomial_domains(std::ostream &ost);
 	void print_line_labelling(std::ostream &ost);
 	void print_set_of_lines_tex(std::ostream &ost, long int *v, int len);

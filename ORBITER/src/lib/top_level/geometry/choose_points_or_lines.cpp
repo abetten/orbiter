@@ -86,7 +86,7 @@ void choose_points_or_lines::free_representative()
 		cout << "choose_points_or_lines::free_representative freeing representative" << endl;
 		}
 	if (representative) {
-		FREE_int(representative);
+		FREE_lint(representative);
 		}
 	if (stab_order) {
 		FREE_OBJECT(stab_order);
@@ -278,7 +278,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	//int f_v4 = (verbose_level >= 4);
 	int f, nd, i;
 	int f_changed;
-	int *the_favorite_representative;
+	long int *the_favorite_representative;
 	group *G;
 	poset_orbit_node *O;
 	
@@ -298,8 +298,8 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	longinteger_object go;
 	
 	G = NEW_OBJECT(group);
-	representative = NEW_int(nb_points_or_lines);
-	the_favorite_representative = NEW_int(nb_points_or_lines);
+	representative = NEW_lint(nb_points_or_lines);
+	the_favorite_representative = NEW_lint(nb_points_or_lines);
 	
 	O = gen->root + nd;
 	O->store_set_to(gen, nb_points_or_lines - 1, representative);
@@ -319,7 +319,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 			}
 		cout << " representing orbit " << orbit_no << " / "
 				<< nb_orbits << " are ";
-		int_set_print(representative, nb_points_or_lines);
+		lint_set_print(representative, nb_points_or_lines);
 		cout << endl;
 		}
 
@@ -328,7 +328,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	if (f_has_favorite) {
 		f_hit_favorite = favorite_orbit_representative(
 				transporter, transporter_inv,
-			the_favorite_representative, verbose_level - 3);
+				the_favorite_representative, verbose_level - 3);
 		if (f_hit_favorite) {
 			if (f_iso_test_only) {
 				f_changed = FALSE;
@@ -355,7 +355,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 			cout << "choose_points_or_lines::choose_orbit " << label
 				<< " / " << nb_orbits << " after changing, the "
 				"representative set for orbit " << orbit_no << " are ";
-			int_set_print(representative, nb_points_or_lines);
+			lint_set_print(representative, nb_points_or_lines);
 			cout << endl;
 			}
 		}
@@ -406,7 +406,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		cout << "choose_points_or_lines::choose_orbit " << label
 			<< " orbit_no " << orbit_no << " / " << nb_orbits
 			<< " done, chosen the set ";
-		int_set_print(representative, nb_points_or_lines);
+		lint_set_print(representative, nb_points_or_lines);
 		cout << "_" << *stab_order;
 		cout << endl;
 		}
@@ -445,19 +445,19 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 
 
 	FREE_OBJECT(G);
-	FREE_int(the_favorite_representative);
+	FREE_lint(the_favorite_representative);
 	
 }
 
 int choose_points_or_lines::favorite_orbit_representative(
 	int *transporter, int *transporter_inv,
-	int *the_favorite_representative, 
+	long int *the_favorite_representative,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_implicit_fusion = FALSE;
-	int *canonical_set1;
-	int *canonical_set2;
+	long int *canonical_set1;
+	long int *canonical_set2;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -476,8 +476,8 @@ int choose_points_or_lines::favorite_orbit_representative(
 		return FALSE;
 		}
 	
-	canonical_set1 = NEW_int(nb_points_or_lines);
-	canonical_set2 = NEW_int(nb_points_or_lines);
+	canonical_set1 = NEW_lint(nb_points_or_lines);
+	canonical_set2 = NEW_lint(nb_points_or_lines);
 	Elt1 = NEW_int(A2->elt_size_in_int);
 	Elt2 = NEW_int(A2->elt_size_in_int);
 	Elt3 = NEW_int(A2->elt_size_in_int);
@@ -508,8 +508,8 @@ int choose_points_or_lines::favorite_orbit_representative(
 			the_favorite_representative[i] = favorite[i];
 			}
 		}
-	FREE_int(canonical_set1);
-	FREE_int(canonical_set2);
+	FREE_lint(canonical_set1);
+	FREE_lint(canonical_set2);
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
@@ -524,7 +524,7 @@ int choose_points_or_lines::favorite_orbit_representative(
 
 void choose_points_or_lines::print_rep()
 {
-	int_set_print(representative, nb_points_or_lines);
+	lint_set_print(representative, nb_points_or_lines);
 	cout << "_" << *stab_order;
 }
 

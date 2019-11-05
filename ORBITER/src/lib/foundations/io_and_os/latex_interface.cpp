@@ -776,8 +776,73 @@ void latex_interface::print_integer_matrix_tex(ostream &ost,
 	ost << "\\end{array}" << endl;
 }
 
+void latex_interface::print_lint_matrix_tex(ostream &ost,
+	long int *p, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{*{" << n << "}c}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
+			if (j < n - 1) {
+				ost << "  & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
 void latex_interface::print_integer_matrix_with_labels(ostream &ost,
 	int *p, int m, int n, int *row_labels, int *col_labels,
+	int f_tex)
+{
+	int i, j;
+
+	if (f_tex) {
+		ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
+		}
+
+	for (j = 0; j < n; j++) {
+		if (f_tex) {
+			ost << " & ";
+			}
+		else {
+			ost << " ";
+			}
+		ost << col_labels[j];
+		}
+	if (f_tex) {
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		}
+	else {
+		ost << endl;
+		}
+	for (i = 0; i < m; i++) {
+		ost << row_labels[i];
+		for (j = 0; j < n; j++) {
+			if (f_tex) {
+				ost << " & ";
+				}
+			else {
+				ost << " ";
+				}
+			ost << p[i * n + j];
+			}
+		if (f_tex) {
+			ost << "\\\\";
+			}
+		ost << endl;
+		}
+	if (f_tex) {
+		ost << "\\end{array}" << endl;
+		}
+}
+
+void latex_interface::print_lint_matrix_with_labels(ostream &ost,
+	long int *p, int m, int n, long int *row_labels, long int *col_labels,
 	int f_tex)
 {
 	int i, j;
@@ -1162,6 +1227,23 @@ void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
 }
 
 void latex_interface::int_matrix_print_tex(ostream &ost, int *p, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
+			if (j < n - 1) {
+				ost << " & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
+void latex_interface::lint_matrix_print_tex(ostream &ost, long int *p, int m, int n)
 {
 	int i, j;
 

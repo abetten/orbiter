@@ -94,7 +94,7 @@ graph_classify::~graph_classify()
 		FREE_int(distance);
 		}
 	if (S1) {
-		FREE_int(S1);
+		FREE_lint(S1);
 		}
 	
 }
@@ -282,7 +282,7 @@ void graph_classify::init(int argc, const char **argv)
 		cout << "n2=" << n2 << endl;
 		}
 
-	S1 = NEW_int(n2);
+	S1 = NEW_lint(n2);
 
 	A_base->init_symmetric_group(n, verbose_level - 3);
 	if (f_v) {
@@ -400,7 +400,7 @@ void graph_classify::init(int argc, const char **argv)
 }
 
 int graph_classify::check_conditions(int len,
-		int *S, int verbose_level)
+		long int *S, int verbose_level)
 {
 	//verbose_level = 2;
 
@@ -445,7 +445,7 @@ int graph_classify::check_conditions(int len,
 }
 
 int graph_classify::check_conditions_tournament(
-		int len, int *S,
+		int len, long int *S,
 		int verbose_level)
 {
 	//verbose_level = 2;
@@ -455,19 +455,19 @@ int graph_classify::check_conditions_tournament(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int a, a2, swap, swap2, b2, b, i, idx;
-	int *S_sorted;
+	long int *S_sorted;
 	combinatorics_domain Combi;
 	sorting Sorting;
 	
 	if (f_v) {
 		cout << "graph_classify::check_conditions_tournament "
 				"checking set ";
-		print_set(cout, len, S);
+		lint_vec_print(cout, S, len);
 		}
 
-	S_sorted = NEW_int(len);
-	int_vec_copy(S, S_sorted, len);
-	Sorting.int_vec_heapsort(S_sorted, len);
+	S_sorted = NEW_lint(len);
+	lint_vec_copy(S, S_sorted, len);
+	Sorting.lint_vec_heapsort(S_sorted, len);
 
 	for (i = 0; i < len; i++) {
 		a = S_sorted[i];
@@ -476,7 +476,7 @@ int graph_classify::check_conditions_tournament(
 		swap2 = 1 - swap;
 		b2 = a2;
 		b = 2 * b2 + swap2;
-		if (Sorting.int_vec_search(S_sorted, len, b, idx)) {
+		if (Sorting.lint_vec_search(S_sorted, len, b, idx, 0)) {
 			if (f_vv) {
 				cout << "graph_classify::check_conditions_tournament "
 						"elements " << a << " and " << b
@@ -515,7 +515,7 @@ int graph_classify::check_conditions_tournament(
 
 		FREE_int(score);
 		}
-	FREE_int(S_sorted);
+	FREE_lint(S_sorted);
 
 	if (f_OK) {
 		if (f_v) {
@@ -533,7 +533,7 @@ int graph_classify::check_conditions_tournament(
 
 
 int graph_classify::check_regularity(
-		int *S, int len,
+		long int *S, int len,
 		int verbose_level)
 {
 	int f_OK;
@@ -541,7 +541,7 @@ int graph_classify::check_regularity(
 	
 	if (f_v) {
 		cout << "check_regularity for ";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	f_OK = compute_degree_sequence(S, len);
@@ -557,9 +557,9 @@ int graph_classify::check_regularity(
 }
 
 
-int graph_classify::compute_degree_sequence(int *S, int len)
+int graph_classify::compute_degree_sequence(long int *S, int len)
 {
-	int h, a, i, j;
+	long int h, a, i, j;
 	combinatorics_domain Combi;
 	
 	if (f_tournament) {
@@ -570,7 +570,7 @@ int graph_classify::compute_degree_sequence(int *S, int len)
 	int_vec_zero(degree_sequence, n);
 	for (h = 0; h < len; h++) {
 		a = S[h];
-		Combi.k2ij(a, i, j, n);
+		Combi.k2ij_lint(a, i, j, n);
 		degree_sequence[i]++;
 		if (degree_sequence[i] > regularity) {
 			return FALSE;
@@ -583,7 +583,7 @@ int graph_classify::compute_degree_sequence(int *S, int len)
 	return TRUE;
 }
 
-int graph_classify::girth_check(int *line, int len,
+int graph_classify::girth_check(long int *line, int len,
 		int verbose_level)
 {
 	int f_OK = TRUE, i;
@@ -592,7 +592,7 @@ int graph_classify::girth_check(int *line, int len,
 	
 	if (f_v) {
 		cout << "girth check for ";
-		int_vec_print(cout, line, len);
+		lint_vec_print(cout, line, len);
 		cout << endl;
 		}
 	for (i = 0; i < n; i++) {
@@ -616,7 +616,7 @@ int graph_classify::girth_check(int *line, int len,
 	return f_OK;
 }
 
-int graph_classify::girth_test_vertex(int *S, int len,
+int graph_classify::girth_test_vertex(long int *S, int len,
 		int vertex, int girth,
 		int verbose_level)
 {
@@ -678,10 +678,10 @@ int graph_classify::girth_test_vertex(int *S, int len,
 	return TRUE;
 }
 
-void graph_classify::get_adjacency(int *S, int len, int verbose_level)
+void graph_classify::get_adjacency(long int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int h, i, j, a;
+	long int h, i, j, a;
 	combinatorics_domain Combi;
 	
 	int_vec_zero(adjacency, n * n);
@@ -693,7 +693,7 @@ void graph_classify::get_adjacency(int *S, int len, int verbose_level)
 			a = S[h];
 			swap = a % 2;
 			a2 = a / 2;
-			Combi.k2ij(a2, i, j, n);
+			Combi.k2ij_lint(a2, i, j, n);
 			if (!swap) {
 				adjacency[i * n + j] = 1;
 				adjacency[j * n + i] = 0;
@@ -707,7 +707,7 @@ void graph_classify::get_adjacency(int *S, int len, int verbose_level)
 	else {
 		for (h = 0; h < len; h++) {
 			a = S[h];
-			Combi.k2ij(a, i, j, n);
+			Combi.k2ij_lint(a, i, j, n);
 			adjacency[i * n + j] = 1;
 			adjacency[j * n + i] = 1;
 			}
@@ -722,7 +722,7 @@ void graph_classify::get_adjacency(int *S, int len, int verbose_level)
 		}
 }
 
-void graph_classify::print(ostream &ost, int *S, int len)
+void graph_classify::print(ostream &ost, long int *S, int len)
 {
 	int i, j;
 	
@@ -747,16 +747,16 @@ void graph_classify::print_score_sequences(
 {
 	int f_v = (verbose_level >= 1);
 	int h, nb_orbits;
-	int *set;
-	int *score;
+	long int *set;
+	long int *score;
 
 	if (f_v) {
 		cout << "graph_classify::print_score_sequences "
 				"level = " << level << endl;
 		}
 
-	set = NEW_int(level);
-	score = NEW_int(n);
+	set = NEW_lint(level);
+	score = NEW_lint(n);
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
 		strong_generators *Strong_gens;
@@ -770,29 +770,29 @@ void graph_classify::print_score_sequences(
 
 
 		cout << h << " : ";
-		int_vec_print(cout, set, level);
+		lint_vec_print(cout, set, level);
 		cout << " : " << go << " : ";
 		
 		score_sequence(n, set, level, score, verbose_level - 1);
 
-		int_vec_print(cout, score, n);
+		lint_vec_print(cout, score, n);
 		cout << endl;
 
 		delete Strong_gens;
 		}
 
-	FREE_int(set);
-	FREE_int(score);
+	FREE_lint(set);
+	FREE_lint(score);
 
 }
 
 void graph_classify::score_sequence(int n,
-		int *set, int sz, int *score, int verbose_level)
+		long int *set, int sz, long int *score, int verbose_level)
 {
 	int i, a, swap, a2, u, v;
 	combinatorics_domain Combi;
 
-	int_vec_zero(score, n);
+	lint_vec_zero(score, n);
 	for (i = 0; i < sz; i++) {
 		a = set[i];
 
@@ -822,7 +822,7 @@ void graph_classify::draw_graphs(int level,
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, nb_orbits;
-	int *set;
+	long int *set;
 	int *v;
 
 	if (f_v) {
@@ -830,7 +830,7 @@ void graph_classify::draw_graphs(int level,
 				"level = " << level << endl;
 		}
 
-	set = NEW_int(level);
+	set = NEW_lint(level);
 	v = NEW_int(n2);
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
@@ -849,7 +849,7 @@ void graph_classify::draw_graphs(int level,
 			}
 
 		cout << h << " : ";
-		int_vec_print(cout, set, level);
+		lint_vec_print(cout, set, level);
 		cout << " : ";
 		for (i = 0; i < n2; i++) {
 			cout << v[i];
@@ -904,7 +904,7 @@ void graph_classify::draw_graphs(int level,
 		delete Strong_gens;
 		}
 
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 
@@ -913,15 +913,15 @@ void graph_classify::draw_graphs(int level,
 // #############################################################################
 
 
-void graph_classify_test_function(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+void graph_classify_test_function(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level)
 {
 	graph_classify *Gen = (graph_classify *) data;
 	int i, f_OK;
 
-	int_vec_copy(S, Gen->S1, len);
+	lint_vec_copy(S, Gen->S1, len);
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		Gen->S1[len] = candidates[i];
@@ -939,7 +939,7 @@ void graph_classify_test_function(int *S, int len,
 }
 
 void graph_classify_print_set(ostream &ost,
-		int len, int *S, void *data)
+		int len, long int *S, void *data)
 {
 	graph_classify *Gen = (graph_classify *) data;
 	

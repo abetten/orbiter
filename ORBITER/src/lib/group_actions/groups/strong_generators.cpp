@@ -1610,7 +1610,7 @@ void strong_generators::compute_schreier_with_given_action(
 }
 
 void strong_generators::compute_schreier_with_given_action_on_a_given_set(
-		action *A_given, schreier *&Sch, int *set, int len,
+		action *A_given, schreier *&Sch, long int *set, int len,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1626,7 +1626,7 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->init_generators(*gens, verbose_level - 2);
-	Sch->compute_all_orbits_on_invariant_subset(len, set,
+	Sch->compute_all_orbits_on_invariant_subset_lint(len, set,
 			0 /* verbose_level */);
 	//Sch->compute_all_point_orbits(verbose_level);
 
@@ -2470,7 +2470,7 @@ void strong_generators::export_permutation_group_to_GAP(
 
 
 void strong_generators::compute_and_print_orbits_on_a_given_set(
-		action *A_given, int *set, int len, int verbose_level)
+		action *A_given, long int *set, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	schreier *Sch;

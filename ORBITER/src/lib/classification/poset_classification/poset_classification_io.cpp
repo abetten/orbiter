@@ -194,18 +194,21 @@ void poset_classification::print_representatives_at_level(
 		}
 }
 
-void poset_classification::print_lex_rank(int *set, int sz)
+void poset_classification::print_lex_rank(long int *set, int sz)
 {
+#if 0
 	int r1, r2;
 	int n;
 	combinatorics_domain Combi;
 
+	// ToDo
 	n = Poset->A2->degree;
 	r1 = Combi.rank_subset(set, sz, n);
 	r2 = Combi.rank_k_subset(set, n, sz);
 
 	cout << "lex rank = " << r1 << " lex rank as "
 			<< sz << "-subset = " << r2;
+#endif
 }
 
 
@@ -1596,7 +1599,7 @@ void poset_classification::read_level_file(int level,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *set_sizes;
-	int **sets;
+	long int **sets;
 	char **data;
 	int nb_cases;
 	int nb_nodes, first_at_level;
@@ -1629,7 +1632,7 @@ void poset_classification::read_level_file(int level,
 		O = &root[I];
 		
 		cout << setw(10) << i << " : ";
-		int_vec_print(cout, sets[i], level);
+		lint_vec_print(cout, sets[i], level);
 		cout << endl;
 		
 		J = find_poset_orbit_node_for_set(level - 1,
@@ -1980,7 +1983,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	pchar *Text_schreier_vector_length;
 	longinteger_object stab_order, orbit_length;
 	int schreier_vector_length;
-	int *rep;
+	long int *rep;
 	char str[1000];
 	poset_orbit_node *O;
 
@@ -1989,7 +1992,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		Nb_orbits += nb_orbits_at_level(level);
 		}
 
-	rep = NEW_int(max_depth);
+	rep = NEW_lint(max_depth);
 	Text_level = NEW_pchar(Nb_orbits);
 	Text_node = NEW_pchar(Nb_orbits);
 	Text_orbit_reps = NEW_pchar(Nb_orbits);
@@ -2013,7 +2016,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			strcpy(Text_node[first + i], str);
 
 			get_set_by_level(level, i, rep);
-			int_vec_print_to_str(str, rep, level);
+			lint_vec_print_to_str(str, rep, level);
 			Text_orbit_reps[first + i] =
 					NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_reps[first + i], str);
@@ -2064,7 +2067,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	cout << "after Sp->save " << fname_csv << endl;
 #endif
 
-	FREE_int(rep);
+	FREE_lint(rep);
 	for (i = 0; i < Nb_orbits; i++) {
 		FREE_char(Text_level[i]);
 		}
@@ -2290,10 +2293,10 @@ void poset_classification::generate_source_code(
 	char fname[1000];
 	char my_prefix[1000];
 	int iso_type;
-	int *rep;
+	long int *rep;
 	int i, j;
 	int /*f,*/ nb_iso;
-	int *set;
+	long int *set;
 	longinteger_object go;
 	file_io Fio;
 
@@ -2303,7 +2306,7 @@ void poset_classification::generate_source_code(
 	sprintf(my_prefix, "%s_level_%d", prefix, level);
 	sprintf(fname, "%s.cpp", my_prefix);
 
-	set = NEW_int(level);
+	set = NEW_lint(level);
 	nb_iso = nb_orbits_at_level(level);
 
 
@@ -2312,9 +2315,9 @@ void poset_classification::generate_source_code(
 	{
 	ofstream fp(fname);
 
-	fp << "static int " << prefix << "_nb_reps = " << nb_iso << ";" << endl;
-	fp << "static int " << prefix << "_size = " << level << ";" << endl;
-	fp << "static int " << prefix << "_reps[] = {" << endl;
+	fp << "static long int " << prefix << "_nb_reps = " << nb_iso << ";" << endl;
+	fp << "static long int " << prefix << "_size = " << level << ";" << endl;
+	fp << "static long int " << prefix << "_reps[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		get_set_by_level(level, iso_type, set);
 		rep = set;
@@ -2389,7 +2392,7 @@ void poset_classification::generate_source_code(
 	fp << "};" << endl;
 
 
-	fp << "static int " << prefix << "_stab_gens_fst[] = { ";
+	fp << "static long int " << prefix << "_stab_gens_fst[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		fp << stab_gens_first[iso_type];
 		if (iso_type < nb_iso - 1) {
@@ -2401,7 +2404,7 @@ void poset_classification::generate_source_code(
 		}
 	fp << "};" << endl;
 
-	fp << "static int " << prefix << "_stab_gens_len[] = { ";
+	fp << "static long int " << prefix << "_stab_gens_len[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		fp << stab_gens_len[iso_type];
 		if (iso_type < nb_iso - 1) {
@@ -2420,6 +2423,8 @@ void poset_classification::generate_source_code(
 	FREE_int(stab_gens_len);
 	}
 	}
+
+	FREE_lint(set);
 
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -2467,7 +2472,7 @@ void poset_classification::wedge_product_export_magma(
 		}
 
 	//int level;
-	int *the_set;
+	long int *the_set;
 	int *v;
 	int a, i, j, h, fst, len, ii, jj;
 	longinteger_object go;
@@ -2476,7 +2481,7 @@ void poset_classification::wedge_product_export_magma(
 	//level = depth_completed + 1;
 
 
-	the_set = NEW_int(level);
+	the_set = NEW_lint(level);
 	v = NEW_int(vector_space_dimension);
 	Elt = NEW_int(Poset->A->elt_size_in_int);
 
@@ -2645,7 +2650,7 @@ void poset_classification::wedge_product_export_magma(
         		 << endl << endl;
 	} // file f
 
-	FREE_int(the_set);
+	FREE_lint(the_set);
 	FREE_int(v);
 	FREE_int(Elt);
 

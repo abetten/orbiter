@@ -369,13 +369,13 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		}
 	Non_unique_cases_fst = NEW_int(nb_non_unique_cases);
 	Non_unique_cases_len = NEW_int(nb_non_unique_cases);
-	Non_unique_cases_go = NEW_int(nb_non_unique_cases);
+	Non_unique_cases_go = NEW_lint(nb_non_unique_cases);
 	for (i = 0; i < nb_non_unique_cases; i++) {
 		a = Non_unique_cases[i];
 		Non_unique_cases_fst[i] = Sub->FstLen[2 * a + 0];
 		Non_unique_cases_len[i] = Sub->FstLen[2 * a + 1];
 		Non_unique_cases_go[i] =
-			Sub->L3->Stabilizer_gens[a].group_order_as_int();
+			Sub->L3->Stabilizer_gens[a].group_order_as_lint();
 		}
 
 	{
@@ -391,7 +391,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	{
 	classify C;
 
-	C.init(Non_unique_cases_go, nb_non_unique_cases, FALSE, 0);
+	C.init_lint(Non_unique_cases_go, nb_non_unique_cases, FALSE, 0);
 	if (f_v) {
 		cout << "classification of group orders amongst "
 				"the non-unique cases:" << endl;
@@ -727,17 +727,17 @@ void semifield_classify_with_substructure::latex_report(
 			NULL /* extra_praeamble */);
 
 
-		int *Go;
+		long int *Go;
 
 
 		classify C;
 
-		Go = NEW_int(Semifields->nb_orbits);
+		Go = NEW_lint(Semifields->nb_orbits);
 		for (i = 0; i < Semifields->nb_orbits; i++) {
-			Go[i] = Semifields->Orbit[i].gens->group_order_as_int();
+			Go[i] = Semifields->Orbit[i].gens->group_order_as_lint();
 		}
 
-		C.init(Go, Semifields->nb_orbits, FALSE, 0);
+		C.init_lint(Go, Semifields->nb_orbits, FALSE, 0);
 
 		fp << "\\section*{Summary}" << endl;
 		fp << "Classification by stabilizer order:\\\\" << endl;
@@ -810,7 +810,7 @@ void semifield_classify_with_substructure::latex_report(
 			if (f_v) {
 				cout << "orbit " << orbit_idx << " / " << Semifields->nb_orbits << ":" << endl;
 			}
-			lint_vec_copy(Semifields->Rep_lint_ith(orbit_idx), Sub->data1, Sub->SC->k);
+			lint_vec_copy(Semifields->Rep_ith(orbit_idx), Sub->data1, Sub->SC->k);
 
 			if (f_v) {
 				cout << "before Sub->all_two_dimensional_subspaces" << endl;
@@ -1043,7 +1043,7 @@ void semifield_print_function_callback(ostream &ost, int orbit_idx,
 
 	SC = Sub->SC;
 	SCWS = Sub->SCWS;
-	R = Step->Rep_lint_ith(orbit_idx);
+	R = Step->Rep_ith(orbit_idx);
 	for (j = 0; j < Step->representation_sz; j++) {
 		a = R[j];
 		SC->matrix_unrank(a, SC->test_Basis);

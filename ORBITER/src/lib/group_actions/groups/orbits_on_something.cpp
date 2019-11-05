@@ -177,8 +177,8 @@ void orbits_on_something::init(
 }
 
 void orbits_on_something::orbit_type_of_set(
-		int *set, int set_sz, int go,
-		int *orbit_type,
+		long int *set, int set_sz, int go,
+		long int *orbit_type,
 		int verbose_level)
 // orbit_type[(go + 1) * go] must be allocated beforehand
 {
@@ -192,7 +192,7 @@ void orbits_on_something::orbit_type_of_set(
 	}
 	v = NEW_int(set_sz);
 	orbit_type_sz = (go + 1) * go;
-	int_vec_zero(orbit_type, orbit_type_sz);
+	lint_vec_zero(orbit_type, orbit_type_sz);
 
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
@@ -233,7 +233,7 @@ void orbits_on_something::orbit_type_of_set(
 	}
 }
 
-void orbits_on_something::report_type(ostream &ost, int *orbit_type, int goi)
+void orbits_on_something::report_type(ostream &ost, long int *orbit_type, long int goi)
 {
 #if 0
 	ost << "\\left[" << endl;
@@ -247,33 +247,33 @@ void orbits_on_something::report_type(ostream &ost, int *orbit_type, int goi)
 
 
 	ost << "\\left[" << endl;
-	L.print_integer_matrix_tex(ost,
+	L.print_lint_matrix_tex(ost,
 			orbit_type,
 			goi + 1, goi);
 	ost << "\\right]" << endl;
 
 	ost << " = ";
 
-	int *compact_type;
-	int *row_labels;
-	int *col_labels;
+	long int *compact_type;
+	long int *row_labels;
+	long int *col_labels;
 	int m, n;
 
 	compute_compact_type(orbit_type, goi,
 			compact_type, row_labels, col_labels, m, n);
 
-	L.print_integer_matrix_with_labels(ost,
+	L.print_lint_matrix_with_labels(ost,
 			compact_type, m, n, row_labels, col_labels,
 		TRUE /* f_tex */);
 
-	FREE_int(compact_type);
-	FREE_int(row_labels);
-	FREE_int(col_labels);
+	FREE_lint(compact_type);
+	FREE_lint(row_labels);
+	FREE_lint(col_labels);
 #endif
 }
 
-void orbits_on_something::compute_compact_type(int *orbit_type, int goi,
-		int *&compact_type, int *&row_labels, int *&col_labels, int &m, int &n)
+void orbits_on_something::compute_compact_type(long int *orbit_type, long int goi,
+		long int *&compact_type, long int *&row_labels, long int *&col_labels, int &m, int &n)
 {
 	int *f_row_used;
 	int *f_col_used;
@@ -309,10 +309,10 @@ void orbits_on_something::compute_compact_type(int *orbit_type, int goi,
 			n++;
 		}
 	}
-	compact_type = NEW_int(m * n);
-	int_vec_zero(compact_type, m * n);
-	row_labels = NEW_int(m);
-	col_labels = NEW_int(n);
+	compact_type = NEW_lint(m * n);
+	lint_vec_zero(compact_type, m * n);
+	row_labels = NEW_lint(m);
+	col_labels = NEW_lint(n);
 	m1 = 0;
 	for (i = 1; i <= goi; i++) {
 		if (f_row_used[i - 1]) {
@@ -435,7 +435,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	int orbit_length,
 	int &type_idx,
 	int &prev_nb,
-	int (*test_function)(int *orbit, int orbit_length, void *data),
+	int (*test_function)(long int *orbit, int orbit_length, void *data),
 	void *test_function_data,
 	int verbose_level)
 {
@@ -445,7 +445,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 		cout << "orbits_on_something::test_orbits_of_a_certain_length "
 				"orbit_length=" << orbit_length << endl;
 	}
-	int *orbit;
+	long int *orbit;
 	int i, j, a, l;
 	int nb_points;
 
@@ -457,7 +457,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 				"nb_points=" << nb_points << endl;
 	}
 
-	orbit = NEW_int(orbit_length);
+	orbit = NEW_lint(orbit_length);
 	j = 0;
 	for (i = 0; i < nb_points; i++) {
 		a = Orbits_classified->Sets[type_idx][i];
@@ -472,6 +472,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	}
 	Orbits_classified->Set_size[type_idx] = j;
 
+	FREE_lint(orbit);
 	if (f_v) {
 		cout << "orbits_on_something::test_orbits_of_a_certain_length done" << endl;
 	}
@@ -484,7 +485,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	int &type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
 	int f_has_colors, int number_colors, int *color_table,
-	int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+	int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	int verbose_level)
 {
@@ -502,8 +503,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	long int i, j, k;
 	int a, b, c;
 	combinatorics_domain Combi;
-	int *orbit1;
-	int *orbit2;
+	long int *orbit1;
+	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
 	int *point_color;
@@ -519,8 +520,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	t0 = Os.os_ticks();
 
-	orbit1 = NEW_int(orbit_length);
-	orbit2 = NEW_int(orbit_length);
+	orbit1 = NEW_lint(orbit_length);
+	orbit2 = NEW_lint(orbit_length);
 
 	if (f_has_colors) {
 		point_color = NEW_int(nb_points * orbit_length);
@@ -667,8 +668,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	//FREE_OBJECT(CG);
 
-	FREE_int(orbit1);
-	FREE_int(orbit2);
+	FREE_lint(orbit1);
+	FREE_lint(orbit2);
 	if (f_has_colors) {
 		FREE_int(point_color);
 	}
@@ -684,7 +685,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	int orbit_length,
 	int &type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
-	int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
+	int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	set_of_sets *my_orbits_classified,
 	int verbose_level)
@@ -703,8 +704,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	long int i, j, k;
 	int a, b;
 	combinatorics_domain Combi;
-	int *orbit1;
-	int *orbit2;
+	long int *orbit1;
+	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
 	os_interface Os;
@@ -716,8 +717,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 				"nb_points=" << nb_points << endl;
 	}
 
-	orbit1 = NEW_int(orbit_length);
-	orbit2 = NEW_int(orbit_length);
+	orbit1 = NEW_lint(orbit_length);
+	orbit2 = NEW_lint(orbit_length);
 
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
@@ -844,8 +845,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 	//FREE_OBJECT(CG);
 
-	FREE_int(orbit1);
-	FREE_int(orbit2);
+	FREE_lint(orbit1);
+	FREE_lint(orbit2);
 
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified done" << endl;

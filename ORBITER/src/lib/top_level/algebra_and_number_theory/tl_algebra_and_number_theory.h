@@ -31,20 +31,20 @@ void presentation(action *A, sims *S, int goi, vector_ge *gens,
 //! auxiliary class for create_factor_group, which is used in analyze_group.cpp
 
 struct factor_group {
-	int goi;
+	long int goi;
 	action *A;
 	sims *S;
 	int size_subgroup;
 	int *subgroup;
-	int *all_cosets;
+	long int *all_cosets;
 	int nb_cosets;
 	action *ByRightMultiplication;
 	action *FactorGroup;
 	action *FactorGroupConjugated;
-	int goi_factor_group;
+	long int goi_factor_group;
 };
 
-void create_factor_group(action *A, sims *S, int goi, 
+void create_factor_group(action *A, sims *S, long int goi,
 	int size_subgroup, int *subgroup, factor_group *F, int verbose_level);
 
 
@@ -111,7 +111,7 @@ public:
 	int *Non_unique_cases;
 	int *Non_unique_cases_fst;
 	int *Non_unique_cases_len;
-	int *Non_unique_cases_go;
+	long int *Non_unique_cases_go;
 
 
 	classification_step *Semifields;
@@ -217,11 +217,11 @@ public:
 			int verbose_level);
 	void compute_orbits(int depth, int verbose_level);
 	void list_points();
-	int rank_point(int *v, int verbose_level);
-	void unrank_point(int *v, int rk, int verbose_level);
-	void early_test_func(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	long int rank_point(int *v, int verbose_level);
+	void unrank_point(int *v, long int rk, int verbose_level);
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int test_candidate(
 			int **Mtx_stack, int stack_size, int *Mtx,
@@ -271,12 +271,12 @@ public:
 			int verbose_level);
 };
 
-void semifield_classify_early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void semifield_classify_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-int semifield_classify_rank_point_func(int *v, void *data);
-void semifield_classify_unrank_point_func(int *v, int rk, void *data);
+long int semifield_classify_rank_point_func(int *v, void *data);
+void semifield_classify_unrank_point_func(int *v, long int rk, void *data);
 long int canonial_form_rank_vector_callback(int *v,
 		int n, void *data, int verbose_level);
 void canonial_form_unrank_vector_callback(long int rk,
@@ -685,7 +685,7 @@ public:
 	void init();
 	void compute_cases(
 			int nb_non_unique_cases,
-			int *Non_unique_cases, int *Non_unique_cases_go,
+			int *Non_unique_cases, long int *Non_unique_cases_go,
 			int verbose_level);
 	void compute_orbits(int verbose_level);
 	void compute_flag_orbits(int verbose_level);
@@ -849,7 +849,7 @@ public:
 	int f_skip;
 	int solution_idx;
 	int nb_sol;
-	int go;
+	long int go;
 	int pos;
 	int so;
 	int orbit_len;

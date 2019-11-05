@@ -336,25 +336,26 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 }
 
 void classify_trihedral_pairs::early_test_func_type1(
-	int *S, int len,
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j, a, rk; //, idx; //, f_bad, rk0, ;
-	int Lines[9];
-	int Lines2[9];
+	int i, j;
+	long int a, rk; //, idx; //, f_bad, rk0, ;
+	long int Lines[9];
+	long int Lines2[9];
 	sorting Sorting;
 		
 	if (f_v) {
 		cout << "classify_trihedral_pairs::early_test_func_type1 "
 				"checking set ";
-		print_set(cout, len, S);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len > 2) {
@@ -379,7 +380,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 		}
 	if (f_vv) {
 		cout << "classify_trihedral_pairs::early_test_func_type1 Lines=" << endl;
-		int_matrix_print(Lines, len, 3);
+		lint_matrix_print(Lines, len, 3);
 		}
 
 	nb_good_candidates = 0;
@@ -404,7 +405,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 			continue;
 			}
 		
-		int_vec_copy(Lines, Lines2, len * 3);
+		lint_vec_copy(Lines, Lines2, len * 3);
 		
 		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 0, 0 /* verbose_level */);
 
@@ -444,11 +445,11 @@ void classify_trihedral_pairs::early_test_func_type1(
 		if (f_vv) {
 			cout << "classify_trihedral_pairs::early_test_func_type1 "
 					"Lines2=" << endl;
-			int_matrix_print(Lines2, len + 1, 3);
+			lint_matrix_print(Lines2, len + 1, 3);
 			}
 
 
-		Sorting.int_vec_heapsort(Lines2, (len + 1) * 3);
+		Sorting.lint_vec_heapsort(Lines2, (len + 1) * 3);
 
 		for (j = 1; j < (len + 1) * 3; j++) {
 			if (Lines2[j] == Lines2[j - 1]) {
@@ -500,22 +501,23 @@ void classify_trihedral_pairs::early_test_func_type1(
 		cout << endl;
 		cout << "good_candidates set of size "
 				<< nb_good_candidates << ":" << endl;
-		int_vec_print(cout, good_candidates, nb_good_candidates);
+		lint_vec_print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 	
 }
 
-void classify_trihedral_pairs::early_test_func_type2(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void classify_trihedral_pairs::early_test_func_type2(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j, a, rk;
-	int Lines[9];
-	int Lines2[9];
+	int i, j;
+	long int a, rk;
+	long int Lines[9];
+	long int Lines2[9];
 	int M1[8];
 	//int M2[12];
 	//int M3[16];
@@ -525,10 +527,10 @@ void classify_trihedral_pairs::early_test_func_type2(int *S, int len,
 	if (f_v) {
 		cout << "classify_trihedral_pairs::early_test_func_type2 "
 				"checking set ";
-		print_set(cout, len, S);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len > 2) {
@@ -545,7 +547,7 @@ void classify_trihedral_pairs::early_test_func_type2(int *S, int len,
 	if (f_vv) {
 		cout << "classify_trihedral_pairs::early_test_func_type2 "
 				"Lines=" << endl;
-		int_matrix_print(Lines, len, 3);
+		lint_matrix_print(Lines, len, 3);
 		}
 
 	if (len == 2) {
@@ -576,7 +578,7 @@ void classify_trihedral_pairs::early_test_func_type2(int *S, int len,
 			continue;
 			}
 		
-		int_vec_copy(Lines, Lines2, len * 3);
+		lint_vec_copy(Lines, Lines2, len * 3);
 		
 		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 0, 0 /* verbose_level */);
 		Lines2[len * 3 + 0] = rk;
@@ -588,11 +590,11 @@ void classify_trihedral_pairs::early_test_func_type2(int *S, int len,
 		if (f_vv) {
 			cout << "classify_trihedral_pairs::early_test_func_type1 "
 					"Lines2=" << endl;
-			int_matrix_print(Lines2, len + 1, 3);
+			lint_matrix_print(Lines2, len + 1, 3);
 			}
 
 
-		Sorting.int_vec_heapsort(Lines2, (len + 1) * 3);
+		Sorting.lint_vec_heapsort(Lines2, (len + 1) * 3);
 
 		for (j = 1; j < (len + 1) * 3; j++) {
 			if (Lines2[j] == Lines2[j - 1]) {
@@ -889,11 +891,11 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 
 	int *f_processed;
 	int nb_processed, po, so, type, orb, f, f2;
-	int Planes[] = {0,1,5, 0,1,2};
-	int planes1[3];
-	int planes2[3];
-	int planes3[3];
-	int planes4[3];
+	long int Planes[] = {0,1,5, 0,1,2};
+	long int planes1[3];
+	long int planes2[3];
+	long int planes3[3];
+	long int planes4[3];
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -940,10 +942,10 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 		
 		po = Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
 		so = Flag_orbits->Flag_orbit_node[f].downstep_secondary_orbit;
-		int_vec_copy(Flag_orbits->Pt + f * 3, planes1, 3);
+		lint_vec_copy(Flag_orbits->Pt + f * 3, planes1, 3);
 		if (f_v) {
 			cout << "classify_trihedral_pairs::upstep initializing planes: ";
-			int_vec_print(cout, planes1, 3);
+			lint_vec_print(cout, planes1, 3);
 			cout << endl;
 			}
 		identify_three_planes(planes1[0], planes1[1], planes1[2],
@@ -954,7 +956,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 			A->element_print_quick(Elt1, cout);
 			}
 
-		int_vec_copy(Planes + po * 3, planes2, 3);
+		lint_vec_copy(Planes + po * 3, planes2, 3);
 		A->map_a_set_and_reorder(planes2, planes3, 3,
 				Elt1, 0 /* verbose_level */);
 		if (type == 1) {
@@ -1023,10 +1025,10 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 					<< go << endl;
 			}
 
-		int Rep[6];
+		long int Rep[6];
 
-		int_vec_copy(Planes + po * 3, Rep, 3);
-		int_vec_copy(planes1, Rep + 3, 3);
+		lint_vec_copy(Planes + po * 3, Rep, 3);
+		lint_vec_copy(planes1, Rep + 3, 3);
 		Trihedral_pairs->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 			Trihedral_pairs,
 			Flag_orbits->nb_primary_orbits_upper, 
@@ -1073,7 +1075,7 @@ void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost,
 
 strong_generators
 *classify_trihedral_pairs::identify_trihedral_pair_and_get_stabilizer(
-	int *planes6, int *transporter, int &orbit_index,
+	long int *planes6, int *transporter, int &orbit_index,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1086,7 +1088,7 @@ strong_generators
 
 	if (f_v) {
 		cout << "planes6: ";
-		int_vec_print(cout, planes6, 6);
+		lint_vec_print(cout, planes6, 6);
 		cout << endl;
 		}
 
@@ -1134,7 +1136,7 @@ strong_generators
 
 
 
-void classify_trihedral_pairs::identify_trihedral_pair(int *planes6, 
+void classify_trihedral_pairs::identify_trihedral_pair(long int *planes6,
 	int *transporter, int &orbit_index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1144,8 +1146,8 @@ void classify_trihedral_pairs::identify_trihedral_pair(int *planes6,
 	int *Elt2;
 	int *Elt3;
 	int *Elt4;
-	int planes1[3];
-	int planes2[3];
+	long int planes1[3];
+	long int planes2[3];
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_trihedral_pair" << endl;
@@ -1230,9 +1232,9 @@ void classify_trihedral_pairs::identify_trihedral_pair(int *planes6,
 // global functions:
 // #############################################################################
 
-void classify_trihedral_pairs_early_test_function_type1(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	classify_trihedral_pairs *CT = (classify_trihedral_pairs *) data;
@@ -1254,9 +1256,9 @@ void classify_trihedral_pairs_early_test_function_type1(int *S, int len,
 		}
 }
 
-void classify_trihedral_pairs_early_test_function_type2(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	classify_trihedral_pairs *CT = (classify_trihedral_pairs *) data;

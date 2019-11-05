@@ -91,15 +91,15 @@ void arc_partition::init(
 			0 /* verbose_level */);
 
 
-	int_vec_complement(The_pair->data, arc_remainder, 6, 2);
+	lint_vec_complement(The_pair->data, arc_remainder, 6, 2);
 	if (f_v) {
 		cout << "arc_partition::init "
 				"the pair is :";
-		int_vec_print(cout, The_pair->data, 2);
+		lint_vec_print(cout, The_pair->data, 2);
 		cout << endl;
 		cout << "arc_partition::init "
 				"the remainder is :";
-		int_vec_print(cout, arc_remainder, 4);
+		lint_vec_print(cout, arc_remainder, 4);
 		cout << endl;
 		}
 

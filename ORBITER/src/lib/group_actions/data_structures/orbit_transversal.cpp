@@ -84,7 +84,7 @@ void orbit_transversal::read_from_file(
 	orbit_transversal::A2 = A2;
 
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii; 
 	int *Casenumbers;
@@ -126,14 +126,14 @@ void orbit_transversal::read_from_file(
 					<< "%" << endl;
 			}
 		strong_generators *gens;
-		int *set;
+		long int *set;
 
 		gens = NEW_OBJECT(strong_generators);
 		gens->init_from_ascii_coding(A,
 				Aut_ascii[i], 0 /* verbose_level */);
 		
-		set = NEW_int(Set_sizes[i]);
-		int_vec_copy(Sets[i], set, Set_sizes[i]);
+		set = NEW_lint(Set_sizes[i]);
+		lint_vec_copy(Sets[i], set, Set_sizes[i]);
 		Reps[i].init_everything(A, A2, set, Set_sizes[i], 
 			gens, 0 /* verbose_level */);
 
@@ -169,7 +169,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	orbit_transversal::A2 = A2;
 
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
@@ -205,14 +205,14 @@ void orbit_transversal::read_from_file_one_case_only(
 	i = case_nr;
 
 	strong_generators *gens;
-	int *set;
+	long int *set;
 
 	gens = NEW_OBJECT(strong_generators);
 	gens->init_from_ascii_coding(A,
 			Aut_ascii[i], 0 /* verbose_level */);
 
-	set = NEW_int(Set_sizes[i]);
-	int_vec_copy(Sets[i], set, Set_sizes[i]);
+	set = NEW_lint(Set_sizes[i]);
+	lint_vec_copy(Sets[i], set, Set_sizes[i]);
 	Reps[i].init_everything(A, A2, set, Set_sizes[i],
 		gens, 0 /* verbose_level */);
 

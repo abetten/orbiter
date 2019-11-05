@@ -188,6 +188,7 @@ void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
 		ost << " fuse to " << fusion_with;
 	}
 	ost << " is ";
+
 	lint_vec_print(ost, Flag_orbits->Pt +
 			flag_orbit_index * Flag_orbits->pt_representation_sz,
 			Flag_orbits->pt_representation_sz);

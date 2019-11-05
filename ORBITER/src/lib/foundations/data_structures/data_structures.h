@@ -129,7 +129,7 @@ class data_file {
 	char fname[1000];
 	int nb_cases;
 	int *set_sizes;
-	int **sets;
+	long int **sets;
 	int *casenumbers;
 	char **Ago_ascii;
 	char **Aut_ascii;
@@ -630,6 +630,8 @@ public:
 	~sorting();
 
 	void int_vec_search_vec(int *v, int len, int *A, int A_sz, int *Idx);
+	void lint_vec_search_vec(
+			long int *v, int len, long int *A, int A_sz, long int *Idx);
 	void int_vec_search_vec_linear(int *v, int len, int *A, int A_sz, int *Idx);
 	int int_vec_is_subset_of(int *set, int sz, int *big_set, int big_set_sz);
 	int lint_vec_is_subset_of(int *set, int sz, long int *big_set, int big_set_sz);
@@ -638,6 +640,8 @@ public:
 	void int_vec_sort_and_remove_duplicates(int *v, int &len);
 	void lint_vec_sort_and_remove_duplicates(long int *v, int &len);
 	int int_vec_sort_and_test_if_contained(int *v1, int len1, int *v2, int len2);
+	int lint_vec_sort_and_test_if_contained(
+			long int *v1, int len1, long int *v2, int len2);
 	int int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2);
 	int int_vecs_find_common_element(int *v1, int len1,
 		int *v2, int len2, int &idx1, int &idx2);
@@ -744,8 +748,8 @@ public:
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
-	int search_general(void *data, int len, int *search_object, int &idx,
-		int (*compare_func)(void *data, int i, int *search_object,
+	int search_general(void *data, int len, void *search_object, int &idx,
+		int (*compare_func)(void *data, int i, void *search_object,
 		void *extra_data),
 		void *extra_data, int verbose_level);
 		// This function finds the last occurence of the element a.
@@ -796,6 +800,8 @@ public:
 		layered_graph *&LG,
 		int f_embedded, int f_sideways,
 		int verbose_level);
+	int compare_sets(int *set1, int *set2, int sz1, int sz2);
+	int compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2);
 };
 
 int int_compare_increasingly(void *a, void *b, void *data);
