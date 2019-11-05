@@ -65,11 +65,11 @@ void cayley_graph_search::init(int level,
 	list_of_elements = NEW_int(go);
 	list_of_elements_inverse = NEW_int(go);
 	for (i = 0; i < go_subgroup; i++) {
-		S_subgroup->element_unrank_int(i, Elt1);
+		S_subgroup->element_unrank_lint(i, Elt1);
 		cout << "Element " << setw(5) << i << " / "
 				<< go_subgroup << ":" << endl;
 		A->element_print(Elt1, cout);
-		j = S->element_rank_int(Elt1);
+		j = S->element_rank_lint(Elt1);
 		cout << "is element " << j << endl;
 		list_of_elements[i] = j;
 		}
@@ -83,14 +83,14 @@ void cayley_graph_search::init(int level,
 		}
 
 	for (i = 0; i < go_subgroup; i++) {
-		S->element_unrank_int(list_of_elements[i], Elt1);
+		S->element_unrank_lint(list_of_elements[i], Elt1);
 		A->element_mult(Elt1, Strong_gens->gens->ith(0), Elt2, 0);
-		j = S->element_rank_int(Elt2);
+		j = S->element_rank_lint(Elt2);
 		list_of_elements[go_subgroup + i] = j;
 		cout << "Element " << setw(5) << i << " / "
 				<< go_subgroup << " * b = " << endl;
 		A->element_print(Elt2, cout);
-		j = S->element_rank_int(Elt1);
+		j = S->element_rank_lint(Elt1);
 		cout << "is element " << j << endl;
 		}
 
@@ -170,17 +170,17 @@ void cayley_graph_search::init_group2(int verbose_level)
 	if (level == 4) {
 		if (group == 2 || group == 3 || group == 5) {
 			for (i = 0; i < go_subgroup; i++) {
-				S_subgroup->element_unrank_int(i, Elt1);
+				S_subgroup->element_unrank_lint(i, Elt1);
 				cout << "Element " << setw(5) << i << " / "
 						<< go_subgroup << ":" << endl;
 				A->element_print(Elt1, cout);
-				j = S->element_rank_int(Elt1);
+				j = S->element_rank_lint(Elt1);
 				f_subgroup[j] = TRUE;
 				}
 			}
 		else if (group == 4) {
 			for (i = 0; i < go; i++) {
-				S->element_unrank_int(i, Elt1);
+				S->element_unrank_lint(i, Elt1);
 				cout << "Element " << setw(5) << i << " / "
 						<< go << ":" << endl;
 				A->element_print(Elt1, cout);
@@ -196,11 +196,11 @@ void cayley_graph_search::init_group2(int verbose_level)
 		}
 	else if (level == 5) {
 		for (i = 0; i < go_subgroup; i++) {
-			S_subgroup->element_unrank_int(i, Elt1);
+			S_subgroup->element_unrank_lint(i, Elt1);
 			cout << "Element " << setw(5) << i << " / "
 					<< go_subgroup << ":" << endl;
 			A->element_print(Elt1, cout);
-			j = S->element_rank_int(Elt1);
+			j = S->element_rank_lint(Elt1);
 			f_subgroup[j] = TRUE;
 			}
 		}
@@ -208,7 +208,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 
 	nb_involutions = 0;
 	for (i = 0; i < go; i++) {
-		S->element_unrank_int(i, Elt1);
+		S->element_unrank_lint(i, Elt1);
 		cout << "Element " << setw(5) << i << " / "
 				<< go << ":" << endl;
 		A->element_print(Elt1, cout);
@@ -233,7 +233,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 	nb_generators = Strong_gens->gens->len;
 	generators = NEW_int(nb_generators);
 	for (i = 0; i < nb_generators; i++) {
-		generators[i] = S->element_rank_int(Strong_gens->gens->ith(i));
+		generators[i] = S->element_rank_lint(Strong_gens->gens->ith(i));
 		}
 
 	S->create_group_table(Table, go, verbose_level);
@@ -829,7 +829,7 @@ void cayley_graph_search::write_file(int verbose_level)
 		ofstream fp(fname_graphs);
 
 		for (i = 0; i < go; i++) {
-			S->element_unrank_int(i, Elt1);
+			S->element_unrank_lint(i, Elt1);
 			cout << "Element " << setw(5) << i << " / "
 					<< go << ":" << endl;
 			A->element_print(Elt1, cout);
@@ -841,7 +841,7 @@ void cayley_graph_search::write_file(int verbose_level)
 			}
 		fp << endl;
 		for (i = 0; i < go; i++) {
-			S->element_unrank_int(i, Elt1);
+			S->element_unrank_lint(i, Elt1);
 			cout << "Element " << setw(5) << i << " / "
 					<< go << ":" << endl;
 			A->element_print(Elt1, cout);
@@ -977,7 +977,7 @@ void cayley_graph_search::create_Adjacency_list(int *Adj,
 		cout << "cayley_graph_search::create_Adjacency_list" << endl;
 		}
 	for (i = 0; i < go; i++) {
-		S->element_unrank_int(i, Elt1);
+		S->element_unrank_lint(i, Elt1);
 
 #if 0
 		cout << "Element " << setw(5) << i << " / "
@@ -1051,7 +1051,7 @@ void cayley_graph_search::create_additional_edges(
 		if (!f_subgroup[i]) {
 			continue;
 			}
-		S->element_unrank_int(i, Elt1);
+		S->element_unrank_lint(i, Elt1);
 		Additional_neighbor[i] = A2->element_image_of(
 				connection_element, Elt1, 0 /* verbose_level */);
 		Additional_neighbor_sz[i]++;

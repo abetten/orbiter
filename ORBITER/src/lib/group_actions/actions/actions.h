@@ -201,12 +201,12 @@ public:
 	int f_has_base();
 	int base_len();
 	void set_base_len(int base_len);
-	int &base_i(int i);
-	int *&get_base();
+	long int &base_i(int i);
+	long int *&get_base();
 	int &transversal_length_i(int i);
 	int *&get_transversal_length();
-	int &orbit_ij(int i, int j);
-	int &orbit_inv_ij(int i, int j);
+	long int &orbit_ij(int i, int j);
+	long int &orbit_inv_ij(int i, int j);
 
 	void null_element_data();
 	void allocate_element_data();
@@ -216,10 +216,10 @@ public:
 	int find_fixed_points(void *elt, 
 		int *fixed_points, int verbose_level);
 	int test_if_set_stabilizes(int *Elt, 
-		int size, int *set, int verbose_level);
-	void map_a_set(int *set, int *image_set, 
+		int size, long int *set, int verbose_level);
+	void map_a_set(long int *set, long int *image_set,
 		int n, int *Elt, int verbose_level);
-	void map_a_set_and_reorder(int *set, int *image_set, 
+	void map_a_set_and_reorder(long int *set, long int *image_set,
 		int n, int *Elt, int verbose_level);
 	void print_all_elements();
 
@@ -269,24 +269,24 @@ public:
 	void compute_stabilizer_orbits(partitionstack *&Staborbits, 
 		int verbose_level);
 	int check_if_in_set_stabilizer(int *Elt, 
-		int size, int *set, 
+		int size, long int *set,
 		int verbose_level);
 	int check_if_transporter_for_set(int *Elt, 
-		int size, int *set1, int *set2, 
+		int size, long int *set1, long int *set2,
 		int verbose_level);
 	void compute_set_orbit(vector_ge &gens, 
-		int size, int *set, 
-		int &nb_sets, int **&Sets, 
+		int size, long int *set,
+		int &nb_sets, long int **&Sets,
 		int **&Transporter, 
 		int verbose_level);
 	void delete_set_orbit(int nb_sets, 
-		int **Sets, int **Transporter);
+		long int **Sets, int **Transporter);
 	void compute_minimal_set(vector_ge &gens, 
-		int size, int *set, 
-		int *minimal_set, int *transporter, 
+		int size, long int *set,
+		long int *minimal_set, int *transporter,
 		int verbose_level);
 	void find_strong_generators_at_level(int base_len, 
-		int *the_base, int level, 
+		long int *the_base, int level,
 		vector_ge &gens, vector_ge &subset_of_gens, 
 		int verbose_level);
 	void compute_strong_generators_from_sims(int verbose_level);
@@ -349,7 +349,7 @@ public:
 		strong_generators *&stab_gens,
 		int verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
-		int line_rk, int *Elt, int verbose_level);
+		long int line_rk, int *Elt, int verbose_level);
 	int is_matrix_group();
 	int is_semilinear_matrix_group();
 	int is_projective();
@@ -624,10 +624,10 @@ public:
 		sims *Base_group, int f_ownership, 
 		int verbose_level);
 	action *create_induced_action_on_sets(int nb_sets, 
-		int set_size, int *sets, 
+		int set_size, long int *sets,
 		int verbose_level);
 	void induced_action_on_sets(action &old_action, sims *old_G, 
-		int nb_sets, int set_size, int *sets, 
+		int nb_sets, int set_size, long int *sets,
 		int f_induce_action, int verbose_level);
 	action *create_induced_action_on_subgroups(sims *S, 
 		int nb_subgroups, int group_order, 
@@ -642,14 +642,14 @@ public:
 		int f_induce_action, sims *old_G, 
 		schreier_vector *Schreier_vector,
 		int pt, int verbose_level);
-	action *restricted_action(int *points, int nb_points, 
+	action *restricted_action(long int *points, int nb_points,
 		int verbose_level);
 	action *create_induced_action_by_restriction(
-			sims *S, int size, int *set, int f_induce,
+			sims *S, int size, long int *set, int f_induce,
 			int verbose_level);
 	void induced_action_by_restriction_internal_function(action &old_action,
 		int f_induce_action, sims *old_G, 
-		int nb_points, int *points, int verbose_level);
+		int nb_points, long int *points, int verbose_level);
 		// uses action_by_restriction data type
 	void induced_action_on_pairs(action &old_action, sims *old_G, 
 		int verbose_level);
@@ -690,25 +690,25 @@ public:
 		int verbose_level);
 	void induce(action *old_action, sims *old_G, 
 		int base_of_choice_len, 
-		int *base_of_choice, 
+		long int *base_of_choice,
 		int verbose_level);
 	int least_moved_point_at_level(int level, 
 		int verbose_level);
 	void lex_least_base_in_place(int verbose_level);
 	void lex_least_base(action *old_action, int verbose_level);
 	int test_if_lex_least_base(int verbose_level);
-	void base_change_in_place(int size, int *set, int verbose_level);
+	void base_change_in_place(int size, long int *set, int verbose_level);
 	void base_change(action *old_action, 
-		int size, int *set, int verbose_level);
+		int size, long int *set, int verbose_level);
 	void create_orbits_on_subset_using_restricted_action(
 			action *&A_by_restriction,
 			schreier *&Orbits, sims *S,
-			int size, int *set,
+			int size, long int *set,
 			int verbose_level);
 	void create_orbits_on_sets_using_action_on_sets(
 			action *&A_on_sets,
 			schreier *&Orbits, sims *S,
-			int nb_sets, int set_size, int *sets,
+			int nb_sets, int set_size, long int *sets,
 			int verbose_level);
 	int choose_next_base_point_default_method(
 			int *Elt, int verbose_level);
@@ -807,7 +807,7 @@ public:
 	void print_for_make_element(std::ostream &ost, void *elt);
 	void print_for_make_element_no_commas(std::ostream &ost, void *elt);
 	
-	int element_image_of(int a, void *elt, int verbose_level);
+	long int element_image_of(long int a, void *elt, int verbose_level);
 	void element_image_of_low_level(int *input, int *output, 
 		void *elt, int verbose_level);
 	int element_linear_entry_ij(void *elt, int i, int j, 
@@ -829,7 +829,7 @@ public:
 	void element_print_latex(void *elt, std::ostream &ost);
 	void element_print_latex_with_print_point_function(
 		void *elt, std::ostream &ost,
-		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data);
 	void element_print_verbose(void *elt, std::ostream &ost);
 	void element_code_for_make_element(void *elt, int *data);
@@ -853,7 +853,7 @@ public:
 		std::ostream &ost, int offset, int max_cycle_length,
 		int f_orbit_structure);
 	void element_print_image_of_set(void *elt, 
-		int size, int *set);
+		int size, long int *set);
 	int element_signum_of_permutation(void *elt);
 	void element_write_file_fp(int *Elt, 
 			std::ofstream &fp, int verbose_level);
@@ -878,7 +878,7 @@ public:
 	// in action_projective.cpp:
 	strong_generators *set_stabilizer_in_projective_space(
 		projective_space *P,
-		int *set, int set_size, int &canonical_pt,
+		long int *set, int set_size, int &canonical_pt,
 		int *canonical_set_or_NULL,
 		int f_save_incma_in_and_out,
 		const char *save_incma_in_and_out_prefix,
@@ -895,17 +895,17 @@ public:
 
 	// in backtrack.cpp
 	int is_minimal(
-		int size, int *set, int &backtrack_level, 
+		int size, long int *set, int &backtrack_level,
 		int verbose_level);
 	void make_canonical(
-		int size, int *set, 
-		int *canonical_set, int *transporter, 
+		int size, long int *set,
+		long int *canonical_set, int *transporter,
 		int &total_backtrack_nodes, 
 		int f_get_automorphism_group, sims *Aut,
 		int verbose_level);
 	int is_minimal_witness(
-		int size, int *set, 
-		int &backtrack_level, int *witness, 
+		int size, long int *set,
+		int &backtrack_level, long int *witness,
 		int *transporter_witness, 
 		int &backtrack_nodes, 
 		int f_get_automorphism_group, sims &Aut,
@@ -951,7 +951,7 @@ void lift_generators_to_subfield_structure(
 	action *Aq, action *AQ, 
 	strong_generators *&Strong_gens, 
 	int verbose_level);
-int group_ring_element_size(action *A, sims *S);
+long int group_ring_element_size(action *A, sims *S);
 void group_ring_element_create(action *A, sims *S, int *&elt);
 void group_ring_element_free(action *A, sims *S, int *elt);
 void group_ring_element_print(action *A, sims *S, int *elt);
@@ -981,7 +981,7 @@ class action_pointer_table {
 public:
 
 	/** function pointers for group actions */
-	int (*ptr_element_image_of)(action &A, int a, void *elt,
+	long int (*ptr_element_image_of)(action &A, long int a, void *elt,
 		int verbose_level);
 	void (*ptr_element_image_of_low_level)(action &A,
 		int *input, int *output, void *elt, int verbose_level);
@@ -1017,19 +1017,19 @@ public:
 		void *elt, std::ostream &ost);
 	void (*ptr_element_print_latex_with_print_point_function)(action &A,
 		void *elt, std::ostream &ost,
-		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data);
 	void (*ptr_element_print_verbose)(action &A,
 		void *elt, std::ostream &ost);
-	void (*ptr_print_point)(action &A, int i, std::ostream &ost);
+	void (*ptr_print_point)(action &A, long int i, std::ostream &ost);
 	void (*ptr_element_code_for_make_element)(action &A,
 		void *elt, int *data);
 	void (*ptr_element_print_for_make_element)(action &A,
 		void *elt, std::ostream &ost);
 	void (*ptr_element_print_for_make_element_no_commas)(action &A,
 		void *elt, std::ostream &ost);
-	void (*ptr_unrank_point)(action &A, int rk, int *v);
-	int (*ptr_rank_point)(action &A, int *v);
+	void (*ptr_unrank_point)(action &A, long int rk, int *v);
+	long int (*ptr_rank_point)(action &A, int *v);
 
 	/** counters for how often a function has been called */
 	int nb_times_image_of_called;
@@ -1154,7 +1154,7 @@ private:
 
 
 	/** the base (b_0,\ldots,b_{l-1}) */
-	int *base;
+	long int *base;
 
 
 
@@ -1162,10 +1162,10 @@ private:
 	int *transversal_length;
 
 	/** the orbit of  b_i */
-	int **orbit;
+	long int **orbit;
 
 	/** the inverse orbit of  b_i */
-	int **orbit_inv;
+	long int **orbit_inv;
 
 	int *path;
 public:
@@ -1178,12 +1178,12 @@ public:
 	void init_base_from_sims(sims *G, int verbose_level);
 	int &get_f_has_base();
 	int &get_base_len();
-	int &base_i(int i);
-	int *&get_base();
+	long int &base_i(int i);
+	long int *&get_base();
 	int &transversal_length_i(int i);
 	int *&get_transversal_length();
-	int &orbit_ij(int i, int j);
-	int &orbit_inv_ij(int i, int j);
+	long int &orbit_ij(int i, int j);
+	long int &orbit_inv_ij(int i, int j);
 	int &path_i(int i);
 	void group_order(longinteger_object &go);
 	void init_projective_matrix_group(

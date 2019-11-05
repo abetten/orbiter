@@ -140,7 +140,7 @@ void andre_construction::init(finite_field *F,
 
 	spread_elements_genma = NEW_int(spread_size * k * n);
 	for (i = 0; i < spread_size; i++) {
-		Grass->unrank_int_here(
+		Grass->unrank_lint_here(
 			spread_elements_genma + i * k * n,
 			spread_elements_numeric[i], 0);
 		}

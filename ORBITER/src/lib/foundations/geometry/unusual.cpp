@@ -449,7 +449,7 @@ void unusual_model::setup2(int q,
 }
 
 void unusual_model::convert_to_ranks(int n,
-		int *unusual_coordinates, int *ranks, int verbose_level)
+		int *unusual_coordinates, long int *ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -479,7 +479,7 @@ void unusual_model::convert_to_ranks(int n,
 	
 	if (f_v) {
 		cout << "ranks:" << endl;
-		int_vec_print(cout, ranks, n);
+		lint_vec_print(cout, ranks, n);
 		cout << endl;
 		}
 
@@ -487,7 +487,7 @@ void unusual_model::convert_to_ranks(int n,
 }
 
 void unusual_model::convert_from_ranks(int n,
-	int *ranks, int *unusual_coordinates, int verbose_level)
+	long int *ranks, int *unusual_coordinates, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *usual;
@@ -498,7 +498,7 @@ void unusual_model::convert_from_ranks(int n,
 		}
 	if (f_v) {
 		cout << "ranks:" << endl;
-		int_vec_print(cout, ranks, n);
+		lint_vec_print(cout, ranks, n);
 		cout << endl;
 		}
 	
@@ -521,18 +521,18 @@ void unusual_model::convert_from_ranks(int n,
 	FREE_int(usual);
 }
 
-int unusual_model::convert_to_rank(
+long int unusual_model::convert_to_rank(
 	int *unusual_coordinates, int verbose_level)
 {
 	int usual[5];
-	int rank;
+	long int rank;
 
 	convert_to_usual(1, unusual_coordinates, usual, verbose_level - 1);
 	rank = f.Q_rank(usual, 1, 4, 0 /* verbose_level */);
 	return rank;
 }
 
-void unusual_model::convert_from_rank(int rank,
+void unusual_model::convert_from_rank(long int rank,
 	int *unusual_coordinates, int verbose_level)
 {
 	int usual[5];
@@ -651,7 +651,7 @@ void unusual_model::convert_from_usual(int n,
 }
 
 void unusual_model::create_Fisher_BLT_set(
-	int *Fisher_BLT, int verbose_level)
+	long int *Fisher_BLT, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -721,7 +721,7 @@ void unusual_model::create_Fisher_BLT_set(
 	
 	if (f_v) {
 		cout << "Fisher BLT set:" << endl;
-		int_vec_print(cout, Fisher_BLT, q + 1);
+		lint_vec_print(cout, Fisher_BLT, q + 1);
 		cout << endl;
 		}
 	FREE_int(norm_one_table);
@@ -729,7 +729,7 @@ void unusual_model::create_Fisher_BLT_set(
 }
 
 void unusual_model::create_Linear_BLT_set(
-		int *BLT, int verbose_level)
+		long int *BLT, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -773,7 +773,7 @@ void unusual_model::create_Linear_BLT_set(
 	
 	if (f_v) {
 		cout << "Linear BLT set:" << endl;
-		int_vec_print(cout, BLT, q + 1);
+		lint_vec_print(cout, BLT, q + 1);
 		cout << endl;
 		}
 	FREE_int(norm_table);
@@ -781,7 +781,7 @@ void unusual_model::create_Linear_BLT_set(
 }
 
 void unusual_model::create_Mondello_BLT_set(
-	int *BLT, int verbose_level)
+	long int *BLT, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -858,7 +858,7 @@ void unusual_model::create_Mondello_BLT_set(
 	
 	if (f_v) {
 		cout << "Mondello BLT set:" << endl;
-		int_vec_print(cout, BLT, q + 1);
+		lint_vec_print(cout, BLT, q + 1);
 		cout << endl;
 		}
 	FREE_int(norm_one_table);
@@ -934,7 +934,7 @@ int unusual_model::bilinear_form(
 }
 
 void unusual_model::print_coordinates_detailed_set(
-		int *set, int len)
+		long int *set, int len)
 {
 	int i, j;
 	
@@ -945,7 +945,7 @@ void unusual_model::print_coordinates_detailed_set(
 		}
 }
 
-void unusual_model::print_coordinates_detailed(int pt, int cnt)
+void unusual_model::print_coordinates_detailed(long int pt, int cnt)
 {
 	int a, b, c, x, y, l1, l2, aq, bq, ll1, ll2, a1, a2, b1, b2, w;
 	int Q = q * q;
@@ -991,7 +991,7 @@ void unusual_model::print_coordinates_detailed(int pt, int cnt)
 }
 
 int unusual_model::build_candidate_set(orthogonal &O, int q, 
-	int gamma, int delta, int m, int *Set, 
+	int gamma, int delta, int m, long int *Set,
 	int f_second_half, int verbose_level)
 {
 	int offset, len;
@@ -1006,7 +1006,7 @@ int unusual_model::build_candidate_set(orthogonal &O, int q,
 
 int unusual_model::build_candidate_set_with_offset(
 	orthogonal &O, int q,
-	int gamma, int delta, int offset, int m, int *Set, 
+	int gamma, int delta, int offset, int m, long int *Set,
 	int f_second_half, int verbose_level)
 {
 	return build_candidate_set_with_or_without_test(
@@ -1016,7 +1016,7 @@ int unusual_model::build_candidate_set_with_offset(
 
 int unusual_model::build_candidate_set_with_or_without_test(
 	orthogonal &O, int q,
-	int gamma, int delta, int offset, int m, int *Set, 
+	int gamma, int delta, int offset, int m, long int *Set,
 	int f_second_half, int f_test, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1043,7 +1043,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 
 	if (f_vvv) {
 		cout << "created the following 1st half:" << endl;
-		int_vec_print(cout, Set, Len);
+		lint_vec_print(cout, Set, Len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, Len);
 		}
@@ -1099,7 +1099,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 	
 	if (f_vvv) {
 		cout << "created the following set:" << endl;
-		int_vec_print(cout, Set, Len);
+		lint_vec_print(cout, Set, Len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, Len);
 		}
@@ -1138,7 +1138,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 }
 
 int unusual_model::create_orbit_of_psi(orthogonal &O, int q, 
-	int gamma, int delta, int m, int *Set, 
+	int gamma, int delta, int m, long int *Set,
 	int f_test, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -1162,7 +1162,7 @@ int unusual_model::create_orbit_of_psi(orthogonal &O, int q,
 
 	if (f_vvv) {
 		cout << "created the following psi-orbit:" << endl;
-		int_vec_print(cout, Set, len);
+		lint_vec_print(cout, Set, len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, len);
 		}

@@ -127,13 +127,13 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 		}
 }
 	
-void action_on_homogeneous_polynomials::unrank_point(int *v, int rk)
+void action_on_homogeneous_polynomials::unrank_point(int *v, long int rk)
 {
 	HPD->unrank_coeff_vector(v, rk);
 	//PG_element_unrank_modified(*F, v, 1, dimension, rk);
 }
 
-int action_on_homogeneous_polynomials::rank_point(int *v)
+long int action_on_homogeneous_polynomials::rank_point(int *v)
 {
 #if 0
 	int rk;
@@ -145,8 +145,8 @@ int action_on_homogeneous_polynomials::rank_point(int *v)
 #endif
 }
 
-int action_on_homogeneous_polynomials::compute_image_int(
-		int *Elt, int a, int verbose_level)
+long int action_on_homogeneous_polynomials::compute_image_int(
+		int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

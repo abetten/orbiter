@@ -51,8 +51,8 @@ void action_on_orbits::init(action *A,
 		}
 }
 
-int action_on_orbits::compute_image(int *Elt,
-		int i, int verbose_level)
+long int action_on_orbits::compute_image(int *Elt,
+		long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j, j1, f, l, a, b, h;

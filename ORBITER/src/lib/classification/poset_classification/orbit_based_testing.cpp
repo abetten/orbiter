@@ -45,7 +45,7 @@ void orbit_based_testing::null()
 void orbit_based_testing::freeself()
 {
 	if (local_S) {
-		FREE_int(local_S);
+		FREE_lint(local_S);
 	}
 	null();
 }
@@ -62,7 +62,7 @@ void orbit_based_testing::init(
 	}
 	orbit_based_testing::PC = PC;
 	orbit_based_testing::max_depth = max_depth;
-	local_S = NEW_int(max_depth);
+	local_S = NEW_lint(max_depth);
 	if (f_v) {
 		cout << "orbit_based_testing::init done" << endl;
 	}
@@ -70,7 +70,7 @@ void orbit_based_testing::init(
 
 void orbit_based_testing::add_callback(
 		int (*func)(orbit_based_testing *Obt,
-				int *S, int len, void *data, int verbose_level),
+				long int *S, int len, void *data, int verbose_level),
 		void *data,
 		int verbose_level)
 {
@@ -89,9 +89,9 @@ void orbit_based_testing::add_callback(
 }
 
 void orbit_based_testing::add_callback_no_group(
-		void (*func)(int *S, int len,
-				int *candidates, int nb_candidates,
-				int *good_candidates, int &nb_good_candidates,
+		void (*func)(long int *S, int len,
+				long int *candidates, int nb_candidates,
+				long int *good_candidates, int &nb_good_candidates,
 				void *data, int verbose_level),
 		void *data,
 		int verbose_level)
@@ -111,9 +111,9 @@ void orbit_based_testing::add_callback_no_group(
 }
 
 void orbit_based_testing::early_test_func(
-	int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -147,9 +147,9 @@ void orbit_based_testing::early_test_func(
 }
 
 void orbit_based_testing::early_test_func_by_using_group(
-	int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -162,7 +162,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 
 	if (f_vv) {
 		cout << "S=";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << " testing " << nb_candidates << " candidates" << endl;
 		//int_vec_print(cout, candidates, nb_candidates);
 		//cout << endl;
@@ -173,10 +173,11 @@ void orbit_based_testing::early_test_func_by_using_group(
 				"len >= max_depth" << endl;
 		exit(1);
 	}
-	int_vec_copy(S, local_S, len);
+	lint_vec_copy(S, local_S, len);
 
 
-	int i, j, node, f, l, pt, nb_good_orbits;
+	int i, j, node, f, l, nb_good_orbits;
+	long int pt;
 	poset_orbit_node *O;
 	int f_orbit_is_good;
 	//int s, a;
@@ -254,7 +255,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 			}
 		}
 
-	Sorting.int_vec_heapsort(good_candidates, nb_good_candidates);
+	Sorting.lint_vec_heapsort(good_candidates, nb_good_candidates);
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group "
 			"after Schreier.compute_all_orbits_on_invariant_subset, "

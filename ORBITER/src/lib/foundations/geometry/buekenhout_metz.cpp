@@ -119,10 +119,10 @@ void buekenhout_metz::freeself()
 		FREE_int(Design_blocks);
 		}
 	if (secant_lines) {
-		FREE_int(secant_lines);
+		FREE_lint(secant_lines);
 		}
 	if (tangent_lines) {
-		FREE_int(tangent_lines);
+		FREE_lint(tangent_lines);
 		}
 	if (components) {
 		FREE_int(components);
@@ -142,10 +142,10 @@ void buekenhout_metz::freeself()
 		FREE_int(w5);
 		}
 	if (U) {
-		FREE_int(U);
+		FREE_lint(U);
 		}
 	if (ovoid) {
-		FREE_int(ovoid);
+		FREE_lint(ovoid);
 		}
 	if (FQ) {
 		delete FQ;
@@ -295,10 +295,11 @@ void buekenhout_metz::init_ovoid(int verbose_level)
 	if (f_v) {
 		cout << "buekenhout_metz::init_ovoid" << endl;
 		}
-	int X0, X1, Y1, Z, i, a;
+	int X0, X1, Y1, Z, a;
+	long int i;
 	
 	theta_3 = Gg.nb_PG_elements(3, q);
-	ovoid = NEW_int(theta_3);
+	ovoid = NEW_lint(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {
 		Fq->PG_element_unrank_modified(w1, 1, 4, i);
@@ -350,7 +351,7 @@ void buekenhout_metz::init_ovoid(int verbose_level)
 		}
 	if (f_v) {
 		cout << "found an ovoid of size " << sz_ovoid << ":" << endl;
-		int_vec_print(cout, ovoid, sz_ovoid);
+		lint_vec_print(cout, ovoid, sz_ovoid);
 		cout << endl;
 		}
 	if (f_vv) {
@@ -412,7 +413,7 @@ void buekenhout_metz::init_ovoid_Uab_even(
 		}
 	
 	theta_3 = Gg.nb_PG_elements(3, q);
-	ovoid = NEW_int(theta_3);
+	ovoid = NEW_lint(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {
 		Fq->PG_element_unrank_modified(w1, 1, 4, i);
@@ -438,7 +439,7 @@ void buekenhout_metz::init_ovoid_Uab_even(
 			}
 		}
 	cout << "found an ovoid of size " << sz_ovoid << ":" << endl;
-	int_vec_print(cout, ovoid, sz_ovoid);
+	lint_vec_print(cout, ovoid, sz_ovoid);
 	cout << endl;
 	P3->print_set(ovoid, sz_ovoid);
 
@@ -453,7 +454,8 @@ void buekenhout_metz::create_unital(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);
 	int f_vvv = (verbose_level >= 4);
-	int i, j, a, b, c1, c2, h;
+	int i, j, a, c1, c2, h;
+	long int b;
 
 	if (f_v) {
 		cout << "buekenhout_metz::create_unital" << endl;
@@ -471,7 +473,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 		cout << endl;
 		}
 	
-	U = NEW_int(q * q * q + 1);
+	U = NEW_lint(q * q * q + 1);
 	sz = 0;
 	for (i = 1; i < q * q + 1; i++) {
 		a = ovoid[i];
@@ -557,7 +559,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 
 	if (f_v) {
 		cout << "the Buekenhout Metz unital of size " << sz << " : ";
-		int_vec_print(cout, U, sz);
+		lint_vec_print(cout, U, sz);
 		cout << endl;
 
 		for (i = 0; i < sz; i++) {
@@ -843,9 +845,10 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 		}
 
 
-	tangent_lines = NEW_int(P2->N_lines);
-	secant_lines = NEW_int(P2->N_lines);
-	block = NEW_int(q + 1);
+	tangent_lines = NEW_lint(P2->N_lines);
+	secant_lines = NEW_lint(P2->N_lines);
+	block = NEW_lint(q + 1);
+
 
 	P2->find_k_secant_lines(U, sz, q + 1, 
 		secant_lines, nb_secant_lines, verbose_level - 1);
@@ -853,7 +856,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	if (f_vv) {
 		cout << "There are " << nb_secant_lines
 				<< " secant lines, they are:" << endl;
-		int_vec_print(cout, secant_lines, nb_secant_lines);
+		lint_vec_print(cout, secant_lines, nb_secant_lines);
 		cout << endl;
 		}
 
@@ -863,7 +866,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	if (f_vv) {
 		cout << "There are " << nb_tangent_lines
 				<< " tangent lines, they are:" << endl;
-		int_vec_print(cout, tangent_lines, nb_tangent_lines);
+		lint_vec_print(cout, tangent_lines, nb_tangent_lines);
 		cout << endl;
 		}
 
@@ -882,8 +885,11 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	for (h = 0; h < nb_tangent_lines; h++) {
 		a = tangent_lines[h];
 		f_is_tangent_line[a] = TRUE;
-		Sorting.int_vec_intersect(P2->Lines + a * P2->k, P2->k,
-				U, sz, block, block_size);
+		P2->intersect_with_line(U, sz,
+				a /* line_rk */, block, block_size,
+				0 /* verbose_level*/);
+		//Sorting.int_vec_intersect(P2->Lines + a * P2->k, P2->k,
+		//		U, sz, block, block_size);
 		if (block_size != 1) {
 			cout << "block_size != 1" << endl;
 			exit(1);
@@ -924,10 +930,14 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 
 	Intersection_sets = NEW_int(nb_secant_lines * (q + 1));
 	Design_blocks = NEW_int(nb_secant_lines * (q + 1));
+
 	for (h = 0; h < nb_secant_lines; h++) {
 		a = secant_lines[h];
-		Sorting.int_vec_intersect(P2->Lines + a * P2->k,
-				P2->k, U, sz, block, block_size);
+		P2->intersect_with_line(U, sz,
+				a /* line_rk */, block, block_size,
+				0 /* verbose_level*/);
+		//Sorting.int_vec_intersect(P2->Lines + a * P2->k,
+		//		P2->k, U, sz, block, block_size);
 		if (block_size != q + 1) {
 			cout << "block_size != q + 1" << endl;
 			exit(1);
@@ -941,7 +951,6 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 			Intersection_sets[h * (q + 1) + j] = block[j];
 			Design_blocks[h * (q + 1) + j] = b;
 			}
-		FREE_int(block);
 		}
 
 	if (f_vv) {

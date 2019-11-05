@@ -8,6 +8,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/finite_field_io.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
+		foundations/algebra_and_number_theory/finite_field_linear_algebra2.o \
 		foundations/algebra_and_number_theory/finite_field_linear_groups.o \
 		foundations/algebra_and_number_theory/finite_field_orthogonal.o \
 		foundations/algebra_and_number_theory/finite_field_projective.o \
@@ -89,10 +90,12 @@ MODULES= \
 		foundations/geometry/orthogonal.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/projective_space.o \
+		foundations/geometry/projective_space2.o \
 		foundations/geometry/spread_tables.o \
 		foundations/geometry/surface_domain_lines.o \
 		foundations/geometry/surface_domain_io.o \
 		foundations/geometry/surface_domain.o \
+		foundations/geometry/surface_domain2.o \
 		foundations/geometry/surface_object.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \

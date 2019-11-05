@@ -821,10 +821,10 @@ int matrix_group::GL_element_entry_frobenius(int *Elt)
 		}
 }
 
-int matrix_group::image_of_element(int *Elt, int a, int verbose_level)
+long int matrix_group::image_of_element(int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int b;
+	long int b;
 	
 	if (f_v) {
 		cout << "matrix_group::image_of_element" << endl;
@@ -851,20 +851,20 @@ int matrix_group::image_of_element(int *Elt, int a, int verbose_level)
 }
 
 
-int matrix_group::GL_image_of_PG_element(
-		int *Elt, int a, int verbose_level)
+long int matrix_group::GL_image_of_PG_element(
+		int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int b;
+	long int b;
 	
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element" << endl;
 		}
-	GFq->PG_element_unrank_modified(v1, 1, n, a);
+	GFq->PG_element_unrank_modified_lint(v1, 1, n, a);
 
 	action_from_the_right_all_types(v1, Elt, v2, verbose_level - 1);
 	
-	GFq->PG_element_rank_modified(v2, 1, n, b);
+	GFq->PG_element_rank_modified_lint(v2, 1, n, b);
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element done" << endl;
@@ -872,11 +872,11 @@ int matrix_group::GL_image_of_PG_element(
 	return b;
 }
 
-int matrix_group::GL_image_of_AG_element(
-		int *Elt, int a, int verbose_level)
+long int matrix_group::GL_image_of_AG_element(
+		int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int b;
+	long int b;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -887,7 +887,7 @@ int matrix_group::GL_image_of_AG_element(
 
 	action_from_the_right_all_types(v1, Elt, v2, verbose_level - 1);
 
-	Gg.AG_element_rank(GFq->q, v2, 1, n, b);
+	b = Gg.AG_element_rank(GFq->q, v2, 1, n);
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_AG_element done" << endl;
@@ -2038,7 +2038,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
-	int goi, rk, i, h;
+	long int goi, rk, i, h;
 	longinteger_object go;
 	int *Id;
 	int *Mtx1;
@@ -2078,20 +2078,20 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 		for (h = 1; h < S->A->base_len(); h++) {
 			S->path[h] = 0;
 			}
-		rk = S->path_rank_int();
+		rk = S->path_rank_lint();
 		}
 
 
 	while (rk < goi) {
-		S->element_unrank_int(rk, Elt1);
-		S->path_unrank_int(rk);
+		S->element_unrank_lint(rk, Elt1);
+		S->path_unrank_lint(rk);
 		if (f_path_select && S->path[0] > select_value) {
 			break;
 			}
 		if (FALSE) {
 			cout << "testing matrix " << rk << " / " << goi << endl;
 			int_matrix_print(Elt1, n, n);
-			S->path_unrank_int(rk);
+			S->path_unrank_lint(rk);
 			cout << "path ";
 			int_vec_print(cout, S->path, S->A->base_len());
 			cout << endl;
@@ -2112,7 +2112,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 				}
 			}
 		if (i < n) {
-			S->path_unrank_int(rk);
+			S->path_unrank_lint(rk);
 			while (i >= 0) {
 				S->path[i]++;
 				if (S->path[i] < S->get_orbit_length(i)) {
@@ -2128,7 +2128,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 				int_vec_print(cout, S->path, S->A->base_len());
 				cout << endl;
 				}
-			rk = S->path_rank_int();
+			rk = S->path_rank_lint();
 			if (FALSE) {
 				cout << "moving on to matrix " << rk << " / " << goi << endl;
 				}
@@ -2145,7 +2145,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 				cout << "The matrix " << rk << " / " << goi
 						<< " (" << d << "%) has no eigenvector one, "
 								"cnt=" << cnt << endl;
-				S->path_unrank_int(rk);
+				S->path_unrank_lint(rk);
 				cout << "path ";
 				int_vec_print(cout, S->path, S->A->base_len());
 				cout << " : ";
@@ -2243,7 +2243,7 @@ int matrix_group::base_len(int verbose_level)
 
 void matrix_group::base_and_transversal_length(
 		int base_len,
-		int *base, int *transversal_length,
+		long int *base, int *transversal_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

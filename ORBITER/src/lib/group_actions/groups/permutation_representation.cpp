@@ -107,23 +107,26 @@ void permutation_representation::init(action *A_original,
 	}
 }
 
-int permutation_representation::element_image_of(int *Elt, int a, int verbose_level)
+long int permutation_representation::element_image_of(int *Elt,
+		long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int b;
+	long int b;
 
 	if (f_v) {
 		cout << "permutation_representation::element_image_of" << endl;
 	}
 	if (f_stay_in_the_old_action) {
 		if (f_v) {
-			cout << "permutation_representation::element_image_of using the old action" << endl;
+			cout << "permutation_representation::element_image_of "
+					"using the old action" << endl;
 		}
 		b = A_original->element_image_of(a, Elt, verbose_level);
 	}
 	else {
 		if (f_v) {
-			cout << "permutation_representation::element_image_of using the permutation representation (new action)" << endl;
+			cout << "permutation_representation::element_image_of "
+					"using the permutation representation (new action)" << endl;
 		}
 		b = Elt[perm_offset + a];
 		if (f_v) {

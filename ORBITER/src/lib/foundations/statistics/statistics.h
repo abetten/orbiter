@@ -27,6 +27,7 @@ public:
 	
 	int data_length;
 	
+	int f_data_ownership;
 	int *data;
 	int *data_sorted;
 	int *sorting_perm;
@@ -49,6 +50,8 @@ public:
 	classify();
 	~classify();
 	void init(int *data, int data_length, 
+		int f_second, int verbose_level);
+	void init_lint(long int *data, int data_length,
 		int f_second, int verbose_level);
 	void sort_and_classify();
 	void sort_and_classify_second();

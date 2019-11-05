@@ -641,9 +641,9 @@ void arc_lifting::loop_over_trihedral_pairs(
 	int orbit_index;
 	int orbit_length;
 	int Tt[4 * 4 + 1];
-	int Nine_lines0[9];
-	int Nine_lines[9];
-	int *v;
+	long int Nine_lines0[9];
+	long int Nine_lines[9];
+	long int *v;
 	int sz;
 	sorting Sorting;
 
@@ -682,7 +682,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 		cout << "arc_lifting::loop_over_trihedral_pairs "
 				"The first trihedral pair gives "
 				"the following nine lines: ";
-		int_vec_print(cout, Nine_lines0, 9);
+		lint_vec_print(cout, Nine_lines0, 9);
 		cout << endl;
 		}
 
@@ -714,11 +714,11 @@ void arc_lifting::loop_over_trihedral_pairs(
 			cout << "arc_lifting::loop_over_trihedral_pairs "
 					"The " << i << "-th trihedral "
 					"pair gives the following nine lines: ";
-			int_vec_print(cout, Nine_lines, 9);
+			lint_vec_print(cout, Nine_lines, 9);
 			cout << endl;
 			}
 
-		Sorting.int_vec_intersect(Nine_lines0, 9, Nine_lines, 9, v, sz);
+		Sorting.vec_intersect(Nine_lines0, 9, Nine_lines, 9, v, sz);
 
 		if (FALSE) {
 			cout << "arc_lifting::loop_over_trihedral_pairs "
@@ -726,7 +726,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 					<< "-th trihedral pair intersect the "
 						"nine lines of the first in " << sz
 						<< " lines, which are: ";
-			int_vec_print(cout, v, sz);
+			lint_vec_print(cout, v, sz);
 			cout << endl;
 			}
 
@@ -736,7 +736,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 			cout << endl;
 			}
 
-		FREE_int(v);
+		FREE_lint(v);
 		
 
 
@@ -879,7 +879,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 							"The " << orbit_length + 1 << "-th "
 							"trihedral pair in the orbit gives "
 							"the following nine lines: ";
-					int_vec_print(cout, Nine_lines, 9);
+					lint_vec_print(cout, Nine_lines, 9);
 					cout << endl;
 					}
 
@@ -1264,7 +1264,7 @@ void arc_lifting::create_clebsch_system(
 	if (f_v) {
 		cout << "arc_lifting::create_clebsch_system" << endl;
 		cout << "The nine lines are: ";
-		int_vec_print(cout, nine_lines, 9);
+		lint_vec_print(cout, nine_lines, 9);
 		cout << endl;
 		}
 
@@ -1442,7 +1442,7 @@ void arc_lifting::print_bisecants(ostream &ost)
 		Surf->P2->Grass_lines->print_single_generator_matrix_tex(ost, a);
 		ost << "\\right] ";
 
-		Surf->P2->Grass_lines->unrank_int_here_and_compute_perp(Mtx, a, 
+		Surf->P2->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
 			0 /*verbose_level */);
 		F->PG_element_normalize(Mtx + 6, 1, 3);
 		

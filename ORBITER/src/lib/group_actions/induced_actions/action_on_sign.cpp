@@ -57,11 +57,11 @@ void action_on_sign::init(action *A, int verbose_level)
 		}
 }
 
-void action_on_sign::compute_image(int *Elt,
-		int i, int &j, int verbose_level)
+long int action_on_sign::compute_image(int *Elt,
+		long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int u, v, sgn;
+	long int u, v, sgn, j;
 	combinatorics_domain Combi;
 	
 	if (f_v) {
@@ -89,6 +89,7 @@ void action_on_sign::compute_image(int *Elt,
 		cout << "action_on_sign::compute_image "
 				"image of " << i << " is " << j << endl;
 		}
+	return j;
 }
 
 }}

@@ -33,7 +33,7 @@ public:
 	int degree;
 	int data_size;
 
-	int go;
+	long int go;
 	int go_subgroup;
 	int nb_involutions;
 	int *f_has_order2;

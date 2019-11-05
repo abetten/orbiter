@@ -211,8 +211,8 @@ void action::print_for_make_element_no_commas(
 
 // #############################################################################
 
-int action::element_image_of(
-		int a, void *elt, int verbose_level)
+long int action::element_image_of(
+		long int a, void *elt, int verbose_level)
 {
 	ptr->nb_times_image_of_called++;
 	return (*ptr->ptr_element_image_of)(*this, a, elt, verbose_level);
@@ -394,7 +394,7 @@ void action::element_print_latex(
 
 void action::element_print_latex_with_print_point_function(
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
 	(*ptr->ptr_element_print_latex_with_print_point_function)(
@@ -567,9 +567,9 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 }
 
 void action::element_print_image_of_set(
-		void *elt, int size, int *set)
+		void *elt, int size, long int *set)
 {
-	int i, j;
+	long int i, j;
 	
 	for (i = 0; i < size; i++) {
 		j = element_image_of(set[i], elt, FALSE);

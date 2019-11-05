@@ -774,7 +774,7 @@ void semifield_substructure::loop_over_all_subspaces(
 
 
 		// unrank the subspace:
-		Gr3->unrank_int_here_and_extend_basis(B, rk,
+		Gr3->unrank_lint_here_and_extend_basis(B, rk,
 				0 /* verbose_level */);
 
 		// multiply the matrices to get the matrices
@@ -1182,7 +1182,7 @@ void semifield_substructure::all_two_dimensional_subspaces(
 
 
 		// unrank the subspace:
-		Gr2->unrank_int_here_and_extend_basis(B, rk,
+		Gr2->unrank_lint_here_and_extend_basis(B, rk,
 				0 /* verbose_level */);
 
 		// multiply the matrices to get the matrices
@@ -1271,7 +1271,7 @@ int semifield_substructure::identify(long int *data,
 
 
 		// unrank the subspace:
-		Gr3->unrank_int_here_and_extend_basis(B, rk,
+		Gr3->unrank_lint_here_and_extend_basis(B, rk,
 				0 /* verbose_level */);
 
 		// multiply the matrices to get the matrices

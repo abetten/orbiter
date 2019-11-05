@@ -25,8 +25,8 @@ namespace foundations {
 // ranking / unranking points according to the partition:
 //##############################################################################
 
-int orthogonal::hyperbolic_type_and_index_to_point_rk(
-		int type, int index, int verbose_level)
+long int orthogonal::hyperbolic_type_and_index_to_point_rk(
+		long int type, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk;
@@ -107,7 +107,7 @@ done:
 }
 
 void orthogonal::hyperbolic_point_rk_to_type_and_index(
-		int rk, int &type, int &index)
+		long int rk, long int &type, long int &index)
 {
 	if (rk < p4) {
 		type = 4;
@@ -159,7 +159,7 @@ void orthogonal::hyperbolic_point_rk_to_type_and_index(
 //##############################################################################
 
 void orthogonal::hyperbolic_unrank_line(
-		int &p1, int &p2, long int rk, int verbose_level)
+		long int &p1, long int &p2, long int rk, int verbose_level)
 {
 	if (m == 0) {
 		cout << "orthogonal::hyperbolic_unrank_line "
@@ -207,14 +207,14 @@ void orthogonal::hyperbolic_unrank_line(
 }
 
 long int orthogonal::hyperbolic_rank_line(
-		int p1, int p2, int verbose_level)
+		long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int pt1_type, pt2_type;
-	int pt1_index, pt2_index;
-	int line_type;
+	long int pt1_type, pt2_type;
+	long int pt1_index, pt2_index;
+	long int line_type;
 	long int rk = 0;
-	int cp1, cp2;
+	long int cp1, cp2;
 
 	if (f_v) {
 		cout << "orthogonal::hyperbolic_rank_line" << endl;
@@ -320,13 +320,13 @@ done:
 }
 
 void orthogonal::unrank_line_L1(
-		int &p1, int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P4_index, P4_sub_index, P4_line_index;
-	int P4_field_element, root, i;
+	long int P4_field_element, root, i;
 
 	if (f_v) {
 		cout << "orthogonal::unrank_line_L1" << endl;
@@ -415,14 +415,14 @@ void orthogonal::unrank_line_L1(
 	}
 }
 
-long int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L1(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P4_index, P4_sub_index, P4_line_index;
-	int P4_field_element, root, i;
-	int P4_field_element_inverse;
+	long int P4_field_element, root, i;
+	long int P4_field_element_inverse;
 	long int index, a, b;
 
 	if (f_v) {
@@ -527,14 +527,14 @@ long int orthogonal::rank_line_L1(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L2(
-		int &p1, int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P3_index, P3_sub_index, P3_point;
-	int root, a, b, c, d, e, i;
-	int P3_field_element;
+	long int root, a, b, c, d, e, i;
+	long int P3_field_element;
 
 	P3_index = index / a32;
 	P3_sub_index = index % a32;
@@ -668,14 +668,14 @@ void orthogonal::unrank_line_L2(
 		}
 }
 
-long int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P3_index, P3_sub_index, P3_point;
-	int root, a, b, c, d, i, alpha;
-	int P3_field_element;
+	long int root, a, b, c, d, i, alpha;
+	long int P3_field_element;
 	long int index;
 
 	if (f_v) {
@@ -898,13 +898,13 @@ long int orthogonal::rank_line_L2(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L3(
-		int &p1, int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P4_index, P4_sub_index, P4_line_index;
-	int P4_field_element, root, i, e;
+	long int P4_field_element, root, i, e;
 
 	P4_index = index / a43;
 	P4_sub_index = index % a43;
@@ -981,15 +981,15 @@ void orthogonal::unrank_line_L3(
 		}
 }
 
-long int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L3(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P4_index, P4_sub_index, P4_line_index;
-	int P4_field_element, root, i;
+	long int P4_field_element, root, i;
 	long int index;
-	int a, b;
+	long int a, b;
 
 	if (f_v) {
 		cout << "orthogonal::rank_line_L3 p1=" << p1 << " p2=" << p2 << endl;
@@ -1102,13 +1102,13 @@ long int orthogonal::rank_line_L3(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L4(
-		int &p1, int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P4_index, P4_sub_index, P4_line_index;
-	int P4_field_element, root, i, e;
+	long int P4_field_element, root, i, e;
 
 	P4_index = index / a44;
 	P4_sub_index = index % a44;
@@ -1183,15 +1183,15 @@ void orthogonal::unrank_line_L4(
 		}
 }
 
-long int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L4(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	long int P3_index, P3_sub_index, P3_line_index;
-	int P3_field_element, root, i;
+	long int P3_field_element, root, i;
 	long int index;
-	int a, b;
+	long int a, b;
 
 	if (f_v) {
 		cout << "rank_line_L4 p1=" << p1 << " p2=" << p2 << endl;
@@ -1301,7 +1301,7 @@ long int orthogonal::rank_line_L4(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L5(
-		int &p1, int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1321,7 +1321,7 @@ void orthogonal::unrank_line_L5(
 		}
 }
 
-long int orthogonal::rank_line_L5(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L5(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int index;
@@ -1341,7 +1341,7 @@ long int orthogonal::rank_line_L5(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L6(
-		int &p1, int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1361,7 +1361,7 @@ void orthogonal::unrank_line_L6(
 		}
 }
 
-long int orthogonal::rank_line_L6(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L6(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int index;
@@ -1381,7 +1381,7 @@ long int orthogonal::rank_line_L6(int p1, int p2, int verbose_level)
 }
 
 void orthogonal::unrank_line_L7(
-		int &p1, int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1401,7 +1401,7 @@ void orthogonal::unrank_line_L7(
 		}
 }
 
-long int orthogonal::rank_line_L7(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line_L7(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int index;
@@ -1422,8 +1422,9 @@ long int orthogonal::rank_line_L7(int p1, int p2, int verbose_level)
 
 
 void orthogonal::hyperbolic_canonical_points_of_line(
-	int line_type, int pt1, int pt2,
-	int &cpt1, int &cpt2, int verbose_level)
+	int line_type,
+	long int pt1, long int pt2,
+	long int &cpt1, long int &cpt2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1457,7 +1458,7 @@ void orthogonal::hyperbolic_canonical_points_of_line(
 }
 
 void orthogonal::canonical_points_L1(
-		int pt1, int pt2, int &cpt1, int &cpt2)
+		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
 {
 	int a, b, c, d, lambda1, lambda2, i;
 
@@ -1497,9 +1498,10 @@ void orthogonal::canonical_points_L1(
 }
 
 void orthogonal::canonical_points_L2(
-		int pt1, int pt2, int &cpt1, int &cpt2)
+		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
 {
-	int a, b, c, d, lambda, i, p1, p2;
+	int a, b, c, d, lambda, i;
+	long int p1, p2;
 
 	unrank_Sbar(v1, 1, m, pt1);
 	unrank_Sbar(v2, 1, m, pt2);
@@ -1552,7 +1554,7 @@ void orthogonal::canonical_points_L2(
 }
 
 void orthogonal::canonical_points_L3(
-		int pt1, int pt2, int &cpt1, int &cpt2)
+		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
 {
 	int a, b, c, d, lambda, i;
 
@@ -1596,7 +1598,7 @@ void orthogonal::canonical_points_L3(
 }
 
 void orthogonal::canonical_points_L4(
-		int pt1, int pt2, int &cpt1, int &cpt2)
+		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
 {
 	int a, b, c, d, lambda, i;
 
@@ -1640,26 +1642,26 @@ void orthogonal::canonical_points_L4(
 }
 
 void orthogonal::canonical_points_L5(
-		int pt1, int pt2, int &cpt1, int &cpt2)
+		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
 {
 	cpt1 = pt1;
 	cpt2 = pt2;
 }
 
 void orthogonal::canonical_points_L6(
-		int pt1, int pt2, int &cpt1, int &cpt2)
+		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
 {
 	canonical_points_L3(pt1, pt2, cpt1, cpt2);
 }
 
 void orthogonal::canonical_points_L7(
-		int pt1, int pt2, int &cpt1, int &cpt2)
+		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
 {
 	canonical_points_L4(pt1, pt2, cpt1, cpt2);
 }
 
 int orthogonal::hyperbolic_line_type_given_point_types(
-		int pt1, int pt2, int pt1_type, int pt2_type)
+		long int pt1, long int pt2, int pt1_type, int pt2_type)
 {
 	if (pt1_type == 1) {
 		if (pt2_type == 1) {
@@ -1750,7 +1752,7 @@ int orthogonal::hyperbolic_line_type_given_point_types(
 	exit(1);
 }
 
-int orthogonal::hyperbolic_decide_P1(int pt1, int pt2)
+int orthogonal::hyperbolic_decide_P1(long int pt1, long int pt2)
 {
 	unrank_Sbar(v1, 1, m, pt1);
 	unrank_Sbar(v2, 1, m, pt2);
@@ -1762,7 +1764,7 @@ int orthogonal::hyperbolic_decide_P1(int pt1, int pt2)
 		}
 }
 
-int orthogonal::hyperbolic_decide_P2(int pt1, int pt2)
+int orthogonal::hyperbolic_decide_P2(long int pt1, long int pt2)
 {
 	if (triple_is_collinear(pt1, pt2, pt_Q)) {
 		return 6;
@@ -1772,7 +1774,7 @@ int orthogonal::hyperbolic_decide_P2(int pt1, int pt2)
 		}
 }
 
-int orthogonal::hyperbolic_decide_P3(int pt1, int pt2)
+int orthogonal::hyperbolic_decide_P3(long int pt1, long int pt2)
 {
 	if (triple_is_collinear(pt1, pt2, pt_P)) {
 		return 7;
@@ -1783,7 +1785,7 @@ int orthogonal::hyperbolic_decide_P3(int pt1, int pt2)
 }
 
 int orthogonal::find_root_hyperbolic(
-		int rk2, int m, int verbose_level)
+		long int rk2, int m, int verbose_level)
 // m = Witt index
 {
 	int f_v = (verbose_level >= 1);
@@ -1832,7 +1834,7 @@ int orthogonal::find_root_hyperbolic(
 }
 
 void orthogonal::find_root_hyperbolic_xyz(
-		int rk2, int m, int *x, int *y, int *z,
+		long int rk2, int m, int *x, int *y, int *z,
 		int verbose_level)
 // m = Witt index
 {

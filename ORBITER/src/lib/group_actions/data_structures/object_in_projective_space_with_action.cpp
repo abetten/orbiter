@@ -40,7 +40,7 @@ void object_in_projective_space_with_action::null()
 void object_in_projective_space_with_action::freeself()
 {
 	if (canonical_labeling) {
-		FREE_int(canonical_labeling);
+		FREE_lint(canonical_labeling);
 	}
 	null();
 }
@@ -49,7 +49,7 @@ void object_in_projective_space_with_action::init(
 	object_in_projective_space *OiP,
 	strong_generators *Aut_gens,
 	int nb_rows, int nb_cols,
-	int *canonical_labeling,
+	long int *canonical_labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -74,7 +74,7 @@ void object_in_projective_space_with_action::init_known_ago(
 	object_in_projective_space *OiP,
 	int known_ago,
 	int nb_rows, int nb_cols,
-	int *canonical_labeling,
+	long int *canonical_labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

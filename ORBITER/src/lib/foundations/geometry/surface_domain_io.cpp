@@ -28,15 +28,15 @@ void surface_domain::print_equation_tex(ostream &ost, int *coeffs)
 	Poly3_4->print_equation(ost, coeffs);
 }
 
-void surface_domain::latex_double_six(ostream &ost, int *double_six)
+void surface_domain::latex_double_six(ostream &ost, long int *double_six)
 {
-	int i, j, a, u, v;
+	long int i, j, a, u, v;
 
 	ost << "\\begin{array}{cc}" << endl;
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 2; j++) {
 			a = double_six[j * 6 + i];
-			Gr->unrank_int(a, 0);
+			Gr->unrank_lint(a, 0);
 			ost << "\\left[" << endl;
 			ost << "\\begin{array}{*{6}{c}}" << endl;
 			for (u = 0; u < 2; u++) {
@@ -61,11 +61,11 @@ void surface_domain::latex_double_six(ostream &ost, int *double_six)
 
 void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 	spreadsheet *&Sp,
-	int *Wedge_rk, int *Line_rk, int *Klein_rk, int nb_lines,
+	long int *Wedge_rk, long int *Line_rk, long int *Klein_rk, int nb_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, a;
+	long int i, a;
 	char str[1000];
 	int w[6];
 	int Basis[8];
@@ -83,14 +83,14 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 
 	for (i = 0; i < nb_lines; i++) {
 		a = Wedge_rk[i];
-		F->PG_element_unrank_modified(w, 1, 6 /*wedge_dimension*/, a);
+		F->PG_element_unrank_modified_lint(w, 1, 6 /*wedge_dimension*/, a);
 		int_vec_print_to_str(str, w, 6);
 		Text_wedge[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_wedge[i], str);
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Line_rk[i];
-		Gr->unrank_int_here(Basis, a, 0 /* verbose_level */);
+		Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
 		int_vec_print_to_str(str, Basis, 8);
 		Text_line[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_line[i], str);
@@ -109,13 +109,13 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(nb_lines + 1, 7);
 	Sp->fill_column_with_row_index(0, "Idx");
-	Sp->fill_column_with_int(1, Wedge_rk, "Wedge_rk");
+	Sp->fill_column_with_lint(1, Wedge_rk, "Wedge_rk");
 	Sp->fill_column_with_text(2,
 			(const char **) Text_wedge, "Wedge coords");
-	Sp->fill_column_with_int(3, Line_rk, "Line_rk");
+	Sp->fill_column_with_lint(3, Line_rk, "Line_rk");
 	Sp->fill_column_with_text(4,
 			(const char **) Text_line, "Line basis");
-	Sp->fill_column_with_int(5, Klein_rk, "Klein_rk");
+	Sp->fill_column_with_lint(5, Klein_rk, "Klein_rk");
 	Sp->fill_column_with_text(6,
 			(const char **) Text_klein, "Klein coords");
 
@@ -403,13 +403,13 @@ void surface_domain::print_equation_wrapped(ostream &ost, int *the_equation)
 	ost << "\\end{align*}" << endl;
 }
 
-void surface_domain::print_lines_tex(ostream &ost, int *Lines)
+void surface_domain::print_lines_tex(ostream &ost, long int *Lines)
 {
 	int i;
 
 	for (i = 0; i < 27; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		Gr->unrank_int(Lines[i], 0 /*verbose_level*/);
+		Gr->unrank_lint(Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
 		ost << "\\ell_{" << i << "} = "
 			<< Line_label_tex[i] << " = " << endl;
@@ -650,7 +650,7 @@ void surface_domain::print_line_labelling(ostream &ost)
 	ost << "$$" << endl;
 }
 
-void surface_domain::print_set_of_lines_tex(ostream &ost, int *v, int len)
+void surface_domain::print_set_of_lines_tex(ostream &ost, long int *v, int len)
 {
 	int i;
 

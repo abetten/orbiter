@@ -32,7 +32,7 @@ void finite_field::create_projective_variety(
 		const char *variety_label,
 		int variety_nb_vars, int variety_degree,
 		const char *variety_coeffs,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -80,14 +80,16 @@ void finite_field::create_projective_variety(
 		cout << endl;
 	}
 
-	Pts = NEW_int(HPD->P->N_points);
+	Pts = NEW_lint(HPD->P->N_points);
 
 	if (f_v) {
-		cout << "finite_field::create_projective_variety before HPD->enumerate_points" << endl;
+		cout << "finite_field::create_projective_variety "
+				"before HPD->enumerate_points" << endl;
 	}
 	HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
 	if (f_v) {
-		cout << "finite_field::create_projective_variety after HPD->enumerate_points, nb_pts = " << nb_pts << endl;
+		cout << "finite_field::create_projective_variety "
+				"after HPD->enumerate_points, nb_pts = " << nb_pts << endl;
 	}
 
 	display_table_of_projective_points(
@@ -106,7 +108,7 @@ void finite_field::create_projective_curve(
 		const char *variety_label,
 		int curve_nb_vars, int curve_degree,
 		const char *curve_coeffs,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -145,7 +147,7 @@ void finite_field::create_projective_curve(
 	nb_pts = q + 1;
 
 	v = NEW_int(curve_nb_vars);
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified(v2, 1, 2, i);
@@ -320,8 +322,7 @@ void finite_field::PG_element_unrank_fining(
 		}
 }
 
-int finite_field::PG_element_rank_fining(
-		int *v, int len)
+int finite_field::PG_element_rank_fining(int *v, int len)
 {
 	int a;
 
@@ -1051,11 +1052,11 @@ void finite_field::projective_point_unrank(int n, int *v, int rk)
 			n + 1 /* len */, rk);
 }
 
-int finite_field::projective_point_rank(int n, int *v)
+long int finite_field::projective_point_rank(int n, int *v)
 {
-	int rk;
+	long int rk;
 
-	PG_element_rank_modified(v, 1 /* stride */, n + 1, rk);
+	PG_element_rank_modified_lint(v, 1 /* stride */, n + 1, rk);
 	return rk;
 }
 
@@ -1102,7 +1103,7 @@ void finite_field::create_BLT_point(
 }
 
 void finite_field::Segre_hyperoval(
-		int *&Pts, int &nb_pts, int verbose_level)
+		long int *&Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int N = q + 2;
@@ -1119,7 +1120,7 @@ void finite_field::Segre_hyperoval(
 
 	nb_pts = N;
 
-	Pts = NEW_int(N);
+	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
 	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
@@ -1150,7 +1151,7 @@ void finite_field::Segre_hyperoval(
 
 
 void finite_field::GlynnI_hyperoval(
-		int *&Pts, int &nb_pts, int verbose_level)
+		long int *&Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int N = q + 2;
@@ -1189,7 +1190,7 @@ void finite_field::GlynnI_hyperoval(
 
 	nb_pts = N;
 
-	Pts = NEW_int(N);
+	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
 	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
@@ -1219,7 +1220,7 @@ void finite_field::GlynnI_hyperoval(
 }
 
 void finite_field::GlynnII_hyperoval(
-		int *&Pts, int &nb_pts, int verbose_level)
+		long int *&Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int N = q + 2;
@@ -1259,7 +1260,7 @@ void finite_field::GlynnII_hyperoval(
 
 	nb_pts = N;
 
-	Pts = NEW_int(N);
+	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
 	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
@@ -1290,7 +1291,7 @@ void finite_field::GlynnII_hyperoval(
 
 
 void finite_field::Subiaco_oval(
-		int *&Pts, int &nb_pts, int f_short, int verbose_level)
+		long int *&Pts, int &nb_pts, int f_short, int verbose_level)
 // following Payne, Penttila, Pinneri:
 // Isomorphisms Between Subiaco q-Clan Geometries,
 // Bull. Belg. Math. Soc. 2 (1995) 197-222.
@@ -1321,7 +1322,7 @@ void finite_field::Subiaco_oval(
 				"add3(omega2, omega, 1) != 0" << endl;
 		exit(1);
 		}
-	Pts = NEW_int(N);
+	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
 	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
@@ -1377,7 +1378,7 @@ void finite_field::Subiaco_oval(
 
 
 void finite_field::Subiaco_hyperoval(
-		int *&Pts, int &nb_pts, int verbose_level)
+		long int *&Pts, int &nb_pts, int verbose_level)
 // email 12/27/2014
 //The o-polynomial of the Subiaco hyperoval is
 
@@ -1418,7 +1419,7 @@ void finite_field::Subiaco_hyperoval(
 	d2 = mult(d, d);
 	one_d_d2 = add3(1, d, d2);
 
-	Pts = NEW_int(N);
+	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
 	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
@@ -2416,7 +2417,7 @@ void finite_field::display_all_AG_elements(int n)
 
 
 void finite_field::do_cone_over(int n,
-	int *set_in, int set_size_in, int *&set_out, int &set_size_out,
+	long int *set_in, int set_size_in, long int *&set_out, int &set_size_out,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2442,7 +2443,7 @@ void finite_field::do_cone_over(int n,
 	v = NEW_int(d);
 
 	set_size_out = 1 + q * set_size_in;
-	set_out = NEW_int(set_size_out);
+	set_out = NEW_lint(set_size_out);
 	cnt = 0;
 
 	// create the vertex:
@@ -2479,8 +2480,8 @@ void finite_field::do_cone_over(int n,
 
 
 void finite_field::do_blocking_set_family_3(int n,
-	int *set_in, int set_size,
-	int *&the_set_out, int &set_size_out,
+	long int *set_in, int set_size,
+	long int *&the_set_out, int &set_size_out,
 	int verbose_level)
 {
 	projective_space *P;
@@ -2653,7 +2654,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	pt_type = NEW_int(P->N_points);
 
-	P->point_types(S->set, S->k, pt_type, 0);
+	P->point_types_of_line_set_int(S->set, S->k, pt_type, 0);
 
 	classify C;
 
@@ -2682,7 +2683,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	cout << "the size is OK" << endl;
 
-	the_set_out = NEW_int(sz);
+	the_set_out = NEW_lint(sz);
 	set_size_out = sz;
 
 	for (i = 0; i < sz; i++) {
@@ -2698,7 +2699,7 @@ void finite_field::do_blocking_set_family_3(int n,
 void finite_field::create_hyperoval(
 	int f_translation, int translation_exponent,
 	int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2726,7 +2727,7 @@ void finite_field::create_hyperoval(
 		}
 
 	v = NEW_int(d);
-	Pts = NEW_int(P->N_points);
+	Pts = NEW_lint(P->N_points);
 
 	if (f_translation) {
 		P->create_translation_hyperoval(Pts, nb_pts,
@@ -2767,7 +2768,7 @@ void finite_field::create_hyperoval(
 			}
 		}
 
-	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "create_hyperoval the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
@@ -2780,7 +2781,7 @@ void finite_field::create_hyperoval(
 
 void finite_field::create_subiaco_oval(
 	int f_short,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2825,7 +2826,7 @@ void finite_field::create_subiaco_oval(
 		FREE_OBJECT(P);
 		}
 
-	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "create_subiaco_oval the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
@@ -2835,7 +2836,7 @@ void finite_field::create_subiaco_oval(
 
 
 void finite_field::create_subiaco_hyperoval(
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2875,7 +2876,7 @@ void finite_field::create_subiaco_hyperoval(
 		FREE_OBJECT(P);
 		}
 
-	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "finite_field::create_subiaco_hyperoval "
 				"the set is not a set, "
 				"something is wrong" << endl;
@@ -2885,7 +2886,7 @@ void finite_field::create_subiaco_hyperoval(
 }
 
 void finite_field::create_ovoid(
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2907,7 +2908,7 @@ void finite_field::create_ovoid(
 
 	v = NEW_int(n + 1);
 	w = NEW_int(n + 1);
-	Pts = NEW_int(P->N_points);
+	Pts = NEW_lint(P->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -2948,7 +2949,7 @@ void finite_field::create_ovoid(
 
 void finite_field::create_Baer_substructure(int n,
 	finite_field *Fq,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 // the big field FQ is given
 {
@@ -2980,7 +2981,7 @@ void finite_field::create_Baer_substructure(int n,
 	cout << "index=" << index << endl;
 
 	v = NEW_int(d);
-	Pts = NEW_int(P2->N_points);
+	Pts = NEW_lint(P2->N_points);
 	sz = 0;
 	for (i = 0; i < P2->N_points; i++) {
 		PG_element_unrank_modified(v, 1, d, i);
@@ -3022,7 +3023,7 @@ void finite_field::create_Baer_substructure(int n,
 
 void finite_field::create_BLT_from_database(int f_embedded,
 	int BLT_k,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3040,7 +3041,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 	BLT = K.BLT_representative(q, BLT_k);
 
 	v = NEW_int(d);
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 
 	if (f_v) {
 		cout << "i : orthogonal rank : point : projective rank" << endl;
@@ -3090,7 +3091,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 
 
 void finite_field::create_orthogonal(int epsilon, int n,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3103,7 +3104,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 	nb_pts = Gg.nb_pts_Qepsilon(epsilon, n, q);
 
 	v = NEW_int(d);
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 
 	if (epsilon == -1) {
 		choose_anisotropic_form(c1, c2, c3, verbose_level);
@@ -3145,7 +3146,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 
 
 void finite_field::create_hermitian(int n,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3160,7 +3161,7 @@ void finite_field::create_hermitian(int n,
 	nb_pts = H->cnt_Sbar[d];
 
 	v = NEW_int(d);
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 
 	if (f_v) {
 		cout << "hermitian rank : point : projective rank" << endl;
@@ -3196,13 +3197,13 @@ void finite_field::create_hermitian(int n,
 }
 
 void finite_field::create_cubic(
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
 	int n = 2;
-	int i, j, a, d, s, t;
+	long int i, j, a, d, s, t;
 	int *v;
 	int v2[2];
 
@@ -3216,7 +3217,7 @@ void finite_field::create_cubic(
 	nb_pts = q + 1;
 
 	v = NEW_int(d);
-	Pts = NEW_int(P->N_points);
+	Pts = NEW_lint(P->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -3256,13 +3257,13 @@ void finite_field::create_cubic(
 }
 
 void finite_field::create_twisted_cubic(
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
 	int n = 3;
-	int i, j, d, s, t;
+	long int i, j, d, s, t;
 	int *v;
 	int v2[2];
 
@@ -3276,7 +3277,7 @@ void finite_field::create_twisted_cubic(
 	nb_pts = q + 1;
 
 	v = NEW_int(n + 1);
-	Pts = NEW_int(P->N_points);
+	Pts = NEW_lint(P->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -3319,13 +3320,13 @@ void finite_field::create_twisted_cubic(
 
 void finite_field::create_elliptic_curve(
 	int elliptic_curve_b, int elliptic_curve_c,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
 	int n = 2;
-	int i, a, d;
+	long int i, a, d;
 	int *v;
 	elliptic_curve *E;
 
@@ -3340,7 +3341,7 @@ void finite_field::create_elliptic_curve(
 
 	E = NEW_OBJECT(elliptic_curve);
 	v = NEW_int(n + 1);
-	Pts = NEW_int(P->N_points);
+	Pts = NEW_lint(P->N_points);
 
 	E->init(this, elliptic_curve_b, elliptic_curve_c,
 			verbose_level);
@@ -3351,7 +3352,7 @@ void finite_field::create_elliptic_curve(
 		cout << "i : point : projective rank" << endl;
 		}
 	for (i = 0; i < nb_pts; i++) {
-		PG_element_rank_modified(E->T + i * d, 1, d, a);
+		PG_element_rank_modified_lint(E->T + i * d, 1, d, a);
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
@@ -3383,13 +3384,13 @@ void finite_field::create_elliptic_curve(
 
 void finite_field::create_ttp_code(finite_field *Fq,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 // this is FQ
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	int i, j, d;
+	long int i, j, d;
 	int *v;
 	int *H_subfield;
 	int m, n;
@@ -3433,7 +3434,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		}
 
 	v = NEW_int(d);
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -3481,7 +3482,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 
 
 void finite_field::create_unital_XXq_YZq_ZYq(
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3499,7 +3500,7 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	v = NEW_int(d);
-	Pts = NEW_int(P2->N_points);
+	Pts = NEW_lint(P2->N_points);
 
 
 	P2->create_unital_XXq_YZq_ZYq(Pts, nb_pts, verbose_level - 1);
@@ -3527,7 +3528,7 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 
 
 void finite_field::create_whole_space(int n,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3545,7 +3546,7 @@ void finite_field::create_whole_space(int n,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
-	Pts = NEW_int(P->N_points);
+	Pts = NEW_lint(P->N_points);
 	nb_pts = P->N_points;
 	for (i = 0; i < P->N_points; i++) {
 		Pts[i] = i;
@@ -3559,12 +3560,12 @@ void finite_field::create_whole_space(int n,
 
 void finite_field::create_hyperplane(int n,
 	int pt,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	int i, d, a;
+	long int i, d, a;
 	int *v1;
 	int *v2;
 
@@ -3582,7 +3583,7 @@ void finite_field::create_hyperplane(int n,
 
 	P->unrank_point(v1, pt);
 
-	Pts = NEW_int(P->N_points);
+	Pts = NEW_lint(P->N_points);
 	nb_pts = 0;
 	for (i = 0; i < P->N_points; i++) {
 		P->unrank_point(v2, i);
@@ -3606,7 +3607,7 @@ void finite_field::create_hyperplane(int n,
 
 
 void finite_field::create_segre_variety(int a, int b,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3647,7 +3648,7 @@ void finite_field::create_segre_variety(int a, int b,
 
 	N1 = P1->N_points;
 	N2 = P2->N_points;
-	Pts = NEW_int(N1 * N2);
+	Pts = NEW_lint(N1 * N2);
 	nb_pts = 0;
 	for (i = 0; i < N1; i++) {
 		P1->unrank_point(v1, i);
@@ -3676,7 +3677,7 @@ void finite_field::create_segre_variety(int a, int b,
 }
 
 void finite_field::create_Maruta_Hamada_arc(
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3694,7 +3695,7 @@ void finite_field::create_Maruta_Hamada_arc(
 
 
 	N = P->N_points;
-	Pts = NEW_int(N);
+	Pts = NEW_lint(N);
 
 	P->create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
 
@@ -3708,7 +3709,7 @@ void finite_field::create_Maruta_Hamada_arc(
 void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 	finite_field *Fq,
 	int f_embedded_in_PG_4_q,
-	char *fname, int &nb_lines, int *&Lines,
+	char *fname, int &nb_lines, long int *&Lines,
 	int verbose_level)
 // this is FQ
 {
@@ -3789,7 +3790,7 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 
 
 	nb_lines = Q + 1;
-	Lines = NEW_int(nb_lines);
+	Lines = NEW_lint(nb_lines);
 
 
 	w1 = NEW_int(d);
@@ -3861,7 +3862,7 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			cout << "before P3->Grass_lines->rank_int:" << endl;
 			int_matrix_print(P3->Grass_lines->M, 2, 4);
 			}
-		rk1 = P3->Grass_lines->rank_int(0 /* verbose_level*/);
+		rk1 = P3->Grass_lines->rank_lint(0 /* verbose_level*/);
 		Lines[rk] = rk1;
 		if (f_vv) {
 			cout << setw(4) << rk << " : ";
@@ -3895,8 +3896,8 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 
 
 void finite_field::do_Klein_correspondence(int n,
-	int *set_in, int set_size,
-	int *&the_set_out, int &set_size_out,
+		long int *set_in, int set_size,
+		long int *&the_set_out, int &set_size_out,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3923,7 +3924,7 @@ void finite_field::do_Klein_correspondence(int n,
 		FALSE /* f_init_incidence_structure */,
 		0 /* verbose_level - 2 */);
 
-	the_set_out = NEW_int(set_size);
+	the_set_out = NEW_lint(set_size);
 	set_size_out = set_size;
 
 	P->klein_correspondence(P5,
@@ -3935,7 +3936,7 @@ void finite_field::do_Klein_correspondence(int n,
 }
 
 void finite_field::do_m_subspace_type(int n, int m,
-	int *set, int set_size,
+		long int *set, int set_size,
 	int f_show, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3970,7 +3971,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 
 	v = NEW_int(d);
 
-	N = P->nb_rk_k_subspaces_as_int(m + 1);
+	N = P->nb_rk_k_subspaces_as_lint(m + 1);
 	if (f_v) {
 		cout << "do_m_subspace_type N = " << N << endl;
 		}
@@ -4039,11 +4040,11 @@ void finite_field::do_m_subspace_type(int n, int m,
 
 			for (j = 0; j < l; j++) {
 
-				int *intersection_set;
+				long int *intersection_set;
 				int intersection_set_size;
 
 				b = S[j];
-				G->unrank_int(b, 0);
+				G->unrank_lint(b, 0);
 
 				cout << "subspace " << j << " / " << l << " which is "
 						<< b << " has a basis:" << endl;
@@ -4060,7 +4061,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 						<< intersection_set_size << ":" << endl;
 				P->print_set(intersection_set, intersection_set_size);
 
-				FREE_int(intersection_set);
+				FREE_lint(intersection_set);
 				}
 			}
 		FREE_int(S);
@@ -4081,7 +4082,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 }
 
 void finite_field::do_m_subspace_type_fast(int n, int m,
-	int *set, int set_size,
+		long int *set, int set_size,
 	int f_show, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4093,7 +4094,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 	int d = n + 1;
 	int *v;
 	longinteger_object *R;
-	int **Pts_on_plane;
+	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int len;
 
@@ -4119,7 +4120,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 
 	v = NEW_int(d);
 
-	N = P->nb_rk_k_subspaces_as_int(m + 1);
+	N = P->nb_rk_k_subspaces_as_lint(m + 1);
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type_fast N = " << N << endl;
 		}
@@ -4146,7 +4147,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		for (i = 0; i < len; i++) {
 			cout << setw(3) << i << " : " << R[i]
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			int_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl;
 			}
 #endif
@@ -4200,7 +4201,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 
 	for (i = 0; i < nb_planes; i++) {
 
-		int *intersection_set;
+		long int *intersection_set;
 
 		b = S[i];
 		G->unrank_longinteger(R[b], 0);
@@ -4215,6 +4216,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 			G, R[b], set, set_size,
 			intersection_set, u, verbose_level);
 
+
 		if (u != intersection_size) {
 			cout << "u != intersection_size" << endl;
 			cout << "u=" << u << endl;
@@ -4227,14 +4229,14 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 
 		for (j = 0; j < intersection_size; j++) {
 			a = intersection_set[j];
-			if (!Sorting.int_vec_search_linear(set, set_size, a, b)) {
+			if (!Sorting.lint_vec_search_linear(set, set_size, a, b)) {
 				cout << "did not find point" << endl;
 				exit(1);
 				}
 			Blocks[i * intersection_size + j] = b;
 			}
 
-		FREE_int(intersection_set);
+		FREE_lint(intersection_set);
 		} // next i
 
 	cout << "Blocks:" << endl;
@@ -4308,7 +4310,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 }
 
 void finite_field::do_line_type(int n,
-	int *set, int set_size,
+		long int *set, int set_size,
 	int f_show, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4379,7 +4381,9 @@ void finite_field::do_line_type(int n,
 		int h, f, l, b;
 		int *S;
 		int *basis;
+		long int *I;
 
+		I = NEW_lint(P->N_points);
 		basis = NEW_int(2 * (P->n + 1));
 		S = NEW_int(P->N_lines);
 		for (h = 0; h < C.nb_types; h++) {
@@ -4407,27 +4411,23 @@ void finite_field::do_line_type(int n,
 							basis, 2, P->n + 1, P->n + 1,
 							P->F->log10_of_q);
 					}
-				int *L;
-				int *I;
 				int sz;
 
-				if (P->Lines == NULL) {
-					continue;
-					}
-				L = P->Lines + b * P->k;
-				Sorting.int_vec_intersect(L, P->k, set, set_size, I, sz);
+				P->intersect_with_line(set, set_size,
+						a /* line_rk */, I, sz,
+						0 /* verbose_level*/);
 
 				if (f_show) {
 					cout << "intersects in " << sz << " points : ";
-					int_vec_print(cout, I, sz);
+					lint_vec_print(cout, I, sz);
 					cout << endl;
 					cout << "they are:" << endl;
 					P->print_set(I, sz);
 					}
 
-				FREE_int(I);
 				}
-			}
+		}
+		FREE_lint(I);
 		FREE_int(S);
 		FREE_int(basis);
 #if 0
@@ -4445,7 +4445,7 @@ void finite_field::do_line_type(int n,
 }
 
 void finite_field::do_plane_type(int n,
-	int *set, int set_size,
+		long int *set, int set_size,
 	int *&intersection_type, int &highest_intersection_number,
 	int verbose_level)
 {
@@ -4488,7 +4488,7 @@ void finite_field::do_plane_type(int n,
 }
 
 void finite_field::do_plane_type_failsafe(int n,
-	int *set, int set_size,
+		long int *set, int set_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4516,7 +4516,7 @@ void finite_field::do_plane_type_failsafe(int n,
 		}
 
 
-	N_planes = P->nb_rk_k_subspaces_as_int(3);
+	N_planes = P->nb_rk_k_subspaces_as_lint(3);
 	type = NEW_int(N_planes);
 
 	P->plane_intersection_type_basic(set, set_size,
@@ -4539,7 +4539,7 @@ void finite_field::do_plane_type_failsafe(int n,
 
 void finite_field::do_conic_type(int n,
 	int f_randomized, int nb_times,
-	int *set, int set_size,
+	long int *set, int set_size,
 	int *&intersection_type, int &highest_intersection_number,
 	int verbose_level)
 {
@@ -4578,7 +4578,7 @@ void finite_field::do_conic_type(int n,
 }
 
 void finite_field::do_test_diagonal_line(int n,
-	int *set_in, int set_size,
+		long int *set_in, int set_size,
 	const char *fname_orbits_on_quadrangles,
 	int verbose_level)
 {
@@ -4668,7 +4668,7 @@ void finite_field::do_test_diagonal_line(int n,
 		for (i = 0; i < 4; i++) {
 			a = sets[h][i];
 			pt[i] = a;
-			if (!Sorting.int_vec_search_linear(set_in, set_size, a, j)) {
+			if (!Sorting.lint_vec_search_linear(set_in, set_size, a, j)) {
 				cout << "the point " << a << " is not contained "
 						"in the hyperoval" << endl;
 				exit(1);
@@ -4773,8 +4773,8 @@ void finite_field::do_test_diagonal_line(int n,
 }
 
 void finite_field::do_andre(finite_field *Fq,
-	int *the_set_in, int set_size_in,
-	int *&the_set_out, int &set_size_out,
+		long int *the_set_in, int set_size_in,
+		long int *&the_set_out, int &set_size_out,
 	int verbose_level)
 // this is FQ
 {
@@ -4849,7 +4849,7 @@ void finite_field::do_andre(finite_field *Fq,
 	v2 = NEW_int(2);
 
 
-	the_set_out = NEW_int(P4->N_points);
+	the_set_out = NEW_lint(P4->N_points);
 	set_size_out = 0;
 
 	for (i = 0; i < set_size_in; i++) {
@@ -4982,11 +4982,11 @@ void finite_field::do_andre(finite_field *Fq,
 }
 
 void finite_field::do_print_lines_in_PG(int n,
-	int *set_in, int set_size)
+		long int *set_in, int set_size)
 {
 	projective_space *P;
 	int d = n + 1;
-	int h, a;
+	long int h, a;
 	int f_elements_exponential = TRUE;
 	const char *symbol_for_print = "\\alpha";
 
@@ -4998,7 +4998,7 @@ void finite_field::do_print_lines_in_PG(int n,
 
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
-		P->Grass_lines->unrank_int(a, 0 /* verbose_level */);
+		P->Grass_lines->unrank_lint(a, 0 /* verbose_level */);
 		cout << setw(5) << h << " : " << setw(5) << a << " :" << endl;
 		latex_matrix(cout, f_elements_exponential,
 			symbol_for_print, P->Grass_lines->M, 2, d);
@@ -5008,11 +5008,11 @@ void finite_field::do_print_lines_in_PG(int n,
 }
 
 void finite_field::do_print_points_in_PG(int n,
-	int *set_in, int set_size)
+		long int *set_in, int set_size)
 {
 	projective_space *P;
 	int d = n + 1;
-	int h, a;
+	long int h, a;
 	//int f_elements_exponential = TRUE;
 	const char *symbol_for_print = "\\alpha";
 	int *v;
@@ -5040,10 +5040,10 @@ void finite_field::do_print_points_in_PG(int n,
 
 void finite_field::do_print_points_in_orthogonal_space(
 	int epsilon, int n,
-	int *set_in, int set_size, int verbose_level)
+	long int *set_in, int set_size, int verbose_level)
 {
 	int d = n + 1;
-	int h, a;
+	long int h, a;
 	//int f_elements_exponential = TRUE;
 	const char *symbol_for_print = "\\alpha";
 	int *v;
@@ -5074,7 +5074,7 @@ void finite_field::do_print_points_in_orthogonal_space(
 
 void finite_field::do_print_points_on_grassmannian(
 	int n, int k,
-	int *set_in, int set_size)
+	long int *set_in, int set_size)
 {
 	grassmann *Grass;
 	projective_space *P;
@@ -5097,7 +5097,7 @@ void finite_field::do_print_points_on_grassmannian(
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
 		//cout << "unrank " << a << endl;
-		Grass->unrank_int(a, 0 /* verbose_level */);
+		Grass->unrank_lint(a, 0 /* verbose_level */);
 		cout << setw(5) << h << " : " << setw(5) << a << " :" << endl;
 		latex_matrix(cout, f_elements_exponential,
 			symbol_for_print, Grass->M, k + 1, d);
@@ -5109,14 +5109,14 @@ void finite_field::do_print_points_on_grassmannian(
 
 void finite_field::do_embed_orthogonal(
 	int epsilon, int n,
-	int *set_in, int *&set_out, int set_size,
+	long int *set_in, long int *&set_out, int set_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
 	int *v;
 	int d = n + 1;
-	int h, a, b;
+	long int h, a, b;
 	int c1 = 0, c2 = 0, c3 = 0;
 
 	if (f_v) {
@@ -5133,7 +5133,7 @@ void finite_field::do_embed_orthogonal(
 		}
 
 	v = NEW_int(d);
-	set_out = NEW_int(set_size);
+	set_out = NEW_lint(set_size);
 
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
@@ -5148,7 +5148,7 @@ void finite_field::do_embed_orthogonal(
 }
 
 void finite_field::do_embed_points(int n,
-	int *set_in, int *&set_out, int set_size,
+		long int *set_in, long int *&set_out, int set_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5156,7 +5156,7 @@ void finite_field::do_embed_points(int n,
 	projective_space *P2;
 	int *v;
 	int d = n + 2;
-	int h, a, b;
+	long int h, a, b;
 
 	if (f_v) {
 		cout << "finite_field::do_embed_points" << endl;
@@ -5172,7 +5172,7 @@ void finite_field::do_embed_points(int n,
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	v = NEW_int(d);
-	set_out = NEW_int(set_size);
+	set_out = NEW_lint(set_size);
 
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
@@ -5189,7 +5189,7 @@ void finite_field::do_embed_points(int n,
 }
 
 void finite_field::do_draw_points_in_plane(
-	int *set, int set_size,
+		long int *set, int set_size,
 	const char *fname_base, int f_point_labels,
 	int f_embedded, int f_sideways,
 	int verbose_level)
@@ -5232,16 +5232,16 @@ void finite_field::do_draw_points_in_plane(
 }
 
 void finite_field::do_ideal(int n,
-	int *set_in, int set_size, int degree,
-	int *&set_out, int &size_out,
-	int verbose_level)
+		long int *set_in, int set_size, int degree,
+		long int *&set_out, int &size_out,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	homogeneous_polynomial_domain *HPD;
 	int *Kernel;
 	int *w1;
 	int *w2;
-	int *Pts;
+	long int *Pts;
 	int nb_pts;
 	int r, h, ns;
 	geometry_global Gg;
@@ -5277,7 +5277,7 @@ void finite_field::do_ideal(int n,
 		cout << endl;
 		}
 
-	Pts = NEW_int(HPD->P->N_points);
+	Pts = NEW_lint(HPD->P->N_points);
 	cout << "looping over all generators of the ideal:" << endl;
 	for (h = 0; h < ns; h++) {
 		cout << "generator " << h << " / " << ns << ":" << endl;
@@ -5286,20 +5286,24 @@ void finite_field::do_ideal(int n,
 				Pts, nb_pts, verbose_level);
 		cout << "We found " << nb_pts << " points on the curve" << endl;
 		cout << "They are : ";
-		int_vec_print(cout, Pts, nb_pts);
+		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		HPD->P->print_set_numerical(Pts, nb_pts);
 
 
 		if (h == 0) {
 			size_out = HPD->nb_monomials;
-			set_out = NEW_int(size_out);
-			int_vec_copy(Kernel + h * HPD->nb_monomials, set_out, size_out);
+			set_out = NEW_lint(size_out);
+			//int_vec_copy(Kernel + h * HPD->nb_monomials, set_out, size_out);
+			int u;
+			for (u = 0; u < size_out; u++) {
+				set_out[u] = Kernel[h * HPD->nb_monomials + u];
+			}
 			break;
 		}
 
 	}
-	FREE_int(Pts);
+	FREE_lint(Pts);
 
 #if 0
 	int N;
@@ -5326,21 +5330,21 @@ void finite_field::do_ideal(int n,
 
 
 void finite_field::PG_element_modified_not_in_subspace_perm(int n, int m,
-	int *orbit, int *orbit_inv,
+	long int *orbit, long int *orbit_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *v = NEW_int(n + 1);
 	geometry_global Gg;
-	int l = Gg.nb_PG_elements(n, q);
-	int ll = Gg.nb_PG_elements_not_in_subspace(n, m, q);
-	int i, j1 = 0, j2 = ll, f_in, j;
+	long int l = Gg.nb_PG_elements(n, q);
+	long int ll = Gg.nb_PG_elements_not_in_subspace(n, m, q);
+	long int i, j1 = 0, j2 = ll, f_in, j;
 
 	if (f_v) {
 		cout << "finite_field::PG_element_modified_not_in_subspace_perm" << endl;
 	}
 	for (i = 0; i < l; i++) {
-		PG_element_unrank_modified(v, 1, n + 1, i);
+		PG_element_unrank_modified_lint(v, 1, n + 1, i);
 		f_in = Gg.PG_element_modified_is_in_subspace(n, m, v);
 		if (f_v) {
 			cout << i << " : ";
@@ -5379,7 +5383,7 @@ void finite_field::PG_element_modified_not_in_subspace_perm(int n, int m,
 	}
 }
 
-void finite_field::print_set_in_affine_plane(int len, int *S)
+void finite_field::print_set_in_affine_plane(int len, long int *S)
 {
 	int *A;
 	int i, j, x, y, v[3];

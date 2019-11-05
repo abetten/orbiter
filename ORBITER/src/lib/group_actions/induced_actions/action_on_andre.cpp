@@ -75,10 +75,10 @@ void action_on_andre::init(action *An, action *An1,
 		}
 }
 
-void action_on_andre::compute_image(int *Elt, int i, int &j, int verbose_level)
+long int action_on_andre::compute_image(int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a;
+	long int a, j;
 	
 	if (f_v) {
 		cout << "action_on_andre::compute_image" << endl;
@@ -94,14 +94,16 @@ void action_on_andre::compute_image(int *Elt, int i, int &j, int verbose_level)
 	if (f_v) {
 		cout << "action_on_andre::compute_image done" << endl;
 		}
+	return j;
 }
 
-int action_on_andre::compute_image_of_point(int *Elt,
-		int pt_idx, int verbose_level)
+long int action_on_andre::compute_image_of_point(int *Elt,
+		long int pt_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	andre_construction_point_element Pt;
-	int i, image, rk, idx, parallel_class_idx;
+	long int i, image, rk, parallel_class_idx;
+	int idx;
 	sorting Sorting;
 
 	if (f_v) {
@@ -139,7 +141,7 @@ int action_on_andre::compute_image_of_point(int *Elt,
 			cout << "Reduced:" << endl;
 			int_matrix_print(coords3, k, n);
 			}
-		rk = Andre->Grass->rank_int_here(coords3, 0 /* verbose_level*/);
+		rk = Andre->Grass->rank_lint_here(coords3, 0 /* verbose_level*/);
 		if (f_v) {
 			cout << "rk=" << rk << endl;
 			}
@@ -177,8 +179,8 @@ int action_on_andre::compute_image_of_point(int *Elt,
 	return image;
 }
 
-int action_on_andre::compute_image_of_line(int *Elt,
-		int line_idx, int verbose_level)
+long int action_on_andre::compute_image_of_line(int *Elt,
+		long int line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	andre_construction_line_element Line;

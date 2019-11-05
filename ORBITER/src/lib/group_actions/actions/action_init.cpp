@@ -1009,7 +1009,7 @@ void action::init_direct_product_group_and_restrict(
 	action *A_direct_product;
 	action *Adp;
 	direct_product *P;
-	int *points;
+	long int *points;
 	int nb_points;
 	int i;
 
@@ -1027,7 +1027,7 @@ void action::init_direct_product_group_and_restrict(
 
 	P = A_direct_product->G.direct_product_group;
 	nb_points = P->degree_of_product_action;
-	points = NEW_int(nb_points);
+	points = NEW_lint(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		points[i] = P->perm_offset_i[2] + i;
 	}
@@ -1128,7 +1128,7 @@ void action::init_direct_product_group(
 		}
 
 
-	int_vec_copy(P->the_base, get_base(), base_len());
+	lint_vec_copy(P->the_base, get_base(), base_len());
 	int_vec_copy(P->the_transversal_length,
 			get_transversal_length(), base_len());
 
@@ -1226,7 +1226,7 @@ void action::init_wreath_product_group_and_restrict(
 	action *A_wreath;
 	action *Awr;
 	wreath_product *W;
-	int *points;
+	long int *points;
 	int nb_points;
 	int i;
 
@@ -1249,7 +1249,7 @@ void action::init_wreath_product_group_and_restrict(
 
 	W = A_wreath->G.wreath_product_group;
 	nb_points = W->degree_of_tensor_action;
-	points = NEW_int(nb_points);
+	points = NEW_lint(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		points[i] = W->perm_offset_i[nb_factors] + i;
 	}
@@ -1369,7 +1369,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 				"base_len=" << base_len() << endl;
 		}
 
-	int_vec_copy(W->the_base, get_base(), base_len());
+	lint_vec_copy(W->the_base, get_base(), base_len());
 	int_vec_copy(W->the_transversal_length,
 			get_transversal_length(), base_len());
 
@@ -1528,7 +1528,7 @@ void action::init_permutation_representation(action *A_original,
 					"base_len=" << base_len() << endl;
 			}
 
-		int_vec_copy(W->the_base, get_base(), base_len());
+		lint_vec_copy(W->the_base, get_base(), base_len());
 		int_vec_copy(W->the_transversal_length,
 				get_transversal_length(), base_len());
 
@@ -1884,7 +1884,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base done" << endl;
 		cout << "base: ";
-		int_vec_print(cout, get_base(), base_len());
+		lint_vec_print(cout, get_base(), base_len());
 		cout << endl;
 		}
 

@@ -219,6 +219,33 @@ void spreadsheet::fill_column_with_int(int col_idx,
 		}
 }
 
+void spreadsheet::fill_column_with_lint(int col_idx,
+		long int *data, const char *heading)
+{
+	int i, l, t;
+	char str[1000];
+
+	for (i = 0; i < nb_rows; i++) {
+		t = Table[i * nb_cols + col_idx];
+		if (tokens[t]) {
+			//cout << "fill_column_with_int before FREE_char i=" << i
+			//<< " col_idx=" << col_idx << " t=" << t << endl;
+			FREE_char(tokens[t]);
+			}
+		if (i == 0) {
+			l = strlen(heading);
+			tokens[t] = NEW_char(l + 1);
+			strcpy(tokens[t], heading);
+			}
+		else {
+			sprintf(str, "%ld", data[i - 1]);
+			l = strlen(str);
+			tokens[t] = NEW_char(l + 1);
+			strcpy(tokens[t], str);
+			}
+		}
+}
+
 void spreadsheet::fill_column_with_row_index(
 		int col_idx, const char *heading)
 {

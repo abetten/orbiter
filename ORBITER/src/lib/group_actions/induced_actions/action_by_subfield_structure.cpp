@@ -160,17 +160,17 @@ void action_by_subfield_structure::init(action &A,
 
 }
 
-int action_by_subfield_structure::compute_image_int(
-	action &A, int *Elt, int a, int verbose_level)
+long int action_by_subfield_structure::compute_image_int(
+	action &A, int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int b;
+	long int b;
 	
 	if (f_v) {
 		cout << "action_by_subfield_structure::compute_image_int" << endl;
 		}
-	Fq->PG_element_unrank_modified(v1, 1, m, a);
+	Fq->PG_element_unrank_modified_lint(v1, 1, m, a);
 	if (f_vv) {
 		cout << "action_by_subfield_structure::compute_image_int "
 				"a = " << a << " v1 = ";
@@ -185,7 +185,7 @@ int action_by_subfield_structure::compute_image_int(
 		cout << endl;
 		}
 
-	Fq->PG_element_rank_modified(v2, 1, m, b);
+	Fq->PG_element_rank_modified_lint(v2, 1, m, b);
 	if (f_v) {
 		cout << "action_by_subfield_structure::compute_image_int "
 				"done " << a << "->" << b << endl;

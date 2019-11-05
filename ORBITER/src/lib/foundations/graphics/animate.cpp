@@ -2155,7 +2155,7 @@ void animate::draw_surface_13_1(ostream &fp)
 	int q = 13;
 	int *selection;
 	int nb_select = nb_affine_pts;
-	int i, rk;
+	long int i, rk;
 	int v[3];
 	geometry_global Gg;
 
@@ -2170,7 +2170,7 @@ void animate::draw_surface_13_1(ostream &fp)
 		v[0] = Pts[i * 4 + 2]; // z
 		v[1] = Pts[i * 4 + 1]; // y
 		v[2] = Pts[i * 4 + 0]; // x
-		Gg.AG_element_rank(q, v, 1, 3, rk);
+		rk = Gg.AG_element_rank(q, v, 1, 3);
 		selection[i] = S->affine_space_starting_point + rk;
 	}
 

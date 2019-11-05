@@ -989,7 +989,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 					<< " coset " << h << " / " << N << endl;
 			}
 
-		Gr->unrank_int_here_and_extend_basis(
+		Gr->unrank_lint_here_and_extend_basis(
 				base_change_matrix, h,
 				0 /* verbose_level */);
 		if (f_vvv) {

@@ -275,28 +275,28 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 
 	gens_stab->print_generators_tex(ost);
 
-	int *Subgroup_elements_by_index;
-	int sz_subgroup;
+	long int *Subgroup_elements_by_index;
+	long int sz_subgroup;
 
-	sz_subgroup = gens_stab->group_order_as_int();
+	sz_subgroup = gens_stab->group_order_as_lint();
 
 	if (sz_subgroup < 20) {
 		gens->list_of_elements_of_subgroup(gens_stab,
 			Subgroup_elements_by_index, sz_subgroup,
 			0 /* verbose_level */);
 
-		Sorting.int_vec_heapsort(Subgroup_elements_by_index,
+		Sorting.lint_vec_heapsort(Subgroup_elements_by_index,
 				sz_subgroup);
 
 		ost << "The subgroup consists of the following "
 				<< sz_subgroup << " elements:" << endl;
 		ost << "$$" << endl;
-		L.int_vec_print_as_matrix(ost,
+		L.lint_vec_print_as_matrix(ost,
 				Subgroup_elements_by_index, sz_subgroup,
 				10 /* width */, TRUE /* f_tex */);
 		ost << "$$" << endl;
 
-		FREE_int(Subgroup_elements_by_index);
+		FREE_lint(Subgroup_elements_by_index);
 
 	}
 
@@ -851,7 +851,7 @@ void schreier::print_orbit_sorted(ostream &ost, int orbit_no)
 	for (i = 0; i < len; i++) {
 		v[i] = orbit[orbit_first[orbit_no] + i];
 	}
-	Sorting.int_vec_sort(len, v);
+	Sorting.int_vec_heapsort(v, len);
 
 	ost << "{ ";
 	for (i = 0; i < len; i++) {

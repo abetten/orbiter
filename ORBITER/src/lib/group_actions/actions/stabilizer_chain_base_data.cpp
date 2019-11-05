@@ -45,7 +45,7 @@ void stabilizer_chain_base_data::free_base_data()
 		cout << "stabilizer_chain_base_data::free_base_data" << endl;
 		}
 	if (base) {
-		FREE_int(base);
+		FREE_lint(base);
 		base = NULL;
 		}
 	if (transversal_length) {
@@ -57,17 +57,17 @@ void stabilizer_chain_base_data::free_base_data()
 			if (f_v) {
 				cout << "deleting orbit " << i << endl;
 				}
-			FREE_int(orbit[i]);
+			FREE_lint(orbit[i]);
 			orbit[i] = NULL;
 			if (f_v) {
 				cout << "deleting orbit_inv " << i << endl;
 				}
-			FREE_int(orbit_inv[i]);
+			FREE_lint(orbit_inv[i]);
 			orbit_inv[i] = NULL;
 			}
-		FREE_pint(orbit);
+		FREE_plint(orbit);
 		orbit = NULL;
-		FREE_pint(orbit_inv);
+		FREE_plint(orbit_inv);
 		orbit_inv = NULL;
 		}
 	if (path) {
@@ -98,16 +98,16 @@ void stabilizer_chain_base_data::allocate_base_data(action *A,
 
 	stabilizer_chain_base_data::A = A;
 	stabilizer_chain_base_data::base_len = base_len;
-	base = NEW_int(base_len);
+	base = NEW_lint(base_len);
 	transversal_length = NEW_int(base_len);
 	path = NEW_int(base_len);
 
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		orbit = NEW_pint(base_len);
-		orbit_inv = NEW_pint(base_len);
+		orbit = NEW_plint(base_len);
+		orbit_inv = NEW_plint(base_len);
 		for (i = 0; i < base_len; i++) {
-			orbit[i] = NEW_int(A->degree);
-			orbit_inv[i] = NEW_int(A->degree);
+			orbit[i] = NEW_lint(A->degree);
+			orbit_inv[i] = NEW_lint(A->degree);
 			for (j = 0; j < A->degree; j++) {
 				orbit[i][j] = -1;
 				orbit_inv[i][j] = -1;
@@ -129,10 +129,10 @@ void stabilizer_chain_base_data::reallocate_base(int new_base_point)
 
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		int i, j;
-		int *old_base;
+		long int *old_base;
 		int *old_transversal_length;
-		int **old_orbit;
-		int **old_orbit_inv;
+		long int **old_orbit;
+		long int **old_orbit_inv;
 		int *old_path;
 		old_base = base;
 		old_transversal_length = transversal_length;
@@ -140,13 +140,13 @@ void stabilizer_chain_base_data::reallocate_base(int new_base_point)
 		old_orbit_inv = orbit_inv;
 		old_path = path;
 
-		base = NEW_int(base_len + 1);
+		base = NEW_lint(base_len + 1);
 		transversal_length = NEW_int(base_len + 1);
-		orbit = NEW_pint(base_len + 1);
-		orbit_inv = NEW_pint(base_len + 1);
+		orbit = NEW_plint(base_len + 1);
+		orbit_inv = NEW_plint(base_len + 1);
 		path = NEW_int(base_len + 1);
-		orbit[base_len] = NEW_int(A->degree);
-		orbit_inv[base_len] = NEW_int(A->degree);
+		orbit[base_len] = NEW_lint(A->degree);
+		orbit_inv[base_len] = NEW_lint(A->degree);
 		for (i = 0; i < base_len; i++) {
 			base[i] = old_base[i];
 			transversal_length[i] = old_transversal_length[i];
@@ -162,13 +162,13 @@ void stabilizer_chain_base_data::reallocate_base(int new_base_point)
 			}
 		base_len++;
 		if (old_base)
-			FREE_int(old_base);
+			FREE_lint(old_base);
 		if (old_transversal_length)
 			FREE_int(old_transversal_length);
 		if (old_orbit)
-			FREE_pint(old_orbit);
+			FREE_plint(old_orbit);
 		if (old_orbit_inv)
-			FREE_pint(old_orbit_inv);
+			FREE_plint(old_orbit_inv);
 		if (old_path)
 			FREE_int(old_path);
 	}
@@ -247,12 +247,12 @@ int &stabilizer_chain_base_data::get_base_len()
 	return base_len;
 }
 
-int &stabilizer_chain_base_data::base_i(int i)
+long int &stabilizer_chain_base_data::base_i(int i)
 {
 	return base[i];
 }
 
-int *&stabilizer_chain_base_data::get_base()
+long int *&stabilizer_chain_base_data::get_base()
 {
 	return base;
 }
@@ -267,7 +267,7 @@ int *&stabilizer_chain_base_data::get_transversal_length()
 	return transversal_length;
 }
 
-int &stabilizer_chain_base_data::orbit_ij(int i, int j)
+long int &stabilizer_chain_base_data::orbit_ij(int i, int j)
 {
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		return orbit[i][j];
@@ -278,7 +278,7 @@ int &stabilizer_chain_base_data::orbit_ij(int i, int j)
 	}
 }
 
-int &stabilizer_chain_base_data::orbit_inv_ij(int i, int j)
+long int &stabilizer_chain_base_data::orbit_inv_ij(int i, int j)
 {
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		return orbit_inv[i][j];

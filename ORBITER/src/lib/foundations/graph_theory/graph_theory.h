@@ -236,12 +236,12 @@ public:
 	long int bitvector_length;
 	long int L;
 	
-	int *points; // [nb_points]
+	long int *points; // [nb_points]
 	int *point_color; // [nb_points * nb_colors_per_vertex]
 	
 
 	int user_data_size;
-	int *user_data; // [user_data_size]
+	long int *user_data; // [user_data_size]
 
 	int f_ownership_of_bitvec;
 	uchar *bitvector_adjacency;
@@ -276,7 +276,7 @@ public:
 		int verbose_level);
 	void init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
-		int *point_labels, 
+		long int *point_labels,
 		int verbose_level);
 	void init_no_colors(int nb_points, uchar *bitvec, 
 		int f_ownership_of_bitvec, 
@@ -287,7 +287,7 @@ public:
 		int *colors, int *Adj, int verbose_level);
 	void init_adjacency_no_colors(int nb_points, int *Adj, 
 		int verbose_level);
-	void init_user_data(int *data, int data_size, int verbose_level);
+	void init_user_data(long int *data, int data_size, int verbose_level);
 	void save(const char *fname, int verbose_level);
 	void load(const char *fname, int verbose_level);
 	void all_cliques_of_size_k_ignore_colors(
@@ -375,17 +375,17 @@ public:
 	void export_laplacian_to_file(const char *fname, 
 		int verbose_level);
 	void export_to_file_matlab(const char *fname, int verbose_level);
-	void early_test_func_for_clique_search(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void early_test_func_for_clique_search(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void early_test_func_for_coclique_search(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void early_test_func_for_coclique_search(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void early_test_func_for_path_and_cycle_search(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void early_test_func_for_path_and_cycle_search(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int is_cycle(int nb_e, int *edges, int verbose_level);
 	void draw_it(const char *fname_base, 
@@ -394,7 +394,7 @@ public:
 	//int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
 	void create_Levi_graph_from_incidence_matrix(
 		int *M, int nb_rows, int nb_cols,
-		int f_point_labels, int *point_labels,
+		int f_point_labels, long int *point_labels,
 		int verbose_level);
 
 };
@@ -544,25 +544,19 @@ public:
 		int f_prefix, const char *prefix,
 		int print_interval,
 		int verbose_level);
-#if 0
-	int colored_graph_all_rainbow_cliques_nonrecursive(
-		const char *fname,
-		int &nb_backtrack_nodes,
-		int verbose_level);
-#endif
 	void save_as_colored_graph_easy(
 		const char *fname_base, int n, int *Adj,
 		int verbose_level);
 	void save_colored_graph(const char *fname,
 		int nb_vertices, int nb_colors, int nb_colors_per_vertex,
-		int *vertex_labels, int *vertex_colors,
-		int *data, int data_sz,
+		long int *vertex_labels, int *vertex_colors,
+		long int *data, int data_sz,
 		uchar *bitvector_adjacency, long int bitvector_length,
 		int verbose_level);
 	void load_colored_graph(const char *fname,
 		int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
-		int *&vertex_labels, int *&vertex_colors,
-		int *&user_data, int &user_data_size,
+		long int *&vertex_labels, int *&vertex_colors,
+		long int *&user_data, int &user_data_size,
 		uchar *&bitvector_adjacency, long int &bitvector_length,
 		int verbose_level);
 	void write_colored_graph(std::ofstream &ost,
@@ -576,7 +570,7 @@ public:
 		int (*is_adjacent_callback)(int i, int j, void *data),
 		void *is_adjacent_callback_data,
 		int f_colors, int nb_colors, int *point_color,
-		int f_point_labels, int *point_label);
+		int f_point_labels, long int *point_label);
 	int is_association_scheme(int *color_graph, int n, int *&Pijk,
 		int *&colors, int &nb_colors, int verbose_level);
 	void print_Pijk(int *Pijk, int nb_colors);

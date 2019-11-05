@@ -87,8 +87,8 @@ void action_on_set_partitions::init(
 		}
 }
 
-int action_on_set_partitions::compute_image(
-		int *Elt, int a, int verbose_level)
+long int action_on_set_partitions::compute_image(
+		int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, b;

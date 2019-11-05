@@ -728,7 +728,7 @@ void vector_ge::extract_subset_of_elements_by_rank(
 		int *rank_vector, int len, sims *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, r;
+	long int i, r;
 	int *Elt;
 
 	if (f_v) {
@@ -738,7 +738,7 @@ void vector_ge::extract_subset_of_elements_by_rank(
 	allocate(len, verbose_level);
 	for (i = 0; i < len; i++) {
 		r = rank_vector[i];
-		S->element_unrank_int(r, Elt);
+		S->element_unrank_lint(r, Elt);
 
 		if (f_v) {
 			cout << "vector_ge::extract_subset_of_elements_by_rank "
@@ -766,7 +766,7 @@ int vector_ge::test_if_all_elements_stabilize_a_point(action *A2, int pt)
 }
 
 int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
-		int *set, int sz, int verbose_level)
+		long int *set, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

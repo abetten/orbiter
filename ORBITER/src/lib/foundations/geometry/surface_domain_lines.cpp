@@ -220,30 +220,30 @@ void surface_domain::index_of_line(int line, int &i, int &j)
 		}
 }
 
-void surface_domain::unrank_line(int *v, int rk)
+void surface_domain::unrank_line(int *v, long int rk)
 {
-	Gr->unrank_int_here(v, rk, 0 /* verbose_level */);
+	Gr->unrank_lint_here(v, rk, 0 /* verbose_level */);
 }
 
-void surface_domain::unrank_lines(int *v, int *Rk, int nb)
+void surface_domain::unrank_lines(int *v, long int *Rk, int nb)
 {
 	int i;
 
 	for (i = 0; i < nb; i++) {
-		Gr->unrank_int_here(v + i * 8, Rk[i], 0 /* verbose_level */);
+		Gr->unrank_lint_here(v + i * 8, Rk[i], 0 /* verbose_level */);
 		}
 }
 
-int surface_domain::rank_line(int *v)
+long int surface_domain::rank_line(int *v)
 {
-	int rk;
+	long int rk;
 
-	rk = Gr->rank_int_here(v, 0 /* verbose_level */);
+	rk = Gr->rank_lint_here(v, 0 /* verbose_level */);
 	return rk;
 }
 
 void surface_domain::build_cubic_surface_from_lines(
-	int len, int *S,
+	int len, long int *S,
 	int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -273,11 +273,11 @@ void surface_domain::build_cubic_surface_from_lines(
 }
 
 int surface_domain::compute_system_in_RREF(
-		int len, int *S, int verbose_level)
+		int len, long int *S, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	int i, j, nb_pts, a, r;
+	long int i, j, nb_pts, a, r;
 
 	if (f_v) {
 		cout << "surface_domain::compute_system_in_RREF" << endl;
@@ -351,7 +351,7 @@ int surface_domain::compute_system_in_RREF(
 }
 
 void surface_domain::compute_intersection_points(int *Adj,
-	int *Lines, int nb_lines,
+	long int *Lines, int nb_lines,
 	int *&Intersection_pt,
 	int verbose_level)
 {
@@ -380,13 +380,15 @@ void surface_domain::compute_intersection_points(int *Adj,
 }
 
 void surface_domain::compute_intersection_points_and_indices(int *Adj,
-	int *Points, int nb_points,
-	int *Lines, int nb_lines,
+	long int *Points, int nb_points,
+	long int *Lines, int nb_lines,
 	int *&Intersection_pt, int *&Intersection_pt_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int j1, j2, a1, a2, pt, idx;
+	int j1, j2;
+	long int a1, a2, pt;
+	int idx;
 	sorting Sorting;
 
 	if (f_v) {
@@ -402,14 +404,13 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 			a2 = Lines[j2];
 			if (Adj[j1 * nb_lines + j2]) {
 				pt = P->intersection_of_two_lines(a1, a2);
-				if (!Sorting.int_vec_search(Points, nb_points,
-					pt, idx)) {
+				if (!Sorting.lint_vec_search(Points, nb_points,
+					pt, idx, 0)) {
 					cout << "surface_domain::compute_intersection_points_"
 							"and_indices cannot find point "
 							"in Points" << endl;
 					cout << "Points:";
-					int_vec_print_fully(cout,
-						Points, nb_points);
+					lint_vec_print_fully(cout, Points, nb_points);
 					cout << endl;
 					cout << "j1=" << j1 << endl;
 					cout << "j2=" << j2 << endl;
@@ -432,23 +433,23 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 }
 
 void surface_domain::lines_meet3_and_skew3(
-	int *lines_meet3, int *lines_skew3,
-	int *&lines, int &nb_lines,
+	long int *lines_meet3, long int *lines_skew3,
+	long int *&lines, int &nb_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o_rank[6];
+	long int o_rank[6];
 	int i, j;
-	int *perp;
+	long int *perp;
 	int perp_sz;
 
 	if (f_v) {
 		cout << "surface_domain::lines_meet3_and_skew3" << endl;
 		cout << "The three lines we will meet are ";
-		int_vec_print(cout, lines_meet3, 3);
+		lint_vec_print(cout, lines_meet3, 3);
 		cout << endl;
 		cout << "The three lines we will be skew to are ";
-		int_vec_print(cout, lines_skew3, 3);
+		lint_vec_print(cout, lines_skew3, 3);
 		cout << endl;
 		}
 	for (i = 0; i < 3; i++) {
@@ -460,7 +461,7 @@ void surface_domain::lines_meet3_and_skew3(
 
 	O->perp_of_k_points(o_rank, 3, perp, perp_sz, verbose_level);
 
-	lines = NEW_int(perp_sz);
+	lines = NEW_lint(perp_sz);
 	nb_lines = 0;
 	for (i = 0; i < perp_sz; i++) {
 		for (j = 0; j < 3; j++) {
@@ -474,7 +475,7 @@ void surface_domain::lines_meet3_and_skew3(
 			}
 		}
 
-	FREE_int(perp);
+	FREE_lint(perp);
 
 	for (i = 0; i < nb_lines; i++) {
 		lines[i] = Klein->Point_on_quadric_to_line[lines[i]];
@@ -485,17 +486,17 @@ void surface_domain::lines_meet3_and_skew3(
 		}
 }
 
-void surface_domain::perp_of_three_lines(int *three_lines,
-	int *&perp, int &perp_sz, int verbose_level)
+void surface_domain::perp_of_three_lines(long int *three_lines,
+		long int *&perp, int &perp_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o_rank[3];
+	long int o_rank[3];
 	int i;
 
 	if (f_v) {
 		cout << "surface_domain::perp_of_three_lines" << endl;
 		cout << "The three lines are ";
-		int_vec_print(cout, three_lines, 3);
+		lint_vec_print(cout, three_lines, 3);
 		cout << endl;
 		}
 	for (i = 0; i < 3; i++) {
@@ -513,19 +514,19 @@ void surface_domain::perp_of_three_lines(int *three_lines,
 }
 
 int surface_domain::perp_of_four_lines(
-	int *four_lines, int *trans12,
-	int &perp_sz, int verbose_level)
+		long int *four_lines, long int *trans12,
+		int &perp_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o_rank[4];
+	long int o_rank[4];
 	int i;
-	int *Perp;
+	long int *Perp;
 	int ret = TRUE;
 
 	if (f_v) {
 		cout << "surface_domain::perp_of_four_lines" << endl;
 		cout << "The four lines are ";
-		int_vec_print(cout, four_lines, 4);
+		lint_vec_print(cout, four_lines, 4);
 		cout << endl;
 		}
 	for (i = 0; i < 4; i++) {
@@ -545,7 +546,7 @@ int surface_domain::perp_of_four_lines(
 	trans12[1] = Klein->Point_on_quadric_to_line[Perp[1]];
 
 finish:
-	FREE_int(Perp);
+	FREE_lint(Perp);
 	if (f_v) {
 		cout << "surface_domain::perp_of_four_lines done" << endl;
 		}
@@ -553,19 +554,19 @@ finish:
 }
 
 int surface_domain::rank_of_four_lines_on_Klein_quadric(
-	int *four_lines,
+		long int *four_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o_rank[4];
+	long int o_rank[4];
 	int *coords;
 	int i;
-	int rk;
+	long int rk;
 
 	if (f_v) {
 		cout << "surface_domain::rank_of_four_lines_on_Klein_quadric" << endl;
 		cout << "The four lines are ";
-		int_vec_print(cout, four_lines, 4);
+		lint_vec_print(cout, four_lines, 4);
 		cout << endl;
 		}
 	for (i = 0; i < 4; i++) {
@@ -586,11 +587,11 @@ int surface_domain::rank_of_four_lines_on_Klein_quadric(
 }
 
 int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
-	int *five_pts, int *double_six,
+	long int *five_pts, long int *double_six,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o_rank[12];
+	long int o_rank[12];
 	int i, j;
 	int ret = TRUE;
 
@@ -598,7 +599,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		cout << "surface_domain::create_double_six_from_five_lines_with_"
 				"a_common_transversal" << endl;
 		cout << "The five lines are ";
-		int_vec_print(cout, five_pts, 5);
+		lint_vec_print(cout, five_pts, 5);
 		cout << endl;
 		}
 	for (i = 0; i < 5; i++) {
@@ -619,23 +620,23 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		cout << "surface_domain::create_double_six_from_five_lines_with_"
 				"a_common_transversal" << endl;
 		cout << "The five lines as orthogonal points are ";
-		int_vec_print(cout, o_rank, 5);
+		lint_vec_print(cout, o_rank, 5);
 		cout << endl;
 		}
 
 	int nb_subsets;
 	int subset[4];
-	int pts[4];
+	long int pts[4];
 	int rk;
-	int **Perp;
+	long int **Perp;
 	int *Perp_sz;
-	int lines[2];
-	int opposites[5];
-	int transversal = 0;
+	long int lines[2];
+	long int opposites[5];
+	long int transversal = 0;
 	combinatorics_domain Combi;
 
 	nb_subsets = Combi.int_n_choose_k(5, 4);
-	Perp = NEW_pint(nb_subsets);
+	Perp = NEW_plint(nb_subsets);
 	Perp_sz = NEW_int(nb_subsets);
 #if 0
 	for (rk = 0; rk < nb_subsets; rk++) {
@@ -657,7 +658,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 			cout << "the perp of the subset ";
 			int_vec_print(cout, subset, 4);
 			cout << " has size " << Perp_sz[rk] << " : ";
-			int_vec_print(cout, Perp[rk], Perp_sz[rk]);
+			lint_vec_print(cout, Perp[rk], Perp_sz[rk]);
 			cout << endl;
 			}
 		if (Perp_sz[rk] != 2) {
@@ -671,7 +672,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 			goto finish;
 			}
 		if (rk == 0) {
-			int_vec_copy(Perp[rk], lines, 2);
+			lint_vec_copy(Perp[rk], lines, 2);
 			}
 		else if (rk == 1) {
 			if (lines[0] == Perp[rk][0]) {
@@ -708,7 +709,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		cout << "surface_domain::create_double_six_from_five_lines_with_"
 				"a_common_transversal" << endl;
 		cout << "opposites ";
-		int_vec_print(cout, opposites, 5);
+		lint_vec_print(cout, opposites, 5);
 		cout << endl;
 		}
 
@@ -717,18 +718,18 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		o_rank[10 - i] = opposites[i];
 		}
 
-	int *Perp_opp;
+	long int *Perp_opp;
 	int Perp_opp_sz;
-	int transversal_opp;
+	long int transversal_opp;
 
 	//Perp_opp = NEW_int(O->alpha * (O->q + 1));
 	O->perp_of_k_points(opposites, 4, Perp_opp, Perp_opp_sz,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "the perp of the opposite subset ";
-		int_vec_print(cout, opposites, 4);
+		lint_vec_print(cout, opposites, 4);
 		cout << " has size " << Perp_opp_sz << ":";
-		int_vec_print(cout, Perp_opp, Perp_opp_sz);
+		lint_vec_print(cout, Perp_opp, Perp_opp_sz);
 		cout << endl;
 		}
 	if (Perp_opp_sz != 2) {
@@ -737,7 +738,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 				"a_common_transversal Perp_opp_sz != 2, "
 				"something is wrong" << endl;
 		exit(1);
-		FREE_int(Perp_opp);
+		FREE_lint(Perp_opp);
 		goto finish;
 		}
 
@@ -761,7 +762,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		cout << "surface_domain::create_double_six_from_five_lines_with_"
 				"a_common_transversal" << endl;
 		cout << "o_rank ";
-		int_vec_print(cout, o_rank, 12);
+		lint_vec_print(cout, o_rank, 12);
 		cout << endl;
 		}
 
@@ -772,7 +773,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		cout << "surface_domain::create_double_six_from_five_lines_with_"
 				"a_common_transversal" << endl;
 		cout << "double_six ";
-		int_vec_print(cout, double_six, 12);
+		lint_vec_print(cout, double_six, 12);
 		cout << endl;
 		}
 
@@ -794,13 +795,13 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		}
 
 
-	FREE_int(Perp_opp);
+	FREE_lint(Perp_opp);
 
 finish:
 	for (i = 0; i < nb_subsets; i++) {
-		FREE_int(Perp[i]);
+		FREE_lint(Perp[i]);
 	}
-	FREE_pint(Perp);
+	FREE_plint(Perp);
 	//free_pint_all(Perp, nb_subsets);
 	FREE_int(Perp_sz);
 
@@ -813,11 +814,11 @@ finish:
 
 
 int surface_domain::create_double_six_from_six_disjoint_lines(
-	int *single_six,
-	int *double_six, int verbose_level)
+		long int *single_six,
+		long int *double_six, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o_rank[12];
+	long int o_rank[12];
 	int i, j;
 	int ret = FALSE;
 	combinatorics_domain Combi;
@@ -842,14 +843,14 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 
 
 	// compute the perp on the Klein quadric of each of the 6 given lines:
-	int **Perp_without_pt;
+	long int **Perp_without_pt;
 	int perp_sz = 0;
 	int sz;
 
 	sz = O->alpha * q;
-	Perp_without_pt = NEW_pint(6);
+	Perp_without_pt = NEW_plint(6);
 	for (i = 0; i < 6; i++) {
-		Perp_without_pt[i] = NEW_int(sz);
+		Perp_without_pt[i] = NEW_lint(sz);
 		O->perp(o_rank[i], Perp_without_pt[i], perp_sz,
 			0 /* verbose_level */);
 		if (perp_sz != sz) {
@@ -861,7 +862,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	if (f_v) {
 		cout << "perp_sz=" << perp_sz << endl;
 		for (i = 0; i < 6; i++) {
-			int_vec_print(cout, Perp_without_pt[i], perp_sz);
+			lint_vec_print(cout, Perp_without_pt[i], perp_sz);
 			cout << endl;
 			}
 		}
@@ -869,19 +870,23 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 
 	// compute the intersection of all perps, five at a time:
 
-	int **I2, *I2_sz;
-	int **I3, *I3_sz;
-	int **I4, *I4_sz;
-	int **I5, *I5_sz;
-	int six2, six3, six4, six5, rk, rk2;
+	long int **I2;
+	int *I2_sz;
+	long int **I3;
+	int *I3_sz;
+	long int **I4;
+	int *I4_sz;
+	long int **I5;
+	int *I5_sz;
+	long int six2, six3, six4, six5, rk, rk2;
 	int subset[6];
 
 	six2 = Combi.int_n_choose_k(6, 2);
-	I2 = NEW_pint(six2);
+	I2 = NEW_plint(six2);
 	I2_sz = NEW_int(six2);
 	for (rk = 0; rk < six2; rk++) {
 		Combi.unrank_k_subset(rk, subset, 6, 2);
-		Sorting.int_vec_intersect(
+		Sorting.vec_intersect(
 			Perp_without_pt[subset[0]],
 			perp_sz,
 			Perp_without_pt[subset[1]],
@@ -890,18 +895,18 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 		if (f_v) {
 			cout << "Perp_" << subset[0] << " \\cap Perp_" << subset[1]
 				<< " of size " << I2_sz[rk] << " = ";
-			int_vec_print(cout, I2[rk], I2_sz[rk]);
+			lint_vec_print(cout, I2[rk], I2_sz[rk]);
 			cout << endl;
 			}
 		}
 	six3 = Combi.int_n_choose_k(6, 3);
-	I3 = NEW_pint(six3);
+	I3 = NEW_plint(six3);
 	I3_sz = NEW_int(six3);
 	for (rk = 0; rk < six3; rk++) {
 		Combi.unrank_k_subset(rk, subset, 6, 3);
 		rk2 = Combi.rank_k_subset(subset, 6, 2);
 		Combi.unrank_k_subset(rk, subset, 6, 3);
-		Sorting.int_vec_intersect(I2[rk2], I2_sz[rk2],
+		Sorting.vec_intersect(I2[rk2], I2_sz[rk2],
 			Perp_without_pt[subset[2]],
 			perp_sz,
 			I3[rk], I3_sz[rk]);
@@ -909,19 +914,19 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 			cout << "Perp_" << subset[0] << " \\cap Perp_" << subset[1]
 				<< " \\cap Perp_" << subset[2] << " of size "
 				<< I3_sz[rk] << " = ";
-			int_vec_print(cout, I3[rk], I3_sz[rk]);
+			lint_vec_print(cout, I3[rk], I3_sz[rk]);
 			cout << endl;
 			}
 		}
 
 	six4 = Combi.int_n_choose_k(6, 4);
-	I4 = NEW_pint(six4);
+	I4 = NEW_plint(six4);
 	I4_sz = NEW_int(six4);
 	for (rk = 0; rk < six4; rk++) {
 		Combi.unrank_k_subset(rk, subset, 6, 4);
 		rk2 = Combi.rank_k_subset(subset, 6, 3);
 		Combi.unrank_k_subset(rk, subset, 6, 4);
-		Sorting.int_vec_intersect(I3[rk2], I3_sz[rk2],
+		Sorting.vec_intersect(I3[rk2], I3_sz[rk2],
 			Perp_without_pt[subset[3]], perp_sz,
 			I4[rk], I4_sz[rk]);
 		if (f_v) {
@@ -929,19 +934,19 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 				<< " \\cap Perp_" << subset[1] << " \\cap Perp_"
 				<< subset[2] << " \\cap Perp_" << subset[3]
 				<< " of size " << I4_sz[rk] << " = ";
-			int_vec_print(cout, I4[rk], I4_sz[rk]);
+			lint_vec_print(cout, I4[rk], I4_sz[rk]);
 			cout << endl;
 			}
 		}
 
 	six5 = Combi.int_n_choose_k(6, 5);
-	I5 = NEW_pint(six5);
+	I5 = NEW_plint(six5);
 	I5_sz = NEW_int(six5);
 	for (rk = 0; rk < six5; rk++) {
 		Combi.unrank_k_subset(rk, subset, 6, 5);
 		rk2 = Combi.rank_k_subset(subset, 6, 4);
 		Combi.unrank_k_subset(rk, subset, 6, 5);
-		Sorting.int_vec_intersect(I4[rk2], I4_sz[rk2],
+		Sorting.vec_intersect(I4[rk2], I4_sz[rk2],
 			Perp_without_pt[subset[4]], perp_sz,
 			I5[rk], I5_sz[rk]);
 		if (f_v) {
@@ -950,7 +955,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 				<< subset[2] << " \\cap Perp_" << subset[3]
 				<< " \\cap Perp_" << subset[4] << " of size "
 				<< I5_sz[rk] << " = ";
-			int_vec_print(cout, I5[rk], I5_sz[rk]);
+			lint_vec_print(cout, I5[rk], I5_sz[rk]);
 			cout << endl;
 			}
 
@@ -970,35 +975,35 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	ret = TRUE;
 free_it:
 	for (i = 0; i < 6; i++) {
-		FREE_int(Perp_without_pt[i]);
+		FREE_lint(Perp_without_pt[i]);
 	}
-	FREE_pint(Perp_without_pt);
+	FREE_plint(Perp_without_pt);
 	//free_pint_all(Perp_without_pt, 6);
 
 
 
 	for (i = 0; i < six2; i++) {
-		FREE_int(I2[i]);
+		FREE_lint(I2[i]);
 	}
-	FREE_pint(I2);
+	FREE_plint(I2);
 	//free_pint_all(I2, six2);
 
 	FREE_int(I2_sz);
 
 
 	for (i = 0; i < six3; i++) {
-		FREE_int(I3[i]);
+		FREE_lint(I3[i]);
 	}
-	FREE_pint(I3);
+	FREE_plint(I3);
 	//free_pint_all(I3, six3);
 
 	FREE_int(I3_sz);
 
 
 	for (i = 0; i < six4; i++) {
-		FREE_int(I4[i]);
+		FREE_lint(I4[i]);
 	}
-	FREE_pint(I4);
+	FREE_plint(I4);
 
 	//free_pint_all(I4, six4);
 
@@ -1006,9 +1011,9 @@ free_it:
 
 
 	for (i = 0; i < six5; i++) {
-		FREE_int(I5[i]);
+		FREE_lint(I5[i]);
 	}
-	FREE_pint(I5);
+	FREE_plint(I5);
 
 	//free_pint_all(I5, six5);
 
@@ -1023,35 +1028,35 @@ free_it:
 }
 
 void surface_domain::create_the_fifteen_other_lines(
-	int *double_six,
-	int *fifteen_other_lines, int verbose_level)
+	long int *double_six,
+	long int *fifteen_other_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface_domain::create_the_fifteen_other_lines" << endl;
 		}
-	int *Planes;
-	int *Lines;
+	long int *Planes;
+	long int *Lines;
 	int h, k3;
 	int i, j;
 
-	Planes = NEW_int(30);
+	Planes = NEW_lint(30);
 	if (f_v) {
 		cout << "creating the 30 planes:" << endl;
 		}
 	for (h = 0; h < 30; h++) {
 		i = Sets[h * 2 + 0];
 		j = Sets[h * 2 + 1];
-		Gr->unrank_int_here(Basis0, double_six[i],
+		Gr->unrank_lint_here(Basis0, double_six[i],
 				0/* verbose_level*/);
-		Gr->unrank_int_here(Basis0 + 8, double_six[j],
+		Gr->unrank_lint_here(Basis0 + 8, double_six[j],
 				0/* verbose_level*/);
 		if (F->Gauss_easy(Basis0, 4, 4) != 3) {
 			cout << "the rank is not 3" << endl;
 			exit(1);
 			}
-		Planes[h] = Gr3->rank_int_here(Basis0,
+		Planes[h] = Gr3->rank_lint_here(Basis0,
 				0/* verbose_level*/);
 		if (f_v) {
 			cout << "plane " << h << " / " << 30
@@ -1060,16 +1065,16 @@ void surface_domain::create_the_fifteen_other_lines(
 			cout << endl;
 			}
 		}
-	Lines = NEW_int(15);
+	Lines = NEW_lint(15);
 	if (f_v) {
 		cout << "creating the 15 lines:" << endl;
 		}
 	for (h = 0; h < 15; h++) {
 		i = Sets2[h * 2 + 0];
 		j = Sets2[h * 2 + 1];
-		Gr3->unrank_int_here(Basis1, Planes[i],
+		Gr3->unrank_lint_here(Basis1, Planes[i],
 				0/* verbose_level*/);
-		Gr3->unrank_int_here(Basis2, Planes[j],
+		Gr3->unrank_lint_here(Basis2, Planes[j],
 				0/* verbose_level*/);
 		F->intersect_subspaces(4, 3, Basis1, 3, Basis2,
 			k3, Basis0, 0 /* verbose_level */);
@@ -1077,7 +1082,7 @@ void surface_domain::create_the_fifteen_other_lines(
 			cout << "the rank is not 2" << endl;
 			exit(1);
 			}
-		Lines[h] = Gr->rank_int_here(Basis0,
+		Lines[h] = Gr->rank_lint_here(Basis0,
 				0/* verbose_level*/);
 		for (i = 0; i < 2; i++) {
 			F->PG_element_normalize_from_front(
@@ -1092,11 +1097,11 @@ void surface_domain::create_the_fifteen_other_lines(
 			}
 		}
 
-	int_vec_copy(Lines, fifteen_other_lines, 15);
+	lint_vec_copy(Lines, fifteen_other_lines, 15);
 
 
-	FREE_int(Planes);
-	FREE_int(Lines);
+	FREE_lint(Planes);
+	FREE_lint(Lines);
 
 	if (f_v) {
 		cout << "surface_domain::create_the_fifteen_other_lines done" << endl;
@@ -1227,7 +1232,7 @@ int surface_domain::get_adjacency_matrix_of_lines(int i, int j)
 }
 
 void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
-	int *&Adj, int *S, int n, int verbose_level)
+	int *&Adj, long int *S, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1263,7 +1268,7 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 }
 
 void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
-	int *&Adj, int *S, int n, int verbose_level)
+	int *&Adj, long int *S, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1299,10 +1304,10 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 }
 
 void surface_domain::compute_points_on_lines(
-	int *Pts_on_surface, int nb_points_on_surface,
-	int *Lines, int nb_lines,
-	set_of_sets *&pts_on_lines,
-	int verbose_level)
+		long int *Pts_on_surface, int nb_points_on_surface,
+		long int *Lines, int nb_lines,
+		set_of_sets *&pts_on_lines,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, l, r;
@@ -1350,12 +1355,12 @@ void surface_domain::compute_points_on_lines(
 }
 
 int surface_domain::compute_rank_of_any_four(
-	int *&Rk, int &nb_subsets,
-	int *lines, int sz, int verbose_level)
+		long int *&Rk, int &nb_subsets,
+		long int *lines, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int subset[4];
-	int four_lines[4];
+	long int four_lines[4];
 	int i, rk;
 	int ret = TRUE;
 	combinatorics_domain Combi;
@@ -1364,7 +1369,7 @@ int surface_domain::compute_rank_of_any_four(
 		cout << "surface_domain::compute_rank_of_any_four" << endl;
 		}
 	nb_subsets = Combi.int_n_choose_k(sz, 4);
-	Rk = NEW_int(nb_subsets);
+	Rk = NEW_lint(nb_subsets);
 	for (rk = 0; rk < nb_subsets; rk++) {
 		Combi.unrank_k_subset(rk, subset, sz, 4);
 		for (i = 0; i < 4; i++) {
@@ -1384,7 +1389,7 @@ int surface_domain::compute_rank_of_any_four(
 		}
 	if (f_v) {
 		cout << "Ranks:" << endl;
-		int_vec_print(cout, Rk, nb_subsets);
+		lint_vec_print(cout, Rk, nb_subsets);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1393,13 +1398,13 @@ int surface_domain::compute_rank_of_any_four(
 	return ret;
 }
 
-void surface_domain::rearrange_lines_according_to_double_six(int *Lines,
+void surface_domain::rearrange_lines_according_to_double_six(long int *Lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Adj;
 	int nb_lines = 27;
-	int New_lines[27];
+	long int New_lines[27];
 
 	if (f_v) {
 		cout << "surface_domain::rearrange_lines_according_to_double_six" << endl;
@@ -1456,7 +1461,7 @@ void surface_domain::rearrange_lines_according_to_double_six(int *Lines,
 		line_idx, subset_idx, Adj,
 		line_intersections, 0 /*verbose_level*/);
 
-	int_vec_copy(New_lines, Lines, 27);
+	lint_vec_copy(New_lines, Lines, 27);
 
 	FREE_int(Adj);
 	FREE_int(Starter_Table);
@@ -1468,13 +1473,13 @@ void surface_domain::rearrange_lines_according_to_double_six(int *Lines,
 }
 
 void surface_domain::rearrange_lines_according_to_starter_configuration(
-	int *Lines, int *New_lines,
+	long int *Lines, long int *New_lines,
 	int line_idx, int subset_idx, int *Adj,
 	set_of_sets *line_intersections,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int S3[6];
+	long int S3[6];
 	int i, idx;
 	int nb_lines = 27;
 	sorting Sorting;
@@ -1496,7 +1501,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 
 	int Line_idx[27];
 	for (i = 0; i < 6; i++) {
-		if (!Sorting.int_vec_search_linear(Lines, nb_lines, S3[i], idx)) {
+		if (!Sorting.lint_vec_search_linear(Lines, nb_lines, S3[i], idx)) {
 			cout << "could not find the line" << endl;
 			exit(1);
 			}
@@ -1511,8 +1516,8 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 
 	Line_idx[11] = Line_idx[5];
 	Line_idx[5] = 0;
-	int_vec_zero(New_lines, 27);
-	int_vec_copy(S3, New_lines, 5);
+	lint_vec_zero(New_lines, 27);
+	lint_vec_copy(S3, New_lines, 5);
 	New_lines[11] = S3[5];
 
 	if (f_v) {
@@ -1551,13 +1556,13 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 		}
 
 
-	int double_six[12];
+	long int double_six[12];
 	int h, j;
 
 	for (i = 0; i < 12; i++) {
 		double_six[i] = Lines[Line_idx[i]];
 		}
-	int_vec_copy(double_six, New_lines, 12);
+	lint_vec_copy(double_six, New_lines, 12);
 
 	h = 0;
 	for (i = 0; i < 6; i++) {
@@ -1569,7 +1574,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 		}
 	if (f_v) {
 		cout << "New_lines:";
-		int_vec_print(cout, New_lines, 27);
+		lint_vec_print(cout, New_lines, 27);
 		cout << endl;
 		}
 
@@ -1649,8 +1654,8 @@ int surface_domain::intersection_of_five_lines(int *Adj,
 }
 
 void surface_domain::rearrange_lines_according_to_a_given_double_six(
-	int *Lines,
-	int *New_lines, int *double_six, int verbose_level)
+	long int *Lines,
+	long int *New_lines, long int *double_six, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -1673,7 +1678,7 @@ void surface_domain::rearrange_lines_according_to_a_given_double_six(
 		}
 	if (f_v) {
 		cout << "New_lines:";
-		int_vec_print(cout, New_lines, 27);
+		lint_vec_print(cout, New_lines, 27);
 		cout << endl;
 		}
 
@@ -1685,7 +1690,7 @@ void surface_domain::rearrange_lines_according_to_a_given_double_six(
 
 void surface_domain::create_lines_from_plane_equations(
 	int *The_plane_equations,
-	int *Lines27, int verbose_level)
+	long int *Lines27, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int line_idx, plane1, plane2;
@@ -1710,7 +1715,7 @@ void surface_domain::create_lines_from_plane_equations(
 }
 
 int surface_domain::identify_two_lines(
-		int *lines, int verbose_level)
+		long int *lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int iso = 0;
@@ -1736,7 +1741,7 @@ int surface_domain::identify_two_lines(
 }
 
 
-int surface_domain::identify_three_lines(int *lines, int verbose_level)
+int surface_domain::identify_three_lines(long int *lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int iso = 0;
@@ -1783,7 +1788,7 @@ int surface_domain::identify_three_lines(int *lines, int verbose_level)
 			int Basis[3 * 8];
 
 			for (i = 0; i < 3; i++) {
-				Gr->unrank_int_here(Basis + i * 8,
+				Gr->unrank_lint_here(Basis + i * 8,
 					lines[i], 0 /* verbose_level */);
 				}
 			rk = F->Gauss_easy(Basis, 6, 4);
@@ -1814,7 +1819,7 @@ int surface_domain::identify_three_lines(int *lines, int verbose_level)
 
 
 void surface_domain::create_remaining_fifteen_lines(
-	int *double_six, int *fifteen_lines,
+	long int *double_six, long int *fifteen_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1841,11 +1846,11 @@ void surface_domain::create_remaining_fifteen_lines(
 		}
 }
 
-int surface_domain::compute_cij(int *double_six,
+long int surface_domain::compute_cij(long int *double_six,
 		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ai, aj, bi, bj;
+	long int ai, aj, bi, bj;
 	int Basis1[16];
 	int Basis2[16];
 	int K1[16];
@@ -1853,7 +1858,8 @@ int surface_domain::compute_cij(int *double_six,
 	int K[16];
 	int base_cols1[4];
 	int base_cols2[4];
-	int kernel_m, kernel_n, cij;
+	int kernel_m, kernel_n;
+	long int cij;
 
 	if (f_v) {
 		cout << "surface_domain::compute_cij" << endl;
@@ -1862,13 +1868,13 @@ int surface_domain::compute_cij(int *double_six,
 	aj = double_six[j];
 	bi = double_six[6 + i];
 	bj = double_six[6 + j];
-	Gr->unrank_int_here(Basis1, ai,
+	Gr->unrank_lint_here(Basis1, ai,
 			0 /* verbose_level */);
-	Gr->unrank_int_here(Basis1 + 2 * 4, bj,
+	Gr->unrank_lint_here(Basis1 + 2 * 4, bj,
 			0 /* verbose_level */);
-	Gr->unrank_int_here(Basis2, aj,
+	Gr->unrank_lint_here(Basis2, aj,
 			0 /* verbose_level */);
-	Gr->unrank_int_here(Basis2 + 2 * 4, bi,
+	Gr->unrank_lint_here(Basis2 + 2 * 4, bi,
 			0 /* verbose_level */);
 	if (F->Gauss_simple(Basis1, 4, 4, base_cols1,
 			0 /* verbose_level */) != 3) {
@@ -1948,7 +1954,7 @@ int surface_domain::compute_cij(int *double_six,
 			Basis1[j * n + i] = K1[i * kernel_n + j];
 			}
 		}
-	cij = Gr->rank_int_here(Basis1, 0 /* verbose_level */);
+	cij = Gr->rank_lint_here(Basis1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_domain::compute_cij done" << endl;
 		}
@@ -1956,14 +1962,14 @@ int surface_domain::compute_cij(int *double_six,
 }
 
 int surface_domain::compute_transversals_of_any_four(
-	int *&Trans, int &nb_subsets,
-	int *lines, int sz,
-	int verbose_level)
+		long int *&Trans, int &nb_subsets,
+		long int *lines, int sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int trans12[2];
+	long int trans12[2];
 	int subset[4];
-	int four_lines[4];
+	long int four_lines[4];
 	int i, rk, perp_sz;
 	int ret = TRUE;
 	combinatorics_domain Combi;
@@ -1972,7 +1978,7 @@ int surface_domain::compute_transversals_of_any_four(
 		cout << "surface_domain::compute_transversals_of_any_four" << endl;
 		}
 	nb_subsets = Combi.int_n_choose_k(sz, 4);
-	Trans = NEW_int(nb_subsets * 2);
+	Trans = NEW_lint(nb_subsets * 2);
 	for (rk = 0; rk < nb_subsets; rk++) {
 		Combi.unrank_k_subset(rk, subset, sz, 4);
 		for (i = 0; i < 4; i++) {
@@ -1991,7 +1997,7 @@ int surface_domain::compute_transversals_of_any_four(
 						"to two transversal lines: ";
 				int_vec_print(cout, subset, 4);
 				cout << " = ";
-				int_vec_print(cout, four_lines, 4);
+				lint_vec_print(cout, four_lines, 4);
 				cout << " perp_sz=" << perp_sz << endl;
 				}
 			ret = FALSE;
@@ -1999,11 +2005,11 @@ int surface_domain::compute_transversals_of_any_four(
 			trans12[0] = -1;
 			trans12[1] = -1;
 			}
-		int_vec_copy(trans12, Trans + rk * 2, 2);
+		lint_vec_copy(trans12, Trans + rk * 2, 2);
 		}
 	if (f_v) {
 		cout << "Transversals:" << endl;
-		int_matrix_print(Trans, nb_subsets, 2);
+		lint_matrix_print(Trans, nb_subsets, 2);
 		}
 	if (f_v) {
 		cout << "surface_domain::compute_transversals_of_any_four done" << endl;

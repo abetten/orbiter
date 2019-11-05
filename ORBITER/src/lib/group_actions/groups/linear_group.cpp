@@ -893,7 +893,7 @@ void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
 	H = Strong_gens->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
-	cout << "group order H = " << H->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
 	longinteger_object go;

@@ -54,7 +54,7 @@ void rank_checker::init(finite_field *GFq, int m, int n, int d)
 	set = NEW_int(n);
 }
 
-int rank_checker::check_rank(int len, int *S, int verbose_level)
+int rank_checker::check_rank(int len, long int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -68,7 +68,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 		}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
-		GFq->PG_element_unrank_modified(
+		GFq->PG_element_unrank_modified_lint(
 				M1 + j, len /* stride */, m /* len */, S[j]);
 		}
 	if (f_vv) {
@@ -94,7 +94,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			print_set(cout, d1, set);
+			int_vec_print(cout, set, d1);
 			cout << endl;
 			}
 		
@@ -122,7 +122,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				print_set(cout, d1, set);
+				int_vec_print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
 				}
 			break;
@@ -136,7 +136,7 @@ int rank_checker::check_rank(int len, int *S, int verbose_level)
 }
 
 int rank_checker::check_rank_matrix_input(
-		int len, int *S, int dim_S, int verbose_level)
+		int len, long int *S, int dim_S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -162,7 +162,7 @@ int rank_checker::check_rank_matrix_input(
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			print_set(cout, d1, set);
+			int_vec_print(cout, set, d1);
 			cout << endl;
 			}
 		
@@ -187,7 +187,7 @@ int rank_checker::check_rank_matrix_input(
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				print_set(cout, d1, set);
+				int_vec_print(cout, set, d1);
 				cout << " leads to a rk " << rk
 						<< " submatrix, but we want rank "
 						<< d1 + 1 << endl;
@@ -203,7 +203,7 @@ int rank_checker::check_rank_matrix_input(
 }
 
 int rank_checker::check_rank_last_two_are_fixed(
-		int len, int *S, int verbose_level)
+		int len, long int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -244,7 +244,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			print_set(cout, d1, set);
+			int_vec_print(cout, set, d1);
 			cout << endl;
 			}
 		
@@ -273,7 +273,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				print_set(cout, d1, set);
+				int_vec_print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
 				}
 			break;
@@ -289,7 +289,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 }
 
 int rank_checker::compute_rank_row_vectors(
-		int len, int *S, int f_projective, int verbose_level)
+		int len, long int *S, int f_projective, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -304,7 +304,7 @@ int rank_checker::compute_rank_row_vectors(
 	// M1 will be used as a len x n matrix
 	for (j = 0; j < len; j++) {
 		if (f_projective) {
-			GFq->PG_element_unrank_modified(
+			GFq->PG_element_unrank_modified_lint(
 					M1 + j * n, 1 /* stride */, n /* len */, S[j]);
 			}
 		else {

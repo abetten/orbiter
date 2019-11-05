@@ -1367,7 +1367,7 @@ int finite_field::primitive_element()
 
 
 void finite_field::Siegel_map_between_singular_points(int *T,
-	int rk_from, int rk_to, int root,
+		long int rk_from, long int rk_to, long int root,
 	int epsilon, int algebraic_dimension,
 	int form_c1, int form_c2, int form_c3, int *Gram_matrix,
 	int verbose_level)
@@ -1607,7 +1607,7 @@ void finite_field::Siegel_Transformation(
 }
 
 
-int finite_field::orthogonal_find_root(int rk2,
+long int finite_field::orthogonal_find_root(int rk2,
 	int epsilon, int algebraic_dimension,
 	int form_c1, int form_c2, int form_c3, int *Gram_matrix,
 	int verbose_level)
@@ -1617,7 +1617,8 @@ int finite_field::orthogonal_find_root(int rk2,
 	int *x, *y, *z;
 	int d, k, i;
 	//int epsilon, d, k, form_c1, form_c2, form_c3, i;
-	int y2_minus_y3, minus_y1, y3_minus_y2, a, a2, u, v, root;
+	int y2_minus_y3, minus_y1, y3_minus_y2, a, a2, u, v;
+	long int root;
 
 	d = algebraic_dimension;
 	k = d - 1;

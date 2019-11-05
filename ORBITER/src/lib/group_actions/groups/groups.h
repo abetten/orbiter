@@ -53,15 +53,15 @@ public:
 	uchar *elt1;
 
 	int base_len_in_component1;
-	int *base_for_component1;
+	long int *base_for_component1;
 	int *tl_for_component1;
 
 	int base_len_in_component2;
-	int *base_for_component2;
+	long int *base_for_component2;
 	int *tl_for_component2;
 
 	int base_length;
-	int *the_base;
+	long int *the_base;
 	int *the_transversal_length;
 
 	page_storage *Elts;
@@ -72,7 +72,7 @@ public:
 	void freeself();
 	void init(matrix_group *M1, matrix_group *M2,
 			int verbose_level);
-	int element_image_of(int *Elt, int a, int verbose_level);
+	long int element_image_of(int *Elt, long int a, int verbose_level);
 	void element_one(int *Elt);
 	int element_is_one(int *Elt);
 	void element_mult(int *A, int *B, int *AB, int verbose_level);
@@ -376,9 +376,9 @@ public:
 
 	int GL_element_entry_ij(int *Elt, int i, int j);
 	int GL_element_entry_frobenius(int *Elt);
-	int image_of_element(int *Elt, int a, int verbose_level);
-	int GL_image_of_PG_element(int *Elt, int a, int verbose_level);
-	int GL_image_of_AG_element(int *Elt, int a, int verbose_level);
+	long int image_of_element(int *Elt, long int a, int verbose_level);
+	long int GL_image_of_PG_element(int *Elt, long int a, int verbose_level);
+	long int GL_image_of_AG_element(int *Elt, long int a, int verbose_level);
 	void action_from_the_right_all_types(
 		int *v, int *A, int *vA, int verbose_level);
 	void projective_action_from_the_right(
@@ -435,7 +435,7 @@ public:
 	int base_len(int verbose_level);
 	void base_and_transversal_length(
 			int base_len,
-			int *base, int *transversal_length,
+			long int *base, int *transversal_length,
 			int verbose_level);
 	void strong_generators_low_level(int *&data,
 			int &size, int &nb_gens, int verbose_level);
@@ -500,7 +500,7 @@ public:
 		const char *fname,
 		int orbit_length,
 		int &type_idx,
-		int f_has_user_data, int *user_data, int user_data_size,
+		int f_has_user_data, long int *user_data, int user_data_size,
 		int f_has_colors, int number_colors, int *color_table,
 		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
@@ -510,7 +510,7 @@ public:
 		const char *fname,
 		int orbit_length,
 		int &type_idx,
-		int f_has_user_data, int *user_data, int user_data_size,
+		int f_has_user_data, long int *user_data, int user_data_size,
 		int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
 		set_of_sets *my_orbits_classified,
@@ -576,7 +576,7 @@ public:
 	void print(int *Elt, std::ostream &ost);
 	void print_with_print_point_function(int *Elt,
 			std::ostream &ost,
-			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 			void *point_label_data);
 	void code_for_make_element(int *Elt, int *data);
 	void print_for_make_element(int *Elt, std::ostream &ost);
@@ -631,7 +631,7 @@ public:
 			int *Perms, int degree,
 			int verbose_level);
 		// Perms is degree x nb_gens
-	int element_image_of(int *Elt, int a, int verbose_level);
+	long int element_image_of(int *Elt, long int a, int verbose_level);
 	void element_one(int *Elt);
 	int element_is_one(int *Elt);
 	void element_mult(int *A, int *B, int *AB, int verbose_level);
@@ -1161,7 +1161,7 @@ public:
 	void group_order(longinteger_object &go);
 	void group_order_verbose(longinteger_object &go, int verbose_level);
 	void subgroup_order_verbose(longinteger_object &go, int level, int verbose_level);
-	int group_order_int();
+	long int group_order_lint();
 	int is_trivial_group();
 	int last_moved_base_point();
 		// j == -1 means the group is trivial
@@ -1175,8 +1175,8 @@ public:
 		// does not go through a table.
 	void swap_points(int lvl, int i, int j);
 		// swaps two points given by their cosets
-	void path_unrank_int(int a);
-	int path_rank_int();
+	void path_unrank_lint(long int a);
+	long int path_rank_lint();
 	
 	void element_from_path(int *elt, int verbose_level);
 		// given coset representatives in path[], 
@@ -1196,9 +1196,9 @@ public:
 	void element_rank(longinteger_object &a, int *elt);
 		// Computes the rank of the element in elt into a.
 		// uses eltrk1, eltrk2
-	void element_unrank_int(int rk, int *Elt, int verbose_level);
-	void element_unrank_int(int rk, int *Elt);
-	int element_rank_int(int *Elt);
+	void element_unrank_lint(long int rk, int *Elt, int verbose_level);
+	void element_unrank_lint(long int rk, int *Elt);
+	long int element_rank_lint(int *Elt);
 	int is_element_of(int *elt);
 	void test_element_rank_unrank();
 	void coset_rep(int *Elt, int i, int j, int verbose_level);
@@ -1224,7 +1224,7 @@ public:
 	void random_schreier_generator(int *Elt, int verbose_level);
 		// computes random Schreier generator
 	void element_as_permutation(action *A_special, 
-		int elt_rk, int *perm, int verbose_level);
+		long int elt_rk, int *perm, int verbose_level);
 	int least_moved_point_at_level(int lvl, int verbose_level);
 	int get_orbit(int i, int j);
 	int get_orbit_inv(int i, int j);
@@ -1343,7 +1343,7 @@ public:
 		int f_overshooting_OK, int verbose_level);
 		// Elt * g * Elt^{-1} where g is in old_G
 	int test_if_in_set_stabilizer(action *A,
-		int *set, int size, int verbose_level);
+		long int *set, int size, int verbose_level);
 	int test_if_subgroup(sims *old_G, int verbose_level);
 	int find_element_with_exactly_n_fixpoints_in_given_action(
 			int *Elt, int nb_fixpoints, action *A_given, int verbose_level);
@@ -1360,7 +1360,7 @@ public:
 	void find_standard_generators_int(int ord_a, int ord_b,
 		int ord_ab, int &a, int &b, int &nb_trials,
 		int verbose_level);
-	int find_element_of_given_order_int(int ord,
+	long int find_element_of_given_order_int(int ord,
 		int &nb_trials, int verbose_level);
 	int find_element_of_given_order_int(int *Elt,
 		int ord, int &nb_trials, int max_trials,
@@ -1371,9 +1371,9 @@ public:
 		int *word, int *Elt, int verbose_level);
 	void sylow_subgroup(int p, sims *P, int verbose_level);
 	int is_normalizing(int *Elt, int verbose_level);
-	void create_Cayley_graph(vector_ge *gens, int *&Adj, int &n,
+	void create_Cayley_graph(vector_ge *gens, int *&Adj, long int &n,
 		int verbose_level);
-	void create_group_table(int *&Table, int &n, int verbose_level);
+	void create_group_table(int *&Table, long int &n, int verbose_level);
 	void compute_conjugacy_classes(
 		action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
 		strong_generators *&SG, int &nb_classes,
@@ -1381,12 +1381,12 @@ public:
 		int verbose_level);
 	void compute_all_powers(int elt_idx, int n, int *power_elt,
 			int verbose_level);
-	int mult_by_rank(int rk_a, int rk_b, int verbose_level);
-	int mult_by_rank(int rk_a, int rk_b);
-	int invert_by_rank(int rk_a, int verbose_level);
-	int conjugate_by_rank(int rk_a, int rk_b, int verbose_level);
+	long int mult_by_rank(long int rk_a, long int rk_b, int verbose_level);
+	long int mult_by_rank(long int rk_a, long int rk_b);
+	long int invert_by_rank(long int rk_a, int verbose_level);
+	long int conjugate_by_rank(long int rk_a, long int rk_b, int verbose_level);
 		// comutes b^{-1} * a * b
-	int conjugate_by_rank_b_bv_given(int rk_a,
+	long int conjugate_by_rank_b_bv_given(long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level);
 	void zuppo_list(
 			int *Zuppos, int &nb_zuppos, int verbose_level);
@@ -1541,7 +1541,7 @@ public:
 	void add_single_generator(int *Elt, 
 		int group_index, int verbose_level);
 	void group_order(longinteger_object &go);
-	int group_order_as_int();
+	long int group_order_as_lint();
 	void print_generators();
 	void print_generators_ost(std::ostream &ost);
 	void print_generators_in_source_code();
@@ -1554,7 +1554,7 @@ public:
 	void print_generators_tex_with_print_point_function(
 			action *A,
 			std::ostream &ost,
-			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 			void *point_label_data);
 	void print_generators_for_make_element(std::ostream &ost);
 	void print_generators_as_permutations();
@@ -1565,14 +1565,14 @@ public:
 	void print_elements_latex_ost_with_print_point_function(
 			action *A,
 			std::ostream &ost,
-			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 			void *point_label_data);
-	void create_group_table(int *&Table, int &go, 
+	void create_group_table(int *&Table, long int &go,
 		int verbose_level);
 	void list_of_elements_of_subgroup(
 		strong_generators *gens_subgroup, 
-		int *&Subgroup_elements_by_index, 
-		int &sz_subgroup, int verbose_level);
+		long int *&Subgroup_elements_by_index,
+		long int &sz_subgroup, int verbose_level);
 	void compute_schreier_with_given_action(action *A_given, 
 		schreier *&Sch, int verbose_level);
 	void compute_schreier_with_given_action_on_a_given_set(
@@ -1607,7 +1607,7 @@ public:
 		int verbose_level);
 	int test_if_normalizing(sims *S, int verbose_level);
 	void test_if_set_is_invariant_under_given_action(action *A_given, 
-		int *set, int set_sz, int verbose_level);
+		long int *set, int set_sz, int verbose_level);
 	strong_generators *point_stabilizer(int pt, int verbose_level);
 	strong_generators *find_cyclic_subgroup_with_exactly_n_fixpoints(
 			int nb_fixpoints, action *A_given, int verbose_level);
@@ -1743,7 +1743,7 @@ class subgroup {
 public:
 	action *A;
 	int *Elements;
-	int group_order;
+	long int group_order;
 	int *gens;
 	int nb_gens;
 	sims *Sub;
@@ -1846,11 +1846,11 @@ public:
 	uchar *elt1;
 
 	int base_len_in_component;
-	int *base_for_component;
+	long int *base_for_component;
 	int *tl_for_component;
 
 	int base_length;
-	int *the_base;
+	long int *the_base;
 	int *the_transversal_length;
 
 	page_storage *Elts;
@@ -1870,7 +1870,7 @@ public:
 	void init_tensor_wreath_product(matrix_group *M,
 			action *A_mtx, int nb_factors, int f_tensor_ranks,
 			int verbose_level);
-	int element_image_of(int *Elt, int a, int verbose_level);
+	long int element_image_of(int *Elt, long int a, int verbose_level);
 	void element_image_of_low_level(int *Elt,
 			int *input, int *output, int verbose_level);
 		// we assume that we are in the tensor product domain

@@ -317,7 +317,8 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	int *M;
 	int *K;
 	int *base_cols;
-	int rk, kernel_m, kernel_n, a;
+	int rk, kernel_m, kernel_n;
+	long int a;
 	geometry_global Gg;
 
 	M = NEW_int(e * (e1 + 1));
@@ -392,7 +393,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		int_vec_print(cout, K, e1 + 1);
 		cout << endl;
 		}
-	Gg.AG_element_rank(p, K, 1, e1 + 1, a);
+	a = Gg.AG_element_rank(p, K, 1, e1 + 1);
 	if (f_v) {
 		unipoly_object elt;
 		
@@ -636,7 +637,7 @@ void finite_field::create_tables_extension_field(int verbose_level)
 // assumes that alpha_table and log_alpha_table have been computed already 
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, l, k, ii, jj, kk;
+	long int i, j, l, k, ii, jj, kk;
 	geometry_global Gg;
 	
 	if (f_v) {
@@ -649,7 +650,7 @@ void finite_field::create_tables_extension_field(int verbose_level)
 			for (l = 0; l < e; l++) {
 				v3[l] = (v1[l] + v2[l]) % p;
 				}
-			Gg.AG_element_rank(p, v3, 1, e, k);
+			k = Gg.AG_element_rank(p, v3, 1, e);
 			add_table[i * q + j] = k;
 			if (k == 0)
 				negate_table[i] = j;
@@ -865,14 +866,14 @@ int finite_field::add(int i, int j)
 		return add_table[i * q + j];
 		}
 	else {
-		int l, k;
+		long int l, k;
 		
 		Gg.AG_element_unrank(p, v1, 1, e, i);
 		Gg.AG_element_unrank(p, v2, 1, e, j);
 		for (l = 0; l < e; l++) {
 			v3[l] = (v1[l] + v2[l]) % p;
 			}
-		Gg.AG_element_rank(p, v3, 1, e, k);
+		k = Gg.AG_element_rank(p, v3, 1, e);
 		return k;
 		}
 }
@@ -959,13 +960,13 @@ int finite_field::negate(int i)
 		return negate_table[i];
 		}
 	else {
-		int l, k;
+		long int l, k;
 		
 		Gg.AG_element_unrank(p, v1, 1, e, i);
 		for (l = 0; l < e; l++) {
 			v2[l] = (p - v1[l]) % p;
 			}
-		Gg.AG_element_rank(p, v2, 1, e, k);
+		k = Gg.AG_element_rank(p, v2, 1, e);
 		return k;
 		}
 }

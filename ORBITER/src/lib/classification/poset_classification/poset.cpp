@@ -212,7 +212,7 @@ void poset::add_independence_condition(
 
 void poset::add_testing(
 		int (*func)(orbit_based_testing *Obt,
-				int *S, int len, void *data, int verbose_level),
+				long int *S, int len, void *data, int verbose_level),
 		void *data,
 		int verbose_level)
 {
@@ -250,9 +250,9 @@ void poset::add_testing(
 }
 
 void poset::add_testing_without_group(
-		void (*func)(int *S, int len,
-				int *candidates, int nb_candidates,
-				int *good_candidates, int &nb_good_candidates,
+		void (*func)(long int *S, int len,
+				long int *candidates, int nb_candidates,
+				long int *good_candidates, int &nb_good_candidates,
 				void *data, int verbose_level),
 		void *data,
 		int verbose_level)
@@ -308,9 +308,9 @@ void poset::print()
 }
 
 void poset::early_test_func(
-	int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -336,7 +336,7 @@ void poset::early_test_func(
 		}
 	}
 	else {
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	if (f_v) {
@@ -344,7 +344,7 @@ void poset::early_test_func(
 	}
 }
 
-void poset::unrank_point(int *v, int rk)
+void poset::unrank_point(int *v, long int rk)
 {
 	if (!f_subspace_lattice) {
 		cout << "poset::unrank_point !f_subspace_lattice" << endl;
@@ -357,9 +357,9 @@ void poset::unrank_point(int *v, int rk)
 	VS->unrank_point(v, rk);
 }
 
-int poset::rank_point(int *v)
+long int poset::rank_point(int *v)
 {
-	int rk;
+	long int rk;
 
 	if (!f_subspace_lattice) {
 		cout << "poset::rank_point !f_subspace_lattice" << endl;
@@ -487,7 +487,7 @@ poset_classification *poset::orbits_on_k_sets_compute(
 
 
 int callback_test_independence_condition(orbit_based_testing *Obt,
-		int *S, int len, void *data, int verbose_level)
+		long int *S, int len, void *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 0);
 

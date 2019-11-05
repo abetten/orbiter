@@ -178,7 +178,7 @@ void young::init(int n, int verbose_level)
 		cout << "Listing all elements in the group "
 				"Sym(" << n << "):" << endl;
 		for (i = 0; i < goi; i++) {
-			S->element_unrank_int(i, Elt);
+			S->element_unrank_lint(i, Elt);
 			cout << "element " << i << " is ";
 			A->element_print_quick(Elt, cout);
 			cout << endl;
@@ -222,7 +222,7 @@ void young::create_module(int *h_alpha,
 	int sz;
 
 
-	goi = S->group_order_int();
+	goi = S->group_order_lint();
 	sz = group_ring_element_size(A, S);
 	
 
@@ -389,7 +389,7 @@ void young::create_representations(int *Base,
 
 		cout << "Conjugacy class " << c << " is represented "
 				"by group element " << h;
-		S->element_unrank_int(h, Elt);
+		S->element_unrank_lint(h, Elt);
 		cout << " which is ";
 		A->element_print(Elt, cout);
 		cout << " which is represented by the matrix:" << endl;
@@ -612,7 +612,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 
 	if (f_vv) {
 		for (i = 0; i < go1; i++) {
-			S1->element_unrank_int(i, Elt);
+			S1->element_unrank_lint(i, Elt);
 			cout << "element " << i << " is ";
 			A->element_print_quick(Elt, cout);
 			cout << endl;
@@ -629,7 +629,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 
 	if (f_v) {
 		for (i = 0; i < go2; i++) {
-			S2->element_unrank_int(i, Elt);
+			S2->element_unrank_lint(i, Elt);
 			cout << "element " << i << " is ";
 			A->element_print_quick(Elt, cout);
 			cout << endl;
@@ -645,8 +645,8 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	// then rank the element in the symmetric group.
 	// Put the coefficient as one.
 	for (i = 0; i < go1; i++) {
-		S1->element_unrank_int(i, Elt);
-		j = S->element_rank_int(Elt);
+		S1->element_unrank_lint(i, Elt);
+		j = S->element_rank_lint(Elt);
 		elt1[j] += 1;
 		}
 
@@ -656,8 +656,8 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	// then rank the element in the symmetric group.
 	// Put the coefficient as the sign of the permutation.
 	for (i = 0; i < go2; i++) {
-		S2->element_unrank_int(i, Elt);
-		j = S->element_rank_int(Elt);
+		S2->element_unrank_lint(i, Elt);
+		j = S->element_rank_lint(Elt);
 
 		s = Combi.perm_signum(Elt, n);
 		

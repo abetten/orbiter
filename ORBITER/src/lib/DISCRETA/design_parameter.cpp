@@ -571,7 +571,7 @@ void design_parameter::supplementary(design_parameter& p)
 {
 	discreta_base lambda_new, a;
 	design_parameter_source S;
-	int num, denom, n, d, g, i;
+	long int num, denom, n, d, g, i;
 	number_theory_domain NT;
 	
 	num = 1;
@@ -583,7 +583,7 @@ void design_parameter::supplementary(design_parameter& p)
 		denom *= d;
 		n--;
 		d--;
-		g = NT.gcd_int(num, denom);
+		g = NT.gcd_lint(num, denom);
 		if (g != 1 && g != -1) {
 			num /= g;
 			denom /= g;

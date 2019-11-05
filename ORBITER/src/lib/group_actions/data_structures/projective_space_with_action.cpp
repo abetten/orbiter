@@ -143,7 +143,7 @@ void projective_space_with_action::init_group(
 }
 
 strong_generators *projective_space_with_action::set_stabilizer(
-	int *set, int set_size, int &canonical_pt, 
+	long int *set, int set_size, int &canonical_pt,
 	int *canonical_set_or_NULL, 
 	int f_save_incma_in_and_out,
 	const char *save_incma_in_and_out_prefix,
@@ -164,6 +164,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	int *Incma;
 	int *partition;
 	int *labeling;
+	long int *vertex_labeling;
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
@@ -192,7 +193,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	classify C;
 
-	C.init(set, set_size, TRUE, 0);
+	C.init_lint(set, set_size, TRUE, 0);
 	if (C.second_nb_types > 1) {
 		cout << "projective_space_with_action::set_stabilizer: "
 				"The set is a multiset:" << endl;
@@ -212,6 +213,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	Incma = NEW_int(nb_rows * nb_cols);
 	partition = NEW_int(nb_rows + nb_cols);
 	labeling = NEW_int(nb_rows + nb_cols);
+	vertex_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer "
@@ -290,7 +292,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
-			labeling[i] = i;
+			vertex_labeling[i] = i;
 			}
 
 		colored_graph *CG;
@@ -298,7 +300,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		CG = NEW_OBJECT(colored_graph);
 
 		CG->create_Levi_graph_from_incidence_matrix(
-				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
+				Incma, nb_rows, nb_cols, TRUE, vertex_labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_int(Incma);
 		delete CG;
@@ -467,7 +469,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 		CG->create_Levi_graph_from_incidence_matrix(
 				Incma_out, nb_rows, nb_cols,
-				TRUE, labeling, verbose_level);
+				TRUE, vertex_labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		FREE_OBJECT(CG);
 		}
@@ -646,6 +648,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	FREE_int(Incma);
 	FREE_int(partition);
 	FREE_int(labeling);
+	FREE_lint(vertex_labeling);
 	FREE_OBJECT(A_perm);
 	FREE_OBJECT(gens1);
 	FREE_int(Mtx);
@@ -796,7 +799,7 @@ strong_generators
 	int f_compute_canonical_form,
 	uchar *&canonical_form,
 	int &canonical_form_len,
-	int *canonical_labeling,
+	long int *canonical_labeling,
 	int verbose_level)
 // canonical_labeling[nb_rows, nb_cols]
 // where nb_rows and nb_cols is the encoding size ,
@@ -914,12 +917,22 @@ strong_generators
 	tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
 
+	int *can_labeling;
+
+	can_labeling = NEW_int(nb_rows + nb_cols);
+
 	nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
-		canonical_labeling, partition,
+		can_labeling, partition,
 		Aut, Aut_counter, 
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
+
+	for (i = 0; i < nb_rows + nb_cols; i++) {
+		canonical_labeling[i] = can_labeling[i];
+		}
+	FREE_int(can_labeling);
+
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -948,7 +961,7 @@ strong_generators
 	if (f_vvv) {
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object labeling:" << endl;
-		int_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
+		lint_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
 		cout << endl;
 		}
 
@@ -1008,10 +1021,10 @@ strong_generators
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
 		cout << "labeling:" << endl;
-		L.int_vec_print_as_matrix(cout,
+		L.lint_vec_print_as_matrix(cout,
 				canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
 
-		Fio.int_vec_write_csv(canonical_labeling, N,
+		Fio.lint_vec_write_csv(canonical_labeling, N,
 				fname_labeling, "canonical labeling");
 		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
@@ -1674,7 +1687,7 @@ projective_space_with_action::create_object_from_string(
 object_in_projective_space *
 projective_space_with_action::create_object_from_int_vec(
 	int type, const char *input_fname, int input_idx,
-	int *the_set, int set_sz, int verbose_level)
+	long int *the_set, int set_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1706,7 +1719,7 @@ int projective_space_with_action::process_object(
 	int f_save_incma_in_and_out, const char *prefix,
 	int nb_objects_to_test,
 	strong_generators *&SG,
-	int *canonical_labeling,
+	long int *canonical_labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1848,12 +1861,12 @@ void projective_space_with_action::classify_objects_using_nauty(
 						"before process_object" << endl;
 				}
 			int nb_rows, nb_cols;
-			int *canonical_labeling;
+			long int *canonical_labeling;
 
 			OiP->encoding_size(
 					nb_rows, nb_cols,
 					verbose_level);
-			canonical_labeling = NEW_int(nb_rows + nb_cols);
+			canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 			ret = process_object(CB, OiP,
 					f_save_incma_in_and_out, prefix,
@@ -1862,7 +1875,6 @@ void projective_space_with_action::classify_objects_using_nauty(
 					canonical_labeling,
 					verbose_level);
 
-			FREE_int(canonical_labeling);
 
 			if (f_v) {
 				cout << "projective_space_with_action::classify_objects_using_nauty "
@@ -1878,6 +1890,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				//cout << "before FREE_OBJECT(canonical_labeling)" << endl;
 				//FREE_int(canonical_labeling);
 				//cout << "after FREE_OBJECT(canonical_labeling)" << endl;
+				FREE_lint(canonical_labeling);
 				}
 			else {
 				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
@@ -1903,7 +1916,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 			object_in_projective_space *OiP;
 			strong_generators *SG;
-			int *the_set;
+			long int *the_set;
 			int set_size;
 
 			Fio.read_set_from_file(Data->input_string[input_idx],
@@ -1918,12 +1931,12 @@ void projective_space_with_action::classify_objects_using_nauty(
 						"before encoding_size" << endl;
 				}
 			int nb_rows, nb_cols;
-			int *canonical_labeling;
+			long int *canonical_labeling;
 
 			OiP->encoding_size(
 					nb_rows, nb_cols,
 					verbose_level);
-			canonical_labeling = NEW_int(nb_rows + nb_cols);
+			canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 			if (f_v) {
 				cout << "projective_space_with_action::classify_objects_using_nauty "
@@ -1936,7 +1949,6 @@ void projective_space_with_action::classify_objects_using_nauty(
 					canonical_labeling,
 					verbose_level);
 
-			FREE_int(canonical_labeling);
 
 			if (f_v) {
 				cout << "projective_space_with_action::classify_objects_using_nauty "
@@ -1948,6 +1960,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
 				//FREE_int(canonical_labeling);
+				FREE_lint(canonical_labeling);
 				}
 			else {
 				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
@@ -1979,12 +1992,12 @@ void projective_space_with_action::classify_objects_using_nauty(
 					Data->input_string[input_idx], verbose_level);
 
 			int nb_rows, nb_cols;
-			int *canonical_labeling;
+			long int *canonical_labeling;
 
 			OiP->encoding_size(
 					nb_rows, nb_cols,
 					verbose_level);
-			canonical_labeling = NEW_int(nb_rows + nb_cols);
+			canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 
 			if (!process_object(CB, OiP,
@@ -1996,7 +2009,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
-				FREE_int(canonical_labeling);
+				FREE_lint(canonical_labeling);
 				}
 			else {
 				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
@@ -2028,12 +2041,12 @@ void projective_space_with_action::classify_objects_using_nauty(
 					Data->input_string[input_idx], verbose_level);
 
 			int nb_rows, nb_cols;
-			int *canonical_labeling;
+			long int *canonical_labeling;
 
 			OiP->encoding_size(
 					nb_rows, nb_cols,
 					verbose_level);
-			canonical_labeling = NEW_int(nb_rows + nb_cols);
+			canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 			if (!process_object(CB, OiP,
 				f_save_incma_in_and_out, prefix,
@@ -2044,7 +2057,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
-				FREE_int(canonical_labeling);
+				FREE_lint(canonical_labeling);
 				}
 			else {
 				cout << "projective_space_with_action::classify_objects_using_nauty New isomorphism type! The n e w number of "
@@ -2086,7 +2099,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 
 			// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
-			int *Spread_table;
+			long int *Spread_table;
 			int nb_spreads;
 			int spread_size;
 
@@ -2094,7 +2107,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				cout << "projective_space_with_action::classify_objects_using_nauty Reading spread table from file "
 					<< Data->input_string2[input_idx] << endl;
-				Fio.int_matrix_read_csv(Data->input_string2[input_idx],
+				Fio.lint_matrix_read_csv(Data->input_string2[input_idx],
 						Spread_table, nb_spreads, spread_size,
 						0 /* verbose_level */);
 				cout << "Reading spread table from file "
@@ -2108,7 +2121,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				int *the_set_in;
+				long int *the_set_in;
 				int set_size_in;
 				object_in_projective_space *OiP;
 
@@ -2123,7 +2136,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 				if (f_vvv) {
 					cout << "projective_space_with_action::classify_objects_using_nauty The input set is:" << endl;
-					int_vec_print(cout, the_set_in, set_size_in);
+					lint_vec_print(cout, the_set_in, set_size_in);
 					cout << endl;
 					}
 
@@ -2182,12 +2195,12 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 
 				int nb_rows, nb_cols;
-				int *canonical_labeling;
+				long int *canonical_labeling;
 
 				OiP->encoding_size(
 						nb_rows, nb_cols,
 						verbose_level);
-				canonical_labeling = NEW_int(nb_rows + nb_cols);
+				canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 
 				if (!process_object(CB, OiP,
@@ -2199,7 +2212,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 					FREE_OBJECT(OiP);
 					FREE_OBJECT(SG);
-					FREE_int(canonical_labeling);
+					FREE_lint(canonical_labeling);
 					}
 				else {
 					t1 = Os.os_ticks();
@@ -2238,7 +2251,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				}
 			if (Data->input_type[input_idx] ==
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				FREE_int(Spread_table);
+				FREE_lint(Spread_table);
 				}
 			FREE_OBJECT(SoS);
 			}
@@ -2379,7 +2392,7 @@ void projective_space_with_action::merge_packings(
 
 
 	// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
-	int *Spread_table;
+	long int *Spread_table;
 	int nb_spreads;
 	int spread_size;
 
@@ -2388,7 +2401,7 @@ void projective_space_with_action::merge_packings(
 				"Reading spread table from file "
 				<< file_of_spreads << endl;
 	}
-	Fio.int_matrix_read_csv(file_of_spreads,
+	Fio.lint_matrix_read_csv(file_of_spreads,
 			Spread_table, nb_spreads, spread_size,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -2471,9 +2484,9 @@ void projective_space_with_action::merge_packings(
 
 			int ago;
 			char *text;
-			int *the_set_in;
+			long int *the_set_in;
 			int set_size_in;
-			int *canonical_labeling;
+			long int *canonical_labeling;
 			int canonical_labeling_sz;
 			int nb_rows, nb_cols;
 			object_in_projective_space *OiP;
@@ -2484,7 +2497,7 @@ void projective_space_with_action::merge_packings(
 			nb_cols = S->get_int(g + 1, nb_cols_idx);
 
 			text = S->get_string(g + 1, input_set_idx);
-			int_vec_scan(text, the_set_in, set_size_in);
+			lint_vec_scan(text, the_set_in, set_size_in);
 
 
 			if (f_v) {
@@ -2502,12 +2515,12 @@ void projective_space_with_action::merge_packings(
 			if (FALSE) {
 				cout << "text=" << text << endl;
 			}
-			int_vec_scan(text, canonical_labeling, canonical_labeling_sz);
+			lint_vec_scan(text, canonical_labeling, canonical_labeling_sz);
 			if (FALSE) {
 				cout << "File " << f << " / " << nb_files
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
-				int_vec_print(cout, canonical_labeling, canonical_labeling_sz);
+				lint_vec_print(cout, canonical_labeling, canonical_labeling_sz);
 				cout << endl;
 				}
 
@@ -2634,7 +2647,7 @@ void projective_space_with_action::merge_packings(
 			CB->Type_extra_data[idx] = OiPA;
 
 
-			FREE_int(the_set_in);
+			FREE_lint(the_set_in);
 			//FREE_int(canonical_labeling);
 			FREE_int(Incma_in);
 			FREE_int(Incma_out);
@@ -2655,7 +2668,7 @@ void projective_space_with_action::merge_packings(
 
 
 	//FREE_OBJECT(CB);
-	FREE_int(Spread_table);
+	FREE_lint(Spread_table);
 
 	if (f_v) {
 		cout << "projective_space_with_action::merge_packings done" << endl;
@@ -2683,7 +2696,7 @@ void projective_space_with_action::select_packings(
 
 
 
-	int *Spread_table;
+	long int *Spread_table;
 	int nb_spreads;
 	int spread_size;
 	int packing_size;
@@ -2694,7 +2707,7 @@ void projective_space_with_action::select_packings(
 				"Reading spread table from file "
 				<< file_of_spreads_original << endl;
 	}
-	Fio.int_matrix_read_csv(file_of_spreads_original,
+	Fio.lint_matrix_read_csv(file_of_spreads_original,
 			Spread_table, nb_spreads, spread_size,
 			0 /* verbose_level */);
 	if (nb_spreads != Spread_tables->nb_spreads) {
@@ -2723,26 +2736,26 @@ void projective_space_with_action::select_packings(
 
 	int *s2l, *l2s;
 	int i, idx;
-	int *set;
-	int extra_data[1];
+	long int *set;
+	long int extra_data[1];
 	sorting Sorting;
 
 	extra_data[0] = spread_size;
 
-	set = NEW_int(spread_size);
+	set = NEW_lint(spread_size);
 	s2l = NEW_int(nb_spreads);
 	l2s = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
-		int_vec_copy(Spread_tables->spread_table +
+		lint_vec_copy(Spread_tables->spread_table +
 				i * spread_size, set, spread_size);
-		Sorting.int_vec_heapsort(set, spread_size);
+		Sorting.lint_vec_heapsort(set, spread_size);
 		if (!Sorting.search_general(Spread_tables->spread_table,
-				nb_spreads, set, idx,
+				nb_spreads, (int *) set, idx,
 				table_of_sets_compare_func,
 				extra_data, 0 /*verbose_level*/)) {
 			cout << "projective_space_with_action::select_packings "
 					"cannot find spread " << i << " = ";
-			int_vec_print(cout, set, spread_size);
+			lint_vec_print(cout, set, spread_size);
 			cout << endl;
 			exit(1);
 		}
@@ -2793,9 +2806,9 @@ void projective_space_with_action::select_packings(
 
 		int ago;
 		char *text;
-		int *the_set_in;
+		long int *the_set_in;
 		int set_size_in;
-		int *canonical_labeling;
+		long int *canonical_labeling;
 		int canonical_labeling_sz;
 		int nb_rows, nb_cols;
 		object_in_projective_space *OiP;
@@ -2808,7 +2821,7 @@ void projective_space_with_action::select_packings(
 		nb_cols = S->get_int(g + 1, nb_cols_idx);
 
 		text = S->get_string(g + 1, input_set_idx);
-		int_vec_scan(text, the_set_in, set_size_in);
+		lint_vec_scan(text, the_set_in, set_size_in);
 
 		packing_size = set_size_in;
 
@@ -2880,12 +2893,12 @@ void projective_space_with_action::select_packings(
 			if (FALSE) {
 				cout << "text=" << text << endl;
 			}
-			int_vec_scan(text, canonical_labeling, canonical_labeling_sz);
+			lint_vec_scan(text, canonical_labeling, canonical_labeling_sz);
 			if (FALSE) {
 				cout << "File " << fname
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
-				int_vec_print(cout, canonical_labeling, canonical_labeling_sz);
+				lint_vec_print(cout, canonical_labeling, canonical_labeling_sz);
 				cout << endl;
 				}
 
@@ -3029,7 +3042,7 @@ void projective_space_with_action::select_packings(
 
 
 
-		FREE_int(the_set_in);
+		FREE_lint(the_set_in);
 
 	} // next g
 
@@ -3047,7 +3060,7 @@ void projective_space_with_action::select_packings(
 
 
 	//FREE_OBJECT(CB);
-	FREE_int(Spread_table);
+	FREE_lint(Spread_table);
 
 	if (f_v) {
 		cout << "projective_space_with_action::select_packings done" << endl;
@@ -3077,7 +3090,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 
-	int *Spread_table_original;
+	long int *Spread_table_original;
 	int nb_spreads;
 	int spread_size;
 	int packing_size;
@@ -3088,7 +3101,7 @@ void projective_space_with_action::select_packings_self_dual(
 				"Reading spread table from file "
 				<< file_of_spreads_original << endl;
 	}
-	Fio.int_matrix_read_csv(file_of_spreads_original,
+	Fio.lint_matrix_read_csv(file_of_spreads_original,
 			Spread_table_original, nb_spreads, spread_size,
 			0 /* verbose_level */);
 	if (nb_spreads != Spread_tables->nb_spreads) {
@@ -3117,27 +3130,27 @@ void projective_space_with_action::select_packings_self_dual(
 
 	int *s2l, *l2s;
 	int i, idx;
-	int *set;
-	int extra_data[1];
+	long int *set;
+	long int extra_data[1];
 	sorting Sorting;
 
 	extra_data[0] = spread_size;
 
-	set = NEW_int(spread_size);
+	set = NEW_lint(spread_size);
 	s2l = NEW_int(nb_spreads);
 	l2s = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
-		int_vec_copy(Spread_table_original +
+		lint_vec_copy(Spread_table_original +
 				i * spread_size, set, spread_size);
-		Sorting.int_vec_heapsort(set, spread_size);
+		Sorting.lint_vec_heapsort(set, spread_size);
 		if (!Sorting.search_general(Spread_tables->spread_table,
-				nb_spreads, set, idx,
+				nb_spreads, (int *) set, idx,
 				table_of_sets_compare_func,
 				extra_data, 0 /*verbose_level*/)) {
 			cout << "projective_space_with_action::"
 					"select_packings_self_dual "
 					"cannot find spread " << i << " = ";
-			int_vec_print(cout, set, spread_size);
+			lint_vec_print(cout, set, spread_size);
 			cout << endl;
 			exit(1);
 		}
@@ -3207,9 +3220,9 @@ void projective_space_with_action::select_packings_self_dual(
 
 		int ago;
 		char *text;
-		int *the_set_in;
+		long int *the_set_in;
 		int set_size_in;
-		int *canonical_labeling;
+		long int *canonical_labeling;
 		int canonical_labeling_sz;
 		int nb_rows, nb_cols;
 		object_in_projective_space *OiP;
@@ -3220,7 +3233,7 @@ void projective_space_with_action::select_packings_self_dual(
 		nb_cols = S->get_int(g + 1, nb_cols_idx);
 
 		text = S->get_string(g + 1, input_set_idx);
-		int_vec_scan(text, the_set_in, set_size_in);
+		lint_vec_scan(text, the_set_in, set_size_in);
 
 		packing_size = set_size_in;
 
@@ -3249,12 +3262,12 @@ void projective_space_with_action::select_packings_self_dual(
 			if (FALSE) {
 				cout << "text=" << text << endl;
 			}
-			int_vec_scan(text, canonical_labeling, canonical_labeling_sz);
+			lint_vec_scan(text, canonical_labeling, canonical_labeling_sz);
 			if (FALSE) {
 				cout << "File " << fname
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
-				int_vec_print(cout,
+				lint_vec_print(cout,
 						canonical_labeling, canonical_labeling_sz);
 				cout << endl;
 				}
@@ -3410,7 +3423,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 
-		FREE_int(the_set_in);
+		FREE_lint(the_set_in);
 
 	} // next g
 
@@ -3459,8 +3472,8 @@ void projective_space_with_action::select_packings_self_dual(
 		int nb_rows, nb_cols;
 		object_in_projective_space *OiP1;
 		object_in_projective_space *OiP2;
-		int *set1;
-		int *set2;
+		long int *set1;
+		long int *set2;
 
 		ago = S->get_int(g + 1, ago_idx);
 		nb_rows = S->get_int(g + 1, nb_rows_idx);
@@ -3488,15 +3501,15 @@ void projective_space_with_action::select_packings_self_dual(
 			}
 
 
-		set1 = NEW_int(packing_size);
-		set2 = NEW_int(packing_size);
+		set1 = NEW_lint(packing_size);
+		set2 = NEW_lint(packing_size);
 
 		for (i = 0; i < packing_size; i++) {
 			a = the_set_in[i];
 			b = s2l[a];
 			set1[i] = b;
 		}
-		Sorting.int_vec_heapsort(set1, packing_size);
+		Sorting.lint_vec_heapsort(set1, packing_size);
 		for (i = 0; i < packing_size; i++) {
 			a = set1[i];
 			b = Spread_tables->dual_spread_idx[a];
@@ -3507,8 +3520,8 @@ void projective_space_with_action::select_packings_self_dual(
 			b = l2s[a];
 			set1[i] = b;
 		}
-		Sorting.int_vec_heapsort(set1, packing_size);
-		Sorting.int_vec_heapsort(set2, packing_size);
+		Sorting.lint_vec_heapsort(set1, packing_size);
+		Sorting.lint_vec_heapsort(set2, packing_size);
 
 #if 0
 		cout << "set1: ";
@@ -3743,8 +3756,8 @@ void projective_space_with_action::select_packings_self_dual(
 		FREE_uchar(canonical_form1);
 		FREE_uchar(canonical_form2);
 
-		FREE_int(set1);
-		FREE_int(set2);
+		FREE_lint(set1);
+		FREE_lint(set2);
 
 		if (idx1 == idx2) {
 			cout << "self-dual" << endl;
@@ -3777,7 +3790,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 	//FREE_OBJECT(CB);
-	FREE_int(Spread_table_original);
+	FREE_lint(Spread_table_original);
 
 	if (f_v) {
 		cout << "projective_space_with_action::"
@@ -3925,12 +3938,12 @@ void projective_space_with_action::latex_report(const char *fname,
 		int canonical_form_len;
 
 		int nb_r, nb_c;
-		int *canonical_labeling;
+		long int *canonical_labeling;
 
 		OiP->encoding_size(
 				nb_r, nb_c,
 				verbose_level);
-		canonical_labeling = NEW_int(nb_r + nb_c);
+		canonical_labeling = NEW_lint(nb_r + nb_c);
 
 
 		SG = set_stabilizer_of_object(
@@ -3941,7 +3954,7 @@ void projective_space_with_action::latex_report(const char *fname,
 			canonical_labeling,
 			0 /* verbose_level */);
 
-		FREE_int(canonical_labeling);
+		FREE_lint(canonical_labeling);
 
 		SG->group_order(go);
 
@@ -4166,7 +4179,7 @@ void projective_space_with_action::latex_report(const char *fname,
 
 
 void OiPA_encode(void *extra_data,
-		int *&encoding, int &encoding_sz, void *global_data)
+		long int *&encoding, int &encoding_sz, void *global_data)
 {
 	//cout << "OiPA_encode" << endl;
 	object_in_projective_space_with_action *OiPA;
@@ -4367,7 +4380,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 		ost << "Group order $" << types[i]
 			<< "$ appears for the following $" << SoS->Set_size[i]
 			<< "$ classes: $" << endl;
-		L.int_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
+		L.lint_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
 		ost << "$\\\\" << endl;
 		//int_vec_print_as_matrix(ost, SoS->Sets[i],
 		//SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);
@@ -4385,12 +4398,12 @@ int table_of_sets_compare_func(void *data, int i,
 		int *search_object,
 		void *extra_data)
 {
-	int *Data = (int *) data;
-	int *p = (int *) extra_data;
-	int len = p[0];
+	long int *Data = (long int *) data;
+	long int *p = (long int *) extra_data;
+	long int len = p[0];
 	int ret;
 
-	ret = int_vec_compare(Data + i * len, search_object, len);
+	ret = lint_vec_compare(Data + i * len, (long int *) search_object, len);
 	return ret;
 }
 

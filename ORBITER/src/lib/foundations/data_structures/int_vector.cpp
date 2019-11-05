@@ -37,7 +37,7 @@ void int_vector::null()
 void int_vector::freeself()
 {
 	if (M) {
-		FREE_int(M);
+		FREE_lint(M);
 		}
 	null();
 }
@@ -45,18 +45,31 @@ void int_vector::freeself()
 void int_vector::allocate(int len)
 {
 	freeself();
-	M = NEW_int(len);
+	M = NEW_lint(len);
 	m = 0;
 	alloc_length = len;
 }
 
-void int_vector::allocate_and_init(int len, int *V)
+void int_vector::allocate_and_init(int len, long int *V)
 {
 	freeself();
-	M = NEW_int(len);
+	M = NEW_lint(len);
 	m = len;
 	alloc_length = len;
-	int_vec_copy(V, M, len);
+	lint_vec_copy(V, M, len);
+}
+
+void int_vector::allocate_and_init_int(int len, int *V)
+{
+	int i;
+
+	freeself();
+	M = NEW_lint(len);
+	m = len;
+	alloc_length = len;
+	for (i = 0; i < len; i++) {
+		M[i] = V[i];
+	}
 }
 
 void int_vector::init_permutation_from_string(const char *s)
@@ -66,35 +79,35 @@ void int_vector::init_permutation_from_string(const char *s)
 	int degree;
 	
 	scan_permutation_from_string(s, perm, degree, verbose_level);
-	allocate_and_init(degree, perm);
+	allocate_and_init_int(degree, perm);
 	FREE_int(perm);
 }
 
 void int_vector::read_ascii_file(const char *fname)
 {
 	int verbose_level = 0;
-	int *the_set;
+	long int *the_set;
 	int set_size;
 	file_io Fio;
 
 	Fio.read_set_from_file(fname, the_set, set_size, verbose_level);
 	allocate_and_init(set_size, the_set);
-	FREE_int(the_set);
+	FREE_lint(the_set);
 }
 
 void int_vector::read_binary_file_int4(const char *fname)
 {
 	int verbose_level = 0;
-	int *the_set;
+	long int *the_set;
 	int set_size;
 	file_io Fio;
 
 	Fio.read_set_from_file_int4(fname, the_set, set_size, verbose_level);
 	allocate_and_init(set_size, the_set);
-	FREE_int(the_set);
+	FREE_lint(the_set);
 }
 
-int &int_vector::s_i(int i)
+long int &int_vector::s_i(int i)
 {
 	return M[i];
 }
@@ -106,31 +119,31 @@ int &int_vector::length()
 
 void int_vector::print(ostream &ost)
 {
-	int_vec_print(ost, M, m);
+	lint_vec_print(ost, M, m);
 }
 
 void int_vector::zero()
 {
-	int_vec_zero(M, m);
+	lint_vec_zero(M, m);
 }
 
 int int_vector::search(int a, int &idx)
 {
 	sorting Sorting;
 
-	return Sorting.int_vec_search(M, m, a, idx);
+	return Sorting.lint_vec_search(M, m, a, idx, 0);
 }
 
 void int_vector::sort()
 {
 	sorting Sorting;
 
-	Sorting.int_vec_sort(m, M);
+	Sorting.lint_vec_heapsort(M, m);
 }
 
 void int_vector::make_space()
 {
-	int *M1;
+	long int *M1;
 	int new_alloc_length;
 
 	if (alloc_length) {
@@ -139,10 +152,10 @@ void int_vector::make_space()
 	else {
 		new_alloc_length = 1;
 		}
-	M1 = NEW_int(new_alloc_length);
-	int_vec_copy(M, M1, m);
+	M1 = NEW_lint(new_alloc_length);
+	lint_vec_copy(M, M1, m);
 	if (M) {
-		FREE_int(M);
+		FREE_lint(M);
 		}
 	M = M1;
 	alloc_length = new_alloc_length;
@@ -184,7 +197,7 @@ void int_vector::sort_and_remove_duplicates()
 {
 	sorting Sorting;
 
-	Sorting.int_vec_sort_and_remove_duplicates(M, m);
+	Sorting.lint_vec_sort_and_remove_duplicates(M, m);
 }
 
 void int_vector::write_to_ascii_file(const char *fname)
@@ -210,17 +223,17 @@ void int_vector::write_to_csv_file(const char *fname, const char *label)
 
 int int_vector::hash()
 {
-	return int_vec_hash(M, m);
+	return lint_vec_hash(M, m);
 }
 
 int int_vector::minimum()
 {
-	return int_vec_minimum(M, m);
+	return lint_vec_minimum(M, m);
 }
 
 int int_vector::maximum()
 {
-	return int_vec_maximum(M, m);
+	return lint_vec_maximum(M, m);
 }
 
 

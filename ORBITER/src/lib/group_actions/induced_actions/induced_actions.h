@@ -35,9 +35,9 @@ public:
 	void null();
 	void free();
 	void init(sims *Base_group, int f_ownership, int verbose_level);
-	int compute_image(action *A, int *Elt, int i, int verbose_level);
-	int rank(int *Elt);
-	int multiply(action *A, int i, int j, int verbose_level);
+	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
+	long int rank(int *Elt);
+	long int multiply(action *A, long int i, long int j, int verbose_level);
 };
 
 // #############################################################################
@@ -68,8 +68,8 @@ public:
 	void null();
 	void free();
 	void init_action_on_conic(action &A, int verbose_level);
-	int compute_image_int(
-		action &A, int *Elt, int a, int verbose_level);
+	long int compute_image_int(
+		action &A, int *Elt, long int a, int verbose_level);
 	void compute_image_int_low_level(
 		action &A, int *Elt, int *input, int *output, 
 		int verbose_level);
@@ -88,9 +88,9 @@ public:
 class action_by_restriction {
 public:
 	int nb_points;
-	int *points; // [nb_points]
-	int *points_sorted; // [nb_points]
-	int *perm_inv; // [nb_points]
+	long int *points; // [nb_points]
+	long int *points_sorted; // [nb_points]
+	long int *perm_inv; // [nb_points]
 
 	action_by_restriction();
 	~action_by_restriction();
@@ -99,11 +99,11 @@ public:
 	void init_from_schreier_vector(
 			schreier_vector *Schreier_vector,
 			int pt, int verbose_level);
-	void init(int nb_points, int *points, int verbose_level);
-		// the array points must be orderd
-	int original_point(int pt);
-	int restricted_point_idx(int pt);
-	int compute_image(action *A, int *Elt, int i, int verbose_level);
+	void init(int nb_points, long int *points, int verbose_level);
+		// the array points must be ordered
+	long int original_point(long int pt);
+	long int restricted_point_idx(long int pt);
+	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -128,7 +128,7 @@ public:
 	void null();
 	void free();
 	void init(sims *Base_group, int f_ownership, int verbose_level);
-	void compute_image(action *A, int *Elt, int i, int &j, 
+	long int compute_image(action *A, int *Elt, long int i,
 		int verbose_level);
 };
 
@@ -172,8 +172,8 @@ public:
 	void null();
 	void free();
 	void init(action &A, finite_field *Fq, int verbose_level);
-	int compute_image_int(
-		action &A, int *Elt, int a, int verbose_level);
+	long int compute_image_int(
+		action &A, int *Elt, long int a, int verbose_level);
 	void compute_image_int_low_level(
 		action &A, int *Elt, int *input, int *output, 
 		int verbose_level);
@@ -206,11 +206,11 @@ public:
 	void free();
 	void init(action *An, action *An1, 
 		andre_construction *Andre, int verbose_level);
-	void compute_image(int *Elt, int i, int &j, 
+	long int compute_image(int *Elt, long int i,
 		int verbose_level);
-	int compute_image_of_point(int *Elt, int pt_idx, 
+	long int compute_image_of_point(int *Elt, long int pt_idx,
 		int verbose_level);
-	int compute_image_of_line(int *Elt, int line_idx, 
+	long int compute_image_of_line(int *Elt, long int line_idx,
 		int verbose_level);
 };
 
@@ -235,11 +235,11 @@ public:
 	void free();
 	void init(action *A, brick_domain *B, int f_linear_action, 
 		int verbose_level);
-	void compute_image(int *Elt, int i, int &j, 
+	long int compute_image(int *Elt, long int i,
 		int verbose_level);
-	void compute_image_linear_action(int *Elt, int i, int &j, 
+	long int compute_image_linear_action(int *Elt, long int i,
 		int verbose_level);
-	void compute_image_permutation_action(int *Elt, int i, int &j, 
+	long int compute_image_permutation_action(int *Elt, long int i,
 		int verbose_level);
 };
 
@@ -303,7 +303,7 @@ public:
 		void *rank_unrank_data,
 		int verbose_level);
 	void reduce_mod_subspace(int *v, int verbose_level);
-	int compute_image(int *Elt, int i, int verbose_level);
+	long int compute_image(int *Elt, long int i, int verbose_level);
 
 };
 
@@ -329,7 +329,7 @@ public:
 	void null();
 	void free();
 	void init(action &A, int f_projective, int m, int verbose_level);
-	void compute_image(action *A, int *Elt, int i, int &j, 
+	long int compute_image(action *A, int *Elt, long int i,
 		int verbose_level);
 };
 
@@ -464,7 +464,7 @@ public:
 	int rank_in_large_space(int *v);
 	void unrank_in_small_space(int *v, int rk);
 	int rank_in_small_space(int *v);
-	int compute_image(action *A, int *Elt, int i, int verbose_level);
+	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -494,7 +494,7 @@ public:
 	void free();
 	void init(action *A, int *type, int type_len, 
 		int verbose_level);
-	int compute_image(int *Elt, int i, int verbose_level);
+	long int compute_image(int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -517,7 +517,7 @@ public:
 	void null();
 	void free();
 	void init(action *A, int m, int verbose_level);
-	void compute_image(int *Elt, int i, int &j,
+	long int compute_image(int *Elt, long int i,
 		int verbose_level);
 };
 
@@ -562,13 +562,13 @@ public:
 	void compute_image_longinteger(action *A, int *Elt, 
 		longinteger_object &i, longinteger_object &j, 
 		int verbose_level);
-	int compute_image_int(action *A, int *Elt, 
-		int i, int verbose_level);
-	int compute_image_int_ordinary(action *A, int *Elt, 
-		int i, int verbose_level);
-	int compute_image_int_embedded(action *A, int *Elt, 
-		int i, int verbose_level);
-	void print_point(int a, std::ostream &ost);
+	long int compute_image_int(action *A, int *Elt,
+		long int i, int verbose_level);
+	long int compute_image_int_ordinary(action *A, int *Elt,
+		long int i, int verbose_level);
+	long int compute_image_int_embedded(action *A, int *Elt,
+		long int i, int verbose_level);
+	void print_point(long int a, std::ostream &ost);
 };
 
 // #############################################################################
@@ -609,9 +609,9 @@ public:
 		int verbose_level);
 	void init_invariant_set_of_equations(int *Equations, 
 		int nb_equations, int verbose_level);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
-	int compute_image_int(int *Elt, int a, int verbose_level);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
+	long int compute_image_int(int *Elt, long int a, int verbose_level);
 	void compute_image_int_low_level(
 		int *Elt, int *input, int *output, int verbose_level);
 };
@@ -636,7 +636,7 @@ public:
 	void null();
 	void free();
 	void init(action *A, int k, int verbose_level);
-	void compute_image(int *Elt, int i, int &j, int verbose_level);
+	long int compute_image(int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -660,7 +660,7 @@ public:
 	void free();
 	void init(action *A, schreier *Sch, int f_play_it_safe, 
 		int verbose_level);
-	int compute_image(int *Elt, int i, int verbose_level);
+	long int compute_image(int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -694,9 +694,9 @@ public:
 		int verbose_level);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
-	int map_a_point(int *Elt, int i, int verbose_level);
-	int map_a_line(int *Elt, int i, int verbose_level);
-	int compute_image_int(int *Elt, int i, int verbose_level);
+	long int map_a_point(int *Elt, long int i, int verbose_level);
+	long int map_a_line(int *Elt, long int i, int verbose_level);
+	long int compute_image_int(int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -725,9 +725,9 @@ public:
 	void init(int partition_size,
 		action *A,
 		int verbose_level);
-	int compute_image(
+	long int compute_image(
 		int *Elt,
-		int a, int verbose_level);
+		long int a, int verbose_level);
 };
 
 // #############################################################################
@@ -743,8 +743,8 @@ class action_on_sets {
 public:
 	int nb_sets;
 	int set_size;
-	int **sets;
-	int *image_set;
+	long int **sets;
+	long int *image_set;
 	int *perm;
 	int *perm_inv;
 
@@ -753,9 +753,9 @@ public:
 	void null();
 	void free();
 	void init(int nb_sets, int set_size, 
-		int *input_sets, int verbose_level);
-	void compute_image(action *A, int *Elt, 
-		int i, int &j, int verbose_level);
+		long int *input_sets, int verbose_level);
+	long int compute_image(action *A, int *Elt,
+		long int i, int verbose_level);
 	void print_sets_sorted();
 	void print_sets_in_original_ordering();
 	void test_sets();
@@ -783,7 +783,7 @@ public:
 	void null();
 	void free();
 	void init(action *A, int verbose_level);
-	void compute_image(int *Elt, int i, int &j, int verbose_level);
+	long int compute_image(int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -823,11 +823,11 @@ public:
 	void free();
 	void init(action *A_PGL_n_q, action *A_PGL_k_q, sims *G_PGL_k_q, 
 		int k, finite_field *F, int verbose_level);
-	int compute_image_int(int *Elt, int rk, int verbose_level);
+	long int compute_image_int(int *Elt, long int rk, int verbose_level);
 	void matrix_to_subspace(int *mtx, int *subspace, int verbose_level);
 	void subspace_to_matrix(int *subspace, int *mtx, int verbose_level);
-	void unrank_point(int rk, int *mtx, int verbose_level);
-	int rank_point(int *mtx, int verbose_level);
+	void unrank_point(long int rk, int *mtx, int verbose_level);
+	long int rank_point(int *mtx, int verbose_level);
 	void compute_image_low_level(int *Elt, int *input, int *output, 
 		int verbose_level);
 };
@@ -860,7 +860,7 @@ public:
 	void init(action *A, sims *S, int nb_subgroups, 
 		int subgroup_order, subgroup **Subgroups, 
 		int verbose_level);
-	int compute_image(int *Elt, int a, int verbose_level);
+	long int compute_image(int *Elt, long int a, int verbose_level);
 
 };
 
@@ -898,8 +898,8 @@ public:
 	void init(action &A, int verbose_level);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
-	int compute_image_int(
-		action &A, int *Elt, int a, int verbose_level);
+	long int compute_image_int(
+		action &A, int *Elt, long int a, int verbose_level);
 	int element_entry_frobenius(action &A, int *Elt, 
 		int verbose_level);
 	int element_entry_ij(action &A, int *Elt, int I, int J, 
@@ -942,7 +942,7 @@ public:
 	void free();
 	void init(action *A1, action *A2, int f_use_projections, 
 		int verbose_level);
-	int compute_image(action *A, int *Elt, int i, int verbose_level);
+	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
 	void element_one(action *A, int *Elt, int verbose_level);
 	int element_is_one(action *A, int *Elt, int verbose_level);
 	void element_unpack(uchar *elt, int *Elt, int verbose_level);

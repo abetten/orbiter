@@ -595,7 +595,7 @@ void partitionstack::write_cell_to_file(int i,
 {
 	int f_v = (verbose_level >= 1);
 	int j, first, len;
-	int *set;
+	long int *set;
 	file_io Fio;
 
 	if (f_v) {
@@ -604,12 +604,12 @@ void partitionstack::write_cell_to_file(int i,
 		}
 	first = startCell[i];
 	len = cellSize[i];
-	set = NEW_int(len);
+	set = NEW_lint(len);
 	for (j = 0; j < len; j++) {
 		set[j] = pointList[first + j];
 		}
 	Fio.write_set_to_file(fname, set, len, verbose_level - 1);
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 void partitionstack::write_cell_to_file_points_or_lines(int i,
@@ -617,7 +617,7 @@ void partitionstack::write_cell_to_file_points_or_lines(int i,
 {
 	int f_v = (verbose_level >= 1);
 	int j, first, len, m = 0;
-	int *set;
+	long int *set;
 	file_io Fio;
 
 	if (f_v) {
@@ -629,12 +629,12 @@ void partitionstack::write_cell_to_file_points_or_lines(int i,
 		}
 	first = startCell[i];
 	len = cellSize[i];
-	set = NEW_int(len);
+	set = NEW_lint(len);
 	for (j = 0; j < len; j++) {
 		set[j] = pointList[first + j] - m;
 		}
 	Fio.write_set_to_file(fname, set, len, verbose_level - 1);
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 void partitionstack::print_subset()
@@ -1874,14 +1874,14 @@ void partitionstack::get_col_decomposition_scheme(orthogonal &O,
 {
 	int f_v = (verbose_level >= 1);
 	int I, J, i, j, c1, f1, l1, x, y, u, c;
-	int *neighbors;
+	long int *neighbors;
 	int *data0;
 	int *data1;
 	
 	if (f_v) {
 		cout << "get_col_decomposition_scheme" << endl;
 		}
-	neighbors = NEW_int(O.q + 1);
+	neighbors = NEW_lint(O.q + 1);
 	data0 = NEW_int(nb_row_classes);
 	data1 = NEW_int(nb_row_classes);
 	for (i = 0; i < nb_row_classes * nb_col_classes; i++) {
@@ -1925,7 +1925,7 @@ void partitionstack::get_col_decomposition_scheme(orthogonal &O,
 			col_scheme[I * nb_col_classes + J] = data0[I];
 			}
 		}
-	FREE_int(neighbors);
+	FREE_lint(neighbors);
 	FREE_int(data0);
 	FREE_int(data1);
 }
@@ -2043,7 +2043,8 @@ int partitionstack::refine_row_partition(
 	int col_cell, f, l, i, j, x, y, u, c, cell;
 	int N, first, next, ht1, depth, idx;
 	int *data;
-	int *neighbors, nb_neighbors, h;
+	long int *neighbors;
+	int nb_neighbors, h;
 	
 	N = O.nb_points + O.nb_lines;
 	ht1 = ht;
@@ -2057,7 +2058,7 @@ int partitionstack::refine_row_partition(
 		data[i] = 0;
 	
 	nb_neighbors = O.F->q + 1;
-	neighbors = NEW_int(nb_neighbors);
+	neighbors = NEW_lint(nb_neighbors);
 	for (x = 0; x < O.nb_points; x++) {
 		i = x;
 		c = cellNumber[invPointList[i]];
@@ -2140,7 +2141,7 @@ int partitionstack::refine_row_partition(
 
 	
 	FREE_int(data);
-	FREE_int(neighbors);
+	FREE_lint(neighbors);
 	return h;
 }
 

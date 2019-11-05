@@ -196,9 +196,9 @@ int number_theory_domain::int_abs(int a)
 		}
 }
 
-int number_theory_domain::irem(int a, int m)
+long int number_theory_domain::irem(long int a, long int m)
 {
-	int b;
+	long int b;
 	
 	if (a < 0) {
 		b = irem(-a, m);
@@ -207,7 +207,7 @@ int number_theory_domain::irem(int a, int m)
 	return a % m;
 }
 
-int number_theory_domain::gcd_int(int m, int n)
+long int number_theory_domain::gcd_lint(long int m, long int n)
 {
 #if 0
 	longinteger_domain D;
@@ -219,7 +219,7 @@ int number_theory_domain::gcd_int(int m, int n)
 	D.extended_gcd(M, N, G, U, V, 0);
 	return G.as_int();
 #else
-	int r, s;
+	long int r, s;
 	
 	if (m < 0) {
 		m *= -1;
@@ -691,8 +691,8 @@ int number_theory_domain::Jacobi(int a, int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
 	int f_v = (verbose_level >= 1);
-	int a1, m1, ord2, r1;
-	int g;
+	long int a1, m1, ord2, r1;
+	long int g;
 	int f_negative = FALSE;
 	int t, t1, t2;
 	
@@ -702,7 +702,7 @@ int number_theory_domain::Jacobi(int a, int m, int verbose_level)
 	a1 = a;
 	m1 = m;
 	r1 = 1;
-	g = gcd_int(a1, m1);
+	g = gcd_lint(a1, m1);
 	if (ABS(g) != 1) {
 		return 0;
 		}
@@ -776,8 +776,8 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
 	int f_v = (verbose_level >= 1);
-	int a1, m1, ord2, r1;
-	int g;
+	long int a1, m1, ord2, r1;
+	long int g;
 	int f_negative = FALSE;
 	int t, t1, t2;
 	
@@ -787,7 +787,7 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 	a1 = a;
 	m1 = m;
 	r1 = 1;
-	g = gcd_int(a1, m1);
+	g = gcd_lint(a1, m1);
 	if (ABS(g) != 1) {
 		return 0;
 		}
@@ -1034,7 +1034,7 @@ int number_theory_domain::gcd_with_key_in_latex(ostream &ost,
 	return b1;
 }
 
-int number_theory_domain::ny2(int x, int &x1)
+int number_theory_domain::ny2(long int x, long int &x1)
 //returns $n = \ny_2(x).$ 
 //Computes $x1 := \frac{x}{2^n}$. 
 {
@@ -1159,7 +1159,7 @@ void number_theory_domain::int_add_fractions(int at, int ab,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int g, a1, b1;
+	long int g, a1, b1;
 	
 	if (at == 0) {
 		ct = bt;
@@ -1170,7 +1170,7 @@ void number_theory_domain::int_add_fractions(int at, int ab,
 		cb = ab;
 		}
 	else {
-		g = gcd_int(ab, bb);
+		g = gcd_lint(ab, bb);
 		a1 = ab / g;
 		b1 = bb / g;
 		cb = ab * b1;
@@ -1180,7 +1180,7 @@ void number_theory_domain::int_add_fractions(int at, int ab,
 		cb *= -1;
 		ct *= -1;
 		}
-	g = gcd_int(int_abs(ct), cb);
+	g = gcd_lint(int_abs(ct), cb);
 	if (g > 1) {
 		ct /= g;
 		cb /= g;
@@ -1196,7 +1196,7 @@ void number_theory_domain::int_mult_fractions(int at, int ab,
 		int bt, int bb, int &ct, int &cb,
 		int verbose_level)
 {
-	int g;
+	long int g;
 	
 	if (at == 0) {
 		ct = 0;
@@ -1207,22 +1207,22 @@ void number_theory_domain::int_mult_fractions(int at, int ab,
 		cb = 1;
 		}
 	else {
-		g = gcd_int(at, ab);
+		g = gcd_lint(at, ab);
 		if (g != 1 && g != -1) {
 			at /= g;
 			ab /= g;
 			}
-		g = gcd_int(bt, bb);
+		g = gcd_lint(bt, bb);
 		if (g != 1 && g != -1) {
 			bt /= g;
 			bb /= g;
 			}
-		g = gcd_int(at, bb);
+		g = gcd_lint(at, bb);
 		if (g != 1 && g != -1) {
 			at /= g;
 			bb /= g;
 			}
-		g = gcd_int(bt, ab);
+		g = gcd_lint(bt, ab);
 		if (g != 1 && g != -1) {
 			bt /= g;
 			ab /= g;
@@ -1234,7 +1234,7 @@ void number_theory_domain::int_mult_fractions(int at, int ab,
 		cb *= -1;
 		ct *= -1;
 		}
-	g = gcd_int(int_abs(ct), cb);
+	g = gcd_lint(int_abs(ct), cb);
 	if (g > 1) {
 		ct /= g;
 		cb /= g;

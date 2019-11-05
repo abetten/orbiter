@@ -13,7 +13,7 @@ static int surface_4_single_six[] = {
 	0, 16, 340, 38, 61, 156, 
 };
 #endif
-static int surface_4_Lines[] = {
+static long int surface_4_Lines[] = {
 	0, 1, 16, 340, 84, 356, 100, 38, 110, 81, 156, 61, 139, 25, 26, 71, 72, 54, 55, 345, 85, 109, 122, 155, 165, 138, 145, 
 };
 static int surface_4_make_element_size = 17;

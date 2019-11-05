@@ -95,6 +95,24 @@ void int_vec_apply(int *from, int *through, int *to, int len)
 		}
 }
 
+void int_vec_apply_lint(int *from, long int *through, long int *to, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		to[i] = through[from[i]];
+		}
+}
+
+void lint_vec_apply(long int *from, long int *through, long int *to, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		to[i] = through[from[i]];
+		}
+}
+
 int int_vec_is_constant_on_subset(int *v, 
 	int *subset, int sz, int &value)
 {
@@ -168,6 +186,16 @@ void int_vec_zero(int *v, int len)
 {
 	int i;
 	int *p;
+
+	for (p = v, i = 0; i < len; p++, i++) {
+		*p = 0;
+		}
+}
+
+void lint_vec_zero(long int *v, int len)
+{
+	int i;
+	long int *p;
 
 	for (p = v, i = 0; i < len; p++, i++) {
 		*p = 0;
@@ -485,12 +513,45 @@ int int_vec_minimum(int *v, int len)
 	return m;
 }
 
+long int lint_vec_minimum(long int *v, int len)
+{
+	long int i, m;
+
+	if (len == 0) {
+		cout << "lint_vec_minimum len == 0" << endl;
+		exit(1);
+		}
+	m = v[0];
+	for (i = 1; i < len; i++) {
+		if (v[i] < m) {
+			m = v[i];
+			}
+		}
+	return m;
+}
+
 int int_vec_maximum(int *v, int len)
 {
 	int m, i;
 	
 	if (len == 0) {
 		cout << "int_vec_maximum len == 0" << endl;
+		exit(1);
+		}
+	m = v[0];
+	for (i = 1; i < len; i++)
+		if (v[i] > m) {
+			m = v[i];
+			}
+	return m;
+}
+
+long int lint_vec_maximum(long int *v, int len)
+{
+	long int m, i;
+
+	if (len == 0) {
+		cout << "lint_vec_maximum len == 0" << endl;
 		exit(1);
 		}
 	m = v[0];
@@ -916,6 +977,20 @@ void int_vec_print_as_table(ostream &ost, int *v, int len, int width)
 	ost << endl;
 }
 
+void lint_vec_print_as_table(ostream &ost, long int *v, int len, int width)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		if (((i + 1) % 10) == 0)
+			ost << endl;
+		}
+	ost << endl;
+}
+
 void int_vec_print_fully(ostream &ost, int *v, int len)
 {
 	int i;
@@ -1117,7 +1192,20 @@ void pint_matrix_shorten_rows(pint *&p, int m, int n)
 
 
 
-void print_set(ostream &ost, int size, int *set)
+void print_set(ostream &ost, int size, long int *set)
+{
+	int i;
+
+	ost << "{ ";
+	for (i = 0; i < size; i++) {
+		ost << set[i];
+		if (i < size - 1)
+			ost << ", ";
+		}
+	ost << " }";
+}
+
+void print_set_lint(ostream &ost, int size, long int *set)
 {
 	int i;
 	

@@ -510,7 +510,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	if (Stabilizer_chain) {
 		if (base_len()) {
 			ost << "Base: $";
-			int_vec_print(ost, get_base(), base_len());
+			lint_vec_print(ost, get_base(), base_len());
 			ost << "$\\\\" << endl;
 		}
 		if (f_strong_gens) {
@@ -550,7 +550,7 @@ void action::print_info()
 	if (Stabilizer_chain) {
 		if (base_len()) {
 			cout << "base: ";
-			int_vec_print(cout, get_base(), base_len());
+			lint_vec_print(cout, get_base(), base_len());
 			cout << endl;
 		}
 	}
@@ -597,7 +597,7 @@ void action::print_base()
 {
 	if (Stabilizer_chain) {
 		cout << "action " << label << " has base ";
-		int_vec_print(cout, get_base(), base_len());
+		lint_vec_print(cout, get_base(), base_len());
 		cout << endl;
 	}
 	else {

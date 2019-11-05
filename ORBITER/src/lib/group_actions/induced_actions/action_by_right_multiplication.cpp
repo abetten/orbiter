@@ -66,9 +66,10 @@ void action_by_right_multiplication::init(sims *Base_group, int f_ownership, int
 	Elt2 = NEW_int(A->elt_size_in_int);
 }
 
-void action_by_right_multiplication::compute_image(action *A, int *Elt, int i, int &j, int verbose_level)
+long int action_by_right_multiplication::compute_image(action *A, int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	long int j;
 
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image i = " << i << endl;
@@ -77,12 +78,13 @@ void action_by_right_multiplication::compute_image(action *A, int *Elt, int i, i
 		cout << "action_by_right_multiplication::compute_image i = " << i << " out of range" << endl;
 		exit(1);
 		}
-	Base_group->element_unrank_int(i, Elt1);
+	Base_group->element_unrank_lint(i, Elt1);
 	A->mult(Elt1, Elt, Elt2);
-	j = Base_group->element_rank_int(Elt2);
+	j = Base_group->element_rank_lint(Elt2);
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image image is " << j << endl;
 		}
+	return j;
 }
 
 }}

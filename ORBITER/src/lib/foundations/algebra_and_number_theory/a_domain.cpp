@@ -73,14 +73,14 @@ int a_domain::as_int(int *elt, int verbose_level)
 		return elt[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		int at, ab, g;
+		long int at, ab, g;
 
 		at = elt[0];
 		ab = elt[1];
 		if (at == 0) {
 			return 0;
 			}
-		g = NT.gcd_int(at, ab);
+		g = NT.gcd_lint(at, ab);
 		at /= g;
 		ab /= g;
 		if (ab != 1 && ab != -1) {
@@ -241,7 +241,7 @@ int a_domain::is_one(int *elt, int verbose_level)
 			}
 		}
 	else if (kind == domain_integer_fractions) {
-		int at, ab, g;
+		long int at, ab, g;
 		
 		at = elt[0];
 		ab = elt[1];
@@ -249,7 +249,7 @@ int a_domain::is_one(int *elt, int verbose_level)
 			ret = FALSE;
 			}
 		else {
-			g = NT.gcd_int(at, ab);
+			g = NT.gcd_lint(at, ab);
 			at = at / g;
 			ab = ab / g;
 			if (ab < 0) {
@@ -421,13 +421,13 @@ void a_domain::subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 		elt_c[0] = elt_a[0] + elt_b[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		int at, ab, bt, bb, g, a1, b1, ct, cb;
+		long int at, ab, bt, bb, g, a1, b1, ct, cb;
 
 		at = elt_a[0];
 		ab = elt_a[1];
 		bt = elt_b[0];
 		bb = elt_b[1];
-		g = NT.gcd_int(ab, bb);
+		g = NT.gcd_lint(ab, bb);
 		a1 = ab / g;
 		b1 = bb / g;
 		cb = a1 * g;
@@ -618,11 +618,11 @@ void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 		elt[0] /= n;
 		}
 	else if (kind == domain_integer_fractions) {
-		int a, b, g, n1;
+		long int a, b, g, n1;
 
 		a = elt[0];
 		b = elt[1];
-		g = NT.gcd_int(a, n);
+		g = NT.gcd_lint(a, n);
 		a /= g;
 		n1 = n / g;
 		b *= n1;	
@@ -645,13 +645,13 @@ void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 		cout << "a_domain::divide" << endl;
 		}
 	if (kind == domain_the_integers) {
-		int g;
+		long int g;
 
 		if (elt_b[0] == 0) {
 			cout << "a_domain::divide division by zero" << endl;
 			exit(1);
 			}
-		g = NT.gcd_int(elt_a[0], elt_b[0]);
+		g = NT.gcd_lint(elt_a[0], elt_b[0]);
 		elt_c[0] = elt_a[0] / g;
 		}
 	else if (kind == domain_integer_fractions) {

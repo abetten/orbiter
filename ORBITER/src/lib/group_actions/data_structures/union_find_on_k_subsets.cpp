@@ -62,8 +62,8 @@ void union_find_on_k_subsets::null()
 
 void union_find_on_k_subsets::init(
 	action *A_original, sims *S,
-	int *set, int set_sz, int k, 
-	int *interesting_k_subsets,
+	long int *set, int set_sz, int k,
+	long int *interesting_k_subsets,
 	int nb_interesting_k_subsets,
 	int verbose_level)
 {

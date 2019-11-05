@@ -59,13 +59,13 @@ void colored_graph::freeself()
 		if (f_v) {
 			cout << "colored_graph::freeself user_data" << endl;
 			}
-		FREE_int(user_data);
+		FREE_lint(user_data);
 		}
 	if (points) {
 		if (f_v) {
 			cout << "colored_graph::freeself points" << endl;
 			}
-		FREE_int(points);
+		FREE_lint(points);
 		}
 	if (point_color) {
 		if (f_v) {
@@ -224,12 +224,12 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 	}
 
 	int *A;
-	int *Pts;
+	long int *Pts;
 	int *Color;
 	int i, j, I, J, f1, l1, f2, l2, ii, jj, idx1, idx2, aij;
 
 	A = NEW_int((long int) nb_points * (long int) nb_points);
-	Pts = NEW_int(nb_points);
+	Pts = NEW_lint(nb_points);
 	Color = NEW_int(nb_points);
 	for (I = 0; I < C.nb_types; I++) {
 		f1 = C.type_first[I];
@@ -268,10 +268,10 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 		Color, A, 0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	int_vec_copy(Pts, CG->points, nb_points);
+	lint_vec_copy(Pts, CG->points, nb_points);
 	FREE_int(A);	
 	FREE_int(Color);	
-	FREE_int(Pts);	
+	FREE_lint(Pts);
 
 	cout << "-partition \"";
 	for (I = 0; I < C.nb_types; I++) {
@@ -312,7 +312,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 	}
 
 	int *A;
-	int *Pts;
+	long int *Pts;
 	int *Color;
 	int i, j, I, f, l, ii, jj, idx1, idx2;
 
@@ -321,7 +321,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 	l = C.type_len[I];
 
 	A = NEW_int(l * l);
-	Pts = NEW_int(l);
+	Pts = NEW_lint(l);
 	Color = NEW_int(l);
 
 	int_vec_zero(A, l * l);
@@ -353,10 +353,10 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 		Color, A, 0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	int_vec_copy(Pts, CG->points, l);
+	lint_vec_copy(Pts, CG->points, l);
 	FREE_int(A);
 	FREE_int(Color);
-	FREE_int(Pts);
+	FREE_lint(Pts);
 
 	if (f_v) {
 		cout << "colored_graph::subgraph_by_color_classes done" << endl;
@@ -375,7 +375,8 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 				"c=" << c << " nb_seed_pts=" << nb_seed_pts << endl;
 	}
 	if (nb_colors_per_vertex != 1) {
-		cout << "colored_graph::subgraph_by_color_classes_with_condition nb_colors_per_vertex != 1" << endl;
+		cout << "colored_graph::subgraph_by_color_classes_with_condition "
+				"nb_colors_per_vertex != 1" << endl;
 		exit(1);
 	}
 
@@ -389,7 +390,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 	}
 
 	int *A;
-	int *Pts;
+	long int *Pts;
 	int nb_pts;
 	int *Color;
 	int i, j, I, f, l, ii, jj, idx1, idx2;
@@ -398,7 +399,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 	f = C.type_first[I];
 	l = C.type_len[I];
 
-	Pts = NEW_int(l);
+	Pts = NEW_lint(l);
 	Color = NEW_int(l);
 
 
@@ -451,10 +452,10 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 		Color, A, 0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	int_vec_copy(Pts, CG->points, nb_pts);
+	lint_vec_copy(Pts, CG->points, nb_pts);
 	FREE_int(A);
 	FREE_int(Color);
-	FREE_int(Pts);
+	FREE_lint(Pts);
 
 	if (f_v) {
 		cout << "colored_graph::subgraph_by_color_classes_with_condition "
@@ -612,7 +613,7 @@ void colored_graph::print_adjacency_list()
 
 void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
-	int *point_labels, 
+	long int *point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -626,7 +627,7 @@ void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_
 	init(nb_points, nb_colors, nb_colors_per_vertex,
 		colors, bitvec, f_ownership_of_bitvec, 
 		verbose_level);
-	int_vec_copy(point_labels, points, nb_points);
+	lint_vec_copy(point_labels, points, nb_points);
 	if (f_v) {
 		cout << "colored_graph::init_with_point_labels done" << endl;
 	}
@@ -655,7 +656,7 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 
 	user_data_size = 0;
 	
-	points = NEW_int(nb_points);
+	points = NEW_lint(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		points[i] = i;
 		}
@@ -808,7 +809,7 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 	}
 }
 
-void colored_graph::init_user_data(int *data,
+void colored_graph::init_user_data(long int *data,
 	int data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -818,8 +819,8 @@ void colored_graph::init_user_data(int *data,
 		cout << "colored_graph::init_user_data" << endl;
 	}
 	user_data_size = data_size;
-	user_data = NEW_int(data_size);
-	int_vec_copy(data, user_data, data_size);
+	user_data = NEW_lint(data_size);
+	lint_vec_copy(data, user_data, data_size);
 	if (f_v) {
 		cout << "colored_graph::init_user_data done" << endl;
 	}
@@ -2037,14 +2038,14 @@ void colored_graph::export_to_file_matlab(
 
 
 void colored_graph::early_test_func_for_clique_search(
-	int *S, int len,
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int j, a, pt;
+	long int j, a, pt;
 
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_clique_"
@@ -2053,12 +2054,12 @@ void colored_graph::early_test_func_for_clique_search(
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -2076,14 +2077,14 @@ void colored_graph::early_test_func_for_clique_search(
 }
 
 void colored_graph::early_test_func_for_coclique_search(
-	int *S, int len,
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int j, a, pt;
+	long int j, a, pt;
 
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_"
@@ -2092,12 +2093,12 @@ void colored_graph::early_test_func_for_coclique_search(
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -2115,14 +2116,14 @@ void colored_graph::early_test_func_for_coclique_search(
 }
 
 void colored_graph::early_test_func_for_path_and_cycle_search(
-	int *S, int len,
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int i, j, a, b, /*pt,*/ x, y;
+	long int i, j, a, b, /*pt,*/ x, y;
 	int *v;
 	combinatorics_domain Combi;
 
@@ -2133,12 +2134,12 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -2150,7 +2151,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	for (i = 0; i < len; i++) {
 		a = S[i];
 		b = list_of_edges[a];
-		Combi.k2ij(b, x, y, nb_points);
+		Combi.k2ij_lint(b, x, y, nb_points);
 		v[x]++;
 		v[y]++;
 		}
@@ -2159,7 +2160,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	for (j = 0; j < nb_candidates; j++) {
 		a = candidates[j];
 		b = list_of_edges[a];
-		Combi.k2ij(b, x, y, nb_points);
+		Combi.k2ij_lint(b, x, y, nb_points);
 		
 		if (v[x] < 2 && v[y] < 2) {
 			good_candidates[nb_good_candidates++] = a;
@@ -2624,7 +2625,7 @@ int colored_graph::rainbow_cliques_nonrecursive(
 
 void colored_graph::create_Levi_graph_from_incidence_matrix(
 	int *M, int nb_rows, int nb_cols,
-	int f_point_labels, int *point_labels,
+	int f_point_labels, long int *point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

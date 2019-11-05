@@ -56,7 +56,7 @@ void action_on_determinant::init(action &A,
 	M = A.G.matrix_grp;
 	q = M->GFq->q;
 	if (f_projective) {
-		degree = NT.gcd_int(m, q - 1);
+		degree = NT.gcd_lint(m, q - 1);
 		}
 	else {
 		degree = q - 1;
@@ -70,12 +70,12 @@ void action_on_determinant::init(action &A,
 		}
 }
 
-void action_on_determinant::compute_image(action *A,
-		int *Elt, int i, int &j, int verbose_level)
+long int action_on_determinant::compute_image(action *A,
+		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	int a, b, c, l = 0;
+	long int a, b, c, l = 0, j;
 	
 	if (f_v) {
 		cout << "action_on_determinant::compute_image "
@@ -112,6 +112,7 @@ void action_on_determinant::compute_image(action *A,
 			}
 		cout << "image of " << i << " is " << j << endl;
 		}
+	return j;
 }
 
 }}

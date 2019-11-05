@@ -63,10 +63,10 @@ void action_on_k_subsets::init(action *A,
 		}
 }
 
-void action_on_k_subsets::compute_image(
-		int *Elt, int i, int &j, int verbose_level)
+long int action_on_k_subsets::compute_image(
+		int *Elt, long int i, int verbose_level)
 {
-	int u, a, b;
+	long int u, a, b, j;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	combinatorics_domain Combi;
@@ -101,6 +101,7 @@ void action_on_k_subsets::compute_image(
 				"j = " << j << " out of range" << endl;
 		exit(1);
 		}
+	return j;
 }
 
 

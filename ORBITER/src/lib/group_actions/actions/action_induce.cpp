@@ -1189,7 +1189,7 @@ void action::induced_action_by_right_multiplication(
 }
 
 action *action::create_induced_action_on_sets(
-		int nb_sets, int set_size, int *sets,
+		int nb_sets, int set_size, long int *sets,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1219,7 +1219,7 @@ action *action::create_induced_action_on_sets(
 
 void action::induced_action_on_sets(
 	action &old_action, sims *old_G,
-	int nb_sets, int set_size, int *sets, 
+	int nb_sets, int set_size, long int *sets,
 	int f_induce_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1483,7 +1483,7 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 }
 
 action *action::restricted_action(
-		int *points, int nb_points, int verbose_level)
+		long int *points, int nb_points, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
@@ -1542,7 +1542,7 @@ action *action::restricted_action(
 }
 
 action *action::create_induced_action_by_restriction(
-		sims *S, int size, int *set, int f_induce,
+		sims *S, int size, long int *set, int f_induce,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1563,7 +1563,7 @@ action *action::create_induced_action_by_restriction(
 void action::induced_action_by_restriction_internal_function(
 	action &old_action,
 	int f_induce_action, sims *old_G, 
-	int nb_points, int *points, int verbose_level)
+	int nb_points, long int *points, int verbose_level)
 // uses action_by_restriction data type
 {
 	int f_v = (verbose_level >= 1);
@@ -2314,7 +2314,7 @@ void action::induced_action_override_sims(
 }
 
 void action::induce(action *old_action, sims *old_G, 
-	int base_of_choice_len, int *base_of_choice,
+	int base_of_choice_len, long int *base_of_choice,
 	int verbose_level)
 // after this procedure, action will have
 // a sims for the group and the kernel
@@ -2376,7 +2376,7 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "subaction->base_len = " << subaction->base_len() << endl;
 		if (base_of_choice_len) {
 			cout << "base of choice:" << endl;
-			int_vec_print(cout, base_of_choice, base_of_choice_len);
+			lint_vec_print(cout, base_of_choice, base_of_choice_len);
 			cout << endl;
 			}
 		else {
@@ -2512,8 +2512,8 @@ int action::least_moved_point_at_level(int level, int verbose_level)
 void action::lex_least_base_in_place(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *set;
-	int *old_base;
+	long int *set;
+	long int *old_base;
 	int i, lmp, old_base_len;
 
 	if (f_v) {
@@ -2526,8 +2526,8 @@ void action::lex_least_base_in_place(int verbose_level)
 		//Sims->print_generators();
 		}
 
-	set = NEW_int(degree);
-	old_base = NEW_int(base_len());
+	set = NEW_lint(degree);
+	old_base = NEW_lint(base_len());
 	old_base_len = base_len();
 	for (i = 0; i < base_len(); i++) {
 		old_base[i] = base_i(i);
@@ -2586,21 +2586,21 @@ void action::lex_least_base_in_place(int verbose_level)
 		if (f_changed) {
 			cout << "The base has changed !!!" << endl;
 			cout << "old base: ";
-			int_vec_print(cout, old_base, old_base_len);
+			lint_vec_print(cout, old_base, old_base_len);
 			cout << endl;
 			cout << "new base: ";
 			//int_vec_print(cout, Stabilizer_chain->base, base_len());
 			cout << endl;
 			}
 		}
-	FREE_int(old_base);
-	FREE_int(set);
+	FREE_lint(old_base);
+	FREE_lint(set);
 }
 
 void action::lex_least_base(action *old_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *set;
+	long int *set;
 	action *A, *old_A;
 	int i, lmp;
 
@@ -2624,7 +2624,7 @@ void action::lex_least_base(action *old_action, int verbose_level)
 		}
 	A = NEW_OBJECT(action);
 
-	set = NEW_int(old_action->degree);
+	set = NEW_lint(old_action->degree);
 	
 	old_A = old_action;
 	
@@ -2654,7 +2654,7 @@ void action::lex_least_base(action *old_action, int verbose_level)
 		}
 	base_change(old_A, old_A->base_len(),
 			old_A->get_base(), verbose_level - 1);
-	FREE_int(set);
+	FREE_lint(set);
 	if (f_v) {
 		cout << "action::lex_least_base action " << label << " base=";
 		//int_vec_print(cout, Stabilizer_chain->base, base_len());
@@ -2692,7 +2692,7 @@ int action::test_if_lex_least_base(int verbose_level)
 	return TRUE;
 }
 
-void action::base_change_in_place(int size, int *set, int verbose_level)
+void action::base_change_in_place(int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
@@ -2796,14 +2796,14 @@ void action::base_change_in_place(int size, int *set, int verbose_level)
 }
 
 void action::base_change(action *old_action, 
-	int size, int *set, int verbose_level)
+	int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "action::base_change to the following set:" << endl;
-		int_vec_print(cout, set, size);
+		lint_vec_print(cout, set, size);
 		cout << endl;
 		}
 	if (!old_action->f_has_sims) {
@@ -2870,7 +2870,7 @@ void action::base_change(action *old_action,
 void action::create_orbits_on_subset_using_restricted_action(
 		action *&A_by_restriction,
 		schreier *&Orbits, sims *S,
-		int size, int *set,
+		int size, long int *set,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2898,7 +2898,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 void action::create_orbits_on_sets_using_action_on_sets(
 		action *&A_on_sets,
 		schreier *&Orbits, sims *S,
-		int nb_sets, int set_size, int *sets,
+		int nb_sets, int set_size, long int *sets,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -449,7 +449,7 @@ int PHG_element_normalize_from_front(finite_ring &R,
 int PHG_element_rank(finite_ring &R,
 		int *v, int stride, int len)
 {
-	int i, j, idx, a, b, r1, r2, rk, N;
+	long int i, j, idx, a, b, r1, r2, rk, N;
 	int f_v = FALSE;
 	int *w;
 	int *embedding;
@@ -496,8 +496,8 @@ int PHG_element_rank(finite_ring &R,
 		int_vec_print(cout, w, len - 1);
 		cout << endl;
 		}
-	Gg.AG_element_rank(R.e, w, 1, len - 1, r1);
-	R.Fp->PG_element_rank_modified(v, stride, len, r2);
+	r1 = Gg.AG_element_rank(R.e, w, 1, len - 1);
+	R.Fp->PG_element_rank_modified_lint(v, stride, len, r2);
 
 	N = Gg.nb_PG_elements(len - 1, R.p);
 	rk = r1 * N + r2;

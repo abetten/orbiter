@@ -54,25 +54,29 @@ void action_on_bricks::init(action *A, brick_domain *B,
 		}
 }
 
-void action_on_bricks::compute_image(int *Elt,
-		int i, int &j, int verbose_level)
+long int action_on_bricks::compute_image(int *Elt,
+		long int i, int verbose_level)
 {
+	long int j;
+
 	if (f_linear_action) {
-		compute_image_linear_action(Elt, i, j, verbose_level);
+		j = compute_image_linear_action(Elt, i, verbose_level);
 		}
 	else {
-		compute_image_permutation_action(Elt, i, j, verbose_level);
+		j = compute_image_permutation_action(Elt, i, verbose_level);
 		}
+	return j;
 }
 
-void action_on_bricks::compute_image_linear_action(int *Elt,
-		int i, int &j, int verbose_level)
+long int action_on_bricks::compute_image_linear_action(int *Elt,
+		long int i, int verbose_level)
 {
 	//verbose_level = 3; // !!!
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int v[3], w[3], rk_v, rk_w;
 	int vv[3], ww[3], rk_vv, rk_ww;
+	long int j;
 
 	if (f_v) {
 		cout << "action_on_bricks::compute_image "
@@ -143,16 +147,18 @@ void action_on_bricks::compute_image_linear_action(int *Elt,
 				"j = " << j << " out of range" << endl;
 		exit(1);
 		}
+	return j;
 }
 
-void action_on_bricks::compute_image_permutation_action(
-		int *Elt, int i, int &j, int verbose_level)
+long int action_on_bricks::compute_image_permutation_action(
+		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 3; // !!!
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int x0, y0, x1, y1, x2, y2, x3, y3;
 	int a, b, c, d;
+	long int j;
 
 	if (f_v) {
 		cout << "action_on_bricks::compute_image_permutation_action "
@@ -195,6 +201,7 @@ void action_on_bricks::compute_image_permutation_action(
 				"j = " << j << " out of range" << endl;
 		exit(1);
 		}
+	return j;
 }
 
 

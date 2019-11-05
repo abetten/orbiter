@@ -9,6 +9,7 @@ MODULES = \
 	a_domain.o \
 	finite_field_io.o \
 	finite_field_linear_algebra.o \
+	finite_field_linear_algebra2.o \
 	finite_field_linear_groups.o \
 	finite_field_orthogonal.o \
 	finite_field_projective.o \

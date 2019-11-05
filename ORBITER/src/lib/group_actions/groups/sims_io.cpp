@@ -22,7 +22,7 @@ namespace group_actions {
 void sims::create_group_tree(const char *fname,
 		int f_full, int verbose_level)
 {
-	int i, j, h, go, l;
+	long int i, j, h, go, l;
 	longinteger_object Go;
 	int *Elt;
 	int *Elt2;
@@ -32,7 +32,7 @@ void sims::create_group_tree(const char *fname,
 	Elt = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	group_order(Go);
-	go = Go.as_int();
+	go = Go.as_lint();
 	//cout << "Group of order " << go << endl;
 
 	{
@@ -50,7 +50,7 @@ void sims::create_group_tree(const char *fname,
 		}
 	if (f_full) {
 		for (h = 0; h < go; h++) {
-			element_unrank_int(h, Elt);
+			element_unrank_lint(h, Elt);
 			//cout << "Element " << h << " / " << go << " : path=";
 			//int_vec_print(cout, S->path, S->A->base_len);
 			//cout << endl;
@@ -390,31 +390,21 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	int *Elt;
 	//char *elt;
 	longinteger_object go;
-	int i;
+	long int i;
 	file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	//elt = NEW_char(A->coded_elt_size_in_char);
 	group_order(go);
 
-#if 0
-	FILE *fp;
-	fp = fopen(fname, "wb");
-	for (i = 0; i < go.as_int(); i++) {
-		element_unrank_int(i, Elt);
-		A->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
-		}
-	fclose(fp);
-#else
 	{
 		ofstream fp(fname, ios::binary);
 
-		for (i = 0; i < go.as_int(); i++) {
-			element_unrank_int(i, Elt);
+		for (i = 0; i < go.as_lint(); i++) {
+			element_unrank_lint(i, Elt);
 			A->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
 			}
 	}
-#endif
 	if (f_v) {
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -429,7 +419,7 @@ void sims::print_all_group_elements_to_file(char *fname,
 	int f_v = (verbose_level >= 1);
 	int *Elt;
 	longinteger_object go;
-	int i;
+	long int i;
 	file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -437,8 +427,8 @@ void sims::print_all_group_elements_to_file(char *fname,
 
 	{
 	ofstream fp(fname);
-	for (i = 0; i < go.as_int(); i++) {
-		element_unrank_int(i, Elt);
+	for (i = 0; i < go.as_lint(); i++) {
+		element_unrank_lint(i, Elt);
 		fp << "Element " << setw(5) << i << " / "
 				<< go.as_int() << endl;
 		A->element_print(Elt, fp);
@@ -456,13 +446,13 @@ void sims::print_all_group_elements()
 {
 	int *Elt;
 	longinteger_object go;
-	int i;
+	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 
-	for (i = 0; i < go.as_int(); i++) {
-		element_unrank_int(i, Elt);
+	for (i = 0; i < go.as_lint(); i++) {
+		element_unrank_lint(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
 				<< go.as_int() << ":" << endl;
 		A->element_print(Elt, cout);
@@ -477,13 +467,13 @@ void sims::print_all_group_elements_tex(ostream &ost)
 {
 	int *Elt;
 	longinteger_object go;
-	int i, ord;
+	long int i, ord;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 
-	for (i = 0; i < go.as_int(); i++) {
-		element_unrank_int(i, Elt);
+	for (i = 0; i < go.as_lint(); i++) {
+		element_unrank_lint(i, Elt);
 		ord = A->element_order(Elt);
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;
@@ -500,13 +490,13 @@ void sims::print_all_group_elements_as_permutations()
 {
 	int *Elt;
 	longinteger_object go;
-	int i;
+	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 
-	for (i = 0; i < go.as_int(); i++) {
-		element_unrank_int(i, Elt);
+	for (i = 0; i < go.as_lint(); i++) {
+		element_unrank_lint(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
 				<< go.as_int() << ":" << endl;
 		//A->element_print(Elt, cout);
@@ -522,13 +512,13 @@ void sims::print_all_group_elements_as_permutations_in_special_action(
 {
 	int *Elt;
 	longinteger_object go;
-	int i;
+	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 
-	for (i = 0; i < go.as_int(); i++) {
-		element_unrank_int(i, Elt);
+	for (i = 0; i < go.as_lint(); i++) {
+		element_unrank_lint(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
 				<< go.as_int() << ":" << endl;
 		A->element_print(Elt, cout);
@@ -576,37 +566,23 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
-	int goi, i;
+	long int goi, i;
 	longinteger_object go;
 	file_io Fio;
 
 	group_order(go);
-	goi = go.as_int();
+	goi = go.as_lint();
 	if (f_v) {
 		cout << "sims::save_list_of_elements(): saving "
 				<< goi << " elements to file " << fname << endl;
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
 
-#if 0
-	FILE *f2;
-	f2 = fopen(fname, "wb");
-	for (i = 0; i < goi; i++) {
-		element_unrank_int(i, Elt1);
-		//cout << "element " << i << ":" << endl;
-		//A->element_print(Elt1, cout);
-		A->element_write_file_fp(Elt1, f2, 0/* verbose_level*/);
-		//A->element_print_as_permutation(Elt1, cout);
-		//AA.print_as_permutation(cout, Elt1);
-		//cout << endl;
-		}
-	fclose(f2);
-#else
 	{
 		ofstream fp(fname, ios::binary);
 
 		for (i = 0; i < goi; i++) {
-			element_unrank_int(i, Elt1);
+			element_unrank_lint(i, Elt1);
 			//cout << "element " << i << ":" << endl;
 			//A->element_print(Elt1, cout);
 			A->element_write_file_fp(Elt1, fp, 0/* verbose_level*/);
@@ -615,7 +591,6 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 			//cout << endl;
 			}
 	}
-#endif
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "written file " << fname << " of size "
@@ -965,7 +940,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 		vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, k, n, l, h;
+	long int i, k, n, l, h;
 	longinteger_object go;
 	int *Elt1;
 	int *Elt2;
@@ -997,7 +972,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 				cout << "sims::write_as_magma_permutation_group "
 						"i = " << i <<  " / " << n << endl;
 				}
-			element_unrank_int(i, Elt1);
+			element_unrank_lint(i, Elt1);
 
 			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
 
@@ -1005,7 +980,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 				cout << "Elt2=" << endl;
 				A->element_print(Elt2, cout);
 				}
-			k = element_rank_int(Elt2);
+			k = element_rank_lint(Elt2);
 			if (f_v) {
 				cout << "has rank k=" << k << endl;
 				}

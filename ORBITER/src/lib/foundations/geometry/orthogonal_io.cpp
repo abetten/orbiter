@@ -26,7 +26,7 @@ void orthogonal::list_points_by_type(int verbose_level)
 
 void orthogonal::list_points_of_given_type(int t, int verbose_level)
 {
-	int i, j, rk, u;
+	long int i, j, rk, u;
 
 	cout << "points of type P" << t << ":" << endl;
 	for (i = 0; i < P[t - 1]; i++) {

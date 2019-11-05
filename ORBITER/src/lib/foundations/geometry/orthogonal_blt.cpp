@@ -17,7 +17,7 @@ namespace orbiter {
 namespace foundations {
 
 
-void orthogonal::create_FTWKB_BLT_set(int *set, int verbose_level)
+void orthogonal::create_FTWKB_BLT_set(long int *set, int verbose_level)
 // for q congruent 2 mod 3
 // a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -69,12 +69,12 @@ void orthogonal::create_FTWKB_BLT_set(int *set, int verbose_level)
 		}
 	if (f_v) {
 		cout << "orthogonal::create_FTWKB_BLT_set the BLT set FTWKB is ";
-		int_vec_print(cout, set, q + 1);
+		lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void orthogonal::create_K1_BLT_set(int *set, int verbose_level)
+void orthogonal::create_K1_BLT_set(long int *set, int verbose_level)
 // for a nonsquare m, and q=p^e
 // a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -125,12 +125,12 @@ void orthogonal::create_K1_BLT_set(int *set, int verbose_level)
 		}
 	if (f_v) {
 		cout << "orthogonal::create_K1_BLT_set the BLT set K1 is ";
-		int_vec_print(cout, set, q + 1);
+		lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void orthogonal::create_K2_BLT_set(int *set, int verbose_level)
+void orthogonal::create_K2_BLT_set(long int *set, int verbose_level)
 // for q congruent 2 or 3 mod 5
 // a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -185,13 +185,13 @@ void orthogonal::create_K2_BLT_set(int *set, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_K2_BLT_set "
 				"the BLT set K2 is ";
-		int_vec_print(cout, set, q + 1);
+		lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
 void orthogonal::create_LP_37_72_BLT_set(
-		int *set, int verbose_level)
+		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -264,12 +264,12 @@ void orthogonal::create_LP_37_72_BLT_set(
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_72_BLT_set "
 				"the BLT set LP_37_72 is ";
-		int_vec_print(cout, set, q + 1);
+		lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void orthogonal::create_LP_37_4a_BLT_set(int *set, int verbose_level)
+void orthogonal::create_LP_37_4a_BLT_set(long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -342,12 +342,12 @@ void orthogonal::create_LP_37_4a_BLT_set(int *set, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_4a_BLT_set "
 				"the BLT set LP_37_4a is ";
-		int_vec_print(cout, set, q + 1);
+		lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void orthogonal::create_LP_37_4b_BLT_set(int *set, int verbose_level)
+void orthogonal::create_LP_37_4b_BLT_set(long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -420,13 +420,13 @@ void orthogonal::create_LP_37_4b_BLT_set(int *set, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_4b_BLT_set "
 				"the BLT set LP_37_4b is ";
-		int_vec_print(cout, set, q + 1);
+		lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
 void orthogonal::create_Law_71_BLT_set(
-		int *set, int verbose_level)
+		long int *set, int verbose_level)
 // This example can be found in Maska Law's thesis on page 115.
 // Maska Law: Flocks, generalised quadrangles
 // and translatrion planes from BLT-sets,
@@ -509,13 +509,13 @@ void orthogonal::create_Law_71_BLT_set(
 	if (f_v) {
 		cout << "orthogonal::create_Law_71_BLT_set "
 				"the BLT set LP_71 is ";
-		int_vec_print(cout, set, q + 1);
+		lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
 
-int orthogonal::BLT_test_full(int size, int *set, int verbose_level)
+int orthogonal::BLT_test_full(int size, long int *set, int verbose_level)
 {
 	if (!collinearity_test(size, set, 0/*verbose_level - 2*/)) {
 		return FALSE;
@@ -526,7 +526,7 @@ int orthogonal::BLT_test_full(int size, int *set, int verbose_level)
 	return TRUE;
 }
 
-int orthogonal::BLT_test(int size, int *set, int verbose_level)
+int orthogonal::BLT_test(int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -540,7 +540,7 @@ int orthogonal::BLT_test(int size, int *set, int verbose_level)
 		return TRUE;
 	if (f_v) {
 		cout << "BLT_test for" << endl;
-		int_vec_print(cout, set, size);
+		lint_vec_print(cout, set, size);
 		if (f_vv) {
 			for (i = 0; i < size; i++) {
 				unrank_point(v1, 1, set[i], verbose_level - 1);
@@ -675,7 +675,7 @@ int orthogonal::BLT_test(int size, int *set, int verbose_level)
 	return f_OK;
 }
 
-int orthogonal::collinearity_test(int size, int *set, int verbose_level)
+int orthogonal::collinearity_test(int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, x, y;
@@ -730,7 +730,7 @@ int orthogonal::collinearity_test(int size, int *set, int verbose_level)
 	return f_OK;
 }
 
-int orthogonal::triple_is_collinear(int pt1, int pt2, int pt3)
+int orthogonal::triple_is_collinear(long int pt1, long int pt2, long int pt3)
 {
 	int verbose_level = 0;
 	int rk;

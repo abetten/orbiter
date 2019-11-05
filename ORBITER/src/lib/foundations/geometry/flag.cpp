@@ -164,10 +164,10 @@ void flag::init_recursion(int n,
 		}
 }
 
-void flag::unrank(int rk, int *subspace, int verbose_level)
+void flag::unrank(long int rk, int *subspace, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a, b;
+	long int a, b;
 
 	if (f_v) {
 		cout << "flag::unrank idx=" << idx << " rk=" << rk << endl;
@@ -185,7 +185,7 @@ void flag::unrank(int rk, int *subspace, int verbose_level)
 				<< " a=" << a << " b=" << b << endl;
 		}
 
-	Gr->unrank_embedded_subspace_int(a, 0 /*verbose_level*/);
+	Gr->unrank_embedded_subspace_lint(a, 0 /*verbose_level*/);
 	int_vec_copy(Gr->M, M, K * n);
 	if (f_v) {
 		cout << "flag::unrank M=" << endl;
@@ -197,11 +197,11 @@ void flag::unrank(int rk, int *subspace, int verbose_level)
 	int_vec_copy(M, subspace, K * n);
 }
 
-void flag::unrank_recursion(int rk, int *subspace, int verbose_level)
+void flag::unrank_recursion(long int rk, int *subspace, int verbose_level)
 // subspace is K x n
 {
 	int f_v = (verbose_level >= 1);
-	int a, b;
+	long int a, b;
 
 	if (f_v) {
 		cout << "flag::unrank_recursion idx=" << idx
@@ -220,7 +220,7 @@ void flag::unrank_recursion(int rk, int *subspace, int verbose_level)
 				<< " rk=" << rk << " a=" << a << " b=" << b << endl;
 		}
 
-	Gr->unrank_embedded_subspace_int(a, 0 /*verbose_level*/);
+	Gr->unrank_embedded_subspace_lint(a, 0 /*verbose_level*/);
 
 	// now Gr->M is s2 x s2
 
@@ -248,10 +248,10 @@ void flag::unrank_recursion(int rk, int *subspace, int verbose_level)
 	int_vec_copy(M, subspace, K * n);
 }
 
-int flag::rank(int *input_subspace, int verbose_level)
+long int flag::rank(int *input_subspace, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a, b, rk;
+	long int a, b, rk;
 
 	if (f_v) {
 		cout << "flag::rank idx=" << idx << endl;
@@ -268,11 +268,11 @@ int flag::rank(int *input_subspace, int verbose_level)
 
 	int_vec_copy(input_subspace, M, K * n);
 	int_vec_copy(input_subspace, Gr->M, s2 * n);
-	a = Gr->rank_int(0 /*verbose_level*/);
+	a = Gr->rank_lint(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "flag::rank idx=" << idx << " a=" << a << endl;
 		}
-	Gr->unrank_embedded_subspace_int(a, 0 /*verbose_level*/);
+	Gr->unrank_embedded_subspace_lint(a, 0 /*verbose_level*/);
 	int_vec_copy(Gr->M, M1, K * n);
 	if (f_v) {
 		cout << "flag::rank after unrank:" << endl;
@@ -292,11 +292,11 @@ int flag::rank(int *input_subspace, int verbose_level)
 	return rk;
 }
 
-int flag::rank_recursion(int *input_subspace,
+long int flag::rank_recursion(int *input_subspace,
 		int *big_space, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a, b, rk, r, i, j;
+	long int a, b, rk, r, i, j;
 
 	if (f_v) {
 		cout << "flag::rank_recursion idx=" << idx << endl;
@@ -379,11 +379,11 @@ int flag::rank_recursion(int *input_subspace,
 		print_integer_matrix_width(cout,
 				Gr->M, s1, s2, s2, F->log10_of_q);
 		}
-	a = Gr->rank_int(verbose_level);
+	a = Gr->rank_lint(verbose_level);
 	if (f_v) {
 		cout << "a=" << a << endl;
 		}
-	Gr->unrank_embedded_subspace_int(a, 0 /*verbose_level*/);
+	Gr->unrank_embedded_subspace_lint(a, 0 /*verbose_level*/);
 		// now Gr->M is s2 x s2
 	if (f_v) {
 		cout << "after unrank_embedded, coefficient matrix is" << endl;

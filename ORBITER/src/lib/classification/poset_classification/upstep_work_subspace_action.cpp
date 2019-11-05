@@ -272,7 +272,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			cout << "upstep_work::upstep_subspace_action "
 					"unranking " << coset << ":" << endl;
 		}
-		G.unrank_int(coset, 0 /*verbose_level - 5*/);
+		G.unrank_lint(coset, 0 /*verbose_level - 5*/);
 		int_vec_copy(G.M, base_change_matrix, k * n);
 
 		if (f_vvv) {

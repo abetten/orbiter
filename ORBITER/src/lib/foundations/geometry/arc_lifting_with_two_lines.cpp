@@ -47,7 +47,7 @@ void arc_lifting_with_two_lines::freeself()
 
 void arc_lifting_with_two_lines::create_surface(
 		surface_domain *Surf,
-	int *Arc6, int line1, int line2,
+	long int *Arc6, long int line1, long int line2,
 	int verbose_level)
 // line1 = b1
 // line2 = b2
@@ -68,7 +68,7 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << "arc_lifting_with_two_lines::create_surface" << endl;
 		cout << "line1=" << line1 << " line2=" << line2 << endl;
 		cout << "Arc6: ";
-		int_vec_print(cout, Arc6, 6);
+		lint_vec_print(cout, Arc6, 6);
 		cout << endl;
 	}
 
@@ -157,7 +157,7 @@ void arc_lifting_with_two_lines::create_surface(
 
 	if (f_vv) {
 		cout << "P[]: ";
-		int_vec_print(cout, P, 6);
+		lint_vec_print(cout, P, 6);
 		cout << endl;
 	}
 
@@ -190,7 +190,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"rearranged arc:" << endl;
-		int_vec_print(cout, P, 6);
+		lint_vec_print(cout, P, 6);
 		cout << endl;
 		int_matrix_print(Arc_coords, 6, 4);
 	}
@@ -205,7 +205,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"transversal:" << endl;
-		int_vec_print(cout, transversal, 4);
+		lint_vec_print(cout, transversal, 4);
 		cout << endl;
 		cout << "Transversals:" << endl;
 		int_matrix_print(Transversals, 8, 4);
@@ -401,9 +401,9 @@ void arc_lifting_with_two_lines::create_surface(
 	// a3 a4 a5 a6 a2 a1
 	// b3 b4 b5 b6 b2 b1
 
-	int five_pts[5];
-	int double_six_special[12];
-	int double_six[12];
+	long int five_pts[5];
+	long int double_six_special[12];
+	long int double_six[12];
 
 	five_pts[0] = transversal[0];
 	five_pts[1] = transversal[1];
@@ -414,7 +414,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"five_pts=";
-		int_vec_print(cout, five_pts, 5);
+		lint_vec_print(cout, five_pts, 5);
 		cout << endl;
 	}
 	if (f_vv) {
@@ -439,7 +439,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"double_six_special=";
-		int_vec_print(cout, double_six_special, 12);
+		lint_vec_print(cout, double_six_special, 12);
 		cout << endl;
 	}
 	double_six[0] = double_six_special[5];
@@ -458,10 +458,10 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"double_six=";
-		int_vec_print(cout, double_six, 12);
+		lint_vec_print(cout, double_six, 12);
 		cout << endl;
 	}
-	int_vec_copy(double_six, lines27, 12);
+	lint_vec_copy(double_six, lines27, 12);
 	Surf->create_the_fifteen_other_lines(double_six,
 			lines27 + 12, verbose_level - 10);
 

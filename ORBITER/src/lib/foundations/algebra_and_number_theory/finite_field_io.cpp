@@ -74,11 +74,11 @@ void finite_field::cheat_sheet_PG(int n,
 		f << "\\clearpage" << endl << endl;
 		f << "\\section{The Plane}" << endl;
 		char fname_base[1000];
-		int *set;
+		long int *set;
 		int i;
 		int rad = 17000;
 
-		set = NEW_int(P->N_points);
+		set = NEW_lint(P->N_points);
 		for (i = 0; i < P->N_points; i++) {
 			set[i] = i;
 			}
@@ -91,7 +91,7 @@ void finite_field::cheat_sheet_PG(int n,
 				FALSE /*f_sideways*/,
 				rad,
 				0 /* verbose_level */);
-		FREE_int(set);
+		FREE_lint(set);
 		f << "{\\scriptsize" << endl;
 		f << "$$" << endl;
 		f << "\\input " << fname_base << ".tex" << endl;
@@ -154,17 +154,17 @@ void finite_field::cheat_sheet_PG(int n,
 		S->latex_table_of_Eckardt_points(f);
 
 #if 1
-		int *Lines;
+		long int *Lines;
 
 		cout << "creating S_{3,1}:" << endl;
-		Lines = NEW_int(27);
+		Lines = NEW_lint(27);
 		S->create_special_double_six(Lines,
 				3 /*a*/, 1 /*b*/, 0 /* verbose_level */);
 		S->create_remaining_fifteen_lines(Lines,
 				Lines + 12, 0 /* verbose_level */);
 		P->Grass_lines->print_set(Lines, 27);
 
-		FREE_int(Lines);
+		FREE_lint(Lines);
 #endif
 		FREE_OBJECT(S);
 		}
@@ -1037,7 +1037,7 @@ void finite_field::cheat_sheet_bottom(ostream &f)
 
 
 void finite_field::display_table_of_projective_points(
-	ostream &ost, int *Pts, int nb_pts, int len)
+	ostream &ost, long int *Pts, int nb_pts, int len)
 {
 	int i;
 	int *coords;
@@ -1051,7 +1051,7 @@ void finite_field::display_table_of_projective_points(
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < nb_pts; i++) {
-		PG_element_unrank_modified(coords, 1, len, Pts[i]);
+		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
 		ost << i << " & " << Pts[i] << " & ";
 		int_vec_print(ost, coords, len);
 		ost << "\\\\" << endl;

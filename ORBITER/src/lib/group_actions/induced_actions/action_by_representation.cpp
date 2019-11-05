@@ -78,17 +78,17 @@ void action_by_representation::init_action_on_conic(
 	v3 = NEW_int(dimension);
 }
 
-int action_by_representation::compute_image_int(
-	action &A, int *Elt, int a, int verbose_level)
+long int action_by_representation::compute_image_int(
+	action &A, int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int b;
+	long int b;
 	
 	if (f_v) {
 		cout << "action_by_representation::compute_image_int" << endl;
 		}
-	F->PG_element_unrank_modified(v1, 1, dimension, a);
+	F->PG_element_unrank_modified_lint(v1, 1, dimension, a);
 	if (f_vv) {
 		cout << "action_by_representation::compute_image_int "
 				"a = " << a << " v1 = ";
@@ -103,7 +103,7 @@ int action_by_representation::compute_image_int(
 		cout << endl;
 		}
 
-	F->PG_element_rank_modified(v2, 1, dimension, b);
+	F->PG_element_rank_modified_lint(v2, 1, dimension, b);
 	if (f_v) {
 		cout << "action_by_representation::compute_image_int "
 				"done " << a << "->" << b << endl;

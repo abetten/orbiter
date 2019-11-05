@@ -112,13 +112,13 @@ void action_on_spread_set::init(action *A_PGL_n_q,
 		}
 }
 
-int action_on_spread_set::compute_image_int(int *Elt,
-		int rk, int verbose_level)
+long int action_on_spread_set::compute_image_int(int *Elt,
+		long int rk, int verbose_level)
 {
 	//verbose_level = 2;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, rk2;
+	long int i, rk2;
 	
 	if (f_v) {
 		cout << "action_on_spread_set::compute_image_int "
@@ -211,7 +211,7 @@ void action_on_spread_set::subspace_to_matrix(
 }
 
 void action_on_spread_set::unrank_point(
-		int rk, int *mtx, int verbose_level)
+		long int rk, int *mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -219,25 +219,25 @@ void action_on_spread_set::unrank_point(
 		cout << "action_on_spread_set::unrank_point "
 				"rk = " << rk << endl;
 		}
-	G_PGL_k_q->element_unrank_int(rk, Elt1);
+	G_PGL_k_q->element_unrank_lint(rk, Elt1);
 	int_vec_copy(Elt1, mtx, k * k);
 	if (f_v) {
 		cout << "action_on_spread_set::unrank_point done" << endl;
 		}
 }
 
-int action_on_spread_set::rank_point(
+long int action_on_spread_set::rank_point(
 		int *mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int rk;
+	long int rk;
 	
 	if (f_v) {
 		cout << "action_on_spread_set::rank_point" << endl;
 		}
 	A_PGL_k_q->make_element(Elt2, mtx, 0 /* verbose_level */);
 
-	rk = G_PGL_k_q->element_rank_int(Elt2);
+	rk = G_PGL_k_q->element_rank_lint(Elt2);
 	if (f_v) {
 		cout << "action_on_spread_set::rank_point done, rk = " << rk << endl;
 		}

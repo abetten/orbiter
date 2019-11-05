@@ -118,7 +118,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	int coefficients[3];
 
 
-	Surf->P->Grass_planes->unrank_int_here(
+	Surf->P->Grass_planes->unrank_lint_here(
 			Plane, plane_rk_global, 0);
 	F->Gauss_simple(Plane, 3, 4, base_cols,
 			0 /* verbose_level */);
@@ -201,7 +201,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 }
 
 void clebsch_map::init(surface_object *SO,
-		int *line_idx, int plane_rk_global, int verbose_level)
+		int *line_idx, long int plane_rk_global, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -215,7 +215,7 @@ void clebsch_map::init(surface_object *SO,
 	clebsch_map::plane_rk_global = plane_rk_global;
 
 
-	Clebsch_map = NEW_int(SO->nb_pts);
+	Clebsch_map = NEW_lint(SO->nb_pts);
 	Clebsch_coeff = NEW_int(SO->nb_pts * 4);
 
 	if (!Surf->clebsch_map(

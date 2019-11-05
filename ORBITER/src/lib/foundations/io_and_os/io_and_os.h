@@ -77,6 +77,8 @@ public:
 	void copy_file_to_ostream(std::ostream &ost, char *fname);
 	void int_vec_write_csv(int *v, int len,
 		const char *fname, const char *label);
+	void lint_vec_write_csv(long int *v, int len,
+		const char *fname, const char *label);
 	void int_vecs_write_csv(int *v1, int *v2, int len,
 		const char *fname,
 		const char *label1, const char *label2);
@@ -126,19 +128,19 @@ public:
 		int *&Casenumbers,
 		int verbose_level);
 	void read_set_from_file(const char *fname,
-		int *&the_set, int &set_size, int verbose_level);
+		long int *&the_set, int &set_size, int verbose_level);
 	void write_set_to_file(const char *fname,
-		int *the_set, int set_size, int verbose_level);
+		long int *the_set, int set_size, int verbose_level);
 	void read_set_from_file_lint(const char *fname,
 		long int *&the_set, int &set_size, int verbose_level);
 	void write_set_to_file_lint(const char *fname,
 		long int *the_set, int set_size, int verbose_level);
 	void read_set_from_file_int4(const char *fname,
-		int *&the_set, int &set_size, int verbose_level);
+		long int *&the_set, int &set_size, int verbose_level);
 	void read_set_from_file_int8(const char *fname,
 		long int *&the_set, int &set_size, int verbose_level);
 	void write_set_to_file_as_int4(const char *fname,
-		int *the_set, int set_size, int verbose_level);
+		long int *the_set, int set_size, int verbose_level);
 	void write_set_to_file_as_int8(const char *fname,
 		long int *the_set, int set_size, int verbose_level);
 	void read_k_th_set_from_file(const char *fname, int k,
@@ -240,17 +242,28 @@ public:
 		int m, int n, int *row_labels, int *col_labels, int f_tex);
 	void print_integer_matrix_with_standard_labels(std::ostream &ost,
 		int *p, int m, int n, int f_tex);
+	void print_lint_matrix_with_standard_labels(std::ostream &ost,
+		long int *p, int m, int n, int f_tex);
 	void print_integer_matrix_with_standard_labels_and_offset(std::ostream &ost,
 		int *p, int m, int n, int m_offset, int n_offset, int f_tex);
+	void print_lint_matrix_with_standard_labels_and_offset(std::ostream &ost,
+		long int *p, int m, int n, int m_offset, int n_offset, int f_tex);
 	void print_integer_matrix_tex_block_by_block(std::ostream &ost,
 		int *p, int m, int n, int block_width);
 	void print_integer_matrix_with_standard_labels_and_offset_text(std::ostream &ost,
 		int *p, int m, int n, int m_offset, int n_offset);
+	void print_lint_matrix_with_standard_labels_and_offset_text(
+		std::ostream &ost, long int *p, int m, int n, int m_offset, int n_offset);
 	void print_integer_matrix_with_standard_labels_and_offset_tex(std::ostream &ost,
 		int *p, int m, int n, int m_offset, int n_offset);
+	void print_lint_matrix_with_standard_labels_and_offset_tex(
+		std::ostream &ost, long int *p, int m, int n,
+		int m_offset, int n_offset);
 	void print_big_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
 	void int_vec_print_as_matrix(std::ostream &ost,
 		int *v, int len, int width, int f_tex);
+	void lint_vec_print_as_matrix(std::ostream &ost,
+		long int *v, int len, int width, int f_tex);
 	void int_matrix_print_with_labels_and_partition(std::ostream &ost, int *p,
 		int m, int n,
 		int *row_labels, int *col_labels,
@@ -266,6 +279,7 @@ public:
 			void (*point_label)(std::stringstream &sstr, int pt, void *data),
 			void *point_label_data);
 	void int_set_print_tex(std::ostream &ost, int *v, int len);
+	void lint_set_print_tex(std::ostream &ost, long int *v, int len);
 	void int_set_print_masked_tex(std::ostream &ost,
 		int *v, int len, const char *mask_begin, const char *mask_end);
 	void int_set_print_tex_for_inline_text(std::ostream &ost,
@@ -542,12 +556,15 @@ public:
 void int_vec_add(int *v1, int *v2, int *w, int len);
 void int_vec_add3(int *v1, int *v2, int *v3, int *w, int len);
 void int_vec_apply(int *from, int *through, int *to, int len);
+void int_vec_apply_lint(int *from, long int *through, long int *to, int len);
+void lint_vec_apply(long int *from, long int *through, long int *to, int len);
 int int_vec_is_constant_on_subset(int *v, int *subset, int sz, int &value);
 void int_vec_take_away(int *v, int &len, int *take_away, int nb_take_away);
 	// v must be sorted
 int int_vec_count_number_of_nonzero_entries(int *v, int len);
 int int_vec_find_first_nonzero_entry(int *v, int len);
 void int_vec_zero(int *v, int len);
+void lint_vec_zero(long int *v, int len);
 void int_vec_mone(int *v, int len);
 void int_vec_copy(int *from, int *to, int len);
 void lint_vec_copy(long int *from, long int *to, int len);
@@ -573,8 +590,9 @@ void int_vec_init5(int *v, int a0, int a1, int a2, int a3, int a4);
 void dump_memory_chain(void *allocated_objects);
 void print_vector(std::ostream &ost, int *v, int size);
 int int_vec_minimum(int *v, int len);
+long int lint_vec_minimum(long int *v, int len);
 int int_vec_maximum(int *v, int len);
-//void int_vec_copy(int len, int *from, int *to);
+long int lint_vec_maximum(long int *v, int len);
 int int_vec_first_difference(int *p, int *q, int len);
 void itoa(char *p, int len_of_p, int i);
 void char_swap(char *p, char *q, int len);
@@ -588,6 +606,7 @@ void int_vec_print(std::ostream &ost, int *v, int len);
 void lint_vec_print(std::ostream &ost, long int *v, int len);
 void int_vec_print_str(std::stringstream &ost, int *v, int len);
 void int_vec_print_as_table(std::ostream &ost, int *v, int len, int width);
+void lint_vec_print_as_table(std::ostream &ost, long int *v, int len, int width);
 void int_vec_print_fully(std::ostream &ost, int *v, int len);
 void lint_vec_print_fully(std::ostream &ost, long int *v, int len);
 void int_vec_print_Cpp(std::ostream &ost, int *v, int len);
@@ -632,7 +651,8 @@ void pint_matrix_shorten_rows(pint *&p, int m, int n);
 
 
 
-void print_set(std::ostream &ost, int size, int *set);
+void print_set(std::ostream &ost, int size, long int *set);
+void print_set_lint(std::ostream &ost, int size, long int *set);
 void block_swap_chars(char *ptr, int size, int no);
 void code_int4(char *&p, int_4 i);
 int_4 decode_int4(char *&p);

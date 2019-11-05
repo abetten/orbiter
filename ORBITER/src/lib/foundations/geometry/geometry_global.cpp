@@ -62,9 +62,10 @@ long int geometry_global::nb_AG_elements(int n, int q)
 	return NT.i_power_j_lint(q, n);
 }
 
-void geometry_global::AG_element_rank(int q, int *v, int stride, int len, int &a)
+long int geometry_global::AG_element_rank(int q, int *v, int stride, int len)
 {
 	int i;
+	long int a;
 
 	if (len <= 0) {
 		cout << "geometry_global::AG_element_rank len <= 0" << endl;
@@ -77,9 +78,10 @@ void geometry_global::AG_element_rank(int q, int *v, int stride, int len, int &a
 			a *= q;
 			}
 		}
+	return a;
 }
 
-void geometry_global::AG_element_unrank(int q, int *v, int stride, int len, int a)
+void geometry_global::AG_element_unrank(int q, int *v, int stride, int len, long int a)
 {
 	int i, b;
 
@@ -106,7 +108,7 @@ void geometry_global::AG_element_rank_longinteger(int q,
 	if (len <= 0) {
 		cout << "geometry_global::AG_element_rank_longinteger len <= 0" << endl;
 		exit(1);
-		}
+	}
 	a.create(0);
 	Q.create(q);
 	for (i = len - 1; i >= 0; i--) {
@@ -118,8 +120,8 @@ void geometry_global::AG_element_rank_longinteger(int q,
 			a.swap_with(a1);
 			//cout << "AG_element_rank_longinteger
 			//after mult " << a << endl;
-			}
 		}
+	}
 }
 
 void geometry_global::AG_element_unrank_longinteger(int q,
@@ -133,14 +135,14 @@ void geometry_global::AG_element_unrank_longinteger(int q,
 	if (len <= 0) {
 		cout << "geometry_global::AG_element_unrank_longinteger len <= 0" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < len; i++) {
 		D.integral_division_by_int(a0, q, a1, r);
 		//r = a % q;
 		v[i * stride] = r;
 		//a /= q;
 		a0.swap_with(a1);
-		}
+	}
 }
 
 
@@ -151,8 +153,8 @@ int geometry_global::PG_element_modified_is_in_subspace(int n, int m, int *v)
 	for (j = m + 1; j < n + 1; j++) {
 		if (v[j]) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
@@ -266,7 +268,7 @@ void geometry_global::add_term(int n, finite_field &F,
 
 
 void geometry_global::determine_conic(int q, const char *override_poly,
-		int *input_pts, int nb_pts, int verbose_level)
+		long int *input_pts, int nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -283,7 +285,7 @@ void geometry_global::determine_conic(int q, const char *override_poly,
 	if (f_v) {
 		cout << "determine_conic q=" << q << endl;
 		cout << "input_pts: ";
-		int_vec_print(cout, input_pts, nb_pts);
+		lint_vec_print(cout, input_pts, nb_pts);
 		cout << endl;
 		}
 	F.init_override_polynomial(q, override_poly, verbose_level);
@@ -308,7 +310,7 @@ void geometry_global::determine_conic(int q, const char *override_poly,
 		cout << endl;
 		}
 
-	int points[1000];
+	long int points[1000];
 	int nb_points;
 	//int v[3];
 
@@ -316,7 +318,7 @@ void geometry_global::determine_conic(int q, const char *override_poly,
 			points, nb_points, verbose_level - 2);
 	if (f_v) {
 		cout << "the " << nb_points << " conic points are: ";
-		int_vec_print(cout, points, nb_points);
+		lint_vec_print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);
@@ -356,7 +358,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 		for (i = 0; i < 3; i++) {
 			subset1[i] = set[subset[i]];
 			}
-		Sorting.int_vec_sort(3, subset1);
+		Sorting.int_vec_heapsort(subset1, 3);
 		if (f_vv) {
 			cout << "testing subset ";
 			int_vec_print(cout, subset1, 3);

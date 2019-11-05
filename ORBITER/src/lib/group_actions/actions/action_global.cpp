@@ -832,19 +832,19 @@ void lift_generators_to_subfield_structure(
 }
 
 
-int group_ring_element_size(action *A, sims *S)
+long int group_ring_element_size(action *A, sims *S)
 {
-	int goi;
+	long int goi;
 
-	goi = S->group_order_int();
+	goi = S->group_order_lint();
 	return goi;
 }
 
 void group_ring_element_create(action *A, sims *S, int *&elt)
 {
-	int goi;
+	long int goi;
 
-	goi = S->group_order_int();
+	goi = S->group_order_lint();
 	elt = NEW_int(goi);
 	group_ring_element_zero(A, S, elt);
 }
@@ -856,37 +856,37 @@ void group_ring_element_free(action *A, sims *S, int *elt)
 
 void group_ring_element_print(action *A, sims *S, int *elt)
 {
-	int goi;
+	long int goi;
 
-	goi = S->group_order_int();
+	goi = S->group_order_lint();
 	int_vec_print(cout, elt, goi);
 }
 
 void group_ring_element_copy(action *A, sims *S,
 		int *elt_from, int *elt_to)
 {
-	int goi;
+	long int goi;
 
-	goi = S->group_order_int();
+	goi = S->group_order_lint();
 	int_vec_copy(elt_from, elt_to, goi);
 }
 
 void group_ring_element_zero(action *A, sims *S, int *elt)
 {
-	int goi;
+	long int goi;
 
-	goi = S->group_order_int();
+	goi = S->group_order_lint();
 	int_vec_zero(elt, goi);
 }
 
 void group_ring_element_mult(action *A,
 		sims *S, int *elt1, int *elt2, int *elt3)
 {
-	int goi;
+	long int goi;
 	int i, j, k;
 	int a, b, c;
 
-	goi = S->group_order_int();
+	goi = S->group_order_lint();
 	int_vec_zero(elt3, goi);
 	for (i = 0; i < goi; i++) {
 		a = elt1[i];

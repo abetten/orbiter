@@ -948,12 +948,12 @@ int action_on_factor_space::rank_in_small_space(int *v)
 	return rk;
 }
 
-int action_on_factor_space::compute_image(action *A,
-		int *Elt, int i, int verbose_level)
+long int action_on_factor_space::compute_image(action *A,
+		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 2;
 	int f_v = (verbose_level >= 1);
-	int j;
+	long int j;
 	
 	if (f_v) {
 		cout << "action_on_factor_space::compute_"
