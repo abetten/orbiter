@@ -831,6 +831,14 @@ void latex_interface::print_integer_matrix_with_standard_labels(ostream &ost,
 
 }
 
+void latex_interface::print_lint_matrix_with_standard_labels(ostream &ost,
+	long int *p, int m, int n, int f_tex)
+{
+	print_lint_matrix_with_standard_labels_and_offset(ost,
+		p, m, n, 0, 0, f_tex);
+
+}
+
 void latex_interface::print_integer_matrix_with_standard_labels_and_offset(ostream &ost,
 	int *p, int m, int n, int m_offset, int n_offset, int f_tex)
 {
@@ -840,6 +848,19 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset(ostre
 		}
 	else {
 		print_integer_matrix_with_standard_labels_and_offset_text(
+			ost, p, m, n, m_offset, n_offset);
+		}
+}
+
+void latex_interface::print_lint_matrix_with_standard_labels_and_offset(ostream &ost,
+	long int *p, int m, int n, int m_offset, int n_offset, int f_tex)
+{
+	if (f_tex) {
+		print_lint_matrix_with_standard_labels_and_offset_tex(
+			ost, p, m, n, m_offset, n_offset);
+		}
+	else {
+		print_lint_matrix_with_standard_labels_and_offset_text(
 			ost, p, m, n, m_offset, n_offset);
 		}
 }
@@ -867,8 +888,55 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
 		}
 }
 
+void latex_interface::print_lint_matrix_with_standard_labels_and_offset_text(
+	ostream &ost, long int *p, int m, int n, int m_offset, int n_offset)
+{
+	int i, j, w;
+
+	w = lint_matrix_max_log_of_entries(p, m, n);
+
+	for (j = 0; j < w; j++) {
+		ost << " ";
+		}
+	for (j = 0; j < n; j++) {
+		ost << " " << setw(w) << n_offset + j;
+		}
+	ost << endl;
+	for (i = 0; i < m; i++) {
+		ost << setw(w) << m_offset + i;
+		for (j = 0; j < n; j++) {
+			ost << " " << setw(w) << p[i * n + j];
+			}
+		ost << endl;
+		}
+}
+
 void latex_interface::print_integer_matrix_with_standard_labels_and_offset_tex(
 	ostream &ost, int *p, int m, int n,
+	int m_offset, int n_offset)
+{
+	int i, j;
+
+	ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
+
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i;
+		for (j = 0; j < n; j++) {
+			ost << " & " << p[i * n + j];
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
+void latex_interface::print_lint_matrix_with_standard_labels_and_offset_tex(
+	ostream &ost, long int *p, int m, int n,
 	int m_offset, int n_offset)
 {
 	int i, j;
@@ -978,6 +1046,24 @@ void latex_interface::int_vec_print_as_matrix(ostream &ost,
 		w, (len + width - 1) / width, width, f_tex);
 
 	FREE_int(w);
+}
+
+void latex_interface::lint_vec_print_as_matrix(ostream &ost,
+	long int *v, int len, int width, int f_tex)
+{
+	long int *w;
+	int i;
+
+	w = NEW_lint(len + width - 1);
+	lint_vec_copy(v, w, len);
+	for (i = 0; i < width - 1; i++) {
+		w[len + i] = 0;
+		}
+
+	print_lint_matrix_with_standard_labels(ost,
+		w, (len + width - 1) / width, width, f_tex);
+
+	FREE_lint(w);
 }
 
 
@@ -1113,6 +1199,19 @@ void latex_interface::print_cycle_tex_with_special_point_labels(
 }
 
 void latex_interface::int_set_print_tex(ostream &ost, int *v, int len)
+{
+	int i;
+
+	ost << "\\{ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " \\}";
+}
+
+void latex_interface::lint_set_print_tex(ostream &ost, long int *v, int len)
 {
 	int i;
 

@@ -158,9 +158,9 @@ int andre_construction_line_element::rank(int verbose_level)
 			a = coordinates[k * n + j];
 			coset[i] = a;
 			}
-		Gg.AG_element_rank(q, coset, 1, n - k, coset_idx);
+		coset_idx = Gg.AG_element_rank(q, coset, 1, n - k);
 
-		rk = Andre->Grass->rank_int_here(
+		rk = Andre->Grass->rank_lint_here(
 				coordinates, 0 /* verbose_level*/);
 		if (!Sorting.int_vec_search(Andre->spread_elements_numeric_sorted,
 				spread_size, rk, idx)) {
@@ -199,7 +199,7 @@ int andre_construction_line_element::make_affine_point(
 	F->mult_vector_from_the_left(vec1, coordinates, vec2, k + 1, n);
 
 	point_rank = spread_size;
-	Gg.AG_element_rank(q, vec2, 1, n, a);
+	a = Gg.AG_element_rank(q, vec2, 1, n);
 	point_rank += a;
 
 	FREE_int(vec1);

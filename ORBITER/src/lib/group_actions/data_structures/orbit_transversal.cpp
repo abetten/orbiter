@@ -232,7 +232,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	}
 }
 
-classify *orbit_transversal::get_ago_distribution(int *&ago,
+classify *orbit_transversal::get_ago_distribution(long int *&ago,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -245,13 +245,13 @@ classify *orbit_transversal::get_ago_distribution(int *&ago,
 		cout << "orbit_transversal::get_ago_distribution "
 				"nb_orbits = " << nb_orbits << endl;
 	}
-	ago = NEW_int(nb_orbits);
+	ago = NEW_lint(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
-		ago[i] = Reps[i].group_order_as_int();
+		ago[i] = Reps[i].group_order_as_lint();
 	}
 	classify *C;
 	C = NEW_OBJECT(classify);
-	C->init(ago, nb_orbits, FALSE, 0);
+	C->init_lint(ago, nb_orbits, FALSE, 0);
 	if (f_v) {
 		cout << "orbit_transversal::get_ago_distribution done" << endl;
 	}
@@ -261,7 +261,7 @@ classify *orbit_transversal::get_ago_distribution(int *&ago,
 void orbit_transversal::report_ago_distribution(ostream &ost)
 {
 	classify *C;
-	int *Ago;
+	long int *Ago;
 	int i, f, l, a;
 
 	C = get_ago_distribution(Ago, 0 /*verbose_level*/);
@@ -274,7 +274,7 @@ void orbit_transversal::report_ago_distribution(ostream &ost)
 		ost << "There are " << l << " orbits with a stabilizer of order " << a << "\\\\" << endl;
 		}
 
-	FREE_int(Ago);
+	FREE_lint(Ago);
 }
 
 void orbit_transversal::print_table_latex(
@@ -316,7 +316,7 @@ void orbit_transversal::print_table_latex(
 				Reps[i].Strong_gens->group_order(go);
 
 				f << i << " & ";
-				int_vec_print(f, Reps[i].data, Reps[i].sz);
+				lint_vec_print(f, Reps[i].data, Reps[i].sz);
 				f << " & " << go;
 				if (f_has_callback) {
 					f << " & ";

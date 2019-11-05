@@ -77,11 +77,11 @@ void action_by_conjugation::init(sims *Base_group,
 		}
 }
 
-int action_by_conjugation::compute_image(action *A,
-		int *Elt, int i, int verbose_level)
+long int action_by_conjugation::compute_image(action *A,
+		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int j;
+	long int j;
 
 	if (f_v) {
 		cout << "action_by_conjugation::compute_image "
@@ -93,10 +93,10 @@ int action_by_conjugation::compute_image(action *A,
 		exit(1);
 		}
 	A->invert(Elt, Elt2);
-	Base_group->element_unrank_int(i, Elt1);
+	Base_group->element_unrank_lint(i, Elt1);
 	A->mult(Elt2, Elt1, Elt3);
 	A->mult(Elt3, Elt, Elt1);
-	j = Base_group->element_rank_int(Elt1);
+	j = Base_group->element_rank_lint(Elt1);
 	if (f_v) {
 		cout << "action_by_conjugation::compute_image "
 				"image is " << j << endl;
@@ -104,20 +104,20 @@ int action_by_conjugation::compute_image(action *A,
 	return j;
 }
 
-int action_by_conjugation::rank(int *Elt)
+long int action_by_conjugation::rank(int *Elt)
 {
-	int j;
+	long int j;
 
-	j = Base_group->element_rank_int(Elt);
+	j = Base_group->element_rank_lint(Elt);
 
 	return j;
 }
 
-int action_by_conjugation::multiply(action *A,
-		int i, int j, int verbose_level)
+long int action_by_conjugation::multiply(action *A,
+		long int i, long int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int k;
+	long int k;
 
 	if (f_v) {
 		cout << "action_by_conjugation::multiply" << endl;
@@ -132,10 +132,10 @@ int action_by_conjugation::multiply(action *A,
 				"j = " << j << " out of range" << endl;
 		exit(1);
 		}
-	Base_group->element_unrank_int(i, Elt1);
-	Base_group->element_unrank_int(j, Elt2);
+	Base_group->element_unrank_lint(i, Elt1);
+	Base_group->element_unrank_lint(j, Elt2);
 	A->mult(Elt1, Elt2, Elt3);
-	k = Base_group->element_rank_int(Elt3);
+	k = Base_group->element_rank_lint(Elt3);
 	if (f_v) {
 		cout << "action_by_conjugation::multiply "
 				"the product is " << k << endl;

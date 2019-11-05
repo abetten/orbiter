@@ -1489,7 +1489,7 @@ int diophant::solve_first_betten(int verbose_level)
 				Gij(i, j) = g;
 				j--;
 				for (; j >= 0; j--) {
-					g = NT.gcd_int(Aij(i, j + 1), g);
+					g = NT.gcd_lint(Aij(i, j + 1), g);
 					Gij(i, j) = g;
 				}
 			}
@@ -3727,7 +3727,7 @@ void diophant::get_columns(int *col, int nb_col,
 				d++;
 			}
 		}
-		S->Sets[h] = NEW_int(d);
+		S->Sets[h] = NEW_lint(d);
 		S->Set_size[h] = d;
 		d = 0;
 		for (i = 0; i < m; i++) {

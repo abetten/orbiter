@@ -567,7 +567,7 @@ int semifield_classify::rank_point(int *v, int verbose_level)
 				"The rank of" << endl;
 		int_matrix_print(A_on_S->mtx1, k, k);
 		}
-	rk = G->element_rank_int(Elt1);
+	rk = G->element_rank_lint(Elt1);
 	if (f_vv) {
 		cout << "is " << rk << endl;
 		}
@@ -592,7 +592,7 @@ void semifield_classify::unrank_point(int *v, int rk, int verbose_level)
 		cout << "degree=" << AS->degree << endl;
 		exit(1);
 		}
-	G->element_unrank_int(rk, Elt1);
+	G->element_unrank_lint(rk, Elt1);
 	int_vec_copy(Elt1, v, k2);
 	if (f_vv) {
 		cout << "semifield_classify::unrank_point "
@@ -1098,7 +1098,7 @@ void semifield_classify::candidates_classify_by_first_column(
 			t = Mtx[(window_bottom - u) * k + 0];
 			window[u] = t;
 			}
-		Gg.AG_element_rank(q, window, 1, window_size, w);
+		w = Gg.AG_element_rank(q, window, 1, window_size);
 		Set_sz[w]++;
 		}
 	if (f_vv) {
@@ -1130,7 +1130,7 @@ void semifield_classify::candidates_classify_by_first_column(
 			t = Mtx[(window_bottom - u) * k + 0];
 			window[u] = t;
 			}
-		Gg.AG_element_rank(q, window, 1, window_size, w);
+		w = Gg.AG_element_rank(q, window, 1, window_size);
 
 		// zero out the first column to make it fit into a machine word:
 

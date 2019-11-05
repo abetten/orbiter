@@ -36,12 +36,12 @@ void action_on_sets::free()
 	
 	if (sets) {
 		for (i = 0; i < nb_sets; i++) {
-			FREE_int(sets[i]);
+			FREE_lint(sets[i]);
 			}
-		FREE_pint(sets);
+		FREE_plint(sets);
 		}
 	if (image_set) {
-		FREE_int(image_set);
+		FREE_lint(image_set);
 		}
 	if (perm) {
 		FREE_int(perm);
@@ -54,7 +54,7 @@ void action_on_sets::free()
 
 
 void action_on_sets::init(int nb_sets,
-		int set_size, int *input_sets,
+		int set_size, long int *input_sets,
 		int verbose_level)
 {
 	int i, j;
@@ -70,8 +70,8 @@ void action_on_sets::init(int nb_sets,
 		}
 	action_on_sets::nb_sets = nb_sets;
 	action_on_sets::set_size = set_size;
-	sets = NEW_pint(nb_sets);
-	image_set = NEW_int(set_size);
+	sets = NEW_plint(nb_sets);
+	image_set = NEW_lint(set_size);
 	perm = NEW_int(nb_sets);
 	perm_inv = NEW_int(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
@@ -79,14 +79,14 @@ void action_on_sets::init(int nb_sets,
 		perm_inv[i] = i;
 		}
 	for (i = 0; i < nb_sets; i++) {
-		sets[i] = NEW_int(set_size);
+		sets[i] = NEW_lint(set_size);
 		for (j = 0; j < set_size; j++) {
 			sets[i][j] = input_sets[i * set_size + j];
 			}
-		Sorting.int_vec_quicksort_increasingly(sets[i], set_size);
+		Sorting.lint_vec_quicksort_increasingly(sets[i], set_size);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";
-			int_vec_print(cout, sets[i], set_size);
+			lint_vec_print(cout, sets[i], set_size);
 			cout << endl;
 			}
 		}
@@ -127,12 +127,13 @@ void action_on_sets::init(int nb_sets,
 		}
 }
 
-void action_on_sets::compute_image(action *A,
-		int *Elt, int i, int &j, int verbose_level)
+long int action_on_sets::compute_image(action *A,
+		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int idx, res;
+	long int j;
 	sorting Sorting;
 
 	if (f_v) {
@@ -156,7 +157,7 @@ void action_on_sets::compute_image(action *A,
 		}
 	if (f_vv) {
 		cout << "sets[perm[i]]:" << endl;
-		int_vec_print(cout, sets[perm[i]], set_size);
+		lint_vec_print(cout, sets[perm[i]], set_size);
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << sets[perm[i]][j] << " : " << endl;
@@ -172,7 +173,7 @@ void action_on_sets::compute_image(action *A,
 			0);
 	if (f_vv) {
 		cout << "after map_a_set_and_reorder:" << endl;
-		int_vec_print(cout, image_set, set_size);
+		lint_vec_print(cout, image_set, set_size);
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
@@ -203,14 +204,14 @@ void action_on_sets::compute_image(action *A,
 		cout << "i=" << i << endl;
 		cout << "perm[i]=" << perm[i] << endl;
 		cout << "sets[perm[i]]:" << endl;
-		int_vec_print_fully(cout, sets[perm[i]], set_size);
+		lint_vec_print_fully(cout, sets[perm[i]], set_size);
 		cout << endl;
 		cout << "image_set:" << endl;
-		int_vec_print_fully(cout, image_set, set_size);
+		lint_vec_print_fully(cout, image_set, set_size);
 		cout << endl;
 		for (u = 0; u < nb_sets; u++) {
 			cout << u << " : ";
-			int_vec_print(cout, sets[u], set_size);
+			lint_vec_print(cout, sets[u], set_size);
 			cout << endl;
 			}
 		for (u = 0; u < set_size; u++) {
@@ -240,6 +241,7 @@ void action_on_sets::compute_image(action *A,
 				"j=" << j << " out of range" << endl;
 		exit(1);
 		}
+	return j;
 }
 
 void action_on_sets::print_sets_sorted()
@@ -249,7 +251,7 @@ void action_on_sets::print_sets_sorted()
 	cout << "the sets in the sorted ordering:" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		cout << "set " << i << " : is " << perm_inv[i] << " : ";
-		int_vec_print(cout, sets[i], set_size);
+		lint_vec_print(cout, sets[i], set_size);
 		cout << endl;
 		}
 }
@@ -261,7 +263,7 @@ void action_on_sets::print_sets_in_original_ordering()
 	cout << "the sets in the original ordering:" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		cout << "set " << i << " : is " << perm[i] << " : ";
-		int_vec_print(cout, sets[perm[i]], set_size);
+		lint_vec_print(cout, sets[perm[i]], set_size);
 		cout << endl;
 		}
 }
@@ -288,22 +290,22 @@ void action_on_sets::test_sets()
 int action_on_sets_compare(void *a, void *b, void *data)
 {
 	action_on_sets *AOS = (action_on_sets *) data;
-	int *A = (int *)a;
-	int *B = (int *)b;
+	long int *A = (long int *)a;
+	long int *B = (long int *)b;
 	int c;
 	
-	c = int_vec_compare(A, B, AOS->set_size);
+	c = lint_vec_compare(A, B, AOS->set_size);
 	return c;
 }
 
 int action_on_sets_compare_inverted(void *a, void *b, void *data)
 {
 	action_on_sets *AOS = (action_on_sets *) data;
-	int *A = (int *)a;
-	int *B = (int *)b;
+	long int *A = (long int *)a;
+	long int *B = (long int *)b;
 	int c;
 	
-	c = int_vec_compare(B, A, AOS->set_size);
+	c = lint_vec_compare(B, A, AOS->set_size);
 	return c;
 }
 

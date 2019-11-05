@@ -79,10 +79,10 @@ void action_on_flags::init(action *A, int *type,
 		}
 }
 
-int action_on_flags::compute_image(int *Elt, int i, int verbose_level)
+long int action_on_flags::compute_image(int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int h, j;
+	long int h, j;
 
 	if (f_v) {
 		cout << "action_on_flags::compute_image "

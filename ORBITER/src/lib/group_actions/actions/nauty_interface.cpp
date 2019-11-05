@@ -1105,7 +1105,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 
 		cout << "the group order is: " << goi << endl;
 		for (i = 0; i < goi; i++) {
-			S->element_unrank_int(i, Elt);
+			S->element_unrank_lint(i, Elt);
 			if (Elt[0] < m_half) {
 				continue; // not a duality
 				}

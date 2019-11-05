@@ -62,7 +62,7 @@ int orthogonal::rank_point(int *v, int stride, int verbose_level)
 }
 
 
-void orthogonal::unrank_line(int &p1, int &p2,
+void orthogonal::unrank_line(long int &p1, long int &p2,
 		long int rk, int verbose_level)
 {
 	if (epsilon == 1) {
@@ -79,7 +79,7 @@ void orthogonal::unrank_line(int &p1, int &p2,
 		}
 }
 
-long int orthogonal::rank_line(int p1, int p2, int verbose_level)
+long int orthogonal::rank_line(long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int ret;
@@ -104,7 +104,7 @@ long int orthogonal::rank_line(int p1, int p2, int verbose_level)
 }
 
 int orthogonal::line_type_given_point_types(
-		int pt1, int pt2, int pt1_type, int pt2_type)
+		long int pt1, long int pt2, long int pt1_type, long int pt2_type)
 {
 	if (epsilon == 1) {
 		return hyperbolic_line_type_given_point_types(
@@ -122,7 +122,7 @@ int orthogonal::line_type_given_point_types(
 }
 
 int orthogonal::type_and_index_to_point_rk(
-		int type, int index, int verbose_level)
+		long int type, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret;
@@ -162,7 +162,7 @@ int orthogonal::type_and_index_to_point_rk(
 }
 
 void orthogonal::point_rk_to_type_and_index(
-		int rk, int &type, int &index,
+		long int rk, long int &type, long int &index,
 		int verbose_level)
 {
 	if (epsilon == 1) {
@@ -180,8 +180,8 @@ void orthogonal::point_rk_to_type_and_index(
 }
 
 void orthogonal::canonical_points_of_line(
-	int line_type, int pt1, int pt2,
-	int &cpt1, int &cpt2, int verbose_level)
+	int line_type, long int pt1, long int pt2,
+	long int &cpt1, long int &cpt2, int verbose_level)
 {
 	if (epsilon == 1) {
 		hyperbolic_canonical_points_of_line(line_type,

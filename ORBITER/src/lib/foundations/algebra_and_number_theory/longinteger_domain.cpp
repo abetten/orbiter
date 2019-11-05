@@ -494,6 +494,50 @@ void longinteger_domain::multiply_up(
 		}
 }
 
+void longinteger_domain::multiply_up_lint(
+		longinteger_object &a, long int *x, int len, int verbose_level)
+{
+	longinteger_object b, c;
+	int i;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "longinteger_domain::multiply_up_lint" << endl;
+		}
+	a.one();
+	if (f_v) {
+		cout << "longinteger_domain::multiply_up_lint "
+				"a=" << a << endl;
+		}
+	for (i = 0; i < len; i++) {
+		if (x[i] == 1) {
+			continue;
+		}
+		b.create(x[i]);
+		if (f_v) {
+			cout << "longinteger_domain::multiply_up_lint "
+					"i=" << i << " x[i]=" << x[i]
+					<< " b=" << b << endl;
+			}
+		mult(a, b, c);
+		if (f_v) {
+			cout << "longinteger_domain::multiply_up_lint "
+					"i=" << i << " x[i]=" << x[i]
+					<< " c=" << c << endl;
+			}
+		c.assign_to(a);
+		if (f_v) {
+			cout << "longinteger_domain::multiply_up_lint "
+					"i=" << i << " x[i]=" << x[i]
+					<< " a=" << a << endl;
+			}
+		//cout << "*" << x[i] << "=" << a << endl;
+		}
+	if (f_v) {
+		cout << "longinteger_domain::multiply_up_lint done" << endl;
+		}
+}
+
 int longinteger_domain::quotient_as_int(
 		longinteger_object &a, longinteger_object &b)
 {

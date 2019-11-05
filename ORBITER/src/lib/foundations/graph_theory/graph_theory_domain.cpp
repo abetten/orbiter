@@ -357,8 +357,8 @@ void graph_theory_domain::save_as_colored_graph_easy(
 
 void graph_theory_domain::save_colored_graph(const char *fname,
 	int nb_vertices, int nb_colors, int nb_colors_per_vertex,
-	int *points, int *point_color,
-	int *data, int data_sz,
+	long int *points, int *point_color,
+	long int *data, int data_sz,
 	uchar *bitvector_adjacency, long int bitvector_length,
 	int verbose_level)
 {
@@ -388,11 +388,11 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 		fp.write((char *) &nb_colors_per_vertex, sizeof(int));
 		fp.write((char *) &data_sz, sizeof(int));
 		for (i = 0; i < data_sz; i++) {
-			fp.write((char *) &data[i], sizeof(int));
+			fp.write((char *) &data[i], sizeof(long int));
 		}
 		for (i = 0; i < nb_vertices; i++) {
 			if (points) {
-				fp.write((char *) &points[i], sizeof(int));
+				fp.write((char *) &points[i], sizeof(long int));
 				}
 			else {
 				a = 0;
@@ -414,8 +414,8 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 
 void graph_theory_domain::load_colored_graph(const char *fname,
 	int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
-	int *&vertex_labels, int *&vertex_colors,
-	int *&user_data, int &user_data_size,
+	long int *&vertex_labels, int *&vertex_colors,
+	long int *&user_data, int &user_data_size,
 	uchar *&bitvector_adjacency, long int &bitvector_length,
 	int verbose_level)
 {
@@ -460,17 +460,17 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 				cout << "load_colored_graph user_data_size="
 						<< user_data_size << endl;
 				}
-			user_data = NEW_int(user_data_size);
+			user_data = NEW_lint(user_data_size);
 
 			for (i = 0; i < user_data_size; i++) {
-				fp.read((char *) &user_data[i], sizeof(int));
+				fp.read((char *) &user_data[i], sizeof(long int));
 				}
 
-			vertex_labels = NEW_int(nb_vertices);
+			vertex_labels = NEW_lint(nb_vertices);
 			vertex_colors = NEW_int(nb_vertices * nb_colors_per_vertex);
 
 			for (i = 0; i < nb_vertices; i++) {
-				fp.read((char *) &vertex_labels[i], sizeof(int));
+				fp.read((char *) &vertex_labels[i], sizeof(long int));
 				for (j = 0; j < nb_colors_per_vertex; j++) {
 					fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
 					if (vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors) {
@@ -513,7 +513,7 @@ void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
 	int (*is_adjacent_callback)(int i, int j, void *data),
 	void *is_adjacent_callback_data,
 	int f_colors, int nb_colors, int *point_color,
-	int f_point_labels, int *point_label)
+	int f_point_labels, long int *point_label)
 {
 	long int i, j, h, d;
 	int aij = 0;

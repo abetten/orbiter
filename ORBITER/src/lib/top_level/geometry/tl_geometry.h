@@ -258,7 +258,7 @@ public:
 	int row_col_Eckardt_points[6];
 	int *Dual_point_ranks; // [nb_T * 6]
 	int *base_curves; // [4 * 10]
-	int Lines27[27];
+	long int Lines27[27];
 
 
 	int The_six_plane_equations[6 * 4]; // [6 * 4]
@@ -277,7 +277,7 @@ public:
 	vector_ge *cosets;
 
 	vector_ge *coset_reps;
-	int nine_lines[9];
+	long int nine_lines[9];
 	int *aut_T_index;
 	int *aut_coset_index;
 	strong_generators *Aut_gens;
@@ -842,18 +842,18 @@ public:
 	int nb_neighbors;
 		// = (q + 1) * q * (q + 1)
 
-	int *Neighbors; // [nb_neighbors] 
+	long int *Neighbors; // [nb_neighbors]
 		// The lines which intersect the special line. 
 		// In wedge ranks.
 		// The array Neighbors is sorted.
 
-	int *Neighbor_to_line; // [nb_neighbors] 
+	long int *Neighbor_to_line; // [nb_neighbors]
 		// The lines which intersect the special line. 
 		// In grassmann (i.e., line) ranks.
-	int *Neighbor_to_klein; // [nb_neighbors] 
+	long int *Neighbor_to_klein; // [nb_neighbors]
 		// In orthogonal ranks (i.e., points on the Klein quadric).
 
-	int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
+	long int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
 	
 	longinteger_object go, stab_go;
 	sims *Stab;
@@ -862,22 +862,22 @@ public:
 	int *orbit;
 	int orbit_len;
 
-	int pt0_idx_in_orbit;
-	int pt0_wedge;
-	int pt0_line;
-	int pt0_klein;
+	long int pt0_idx_in_orbit;
+	long int pt0_wedge;
+	long int pt0_line;
+	long int pt0_klein;
 
 
 	int Basis[8];
 	int *line_to_orbit; // [nb_lines_PG_3]
-	int *orbit_to_line; // [nb_lines_PG_3]
+	long int *orbit_to_line; // [nb_lines_PG_3]
 
-	int *Pts_klein;
-	int *Pts_wedge;
+	long int *Pts_klein;
+	long int *Pts_wedge;
 	int nb_pts;
 	
-	int *Pts_wedge_to_line; // [nb_pts]
-	int *line_to_pts_wedge; // [nb_lines_PG_3]
+	long int *Pts_wedge_to_line; // [nb_pts]
+	long int *line_to_pts_wedge; // [nb_lines_PG_3]
 
 	action *A_on_neighbors; 
 		// restricted action A2 on the set Neighbors[]
@@ -901,7 +901,7 @@ public:
 		// Po[Flag_orbits->nb_flag_orbits], 
 		//list of orbits for which a double six exists
 
-	int *Pts_for_partial_ovoid_test; // [5*6]
+	long int *Pts_for_partial_ovoid_test; // [5*6]
 
 	
 	flag_orbits *Flag_orbits;

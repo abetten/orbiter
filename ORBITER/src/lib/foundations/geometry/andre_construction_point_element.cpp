@@ -104,7 +104,7 @@ int andre_construction_point_element::rank(int verbose_level)
 		}
 	else {
 		point_rank = spread_size;
-		Gg.AG_element_rank(q, coordinates, 1, n, a);
+		a = Gg.AG_element_rank(q, coordinates, 1, n);
 		point_rank += a;
 		}
 	if (f_v) {

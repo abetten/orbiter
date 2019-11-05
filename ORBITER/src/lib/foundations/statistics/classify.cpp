@@ -20,6 +20,7 @@ namespace foundations {
 classify::classify()
 {
 	data_length = 0;
+	f_data_ownership = FALSE;
 	data = NULL;
 	data_sorted = NULL;
 	sorting_perm = NULL;
@@ -41,6 +42,9 @@ classify::classify()
 classify::~classify()
 {
 	//cout << "in ~classify()" << endl;
+	if (f_data_ownership) {
+		FREE_int(data);
+	}
 	if (data_sorted)
 		FREE_int(data_sorted);
 	if (sorting_perm)
@@ -72,6 +76,7 @@ void classify::init(int *data,
 	if (f_v) {
 		cout << "classify::init" << endl;
 		}
+	f_data_ownership = FALSE;
 	classify::data = data;
 	classify::data_length = data_length;
 	classify::f_second = f_second;
@@ -111,6 +116,67 @@ void classify::init(int *data,
 		}
 	if (f_v) {
 		cout << "classify::init done" << endl;
+		}
+}
+
+void classify::init_lint(long int *data,
+		int data_length, int f_second, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *data_int;
+	int i;
+
+	if (f_v) {
+		cout << "classify::init_lint" << endl;
+		}
+	data_int = NEW_int(data_length);
+	for (i = 0; i < data_length; i++) {
+		data_int[i] = (int) data[i];
+		if (data_int[i] != data[i]) {
+			cout << "classify::init_lint data loss" << endl;
+			exit(1);
+		}
+	}
+	f_data_ownership = TRUE;
+	classify::data = data_int;
+	classify::data_length = data_length;
+	classify::f_second = f_second;
+
+#if 0
+	int_vec_classify(data_length, data, data_sorted,
+		sorting_perm, sorting_perm_inv,
+		nb_types, type_first, type_len);
+#endif
+
+	data_sorted = NEW_int(data_length);
+	sorting_perm = NEW_int(data_length);
+	sorting_perm_inv = NEW_int(data_length);
+	type_first = NEW_int(data_length);
+	type_len = NEW_int(data_length);
+
+	sort_and_classify();
+
+
+
+	if (f_second) {
+
+		second_data_sorted = NEW_int(nb_types);
+		second_sorting_perm = NEW_int(nb_types);
+		second_sorting_perm_inv = NEW_int(nb_types);
+		second_type_first = NEW_int(nb_types);
+		second_type_len = NEW_int(nb_types);
+
+		sort_and_classify_second();
+
+#if 0
+		int_vec_classify(nb_types, type_len, second_data_sorted,
+			second_sorting_perm, second_sorting_perm_inv,
+			second_nb_types, second_type_first, second_type_len);
+#endif
+
+		}
+	if (f_v) {
+		cout << "classify::init_lint done" << endl;
 		}
 }
 

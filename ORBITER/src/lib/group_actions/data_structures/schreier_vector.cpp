@@ -656,7 +656,7 @@ void schreier_vector::orbit_stats(
 }
 
 void schreier_vector::orbit_of_point(
-		int pt, int *&orbit_elts, int &orbit_len,
+		int pt, long int *&orbit_elts, int &orbit_len,
 		int verbose_level)
 {
 	int i, idx;
@@ -682,7 +682,7 @@ void schreier_vector::orbit_of_point(
 
 	if (nb_gen == 0) {
 		orbit_len = 1;
-		orbit_elts = NEW_int(orbit_len);
+		orbit_elts = NEW_lint(orbit_len);
 		orbit_elts[0] = pt;
 		return;
 	}
@@ -748,14 +748,14 @@ void schreier_vector::orbit_of_point(
 		cout << "schreier_vector::orbit_of_point "
 				"found orbit of length " << orbit_len << endl;
 		}
-	orbit_elts = NEW_int(orbit_len);
+	orbit_elts = NEW_lint(orbit_len);
 	for (i = 0; i < orbit_len; i++) {
 		orbit_elts[i] = pts[orbit_elt_idx[i]];
 		}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
 				"the points in the orbit are: ";
-		int_vec_print(cout, orbit_elts, orbit_len);
+		lint_vec_print(cout, orbit_elts, orbit_len);
 		cout << endl;
 		}
 	if (orbit_elts[0] != pt) {
@@ -964,7 +964,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	int len;
 	int *horizontal_position;
 	int n, i, j, l, max_depth;
-	int *orbit_elts;
+	long int *orbit_elts;
 	int *orbit_prev;
 	int *orbit_depth;
 	int *points;
@@ -1102,7 +1102,7 @@ void schreier_vector::export_tree_as_layered_graph(
 			if (orbit_prev[n1] != -1) {
 				int pt;
 				pt = orbit_prev[n1];
-				if (!Sorting.int_vec_search(orbit_elts, len, pt, n2)) {
+				if (!Sorting.lint_vec_search(orbit_elts, len, pt, n2, 0)) {
 					cout << "schreier_vector::export_tree_as_layered_graph "
 							"could not find point" << endl;
 					exit(1);
@@ -1135,7 +1135,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	for (j = 0; j < len; j++) {
 		char text[1000];
 
-		sprintf(text, "%d", orbit_elts[j]);
+		sprintf(text, "%ld", orbit_elts[j]);
 		l = orbit_depth[j];
 		LG->add_text(l, horizontal_position[j],
 				text, 0/*verbose_level*/);
@@ -1150,7 +1150,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	FREE_int(Nb1);
 	FREE_int(horizontal_position);
 
-	FREE_int(orbit_elts);
+	FREE_lint(orbit_elts);
 	FREE_int(orbit_prev);
 	FREE_int(orbit_depth);
 

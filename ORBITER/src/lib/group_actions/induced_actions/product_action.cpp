@@ -98,11 +98,11 @@ void product_action::init(action *A1, action *A2,
 	//Elts->add_elt_print_function(elt_print, (void *) this);
 }
 
-int product_action::compute_image(action *A,
-		int *Elt, int i, int verbose_level)
+long int product_action::compute_image(action *A,
+		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 1;
-	int x, y, xx, yy, j;
+	long int x, y, xx, yy, j;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 

@@ -42,7 +42,7 @@ void create_factor_group(action *A, sims *S, int goi,
 		cout << "the subgroup is:" << endl;
 		for (i = 0; i < size_subgroup; i++) {
 			cout << i << " element has rank " << subgroup[i] << endl;
-			S->element_unrank_int(subgroup[i], Elt1);
+			S->element_unrank_lint(subgroup[i], Elt1);
 			A->print(cout, Elt1);
 			//A->print_as_permutation(cout, Elt1);
 			cout << endl;

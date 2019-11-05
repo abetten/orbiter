@@ -251,7 +251,7 @@ public:
 		int len, sims *S, int verbose_level);
 	int test_if_all_elements_stabilize_a_point(action *A2, int pt);
 	int test_if_all_elements_stabilize_a_set(action *A2, 
-		int *set, int sz, int verbose_level);
+		long int *set, int sz, int verbose_level);
 };
 
 }}

@@ -577,6 +577,31 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 		}
 }
 
+void homogeneous_polynomial_domain::print_equation_lint(ostream &ost, long int *coeffs)
+{
+	int i, c;
+	int f_first = TRUE;
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		c = coeffs[i];
+		if (c == 0) {
+			continue;
+			}
+		if (f_first) {
+			f_first = FALSE;
+			}
+		else {
+			ost << " + ";
+			}
+		if (c > 1) {
+			F->print_element(ost, c);
+			//ost << c;
+			}
+		print_monomial(ost, i);
+		}
+}
+
 void homogeneous_polynomial_domain::print_equation_str(stringstream &ost, int *coeffs)
 {
 	int i, c;
@@ -667,10 +692,10 @@ void homogeneous_polynomial_domain::algebraic_set(int *Eqns, int nb_eqns,
 }
 
 void homogeneous_polynomial_domain::enumerate_points(int *coeff,
-		int *Pts, int &nb_pts, int verbose_level)
+		long int *Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int rk, a;
+	long int rk, a;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::enumerate_points "
@@ -1045,16 +1070,16 @@ int homogeneous_polynomial_domain::rank_point(int *v)
 	return rk;
 }
 
-void homogeneous_polynomial_domain::unrank_coeff_vector(int *v, int rk)
+void homogeneous_polynomial_domain::unrank_coeff_vector(int *v, long int rk)
 {
-	F->PG_element_unrank_modified(v, 1, nb_monomials, rk);
+	F->PG_element_unrank_modified_lint(v, 1, nb_monomials, rk);
 }
 
-int homogeneous_polynomial_domain::rank_coeff_vector(int *v)
+long int homogeneous_polynomial_domain::rank_coeff_vector(int *v)
 {
-	int rk;
+	long int rk;
 
-	F->PG_element_rank_modified(v, 1, nb_monomials, rk);
+	F->PG_element_rank_modified_lint(v, 1, nb_monomials, rk);
 	return rk;
 }
 
@@ -1098,7 +1123,7 @@ int homogeneous_polynomial_domain::test_weierstrass_form(int rk,
 	return TRUE;
 }
 
-void homogeneous_polynomial_domain::vanishing_ideal(int *Pts,
+void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 		int nb_pts, int &r, int *Kernel, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

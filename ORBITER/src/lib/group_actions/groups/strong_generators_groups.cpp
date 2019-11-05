@@ -655,7 +655,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	finite_field *F;
 	longinteger_domain D;
 	longinteger_object target_go;
-	int *go_factored;
+	long int *go_factored;
 	int n, q;
 	//vector_ge *my_gens;
 	int *data;
@@ -675,7 +675,7 @@ void strong_generators::generators_for_the_singer_cycle(
 		cout << "n=" << n << " q=" << q << endl;
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
-	go_factored = NEW_int(1);
+	go_factored = NEW_lint(1);
 	data = NEW_int(n * n + 1);
 
 	// group order 
@@ -683,14 +683,14 @@ void strong_generators::generators_for_the_singer_cycle(
 	// = q^n - 1 if general_linear
 	
 	go_factored[0] = Gg.nb_PG_elements(n - 1, q);
-	int g;
-	g = NT.gcd_int(go_factored[0], power_of_singer);
+	long int g;
+	g = NT.gcd_lint(go_factored[0], power_of_singer);
 	go_factored[0] = go_factored[0] / g;
 
-	D.multiply_up(target_go, go_factored, 1, 0 /* verbose_level */);
+	D.multiply_up_lint(target_go, go_factored, 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		int_vec_print(cout, go_factored, 1);
+		lint_vec_print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
@@ -776,7 +776,7 @@ void strong_generators::generators_for_the_singer_cycle(
 		}
 	if (f_v) {
 		cout << "group order factored: ";
-		int_vec_print(cout, go_factored, 1);
+		lint_vec_print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
@@ -809,7 +809,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	FREE_OBJECT(S);
 	//FREE_OBJECT(nice_gens);
 	FREE_int(data);
-	FREE_int(go_factored);
+	FREE_lint(go_factored);
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
@@ -830,7 +830,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	finite_field *F;
 	longinteger_domain D;
 	longinteger_object target_go;
-	int *go_factored;
+	long int *go_factored;
 	int n, q;
 	//vector_ge *my_gens;
 	int *data1;
@@ -851,7 +851,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		cout << "n=" << n << " q=" << q << endl;
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
-	go_factored = NEW_int(2);
+	go_factored = NEW_lint(2);
 	data1 = NEW_int(n * n + 1);
 	data2 = NEW_int(n * n + 1);
 
@@ -860,15 +860,15 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	// = q^n - 1 if general_linear
 
 	go_factored[0] = Gg.nb_PG_elements(n - 1, q);
-	int g;
-	g = NT.gcd_int(go_factored[0], power_of_singer);
+	long int g;
+	g = NT.gcd_lint(go_factored[0], power_of_singer);
 	go_factored[0] = go_factored[0] / g;
 	go_factored[1] = n;
 
-	D.multiply_up(target_go, go_factored, 2, 0 /* verbose_level */);
+	D.multiply_up_lint(target_go, go_factored, 2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		int_vec_print(cout, go_factored, 2);
+		lint_vec_print(cout, go_factored, 2);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
@@ -964,7 +964,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		}
 	if (f_v) {
 		cout << "group order factored: ";
-		int_vec_print(cout, go_factored, 1);
+		lint_vec_print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
@@ -998,7 +998,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	//FREE_OBJECT(nice_gens);
 	FREE_int(data1);
 	FREE_int(data2);
-	FREE_int(go_factored);
+	FREE_lint(go_factored);
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle_"

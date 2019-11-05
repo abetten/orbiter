@@ -272,7 +272,7 @@ void clique_finder::init_suspicous_points(int nb, int *point_list)
 	for (i = 0; i < nb; i++) {
 		point_list_ordered[i] = point_list[i];
 	}
-	Sorting.int_vec_sort(nb, point_list_ordered);
+	Sorting.int_vec_heapsort(point_list_ordered, nb);
 	point_is_suspicous = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		point_is_suspicous[i] = FALSE;

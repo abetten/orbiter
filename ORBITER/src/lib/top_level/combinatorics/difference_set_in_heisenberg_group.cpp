@@ -242,7 +242,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	cout << "created the normalizer N of order " << N_order << endl;
 
 
-	rk_E1 = N->Sims->element_rank_int(E1);
+	rk_E1 = N->Sims->element_rank_lint(E1);
 	cout << "rk_E1 = " << rk_E1 << endl;
 
 	N_on_orbits = NEW_OBJECT(action);
@@ -456,7 +456,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 
 	cout << "making element Elt1:" << endl;
-	N->Sims->element_unrank_int(rk_E1, Elt1, 0);
+	N->Sims->element_unrank_lint(rk_E1, Elt1, 0);
 	A->element_print(Elt1, cout);
 	cout << endl;
 
@@ -473,7 +473,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 
 		cout << "making element" << endl;
-		N->Sims->element_unrank_int(second_gen_idx[h], Elt2, 0);
+		N->Sims->element_unrank_lint(second_gen_idx[h], Elt2, 0);
 		cout << "second generator has been created:" << endl;
 		A->element_print(Elt2, cout);
 		cout << endl;

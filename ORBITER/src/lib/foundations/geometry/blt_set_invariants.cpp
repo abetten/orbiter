@@ -75,14 +75,14 @@ void blt_set_invariants::null()
 void blt_set_invariants::freeself()
 {
 	if (the_set_in_orthogonal) {
-		FREE_int(the_set_in_orthogonal);
+		FREE_lint(the_set_in_orthogonal);
 	}
 	if (the_set_in_PG) {
-		FREE_int(the_set_in_PG);
+		FREE_lint(the_set_in_PG);
 	}
 }
 
-void blt_set_invariants::init(blt_set_domain *D, int *the_set,
+void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -94,9 +94,9 @@ void blt_set_invariants::init(blt_set_domain *D, int *the_set,
 	}
 	blt_set_invariants::D = D;
 	set_size = D->q + 1;
-	the_set_in_orthogonal = NEW_int(set_size);
-	the_set_in_PG = NEW_int(set_size);
-	int_vec_copy(the_set, the_set_in_orthogonal, set_size);
+	the_set_in_orthogonal = NEW_lint(set_size);
+	the_set_in_PG = NEW_lint(set_size);
+	lint_vec_copy(the_set, the_set_in_orthogonal, set_size);
 
 	for (i = 0; i < set_size; i++) {
 		D->O->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);

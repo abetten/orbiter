@@ -32,13 +32,13 @@ void action_by_restriction::null()
 void action_by_restriction::free()
 {
 	if (points) {
-		FREE_int(points);
+		FREE_lint(points);
 		}
 	if (points_sorted) {
-		FREE_int(points_sorted);
+		FREE_lint(points_sorted);
 		}
 	if (perm_inv) {
-		FREE_int(perm_inv);
+		FREE_lint(perm_inv);
 		}
 	null();
 }
@@ -53,7 +53,7 @@ void action_by_restriction::init_from_schreier_vector(
 		cout << "action_by_restriction::init_from_schreier_vector "
 				"pt=" << pt << endl;
 		}
-	int *orbit_elts;
+	long int *orbit_elts;
 	int orbit_len;
 
 	Schreier_vector->orbit_of_point(
@@ -62,7 +62,7 @@ void action_by_restriction::init_from_schreier_vector(
 
 	init(orbit_len, orbit_elts, verbose_level);
 
-	FREE_int(orbit_elts);
+	FREE_lint(orbit_elts);
 
 	if (f_v) {
 		cout << "action_by_restriction::init_from_schreier_vector "
@@ -70,9 +70,9 @@ void action_by_restriction::init_from_schreier_vector(
 		}
 }
 
-void action_by_restriction::init(int nb_points, int *points,
+void action_by_restriction::init(int nb_points, long int *points,
 		int verbose_level)
-// the array points must be orderd
+// the array points must be ordered
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -85,22 +85,22 @@ void action_by_restriction::init(int nb_points, int *points,
 		}
 	if (f_vv) {
 		cout << "action_by_restriction::init points=";
-		int_vec_print(cout, points, nb_points);
+		lint_vec_print(cout, points, nb_points);
 		cout << endl;
 	}
 	action_by_restriction::nb_points = nb_points;
-	action_by_restriction::points = NEW_int(nb_points);
-	action_by_restriction::points_sorted = NEW_int(nb_points);
-	action_by_restriction::perm_inv = NEW_int(nb_points);
+	action_by_restriction::points = NEW_lint(nb_points);
+	action_by_restriction::points_sorted = NEW_lint(nb_points);
+	action_by_restriction::perm_inv = NEW_lint(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		action_by_restriction::points[i] = points[i];
 		points_sorted[i] = points[i];
 		perm_inv[i] = i;
 		}
-	Sorting.int_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
+	Sorting.lint_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
 	if (f_vv) {
 		cout << "action_by_restriction::init points after sorting=";
-		int_vec_print(cout, points_sorted, nb_points);
+		lint_vec_print(cout, points_sorted, nb_points);
 		cout << endl;
 	}
 	if (f_v) {
@@ -108,17 +108,17 @@ void action_by_restriction::init(int nb_points, int *points,
 		}
 }
 
-int action_by_restriction::original_point(int pt)
+long int action_by_restriction::original_point(long int pt)
 {
 	return points[pt];
 }
 
-int action_by_restriction::restricted_point_idx(int pt)
+long int action_by_restriction::restricted_point_idx(long int pt)
 {
 	int idx;
 	sorting Sorting;
 
-	if (!Sorting.int_vec_search(points_sorted, nb_points, pt, idx)) {
+	if (!Sorting.lint_vec_search(points_sorted, nb_points, pt, idx, 0 /* verbose_level */)) {
 		cout << "action_by_restriction::restricted_point_idx fatal: "
 				"point " << pt << " not found" << endl;
 		exit(1);
@@ -127,10 +127,11 @@ int action_by_restriction::restricted_point_idx(int pt)
 }
 
 
-int action_by_restriction::compute_image(
-		action *A, int *Elt, int i, int verbose_level)
+long int action_by_restriction::compute_image(
+		action *A, int *Elt, long int i, int verbose_level)
 {
-	int idx, b, c, h;
+	int idx;
+	long int b, c, h;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	sorting Sorting;
@@ -155,7 +156,7 @@ int action_by_restriction::compute_image(
 	if (f_vv) {
 		cout << "image of " << points[i] << " is " << b << endl;
 		}
-	if (!Sorting.int_vec_search(points_sorted, nb_points, b, idx)) {
+	if (!Sorting.lint_vec_search(points_sorted, nb_points, b, idx, 0 /* verbose_level */)) {
 		cout << "action_by_restriction::compute_image fatal: "
 				"image point " << b << " not found" << endl;
 		cout << "action: ";
@@ -172,7 +173,7 @@ int action_by_restriction::compute_image(
 		cout << "image of " << points[i] << " is " << b << endl;
 		cout << "nb_points=" << nb_points << endl;
 		cout << "points=";
-		int_vec_print(cout, points, nb_points);
+		lint_vec_print(cout, points, nb_points);
 		cout << endl;
 		cout << "points_sorted=" << endl;
 		for (h = 0; h < nb_points; h++) {

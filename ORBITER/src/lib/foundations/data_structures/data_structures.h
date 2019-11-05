@@ -192,12 +192,12 @@ class fancy_set {
 // int_vector.cpp
 // #############################################################################
 
-//! vector on ints
+//! vector of ints
 
 class int_vector {
 public:
 
-	int *M;
+	long int *M;
 	int m;
 	int alloc_length;
 
@@ -206,11 +206,12 @@ public:
 	void null();
 	void freeself();
 	void allocate(int len);
-	void allocate_and_init(int len, int *V);
+	void allocate_and_init(int len, long int *V);
+	void allocate_and_init_int(int len, int *V);
 	void init_permutation_from_string(const char *s);
 	void read_ascii_file(const char *fname);
 	void read_binary_file_int4(const char *fname);
-	int &s_i(int i);
+	long int &s_i(int i);
 	int &length();
 	void print(std::ostream &ost);
 	void zero();
@@ -526,7 +527,7 @@ public:
 	
 	int underlying_set_size;
 	int nb_sets;
-	int **Sets;
+	long int **Sets;
 	int *Set_size;
 
 
@@ -540,7 +541,7 @@ public:
 	void init_from_adjacency_matrix(int n, int *Adj, 
 		int verbose_level);
 	void init(int underlying_set_size, int nb_sets, 
-		int **Pts, int *Sz, int verbose_level);
+		long int **Pts, int *Sz, int verbose_level);
 	void init_basic(int underlying_set_size, 
 		int nb_sets, int *Sz, int verbose_level);
 	void init_basic_constant_size(int underlying_set_size, 
@@ -556,8 +557,8 @@ public:
 		// Stores a copy of the given set.
 	void init_cycle_structure(int *perm, int n, int verbose_level);
 	int total_size();
-	int &element(int i, int j);
-	void add_element(int i, int a);
+	long int &element(int i, int j);
+	void add_element(int i, long int a);
 	void print();
 	void print_table();
 	void print_table_tex(std::ostream &ost);
@@ -631,13 +632,17 @@ public:
 	void int_vec_search_vec(int *v, int len, int *A, int A_sz, int *Idx);
 	void int_vec_search_vec_linear(int *v, int len, int *A, int A_sz, int *Idx);
 	int int_vec_is_subset_of(int *set, int sz, int *big_set, int big_set_sz);
+	int lint_vec_is_subset_of(int *set, int sz, long int *big_set, int big_set_sz);
 	void int_vec_swap_points(int *list, int *list_inv, int idx1, int idx2);
 	int int_vec_is_sorted(int *v, int len);
 	void int_vec_sort_and_remove_duplicates(int *v, int &len);
+	void lint_vec_sort_and_remove_duplicates(long int *v, int &len);
 	int int_vec_sort_and_test_if_contained(int *v1, int len1, int *v2, int len2);
 	int int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2);
 	int int_vecs_find_common_element(int *v1, int len1,
 		int *v2, int len2, int &idx1, int &idx2);
+	int lint_vecs_find_common_element(long int *v1, int len1,
+		long int *v2, int len2, int &idx1, int &idx2);
 	void int_vec_insert_and_reallocate_if_necessary(int *&vec,
 		int &used_length, int &alloc_length, int a, int verbose_level);
 	void int_vec_append_and_reallocate_if_necessary(int *&vec,
@@ -649,11 +654,15 @@ public:
 	int test_if_sets_are_equal(int *set1, int *set2, int set_size);
 	void test_if_set(int *set, int set_size);
 	int test_if_set_with_return_value(int *set, int set_size);
+	int test_if_set_with_return_value_lint(long int *set, int set_size);
 	void rearrange_subset(int n, int k, int *set,
 		int *subset, int *rearranged_set, int verbose_level);
 	int int_vec_search_linear(int *v, int len, int a, int &idx);
+	int lint_vec_search_linear(long int *v, int len, long int a, int &idx);
 	void int_vec_intersect(int *v1, int len1, int *v2, int len2,
 		int *&v3, int &len3);
+	void vec_intersect(long int *v1, int len1,
+		long int *v2, int len2, long int *&v3, int &len3);
 	void int_vec_intersect_sorted_vectors(int *v1, int len1,
 		int *v2, int len2, int *v3, int &len3);
 	void lint_vec_intersect_sorted_vectors(long int *v1, int len1,
@@ -673,7 +682,7 @@ public:
 		int (*compare_func)(void *a, void *b, void *data), void *data);
 	void quicksort_array_with_perm(int len, void **v, int *perm,
 		int (*compare_func)(void *a, void *b, void *data), void *data);
-	void int_vec_sort(int len, int *p);
+	//void int_vec_sort(int len, int *p);
 	int vec_search(void **v, int (*compare_func)(void *a, void *b, void *data),
 		void *data_for_compare,
 		int len, void *a, int &idx, int verbose_level);
@@ -746,9 +755,11 @@ public:
 	void int_vec_heapsort(int *v, int len);
 	void lint_vec_heapsort(long int *v, int len);
 	void int_vec_heapsort_with_log(int *v, int *w, int len);
+	void lint_vec_heapsort_with_log(long int *v, long int *w, int len);
 	void heapsort_make_heap(int *v, int len);
 	void lint_heapsort_make_heap(long int *v, int len);
 	void heapsort_make_heap_with_log(int *v, int *w, int len);
+	void lint_heapsort_make_heap_with_log(long int *v, long int *w, int len);
 	void Heapsort_make_heap(void *v, int len, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
 	void Heapsort_general_make_heap(void *data, int len,
@@ -758,6 +769,8 @@ public:
 	void heapsort_sift_down(int *v, int start, int end);
 	void lint_heapsort_sift_down(long int *v, int start, int end);
 	void heapsort_sift_down_with_log(int *v, int *w, int start, int end);
+	void lint_heapsort_sift_down_with_log(
+			long int *v, long int *w, int start, int end);
 	void Heapsort_sift_down(void *v, int start, int end, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
 	void Heapsort_general_sift_down(void *data, int start, int end,
@@ -831,6 +844,8 @@ public:
 		const char *heading);
 	void fill_column_with_int(int col_idx, int *data, 
 		const char *heading);
+	void fill_column_with_lint(int col_idx,
+			long int *data, const char *heading);
 	void fill_column_with_row_index(int col_idx, 
 		const char *heading);
 	void add_token(const char *label);

@@ -925,12 +925,12 @@ void sims::subgroup_order_verbose(longinteger_object &go, int level, int verbose
 	}
 }
 
-int sims::group_order_int()
+long int sims::group_order_lint()
 {
 	longinteger_object go;
 
 	group_order(go);
-	return go.as_int();
+	return go.as_lint();
 }
 
 int sims::is_trivial_group()
@@ -1003,9 +1003,9 @@ void sims::swap_points(int lvl, int i, int j)
 	orbit_inv[lvl][pj] = i;
 }
 
-void sims::path_unrank_int(int a)
+void sims::path_unrank_lint(long int a)
 {
-	int h, l;
+	long int h, l;
 	
 	for (h = A->base_len() - 1; h >= 0; h--) {
 		l = orbit_len[h];
@@ -1015,9 +1015,9 @@ void sims::path_unrank_int(int a)
 		}
 }
 
-int sims::path_rank_int()
+long int sims::path_rank_lint()
 {
-	int h, a;
+	long int h, a;
 	
 	a = 0;
 	for (h = 0; h < A->base_len(); h++) {
@@ -1201,7 +1201,7 @@ void sims::element_rank(longinteger_object &a, int *elt)
 // Computes the rank of the element in elt into a.
 // uses eltrk1, eltrk2
 {
-	int i, j, bi, jj, l;
+	long int i, j, bi, jj, l;
 	longinteger_domain D;
 	longinteger_object b, c;
 	
@@ -1227,7 +1227,7 @@ void sims::element_rank(longinteger_object &a, int *elt)
 			cout << "jj=bi^elt=" << jj << endl;
 			cout << "j=orbit_inv[i][jj]=" << j << endl;
 			cout << "base=";
-			int_vec_print(cout, A->get_base(), A->base_len());
+			lint_vec_print(cout, A->get_base(), A->base_len());
 			cout << endl;
 			cout << "orbit_len=";
 			int_vec_print(cout, orbit_len, A->base_len());
@@ -1247,19 +1247,19 @@ void sims::element_rank(longinteger_object &a, int *elt)
 	}
 }
 
-void sims::element_unrank_int(int rk, int *Elt, int verbose_level)
+void sims::element_unrank_lint(long int rk, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//longinteger_object a;
 
 	if (f_v) {
-		cout << "sims::element_unrank_int rk=" << rk << endl;
+		cout << "sims::element_unrank_lint rk=" << rk << endl;
 	}
 	//a.create(rk);
 	//element_unrank(a, Elt);
-	path_unrank_int(rk);
+	path_unrank_lint(rk);
 	if (f_v) {
-		cout << "sims::element_unrank path=";
+		cout << "sims::element_unrank_lint path=";
 		int_vec_print(cout, path, A->base_len());
 		cout << endl;
 	}
@@ -1267,20 +1267,20 @@ void sims::element_unrank_int(int rk, int *Elt, int verbose_level)
 
 }
 
-void sims::element_unrank_int(int rk, int *Elt)
+void sims::element_unrank_lint(long int rk, int *Elt)
 {
 	//longinteger_object a;
 	
 	//a.create(rk);
-	element_unrank_int(rk, Elt, 0);
+	element_unrank_lint(rk, Elt, 0);
 }
 
-int sims::element_rank_int(int *Elt)
+long int sims::element_rank_lint(int *Elt)
 {
 	longinteger_object a;
 	
 	element_rank(a, Elt);
-	return a.as_int();
+	return a.as_lint();
 }
 
 int sims::is_element_of(int *elt)
@@ -1968,7 +1968,7 @@ finish:
 }
 
 void sims::element_as_permutation(action *A_special,
-		int elt_rk, int *perm, int verbose_level)
+		long int elt_rk, int *perm, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1979,7 +1979,7 @@ void sims::element_as_permutation(action *A_special,
 	
 	Elt = NEW_int(A->elt_size_in_int);
 	
-	element_unrank_int(elt_rk, Elt);
+	element_unrank_lint(elt_rk, Elt);
 
 	A_special->element_as_permutation(Elt, perm, 0);
 	

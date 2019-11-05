@@ -55,13 +55,13 @@ void klein_correspondence::freeself()
 		FREE_int(Form);
 	}
 	if (Line_to_point_on_quadric) {
-		FREE_int(Line_to_point_on_quadric);
+		FREE_lint(Line_to_point_on_quadric);
 	}
 	if (Point_on_quadric_to_line) {
-		FREE_int(Point_on_quadric_to_line);
+		FREE_lint(Point_on_quadric_to_line);
 	}
 	if (Point_on_quadric_embedded_in_P5) {
-		FREE_int(Point_on_quadric_embedded_in_P5);
+		FREE_lint(Point_on_quadric_embedded_in_P5);
 	}
 #if 0
 	if (coordinates_of_quadric_points) {
@@ -143,19 +143,19 @@ void klein_correspondence::init(finite_field *F,
 				"Line_to_point_on_quadric P3->N_lines="
 				<< P3->N_lines << endl;
 	}
-	Line_to_point_on_quadric = NEW_int(P3->N_lines);
+	Line_to_point_on_quadric = NEW_lint(P3->N_lines);
 	if (f_v) {
 		cout << "klein_correspondence::init before allocate "
 				"Point_on_quadric_to_line P3->N_lines="
 				<< P3->N_lines << endl;
 	}
-	Point_on_quadric_to_line = NEW_int(P3->N_lines);
+	Point_on_quadric_to_line = NEW_lint(P3->N_lines);
 	if (f_v) {
 		cout << "klein_correspondence::init before allocate "
 				"Point_on_quadric_embedded_in_P5 P3->N_lines="
 				<< P3->N_lines << endl;
 	}
-	Point_on_quadric_embedded_in_P5 = NEW_int(P3->N_lines);
+	Point_on_quadric_embedded_in_P5 = NEW_lint(P3->N_lines);
 
 	int basis_line[8]; // [2 * 4]
 	int v6[6];
@@ -311,22 +311,22 @@ void klein_correspondence::init(finite_field *F,
 }
 
 void klein_correspondence::plane_intersections(
-	int *lines_in_PG3, int nb_lines,
+	long int *lines_in_PG3, int nb_lines,
 	longinteger_object *&R,
-	int **&Pts_on_plane, 
+	long int **&Pts_on_plane,
 	int *&nb_pts_on_plane, 
 	int &nb_planes, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *pts;
+	long int *pts;
 	int i;
 
 	if (f_v) {
 		cout << "klein_correspondence::plane_intersections" << endl;
 		}
-	pts = NEW_int(nb_lines);
+	pts = NEW_lint(nb_lines);
 	
 	P3->klein_correspondence(P5, 
 		lines_in_PG3, nb_lines, pts, 0/*verbose_level*/);
@@ -343,13 +343,13 @@ void klein_correspondence::plane_intersections(
 		for (i = 0; i < nb_planes; i++) {
 			cout << setw(3) << i << " : " << R[i] 
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			int_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl; 
 			}
 #endif
 		}
 	
-	FREE_int(pts);
+	FREE_lint(pts);
 	if (f_v) {
 		cout << "klein_correspondence::plane_intersections done" << endl;
 		}

@@ -181,7 +181,7 @@ void subfield_structure::init_with_given_basis(
 
 void subfield_structure::print_embedding()
 {
-	int i, j;
+	long int i, j;
 	geometry_global Gg;
 	
 	cout << "subfield_structure::print_embedding:" << endl;
@@ -196,7 +196,7 @@ void subfield_structure::print_embedding()
 	cout << "subfield_structure::print_embedding in reverse:" << endl;
 	cout << "element i in F_Q : vector over F_q : vector AG_rank" << endl;
 	for (i = 0; i < Q; i++) {
-		Gg.AG_element_rank(q, components + i * s, 1, s, j);
+		j = Gg.AG_element_rank(q, components + i * s, 1, s);
 		cout << setw(4) << i << " : ";
 		int_vec_print(cout, components + i * s, s);
 		cout << " : " << j << endl;
@@ -265,7 +265,7 @@ void subfield_structure::retract_matrix(int *Mq,
 {
 	int f_v = (verbose_level >= 1);
 	int *vec;
-	int i, j, I, J, u, v, d, b, bv, a, rk;
+	long int i, j, I, J, u, v, d, b, bv, a, rk;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -284,7 +284,7 @@ void subfield_structure::retract_matrix(int *Mq,
 				for (v = 0; v < s; v++) {
 					vec[v] = Mq[(I + u) * n + J + v];
 					}
-				Gg.AG_element_rank(q, vec, 1, s, rk);
+				rk = Gg.AG_element_rank(q, vec, 1, s);
 				d = embedding[rk];
 				b = Basis[u];
 				bv = FQ->inverse(b);

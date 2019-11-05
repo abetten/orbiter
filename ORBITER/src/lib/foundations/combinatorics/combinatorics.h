@@ -73,6 +73,8 @@ public:
 	int set_find(int *elts, int size, int a);
 	void set_complement(int *subset, int subset_size, int *complement,
 		int &size_complement, int universal_set_size);
+	void set_complement_lint(long int *subset, int subset_size, long int *complement,
+		int &size_complement, int universal_set_size);
 	void set_complement_safe(int *subset, int subset_size, int *complement,
 		int &size_complement, int universal_set_size);
 	// subset does not need to be in increasing order
@@ -83,7 +85,7 @@ public:
 		int *elts_to_delete, int nb_elts_to_delete);
 	void set_delete_element(int *elts, int &size, int a);
 	int compare_lexicographically(int a_len, int *a, int b_len, int *b);
-	int int_n_choose_k(int n, int k);
+	long int int_n_choose_k(int n, int k);
 	void make_t_k_incidence_matrix(int v, int t, int k, int &m, int &n, int *&M,
 		int verbose_level);
 	void print_k_subsets_by_rank(std::ostream &ost, int v, int k);
@@ -133,7 +135,7 @@ public:
 	void perm_print_with_print_point_function(
 			std::ostream &ost,
 			int *a, int n,
-			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 			void *point_label_data);
 	void perm_print_with_cycle_length(std::ostream &ost, int *a, int n);
 	void perm_print_counting_from_one(std::ostream &ost, int *a, int n);
@@ -145,7 +147,7 @@ public:
 		int f_max_cycle_length,
 		int max_cycle_length,
 		int f_orbit_structure,
-		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data);
 	void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles);
 	int perm_order(int *a, int n);
@@ -163,7 +165,7 @@ public:
 	void print_01_matrix_with_stars(std::ostream &ost, int *A, int m, int n);
 	void print_int_matrix(std::ostream &ost, int *A, int m, int n);
 	int create_roots_H4(finite_field *F, int *roots);
-	int generalized_binomial(int n, int k, int q);
+	long int generalized_binomial(int n, int k, int q);
 	void print_tableau(int *Tableau, int l1, int l2,
 		int *row_parts, int *col_parts);
 	int ijk_rank(int i, int j, int k, int n);

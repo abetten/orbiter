@@ -207,9 +207,9 @@ void action_on_grassmannian::compute_image_longinteger(
 		}
 }
 
-int action_on_grassmannian::compute_image_int(
+long int action_on_grassmannian::compute_image_int(
 	action *A, int *Elt,
-	int i, int verbose_level)
+	long int i, int verbose_level)
 {
 	if (f_embedding) {
 		return compute_image_int_embedded(A, Elt, i, verbose_level);
@@ -219,13 +219,13 @@ int action_on_grassmannian::compute_image_int(
 		}
 }
 
-int action_on_grassmannian::compute_image_int_ordinary(
+long int action_on_grassmannian::compute_image_int_ordinary(
 	action *A, int *Elt,
-	int i, int verbose_level)
+	long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int h, j;
+	long int h, j;
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "
@@ -234,7 +234,7 @@ int action_on_grassmannian::compute_image_int_ordinary(
 				<< A->low_level_point_size << endl;
 		cout << "using action " << A->label << endl;
 		}
-	G->unrank_int(i, verbose_level - 1);
+	G->unrank_lint(i, verbose_level - 1);
 	if (f_vv) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "
 				"after G->unrank_int" << endl;
@@ -260,7 +260,7 @@ int action_on_grassmannian::compute_image_int_ordinary(
 		G->M[h] = M1[h];
 		}
 #endif
-	j = G->rank_int(verbose_level - 1);
+	j = G->rank_lint(verbose_level - 1);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "
 				"image of " << i << " is " << j << endl;
@@ -268,20 +268,20 @@ int action_on_grassmannian::compute_image_int_ordinary(
 	return j;
 }
 
-int action_on_grassmannian::compute_image_int_embedded(
+long int action_on_grassmannian::compute_image_int_embedded(
 	action *A, int *Elt,
-	int i, int verbose_level)
+	long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int j, h;
+	long int j, h;
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"i = " << i << endl;
 		cout << "calling GE->unrank_int" << endl;
 		}
-	GE->unrank_int(subspace_basis, i, 0 /*verbose_level - 1*/);
+	GE->unrank_lint(subspace_basis, i, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"subspace_basis:" << endl;
@@ -324,7 +324,7 @@ int action_on_grassmannian::compute_image_int_embedded(
 		print_integer_matrix_width(cout, subspace_basis2,
 				k, big_n, big_n, F->log10_of_q);
 		}
-	j = GE->rank_int(subspace_basis2,
+	j = GE->rank_lint(subspace_basis2,
 			0 /*verbose_level - 1 */);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_embedded "
@@ -333,9 +333,9 @@ int action_on_grassmannian::compute_image_int_embedded(
 	return j;
 }
 
-void action_on_grassmannian::print_point(int a, ostream &ost)
+void action_on_grassmannian::print_point(long int a, ostream &ost)
 {
-	G->unrank_int(a, 0);
+	G->unrank_lint(a, 0);
 	print_integer_matrix_width(ost, G->M,
 			G->k, G->n, G->n, 2 /*M->GFq->log10_of_q*/);
 }

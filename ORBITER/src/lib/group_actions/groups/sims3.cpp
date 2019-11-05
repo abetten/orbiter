@@ -16,20 +16,20 @@ void sims::subgroup_make_characteristic_vector(
 		sims *Sub, int *C, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int go, go_sub;
-	int i, j;
+	long int go, go_sub;
+	long int i, j;
 
 
 	if (f_v) {
 		cout << "sims::subgroup_make_characteristic_vector" << endl;
 		}
 
-	go = group_order_int();
+	go = group_order_lint();
 	int_vec_zero(C, go);
-	go_sub = Sub->group_order_int();
+	go_sub = Sub->group_order_lint();
 	for (i = 0; i < go_sub; i++) {
-		Sub->element_unrank_int(i, Elt1);
-		j = element_rank_int(Elt1);
+		Sub->element_unrank_lint(i, Elt1);
+		j = element_rank_lint(Elt1);
 		C[j] = TRUE;
 		}
 	if (f_v) {
@@ -46,8 +46,8 @@ void sims::normalizer_based_on_characteristic_vector(int *C_sub,
 	int *Gen_idx, int nb_gens, int *N, int &N_go, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int go;
-	int i, j, a;
+	long int go;
+	long int i, j, a;
 	vector_ge *gens;
 
 
@@ -60,20 +60,20 @@ void sims::normalizer_based_on_characteristic_vector(int *C_sub,
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (j = 0; j < nb_gens; j++) {
 		a = Gen_idx[j];
-		element_unrank_int(a, gens->ith(j));
+		element_unrank_lint(a, gens->ith(j));
 		}
 
-	go = group_order_int();
+	go = group_order_lint();
 	int_vec_zero(N, go);
 
 	N_go = 0;
 	for (i = 0; i < go; i++) {
-		element_unrank_int(i, Elt1);
+		element_unrank_lint(i, Elt1);
 		A->element_invert(Elt1, Elt2, 0);
 		for (j = 0; j < nb_gens; j++) {
 			A->element_mult(Elt2, gens->ith(j), Elt3, 0);
 			A->element_mult(Elt3, Elt1, Elt4, 0);
-			a = element_rank_int(Elt4);
+			a = element_rank_lint(Elt4);
 			if (!C_sub[a]) {
 				break;
 				}
@@ -93,8 +93,8 @@ void sims::order_structure_relative_to_subgroup(int *C_sub,
 	int *Order, int *Residue, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int go;
-	int i, j, a;
+	long int go;
+	long int i, j, a;
 
 
 	if (f_v) {
@@ -102,12 +102,12 @@ void sims::order_structure_relative_to_subgroup(int *C_sub,
 		}
 
 
-	go = group_order_int();
+	go = group_order_lint();
 	for (i = 0; i < go; i++) {
-		element_unrank_int(i, Elt1);
+		element_unrank_lint(i, Elt1);
 		A->element_move(Elt1, Elt2, 0);
 		for (j = 1; ; j++) {
-			a = element_rank_int(Elt2);
+			a = element_rank_lint(Elt2);
 			if (C_sub[a]) {
 				break;
 				}

@@ -242,7 +242,7 @@ int is_ancestor(int t, int v, int k, int delta_lambda)
 int calc_redinv(int t, int v, int k, int delta_lambda, int &c,
 		int &T, int &V, int &K, int &Delta_lambda)
 {
-	int vt, kt, g, v1, k1, gg;
+	long int vt, kt, g, v1, k1, gg;
 	number_theory_domain NT;
 	
 	if (t == k)
@@ -252,10 +252,10 @@ int calc_redinv(int t, int v, int k, int delta_lambda, int &c,
 	K = k;
 	vt = v - t;
 	kt = k - t;
-	g = NT.gcd_int(vt, kt);
+	g = NT.gcd_lint(vt, kt);
 	v1 = vt / g;
 	k1 = kt / g;
-	gg = NT.gcd_int(delta_lambda, v1);
+	gg = NT.gcd_lint(delta_lambda, v1);
 	c = v1 / gg;
 	Delta_lambda = k1 * delta_lambda / gg;
 	return TRUE;
@@ -275,7 +275,7 @@ int calc_derinv(int t, int v, int k, int delta_lambda, int &c,
 int calc_resinv(int t, int v, int k, int delta_lambda, int &c,
 		int &T, int &V, int &K, int &Delta_lambda)
 {
-	int a, b, g;
+	long int a, b, g;
 	number_theory_domain NT;
 	
 	if (t == k)
@@ -286,7 +286,7 @@ int calc_resinv(int t, int v, int k, int delta_lambda, int &c,
 	Delta_lambda = calc_delta_lambda(V, T, K, FALSE);
 	a = Delta_lambda * (v + 1 - k);
 	b = delta_lambda * (k - t);
-	g = NT.gcd_int(a, b);
+	g = NT.gcd_lint(a, b);
 	c = a / g;
 	return TRUE;
 }

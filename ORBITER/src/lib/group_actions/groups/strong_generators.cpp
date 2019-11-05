@@ -1142,13 +1142,13 @@ void strong_generators::group_order(longinteger_object &go)
 	D.multiply_up(go, tl, A->base_len(), 0 /* verbose_level */);
 }
 
-int strong_generators::group_order_as_int()
+long int strong_generators::group_order_as_lint()
 {
 	longinteger_domain D;
 	longinteger_object go;
 
 	D.multiply_up(go, tl, A->base_len(), 0 /* verbose_level */);
-	return go.as_int();
+	return go.as_lint();
 }
 
 void strong_generators::print_generators()
@@ -1303,7 +1303,7 @@ void strong_generators::print_generators_tex(ostream &ost)
 void strong_generators::print_generators_tex_with_print_point_function(
 		action *A_given,
 		ostream &ost,
-		void (*point_label)(stringstream &sstr, int pt, void *data),
+		void (*point_label)(stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	int i;
@@ -1417,7 +1417,7 @@ void strong_generators::print_with_given_action(
 
 void strong_generators::print_elements_ost(ostream &ost)
 {
-	int i;
+	long int i;
 	longinteger_object go;
 	sims *S;
 	int *Elt;
@@ -1428,8 +1428,8 @@ void strong_generators::print_elements_ost(ostream &ost)
 	ost << "Group elements for a group of order " << go << " tl=";
 	int_vec_print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
-	for (i = 0; i < go.as_int(); i++) {
-		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
+	for (i = 0; i < go.as_lint(); i++) {
+		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
 		A->element_print_latex(Elt, ost);
@@ -1441,7 +1441,7 @@ void strong_generators::print_elements_ost(ostream &ost)
 
 void strong_generators::print_elements_latex_ost(ostream &ost)
 {
-	int i, order, m;
+	long int i, order, m;
 	longinteger_object go;
 	sims *S;
 	int *Elt;
@@ -1458,7 +1458,7 @@ void strong_generators::print_elements_latex_ost(ostream &ost)
 				<< " elements:\\\\" << endl;
 		}
 	for (i = 0; i < m; i++) {
-		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
+		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
 		order = A->element_order(Elt);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
@@ -1473,10 +1473,10 @@ void strong_generators::print_elements_latex_ost(ostream &ost)
 void strong_generators::print_elements_latex_ost_with_print_point_function(
 		action *A_given,
 		ostream &ost,
-		void (*point_label)(stringstream &sstr, int pt, void *data),
+		void (*point_label)(stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
-	int i, order, m;
+	long int i, order, m;
 	longinteger_object go;
 	sims *S;
 	int *Elt;
@@ -1499,7 +1499,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 				<< " elements:\\\\" << endl;
 		}
 	for (i = 0; i < m; i++) {
-		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
+		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
 		//cout << "element " << i << " / " << m << " before A->element_order" << endl;
 		order = A->element_order(Elt);
 		//cout << "element " << i << " / " << m << " before A->element_order_and_cycle_type" << endl;
@@ -1534,7 +1534,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 }
 
 void strong_generators::create_group_table(
-		int *&Table, int &go, int verbose_level)
+		int *&Table, long int &go, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sims *S;
@@ -1552,10 +1552,10 @@ void strong_generators::create_group_table(
 
 void strong_generators::list_of_elements_of_subgroup(
 	strong_generators *gens_subgroup,
-	int *&Subgroup_elements_by_index, int &sz_subgroup, int verbose_level)
+	long int *&Subgroup_elements_by_index, long int &sz_subgroup, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, a;
+	long int i, a;
 	longinteger_object go;
 	sims *S;
 	sims *U;
@@ -1568,11 +1568,11 @@ void strong_generators::list_of_elements_of_subgroup(
 	S = create_sims(0 /*verbose_level */);
 	U = gens_subgroup->create_sims(0 /*verbose_level */);
 	U->group_order(go);
-	sz_subgroup = go.as_int();
-	Subgroup_elements_by_index = NEW_int(go.as_int());
+	sz_subgroup = go.as_lint();
+	Subgroup_elements_by_index = NEW_lint(go.as_int());
 	for (i = 0; i < sz_subgroup; i++) {
-		U->element_unrank_int(i, Elt, 0 /* verbose_level */);
-		a = S->element_rank_int(Elt);
+		U->element_unrank_lint(i, Elt, 0 /* verbose_level */);
+		a = S->element_rank_lint(Elt);
 		Subgroup_elements_by_index[i] = a;
 		}
 	FREE_OBJECT(S);
@@ -2616,7 +2616,7 @@ int strong_generators::test_if_normalizing(sims *S, int verbose_level)
 
 
 void strong_generators::test_if_set_is_invariant_under_given_action(
-		action *A_given, int *set, int set_sz, int verbose_level)
+		action *A_given, long int *set, int set_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

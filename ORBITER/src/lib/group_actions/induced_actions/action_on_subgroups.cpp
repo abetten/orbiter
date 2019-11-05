@@ -135,12 +135,13 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 		}
 }
 
-int action_on_subgroups::compute_image(
-		int *Elt, int a, int verbose_level)
+long int action_on_subgroups::compute_image(
+		int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int idx, res, j, b, aa, s, t;
+	long int res, j, b, aa, s, t;
+	int idx;
 	sorting Sorting;
 
 	if (f_v) {

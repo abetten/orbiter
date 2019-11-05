@@ -1043,6 +1043,22 @@ void file_io::int_vec_write_csv(int *v, int len,
 	}
 }
 
+void file_io::lint_vec_write_csv(long int *v, int len,
+	const char *fname, const char *label)
+{
+	int i;
+
+	{
+	ofstream f(fname);
+
+	f << "Case," << label << endl;
+	for (i = 0; i < len; i++) {
+		f << i << "," << v[i] << endl;
+		}
+	f << "END" << endl;
+	}
+}
+
 void file_io::int_vecs_write_csv(int *v1, int *v2, int len,
 	const char *fname, const char *label1, const char *label2)
 {
@@ -1893,7 +1909,7 @@ void file_io::read_and_parse_data_file_fancy(
 }
 
 void file_io::read_set_from_file(const char *fname,
-	int *&the_set, int &set_size, int verbose_level)
+	long int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1911,7 +1927,7 @@ void file_io::read_set_from_file(const char *fname,
 		cout << "read_set_from_file allocating set of size "
 			<< set_size << endl;
 		}
-	the_set = NEW_int(set_size);
+	the_set = NEW_lint(set_size);
 
 	if (f_v) {
 		cout << "read_set_from_file reading set of size "
@@ -1933,13 +1949,13 @@ void file_io::read_set_from_file(const char *fname,
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		int_vec_print(cout, the_set, set_size);
+		lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 }
 
 void file_io::write_set_to_file(const char *fname,
-	int *the_set, int set_size, int verbose_level)
+	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2048,7 +2064,7 @@ void file_io::write_set_to_file_lint(const char *fname,
 }
 
 void file_io::read_set_from_file_int4(const char *fname,
-	int *&the_set, int &set_size, int verbose_level)
+	long int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2064,7 +2080,7 @@ void file_io::read_set_from_file_int4(const char *fname,
 
 	f.read((char *) &a, sizeof(int_4));
 	set_size = a;
-	the_set = NEW_int(set_size);
+	the_set = NEW_lint(set_size);
 
 	for (i = 0; i < set_size; i++) {
 		f.read((char *) &a, sizeof(int_4));
@@ -2083,7 +2099,7 @@ void file_io::read_set_from_file_int4(const char *fname,
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		int_vec_print(cout, the_set, set_size);
+		lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 }
@@ -2131,7 +2147,7 @@ void file_io::read_set_from_file_int8(const char *fname,
 }
 
 void file_io::write_set_to_file_as_int4(const char *fname,
-	int *the_set, int set_size, int verbose_level)
+	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

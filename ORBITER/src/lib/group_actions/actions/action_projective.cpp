@@ -18,7 +18,7 @@ namespace group_actions {
 
 strong_generators *action::set_stabilizer_in_projective_space(
 	projective_space *P,
-	int *set, int set_size, int &canonical_pt,
+	long int *set, int set_size, int &canonical_pt,
 	int *canonical_set_or_NULL,
 	int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 	int verbose_level)
@@ -33,6 +33,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	int *Incma;
 	int *partition;
 	int *labeling;
+	long int *vertex_labeling;
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
@@ -57,7 +58,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 	classify C;
 
-	C.init(set, set_size, TRUE, 0);
+	C.init_lint(set, set_size, TRUE, 0);
 	if (C.second_nb_types > 1) {
 		cout << "action::set_stabilizer_in_projective_space: "
 				"The set is a multiset:" << endl;
@@ -77,6 +78,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	Incma = NEW_int(nb_rows * nb_cols);
 	partition = NEW_int(nb_rows + nb_cols);
 	labeling = NEW_int(nb_rows + nb_cols);
+	vertex_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_vv) {
 		cout << "Initializing Incma" << endl;
@@ -159,7 +161,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
-			labeling[i] = i;
+			vertex_labeling[i] = i;
 			}
 
 		colored_graph *CG;
@@ -167,7 +169,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		CG = NEW_OBJECT(colored_graph);
 
 		CG->create_Levi_graph_from_incidence_matrix(
-				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
+				Incma, nb_rows, nb_cols, TRUE, vertex_labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_int(Incma);
 		FREE_OBJECT(CG);
@@ -267,7 +269,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		CG = NEW_OBJECT(colored_graph);
 
 		CG->create_Levi_graph_from_incidence_matrix(
-				Incma_out, nb_rows, nb_cols, TRUE, labeling,
+				Incma_out, nb_rows, nb_cols, TRUE, vertex_labeling,
 				verbose_level);
 		CG->save(fname_bin, verbose_level);
 		FREE_OBJECT(CG);
@@ -482,6 +484,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	FREE_int(Incma);
 	FREE_int(partition);
 	FREE_int(labeling);
+	FREE_lint(vertex_labeling);
 	FREE_OBJECT(A_perm);
 	FREE_OBJECT(gens1);
 	FREE_int(Mtx);

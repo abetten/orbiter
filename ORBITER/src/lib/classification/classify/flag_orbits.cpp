@@ -23,12 +23,12 @@ flag_orbits::flag_orbits()
 	A2 = NULL;
 	nb_primary_orbits_lower = 0;
 	nb_primary_orbits_upper = 0;
-	f_lint = FALSE;
+	//f_lint = FALSE;
 	nb_flag_orbits = 0;
 	Flag_orbit_node = NULL;
 	pt_representation_sz = 0;
 	Pt = NULL;
-	Pt_lint = NULL;
+	//Pt_lint = NULL;
 	//null();
 }
 
@@ -47,10 +47,7 @@ void flag_orbits::freeself()
 		FREE_OBJECTS(Flag_orbit_node);
 		}
 	if (Pt) {
-		FREE_int(Pt);
-		}
-	if (Pt_lint) {
-		FREE_lint(Pt_lint);
+		FREE_lint(Pt);
 		}
 	null();
 }
@@ -70,31 +67,8 @@ void flag_orbits::init(action *A, action *A2,
 	flag_orbits::nb_primary_orbits_lower = nb_primary_orbits_lower;
 	flag_orbits::pt_representation_sz = pt_representation_sz;
 	flag_orbits::nb_flag_orbits = nb_flag_orbits;
-	f_lint = FALSE;
-	Pt = NEW_int(nb_flag_orbits * pt_representation_sz);
-	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
-	if (f_v) {
-		cout << "flag_orbits::init done" << endl;
-		}
-}
-
-void flag_orbits::init_lint(action *A, action *A2,
-	int nb_primary_orbits_lower,
-	int pt_representation_sz, int nb_flag_orbits,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "flag_orbits::init" << endl;
-		}
-	flag_orbits::A = A;
-	flag_orbits::A2 = A2;
-	flag_orbits::nb_primary_orbits_lower = nb_primary_orbits_lower;
-	flag_orbits::pt_representation_sz = pt_representation_sz;
-	flag_orbits::nb_flag_orbits = nb_flag_orbits;
-	f_lint = TRUE;
-	Pt_lint = NEW_lint(nb_flag_orbits * pt_representation_sz);
+	//f_lint = FALSE;
+	Pt = NEW_lint(nb_flag_orbits * pt_representation_sz);
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	if (f_v) {
 		cout << "flag_orbits::init done" << endl;
@@ -191,17 +165,9 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 	fp.write((char *) &nb_primary_orbits_upper, sizeof(int));
 	fp.write((char *) &nb_flag_orbits, sizeof(int));
 	fp.write((char *) &pt_representation_sz, sizeof(int));
-	fp.write((char *) &f_lint, sizeof(int));
 
-	if (f_lint) {
-		for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
-			fp.write((char *) &Pt_lint[i], sizeof(long int));
-			}
-	}
-	else {
-		for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
-			fp.write((char *) &Pt[i], sizeof(int));
-			}
+	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
+		fp.write((char *) &Pt[i], sizeof(long int));
 	}
 	for (i = 0; i < nb_flag_orbits; i++) {
 		Flag_orbit_node[i].write_file(fp, 0 /*verbose_level*/);
@@ -228,20 +194,12 @@ void flag_orbits::read_file(ifstream &fp,
 	fp.read((char *) &nb_primary_orbits_upper, sizeof(int));
 	fp.read((char *) &nb_flag_orbits, sizeof(int));
 	fp.read((char *) &pt_representation_sz, sizeof(int));
-	fp.read((char *) &f_lint, sizeof(int));
 
-	if (f_lint) {
-		Pt_lint = NEW_lint(nb_flag_orbits * pt_representation_sz);
-		for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
-			fp.read((char *) &Pt_lint[i], sizeof(long int));
-			}
-	}
-	else {
-		Pt = NEW_int(nb_flag_orbits * pt_representation_sz);
-		for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
-			fp.read((char *) &Pt[i], sizeof(int));
-			}
-	}
+	Pt = NEW_lint(nb_flag_orbits * pt_representation_sz);
+	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
+		fp.read((char *) &Pt[i], sizeof(long int));
+		}
+
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
 		if (FALSE) {

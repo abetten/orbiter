@@ -63,14 +63,14 @@ void analyze_group(action *A, sims *S,
 	cout << "the center is:" << endl;
 	for (i = 0; i < size_center; i++) {
 		cout << i << " element has rank " << center[i] << endl;
-		S->element_unrank_int(center[i], Elt1);
+		S->element_unrank_lint(center[i], Elt1);
 		A->print(cout, Elt1);
 		//A->print_as_permutation(cout, Elt1);
 		cout << endl;
 		}
 	cout << endl << endl;
 	
-	S->element_unrank_int(center[1], Elt1);
+	S->element_unrank_lint(center[1], Elt1);
 	A->move(Elt1, gens2->ith(0));
 	nb_gens2 = 1;
 	
@@ -180,7 +180,7 @@ void analyze_group(action *A, sims *S,
 	cout << "the elements of ModH1 are:" << endl;
 	for (i = 0; i < ModH1->goi_factor_group; i++) {
 		cout << "element " << i << ":" << endl;
-		ModH1->FactorGroup->Sims->element_unrank_int(i, Elt1);
+		ModH1->FactorGroup->Sims->element_unrank_lint(i, Elt1);
 		A->print(cout, Elt1);
 		cout << endl;
 		cout << "in the factor group mod H1" << endl;
@@ -251,7 +251,7 @@ void analyze_group(action *A, sims *S,
 	cout << "the elements of ModH2 are:" << endl;
 	for (i = 0; i < ModH2->goi_factor_group; i++) {
 		cout << "element " << i << ":" << endl;
-		ModH2->FactorGroup->Sims->element_unrank_int(i, Elt1);
+		ModH2->FactorGroup->Sims->element_unrank_lint(i, Elt1);
 		A->print(cout, Elt1);
 		cout << endl;
 		cout << "in the factor group mod H2" << endl;
@@ -403,7 +403,7 @@ void presentation(action *A, sims *S, int goi,
 				}
 			}
 		A->move(Elt1, Elt2);
-		a = S->element_rank_int(Elt2);
+		a = S->element_rank_lint(Elt2);
 		word_list[i] = a;
 		inverse_word_list[a] = i;
 		cout << "word " << i << " = ";
@@ -429,7 +429,7 @@ void presentation(action *A, sims *S, int goi,
 	for (i = 0; i < l; i++) {
 		A->move(gens->ith(i), Elt1);
 		A->element_power_int_in_place(Elt1, primes[i], 0);
-		a = S->element_rank_int(Elt1);
+		a = S->element_rank_lint(Elt1);
 		cout << "generator " << i << " to the power " << primes[i]
 			<< " is elt " << a << " which is word "
 			<< inverse_word_list[a];
@@ -454,7 +454,7 @@ void presentation(action *A, sims *S, int goi,
 			A->mult(Elt2, gens->ith(j), Elt3);
 			A->mult(Elt3, Elt1, Elt4);
 			cout << "g_" << j << "^{g_" << i << "} =" << endl;
-			a = S->element_rank_int(Elt4);
+			a = S->element_rank_lint(Elt4);
 			cout << "which is element " << a << " which is word "
 				<< inverse_word_list[a] << " = ";
 			jj = inverse_word_list[a];

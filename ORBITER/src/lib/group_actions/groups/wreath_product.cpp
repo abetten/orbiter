@@ -7123,13 +7123,13 @@ void wreath_product::freeself()
 		FREE_OBJECT(Elts);
 	}
 	if (base_for_component) {
-		FREE_int(base_for_component);
+		FREE_lint(base_for_component);
 	}
 	if (tl_for_component) {
 		FREE_int(tl_for_component);
 	}
 	if (the_base) {
-		FREE_int(the_base);
+		FREE_lint(the_base);
 	}
 	if (the_transversal_length) {
 		FREE_int(the_transversal_length);
@@ -7291,7 +7291,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << "wreath_product::init_tensor_wreath_product "
 				"base_len_in_component = " << base_len_in_component << endl;
 	}
-	base_for_component = NEW_int(base_len_in_component);
+	base_for_component = NEW_lint(base_len_in_component);
 	tl_for_component = NEW_int(base_len_in_component);
 	F->general_linear_matrix_group_base_and_transversal_length(
 		dimension_of_matrix_group,
@@ -7302,7 +7302,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"base_for_component = ";
-		int_vec_print(cout, base_for_component, base_len_in_component);
+		lint_vec_print(cout, base_for_component, base_len_in_component);
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"tl_for_component = ";
@@ -7326,7 +7326,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"the_base = ";
-		int_vec_print(cout, the_base, base_length);
+		lint_vec_print(cout, the_base, base_length);
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"the_transversal_length = ";
@@ -7362,10 +7362,10 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	}
 }
 
-int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
+long int wreath_product::element_image_of(int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f, a0, b, c;
+	long int f, a0, b, c;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -7379,7 +7379,8 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 					"we are in the permutation" << endl;
 		}
 		b = Elt[a];
-	} else {
+	}
+	else {
 		a -= nb_factors;
 		b += nb_factors;
 		for (f = 0; f < nb_factors; f++) {
@@ -7392,7 +7393,7 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 				Gg.AG_element_unrank(q, u, 1, M->n, a);
 				F->mult_vector_from_the_left(u, Elt + offset_i(f), v,
 						M->n, M->n);
-				Gg.AG_element_rank(q, v, 1, M->n, c);
+				c = Gg.AG_element_rank(q, v, 1, M->n);
 				if (f_v) {
 					cout << "wreath_product::element_image_of "
 							"we are in component " << f
@@ -7411,7 +7412,7 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 						"we are in the tensor product component "
 						"reduced input a = " << a << endl;
 			}
-			F->PG_element_unrank_modified(u, 1,
+			F->PG_element_unrank_modified_lint(u, 1,
 					dimension_of_tensor_action, a);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
@@ -7443,7 +7444,7 @@ int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 				int_vec_print(cout, w, dimension_of_tensor_action);
 				cout << endl;
 			}
-			F->PG_element_rank_modified(w, 1,
+			F->PG_element_rank_modified_lint(w, 1,
 					dimension_of_tensor_action, c);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
@@ -7617,8 +7618,8 @@ void wreath_product::compute_induced_permutation(int *Elt, int *perm)
 			k = Elt[h];
 			index_set2[k] = a;
 		}
-		Gg.AG_element_rank(dimension_of_matrix_group,
-				index_set2, 1, nb_factors, j);
+		j = Gg.AG_element_rank(dimension_of_matrix_group,
+				index_set2, 1, nb_factors);
 		perm[i] = j;
 	}
 }
@@ -7918,7 +7919,7 @@ void wreath_product::compute_base_and_transversals(int verbose_level)
 	base_length = 0;
 	base_length += nb_factors;
 	base_length += nb_factors * base_len_in_component;
-	the_base = NEW_int(base_length);
+	the_base = NEW_lint(base_length);
 
 	h = 0;
 	for (i = 0; i < nb_factors; i++, h++) {

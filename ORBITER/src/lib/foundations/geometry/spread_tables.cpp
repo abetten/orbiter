@@ -67,7 +67,7 @@ spread_tables::~spread_tables()
 		FREE_int(self_dual_lines);
 	}
 	if (spread_table) {
-		FREE_int(spread_table);
+		FREE_lint(spread_table);
 	}
 	if (spread_iso_type) {
 		FREE_int(spread_iso_type);
@@ -154,7 +154,7 @@ void spread_tables::init(finite_field *F,
 }
 
 void spread_tables::init_spread_table(int nb_spreads,
-		int *spread_table, int *spread_iso_type,
+		long int *spread_table, int *spread_iso_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -171,7 +171,7 @@ void spread_tables::init_spread_table(int nb_spreads,
 }
 
 void spread_tables::init_tables(int nb_spreads,
-		int *spread_table, int *spread_iso_type,
+		long int *spread_table, int *spread_iso_type,
 		int *dual_spread_idx,
 		int *self_dual_spreads, int nb_self_dual_spreads,
 		int verbose_level)
@@ -224,14 +224,14 @@ void spread_tables::init_reduced(
 	if (f_v) {
 		cout << "spread_tables::init_reduced allocating spread_table" << endl;
 	}
-	spread_table = NEW_int(nb_spreads * spread_size);
+	spread_table = NEW_lint(nb_spreads * spread_size);
 	if (f_v) {
 		cout << "spread_tables::init_reduced allocating spread_iso_type" << endl;
 	}
 	spread_iso_type = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
 		a = select[i];
-		int_vec_copy(old_spread_table->spread_table + a * spread_size,
+		lint_vec_copy(old_spread_table->spread_table + a * spread_size,
 				spread_table + i * spread_size, spread_size);
 		spread_iso_type[i] = old_spread_table->spread_iso_type[a];
 	}
@@ -293,7 +293,7 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_spreads << endl;
 		}
 
-	Fio.int_matrix_write_csv(fname_spreads,
+	Fio.lint_matrix_write_csv(fname_spreads,
 			spread_table, nb_spreads, spread_size);
 	if (f_v) {
 		cout << "spread_tables::save "
@@ -367,7 +367,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_spreads << endl;
 		}
 
-	Fio.int_matrix_read_csv(fname_spreads,
+	Fio.lint_matrix_read_csv(fname_spreads,
 			spread_table, nb_spreads, b,
 			0 /* verbose_level */);
 	if (b != spread_size) {
@@ -464,7 +464,7 @@ void spread_tables::compute_adjacency_matrix(
 	for (i = 0; i < nb_spreads; i++) {
 		for (j = i + 1; j < nb_spreads; j++) {
 
-			int *p, *q;
+			long int *p, *q;
 			int u, v;
 
 			p = spread_table + i * spread_size;
@@ -542,7 +542,7 @@ void spread_tables::compute_adjacency_matrix(
 
 int spread_tables::test_if_spreads_are_disjoint(int a, int b)
 {
-	int *p, *q;
+	long int *p, *q;
 	int u, v;
 
 	p = spread_table + a * spread_size;

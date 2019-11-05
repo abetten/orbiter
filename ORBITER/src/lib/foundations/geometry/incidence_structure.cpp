@@ -145,7 +145,7 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 		for (j = 0; j < nb_cols; j++) {
 			cout << "i=" << i << " j=" << j << endl;
 			PHG_element_unrank(*H->R, Mtx, 1, n, i);
-			H->unrank_int(Mtx + n, j, 0);
+			H->unrank_lint(Mtx + n, j, 0);
 			print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
 			mtx_rk = H->R->Gauss_int(
 				Mtx, TRUE, FALSE, base_cols, FALSE, NULL,
@@ -487,7 +487,7 @@ int incidence_structure::get_ij(int i, int j)
 		}
 	else if (realization_type ==
 			INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL) {
-		int p1, p2, rk;
+		long int p1, p2, rk;
 		int *v;
 		int *base_cols;
 
@@ -557,7 +557,15 @@ int incidence_structure::get_points_on_line(int *data, int j)
 		}
 	else if (realization_type ==
 			INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL) {
-		O->points_on_line_by_line_rank(j, data, 0/* verbose_level - 2*/);
+		long int *Data;
+		int h;
+
+		Data = NEW_lint(nb_points_on_line[j]);
+		O->points_on_line_by_line_rank(j, Data, 0/* verbose_level - 2*/);
+		for (h = 0; h < nb_points_on_line[j]; h++) {
+			data[h] = Data[h];
+			}
+		FREE_lint(Data);
 		return O->q + 1;
 		}
 	cout << "incidence_structure::get_points_on_line "

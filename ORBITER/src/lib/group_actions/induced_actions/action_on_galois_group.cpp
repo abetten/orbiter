@@ -73,12 +73,12 @@ void action_on_galois_group::init(action *A,
 		}
 }
 
-void action_on_galois_group::compute_image(
-		int *Elt, int i, int &j, int verbose_level)
+long int action_on_galois_group::compute_image(
+		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	int a, b;
+	long int a, b, j;
 
 	if (f_v) {
 		cout << "action_on_galois_group::compute_image "
@@ -98,6 +98,7 @@ void action_on_galois_group::compute_image(
 		cout << "action_on_galois_group::compute_image "
 				"image of " << i << " is " << j << endl;
 		}
+	return j;
 }
 
 }}

@@ -16,10 +16,10 @@ namespace orbiter {
 namespace foundations {
 
 
-int orthogonal::find_root(int rk2, int verbose_level)
+long int orthogonal::find_root(long int rk2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret;
+	long int ret;
 
 	if (f_v) {
 		cout << "orthogonal::find_root" << endl;
@@ -42,7 +42,7 @@ int orthogonal::find_root(int rk2, int verbose_level)
 
 
 void orthogonal::Siegel_map_between_singular_points(int *T,
-	int rk_from, int rk_to, int root, int verbose_level)
+		long int rk_from, long int rk_to, long int root, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

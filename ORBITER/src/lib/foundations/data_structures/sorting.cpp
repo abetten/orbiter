@@ -88,6 +88,29 @@ int sorting::int_vec_is_subset_of(
 	return TRUE;
 }
 
+int sorting::lint_vec_is_subset_of(
+		int *set, int sz, long int *big_set, int big_set_sz)
+{
+	long int i, j, a;
+
+	j = 0;
+	for (i = 0; i < sz; i++) {
+		a = set[i];
+		while (big_set[j] < a && j < big_set_sz) {
+			j++;
+			}
+		if (j == big_set_sz) {
+			return FALSE;
+			}
+		if (big_set[j] == a) {
+			j++;
+			continue;
+			}
+		return FALSE;
+		}
+	return TRUE;
+}
+
 void sorting::int_vec_swap_points(
 		int *list, int *list_inv, int idx1, int idx2)
 {
@@ -121,6 +144,21 @@ void sorting::int_vec_sort_and_remove_duplicates(int *v, int &len)
 	int i, j;
 	
 	int_vec_heapsort(v, len);
+	for (i = len - 1; i > 0; i--) {
+		if (v[i] == v[i - 1]) {
+			for (j = i + 1; j < len; j++) {
+				v[j - 1] = v[j];
+				}
+			len--;
+			}
+		}
+}
+
+void sorting::lint_vec_sort_and_remove_duplicates(long int *v, int &len)
+{
+	int i, j;
+
+	lint_vec_heapsort(v, len);
 	for (i = len - 1; i > 0; i--) {
 		if (v[i] == v[i - 1]) {
 			for (j = i + 1; j < len; j++) {
@@ -184,6 +222,35 @@ int sorting::int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
 
 int sorting::int_vecs_find_common_element(int *v1, int len1,
 		int *v2, int len2, int &idx1, int &idx2)
+{
+	int i, j;
+
+	i = 0;
+	j = 0;
+	while (TRUE) {
+		if (i == len1) {
+			break;
+			}
+		if (j == len2) {
+			break;
+			}
+		if (v1[i] == v2[j]) {
+			idx1 = i;
+			idx2 = j;
+			return TRUE;
+			}
+		if (v1[i] < v2[j]) {
+			i++;
+			}
+		else if (v1[i] > v2[j]) {
+			j++;
+			}
+		}
+	return FALSE;
+}
+
+int sorting::lint_vecs_find_common_element(long int *v1, int len1,
+		long int *v2, int len2, int &idx1, int &idx2)
 {
 	int i, j;
 
@@ -426,6 +493,28 @@ int sorting::test_if_set_with_return_value(int *set, int set_size)
 	return TRUE;
 }
 
+int sorting::test_if_set_with_return_value_lint(long int *set, int set_size)
+{
+	int *S;
+	int i;
+
+	S = NEW_int(set_size);
+	for (i = 0; i < set_size; i++) {
+		S[i] = set[i];
+		}
+	int_vec_heapsort(S, set_size);
+	for (i = 0; i < set_size - 1; i++) {
+		if (S[i] == S[i + 1]) {
+			cout << "the set is not a set: the element "
+				<< S[i] << " is repeated" << endl;
+			FREE_int(S);
+			return FALSE;
+			}
+		}
+	FREE_int(S);
+	return TRUE;
+}
+
 void sorting::rearrange_subset(int n, int k,
 	int *set, int *subset, int *rearranged_set,
 	int verbose_level)
@@ -471,6 +560,19 @@ int sorting::int_vec_search_linear(int *v, int len, int a, int &idx)
 	return FALSE;
 }
 
+int sorting::lint_vec_search_linear(long int *v, int len, long int a, int &idx)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (v[i] == a) {
+			idx = i;
+			return TRUE;
+			}
+		}
+	return FALSE;
+}
+
 void sorting::int_vec_intersect(int *v1, int len1,
 	int *v2, int len2, int *&v3, int &len3)
 {
@@ -498,6 +600,36 @@ void sorting::int_vec_intersect(int *v1, int len1,
 
 	FREE_int(V1);
 	FREE_int(V2);
+}
+
+void sorting::vec_intersect(long int *v1, int len1,
+	long int *v2, int len2, long int *&v3, int &len3)
+{
+	long int *V1, *V2;
+	long int i, a;
+	int idx;
+
+	V1 = NEW_lint(len1);
+	V2 = NEW_lint(len2);
+	for (i = 0; i < len1; i++) {
+		V1[i] = v1[i];
+		}
+	for (i = 0; i < len2; i++) {
+		V2[i] = v2[i];
+		}
+	lint_vec_heapsort(V1, len1);
+	lint_vec_heapsort(V2, len2);
+	v3 = NEW_lint(MAXIMUM(len1, len2));
+	len3 = 0;
+	for (i = 0; i < len1; i++) {
+		a = V1[i];
+		if (lint_vec_search(V2, len2, a, idx, 0 /* verbose_level */)) {
+			v3[len3++] = a;
+			}
+		}
+
+	FREE_lint(V1);
+	FREE_lint(V2);
 }
 
 void sorting::int_vec_intersect_sorted_vectors(int *v1, int len1,
@@ -674,6 +806,7 @@ void sorting::quicksort_array_with_perm(int len, void **v, int *perm,
 	quicksort(v, perm, compare_func, data, 0, len - 1);
 }
 
+#if 0
 void sorting::int_vec_sort(int len, int *p)
 {
 	int i, j, a;
@@ -687,6 +820,7 @@ void sorting::int_vec_sort(int len, int *p)
 			}
 		}
 }
+#endif
 
 int sorting::vec_search(void **v,
 	int (*compare_func)(void *a, void *b, void *data),
@@ -1617,6 +1751,20 @@ void sorting::int_vec_heapsort_with_log(int *v, int *w, int len)
 	
 }
 
+void sorting::lint_vec_heapsort_with_log(long int *v, long int *w, int len)
+{
+	int end;
+
+	lint_heapsort_make_heap_with_log(v, w, len);
+	for (end = len - 1; end > 0; ) {
+		lint_heapsort_swap(v, 0, end);
+		lint_heapsort_swap(w, 0, end);
+		end--;
+		lint_heapsort_sift_down_with_log(v, w, 0, end);
+		}
+
+}
+
 void sorting::heapsort_make_heap(int *v, int len)
 {
 	int start;
@@ -1641,6 +1789,15 @@ void sorting::heapsort_make_heap_with_log(int *v, int *w, int len)
 	
 	for (start = (len - 2) >> 1 ; start >= 0; start--) {
 		heapsort_sift_down_with_log(v, w, start, len - 1);
+		}
+}
+
+void sorting::lint_heapsort_make_heap_with_log(long int *v, long int *w, int len)
+{
+	int start;
+
+	for (start = (len - 2) >> 1 ; start >= 0; start--) {
+		lint_heapsort_sift_down_with_log(v, w, start, len - 1);
 		}
 }
 
@@ -1724,6 +1881,28 @@ void sorting::heapsort_sift_down_with_log(
 		if (v[root] < v[child]) {
 			heapsort_swap(v, root, child);
 			heapsort_swap(w, root, child);
+			root = child;
+			}
+		else {
+			return;
+			}
+		}
+}
+
+void sorting::lint_heapsort_sift_down_with_log(
+		long int *v, long int *w, int start, int end)
+{
+	long int root, child;
+
+	root = start;
+	while (2 * root + 1 <= end) {
+		child = 2 * root + 1; // left child
+		if (child + 1 <= end && v[child] < v[child + 1]) {
+			child++;
+			}
+		if (v[root] < v[child]) {
+			lint_heapsort_swap(v, root, child);
+			lint_heapsort_swap(w, root, child);
 			root = child;
 			}
 		else {
@@ -2077,11 +2256,11 @@ void sorting::schreier_vector_tree(
 		}
 		d1 = depth[pos1];
 		d2 = depth[pos2];
-		if (!int_vec_search(SoS->Sets[d1], SoS->Set_size[d1], pos1, n1)) {
+		if (!lint_vec_search(SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
 			cout << "sorting::schreier_vector_tree cannot find point pos1" << endl;
 			exit(1);
 		}
-		if (!int_vec_search(SoS->Sets[d2], SoS->Set_size[d2], pos2, n2)) {
+		if (!lint_vec_search(SoS->Sets[d2], SoS->Set_size[d2], pos2, n2, 0)) {
 			cout << "sorting::schreier_vector_tree cannot find point pos2" << endl;
 			exit(1);
 		}
@@ -2091,7 +2270,7 @@ void sorting::schreier_vector_tree(
 	for (i = 0; i < n; i++) {
 		pos1 = i;
 		d1 = depth[pos1];
-		if (!int_vec_search(SoS->Sets[d1], SoS->Set_size[d1], pos1, n1)) {
+		if (!lint_vec_search(SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
 			cout << "sorting::schreier_vector_tree cannot find point pos1" << endl;
 			exit(1);
 		}

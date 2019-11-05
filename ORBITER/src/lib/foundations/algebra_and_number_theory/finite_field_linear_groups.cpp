@@ -20,20 +20,21 @@ namespace foundations {
 
 
 void finite_field::diagonal_orbit_perm(int n,
-		int *orbit, int *orbit_inv, int verbose_level)
+		long int *orbit, long int *orbit_inv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *v = NEW_int(n + 1);
 	geometry_global Gg;
-	int l, ll;
-	l = Gg.nb_PG_elements(n - 1, q);
-	ll = Gg.nb_AG_elements(n - 1, q - 1);
-	int a, b, c;
-	int i, j;
+	long int l, ll;
+	long int a, b, c;
+	long int i, j;
 
 	if (f_v) {
 		cout << "finite_field::diagonal_orbit_perm" << endl;
 	}
+	l = Gg.nb_PG_elements(n - 1, q);
+	ll = Gg.nb_AG_elements(n - 1, q - 1);
+
 	//cout << "l = " << l << endl;
 	for (i = 0; i < l; i++) {
 		orbit[i] = i;
@@ -51,7 +52,7 @@ void finite_field::diagonal_orbit_perm(int n,
 				cout << v[j] << " ";
 				}
 			}
-		PG_element_rank_modified(v, 1, n, a);
+		PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_v) {
 			cout << " : " << a << endl;
 			}
@@ -69,21 +70,25 @@ void finite_field::diagonal_orbit_perm(int n,
 }
 
 void finite_field::frobenius_orbit_perm(int n,
-	int *orbit, int *orbit_inv,
+	long int *orbit, long int *orbit_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *v = NEW_int(n);
 	geometry_global Gg;
-	int l = Gg.nb_PG_elements(n - 1, q);
-	int ll = e;
-	int a, b, c;
-	int i, j;
+	long int l;
+	long int ll;
+	long int a, b, c;
+	long int i, j;
 
 	if (f_v) {
 		cout << "finite_field::frobenius_orbit_perm n=" << n
 				<< " (vector space dimension)" << endl;
-		cout << "l=" << l << endl;
+	}
+	l = Gg.nb_PG_elements(n - 1, q);
+	ll = e;
+	if (f_v) {
+		cout << "finite_field::frobenius_orbit_perm l=" << l << endl;
 		}
 	if (e == 1) {
 		cout << "finite_field::frobenius_orbit_perm GFq.e == 1" << endl;
@@ -110,7 +115,7 @@ void finite_field::frobenius_orbit_perm(int n,
 				cout << v[j] << " ";
 				}
 			}
-		PG_element_rank_modified(v, 1, n, a);
+		PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_v) {
 			cout << " : " << a << endl;
 			}
@@ -131,8 +136,8 @@ void finite_field::frobenius_orbit_perm(int n,
 void finite_field::projective_matrix_group_base_and_orbits(int n,
 	int f_semilinear,
 	int base_len, int degree,
-	int *base, int *transversal_length,
-	int **orbit, int **orbit_inv,
+	long int *base, int *transversal_length,
+	long int **orbit, long int **orbit_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -176,9 +181,9 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 			}
 
 		if (FALSE) {
-			print_set(cout, degree, orbit[i]);
+			print_set_lint(cout, degree, orbit[i]);
 			cout << endl;
-			print_set(cout, degree, orbit_inv[i]);
+			print_set_lint(cout, degree, orbit_inv[i]);
 			cout << endl;
 			}
 		}
@@ -201,9 +206,9 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 			}
 
 		if (FALSE) {
-			print_set(cout, degree, orbit[i]);
+			print_set_lint(cout, degree, orbit[i]);
 			cout << endl;
-			print_set(cout, degree, orbit_inv[i]);
+			print_set_lint(cout, degree, orbit_inv[i]);
 			cout << endl;
 			}
 		i++;
@@ -228,16 +233,16 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 			}
 
 		if (FALSE) {
-			print_set(cout, degree, orbit[i]);
+			print_set_lint(cout, degree, orbit[i]);
 			cout << endl;
-			print_set(cout, degree, orbit_inv[i]);
+			print_set_lint(cout, degree, orbit_inv[i]);
 			cout << endl;
 			}
 		i++;
 		}
 	if (f_v) {
 		cout << "finite_field::projective_matrix_group_base_and_orbits base: ";
-		int_vec_print(cout, base, base_len);
+		lint_vec_print(cout, base, base_len);
 		cout << endl;
 		cout << "projective_matrix_group_base_and_orbits "
 				"transversal_length: ";
@@ -252,7 +257,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 void finite_field::projective_matrix_group_base_and_transversal_length(int n,
 	int f_semilinear,
 	int base_len, int degree,
-	int *base, int *transversal_length,
+	long int *base, int *transversal_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -304,7 +309,7 @@ void finite_field::projective_matrix_group_base_and_transversal_length(int n,
 		}
 	if (f_v) {
 		cout << "finite_field::projective_matrix_group_base_and_transversal_length base: ";
-		int_vec_print(cout, base, base_len);
+		lint_vec_print(cout, base, base_len);
 		cout << endl;
 		cout << "finite_field::projective_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
@@ -319,7 +324,7 @@ void finite_field::projective_matrix_group_base_and_transversal_length(int n,
 void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 	int f_semilinear,
 	int base_len, int degree,
-	int *base, int *transversal_length,
+	long int *base, int *transversal_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -336,8 +341,8 @@ void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 	transversal_length[c] = NT.i_power_j(q, n);
 	c++;
 	for (i = 0; i < n; i++) {
-		base[c] = NT.i_power_j(q, i);
-		transversal_length[c] = NT.i_power_j(q, n) - NT.i_power_j(q, i);
+		base[c] = NT.i_power_j_lint(q, i);
+		transversal_length[c] = NT.i_power_j_lint(q, n) - NT.i_power_j_lint(q, i);
 		c++;
 		}
 	if (f_semilinear) {
@@ -352,7 +357,7 @@ void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 		}
 	if (f_v) {
 		cout << "finite_field::affine_matrix_group_base_and_transversal_length base: ";
-		int_vec_print(cout, base, base_len);
+		lint_vec_print(cout, base, base_len);
 		cout << endl;
 		cout << "finite_field::affine_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
@@ -368,7 +373,7 @@ void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 void finite_field::general_linear_matrix_group_base_and_transversal_length(int n,
 	int f_semilinear,
 	int base_len, int degree,
-	int *base, int *transversal_length,
+	long int *base, int *transversal_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -383,8 +388,8 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 		}
 	c = 0;
 	for (i = 0; i < n; i++) {
-		base[c] = NT.i_power_j(q, i);
-		transversal_length[c] = NT.i_power_j(q, n) - NT.i_power_j(q, i);
+		base[c] = NT.i_power_j_lint(q, i);
+		transversal_length[c] = NT.i_power_j_lint(q, n) - NT.i_power_j_lint(q, i);
 		c++;
 		}
 	if (f_semilinear) {
@@ -402,7 +407,7 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 	if (f_v) {
 		cout << "finite_field::general_linear_matrix_group_base_and_"
 				"transversal_length base: ";
-		int_vec_print(cout, base, base_len);
+		lint_vec_print(cout, base, base_len);
 		cout << endl;
 		cout << "finite_field::general_linear_matrix_group_base_and_"
 				"transversal_length transversal_length: ";

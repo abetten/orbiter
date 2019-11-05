@@ -68,19 +68,19 @@ void direct_product::freeself()
 		FREE_OBJECT(Elts);
 	}
 	if (base_for_component1) {
-		FREE_int(base_for_component1);
+		FREE_lint(base_for_component1);
 	}
 	if (tl_for_component1) {
 		FREE_int(tl_for_component1);
 	}
 	if (base_for_component2) {
-		FREE_int(base_for_component2);
+		FREE_lint(base_for_component2);
 	}
 	if (tl_for_component2) {
 		FREE_int(tl_for_component2);
 	}
 	if (the_base) {
-		FREE_int(the_base);
+		FREE_lint(the_base);
 	}
 	if (the_transversal_length) {
 		FREE_int(the_transversal_length);
@@ -173,7 +173,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 				"base_len_in_component2 = "
 				<< base_len_in_component2 << endl;
 	}
-	base_for_component1 = NEW_int(base_len_in_component1);
+	base_for_component1 = NEW_lint(base_len_in_component1);
 	tl_for_component1 = NEW_int(base_len_in_component1);
 
 	M1->base_and_transversal_length(
@@ -183,7 +183,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component1 = ";
-		int_vec_print(cout, base_for_component1,
+		lint_vec_print(cout, base_for_component1,
 				base_len_in_component1);
 		cout << endl;
 		cout << "direct_product::init "
@@ -194,7 +194,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 
 
-	base_for_component2 = NEW_int(base_len_in_component2);
+	base_for_component2 = NEW_lint(base_len_in_component2);
 	tl_for_component2 = NEW_int(base_len_in_component2);
 	M2->base_and_transversal_length(
 			base_len_in_component2,
@@ -204,7 +204,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component2 = ";
-		int_vec_print(cout, base_for_component2,
+		lint_vec_print(cout, base_for_component2,
 				base_len_in_component2);
 		cout << endl;
 		cout << "direct_product::init "
@@ -230,7 +230,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"the_base = ";
-		int_vec_print(cout, the_base, base_length);
+		lint_vec_print(cout, the_base, base_length);
 		cout << endl;
 		cout << "direct_product::init "
 				"the_transversal_length = ";
@@ -243,10 +243,11 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 }
 
-int direct_product::element_image_of(int *Elt, int a, int verbose_level)
+long int direct_product::element_image_of(int *Elt,
+		long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a0, b, c, c1, c2, i, j;
+	long int a0, b, c, c1, c2, i, j;
 
 	if (f_v) {
 		cout << "direct_product::element_image_of" << endl;
@@ -550,7 +551,7 @@ void direct_product::compute_base_and_transversals(int verbose_level)
 	base_length = 0;
 	base_length += base_len_in_component1;
 	base_length += base_len_in_component2;
-	the_base = NEW_int(base_length);
+	the_base = NEW_lint(base_length);
 
 	h = 0;
 	for (i = 0; i < base_len_in_component1; i++, h++) {

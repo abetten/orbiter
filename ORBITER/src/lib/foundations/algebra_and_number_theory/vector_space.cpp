@@ -86,8 +86,8 @@ void vector_space::init(finite_field *F, int dimension,
 }
 
 void vector_space::init_rank_functions(
-	int (*rank_point_func)(int *v, void *data),
-	void (*unrank_point_func)(int *v, int rk, void *data),
+	long int (*rank_point_func)(int *v, void *data),
+	void (*unrank_point_func)(int *v, long int rk, void *data),
 	void *data,
 	int verbose_level)
 {
@@ -104,7 +104,7 @@ void vector_space::init_rank_functions(
 		}
 }
 
-void vector_space::unrank_basis(int *Mtx, int *set, int len)
+void vector_space::unrank_basis(int *Mtx, long int *set, int len)
 {
 	int i;
 
@@ -113,7 +113,7 @@ void vector_space::unrank_basis(int *Mtx, int *set, int len)
 	}
 }
 
-void vector_space::rank_basis(int *Mtx, int *set, int len)
+void vector_space::rank_basis(int *Mtx, long int *set, int len)
 {
 	int i;
 
@@ -122,25 +122,25 @@ void vector_space::rank_basis(int *Mtx, int *set, int len)
 	}
 }
 
-void vector_space::unrank_point(int *v, int rk)
+void vector_space::unrank_point(int *v, long int rk)
 {
 	if (unrank_point_func) {
 		(*unrank_point_func)(v, rk, rank_point_data);
 	}
 	else {
-		F->PG_element_unrank_modified(v, 1, dimension, rk);
+		F->PG_element_unrank_modified_lint(v, 1, dimension, rk);
 	}
 }
 
-int vector_space::rank_point(int *v)
+long int vector_space::rank_point(int *v)
 {
-	int rk;
+	long int rk;
 
 	if (rank_point_func) {
 		rk = (*rank_point_func)(v, rank_point_data);
 	}
 	else {
-		F->PG_element_rank_modified(v, 1, dimension, rk);
+		F->PG_element_rank_modified_lint(v, 1, dimension, rk);
 	}
 	return rk;
 }
@@ -167,7 +167,7 @@ int vector_space::is_contained_in_subspace(int *v, int *basis, int k)
 }
 
 int vector_space::compare_subspaces_ranked(
-		int *set1, int *set2, int k, int verbose_level)
+		long int *set1, long int *set2, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int r, i;

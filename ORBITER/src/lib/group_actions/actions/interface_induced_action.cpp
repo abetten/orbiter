@@ -23,16 +23,10 @@ namespace group_actions {
 // interface functions: induced action
 // #############################################################################
 
-static int induced_action_element_image_of(action &A, int a,
+static long int induced_action_element_image_of(action &A, long int a,
 	void *elt, int verbose_level);
 static void induced_action_element_image_of_low_level(action &A,
 	int *input, int *output, void *elt, int verbose_level);
-#if 0
-static int induced_action_element_linear_entry_ij(action &A,
-	void *elt, int i, int j, int verbose_level);
-static int induced_action_element_linear_entry_frobenius(action &A,
-	void *elt, int verbose_level);
-#endif
 static void induced_action_element_one(action &A,
 	void *elt, int verbose_level);
 static int induced_action_element_is_one(action &A,
@@ -64,7 +58,7 @@ static void induced_action_element_print_latex(action &A,
 static void induced_action_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data);
 static void induced_action_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
@@ -74,9 +68,9 @@ static void induced_action_element_print_for_make_element(action &A,
 	void *elt, std::ostream &ost);
 static void induced_action_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
-static void induced_action_print_point(action &A, int a, std::ostream &ost);
-static void induced_action_unrank_point(action &A, int rk, int *v);
-static int induced_action_rank_point(action &A, int *v);
+static void induced_action_print_point(action &A, long int a, std::ostream &ost);
+static void induced_action_unrank_point(action &A, long int rk, int *v);
+static long int induced_action_rank_point(action &A, int *v);
 
 
 void action_pointer_table::init_function_pointers_induced_action()
@@ -115,11 +109,11 @@ void action_pointer_table::init_function_pointers_induced_action()
 }
 
 
-static int induced_action_element_image_of(action &A,
-		int a, void *elt, int verbose_level)
+static long int induced_action_element_image_of(action &A,
+		long int a, void *elt, int verbose_level)
 {
 	int *Elt = (int *) elt;
-	int b = 0;
+	long int b = 0;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -141,7 +135,7 @@ static int induced_action_element_image_of(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		ABRM->compute_image(sub, Elt, a, b, verbose_level - 1);
+		b = ABRM->compute_image(sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_by_restriction_t) {
 		if (f_v) {
@@ -210,7 +204,7 @@ static int induced_action_element_image_of(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		AD->compute_image(sub, Elt, a, b, verbose_level - 1);
+		b = AD->compute_image(sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_galois_group_t) {
 		if (f_v) {
@@ -219,7 +213,7 @@ static int induced_action_element_image_of(action &A,
 			}
 		action_on_galois_group *AG = A.G.on_Galois_group;
 
-		AG->compute_image(Elt, a, b, verbose_level - 1);
+		b = AG->compute_image(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_sign_t) {
 		if (f_v) {
@@ -228,7 +222,7 @@ static int induced_action_element_image_of(action &A,
 			}
 		action_on_sign *OnSign = A.G.OnSign;
 
-		OnSign->compute_image(Elt, a, b, verbose_level - 1);
+		b = OnSign->compute_image(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_grassmannian_t) {
 		if (f_v) {
@@ -364,7 +358,7 @@ static int induced_action_element_image_of(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		AOS->compute_image(sub, Elt, a, b, verbose_level - 1);
+		b = AOS->compute_image(sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_set_partitions_t) {
 		if (f_v) {
@@ -397,7 +391,7 @@ static int induced_action_element_image_of(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		On_k_subsets->compute_image(Elt, a, b, verbose_level - 1);
+		b = On_k_subsets->compute_image(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_orbits_t) {
 		if (f_v) {
@@ -431,7 +425,7 @@ static int induced_action_element_image_of(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		On_bricks->compute_image(Elt, a, b, verbose_level - 1);
+		b = On_bricks->compute_image(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_andre_t) {
 		if (f_v) {
@@ -451,7 +445,7 @@ static int induced_action_element_image_of(action &A,
 			}
 #endif
 
-		On_andre->compute_image(Elt, a, b, verbose_level - 1);
+		b = On_andre->compute_image(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_pairs_t) {
 		if (f_v) {
@@ -460,7 +454,7 @@ static int induced_action_element_image_of(action &A,
 			}
 		action *sub;
 		combinatorics_domain Combi;
-		int i, j, u, v;
+		long int i, j, u, v;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
@@ -468,10 +462,10 @@ static int induced_action_element_image_of(action &A,
 					"no subaction, type = action_on_pairs_t" << endl;
 			exit(1);
 			}
-		Combi.k2ij(a, i, j, sub->degree);
+		Combi.k2ij_lint(a, i, j, sub->degree);
 		u = sub->element_image_of(i, elt, verbose_level - 1);
 		v = sub->element_image_of(j, elt, verbose_level - 1);
-		b = Combi.ij2k(u, v, sub->degree);
+		b = Combi.ij2k_lint(u, v, sub->degree);
 		}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		if (f_v) {
@@ -480,7 +474,7 @@ static int induced_action_element_image_of(action &A,
 			}
 		action *sub;
 		combinatorics_domain Combi;
-		int a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
+		long int a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
@@ -490,7 +484,7 @@ static int induced_action_element_image_of(action &A,
 			}
 		swap = a % 2;
 		a2 = a / 2;
-		Combi.k2ij(a2, i, j, sub->degree);
+		Combi.k2ij_lint(a2, i, j, sub->degree);
 		if (swap) {
 			tmp = i;
 			i = j;
@@ -508,7 +502,7 @@ static int induced_action_element_image_of(action &A,
 			v2 = v;
 			swap2 = 0;
 			}
-		b2 = Combi.ij2k(u2, v2, sub->degree);
+		b2 = Combi.ij2k_lint(u2, v2, sub->degree);
 		b = 2 * b2 + swap2;
 #if 0
 		cout << "induced_action_element_image_of "
@@ -1371,7 +1365,7 @@ static void induced_action_element_print_latex(action &A,
 static void induced_action_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
 	int f_v = FALSE;
@@ -1505,7 +1499,7 @@ static void induced_action_element_print_for_make_element_no_commas(
 }
 
 static void induced_action_print_point(action &A,
-		int a, ostream &ost)
+		long int a, ostream &ost)
 {
 
 	if (A.type_G == action_by_right_multiplication_t) {
@@ -1734,7 +1728,7 @@ static void induced_action_print_point(action &A,
 }
 
 
-static void induced_action_unrank_point(action &A, int rk, int *v)
+static void induced_action_unrank_point(action &A, long int rk, int *v)
 {
 	//cout << "induced_action_unrank_point" << endl;
 
@@ -1984,10 +1978,10 @@ static void induced_action_unrank_point(action &A, int rk, int *v)
 
 }
 
-static int induced_action_rank_point(action &A, int *v)
+static long int induced_action_rank_point(action &A, int *v)
 {
 	//cout << "induced_action_rank_point" << endl;
-	int rk = -1;
+	long int rk = -1;
 
 	if (A.type_G == action_by_right_multiplication_t) {
 		//action_by_right_multiplication *ABRM = A.G.ABRM;

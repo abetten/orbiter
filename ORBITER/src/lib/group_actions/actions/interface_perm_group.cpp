@@ -24,7 +24,7 @@ namespace group_actions {
 // #############################################################################
 
 
-static int perm_group_element_image_of(action &A, int a,
+static long int perm_group_element_image_of(action &A, long int a,
 	void *elt, int verbose_level);
 static void perm_group_element_one(action &A,
 	void *elt, int verbose_level);
@@ -53,7 +53,7 @@ static void perm_group_element_print_latex(action &A,
 static void perm_group_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data);
 static void perm_group_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
@@ -63,7 +63,7 @@ static void perm_group_element_print_for_make_element(action &A,
 	void *elt, std::ostream &ost);
 static void perm_group_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
-static void perm_group_print_point(action &A, int a, std::ostream &ost);
+static void perm_group_print_point(action &A, long int a, std::ostream &ost);
 
 
 void action_pointer_table::init_function_pointers_permutation_group()
@@ -98,13 +98,13 @@ void action_pointer_table::init_function_pointers_permutation_group()
 	ptr_print_point = perm_group_print_point;
 }
 
-static int perm_group_element_image_of(action &A,
-		int a, void *elt, int verbose_level)
+static long int perm_group_element_image_of(action &A,
+		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
-	int b;
+	long int b;
 	
 	if (f_v) {
 		cout << "perm_group_element_image_of "
@@ -433,7 +433,7 @@ static void perm_group_element_print_latex(action &A,
 static void perm_group_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
 	perm_group &G = *A.G.perm_grp;
@@ -481,7 +481,7 @@ static void perm_group_element_print_for_make_element_no_commas(action &A,
 }
 
 
-static void perm_group_print_point(action &A, int a, ostream &ost)
+static void perm_group_print_point(action &A, long int a, ostream &ost)
 {
 	perm_group &G = *A.G.perm_grp;
 	

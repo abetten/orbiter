@@ -76,17 +76,17 @@ public:
 
 	poset_classification *PC;
 	int max_depth;
-	int *local_S; // [max_depth]
+	long int *local_S; // [max_depth]
 	int nb_callback;
 	int (*callback_testing[MAX_CALLBACK])(orbit_based_testing *Obt,
-			int *S, int len, void *data, int verbose_level);
+			long int *S, int len, void *data, int verbose_level);
 	void *callback_data[MAX_CALLBACK];
 
 	int nb_callback_no_group;
 	void (*callback_testing_no_group[MAX_CALLBACK])(
-			int *S, int len,
-			int *candidates, int nb_candidates,
-			int *good_candidates, int &nb_good_candidates,
+			long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 			void *data, int verbose_level);
 	void *callback_data_no_group[MAX_CALLBACK];
 
@@ -100,25 +100,25 @@ public:
 			int verbose_level);
 	void add_callback(
 			int (*func)(orbit_based_testing *Obt,
-					int *S, int len, void *data, int verbose_level),
+					long int *S, int len, void *data, int verbose_level),
 			void *data,
 			int verbose_level);
 	void add_callback_no_group(
-			void (*func)(int *S, int len,
-					int *candidates, int nb_candidates,
-					int *good_candidates, int &nb_good_candidates,
+			void (*func)(long int *S, int len,
+					long int *candidates, int nb_candidates,
+					long int *good_candidates, int &nb_good_candidates,
 					void *data, int verbose_level),
 			void *data,
 			int verbose_level);
 	void early_test_func(
-		int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void early_test_func_by_using_group(
-		int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 };
 
@@ -171,24 +171,24 @@ public:
 			int verbose_level);
 	void add_testing(
 			int (*func)(orbit_based_testing *Obt,
-					int *S, int len, void *data, int verbose_level),
+					long int *S, int len, void *data, int verbose_level),
 			void *data,
 			int verbose_level);
 	void add_testing_without_group(
-			void (*func)(int *S, int len,
-					int *candidates, int nb_candidates,
-					int *good_candidates, int &nb_good_candidates,
+			void (*func)(long int *S, int len,
+					long int *candidates, int nb_candidates,
+					long int *good_candidates, int &nb_good_candidates,
 					void *data, int verbose_level),
 			void *data,
 			int verbose_level);
 	void print();
 	void early_test_func(
-		int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
 	void orbits_on_k_sets(
 		int k, int *&orbit_reps, int &nb_orbits, int verbose_level);
 	poset_classification *orbits_on_k_sets_compute(
@@ -196,7 +196,7 @@ public:
 };
 
 int callback_test_independence_condition(orbit_based_testing *Obt,
-					int *S, int len, void *data, int verbose_level);
+					long int *S, int len, void *data, int verbose_level);
 
 
 
@@ -257,7 +257,7 @@ public:
 
 
 	// used as storage for the current set:
-	int *S; // [sz]
+	long int *S; // [sz]
 	
 	int sz;
 		// the target depth
@@ -285,7 +285,7 @@ public:
 
 
 	int f_print_function;
-	void (*print_function)(std::ostream &ost, int len, int *S, void *data);
+	void (*print_function)(std::ostream &ost, int len, long int *S, void *data);
 	void *print_function_data;
 	
 	int nb_times_trace;
@@ -293,7 +293,7 @@ public:
 	
 	// data for recognize:
 	vector_ge *transporter; // [sz + 1]
-	int **set; // [sz + 1][sz]
+	long int **set; // [sz + 1][sz]
 
 	
 	
@@ -307,9 +307,9 @@ public:
 	poset_orbit_node *root;
 	
 	int *first_poset_orbit_node_at_level;
-	int *set0; // [sz + 1] temporary storage
-	int *set1; // [sz + 1] temporary storage
-	int *set3; // [sz + 1] temporary storage
+	long int *set0; // [sz + 1] temporary storage
+	long int *set1; // [sz + 1] temporary storage
+	long int *set3; // [sz + 1] temporary storage
 	
 	int *nb_extension_nodes_at_level_total;
 	int *nb_extension_nodes_at_level;
@@ -359,12 +359,12 @@ public:
 
 	int f_starter;
 	int starter_size;
-	int *starter;
+	long int *starter;
 	strong_generators *starter_strong_gens;
-	int *starter_live_points;
+	long int *starter_live_points;
 	int starter_nb_live_points;
 	void *starter_canonize_data;
-	int (*starter_canonize)(int *Set, int len, int *Elt, 
+	int (*starter_canonize)(long int *Set, int len, int *Elt,
 		void *data, int verbose_level);
 	int *starter_canonize_Elt;
 	
@@ -903,7 +903,7 @@ public:
 	int node;
 	int prev;
 	
-	int pt;
+	long int pt;
 	int nb_strong_generators;
 	int *hdl_strong_generators;
 	int *tl;

@@ -139,7 +139,7 @@ public:
 	strong_generators *Aut_gens;
 		// generators for the automorphism group
 	int nb_rows, nb_cols;
-	int *canonical_labeling;
+	long int *canonical_labeling;
 
 
 	object_in_projective_space_with_action();
@@ -149,13 +149,13 @@ public:
 	void init(object_in_projective_space *OiP,
 		strong_generators *Aut_gens,
 		int nb_rows, int nb_cols,
-		int *canonical_labeling,
+		long int *canonical_labeling,
 		int verbose_level);
 	void init_known_ago(
 		object_in_projective_space *OiP,
 		int known_ago,
 		int nb_rows, int nb_cols,
-		int *canonical_labeling,
+		long int *canonical_labeling,
 		int verbose_level);
 };
 
@@ -239,7 +239,7 @@ public:
 		const char *fname, int verbose_level);
 	void read_from_file_one_case_only(
 			action *A, action *A2, const char *fname, int case_nr, int verbose_level);
-	classify *get_ago_distribution(int *&ago,
+	classify *get_ago_distribution(long int *&ago,
 			int verbose_level);
 	void report_ago_distribution(std::ostream &ost);
 	void print_table_latex(
@@ -424,7 +424,7 @@ public:
 	int f_intersect_with_set_from_file;
 	const char *intersect_with_set_from_file_fname;
 	int intersect_with_set_from_file_set_has_beed_read;
-	int *intersect_with_set_from_file_set;
+	long int *intersect_with_set_from_file_set;
 	int intersect_with_set_from_file_set_size;
 
 	int f_arc_with_given_set_as_s_lines_after_dualizing;
@@ -436,13 +436,13 @@ public:
 	int f_arc_with_two_given_sets_of_lines_after_dualizing;
 	int arc_t;
 	const char *t_lines_string;
-	int *t_lines;
+	long int *t_lines;
 	int nb_t_lines;
 
 	int f_arc_with_three_given_sets_of_lines_after_dualizing;
 	int arc_u;
 	const char *u_lines_string;
-	int *u_lines;
+	long int *u_lines;
 	int nb_u_lines;
 
 
@@ -463,12 +463,12 @@ public:
 			int verbose_level);
 	void perform_job_for_one_set(int input_idx,
 		object_in_projective_space *OiP,
-		int *&the_set_out,
+		long int *&the_set_out,
 		int &set_size_out,
 		std::ostream &fp_tex,
 		int verbose_level);
 	void do_canonical_form(
-		int *set, int set_size, int f_semilinear,
+		long int *set, int set_size, int f_semilinear,
 		const char *fname_base, int verbose_level);
 
 };
@@ -514,7 +514,7 @@ public:
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	strong_generators *set_stabilizer(
-		int *set, int set_size, int &canonical_pt, 
+		long int *set, int set_size, int &canonical_pt,
 		int *canonical_set_or_NULL, 
 		int f_save_incma_in_and_out, 
 		const char *save_incma_in_and_out_prefix, 
@@ -531,8 +531,8 @@ public:
 		const char *save_incma_in_and_out_prefix, 
 		int f_compute_canonical_form, 
 		uchar *&canonical_form, 
-		int &canonical_form_len, 
-		int *canonical_labeling,
+		int &canonical_form_len,
+		long int *canonical_labeling,
 		int verbose_level);
 		// canonical_labeling[nb_rows + nb_cols]
 		// where nb_rows and nb_cols is the encoding size,
@@ -556,14 +556,14 @@ public:
 	object_in_projective_space *
 	create_object_from_int_vec(
 		int type, const char *input_fname, int input_idx,
-		int *the_set, int set_sz, int verbose_level);
+		long int *the_set, int set_sz, int verbose_level);
 	int process_object(
 		classify_bitvectors *CB,
 		object_in_projective_space *OiP,
 		int f_save_incma_in_and_out, const char *prefix,
 		int nb_objects_to_test,
 		strong_generators *&SG,
-		int *canonical_labeling,
+		long int *canonical_labeling,
 		int verbose_level);
 	void classify_objects_using_nauty(
 		data_input_stream *Data,
@@ -605,7 +605,7 @@ public:
 
 //globals:
 void OiPA_encode(void *extra_data,
-	int *&encoding, int &encoding_sz, void *global_data);
+	long int *&encoding, int &encoding_sz, void *global_data);
 void OiPA_group_order(void *extra_data,
 	longinteger_object &go, void *global_data);
 void print_summary_table_entry(int *Table,
@@ -721,7 +721,7 @@ public:
 			int &nb_orbits, int *&orbit_reps, int *&orbit_length, int *&total_depth,
 			int verbose_level);
 	void orbit_of_point(
-			int pt, int *&orbit_elts, int &orbit_len,
+			int pt, long int *&orbit_elts, int &orbit_len,
 			int verbose_level);
 	void init_from_schreier(schreier *S,
 		int f_trivial_group, int verbose_level);
@@ -753,7 +753,7 @@ class set_and_stabilizer {
 public:
 	action *A;
 	action *A2;
-	int *data;
+	long int *data;
 	int sz;
 	longinteger_object target_go;
 	strong_generators *Strong_gens;
@@ -765,12 +765,12 @@ public:
 	void freeself();
 	void init(action *A, action *A2, int verbose_level);
 	void group_order(longinteger_object &go);
-	int group_order_as_int();
-	void init_everything(action *A, action *A2, int *Set, int set_sz, 
+	long int group_order_as_lint();
+	void init_everything(action *A, action *A2, long int *Set, int set_sz,
 		strong_generators *gens, int verbose_level);
 	void allocate_data(int sz, int verbose_level);
 	set_and_stabilizer *create_copy(int verbose_level);
-	void init_data(int *data, int sz, int verbose_level);
+	void init_data(long int *data, int sz, int verbose_level);
 	void init_stab_from_data(int *data_gens, 
 		int data_gens_size, int nb_gens, const char *ascii_target_go, 
 		int verbose_level);
@@ -839,13 +839,13 @@ class union_find_on_k_subsets {
 
 public:
 
-	int *set;
+	long int *set;
 	int set_sz;
 	int k;
 
 	sims *S;
 
-	int *interesting_k_subsets;
+	long int *interesting_k_subsets;
 	int nb_interesting_k_subsets;
 	
 	action *A_original;
@@ -864,8 +864,8 @@ public:
 	void freeself();
 	void null();
 	void init(action *A_original, sims *S, 
-		int *set, int set_sz, int k, 
-		int *interesting_k_subsets, int nb_interesting_k_subsets, 
+		long int *set, int set_sz, int k,
+		long int *interesting_k_subsets, int nb_interesting_k_subsets,
 		int verbose_level);
 	int is_minimal(int rk, int verbose_level);
 };

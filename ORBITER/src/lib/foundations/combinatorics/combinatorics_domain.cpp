@@ -276,10 +276,10 @@ int combinatorics_domain::int_vec_first_regular_word(int *v, int len, int Q, int
 
 int combinatorics_domain::int_vec_next_regular_word(int *v, int len, int Q, int q)
 {
-	int a;
+	long int a;
 	geometry_global Gg;
 
-	Gg.AG_element_rank(q, v, 1, len, a);
+	a = Gg.AG_element_rank(q, v, 1, len);
 	//cout << "int_vec_next_regular_word current rank = " << a << endl;
 	for (a++; a < Q; a++) {
 		Gg.AG_element_unrank(q, v, 1, len, a);
@@ -334,6 +334,25 @@ int combinatorics_domain::set_find(int *elts, int size, int a)
 void combinatorics_domain::set_complement(
 		int *subset, int subset_size,
 		int *complement, int &size_complement,
+		int universal_set_size)
+// subset must be in increasing order
+{
+	int i, j;
+
+	j = 0;
+	size_complement = 0;
+	for (i = 0; i < universal_set_size; i++) {
+		if (j < subset_size && subset[j] == i) {
+			j++;
+			continue;
+			}
+		complement[size_complement++] = i;
+		}
+}
+
+void combinatorics_domain::set_complement_lint(
+		long int *subset, int subset_size,
+		long int *complement, int &size_complement,
 		int universal_set_size)
 // subset must be in increasing order
 {
@@ -449,14 +468,14 @@ int combinatorics_domain::compare_lexicographically(
 	return 0;
 }
 
-int combinatorics_domain::int_n_choose_k(int n, int k)
+long int combinatorics_domain::int_n_choose_k(int n, int k)
 {
-	int r;
+	long int r;
 	longinteger_object a;
 	longinteger_domain D;
 	
 	D.binomial(a, n, k, FALSE);
-	r = a.as_int();
+	r = a.as_lint();
 	return r;
 }
 
@@ -1256,7 +1275,7 @@ void combinatorics_domain::perm_print(ostream &ost, int *a, int n)
 void combinatorics_domain::perm_print_with_print_point_function(
 		ostream &ost,
 		int *a, int n,
-		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	perm_print_offset(ost, a, n, 0, FALSE, FALSE, FALSE, 0, FALSE,
@@ -1283,7 +1302,7 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 	int f_max_cycle_length,
 	int max_cycle_length,
 	int f_orbit_structure,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
 	int *have_seen;
@@ -1473,7 +1492,7 @@ void combinatorics_domain::perm_cycle_type(
 int combinatorics_domain::perm_order(int *a, int n)
 {
 	int *have_seen;
-	int i, l, l1, first, next, len, order = 1;
+	long int i, l, l1, first, next, len, order = 1;
 	number_theory_domain NT;
 		
 	have_seen = NEW_int(n);
@@ -1515,7 +1534,7 @@ int combinatorics_domain::perm_order(int *a, int n)
 		if (len == 1) {
 			continue;
 			}
-		order = len * order / NT.gcd_int(order, len);
+		order = len * order / NT.gcd_lint(order, len);
 		}
 	FREE_int(have_seen);
 	return order;
@@ -1931,26 +1950,27 @@ int combinatorics_domain::create_roots_H4(
 }
 
 
-int combinatorics_domain::generalized_binomial(int n, int k, int q)
+long int combinatorics_domain::generalized_binomial(int n, int k, int q)
 {
-	int a, b, c, a1, b1, c1, d, e, g;
+	long int a, b, c, a1, b1, c1, d, e, g;
 	number_theory_domain NT;
 	
-	if (n == k || k == 0)
+	if (n == k || k == 0) {
 		return 1;
+	}
 	// now n >= 2
 	c = generalized_binomial(n - 1, k - 1, q);
-	a = NT.i_power_j(q, n) - 1;
+	a = NT.i_power_j_lint(q, n) - 1;
 	
-	b = NT.i_power_j(q, k) - 1;
+	b = NT.i_power_j_lint(q, k) - 1;
 	
-	g = NT.gcd_int(a, b);
+	g = NT.gcd_lint(a, b);
 	a1 = a / g;
 	b1 = b / g;
 	a = a1;
 	b = b1;
 
-	g = NT.gcd_int(c, b);
+	g = NT.gcd_lint(c, b);
 	c1 = c / g;
 	b1 = b / g;
 	c = c1;

@@ -62,7 +62,7 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
-	int i, rk;
+	long int i, rk;
 	sorting Sorting;
 
 	if (f_v) {
@@ -71,7 +71,7 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 	A = S->A;
 	subgroup::Sub = Sub;
 	subgroup::SG = SG;
-	group_order = SG->group_order_as_int();
+	group_order = SG->group_order_as_lint();
 	if (f_v) {
 		cout << "subgroup::init_from_sims "
 				"group_order=" << group_order << endl;
@@ -79,8 +79,8 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 	Elt = NEW_int(A->elt_size_in_int);
 	Elements = NEW_int(group_order);
 	for (i = 0; i < group_order; i++) {
-		Sub->element_unrank_int(i, Elt);
-		rk = S->element_rank_int(Elt);
+		Sub->element_unrank_lint(i, Elt);
+		rk = S->element_rank_lint(Elt);
 		Elements[i] = rk;
 	}
 	Sorting.int_vec_heapsort(Elements, group_order);

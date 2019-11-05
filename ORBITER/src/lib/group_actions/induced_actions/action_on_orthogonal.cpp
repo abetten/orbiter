@@ -119,11 +119,11 @@ int action_on_orthogonal::rank_point(int *v)
 	return rk;
 }
 
-int action_on_orthogonal::map_a_point(
-		int *Elt, int i, int verbose_level)
+long int action_on_orthogonal::map_a_point(
+		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int j;
+	long int j;
 	action *A;
 	
 	if (f_v) {
@@ -139,11 +139,12 @@ int action_on_orthogonal::map_a_point(
 	return j;
 }
 
-int action_on_orthogonal::map_a_line(int *Elt, int i, int verbose_level)
+long int action_on_orthogonal::map_a_line(int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int j, p1, p2, q1, q2;
+	long int j;
+	long int p1, p2, q1, q2;
 	action *A;
 	
 	if (f_v) {
@@ -169,11 +170,11 @@ int action_on_orthogonal::map_a_line(int *Elt, int i, int verbose_level)
 	return j;
 }
 
-int action_on_orthogonal::compute_image_int(
-		int *Elt, int i, int verbose_level)
+long int action_on_orthogonal::compute_image_int(
+		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int j;
+	long int j;
 	//action *A;
 	
 	//A = original_action;

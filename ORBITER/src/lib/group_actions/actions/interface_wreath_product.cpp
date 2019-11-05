@@ -21,7 +21,7 @@ namespace group_actions {
 // #############################################################################
 
 
-static int wreath_product_group_element_image_of(action &A, int a,
+static long int wreath_product_group_element_image_of(action &A, long int a,
 	void *elt, int verbose_level);
 static void wreath_product_group_element_image_of_low_level(action &A,
 	int *input, int *output, void *elt, int verbose_level);
@@ -66,12 +66,12 @@ static void wreath_product_group_element_print_latex(action &A,
 static void wreath_product_group_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data);
 static void wreath_product_group_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
 static void wreath_product_group_print_point(action &A,
-	int a, std::ostream &ost);
+	long int a, std::ostream &ost);
 
 
 void action_pointer_table::init_function_pointers_wreath_product_group()
@@ -110,13 +110,13 @@ void action_pointer_table::init_function_pointers_wreath_product_group()
 
 
 
-static int wreath_product_group_element_image_of(action &A,
-		int a, void *elt, int verbose_level)
+static long int wreath_product_group_element_image_of(action &A,
+		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
-	int b;
+	long int b;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_image_of "
@@ -457,7 +457,7 @@ static void wreath_product_group_element_print_latex(
 static void wreath_product_group_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
 	cout << "wreath_product_group_element_print_latex_with_print_point_function "
@@ -475,7 +475,7 @@ static void wreath_product_group_element_print_verbose(
 
 }
 
-static void wreath_product_group_print_point(action &A, int a, ostream &ost)
+static void wreath_product_group_print_point(action &A, long int a, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
 

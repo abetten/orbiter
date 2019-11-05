@@ -420,7 +420,7 @@ void action::set_base_len(int base_len)
 
 }
 
-int &action::base_i(int i)
+long int &action::base_i(int i)
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->base_i(i);
@@ -431,7 +431,7 @@ int &action::base_i(int i)
 	}
 }
 
-int *&action::get_base()
+long int *&action::get_base()
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->get_base();
@@ -464,7 +464,7 @@ int *&action::get_transversal_length()
 	}
 }
 
-int &action::orbit_ij(int i, int j)
+long int &action::orbit_ij(int i, int j)
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->orbit_ij(i, j);
@@ -475,7 +475,7 @@ int &action::orbit_ij(int i, int j)
 	}
 }
 
-int &action::orbit_inv_ij(int i, int j)
+long int &action::orbit_inv_ij(int i, int j)
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->orbit_inv_ij(i, j);
@@ -606,9 +606,9 @@ int action::find_fixed_points(void *elt,
 }
 
 int action::test_if_set_stabilizes(int *Elt,
-		int size, int *set, int verbose_level)
+		int size, long int *set, int verbose_level)
 {
-	int *set1, *set2;
+	long int *set1, *set2;
 	int i, cmp;
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
@@ -616,25 +616,25 @@ int action::test_if_set_stabilizes(int *Elt,
 	if (f_v) {
 		cout << "action::test_if_set_stabilizes" << endl;
 		}
-	set1 = NEW_int(size);
-	set2 = NEW_int(size);
+	set1 = NEW_lint(size);
+	set2 = NEW_lint(size);
 	for (i = 0; i < size; i++) {
 		set1[i] = set[i];
 		}
-	Sorting.int_vec_quicksort_increasingly(set1, size);
+	Sorting.lint_vec_quicksort_increasingly(set1, size);
 	map_a_set(set1, set2, size, Elt, 0);
-	Sorting.int_vec_quicksort_increasingly(set2, size);
-	cmp = int_vec_compare(set1, set2, size);
+	Sorting.lint_vec_quicksort_increasingly(set2, size);
+	cmp = lint_vec_compare(set1, set2, size);
 	if (f_v) {
 		cout << "the elements takes " << endl;
-		int_vec_print(cout, set1, size);
+		lint_vec_print(cout, set1, size);
 		cout << endl << "to" << endl;
-		int_vec_print(cout, set2, size);
+		lint_vec_print(cout, set2, size);
 		cout << endl;
 		cout << "cmp = " << cmp << endl;
 		}
-	FREE_int(set1);
-	FREE_int(set2);
+	FREE_lint(set1);
+	FREE_lint(set2);
 	if (cmp == 0) {
 		if (f_v) {
 			cout << "action::test_if_set_stabilizes "
@@ -651,8 +651,8 @@ int action::test_if_set_stabilizes(int *Elt,
 		}
 }
 
-void action::map_a_set(int *set,
-		int *image_set, int n, int *Elt, int verbose_level)
+void action::map_a_set(long int *set,
+		long int *image_set, int n, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -666,7 +666,7 @@ void action::map_a_set(int *set,
 		element_print_quick(Elt, cout);
 		cout << endl;
 		cout << "set: " << endl;
-		int_vec_print(cout, set, n);
+		lint_vec_print(cout, set, n);
 		cout << endl;
 		}
 	for (i = 0; i < n; i++) {
@@ -681,13 +681,13 @@ void action::map_a_set(int *set,
 		}
 }
 
-void action::map_a_set_and_reorder(int *set,
-		int *image_set, int n, int *Elt, int verbose_level)
+void action::map_a_set_and_reorder(long int *set,
+		long int *image_set, int n, int *Elt, int verbose_level)
 {
 	sorting Sorting;
 
 	map_a_set(set, image_set, n, Elt, verbose_level);
-	Sorting.int_vec_heapsort(image_set, n);
+	Sorting.lint_vec_heapsort(image_set, n);
 }
 
 
@@ -829,7 +829,7 @@ int action::element_order_and_cycle_type_verbose(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *have_seen;
-	int l, l1, first, next, len, g, n, order = 1;
+	long int l, l1, first, next, len, g, n, order = 1;
 	number_theory_domain NT;
 	
 	if (f_v) {
@@ -881,7 +881,7 @@ int action::element_order_and_cycle_type_verbose(
 		if (len == 1) {
 			continue;
 			}
-		g = NT.gcd_int(len, order);
+		g = NT.gcd_lint(len, order);
 		order *= len / g;
 		}
 	FREE_int(have_seen);
@@ -898,7 +898,7 @@ int action::element_order_if_divisor_of(void *elt, int o)
 // 0 otherwise.
 {
 	int *have_seen;
-	int l, l1, first, next, len, g, n, order = 1;
+	long int l, l1, first, next, len, g, n, order = 1;
 	number_theory_domain NT;
 	
 	n = degree;
@@ -942,7 +942,7 @@ int action::element_order_if_divisor_of(void *elt, int o)
 			FREE_int(have_seen);
 			return 0;
 			}
-		g = NT.gcd_int(len, order);
+		g = NT.gcd_lint(len, order);
 		order *= len / g;
 		}
 	FREE_int(have_seen);
@@ -1277,48 +1277,48 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
 
 
 int action::check_if_in_set_stabilizer(int *Elt,
-		int size, int *set, int verbose_level)
+		int size, long int *set, int verbose_level)
 {
 	int i, a, b, idx;
-	int *ordered_set;
+	long int *ordered_set;
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
 	
-	ordered_set = NEW_int(size);
+	ordered_set = NEW_lint(size);
 	for (i = 0; i < size; i++) {
 		ordered_set[i] = set[i];
 		}
-	Sorting.int_vec_sort(size, ordered_set);
+	Sorting.lint_vec_heapsort(ordered_set, size);
 	for (i = 0; i < size; i++) {
 		a = ordered_set[i];
 		b = element_image_of(a, Elt, 0);
-		if (!Sorting.int_vec_search(ordered_set, size, b, idx)) {
+		if (!Sorting.lint_vec_search(ordered_set, size, b, idx, 0)) {
 			if (f_v) {
 				cout << "action::check_if_in_set_stabilizer fails" << endl;
 				cout << "set: ";
-				int_vec_print(cout, set, size);
+				lint_vec_print(cout, set, size);
 				cout << endl;
 				cout << "ordered_set: ";
-				int_vec_print(cout, ordered_set, size);
+				lint_vec_print(cout, ordered_set, size);
 				cout << endl;
 				cout << "image of " << i << "-th element "
 						<< a << " is " << b
 						<< " is not found" << endl;
 				}
-			FREE_int(ordered_set);
+			FREE_lint(ordered_set);
 			return FALSE;
 			}
 		}
-	FREE_int(ordered_set);
+	FREE_lint(ordered_set);
 	return TRUE;
 	
 }
 
 int action::check_if_transporter_for_set(int *Elt,
-		int size, int *set1, int *set2, int verbose_level)
+		int size, long int *set1, long int *set2, int verbose_level)
 {
 	int i, a, b, idx;
-	int *ordered_set2;
+	long int *ordered_set2;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
 	sorting Sorting;
@@ -1326,21 +1326,21 @@ int action::check_if_transporter_for_set(int *Elt,
 	if (f_vv) {
 		cout << "action::check_if_transporter_for_set "
 				"size=" << size << endl;
-		int_vec_print(cout, set1, size);
+		lint_vec_print(cout, set1, size);
 		cout << endl;
-		int_vec_print(cout, set2, size);
+		lint_vec_print(cout, set2, size);
 		cout << endl;
 		element_print(Elt, cout);
 		cout << endl;
 		}
-	ordered_set2 = NEW_int(size);
+	ordered_set2 = NEW_lint(size);
 	for (i = 0; i < size; i++) {
 		ordered_set2[i] = set2[i];
 		}
-	Sorting.int_vec_sort(size, ordered_set2);
+	Sorting.lint_vec_heapsort(ordered_set2, size);
 	if (f_vv) {
 		cout << "sorted target set:" << endl;
-		int_vec_print(cout, ordered_set2, size);
+		lint_vec_print(cout, ordered_set2, size);
 		cout << endl;
 		}
 	for (i = 0; i < size; i++) {
@@ -1352,39 +1352,39 @@ int action::check_if_transporter_for_set(int *Elt,
 		if (FALSE) {
 			cout << "i=" << i << " a=" << a << " b=" << b << endl;
 			}
-		if (!Sorting.int_vec_search(ordered_set2, size, b, idx)) {
+		if (!Sorting.lint_vec_search(ordered_set2, size, b, idx, 0)) {
 			if (f_v) {
 				cout << "action::check_if_transporter_for_set fails" << endl;
 				cout << "set1   : ";
-				int_vec_print(cout, set1, size);
+				lint_vec_print(cout, set1, size);
 				cout << endl;
 				cout << "set2   : ";
-				int_vec_print(cout, set2, size);
+				lint_vec_print(cout, set2, size);
 				cout << endl;
 				cout << "ordered: ";
-				int_vec_print(cout, ordered_set2, size);
+				lint_vec_print(cout, ordered_set2, size);
 				cout << endl;
 				cout << "image of " << i << "-th element "
 						<< a << " is " << b
 						<< " is not found" << endl;
 				}
-			FREE_int(ordered_set2);
+			FREE_lint(ordered_set2);
 			return FALSE;
 			}
 		}
-	FREE_int(ordered_set2);
+	FREE_lint(ordered_set2);
 	return TRUE;
 	
 }
 
 void action::compute_set_orbit(vector_ge &gens,
-	int size, int *set,
-	int &nb_sets, int **&Sets, int **&Transporter,
+	int size, long int *set,
+	int &nb_sets, long int **&Sets, int **&Transporter,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *image_set;
-	int **New_Sets;
+	long int *image_set;
+	long int **New_Sets;
 	int **New_Transporter;
 	int nb_finished, allocated_nb_sets;
 	int new_allocated_nb_sets, nb_gens, i, j, h;
@@ -1392,22 +1392,22 @@ void action::compute_set_orbit(vector_ge &gens,
 	
 	if (f_v) {
 		cout << "action::compute_set_orbit: ";
-		int_vec_print(cout, set, size);
+		lint_vec_print(cout, set, size);
 		cout << endl;
 		}
 	nb_gens = gens.len;
 	
 	allocated_nb_sets = 100;
-	Sets = NEW_pint(allocated_nb_sets);
+	Sets = NEW_plint(allocated_nb_sets);
 	Transporter = NEW_pint(allocated_nb_sets);
 	nb_sets = 0;
 
-	image_set = NEW_int(size);
-	Sets[0] = NEW_int(size);
+	image_set = NEW_lint(size);
+	Sets[0] = NEW_lint(size);
 	for (i = 0; i < size; i++) {
 		Sets[0][i] = set[i];
 		}
-	Sorting.int_vec_sort(size, Sets[0]);
+	Sorting.lint_vec_heapsort(Sets[0], size);
 	
 	Transporter[0] = NEW_int(elt_size_in_int);
 	element_one(Transporter[0], FALSE);
@@ -1425,11 +1425,11 @@ void action::compute_set_orbit(vector_ge &gens,
 				gens.ith(i), 0);
 			if (FALSE) {
 				cout << "image under generator " << i << ":";
-				int_vec_print(cout, image_set, size);
+				lint_vec_print(cout, image_set, size);
 				cout << endl;
 				}
 			for (j = 0; j < nb_sets; j++) {
-				if (int_vec_compare(Sets[j], image_set, size) == 0)
+				if (lint_vec_compare(Sets[j], image_set, size) == 0)
 					break;
 				}
 			if (j < nb_sets) {
@@ -1438,11 +1438,11 @@ void action::compute_set_orbit(vector_ge &gens,
 			// n e w set found:
 			if (f_v) {
 				cout << "n e w set " << nb_sets << ":";
-				int_vec_print(cout, image_set, size);
+				lint_vec_print(cout, image_set, size);
 				cout << endl;
 				}
 			Sets[nb_sets] = image_set;
-			image_set = NEW_int(size);
+			image_set = NEW_lint(size);
 			Transporter[nb_sets] = NEW_int(elt_size_in_int);
 			element_mult(Transporter[nb_finished],
 					gens.ith(i), Transporter[nb_sets], 0);
@@ -1451,13 +1451,13 @@ void action::compute_set_orbit(vector_ge &gens,
 				new_allocated_nb_sets = allocated_nb_sets + 100;
 				cout << "reallocating to size "
 						<< new_allocated_nb_sets << endl;
-				New_Sets = NEW_pint(new_allocated_nb_sets);
+				New_Sets = NEW_plint(new_allocated_nb_sets);
 				New_Transporter = NEW_pint(new_allocated_nb_sets);
 				for (h = 0; h < nb_sets; h++) {
 					New_Sets[h] = Sets[h];
 					New_Transporter[h] = Transporter[h];
 					}
-				FREE_pint(Sets);
+				FREE_plint(Sets);
 				FREE_pint(Transporter);
 				Sets = New_Sets;
 				Transporter = New_Transporter;
@@ -1466,36 +1466,36 @@ void action::compute_set_orbit(vector_ge &gens,
 			} // next i
 		 nb_finished++;
 		}
-	FREE_int(image_set);
+	FREE_lint(image_set);
 	if (f_v) {
 		cout << "action::compute_set_orbit "
 				"found an orbit of size " << nb_sets << endl;
 		for (i = 0; i < nb_sets; i++) {
 			cout << i << " : ";
-			int_vec_print(cout, Sets[i], size);
+			lint_vec_print(cout, Sets[i], size);
 			cout << endl;
 			element_print(Transporter[i], cout);
 			}
 		}
 }
 
-void action::delete_set_orbit(int nb_sets, int **Sets, int **Transporter)
+void action::delete_set_orbit(int nb_sets, long int **Sets, int **Transporter)
 {
 	int i;
 	
 	for (i = 0; i < nb_sets; i++) {
-		FREE_int(Sets[i]);
+		FREE_lint(Sets[i]);
 		FREE_int(Transporter[i]);
 		}
-	FREE_pint(Sets);
+	FREE_plint(Sets);
 	FREE_pint(Transporter);
 }
 
-void action::compute_minimal_set(vector_ge &gens, int size, int *set, 
-	int *minimal_set, int *transporter, int verbose_level)
+void action::compute_minimal_set(vector_ge &gens, int size, long int *set,
+	long int *minimal_set, int *transporter, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int **Sets;
+	long int **Sets;
 	int **Transporter;
 	int nb_sets, i;
 	int min_set;
@@ -1510,7 +1510,7 @@ void action::compute_minimal_set(vector_ge &gens, int size, int *set,
 	
 	min_set = 0;
 	for (i = 1; i < nb_sets; i++) {
-		if (int_vec_compare(Sets[i], Sets[min_set], size) < 0) {
+		if (lint_vec_compare(Sets[i], Sets[min_set], size) < 0) {
 			min_set = i;
 			}
 		}
@@ -1522,7 +1522,7 @@ void action::compute_minimal_set(vector_ge &gens, int size, int *set,
 }
 
 void action::find_strong_generators_at_level(
-	int base_len, int *the_base, int level,
+	int base_len, long int *the_base, int level,
 	vector_ge &gens, vector_ge &subset_of_gens,
 	int verbose_level)
 {
@@ -1535,7 +1535,7 @@ void action::find_strong_generators_at_level(
 	if (f_v) {
 		cout << "action::find_strong_generators_at_level "
 				"level=" << level << " base: ";
-		int_vec_print(cout, the_base, base_len);
+		lint_vec_print(cout, the_base, base_len);
 		cout << endl;
 		}
 	nb_gens = gens.len;
@@ -2642,7 +2642,7 @@ void action::point_stabilizer_any_point_with_given_group(
 
 void action::make_element_which_moves_a_line_in_PG3q(
 		grassmann *Gr,
-		int line_rk, int *Elt, int verbose_level)
+		long int line_rk, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2656,7 +2656,7 @@ void action::make_element_which_moves_a_line_in_PG3q(
 	int r, c, i, j;
 
 	//int_vec_zero(M, 16);
-	Gr->unrank_int_here(M, line_rk, 0 /*verbose_level*/);
+	Gr->unrank_lint_here(M, line_rk, 0 /*verbose_level*/);
 	r = Gr->F->Gauss_simple(M, 2, 4, base_cols, 0 /* verbose_level */);
 	Gr->F->kernel_columns(4, r, base_cols, base_cols + r);
 	

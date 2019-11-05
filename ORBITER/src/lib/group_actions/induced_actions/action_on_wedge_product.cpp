@@ -86,18 +86,18 @@ int action_on_wedge_product::rank_point(int *v)
 	return rk;
 }
 
-int action_on_wedge_product::compute_image_int(
-	action &A, int *Elt, int a, int verbose_level)
+long int action_on_wedge_product::compute_image_int(
+	action &A, int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int b;
+	long int b;
 	
 	if (f_v) {
 		cout << "action_on_wedge_product::compute_image_int" << endl;
 		}
 	//AG_element_unrank(q, wedge_v1, 1, wedge_dimension, a);
-	F->PG_element_unrank_modified(wedge_v1, 1, wedge_dimension, a);
+	F->PG_element_unrank_modified_lint(wedge_v1, 1, wedge_dimension, a);
 	if (f_vv) {
 		cout << "action_on_wedge_product::compute_image_int "
 				"a = " << a << " wedge_v1 = ";
@@ -113,7 +113,7 @@ int action_on_wedge_product::compute_image_int(
 		}
 
 	//AG_element_rank(q, wedge_v2, 1, wedge_dimension, b);
-	F->PG_element_rank_modified(wedge_v2, 1, wedge_dimension, b);
+	F->PG_element_rank_modified_lint(wedge_v2, 1, wedge_dimension, b);
 	if (f_v) {
 		cout << "action_on_wedge_product::compute_image_int "
 				"done " << a << "->" << b << endl;

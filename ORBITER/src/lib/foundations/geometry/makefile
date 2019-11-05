@@ -40,10 +40,12 @@ MODULES = \
 	orthogonal.o \
 	point_line.o \
 	projective_space.o \
+	projective_space2.o \
 	spread_tables.o \
 	surface_domain_lines.o \
 	surface_domain_io.o \
 	surface_domain.o \
+	surface_domain2.o \
 	surface_object.o \
 	unusual.o \
 	w3q.o 

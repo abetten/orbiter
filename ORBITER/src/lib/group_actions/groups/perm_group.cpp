@@ -267,7 +267,7 @@ void perm_group::init_with_base(int degree,
 
 	if (f_v) {
 		cout << "base: ";
-		int_vec_print(cout, A.get_base(), A.base_len());
+		lint_vec_print(cout, A.get_base(), A.base_len());
 		cout << endl;
 		//cout << "transversal_length: ";
 		//print_set(cout, A.base_len, A.transversal_length);
@@ -392,7 +392,7 @@ void perm_group::print(int *Elt, ostream &ost)
 
 void perm_group::print_with_print_point_function(int *Elt,
 		ostream &ost,
-		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	combinatorics_domain Combi;

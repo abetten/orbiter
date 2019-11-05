@@ -25,7 +25,7 @@ namespace group_actions {
 // #############################################################################
 
 
-static int matrix_group_element_image_of(action &A, int a,
+static long int matrix_group_element_image_of(action &A, long int a,
 	void *elt, int verbose_level);
 static void matrix_group_element_image_of_low_level(action &A,
 	int *input, int *output, void *elt, int verbose_level);
@@ -70,16 +70,16 @@ static void matrix_group_element_print_latex(action &A,
 static void matrix_group_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data);
 static void matrix_group_element_print_as_permutation(
 	action &A, void *elt, std::ostream &ost);
 static void matrix_group_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
 static void matrix_group_print_point(action &A,
-	int a, std::ostream &ost);
-static void matrix_group_unrank_point(action &A, int rk, int *v);
-static int matrix_group_rank_point(action &A, int *v);
+	long int a, std::ostream &ost);
+static void matrix_group_unrank_point(action &A, long int rk, int *v);
+static long int matrix_group_rank_point(action &A, int *v);
 
 
 void action_pointer_table::init_function_pointers_matrix_group()
@@ -118,13 +118,13 @@ void action_pointer_table::init_function_pointers_matrix_group()
 
 
 
-static int matrix_group_element_image_of(action &A,
-		int a, void *elt, int verbose_level)
+static long int matrix_group_element_image_of(action &A,
+		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
-	int b;
+	long int b;
 	
 	if (f_v) {
 		cout << "matrix_group_element_image_of "
@@ -549,7 +549,7 @@ static void matrix_group_element_print_latex(action &A,
 static void matrix_group_element_print_latex_with_print_point_function(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, int pt, void *data),
+	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
 	matrix_group &G = *A.G.matrix_grp;
@@ -619,13 +619,13 @@ static void matrix_group_element_print_verbose(action &A,
 
 }
 
-static void matrix_group_print_point(action &A, int a, ostream &ost)
+static void matrix_group_print_point(action &A, long int a, ostream &ost)
 {
 	matrix_group *G = A.G.matrix_grp;
 	geometry_global Gg;
 	
 	if (G->f_projective) {
-		G->GFq->PG_element_unrank_modified(G->v1, 1, G->n, a);
+		G->GFq->PG_element_unrank_modified_lint(G->v1, 1, G->n, a);
 		}
 	else if (G->f_affine) {
 		Gg.AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
@@ -640,7 +640,7 @@ static void matrix_group_print_point(action &A, int a, ostream &ost)
 	int_vec_print(ost, G->v1, G->n);
 }
 
-static void matrix_group_unrank_point(action &A, int rk, int *v)
+static void matrix_group_unrank_point(action &A, long int rk, int *v)
 {
 	matrix_group *G = A.G.matrix_grp;
 	geometry_global Gg;
@@ -660,20 +660,20 @@ static void matrix_group_unrank_point(action &A, int rk, int *v)
 		}
 }
 
-static int matrix_group_rank_point(action &A, int *v)
+static long int matrix_group_rank_point(action &A, int *v)
 {
 	matrix_group *G = A.G.matrix_grp;
-	int rk;
+	long int rk;
 	geometry_global Gg;
 
 	if (G->f_projective) {
-		G->GFq->PG_element_rank_modified(v, 1 /* stride */, G->n, rk);
+		G->GFq->PG_element_rank_modified_lint(v, 1 /* stride */, G->n, rk);
 		}
 	else if (G->f_affine) {
-		Gg.AG_element_rank(G->GFq->q, v, 1, G->n, rk);
+		rk = Gg.AG_element_rank(G->GFq->q, v, 1, G->n);
 		}
 	else if (G->f_general_linear) {
-		Gg.AG_element_rank(G->GFq->q, v, 1, G->n, rk);
+		rk = Gg.AG_element_rank(G->GFq->q, v, 1, G->n);
 		}
 	else {
 		cout << "matrix_group_unrank_point unknown group type" << endl;

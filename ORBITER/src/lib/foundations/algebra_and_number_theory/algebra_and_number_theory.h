@@ -585,30 +585,30 @@ public:
 	// finite_field_linear_groups.cpp
 	// #########################################################################
 	void diagonal_orbit_perm(int n,
-			int *orbit, int *orbit_inv, int verbose_level);
+			long int *orbit, long int *orbit_inv, int verbose_level);
 	void frobenius_orbit_perm(int n,
-		int *orbit, int *orbit_inv,
+		long int *orbit, long int *orbit_inv,
 		int verbose_level);
 	void projective_matrix_group_base_and_orbits(int n,
 		int f_semilinear,
 		int base_len, int degree,
-		int *base, int *transversal_length,
-		int **orbit, int **orbit_inv,
+		long int *base, int *transversal_length,
+		long int **orbit, long int **orbit_inv,
 		int verbose_level);
 	void projective_matrix_group_base_and_transversal_length(int n,
 		int f_semilinear,
 		int base_len, int degree,
-		int *base, int *transversal_length,
+		long int *base, int *transversal_length,
 		int verbose_level);
 	void affine_matrix_group_base_and_transversal_length(int n,
 		int f_semilinear,
 		int base_len, int degree,
-		int *base, int *transversal_length,
+		long int *base, int *transversal_length,
 		int verbose_level);
 	void general_linear_matrix_group_base_and_transversal_length(int n,
 		int f_semilinear,
 		int base_len, int degree,
-		int *base, int *transversal_length,
+		long int *base, int *transversal_length,
 		int verbose_level);
 	void strong_generators_for_projective_linear_group(
 		int n,
@@ -691,7 +691,7 @@ public:
 			int *u, int *v, int n);
 	int primitive_element();
 	void Siegel_map_between_singular_points(int *T,
-		int rk_from, int rk_to, int root,
+			long int rk_from, long int rk_to, long int root,
 		int epsilon, int algebraic_dimension,
 		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
 		int verbose_level);
@@ -705,7 +705,7 @@ public:
 		// is called the Siegel transform (see Taylor p. 148)
 		// Here Q is the quadratic form
 		// and \beta is the corresponding bilinear form
-	int orthogonal_find_root(int rk2,
+	long int orthogonal_find_root(int rk2,
 		int epsilon, int algebraic_dimension,
 		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
 		int verbose_level);
@@ -758,13 +758,13 @@ public:
 			const char *variety_label,
 			int variety_nb_vars, int variety_degree,
 			const char *variety_coeffs,
-			char *fname, int &nb_pts, int *&Pts,
+			char *fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void create_projective_curve(
 			const char *variety_label,
 			int curve_nb_vars, int curve_degree,
 			const char *curve_coeffs,
-			char *fname, int &nb_pts, int *&Pts,
+			char *fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void PG_element_normalize(
 			int *v, int stride, int len);
@@ -822,7 +822,7 @@ public:
 		int n, int *Basis);
 	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
 	void projective_point_unrank(int n, int *v, int rk);
-	int projective_point_rank(int n, int *v);
+	long int projective_point_rank(int n, int *v);
 	void create_BLT_point(
 			int *v5, int a, int b, int c, int verbose_level);
 		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
@@ -830,19 +830,19 @@ public:
 		// b^2/4 + (-c)*a + -(b^2/4-ac)
 		// = b^2/4 -ac -b^2/4 + ac = 0
 	void Segre_hyperoval(
-			int *&Pts, int &nb_pts, int verbose_level);
+			long int *&Pts, int &nb_pts, int verbose_level);
 	void GlynnI_hyperoval(
-			int *&Pts, int &nb_pts, int verbose_level);
+			long int *&Pts, int &nb_pts, int verbose_level);
 	void GlynnII_hyperoval(
-			int *&Pts, int &nb_pts, int verbose_level);
+			long int *&Pts, int &nb_pts, int verbose_level);
 	void Subiaco_oval(
-			int *&Pts, int &nb_pts, int f_short, int verbose_level);
+			long int *&Pts, int &nb_pts, int f_short, int verbose_level);
 		// following Payne, Penttila, Pinneri:
 		// Isomorphisms Between Subiaco q-Clan Geometries,
 		// Bull. Belg. Math. Soc. 2 (1995) 197-222.
 		// formula (53)
 	void Subiaco_hyperoval(
-			int *&Pts, int &nb_pts, int verbose_level);
+			long int *&Pts, int &nb_pts, int verbose_level);
 	int OKeefe_Penttila_32(int t);
 	int Subiaco64_1(int t);
 	int Subiaco64_2(int t);
@@ -867,143 +867,141 @@ public:
 		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
 		int *tangent_plane, int verbose_level);
 	void do_cone_over(int n,
-		int *set_in, int set_size_in, int *&set_out, int &set_size_out,
+		long int *set_in, int set_size_in, long int *&set_out, int &set_size_out,
 		int verbose_level);
 	void do_blocking_set_family_3(int n,
-		int *set_in, int set_size,
-		int *&the_set_out, int &set_size_out,
+		long int *set_in, int set_size,
+		long int *&the_set_out, int &set_size_out,
 		int verbose_level);
 	void create_hyperoval(
 		int f_translation, int translation_exponent,
 		int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_subiaco_oval(
 		int f_short,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_subiaco_hyperoval(
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_ovoid(
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_Baer_substructure(int n,
 		finite_field *Fq,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// the big field FQ is given
 	void create_BLT_from_database(int f_embedded,
 		int BLT_k,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_orthogonal(int epsilon, int n,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_hermitian(int n,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_cubic(
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_twisted_cubic(
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_elliptic_curve(
 		int elliptic_curve_b, int elliptic_curve_c,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_ttp_code(finite_field *Fq,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// this is FQ
 	void create_unital_XXq_YZq_ZYq(
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_whole_space(int n,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_hyperplane(int n,
 		int pt,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_segre_variety(int a, int b,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_Maruta_Hamada_arc(
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_desarguesian_line_spread_in_PG_3_q(
 		finite_field *Fq,
 		int f_embedded_in_PG_4_q,
-		char *fname, int &nb_lines, int *&Lines,
+		char *fname, int &nb_lines, long int *&Lines,
 		int verbose_level);
 	// this is FQ
 	void do_Klein_correspondence(int n,
-		int *set_in, int set_size,
-		int *&the_set_out, int &set_size_out,
-		int verbose_level);
+			long int *set_in, int set_size,
+			long int *&the_set_out, int &set_size_out,
+			int verbose_level);
 	void do_m_subspace_type(int n, int m,
-		int *set, int set_size,
+			long int *set, int set_size,
 		int f_show, int verbose_level);
 	void do_m_subspace_type_fast(int n, int m,
-		int *set, int set_size,
-		int f_show, int verbose_level);
+			long int *set, int set_size,
+			int f_show, int verbose_level);
 	void do_line_type(int n,
-		int *set, int set_size,
-		int f_show, int verbose_level);
+			long int *set, int set_size,
+			int f_show, int verbose_level);
 	void do_plane_type(int n,
-		int *set, int set_size,
-		int *&intersection_type, int &highest_intersection_number,
+			long int *set, int set_size,
+			int *&intersection_type, int &highest_intersection_number,
 		int verbose_level);
 	void do_plane_type_failsafe(int n,
-		int *set, int set_size,
-		int verbose_level);
+			long int *set, int set_size,
+			int verbose_level);
 	void do_conic_type(int n,
-		int f_randomized, int nb_times,
-		int *set, int set_size,
-		int *&intersection_type, int &highest_intersection_number,
-		int verbose_level);
+			int f_randomized, int nb_times,
+			long int *set, int set_size,
+			int *&intersection_type, int &highest_intersection_number,
+			int verbose_level);
 	void do_test_diagonal_line(int n,
-		int *set_in, int set_size,
+			long int *set_in, int set_size,
 		const char *fname_orbits_on_quadrangles,
 		int verbose_level);
 	void do_andre(finite_field *Fq,
-		int *the_set_in, int set_size_in,
-		int *&the_set_out, int &set_size_out,
-		int verbose_level);
+			long int *the_set_in, int set_size_in,
+			long int *&the_set_out, int &set_size_out,
+			int verbose_level);
 	// this is FQ
-	void do_print_lines_in_PG(int n,
-		int *set_in, int set_size);
-	void do_print_points_in_PG(int n,
-		int *set_in, int set_size);
+	void do_print_lines_in_PG(int n, long int *set_in, int set_size);
+	void do_print_points_in_PG(int n, long int *set_in, int set_size);
 	void do_print_points_in_orthogonal_space(
 		int epsilon, int n,
-		int *set_in, int set_size, int verbose_level);
+		long int *set_in, int set_size, int verbose_level);
 	void do_print_points_on_grassmannian(
 		int n, int k,
-		int *set_in, int set_size);
+		long int *set_in, int set_size);
 	void do_embed_orthogonal(
 		int epsilon, int n,
-		int *set_in, int *&set_out, int set_size,
+		long int *set_in, long int *&set_out, int set_size,
 		int verbose_level);
 	void do_embed_points(int n,
-		int *set_in, int *&set_out, int set_size,
-		int verbose_level);
+			long int *set_in, long int *&set_out, int set_size,
+			int verbose_level);
 	void do_draw_points_in_plane(
-		int *set, int set_size,
+			long int *set, int set_size,
 		const char *fname_base, int f_point_labels,
 		int f_embedded, int f_sideways,
 		int verbose_level);
 	void do_ideal(int n,
-		int *set_in, int set_size, int degree,
-		int *&set_out, int &size_out,
+			long int *set_in, int set_size, int degree,
+			long int *&set_out, int &size_out,
 		int verbose_level);
 	void PG_element_modified_not_in_subspace_perm(int n, int m,
-		int *orbit, int *orbit_inv,
+		long int *orbit, long int *orbit_inv,
 		int verbose_level);
-	void print_set_in_affine_plane(int len, int *S);
+	void print_set_in_affine_plane(int len, long int *S);
 
 
 	// #########################################################################
@@ -1062,7 +1060,7 @@ public:
 	void cheat_sheet_top(std::ostream &f, int nb_cols);
 	void cheat_sheet_bottom(std::ostream &f);
 	void display_table_of_projective_points(
-			std::ostream &ost, int *Pts, int nb_pts, int len);
+			std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void export_magma(int d, int *Pts, int nb_pts, char *fname);
 	void export_gap(int d, int *Pts, int nb_pts, char *fname);
 	void oval_polynomial(
@@ -1419,8 +1417,8 @@ public:
 	void null();
 	void freeself();
 	void init(finite_field *F, int n, int verbose_level);
-	void unrank_element(int *Elt, int rk);
-	int rank_element(int *Elt);
+	void unrank_element(int *Elt, long int rk);
+	long int rank_element(int *Elt);
 	void element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level);
 	void element_negate(int *Elt1, int *Elt2, int verbose_level);
 	int element_add_by_rank(int rk_a, int rk_b, int verbose_level);
@@ -1492,13 +1490,14 @@ public:
 	void print_monomial(char *str, int i);
 	void print_monomial_str(std::stringstream &ost, int i);
 	void print_equation(std::ostream &ost, int *coeffs);
+	void print_equation_lint(std::ostream &ost, long int *coeffs);
 	void print_equation_str(std::stringstream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(std::ostream &ost,
 		int *coeffs, int nb_terms_per_line, 
 		const char *new_line_text);
 	void algebraic_set(int *Eqns, int nb_eqns,
 			int *Pts, int &nb_pts, int verbose_level);
-	void enumerate_points(int *coeff, int *Pts, int &nb_pts, 
+	void enumerate_points(int *coeff, long int *Pts, int &nb_pts,
 		int verbose_level);
 	int evaluate_at_a_point_by_rank(int *coeff, int pt);
 	int evaluate_at_a_point(int *coeff, int *pt_vec);
@@ -1514,12 +1513,12 @@ public:
 	int is_zero(int *coeff);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
-	void unrank_coeff_vector(int *v, int rk);
-	int rank_coeff_vector(int *v);
+	void unrank_coeff_vector(int *v, long int rk);
+	long int rank_coeff_vector(int *v);
 	int test_weierstrass_form(int rk, 
 		int &a1, int &a2, int &a3, int &a4, int &a6, 
 		int verbose_level);
-	void vanishing_ideal(int *Pts, int nb_pts, int &r, int *Kernel, 
+	void vanishing_ideal(long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
 	void print_monomial_ordering(std::ostream &ost);
@@ -1568,6 +1567,8 @@ public:
 		longinteger_object &b, longinteger_object &c, 
 		longinteger_object &m, int verbose_level);
 	void multiply_up(longinteger_object &a, int *x, int len, int verbose_level);
+	void multiply_up_lint(
+			longinteger_object &a, long int *x, int len, int verbose_level);
 	int quotient_as_int(longinteger_object &a, longinteger_object &b);
 	void integral_division_exact(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &a_over_b);
@@ -1794,8 +1795,8 @@ public:
 	int mult_mod(int a, int b, int p);
 	int add_mod(int a, int b, int p);
 	int int_abs(int a);
-	int irem(int a, int m);
-	int gcd_int(int m, int n);
+	long int irem(long int a, long int m);
+	long int gcd_lint(long int m, long int n);
 	void extended_gcd_int(int m, int n, int &g, int &u, int &v);
 	int i_power_j_safe(int i, int j);
 	long int i_power_j_lint_safe(int i, int j, int verbose_level);
@@ -1825,7 +1826,7 @@ public:
 	int Jacobi_with_key_in_latex(std::ostream &ost, int a, int m, int verbose_level);
 	int gcd_with_key_in_latex(std::ostream &ost,
 			int a, int b, int f_key, int verbose_level);
-	int ny2(int x, int &x1);
+	int ny2(long int x, long int &x1);
 	int ny_p(int n, int p);
 	int sqrt_mod_simple(int a, int p);
 	void print_factorization(int nb_primes, int *primes, int *exponents);
@@ -1899,13 +1900,13 @@ public:
 	rank_checker();
 	~rank_checker();
 	void init(finite_field *GFq, int m, int n, int d);
-	int check_rank(int len, int *S, int verbose_level);
-	int check_rank_matrix_input(int len, int *S, int dim_S, 
+	int check_rank(int len, long int *S, int verbose_level);
+	int check_rank_matrix_input(int len, long int *S, int dim_S,
 		int verbose_level);
-	int check_rank_last_two_are_fixed(int len, int *S, int verbose_level);
-	int compute_rank(int len, int *S, int f_projective, int verbose_level);
-	int compute_rank_row_vectors(int len, int *S, int f_projective, 
-		int verbose_level);
+	int check_rank_last_two_are_fixed(int len, long int *S, int verbose_level);
+	int compute_rank(int len, long int *S, int f_projective, int verbose_level);
+	int compute_rank_row_vectors(
+			int len, long int *S, int f_projective, int verbose_level);
 };
 
 // #############################################################################
@@ -2159,8 +2160,8 @@ public:
 	int dimension;
 	finite_field *F;
 
-	int (*rank_point_func)(int *v, void *data);
-	void (*unrank_point_func)(int *v, int rk, void *data);
+	long int (*rank_point_func)(int *v, void *data);
+	void (*unrank_point_func)(int *v, long int rk, void *data);
 	void *rank_point_data;
 	int *v1; // [dimension]
 	int *base_cols; // [dimension]
@@ -2176,18 +2177,18 @@ public:
 	void init(finite_field *F, int dimension,
 			int verbose_level);
 	void init_rank_functions(
-		int (*rank_point_func)(int *v, void *data),
-		void (*unrank_point_func)(int *v, int rk, void *data),
+		long int (*rank_point_func)(int *v, void *data),
+		void (*unrank_point_func)(int *v, long int rk, void *data),
 		void *data,
 		int verbose_level);
-	void unrank_basis(int *Mtx, int *set, int len);
-	void rank_basis(int *Mtx, int *set, int len);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_basis(int *Mtx, long int *set, int len);
+	void rank_basis(int *Mtx, long int *set, int len);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
 	int RREF_and_rank(int *basis, int k);
 	int is_contained_in_subspace(int *v, int *basis, int k);
 	int compare_subspaces_ranked(
-			int *set1, int *set2, int k, int verbose_level);
+			long int *set1, long int *set2, int k, int verbose_level);
 		// equality test for subspaces given by ranks of basis elements
 };
 

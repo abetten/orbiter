@@ -21,13 +21,13 @@ classification_step::classification_step()
 {
 	A = NULL;
 	A2 = NULL;
-	f_lint = FALSE;
+	//f_lint = FALSE;
 	max_orbits = 0;
 	nb_orbits = 0;
 	Orbit = NULL;
 	representation_sz = 0;
 	Rep = NULL;
-	Rep_lint = NULL;
+	//Rep_lint = NULL;
 	//null();
 }
 
@@ -46,10 +46,7 @@ void classification_step::freeself()
 		FREE_OBJECTS(Orbit);
 		}
 	if (Rep) {
-		FREE_int(Rep);
-		}
-	if (Rep_lint) {
-		FREE_lint(Rep_lint);
+		FREE_lint(Rep);
 		}
 	null();
 }
@@ -68,39 +65,14 @@ void classification_step::init(action *A, action *A2,
 		}
 	classification_step::A = A;
 	classification_step::A2 = A2;
-	f_lint = FALSE;
+	//f_lint = FALSE;
 	go.assign_to(classification_step::go);
 	classification_step::max_orbits = max_orbits;
 	classification_step::representation_sz = representation_sz;
 	Orbit = NEW_OBJECTS(orbit_node, max_orbits);
-	Rep = NEW_int(max_orbits * representation_sz);
+	Rep = NEW_lint(max_orbits * representation_sz);
 	if (f_v) {
 		cout << "classification_step::init done" << endl;
-		}
-}
-
-void classification_step::init_lint(action *A, action *A2,
-	int max_orbits, int representation_sz,
-	longinteger_object &go, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_step::init_lint "
-				"group order = " << go
-				<< " representation_sz = " << representation_sz
-				<< " max_orbits = " << max_orbits << endl;
-		}
-	classification_step::A = A;
-	classification_step::A2 = A2;
-	f_lint = TRUE;
-	go.assign_to(classification_step::go);
-	classification_step::max_orbits = max_orbits;
-	classification_step::representation_sz = representation_sz;
-	Orbit = NEW_OBJECTS(orbit_node, max_orbits);
-	Rep_lint = NEW_lint(max_orbits * representation_sz);
-	if (f_v) {
-		cout << "classification_step::init_lint done" << endl;
 		}
 }
 
@@ -109,21 +81,17 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 {
 	int f_v = (verbose_level >= 1);
 	set_and_stabilizer *SaS;
-	int *data;
+	long int *data;
 	strong_generators *Strong_gens;
 
 	if (f_v) {
 		cout << "classification_step::get_set_and_stabilizer" << endl;
 		}
-	if (f_lint) {
-		cout << "classification_step::get_set_and_stabilizer f_lint is TRUE" << endl;
-		exit(1);
-		}
 
 	SaS = NEW_OBJECT(set_and_stabilizer);
 
-	data = NEW_int(representation_sz);
-	int_vec_copy(
+	data = NEW_lint(representation_sz);
+	lint_vec_copy(
 			Rep_ith(orbit_index),
 			data, representation_sz);
 	
@@ -235,16 +203,10 @@ void classification_step::print_latex(ostream &ost,
 
 		ost << "$" << endl;
 
-		if (f_lint) {
-			L.lint_set_print_tex_for_inline_text(ost,
-					Rep_lint_ith(i),
-					representation_sz);
-		}
-		else {
-			L.int_set_print_tex_for_inline_text(ost,
-					Rep_ith(i),
-					representation_sz);
-		}
+		L.lint_set_print_tex_for_inline_text(ost,
+				Rep_ith(i),
+				representation_sz);
+
 		ost << "_{";
 		go1.print_not_scientific(ost);
 		ost << "}$ orbit length $";
@@ -283,18 +245,11 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 		}
 	fp.write((char *) &nb_orbits, sizeof(int));
 	fp.write((char *) &representation_sz, sizeof(int));
-	fp.write((char *) &f_lint, sizeof(int));
 
-	if (f_lint) {
-		for (i = 0; i < nb_orbits * representation_sz; i++) {
-			fp.write((char *) &Rep_lint[i], sizeof(long int));
-			}
-	}
-	else {
-		for (i = 0; i < nb_orbits * representation_sz; i++) {
-			fp.write((char *) &Rep[i], sizeof(int));
-			}
-	}
+	for (i = 0; i < nb_orbits * representation_sz; i++) {
+		fp.write((char *) &Rep[i], sizeof(int));
+		}
+
 	for (i = 0; i < nb_orbits; i++) {
 		Orbit[i].write_file(fp, 0/*verbose_level*/);
 		}
@@ -319,20 +274,11 @@ void classification_step::read_file(ifstream &fp,
 	go.assign_to(classification_step::go);
 	fp.read((char *) &nb_orbits, sizeof(int));
 	fp.read((char *) &representation_sz, sizeof(int));
-	fp.read((char *) &f_lint, sizeof(int));
 
-	if (f_lint) {
-		Rep_lint = NEW_lint(nb_orbits * representation_sz);
-		for (i = 0; i < nb_orbits * representation_sz; i++) {
-			fp.read((char *) &Rep_lint[i], sizeof(long int));
-			}
-	}
-	else {
-		Rep = NEW_int(nb_orbits * representation_sz);
-		for (i = 0; i < nb_orbits * representation_sz; i++) {
-			fp.read((char *) &Rep[i], sizeof(int));
-			}
-	}
+	Rep = NEW_lint(nb_orbits * representation_sz);
+	for (i = 0; i < nb_orbits * representation_sz; i++) {
+		fp.read((char *) &Rep[i], sizeof(long int));
+		}
 	
 	max_orbits = nb_orbits;
 	Orbit = NEW_OBJECTS(orbit_node, nb_orbits);
@@ -351,11 +297,9 @@ void classification_step::generate_source_code(const char *fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 3);
 	char fname[1000];
 	const char *prefix;
 	int orbit_index;
-	int i;
 
 	if (f_v) {
 		cout << "classification_step::generate_source_code" << endl;
@@ -379,6 +323,7 @@ void classification_step::generate_source_code(const char *fname_base,
 		}
 
 
+#if 0
 	if (f_lint) {
 
 		f << "static long int " << prefix << "_reps[] = {" << endl;
@@ -403,6 +348,7 @@ void classification_step::generate_source_code(const char *fname_base,
 			}
 		f << "};" << endl;
 	}
+#endif
 
 
 
@@ -535,15 +481,17 @@ void classification_step::generate_source_code(const char *fname_base,
 		}
 }
 
-int *classification_step::Rep_ith(int i)
+long int *classification_step::Rep_ith(int i)
 {
 	return Rep + i * representation_sz;
 }
 
+#if 0
 long int *classification_step::Rep_lint_ith(int i)
 {
 	return Rep_lint + i * representation_sz;
 }
+#endif
 
 
 }}

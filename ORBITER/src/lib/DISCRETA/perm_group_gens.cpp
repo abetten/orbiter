@@ -348,7 +348,7 @@ void vec_subgroup_of_hol_of_cyclic_group(Vector & V, int n, int i)
 //Computes generators for the subgroup of $Hol(C_n)$ of index $i$.
 //$n$ must be a prime.
 {
-	int m, m1, g, alpha, alpha1, j, jj;
+	long int m, m1, g, alpha, alpha1, j, jj;
 	permutation p;
 	int f_v = TRUE;
 	number_theory_domain NT;
@@ -359,7 +359,7 @@ void vec_subgroup_of_hol_of_cyclic_group(Vector & V, int n, int i)
 		}
 	m = n - 1;
 	m1 = m / i;
-	g = NT.gcd_int(m, i);
+	g = NT.gcd_lint(m, i);
 	if (m1 * i != m) {
 		i = g;
 		cout << "WARNING: vec_subgroup_of_hol_of_cyclic_group(): "

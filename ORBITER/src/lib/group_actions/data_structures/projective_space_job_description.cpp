@@ -356,10 +356,10 @@ int projective_space_job_description::read_arguments(
 			arc_s = atoi(argv[++i]);
 			arc_t = atoi(argv[++i]);
 			t_lines_string = argv[++i];
-			int_vec_scan(t_lines_string, t_lines, nb_t_lines);
+			lint_vec_scan(t_lines_string, t_lines, nb_t_lines);
 			cout << "projective_space_job_description::read_arguments -arc_with_two_given_sets_of_lines_after_dualizing src_size="
 					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " ";
-			int_vec_print(cout, t_lines, nb_t_lines);
+			lint_vec_print(cout, t_lines, nb_t_lines);
 			cout << endl;
 		}
 		else if (strcmp(argv[i], "-arc_with_three_given_sets_of_lines_after_dualizing") == 0) {
@@ -372,17 +372,17 @@ int projective_space_job_description::read_arguments(
 			t_lines_string = argv[++i];
 			arc_u = atoi(argv[++i]);
 			u_lines_string = argv[++i];
-			int_vec_scan(t_lines_string, t_lines, nb_t_lines);
-			int_vec_scan(u_lines_string, u_lines, nb_u_lines);
+			lint_vec_scan(t_lines_string, t_lines, nb_t_lines);
+			lint_vec_scan(u_lines_string, u_lines, nb_u_lines);
 			cout << "projective_space_job_description::read_arguments -arc_with_three_given_sets_of_lines_after_dualizing "
 					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << endl;
 			cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
 			cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
 			cout << "The t-lines, t=" << arc_t << " are ";
-			int_vec_print(cout, t_lines, nb_t_lines);
+			lint_vec_print(cout, t_lines, nb_t_lines);
 			cout << endl;
 			cout << "The u-lines, u=" << arc_u << " are ";
-			int_vec_print(cout, u_lines, nb_u_lines);
+			lint_vec_print(cout, u_lines, nb_u_lines);
 			cout << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
@@ -480,7 +480,7 @@ void projective_space_job_description::perform_job(int verbose_level)
 				cout << "input set of points from file "
 					<< Data->input_string[input_idx] << ":" << endl;
 
-				int *the_set;
+				long int *the_set;
 				int set_size;
 
 				Fio.read_set_from_file(Data->input_string[input_idx],
@@ -521,7 +521,7 @@ void projective_space_job_description::perform_job(int verbose_level)
 
 
 				// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
-				int *Spread_table;
+				long int *Spread_table;
 				int nb_spreads;
 				int spread_size;
 
@@ -529,7 +529,7 @@ void projective_space_job_description::perform_job(int verbose_level)
 						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 					cout << "Reading spread table from file "
 						<< Data->input_string2[input_idx] << endl;
-					Fio.int_matrix_read_csv(Data->input_string2[input_idx],
+					Fio.lint_matrix_read_csv(Data->input_string2[input_idx],
 							Spread_table, nb_spreads, spread_size,
 							0 /* verbose_level */);
 					cout << "Reading spread table from file "
@@ -543,7 +543,7 @@ void projective_space_job_description::perform_job(int verbose_level)
 				for (h = 0; h < SoS->nb_sets; h++) {
 
 
-					int *the_set_in;
+					long int *the_set_in;
 					int set_size_in;
 					object_in_projective_space *OiP;
 
@@ -626,7 +626,7 @@ void projective_space_job_description::back_end(int input_idx,
 		ostream &fp_tex,
 		int verbose_level)
 {
-	int *the_set_out = NULL;
+	long int *the_set_out = NULL;
 	int set_size_out = 0;
 
 	perform_job_for_one_set(back_end_counter,
@@ -644,7 +644,7 @@ void projective_space_job_description::back_end(int input_idx,
 	back_end_counter++;
 
 	if (the_set_out) {
-		FREE_int(the_set_out);
+		FREE_lint(the_set_out);
 	}
 
 }
@@ -652,14 +652,14 @@ void projective_space_job_description::back_end(int input_idx,
 void projective_space_job_description::perform_job_for_one_set(
 	int back_end_counter,
 	object_in_projective_space *OiP,
-	int *&the_set_out,
+	long int *&the_set_out,
 	int &set_size_out,
 	ostream &fp_tex,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *the_set_in;
+	long int *the_set_in;
 	int set_size_in;
 
 	if (f_v) {
@@ -743,7 +743,7 @@ void projective_space_job_description::perform_job_for_one_set(
 				f_homogeneous_polynomial_domain_has_been_allocated = TRUE;
 			}
 			fp_tex << back_end_counter << ": $";
-			HPD->print_equation(fp_tex, the_set_in);
+			HPD->print_equation_lint(fp_tex, the_set_in);
 			fp_tex << "$\\\\" << endl;
 
 		}
@@ -757,8 +757,8 @@ void projective_space_job_description::perform_job_for_one_set(
 			the_set_in, set_size_in,
 			f_show, verbose_level);
 #endif
-		int N_lines;
-		N_lines = PA->P->nb_rk_k_subspaces_as_int(2);
+		long int N_lines;
+		N_lines = PA->P->nb_rk_k_subspaces_as_lint(2);
 
 		int *type;
 		type = NEW_int(N_lines);
@@ -782,8 +782,8 @@ void projective_space_job_description::perform_job_for_one_set(
 			cout << "perform_job_for_one_set f_plane_type" << endl;
 		}
 
-		int N_planes;
-		N_planes = PA->P->nb_rk_k_subspaces_as_int(3);
+		long int N_planes;
+		N_planes = PA->P->nb_rk_k_subspaces_as_lint(3);
 
 		int *type;
 		type = NEW_int(N_planes);
@@ -873,7 +873,7 @@ void projective_space_job_description::perform_job_for_one_set(
 				}
 			}
 			cout << endl;
-			the_set_out = NEW_int(plane_ranks.size());
+			the_set_out = NEW_lint(plane_ranks.size());
 			set_size_out = plane_ranks.size();
 			for (int i = 0; i < len; i++) {
 				the_set_out[i] = plane_ranks[i];
@@ -894,21 +894,21 @@ void projective_space_job_description::perform_job_for_one_set(
 						point_local_coordinates,
 						verbose_level - 2);
 
-				int *pts;
+				long int *pts;
 				int nb_pts;
 
 				nb_pts = point_local_coordinates.size();
-				pts = NEW_int(nb_pts);
+				pts = NEW_lint(nb_pts);
 				for (int j = 0; j < nb_pts; j++) {
 					pts[j] = point_local_coordinates[j];
 				}
 				cout << "plane " << i << " is " << plane_ranks[i]
 					<< " has " << nb_pts << " points, in local "
 							"coordinates they are ";
-				int_vec_print(cout, pts, nb_pts);
+				lint_vec_print(cout, pts, nb_pts);
 				cout << endl;
 
-				int **Pts_on_conic;
+				long int **Pts_on_conic;
 				int *nb_pts_on_conic;
 				int len1;
 				P2->conic_type(
@@ -921,11 +921,11 @@ void projective_space_job_description::perform_job_for_one_set(
 					}
 				}
 				for (int j = 0; j < len1; j++) {
-					FREE_int(Pts_on_conic[j]);
+					FREE_lint(Pts_on_conic[j]);
 				}
-				FREE_pint(Pts_on_conic);
+				FREE_plint(Pts_on_conic);
 				FREE_int(nb_pts_on_conic);
-				FREE_int(pts);
+				FREE_lint(pts);
 			}
 
 
@@ -1045,7 +1045,7 @@ void projective_space_job_description::perform_job_for_one_set(
 					intersect_with_set_from_file_set,
 					intersect_with_set_from_file_set_size,
 					verbose_level);
-			Sorting.int_vec_heapsort(intersect_with_set_from_file_set,
+			Sorting.lint_vec_heapsort(intersect_with_set_from_file_set,
 					intersect_with_set_from_file_set_size);
 
 			intersect_with_set_from_file_set_has_beed_read = TRUE;
@@ -1058,8 +1058,8 @@ void projective_space_job_description::perform_job_for_one_set(
 					<< " and " << intersect_with_set_from_file_set_size
 					<< ":" << endl;
 
-			the_set_out = NEW_int(set_size_in);
-			Sorting.int_vec_intersect_sorted_vectors(the_set_in, set_size_in,
+			the_set_out = NEW_lint(set_size_in);
+			Sorting.lint_vec_intersect_sorted_vectors(the_set_in, set_size_in,
 					intersect_with_set_from_file_set,
 					intersect_with_set_from_file_set_size,
 					the_set_out, set_size_out);
@@ -1293,7 +1293,7 @@ void projective_space_job_description::perform_job_for_one_set(
 
 
 void projective_space_job_description::do_canonical_form(
-	int *set, int set_size, int f_semilinear,
+	long int *set, int set_size, int f_semilinear,
 	const char *fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

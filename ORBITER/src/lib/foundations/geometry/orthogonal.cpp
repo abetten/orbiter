@@ -236,7 +236,7 @@ orthogonal::~orthogonal()
 		FREE_lint(line_pencil);
 		}
 	if (Perp1) {
-		FREE_int(Perp1);
+		FREE_lint(Perp1);
 		}
 	//cout << "orthogonal::~orthogonal finished" << endl;
 }
@@ -505,7 +505,7 @@ void orthogonal::init(int epsilon, int n,
 		cout << "before allocating Perp1 of size "
 				<< alpha * (q + 1) << endl;
 		}
-	Perp1 = NEW_int(alpha * (q + 1));
+	Perp1 = NEW_lint(alpha * (q + 1));
 	if (f_v) {
 		cout << "after allocating Perp1" << endl;
 		}
@@ -1169,16 +1169,16 @@ int orthogonal::evaluate_bilinear_form_by_rank(int i, int j)
 }
 
 void orthogonal::points_on_line_by_line_rank(
-		long int line_rk, int *line, int verbose_level)
+		long int line_rk, long int *line, int verbose_level)
 {
-	int p1, p2;
+	long int p1, p2;
 	
 	unrank_line(p1, p2, line_rk, verbose_level);
 	points_on_line(p1, p2, line, verbose_level);
 }
 
 void orthogonal::points_on_line(int pi, int pj,
-		int *line, int verbose_level)
+		long int *line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -1689,8 +1689,8 @@ void orthogonal::Gauss_step(int *v1, int *v2, int len, int idx)
 		}
 }
 
-void orthogonal::perp(int pt,
-		int *Perp_without_pt, int &sz, int verbose_level)
+void orthogonal::perp(long int pt,
+		long int *Perp_without_pt, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1735,13 +1735,13 @@ void orthogonal::perp(int pt,
 						<< " : " << Perp1[i * (q + 1) + j] << endl;
 			}
 		}
-		int_matrix_print(Perp1, alpha, q + 1);
+		lint_matrix_print(Perp1, alpha, q + 1);
 	}
 
-	Sorting.int_vec_heapsort(Perp1, alpha * (q + 1));
+	Sorting.lint_vec_heapsort(Perp1, alpha * (q + 1));
 	if (FALSE) {
 		cout << "orthogonal::perp after sorting:" << endl;
-		int_vec_print(cout, Perp1, alpha * (q + 1));
+		lint_vec_print(cout, Perp1, alpha * (q + 1));
 		cout << endl;
 	}
 
@@ -1752,28 +1752,28 @@ void orthogonal::perp(int pt,
 		}
 	}
 	sz = j;
-	Sorting.int_vec_heapsort(Perp1, sz);
+	Sorting.lint_vec_heapsort(Perp1, sz);
 	if (FALSE) {
 		cout << "orthogonal::perp after removing "
 				"pt and sorting:" << endl;
-		int_vec_print(cout, Perp1, sz);
+		lint_vec_print(cout, Perp1, sz);
 		cout << endl;
 		cout << "sz=" << sz << endl;
 	}
-	int_vec_copy(Perp1, Perp_without_pt, sz);
+	lint_vec_copy(Perp1, Perp_without_pt, sz);
 
 	if (f_v) {
 		cout << "orthogonal::perp done" << endl;
 	}
 }
 
-void orthogonal::perp_of_two_points(int pt1, int pt2,
-		int *Perp, int &sz, int verbose_level)
+void orthogonal::perp_of_two_points(long int pt1, long int pt2,
+		long int *Perp, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *Perp1;
-	int *Perp2;
-	int *Perp3;
+	long int *Perp1;
+	long int *Perp2;
+	long int *Perp3;
 	int sz1, sz2;
 	sorting Sorting;
 	
@@ -1782,23 +1782,23 @@ void orthogonal::perp_of_two_points(int pt1, int pt2,
 				"pt1=" << pt1 << " pt2=" << pt2 << endl;
 		}
 
-	Perp1 = NEW_int(alpha * (q + 1));
-	Perp2 = NEW_int(alpha * (q + 1));
+	Perp1 = NEW_lint(alpha * (q + 1));
+	Perp2 = NEW_lint(alpha * (q + 1));
 	perp(pt1, Perp1, sz1, 0 /*verbose_level*/);
 	perp(pt2, Perp2, sz2, 0 /*verbose_level*/);
-	Sorting.int_vec_intersect(Perp1, sz1, Perp2, sz2, Perp3, sz);
-	int_vec_copy(Perp3, Perp, sz);
-	FREE_int(Perp1);
-	FREE_int(Perp2);
-	FREE_int(Perp3);
+	Sorting.vec_intersect(Perp1, sz1, Perp2, sz2, Perp3, sz);
+	lint_vec_copy(Perp3, Perp, sz);
+	FREE_lint(Perp1);
+	FREE_lint(Perp2);
+	FREE_lint(Perp3);
 
 	if (f_v) {
 		cout << "orthogonal::perp_of_two_points done" << endl;
 		} 
 }
 
-void orthogonal::perp_of_k_points(int *pts, int nb_pts,
-		int *&Perp, int &sz, int verbose_level)
+void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
+		long int *&Perp, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1809,7 +1809,7 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 	}
 	if (f_vv) {
 		cout << "pts=";
-		int_vec_print(cout, pts, nb_pts);
+		lint_vec_print(cout, pts, nb_pts);
 		cout << endl;
 		for (i = 0; i < nb_pts; i++) {
 			unrank_point(v1, 1, pts[i], 0 /* verbose_level*/);
@@ -1823,30 +1823,30 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 		exit(1);
 		}
 
-	int **Perp_without_pt;
-	int *Intersection1 = NULL;
+	long int **Perp_without_pt;
+	long int *Intersection1 = NULL;
 	int sz1;
-	int *Intersection2 = NULL;
+	long int *Intersection2 = NULL;
 	int sz2;
 	int sz0, perp_sz = 0;
 	sorting Sorting;
 
 	sz0 = alpha * q;
-	Perp_without_pt = NEW_pint(nb_pts);
+	Perp_without_pt = NEW_plint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		if (f_v) {
 			cout << "orthogonal::perp_of_k_points "
 					"computing perp of point " << i
 					<< " / " << nb_pts << ":" << endl;
 			}
-		Perp_without_pt[i] = NEW_int(sz0);
+		Perp_without_pt[i] = NEW_lint(sz0);
 		perp(pts[i], Perp_without_pt[i], perp_sz,
 				0 /* verbose_level */);
 		if (f_vv) {
 			cout << "orthogonal::perp_of_k_points perp of pt "
 					<< i << " / " << nb_pts << " has size "
 					<< perp_sz << " and is equal to ";
-			int_vec_print_fully(cout, Perp_without_pt[i], perp_sz);
+			lint_vec_print_fully(cout, Perp_without_pt[i], perp_sz);
 			cout << endl;
 			}
 		if (perp_sz != sz0) {
@@ -1854,45 +1854,45 @@ void orthogonal::perp_of_k_points(int *pts, int nb_pts,
 			exit(1);
 			}
 		}
-	Sorting.int_vec_intersect(Perp_without_pt[0], perp_sz,
+	Sorting.vec_intersect(Perp_without_pt[0], perp_sz,
 			Perp_without_pt[1], perp_sz, Intersection1, sz1);
 	if (f_v) {
 		cout << "orthogonal::perp_of_k_points intersection of "
 				"P[0] and P[1] has size " << sz1 << " : ";
-		int_vec_print_fully(cout, Intersection1, sz1);
+		lint_vec_print_fully(cout, Intersection1, sz1);
 		cout << endl;
 		}
 	for (i = 2; i < nb_pts; i++) {
 		if (f_v) {
 			cout << "intersecting with perp[" << i << "]" << endl;
 			}
-		Sorting.int_vec_intersect(Intersection1, sz1,
+		Sorting.vec_intersect(Intersection1, sz1,
 				Perp_without_pt[i], sz0, Intersection2, sz2);
 
 		if (f_v) {
 			cout << "orthogonal::perp_of_k_points intersection "
 					"with P[" << i << "] has size " << sz2 << " : ";
-			int_vec_print_fully(cout, Intersection2, sz2);
+			lint_vec_print_fully(cout, Intersection2, sz2);
 			cout << endl;
 			}
 
 
-		FREE_int(Intersection1);
+		FREE_lint(Intersection1);
 		Intersection1 = Intersection2;
 		Intersection2 = NULL;
 		sz1 = sz2;
 		}
 
-	Perp = NEW_int(sz1);
-	int_vec_copy(Intersection1, Perp, sz1);
+	Perp = NEW_lint(sz1);
+	lint_vec_copy(Intersection1, Perp, sz1);
 	sz = sz1;
 
 
-	FREE_int(Intersection1);
+	FREE_lint(Intersection1);
 	for (i = 0; i < nb_pts; i++) {
-		FREE_int(Perp_without_pt[i]);
+		FREE_lint(Perp_without_pt[i]);
 	}
-	FREE_pint(Perp_without_pt);
+	FREE_plint(Perp_without_pt);
 	//free_pint_all(Perp_without_pt, nb_pts);
 
 

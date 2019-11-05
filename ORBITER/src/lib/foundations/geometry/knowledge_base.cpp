@@ -1028,10 +1028,10 @@ int *cubic_surface_single_six(int q, int i)
 }
 #endif
 
-int *knowledge_base::cubic_surface_Lines(int q, int i)
+long int *knowledge_base::cubic_surface_Lines(int q, int i)
 // i starts from 0
 {
-	int *p, nb; //, sz;
+	long int *p, nb; //, sz;
 	if (q == 4) {
 		p = surface_4_Lines;
 		nb = surface_4_nb_reps;

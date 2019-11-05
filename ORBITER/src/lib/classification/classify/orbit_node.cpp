@@ -37,28 +37,25 @@ void orbit_node::freeself()
 }
 
 void orbit_node::init(classification_step *C, int orbit_index,
-	strong_generators *gens, int *Rep, int verbose_level)
+	strong_generators *gens, long int *Rep, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orbit_node::init "
 				"orbit_index=" << orbit_index << " rep=";
-		int_vec_print(cout, Rep, C->representation_sz);
+		lint_vec_print(cout, Rep, C->representation_sz);
 		cout << endl;
 		}
-	if (C->f_lint) {
-		cout << "orbit_node::init C->f_lint" << endl;
-		exit(1);
-	}
 	orbit_node::C = C;
 	orbit_node::orbit_index = orbit_index;
 	orbit_node::gens = gens;
-	int_vec_copy(Rep,
+	lint_vec_copy(Rep,
 			C->Rep + orbit_index * C->representation_sz,
 			C->representation_sz);
 }
 
+#if 0
 void orbit_node::init_lint(classification_step *C, int orbit_index,
 	strong_generators *gens, long int *Rep, int verbose_level)
 {
@@ -81,6 +78,7 @@ void orbit_node::init_lint(classification_step *C, int orbit_index,
 			C->Rep_lint + orbit_index * C->representation_sz,
 			C->representation_sz);
 }
+#endif
 
 void orbit_node::write_file(ofstream &fp, int verbose_level)
 {

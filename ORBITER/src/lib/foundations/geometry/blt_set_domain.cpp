@@ -163,7 +163,7 @@ void blt_set_domain::init(orthogonal *O,
 
 void blt_set_domain::compute_adjacency_list_fast(
 	int first_point_of_starter,
-	int *points, int nb_points, int *point_color,
+	long int *points, int nb_points, int *point_color,
 	uchar *&bitvector_adjacency,
 	long int &bitvector_length_in_bits,
 	long int &bitvector_length,
@@ -277,19 +277,19 @@ void blt_set_domain::compute_adjacency_list_fast(
 
 
 void blt_set_domain::compute_colors(int orbit_at_level,
-	int *starter, int starter_sz,
-	int special_line,
-	int *candidates, int nb_candidates,
+	long int *starter, int starter_sz,
+	long int special_line,
+	long int *candidates, int nb_candidates,
 	int *&point_color, int &nb_colors,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int p1, p2;
+	long int p1, p2;
 	int v1[5];
 	int v2[5];
 	int v3[5];
-	int *pts_on_special_line;
+	long int *pts_on_special_line;
 	int idx, i;
 	sorting Sorting;
 
@@ -317,17 +317,17 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		exit(1);
 	}
 
-	pts_on_special_line = NEW_int(q + 1);
+	pts_on_special_line = NEW_lint(q + 1);
 	O->points_on_line(p1, p2, pts_on_special_line,
 			0/*verbose_level*/);
 
 	if (f_vv) {
 		cout << "pts_on_special_line:" << endl;
-		int_vec_print(cout, pts_on_special_line, q + 1);
+		lint_vec_print(cout, pts_on_special_line, q + 1);
 		cout << endl;
 	}
 
-	if (!Sorting.int_vec_search(pts_on_special_line, q + 1, starter[0], idx)) {
+	if (!Sorting.lint_vec_search(pts_on_special_line, q + 1, starter[0], idx, 0)) {
 		cout << "cannot find the first point on the line" << endl;
 		exit(1);
 	}
@@ -337,11 +337,12 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	if (f_vv) {
 		cout << "pts_on_special_line without the first "
 				"starter point:" << endl;
-		int_vec_print(cout, pts_on_special_line, q);
+		lint_vec_print(cout, pts_on_special_line, q);
 		cout << endl;
 	}
 
-	int a, b, t, c, j, h;
+	int a, b;
+	int t, c, j, h;
 	int *starter_t;
 
 	starter_t = NEW_int(starter_sz);
@@ -366,11 +367,11 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		cout << endl;
 	}
 
-	int *free_pts;
+	long int *free_pts;
 	int *open_colors;
 	int *open_colors_inv;
 
-	free_pts = NEW_int(q);
+	free_pts = NEW_lint(q);
 	open_colors = NEW_int(q);
 	open_colors_inv = NEW_int(q);
 
@@ -396,7 +397,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	}
 	if (f_vv) {
 		cout << "The " << nb_colors << " free points are :" << endl;
-		int_vec_print(cout, free_pts, nb_colors);
+		lint_vec_print(cout, free_pts, nb_colors);
 		cout << endl;
 		cout << "The " << nb_colors << " open colors are :" << endl;
 		int_vec_print(cout, open_colors, nb_colors);
@@ -463,9 +464,9 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		cout << endl;
 	}
 
-	FREE_int(pts_on_special_line);
+	FREE_lint(pts_on_special_line);
 	FREE_int(starter_t);
-	FREE_int(free_pts);
+	FREE_lint(free_pts);
 	FREE_int(open_colors);
 	FREE_int(open_colors_inv);
 	if (f_v) {
@@ -475,9 +476,9 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 
 
 
-void blt_set_domain::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void blt_set_domain::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -497,7 +498,7 @@ void blt_set_domain::early_test_func(int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
@@ -523,7 +524,7 @@ void blt_set_domain::early_test_func(int *S, int len,
 
 
 	if (len == 0) {
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -647,7 +648,7 @@ int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
 
 }
 
-int blt_set_domain::check_conditions(int len, int *S, int verbose_level)
+int blt_set_domain::check_conditions(int len, long int *S, int verbose_level)
 {
 	int f_OK = TRUE;
 	int f_BLT_test = FALSE;
@@ -693,15 +694,16 @@ int blt_set_domain::check_conditions(int len, int *S, int verbose_level)
 	}
 }
 
-int blt_set_domain::collinearity_test(int *S, int len, int verbose_level)
+int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, x, y;
+	int i;
+	long int x, y;
 	int f_OK = TRUE;
 	int fxy;
 
 	if (f_v) {
-		cout << "collinearity test for" << endl;
+		cout << "blt_set_domain::collinearity_test test for" << endl;
 		for (i = 0; i < len; i++) {
 			O->unrank_point(O->v1, 1, S[i], 0);
 			int_vec_print(cout, O->v1, n);
@@ -740,7 +742,7 @@ int blt_set_domain::collinearity_test(int *S, int len, int verbose_level)
 	return f_OK;
 }
 
-void blt_set_domain::print(ostream &ost, int *S, int len)
+void blt_set_domain::print(ostream &ost, long int *S, int len)
 {
 	int i;
 
@@ -752,15 +754,15 @@ void blt_set_domain::print(ostream &ost, int *S, int len)
 }
 
 
-void blt_set_domain::find_free_points(int *S, int S_sz,
-	int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
+void blt_set_domain::find_free_points(long int *S, int S_sz,
+	long int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	long int *lines_on_pt;
-	int *Perp;
-	int i, j, a, b, h, f, fst, len, pt;
+	long int *Perp;
+	long int i, j, a, b, h, f, fst, len, pt;
 	classify C;
 
 	if (f_v) {
@@ -779,7 +781,7 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 		lint_matrix_print(lines_on_pt, S_sz, q + 1);
 	}
 
-	Perp = NEW_int(S_sz * (q + 1) * (q + 1));
+	Perp = NEW_lint(S_sz * (q + 1) * (q + 1));
 	for (i = 0; i < S_sz; i++) {
 		for (j = 0; j < q + 1; j++) {
 			a = lines_on_pt[i * (q + 1) + j];
@@ -790,11 +792,11 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 	}
 	if (f_vv) {
 		cout << "blt_set_domain::find_free_points Perp:" << endl;
-		int_matrix_print(Perp, S_sz * (q + 1), q + 1);
+		lint_matrix_print(Perp, S_sz * (q + 1), q + 1);
 	}
 
 
-	C.init(Perp, S_sz * (q + 1) * (q + 1), TRUE, 0);
+	C.init_lint(Perp, S_sz * (q + 1) * (q + 1), TRUE, 0);
 
 	C.print(FALSE /* f_reverse */);
 
@@ -806,7 +808,7 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 		cout << "blt_set_domain::find_free_points nb_free_pts="
 				<< nb_free_pts << endl;
 	}
-	free_pts = NEW_int(nb_free_pts);
+	free_pts = NEW_lint(nb_free_pts);
 	free_pt_idx = NEW_int(O->nb_points);
 	for (h = 0; h < O->nb_points; h++) {
 		free_pt_idx[h] = -1;
@@ -828,7 +830,7 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 	}
 
 	FREE_lint(lines_on_pt);
-	FREE_int(Perp);
+	FREE_lint(Perp);
 
 	if (f_v) {
 		cout << "blt_set_domain::find_free_points "
@@ -841,8 +843,8 @@ void blt_set_domain::find_free_points(int *S, int S_sz,
 
 int blt_set_domain::create_graph(
 	int case_number, int nb_cases_total,
-	int *Starter_set, int starter_size,
-	int *candidates, int nb_candidates,
+	long int *Starter_set, int starter_size,
+	long int *candidates, int nb_candidates,
 	int f_eliminate_graphs_if_possible,
 	colored_graph *&CG,
 	int verbose_level)

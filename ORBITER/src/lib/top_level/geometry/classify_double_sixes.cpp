@@ -102,7 +102,7 @@ void classify_double_sixes::freeself()
 		FREE_int(Po);
 		}
 	if (Pts_for_partial_ovoid_test) {
-		FREE_int(Pts_for_partial_ovoid_test);
+		FREE_lint(Pts_for_partial_ovoid_test);
 	}
 	if (Flag_orbits) {
 		FREE_OBJECT(Flag_orbits);
@@ -194,7 +194,7 @@ void classify_double_sixes::init(
 				"after compute_neighbors "
 				"nb_neighbors = " << nb_neighbors << endl;
 		cout << "Neighbors=";
-		int_vec_print(cout, Neighbors, nb_neighbors);
+		lint_vec_print(cout, Neighbors, nb_neighbors);
 		cout << endl;
 		}
 
@@ -304,9 +304,9 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"nb_neighbors = " << nb_neighbors << endl;
 		}
-	Neighbors = NEW_int(nb_neighbors);
-	Neighbor_to_line = NEW_int(nb_neighbors);
-	Neighbor_to_klein = NEW_int(nb_neighbors);
+	Neighbors = NEW_lint(nb_neighbors);
+	Neighbor_to_line = NEW_lint(nb_neighbors);
+	Neighbor_to_klein = NEW_lint(nb_neighbors);
 	
 	int sz;
 
@@ -340,7 +340,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"allocating Line_to_neighbor" << endl;
 	}
-	Line_to_neighbor = NEW_int(Surf->nb_lines_PG_3);
+	Line_to_neighbor = NEW_lint(Surf->nb_lines_PG_3);
 	for (i = 0; i < Surf->nb_lines_PG_3; i++) {
 		Line_to_neighbor[i] = -1;
 		}
@@ -356,7 +356,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 			Neighbors, nb_neighbors);
 
 	// Sort the set Neighbors:
-	Sorting.int_vec_heapsort(Neighbors, nb_neighbors);
+	Sorting.lint_vec_heapsort(Neighbors, nb_neighbors);
 
 
 
@@ -382,7 +382,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"before int_vec_apply" << endl;
 	}
-	int_vec_apply(Neighbor_to_line,
+	lint_vec_apply(Neighbor_to_line,
 			Surf->Klein->Line_to_point_on_quadric,
 			Neighbor_to_klein, nb_neighbors);
 
@@ -1110,7 +1110,7 @@ void classify_double_sixes::identify_five_plus_one(
 		0 /* verbose_level */);
 	if (f_v) {
 		cout << "classify_double_sixes::identify_five_plus_one "
-				"element which moves tranversal line:" << endl;
+				"element which moves transversal line:" << endl;
 		A->element_print(Elt0, cout);
 	}
 

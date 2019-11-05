@@ -64,7 +64,7 @@ void eckardt_point_info::freeself()
 }
 
 void eckardt_point_info::init(projective_space *P,
-		int *arc6, int verbose_level)
+		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -73,7 +73,7 @@ void eckardt_point_info::init(projective_space *P,
 	int t, f, l, s, u;
 	combinatorics_domain Combi;
 
-	int arc5[5];
+	long int arc5[5];
 	int *H1; // [6]
 	int *H; // [12]
 
@@ -82,7 +82,7 @@ void eckardt_point_info::init(projective_space *P,
 		cout << "eckardt_point_info::init" << endl;
 		}
 	eckardt_point_info::P = P;
-	int_vec_copy(arc6, eckardt_point_info::arc6, 6);
+	lint_vec_copy(arc6, eckardt_point_info::arc6, 6);
 
 	if (P->n != 2) {
 		cout << "eckardt_point_info::init "
@@ -92,7 +92,7 @@ void eckardt_point_info::init(projective_space *P,
 
 	if (f_v) {
 		cout << "arc: ";
-		int_vec_print(cout, arc6, 6);
+		lint_vec_print(cout, arc6, 6);
 		cout << endl;
 	}
 
@@ -240,14 +240,14 @@ void eckardt_point_info::init(projective_space *P,
 
 		int deleted_point, rk, i1;
 		int *six_coeffs;
-		int tangents[5];
+		long int tangents[5];
 		int Basis[9];
 
 		six_coeffs = conic_coefficients + j * 6;
 
 		deleted_point = arc6[j];
-		int_vec_copy(arc6, arc5, j);
-		int_vec_copy(arc6 + j + 1, arc5 + j, 5 - j);
+		lint_vec_copy(arc6, arc5, j);
+		lint_vec_copy(arc6 + j + 1, arc5 + j, 5 - j);
 
 #if 0
 		cout << "deleting point " << j << " / 6:";

@@ -482,7 +482,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	const char *fname,
 	int orbit_length,
 	int &type_idx,
-	int f_has_user_data, int *user_data, int user_data_size,
+	int f_has_user_data, long int *user_data, int user_data_size,
 	int f_has_colors, int number_colors, int *color_table,
 	int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
@@ -620,13 +620,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		// the adjacency becomes part of the colored_graph object
 
 	if (f_has_user_data) {
-		int *my_user_data;
+		long int *my_user_data;
 
-		my_user_data = NEW_int(user_data_size);
+		my_user_data = NEW_lint(user_data_size);
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data before: ";
-			int_vec_print(cout, user_data, user_data_size);
+			lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length" << endl;
 		}
@@ -637,23 +637,23 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 			my_user_data,
 			user_data_size);
 #else
-		int_vec_copy(user_data, my_user_data, user_data_size);
+		lint_vec_copy(user_data, my_user_data, user_data_size);
 #endif
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data after: ";
-			int_vec_print(cout, my_user_data, user_data_size);
+			lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
 
 		CG->init_user_data(my_user_data,
 				user_data_size, 0 /* verbose_level */);
-		FREE_int(my_user_data);
+		FREE_lint(my_user_data);
 	}
 
 
 
-	int_vec_copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
+	lint_vec_copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
 	sprintf(CG->fname_base, "%s", fname);
 
 
@@ -683,7 +683,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	const char *fname,
 	int orbit_length,
 	int &type_idx,
-	int f_has_user_data, int *user_data, int user_data_size,
+	int f_has_user_data, long int *user_data, int user_data_size,
 	int (*test_function)(int *orbit1, int orbit_length1, int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	set_of_sets *my_orbits_classified,
@@ -799,13 +799,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		// the adjacency becomes part of the colored_graph object
 
 	if (f_has_user_data) {
-		int *my_user_data;
+		long int *my_user_data;
 
-		my_user_data = NEW_int(user_data_size);
+		my_user_data = NEW_lint(user_data_size);
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data before: ";
-			int_vec_print(cout, user_data, user_data_size);
+			lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified" << endl;
 		}
@@ -816,18 +816,18 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			my_user_data,
 			user_data_size);
 #else
-		int_vec_copy(user_data, my_user_data, user_data_size);
+		lint_vec_copy(user_data, my_user_data, user_data_size);
 #endif
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data after: ";
-			int_vec_print(cout, my_user_data, user_data_size);
+			lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
 
 		CG->init_user_data(my_user_data,
 				user_data_size, 0 /* verbose_level */);
-		FREE_int(my_user_data);
+		FREE_lint(my_user_data);
 	}
 
 	//int_vec_copy(my_orbits_classified->Sets[type_idx], CG->points, nb_points);

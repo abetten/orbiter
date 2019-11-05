@@ -447,7 +447,7 @@ void large_set_classify::compute_colors(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a;
+	int i;
 
 	if (f_v) {
 		cout << "large_set_classify::compute_colors" << endl;
@@ -470,7 +470,7 @@ void large_set_classify::compute_reduced_colors(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a, idx, c, s;
+	int i, j, idx, c, s;
 	int *set_color;
 
 	if (f_v) {

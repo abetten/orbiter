@@ -174,11 +174,11 @@ void grassmann_embedded::init(int big_n, int n,
 		cout << endl;
 		}
 	D.q_binomial(deg, n, k, q, 0);
-	degree = deg.as_int();
+	degree = deg.as_lint();
 }
 
-void grassmann_embedded::unrank_embedded_int(
-	int *subspace_basis_with_embedding, int rk,
+void grassmann_embedded::unrank_embedded_lint(
+	int *subspace_basis_with_embedding, long int rk,
 	int verbose_level)
 // subspace_basis_with_embedding is n x big_n
 {
@@ -189,7 +189,7 @@ void grassmann_embedded::unrank_embedded_int(
 		cout << "rk=" << rk << endl;
 		cout << "calling G->unrank_int" << endl;
 		}
-	G->unrank_embedded_subspace_int(rk, verbose_level);
+	G->unrank_embedded_subspace_lint(rk, verbose_level);
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_embedded_int "
 				"coefficient matrix:" << endl;
@@ -214,46 +214,46 @@ void grassmann_embedded::unrank_embedded_int(
 		}
 }
 
-int grassmann_embedded::rank_embedded_int(
+long int grassmann_embedded::rank_embedded_lint(
 	int *subspace_basis, int verbose_level)
 // subspace_basis is n x big_n, only the
 // first k x big_n entries are used
 {
 	int f_v = (verbose_level >= 1);
-	int rk;
+	long int rk;
 
 	if (f_v) {
 		cout << "grassmann_embedded::rank_embedded_int" << endl;
 		//print_integer_matrix_width(cout,
 		// subspace_basis, n, big_n, big_n, F->log10_of_q);
 		}
-	rk = rank_int(subspace_basis, verbose_level);
+	rk = rank_lint(subspace_basis, verbose_level);
 	if (f_v) {
 		cout << "grassmann_embedded::rank_embedded_int done" << endl;
 		}
 	return rk;
 }
 
-void grassmann_embedded::unrank_int(
-	int *subspace_basis, int rk, int verbose_level)
+void grassmann_embedded::unrank_lint(
+	int *subspace_basis, long int rk, int verbose_level)
 // subspace_basis is k x big_n
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "grassmann_embedded::unrank_int" << endl;
+		cout << "grassmann_embedded::unrank_lint" << endl;
 		cout << "rk=" << rk << endl;
 		cout << "calling G->unrank_int" << endl;
 		}
-	G->unrank_int(rk, verbose_level);
+	G->unrank_lint(rk, verbose_level);
 	if (f_v) {
-		cout << "grassmann_embedded::unrank_int "
+		cout << "grassmann_embedded::unrank_lint "
 			"coefficient matrix:" << endl;
 		print_integer_matrix_width(cout,
 			G->M, k, n, n, F->log10_of_q);
 		}
 	if (f_v) {
-		cout << "grassmann_embedded::rank_int "
+		cout << "grassmann_embedded::rank_lint "
 			"subspace_basis:" << endl;
 		print_integer_matrix_width(cout,
 			M, n, big_n, big_n, F->log10_of_q);
@@ -262,7 +262,7 @@ void grassmann_embedded::unrank_int(
 			subspace_basis, k, n, big_n,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "grassmann_embedded::unrank_int "
+		cout << "grassmann_embedded::unrank_lint "
 			"subspace_basis:" << endl;
 		print_integer_matrix_width(cout,
 				subspace_basis, k, big_n, big_n,
@@ -270,16 +270,16 @@ void grassmann_embedded::unrank_int(
 		}
 }
 
-int grassmann_embedded::rank_int(
+long int grassmann_embedded::rank_lint(
 		int *subspace_basis, int verbose_level)
 // subspace_basis is k x big_n
 {
 	int f_v = (verbose_level >= 1);
-	int rk, i, j, a;
+	long int rk, i, j, a;
 
 
 	if (f_v) {
-		cout << "grassmann_embedded::rank_int" << endl;
+		cout << "grassmann_embedded::rank_lint" << endl;
 		print_integer_matrix_width(cout,
 				subspace_basis, k, big_n, big_n, F->log10_of_q);
 		}
@@ -292,7 +292,7 @@ int grassmann_embedded::rank_int(
 	// now tmp_M1 is k x n
 
 	if (f_v) {
-		cout << "grassmann_embedded::rank_int tmp_M1:" << endl;
+		cout << "grassmann_embedded::rank_lint tmp_M1:" << endl;
 		print_integer_matrix_width(cout,
 				tmp_M1, k, n, n, F->log10_of_q);
 		}
@@ -305,7 +305,7 @@ int grassmann_embedded::rank_int(
 	// this means: tmp_M2 * M = subspace_basis
 
 	if (f_v) {
-		cout << "grassmann_embedded::rank_int tmp_M2:" << endl;
+		cout << "grassmann_embedded::rank_lint tmp_M2:" << endl;
 		print_integer_matrix_width(cout,
 				tmp_M2, k, n, n, F->log10_of_q);
 		}
@@ -319,13 +319,13 @@ int grassmann_embedded::rank_int(
 			// now Tmp2 is of length big_n
 
 		if (f_v) {
-			cout << "grassmann_embedded::rank_int i=" << i
+			cout << "grassmann_embedded::rank_lint i=" << i
 					<< " Tmp2=" << endl;
 			print_integer_matrix_width(cout,
 					Tmp2, 1, big_n, big_n, F->log10_of_q);
 			}
 		if (int_vec_compare(subspace_basis + i * big_n, Tmp2, big_n)) {
-			cout << "grassmann_embedded::rank_int fatal: "
+			cout << "grassmann_embedded::rank_lint fatal: "
 					"the i-th vector is not in the space" << endl;
 			cout << "i=" << i << endl;
 			cout << "subspace:" << endl;
@@ -347,12 +347,12 @@ int grassmann_embedded::rank_int(
 			}
 		}
 	if (f_v) {
-		cout << "grassmann_embedded::rank_int "
+		cout << "grassmann_embedded::rank_lint "
 				"coefficient matrix:" << endl;
 		print_integer_matrix_width(cout,
 				G->M, k, n, n, F->log10_of_q);
 		}
-	rk = G->rank_int(verbose_level);
+	rk = G->rank_lint(verbose_level);
 	if (f_v) {
 		cout << "rk=" << rk << endl;
 		}
