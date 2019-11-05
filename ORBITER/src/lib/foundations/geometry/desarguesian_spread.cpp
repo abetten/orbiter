@@ -305,7 +305,7 @@ void desarguesian_spread::compute_shadow(
 }
 
 void desarguesian_spread::compute_linear_set(int *Basis, int basis_sz, 
-	int *&the_linear_set, int &the_linear_set_sz, 
+	long int *&the_linear_set, int &the_linear_set_sz,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -326,7 +326,7 @@ void desarguesian_spread::compute_linear_set(int *Basis, int basis_sz,
 			the_linear_set_sz++;
 			}
 		}
-	the_linear_set = NEW_int(the_linear_set_sz);
+	the_linear_set = NEW_lint(the_linear_set_sz);
 	j = 0;
 	for (i = 0; i < N; i++) {
 		if (Intersection_dimensions[i]) {
@@ -336,7 +336,7 @@ void desarguesian_spread::compute_linear_set(int *Basis, int basis_sz,
 	if (f_v) {
 		cout << "desarguesian_spread::compute_linear_set "
 				"The linear set is: ";
-		int_vec_print(cout, the_linear_set, the_linear_set_sz);
+		lint_vec_print(cout, the_linear_set, the_linear_set_sz);
 		cout << endl;
 		}
 
@@ -381,7 +381,7 @@ void desarguesian_spread::print_spread_element_table_tex()
 	FREE_int(v);
 }
 
-void desarguesian_spread::print_linear_set_tex(int *set, int sz)
+void desarguesian_spread::print_linear_set_tex(long int *set, int sz)
 {
 	int i;
 
@@ -393,7 +393,7 @@ void desarguesian_spread::print_linear_set_tex(int *set, int sz)
 		}
 }
 
-void desarguesian_spread::print_linear_set_element_tex(int a, int sz)
+void desarguesian_spread::print_linear_set_element_tex(long int a, int sz)
 {
 	int *v;
 

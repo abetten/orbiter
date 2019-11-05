@@ -81,6 +81,9 @@ void large_set_classify::null()
 
 void large_set_classify::freeself()
 {
+	if (Design_table) {
+		FREE_lint(Design_table);
+	}
 	if (bitvector_adjacency) {
 		FREE_uchar(bitvector_adjacency);
 		}
@@ -88,10 +91,10 @@ void large_set_classify::freeself()
 		FREE_int(design_color_table);
 	}
 	if (Design_table_reduced) {
-		FREE_int(Design_table_reduced);
+		FREE_lint(Design_table_reduced);
 	}
 	if (Design_table_reduced_idx) {
-		FREE_int(Design_table_reduced_idx);
+		FREE_lint(Design_table_reduced_idx);
 	}
 	if (OoS) {
 		FREE_OBJECT(OoS);
@@ -156,7 +159,7 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 		cout << "large_set_classify::init_designs" << endl;
 	}
 
-	int **Sets;
+	long int **Sets;
 	int i;
 	sorting Sorting;
 	combinatorics_domain Combi;
@@ -166,11 +169,11 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	}
 
 	nb_designs = SetOrb->used_length;
-	Sets = NEW_pint(nb_designs);
+	Sets = NEW_plint(nb_designs);
 	for (i = 0; i < nb_designs; i++) {
 
-		Sets[i] = NEW_int(design_size);
-		int_vec_copy(SetOrb->Sets[i], Sets[i], design_size);
+		Sets[i] = NEW_lint(design_size);
+		lint_vec_copy(SetOrb->Sets[i], Sets[i], design_size);
 	}
 
 	if (f_v) {
@@ -187,16 +190,16 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 				"sorting design table of size " << nb_designs << endl;
 	}
 
-	Design_table = NEW_int(nb_designs * design_size);
+	Design_table = NEW_lint(nb_designs * design_size);
 	for (i = 0; i < nb_designs; i++) {
-		int_vec_copy(Sets[i], Design_table + i * design_size, design_size);
+		lint_vec_copy(Sets[i], Design_table + i * design_size, design_size);
 	}
 
 	cout << "Designs:" << endl;
 	if (nb_designs < 100) {
 		for (i = 0; i < nb_designs; i++) {
 			cout << i << " : ";
-			int_vec_print(cout, Design_table + i * design_size, design_size);
+			lint_vec_print(cout, Design_table + i * design_size, design_size);
 			cout << endl;
 		}
 	}
@@ -205,9 +208,9 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	}
 
 	for (i = 0; i < nb_designs; i++) {
-		FREE_int(Sets[i]);
+		FREE_lint(Sets[i]);
 	}
-	FREE_pint(Sets);
+	FREE_plint(Sets);
 
 	if (f_v) {
 		cout << "large_set_classify::init_designs before compute_colors" << endl;
@@ -410,18 +413,18 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 }
 
 void large_set_classify::make_reduced_design_table(
-		int *set, int set_sz,
-		int *&Design_table_out, int *&Design_table_out_idx, int &nb_out,
+		long int *set, int set_sz,
+		long int *&Design_table_out, long int *&Design_table_out_idx, int &nb_out,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a;
+	long int i, j, a;
 
 	if (f_v) {
 		cout << "large_set_classify::make_reduced_design_table" << endl;
 	}
-	Design_table_out = NEW_int(nb_designs * design_size);
-	Design_table_out_idx = NEW_int(nb_designs);
+	Design_table_out = NEW_lint(nb_designs * design_size);
+	Design_table_out_idx = NEW_lint(nb_designs);
 	nb_out = 0;
 	for (i = 0; i < nb_designs; i++) {
 		for (j = 0; j < set_sz; j++) {
@@ -431,7 +434,8 @@ void large_set_classify::make_reduced_design_table(
 			}
 		}
 		if (j == set_sz) {
-			int_vec_copy(Design_table + i * design_size, Design_table_out + nb_out * design_size, design_size);
+			lint_vec_copy(Design_table + i * design_size,
+					Design_table_out + nb_out * design_size, design_size);
 			Design_table_out_idx[nb_out] = i;
 			nb_out++;
 		}
@@ -443,7 +447,7 @@ void large_set_classify::make_reduced_design_table(
 
 
 void large_set_classify::compute_colors(
-		int *Design_table, int nb_designs, int *&design_color_table,
+		long int *Design_table, int nb_designs, int *&design_color_table,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -466,7 +470,7 @@ void large_set_classify::compute_colors(
 }
 
 void large_set_classify::compute_reduced_colors(
-		int *set, int set_sz,
+		long int *set, int set_sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -510,11 +514,11 @@ void large_set_classify::compute_reduced_colors(
 
 int large_set_classify::designs_are_disjoint(int i, int j)
 {
-	int *p1, *p2;
+	long int *p1, *p2;
 
 	p1 = Design_table + i * design_size;
 	p2 = Design_table + j * design_size;
-	if (test_if_sets_are_disjoint_assuming_sorted(
+	if (test_if_sets_are_disjoint_assuming_sorted_lint(
 			p1, p2, design_size, design_size)) {
 		return TRUE;
 	}
@@ -529,7 +533,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		strong_generators *SG, const char *prefix,
 		char *group_label, int orbit_length,
 		int f_read_solution_file, const char *solution_file_name,
-		int *&Large_sets, int &nb_large_sets,
+		long int *&Large_sets, int &nb_large_sets,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -637,10 +641,10 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 			exit(1);
 		}
 		nb_large_sets = nb_solutions;
-		Large_sets = NEW_int(nb_solutions * sz);
+		Large_sets = NEW_lint(nb_solutions * sz);
 		int i, j, a, b, l;
 		for (i = 0; i < nb_solutions; i++) {
-			int_vec_copy(Rep->data, Large_sets + i * sz, Rep->sz);
+			lint_vec_copy(Rep->data, Large_sets + i * sz, Rep->sz);
 			for (j = 0; j < solution_size; j++) {
 				a = Solutions[i * solution_size + j];
 				b = OoS->Orbits_classified->Sets[selected_type_idx][a];
@@ -773,11 +777,11 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	}
 }
 
-int large_set_classify::test_orbit(int *orbit, int orbit_length)
+int large_set_classify::test_orbit(long int *orbit, int orbit_length)
 {
 	int i, j, a, b;
-	int *p1;
-	int *p2;
+	long int *p1;
+	long int *p2;
 
 	for (i = 0; i < orbit_length; i++) {
 		a = orbit[i];
@@ -785,7 +789,7 @@ int large_set_classify::test_orbit(int *orbit, int orbit_length)
 		for (j = i + 1; j < orbit_length; j++) {
 			b = orbit[j];
 			p2 = Design_table_reduced + b * design_size;
-			if (!test_if_sets_are_disjoint_assuming_sorted(
+			if (!test_if_sets_are_disjoint_assuming_sorted_lint(
 					p1, p2, design_size, design_size)) {
 				return FALSE;
 			}
@@ -795,12 +799,12 @@ int large_set_classify::test_orbit(int *orbit, int orbit_length)
 }
 
 int large_set_classify::test_pair_of_orbits(
-		int *orbit1, int orbit_length1,
-		int *orbit2, int orbit_length2)
+		long int *orbit1, int orbit_length1,
+		long int *orbit2, int orbit_length2)
 {
 	int i, j, a, b;
-	int *p1;
-	int *p2;
+	long int *p1;
+	long int *p2;
 
 	for (i = 0; i < orbit_length1; i++) {
 		a = orbit1[i];
@@ -808,7 +812,7 @@ int large_set_classify::test_pair_of_orbits(
 		for (j = 0; j < orbit_length2; j++) {
 			b = orbit2[j];
 			p2 = Design_table_reduced + b * design_size;
-			if (!test_if_sets_are_disjoint_assuming_sorted(
+			if (!test_if_sets_are_disjoint_assuming_sorted_lint(
 					p1, p2, design_size, design_size)) {
 				return FALSE;
 			}
@@ -817,7 +821,7 @@ int large_set_classify::test_pair_of_orbits(
 	return TRUE;
 }
 
-int large_set_design_test_orbit(int *orbit, int orbit_length,
+int large_set_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data)
 {
 	large_set_classify *LS = (large_set_classify *) extra_data;
@@ -828,8 +832,8 @@ int large_set_design_test_orbit(int *orbit, int orbit_length,
 	return ret;
 }
 
-int large_set_design_test_pair_of_orbits(int *orbit1, int orbit_length1,
-		int *orbit2, int orbit_length2, void *extra_data)
+int large_set_design_test_pair_of_orbits(long int *orbit1, int orbit_length1,
+		long int *orbit2, int orbit_length2, void *extra_data)
 {
 	large_set_classify *LS = (large_set_classify *) extra_data;
 	int ret = FALSE;
@@ -885,9 +889,9 @@ void large_set_swap_func(void *data, int i, int j, void *extra_data)
 	Sets[j] = p;
 }
 
-void large_set_early_test_function(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void large_set_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	large_set_classify *LS = (large_set_classify *) data;
@@ -901,7 +905,7 @@ void large_set_early_test_function(int *S, int len,
 		cout << endl;
 	}
 	if (len == 0) {
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {

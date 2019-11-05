@@ -725,7 +725,7 @@ finish:
 }
 
 int translation_plane_via_andre_model::check_subplane(
-		int *S, int len, int verbose_level)
+		long int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -741,7 +741,7 @@ int translation_plane_via_andre_model::check_subplane(
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
 				"check_subplane the set is";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 
@@ -894,7 +894,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 }
 
 int translation_plane_via_andre_model_check_arc(
-		int len, int *S, void *data, int verbose_level)
+		int len, long int *S, void *data, int verbose_level)
 {
 	translation_plane_via_andre_model *TP =
 			(translation_plane_via_andre_model *) data;
@@ -904,7 +904,7 @@ int translation_plane_via_andre_model_check_arc(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model_check_arc "
 				"checking set ";
-		print_set(cout, len, S);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	f_OK = TP->check_arc(S, len, 0 /*verbose_level - 1*/);
@@ -923,7 +923,7 @@ int translation_plane_via_andre_model_check_arc(
 }
 
 int translation_plane_via_andre_model_check_subplane(
-		int len, int *S, void *data,
+		int len, long int *S, void *data,
 		int verbose_level)
 {
 	translation_plane_via_andre_model *TP =
@@ -934,7 +934,7 @@ int translation_plane_via_andre_model_check_subplane(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model_"
 				"check_subplane checking set ";
-		print_set(cout, len, S);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	f_OK = TP->check_subplane(S, len, verbose_level - 1);

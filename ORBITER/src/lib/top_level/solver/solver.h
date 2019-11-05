@@ -40,20 +40,20 @@ public:
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
 		int *candidates, int nb_candidates, 
 		strong_generators *Strong_gens, 
-		diophant *&Dio, int *&col_label, 
+		diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level);
 
 
 
-	void (*early_test_func)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void (*early_test_func)(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
 	void *early_test_func_data;
 
 	int f_has_solution_test_func;
-	int (*solution_test_func)(exact_cover *EC, int *S, int len, 
+	int (*solution_test_func)(exact_cover *EC, long int *S, int len,
 		void *data, int verbose_level);
 	void *solution_test_func_data;
 
@@ -75,7 +75,7 @@ public:
 
 	int starter_size;
 	int starter_nb_cases;
-	int *starter; // [starter_size]
+	long int *starter; // [starter_size]
 
 	int f_randomized;
 	const char *random_permutation_fname;
@@ -94,17 +94,17 @@ public:
 		int verbose_level);
 
 	void init_early_test_func(
-		void (*early_test_func)(int *S, int len, 
-			int *candidates, int nb_candidates, 
-			int *good_candidates, int &nb_good_candidates, 
+		void (*early_test_func)(long int *S, int len,
+				long int *candidates, int nb_candidates,
+				long int *good_candidates, int &nb_good_candidates,
 			void *data, int verbose_level), 
 		void *early_test_func_data,
 		int verbose_level);
 	void init_prepare_function_new(
 		void (*prepare_function_new)(exact_cover *E, int starter_case, 
-			int *candidates, int nb_candidates, 
+				long int *candidates, int nb_candidates,
 			strong_generators *Strong_gens, 
-			diophant *&Dio, int *&col_label, 
+			diophant *&Dio, long int *&col_label,
 			int &f_ruled_out, 
 			int verbose_level),
 		int verbose_level);
@@ -112,7 +112,7 @@ public:
 	void set_single_case(int single_case, int verbose_level);
 	void randomize(const char *random_permutation_fname, int verbose_level);
 	void add_solution_test_function(
-		int (*solution_test_func)(exact_cover *EC, int *S, int len, 
+		int (*solution_test_func)(exact_cover *EC, long int *S, int len,
 		void *data, int verbose_level), 
 		void *solution_test_func_data,
 		int verbose_level);
@@ -131,7 +131,7 @@ public:
 		int f_draw_system, const char *fname_system, 
 		int f_write_tree, const char *fname_tree, 
 		int verbose_level);
-	void lexorder_test(int *live_blocks2, int &nb_live_blocks2, 
+	void lexorder_test(long int *live_blocks2, int &nb_live_blocks2,
 		vector_ge *stab_gens, 
 		int verbose_level);
 };
@@ -177,18 +177,18 @@ public:
 	int f_write_tree;
 	const char *fname_tree;
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
-		int *candidates, int nb_candidates, 
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens, 
-		diophant *&Dio, int *&col_label, 
+		diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level);
-	void (*early_test_function)(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void (*early_test_function)(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
 	void *early_test_function_data;
 	int f_has_solution_test_function;
-	int (*solution_test_func)(exact_cover *EC, int *S, int len, 
+	int (*solution_test_func)(exact_cover *EC, long int *S, int len,
 		void *data, int verbose_level);
 	void *solution_test_func_data;
 	int f_has_late_cleanup_function;

@@ -2759,7 +2759,7 @@ void mp_graphics::text_4pts(int *Px, int *Py,
 
 
 void mp_graphics::draw_graph(int x, int y,
-		int dx, int dy, int nb_V, int *Edges, int nb_E)
+		int dx, int dy, int nb_V, long int *Edges, int nb_E)
 {
 	double *X, *Y;
 	double h = dy * .7;
@@ -2960,7 +2960,7 @@ void mp_graphics::draw_graph_on_2D_grid(
 }
 
 void mp_graphics::draw_tournament(int x, int y,
-		int dx, int dy, int nb_V, int *Edges, int nb_E,
+		int dx, int dy, int nb_V, long int *Edges, int nb_E,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

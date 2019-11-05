@@ -294,17 +294,15 @@ void memory_object::read_double(double *f)
 	*f = f1;
 }
 
-void memory_object::write_int64(int i)
+void memory_object::write_lint(long int i)
 {
-	int_8 i1 = (int_8) i;
-	
-	block_swap_chars((char *) &i1, 8, 1);
-	append(8, (char *) &i1, 0);
+	//block_swap_chars((char *) &i, 8, 1);
+	append(8, (char *) &i, 0);
 }
 
-void memory_object::read_int64(int *i)
+void memory_object::read_lint(long int *i)
 {
-	int_8 i1;
+	long int i1;
 	long int l1, j, cur_p, l;
 	char *cp, *cp1;
 	
@@ -323,9 +321,9 @@ void memory_object::read_int64(int *i)
 		cp1++;
 		cp++;
 		}
-	block_swap_chars((char *) &i1, 8, 1);
+	//block_swap_chars((char *) &i1, 8, 1);
 	cur_pointer += 8;
-	*i = (int) i1;
+	*i = i1;
 }
 
 void memory_object::write_int(int i)

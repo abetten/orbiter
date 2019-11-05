@@ -823,21 +823,21 @@ void schreier::list_all_orbits_tex(ostream &ost)
 }
 
 void schreier::print_orbit_through_labels(ostream &ost,
-	int orbit_no, int *point_labels)
+	int orbit_no, long int *point_labels)
 {
 	int i, first, len;
-	int *v;
+	long int *v;
 	sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
-	v = NEW_int(len);
+	v = NEW_lint(len);
 	for (i = 0; i < len; i++) {
 		v[i] = point_labels[orbit[first + i]];
 	}
-	Sorting.int_vec_heapsort(v, len);
-	int_vec_print_fully(ost, v, len);
-	FREE_int(v);
+	Sorting.lint_vec_heapsort(v, len);
+	lint_vec_print_fully(ost, v, len);
+	FREE_lint(v);
 }
 
 void schreier::print_orbit_sorted(ostream &ost, int orbit_no)
@@ -918,7 +918,7 @@ void schreier::draw_forest(const char *fname_mask,
 	int f_circletext, int rad,
 	int f_embedded, int f_sideways,
 	double scale, double line_width,
-	int f_has_point_labels, int *point_labels,
+	int f_has_point_labels, long int *point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1097,7 +1097,7 @@ void schreier::draw_tree(const char *fname,
 	int f_circletext, int rad,
 	int f_embedded, int f_sideways,
 	double scale, double line_width,
-	int f_has_point_labels, int *point_labels,
+	int f_has_point_labels, long int *point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1171,7 +1171,7 @@ void schreier::draw_tree2(const char *fname,
 	int max_depth, int i, int last, int rad,
 	int f_embedded, int f_sideways,
 	double scale, double line_width,
-	int f_has_point_labels, int *point_labels,
+	int f_has_point_labels, long int *point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1315,7 +1315,7 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 void schreier::subtree_draw_vertices(mp_graphics &G,
 	int f_circletext, int parent_x, int parent_y, int *weight,
 	int *placement_x, int max_depth, int i, int last, int rad,
-	int f_has_point_labels, int *point_labels,
+	int f_has_point_labels, long int *point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1356,7 +1356,7 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 		}
 #endif
 	if (f_has_point_labels) {
-		sprintf(str, "%d", point_labels[pt]);
+		sprintf(str, "%ld", point_labels[pt]);
 	}
 	else {
 		sprintf(str, "%d", pt);

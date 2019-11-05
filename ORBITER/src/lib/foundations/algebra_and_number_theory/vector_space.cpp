@@ -272,20 +272,20 @@ ret:
 	return r;
 }
 
-void vector_space_unrank_point_callback(int *v, int rk, void *data)
+void vector_space_unrank_point_callback(int *v, long int rk, void *data)
 {
 	vector_space *VS = (vector_space *) data;
 
-	VS->F->PG_element_unrank_modified(v, 1, VS->dimension, rk);
+	VS->F->PG_element_unrank_modified_lint(v, 1, VS->dimension, rk);
 
 }
 
-int vector_space_rank_point_callback(int *v, void *data)
+long int vector_space_rank_point_callback(int *v, void *data)
 {
 	vector_space *VS = (vector_space *) data;
-	int rk;
+	long int rk;
 
-	VS->F->PG_element_rank_modified(v, 1, VS->dimension, rk);
+	VS->F->PG_element_rank_modified_lint(v, 1, VS->dimension, rk);
 	return rk;
 
 }

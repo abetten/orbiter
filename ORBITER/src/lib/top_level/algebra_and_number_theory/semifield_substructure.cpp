@@ -101,7 +101,7 @@ void semifield_substructure::init()
 
 void semifield_substructure::compute_cases(
 		int nb_non_unique_cases,
-		int *Non_unique_cases, int *Non_unique_cases_go,
+		int *Non_unique_cases, long int *Non_unique_cases_go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -343,14 +343,14 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 		if (FALSE) {
 			cout << "orbit " << o << " number of semifields = "
 				<< Len[o] << " group order = "
-				<< L3->Stabilizer_gens[o].group_order_as_int() << endl;
+				<< L3->Stabilizer_gens[o].group_order_as_lint() << endl;
 			}
 		if (Len[o] == 0) {
 			}
 		else if (Len[o] == 1) {
 			nb_flag_orbits += 1;
 			}
-		else if (L3->Stabilizer_gens[o].group_order_as_int() == 1) {
+		else if (L3->Stabilizer_gens[o].group_order_as_lint() == 1) {
 			nb_flag_orbits += Len[o];
 			}
 		else {
@@ -416,7 +416,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 				0 /*verbose_level - 2 */);
 			h++;
 		}
-		else if (L3->Stabilizer_gens[o].group_order_as_int() == 1) {
+		else if (L3->Stabilizer_gens[o].group_order_as_lint() == 1) {
 			for (g = 0; g < Len[o]; g++) {
 				data = Data +
 						(fst + g) * data_size + start_column;
@@ -561,7 +561,7 @@ void semifield_substructure::do_classify(int verbose_level)
 			cout << "po=" << po << " so=" << so << endl;
 		}
 		lint_vec_copy(
-				Flag_orbits->Pt_lint + f * Flag_orbits->pt_representation_sz,
+				Flag_orbits->Pt + f * Flag_orbits->pt_representation_sz,
 				data1, SC->k);
 		if (f_v) {
 			cout << "data1=";
@@ -685,7 +685,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		}
 
 
-		SCWS->Semifields->Orbit[Flag_orbits->nb_primary_orbits_upper].init_lint(
+		SCWS->Semifields->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 				SCWS->Semifields,
 			Flag_orbits->nb_primary_orbits_upper,
 			Stab, data1, verbose_level);
@@ -914,8 +914,8 @@ void semifield_substructure::loop_over_all_subspaces(
 				cout << "solution_idx=" << solution_idx << endl;
 			}
 
-			int go;
-			go = L3->Stabilizer_gens[trace_po].group_order_as_int();
+			long int go;
+			go = L3->Stabilizer_gens[trace_po].group_order_as_lint();
 
 			T->go = go;
 			T->pos = -1;
@@ -1404,8 +1404,8 @@ int semifield_substructure::identify(long int *data,
 				return FALSE;
 			}
 
-			int go;
-			go = L3->Stabilizer_gens[trace_po].group_order_as_int();
+			long int go;
+			go = L3->Stabilizer_gens[trace_po].group_order_as_lint();
 
 			//T->solution_idx = solution_idx;
 			//T->nb_sol = Len[trace_po];

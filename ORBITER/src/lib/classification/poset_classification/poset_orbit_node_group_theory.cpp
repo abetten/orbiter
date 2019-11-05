@@ -119,7 +119,7 @@ void poset_orbit_node::init_extension_node_prepare_G(
 	G.init(gen->Poset->A, verbose_level - 2);
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"calling init_strong_generators_by_hdl" << endl;
 		int_vec_print(cout,
@@ -134,7 +134,7 @@ void poset_orbit_node::init_extension_node_prepare_G(
 			Op.tl, verbose_level - 1);
 	if (f_vvv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"the strong generators are:" << endl;
 		G.print_strong_generators(cout,
@@ -143,7 +143,7 @@ void poset_orbit_node::init_extension_node_prepare_G(
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"before schreier_sims for stabilizer with "
 			<< Op.nb_strong_generators << " strong generators" << endl;
@@ -151,7 +151,7 @@ void poset_orbit_node::init_extension_node_prepare_G(
 	G.schreier_sims(0 /*verbose_level - 2*/);
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"after schreier_sims" << endl;
 		}
@@ -159,7 +159,7 @@ void poset_orbit_node::init_extension_node_prepare_G(
 	G.group_order(go_G);
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "_{" << go_G << "}, previous stabilizer "
 				"has been reconstructed" << endl;
 		}
@@ -177,7 +177,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 	int prev, int prev_ex, int size,
 	group &G, longinteger_object &go_G,
 	group &H, longinteger_object &go_H,
-	int pt, int pt_orbit_len,
+	long int pt, int pt_orbit_len,
 	int verbose_level)
 // sets up the group H which is the stabilizer of the point pt in G
 {
@@ -199,7 +199,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"computing stabilizer of point " << pt
 			<< " (of index " << pt_orbit_len
@@ -215,7 +215,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 	//cout << "computing point stabilizer" << endl;
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"computing stabilizer of point " << pt
 				<< " in group of order " << go_G << endl;
@@ -225,7 +225,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			int_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->S, size);
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"before compute_point_stabilizer_in_subspace_setting"
 					<< endl;
@@ -238,7 +238,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			verbose_level - 3);
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			int_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->S, size);
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"after compute_point_stabilizer_in_subspace_setting"
 					<< endl;
@@ -250,7 +250,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			int_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->S, size);
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"before compute_point_stabilizer_in_standard_setting"
 					<< endl;
@@ -263,7 +263,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			verbose_level - 3);
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			int_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->S, size);
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"after compute_point_stabilizer_in_standard_setting"
 					<< endl;
@@ -295,7 +295,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 	D.integral_division(go_G, go_H, q, r, 0);
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"point stabilizer has order ";
 		H.print_group_order(cout);
@@ -305,7 +305,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		}
 	if (q.as_int() != pt_orbit_len) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_H: "
 				"fatal: q != pt_orbit_len" << endl;
 		cout << "go_G = " << go_G << endl;
@@ -316,7 +316,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		}
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		int_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->S, size);
 		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"point stabilizer is generated by:" << endl;
 		int f_print_as_permutation = FALSE;
@@ -336,16 +336,16 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	int prev, int prev_ex, int size,
 	group &G, longinteger_object &go_G,
 	group &H, longinteger_object &go_H,
-	int pt, int pt_orbit_len,
+	long int pt, int pt_orbit_len,
 	int verbose_level)
 // we are at the new node, and prev is the node from which we came.
-// prev_ex is the extension that we are currently crocessing.
+// prev_ex is the extension that we are currently processing.
 // size is the new size.
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int projected_pt;
+	long int projected_pt;
 
 
 	if (f_v) {
@@ -674,7 +674,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 void poset_orbit_node::create_schreier_vector_wrapper(
 	poset_classification *gen,
 	int f_create_schreier_vector,
-	schreier &Schreier,
+	schreier *Schreier,
 	int verbose_level)
 // calls Schreier.get_schreier_vector
 // called from poset_orbit_node_downstep.cpp and from
@@ -719,7 +719,7 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 				//shallow_schreier_tree_Seress_deterministic;
 				//shallow_schreier_tree_Seress_randomized;
 				//shallow_schreier_tree_Sajeeb;
-		Schreier_vector = Schreier.get_schreier_vector(
+		Schreier_vector = Schreier->get_schreier_vector(
 				gen_hdl_first,
 				nb_strong_generators,
 				Shallow_schreier_tree_strategy,

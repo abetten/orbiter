@@ -2339,7 +2339,7 @@ void action::get_generators_from_ascii_coding(
 }
 
 
-void action::lexorder_test(int *set, int set_sz,
+void action::lexorder_test(long int *set, int set_sz,
 	int &set_sz_after_test,
 	vector_ge *gens, int max_starter,
 	int verbose_level)

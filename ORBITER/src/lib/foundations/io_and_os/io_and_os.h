@@ -33,20 +33,20 @@ public:
 		int verbose_level);
 	void poset_classification_read_candidates_of_orbit(
 		const char *fname, int orbit_at_level,
-		int *&candidates, int &nb_candidates, int verbose_level);
+		long int *&candidates, int &nb_candidates, int verbose_level);
 	void read_candidates_for_one_orbit_from_file(char *prefix,
 			int level, int orbit_at_level, int level_of_candidates_file,
-			int *S,
-			void (*early_test_func_callback)(int *S, int len,
-				int *candidates, int nb_candidates,
-				int *good_candidates, int &nb_good_candidates,
+			long int *S,
+			void (*early_test_func_callback)(long int *S, int len,
+				long int *candidates, int nb_candidates,
+				long int *good_candidates, int &nb_good_candidates,
 				void *data, int verbose_level),
 			void *early_test_func_callback_data,
-			int *&candidates,
+			long int *&candidates,
 			int &nb_candidates,
 			int verbose_level);
 	int find_orbit_index_in_data_file(const char *prefix,
-			int level_of_candidates_file, int *starter,
+			int level_of_candidates_file, long int *starter,
 			int verbose_level);
 	void write_exact_cover_problem_to_file(int *Inc, int nb_rows,
 		int nb_cols, const char *fname);
@@ -87,12 +87,16 @@ public:
 		const char *label1, const char *label2, const char *label3);
 	void int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
 		const char *fname, const char **column_label);
+	void lint_vec_array_write_csv(int nb_vecs, long int **Vec, int len,
+		const char *fname, const char **column_label);
 	void int_matrix_write_csv(const char *fname, int *M, int m, int n);
 	void lint_matrix_write_csv(const char *fname, long int *M, int m, int n);
 	void double_matrix_write_csv(const char *fname,
 		double *M, int m, int n);
 	void int_matrix_write_csv_with_labels(const char *fname,
 		int *M, int m, int n, const char **column_label);
+	void lint_matrix_write_csv_with_labels(const char *fname,
+		long int *M, int m, int n, const char **column_label);
 	void int_matrix_read_csv(const char *fname, int *&M,
 		int &m, int &n, int verbose_level);
 	void lint_matrix_read_csv(const char *fname,
@@ -104,27 +108,27 @@ public:
 	void int_matrix_read_text(const char *fname,
 		int *&M, int &m, int &n);
 	void parse_sets(int nb_cases, char **data, int f_casenumbers,
-		int *&Set_sizes, int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
+		int *&Set_sizes, long int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
 		int *&Casenumbers,
 		int verbose_level);
 	void parse_sets_and_check_sizes_easy(int len, int nb_cases,
-		char **data, int **&sets);
-	void parse_line(char *line, int &len, int *&set,
+		char **data, long int **&sets);
+	void parse_line(char *line, int &len, long int *&set,
 		char *ago_ascii, char *aut_ascii);
 	int count_number_of_orbits_in_file(const char *fname, int verbose_level);
 	int count_number_of_lines_in_file(const char *fname, int verbose_level);
 	int try_to_read_file(const char *fname, int &nb_cases,
 		char **&data, int verbose_level);
 	void read_and_parse_data_file(const char *fname, int &nb_cases,
-		char **&data, int **&sets, int *&set_sizes, int verbose_level);
+		char **&data, long int **&sets, int *&set_sizes, int verbose_level);
 	void free_data_fancy(int nb_cases,
-		int *Set_sizes, int **Sets,
+		int *Set_sizes, long int **Sets,
 		char **Ago_ascii, char **Aut_ascii,
 		int *Casenumbers);
 	void read_and_parse_data_file_fancy(const char *fname,
 		int f_casenumbers,
 		int &nb_cases,
-		int *&Set_sizes, int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
+		int *&Set_sizes, long int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
 		int *&Casenumbers,
 		int verbose_level);
 	void read_set_from_file(const char *fname,
@@ -238,8 +242,13 @@ public:
 	void incma_latex_override_unit_length_drop();
 	void print_01_matrix_tex(std::ostream &ost, int *p, int m, int n);
 	void print_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
+	void print_lint_matrix_tex(std::ostream &ost,
+		long int *p, int m, int n);
 	void print_integer_matrix_with_labels(std::ostream &ost, int *p,
 		int m, int n, int *row_labels, int *col_labels, int f_tex);
+	void print_lint_matrix_with_labels(std::ostream &ost,
+		long int *p, int m, int n, long int *row_labels, long int *col_labels,
+		int f_tex);
 	void print_integer_matrix_with_standard_labels(std::ostream &ost,
 		int *p, int m, int n, int f_tex);
 	void print_lint_matrix_with_standard_labels(std::ostream &ost,
@@ -274,6 +283,7 @@ public:
 		void *data,
 		int f_tex);
 	void int_matrix_print_tex(std::ostream &ost, int *p, int m, int n);
+	void lint_matrix_print_tex(std::ostream &ost, long int *p, int m, int n);
 	void print_cycle_tex_with_special_point_labels(
 			std::ostream &ost, int *pts, int nb_pts,
 			void (*point_label)(std::stringstream &sstr, int pt, void *data),
@@ -340,13 +350,14 @@ void stop_memory_debug();
 #define POINTER_TYPE_lint 3
 #define POINTER_TYPE_plint 4
 #define POINTER_TYPE_ppint 5
-#define POINTER_TYPE_char 6
-#define POINTER_TYPE_uchar 7
-#define POINTER_TYPE_pchar 8
-#define POINTER_TYPE_puchar 9
-#define POINTER_TYPE_PVOID 10
-#define POINTER_TYPE_OBJECT 11
-#define POINTER_TYPE_OBJECTS 12
+#define POINTER_TYPE_pplint 6
+#define POINTER_TYPE_char 7
+#define POINTER_TYPE_uchar 8
+#define POINTER_TYPE_pchar 9
+#define POINTER_TYPE_puchar 10
+#define POINTER_TYPE_PVOID 11
+#define POINTER_TYPE_OBJECT 12
+#define POINTER_TYPE_OBJECTS 13
 
 
 
@@ -401,6 +412,8 @@ public:
 	void free_plint(long int **p, const char *file, int line);
 	int ***allocate_ppint(long int n, const char *file, int line);
 	void free_ppint(int ***p, const char *file, int line);
+	long int ***allocate_pplint(long int n, const char *file, int line);
+	void free_pplint(long int ***p, const char *file, int line);
 	char *allocate_char(long int n, const char *file, int line);
 	void free_char(char *p, const char *file, int line);
 	uchar *allocate_uchar(long int n, const char *file, int line);
@@ -467,8 +480,8 @@ public:
 	void read_string(char *&p);
 	void write_double(double f);
 	void read_double(double *f);
-	void write_int64(int i);
-	void read_int64(int *i);
+	void write_lint(long int i);
+	void read_lint(long int *i);
 	void write_int(int i);
 	void read_int(int *i);
 	void read_file(const char *fname, int verbose_level);
@@ -489,7 +502,7 @@ public:
 class orbiter_data_file {
 public:
 	int nb_cases;
-	int **sets;
+	long int **sets;
 	int *set_sizes;
 	char **Ago_ascii;
 	char **Aut_ascii;
@@ -568,6 +581,8 @@ void lint_vec_zero(long int *v, int len);
 void int_vec_mone(int *v, int len);
 void int_vec_copy(int *from, int *to, int len);
 void lint_vec_copy(long int *from, long int *to, int len);
+void int_vec_copy_to_lint(int *from, long int *to, int len);
+void lint_vec_copy_to_int(long int *from, int *to, int len);
 void int_vec_swap(int *v1, int *v2, int len);
 void int_vec_delete_element_assume_sorted(int *v, int &len, int a);
 uchar *bitvector_allocate(long int length);
@@ -586,6 +601,7 @@ void int_vec_complement(int *v, int n, int k);
 // computes the complement to v + k (v must be allocated to n lements)
 void int_vec_complement(int *v, int *w, int n, int k);
 // computes the complement of v[k] w[n - k] 
+void lint_vec_complement(long int *v, long int *w, int n, int k);
 void int_vec_init5(int *v, int a0, int a1, int a2, int a3, int a4);
 void dump_memory_chain(void *allocated_objects);
 void print_vector(std::ostream &ost, int *v, int size);
@@ -601,7 +617,9 @@ void int_vec_distribution(int *v, int len_v, int *&val, int *&mult, int &len);
 void int_distribution_print(std::ostream &ost, int *val, int *mult, int len);
 void int_swap(int& x, int& y);
 void int_set_print(int *v, int len);
+void lint_set_print(long int *v, int len);
 void int_set_print(std::ostream &ost, int *v, int len);
+void lint_set_print(std::ostream &ost, long int *v, int len);
 void int_vec_print(std::ostream &ost, int *v, int len);
 void lint_vec_print(std::ostream &ost, long int *v, int len);
 void int_vec_print_str(std::stringstream &ost, int *v, int len);
@@ -618,6 +636,8 @@ void integer_vec_print(std::ostream &ost, int *v, int len);
 void print_integer_matrix(std::ostream &ost, int *p, int m, int n);
 void print_integer_matrix_width(std::ostream &ost, int *p,
 	int m, int n, int dim_n, int w);
+void lint_matrix_print_width(std::ostream &ost,
+	long int *p, int m, int n, int dim_n, int w);
 void int_matrix_make_block_matrix_2x2(int *Mtx, int k, 
 	int *A, int *B, int *C, int *D);
 // makes the 2k x 2k block matrix 
@@ -691,12 +711,15 @@ void print_hex_digit(std::ostream &ost, int digit);
 int compare_sets(int *set1, int *set2, int sz1, int sz2);
 //int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
+int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
 void make_graph_of_disjoint_sets_from_rows_of_matrix(
 	int *M, int m, int n, 
 	int *&Adj, int verbose_level);
 // sol_length must be constant
 void int_vec_print_to_str(char *str, int *data, int len);
+void lint_vec_print_to_str(char *str, long int *data, int len);
 void int_vec_print_to_str_naked(char *str, int *data, int len);
+void lint_vec_print_to_str_naked(char *str, long int *data, int len);
 int is_csv_file(const char *fname);
 int is_xml_file(const char *fname);
 

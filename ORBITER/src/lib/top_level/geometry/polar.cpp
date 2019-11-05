@@ -317,8 +317,8 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int i, c, cc, node2, index_int;
-	int *the_set1;
-	int *the_set2;
+	long int *the_set1;
+	long int *the_set2;
 	int *M1;
 	int *M2;
 	int *Elt1, *Elt2;
@@ -331,8 +331,8 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 		}
 	Elt1 = NEW_int(Gen->Poset->A->elt_size_in_int);
 	Elt2 = NEW_int(Gen->Poset->A->elt_size_in_int);
-	the_set1 = NEW_int(depth);
-	the_set2 = NEW_int(depth);
+	the_set1 = NEW_lint(depth);
+	the_set2 = NEW_lint(depth);
 	M1 = NEW_int(k * n);
 	M2 = NEW_int(k * n);
 	
@@ -353,7 +353,7 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	if (f_v) {
 		cout << "the set representing orbit " << orbit_idx 
 			<< " at level " << depth << " is ";
-		int_vec_print(cout, the_set1, depth);
+		lint_vec_print(cout, the_set1, depth);
 		cout << endl;
 		}
 	for (i = 0; i < k; i++) {
@@ -427,8 +427,8 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 		}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
-	FREE_int(the_set1);
-	FREE_int(the_set2);
+	FREE_lint(the_set1);
+	FREE_lint(the_set2);
 	FREE_int(M1);
 	FREE_int(M2);
 }
@@ -440,8 +440,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, c, node2, index_int;
-	int *the_set1;
-	int *the_set2;
+	long int *the_set1;
+	long int *the_set2;
 	int *M1;
 	int *M2;
 	int *Elt1, *Elt2;
@@ -458,8 +458,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 		}
 	Elt1 = NEW_int(Gen->Poset->A->elt_size_in_int);
 	Elt2 = NEW_int(Gen->Poset->A->elt_size_in_int);
-	the_set1 = NEW_int(depth);
-	the_set2 = NEW_int(depth);
+	the_set1 = NEW_lint(depth);
+	the_set2 = NEW_lint(depth);
 	M1 = NEW_int(k * n);
 	M2 = NEW_int(k * n);
 
@@ -495,7 +495,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	if (f_v) {
 		cout << "the set representing orbit " << orbit_idx 
 			<< " at level " << depth << " is ";
-		int_vec_print(cout, the_set1, depth);
+		lint_vec_print(cout, the_set1, depth);
 		cout << endl;
 		}
 	for (i = 0; i < k; i++) {
@@ -683,8 +683,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	
 	FREE_int(Elt1);
 	FREE_int(Elt2);
-	FREE_int(the_set1);
-	FREE_int(the_set2);
+	FREE_lint(the_set1);
+	FREE_lint(the_set2);
 	FREE_int(M1);
 	FREE_int(M2);
 	FREE_int(Adj);
@@ -697,7 +697,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 {
 	int *Elt;
-	int goi, i, order;
+	long int goi, i, order;
 	strong_generators *Strong_gens;
 
 	Elt = NEW_int(A->elt_size_in_int);	
@@ -716,7 +716,7 @@ void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 	cout << "polar::show_stabilizer created group of order " << go << endl;
 	goi = go.as_int();
 	for (i = 0; i < goi; i++) {
-		S->element_unrank_int(i, Elt);
+		S->element_unrank_lint(i, Elt);
 		order = A->element_order(Elt);
 		cout << "element " << i << " of order " << order << ":" << endl;
 		A->element_print_quick(Elt, cout);
@@ -856,9 +856,9 @@ int polar::test(int *S, int len, int verbose_level)
 }
 #endif
 
-void polar::test_if_in_perp(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void polar::test_if_in_perp(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -868,7 +868,7 @@ void polar::test_if_in_perp(int *S, int len,
 
 	if (f_v) {
 		cout << "polar::test_if_in_perp done for ";
-		int_set_print(cout, S, len);
+		lint_set_print(cout, S, len);
 		cout << endl;
 		}
 	if (len == 0) {
@@ -902,13 +902,13 @@ void polar::test_if_in_perp(int *S, int len,
 	
 	if (f_v) {
 		cout << "polar::test_if_in_perp done for ";
-		int_set_print(cout, S, len);
+		lint_set_print(cout, S, len);
 		cout << "; # of candidates reduced from " << nb_candidates
 				<< " to " << nb_good_candidates << endl;
 		}
 	if (f_vv) {
 		cout << "good candidates: ";
-		int_vec_print(cout, good_candidates, nb_good_candidates);
+		lint_vec_print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 }
@@ -1151,14 +1151,14 @@ int polar::get_orbit_length_as_int(int orbit_idx)
 }
 
 void polar::orbit_element_unrank(int orbit_idx,
-		int rank, int *set, int verbose_level)
+		long int rank, long int *set, int verbose_level)
 {
 	return Gen->orbit_element_unrank(depth,
 			orbit_idx, rank, set, verbose_level);
 }
 
 void polar::orbit_element_rank(int &orbit_idx,
-		int &rank, int *set, int verbose_level)
+		long int &rank, long int *set, int verbose_level)
 {
 	return Gen->orbit_element_rank(depth,
 			orbit_idx, rank, set, verbose_level);
@@ -1177,14 +1177,15 @@ int polar::rank_point(int *v)
 void polar::list_whole_orbit(int depth,
 		int orbit_idx, int f_limit, int limit)
 {
-	int *set;
-	int len, j, h, ii, jj;
+	long int *set;
+	int ii;
+	long int len, j, h, jj;
 	group G;
 	longinteger_object go_G, Rank;
 	int *M1;
 	int *base_cols;
 
-	set = NEW_int(depth);
+	set = NEW_lint(depth);
 	M1 = NEW_int(depth * n);
 	base_cols = NEW_int(n);
 	get_stabilizer(orbit_idx, G, go_G);
@@ -1204,7 +1205,7 @@ void polar::list_whole_orbit(int depth,
 			}
 		orbit_element_unrank(orbit_idx, j, set, 0/*verbose_level*/);
 		cout << setw(4) << j << " : ";
-		int_vec_print(cout, set, depth);
+		lint_vec_print(cout, set, depth);
 		cout << endl;
 			
 		for (h = 0; h < depth; h++) {
@@ -1242,7 +1243,7 @@ void polar::list_whole_orbit(int depth,
 			exit(1);
 			}
 		}
-	FREE_int(set);
+	FREE_lint(set);
 	FREE_int(M1);
 	FREE_int(base_cols);
 }
@@ -1252,11 +1253,11 @@ void polar::list_whole_orbit(int depth,
 // global functions:
 // #############################################################################
 
-int polar_callback_rank_point_func(int *v, void *data)
+long int polar_callback_rank_point_func(int *v, void *data)
 {
 	polar *P = (polar *) data;
 	//generator *gen = P->Gen;
-	int rk;
+	long int rk;
 	
 	rk = P->O->rank_point(v, 1, 0);
 	//PG_element_rank_modified(*gen->F, v, 1,
@@ -1264,7 +1265,7 @@ int polar_callback_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void polar_callback_unrank_point_func(int *v, int rk, void *data)
+void polar_callback_unrank_point_func(int *v, long int rk, void *data)
 {
 	polar *P = (polar *) data;
 	//generator *gen = P->Gen;
@@ -1299,9 +1300,9 @@ int polar_callback_test_func(int len, int *S,
 }
 #endif
 
-void polar_callback_early_test_func(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void polar_callback_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	polar *P = (polar *) data;

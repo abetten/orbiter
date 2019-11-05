@@ -124,7 +124,7 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 
 
 int cubic_curve::compute_system_in_RREF(
-		int nb_pts, int *pt_list, int verbose_level)
+		int nb_pts, long int *pt_list, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -143,7 +143,7 @@ int cubic_curve::compute_system_in_RREF(
 	if (FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points by lines:" << endl;
-		int_matrix_print(pt_list, nb_pts, P->k);
+		lint_matrix_print(pt_list, nb_pts, P->k);
 		}
 	for (i = 0; i < nb_pts; i++) {
 		P->unrank_point(Pts + i * 3, pt_list[i]);
@@ -223,8 +223,8 @@ void cubic_curve::compute_gradient(
 
 void cubic_curve::compute_singular_points(
 		int *eqn_in,
-		int *Pts_on_curve, int nb_pts_on_curve,
-		int *Pts, int &nb_pts,
+		long int *Pts_on_curve, int nb_pts_on_curve,
+		long int *Pts, int &nb_pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -291,8 +291,8 @@ void cubic_curve::compute_singular_points(
 
 void cubic_curve::compute_inflexion_points(
 		int *eqn_in,
-		int *Pts_on_curve, int nb_pts_on_curve,
-		int *Pts, int &nb_pts,
+		long int *Pts_on_curve, int nb_pts_on_curve,
+		long int *Pts, int &nb_pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

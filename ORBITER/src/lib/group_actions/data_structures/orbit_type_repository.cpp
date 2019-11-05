@@ -21,7 +21,7 @@ namespace group_actions {
 static int orbit_type_repository_compare_types(void *data,
 		int i, int j, void *extra_data);
 static int orbit_type_repository_compare_type_with(void *data,
-		int i, int *type, void *extra_data);
+		int i, void *type, void *extra_data);
 static void orbit_type_repository_swap_types(void *data,
 			int i, int j, void *extra_data);
 
@@ -71,7 +71,7 @@ void orbit_type_repository::null()
 void orbit_type_repository::freeself()
 {
 	if (Type_repository) {
-		FREE_int(Type_repository);
+		FREE_lint(Type_repository);
 	}
 	if (type_first) {
 		FREE_int(type_first);
@@ -83,7 +83,7 @@ void orbit_type_repository::freeself()
 		FREE_int(type);
 	}
 	if (Type_representatives) {
-		FREE_int(Type_representatives);
+		FREE_lint(Type_representatives);
 	}
 	null();
 }
@@ -92,8 +92,8 @@ void orbit_type_repository::init(
 		orbits_on_something *Oos,
 		int nb_sets,
 		int set_size,
-		int *Sets,
-		int goi,
+		long int *Sets,
+		long int goi,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -111,7 +111,7 @@ void orbit_type_repository::init(
 	sorting Sorting;
 
 	orbit_type_size = (goi + 1) * goi;
-	Type_repository = NEW_int(nb_sets * orbit_type_size);
+	Type_repository = NEW_lint(nb_sets * orbit_type_size);
 
 	for (i = 0; i < nb_sets; i++) {
 		Oos->orbit_type_of_set(
@@ -134,7 +134,7 @@ void orbit_type_repository::init(
 				"after Heapsort_general" << endl;
 		cout << "Sorted Type_repository:" << endl;
 		if (nb_sets < 1000) {
-			int_matrix_print(Type_repository, nb_sets, orbit_type_size);
+			lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
 		}
 		else {
 			cout << "too many to print" << endl;
@@ -162,11 +162,11 @@ void orbit_type_repository::init(
 				"we found " << nb_types << " spread types" << endl;
 	}
 
-	Type_representatives = NEW_int(nb_types * orbit_type_size);
+	Type_representatives = NEW_lint(nb_types * orbit_type_size);
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		l = type_len[i];
-		int_vec_copy(Type_repository + f * orbit_type_size,
+		lint_vec_copy(Type_repository + f * orbit_type_size,
 				Type_representatives + i * orbit_type_size, orbit_type_size);
 	}
 
@@ -278,14 +278,13 @@ static int orbit_type_repository_compare_types(void *data,
 
 
 static int orbit_type_repository_compare_type_with(void *data,
-		int i, int *type, void *extra_data)
+		int i, void *type, void *extra_data)
 {
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
-	int *Types = (int *) data;
+	long int *Types = (long int *) data;
 	int len = OTR->orbit_type_size;
 
-	return int_vec_compare(Types + i * len, type,
-			len);
+	return lint_vec_compare(Types + i * len, (long int *) type, len);
 }
 
 

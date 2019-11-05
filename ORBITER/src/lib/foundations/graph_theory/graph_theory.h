@@ -453,7 +453,7 @@ public:
 	int data3;
 
 	int f_has_vec_data;
-	int *vec_data;
+	long int *vec_data;
 	int vec_data_len;
 
 	int f_has_distinguished_element; // refers to vec_data
@@ -482,7 +482,7 @@ public:
 	void freeself();
 	void add_neighbor(int l, int n, int id);
 	void add_text(const char *text);
-	void add_vec_data(int *v, int len);
+	void add_vec_data(long int *v, int len);
 	void set_distinguished_element(int idx);
 	void add_data1(int data);
 	void add_data2(int data);
@@ -622,7 +622,7 @@ public:
 	void add_edge(int l1, int n1, int l2, int n2, int verbose_level);
 	void add_text(int l, int n, const char *text, int verbose_level);
 	void add_data1(int data, int verbose_level);
-	void add_node_vec_data(int l, int n, int *v, int len, 
+	void add_node_vec_data(int l, int n, long int *v, int len,
 		int verbose_level);
 	void set_distinguished_element_index(int l, int n, 
 		int index, int verbose_level);

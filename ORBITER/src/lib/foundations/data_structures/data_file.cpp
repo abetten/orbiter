@@ -49,12 +49,12 @@ void data_file::freeself()
 	cout << "data_file::freeself" << endl;
 	if (nb_cases >= 0) {
 		for (i = 0; i < nb_cases; i++) {
-			FREE_int(sets[i]);
+			FREE_lint(sets[i]);
 			FREE_char(Ago_ascii[i]);
 			FREE_char(Aut_ascii[i]);
 			}
 		FREE_int(set_sizes);
-		FREE_pint(sets);
+		FREE_plint(sets);
 		FREE_int(casenumbers);
 		FREE_pchar(Ago_ascii);
 		FREE_pchar(Aut_ascii);

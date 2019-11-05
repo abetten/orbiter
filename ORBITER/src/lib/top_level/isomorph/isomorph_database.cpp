@@ -241,7 +241,7 @@ void isomorph::add_solution_to_database(int *data,
 		}
 }
 
-void isomorph::load_solution(int id, int *data)
+void isomorph::load_solution(int id, long int *data)
 {
 	int i, j, datref;
 	Vector v;

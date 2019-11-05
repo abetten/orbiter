@@ -151,9 +151,9 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *set;
-	int *set1;
-	int *set2;
+	long int *set;
+	long int *set1;
+	long int *set2;
 	int ol, i, cnt = 0;
 	int f_contained;
 
@@ -165,9 +165,9 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 	if (lvl1 > lvl2) {
 		return 0;
 		}
-	set = NEW_int(lvl2 + 1);
-	set1 = NEW_int(lvl2 + 1);
-	set2 = NEW_int(lvl2 + 1);
+	set = NEW_lint(lvl2 + 1);
+	set1 = NEW_lint(lvl2 + 1);
+	set2 = NEW_lint(lvl2 + 1);
 
 	orbit_element_unrank(lvl1, po1, 0 /*el1 */,
 			set1, 0 /* verbose_level */);
@@ -176,20 +176,20 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 
 	if (f_vv) {
 		cout << "set1=";
-		int_vec_print(cout, set1, lvl1);
+		lint_vec_print(cout, set1, lvl1);
 		cout << endl;
 		}
 
 	for (i = 0; i < ol; i++) {
 
-		int_vec_copy(set1, set, lvl1);
+		lint_vec_copy(set1, set, lvl1);
 
 
 		orbit_element_unrank(lvl2, po2, i, set2, 0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "set2 " << i << " / " << ol << "=";
-			int_vec_print(cout, set2, lvl2);
+			lint_vec_print(cout, set2, lvl2);
 			cout << endl;
 			}
 
@@ -209,9 +209,9 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 		}
 
 	
-	FREE_int(set);
-	FREE_int(set1);
-	FREE_int(set2);
+	FREE_lint(set);
+	FREE_lint(set1);
+	FREE_lint(set2);
 	if (f_v) {
 		cout << "poset_classification::count_incidences_up "
 				"lvl1=" << lvl1 << " po1=" << po1
@@ -226,9 +226,9 @@ int poset_classification::count_incidences_down(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *set;
-	int *set1;
-	int *set2;
+	long int *set;
+	long int *set1;
+	long int *set2;
 	int ol, i, cnt = 0;
 	int f_contained;
 
@@ -240,9 +240,9 @@ int poset_classification::count_incidences_down(
 	if (lvl1 > lvl2) {
 		return 0;
 		}
-	set = NEW_int(lvl2 + 1);
-	set1 = NEW_int(lvl2 + 1);
-	set2 = NEW_int(lvl2 + 1);
+	set = NEW_lint(lvl2 + 1);
+	set1 = NEW_lint(lvl2 + 1);
+	set2 = NEW_lint(lvl2 + 1);
 
 	orbit_element_unrank(lvl2, po2, 0 /*el1 */, set2, 0 /* verbose_level */);
 
@@ -250,20 +250,20 @@ int poset_classification::count_incidences_down(
 
 	if (f_vv) {
 		cout << "set2=";
-		int_vec_print(cout, set2, lvl2);
+		lint_vec_print(cout, set2, lvl2);
 		cout << endl;
 		}
 
 	for (i = 0; i < ol; i++) {
 
-		int_vec_copy(set2, set, lvl2);
+		lint_vec_copy(set2, set, lvl2);
 
 
 		orbit_element_unrank(lvl1, po1, i, set1, 0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "set1 " << i << " / " << ol << "=";
-			int_vec_print(cout, set1, lvl1);
+			lint_vec_print(cout, set1, lvl1);
 			cout << endl;
 			}
 
@@ -283,9 +283,9 @@ int poset_classification::count_incidences_down(
 		}
 
 	
-	FREE_int(set);
-	FREE_int(set1);
-	FREE_int(set2);
+	FREE_lint(set);
+	FREE_lint(set1);
+	FREE_lint(set2);
 	if (f_v) {
 		cout << "poset_classification::count_incidences_down "
 				"lvl1=" << lvl1 << " po1=" << po1

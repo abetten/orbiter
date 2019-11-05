@@ -2344,7 +2344,7 @@ void projective_space_with_action::save(
 				ago = OiP->known_ago;
 			}
 			else {
-				ago = OiPA->Aut_gens->group_order_as_int();
+				ago = OiPA->Aut_gens->group_order_as_lint();
 			}
 			fp << i << "," << ago
 					<< "," << OiP->input_fname
@@ -4286,20 +4286,20 @@ void compute_ago_distribution(
 	if (f_v) {
 		cout << "compute_ago_distribution" << endl;
 		}
-	int *Ago;
+	long int *Ago;
 	int i;
 
-	Ago = NEW_int(CB->nb_types);
+	Ago = NEW_lint(CB->nb_types);
 	for (i = 0; i < CB->nb_types; i++) {
 		object_in_projective_space_with_action *OiPA;
 
 		OiPA = (object_in_projective_space_with_action *)
 				CB->Type_extra_data[i];
-		Ago[i] = OiPA->Aut_gens->group_order_as_int();
+		Ago[i] = OiPA->Aut_gens->group_order_as_lint();
 		}
 	C_ago = NEW_OBJECT(classify);
-	C_ago->init(Ago, CB->nb_types, FALSE, 0);
-	FREE_int(Ago);
+	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
+	FREE_lint(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution done" << endl;
 		}
@@ -4313,20 +4313,20 @@ void compute_ago_distribution_permuted(
 	if (f_v) {
 		cout << "compute_ago_distribution_permuted" << endl;
 		}
-	int *Ago;
+	long int *Ago;
 	int i;
 
-	Ago = NEW_int(CB->nb_types);
+	Ago = NEW_lint(CB->nb_types);
 	for (i = 0; i < CB->nb_types; i++) {
 		object_in_projective_space_with_action *OiPA;
 
 		OiPA = (object_in_projective_space_with_action *)
 				CB->Type_extra_data[CB->perm[i]];
-		Ago[i] = OiPA->Aut_gens->group_order_as_int();
+		Ago[i] = OiPA->Aut_gens->group_order_as_lint();
 		}
 	C_ago = NEW_OBJECT(classify);
-	C_ago->init(Ago, CB->nb_types, FALSE, 0);
-	FREE_int(Ago);
+	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
+	FREE_lint(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution_permuted done" << endl;
 		}

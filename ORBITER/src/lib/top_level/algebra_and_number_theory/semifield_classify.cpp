@@ -498,13 +498,13 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 
 	sprintf(fname, "semifield_list_order%d.csv", order);
 	{
-	int *set;
-	int *Table;
+	long int *set;
+	long int *Table;
 	int *v;
 	int i, j;
 
-	set = NEW_int(k);
-	Table = NEW_int(nb_orbits * k);
+	set = NEW_lint(k);
+	Table = NEW_lint(nb_orbits * k);
 	v = NEW_int(k2);
 	for (i = 0; i < nb_orbits; i++) {
 		Gen->get_set_by_level(k, i, set);
@@ -512,12 +512,12 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 			unrank_point(v, set[j], 0/* verbose_level*/);
 			set[j] = matrix_rank(v);
 			}
-		int_vec_copy(set, Table + i * k, k);
+		lint_vec_copy(set, Table + i * k, k);
 		}
-	Fio.int_matrix_write_csv(fname, Table, nb_orbits, k);
+	Fio.lint_matrix_write_csv(fname, Table, nb_orbits, k);
 
-	FREE_int(set);
-	FREE_int(Table);
+	FREE_lint(set);
+	FREE_lint(Table);
 	FREE_int(v);
 	}
 	cout << "Written file " << fname << " of size "
@@ -551,11 +551,11 @@ void semifield_classify::list_points()
 	FREE_int(v);
 }
 
-int semifield_classify::rank_point(int *v, int verbose_level)
+long int semifield_classify::rank_point(int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int /*r,*/ rk;
+	long int /*r,*/ rk;
 
 	if (f_v) {
 		cout << "semifield_classify::rank_point" << endl;
@@ -577,7 +577,7 @@ int semifield_classify::rank_point(int *v, int verbose_level)
 	return rk;
 }
 
-void semifield_classify::unrank_point(int *v, int rk, int verbose_level)
+void semifield_classify::unrank_point(int *v, long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -605,9 +605,9 @@ void semifield_classify::unrank_point(int *v, int rk, int verbose_level)
 		}
 }
 
-void semifield_classify::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void semifield_classify::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1323,9 +1323,9 @@ void semifield_classify::knuth_operation(int t,
 // global function:
 //##############################################################################
 
-void semifield_classify_early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void semifield_classify_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	semifield_classify *Semi;
@@ -1352,12 +1352,12 @@ void semifield_classify_early_test_func(int *S, int len,
 
 
 
-int semifield_classify_rank_point_func(int *v, void *data)
+long int semifield_classify_rank_point_func(int *v, void *data)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	semifield_classify *Semi;
-	int rk;
+	long int rk;
 
 	if (f_v) {
 		cout << "semifield_classify_rank_point_func" << endl;
@@ -1370,7 +1370,7 @@ int semifield_classify_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void semifield_classify_unrank_point_func(int *v, int rk, void *data)
+void semifield_classify_unrank_point_func(int *v, long int rk, void *data)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);

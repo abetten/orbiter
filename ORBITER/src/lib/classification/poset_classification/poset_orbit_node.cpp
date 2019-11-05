@@ -189,7 +189,7 @@ void poset_orbit_node::poset_orbit_node_depth_breadth_perm_and_inverse(
 
 int poset_orbit_node::find_extension_from_point(
 		poset_classification *gen,
-		int pt, int verbose_level)
+		long int pt, int verbose_level)
 // a -1 means not found
 {
 	int i;
@@ -509,6 +509,8 @@ void poset_orbit_node::log_current_node_with_candidates(
 		}
 	f << -1 << " ";
 	
+#if 0
+	// ToDo
 	int n;
 	int *subset;
 	int *candidates = NULL;
@@ -539,6 +541,7 @@ void poset_orbit_node::log_current_node_with_candidates(
 		FREE_int(subset);
 		}
 	FREE_int(candidates);
+#endif
 }
 
 
@@ -591,7 +594,7 @@ void poset_orbit_node::store_set_with_verbose_level(
 }
 
 void poset_orbit_node::store_set_to(
-		poset_classification *gen, int i, int *to)
+		poset_classification *gen, int i, long int *to)
 // stores a set of size i + 1 to 'to'
 {
 	if (i < 0)
@@ -607,13 +610,13 @@ void poset_orbit_node::store_set_to(
 }
 
 void poset_orbit_node::store_set_to(
-		poset_classification *gen, int *to)
+		poset_classification *gen, long int *to)
 {
 	store_set_to(gen, depth_of_node(gen), to);
 }
 
 int poset_orbit_node::check_node_and_set_consistency(
-		poset_classification *gen, int i, int *set)
+		poset_classification *gen, int i, long int *set)
 {
 	if (i < 0)
 		return TRUE;
@@ -635,7 +638,7 @@ int poset_orbit_node::check_node_and_set_consistency(
 void poset_orbit_node::print_set_verbose(poset_classification *gen)
 {
 	int depth;
-	int *set;
+	long int *set;
 
 	//cout << "poset_orbit_node::print_set_verbose" << endl;
 	depth = depth_of_node(gen);
@@ -643,13 +646,13 @@ void poset_orbit_node::print_set_verbose(poset_classification *gen)
 	cout << endl;
 
 
-	set = NEW_int(depth);
+	set = NEW_lint(depth);
 	store_set_to(gen, depth - 1, set /* gen->S0 */);
 	if (gen->f_print_function) {
 		(*gen->print_function)(cout, depth,
 				set /* gen->S0 */, gen->print_function_data);
 		}
-	FREE_int(set);
+	FREE_lint(set);
 	//cout << "poset_orbit_node::print_set_verbose done" << endl;
 }
 
@@ -658,14 +661,14 @@ void poset_orbit_node::print_set(poset_classification *gen)
 	int depth, size, i;
 	longinteger_object go;
 	longinteger_domain D;
-	int *set;
+	long int *set;
 	
 	depth = depth_of_node(gen);
 	//cout << "poset_orbit_node::print_set depth = " << depth << endl;
 	size = depth;
-	set = NEW_int(size);
+	set = NEW_lint(size);
 	store_set_to(gen, depth - 1, set /*gen->S0*/);
-	int_set_print(cout, set /*gen->S0*/, size);
+	lint_vec_print(cout, set /*gen->S0*/, size);
 	if (nb_strong_generators == 0) {
 		cout << "_1";
 		}
@@ -684,13 +687,13 @@ void poset_orbit_node::print_set(poset_classification *gen)
 
 	//gen->print_lex_rank(set, size);
 	
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 void poset_orbit_node::print_node(poset_classification *gen)
 {
 	int depth;
-	int *set;
+	long int *set;
 	//int i, depth, node2, len;
 	//int *orbit;
 	
@@ -704,7 +707,7 @@ void poset_orbit_node::print_node(poset_classification *gen)
 	cout << "nb_strong_generators=" << nb_strong_generators << endl;
 	cout << "nb_extensions=" << nb_extensions << endl;
 	
-	set = NEW_int(depth);
+	set = NEW_lint(depth);
 	store_set_to(gen, depth - 1, set /*gen->S0*/);
 
 	if (gen->f_print_function) {
@@ -712,7 +715,7 @@ void poset_orbit_node::print_node(poset_classification *gen)
 				set /* gen->S0 */, gen->print_function_data);
 		}
 
-	FREE_int(set);
+	FREE_lint(set);
 	print_extensions(gen);
 	
 #if 0

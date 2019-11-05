@@ -272,7 +272,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 		cout << i << " : " << Paired_with[i] << endl;
 		}
 	nb_paired_orbits = 0;
-	Pairs = NEW_int(Sch->nb_orbits * 2);
+	Pairs = NEW_lint(Sch->nb_orbits * 2);
 	Pair_orbit_length = NEW_int(Sch->nb_orbits);
 	for (i = 0; i < Sch->nb_orbits; i++) {
 		if (Paired_with[i] <= i) {
@@ -383,15 +383,15 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	nb_long_orbits = 2 * nb_pairs_of_type2;
 
 
-	Short_pairs = NEW_int(nb_short_orbits);
-	Long_pairs = NEW_int(nb_long_orbits);
+	Short_pairs = NEW_lint(nb_short_orbits);
+	Long_pairs = NEW_lint(nb_long_orbits);
 
 	Short_orbit_inverse = NEW_int(Sch->nb_orbits);
 	int_vec_mone(Short_orbit_inverse, Sch->nb_orbits);
 
 	for (s = 0; s < nb_pairs_of_type1; s++) {
 		h = Pairs_of_type1[s];
-		int_vec_copy(Pairs + 2 * h, Short_pairs + 2 * s, 2);
+		lint_vec_copy(Pairs + 2 * h, Short_pairs + 2 * s, 2);
 		for (t = 0; t < 2; t++) {
 			a = Short_pairs[2 * s + t];
 			Short_orbit_inverse[a] = 2 * s + t;
@@ -401,14 +401,14 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	for (s = 0; s < nb_pairs_of_type2; s++) {
 		h = Pairs_of_type2[s];
-		int_vec_copy(Pairs + 2 * h, Long_pairs + 2 * s, 2);
+		lint_vec_copy(Pairs + 2 * h, Long_pairs + 2 * s, 2);
 		}
 
 	cout << "Short_pairs:" << endl;
-	L.print_integer_matrix_with_standard_labels(cout,
+	L.print_lint_matrix_with_standard_labels(cout,
 			Short_pairs, nb_pairs_of_type1, 2, FALSE /* f_tex */);
 	cout << "Long_pairs:" << endl;
-	L.print_integer_matrix_with_standard_labels(cout,
+	L.print_lint_matrix_with_standard_labels(cout,
 			Long_pairs, nb_pairs_of_type2, 2, FALSE /* f_tex */);
 
 
@@ -1002,9 +1002,9 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 		}
 }
 
-void difference_set_in_heisenberg_group::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void difference_set_in_heisenberg_group::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	verbose_level = 1;
@@ -1014,7 +1014,7 @@ void difference_set_in_heisenberg_group::early_test_func(int *S, int len,
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::early_test_func" << endl;
 		cout << "S=";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 
@@ -1087,7 +1087,7 @@ void difference_set_in_heisenberg_group::early_test_func(int *S, int len,
 		}
 	if (f_v) {
 		cout << "They are:" << endl;
-		int_vec_print(cout, good_candidates, nb_good_candidates);
+		lint_vec_print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1099,9 +1099,9 @@ void difference_set_in_heisenberg_group::early_test_func(int *S, int len,
 
 
 void difference_set_in_heisenberg_group_early_test_func(
-		int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level)
 {
 	difference_set_in_heisenberg_group *DS =

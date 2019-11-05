@@ -580,7 +580,7 @@ void surface_domain::print_system(ostream &ost, int *system)
 }
 
 void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
-	int *F_planes_rank, int *G_planes_rank)
+	long int *F_planes_rank, long int *G_planes_rank)
 {
 	int i;
 	int F_planes[12];

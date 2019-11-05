@@ -333,9 +333,9 @@ void regular_ls_classify::compute_starter(
 
 }
 
-void regular_ls_classify::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void regular_ls_classify::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	//verbose_level = 10;
@@ -350,7 +350,7 @@ void regular_ls_classify::early_test_func(int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	int_vec_zero(row_sum, m);
@@ -426,7 +426,7 @@ void regular_ls_classify::early_test_func(int *S, int len,
 		}
 }
 
-void regular_ls_classify::print(ostream &ost, int *S, int len)
+void regular_ls_classify::print(ostream &ost, long int *S, int len)
 {
 	int i;
 	
@@ -438,8 +438,8 @@ void regular_ls_classify::print(ostream &ost, int *S, int len)
 
 void regular_ls_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, int *&col_labels, 
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -502,10 +502,10 @@ void regular_ls_classify::lifting_prepare_function_new(
 		}
 
 	
-	col_labels = NEW_int(nb_candidates);
+	col_labels = NEW_lint(nb_candidates);
 
 
-	int_vec_copy(candidates, col_labels, nb_candidates);
+	lint_vec_copy(candidates, col_labels, nb_candidates);
 
 	if (E->f_lex) {
 		E->lexorder_test(col_labels, nb_candidates, Strong_gens->gens, 
@@ -595,7 +595,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 
 
 
-void regular_ls_classify_print_set(ostream &ost, int len, int *S, void *data)
+void regular_ls_classify_print_set(ostream &ost, int len, long int *S, void *data)
 {
 	regular_ls_classify *Gen = (regular_ls_classify *) data;
 	
@@ -603,9 +603,9 @@ void regular_ls_classify_print_set(ostream &ost, int len, int *S, void *data)
 	Gen->print(ost, S, len);
 }
 
-void regular_ls_classify_early_test_function(int *S, int len,
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void regular_ls_classify_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	regular_ls_classify *Gen = (regular_ls_classify *) data;
@@ -627,8 +627,8 @@ void regular_ls_classify_early_test_function(int *S, int len,
 
 void regular_ls_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, int *&col_labels, 
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {

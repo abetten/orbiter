@@ -199,7 +199,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 	Schreier.init_generators_by_hdl(
 		O->nb_strong_generators, O->hdl_strong_generators, 0);
 
-	Schreier.orbits_on_invariant_subset_fast(
+	Schreier.orbits_on_invariant_subset_fast_lint(
 		nb_candidates, candidates,
 		0/*verbose_level*/);
 

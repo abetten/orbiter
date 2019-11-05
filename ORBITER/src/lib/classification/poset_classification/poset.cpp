@@ -374,7 +374,7 @@ long int poset::rank_point(int *v)
 }
 
 void poset::orbits_on_k_sets(
-	int k, int *&orbit_reps, int &nb_orbits, int verbose_level)
+	int k, long int *&orbit_reps, int &nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	poset_classification *Gen;

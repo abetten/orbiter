@@ -1352,7 +1352,7 @@ int isomorph::identify_database_is_open(int *set,
 
 
 void isomorph::induced_action_on_set_basic(sims *S,
-		int *set, int verbose_level)
+		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

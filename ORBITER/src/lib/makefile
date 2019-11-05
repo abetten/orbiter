@@ -251,8 +251,6 @@ MODULES= \
 		classification/poset_classification/upstep_work.o \
 		classification/poset_classification/upstep_work_subspace_action.o \
 		classification/poset_classification/upstep_work_trace.o \
-		classification/set_stabilizer/compute_stabilizer.o \
-		classification/set_stabilizer/set_stabilizer_compute.o \
 		DISCRETA/base.o \
 		DISCRETA/bt_key.o \
 		DISCRETA/btree.o \

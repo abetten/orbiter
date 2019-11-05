@@ -327,7 +327,7 @@ public:
 		int *Elt, int verbose_level);
 	void get_generators_from_ascii_coding(char *ascii_coding, 
 		vector_ge *&gens, int *&tl, int verbose_level);
-	void lexorder_test(int *set, int set_sz, int &set_sz_after_test, 
+	void lexorder_test(long int *set, int set_sz, int &set_sz_after_test,
 		vector_ge *gens, int max_starter, 
 		int verbose_level);
 	void compute_orbits_on_points(schreier *&Sch, 
@@ -409,9 +409,9 @@ public:
 
 
 	// action_indexing_cosets.cpp
-	void coset_unrank(sims *G, sims *U, int rank, 
+	void coset_unrank(sims *G, sims *U, long int rank,
 		int *Elt, int verbose_level);
-	int coset_rank(sims *G, sims *U, 
+	long int coset_rank(sims *G, sims *U,
 		int *Elt, int verbose_level);
 		// used in generator::coset_unrank and generator::coset_rank
 		// which in turn are used by 
@@ -725,26 +725,26 @@ public:
 	void read_orbit_rep_and_candidates_from_files_and_process(
 		char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
-		void (*early_test_func_callback)(int *S, int len,
-			int *candidates, int nb_candidates,
-			int *good_candidates, int &nb_good_candidates,
+		void (*early_test_func_callback)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
 			void *data, int verbose_level),
 		void *early_test_func_callback_data,
-		int *&starter,
+		long int *&starter,
 		int &starter_sz,
 		sims *&Stab,
 		strong_generators *&Strong_gens,
-		int *&candidates,
+		long int *&candidates,
 		int &nb_candidates,
 		int &nb_cases,
 		int verbose_level);
 	void read_orbit_rep_and_candidates_from_files(char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
-		int *&starter,
+		long int *&starter,
 		int &starter_sz,
 		sims *&Stab,
 		strong_generators *&Strong_gens,
-		int *&candidates,
+		long int *&candidates,
 		int &nb_candidates,
 		int &nb_cases,
 		int verbose_level);
@@ -757,7 +757,7 @@ public:
 	void read_file_and_print_representatives(char *fname,
 		int f_print_stabilizer_generators, int verbose_level);
 	void read_set_and_stabilizer(const char *fname,
-		int no, int *&set, int &set_sz, sims *&stab,
+		int no, long int *&set, int &set_sz, sims *&stab,
 		strong_generators *&Strong_gens,
 		int &nb_cases,
 		int verbose_level);

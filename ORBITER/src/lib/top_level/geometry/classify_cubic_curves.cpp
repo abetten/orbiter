@@ -138,9 +138,9 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; // (verbose_level >= 2);
 	int i, r;
-	int S[9];
-	int *Pts_on_curve;
-	int *singular_Pts;
+	long int S[9];
+	long int *Pts_on_curve;
+	long int *singular_Pts;
 	int *type;
 	int nb_pts_on_curve; //, nb_singular_pts;
 
@@ -150,8 +150,8 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 	}
 	nb_orbits_on_sets = Arc_gen->gen->nb_orbits_at_level(9);
 
-	Pts_on_curve = NEW_int(CC->P->N_points);
-	singular_Pts = NEW_int(CC->P->N_points);
+	Pts_on_curve = NEW_lint(CC->P->N_points);
+	singular_Pts = NEW_lint(CC->P->N_points);
 	type = NEW_int(CC->P->N_lines);
 
 	if (f_v) {
@@ -168,7 +168,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		Arc_gen->gen->get_set_by_level(9, i, S);
 		if (f_vv) {
 			cout << "set: ";
-			int_vec_print(cout, S, 5);
+			lint_vec_print(cout, S, 5);
 			cout << endl;
 		}
 
@@ -243,8 +243,8 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		cout << endl;
 		}
 
-	FREE_int(Pts_on_curve);
-	FREE_int(singular_Pts);
+	FREE_lint(Pts_on_curve);
+	FREE_lint(singular_Pts);
 	FREE_int(type);
 
 	if (f_v) {
@@ -308,7 +308,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 		set_and_stabilizer *R;
 		longinteger_object ol;
 		longinteger_object go;
-		int dataset[19];
+		long int dataset[19];
 
 		R = Arc_gen->gen->get_set_and_stabilizer(
 				9 /* level */,
@@ -320,12 +320,12 @@ void classify_cubic_curves::downstep(int verbose_level)
 
 		R->Strong_gens->group_order(go);
 
-		int_vec_copy(R->data, dataset, 9);
+		lint_vec_copy(R->data, dataset, 9);
 
 		int eqn[10];
 		if (f_vv) {
 			cout << "9 points = ";
-			int_vec_print(cout, dataset, 9);
+			lint_vec_print(cout, dataset, 9);
 			cout << endl;
 		}
 
@@ -348,7 +348,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 			int_vec_print(cout, eqn, 10);
 		}
 
-		int_vec_copy(eqn, dataset + 9, 10);
+		int_vec_copy_to_lint(eqn, dataset + 9, 10);
 
 
 		Flag_orbits->Flag_orbit_node[nb_flag_orbits].init(
@@ -402,9 +402,9 @@ void classify_cubic_curves::upstep(int verbose_level)
 	int nb_processed;
 	int *Elt;
 	int idx_set[9];
-	int set[9];
-	int canonical_set[9];
-	int *Pts;
+	long int set[9];
+	long int canonical_set[9];
+	long int *Pts;
 	int *type;
 	combinatorics_domain Combi;
 	sorting Sorting;
@@ -416,7 +416,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 
 	Elt = NEW_int(A->elt_size_in_int);
-	Pts = NEW_int(CCA->CC->P->N_points);
+	Pts = NEW_lint(CCA->CC->P->N_points);
 	type = NEW_int(CCA->CC->P->N_lines);
 
 	f_processed = NEW_int(Flag_orbits->nb_flag_orbits);
@@ -450,7 +450,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
 
 		double progress;
-		int dataset[19];
+		long int dataset[19];
 
 		if (f_processed[f]) {
 			continue;
@@ -479,7 +479,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 			}
-		int_vec_copy(Flag_orbits->Pt + f * 19, dataset, 19);
+		lint_vec_copy(Flag_orbits->Pt + f * 19, dataset, 19);
 
 
 
@@ -492,7 +492,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		longinteger_object go;
 		int eqn[10];
 
-		int_vec_copy(dataset + 9, eqn, 10);
+		lint_vec_copy_to_int(dataset + 9, eqn, 10);
 
 		if (f_v) {
 			cout << "equation:";
@@ -703,7 +703,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 	FREE_int(Elt);
 	FREE_int(f_processed);
-	FREE_int(Pts);
+	FREE_lint(Pts);
 	FREE_int(type);
 
 
@@ -762,11 +762,11 @@ int classify_cubic_curves::recognize(int *eqn_in,
 	int f_v = (verbose_level >= 1);
 	int i, j, r;
 	int idx_set[9];
-	int set[9];
-	int canonical_set[9];
+	long int set[9];
+	long int canonical_set[9];
 	int *Elt1;
-	int *Pts_on_curve;
-	int *singular_Pts;
+	long int *Pts_on_curve;
+	long int *singular_Pts;
 	int *type;
 	int ret;
 	combinatorics_domain Combi;
@@ -779,8 +779,8 @@ int classify_cubic_curves::recognize(int *eqn_in,
 
 
 	Elt1 = NEW_int(A->elt_size_in_int);
-	Pts_on_curve = NEW_int(CCA->CC->P->N_points);
-	singular_Pts = NEW_int(CCA->CC->P->N_points);
+	Pts_on_curve = NEW_lint(CCA->CC->P->N_points);
+	singular_Pts = NEW_lint(CCA->CC->P->N_points);
 	type = NEW_int(CCA->CC->P->N_lines);
 
 
@@ -934,8 +934,8 @@ int classify_cubic_curves::recognize(int *eqn_in,
 
 
 	FREE_int(Elt1);
-	FREE_int(Pts_on_curve);
-	FREE_int(singular_Pts);
+	FREE_lint(Pts_on_curve);
+	FREE_lint(singular_Pts);
 	FREE_int(type);
 
 	if (f_v) {

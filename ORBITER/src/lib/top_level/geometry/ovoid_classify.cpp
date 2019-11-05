@@ -301,8 +301,7 @@ void ovoid_classify::init(int argc, const char **argv,
 			fxy = O->evaluate_bilinear_form(u, v, 1);
 			if (i && fxy != 0) {
 				j = K->Point_on_quadric_to_line[i];
-				K->P3->Grass_lines->unrank_int_here(B, j,
-						0 /* verbose_level */);
+				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
 				F->Gauss_int_with_given_pivots(B,
 					FALSE /* f_special */,
 					TRUE /* f_complete */,
@@ -314,7 +313,7 @@ void ovoid_classify::init(int argc, const char **argv,
 					cout << "The shape of B is wrong" << endl;
 					exit(1);
 				}
-				Gg.AG_element_rank(F->q, B, 1, 2, c);
+				c = Gg.AG_element_rank(F->q, B, 1, 2);
 			} else {
 				c = -1;
 			}
@@ -330,8 +329,7 @@ void ovoid_classify::init(int argc, const char **argv,
 			fxy = O->evaluate_bilinear_form(u, v, 1);
 			if (i && fxy != 0) {
 				j = K->Point_on_quadric_to_line[i];
-				K->P3->Grass_lines->unrank_int_here(B, j,
-						0 /* verbose_level */);
+				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
 				F->Gauss_int_with_given_pivots(B,
 					FALSE /* f_special */,
 					TRUE /* f_complete */,
@@ -440,9 +438,9 @@ void ovoid_classify::read_arguments(
 	cout << "Witt index " << m << endl;
 }
 
-void ovoid_classify::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void ovoid_classify::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -457,7 +455,7 @@ void ovoid_classify::early_test_func(int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
@@ -479,7 +477,7 @@ void ovoid_classify::early_test_func(int *S, int len,
 		}
 
 	if (len == 0) {
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 		}
 	else {
@@ -512,7 +510,7 @@ void ovoid_classify::early_test_func(int *S, int len,
 		} // else
 }
 
-void ovoid_classify::print(ostream &ost, int *S, int len)
+void ovoid_classify::print(ostream &ost, long int *S, int len)
 {
 	int i;
 	
@@ -552,14 +550,14 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 			}
 		}
 		cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-		int_vec_print(cout, ODF->sets[orbit_idx],
+		lint_vec_print(cout, ODF->sets[orbit_idx],
 				ODF->set_sizes[orbit_idx]);
 		cout << " : " << ODF->Ago_ascii[orbit_idx]
 				<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
 
 		sprintf(fname_graph, fname_mask, orbit_idx);
 
-		int *candidates;
+		long int *candidates;
 		int nb_candidates;
 
 #if 0
@@ -584,7 +582,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 
 
 		cout << "With " << nb_candidates << " live points: ";
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 
 
@@ -658,7 +656,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 		}
 
 		FREE_OBJECT(CG);
-		FREE_int(candidates);
+		FREE_lint(candidates);
 
 	}
 	if (f_v) {
@@ -683,7 +681,7 @@ void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 	level = ODF->set_sizes[0];
 
 
-	int *candidates;
+	long int *candidates;
 	int nb_candidates;
 
 
@@ -773,7 +771,7 @@ void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 	}
 #endif
 
-	FREE_int(candidates);
+	FREE_lint(candidates);
 
 
 	if (f_v) {
@@ -783,7 +781,7 @@ void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 
 void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	int orbit_idx,
-	int *candidates, int nb_candidates,
+	long int *candidates, int nb_candidates,
 	colored_graph *&CG,
 	int verbose_level)
 {
@@ -867,7 +865,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 
-	int_vec_copy(candidates, CG->points, nb_candidates);
+	lint_vec_copy(candidates, CG->points, nb_candidates);
 	CG->init_user_data(ODF->sets[orbit_idx],
 			starter_size, verbose_level - 2);
 	sprintf(CG->fname_base, "graph_ovoid_%d_%d_%d",
@@ -883,8 +881,8 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 }
 
 void ovoid_classify::compute_coloring(
-		int *starter, int starter_size,
-		int *candidates, int nb_points,
+		long int *starter, int starter_size,
+		long int *candidates, int nb_points,
 		int *point_color, int &nb_colors_used,
 		int verbose_level)
 {
@@ -909,7 +907,7 @@ void ovoid_classify::compute_coloring(
 	colors = NEW_int(nb_colors);
 	color_pos = NEW_int(nb_colors);
 	cout << "starter:";
-	int_vec_print(cout, starter, starter_size);
+	lint_vec_print(cout, starter, starter_size);
 	cout << endl;
 	for (i = 1; i < starter_size; i++) {
 		c = color_table[starter[i]];
@@ -951,9 +949,9 @@ void ovoid_classify::compute_coloring(
 }
 
 
-void ovoid_classify_early_test_func_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void ovoid_classify_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	ovoid_classify *Gen = (ovoid_classify *) data;
@@ -973,7 +971,7 @@ void ovoid_classify_early_test_func_callback(int *S, int len,
 		}
 }
 
-void callback_ovoid_print_set(ostream &ost, int len, int *S, void *data)
+void callback_ovoid_print_set(ostream &ost, int len, long int *S, void *data)
 {
 	ovoid_classify *Gen = (ovoid_classify *) data;
 

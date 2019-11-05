@@ -717,7 +717,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 }
 
 int cayley_graph_search::incremental_check_func(
-		int len, int *S, int verbose_level)
+		int len, long int *S, int verbose_level)
 {
 	int f_OK = TRUE;
 	//verbose_level = 1;
@@ -726,7 +726,7 @@ int cayley_graph_search::incremental_check_func(
 
 	if (f_v) {
 		cout << "checking set ";
-		print_set(cout, len, S);
+		lint_vec_print(cout, S, len);
 		cout << " (incrementally)";
 		}
 	if (len) {
@@ -856,9 +856,9 @@ void cayley_graph_search::write_file(int verbose_level)
 		fp << endl;
 
 		int n;
-		int *Adj;
+		long int *Adj;
 
-		Adj = NEW_int(go * sz);
+		Adj = NEW_lint(go * sz);
 
 		nb_orbits = gen->nb_orbits_at_level(sz);
 		cout << "We found " << nb_orbits << " orbits on "
@@ -929,7 +929,7 @@ void cayley_graph_search::write_file(int verbose_level)
 			}
 		//fp << "];" << endl;
 
-		delete Adj;
+		FREE_lint(Adj);
 		} // end of fp
 
 		file_io Fio;
@@ -965,8 +965,8 @@ void cayley_graph_search::write_file(int verbose_level)
 		}
 }
 
-void cayley_graph_search::create_Adjacency_list(int *Adj,
-	int *connection_set, int connection_set_sz,
+void cayley_graph_search::create_Adjacency_list(long int *Adj,
+	long int *connection_set, int connection_set_sz,
 	int verbose_level)
 // Adj[go * connection_set_sz]
 {
@@ -1031,9 +1031,9 @@ void cayley_graph_search::create_Adjacency_list(int *Adj,
 }
 
 void cayley_graph_search::create_additional_edges(
-	int *Additional_neighbor,
+	long int *Additional_neighbor,
 	int *Additional_neighbor_sz,
-	int connection_element,
+	long int connection_element,
 	int verbose_level)
 // Additional_neighbor[go], Additional_neighbor_sz[go]
 {

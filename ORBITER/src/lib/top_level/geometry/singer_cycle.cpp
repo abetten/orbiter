@@ -264,7 +264,7 @@ void singer_cycle::init_lines(int verbose_level)
 		for (i = 0; i < P->r; i++) {
 			a = P->Lines_on_point[0 * P->r + i];
 			cout << "Line " <<  i << " has rank " << a << ":" << endl;
-			P->Grass_lines->unrank_int(a, 0);
+			P->Grass_lines->unrank_lint(a, 0);
 			int_matrix_print(P->Grass_lines->M, 2, n);
 			h = 0;
 			for (j = 0; j < P->k; j++) {

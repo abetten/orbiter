@@ -14,8 +14,8 @@ namespace classification {
 
 void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	poset_classification *gen,
-	int lvl, int pt_to_trace,
-	int &pt0, int *&cosetrep, int verbose_level)
+	int lvl, long int pt_to_trace,
+	long int &pt0, int *&cosetrep, int verbose_level)
 // called by poset_orbit_node::trace_next_point
 // creates action_on_factor_space AF;
 // and action A_factor_space;

@@ -178,7 +178,7 @@ void geometry_global::test_PG(int n, int q)
 
 }
 
-void geometry_global::create_Fisher_BLT_set(int *Fisher_BLT,
+void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT,
 		int q, const char *poly_q, const char *poly_Q, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -190,7 +190,7 @@ void geometry_global::create_Fisher_BLT_set(int *Fisher_BLT,
 
 }
 
-void geometry_global::create_Linear_BLT_set(int *BLT, int q,
+void geometry_global::create_Linear_BLT_set(long int *BLT, int q,
 		const char *poly_q, const char *poly_Q, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -202,7 +202,7 @@ void geometry_global::create_Linear_BLT_set(int *BLT, int q,
 
 }
 
-void geometry_global::create_Mondello_BLT_set(int *BLT, int q,
+void geometry_global::create_Mondello_BLT_set(long int *BLT, int q,
 		const char *poly_q, const char *poly_Q, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);

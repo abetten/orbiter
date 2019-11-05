@@ -114,7 +114,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 		cout << "BLT_set_create::init computing "
 				"lex least base done" << endl;
 		cout << "BLT_set_create::init base: ";
-		int_vec_print(cout, A->get_base(), A->base_len());
+		lint_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;
 		}
 	

@@ -1414,7 +1414,7 @@ int projective_space::determine_conic_in_plane(
 
 int projective_space::determine_cubic_in_plane(
 		homogeneous_polynomial_domain *Poly_3_3,
-		int nb_pts, int *Pts, int *coeff10,
+		int nb_pts, long int *Pts, int *coeff10,
 		int verbose_level)
 {
 	//verbose_level = 1;
@@ -1435,7 +1435,7 @@ int projective_space::determine_cubic_in_plane(
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane list of "
 				"points:" << endl;
-		int_vec_print(cout, Pts, nb_pts);
+		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		}
 	for (i = 0; i < nb_pts; i++) {

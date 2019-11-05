@@ -64,7 +64,7 @@ void graph_node::freeself()
 		FREE_int(neighbor_list);
 		}
 	if (f_has_vec_data) {
-		FREE_int(vec_data);
+		FREE_lint(vec_data);
 		}
 	if (child_id) {
 		FREE_int(child_id);
@@ -114,11 +114,11 @@ void graph_node::add_text(const char *text)
 	label = p;
 }
 
-void graph_node::add_vec_data(int *v, int len)
+void graph_node::add_vec_data(long int *v, int len)
 {
-	vec_data = NEW_int(len);
+	vec_data = NEW_lint(len);
 	vec_data_len = len;
-	int_vec_copy(v, vec_data, len);
+	lint_vec_copy(v, vec_data, len);
 	f_has_vec_data = TRUE;
 }
 
@@ -173,7 +173,7 @@ void graph_node::write_memory_object(
 	if (f_has_vec_data) {
 		m->write_int(vec_data_len);
 		for (i = 0; i < vec_data_len; i++) {
-			m->write_int(vec_data[i]);
+			m->write_lint(vec_data[i]);
 			}
 		}
 	m->write_int(f_has_distinguished_element);
@@ -212,9 +212,9 @@ void graph_node::read_memory_object(
 	m->read_int(&f_has_vec_data);
 	if (f_has_vec_data) {
 		m->read_int(&vec_data_len);
-		vec_data = NEW_int(vec_data_len);
+		vec_data = NEW_lint(vec_data_len);
 		for (i = 0; i < vec_data_len; i++) {
-			m->read_int(&vec_data[i]);
+			m->read_lint(&vec_data[i]);
 			}
 		}
 	else {

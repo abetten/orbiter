@@ -232,6 +232,28 @@ void lint_vec_copy(long int *from, long int *to, int len)
 		}
 }
 
+void int_vec_copy_to_lint(int *from, long int *to, int len)
+{
+	int i;
+	int *p;
+	long int *q;
+
+	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
+		*q = *p;
+		}
+}
+
+void lint_vec_copy_to_int(long int *from, int *to, int len)
+{
+	int i;
+	long int *p;
+	int *q;
+
+	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
+		*q = *p;
+		}
+}
+
 void int_vec_swap(int *v1, int *v2, int len)
 {
 	int i, a;
@@ -456,6 +478,27 @@ void int_vec_complement(int *v, int *w, int n, int k)
 		}
 }
 
+void lint_vec_complement(long int *v, long int *w, int n, int k)
+// computes the complement of v[k] w[n - k]
+{
+	long int j1, j2, i;
+
+	j1 = 0;
+	j2 = 0;
+	for (i = 0; i < n; i++) {
+		if (j1 < k && v[j1] == i) {
+			j1++;
+			continue;
+			}
+		w[j2] = i;
+		j2++;
+		}
+	if (j2 != n - k) {
+		cout << "lint_vec_complement j2 != n - k" << endl;
+		exit(1);
+		}
+}
+
 void int_vec_init5(int *v, int a0, int a1, int a2, int a3, int a4)
 {
 	v[0] = a0;
@@ -620,6 +663,22 @@ void print_integer_matrix_width(ostream &ost,
 {
 	int i, j;
 	
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << setw((int) w) << p[i * dim_n + j];
+			if (w) {
+				ost << " ";
+				}
+			}
+		ost << endl;
+		}
+}
+
+void lint_matrix_print_width(ostream &ost,
+	long int *p, int m, int n, int dim_n, int w)
+{
+	int i, j;
+
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			ost << setw((int) w) << p[i * dim_n + j];
@@ -887,10 +946,28 @@ void int_set_print(int *v, int len)
 	int_set_print(cout, v, len);
 }
 
+void lint_set_print(long int *v, int len)
+{
+	lint_set_print(cout, v, len);
+}
+
 void int_set_print(ostream &ost, int *v, int len)
 {
 	int i;
 	
+	ost << "{ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " }";
+}
+
+void lint_set_print(ostream &ost, long int *v, int len)
+{
+	int i;
+
 	ost << "{ ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];
@@ -2178,49 +2255,6 @@ void print_hex_digit(ostream &ost, int digit)
 		}
 }
 
-int compare_sets(int *set1, int *set2, int sz1, int sz2)
-{
-	sorting Sorting;
-	int *S1, *S2;
-	int u, ret;
-
-	S1 = NEW_int(sz1);
-	S2 = NEW_int(sz2);
-	int_vec_copy(set1, S1, sz1);
-	int_vec_copy(set2, S2, sz2);
-	Sorting.int_vec_heapsort(S1, sz1);
-	Sorting.int_vec_heapsort(S2, sz2);
-	for ( u = 0; u < sz1 + sz2; u++) {
-		if (u < sz1 && u < sz2) {
-			if (S1[u] < S2[u]) {
-				ret = -1;
-				goto finish;
-				}
-			else if (S1[u] > S2[u]) {
-				ret = 1;
-				goto finish;
-				}
-			}
-		if (u == sz1) {
-			if (sz2 > sz1) {
-				ret = -1;
-				}
-			else {
-				ret = 0;
-				}
-			goto finish;
-			}
-		else if (u == sz2) {
-			ret = 1;
-			goto finish;
-			}
-		}
-	ret = 0;
-finish:
-	FREE_int(S1);
-	FREE_int(S2);
-	return ret;
-}
 
 #if 0
 int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2)
@@ -2301,6 +2335,36 @@ int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int
 	return TRUE;
 }
 
+int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2)
+{
+	int sz;
+	long int *p, *q;
+	int u, v;
+
+	sz = sz1 + sz2;
+	u = v = 0;
+	p = set1;
+	q = set2;
+	while (u + v < sz) {
+		if (p[u] == q[v]) {
+			return FALSE;
+		}
+		if (u == sz1) {
+			v++;
+		}
+		else if (v == sz2) {
+			u++;
+		}
+		else if (p[u] < q[v]) {
+			u++;
+		}
+		else {
+			v++;
+		}
+	}
+	return TRUE;
+}
+
 void make_graph_of_disjoint_sets_from_rows_of_matrix(
 	int *M, int m, int n, 
 	int *&Adj, int verbose_level)
@@ -2348,6 +2412,22 @@ void int_vec_print_to_str(char *str, int *data, int len)
 	strcat(str, "\"");
 }
 
+void lint_vec_print_to_str(char *str, long int *data, int len)
+{
+	long int i, a;
+
+	str[0] = 0;
+	strcat(str, "\" ");
+	for (i = 0; i < len; i++) {
+		a = data[i];
+		sprintf(str + strlen(str), "%ld", a);
+		if (i < len - 1) {
+			strcat(str, ", ");
+			}
+		}
+	strcat(str, "\"");
+}
+
 void int_vec_print_to_str_naked(char *str, int *data, int len)
 {
 	int i, a;
@@ -2356,6 +2436,20 @@ void int_vec_print_to_str_naked(char *str, int *data, int len)
 	for (i = 0; i < len; i++) {
 		a = data[i];
 		sprintf(str + strlen(str), "%d", a);
+		if (i < len - 1) {
+			strcat(str, ", ");
+			}
+		}
+}
+
+void lint_vec_print_to_str_naked(char *str, long int *data, int len)
+{
+	long int i, a;
+
+	str[0] = 0;
+	for (i = 0; i < len; i++) {
+		a = data[i];
+		sprintf(str + strlen(str), "%ld", a);
 		if (i < len - 1) {
 			strcat(str, ", ");
 			}

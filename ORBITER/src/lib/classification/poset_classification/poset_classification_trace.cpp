@@ -14,13 +14,13 @@ namespace orbiter {
 namespace classification {
 
 int poset_classification::find_isomorphism(
-		int *set1, int *set2, int sz,
+		long int *set1, long int *set2, int sz,
 		int *transporter, int &orbit_idx,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *set1_canonical;
-	int *set2_canonical;
+	long int *set1_canonical;
+	long int *set2_canonical;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -32,8 +32,8 @@ int poset_classification::find_isomorphism(
 		cout << "poset_classification::find_isomorphism" << endl;
 		}
 	
-	set1_canonical = NEW_int(sz);
-	set2_canonical = NEW_int(sz);
+	set1_canonical = NEW_lint(sz);
+	set2_canonical = NEW_lint(sz);
 	Elt1 = NEW_int(Poset->A->elt_size_in_int);
 	Elt2 = NEW_int(Poset->A->elt_size_in_int);
 	Elt3 = NEW_int(Poset->A->elt_size_in_int);
@@ -57,8 +57,8 @@ int poset_classification::find_isomorphism(
 		ret = FALSE;
 		}
 
-	FREE_int(set1_canonical);
-	FREE_int(set2_canonical);
+	FREE_lint(set1_canonical);
+	FREE_lint(set2_canonical);
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
@@ -70,7 +70,7 @@ int poset_classification::find_isomorphism(
 }
 
 set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
-		int *set, int sz, int *transporter,
+		long int *set, int sz, int *transporter,
 		int &orbit_at_level,
 		int verbose_level)
 {
@@ -78,6 +78,7 @@ set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 	//set_and_stabilizer *SaS0;
 	set_and_stabilizer *SaS;
 	int *Elt;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::identify_and_get_stabilizer" << endl;
@@ -85,7 +86,7 @@ set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 	if (f_v) {
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"identifying the set ";
-		int_vec_print(cout, set, sz);
+		lint_vec_print(cout, set, sz);
 		cout << endl;
 		}
 	Elt = NEW_int(Poset->A->elt_size_in_int);
@@ -100,14 +101,14 @@ set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 	if (f_v) {
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"input set=";
-		int_vec_print(cout, set, sz);
+		lint_vec_print(cout, set, sz);
 		cout << endl;
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"SaS->set=";
-		int_vec_print(cout, SaS->data, SaS->sz);
+		lint_vec_print(cout, SaS->data, SaS->sz);
 		cout << endl;
 		}
-	if (compare_sets(set, SaS->data, sz, SaS->sz)) {
+	if (Sorting.compare_sets_lint(set, SaS->data, sz, SaS->sz)) {
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"the sets do not agree" << endl;
 		exit(1);
@@ -121,7 +122,7 @@ set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 	return SaS;
 }
 
-void poset_classification::identify(int *data, int sz,
+void poset_classification::identify(long int *data, int sz,
 		int *transporter, int &orbit_at_level,
 		int verbose_level)
 {
@@ -135,7 +136,7 @@ void poset_classification::identify(int *data, int sz,
 		}
 	if (f_v) {
 		cout << "poset_classification::identify identifying the set ";
-		int_vec_print(cout, data, sz);
+		lint_vec_print(cout, data, sz);
 		cout << endl;
 		}
 
@@ -184,8 +185,8 @@ void poset_classification::test_identify(int level, int nb_times,
 	int final_node;
 	int *Elt;
 	int nb_orbits, cnt, r, r2;
-	int *set1;
-	int *set2;
+	long int *set1;
+	long int *set2;
 	sims *S;
 	longinteger_object go;
 	os_interface Os;
@@ -199,8 +200,8 @@ void poset_classification::test_identify(int level, int nb_times,
 	Elt = NEW_int(Poset->A->elt_size_in_int);
 	transporter = NEW_int(Poset->A->elt_size_in_int);
 	nb_orbits = nb_orbits_at_level(level);
-	set1 = NEW_int(level);
-	set2 = NEW_int(level);
+	set1 = NEW_lint(level);
+	set2 = NEW_lint(level);
 
 	S = Poset->Strong_gens->create_sims(0 /*verbose_level*/);
 
@@ -219,14 +220,14 @@ void poset_classification::test_identify(int level, int nb_times,
 		if (f_v) {
 			cout << "random orbit " << r << " / "
 					<< nb_orbits << " is represented by ";
-			int_vec_print(cout, set1, level);
+			lint_vec_print(cout, set1, level);
 			cout << endl;
 			}
 		Poset->A->random_element(S, Elt, 0 /* verbose_level */);
 		Poset->A2->map_a_set_and_reorder(set1, set2, level, Elt,
 				0 /* verbose_level */);
 		cout << "mapped set is ";
-		int_vec_print(cout, set2, level);
+		lint_vec_print(cout, set2, level);
 		cout << endl;
 
 		recognize(set2, level, transporter, f_implicit_fusion,
@@ -245,8 +246,8 @@ void poset_classification::test_identify(int level, int nb_times,
 	delete S;
 	FREE_int(Elt);
 	FREE_int(transporter);
-	FREE_int(set1);
-	FREE_int(set2);
+	FREE_lint(set1);
+	FREE_lint(set2);
 	if (f_v) {
 		cout << "poset_classification::test_identify done" << endl;
 		}
@@ -257,13 +258,13 @@ void poset_classification::test_identify(int level, int nb_times,
 #if 1
 void poset_classification::poset_classification_apply_isomorphism_no_transporter(
 	int cur_level, int size, int cur_node, int cur_ex, 
-	int *set_in, int *set_out, 
+	long int *set_in, long int *set_out,
 	int verbose_level)
 // Called by upstep_work::handle_extension_fusion_type
 {
 	int *Elt1;
 	int *Elt2;
-	int *set_tmp;
+	long int *set_tmp;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -273,7 +274,7 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 
 	Elt1 = NEW_int(Poset->A->elt_size_in_int);
 	Elt2 = NEW_int(Poset->A->elt_size_in_int);
-	set_tmp = NEW_int(size);
+	set_tmp = NEW_lint(size);
 	Poset->A->element_one(Elt1, 0);
 
 	poset_classification_apply_isomorphism(cur_level, size, cur_node, cur_ex, 
@@ -284,7 +285,7 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 
 	FREE_int(Elt1);
 	FREE_int(Elt2);
-	FREE_int(set_tmp);
+	FREE_lint(set_tmp);
 
 	if (f_v) {
 		cout << "poset_classification::poset_classification_apply_isomorphism_"
@@ -297,7 +298,7 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 int poset_classification::poset_classification_apply_isomorphism(
 	int level, int size,
 	int current_node, int current_extension, 
-	int *set_in, int *set_out, int *set_tmp, 
+	long int *set_in, long int *set_out, long int *set_tmp,
 	int *transporter_in, int *transporter_out, 
 	int f_tolerant, 
 	int verbose_level)
@@ -317,7 +318,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 				<< " current_extension=" << current_extension << endl;
 		cout << "level=" << level << endl;		
 		cout << "applying fusion element to the set ";
-		int_set_print(cout, set_in, size);
+		lint_set_print(cout, set_in, size);
 		cout << endl;
 		}
 
@@ -331,7 +332,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 		cout << "in action " << Poset->A2->label << ":" << endl;
 		Poset->A2->element_print_as_permutation(Elt1, cout);
 		cout << "to the set ";
-		int_vec_print(cout, set_in, size);
+		lint_vec_print(cout, set_in, size);
 		cout << endl;
 		}
 	Poset->A2->map_a_set(set_in, set_tmp, size, Elt1, 0);
@@ -339,13 +340,13 @@ int poset_classification::poset_classification_apply_isomorphism(
 		cout << "poset_classification::poset_"
 				"classification_apply_isomorphism "
 				"the set becomes: ";
-		int_vec_print(cout, set_tmp, size);
+		lint_vec_print(cout, set_tmp, size);
 		cout << endl;
 		}
 
 	Poset->A2->element_mult(transporter_in, Elt1, Elt2, 0);
 	if (f_v) {
-		int_vec_print(cout, set_in, size);
+		lint_vec_print(cout, set_in, size);
 		cout << endl;
 		}
 	Poset->A2->move(Elt2, transporter_out);
@@ -353,11 +354,11 @@ int poset_classification::poset_classification_apply_isomorphism(
 	if (Poset->f_subspace_lattice) {
 		next_node = find_node_for_subspace_by_rank(set_tmp,
 				level + 1, verbose_level - 1);
-		int_vec_copy(set_tmp, set_out, size);
+		lint_vec_copy(set_tmp, set_out, size);
 		}
 	else {
-		Sorting.int_vec_heapsort(set_tmp, level + 1);
-		int_vec_copy(set_tmp, set_out, size);
+		Sorting.lint_vec_heapsort(set_tmp, level + 1);
+		lint_vec_copy(set_tmp, set_out, size);
 		if (f_v) {
 			cout << "poset_classification::poset_"
 					"classification_apply_isomorphism "
@@ -367,7 +368,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 			cout << "poset_classification::poset_"
 					"classification_apply_isomorphism "
 					"calling find_poset_orbit_node_for_set: ";
-			int_vec_print(cout, set_out, size);
+			lint_vec_print(cout, set_out, size);
 			cout << endl;
 			}
 
@@ -379,9 +380,9 @@ int poset_classification::poset_classification_apply_isomorphism(
 	if (f_v) {
 		cout << "poset_classification::poset_"
 				"classification_apply_isomorphism from ";
-		int_vec_print(cout, set_in, size);
+		lint_vec_print(cout, set_in, size);
 		cout << " to ";
-		int_vec_print(cout, set_out, size);
+		lint_vec_print(cout, set_out, size);
 		cout << ", which is node " << next_node << endl;
 		cout << "we are done" << endl;
 		}
@@ -392,7 +393,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 int poset_classification::trace_set_recursion(
 	int cur_level, int cur_node,
 	int size, int level,
-	int *canonical_set, int *tmp_set1, int *tmp_set2, 
+	long int *canonical_set, long int *tmp_set1, long int *tmp_set2,
 	int *Elt_transporter, int *tmp_Elt1, 
 	int f_tolerant, 
 	int verbose_level)
@@ -402,7 +403,8 @@ int poset_classification::trace_set_recursion(
 // or -1 if f_tolerant and the node could not be found
 {
 	int f_v = (verbose_level >= 1);
-	int pt, pt0, current_extension, i, t, next_node;
+	long int pt, pt0;
+	int current_extension, i, t, next_node;
 	int f_failure_to_find_point;
 	poset_orbit_node *O = &root[cur_node];
 	sorting Sorting;
@@ -411,7 +413,7 @@ int poset_classification::trace_set_recursion(
 		cout << "poset_classification::trace_set_recursion "
 				"cur_level = " << cur_level
 				<< " cur_node = " << cur_node << " : ";
-		int_vec_print(cout, canonical_set, size);
+		lint_vec_print(cout, canonical_set, size);
 		cout << endl;
 		}
 	pt = canonical_set[cur_level];
@@ -440,7 +442,7 @@ int poset_classification::trace_set_recursion(
 		// this can only happen if f_lex is TRUE
 		// we need to sort and restart the trace:
 
-		Sorting.int_vec_heapsort(canonical_set, cur_level + 1);
+		Sorting.lint_vec_heapsort(canonical_set, cur_level + 1);
 		
 		
 		if (f_v) {
@@ -472,7 +474,7 @@ int poset_classification::trace_set_recursion(
 		cout << "poset_classification::trace_set_recursion "
 				"cur_level = " << cur_level
 				<< " cur_node = " << cur_node << " : ";
-		int_vec_print(cout, canonical_set, size);
+		lint_vec_print(cout, canonical_set, size);
 		cout << " point " << pt
 				<< " has been mapped to " << pt0 << endl;
 		}
@@ -505,7 +507,7 @@ int poset_classification::trace_set_recursion(
 			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
-			int_vec_print(cout, canonical_set, size);
+			lint_vec_print(cout, canonical_set, size);
 			cout << " point " << pt << " has been mapped to "
 					<< pt0 << " next node is node " << next_node << endl;
 			}
@@ -562,9 +564,9 @@ int poset_classification::trace_set_recursion(
 				<< " cur_node = " << cur_node << " : " 
 				<< " current_extension = " << current_extension 
 				<< " : fusion from ";
-			int_vec_print(cout, canonical_set, size);
+			lint_vec_print(cout, canonical_set, size);
 			cout << " to ";
-			int_vec_print(cout, tmp_set1, size);
+			lint_vec_print(cout, tmp_set1, size);
 			cout << " : we continue with node " << next_node << endl; 
 			cout << endl;
 			}
@@ -576,9 +578,9 @@ int poset_classification::trace_set_recursion(
 					<< " cur_node = " << cur_node << " : " 
 					<< " current_extension = " << current_extension 
 					<< " : fusion from ";
-				int_vec_print(cout, canonical_set, size);
+				lint_vec_print(cout, canonical_set, size);
 				cout << " to ";
-				int_vec_print(cout, tmp_set1, size);
+				lint_vec_print(cout, tmp_set1, size);
 				cout << "we stop tracing" << endl;
 				}
 			return -1;
@@ -623,32 +625,32 @@ int poset_classification::trace_set_recursion(
 	exit(1);
 }
 
-int poset_classification::trace_set(int *set, int size, int level, 
-	int *canonical_set, int *Elt_transporter, 
+int poset_classification::trace_set(long int *set, int size, int level,
+	long int *canonical_set, int *Elt_transporter,
 	int verbose_level)
 // called by map_set_to_set_BLT in orbits.cpp
 // returns the case number of the canonical set
 {
 	int n, case_nb;
 	int f_v = (verbose_level >= 1);
-	int *tmp_set1, *tmp_set2;
+	long int *tmp_set1, *tmp_set2;
 	int *tmp_Elt;
 
-	tmp_set1 = NEW_int(size);
-	tmp_set2 = NEW_int(size);
+	tmp_set1 = NEW_lint(size);
+	tmp_set2 = NEW_lint(size);
 	tmp_Elt = NEW_int(Poset->A->elt_size_in_int);
 
 	if (f_v) {
 		cout << "poset_classification::trace_set" << endl;
 		cout << "tracing set ";
-		int_vec_print(cout, set, size);	
+		lint_vec_print(cout, set, size);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "level=" << level << endl;
 		cout << "f_lex=" << f_lex << endl;
 		}
 	
-	int_vec_copy(set, canonical_set, size);
+	lint_vec_copy(set, canonical_set, size);
 
 	Poset->A->element_one(Elt_transporter, 0);
 
@@ -676,25 +678,25 @@ int poset_classification::trace_set(int *set, int size, int level,
 				"case_nb < 0, case_nb = " << case_nb << endl;
 		exit(1);
 		}
-	FREE_int(tmp_set1);
-	FREE_int(tmp_set2);
+	FREE_lint(tmp_set1);
+	FREE_lint(tmp_set2);
 	FREE_int(tmp_Elt);
 	return case_nb;
 }
 
-int poset_classification::find_node_for_subspace_by_rank(
-		int *set, int len, int verbose_level)
+long int poset_classification::find_node_for_subspace_by_rank(
+		long int *set, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *v;
 	int *basis;
 	//int *base_cols;
-	int rk, node, i, j, pt;
+	long int rk, node, i, j, pt;
 
 	if (f_v) {
 		cout << "poset_classification::find_node_for_subspace_by_rank for set ";
-		int_vec_print(cout, set, len);
+		lint_vec_print(cout, set, len);
 		cout << endl;
 		}
 	v = tmp_find_node_for_subspace_by_rank1;
@@ -747,7 +749,7 @@ int poset_classification::find_node_for_subspace_by_rank(
 	if (f_v) {
 		cout << "poset_classification::find_node_for_subspace_by_rank "
 				"the canonical set is ";
-		int_vec_print(cout, set, len);
+		lint_vec_print(cout, set, len);
 		cout << " at node " << node << endl;
 		}
 	

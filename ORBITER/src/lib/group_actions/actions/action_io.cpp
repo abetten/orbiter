@@ -24,16 +24,16 @@ namespace group_actions {
 void action::read_orbit_rep_and_candidates_from_files_and_process(
 	char *prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
-	void (*early_test_func_callback)(int *S, int len,
-		int *candidates, int nb_candidates,
-		int *good_candidates, int &nb_good_candidates,
+	void (*early_test_func_callback)(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level),
 	void *early_test_func_callback_data,
-	int *&starter,
+	long int *&starter,
 	int &starter_sz,
 	sims *&Stab,
 	strong_generators *&Strong_gens,
-	int *&candidates,
+	long int *&candidates,
 	int &nb_candidates,
 	int &nb_cases,
 	int verbose_level)
@@ -41,7 +41,7 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *candidates1;
+	long int *candidates1;
 	int nb_candidates1;
 	int h; //, i;
 
@@ -62,7 +62,7 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 
 	for (h = level_of_candidates_file; h < level; h++) {
 
-		int *candidates2;
+		long int *candidates2;
 		int nb_candidates2;
 
 		if (f_vv) {
@@ -70,7 +70,7 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 					"testing candidates at level " << h
 					<< " number of candidates = " << nb_candidates1 << endl;
 			}
-		candidates2 = NEW_int(nb_candidates1);
+		candidates2 = NEW_lint(nb_candidates1);
 
 		(*early_test_func_callback)(starter, h + 1,
 			candidates1, nb_candidates1,
@@ -85,10 +85,10 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 
-		int_vec_copy(candidates2, candidates1, nb_candidates2);
+		lint_vec_copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
-		FREE_int(candidates2);
+		FREE_lint(candidates2);
 		}
 
 	candidates = candidates1;
@@ -102,11 +102,11 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 
 void action::read_orbit_rep_and_candidates_from_files(char *prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
-	int *&starter,
+	long int *&starter,
 	int &starter_sz,
 	sims *&Stab,
 	strong_generators *&Strong_gens,
-	int *&candidates,
+	long int *&candidates,
 	int &nb_candidates,
 	int &nb_cases,
 	int verbose_level)
@@ -142,7 +142,7 @@ void action::read_orbit_rep_and_candidates_from_files(char *prefix,
 		cout << "action::read_orbit_rep_and_candidates_from_files "
 				"Read starter " << orbit_at_level << " / "
 				<< nb_cases << " : ";
-		int_vec_print(cout, starter, starter_sz);
+		lint_vec_print(cout, starter, starter_sz);
 		cout << endl;
 		//cout << "read_orbit_rep_and_candidates_from_files "
 		//"Group order=" << stab_go << endl;
@@ -216,7 +216,7 @@ void action::read_representatives(char *fname,
 	int f_casenumbers = FALSE;
 	int nb_cases;
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
@@ -253,7 +253,7 @@ void action::read_representatives_and_strong_generators(
 	int f_casenumbers = FALSE;
 	int nb_cases;
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	//char **Aut_ascii;
 	int *Casenumbers;
@@ -291,7 +291,7 @@ void action::read_file_and_print_representatives(
 	int f_casenumbers = FALSE;
 	int nb_cases;
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
@@ -312,7 +312,7 @@ void action::read_file_and_print_representatives(
 		0/*verbose_level*/);
 	for (i = 0; i < nb_cases; i++) {
 		cout << "Orbit " << i << " representative ";
-		int_vec_print(cout, Sets[i], Set_sizes[i]);
+		lint_vec_print(cout, Sets[i], Set_sizes[i]);
 		cout << endl;
 
 		group *G;
@@ -354,7 +354,7 @@ void action::read_file_and_print_representatives(
 }
 
 void action::read_set_and_stabilizer(const char *fname,
-	int no, int *&set, int &set_sz, sims *&stab,
+	int no, long int *&set, int &set_sz, sims *&stab,
 	strong_generators *&Strong_gens,
 	int &nb_cases,
 	int verbose_level)
@@ -364,7 +364,7 @@ void action::read_set_and_stabilizer(const char *fname,
 	int f_casenumbers = FALSE;
 	//int nb_cases;
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
@@ -394,7 +394,7 @@ void action::read_set_and_stabilizer(const char *fname,
 		}
 
 	set_sz = Set_sizes[no];
-	set = NEW_int(set_sz);
+	set = NEW_lint(set_sz);
 	for (i = 0; i < set_sz; i ++) {
 		set[i] = Sets[no][i];
 		}

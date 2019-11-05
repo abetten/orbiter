@@ -52,6 +52,20 @@ void sorting::int_vec_search_vec(
 		}
 }
 
+void sorting::lint_vec_search_vec(
+		long int *v, int len, long int *A, int A_sz, long int *Idx)
+{
+	int i, idx;
+
+	for (i = 0; i < A_sz; i++) {
+		if (!lint_vec_search(v, len, A[i], idx, 0)) {
+			cout << "sorting::int_vec_search_vec did not find entry" << endl;
+			exit(1);
+			}
+		Idx[i] = idx;
+		}
+}
+
 void sorting::int_vec_search_vec_linear(
 		int *v, int len, int *A, int A_sz, int *Idx)
 {
@@ -176,6 +190,31 @@ int sorting::int_vec_sort_and_test_if_contained(
 	
 	int_vec_heapsort(v1, len1);
 	int_vec_heapsort(v2, len2);
+	for (i = 0, j = 0; i < len1; ) {
+		if (j == len2) {
+			return FALSE;
+			}
+		if (v1[i] == v2[j]) {
+			i++;
+			j++;
+			}
+		else if (v1[i] > v2[j]) {
+			j++;
+			}
+		else if (v1[i] < v2[j]) {
+			return FALSE;
+			}
+		}
+	return TRUE;
+}
+
+int sorting::lint_vec_sort_and_test_if_contained(
+		long int *v1, int len1, long int *v2, int len2)
+{
+	int i, j;
+
+	lint_vec_heapsort(v1, len1);
+	lint_vec_heapsort(v2, len2);
 	for (i = 0, j = 0; i < len1; ) {
 		if (j == len2) {
 			return FALSE;
@@ -1623,9 +1662,9 @@ void sorting::Heapsort_general(void *data, int len,
 
 
 int sorting::search_general(void *data, int len,
-	int *search_object, int &idx,
+	void *search_object, int &idx,
 	int (*compare_func)(void *data, int i,
-			int *search_object, void *extra_data),
+			void *search_object, void *extra_data),
 	void *extra_data, int verbose_level)
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx the
@@ -2337,6 +2376,92 @@ void sorting::schreier_vector_tree(
 		cout << "sorting::schreier_vector_tree done" << endl;
 	}
 
+}
+
+int sorting::compare_sets(int *set1, int *set2, int sz1, int sz2)
+{
+	int *S1, *S2;
+	int u, ret;
+
+	S1 = NEW_int(sz1);
+	S2 = NEW_int(sz2);
+	int_vec_copy(set1, S1, sz1);
+	int_vec_copy(set2, S2, sz2);
+	int_vec_heapsort(S1, sz1);
+	int_vec_heapsort(S2, sz2);
+	for ( u = 0; u < sz1 + sz2; u++) {
+		if (u < sz1 && u < sz2) {
+			if (S1[u] < S2[u]) {
+				ret = -1;
+				goto finish;
+				}
+			else if (S1[u] > S2[u]) {
+				ret = 1;
+				goto finish;
+				}
+			}
+		if (u == sz1) {
+			if (sz2 > sz1) {
+				ret = -1;
+				}
+			else {
+				ret = 0;
+				}
+			goto finish;
+			}
+		else if (u == sz2) {
+			ret = 1;
+			goto finish;
+			}
+		}
+	ret = 0;
+finish:
+	FREE_int(S1);
+	FREE_int(S2);
+	return ret;
+}
+
+int sorting::compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2)
+{
+	long int *S1, *S2;
+	int u, ret;
+
+	S1 = NEW_lint(sz1);
+	S2 = NEW_lint(sz2);
+	lint_vec_copy(set1, S1, sz1);
+	lint_vec_copy(set2, S2, sz2);
+	lint_vec_heapsort(S1, sz1);
+	lint_vec_heapsort(S2, sz2);
+	for (u = 0; u < sz1 + sz2; u++) {
+		if (u < sz1 && u < sz2) {
+			if (S1[u] < S2[u]) {
+				ret = -1;
+				goto finish;
+				}
+			else if (S1[u] > S2[u]) {
+				ret = 1;
+				goto finish;
+				}
+			}
+		if (u == sz1) {
+			if (sz2 > sz1) {
+				ret = -1;
+				}
+			else {
+				ret = 0;
+				}
+			goto finish;
+			}
+		else if (u == sz2) {
+			ret = 1;
+			goto finish;
+			}
+		}
+	ret = 0;
+finish:
+	FREE_lint(S1);
+	FREE_lint(S2);
+	return ret;
 }
 
 

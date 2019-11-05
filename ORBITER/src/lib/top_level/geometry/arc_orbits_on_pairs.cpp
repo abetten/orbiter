@@ -225,7 +225,7 @@ void arc_orbits_on_pairs::init(
 		}
 }
 
-void arc_orbits_on_pairs::recognize(int *pair, int *transporter,
+void arc_orbits_on_pairs::recognize(long int *pair, int *transporter,
 		int &orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

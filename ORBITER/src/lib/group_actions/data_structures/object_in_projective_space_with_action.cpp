@@ -64,7 +64,7 @@ void object_in_projective_space_with_action::init(
 	object_in_projective_space_with_action::nb_cols = nb_cols;
 	object_in_projective_space_with_action::canonical_labeling = canonical_labeling;
 	OiP->f_has_known_ago = TRUE;
-	OiP->known_ago = Aut_gens->group_order_as_int();
+	OiP->known_ago = Aut_gens->group_order_as_lint();
 	if (f_v) {
 		cout << "object_in_projective_space_with_action::init done" << endl;
 		}
@@ -72,7 +72,7 @@ void object_in_projective_space_with_action::init(
 
 void object_in_projective_space_with_action::init_known_ago(
 	object_in_projective_space *OiP,
-	int known_ago,
+	long int known_ago,
 	int nb_rows, int nb_cols,
 	long int *canonical_labeling,
 	int verbose_level)

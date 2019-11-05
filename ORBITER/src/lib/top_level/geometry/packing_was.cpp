@@ -420,12 +420,12 @@ void packing_was::init(int argc, const char **argv)
 		cout << "packing_was::init H_gens=" << endl;
 		H_gens->print_generators_tex(cout);
 	}
-	H_goi = H_gens->group_order_as_int();
+	H_goi = H_gens->group_order_as_lint();
 	if (f_v) {
 		cout << "packing_was::init H_goi=" << H_goi << endl;
 	}
 
-	orb = NEW_int(H_goi);
+	orb = NEW_lint(H_goi);
 
 	// end set up H
 
@@ -473,7 +473,7 @@ void packing_was::init(int argc, const char **argv)
 			cout << "packing_was::init N_gens=" << endl;
 			N_gens->print_generators_tex(cout);
 		}
-		N_goi = N_gens->group_order_as_int();
+		N_goi = N_gens->group_order_as_lint();
 		if (f_v) {
 			cout << "packing_was::init N_goi=" << N_goi << endl;
 		}
@@ -953,8 +953,8 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 				0 /* verbose_level */);
 
 		nb_good_orbits = m;
-		Good_orbit_idx = NEW_int(Spread_orbits_under_H->Sch->nb_orbits);
-		Good_orbit_len = NEW_int(Spread_orbits_under_H->Sch->nb_orbits);
+		Good_orbit_idx = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
+		Good_orbit_len = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
 		for (i = 0; i < m; i++) {
 			Good_orbit_idx[i] = M[i * 2 + 0];
 			Good_orbit_len[i] = M[i * 2 + 1];
@@ -965,8 +965,8 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 		int orbit_idx;
 
 		nb_good_orbits = 0;
-		Good_orbit_idx = NEW_int(Spread_orbits_under_H->Sch->nb_orbits);
-		Good_orbit_len = NEW_int(Spread_orbits_under_H->Sch->nb_orbits);
+		Good_orbit_idx = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
+		Good_orbit_len = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
 		for (orbit_idx = 0;
 				orbit_idx < Spread_orbits_under_H->Sch->nb_orbits;
 				orbit_idx++) {
@@ -992,14 +992,14 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 							"partial packings" << endl;
 		}
 
-		int *Vec[2];
+		long int *Vec[2];
 		const char *Col_labels[2] = {"Orbit_idx", "Orbit_len"};
 
 		Vec[0] = Good_orbit_idx;
 		Vec[1] = Good_orbit_len;
 
 
-		Fio.int_vec_array_write_csv(2 /* nb_vecs */, Vec,
+		Fio.lint_vec_array_write_csv(2 /* nb_vecs */, Vec,
 				nb_good_orbits, fname_good_orbits, Col_labels);
 		cout << "Written file " << fname_good_orbits
 				<< " of size " << Fio.file_size(fname_good_orbits) << endl;
@@ -1164,13 +1164,13 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 }
 
 int packing_was::test_if_pair_of_orbits_are_adjacent(
-	int *orbit1, int len1, int *orbit2, int len2,
+	long int *orbit1, int len1, long int *orbit2, int len2,
 	int verbose_level)
 // tests if every spread from orbit1
 // is line-disjoint from every spread from orbit2
 {
 	int f_v = FALSE; // (verbose_level >= 1);
-	int s1, s2;
+	long int s1, s2;
 	int i, j;
 
 	if (f_v) {
@@ -1199,7 +1199,7 @@ int packing_was::test_if_pair_of_orbits_are_adjacent(
 void packing_was::create_graph_and_save_to_file(
 	const char *fname,
 	int orbit_length,
-	int f_has_user_data, int *user_data, int user_data_size,
+	int f_has_user_data, long int *user_data, int user_data_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1329,7 +1329,7 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 
 	if (Fio.file_size(fname_fixp_graph_cliques) > 0) {
 		cout << "The file " << fname_fixp_graph_cliques << " exists" << endl;
-		Fio.int_matrix_read_csv(fname_fixp_graph_cliques,
+		Fio.lint_matrix_read_csv(fname_fixp_graph_cliques,
 				Cliques, nb_cliques, clique_size, verbose_level);
 
 	}
@@ -1376,9 +1376,9 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 
 		cout << "We found " << nb_cliques << " orbits of cliques of size "
 				<< clique_size << " in the fixed point graph:" << endl;
-		int_matrix_print(Cliques, nb_cliques, clique_size);
+		lint_matrix_print(Cliques, nb_cliques, clique_size);
 
-		Fio.int_matrix_write_csv(fname_fixp_graph_cliques, Cliques, nb_cliques, clique_size);
+		Fio.lint_matrix_write_csv(fname_fixp_graph_cliques, Cliques, nb_cliques, clique_size);
 	}
 
 	Fixp_cliques = NEW_OBJECT(orbit_transversal);
@@ -1540,7 +1540,7 @@ void packing_was::classify_orbit_invariant(int verbose_level)
 	nb_sets = Orbit_invariant->nb_sets;
 	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(classify, nb_sets);
 	for (i = 0; i < nb_sets; i++) {
-		Classify_spread_invariant_by_orbit_length[i].init(
+		Classify_spread_invariant_by_orbit_length[i].init_lint(
 				Orbit_invariant->Sets[i], Orbit_invariant->Set_size[i], FALSE, 0);
 	}
 	if (f_v) {
@@ -1633,7 +1633,7 @@ void packing_was::report(ostream &ost)
 					latex_interface Li;
 
 					ost << "After selecting fixpoint clique $" << L->fixpoints_clique_case_number << " = ";
-					Li.int_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
+					Li.lint_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
 					ost << "$, we find the following filtered orbits:\\\\" << endl;
 					L->report_filtered_orbits(ost);
 					ost << "A graph with " << L->CG->nb_points << " vertices has been created and saved in the file \\verb'" << L->fname_graph << "'\\\\" << endl;
@@ -1650,8 +1650,8 @@ void packing_was::report(ostream &ost)
 // #############################################################################
 
 
-int packing_was_orbit_test_function(int *orbit1, int len1,
-		int *orbit2, int len2, void *data)
+int packing_was_orbit_test_function(long int *orbit1, int len1,
+		long int *orbit2, int len2, void *data)
 {
 	packing_was *P = (packing_was *) data;
 
@@ -1660,9 +1660,9 @@ int packing_was_orbit_test_function(int *orbit1, int len1,
 }
 
 
-void packing_was_early_test_function_fp_cliques(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void packing_was_early_test_function_fp_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

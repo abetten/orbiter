@@ -311,7 +311,7 @@ int design_create::get_nb_colors_as_two_design(int verbose_level)
 	return nb_c;
 }
 
-int design_create::get_color_as_two_design_assume_sorted(int *design, int verbose_level)
+int design_create::get_color_as_two_design_assume_sorted(long int *design, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c, i;

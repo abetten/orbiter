@@ -342,7 +342,7 @@ void tensor_classify::init(int argc, const char **argv,
 				for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 					fp << "\\subsubsection*{Orbit " << orbit_idx << " / " << nb_orbits << "}" << endl;
 
-					int *Orbit; // orbit_length * depth
+					long int *Orbit; // orbit_length * depth
 					int orbit_length;
 
 					cout << "before get_whole_orbit orbit_idx=" << orbit_idx << endl;
@@ -351,9 +351,9 @@ void tensor_classify::init(int argc, const char **argv,
 							poset_classify_depth, orbit_idx,
 							Orbit, orbit_length, verbose_level);
 
-					int *data;
+					long int *data;
 
-					data = NEW_int(orbit_length);
+					data = NEW_lint(orbit_length);
 
 					for (i = 0; i < orbit_length; i++) {
 
@@ -388,19 +388,19 @@ void tensor_classify::init(int argc, const char **argv,
 					}
 					sorting Sorting;
 
-					Sorting.int_vec_heapsort(data, orbit_length);
+					Sorting.lint_vec_heapsort(data, orbit_length);
 
 					fp << "$$" << endl;
-					L.print_integer_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
+					L.print_lint_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
 					fp << "$$" << endl;
 
 					classify C;
 
-					C.init(data, orbit_length, TRUE, 0);
+					C.init_lint(data, orbit_length, TRUE, 0);
 					fp << "$$";
 					C.print_naked_tex(fp, TRUE /* f_backwards */);
 					fp << "$$";
-					FREE_int(data);
+					FREE_lint(data);
 				}
 			}
 
@@ -629,7 +629,7 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 	}
 
 	nb_points = W->nb_rank_one_tensors;
-	points = NEW_int(nb_points);
+	points = NEW_lint(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		uint32_t a, b;
 
@@ -656,9 +656,9 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 }
 
 
-void tensor_classify::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void tensor_classify::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -672,13 +672,13 @@ void tensor_classify::early_test_func(int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 
 
 	if (len == 0) {
-		int_vec_copy(candidates, good_candidates, nb_candidates);
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 		}
 	else {
@@ -772,9 +772,9 @@ void wreath_product_print_set(ostream &ost,
 
 
 
-void wreath_product_rank_one_early_test_func_callback(int *S, int len,
-	int *candidates, int nb_candidates,
-	int *good_candidates, int &nb_good_candidates,
+void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	tensor_classify *T = (tensor_classify *) data;

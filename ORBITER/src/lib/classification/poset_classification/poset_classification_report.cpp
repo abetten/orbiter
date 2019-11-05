@@ -267,7 +267,7 @@ void poset_classification::report(ostream &ost)
 	ost << "\\endlastfoot" << endl;
 
 	int level, nb_orbits, cnt, nb_live_pts, nb_extensions, nbo, nbg;
-	int *rep = NULL;
+	long int *rep = NULL;
 	char str[1000];
 	poset_orbit_node *O;
 	longinteger_object stab_order, orbit_length;
@@ -275,7 +275,7 @@ void poset_classification::report(ostream &ost)
 	latex_interface L;
 
 
-	rep = NEW_int(depth + 1);
+	rep = NEW_lint(depth + 1);
 
 	cout << "printing orbit representative" << endl;
 
@@ -291,7 +291,7 @@ void poset_classification::report(ostream &ost)
 
 			get_set_by_level(level, i, rep);
 
-			int_vec_print_to_str_naked(str, rep, level);
+			lint_vec_print_to_str_naked(str, rep, level);
 
 			cout << "set: '" << str << "'" << endl;
 
@@ -467,7 +467,7 @@ void poset_classification::report(ostream &ost)
 			get_set_by_level(level, orbit_at_level, rep);
 
 			ost << "$$" << endl;
-			L.int_set_print_tex(ost, rep, level);
+			L.lint_set_print_tex(ost, rep, level);
 			ost << "_{";
 			ost << str;
 			ost << "}";
@@ -648,7 +648,7 @@ void poset_classification::report(ostream &ost)
 			FREE_OBJECT(gens);
 		}
 	}
-	FREE_int(rep);
+	FREE_lint(rep);
 
 
 }

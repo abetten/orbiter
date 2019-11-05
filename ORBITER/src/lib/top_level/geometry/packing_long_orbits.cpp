@@ -46,7 +46,7 @@ void packing_long_orbits::init(packing_was *P,
 		int fixpoints_idx,
 		int fixpoints_clique_case_number,
 		int fixpoint_clique_size,
-		int *fixpoint_clique,
+		long int *fixpoint_clique,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -101,12 +101,12 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 			continue;
 			}
 
-		int *Orb;
+		long int *Orb;
 		int orbit_length;
 		int len1;
 
 		orbit_length = P->reduced_spread_orbits_under_H->Orbits_classified_length[t];
-		Orb = NEW_int(orbit_length);
+		Orb = NEW_lint(orbit_length);
 		Filtered_orbits->Set_size[t] = 0;
 
 		for (i = 0; i < Input->Set_size[t]; i++) {
@@ -128,7 +128,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 				}
 			}
 
-		FREE_int(Orb);
+		FREE_lint(Orb);
 		}
 
 	if (f_v) {
@@ -178,11 +178,11 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 
 	int user_data_sz;
-	int *user_data;
+	long int *user_data;
 
 	user_data_sz = fixpoint_clique_size;
-	user_data = NEW_int(user_data_sz);
-	int_vec_apply(fixpoint_clique,
+	user_data = NEW_lint(user_data_sz);
+	lint_vec_apply(fixpoint_clique,
 			P->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx],
 			user_data, fixpoint_clique_size);
 
@@ -195,7 +195,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 
 
-	FREE_int(user_data);
+	FREE_lint(user_data);
 	cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 			"the graph on long orbits has been created with "
 			<< CG->nb_points
@@ -231,7 +231,7 @@ void packing_long_orbits::create_graph_and_save_to_file(
 	colored_graph *&CG,
 	const char *fname,
 	int orbit_length,
-	int f_has_user_data, int *user_data, int user_data_size,
+	int f_has_user_data, long int *user_data, int user_data_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -265,7 +265,7 @@ void packing_long_orbits::create_graph_and_save_to_file(
 
 void packing_long_orbits::create_graph_on_long_orbits(
 		colored_graph *&CG,
-		int *user_data, int user_data_sz,
+		long int *user_data, int user_data_sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -305,8 +305,8 @@ void packing_long_orbits::report_filtered_orbits(ostream &ost)
 // #############################################################################
 
 
-int packing_long_orbit_test_function(int *orbit1, int len1,
-		int *orbit2, int len2, void *data)
+int packing_long_orbit_test_function(long int *orbit1, int len1,
+		long int *orbit2, int len2, void *data)
 {
 	packing_long_orbits *L = (packing_long_orbits *) data;
 

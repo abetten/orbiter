@@ -15,10 +15,11 @@ namespace orbiter {
 namespace group_actions {
 
 void action::coset_unrank(sims *G, sims *U,
-		int rank, int *Elt, int verbose_level)
+		long int rank, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, base_idx = 0, base_pt, rank0, nb, rem_int, len, k, elt_k;
+	long int i, base_idx = 0, base_pt, rank0, nb, len, k, elt_k;
+	int rem_int;
 	int *Elt_gk, *Elt1, *Elt2;
 	longinteger_domain D;
 	longinteger_object G0_order, G_order;
@@ -282,11 +283,12 @@ done:
 	
 }
 
-int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
+long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int rank = 0;
-	int i, base_idx = 0, base_pt, rank1, nb, rem_int, len, k, kk, elt_k, im;
+	long int rank = 0;
+	long int i, base_idx = 0, base_pt, rank1, nb, len, k, kk, elt_k, im;
+	int rem_int;
 	int *Elt_gk, *Elt1, *Elt2, *Elt3, *Elt_u;
 	longinteger_domain D;
 	longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
