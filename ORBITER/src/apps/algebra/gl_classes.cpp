@@ -223,7 +223,7 @@ int main(int argc, char **argv)
 
 			cout << "Looking at element " << i << ":" << endl;
 
-			A->Sims->element_unrank_int(i, Elt);
+			A->Sims->element_unrank_lint(i, Elt);
 			int_matrix_print(Elt, d, d);
 
 			{
@@ -265,7 +265,7 @@ int main(int argc, char **argv)
 			
 			cout << "Looking at element " << a << ":" << endl;
 
-			A->Sims->element_unrank_int(a, Elt);
+			A->Sims->element_unrank_lint(a, Elt);
 			int_matrix_print(Elt, d, d);
 
 
@@ -293,12 +293,12 @@ int main(int argc, char **argv)
 		int_vec_zero(Group_table, list_sz * list_sz);
 		for (i = 0; i < list_sz; i++) {
 			a = List[i];
-			A->Sims->element_unrank_int(a, Elt1);
+			A->Sims->element_unrank_lint(a, Elt1);
 			for (j = 0; j < list_sz; j++) {
 				b = List[j];
-				A->Sims->element_unrank_int(b, Elt2);
+				A->Sims->element_unrank_lint(b, Elt2);
 				A->element_mult(Elt1, Elt2, Elt3, 0);
-				h = A->Sims->element_rank_int(Elt3);
+				h = A->Sims->element_rank_lint(Elt3);
 				Group_table[i * list_sz + j] = h;
 				}
 			}
@@ -397,7 +397,7 @@ int main(int argc, char **argv)
 
 
 
-		A->Sims->element_unrank_int(elt_idx, Elt);
+		A->Sims->element_unrank_lint(elt_idx, Elt);
 
 		cout << "Computing centralizer of element "
 				<< elt_idx << ":" << endl;
@@ -409,7 +409,7 @@ int main(int argc, char **argv)
 
 			cout << "Looking at element " << i << " / " << go << endl;
 
-			A->Sims->element_unrank_int(i, Elt1);
+			A->Sims->element_unrank_lint(i, Elt1);
 			//int_matrix_print(Elt1, d, d);
 
 
@@ -441,7 +441,7 @@ int main(int argc, char **argv)
 			cout << "Looking at element " << i << " / " << sz
 					<< " which is " << a << endl;
 
-			A->Sims->element_unrank_int(a, Elt1);
+			A->Sims->element_unrank_lint(a, Elt1);
 			int_matrix_print(Elt1, d, d);
 			
 			A->element_move(Elt1, gens->ith(i), 0);
@@ -457,7 +457,7 @@ int main(int argc, char **argv)
 		for (i = 0; i < SG->len; i++) {
 
 			A->element_move(SG->ith(i), Elt1, 0);
-			a = A->Sims->element_rank_int(Elt1);
+			a = A->Sims->element_rank_lint(Elt1);
 
 			cout << "Element " << i << " / " << SG->len
 					<< " which is " << a << endl;
@@ -516,7 +516,7 @@ int main(int argc, char **argv)
 
 		cout << "Looking at element " << elt_idx << ":" << endl;
 
-		A_PGL->Sims->element_unrank_int(elt_idx, Elt);
+		A_PGL->Sims->element_unrank_lint(elt_idx, Elt);
 		int_matrix_print(Elt, d, d);
 
 		strong_generators *Cent;
@@ -579,7 +579,7 @@ int main(int argc, char **argv)
 		for (i = 0; i < go; i++) {
 			cout << "Looking at element " << i << ":" << endl;
 
-			A->Sims->element_unrank_int(i, Elt);
+			A->Sims->element_unrank_lint(i, Elt);
 			int_matrix_print(Elt, d, d);
 
 			sims *Cent;
@@ -656,7 +656,7 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 
 		A->make_element(Elt, Mtx, 0);
 			
-		a = A->Sims->element_rank_int(Elt);
+		a = A->Sims->element_rank_lint(Elt);
 
 		cout << "Representative of class " << i << " / "
 				<< nb_classes << " has rank " << a << endl;
@@ -782,7 +782,7 @@ void do_identify_all(int q, int d,
 
 		cout << "Looking at element " << i << ":" << endl;
 
-		A->Sims->element_unrank_int(i, Elt);
+		A->Sims->element_unrank_lint(i, Elt);
 		int_matrix_print(Elt, d, d);
 
 
@@ -864,7 +864,7 @@ void do_identify_one(int q, int d,
 
 	cout << "Looking at element " << elt_idx << ":" << endl;
 
-	A->Sims->element_unrank_int(elt_idx, Elt);
+	A->Sims->element_unrank_lint(elt_idx, Elt);
 	int_matrix_print(Elt, d, d);
 
 

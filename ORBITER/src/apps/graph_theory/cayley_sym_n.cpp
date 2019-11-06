@@ -257,7 +257,7 @@ void do_it(int n, int f_star, int f_coxeter,
 
 	
 	int *Adj;
-	int goi1;
+	long int goi1;
 
 	G->create_Cayley_graph(gens, Adj, goi1, verbose_level);
 

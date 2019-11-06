@@ -334,14 +334,14 @@ int main(int argc, const char **argv)
 		G = LG->initial_strong_gens->create_sims(verbose_level);
 		H = LG->Strong_gens->create_sims(verbose_level);
 
-		cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_int() << endl;
+		cout << "group order G = " << G->group_order_lint() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
 		cout << "before A->normalizer_using_MAGMA" << endl;
 		A->normalizer_using_MAGMA(fname_magma_prefix,
 				G, H, gens_N, verbose_level);
 
-		cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_int() << endl;
+		cout << "group order G = " << G->group_order_lint() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
 		gens_N->group_order(N_order);
 		cout << "group order N = " << N_order << endl;
 		cout << "Strong generators for the normalizer of H are:" << endl;
@@ -353,7 +353,7 @@ int main(int argc, const char **argv)
 		int N_goi;
 
 		N = gens_N->create_sims(verbose_level);
-		N_goi = N->group_order_int();
+		N_goi = N->group_order_lint();
 		cout << "The elements of N are:" << endl;
 		N->print_all_group_elements();
 
@@ -362,11 +362,11 @@ int main(int argc, const char **argv)
 
 			char fname[1000];
 			int *Table;
-			int n;
+			long int n;
 			N->create_group_table(Table, n, verbose_level);
 			cout << "The group table of the normalizer is:" << endl;
 			int_matrix_print(Table, n, n, 2);
-			sprintf(fname, "normalizer_%d.tex", n);
+			sprintf(fname, "normalizer_%ld.tex", n);
 			{
 				ofstream fp(fname);
 				latex_interface L;
@@ -418,7 +418,7 @@ int main(int argc, const char **argv)
 		H = LG->Strong_gens->create_sims(verbose_level);
 
 		//cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
 
 		int *Elt;
 		longinteger_object go;
@@ -429,8 +429,8 @@ int main(int argc, const char **argv)
 
 
 		cnt = 0;
-		for (i = 0; i < go.as_int(); i++) {
-			H->element_unrank_int(i, Elt);
+		for (i = 0; i < go.as_lint(); i++) {
+			H->element_unrank_lint(i, Elt);
 
 			cout << "Element " << setw(5) << i << " / "
 					<< go.as_int() << ":" << endl;
@@ -452,7 +452,7 @@ int main(int argc, const char **argv)
 		H = LG->Strong_gens->create_sims(verbose_level);
 
 		//cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
 
 		int *Elt;
 		longinteger_object go;
@@ -506,12 +506,12 @@ int main(int argc, const char **argv)
 						order_table = NEW_int(nb_elements * nb_elements);
 						for (i = 0; i < nb_elements; i++) {
 
-							H->element_unrank_int(elements[i], Elt1);
+							H->element_unrank_lint(elements[i], Elt1);
 
 
 							for (j = 0; j < nb_elements; j++) {
 
-								H->element_unrank_int(elements[j], Elt2);
+								H->element_unrank_lint(elements[j], Elt2);
 
 								A->element_mult(Elt1, Elt2, Elt3, 0);
 
@@ -544,7 +544,7 @@ int main(int argc, const char **argv)
 		H = LG->Strong_gens->create_sims(verbose_level);
 
 		//cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
 
 		int *Elt;
 		longinteger_object go;
@@ -555,7 +555,7 @@ int main(int argc, const char **argv)
 
 		cnt = 0;
 		for (i = 0; i < go.as_int(); i++) {
-			H->element_unrank_int(i, Elt);
+			H->element_unrank_lint(i, Elt);
 
 #if 0
 			cout << "Element " << setw(5) << i << " / "
@@ -591,7 +591,7 @@ int main(int argc, const char **argv)
 		file_io Fio;
 		int *M;
 		int m, n;
-		int *Table;
+		long int *Table;
 		int j;
 
 		Fio.int_matrix_read_csv(orbits_on_set_system_from_file_fname, M,
@@ -603,7 +603,7 @@ int main(int argc, const char **argv)
 		//orbits_on_set_system_number_of_columns = atoi(argv[++i]);
 
 
-		Table = NEW_int(m * orbits_on_set_system_number_of_columns);
+		Table = NEW_lint(m * orbits_on_set_system_number_of_columns);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < orbits_on_set_system_number_of_columns; j++) {
 				Table[i * orbits_on_set_system_number_of_columns + j] =
@@ -640,7 +640,7 @@ int main(int argc, const char **argv)
 			first = Sch->orbit_first[i];
 			a = Sch->orbit[first + 0];
 			cout << a << " : ";
-			int_vec_print(cout, Table + a * set_size, set_size);
+			lint_vec_print(cout, Table + a * set_size, set_size);
 			cout << endl;
 			//Sch->print_and_list_orbit_tex(i, ost);
 			}
@@ -673,7 +673,7 @@ int main(int argc, const char **argv)
 		cout << "computing orbit of set from file "
 				<< orbit_of_set_from_file_fname << ":" << endl;
 		file_io Fio;
-		int *the_set;
+		long int *the_set;
 		int set_sz;
 
 		Fio.read_set_from_file(orbit_of_set_from_file_fname,
@@ -691,7 +691,7 @@ int main(int argc, const char **argv)
 
 		cout << "Found an orbit of length " << OS->used_length << endl;
 
-		int *Table;
+		long int *Table;
 		int orbit_length, set_size;
 
 		cout << "before OS->get_table_of_orbits" << endl;
@@ -706,12 +706,12 @@ int main(int argc, const char **argv)
 		char fname[1000];
 		sprintf(fname, "orbit_of_%s_under_%s_with_hash.csv", str, LG->prefix);
 		cout << "Writing table to file " << fname << endl;
-		Fio.int_matrix_write_csv(fname,
+		Fio.lint_matrix_write_csv(fname,
 				Table, orbit_length, set_size);
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 
-		FREE_int(Table);
+		FREE_lint(Table);
 
 		cout << "before OS->get_table_of_orbits" << endl;
 		OS->get_table_of_orbits(Table,
@@ -944,7 +944,7 @@ int main(int argc, const char **argv)
 			for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 
 				int orbit_length;
-				int *Orbit;
+				long int *Orbit;
 
 				cout << "before PC->get_whole_orbit depth " << depth
 						<< " orbit " << orbit_idx
@@ -955,7 +955,7 @@ int main(int argc, const char **argv)
 				cout << "depth " << depth << " orbit " << orbit_idx
 						<< " / " << nb_orbits << " has length "
 						<< orbit_length << ":" << endl;
-				int_matrix_print(Orbit, orbit_length, depth);
+				lint_matrix_print(Orbit, orbit_length, depth);
 
 				action *Aut;
 				longinteger_object ago;
@@ -971,15 +971,15 @@ int main(int argc, const char **argv)
 						"has order " << ago << endl;
 
 				FREE_OBJECT(Aut);
-				FREE_int(Orbit);
+				FREE_lint(Orbit);
 			}
 			if (nb_orbits == 2) {
 				cout << "the number of orbits at depth " << depth
 						<< " is two, we will try create_automorphism_"
 						"group_of_collection_of_two_block_systems" << endl;
-				int *Orbit1;
+				long int *Orbit1;
 				int orbit_length1;
-				int *Orbit2;
+				long int *Orbit2;
 				int orbit_length2;
 
 				cout << "before PC->get_whole_orbit depth " << depth
@@ -991,7 +991,7 @@ int main(int argc, const char **argv)
 				cout << "depth " << depth << " orbit " << 0
 						<< " / " << nb_orbits << " has length "
 						<< orbit_length1 << ":" << endl;
-				int_matrix_print(Orbit1, orbit_length1, depth);
+				lint_matrix_print(Orbit1, orbit_length1, depth);
 
 				PC->get_whole_orbit(
 						depth, 1 /* orbit_idx*/,
@@ -999,7 +999,7 @@ int main(int argc, const char **argv)
 				cout << "depth " << depth << " orbit " << 1
 						<< " / " << nb_orbits << " has length "
 						<< orbit_length2 << ":" << endl;
-				int_matrix_print(Orbit2, orbit_length2, depth);
+				lint_matrix_print(Orbit2, orbit_length2, depth);
 
 				action *Aut;
 				longinteger_object ago;
@@ -1017,8 +1017,8 @@ int main(int argc, const char **argv)
 						"has order " << ago << endl;
 
 				FREE_OBJECT(Aut);
-				FREE_int(Orbit1);
-				FREE_int(Orbit2);
+				FREE_lint(Orbit1);
+				FREE_lint(Orbit2);
 
 			} // if nb_orbits == 2
 		} // if (f_test_if_geometric)

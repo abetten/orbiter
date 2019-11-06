@@ -175,7 +175,7 @@ void factor_cyclotomic(int n, int q, int d,
 	sorting Sorting;
 	
 	for (c = 0; c < n; c++) {
-		if (NT.gcd_int(c, n) != 1)
+		if (NT.gcd_lint(c, n) != 1)
 			continue;
 		C.create(c);
 		N.create(n);

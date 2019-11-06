@@ -387,7 +387,7 @@ public:
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int is_cycle(int nb_e, int *edges, int verbose_level);
+	int is_cycle(int nb_e, long int *edges, int verbose_level);
 	void draw_it(const char *fname_base, 
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width);
@@ -527,7 +527,7 @@ public:
 		int &nb_sol, int &dt,
 		int verbose_level);
 	void colored_graph_all_cliques_list_of_cases(
-		int *list_of_cases, int nb_cases,
+		long int *list_of_cases, int nb_cases,
 		int f_output_solution_raw,
 		const char *fname_template,
 		const char *fname_sol, const char *fname_stats,

@@ -37,7 +37,7 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 		int x, int y, int dx, int dy);
 int get_depth(layered_graph *LG, int layer, int node);
 int get_data(layered_graph *LG,
-		int layer, int node, int *Data, int cur_depth);
+		int layer, int node, long int *Data, int cur_depth);
 void draw_begining_callback(layered_graph *LG,
 		mp_graphics *G, int x_max, int y_max,
 		int f_rotated, int dx, int dy);
@@ -366,13 +366,13 @@ void draw_vertex_callback_standard(layered_graph *LG,
 	else {
 		if (LG->L[layer].Nodes[node].f_has_vec_data) {
 			cout << "has vector data" << endl;
-			int *D;
+			long int *D;
 			int len;
 
 			D = LG->L[layer].Nodes[node].vec_data;
 			len = LG->L[layer].Nodes[node].vec_data_len;
 			if (len) {
-				sprintf(str, "%d", D[len - 1]);
+				sprintf(str, "%ld", D[len - 1]);
 				}
 			}
 		else {
@@ -495,7 +495,7 @@ void draw_vertex_callback_graph(layered_graph *LG,
 		cout << "node has vector data" << endl;
 		char str[1000000];
 		int i;
-		int *D;
+		long int *D;
 		int len;
 
 		D = LG->L[layer].Nodes[node].vec_data;
@@ -504,7 +504,7 @@ void draw_vertex_callback_graph(layered_graph *LG,
 		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ",
 				layer, node, x, y, dx, dy, nb_V, len);
 		for (i = 0; i < len; i++) {
-			sprintf(str + strlen(str), " %d", D[i]);
+			sprintf(str + strlen(str), " %ld", D[i]);
 			}
 		G->comment(str);
 
@@ -516,7 +516,7 @@ void draw_vertex_callback_graph(layered_graph *LG,
 			distinguished_edge =
 					LG->L[layer].Nodes[node].distinguished_element_index;
 
-			cout << "dinstingished edge = " << distinguished_edge << endl;
+			cout << "distinguished edge = " << distinguished_edge << endl;
 
 			G->draw_graph_with_distinguished_edge(x, y, dx, dy,
 					nb_V, D, len, distinguished_edge, 0 /*verbose_level*/);
@@ -530,14 +530,14 @@ void draw_vertex_callback_graph(layered_graph *LG,
 		}
 
 	else if (d1 >= 0) {
-		int *D;
+		long int *D;
 		depth = get_depth(LG, layer, node);
 
-		D = NEW_int(depth + 1);
+		D = NEW_lint(depth + 1);
 		get_data(LG, layer, node, D, depth);
 		cout << "draw_vertex_callback layer=" << layer
 				<< " node=" << node << " data = ";
-		int_vec_print(cout, D, depth);
+		lint_vec_print(cout, D, depth);
 		cout << endl;
 
 		char str[1000000];
@@ -546,14 +546,14 @@ void draw_vertex_callback_graph(layered_graph *LG,
 		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ",
 				layer, node, x, y, dx, dy, nb_V, depth);
 		for (i = 0; i < depth; i++) {
-			sprintf(str + strlen(str), " %d", D[i]);
+			sprintf(str + strlen(str), " %ld", D[i]);
 			}
 		G->comment(str);
 		G->draw_graph(x, y, dx, dy, nb_V, D, depth);
 
 		G->comment("graph_end");
 		
-		FREE_int(D);
+		FREE_lint(D);
 		}
 }
 
@@ -574,7 +574,7 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 
 		char str[1000000];
 		int i;
-		int *D;
+		long int *D;
 		int len;
 
 		D = LG->L[layer].Nodes[node].vec_data;
@@ -583,7 +583,7 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ",
 				layer, node, x, y, dx, dy, nb_V, len);
 		for (i = 0; i < len; i++) {
-			sprintf(str + strlen(str), " %d", D[i]);
+			sprintf(str + strlen(str), " %ld", D[i]);
 			}
 		G->comment(str);
 		G->draw_tournament(x, y, dx, dy, nb_V, D, len, verbose_level);
@@ -593,14 +593,14 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 		}
 
 	else if (d1 >= 0) {
-		int *D;
+		long int *D;
 		depth = get_depth(LG, layer, node);
 
-		D = NEW_int(depth + 1);
+		D = NEW_lint(depth + 1);
 		get_data(LG, layer, node, D, depth);
 		cout << "draw_vertex_callback layer=" << layer
 				<< " node=" << node << " data = ";
-		int_vec_print(cout, D, depth);
+		lint_vec_print(cout, D, depth);
 		cout << endl;
 
 		char str[1000000];
@@ -609,13 +609,13 @@ void draw_vertex_callback_tournament(layered_graph *LG,
 		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ",
 				layer, node, x, y, dx, dy, nb_V, depth);
 		for (i = 0; i < depth; i++) {
-			sprintf(str + strlen(str), " %d", D[i]);
+			sprintf(str + strlen(str), " %ld", D[i]);
 			}
 		G->comment(str);
 		G->draw_tournament(x, y, dx, dy, nb_V, D, depth, verbose_level);
 		G->comment("tournament_end");
 		
-		FREE_int(D);
+		FREE_lint(D);
 		}
 }
 
@@ -635,7 +635,7 @@ int get_depth(layered_graph *LG, int layer, int node)
 }
 
 int get_data(layered_graph *LG, int layer,
-		int node, int *Data, int cur_depth)
+		int node, long int *Data, int cur_depth)
 {
 	int d1, d2, d3;
 	

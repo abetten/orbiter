@@ -356,7 +356,7 @@ int main(int argc, const char **argv)
 
 	char fname[1000];
 	int nb_pts;
-	int *Pts = NULL;
+	long int *Pts = NULL;
 
 	finite_field *F;
 
@@ -666,7 +666,7 @@ int main(int argc, const char **argv)
 
 
 	if (Pts) {
-		FREE_int(Pts);
+		FREE_lint(Pts);
 		}
 	the_end(t0);
 }

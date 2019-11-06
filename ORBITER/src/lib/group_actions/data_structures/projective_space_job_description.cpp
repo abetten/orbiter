@@ -1101,7 +1101,7 @@ void projective_space_job_description::perform_job_for_one_set(
 			}
 
 		long int nb_backtrack_nodes;
-		int *Sol;
+		long int *Sol;
 		int nb_sol;
 
 		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
@@ -1135,7 +1135,7 @@ void projective_space_job_description::perform_job_for_one_set(
 
 		cout << "Written file " << fname_solutions << " of size "
 				<< Fio.file_size(fname_solutions) << endl;
-		FREE_int(Sol);
+		FREE_lint(Sol);
 
 
 	}
@@ -1173,7 +1173,7 @@ void projective_space_job_description::perform_job_for_one_set(
 			}
 
 		long int nb_backtrack_nodes;
-		int *Sol;
+		long int *Sol;
 		int nb_sol;
 
 		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
@@ -1207,7 +1207,7 @@ void projective_space_job_description::perform_job_for_one_set(
 
 		cout << "Written file " << fname_solutions << " of size "
 				<< Fio.file_size(fname_solutions) << endl;
-		FREE_int(Sol);
+		FREE_lint(Sol);
 
 
 	}
@@ -1246,7 +1246,7 @@ void projective_space_job_description::perform_job_for_one_set(
 			}
 
 		long int nb_backtrack_nodes;
-		int *Sol;
+		long int *Sol;
 		int nb_sol;
 
 		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
@@ -1280,7 +1280,7 @@ void projective_space_job_description::perform_job_for_one_set(
 
 		cout << "Written file " << fname_solutions << " of size "
 				<< Fio.file_size(fname_solutions) << endl;
-		FREE_int(Sol);
+		FREE_lint(Sol);
 
 
 	}

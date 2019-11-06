@@ -233,7 +233,7 @@ int main(int argc, const char **argv)
 	cout << "We are now creating the quadric:" << endl;
 
 	int nb_pts;
-	int *Pts;
+	long int *Pts;
 	int n = 3;
 	int epsilon = 1;
 	int c1 = 1, c2 = 0, c3 = 0;
@@ -245,7 +245,7 @@ int main(int argc, const char **argv)
 	nb_pts = Gg.nb_pts_Qepsilon(epsilon, n, q);
 
 	v = NEW_int(d);
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 
 	if (epsilon == -1) {
 		F->choose_anisotropic_form(c1, c2, c3, verbose_level);
@@ -269,7 +269,7 @@ int main(int argc, const char **argv)
 
 
 	cout << "The quadric is ";
-	int_vec_print(cout, Pts, nb_pts);
+	lint_vec_print(cout, Pts, nb_pts);
 	cout << endl;
 
 
@@ -423,7 +423,7 @@ int main(int argc, const char **argv)
 
 	// compute the orbit of the quadric under PGGL(4,q):
 
-	int *the_set = Pts;
+	long int *the_set = Pts;
 	int set_sz = nb_pts;
 
 	orbit_of_sets *OS;
@@ -437,7 +437,7 @@ int main(int argc, const char **argv)
 
 	cout << "Found an orbit of length " << OS->used_length << endl;
 
-	int *Table;
+	long int *Table;
 	int orbit_length, set_size;
 
 	cout << "before OS->get_table_of_orbits" << endl;
@@ -449,12 +449,11 @@ int main(int argc, const char **argv)
 	char fname[1000];
 	sprintf(fname, "orbit_of_quadric_under_%s_with_hash.csv", LG->prefix);
 	cout << "Writing table to file " << fname << endl;
-	Fio.int_matrix_write_csv(fname,
+	Fio.lint_matrix_write_csv(fname,
 			Table, orbit_length, set_size);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
-	FREE_int(Table);
 
 	cout << "before OS->get_table_of_orbits" << endl;
 	OS->get_table_of_orbits(Table,
@@ -519,8 +518,8 @@ int main(int argc, const char **argv)
 
 	int N_planes;
 	int N_lines_in_plane;
-	N_planes = Surf_A->Surf->P->nb_rk_k_subspaces_as_int(3);
-	N_lines_in_plane = Surf_A->Surf->P2->nb_rk_k_subspaces_as_int(2);
+	N_planes = Surf_A->Surf->P->nb_rk_k_subspaces_as_lint(3);
+	N_lines_in_plane = Surf_A->Surf->P2->nb_rk_k_subspaces_as_lint(2);
 	int *plane_rk;
 	plane_rk = NEW_int(N_planes);
 
@@ -544,7 +543,7 @@ int main(int argc, const char **argv)
 		first = Sch_on_sets->orbit_first[orbit_idx];
 		a = Sch_on_sets->orbit[first + 0];
 		cout << a << " : ";
-		int_vec_print(cout, Table + a * set_size, set_size);
+		lint_vec_print(cout, Table + a * set_size, set_size);
 		cout << endl;
 
 		OS->coset_rep(a);
@@ -558,17 +557,17 @@ int main(int argc, const char **argv)
 
 
 		sorting Sorting;
-		int *intersection;
+		long int *intersection;
 		int intersection_size;
-		int *intersection_on_quadric;
+		long int *intersection_on_quadric;
 
-		Sorting.int_vec_intersect(
+		Sorting.vec_intersect(
 				Table + a * set_size, set_size,
 				SO->Pts, SO->nb_pts,
 				intersection, intersection_size);
 
 		cout << "The intersection has size " << intersection_size << " : ";
-		int_vec_print(cout, intersection, intersection_size);
+		lint_vec_print(cout, intersection, intersection_size);
 		cout << endl;
 
 		fp << " & " << intersection_size;
@@ -576,12 +575,12 @@ int main(int argc, const char **argv)
 		fp << " & " << orbit_length1;
 
 
-		intersection_on_quadric = NEW_int(intersection_size);
+		intersection_on_quadric = NEW_lint(intersection_size);
 		A->map_a_set_and_reorder(intersection, intersection_on_quadric,
 				intersection_size, transporter_inv, 0 /* verbose_level */);
 
 		cout << "The intersection mapped back to the quadric : ";
-		int_vec_print(cout, intersection_on_quadric, intersection_size);
+		lint_vec_print(cout, intersection_on_quadric, intersection_size);
 		cout << endl;
 
 		strong_generators *stab_gens;
@@ -593,7 +592,7 @@ int main(int argc, const char **argv)
 		cout << "The stabilizer is:" << endl;
 		stab_gens->print_generators_tex(cout);
 
-		fp << " & " << stab_gens->group_order_as_int();
+		fp << " & " << stab_gens->group_order_as_lint();
 
 
 		vector<int> plane_ranks;
@@ -622,24 +621,24 @@ int main(int argc, const char **argv)
 
 		fp << " & " << len;
 
-		int *tri_planes;
+		long int *tri_planes;
 		int nb_tri_planes;
-		int *five_planes_tri;
-		int *five_planes_not_tri;
+		long int *five_planes_tri;
+		long int *five_planes_not_tri;
 		int nb_five_planes_tri = 0;
 		int nb_five_planes_not_tri = 0;
 		int idx;
 
-		five_planes_tri = NEW_int(len);
-		five_planes_not_tri = NEW_int(len);
+		five_planes_tri = NEW_lint(len);
+		five_planes_not_tri = NEW_lint(len);
 		tri_planes = SoA->SO->Tritangent_planes;
 		nb_tri_planes = SoA->SO->nb_tritangent_planes;
-		Sorting.int_vec_heapsort(tri_planes, nb_tri_planes);
+		Sorting.lint_vec_heapsort(tri_planes, nb_tri_planes);
 
 
 		for (int i = 0; i < len; i++) {
 			a = plane_ranks[i];
-			if (Sorting.int_vec_search(tri_planes, nb_tri_planes, a, idx)) {
+			if (Sorting.lint_vec_search(tri_planes, nb_tri_planes, a, idx, 0)) {
 				five_planes_tri[nb_five_planes_tri++] = a;
 			}
 			else {
@@ -651,14 +650,14 @@ int main(int argc, const char **argv)
 						"which intersect in "
 				"at least " << s << " points" << endl;
 		cout << "They are: ";
-		int_vec_print(cout, five_planes_tri, nb_five_planes_tri);
+		lint_vec_print(cout, five_planes_tri, nb_five_planes_tri);
 		cout << endl;
 		cout << "orbit_idx = " << orbit_idx << " we found "
 				<< nb_five_planes_not_tri << " non-tritangent planes "
 						"which intersect in "
 				"at least " << s << " points" << endl;
 		cout << "They are: ";
-		int_vec_print(cout, five_planes_not_tri, nb_five_planes_not_tri);
+		lint_vec_print(cout, five_planes_not_tri, nb_five_planes_not_tri);
 		cout << endl;
 
 		fp << " & " << nb_five_planes_tri;
@@ -688,12 +687,12 @@ int main(int argc, const char **argv)
 			for (int i = 0; i < N_planes; i++) {
 
 				if (e == 0) {
-					if (!Sorting.int_vec_search(tri_planes, nb_tri_planes, i, idx)) {
+					if (!Sorting.lint_vec_search(tri_planes, nb_tri_planes, i, idx, 0)) {
 						continue;
 					}
 				}
 				else {
-					if (Sorting.int_vec_search(tri_planes, nb_tri_planes, i, idx)) {
+					if (Sorting.lint_vec_search(tri_planes, nb_tri_planes, i, idx, 0)) {
 						continue;
 					}
 				}
@@ -737,7 +736,7 @@ int main(int argc, const char **argv)
 
 				vector<int> point_indices;
 				vector<int> point_local_coordinates;
-				int *pts_local;
+				long int *pts_local;
 				int nb_pts_local;
 
 				Surf_A->Surf->P->plane_intersection(plane_rank,
@@ -746,12 +745,12 @@ int main(int argc, const char **argv)
 							point_local_coordinates,
 							verbose_level);
 				nb_pts_local = point_local_coordinates.size();
-				pts_local = NEW_int(nb_pts_local);
+				pts_local = NEW_lint(nb_pts_local);
 				for (int j = 0; j < nb_pts_local; j++) {
 					pts_local[j] = point_local_coordinates[j];
 				}
 
-				int **Pts_on_conic;
+				long int **Pts_on_conic;
 				int *nb_pts_on_conic;
 				int nb_conics;
 
@@ -765,9 +764,9 @@ int main(int argc, const char **argv)
 
 				C2.print_file_tex_we_are_in_math_mode(fp3, TRUE);
 				for (int j = 0; j < nb_conics; j++) {
-					FREE_int(Pts_on_conic[j]);
+					FREE_lint(Pts_on_conic[j]);
 				}
-				FREE_pint(Pts_on_conic);
+				FREE_plint(Pts_on_conic);
 				FREE_int(nb_pts_on_conic);
 
 
@@ -806,7 +805,7 @@ int main(int argc, const char **argv)
 
 
 		FREE_OBJECT(stab_gens);
-		FREE_int(intersection);
+		FREE_lint(intersection);
 		}
 	} // end ofstream
 
@@ -831,6 +830,7 @@ int main(int argc, const char **argv)
 	}
 
 
+	FREE_lint(Table);
 
 
 	cout << "before FREE_OBJECT(OS)" << endl;

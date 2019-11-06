@@ -154,14 +154,14 @@ void do_it(finite_field *F, linear_group *LG,
 
 
 	int *Eqn;
-	int *Pts;
+	long int *Pts;
 	int nb_pts;
 	int lambda;
-	int *Conics;
+	long int *Conics;
 
 	Eqn = NEW_int(HPD->nb_monomials);
-	Pts = NEW_int(HPD->P->N_points);
-	Conics = NEW_int((F->q - 1) * (F->q + 1));
+	Pts = NEW_lint(HPD->P->N_points);
+	Conics = NEW_lint((F->q - 1) * (F->q + 1));
 
 	for (lambda = 1; lambda < F->q; lambda++) {
 
@@ -176,11 +176,11 @@ void do_it(finite_field *F, linear_group *LG,
 			cout << "do_it nb_pts != F->q + 1" << endl;
 			exit(1);
 		}
-		int_vec_copy(Pts, Conics + (lambda - 1) * (F->q + 1), F->q + 1);
+		lint_vec_copy(Pts, Conics + (lambda - 1) * (F->q + 1), F->q + 1);
 	}
 	if (f_v) {
 		cout << "do_it Conics:" << endl;
-		int_matrix_print(Conics, F->q - 1, F->q + 1);
+		lint_matrix_print(Conics, F->q - 1, F->q + 1);
 	}
 
 	action *A_on_conics;
@@ -232,10 +232,10 @@ void do_it(finite_field *F, linear_group *LG,
 	cout << "nb_orbits at level 2 = " << PC->nb_orbits_at_level(2) << endl;
 	cout << "nb_orbits at level 3 = " << PC->nb_orbits_at_level(3) << endl;
 
-	int *orbit_reps;
+	long int *orbit_reps;
 	int nb_orbits;
 	int orbit_idx;
-	int *Set;
+	long int *Set;
 	int set_size;
 	int i, a;
 	int *line_type;
@@ -244,20 +244,20 @@ void do_it(finite_field *F, linear_group *LG,
 			orbit_reps, verbose_level);
 
 	cout << "orbit reps:" << endl;
-	int_matrix_print(orbit_reps, nb_orbits, 3);
+	lint_matrix_print(orbit_reps, nb_orbits, 3);
 
 	set_size = 2 + 3 * (F->q - 1);
-	Set = NEW_int(set_size);
+	Set = NEW_lint(set_size);
 	line_type = NEW_int(HPD->P->N_lines);
 	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 		Set[0] = 0;
 		Set[1] = 1;
 		for (i = 0; i < 3; i++) {
 			a = orbit_reps[orbit_idx * 3 + i];
-			int_vec_copy(Conics + a * (F->q + 1) + 2, Set + 2 + i * (F->q - 1), F->q - 1);
+			lint_vec_copy(Conics + a * (F->q + 1) + 2, Set + 2 + i * (F->q - 1), F->q - 1);
 		}
 		cout << "orbit " << orbit_idx << " = ";
-		int_vec_print(cout, orbit_reps + orbit_idx * 3, 3);
+		lint_vec_print(cout, orbit_reps + orbit_idx * 3, 3);
 		cout << " : ";
 		//int_vec_print(cout, Set, set_size);
 		//cout << " : ";
@@ -279,7 +279,7 @@ void do_it(finite_field *F, linear_group *LG,
 		Set[1] = 1;
 		for (i = 0; i < 3; i++) {
 			a = test3[i];
-			int_vec_copy(Conics + a * (F->q + 1) + 2,
+			lint_vec_copy(Conics + a * (F->q + 1) + 2,
 					Set + 2 + i * (F->q - 1), F->q - 1);
 		}
 		cout << "testing " << orbit_idx << " = ";

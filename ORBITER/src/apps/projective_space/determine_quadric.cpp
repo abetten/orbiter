@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *Pts;
+	long int *Pts;
 	int ten_coeffs[10];
 	finite_field *F;
 	projective_space *P;
@@ -103,11 +103,11 @@ int main(int argc, char **argv)
 					"using -pts <p1> ... <p9>" << endl;
 			exit(1);
 			}
-		Pts = NEW_int(nb_pts);
-		int_vec_copy(pts, Pts, nb_pts);
+		Pts = NEW_lint(nb_pts);
+		int_vec_copy_to_lint(pts, Pts, nb_pts);
 		}
 	else if (nb_pt_coords) {
-		int a;
+		long int a;
 		
 		if (nb_pt_coords < 36) {
 			cout << "please give at least 36 = 9 x 4 point coordinates "
@@ -116,12 +116,12 @@ int main(int argc, char **argv)
 			exit(1);
 			}
 		nb_pts = nb_pt_coords / 4;
-		Pts = NEW_int(nb_pts);
+		Pts = NEW_lint(nb_pts);
 		for (i = 0; i < nb_pts; i++) {
 			cout << "point " << i << " has coordinates ";
 			int_vec_print(cout, pt_coords + i * 4, 4);
 			cout << endl;
-			F->PG_element_rank_modified(pt_coords + i * 4, 1, 4, a);
+			F->PG_element_rank_modified_lint(pt_coords + i * 4, 1, 4, a);
 			Pts[i] = a;
 			cout << "and rank " << a << endl;
 			}
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 
 
 	cout << "Pts: ";
-	int_vec_print(cout, Pts, nb_pts);
+	lint_vec_print(cout, Pts, nb_pts);
 	cout << endl;
 
 
@@ -161,7 +161,7 @@ int main(int argc, char **argv)
 		}
 
 
-	int points[1000];
+	long int points[1000];
 	int nb_points;
 	
 	cout << "quadric points brute force:" << endl;
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
 		int v[4];
 		
 		cout << "the " << nb_points << " quadric points are: ";
-		int_vec_print(cout, points, nb_points);
+		lint_vec_print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);

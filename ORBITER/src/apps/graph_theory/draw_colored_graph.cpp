@@ -20,13 +20,13 @@ using namespace orbiter;
 
 int t0; // the system time when the program started
 
-void early_test_function_cliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-void early_test_function_cocliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cocliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void characteristic_polynomial(colored_graph *CG, int verbose_level);
 
@@ -608,10 +608,10 @@ int main(int argc, char **argv)
 		cout << "ago=" << ago << endl;
 
 		action *Aut_on_points;
-		int *points;
+		long int *points;
 		
 		//Aut_on_points = NEW_OBJECT(action);
-		points = NEW_int(CG->nb_points);
+		points = NEW_lint(CG->nb_points);
 		for (i = 0; i < CG->nb_points; i++) {
 			points[i] = i;
 			}
@@ -693,11 +693,11 @@ int main(int argc, char **argv)
 				}
 			}
 
-		int *set;
+		long int *set;
 		longinteger_object go, ol;
 		longinteger_domain D;
 
-		set = NEW_int(depth);
+		set = NEW_lint(depth);
 		nb_orbits = gen->nb_orbits_at_level(depth);
 
 		cout << "orbit : representative : stabilizer order : "
@@ -713,16 +713,16 @@ int main(int argc, char **argv)
 
 
 			cout << "Orbit " << i << " is the set ";
-			int_vec_print(cout, set, depth);
+			lint_vec_print(cout, set, depth);
 			cout << " : " << go << " : " << ol << endl;
 			cout << endl;
 
 			
 			}
 
-		FREE_int(set);
+		FREE_lint(set);
 		FREE_int(Adj);
-		FREE_int(points);
+		FREE_lint(points);
 		FREE_OBJECT(Aut);
 		FREE_OBJECT(Aut_on_points);
 
@@ -745,9 +745,9 @@ int main(int argc, char **argv)
 
 }
 
-void early_test_function_cliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;
@@ -770,9 +770,9 @@ void early_test_function_cliques(int *S, int len,
 		}
 }
 
-void early_test_function_cocliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cocliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;

@@ -29,7 +29,7 @@ void arc_lifting_from_classification_file(
 void do_arc_lifting(
 	ostream &ost,
 	projective_space *P, int k,
-	int *arc, int arc_sz, int target_sz, 
+	long int *arc, int arc_sz, int target_sz,
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
 	long int &nb_backtrack_nodes,
@@ -42,9 +42,9 @@ void search(ostream &ost, int level);
 	finite_field *F;
 	projective_space *P;
 	//action *A_linear;
-int *arc;
+long int *arc;
 int arc_sz;
-	int *free_points;
+	long int *free_points;
 	int nb_free_points;
 
 
@@ -56,7 +56,7 @@ int arc_sz;
 	int *row; // [nb_needed]
 	int *col; // [nb_needed]
 	int nb_needed;
-	int *Arc;
+	long int *Arc;
 	int *line_type;
 	int *Line_type_after; // [nb_needed * P->N_lines]
 	int k = 0;
@@ -304,13 +304,13 @@ int main(int argc, char **argv)
 				}
 			}
 
-		int *the_arc;
+		long int *the_arc;
 		int the_arc_sz;
 		long int nb_backtrack_nodes;
 		
-		int_vec_scan(arc_text, the_arc, the_arc_sz);
+		lint_vec_scan(arc_text, the_arc, the_arc_sz);
 		cout << "input arc of size " << the_arc_sz << " = ";
-		int_vec_print(cout, the_arc, the_arc_sz);
+		lint_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 
@@ -331,7 +331,7 @@ int main(int argc, char **argv)
 				the_arc[i] = b;
 				}
 			cout << "input arc in orbiter labels = ";
-			int_vec_print(cout, the_arc, the_arc_sz);
+			lint_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 			}
 		else if (f_cook_labels) {
@@ -351,7 +351,7 @@ int main(int argc, char **argv)
 				the_arc[i] = b;
 				}
 			cout << "input arc in orbiter labels = ";
-			int_vec_print(cout, the_arc, the_arc_sz);
+			lint_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 			}
 
@@ -365,15 +365,15 @@ int main(int argc, char **argv)
 			}
 			cout << "input arc after applying the polarity "
 					"from lines to points = ";
-			int_vec_print(cout, the_arc, the_arc_sz);
+			lint_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 
 		}
 
-		Sorting.int_vec_heapsort(the_arc, the_arc_sz);
+		Sorting.lint_vec_heapsort(the_arc, the_arc_sz);
 
 		cout << "input arc in orbiter labels sorted= ";
-		int_vec_print(cout, the_arc, the_arc_sz);
+		lint_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 		
@@ -723,7 +723,7 @@ void arc_lifting_from_classification_file(
 void do_arc_lifting(
 	ostream &ost,
 	projective_space *P, int k,
-	int *arc, int arc_sz, int target_sz, 
+	long int *arc, int arc_sz, int target_sz,
 	int f_save_system, const char *fname_system, 
 	int f_Cook, int f_DLX, int f_McKay, 
 	long int &nb_backtrack_nodes,
@@ -744,15 +744,15 @@ void do_arc_lifting(
 	F = P->F;
 	if (f_v) {
 		cout << "do_arc_lifting, the arc is ";
-		int_vec_print(cout, arc, arc_sz);
+		lint_vec_print(cout, arc, arc_sz);
 		cout << endl;
 		}
 
 	nb_backtrack_nodes = 0;
 
-	free_points = NEW_int(P->N_points);
+	free_points = NEW_lint(P->N_points);
 
-	Combi.set_complement(arc, arc_sz,
+	Combi.set_complement_lint(arc, arc_sz,
 			free_points, nb_free_points,
 			P->N_points);
 
@@ -917,7 +917,7 @@ void do_arc_lifting(
 			
 				// test it pt is already in the arc,
 				// skip if so.
-				if (!Sorting.int_vec_search(arc, arc_sz, pt, idx)) {
+				if (!Sorting.lint_vec_search(arc, arc_sz, pt, idx, 0)) {
 
 					// otherwise, put it in the Cook table:
 					Cook_table[i * w + h++] = pt;
@@ -1026,7 +1026,7 @@ void do_arc_lifting(
 		row = NEW_int(nb_needed);
 		col = NEW_int(nb_needed);
 
-		Arc = NEW_int(nb_needed);
+		Arc = NEW_lint(nb_needed);
 
 
 
@@ -1071,7 +1071,7 @@ void do_arc_lifting(
 		FREE_int(Cook_table2);
 		FREE_int(row);
 		FREE_int(col);
-		FREE_int(Arc);
+		FREE_lint(Arc);
 		FREE_int(Line_type_after);
 		cout << "before FREE_OBJECT(line_type)" << endl;
 		FREE_int(line_type);
@@ -1109,14 +1109,14 @@ void do_arc_lifting(
 			cout << "D->sum = " << D->sum << endl;
 			}
 		if (nb_sol) {
-			int *Sol;
+			long int *Sol;
 			int nb_sol;
 			int i, j, a;
-			int *big_arc;
+			long int *big_arc;
 
-			big_arc = NEW_int(target_sz);
+			big_arc = NEW_lint(target_sz);
 			
-			int_vec_copy(arc, big_arc, arc_sz);
+			lint_vec_copy(arc, big_arc, arc_sz);
 			if (f_v) {
 				cout << "before D->get_solutions" << endl;
 				}
@@ -1153,8 +1153,8 @@ void do_arc_lifting(
 				}
 
 				}
-			FREE_int(big_arc);
-			FREE_int(Sol);
+			FREE_lint(big_arc);
+			FREE_lint(Sol);
 			}
 		if (f_v) {
 			cout << "after writing the lifted arcs" << endl;
@@ -1220,7 +1220,7 @@ void do_arc_lifting(
 	FREE_int(Coord);
 
 	//cout << "before FREE_OBJECT(free_points)" << endl;
-	FREE_int(free_points);
+	FREE_lint(free_points);
 }
 
 
@@ -1232,7 +1232,7 @@ void user_callback_solution_found(
 	nb_sol++;
 	cout << "nb_sol=" << nb_sol << endl;
 
-	int *big_arc;
+	long int *big_arc;
 	int big_arc_size;
 	int i, a;
 
@@ -1243,18 +1243,18 @@ void user_callback_solution_found(
 	int_vec_print(cout, sol, len);
 	cout << endl;
 
-	big_arc = NEW_int(big_arc_size);
-	int_vec_copy(arc, big_arc, arc_sz);
+	big_arc = NEW_lint(big_arc_size);
+	lint_vec_copy(arc, big_arc, arc_sz);
 	for (i = 0; i < len; i++) {
 		a = sol[i];
 		big_arc[arc_sz + i] = free_points[a];
 		}
 
 	cout << "free_points: ";
-	int_vec_print(cout, free_points, nb_free_points);
+	lint_vec_print(cout, free_points, nb_free_points);
 	cout << endl;
 	cout << "The big arc is: ";
-	int_vec_print(cout, big_arc, big_arc_size);
+	lint_vec_print(cout, big_arc, big_arc_size);
 	cout << endl;
 	
 	int *line_type;
@@ -1314,7 +1314,7 @@ void user_callback_solution_found(
 	FREE_int(type_collected);
 #endif
 	FREE_int(line_type);
-	FREE_int(big_arc);
+	FREE_lint(big_arc);
 	
 }
  
@@ -1342,20 +1342,20 @@ void search(ostream &ost, int level)
 	
 	if (level == nb_needed) {
 		cout << "found an arc, solution no " << nb_sol << " : ";
-		int_vec_print(cout, Arc, nb_needed);
+		lint_vec_print(cout, Arc, nb_needed);
 		//cout << endl;
 
-		int *big_arc;
+		long int *big_arc;
 		int big_arc_size;
 		
 		big_arc_size = arc_sz + nb_needed;
-		big_arc = NEW_int(big_arc_size);
-		int_vec_copy(arc, big_arc, arc_sz);
+		big_arc = NEW_lint(big_arc_size);
+		lint_vec_copy(arc, big_arc, arc_sz);
 		for (i = 0; i < nb_needed; i++) {
 			big_arc[arc_sz + i] = Arc[i];
 			}
 		cout << " : ";
-		int_vec_print(cout, big_arc, big_arc_size);
+		lint_vec_print(cout, big_arc, big_arc_size);
 		//cout << endl;
 
 
@@ -1427,7 +1427,7 @@ void search(ostream &ost, int level)
 	FREE_int(type_collected);
 
 
-		FREE_int(big_arc);
+		FREE_lint(big_arc);
 
 		nb_sol++;
 		return;

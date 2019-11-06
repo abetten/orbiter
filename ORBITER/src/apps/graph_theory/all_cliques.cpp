@@ -28,13 +28,13 @@ void print_orbits_at_level(poset_classification *gen,
 	int level, int verbose_level);
 void save_orbits_at_level(const char *fname,
 	poset_classification *gen, int level, int verbose_level);
-void early_test_function_cliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-void early_test_function_cocliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cocliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 int main(int argc, char **argv)
@@ -205,10 +205,10 @@ void use_group(const char *fname, colored_graph *CG,
 	cout << "ago=" << ago << endl;
 
 	action *Aut_on_points;
-	int *points;
+	long int *points;
 
 	//Aut_on_points = NEW_OBJECT(action);
-	points = NEW_int(CG->nb_points);
+	points = NEW_lint(CG->nb_points);
 	for (i = 0; i < CG->nb_points; i++) {
 		points[i] = i;
 		}
@@ -331,7 +331,7 @@ void use_group(const char *fname, colored_graph *CG,
 		}
 
 	FREE_int(Adj);
-	FREE_int(points);
+	FREE_lint(points);
 	FREE_OBJECT(Aut_on_points);
 	FREE_OBJECT(Aut);
 }
@@ -339,12 +339,12 @@ void use_group(const char *fname, colored_graph *CG,
 void print_orbits_at_level(poset_classification *gen,
 	int level, int verbose_level)
 {
-	int *set;
+	long int *set;
 	longinteger_object go, ol, ago;
 	longinteger_domain D;
 	int i, nb_orbits;
 
-	set = NEW_int(level);
+	set = NEW_lint(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -366,27 +366,27 @@ void print_orbits_at_level(poset_classification *gen,
 
 		
 		cout << "Orbit " << i << " is the set ";
-		int_vec_print(cout, set, level);
+		lint_vec_print(cout, set, level);
 		cout << " : " << go << " : " << ol << endl;
 		//cout << endl;
 
 		
 		}
 
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 void save_orbits_at_level(const char *fname,
 		poset_classification *gen, int level,
 		int verbose_level)
 {
-	int *set;
+	long int *set;
 	//longinteger_object go, ol, ago;
 	//longinteger_domain D;
 	int i, j, nb_orbits;
 	file_io Fio;
 
-	set = NEW_int(level);
+	set = NEW_lint(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -435,12 +435,12 @@ void save_orbits_at_level(const char *fname,
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
-	FREE_int(set);
+	FREE_lint(set);
 }
 
-void early_test_function_cliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;
@@ -463,9 +463,9 @@ void early_test_function_cliques(int *S, int len,
 		}
 }
 
-void early_test_function_cocliques(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_cocliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;

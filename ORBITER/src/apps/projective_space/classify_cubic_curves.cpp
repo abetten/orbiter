@@ -109,14 +109,14 @@ int main(int argc, const char **argv)
 	char fname[1000];
 	char title[1000];
 	char author[1000];
-	int *Pts_on_curve;
-	int *inflexion_Pts;
-	int *singular_Pts;
+	long int *Pts_on_curve;
+	long int *inflexion_Pts;
+	long int *singular_Pts;
 	int *type;
 
-	Pts_on_curve = NEW_int(CCA->CC->P->N_points);
-	inflexion_Pts = NEW_int(CCA->CC->P->N_points);
-	singular_Pts = NEW_int(CCA->CC->P->N_points);
+	Pts_on_curve = NEW_lint(CCA->CC->P->N_points);
+	inflexion_Pts = NEW_lint(CCA->CC->P->N_points);
+	singular_Pts = NEW_lint(CCA->CC->P->N_points);
 	type = NEW_int(CCA->CC->P->N_lines);
 
 	sprintf(title, "Cubic Curves in PG$(2,%d)$", q);
@@ -197,22 +197,24 @@ int main(int argc, const char **argv)
 				cout << "orbit length " << ol << endl;
 				}
 
-			int *data;
-			int *eqn;
+			long int *data;
+			long int *eqn1;
+			int eqn[10];
 			int nb_pts_on_curve;
 			int nb_singular_pts;
 			int nb_inflection_pts;
 			latex_interface L;
 
 			data = CCC->Curves->Rep + i * CCC->Curves->representation_sz;
-			eqn = data + 9;
+			eqn1 = data + 9;
+			lint_vec_copy_to_int(eqn1, eqn, 10);
 
 			fp << "\\subsection*{Curve " << i << " / "
 					<< CCC->Curves->nb_orbits << "}" << endl;
 			//fp << "$" << i << " / " << CCC->Curves->nb_orbits << "$ $" << endl;
 
 			fp << "$";
-			L.int_set_print_tex_for_inline_text(fp,
+			L.lint_set_print_tex_for_inline_text(fp,
 					data,
 					9 /*CCC->Curves->representation_sz*/);
 			fp << "_{";
@@ -291,7 +293,7 @@ int main(int argc, const char **argv)
 			Nb_inflexions[i] = nb_inflection_pts;
 
 			fp << "The curve has " << nb_inflection_pts << " inflexion points: $";
-			int_vec_print(fp, inflexion_Pts, nb_inflection_pts);
+			lint_vec_print(fp, inflexion_Pts, nb_inflection_pts);
 			fp << "$\\\\" << endl;
 
 
@@ -370,7 +372,7 @@ int main(int argc, const char **argv)
 
 				fp << "The transformed curve has " << nb_inflection_pts
 						<< " inflexion points: $";
-				int_vec_print(fp, inflexion_Pts, nb_inflection_pts);
+				lint_vec_print(fp, inflexion_Pts, nb_inflection_pts);
 				fp << "$\\\\" << endl;
 
 
@@ -575,9 +577,9 @@ int main(int argc, const char **argv)
 #endif
 
 		L.foot(fp);
-		FREE_int(Pts_on_curve);
-		FREE_int(inflexion_Pts);
-		FREE_int(singular_Pts);
+		FREE_lint(Pts_on_curve);
+		FREE_lint(inflexion_Pts);
+		FREE_lint(singular_Pts);
 		FREE_int(type);
 		}
 		file_io Fio;

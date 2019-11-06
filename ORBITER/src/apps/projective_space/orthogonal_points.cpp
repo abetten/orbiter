@@ -102,13 +102,14 @@ int main(int argc, char **argv)
 	int c1 = 1, c2 = 0, c3 = 0;
 	int N, j;
 	finite_field GFq;
-	int *v, *L;
+	int *v;
+	long int *L;
 
 	GFq.init(q, verbose_level);
 	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
 
 	v = NEW_int(d);
-	L = NEW_int(N);
+	L = NEW_lint(N);
 
 	if (f_v) {
 		cout << "orthogonal rank : point : projective rank" << endl;
@@ -148,7 +149,7 @@ int main(int argc, char **argv)
 
 
 	FREE_int(v);
-	FREE_int(L);
+	FREE_lint(L);
 	Os.time_check(cout, t0);
 	cout << endl;
 }

@@ -1130,7 +1130,7 @@ void spread_classify::compute_dual_spread(int *spread,
 		}
 }
 
-void spread_classify::print(ostream &ost, int len, int *S)
+void spread_classify::print(ostream &ost, int len, long int *S)
 {
 	int i;
 	int f_elements_exponential = FALSE;

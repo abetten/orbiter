@@ -337,7 +337,7 @@ void subfield_structure::retract_matrix(int *Mq,
 
 
 void subfield_structure::Adelaide_hyperoval(
-		int *&Pts, int &nb_pts, int verbose_level)
+		long int *&Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -397,7 +397,7 @@ void subfield_structure::Adelaide_hyperoval(
 	tr_b_down_inv = Fq->inverse(tr_b_down);
 
 
-	Pts = NEW_int(N);
+	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
 	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
@@ -464,7 +464,7 @@ void subfield_structure::Adelaide_hyperoval(
 }
 
 void subfield_structure::create_adelaide_hyperoval(
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -506,7 +506,7 @@ void subfield_structure::create_adelaide_hyperoval(
 		FREE_OBJECT(P);
 		}
 
-	if (!Sorting.test_if_set_with_return_value(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "subfield_structure::create_adelaide_hyperoval "
 				"the set is not a set, "
 				"something is wrong" << endl;

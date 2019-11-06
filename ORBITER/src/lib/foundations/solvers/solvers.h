@@ -82,7 +82,7 @@ public:
 	void freeself();
 	
 	void open(int m, int n);
-	void init_var_labels(int *labels, int verbose_level);
+	void init_var_labels(long int *labels, int verbose_level);
 	void join_problems(diophant *D1, diophant *D2, int verbose_level);
 	void init_partition_problem(
 		int *weights, int nb_weights, int target_value,
@@ -120,7 +120,7 @@ public:
 	void write_solutions(const char *fname, int verbose_level);
 	void read_solutions_from_file(const char *fname_sol, 
 		int verbose_level);
-	void get_solutions(int *&Sol, int &nb_sol, int verbose_level);
+	void get_solutions(long int *&Sol, int &nb_sol, int verbose_level);
 	void get_solutions_full_length(int *&Sol, int &nb_sol, 
 		int verbose_level);
 	void test_solution_full_length(int *sol, int verbose_level);
@@ -218,7 +218,7 @@ void diophant_solve_mckay_override_minrhs_in_inequalities(
 	int minrhs, int &nb_sol, int verbose_level);
 void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed, 
 	int f_has_Rhs, int *Rhs, 
-	int *&Solutions, int &nb_sol, int &nb_backtrack, int &dt, 
+	long int *&Solutions, int &nb_sol, int &nb_backtrack, int &dt,
 	int f_DLX, 
 	int f_draw_system, const char *fname_system, 
 	int f_write_tree, const char *fname_tree, 

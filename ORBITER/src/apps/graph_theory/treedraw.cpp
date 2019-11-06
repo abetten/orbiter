@@ -358,7 +358,8 @@ void draw_vertex_callback_graph(tree *T,
 				x, y, dx, dy, graph_nb_V, v, layer, nb_circles);
 		}
 	else {
-		G->draw_graph(x, y, dx, dy, graph_nb_V, v, layer);
+		//ToDo
+		//G->draw_graph(x, y, dx, dy, graph_nb_V, v, layer);
 		}
 
 }

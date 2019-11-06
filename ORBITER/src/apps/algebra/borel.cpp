@@ -157,7 +157,7 @@ void test_borel(int n, int q, int verbose_level)
 			bottom(fp);
 			top(fp);
 			}
-		S->element_unrank_int(rk, Elt1);
+		S->element_unrank_lint(rk, Elt1);
 		cout << "element " << rk << " / " << goi << " is:" << endl;
 
 		fp << rk << " & " << endl;
@@ -190,7 +190,7 @@ void test_borel(int n, int q, int verbose_level)
 		AP->element_print(Perm1, cout);
 		cout << endl;
 
-		rkP = SP->element_rank_int(Perm1);
+		rkP = SP->element_rank_lint(Perm1);
 		cout << "permutation group rank = " << rkP << endl;
 
 
@@ -227,7 +227,7 @@ void test_borel(int n, int q, int verbose_level)
 		cout << "B1*N*B2:" << endl;
 		int_matrix_print(M2, n, n);
 		A->make_element(Elt1, M2, verbose_level);
-		rk1 = S->element_rank_int(Elt1);
+		rk1 = S->element_rank_lint(Elt1);
 		if (rk1 != rk) {
 			cout << "rk1 != rk" << endl;
 			exit(1);
@@ -244,7 +244,7 @@ void test_borel(int n, int q, int verbose_level)
 	
 	cout << "i : permutation : count" << endl;
 	for (i = 0; i < goPi; i++) {
-		SP->element_unrank_int(i, Perm1);
+		SP->element_unrank_lint(i, Perm1);
 		cout << i << " : ";
 		AP->element_print_quick(Perm1, cout);
 		cout << " : ";

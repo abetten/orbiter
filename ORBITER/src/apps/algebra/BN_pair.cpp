@@ -112,9 +112,10 @@ int main(int argc, char **argv)
 	compute_B(A, epsilon, n, F, verbose_level);
 
 
+#if 0
 	cout << "computing the group N:" << endl;
 	compute_N(A, epsilon, n, F, verbose_level);
-
+#endif
 
 	the_end(t0);
 }
@@ -211,11 +212,13 @@ void compute_B(action *A, int epsilon, int n,
 	FREE_OBJECT(Strong_gens);
 }
 
+#if 0
+// ToDo
 void compute_N(action *A, int epsilon, int n,
 		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *the_set;
+	long int *the_set;
 	int *v;
 	int the_set_size;
 	set_stabilizer_compute *S;
@@ -235,7 +238,7 @@ void compute_N(action *A, int epsilon, int n,
 	O = AO->O;
 	
 	S = NEW_OBJECT(set_stabilizer_compute);
-	the_set = NEW_int(n);
+	the_set = NEW_lint(n);
 	v = NEW_int(n); // n = algebraic dimension
 	the_set_size = 0;
 	for (h = 0; h < n; h++) {
@@ -250,7 +253,7 @@ void compute_N(action *A, int epsilon, int n,
 		}
 	if (f_v) {
 		cout << "the_set=";
-		int_vec_print(cout, the_set, the_set_size);
+		lint_vec_print(cout, the_set, the_set_size);
 		cout << endl;
 		}
 
@@ -327,6 +330,7 @@ void compute_N(action *A, int epsilon, int n,
 		}
 
 }
+#endif
 
 
 

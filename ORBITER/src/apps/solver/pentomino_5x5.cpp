@@ -27,15 +27,15 @@ using namespace orbiter;
 	int var_start[NB_PIECES + 1];
 	int var_length[NB_PIECES + 1];
 
-int has_interlocking_Ps(int *set);
-int has_interlocking_Pprime(int *set);
-int has_interlocking_Ls(int *set);
+int has_interlocking_Ps(long int *set);
+int has_interlocking_Pprime(long int *set);
+int has_interlocking_Ls(long int *set);
 int test_if_interlocking_Ps(int a1, int a2);
-int has_interlocking_Lprime(int *set);
+int has_interlocking_Lprime(long int *set);
 int test_if_interlocking_Ls(int a1, int a2);
-int number_of_pieces_of_type(int t, int *set);
-int does_it_contain_an_I(int *set);
-void decode_assembly(int *set);
+int number_of_pieces_of_type(int t, long int *set);
+int does_it_contain_an_I(long int *set);
+void decode_assembly(long int *set);
 // input set[5]
 void decode_piece(int j, int &h, int &r, int &t);
 // h is the kind of piece
@@ -44,7 +44,7 @@ void decode_piece(int j, int &h, int &r, int &t);
 // to get the actual rotation and translation, use 
 // R[h][r] and T[h][t].
 int code_piece(int h, int r, int t);
-void draw_it(ostream &ost, int *sol);
+void draw_it(ostream &ost, long int *sol);
 void compute_image_function(set_of_sets *S, void *compute_image_data, int elt_idx, int gen_idx, int &idx_of_image, int verbose_level);
 int compare_func(void *vec, void *a, int b, void *data_for_compare);
 void turn_piece(int &h, int &r, int &t, int verbose_level);
@@ -99,7 +99,7 @@ int main(void)
 	D->solve_all_DLX_with_RHS(f_write_tree, fname_tree, verbose_level);
 	cout << "After solve, we found " << D->_resultanz << " solutions" << endl;
 
-	int *Sol;
+	long int *Sol;
 	int nb_sol, sol_length = 5;
 
 	D->get_solutions(Sol, nb_sol, verbose_level);
@@ -113,7 +113,7 @@ int main(void)
 		nb_sol, sol_length, 0 /* verbose_level */);
 
 	for (l = 0; l < nb_sol; l++) {
-		int_vec_copy(Sol + l * sol_length, L->Sets[l], sol_length);
+		lint_vec_copy(Sol + l * sol_length, L->Sets[l], sol_length);
 		}
 
 	L->sort_all(0);
@@ -164,7 +164,7 @@ int main(void)
 
 		cout << "Solution " << l << " : ";
 #if 1
-		int_vec_print(cout, L->Sets[l], sol_length);
+		lint_vec_print(cout, L->Sets[l], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -212,7 +212,7 @@ int main(void)
 		i = orbit[f];
 #if 1
 		cout << "Representative of orbit " << o << " is solution " << i << " : ";
-		int_vec_print(cout, L->Sets[i], sol_length);
+		lint_vec_print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -273,7 +273,7 @@ int main(void)
 
 #if 1
 		cout << p << " / " << nb_orbits_without_I << " Representative of orbit " << o << " is solution " << i << " : ";
-		int_vec_print(cout, L->Sets[i], sol_length);
+		lint_vec_print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -311,7 +311,7 @@ int main(void)
 	FREE_OBJECT(D);
 }
 
-int has_interlocking_Ps(int *set)
+int has_interlocking_Ps(long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -336,7 +336,7 @@ int has_interlocking_Ps(int *set)
 	return FALSE;
 }
 
-int has_interlocking_Pprime(int *set)
+int has_interlocking_Pprime(long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -361,7 +361,7 @@ int has_interlocking_Pprime(int *set)
 	return FALSE;
 }
 
-int has_interlocking_Ls(int *set)
+int has_interlocking_Ls(long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -386,7 +386,7 @@ int has_interlocking_Ls(int *set)
 	return FALSE;
 }
 
-int has_interlocking_Lprime(int *set)
+int has_interlocking_Lprime(long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -473,7 +473,7 @@ int test_if_interlocking_Ls(int a1, int a2)
 	return TRUE;
 }
 
-int number_of_pieces_of_type(int t, int *set)
+int number_of_pieces_of_type(int t, long int *set)
 {
 	int i, a, cnt = 0;
 
@@ -486,7 +486,7 @@ int number_of_pieces_of_type(int t, int *set)
 	return cnt;
 }
 
-int does_it_contain_an_I(int *set)
+int does_it_contain_an_I(long int *set)
 {
 	int i, a;
 
@@ -499,13 +499,13 @@ int does_it_contain_an_I(int *set)
 	return FALSE;
 }
 
-void decode_assembly(int *set)
+void decode_assembly(long int *set)
 // input set[5]
 {
 	int i, h, r, t, tt, x, y, rr;
 
 	cout << "Set ";
-	int_vec_print(cout, set, 5);
+	lint_vec_print(cout, set, 5);
 	cout << endl;
 
 	for (i = 0; i < 5; i++) {
@@ -554,7 +554,7 @@ int code_piece(int h, int r, int t)
 }
 
 
-void draw_it(ostream &ost, int *sol)
+void draw_it(ostream &ost, long int *sol)
 {
 	int sol_length = 5;
 	int u, h, r, rr, t, tt, tx, ty, s, a, b, x, y, j;
@@ -603,20 +603,20 @@ void compute_image_function(set_of_sets *S,
 	//int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int *set1;
-	int *set2;
+	long int *set1;
+	long int *set2;
 	int sz, i, a, b, h, r, t, idx;
 	sorting Sorting;
 
 	set1 = S->Sets[elt_idx];
 	sz = S->Set_size[elt_idx];
-	set2 = NEW_int(sz);
+	set2 = NEW_lint(sz);
 
 
 	if (f_v) {
 		cout << "compute_image_function "
 				"computing image of solution " << elt_idx << " = ";
-		int_vec_print(cout, set1, sz);
+		lint_vec_print(cout, set1, sz);
 		cout << " under generator " << gen_idx << endl;
 		}
 
@@ -643,23 +643,23 @@ void compute_image_function(set_of_sets *S,
 			}
 		set2[i] = b;
 		}
-	Sorting.int_vec_heapsort(set2, sz);
+	Sorting.lint_vec_heapsort(set2, sz);
 	if (!Sorting.vec_search_general(S,
 		compare_func, 
 		NULL /* void *data_for_compare */, 
 		S->nb_sets, set2, idx, 0 /*verbose_level*/)) {
 		cout << "compute_image_function cannot find image" << endl;
-		int_vec_print(cout, set2, sz);
+		lint_vec_print(cout, set2, sz);
 		cout << endl;
 		exit(1);
 		}
 	idx_of_image = idx;
 	if (f_v) {
 		cout << "compute_image_function image is ";
-		int_vec_print(cout, set2, sz);
+		lint_vec_print(cout, set2, sz);
 		cout << " which is solution " << idx_of_image << endl;
 		}
-	FREE_int(set2);
+	FREE_lint(set2);
 
 }
 
@@ -669,7 +669,7 @@ int compare_func(void *vec, void *a, int b, void *data_for_compare)
 	int sz, c;
 
 	sz = S->Set_size[b];
-	c = int_vec_compare((int *) a, S->Sets[b], sz);
+	c = lint_vec_compare((long int *) a, S->Sets[b], sz);
 #if 0
 	cout << "compare ";
 	int_vec_print(cout, (int *) a, sz);

@@ -97,7 +97,7 @@ int main(int argc, const char **argv)
 	int f_casenumbers = FALSE;
 	int nb_cases;
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
@@ -111,7 +111,7 @@ int main(int argc, const char **argv)
 	int vb;
 	int *Adj;
 	int nb_points;
-	int *points;
+	long int *points;
 	combinatorics_domain Combi;
 	file_io Fio;
 
@@ -127,7 +127,7 @@ int main(int argc, const char **argv)
 	cout << "Read " << nb_cases << " orbits from file "
 			<< fname_in << endl;
 
-	points = NEW_int(b);
+	points = NEW_lint(b);
 	nb_points = b;
 	for (i = 0; i < b; i++) {
 		points[i] = i;
@@ -167,7 +167,7 @@ int main(int argc, const char **argv)
 			exit(1);
 			}
 		if (f_vv) {
-			int_vec_print(cout, Sets[h], b);
+			lint_vec_print(cout, Sets[h], b);
 			cout << endl;
 			}
 		for (i = 0; i < v * b; i++) {

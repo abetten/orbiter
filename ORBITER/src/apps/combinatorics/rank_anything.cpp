@@ -131,7 +131,7 @@ void rank_binary_trees(int n, int verbose_level)
 		cout << " : bitstring ";
 		int_vec_print(cout, v, n);
 		cout << " : ";
-		Gg.AG_element_rank(2 /* q */, v, 1, n, r);
+		r = Gg.AG_element_rank(2 /* q */, v, 1, n);
 		cout << " has rank " << r << endl;
 		if (r != i) {
 			cout << "r != i, something is wrong" << endl;

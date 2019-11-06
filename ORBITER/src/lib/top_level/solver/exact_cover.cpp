@@ -341,7 +341,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 		nb_col = 0;
 		nb_sol = 0;
 
-		int *Solutions = NULL;
+		long int *Solutions = NULL;
 		char fname1[1000];
 
 
@@ -457,7 +457,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 					}
 				}
 			FREE_lint(the_solution);
-			FREE_int(Solutions);
+			FREE_lint(Solutions);
 			}
 
 		if (f_has_late_cleanup_function) {
@@ -525,7 +525,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 void exact_cover::compute_liftings_single_case_new(int starter_case, 
 	int f_solve, int f_save, int f_read_instead, 
 	int &nb_col, 
-	int *&Solutions, int &sol_length, int &nb_sol, int &nb_backtrack, int &dt, 
+	long int *&Solutions, int &sol_length, int &nb_sol, int &nb_backtrack, int &dt,
 	int f_draw_system, const char *fname_system, 
 	int f_write_tree, const char *fname_tree, 
 	int verbose_level)
@@ -782,7 +782,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 					}
 
 				if (f_save) {
-					Fio.int_matrix_write_text(fname_sol,
+					Fio.lint_matrix_write_text(fname_sol,
 							Solutions, nb_sol, sol_length);
 					}
 				for (i = 0; i < nb_sol; i++) {

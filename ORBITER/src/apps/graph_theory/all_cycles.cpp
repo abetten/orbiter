@@ -25,9 +25,9 @@ void print_orbits_at_level(poset_classification *gen,
 		int level, int verbose_level);
 void print_selected_orbits_at_level(poset_classification *gen, int level,
 	int nb_selected_orbits, int *orbits, int verbose_level);
-void early_test_function_paths_and_cycles(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_paths_and_cycles(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 int main(int argc, char **argv)
@@ -137,10 +137,10 @@ int main(int argc, char **argv)
 	cout << "ago=" << ago << endl;
 
 	action *Aut_on_edges;
-	int *edges;
+	long int *edges;
 	
 	//Aut_on_edges = NEW_OBJECT(action);
-	edges = NEW_int(nb_cols);
+	edges = NEW_lint(nb_cols);
 	for (i = 0; i < nb_cols; i++) {
 		edges[i] = nb_rows + i;
 		}
@@ -211,7 +211,7 @@ int main(int argc, char **argv)
 	FREE_int(orbits);
 	FREE_int(M);
 	FREE_int(Adj);
-	FREE_int(edges);
+	FREE_lint(edges);
 	FREE_OBJECT(Aut_on_edges);
 	FREE_OBJECT(Aut);
 	FREE_OBJECT(CG);
@@ -225,10 +225,10 @@ void select_cycles(colored_graph *CG,
 		poset_classification *gen, int level,
 		int &nb_selected_orbits, int *&orbits)
 {
-	int *set;
+	long int *set;
 	int i, nb_orbits;
 
-	set = NEW_int(level);
+	set = NEW_lint(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 	nb_selected_orbits = 0;
@@ -242,18 +242,18 @@ void select_cycles(colored_graph *CG,
 			}
 		}
 
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 void print_orbits_at_level(poset_classification *gen,
 		int level, int verbose_level)
 {
-	int *set;
+	long int *set;
 	longinteger_object go, ol, ago;
 	longinteger_domain D;
 	int i, nb_orbits;
 
-	set = NEW_int(level);
+	set = NEW_lint(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -275,14 +275,14 @@ void print_orbits_at_level(poset_classification *gen,
 
 		
 		cout << "Orbit " << i << " is the set ";
-		int_vec_print(cout, set, level);
+		lint_vec_print(cout, set, level);
 		cout << " : " << go << " : " << ol << endl;
 		//cout << endl;
 
 		
 		}
 
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 void print_selected_orbits_at_level(
@@ -290,12 +290,12 @@ void print_selected_orbits_at_level(
 	int nb_selected_orbits, int *orbits,
 	int verbose_level)
 {
-	int *set;
+	long int *set;
 	longinteger_object go, ol, ago;
 	longinteger_domain D;
 	int i, j, nb_orbits;
 
-	set = NEW_int(level);
+	set = NEW_lint(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -320,19 +320,19 @@ void print_selected_orbits_at_level(
 
 		
 		cout << "Orbit " << j << " is the set ";
-		int_vec_print(cout, set, level);
+		lint_vec_print(cout, set, level);
 		cout << " : " << go << " : " << ol << endl;
 		//cout << endl;
 
 		
 		}
 
-	FREE_int(set);
+	FREE_lint(set);
 }
 
-void early_test_function_paths_and_cycles(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void early_test_function_paths_and_cycles(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;

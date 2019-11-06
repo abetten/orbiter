@@ -352,7 +352,7 @@ int main(int argc, char **argv)
 			//}
 		}
 	else if (f_list_of_cases) {
-		int *list_of_cases;
+		long int *list_of_cases;
 		int nb_cases;
 		char fname_sol[1000];
 		char fname_stats[1000];
@@ -395,7 +395,7 @@ int main(int argc, char **argv)
 			print_interval, 
 			verbose_level);
 		
-		FREE_int(list_of_cases);
+		FREE_lint(list_of_cases);
 		cout << "all_rainbow_cliques.out written file " << fname_sol
 				<< " of size " << Fio.file_size(fname_sol) << endl;
 		cout << "all_rainbow_cliques.out written file " << fname_stats

@@ -251,7 +251,7 @@ void welch(int q, int verbose_level)
 
 	for (lambda = 1; lambda < q; lambda++) {
 		for (k = 1; k < q; k++) {
-			if (NT.gcd_int(k, q - 1) == 1) {
+			if (NT.gcd_lint(k, q - 1) == 1) {
 				alpha = F->alpha_power(k);
 				for (i = 0; i < q - 1; i++) {
 					ci = F->mult(lambda, F->power(alpha, i));
@@ -340,10 +340,10 @@ void Lempel_Golomb(int q, int verbose_level)
 	F->init(q, 0);
 
 	for (k1 = 1; k1 < q; k1++) {
-		if (NT.gcd_int(k1, q - 1) == 1) {
+		if (NT.gcd_lint(k1, q - 1) == 1) {
 			alpha = F->alpha_power(k1);
 			for (k2 = 1; k2 < q; k2++) {
-				if (NT.gcd_int(k2, q - 1) == 1) {
+				if (NT.gcd_lint(k2, q - 1) == 1) {
 					//cout << "before extended_gcd k2=" << k2 << " q-1=" << q - 1 << endl;
 					NT.extended_gcd_int(k2, q - 1, g, k2v, v);
 					//cout << "k2v=" << k2v << endl;

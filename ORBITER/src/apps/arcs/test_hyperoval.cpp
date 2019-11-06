@@ -166,6 +166,8 @@ int main(int argc, char **argv)
 
 
 	if (f_stabilizer) {
+#if 0
+		// ToDo
 		// computing stabilizer:
 		action *A;
 		strong_generators *Aut_gens;
@@ -201,7 +203,6 @@ int main(int argc, char **argv)
 		STAB.compute_set_stabilizer(t0,
 				nb_backtrack_nodes, Aut_gens, verbose_level);
 
-
 		Stab = Aut_gens->create_sims(verbose_level - 1);
 	
 
@@ -218,6 +219,7 @@ int main(int argc, char **argv)
 		FREE_OBJECT(Aut_gens);
 		FREE_OBJECT(Stab);
 		FREE_OBJECT(Poset);
+#endif
 		}
 
 

@@ -73,10 +73,10 @@ int main(int argc, char **argv)
 
 	cout << "N=" << N << endl;
 
-	int **Sets;
+	long int **Sets;
 	int *Set_sz;
 
-	Sets = NEW_pint(N);
+	Sets = NEW_plint(N);
 	Set_sz = NEW_int(N);
 
 	int M, h;
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 			S->fill_entry_with_text(1 + h /* row_idx */, 1 /* col_idx */, str);
 			sprintf(str, "%d", j);
 			S->fill_entry_with_text(1 + h /* row_idx */, 2 /* col_idx */, str);
-			sprintf(str, "%d", Sets[i][j]);
+			sprintf(str, "%ld", Sets[i][j]);
 			S->fill_entry_with_text(1 + h /* row_idx */, 3 /* col_idx */, str);
 			sprintf(str, out_mask, i, Sets[i][j]);
 			S->fill_entry_with_text(1 + h /* row_idx */, 4 /* col_idx */, str);

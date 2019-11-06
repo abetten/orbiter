@@ -417,7 +417,7 @@ public:
 			int dx, int dy, int nb_V, long int *Edges, int nb_E);
 	void draw_graph_with_distinguished_edge(
 		int x, int y,
-		int dx, int dy, int nb_V, int *Edges, int nb_E,
+		int dx, int dy, int nb_V, long int *Edges, int nb_E,
 		int distinguished_edge, int verbose_level);
 	void draw_graph_on_multiple_circles(int x, int y,
 			int dx, int dy, int nb_V, int *Edges, int nb_E, int nb_circles);

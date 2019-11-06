@@ -406,7 +406,7 @@ void subspace_orbits::Kramer_Mesner_matrix(
 					<< solution_fname << endl;
 			}
 		D->read_solutions_from_file(solution_fname, verbose_level);
-		int *Sol;
+		long int *Sol;
 		int nb_sol;
 		D->get_solutions(Sol, nb_sol, verbose_level);
 		if (f_v) {
@@ -455,7 +455,7 @@ void subspace_orbits::Kramer_Mesner_matrix(
 				<< Fio.file_size(fname) << endl;
 		
 		FREE_int(Subspace_ranks1);
-		FREE_int(Sol);
+		FREE_lint(Sol);
 		}
 	else {
 	
@@ -567,7 +567,7 @@ void subspace_orbits::Kramer_Mesner_matrix(
 }
 
 void subspace_orbits::print_all_solutions(
-	diophant *D, int k, int *Sol, int nb_sol,
+	diophant *D, int k, long int *Sol, int nb_sol,
 	int **Subspace_ranks, int &nb_subspaces, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -594,7 +594,7 @@ void subspace_orbits::print_all_solutions(
 }
 
 void subspace_orbits::print_one_solution(
-	diophant *D, int k, int *sol,
+	diophant *D, int k, long int *sol,
 	int *&subspace_ranks, int &nb_subspaces,
 	int verbose_level)
 {
@@ -615,7 +615,7 @@ void subspace_orbits::print_one_solution(
 	Gr->init(Gen->Poset->VS->dimension, k, Gen->Poset->VS->F,
 			0/*verbose_level - 10*/);
 
-	int_vec_print(cout, sol, D->sum);
+	lint_vec_print(cout, sol, D->sum);
 	cout << endl;
 
 	nb_subspaces = 0;

@@ -83,14 +83,14 @@ int main(int argc, char **argv)
 		}
 	
 	int nb_missing = 0;
-	int *Missing = NULL;
+	long int *Missing = NULL;
 	char fname[1000];
 	int missing_n;
 	file_io Fio;
 
 
 	if (f_N2) {
-		Missing = NEW_int(N * N2 * 2);
+		Missing = NEW_lint(N * N2 * 2);
 		int j;
 
 		missing_n = 2;
@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 		}
 	else {	
 		missing_n = 1;
-		Missing = NEW_int(N);
+		Missing = NEW_lint(N);
 
 		for (i = 0; i < N; i++) {
 			if (f_split) {
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
 
 	if (f_save) {
 		if (is_csv_file(fname_out)) {
-			Fio.int_matrix_write_csv(fname_out,
+			Fio.lint_matrix_write_csv(fname_out,
 					Missing, nb_missing, missing_n);
 			}
 		else {

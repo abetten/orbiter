@@ -56,7 +56,7 @@ int main()
 	Elt = NEW_int(A->elt_size_in_int);
 
 	for (i = 0; i < go.as_int(); i++) {
-		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
+		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
 		cout << "element " << i << " / " << go << ":" << endl;
 		A->element_print_quick(Elt, cout);
 		}

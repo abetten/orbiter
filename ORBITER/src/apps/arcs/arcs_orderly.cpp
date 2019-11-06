@@ -19,7 +19,7 @@ int t0; // the system time when the program started
 	finite_field *F;
 	projective_space *P;
 	action *A_linear;
-	int *Arc;
+	long int *Arc;
 	int arc_sz;
 	int target_sz;
 	int *Idx_table; // [target_sz * P->N_points]
@@ -36,7 +36,7 @@ int t0; // the system time when the program started
 
 int main(int argc, char **argv);
 void do_arc_lifting(projective_space *P, int k, 
-	int *arc, int arc_sz, int target_sz, int verbose_level);
+	long int *arc, int arc_sz, int target_sz, int verbose_level);
 void extend(int arc_size, int verbose_level);
 
 int main(int argc, char **argv)
@@ -157,12 +157,12 @@ int main(int argc, char **argv)
 				}
 			}
 
-		int *the_arc;
+		long int *the_arc;
 		int the_arc_sz;
 		
-		int_vec_scan(arc_text, the_arc, the_arc_sz);
+		lint_vec_scan(arc_text, the_arc, the_arc_sz);
 		cout << "input arc of size " << the_arc_sz << " = ";
-		int_vec_print(cout, the_arc, the_arc_sz);
+		lint_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 
@@ -183,14 +183,14 @@ int main(int argc, char **argv)
 				the_arc[i] = b;
 				}
 			cout << "input arc in orbiter labels = ";
-			int_vec_print(cout, the_arc, the_arc_sz);
+			lint_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 			}
 
-		Sorting.int_vec_heapsort(the_arc, the_arc_sz);
+		Sorting.lint_vec_heapsort(the_arc, the_arc_sz);
 
 		cout << "input arc in orbiter labels sorted= ";
-		int_vec_print(cout, the_arc, the_arc_sz);
+		lint_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 		
@@ -209,7 +209,7 @@ int main(int argc, char **argv)
 }
 
 void do_arc_lifting(projective_space *P, int k, 
-	int *arc, int arc_sz, int target_sz, int verbose_level)
+	long int *arc, int arc_sz, int target_sz, int verbose_level)
 {
 	int i;
 	vector_ge *nice_gens;
@@ -218,8 +218,8 @@ void do_arc_lifting(projective_space *P, int k,
 	
 	::target_sz = target_sz;
 	::arc_sz = arc_sz;
-	Arc = NEW_int(target_sz);
-	int_vec_copy(arc, Arc, arc_sz);
+	Arc = NEW_lint(target_sz);
+	lint_vec_copy(arc, Arc, arc_sz);
 
 	cout << "do_arc_lifting" << endl;
 	F = P->F;
@@ -309,7 +309,7 @@ void extend(int arc_size, int verbose_level)
 			cout << Cur_orbit[i] << "/" << Nb_orbits[i] << " ";
 		}
 		cout << "; Arc=";
-		int_vec_print(cout, Arc, arc_size);
+		lint_vec_print(cout, Arc, arc_size);
 		cout << endl;
 	}
 
@@ -387,7 +387,7 @@ void extend(int arc_size, int verbose_level)
 			cout << "Node " << cnt << " level " << arc_size << " testing orbit " << orb
 					<< " / " << Sch->nb_orbits << " pt=" << pt << " ";
 		}
-		if (Sorting.int_vec_search(Arc, arc_size, pt, idx)) {
+		if (Sorting.lint_vec_search(Arc, arc_size, pt, idx, 0)) {
 			if (f_vv) {
 				cout << "fail (already in the set)" << endl;
 			}

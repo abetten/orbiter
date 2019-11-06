@@ -234,7 +234,7 @@ void do_it(int q, int type,
 
 		create_reflection(A, M->GFq, Elt, simple_roots[i],
 			nb_roots, roots + simple_roots[i] * dimension);
-		simple_roots_rank[i] = S.element_rank_int(Elt);		
+		simple_roots_rank[i] = S.element_rank_lint(Elt);
 		}
 
 	if (f_words) {
@@ -392,7 +392,7 @@ void words(action *A, finite_field *F, sims *S,
 		cout << "length : i : element : reduced expression" << endl;		
 		for (i = 0; i < Nb_elements_by_length[l]; i++) {
 			a = Elements_by_length[l][i];
-			S->element_unrank_int(a, Elt1);
+			S->element_unrank_lint(a, Elt1);
 			cout << l << " : " << i << " : " << a << ":" << endl;
 			//A->print(cout, Elt1);
 			//cout << "reduced expression: ";
@@ -1031,7 +1031,7 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 					word2[j] = b;
 					}
 				S->evaluate_word_int(length, word2, Elt1, 0);
-				a = S->element_rank_int(Elt1);
+				a = S->element_rank_lint(Elt1);
 				W[length][i] = a;
 				if (reduced_word_length[a] == -1) {
 					reduced_word_length[a] = length;
@@ -1073,7 +1073,7 @@ int create_reduced_expressions(action *A, finite_field *F, sims *S,
 						word2[j] = gens[word[j]];
 						}
 					S->evaluate_word_int(length, word2, Elt1, 0);
-					a = S->element_rank_int(Elt1);
+					a = S->element_rank_lint(Elt1);
 					if (reduced_word_length[a] == -1) {
 						if (f_v) {
 							cout << "yields new group element " << a << endl;
@@ -1186,7 +1186,7 @@ void presentation(action *A, sims *S,
 				}
 			}
 		A->move(Elt1, Elt2);
-		a = S->element_rank_int(Elt2);
+		a = S->element_rank_lint(Elt2);
 		word_list[i] = a;
 		inverse_word_list[a] = i;
 		cout << "word " << i << " = ";
@@ -1209,7 +1209,7 @@ void presentation(action *A, sims *S,
 			A->mult(Elt3, Elt1, Elt4);
 			cout << "g_" << j << "^{g_" << i << "} =" << endl;
 			A->print(cout, Elt4);
-			a = S->element_rank_int(Elt4);
+			a = S->element_rank_lint(Elt4);
 			cout << "which is element " << a << " which is word "
 					<< inverse_word_list[a] << endl;
 			cout << endl;

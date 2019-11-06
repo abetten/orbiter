@@ -2170,7 +2170,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	FREE_int(v);
 }
 
-int colored_graph::is_cycle(int nb_e, int *edges,
+int colored_graph::is_cycle(int nb_e, long int *edges,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

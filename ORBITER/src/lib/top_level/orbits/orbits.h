@@ -417,9 +417,9 @@ public:
 	void Kramer_Mesner_matrix(int t, int k, int f_print_matrix, 
 		int f_read_solutions, const char *solution_fname, 
 		int verbose_level);
-	void print_all_solutions(diophant *D, int k, int *Sol, int nb_sol, 
+	void print_all_solutions(diophant *D, int k, long int *Sol, int nb_sol,
 		int **Subspace_ranks, int &nb_subspaces, int verbose_level);
-	void print_one_solution(diophant *D, int k, int *sol, 
+	void print_one_solution(diophant *D, int k, long int *sol,
 		int *&subspace_ranks, int &nb_subspaces, int verbose_level);
 	int test_dim_C_cap_Cperp_property(int len, long int *S, int d);
 	int compute_minimum_distance(int len, long int *S);

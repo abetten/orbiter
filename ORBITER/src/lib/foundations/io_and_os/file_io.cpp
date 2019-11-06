@@ -1366,6 +1366,23 @@ void file_io::int_matrix_write_text(const char *fname, int *M, int m, int n)
 	}
 }
 
+void file_io::lint_matrix_write_text(const char *fname, long int *M, int m, int n)
+{
+	int i, j;
+
+	{
+	ofstream f(fname);
+
+	f << m << " " << n << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			f << M[i * n + j] << " ";
+			}
+		f << endl;
+		}
+	}
+}
+
 void file_io::int_matrix_read_text(const char *fname, int *&M, int &m, int &n)
 {
 	int i, j;

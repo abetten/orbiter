@@ -22,7 +22,7 @@ using namespace orbiter::top_level;
 
 int t0; // the system time when the program started
 
-void print_spread(ostream &ost, int len, int *S, void *data);
+void print_spread(ostream &ost, int len, long int *S, void *data);
 
 
 #define MAX_FILES 1000
@@ -383,13 +383,13 @@ int main(int argc, const char **argv)
 		
 		for (i = 0; i < nb_identify; i++) {
 
-			int *data;
+			long int *data;
 			int sz;
 
-			int_vec_scan(identify_data[i], data, sz);
+			lint_vec_scan(identify_data[i], data, sz);
 			cout << "spread_classify.cpp identifying set "
 					<< i << " / " << nb_identify << " : ";
-			int_vec_print(cout, data, sz);
+			lint_vec_print(cout, data, sz);
 			cout << endl;
 			T.gen->identify(data, sz,
 					transporter, orbit_at_level, verbose_level);
@@ -400,7 +400,7 @@ int main(int argc, const char **argv)
 			cout << "A transporter is " << endl;
 			T.gen->Poset->A->element_print_quick(transporter, cout);
 
-			FREE_int(data);
+			FREE_lint(data);
 		}
 
 		FREE_int(transporter);
@@ -499,7 +499,7 @@ int main(int argc, const char **argv)
 			cout << endl;
 			for (i = 0; i < representatives_size; i++) {
 				cout << R->rep[i] << " = " << endl;
-				T.Grass->unrank_int_here(M,
+				T.Grass->unrank_lint_here(M,
 						R->rep[i], 0/*verbose_level - 4*/);
 				int_matrix_print(M, T.k, T.n);
 			}
@@ -516,7 +516,7 @@ int main(int argc, const char **argv)
 }
 
 
-void print_spread(ostream &ost, int len, int *S, void *data)
+void print_spread(ostream &ost, int len, long int *S, void *data)
 {
 	spread_classify *Spread = (spread_classify *) data;
 	

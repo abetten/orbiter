@@ -254,7 +254,7 @@ void classify_bitvectors::print_table()
 
 void classify_bitvectors::save(const char *prefix, 
 	void (*encode_function)(void *extra_data,
-			int *&encoding, int &encoding_sz, void *global_data),
+			long int *&encoding, int &encoding_sz, void *global_data),
 	void (*get_group_order_or_NULL)(void *extra_data,
 			longinteger_object &go, void *global_data),
 	void *global_data, 
@@ -277,7 +277,7 @@ void classify_bitvectors::save(const char *prefix,
 		cout << "classify_bitvectors::save perm == NULL" << endl;
 		exit(1);
 		}
-	int *Reps = NULL; // [nb_types * sz]
+	long int *Reps = NULL; // [nb_types * sz]
 	int sz = 0;
 
 
@@ -292,7 +292,7 @@ void classify_bitvectors::save(const char *prefix,
 	for (i = 0; i < nb_types; i++) {
 		j = perm[i];
 
-		int *encoding;
+		long int *encoding;
 		int encoding_sz;
 
 		if (f_v) {
@@ -322,17 +322,17 @@ void classify_bitvectors::save(const char *prefix,
 		fp << endl;
 		if (i == 0) {
 			sz = encoding_sz;
-			Reps = NEW_int(nb_types * sz);
-			int_vec_copy(encoding, Reps, sz);
+			Reps = NEW_lint(nb_types * sz);
+			lint_vec_copy(encoding, Reps, sz);
 			}
 		else {
 			if (encoding_sz != sz) {
 				cout << "encoding_sz != sz" << endl;
 				exit(1);
 				}
-			int_vec_copy(encoding, Reps + i * sz, sz);
+			lint_vec_copy(encoding, Reps + i * sz, sz);
 			}
-		FREE_int(encoding);
+		FREE_lint(encoding);
 		}
 	fp << "-1 " << nb_types << " " << N << endl;
 	}
@@ -351,7 +351,7 @@ void classify_bitvectors::save(const char *prefix,
 		cout << "classify_bitvectors::save writing "
 				"file " << fname_csv << endl;
 		}
-	Fio.int_matrix_write_csv(fname_csv, Reps, nb_types, sz);
+	Fio.lint_matrix_write_csv(fname_csv, Reps, nb_types, sz);
 
 	if (f_v) {
 		cout << "classify_bitvectors::save "
@@ -363,7 +363,7 @@ void classify_bitvectors::save(const char *prefix,
 		}
 
 	if (Reps) {
-		FREE_int(Reps);
+		FREE_lint(Reps);
 		}
 	
 	if (f_v) {

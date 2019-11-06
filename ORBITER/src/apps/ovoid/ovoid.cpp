@@ -92,7 +92,7 @@ int main(int argc, const char **argv)
 				}
 			}
 			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-			int_vec_print(cout, ODF->sets[orbit_idx],
+			lint_vec_print(cout, ODF->sets[orbit_idx],
 					ODF->set_sizes[orbit_idx]);
 			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
 					<< ODF->Aut_ascii[orbit_idx] << endl;
@@ -118,7 +118,7 @@ int main(int argc, const char **argv)
 
 		for (i = 0; i < ODF->nb_cases; i++) {
 			cout << i << " / " << ODF->nb_cases << " : ";
-			int_vec_print(cout, ODF->sets[i], ODF->set_sizes[i]);
+			lint_vec_print(cout, ODF->sets[i], ODF->set_sizes[i]);
 			cout << " : " << ODF->Ago_ascii[i] << " : "
 					<< ODF->Aut_ascii[i] << endl;
 
