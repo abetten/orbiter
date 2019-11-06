@@ -97,6 +97,167 @@ public:
 
 
 
+// #############################################################################
+// delandtsheer_doyen.cpp
+// #############################################################################
+
+
+
+#define MAX_MASK_TESTS 1000
+
+
+
+//! searching for line transitive point imprimitive designs preserving a grid structure on points
+
+
+class delandtsheer_doyen {
+public:
+	int argc;
+	const char **argv;
+
+	int d1;
+	int d2;
+	int q1;
+	int q2;
+
+	const char *group_label;
+
+	finite_field *F1;
+	finite_field *F2;
+
+
+	int DELANDTSHEER_DOYEN_X;
+	int DELANDTSHEER_DOYEN_Y;
+	int K;
+
+	int Xsize; // = D = q1 = # of rows
+	int Ysize; // = C = q2 = # of cols
+
+	int V; // = Xsize * Ysize
+	int b;
+	long int *line;        // [K];
+	int *row_sum; // [Xsize]
+	int *col_sum; // [Ysize]
+
+
+	matrix_group *M1;
+	matrix_group *M2;
+	action *A1;
+	action *A2;
+
+	action *A;
+	action *A0;
+
+	strong_generators *SG;
+	longinteger_object go;
+	direct_product *P;
+	poset *Poset_pairs;
+	poset *Poset_search;
+	poset_classification *Pairs;
+	poset_classification *Gen;
+
+	// orbits on pairs:
+	int f_subgroup;
+	int *pair_orbit; // [V * V]
+	int nb_orbits;
+	int *transporter;
+	int *tmp_Elt;
+	int *orbit_length; 		// [nb_orbits]
+	int *orbit_covered; 		// [nb_orbits]
+	int *orbit_covered_max; 	// [nb_orbits]
+		// orbit_covered_max[i] = orbit_length[i] / b;
+	int *orbits_covered; 		// [K * K]
+
+
+	// intersection type tests:
+
+	int inner_pairs_in_rows;
+	int inner_pairs_in_cols;
+
+	// row intersection type
+	int f_R;
+	int nb_row_types;
+	int *row_type;     		// [nb_row_types + 1]
+	int *row_type_cur; 		// [nb_row_types + 1]
+	int *row_type_this_or_bigger; 	// [nb_row_types + 1]
+
+	// col intersection type
+	int f_C;
+	int nb_col_types;
+	int *col_type;     		// [nb_col_types + 1]
+	int *col_type_cur; 		// [nb_col_types + 1]
+	int *col_type_this_or_bigger; 	// [nb_col_types + 1]
+
+
+	// mask related test:
+	int nb_mask_tests;
+	int mask_test_level[MAX_MASK_TESTS];
+	int mask_test_who[MAX_MASK_TESTS];
+		// 1 = x
+		// 2 = y
+		// 3 = x+y
+		// 4 = singletons
+	int mask_test_what[MAX_MASK_TESTS];
+		// 1 = eq
+		// 2 = ge
+		// 3 = le
+	int mask_test_value[MAX_MASK_TESTS];
+
+	// a file where we print the solution, it has the extension bblt
+	// for "base block line transitive" design
+	//FILE *fp_sol;
+	//char fname_solution_file[1000];
+
+	// for testing the mask:
+	int *f_row_used; // [Xsize];
+	int *f_col_used; // [Ysize];
+	int *row_idx; // [Xsize];
+	int *col_idx; // [Ysize];
+	int *singletons; // [K];
+
+	// temporary data
+	int *row_col_idx; // [Xsize];
+	int *col_row_idx; // [Ysize];
+
+	long int *live_points; // [V]
+	int nb_live_points;
+
+	delandtsheer_doyen();
+	~delandtsheer_doyen();
+	void init(int argc, const char **argv,
+			int d1, int q1, int d2, int q2,
+			int f_subgroup, const char *subgroup_gens_text,
+			const char *subgroup_order_text,
+			const char *group_label,
+			int depth,
+			int verbose_level);
+	void create_graph(
+			long int *line0, int len, int verbose_level);
+	void testing(strong_generators *SG, int verbose_level);
+	int find_pair_orbit(int i, int j, int verbose_level);
+	int find_pair_orbit_by_tracing(int i, int j, int verbose_level);
+	void compute_pair_orbit_table(int verbose_level);
+	void write_pair_orbit_file(int verbose_level);
+	void print_mask_test_i(std::ostream &ost, int i);
+	int check_conditions(long int *S, int len, int verbose_level);
+	int check_orbit_covering(long int *line,
+			int len, int verbose_level);
+	int check_row_sums(long int *line,
+			int len, int verbose_level);
+	int check_col_sums(long int *line,
+			int len, int verbose_level);
+	int check_mask(long int *line,
+			int len, int verbose_level);
+	void get_mask_core_and_singletons(
+		long int *line, int len,
+		int &nb_rows_used, int &nb_cols_used,
+		int &nb_singletons, int verbose_level);
+};
+
+
+int delandtsheer_doyen_check_conditions(int len, long int *S,
+		void *data, int verbose_level);
+
 
 // #############################################################################
 // design_create_description.cpp

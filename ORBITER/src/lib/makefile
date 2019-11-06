@@ -288,6 +288,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/trace_record.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/cayley_graph_search.o \
+		top_level/combinatorics/delandtsheer_doyen.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
