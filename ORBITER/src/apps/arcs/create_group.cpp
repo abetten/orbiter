@@ -60,7 +60,7 @@ void create_group_arcs8(int q, int verbose_level)
 
 	//int arc_8_nb_reps = 1;
 	int arc_8_size = 10;
-	int arc_8_reps[] = {
+	long int arc_8_reps[] = {
 		0, 1, 2, 3, 28, 38, 43, 55, 64, 69, 
 	};
 	const char *arc_8_stab_order[] = {
@@ -131,7 +131,7 @@ void create_group_arcs8(int q, int verbose_level)
 	cnt = 0;
 	nb_zero_max = 0;
 	for (i = 0; i < go.as_int(); i++) {
-		Aut->element_unrank_int(i, Elt);
+		Aut->element_unrank_lint(i, Elt);
 		o = A->element_order(Elt);
 		if (o == 9) {
 #if 0
@@ -155,7 +155,7 @@ void create_group_arcs8(int q, int verbose_level)
 			"nb_zero_max = " << nb_zero_max << endl;
 
 	for (i = 0; i < go.as_int(); i++) {
-		Aut->element_unrank_int(i, Elt);
+		Aut->element_unrank_lint(i, Elt);
 		o = A->element_order(Elt);
 		if (o == 9) {
 			nb_zero = 0;
@@ -198,7 +198,7 @@ void create_group_arcs8(int q, int verbose_level)
 	int idx;
 	
 	idx = 1458;
-	Aut->element_unrank_int(idx, Elt);
+	Aut->element_unrank_lint(idx, Elt);
 	cout << "Element " << setw(5) << idx << " / " << go.as_int() << endl;
 	A->element_print(Elt, cout);
 	A->element_print_as_permutation(Elt, cout);

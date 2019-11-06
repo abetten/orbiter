@@ -1061,8 +1061,8 @@ public:
 	void cheat_sheet_bottom(std::ostream &f);
 	void display_table_of_projective_points(
 			std::ostream &ost, long int *Pts, int nb_pts, int len);
-	void export_magma(int d, int *Pts, int nb_pts, char *fname);
-	void export_gap(int d, int *Pts, int nb_pts, char *fname);
+	void export_magma(int d, long int *Pts, int nb_pts, char *fname);
+	void export_gap(int d, long int *Pts, int nb_pts, char *fname);
 	void oval_polynomial(
 		int *S, unipoly_domain &D, unipoly_object &poly,
 		int verbose_level);
@@ -1496,7 +1496,7 @@ public:
 		int *coeffs, int nb_terms_per_line, 
 		const char *new_line_text);
 	void algebraic_set(int *Eqns, int nb_eqns,
-			int *Pts, int &nb_pts, int verbose_level);
+			long int *Pts, int &nb_pts, int verbose_level);
 	void enumerate_points(int *coeff, long int *Pts, int &nb_pts,
 		int verbose_level);
 	int evaluate_at_a_point_by_rank(int *coeff, int pt);
@@ -1962,9 +1962,9 @@ public:
 	void retract_matrix(int *Mq, int n, int *MQ, int m, 
 		int verbose_level);
 	void Adelaide_hyperoval(
-			int *&Pts, int &nb_pts, int verbose_level);
+			long int *&Pts, int &nb_pts, int verbose_level);
 	void create_adelaide_hyperoval(
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 
 };

@@ -125,7 +125,7 @@ void do_it(int n, int verbose_level)
 	S = A->Sims;
 
 	for (i = 0; i < goi; i++) {
-		S->element_unrank_int(i, Elt);
+		S->element_unrank_lint(i, Elt);
 		cout << "element " << i << " is ";
 		A->element_print_quick(Elt, cout);
 		cout << endl;

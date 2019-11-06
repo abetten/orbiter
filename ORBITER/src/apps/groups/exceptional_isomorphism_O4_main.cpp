@@ -210,7 +210,7 @@ void do_it(int q, int verbose_level)
 	if (goi < 1000) {
 		for (i = 0; i < goi; i++) {
 			cout << "i=" << i << " / " << goi << endl;
-			G->element_unrank_int(i, E4a);
+			G->element_unrank_lint(i, E4a);
 
 			cout << "E4a=" << endl;
 			A4->element_print_quick(E4a, cout);
@@ -225,7 +225,7 @@ void do_it(int q, int verbose_level)
 			A2->element_print_quick(E2b, cout);
 
 			Iso->apply_2_to_4(f_switch, E2a, E2b, E4b, 0 /*verbose_level*/);
-			j = G->element_rank_int(E4b);
+			j = G->element_rank_lint(E4b);
 			cout << "rank returns j=" << j << endl;
 			if (j != i) {
 				cout << "j != i" << endl;
@@ -282,7 +282,7 @@ void do_it(int q, int verbose_level)
 			A4->print_for_make_element(cout, E4a);
 			cout << endl;
 
-			j = G->element_rank_int(E4a);
+			j = G->element_rank_lint(E4a);
 			cout << "rank =" << j << endl;
 
 #if 1
@@ -291,7 +291,7 @@ void do_it(int q, int verbose_level)
 			A5->element_print_quick(E5, cout);
 			A5->print_for_make_element(cout, E5);
 			cout << endl;
-			j = G5->element_rank_int(E5);
+			j = G5->element_rank_lint(E5);
 			cout << "rank in O(5,q)=" << j << endl;
 #endif
 		}
@@ -406,7 +406,7 @@ void do_2to4(int q, int nb_gens,
 		A4->print_for_make_element(cout, E4a);
 		cout << endl;
 
-		j = G->element_rank_int(E4a);
+		j = G->element_rank_lint(E4a);
 		cout << "rank =" << j << endl;
 
 	}

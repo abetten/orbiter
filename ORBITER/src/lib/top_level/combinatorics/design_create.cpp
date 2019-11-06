@@ -59,7 +59,7 @@ void design_create::freeself()
 		FREE_OBJECT(F);
 		}
 	if (set) {
-		FREE_int(set);
+		FREE_lint(set);
 		}
 	if (Sg) {
 		FREE_OBJECT(Sg);
@@ -175,7 +175,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 
 	if (f_v) {
 		cout << "design_create::init set = ";
-		int_vec_print(cout, set, sz);
+		lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 
@@ -192,7 +192,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 }
 
 void design_create::create_design_PG_2_q(finite_field *F,
-		int *&set, int &sz, int &k, int verbose_level)
+		long int *&set, int &sz, int &k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -215,7 +215,7 @@ void design_create::create_design_PG_2_q(finite_field *F,
 
 	block = NEW_int(k);
 	sz = P->N_lines;
-	set = NEW_int(sz);
+	set = NEW_lint(sz);
 	for (j = 0; j < sz; j++) {
 		int_vec_copy(P->Lines + j * k, block, k);
 		Sorting.int_vec_heapsort(block, k);
@@ -226,10 +226,10 @@ void design_create::create_design_PG_2_q(finite_field *F,
 			cout << " : " << set[j] << endl;
 		}
 	}
-	Sorting.int_vec_heapsort(set, sz);
+	Sorting.lint_vec_heapsort(set, sz);
 	if (f_v) {
 		cout << "design : ";
-		int_vec_print(cout, set, sz);
+		lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 

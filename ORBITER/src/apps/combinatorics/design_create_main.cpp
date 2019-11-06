@@ -153,7 +153,7 @@ int main(int argc, const char **argv)
 
 	cout << "We have created the following design:" << endl;
 	cout << "$$" << endl;
-	L.int_set_print_tex(cout, DC->set, DC->sz);
+	L.lint_set_print_tex(cout, DC->set, DC->sz);
 	cout << endl;
 	cout << "$$" << endl;
 
@@ -237,7 +237,7 @@ int main(int argc, const char **argv)
 
 			a = Rep->data[i];
 			cout << i << " & " << a << " & ";
-			int_vec_print(cout, LS->Design_table + a * LS->design_size, LS->design_size);
+			lint_vec_print(cout, LS->Design_table + a * LS->design_size, LS->design_size);
 			cout << endl;
 		}
 
@@ -307,7 +307,7 @@ int main(int argc, const char **argv)
 			sprintf(prefix, "Case_%d_", lift_case);
 			sprintf(group_label, "Syl_%d", Syl->primes[sylow_select]);
 
-			int *Large_sets;
+			long int *Large_sets;
 			int nb_large_sets;
 
 			strong_generators *SG1;
@@ -331,7 +331,7 @@ int main(int argc, const char **argv)
 			cout << "processing starter case done" << endl;
 			if (f_read_solution_file) {
 				cout << "We found " << nb_large_sets << " large sets" << endl;
-				int_matrix_print(Large_sets, nb_large_sets, LS->size_of_large_set);
+				lint_matrix_print(Large_sets, nb_large_sets, LS->size_of_large_set);
 			}
 		}
 #endif

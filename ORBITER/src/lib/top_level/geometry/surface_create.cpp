@@ -359,9 +359,9 @@ void surface_create::init2(int verbose_level)
 		int i;
 
 		for (i = 0; i < 6; i++) {
-			sprintf(prefix + strlen(prefix), "_%d", arc[i]);
-			sprintf(label_txt + strlen(label_txt), "_%d", arc[i]);
-			sprintf(label_tex + strlen(label_tex), "\\_%d", arc[i]);
+			sprintf(prefix + strlen(prefix), "_%ld", arc[i]);
+			sprintf(label_txt + strlen(label_txt), "_%ld", arc[i]);
+			sprintf(label_tex + strlen(label_tex), "\\_%ld", arc[i]);
 		}
 		
 		//AL->print(fp);
@@ -439,9 +439,9 @@ void surface_create::init2(int verbose_level)
 		int i;
 
 		for (i = 0; i < 6; i++) {
-			sprintf(prefix + strlen(prefix), "_%d", arc[i]);
-			sprintf(label_txt + strlen(label_txt), "_%d", arc[i]);
-			sprintf(label_tex + strlen(label_tex), "\\_%d", arc[i]);
+			sprintf(prefix + strlen(prefix), "_%ld", arc[i]);
+			sprintf(label_txt + strlen(label_txt), "_%ld", arc[i]);
+			sprintf(label_tex + strlen(label_tex), "\\_%ld", arc[i]);
 		}
 
 		//AL->print(fp);

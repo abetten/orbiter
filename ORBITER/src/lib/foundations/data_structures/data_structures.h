@@ -104,7 +104,7 @@ public:
 	void print_table();
 	void save(const char *prefix,
 		void (*encode_function)(void *extra_data,
-			int *&encoding, int &encoding_sz, void *global_data),
+			long int *&encoding, int &encoding_sz, void *global_data),
 		void (*get_group_order_or_NULL)(void *extra_data,
 			longinteger_object &go, void *global_data),
 		void *global_data,

@@ -25,7 +25,7 @@ int t0; // the system time when the program started
 
 
 void do_analyze_projective_code(int n, finite_field *F, 
-	int *the_set, int set_size, int verbose_level);
+	long int *the_set, int set_size, int verbose_level);
 
 
 int main(int argc, char **argv)
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 	char *file_name;
 	int f_poly = FALSE;
 	const char *poly = "";
-	int *the_set;
+	long int *the_set;
 	int set_size = 0;
 	os_interface Os;
 
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 }
 
 void do_analyze_projective_code(int n, finite_field *F, 
-	int *the_set, int set_size, int verbose_level)
+	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;

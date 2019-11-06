@@ -22,7 +22,7 @@ int t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
 int main(int argc, const char **argv);
-int design_search_check_conditions(int len, int *S,
+int design_search_check_conditions(int len, long int *S,
 		void *data, int verbose_level);
 
 
@@ -54,7 +54,7 @@ public:
 
 	int V; // = Xsize * Ysize
 	int b;
-	int *line;        // [K];
+	long int *line;        // [K];
 	int *row_sum; // [Xsize]
 	int *col_sum; // [Ysize]
 
@@ -138,7 +138,7 @@ public:
 	int *row_col_idx; // [Xsize];
 	int *col_row_idx; // [Ysize];
 
-	int *live_points; // [V]
+	long int *live_points; // [V]
 	int nb_live_points;
 
 	direct_product_action();
@@ -151,24 +151,24 @@ public:
 			int depth,
 			int verbose_level);
 	void create_graph(
-			int *line0, int len, int verbose_level);
+			long int *line0, int len, int verbose_level);
 	void testing(strong_generators *SG, int verbose_level);
 	int find_pair_orbit(int i, int j, int verbose_level);
 	int find_pair_orbit_by_tracing(int i, int j, int verbose_level);
 	void compute_pair_orbit_table(int verbose_level);
 	void write_pair_orbit_file(int verbose_level);
 	void print_mask_test_i(ostream &ost, int i);
-	int check_conditions(int *S, int len, int verbose_level);
-	int check_orbit_covering(int *line,
+	int check_conditions(long int *S, int len, int verbose_level);
+	int check_orbit_covering(long int *line,
 			int len, int verbose_level);
-	int check_row_sums(int *line,
+	int check_row_sums(long int *line,
 			int len, int verbose_level);
-	int check_col_sums(int *line,
+	int check_col_sums(long int *line,
 			int len, int verbose_level);
-	int check_mask(int *line,
+	int check_mask(long int *line,
 			int len, int verbose_level);
 	void get_mask_core_and_singletons(
-		int *line, int len,
+		long int *line, int len,
 		int &nb_rows_used, int &nb_cols_used,
 		int &nb_singletons, int verbose_level);
 };
@@ -404,7 +404,7 @@ direct_product_action::direct_product_action()
 direct_product_action::~direct_product_action()
 {
 	if (line) {
-		FREE_int(line);
+		FREE_lint(line);
 	}
 	if (row_sum) {
 		FREE_int(row_sum);
@@ -473,7 +473,7 @@ direct_product_action::~direct_product_action()
 		FREE_int(col_row_idx);
 	}
 	if (live_points) {
-		FREE_int(live_points);
+		FREE_lint(live_points);
 	}
 }
 
@@ -620,10 +620,10 @@ void direct_product_action::init(int argc, const char **argv,
 	cout << "Ysize=" << Ysize << endl;
 	cout << "V=" << V << endl;
 
-	line = NEW_int(K);
+	line = NEW_lint(K);
 	row_sum = NEW_int(Xsize);
 	col_sum = NEW_int(Ysize);
-	live_points = NEW_int(V);
+	live_points = NEW_lint(V);
 
 
 	cout << "DELANDTSHEER_DOYEN_X=" << DELANDTSHEER_DOYEN_X << endl;
@@ -776,12 +776,12 @@ void direct_product_action::init(int argc, const char **argv,
 		cout << "The group has order " << go << endl;
 
 		action *Ar;
-		int *points;
+		long int *points;
 		int nb_points;
 		int h;
 
 		nb_points = d1 * d2;
-		points = NEW_int(nb_points);
+		points = NEW_lint(nb_points);
 		h = 0;
 		for (i = 0; i < d1; i++) {
 			for (j = 0; j < d2; j++) {
@@ -1066,13 +1066,13 @@ void direct_product_action::init(int argc, const char **argv,
 			}
 			if (f_vv) {
 				cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-				int_vec_print(cout, ODF->sets[orbit_idx],
+				lint_vec_print(cout, ODF->sets[orbit_idx],
 						ODF->set_sizes[orbit_idx]);
 				cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
 						<< ODF->Aut_ascii[orbit_idx] << endl;
 			}
 
-			int *line0;
+			long int *line0;
 
 			line0 = ODF->sets[orbit_idx];
 			if (ODF->set_sizes[orbit_idx] != level) {
@@ -1080,8 +1080,7 @@ void direct_product_action::init(int argc, const char **argv,
 				exit(1);
 			}
 
-			create_graph(
-					line0, level, 0 /*verbose_level*/);
+			create_graph(line0, level, 0 /*verbose_level*/);
 
 			if (f_vv) {
 				cout << "case " << orbit_idx << " / " << ODF->nb_cases
@@ -1126,7 +1125,7 @@ void direct_product_action::init(int argc, const char **argv,
 						<< " is orbit_idx " << orbit_idx << endl;
 			}
 
-			int *line0;
+			long int *line0;
 
 			line0 = ODF->sets[orbit_idx];
 			if (ODF->set_sizes[orbit_idx] != level) {
@@ -1145,8 +1144,8 @@ void direct_product_action::init(int argc, const char **argv,
 						<< " live points" << endl;
 			}
 			if (nb_live_points == target_depth) {
-				int_vec_copy(line0, line, level);
-				int_vec_copy(live_points, line + level, target_depth);
+				lint_vec_copy(line0, line, level);
+				lint_vec_copy(live_points, line + level, target_depth);
 				if (check_orbit_covering(line,
 					K, 0 /* verbose_level */)) {
 					cout << "found a solution in orbit " << orbit_idx << endl;
@@ -1155,7 +1154,8 @@ void direct_product_action::init(int argc, const char **argv,
 
 
 
-			} else {
+			}
+			else {
 				cout << "orbit_not_ruled_out=" << orbit_not_ruled_out << " / "
 						<< nb_orbits_not_ruled_out << " is orbit_idx"
 						<< orbit_idx << " / " << ODF->nb_cases
@@ -1168,9 +1168,13 @@ void direct_product_action::init(int argc, const char **argv,
 				subset = NEW_int(target_depth);
 				nCk = Combi.int_n_choose_k(nb_live_points, target_depth);
 				for (l = 0; l < nCk; l++) {
+
 					Combi.unrank_k_subset(l, subset, nb_live_points, target_depth);
-					int_vec_copy(line0, line, level);
-					int_vec_apply(subset, live_points, line + level, target_depth);
+
+					lint_vec_copy(line0, line, level);
+
+					int_vec_apply_lint(subset, live_points, line + level, target_depth);
+
 					if (check_orbit_covering(line,
 						K, 0 /* verbose_level */)) {
 						cout << "found a solution, subset " << l
@@ -1289,7 +1293,7 @@ void direct_product_action::init(int argc, const char **argv,
 }
 
 void direct_product_action::create_graph(
-		int *line0, int len, int verbose_level)
+		long int *line0, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, x, y, h, ph, k, pk, o;
@@ -1607,8 +1611,8 @@ int direct_product_action::find_pair_orbit_by_tracing(
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_no;
-	int set[2];
-	int canonical_set[2];
+	long int set[2];
+	long int canonical_set[2];
 
 	if (f_v) {
 		cout << "direct_product_action::find_pair_orbit_by_tracing" << endl;
@@ -1665,7 +1669,7 @@ void direct_product_action::write_pair_orbit_file(
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
-	int set[1000];
+	long int set[1000];
 	int i, j, k, n, size, l;
 
 
@@ -1746,7 +1750,7 @@ void direct_product_action::print_mask_test_i(
 }
 
 int direct_product_action::check_conditions(
-		int *S, int len, int verbose_level)
+		long int *S, int len, int verbose_level)
 {
 	//verbose_level = 4;
 	int f_v = (verbose_level >= 1);
@@ -1768,7 +1772,7 @@ int direct_product_action::check_conditions(
 		}
 
 	pt = S[len - 1];
-	if (Sorting.int_vec_search_linear(S, len - 1, pt, idx)) {
+	if (Sorting.lint_vec_search_linear(S, len - 1, pt, idx)) {
 		if (f_v) {
 			cout << "direct_product_action::check_conditions "
 					"not OK, "
@@ -1822,7 +1826,7 @@ int direct_product_action::check_conditions(
 }
 
 int direct_product_action::check_orbit_covering(
-		int *line,
+		long int *line,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1867,7 +1871,7 @@ int direct_product_action::check_orbit_covering(
 	return f_OK;
 }
 
-int direct_product_action::check_row_sums(int *line,
+int direct_product_action::check_row_sums(long int *line,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1942,7 +1946,7 @@ int direct_product_action::check_row_sums(int *line,
 	return f_OK;
 }
 
-int direct_product_action::check_col_sums(int *line,
+int direct_product_action::check_col_sums(long int *line,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2017,7 +2021,7 @@ int direct_product_action::check_col_sums(int *line,
 	return f_OK;
 }
 
-int direct_product_action::check_mask(int *line,
+int direct_product_action::check_mask(long int *line,
 		int len, int verbose_level)
 {
 	//verbose_level = 4;
@@ -2107,7 +2111,7 @@ int direct_product_action::check_mask(int *line,
 
 
 void direct_product_action::get_mask_core_and_singletons(
-	int *line, int len,
+	long int *line, int len,
 	int &nb_rows_used, int &nb_cols_used,
 	int &nb_singletons, int verbose_level)
 {
@@ -2160,7 +2164,7 @@ void direct_product_action::get_mask_core_and_singletons(
 		}
 }
 
-int design_search_check_conditions(int len, int *S,
+int design_search_check_conditions(int len, long int *S,
 		void *data, int verbose_level)
 {
 	direct_product_action *P = (direct_product_action *) data;

@@ -257,14 +257,14 @@ int main(int argc, const char **argv)
 			longinteger_domain D;
 			int *coeff;
 			int *line_type;
-			int *Pts;
+			long int *Pts;
 			int nb_pts;
 			int *Kernel;
 			int *v;
 			//int h, pt, orbit_idx;
 
 			A->group_order(go);
-			Pts = NEW_int(HPD->P->N_points);
+			Pts = NEW_lint(HPD->P->N_points);
 			coeff = NEW_int(HPD->nb_monomials);
 			line_type = NEW_int(HPD->P->N_lines);
 			Kernel = NEW_int(HPD->nb_monomials * HPD->nb_monomials);
@@ -296,7 +296,7 @@ int main(int argc, const char **argv)
 
 				cout << "We found " << nb_pts << " points on the curve" << endl;
 				cout << "They are : ";
-				int_vec_print(cout, Pts, nb_pts);
+				lint_vec_print(cout, Pts, nb_pts);
 				cout << endl;
 				HPD->P->print_set_numerical(Pts, nb_pts);
 
@@ -320,7 +320,7 @@ int main(int argc, const char **argv)
 				T->Reps[i].Strong_gens->print_generators_tex(f);
 			} // next i
 
-			FREE_int(Pts);
+			FREE_lint(Pts);
 			FREE_int(coeff);
 			FREE_int(line_type);
 			FREE_int(Kernel);
@@ -338,14 +338,14 @@ int main(int argc, const char **argv)
 	longinteger_domain D;
 	int *coeff;
 	int *line_type;
-	int *Pts;
+	long int *Pts;
 	int nb_pts;
 	int *Kernel;
 	int h, pt, orbit_idx;
 	sorting Sorting;
 
 
-	Pts = NEW_int(HPD->P->N_points);
+	Pts = NEW_lint(HPD->P->N_points);
 	coeff = NEW_int(HPD->nb_monomials);
 	line_type = NEW_int(HPD->P->N_lines);
 	Kernel = NEW_int(HPD->nb_monomials * HPD->nb_monomials);
@@ -376,7 +376,7 @@ int main(int argc, const char **argv)
 		HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
 		cout << "We found " << nb_pts << " points on the curve" << endl;
 		cout << "They are : ";
-		int_vec_print(cout, Pts, nb_pts);
+		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		HPD->P->print_set_numerical(Pts, nb_pts);
 
@@ -526,7 +526,7 @@ int main(int argc, const char **argv)
 			HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
 			cout << "We found " << nb_pts << " points on the curve" << endl;
 			cout << "They are : ";
-			int_vec_print(cout, Pts, nb_pts);
+			lint_vec_print(cout, Pts, nb_pts);
 			cout << endl;
 			HPD->P->print_set_numerical(Pts, nb_pts);
 
@@ -728,23 +728,23 @@ int main(int argc, const char **argv)
 		HPD->print_equation(cout, coeff);
 		cout << endl;
 
-		int *Pts2;
-		int *Pts3;
+		long int *Pts2;
+		long int *Pts3;
 		int nb_pts2;
 		int *coeff2;
 		int r, b, orbit_idx;
 
-		Pts2 = NEW_int(HPD->P->N_points);
-		Pts3 = NEW_int(HPD->P->N_points);
+		Pts2 = NEW_lint(HPD->P->N_points);
+		Pts3 = NEW_lint(HPD->P->N_points);
 		coeff2 = NEW_int(HPD->nb_monomials);
 		
 		HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
 		cout << "We found " << nb_pts << " points on the curve" << endl;
 
-		Sorting.int_vec_heapsort(Pts, nb_pts);
+		Sorting.lint_vec_heapsort(Pts, nb_pts);
 
 		cout << "They are : ";
-		int_vec_print(cout, Pts, nb_pts);
+		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		HPD->P->print_set_numerical(Pts, nb_pts);
 
@@ -773,10 +773,10 @@ int main(int argc, const char **argv)
 			cout << "We found " << nb_pts2
 					<< " points on the curve" << endl;
 
-			Sorting.int_vec_heapsort(Pts2, nb_pts);
+			Sorting.lint_vec_heapsort(Pts2, nb_pts);
 
 			cout << "They are : ";
-			int_vec_print(cout, Pts2, nb_pts2);
+			lint_vec_print(cout, Pts2, nb_pts2);
 			cout << endl;
 			HPD->P->print_set_numerical(Pts2, nb_pts2);
 			if (nb_pts2 != nb_pts) {
@@ -797,14 +797,14 @@ int main(int argc, const char **argv)
 
 			A->map_a_set_and_reorder(Pts, Pts3, nb_pts, Elt1,
 					verbose_level);
-			Sorting.int_vec_heapsort(Pts3, nb_pts);
+			Sorting.lint_vec_heapsort(Pts3, nb_pts);
 
 			cout << "after apply : ";
-			int_vec_print(cout, Pts3, nb_pts);
+			lint_vec_print(cout, Pts3, nb_pts);
 			cout << endl;
 
 		
-			if (int_vec_compare(Pts3, Pts2, nb_pts)) {
+			if (lint_vec_compare(Pts3, Pts2, nb_pts)) {
 				cout << "The sets are different" << endl;
 				exit(1);
 				}
@@ -813,8 +813,8 @@ int main(int argc, const char **argv)
 					"to the new set, which is good" << endl;
 			}
 
-		FREE_int(Pts2);
-		FREE_int(Pts3);
+		FREE_lint(Pts2);
+		FREE_lint(Pts3);
 		FREE_int(coeff2);
 		}
 
@@ -823,7 +823,7 @@ int main(int argc, const char **argv)
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 
-	FREE_int(Pts);
+	FREE_lint(Pts);
 	FREE_int(coeff);
 	FREE_int(line_type);
 	FREE_int(Kernel);
@@ -857,10 +857,10 @@ void polynomial_orbits_callback_print_function2(
 
 	int *coeff;
 	int *i_data = (int *) data;
-	int *Pts;
+	long int *Pts;
 	int nb_pts;
 
-	Pts = NEW_int(HPD->P->N_points);
+	Pts = NEW_lint(HPD->P->N_points);
 	coeff = NEW_int(HPD->nb_monomials);
 	HPD->unrank_coeff_vector(coeff, i_data[0]);
 	HPD->enumerate_points(coeff, Pts, nb_pts,  0 /*verbose_level*/);
@@ -870,7 +870,7 @@ void polynomial_orbits_callback_print_function2(
 	//HPD->print_equation_str(ost, coeff);
 	//ost << endl;
 	FREE_int(coeff);
-	FREE_int(Pts);
+	FREE_lint(Pts);
 }
 
 

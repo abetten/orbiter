@@ -2801,7 +2801,7 @@ void mp_graphics::draw_graph(int x, int y,
 
 void mp_graphics::draw_graph_with_distinguished_edge(
 	int x, int y,
-	int dx, int dy, int nb_V, int *Edges, int nb_E,
+	int dx, int dy, int nb_V, long int *Edges, int nb_E,
 	int distinguished_edge, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

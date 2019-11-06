@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 	sz = 0;
 
 	for (i = 0; i < N; i++) {
-		Gr->unrank_int_here(M1, i, 0 /* verbose_level */);
+		Gr->unrank_lint_here(M1, i, 0 /* verbose_level */);
 		
 		for (j = 0; j < q + 1; j++) {
 			F->unrank_point_in_PG(v, 2, j);
@@ -85,10 +85,10 @@ int main(int argc, char **argv)
 	int_vec_zero(Adj, sz * sz);
 
 	for (i = 0; i < sz; i++) {
-		Gr->unrank_int_here(M1, List[i], 0 /* verbose_level */);
+		Gr->unrank_lint_here(M1, List[i], 0 /* verbose_level */);
 
 		for (j = i + 1; j < sz; j++) {
-			Gr->unrank_int_here(M2, List[j], 0 /* verbose_level */);
+			Gr->unrank_lint_here(M2, List[j], 0 /* verbose_level */);
 
 			int_vec_copy(M1, M, k * n);
 			int_vec_copy(M2, M + k * n, k * n);

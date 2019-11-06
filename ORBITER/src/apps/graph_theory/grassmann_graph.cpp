@@ -93,11 +93,11 @@ int main(int argc, char **argv)
 
 	for (i = 0; i < N; i++) {
 		
-		Gr->unrank_int_here(M1, i, 0 /* verbose_level */);
+		Gr->unrank_lint_here(M1, i, 0 /* verbose_level */);
 
 		for (j = i + 1; j < N; j++) {
 
-			Gr->unrank_int_here(M2, j, 0 /* verbose_level */);
+			Gr->unrank_lint_here(M2, j, 0 /* verbose_level */);
 		
 			int_vec_copy(M1, M, k * n);
 			int_vec_copy(M2, M + k * n, k * n);

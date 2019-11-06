@@ -205,7 +205,7 @@ void diophant::open(int m, int n)
 	f_has_var_labels = FALSE;
 }
 
-void diophant::init_var_labels(int *labels, int verbose_level)
+void diophant::init_var_labels(long int *labels, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -214,7 +214,7 @@ void diophant::init_var_labels(int *labels, int verbose_level)
 	}
 	var_labels = NEW_int(n);
 	f_has_var_labels = TRUE;
-	int_vec_copy(labels, var_labels, n);
+	lint_vec_copy_to_int(labels, var_labels, n);
 	if (f_v) {
 		cout << "diophant::init_var_labels done" << endl;
 	}
@@ -963,7 +963,7 @@ void diophant::read_solutions_from_file(const char *fname_sol,
 }
 
 
-void diophant::get_solutions(int *&Sol, int &nb_sol, int verbose_level)
+void diophant::get_solutions(long int *&Sol, int &nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -979,7 +979,7 @@ void diophant::get_solutions(int *&Sol, int &nb_sol, int verbose_level)
 		exit(1);
 	}
 	nb_sol = _resultanz;
-	Sol = NEW_int(nb_sol * sum);
+	Sol = NEW_lint(nb_sol * sum);
 	for (i = 0; i < _resultanz; i++) {
 		res = _results.front();
 		h = 0;
@@ -4236,7 +4236,7 @@ void diophant_solve_mckay_override_minrhs_in_inequalities(
 void solve_diophant(int *Inc,
 	int nb_rows, int nb_cols, int nb_needed,
 	int f_has_Rhs, int *Rhs, 
-	int *&Solutions, int &nb_sol, int &nb_backtrack, int &dt, 
+	long int *&Solutions, int &nb_sol, int &nb_backtrack, int &dt,
 	int f_DLX, 
 	int f_draw_system, const char *fname_system, 
 	int f_write_tree, const char *fname_tree, 
@@ -4304,7 +4304,7 @@ void solve_diophant(int *Inc,
 		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
 		if (FALSE /*f_v4*/) {
 			cout << "Solutions:" << endl;
-			int_matrix_print(Solutions, nb_sol, nb_needed);
+			lint_matrix_print(Solutions, nb_sol, nb_needed);
 		}
 	}
 	else {

@@ -17,7 +17,7 @@ void canonical_form(int *Adj, int *Adj2, int n, int nb_edges, int *edges2,
 void make_graph_fname(char *fname_full,
 		char *fname_full_tex, int n, int *set, int sz);
 void draw_graph_to_file(const char *fname, int n,
-		int *set, int sz, double scale, int f_embedded, int f_sideways);
+		long int *set, int sz, double scale, int f_embedded, int f_sideways);
 
 int main(int argc, char **argv)
 {
@@ -80,6 +80,7 @@ int main(int argc, char **argv)
 	int *Adj;
 	int *Adj2;
 	int *edges2;
+	long int *Edges2;
 	int *labeling;
 	int e, n2;
 	number_theory_domain NT;
@@ -90,6 +91,7 @@ int main(int argc, char **argv)
 	Adj = NEW_int(n * n);
 	Adj2 = NEW_int(n * n);
 	edges2 = NEW_int(n2);
+	Edges2 = NEW_lint(n2);
 	labeling = NEW_int(n);
 
 
@@ -121,6 +123,7 @@ int main(int argc, char **argv)
 	if (f_all) {
 		int N, E;
 		int *set;
+		long int *set1;
 		int sz;
 		char fname1_tex[1000];
 		char fname2_tex[1000];
@@ -133,6 +136,7 @@ int main(int argc, char **argv)
 		ofstream fp(fname);
 
 		set = NEW_int(n2);
+		set1 = NEW_lint(n2);
 		N = NT.i_power_j(2, n2);
 		fp << "\\begin{tabular}{|c|l|c|c|l|c|l|}" << endl;
 		fp << "\\hline" << endl;
@@ -142,10 +146,11 @@ int main(int argc, char **argv)
 			int_vec_zero(Adj, n * n);
 			int_vec_zero(Adj2, n * n);
 			Combi.unrank_subset(set, sz, n2, E);
+			int_vec_copy_to_lint(set, set1, n2);
 			L.int_set_print_tex(fp, set, sz);
 
 			make_graph_fname(fname1, fname1_tex, n, set, sz);
-			draw_graph_to_file(fname1, n, set, sz,
+			draw_graph_to_file(fname1, n, set1, sz,
 					scale, f_embedded, f_sideways);
 			
 			fp << " & \\mbox{ \\input GRAPHICS/G4/"
@@ -166,6 +171,7 @@ int main(int argc, char **argv)
 
 			canonical_form(Adj, Adj2, n, sz,
 					edges2, labeling, A, A2, Sch, verbose_level);
+			int_vec_copy_to_lint(edges2, Edges2, n2);
 			fp << " & ";
 			fp << "[";
 			for (h = 0; h < n; h++) {
@@ -179,7 +185,7 @@ int main(int argc, char **argv)
 			L.int_set_print_tex(fp, edges2, sz);
 			make_graph_fname(fname2, fname2_tex, n, edges2, sz);
 			draw_graph_to_file(fname2, n,
-					edges2, sz, scale, f_embedded, f_sideways);
+					Edges2, sz, scale, f_embedded, f_sideways);
 			fp << " & \\mbox{ \\input GRAPHICS/G4/"
 					<< fname2_tex << " } ";
 			fp << " & $";
@@ -216,6 +222,7 @@ int main(int argc, char **argv)
 				<< Fio.file_size(fname) << endl;
 
 		FREE_int(set);
+		FREE_lint(set1);
 		}
 
 	FREE_int(Adj);
@@ -298,7 +305,7 @@ void make_graph_fname(char *fname_full,
 }
 
 void draw_graph_to_file(const char *fname,
-		int n, int *set, int sz, double scale,
+		int n, long int *set, int sz, double scale,
 		int f_embedded, int f_sideways)
 {
 	int x_min = 0, x_max = 1000000;

@@ -799,7 +799,7 @@ public:
 	void create_Buekenhout_Metz(
 		finite_field *Fq, finite_field *FQ,
 		int f_classical, int f_Uab, int parameter_a, int parameter_b,
-		char *fname, int &nb_pts, int *&Pts,
+		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	long int count_Sbar(int n, int q);
 	long int count_S(int n, int q);
@@ -2452,7 +2452,7 @@ public:
 		partitionstack *&Stack, 
 		int verbose_level);
 	void arc_lifting_diophant(
-		int *arc, int arc_sz,
+		long int *arc, int arc_sz,
 		int target_sz, int target_d,
 		diophant *&D,
 		int verbose_level);

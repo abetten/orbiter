@@ -22,7 +22,7 @@ int t0 = 0;
 
 
 int main(int argc, const char **argv);
-void lift_single_arc(int *arc, int arc_size,
+void lift_single_arc(long int *arc, int arc_size,
 		surface_with_action *Surf_A, int verbose_level);
 void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 		surface_with_action *Surf_A, int verbose_level);
@@ -131,10 +131,10 @@ int main(int argc, const char **argv)
 	
 
 	if (f_arc) {
-		int *arc;
+		long int *arc;
 		int arc_size;
 
-		int_vec_scan(the_arc_text, arc, arc_size);
+		lint_vec_scan(the_arc_text, arc, arc_size);
 		
 		if (f_v) {
 			cout << "before lift_single_arc" << endl;
@@ -159,7 +159,7 @@ int main(int argc, const char **argv)
 }
 
 
-void lift_single_arc(int *arc, int arc_size,
+void lift_single_arc(long int *arc, int arc_size,
 		surface_with_action *Surf_A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -176,7 +176,7 @@ void lift_single_arc(int *arc, int arc_size,
 	if (f_v) {
 		cout << "lift_single_arc q=" << q << endl;
 		cout << "Lifting the arc ";
-		int_vec_print(cout, arc, arc_size);
+		lint_vec_print(cout, arc, arc_size);
 		cout << endl;
 		}
 
@@ -197,7 +197,7 @@ void lift_single_arc(int *arc, int arc_size,
 	sprintf(fname_arc_lifting, "single_arc_lifting_q%d_arc", q);
 
 	for (i = 0; i < 6; i++) {
-		sprintf(fname_arc_lifting + strlen(fname_arc_lifting), "_%d",
+		sprintf(fname_arc_lifting + strlen(fname_arc_lifting), "_%ld",
 				arc[i]);
 		}
 	sprintf(fname_arc_lifting + strlen(fname_arc_lifting), ".tex");
@@ -218,7 +218,7 @@ void lift_single_arc(int *arc, int arc_size,
 
 
 	fp << "We are lifting the arc ";
-	int_vec_print(fp, arc, arc_size);
+	lint_vec_print(fp, arc, arc_size);
 	fp << endl;
 
 	fp << "consisting of the following points:\\\\" << endl;
@@ -423,7 +423,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 	int *Arc_identify; //[Six_arcs->nb_arcs_not_on_conic *
 				// Six_arcs->nb_arcs_not_on_conic]
 	int *Arc_identify_nb; // [Six_arcs->nb_arcs_not_on_conic]
-	int Arc6[6];
+	long int Arc6[6];
 	int nb_surfaces;
 
 	nb_surfaces = 0;
@@ -510,6 +510,19 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 			Arc_identify, 
 			f_deleted, 
 			verbose_level);
+
+#if 0
+		void surface_with_action::arc_lifting_and_classify(
+			int f_log_fp, ofstream &fp,
+			long int *Arc6,
+			const char *arc_label, const char *arc_label_short,
+			int nb_surfaces,
+			six_arcs_not_on_a_conic *Six_arcs,
+			int *Arc_identify_nb,
+			int *Arc_identify,
+			int *f_deleted,
+			int verbose_level)
+#endif
 
 		if (f_v) {
 			cout << "classify_arcs_and_do_arc_lifting "

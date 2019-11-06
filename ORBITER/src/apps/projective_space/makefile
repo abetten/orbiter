@@ -17,7 +17,6 @@ all: analyze_projective_code.out  \
 	canonical_form.out\
 	cheat_sheet_PG.out \
 	classify_cubic_curves.out \
-	conic.out \
 	create_object.out \
 	determine_conic.out \
 	determine_cubic.out \
@@ -27,9 +26,7 @@ all: analyze_projective_code.out  \
 	plane_search.out \
 	points.out \
 	polar.out \
-	process.out\
-	process_PG.out
-
+	process.out
 
 
 
@@ -55,9 +52,6 @@ cheat_sheet_PG.out:  cheat_sheet_PG.o;
 
 classify_cubic_curves.out:  classify_cubic_curves.o;
 	$(DISCRETA_CPP)  classify_cubic_curves.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-conic.out:  conic.o;
-	$(DISCRETA_CPP)  conic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 create_object.out:  create_object.o ;
 	$(DISCRETA_CPP)  create_object.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -89,14 +83,9 @@ points.out:  points.o;
 polar.out:  polar.o;
 	$(DISCRETA_CPP)  polar.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-process_PG.out:  process_PG.o ;
-	$(DISCRETA_CPP)  process_PG.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 process.out:  process.o ;
 	$(DISCRETA_CPP)  process.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-simeon.out:  simeon.o ;
-	$(DISCRETA_CPP)  simeon.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

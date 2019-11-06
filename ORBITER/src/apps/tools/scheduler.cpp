@@ -50,7 +50,7 @@ void do_collate(int N,
 		const char *collate_output_file_mask,
 		const char *collated_fname,
 		int verbose_level);
-void do_scheduling(int N, int *list_of_cases, 
+void do_scheduling(int N, long int *list_of_cases,
 	int J, 
 	int f_input_file_mask, const char *input_file_mask, 
 	const char *target_file_mask, 
@@ -63,7 +63,7 @@ void do_scheduling(int N, int *list_of_cases,
 	int verbose_level);
 int find_free_job(job_table *JT, int J);
 void assign_task(job_table *JT, int t, int j, 
-	int *list_of_cases, const char *log_prefix, 
+	long int *list_of_cases, const char *log_prefix,
 	int f_batch, const char *job_fname, const char *batch_template, int template_nb_times, 
 	int verbose_level);
 
@@ -292,18 +292,18 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	int *list_of_cases;
+	long int *list_of_cases;
 	file_io Fio;
 
 	if (f_list_of_cases) {
 		Fio.read_set_from_file(fname_list_of_cases, list_of_cases, N, verbose_level);
 		cout << "nb_cases=N=" << N << endl;
 		cout << "list of cases from file: ";
-		int_vec_print(cout, list_of_cases, N);
+		lint_vec_print(cout, list_of_cases, N);
 		cout << endl;
 		}
 	else {
-		list_of_cases = NEW_int(N);
+		list_of_cases = NEW_lint(N);
 		for (i = 0; i < N; i++) {
 			list_of_cases[i] = i;
 			}
@@ -331,7 +331,7 @@ int main(int argc, char **argv)
 		do_collate(N, collate_output_file_mask, collated_fname, verbose_level);
 		}
 
-	FREE_int(list_of_cases);
+	FREE_lint(list_of_cases);
 
 	cout << "scheduler.out is done" << endl;
 	the_end(t0);
@@ -430,7 +430,7 @@ void do_collate(int N, const char *collate_output_file_mask,
 		}
 }
 
-void do_scheduling(int N, int *list_of_cases, 
+void do_scheduling(int N, long int *list_of_cases,
 	int J, 
 	int f_input_file_mask, const char *input_file_mask, 
 	const char *target_file_mask, 
@@ -632,7 +632,7 @@ int find_free_job(job_table *JT, int J)
 }
 
 void assign_task(job_table *JT, int t, int j, 
-	int *list_of_cases, const char *log_prefix, 
+	long int *list_of_cases, const char *log_prefix,
 	int f_batch, const char *job_fname,
 	const char *batch_template, int template_nb_times,
 	int verbose_level)

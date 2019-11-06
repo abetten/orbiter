@@ -359,14 +359,6 @@ int main(int argc, const char **argv)
 			if (f_clebsch) {
 
 				surface_object *SO;
-				int *Arc_iso; // [72]
-				int *Clebsch_map; // [nb_pts]
-				int *Clebsch_coeff; // [nb_pts * 4]
-				//int line_a, line_b;
-				//int transversal_line;
-				int tritangent_plane_rk;
-				int plane_rk_global;
-				int ds, ds_row;
 				SO = SoA->SO;
 
 				fp << endl;
@@ -472,6 +464,16 @@ int main(int argc, const char **argv)
 
 
 #if 0
+
+				int *Arc_iso; // [72]
+				int *Clebsch_map; // [nb_pts]
+				int *Clebsch_coeff; // [nb_pts * 4]
+				//int line_a, line_b;
+				//int transversal_line;
+				int tritangent_plane_rk;
+				int plane_rk_global;
+				int ds, ds_row;
+
 				fp << endl;
 				fp << "\\clearpage" << endl;
 				fp << endl;
@@ -879,10 +881,10 @@ void polynomial_orbits_callback_print_function2(
 
 	int *coeff;
 	int *i_data = (int *) data;
-	int *Pts;
+	long int *Pts;
 	int nb_pts;
 
-	Pts = NEW_int(HPD->P->N_points);
+	Pts = NEW_lint(HPD->P->N_points);
 	coeff = NEW_int(HPD->nb_monomials);
 	HPD->unrank_coeff_vector(coeff, i_data[0]);
 	HPD->enumerate_points(coeff, Pts, nb_pts,  0 /*verbose_level*/);
@@ -892,7 +894,7 @@ void polynomial_orbits_callback_print_function2(
 	//HPD->print_equation_str(ost, coeff);
 	//ost << endl;
 	FREE_int(coeff);
-	FREE_int(Pts);
+	FREE_lint(Pts);
 }
 
 

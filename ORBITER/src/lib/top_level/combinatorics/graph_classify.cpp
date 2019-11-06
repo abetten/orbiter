@@ -203,7 +203,7 @@ void graph_classify::read_arguments(int argc, const char **argv)
 				}
 			identify_data_sz = j;
 			cout << "-identify ";
-			int_vec_print(cout, identify_data, identify_data_sz);
+			lint_vec_print(cout, identify_data, identify_data_sz);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-depth") == 0) {

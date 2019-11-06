@@ -2062,7 +2062,7 @@ void polar_callback_early_test_func(long int *S, int len,
 
 
 void Hill_cap56(int argc, const char **argv, 
-	char *fname, int &nb_Pts, int *&Pts, 
+	char *fname, int &nb_Pts, long int *&Pts,
 	int verbose_level);
 void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
 
@@ -2443,7 +2443,7 @@ public:
 	void orbit_info_short(std::ofstream &f, isomorph &Iso, int h);
 	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
 		int verbose_level);
-	void print(std::ostream &ost, int len, int *S);
+	void print(std::ostream &ost, int len, long int *S);
 };
 
 

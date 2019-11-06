@@ -241,7 +241,17 @@ int main(int argc, const char **argv)
 				OiPA_encode, OiPA_group_order, 
 				NULL /* void *global_data */, 
 				verbose_level);
-			}
+
+#if 0
+			void save(const char *prefix,
+				void (*encode_function)(void *extra_data,
+					int *&encoding, int &encoding_sz, void *global_data),
+				void (*get_group_order_or_NULL)(void *extra_data,
+					longinteger_object &go, void *global_data),
+				void *global_data,
+				int verbose_level);
+#endif
+		}
 
 
 	

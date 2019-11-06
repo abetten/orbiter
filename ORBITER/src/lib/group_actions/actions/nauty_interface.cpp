@@ -597,7 +597,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 
 
 action *nauty_interface::create_automorphism_group_of_block_system(
-	int nb_points, int nb_blocks, int block_size, int *Blocks,
+	int nb_points, int nb_blocks, int block_size, long int *Blocks,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -628,8 +628,8 @@ action *nauty_interface::create_automorphism_group_of_block_system(
 
 action *nauty_interface::create_automorphism_group_of_collection_of_two_block_systems(
 	int nb_points,
-	int nb_blocks1, int block_size1, int *Blocks1,
-	int nb_blocks2, int block_size2, int *Blocks2,
+	int nb_blocks1, int block_size1, long int *Blocks1,
+	int nb_blocks2, int block_size2, long int *Blocks2,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

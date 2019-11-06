@@ -105,6 +105,7 @@ public:
 		int &m, int &n, int verbose_level);
 	void int_matrix_write_text(const char *fname,
 		int *M, int m, int n);
+	void lint_matrix_write_text(const char *fname, long int *M, int m, int n);
 	void int_matrix_read_text(const char *fname,
 		int *&M, int &m, int &n);
 	void parse_sets(int nb_cases, char **data, int f_casenumbers,
@@ -292,6 +293,10 @@ public:
 	void lint_set_print_tex(std::ostream &ost, long int *v, int len);
 	void int_set_print_masked_tex(std::ostream &ost,
 		int *v, int len, const char *mask_begin, const char *mask_end);
+	void lint_set_print_masked_tex(std::ostream &ost,
+		long int *v, int len,
+		const char *mask_begin,
+		const char *mask_end);
 	void int_set_print_tex_for_inline_text(std::ostream &ost,
 			int *v, int len);
 	void lint_set_print_tex_for_inline_text(std::ostream &ost,

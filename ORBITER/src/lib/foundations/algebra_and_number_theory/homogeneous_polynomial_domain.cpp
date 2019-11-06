@@ -662,7 +662,7 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
 }
 
 void homogeneous_polynomial_domain::algebraic_set(int *Eqns, int nb_eqns,
-		int *Pts, int &nb_pts, int verbose_level)
+		long int *Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk, a, i;

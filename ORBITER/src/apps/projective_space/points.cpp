@@ -223,7 +223,7 @@ void orthogonal_lines(finite_field *F,
 		int epsilon, int n, int *c123, int verbose_level)
 {
 	orthogonal O;
-	int p1, p2, i, j, a, len;
+	long int p1, p2, i, j, a, len;
 	int d, q;
 	int *L;
 	sorting Sorting;
@@ -256,6 +256,12 @@ void orthogonal_lines(finite_field *F,
 	cout << "lines:" << endl;
 	len = O.nb_lines; // O.L[0] + O.L[1] + O.L[2];
 	cout << "len=" << len << endl;
+
+
+	long int *Line;
+
+	Line = NEW_lint(q + 1);
+
 	for (i = 0; i < len; i++) {
 		cout << "L_{" << i << "} &= ";
 		O.unrank_line(p1, p2, i, 0 /* verbose_level - 1*/);
@@ -285,11 +291,12 @@ void orthogonal_lines(finite_field *F,
 		}
 
 #if 1
-		O.points_on_line(p1, p2, O.line1, 0 /*verbose_level - 1*/);
-		Sorting.int_vec_sort(q + 1, O.line1);
+
+		O.points_on_line(p1, p2, Line, 0 /*verbose_level - 1*/);
+		Sorting.lint_vec_heapsort(Line, q + 1);
 		latex_interface Li;
 
-		Li.int_set_print_masked_tex(cout, O.line1, q + 1, "P_{", "}");
+		Li.lint_set_print_masked_tex(cout, Line, q + 1, "P_{", "}");
 		cout << "\\\\" << endl;
 #if 0
 		for (r1 = 0; r1 <= q; r1++) {
@@ -313,6 +320,7 @@ void orthogonal_lines(finite_field *F,
 #endif
 #endif
 	}
+	FREE_lint(Line);
 
 }
 

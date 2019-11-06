@@ -17,7 +17,7 @@ using namespace std;
 using namespace orbiter;
 
 void make_generator_matrix(finite_field *F,
-		int *G, int k, int n, int *code, int verbose_level);
+		int *G, int k, int n, long int *code, int verbose_level);
 void projective_group(int n, int q, int f_semilinear, int verbose_level);
 void grassmannian(int n, int k, finite_field *F, int verbose_level);
 void read_group(const char *fname, int verbose_level);
@@ -52,8 +52,8 @@ int main(int argc, char **argv)
 	const char *fname = NULL;
 	int f_semilinear = FALSE;
 	int f_code;
-	int code[1000];
-	int code2[1000];
+	long int code[1000];
+	long int code2[1000];
 	int code_sz = 0;
 	int f_subspace_classify = FALSE;
 	sorting Sorting;
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 				code_sz++;
 				}
 			cout << "-code ";
-			int_vec_print(cout, code, code_sz);
+			lint_vec_print(cout, code, code_sz);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-subspace_classify") == 0) {
@@ -235,7 +235,7 @@ int main(int argc, char **argv)
 				code2[h] = a;
 				}
 			cout << "image code: ";
-			int_vec_print(cout, code2, code_sz);
+			lint_vec_print(cout, code2, code_sz);
 			cout << endl;
 			
 			
@@ -257,7 +257,7 @@ int main(int argc, char **argv)
 			int_matrix_print(G + n * code_sz, code_sz - n, code_sz);
 
 
-			rk = Gr->rank_int_here(G + n * code_sz, 2 /*verbose_level*/);
+			rk = Gr->rank_lint_here(G + n * code_sz, 2 /*verbose_level*/);
 			
 			Ranks[i] = rk;
 			
@@ -292,7 +292,7 @@ int main(int argc, char **argv)
 
 			cout << "N=" << N << endl;
 			for (i = 0; i < N; i++) {
-				Gr->unrank_int_here(G, i, 0 /*verbose_level*/);
+				Gr->unrank_lint_here(G, i, 0 /*verbose_level*/);
 
 				if (f_v3) {
 					cout << "subspace " << 	i << " / " << N
@@ -338,7 +338,7 @@ int main(int argc, char **argv)
 }
 
 void make_generator_matrix(finite_field *F,
-		int *G, int k, int n, int *code, int verbose_level)
+		int *G, int k, int n, long int *code, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a;

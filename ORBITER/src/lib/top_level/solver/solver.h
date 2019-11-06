@@ -126,7 +126,7 @@ public:
 	void compute_liftings_single_case_new(int starter_case, 
 		int f_solve, int f_save, int f_read_instead, 
 		int &nb_col, 
-		int *&Solutions, int &sol_length, int &nb_sol, 
+		long int *&Solutions, int &sol_length, int &nb_sol,
 		int &nb_backtrack, int &dt, 
 		int f_draw_system, const char *fname_system, 
 		int f_write_tree, const char *fname_tree, 

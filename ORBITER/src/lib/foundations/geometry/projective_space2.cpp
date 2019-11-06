@@ -3395,7 +3395,7 @@ void projective_space::decomposition(
 }
 
 void projective_space::arc_lifting_diophant(
-	int *arc, int arc_sz,
+	long int *arc, int arc_sz,
 	int target_sz, int target_d,
 	diophant *&D,
 	int verbose_level)
@@ -3404,7 +3404,7 @@ void projective_space::arc_lifting_diophant(
 	int f_vv = (verbose_level >= 5);
 	int *line_type;
 	int i, j, h, pt;
-	int *free_points;
+	long int *free_points;
 	int nb_free_points;
 	combinatorics_domain Combi;
 
@@ -3412,28 +3412,21 @@ void projective_space::arc_lifting_diophant(
 		cout << "projective_space::arc_lifting_diophant" << endl;
 		}
 
-	free_points = NEW_int(N_points);
+	free_points = NEW_lint(N_points);
 
-	Combi.set_complement(arc, arc_sz,
+	Combi.set_complement_lint(arc, arc_sz,
 			free_points, nb_free_points, N_points);
 
 
-	long int *arc_lint;
-
-	arc_lint = NEW_lint(arc_sz);
-	for (i = 0; i < arc_sz; i++) {
-		arc_lint[i] = arc[i];
-	}
 
 	line_type = NEW_int(N_lines);
-	line_intersection_type(arc_lint, arc_sz,
+	line_intersection_type(arc, arc_sz,
 			line_type, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "line_type: ";
 		int_vec_print_fully(cout, line_type, N_lines);
 		cout << endl;
 		}
-	FREE_lint(arc_lint);
 
 	if (f_vv) {
 		cout << "line type:" << endl;
@@ -3518,7 +3511,7 @@ void projective_space::arc_lifting_diophant(
 #endif
 
 	FREE_int(line_type);
-	FREE_int(free_points);
+	FREE_lint(free_points);
 
 	if (f_v) {
 		cout << "projective_space::arc_lifting_diophant done" << endl;

@@ -399,7 +399,7 @@ done:
 void geometry_global::create_Buekenhout_Metz(
 	finite_field *Fq, finite_field *FQ,
 	int f_classical, int f_Uab, int parameter_a, int parameter_b,
-	char *fname, int &nb_pts, int *&Pts,
+	char *fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -432,7 +432,7 @@ void geometry_global::create_Buekenhout_Metz(
 	//BM->write_unital_to_file();
 
 	nb_pts = BM->sz;
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		Pts[i] = BM->U[i];
 		}

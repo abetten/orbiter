@@ -113,7 +113,7 @@ int main(int argc, char **argv)
 			f_has_ago = TRUE;
 			char **data;
 			int *Set_sizes;
-			int **Sets;
+			long int **Sets;
 			char **Ago_ascii;
 			char **Aut_ascii;
 			int *Casenumbers;

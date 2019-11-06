@@ -160,7 +160,7 @@ public:
 
 	int degree;
 
-	int *set;
+	long int *set;
 	int sz;
 
 	int f_has_group;
@@ -178,7 +178,7 @@ public:
 	void freeself();
 	void init(design_create_description *Descr, int verbose_level);
 	void create_design_PG_2_q(finite_field *F,
-			int *&set, int &sz, int &k, int verbose_level);
+			long int *&set, int &sz, int &k, int verbose_level);
 	void unrank_block_in_PG_2_q(int *block,
 			int rk, int verbose_level);
 	int rank_block_in_PG_2_q(int *block,
@@ -355,7 +355,7 @@ public:
 	int f_plesken;
 
 	int f_identify;
-	int identify_data[1000];
+	long int identify_data[1000];
 	int identify_data_sz;
 
 

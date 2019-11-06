@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 	get_fname_base(fname, fname_base);
 
 	int *Set_sizes;
-	int **Sets;
+	long int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii; 
 	int *Casenumbers;

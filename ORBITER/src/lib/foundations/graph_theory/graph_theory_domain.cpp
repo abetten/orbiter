@@ -119,7 +119,7 @@ void graph_theory_domain::colored_graph_all_cliques(
 }
 
 void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
-	int *list_of_cases, int nb_cases, int f_output_solution_raw,
+	long int *list_of_cases, int nb_cases, int f_output_solution_raw,
 	const char *fname_template,
 	const char *fname_sol, const char *fname_stats,
 	int f_split, int split_r, int split_m,

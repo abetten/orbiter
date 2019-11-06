@@ -24,10 +24,10 @@ int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
 int extra_test_func(subspace_orbits *SubOrb, 
-	int len, int *S, void *data, int verbose_level);
-int test_dim_C_cap_Cperp_property(int len, int *S, void *data);
-int compute_minimum_distance(int len, int *S, void *data);
-void print_subspace(ostream &ost, int len, int *S, void *data);
+	int len, long int *S, void *data, int verbose_level);
+int test_dim_C_cap_Cperp_property(int len, long int *S, void *data);
+int compute_minimum_distance(int len, long int *S, void *data);
+void print_subspace(ostream &ost, int len, long int *S, void *data);
 
 
 
@@ -379,7 +379,7 @@ int main(int argc, const char **argv)
 
 
 	if (f_table_of_nodes) {
-		int *Table;
+		long int *Table;
 		int nb_rows, nb_cols;
 		char fname[1000];
 
@@ -401,10 +401,10 @@ int main(int argc, const char **argv)
 			cout << "writing to file " << fname << endl;
 			}
 
-		Fio.int_matrix_write_csv(fname, Table, nb_rows, nb_cols);
+		Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
 
 
-		FREE_int(Table);
+		FREE_lint(Table);
 		}
 
 
@@ -447,7 +447,7 @@ int main(int argc, const char **argv)
 
 
 int extra_test_func(subspace_orbits *SubOrb, 
-	int len, int *S, void *data, int verbose_level)
+	int len, long int *S, void *data, int verbose_level)
 {
 	int f_v = FALSE;//(verbose_level >= 1);
 	//int *p_mindist = (int *) data;
@@ -493,7 +493,7 @@ int extra_test_func(subspace_orbits *SubOrb,
 	return ret;
 }
 
-int test_dim_C_cap_Cperp_property(int len, int *S, void *data)
+int test_dim_C_cap_Cperp_property(int len, long int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;
 	int dim, ret;
@@ -503,7 +503,7 @@ int test_dim_C_cap_Cperp_property(int len, int *S, void *data)
 	return ret;
 }
 
-int compute_minimum_distance(int len, int *S, void *data)
+int compute_minimum_distance(int len, long int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;
 	int d;
@@ -512,7 +512,7 @@ int compute_minimum_distance(int len, int *S, void *data)
 	return d;
 }
 
-void print_subspace(ostream &ost, int len, int *S, void *data)
+void print_subspace(ostream &ost, int len, long int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;
 	

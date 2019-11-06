@@ -18,7 +18,7 @@ namespace top_level {
 
 
 void Hill_cap56(int argc, const char **argv, 
-	char *fname, int &nb_Pts, int *&Pts, 
+	char *fname, int &nb_Pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -332,7 +332,7 @@ void Hill_cap56(int argc, const char **argv,
 		}
 
 	nb_Pts = 56;
-	Pts = NEW_int(56);
+	Pts = NEW_lint(56);
 	for (j = 0; j < 56; j++) {
 		Pts[j] = Sets[0 * 56 + j];
 		}

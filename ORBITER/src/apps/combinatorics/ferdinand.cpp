@@ -25,7 +25,7 @@ void ferdinand(int level, int group, int subgroup,
 	int f_create_graph, int create_graph_level,
 	int create_graph_index, int connection_element,
 	int verbose_level);
-int ferdinand_incremental_check_func(int len, int *S,
+int ferdinand_incremental_check_func(int len, long int *S,
 		void *data, int verbose_level);
 
 
@@ -141,21 +141,21 @@ void ferdinand(int level, int group, int subgroup,
 
 		int go;
 		int *Adj;
-		int *Adj_list;
-		int *Additional_neighbor;
+		long int *Adj_list;
+		long int *Additional_neighbor;
 		int *Additional_neighbor_sz;
 
 		go = Cayley->go;
-		Additional_neighbor = NEW_int(go);
+		Additional_neighbor = NEW_lint(go);
 		Additional_neighbor_sz = NEW_int(go);
-		Adj_list = NEW_int(go * SaS->sz);
+		Adj_list = NEW_lint(go * SaS->sz);
 		Adj = NEW_int(go * go);
 		Cayley->create_Adjacency_list(Adj_list, 
 			SaS->data, SaS->sz, 
 			verbose_level);
 
 		cout << "The adjacency list is:" << endl;
-		int_matrix_print(Adj_list, go, SaS->sz);
+		lint_matrix_print(Adj_list, go, SaS->sz);
 
 		Cayley->create_additional_edges(Additional_neighbor, 
 			Additional_neighbor_sz, 
@@ -226,9 +226,9 @@ void ferdinand(int level, int group, int subgroup,
 		CG->save(fname, verbose_level);
 
 		FREE_OBJECT(CG);
-		FREE_int(Adj_list);
+		FREE_lint(Adj_list);
 		FREE_int(Adj);
-		FREE_int(Additional_neighbor);
+		FREE_lint(Additional_neighbor);
 		FREE_int(Additional_neighbor_sz);
 
 		}
@@ -238,7 +238,7 @@ void ferdinand(int level, int group, int subgroup,
 }
 
 
-int ferdinand_incremental_check_func(int len, int *S,
+int ferdinand_incremental_check_func(int len, long int *S,
 		void *data, int verbose_level)
 {
 	cayley_graph_search *Cayley = (cayley_graph_search *) data;

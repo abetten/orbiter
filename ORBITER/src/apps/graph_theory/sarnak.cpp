@@ -338,7 +338,7 @@ void do_it(int p, int q, int verbose_level)
 
 	cout << "Computing the Cayley graph:" << endl;
 	for (i = 0; i < goi; i++) {
-		Sims->element_unrank_int(i, Elt1);
+		Sims->element_unrank_lint(i, Elt1);
 		//cout << "i=" << i << endl;
 		for (h = 0; h < nb_A4; h++) {
 			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
@@ -351,7 +351,7 @@ void do_it(int p, int q, int verbose_level)
 			cout << "Elt2=" << endl;
 			A->element_print_quick(Elt2, cout);
 #endif
-			j = Sims->element_rank_int(Elt2);
+			j = Sims->element_rank_lint(Elt2);
 			Adj[i * goi + j] = Adj[j * goi + i] = 1;
 			if (i == 0) {
 				cout << "edge " << i << " " << j << endl;

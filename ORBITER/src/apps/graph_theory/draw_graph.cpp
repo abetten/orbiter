@@ -12,9 +12,9 @@ using namespace orbiter;
 
 
 void draw_graph(mp_graphics &G,
-	int nb_v, int nb_e, int *E, int f_directed,
+	int nb_v, int nb_e, long int *E, int f_directed,
 	int f_no_point_labels, 
-	int f_point_labels, int *point_labels, 
+	int f_point_labels, long int *point_labels,
 	int point_label_offset, 
 	int f_edge_labels, 
 	int f_bipartite, int size_of_bipartition, 
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 	const char *vertex_selection_text = NULL;
 	int f_no_point_labels = FALSE;
 	int f_point_labels = FALSE;
-	int *point_labels = NULL;
+	long int *point_labels = NULL;
 	combinatorics_domain Combi;
 
 
@@ -288,8 +288,8 @@ int main(int argc, char **argv)
 				}
 			}
 		if (f_point_labels) {
-			point_labels = NEW_int(CG->nb_points);
-			int_vec_copy(CG->points, point_labels, CG->nb_points);
+			point_labels = NEW_lint(CG->nb_points);
+			lint_vec_copy(CG->points, point_labels, CG->nb_points);
 			}
 		}
 
@@ -353,9 +353,9 @@ int main(int argc, char **argv)
 			f_point_labels, point_label_offset, f_directed);
 		}
 	else {
-		int *E2;
+		long int *E2;
 
-		E2 = NEW_int(nb_E);
+		E2 = NEW_lint(nb_E);
 		for (i = 0; i < nb_E; i++) {
 			E2[i] = Combi.ij2k(E[2 * i + 0], E[2 * i + 1], nb_V);
 			}
@@ -370,7 +370,7 @@ int main(int argc, char **argv)
 			rad, verbose_level);
 			// not in GALOIS/draw.cpp
 
-		FREE_int(E2);
+		FREE_lint(E2);
 		}
 
 #if 0
@@ -433,9 +433,9 @@ int main(int argc, char **argv)
 }
 
 void draw_graph(mp_graphics &G,
-	int nb_v, int nb_e, int *E, int f_directed,
+	int nb_v, int nb_e, long int *E, int f_directed,
 	int f_no_point_labels, 
-	int f_point_labels, int *point_labels, 
+	int f_point_labels, long int *point_labels,
 	int point_label_offset, 
 	int f_edge_labels, 
 	int f_bipartite, int size_of_bipartition, 

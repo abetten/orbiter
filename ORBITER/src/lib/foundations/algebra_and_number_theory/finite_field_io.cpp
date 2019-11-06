@@ -1074,7 +1074,7 @@ void finite_field::display_table_of_projective_points(
 }
 
 
-void finite_field::export_magma(int d, int *Pts, int nb_pts, char *fname)
+void finite_field::export_magma(int d, long int *Pts, int nb_pts, char *fname)
 {
 	char fname2[1000];
 	int *v;
@@ -1092,7 +1092,7 @@ void finite_field::export_magma(int d, int *Pts, int nb_pts, char *fname)
 	fp << "S:={};" << endl;
 	fp << "a := F.1;" << endl;
 	for (h = 0; h < nb_pts; h++) {
-		PG_element_unrank_modified(v, 1, d, Pts[h]);
+		PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
 
 		PG_element_normalize_from_front(v, 1, d);
 
@@ -1127,7 +1127,7 @@ void finite_field::export_magma(int d, int *Pts, int nb_pts, char *fname)
 	FREE_int(v);
 }
 
-void finite_field::export_gap(int d, int *Pts, int nb_pts, char *fname)
+void finite_field::export_gap(int d, long int *Pts, int nb_pts, char *fname)
 {
 	char fname2[1000];
 	int *v;
@@ -1144,7 +1144,7 @@ void finite_field::export_gap(int d, int *Pts, int nb_pts, char *fname)
 	fp << "pg := ProjectiveSpace(" << d - 1 << "," << q << ");" << endl;
 	fp << "S:=[" << endl;
 	for (h = 0; h < nb_pts; h++) {
-		PG_element_unrank_modified(v, 1, d, Pts[h]);
+		PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
 
 		PG_element_normalize_from_front(v, 1, d);
 

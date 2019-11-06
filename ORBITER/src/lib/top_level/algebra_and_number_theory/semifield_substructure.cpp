@@ -382,7 +382,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 	Fo_first = NEW_int(nb_orbits_at_level_3);
 
 	Flag_orbits = NEW_OBJECT(flag_orbits);
-	Flag_orbits->init_lint(
+	Flag_orbits->init(
 		SC->A, SC->AS,
 		nb_orbits_at_level_3 /* nb_primary_orbits_lower */,
 		SC->k /* pt_representation_sz */,
@@ -404,7 +404,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 		else if (Len[o] == 1) {
 			data = Data +
 					(fst + 0) * data_size + start_column;
-			Flag_orbits->Flag_orbit_node[h].init_lint(
+			Flag_orbits->Flag_orbit_node[h].init(
 					Flag_orbits,
 				h /* flag_orbit_index */,
 				o /* downstep_primary_orbit */,
@@ -420,7 +420,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 			for (g = 0; g < Len[o]; g++) {
 				data = Data +
 						(fst + g) * data_size + start_column;
-				Flag_orbits->Flag_orbit_node[h].init_lint(
+				Flag_orbits->Flag_orbit_node[h].init(
 						Flag_orbits,
 					h /* flag_orbit_index */,
 					o /* downstep_primary_orbit */,
@@ -454,7 +454,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 				L3->Stabilizer_gens[o].group_order(go);
 				gens = Orb->stabilizer_orbit_rep(
 					go /* full_group_order */, 0 /*verbose_level - 1*/);
-				Flag_orbits->Flag_orbit_node[h].init_lint(
+				Flag_orbits->Flag_orbit_node[h].init(
 						Flag_orbits,
 					h /* flag_orbit_index */,
 					o /* downstep_primary_orbit */,
@@ -522,7 +522,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 	SC->A->group_order(go);
 
-	SCWS->Semifields->init_lint(SC->A, SC->AS,
+	SCWS->Semifields->init(SC->A, SC->AS,
 			nb_flag_orbits, SC->k, go, verbose_level);
 
 

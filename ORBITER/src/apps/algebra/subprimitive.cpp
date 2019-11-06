@@ -137,7 +137,7 @@ void formula_subprimitive(int d, int q,
 	D.integral_division(A, Qm1, Theta, C, 0);
 	cout << "theta = " << Theta << endl;
 	D.integral_division_by_int(Theta, q - 1, C, theta_mod_qm1);
-	g = NT.gcd_int(q - 1, theta_mod_qm1);
+	g = NT.gcd_lint(q - 1, theta_mod_qm1);
 	cout << "g = " << g << endl;
 	D.factor(Theta, nb_primes, primes, exponents, verbose_level);
 	if (f_v) {
@@ -207,7 +207,7 @@ void formula(int d, int q, longinteger_object &Rdq, int verbose_level)
 	cout << "theta = " << Theta << endl;
 	D.integral_division_by_int(Theta, 
 		q - 1, C, theta_mod_qm1);
-	g = NT.gcd_int(q - 1, theta_mod_qm1);
+	g = NT.gcd_lint(q - 1, theta_mod_qm1);
 	cout << "g = " << g << endl;
 	D.factor(Theta, nb_primes, primes, exponents, verbose_level);
 	if (f_v) {
@@ -366,7 +366,7 @@ void subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c)
 	number_theory_domain NT;
 	
 	a = j + k * (q - 1);
-	g = NT.gcd_int(a, f);
+	g = NT.gcd_lint(a, f);
 	s = f / g;
 	c = a / g;
 	c = c % (q - 1);

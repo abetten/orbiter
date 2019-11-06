@@ -295,7 +295,7 @@ int main(int argc, const char **argv)
 		}
 	if (f_action_on_maximals) {
 		longinteger_object *Rank_maximals;
-		int *Rank_maximals_int;
+		long int *Rank_maximals_int;
 		int nb_maximals;
 		grassmann *Grass;
 		action_on_grassmannian *AG;
@@ -303,7 +303,7 @@ int main(int argc, const char **argv)
 		
 		P.dual_polar_graph(k, 0, Rank_maximals, nb_maximals, verbose_level);
 
-		Rank_maximals_int = NEW_int(nb_maximals);
+		Rank_maximals_int = NEW_lint(nb_maximals);
 		for (i = 0; i < nb_maximals; i++) {
 			Rank_maximals_int[i] = Rank_maximals[i].as_int();
 			}
@@ -354,7 +354,7 @@ int main(int argc, const char **argv)
 			FALSE /* f_induce_action */,
 			verbose_level);
 		for (i = 0; i < goi; i++) {
-			S->element_unrank_int(i, Elt);
+			S->element_unrank_lint(i, Elt);
 			order = A->element_order(Elt);
 			cout << "element " << i << " of order " << order << ":" << endl;
 			A->element_print_quick(Elt, cout);
@@ -369,7 +369,7 @@ int main(int argc, const char **argv)
 		// do not free AG
 		FREE_OBJECT(A_restr);
 		FREE_int(Elt);
-		FREE_int(Rank_maximals_int);
+		FREE_lint(Rank_maximals_int);
 		delete [] Rank_maximals;		
 		}
 	

@@ -147,7 +147,7 @@ int main(int argc, char **argv)
 		Text_node[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_node[i], str);
 
-		int_vec_print_to_str(str, ODF->sets[i], level);
+		lint_vec_print_to_str(str, ODF->sets[i], level);
 		Text_orbit_reps[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_orbit_reps[i], str);
 		
